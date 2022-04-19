@@ -124,14 +124,14 @@ var/global/datum/region_allocator/region_allocator = new
 		ASSERT(node.state == NODE_STATE_FREE)
 		node.set_state(NODE_STATE_USED)
 		src.node = node
-		global.region_allocator.allocated_regions[src] = 1
+		global.region_allocator.allocated_regions[get_weakref(src)] = 1
 
 	proc/free()
 		PRIVATE_PROC(TRUE)
 		ASSERT(node.state == NODE_STATE_USED)
 		node.free_up_from_used()
 		src.node = null
-		global.region_allocator.allocated_regions -= src
+		global.region_allocator.allocated_regions -= src.weakref
 
 	proc/clean_up(turf/main_turf=/turf/space, turf/edge_turf=/turf/cordon, area/main_area=/area/space)
 		if(ispath(main_area))
