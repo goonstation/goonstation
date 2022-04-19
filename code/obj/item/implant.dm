@@ -523,7 +523,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				return
 			. = 0
 			for (var/obj/item/implant/implant in src.loc)
-				if (implant.type == src.type) //only interact with implants that are the same type as us
+				if (istype(implant, src.type)) //only interact with implants that are the same type as us
 					var/obj/item/implant/revenge/revenge_implant = implant
 					if (!revenge_implant.active)
 						revenge_implant.active = TRUE
