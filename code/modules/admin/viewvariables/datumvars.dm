@@ -424,10 +424,10 @@
 		html += "\[[name]\]</th><td><em class='value'>[html_encode("[value]")]</em>"
 
 	if(name == "particles")
-		html += " <a href='byond://?src=\ref[src];Particool=\ref[fullvar]' style='font-size:0.65em;'>particool</b></a>"
+		html += " <a href='byond://?src=\ref[src];Particool=\ref[fullvar]' style='font-size:0.65em;'>particool</a>"
 
 	if(name == "filters")
-		html += " <a href='byond://?src=\ref[src];Filterrific=\ref[fullvar]' style='font-size:0.65em;'>filterrific</b></a>"
+		html += " <a href='byond://?src=\ref[src];Filterrific=\ref[fullvar]' style='font-size:0.65em;'>filterrific</a>"
 
 	html += "</td></tr>"
 
