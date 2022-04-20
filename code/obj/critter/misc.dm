@@ -1582,6 +1582,7 @@
 	health = 30
 	flags = NOSPLASH | TABLEPASS
 	maxhealth = 60
+	butcherable = 1
 
 	var/obj/item/organ/tail/lizard/tail_memory = null
 	var/maxsteps
