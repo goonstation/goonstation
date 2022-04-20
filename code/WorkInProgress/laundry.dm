@@ -2,6 +2,8 @@
 #define WASH "w"
 #define DRY "d"
 #define POST 1
+#define cycle_time_mob_inside 5
+#define cycle_time 10
 
 /obj/submachine/laundry_machine
 	name = "laundry machine"
@@ -14,9 +16,8 @@
 	var/on = 0
 	var/open = 0
 	var/cycle = PRE
-	var/cycle_time = 10
-	var/cycle_time_mob_inside = 5
 	var/cycle_current = 0
+	var/cycle_max = cycle_time
 	var/mob/occupant = null
 	var/image/image_door = null
 	var/image/image_light = null
@@ -61,7 +62,7 @@
 		return
 
 	var/mob/living/carbon/human/H = src.occupant
-	if ((!src.occupant && src.cycle_current >= src.cycle_time) || (src.occupant && src.cycle_current >= src.cycle_time_mob_inside)) // cycle done! The cycle is faster if a human is inside
+	if (src.cycle_current >= src.cycle_max) // cycle done! The cycle is faster if a human is inside
 		if (src.cycle == WASH) // we have to dry things now!
 			for (var/obj/item/I in src.contents)
 				if (istype(I, /obj/item/clothing))
@@ -97,6 +98,7 @@
 				src.cycle = PRE
 				src.visible_message("[src]'s door flings open and [H] flops on the ground, squeaky clean.")
 			src.occupant = null
+			src.cycle_max = cycle_time
 			src.on = 0
 			src.UpdateIcon()
 			src.generate_html()
@@ -198,6 +200,7 @@
 			var/mob/M = W.affecting
 			src.occupant = M
 			src.update_icon()
+			cycle_max = cycle_time_mob_inside
 			if (!processing_items.Find(src))
 				processing_items.Add(src)
 			var/mob/living/L = user
