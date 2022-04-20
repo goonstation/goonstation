@@ -16,6 +16,7 @@
 	canmove = 1
 	use_stamina = FALSE
 	flags = FPRINT | NO_MOUSEDROP_QOL
+	gender = NEUTER
 
 	blinded = FALSE
 	anchored = FALSE

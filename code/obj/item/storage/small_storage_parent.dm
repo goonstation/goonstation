@@ -231,7 +231,7 @@
 							usr.u_equip(src)
 							usr.put_in_hand_or_drop(src, 1)
 				return
-		if (over_object == usr && in_interact_range(src, usr) && isliving(usr) && !usr.stat)
+		if (over_object == usr && in_interact_range(src, usr) && isliving(usr) && !usr.stat && !isintangible(usr))
 			if (usr.s_active)
 				usr.detach_hud(usr.s_active)
 				usr.s_active = null
