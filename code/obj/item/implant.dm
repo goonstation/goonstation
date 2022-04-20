@@ -281,13 +281,6 @@ THROWING DARTS
 			probably_my_record["h_imp"] = "[src.sensehealth()]"
 		..()
 
-	on_crit()
-		if(inafterlife(src.owner))
-			return
-		DEBUG_MESSAGE("[src] calling to report crit")
-		health_alert()
-		..()
-
 	on_death()
 		if(inafterlife(src.owner))
 			return
