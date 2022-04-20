@@ -198,6 +198,7 @@ obj/item/gun/reagent/syringe/love/plus // Sometimes you just need more love in y
 	icon_state = "ghost"
 	ammo_reagents = list("ectoplasm")
 	force = 7.0
+	mats = 0
 	desc = "A weapon that launches concentrated ectoplasm. Harmless to humans, deadly to ghosts."
 
 	New()
