@@ -298,7 +298,7 @@
 			src.setItemSpecial(/datum/item_special/simple)
 			src.UpdateIcon()
 			user.update_inhands()
-			user.show_text("<B>You flip \the [src] and grab it by the head! [src.is_active ? "It seems pretty unsafe to hold it like this while it's on!" : "At least its off!"]</B>", "red")
+			user.show_text("<B>You flip \the [src] and grab it by the head! [src.is_active ? "It seems pretty unsafe to hold it like this while it's on!" : "At least it's off!"]</B>", "red")
 		else //not already flipped
 			if (!src.flipped) //swapping hands triggers the intent switch too, so we dont wanna spam that
 				return
