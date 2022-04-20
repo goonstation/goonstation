@@ -1,4 +1,9 @@
 
+(t)wed apr 20 22
+(u)Flappybat
+(p)8097
+(e)⚖|balance
+(+)Many Battle Royale changes. Shuttle call moved to 10 players left. Cloaking device, Wrestling Belt, Red Saw removed. Whole load of mostly useless Syndicate items removed. More weapon and armor variety added. Loot chests now always hold a weapon and 50% chance of also some armor. Vehicles removed except escape pods.
 (t)sat apr 16 22
 (u)Yellow/Myco
 (p)8168

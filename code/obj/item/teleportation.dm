@@ -132,6 +132,14 @@ Frequency:
 	var/list/portals = list()
 	var/list/users = list() // List of people who've clicked on the hand tele and haven't resolved its UI yet
 
+	New()
+		..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		..()
+
 	// Port of the telegun improvements (Convair880).
 	attack_self(mob/user as mob)
 		src.add_fingerprint(user)
