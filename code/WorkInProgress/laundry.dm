@@ -71,8 +71,7 @@
 					C.UpdateName()
 				I.clean_forensic()
 			if (src.occupant)
-				if (H.sims)
-					H.sims.affectMotive("Hygiene", 100)
+				H?.sims.affectMotive("Hygiene", 100)
 			src.cycle = DRY
 			src.cycle_current = 0
 			src.visible_message("[src] lets out a beep and hums as it switches to its drying cycle.")
