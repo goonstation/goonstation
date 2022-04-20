@@ -1,7 +1,3 @@
-#define EXTENDO_BATON_CLOSED_AND_OFF 1
-#define EXTENDO_BATON_OPEN_AND_ON 2
-#define EXTENDO_BATON_OPEN_AND_OFF 3
-
 // Contains:
 // - Baton parent
 // - Subtypes
@@ -491,4 +487,3 @@
 		src.is_active = FALSE
 		usr.show_text("The [src.name] is now open and unpowered.", "blue")
 		src.process_charges(-INFINITY)
-
