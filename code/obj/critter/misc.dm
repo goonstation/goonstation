@@ -1580,10 +1580,6 @@
 	icon_state = "twitchytail"
 	density = 1
 	health = 30
-	wanderer = 1
-	firevuln = 1
-	brutevuln = 1
-	butcherable = 0
 	flags = NOSPLASH | TABLEPASS
 	maxhealth = 60
 
