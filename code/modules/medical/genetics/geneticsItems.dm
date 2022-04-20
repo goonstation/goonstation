@@ -176,6 +176,10 @@
 			boutput(user, "<span class='alert'>You stab [M], but nothing happens.</span>")
 		return
 
+#define SCRAMBLER_MODE_COPY "copy"
+#define SCRAMBLER_MODE_PASTE "paste"
+#define SCRAMBLER_MODE_DEPLETED "depleted"
+
 /obj/item/dna_scrambler
 	name = "dna scrambler"
 	desc = "An illegal retroviral genetic serum designed to randomize the user's identity, store it, and apply it later."
@@ -186,67 +190,77 @@
 	force = 3
 	throwforce = 3
 	w_class = W_CLASS_SMALL
-	var/use_mode = "copy"
+	var/use_mode = SCRAMBLER_MODE_COPY
 	var/datum/bioHolder/bioHolder = new/datum/bioHolder
 	var/stored_name
 	contraband = 2
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if(!M || !user)
 			return
 
-		if(src.use_mode == "depleted")
+		if(src.use_mode == SCRAMBLER_MODE_DEPLETED)
 			boutput(user, "<span class='alert'>The [name] is expended and has no more uses.</span>")
 			return
 
 		if(M == user)
 
-			if(use_mode == "copy")
+			if(use_mode == SCRAMBLER_MODE_COPY)
 				src.copy_identity(user,user)
-				src.icon_state = "dna_scrambler_2"
 				user.visible_message("<span class='alert'><b>You inject yourself with the [src]! Your appearance has been copied to the [src].</b></span>")
-				src.use_mode = "paste"
 				return
 
-			if(use_mode == "paste")
+			if(use_mode == SCRAMBLER_MODE_PASTE)
 				src.paste_identity(user,user)
-				src.icon_state = "dna_scrambler_3"
 				user.visible_message("<span class='alert'><b>You inject yourself with the [src]! The [src] has been totally used up.</b></span>")
-				src.use_mode = "depleted"
 				return
 
 		else
 			logTheThing("combat", user, M, "injects [constructTarget(M,"combat")] with [src.name] at [log_loc(user)]")
 
-			if(use_mode == "copy")
+			if(use_mode == SCRAMBLER_MODE_COPY)
 				src.copy_identity(user,M)
-				src.icon_state = "dna_scrambler_2"
 				user.visible_message("<span class='alert'><b>You stab [M] with the DNA injector. [M]'s appearance has been copied to the [src].</b></span>")
-				src.use_mode = "paste"
 				return
 
-			if(use_mode == "paste")
+			if(use_mode == SCRAMBLER_MODE_PASTE)
 				src.paste_identity(user,M)
-				src.icon_state = "dna_scrambler_3"
 				user.visible_message("<span class='alert'><b>You stab [M] with the DNA injector. The [src] has been totally used up.</b></span>")
-				src.use_mode = "depleted"
 				return
 
 	proc/copy_identity(var/mob/living/carbon/user,var/mob/living/carbon/target)
 		if (ishuman(target))
+			src.use_mode = SCRAMBLER_MODE_PASTE
 			boutput(target, "<span class='alert'>Your body changes! You feel completely different!</span>")
 			src.bioHolder.CopyOther(target.bioHolder)
 			stored_name = target.name
 			randomize_look(target)
+			UpdateIcon()
 
 	proc/paste_identity(var/mob/living/carbon/user,var/mob/living/carbon/target)
 		if (ishuman(target))
+			src.use_mode = SCRAMBLER_MODE_DEPLETED
 			boutput(target, "<span class='alert'>Your body changes! You feel completely different!</span>")
 			target.bioHolder.CopyOther(src.bioHolder)
 			target.name = src.stored_name
 			target.real_name = src.stored_name
+			UpdateIcon()
+
 			if(src.bioHolder?.mobAppearance?.mutant_race)
 				target.set_mutantrace(src.bioHolder.mobAppearance.mutant_race.type)
 			else
 				target.set_mutantrace(null)
 
+	update_icon()
+		if (src.use_mode == SCRAMBLER_MODE_COPY)
+			src.icon_state = "dna_scrambler_1"
+
+		if (src.use_mode == SCRAMBLER_MODE_PASTE)
+			src.icon_state = "dna_scrambler_2"
+
+		if (src.use_mode == SCRAMBLER_MODE_DEPLETED)
+			src.icon_state = "dna_scrambler_3"
+
+#undef SCRAMBLER_MODE_COPY
+#undef SCRAMBLER_MODE_PASTE
+#undef SCRAMBLER_MODE_DEPLETED
