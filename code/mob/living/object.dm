@@ -332,11 +332,10 @@
 
 /datum/aiHolder/living_object/New()
 	..()
+	// THE LIVING OBJECT CYCLE
+	// THERE IS ONE STEP, AND IT IS ATTACK
 	var/datum/aiTask/timed/targeted/living_object/attack = get_instance(/datum/aiTask/timed/targeted/living_object, list(src))
-	var/datum/aiTask/timed/wander/wander = get_instance(/datum/aiTask/timed/wander, list(src))
 	default_task = attack
-	attack.transition_task = attack
-	// wander.transition_task = attack
 
 /datum/aiHolder/living_object/was_harmed(obj/item/W, mob/M)
 	. = ..()
