@@ -481,29 +481,11 @@ datum
 
 				return
 
-			reaction_mob(var/mob/target, var/method=TOUCH, var/volume_passed)
-				. = ..()
-				return
-
 			reaction_obj(var/obj/O, var/volume)
 				if (volume < 5 || istype(O, /obj/critter) || istype(O, /obj/machinery/bot) || istype(O, /obj/decal) || O.anchored || O.invisibility) return
 				return_if_overlay_or_effect(O)
 				O.visible_message("<span class='alert'>The [O] comes to life!</span>")
-				var/obj/critter/livingobj/L = new/obj/critter/livingobj(O.loc)
-				O.set_loc(L)
-				L.name = "Living [O.name]"
-				L.desc = "[O.desc]. It appears to be alive!"
-				L.overlays += O
-				L.health = rand(10, 150)
-				L.atk_brute_amt = rand(1, 35)
-				L.defensive = 1
-				L.aggressive = pick(1,0)
-				L.atkcarbon = pick(1,0)
-				L.atksilicon = pick(1,0)
-				L.opensdoors = pick(1,0)
-				L.original_object = O
-				animate_float(L, -1, 30)
-				return
+				new /mob/living/object/ai_controlled(get_turf(O), O)
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
