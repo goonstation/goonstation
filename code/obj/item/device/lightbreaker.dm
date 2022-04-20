@@ -40,6 +40,7 @@
 			if (L.status == 2 || L.status == 1)
 				continue
 			var/area/A = get_area(L)
+			// Protect lights in sanctuary and nukie battlecruiser
 			if(A?.sanctuary || istype(A, /area/syndicate_station))
 				continue
 			L.broken(1)
