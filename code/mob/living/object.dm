@@ -401,6 +401,10 @@
 	if (istype(spooker.possessed_thing, /obj/item/baton))
 		var/obj/item/baton/bat = spooker.possessed_thing
 		if (!bat.is_active)
+			if (istype(bat, /obj/item/baton/ntso))
+				var/obj/item/baton/ntso/NTbat = bat
+				if (NTbat.state != EXTENDO_BATON_CLOSED_AND_OFF) // we never want to close the baton, only extend it
+					return
 			spooker.self_interact() // (attempt to) turn that shit on
 		if (!(SEND_SIGNAL(bat, COMSIG_CELL_CHECK_CHARGE, bat.cost_normal) & CELL_SUFFICIENT_CHARGE)) // Not enough charge for a hit
 			spooker.set_a_intent(INTENT_HARM) // harmbaton
