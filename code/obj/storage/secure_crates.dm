@@ -177,7 +177,7 @@
 		desc = "Warning: Contains live monkeys!"
 		req_access = list(access_medical_lockers, access_tox_storage)
 
-/obj/storage/secure/crate/ghost
+/obj/storage/secure/crate/ghost // To help fight that not-so-friendly Casper
 	name = "Spiritual-security crate"
 	desc = "Contains gear to help fight the less-than physical"
 	icon_state = "weaponcrate"

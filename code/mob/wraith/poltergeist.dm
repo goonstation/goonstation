@@ -132,9 +132,9 @@
 		if (src.density)
 			src.visible_message(pick("<span class='alert'>[src] vanishes!</span>", "<span class='alert'>The poltergeist dissolves into shadow!</span>"), pick("<span class='notice'>The ectoplasm around you dissipates!</span>", "<span class='notice'>You fade into the aether!</span>"))
 			src.set_density(0)
-			APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_GHOST)
+			APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_SPOOKY)
 			src.icon_state = "poltergeist"
-			src.see_invisible = INVIS_GHOST
+			src.see_invisible = INVIS_SPOOKY
 		update_body()
 
 	Move(var/turf/NewLoc, direct)
