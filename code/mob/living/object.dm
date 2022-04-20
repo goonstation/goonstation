@@ -402,8 +402,10 @@
 			spooker.self_interact() // (attempt to) turn that shit on
 		if (!(SEND_SIGNAL(bat, COMSIG_CELL_CHECK_CHARGE, bat.cost_normal) & CELL_SUFFICIENT_CHARGE)) // Not enough charge for a hit
 			spooker.set_a_intent(INTENT_HARM) // harmbaton
+			bat.flipped = TRUE
 		else
 			spooker.set_a_intent(INTENT_DISARM) // have charge, baton normally
+			bat.flipped = FALSE
 	else if (istype(spooker.possessed_thing, /obj/item/sword))
 		var/obj/item/sword/saber = spooker.possessed_thing
 		if (!saber.active)
