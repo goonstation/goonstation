@@ -365,7 +365,7 @@
 	// see if we can find someone
 	var/mob/mobtarget = holder.target
 	ENSURE_TYPE(mobtarget)
-	if (!mobtarget || isalive(mobtarget))
+	if (!mobtarget || !isalive(mobtarget))
 		var/list/possible = get_targets()
 		if (length(possible))
 			holder.target = pick(possible)
