@@ -360,7 +360,7 @@
 /datum/aiTask/timed/targeted/living_object/evaluate() //always attack if we can see a person
 	return length(get_targets()) ? 999 : 0
 
-/datum/aiTask/timed/targeted/living_object/on_tick() //TODO make sure we don't keep beating dead dudes
+/datum/aiTask/timed/targeted/living_object/on_tick()
 	. = ..()
 	// see if we can find someone
 	var/mob/mobtarget = holder.target
@@ -405,9 +405,11 @@
 		if (!(SEND_SIGNAL(bat, COMSIG_CELL_CHECK_CHARGE, bat.cost_normal) & CELL_SUFFICIENT_CHARGE)) // Not enough charge for a hit
 			spooker.set_a_intent(INTENT_HARM) // harmbaton
 			bat.flipped = TRUE
+			bat.UpdateIcon()
 		else
 			spooker.set_a_intent(INTENT_DISARM) // have charge, baton normally
 			bat.flipped = FALSE
+			bat.UpdateIcon()
 	else if (istype(spooker.possessed_thing, /obj/item/sword))
 		var/obj/item/sword/saber = spooker.possessed_thing
 		if (!saber.active)
