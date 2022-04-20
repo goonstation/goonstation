@@ -64,6 +64,8 @@
 		qdel(tank)
 	for (var/obj/tank as anything in inserted_pl)
 		qdel(tank)
+	inserted_o2 = null
+	inserted_pl = null
 	..()
 
 /obj/machinery/dispenser/attack_ai(mob/user as mob)
