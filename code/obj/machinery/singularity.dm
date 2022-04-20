@@ -879,6 +879,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	if(user.get_burn_damage() >= 500) //This person has way too much BURN, they've probably been shocked a lot! Let's destroy them!
 		user.visible_message("<span style=\"color:red;font-weight:bold;\">[user.name] was disintegrated by the [src.name]!</span>")
+		logTheThing("user", user, null, "was elecgibbed by [src] ([src.type]) at [log_loc(user)].")
 		user.elecgib()
 		return
 	else

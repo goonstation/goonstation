@@ -30,7 +30,7 @@
 		if (src.contents.len < src.maxitems)
 			user.u_equip(W)
 			W.set_loc(src)
-			W.dropped()
+			W.dropped(user)
 			boutput(user, "<span class='notice'>You put [W] in [src].</span>")
 			W.add_fingerprint(user)
 			if (src.contents.len == src.maxitems) boutput(user, "<span class='notice'>[src] is now full!</span>")

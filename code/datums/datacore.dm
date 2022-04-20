@@ -46,7 +46,7 @@
 		G["sex"] = "Male"
 
 	G["age"] ="[H.bioHolder.age]"
-	G["fingerprint"] = "[H.bioHolder.uid_hash]"
+	G["fingerprint"] = "[H.bioHolder.fingerprints]"
 	G["dna"] = H.bioHolder.Uid
 	G["p_stat"] = "Active"
 	G["m_stat"] = "Stable"

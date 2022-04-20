@@ -589,7 +589,9 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		elecflash(src, ., . * 2, TRUE)
 		for (var/mob/living/M in orange(. / 6 + 1, src.owner))
 			if (!isintangible(M))
-				arcFlash(src.owner, M, (40000 * (10 - get_dist(src.owner, M))) * (. + 2)) // need to adjust the damage on these a bit- probably bump the lower end, lower the top end idk
+				var/dist = get_dist(src.owner, M) + 1
+				// arcflash uses some fucked up thresholds so trust me on this one
+				arcFlash(src.owner, M, (40000 * (4 - (0.4 * dist * log(dist)))) * (15 * log(.) + 3))
 		for (var/obj/machinery/machine in orange(round(. / 6) + 1)) // machinery around you also zaps people, based on the amount of power in the grid
 			if (prob(. * 7))
 				var/mob/living/target

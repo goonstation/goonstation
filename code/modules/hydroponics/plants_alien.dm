@@ -80,6 +80,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 		else if(focus_level <= 6)
 			boutput(M, "<span style=\"color:red;font-size:3em\">Run.</span>")
 		else
+			logTheThing("combat", M, null, "was gibbed by [src] ([src.type]) at [log_loc(M)].")
 			if (M.organHolder)
 				var/obj/brain = M.organHolder.drop_organ("brain")
 				brain?.throw_at(get_edge_cheap(get_turf(M), pick(cardinal)), 16, 3)

@@ -120,10 +120,10 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	desc = "This voice-modulation device will dynamically disguise your voice to that of whoever is listed on your identification card, via incredibly complex algorithms. Discretely fits inside most masks, and can be removed with wirecutters."
 
 /datum/syndicate_buylist/generic/chamsuit
-	name = "Chameleon Jumpsuit"
-	item = /obj/item/clothing/under/chameleon
+	name = "Chameleon Outfit"
+	item = /obj/item/storage/backpack/chameleon
 	cost = 1
-	desc = "A jumpsuit made of advanced fibres that can change colour to suit the needs of the wearer. Do not expose to electromagnetic interference."
+	desc = "A full ensemble of clothing made of advanced fibres that can change colour to suit the needs of the wearer. Comes in a backpack that itelf can be disguised in the same manner. Do not expose to electromagnetic interference."
 
 /datum/syndicate_buylist/generic/syndicard
 	name = "Agent Card"
@@ -649,6 +649,8 @@ This is basically useless for anyone but miners.
 	cost = 6
 	desc = "These marvels of modern technology employ nanites and space science to draw energy from nearby cables to zap things. BZZZZT!"
 	not_in_crates = 1
+	job = list("Engineer", "Chief Engineer", "Mechanic")
+	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 
 /datum/syndicate_buylist/traitor/zappy_implant

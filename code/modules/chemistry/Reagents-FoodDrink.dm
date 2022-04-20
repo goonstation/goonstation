@@ -51,6 +51,7 @@ datum
 			thirst_value = 0.6
 			bladder_value = -0.2
 			viscosity = 0.3
+			var/list/flushed_reagents = list("capsaicin")
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M)
@@ -67,8 +68,7 @@ datum
 						M.HealDamage("All", 1 * mult, 1 * mult)
 						if(probmult(15))
 							boutput(H, "<span class='notice'>The milk comforts your [pick("boanes","bones","bonez","boens","bowns","beaunes","brones","bonse")]!</span>")
-				if (M.reagents.has_reagent("capsaicin"))
-					M.reagents.remove_reagent("capsaicin", 5 * mult)
+				flush(M,5 * mult, flushed_reagents)
 				..()
 				return
 
@@ -105,7 +105,7 @@ datum
 			fluid_g = 196
 			fluid_b = 248
 			transparency = 255
-			taste = "oily and sweet."
+			taste = "oily and sweet"
 			description = "Smells like blueberries and tastes worse."
 			reagent_state = LIQUID
 			thirst_value = 0.75
@@ -646,6 +646,7 @@ datum
 						H.visible_message("<span class='alert'><b>[H] explodes in a shower of gibs, hair and piracy!</b></span>","<span class='alert'><b>Oh god, too much hair!</b></span>")
 						new /obj/item/clothing/glasses/eyepatch(get_turf(H))
 						new /obj/item/clothing/mask/moustache(get_turf(H))
+						logTheThing("combat", src, null, "was gibbed by the reagent [name].")
 						H.gib()
 						return
 					if(H.bioHolder.mobAppearance.customization_first.id != "dreads" || H.bioHolder.mobAppearance.customization_second.id != "fullbeard")
@@ -1123,6 +1124,7 @@ datum
 								boutput(M, "<span class='alert'><b>IT BURNS!!!!</b></span>")
 								sleep(0.2 SECONDS)
 								M.visible_message("<span class='alert'>[M] is consumed in flames!</span>")
+								logTheThing("combat", M, null, "was fire-gibbed by the reagent [name].")
 								M.firegib()
 
 				..()
@@ -1184,9 +1186,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				for(var/reagent_id in M.reagents.reagent_list)
-					if(reagent_id != id)
-						M.reagents.remove_reagent(reagent_id, 8 * mult)
+				flush(M, 8 * mult)
 				if(M.health > 10)
 					M.take_toxin_damage(2 * mult)
 				if(probmult(20))
@@ -2386,6 +2386,7 @@ datum
 			addiction_prob2 = 1
 			addiction_min = 10
 			minimum_reaction_temperature = -INFINITY
+			var/list/flushed_reagents = list("toxin","toxic_slurry")
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				if (exposed_temperature <= T0C + 7)
@@ -2399,10 +2400,7 @@ datum
 					description = initial(description)
 
 			on_mob_life(var/mob/M, var/mult = 1)
-				if (holder.has_reagent("toxin")) //Tea is good for you!!
-					holder.remove_reagent("toxin", 1 * mult)
-				if (holder.has_reagent("toxic_slurry"))
-					holder.remove_reagent("toxic_slurry", 1 * mult)
+				flush(M, 1 * mult, flushed_reagents)//Tea is good for you!
 				..()
 				return
 
@@ -3732,7 +3730,7 @@ datum
 			fluid_g = 110
 			fluid_b = 41
 			transparency = 200
-			taste = "bittersweet."
+			taste = "bittersweet"
 			description = "A mixture of half lemonade and half coffee."
 			reagent_state = LIQUID
 			thirst_value = 0.75
@@ -4019,6 +4017,13 @@ datum
 						O.visible_message("<span class='alert'>The [O] fails to muster up the effort to become delicious!</span>")
 					return
 				else
+					if(isitem(O))
+						var/obj/item/I = O
+						if(I.amount > 1)
+							var/obj/item/split_item = I.split_stack(1)
+							split_item.set_loc(get_turf(I))
+							O = split_item
+
 					O.setMaterial(getMaterial("pizza"))
 
 		fooddrink/friedessence
@@ -4076,6 +4081,7 @@ datum
 								boutput(M, "<span class='alert'><b>IT BURNS!!!!</b></span>")
 								sleep(0.2 SECONDS)
 								M.visible_message("<span class='alert'>[M] is consumed in flames!</span>")
+								logTheThing("combat", M, null, "was fire-gibbed by the reagent [name].")
 								M.firegib()
 				..()
 

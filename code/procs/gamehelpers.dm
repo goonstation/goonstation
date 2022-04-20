@@ -610,6 +610,7 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","a
 	for (var/turf/S in turfs_src)
 		var/turf/T = locate(S.x - src_min_x + trg_min_x, S.y - src_min_y + trg_min_y, trg_z)
 		for (var/atom/movable/AM as anything in S)
+			if (istype(AM, /obj/effects/precipitation)) continue
 			if (istype(AM, /obj/forcefield) || istype(AM, /obj/overlay/tile_effect)) continue
 			if (!ignore_fluid && istype(AM, /obj/fluid)) continue
 			if (istype(AM, /obj/decal/tile_edge) && istype(S, turf_to_skip)) continue

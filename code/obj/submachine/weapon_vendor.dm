@@ -192,7 +192,7 @@
 		materiel_stock += new/datum/materiel/utility/rpg_ammo
 		materiel_stock += new/datum/materiel/utility/donk
 		materiel_stock += new/datum/materiel/utility/sarin_grenade
-		materiel_stock += new/datum/materiel/utility/noslip_boots
+		//materiel_stock += new/datum/materiel/utility/noslip_boots
 		materiel_stock += new/datum/materiel/utility/bomb_decoy
 		materiel_stock += new/datum/materiel/utility/comtac
 		materiel_stock += new/datum/materiel/utility/beartraps
@@ -320,9 +320,9 @@
 	description = "A spare (200u) power cell. Fits in standard issue energy weapons."
 
 /datum/materiel/ammo/self_charging
-	name = "Distruptor Power Cell"
+	name = "Disruptor Power Cell"
 	path = /obj/item/ammo/power_cell/self_charging/disruptor
-	description = "A small(100u) self-charging power cell repurposed from a decommissioned distruptor blaster."
+	description = "A small(100u) self-charging power cell repurposed from a decommissioned disruptor blaster."
 
 /datum/materiel/assistant/basic
 	name = "Assistant"

@@ -943,6 +943,10 @@
 	stamina_crit_chance = 15
 	mats = list("wood" = 8)
 
+	attack(mob/M, mob/user, def_zone, is_special)
+		. = ..()
+		attack_twitch(user, 3, 2)
+
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)

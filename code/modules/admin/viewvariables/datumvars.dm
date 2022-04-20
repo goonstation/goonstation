@@ -360,7 +360,10 @@
 		usr << browse_rsc(I, rname)
 		html += "\[[name]\]</th><td>(<span class='value'>[value]</span>) <img class=icon src=\"[rname]\">"
 		#else
-		html += "\[[name]\]</th><td>/icon (<em class='value'>[value]</em>)"
+		if(istype(value, /icon))
+			html += "\[[name]\]</th><td>/icon (<em class='value'><a href='byond://?src=\ref[src];Download=\ref[value]'>[value]</a></em>)"
+		else
+			html += "\[[name]\]</th><td>/icon (<em class='value'>[value]</em>)"
 		#endif
 
 /*	else if (istype(value, /image))
@@ -424,7 +427,18 @@
 		html += "\[[name]\]</th><td><em class='value'>[html_encode("[value]")]</em>"
 
 	if(name == "particles")
-		html += " <a href='byond://?src=\ref[src];Particool=\ref[fullvar]' style='font-size:0.65em;'>particool</b></a>"
+		html += " <a href='byond://?src=\ref[src];Particool=\ref[fullvar]' style='font-size:0.65em;'>particool</a>"
+
+	if(name == "filters")
+		html += " <a href='byond://?src=\ref[src];Filterrific=\ref[fullvar]' style='font-size:0.65em;'>filterrific</a>"
+
+	if(istype(value, /datum/weakref))
+		var/datum/weakref/weakref = value
+		var/datum/deref = weakref.deref()
+		if(isnull(deref))
+			html += " <span style='font-size:0.65em;'>INVALID</span>"
+		else
+			html += " <a href='byond://?src=\ref[src];Vars=\ref[deref]' style='font-size:0.65em;'>\ref[deref]</a>"
 
 	html += "</td></tr>"
 
@@ -550,6 +564,23 @@
 			src.holder.particool.ui_interact(mob)
 		else
 			audit(AUDIT_ACCESS_DENIED, "tried to open particool on something all rude-like.")
+		return
+	if (href_list["Filterrific"])
+		USR_ADMIN_ONLY
+		if(holder && src.holder.level >= LEVEL_PA)
+			var/datum/D = locate(href_list["Filterrific"])
+			src.holder.filteriffic = new /datum/filter_editor(D)
+			src.holder.filteriffic.ui_interact(mob)
+		else
+			audit(AUDIT_ACCESS_DENIED, "tried to open filterrific on something all rude-like.")
+		return
+	if (href_list["Download"])
+		USR_ADMIN_ONLY
+		if(holder && src.holder.level >= LEVEL_PA)
+			var/datum/D = locate(href_list["Download"])
+			src << ftp(D)
+		else
+			audit(AUDIT_ACCESS_DENIED, "tried to download a var of something all rude-like.")
 		return
 	if (href_list["Delete"])
 		USR_ADMIN_ONLY

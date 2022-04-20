@@ -7097,9 +7097,7 @@
 	pixel_x = 26;
 	pixel_y = 1
 	},
-/turf/simulated/floor/greenblack{
-	dir = 4
-	},
+/turf/simulated/floor/delivery,
 /area/station/crew_quarters/quartersA)
 "aqF" = (
 /obj/machinery/light/incandescent/warm,
@@ -7837,9 +7835,7 @@
 	dir = 5;
 	icon_state = "line1"
 	},
-/turf/simulated/floor/bluewhite/corner{
-	dir = 4
-	},
+/turf/simulated/floor/delivery/white,
 /area/station/medical/medbay)
 "ast" = (
 /obj/disposalpipe/segment/mail,
@@ -8371,9 +8367,8 @@
 	pixel_x = -23;
 	pixel_y = 8
 	},
-/turf/simulated/floor/bluewhite{
-	dir = 8
-	},
+/obj/machinery/navbeacon/mule/medbay_north,
+/turf/simulated/floor/bot/white,
 /area/station/medical/medbay)
 "atJ" = (
 /obj/disposalpipe/segment/mail,
@@ -10127,7 +10122,8 @@
 /obj/decal/tile_edge/line/purple{
 	icon_state = "line1"
 	},
-/turf/simulated/floor/purpleblack,
+/obj/machinery/navbeacon/mule/research_north/west,
+/turf/simulated/floor/bot,
 /area/station/science/lobby)
 "axN" = (
 /obj/disposalpipe/segment/mail,
@@ -23239,9 +23235,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/turf/simulated/floor/darkblue{
-	dir = 10
-	},
+/turf/simulated/floor/delivery,
 /area/station/crew_quarters/bar)
 "bhK" = (
 /obj/disposalpipe/segment/mail{
@@ -23251,9 +23245,8 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/turf/simulated/floor/darkblue{
-	dir = 10
-	},
+/obj/machinery/navbeacon/mule/cafeteria_north/west,
+/turf/simulated/floor/bot,
 /area/station/crew_quarters/bar)
 "bhM" = (
 /obj/machinery/vending/fortune,
@@ -23850,11 +23843,9 @@
 	},
 /area/station/hallway/primary/east)
 "bjw" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor,
-/area/station/engine/engineering)
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/delivery,
+/area/station/chapel/sanctuary)
 "bjx" = (
 /obj/decal/poster/wallsign/teaparty{
 	desc = "Pre-eliminary signing up for Nanotrasen's newest military vessel NSS Manta has now begun. Reach out to your head of personnel or a local Nanotrasen recruiting officer to find out more about new job oppurtunities aboard NSS Manta!  ... Hold on just a minute, aren't you already there?";
@@ -27024,7 +27015,7 @@
 	icon_state = "2-8"
 	},
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor/delivery,
 /area/station/hangar/main)
 "bru" = (
 /obj/machinery/disposal,
@@ -27320,7 +27311,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor,
+/obj/machinery/navbeacon/mule/podbay_north,
+/turf/simulated/floor/bot,
 /area/station/hangar/main)
 "bsg" = (
 /turf/simulated/wall/auto/supernorn,
@@ -27606,7 +27598,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/delivery,
 /area/station/engine/storage)
 "bsX" = (
 /obj/item/raw_material/uqill,
@@ -27914,7 +27906,8 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/turf/simulated/floor,
+/obj/machinery/navbeacon/mule/engineering_north,
+/turf/simulated/floor/bot,
 /area/station/engine/storage)
 "btF" = (
 /turf/simulated/floor,
@@ -32876,6 +32869,7 @@
 	pixel_x = -16;
 	pixel_y = 16
 	},
+/obj/machinery/navbeacon/mule/bridge_north/east,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fblue2"
@@ -36972,7 +36966,7 @@
 /area/station/quartermaster/office)
 "bQh" = (
 /obj/machinery/light/incandescent/harsh,
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/delivery/caution,
 /area/station/quartermaster/office)
 "bQi" = (
 /obj/decal/cleanable/dirt,
@@ -37101,7 +37095,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/delivery,
 /area/station/security/processing)
 "bQz" = (
 /obj/table/wood,
@@ -37570,7 +37564,8 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/turf/simulated/floor,
+/obj/machinery/navbeacon/mule/security_north,
+/turf/simulated/floor/bot,
 /area/station/security/processing)
 "bRD" = (
 /obj/disposalpipe/segment{
@@ -44855,6 +44850,12 @@
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
+"dkU" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/bot/mulebot/QM1,
+/obj/machinery/navbeacon/mule/QM1_north/west,
+/turf/simulated/floor/bot,
+/area/station/quartermaster/office)
 "dlH" = (
 /obj/submachine/chef_oven{
 	dir = 4
@@ -45057,6 +45058,13 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor,
 /area/station/ranch)
+"ezm" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/navbeacon/mule/crewA_north/east,
+/turf/simulated/floor/bot,
+/area/station/crew_quarters/quartersA)
 "ezU" = (
 /turf/simulated/wall/false_wall,
 /area/station/crew_quarters/barber_shop)
@@ -45102,6 +45110,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment/horizontal,
+/obj/machinery/navbeacon/mule/ranch_north/east,
 /turf/simulated/floor/grasstodirt{
 	icon_state = "dirt";
 	name = "not grass"
@@ -45188,6 +45197,15 @@
 /obj/machinery/lawrack,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
+"fev" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/navbeacon/mule/catering_north/east,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/baroffice)
 "fhb" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -46586,6 +46604,9 @@
 /obj/machinery/light/incandescent/greenish,
 /turf/simulated/floor,
 /area/station/hangar/sec)
+"nKn" = (
+/turf/simulated/floor/delivery,
+/area/station/bridge)
 "nMJ" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -46966,6 +46987,9 @@
 /obj/storage/secure/crate/eng/interdictor,
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
+"qpP" = (
+/turf/simulated/floor/delivery,
+/area/station/hallway/secondary/exit)
 "qqR" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -47005,6 +47029,10 @@
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
+"qxx" = (
+/obj/machinery/navbeacon/mule/QM2_north/west,
+/turf/simulated/floor/bot,
+/area/station/quartermaster/office)
 "qBd" = (
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/security_horizontal,
@@ -47129,6 +47157,10 @@
 	},
 /turf/simulated/floor/yellow/side,
 /area/station/crew_quarters/info)
+"riE" = (
+/obj/machinery/navbeacon/mule/hydroponics_north,
+/turf/simulated/floor/grass,
+/area/station/hydroponics/bay)
 "rqc" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -47214,6 +47246,10 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
+"rLm" = (
+/obj/machinery/navbeacon/mule/chapel_north/south,
+/turf/simulated/floor/bot,
+/area/station/chapel/sanctuary)
 "rNm" = (
 /obj/storage/cart/forensic,
 /obj/item/storage/box/evidence,
@@ -47386,6 +47422,12 @@
 	},
 /turf/simulated/floor,
 /area/station/security/checkpoint/sec_foyer)
+"tDJ" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/engine/engineering)
 "tDZ" = (
 /obj/cable{
 	d1 = 4;
@@ -47537,6 +47579,10 @@
 /obj/machinery/drainage/big,
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/inner/central)
+"uwd" = (
+/obj/machinery/navbeacon/mule/hallway_escape_north,
+/turf/simulated/floor/bot,
+/area/station/hallway/secondary/exit)
 "uyg" = (
 /obj/machinery/firealarm{
 	pixel_x = 1;
@@ -47614,6 +47660,12 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
+"vcx" = (
+/obj/decal/tile_edge/line/purple{
+	icon_state = "line1"
+	},
+/turf/simulated/floor/delivery,
+/area/station/science/lobby)
 "vcK" = (
 /obj/item/furniture_parts/office_chair,
 /obj/item/furniture_parts/office_chair/green,
@@ -75975,7 +76027,7 @@ aOS
 aOS
 aPZ
 aPU
-aQC
+fev
 bfC
 bgg
 bha
@@ -79041,7 +79093,7 @@ bQi
 bKj
 bKj
 bPh
-bQi
+dkU
 bJA
 bSn
 bTm
@@ -79343,7 +79395,7 @@ bLL
 bMS
 bKj
 bMS
-bKj
+bMR
 bJA
 bSo
 cfT
@@ -79645,7 +79697,7 @@ bLM
 bMS
 bKj
 bMS
-bPh
+qxx
 bJA
 aNT
 bTo
@@ -79897,7 +79949,7 @@ aKE
 ubH
 bgj
 aMf
-aMf
+riE
 aNJ
 aeW
 bhw
@@ -80170,7 +80222,7 @@ amD
 amD
 aot
 apn
-amC
+ezm
 eSt
 atf
 auv
@@ -85609,8 +85661,8 @@ amR
 aqN
 asa
 amX
-anO
-aoB
+rLm
+bjw
 ahY
 ayd
 azt
@@ -95036,7 +95088,7 @@ bBb
 bCp
 bDE
 bts
-bFE
+nKn
 buV
 bHs
 bHU
@@ -105845,7 +105897,7 @@ asS
 aua
 acu
 awH
-axK
+vcx
 ayO
 azX
 aBb
@@ -106785,9 +106837,9 @@ avZ
 aSL
 bgM
 biK
-bjw
+tDJ
 aer
-bjw
+tDJ
 cgA
 afk
 blI
@@ -109533,8 +109585,8 @@ byY
 byY
 byY
 byZ
-byY
-byY
+qpP
+uwd
 bIy
 bJv
 bKe

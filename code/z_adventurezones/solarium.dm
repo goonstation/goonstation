@@ -59,6 +59,7 @@ var/global/the_sun = null
 					SPAWN(1 SECOND)
 						user.visible_message("<span class='alert'><b>[user]</b> burns away into ash! It's almost as though being that close to a star wasn't a great idea!</span>",\
 						"<span class='alert'><b>You burn away into ash! It's almost as though being that close to a star wasn't a great idea!</b></span>")
+						logTheThing("combat", user, null, "was firegibbed by [src] ([src.type]) at [log_loc(user)].")
 						user.firegib()
 				else
 					user.unlock_medal("Helios", 1)

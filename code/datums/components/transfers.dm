@@ -167,7 +167,7 @@
 		if(isitem(incoming))
 			var/obj/item/I = incoming
 			attacker.u_equip(incoming)
-			I.dropped()
+			I.dropped(attacker)
 		return TRUE
 
 #undef CONTAINER_CHOICE_DUMP

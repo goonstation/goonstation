@@ -135,7 +135,7 @@ var/list/clothingbooth_items = list()
 			weapon.amount = 0
 			user.visible_message("<span class='notice'>[user.name] inserts credits into the- Wait, was that a hand?</span>","<span class='notice'>A small goblin-like hand reaches out from a compartment within the clothing booth, takes your credits, and quickly pulls them back inside.</span>")
 			user.u_equip(weapon)
-			weapon.dropped()
+			weapon.dropped(user)
 			qdel(weapon)
 		else
 			boutput(user,"<span style=\"color:red\">It seems the clothing booth is currently occupied. Maybe it's better to just wait.</span>")

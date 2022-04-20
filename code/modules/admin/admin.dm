@@ -3576,7 +3576,7 @@ var/global/noir = 0
 						for(var/mob/living/carbon/human/H in mobs)
 							if(H.ckey)
 								if(H.bioHolder.Uid)
-									dat += "<tr><td>[H]</td><td>[H.bioHolder.uid_hash]</td></tr>"
+									dat += "<tr><td>[H]</td><td>[H.bioHolder.fingerprints]</td></tr>"
 								else if(!H.bioHolder.Uid)
 									dat += "<tr><td>[H]</td><td>H.bioHolder.Uid = null</td></tr>"
 							LAGCHECK(LAG_LOW)
@@ -3816,7 +3816,7 @@ var/global/noir = 0
 			if (src.level >= LEVEL_MOD)
 				var/newName = href_list["newName"]
 				if (set_station_name(usr, newName))
-					command_alert("The new station name is [station_name]", "Station Naming Ceremony Completion Detection Algorithm")
+					command_alert("The new station name is [station_name]", "Station Naming Ceremony Completion Detection Algorithm", alert_origin = ALERT_STATION)
 
 				usr.Browse(null, "window=stationnamechanger")
 				src.Game()

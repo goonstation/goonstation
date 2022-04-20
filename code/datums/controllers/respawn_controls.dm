@@ -190,6 +190,9 @@ var/datum/respawn_controls/respawn_controller
 		M.key = the_client.key
 		M.Login()
 		M.mind.purchased_bank_item = null
+		if(master.rp_alert)
+			M.client?.preferences.ShowChoices(M)
+			boutput(M, "<span class='alert'>Remember that you <B>must spawn as a <u>new character</u></B> and <B>have no memory of your past life!</B></span>")
 		master.unsubscribeRespawnee(src.ckey)
 
 /client/proc/respawn_via_controller()
