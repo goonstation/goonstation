@@ -141,6 +141,20 @@
 	desc = "A pair of goggles with a dumb name."
 	icon_state = "ectogoggles"
 
+/obj/item/clothing/glasses/regular/ecto/goggles/advanced
+	name = "advanced ectoplasmoleic imager"
+	desc = "A pair of goggles with a dumb name. They give off a very spooky vibe"
+	icon_state = "ectogoggles"
+
+	equipped(mob/user, slot)
+		. = ..()
+		APPLY_ATOM_PROPERTY(user, PROP_MOB_WRAITHVISION, src)
+
+	unequipped(mob/user)
+		. = ..()
+		REMOVE_ATOM_PROPERTY(user, PROP_MOB_WRAITHVISION, src)
+
+
 /obj/item/clothing/glasses/sunglasses
 	name = "sunglasses"
 	desc = "Strangely ancient technology used to help provide rudimentary eye cover. Enhanced shielding blocks many flashes."

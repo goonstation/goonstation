@@ -82,9 +82,9 @@
 		src.add_ability(/datum/blob_ability/set_color)
 		src.add_ability(/datum/blob_ability/tutorial)
 		src.add_ability(/datum/blob_ability/help)
-		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_SPOOKY)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_BLOBMIND)
 		src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
-		src.see_invisible = INVIS_SPOOKY
+		src.see_invisible = INVIS_BLOBMIND
 		src.see_in_dark = SEE_DARK_FULL
 		my_material = copyMaterial(getMaterial("blob"))
 		my_material.color = "#ffffff"
