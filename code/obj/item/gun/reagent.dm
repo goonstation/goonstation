@@ -195,7 +195,7 @@ obj/item/gun/reagent/syringe/love/plus // Sometimes you just need more love in y
 
 /obj/item/gun/reagent/ecto
 	name = "ectoblaster"
-	icon_state = "ecto0"
+	icon_state = "ghost"
 	ammo_reagents = list("ectoplasm")
 	force = 7.0
 	desc = "A weapon that launches concentrated ectoplasm. Harmless to humans, deadly to ghosts."
@@ -210,7 +210,7 @@ obj/item/gun/reagent/syringe/love/plus // Sometimes you just need more love in y
 		if(src.reagents)
 			var/ratio = min(1, src.reagents.total_volume / src.reagents.maximum_volume)
 			ratio = round(ratio, 0.25) * 100
-			src.icon_state = "ecto[ratio]"
+			src.icon_state = "ghost[ratio]"
 			return
 
 	attackby(obj/item/I as obj, mob/user as mob)

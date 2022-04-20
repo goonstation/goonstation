@@ -453,3 +453,6 @@
 		I.throw_at(target, 8, 2, bonus_throwforce=8)
 
 		playsound(src, 'sound/effects/singsuck.ogg', 40, 1)
+
+/obj/item/storage/spooky_ammo // Ghost gun ammo box
+	spawn_contents = list(/obj/item/reagent_containers/food/snacks/ectoplasm = 7)

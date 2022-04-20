@@ -176,3 +176,13 @@
 		name = "Lab Monkey Crate"
 		desc = "Warning: Contains live monkeys!"
 		req_access = list(access_medical_lockers, access_tox_storage)
+
+/obj/storage/secure/crate/ghost
+	name = "Spiritual-security crate"
+	desc = "Contains gear to help fight the less-than physical"
+	icon_state = "weaponcrate"
+	density = 1
+	icon_opened = "weaponcrateopen"
+	icon_closed = "weaponcrate"
+	req_access = list(access_securitylockers)
+	spawn_contents = list(/obj/item/gun/reagent/ecto, /obj/item/storage/spooky_ammo, /obj/item/clothing/glasses/regular/ecto/goggles/advanced)
