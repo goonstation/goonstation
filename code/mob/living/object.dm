@@ -68,8 +68,8 @@
 		src.flags = possessed_thing.flags
 		src.event_handler_flags = src.flags
 		//this is a mistake
-		src.bound_height = possesed_thing.bound_height
-		src.bound_width = possesed_thing.bound_width
+		src.bound_height = possessed_thing.bound_height
+		src.bound_width = possessed_thing.bound_width
 
 		//Relay these signals
 		RegisterSignal(src.possessed_thing, COMSIG_ATOM_POST_UPDATE_ICON, /atom/proc/UpdateIcon)
@@ -86,6 +86,11 @@
 		animate_levitate(src, -1, 20, 1)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX, "living_object", 100)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "living_object", 100)
+
+		remove_lifeprocess(/datum/lifeprocess/blindness)
+		remove_lifeprocess(/datum/lifeprocess/viruses)
+		remove_lifeprocess(/datum/lifeprocess/blood)
+		remove_lifeprocess(/datum/lifeprocess/breath)
 
 	mouse_drop(atom/over_object, src_location, over_location, over_control, params)
 		src.possessed_thing.MouseDrop(over_object, src_location, over_location, over_control, params)
@@ -304,6 +309,19 @@
 	proc/update_density()
 		src.density = src.possessed_thing.density
 
+/mob/living/object/ai_controlled
+	is_npc = 1
+	New()
+		..()
+		src.ai = new /datum/aiHolder/living_object(src)
+
+	death(var/gibbed)
+		qdel(src.ai)
+		src.ai = null
+		..()
+
+
+
 
 // Extremely simple AI for living objects.
 // Essentially:
@@ -312,28 +330,72 @@
 /datum/aiHolder/living_object
 	exclude_from_mobs_list = TRUE
 
+/datum/aiHolder/living_object/New()
+	..()
+	var/datum/aiTask/timed/targeted/living_object/attack = get_instance(/datum/aiTask/timed/targeted/living_object, list(src))
+	var/datum/aiTask/timed/wander/wander = get_instance(/datum/aiTask/timed/wander, list(src))
+	default_task = attack
+	attack.transition_task = attack
+	// wander.transition_task = attack
+
+/datum/aiHolder/living_object/was_harmed(obj/item/W, mob/M)
+	. = ..()
+	if (!src.target)
+		src.target = M
+	src.current_task = default_task
+
+
+// /datum/aiTask/prioritizer/living_object/New() // immediately do violence if someone is nearby, otherwise wander
+// 	src.transition_tasks += get_instance()
+// 	src.transition_tasks += get_instance(/datum/aiTask/timed/wander, list(holder, src))
 
 /datum/aiTask/timed/targeted/living_object
 	name = "attack"
 	minimum_task_ticks = 8
 	maximum_task_ticks = 20
+	frustration_threshold = 2
 
 /datum/aiTask/timed/targeted/living_object/get_targets()
-	var/list/humans = list() // Only care about humans since that's all wraiths eat
-	for (var/mob/living/carbon/human/H in View(src.target_range, src))
+	var/list/humans = list() // Only care about humans since that's all wraiths eat. TODO maybe borgs too?
+	for (var/mob/living/carbon/human/H in view(src.target_range, src.holder.owner))
 		if (isalive(H) && !H.nodamage)
 			humans += H
 	return humans
 
-/datum/aiTask/timed/targeted/living_object/evaluate()
-
+/datum/aiTask/timed/targeted/living_object/evaluate() //always attack if we can see a person
+	return length(get_targets()) ? 999 : 0
 
 /datum/aiTask/timed/targeted/living_object/on_tick() //TODO make sure we don't keep beating dead dudes
+	. = ..()
+	// see if we can find someone
+	if (!holder.target)
+		var/list/possible = get_targets()
+		if (length(possible))
+			holder.target = pick(possible)
+	if (!holder.target) // we didn't find anyone, wander around
+		holder.owner.move_dir = pick(alldirs)
+		holder.owner.process_move()
+		return
+	var/mob/living/object/spooker = holder.owner
+	process_special_intent()
+	spooker.hud.update_intent()
 	if (BOUNDS_DIST(holder.target, holder.owner))
 		holder.move_to(holder.target)
-	process_special_intent()
-	owncritter.hud.update_intent()
-	if ()
+	else
+		attack_twitch(src)
+		holder.owner.weapon_attack(holder.target, holder.owner.equipped(), TRUE)
+
+/datum/aiTask/timed/targeted/living_object/frustration_check()
+	.= 0
+	if (holder)
+		if (!IN_RANGE(holder.owner, holder.target, target_range))
+			return 1
+
+		if (ismob(holder.target))
+			var/mob/M = holder.target
+			. = !(holder.target && isalive(M))
+		else
+			. = !(holder.target)
 
 /// For items with special intent, bodypart, etc targeting requirements. Mostly for batons, but do tack on any other edge cases.
 /datum/aiTask/timed/targeted/living_object/proc/process_special_intent()
@@ -349,7 +411,7 @@
 	else if (istype(spooker.possessed_thing, /obj/item/sword))
 		var/obj/item/sword/saber = spooker.possessed_thing
 		if (!saber.active)
-			spooker.self_interact // turn that sword on
+			spooker.self_interact() // turn that sword on
 		spooker.set_a_intent(INTENT_HARM)
 	else if(istype(spooker.possessed_thing, /obj/item/gun))
 		var/obj/item/gun/pew = spooker.possessed_thing
@@ -361,3 +423,7 @@
 		spooker.set_a_intent(INTENT_HARM)
 
 	//TODO katana limb targeting, make guns fire at range?, c saber deflect (if possible i forget if arbitrary mobs can block)
+
+/datum/aiTask/timed/wander/living_object //shorter so we're more responsive
+	minimum_task_ticks = 1
+	maximum_task_ticks = 5
