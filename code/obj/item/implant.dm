@@ -281,6 +281,13 @@ THROWING DARTS
 			probably_my_record["h_imp"] = "[src.sensehealth()]"
 		..()
 
+	on_crit()
+		if(inafterlife(src.owner))
+			return
+		DEBUG_MESSAGE("[src] calling to report crit")
+		health_alert()
+		..()
+
 	on_death()
 		if(inafterlife(src.owner))
 			return
@@ -313,6 +320,9 @@ THROWING DARTS
 
 /obj/item/implant/health/security
 	name = "health implant - security issue"
+
+	on_crit()
+		return
 
 	New()
 		mailgroups.Add(MGD_SECURITY)
