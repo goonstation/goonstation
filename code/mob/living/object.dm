@@ -344,11 +344,6 @@
 		src.target = M
 	src.current_task = default_task
 
-
-// /datum/aiTask/prioritizer/living_object/New() // immediately do violence if someone is nearby, otherwise wander
-// 	src.transition_tasks += get_instance()
-// 	src.transition_tasks += get_instance(/datum/aiTask/timed/wander, list(holder, src))
-
 /datum/aiTask/timed/targeted/living_object
 	name = "attack"
 	minimum_task_ticks = 8
@@ -368,11 +363,12 @@
 /datum/aiTask/timed/targeted/living_object/on_tick() //TODO make sure we don't keep beating dead dudes
 	. = ..()
 	// see if we can find someone
-	if (!holder.target)
+	if (!holder.target && isalive(holder.target))
 		var/list/possible = get_targets()
 		if (length(possible))
 			holder.target = pick(possible)
-	if (!holder.target) // we didn't find anyone, wander around
+	 // we didn't find anyone, wander around
+	if (!holder.target)
 		holder.owner.move_dir = pick(alldirs)
 		holder.owner.process_move()
 		return
