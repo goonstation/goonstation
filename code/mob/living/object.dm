@@ -363,7 +363,9 @@
 /datum/aiTask/timed/targeted/living_object/on_tick() //TODO make sure we don't keep beating dead dudes
 	. = ..()
 	// see if we can find someone
-	if (!holder.target && isalive(holder.target))
+	var/mob/mobtarget = holder.target
+	ENSURE_TYPE(mobtarget)
+	if (!mobtarget || isalive(mobtarget))
 		var/list/possible = get_targets()
 		if (length(possible))
 			holder.target = pick(possible)
