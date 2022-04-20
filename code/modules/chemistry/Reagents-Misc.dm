@@ -1023,6 +1023,8 @@ datum
 			transparency = 175
 			value = 3
 			viscosity = 0.4
+			var/reaction_temperature = T0C
+			minimum_reaction_temperature = -INFINITY
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
@@ -1050,10 +1052,17 @@ datum
 								step_rand(W)
 				..()
 
-			reaction_turf(var/turf/T, var/volume)
-				if (volume >= 10)
-					if (locate(/obj/item/reagent_containers/food/snacks/ectoplasm) in T) return
-					new /obj/item/reagent_containers/food/snacks/ectoplasm(T)
+			reaction_temperature(exposed_temperature, exposed_volume)
+				if (exposed_temperature <= T0C && volume >= 20)
+					if (holder.my_atom && holder.my_atom.is_open_container())
+						var/turf/location = get_turf(holder.my_atom)
+						for(var/mob/M in all_viewers(null, location))
+							boutput(M,"<span class='notice'>The ectoplasm congeals into a more solid form!</span>")
+							playsound(location, 'sound/misc/drinkfizz.ogg', 80, 1)
+						new /obj/item/reagent_containers/food/snacks/ectoplasm(location)
+						holder.del_reagent(src.id)
+
+
 
 		space_fungus
 			name = "space fungus"
