@@ -1,5 +1,9 @@
 
 (t)thu apr 21 22
+(u)Flaborized
+(p)8233
+(e)🗺🎨|mapping, sprites
+(*)Changed DNA scramblers. On first injection, it will randomize appearance like normal. On the second shot, it'll give the appearance of the person first injected by it, and become expended and unusable. It's also now instant when using it on other people.
 (u)Nexusuxen
 (p)6684
 (e)🗺🎨|mapping, sprites
