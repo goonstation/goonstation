@@ -145,7 +145,7 @@
 	attack_self(mob/user as mob)
 		..()
 		src.add_fingerprint(user)
-		if(use_new_interface == 1)
+		if(use_new_interface)
 			ui_interact(user)
 		else
 			src.play(user)
@@ -170,7 +170,7 @@
 
 	attack_hand(mob/user as mob)
 		src.add_fingerprint(user)
-		if(use_new_interface == 1)
+		if(use_new_interface)
 			ui_interact(user)
 		else
 			src.play(user)
