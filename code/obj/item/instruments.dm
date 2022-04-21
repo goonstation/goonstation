@@ -136,11 +136,10 @@
 		. = ..()
 
 	ui_status(mob/user, datum/ui_state/state)
-		if(!IN_RANGE(src, user, 1)){
+		. = ..()
+		if(. <= UI_CLOSE || !IN_RANGE(src, user, 1))
 			user.reset_keymap()
 			return UI_CLOSE
-		}
-		. = ..()
 
 
 	attack_self(mob/user as mob)
