@@ -61384,7 +61384,7 @@
 "dxK" = (
 /obj/table/wood/auto,
 /obj/item/device/detective_scanner,
-/obj/item/genetics_injector/dna_scrambler{
+/obj/item/dna_scrambler{
 	pixel_y = 14
 	},
 /turf/unsimulated/floor/carpet/grime,
