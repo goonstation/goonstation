@@ -2,8 +2,8 @@
 #define WASH "w"
 #define DRY "d"
 #define POST 1
-#define cycle_time_mob_inside 5
-#define cycle_time 10
+#define CYCLE_TIME_MOB_INSIDE 5
+#define CYCLE_TIME 10
 
 /obj/submachine/laundry_machine
 	name = "laundry machine"
@@ -17,7 +17,7 @@
 	var/open = 0
 	var/cycle = PRE
 	var/cycle_current = 0
-	var/cycle_max = cycle_time
+	var/cycle_max = CYCLE_TIME
 	var/mob/occupant = null
 	var/image/image_door = null
 	var/image/image_light = null
@@ -71,7 +71,7 @@
 					C.UpdateName()
 				I.clean_forensic()
 			if (src.occupant)
-				H?.sims.affectMotive("Hygiene", 100)
+				H.sims?.affectMotive("Hygiene", 100)
 			src.cycle = DRY
 			src.cycle_current = 0
 			src.visible_message("[src] lets out a beep and hums as it switches to its drying cycle.")
@@ -97,7 +97,7 @@
 				src.cycle = PRE
 				src.visible_message("[src]'s door flings open and [H] flops on the ground, squeaky clean.")
 			src.occupant = null
-			src.cycle_max = cycle_time
+			src.cycle_max = CYCLE_TIME
 			src.on = 0
 			src.UpdateIcon()
 			src.generate_html()
@@ -199,7 +199,7 @@
 			var/mob/M = W.affecting
 			src.occupant = M
 			src.update_icon()
-			cycle_max = cycle_time_mob_inside
+			cycle_max = CYCLE_TIME_MOB_INSIDE
 			if (!processing_items.Find(src))
 				processing_items.Add(src)
 			var/mob/living/L = user
