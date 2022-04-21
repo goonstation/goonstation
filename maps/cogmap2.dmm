@@ -40928,6 +40928,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
+/obj/storage/secure/crate/ghost/armory,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "bMx" = (
