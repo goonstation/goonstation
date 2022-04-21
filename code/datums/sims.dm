@@ -515,7 +515,7 @@
 #ifdef RP_MODE
 	var/provide_plumbobs = 0
 #else
-	var/provide_plumbobs = 1
+	var/provide_plumbobs = 0
 #endif
 
 	New()
@@ -659,6 +659,11 @@ var/global/datum/simsControl/simsController = new()
 			//addMotive(/datum/simsMotive/bladder)
 			//addMotive(/datum/simsMotive/energy)
 			//addMotive(/datum/simsMotive/sanity)
+
+	classic
+		start_y = 3
+		make_motives()
+			addMotive(/datum/simsMotive/hunger)
 
 	New(var/mob/living/L)
 		..()

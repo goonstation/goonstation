@@ -192,7 +192,7 @@
 #ifdef RP_MODE
 		sims = new /datum/simsHolder/rp(src)
 #else
-		sims = new /datum/simsHolder/human(src)
+		sims = new /datum/simsHolder/classic(src)
 #endif
 
 	health_mon = image('icons/effects/healthgoggles.dmi',src,"100",EFFECTS_LAYER_UNDER_4)

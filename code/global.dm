@@ -377,7 +377,7 @@ var/global
 #ifdef RP_MODE
 	global_sims_mode = 1 // SET THIS TO 0 TO DISABLE SIMS MODE
 #else
-	global_sims_mode = 0 // SET THIS TO 0 TO DISABLE SIMS MODE
+	global_sims_mode = 1 // SET THIS TO 0 TO DISABLE SIMS MODE
 #endif
 
 	narrator_mode = 0
