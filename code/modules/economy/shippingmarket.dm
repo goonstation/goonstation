@@ -419,6 +419,7 @@
 					pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_SALES), "sender"="00000000", "message"="[returnmsg]")
 					pdaSignal.transmission_method = TRANSMISSION_RADIO
 					radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
+					return
 			if(req_contracts.Find(contract_to_clear))
 				req_contracts -= contract_to_clear
 				complete_orders += contract_to_clear

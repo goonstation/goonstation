@@ -93,7 +93,7 @@
 			src.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>")
 			user.u_equip(W)
 			W.set_loc(src)
-			W.dropped()
+			W.dropped(user)
 			src.cooktime = 0
 			src.target_item = W
 			src.icon_state = "plater1"

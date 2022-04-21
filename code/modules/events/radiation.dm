@@ -2,6 +2,7 @@
 	name = "Radiation Storm"
 	centcom_headline = "Radioactive Anomaly"
 	centcom_message = {"Radioactive anomalies have been detected on the station. Evacuate any areas containing abnormal green or blue energy fields. Medical personnel are advised to prepare potassium iodide and anti-toxin treatments, and remain on standby to treat cases of irradiation."}
+	centcom_origin = ALERT_WEATHER
 	var/min_pulses_per_event = 30
 	var/max_pulses_per_event = 100
 	var/min_delay_between_pulses = 2
@@ -138,6 +139,7 @@
 	name = "Radiation Wave"
 	centcom_headline = "Radiation Wave"
 	centcom_message = "A large wave of radiation is approaching the station. Personnel should use caution when traversing the station and seek medical attention if they experience any side effects from the wave."
+	centcom_origin = ALERT_WEATHER
 
 	event_effect(var/source)
 		..()

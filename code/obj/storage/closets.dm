@@ -4,8 +4,12 @@
 	soundproofing = 3
 	can_flip_bust = 1
 	p_class = 3
+	open_sound = 'sound/misc/locker_open.ogg'
+	close_sound = 'sound/misc/locker_close.ogg'
+	volume = 70
 	_max_health = LOCKER_HEALTH_WEAK
 	_health = LOCKER_HEALTH_WEAK
+	material_amt = 0.2
 
 	New()
 		. = ..()
@@ -154,6 +158,9 @@
 	icon_opened = "coffin-open"
 	layer = 2.5
 	icon_welded = "welded-coffin-4dirs"
+	open_sound = 'sound/misc/coffin_open.ogg'
+	close_sound = 'sound/misc/coffin_close.ogg'
+	volume = 70
 
 	wood
 		icon_closed = "woodcoffin"
@@ -467,6 +474,7 @@
 
 		src.UpdateIcon()
 		playsound(src.loc, "sound/effects/cargodoor.ogg", 15, 1, -3)
+		SEND_SIGNAL(src, COMSIG_STORAGE_CLOSED)
 		return 1
 
 	attackby(obj/item/W as obj, mob/user as mob)

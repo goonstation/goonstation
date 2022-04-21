@@ -1667,6 +1667,13 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/biscuit
 
+/datum/cookingrecipe/dog_biscuit
+	item1 = /obj/item/reagent_containers/food/snacks/granola_bar
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meatpaste
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/peanutbutter
+	cookbonus = 6
+	output = /obj/item/reagent_containers/food/snacks/cookie/dog
+
 /datum/cookingrecipe/hardtack
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
 	item2 = /obj/item/reagent_containers/food/snacks/condiment/ironfilings

@@ -4,6 +4,9 @@
 	soundproofing = 5
 	can_flip_bust = 1
 	p_class = 3
+	open_sound = 'sound/misc/locker_open.ogg'
+	close_sound = 'sound/misc/locker_close.ogg'
+	volume = 70
 	_max_health = LOCKER_HEALTH_AVERAGE
 	_health = LOCKER_HEALTH_AVERAGE
 	/// Anchored if TRUE
@@ -42,20 +45,25 @@
 			..()
 		else if (user.a_intent == INTENT_HELP)
 			..()
-		else if ((I.force > 0) && !reinforced)
-			var/damage
-			var/damage_text
-			if (I.force <= 10)
-				damage = round(I.force * 0.6)
-				damage_text = " It's not very effective."
-			else
-				damage = I.force
-			user.visible_message("<span class='alert'><b>[user]</b> hits [src] with [I]! [damage_text]</span>")
+		else if (I.force > 0)
 			user.lastattacked = src
-			attack_particle(user,src)
-			hit_twitch(src)
-			take_damage(clamp(damage, 1, 20), user, I, null)
-			playsound(src.loc, 'sound/impact_sounds/locker_hit.ogg', 90, 1)
+			if (src.reinforced)
+				boutput(user, "<span class='alert'>[src] is too reinforced to bash into!</span>")
+				attack_particle(user,src)
+				playsound(src.loc, 'sound/impact_sounds/locker_hit.ogg', 40, 1) //quiet, no hit twitch
+			else
+				var/damage
+				var/damage_text
+				user.visible_message("<span class='alert'><b>[user]</b> hits [src] with [I]! [damage_text]</span>")
+				if (I.force <= 10)
+					damage = round(I.force * 0.6)
+					damage_text = " It's not very effective."
+				else
+					damage = I.force
+				attack_particle(user,src)
+				hit_twitch(src)
+				take_damage(clamp(damage, 1, 20), user, I, null)
+				playsound(src.loc, 'sound/impact_sounds/locker_hit.ogg', 90, 1)
 		else
 			..()
 
@@ -844,6 +852,9 @@
 	icon_sparks = "fridge-sparks"
 	intact_frame = 1
 	weld_image_offset_X = 3
+	open_sound = 'sound/misc/fridge_open.ogg'
+	close_sound = 'sound/misc/fridge_close.ogg'
+	volume = 80
 
 /obj/storage/secure/closet/fridge/opened
 	New()

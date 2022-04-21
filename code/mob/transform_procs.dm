@@ -148,6 +148,7 @@
 	O.verbs += /mob/living/silicon/ai/proc/ai_colorchange
 	O.verbs += /mob/living/silicon/ai/proc/ai_station_announcement
 	O.verbs += /mob/living/silicon/ai/proc/view_messageLog
+	O.verbs += /mob/living/silicon/ai/verb/rename_self
 	O.job = "AI"
 
 	SPAWN(0)
