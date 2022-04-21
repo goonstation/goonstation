@@ -3,7 +3,6 @@
 	desc = "An incredibly high quality studio monitor with an uncomfortable number of high voltage stickers. Manufactured by Funk-Tek"
 	icon = 'icons/obj/loudspeakers.dmi'
 	icon_state = "amp_stack"
-	//inhand_image_icon = 'icons/mob/inhand/hand_cswords.dmi' // Gannets to make sweet inhand
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 
 	anchored = 0
@@ -45,7 +44,7 @@
 
 	speech_bubble()
 		UpdateOverlays(speech_bubble, "speech_bubble")
-		SPAWN_DBG(1.5 SECONDS)
+		SPAWN(1.5 SECONDS)
 			UpdateOverlays(null, "speech_bubble")
 
 	disposing()
@@ -116,7 +115,7 @@
 	afterattack(atom/target, mob/user, reach, params)
 		. = ..()
 		if(ismob(target) || iscritter(target))
-			if(actions.hasAction(usr,"rocking_out"))
+			if(actions.hasAction(user,"rocking_out"))
 				play_notes()
 			else
 				playsound(src, pick('sound/musical_instruments/Guitar_bonk1.ogg', 'sound/musical_instruments/Guitar_bonk2.ogg', 'sound/musical_instruments/Guitar_bonk3.ogg'), 50, 1, -1)
@@ -131,7 +130,7 @@
 			effect.play_notes()
 			for(var/obj/item/device/radio/nukie_studio_monitor/S in speakers)
 				S.play_song()
-			SPAWN_DBG(2 SECONDS)
+			SPAWN(2 SECONDS)
 				stop_notes()
 		else
 			strums = ( strums + 1 % 2000 )
@@ -162,6 +161,13 @@
 			src.overheated = 0
 			for(var/obj/ability_button/nukie_rocker/B as anything in ability_buttons)
 				B.UpdateOverlays(null, "rocked_out")
+
+/obj/item/breaching_hammer/rock_sledge/nanotrasen
+	name = "Marsyas electric guitar"
+	desc = "A high-tech Syndicate guitar, reverse engineered by Nanotrasen and given a blue paint job."
+	icon_state = "guitar_nt"
+	item_state = "guitar_nt"
+	is_syndicate = FALSE
 
 /obj/ability_button/nukie_rocker
 	name = "Nukie Rocker Ability - You shouldn't see this..."
@@ -211,11 +217,14 @@
 			var/mob/living/carbon/human/virtual/V = target
 			. = istype(V.ears, /obj/item/device/radio/headset/syndicate) || istype(V.head, /obj/item/clothing/head/helmet/space/syndicate)
 		else
-			. = istype(target.ears, /obj/item/device/radio/headset/syndicate)
+			if(is_syndicate)
+				. = istype(target.ears, /obj/item/device/radio/headset/syndicate)
+			else
+				. = istype(target.ears, /obj/item/device/radio/headset/command) //Nanotrasen guitar, Nanotrasen tunes
 
 	shred
 		name = "Shred"
-		desc = "Lightbreaker Effect"
+		desc = "Sound so shrill it shatters lights."
 		icon_state = "shred"
 		cooldown = 2 MINUTES
 
@@ -239,7 +248,7 @@
 
 	infrasound
 		name = "Infrasound"
-		desc = "Play something so deep it hurts."
+		desc = "Play something so deep it hurts.  Causes headaches for those nearby and nausea to those that can hear it."
 		icon_state = "infrasound"
 		cooldown = 45 SECONDS
 
@@ -261,7 +270,7 @@
 
 	ultrasound
 		name = "Ultrasound"
-		desc = "Play something so high it hurts."
+		desc = "Play something so high it hurts. Penetrate organs and stuns!"
 		icon_state = "ultrasound"
 		cooldown = 45 SECONDS
 
@@ -306,7 +315,7 @@
 
 	heal
 		name = "Chill Beats to Murder To"
-		desc = "Gentle healing effect that allows you to do more."
+		desc = "Gentle healing effect that improves your stamina."
 		icon_state = "chill_murder"
 		status_effect_ids = list("music_energized_big", "chill_murder")
 		sound_clip = "sound/musical_instruments/bard/lead2.ogg"
@@ -320,14 +329,14 @@
 
 	perseverance
 		name = "Perseverance"
-		desc = "Health Boost and Minor Stamina Regeneration"
+		desc = "Boosts health and improves stamina regeneration"
 		icon_state = "perseverance"
 		status_effect_ids = list("music_hp_up", "music_refreshed")
 		sound_clip = "sound/musical_instruments/bard/lead1.ogg"
 
 	epic_climax
 		name = "EPIC CLIMAX"
-		desc = "Play a sound that drives the time into a murder rage! Taxing physically and emotionally."
+		desc = "Play a sound that drives the team into a murder rage! Taxing physically and emotionally."
 		icon_state = "epic_climax"
 		status_effect_ids = list("music_hp_up_big", "epic_climax")
 		song_duration = 69 SECONDS
@@ -380,7 +389,7 @@
 		..()
 		icon_image.pixel_y += 8
 		icon_image.alpha = 200
-		if(get_dist(owner, instrument) > 1 || instrument == null || owner == null) //If the thing is out of range, interrupt the action. Also interrupt if the user or the item disappears.
+		if(BOUNDS_DIST(owner, instrument) > 0 || instrument == null || owner == null) //If the thing is out of range, interrupt the action. Also interrupt if the user or the item disappears.
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/M = owner
@@ -399,7 +408,7 @@
 	onDelete()
 		..()
 		if(istype(song, /obj/ability_button/nukie_rocker/epic_climax))
-			SPAWN_DBG(30 SECONDS)
+			SPAWN(30 SECONDS)
 				instrument.overheat(FALSE)
 
 	onEnd()
@@ -493,15 +502,15 @@
 		. = ..()
 		if(ismob(owner))
 			var/mob/M = owner
-			APPLY_MOB_PROPERTY(M, PROP_DISARM_RESIST, "focus_music", 10)
-			APPLY_MOB_PROPERTY(M, PROP_DISORIENT_RESIST_BODY, "focus_music", 10)
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_DISARM_RESIST, "focus_music", 10)
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_DISORIENT_RESIST_BODY, "focus_music", 10)
 
 	onRemove()
 		. = ..()
 		if(ismob(owner))
 			var/mob/M = owner
-			REMOVE_MOB_PROPERTY(M, PROP_DISARM_RESIST, "focus_music")
-			REMOVE_MOB_PROPERTY(M, PROP_DISORIENT_RESIST_BODY, "focus_music")
+			REMOVE_ATOM_PROPERTY(M, PROP_MOB_DISARM_RESIST, "focus_music")
+			REMOVE_ATOM_PROPERTY(M, PROP_MOB_DISORIENT_RESIST_BODY, "focus_music")
 
 	getTooltip()
 		. = "Your feel like you would be difficult to stop."
@@ -590,18 +599,20 @@
 		. = ..()
 		if(ismob(owner))
 			var/mob/M = owner
-			APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "stims", 100)
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "stims", 100)
 			M.add_stam_mod_max("stims", 100)
-			M.add_stun_resist_mod("stims", 100)
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST, "stims", 100)
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "stims", 100)
 
 	onRemove()
 		. = ..()
 		if(ismob(owner))
 			var/mob/M = owner
 			M.jitteriness = 110
-			REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "stims")
+			REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "stims")
 			M.remove_stam_mod_max("stims")
-			M.remove_stun_resist_mod("stims")
+			REMOVE_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST, "stims")
+			REMOVE_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "stims")
 
 	onUpdate(timePassed)
 		. = ..()

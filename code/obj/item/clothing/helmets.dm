@@ -7,6 +7,7 @@
 	item_state = "helmet"
 	desc = "Somewhat protects your head from being bashed in."
 	protective_temperature = 500
+	duration_remove = 5 SECONDS
 
 	setupProperties()
 		..()
@@ -116,29 +117,62 @@
 	desc = "Helps protect against vacuum. Comes in a unique, flashy style."
 
 /obj/item/clothing/head/helmet/space/custom
+
 	name = "bespoke space helmet"
-	desc = "Helps protect against vacuum, and is custom-made just for you!"
-	onMaterialChanged()
-		if(src.material)
-			if(material.hasProperty("thermal"))
-				var/prot = round((100 - material.getProperty("thermal")) / 2)
+	desc = "A custom built helmet with a fancy visor!"
+	icon_state = "spacemat"
+
+	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi' // inhand shit
+	item_state = "s_helmet"
+
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	var/datum/material/visr_material = null
+	var/image/fabrImg = null
+	var/image/visrImg = null
+
+	New()
+		..()
+
+		visrImg = SafeGetOverlayImage("visor", src.icon, "spacemat-vis") // prep the world icon_state for building, is made later
+		fabrImg = SafeGetOverlayImage("helmet", src.icon, "spacemat")
+
+	proc/setupVisorMat(var/datum/material/V)
+		visr_material = copyMaterial(V) // in 99% of all calls this is redundant but just in case
+		if (visr_material)
+			if (visr_material.hasProperty("thermal"))
+				var/prot = round((100 - visr_material.getProperty("thermal")) / 2)
 				setProperty("coldprot", 10+prot)
 				setProperty("heatprot", 1+round(prot/2))
 			else
 				setProperty("coldprot", 10)
 				setProperty("heatprot", 2)
 
-			if(material.hasProperty("permeable"))
-				var/prot = 100 - material.getProperty("permeable")
+			if (visr_material.hasProperty("permeable"))
+				var/prot = 100 - visr_material.getProperty("permeable")
 				setProperty("viralprot", prot)
 			else
 				setProperty("viralprot", 40)
 
-			if(material.hasProperty("density"))
-				var/prot = round(material.getProperty("density") / 20)
-				setProperty("meleeprot_head", 2+prot)
+			if (visr_material.hasProperty("density"))
+				var/prot = round(visr_material.getProperty("density") / 20)
+				setProperty("meleeprot_head", 2+ max(2, prot)) // even if soft visor, still decent helmet
 			else
-				setProperty("meleeprot_head", 2)
+				setProperty("meleeprot_head", 4) // always at least be as good as baseline item
+
+		// overlay stuff
+
+		fabrImg.color = src.material
+		UpdateOverlays(fabrImg, "helmet")
+
+		visrImg.color = visr_material.color
+		UpdateOverlays(visrImg, "visor")
+
+
+	UpdateName()
+		if (visr_material && src.material)
+			name = "[visr_material]-visored [src.material] helmet"
+		else if (visr_material)
+			name = " [src.material] helmet"
 
 // Sealab helmets
 
@@ -314,10 +348,10 @@
 					if (istype(H.head, /obj/item/clothing/head/helmet/space/syndicate/specialist/engineer)) //handling of the rest is done in life.dm
 						if (src.on)
 							H.vision.set_scan(1)
-							APPLY_MOB_PROPERTY(toggler, PROP_MESONVISION, src)
+							APPLY_ATOM_PROPERTY(toggler, PROP_MOB_MESONVISION, src)
 						else
 							H.vision.set_scan(0)
-							REMOVE_MOB_PROPERTY(toggler, PROP_MESONVISION, src)
+							REMOVE_ATOM_PROPERTY(toggler, PROP_MOB_MESONVISION, src)
 
 			equipped(var/mob/living/user, var/slot)
 				..()
@@ -325,14 +359,14 @@
 					return
 				if (slot == SLOT_HEAD && on)
 					user.vision.set_scan(1)
-					APPLY_MOB_PROPERTY(user, PROP_MESONVISION, src)
+					APPLY_ATOM_PROPERTY(user, PROP_MOB_MESONVISION, src)
 
 			unequipped(var/mob/living/user)
 				..()
 				if(!isliving(user))
 					return
 				user.vision.set_scan(0)
-				REMOVE_MOB_PROPERTY(user, PROP_MESONVISION, src)
+				REMOVE_ATOM_PROPERTY(user, PROP_MOB_MESONVISION, src)
 
 		medic
 			name = "specialist health monitor"
@@ -691,7 +725,7 @@
 		if (weeoo_in_progress)
 			return
 		weeoo_in_progress = 10
-		SPAWN_DBG(0)
+		SPAWN(0)
 			playsound(src.loc, "sound/machines/siren_police.ogg", 50, 1)
 			light.enable()
 			src.icon_state = "siren1"
@@ -719,7 +753,7 @@
 
 	dropped(mob/user)
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (src.loc != user)
 				light.attach(src)
 
@@ -822,7 +856,7 @@
 		src.set_loc(get_turf(user))
 		step_rand(src)
 		user.visible_message("<span class='alert'><b>[user] kicks the bucket!</b></span>")
-		user.death(0)
+		user.death(FALSE)
 
 
 /obj/item/clothing/head/helmet/bucket/hat
@@ -848,7 +882,7 @@
 		user.u_equip(src)
 		src.set_loc(get_turf(user))
 		user.visible_message("<span class='alert'><b>[user] kicks the bucket!</b></span>")
-		user.death(0)
+		user.death(FALSE)
 
 	red
 		name = "red bucket hat"

@@ -290,7 +290,7 @@ obj/machinery/atmospherics/mixer
 					target_pressure = 0
 
 		if (signal.data["tag"])
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				if (src) src.report_status()
 
 		src.UpdateIcon()

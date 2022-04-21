@@ -81,7 +81,7 @@
 
 	on_shipdeath(var/obj/machinery/vehicle/ship)
 		if (ship)
-			SPAWN_DBG(1 SECOND)	//idk so it doesn't get caught on big pods when they are still aorund...
+			SPAWN(1 SECOND)	//idk so it doesn't get caught on big pods when they are still aorund...
 				for (var/obj/O in src.contents)
 					O.set_loc(get_turf(ship))
 					O.throw_at(get_edge_target_turf(O, pick(alldirs)), rand(1,3), 3)
@@ -108,7 +108,7 @@
 
 		var/inrange = 0
 		for(var/turf/ST in src.ship.locs)
-			if (get_dist(T,ST) <= 1)
+			if (BOUNDS_DIST(T, ST) == 0)
 				inrange = 1
 				break
 		if (!inrange)
@@ -818,7 +818,7 @@
 		//B.remove_shipcrewmember_powers(ship.weapon_class)
 	for(var/obj/item/shipcomponent/SC in src)
 		SC.on_shipdeath()
-	SPAWN_DBG(0) //???? otherwise we runtime
+	SPAWN(0) //???? otherwise we runtime
 		qdel(ship)
 
 /obj/item/shipcomponent/secondary_system/crash/proc/crashtime(atom/A)

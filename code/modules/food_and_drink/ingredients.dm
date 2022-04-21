@@ -33,11 +33,25 @@
 		..()
 
 /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat
-	name = "-meat"
-	desc = "A slab of meat."
-	var/subjectname = ""
-	var/subjectjob = null
+	name = "human meat"
+	desc = "A slab of meat from a human."
+	var/subjectname = "Human"
+	var/subjectjob = "Human Being"
 	amount = 1
+
+	New(var/turf/newloc,var/mob/living/meatsource)
+		. = ..(newloc)
+		if(!meatsource)
+			return
+		src.subjectname = meatsource.real_name
+		src.subjectjob = "Stowaway"
+		if (meatsource?.mind?.assigned_role)
+			src.subjectjob = meatsource.mind.assigned_role
+		else if (meatsource?.ghost?.mind?.assigned_role)
+			src.subjectjob = meatsource.ghost.mind.assigned_role
+
+		src.name = src.subjectname + " meat"
+
 
 /obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat
 	name = "monkeymeat"

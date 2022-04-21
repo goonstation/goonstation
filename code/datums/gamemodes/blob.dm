@@ -26,7 +26,7 @@
 			num_players++
 
 	var/i = rand(-5, 0)
-	var/num_blobs = clamp(round((num_players + i) / 20), blobs_minimum, blobs_possible)
+	var/num_blobs = clamp(round((num_players + i) / 18), blobs_minimum, blobs_possible)
 
 	var/list/possible_blobs = get_possible_enemies(ROLE_BLOB, num_blobs)
 
@@ -59,7 +59,7 @@
 		if (istype(blob))
 			bestow_objective(blob,/datum/objective/specialist/blob)
 
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/newname = input(blob.current, "You are a Blob. Please choose a name for yourself, it will show in the form: <name> the Blob", "Name change") as text
 
 				if (newname)
@@ -69,7 +69,7 @@
 					blob.current.real_name = newname
 					blob.current.name = newname
 
-	SPAWN_DBG (rand(waittime_l, waittime_h))
+	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
 
 /datum/game_mode/blob/send_intercept()

@@ -40,7 +40,7 @@ steam.start() -- spawns the effect
 		src.location = get_turf(holder)
 		src.holder = null
 	for(var/i=0, i<src.number, i++)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if(holder)
 				src.location = get_turf(holder)
 			var/obj/effects/steam/steam = new /obj/effects/steam

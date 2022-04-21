@@ -183,7 +183,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (src.reagents)
 				if (prob(33))
 					src.reagents.add_reagent(pick("milk", "coffee", "VHFCS", "gravy", "fakecheese", "grease", "ethanol", "chickensoup", "vanilla", "cornsyrup", "chocolate"), 10)
@@ -222,7 +222,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (src.reagents)
 				if (prob(12))
 					src.reagents.add_reagent(pick("milk", "coffee", "VHFCS", "gravy", "fakecheese", "grease"), 10)
@@ -306,7 +306,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 		if (src.icon_random)
 			src.icon_state = "lpop-[rand(1,6)]"
 		else
-			SPAWN_DBG(0)
+			SPAWN(0)
 				src.UpdateIcon()
 
 	update_icon()
@@ -324,7 +324,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (src.icon_state == "lpop-")
 				src.icon_state = "lpop-[rand(1,6)]"
 			if (islist(src.flavors) && length(src.flavors))
@@ -397,6 +397,45 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 	New()
 		..()
 		reagents.add_reagent("juice_peach",5)
+
+/obj/item/kitchen/gummy_worms_bag
+	amount = 6
+	icon = 'icons/obj/foodNdrink/food_candy.dmi'
+	icon_state = "gummyw-full"
+	name = "bag of gummy worms"
+	desc = "A bag of sour gummy worms. Still a little wriggly."
+
+	attack_hand(mob/user as mob, unused, flag)
+		if (flag)
+			return ..()
+		if (user.r_hand == src || user.l_hand == src)
+			if(src.amount == 0)
+				boutput(user, "<span class='alert'>You're out of gummy worms. The world is a little bleaker.</span>")
+				return
+			else
+				var/obj/item/reagent_containers/food/snacks/candy/gummy_worm/B = new(user)
+				user.put_in_hand_or_drop(B)
+				src.amount--
+				if(src.amount == 0)
+					src.icon_state = "gummyw-empty"
+					src.name = "empty gummy worms bag"
+					src.desc = "A crumpled bag that was once full of sour gummy worms."
+		else
+			return ..()
+		return
+
+/obj/item/reagent_containers/food/snacks/candy/gummy_worm
+	name = "gummy worm"
+	desc = "A sour gummy worm sprinkled in sugar. Comes in several flavours."
+	icon_state = "gummyworm-1"
+	amount = 1
+	sugar_content = 5
+
+	New()
+		..()
+		src.icon_state = "gummyworm-[rand(1,3)]"
+		src.reagents.add_reagent(pick("juice_cherry", "juice_orange", "lemonade", "juice_strawberry", "juice_blueberry", "juice_apple", "juice_blueraspberry", "juice_watermelon", "juice_peach", "cocktail_citrus"), 5)
+		src.heal_amt = 1
 
 /obj/item/reagent_containers/food/snacks/candy/candyheart
 	name = "candy heart"

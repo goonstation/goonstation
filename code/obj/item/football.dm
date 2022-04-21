@@ -47,7 +47,7 @@
 	desc = "Sharp cleats made for playing football at a professional level. They must be expensive!"
 	icon_state = "cleats"
 	item_state = "bl_shoes"
-	kick_bonus = 4
+	kick_bonus = 6
 	step_sound = "step_plating"
 	step_priority = STEP_PRIORITY_LOW
 	item_function_flags = IMMUNE_TO_ACID
@@ -145,7 +145,7 @@
 				playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
 				if (istype(O, /obj/machinery/door) && O.density)
 					var/obj/machinery/door/D = O
-					SPAWN_DBG(0)
+					SPAWN(0)
 						D.try_force_open(src)
 					return
 				if (istype(O, /obj/structure/girder) || istype(O, /obj/foamedmetal))
@@ -267,7 +267,7 @@
 			var/mob/hitMob = hit_atom
 			if (ishuman(hitMob))
 				var/mob/living/carbon/human/user = usr
-				SPAWN_DBG( 0 )
+				SPAWN( 0 )
 					if (istype(user))
 						if (check_target_immunity(hitMob))
 							hitMob.visible_message("<span class='alert'>The [src] bounces off of [hit_atom]!</span>")

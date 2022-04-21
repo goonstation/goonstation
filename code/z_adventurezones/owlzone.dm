@@ -61,7 +61,7 @@ obj/item/coin/bombini
 
 	New()
 		..()
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			src.b = locate(/obj/machinery/shower/puzzle/part_two, orange(2,src))
 			src.c = locate(/obj/machinery/shower/puzzle/part_three, orange(2,src))
 			src.tub = locate(/obj/machinery/floorflusher/bathtub, orange(2,src))

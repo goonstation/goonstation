@@ -121,7 +121,7 @@ datum/shuttle_controller
 						var/eastBound = 1
 
 						for (var/atom/A as obj|mob in end_location)
-							SPAWN_DBG(0)
+							SPAWN(0)
 								A.ex_act(1)
 
 						end_location.color = null //Remove the colored shuttle!
@@ -145,10 +145,12 @@ datum/shuttle_controller
 									continue // skip ghosties
 								if (istype(AM, /obj/overlay/tile_effect))
 									continue
+								if (istype(AM, /obj/effects/precipitation))
+									continue
 								AM.set_loc(D)
 								// NOTE: Commenting this out to avoid recreating mass driver glitch
 								/*
-								SPAWN_DBG(0)
+								SPAWN(0)
 									AM.throw_at(E, 1, 1)
 									return
 								*/
@@ -235,7 +237,7 @@ datum/shuttle_controller
 								M.addOverlayComposition(/datum/overlayComposition/shuttle_warp)
 								if (!isturf(M.loc) || !isliving(M) || isintangible(M))
 									continue
-								SPAWN_DBG(1 DECI SECOND)
+								SPAWN(1 DECI SECOND)
 									var/bonus_stun = 0
 									if (ishuman(M))
 										var/mob/living/carbon/human/H = M
@@ -267,6 +269,12 @@ datum/shuttle_controller
 						for (var/turf/O in end_location)
 							if (istype(O, map_turf))
 								O.ReplaceWith(transit_turf, keep_old_material = 0, force=1)
+
+						if(station_repair.station_generator)
+							var/list/turf/turfs_to_fix = get_area_turfs(start_location)
+							if(length(turfs_to_fix))
+								station_repair.repair_turfs(turfs_to_fix)
+
 						DEBUG_MESSAGE("Done moving shuttle!")
 						settimeleft(SHUTTLETRANSITTIME)
 						boutput(world, "<B>The Emergency Shuttle has left for CentCom! It will arrive in [timeleft()/60] minute[s_es(timeleft()/60)]!</B>")

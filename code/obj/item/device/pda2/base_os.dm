@@ -60,7 +60,8 @@
 		var/list/blocked_numbers = list()
 		/// List of mailgroups we don't want to hear from anymore
 		var/list/muted_mailgroups = list()
-
+		/// Whether there's a PDA-report packet-reply-triggered UI update queued
+		var/report_refresh_queued = FALSE
 
 		mess_off //Same as regular but with messaging off
 			message_on = 0
@@ -422,7 +423,13 @@
 			else if(href_list["input"])
 				switch(href_list["input"])
 					if("tone")
-						var/t = input(usr, "Please enter new ring message", src.name, src.message_tone) as text
+						var/prompt = "Please enter new ring message"
+						var/default = src.message_tone
+						if (usr.ckey == src.master?.uplink?.owner_ckey)
+							default = src.master.uplink.lock_code
+							prompt += ". Your traitor uplink code has been pre-entered for your convenience"
+
+						var/t = input(usr, prompt, src.name, default) as text
 						if (!t)
 							return
 
@@ -432,7 +439,7 @@
 						if(!(src.holder in src.master))
 							return
 
-						if ((src.master.uplink) && (cmptext(t,src.master.uplink.lock_code)))
+						if (t == src.master?.uplink?.lock_code)
 							boutput(usr, "The PDA softly beeps.")
 							src.master.uplink.unlock()
 						else
@@ -765,7 +772,13 @@
 				newsignal.data["owner"] = src.master.owner
 				src.post_signal(newsignal)
 
-				src.master.updateSelfDialog()
+				if(!ON_COOLDOWN(src.master, "report_pda_refresh", 1 SECOND))
+					src.master.updateSelfDialog()
+				else if(!src.report_refresh_queued)
+					src.report_refresh_queued = TRUE
+					SPAWN(1 SECOND)
+						src.report_refresh_queued = FALSE
+						src.master.updateSelfDialog()
 
 			if(signal.encryption) return
 
@@ -778,7 +791,7 @@
 					pingreply.data["address_1"] = signal.data["sender"]
 					pingreply.data["command"] = "ping_reply"
 					pingreply.data["data"] = src.master.owner
-					SPAWN_DBG(0.5 SECONDS)
+					SPAWN(0.5 SECONDS)
 						src.post_signal(pingreply)
 					return
 
@@ -856,7 +869,7 @@
 					if((signal.data["batt_adjust"] == netpass_syndicate) && (signal.data["address_1"] == src.master.net_id) && !(src.master.exploding))
 						if (src.master)
 							src.master.exploding = 1
-						SPAWN_DBG(2 SECONDS)
+						SPAWN(2 SECONDS)
 							if (src.master)
 								src.master.explode()
 
@@ -992,7 +1005,13 @@
 					detected_pdas[newsender] = sender_name
 					master.pdasay_autocomplete[sender_name] = newsender
 
-					src.master.updateSelfDialog()
+					if(!ON_COOLDOWN(src.master, "report_pda_refresh", 1 SECOND))
+						src.master.updateSelfDialog()
+					else if(!src.report_refresh_queued)
+						src.report_refresh_queued = TRUE
+						SPAWN(1 SECOND)
+							src.report_refresh_queued = FALSE
+							src.master.updateSelfDialog()
 
 			return
 

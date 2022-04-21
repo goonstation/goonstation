@@ -11,6 +11,9 @@
 #define ALL_HAIR 4
 
 
+TYPEINFO(/datum/component/toggle_tool_use)
+	initialization_args = list()
+
 /datum/component/toggle_tool_use
 /datum/component/toggle_tool_use/Initialize()
 	if(!istype(parent, /obj/item))
@@ -54,6 +57,9 @@
 	UnregisterSignal(parent, COMSIG_ITEM_DROPPED)
 	. = ..()
 
+TYPEINFO(/datum/component/barber)
+	initialization_args = list()
+
 /datum/component/barber
 /datum/component/barber/Initialize()
 	if(!istype(parent, /obj/item))
@@ -94,7 +100,7 @@
 		else
 			return 0
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		var/list/region = list(
 			"Top Detail ([M.bioHolder.mobAppearance.customization_third.name])" = TOP_DETAIL,
 			"Middle Detail ([M.bioHolder.mobAppearance.customization_second.name])" = MIDDLE_DETAIL,
@@ -169,7 +175,7 @@
 		else
 			return 0
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 
 		var/list/region = list(
 			"Top Detail ([M.bioHolder.mobAppearance.customization_third.name])" = TOP_DETAIL,
@@ -202,6 +208,8 @@
 	if(M.stat || issilicon(user))
 		barbery_conditions = 100
 	else
+		if (M.buckled)
+			barbery_conditions += 10
 		if(istype(M.buckled, /obj/stool/chair/comfy/barber_chair))
 			barbery_conditions += 30
 
@@ -226,15 +234,17 @@
 			if(user.bioHolder.HasEffect("clumsy"))
 				barbery_conditions -= 20
 
-	var/degree_of_success = 0 // 0 - 3, 0 being failure, 3 being catastrophic hair success
+	var/degree_of_success = 0
 	if(prob(clamp(barbery_conditions, 10, 100)))
-		degree_of_success = 3
-	else // oh no we fucked up!
-		if(prob(50))
-			degree_of_success = 2
-		else
-			degree_of_success = rand(0,1)
-	//and then just jam all the vars into the action bar and let it handle the rest!
+		degree_of_success = 3 // success
+	else
+		switch(max(barbery_conditions, 0))
+			if (0 to 20)
+				degree_of_success = 0 // destroy all hair
+			if (20 to 50)
+				degree_of_success = 1 // cut hair off as wig
+			else
+				degree_of_success = 2 // fine haircut, but wrong style
 
 	return degree_of_success
 
@@ -259,7 +269,7 @@
 	else
 		var/datum/mutantrace/mutant = M.mutantrace.name
 		var/datum/mutantrace/mutant_us = "human"
-		if (user?.mutantrace)
+		if (ishuman(user) && user?.mutantrace)
 			mutant_us = user.mutantrace.name
 		switch(mutant)
 			if("blob")
@@ -287,7 +297,7 @@
 			if("virtual")
 				boutput(user, "You prepare to modify M.bioHolder.mobAppearance.customization_[barbery_type == "haircut" ? "first" : "second"].")
 				return 1
-			if("blank" || "humanoid")
+			if("blank", "humanoid")
 				boutput(user, "You somehow correctly guess which end of [M] is forward.")
 				return 1
 			if("grey")
@@ -359,7 +369,7 @@
 											M, "[user] [barbery_type == "haircut" ? "snips" : "cuts"] at something on your head.",\
 									 user, "You wave your [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s fishy head, knocking loose some space barnnacles.")
 				return 0
-			if("monkey" || "sea monkey")
+			if("monkey", "sea monkey")
 				M.emote("scream")
 				playsound(M, "sound/impact_sounds/Slimy_Cut_1.ogg", 100, 1)
 				user.tri_message("[user] [barbery_type == "haircut" ? "snips" : "cuts"] [M]'s ear trying to trim [his_or_her(user)] hair!",\
@@ -407,7 +417,7 @@
 				M.TakeDamage("head", rand(5,10), 0)
 				take_bleeding_damage(M, user, 1, DAMAGE_CUT, 1)
 				return 0
-			if("amphibian" || "Shelter Amphibian")
+			if("amphibian", "Shelter Amphibian")
 				if(barbery_type == "haircut")
 					playsound(M, "sound/items/Scissor.ogg", 100, 1)
 				user.tri_message("[user] waves [his_or_her(user)] [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s head, snipping at nothing!",\
@@ -475,13 +485,13 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 
 	onUpdate()
 		..()
-		if(get_dist(owner, M) > 1 || M == null || owner == null)
+		if(BOUNDS_DIST(owner, M) > 0 || M == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, M) > 1 || M == null || owner == null)
+		if(BOUNDS_DIST(owner, M) > 0 || M == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 

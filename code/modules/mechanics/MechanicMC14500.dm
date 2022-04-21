@@ -46,16 +46,16 @@ var/list/hex_digit_values = list("0" = 0, "1" = 1, "2" = 2, "3" = 3, "4" = 4, "5
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 1", "fire1")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 2", "fire2")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 3", "fire3")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 4", "fire4")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 5", "fire5")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 6", "fire6")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 7", "fire7")
-		//SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 8", "fire8")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set ROM","setROM")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Active","toggleActivate")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 1", .proc/fire1)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 2", .proc/fire2)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 3", .proc/fire3)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 4", .proc/fire4)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 5", .proc/fire5)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 6", .proc/fire6)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 7", .proc/fire7)
+		//SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 8", .proc/fire8)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set ROM",.proc/setROM)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Active",.proc/toggleActivate)
 
 	proc/setROM(obj/item/W as obj, mob/user as mob)
 		. = adminscrub(strip_html(input(user, "What should the ROM be set to?  This better be hexadecimal and an even number of characters!!", "Terrible debug ROM panel", src.ROM) as text))
@@ -78,7 +78,7 @@ var/list/hex_digit_values = list("0" = 0, "1" = 1, "2" = 2, "3" = 3, "4" = 4, "5
 	process()
 		if (..() || !running || !level)
 			return
-		SPAWN_DBG(0) src.light_up_housing()
+		SPAWN(0) src.light_up_housing()
 		. = length(ROM)
 		if (. < 2 || . % 2) //Too short or an odd length and we're out of here.
 			running = 0
@@ -87,7 +87,7 @@ var/list/hex_digit_values = list("0" = 0, "1" = 1, "2" = 2, "3" = 3, "4" = 4, "5
 
 		updateUsrDialog()
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for (var/i = INSTRUCTIONS_PER_PROCESS, i > 0, i--)
 				if (!running || !level || disposed)
 					break
@@ -122,7 +122,7 @@ var/list/hex_digit_values = list("0" = 0, "1" = 1, "2" = 2, "3" = 3, "4" = 4, "5
 			onclose(user, "mcu14500b")
 
 	proc/user_interface(mob/user as mob)
-		if (!user || user.stat ||(iscarbon(user) && get_dist(user, src) > 1))
+		if (!user || user.stat ||(iscarbon(user) && BOUNDS_DIST(user, src) > 0))
 			return
 
 		src.add_dialog(user)

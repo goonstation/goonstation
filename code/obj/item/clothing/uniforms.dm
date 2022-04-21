@@ -16,10 +16,10 @@
 	burn_point = 400
 	burn_output = 800
 	burn_possible = 1
-	health = 50
+	health = 10
 	var/team_num
 
-	duration_remove = 6.5 SECONDS
+	duration_remove = 7.5 SECONDS
 
 	setupProperties()
 		..()
@@ -188,6 +188,30 @@
 		desc = "A corporate token of inclusivity, made in a sweatshop. It's based off of the lesbian pride flag."
 		icon_state ="lesb"
 		item_state = "lesb"
+
+	gaymasc
+		name = "MLM pride jumpsuit"
+		desc = "A corporate token of inclusivity, made in a sweatshop. It's based off of vincian pride flag, but can be flipped inside-out to change it to the achillean one."
+		icon_state ="mlm"
+		item_state = "mlm"
+		var/isachily = FALSE
+		var/ach_descstate = "A corporate token of inclusivity, made in a sweatshop. It's based off of achillean pride flag, but can be flipped inside-out to change it to the vincian one."
+
+		attack_self(mob/user as mob)
+			user.show_text("You flip the [src] inside out.")
+			if(!src.isachily)
+				src.isachily = TRUE
+				src.desc = ach_descstate
+				src.icon_state = "[src.icon_state]alt"
+				src.item_state = "mlmalt"
+			else
+				src.isachily = FALSE
+				src.desc = initial(src.desc)
+				src.icon_state = initial(src.icon_state)
+				src.item_state = "mlm"
+			src.UpdateIcon()
+
+
 
 	nb
 		name = "nb pride jumpsuit"

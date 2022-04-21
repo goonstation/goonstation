@@ -60,7 +60,7 @@
 				return
 		message_admins("<span class='internal'>Setting up Sleeper Agent event. Source: [source ? "[source]" : "random"]</span>")
 		logTheThing("admin", null, null, "Setting up Sleeper Agent event. Source: [source ? "[source]" : "random"]")
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.lock = 1
 			do_event(source=="spawn_antag", source)
 
@@ -83,7 +83,7 @@
 				else
 					num_agents = 0
 
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			broadcast_sound(signal_intro)
 			sleep(8 SECONDS)
 			play_all_numbers()
@@ -135,16 +135,12 @@
 			if (new_objective == /datum/objective/regular/killstirstir) // single-use
 				eligible_objectives -= /datum/objective/regular/killstirstir
 				escape_objectives -= /datum/objective/escape/stirstir
-			objectives += new new_objective
-		var/datum/objective/gimmick = new /datum/objective/regular/gimmick
+			objectives += new new_objective(null, H.mind)
+		var/datum/objective/gimmick = new /datum/objective/regular/gimmick(null, H.mind)
 		objectives += gimmick
 		var/escape_objective = pick(escape_objectives)
-		var/datum/objective/esc = new escape_objective
+		var/datum/objective/esc = new escape_objective(null, H.mind)
 		objectives += esc
-		for(var/datum/objective/objective in objectives)
-			objective.owner = H.mind
-			objective.set_up()
-			H.mind.objectives += objective
 		message_admins("[key_name(H)] awakened as a sleeper agent antagonist. Source: [source ? "[source]" : "random event"]")
 		logTheThing("admin", H, null, "awakened as a sleeper agent antagonist. Source: [source ? "[source]" : "random event"]")
 		H.show_text("<h2><font color=red><B>You have awakened as a syndicate sleeper agent!</B></font></h2>", "red")

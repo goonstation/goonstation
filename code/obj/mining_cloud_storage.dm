@@ -29,16 +29,16 @@
 		. = ..()
 		STOP_TRACKING
 
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		if(!istype(usr,/mob/living/))
 			boutput(usr, "<span class='alert'>Only living mobs are able to set the output target for [src].</span>")
 			return
 
-		if(get_dist(over_object,src) > 1)
+		if(BOUNDS_DIST(over_object, src) > 0)
 			boutput(usr, "<span class='alert'>[src] is too far away from the target!</span>")
 			return
 
-		if(get_dist(over_object,usr) > 1)
+		if(BOUNDS_DIST(over_object, usr) > 0)
 			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
 			return
 
@@ -84,7 +84,7 @@
 			boutput(user, "<span class='alert'>You can't quick-load that.</span>")
 			return
 
-		if(!IN_RANGE(O, user, 1))
+		if(BOUNDS_DIST(O, user) > 0)
 			boutput(user, "<span class='alert'>You are too far away!</span>")
 			return
 
@@ -159,6 +159,9 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/ore_scoop))
 			var/obj/item/ore_scoop/scoop = W
+			if (!scoop?.satchel)
+				boutput(user, "<span class='alert'>No ore satchel to unload from [W].</span>")
+				return
 			W = scoop.satchel
 
 		if (istype(W, /obj/item/raw_material/) && src.accept_loading(user))
@@ -179,9 +182,10 @@
 				src.load_item(R, user)
 				amtload++
 			satchel.UpdateIcon()
-			if (amtload) boutput(user, "<span class='notice'>[amtload] materials loaded from [satchel]!</span>")
-			else boutput(user, "<span class='alert'>[satchel] is empty!</span>")
-
+			if (amtload)
+				boutput(user, "<span class='notice'>[amtload] materials loaded from [satchel]!</span>")
+			else
+				boutput(user, "<span class='alert'>[satchel] is empty!</span>")
 		else
 			src.health = max(src.health-W.force,0)
 			src.check_health()
@@ -202,7 +206,7 @@
 			amount_loaded++
 			if (user && R)
 				user.u_equip(R)
-				R.dropped()
+				R.dropped(user)
 		else if(R.amount>1)
 			R.set_loc(src)
 			for(R.amount,R.amount > 0, R.amount--)
@@ -211,7 +215,7 @@
 				amount_loaded++
 			if (user && R)
 				user.u_equip(R)
-				R.dropped()
+				R.dropped(user)
 			qdel(R)
 		update_ore_amount(R.material_name,amount_loaded,R)
 		tgui_process.update_uis(src)
@@ -292,7 +296,7 @@
 		if (!src.output_target)
 			return src.loc
 
-		if (get_dist(src.output_target,src) > 1)
+		if (BOUNDS_DIST(src.output_target, src) > 0)
 			src.output_target = null
 			return src.loc
 

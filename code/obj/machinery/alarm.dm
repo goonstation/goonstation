@@ -160,7 +160,7 @@
 	onclose(user, "atmos")
 
 /obj/machinery/alarm/proc/return_text(mob/user)
-	if ( (get_dist(src, user) > 1 ))
+	if ( (BOUNDS_DIST(src, user) > 0 ))
 		if (!issilicon(user))
 			src.remove_dialog(user)
 			user.Browse(null, "window=atmos")

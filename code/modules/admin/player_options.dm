@@ -103,6 +103,7 @@
 	Mob: <b>[M.name]</b> [M.mind && M.mind.assigned_role ? "{[M.mind.assigned_role]}": ""] (<tt>[M.key ? M.key : "<em>no key</em>"]</tt>)
 	[M.client ? "" : "<em>(no client)</em>"]
 	[isdead(M) ? "<span class='antag'>(dead)</span>" : ""]
+	<div style="font-family: Monospace; font-size: 0.7em; float: right;">ping [M.client?.chatOutput?.last_ping || "N/A "]ms</div>
 	<br>Mob Type: <b>[M.type]</b> ([antag])
 </div>
 	"}
@@ -162,7 +163,8 @@
 				 	</div>
 					<div class='l'>StatusEffects<a href='?src=\ref[src];action=secretsfun;type=statuseffect_help'>*</a></div>
 					<div class='r'>
-						<a href='[playeropt_link(M, "setstatuseffect")]'>Set</a>
+						<a href='[playeropt_link(M, "setstatuseffect")]'>Set</a> &bull;
+						<a href='[playeropt_link(M, "modifystatuseffect")]'>Modify</a>
 				 	</div>
 					<div class='l'>Contents</div>
 					<div class='r'>

@@ -91,16 +91,16 @@
 		else
 			return
 
-	MouseDrop(over_object, src_location, over_location) //src dragged onto over_object
+	mouse_drop(over_object, src_location, over_location) //src dragged onto over_object
 		if (isobserver(usr))
 			boutput(usr, "<span class='alert'>Quit that! You're dead!</span>")
 			return
 
 		if(!istype(over_object, /atom/movable/screen/hud))
-			if (get_dist(usr,src) > 1)
+			if (BOUNDS_DIST(usr, src) > 0)
 				boutput(usr, "<span class='alert'>You're too far away from it to do that.</span>")
 				return
-			if (get_dist(usr,over_object) > 1)
+			if (BOUNDS_DIST(usr, over_object) > 0)
 				boutput(usr, "<span class='alert'>You're too far away from it to do that.</span>")
 				return
 
@@ -322,8 +322,9 @@
 			var/turf/bombturf = get_turf(src)
 			if (bombturf)
 				var/bombarea = bombturf.loc.name
-				logTheThing("combat", null, null, "Erebite detonated by an explosion in [bombarea] ([showCoords(bombturf.x, bombturf.y, bombturf.z)]). Last touched by: [src.fingerprintslast]")
-				message_admins("Erebite detonated by an explosion in [bombarea] ([showCoords(bombturf.x, bombturf.y, bombturf.z)]). Last touched by: [key_name(src.fingerprintslast)]")
+				logTheThing("combat", null, null, "Erebite detonated by an explosion in [bombarea] ([log_loc(bombturf)]). Last touched by: [src.fingerprintslast]")
+				if (src.fingerprintslast && !istype(get_area(bombturf), /area/mining/magnet))
+					message_admins("Erebite detonated by an explosion in [bombarea] ([log_loc(bombturf)]). Last touched by: [key_name(src.fingerprintslast)]")
 
 		qdel(src)
 
@@ -337,7 +338,8 @@
 			var/bombarea = istype(bombturf) ? bombturf.loc.name : "a blank, featureless void populated only by your own abandoned dreams and wasted potential"
 
 			logTheThing("combat", null, null, "Erebite detonated by heat in [bombarea]. Last touched by: [src.fingerprintslast]")
-			message_admins("Erebite detonated by heat in [bombarea]. Last touched by: [key_name(src.fingerprintslast)]")
+			if(src.fingerprintslast && !istype(get_area(bombturf), /area/mining/magnet))
+				message_admins("Erebite detonated by heat in [bombarea]. Last touched by: [key_name(src.fingerprintslast)]")
 
 		qdel(src)
 
@@ -450,6 +452,7 @@
 		src.color = "#00f"
 		name = "Blue Telecrystal"
 		desc = "[desc] It's all shiny and blue now."
+		return TRUE
 
 
 /obj/item/raw_material/miracle
@@ -554,6 +557,11 @@
 		..()
 		icon_state += "[rand(1,5)]"
 
+/obj/item/raw_material/scrap_metal/steel
+	New()
+		..()
+		src.setMaterial(getMaterial("steel"))
+
 /obj/item/raw_material/shard
 	// same deal here
 	name = "shard"
@@ -575,6 +583,7 @@
 	stamina_crit_chance = 35
 	burn_possible = 0
 	event_handler_flags = USE_FLUID_ENTER
+	material_amt = 0.1
 	var/sound_stepped = 'sound/impact_sounds/Glass_Shards_Hit_1.ogg'
 
 	New()
@@ -612,7 +621,7 @@
 		user.visible_message("<span class='alert'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
 		blood_slash(user, 25)
 		user.TakeDamage("head", 150, 0)
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -746,7 +755,7 @@
 
 /obj/machinery/portable_reclaimer
 	name = "portable reclaimer"
-	desc = "A sophisticated piece of machinery that quickly processes minerals into bars."
+	desc = "A sophisticated piece of machinery can process raw materials, scrap, and material sheets into bars."
 	icon = 'icons/obj/scrap.dmi'
 	icon_state = "reclaimer"
 	anchored = 0
@@ -783,33 +792,13 @@
 				src.reject = 1
 				continue
 
-			else if (istype(M, /obj/item/raw_material/shard))
-				if (output_bar_from_item(M, 10))
-					qdel(M)
-
-			else if (istype(M, /obj/item/sheet))
-				if (output_bar_from_item(M, 10))
-					qdel(M)
-
-			else if (istype(M, /obj/item/rods))
-				if (output_bar_from_item(M, 20))
-					qdel(M)
-
-			else if (istype(M, /obj/item/tile))
-				if (output_bar_from_item(M, 40))
-					qdel(M)
-
 			else if (istype(M, /obj/item/cable_coil))
 				var/obj/item/cable_coil/C = M
 				if (output_bar_from_item(M, 30, C.conductor.mat_id))
 					qdel(C)
 
-			else if (istype(M, /obj/item/wizard_crystal))
-				if (output_bar_from_item(M))
-					qdel(M)
-
 			else
-				output_bar_from_item(M)
+				output_bar_from_item(M, 1 / M.material_amt)
 				qdel(M)
 
 			sleep(smelt_interval)
@@ -880,7 +869,7 @@
 		if (src.is_valid(W))
 			W.set_loc(src)
 			if (user) user.u_equip(W)
-			W.dropped()
+			W.dropped(user)
 			. = TRUE
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -916,7 +905,7 @@
 		else
 			. = ..()
 
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		if(!isliving(usr))
 			boutput(usr, "<span class='alert'>Get your filthy dead fingers off that!</span>")
 			return
@@ -926,11 +915,11 @@
 			boutput(usr, "<span class='notice'>You reset the reclaimer's output target.</span>")
 			return
 
-		if(get_dist(over_object,src) > 1)
+		if(BOUNDS_DIST(over_object, src) > 0)
 			boutput(usr, "<span class='alert'>The reclaimer is too far away from the target!</span>")
 			return
 
-		if(get_dist(over_object,usr) > 1)
+		if(BOUNDS_DIST(over_object, usr) > 0)
 			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
 			return
 
@@ -983,7 +972,7 @@
 			boutput(user, "<span class='alert'>You can't quick-load that.</span>")
 			return
 
-		if(!IN_RANGE(O, user, 1))
+		if(BOUNDS_DIST(O, user) > 0)
 			boutput(user, "<span class='alert'>You are too far away!</span>")
 			return
 
@@ -1024,7 +1013,7 @@
 		if (!output_location)
 			return src.loc
 
-		if (!IN_RANGE(src.output_location, src, 1))
+		if (!(BOUNDS_DIST(src.output_location, src) == 0))
 			output_location = null
 			return src.loc
 

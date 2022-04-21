@@ -95,15 +95,15 @@
 	var/sharkspeed = 1
 
 	New()
-		SPAWN_DBG(0) process()
+		SPAWN(0) process()
 		..()
 
 	bump(atom/M as turf|obj|mob)
 		if(M.density)
 			M.density = 0
-			SPAWN_DBG(0.4 SECONDS)
+			SPAWN(0.4 SECONDS)
 				M.density = 1
-		SPAWN_DBG(0.1 SECONDS)
+		SPAWN(0.1 SECONDS)
 			var/turf/T = get_turf(M)
 			src.x = T.x
 			src.y = T.y
@@ -119,7 +119,7 @@
 				src.z = sharktarget2.z
 				banproc()
 				return
-			else if (IN_RANGE(src, src.sharktarget2, 1))
+			else if ((BOUNDS_DIST(src, src.sharktarget2) == 0))
 				for(var/mob/O in AIviewers(src, null))
 					O.show_message("<span class='alert'><B>[src]</B> bites [sharktarget2]!</span>", 1)
 				sharktarget2.changeStatus("weakened", 1 SECOND)
@@ -163,22 +163,22 @@
 	var/mob/caller = null
 
 	New()
-		SPAWN_DBG(0) process()
+		SPAWN(0) process()
 		..()
 
 	bump(atom/M as turf|obj|mob)
 		if(M.density)
 			M.density = 0
-			SPAWN_DBG(0.4 SECONDS)
+			SPAWN(0.4 SECONDS)
 				M.density = 1
-		SPAWN_DBG(0.1 SECONDS)
+		SPAWN(0.1 SECONDS)
 			var/turf/T = get_turf(M)
 			src.x = T.x
 			src.y = T.y
 
 	proc/process()
 		while (!disposed)
-			if (IN_RANGE(src, src.sharktarget2, 1))
+			if ((BOUNDS_DIST(src, src.sharktarget2) == 0))
 				for(var/mob/O in AIviewers(src, null))
 					O.show_message("<span class='alert'><B>[src]</B> bites [sharktarget2]!</span>", 1)
 				sharktarget2.changeStatus("weakened", 1 SECOND)
@@ -193,7 +193,7 @@
 	proc/gibproc()
 		// drsingh for various cannot read null.
 		sleep(1.5 SECONDS)
-		if (IN_RANGE(src, src.sharktarget2, 1))
+		if ((BOUNDS_DIST(src, src.sharktarget2) == 0))
 			for(var/mob/O in AIviewers(src, null))
 				O.show_message("<span class='alert'><B>[src]</B> gibs [sharktarget2] in one bite!</span>", 1)
 			playsound(src.loc, 'sound/items/eatfood.ogg', 30, 1, -2)
