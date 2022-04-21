@@ -11787,6 +11787,14 @@
 	dir = 1
 	},
 /area/station/turret_protected/ai_upload)
+"drK" = (
+/obj/machinery/recharger/wall{
+	dir = 8;
+	pixel_x = 23
+	},
+/obj/storage/secure/crate/ghost/armory,
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "drZ" = (
 /obj/machinery/computer/announcement{
 	name = "Executive Announcement Computer";
@@ -138339,7 +138347,7 @@ kgF
 vWl
 iSS
 irg
-irg
+drK
 vWl
 cTc
 ofy
