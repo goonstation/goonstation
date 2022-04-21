@@ -51464,6 +51464,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/storage/secure/crate/ghost/armory,
 /turf/simulated/floor/redblack/corner{
 	dir = 8
 	},
