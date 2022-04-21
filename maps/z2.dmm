@@ -12,17 +12,7 @@
 /obj/decal/tile_edge/stripe/big{
 	dir = 4
 	},
-/turf/unsimulated/floor/plating/random,
-/turf/simulated/wall/target,
-/area/syndicate_station/firing_range)
-"aad" = (
-/obj/decal/tile_edge/stripe/big{
-	dir = 8
-	},
-/obj/decal/tile_edge/stripe/big{
-	dir = 4
-	},
-/turf/simulated/wall/target,
+/obj/range_target,
 /turf/unsimulated/floor/plating/random,
 /area/syndicate_station/firing_range)
 "aae" = (
@@ -43107,6 +43097,12 @@
 /obj/item/pinpointer/nuke,
 /obj/item/pinpointer/nuke,
 /obj/item/pinpointer/nuke,
+/obj/item/remote/syndicate_teleporter,
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/battlecruiser)
 "cvZ" = (
@@ -58870,7 +58866,6 @@
 /area/syndicate_station/battlecruiser)
 "dhk" = (
 /obj/table/auto,
-/obj/machinery/light,
 /obj/item/remote/syndicate_teleporter,
 /obj/item/remote/syndicate_teleporter,
 /obj/item/remote/syndicate_teleporter,
@@ -76918,6 +76913,10 @@
 	icon_state = "shore-25"
 	},
 /area/titlescreen)
+"xJi" = (
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/darkblue,
+/area/syndicate_station/battlecruiser)
 "xMP" = (
 /obj/machinery/light/small,
 /turf/unsimulated/outdoors/grass,
@@ -107916,7 +107915,7 @@ bEP
 lzl
 cIe
 cKR
-aad
+aac
 cKR
 cIe
 deq
@@ -108224,7 +108223,7 @@ cIe
 dep
 dex
 deG
-btf
+xJi
 nJZ
 btf
 dgL
@@ -108828,7 +108827,7 @@ cIe
 dep
 dex
 deG
-btf
+xJi
 dgs
 btf
 dgM
