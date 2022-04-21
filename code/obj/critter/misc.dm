@@ -1614,9 +1614,9 @@
 		..()
 
 	CritterDeath()
+		..()
 		if (tail_memory)
 			tail_memory.set_loc(get_turf(src))
 		else
 			new/obj/item/organ/tail/lizard(get_turf(src))
 		qdel(src)
-		..()
