@@ -40296,11 +40296,14 @@
 /turf/simulated/floor/green,
 /area/research_outpost/pathology)
 "bYt" = (
+/obj/table/reinforced/industrial/auto,
+/obj/item/storage/spooky_ammo,
 /obj/item/reagent_containers/food/snacks/donut/custom/robust{
 	pixel_y = 4;
 	rand_pos = 0
 	},
-/obj/table/reinforced/industrial/auto,
+/obj/item/gun/reagent/ecto,
+/obj/item/clothing/glasses/regular/ecto/goggles/advanced,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
