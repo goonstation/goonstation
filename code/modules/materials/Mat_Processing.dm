@@ -42,24 +42,13 @@
 			var/mat_id
 
 			//Check for exploitable inputs and divide the result accordingly
-			var/div_factor = 1
+			var/div_factor = 1 / X.material_amt
 			var/second_mat = null
-			if (istype(X, /obj/item/sheet))
-				div_factor = 10
 
-			else if (istype(X, /obj/item/rods))
-				div_factor = 20
-
-			else if (istype(X, /obj/item/tile))
-				div_factor = 40
-
-			else if (istype(X, /obj/item/cable_coil))
+			if (istype(X, /obj/item/cable_coil))
 				var/obj/item/cable_coil/C = X
 				div_factor = 30
 				second_mat = C.conductor
-
-			else if (istype(X, /obj/item/raw_material/shard))
-				div_factor = 10
 
 			//Output processed amount if there is enough input material
 			var/out_amount = round(totalAmount/div_factor)

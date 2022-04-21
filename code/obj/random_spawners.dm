@@ -791,7 +791,7 @@
 	/obj/item/clothing/mask/gas,
 	/obj/item/clothing/mask/medical,
 	/obj/item/clothing/mask/surgical,
-	/obj/item/clothing/shoes,
+	/obj/item/clothing/shoes/black,
 	/obj/item/coin,
 	/obj/item/device/infra_sensor,
 	/obj/item/device/radio,

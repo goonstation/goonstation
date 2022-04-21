@@ -583,6 +583,7 @@
 	stamina_crit_chance = 35
 	burn_possible = 0
 	event_handler_flags = USE_FLUID_ENTER
+	material_amt = 0.1
 	var/sound_stepped = 'sound/impact_sounds/Glass_Shards_Hit_1.ogg'
 
 	New()
@@ -791,33 +792,13 @@
 				src.reject = 1
 				continue
 
-			else if (istype(M, /obj/item/raw_material/shard))
-				if (output_bar_from_item(M, 10))
-					qdel(M)
-
-			else if (istype(M, /obj/item/sheet))
-				if (output_bar_from_item(M, 10))
-					qdel(M)
-
-			else if (istype(M, /obj/item/rods))
-				if (output_bar_from_item(M, 20))
-					qdel(M)
-
-			else if (istype(M, /obj/item/tile))
-				if (output_bar_from_item(M, 40))
-					qdel(M)
-
 			else if (istype(M, /obj/item/cable_coil))
 				var/obj/item/cable_coil/C = M
 				if (output_bar_from_item(M, 30, C.conductor.mat_id))
 					qdel(C)
 
-			else if (istype(M, /obj/item/wizard_crystal))
-				if (output_bar_from_item(M))
-					qdel(M)
-
 			else
-				output_bar_from_item(M)
+				output_bar_from_item(M, 1 / M.material_amt)
 				qdel(M)
 
 			sleep(smelt_interval)

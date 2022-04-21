@@ -403,7 +403,7 @@
 		icon_state = "dog-biscuit"
 		frosted = 1
 		amount = 5
-		heal_amt = 3 //for pugs only. Strong, but there's no recipe for these (just the one you start with).
+		heal_amt = 3 //for pugs only!
 		initial_volume = 20
 		initial_reagents = list("meat_slurry" = 10)
 		food_effects = list("food_hp_up_big", "food_energized_big")

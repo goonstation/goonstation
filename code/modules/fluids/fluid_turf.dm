@@ -263,7 +263,7 @@
 	attackby(obj/item/C as obj, mob/user as mob, params) //i'm sorry
 		if(istype(C, /obj/item/cable_coil))
 			var/obj/item/cable_coil/coil = C
-			coil.turf_place(src, user)
+			coil.turf_place(src, get_turf(user), user)
 		..()
 
 

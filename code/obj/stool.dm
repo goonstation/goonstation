@@ -32,6 +32,7 @@
 	var/securable = 0
 	var/list/scoot_sounds = null
 	var/parts_type = /obj/item/furniture_parts/stool
+	material_amt = 0.1
 
 	New()
 		if (!src.anchored && src.securable) // we're able to toggle between being secured to the floor or not, and we started unsecured
@@ -296,6 +297,7 @@
 	var/security = 0
 	var/obj/item/clothing/suit/bedsheet/Sheet = null
 	parts_type = /obj/item/furniture_parts/bed
+	material_amt = 0.2
 
 	brig
 		name = "brig cell bed"
@@ -533,6 +535,7 @@
 	anchored = 1
 	scoot_sounds = list( 'sound/misc/chair/normal/scoot1.ogg', 'sound/misc/chair/normal/scoot2.ogg', 'sound/misc/chair/normal/scoot3.ogg', 'sound/misc/chair/normal/scoot4.ogg', 'sound/misc/chair/normal/scoot5.ogg' )
 	parts_type = null
+	material_amt = 0.1
 
 	moveable
 		anchored = 0
@@ -871,6 +874,7 @@
 	stamina_damage = 45
 	stamina_cost = 21
 	stamina_crit_chance = 10
+	material_amt = 0.1
 	var/c_color = null
 
 	New()

@@ -9,6 +9,7 @@
 	volume = 70
 	_max_health = LOCKER_HEALTH_WEAK
 	_health = LOCKER_HEALTH_WEAK
+	material_amt = 0.2
 
 	New()
 		. = ..()

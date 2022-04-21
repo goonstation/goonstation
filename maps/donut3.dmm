@@ -98,20 +98,6 @@
 /obj/stool,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
-"aag" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/recharger/wall/sticky{
-	dir = 4;
-	pixel_x = 23
-	},
-/obj/storage/secure/crate/ghost/armory,
-/obj/decal/mule/beacon/no_auto_dropoff_spawn,
-/turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
 "aah" = (
 /obj/wingrille_spawn/auto/tuff,
 /turf/simulated/floor/plating,
@@ -25223,12 +25209,6 @@
 	},
 /turf/simulated/floor/purpleblack,
 /area/station/bridge)
-"haK" = (
-/obj/machinery/floorflusher/bathtub{
-	dir = 8
-	},
-/turf/simulated/floor/specialroom/freezer/white,
-/area/station/security/hos)
 "haS" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -56694,6 +56674,12 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
+"qma" = (
+/obj/machinery/bathtub{
+	dir = 8
+	},
+/turf/simulated/floor/specialroom/freezer/white,
+/area/station/security/hos)
 "qmk" = (
 /obj/disposalpipe/segment,
 /obj/disposalpipe/segment{
@@ -57126,6 +57112,20 @@
 	},
 /turf/space,
 /area/station/turret_protected/AIbaseoutside)
+"qrj" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/recharger/wall/sticky{
+	dir = 4;
+	pixel_x = 23
+	},
+/obj/storage/secure/crate/ghost/armory,
+/obj/decal/mule/beacon/no_auto_dropoff_spawn,
+/turf/simulated/floor/engine,
+/area/station/ai_monitored/armory)
 "qrn" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -105183,7 +105183,7 @@ jhw
 jhw
 lpZ
 jXl
-haK
+qma
 jhw
 plN
 plN
@@ -109703,7 +109703,7 @@ mFb
 eqa
 aaf
 rBx
-aag
+qrj
 bBl
 uKa
 jJd

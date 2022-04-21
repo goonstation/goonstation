@@ -647,16 +647,6 @@ datum
 			mix_phrase = "The eggs nog together. Pretend that \"nog\" is a verb."
 			drinkrecipe = 1
 
-		sweet_tea
-			name = "Sweet Tea"
-			id = "sweet_tea"
-			result = "sweet_tea"
-			required_reagents = list("sugar" = 1, "tea" = 1)
-			result_amount = 2
-			mix_phrase = "The tea sweetens. Visually. Somehow."
-			mix_sound = 'sound/misc/drinkfizz.ogg'
-			drinkrecipe = 1
-
 		honey_tea
 			name = "tea"
 			id = "honey_tea"
@@ -684,6 +674,16 @@ datum
 			required_reagents = list("tea" = 3, "juice_orange" = 1, "sugar" = 1)
 			result_amount = 5
 			mix_phrase = "The tea takes on a sweet, summery smell."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+			drinkrecipe = 1
+
+		sweet_tea
+			name = "Sweet Tea"
+			id = "sweet_tea"
+			result = "sweet_tea"
+			required_reagents = list("sugar" = 1, "tea" = 1)
+			result_amount = 2
+			mix_phrase = "The tea sweetens. Visually. Somehow."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 			drinkrecipe = 1
 
