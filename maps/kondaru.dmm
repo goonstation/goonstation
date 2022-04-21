@@ -53298,10 +53298,6 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/garden/aviary)
-"qtH" = (
-/obj/item/clothing/glasses/regular/ecto/goggles/advanced,
-/turf/space,
-/area/space)
 "qtW" = (
 /obj/machinery/light{
 	dir = 4;
@@ -89867,7 +89863,7 @@ aaa
 aaa
 aaa
 aaa
-qtH
+aaa
 aaa
 aaa
 aaa
@@ -90166,7 +90162,7 @@ acO
 aaa
 aaa
 aaa
-qtH
+aaa
 aaa
 aaa
 aaa
