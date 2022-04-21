@@ -2807,13 +2807,13 @@ datum
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					APPLY_ATOM_PROPERTY(M, PROP_MOB_GHOSTVISION, src)
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_WRAITHVISION, src)
 				..()
 
 			cross_threshold_under()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					REMOVE_ATOM_PROPERTY(M, PROP_MOB_GHOSTVISION, src)
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_WRAITHVISION, src)
 				..()
 
 		voltagen
