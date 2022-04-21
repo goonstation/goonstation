@@ -1631,6 +1631,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 					/obj/item/reagent_containers/food/drinks/chickensoup = 2,
 					/obj/item/reagent_containers/food/drinks/coffee = 2)
 	frames = list(/obj/machinery/space_heater = 2)
+	cost = 3000
 
 /datum/supply_packs/complex/hydrostarter
 	name = "Hydroponics: Starter Crate"
