@@ -37018,6 +37018,9 @@
 /obj/item/gun/kinetic/dart_rifle{
 	pixel_y = -8
 	},
+/obj/item/storage/spooky_ammo,
+/obj/item/clothing/glasses/regular/ecto/goggles/advanced,
+/obj/item/gun/reagent/ecto,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "bQw" = (
