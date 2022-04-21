@@ -18863,6 +18863,9 @@
 	pixel_x = -1;
 	pixel_y = 1
 	},
+/obj/item/storage/spooky_ammo,
+/obj/item/gun/reagent/ecto,
+/obj/item/clothing/glasses/regular/ecto/goggles/advanced,
 /turf/simulated/floor/caution/east,
 /area/station/ai_monitored/armory)
 "Vb" = (
