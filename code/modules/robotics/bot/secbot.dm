@@ -157,6 +157,11 @@
 			our_baton.dispose()
 			our_baton = null
 		target = null
+
+		#ifdef I_AM_ABOVE_THE_LAW
+		STOP_TRACKING_CAT(TR_CAT_DELETE_ME)
+		#endif
+
 		..()
 
 /obj/machinery/bot/secbot/autopatrol
@@ -248,7 +253,7 @@
 		START_TRACKING
 		src.chatspam_cooldown = (1 SECOND) + (length(by_type[/obj/machinery/bot/secbot]) * 2) // big hordes of bots can really jam up the chat
 
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			if(src.hat)
 				bothat = image('icons/obj/bots/aibots.dmi', "hat-[src.hat]")
 				UpdateOverlays(bothat, "secbot_hat")
@@ -256,6 +261,10 @@
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("control", control_freq)
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("beacon", beacon_freq)
 		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
+
+		#ifdef I_AM_ABOVE_THE_LAW
+		START_TRACKING_CAT(TR_CAT_DELETE_ME)
+		#endif
 
 	speak(var/message, var/sing, var/just_float)
 		if (src.emagged >= 2)
@@ -268,7 +277,7 @@
 		if (src.attack_per_step && prob(src.attack_per_step == 2 ? 25 : 75))
 			if (oldloc != NewLoc)
 				if (mode == SECBOT_AGGRO && target)
-					if (IN_RANGE(src, src.target, 1))
+					if ((BOUNDS_DIST(src, src.target) == 0))
 						src.baton_attack(src.target, 1)
 
 	attack_hand(mob/user as mob, params)
@@ -291,7 +300,7 @@
 			Guard Lockdown: <A href='?src=\ref[src];operation=lockdown'>[src.guard_area_lockdown ? "On" : "Off"]</A><BR>
 			<A href='?src=\ref[src];operation=guardhere'>Guard Here</A>"}
 
-		if (user.client.tooltipHolder)
+		if (user.client?.tooltipHolder)
 			user.client.tooltipHolder.showClickTip(src, list(
 				"params" = params,
 				"title" = "Securitron v2.0 controls",
@@ -546,7 +555,7 @@
 	proc/charge_baton()
 		src.baton_charged = TRUE
 		UpdateOverlays(chargepic, "secbot_charged")
-		SPAWN_DBG(src.baton_charge_duration)
+		SPAWN(src.baton_charge_duration)
 			src.baton_charged = FALSE
 			UpdateOverlays(null, "secbot_charged")
 
@@ -566,14 +575,18 @@
 
 			while (stuncount > 0 && src.target)
 				// they moved while we were sleeping, abort
-				if(!IN_RANGE(src, src.target, 1))
+				if(!(BOUNDS_DIST(src, src.target) == 0))
 					src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-wild" : null]"
 					src.weeoo()
 					src.process()
 					return
 
 				stuncount--
-				src.our_baton.do_stun(src, M, src.stun_type, 2)
+				if (check_target_immunity(M))
+					src.visible_message("<span class='alert'><B>[src] tries to stun [M] with the [src.our_baton] but the attack bounces off uselessly!</B></span>")
+					playsound(src, "sound/impact_sounds/Generic_Swing_1.ogg", 25, 1, -1)
+				else
+					src.our_baton.do_stun(src, M, src.stun_type, 2)
 				if (!stuncount && maxstuns-- <= 0)
 					src.KillPathAndGiveUp(KPAGU_CLEAR_PATH)
 				if (stuncount > 0)
@@ -581,7 +594,7 @@
 
 			if (isnull(target))
 				return
-			SPAWN_DBG(0.2 SECONDS)
+			SPAWN(0.2 SECONDS)
 				src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-wild" : null]"
 			if (src.target.getStatusDuration("weakened"))
 				src.anchored = 1
@@ -682,7 +695,7 @@
 			if(src.mode == SECBOT_GUARD_START && !src.guard_start_no_announce && !ON_COOLDOWN(global, "[SECBOT_CHATSPAM_COOLDOWN]-guardcalc", src.chatspam_cooldown))
 				src.speak("Calculating path to [src.guard_area]...", just_float = 1)
 			if(length(T) >= 1)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					for(var/i in 1 to 10) // Not every turf is accessible to the bot. But some might!
 						T = (pick(T))
 						src.navigate_to(T, src.bot_move_delay)
@@ -761,7 +774,7 @@
 		/// Tango!
 		if(src.target)
 			/// Tango in batonning distance?
-			if (IN_RANGE(src, src.target, 1))
+			if ((BOUNDS_DIST(src, src.target) == 0))
 				/// Are they good and downed, and are we allowed to cuff em?
 				if(!src.arrest_type && src.target?.getStatusDuration("weakened") >= 3 SECONDS)
 					if(!src.warn_minor_crime || ((src.warn_minor_crime || src.guard_area_lockdown) && src.threatlevel >= src.cuff_threat_threshold))
@@ -772,7 +785,7 @@
 						return
 				/// No? Well, make em good and downed then
 				else
-					SPAWN_DBG(0)
+					SPAWN(0)
 						src.baton_attack(src.target) // has while-sleeps, proc happens as part of process(), stc
 			/// Tango in charging distance?
 			else if(IN_RANGE(src, src.target, 13)) // max perp-seek distance of 13
@@ -873,7 +886,7 @@
 	proc/weeoo()
 		if(weeooing)
 			return
-		SPAWN_DBG(0)
+		SPAWN(0)
 			weeooing = 1
 			var/weeoo = 10
 			playsound(src, "sound/machines/siren_police.ogg", 50, 1)
@@ -984,7 +997,7 @@
 			src.look_for_perp()
 
 		/// If we happen to be chasing someone and get in batonning range, let's stop and maybe try to hit them
-		if(src.target && IN_RANGE(src, src.target, 1))
+		if(src.target && (BOUNDS_DIST(src, src.target) == 0))
 			return TRUE
 
 	KillPathAndGiveUp(var/give_up = KPAGU_CLEAR_PATH)
@@ -1043,7 +1056,7 @@
 		new_destination = "__nearest__"
 		post_signal_multiple("beacon", list("findbeacon" = "patrol", "address_tag" = "patrol"))
 		awaiting_beacon = 1
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			awaiting_beacon = 0
 			if(nearest_beacon)
 				set_destination(nearest_beacon)
@@ -1101,7 +1114,7 @@
 						src.speak("!", just_float = 1)
 						src.proc_available = 0
 						src.process()
-						SPAWN_DBG(3 SECONDS)
+						SPAWN(3 SECONDS)
 							src.proc_available = 1
 					else
 						src.speak("...", just_float = 1)
@@ -1272,15 +1285,11 @@
 
 		master.cuffing = 0
 
-		if (get_dist(master, master.target) <= 1)
+		if (BOUNDS_DIST(master, master.target) == 0)
 			if (!master.target || master.target.hasStatus("handcuffed"))
 				return
 
 			var/uncuffable = 0
-			if (ishuman(master.target))
-				var/mob/living/carbon/human/H = master.target
-				if(!H.limbs.l_arm || !H.limbs.r_arm)
-					uncuffable = 1
 
 			if (!isturf(master.target.loc))
 				uncuffable = 1
@@ -1321,7 +1330,7 @@
 					master.KillPathAndGiveUp(KPAGU_CLEAR_ALL)
 
 	proc/failchecks()
-		if (!IN_RANGE(master, master.target, 1))
+		if (!(BOUNDS_DIST(master, master.target) == 0))
 			return 1
 		if (!master.target || master.target.hasStatus("handcuffed") || master.moving)
 			return 1
@@ -1368,11 +1377,11 @@
 	onEnd()
 		..()
 		master.baton_charging = 0
-		if(IN_RANGE(master, master.target, 1))
+		if((BOUNDS_DIST(master, master.target) == 0))
 			master.baton_attack(master.target, 1)
 		else
 			master.charge_baton()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			master.weeoo()
 
 //Secbot Construction

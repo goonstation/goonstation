@@ -57,7 +57,7 @@
 		if (cd > 0)
 			cooldown_overlay = 1
 			screenObj.overlays += obscurer
-			SPAWN_DBG (cd)
+			SPAWN(cd)
 				cooldown_overlay = 0
 				screenObj.overlays -= obscurer
 

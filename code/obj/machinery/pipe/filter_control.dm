@@ -3,7 +3,7 @@
 
 /obj/machinery/filter_control/New()
 	..()
-	SPAWN_DBG(0.5 SECONDS)	//wait for world
+	SPAWN(0.5 SECONDS)	//wait for world
 		for(var/obj/machinery/inlet/filter/F as anything in machine_registry[MACHINES_INLETS])
 			if(F.control == src.control)
 				F.f_mask = src.f_mask
@@ -51,7 +51,7 @@
 		return
 	if(user.stat || user.lying)
 		return
-	if ((get_dist(src, user) > 1 || !istype(src.loc, /turf)) && !isAI(user))
+	if ((BOUNDS_DIST(src, user) > 0 || !istype(src.loc, /turf)) && !isAI(user))
 		return 0
 
 	var/list/gases = list("O2", "N2", "Plasma", "CO2", "N2O")
@@ -89,7 +89,7 @@
 		return	//Who cares if we're dead or whatever let us close the fucking window
 	if(..())
 		return
-	if ((((get_dist(src, usr) <= 1 || usr.telekinesis == 1) || isAI(usr)) && isturf(src.loc)))
+	if ((((BOUNDS_DIST(src, usr) == 0 || usr.telekinesis == 1) || isAI(usr)) && isturf(src.loc)))
 		src.add_dialog(usr)
 		if (src.allowed(usr) || src.emagged && !(status & BROKEN))
 			if (href_list["tg"])	//someone modified the html so I added a check here
@@ -154,6 +154,6 @@
 		status &= ~NOPOWER
 	else
 		status |= NOPOWER
-	SPAWN_DBG(rand(1,15))
+	SPAWN(rand(1,15))
 		src.UpdateIcon()
 	return

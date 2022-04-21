@@ -199,7 +199,7 @@
 	execute(atom/target, mob/user)
 		if (user && istype(user, /mob/dead/observer))
 			var/mob/dead/observer/ghost = user
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				ghost.go_to_vr()
 		..()
 
@@ -212,7 +212,7 @@
 	execute(atom/target, mob/user)
 		if (user && istype(user, /mob/dead/observer))
 			var/mob/dead/observer/ghost = user
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				ghost.respawn_as_animal()
 		..()
 
@@ -228,7 +228,7 @@
 	execute(atom/target, mob/user)
 		if (user && istype(user, /mob/dead/observer))
 			var/mob/dead/observer/ghost = user
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				ghost.respawn_as_mentor_mouse()
 		..()
 
@@ -244,7 +244,7 @@
 	execute(atom/target, mob/user)
 		if (user && istype(user, /mob/dead/observer))
 			var/mob/dead/observer/ghost = user
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				ghost.respawn_as_admin_mouse()
 		..()
 
@@ -257,7 +257,7 @@
 	execute(atom/target, mob/user)
 		if (user && istype(user, /mob/dead/observer))
 			var/mob/dead/observer/ghost = user
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				ghost.enter_ghostdrone_queue()
 		..()
 
@@ -270,7 +270,7 @@
 	execute(atom/target, mob/user)
 		if (user && istype(user, /mob/dead/observer))
 			var/mob/dead/observer/ghost = user
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				ghost.go_to_deadbar()
 		..()
 
@@ -362,7 +362,7 @@
 
 	checkRequirements(atom/target, mob/user)
 		. = FALSE
-		if (GBP && GB && (get_dist(target,user) <= 1 && isliving(user)) && !GB?.occupant)
+		if (GBP && GB && (BOUNDS_DIST(target, user) == 0 && isliving(user)) && !GB?.occupant)
 			. = TRUE
 			GB.show_admin_panel(user)
 
@@ -697,7 +697,7 @@
 		I.play_note(note,user)
 
 	checkRequirements(atom/target, mob/user)
-		. = ((user.equipped() == target) || target.density && target.loc == get_turf(target) && get_dist(user,target)<=1 && istype(target,/obj/item/instrument))
+		. = ((user.equipped() == target) || target.density && target.loc == get_turf(target) && BOUNDS_DIST(user, target) == 0 && istype(target,/obj/item/instrument))
 
 	special
 		icon_background = "key_special"

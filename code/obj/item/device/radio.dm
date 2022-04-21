@@ -74,12 +74,13 @@ var/list/headset_channel_lookup
 
 /obj/item/device/radio/proc/set_secure_frequencies()
 	if(istype(src.secure_frequencies))
+		if (!istype(src.secure_connections))
+			src.secure_connections = list()
 		for (var/sayToken in src.secure_frequencies)
 			var/frequency_id = src.secure_frequencies["[sayToken]"]
 			if (frequency_id)
-				if (!istype(src.secure_connections))
-					src.secure_connections = list()
-				src.secure_connections["[sayToken]"] = MAKE_DEFAULT_RADIO_PACKET_COMPONENT("f[frequency_id]", frequency_id)
+				if (!src.secure_connections["[sayToken]"])
+					src.secure_connections["[sayToken]"] = MAKE_DEFAULT_RADIO_PACKET_COMPONENT("f[frequency_id]", frequency_id)
 			else
 				src.secure_frequencies -= "[sayToken]"
 
@@ -588,7 +589,7 @@ var/list/headset_channel_lookup
 	if ((src.listening && src.wires & WIRE_RECEIVE))
 		if (istype(src, /obj/item/device/radio/intercom))
 			UpdateOverlays(bubbleOverride, "speech_bubble")
-			SPAWN_DBG(1.5 SECONDS)
+			SPAWN(1.5 SECONDS)
 				UpdateOverlays(null, "speech_bubble")
 
 /obj/item/device/radio/examine(mob/user)
@@ -658,6 +659,33 @@ var/list/headset_channel_lookup
 	item_state = "signaler"
 	desc = "A small beacon that is tracked by the Teleporter Computer, allowing things to be sent to its general location."
 	burn_possible = 0
+	anchored = 1
+
+	attack_hand(mob/user)
+		if (src.anchored)
+			boutput(user, "You need to unscrew the [src.name] from the floor first!")
+			return
+		..()
+
+	attackby(obj/item/I as obj, mob/user as mob)
+		if (isscrewingtool(I))
+			if (src.anchored)
+				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+				user.visible_message("[user] unscrews [src] from the floor.", "You unscrew [src] from the floor.", "You hear a screwdriver.")
+				src.anchored = 0
+				return
+			else
+				if (isturf(src.loc))
+					var/turf/T = get_turf(src)
+					if (istype(T, /turf/space))
+						user.show_text("What exactly are you gonna secure [src] to?", "red")
+						return
+					else
+						playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+						user.visible_message("[user] screws [src] to the floor, anchoring it in place.", "You screw [src] to the floor, anchoring it in place.", "You hear a screwdriver.")
+						src.anchored = 1
+						return
+		..()
 
 /obj/item/device/radio/beacon/New()
 	..()
@@ -945,7 +973,7 @@ obj/item/device/radio/signaler/attackby(obj/item/W as obj, mob/user as mob)
 			logTheThing("bombing", usr, null, "signalled a radio on a single-tank bomb at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"].")
 			message_admins("[key_name(usr)] signalled a radio on a single-tank bomb at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"].")
 			SEND_SIGNAL(src.master, COMSIG_BOMB_SIGNAL_START)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.master.receive_signal(signal)
 	for(var/mob/O in hearers(1, src.loc))
 		O.show_message("[bicon(src)] *beep* *beep*", 3, "*beep* *beep*", 2)
@@ -1068,7 +1096,7 @@ obj/item/device/radio/signaler/attackby(obj/item/W as obj, mob/user as mob)
 //Must be standing next to it to talk into it
 /obj/item/device/radio/intercom/loudspeaker/hear_talk(mob/M as mob, msgs, real_name, lang_id)
 	if (src.broadcasting)
-		if (get_dist(src, M) <= 1)
+		if (BOUNDS_DIST(src, M) == 0)
 			talk_into(M, msgs, null, real_name, lang_id)
 
 /obj/item/device/radio/intercom/loudspeaker/examine()

@@ -14,7 +14,7 @@
 
 /obj/item/device/prox_sensor/dropped()
 	..()
-	SPAWN_DBG(0)
+	SPAWN(0)
 		src.sense()
 
 /obj/item/device/prox_sensor/update_icon()
@@ -32,7 +32,7 @@
 /obj/item/device/prox_sensor/proc/sense()
 	if (src.armed == 1)
 		if (src.master)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/datum/signal/signal = get_free_signal()
 				signal.source = src
 				signal.data["message"] = "ACTIVATE"
@@ -96,7 +96,7 @@
 /obj/item/device/prox_sensor/attack_self(mob/user as mob)
 	if (user.stat || user.restrained() || user.lying)
 		return
-	if ((src in user) || (src.master && (src.master in user)) || get_dist(src, user) <= 1 && istype(src.loc, /turf))
+	if ((src in user) || (src.master && (src.master in user)) || BOUNDS_DIST(src, user) == 0 && istype(src.loc, /turf))
 		if (!src.master)
 			src.add_dialog(user)
 		else
@@ -120,7 +120,7 @@
 	..()
 	if (usr.stat || usr.restrained() || usr.lying)
 		return
-	if ((src in usr) || (src.master && (src.master in usr)) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf)))
+	if ((src in usr) || (src.master && (src.master in usr)) || ((BOUNDS_DIST(src, usr) == 0) && istype(src.loc, /turf)))
 		if (!src.master)
 			src.add_dialog(usr)
 		else
@@ -133,7 +133,7 @@
 			var/turf/T = get_turf(src)
 			if (master && istype(master, /obj/item/device/transfer_valve))
 				logTheThing("bombing", usr, null, "[armed ? "armed" : "disarmed"] a proximity device on a transfer valve at [log_loc(T)].")
-				message_admins("[key_name(usr)] [armed ? "armed" : "disarmed"] a proximity device on a transfer valve at [showCoords(T.x, T.y, T.z)].")
+				message_admins("[key_name(usr)] [armed ? "armed" : "disarmed"] a proximity device on a transfer valve at [log_loc(T)].")
 				SEND_SIGNAL(src.master, "[timing ? COMSIG_BOMB_SIGNAL_START : COMSIG_BOMB_SIGNAL_CANCEL]")
 			else if (src.master && istype(src.master, /obj/item/assembly/prox_ignite)) //Prox-detonated beaker assemblies
 				var/obj/item/assembly/rad_ignite/RI = src.master
@@ -153,7 +153,7 @@
 			var/turf/T = get_turf(src)
 			if (master && istype(master, /obj/item/device/transfer_valve))
 				logTheThing("bombing", usr, null, "[timing ? "initiated" : "defused"] a prox-arming timer on a transfer valve at [log_loc(T)].")
-				message_admins("[key_name(usr)] [timing ? "initiated" : "defused"] a prox-arming timer on a transfer valve at [showCoords(T.x, T.y, T.z)].")
+				message_admins("[key_name(usr)] [timing ? "initiated" : "defused"] a prox-arming timer on a transfer valve at [log_loc(T)].")
 				SEND_SIGNAL(src.master, "[timing ? COMSIG_BOMB_SIGNAL_START : COMSIG_BOMB_SIGNAL_CANCEL]")
 			else if (src.master && istype(src.master, /obj/item/assembly/prox_ignite)) //Proximity-detonated beaker assemblies
 				var/obj/item/assembly/rad_ignite/RI = src.master

@@ -12,10 +12,10 @@
 	for(var/obj/machinery/door/window/brigdoor/M in by_type[/obj/machinery/door])
 		if (M.id == src.id)
 			if(M.density)
-				SPAWN_DBG( 0 )
+				SPAWN( 0 )
 					M.open()
 			else
-				SPAWN_DBG( 0 )
+				SPAWN( 0 )
 					M.close()
 	src.updateUsrDialog()
 	return

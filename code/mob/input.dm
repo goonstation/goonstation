@@ -12,7 +12,7 @@
 
 /mob/keys_changed(keys, changed)
 	if (changed & KEY_EXAMINE)
-		if (keys & KEY_EXAMINE && HAS_MOB_PROPERTY(src, PROP_EXAMINE_ALL_NAMES))
+		if (keys & KEY_EXAMINE && HAS_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES))
 			src.client?.get_plane(PLANE_EXAMINE).alpha = 255
 		else
 			src.client?.get_plane(PLANE_EXAMINE).alpha = 0
@@ -71,8 +71,8 @@
 		var/running = 0
 		var/mob/living/carbon/human/H = src
 		if ((keys & KEY_RUN) && \
-		      ((H.get_stamina() > STAMINA_COST_SPRINT && HAS_MOB_PROPERTY(src, PROP_FAILED_SPRINT_FLOP)) ||  H.get_stamina() > STAMINA_SPRINT) && \
-			  !HAS_MOB_PROPERTY(src, PROP_CANTSPRINT))
+		      ((H.get_stamina() > STAMINA_COST_SPRINT && HAS_ATOM_PROPERTY(src, PROP_MOB_FAILED_SPRINT_FLOP)) ||  H.get_stamina() > STAMINA_SPRINT) && \
+			  !HAS_ATOM_PROPERTY(src, PROP_MOB_CANTSPRINT))
 			running = 1
 		if (H.pushing && get_dir(H,H.pushing) != H.move_dir) //Stop pushing before calculating move_delay if we've changed direction
 			H.pushing = 0
@@ -81,7 +81,7 @@
 		var/move_dir = src.move_dir
 		if (move_dir & (move_dir-1))
 			delay *= DIAG_MOVE_DELAY_MULT // actual sqrt(2) unsurprisingly resulted in rounding errors
-		if (src.client && src.client.flying || (ismob(src) && HAS_MOB_PROPERTY(src, PROP_NOCLIP)))
+		if (src.client && src.client.flying || (ismob(src) && HAS_ATOM_PROPERTY(src, PROP_MOB_NOCLIP)))
 			if(isnull(get_step(src, move_dir)))
 				return
 			var/glide = 32 / (running ? 0.5 : 1.5) * world.tick_lag
@@ -128,11 +128,11 @@
 						C.rotate(src.move_dir)
 
 				for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
-					if (get_dist(src, G.affecting) > 1)
+					if (BOUNDS_DIST(src, G.affecting) > 0)
 						qdel(G)
 				for (var/obj/item/grab/G as anything in src.grabbed_by)
-					if (istype(G) && get_dist(src, G.assailant) > 1)
-						if (G.state > 1)
+					if (istype(G) && BOUNDS_DIST(src, G.assailant) > 0)
+						if (G.state > GRAB_STRONG)
 							delay += G.assailant.p_class
 						qdel(G)
 
@@ -178,7 +178,7 @@
 						I.icon_state = "blank"
 						I.pixel_x = src.pixel_x
 						I.pixel_y = src.pixel_y
-						SPAWN_DBG( 20 )
+						SPAWN( 20 )
 							if (I && !I.disposed) qdel(I)
 
 				if (!spacemove) // buh
@@ -200,7 +200,7 @@
 
 					var/do_step = 1 //robust grab : don't even bother if we are in a chokehold. Assailant gets moved below. Makes the tile glide better without having a chain of step(src)->step(assailant)->step(me)
 					for (var/obj/item/grab/G as anything in src.grabbed_by)
-						if (G?.state < GRAB_NECK) continue
+						if (G?.state < GRAB_AGGRESSIVE) continue
 						do_step = 0
 						break
 
@@ -220,7 +220,7 @@
 
 						for (var/obj/item/grab/G as anything in src.grabbed_by)
 							if (G.assailant == pushing || G.affecting == pushing) continue
-							if (G.state < GRAB_NECK) continue
+							if (G.state < GRAB_AGGRESSIVE) continue
 							if (!G.assailant || !isturf(G.assailant.loc) || G.assailant.anchored)
 								return
 							src.set_density(0) //assailant shouldn't be able to bump us here. Density is set to 0 by the grab stuff but *SAFETY!*
@@ -234,7 +234,7 @@
 							if (src.pulling)
 								src.remove_stamina((src.lying ? 3 : 1) * (STAMINA_COST_SPRINT-1))
 
-						if(src.get_stamina() < STAMINA_COST_SPRINT && HAS_MOB_PROPERTY(src, PROP_FAILED_SPRINT_FLOP)) //Check after move rather than before so we cleanly transition from sprint to flop
+						if(src.get_stamina() < STAMINA_COST_SPRINT && HAS_ATOM_PROPERTY(src, PROP_MOB_FAILED_SPRINT_FLOP)) //Check after move rather than before so we cleanly transition from sprint to flop
 							if (!src.client.flying && !src.hasStatus("resting")) //no flop if laying or noclipping
 								//just fall over in place when in space (to prevent zooming)
 								var/turf/current_turf = get_turf(src)
@@ -247,7 +247,7 @@
 
 						var/list/pulling = list()
 						if (src.pulling)
-							if ((!IN_RANGE(old_loc, src.pulling, 1) && !IN_RANGE(src, src.pulling, 1)) || !isturf(src.pulling.loc) || src.pulling == src) // fucks sake
+							if ((BOUNDS_DIST(old_loc, src.pulling) > 0 && BOUNDS_DIST(src, src.pulling) > 0) || !isturf(src.pulling.loc) || src.pulling == src) // fucks sake
 								src.remove_pulling()
 								//hud.update_pulling() // FIXME
 							else

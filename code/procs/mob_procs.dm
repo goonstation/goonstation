@@ -94,7 +94,11 @@
 	if (!I)
 		return 0
 	if (!src.put_in_hand(I))
+		#ifdef UPSCALED_MAP
+		I.set_loc(get_turf(src))
+		#else
 		I.set_loc(get_turf(I))
+		#endif
 		return 1
 	return 1
 
@@ -129,6 +133,8 @@
 
 	if (movedelay < slip_delay)
 		var/intensity = (-0.33)+(6.033763-(-0.33))/(1+(movement_delay_real/(0.4))-1.975308)  //y=d+(6.033763-d)/(1+(x/c)-1.975308)
+		if (traitHolder && traitHolder.hasTrait("super_slips"))
+			intensity = max(intensity, 12) //the 12 is copied from the range of lube slips because that's what I'm trying to emulate
 		var/throw_range = min(round(intensity),50)
 		if (intensity < 1 && intensity > 0 && throw_range <= 0)
 			throw_range = max(throw_range,1)
@@ -234,6 +240,8 @@
 	if (animation_duration <= 0)
 		return
 
+	if (check_target_immunity(src))
+		return 0
 	// Target checks.
 	var/mod_animation = 0 // Note: these aren't multipliers.
 	var/mod_weak = 0
@@ -479,7 +487,7 @@
 	return 0
 
 /mob/living/carbon/human/get_explosion_resistance()
-	return min(GET_MOB_PROPERTY(src, PROP_EXPLOPROT), 100) / 100
+	return min(GET_ATOM_PROPERTY(src, PROP_MOB_EXPLOPROT), 100) / 100
 
 /mob/proc/spread_blood_clothes(mob/whose)
 	return
@@ -558,7 +566,7 @@
 	if (!old || !newbody || !ishuman(old) || !ishuman(newbody))
 		return
 
-	SPAWN_DBG(2 SECONDS) // OrganHolders etc need time to initialize. Transferring inventory doesn't.
+	SPAWN(2 SECONDS) // OrganHolders etc need time to initialize. Transferring inventory doesn't.
 		if (copy_organs && old && newbody && old.organHolder && newbody.organHolder)
 			if (old.organHolder.skull && (old.organHolder.skull.type != newbody.organHolder.skull.type))
 				var/obj/item/organ/NO = new old.organHolder.skull.type(newbody)
@@ -716,7 +724,7 @@
 			old.u_equip(CI15)
 			newbody.equip_if_possible(CI15, slot_r_hand)
 
-	SPAWN_DBG(2 SECONDS) // Necessary.
+	SPAWN(2 SECONDS) // Necessary.
 		if (newbody)
 			newbody.set_face_icon_dirty()
 			newbody.set_body_icon_dirty()
@@ -749,7 +757,7 @@
 	var/datum/gang/gang_to_see = null
 	var/PWT_to_see = null
 
-	if (isadminghost(src) || src.client?.adventure_view)
+	if (isadminghost(src) || src.client?.adventure_view || current_state >= GAME_STATE_FINISHED)
 		see_everything = 1
 	else
 		if (istype(ticker.mode, /datum/game_mode/revolution))
@@ -924,18 +932,18 @@
 			for (var/datum/mind/M in HR)
 				if (M.current)
 					if (!see_everything && isobserver(M.current)) continue
-					var/I = image(antag_revhead, loc = M.current)
+					var/I = image(antag_revhead, loc = M.current, icon_state = null, layer = (EFFECTS_LAYER_UNDER_4 + 0.1)) //secHuds are on EFFECTS_LAYER_UNDER_4
 					can_see.Add(I)
 			for (var/datum/mind/M in RR)
 				if (M.current)
 					if (!see_everything && isobserver(M.current)) continue
-					var/I = image(antag_rev, loc = M.current)
+					var/I = image(antag_rev, loc = M.current, icon_state = null, layer = (EFFECTS_LAYER_UNDER_4 + 0.1))
 					can_see.Add(I)
 
 		if (see_heads || see_everything)
 			for (var/datum/mind/M in heads)
 				if (M.current)
-					var/I = image(antag_head, loc = M.current)
+					var/I = image(antag_head, loc = M.current, icon_state = null, layer = (EFFECTS_LAYER_UNDER_4 + 0.1))
 					can_see.Add(I)
 
 	else if (istype(ticker.mode, /datum/game_mode/nuclear))
@@ -1054,7 +1062,7 @@
 
 		if (S == "door" && istype(target, /obj/machinery/door))
 			var/obj/machinery/door/door = target
-			SPAWN_DBG(0)
+			SPAWN(0)
 				door.tear_apart(src)
 			return 1
 
@@ -1135,8 +1143,8 @@
 	ghost_invisibility = new_invis
 	for (var/mob/dead/observer/G in mobs)
 		G.invisibility = new_invis
-		REMOVE_MOB_PROPERTY(G, PROP_INVISIBILITY, G)
-		APPLY_MOB_PROPERTY(G, PROP_INVISIBILITY, G, new_invis)
+		REMOVE_ATOM_PROPERTY(G, PROP_MOB_INVISIBILITY, G)
+		APPLY_ATOM_PROPERTY(G, PROP_MOB_INVISIBILITY, G, new_invis)
 		if (new_invis != prev_invis && (new_invis == 0 || prev_invis == 0))
 			boutput(G, "<span class='notice'>You are [new_invis == 0 ? "now" : "no longer"] visible to the living!</span>")
 

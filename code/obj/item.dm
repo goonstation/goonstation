@@ -24,7 +24,8 @@
 	var/burn_possible = 1 //cogwerks fire project - can object catch on fire - let's have all sorts of shit burn at hellish temps
 	//MBC : im shit. change burn_possible to '2' if you want it to pool itself instead of qdeling when burned
 	var/burning = null
-	var/health = 4 //burn faster
+	/// How long an item takes to burn (or be consumed by other means), based on the weight class if no value is set
+	var/health = null
 	var/burn_point = 15000  //this already exists but nothing uses it???
 	var/burn_output = 1500 //how hot should it burn
 	var/burn_type = 0 //0 = ash, 1 = melt
@@ -204,7 +205,7 @@
 			var/show = 1
 
 			if (!lastTooltipContent || !lastTooltipTitle || tooltip_flags & REBUILD_ALWAYS\
-			 || (HAS_MOB_PROPERTY(usr, PROP_SPECTRO) && tooltip_flags & REBUILD_SPECTRO)\
+			 || (HAS_ATOM_PROPERTY(usr, PROP_MOB_SPECTRO) && tooltip_flags & REBUILD_SPECTRO)\
 			 || (usr != lastTooltipUser && tooltip_flags & REBUILD_USER)\
 			 || (get_dist(src, usr) != lastTooltipDist && tooltip_flags & REBUILD_DIST))
 				tooltip_rebuild = 1
@@ -296,6 +297,12 @@
 		if (src.amount != 1)
 			// this is a gross hack to make things not just show "1" by default
 			src.inventory_counter.update_number(src.amount)
+	if (isnull(src.health))
+		switch (src.w_class)
+			if (W_CLASS_TINY to W_CLASS_NORMAL)
+				src.health = src.w_class + 1
+			else
+				src.health = src.w_class + 2
 	..()
 
 /obj/item/set_loc(var/newloc as turf|mob|obj in world)
@@ -376,12 +383,12 @@
 
 		if (src.reagents && src.reagents.total_volume)
 			src.reagents.reaction(M, INGEST)
-			SPAWN_DBG(0.5 SECONDS) // Necessary.
+			SPAWN(0.5 SECONDS) // Necessary.
 				src.reagents.trans_to(M, src.reagents.total_volume/src.amount)
 
 		playsound(M.loc,"sound/items/eatfood.ogg", rand(10, 50), 1)
 		eat_twitch(M)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if (!src || !M || !user)
 				return
 			SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED, user, src)
@@ -397,7 +404,7 @@
 
 		if (!do_mob(user, M))
 			return 0
-		if (get_dist(user,M) > 1)
+		if (BOUNDS_DIST(user, M) > 0)
 			return 0
 
 		user.tri_message("<span class='alert'><b>[user]</b> feeds [M] [src]!</span>",\
@@ -410,12 +417,12 @@
 
 		if (src.reagents && src.reagents.total_volume)
 			src.reagents.reaction(M, INGEST)
-			SPAWN_DBG(0.5 SECONDS) // Necessary.
+			SPAWN(0.5 SECONDS) // Necessary.
 				src.reagents.trans_to(M, src.reagents.total_volume)
 
 		playsound(M.loc, "sound/items/eatfood.ogg", rand(10, 50), 1)
 		eat_twitch(M)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if (!src || !M || !user)
 				return
 			SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED, user, src)
@@ -497,11 +504,11 @@
 				var/obj/chem_smoke/C = new/obj/chem_smoke(location, reagents, max_vol)
 				C.overlays += I
 				if (rname) C.name = "[rname] smoke"
-				SPAWN_DBG(0)
+				SPAWN(0)
 					var/my_dir = the_dir
 					var/my_time = rand(80,110)
 					var/my_range = 3
-					SPAWN_DBG(my_time) qdel(C)
+					SPAWN(my_time) qdel(C)
 					for(var/b=0, b<my_range, b++)
 						sleep(1.5 SECONDS)
 						if (!C) break
@@ -602,7 +609,7 @@
 
 /obj/item/MouseDrop_T(atom/movable/O as obj, mob/user as mob)
 	..()
-	if (max_stack > 1 && src.loc == user && get_dist(O, user) <= 1 && check_valid_stack(O))
+	if (max_stack > 1 && src.loc == user && BOUNDS_DIST(O, user) == 0 && check_valid_stack(O))
 		if ( src.amount >= max_stack)
 			failed_stack(O, user)
 			return
@@ -630,7 +637,7 @@
 #define src_exists_inside_user_or_user_storage (src.loc == user || (istype(src.loc, /obj/item/storage) && src.loc.loc == user))
 
 
-/obj/item/MouseDrop(atom/over_object, src_location, over_location, over_control, params)
+/obj/item/mouse_drop(atom/over_object, src_location, over_location, over_control, params)
 	..()
 
 	if (!src.anchored)
@@ -649,7 +656,7 @@
 		if (user == over_object)
 			actions.start(new /datum/action/bar/private/icon/pickup(src), user)
 		//else // use laterr, after we improve the 'give' dialog to work with multicontext
-		//	if (get_dist(user,over_object) <= 1 && src_exists_inside_usr_or_usr_storage)
+		//	if (BOUNDS_DIST(user, over_object) == 0 && src_exists_inside_usr_or_usr_storage)
 		//		user.give_to(over_object)
 	else
 
@@ -734,7 +741,7 @@
 		src.pick_up_by(user)
 		var/succ = user.is_in_hands(src)
 		if (succ)
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				if (user.is_in_hands(src))
 					storage.Attackby(src, user)
 			return
@@ -747,7 +754,7 @@
 			src.pick_up_by(user)
 			var/succ = user.is_in_hands(src)
 			if (succ)
-				SPAWN_DBG(1 DECI SECOND)
+				SPAWN(1 DECI SECOND)
 					if (user.is_in_hands(src))
 						S.sendclick(params, user)
 
@@ -875,7 +882,20 @@
 		STOP_TRACKING_CAT(TR_CAT_BURNING_ITEMS)
 	burning_last_process = src.burning
 
+/// Call this proc inplace of attack_self(...)
+/obj/item/proc/AttackSelf(mob/user as mob)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	. = SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SELF, user)
+	if(!.)
+		. = src.attack_self(user)
+
+/**
+ * DO NOT CALL THIS PROC - Call AttackSelf(...) Instead!
+ *
+ * Only override this proc!
+ */
 /obj/item/proc/attack_self(mob/user)
+	PROTECTED_PROC(TRUE)
 	if (src.temp_flags & IS_LIMB_ITEM)
 		if (istype(src.loc,/obj/item/parts/human_parts/arm/left/item))
 			var/obj/item/parts/human_parts/arm/left/item/I = src.loc
@@ -885,8 +905,6 @@
 			var/obj/item/parts/human_parts/arm/right/item/I = src.loc
 			I.remove_from_mob()
 			I.set_item(src)
-
-	SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SELF, user)
 
 	chokehold?.attack_self(user)
 
@@ -946,7 +964,13 @@
 		equipment_proxy.additive_slowdown -= spacemove
 		equipment_proxy.space_movement -= spacemove
 
+/obj/item/proc/AfterAttack(atom/target, mob/user, reach, params)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	SEND_SIGNAL(src, COMSIG_ITEM_AFTERATTACK, target, user, reach, params)
+	. = src.afterattack(target, user, reach, params)
+
 /obj/item/proc/afterattack(atom/target, mob/user, reach, params)
+	PROTECTED_PROC(TRUE)
 	return
 
 /obj/item/dummy/ex_act()
@@ -1024,7 +1048,7 @@
 			if (istype(HH.limb,/datum/limb/small_critter))
 				if (M.equipped())
 					M.drop_item()
-					SPAWN_DBG(1 DECI SECOND)
+					SPAWN(1 DECI SECOND)
 						HH.limb.attack_hand(src,M,1)
 				else
 					HH.limb.attack_hand(src,M,1)
@@ -1037,7 +1061,7 @@
 			arm = H.hand ? H.limbs.l_arm : H.limbs.r_arm // I'm so sorry I couldent kill all this shitcode at once
 		if (H.equipped())
 			H.drop_item()
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				if (arm)
 					arm.limb_data.attack_hand(src, H, can_reach(H, src))
 		else if (arm)
@@ -1047,7 +1071,7 @@
 		//the verb is PICK-UP, not 'smack this object with that object'
 		if (M.equipped())
 			M.drop_item()
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				src.Attackhand(M)
 		else
 			src.Attackhand(M)
@@ -1177,14 +1201,14 @@
 		return
 
 	if(hasProperty("frenzy"))
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/frenzy = getProperty("frenzy")
 			click_delay -= frenzy
 			sleep(3 SECONDS)
 			click_delay += frenzy
 /*
 	if(hasProperty("Momentum"))
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/momentum = getProperty("momemtum")
 			force += 5
 */
@@ -1406,7 +1430,7 @@
 
 	//qdel(src)
 
-	SPAWN_DBG(rand(150,200))
+	SPAWN(rand(150,200))
 		if (new_arm.remove_stage == 2) new_arm.remove()
 
 	return
@@ -1424,7 +1448,6 @@
 	disposing_abilities()
 	setItemSpecial(null)
 	if (src.inventory_counter)
-		src.inventory_counter.vis_locs = null
 		qdel(src.inventory_counter)
 		src.inventory_counter = null
 
@@ -1532,10 +1555,14 @@
 		msg += " Turf contains <b>fluid</b> [log_reagents(T.active_liquid.group)]."
 	if (T.active_airborne_liquid?.group)
 		msg += " Turf contains <b>smoke</b> [log_reagents(T.active_airborne_liquid.group)]."
+	if (locate(/obj/item) in T.contents)
+		var/obj/item/W = locate(/obj/item) in T.contents
+		if (istype(W.material, /datum/material/crystal/plasmastone))
+			msg += " Turf contains <b>plasmastone</b>."
 	logTheThing("bombing", M, null, "[msg]")
 
 /obj/item/proc/dropped(mob/user)
-	SPAWN_DBG(0) //need to spawn to know if we've been dropped or thrown instead
+	SPAWN(0) //need to spawn to know if we've been dropped or thrown instead
 		if ((firesource == FIRESOURCE_OPEN_FLAME) && throwing)
 			RegisterSignal(src, COMSIG_MOVABLE_THROW_END, .proc/log_firesource)
 		else if (firesource == FIRESOURCE_OPEN_FLAME)

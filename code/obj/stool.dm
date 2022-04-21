@@ -25,12 +25,14 @@
 	flags = FPRINT | FLUID_SUBMERGE
 	throwforce = 10
 	pressure_resistance = 3*ONE_ATMOSPHERE
+	layer = STORAGE_LAYER //dumb
 	var/allow_unbuckle = 1
 	var/mob/living/buckled_guy = null
 	var/deconstructable = 1
 	var/securable = 0
 	var/list/scoot_sounds = null
 	var/parts_type = /obj/item/furniture_parts/stool
+	material_amt = 0.1
 
 	New()
 		if (!src.anchored && src.securable) // we're able to toggle between being secured to the floor or not, and we started unsecured
@@ -81,8 +83,23 @@
 		else
 			return ..()
 
-	proc/can_buckle(var/mob/M, var/mob/user)
-		.= 0
+	proc/can_buckle(var/mob/living/to_buckle, var/mob/user)
+		if (!istype(to_buckle) || isintangible(to_buckle)) //no buckling AI-eyes
+			return FALSE
+		if (!ticker)
+			boutput(user, "You can't buckle anyone in before the game starts.")
+			return FALSE
+		if (to_buckle.buckled)
+			boutput(user, "They're already buckled into something!", "red")
+			return FALSE
+		if (BOUNDS_DIST(src, user) > 0 || to_buckle.loc != src.loc || user.restrained() || is_incapacitated(user) || !isalive(user))
+			return FALSE
+		if (user.hasStatus("weakened"))
+			return FALSE
+		if (src.buckled_guy && src.buckled_guy.buckled == src && to_buckle != src.buckled_guy)
+			user.show_text("There's already someone buckled in [src]!", "red")
+			return FALSE
+		return TRUE
 
 	proc/buckle_in(mob/living/to_buckle, mob/living/user, var/stand = 0) //Handles the actual buckling in
 		if (!can_buckle(to_buckle,user))
@@ -180,7 +197,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (src.auto && ispath(src.auto_path))
 				src.set_up(1)
 
@@ -280,6 +297,7 @@
 	var/security = 0
 	var/obj/item/clothing/suit/bedsheet/Sheet = null
 	parts_type = /obj/item/furniture_parts/bed
+	material_amt = 0.2
 
 	brig
 		name = "brig cell bed"
@@ -329,33 +347,12 @@
 		return
 
 	can_buckle(var/mob/living/C, var/mob/user)
-		if (!C || (C.loc != src.loc))
-			return 0// yeesh
-
-		if (get_dist(src, user) > 1)
-			user.show_text("[src] is too far away!", "red")
-			return 0
-
-		if(src.buckled_guy && src.buckled_guy.buckled == src)
-			user.show_text("There's already someone buckled in [src]!", "red")
-			return 0
-
-		if (!ticker)
-			user.show_text("You can't buckle anyone in before the game starts.", "red")
-			return 0
-		if (C.buckled)
-			boutput(user, "They're already buckled into something!", "red")
-			return 0
+		if (!..())
+			return FALSE
 		if (src.security)
 			user.show_text("There's nothing you can buckle them to!", "red")
-			return 0
-		if (get_dist(src, user) > 1)
-			user.show_text("[src] is too far away!", "red")
-			return 0
-		if ((!(isliving(C)) || C.loc != src.loc || user.restrained() || is_incapacitated(user) ))
-			return 0
-
-		return 1
+			return FALSE
+		return TRUE
 
 	proc/unbuckle_mob(var/mob/M as mob, var/mob/user as mob)
 		if (M.buckled && !user.restrained())
@@ -463,7 +460,7 @@
 		src.Sheet = null
 
 	MouseDrop_T(atom/A as mob|obj, mob/user as mob)
-		if (get_dist(src, user) > 1 || A.loc != src.loc || user.restrained() || !isalive(user))
+		if (BOUNDS_DIST(src, user) > 0 || A.loc != src.loc || user.restrained() || !isalive(user))
 			..()
 		else if (istype(A, /obj/item/clothing/suit/bedsheet))
 			if ((!src.Sheet || (src.Sheet && src.Sheet.loc != src.loc)) && A.loc == src.loc)
@@ -538,6 +535,7 @@
 	anchored = 1
 	scoot_sounds = list( 'sound/misc/chair/normal/scoot1.ogg', 'sound/misc/chair/normal/scoot2.ogg', 'sound/misc/chair/normal/scoot3.ogg', 'sound/misc/chair/normal/scoot4.ogg', 'sound/misc/chair/normal/scoot5.ogg' )
 	parts_type = null
+	material_amt = 0.1
 
 	moveable
 		anchored = 0
@@ -649,12 +647,13 @@
 			user.visible_message("<b>[user.name] folds [src].</b>")
 			if ((chair_chump) && (chair_chump != user))
 				chair_chump.visible_message("<span class='alert'><b>[chair_chump.name] falls off of [src]!</b></span>")
-				chair_chump.on_chair = 0
+				chair_chump.on_chair = null
 				chair_chump.pixel_y = 0
 				chair_chump.changeStatus("weakened", 1 SECOND)
 				chair_chump.changeStatus("stunned", 2 SECONDS)
 				random_brute_damage(chair_chump, 15)
 				playsound(chair_chump.loc, "swing_hit", 50, 1)
+				chair_chump.end_chair_flip_targeting()
 
 			var/obj/item/chair/folded/C = null
 			if(istype(src, /obj/stool/chair/syndicate))
@@ -692,32 +691,12 @@
 					user.unlock_medal("Leave no man behind!", 1)
 		return
 
-	MouseDrop(atom/over_object as mob|obj)
-		if(get_dist(src,usr) <= 1)
+	mouse_drop(atom/over_object as mob|obj)
+		if(BOUNDS_DIST(src,usr) == 0)
 			src.rotate(get_dir(get_turf(src),get_turf(over_object)))
 		..()
 
-	can_buckle(var/mob/M, var/mob/user)
-		if (!ticker)
-			boutput(user, "You can't buckle anyone in before the game starts.")
-			return 0
-		if (M.buckled)
-			boutput(user, "They're already buckled into something!", "red")
-			return 0
-		if (!( isliving(M) ) || get_dist(src, user) > 1 || M.loc != src.loc || user.restrained() || !isalive(user))
-			return 0
-		if(src.buckled_guy && src.buckled_guy.buckled == src && src.buckled_guy != M)
-			user.show_text("There's already someone buckled in [src]!", "red")
-			return 0
-		return 1
-
 	buckle_in(mob/living/to_buckle, mob/living/user, var/stand = 0)
-		if(!istype(to_buckle))
-			return FALSE
-		if(user.hasStatus("weakened"))
-			return FALSE
-		if(src.buckled_guy && src.buckled_guy.buckled == src && to_buckle != src.buckled_guy)
-			return FALSE
 		if (!can_buckle(to_buckle,user))
 			return FALSE
 
@@ -766,19 +745,19 @@
 
 		M.end_chair_flip_targeting()
 
-		if (istype(H) && H.on_chair)// == 1)
+		if (istype(H) && H.on_chair)
 			M.pixel_y = 0
 			reset_anchored(M)
 			M.buckled = null
 			buckled_guy.force_laydown_standup()
-			SPAWN_DBG(0.5 SECONDS)
-				H.on_chair = 0
+			SPAWN(0.5 SECONDS)
+				H.on_chair = null
 				src.buckledIn = 0
 		else if ((M.buckled))
 			reset_anchored(M)
 			M.buckled = null
 			buckled_guy.force_laydown_standup()
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				src.buckledIn = 0
 
 		src.buckled_guy = null
@@ -873,9 +852,9 @@
 	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 
 	HasProximity(atom/movable/AM as mob|obj)
-		if (isliving(AM) && prob(40))
+		if (isliving(AM) && !isintangible(AM) && prob(40) && !AM.hasStatus("weakened"))
 			src.visible_message("<span class='alert'>[src] trips [AM]!</span>", "<span class='alert'>You hear someone fall.</span>")
-			AM:changeStatus("weakened", 2 SECONDS)
+			AM.changeStatus("weakened", 2 SECONDS)
 		return
 
 /* ======================================================= */
@@ -895,6 +874,7 @@
 	stamina_damage = 45
 	stamina_cost = 21
 	stamina_crit_chance = 10
+	material_amt = 0.1
 	var/c_color = null
 
 	New()
@@ -1389,7 +1369,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 			if (src)
 				if (!(src.part1 && istype(src.part1)))
 					src.part1 = new /obj/item/assembly/shock_kit(src)

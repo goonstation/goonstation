@@ -4,7 +4,7 @@
 	if (!M)
 		return "<span class='alert'>ERROR: NO SUBJECT DETECTED</span>"
 
-	if (isghostdrone(M))
+	if (issilicon(M))
 		return "<span class='alert'>ERROR: INVALID DATA FROM SUBJECT</span>"
 
 	if(visible)
@@ -378,20 +378,25 @@
 				R["cdi_d"] = "No notes."
 	return
 
+/proc/scan_health_generate_text(var/mob/M)
+	var/h_pct = M.max_health ? round(100 * M.health / M.max_health) : M.health
+	if(M.max_health <= 0)
+		h_pct = "???"
+	var/oxy = round(M.get_oxygen_deprivation())
+	var/tox = round(M.get_toxin_damage())
+	var/burn = round(M.get_burn_damage())
+	var/brute = round(M.get_brute_damage())
+
+	return "<span class='ol c pixel'><span class='vga'>[h_pct]%</span>\n<span style='color: #40b0ff;'>[oxy]</span> - <span style='color: #33ff33;'>[tox]</span> - <span style='color: #ffee00;'>[burn]</span> - <span style='color: #ff6666;'>[brute]</span></span>"
+
+
 // output a health pop-up overhead thing to the client
 /proc/scan_health_overhead(var/mob/M as mob, var/mob/C as mob) // M is who we're scanning, C is who to give the overhead to
 	if (C.client && !C.client.preferences?.flying_chat_hidden)
 
 		var/image/chat_maptext/chat_text = null
-		var/h_pct = M.max_health ? round(100 * M.health / M.max_health) : M.health
-		if(M.max_health <= 0)
-			h_pct = "???"
-		var/oxy = round(M.get_oxygen_deprivation())
-		var/tox = round(M.get_toxin_damage())
-		var/burn = round(M.get_burn_damage())
-		var/brute = round(M.get_brute_damage())
+		var/popup_text = scan_health_generate_text(M)
 
-		var/popup_text = "<span class='ol c pixel'><span class='vga'>[h_pct]%</span>\n<span style='color: #40b0ff;'>[oxy]</span> - <span style='color: #33ff33;'>[tox]</span> - <span style='color: #ffee00;'>[burn]</span> - <span style='color: #ff6666;'>[brute]</span></span>"
 		chat_text = make_chat_maptext(M, popup_text, force = 1)
 		if(chat_text)
 			chat_text.measure(C.client)
@@ -427,7 +432,7 @@
 	record_prog.active1 = GR
 	record_prog.active2 = MR
 	record_prog.mode = 1
-	pda.attack_self(usr)
+	pda.AttackSelf(usr)
 
 /proc/scan_reagents(var/atom/A as turf|obj|mob, var/show_temp = 1, var/single_line = 0, var/visible = 0, var/medical = 0)
 	if (!A)
@@ -505,11 +510,11 @@
 			if (WG.glove_ID)
 				glove_data += "[WG.glove_ID] (<span class='notice'>[H]'s worn [WG.name]</span>)"
 			if (!WG.hide_prints)
-				fingerprint_data += "<br><span class='notice'>[H]'s fingerprints:</span> [H.bioHolder.uid_hash]"
+				fingerprint_data += "<br><span class='notice'>[H]'s fingerprints:</span> [H.bioHolder.fingerprints]"
 			else
 				fingerprint_data += "<br><span class='notice'>Unable to scan [H]'s fingerprints.</span>"
 		else
-			fingerprint_data += "<br><span class='notice'>[H]'s fingerprints:</span> [H.bioHolder.uid_hash]"
+			fingerprint_data += "<br><span class='notice'>[H]'s fingerprints:</span> [H.bioHolder.fingerprints]"
 
 		if (H.gunshot_residue) // Left by firing a kinetic gun.
 			forensic_data += "<br><span class='notice'>Gunshot residue found.</span>"
@@ -670,7 +675,7 @@
 	return data
 
 // Made this a global proc instead of 10 or so instances of duplicate code spread across the codebase (Convair880).
-/proc/scan_atmospheric(var/atom/A as turf|obj, var/pda_readout = 0, var/simple_output = 0, var/visible = 0)
+/proc/scan_atmospheric(var/atom/A as turf|obj, var/pda_readout = 0, var/simple_output = 0, var/visible = 0, var/alert_output = 0)
 	if (istype(A, /obj/ability_button))
 		return
 	if (!A)
@@ -733,9 +738,13 @@
 			[CONCENTRATION_REPORT(check_me, "<br>")]\
 			Temperature: [round(check_me.temperature - T0C)]&deg;C<br>"
 
-		else if (simple_output == 1) // For the log_atmos() proc.
+		else if (simple_output) // For the log_atmos() proc.
 			data = "(<b>Pressure:</b> <i>[round(pressure, 0.1)] kPa</i>, <b>Temp:</b> <i>[round(check_me.temperature - T0C)]&deg;C</i>\
 			, <b>Contents:</b> <i>[CONCENTRATION_REPORT(check_me, ", ")]</i>"
+
+		else if (alert_output) // For the alert_atmos() proc.
+			data = "(<b>Pressure:</b> <i>[round(pressure, 0.1)] kPa</i>, <b>Temp:</b> <i>[round(check_me.temperature - T0C)]&deg;C</i>\
+			, <b>Contents:</b> <i>[SIMPLE_CONCENTRATION_REPORT(check_me, ", ")]</i>"
 
 		else
 			data = "--------------------------------<br>\

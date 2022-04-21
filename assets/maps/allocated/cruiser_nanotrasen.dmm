@@ -1,0 +1,342 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/turf/simulated/floor/shuttlebay,
+/area/cruiser/nanotrasen/lower)
+"b" = (
+/turf/unsimulated/wall/setpieces/leadwall,
+/area/cruiser/nanotrasen/upper)
+"c" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 10
+	},
+/area/cruiser/nanotrasen/lower)
+"d" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 10
+	},
+/area/cruiser/nanotrasen/upper)
+"e" = (
+/obj/machinery/cruiser_camera_screen,
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 4
+	},
+/area/cruiser/nanotrasen/lower)
+"g" = (
+/obj/machinery/cruiser_camera_screen,
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 4
+	},
+/area/cruiser/nanotrasen/upper)
+"h" = (
+/obj/machinery/cruiser_destroyable/cable_panel,
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 4
+	},
+/area/cruiser/nanotrasen/lower)
+"i" = (
+/obj/machinery/cruiser_destroyable/cruiser_component_slot/weapon/left,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor,
+/area/cruiser/nanotrasen/upper)
+"j" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 4
+	},
+/area/cruiser/nanotrasen/lower)
+"m" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 9
+	},
+/area/cruiser/nanotrasen/lower)
+"n" = (
+/obj/machinery/manufacturer/pod_wars/syndicate,
+/turf/simulated/floor,
+/area/cruiser/nanotrasen/lower)
+"o" = (
+/turf/simulated/floor,
+/area/cruiser/nanotrasen/upper)
+"p" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 6
+	},
+/area/cruiser/nanotrasen/upper)
+"q" = (
+/turf/simulated/floor/shuttlebay,
+/area/cruiser/nanotrasen/lower)
+"r" = (
+/turf/cordon,
+/area/cordon)
+"v" = (
+/obj/machinery/cruiser_destroyable/cruiser_pod/movement{
+	pixel_x = -22
+	},
+/turf/simulated/floor,
+/area/cruiser/nanotrasen/upper)
+"z" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/obj/rack,
+/obj/item/tile/steel/fullstack,
+/obj/item/rods/steel/fullstack,
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = 6;
+	pixel_y = -3
+	},
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = 2
+	},
+/obj/item/extinguisher{
+	pixel_x = -1;
+	pixel_y = 5
+	},
+/obj/item/extinguisher{
+	pixel_x = -6;
+	pixel_y = 7
+	},
+/turf/simulated/floor,
+/area/cruiser/nanotrasen/lower)
+"A" = (
+/obj/machinery/cruiser_destroyable/cruiser_component_slot/life_support,
+/turf/unsimulated/wall/setpieces/leadwall,
+/area/cruiser/nanotrasen/upper)
+"C" = (
+/obj/machinery/cruiser_destroyable/cruiser_exit,
+/turf/unsimulated/wall/setpieces/leadwall,
+/area/cruiser/nanotrasen/lower)
+"E" = (
+/turf/unsimulated/wall/setpieces/leadwall,
+/area/cruiser/nanotrasen/lower)
+"F" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/ladder/cruiser/nanotrasen{
+	icon_state = "ladder_wall";
+	pixel_y = 20
+	},
+/turf/simulated/floor/shuttlebay,
+/area/cruiser/nanotrasen/lower)
+"I" = (
+/obj/machinery/cruiser_destroyable/cruiser_pod/security{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/simulated/floor,
+/area/cruiser/nanotrasen/upper)
+"K" = (
+/obj/machinery/cruiser_destroyable/cruiser_component_slot/weapon/right,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor,
+/area/cruiser/nanotrasen/upper)
+"M" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/obj/rack,
+/obj/item/weldingtool{
+	pixel_x = -7
+	},
+/obj/item/crowbar{
+	pixel_x = -2;
+	pixel_y = 1
+	},
+/obj/item/crowbar{
+	pixel_x = -2;
+	pixel_y = 4
+	},
+/obj/item/weldingtool{
+	pixel_x = -3
+	},
+/obj/item/wirecutters{
+	pixel_y = -7
+	},
+/obj/item/wirecutters{
+	pixel_x = -4;
+	pixel_y = -7
+	},
+/obj/item/wrench{
+	pixel_x = 10;
+	pixel_y = -2
+	},
+/obj/item/wrench{
+	pixel_x = 6;
+	pixel_y = -2
+	},
+/obj/item/screwdriver{
+	pixel_x = 13;
+	pixel_y = -6
+	},
+/obj/item/screwdriver{
+	pixel_x = 11;
+	pixel_y = -4
+	},
+/turf/simulated/floor,
+/area/cruiser/nanotrasen/lower)
+"N" = (
+/obj/landmark/cruiser_center,
+/turf/simulated/floor,
+/area/cruiser/nanotrasen/upper)
+"O" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 9
+	},
+/area/cruiser/nanotrasen/upper)
+"P" = (
+/obj/machinery/cruiser_status_panel,
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 4
+	},
+/area/cruiser/nanotrasen/lower)
+"Q" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 5
+	},
+/area/cruiser/nanotrasen/upper)
+"R" = (
+/obj/landmark/cruiser_entrance,
+/turf/simulated/floor/shuttlebay,
+/area/cruiser/nanotrasen/lower)
+"S" = (
+/obj/ladder/cruiser/nanotrasen,
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/cruiser/nanotrasen/upper)
+"T" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 6
+	},
+/area/cruiser/nanotrasen/lower)
+"U" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 5
+	},
+/area/cruiser/nanotrasen/lower)
+"W" = (
+/obj/machinery/cruiser_status_panel,
+/turf/unsimulated/wall/setpieces/leadwall,
+/area/cruiser/nanotrasen/upper)
+"Y" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 4
+	},
+/area/cruiser/nanotrasen/upper)
+"Z" = (
+/obj/machinery/cruiser_destroyable/cruiser_component_slot/engine,
+/turf/simulated/floor,
+/area/cruiser/nanotrasen/upper)
+
+(1,1,1) = {"
+r
+r
+r
+r
+r
+r
+r
+r
+r
+r
+r
+r
+r
+"}
+(2,1,1) = {"
+r
+O
+b
+A
+b
+d
+r
+m
+E
+E
+E
+c
+r
+"}
+(3,1,1) = {"
+r
+Y
+v
+o
+i
+Y
+r
+e
+z
+n
+M
+e
+r
+"}
+(4,1,1) = {"
+r
+Y
+S
+N
+Z
+g
+r
+j
+F
+a
+a
+j
+r
+"}
+(5,1,1) = {"
+r
+Y
+I
+o
+K
+Y
+r
+P
+q
+R
+q
+h
+r
+"}
+(6,1,1) = {"
+r
+Q
+b
+W
+b
+p
+r
+U
+E
+C
+E
+T
+r
+"}
+(7,1,1) = {"
+r
+r
+r
+r
+r
+r
+r
+r
+r
+r
+r
+r
+r
+"}

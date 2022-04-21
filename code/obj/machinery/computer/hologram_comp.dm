@@ -11,7 +11,7 @@
 
 /obj/machinery/computer/hologram_comp/New()
 	..()
-	SPAWN_DBG( 10 )
+	SPAWN( 10 )
 		src.projector = locate(/obj/machinery/hologram_proj, get_step(src.loc, NORTH))
 		return
 	return
@@ -52,7 +52,6 @@
 		if (href_list["power"])
 			if (src.projector.projection)
 				src.projector.icon_state = "hologram0"
-				//src.projector.projection = null
 				qdel(src.projector.projection)
 			else
 				src.projector.projection = new /obj/projection(src.projector.loc)

@@ -6,7 +6,7 @@
 
 	src.fakeloss += amount
 
-	SPAWN_DBG(seconds * 10)
+	SPAWN(seconds * 10)
 		src.fakeloss -= amount
 
 /mob/proc/false_death(var/seconds)
@@ -17,7 +17,7 @@
 	boutput(src, "<B>[src]</B> seizes up and falls limp, [his_or_her(src)] eyes dead and lifeless...")
 	src.changeStatus("weakened", 5 SECONDS)
 
-	SPAWN_DBG(seconds * 10)
+	SPAWN(seconds * 10)
 		src.fakedead = 0
 		src.delStatus("weakened")
 
@@ -231,7 +231,7 @@
 				boutput(user, "<span class='alert'>You can't press it when you're incapacitated.</span>")
 				being_pressed = 0
 				return
-			if (get_dist(user,src) > 1)
+			if (BOUNDS_DIST(user, src) > 0)
 				boutput(user, "<span class='alert'>You can't press it from over there.</span>")
 				being_pressed = 0
 				return

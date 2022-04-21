@@ -35,7 +35,7 @@
 
 	logTheThing("bombing", user, null, "[welded_or_unwelded == 0 ? "welded" : "unwelded"] a [type] single tank bomb [log_atmos(T)] at [log_loc(user)].")
 	if (welded_or_unwelded == 0)
-		message_admins("[key_name(user)] welded a [type] single tank bomb at [log_loc(user)]. See bombing logs or bomb monitor for complete atmos readout.")
+		message_admins("[key_name(user)] welded a [type] single tank bomb [alert_atmos(T)] at [log_loc(user)].")
 
 	return
 
@@ -54,7 +54,7 @@
 
 /obj/item/assembly/proximity_bomb/dropped()
 
-	SPAWN_DBG( 0 )
+	SPAWN( 0 )
 		src.part1.sense()
 		return
 	return
@@ -149,7 +149,7 @@
 	return
 
 /obj/item/assembly/proximity_bomb/bump(atom/O)
-	SPAWN_DBG(0)
+	SPAWN(0)
 		//boutput(world, "miptank bumped into [O]")
 		if(src.part1.armed)
 			//boutput(world, "sending signal")
@@ -167,7 +167,7 @@
 			src.part1.sense()
 			break
 
-	SPAWN_DBG(1 SECOND)
+	SPAWN(1 SECOND)
 		prox_check()
 
 /////////////////////////////////////////////////// Single tank bomb (timer) ////////////////////////////////////
@@ -276,12 +276,12 @@
 
 /obj/item/assembly/radio_bomb/disposing()
 
-	//src.part1 = null
 	qdel(src.part1)
-	//src.part2 = null
+	src.part1 = null
 	qdel(src.part2)
-	//src.part3 = null
+	src.part2 = null
 	qdel(src.part3)
+	src.part3 = null
 	..()
 	return
 

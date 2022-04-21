@@ -23,7 +23,7 @@
 			qdel(W)
 		else if (istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/) || istype(W, /obj/item/reagent_containers/balloon/) || istype(W, /obj/item/soup_pot))
 			var/fill = W.reagents.maximum_volume
-			if (fill == W.reagents.total_volume)
+			if (W.reagents.total_volume >= fill)
 				user.show_text("[W] is too full already.", "red")
 			else
 				fill -= W.reagents.total_volume
@@ -32,7 +32,7 @@
 				playsound(src.loc, "sound/misc/pourdrink.ogg", 100, 1)
 		else if (istype(W, /obj/item/mop)) // dude whatever
 			var/fill = W.reagents.maximum_volume
-			if (fill == W.reagents.total_volume)
+			if (W.reagents.total_volume >= fill)
 				user.show_text("[W] is too wet already.", "red")
 			else
 				fill -= W.reagents.total_volume
@@ -117,7 +117,7 @@
 		return attack_hand(user)
 
 	Topic(href, href_list)
-		if (istype(src.loc, /turf) && (( get_dist(src, usr) <= 1) || issilicon(usr) || isAI(usr)))
+		if (istype(src.loc, /turf) && (( BOUNDS_DIST(src, usr) == 0) || issilicon(usr) || isAI(usr)))
 			if (!isliving(usr) || iswraith(usr) || isintangible(usr))
 				return
 			if (is_incapacitated(usr) || usr.restrained())
@@ -375,6 +375,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/omelette_bee(src)
 			src.recipes += new /datum/cookingrecipe/omelette(src)
 			src.recipes += new /datum/cookingrecipe/monster(src)
+			src.recipes += new /datum/cookingrecipe/c_butty(src)
 			src.recipes += new /datum/cookingrecipe/scarewich_h(src)
 			src.recipes += new /datum/cookingrecipe/scarewich_p_h(src)
 			src.recipes += new /datum/cookingrecipe/scarewich_p(src)
@@ -473,13 +474,6 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/cheesetoast(src)
 			src.recipes += new /datum/cookingrecipe/bacontoast(src)
 			src.recipes += new /datum/cookingrecipe/eggtoast(src)
-			/*
-			src.recipes += new /datum/cookingrecipe/pizza_mushpoison(src)
-			src.recipes += new /datum/cookingrecipe/pizza_mushdrug(src)
-			src.recipes += new /datum/cookingrecipe/pizza_mushnorm(src)
-			src.recipes += new /datum/cookingrecipe/pizza_meat(src)
-			src.recipes += new /datum/cookingrecipe/pizza_plain(src)
-			*/
 			src.recipes += new /datum/cookingrecipe/nougat(src)
 			src.recipes += new /datum/cookingrecipe/candy_cane(src)
 			src.recipes += new /datum/cookingrecipe/cereal_honey(src)
@@ -529,7 +523,6 @@ table#cooktime a#start {
 			#endif
 			src.recipes += new /datum/cookingrecipe/cake_custom(src)
 			src.recipes += new /datum/cookingrecipe/meatloaf(src)
-			src.recipes += new /datum/cookingrecipe/hotdog(src)
 			src.recipes += new /datum/cookingrecipe/stroopwafel(src)
 			src.recipes += new /datum/cookingrecipe/cookie_spooky(src)
 			src.recipes += new /datum/cookingrecipe/cookie_jaffa(src)
@@ -550,6 +543,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/moon_pie(src)
 			src.recipes += new /datum/cookingrecipe/granola_bar(src)
 			src.recipes += new /datum/cookingrecipe/biscuit(src)
+			src.recipes += new /datum/cookingrecipe/dog_biscuit(src)
 			src.recipes += new /datum/cookingrecipe/hardtack(src)
 			src.recipes += new /datum/cookingrecipe/macguffin(src)
 			src.recipes += new /datum/cookingrecipe/eggsalad(src)
@@ -585,9 +579,10 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/hardboiled(src)
 			src.recipes += new /datum/cookingrecipe/bakedpotato(src)
 			src.recipes += new /datum/cookingrecipe/rice_ball(src)
+			src.recipes += new /datum/cookingrecipe/hotdog(src)
 
 	Topic(href, href_list)
-		if ((get_dist(src, usr) > 1 && (!issilicon(usr) && !isAI(usr))) || !isliving(usr) || iswraith(usr) || isintangible(usr))
+		if ((BOUNDS_DIST(src, usr) > 0 && (!issilicon(usr) && !isAI(usr))) || !isliving(usr) || iswraith(usr) || isintangible(usr))
 			return
 		if (is_incapacitated(usr) || usr.restrained())
 			return
@@ -693,7 +688,7 @@ table#cooktime a#start {
 			src.working = 1
 			src.icon_state = "oven_bake"
 			src.updateUsrDialog()
-			SPAWN_DBG(cook_amt * 10)
+			SPAWN(cook_amt * 10)
 
 				if(recook && bonus !=0)
 					for (var/obj/item/reagent_containers/food/snacks/F in src)
@@ -778,7 +773,7 @@ table#cooktime a#start {
 		user.TakeDamage("head", 0, 150)
 		sleep(5 SECONDS)
 		src.icon_state = "oven_off"
-		SPAWN_DBG(55 SECONDS)
+		SPAWN(55 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -937,6 +932,16 @@ table#cooktime a#start {
 					var/obj/item/reagent_containers/food/snacks/condiment/hotsauce/F = new(src.loc)
 					F.reagents.add_reagent("capsaicin", DNA.potency)
 					qdel( P )
+				if (/obj/item/reagent_containers/food/snacks/plant/coffeeberry/mocha)
+					var/datum/plantgenes/DNA = P:plantgenes
+					var/obj/item/reagent_containers/food/snacks/candy/chocolate/F = new(src.loc)
+					F.reagents.add_reagent("chocolate", DNA.potency)
+					qdel( P )
+				if (/obj/item/reagent_containers/food/snacks/plant/coffeeberry/latte)
+					var/datum/plantgenes/DNA = P:plantgenes
+					var/obj/item/reagent_containers/food/snacks/condiment/cream/F = new(src.loc)
+					F.reagents.add_reagent("milk", DNA.potency)
+					qdel( P )
 				if (/obj/item/plant/sugar)
 					var/obj/item/reagent_containers/food/snacks/ingredient/sugar/F = new(src.loc)
 					F.reagents.add_reagent("sugar", 20)
@@ -1026,12 +1031,12 @@ table#cooktime a#start {
 			user.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>")
 			user.u_equip(W)
 			W.set_loc(src)
-			W.dropped()
+			W.dropped(user)
 			return
 
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		..()
-		if (get_dist(src, usr) > 1 || !isliving(usr) || iswraith(usr) || isintangible(usr))
+		if (BOUNDS_DIST(src, usr) > 0 || !isliving(usr) || iswraith(usr) || isintangible(usr))
 			return
 		if (is_incapacitated(usr) || usr.restrained())
 			return
@@ -1043,7 +1048,7 @@ table#cooktime a#start {
 			return
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-		if (get_dist(src, user) > 1 || !isliving(user) || iswraith(user) || isintangible(user))
+		if (BOUNDS_DIST(src, user) > 0 || !isliving(user) || iswraith(user) || isintangible(user))
 			return
 		if (is_incapacitated(user) || user.restrained())
 			return
@@ -1133,7 +1138,7 @@ var/list/mixer_recipes = list()
 		user.visible_message("<span class='notice'>[user] puts [W] into the [src].</span>")
 		user.u_equip(W)
 		W.set_loc(src)
-		W.dropped()
+		W.dropped(user)
 
 	attack_hand(var/mob/user as mob)
 		if (!src.working)
@@ -1165,7 +1170,7 @@ var/list/mixer_recipes = list()
 		return ..()
 
 	Topic(href, href_list)
-		if ((get_dist(src, usr) > 1 && (!issilicon(usr) && !isAI(usr))) || !isliving(usr) || iswraith(usr) || isintangible(usr))
+		if ((BOUNDS_DIST(src, usr) > 0 && (!issilicon(usr) && !isAI(usr))) || !isliving(usr) || iswraith(usr) || isintangible(usr))
 			return
 		if (is_incapacitated(usr) || usr.restrained())
 			return
@@ -1220,7 +1225,7 @@ var/list/mixer_recipes = list()
 			if (R.useshumanmeat)
 				derivename = 1
 			break
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 
 			if (!isnull(output))
 				var/obj/item/reagent_containers/food/snacks/F

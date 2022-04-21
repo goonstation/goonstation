@@ -9,6 +9,7 @@
 	var/rechargeable = 1 // Can we put this gun in a recharger? False should be a very rare exception.
 	var/robocharge = 800
 	var/cell_type = /obj/item/ammo/power_cell // Type of cell to spawn by default.
+	var/from_frame_cell_type = /obj/item/ammo/power_cell
 	var/custom_cell_max_capacity = null // Is there a limit as to what power cell (in PU) we can use?
 	var/wait_cycle = 0 // Using a self-charging cell should auto-update the gun's sprite.
 	var/can_swap_cell = 1
@@ -28,6 +29,12 @@
 		processing_items -= src
 		..()
 
+	was_built_from_frame(mob/user, newly_built)
+		. = ..()
+		if(src.can_swap_cell && from_frame_cell_type)
+			AddComponent(/datum/component/cell_holder, new from_frame_cell_type)
+
+		SEND_SIGNAL(src, COMSIG_CELL_USE, INFINITY) //also drain the cell out of spite
 
 	examine()
 		. = ..()
@@ -220,7 +227,7 @@
 	uses_multiple_icon_states = 1
 	desc = "Wait, that's not a plastic toy..."
 	muzzle_flash = "muzzle_flash_laser"
-	cell_type = /obj/item/ammo/power_cell/med_power
+	cell_type = null
 
 	New()
 		if (!src.current_projectile)
@@ -277,6 +284,7 @@
 	throw_range = 10
 	rechargeable = 0 // Cannot be recharged manually.
 	cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
+	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	projectiles = null
 	is_syndicate = 1
 	silenced = 1 // No conspicuous text messages, please (Convair880).
@@ -454,6 +462,7 @@
 	throw_range = 12
 	rechargeable = 0
 	cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
+	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	projectiles = null
 	is_syndicate = 1
 	custom_cell_max_capacity = 100 //endless crab
@@ -597,11 +606,23 @@
 					if (0) // It's busted, Jim.
 						continue
 					if (1)
-						L["Tele at [get_area(Control)]: Locked in ([ismob(Control.locked.loc) ? "[Control.locked.loc.name]" : "[get_area(Control.locked)]"])"] += Control
+						var/index = "Tele at [get_area(Control)]: Locked in ([ismob(Control.locked.loc) ? "[Control.locked.loc.name]" : "[get_area(Control.locked)]"])"
+						if (L[index])
+							L[dedupe_index(L, index)] = Control
+						else
+							L[index] = Control
 					if (2)
-						L["Tele at [get_area(Control)]: *NOPOWER*"] += Control
+						var/index = "Tele at [get_area(Control)]: *NOPOWER*"
+						if (L[index])
+							L[dedupe_index(L, index)] = Control
+						else
+							L[index] = Control
 					if (3)
-						L["Tele at [get_area(Control)]: Inactive"] += Control
+						var/index = "Tele at [get_area(Control)]: Inactive"
+						if (L[index])
+							L[dedupe_index(L, index)] = Control
+						else
+							L[index] = Control
 			else
 				continue
 
@@ -666,6 +687,15 @@
 		TB.target = our_target
 		return ..(target, start, user)
 
+	proc/dedupe_index(list/L, index)
+		var/index_base = index
+		var/i = 2
+		while(L[index])
+			index = index_base
+			index += " [i]"
+			i++
+		return index
+
 ///////////////////////////////////////Ghost Gun
 /obj/item/gun/energy/ghost
 	name = "ectoplasmic destabilizer"
@@ -695,6 +725,7 @@
 	force = 5.0
 	mats = 0
 	cell_type = /obj/item/ammo/power_cell/self_charging/medium
+	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/disruptor
 
 
 	/*
@@ -795,7 +826,6 @@
 	w_class = W_CLASS_BULKY
 	force = 15
 	cell_type = /obj/item/ammo/power_cell/self_charging/big
-
 
 	New()
 		set_current_projectile(new /datum/projectile/special/spreader/uniform_burst/blaster)
@@ -962,6 +992,27 @@
 		set_current_projectile(new/datum/projectile/shrink_beam/grow)
 		projectiles = list(current_projectile)
 
+// stinky ray
+/obj/item/gun/energy/stinkray
+	name = "stink ray"
+	item_state = "gun"
+	force = 5.0
+	icon_state = "ghost"
+	cell_type = /obj/item/ammo/power_cell/med_power
+	uses_multiple_icon_states = 1
+
+	New()
+		set_current_projectile(new/datum/projectile/bioeffect_beam/stinky)
+		projectiles = list(current_projectile)
+		..()
+
+	update_icon()
+		..()
+		var/list/ret = list()
+		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+			var/ratio = min(1, ret["charge"] / ret["max_charge"])
+			ratio = round(ratio, 0.25) * 100
+			src.icon_state = "ghost[ratio]"
 
 ///////////////////////////////////////Glitch Gun
 /obj/item/gun/energy/glitch_gun
@@ -986,7 +1037,7 @@
 
 ///////////////////////////////////////Hunter
 /obj/item/gun/energy/plasma_gun/ // Made use of a spare sprite here (Convair880).
-	name = "Plasma rifle"
+	name = "plasma rifle"
 	desc = "This advanced bullpup rifle contains a self-recharging power cell."
 	icon_state = "bullpup"
 	item_state = "bullpup"
@@ -1012,7 +1063,7 @@
 		..()
 
 /obj/item/gun/energy/plasma_gun/vr
-	name = "Advanced laser gun"
+	name = "advanced laser gun"
 	icon = 'icons/effects/VR.dmi'
 	icon_state = "wavegun"
 	base_item_state = "wavegun"
@@ -1056,6 +1107,7 @@
 	throw_range = 10
 	rechargeable = 0 // Cannot be recharged manually.
 	cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
+	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	projectiles = null
 	is_syndicate = 1
 	silenced = 1
@@ -1135,7 +1187,7 @@
 		var/turf/tgt = get_turf(target)
 		if(isrestrictedz(us.z) || isrestrictedz(tgt.z))
 			boutput(user, "\The [src.name] jams!")
-			message_admins("[key_name(user)] is a nerd and tried to fire a pickpocket gun in a restricted z-level at [showCoords(us.x, us.y, us.z)].")
+			message_admins("[key_name(user)] is a nerd and tried to fire a pickpocket gun in a restricted z-level at [log_loc(us)].")
 			return
 
 
@@ -1161,6 +1213,7 @@
 	cell_type = /obj/item/ammo/power_cell/med_power
 	desc = "A gun that produces a harmful laser, causing substantial damage."
 	muzzle_flash = "muzzle_flash_laser"
+	is_syndicate = 1
 
 	New()
 		set_current_projectile(new/datum/projectile/laser/alastor)
@@ -1193,6 +1246,7 @@
 	m_amt = 5000
 	g_amt = 2000
 	cell_type = /obj/item/ammo/power_cell/self_charging/lawbringer
+	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/lawbringer/bad
 	mats = list("MET-1"=15, "CON-2"=5, "POW-2"=5)
 	var/owner_prints = null
 	var/image/indicator_display = null
@@ -1235,7 +1289,7 @@
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if (H.bioHolder)
-				owner_prints = H.bioHolder.uid_hash
+				owner_prints = H.bioHolder.fingerprints
 				src.name = "HoS [H.real_name]'s Lawbringer"
 				tooltip_rebuild = 1
 
@@ -1254,7 +1308,7 @@
 		//only work if the voice is the same as the voice of your owner fingerprints.
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
-			if (owner_prints && (H.bioHolder.uid_hash != owner_prints))
+			if (owner_prints && (H.bioHolder.fingerprints != owner_prints))
 				are_you_the_law(M, msg[1])
 				return
 		else
@@ -1301,7 +1355,7 @@
 					current_projectile.cost = 170
 					item_state = "lawg-bigshot"
 					playsound(M, "sound/vox/high.ogg", 50)
-					SPAWN_DBG(0.4 SECONDS)
+					SPAWN(0.4 SECONDS)
 						playsound(M, "sound/vox/explosive.ogg", 50)
 				if ("clownshot","clown")
 					set_current_projectile(projectiles["clownshot"])
@@ -1337,7 +1391,7 @@
 					playsound(src.loc, "sound/weapons/armbomb.ogg", 75, 1, -3)
 					logTheThing("combat", src, null, "Is not the law. Caused explosion with Lawbringer.")
 
-					SPAWN_DBG(2 SECONDS)
+					SPAWN(2 SECONDS)
 						src.blowthefuckup(15)
 					return 0
 				else
@@ -1346,7 +1400,11 @@
 	//all gun modes use the same base sprite icon "lawbringer0" depending on the current projectile/current mode, we apply a coloured overlay to it.
 	update_icon()
 		..()
-		src.icon_state = "[old ? "old-" : ""]lawbringer0"
+		var/prefix = ""
+		if(old)
+			prefix = "old-"
+
+		src.icon_state = "[prefix]lawbringer0"
 		src.overlays = null
 
 		var/list/ret = list()
@@ -1356,7 +1414,7 @@
 			//if we're showing zero charge, don't do any overlay, since the main image shows an empty gun anyway
 			if (ratio == 0)
 				return
-			indicator_display.icon_state = "[old ? "old-" : ""]lawbringer-d[ratio]"
+			indicator_display.icon_state = "[prefix]lawbringer-d[ratio]"
 
 			if(current_projectile.type == /datum/projectile/energy_bolt/aoe)			//detain - yellow
 				indicator_display.color = "#FFFF00"
@@ -1397,9 +1455,14 @@
 	// Checks if the gun can shoot based on the fingerprints of the shooter.
 	//returns true if the prints match or there are no prints stored on the gun(emagged). false if it fails
 	proc/fingerprints_can_shoot(var/mob/user)
-		if (!owner_prints || (user.bioHolder.uid_hash == owner_prints))
+		if (!owner_prints || (user.bioHolder.fingerprints == owner_prints))
 			return 1
 		return 0
+
+	proc/make_antique()
+		icon_state = "old-lawbringer0"
+		old = 1
+		UpdateIcon()
 
 	shoot(var/target,var/start,var/mob/user)
 		if (canshoot())
@@ -1423,7 +1486,7 @@
 	if (user)
 		boutput(user, "<span class='alert'>Anyone can use this gun now. Be careful! (use it in-hand to register your fingerprints)</span>")
 		owner_prints = null
-	return 0
+		return TRUE
 
 //stolen from firebreath in powers.dm
 /obj/item/gun/energy/lawbringer/proc/shoot_fire_hotspots(var/target,var/start,var/mob/user)
@@ -1487,6 +1550,7 @@
 	throw_range = 10
 	rechargeable = 0 // Cannot be recharged manually.
 	cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
+	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	projectiles = null
 	is_syndicate = 1
 	silenced = 1
@@ -1523,6 +1587,7 @@
 	force = 8
 	two_handed = 0
 	cell_type = /obj/item/ammo/power_cell/self_charging/ntso_signifer
+	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/ntso_signifer/bad
 	can_swap_cell = 0
 	var/shotcount = 0
 
@@ -1573,7 +1638,7 @@
 		shotcount = 0
 		. = ..()
 
-	shoot_point_blank(mob/M, mob/user, second_shot)
+	shoot_point_blank(atom/target, mob/user, second_shot)
 		shotcount = 0
 		. = ..()
 

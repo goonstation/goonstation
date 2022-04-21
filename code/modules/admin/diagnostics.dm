@@ -202,7 +202,7 @@ proc/debug_map_apc_count(delim,zlim)
 		SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 		set name = "Open Profiler"
 
-		admin_only
+		ADMIN_ONLY
 		world.SetConfig( "APP/admin", src.key, "role=admin" )
 		input( src, "Enter '.debug profile' in the next command box. Blame BYOND.", "BYONDSucks", ".debug profile" )
 		winset( usr, null, "command=.command" )
@@ -957,12 +957,6 @@ proc/debug_map_apc_count(delim,zlim)
 		proc/is_ok(atom/A)
 			return TRUE
 
-	checkingexit
-		name = "checkingexit"
-		help = "Green = yes."
-		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
-			img.app.color = theTurf.checkingexit ? "#0f0" : "#f00"
-
 	blocked_dirs
 		name = "blocked dirs"
 		help = "Displays dir flags of blocked turf exits"
@@ -1266,7 +1260,7 @@ proc/info_overlay_choices()
 /client/proc/SetInfoOverlay(name in info_overlay_choices())
 	set name = "Debug Overlay"
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-	admin_only
+	ADMIN_ONLY
 	var/list/available_overlays = info_overlay_choices()
 	activeOverlay?.OnDisabled(src)
 	if(!name || name == "REMOVE")
@@ -1279,8 +1273,8 @@ proc/info_overlay_choices()
 				img:loc = null
 				qdel(img)
 			infoOverlayImages = list()
-		activeOverlay = null
 		qdel(activeOverlay)
+		activeOverlay = null
 	else
 		var/type = available_overlays[name]
 		activeOverlay = new type()
@@ -1288,7 +1282,7 @@ proc/info_overlay_choices()
 		GenerateOverlay()
 		activeOverlay.OnEnabled(src)
 		RenderOverlay()
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			var/client/X = src
 			while (X?.activeOverlay)
 				// its a debug overlay so f u

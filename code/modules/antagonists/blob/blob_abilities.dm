@@ -55,7 +55,7 @@
 			//boutput(world, "cooldown initiated, length of [cooldown_time]")
 			last_used = world.time + cooldown_time
 			owner.update_buttons()
-			SPAWN_DBG(cooldown_time + 1)
+			SPAWN(cooldown_time + 1)
 				//boutput(world, "cooldown over, refreshing UI")
 				if (owner)
 					owner.update_buttons()
@@ -656,7 +656,7 @@
 		var/current_target_z = H.pixel_z
 		var/destination_z = current_target_z - 6
 		animate(H, time = 10, alpha = 1, pixel_z = destination_z, easing = LINEAR_EASING)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			sleep(1 SECOND)
 			H.lying = 1
 			H.skeletonize()
@@ -1326,7 +1326,7 @@
 		for (var/obj/O in deposits)
 			qdel(O)
 		boutput(usr, "<span class='notice'>Applying upgrade to the blob...</span>")
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/wg = 0
 			for (var/obj/blob/O in owner.blobs)
 				if (!O.material)

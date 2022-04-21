@@ -18,7 +18,7 @@
 	src.c_state(0)
 
 	if (src.master)
-		SPAWN_DBG( 0 )
+		SPAWN( 0 )
 			var/datum/signal/signal = get_free_signal()
 			signal.source = src
 			signal.data["message"] = "ACTIVATE"
@@ -103,7 +103,7 @@
 	if (user.stat || user.restrained() || user.lying)
 		return
 
-	if ((src in user) || (src.master && (src.master in user)) || (get_dist(src, user) <= 1 && istype(src.loc, /turf)) || src.is_detonator_trigger())
+	if ((src in user) || (src.master && (src.master in user)) || (BOUNDS_DIST(src, user) == 0 && istype(src.loc, /turf)) || src.is_detonator_trigger())
 		if (!src.master)
 			src.add_dialog(user)
 		else

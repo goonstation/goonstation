@@ -44,7 +44,7 @@
 
 	speech_bubble()
 		UpdateOverlays(speech_bubble, "speech_bubble")
-		SPAWN_DBG(1.5 SECONDS)
+		SPAWN(1.5 SECONDS)
 			UpdateOverlays(null, "speech_bubble")
 
 	disposing()
@@ -115,7 +115,7 @@
 	afterattack(atom/target, mob/user, reach, params)
 		. = ..()
 		if(ismob(target) || iscritter(target))
-			if(actions.hasAction(usr,"rocking_out"))
+			if(actions.hasAction(user,"rocking_out"))
 				play_notes()
 			else
 				playsound(src, pick('sound/musical_instruments/Guitar_bonk1.ogg', 'sound/musical_instruments/Guitar_bonk2.ogg', 'sound/musical_instruments/Guitar_bonk3.ogg'), 50, 1, -1)
@@ -130,7 +130,7 @@
 			effect.play_notes()
 			for(var/obj/item/device/radio/nukie_studio_monitor/S in speakers)
 				S.play_song()
-			SPAWN_DBG(2 SECONDS)
+			SPAWN(2 SECONDS)
 				stop_notes()
 		else
 			strums = ( strums + 1 % 2000 )
@@ -379,7 +379,7 @@
 		..()
 		icon_image.pixel_y += 8
 		icon_image.alpha = 200
-		if(get_dist(owner, instrument) > 1 || instrument == null || owner == null) //If the thing is out of range, interrupt the action. Also interrupt if the user or the item disappears.
+		if(BOUNDS_DIST(owner, instrument) > 0 || instrument == null || owner == null) //If the thing is out of range, interrupt the action. Also interrupt if the user or the item disappears.
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/M = owner
@@ -398,7 +398,7 @@
 	onDelete()
 		..()
 		if(istype(song, /obj/ability_button/nukie_rocker/epic_climax))
-			SPAWN_DBG(30 SECONDS)
+			SPAWN(30 SECONDS)
 				instrument.overheat(FALSE)
 
 	onEnd()
@@ -492,15 +492,15 @@
 		. = ..()
 		if(ismob(owner))
 			var/mob/M = owner
-			APPLY_MOB_PROPERTY(M, PROP_DISARM_RESIST, "focus_music", 10)
-			APPLY_MOB_PROPERTY(M, PROP_DISORIENT_RESIST_BODY, "focus_music", 10)
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_DISARM_RESIST, "focus_music", 10)
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_DISORIENT_RESIST_BODY, "focus_music", 10)
 
 	onRemove()
 		. = ..()
 		if(ismob(owner))
 			var/mob/M = owner
-			REMOVE_MOB_PROPERTY(M, PROP_DISARM_RESIST, "focus_music")
-			REMOVE_MOB_PROPERTY(M, PROP_DISORIENT_RESIST_BODY, "focus_music")
+			REMOVE_ATOM_PROPERTY(M, PROP_MOB_DISARM_RESIST, "focus_music")
+			REMOVE_ATOM_PROPERTY(M, PROP_MOB_DISORIENT_RESIST_BODY, "focus_music")
 
 	getTooltip()
 		. = "Your feel like you would be difficult to stop."
@@ -589,18 +589,20 @@
 		. = ..()
 		if(ismob(owner))
 			var/mob/M = owner
-			APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "stims", 100)
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "stims", 100)
 			M.add_stam_mod_max("stims", 100)
-			M.add_stun_resist_mod("stims", 100)
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST, "stims", 100)
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "stims", 100)
 
 	onRemove()
 		. = ..()
 		if(ismob(owner))
 			var/mob/M = owner
 			M.jitteriness = 110
-			REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "stims")
+			REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "stims")
 			M.remove_stam_mod_max("stims")
-			M.remove_stun_resist_mod("stims")
+			REMOVE_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST, "stims")
+			REMOVE_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "stims")
 
 	onUpdate(timePassed)
 		. = ..()

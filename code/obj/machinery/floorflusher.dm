@@ -70,7 +70,7 @@
 	New()
 		..()
 		START_TRACKING
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			trunk = locate() in src.loc
 			if(!trunk)
 				mode = 0
@@ -145,13 +145,13 @@
 				update()
 
 			if(current_state <= GAME_STATE_PREGAME)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					flush()
 					sleep(1 SECOND)
 					openup()
 
 	MouseDrop_T(mob/target, mob/user)
-		if (!istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user) || isAI(user))
+		if (!istype(target) || target.buckled || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, target) > 0 || is_incapacitated(user) || isAI(user))
 			return
 
 		if(open != 1)
@@ -235,7 +235,7 @@
 			return
 
 		if(open && flush)	// flush can happen even without power, must be open first
-			SPAWN_DBG(0)
+			SPAWN(0)
 				flush()
 
 		if(status & NOPOWER)			// won't charge if no power
@@ -292,7 +292,7 @@
 		src.icon_state = "floorflush_o"
 		for(var/atom/movable/AM in src.loc)
 			src.Crossed(AM) // try to flush them
-		SPAWN_DBG(0.7 SECONDS)
+		SPAWN(0.7 SECONDS)
 			opening = FALSE
 
 	proc/closeup()
@@ -300,7 +300,7 @@
 		opening = TRUE
 		flick("floorflush_a2", src)
 		src.icon_state = "floorflush_c"
-		SPAWN_DBG(0.7 SECONDS)
+		SPAWN(0.7 SECONDS)
 			opening = FALSE
 
 	// called when holder is expelled from a disposal
@@ -327,7 +327,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			openup()
 
 		return 1
@@ -361,7 +361,7 @@
 				update()
 
 			if(current_state <= GAME_STATE_PREGAME)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					flush()
 					sleep(1 SECOND)
 					openup()
@@ -371,7 +371,7 @@
 			return
 
 		if(open && flush)	// flush can happen even without power, must be open first
-			SPAWN_DBG(0) flush()
+			SPAWN(0) flush()
 
 		if(status & NOPOWER)			// won't charge if no power
 			return

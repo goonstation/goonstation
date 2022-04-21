@@ -3,7 +3,11 @@
 /obj/machinery/door
 	name = "door"
 	icon_state = "door1"
+	#ifdef UPSCALED_MAP
+	opacity = 0
+	#else
 	opacity = 1
+	#endif
 	density = 1
 	flags = FPRINT | ALWAYS_SOLID_FLUID
 	event_handler_flags = USE_FLUID_ENTER
@@ -164,7 +168,7 @@
 		..()
 		UnsubscribeProcess()
 		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", "toggleinput")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", .proc/toggleinput)
 		update_nearby_tiles(need_rebuild=1)
 		START_TRACKING
 		for (var/turf/simulated/wall/auto/T in orange(1))
@@ -223,7 +227,7 @@
 #endif
 	if (do_after(user, 100) && !(user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.getStatusDuration("paralysis") > 0 || !isalive(user) || user.restrained()))
 		var/success = 0
-		SPAWN_DBG(0.6 SECONDS)
+		SPAWN(0.6 SECONDS)
 			success = try_force_open(user)
 			if (success != 0)
 				src.operating = -1 // It's broken now.
@@ -453,7 +457,7 @@
 			elecflash(src,power=2)
 
 		if (prob(2) && src.health <= health_max * 0.35 && istype(src, /obj/machinery/door/airlock) )
-			SPAWN_DBG(0)
+			SPAWN(0)
 				src.open()
 
 
@@ -517,10 +521,10 @@
 	if (linked_forcefield)
 		linked_forcefield.setactive(1)
 
-	SPAWN_DBG(-1)
+	SPAWN(-1)
 		play_animation("opening")
 		next_timeofday_opened = world.timeofday + (src.operation_time)
-		SPAWN_DBG(-1)
+		SPAWN(-1)
 			if (ignore_light_or_cam_opacity)
 				src.opacity = 0
 			else
@@ -565,7 +569,7 @@
 
 	src.operating = 1
 	close_trys = 0
-	SPAWN_DBG(-1)
+	SPAWN(-1)
 		src.play_animation("closing")
 		src.UpdateIcon(1)
 		src.set_density(1)
@@ -586,7 +590,7 @@
 				L.changeStatus("weakened", 3 SECONDS)
 				L.stuttering += 10
 				did_crush = 1
-				SPAWN_DBG(src.operation_time * 1.5 + crush_delay)
+				SPAWN(src.operation_time * 1.5 + crush_delay)
 					if (L) L.layer = mob_layer //Restore the mob's layer. Might be jarring...?
 
 		sleep(src.operation_time)
@@ -678,14 +682,22 @@
 	icon = 'icons/turf/shuttle.dmi'
 	name = "door"
 	icon_state = "door1"
+	#ifdef UPSCALED_MAP
+	opacity = 0
+	#else
 	opacity = 1
+	#endif
 	density = 1
 
 /obj/machinery/door/unpowered/martian
 	icon = 'icons/turf/martian.dmi'
 	name = "Orifice"
 	icon_state = "door1"
+	#ifdef UPSCALED_MAP
+	opacity = 0
+	#else
 	opacity = 1
+	#endif
 	density = 1
 	var/id = null
 
@@ -703,7 +715,11 @@
 	name = "door"
 	icon = 'icons/obj/doors/door_wood.dmi'
 	icon_state = "door1"
+	#ifdef UPSCALED_MAP
+	opacity = 0
+	#else
 	opacity = 1
+	#endif
 	density = 1
 	p_open = 0
 	operating = 0
@@ -828,7 +844,7 @@
 
 	onUpdate()
 		..()
-		if (the_door == null || the_tool == null || owner == null || get_dist(owner, the_door) > 1 || !the_door.locked || the_door.operating)
+		if (the_door == null || the_tool == null || owner == null || BOUNDS_DIST(owner, the_door) > 0 || !the_door.locked || the_door.operating)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner

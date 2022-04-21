@@ -253,7 +253,7 @@
 				if (!isnull(src.our_projectile2))
 					src.our_projectiles = list(new src.our_projectile, new src.our_projectile2)
 					L.projectiles = src.our_projectiles
-				AddComponent(/datum/component/cell_holder, our_cell)
+				L.AddComponent(/datum/component/cell_holder, our_cell)
 				// The man with the golden gun.
 				if (src.quality_counter >= src.q_threshold2)
 					L.setMaterial(getMaterial("gold"), appearance = 0, setname = 0)

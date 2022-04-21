@@ -241,7 +241,7 @@
 				logTheThing("admin", "[user] (Discord)", null, "displayed an alert to [constructTarget(C,"admin")] with the message \"[message]\"")
 				logTheThing("diary", "[user] (Discord)", null, "displayed an alert to  [constructTarget(C,"diary")] with the message \"[message]\"", "admin")
 				if (C?.mob)
-					SPAWN_DBG(0)
+					SPAWN(0)
 						C.mob.playsound_local(C.mob, "sound/voice/animal/goose.ogg", 100, flags = SOUND_IGNORE_SPACE)
 						if (alert(C.mob, message, "!! Admin Alert !!", "OK") == "OK")
 							message_admins("[ckey] acknowledged the alert from [user] (Discord).")
@@ -593,3 +593,25 @@
 		logTheThing("diary", "[user] (Discord)", null, logMessage, "admin")
 		message_admins("[user] (Discord) [logMessage]")
 		system.reply(logMessage)
+
+
+/datum/spacebee_extension_command/state_based/confirmation/renamestation
+	name = "renamestation"
+	help_message = "Rename the station."
+	argument_types = list(/datum/command_argument/the_rest="new_name")
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+	var/new_name = null
+
+	prepare(user, new_name)
+		src.new_name = new_name
+		return "You are about to rename the station to `[new_name]`."
+
+	do_it(user)
+		if(isnull(src.new_name))
+			return
+		set_station_name(user, new_name, admin_override=TRUE)
+		message_admins("<span class='alert'>Admin [user] (Discord) renamed station to [src.new_name]!</span>")
+		logTheThing("admin", "[user] (Discord)", null, "renamed station to [src.new_name]!")
+		logTheThing("diary", "[user] (Discord)", null, "renamed station to [src.new_name]!", "admin")
+		var/success_msg = "Station renamed to [src.new_name]."
+		system.reply(success_msg)

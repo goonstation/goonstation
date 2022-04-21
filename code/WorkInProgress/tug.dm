@@ -13,7 +13,7 @@
 		if (!in_interact_range(user, src) || !in_interact_range(user, C) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
 			return
 
-		if (!istype(C)|| C.anchored || get_dist(user, src) > 1 || get_dist(src,C) > 1 )
+		if (!istype(C)|| C.anchored || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(src, C) > 0 )
 			return
 
 		if (istype(C, /mob/dead/))
@@ -61,7 +61,7 @@
 		load(C)
 		src.visible_message("<b>[user]</b> loads [C] onto [src].")
 
-	MouseDrop(obj/over_object as obj, src_location, over_location)
+	mouse_drop(obj/over_object as obj, src_location, over_location)
 		..()
 		var/turf/T = get_turf(over_location)
 		var/mob/user = usr
@@ -91,7 +91,7 @@
 		if (istype(C, /atom/movable/screen) || C.anchored)
 			return
 
-		if (get_dist(C, src) > 1 || load)
+		if (BOUNDS_DIST(C, src) > 0 || load)
 			return
 
 		// if a create, close before loading
@@ -99,7 +99,7 @@
 		if (istype(crate))
 			crate.close()
 		C.set_loc(src.loc)
-		SPAWN_DBG(0.2 SECONDS)
+		SPAWN(0.2 SECONDS)
 			if (C && C.loc == src.loc)
 				C.set_loc(src)
 				load = C
@@ -182,7 +182,7 @@
 				return
 
 			weeoo_in_progress = 10
-			SPAWN_DBG(0)
+			SPAWN(0)
 				playsound(src.loc, "sound/machines/siren_police.ogg", 60, 1)
 				light.enable()
 				src.icon_state = "tractor-sec2"

@@ -183,7 +183,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (src.reagents)
 				if (prob(33))
 					src.reagents.add_reagent(pick("milk", "coffee", "VHFCS", "gravy", "fakecheese", "grease", "ethanol", "chickensoup", "vanilla", "cornsyrup", "chocolate"), 10)
@@ -222,7 +222,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (src.reagents)
 				if (prob(12))
 					src.reagents.add_reagent(pick("milk", "coffee", "VHFCS", "gravy", "fakecheese", "grease"), 10)
@@ -306,7 +306,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 		if (src.icon_random)
 			src.icon_state = "lpop-[rand(1,6)]"
 		else
-			SPAWN_DBG(0)
+			SPAWN(0)
 				src.UpdateIcon()
 
 	update_icon()
@@ -324,7 +324,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (src.icon_state == "lpop-")
 				src.icon_state = "lpop-[rand(1,6)]"
 			if (islist(src.flavors) && length(src.flavors))

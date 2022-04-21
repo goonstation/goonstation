@@ -5,14 +5,18 @@
 	icon_state = "vampcoffin"
 	icon_closed = "vampcoffin"
 	icon_opened = "vampcoffin-open"
-	health = 50
+	_max_health = 50
+	_health = 50
 
+	open(entangleLogic, mob/user)
+		if (!isvampire(user))
+			return
+		. = ..()
 
 	attack_hand(mob/user as mob)
 		if (!isvampire(user))
 			if (user.a_intent == INTENT_HELP)
 				user.show_text("It won't budge!", "red")
-
 			else
 				user.show_text("It's built tough! A weapon would be more effective.", "red")
 			return
@@ -25,14 +29,14 @@
 		else
 			..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
-
+	attackby(obj/item/I as obj, mob/user as mob)
 		user.lastattacked = src
-		health -= W.force
+		_health -= I.force
 		attack_particle(user,src)
 		playsound(src.loc, "sound/impact_sounds/Wood_Hit_1.ogg", 50, 1, pitch = 1.1)
 
-		if (health <= 0)
+		if (_health <= 0)
+			logTheThing("combat", user, null, "destroyed [src] at [log_loc(src)]")
 			bust_out()
 
 

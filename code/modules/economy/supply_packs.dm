@@ -359,19 +359,6 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/crate
 	containername = "Janitorial Supplies"
 
-/datum/supply_packs/hydrostarter
-	name = "Hydroponics: Starter Crate"
-	desc = "x2 Watering Cans, x4 Compost Bags, x2 Weedkiller bottles, x2 Plant Analyzers, x4 Plant Trays"
-	category = "Civilian Department"
-	contains = list(/obj/item/reagent_containers/glass/wateringcan = 2,
-					/obj/item/reagent_containers/glass/compostbag = 4,
-					/obj/item/reagent_containers/glass/bottle/weedkiller = 2,
-					/obj/item/plantanalyzer = 2,
-					/obj/machinery/plantpot = 4)
-	cost = 500
-	containertype = /obj/storage/crate
-	containername = "Hydroponics: Starter Crate"
-
 /datum/supply_packs/hydronutrient
 	name = "Hydroponics: Nutrient Pack"
 	desc = "x15 Nutrient Formulas"
@@ -803,13 +790,6 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/crate/wooden
 	containername = "RCD Replacement"
 
-/datum/supply_packs/winter
-	name = "Cold Weather Gear"
-	desc = "Warm winter gear to ward off the winter chills."
-	contains = list(/obj/item/clothing/suit/wintercoat = 5,
-					/obj/machinery/space_heater = 2,
-					/obj/item/reagent_containers/food/drinks/chickensoup = 2,
-					/obj/item/reagent_containers/food/drinks/coffee = 2)
 	cost = 3000
 	containertype = /obj/storage/crate/packing
 	containername = "Cold Weather Gear"
@@ -833,18 +813,6 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	cost = 2500
 	containertype = /obj/storage/crate/wooden
 	containername = "Meteor Shield System"
-
-/datum/supply_packs/atmos
-	name = "Atmospherics Supplies"
-	desc = "For when you need to be breathing."
-	category = "Basic Materials"
-	contains = list(/obj/item/tank/air,
-					/obj/item/tank/oxygen,
-					/obj/machinery/portable_atmospherics/scrubber = 2,
-					/obj/item/clothing/under/misc/atmospheric_technician)
-	cost = 8000
-	containertype = /obj/storage/crate/wooden
-	containername = "Atmospherics Supplies"
 
 /datum/supply_packs/reclaimer
 	name = "Reclaimed Reclaimer"
@@ -918,16 +886,6 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/secure/crate
 	containername = "Singularity Generator Crate (Cardlocked \[Chief Engineer])"
 	access = access_engineering_chief
-
-/datum/supply_packs/field_generator
-	name = "Field Generator Crate"
-	desc = "The four goal-posts needed to contain a singularity."
-	category = "Engineering Department"
-	contains = list(/obj/machinery/field_generator = 4)
-	cost = 40000
-	containertype = /obj/storage/secure/crate
-	containername = "Field Generator Crate (Cardlocked \[Engineering])"
-	access = access_engineering
 
 /datum/supply_packs/emitter
 	name = "Emitter Crate"
@@ -1039,15 +997,15 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containername = "Anti-Biological Hazard Supplies (Cardlocked \[Security Equipment])"
 	access = access_securitylockers
 
-/datum/supply_packs/loyaltyimplant
-	name = "Loyalty Kit"
-	desc = "To ensure unflinching loyalty towards glorious Nanotrasen."
+/datum/supply_packs/counterrevimplant
+	name = "Counter-Revolutionary Kit"
+	desc = "Implanters and counter-revolutionary implants to supress rebellion against Nanotrasen."
 	category = "Security Department"
-	contains = list(/obj/item/implantcase/antirev = 4,
+	contains = list(/obj/item/implantcase/counterrev = 4,
 					/obj/item/implanter = 2)
 	cost = 6000
 	containertype = /obj/storage/crate
-	containername = "Loyalty Kit"
+	containername = "Counter-Revolutionary Kit"
 	access = access_security
 
 /datum/supply_packs/furniture
@@ -1218,8 +1176,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 /datum/supply_packs/electronics_vending_restock
 	name = "Electronics Vending Machine Restocking Pack"
 	desc = "Various Vending Machine Restock Cartridges for electronics"
-	contains = list(/obj/item/vending/restock_cartridge/electronics,
-					/obj/item/vending/restock_cartridge/mechanics,
+	contains = list(/obj/item/vending/restock_cartridge/mechanics,
 					/obj/item/vending/restock_cartridge/computer3,
 					/obj/item/vending/restock_cartridge/floppy,
 					/obj/item/vending/restock_cartridge/pda)
@@ -1316,12 +1273,10 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	name = "Construction Equipment"
 	desc = "The mothballed tools of our former Construction Workers, in a crate, for you!"
 	category = "Engineering Department"
-	contains = list(/obj/item/lamp_manufacturer/organic,/obj/item/material_shaper,/obj/item/room_planner,/obj/item/clothing/under/rank/orangeoveralls)
-	//i was going to add a version of the construction visualliser w/o seeing invisible monsters but FUCK SIGHT CODE WHAT THE FUCK
-	cost = 8000
+	contains = list(/obj/item/lamp_manufacturer/organic,/obj/item/room_planner,/obj/item/clothing/under/rank/orangeoveralls)
+	cost = 7000
 	containertype = /obj/storage/secure/crate
-	containername = "Construction Equipment (Cardlocked \[Engineering])"
-	access = access_engineering
+	containername = "Construction Equipment"
 
 /* ================================================= */
 /* -------------------- Complex -------------------- */
@@ -1646,6 +1601,49 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	cost = 15000
 	containertype = /obj/storage/crate
 	containername = "Operating Room kit"
+
+/datum/supply_packs/complex/field_generator
+	name = "Field Generator Crate"
+	desc = "The four goal-posts needed to contain a singularity. Comes as frames to solder."
+	category = "Engineering Department"
+	frames = list(/obj/machinery/field_generator = 4)
+	cost = 40000
+	containertype = /obj/storage/secure/crate
+	containername = "Field Generator Crate (Cardlocked \[Engineering])"
+	access = access_engineering
+
+/datum/supply_packs/complex/atmos
+	name = "Atmospherics Supplies"
+	desc = "For when you need to be breathing."
+	category = "Basic Materials"
+	contains = list(/obj/item/tank/air,
+					/obj/item/tank/oxygen,
+					/obj/item/clothing/under/misc/atmospheric_technician)
+	frames = list(/obj/machinery/portable_atmospherics/scrubber = 2)
+	cost = 8000
+	containertype = /obj/storage/crate/wooden
+	containername = "Atmospherics Supplies"
+
+/datum/supply_packs/complex/winter
+	name = "Cold Weather Gear"
+	desc = "Warm winter gear to ward off the winter chills."
+	contains = list(/obj/item/clothing/suit/wintercoat = 5,
+					/obj/item/reagent_containers/food/drinks/chickensoup = 2,
+					/obj/item/reagent_containers/food/drinks/coffee = 2)
+	frames = list(/obj/machinery/space_heater = 2)
+
+/datum/supply_packs/complex/hydrostarter
+	name = "Hydroponics: Starter Crate"
+	desc = "x2 Watering Cans, x4 Compost Bags, x2 Weedkiller bottles, x2 Plant Analyzers, x4 Plant Tray frames"
+	category = "Civilian Department"
+	contains = list(/obj/item/reagent_containers/glass/wateringcan = 2,
+					/obj/item/reagent_containers/glass/compostbag = 4,
+					/obj/item/reagent_containers/glass/bottle/weedkiller = 2,
+					/obj/item/plantanalyzer = 2)
+	frames = list(/obj/machinery/plantpot = 4)
+	cost = 500
+	containertype = /obj/storage/crate
+	containername = "Hydroponics: Starter Crate"
 
 /datum/supply_packs/complex/robotics_kit
 	name = "Robotics kit"

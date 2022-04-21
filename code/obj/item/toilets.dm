@@ -33,13 +33,17 @@ TOILET
 	if (istype(W, /obj/item/storage))
 		return
 	if (istype(W, /obj/item/grab))
-		playsound(src, "sound/effects/toilet_flush.ogg", 50, 1)
-		user.visible_message("<span class='notice'>[user] gives [W:affecting] a swirlie!</span>", "<span class='notice'>You give [W:affecting] a swirlie. It's like Middle School all over again!</span>")
+		var/obj/item/grab/G = W
+		playsound(src, 'sound/effects/toilet_flush.ogg', 50, 1)
+		user.visible_message("<span class='notice'>[user] gives [G.affecting] a swirlie!</span>", "<span class='notice'>You give [G.affecting] a swirlie. It's like Middle School all over again!</span>")
+		if (G.affecting.hasStatus("burning"))
+			G.affecting.changeStatus("burning", -2 SECONDS)
+			playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 70, 1)
+			return
 		return
-
 	return ..()
 
-/obj/item/storage/toilet/MouseDrop(atom/over_object, src_location, over_location)
+/obj/item/storage/toilet/mouse_drop(atom/over_object, src_location, over_location)
 	if (usr && over_object == usr && in_interact_range(src, usr) && iscarbon(usr) && !usr.stat)
 		usr.visible_message("<span class='alert'>[usr] [pick("shoves", "sticks", "stuffs")] [his_or_her(usr)] hand into [src]!</span>")
 		playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
@@ -49,7 +53,7 @@ TOILET
 	if (!ticker)
 		boutput(user, "You can't help relieve anyone before the game starts.")
 		return
-	if (!ishuman(M) || get_dist(src, user) > 1 || M.loc != src.loc || user.restrained() || user.stat)
+	if (!ishuman(M) || BOUNDS_DIST(src, user) > 0 || M.loc != src.loc || user.restrained() || user.stat)
 		return
 	if (M == user && ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -151,7 +155,7 @@ TOILET
 
 	playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
 	health_update_queue |= user
-	SPAWN_DBG(10 SECONDS)
+	SPAWN(10 SECONDS)
 		if (user)
 			user.suiciding = 0
 	return 1

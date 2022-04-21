@@ -52,6 +52,7 @@
 				flick("implode", animation)
 
 				H.unequip_all()
+				logTheThing("combat", H, null, "is transformed into a crab by the crab gun at [log_loc(H)].")
 				var/mob/living/critter/C = H.make_critter(/mob/living/critter/small_animal/crab)
 				if (istype(C))
 
