@@ -109,9 +109,6 @@
 			ui.open()
 
 	ui_data(mob/user)
-		. = ..()
-		if (.)
-			return
 		. = list(
 			"name" = src.name,
 			"notes" = src.notes,
