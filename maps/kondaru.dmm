@@ -53298,6 +53298,10 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/garden/aviary)
+"qtH" = (
+/obj/item/clothing/glasses/regular/ecto/goggles/advanced,
+/turf/space,
+/area/space)
 "qtW" = (
 /obj/machinery/light{
 	dir = 4;
@@ -55719,6 +55723,9 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
+/obj/item/storage/spooky_ammo,
+/obj/item/gun/reagent/ecto,
+/obj/item/clothing/glasses/regular/ecto/goggles/advanced,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "sWh" = (
@@ -89860,7 +89867,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+qtH
 aaa
 aaa
 aaa
@@ -90159,7 +90166,7 @@ acO
 aaa
 aaa
 aaa
-aaa
+qtH
 aaa
 aaa
 aaa
