@@ -1,5 +1,9 @@
 
 (t)thu apr 21 22
+(u)glowbold
+(p)8101
+(e)|
+(+)AI units can now change their name via a new AI Command: "Change Designation"
 (u)Hans
 (p)8276
 (e)🆕|feature
