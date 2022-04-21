@@ -102,8 +102,8 @@
 	var/list/datum/plant_gene_strain/spawn_commuts = list()
 	var/auto_water = TRUE
 
-	New()
-		SPAWN_DBG(0) // delay for prefab attribute assignment
+	New(newLoc, obj/item/seed/initial_seed)
+		SPAWN(0) // delay for prefab attribute assignment
 			var/datum/plant/P
 			//Adjust processing tier to slow down server burden unless necessary
 			if(spawn_plant)
@@ -113,7 +113,10 @@
 			..()
 			status |= BROKEN
 
-			if(P)
+			if(initial_seed)
+				src.HYPnewplant(initial_seed)
+				UpdateIcon()
+			else if(P)
 				var/obj/item/seed/S = new /obj/item/seed
 
 				S.generic_seed_setup(P)
@@ -178,7 +181,7 @@
 	process()
 		..()
 		if(auto_water)
-			if(!src.reagents.has_reagent("water", 50))
+			if(src.reagents && !src.reagents.has_reagent("water", 50))
 				src.reagents.add_reagent("water", 200)
 
 	flower
@@ -538,7 +541,7 @@
 								qdel(C)
 							playsound(src.loc, "sound/items/eatfood.ogg", 30, 1, -2)
 							src.reagents.add_reagent("blood", 120)
-							SPAWN_DBG(2.5 SECONDS)
+							SPAWN(2.5 SECONDS)
 								if(src)
 									playsound(src.loc, pick("sound/voice/burp_alien.ogg"), 50, 0)
 							return
@@ -596,7 +599,7 @@
 
 		else if(isweldingtool(W) || istype(W, /obj/item/device/light/zippo) || istype(W, /obj/item/device/igniter))
 			// These are for burning down plants with.
-			if(isweldingtool(W) && !W:try_weld(usr, 3, noisy = 0, burn_eyes = 1))
+			if(isweldingtool(W) && !W:try_weld(user, 3, noisy = 0, burn_eyes = 1))
 				return
 			else if(istype(W, /obj/item/device/light/zippo) && !W:on)
 				boutput(user, "<span class='alert'>It would help if you lit it first, dumbass!</span>")
@@ -763,7 +766,7 @@
 		else ..()
 
 	attack_ai(mob/user as mob)
-		if(isrobot(user) && get_dist(src, user) <= 1) return src.Attackhand(user)
+		if(isrobot(user) && BOUNDS_DIST(src, user) == 0) return src.Attackhand(user)
 
 	attack_hand(var/mob/user as mob)
 		if(isAI(user) || isobserver(user)) return // naughty AIs used to be able to harvest plants
@@ -819,10 +822,10 @@
 			boutput(user, "The solution seems to contain [reag_list].")
 		return
 
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		..()
-		if(!isliving(usr)) return // ghosts killing plants fix
-		if(get_dist(src, usr) > 1)
+		if(!isliving(usr) || isintangible(usr)) return // ghosts killing plants fix
+		if(BOUNDS_DIST(src, usr) > 0)
 			boutput(usr, "<span class='alert'>You need to be closer to empty the tray out!</span>")
 			return
 
@@ -871,13 +874,13 @@
 		return
 
 	MouseDrop_T(atom/over_object as obj, mob/user as mob) // ty to Razage for the initial code
-		if(get_dist(user, src) > 1 || get_dist(user, over_object) > 1 || is_incapacitated(user) || isAI(user))
+		if(BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, over_object) > 0 || is_incapacitated(user) || isAI(user))
 			return
 		if(istype(over_object, /obj/item/seed))  // Checks to make sure it's a seed being dragged onto the tray.
-			if(get_dist(user, src) > 1)
+			if(BOUNDS_DIST(user, src) > 0)
 				boutput(user, "<span class='alert'>You need to be closer to the tray!</span>")
 				return
-			if(get_dist(user, over_object) > 1)
+			if(BOUNDS_DIST(user, over_object) > 0)
 				boutput(user, "<span class='alert'>[over_object] is too far away!</span>")
 				return
 			src.Attackby(over_object, user)  // Activates the same command as would be used with a seed in hand on the tray.
@@ -909,7 +912,7 @@
 			pingsignal.data["address_1"] = signal.data["sender"]
 			pingsignal.data["command"] = "ping_reply"
 
-			SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
+			SPAWN(0.5 SECONDS) //Send a reply for those curious jerks
 				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pingsignal)
 
 		return //Just toss out the rest of the signal then I guess
@@ -969,15 +972,7 @@
 			else
 				UpdateOverlays(null, "health_display")
 
-		var/planticon = null
-		if(MUT?.iconmod)
-			planticon = "[MUT.iconmod]-G[src.grow_level]"
-		else if(growing.sprite)
-			planticon = "[growing.sprite]-G[src.grow_level]"
-		else if(growing.override_icon_state)
-			planticon = "[growing.override_icon_state]-G[src.grow_level]"
-		else
-			planticon = "[growing.name]-G[src.grow_level]"
+		var/planticon = growing.getIconState(src.grow_level, MUT)
 
 		src.plant_sprite.icon = iconname
 		src.plant_sprite.icon_state = planticon
@@ -1057,7 +1052,7 @@
 		if(hydro_controls)
 			src.recently_harvested = 1
 			src.harvest_warning = 0
-			SPAWN_DBG(hydro_controls.delay_between_harvests)
+			SPAWN(hydro_controls.delay_between_harvests)
 				src.recently_harvested = 0
 		else
 			logTheThing("debug", null, null, "<b>Hydro Controls</b>: Could not access Hydroponics Controller to get Delay cap.")

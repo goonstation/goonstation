@@ -93,7 +93,7 @@
 /turf/simulated/floor/purple/side,
 /area/prefab/sequestered_cloner)
 "hw" = (
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /turf/variableTurf/clear,
 /area/noGenerate)
 "hB" = (

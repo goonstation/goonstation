@@ -6,6 +6,7 @@ mob/new_player
 	var/keyd
 	var/adminspawned = 0
 	var/is_respawned_player = 0
+	var/pregameBrowserLoaded = FALSE
 
 #ifdef TWITCH_BOT_ALLOWED
 	var/twitch_bill_spawn = 0
@@ -17,11 +18,11 @@ mob/new_player
 
 	anchored = 1	//  don't get pushed around
 
-	var/chui/window/spend_spacebux/bank_menu
+	var/datum/spend_spacebux/bank_menu
 
 	New()
 		. = ..()
-		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_ALWAYS)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_ALWAYS)
 	#ifdef I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO
 		ready = 1
 	#endif
@@ -93,6 +94,8 @@ mob/new_player
 
 			else
 				spawned_in_keys += "[src.ckey]"
+				for (var/sound in global.dj_panel.preloaded_sounds)
+					src.client << load_resource(sound, -1)
 
 #ifdef TWITCH_BOT_ALLOWED
 		if (current_state == GAME_STATE_PLAYING)
@@ -119,7 +122,7 @@ mob/new_player
 		// explanation for isnull(src.key) from the reference: In the case of a player switching to another mob, by the time Logout() is called, the original mob's key will be null,
 		if (isnull(src.key) && pregameHTML && isclient(src.last_client))
 			// Removed dupe "if (src.last_client)" check since it was still runtiming anyway
-			SPAWN_DBG(0)
+			SPAWN(0)
 				if(isclient(src.last_client))
 					winshow(src.last_client, "pregameBrowser", 0)
 					src.last_client << browse("", "window=pregameBrowser")
@@ -152,6 +155,7 @@ mob/new_player
 		if(pregameHTML && client)
 			winshow(client, "pregameBrowser", 1)
 			client << browse(pregameHTML, "window=pregameBrowser")
+			src.pregameBrowserLoaded = TRUE
 		else if(client)
 			winshow(src.last_client, "pregameBrowser", 0)
 			src.last_client << browse("", "window=pregameBrowser")
@@ -242,10 +246,13 @@ mob/new_player
 					var/obj/item/organ/brain/latejoin/latejoin = IsSiliconAvailableForLateJoin(S)
 					if(latejoin)
 						close_spawn_windows()
-						latejoin.activated = 1
+						latejoin.activated = TRUE
+						latejoin.name_prefix("activated")
+						latejoin.UpdateName()
+						latejoin.color = json_decode("\[-0.152143,1.02282,-0.546681,1.28769,-0.143153,0.610996,-0.135547,0.120332,0.935685\]") //spriters beware
 						latejoin.owner = src.mind
 						src.mind.transfer_to(S)
-						SPAWN_DBG(1 DECI SECOND)
+						SPAWN(1 DECI SECOND)
 							S.choose_name()
 							qdel(src)
 					else
@@ -300,7 +307,7 @@ mob/new_player
 				return latejoin
 		if (istype(S,/mob/living/silicon/robot))
 			var/mob/living/silicon/robot/R = S
-			var/obj/item/organ/brain/latejoin/latejoin = R.brain
+			var/obj/item/organ/brain/latejoin/latejoin = R.part_head?.brain
 			if (istype(latejoin) && !latejoin.activated)
 				return latejoin
 		return 0
@@ -341,6 +348,9 @@ mob/new_player
 				//So the location setting is handled in EquipRank in jobprocs.dm. I assume cause that is run all the time as opposed to this.
 			else if (character.traitHolder && character.traitHolder.hasTrait("pilot"))
 				boutput(character.mind.current,"<h3 class='notice'>You've become lost on your way to the station! Good luck!</h3>")
+			else if (character.traitHolder && character.traitHolder.hasTrait("sleepy"))
+				SPAWN(10 SECONDS) //ugly hardcoding- matches the duration you're asleep for
+					boutput(character?.mind?.current,"<h3 class='notice'>Hey, you! You're finally awake!</h3>")
 				//As with the Stowaway trait, location setting is handled elsewhere.
 			else if (istype(character.mind.purchased_bank_item, /datum/bank_purchaseable/space_diner) || istype(character.mind.purchased_bank_item, /datum/bank_purchaseable/mail_order))
 				// Location is set in bank_purchaseable Create()
@@ -390,13 +400,13 @@ mob/new_player
 				character.mind.join_time = world.time
 				//ticker.implant_skull_key() // This also checks if a key has been implanted already or not. If not then it'll implant a random sucker with a key.
 				if (!(character.mind in ticker.minds))
-					logTheThing("debug", character, null, "<b>Late join:</b> added player to ticker.minds.")
+					logTheThing("debug", character, null, "<b>Late join:</b> added player to ticker.minds. [character.mind.on_ticker_add_log()]")
 					ticker.minds += character.mind
 				logTheThing("debug", character, null, "<b>Late join:</b> assigned job: [JOB.name]")
 				//if they have a ckey, joined before a certain threshold and the shuttle wasnt already on its way
 				if (character.mind.ckey && (ticker.round_elapsed_ticks <= MAX_PARTICIPATE_TIME) && !emergency_shuttle.online)
 					participationRecorder.record(character.mind.ckey)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				qdel(src)
 
 		else
@@ -609,7 +619,7 @@ a.latejoin-card:hover {
 		src.Browse(dat, "window=latechoices;size=800x666")
 		if(!bank_menu)
 			bank_menu = new
-		bank_menu.Subscribe( usr.client )
+		bank_menu.ui_interact(usr ,null)
 
 	proc/create_character(var/datum/job/J, var/allow_late_antagonist = 0)
 		if (!src || !src.mind || !src.client)
@@ -662,8 +672,19 @@ a.latejoin-card:hover {
 							break
 
 					var/bad_type = null
-					if (islist(ticker.mode.latejoin_antag_roles) && length(ticker.mode.latejoin_antag_roles))
-						bad_type = pick(ticker.mode.latejoin_antag_roles)
+					if (islist(ticker.mode.latejoin_antag_roles) && length(ticker.mode.latejoin_antag_roles)){
+
+						//Another one I need input on
+						if(ticker.mode.latejoin_antag_roles[ROLE_TRAITOR] != null)
+						{
+							bad_type = weighted_pick(ticker.mode.latejoin_antag_roles);
+						}
+						else{
+							bad_type = pick(ticker.mode.latejoin_antag_roles)
+						}
+						}
+
+
 					else
 						bad_type = ROLE_TRAITOR
 
@@ -828,9 +849,9 @@ a.latejoin-card:hover {
 				if (usr.client) winset(src, "joinmenu.button_cancel", "is-disabled=false;is-visible=true")
 				if (usr.client) winset(src, "joinmenu.button_ready_antag", "is-disabled=true")
 				usr.Browse(null, "window=mob_occupation")
-
-				bank_menu = new
-				bank_menu.Subscribe( usr.client )
+				if(!bank_menu)
+					bank_menu = new
+				bank_menu.ui_interact( usr, null )
 				src.client.loadResources()
 		else
 			LateChoices()
@@ -843,7 +864,7 @@ a.latejoin-card:hover {
 			return
 
 		if (ticker)
-			if(ticker.pregame_timeleft <= 3)
+			if(ticker.pregame_timeleft <= 3 && !isadmin(usr))
 				boutput(usr, "<span class='alert'>It is too close to roundstart for you to unready. Please wait until setup finishes.</span>")
 				return
 			if (ticker.mode)

@@ -72,7 +72,7 @@
 
 		equip_leader(leaderMind.current)
 
-	SPAWN_DBG (rand(waittime_l, waittime_h))
+	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
 
 /datum/game_mode/spy/send_intercept()
@@ -318,8 +318,7 @@
 
 		if (M.mind)
 			if (!src.linked_objective)
-				src.linked_objective = new /datum/objective(  )
-				M.mind.objectives += src.linked_objective
+				src.linked_objective = new /datum/objective(null, M.mind)
 
 			src.linked_objective.explanation_text = "Obey [leader_name]'s every order."
 

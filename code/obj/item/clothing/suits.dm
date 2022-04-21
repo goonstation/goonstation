@@ -32,34 +32,19 @@
 	name = "hoodie"
 	desc = "Nice and comfy on those cold space evenings."
 	icon_state = "hoodie"
-	uses_multiple_icon_states = 1
 	item_state = "hoodie"
 	body_parts_covered = TORSO|ARMS
-	var/hood = 0
 	var/hcolor = null
 
 	New()
 		..()
+		src.AddComponent(/datum/component/toggle_hood, hood_style="hoodie[src.hcolor ? "-[hcolor]" : null]")
 		src.icon_state = "hoodie[src.hcolor ? "-[hcolor]" : null]"
 		src.item_state = "hoodie[src.hcolor ? "-[hcolor]" : null]"
 
 	setupProperties()
 		..()
 		setProperty("coldprot", 25)
-
-	attack_self(mob/user as mob)
-		src.hood = !(src.hood)
-		user.show_text("You flip [src]'s hood [src.hood ? "up" : "down"].")
-		if (src.hood)
-			src.over_hair = 1
-			src.body_parts_covered = HEAD|TORSO|ARMS
-			src.icon_state = "hoodie[src.hcolor ? "-[hcolor]" : null]-up"
-			src.item_state = "hoodie[src.hcolor ? "-[hcolor]" : null]-up"
-		else
-			src.over_hair = 0
-			src.body_parts_covered = TORSO|ARMS
-			src.icon_state = "hoodie[src.hcolor ? "-[hcolor]" : null]"
-			src.item_state = "hoodie[src.hcolor ? "-[hcolor]" : null]"
 
 	blue
 		desc = "Would fit well on a skeleton."
@@ -149,7 +134,7 @@
 
 	plastic
 		name = "plastic jacket"
-		desc = "A translucent plastic jacket. It looks flimsy and incredibly tacky."
+		desc = "A flimsy and translucent plastic jacket that comes in a variety of colors. Someone who wears this must either have negative fashion or impeccable taste."
 		icon_state = "jacket_plastic"
 		item_state = "jacket_plastic"
 
@@ -479,6 +464,12 @@
 			setProperty("coldprot", 10)
 			setProperty("heatprot", 10)
 			setProperty("movespeed", 0.4)
+
+/obj/item/clothing/suit/apron/surgeon
+	name = "surgeon's apron"
+	desc = "A white apron with a tendency to be spattered with red substances."
+	icon_state = "apron-surgeon"
+	item_state = "apron-surgeon"
 
 /obj/item/clothing/suit/labcoat
 	name = "labcoat"
@@ -1005,7 +996,7 @@
 
 		New()
 			..()
-			SPAWN_DBG(2 SECONDS)
+			SPAWN(2 SECONDS)
 				src.name = initial(src.name)
 				src.setMaterial(getMaterial("cotton"), appearance = 0, setname = 0)
 
@@ -1049,6 +1040,8 @@
 	item_state = "s_suit"
 	c_flags = SPACEWEAR
 	body_parts_covered = TORSO|LEGS|ARMS
+	duration_remove = 6 SECONDS
+	duration_put = 6 SECONDS
 	permeability_coefficient = 0.1
 	protective_temperature = 1000
 
@@ -1090,7 +1083,7 @@
 			T = T.loc
 		src.set_loc(T)
 		user.u_equip(src)
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			qdel(src)
 
 /obj/item/clothing/suit/space/captain
@@ -1292,32 +1285,58 @@
 	item_state = "space-neon"
 
 /obj/item/clothing/suit/space/custom // Used for nanofabs
+	icon_state = "spacemat"
+	inhand_image_icon = "s_suit"
+	item_state = "spacemat"
 	name = "bespoke space suit"
-	desc = "A suit that protects against low pressure environments, custom-made just for you!"
-	onMaterialChanged()
-		if(src.material)
-			if(material.hasProperty("thermal"))
-				var/prot = 100 - material.getProperty("thermal")
+	desc = "A custom built suit that protects your fragile body from hard vacuum."
+	var/datum/material/renf=null
+	var/prot = 0 //tired of this being initalized in the setup code so it gets a special place now
+
+	proc/setupReinforcement(var/datum/material/R) // passes the reinforcement variable, sets up protection
+		renf = R
+		if (src.material && renf)
+			if (src.material.hasProperty("thermal"))
+				var/prot = 100 - src.material.getProperty("thermal")
 				setProperty("coldprot", prot)
 				setProperty("heatprot", round(prot/2))
 			else
 				setProperty("coldprot", 30)
 				setProperty("heatprot", 15)
 
-			if(material.hasProperty("permeable"))
-				var/prot = 100 - material.getProperty("permeable")
-				setProperty("viralprot", prot)
+			if (src.material.hasProperty("permeable"))
+				var/permprot = 100 - src.material.getProperty("permeable")
+				setProperty("viralprot", permprot)
 			else
 				setProperty("viralprot", 40)
 
-			if(material.hasProperty("density"))
-				var/prot = round(material.getProperty("density") / 13)
-				setProperty("meleeprot", prot)
+			if(src.material.hasProperty("density"))
+				prot = round(src.material.getProperty("density") / 13)// for RANGED
 				setProperty("rangedprot", (0.2 + round(prot/10, 0.1)))
 			else
-				setProperty("meleeprot", 2)
 				setProperty("rangedprot", 0.4)
 
+			if(renf.hasProperty("density"))
+				prot = round(((renf.getProperty("density") / 20)+2), 0.5)// for MELEE- scaling of protection/density with formula y=(x/20)+2
+				prot = clamp(prot, 2, 6)// it shouldn't be outside these two numbers but just in case
+				setProperty("meleeprot", prot)
+
+				 // for MOVESPEED
+				var/clunk = round((((renf.getProperty("density")/20) /10)+0.3), 0.1) // one-line fuckyou code that scales speed between 0.3 and 0.7
+				clunk = clamp(clunk, 0.3, 0.7) // again, keep it safe
+				setProperty("space_movespeed", clunk)
+
+			else
+				setProperty("meleeprot", 3)
+				setProperty("space_movespeed", 0.6)
+
+
+
+	UpdateName()
+		if (src.material && renf)
+			name = "[renf]-reinforced [src.material] bespoke space suit"
+		else if (src.material)
+			name = " [src.material] bespoke space suit"
 // Sealab suits
 
 /obj/item/clothing/suit/space/diving
@@ -1558,17 +1577,12 @@
 	permeability_coefficient = 0.01
 	body_parts_covered = TORSO|LEGS|ARMS
 	contraband = 4
+	duration_remove = 10 SECONDS
 
 	setupProperties()
 		..()
 		setProperty("coldprot", 90)
 		setProperty("heatprot", 30)
-
-	handle_other_remove(var/mob/source, var/mob/living/carbon/human/target)
-		. = ..()
-		if ( . &&prob(75))
-			source.show_message(text("<span class='alert'>\The [src] writhes in your hands as though it is alive! It just barely wriggles out of your grip!</span>"), 1)
-			.  = 0
 
 /obj/item/clothing/suit/wizrobe/red
 	name = "red wizard robe"
@@ -1627,6 +1641,11 @@
 	name = "medical winter coat"
 	icon_state = "wintercoat-medical"
 	item_state = "wintercoat-medical"
+
+/obj/item/clothing/suit/wintercoat/genetics
+	name = "genetics winter coat"
+	icon_state = "wintercoat-genetics"
+	item_state = "wintercoat-genetics"
 
 /obj/item/clothing/suit/wintercoat/research
 	name = "research winter coat"
@@ -1735,6 +1754,9 @@
 
 	attack_self(mob/user as mob)
 		user.visible_message("[user] flashes the badge: <br><span class='bold'>[bicon(src)] Nanotrasen's Finest [badge_owner_job]: [badge_owner_name].</span>", "You show off the badge: <br><span class='bold'>[bicon(src)] Nanotrasen's Finest [badge_owner_job] [badge_owner_name].</span>")
+
+	attack(mob/target, mob/user)
+		user.visible_message("[user] flashes the badge at [target.name]: <br><span class='bold'>[bicon(src)] Nanotrasen's Finest [badge_owner_job]: [badge_owner_name].</span>", "You show off the badge to [target.name]: <br><span class='bold'>[bicon(src)] Nanotrasen's Finest [badge_owner_job] [badge_owner_name].</span>")
 
 /obj/item/clothing/suit/hosmedal
 	name = "war medal"

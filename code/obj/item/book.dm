@@ -147,6 +147,12 @@ Custom Books
 	icon_state = "hydrohandbook"
 	file_path = "strings/books/hydroponicsguide.txt"
 
+/obj/item/paper/book/from_file/bee_book  // By Keiya, bee-cause she felt like it
+	name = "Bee Exposition Extravaganza"
+	icon_state = "bee_book"
+	desc = "Also called \"The BEE Book\" for short."
+	file_path = "strings/books/bee_book.txt"
+
 //needs a review + bullet reformat
 /obj/item/paper/book/from_file/cookbook
 	name = "To Serve Man"
@@ -273,7 +279,7 @@ Custom Books
 				if(hos && !ON_COOLDOWN(H, "spacelaw_confession", 10 SECONDS))
 					H.say("[pick("Alright, fine, I ", "I confess that I ", "I confess! I ", "Okay, okay, I admit that I ")][pick("nabbed ", "stole ", "klepped ", "grabbed ", "thieved ", "pilfered ")]the [pick("Head of Security's ", "Captain's ", "Head of Personnel's ", "Chief Engineer's ", "Research Director's ", "Science Department's ", "Mining Team's ", "Quartermaster's ")] [pick("hair brush!", "shoes!", "stuffed animal!", "spare uniform!", "bedsheets!", "hat!", "trophy!", "glasses!", "fizzy lifting drink!", "ID card!")]")
 				prob_clonk = min(prob_clonk + 5, 40)
-				SPAWN_DBG(2 SECONDS)
+				SPAWN(2 SECONDS)
 					prob_clonk = max(prob_clonk - 5, 0)
 
 		return ..(hit_atom)
@@ -303,6 +309,12 @@ Custom Books
 	desc = "A book detailing the ruleset for the tabletop RPG, Stations and Syndicates. You don't know what happened to the previous 7 editions but maybe its probably not worth looking for them."
 	icon_state = "bookcc"
 	file_path = "strings/books/DNDrulebook.txt"
+
+/obj/item/paper/book/from_file/MONOrules
+	name = "MONO card game rules"
+	desc = "A pamphlet describing the rules of MONO, the family-friendly and legally distinct card game for all ages!"
+	icon_state = "paper"
+	file_path = "strings/books/MONOrules.txt"
 
 /******************** OTHER BOOKS ********************/
 /obj/item/diary
@@ -421,6 +433,20 @@ Custom Books
 	name = "A SYNDIE'S GUIDE TO DOING YOUR FUCKING JOB"
 	icon_state = "syndiebook"
 	file_path = "strings/books/syndies_guide.txt"
+
+	New()
+		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
+
+	stolen //crew obtainable version
+
+		New()
+			..()
+			STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE) //ugly but oh well
 
 /obj/item/paper/book/from_file/zoo_diary
 	name = "grimy diary"

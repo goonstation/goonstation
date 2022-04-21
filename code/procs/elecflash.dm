@@ -94,7 +94,7 @@ var/global/mutable_appearance/elecflash_ma = null
 
 	playsound(center_turf, sound, 50, 1)
 
-	SPAWN_DBG(3 SECONDS)
+	SPAWN(3 SECONDS)
 		for(var/atom in elecs)
 			var/atom/A = atom
 			qdel(A)

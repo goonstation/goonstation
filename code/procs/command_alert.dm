@@ -1,5 +1,5 @@
-/proc/command_alert(var/text, var/title = "", var/sound_to_play = "", var/do_sanitize = 1, var/override_big_title=null)
-	var/big_title = override_big_title ? override_big_title : "[command_name()] Update"
+/proc/command_alert(var/text, var/title = "", var/sound_to_play = "", var/do_sanitize = 1, var/alert_origin=null)
+	var/big_title = alert_origin ? alert_origin : "[ALERT_GENERAL]"
 	boutput(world, "<h1 class='alert'>[big_title]</h1>")
 
 	if (title && length(title) > 0)
@@ -36,7 +36,7 @@
 
 	//for(var/mob/M in mob_list)
 	for (var/client/C in clients)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if(C.mob)//M.client)
 				var/mob/M = C.mob
 				var/client/rand_client_mult = pick(clients)

@@ -40,7 +40,7 @@
 				button.pad_type = button_type
 				button.triggered = selected_triggerable.Copy()
 				button.triggered_unpress = selected_triggerable_untrigger.Copy()
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					button.color = color_rgb
 		else if ("right" in pa)
 			if (istype(object, /obj/adventurepuzzle/triggerable))
@@ -99,7 +99,7 @@
 			return
 		pressed = 1
 		flick("pressure_[pad_type]_pressing", src)
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			icon_state = "pressure_[pad_type]_pressed"
 			post_trigger()
 
@@ -108,7 +108,7 @@
 			return
 		pressed = 0
 		flick("pressure_[pad_type]_unpressing", src)
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			icon_state = "pressure_[pad_type]_unpressed"
 			post_untrigger()
 

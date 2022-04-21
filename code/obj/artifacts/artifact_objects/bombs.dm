@@ -2,6 +2,7 @@
 
 ABSTRACT_TYPE(/datum/artifact/bomb)
 /datum/artifact/bomb
+	type_size = ARTIFACT_SIZE_LARGE
 	associated_object = null
 	rarity_weight = 0
 	validtypes = list("ancient","eldritch","precursor")
@@ -46,7 +47,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		if(recharge_delay && ON_COOLDOWN(O, "bomb_cooldown", recharge_delay))
 			T.visible_message("<b><span class='alert'>[O] [text_cooldown]</span></b>")
 			playsound(T, sound_cooldown, 100, 1)
-			SPAWN_DBG(3 SECONDS)
+			SPAWN(3 SECONDS)
 				O.ArtifactDeactivated() // lol get rekt spammer
 			return
 
@@ -57,7 +58,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 			playsound(T, alarm_initial, 100, 1, doAlert?200:-1)
 		if (doAlert)
 			var/area/A = get_area(O)
-			command_alert("An extremely unstable object of [artitype.type_name] origin has been detected in [A]. The crew is advised to dispose of it immediately.", "Station Threat Detected")
+			command_alert("An extremely unstable object of [artitype.type_name] origin has been detected in [A]. The crew is advised to dispose of it immediately.", "Station Threat Detected", alert_origin = ALERT_ANOMALY)
 		O.add_simple_light("artbomb", lightColor)
 		animate(O, pixel_y = rand(-3,3), pixel_y = rand(-3,3),time = 1,loop = src.explode_delay + 10 SECONDS, easing = ELASTIC_EASING, flags=ANIMATION_PARALLEL)
 		animate(O.simple_light, flags=ANIMATION_PARALLEL, time = src.explode_delay + 10 SECONDS, transform = matrix() * animationScale)
@@ -87,7 +88,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 				animate(O.simple_light, flags=ANIMATION_PARALLEL, time = 10 SECONDS, transform = matrix() * animationScale)
 
 			// actual boom
-			SPAWN_DBG(10 SECONDS)
+			SPAWN(10 SECONDS)
 				if (!O.disposed && src.activated)
 					blewUp = 1
 					deploy_payload(O)
@@ -99,12 +100,12 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		animate(O, pixel_y = 0, pixel_y = 0, time = 3,loop = 1, easing = LINEAR_EASING)
 		if(O.simple_light)
 			animate(O.simple_light, flags=ANIMATION_PARALLEL, time= 3 SECONDS, transform = null)
-		SPAWN_DBG(3 SECONDS)
+		SPAWN(3 SECONDS)
 			O.remove_simple_light("artbomb")
 		var/turf/T = get_turf(O)
 		T.visible_message("<b><span class='notice'>[O] [text_disarmed]</b></span>")
 		if(src.doAlert && !src.blewUp && !ON_COOLDOWN(O, "alertDisarm", 10 MINUTES)) // lol, don't give the message if it was destroyed by exploding itself
-			command_alert("The object of [src.artitype.type_name] origin has been neutralized. All personnel should return to their duties.", "Station Threat Neutralized")
+			command_alert("The object of [src.artitype.type_name] origin has been neutralized. All personnel should return to their duties.", "Station Threat Neutralized", alert_origin = ALERT_ANOMALY)
 
 	proc/deploy_payload(var/obj/O)
 		if (!O)
@@ -113,12 +114,12 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 			var/turf/T = get_turf(O)
 			T.visible_message("<b>[O] [text_dud]")
 			if(src.doAlert && !ON_COOLDOWN(O, "alertDud", 10 MINUTES))
-				command_alert("The object of [src.artitype.type_name] origin appears to be nonfunctional. All personnel should return to their duties.", "Station Threat Neutralized")
+				command_alert("The object of [src.artitype.type_name] origin appears to be nonfunctional. All personnel should return to their duties.", "Station Threat Neutralized", alert_origin = ALERT_ANOMALY)
 			O.ArtifactDeactivated()
 			return 1
 
 		// Added (Convair880).
-		ArtifactLogs(usr, null, O, "detonated", null, 1)
+		ArtifactLogs(usr, null, O, "detonated", log_addendum, 1)
 
 		return 0
 
@@ -133,7 +134,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		if(src.artifact && istype(src.artifact, /datum/artifact/bomb))
 			var/datum/artifact/bomb/B = src.artifact
 			if(B.doAlert && B.activated && !B.blewUp) // lol, don't give the message if it was destroyed by exploding itself
-				command_alert("The object of [B.artitype.type_name] origin has been neutralized. All personnel should return to their duties.", "Station Threat Neutralized")
+				command_alert("The object of [B.artitype.type_name] origin has been neutralized. All personnel should return to their duties.", "Station Threat Neutralized", alert_origin = ALERT_ANOMALY)
 
 
 
@@ -265,6 +266,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 					continue
 				looper--
 				payload_reagents += reagent
+			log_addendum = "Payload: [kText.list2text(payload_reagents, ", ")]"
 
 		recharge_delay = rand(300,800)
 
@@ -301,7 +303,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 		O.reagents.clear_reagents()
 
-		SPAWN_DBG(recharge_delay)
+		SPAWN(recharge_delay)
 			if (O)
 				O.ArtifactDeactivated()
 
@@ -390,7 +392,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 					50;"bone",
 					20;"blob",
 					20;"pizza",
-					2;"butt")
+					20;"butt")
 			if("ancient") // industrial type stuff
 				material = pick(
 					100;"electrum",
@@ -416,8 +418,8 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 					30;"carbonfibre",
 					30;"diamond",
 					30;"dyneema",
-					10;"iridiumalloy",
-					1;"neutronium")
+					20;"iridiumalloy",
+					20;"neutronium")
 			if("precursor") // uh, the rest
 				material = pick(
 					100;"rock",
@@ -432,6 +434,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 		warning_initial = "appears to be turning into [mat.name]."
 		warning_final = "begins transmuting nearby matter into [mat.name]!"
+		log_addendum = "Material: [mat.name]"
 
 		var/matR = GetRedPart(mat.color)
 		var/matG = GetGreenPart(mat.color)
@@ -453,7 +456,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		animate(O.get_filter("rays"), size=16*range, time=0.5 SECONDS, offset=base_offset+50)
 		animate(size=32*range, time=0.5 SECONDS, offset=base_offset+50, alpha=0)
 
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			var/range_squared = range**2
 			var/turf/T = get_turf(O)
 			for(var/atom/G in range(range, T))
@@ -466,7 +469,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 				if(!smoothEdge && prob(distPercent))
 					continue
 				if(istype(G, /mob))
-					if(!istype(G, /mob/living)) // not stuff like ghosts, please
+					if(!isliving(G) || isintangible(G)) // not stuff like ghosts, please
 						continue
 					var/mob/M = G
 					switch(affects_organic)

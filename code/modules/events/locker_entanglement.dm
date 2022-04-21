@@ -2,6 +2,7 @@
 	name = "Locker Entanglement"
 	centcom_headline = "Quantum Anomaly"
 	centcom_message = {"A quantum anomaly has been detected on station. Locker dimensional subspaces might have become unstable. Enter lockers at your own risk."}
+	centcom_origin = ALERT_ANOMALY
 	weight = 20
 	var/time = null
 
@@ -30,7 +31,7 @@
 
 		if(isnull(src.time))
 			src.time = rand(1 MINUTE, 5 MINUTES)
-		SPAWN_DBG(src.time)
+		SPAWN(src.time)
 			for(var/obj/storage/closet/closet as anything in closets)
 				closet.entangled = null
 			command_alert("Locker quantum stability restored.", src.centcom_headline)

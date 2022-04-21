@@ -17,7 +17,7 @@
 	mechanics_type_override = /obj/item/storage/wall
 
 	attack_hand(mob/user as mob)
-		return MouseDrop(user)
+		return mouse_drop(user)
 
 /obj/item/storage/wall/emergency
 	name = "emergency supplies"
@@ -200,7 +200,7 @@
 	New()
 		hud = new(src)
 		..()
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			UpdateIcon()
 
 	update_icon()
@@ -286,7 +286,7 @@ obj/item/storage/wall/clothingrack/hatrack
 	New()
 		hud = new(src)
 		..()
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			UpdateIcon()
 
 
@@ -337,7 +337,7 @@ obj/item/storage/wall/clothingrack/hatrack
 	New()
 		hud = new(src)
 		..()
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			UpdateIcon()
 
 	update_icon()
@@ -361,7 +361,7 @@ obj/item/storage/wall/clothingrack/hatrack
 	New()
 		hud = new(src)
 		..()
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			UpdateIcon()
 
 	update_icon()

@@ -6,7 +6,7 @@
 	density = 1
 	anchored = 1.0
 	mats = 25
-	event_handler_flags = USE_FLUID_ENTER 
+	event_handler_flags = USE_FLUID_ENTER
 	var/mob/living/carbon/human/victim = null
 	var/strapped = 0.0
 
@@ -15,7 +15,7 @@
 
 /obj/machinery/optable/New()
 	..()
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		src.computer = locate(/obj/machinery/computer/operating, orange(2,src))
 
 /obj/machinery/optable/ex_act(severity)
@@ -105,10 +105,10 @@
 	if (!ishuman(O))
 		boutput(user, "<span class='alert'>You can only put carbon lifeforms on the operating table.</span>")
 		return
-	if (get_dist(user,src) > 1)
+	if (BOUNDS_DIST(user, src) > 0)
 		boutput(user, "<span class='alert'>You need to be closer to the operating table.</span>")
 		return
-	if (get_dist(user,O) > 1)
+	if (BOUNDS_DIST(user, O) > 0)
 		boutput(user, "<span class='alert'>Your target needs to be near you to put them on the operating table.</span>")
 		return
 

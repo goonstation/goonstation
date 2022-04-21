@@ -2,6 +2,7 @@
 	name = "Wormholes"
 	centcom_headline = "Spatial Anomalies"
 	centcom_message = "Multiple localized spatial anomalies detected on the station. Personnel are advised to avoid any spatial distortions."
+	centcom_origin = ALERT_ANOMALY
 	required_elapsed_round_time = 20 MINUTES
 
 	event_effect(var/source)
@@ -9,14 +10,14 @@
 		var/turf/holepick = null
 		var/turf/targpick = null
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for(var/holes = rand(100,200), holes > 0, holes--)
 				holepick = pick(wormholeturfs)
 				targpick = pick(wormholeturfs)
 				var/obj/portal/P = new /obj/portal/wormhole
 				P.set_loc( holepick )
 				P.target = targpick
-				SPAWN_DBG(rand(18 SECONDS,32 SECONDS))
+				SPAWN(rand(18 SECONDS,32 SECONDS))
 					qdel(P)
 				if (rand(1,1000) == 1)
 					Artifact_Spawn(holepick)

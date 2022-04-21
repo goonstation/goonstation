@@ -392,7 +392,11 @@ obj/machinery/atmospherics/pipe
 					return
 
 				boutput(user, "You start to repair the [src.name].")
-				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/atmospherics/pipe/simple/proc/repair_pipe, list(), W.icon, W.icon_state, "<span class='notice'>[user] repairs the [src.name].</span>", null)
+
+				var/positions = src.get_welding_positions()
+				actions.start(new /datum/action/bar/private/welding(user, src, 2 SECONDS, /obj/machinery/atmospherics/pipe/simple/proc/repair_pipe, \
+						list(user), "<span class='notice'>[user] repairs the [src.name].</span>", positions[1], positions[2]),user)
+
 
 			else if(destroyed && istype(W, /obj/item/rods))
 				var/duration = 15 SECONDS
@@ -402,6 +406,49 @@ obj/machinery/atmospherics/pipe
 				var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, duration, /obj/machinery/atmospherics/pipe/simple/proc/reconstruct_pipe,\
 				list(user, S), W.icon, W.icon_state, "[user] finishes working with \the [src].")
 				actions.start(action_bar, user)
+
+		proc/get_welding_positions()
+			var/start
+			var/stop
+			var/axis_start_value
+			var/axis_stop_value
+			if(icon_state=="exposed")
+				axis_start_value = 6
+				axis_stop_value = 20
+			else
+				axis_start_value = 12
+				axis_stop_value = -12
+
+			switch(dir)
+				if(SOUTH)
+					start = list(0, axis_start_value)
+					stop = list(0, axis_stop_value)
+				if(NORTH)
+					start = list(0, -axis_start_value)
+					stop = list(0, -axis_stop_value)
+				if(EAST)
+					start = list(-axis_start_value, 0)
+					stop = list(-axis_stop_value, 0)
+				if(WEST)
+					start = list(axis_start_value, 0)
+					stop = list(axis_stop_value, 0)
+				if(SOUTHEAST)
+					start = list(0, -axis_start_value)
+					stop = list(axis_start_value, 0)
+				if(SOUTHWEST)
+					start = list(0, -axis_start_value)
+					stop = list(-axis_start_value, 0)
+				if(NORTHEAST)
+					start = list(0, axis_start_value)
+					stop = list(axis_start_value, 0)
+				if(NORTHWEST)
+					start = list(0, axis_start_value)
+					stop = list(-axis_start_value, 0)
+
+			if(rand(50))
+				. = list(start, stop)
+			else
+				. = list(stop, start)
 
 		proc/repair_pipe()
 			src.ruptured = 0

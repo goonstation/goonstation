@@ -77,10 +77,10 @@
 			if (!src.spam_flag_message)
 				src.spam_flag_message = 1
 				user.visible_message("<span style='color:#888888;font-size:80%'>[user] clicks [src].</span>")
-				SPAWN_DBG((src.spam_timer * 5))
+				SPAWN((src.spam_timer * 5))
 					if (src)
 						src.spam_flag_message = 0
-			SPAWN_DBG(src.spam_timer)
+			SPAWN(src.spam_timer)
 				if (src)
 					src.spam_flag_sound = 0
 
@@ -95,14 +95,14 @@
 		return FALSE
 
 	proc/write_on_turf(var/turf/T as turf, var/mob/user as mob, params)
-		if (!T || !user || src.in_use || get_dist(T, user) > 1 || isghostdrone(user))
+		if (!T || !user || src.in_use || BOUNDS_DIST(T, user) > 0 || isghostdrone(user))
 			return
 		if(!user.literate)
 			boutput(user, "<span class='alert'>You don't know how to write.</span>")
 			return
 		src.in_use = 1
 		var/t = input(user, "What do you want to write?", null, null) as null|text
-		if (!t || get_dist(T, user) > 1)
+		if (!t || BOUNDS_DIST(T, user) > 0)
 			src.in_use = 0
 			return
 		phrase_log.log_phrase("floorpen", t)
@@ -147,7 +147,7 @@
 			return 0
 		user.visible_message("<span class='alert'><b>[user] gently pushes the end of [src] into [his_or_her(user)] nose, then leans forward until [he_or_she(user)] falls to the floor face first!</b></span>")
 		user.TakeDamage("head", 175, 0)
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		qdel(src)
@@ -157,6 +157,7 @@
 	name = "fancy pen"
 	desc = "A pretty swag pen."
 	icon_state = "pen_fancy"
+	item_state = "pen_fancy"
 	font_color = "blue"
 	font = "'Dancing Script', cursive"
 	webfont = "Dancing Script"
@@ -373,7 +374,7 @@
 		New()
 			..()
 			if (!ticker) // trying to avoid pre-game-start runtime bullshit
-				SPAWN_DBG(3 SECONDS)
+				SPAWN(3 SECONDS)
 					src.font_color = random_saturated_hex_color(1)
 					src.color_name = hex2color_name(src.font_color)
 			else
@@ -382,7 +383,7 @@
 				src.color = src.font_color
 
 		write_on_turf(var/turf/T as turf, var/mob/user as mob, params)
-			if (!T || !user || src.in_use || get_dist(T, user) > 1)
+			if (!T || !user || src.in_use || BOUNDS_DIST(T, user) > 0)
 				return
 			src.font_color = random_saturated_hex_color(1)
 			src.color_name = hex2color_name(src.font_color)
@@ -394,12 +395,12 @@
 		if (!src.user_can_suicide(user))
 			return 0
 		user.visible_message("<span class='alert'><b>[user] jams [src] up [his_or_her(user)] nose!</b></span>")
-		SPAWN_DBG(0.5 SECONDS) // so we get a moment to think before we die
+		SPAWN(0.5 SECONDS) // so we get a moment to think before we die
 			user.take_brain_damage(120)
 		user.u_equip(src)
 		src.set_loc(user) // SHOULD be redundant but you never know.
 		health_update_queue |= user
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -464,7 +465,7 @@
 
 
 	write_on_turf(var/turf/T as turf, var/mob/user as mob, params)
-		if (!T || !user || src.in_use || get_dist(T, user) > 1)
+		if (!T || !user || src.in_use || BOUNDS_DIST(T, user) > 0)
 			return
 
 		var/t // t is for what we're tdrawing
@@ -487,7 +488,7 @@
 				t = t[1]
 			update_inventory_counter()
 
-		if (!t || get_dist(T, user) > 1)
+		if (!t || BOUNDS_DIST(T, user) > 0)
 			return
 
 		if(t == " ")
@@ -503,7 +504,8 @@
 			G = make_cleanable(/obj/decal/cleanable/writing, T)
 		G.artist = user.key
 
-		logTheThing("station", user, null, "writes on [T] with [src][src.material ? " (material: [src.material.name])" : null] [log_loc(T)]: [t]")
+		if(user.client) //I don't give a damn about monkeys writing stuff with crayon!!
+			logTheThing("station", user, null, "writes on [T] with [src][src.material ? " (material: [src.material.name])" : null] [log_loc(T)]: [t]")
 
 		var/size = 32
 
@@ -614,11 +616,11 @@
 
 	suicide(var/mob/user as mob)
 		user.visible_message("<span class='alert'><b>[user] crushes \the [src] into a powder and then [he_or_she(user)] snorts it all! That can't be good for [his_or_her(user)] lungs!</b></span>")
-		SPAWN_DBG(5 DECI SECONDS) // so we get a moment to think before we die
+		SPAWN(5 DECI SECONDS) // so we get a moment to think before we die
 			user.take_oxygen_deprivation(175)
 		user.u_equip(src)
 		src.set_loc(user) //yes i did this dont ask why i cant literally think of anything better to do
-		SPAWN_DBG(10 SECONDS)
+		SPAWN(10 SECONDS)
 			if (user)
 				user.suiciding = 0
 		qdel(src)
@@ -633,14 +635,14 @@
 	font_color = "#D20040"
 
 	write_on_turf(var/turf/T as turf, var/mob/user as mob, params)
-		if (!T || !user || src.in_use || get_dist(T, user) > 1)
+		if (!T || !user || src.in_use || BOUNDS_DIST(T, user) > 0)
 			return
 		if(!user.literate)
 			boutput(user, "<span class='alert'>You don't know how to write.</span>")
 			return
 		src.in_use = 1
 		var/t = input(user, "What do you want to write?", null, null) as null|text
-		if (!t || get_dist(T, user) > 1)
+		if (!t || BOUNDS_DIST(T, user) > 0)
 			src.in_use = 0
 			return
 		var/obj/decal/cleanable/writing/infrared/G = make_cleanable(/obj/decal/cleanable/writing/infrared,T)
@@ -786,7 +788,7 @@
 		Label(user,user,1)
 
 		user.TakeDamage("chest", 300, 0) //they have to die fast or it'd make even less sense
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -796,7 +798,7 @@
 /obj/item/clipboard
 	name = "clipboard"
 	icon = 'icons/obj/writing.dmi'
-	icon_state = "clipboard00"
+	icon_state = "clipboard"
 	var/obj/item/pen/pen = null
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "clipboard0"
@@ -808,10 +810,14 @@
 	stamina_damage = 10
 	stamina_cost = 1
 	stamina_crit_chance = 5
+	var/tmp/list/image/overlay_images = null
 
 	New()
 		..()
 		BLOCK_SETUP(BLOCK_BOOK)
+		src.overlay_images = list()
+		overlay_images["paper"] = image('icons/obj/writing.dmi', "clipboard_paper")
+		overlay_images["pen"] = image('icons/obj/writing.dmi', "clipboard_pen")
 
 	attack_self(mob/user as mob)
 		var/dat = "<B>Clipboard</B><BR>"
@@ -921,15 +927,21 @@
 				return
 		src.update()
 		user.update_inhands()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			attack_self(user)
 			return
 		return
 
 	proc/update()
-		src.icon_state = "clipboard[(locate(/obj/item/paper) in src) ? "1" : "0"][src.pen ? "1" : "0"]"
+		if (locate(/obj/item/paper) in src)
+			src.UpdateOverlays(src.overlay_images["paper"], "paper")
+		else
+			src.ClearSpecificOverlays("paper")
+		if (src.pen)
+			src.UpdateOverlays(src.overlay_images["pen"], "pen")
+		else
+			src.ClearSpecificOverlays("pen")
 		src.item_state = "clipboard[(locate(/obj/item/paper) in src) ? "1" : "0"]"
-		return
 
 /obj/item/clipboard/with_pen
 	New()
@@ -937,6 +949,24 @@
 		src.pen = new /obj/item/pen(src)
 		src.update()
 		return
+
+/obj/item/clipboard/with_pen/inspector
+	icon = 'icons/obj/writing.dmi'
+	icon_state = "clipboard_inspector"
+	name = "inspector's clipboard"
+	desc = "An official Nanotrasen Inspector's clipboard."
+	var/inspector_name = null
+	New()
+		..()
+		src.inhand_color = "#3F3F3F"
+		START_TRACKING
+	proc/set_owner(var/mob/living/carbon/human/M)
+		inspector_name = M.real_name
+		src.name = "Inspector [inspector_name]'s clipboard"
+	disposing()
+		STOP_TRACKING
+		..()
+
 
 /* =============== FOLDERS (wip) =============== */
 
@@ -967,7 +997,7 @@
 		show_window(user)
 
 	Topic(var/href, var/href_list)
-		if (get_dist(src, usr) > 1 || iswraith(usr) || isintangible(usr))
+		if (BOUNDS_DIST(src, usr) > 0 || iswraith(usr) || isintangible(usr))
 			return
 		if (is_incapacitated(usr))
 			return
@@ -1079,7 +1109,7 @@
 	Topic(href, href_list)
 		..()
 
-		if ((usr.stat || usr.restrained()) || (get_dist(src, usr) > 1))
+		if ((usr.stat || usr.restrained()) || (BOUNDS_DIST(src, usr) > 0))
 			return
 
 		var/page_num = text2num(href_list["page"])
@@ -1271,6 +1301,5 @@
 /obj/item/portable_typewriter/borg
 	name = "integrated typewriter"
 	desc = "A built-in typewriter that can even create its own paper, whoa!"
-	cant_drop = TRUE
 	paper_creation_cooldown = 10 SECONDS
 	can_create_paper = TRUE

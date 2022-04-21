@@ -4,6 +4,7 @@
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "PAG_0"
 	anchored = 0
+	req_access = null //will revisit later
 	var/mob/occupant = null
 	var/datum/character_preview/multiclient/occupant_preview = null
 	var/locked = 0
@@ -31,7 +32,7 @@
 		. = ..()
 		. += "Home turf: [get_area(src.homeloc)]."
 
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		..()
 		if (isobserver(usr) || isintangible(usr))
 			return
@@ -39,10 +40,10 @@
 			return
 		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened"))
 			return
-		if (get_dist(src, usr) > 1)
+		if (BOUNDS_DIST(src, usr) > 0)
 			usr.show_text("You are too far away to do this!", "red")
 			return
-		if (get_dist(over_object, src) > 1)
+		if (BOUNDS_DIST(over_object, src) > 0)
 			usr.show_text("The [src.name] is too far away from the target!", "red")
 			return
 		if (!istype(over_object,/turf/simulated/floor/))
@@ -76,7 +77,7 @@
 		if (!istype(target) || isAI(user))
 			return
 
-		if (get_dist(src,user) > 1 || get_dist(user, target) > 1)
+		if (BOUNDS_DIST(src, user) > 0 || BOUNDS_DIST(user, target) > 0)
 			return
 
 		if (target == user)
@@ -87,7 +88,7 @@
 			user.drop_item()
 			target.Attackhand(user)
 			user.set_a_intent(previous_user_intent)
-			SPAWN_DBG(user.combat_click_delay + 2)
+			SPAWN(user.combat_click_delay + 2)
 				if (can_operate(user,target))
 					if (istype(user.equipped(), /obj/item/grab))
 						src.Attackby(user.equipped(), user)
@@ -96,7 +97,7 @@
 	proc/can_operate(var/mob/M, var/mob/living/target)
 		if (!isalive(M))
 			return 0
-		if (get_dist(src,M) > 1)
+		if (BOUNDS_DIST(src, M) > 0)
 			return 0
 		if (M.getStatusDuration("paralysis") || M.getStatusDuration("stunned") || M.getStatusDuration("weakened"))
 			return 0

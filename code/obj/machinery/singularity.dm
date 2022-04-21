@@ -18,6 +18,11 @@ Contains:
 #define WRENCHED 1
 #define WELDED 2
 
+#ifdef UPSCALED_MAP
+#undef SINGULARITY_MAX_DIMENSION
+#define SINGULARITY_MAX_DIMENSION 22
+#endif
+
 // I'm sorry
 //////////////////////////////////////////////////// Singularity generator /////////////////////
 
@@ -164,7 +169,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	if (active == 1)
 		move()
-		SPAWN_DBG(1.1 SECONDS) // slowing this baby down a little -drsingh
+		SPAWN(1.1 SECONDS) // slowing this baby down a little -drsingh
 			move()
 	else//this should probably be modified to use the enclosed test of the generator
 		var/checkpointC = 0
@@ -223,7 +228,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 /obj/machinery/the_singularity/ex_act(severity, last_touched, power)
 	if(!maxboom)
-		SPAWN_DBG(0.1 SECONDS)
+		SPAWN(0.1 SECONDS)
 			if(severity == 1 && (maxboom ? prob(maxboom*5) : prob(30))) //need a big bomb (TTV+ sized), but a big enough bomb will always clear it
 				qdel(src)
 			maxboom = 0
@@ -326,7 +331,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 // totally rewrote this proc from the ground-up because it was puke but I want to keep this comment down here vvv so we can bask in the glory of What Used To Be - haine
 		/* uh why was lighting a cig causing the singularity to have an extra process()?
 		   this is dumb as hell, commenting this. the cigarette will get processed very soon. -drsingh
-		SPAWN_DBG(0) //start fires while it's lit
+		SPAWN(0) //start fires while it's lit
 			src.process()
 		*/
 
@@ -475,7 +480,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 /obj/machinery/field_generator/New()
 	START_TRACKING
 	..()
-	SPAWN_DBG(0.6 SECONDS)
+	SPAWN(0.6 SECONDS)
 		if(!src.link && (state == WELDED))
 			src.get_link()
 
@@ -548,7 +553,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		T = get_step(T2, NSEW)
 		T2 = T
 		steps += 1
-		if(locate(/obj/machinery/field_generator) in T)
+		G = (locate(/obj/machinery/field_generator) in T)
+		if(G && G != src)
 			G = (locate(/obj/machinery/field_generator) in T)
 			steps -= 1
 			if(shortestlink==0)
@@ -602,6 +608,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		return
 	if(P.proj_data.damage_type == D_ENERGY)
 		src.power += P.power
+		flick("Field_Gen_Flash", src)
 
 /obj/machinery/field_generator/attackby(obj/item/W, mob/user)
 	if (iswrenchingtool(W))
@@ -629,8 +636,9 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		if(state != UNWRENCHED)
 			if(!W:try_weld(user, 1, noisy = 2))
 				return
-			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/field_generator/proc/weld_action,\
-			list(user), W.icon, W.icon_state, "[user] finishes using their [W.name] on the field generator.", null)
+			var/positions = src.get_welding_positions()
+			actions.start(new /datum/action/bar/private/welding(user, src, 2 SECONDS, /obj/machinery/field_generator/proc/weld_action, \
+						list(user), "[user] finishes using their [W.name] on the field generator.", positions[1], positions[2]),user)
 		if(state == WRENCHED)
 			boutput(user, "You start to weld the field generator to the floor.")
 			return
@@ -653,6 +661,18 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		for(var/mob/M in AIviewers(src))
 			if(M == user)	continue
 			M.show_message("<span class='alert'>The [src.name] has been hit with the [W.name] by [user.name]!</span>")
+
+/obj/machinery/field_generator/proc/get_welding_positions()
+	var/start
+	var/stop
+
+	start = list(-6,-15)
+	stop = list(6,-15)
+
+	if(state == WELDED)
+		. = list(stop,start)
+	else
+		. = list(start,stop)
 
 /obj/machinery/field_generator/proc/weld_action(mob/user)
 	if(state == WRENCHED)
@@ -731,7 +751,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	//Otherwise, ff they aren't addressing us, ignore them
 	if(signal.data["address_1"] != src.net_id)
 		if((signal.data["address_1"] == "ping") && signal.data["sender"])
-			SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
+			SPAWN(0.5 SECONDS) //Send a reply for those curious jerks
 				src.post_status(target, "command", "ping_reply", "device", "PNET_ENG_FIELD", "netid", src.net_id)
 
 		return
@@ -769,7 +789,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "Contain_F"
 	anchored = 1
-	density = 0
+	density = 1
 	event_handler_flags = USE_FLUID_ENTER | IMMUNE_SINGULARITY
 	var/active = 1
 	var/power = 10
@@ -790,6 +810,9 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	light.enable()
 
 	..()
+
+/obj/machinery/containment_field/ex_act(severity)
+	return
 
 /obj/machinery/containment_field/attack_hand(mob/user as mob)
 	return
@@ -856,12 +879,12 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	if(user.get_burn_damage() >= 500) //This person has way too much BURN, they've probably been shocked a lot! Let's destroy them!
 		user.visible_message("<span style=\"color:red;font-weight:bold;\">[user.name] was disintegrated by the [src.name]!</span>")
+		logTheThing("user", user, null, "was elecgibbed by [src] ([src.type]) at [log_loc(user)].")
 		user.elecgib()
 		return
 	else
 		var/throwdir = get_dir(src, get_step_away(user, src))
-		if (prob(20))
-			user.set_loc(get_turf(src))
+		if (get_turf(user) == get_turf(src))
 			if (prob(50))
 				throwdir = turn(throwdir,90)
 			else
@@ -876,11 +899,20 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	src.gen_secondary.power -= 3
 	return
 
-/obj/machinery/containment_field/Cross(atom/movable/O as mob|obj)
-	if(iscarbon(O) && prob(80))
+/obj/machinery/containment_field/Bumped(atom/O)
+	. = ..()
+	if(iscarbon(O))
 		shock(O)
-	..()
 
+/obj/machinery/containment_field/Cross(atom/movable/mover)
+	. = ..()
+	if(prob(10))
+		. = TRUE
+
+/obj/machinery/containment_field/Crossed(atom/movable/AM)
+	. = ..()
+	if(iscarbon(AM))
+		shock(AM)
 
 /////////////////////////////////////////// Emitter ///////////////////////////////
 /obj/machinery/emitter
@@ -908,7 +940,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 /obj/machinery/emitter/New()
 	..()
-	SPAWN_DBG(0.6 SECONDS)
+	SPAWN(0.6 SECONDS)
 		if(!src.link && (state == WELDED))
 			src.get_link()
 
@@ -1036,8 +1068,9 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		if(state != UNWRENCHED)
 			if(!W:try_weld(user, 1, noisy = 2))
 				return
-			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/emitter/proc/weld_action,\
-			list(user), W.icon, W.icon_state, "[user] finishes using their [W.name] on the emitter.", null)
+			var/positions = src.get_welding_positions()
+			actions.start(new /datum/action/bar/private/welding(user, src, 2 SECONDS, /obj/machinery/emitter/proc/weld_action, \
+						list(user), "[user] finishes using their [W.name] on the emitter.", positions[1], positions[2]),user)
 		if(state == WRENCHED)
 			boutput(user, "You start to weld the emitter to the floor.")
 			return
@@ -1062,6 +1095,22 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		for(var/mob/M in AIviewers(src))
 			if(M == user)	continue
 			M.show_message("<span class='alert'>The [src.name] has been hit with the [W.name] by [user.name]!</span>")
+
+/obj/machinery/emitter/proc/get_welding_positions()
+	var/start
+	var/stop
+	if(dir & (NORTH|SOUTH))
+		start = list(-10,-7)
+		stop = list(10,-7)
+	else
+		start = list(-10,-14)
+		stop = list(10,-14)
+
+	if(state == WELDED)
+		. = list(stop,start)
+	else
+		. = list(start,stop)
+
 
 /obj/machinery/emitter/proc/weld_action(mob/user)
 	if(state == WRENCHED)
@@ -1115,7 +1164,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	//Otherwise, ff they aren't addressing us, ignore them
 	if(signal.data["address_1"] != src.net_id)
 		if((signal.data["address_1"] == "ping") && signal.data["sender"])
-			SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
+			SPAWN(0.5 SECONDS) //Send a reply for those curious jerks
 				src.post_status(target, "command", "ping_reply", "device", "PNET_ENG_EMITR", "netid", src.net_id)
 
 		return
@@ -1161,7 +1210,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 /obj/machinery/power/collector_array/New()
 	..()
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		UpdateIcon()
 
 
@@ -1291,7 +1340,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 /obj/machinery/power/collector_control/New()
 	..()
 	START_TRACKING
-	SPAWN_DBG(1 SECOND)
+	SPAWN(1 SECOND)
 		updatecons()
 
 /obj/machinery/power/collector_control/disposing()
@@ -1343,12 +1392,12 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			S1 = null
 
 		UpdateIcon()
-		SPAWN_DBG(1 MINUTE)
+		SPAWN(1 MINUTE)
 			updatecons()
 
 	else
 		UpdateIcon()
-		SPAWN_DBG(1 MINUTE)
+		SPAWN(1 MINUTE)
 			updatecons()
 
 /obj/machinery/power/collector_control/update_icon()
@@ -1633,7 +1682,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		return
 	if (user.stat || user.restrained() || user.lying)
 		return
-	if ((get_dist(src, user) <= 1 && istype(src.loc, /turf)))
+	if ((BOUNDS_DIST(src, user) == 0 && istype(src.loc, /turf)))
 		src.add_dialog(user)
 		/*
 		var/dat = text("<TT><B>Timing Unit</B><br>[] []:[]<br><A href='?src=\ref[];tp=-30'>-</A> <A href='?src=\ref[];tp=-1'>-</A> <A href='?src=\ref[];tp=1'>+</A> <A href='?src=\ref[];tp=30'>+</A><br></TT>", (src.timing ? text("<A href='?src=\ref[];time=0'>Timing</A>", src) : text("<A href='?src=\ref[];time=1'>Not Timing</A>", src)), minute, second, src, src, src, src)
@@ -1662,7 +1711,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		animate_shake(TF,5,1 * get_dist(TF,T),1 * get_dist(TF,T))
 	particleMaster.SpawnSystem(new /datum/particleSystem/bhole_warning(T))
 
-	SPAWN_DBG(3 SECONDS)
+	SPAWN(3 SECONDS)
 		for (var/mob/M in range(7,T))
 			boutput(M, "<span class='bold alert'>The containment field on \the [src] fails completely!</span>")
 			shake_camera(M, 5, 16)

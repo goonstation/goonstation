@@ -29,6 +29,7 @@ datum
 		var/reacting = 0 // fuck off chemist spam
 		var/overdose = 0 // if reagents are at or above this in a mob, it's an overdose - if double this, it's a major overdose
 		var/depletion_rate = 0.4 // this much goes away per tick
+		var/flushing_multiplier = 1 // this decides how succeptible it is to other chemical's flushing
 		var/penetrates_skin = 0 //if this reagent can enter the bloodstream through simple touch.
 		var/touch_modifier = 1 //If this does penetrate skin, how much should be transferred by default (assuming naked dude)? 1 = transfer full amount, 0.5 = transfer half, etc.
 		var/taste = null
@@ -51,6 +52,8 @@ datum
 		var/random_chem_blacklisted = 0 // will not appear in random chem sources oddcigs/artifacts/etc
 		var/boiling_point = T0C + 100
 		var/can_crack = 0 // used by organic chems
+		var/threshold_volume = null //defaults to not using threshold
+		var/threshold = null
 
 		New()
 			..()
@@ -63,18 +66,34 @@ datum
 			..()
 
 		proc/on_add()
-			if (stun_resist > 0)
-				if (ismob(holder.my_atom))
-					var/mob/M = holder.my_atom
-					M.add_stun_resist_mod("reagent_[src.id]", stun_resist)
 			return
 
 		proc/on_remove()
-			if (stun_resist > 0)
-				if (ismob(holder?.my_atom))
-					var/mob/M = holder.my_atom
-					M.remove_stun_resist_mod("reagent_[src.id]")
 			return
+
+		proc/check_threshold()
+			SHOULD_NOT_OVERRIDE(TRUE)
+
+			if (src.threshold == THRESHOLD_UNDER && src.volume >= (src.threshold_volume || src.depletion_rate))
+				src.cross_threshold_over()
+			else if (src.threshold == THRESHOLD_OVER && src.volume < (src.threshold_volume || src.depletion_rate))
+				src.cross_threshold_under()
+
+		proc/cross_threshold_over()
+			SHOULD_CALL_PARENT(TRUE)
+			threshold = THRESHOLD_OVER
+			if (stun_resist > 0 && ismob(holder?.my_atom))
+				var/mob/M = holder.my_atom
+				APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST, "reagent_[src.id]", stun_resist)
+				APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "reagent_[src.id]", stun_resist)
+
+		proc/cross_threshold_under()
+			SHOULD_CALL_PARENT(TRUE)
+			threshold = THRESHOLD_UNDER
+			if (stun_resist > 0 && ismob(holder?.my_atom))
+				var/mob/M = holder.my_atom
+				REMOVE_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST, "reagent_[src.id]")
+				REMOVE_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "reagent_[src.id]")
 
 		proc/on_copy(var/datum/reagent/new_reagent)
 			//To support deep copying of a reagent holder
@@ -277,6 +296,12 @@ datum
 				M.ailments += AD
 				//DEBUG_MESSAGE("became addicted: [AD.name]")
 				return AD
+			return
+
+		proc/flush(var/mob/M, var/amount, var/list/flush_specific_reagents)
+			for (var/reagent_id in M.reagents.reagent_list)
+				if ((reagent_id != src.id) && ((reagent_id in flush_specific_reagents) || !flush_specific_reagents))//checks if there's a specific reagent list to flush or if it should flush all reagents.
+					holder.remove_reagent(reagent_id, (amount * M.reagents.reagent_list[reagent_id].flushing_multiplier))
 			return
 
 		// reagent state helper procs

@@ -94,7 +94,7 @@
 					user.visible_message("<span class='alert'>[user] stuffs [M] into the furnace!</span>")
 					logTheThing("combat", user, M, "forced [constructTarget(M,"combat")] into a furnace at [log_loc(src)].")
 					message_admins("[key_name(user)] forced [key_name(M)] into a furnace at [log_loc(src)].")
-					M.death(1)
+					M.death(TRUE)
 					if (M.mind)
 						M.ghostize()
 					src.stoked += round(M.reagents?.get_reagent_amount("THC") / 5)
@@ -111,11 +111,11 @@
 			return
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-		if (get_dist(src,user) > 1)
+		if (BOUNDS_DIST(src, user) > 0)
 			boutput(user, "<span class='alert'>You are too far away to do that.</span>")
 			return
 
-		if (get_dist(src,O) > 1)
+		if (BOUNDS_DIST(src, O) > 0)
 			boutput(user, "<span class='alert'>[O] is too far away to do that.</span>")
 			return
 
@@ -227,7 +227,7 @@
 		if (!src.user_can_suicide(user))
 			return 0
 		user.visible_message("<span class='alert'><b>[user] climbs into the furnace!</b></span>")
-		user.death(1)
+		user.death(TRUE)
 		if (user.mind)
 			user.ghostize()
 			qdel(user)
@@ -276,7 +276,7 @@
 			for(var/atom/movable/fried_content in W)
 				if(ismob(fried_content))
 					var/mob/M = fried_content
-					M.death(1)
+					M.death(TRUE)
 					if (M.mind)
 						M.ghostize()
 					fuel += 400
@@ -300,7 +300,7 @@
 			if(!pooled_type)
 				fuel_name = W.name
 				user.u_equip(W)
-				W.dropped()
+				W.dropped(user)
 			boutput(user, "<span class='notice'>You load [fuel_name] into [src]!</span>")
 
 			if(src.fuel > src.maxfuel)

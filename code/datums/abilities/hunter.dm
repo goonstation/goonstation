@@ -13,6 +13,7 @@
 		P.addAbility(/datum/targetable/hunter/hunter_gearspawn)
 		P.addAbility(/datum/targetable/hunter/hunter_taketrophy)
 		P.addAbility(/datum/targetable/hunter/hunter_trophycount)
+		P.addAbility(/datum/targetable/hunter/hunter_summongear)
 
 		if (src.mind && src.mind.special_role != ROLE_OMNITRAITOR)
 			SHOW_HUNTER_TIPS(src)
@@ -47,7 +48,7 @@
 
 		M.unequip_all()
 
-		var/obj/item/implant/microbomb/hunter/B = new /obj/item/implant/microbomb/hunter(M)
+		var/obj/item/implant/revenge/microbomb/hunter/B = new /obj/item/implant/revenge/microbomb/hunter(M)
 		M.implant.Add(B)
 		B.implanted = 1
 		B.implanted(M)
@@ -58,9 +59,10 @@
 		M.equip_if_possible(new /obj/item/clothing/shoes/cowboy/hunter(M), slot_shoes)
 		M.equip_if_possible(new /obj/item/device/radio/headset(M), slot_ears)
 		M.equip_if_possible(new /obj/item/storage/backpack(M), slot_back)
-		M.equip_if_possible(new /obj/item/cloaking_device(M), slot_r_store)
-		M.equip_if_possible(new /obj/item/knife/butcher/predspear(M), slot_l_hand)
-		M.equip_if_possible(new /obj/item/gun/energy/laser_gun/pred(M), slot_r_hand)
+		M.equip_if_possible(new /obj/item/tank/emergency_oxygen(M), slot_l_store)
+		M.equip_if_possible(new /obj/item/cloaking_device/hunter(M), slot_r_store)
+		M.equip_if_possible(new /obj/item/knife/butcher/hunterspear(M), slot_in_backpack)
+		M.equip_if_possible(new /obj/item/gun/energy/plasma_gun/hunter(M), slot_in_backpack)
 
 		M.set_face_icon_dirty()
 		M.set_body_icon_dirty()
@@ -244,7 +246,7 @@
 			owner.holder.owner.targeting_ability = owner
 			owner.holder.owner.update_cursor()
 		else
-			SPAWN_DBG(0)
+			SPAWN(0)
 				spell.handleCast()
 		return
 

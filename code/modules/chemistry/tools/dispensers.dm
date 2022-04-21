@@ -17,11 +17,6 @@
 	var/amount_per_transfer_from_this = 10
 	var/capacity
 
-	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/cargotele))
-			W:cargoteleport(src, user)
-		return
-
 	New()
 		..()
 		src.create_reagents(4000)
@@ -63,11 +58,11 @@
 			for (var/i = 0, i < 9, i++) // ugly hack
 				reagents.temperature_reagents(exposed_temperature, exposed_volume)
 
-	MouseDrop(atom/over_object as obj)
+	mouse_drop(atom/over_object as obj)
 		if (!istype(over_object, /obj/item/reagent_containers/glass) && !istype(over_object, /obj/item/reagent_containers/food/drinks) && !istype(over_object, /obj/item/spraybottle) && !istype(over_object, /obj/machinery/plantpot) && !istype(over_object, /obj/mopbucket) && !istype(over_object, /obj/machinery/hydro_mister) && !istype(over_object, /obj/item/tank/jetpack/backtank))
 			return ..()
 
-		if (get_dist(usr, src) > 1 || get_dist(usr, over_object) > 1)
+		if (BOUNDS_DIST(usr, src) > 0 || BOUNDS_DIST(usr, over_object) > 0)
 			boutput(usr, "<span class='alert'>That's too far!</span>")
 			return
 
@@ -99,7 +94,7 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		..(W, user)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if (src?.reagents)
 				if (src.reagents.total_volume <= 1)
 					qdel(src)
@@ -130,7 +125,7 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		..(W, user)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if (src?.reagents)
 				if (src.reagents.total_volume <= 1)
 					qdel(src)
@@ -138,7 +133,7 @@
 
 /obj/reagent_dispensers/foamtank
 	name = "foamtank"
-	desc = "A foamtank"
+	desc = "A massive tank full of firefighting foam, for refilling extinguishers."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "foamtank"
 	amount_per_transfer_from_this = 25
@@ -344,7 +339,7 @@
 		if (isliving(user))
 			var/mob/living/L = user
 			L.changeStatus("burning", 10 SECONDS)
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -375,7 +370,7 @@
 
 /obj/reagent_dispensers/beerkeg
 	name = "beer keg"
-	desc = "A beer keg"
+	desc = "Full of delicious alcohol, hopefully."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "beertankTEMP"
 	amount_per_transfer_from_this = 25
@@ -425,7 +420,7 @@
 			boutput(user, "<span class='notice'>[src] mulches up [W].</span>")
 			playsound(src.loc, "sound/impact_sounds/Slimy_Hit_4.ogg", 30, 1)
 			user.u_equip(W)
-			W.dropped()
+			W.dropped(user)
 			qdel( W )
 			return
 		else ..()
@@ -434,10 +429,10 @@
 		if (!isliving(user))
 			boutput(user, "<span class='alert'>Excuse me you are dead, get your gross dead hands off that!</span>")
 			return
-		if (get_dist(user,src) > 1)
+		if (BOUNDS_DIST(user, src) > 0)
 			boutput(user, "<span class='alert'>You need to move closer to [src] to do that.</span>")
 			return
-		if (get_dist(O,src) > 1 || get_dist(O,user) > 1)
+		if (BOUNDS_DIST(O, src) > 0 || BOUNDS_DIST(O, user) > 0)
 			boutput(user, "<span class='alert'>[O] is too far away to load into [src]!</span>")
 			return
 		if (istype(O, /obj/item/reagent_containers/food/snacks/plant/) || istype(O, /obj/item/reagent_containers/food/snacks/mushroom/) || istype(O, /obj/item/seed/) || istype(O, /obj/item/plant/))
@@ -508,7 +503,7 @@
 
 			if (load)
 				user.u_equip(W)
-				W.dropped()
+				W.dropped(user)
 				qdel(W)
 				return
 			else  ..()
@@ -518,10 +513,10 @@
 		if (!isliving(user))
 			user.show_text("It's probably a bit too late for you to drink your problems away.", "red")
 			return
-		if (get_dist(user,src) > 1)
+		if (BOUNDS_DIST(user, src) > 0)
 			user.show_text("You need to move closer to [src] to do that.", "red")
 			return
-		if (get_dist(O,src) > 1 || get_dist(O,user) > 1)
+		if (BOUNDS_DIST(O, src) > 0 || BOUNDS_DIST(O, user) > 0)
 			user.show_text("[O] is too far away to load into [src]!", "red")
 			return
 

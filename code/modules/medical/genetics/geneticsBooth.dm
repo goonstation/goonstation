@@ -109,8 +109,10 @@
 		if (occupant)
 			if (!powered())
 				eject_occupant(0)
-			if (occupant.loc != src)
+			if (occupant?.loc != src)
 				eject_occupant(0)
+			if(!occupant)
+				return
 
 			started++
 			if (started == 2)
@@ -147,10 +149,6 @@
 					if (name_sel == P.name)
 						select_product(P)
 						break
-			if(occupant && occupant != user)
-				user.show_text("There's someone else inside!")
-				return
-
 		else
 			user.show_text("[src] has no products available for purchase right now.", "blue")
 

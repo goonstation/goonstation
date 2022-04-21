@@ -100,7 +100,7 @@ var/global/obj/flashDummy
 	var/list/affected = DrawLine(from, O, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 	for(var/obj/Q in affected)
-		SPAWN_DBG(0.6 SECONDS) qdel(Q)
+		SPAWN(0.6 SECONDS) qdel(Q)
 
 	for(var/mob/living/M in get_turf(target))
 		M.shock(from, wattage, "chest", 1, 1)
@@ -132,7 +132,7 @@ var/global/obj/flashDummy
 	var/list/affected = DrawLine(from, target_r, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 	for(var/obj/O in affected)
-		SPAWN_DBG(0.6 SECONDS) qdel(O)
+		SPAWN(0.6 SECONDS) qdel(O)
 
 	if(wattage && isliving(target)) //Probably unsafe.
 		target:shock(from, wattage, "chest", stun_coeff, 1)
@@ -693,7 +693,7 @@ proc/get_angle(atom/a, atom/b)
 	for_by_tcl(M, /mob/living/silicon/ai)
 		. += M
 		LAGCHECK(LAG_REALTIME)
-	for(var/mob/dead/aieye/M in mobs)
+	for(var/mob/living/intangible/aieye/M in mobs)
 		. += M
 		LAGCHECK(LAG_REALTIME)
 	for(var/mob/living/silicon/robot/M in mobs)
@@ -891,8 +891,11 @@ proc/get_angle(atom/a, atom/b)
 // used for mass driver
 /proc/get_edge_target_turf(var/atom/A, var/direction)
 
+	if (isnull(A))
+		stack_trace("get_edge_target_turf called with null reference atom.")
+
 	var/turf/target = locate(A.x, A.y, A.z)
-	if (!A || !target)
+	if (!target)
 		return 0
 		//since NORTHEAST == NORTH & EAST, etc, doing it this way allows for diagonal mass drivers in the future
 		//and isn't really any more complicated
@@ -915,6 +918,9 @@ proc/get_angle(atom/a, atom/b)
 // used for disposal system
 /proc/get_ranged_target_turf(var/atom/A, var/direction, var/range)
 
+	if (isnull(A))
+		stack_trace("get_ranged_target_turf called with null reference atom.")
+
 	var/x = A.x
 	var/y = A.y
 	if(direction & NORTH)
@@ -932,6 +938,9 @@ proc/get_angle(atom/a, atom/b)
 // returns turf relative to A offset in dx and dy tiles
 // bound to map limits
 /proc/get_offset_target_turf(var/atom/A, var/dx, var/dy)
+
+	if (isnull(A))
+		stack_trace("get_offset_target_turf called with null reference atom.")
 	var/x = clamp(A.x + dx, 1, world.maxx)
 	var/y = clamp(A.y + dy, 1, world.maxy)
 	return locate(x,y,A.z)
@@ -1080,7 +1089,7 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 	return copytext(sanitize(t),1,MAX_MESSAGE_LEN)
 
 /proc/shake_camera(mob/M, duration, strength=1, delay=0.2)
-	SPAWN_DBG(1 DECI SECOND)
+	SPAWN(1 DECI SECOND)
 		if(!M || !M.client || M.shakecamera)
 			return
 		M.shakecamera = 1
@@ -1258,7 +1267,7 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 
 /proc/obj_loc_chain(var/atom/movable/whose)
 	. = list()
-	if (isturf(whose) || isarea(whose) || isturf(whose.loc))
+	if (isnull(whose) || isnull(whose.loc) || isturf(whose) || isarea(whose) || isturf(whose.loc))
 		return
 	var/atom/movable/M = whose
 	while (ismob(M.loc) || isobj(M.loc))
@@ -1847,7 +1856,7 @@ proc/countJob(rank)
 				if (C.holder && !C.holder.ghost_respawns && !C.player_mode || !M.show_respawn_prompts)
 					continue
 
-				SPAWN_DBG(0) // Don't lock up the entire proc.
+				SPAWN(0) // Don't lock up the entire proc.
 					M.current.playsound_local(M.current, "sound/misc/lawnotify.ogg", 50, flags=SOUND_IGNORE_SPACE)
 					boutput(M.current, text_chat_alert)
 
@@ -1941,8 +1950,8 @@ proc/countJob(rank)
 
 		if (istype(G, /mob/dead/target_observer))
 			var/mob/dead/target_observer/TO = G
-			if (TO.my_ghost && istype(TO.my_ghost, /mob/dead/observer))
-				the_ghost = TO.my_ghost
+			if (TO.ghost && istype(TO.ghost, /mob/dead/observer))
+				the_ghost = TO.ghost
 
 		if (!the_ghost || !isobserver(the_ghost) || !isdead(the_ghost))
 			return 0
@@ -2604,6 +2613,7 @@ proc/is_incapacitated(mob/M)
 		M.hasStatus("stunned") || \
 		M.hasStatus("weakened") || \
 		M.hasStatus("paralysis") || \
+		M.hasStatus("pinned") || \
 		M.stat)
 
 /// sets up the list of ringtones players can select through character setup
@@ -2613,3 +2623,12 @@ proc/get_all_character_setup_ringtones()
 			var/datum/ringtone/R_prime = new R
 			selectable_ringtones[R_prime.name] = R_prime
 	return selectable_ringtones
+
+/// converts `get_connected_directions_bitflag()` diagonal bits to byond direction flags
+proc/connectdirs_to_byonddirs(var/connectdir_bitflag)
+	. = 0
+	if (!connectdir_bitflag) return
+	if(16 & connectdir_bitflag) .|= NORTHEAST
+	if(32 & connectdir_bitflag) .|= SOUTHEAST
+	if(64 & connectdir_bitflag) .|= SOUTHWEST
+	if(128 & connectdir_bitflag) .|= NORTHWEST

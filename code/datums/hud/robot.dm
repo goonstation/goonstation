@@ -27,7 +27,7 @@
 		temp
 
 		pda
-		mainframe
+		eyecam
 
 	var/list/screen_tools = list()
 
@@ -264,8 +264,8 @@
 		pda = create_screen("pda", "Cyborg PDA", 'icons/mob/hud_ai.dmi', "pda", "WEST, NORTH+0.5", HUD_LAYER)
 		pda.underlays += "button"
 
-		mainframe = create_screen("mainframe", "Return to Mainframe", 'icons/mob/screen1.dmi', "x", "SOUTH,EAST", HUD_LAYER)
-		mainframe.underlays += "block"
+		eyecam = create_screen("eyecam", "Eject to eyecam", 'icons/mob/screen1.dmi', "x", "SOUTH,EAST", HUD_LAYER)
+		eyecam.underlays += "block"
 
 
 	scrolled(id, dx, dy, user, parms, atom/movable/screen/hud/scr)
@@ -355,7 +355,7 @@
 						boutput(master, "<span class='notice'>There is nothing to pull.</span>")
 					else
 						to_pull = tgui_input_list(master, "Which do you want to pull? You can also Ctrl+Click on things to pull them.", "Which thing to pull?", pullable)
-					if(!isnull(to_pull) && GET_DIST(master, to_pull) <= 1)
+					if(!isnull(to_pull) && BOUNDS_DIST(master, to_pull) == 0)
 						usr = master // gross
 						to_pull.pull()
 			if ("upgrades")
@@ -395,8 +395,8 @@
 				last_health = -1
 			if ("pda")
 				master.access_internal_pda()
-			if ("mainframe")
-				master.return_mainframe()
+			if ("eyecam")
+				master.become_eye()
 
 	proc/update_status_effects()
 		for(var/atom/movable/screen/statusEffect/G in src.objects)
@@ -565,8 +565,8 @@
 
 			// I put this here because there's nowhere else for it right now.
 			// @TODO robot hud needs a general update() call imo.
-			if (src.mainframe)
-				mainframe.invisibility = (master.mainframe ? INVIS_NONE : INVIS_ALWAYS)
+			if (src.eyecam)
+				eyecam.invisibility = (master.mainframe ? INVIS_NONE : INVIS_ALWAYS)
 
 
 		update_pulling()

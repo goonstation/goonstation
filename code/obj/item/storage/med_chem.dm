@@ -12,7 +12,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			if (length(kit_styles))
 				icon_state = pick(kit_styles)
 				item_state = icon_state
@@ -36,7 +36,7 @@
 		/obj/item/reagent_containers/patch/bruise,\
 		/obj/item/reagent_containers/patch/burn,\
 		/obj/item/reagent_containers/pill/salicylic_acid,\
-		/obj/item/device/analyzer/healthanalyzer/borg,\
+		/obj/item/device/analyzer/healthanalyzer/upgraded,\
 		/obj/item/reagent_containers/emergency_injector/epinephrine)
 
 	emergency
@@ -44,7 +44,7 @@
 		/obj/item/item_box/medical_patches/mini_silver_sulf,\
 		/obj/item/reagent_containers/pill/menthol,\
 		/obj/item/reagent_containers/pill/salicylic_acid,\
-		/obj/item/device/analyzer/healthanalyzer/borg,\
+		/obj/item/device/analyzer/healthanalyzer/upgraded,\
 		/obj/item/reagent_containers/emergency_injector/epinephrine,\
 		/obj/item/reagent_containers/emergency_injector/atropine)
 

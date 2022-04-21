@@ -19,8 +19,8 @@
 	var/plate_mat = null
 	var/reinforced = FALSE
 	//Stuff for the floor & wall planner undo mode that initial() doesn't resolve.
-	var/roundstart_icon_state
-	var/roundstart_dir
+	var/tmp/roundstart_icon_state
+	var/tmp/roundstart_dir
 
 	New()
 		..()
@@ -157,7 +157,7 @@
 			src.icon_old = P.icon_state
 			allows_vehicles = P.allows_vehicles
 			var/pdir = P.dir
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				src.set_dir(pdir)
 			qdel(P)
 
@@ -179,6 +179,7 @@
 		..()
 		if (prob(20))
 			src.icon_state = pick("panelscorched", "platingdmg1", "platingdmg2", "platingdmg3")
+			src.UpdateIcon()
 		if (prob(2))
 			make_cleanable(/obj/decal/cleanable/dirt,src)
 		if (prob(2))
@@ -208,6 +209,7 @@
 		..()
 		if (prob(20))
 			src.icon_state = pick("panelscorched", "platingdmg1", "platingdmg2", "platingdmg3")
+			src.UpdateIcon()
 
 
 /////////////////////////////////////////
@@ -1326,6 +1328,7 @@ DEFINE_FLOORS(techfloor/green,
 /turf/simulated/floor/grassify()
 	src.icon = 'icons/turf/outdoors.dmi'
 	src.icon_state = "grass"
+	src.UpdateIcon()
 	if(prob(30))
 		src.icon_state += pick("_p", "_w", "_b", "_y", "_r", "_a")
 	src.name = "grass"
@@ -1456,10 +1459,8 @@ DEFINE_FLOORS(grasslush/thin,
 		setMaterial(getMaterial("blob"))
 
 	proc/setOvermind(var/mob/living/intangible/blob_overmind/O)
-		if (!material)
-			setMaterial(getMaterial("blob"))
-		material.color = O.color
-		color = O.color
+		setMaterial(copyMaterial(O.my_material))
+		color = material.color
 
 	attackby(var/obj/item/W, var/mob/user)
 		if (isweldingtool(W))
@@ -1479,6 +1480,7 @@ DEFINE_FLOORS(grasslush/thin,
 // metal foam floors
 
 /turf/simulated/floor/metalfoam/update_icon()
+	. = ..()
 	if(metal == 1)
 		icon_state = "metalfoam"
 	else
@@ -1522,7 +1524,10 @@ DEFINE_FLOORS(grasslush/thin,
 	return ..()
 
 /turf/simulated/floor/burn_down()
-	src.ex_act(2)
+	if (src.intact)
+		src.ex_act(2)
+	else //make sure plating always burns down to space and not... plating
+		src.ex_act(1)
 
 /turf/simulated/floor/ex_act(severity)
 	switch(severity)
@@ -1575,7 +1580,7 @@ DEFINE_FLOORS(grasslush/thin,
 		return
 	if (!user.canmove || user.restrained())
 		return
-	if (!user.pulling || user.pulling.anchored || (user.pulling.loc != user.loc && get_dist(user, user.pulling) > 1))
+	if (!user.pulling || user.pulling.anchored || (user.pulling.loc != user.loc && BOUNDS_DIST(user, user.pulling) > 0))
 		//get rid of click delay since we didn't do anything
 		user.next_click = world.time
 		return
@@ -1610,6 +1615,7 @@ DEFINE_FLOORS(grasslush/thin,
 		name_old = name
 	src.name = "plating"
 	src.icon_state = "plating"
+	src.UpdateIcon()
 	setIntact(FALSE)
 	broken = 0
 	burnt = 0
@@ -1642,6 +1648,7 @@ DEFINE_FLOORS(grasslush/thin,
 	else
 		src.icon_state = "platingdmg[pick(1,2,3)]"
 		broken = 1
+	src.UpdateIcon()
 
 /turf/simulated/floor/proc/burn_tile()
 	if(broken || burnt || reinforced) return
@@ -1651,6 +1658,7 @@ DEFINE_FLOORS(grasslush/thin,
 		src.icon_state = "floorscorched[pick(1,2)]"
 	else
 		src.icon_state = "panelscorched"
+	src.UpdateIcon()
 	burnt = 1
 
 /turf/simulated/floor/shuttle/burn_tile()
@@ -1666,48 +1674,40 @@ DEFINE_FLOORS(grasslush/thin,
 		icon_state = icon_old
 	else
 		icon_state = "floor"
+	src.UpdateIcon()
 	if (name_old)
 		name = name_old
 	levelupdate()
 
 /turf/simulated/floor/var/global/girder_egg = 0
 
-//basically the same as walls.dm sans the
 /turf/simulated/floor/proc/attach_light_fixture_parts(var/mob/user, var/obj/item/W, var/instantly)
 	if (!user || !istype(W, /obj/item/light_parts/floor))
 		return
-
-	// the wall is the target turf, the source is the turf where the user is standing
-	var/obj/item/light_parts/parts = W
-	var/turf/target = src
-
 	if(!instantly)
 		playsound(src, "sound/items/Screwdriver.ogg", 50, 1)
 		boutput(user, "You begin to attach the light fixture to [src]...")
+		SETUP_GENERIC_ACTIONBAR(user, src, 4 SECONDS, /turf/simulated/floor/proc/finish_attaching,\
+			list(W, user), W.icon, W.icon_state, null, null)
+		return
 
+	finish_attaching(W, user)
+	return
 
-		if (!do_after(user, 4 SECONDS))
-			user.show_text("You were interrupted!", "red")
-			return
-
-		if (!parts) //ZeWaka: Fix for null.fixture_type
-			return
-
-		// if they didn't move, put it up
-		boutput(user, "You attach the light fixture to [src].")
-
+/turf/simulated/floor/proc/finish_attaching(obj/item/W, mob/user)
+	// the floor is the target turf
+	var/turf/target = src
+	var/obj/item/light_parts/parts = W
 	var/obj/machinery/light/newlight = new parts.fixture_type(target)
+	boutput(user, "You attach the light fixture to [src].")
 	newlight.icon_state = parts.installed_icon_state
 	newlight.base_state = parts.installed_base_state
 	newlight.fitting = parts.fitting
 	newlight.status = 1 // LIGHT_EMPTY
-
 	newlight.add_fingerprint(user)
 	src.add_fingerprint(user)
-
 	user.u_equip(parts)
 	qdel(parts)
-	return
 
 /turf/simulated/floor/proc/pry_tile(obj/item/C as obj, mob/user as mob, params)
 	if (!intact)
@@ -1914,7 +1914,7 @@ DEFINE_FLOORS(grasslush/thin,
 	if(istype(C, /obj/item/cable_coil))
 		if(!intact)
 			var/obj/item/cable_coil/coil = C
-			coil.turf_place(src, user)
+			coil.turf_place(src, get_turf(user), user)
 		else
 			boutput(user, "<span class='alert'>You must remove the plating first.</span>")
 
@@ -1940,7 +1940,7 @@ DEFINE_FLOORS(grasslush/thin,
 		if (K)
 			K.Attackby(C, user, params)
 
-	else if (!user.pulling || user.pulling.anchored || (user.pulling.loc != user.loc && get_dist(user, user.pulling) > 1)) // this seemed like the neatest way to make attack_hand still trigger when needed
+	else if (!user.pulling || user.pulling.anchored || (user.pulling.loc != user.loc && BOUNDS_DIST(user, user.pulling) > 0)) // this seemed like the neatest way to make attack_hand still trigger when needed
 		src?.material?.triggerOnHit(src, C, user, 1)
 	else
 		return attack_hand(user)
@@ -1953,7 +1953,7 @@ DEFINE_FLOORS(grasslush/thin,
 		if(I)
 			if(istype(I,/obj/item/cable_coil))
 				var/obj/item/cable_coil/C = I
-				if((get_dist(user,F)<2) && (get_dist(user,src)<2))
+				if(BOUNDS_DIST(user,F) == 0 && BOUNDS_DIST(user,src) == 0)
 					C.move_callback(user, F, src)
 
 ////////////////////////////////////////////ADVENTURE SIMULATED FLOORS////////////////////////
@@ -2097,7 +2097,7 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 				else playsound(H.loc, "sound/voice/screams/female_scream.ogg", 100, 0, 0, H.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 			random_brute_damage(M, 50)
 			M.changeStatus("paralysis", 7 SECONDS)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				playsound(M.loc, pick('sound/impact_sounds/Slimy_Splat_1.ogg', 'sound/impact_sounds/Flesh_Break_1.ogg'), 75, 1)
 		A.set_loc(T)
 		return

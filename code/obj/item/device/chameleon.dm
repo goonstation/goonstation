@@ -59,7 +59,7 @@
 	relaymove(var/mob/user, direction)
 		if (can_move)
 			can_move = 0
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				can_move = 1
 			step(src,direction)
 		return
@@ -117,7 +117,7 @@
 		scan(target, user)
 
 	proc/scan(obj/target, mob/user)
-		if (get_dist(src, target) > 1)
+		if (BOUNDS_DIST(src, target) > 0)
 			if (user && ismob(user))
 				user.show_text("You are too far away to do that.", "red")
 			return
@@ -133,8 +133,7 @@
 			cham.real_name = target.name
 			cham.desc = target.desc
 			cham.real_desc = target.desc
-			cham.icon = target.icon
-			cham.icon_state = target.icon_state
+			cham.icon = getFlatIcon(target)
 			cham.set_dir(target.dir)
 			can_use = 1
 			tooltip_rebuild = 1
@@ -157,7 +156,7 @@
 			boutput(usr, "<span class='notice'>You deactivate the [src].</span>")
 			anim.set_loc(get_turf(src))
 			flick("emppulse",anim)
-			SPAWN_DBG(0.8 SECONDS)
+			SPAWN(0.8 SECONDS)
 				anim.set_loc(src)
 		else
 			if (istype(src.loc, /obj/dummy/chameleon)) //No recursive chameleon projectors!!
@@ -173,7 +172,7 @@
 			boutput(usr, "<span class='notice'>You activate the [src].</span>")
 			anim.set_loc(get_turf(src))
 			flick("emppulse",anim)
-			SPAWN_DBG(0.8 SECONDS)
+			SPAWN(0.8 SECONDS)
 				anim.set_loc(src)
 
 	proc/disrupt()
@@ -185,7 +184,7 @@
 			cham.set_loc(src)
 			can_use = 0
 			tooltip_rebuild = 1
-			SPAWN_DBG(10 SECONDS)
+			SPAWN(10 SECONDS)
 				can_use = 1
 				tooltip_rebuild = 1
 
@@ -232,7 +231,7 @@
 			return ..()
 
 	scan(obj/target, mob/user)
-		if (get_dist(src, target) > 1)
+		if (BOUNDS_DIST(src, target) > 0)
 			if (user && ismob(user))
 				user.show_text("You are too far away to do that.", "red")
 			return

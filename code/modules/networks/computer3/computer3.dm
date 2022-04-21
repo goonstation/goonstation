@@ -2,7 +2,7 @@
 
 /obj/machinery/computer3
 	name = "computer"
-	desc = "A computer workstation."
+	desc = "A computer that uses the bleeding-edge command line OS ThinkDOS."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer_generic"
 	density = 1
@@ -272,7 +272,7 @@
 	light.set_brightness(0.4)
 	light.attach(src)
 
-	SPAWN_DBG(0.4 SECONDS)
+	SPAWN(0.4 SECONDS)
 
 		if(ispath(src.setup_starting_peripheral1))
 			new src.setup_starting_peripheral1(src) //Peripherals add themselves automatically if spawned inside a computer3
@@ -328,12 +328,13 @@
 
 		src.post_system()
 
-		switch(rand(1,3))
-			if(1)
-				setup_font_color = "#E79C01"
-			if(2)
-				setup_font_color = "#A5A5FF"
-				setup_bg_color = "#4242E7"
+		if (prob(60))
+			switch(rand(1,2))
+				if(1)
+					setup_font_color = "#E79C01"
+				if(2)
+					setup_font_color = "#A5A5FF"
+					setup_bg_color = "#4242E7"
 
 	return
 
@@ -587,7 +588,7 @@ function lineEnter (ev)
 	else if(href_list["disk"])
 		if (src.diskette)
 			//Ai/cyborgs cannot press a physical button from a room away.
-			if((issilicon(usr) || isAI(usr)) && get_dist(src, usr) > 1)
+			if((issilicon(usr) || isAI(usr)) && BOUNDS_DIST(src, usr) > 0)
 				boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
 				return
 
@@ -658,7 +659,7 @@ function lineEnter (ev)
 			screen_image.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
 			src.UpdateOverlays(screen_image, "screen_image")
 	else
-		SPAWN_DBG(rand(0, 15))
+		SPAWN(rand(0, 15))
 			icon_state = src.base_icon_state
 			src.icon_state += "0"
 			status |= NOPOWER
@@ -684,51 +685,53 @@ function lineEnter (ev)
 
 	else if (isscrewingtool(W))
 		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-		if(do_after(user, 2 SECONDS))
-			if(!ispath(setup_frame_type, /obj/computer3frame))
-				src.setup_frame_type = /obj/computer3frame
-			var/obj/computer3frame/A = new setup_frame_type( src.loc )
-			if(src.material) A.setMaterial(src.material)
-			A.created_icon_state = src.base_icon_state
-			A.set_dir(src.dir)
-			if (src.status & BROKEN)
-				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
-				var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
-				G.set_loc( src.loc )
-				A.state = 3
-				A.icon_state = "3"
-			else
-				boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
-				A.state = 4
-				A.icon_state = "4"
-
-			for (var/obj/item/peripheral/C in src.peripherals)
-				C.set_loc(A)
-				A.peripherals.Add(C)
-				C.uninstalled()
-
-			if(src.diskette)
-				src.diskette.set_loc(src.loc)
-				src.diskette = null
-
-			if(src.hd)
-				src.hd.set_loc(A)
-				A.hd = src.hd
-				src.hd = null
-
-			A.mainboard = new /obj/item/motherboard(A)
-			A.mainboard.created_name = src.name
-			A.mainboard.integrated_floppy = src.setup_has_internal_disk
-
-
-			A.anchored = 1
-			//dispose()
-			src.dispose()
+		SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/computer3/proc/unscrew_monitor,\
+		list(W, user), W.icon, W.icon_state, null, null)
 
 	else
 		src.Attackhand(user)
-
 	return
+
+/obj/machinery/computer3/proc/unscrew_monitor(obj/item/W as obj, mob/user as mob)
+	if(!ispath(setup_frame_type, /obj/computer3frame))
+		src.setup_frame_type = /obj/computer3frame
+	var/obj/computer3frame/A = new setup_frame_type( src.loc )
+	if(src.material) A.setMaterial(src.material)
+	A.created_icon_state = src.base_icon_state
+	A.set_dir(src.dir)
+	if (src.status & BROKEN)
+		boutput(user, "<span class='notice'>The broken glass falls out.</span>")
+		var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
+		G.set_loc( src.loc )
+		A.state = 3
+		A.icon_state = "3"
+	else
+		boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
+		A.state = 4
+		A.icon_state = "4"
+
+	for (var/obj/item/peripheral/C in src.peripherals)
+		C.set_loc(A)
+		A.peripherals.Add(C)
+		C.uninstalled()
+
+	if(src.diskette)
+		src.diskette.set_loc(src.loc)
+		src.diskette = null
+
+	if(src.hd)
+		src.hd.set_loc(A)
+		A.hd = src.hd
+		src.hd = null
+
+	A.mainboard = new /obj/item/motherboard(A)
+	A.mainboard.created_name = src.name
+	A.mainboard.integrated_floppy = src.setup_has_internal_disk
+
+
+	A.anchored = 1
+	//dispose()
+	src.dispose()
 
 /obj/machinery/computer3/meteorhit(var/obj/O as obj)
 	if(status & BROKEN)
@@ -887,7 +890,7 @@ function lineEnter (ev)
 		src.temp_add = "Restarting system...<br>"
 		src.updateUsrDialog()
 		playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 			src.restarting = 0
 			src.post_system()
 
@@ -986,7 +989,7 @@ function lineEnter (ev)
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if(!luggable)
 				src.luggable = new luggable_type (src)
 				src.luggable.case = src

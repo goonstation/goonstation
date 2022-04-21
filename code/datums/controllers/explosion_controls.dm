@@ -9,6 +9,10 @@ var/datum/explosion_controller/explosions
 	var/next_turf_safe = FALSE
 
 	proc/explode_at(atom/source, turf/epicenter, power, brisance = 1, angle = 0, width = 360, turf_safe=FALSE)
+		SEND_SIGNAL(source, COMSIG_ATOM_EXPLODE, args)
+		if(istype(source)) // Oshan hotspots rudely send a datum here 😐
+			for(var/atom/movable/loc_ancestor in obj_loc_chain(source))
+				SEND_SIGNAL(loc_ancestor, COMSIG_ATOM_EXPLODE_INSIDE, args)
 		var/atom/A = epicenter
 		if(istype(A))
 			var/severity = power >= 6 ? 1 : power > 3 ? 2 : 3
@@ -169,7 +173,10 @@ var/datum/explosion_controller/explosions
 			if(!A.dont_log_combat)
 				// Cannot read null.name
 				var/logmsg = "[turf_safe ? "Turf-safe e" : "E"]xplosion with power [power] (Source: [source ? "[source.name]" : "*unknown*"])  at [log_loc(epicenter)]. Source last touched by: [key_name(source?.fingerprintslast)] (usr: [ismob(user) ? key_name(user) : user])"
-				if(power > 10)
+				var/mob/M = null
+				if(ismob(user))
+					M = user
+				if(power > 10 && (source?.fingerprintslast || M?.last_ckey) && !istype(A, /area/mining/magnet) && !istype(source, /obj/machinery/vehicle/escape_pod))
 					message_admins(logmsg)
 				if (source?.fingerprintslast)
 					logTheThing("bombing", source.fingerprintslast, null, logmsg)

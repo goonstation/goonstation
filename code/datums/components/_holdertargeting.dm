@@ -6,6 +6,9 @@
 	var/mob/current_user
 	var/keep_while_on_mob = FALSE
 
+TYPEINFO(/datum/component/holdertargeting)
+	initialization_args = list()
+
 /datum/component/holdertargeting/Initialize()
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
