@@ -7121,7 +7121,7 @@
 /turf/unsimulated/floor/engine,
 /area/hospital/samostrel)
 "qU" = (
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "Human remains.  Probably related to all this burnt science equipment and general bad vibes.";
 	layer = 2.5;
 	pixel_y = 8
@@ -7404,7 +7404,7 @@
 /obj/decal/fakeobjects/lightbulb_broken{
 	dir = 1
 	},
-/obj/decal/sink,
+/obj/decal/fakeobjects/sink,
 /turf/unsimulated/floor/specialroom/freezer{
 	dir = 1
 	},
@@ -7476,7 +7476,7 @@
 	},
 /area/hospital/samostrel)
 "ry" = (
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "Oh.  Gross.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body6";
@@ -7846,7 +7846,7 @@
 	},
 /area/hospital/samostrel)
 "se" = (
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "The remains of some poor cosmonaut fellow.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body9";
@@ -7881,7 +7881,7 @@
 	},
 /area/hospital/samostrel)
 "sh" = (
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "Human remains.  Probably related to all this burnt science equipment and general bad vibes.";
 	layer = 2.5;
 	pixel_y = 8

@@ -67,12 +67,13 @@
 	var/clear_invalid_targets = 1 // In relation to world time. Clear list periodically.
 	var/clear_invalid_targets_interval = 30 SECONDS // How frequently?
 
+	var/list/chase_lines = list("Gimme!", "Hey!", "Oi!", "Mine!", "Want!", "Need!")
 
 /obj/machinery/bot/floorbot/New()
 	..()
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		if (src)
-			src.updateicon()
+			src.UpdateIcon()
 	return
 
 /obj/machinery/bot/floorbot/attack_hand(mob/user as mob, params)
@@ -87,7 +88,7 @@
 		dat += "Finds tiles: \[<A href='?src=\ref[src];operation=tiles'>[src.eattiles ? "Yes" : "No"]</A>\]<BR>"
 		dat += "Make single pieces of metal into tiles when empty: \[<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>\]"
 
-	if (user.client.tooltipHolder)
+	if (user.client?.tooltipHolder)
 		user.client.tooltipHolder.showClickTip(src, list(
 			"params" = params,
 			"title" = "Repairbot v1.0 controls",
@@ -145,7 +146,7 @@
 			loaded = T.amount
 			qdel(T)
 		boutput(user, "<span class='alert'>You load [loaded] tiles into the floorbot. He now contains [src.amount] tiles!</span>")
-		src.updateicon()
+		src.UpdateIcon()
 	//Regular ID
 	else
 		if (istype(W, /obj/item/device/pda2) && W:ID_card)
@@ -159,7 +160,9 @@
 			src.updateUsrDialog()
 		else
 			..()
-
+			src.health -= W.force * 0.5
+			if (src.health <= 0)
+				src.explode()
 
 /obj/machinery/bot/floorbot/Topic(href, href_list)
 	if (..())
@@ -208,7 +211,7 @@
 				else if (D == src.oldtarget || should_ignore_tile(D))
 					continue
 				// Floorbot doesnt like space, so it won't accept space tiles without some kind of not-space next to it. Or they're right up against it. Or already on space.
-				else if (IN_RANGE(get_turf(src), get_turf(D), 1) || get_pathable_turf(D)) // silly little things
+				else if ((BOUNDS_DIST(get_turf(src), get_turf(D)) == 0) || get_pathable_turf(D)) // silly little things
 					src.floorbottargets |= coord
 					return D
 
@@ -278,6 +281,9 @@
 	if (!src.on || src.repairing || !isturf(src.loc))
 		return
 
+	if (src.target?.disposed || !isturf(get_turf(src.target)))
+		src.target = null
+
 	// Invalid targets may not be unreachable anymore. Clear list periodically.
 	if (src.clear_invalid_targets && !ON_COOLDOWN(src, FLOORBOT_CLEARTARGET_COOLDOWN, src.clear_invalid_targets_interval))
 		src.targets_invalid = list()
@@ -299,7 +305,7 @@
 
 	if (src.target)
 		// are we there yet
-		if (IN_RANGE(get_turf(src), get_turf(src.target), 1))
+		if ((BOUNDS_DIST(get_turf(src), get_turf(src.target)) == 0))
 			do_the_thing()
 			return
 
@@ -312,6 +318,11 @@
 				src.KillPathAndGiveUp(1)
 				return
 		src.point(src.target)
+		var/obj/A = src.target
+		while(!isnull(A) && !istype(A.loc, /turf) && !ishuman(A.loc))
+			A = A.loc
+		if (ishuman(A?.loc) && prob(30))
+			speak(pick(src.chase_lines))
 		src.doing_something = 1
 		src.search_range = 1
 	else
@@ -324,7 +335,7 @@
 		src.floorbottargets -= turf2coordinates(src.target)
 		src.target = null
 		src.anchored = 0
-		src.updateicon()
+		src.UpdateIcon()
 		src.repairing = 0
 		src.oldtarget = null
 		src.oldloc = null
@@ -373,7 +384,7 @@
 	else
 		src.amount += T.amount
 		qdel(T)
-	src.updateicon()
+	src.UpdateIcon()
 	src.floorbottargets -= turf2coordinates(src.target)
 	src.target = null
 	src.repairing = 0
@@ -406,7 +417,7 @@
 	src.target = null
 	src.repairing = 0
 
-/obj/machinery/bot/floorbot/proc/updateicon()
+/obj/machinery/bot/floorbot/update_icon()
 	if (src.amount > 0)
 		src.icon_state = "floorbot[src.on]"
 	else
@@ -461,6 +472,9 @@
 	src.visible_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
 	playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
 	elecflash(src, radius=1, power=3, exclude_center = 0)
+	new /obj/item/tile/steel(src.loc)
+	new /obj/item/device/prox_sensor(src.loc)
+	new /obj/item/storage/toolbox/mechanical/empty(src.loc)
 	qdel(src)
 	return
 
@@ -532,7 +546,7 @@
 
 		master.repairing = 0
 		master.amount -= 1
-		master.updateicon()
+		master.UpdateIcon()
 		master.anchored = 0
 		master.floorbottargets -= master.turf2coordinates(master.target)
 		master.target = master.find_target(1)
@@ -592,7 +606,7 @@
 
 		T.ReplaceWithSpace()
 		master.repairing = 0
-		master.updateicon()
+		master.UpdateIcon()
 		master.anchored = 0
 		master.floorbottargets -= master.turf2coordinates(master.target)
 		master.target = master.find_target(1)

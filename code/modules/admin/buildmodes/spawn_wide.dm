@@ -15,8 +15,8 @@ change the direction of created objects.<br>
 	var/objpath = null
 	var/cinematic = "Blink"
 	var/delete_area = 0
-	var/turf/A = null
-	var/image/marker = null
+	var/tmp/turf/A = null
+	var/tmp/image/marker = null
 
 	deselected()
 		..()
@@ -32,7 +32,9 @@ change the direction of created objects.<br>
 			boutput(usr, delete_area ? "<span class='alert'>Now also deleting areas!</span>" : "<span class='alert'>Now not deleting areas!</span>")
 			return
 
-		objpath = get_one_match(input("Type path", "Type path", "/obj/closet"), /atom)
+		if (!objpath)
+			objpath = /obj/critter/domestic_bee/heisenbee
+		objpath = get_one_match(input("Type path", "Type path", "[objpath]"), /atom)
 		update_button_text(objpath)
 		A = null
 		usr.client?.images -= marker
@@ -78,7 +80,7 @@ change the direction of created objects.<br>
 						mtx.Translate(0, 64)
 						pad.transform = mtx
 						animate(pad, alpha = 255, transform = mtx.Reset(), time = 5, easing=SINE_EASING)
-						SPAWN_DBG(0.7 SECONDS)
+						SPAWN(0.7 SECONDS)
 							swirl.loc = Q
 							flick("portswirl", swirl)
 
@@ -101,7 +103,7 @@ change the direction of created objects.<br>
 							qdel(swirl)
 							qdel(pad)
 					if("Fancy and Inefficient yet Laggy Telepad")
-						SPAWN_DBG(cnt/10)
+						SPAWN(cnt/10)
 							var/obj/decal/teleport_swirl/swirl = new /obj/decal/teleport_swirl
 							var/obj/decal/fakeobjects/teleport_pad/pad = new /obj/decal/fakeobjects/teleport_pad
 							swirl.mouse_opacity = 0
@@ -147,19 +149,19 @@ change the direction of created objects.<br>
 							A.onVarChanged("dir", SOUTH, A.dir)
 							blink(Q)
 					if("Supplydrop")
-						SPAWN_DBG(rand(0, min(200, (length(block(A,B))))))
+						SPAWN(rand(0, min(200, (length(block(A,B))))))
 							if (ispath(objpath, /atom/movable))
 								new/obj/effect/supplymarker/safe(Q, 3 SECONDS, objpath)
 					if("Supplydrop (no lootbox)")
-						SPAWN_DBG(rand(0, min(200, (length(block(A,B))))))
+						SPAWN(rand(0, min(200, (length(block(A,B))))))
 							if (ispath(objpath, /atom/movable))
 								new/obj/effect/supplymarker/safe(Q, 3 SECONDS, objpath, TRUE)
 					if("Lethal Supplydrop")
-						SPAWN_DBG(rand(0, min(200, (length(block(A,B))))))
+						SPAWN(rand(0, min(200, (length(block(A,B))))))
 							if (ispath(objpath, /atom/movable))
 								new/obj/effect/supplymarker(Q, 3 SECONDS, objpath)
 					if("Lethal Supplydrop (no lootbox)")
-						SPAWN_DBG(rand(0, min(200, (length(block(A,B))))))
+						SPAWN(rand(0, min(200, (length(block(A,B))))))
 							if (ispath(objpath, /atom/movable))
 								new/obj/effect/supplymarker(Q, 3 SECONDS, objpath, TRUE)
 					else

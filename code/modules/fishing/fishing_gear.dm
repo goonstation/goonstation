@@ -25,7 +25,7 @@
 			if (fishing_spot)
 				actions.start(new /datum/action/fishing(user, src, fishing_spot, target), user)
 
-	proc/update_icon()
+	update_icon()
 		//state for fishing
 		if (src.is_fishing)
 			src.icon_state = "fishing_rod-active"
@@ -58,7 +58,7 @@
 
 	onStart()
 		..()
-		if (!IN_RANGE(src.user, src.rod, 1) || !IN_RANGE(src.user, src.target, 1) || !src.user || !src.target || !src.rod || !src.fishing_spot)
+		if (!(BOUNDS_DIST(src.user, src.rod) == 0) || !(BOUNDS_DIST(src.user, src.target) == 0) || !src.user || !src.target || !src.rod || !src.fishing_spot)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -66,31 +66,31 @@
 		playsound(src.user, "sound/items/fishing_rod_cast.ogg", 50, 1)
 		src.user.visible_message("[src.user] starts fishing.")
 		src.rod.is_fishing = true
-		src.rod.update_icon()
+		src.rod.UpdateIcon()
 		src.user.update_inhands()
 
 	onUpdate()
 		..()
-		if (!IN_RANGE(src.user, src.rod, 1) || !IN_RANGE(src.user, src.target, 1) || !src.user || !src.target || !src.rod || !src.fishing_spot)
+		if (!(BOUNDS_DIST(src.user, src.rod) == 0) || !(BOUNDS_DIST(src.user, src.target) == 0) || !src.user || !src.target || !src.rod || !src.fishing_spot)
 			interrupt(INTERRUPT_ALWAYS)
 			src.rod.is_fishing = false
-			src.rod.update_icon()
+			src.rod.UpdateIcon()
 			src.user.update_inhands()
 			return
 
 	onEnd()
-		if (!IN_RANGE(src.user, src.rod, 1) || !IN_RANGE(src.user, src.target, 1) || !src.user || !src.target || !src.rod || !src.fishing_spot)
+		if (!(BOUNDS_DIST(src.user, src.rod) == 0) || !(BOUNDS_DIST(src.user, src.target) == 0) || !src.user || !src.target || !src.rod || !src.fishing_spot)
 			..()
 			interrupt(INTERRUPT_ALWAYS)
 			src.rod.is_fishing = false
-			src.rod.update_icon()
+			src.rod.UpdateIcon()
 			src.user.update_inhands()
 			return
 
 		if (src.fishing_spot.try_fish(src.user, src.rod, target)) //if it returns one we successfully fished, otherwise lets restart the loop
 			..()
 			src.rod.is_fishing = false
-			src.rod.update_icon()
+			src.rod.UpdateIcon()
 			src.user.update_inhands()
 			return
 

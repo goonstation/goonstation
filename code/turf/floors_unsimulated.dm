@@ -32,6 +32,23 @@
 
 /////////////////////////////////////////
 
+/turf/unsimulated/floor/pryable
+	attackby(obj/item/W, mob/user)
+		if(ispryingtool(W))
+			src.name = "plating"
+			src.icon_state = "plating"
+			src.UpdateIcon()
+			setIntact(FALSE)
+			levelupdate()
+
+	scorched
+		icon_state = "floorscorched1"
+
+
+	scorched2
+		icon_state = "floorscorched2"
+
+
 /turf/unsimulated/floor/scorched
 	icon_state = "floorscorched1"
 
@@ -88,12 +105,14 @@
 			make_cleanable(/obj/decal/cleanable/dirt/dirt4,src)
 		if (prob(2))
 			make_cleanable(/obj/decal/cleanable/dirt/dirt5,src)
-		else if (prob(2))
+		if ((locate(/obj/window) in src) || (locate(/obj/wingrille_spawn) in src))
+			return
+		if (prob(2))
 			var/obj/C = pick(/obj/decal/cleanable/paper, /obj/decal/cleanable/fungus, /obj/decal/cleanable/dirt, /obj/decal/cleanable/ash,\
 			/obj/decal/cleanable/molten_item, /obj/decal/cleanable/machine_debris, /obj/decal/cleanable/oil, /obj/decal/cleanable/rust)
 			make_cleanable( C ,src)
 		else if ((locate(/obj) in src) && prob(3))
-			var/obj/C = pick(/obj/item/cable_coil/cut/small, /obj/item/brick, /obj/item/cigbutt, /obj/item/scrap, /obj/item/raw_material/scrap_metal,\
+			var/obj/C = pick(/obj/item/cable_coil/cut/small, /obj/item/brick, /obj/item/cigbutt, /obj/item/scrap, /obj/item/raw_material/scrap_metal/steel,\
 			/obj/item/spacecash, /obj/item/tile/steel, /obj/item/weldingtool, /obj/item/screwdriver, /obj/item/wrench, /obj/item/wirecutters, /obj/item/crowbar)
 			new C (src)
 		else if (prob(1) && prob(2)) // really rare. not "three space things spawn on destiny during first test with just prob(1)" rare.
@@ -940,7 +959,7 @@
 	New()
 		. = ..()
 		src.layer += src.edge_priority_level / 1000
-		SPAWN_DBG(0.5 SECONDS) //give neighbors a chance to spawn in
+		SPAWN(0.5 SECONDS) //give neighbors a chance to spawn in
 			edge_overlays()
 
 	proc/edge_overlays()
@@ -988,21 +1007,39 @@
 	desc = "finest earth."
 	icon = 'icons/turf/outdoors.dmi'
 	icon_state = "sand_other"
-	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_DIRT
+	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_DIRT + 1
 	icon_state_edge = "sand_edge"
+	var/tuft_prob = 2
 
 	New()
 		..()
-		switch(rand(1,3))
-			if(1)
-				icon_state = "sand_other_texture"
-				src.set_dir(pick(alldirs))
-			if(2)
-				icon_state = "sand_other_texture2"
-				src.set_dir(pick(alldirs))
-			if(3)
-				icon_state = "sand_other_texture3"
-				src.set_dir(pick(cardinal))
+		src.set_dir(pick(cardinal))
+
+		if(prob(tuft_prob))
+			var/rand_x = rand(-5,5)
+			var/rand_y = rand(-5,5)
+			var/image/tuft
+			var/hue_shift = rand(80,95)
+
+			tuft = image('icons/turf/outdoors.dmi', "grass_tuft", src, pixel_x=rand_x, pixel_y=rand_y)
+			tuft.color = hsv_transform_color_matrix(h=hue_shift)
+			UpdateOverlays(tuft,"grass_turf")
+
+	rough
+		tuft_prob = 0.8
+		New()
+			..()
+			icon_state_edge = "sand_r_edge"
+			edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_DIRT + 2
+			switch(rand(1,3))
+				if(1)
+					icon_state = "sand_other_texture"
+					src.set_dir(pick(alldirs))
+				if(2)
+					icon_state = "sand_other_texture2"
+					src.set_dir(pick(alldirs))
+				if(3)
+					icon_state = "sand_other_texture3"
 
 
 /turf/unsimulated/floor/auto/water

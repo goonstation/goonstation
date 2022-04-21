@@ -6,6 +6,7 @@
 	flags = FPRINT | USEDELAY
 	anchored = 1.0
 	stops_space_move = 1
+	status = REQ_PHYSICAL_ACCESS
 	var/datum/effects/system/ion_trail_follow/ion_trail = null
 	var/mob/pilot = null //The mob which actually flys the ship
 	var/capacity = 3 //How many passengers the ship can hold
@@ -36,7 +37,6 @@
 	var/flying = 0 // holds the direction the ship is currently drifting, or 0 if stopped
 	var/facing = SOUTH // holds the direction the ship is currently facing
 	var/going_home = 0 // set to 1 when the com system locates the station, next z level crossing will head to 1
-	var/fire_delay = 0 // stop people from firing like crazy
 	var/image/fire_overlay = null
 	var/image/damage_overlay = null
 	var/exploding = 0 // don't blow up a bunch of times sheesh
@@ -63,6 +63,7 @@
 
 	New()
 		src.contextActions = childrentypesof(/datum/contextAction/vehicle)
+		src.facing = src.dir
 
 		. = ..()
 		START_TRACKING
@@ -95,6 +96,14 @@
 			return remove_air(breath_request)
 		else
 			return null
+
+	Click(location,control,params)
+		if(istype(usr, /mob/dead/observer) && usr.client && !usr.client.keys_modifier && !usr:in_point_mode)
+			var/mob/dead/observer/O = usr
+			if(src.pilot)
+				O.insert_observer(src.pilot)
+		else
+			. = ..()
 
 	/////////////////////////////////////////////////////////
 	///////Attack Code									////
@@ -184,7 +193,7 @@
 
 	updateDialog()
 		for(var/client/C)
-			if (C.mob && C.mob.using_dialog_of(src) && get_dist(C.mob,src) <= 1)
+			if (C.mob && C.mob.using_dialog_of(src) && BOUNDS_DIST(C.mob, src) == 0)
 				src.open_parts_panel(C.mob)
 
 	Topic(href, href_list)
@@ -488,7 +497,7 @@
 	get_desc()
 		if (src.keyed > 0)
 			var/t = strings("descriptors.txt", "keyed")
-			var/t_ind = max(min(round(keyed/10),10),0)
+			var/t_ind = clamp(round(keyed/10), 0, 10)
 			. += "It has been keyed [keyed] time[s_es(keyed)]! [t_ind ? t[t_ind] : null]"
 
 	proc/paint_pod(var/obj/item/pod/paintjob/P as obj, var/mob/user as mob)
@@ -577,7 +586,7 @@
 
 			if (ismob(target) && target != hitmob)
 				hitmob = target
-				SPAWN_DBG(0.5 SECONDS)
+				SPAWN(0.5 SECONDS)
 					hitmob = 0
 				var/mob/M = target
 				var/vehicular_manslaughter
@@ -590,7 +599,7 @@
 				var/turf/throw_at = get_edge_target_turf(src, src.dir)
 				M.throw_at(throw_at, movement_controller:velocity_magnitude, 2)
 				logTheThing("combat", src, target, "(piloted by [constructTarget(src.pilot,"combat")]) crashes into [constructTarget(target,"combat")] [log_loc(src)].")
-				SPAWN_DBG(2.5 SECONDS)
+				SPAWN(2.5 SECONDS)
 					if(M.health > 0)
 						vehicular_manslaughter = 0 //we now check if person was sent into crit after hit, if they did we get the achievement
 					if(vehicular_manslaughter && ishuman(M))
@@ -610,7 +619,7 @@
 				if (power > 20)
 					if (istype(O, /obj/machinery/door) && O.density)
 						var/obj/machinery/door/D = O
-						SPAWN_DBG(0)
+						SPAWN(0)
 							D.try_force_open(src)
 					if (istype(O, /obj/structure/girder) || istype(O, /obj/foamedmetal))
 						qdel(O)
@@ -643,7 +652,7 @@
 			if (sec_system.type == /obj/item/shipcomponent/secondary_system/crash)
 				if (sec_system:crashable)
 					sec_system:crashtime2(target)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			..()
 			return
 		return
@@ -833,7 +842,7 @@
 	if(exploding)
 		return
 	exploding = 1
-	SPAWN_DBG(1 DECI SECOND)
+	SPAWN(1 DECI SECOND)
 		src.visible_message("<b>[src] is breaking apart!</b>")
 		new /obj/effects/explosion (src.loc)
 		playsound(src.loc, "explosion", 50, 1)
@@ -1181,15 +1190,8 @@
 		logTheThing("vehicle", M, src.name, "is ejected from pod: <b>[constructTarget(src.name,"vehicle")]</b> when it blew up!")
 
 		src.leave_pod(M)
-		//var/atom/target = get_edge_target_turf(M,pick(alldirs))
-		//SPAWN_DBG(0)
-		//M.throw_at(target, 10, 2)
-		SPAWN_DBG(0)
-		step_rand(M, 0)
-		step_rand(M, 0)
-		step_rand(M, 0)
-		step_rand(M, 0)
-		step_rand(M, 0)
+		var/atom/target = get_edge_cheap(M, src.dir)
+		M.throw_at(target, 10, 2)
 
 
 /////////////////////////////////////////////////////////////////////
@@ -1459,7 +1461,7 @@
 ////////////////////////////////////////////////////////////////////////
 
 /obj/machinery/vehicle/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-	if (!user.client || !isliving(user))
+	if (!user.client || !isliving(user) || isintangible(usr))
 		return
 	if (is_incapacitated(user))
 		user.show_text("Not when you're incapacitated.", "red")
@@ -1485,8 +1487,8 @@
 	SS.Clickdrag_ObjectToPod(user,O)
 	return
 
-/obj/machinery/vehicle/MouseDrop(over_object, src_location, over_location)
-	if (!usr.client || !isliving(usr))
+/obj/machinery/vehicle/mouse_drop(over_object, src_location, over_location)
+	if (!usr.client || !isliving(usr) || isintangible(usr))
 		return
 	if (is_incapacitated(usr))
 		usr.show_text("Not when you're incapacitated.", "red")
@@ -1545,34 +1547,30 @@
 	else
 		boutput(usr, "<span class='alert'>Uh-oh you aren't in a ship! Report this.</span>")
 
-/obj/machinery/vehicle/proc/fire_main_weapon()
-	if(is_incapacitated(usr))
-		boutput(usr, "<span class='alert'>Not when you are incapacitated.</span>")
+/obj/machinery/vehicle/proc/fire_main_weapon(mob/user)
+	if(is_incapacitated(user))
+		boutput(user, "<span class='alert'>Not when you are incapacitated.</span>")
 		return
-	if(istype(usr.loc, /obj/machinery/vehicle/))
-		var/obj/machinery/vehicle/ship = usr.loc
+	if(istype(user.loc, /obj/machinery/vehicle/))
+		var/obj/machinery/vehicle/ship = user.loc
 		if(ship.stall)
 			return
 		if(ship.m_w_system)
-			if(ship.m_w_system.active && !ship.fire_delay)
+			if(ship.m_w_system.active)
 				if(ship.m_w_system.r_gunner)
-					if(usr == ship.m_w_system.gunner)
+					if(user == ship.m_w_system.gunner)
 						ship.stall += 1
-						ship.fire_delay += 1
-						ship.m_w_system.Fire(usr, src.facing)
-						SPAWN_DBG(1.5 SECONDS)
-							ship.fire_delay -= 1 // cogwerks: no more spamming lasers until the server dies
-							if (ship.fire_delay > 0) ship.fire_delay = 0
+						ship.m_w_system.Fire(user, src.facing)
 					else
-						boutput(usr, "[ship.ship_message("You must be in the gunner seat!")]")
+						boutput(user, "[ship.ship_message("You must be in the gunner seat!")]")
 				else
-					ship.m_w_system.Fire(usr, src.facing)
+					ship.m_w_system.Fire(user, src.facing)
 			else
-				boutput(usr, "[ship.ship_message("SYSTEM OFFLINE")]")
+				boutput(user, "[ship.ship_message("SYSTEM OFFLINE")]")
 		else
-			boutput(usr, "[ship.ship_message("System not installed in ship!")]")
+			boutput(user, "[ship.ship_message("System not installed in ship!")]")
 	else
-		boutput(usr, "<span class='alert'>Uh-oh you aren't in a ship! Report this.</span>")
+		boutput(user, "<span class='alert'>Uh-oh you aren't in a ship! Report this.</span>")
 
 /obj/machinery/vehicle/proc/use_external_speaker()
 	if(is_incapacitated(usr))
@@ -1808,12 +1806,17 @@
 
 	New()
 		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		name = "syndicate minisub"
 		src.lock = new /obj/item/shipcomponent/secondary_system/lock(src)
 		src.lock.ship = src
 		src.components += src.lock
 		myhud.update_systems()
 		myhud.update_states()
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 /obj/machinery/vehicle/tank/minisub/mining
 	body_type = "minisub"
@@ -1905,7 +1908,7 @@
 	finish_board_pod(var/mob/boarder)
 		..()
 		if (!src.pilot) return //if they were stopped from entering by other parts of the board proc from ..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.escape()
 
 	proc/escape()
@@ -1997,7 +2000,7 @@
 					var/mob/living/carbon/human/H = pilot
 					for(var/effect in list("sever_left_leg","sever_right_leg","sever_left_arm","sever_right_arm"))
 						if(prob(40))
-							SPAWN_DBG(rand(0,5))
+							SPAWN(rand(0,5))
 								H.bioHolder.AddEffect(effect)
 				src.leave_pod(pilot)
 				src.icon_state = "escape_nowindow"

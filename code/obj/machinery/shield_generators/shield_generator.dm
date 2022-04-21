@@ -3,6 +3,8 @@
 
 /area/station/shield_zone
 	icon_state = "shield_zone"
+	expandable = 0
+	do_not_irradiate = 1
 
 /* ==================== Generator ==================== */
 
@@ -26,8 +28,8 @@
 
 	New()
 		..()
-		src.update_icon()
-		SPAWN_DBG(0.6 SECONDS)
+		src.UpdateIcon()
+		SPAWN(0.6 SECONDS)
 			if (!src.link)
 				var/turf/T = get_turf(src)
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
@@ -36,7 +38,8 @@
 					src.link.master = src
 			src.net_id = generate_net_id(src)
 
-	proc/update_icon()
+	update_icon()
+
 		if (status & (NOPOWER|BROKEN))
 			src.icon_state = "shieldgen0"
 			src.UpdateOverlays(null, "top_lights")
@@ -101,7 +104,7 @@
 		//Otherwise, ff they aren't addressing us, ignore them
 		if (signal.data["address_1"] != src.net_id)
 			if ((signal.data["address_1"] == "ping") && signal.data["sender"])
-				SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
+				SPAWN(0.5 SECONDS) //Send a reply for those curious jerks
 					src.post_status(target, "command", "ping_reply", "device", "PNET_SHIELD_GEN", "netid", src.net_id)
 			return
 
@@ -168,7 +171,7 @@
 	proc/post_reply(error_text, target_id)
 		if (!error_text || !target_id)
 			return
-		SPAWN_DBG(0.3 SECONDS)
+		SPAWN(0.3 SECONDS)
 			src.post_status(target_id, "command", "device_reply", "status", error_text)
 		return
 
@@ -191,7 +194,7 @@
 			return
 		src.active = 1
 		src.create_shield()
-		src.update_icon()
+		src.UpdateIcon()
 		playsound(src.loc, src.sound_startup, 75)
 
 	proc/deactivate()
@@ -199,7 +202,7 @@
 			return
 		src.active = 0
 		src.remove_shield()
-		src.update_icon()
+		src.UpdateIcon()
 		playsound(src.loc, src.sound_shutoff, 75)
 
 
@@ -208,6 +211,7 @@
 	icon_state = "engine1"
 
 	update_icon()
+
 		return
 
 /obj/machinery/shield_generator/console_lower
@@ -215,6 +219,7 @@
 	icon_state = "engine2"
 
 	update_icon()
+
 		return
 
 /* ==================== Computer ==================== */

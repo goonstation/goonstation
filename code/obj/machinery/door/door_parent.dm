@@ -3,7 +3,11 @@
 /obj/machinery/door
 	name = "door"
 	icon_state = "door1"
+	#ifdef UPSCALED_MAP
+	opacity = 0
+	#else
 	opacity = 1
+	#endif
 	density = 1
 	flags = FPRINT | ALWAYS_SOLID_FLUID
 	event_handler_flags = USE_FLUID_ENTER
@@ -164,16 +168,25 @@
 		..()
 		UnsubscribeProcess()
 		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", "toggleinput")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", .proc/toggleinput)
 		update_nearby_tiles(need_rebuild=1)
 		START_TRACKING
 		for (var/turf/simulated/wall/auto/T in orange(1))
-			T.update_icon()
+			T.UpdateIcon()
+		#ifdef XMAS
+		if(src.z == Z_LEVEL_STATION && current_state <= GAME_STATE_PREGAME)
+			src.xmasify()
+		#endif
 
 	disposing()
 		update_nearby_tiles()
 		STOP_TRACKING
 		..()
+
+	proc/xmasify()
+		var/obj/decal/garland/garland = new(src.loc)
+		if(src.dir != NORTH)
+			garland.dir = src.dir
 
 	proc/toggleinput()
 		if(cant_emag || (src.req_access && !(src.operating == -1)))
@@ -214,7 +227,7 @@
 #endif
 	if (do_after(user, 100) && !(user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.getStatusDuration("paralysis") > 0 || !isalive(user) || user.restrained()))
 		var/success = 0
-		SPAWN_DBG(0.6 SECONDS)
+		SPAWN(0.6 SECONDS)
 			success = try_force_open(user)
 			if (success != 0)
 				src.operating = -1 // It's broken now.
@@ -430,7 +443,7 @@
 
 	amount = get_damage_after_percentage_based_armor_reduction(armor,amount)
 
-	src.health = max(0,min(src.health - amount,src.health_max))
+	src.health = clamp(src.health - amount, 0, src.health_max)
 
 	if (src.health <= 0)
 		break_me_complitely()
@@ -444,7 +457,7 @@
 			elecflash(src,power=2)
 
 		if (prob(2) && src.health <= health_max * 0.35 && istype(src, /obj/machinery/door/airlock) )
-			SPAWN_DBG(0)
+			SPAWN(0)
 				src.open()
 
 
@@ -471,7 +484,7 @@
 			take_damage(damage/4)
 	return
 
-/obj/machinery/door/proc/update_icon(var/toggling = 0)
+/obj/machinery/door/update_icon(var/toggling = 0)
 	if(toggling? !density : density)
 		icon_state = "[icon_base]1"
 	else
@@ -508,10 +521,10 @@
 	if (linked_forcefield)
 		linked_forcefield.setactive(1)
 
-	SPAWN_DBG(-1)
+	SPAWN(-1)
 		play_animation("opening")
 		next_timeofday_opened = world.timeofday + (src.operation_time)
-		SPAWN_DBG(-1)
+		SPAWN(-1)
 			if (ignore_light_or_cam_opacity)
 				src.opacity = 0
 			else
@@ -519,7 +532,7 @@
 		use_power(100)
 		sleep(src.operation_time / 2)
 		src.set_density(0)
-		update_icon(0)
+		UpdateIcon(/*/toggling*/ 0)
 		update_nearby_tiles()
 		next_timeofday_opened = 0
 		sleep(src.operation_time / 2)
@@ -556,9 +569,9 @@
 
 	src.operating = 1
 	close_trys = 0
-	SPAWN_DBG(-1)
+	SPAWN(-1)
 		src.play_animation("closing")
-		src.update_icon(1)
+		src.UpdateIcon(1)
 		src.set_density(1)
 		src.update_nearby_tiles()
 
@@ -577,7 +590,7 @@
 				L.changeStatus("weakened", 3 SECONDS)
 				L.stuttering += 10
 				did_crush = 1
-				SPAWN_DBG(src.operation_time * 1.5 + crush_delay)
+				SPAWN(src.operation_time * 1.5 + crush_delay)
 					if (L) L.layer = mob_layer //Restore the mob's layer. Might be jarring...?
 
 		sleep(src.operation_time)
@@ -669,14 +682,22 @@
 	icon = 'icons/turf/shuttle.dmi'
 	name = "door"
 	icon_state = "door1"
+	#ifdef UPSCALED_MAP
+	opacity = 0
+	#else
 	opacity = 1
+	#endif
 	density = 1
 
 /obj/machinery/door/unpowered/martian
 	icon = 'icons/turf/martian.dmi'
 	name = "Orifice"
 	icon_state = "door1"
+	#ifdef UPSCALED_MAP
+	opacity = 0
+	#else
 	opacity = 1
+	#endif
 	density = 1
 	var/id = null
 
@@ -694,7 +715,11 @@
 	name = "door"
 	icon = 'icons/obj/doors/door_wood.dmi'
 	icon_state = "door1"
+	#ifdef UPSCALED_MAP
+	opacity = 0
+	#else
 	opacity = 1
+	#endif
 	density = 1
 	p_open = 0
 	operating = 0
@@ -819,7 +844,7 @@
 
 	onUpdate()
 		..()
-		if (the_door == null || the_tool == null || owner == null || get_dist(owner, the_door) > 1 || !the_door.locked || the_door.operating)
+		if (the_door == null || the_tool == null || owner == null || BOUNDS_DIST(owner, the_door) > 0 || !the_door.locked || the_door.operating)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner

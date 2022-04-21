@@ -7,7 +7,7 @@
 	anchored = 1
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			var/obj/term = new /obj/machinery/power/terminal(get_step(get_turf(src), dir))
 			term.set_dir(get_dir(get_turf(term), src))
 			new /obj/machinery/power/smes(get_turf(src))
@@ -214,7 +214,7 @@
 			return
 		using = 1
 		boutput(user, "<span class='notice'>Designating room.</span>")
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (designated.check_completion(target))
 				boutput(user, "<span class='notice'>Designation successful, room matches required parameters.</span>")
 				//new /obj/machinery/power/apc(get_turf(target))
@@ -440,7 +440,7 @@
 			user.visible_message("<span class='notice'>[user] finishes stuffing materials into [src].</span>")
 
 /obj/item/room_planner
-	name = "\improper Floor and Wall Planner"
+	name = "\improper Floor and Wall Designer"
 	icon = 'icons/obj/construction.dmi'
 	icon_state = "plan"
 	item_state = "gun"
@@ -508,7 +508,7 @@
 				//T.icon_state = initial(T.icon_state)
 				if (istype(T, /turf/simulated/wall/auto))
 					var/turf/simulated/wall/auto/W = T
-					W.update_icon()
+					W.UpdateIcon()
 					W.update_neighbors()
 			return
 		var/obj/plan_marker/old = null
@@ -555,7 +555,7 @@
 		var/turf/T = get_turf(src)
 		if (T)
 			T.Attackby(W, user)
-			W.afterattack(T, user)
+			W.AfterAttack(T, user)
 
 /obj/plan_marker/glass_shaper
 	name = "\improper Window Plan Marker"
@@ -775,7 +775,7 @@
 				AT.icon_state = initial(AT.icon_state)
 				AT.set_dir(initial(AT.dir))
 				AT:allows_vehicles = initial(AT.allows_vehicles)
-				AT.update_icon()
+				AT.UpdateIcon()
 				AT.update_neighbors()
 			qdel(src)
 

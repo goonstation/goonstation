@@ -42,24 +42,13 @@
 			var/mat_id
 
 			//Check for exploitable inputs and divide the result accordingly
-			var/div_factor = 1
+			var/div_factor = 1 / X.material_amt
 			var/second_mat = null
-			if (istype(X, /obj/item/sheet))
-				div_factor = 10
 
-			else if (istype(X, /obj/item/rods))
-				div_factor = 20
-
-			else if (istype(X, /obj/item/tile))
-				div_factor = 40
-
-			else if (istype(X, /obj/item/cable_coil))
+			if (istype(X, /obj/item/cable_coil))
 				var/obj/item/cable_coil/C = X
 				div_factor = 30
 				second_mat = C.conductor
-
-			else if (istype(X, /obj/item/raw_material/shard))
-				div_factor = 10
 
 			//Output processed amount if there is enough input material
 			var/out_amount = round(totalAmount/div_factor)
@@ -143,7 +132,7 @@
 			for(var/obj/item/I in S)
 				if(I.material)
 					I.set_loc(src)
-			S.satchel_updateicon()
+			S.UpdateIcon()
 			return
 
 		if (W.cant_drop) //For borg held items
@@ -154,12 +143,12 @@
 			boutput(user, "<span class='notice'>You put \the [W] into \the [src].</span>")
 			user.u_equip(W)
 			W.set_loc(src)
-			W.dropped()
+			W.dropped(user)
 			return
 
 		return
 
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		if(!isliving(usr))
 			boutput(usr, "<span class='alert'>Get your filthy dead fingers off that!</span>")
 			return
@@ -169,11 +158,11 @@
 			boutput(usr, "<span class='notice'>You reset the processor's output target.</span>")
 			return
 
-		if(get_dist(over_object,src) > 1)
+		if(BOUNDS_DIST(over_object, src) > 0)
 			boutput(usr, "<span class='alert'>The processor is too far away from the target!</span>")
 			return
 
-		if(get_dist(over_object,usr) > 1)
+		if(BOUNDS_DIST(over_object, usr) > 0)
 			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
 			return
 
@@ -223,8 +212,8 @@
 			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
 		return
 
-	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-		if (get_dist(user, src) > 1 || get_dist(user, O) > 1 || is_incapacitated(user) || isAI(user))
+	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
+		if (BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, O) > 0 || is_incapacitated(user) || isAI(user))
 			return
 
 		if (istype(O, /obj/storage/crate/) || istype(O, /obj/storage/cart/))
@@ -241,12 +230,13 @@
 			else boutput(user, "<span class='alert'>No material loaded!</span>")
 			return
 
+		if (!istype(O, /obj/item))
+			return
 		var/obj/item/W = O
-
 		if(W in user && !W.cant_drop)
 			user.u_equip(W)
 			W.set_loc(src.loc)
-			W.dropped()
+			W.dropped(user)
 
 
 		//if (istype(W, /obj/item/raw_material/) || istype(W, /obj/item/sheet/) || istype(W, /obj/item/rods/) || istype(W, /obj/item/tile/) || istype(W, /obj/item/cable_coil))
@@ -264,7 +254,9 @@
 		if (!user || !O || !istype(O))
 			return
 		user.visible_message("<span class='notice'>[user] begins quickly stuffing [O] into [src]!</span>")
+		user.u_equip(O)
 		O.set_loc(src)
+		O.dropped(user)
 		var/staystill = user.loc
 		for(var/obj/item/M in view(1,user))
 			if (!M || M.loc == user)
@@ -288,7 +280,7 @@
 		if (isnull(output_location))
 			return src.loc
 
-		if (get_dist(src.output_location,src) > 1)
+		if (BOUNDS_DIST(src.output_location, src) > 0)
 			output_location = null
 			return src.loc
 
@@ -368,7 +360,7 @@
 		return
 
 	Topic(href, href_list)
-		if(get_dist(usr, src) > 1 || usr.z != src.z) return
+		if(BOUNDS_DIST(usr, src) > 0 || usr.z != src.z) return
 
 		if(href_list["select_l"])
 			var/obj/item/L = locate(href_list["select_l"]) in src
@@ -606,7 +598,7 @@
 		if(components.len > 0)
 			light.enable()
 			playsound(src.loc, sound_zap, 40, 1)
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				playsound(src.loc, sound_bubble, 40, 1)
 			if(components.len == 1)
 				boutput(user, "<span class='alert'>You activate the [src].</span>")
@@ -633,7 +625,7 @@
 				output.generation++
 				logTheThing("station", user, null, "creates a [output] bar (<b>Material:</b> <i>[output.mat_id]</i>) with the [src] at [log_loc(src)].") // Sorry for code duplication, but I'm regularly seeing runtime errors for some reason if this proc is called after handleSlag (Convair880).
 				handleSlag()
-			SPAWN_DBG(0.8 SECONDS)
+			SPAWN(0.8 SECONDS)
 				playsound(src.loc, sound_hiss, 45, 1)
 				light.disable()
 		else

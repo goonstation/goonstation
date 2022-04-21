@@ -158,10 +158,10 @@
 		var/the_range = input("Enter a range from [src.min_range]-[src.max_range]. Higher ranges use more power.","[src.name]",2) as null|num
 		if(!the_range)
 			return
-		if(get_dist(user,src) > 1)
+		if(BOUNDS_DIST(user, src) > 0)
 			boutput(user, "<span class='alert'>You flail your arms at [src.name] from across the room like a complete muppet. Move closer, genius!</span>")
 			return
-		the_range = max(src.min_range,min(the_range,src.max_range))
+		the_range = clamp(the_range, src.min_range, src.max_range)
 		src.range = the_range
 		var/outcome_text = "You set the range to [src.range]."
 		if(src.active)
@@ -623,7 +623,7 @@
 	New()
 		..()
 		setactive(0)
-		SPAWN_DBG(1 SECOND)//yucky...
+		SPAWN(1 SECOND)//yucky...
 			var/obj/machinery/door/door = (locate() in src.loc)
 			if(door)
 				door.linked_forcefield = src

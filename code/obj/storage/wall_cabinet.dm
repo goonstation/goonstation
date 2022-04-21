@@ -17,7 +17,7 @@
 	mechanics_type_override = /obj/item/storage/wall
 
 	attack_hand(mob/user as mob)
-		return MouseDrop(user)
+		return mouse_drop(user)
 
 /obj/item/storage/wall/emergency
 	name = "emergency supplies"
@@ -54,6 +54,8 @@
 		..()
 		if (prob(80))
 			new /obj/item/extinguisher(src)
+		if (prob(50))
+			new /obj/item/clothing/head/helmet/firefighter(src)
 		if (prob(30))
 			new /obj/item/clothing/suit/fire(src)
 			new /obj/item/clothing/mask/gas/emergency(src)
@@ -198,10 +200,11 @@
 	New()
 		hud = new(src)
 		..()
-		SPAWN_DBG(1 DECI SECOND)
-			update_icon()
+		SPAWN(1 DECI SECOND)
+			UpdateIcon()
 
 	update_icon()
+
 		var/list/my_contents = src.get_contents()
 		if (my_contents.len <= 0)
 			src.icon_state = "clothingrack-empty"
@@ -283,11 +286,12 @@ obj/item/storage/wall/clothingrack/hatrack
 	New()
 		hud = new(src)
 		..()
-		SPAWN_DBG(1 DECI SECOND)
-			update_icon()
+		SPAWN(1 DECI SECOND)
+			UpdateIcon()
 
 
 	update_icon()
+
 		var/list/my_contents = src.get_contents()
 		if (my_contents.len <= 0)
 			src.icon_state = "hatrack-empty"
@@ -333,8 +337,8 @@ obj/item/storage/wall/clothingrack/hatrack
 	New()
 		hud = new(src)
 		..()
-		SPAWN_DBG(1 DECI SECOND)
-			update_icon()
+		SPAWN(1 DECI SECOND)
+			UpdateIcon()
 
 	update_icon()
 		var/list/my_contents = src.get_contents()
@@ -357,8 +361,8 @@ obj/item/storage/wall/clothingrack/hatrack
 	New()
 		hud = new(src)
 		..()
-		SPAWN_DBG(1 DECI SECOND)
-			update_icon()
+		SPAWN(1 DECI SECOND)
+			UpdateIcon()
 
 	update_icon()
 		var/list/my_contents = src.get_contents()

@@ -15,7 +15,7 @@
 		. = ..()
 		src.fluid_image = image(src.icon, "fluid", -1)
 
-	proc/update_icon()
+	update_icon()
 		if (reagents.total_volume)
 			var/datum/color/average = reagents.get_average_color()
 			src.fluid_image.color = average.to_rgba()
@@ -25,7 +25,7 @@
 
 	on_reagent_change()
 		..()
-		src.update_icon()
+		src.UpdateIcon()
 
 /obj/mopbucket/New()
 	..()
@@ -58,11 +58,11 @@
 	else
 		return ..()
 
-/obj/mopbucket/MouseDrop(atom/over_object as obj)
+/obj/mopbucket/mouse_drop(atom/over_object as obj)
 	if (!istype(over_object, /obj/item/reagent_containers/glass) && !istype(over_object, /obj/item/reagent_containers/food/drinks) && !istype(over_object, /obj/item/spraybottle) && !istype(over_object, /obj/machinery/plantpot) && !istype(over_object, /obj/mopbucket))
 		return ..()
 
-	if (get_dist(usr, src) > 1 || get_dist(usr, over_object) > 1)
+	if (BOUNDS_DIST(usr, src) > 0 || BOUNDS_DIST(usr, over_object) > 0)
 		boutput(usr, "<span class='alert'>That's too far!</span>")
 		return
 

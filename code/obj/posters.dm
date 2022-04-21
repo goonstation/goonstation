@@ -52,13 +52,12 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 	var/print_or_place = alert(usr, "Print out at all printers or place on your tile?", "Selection", "Place", "Print")
 	if (alert(usr, "Confirm poster creation", "Confirmation", "OK", "Cancel") == "OK")
 		if (print_or_place == "Print")
-			for (var/obj/machinery/networked/printer/P in world)
-				LAGCHECK(LAG_LOW)
+			for_by_tcl(P, /obj/machinery/networked/printer)
 				if (P.status & (NOPOWER|BROKEN))
 					continue
 				flick("printer-printing",P)
 				playsound(P.loc, "sound/machines/printer_dotmatrix.ogg", 50, 1)
-				SPAWN_DBG(3.2 SECONDS)
+				SPAWN(3.2 SECONDS)
 					var/obj/item/poster/titled_photo/np = new(get_turf(P))
 					if (p_title)
 						np.line_title = p_title
@@ -156,13 +155,12 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 	var/print_or_place = alert(usr, "Print out at all printers or place on your tile?", "Selection", "Place", "Print")
 	if (alert(usr, "Confirm poster creation", "Confirmation", "OK", "Cancel") == "OK")
 		if (print_or_place == "Print")
-			for (var/obj/machinery/networked/printer/P in world)
-				LAGCHECK(LAG_LOW)
+			for_by_tcl(P, /obj/machinery/networked/printer)
 				if (P.status & (NOPOWER|BROKEN))
 					continue
 				flick("printer-printing",P)
 				playsound(P.loc, "sound/machines/printer_dotmatrix.ogg", 50, 1)
-				SPAWN_DBG(3.2 SECONDS)
+				SPAWN(3.2 SECONDS)
 					var/obj/item/poster/titled_photo/wp = new(get_turf(P))
 					if (w_name)
 						wp.line_title = w_name
@@ -316,12 +314,13 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 	var/line_b1 = null
 	var/line_b2 = null
 	var/line_b3 = null
+	var/author = null
 
 	var/list/plist = null
 
 	New()
 		..()
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			if (!src.poster_HTML)
 				src.generate_poster()
 
@@ -502,6 +501,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 		src.papers --
 		playsound(src, "sound/machines/printer_dotmatrix.ogg", 30, 1)
 		var/obj/item/poster/titled_photo/P = new (src.loc)
+		P.author = user.key
 		P.name = "Wanted: [src.plist["name"]]"
 		P.line_title = "NAME: [src.plist["name"]]"
 		P.poster_image = src.plist["image"]
@@ -519,14 +519,14 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 	Topic(href, href_list)
 		if (!usr || !usr.client)
 			return ..()
-		if (get_dist(usr,src) > 1)
+		if (BOUNDS_DIST(usr, src) > 0)
 			boutput(usr, "<span class='alert'>You need to be closer to [src] to do that!</span>")
 			return
 		src.ensure_plist()
 
 		if (href_list["print"])
 			var/pnum = input(usr, "Enter amount to print:", "Print Amount", 1) as null|num
-			if (isnull(pnum) || get_dist(usr,src) > 1)
+			if (isnull(pnum) || BOUNDS_DIST(usr, src) > 0)
 				return
 			logTheThing("speech", usr, null, "printed out [pnum] wanted poster(s) [log_loc(src)] contents: name [src.plist["name"]], subtitle [src.plist["subtitle"]], wanted [src.plist["wanted"]], for [src.plist["for"]], notes [src.plist["notes"]]")
 			for (var/i = clamp(pnum, 1, src.papers), i>0, i--)
@@ -538,14 +538,14 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 
 		else if (href_list["entername"])
 			var/ptext = scrubbed_input(usr, "Enter name:", "Name", src.plist["name"])
-			if (isnull(ptext) || !length(ptext) || get_dist(usr,src) > 1)
+			if (isnull(ptext) || !length(ptext) || BOUNDS_DIST(usr, src) > 0)
 				return
 			src.plist["name"] = ptext
 			logTheThing("speech", usr, null, "edited wanted poster's name: [ptext]")
 
 		else if (href_list["selectphoto"])
 			var/ptext = scrubbed_input(usr, "Enter name or ID of crew to search for:", "Locate File Photo", src.plist["name"])
-			if (isnull(ptext) || !length(ptext) || get_dist(usr,src) > 1)
+			if (isnull(ptext) || !length(ptext) || BOUNDS_DIST(usr, src) > 0)
 				return
 			var/datum/db_record/R
 			for (var/datum/db_record/rec as anything in data_core.general.records)
@@ -568,27 +568,27 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 
 		else if (href_list["enterdoa"])
 			var/ptext = scrubbed_input(usr, "Enter wanted level:", "Wanted Level", src.plist["wanted"])
-			if (isnull(ptext) || !length(ptext) || get_dist(usr,src) > 1)
+			if (isnull(ptext) || !length(ptext) || BOUNDS_DIST(usr, src) > 0)
 				return
 			src.plist["wanted"] = ptext
 			logTheThing("speech", usr, null, "edited wanted poster's wanted: [ptext]")
 
 		else if (href_list["enterreward"])
 			var/pnum = input(usr, "Enter reward amount:", "Reward", src.plist["reward"]) as null|num
-			if (isnull(pnum) || get_dist(usr,src) > 1)
+			if (isnull(pnum) || BOUNDS_DIST(usr, src) > 0)
 				return
 			src.plist["reward"] = pnum
 
 		else if (href_list["enterfor"])
 			var/ptext = scrubbed_input(usr, "Enter wanted information:", "Wanted For", src.plist["for"])
-			if (isnull(ptext) || !length(ptext) || get_dist(usr,src) > 1)
+			if (isnull(ptext) || !length(ptext) || BOUNDS_DIST(usr, src) > 0)
 				return
 			src.plist["for"] = ptext
 			logTheThing("speech", usr, null, "edited wanted poster's for: [ptext]")
 
 		else if (href_list["enternotes"])
 			var/ptext = scrubbed_input(usr, "Enter notes:", "Notes", src.plist["notes"])
-			if (isnull(ptext) || !length(ptext) || get_dist(usr,src) > 1)
+			if (isnull(ptext) || !length(ptext) || BOUNDS_DIST(usr, src) > 0)
 				return
 			src.plist["notes"] = ptext
 			logTheThing("speech", usr, null, "edited wanted poster's notes: [ptext]")

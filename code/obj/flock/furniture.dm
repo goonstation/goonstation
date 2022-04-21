@@ -108,6 +108,20 @@
 	var/health_max = 100
 	var/hitsound = "sound/impact_sounds/Generic_Hit_Heavy_1.ogg"
 
+	take_damage(var/force, var/mob/user as mob)
+		if (!isnum(force) || force <= 0)
+			return
+		src.health_attack = clamp(src.health_attack - force, 0, src.health_max)
+		if (src.health_attack <= 0)
+			var/turf/T = get_turf(src)
+			playsound(T, "sound/impact_sounds/Glass_Shatter_3.ogg", 25, 1)
+			var/obj/item/raw_material/shard/S = new /obj/item/raw_material/shard
+			S.set_loc(T)
+			S.setMaterial(getMaterial("gnesisglass"))
+			src.dump_contents()
+			make_cleanable( /obj/decal/cleanable/flockdrone_debris, T)
+			qdel(src)
+
 /obj/storage/closet/flock/New()
 	..()
 	setMaterial("gnesis")
@@ -136,22 +150,8 @@
 	else
 		..()
 
-/obj/storage/closet/flock/proc/take_damage(var/force, var/mob/user as mob)
-	if (!isnum(force) || force <= 0)
-		return
-	src.health_attack = max(0,min(src.health_attack - force,src.health_max))
-	if (src.health_attack <= 0)
-		var/turf/T = get_turf(src)
-		playsound(T, "sound/impact_sounds/Glass_Shatter_3.ogg", 25, 1)
-		var/obj/item/raw_material/shard/S = new /obj/item/raw_material/shard
-		S.set_loc(T)
-		S.setMaterial(getMaterial("gnesisglass"))
-		src.dump_contents()
-		make_cleanable( /obj/decal/cleanable/flockdrone_debris, T)
-		qdel(src)
-
 /obj/storage/closet/flock/attack_hand(mob/user as mob)
-	if (get_dist(user, src) > 1)
+	if (BOUNDS_DIST(user, src) > 0)
 		return
 
 	interact_particle(user,src)
@@ -257,7 +257,7 @@
 	mat_changename = 0
 	mat_changedesc = 0
 
-	update_icon(special_icon_state) //fix for perspective grilles fucking these up
+	update_icon(special_icon_state, override_parent = TRUE) //fix for perspective grilles fucking these up
 		if (ruined)
 			return
 
@@ -279,7 +279,7 @@
 /obj/grille/flock/New()
 	..()
 	setMaterial("gnesis")
-	src.update_icon()
+	src.UpdateIcon()
 
 
 // flockdrones can always move through

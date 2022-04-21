@@ -3,6 +3,7 @@
 	desc = "Designed to interface the player piano."
 	icon = 'icons/obj/instruments.dmi'
 	icon_state = "piano_key"
+	w_class = W_CLASS_TINY
 
 /obj/player_piano //this is the big boy im pretty sure all this code is garbage
 	name = "player piano"
@@ -94,7 +95,7 @@
 				P.name = "Piano Maintenance Panel"
 				P.desc = "A cover for the internal workings of a piano. Better not lose it."
 				panel_exposed = 1
-				update_icon()
+				UpdateIcon()
 			else
 				boutput(user, "There's nothing to pry off of \the [src].")
 
@@ -106,7 +107,7 @@
 				playsound(user, "sound/items/Deconstruct.ogg", 65, 1)
 				user.visible_message("[user] replaces the maintenance panel!", "You replace the maintenance panel!")
 				panel_exposed = 0
-				update_icon(0)
+				UpdateIcon(0)
 				qdel(W)
 
 		else if (istype(W, /obj/item/wirecutters)) //turning off looping... forever!
@@ -152,7 +153,7 @@
 		else //just in case
 			return
 
-	MouseDrop(obj/player_piano/O, null)//, var/src_location, var/control_orig, var/control_new, var/params)
+	mouse_drop(obj/player_piano/piano)
 		if (!istype(usr, /mob/living))
 			return
 		if (usr.stat)
@@ -160,12 +161,19 @@
 		if (!allowChange(usr))
 			boutput(usr, "<span class='alert'>You can't link pianos without a multitool!</span>")
 			return
-		if (O.is_busy || is_busy)
+		ENSURE_TYPE(piano)
+		if (!piano)
+			return
+		if (piano == src)
+			boutput(usr, "<span class='alert'>You can't link a piano with itself!</span>")
+			return
+		if (piano.is_busy || src.is_busy)
 			boutput(usr, "<span class='alert'>You can't link a busy piano!</span>")
-		if (O.panel_exposed && panel_exposed)
+			return
+		if (piano.panel_exposed && panel_exposed)
 			usr.visible_message("[usr] links the pianos.", "You link the pianos!")
-			add_piano(O)
-			O.add_piano(src)
+			src.add_piano(piano)
+			piano.add_piano(src)
 
 	disposing() //just to clear up ANY funkiness
 		reset_piano(1)
@@ -237,7 +245,7 @@
 		if (note_volumes.len + note_octaves.len - note_names.len - note_accidentals.len)
 			src.visible_message("<span class='alert'>\The [src] makes a grumpy ratchetting noise and shuts down!</span>")
 			is_busy = 0
-			update_icon(0)
+			UpdateIcon(0)
 		song_length = length(note_names)
 		compiled_notes = list()
 		for (var/i = 1, i <= note_names.len, i++)
@@ -249,10 +257,10 @@
 			if (!(string in soundCache))
 				src.visible_message("<span class='alert'>\The [src] makes an atrocious racket and beeps [i] times.</span>")
 				is_busy = 0
-				update_icon(0)
+				UpdateIcon(0)
 				return
 		src.visible_message("<span class='notice'>\The [src] starts playing music!</span>")
-		update_icon(1)
+		UpdateIcon(1)
 		if (is_linked)
 			play_notes(0)
 			return
@@ -261,7 +269,7 @@
 	proc/play_notes(var/is_master) //how notes are handled, using while and spawn to set a very strict interval, solo piano process loop was too variable to work for music
 		if (linked_pianos.len > 0 && is_master)
 			for (var/obj/player_piano/p in linked_pianos)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					p.ready_piano(1)
 		while (curr_note <= song_length)
 			curr_note++
@@ -273,11 +281,12 @@
 				is_busy = 0
 				curr_note = 0
 				src.visible_message("<span class='notice'>\The [src] stops playing music.</span>")
-				update_icon(0)
+				UpdateIcon(0)
 				return
 			sleep((timing * 10)) //to get delay into 10ths of a second
-			var/sound_name = "sound/piano/"
-			sound_name += "[compiled_notes[curr_note]].ogg"
+			if (!curr_note) // else we get runtimes when the piano is reset while playing
+				return
+			var/sound_name = "sound/piano/[compiled_notes[curr_note]].ogg"
 			playsound(src, sound_name, note_volumes[curr_note],0,10,0)
 
 	proc/reset_piano(var/disposing) //so i dont have to have duplicate code for multiool pulsing and piano key
@@ -295,9 +304,9 @@
 		note_accidentals = list()
 		compiled_notes = list()
 		linked_pianos = list()
-		update_icon(0)
+		UpdateIcon(0)
 
-	proc/update_icon(var/active) //1: active, 0: inactive
+	update_icon(var/active) //1: active, 0: inactive
 		if (panel_exposed)
 			icon_state = "player_piano_open"
 			return

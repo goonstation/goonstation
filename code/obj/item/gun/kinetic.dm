@@ -5,21 +5,39 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "gun"
 	m_amt = 2000
 	var/obj/item/ammo/bullets/ammo = null
-	var/max_ammo_capacity = 1 // How much ammo can this gun hold? Don't make this null (Convair880).
-	var/caliber = null // Can be a list too. The .357 Mag revolver can also chamber .38 Spc rounds, for instance (Convair880).
-	var/has_empty_state = 0 //Does this gun have a special icon state for having no ammo lefT?
-	var/gildable = 0 //Can this gun be affected by the [Helios] medal reward?
-	var/gilded = FALSE //Is this gun currently gilded by the [Helios] medal reward?
-	var/auto_eject = 0 // Do we eject casings on firing, or on reload?
-	var/casings_to_eject = 0 // If we don't automatically ejected them, we need to keep track (Convair880).
-	var/default_magazine //What's the default magazine used in this gun? Set this in place of putting the type in New()
+	/// How much ammo can this gun hold? Don't make this null (Convair880).
+	var/max_ammo_capacity = 1
+	/// Can be a list too. The .357 Mag revolver can also chamber .38 Spc rounds, for instance (Convair880).
+	var/ammo_cats = null
+	/// Does this gun have a special icon state for having no ammo lefT?
+	var/has_empty_state = FALSE
+	/// Can this gun be affected by the [Helios] medal reward?
+	var/gildable = FALSE
+	/// Is this gun currently gilded by the [Helios] medal reward?
+	var/gilded = FALSE
+	/// Do we eject casings on firing, or on reload?
+	var/auto_eject = FALSE
+	/// If we don't automatically ejected them, we need to keep track (Convair880).
+	var/casings_to_eject = 0
+	/// What's the default magazine used in this gun? Set this in place of putting the type in New()
+	var/default_magazine = null
+	/// Assoc list of magazine types, standard ammo first, special ammo second
+	var/list/ammobag_magazines = list()
+	/// Can only special-ammo ammobags restock these?
+	var/ammobag_spec_required = FALSE
+	/// How many charges it costs an ammobag to fabricate ammo for this gun
+	var/ammobag_restock_cost = 0
 
+	/// Does this gun add gunshot residue when fired? Kinetic guns should (Convair880).
+	add_residue = TRUE
 
-	add_residue = 1 // Does this gun add gunshot residue when fired? Kinetic guns should (Convair880).
+	/// Can you use the gun on ammo to reload?
+	var/allowReverseReload = TRUE
 
-	var/allowReverseReload = 1 //Use gun on ammo to reload
-	var/allowDropReload = 1    //Drag&Drop ammo onto gun to reload
+	/// Can you Drag & Drop ammo onto the gun to reload?
+	var/allowDropReload = TRUE
 
+	/// `icon_state` of the muzzle flash of the gun (if any)
 	muzzle_flash = "muzzle_flash"
 
 	// caliber list: update as needed
@@ -36,7 +54,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		if(silenced)
 			current_projectile.shot_sound = 'sound/machines/click.ogg'
 		..()
-		src.update_icon()
+		src.UpdateIcon()
 
 	examine()
 		. = ..()
@@ -51,6 +69,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			. += "<span class='alert'>*ERROR* No output selected!</span>"
 
 	update_icon()
+
 		if (src.ammo)
 			inventory_counter.update_number(src.ammo.amount_left)
 		else
@@ -156,7 +175,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			ammoHand.icon_state = src.ammo.icon_state
 			ammoHand.ammo_type = src.ammo.ammo_type
 			ammoHand.delete_on_reload = 1 // No duplicating empty magazines, please (Convair880).
-			ammoHand.update_icon()
+			ammoHand.UpdateIcon()
 			user.put_in_hand_or_drop(ammoHand)
 			ammoHand.after_unload(user)
 
@@ -165,7 +184,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			src.casings_to_eject = 0
 
 			src.ammo.amount_left = 0
-			src.update_icon()
+			src.ammo.refillable = FALSE
+			src.UpdateIcon()
 			src.add_fingerprint(user)
 			ammoHand.add_fingerprint(user)
 
@@ -256,7 +276,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		desc = "Seems to be a small pistol cartridge."
 		New()
 			..()
-			SPAWN_DBG(rand(1, 3))
+			SPAWN(rand(1, 3))
 				playsound(src.loc, "sound/weapons/casings/casing-small-0[rand(1,6)].ogg", 20, 0.1)
 
 	medium
@@ -264,7 +284,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		desc = "Seems to be a common revolver cartridge."
 		New()
 			..()
-			SPAWN_DBG(rand(1, 3))
+			SPAWN(rand(1, 3))
 				playsound(src.loc, "sound/weapons/casings/casing-0[rand(1,9)].ogg", 20, 0.1)
 
 	rifle
@@ -272,7 +292,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		desc = "Seems to be a rifle cartridge."
 		New()
 			..()
-			SPAWN_DBG(rand(1, 3))
+			SPAWN(rand(1, 3))
 				playsound(src.loc, "sound/weapons/casings/casing-0[rand(1,9)].ogg", 20, 0.1, 0, 0.8)
 
 
@@ -281,7 +301,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		desc = "Seems to be a rifle cartridge."
 		New()
 			..()
-			SPAWN_DBG(rand(1, 3))
+			SPAWN(rand(1, 3))
 				playsound(src.loc, "sound/weapons/casings/casing-large-0[rand(1,4)].ogg", 25, 0.1)
 
 	derringer
@@ -289,7 +309,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		desc = "A fat and stumpy bullet casing. Looks pretty old."
 		New()
 			..()
-			SPAWN_DBG(rand(1, 3))
+			SPAWN(rand(1, 3))
 				playsound(src.loc, "sound/weapons/casings/casing-0[rand(1,9)].ogg", 20, 0.1)
 
 	deagle
@@ -297,7 +317,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		desc = "An uncomfortably large pistol cartridge."
 		New()
 			..()
-			SPAWN_DBG(rand(1, 3))
+			SPAWN(rand(1, 3))
 				playsound(src.loc, "sound/weapons/casings/casing-0[rand(1,9)].ogg", 20, 0.1, 0, 0.9)
 	shotgun
 		red
@@ -317,7 +337,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			desc = "An gray shotgun shell."
 		New()
 			..()
-			SPAWN_DBG(rand(4, 7))
+			SPAWN(rand(4, 7))
 				playsound(src.loc, "sound/weapons/casings/casing-shell-0[rand(1,7)].ogg", 20, 0.1)
 
 	cannon
@@ -326,7 +346,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		w_class = W_CLASS_SMALL
 		New()
 			..()
-			SPAWN_DBG(rand(2, 4))
+			SPAWN(rand(2, 4))
 				playsound(src.loc, "sound/weapons/casings/casing-large-0[rand(1,4)].ogg", 35, 0.1, 0, 0.8)
 
 	grenade
@@ -335,7 +355,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		desc = "A 40mm grenade round casing. Huh."
 		New()
 			..()
-			SPAWN_DBG(rand(3, 6))
+			SPAWN(rand(3, 6))
 				playsound(src.loc, "sound/weapons/casings/casing-xl-0[rand(1,6)].ogg", 15, 0.1)
 
 
@@ -349,7 +369,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 //no caliber and ALL
 /obj/item/gun/kinetic/vgun
-	name = "Virtual Pistol"
+	name = "virtual pistol"
 	desc = "This thing would be better if it wasn't such a piece of shit."
 	icon_state = "railgun"
 	force = MELEE_DMG_PISTOL
@@ -372,12 +392,12 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			..()
 
 /obj/item/gun/kinetic/zipgun
-	name = "Zip Gun"
+	name = "zip gun"
 	desc = "An improvised and unreliable gun."
 	icon_state = "zipgun"
 	force = MELEE_DMG_PISTOL
 	contraband = 6
-	caliber = null // use any ammo at all BA HA HA HA HA
+	ammo_cats = list(AMMO_PISTOL_ALL, AMMO_REVOLVER_ALL, AMMO_SMG_9MM, AMMO_TRANQ_ALL, AMMO_RIFLE_308, AMMO_SHOTGUN_ALL, AMMO_AUTO_308, AMMO_AUTO_562, AMMO_CASELESS_G11, AMMO_FLECHETTE)
 	max_ammo_capacity = 2
 	var/failure_chance = 6
 	var/failured = 0
@@ -397,8 +417,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			explosion(src, T,-1,-1,1,2)
 			qdel(src)
 			return
-		if(ammo?.amount_left && current_projectile?.caliber && current_projectile.power)
-			failure_chance = max(0,min(33,round(current_projectile.power/2 - 9)))
+		if(ammo?.amount_left && current_projectile.power)
+			failure_chance = clamp(round(current_projectile.power/2 - 9), 0, 33)
 		if(canshoot() && prob(failure_chance)) // Empty zip guns had a chance of blowing up. Stupid (Convair880).
 			failured = 1
 			if(prob(failure_chance))	// Sometimes the failure is obvious
@@ -418,13 +438,14 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	desc = "'Cause ya gotta have Faith."
 	icon_state = "faith"
 	force = MELEE_DMG_PISTOL
-	caliber = 0.22
+	ammo_cats = list(AMMO_PISTOL_22)
 	max_ammo_capacity = 4
 	auto_eject = 1
 	w_class = W_CLASS_SMALL
 	muzzle_flash = null
 	has_empty_state = 1
 	default_magazine = /obj/item/ammo/bullets/bullet_22/faith
+	fire_animation = TRUE
 
 	New()
 		ammo = new default_magazine
@@ -432,14 +453,14 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		..()
 
 /obj/item/gun/kinetic/silenced_22
-	name = "Orion silenced pistol"
+	name = "\improper Orion silenced pistol"
 	desc = "A small pistol with an integrated flash and noise suppressor, developed by Specter Tactical Laboratory. Uses .22 rounds."
 	icon_state = "silenced"
 	w_class = W_CLASS_SMALL
 	silenced = 1
 	force = MELEE_DMG_PISTOL
 	contraband = 4
-	caliber = 0.22
+	ammo_cats = list(AMMO_PISTOL_22)
 	max_ammo_capacity = 10
 	auto_eject = 1
 	hide_attack = 1
@@ -447,6 +468,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	has_empty_state = 1
 	fire_animation = TRUE
 	default_magazine = /obj/item/ammo/bullets/bullet_22HP
+	ammobag_magazines = list(/obj/item/ammo/bullets/bullet_22, /obj/item/ammo/bullets/bullet_22HP)
+	ammobag_restock_cost = 1
 
 	New()
 		ammo = new default_magazine
@@ -456,12 +479,12 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 //0.308
 /obj/item/gun/kinetic/minigun
-	name = "Minigun"
+	name = "minigun"
 	desc = "The M134 Minigun is a 7.62×51mm NATO, six-barrel rotary machine gun with a high rate of fire."
 	icon_state = "minigun"
 	item_state = "heavy"
 	force = MELEE_DMG_LARGE
-	caliber = 0.308
+	ammo_cats = list(AMMO_AUTO_308)
 	max_ammo_capacity = 100
 	auto_eject = 1
 
@@ -487,20 +510,21 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		setProperty("movespeed", 0.4)
 
 /obj/item/gun/kinetic/ak47
-	name = "AK-744 Rifle"
+	name = "\improper AK-744 Rifle"
 	desc = "Based on an old Cold War relic, often used by paramilitary organizations and space terrorists."
 	icon = 'icons/obj/large/48x32.dmi' // big guns get big icons
 	icon_state = "ak47"
 	item_state = "ak47"
 	force = MELEE_DMG_RIFLE
 	contraband = 8
-	caliber = 0.308
+	ammo_cats = list(AMMO_AUTO_308)
 	max_ammo_capacity = 30 // It's magazine-fed (Convair880).
 	auto_eject = 1
 	can_dual_wield = 0
 	two_handed = 1
 	gildable = 1
 	default_magazine = /obj/item/ammo/bullets/ak47
+	fire_animation = TRUE
 
 	New()
 		ammo = new default_magazine
@@ -508,14 +532,14 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		..()
 
 /obj/item/gun/kinetic/hunting_rifle
-	name = "Old Hunting Rifle"
+	name = "old hunting rifle"
 	desc = "A powerful antique hunting rifle."
 	icon = 'icons/obj/large/48x32.dmi'
 	icon_state = "ohr"
 	item_state = "ohr"
 	force = MELEE_DMG_RIFLE
 	contraband = 8
-	caliber = 0.308
+	ammo_cats = list(AMMO_RIFLE_308)
 	max_ammo_capacity = 4 // It's magazine-fed (Convair880).
 	auto_eject = 1
 	can_dual_wield = 0
@@ -523,6 +547,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	has_empty_state = 1
 	gildable = 1
 	default_magazine = /obj/item/ammo/bullets/rifle_3006
+	fire_animation = TRUE
 
 	New()
 		ammo = new default_magazine
@@ -530,20 +555,21 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		..()
 
 /obj/item/gun/kinetic/dart_rifle
-	name = "Tranquilizer Rifle"
+	name = "tranquilizer rifle"
 	desc = "A veterinary tranquilizer rifle chambered in .308 caliber."
 	icon = 'icons/obj/large/48x32.dmi'
 	icon_state = "tranq"
 	item_state = "tranq"
 	force = MELEE_DMG_RIFLE
 	//contraband = 8
-	caliber = 0.308
+	ammo_cats = list(AMMO_TRANQ_308)
 	max_ammo_capacity = 4 // It's magazine-fed (Convair880).
 	auto_eject = 1
 	can_dual_wield = 0
 	two_handed = 1
 	gildable = 1
 	default_magazine = /obj/item/ammo/bullets/tranq_darts
+	fire_animation = TRUE
 
 	New()
 		ammo = new default_magazine
@@ -553,13 +579,13 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 //9mm/0.355
 /obj/item/gun/kinetic/clock_188
 	desc = "A reliable weapon used the world over... 50 years ago. Uses 9mm NATO rounds."
-	name = "Clock 188"
+	name = "\improper Clock 188"
 	icon_state = "glock"
 	item_state = "glock"
 	shoot_delay = 2
 	w_class = W_CLASS_SMALL
 	force = MELEE_DMG_PISTOL
-	caliber = 0.355
+	ammo_cats = list(AMMO_PISTOL_9MM)
 	max_ammo_capacity = 18
 	auto_eject = 1
 	has_empty_state = 1
@@ -596,7 +622,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 /obj/item/gun/kinetic/clock_188/boomerang
 	desc = "Jokingly called a \"Gunarang\" in some circles. Uses 9mm NATO rounds."
-	name = "Clock 180"
+	name = "\improper Clock 180"
 	force = MELEE_DMG_PISTOL
 	throw_range = 10
 	throwforce = 1
@@ -610,28 +636,28 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		playsound(src.loc, "rustle", 50, 1)
 		return ..(target)
 
-	throw_impact(atom/hit_atom)
-		if(hit_atom == usr)
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
+		var/mob/user = thr.user
+		if(hit_atom == user)
 			if(prob(prob_clonk))
-				var/mob/living/carbon/human/user = usr
 				user.visible_message("<span class='alert'><B>[user] fumbles the catch and accidentally discharges [src]!</B></span>")
 				src.shoot_point_blank(user, user)
 				user.force_laydown_standup()
 			else
-				src.Attackhand(usr)
+				src.Attackhand(user)
 			return
 		else
 			var/mob/M = hit_atom
 			if(istype(M))
-				var/mob/living/carbon/human/user = usr
-				if(istype(user.wear_suit, /obj/item/clothing/suit/security_badge))
+				var/mob/living/carbon/human/H = user
+				if(istype(H) && istype(H.wear_suit, /obj/item/clothing/suit/security_badge))
 					src.silenced = 1
 					src.shoot_point_blank(M, M)
 					M.visible_message("<span class='alert'><B>[src] fires, hitting [M] point blank!</B></span>")
 					src.silenced = initial(src.silenced)
 
 			prob_clonk = min(prob_clonk + 5, 100)
-			SPAWN_DBG(1 SECONDS)
+			SPAWN(1 SECONDS)
 				prob_clonk = max(prob_clonk - 5, 0)
 
 		return ..(hit_atom)
@@ -644,7 +670,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "sec-case"
 	desc = "A large briefcase with a digital locking system. This one has a small hole in the side of it. Odd."
 	force = MELEE_DMG_SMG
-	caliber = 0.355
+	ammo_cats = list(AMMO_SMG_9MM)
 	max_ammo_capacity = 30
 	auto_eject = 0
 
@@ -681,12 +707,12 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	attack_self(mob/user)
 		if(open)
 			open = FALSE
-			update_icon()
+			UpdateIcon()
 			boutput(user, "<span class='alert'>You close the [src]!</span>")
 		else
 			boutput(user, "<span class='alert'>You open the [src].</span>")
 			open = TRUE
-			update_icon()
+			UpdateIcon()
 			if (src.loc == user && user.find_in_hand(src)) // Make sure it's not on the belt or in a backpack.
 				src.add_fingerprint(user)
 				if (!src.sanitycheck(0, 1))
@@ -712,6 +738,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			. = ..()
 
 	update_icon()
+
 		if(open)
 			icon_state="guncase"
 		else
@@ -719,14 +746,17 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 //0.357
 /obj/item/gun/kinetic/revolver
-	name = "Predator revolver"
+	name = "\improper Predator revolver"
 	desc = "A hefty combat revolver developed by Cormorant Precision Arms. Uses .357 caliber rounds."
 	icon_state = "revolver"
 	item_state = "revolver"
 	force = MELEE_DMG_REVOLVER
-	caliber = list(0.38, 0.357) // Just like in RL (Convair880).
+	ammo_cats = list(AMMO_REVOLVER_SYNDICATE, AMMO_REVOLVER_DETECTIVE) // Just like in RL (Convair880).
 	max_ammo_capacity = 7
 	default_magazine = /obj/item/ammo/bullets/a357
+	fire_animation = TRUE
+	ammobag_magazines = list(/obj/item/ammo/bullets/a357, /obj/item/ammo/bullets/a357/AP)
+	ammobag_restock_cost = 2
 
 	New()
 		ammo = new default_magazine
@@ -735,16 +765,17 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 //0.38
 /obj/item/gun/kinetic/detectiverevolver
-	name = "Detective Special revolver"
+	name = "\improper Detective Special revolver"
 	desc = "A snubnosed police-issue revolver developed by Cormorant Precision Arms. Uses .38-Special rounds."
 	icon_state = "detective"
 	item_state = "detective"
 	w_class = W_CLASS_SMALL
 	force = MELEE_DMG_REVOLVER
-	caliber = 0.38
+	ammo_cats = list(AMMO_REVOLVER_DETECTIVE)
 	max_ammo_capacity = 7
 	gildable = 1
 	default_magazine = /obj/item/ammo/bullets/a38/stun
+	fire_animation = TRUE
 
 	New()
 		ammo = new default_magazine
@@ -753,7 +784,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 //0.393
 /obj/item/gun/kinetic/foamdartgun
-	name = "Foam Dart Gun"
+	name = "foam dart gun"
 	icon_state = "foamdartgun"
 	desc = "A toy gun that fires foam darts. Keep out of reach of clowns, staff assistants and scientists."
 	w_class = W_CLASS_SMALL
@@ -761,7 +792,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "toygun"
 	contraband = 1
 	force = 1
-	caliber = 0.393
+	ammo_cats = list(AMMO_FOAMDART)
 	max_ammo_capacity = 1
 	muzzle_flash = null
 	default_magazine = /obj/item/ammo/bullets/foamdarts
@@ -778,7 +809,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		if(!pulled)
 			pulled = 1
 			playsound(user.loc, "sound/weapons/gunload_click.ogg", 60, 1)
-			update_icon()
+			UpdateIcon()
 
 	update_icon()
 		..()
@@ -800,20 +831,20 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			return
 		..()
 		pulled = 0
-		update_icon()
+		UpdateIcon()
 
-	shoot_point_blank(var/mob/M as mob, var/mob/user as mob)
+	shoot_point_blank(atom/target, var/mob/user as mob)
 		if(!pulled)
 			boutput(user, "<span class='notice'>You need to pull back the pully tab thingy first!</span>")
 			playsound(user, "sound/weapons/Gunclick.ogg", 60, 1)
 			return
 		..()
 		pulled = 0
-		update_icon()
+		UpdateIcon()
 
 
 /obj/item/gun/kinetic/foamdartrevolver
-	name = "Foam Dart Revolver"
+	name = "foam dart revolver"
 	icon_state = "foamdartrevolver"
 	desc = "An advanced dart gun for experienced pros. Just holding it imbues you with a sense of great power."
 	w_class = W_CLASS_SMALL
@@ -821,7 +852,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "toyrevolver"
 	contraband = 1
 	force = 1
-	caliber = 0.393
+	ammo_cats = list(AMMO_FOAMDART)
 	max_ammo_capacity = 6
 	muzzle_flash = null
 	default_magazine = /obj/item/ammo/bullets/foamdarts
@@ -833,13 +864,13 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 //0.40
 /obj/item/gun/kinetic/blowgun
-	name = "Flute"
+	name = "flute"
 	desc = "Wait, this isn't a flute. It's a blowgun!"
 	icon_state = "blowgun"
 	item_state = "cane-f"
 	force = MELEE_DMG_PISTOL
 	contraband = 2
-	caliber = 0.40
+	ammo_cats = list(AMMO_DART_ALL)
 	max_ammo_capacity = 1.
 	can_dual_wield = 0
 	hide_attack = 1
@@ -859,11 +890,12 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	desc = "A small and easy-to-hide gun that comes with 2 shots. (Can be hidden in worn clothes and retrieved by using the wink emote)"
 	icon_state = "derringer"
 	force = MELEE_DMG_PISTOL
-	caliber = 0.41
+	ammo_cats = list(AMMO_PISTOL_41)
 	max_ammo_capacity = 2
 	w_class = W_CLASS_SMALL
 	muzzle_flash = null
 	default_magazine = /obj/item/ammo/bullets/derringer
+	fire_animation = TRUE
 
 	afterattack(obj/O as obj, mob/user as mob)
 		if (O.loc == user && O != src && istype(O, /obj/item/clothing))
@@ -884,7 +916,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	New()
 		..()
 		ammo.amount_left = 0
-		update_icon()
+		UpdateIcon()
 
 //0.45
 /obj/item/gun/kinetic/colt_saa
@@ -894,18 +926,18 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "colt_saa"
 	w_class = W_CLASS_NORMAL
 	force = MELEE_DMG_REVOLVER
-	caliber = 0.45
+	ammo_cats = list(AMMO_REVOLVER_45)
 	spread_angle = 1
 	max_ammo_capacity = 7
 	default_magazine = /obj/item/ammo/bullets/c_45
 	var/hammer_cocked = 0
 
 	detective
-		name = "Peacemaker"
+		name = "\improper Peacemaker"
 		desc = "A barely adequate replica of a nearly ancient single action revolver. Used by war reenactors for the last hundred years or so. Its caliber is obviously the wrong size, though."
 		w_class = W_CLASS_SMALL
 		force = MELEE_DMG_REVOLVER
-		caliber = 0.38
+		ammo_cats = list(AMMO_REVOLVER_DETECTIVE)
 		default_magazine = /obj/item/ammo/bullets/a38/stun
 		New()
 			..()
@@ -947,7 +979,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "flintlock"
 	force = MELEE_DMG_PISTOL
 	contraband = 0 //It's so old that futuristic security scanners don't even recognize it.
-	caliber = 0.58
+	ammo_cats = list(AMMO_FLINTLOCK)
 	max_ammo_capacity = 1 // It's magazine-fed (Convair880).
 	auto_eject = null
 	default_magazine = /obj/item/ammo/bullets/flintlock
@@ -959,8 +991,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		..()
 
 	shoot()
-		if(ammo?.amount_left && current_projectile?.caliber && current_projectile.power)
-			failure_chance = max(10,min(33,round(current_projectile.caliber * (current_projectile.power/2))))
+		if(ammo?.amount_left && current_projectile.power)
+			failure_chance = clamp(round(current_projectile.power/2), 10, 33)
 		if(canshoot() && prob(failure_chance))
 			var/turf/T = get_turf(src)
 			boutput(T, "<span class='alert'>[src] blows up!</span>")
@@ -979,11 +1011,13 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "spas"
 	force = MELEE_DMG_RIFLE
 	contraband = 7
-	caliber = 0.72
+	ammo_cats = list(AMMO_SHOTGUN_ALL)
 	max_ammo_capacity = 8
 	auto_eject = 1
 	can_dual_wield = 0
 	default_magazine = /obj/item/ammo/bullets/a12
+	ammobag_magazines = list(/obj/item/ammo/bullets/a12, /obj/item/ammo/bullets/aex)
+	ammobag_restock_cost = 2
 
 	New()
 		if(prob(10))
@@ -1011,6 +1045,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		return 1
 
 	engineer
+		ammobag_magazines = list(/obj/item/ammo/bullets/a12/weak, /obj/item/ammo/bullets/a12)
 		New()
 			..()
 			src.name = replacetext("[src.name]", "12", "6") //only half as good
@@ -1018,14 +1053,14 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			set_current_projectile(new/datum/projectile/bullet/a12/weak)
 
 /obj/item/gun/kinetic/riotgun
-	name = "Riot Shotgun"
+	name = "riot shotgun"
 	desc = "A police-issue shotgun meant for suppressing riots."
 	icon = 'icons/obj/large/48x32.dmi'
 	icon_state = "shotty-empty"
 	item_state = "shotty"
 	force = MELEE_DMG_RIFLE
 	contraband = 5
-	caliber = 0.72
+	ammo_cats = list(AMMO_SHOTGUN_ALL)
 	max_ammo_capacity = 8
 	auto_eject = 0
 	can_dual_wield = 0
@@ -1056,10 +1091,10 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		src.racked_slide = FALSE
 		src.casings_to_eject = 1
 		if (src.ammo.amount_left == 0) // change icon_state to empty if 0 shells left
-			src.update_icon()
+			src.UpdateIcon()
 			src.casings_to_eject = 0
 
-	shoot_point_blank(user, user)
+	shoot_point_blank(atom/target, mob/user)
 		if(ammo.amount_left > 0 && !racked_slide)
 			boutput(user, "<span class='notice'>You need to rack the slide before you can fire!</span>")
 			return
@@ -1067,7 +1102,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		src.racked_slide = FALSE
 		src.casings_to_eject = 1
 		if (src.ammo.amount_left == 0) // change icon_state to empty if 0 shells left
-			src.update_icon()
+			src.UpdateIcon()
 			src.casings_to_eject = 0
 
 	attack_self(mob/user as mob)
@@ -1081,15 +1116,15 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		if (!src.racked_slide) //Are we racked?
 			if (src.ammo.amount_left == 0)
 				boutput(mob_user, "<span class ='notice'>You are out of shells!</span>")
-				update_icon()
+				UpdateIcon()
 			else
 				src.racked_slide = TRUE
 				if (src.icon_state == "shotty[src.gilded ? "-golden" : ""]") //"animated" racking
-					src.icon_state = "shotty[src.gilded ? "-golden-empty" : "-empty"]" // having update_icon() here breaks
+					src.icon_state = "shotty[src.gilded ? "-golden-empty" : "-empty"]" // having UpdateIcon() here breaks
 					animate(src, time = 0.2 SECONDS)
 					animate(icon_state = "shotty[gilded ? "-golden" : ""]")
 				else
-					update_icon() // Slide already open? Just close the slide
+					UpdateIcon() // Slide already open? Just close the slide
 				boutput(mob_user, "<span class='notice'>You rack the slide of the shotgun!</span>")
 				playsound(user.loc, "sound/weapons/shotgunpump.ogg", 50, 1)
 				src.casings_to_eject = 0
@@ -1102,12 +1137,12 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 /obj/item/gun/kinetic/flaregun
 	desc = "A 12-gauge flaregun."
-	name = "Flare Gun"
+	name = "flare gun"
 	icon_state = "flare"
 	item_state = "flaregun"
 	force = MELEE_DMG_PISTOL
 	contraband = 2
-	caliber = 0.72
+	ammo_cats = list(AMMO_SHOTGUN_LOW)
 	max_ammo_capacity = 1
 	has_empty_state = 1
 	default_magazine = /obj/item/ammo/bullets/flare/single
@@ -1127,7 +1162,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	inhand_image_icon = 'icons/obj/slamgun.dmi'
 	item_state = "slamgun-ready-world"
 	force = MELEE_DMG_RIFLE
-	caliber = 0.72
+	ammo_cats = list(AMMO_SHOTGUN_ALL)
 	max_ammo_capacity = 1
 	auto_eject = 0
 	spread_angle = 10 // sorry, no sniping with slamguns
@@ -1151,14 +1186,14 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				src.icon_state = "slamgun-open-loaded"
 			else
 				src.icon_state = "slamgun-open"
-			update_icon()
+			UpdateIcon()
 			two_handed = 0
 			user.updateTwoHanded(src, 0)
 			user.update_inhands()
 		else
 			w_class = W_CLASS_BULKY
 			src.icon_state = "slamgun-ready"
-			update_icon()
+			UpdateIcon()
 			two_handed = 1
 			user.updateTwoHanded(src, 1)
 			user.update_inhands()
@@ -1187,7 +1222,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 		..()
 
-	MouseDrop(atom/over_object, src_location, over_location, params)
+	mouse_drop(atom/over_object, src_location, over_location, params)
 		if (usr.stat || usr.restrained() || !can_reach(usr, src) || usr.getStatusDuration("paralysis") || usr.sleeping || usr.lying || isAIeye(usr) || isAI(usr) || isghostcritter(usr))
 			return ..()
 		if (over_object == usr && src.icon_state == "slamgun-open-loaded") // sorry for doing it like this, but i have no idea how to do it cleaner.
@@ -1204,7 +1239,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 						usr.show_text("You eject [src.casings_to_eject] casings from [src].", "red")
 						src.ejectcasings()
 						src.casings_to_eject = 0 // needed for bullets that don't have casings (???)
-						src.update_icon()
+						src.UpdateIcon()
 						return
 				else
 					usr.show_text("[src] is empty!", "red")
@@ -1218,7 +1253,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			ammoHand.icon_state = src.ammo.icon_state
 			ammoHand.ammo_type = src.ammo.ammo_type
 			ammoHand.delete_on_reload = 1 // No duplicating empty magazines, please (Convair880).
-			ammoHand.update_icon()
+			ammoHand.UpdateIcon()
 			usr.put_in_hand_or_drop(ammoHand)
 
 			// The gun may have been fired; eject casings if so.
@@ -1226,7 +1261,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			src.casings_to_eject = 0
 
 			src.ammo.amount_left = 0
-			src.update_icon()
+			src.UpdateIcon()
 
 			src.add_fingerprint(usr)
 			ammoHand.add_fingerprint(usr)
@@ -1253,7 +1288,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "flaregun"
 	force = MELEE_DMG_RIFLE
 	contraband = 6
-	caliber = 1.0
+	ammo_cats = list(AMMO_COILGUN)
 	max_ammo_capacity = 2
 	default_magazine = /obj/item/ammo/bullets/rod
 
@@ -1262,48 +1297,19 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		set_current_projectile(new/datum/projectile/bullet/rod)
 		..()
 
-//1.12
-/obj/item/gun/kinetic/antisingularity
-	desc = "An experimental rocket launcher designed to deliver various payloads in rocket format."
-	name = "Singularity Buster rocket launcher"
-	icon = 'icons/obj/large/64x32.dmi'
-	icon_state = "ntlauncher"
-	item_state = "ntlauncher"
-	w_class = W_CLASS_BULKY
-	throw_speed = 2
-	throw_range = 4
-	force = MELEE_DMG_LARGE
-	caliber = 1.12 //Based on APILAS
-	max_ammo_capacity = 1
-	can_dual_wield = 0
-	two_handed = 1
-	muzzle_flash = "muzzle_flash_launch"
-	default_magazine = /obj/item/ammo/bullets/antisingularity
-
-	New()
-		ammo = new default_magazine
-		ammo.amount_left = 0 // Spawn empty.
-		set_current_projectile(new /datum/projectile/bullet/antisingularity)
-		..()
-		return
-
-	setupProperties()
-		..()
-		setProperty("movespeed", 0.8)
-
 //1.57
 /obj/item/gun/kinetic/riot40mm
-	desc = "A 40mm riot control launcher."
-	name = "Riot launcher"
+	desc = "A 40mm riot control gun. It can accept standard 40mm rounds and hand-thrown grenades."
+	name = "riot launcher"
 	icon_state = "40mm"
 	item_state = "40mm"
-	force = MELEE_DMG_LARGE
-	w_class = W_CLASS_BULKY
+	force = MELEE_DMG_SMG
 	contraband = 7
-	caliber = 1.57
+	ammo_cats = list(AMMO_GRENADE_ALL)
 	max_ammo_capacity = 1
 	muzzle_flash = "muzzle_flash_launch"
 	default_magazine = /obj/item/ammo/bullets/smoke/single
+	fire_animation = TRUE
 
 	New()
 		ammo = new default_magazine
@@ -1331,33 +1337,36 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 // Ported from old, non-gun RPG-7 object class (Convair880).
 /obj/item/gun/kinetic/rpg7
 	desc = "A rocket-propelled grenade launcher licensed by the Space Irish Republican Army."
-	name = "MPRT-7"
+	name = "\improper MPRT-7"
 	icon = 'icons/obj/large/64x32.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "rpg7"
 	uses_multiple_icon_states = 1
 	item_state = "rpg7"
-	wear_image_icon = 'icons/mob/back.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	flags = ONBACK
 	w_class = W_CLASS_BULKY
 	throw_speed = 2
 	throw_range = 4
 	force = MELEE_DMG_LARGE
 	contraband = 8
-	caliber = 1.58
+	ammo_cats = list(AMMO_ROCKET_ALL)
 	max_ammo_capacity = 1
 	can_dual_wield = 0
 	two_handed = 1
 	muzzle_flash = "muzzle_flash_launch"
 	has_empty_state = 1
 	default_magazine = /obj/item/ammo/bullets/rpg
+	ammobag_magazines = list(/obj/item/ammo/bullets/rpg)
+	ammobag_spec_required = TRUE
+	ammobag_restock_cost = 4
 
 	New()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		ammo = new default_magazine
 		ammo.amount_left = 0 // Spawn empty.
 		set_current_projectile(new /datum/projectile/bullet/rpg)
 		..()
-		return
 
 	update_icon()
 		..()
@@ -1369,22 +1378,54 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			var/mob/living/carbon/human/H = src.loc
 			H.update_inhands()
 
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
+
 	loaded
 		New()
 			..()
 			ammo.amount_left = 1
-			src.update_icon()
+			src.UpdateIcon()
 			return
+
+/obj/item/gun/kinetic/antisingularity
+	desc = "An experimental rocket launcher designed to deliver various payloads in rocket format."
+	name = "\improper Singularity Buster rocket launcher"
+	icon = 'icons/obj/large/64x32.dmi'
+	icon_state = "ntlauncher"
+	item_state = "ntlauncher"
+	w_class = W_CLASS_BULKY
+	throw_speed = 2
+	throw_range = 4
+	force = MELEE_DMG_LARGE
+	ammo_cats = list(AMMO_ROCKET_ALL)//based on the fact that it's funny to fire an RPG rocket out of this thing
+	max_ammo_capacity = 1
+	can_dual_wield = 0
+	two_handed = 1
+	muzzle_flash = "muzzle_flash_launch"
+	default_magazine = /obj/item/ammo/bullets/antisingularity
+
+	New()
+		ammo = new default_magazine
+		ammo.amount_left = 0 // Spawn empty.
+		set_current_projectile(new /datum/projectile/bullet/antisingularity)
+		..()
+		return
+
+	setupProperties()
+		..()
+		setProperty("movespeed", 0.8)
 
 
 //3.0
 /obj/item/gun/kinetic/gungun //meesa jarjar binks
-	name = "Gun"
+	name = "\improper Gun"
 	desc = "A gun that shoots... something. It looks like a modified grenade launcher."
 	icon_state = "gungun"
 	item_state = "gungun"
 	w_class = W_CLASS_NORMAL
-	caliber = 3//fuck if i know lol, derringers are about 3 inches in size so ill just set this to 3
+	ammo_cats = list(AMMO_DERRINGER_LITERAL)
 	max_ammo_capacity = 6 //6 guns
 	force = MELEE_DMG_SMG
 	default_magazine = /obj/item/ammo/bullets/gun
@@ -1397,12 +1438,12 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 //4.6
 /obj/item/gun/kinetic/airzooka //This is technically kinetic? I guess?
-	name = "Airzooka"
+	name = "airzooka"
 	desc = "The new double action air projection device from Donk Co!"
 	icon_state = "airzooka"
 	force = MELEE_DMG_PISTOL
 	max_ammo_capacity = 10
-	caliber = 4.6 // I rolled a dice
+	ammo_cats = list(AMMO_AIRZOOKA)
 	muzzle_flash = "muzzle_flash_launch"
 	default_magazine = /obj/item/ammo/bullets/airzooka
 
@@ -1420,7 +1461,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	color = "#ff7b00"
 	force = MELEE_DMG_LARGE
-	caliber = 20
+	ammo_cats = list(AMMO_HOWITZER)
 	max_ammo_capacity = 1
 	auto_eject = 0
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
@@ -1459,18 +1500,20 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 // agent
 /obj/item/gun/kinetic/pistol
-	name = "Branwen pistol"
+	name = "\improper Branwen pistol"
 	desc = "A semi-automatic, 9mm caliber service pistol, developed by Mabinogi Firearms Company."
 	icon_state = "9mm_pistol"
 	w_class = W_CLASS_NORMAL
 	force = MELEE_DMG_PISTOL
 	contraband = 4
-	caliber = 0.355
+	ammo_cats = list(AMMO_PISTOL_9MM)
 	max_ammo_capacity = 15
 	auto_eject = 1
 	has_empty_state = 1
 	fire_animation = TRUE
 	default_magazine = /obj/item/ammo/bullets/bullet_9mm
+	ammobag_magazines = list(/obj/item/ammo/bullets/bullet_9mm)
+	ammobag_restock_cost = 1
 
 	New()
 		ammo = new default_magazine
@@ -1482,14 +1525,14 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	New()
 		..()
 		ammo.amount_left = 0
-		update_icon()
+		UpdateIcon()
 
 /obj/item/gun/kinetic/pistol/smart/mkII
 	name = "\improper Hydra smart pistol"
 	desc = "A pistol capable of locking onto multiple targets and firing on them in rapid sequence. \"Anderson Para-Munitions\" is engraved on the slide."
 	icon_state = "smartgun"
 	max_ammo_capacity = 20
-	caliber = 0.22
+	ammo_cats = list(AMMO_PISTOL_22)
 	default_magazine = /obj/item/ammo/bullets/bullet_22/smartgun
 
 	New()
@@ -1503,23 +1546,30 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	return ..() && !istype(M.get_id(), /obj/item/card/id/syndicate)
 
 /obj/item/gun/kinetic/smg
-	name = "Bellatrix submachine gun"
+	name = "\improper Bellatrix submachine gun"
 	desc = "A semi-automatic, 9mm submachine gun, developed by Almagest Weapons Fabrication."
 	icon = 'icons/obj/large/48x32.dmi'
 	icon_state = "mp52"
 	w_class = W_CLASS_SMALL
 	force = MELEE_DMG_SMG
 	contraband = 4
-	caliber = 0.355
+	ammo_cats = list(AMMO_SMG_9MM)
 	max_ammo_capacity = 30
 	auto_eject = 1
 	spread_angle = 12.5
 	has_empty_state = 1
 	default_magazine = /obj/item/ammo/bullets/bullet_9mm/smg
+	ammobag_magazines = list(/obj/item/ammo/bullets/bullet_9mm/smg)
+	ammobag_restock_cost = 2
 
 	New()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/bullet_9mm/smg)
+		..()
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
 /obj/item/gun/kinetic/smg/empty
@@ -1527,22 +1577,25 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	New()
 		..()
 		ammo.amount_left = 0
-		update_icon()
+		UpdateIcon()
 
 /obj/item/gun/kinetic/tranq_pistol
-	name = "Gwydion tranquilizer pistol"
+	name = "\improper Gwydion tranquilizer pistol"
 	desc = "A silenced 9mm tranquilizer pistol, developed by Mabinogi Firearms Company."
 	icon_state = "tranq_pistol"
 	item_state = "tranq_pistol"
 	w_class = W_CLASS_SMALL
 	force = MELEE_DMG_PISTOL
 	contraband = 4
-	caliber = 0.355
+	ammo_cats = list(AMMO_TRANQ_9MM)
 	max_ammo_capacity = 15
 	auto_eject = 1
 	hide_attack = 1
 	muzzle_flash = null
 	default_magazine = /obj/item/ammo/bullets/tranq_darts/syndicate/pistol
+	fire_animation = TRUE
+	ammobag_magazines = list(/obj/item/ammo/bullets/tranq_darts/syndicate/pistol)
+	ammobag_restock_cost = 2
 
 	New()
 		ammo = new default_magazine
@@ -1557,7 +1610,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "shotgun"
 	force = MELEE_DMG_RIFLE
 	contraband = 7
-	caliber = 0.72
+	ammo_cats = list(AMMO_SHOTGUN_ALL)
 	max_ammo_capacity = 8
 	auto_eject = 1
 	two_handed = 1
@@ -1571,16 +1624,18 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 // assault
 /obj/item/gun/kinetic/assault_rifle
-	name = "Sirius assault rifle"
+	name = "\improper Sirius assault rifle"
 	desc = "A bullpup assault rifle capable of semi-automatic and burst fire modes, developed by Almagest Weapons Fabrication."
 	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "assault_rifle"
 	item_state = "assault_rifle"
 	force = MELEE_DMG_RIFLE
 	contraband = 8
-	caliber = 0.223
+	ammo_cats = list(AMMO_AUTO_562)
 	max_ammo_capacity = 20
 	auto_eject = 1
+	ammobag_magazines = list(/obj/item/ammo/bullets/assault_rifle, /obj/item/ammo/bullets/assault_rifle/armor_piercing)
+	ammobag_restock_cost = 2
 
 	two_handed = 1
 	can_dual_wield = 0
@@ -1588,6 +1643,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	default_magazine = /obj/item/ammo/bullets/assault_rifle
 
 	New()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/assault_rifle)
 		projectiles = list(current_projectile,new/datum/projectile/bullet/assault_rifle/burst)
@@ -1622,18 +1678,22 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			spread_angle = 0
 			shoot_delay = 3 DECI SECONDS
 
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
+
 
 
 // heavy
 /obj/item/gun/kinetic/light_machine_gun
-	name = "Antares light machine gun"
+	name = "\improper Antares light machine gun"
 	desc = "A 100 round light machine gun, developed by Almagest Weapons Fabrication."
 	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "lmg"
 	item_state = "lmg"
-	wear_image_icon = 'icons/mob/back.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	force = MELEE_DMG_RIFLE
-	caliber = 0.308
+	ammo_cats = list(AMMO_AUTO_308)
 	max_ammo_capacity = 100
 	auto_eject = 0
 
@@ -1646,6 +1706,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	two_handed = 1
 	w_class = W_CLASS_BULKY
 	default_magazine = /obj/item/ammo/bullets/lmg
+	ammobag_magazines = list(/obj/item/ammo/bullets/lmg)
+	ammobag_restock_cost = 3
 
 	New()
 		ammo = new default_magazine
@@ -1660,16 +1722,17 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 
 /obj/item/gun/kinetic/cannon
-	name = "M20-CV tactical cannon"
-	desc = "A shortened conversion of a 20mm military cannon. Slow but enormously powerful."
+	name = "\improper Alphard 20mm cannon"
+	desc = "A 20mm anti-materiel recoiling cannon. Slow but enormously powerful."
 	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "cannon"
 	item_state = "cannon"
-	wear_image_icon = 'icons/mob/back.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	force = MELEE_DMG_LARGE
-	caliber = 0.787
+	ammo_cats = list(AMMO_CANNON_20MM)
 	max_ammo_capacity = 1
 	auto_eject = 1
+	fire_animation = TRUE
 
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
 	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
@@ -1683,6 +1746,9 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	w_class = W_CLASS_BULKY
 	muzzle_flash = "muzzle_flash_launch"
 	default_magazine = /obj/item/ammo/bullets/cannon/single
+	ammobag_magazines = list(/obj/item/ammo/bullets/cannon)
+	ammobag_spec_required = TRUE
+	ammobag_restock_cost = 3
 
 
 	New()
@@ -1694,25 +1760,64 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		..()
 		setProperty("movespeed", 0.3)
 
+/obj/item/gun/kinetic/recoilless
+	name = "\improper Carinae RCL/120"
+	desc = "An absurdly destructive 120mm recoilless gun-mortar, the largest man-portable weapon in the Almagest line."
+	icon = 'icons/obj/large/64x32.dmi'
+	icon_state = "recoilless"
+	item_state = "cannon"
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
+	force = MELEE_DMG_LARGE
+	ammo_cats = list(AMMO_HOWITZER)
+	max_ammo_capacity = 1
+	auto_eject = 1
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+
+	can_dual_wield = 0
+
+	slowdown = 10
+	slowdown_time = 15
+
+	two_handed = 1
+	w_class = W_CLASS_BULKY
+	muzzle_flash = "muzzle_flash_launch"
+	default_magazine = /obj/item/ammo/bullets/howitzer
+	ammobag_magazines = list(/obj/item/ammo/bullets/howitzer)
+	ammobag_spec_required = TRUE
+	ammobag_restock_cost = 5
+
+	New()
+		ammo = new default_magazine
+		set_current_projectile(new/datum/projectile/bullet/howitzer)
+		..()
+
+	setupProperties()
+		..()
+		setProperty("movespeed", 0.2)
 
 
 // demo
 /obj/item/gun/kinetic/grenade_launcher
-	name = "Rigil grenade launcher"
+	name = "\improper Rigil grenade launcher"
 	desc = "A 40mm hand-held grenade launcher, developed by Almagest Weapons Fabrication."
 	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "grenade_launcher"
 	item_state = "grenade_launcher"
 	force = MELEE_DMG_RIFLE
 	contraband = 7
-	caliber = 1.57
+	ammo_cats = list(AMMO_GRENADE_ALL)
 	max_ammo_capacity = 4 // to fuss with if i want 6 packs of ammo
 	two_handed = 1
 	can_dual_wield = 0
 	auto_eject = 1
 	default_magazine = /obj/item/ammo/bullets/grenade_round/explosive
+	ammobag_magazines = list(/obj/item/ammo/bullets/grenade_round/explosive)
+	ammobag_spec_required = TRUE
+	ammobag_restock_cost = 3
 
 	New()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		ammo = new default_magazine
 		ammo.amount_left = max_ammo_capacity
 		set_current_projectile(new/datum/projectile/bullet/grenade_round/explosive)
@@ -1734,6 +1839,10 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		else
 			..()
 
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
+
 	proc/convert_grenade(obj/item/nade, mob/user)
 		var/obj/item/ammo/bullets/grenade_shell/TO_LOAD = new /obj/item/ammo/bullets/grenade_shell/rigil
 		TO_LOAD.Attackby(nade, user)
@@ -1741,14 +1850,14 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 // sniper
 /obj/item/gun/kinetic/sniper
-	name = "Betelgeuse sniper rifle"
+	name = "\improper Betelgeuse sniper rifle"
 	desc = "A semi-automatic bullpup sniper rifle, developed by Almagest Weapons Fabrication."
 	icon = 'icons/obj/large/64x32.dmi' // big guns get big icons
 	icon_state = "sniper"
 	item_state = "sniper"
-	wear_image_icon = 'icons/mob/back.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	force = MELEE_DMG_RIFLE
-	caliber = 0.308
+	ammo_cats = list(AMMO_RIFLE_308)
 	max_ammo_capacity = 6
 	auto_eject = 1
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
@@ -1762,16 +1871,20 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	shoot_delay = 1 SECOND
 	default_magazine = /obj/item/ammo/bullets/rifle_762_NATO
+	ammobag_magazines = list(/obj/item/ammo/bullets/rifle_762_NATO)
+	ammobag_restock_cost = 3
 
 	var/datum/movement_controller/snipermove = null
 
 	New()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/rifle_762_NATO)
 		snipermove = new/datum/movement_controller/sniper_look()
 		..()
 
 	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		snipermove = null
 		..()
 
@@ -1806,7 +1919,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			M.client.pixel_y = 0
 
 		M.use_movement_controller = null
-		M.keys_changed(0,0xFFFF)
+		M.keys_changed(0,0xFFFF) //This is necessary for the designator to work
 		M.removeOverlayComposition(/datum/overlayComposition/sniper_scope)
 
 	attack_hand(mob/user as mob)
@@ -1843,9 +1956,9 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "antimateriel"
 	item_state = "cannon"
-	wear_image_icon = 'icons/mob/back.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	force = 10
-	caliber = 0.787
+	ammo_cats = list(AMMO_CANNON_20MM)
 	max_ammo_capacity = 5
 	auto_eject = 1
 

@@ -1,60 +1,560 @@
-"a" = (/turf/unsimulated/wall/setpieces/hive,/area/bee_trader)
-"b" = (/turf/variableTurf/clear,/area/space)
-"c" = (/obj/item/cigbutt,/obj/item/cigbutt{pixel_x = -6; pixel_y = 8},/obj/table/wood/auto,/obj/item/reagent_containers/food/snacks/ice_cream/random,/obj/machinery/light/incandescent/warm{dir = 1; icon_state = "tube1"},/turf/simulated/floor/specialroom/cafeteria,/area/bee_trader)
-"d" = (/obj/table/wood/auto,/obj/item/reagent_containers/food/snacks/breadloaf/corn/sweet/honey,/obj/item/reagent_containers/food/snacks/breadloaf/honeywheat{pixel_x = -2; pixel_y = 4},/obj/item/reagent_containers/food/snacks/cake/cream{pixel_y = 4},/turf/simulated/floor/specialroom/cafeteria,/area/bee_trader)
-"e" = (/obj/storage/crate/freezer,/obj/item/reagent_containers/food/snacks/beefood{pixel_x = 3; pixel_y = -3},/obj/item/reagent_containers/food/snacks/beefood,/obj/item/reagent_containers/food/snacks/beefood{pixel_x = -2; pixel_y = 2},/obj/item/reagent_containers/food/snacks/ingredient/royal_jelly,/obj/item/reagent_containers/food/snacks/ingredient/royal_jelly{pixel_x = 4; pixel_y = 2},/obj/item/reagent_containers/food/snacks/ingredient/honey{pixel_x = 3; pixel_y = -3},/obj/item/reagent_containers/food/snacks/ingredient/honey,/turf/simulated/floor/specialroom/cafeteria,/area/bee_trader)
-"f" = (/turf/simulated/floor/specialroom/cafeteria,/area/bee_trader)
-"g" = (/obj/table/wood/auto,/obj/item/reagent_containers/food/snacks/goldfish_cracker{pixel_x = 2; pixel_y = -2},/obj/item/reagent_containers/food/snacks/goldfish_cracker,/obj/item/reagent_containers/food/snacks/cereal_box/honey{pixel_x = -4; pixel_y = 4},/turf/simulated/floor/specialroom/cafeteria,/area/bee_trader)
-"h" = (/obj/table/wood/auto,/obj/machinery/computer/security/wooden_tv{desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?"; name = "Television"; network = "Zeta"; pixel_x = 0; pixel_y = 4},/turf/simulated/floor/specialroom/cafeteria,/area/bee_trader)
-"i" = (/obj/reagent_dispensers/beerkeg,/turf/simulated/floor/specialroom/cafeteria,/area/bee_trader)
-"j" = (/obj/item/cigbutt,/obj/item/cigbutt{pixel_x = -4; pixel_y = 4},/obj/item/cigbutt{pixel_y = 8},/obj/stool/chair/couch{dir = 9; icon_state = "chair_couch-brown"},/turf/simulated/floor/specialroom/cafeteria,/area/bee_trader)
-"k" = (/obj/stool/chair/couch{dir = 5; icon_state = "chair_couch-brown"},/turf/simulated/floor/specialroom/cafeteria,/area/bee_trader)
-"l" = (/turf/simulated/wall/false_wall/hive,/area/bee_trader)
-"m" = (/obj/stool/chair/couch{dir = 8; icon_state = "chair_couch-brown"},/obj/machinery/light/incandescent/warm{dir = 1; icon_state = "tube1"},/turf/simulated/floor{icon_state = "hive"},/area/bee_trader)
-"n" = (/obj/stool/chair/couch{dir = 4; icon_state = "chair_couch-brown"},/turf/simulated/floor{icon_state = "hive"},/area/bee_trader)
-"o" = (/obj/wingrille_spawn/auto,/turf/simulated/floor/white,/area/bee_trader)
-"p" = (/obj/shrub,/turf/simulated/floor/white,/area/bee_trader)
-"q" = (/obj/submachine/ATM{pixel_x = -32; pixel_y = 0},/turf/simulated/floor{icon_state = "hive"},/area/bee_trader)
-"r" = (/turf/simulated/floor{icon_state = "hive"},/area/bee_trader)
-"s" = (/turf/simulated/floor/white,/area/bee_trader)
-"t" = (/obj/machinery/light/incandescent/warm{dir = 1; icon_state = "tube1"},/turf/simulated/floor/white,/area/bee_trader)
-"u" = (/obj/npc/trader/bee{dir = 4},/turf/simulated/floor{icon_state = "hive"},/area/bee_trader)
-"v" = (/turf/simulated/floor/stairs/medical/wide{dir = 4; icon_state = "medstairs_wide"},/area/bee_trader)
-"w" = (/turf/variableTurf/clear,/area/noGenerate)
-"x" = (/obj/critter/domestic_bee,/turf/simulated/floor/white,/area/bee_trader)
-"y" = (/obj/machinery/drainage/big,/turf/simulated/floor/white,/area/bee_trader)
-"z" = (/obj/machinery/door/unpowered/shuttle,/turf/simulated/floor/white,/area/bee_trader)
-"A" = (/obj/decal/fakeobjects/cargopad,/obj/marker/supplymarker,/turf/simulated/floor{icon_state = "hive"},/area/bee_trader)
-"B" = (/turf/simulated/floor/stairs/medical/wide/other{dir = 4; icon_state = "medstairs2_wide"},/area/bee_trader)
-"C" = (/obj/machinery/light/incandescent/warm,/turf/simulated/floor{icon_state = "hive"},/area/bee_trader)
-"D" = (/obj/machinery/light/incandescent/warm,/turf/simulated/floor/white,/area/bee_trader)
-"E" = (/obj/critter/domestic_bee/buddy,/turf/simulated/floor/white,/area/bee_trader)
-"F" = (/obj/stool/chair/comfy{dir = 4; icon_state = "chair_comfy"},/obj/critter/domestic_bee/overbee,/turf/simulated/floor{icon_state = "hive"},/area/bee_trader)
-"G" = (/obj/table/wood/auto,/obj/shrub{dir = 2; icon = 'icons/obj/stationobjs.dmi'; icon_state = "plant_small"; layer = 3; pixel_y = 18},/turf/simulated/floor{icon_state = "hive"},/area/bee_trader)
-"H" = (/obj/table/auto,/obj/item/reagent_containers/food/snacks/ingredient/egg/bee/moon{pixel_y = 6},/turf/simulated/floor{icon_state = "hive"},/area/bee_trader)
-"I" = (/obj/table/auto,/obj/item/device/camera_viewer,/turf/simulated/floor{icon_state = "hive"},/area/bee_trader)
-"J" = (/obj/decal/fakeobjects{anchored = 1; density = 1; desc = "An older biopod for the creation of space bee eggs."; icon = 'icons/obj/cloning.dmi'; icon_state = "pod_0"; name = "egg generator pod"},/turf/simulated/floor{icon_state = "hive"},/area/bee_trader)
-"K" = (/obj/stool/chair/office{dir = 1; icon_state = "office_chair"},/turf/simulated/floor{icon_state = "hive"},/area/bee_trader)
-"L" = (/obj/table/auto,/obj/item/record/honey,/obj/machinery/light/incandescent/warm,/turf/simulated/floor{icon_state = "hive"},/area/bee_trader)
-"M" = (/obj/item/device/gps{identifier = "BEE1"},/turf/simulated/floor{icon_state = "hive"},/area/bee_trader)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/unsimulated/wall/setpieces/hive,
+/area/bee_trader)
+"b" = (
+/turf/variableTurf/clear,
+/area/space)
+"c" = (
+/obj/item/cigbutt,
+/obj/item/cigbutt{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/table/wood/auto,
+/obj/item/reagent_containers/food/snacks/ice_cream/random,
+/obj/machinery/light/incandescent/warm{
+	dir = 1;
+	icon_state = "tube1"
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/bee_trader)
+"d" = (
+/obj/table/wood/auto,
+/obj/item/reagent_containers/food/snacks/breadloaf/corn/sweet/honey,
+/obj/item/reagent_containers/food/snacks/breadloaf/honeywheat{
+	pixel_x = -2;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/snacks/cake/cream{
+	pixel_y = 4
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/bee_trader)
+"e" = (
+/obj/storage/crate/freezer,
+/obj/item/reagent_containers/food/snacks/beefood{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/item/reagent_containers/food/snacks/beefood,
+/obj/item/reagent_containers/food/snacks/beefood{
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/royal_jelly,
+/obj/item/reagent_containers/food/snacks/ingredient/royal_jelly{
+	pixel_x = 4;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/honey{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/honey,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/bee_trader)
+"f" = (
+/turf/simulated/floor/specialroom/cafeteria,
+/area/bee_trader)
+"g" = (
+/obj/table/wood/auto,
+/obj/item/reagent_containers/food/snacks/goldfish_cracker{
+	pixel_x = 2;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/snacks/goldfish_cracker,
+/obj/item/reagent_containers/food/snacks/cereal_box/honey{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/bee_trader)
+"h" = (
+/obj/table/wood/auto,
+/obj/machinery/computer/security/wooden_tv{
+	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
+	name = "Television";
+	network = "Zeta";
+	pixel_x = 0;
+	pixel_y = 4
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/bee_trader)
+"i" = (
+/obj/reagent_dispensers/beerkeg,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/bee_trader)
+"j" = (
+/obj/item/cigbutt,
+/obj/item/cigbutt{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/cigbutt{
+	pixel_y = 8
+	},
+/obj/stool/chair/couch{
+	dir = 9;
+	icon_state = "chair_couch-brown"
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/bee_trader)
+"k" = (
+/obj/stool/chair/couch{
+	dir = 5;
+	icon_state = "chair_couch-brown"
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/bee_trader)
+"l" = (
+/turf/simulated/wall/false_wall/hive,
+/area/bee_trader)
+"m" = (
+/obj/stool/chair/couch{
+	dir = 8;
+	icon_state = "chair_couch-brown"
+	},
+/obj/machinery/light/incandescent/warm{
+	dir = 1;
+	icon_state = "tube1"
+	},
+/turf/simulated/floor{
+	icon_state = "hive"
+	},
+/area/bee_trader)
+"n" = (
+/obj/stool/chair/couch{
+	dir = 4;
+	icon_state = "chair_couch-brown"
+	},
+/turf/simulated/floor{
+	icon_state = "hive"
+	},
+/area/bee_trader)
+"o" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/white,
+/area/bee_trader)
+"p" = (
+/obj/shrub,
+/turf/simulated/floor/white,
+/area/bee_trader)
+"q" = (
+/obj/submachine/ATM{
+	pixel_x = -32;
+	pixel_y = 0
+	},
+/turf/simulated/floor{
+	icon_state = "hive"
+	},
+/area/bee_trader)
+"r" = (
+/turf/simulated/floor{
+	icon_state = "hive"
+	},
+/area/bee_trader)
+"s" = (
+/turf/simulated/floor/white,
+/area/bee_trader)
+"t" = (
+/obj/machinery/light/incandescent/warm{
+	dir = 1;
+	icon_state = "tube1"
+	},
+/turf/simulated/floor/white,
+/area/bee_trader)
+"u" = (
+/obj/npc/trader/bee{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "hive"
+	},
+/area/bee_trader)
+"v" = (
+/turf/simulated/floor/stairs/medical/wide{
+	dir = 4;
+	icon_state = "medstairs_wide"
+	},
+/area/bee_trader)
+"w" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
+"x" = (
+/obj/critter/domestic_bee,
+/turf/simulated/floor/white,
+/area/bee_trader)
+"y" = (
+/obj/machinery/drainage/big,
+/turf/simulated/floor/white,
+/area/bee_trader)
+"z" = (
+/obj/machinery/door/unpowered/shuttle,
+/turf/simulated/floor/white,
+/area/bee_trader)
+"A" = (
+/obj/decal/fakeobjects/cargopad,
+/obj/marker/supplymarker,
+/turf/simulated/floor{
+	icon_state = "hive"
+	},
+/area/bee_trader)
+"B" = (
+/turf/simulated/floor/stairs/medical/wide/other{
+	dir = 4;
+	icon_state = "medstairs2_wide"
+	},
+/area/bee_trader)
+"C" = (
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor{
+	icon_state = "hive"
+	},
+/area/bee_trader)
+"D" = (
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/white,
+/area/bee_trader)
+"E" = (
+/obj/critter/domestic_bee/buddy,
+/turf/simulated/floor/white,
+/area/bee_trader)
+"F" = (
+/obj/stool/chair/comfy{
+	dir = 4;
+	icon_state = "chair_comfy"
+	},
+/obj/critter/domestic_bee/overbee,
+/turf/simulated/floor{
+	icon_state = "hive"
+	},
+/area/bee_trader)
+"G" = (
+/obj/table/wood/auto,
+/obj/shrub{
+	dir = 2;
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant_small";
+	layer = 3;
+	pixel_y = 18
+	},
+/turf/simulated/floor{
+	icon_state = "hive"
+	},
+/area/bee_trader)
+"H" = (
+/obj/table/auto,
+/obj/item/reagent_containers/food/snacks/ingredient/egg/bee/moon{
+	pixel_y = 6
+	},
+/turf/simulated/floor{
+	icon_state = "hive"
+	},
+/area/bee_trader)
+"I" = (
+/obj/table/auto,
+/obj/item/device/camera_viewer,
+/turf/simulated/floor{
+	icon_state = "hive"
+	},
+/area/bee_trader)
+"J" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "An older biopod for the creation of space bee eggs.";
+	icon = 'icons/obj/cloning.dmi';
+	icon_state = "pod_0";
+	name = "egg generator pod"
+	},
+/turf/simulated/floor{
+	icon_state = "hive"
+	},
+/area/bee_trader)
+"K" = (
+/obj/stool/chair/office{
+	dir = 1;
+	icon_state = "office_chair"
+	},
+/turf/simulated/floor{
+	icon_state = "hive"
+	},
+/area/bee_trader)
+"L" = (
+/obj/table/auto,
+/obj/item/record/honey,
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor{
+	icon_state = "hive"
+	},
+/area/bee_trader)
+"M" = (
+/obj/item/device/gps{
+	identifier = "BEE1"
+	},
+/turf/simulated/floor{
+	icon_state = "hive"
+	},
+/area/bee_trader)
 
 (1,1,1) = {"
-bbbbbbbbbbbbb
-bbbbaaaabbbbb
-bbbaacdaabbbb
-bbbaefghabbbb
-bbbaifjkabbbb
-bbbaalaaabbbb
-bbaamnopaaabb
-baaqrrosstaaw
-baurrMvsxsyzw
-baArrrBsssyzw
-baaCrrosDEaaw
-bbaaFGopaaabb
-bbbalaaaabbbb
-bbbarrHIabbbb
-bbbaJrrKabbbb
-bbbaaLraabbbb
-bbbbaaaabbbbb
-bbbbbbbbbbbbb
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+"}
+(2,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+a
+a
+a
+a
+b
+b
+b
+b
+b
+b
+b
+"}
+(3,1,1) = {"
+b
+b
+b
+b
+b
+b
+a
+a
+u
+A
+a
+a
+b
+b
+b
+b
+b
+b
+"}
+(4,1,1) = {"
+b
+b
+a
+a
+a
+a
+a
+q
+r
+r
+C
+a
+a
+a
+a
+a
+b
+b
+"}
+(5,1,1) = {"
+b
+a
+a
+e
+i
+a
+m
+r
+r
+r
+r
+F
+l
+r
+J
+a
+a
+b
+"}
+(6,1,1) = {"
+b
+a
+c
+f
+f
+l
+n
+r
+M
+r
+r
+G
+a
+r
+r
+L
+a
+b
+"}
+(7,1,1) = {"
+b
+a
+d
+g
+j
+a
+o
+o
+v
+B
+o
+o
+a
+H
+r
+r
+a
+b
+"}
+(8,1,1) = {"
+b
+a
+a
+h
+k
+a
+p
+s
+s
+s
+s
+p
+a
+I
+K
+a
+a
+b
+"}
+(9,1,1) = {"
+b
+b
+a
+a
+a
+a
+a
+s
+x
+s
+D
+a
+a
+a
+a
+a
+b
+b
+"}
+(10,1,1) = {"
+b
+b
+b
+b
+b
+b
+a
+t
+s
+s
+E
+a
+b
+b
+b
+b
+b
+b
+"}
+(11,1,1) = {"
+b
+b
+b
+b
+b
+b
+a
+a
+y
+y
+a
+a
+b
+b
+b
+b
+b
+b
+"}
+(12,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+a
+z
+z
+a
+b
+b
+b
+b
+b
+b
+b
+"}
+(13,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+w
+w
+w
+w
+b
+b
+b
+b
+b
+b
+b
 "}

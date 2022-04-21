@@ -8,11 +8,11 @@
 
 TYPEINFO(/datum/component/explode_on_touch)
 	initialization_args = list(
-		ARG_INFO("explosion_size", "num", "Explosive force", 5),
-		ARG_INFO("gib", "num", "If the mob that triggers should always gib (bool)", FALSE),
-		ARG_INFO("delete_self", "num", "If should always delete self upon exploding (bool)", TRUE),
-		ARG_INFO("remove_limbs", "num", "Number of limbs to remove", 0),
-		ARG_INFO("turf_safe_explosion", "num", "If explosion should not breach (bool)", FALSE)
+		ARG_INFO("explosion_size", DATA_INPUT_NUM, "Explosive force", 5),
+		ARG_INFO("gib", DATA_INPUT_BOOL, "If the mob that triggers should always gib", FALSE),
+		ARG_INFO("delete_self", DATA_INPUT_BOOL, "If owner should always delete self upon exploding", TRUE),
+		ARG_INFO("remove_limbs", DATA_INPUT_NUM, "Number of limbs to remove", 0),
+		ARG_INFO("turf_safe_explosion", DATA_INPUT_BOOL, "If explosion is turf-safe", FALSE)
 	)
 
 /datum/component/explode_on_touch/Initialize(explosion_size=5, gib=FALSE, delete_self=TRUE, remove_limbs=0, turf_safe_explosion=FALSE)
@@ -33,7 +33,7 @@ TYPEINFO(/datum/component/explode_on_touch)
 	if(explosion_size > 0)
 		explosions.explode_at(thing, T, explosion_size, turf_safe=src.turf_safe_explosion)
 	if(!delete_self)
-		SPAWN_DBG(0.1 SECONDS)
+		SPAWN(0.1 SECONDS)
 			while(explosions.exploding)
 				sleep(0.1 SECONDS)
 			thing.set_loc(T)
@@ -46,7 +46,8 @@ TYPEINFO(/datum/component/explode_on_touch)
 	if(src.gib)
 		user.gib()
 	if(src.delete_self)
-		qdel(thing)
+		SPAWN(0.1 SECONDS)
+			qdel(thing)
 
 /datum/component/explode_on_touch/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_ATTACKHAND)

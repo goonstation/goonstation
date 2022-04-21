@@ -27,7 +27,7 @@
 	var/status_display_freq = FREQ_STATUS_DISPLAY
 	var/stat_msg1
 	var/stat_msg2
-	desc = "A computer that allows one to call and recall the emergency shuttle, as well as recieve messages from Centcom."
+	desc = "A computer that allows one to call and recall the emergency shuttle, as well as receive messages from Centcom."
 
 	light_r =0.6
 	light_g = 1
@@ -179,12 +179,12 @@
 	boutput(world, "<span class='alert'>Lockdown cancelled by [usr.name]!</span>")
 
 	for(var/obj/machinery/firealarm/FA as anything in machine_registry[MACHINES_FIREALARMS]) //deactivate firealarms
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if(FA.lockdownbyai == 1)
 				FA.lockdownbyai = 0
 				FA.reset()
 	for_by_tcl(AL, /obj/machinery/door/airlock) //open airlocks
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if(AL.canAIControl() && AL.lockdownbyai == 1)
 				AL.open()
 				AL.lockdownbyai = 0
@@ -316,15 +316,14 @@
 	set category = "AI Commands"
 	set name = "Call Emergency Shuttle"
 
-	if (usr == src || usr == src.eyecam)
-		if((alert(usr, "Are you sure?",,"Yes","No") != "Yes"))
-			return
+	var/call_reason = input("Please state the nature of your current emergency.", "Emergency Shuttle Call Reason", "") as text|null
 
-	var/call_reason = input("Please state the nature of your current emergency.", "Emergency Shuttle Call Reason", "") as text
-
+	if (isnull(call_reason)) // Cancel
+		return
 	if(isdead(src))
 		boutput(usr, "You can't call the shuttle because you are dead!")
 		return
+
 	logTheThing("admin", usr, null,  "called the Emergency Shuttle (reason: [call_reason])")
 	logTheThing("diary", usr, null, "called the Emergency Shuttle (reason: [call_reason])", "admin")
 	message_admins("<span class='internal'>[key_name(usr)] called the Emergency Shuttle to the station</span>")
@@ -374,6 +373,9 @@
 	if(!call_reason || length(call_reason) < 1)
 		call_reason = "No reason given."
 
+	message_admins("<span class='internal'>[key_name(user)] called the Emergency Shuttle to the station</span>")
+	logTheThing("station", null, null, "[key_name(user)] called the Emergency Shuttle to the station")
+
 	emergency_shuttle.incall()
 	command_announcement(call_reason + "<br><b><span class='alert'>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</span></b>", "The Emergency Shuttle Has Been Called", css_class = "notice")
 	return 0
@@ -392,6 +394,8 @@
 
 	boutput(world, "<span class='notice'><B>Alert: The shuttle is going back!</B></span>") //marker4
 
+	logTheThing("station", user, null, "recalled the Emergency Shuttle")
+	message_admins("<span class='internal'>[key_name(user)] recalled the Emergency Shuttle</span>")
 	emergency_shuttle.recall()
 
 	return 0

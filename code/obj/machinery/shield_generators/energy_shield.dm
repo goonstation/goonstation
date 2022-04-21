@@ -19,7 +19,7 @@
 		src.power_usage = 5
 
 	get_desc(dist, mob/user)
-		. = ..()
+		..()
 		var/charge_percentage = 0
 		if (PCEL?.charge > 0 && PCEL.maxcharge > 0)
 			charge_percentage = round((PCEL.charge/PCEL.maxcharge)*100)
@@ -57,10 +57,10 @@
 					var/the_level = input("Enter a power level from [src.MIN_POWER_LEVEL]-[src.MAX_POWER_LEVEL]. Higher levels use more power.","[src.name]",1) as null|num
 					if(!the_level)
 						return
-					if(get_dist(user,src) > 1)
+					if(BOUNDS_DIST(user, src) > 0)
 						boutput(user, "<span class='alert'>You flail your arms at [src] from across the room like a complete muppet. Move closer, genius!</span>")
 						return
-					the_level = max(MIN_POWER_LEVEL,min(the_level,MAX_POWER_LEVEL))
+					the_level = clamp(the_level, MIN_POWER_LEVEL, MAX_POWER_LEVEL)
 					src.power_level = the_level
 					boutput(user, "<span class='notice'>You set the power level to [src.power_level].</span>")
 

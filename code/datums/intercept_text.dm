@@ -58,7 +58,7 @@
 
 /datum/intercept_text/proc/pick_fingerprints()
 	var/mob/living/carbon/human/dude = src.pick_mob()
-	var/print = "[dude.bioHolder.uid_hash]"
+	var/print = "[dude.bioHolder.fingerprints]"
 	return print
 
 /datum/intercept_text/proc/build_traitor(correct_mob)
@@ -121,7 +121,7 @@
 	src.text += "Known attributes include: Brown sandals, a large blue hat, a voluptous white beard, and an inclination to cast spells."
 
 /datum/intercept_text/proc/build_nuke(correct_mob)
-	src.text += "<BR><BR>Cent. Com recently recieved a report of a plot to destroy one of our stations in your area. We believe an elite strike team is "
+	src.text += "<BR><BR>Cent. Com recently received a report of a plot to destroy one of our stations in your area. We believe an elite strike team is "
 	src.text += "preparing to plant and activate a nuclear device aboard one of them. The security department should take all necessary precautions "
 	src.text += "to repel an enemy boarding party if the need arises. As this may cause panic among the crew, all efforts should be made to keep this "
 	src.text += "information a secret from all but the most trusted members."

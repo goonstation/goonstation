@@ -96,13 +96,13 @@ obj/machinery/atmospherics/binary/volume_pump
 
 			if("set_transfer_rate")
 				var/number = text2num_safe(signal.data["parameter"])
-				number = min(max(number, 0), air1.volume)
+				number = clamp(number, 0, air1.volume)
 
 				transfer_rate = number
 
 		if(signal.data["tag"])
-			SPAWN_DBG(0.5 SECONDS) broadcast_status()
-		update_icon()
+			SPAWN(0.5 SECONDS) broadcast_status()
+		UpdateIcon()
 
 obj/machinery/atmospherics/binary/volume_pump/attackby(obj/item/W, mob/user)
 	if(ispulsingtool(W))
@@ -124,11 +124,11 @@ datum/pump_ui/volume_pump_ui/New(obj/machinery/atmospherics/binary/volume_pump/o
 
 datum/pump_ui/volume_pump_ui/set_value(val)
 	our_pump.transfer_rate = val
-	our_pump.update_icon()
+	our_pump.UpdateIcon()
 
 datum/pump_ui/volume_pump_ui/toggle_power()
 	our_pump.on = !our_pump.on
-	our_pump.update_icon()
+	our_pump.UpdateIcon()
 
 datum/pump_ui/volume_pump_ui/is_on()
 	return our_pump.on

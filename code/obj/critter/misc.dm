@@ -34,7 +34,7 @@
 		src.visible_message("<b>[src]</b> stops moving!")
 		animate_float(src, 1, 5)
 		playsound(src.loc, "sound/effects/suck.ogg", 40, 1, -1, 0.6)
-		SPAWN_DBG(10 SECONDS) //Give time for people to butcher it if they want.
+		SPAWN(10 SECONDS) //Give time for people to butcher it if they want.
 			if (!src.disposed && src.loc && original_object)
 				original_object.set_loc(src.loc)
 				original_object = null
@@ -109,7 +109,7 @@
 	New()
 		..()
 		src.toolbox_style = pick(src.toolbox_list)
-		src.update_icon()
+		src.UpdateIcon()
 		if (prob(src.switcharoo))
 			switch (src.toolbox_style)
 				if ("blue")
@@ -130,11 +130,11 @@
 		if (src.alive)
 			switch (task)
 				if ("thinking")
-					src.update_icon()
+					src.UpdateIcon()
 				if ("chasing")
-					src.update_icon()
+					src.UpdateIcon()
 				if ("attacking")
-					src.update_icon()
+					src.UpdateIcon()
 
 	ChaseAttack(mob/M)
 		..()
@@ -143,7 +143,7 @@
 	CritterAttack(mob/M)
 		..()
 
-	proc/update_icon()
+	update_icon()
 		if (!src.toolbox_style)
 			src.toolbox_style = pick(src.toolbox_list)
 			src.dead_state = "mimic_[src.toolbox_style]1-dead"
@@ -215,7 +215,7 @@
 		src.attacking = 1
 		src.visible_message("<span class='combat'><B>[src]</B> bites [src.target]!</span>")
 		random_brute_damage(src.target, rand(2,4))
-		SPAWN_DBG(2.5 SECONDS)
+		SPAWN(2.5 SECONDS)
 			src.attacking = 0
 */
 /obj/critter/wraithskeleton
@@ -441,6 +441,98 @@
 			M.reagents.add_reagent("toxin", 2)
 			M.add_karma(1)
 
+/obj/critter/spacescorpion
+	name = "space scorpion"
+	desc = "A scorpion in space. It seems a little hungry."
+	icon_state = "spacescorpion"
+	critter_family = BUG
+	density = 1
+	health = 30
+	aggressive = 1
+	defensive = 1
+	wanderer = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
+	atkcarbon = 1
+	atksilicon = 1
+	firevuln = 1
+	brutevuln = 1
+	health_gain_from_food = 6
+	angertext = "snips at"
+	butcherable = 1
+	flags = NOSPLASH | OPENCONTAINER | TABLEPASS
+	flying = 0
+	maxhealth = 60
+
+	CritterDeath()
+		..()
+		src.reagents.add_reagent("toxin", 20, null)
+		src.reagents.add_reagent("neurotoxin", 80, null)
+		return
+
+	seek_target()
+		src.anchored = 0
+		for (var/mob/living/C in hearers(src.seekrange,src))
+			if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100)) continue
+			if (iscarbon(C) && !src.atkcarbon) continue
+			if (issilicon(C) && !src.atksilicon) continue
+			if (C.health < 0) continue
+			if (C in src.friends) continue
+			if (iscarbon(C) && src.atkcarbon) src.attack = 1
+			if (issilicon(C) && src.atksilicon) src.attack = 1
+
+			if (src.attack)
+				src.target = C
+				src.oldtarget_name = C.name
+				src.visible_message("<span class='combat'><b>[src]</b> charges at [C.name]!</span>")
+				src.task = "chasing"
+				break
+			else
+				continue
+
+	attackby(obj/item/W as obj, mob/M as mob)
+		if(istype(W, /obj/item/reagent_containers/food/snacks) && !(M in src.friends))
+			if(prob(20))
+				src.visible_message("<span class='notice'>[src] chitters happily at the [W], and seems a little friendlier with [M]!</span>")
+				friends += M
+				playsound(src.loc, "sound/misc/bugchitter.ogg", 50, 0)
+				src.task = "thinking"
+			else
+				src.visible_message("<span class='notice'>[src] hated the [W]! It bit [M]'s hand!</span>")
+				random_brute_damage(M, rand(6,12),1)
+				playsound(src.loc, "sound/items/Wirecutter.ogg", 50, 0)
+				M.emote("scream")
+			M.drop_item()
+			qdel(W)
+			src.health = min(src.maxhealth, src.health + health_gain_from_food)
+			eat_twitch(src)
+		else
+			..()
+
+
+	ChaseAttack(mob/M)
+		..()
+		if(!ON_COOLDOWN(src, "scorpion_ability", 10 SECONDS))
+			if(prob(50))
+				M.visible_message("<span class='combat'><B>[src]</B> stings [src.target]!</span>")
+				M.reagents?.add_reagent("neurotoxin", 15)
+				M.reagents?.add_reagent("toxin", 6)
+				playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+				M.emote("scream")
+			else
+				random_brute_damage(M, rand(5,10),1)
+				M.visible_message("<span class='combat'><B>[src]</B> tackles [src.target] with its pincers!</span>")
+				playsound(src.loc, "sound/items/Wirecutter.ogg", 50, 0)
+				M.changeStatus("weakened", 4 SECONDS)
+				M.force_laydown_standup()
+
+
+	CritterAttack(mob/M)
+		take_bleeding_damage(M, M, rand(3,6), DAMAGE_STAB, 1)
+		M.visible_message("<span class='combat'><B>[src]</B> snips [src.target] with its pincers!</span>")
+		playsound(src.loc, "sound/items/Wirecutter.ogg", 50, 0)
+
+
+
 /obj/critter/spacebee/angry
 	name = "angry space wasp"
 	desc = "An angry wasp in space."
@@ -492,7 +584,7 @@
 		if (!src.alive) return
 		if (istype(W, /obj/item/clothing/head))
 			if (pixel_y_inc > 20) return
-			var/image/I = image('icons/mob/head.dmi', src,  W.icon_state)
+			var/image/I = image('icons/mob/clothing/head.dmi', src,  W.icon_state)
 			I.pixel_y = pixel_y_inc
 			src.overlays += I
 			pixel_y_inc += 3
@@ -558,7 +650,7 @@
 			playsound(src.loc, "punch", 30, 1, -2)
 			random_brute_damage(M, rand(10,15),1)
 
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.attacking = 0
 
 	CritterDeath(mob/M)
@@ -566,7 +658,7 @@
 		..()
 		if (rand(100) <= revivalChance)
 			src.revivalChance -= revivalDecrement
-			SPAWN_DBG(rand(400,800))
+			SPAWN(rand(400,800))
 				src.alive = 1
 				src.set_density(1)
 				src.health = initial(src.health)
@@ -608,7 +700,7 @@
 
 		src.create_reagents(1000)
 
-		SPAWN_DBG(4 SECONDS)
+		SPAWN(4 SECONDS)
 			if(reagents && !reagents.total_volume)
 				if (all_functional_reagent_ids.len > 0)
 					src.reagent_id = pick(all_functional_reagent_ids)
@@ -631,6 +723,7 @@
 		for (var/mob/living/C in hearers(src.seekrange,src))
 			if (C.ckey == null) continue //do not attack non-threats ie. NPC monkeys and AFK players
 			if (iswizard(C)) continue //do not attack our master
+			if (isintangible(C)) continue
 			var/mob/living/carbon/human/H = C
 			if (istype(C) && (H.traitHolder.hasTrait("training_chaplain"))) continue
 			if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100)) continue
@@ -679,9 +772,10 @@
 		..()
 
 		src.visible_message("<span class='combat'><b>[src]</b> bursts into a puff of smoke!</span>")
+		logTheThing("combat", src, null, "died, causing [src.reagents.get_master_reagent_name()] smoke at [log_loc(src)].")
 		src.reagents.smoke_start(12)
 		invisibility = INVIS_ALWAYS_ISH
-		SPAWN_DBG(5 SECONDS)
+		SPAWN(5 SECONDS)
 			qdel(src)
 
 /obj/critter/townguard
@@ -772,7 +866,7 @@
 			C.health -= 6
 			if(C.health <= 0)
 				C.CritterDeath()
-			SPAWN_DBG(2.5 SECONDS)
+			SPAWN(2.5 SECONDS)
 				src.attacking = 0
 			return
 
@@ -786,13 +880,13 @@
 				if(to_deal > (((sword_damage_max-sword_damage_min)/2)+sword_damage_min) && prob(50))
 					src.visible_message("<span class='combat'><B>[src] knocks down [M]!</B></span>")
 					M:changeStatus("weakened", 8 SECONDS)
-			SPAWN_DBG(2.5 SECONDS)
+			SPAWN(2.5 SECONDS)
 				src.attacking = 0
 		else
 			src.visible_message("<span class='combat'><B>[src]</B> kicks [src.target]!</span>")
 			playsound(src.loc, "swing_hit", 50, 1, -1)
 			random_brute_damage(src.target, rand(4,8),1)
-			SPAWN_DBG(2.5 SECONDS)
+			SPAWN(2.5 SECONDS)
 				src.attacking = 0
 		if (isliving(M))
 			var/mob/living/H = M
@@ -884,7 +978,7 @@
 			else
 				boutput(M, "<span class='combat'>You feel uncomfortable.</span>")
 
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			attacking = 0
 
 
@@ -966,30 +1060,10 @@
 		qdel(src)
 
 	CritterAttack(mob/M)
-		src.attacking = 1
-		src.visible_message("<span class='combat'><B>The [src.name]</B> starts to envelop [M]!</span>")
-
-		var/lastloc = M.loc
-		SPAWN_DBG(6 SECONDS)
-			if (get_dist(src, M) <= 1 && ((M.loc == lastloc)))
-				if(isliving(M))
-					logTheThing("combat", M, null, "was enveloped by [src] (obj) at [log_loc(src)].") // Some logging for instakill critters would be nice (Convair880).
-					M.ghostize()
-
-					if (iscarbon(M))
-						for(var/obj/item/W in M)
-							if (isitem(W))
-								M.u_equip(W)
-								if (W)
-									W.set_loc(M.loc)
-									W.dropped(M)
-									W.layer = initial(W.layer)
-
-				src.visible_message("<span class='combat'><B>The [src.name]</B> completely envelops [M]!</span>")
-				playsound(src.loc, "sound/impact_sounds/Slimy_Hit_4.ogg", 50, 1)
-				qdel(M)
-
-			src.attacking = 0
+		if(GET_COOLDOWN(src, "envelop_attack"))
+			return
+		actions.start(new/datum/action/bar/icon/envelopAbility/critter(M, null), src)
+		ON_COOLDOWN(src, "envelop_attack",7 SECONDS)
 
 	blob_act(power)
 		return
@@ -997,7 +1071,6 @@
 	attack_hand(var/mob/user as mob)
 		if (src.alive)
 			boutput(user, "<span class='combat'><b>Your hand passes right through! It's so cold...</b></span>")
-
 		return
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
@@ -1074,7 +1147,7 @@
 	CritterDeath()
 		..()
 		flick("ancientrobot-disappear",src)
-		SPAWN_DBG(16) //maybe let the animation actually play
+		SPAWN(16) //maybe let the animation actually play
 			qdel(src)
 
 	seek_target()
@@ -1121,11 +1194,11 @@
 			logTheThing("combat", M, null, "was gibbed by [src] at [log_loc(src)].") // Some logging for instakill critters would be nice (Convair880).
 			playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)
 			doomedMob.ghostize()
-			new /obj/decal/skeleton(doomedMob.loc)
+			new /obj/decal/fakeobjects/skeleton(doomedMob.loc)
 			doomedMob.gib()
 			src.target = null
 
-		SPAWN_DBG(4 SECONDS)
+		SPAWN(4 SECONDS)
 			src.attacking = 0
 
 	proc/appear()
@@ -1134,7 +1207,7 @@
 		src.name = pick("something","weird thing","odd thing","whatchamacallit","thing","something weird","old thing")
 		src.icon_state = "ancientrobot-appear"
 		src.invisibility = INVIS_NONE
-		SPAWN_DBG(1.2 SECONDS)
+		SPAWN(1.2 SECONDS)
 			src.icon_state = "ancientrobot"
 		return
 
@@ -1176,7 +1249,7 @@
 		if (isliving(M))
 			var/mob/living/H = M
 			H.was_harmed(src)
-		SPAWN_DBG(6 SECONDS)
+		SPAWN(6 SECONDS)
 			src.attacking = 0
 
 	ai_think()
@@ -1192,7 +1265,7 @@
 	CritterDeath()
 		..()
 		speak( pick("There...is...nothing...","It's dark.  Oh god, oh god, it's dark.","Thank you.","Oh wow. Oh wow. Oh wow.") )
-		SPAWN_DBG(1.5 SECONDS)
+		SPAWN(1.5 SECONDS)
 			qdel(src)
 
 	seek_target()
@@ -1304,7 +1377,7 @@
 	proc/start_expiration(var/time)
 		var/this_expiration_id = rand(1, 100000)
 		src.expiration_id = this_expiration_id
-		SPAWN_DBG(time)
+		SPAWN(time)
 			if(src?.alive && src.expiration_id == this_expiration_id)
 				src.health = 0
 				src.CritterDeath()
@@ -1408,7 +1481,7 @@
 		M.visible_message("<span class='combat'><B>[src]</B> bites [src.target]!</span>")
 		playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
 		random_brute_damage(M, rand(src.attack_damage, src.attack_damage + 5))
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.attacking = 0
 
 	CritterDeath()
@@ -1430,3 +1503,73 @@
 			return prob(50)
 		else
 			return ..()
+
+/obj/critter/spacerattlesnake
+	name = "space rattlesnake"
+	desc = "A rattlesnake in space."
+	icon_state = "rattlesnake"
+	dead_state = "rattlesnake_dead"
+	density = 1
+	health = 50
+	aggressive = 1
+	defensive = 1
+	wanderer = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
+	atkcarbon = 1
+	atksilicon = 1
+	firevuln = 1
+	brutevuln = 1
+	angertext = "hisses at"
+	butcherable = 0
+	flags = NOSPLASH | OPENCONTAINER | TABLEPASS
+	flying = 0
+
+	seek_target()
+		src.anchored = 0
+		for (var/mob/living/C in hearers(src.seekrange,src))
+			if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100)) continue
+			if (iscarbon(C) && !src.atkcarbon) continue
+			if (issilicon(C) && !src.atksilicon) continue
+			if (C.health < 0) continue
+			if (C in src.friends) continue
+
+			if(!src.attack)
+				switch(get_dist(src, C))
+					if (0 to 1)
+						icon_state = "rattlesnake"
+						if (iscarbon(C) && src.atkcarbon) src.attack = 1
+						if (issilicon(C) && src.atksilicon) src.attack = 1
+						if(!ON_COOLDOWN(src, "snake bite", 10 SECONDS))
+							C.visible_message("<span class='combat'><B>[src]</B> bites [C.name]!</span>")
+							C.reagents?.add_reagent("viper_venom", rand(15,25))
+							playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+							C.emote("scream")
+					if (1 to 2)
+						icon_state = "rattlesnake_rattle"
+						if(!ON_COOLDOWN(src, "Rattle", 6 SECONDS))
+							C.visible_message("<span class='combat'><B>[src]</B> is rattling, better not get much closer!</span>")
+							playsound(src.loc, "sound/musical_instruments/tambourine/tambourine_4.ogg", 80, 0, 0, 0.75)
+					if (2 to 3)
+						icon_state = "rattlesnake_coiled"
+					if (3 to INFINITY)
+						icon_state = "rattlesnake"
+
+			if (src.attack)
+				icon_state = "rattlesnake"
+				src.target = C
+				src.oldtarget_name = C.name
+				src.visible_message("<span class='combat'><b>[src]</b> charges at [C.name]!</span>")
+				src.task = "chasing"
+				break
+
+	ChaseAttack(mob/M)
+		..()
+		if(!ON_COOLDOWN(src, "snake bite", 10 SECONDS))
+			M.visible_message("<span class='combat'><B>[src]</B> bites [src.target]!</span>")
+			M.reagents?.add_reagent("viper_venom", rand(10,15))
+			playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+			M.emote("scream")
+		src.task = "chasing"
+
+	CritterAttack(mob/M)
+		src.task = "chasing"

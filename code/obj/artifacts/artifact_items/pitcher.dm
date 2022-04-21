@@ -12,7 +12,7 @@
 		if (forceartiorigin)
 			AS.validtypes = list("[forceartiorigin]")
 		src.artifact = AS
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.ArtifactSetup()
 
 		gulp_size = rand(2, 10) * 5 //How fast will you drink from this? Who knows!
@@ -144,6 +144,7 @@
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
 
 	update_icon()
+
 		return //Can't be activated, so the icon should never change
 
 	smash()
@@ -181,6 +182,7 @@
 /datum/artifact/pitcher
 	associated_object = /obj/item/reagent_containers/food/drinks/drinkingglass/artifact
 	type_name = "Pitcher"
+	type_size = ARTIFACT_SIZE_MEDIUM
 	rarity_weight = 350
 	validtypes = list("martian","wizard","eldritch")
 	min_triggers = 0

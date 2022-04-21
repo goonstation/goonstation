@@ -28,7 +28,7 @@
 		if(T.intact || !istype(T, /turf/simulated/floor))
 			return
 
-		if(get_dist(src, user) > 1)
+		if(BOUNDS_DIST(src, user) > 0)
 			return
 
 		if(!directwired)		// only for attaching to directwired machines
@@ -47,7 +47,7 @@
 		NC.d2 = dirn
 		NC.iconmod = coil.iconmod
 		NC.add_fingerprint()
-		NC.updateicon()
+		NC.UpdateIcon()
 		NC.update_network()
 		coil.use(1)
 		return
@@ -172,9 +172,9 @@
 
 	if(level == 1)// && istype(loc, /turf/simulated))
 		invisibility = i ? INVIS_ALWAYS : INVIS_NONE
-	updateicon()
+	UpdateIcon()
 
-/obj/cable/proc/updateicon()
+/obj/cable/update_icon()
 	icon_state = "[d1]-[d2][iconmod]"
 	alpha = invisibility ? 128 : 255
 	//if (cableimg)
@@ -186,6 +186,8 @@
 	var/datum/powernet/PN			// find the powernet
 	if(netnum && powernets && powernets.len >= netnum)
 		PN = powernets[netnum]
+	if (isnull(PN) && netnum)
+		CRASH("Attempted to get powernet number [netnum] but it was null.")
 	return PN
 
 /obj/cable/proc/cut(mob/user,turf/T)
@@ -195,14 +197,14 @@
 		if (src.iconmod)
 			var/obj/item/cable_coil/C = A
 			C.iconmod = src.iconmod
-			C.updateicon()
+			C.UpdateIcon()
 	else
 		var/atom/A = new/obj/item/cable_coil(T, 1)
 		applyCableMaterials(A, src.insulator, src.conductor)
 		if (src.iconmod)
 			var/obj/item/cable_coil/C = A
 			C.iconmod = src.iconmod
-			C.updateicon()
+			C.UpdateIcon()
 
 	src.visible_message("<span class='alert'>[user] cuts the cable.</span>")
 	src.log_wirelaying(user, 1)
@@ -226,7 +228,7 @@
 
 	else if (istype(W, /obj/item/cable_coil))
 		var/obj/item/cable_coil/coil = W
-		coil.cable_join(src, user)
+		coil.cable_join(src, get_turf(user), user, TRUE)
 		//note do shock in cable_join
 
 	else if (istype(W, /obj/item/device/t_scanner) || ispulsingtool(W) || (istype(W, /obj/item/device/pda2) && istype(W:module, /obj/item/device/pda_module/tray)))

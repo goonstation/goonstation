@@ -44,18 +44,18 @@
 	alarm_overlay.plane = PLANE_LIGHTING
 	alarm_overlay.blend_mode = BLEND_ADD
 	alarm_overlay.layer = LIGHTING_LAYER_BASE
-	alarm_overlay.alpha = 127
-	update_icon()
+	alarm_overlay.alpha = 80
+	UpdateIcon()
 
 	AddComponent(/datum/component/mechanics_holder)
-	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", "toggleinput")
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", .proc/toggleinput)
 	MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, alarm_frequency)
 
 /obj/machinery/firealarm/disposing()
 	STOP_TRACKING
 	..()
 
-/obj/machinery/firealarm/proc/update_icon()
+/obj/machinery/firealarm/update_icon()
 	if (status & NOPOWER)
 		icon_state = "firep"
 		ClearSpecificOverlays("alarm_base_overlay")
@@ -129,14 +129,14 @@
 			var/area/A = get_area(src)
 			A.firereset()
 		status &= ~NOPOWER
-		update_icon()
+		UpdateIcon()
 	else
-		SPAWN_DBG(rand(0,15))
+		SPAWN(rand(0,15))
 			status |= NOPOWER
-			update_icon()
+			UpdateIcon()
 
 /obj/machinery/firealarm/attack_hand(mob/user as mob)
-	if(user.stat || status & (NOPOWER|BROKEN))
+	if(user.stat || status & (NOPOWER|BROKEN) || ON_COOLDOWN(src, "toggle", 1 SECOND))
 		return
 
 	interact_particle(user,src)
@@ -190,7 +190,7 @@
 
 
 	src.dont_spam = 1
-	SPAWN_DBG(5 SECONDS)
+	SPAWN(5 SECONDS)
 		src.dont_spam = 0
 
 	return
@@ -240,5 +240,5 @@
 		reply.data["alert"] = !alarm_active ? "reset" : "fire"
 		reply.data["zone"] = alarm_zone
 		reply.data["type"] = "Fire"
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, reply)

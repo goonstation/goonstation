@@ -35,7 +35,7 @@
 
 	attack_hand(mob/user as mob)
 		boutput(user, "<span class='notice'>You push the [src.name] but nothing happens!</span>")
-		playsound(src.loc, "sound/weapons/Genhit.ogg", 25, 1)
+		playsound(src.loc, "sound/impact_sounds/Flesh_Crush_1.ogg", 40, 1)
 		src.add_fingerprint(user)
 		return
 
@@ -50,10 +50,6 @@
 					src.gib(1)
 			else
 		return
-
-	build_keybind_styles(client/C)
-		..()
-		C.apply_keybind("cube")
 
 	proc/get_cube_idle()
 		return "cubes cubily"
@@ -145,7 +141,7 @@
 					if(src.emote_check(voluntary, 10))
 						message = "<B>[src]</B> jiggles like only a meat cube can."
 				else
-					src.show_text("Invalid Emote: [act]")
+					if (voluntary) src.show_text("Invalid Emote: [act]")
 		if (message && isalive(src))
 			logTheThing("say", src, null, "EMOTE: [message]")
 			if (m_type & 1)
@@ -191,7 +187,7 @@
 				var/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/meat = new /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat(src.loc)
 				meat.name = "cube steak"
 				meat.desc = "Grody."
-			playsound(src.loc, "sound/effects/splat.ogg", 75, 1)
+			playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 75, 1)
 			src.visible_message("<span class='alert'><b>The meat cube pops!</b></span>")
 			..()
 
@@ -205,7 +201,7 @@
 			New()
 				..()
 				real_name = pick("Krampus", "Krampus 3.0", "The Krampmeister", "The Krampster") //For deadchat
-				SPAWN_DBG(2 SECONDS) //I do not know where the hell you get a bioholder from =I
+				SPAWN(2 SECONDS) //I do not know where the hell you get a bioholder from =I
 					if(src.bioHolder) src.bioHolder.age = 110
 
 			// people were somehow being shit even as a meatcube, so i'm removing the small mercy they had with being unpoppable - cirr
@@ -222,7 +218,7 @@
 		real_name = "metal cube"
 		desc = "unfortunate"
 		icon_state = "metalcube-squish"
-		sound_scream = "sound/voice/screams/Robot_Scream_2.ogg"
+		sound_scream = 'sound/voice/screams/Robot_Scream_2.ogg'
 		custom_gib_handler = /proc/robogibs
 
 		get_cube_idle()

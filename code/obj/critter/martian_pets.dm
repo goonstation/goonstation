@@ -110,11 +110,11 @@
             src.frustration = 0
       else src.task = "thinking"
     if("attacking")
-      if ((get_dist(src, src.target) > 1) || ((src.target:loc != src.target_lastloc)))
+      if ((BOUNDS_DIST(src, src.target) > 0) || ((src.target:loc != src.target_lastloc)))
         src.anchored = 0
         src.task = "chasing"
       else
-        if (get_dist(src, src.target) <= 1)
+        if (BOUNDS_DIST(src, src.target) == 0)
           var/mob/living/carbon/M = src.target
           if (!src.attacking) CritterAttack(src.target)
           if (!src.aggressive)
@@ -157,7 +157,7 @@ CritterAttack(atom/M)
       src.task = "thinking"
       walk_to(src,0)
 
-    SPAWN_DBG(attack_cooldown)
+    SPAWN(attack_cooldown)
       src.attacking = 0
   return
 
@@ -178,7 +178,7 @@ CritterAttack(atom/M)
       src.task = "thinking"
       walk_to(src,0)
 
-    SPAWN_DBG(attack_cooldown)
+    SPAWN(attack_cooldown)
       src.attacking = 0
   return
 
@@ -213,7 +213,7 @@ CritterAttack(atom/M)
 
   A.shooter = src
   src.set_dir(get_dir(src, target))
-  SPAWN_DBG( 0 )
+  SPAWN( 0 )
     A.process()
   return
 */

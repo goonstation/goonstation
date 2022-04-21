@@ -46,6 +46,8 @@
 			M.ghostize()
 			for (var/obj/item/I in M)
 				I.dispose()
+			if (!isturf(src.loc))
+				qdel(M)
 		..()
 
 /obj/item/reagent_containers/food/snacks/shell/deepfry
@@ -72,6 +74,7 @@
 	var/sliced = FALSE
 	var/topping = FALSE
 	var/num = 0
+	var/list/topping_types = list()
 	var/list/topping_colors = list()
 	var/list/topping_holder = list()
 	var/sliced_icon = "pslice"
@@ -87,7 +90,7 @@
 		..()
 		src.setMaterial(getMaterial("pizza"), appearance = 0, setname = 0)
 		if (prob(1))
-			SPAWN_DBG( rand(300, 900) )
+			SPAWN( rand(300, 900) )
 				src.visible_message("<b>[src]</b> <i>says, \"I'm pizza.\"</i>")
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -317,8 +320,9 @@
 
 	New()
 		..()
-		src.pixel_x = rand(-6, 6)
-		src.pixel_y = rand(-6, 6)
+		if(rand_pos)
+			src.pixel_x = rand(-6, 6)
+			src.pixel_y = rand(-6, 6)
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (!frosted && istype(W, /obj/item/reagent_containers/food/snacks/condiment/cream))
@@ -399,7 +403,7 @@
 		icon_state = "dog-biscuit"
 		frosted = 1
 		amount = 5
-		heal_amt = 3 //for pugs only. Strong, but there's no recipe for these (just the one you start with).
+		heal_amt = 3 //for pugs only!
 		initial_volume = 20
 		initial_reagents = list("meat_slurry" = 10)
 		food_effects = list("food_hp_up_big", "food_energized_big")
@@ -505,6 +509,7 @@
 		food_effects = list("food_refreshed_big")
 		meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
+ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 /obj/item/reagent_containers/food/snacks/soup
 	name = "soup"
 	desc = "A soup of indeterminable type."
@@ -794,6 +799,7 @@
 		hasPrize = (prize_inside == 1)
 
 	on_reagent_change()
+		..()
 		if (src.reagents && src.reagents.total_volume)
 			src.name = "cereal"
 			src.dry = 0
@@ -883,7 +889,7 @@
 
 	proc/cooltime()
 		if (src.warm)
-			SPAWN_DBG( 420 SECONDS )
+			SPAWN( 420 SECONDS )
 				src.warm = DONK_COLD
 				src.name = "donk-pocket"
 		return
@@ -901,7 +907,7 @@
 			M.reagents.add_reagent("synaptizine", 15)
 			M.reagents.add_reagent("saline", 15)
 			M.reagents.add_reagent("salbutamol", 15)
-			M.reagents.add_reagent("methamphetamine", 15)
+			M.reagents.add_reagent("synd_methamphetamine", 15)
 		..()
 
 /obj/item/reagent_containers/food/snacks/donkpocket/honk
@@ -921,7 +927,7 @@
 
 	cooltime()
 		if (src.warm)
-			SPAWN_DBG( 420 SECONDS )
+			SPAWN( 420 SECONDS )
 				src.warm = DONK_COLD
 				src.name = "honk-pocket"
 		return
@@ -1029,7 +1035,7 @@
 					M.emote("scream")
 					M.emote("sneeze")
 					M.changeStatus("weakened", 4 SECONDS)
-					SPAWN_DBG(0)
+					SPAWN(0)
 						while(prob(75))
 							sleep(rand(50,75))
 							boutput(M, "<span class='alert'>Some of the horrible juice in your nose drips into the back of your throat!!</span>")
@@ -1167,7 +1173,7 @@
 					src.visible_message("<span class='alert'><b>[H] hits the [src] with [W]!<b></span>")
 					src.visible_message("<span class='alert'>The [src] barks at [H]!</span>")
 					playsound(src, "sound/voice/animal/dogbark.ogg", 40, 1)
-					SPAWN_DBG(0.75 SECONDS)
+					SPAWN(0.75 SECONDS)
 						if (src && H)
 							src.visible_message("<span class='alert'>The [src] takes a bite out of [H]!</span>")
 							random_brute_damage(H, 10)
@@ -1389,7 +1395,7 @@
 
 		var/frosting_type = null
 		frosting_type = input("Which frosting style would you like?", "Frosting Style", null) as null|anything in frosting_styles
-		if(frosting_type && (get_dist(src, user) <= 1))
+		if(frosting_type && (BOUNDS_DIST(src, user) == 0))
 			frosting_type = src.frosting_styles[frosting_type]
 			var/datum/color/average = tube.reagents.get_average_color()
 			var/image/frosting_overlay = new(src.icon, frosting_type)
@@ -1439,7 +1445,7 @@
 
 		robusted
 			name = "robusted donut"
-			desc = "A donut for those critical moments."
+			desc = "A donut for those harsh moments. Contains a mix of chemicals for cardiac emergency recovery and any minor trauma that accompanies it."
 			icon_state = "donut5"
 			amount = 6
 			initial_volume = 48
@@ -1461,7 +1467,7 @@
 		user.u_equip(src)
 		user.visible_message("<span class='alert'><b>[user] accidentally inhales part of a [src], blocking their windpipe!</b></span>")
 		user.take_oxygen_deprivation(123)
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -1594,9 +1600,10 @@
 		meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
 	on_reagent_change()
-		src.update_icon()
+		..()
+		src.UpdateIcon()
 
-	proc/update_icon()
+	update_icon()
 		src.overlays.len = 0
 		if (src.reagents.has_reagent("juice_tomato"))
 			src.overlays += image(src.icon, "corndog-k")
@@ -1617,7 +1624,8 @@
 	meal_time_flags = MEAL_TIME_LUNCH
 
 	on_reagent_change()
-		src.update_icon()
+		..()
+		src.UpdateIcon()
 
 	heal(var/mob/M)
 		if (src.bun == 4) M.bioHolder.AddEffect("accent_elvis", timeleft = 180)
@@ -1690,7 +1698,7 @@
 
 			qdel(W)
 			user.visible_message("[user] adds a bun to [src].","You add a bun to [src].")
-			src.update_icon()
+			src.UpdateIcon()
 
 		else if (istype(W,/obj/item/rods) || istype(W,/obj/item/stick))
 			if(!src.bun)
@@ -1770,7 +1778,7 @@
 			..()
 		return
 
-	proc/update_icon()
+	update_icon()
 		if(!(src.GetOverlayImage("bun")))
 			switch(src.bun)
 				if(1)
@@ -1939,7 +1947,7 @@
 
 			return
 
-		else if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/cheese))
+		else if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/cheeseslice))
 			switch(src.stage)
 				if(0)
 					boutput(user, "<span class='alert'>You really should add the meat first.</span>")
@@ -2128,7 +2136,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			if (isturf(src.loc))
 				for (var/x = 1, x <= 4, x++)
 					new /obj/item/reagent_containers/food/snacks/tortilla_chip(src.loc)
@@ -2150,6 +2158,7 @@
 		src.pixel_y = rand(-6, 6)
 
 	on_reagent_change()
+		..()
 		if (src.reagents && src.reagents.total_volume)
 			var/image/dip = image('icons/obj/foodNdrink/food_snacks.dmi', "tortilla-chip-overlay")
 			dip.color = src.reagents.get_average_color().to_rgba()
@@ -2163,7 +2172,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			if (isturf(src.loc))
 				for (var/x = 1, x <= 4, x++)
 					new /obj/item/reagent_containers/food/snacks/wonton_wrapper(src.loc)
@@ -2203,7 +2212,7 @@
 			user.u_equip(W)
 			W.set_loc(src)
 			src.wrapped = W
-			W.dropped()
+			W.dropped(user)
 
 			if (W.w_class > (src.maximum_wrapped_size / 2))
 				src.name = "[W.name] eggroll"

@@ -1,4 +1,4 @@
-#define HERB_SMOKE_TRANSFER_HARDCAP 15
+#define HERB_SMOKE_TRANSFER_HARDCAP 20
 #define HERB_HOTBOX_MULTIPLIER 1.2
 /// Inedible Produce
 /obj/item/plant/
@@ -21,6 +21,7 @@
 
 /obj/item/plant/herb
 	name = "herb base"
+	health = 4
 	burn_point = 330
 	burn_output = 800
 	burn_possible = 2
@@ -226,6 +227,10 @@
 	name = "grass"
 	desc = "Fresh free-range spacegrass."
 	icon_state = "grass"
+
+	attack_hand(mob/user)
+		. = ..()
+		game_stats.Increment("grass_touched")
 
 /obj/item/plant/herb/contusine
 	name = "contusine leaves"

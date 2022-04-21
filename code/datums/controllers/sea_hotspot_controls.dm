@@ -13,6 +13,9 @@
 
 	New()
 		..()
+		#ifdef UPSCALED_MAP
+		groups_to_create *= 4
+		#endif
 		#ifdef UNDERWATER_MAP
 		var/datum/sea_hotspot/new_hotspot = 0
 		for (var/i = 1, i <= groups_to_create, i++)
@@ -231,7 +234,7 @@
 
 				//ahhhh shit
 				var/turf/center = S.center.turf()
-				if (get_dist(T,center) > 1) //smash center to lock me in place
+				if (BOUNDS_DIST(T, center) > 0) //smash center to lock me in place
 					S.can_drift = 1
 					.= 1
 				else
@@ -388,7 +391,7 @@
 				logTheThing("bombing", null, null, logmsg)
 				logTheThing("diary", null, null, logmsg, "game")
 
-			SPAWN_DBG(5 SECONDS)
+			SPAWN(5 SECONDS)
 				LAGCHECK(LAG_HIGH)
 				src.do_phenomena( recursion++, heat - (9000 + (9000 * recursion)) )
 		else
@@ -549,7 +552,7 @@
 
 						val += round(diff, 1)
 
-				val = min(max(val,0),20)
+				val = clamp(val, 0, 20)
 
 				if (placed)
 					placed = 0
@@ -571,15 +574,21 @@
 
 				speech_bubble.icon_state = "[val]"
 				UpdateOverlays(speech_bubble, "speech_bubble")
-				SPAWN_DBG(1.5 SECONDS)
+				SPAWN(1.5 SECONDS)
 					UpdateOverlays(null, "speech_bubble")
 
+	attackby(var/obj/item/I as obj, var/mob/M as mob)
+		if (ispryingtool(I))
+			if (deployed)
+				src.undeploy()
+			else
+				if (src in M.contents)
+					src.force_drop()
+				src.deploy()
+		..()
 
 	attack_hand(var/mob/living/carbon/human/user as mob)
-		icon_state = "dowsing_hands"
-		deployed = 0
-		closest_hotspot = 0
-		processing_items -= src
+		src.undeploy()
 		..()
 
 	afterattack(var/turf/T, var/mob/user)
@@ -593,6 +602,11 @@
 			return
 		..()
 
+	proc/undeploy()
+		src.icon_state = "dowsing_hands"
+		deployed = 0
+		closest_hotspot = 0
+		processing_items -= src
 
 	proc/deploy()
 		processing_items |= src
@@ -709,7 +723,7 @@
 		var/obj/machinery/power/vent_capture/V = new /obj/machinery/power/vent_capture(src.loc)
 		V.built = 1
 		//V.built = 0
-		//V.update_icon()
+		//V.UpdateIcon()
 		qdel(src)
 
 /obj/machinery/power/vent_capture
@@ -736,7 +750,7 @@
 	ex_act(severity)
 		return //nah
 
-	proc/update_icon()
+	update_icon()
 		icon_state = icon_state = "hydrovent_[built]"
 
 	disposing()
@@ -781,7 +795,7 @@
 		if (!built)
 			if (ispryingtool(W)) //blah i don care
 				built = 1
-				update_icon()
+				UpdateIcon()
 				return
 		else
 			if (istype(W,/obj/item/cable_coil))
@@ -847,6 +861,7 @@
 	var/mode_toggle = 0
 	var/set_anchor = 1
 
+	var/emagged = FALSE
 
 	New()
 		..()
@@ -858,13 +873,17 @@
 		return //nah
 
 	emag_act(mob/user, obj/item/card/emag/E)
+		if (src.emagged)
+			user?.show_message("<span class='alert'>[src] has already had its safety restrictions disabled.</span>")
+			return
+		src.emagged = TRUE
 		power_up_realtime = 10
 		set_anchor = 0
 		for (var/mob/O in hearers(src, null))
 			O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"Safety restrictions disabled.\"</span></span>", 2)
-		..()
+		return TRUE
 
-	proc/update_icon()
+	update_icon()
 		icon_state = "stomper[on]"
 
 	attack_hand(var/mob/living/carbon/human/user as mob)
@@ -873,7 +892,7 @@
 		if(open)
 			if(cell && !user.equipped())
 				user.put_in_hand_or_drop(cell)
-				cell.updateicon()
+				cell.UpdateIcon()
 				cell = null
 
 				user.visible_message("<span class='notice'>[user] removes the power cell from \the [src].</span>", "<span class='notice'>You remove the power cell from \the [src].</span>")
@@ -881,7 +900,7 @@
 			activate()
 
 			playsound(src.loc, 'sound/machines/engine_alert3.ogg', 50, 1, 0.1, on ? 1 : 0.6)
-			update_icon()
+			UpdateIcon()
 			user.visible_message("<span class='notice'>[user] switches [on ? "on" : "off"] the [src].</span>","<span class='notice'>You switch [on ? "on" : "off"] the [src].</span>")
 
 	proc/activate()
@@ -932,7 +951,7 @@
 		else if (ispryingtool(I))
 			open = !open
 			user.visible_message("<span class='notice'>[user] [open ? "opens" : "closes"] the hatch on the [src].</span>", "<span class='notice'>You [open ? "open" : "close"] the hatch on the [src].</span>")
-			update_icon()
+			UpdateIcon()
 		else
 			..()
 
@@ -951,15 +970,15 @@
 			return
 
 		on = 0
-		update_icon()
+		UpdateIcon()
 		flick("stomper2",src)
 
 		if (hotspot_controller.stomp_turf(get_turf(src))) //we didn't stomped center, do an additional SFX
-			SPAWN_DBG(0.4 SECONDS)
+			SPAWN(0.4 SECONDS)
 				playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 99, 1, 0.1, 0.7)
 
 		for (var/datum/sea_hotspot/H in hotspot_controller.get_hotspots_list(get_turf(src)))
-			if (get_dist(src,H.center.turf()) <= 1)
+			if (BOUNDS_DIST(src, H.center.turf()) == 0)
 				playsound(src, "sound/machines/twobeep.ogg", 50, 1,0.1,0.7)
 				for (var/mob/O in hearers(src, null))
 					O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"Hotspot pinned.\"</span></span>", 2)
@@ -967,10 +986,11 @@
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 99, 1, 0.1, 0.7)
 
 		for (var/mob/M in src.loc)
-			random_brute_damage(M, 55, 1)
-			M.changeStatus("weakened", 1 SECOND)
-			INVOKE_ASYNC(M, /mob.proc/emote, "scream")
-			playsound(M.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 70, 1)
+			if (isliving(M))
+				random_brute_damage(M, 55, 1)
+				M.changeStatus("weakened", 1 SECOND)
+				INVOKE_ASYNC(M, /mob.proc/emote, "scream")
+				playsound(M.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 70, 1)
 
 		for (var/mob/C in viewers(src))
 			shake_camera(C, 5, 8)
@@ -1008,19 +1028,19 @@
 
 	onUpdate()
 		..()
-		if(get_dist(owner, T) > 1 || V == null || owner == null || T == null || V.loc != T)
+		if(BOUNDS_DIST(owner, T) > 0 || V == null || owner == null || T == null || V.loc != T)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, T) > 1 || V == null || owner == null || T == null || V.loc != T)
+		if(BOUNDS_DIST(owner, T) > 0 || V == null || owner == null || T == null || V.loc != T)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
-		if(get_dist(owner, T) > 1 || V == null || owner == null || T == null || V.loc != T)
+		if(BOUNDS_DIST(owner, T) > 0 || V == null || owner == null || T == null || V.loc != T)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if(locate(/obj/machinery/power/vent_capture) in T)
@@ -1045,19 +1065,19 @@
 
 	onUpdate()
 		..()
-		if(get_dist(owner, V) > 1 || V == null || owner == null)
+		if(BOUNDS_DIST(owner, V) > 0 || V == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, V) > 1 || V == null || owner == null)
+		if(BOUNDS_DIST(owner, V) > 0 || V == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
-		if(get_dist(owner, V) > 1 || V == null || owner == null)
+		if(BOUNDS_DIST(owner, V) > 0 || V == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if(owner && V)
@@ -1078,19 +1098,19 @@
 
 	onUpdate()
 		..()
-		if(get_dist(owner, T) > 1 || T == null)
+		if(BOUNDS_DIST(owner, T) > 0 || T == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, T) > 1 || T == null)
+		if(BOUNDS_DIST(owner, T) > 0 || T == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
-		if(get_dist(owner, T) > 1 || T == null)
+		if(BOUNDS_DIST(owner, T) > 0 || T == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 

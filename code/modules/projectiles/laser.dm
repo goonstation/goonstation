@@ -96,10 +96,13 @@ toxic - poisons
 	color_green = 0
 	color_blue = 1
 
+/datum/projectile/laser/heavy/law_safe //subclass of heavy laser that can't damage the law rack - for AI turrets
+	name = "heavy laser"
+
 /datum/projectile/laser/asslaser // heh
 	name = "assault laser"
 	icon_state = "u_laser"
-	power = 25
+	power = 50
 	cost = 65
 	dissipation_delay = 5
 	dissipation_rate = 0
@@ -111,12 +114,13 @@ toxic - poisons
 	color_green = 0
 	color_blue = 1
 
-	on_hit(atom/hit)
+	on_hit(atom/hit, dir, obj/projectile/P)
 		fireflash(get_turf(hit), 0)
 		if((istype(hit, /turf/simulated) || istype(hit, /obj/structure/girder)))
 			hit.ex_act(2)
 		else
-			hit.ex_act(3)
+			hit.ex_act(3, src, 1.5) //don't stun humans nearly as much
+		P.die() //explicitly kill projectile - not a mining laser
 
 /datum/projectile/laser/light // for the drones
 	name = "phaser bolt"
@@ -231,7 +235,7 @@ toxic - poisons
 						cangle += angle_step
 				P.die()
 
-		proc/update_icon()
+		proc/UpdateIcon()
 			if (power >= 75)
 				icon_state = "phaser_ultra"
 			else if (power >= 50)
@@ -268,11 +272,11 @@ toxic - poisons
 	color_blue = 1
 	ks_ratio = 0.8
 
-/datum/projectile/laser/pred //mostly just a reskin
+/datum/projectile/laser/plasma //mostly just a reskin
 	icon_state = "phaser_med"
 	name = "plasma bolt"
 	sname = "plasma bolt"
-	shot_sound = 'sound/weapons/snipershot.ogg'
+	shot_sound = 'sound/weapons/plasma_gun.ogg'
 	dissipation_delay = 8
 	dissipation_rate = 5
 	cost = 25
@@ -483,7 +487,7 @@ toxic - poisons
 		power = 5
 		dissipation_rate = 5
 		sname = "saw teeth"
-		shot_sound = 'sound/machines/chainsaw_green.ogg'
+		shot_sound = 'sound/machines/chainsaw.ogg'
 		hit_human_sound = "sound/impact_sounds/Flesh_Tear_1.ogg"
 		damtype = DAMAGE_CUT
 

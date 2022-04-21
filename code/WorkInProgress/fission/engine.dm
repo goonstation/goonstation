@@ -28,7 +28,7 @@ ENGINE
 
 	New()
 		..()
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			setupLinks()
 
 
@@ -41,7 +41,7 @@ ENGINE
 			if(src.id == F.id)
 				F.theEngine = src
 
-	proc/updateicon()
+	update_icon()
 		if(status & BROKEN)
 			icon_state = "enginebrok"
 			active = 0
@@ -59,7 +59,7 @@ ENGINE
 			icon_state = "engineoff"
 
 	power_change()
-		updateicon()
+		UpdateIcon()
 		..()
 
 	process()
@@ -88,7 +88,7 @@ ENGINE
 			src.active = !src.active
 			boutput(user, "You turn [src.active ? "on" : "off"] the engine.")
 			if(src.active == 0) src.lastpower = 0
-			updateicon()
+			UpdateIcon()
 			return
 
 	attackby(obj/item/W, mob/user)
@@ -168,7 +168,7 @@ REACTOR
 		controlRods.len = 5
 
 	process()
-		updateicon()
+		UpdateIcon()
 
 		if (status & BROKEN)
 			return
@@ -261,7 +261,7 @@ REACTOR
 
 	proc/setupCherenkovRad()
 
-	proc/updateicon()
+	UpdateIcon()
 		if (status & BROKEN)
 			icon_state = "reactoroff"
 			return
@@ -307,7 +307,7 @@ REACTOR
 					T:air:trace_gases = list()
 				T:air:trace_gases += rad
 
-		SPAWN_DBG(0.8 SECONDS)
+		SPAWN(0.8 SECONDS)
 			meltdown = 2.0
 
 
@@ -332,7 +332,7 @@ REACTOR
 					// Unequipping
 					user.u_equip(W)
 					W.set_loc(src)
-					W.dropped()
+					W.dropped(user)
 					// Letting everyone around know
 					boutput(user, "<span class='alert'>You insert the [W] into the [src].</span>")
 					for(var/mob/M in AIviewers(src))
@@ -348,7 +348,7 @@ REACTOR
 					controlRods[i] = W
 					user.u_equip(W)
 					W.set_loc(src)
-					W.dropped()
+					W.dropped(user)
 					boutput(user, "<span class='alert'>You insert the [W] into the [src].</span>")
 					for(var/mob/M in AIviewers(src))
 						if(M == user)	continue

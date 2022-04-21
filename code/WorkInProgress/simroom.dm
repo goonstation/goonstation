@@ -17,7 +17,7 @@
 
 /*
 /obj/machinery/sim/transmitter/New()
-	SPAWN_DBG(1 SECOND)
+	SPAWN(1 SECOND)
 		Connect()
 	..()
 */
@@ -64,7 +64,7 @@
 
 
 /obj/machinery/sim/transmitter/proc/interact(mob/user)
-	if ( (get_dist(src, user) > 1 ) || (status & (BROKEN|NOPOWER)) )
+	if ( (BOUNDS_DIST(src, user) > 0 ) || (status & (BROKEN|NOPOWER)) )
 		if (!issilicon(user))
 			user.machine = null
 			user.Browse(null, "window=mm")
@@ -140,7 +140,7 @@
 	if (!ticker)
 		boutput(user, "You can't buckle anyone in before the game starts.")
 		return
-	if ((!( iscarbon(M) ) || get_dist(src, user) > 1 || M.loc != src.loc || user.restrained() || user.stat))
+	if ((!( iscarbon(M) ) || BOUNDS_DIST(src, user) > 0 || M.loc != src.loc || user.restrained() || user.stat))
 		return
 	if (M.buckled)	return
 
@@ -200,14 +200,14 @@
 
 /obj/machinery/sim/vr_bed/New()
 	..()
-	src.update_icon()
+	src.UpdateIcon()
 
 /obj/machinery/sim/vr_bed/disposing()
 	go_out()
 	. = ..()
 
 
-/obj/machinery/sim/vr_bed/proc/update_icon()
+/obj/machinery/sim/vr_bed/update_icon()
 	ENSURE_IMAGE(src.image_lid, src.icon, "lid[!isnull(occupant)]")
 	src.UpdateOverlays(src.image_lid, "lid")
 
@@ -271,7 +271,7 @@
 	Station_VNet.Enter_Vspace(M, src, src.network)
 	for(var/obj/O in src)
 		O.set_loc(src.loc)
-	src.update_icon()
+	src.UpdateIcon()
 	return
 
 /obj/machinery/sim/vr_bed/Click(location,control,params)
@@ -344,7 +344,7 @@
 	src.occupant = null
 	src.active = 0
 	src.con_user = null
-	src.update_icon()
+	src.UpdateIcon()
 	return
 
 /obj/machinery/sim/vr_bed/Exited(atom/movable/thing, newloc)
@@ -393,7 +393,7 @@
 				if(src.allowed(usr))
 					var/tp = text2num_safe(href_list["tp"])
 					src.time += tp
-					src.time = min(max(round(src.time), 0), 300)
+					src.time = clamp(round(src.time), 0, 300)
 		src.updateUsrDialog()
 	return
 

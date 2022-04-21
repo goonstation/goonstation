@@ -10,9 +10,11 @@
 	flags = ONBACK | FPRINT | TABLEPASS | NOSPLASH
 	w_class = W_CLASS_BULKY
 	max_wclass = 3
-	wear_image_icon = 'icons/mob/back.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	does_not_open_in_pocket = 0
 	spawn_contents = list(/obj/item/storage/box/starter)
+	duration_remove = 3 SECONDS
+	duration_put = 3 SECONDS
 
 	blue
 		icon_state = "backpackb"
@@ -239,6 +241,14 @@
 	item_state = "Syndiesatchel"
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
 
+	New()
+		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
+
 /obj/item/storage/backpack/satchel/NT
 	name = "\improper NT Satchel"
 	desc = "A stylish blue, thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's shoulder."
@@ -421,6 +431,14 @@
 	item_state = "syndie"
 	slots = 7
 
+	New()
+		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
+
 /* -------------------- Belts -------------------- */
 
 /obj/item/storage/belt
@@ -447,7 +465,7 @@
 
 
 
-	MouseDrop(obj/over_object as obj, src_location, over_location)
+	mouse_drop(obj/over_object as obj, src_location, over_location)
 		var/mob/M = usr
 		if (istype(over_object,/obj/item) || istype(over_object,/mob/)) // covers pretty much all the situations we're trying to prevent; namely transferring storage and opening while on ground
 			if(!can_use())
@@ -607,18 +625,35 @@
 
 /obj/item/storage/belt/medical
 	name = "medical belt"
+	desc = "A specialized belt for treating patients outside medbay in the field. A unique attachment point lets you carry defibrillators."
 	icon_state = "injectorbelt"
-	item_state = "injector"
+	item_state = "medical"
 	can_hold = list(
 		/obj/item/robodefibrillator
 	)
 	in_list_or_max = 1
 
+/obj/item/storage/belt/roboticist
+	icon_state = "utilrobotics"
+	name = "Roboticist's belt"
+	item_state = "robotics"
+	desc = "A utility belt, in the departmental colors of someone who loves robots and surgery."
+
+/obj/item/storage/belt/roboticist/prepared
+	spawn_contents = list(
+	/obj/item/crowbar,
+	/obj/item/weldingtool,
+	/obj/item/wirecutters,
+	/obj/item/screwdriver,
+	/obj/item/wrench,
+	/obj/item/circular_saw,
+	/obj/item/scalpel
+	)
 /obj/item/storage/belt/mining
 	name = "miner's belt"
 	desc = "Can hold various mining tools."
 	icon_state = "minerbelt"
-	item_state = "utility"
+	item_state = "mining"
 	can_hold = list(
 		/obj/item/mining_tool,
 		/obj/item/mining_tools
@@ -637,8 +672,8 @@
 /obj/item/storage/belt/hunter
 	name = "trophy belt"
 	desc = "Holds normal-sized items, such as skulls."
-	icon_state = "minerbelt"
-	item_state = "utility"
+	icon_state = "hunterbelt"
+	item_state = "hunter"
 	max_wclass = 3
 	item_function_flags = IMMUNE_TO_ACID
 
@@ -698,7 +733,7 @@
 		spawn_contents = list(/obj/item/gun/energy/signifer2, /obj/item/gun/kinetic/clock_188, /obj/item/baton/ntso, /obj/item/instrument/whistle, /obj/item/clothing/mask/gas/NTSO, /obj/item/storage/ntso_pouch, /obj/item/barrier) //secbelt subtype that only spawns on NTSO, not in vendor
 
 	baton
-		spawn_contents = list(/obj/item/baton, /obj/item/barrier)
+		spawn_contents = list(/obj/item/baton, /obj/item/barrier, /obj/item/requisition_token/security/utility)
 
 	tasersmg
 		spawn_contents = list(/obj/item/gun/energy/tasersmg, /obj/item/baton, /obj/item/barrier)

@@ -186,7 +186,7 @@ var/list/telescope_computers = list()
 		if(status & (BROKEN|NOPOWER))
 			return
 
-		if(using && (!using.client || using.client.inactivity >= 1200 || get_dist(src, using) > 1))
+		if(using && (!using.client || using.client.inactivity >= 1200 || BOUNDS_DIST(src, using) > 0))
 			using << browse(null, "window=materials")
 			using = null
 
@@ -231,7 +231,7 @@ var/list/telescope_computers = list()
 		user << browse(html, "window=telescope;size=800x435;can_resize=0;can_minimize=0;can_close=1")
 		onclose(user, "telescope", src)
 
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			callJsFunc(user, "setRef", list("\ref[src]")) //This is shit but without it, it calls the JS before the window is open and doesn't work.
 			loadContent("Starmap", "#contentInner")
 		return
@@ -290,7 +290,7 @@ var/list/telescope_computers = list()
 
 	Topic(href, href_list)
 		//boutput(world, href)
-		if(!using || get_dist(using, src) > 1)
+		if(!using || BOUNDS_DIST(using, src) > 0)
 			using << browse(null, "window=telescope")
 			using = null
 			return

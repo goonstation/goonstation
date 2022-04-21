@@ -131,7 +131,7 @@
 		if(!recharges_contents)
 			UnsubscribeProcess()
 
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if (!ispath(src.contained_weapon))
 				logTheThing("debug", src, null, "has a non-path contained_weapon, \"[src.contained_weapon]\", and is being disposed of to prevent errors")
 				qdel(src)
@@ -173,7 +173,7 @@
 
 //no, this isnt even an item its not allowed. if you wanna move racks around, code an unscrew behavior or something
 /*
-	MouseDrop(mob/user as mob) // no I ain't even touchin this mess it can keep doin whatever it's doin
+	mouse_drop(mob/user as mob) // no I ain't even touchin this mess it can keep doin whatever it's doin
 		// I finally came back and touched that mess because it was broke - Haine
 		// When I was working on this in the 2016 release, some stuff was broken and I didn't know why. Then when I got coder, it'd already been fixed! Thanks Haine! ~Gannets
 		if (user == usr && !user.restrained() && !user.stat && (user.contents.Find(src) || in_interact_range(src, user)))
@@ -234,7 +234,7 @@
 				boutput(user, "You take [myWeapon] out of [src].")
 		src.update()
 		try // : is bad, but let's try and do it anyway.
-			myWeapon:update_icon() // Update the icon of the weapon, so it shows the right level of charge.
+			myWeapon:UpdateIcon() // Update the icon of the weapon, so it shows the right level of charge.
 		catch // Did : throw an exception? Catch it! Before it gets loose!
 
 	proc/update()
@@ -249,7 +249,7 @@
 				SEND_SIGNAL(A, COMSIG_CELL_CHARGE, 10)
 
 	Topic(href, href_list)
-		if(get_dist(usr,src) > 1 && !issilicon(usr) && !isAI(usr))
+		if(BOUNDS_DIST(usr, src) > 0 && !issilicon(usr) && !isAI(usr))
 			boutput(usr, "<span class='alert'>You need to be closer to the rack to do that!</span>")
 			return
 

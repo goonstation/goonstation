@@ -32,16 +32,16 @@
 		src.levelupdate()
 		src.gas_impermeable = 1
 		src.layer = src.layer - 0.1
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.find_icon_state()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			// so that if it's getting created by the map it works, and if it isn't this will just return
 			src.setFloorUnderlay('icons/turf/floors.dmi', "plating", 0, 100, 0, "plating")
 			if (src.can_be_auto)
 				for (var/turf/simulated/wall/auto/W in orange(1,src))
-					W.update_icon()
+					W.UpdateIcon()
 				for (var/obj/grille/G in orange(1,src))
-					G.update_icon()
+					G.UpdateIcon()
 
 	Del()
 		src.RL_SetSprite(null)
@@ -139,7 +139,7 @@
 					A.setMaterial(M)
 					B.setMaterial(M)
 				F.levelupdate()
-				logTheThing("station", user, null, "dismantles a False Wall in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
+				logTheThing("station", user, null, "dismantles a False Wall in [user.loc.loc] ([log_loc(user)])")
 				return
 			else
 				return ..()
@@ -158,7 +158,7 @@
 		src.operating = 1
 		src.name = "false wall"
 		animate(src, time = delay, pixel_x = 25, easing = BACK_EASING)
-		SPAWN_DBG(delay)
+		SPAWN(delay)
 			//we want to return 1 without waiting for the animation to finish - the textual cue seems sloppy if it waits
 			//actually do the opening things
 			src.set_density(0)
@@ -188,7 +188,7 @@
 			src.RL_SetOpacity(1)
 		src.setIntact(TRUE)
 		update_nearby_tiles()
-		SPAWN_DBG(delay)
+		SPAWN(delay)
 			//we want to return 1 without waiting for the animation to finish - the textual cue seems sloppy if it waits
 			src.operating = 0
 		return 1
@@ -227,7 +227,7 @@
 	//Temp false walls turn back to regular walls when closed.
 	temp/New()
 		..()
-		SPAWN_DBG(1.1 SECONDS)
+		SPAWN(1.1 SECONDS)
 			src.open()
 
 	temp/close()

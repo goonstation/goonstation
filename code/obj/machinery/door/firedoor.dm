@@ -9,7 +9,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			src.setup()
 			sleep(1 SECOND)
 			qdel(src)
@@ -19,6 +19,11 @@
 			var/obj/machinery/door/firedoor/pyro/P = new/obj/machinery/door/firedoor/pyro(src.loc)
 			P.set_dir(D.dir)
 			P.layer = D.layer + 0.01
+			#ifdef UPSCALED_MAP
+			P.bound_height = 64
+			P.bound_width = 64
+			P.transform = list(2, 0, 16, 0, 2, 16)
+			#endif
 			break
 
 /obj/machinery/door/firedoor
@@ -34,7 +39,12 @@
 	var/image/welded_image = null
 	var/welded_icon_state = "welded"
 	has_crush = 0
-	cant_emag = 1
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_DESTRUCT
+	mats = 30 // maybe a bit high??
+	health = 200
+	health_max = 200
+	xmasify()
+		return
 
 /obj/machinery/door/firedoor/border_only
 	name = "Firelock"
@@ -50,7 +60,7 @@
 
 /obj/machinery/door/firedoor/New()
 	..()
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		var/list/zones = list()
 		for (var/d in list(0) + cardinal)
 			var/turf/T = get_step(src,d)
@@ -104,7 +114,7 @@
 	else
 		status |= NOPOWER
 
-/obj/machinery/door/firedoor/bumpopen(mob/user as mob)
+/obj/machinery/door/firedoor/bumpopen(mob/user)
 	return
 
 /obj/machinery/door/firedoor/isblocked()
@@ -112,23 +122,27 @@
 		return 1
 	return 0
 
-/obj/machinery/door/firedoor/attackby(obj/item/C as obj, mob/user as mob)
+/obj/machinery/door/firedoor/emag_act(mob/user, obj/item/card/emag/E) //BELIEVE IT OR NOT, THIS AND THE CANT_EMAG VAR ARE DISTINCT
+	return
+
+/obj/machinery/door/firedoor/attackby(obj/item/C, mob/user)
 	src.add_fingerprint(user)
 	if (!ispryingtool(C))
-		if (src.density && !src.operating)
+		if (src.density)
 			user.lastattacked = src
 			attack_particle(user,src)
 			playsound(src.loc, src.hitsound , 50, 1, pitch = 1.6)
-			if (C) src.take_damage(C.force) //TODO: FOR MBC, WILL RUNTIME IF ATTACKED WITH BARE HAND, C IS NULL. ADD LIMB INTERACTIONS
+			if (C)
+				src.take_damage(C.force) //TODO: FOR MBC, WILL RUNTIME IF ATTACKED WITH BARE HAND, C IS NULL. ADD LIMB INTERACTIONS
 		return
 
 	if (!src.blocked && !src.operating)
 		if(src.density)
-			SPAWN_DBG( 0 )
+			SPAWN( 0 )
 				src.operating = 1
 
 				play_animation("opening")
-				update_icon(1)
+				UpdateIcon(1)
 				sleep(1.5 SECONDS)
 				src.set_density(0)
 				update_nearby_tiles()
@@ -139,11 +153,11 @@
 				src.operating = 0
 				return
 		else //close it up again
-			SPAWN_DBG( 0 )
+			SPAWN( 0 )
 				src.operating = 1
 
 				play_animation("closing")
-				update_icon(1)
+				UpdateIcon(1)
 				src.set_density(1)
 				update_nearby_tiles()
 				sleep(1.5 SECONDS)
@@ -215,7 +229,7 @@
 
 		return 1
 
-/obj/machinery/door/firedoor/update_icon(var/toggling = 0)
+/obj/machinery/door/firedoor/update_icon(var/toggling = 0, override_parent = TRUE)
 	if(toggling? !density : density)
 		if (locked)
 			icon_state = "[icon_base]_locked"
@@ -236,9 +250,9 @@
 /obj/machinery/door/firedoor/custom_suicide = 1
 /obj/machinery/door/firedoor/suicide(var/mob/living/carbon/human/user as mob)
 	if (!istype(user) || !user.organHolder || !src.user_can_suicide(user))
-		return 0
-	if (!src.allowed(user) || src.density)
-		return 0
+		return FALSE
+	if (src.density)
+		return FALSE
 	user.visible_message("<span class='alert'><b>[user] sticks [his_or_her(user)] head into [src] and closes it!</b></span>")
 	src.close()
 	var/obj/head = user.organHolder.drop_organ("head")
@@ -246,4 +260,4 @@
 	make_cleanable( /obj/decal/cleanable/blood/gibs,src.loc)
 	playsound(src.loc, "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
 
-	return 1
+	return TRUE

@@ -59,6 +59,8 @@ Important Procedures
 	return !src.gas_impermeable
 
 /turf/gas_cross(turf/target)
+	if(!target)
+		return 0
 	if(target?.gas_impermeable || src.gas_impermeable)
 		return 0
 	for(var/atom/A as anything in src)
@@ -268,7 +270,7 @@ datum/controller/air_system
 	process_tiles_to_space()
 		if(length(tiles_to_space))
 			for(var/turf/T as anything in tiles_to_space)
-				T.ReplaceWithSpace()
+				T.ReplaceWithSpaceForce() // If we made it this far, force is appropriate as we know it NEEDs to be updated
 			tiles_to_space.len = 0
 
 	process_update_tiles()

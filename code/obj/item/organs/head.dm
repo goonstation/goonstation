@@ -53,7 +53,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (src.donor)
 				if(!src.bones)
 					src.bones = new /datum/bone(src)
@@ -62,11 +62,11 @@
 				src.bones.name = "skull"
 				if (src.donor?.bioHolder?.mobAppearance)
 					src.donor_appearance = src.donor.bioHolder.mobAppearance
-					src.update_icon(makeshitup = 0)
+					src.UpdateIcon(/*makeshitup*/ 0)
 				else //The heck?
-					src.update_icon(makeshitup = 1)
+					src.UpdateIcon(/*makeshitup*/ 1)
 			else
-				src.update_icon(makeshitup = 1)
+				src.UpdateIcon(/*makeshitup*/ 1)
 
 	disposing()
 		if (holder)
@@ -126,7 +126,7 @@
 	/// This proc does a full rebuild of the head's stored data
 	/// only call it if something changes the head in a major way, like becoming a lizard
 	/// it will cause the head to be rebuilt from the mob's appearanceholder!
-	proc/update_icon(var/makeshitup, var/ignore_transplant) // should only happen once, maybe again if they change mutant race
+	update_icon(var/makeshitup, var/ignore_transplant) // should only happen once, maybe again if they change mutant race
 		var/datum/appearanceHolder/AHead = null
 
 		if(!src.donor_appearance || makeshitup || !src.donor)
@@ -271,8 +271,9 @@
 		..()
 
 	on_removal()
-		. = ..()
+		donor.flags |= OPENCONTAINER
 		src.transplanted = 1
+		. = ..()
 
 	///Taking items off a head
 	attack_self(mob/user as mob)
@@ -443,7 +444,7 @@
 				user.u_equip(src)
 			H.organHolder.receive_organ(src, "head", 3.0)
 
-			SPAWN_DBG(rand(50,500))
+			SPAWN(rand(50,500))
 				if (H?.organHolder?.head && H.organHolder.head == src) // aaaaaa
 					if (src.op_stage != 0.0)
 						H.visible_message("<span class='alert'><b>[H]'s head comes loose and tumbles off of [his_or_her(H)] neck!</b></span>",\
@@ -559,5 +560,5 @@
 					src.organ_name = "psychedelic head"
 					src.desc = "Well, that's trippy."
 
-		src.update_icon(makeshitup = 0)	// so our head actually looks like the thing its supposed to be
+		src.UpdateIcon(/*makeshitup*/ 0)	// so our head actually looks like the thing its supposed to be
 		// though if our head's a transplant, lets run it anyway, in case their hair changed or something

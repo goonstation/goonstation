@@ -51,17 +51,17 @@
 	/// Middle process rate for bots currently trying to murder someone
 	var/PT_active = PROCESSING_QUARTER
 	var/hash_cooldown = (2 SECONDS)
-	var/next_hash_check = 0
+	var/tmp/next_hash_check = 0
 	/// If we're in the middle of something and don't want our tier to go wonky
 	var/doing_something = 0
 	/// Range that the bot checks for clients
 	var/hash_check_range = 6
 
-	var/frustration = 0
+	var/tmp/frustration = 0
 	/// How slowly the bot moves by default -- higher is slower!
 	var/bot_move_delay = 6
-	var/list/path = null	// list of path turfs
-	var/datum/robot_mover/bot_mover
+	var/tmp/list/path = null	// list of path turfs
+	var/tmp/datum/robot_mover/bot_mover
 	var/moving = 0 // Are we ON THE MOVE??
 	var/stunned = 0 //It can be stunned by tasers. Delicate circuits.
 	var/current_movepath = 0
@@ -89,15 +89,21 @@
 		if(!src.chat_text)
 			src.chat_text = new
 		src.vis_contents += src.chat_text
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			src.botcard = new /obj/item/card/id(src)
 			src.botcard.access = get_access(src.access_lookup)
 			src.botnet_id = format_net_id("\ref[src]")
+
+		#ifdef ALL_ROBOT_AND_COMPUTERS_MUST_SHUT_THE_HELL_UP
+		START_TRACKING_CAT(TR_CAT_DELETE_ME)
+		#endif
 
 	disposing()
 		botcard = null
 		qdel(chat_text)
 		chat_text = null
+		qdel(bot_mover)
+		bot_mover = null
 		if(cam)
 			cam.dispose()
 			cam = null
@@ -165,7 +171,7 @@
 		if (src.speech2text && src.chat_text && !just_chat)
 			if(src.use_speech_bubble)
 				UpdateOverlays(bot_speech_bubble, "bot_speech_bubble")
-				SPAWN_DBG(1.5 SECONDS)
+				SPAWN(1.5 SECONDS)
 					UpdateOverlays(null, "bot_speech_bubble")
 			if(!src.bot_speech_color)
 				var/num = hex2num(copytext(md5("[src.name][TIME]"), 1, 7))
@@ -186,7 +192,7 @@
 		src.audible_message("<span class='game say'><span class='name'>[src]</span> [pick(src.speakverbs)], \"<span style=\"[src.bot_chat_style]\">[message]\"</span>", just_maptext = just_float, assoc_maptext = chatbot_text)
 		playsound(src, src.bot_voice, 40, 1)
 		if (src.text2speech)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/audio = dectalk("\[:nk\][message]")
 				if (audio && audio["audio"])
 					for (var/mob/O in hearers(src, null))
@@ -233,7 +239,7 @@
 	P.pixel_x = target.pixel_x
 	P.pixel_y = target.pixel_y
 	P.color = src.bot_speech_color
-	SPAWN_DBG(2 SECONDS)
+	SPAWN(2 SECONDS)
 		P.invisibility = INVIS_ALWAYS
 		qdel(P)
 
@@ -264,7 +270,7 @@
 
 /obj/machinery/bot/proc/navigate_to(atom/the_target, var/move_delay = 10, var/adjacent = 0, max_dist=60)
 	var/target_turf = get_pathable_turf(the_target)
-	if(IN_RANGE(the_target, src, 1))
+	if((BOUNDS_DIST(the_target, src) == 0))
 		return
 	if(src.bot_mover?.the_target == target_turf)
 		return 0
@@ -314,6 +320,11 @@
 			master.moving = FALSE
 		src.master = null
 		src.the_target = null
+
+		#ifdef ALL_ROBOT_AND_COMPUTERS_MUST_SHUT_THE_HELL_UP
+		STOP_TRACKING_CAT(TR_CAT_DELETE_ME)
+		#endif
+
 		..()
 
 	proc/master_move()
@@ -331,7 +342,7 @@
 			qdel(src)
 			return
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (!istype(master) || (master && (!length(master.path) || !src.the_target)))
 				qdel(src)
 				return
@@ -360,7 +371,7 @@
 						I.icon_state = "blank"
 						I.pixel_x = master.pixel_x
 						I.pixel_y = master.pixel_y
-						SPAWN_DBG( 20 )
+						SPAWN( 20 )
 							if (I && !I.disposed) qdel(I)
 
 					step_to(master, master?.path[1])

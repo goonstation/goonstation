@@ -1,4 +1,5 @@
 
+ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 /obj/item/reagent_containers/food/snacks/plant/
 	name = "fruit or vegetable"
 	icon = 'icons/obj/foodNdrink/food_produce.dmi'
@@ -45,7 +46,7 @@
 		..()
 
 	streak_object(var/list/directions)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/direction = pick(directions)
 			for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4), i++)
 				sleep(0.3 SECONDS)
@@ -83,6 +84,9 @@
 	force = 0
 	plant_reagent = "juice_tomato"
 	validforhat = 1
+	sliceable = TRUE
+	slice_product = /obj/item/reagent_containers/food/snacks/ingredient/tomatoslice
+	slice_amount = 3
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
@@ -147,7 +151,7 @@
 		src.visible_message("<span class='alert'>[src] pops violently!</span>")
 		playsound(src.loc, "sound/effects/pop.ogg", 50, 1)
 		flick("cornsplode", src)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			new /obj/item/reagent_containers/food/snacks/popcorn(get_turf(src))
 			qdel(src)
 
@@ -530,13 +534,14 @@
 			hitMob.do_disorient(stamina_damage = 35, weakened = 0, stunned = 0, disorient = 30, remove_stamina_below_zero = 0)
 			hitMob.TakeDamageAccountArmor("chest", rand(damMin, damMax), 0)
 
-	throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = 0, bonus_throwforce = 0)
+	throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = 1,
+			allow_anchored = 0, bonus_throwforce = 0, end_throw_callback = null)
 		throw_unlimited = 1
 		if(target.x > src.x || (target.x == src.x && target.y > src.y))
 			src.icon_state = "[base_icon_state]-spin-right"
 		else
 			src.icon_state = "[base_icon_state]-spin-left"
-		..()
+		. = ..()
 
 	attack_hand(mob/user as mob)
 		..()
@@ -562,7 +567,7 @@
 			if (ismob(hit_atom))
 				var/mob/hitMob = hit_atom
 				if (ishuman(hitMob))
-					SPAWN_DBG( 0 )
+					SPAWN( 0 )
 						if (istype(user))
 							if (user.w_uniform && istype(user.w_uniform, /obj/item/clothing/under/gimmick/bowling))
 								src.hitHard(hitMob, user)
@@ -577,7 +582,7 @@
 				return
 			already_burst = 1
 			src.icon_state = "[base_icon_state]-burst"
-			SPAWN_DBG(0.1 SECONDS)
+			SPAWN(0.1 SECONDS)
 				var/n_slices = rand(1, 5)
 				var/amount_per_slice = 0
 				if(src.reagents)
@@ -904,7 +909,7 @@
 	attack_self(var/mob/user as mob)
 		if (src.icon_state == "banana")
 			if(user.bioHolder.HasEffect("clumsy") && prob(50))
-				user.visible_message("<span class='alert'><b>[user]</b> fumbles and pokes \himself in the eye with [src].</span>")
+				user.visible_message("<span class='alert'><b>[user]</b> fumbles and pokes [himself_or_herself(user)] in the eye with [src].</span>")
 				user.change_eye_blurry(5)
 				user.changeStatus("weakened", 3 SECONDS)
 				JOB_XP(user, "Clown", 2)
@@ -1356,6 +1361,27 @@
 	make_reagents()
 		..()
 		reagents.add_reagent("coffee",10)
+
+/obj/item/reagent_containers/food/snacks/plant/coffeeberry/mocha
+	name = "mocha coffee berries"
+	crop_prefix = "mocha "
+	desc = "Smells faintly of rich, bitter cacao. Huh."
+	icon_state = "mochaberries"
+
+	make_reagents()
+		..()
+		reagents.add_reagent("chocolate", 10)
+
+/obj/item/reagent_containers/food/snacks/plant/coffeeberry/latte
+	name = "latte coffee berries"
+	crop_prefix = "latte "
+	desc = "The texture of these berries' skin is vaguely... creamy??"
+	icon_state = "latteberries"
+
+	make_reagents()
+		..()
+		reagents.add_reagent("milk", 5)
+
 
 /obj/item/reagent_containers/food/snacks/plant/coffeebean
 	name = "coffee beans"

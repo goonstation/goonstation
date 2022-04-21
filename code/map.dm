@@ -30,11 +30,11 @@ var/global/list/mapNames = list(
 	"1 pamgoC" = 		list("id" = "PAMGOC", 		"settings" = "pamgoc", 			"playerPickable" = ASS_JAM),
 	"Kondaru" = 		list("id" = "KONDARU", 		"settings" = "kondaru", 		"playerPickable" = 1,		"MaxPlayersAllowed" = 80),
 	"Ozymandias" = 	list("id" = "OZYMANDIAS", "settings" = "ozymandias", 	"playerPickable" = 0, 	"MinPlayersAllowed" = 40),
-	//"Bellerophon Fleet" = list("id" = "FLEET", "settings" = "fleet", "playerPickable" = ASS_JAM),
+	"Bellerophon Fleet" = list("id" = "FLEET", "settings" = "fleet", "playerPickable" = ASS_JAM),
 	"Icarus" = 			list("id" = "ICARUS",		"settings" = "icarus",				"playerPickable" = ASS_JAM),
 	//"Density" = 		list("id" = "DENSITY", 	"settings" = "density", 			"playerPickable" = ASS_JAM,	"MaxPlayersAllowed" = 30),
 	"Atlas" = 			list("id" = "ATLAS", 		"settings" = "atlas", 				"playerPickable" = 1,				"MaxPlayersAllowed" = 30),
-	"Manta" = 			list("id" = "MANTA", 		"settings" = "manta", 				"playerPickable" = 1,				"MaxPlayersAllowed" = 80),
+	"Manta" = 			list("id" = "MANTA", 		"settings" = "manta", 				"playerPickable" = 0,				"MaxPlayersAllowed" = 80),
 	"Wrestlemap" = 			list("id" = "WRESTLEMAP", 	"settings" = "wrestlemap", 		"playerPickable" = ASS_JAM),
 	"pod_wars" = 			list("id" = "POD_WARS", 	"settings" = "pod_wars", 		"playerPickable" = 0),
 	"blank" = 			list("id" = "BLANK", "settings" = "", "playerPickable" = 0),
@@ -97,8 +97,8 @@ var/global/list/mapNames = list(
 	var/escape_centcom = /area/shuttle/escape/centcom
 	var/escape_transit = /area/shuttle/escape/transit
 	var/escape_station = /area/shuttle/escape/station
-	var/escape_def = SHUTTLE_NODEF
 	var/escape_dir = SOUTH
+	var/default_shuttle = null // null = auto, otherwise name of the dmm file without .dmm
 
 	var/shuttle_map_turf = /turf/space
 
@@ -122,6 +122,24 @@ var/global/list/mapNames = list(
 	var/job_limits_from_landmarks = FALSE /// if TRUE each job with a landmark will get as many slots as many landmarks there are (jobs without a landmark left on default)
 	var/list/job_limits_override = list() /// assoc list of the form `job_type=limit` to override other job settings, works on gimmick jobs too
 
+	proc/get_shuttle_path()
+		var/dirname = dir_to_dirname(escape_dir)
+		var/shuttle_name = src.default_shuttle || "[dirname]base"
+		#ifdef UPSCALED_MAP
+		. = "assets/maps/shuttles/[dirname]/[shuttle_name]_big.dmm"
+		#else
+		. = "assets/maps/shuttles/[dirname]/[shuttle_name].dmm"
+		#endif
+
+	proc/get_shuttle_transit_path()
+		var/dirname = dir_to_dirname(escape_dir)
+		var/shuttle_name = src.default_shuttle || "[dirname]base"
+		#ifdef UPSCALED_MAP
+		. = "assets/maps/transit/[dirname]/[shuttle_name]_big.dmm"
+		#else
+		. = "assets/maps/transit/[dirname]/[shuttle_name].dmm"
+		#endif
+
 	proc/init() /// Map-specific initialization, feel free to override for your map!
 		// map limits
 		if(job_limits_from_landmarks)
@@ -133,6 +151,37 @@ var/global/list/mapNames = list(
 			if(J.type in src.job_limits_override)
 				J.limit = src.job_limits_override[J.type]
 
+		SPAWN(5 SECONDS)
+			src.load_shuttle()
+
+	proc/load_shuttle(path=null, transit_path=null, load_loc_override=null)
+		if(isnull(path))
+			path = src.get_shuttle_path()
+
+		var/datum/mapPrefab/shuttle/shuttlePrefab = null
+		if(istype(path, /datum/mapPrefab/shuttle))
+			shuttlePrefab = path
+		else
+			shuttlePrefab = new(path, path, escape_dir, FALSE)
+
+		if(isnull(transit_path))
+			transit_path = src.get_shuttle_transit_path()
+
+		var/turf/start = load_loc_override || pick_landmark(LANDMARK_SHUTTLE_CENTCOM)
+		if(!start)
+			return FALSE
+
+		shuttlePrefab.applyTo(start, overwrite_args=DMM_OVERWRITE_OBJS)
+
+		var/dmm_suite/dmm_suite = new
+		var/turf/transit_start = pick_landmark(LANDMARK_SHUTTLE_TRANSIT)
+		dmm_suite.read_map(file2text(transit_path), transit_start.x, transit_start.y, transit_start.z)
+
+		var/area/shuttle/escape/transit/transit_area = locate(/area/shuttle/escape/transit)
+		transit_area.warp_dir = escape_dir
+		return TRUE
+
+
 /datum/map_settings/donut2
 	name = "DONUT2"
 	goonhub_map = "https://goonhub.com/maps/donut2"
@@ -140,10 +189,6 @@ var/global/list/mapNames = list(
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 
-	escape_centcom = /area/shuttle/escape/centcom/donut2
-	escape_transit = /area/shuttle/escape/transit/donut2
-	escape_station = /area/shuttle/escape/station/donut2
-	escape_def = SHUTTLE_WEST
 	escape_dir = WEST
 
 	windows = /obj/window/auto
@@ -169,11 +214,8 @@ var/global/list/mapNames = list(
 	walls = /turf/simulated/wall/auto/jen
 	rwalls = /turf/simulated/wall/auto/reinforced/jen
 
-	escape_centcom = /area/shuttle/escape/centcom/donut3
-	escape_transit = /area/shuttle/escape/transit/donut3
-	escape_station = /area/shuttle/escape/station/donut3
-	escape_def = SHUTTLE_DONUT3
 	escape_dir = NORTH
+	default_shuttle = "donut3"
 	auto_windows = 1
 
 	windows = /obj/window/auto
@@ -209,10 +251,6 @@ var/global/list/mapNames = list(
 
 /datum/map_settings/cogmap_old
 	name = "COGMAP_OLD"
-	escape_centcom = /area/shuttle/escape/centcom/cogmap
-	escape_transit = /area/shuttle/escape/transit/cogmap
-	escape_station = /area/shuttle/escape/station/cogmap
-	escape_def = SHUTTLE_SOUTH
 	escape_dir = SOUTH
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
@@ -241,10 +279,6 @@ var/global/list/mapNames = list(
 	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
-	escape_centcom = /area/shuttle/escape/centcom/cogmap
-	escape_transit = /area/shuttle/escape/transit/cogmap
-	escape_station = /area/shuttle/escape/station/cogmap
-	escape_def = SHUTTLE_SOUTH
 	escape_dir = SOUTH
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
@@ -289,10 +323,6 @@ var/global/list/mapNames = list(
 	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
-	escape_centcom = /area/shuttle/escape/centcom/cogmap2
-	escape_transit = /area/shuttle/escape/transit/cogmap2
-	escape_station = /area/shuttle/escape/station/cogmap2
-	escape_def = SHUTTLE_EAST
 	escape_dir = EAST
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap2
@@ -343,10 +373,6 @@ var/global/list/mapNames = list(
 	window_layer_south = FLY_LAYER+1
 	auto_windows = 1
 
-	escape_centcom = /area/shuttle/escape/centcom/destiny
-	escape_transit = /area/shuttle/escape/transit/destiny
-	escape_station = /area/shuttle/escape/station/destiny
-	escape_def = SHUTTLE_NORTH
 	escape_dir = NORTH
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/destiny
@@ -426,10 +452,6 @@ var/global/list/mapNames = list(
 	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
-	escape_centcom = /area/shuttle/escape/centcom/cogmap2
-	escape_transit = /area/shuttle/escape/transit/cogmap2
-	escape_station = /area/shuttle/escape/station/cogmap2
-	escape_def = SHUTTLE_EAST
 	escape_dir = EAST
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
@@ -496,10 +518,7 @@ var/global/list/mapNames = list(
 	airlock_style = "pyro"
 	shuttle_map_turf = /turf/space/fluid/manta
 
-	escape_centcom = /area/shuttle/escape/centcom/manta
-	escape_transit = /area/shuttle/escape/transit/manta
-	escape_station = /area/shuttle/escape/station/manta
-	escape_def = SHUTTLE_MANTA
+	default_shuttle = "manta"
 	escape_dir = NORTH
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
@@ -538,19 +557,11 @@ var/global/list/mapNames = list(
 	window_layer_south = FLY_LAYER+1
 	auto_windows = 1
 
-	escape_centcom = /area/shuttle/escape/centcom/cogmap2
-	escape_transit = /area/shuttle/escape/transit/cogmap2
-	escape_station = /area/shuttle/escape/station/cogmap2
-	escape_def = SHUTTLE_EAST
 	escape_dir = EAST
 
 /datum/map_settings/trunkmap
 	name = "TRUNKMAP"
 	goonhub_map = "https://goonhub.com/maps/trunkmap"
-	escape_centcom = /area/shuttle/escape/centcom/destiny
-	escape_transit = /area/shuttle/escape/transit/destiny
-	escape_station = /area/shuttle/escape/station/destiny
-	escape_def = SHUTTLE_NORTH
 	escape_dir = NORTH
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/destiny
@@ -582,10 +593,6 @@ var/global/list/mapNames = list(
 	window_layer_north = GRILLE_LAYER+0.1
 	window_layer_south = FLY_LAYER+1
 
-	escape_centcom = /area/shuttle/escape/centcom/cogmap2
-	escape_transit = /area/shuttle/escape/transit/cogmap2
-	escape_station = /area/shuttle/escape/station/cogmap2
-	escape_def = SHUTTLE_EAST
 	escape_dir = EAST
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
@@ -625,10 +632,6 @@ var/global/list/mapNames = list(
 	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
-	escape_centcom = /area/shuttle/escape/centcom/cogmap2
-	escape_transit = /area/shuttle/escape/transit/cogmap2
-	escape_station = /area/shuttle/escape/station/cogmap2
-	escape_def = SHUTTLE_EAST
 	escape_dir = EAST
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
@@ -683,10 +686,6 @@ var/global/list/mapNames = list(
 	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
-	escape_centcom = /area/shuttle/escape/centcom/cogmap2
-	escape_transit = /area/shuttle/escape/transit/cogmap2
-	escape_station = /area/shuttle/escape/station/cogmap2
-	escape_def = SHUTTLE_EAST
 	escape_dir = EAST
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
@@ -729,10 +728,6 @@ var/global/list/mapNames = list(
 
 	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 
-	escape_centcom = /area/shuttle/escape/centcom/cogmap2
-	escape_transit = /area/shuttle/escape/transit/cogmap2
-	escape_station = /area/shuttle/escape/station/cogmap2
-	escape_def = SHUTTLE_EAST
 	escape_dir = EAST
 
 	merchant_left_centcom = null
@@ -772,10 +767,6 @@ var/global/list/mapNames = list(
 
 	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 
-	escape_centcom = /area/shuttle/escape/centcom/destiny
-	escape_transit = /area/shuttle/escape/transit/destiny
-	escape_station = /area/shuttle/escape/station/destiny
-	escape_def = SHUTTLE_NORTH
 	escape_dir = NORTH
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/destiny
@@ -810,10 +801,6 @@ var/global/list/mapNames = list(
 	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
-	escape_centcom = /area/shuttle/escape/centcom/cogmap2
-	escape_transit = /area/shuttle/escape/transit/cogmap2
-	escape_station = /area/shuttle/escape/station/cogmap2
-	escape_def = SHUTTLE_EAST
 	escape_dir = EAST
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap2
@@ -853,10 +840,6 @@ var/global/list/mapNames = list(
 	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
-	escape_centcom = /area/shuttle/escape/centcom/cogmap
-	escape_transit = /area/shuttle/escape/transit/cogmap
-	escape_station = /area/shuttle/escape/station/cogmap
-	escape_def = SHUTTLE_SOUTH
 	escape_dir = SOUTH
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
@@ -892,11 +875,8 @@ var/global/list/mapNames = list(
 	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
-	escape_centcom = /area/shuttle/escape/centcom/sealab
-	escape_transit = /area/shuttle/escape/transit/sealab
-	escape_station = /area/shuttle/escape/station/sealab
-	escape_def = SHUTTLE_OSHAN
 	escape_dir = EAST
+	default_shuttle = "oshan"
 	shuttle_map_turf = /turf/space/fluid
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
@@ -945,10 +925,6 @@ var/global/list/mapNames = list(
 	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
-	escape_centcom = /area/shuttle/escape/centcom/destiny
-	escape_transit = /area/shuttle/escape/transit/destiny
-	escape_station = /area/shuttle/escape/station/destiny
-	escape_def = SHUTTLE_NORTH
 	escape_dir = NORTH
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
@@ -1004,71 +980,6 @@ var/global/list/mapNames = list(
 	merchant_right_station = null
 
 	valid_nuke_targets = list()
-
-/area/shuttle/escape/centcom
-	icon_state = "shuttle_escape"
-	donut2
-		icon_state = "shuttle_escape-dnt2"
-	donut3
-		icon_state = "shuttle_escape-dnt3"
-	cogmap
-		icon_state = "shuttle_escape-cog1"
-	cogmap2
-		icon_state = "shuttle_escape-cog2"
-	destiny
-		icon_state = "shuttle_escape-dest"
-	sealab
-		icon_state = "shuttle_escape-sealab"
-	manta
-		icon_state = "shuttle_escape-manta"
-		filler_turf = "/turf/space/fluid"
-	donut3
-		icon_state = "shuttle_escape-dnt3"
-
-/area/shuttle/escape/station
-	#ifdef UNDERWATER_MAP
-	ambient_light = OCEAN_LIGHT
-	#endif
-	icon_state = "shuttle_escape"
-	donut2
-		icon_state = "shuttle_escape-dnt2"
-	donut3
-		icon_state = "shuttle_escape-dnt3"
-	cogmap
-		icon_state = "shuttle_escape-cog1"
-	cogmap2
-		icon_state = "shuttle_escape-cog2"
-	destiny
-		icon_state = "shuttle_escape-dest"
-	sealab
-		icon_state = "shuttle_escape-sealab"
-	manta
-		icon_state = "shuttle_escape-manta"
-
-/area/shuttle/escape/transit
-	icon_state = "shuttle_escape"
-	donut2
-		icon_state = "shuttle_escape-dnt2"
-		warp_dir = WEST
-	donut3
-		icon_state = "shuttle_escape-dnt3"
-		warp_dir = NORTH
-	cogmap
-		icon_state = "shuttle_escape-cog1"
-	cogmap2
-		icon_state = "shuttle_escape-cog2"
-		warp_dir = EAST
-	destiny
-		icon_state = "shuttle_escape-dest"
-	sealab
-		icon_state = "shuttle_escape-sealab"
-		warp_dir = EAST
-	battle_shuttle
-		icon_state = "shuttle_escape-battle-shuttle"
-		warp_dir = EAST
-	manta
-		icon_state = "shuttle_escape-manta"
-		warp_dir = NORTH
 
 /area/shuttle/merchant_shuttle/left_centcom
 	icon_state = "shuttle_merch_l"

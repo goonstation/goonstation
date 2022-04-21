@@ -7,7 +7,8 @@
 		usr.show_text("You can't use this command right now.", "red")
 		return
 
-	var/obj/item/uplink/syndicate/U = new(usr.loc)
+	var/uplink_path = get_uplink_type(usr, /obj/item/uplink/syndicate)
+	var/obj/item/uplink/syndicate/U = new uplink_path(usr.loc)
 	if (!usr.put_in_hand(U))
 		U.set_loc(get_turf(usr))
 		usr.show_text("<h3>Uplink spawned. You can find it on the floor at your current location.</h3>", "blue")
@@ -141,7 +142,8 @@
 
 		if (istype(R, /obj/item/device/radio))
 			var/obj/item/device/radio/RR = R
-			var/obj/item/uplink/integrated/radio/T = new /obj/item/uplink/integrated/radio(RR)
+			var/uplink_path = get_uplink_type(traitor_mob, /obj/item/uplink/integrated/radio)
+			var/obj/item/uplink/integrated/radio/T = new uplink_path(RR)
 			T.setup(traitor_mob.mind, RR)
 			freq = RR.traitor_frequency
 
@@ -150,7 +152,8 @@
 
 		else if (istype(R, /obj/item/device/pda2))
 			var/obj/item/device/pda2/P = R
-			var/obj/item/uplink/integrated/pda/T = new /obj/item/uplink/integrated/pda(P)
+			var/uplink_path = get_uplink_type(traitor_mob, /obj/item/uplink/integrated/pda)
+			var/obj/item/uplink/integrated/pda/T = new uplink_path(P)
 			T.setup(traitor_mob.mind, P)
 			pda_pass = T.lock_code
 
@@ -158,7 +161,8 @@
 			traitor_mob.mind.store_memory("<B>Set your ring message to:</B> [pda_pass] (In the Messenger menu in the [P.name] [loc]).")
 
 		else
-			var/obj/item/uplink/syndicate/T = new(get_turf(traitor_mob))
+			var/uplink_path = get_uplink_type(traitor_mob, /obj/item/uplink/syndicate)
+			var/obj/item/uplink/syndicate/T = new uplink_path(get_turf(traitor_mob))
 			T.lock_code_autogenerate = 1
 			T.setup(traitor_mob.mind, null)
 			pda_pass = T.lock_code
@@ -263,8 +267,8 @@
 		synd_mob.equip_if_possible(new /obj/item/clothing/head/helmet/space/syndicate/commissar_cap(synd_mob), synd_mob.slot_head)
 		synd_mob.equip_if_possible(new /obj/item/clothing/suit/space/syndicate/commissar_greatcoat(synd_mob), synd_mob.slot_wear_suit)
 		synd_mob.equip_if_possible(new /obj/item/device/radio/headset/syndicate/leader(synd_mob), synd_mob.slot_ears)
-		synd_mob.equip_if_possible(new /obj/item/katana_sheath/nukeop(synd_mob), synd_mob.slot_l_hand)
-		synd_mob.equip_if_possible(new /obj/item/remote/nuke_summon_remote(synd_mob), synd_mob.slot_r_hand)
+		synd_mob.equip_if_possible(new /obj/item/katana_sheath/nukeop(synd_mob), synd_mob.slot_r_hand)
+		synd_mob.equip_if_possible(new /obj/item/device/nukeop_commander_uplink(synd_mob), synd_mob.slot_l_hand)
 	else
 		//synd_mob.equip_if_possible(new /obj/item/clothing/head/helmet/swat(synd_mob), synd_mob.slot_head)
 		//synd_mob.equip_if_possible(new /obj/item/clothing/suit/armor/vest(synd_mob), synd_mob.slot_wear_suit)
@@ -272,7 +276,7 @@
 
 	//synd_mob.equip_if_possible(new /obj/item/reagent_containers/pill/tox(synd_mob), synd_mob.slot_in_backpack)
 	synd_mob.equip_if_possible(new /obj/item/clothing/under/misc/syndicate(synd_mob), synd_mob.slot_w_uniform)
-	synd_mob.equip_if_possible(new /obj/item/clothing/shoes/swat(synd_mob), synd_mob.slot_shoes)
+	synd_mob.equip_if_possible(new /obj/item/clothing/shoes/swat/noslip(synd_mob), synd_mob.slot_shoes)
 	synd_mob.equip_if_possible(new /obj/item/clothing/gloves/swat(synd_mob), synd_mob.slot_gloves)
 	synd_mob.equip_if_possible(new /obj/item/storage/backpack/syndie/tactical(synd_mob), synd_mob.slot_back)
 	synd_mob.equip_if_possible(new /obj/item/clothing/mask/breath(synd_mob), synd_mob.slot_wear_mask)
@@ -293,24 +297,10 @@
 	I.icon = 'icons/obj/items/card.dmi'
 	synd_mob.equip_if_possible(I, synd_mob.slot_wear_id)
 
-	var/obj/item/implant/microbomb/M = new /obj/item/implant/microbomb(synd_mob)
+	var/obj/item/implant/revenge/microbomb/M = new /obj/item/implant/revenge/microbomb(synd_mob)
 	M.implanted = 1
 	synd_mob.implant.Add(M)
 	M.implanted(synd_mob)
-
-	var/the_frequency = R_FREQ_SYNDICATE
-	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
-		var/datum/game_mode/nuclear/N = ticker.mode
-		the_frequency = N.agent_radiofreq
-
-	for (var/obj/item/device/radio/headset/R in synd_mob.contents)
-		R.set_secure_frequency("h", the_frequency)
-
-		R.secure_classes = list(RADIOCL_SYNDICATE)
-		R.protected_radio = 1 // Ops can spawn with the deaf trait.
-		R.frequency = the_frequency // let's see if this stops rounds from being ruined every fucking time
-
-	return
 
 /// returns a decimal representing the percentage of alive crew that are also antags
 /proc/get_alive_antags_percentage()
@@ -386,3 +376,28 @@ var/list/roles_to_prefs = list(
   */
 /proc/get_preference_for_role(var/role)
 	return roles_to_prefs[role]
+
+
+/**
+  * Returns a path of a (presumably) valid uplink dependent on the user's mind.
+  *
+  * Arguments:
+  * * target - the mob that will own the uplink.
+  *	* uplink - the path of the uplink type that you wish to spawn
+  */
+/proc/get_uplink_type(mob/target, obj/item/uplink/uplink)
+	var/added_text
+	switch(target?.mind?.special_role)
+		if(ROLE_TRAITOR)
+			added_text = "traitor"
+		if(ROLE_SPY_THIEF) //Uses its own proc to create it, but leaving this here in case a refactor of it comes by
+			added_text = "spy_thief"
+		if("spy")
+			added_text = "spy"
+		if(ROLE_HEAD_REV)
+			added_text = "rev"
+		if(ROLE_NUKEOP)
+			added_text = "nukeop"
+		if(ROLE_OMNITRAITOR)
+			added_text = "omni"
+	return text2path("[uplink]/[added_text]")

@@ -80,7 +80,7 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 					var/datum/pathogen/P = patho[uid]
 					var/datum/cdc_contact_analysis/D = new
 					D.uid = uid
-					var/sym_count = max(min(length(P.effects), 7), 2)
+					var/sym_count = clamp(length(P.effects), 2, 7)
 					D.time_factor = sym_count * rand(10, 15) // 200, 600
 					D.cure_cost = sym_count * rand(25, 40) // 2100, 4300
 					D.name = P.name
@@ -1068,7 +1068,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 		src.temp += "Requisition Code: [RC.req_code]<br><br>"
 		if(RC.flavor_desc) src.temp += "[RC.flavor_desc]<br><br>"
 		src.temp += "[RC.requis_desc]"
-		if(RC.req_class == AID_CONTRACT)
+		if(RC.req_class == AID_CONTRACT && !RC.pinned) // Cannot ordinarily be pinned. Unpin support included for contract testing.
 			src.temp += "URGENT - Cannot Be Reserved<br>"
 		else
 			src.temp += "<A href='[topicLink("pin_contract","\ref[RC]")]'>[RC.pinned ? "Unpin Contract" : "Pin Contract"]</A><br>"
@@ -1077,7 +1077,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 /obj/machinery/computer/supplycomp/proc/print_requisition(var/datum/req_contract/contract)
 	src.printing = 1
 	playsound(src.loc, "sound/machines/printer_thermal.ogg", 60, 0)
-	SPAWN_DBG(2 SECONDS)
+	SPAWN(2 SECONDS)
 		var/obj/item/paper/thermal/P = new(src.loc)
 		P.info = "<font face='System' size='2'><center>REQUISITION CONTRACT MANIFEST<br>"
 		P.info += "FOR SUPPLIER REFERENCE ONLY<br><br>"

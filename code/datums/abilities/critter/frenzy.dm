@@ -1,5 +1,5 @@
 // --------------------
-// Wendigo style frenzy
+// Brullbar style frenzy
 // --------------------
 /datum/targetable/critter/frenzy
 	name = "Frenzy"
@@ -30,16 +30,16 @@
 		if (!ismob(target))
 			boutput(holder.owner, __red("Nothing to frenzy at there."))
 			return 1
-		if (get_dist(holder.owner, target) > 1)
+		if (BOUNDS_DIST(holder.owner, target) > 0)
 			boutput(holder.owner, __red("That is too far away to frenzy."))
 			return 1
 		var/mob/MT = target
 		if (!is_incapacitated(MT))
 			boutput(holder.owner, __red("That is moving around far too much to pounce."))
 			return 1
-		playsound(holder.owner, "sound/voice/animal/wendigo_roar.ogg", 80, 1)
+		playsound(holder.owner, "sound/voice/animal/brullbar_roar.ogg", 80, 1)
 		disabled = 1
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/frenz = rand(10, 20)
 			holder.owner.canmove = 0
 			while (frenz > 0 && MT && !MT.disposed)
@@ -49,7 +49,7 @@
 					holder.owner.set_loc(MT.loc)
 				if (is_incapacitated(holder?.owner))
 					break
-				playsound(holder.owner, "sound/voice/animal/wendigo_maul.ogg", 80, 1)
+				playsound(holder.owner, "sound/voice/animal/brullbar_maul.ogg", 80, 1)
 				holder.owner.visible_message("<span class='alert'><b>[holder.owner] [pick("mauls", "claws", "slashes", "tears at", "lacerates", "mangles")] [MT]!</b></span>")
 				holder.owner.set_dir((cardinal))
 				holder.owner.pixel_x = rand(-5, 5)
@@ -99,7 +99,7 @@
 		if (!ismob(target))
 			boutput(holder.owner, __red("Nothing to snip apart there."))
 			return 1
-		if (get_dist(holder.owner, target) > 1)
+		if (BOUNDS_DIST(holder.owner, target) > 0)
 			boutput(holder.owner, __red("That is too far away to pinch."))
 			return 1
 		var/mob/MT = target
@@ -108,7 +108,7 @@
 			return 1
 		playsound(holder.owner, "sound/items/Scissor.ogg", 100, 1, 0, 3)
 		disabled = 1
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/frenz = rand(10, 20)
 			holder.owner.canmove = 0
 			while (frenz > 0 && MT && !MT.disposed)

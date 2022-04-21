@@ -71,14 +71,19 @@
 
 	build(amount, var/obj/machinery/nanofab/owner)
 		for(var/i=0, i<amount, i++)
-			var/obj/item/clothing/suit/space/suit = new()
-			var/obj/item/clothing/head/helmet/space/helmet = new()
+			var/obj/item/clothing/suit/space/custom/suit = new()
+			var/obj/item/clothing/head/helmet/space/custom/helmet = new()
 			suit.set_loc(getOutputLocation(owner))
 			helmet.set_loc(getOutputLocation(owner))
-			var/obj/item/fab = getObjectByPartName("Fabric")
-			var/obj/item/vis = getObjectByPartName("Visor")
-			suit.setMaterial(fab.material)
-			helmet.setMaterial(vis.material)
+			var/obj/item/fabr = getObjectByPartName("Fabric")
+			var/obj/item/visr = getObjectByPartName("Visor")
+			var/obj/item/renf = getObjectByPartName("Reinforcement")
+			suit.setMaterial(fabr.material) // suit stuff
+			suit.setupReinforcement(renf.material)
+			suit.UpdateName()
+			helmet.setMaterial(fabr.material) // helmet stuff
+			helmet.setupVisorMat(visr.material)// sets color to match the suit, keeps protectiveness from visor
+			helmet.UpdateName()
 		return
 
 /datum/matfab_recipe/mining_mod_conc

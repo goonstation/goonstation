@@ -473,7 +473,7 @@
 					if ("age")
 						if (istype(src.active_record_general, /datum/db_record))
 							var/t1 = input("Age:", "Security Records", src.active_record_general["age"], null) as num
-							t1 = max(1, min(t1, 99))
+							t1 = clamp(t1, 1, 99)
 							if (!t1 || src.validate_can_still_use(current_general, current_security, usr))
 								return
 							src.active_record_general["age"] = t1

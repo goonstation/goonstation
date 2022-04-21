@@ -1,5 +1,6 @@
 /obj/machinery/chem_dispenser
 	name = "chem dispenser"
+	desc = "A complicated, soda fountain-like machine that allows the user to dispense basic chemicals for use in recipies."
 	density = 1
 	anchored = 1
 	icon = 'icons/obj/chemical.dmi'
@@ -89,7 +90,7 @@
 			if (isnull(amount) || amount <= 0)
 				return
 			amount = clamp(amount, 0, amtlimit)
-			if (get_dist(src,user) > 1)
+			if (BOUNDS_DIST(src, user) > 0)
 				boutput(user, "You need to move closer to get the chemicals!")
 				return
 			if (status & (NOPOWER|BROKEN))
@@ -116,17 +117,17 @@
 				boutput(user, "You swap the [B] with the [glass_name] already loaded into the machine.")
 			else
 				boutput(user, "You add the [glass_name] to the machine!")
-		src.update_icon()
+		src.UpdateIcon()
 		src.ui_interact(user)
 
 	ex_act(severity)
 		switch(severity)
 			if(1.0)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					src.take_damage(400)
 				return
 			if(2.0)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					src.take_damage(150)
 				return
 
@@ -140,7 +141,7 @@
 
 	proc/eject_card()
 		if (src.user_id)
-			if(IN_RANGE(usr, src, 1))
+			if((BOUNDS_DIST(usr, src) == 0))
 				usr.put_in_hand_or_drop(src.user_id)
 			else
 				src.user_id.set_loc(src.loc)
@@ -169,22 +170,22 @@
 			src.accounts += new_account
 			src.current_account = new_account
 
-	proc/update_icon()
+	update_icon()
 		if (!beaker)
 			src.icon_state = src.icon_base
 		else
 			src.icon_state = "[src.icon_base][rand(1,5)]"
 
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		if(!isliving(usr))
 			boutput(usr, "<span class='alert'>Only living mobs are able to set the dispenser's output target.</span>")
 			return
 
-		if(get_dist(over_object,src) > 1)
+		if(BOUNDS_DIST(over_object, src) > 0)
 			boutput(usr, "<span class='alert'>The dispenser is too far away from the target!</span>")
 			return
 
-		if(get_dist(over_object,usr) > 1)
+		if(BOUNDS_DIST(over_object, usr) > 0)
 			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
 			return
 
@@ -211,9 +212,9 @@
 	proc/remove_distant_beaker()
 		// borgs and people with item arms don't insert the beaker into the machine itself
 		// but whenever something would happen to the dispenser and the beaker is far it should disappear
-		if(beaker && !IN_RANGE(get_turf(beaker), src, 1))
+		if(beaker && BOUNDS_DIST(beaker, src) > 0)
 			beaker = null
-			src.update_icon()
+			src.UpdateIcon()
 
 	ui_interact(mob/user, datum/tgui/ui)
 		remove_distant_beaker()
@@ -285,19 +286,19 @@
 				var/amount = clamp(round(params["amount"]), 1, 100)
 				beaker.reagents.add_reagent(params["reagentId"], isnum(amount) ? amount : 10)
 				beaker.reagents.handle_reactions()
-				src.update_icon()
+				src.UpdateIcon()
 				playsound(src.loc, dispense_sound, 50, 1, 0.3)
 				use_power(10)
 				. = TRUE
 			if ("eject")
 				if (beaker)
 					if(beaker.loc == src)
-						if(IN_RANGE(usr, src, 1))
+						if((BOUNDS_DIST(usr, src) == 0))
 							usr.put_in_hand_or_drop(beaker)
 						else
 							beaker.set_loc(src.loc)
 					beaker = null
-					src.update_icon()
+					src.UpdateIcon()
 					. = TRUE
 				else
 					var/obj/item/I = usr.equipped()
@@ -306,26 +307,26 @@
 							usr.drop_item()
 							I.set_loc(src)
 						src.beaker = I
-						src.update_icon()
+						src.UpdateIcon()
 						. = TRUE
 			if ("remove")
 				if(!beaker)
 					return
 				var/amount = clamp(round(params["amount"]), 1, 100)
 				beaker.reagents.remove_reagent(params["reagentId"], isnum(amount) ? amount : 10)
-				src.update_icon()
+				src.UpdateIcon()
 				. = TRUE
 			if ("isolate")
 				if(!beaker)
 					return
 				beaker.reagents.isolate_reagent(params["reagentId"])
-				src.update_icon()
+				src.UpdateIcon()
 				. = TRUE
 			if ("all")
 				if(!beaker)
 					return
 				beaker.reagents.del_reagent(params["reagentId"])
-				src.update_icon()
+				src.UpdateIcon()
 				. = TRUE
 			if ("newGroup")
 				var/reagents = params["reagents"]
@@ -340,13 +341,18 @@
 				for (var/reagent in reagentlist)
 					if (lowertext(reagent) in src.dispensable_reagents)
 						G.reagents += lowertext(reagent)
-						//Special amounts!
-						if (istext(reagentlist[reagent])) //Set a dispense amount
-							var/num = text2num_safe(reagentlist[reagent])
-							if(!num) num = 10
-							G.reagents[lowertext(reagent)] = clamp(round(num), 1, 100)
-						else //Default to 10 if no specific amount given
-							G.reagents[lowertext(reagent)] = 10
+						var/reagentAmmount = reagentlist[reagent]
+
+						if (istext(reagentAmmount))
+							var/ammount = text2num_safe(reagentAmmount)
+							G.reagents[lowertext(reagent)] = clamp(round(ammount), 1, 100)
+						// If the input is more than 1 of the same reagent we have a list instead of just text
+						else
+							var/reagentValue = 0
+							for (var/num in reagentAmmount)
+								reagentValue += text2num_safe(num)
+							G.reagents[lowertext(reagent)] = clamp(round(reagentValue), 1, 100)
+
 				if(G.reagents == 0)
 					return
 				G.name = name
@@ -374,7 +380,7 @@
 								amt = group.reagents[reagent]
 							beaker.reagents.add_reagent(reagent,amt)
 							beaker.reagents.handle_reactions()
-					src.update_icon()
+					src.UpdateIcon()
 					use_power(length(group.reagents) * 10)
 				playsound(src.loc, dispense_sound, 50, 1, 0.3)
 				. = TRUE

@@ -18,7 +18,7 @@
 		if (forceartiorigin)
 			AS.validtypes = list("[forceartiorigin]")
 		src.artifact = AS
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.ArtifactSetup()
 		..()
 
@@ -80,6 +80,7 @@
 /datum/artifact/powercell
 	associated_object = /obj/item/cell/artifact
 	type_name = "Large power cell"
+	type_size = ARTIFACT_SIZE_TINY
 	rarity_weight = 350
 	validtypes = list("ancient","martian","wizard","precursor")
 	automatic_activation = 1
@@ -107,7 +108,7 @@
 			if ("ancient")
 				O.noise = pick("sound/effects/electric_shock_short.ogg", "sound/effects/creaking_metal2.ogg","sound/machines/weapons-reloading.ogg", "sound/machines/glitch1.ogg","sound/machines/glitch2.ogg", "sound/machines/glitch3.ogg","sound/machines/glitch4.ogg", "sound/machines/glitch5.ogg", "sound/machines/scan.ogg")
 			if ("wizard")
-				O.noise = pick("sound/weapons/airzooka.ogg", "sound/misc/newsting.ogg", "sound/misc/chair/glass/scoot5.ogg", "sound/misc/chair/glass/scoot2.ogg")
+				O.noise = pick("sound/weapons/airzooka.ogg", "sound/misc/chair/glass/scoot5.ogg", "sound/misc/chair/glass/scoot2.ogg")
 			if ("precursor") // what does precursor stuff even sound like???
 				O.noise = pick("sound/effects/singsuck.ogg", "sound/effects/screech_tone.ogg")
 

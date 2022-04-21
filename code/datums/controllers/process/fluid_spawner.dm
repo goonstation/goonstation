@@ -43,7 +43,7 @@ var/global/obj/fluid/ocean_fluid_obj = null
 
 		src.processing_fluid_turfs = global.processing_fluid_turfs
 
-		SPAWN_DBG(20 SECONDS)
+		SPAWN(20 SECONDS)
 			if (total_clients() >= OSHAN_LIGHT_OVERLOAD)
 				do_light_gen = 0
 

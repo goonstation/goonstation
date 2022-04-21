@@ -17,31 +17,43 @@
 	var/finished = 0
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
+	var/const/min_revheads = 3
+	var/const/max_revheads = 5
+	var/const/pop_divisor = 15
 	var/win_check_freq = 30 SECONDS //frequency of checks on the win conditions
-	var/round_limit = 45 MINUTES //see post_setup
+	var/round_limit = 40 MINUTES //see post_setup
 	var/endthisshit = 0
+	var/gibwave_started = FALSE
 	do_antag_random_spawns = 0
 	escape_possible = 0
 
-/datum/game_mode/revolution/extended
+/datum/game_mode/revolution/extended //Does not end prematurely
 	name = "extended revolution"
 	config_tag = "revolution_extended"
-	round_limit = 0 //Do not end prematurely
 
 /datum/game_mode/revolution/announce()
 	boutput(world, "<B>The current game mode is - Revolution!</B>")
 	boutput(world, "<B>Some crewmembers are attempting to start a revolution!<BR><br>Revolutionaries - Kill the heads of staff. Convert other crewmembers (excluding synthetics and security) to your cause by flashing them. Protect your leaders.<BR><br>Personnel - Protect the heads of staff. Kill the leaders of the revolution, and brainwash the other revolutionaries (by using an electropack, electric chair or beating them in the head).</B>")
 
 /datum/game_mode/revolution/pre_setup()
+
 	var/list/revs_possible = get_possible_enemies(ROLE_HEAD_REV, 1)
+	var/num_players = 0
+	for(var/client/C)
+		var/mob/new_player/player = C.mob
+		if (!istype(player)) continue
+
+		if(player.ready)
+			num_players++
 
 	if (!revs_possible.len)
 		return 0
 
 	var/rev_number = 0
+	var/ideal_rev_number = clamp(round(num_players / pop_divisor), min_revheads, max_revheads)
 
-	if(revs_possible.len >= 3)
-		rev_number = 3
+	if(revs_possible.len >= ideal_rev_number)
+		rev_number = ideal_rev_number
 	else
 		rev_number = length(revs_possible)
 
@@ -75,10 +87,8 @@
 
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		for(var/datum/mind/head_mind in heads)
-			var/datum/objective/regular/assassinate/rev_obj = new
-			rev_obj.owner = rev_mind
+			var/datum/objective/regular/assassinate/rev_obj = new(null, rev_mind)
 			rev_obj.find_target_by_role(head_mind.assigned_role)
-			rev_mind.objectives += rev_obj
 
 		equip_revolutionary(rev_mind.current)
 		SHOW_REVHEAD_TIPS(rev_mind.current)
@@ -91,20 +101,8 @@
 			boutput(rev_mind.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 			obj_count++
 
-	SPAWN_DBG (rand(waittime_l, waittime_h))
+	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
-
-	if(round_limit > 0)
-		SPAWN_DBG (round_limit) // this has got to end soon
-			command_alert("A revolution has been detected on [station_name(1)]. All loyal members of the crew are to ensure the revolution is quelled.","Emergency Riot Update")
-			sleep(6000) // 10 minutes to clean up shop
-			command_alert("Revolution heads have been identified. Please stand by for hostile employee termination.", "Emergency Riot Update")
-			sleep(3000) // 5 minutes until everyone dies
-			command_alert("You may feel a slight burning sensation.", "Emergency Riot Update")
-			sleep(10 SECONDS) // welp
-			for(var/mob/living/carbon/M in mobs)
-				M.gib()
-			endthisshit = 1
 
 /datum/game_mode/revolution/proc/equip_revolutionary(mob/living/carbon/human/rev_mob)
 	equip_traitor(rev_mob)
@@ -168,6 +166,9 @@
 
 /datum/game_mode/revolution/process()
 	..()
+	if (!istype(ticker.mode, /datum/game_mode/revolution/extended) && ticker.round_elapsed_ticks >= round_limit && !gibwave_started)
+		gibwave_started = TRUE
+		start_gibwave()
 	if (world.time > win_check_freq)
 		win_check_freq += win_check_freq
 		check_win()
@@ -186,6 +187,17 @@
 		return 1
 	else
 		return 0
+
+/datum/game_mode/revolution/proc/start_gibwave()
+	command_alert("A revolution has been detected on [station_name(1)]. All loyal members of the crew are to ensure the revolution is quelled.","Emergency Riot Update")
+	sleep(10 MINUTES) // 10 minutes to clean up shop
+	command_alert("Revolution heads have been identified. Please stand by for hostile employee termination.", "Emergency Riot Update")
+	sleep(5 MINUTES) // 5 minutes until everyone dies
+	command_alert("You may feel a slight burning sensation.", "Emergency Riot Update")
+	sleep(10 SECONDS) // welp
+	for(var/mob/living/carbon/M in mobs)
+		M.gib()
+	endthisshit = 1
 
 /datum/game_mode/revolution/proc/add_revolutionary(datum/mind/rev_mind)
 	.= 0
@@ -306,11 +318,11 @@
 
 	for(var/mob/living/carbon/human/player in mobs)
 		if(player.mind)
-			if (locate(/obj/item/implant/antirev) in player.implant)
+			if (locate(/obj/item/implant/counterrev) in player.implant)
 				ucs += player.mind
 			else
 				var/role = player.mind.assigned_role
-				if(role in list("Captain", "Head of Security", "Security Assistant", "Head of Personnel", "Chief Engineer", "Research Director", "Medical Director", "Head Surgeon", "Head of Mining", "Security Officer", "Security Assistant", "Vice Officer", "Part-time Vice Officer", "Detective", "AI", "Cyborg", "Nanotrasen Special Operative", "Nanotrasen Security Operative","Communications Officer"))
+				if(role in list("Captain", "Head of Security", "Security Assistant", "Head of Personnel", "Chief Engineer", "Research Director", "Medical Director", "Head of Mining", "Security Officer", "Security Assistant", "Vice Officer", "Part-time Vice Officer", "Detective", "AI", "Cyborg", "Nanotrasen Special Operative", "Nanotrasen Security Operative","Communications Officer"))
 					ucs += player.mind
 	//for(var/mob/living/carbon/human/player in mobs)
 

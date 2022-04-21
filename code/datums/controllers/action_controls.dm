@@ -44,8 +44,8 @@ var/datum/action_controller/actions
 			interrupt(owner, INTERRUPT_ACTION)
 			for(var/datum/action/OA in running[owner])
 				//Meant to catch users starting the same action twice, and saving the first-attempt from deletion
-				if(OA.id == A.id && OA.state == ACTIONSTATE_DELETE && OA.resumable)
-					OA.onResume()
+				if(OA.id == A.id && OA.state == ACTIONSTATE_DELETE && (OA.interrupt_flags & INTERRUPT_ACTION) && OA.resumable)
+					OA.onResume(A)
 					qdel(A)
 					return OA
 			running[owner] += A
@@ -116,7 +116,7 @@ var/datum/action_controller/actions
 	proc/loopStart()				//Called after restarting. Meant to cotain code from -and be called from- onStart()
 		return
 
-	proc/onResume()				   //Called when the action resumes - likely from almost ending
+	proc/onResume(datum/action/attempted)	 //Called when the action resumes - likely from almost ending. Arg is the action which would have cancelled this.
 		state = ACTIONSTATE_RUNNING
 		return
 
@@ -195,7 +195,7 @@ var/datum/action_controller/actions
 		if (place_to_put_bar)
 			place_to_put_bar.vis_contents -= target_bar
 			place_to_put_bar.vis_contents -= target_border
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			if (bar)
 				bar.set_loc(null)
 				qdel(bar)
@@ -262,7 +262,7 @@ var/datum/action_controller/actions
 				animate( target_bar, color = src.color_failure, time = 2.5 )
 		..()
 
-	onResume()
+	onResume(datum/action/attempted)
 		if (bar)
 			updateBar()
 			bar.color = src.color_active
@@ -718,7 +718,7 @@ var/datum/action_controller/actions
 
 	onUpdate()
 		..()
-		if(get_dist(owner, repairing) > 1 || repairing == null || owner == null || using == null)
+		if(BOUNDS_DIST(owner, repairing) > 0 || repairing == null || owner == null || using == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -745,6 +745,11 @@ var/datum/action_controller/actions
 			border.icon = null
 			M.client?.images += bar.img
 			M.client?.images += border.img
+			if(place_to_put_bar)
+				target_bar.icon = null
+				target_border.icon = null
+				M.client?.images += target_bar.img
+				M.client?.images += target_border.img
 
 	onDelete()
 		bar.icon = 'icons/ui/actions.dmi'
@@ -755,6 +760,11 @@ var/datum/action_controller/actions
 			M.client?.images -= border.img
 			qdel(bar.img)
 			qdel(border.img)
+			if(place_to_put_bar)
+				M.client?.images -= target_bar.img
+				M.client?.images -= target_border.img
+				qdel(target_bar.img)
+				qdel(target_border.img)
 		..()
 
 /datum/action/bar/private/icon //Only visible to the owner and has a little icon on the bar.
@@ -786,12 +796,99 @@ var/datum/action_controller/actions
 		..()
 
 //ACTIONS
-/datum/action/bar/icon/genericProc //Calls a specific proc with the given arguments when the action succeeds. TBI
-	id = "genproc"
+/**
+* Calls a specified proc if it finishes without interruptions. Only displayed to the user.
+* Heavily copy pasted from /datum/action/bar/icon/callback.
+*
+* check [_std/macros/actions.dm] for documentation on a macro that uses this.
+*/
+/datum/action/bar/private/icon/callback
+	/// set to a string version of the callback proc path
+	id = null
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	icon = 'icons/mob/screen1.dmi'
-	icon_state = "grabbed"
+	/// set to the path of the proc that will be called if the action bar finishes
+	var/proc_path = null
+	/// set to datum to perform callback on if seperate from owner or target
+	var/call_proc_on = null
+	/// what the target of the action is, if any
+	var/target = null
+	/// what string is broadcast once the action bar finishes
+	var/end_message = ""
+	/// what is the maximum range target and owner can be apart? need to modify before starting the action.
+	var/maximum_range = 1
+	/// a list of args for the proc thats called once the action bar finishes, if needed.
+	var/list/proc_args = null
 
+	New(owner, target, duration, proc_path, proc_args, icon, icon_state, end_message, interrupt_flags, call_proc_on)
+		..()
+		if (owner)
+			src.owner = owner
+		else //no owner means we have nothing to do things with
+			CRASH("action bars need an owner object to be tied to")
+		if (target) //not having a target is okay, sometimes were just doing things to ourselves
+			src.target = target
+		if (duration)
+			src.duration = duration
+		else //no duration dont do the thing
+			CRASH("action bars need a duration to run for, there's no default duration")
+		if (proc_path)
+			src.proc_path = proc_path
+		else //no proc, dont do the thing
+			CRASH("no proc was specified to be called once the action bar ends")
+		if(call_proc_on)
+			src.call_proc_on = call_proc_on
+		if (proc_args)
+			src.proc_args = proc_args
+		if (icon) //optional, dont always want an icon
+			src.icon = icon
+			if (icon_state) //optional, dont always want an icon state
+				src.icon_state = icon_state
+		else if (icon_state)
+			CRASH("icon state set for action bar, but no icon was set")
+		if (end_message)
+			src.end_message = end_message
+		if (interrupt_flags)
+			src.interrupt_flags = interrupt_flags
+		//generate a id
+		if (src.proc_path)
+			src.id = "[src.proc_path]"
+
+		src.proc_args = proc_args
+
+	onStart()
+		..()
+		if (!src.owner)
+			interrupt(INTERRUPT_ALWAYS)
+		if (src.target && !IN_RANGE(src.owner, src.target, src.maximum_range))
+			interrupt(INTERRUPT_ALWAYS)
+
+	onUpdate()
+		..()
+		if (!src.owner)
+			interrupt(INTERRUPT_ALWAYS)
+		if (src.target && !IN_RANGE(src.owner, src.target, src.maximum_range))
+			interrupt(INTERRUPT_ALWAYS)
+
+	onEnd()
+		..()
+		if (!src.proc_path)
+			CRASH("action bar had no proc to call upon completion")
+		..()
+		if (!src.owner)
+			interrupt(INTERRUPT_ALWAYS)
+		if (src.target && !IN_RANGE(src.owner, src.target, src.maximum_range))
+			interrupt(INTERRUPT_ALWAYS)
+
+		if (end_message)
+			src.owner.visible_message("[src.end_message]")
+		if (src.call_proc_on)
+			INVOKE_ASYNC(arglist(list(src.call_proc_on, src.proc_path) + src.proc_args))
+		else if (src.target)
+			INVOKE_ASYNC(arglist(list(src.target, src.proc_path) + src.proc_args))
+		else
+			INVOKE_ASYNC(arglist(list(src.owner, src.proc_path) + src.proc_args))
+
+#define STAM_COST 30
 /datum/action/bar/icon/otherItem//Putting items on or removing items from others.
 	id = "otheritem"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
@@ -816,14 +913,14 @@ var/datum/action_controller/actions
 			if(item.duration_put > 0)
 				duration = item.duration_put
 			else
-				duration = 45
+				duration = 4.5 SECONDS
 		else
 			var/obj/item/I = target.get_slot(slot)
 			if(I)
 				if(I.duration_remove > 0)
 					duration = I.duration_remove
 				else
-					duration = 25
+					duration = 2.5 SECONDS
 
 		duration += ExtraDuration
 
@@ -838,6 +935,13 @@ var/datum/action_controller/actions
 		if (source.mob_flags & AT_GUNPOINT)
 			for(var/obj/item/grab/gunpoint/G in source.grabbed_by)
 				G.shoot()
+
+		if (source.get_stamina() < STAM_COST)
+			boutput(owner, "<span class='alert>You're too winded to [item ? "place that on" : "take that from"] [him_or_her(target)].</span>")
+			src.resumable = FALSE
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		source.remove_stamina(STAM_COST)
 
 		if(item)
 			if(!target.can_equip(item, slot))
@@ -867,12 +971,6 @@ var/datum/action_controller/actions
 				boutput(source, "<span class='alert'>You can't remove [I] from [target] when [(he_or_she(target))] is in [target.loc]!</span>")
 				interrupt(INTERRUPT_ALWAYS)
 				return
-			/* Some things use handle_other_remove to do stuff (ripping out staples, wiz hat probability, etc) should only be called once per removal.
-			if(!I.handle_other_remove(source, target))
-				boutput(source, "<span class='alert'>[I] can not be removed.</span>")
-				interrupt(INTERRUPT_ALWAYS)
-				return
-			*/
 			logTheThing("combat", source, target, "tries to remove \an [I] from [constructTarget(target,"combat")] at [log_loc(target)].")
 			var/name = "something"
 			if (!hidden)
@@ -888,7 +986,7 @@ var/datum/action_controller/actions
 	onEnd()
 		..()
 
-		if(get_dist(source, target) > 1 || target == null || source == null)
+		if(BOUNDS_DIST(source, target) > 0 || target == null || source == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -931,7 +1029,7 @@ var/datum/action_controller/actions
 				boutput(source, "<span class='alert'>You fail to remove [I] from [target].</span>")
 	onUpdate()
 		..()
-		if(get_dist(source, target) > 1 || target == null || source == null)
+		if(BOUNDS_DIST(source, target) > 0 || target == null || source == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -941,6 +1039,7 @@ var/datum/action_controller/actions
 		else
 			if(!target.get_slot(slot=slot))
 				interrupt(INTERRUPT_ALWAYS)
+#undef STAM_COST
 
 /datum/action/bar/icon/internalsOther //This is used when you try to set someones internals
 	duration = 40
@@ -957,13 +1056,13 @@ var/datum/action_controller/actions
 
 	onUpdate()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -976,7 +1075,7 @@ var/datum/action_controller/actions
 				remove_internals = 0
 	onEnd()
 		..()
-		if(owner && target && get_dist(owner, target) <= 1)
+		if(owner && target && BOUNDS_DIST(owner, target) == 0)
 			if(remove_internals)
 				target.internal.add_fingerprint(owner)
 				for (var/obj/ability_button/tank_valve_toggle/T in target.internal.ability_buttons)
@@ -1013,7 +1112,7 @@ var/datum/action_controller/actions
 
 	onUpdate()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null || cuffs == null)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || cuffs == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -1023,7 +1122,7 @@ var/datum/action_controller/actions
 
 	onStart()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null || cuffs == null)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || cuffs == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -1042,7 +1141,7 @@ var/datum/action_controller/actions
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
-		if(owner && ownerMob && target && cuffs && !target.hasStatus("handcuffed") && cuffs == ownerMob.equipped() && get_dist(owner, target) <= 1)
+		if(owner && ownerMob && target && cuffs && !target.hasStatus("handcuffed") && cuffs == ownerMob.equipped() && BOUNDS_DIST(owner, target) == 0)
 
 			var/obj/item/handcuffs/tape/cuffs2
 
@@ -1096,7 +1195,7 @@ var/datum/action_controller/actions
 
 	onUpdate()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -1106,13 +1205,18 @@ var/datum/action_controller/actions
 
 	onStart()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 		if(target != null && ishuman(target) && target.hasStatus("handcuffed"))
 			var/mob/living/carbon/human/H = target
 			duration = round(duration * H.handcuffs.remove_other_multiplier)
+
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if(H.traitHolder.hasTrait("training_security"))
+				duration = round(duration / 2)
 
 		for(var/mob/O in AIviewers(owner))
 			O.show_message("<span class='alert'><B>[owner] attempts to remove [target]'s handcuffs!</B></span>", 1)
@@ -1200,6 +1304,83 @@ var/datum/action_controller/actions
 				H.show_text("You successfully remove the shackles.", "blue")
 
 
+/datum/action/bar/private/welding
+	duration = 2 SECONDS
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	id = "welding"
+	var/obj/effects/welding/E
+	var/list/start_offset
+	var/list/end_offset
+
+	id = null
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	/// set to the path of the proc that will be called if the action bar finishes
+	var/proc_path = null
+	/// what the target of the action is, if any
+	var/target = null
+	/// what string is broadcast once the action bar finishes
+	var/end_message = ""
+	/// what is the maximum range target and owner can be apart? need to modify before starting the action.
+	var/maximum_range = 1
+	/// a list of args for the proc thats called once the action bar finishes, if needed.
+	var/list/proc_args = null
+	bar_on_owner = FALSE
+
+	New(owner, target, duration, proc_path, proc_args, end_message, start, stop)
+		..()
+		src.owner = owner
+		src.target = target
+		place_to_put_bar = target
+
+		if(duration)
+			src.duration = duration
+		src.proc_path = proc_path
+		src.proc_args = proc_args
+		src.end_message = end_message
+		src.start_offset = start
+		src.end_offset = stop
+
+	onStart()
+		..()
+		if (!src.owner)
+			interrupt(INTERRUPT_ALWAYS)
+		if (src.target && !IN_RANGE(src.owner, src.target, src.maximum_range))
+			interrupt(INTERRUPT_ALWAYS)
+		if(!E && ismovable(src.target))
+			var/atom/movable/M = src.target
+			E = new(M)
+			M.vis_contents += E
+			E.pixel_x = start_offset[1]
+			E.pixel_y = start_offset[2]
+			animate(E, time=src.duration, pixel_x=end_offset[1], pixel_y=end_offset[2])
+
+	onDelete(var/flag)
+		if(E && ismovable(src.target))
+			var/atom/movable/M = src.target
+			M.vis_contents -= E
+			qdel(E)
+		..()
+
+	onEnd()
+		..()
+		if (!src.owner)
+			interrupt(INTERRUPT_ALWAYS)
+		if (src.target && !IN_RANGE(src.owner, src.target, src.maximum_range))
+			interrupt(INTERRUPT_ALWAYS)
+
+		if (end_message)
+			src.owner.visible_message("[src.end_message]")
+
+		if (src.target)
+			INVOKE_ASYNC(arglist(list(src.target, src.proc_path) + src.proc_args))
+		else
+			INVOKE_ASYNC(arglist(list(src.owner, src.proc_path) + src.proc_args))
+
+		if(E && ismovable(src.target))
+			var/atom/movable/M = src.target
+			M.vis_contents -= E
+			qdel(E)
+
 //CLASSES & OBJS
 
 /obj/actions //These objects are mostly used for the attached_objs var on mobs to attach progressbars to mobs.
@@ -1259,13 +1440,13 @@ var/datum/action_controller/actions
 
 	onUpdate() //check for special conditions that could interrupt the picking-up here.
 		..()
-		if(get_dist(owner, target) > 1 || picker == null || target == null || owner == null) //If the thing is suddenly out of range, interrupt the action. Also interrupt if the user or the item disappears.
+		if(BOUNDS_DIST(owner, target) > 0 || picker == null || target == null || owner == null) //If the thing is suddenly out of range, interrupt the action. Also interrupt if the user or the item disappears.
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, target) > 1 || picker == null || target == null || owner == null || picker.working)  //If the thing is out of range, interrupt the action. Also interrupt if the user or the item disappears.
+		if(BOUNDS_DIST(owner, target) > 0 || picker == null || target == null || owner == null || picker.working)  //If the thing is out of range, interrupt the action. Also interrupt if the user or the item disappears.
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		else
@@ -1348,13 +1529,13 @@ var/datum/action_controller/actions
 
 	onUpdate()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		for(var/mob/O in AIviewers(owner))
@@ -1383,13 +1564,13 @@ var/datum/action_controller/actions
 
 	onUpdate()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -1398,14 +1579,14 @@ var/datum/action_controller/actions
 		if(owner && target)
 			if (ishuman(target))
 				var/mob/living/carbon/human/H = target
-				var/obj/item/implant/antirev/found_imp = (locate(/obj/item/implant/antirev) in H.implant)
+				var/obj/item/implant/counterrev/found_imp = (locate(/obj/item/implant/counterrev) in H.implant)
 				if (found_imp)
 					found_imp.on_remove(target)
 					H.implant.Remove(found_imp)
 					qdel(found_imp)
 
 					playsound(target.loc, 'sound/impact_sounds/Crystal_Shatter_1.ogg', 50, 0.1, 0, 0.9)
-					target.visible_message("<span class='notice'>The loyalty implant inside [target] shatters into one million pieces!</span>")
+					target.visible_message("<span class='notice'>The counter-revolutionary implant inside [target] shatters into one million pieces!</span>")
 
 				flash.flash_mob(target, owner)
 
@@ -1426,19 +1607,19 @@ var/datum/action_controller/actions
 
 	onUpdate()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if(owner && target)
@@ -1446,9 +1627,10 @@ var/datum/action_controller/actions
 
 /datum/action/bar/icon/CPR
 	duration = 4 SECONDS
-	interrupt_flags = INTERRUPT_ALWAYS
+	id = "cpr"
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
 	icon = 'icons/ui/actions.dmi'
-	icon_state = "cpr" //placeholder
+	icon_state = "cpr"
 	var/mob/living/target
 
 	New(target)
@@ -1457,12 +1639,12 @@ var/datum/action_controller/actions
 
 	onUpdate()
 		..()
-		if(get_dist(owner, target) > 1 || !target || !owner || target.health > 0 || !src.can_cpr())
+		if(BOUNDS_DIST(owner, target) > 0 || !target || !owner || target.health > 0 || !src.can_cpr())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
-		if(get_dist(owner, target) > 1 || !target || !owner || target.health > 0 || !src.can_cpr())
+		if(BOUNDS_DIST(owner, target) > 0 || !target || !owner || target.health > 0 || !src.can_cpr())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -1470,7 +1652,7 @@ var/datum/action_controller/actions
 		..()
 
 	onEnd()
-		if(get_dist(owner, target) > 1 || !target || !owner || target.health > 0)
+		if(BOUNDS_DIST(owner, target) > 0 || !target || !owner || target.health > 0)
 			..()
 			interrupt(INTERRUPT_ALWAYS)
 			return
@@ -1513,6 +1695,46 @@ var/datum/action_controller/actions
 
 		return TRUE
 
+/datum/action/bar/icon/forcefeed
+	duration = 3 SECONDS
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
+	var/mob/mob_owner
+	var/mob/consumer
+	var/obj/item/reagent_containers/food/snacks/foodish //only works with food for now, will generalize for organs and glasses and such later
+
+	New(var/mob/consumer, var/foodish, var/icon, var/icon_state)
+		..()
+		src.consumer = consumer
+		src.foodish = foodish
+		src.icon = icon
+		src.icon_state = icon_state
+
+	onStart()
+		if (!ismob(owner))
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		src.mob_owner = owner
+
+		if(BOUNDS_DIST(owner, consumer) > 0 || !consumer || !owner || mob_owner.equipped() != foodish)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		..()
+
+	onUpdate()
+		..()
+		if(BOUNDS_DIST(owner, consumer) > 0 || !consumer || !owner || mob_owner.equipped() != foodish)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onEnd()
+		..()
+		if(BOUNDS_DIST(owner, consumer) > 0 || !consumer || !owner || mob_owner.equipped() != foodish)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		foodish.take_a_bite(consumer, mob_owner)
+
 /datum/action/bar/private/spy_steal //Used when a spy tries to steal a large object
 	duration = 30
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
@@ -1527,13 +1749,13 @@ var/datum/action_controller/actions
 
 	onUpdate()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		playsound(owner.loc, "sound/machines/click.ogg", 60, 1)
@@ -1650,13 +1872,13 @@ var/datum/action_controller/actions
 
 	onUpdate()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if(ishuman(owner)) //This is horrible and clunky and probably going to kill us all, I am so, so sorry.
@@ -1702,6 +1924,7 @@ var/datum/action_controller/actions
 		onEnd()
 			..()
 			if (can_reach(owner,over_object) && ismob(owner) && owner:equipped() == target)
+				usr = owner
 				over_object.Attackby(target, owner, params)
 
 /// general purpose action to anchor or unanchor stuff
@@ -1737,7 +1960,7 @@ var/datum/action_controller/actions
 
 	onUpdate()
 		..()
-		if (target == null || tool == null || owner == null || get_dist(owner, target) > 1)
+		if (target == null || tool == null || owner == null || BOUNDS_DIST(owner, target) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner

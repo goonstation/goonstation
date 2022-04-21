@@ -65,6 +65,7 @@
 
 	for (var/obj/machinery/conveyor_switch/S as anything in linked_switches) //conveyor switch could've been exploded
 		S.conveyors -= src
+	id = null
 	..()
 
 	// set the dir and target turf depending on the operating direction
@@ -150,7 +151,7 @@
 		var/mob/M = AM
 		if(istype(M) && M.buckled == src) //Transfer the buckle
 			M.buckled = next_conveyor
-		if(!next_conveyor.operating)
+		if(!next_conveyor.operating || next_conveyor.status & NOPOWER)
 			walk(AM, 0)
 			return
 
@@ -209,7 +210,7 @@
 		return
 	if (user.pulling.anchored)
 		return
-	if ((user.pulling.loc != user.loc && get_dist(user, user.pulling) > 1))
+	if ((user.pulling.loc != user.loc && BOUNDS_DIST(user, user.pulling) > 0))
 		return
 	if (ismob(user.pulling))
 		var/mob/M = user.pulling
@@ -267,7 +268,7 @@
 	desc = "A diverter arm for a conveyor belt."
 	anchored = 1
 	layer = FLY_LAYER
-	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT
+	event_handler_flags = USE_FLUID_ENTER
 	var/obj/machinery/conveyor/conv // the conveyor this diverter works on
 	var/deployed = 0	// true if diverter arm is extended
 	var/operating = 0	// true if arm is extending/contracting
@@ -306,7 +307,7 @@
 		if(SOUTHWEST)
 			divert_to = SOUTH
 			divert_from = WEST
-	SPAWN_DBG(0.2 SECONDS)
+	SPAWN(0.2 SECONDS)
 		// wait for map load then find the conveyor in this turf
 		conv = locate() in src.loc
 		if(conv)	// divert_from dir must match possible conveyor movement
@@ -369,13 +370,15 @@
 	return(direct != turn(divert_from,180))
 
 // don't allow movement through the arm if deployed
-/obj/machinery/diverter/CheckExit(atom/movable/O, var/turf/target)
-	var/direct = get_dir(O, target)
+/obj/machinery/diverter/Uncross(atom/movable/O, do_bump=TRUE)
+	var/direct = get_dir(O, O.movement_newloc)
 	if(direct == turn(divert_to,180))	// prevent movement through body of diverter
-		return 0
-	if(!deployed)
-		return 1
-	return(direct != divert_from)
+		. = 0
+	else if(!deployed)
+		. = 1
+	else
+		. = direct != divert_from
+	UNCROSS_BUMP_CHECK(O)
 
 
 
@@ -404,11 +407,11 @@
 		. = ..()
 		UnsubscribeProcess()
 		START_TRACKING
-		update_icon()
+		UpdateIcon()
 		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"trigger", "trigger")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"trigger", .proc/trigger)
 		conveyors = list()
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			link_conveyors()
 			for (var/obj/machinery/conveyor/C as anything in conveyors)
 				if (C.id == src.id)
@@ -435,7 +438,7 @@
 		return
 
 	/// update the icon depending on the position
-	proc/update_icon()
+	update_icon()
 		if(position == CONVEYOR_REVERSE)
 			icon_state = "switch-rev"
 		else if(position == CONVEYOR_FORWARD)
@@ -455,18 +458,19 @@
 			else
 				position = CONVEYOR_REVERSE
 				last_pos = CONVEYOR_STOPPED
+			logTheThing("station", user, null, "turns the conveyor switch on in [last_pos == CONVEYOR_REVERSE ? "forward" : "reverse"] mode at [log_loc(src)].")
 		else
 			last_pos = position
 			position = CONVEYOR_STOPPED
-
-		update_icon()
+			logTheThing("station", user, null, "turns the conveyor switch off at [log_loc(src)].")
+		UpdateIcon()
 
 		// find any switches with same id as this one, and set their positions to match us
 		for_by_tcl(S, /obj/machinery/conveyor_switch)
 			if (S == src) continue
 			if(S.id == src.id)
 				S.position = position
-				S.update_icon()
+				S.UpdateIcon()
 			LAGCHECK(LAG_MED)
 
 		for (var/obj/machinery/conveyor/C as anything in conveyors)
@@ -595,7 +599,7 @@
 
 		if (speedup != last_speedup)
 			update_belts()
-			update_icon()
+			UpdateIcon()
 
 	proc/update_belts()
 		for_by_tcl(S, /obj/machinery/conveyor_switch)
@@ -604,6 +608,6 @@
 					C.move_lag = max(initial(C.move_lag) - speedup, 0.1)
 				break
 
-	proc/update_icon()
+	update_icon()
 		var/ico = clamp(((speedup / speedup_max) * icon_levels), 0, 6)
 		icon_state = "[icon_base][round(ico)]"

@@ -40,7 +40,7 @@
 				return
 			else
 				owner.waiting_for_hotkey = 1
-				src.updateIcon()
+				src.UpdateIcon()
 				boutput(usr, "<span class='notice'>Please press a number to bind this ability to...</span>")
 				return
 
@@ -57,7 +57,7 @@
 			usr.targeting_ability = owner
 			usr.update_cursor()
 		else
-			SPAWN_DBG(0)
+			SPAWN(0)
 				spell.handleCast()
 		return
 
@@ -92,12 +92,26 @@
 			var/mob/living/carbon/human/H = owner
 			if (istype(H.mutantrace, /datum/mutantrace/vampiric_thrall))
 				var/datum/mutantrace/vampiric_thrall/V = H.mutantrace
-				.["Blood:"] = V.blood_points
-				.["Max HP:"] = H.max_health
+				.["Blood:"] = round(V.blood_points)
+				.["Max HP:"] = round(H.max_health)
 
 	proc/msg_to_master(var/msg)
 		if (master)
 			master.transmit_thrall_msg(msg,owner)
+
+	proc/change_vampire_blood(var/change = 0, var/total_blood = 0, var/set_null = 0)
+		if(!total_blood)
+			var/mob/living/carbon/human/M = owner
+			if(istype(M) && istype(M.mutantrace, /datum/mutantrace/vampiric_thrall))
+				var/datum/mutantrace/vampiric_thrall/V = M.mutantrace
+				if (V.blood_points < 0)
+					V.blood_points = 0
+					if (haine_blood_debug) logTheThing("debug", M, null, "<b>HAINE BLOOD DEBUG:</b> [M]'s blood_points dropped below 0 and was reset to 0")
+
+				if (set_null)
+					V.blood_points = 0
+				else
+					V.blood_points = max(V.blood_points + change, 0)
 
 
 /datum/targetable/vampiric_thrall

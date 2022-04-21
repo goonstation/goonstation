@@ -13,7 +13,7 @@
 	New()
 		..()
 		if(current_state > GAME_STATE_PREGAME)
-			SPAWN_DBG(0.1 SECONDS)
+			SPAWN(0.1 SECONDS)
 				src.initialize()
 
 	initialize()
@@ -136,7 +136,7 @@
 	New()
 		..()
 		if(start_on)
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				src.trigger("on")
 
 	trigger_actions()
@@ -172,7 +172,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			for(var/obj/adventurepuzzle/invisible/target_link/T)
 				if (T.id == "UD-LANDING-ZONE")
 					target = get_turf(T)
@@ -184,7 +184,7 @@
 		if(!(user == usr))
 			return
 		if(istype(H) && slot == SLOT_GLASSES)
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				enter_urs_dungeon(user)
 		return
 
@@ -198,8 +198,7 @@
 			src.set_loc(get_turf(H))
 			H.unequip_all()
 
-			var/mob/living/carbon/human/V = new(get_turf(src.target),H.client.preferences.AH)
-			H.client.preferences.copy_to(V,H,1)
+			var/mob/living/carbon/human/V = new(get_turf(src.target),H.client.preferences.AH, H.client.preferences, TRUE)
 			if (!H.mind)
 				H.mind = new /datum/mind()
 				H.mind.ckey = H.ckey
@@ -238,7 +237,7 @@
 		..()
 		var/mob/living/carbon/human/H = user
 		if(istype(H) && slot == SLOT_GLASSES)
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				exit_urs_dungeon(user)
 		return
 

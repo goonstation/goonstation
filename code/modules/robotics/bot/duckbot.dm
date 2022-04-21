@@ -189,7 +189,7 @@
 	var/list/T = get_area_turfs(src.duck_migration_target, 1)
 	if(length(T) >= 1)
 		. = TRUE
-		SPAWN_DBG(rand(0,10 SECONDS)) // give em some time to spread out a bit
+		SPAWN(rand(0,10 SECONDS)) // give em some time to spread out a bit
 			T = (pick(T))
 			//src.mystical_access() AB SO FUC KING LUTE LEY NOT THANK YOU VERRY MOUCHE - warc
 			src.navigate_to(T, src.bot_move_delay, 0, 80)
@@ -283,5 +283,6 @@
 	src.visible_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
 	playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
 	elecflash(src, radius=1, power=3, exclude_center = 0)
+	new /obj/item/instrument/bikehorn(src.loc)
 	qdel(src)
 	return

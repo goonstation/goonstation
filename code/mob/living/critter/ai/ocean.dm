@@ -56,7 +56,7 @@
 
 /datum/aiTask/timed/targeted/trilobite/on_tick()
 	var/mob/living/critter/owncritter = holder.owner
-	if (HAS_MOB_PROPERTY(owncritter, PROP_CANTMOVE))
+	if (HAS_ATOM_PROPERTY(owncritter, PROP_MOB_CANTMOVE))
 		return
 
 	if(!holder.target)
@@ -80,9 +80,9 @@
 
 		if (dist < 4)
 			if (istype(M) && M.equipped()) //might be attacking a sub
-				owncritter.a_intent = prob(66) ? INTENT_DISARM : INTENT_HARM
+				owncritter.set_a_intent(prob(66) ? INTENT_DISARM : INTENT_HARM)
 			else
-				owncritter.a_intent = INTENT_HARM
+				owncritter.set_a_intent(INTENT_HARM)
 
 			owncritter.hud.update_intent()
 			owncritter.set_dir(get_dir(owncritter, M))
@@ -127,7 +127,7 @@
 		. = 1
 
 /datum/aiTask/timed/targeted/escape_vehicles/on_tick()
-	if (HAS_MOB_PROPERTY(holder.owner, PROP_CANTMOVE))
+	if (HAS_ATOM_PROPERTY(holder.owner, PROP_MOB_CANTMOVE))
 		return
 
 	if(!holder.target)
@@ -184,7 +184,7 @@
 
 /datum/aiTask/timed/targeted/flee_and_shoot/on_tick()
 	var/mob/living/critter/owncritter = holder.owner
-	if (HAS_MOB_PROPERTY(owncritter, PROP_CANTMOVE))
+	if (HAS_ATOM_PROPERTY(owncritter, PROP_MOB_CANTMOVE))
 		return
 
 	if(!holder.target && world.time > last_seek + 5 SECONDS)
@@ -211,7 +211,7 @@
 
 		holder.move_away(holder.target,target_range)
 
-		owncritter.a_intent = INTENT_HARM
+		owncritter.set_a_intent(INTENT_HARM)
 
 		owncritter.hud.update_intent()
 		owncritter.set_dir(get_dir(owncritter, holder.target))
@@ -291,7 +291,7 @@
 
 /datum/aiTask/timed/targeted/pikaia/on_tick()
 	var/mob/living/critter/owncritter = holder.owner
-	if (HAS_MOB_PROPERTY(owncritter, PROP_CANTMOVE) || !isalive(owncritter))
+	if (HAS_ATOM_PROPERTY(owncritter, PROP_MOB_CANTMOVE) || !isalive(owncritter))
 		return
 
 	if(!holder.target)
@@ -318,7 +318,7 @@
 				if(!holder.target)
 					return ..() // try again next tick
 			if (dist <= 1)
-				owncritter.a_intent = INTENT_GRAB
+				owncritter.set_a_intent(INTENT_GRAB)
 				owncritter.hud.update_intent()
 				owncritter.set_dir(get_dir(owncritter, M))
 
@@ -334,7 +334,7 @@
 							owncritter.drop_item()
 
 						if (G.state <= GRAB_PASSIVE)
-							G.attack_self(owncritter)
+							G.AttackSelf(owncritter)
 						else
 							owncritter.emote("flip")
 							holder.move_away(holder.target,1)

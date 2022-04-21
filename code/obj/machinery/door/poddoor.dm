@@ -4,7 +4,7 @@
 	icon_state = "pdoor1"
 	icon_base = "pdoor"
 	cant_emag = 1
-	layer = 2.8
+	layer = (GRILLE_LAYER + 0.01)
 	object_flags = 0
 
 	health = 1800
@@ -20,6 +20,9 @@
 		. = ..()
 		STOP_TRACKING
 
+	xmasify()
+		return
+
 /obj/machinery/door/poddoor/blast/single
 	doordir = "single"
 	icon_state = "bdoorsingle1"
@@ -31,7 +34,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(5 SECONDS)
+		SPAWN(5 SECONDS)
 			open()
 
 	bump()
@@ -956,7 +959,7 @@
 			playsound(src.loc, src.hitsound , 50, 1, pitch = 1.6)
 			src.take_damage(C.force)
 	if ((src.density && (status & NOPOWER) && !( src.operating )))
-		SPAWN_DBG( 0 )
+		SPAWN( 0 )
 			src.operating = 1
 			flick("[icon_base]c0", src)
 			src.icon_state = "[icon_base]0"
@@ -985,7 +988,7 @@
 	if(!src.operating) //in case of emag
 		src.operating = 1
 
-	SPAWN_DBG(-1)
+	SPAWN(-1)
 		flick("[icon_base]c0", src)
 		src.icon_state = "[icon_base]0"
 		sleep(1 SECOND)
@@ -999,7 +1002,7 @@
 		if(operating == 1) //emag again
 			src.operating = 0
 		if(autoclose)
-			SPAWN_DBG(15 SECONDS)
+			SPAWN(15 SECONDS)
 				autoclose()
 	return 1
 
@@ -1011,7 +1014,7 @@
 	if (linked_forcefield) //mbc : oh gosh why is this not calling door parent
 		linked_forcefield.setactive(0)
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		src.operating = 1
 		flick("[icon_base]1", src)
 		src.icon_state = "[icon_base]1"
@@ -1065,7 +1068,7 @@
 	if (!ispryingtool(C))
 		return
 	if ((src.density && (status & NOPOWER) && !( src.operating )))
-		SPAWN_DBG( 0 )
+		SPAWN( 0 )
 			src.operating = 1
 			flick("[icon_base][doordir]c0", src)
 			src.icon_state = "[icon_base][doordir]0"
@@ -1093,7 +1096,7 @@
 	if (linked_forcefield) //mbc : SAVE ME FROM THIS HELL WHERE PARENTS ARENT CALLED
 		linked_forcefield.setactive(1)
 
-	SPAWN_DBG(-1)
+	SPAWN(-1)
 		flick("[icon_base][doordir]c0", src)
 		src.icon_state = "[icon_base][doordir]0"
 		sleep(1 SECOND)
@@ -1107,7 +1110,7 @@
 		if(operating == 1) //emag again
 			src.operating = 0
 		if(autoclose)
-			SPAWN_DBG(15 SECONDS)
+			SPAWN(15 SECONDS)
 				autoclose()
 	return 1
 
@@ -1118,7 +1121,7 @@
 		linked_forcefield.setactive(0)
 	src.operating = 1
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		flick("[icon_base][doordir]c1", src)
 		src.icon_state = "[icon_base][doordir]1"
 		src.set_density(1)

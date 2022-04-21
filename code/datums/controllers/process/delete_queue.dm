@@ -67,7 +67,7 @@ var/global/harddel_count = 0
 				continue
 
 #ifdef HARD_DELETIONS_DISABLED
-			var/harddel_msg = "Didn't GC:"
+			var/harddel_msg = "Didn't GC: \ref[D]"
 #else
 			var/harddel_msg = "HardDel of"
 #endif
@@ -181,6 +181,11 @@ var/global/harddel_count = 0
 		*/
 
 	proc/gimmick_ungcd_mob_stuff(mob/living/L)
+
+		#ifdef UPSCALED_MAP //this causes a ton of lag. no clue why.
+		return
+		#endif
+
 		L.lying = FALSE
 		L.dir = SOUTH
 		L.invisibility = INVIS_NONE

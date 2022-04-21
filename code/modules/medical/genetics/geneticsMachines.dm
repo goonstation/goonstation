@@ -8,7 +8,7 @@
 	name = "genetics console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "scanner"
-	req_access = list(access_heads) //Only used for record deletion right now.
+	req_access = list(access_medlab)
 	object_flags = CAN_REPROGRAM_ACCESS
 	can_reconnect = TRUE
 	circuit_type = /obj/item/circuitboard/genetics
@@ -42,7 +42,7 @@
 /obj/machinery/computer/genetics/New()
 	..()
 	START_TRACKING
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		connection_scan()
 
 /obj/machinery/computer/genetics/connection_scan()
@@ -74,11 +74,11 @@
 		var/obj/item/card/id/ID = W
 		if (istype(ID))
 			registered_id = ID.registered
-			user.show_text("You swipe the ID on [src]. You will now recieve a cut from gene booth sales.", "blue")
+			user.show_text("You swipe the ID on [src]. You will now receive a cut from gene booth sales.", "blue")
 			return
 
 		..()
-	return
+
 
 /obj/machinery/computer/genetics/proc/activated_bonus(mob/user as mob)
 	if (genResearch.time_discount < 0.75)
@@ -246,14 +246,16 @@
 /obj/machinery/computer/genetics/ui_status(mob/user)
 	if (user in src.scanner)
 		return UI_UPDATE
-	return ..()
+	. = ..()
+	if (!src.allowed(user))
+		. = min(., UI_UPDATE)
 
 /obj/machinery/computer/genetics/proc/on_ui_interacted(mob/user, minor = FALSE)
 	src.add_fingerprint(user)
 	playsound(src.loc, 'sound/machines/keypress.ogg', minor ? 25 : 50, 1, -15)
 
 /obj/machinery/computer/genetics/proc/play_emitter_sound()
-	SPAWN_DBG(0)
+	SPAWN(0)
 		for (var/i = 0, i < 15 && (i < 3 || prob(genResearch.emitter_radiation)), i++)
 			switch (genResearch.emitter_radiation)
 				if(1 to 15)
@@ -916,6 +918,7 @@
 		"savedChromosomes" = list(),
 		"combining" = list(),
 		"unlock" = null,
+		"allowed" = src.allowed(user),
 	)
 
 	for(var/datum/db_record/R as anything in data_core.medical.records)

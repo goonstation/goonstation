@@ -487,7 +487,7 @@
 	name = "quiver"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "quiver-0"
-	wear_image_icon = 'icons/mob/back.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	item_state = "quiver"
 	flags = FPRINT | TABLEPASS | ONBACK | ONBELT
 	move_triggered = 1
@@ -517,7 +517,7 @@
 				return contents[1]
 			else return null
 
-	proc/updateApperance()
+	proc/updateAppearance()
 		if (contents.len)
 			maptext = "[contents.len]"
 		else
@@ -530,11 +530,11 @@
 			var/obj/item/arrow/I = getArrow(user)
 			if(I)
 				user.put_in_hand(I, user.hand)
-				updateApperance()
+				updateAppearance()
 			return
 		..()
 
-	MouseDrop(atom/over_object, src_location, over_location)
+	mouse_drop(atom/over_object, src_location, over_location)
 		..()
 		var/atom/movable/screen/hud/S = over_object
 		if (istype(S))
@@ -625,7 +625,7 @@
 					loaded = I
 					I.set_loc(src)
 					overlays += I
-					Q.updateApperance()
+					Q.updateAppearance()
 			if(istype(H.belt, /obj/item/quiver))
 				var/obj/item/quiver/Q = H.belt
 				var/obj/item/arrow/I = Q.getArrow(user)
@@ -633,7 +633,7 @@
 					loaded = I
 					I.set_loc(src)
 					overlays += I
-					Q.updateApperance()
+					Q.updateAppearance()
 		return
 
 	attack_hand(var/mob/user)
@@ -662,7 +662,7 @@
 	//absolutely useless as an attack but removing it causes bugs, replaced fire point blank which had issues with the way arrow damage is calculated.
 		if(isliving(target))
 			if(loaded)
-				if(loaded.afterattack(target,user,1))
+				if(loaded.AfterAttack(target,user,1))
 					loaded =null;//arrow isnt consumed otherwise, for some inexplicable reason.
 			else
 				boutput(user, "<span class='alert'>Nothing is loaded in the bow!</span>")

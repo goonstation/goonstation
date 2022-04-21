@@ -19,6 +19,7 @@
 	flags = FPRINT | ONBELT | TABLEPASS
 	force = 10
 	throwforce = 7
+	health = 7
 	w_class = W_CLASS_NORMAL
 	mats = list("MET-3"=10, "CON-2"=10)
 	contraband = 4
@@ -35,6 +36,7 @@
 	var/wait_cycle = 0 // Update sprite periodically if we're using a self-charging cell.
 
 	var/cell_type = /obj/item/ammo/power_cell/med_power // Type of cell to spawn by default.
+	var/from_frame_cell_type = /obj/item/ammo/power_cell //type of cell to spawn when mechscanned
 	var/cost_normal = 25 // Cost in PU. Doesn't apply to cyborgs.
 	var/cost_cyborg = 500 // Battery charge to drain when user is a cyborg.
 	var/is_active = TRUE
@@ -43,6 +45,7 @@
 
 	var/disorient_stamina_damage = 130 // Amount of stamina drained.
 	var/can_swap_cell = 1
+	var/rechargable = 1
 	var/beepsky_held_this = 0 // Did a certain validhunter hold this?
 	var/flipped = false //is it currently rotated so that youre grabbing it by the head?
 
@@ -51,13 +54,20 @@
 		var/cell = null
 		if(cell_type)
 			cell = new cell_type
-		AddComponent(/datum/component/cell_holder, cell, TRUE, INFINITY, can_swap_cell)
-		RegisterSignal(src, COMSIG_UPDATE_ICON, .proc/update_icon)
+		AddComponent(/datum/component/cell_holder, cell, rechargable, INFINITY, can_swap_cell)
+		RegisterSignal(src, COMSIG_UPDATE_ICON, /atom/proc/UpdateIcon)
 		processing_items |= src
-		src.update_icon()
-		src.setItemSpecial(/datum/item_special/spark)
+		src.UpdateIcon()
+		src.setItemSpecial(/datum/item_special/spark/baton)
 
 		BLOCK_SETUP(BLOCK_ROD)
+
+	was_built_from_frame(mob/user, newly_built)
+		. = ..()
+		if(src.can_swap_cell && from_frame_cell_type)
+			AddComponent(/datum/component/cell_holder, new from_frame_cell_type)
+
+		SEND_SIGNAL(src, COMSIG_CELL_USE, INFINITY) //also drain the cell out of spite
 
 	disposing()
 		processing_items -= src
@@ -76,7 +86,8 @@
 		src.process_charges(-INFINITY)
 		return
 
-	proc/update_icon()
+	update_icon()
+
 		if (!src || !istype(src))
 			return
 
@@ -205,7 +216,7 @@
 			dude_to_stun.lastattacker = user
 			dude_to_stun.lastattackertime = world.time
 
-		src.update_icon()
+		src.UpdateIcon()
 		return
 
 	attack_self(mob/user as mob)
@@ -229,7 +240,7 @@
 			boutput(user, "<span class='notice'>The [src.name] is now off.</span>")
 			playsound(src, "sparks", 75, 1, -1)
 
-		src.update_icon()
+		src.UpdateIcon()
 		user.update_inhands()
 
 		return
@@ -269,7 +280,7 @@
 		if (src.flipped && user.a_intent != INTENT_HARM)
 			user.show_text("You flip \the [src] the right way around as you grab it.")
 			src.flipped = false
-			src.update_icon()
+			src.UpdateIcon()
 			user.update_inhands()
 		else if (user.a_intent == INTENT_HARM)
 			src.do_flip_stuff(user, INTENT_HARM)
@@ -284,7 +295,8 @@
 			animate(transform = turn(matrix(), 240), time = 0.07 SECONDS) //turn the rest of the way
 			animate(transform = turn(matrix(), 180), time = 0.04 SECONDS) //finish up at the right spot
 			src.transform = null //clear it before updating icon
-			src.update_icon()
+			src.setItemSpecial(/datum/item_special/simple)
+			src.UpdateIcon()
 			user.update_inhands()
 			user.show_text("<B>You flip \the [src] and grab it by the head! [src.is_active ? "It seems pretty unsafe to hold it like this while it's on!" : "At least its off!"]</B>", "red")
 		else //not already flipped
@@ -295,14 +307,16 @@
 			animate(transform = turn(matrix(), 240), time = 0.07 SECONDS) //turn the rest of the way
 			animate(transform = turn(matrix(), 180), time = 0.04 SECONDS) //finish up at the right spot
 			src.transform = null //clear it before updating icon
-			src.update_icon()
+			src.setItemSpecial(/datum/item_special/spark/baton)
+			src.UpdateIcon()
 			user.update_inhands()
 			user.show_text("<B>You flip \the [src] and grab it by the base!", "red")
 
 	dropped(mob/user)
 		if (src.flipped)
+			src.setItemSpecial(/datum/item_special/spark/baton)
 			src.flipped = false
-			src.update_icon()
+			src.UpdateIcon()
 			user.update_inhands()
 		..()
 
@@ -315,10 +329,9 @@
 	name = "securitron stun baton"
 	desc = "A stun baton that's been modified to be used more effectively by security robots. There's a small parallel port on the bottom of the handle."
 	can_swap_cell = 0
+	rechargable = 0
 	cell_type = /obj/item/ammo/power_cell
-	New()
-		. = ..()
-		AddComponent(/datum/component/cell_holder, FALSE)
+	mats = 0 //no
 
 /obj/item/baton/cane
 	name = "stun cane"
@@ -378,10 +391,12 @@
 	flick_baton_active = "ntso-baton-a-1"
 	w_class = W_CLASS_SMALL	//2 when closed, 4 when extended
 	can_swap_cell = 0
+	rechargable = 0
 	is_active = FALSE
 	// stamina_based_stun_amount = 110
 	cost_normal = 25 // Cost in PU. Doesn't apply to cyborgs.
 	cell_type = /obj/item/ammo/power_cell/self_charging/ntso_baton
+	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/disruptor
 	item_function_flags = 0
 	//bascially overriding is_active, but it's kinda hacky in that they both are used jointly
 	var/state = CLOSED_AND_OFF
@@ -417,7 +432,7 @@
 					src.force = 7
 					playsound(src, "sound/misc/lightswitch.ogg", 75, 1, -1)
 					boutput(user, "<span class='notice'>The [src.name] is now open and unpowered.</span>")
-					src.update_icon()
+					src.UpdateIcon()
 					user.update_inhands()
 					return
 
@@ -444,12 +459,13 @@
 				boutput(user, "<span class='notice'>The [src.name] is now closed.</span>")
 				playsound(src, "sparks", 75, 1, -1)
 
-		src.update_icon()
+		src.UpdateIcon()
 		user.update_inhands()
 
 		return
 
 	update_icon()
+
 		if (!src || !istype(src))
 			return
 		switch (src.state)

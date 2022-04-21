@@ -35,23 +35,21 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		return
 #ifdef XMAS
 	christmas_cheer += mod
-	christmas_cheer = max(0,min(christmas_cheer,100))
 
 	if (!xmas_respawn_lock)
 		if (christmas_cheer >= 80 && !santa_spawned)
-			SPAWN_DBG(0) // Might have been responsible for locking up the mob loop via human Life() -> death() -> modify_christmas_cheer() -> santa_krampus_spawn().
+			SPAWN(0) // Might have been responsible for locking up the mob loop via human Life() -> death() -> modify_christmas_cheer() -> santa_krampus_spawn().
 				santa_krampus_spawn(0)
 #endif
 #if defined(XMAS) && !defined(RP_MODE)
 		if (christmas_cheer <= 10 && !krampus_spawned)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				santa_krampus_spawn(1)
 #endif
-	return
 
 // Might as well tweak Santa/Krampus respawn to make it use the universal player selection proc I wrote (Convair880).
 /proc/santa_krampus_spawn(var/which_one = 0, var/confirmation_delay = 1200)
-	if (xmas_respawn_lock != 0)
+	if ((xmas_respawn_lock != 0) || (!ticker?.mode?.do_antag_random_spawns))
 		return
 	if (!isnum(confirmation_delay) || confirmation_delay < 0)
 		message_admins("Couldn't set up [which_one == 0 ? "Santa Claus" : "Krampus"] respawn (setup failed).")
@@ -109,7 +107,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		boutput(L, "<b>Do not reference anything that happened during your past life!</b>")
 		santa_spawned = 1
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			L.choose_name(3, "Santa Claus", "Santa Claus")
 
 	else
@@ -157,7 +155,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			if(prob(5) && limiter.canISpawn(/obj/effects/sparks))
 				var/obj/sparks = new /obj/effects/sparks
 				sparks.set_loc(src.loc)
-				SPAWN_DBG(2 SECONDS) if (sparks) qdel(sparks)
+				SPAWN(2 SECONDS) if (sparks) qdel(sparks)
 			return TRUE
 
 /obj/machinery/bot/guardbot/xmas
@@ -206,7 +204,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			var/edge = get_edge_target_turf(src, pick(alldirs))
 			O.throw_at(edge, 100, 4)
 
-		SPAWN_DBG(0) //Delete the overlay when finished with it.
+		SPAWN(0) //Delete the overlay when finished with it.
 			src.on = 0
 			sleep(1.5 SECONDS)
 			qdel(Ov)
@@ -324,12 +322,12 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			if(S.alive)
 				S.visible_message("<b>[S.name]</b> [pick("groans","yelps")]!", 1)
 				walk_away(S,src,20,1)
-				SPAWN_DBG(1 SECOND) walk(S,0)
+				SPAWN(1 SECOND) walk(S,0)
 		///Killing seals pisses off walruses!! uh oh.
 		for (var/obj/critter/walrus/W in view(7,src))
 			if(W.alive)
 				W.aggressive = 1
-				SPAWN_DBG(0.7 SECONDS)
+				SPAWN(0.7 SECONDS)
 				W.aggressive = 0
 
 	attack_hand(var/mob/user as mob)
@@ -349,7 +347,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			if(!src.defensive)
 				src.visible_message("<b>[src]</b> [pick("groans","yelps")]!", 1)
 				walk_away(src,user,10,1)
-				SPAWN_DBG(0.7 SECONDS) walk(src,0)
+				SPAWN(0.7 SECONDS) walk(src,0)
 		else
 			src.visible_message("<b>[user]</b> [pick("hugs","pets","caresses","boops","squeezes")] [src]!", 1)
 			if(prob(80))
@@ -368,7 +366,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 				src.visible_message("<b>[src]</b> [pick("groans","yelps")]!", 1)
 				src.visible_message("<b>[src]</b> gets frightened by [W]!", 1)
 				walk_away(src,user,10,1)
-				SPAWN_DBG(1 SECOND) walk(src,0)
+				SPAWN(1 SECOND) walk(src,0)
 				return
 
 			if(prob(5))
@@ -382,7 +380,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		else
 			src.visible_message("<b>[src]</b> [pick("groans","yelps")]!", 1)
 			walk_away(src,user,10,1)
-			SPAWN_DBG(0.4 SECONDS) walk(src,0)
+			SPAWN(0.4 SECONDS) walk(src,0)
 			..()
 
 /obj/critter/walrus
@@ -428,7 +426,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		src.attacking = 1
 		M.visible_message("<span class='combat'><b>[src]</b> drives its tusks through [src.target]!</span>")
 		random_brute_damage(M, rand(8,16),1)
-		SPAWN_DBG(2 SECONDS) src.attacking = 0
+		SPAWN(2 SECONDS) src.attacking = 0
 
 
 	ChaseAttack(mob/M)
@@ -485,7 +483,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		else if (!src.on_fire && burning == 1)
 			src.visible_message("<span class='combat'><b>[src] catches on fire! Oh shit!</b></span>")
 			src.on_fire = 1
-			SPAWN_DBG(1 MINUTE)
+			SPAWN(1 MINUTE)
 				if (src.on_fire)
 					src.visible_message("<span class='combat'>[src] burns down and collapses into a sad pile of ash. <b><i>Spacemas is ruined!!!</i></b></span>")
 					for (var/turf/simulated/floor/T in range(1,src))
@@ -493,9 +491,9 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 					modify_christmas_cheer(-33)
 					qdel(src)
 					return
-		src.update_icon()
+		src.UpdateIcon()
 
-	proc/update_icon()
+	update_icon()
 		if (src.on_fire)
 			if (!src.fire_image)
 				src.fire_image = image('icons/effects/160x160.dmi', "xmastree_2014_burning")
@@ -514,16 +512,21 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	throwforce = 1
 	doants = 0
 	food_color = "#FFFFFF"
+	var/melts = TRUE
+
+	unmelting
+		melts = FALSE
 
 	New()
 		..()
-		SPAWN_DBG(rand(100,500))
-			if (src.loc && (istype(src.loc, /turf/simulated/floor/specialroom/freezer) || src.loc.loc.name == "Space" || src.loc.loc.name == "Ocean"))
-				src.visible_message("\The [src] vanishes into thin air, as its subatomic particles decay!")
-			else
-				src.visible_message("\The [src] melts!")
-				make_cleanable( /obj/decal/cleanable/water,get_turf(src))
-			qdel(src)
+		if(melts)
+			SPAWN(rand(100,500))
+				if (src.loc && (istype(src.loc, /turf/simulated/floor/specialroom/freezer) || src.loc.loc.name == "Space" || src.loc.loc.name == "Ocean"))
+					src.visible_message("\The [src] vanishes into thin air, as its subatomic particles decay!")
+				else
+					src.visible_message("\The [src] melts!")
+					make_cleanable( /obj/decal/cleanable/water,get_turf(src))
+				qdel(src)
 
 	heal(var/mob/living/M)
 		if (!M || !isliving(M))
@@ -582,7 +585,6 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			return
 
 /obj/decal/garland
-	EPHEMERAL_XMAS
 	name = "garland"
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "garland"
@@ -590,7 +592,6 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	anchored = 1
 
 /obj/decal/tinsel
-	EPHEMERAL_XMAS
 	name = "tinsel"
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "tinsel-silver"
@@ -598,7 +599,6 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	anchored = 1
 
 /obj/decal/wreath
-	EPHEMERAL_XMAS
 	name = "wreath"
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "wreath"
@@ -612,7 +612,6 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	anchored = 1
 
 /obj/decal/xmas_lights
-	EPHEMERAL_XMAS
 	name = "spacemas lights"
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "lights1"
@@ -723,14 +722,14 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 
 			if (src.stat || src.transforming)
 				boutput(src, "<span class='alert'>You can't do that while you're incapacitated.</span>")
-				return
+				return 1
 
 			src.verbs -= /mob/living/carbon/human/santa/verb/santa_heal
 			playsound(src.loc, "sound/voice/heavenly.ogg", 100, 1, 0)
 			src.visible_message("<span class='alert'><B>[src] calls on the power of Spacemas to heal everyone!</B></span>")
 			for (var/mob/living/M in view(src,5))
 				M.HealDamage("All", 30, 30)
-			SPAWN_DBG(1 MINUTE)
+			SPAWN(1 MINUTE)
 				boutput(src, "<span class='notice'>You may now use your healing spell again.</span>")
 				src.verbs += /mob/living/carbon/human/santa/verb/santa_heal
 
@@ -741,7 +740,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 
 			if (src.stat || src.transforming)
 				boutput(src, "<span class='alert'>You can't do that while you're incapacitated.</span>")
-				return
+				return 1
 
 			src.verbs -= /mob/living/carbon/human/santa/verb/santa_gifts
 			src.visible_message("<span class='alert'><B>[src] throws out a bunch of Spacemas presents from nowhere!</B></span>")
@@ -761,7 +760,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 				sleep(0.2 SECONDS)
 			src.transforming = 0
 
-			SPAWN_DBG(2 MINUTES)
+			SPAWN(2 MINUTES)
 				boutput(src, "<span class='notice'>You may now summon gifts again.</span>")
 				src.verbs += /mob/living/carbon/human/santa/verb/santa_gifts
 
@@ -772,7 +771,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 
 			if (src.stat || src.transforming)
 				boutput(src, "<span class='alert'>You can't do that while you're incapacitated.</span>")
-				return
+				return 1
 
 			src.verbs -= /mob/living/carbon/human/santa/verb/santa_food
 			src.visible_message("<span class='alert'><B>[src] casts out a whole shitload of snacks from nowhere!</B></span>")
@@ -794,7 +793,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 				sleep(0.1 SECONDS)
 			src.transforming = 0
 
-			SPAWN_DBG(80 SECONDS)
+			SPAWN(80 SECONDS)
 				boutput(src, "<span class='notice'>You may now summon snacks again.</span>")
 				src.verbs += /mob/living/carbon/human/santa/verb/santa_food
 
@@ -805,7 +804,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 
 			if (src.stat || src.transforming)
 				boutput(src, "<span class='alert'>You can't do that while you're incapacitated.</span>")
-				return
+				return 1
 
 			src.verbs -= /mob/living/carbon/human/santa/verb/santa_warmth
 			playsound(src.loc, "sound/effects/MagShieldUp.ogg", 100, 1, 0)
@@ -813,7 +812,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			for (var/mob/living/M in view(src,5))
 				if (M.bioHolder)
 					M.bioHolder.AddEffect("cold_resist", 0, 60)
-			SPAWN_DBG(80 SECONDS)
+			SPAWN(80 SECONDS)
 				boutput(src, "<span class='notice'>You may now use your warmth spell again.</span>")
 				src.verbs += /mob/living/carbon/human/santa/verb/santa_warmth
 
@@ -824,12 +823,15 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 
 			if (src.stat || src.transforming)
 				boutput(src, "<span class='alert'>You can't do that while you're incapacitated.</span>")
-				return
+				return 1
 
 			src.verbs -= /mob/living/carbon/human/santa/verb/santa_teleport
 			var/A
 			A = input("Area to jump to", "TELEPORTATION", A) in get_teleareas()
 			var/area/thearea = get_telearea(A)
+			if(thearea.teleport_blocked)
+				boutput(src, "<span class='alert'>That area is blocked from teleportation.</span>")
+				return 1
 
 			src.visible_message("<span class='alert'><B>[src] poofs away in a puff of cold, snowy air!</B></span>")
 			playsound(usr.loc, "sound/effects/bamf.ogg", 25, 1, -1)
@@ -850,7 +852,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 						L+=T
 			src.set_loc(pick(L))
 
-			SPAWN_DBG(30 SECONDS)
+			SPAWN(30 SECONDS)
 				boutput(src, "<span class='notice'>You may now teleport again.</span>")
 				src.verbs += /mob/living/carbon/human/santa/verb/santa_teleport
 
@@ -861,7 +863,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 
 			if (src.stat || src.transforming)
 				boutput(src, "<span class='alert'>You can't do that while you're incapacitated.</span>")
-				return
+				return 1
 
 			var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
 			for (var/mob/living/carbon/cube/meat/krampus/K in view(7,src))
@@ -981,10 +983,10 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			playsound(src.loc, "sound/voice/animal/bull.ogg", 80, 1, 0, 0.4)
 			src.visible_message("<span class='alert'><B>[src] goes completely apeshit!</B></span>")
 			src.verbs -= /mob/living/carbon/human/krampus/verb/krampus_rampage
-			SPAWN_DBG(30 SECONDS)
+			SPAWN(30 SECONDS)
 				src.stance = "normal"
 				boutput(src, "<span class='alert'>Your rage burns out for a while.</span>")
-			SPAWN_DBG(1800)
+			SPAWN(1800)
 				boutput(src, "<span class='notice'>You feel ready to rampage again.</span>")
 				src.verbs += /mob/living/carbon/human/krampus/verb/krampus_rampage
 
@@ -1011,7 +1013,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			src.set_loc(target)
 			playsound(src.loc, "sound/voice/animal/bull.ogg", 50, 1, 0, 0.8)
 			animate_fading_leap_down(src)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				playsound(M.loc, "Explosion1.ogg", 50, 1, -1)
 				for (var/mob/C in viewers(src))
 					shake_camera(C, 10, 64)
@@ -1025,7 +1027,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 					playsound(X.loc, "fleshbr1.ogg", 50, 1, -1)
 				src.transforming = 0
 
-			SPAWN_DBG(1 MINUTE)
+			SPAWN(1 MINUTE)
 				boutput(src, "<span class='notice'>You may now leap again.</span>")
 				src.verbs += /mob/living/carbon/human/krampus/verb/krampus_leap
 
@@ -1052,7 +1054,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 				for (var/turf/T in range(src,3))
 					animate_shake(T,5,rand(3,8),rand(3,8))
 
-				SPAWN_DBG(1 MINUTE)
+				SPAWN(1 MINUTE)
 					boutput(src, "<span class='notice'>You may now stomp again.</span>")
 					src.verbs += /mob/living/carbon/human/krampus/verb/krampus_stomp
 
@@ -1090,7 +1092,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 
 			usr.set_loc(pick(L))
 			smoke.start()
-			SPAWN_DBG(1800)
+			SPAWN(1800)
 				boutput(src, "<span class='notice'>You may now teleport again.</span>")
 				src.verbs += /mob/living/carbon/human/krampus/verb/krampus_teleport
 
@@ -1111,8 +1113,8 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 				var/obj/item/grab/G = new /obj/item/grab(src, src, M)
 				usr.put_in_hand_or_drop(G)
 				M.changeStatus("stunned", 1 SECOND)
-				G.state = 1
-				G.update_icon()
+				G.state = GRAB_AGGRESSIVE
+				G.UpdateIcon()
 				src.set_dir(get_dir(src, M))
 				playsound(src.loc, "sound/voice/animal/werewolf_attack3.ogg", 65, 1, 0, 0.5)
 				playsound(src.loc, "sound/impact_sounds/Generic_Shove_1.ogg", 65, 1)
@@ -1133,7 +1135,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 					src.visible_message("<span class='alert'><B>[src] begins squeezing [H] in \his hand!</B></span>")
 					H.set_loc(src.loc)
 					while (!isdead(H))
-						if (src.stat || src.transforming || get_dist(src,H) > 1)
+						if (src.stat || src.transforming || BOUNDS_DIST(src, H) > 0)
 							boutput(src, "<span class='alert'>Your victim escaped! Curses!</span>")
 							qdel(G)
 							src.verbs += /mob/living/carbon/human/krampus/verb/krampus_crush
@@ -1173,12 +1175,12 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 					src.visible_message("<span class='alert'><B>[src] raises [H] up to \his mouth! Oh shit!</B></span>")
 					H.set_loc(src.loc)
 					sleep(6 SECONDS)
-					if (src.stat || src.transforming || get_dist(src,H) > 1)
+					if (src.stat || src.transforming || BOUNDS_DIST(src, H) > 0)
 						boutput(src, "<span class='alert'>Your prey escaped! Curses!</span>")
 					else
 						src.visible_message("<span class='alert'><B>[src] devours [H] whole!</B></span>")
 						playsound(src.loc, "sound/items/eatfood.ogg", 30, 1, -2)
-						H.death(1)
+						H.death(TRUE)
 						H.ghostize()
 						qdel(H)
 						qdel(G)
@@ -1187,7 +1189,6 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 						playsound(src.loc, pick("sound/voice/burp_alien.ogg"), 50, 1, 0 ,0.5)
 
 /obj/stocking
-	EPHEMERAL_XMAS
 	name = "stocking"
 	desc = "The most festive kind of sock!"
 	icon = 'icons/misc/xmas.dmi'
@@ -1246,6 +1247,16 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 
 /obj/decal/tile_edge/stripe/xmas
 	icon_state = "xmas"
+
+/obj/item/reagent_containers/food/drinks/eggnog
+	name = "Egg Nog"
+	desc = "A festive beverage made with eggs. Please eat the eggs. Eat the eggs up."
+	icon_state = "nog"
+	heal_amt = 1
+	festivity = 1
+	rc_flags = RC_FULLNESS
+	initial_volume = 50
+	initial_reagents = list("eggnog"=40)
 
 /obj/storage/crate/xmas
 	name = "\improper Spacemas crate"

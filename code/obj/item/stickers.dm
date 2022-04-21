@@ -172,7 +172,7 @@
 				user.show_text("All that won't fit on [src]!", "red")
 				pen.in_use = 0
 				return
-			logTheThing("station", user, null, "writes on [src] with [pen] at [showCoords(src.x, src.y, src.z)]: [t]")
+			logTheThing("station", user, null, "writes on [src] with [pen] at [log_loc(src)]: [t]")
 			t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
 			if (src.icon_state == initial(src.icon_state))
 				var/search_t = lowertext(t)
@@ -427,7 +427,7 @@
 				src.radio = new src.radio_path (src)
 			else
 				src.radio = new /obj/item/device/radio/spy (src)
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				src.radio.broadcasting = 0
 				//src.radio.listening = 0
 
@@ -505,7 +505,7 @@
 		if (!usr || usr.stat)
 			return
 
-		if ((get_dist(src, usr) <= 1) || (usr.loc == src.loc))
+		if ((BOUNDS_DIST(src, usr) == 0) || (usr.loc == src.loc))
 			src.add_dialog(usr)
 			switch (href_list["change_setting"])
 				if ("spynetwork")
@@ -599,7 +599,7 @@ ABSTRACT_TYPE(/obj/item/sticker/glow)
 	desc = "A sticker that has been egineered to self-illuminate when stuck to things."
 	dont_make_an_overlay = TRUE
 	icon_state = "glow"
-	var/datum/component/holdertargeting/simple_light/light_c
+	var/datum/component/loctargeting/simple_light/light_c
 	var/col_r = 0
 	var/col_g = 0
 	var/col_b = 0
@@ -608,7 +608,7 @@ ABSTRACT_TYPE(/obj/item/sticker/glow)
 	New()
 		. = ..()
 		color = rgb(col_r*255, col_g*255, col_b*255)
-		light_c = src.AddComponent(/datum/component/holdertargeting/simple_light, col_r*255, col_g*255, col_b*255, brightness*255)
+		light_c = src.AddComponent(/datum/component/loctargeting/simple_light, col_r*255, col_g*255, col_b*255, brightness*255)
 		light_c.update(0)
 
 	attack_hand(mob/user as mob)

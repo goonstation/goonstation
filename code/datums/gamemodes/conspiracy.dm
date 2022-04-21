@@ -23,7 +23,7 @@
 		if(player.ready)
 			numPlayers++
 
-	var/numConspirators = max(2, min(round(numPlayers / 5), maxConspirators)) // Selects number of conspirators
+	var/numConspirators = clamp(round(numPlayers / 5), 2, maxConspirators) // Selects number of conspirators
 
 	var/list/potentialAntags = get_possible_enemies(ROLE_CONSPIRATOR, numConspirators)
 	if (!potentialAntags.len)
@@ -50,11 +50,16 @@
 	return 1
 
 /datum/game_mode/conspiracy/post_setup()
-	var/meetingPoint = "Your initial meet-up point is <b>[pick("the chapel", "the arcade", "the escape wing", "the bar", "the pool", "the aviary")].</b>"
+	var/meetingPoint = "Your initial meet-up point is <b>[pick("the chapel", "the bar", "disposals", "the arcade", "the escape wing", "crew quarters", "the pool", "the aviary")].</b>"
 
 	var/conspiratorList = "The conspiracy consists of: "
 	for (var/datum/mind/conspirator in traitors)
-		conspiratorList = conspiratorList + "<b>" + conspirator.current.name + "</b>, "
+		var/conspirator_name
+		if (conspirator.assigned_role == "Clown")
+			conspirator_name = "a Clown"
+		else
+			conspirator_name = conspirator.current.real_name
+		conspiratorList += "<b>[conspirator_name]</b>, "
 
 	var/pickedObjective = pick(typesof(/datum/objective/conspiracy))
 	for(var/datum/mind/conspirator in traitors)
@@ -70,7 +75,7 @@
 		boutput(conspirator.current, conspiratorList)
 		boutput(conspirator.current, meetingPoint)
 
-	SPAWN_DBG (rand(waittime_l, waittime_h))
+	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
 
 /datum/game_mode/conspiracy/proc/random_radio_frequency()

@@ -23,7 +23,12 @@
 	var/list/datum/component/packet_connected/radio/secure_connections = null
 	var/speaker_range = 2
 	var/static/image/speech_bubble = image('icons/mob/mob.dmi', "speech")
-	var/hardened = 1	//This is for being able to run through signal jammers (just solar flares for now). acceptable values = 0 and 1.
+	///This is for being able to run through signal jammers (just solar flares for now). acceptable values = 0 and 1.
+	var/hardened = 1
+
+	/// Set to TRUE for your radio obj to have unconditional flying text. Override showMapText() to conditionalize it.
+	var/doesMapText = FALSE
+	// probably not too resource intensive but I'd be careful using this just in case
 
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
 	throw_speed = 2
@@ -69,12 +74,13 @@ var/list/headset_channel_lookup
 
 /obj/item/device/radio/proc/set_secure_frequencies()
 	if(istype(src.secure_frequencies))
+		if (!istype(src.secure_connections))
+			src.secure_connections = list()
 		for (var/sayToken in src.secure_frequencies)
 			var/frequency_id = src.secure_frequencies["[sayToken]"]
 			if (frequency_id)
-				if (!istype(src.secure_connections))
-					src.secure_connections = list()
-				src.secure_connections["[sayToken]"] = MAKE_DEFAULT_RADIO_PACKET_COMPONENT("f[frequency_id]", frequency_id)
+				if (!src.secure_connections["[sayToken]"])
+					src.secure_connections["[sayToken]"] = MAKE_DEFAULT_RADIO_PACKET_COMPONENT("f[frequency_id]", frequency_id)
 			else
 				src.secure_frequencies -= "[sayToken]"
 
@@ -263,7 +269,10 @@ var/list/headset_channel_lookup
 	else
 		eqjobname = "Unknown"
 
-	var/list/receive = list()
+	///will be associative. key = mob, value = list()
+	///each person will be associated with the radios they're hearing through, e.g shitty bill = radio1, radio2, radio3; john bill = radio1, radio3, radio4
+	var/list/receive = new()
+
 
 	var/display_freq = src.frequency //Frequency to display on radio broadcast messages
 
@@ -289,30 +298,38 @@ var/list/headset_channel_lookup
 					continue
 
 			if (R.accept_rad(src, messages, connection.network))
-				R.speech_bubble()
+				if (ai_sender)
+					R.speech_bubble(image('icons/mob/mob.dmi', "ai"))
+				else
+					R.speech_bubble()
 				if (secure)
 					for (var/i in R.send_hear())
+						var/mob/rmob = i
 						if (!(i in receive))
-							receive += i
-
-							//mbc : i dont like doing this here but its the easiest place to fit it in since this is a point where we have access to both the receiving mob and the radio they are receiving through
-							var/mob/rmob = i
-
+							receive.Add(rmob)
 							if (ai_sender)
 								rmob.playsound_local(R, 'sound/misc/talk/radio_ai.ogg', 30, 1, 0, pitch = 1, ignore_flag = SOUND_SPEECH)
 							else
 								rmob.playsound_local(R, 'sound/misc/talk/radio2.ogg', 30, 1, 0, pitch = 1, ignore_flag = SOUND_SPEECH)
+							//mbc : i dont like doing this here but its the easiest place to fit it in since this is a point where we have access to both the receiving mob and the radio they are receiving through
+							//nex : now we have a list of all the radios someone is hearing through so now we can do this elsewhere, poggers. anyways still gonna leave this here :^)
+
+						associateRadioToMob(rmob, R, receive, messages, secure, real_name, lang_id)
+
 
 				else
 					for (var/i in R.send_hear())
-						if (!(i in receive))
-							if (signal_loss && !R.hardened && R.frequency >= R_FREQ_MINIMUM && R.frequency <= R_FREQ_MAXIMUM)
-								continue
-							receive += i
+						if (signal_loss && !R.hardened && R.frequency >= R_FREQ_MINIMUM && R.frequency <= R_FREQ_MAXIMUM)
+							continue
 
+						var/mob/rmob = i
+						if (!(i in receive))
+							receive.Add(i)
 							if (ai_sender)
-								var/mob/rmob = i
 								rmob.playsound_local(R, 'sound/misc/talk/radio_ai.ogg', 30, 1, 0, pitch = 1, ignore_flag = SOUND_SPEECH)
+
+						associateRadioToMob(rmob, R, receive, messages, secure, real_name, lang_id)
+
 
 		else if (istype(I, /obj/item/mechanics/radioscanner)) //MechComp radio scanner
 			var/obj/item/mechanics/radioscanner/R = I
@@ -425,6 +442,14 @@ var/list/headset_channel_lookup
 
 				if (R.client && R.client.holder && ismob(M) && M.mind)
 					thisR = "<span class='adminHearing' data-ctx='[R.client.chatOutput.getContextFlags()]'>[thisR]</span>"
+
+				// We don't wanna boutput more than once but we gotta make sure all our maptext sends
+				// We also do our client pref checks here and not when forming receive[], so that other things unrelated
+				// to maptext can use the big list of people associated with the radios they're hearing through
+				if (!R.client?.preferences.flying_chat_hidden)
+					for (var/obj/item/device/radio/rad in receive[R])
+						rad.showMapText(R, M, receive, messages[1], secure, real_name, lang_id)
+
 				R.show_message(thisR, 2)
 
 		if (length(heard_normal))
@@ -436,6 +461,11 @@ var/list/headset_channel_lookup
 
 				if (R.client && R.client.holder && ismob(M) && M.mind)
 					thisR = "<span class='adminHearing' data-ctx='[R.client.chatOutput.getContextFlags()]'>[thisR]</span>"
+
+				if (!R.client?.preferences.flying_chat_hidden)
+					for (var/obj/item/device/radio/rad in receive[R])
+						rad.showMapText(R, M, receive, messages[1], secure, real_name, lang_id)
+
 				R.show_message(thisR, 2)
 
 		if (length(heard_voice))
@@ -449,6 +479,11 @@ var/list/headset_channel_lookup
 
 				if (R.client && R.client.holder && ismob(M) && M.mind)
 					thisR = "<span class='adminHearing' data-ctx='[R.client.chatOutput.getContextFlags()]'>[thisR]</span>"
+
+				if (!R.client?.preferences.flying_chat_hidden)
+					for (var/obj/item/device/radio/rad in receive[R])
+						rad.showMapText(R, M, receive, messages[1], secure, real_name, lang_id)
+
 				R.show_message(thisR, 2)
 
 		if (length(heard_garbled))
@@ -460,6 +495,11 @@ var/list/headset_channel_lookup
 
 				if (R.client && R.client.holder && ismob(M) &&  M.mind)
 					thisR = "<span class='adminHearing' data-ctx='[R.client.chatOutput.getContextFlags()]'>[thisR]</span>"
+
+				if (!R.client?.preferences.flying_chat_hidden)
+					for (var/obj/item/device/radio/rad in receive[R])
+						rad.showMapText(R, M, receive, messages[2], secure, real_name, lang_id)
+
 				R.show_message(thisR, 2)
 
 		// sure why NOT copy paste - cirr
@@ -477,6 +517,30 @@ var/list/headset_channel_lookup
 /obj/item/device/radio/hear_talk(mob/M as mob, msgs, real_name, lang_id)
 	if (src.broadcasting)
 		talk_into(M, msgs, null, real_name, lang_id)
+
+/// Handles adding radio objs to the list of radios someone is hearing a message through.
+/obj/item/device/radio/proc/associateRadioToMob(var/mob/rmob, var/obj/item/device/radio/R, receive, messages, secure, real_name, lang_id)
+// By default, associateRadioToMob() won't use all these vars, but we're calling them anyways in case someone overrides it and is expecting it to be called with these args
+	if (rmob.client)
+		if (!islist(receive[rmob]))
+			receive[rmob] = list()
+		receive[rmob] += R
+
+/// Renders maptext to the receiving radio by default. Set textLoc to the loc you want to render the text on otherwise.
+/obj/item/device/radio/proc/generateMapText(var/text, textLoc, var/mob/R, style, var/alpha = 140, force, time) // lets hope to god copy/pasting works just fine
+	var/image/chat_maptext/maptext = null
+	if (isnull(textLoc))
+		textLoc = src
+	if (speechpopups && text)
+		maptext = make_chat_maptext(textLoc, text, style, alpha, force, time)
+	return maptext
+
+/// Handles the displaying of maptext to a player; called on the actual object that the maptext is generating on. Override in child to change maptext behavior!
+/obj/item/device/radio/proc/showMapText(var/mob/R, var/mob/sender, receive, msg, secure, real_name, lang_id, textLoc)
+	if(!src.doesMapText && !force_radio_maptext)
+		return
+	var/maptext = generateMapText(msg, R = R, textLoc = textLoc) // if you want to simply ..() but want to override the maptext loc
+	R.show_message(type = 2, just_maptext = TRUE, assoc_maptext = maptext)
 
 // Hope I didn't butcher this, but I couldn't help but notice some odd stuff going on when I tried to debug radio jammers (Convair880).
 /obj/item/device/radio/proc/accept_rad(obj/item/device/radio/R as obj, message, var/datum/packet_network/radio/freq)
@@ -519,11 +583,13 @@ var/list/headset_channel_lookup
 				hear |= M
 		return hear
 
-/obj/item/device/radio/proc/speech_bubble()
+/obj/item/device/radio/proc/speech_bubble(var/bubbleOverride)
+	if (!bubbleOverride)
+		bubbleOverride = src.speech_bubble
 	if ((src.listening && src.wires & WIRE_RECEIVE))
 		if (istype(src, /obj/item/device/radio/intercom))
-			UpdateOverlays(speech_bubble, "speech_bubble")
-			SPAWN_DBG(1.5 SECONDS)
+			UpdateOverlays(bubbleOverride, "speech_bubble")
+			SPAWN(1.5 SECONDS)
 				UpdateOverlays(null, "speech_bubble")
 
 /obj/item/device/radio/examine(mob/user)
@@ -593,6 +659,33 @@ var/list/headset_channel_lookup
 	item_state = "signaler"
 	desc = "A small beacon that is tracked by the Teleporter Computer, allowing things to be sent to its general location."
 	burn_possible = 0
+	anchored = 1
+
+	attack_hand(mob/user)
+		if (src.anchored)
+			boutput(user, "You need to unscrew the [src.name] from the floor first!")
+			return
+		..()
+
+	attackby(obj/item/I as obj, mob/user as mob)
+		if (isscrewingtool(I))
+			if (src.anchored)
+				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+				user.visible_message("[user] unscrews [src] from the floor.", "You unscrew [src] from the floor.", "You hear a screwdriver.")
+				src.anchored = 0
+				return
+			else
+				if (isturf(src.loc))
+					var/turf/T = get_turf(src)
+					if (istype(T, /turf/space))
+						user.show_text("What exactly are you gonna secure [src] to?", "red")
+						return
+					else
+						playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+						user.visible_message("[user] screws [src] to the floor, anchoring it in place.", "You screw [src] to the floor, anchoring it in place.", "You hear a screwdriver.")
+						src.anchored = 1
+						return
+		..()
 
 /obj/item/device/radio/beacon/New()
 	..()
@@ -610,7 +703,7 @@ var/list/headset_channel_lookup
 
 /obj/item/device/radio/electropack
 	name = "\improper Electropack"
-	wear_image_icon = 'icons/mob/back.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	icon_state = "electropack0"
 	var/code = 2.0
 	var/on = 0.0
@@ -767,7 +860,7 @@ Code:
 	frequency = FREQ_SIGNALER
 	var/delay = 0
 	var/airlock_wire = null
-	desc = "A device used to send a coded signal over a specified frequency, with the effect depending on the device that recieves the signal."
+	desc = "A device used to send a coded signal over a specified frequency, with the effect depending on the device that receives the signal."
 
 /*
 /obj/item/device/radio/signaler/examine()
@@ -869,15 +962,18 @@ obj/item/device/radio/signaler/attackby(obj/item/W as obj, mob/user as mob)
 		if (src.master && istype(src.master, /obj/item/device/transfer_valve))
 			logTheThing("bombing", usr, null, "signalled a radio on a transfer valve at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"].")
 			message_admins("[key_name(usr)] signalled a radio on a transfer valve at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"].")
+			SEND_SIGNAL(src.master, COMSIG_BOMB_SIGNAL_START)
 
 		else if (src.master && istype(src.master, /obj/item/assembly/rad_ignite)) //Radio-detonated beaker assemblies
 			var/obj/item/assembly/rad_ignite/RI = src.master
 			logTheThing("bombing", usr, null, "signalled a radio on a radio-igniter assembly at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"]. Contents: [log_reagents(RI.part3)]")
+			SEND_SIGNAL(src.master, COMSIG_BOMB_SIGNAL_START)
 
 		else if(src.master && istype(src.master, /obj/item/assembly/radio_bomb))	//Radio-detonated single-tank bombs
 			logTheThing("bombing", usr, null, "signalled a radio on a single-tank bomb at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"].")
 			message_admins("[key_name(usr)] signalled a radio on a single-tank bomb at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"].")
-		SPAWN_DBG(0)
+			SEND_SIGNAL(src.master, COMSIG_BOMB_SIGNAL_START)
+		SPAWN(0)
 			src.master.receive_signal(signal)
 	for(var/mob/O in hearers(1, src.loc))
 		O.show_message("[bicon(src)] *beep* *beep*", 3, "*beep* *beep*", 2)
@@ -1000,7 +1096,7 @@ obj/item/device/radio/signaler/attackby(obj/item/W as obj, mob/user as mob)
 //Must be standing next to it to talk into it
 /obj/item/device/radio/intercom/loudspeaker/hear_talk(mob/M as mob, msgs, real_name, lang_id)
 	if (src.broadcasting)
-		if (get_dist(src, M) <= 1)
+		if (BOUNDS_DIST(src, M) == 0)
 			talk_into(M, msgs, null, real_name, lang_id)
 
 /obj/item/device/radio/intercom/loudspeaker/examine()

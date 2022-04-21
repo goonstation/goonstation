@@ -41,6 +41,7 @@
 	var/datum/generic_radio_source/announcer_source = new /datum/generic_radio_source()
 	var/slow_process = 0			//number of ticks to skip the extra gang process loops
 	var/janktank_price = 300		//should start the same as /datum/gang_item/misc/janktank.
+	var/shuttle_called = FALSE
 	var/mob/kidnapping_target
 
 /datum/game_mode/gang/announce()
@@ -55,7 +56,7 @@
 		if (!istype(player)) continue
 		if(player.ready) num_players++
 
-	var/num_teams = max(setup_min_teams, min(round((num_players) / 9), setup_max_teams)) //1 gang per 9 players
+	var/num_teams = clamp(round((num_players) / 9), setup_min_teams, setup_max_teams) //1 gang per 9 players
 
 	var/list/leaders_possible = get_possible_enemies(ROLE_GANG_LEADER, num_teams)
 	if (num_teams > leaders_possible.len)
@@ -108,17 +109,14 @@
 
 	find_potential_hot_zones()
 
-	SPAWN_DBG (10 MINUTES)
+	SPAWN(10 MINUTES)
 		process_hot_zones()
 
-	SPAWN_DBG (15 MINUTES)
+	SPAWN(15 MINUTES)
 		process_kidnapping_event()
 
-	SPAWN_DBG (rand(waittime_l, waittime_h))
+	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
-
-	SPAWN_DBG (50 MINUTES)
-		force_shuttle()
 
 	return 1
 
@@ -206,6 +204,9 @@
 
 /datum/game_mode/gang/process()
 	..()
+	if (ticker.round_elapsed_ticks >= 55 MINUTES && !shuttle_called)
+		shuttle_called = TRUE
+		force_shuttle()
 	slow_process ++
 	if (slow_process < 60)
 		return
@@ -306,7 +307,7 @@
 
 	frequencies_used += leaderMind.gang.gang_frequency
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		pick_name(leaderMind)
 		pick_theme(leaderMind)
 
@@ -408,7 +409,7 @@
 
 	broadcast_to_all_gangs("The [hot_zone.name] is a high priority area. Ensure that your gang has control of it five minutes from now!")
 
-	SPAWN_DBG(hot_zone_timer-600)
+	SPAWN(hot_zone_timer-600)
 		if(hot_zone != null) broadcast_to_all_gangs("You have a minute left to control the [hot_zone.name]!")
 		sleep(1 MINUTE)
 		if(hot_zone != null && hot_zone.gang_owners != null)
@@ -461,7 +462,7 @@
 	boutput(kidnapping_target, "<span class='alert'>You get the feeling that [top_gang.gang_name] wants you dead! Run and hide or ask security for help!</span>")
 
 
-	SPAWN_DBG(kidnapping_timer - 1 MINUTE)
+	SPAWN(kidnapping_timer - 1 MINUTE)
 		if(kidnapping_target != null) broadcast_to_all_gangs("[target_name] has still not been captured by [top_gang.gang_name] and they have 1 minute left!")
 		sleep(1 MINUTE)
 		//if they didn't kidnap em, then give points to other gangs depending on whether they are alive or not.
@@ -612,7 +613,7 @@
 	locker.gang = usr.mind.gang
 	ticker.mode:gang_lockers += locker
 	usr.mind.gang.locker = locker
-	locker.update_icon()
+	locker.UpdateIcon()
 
 	usr.verbs -= /client/proc/set_gang_base
 
@@ -640,7 +641,7 @@
 
 		var/turf/turftarget = get_turf(target)
 
-		if(turftarget == loc || get_dist(src,target) > 1) return
+		if(turftarget == loc || BOUNDS_DIST(src, target) > 0) return
 
 		if(!user.mind || !user.mind.gang)
 			boutput(user, "<span class='alert'>You aren't in a gang, why would you do that?</span>")
@@ -713,7 +714,7 @@
 			..()
 			throw e
 
-		if(get_dist(owner, target_turf) > 1 || target_turf == null || !owner)
+		if(BOUNDS_DIST(owner, target_turf) > 0 || target_turf == null || !owner)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -723,7 +724,7 @@
 
 	onUpdate()
 		..()
-		if(get_dist(owner, target_turf) > 1 || target_turf == null || !owner)
+		if(BOUNDS_DIST(owner, target_turf) > 0 || target_turf == null || !owner)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -740,7 +741,7 @@
 
 	onEnd()
 		..()
-		if(get_dist(owner, target_turf) > 1 || target_turf == null || !owner)
+		if(BOUNDS_DIST(owner, target_turf) > 0 || target_turf == null || !owner)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -875,7 +876,7 @@
 
 	Topic(href, href_list)
 		..()
-		if ((usr.stat || usr.restrained()) || (get_dist(src, usr) > 1))
+		if ((usr.stat || usr.restrained()) || (BOUNDS_DIST(src, usr) > 0))
 			return
 
 		if (href_list["get_gear"])
@@ -918,10 +919,10 @@
 			overlay = image('icons/obj/large_storage.dmi', "gang_overlay_red")
 
 		src.UpdateOverlays(overlay, "screen")
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.UpdateOverlays(default_screen_overlay, "screen")
 
-	proc/update_icon()
+	update_icon()
 		if(health <= 0)
 			src.UpdateOverlays(null, "light")
 			src.UpdateOverlays(null, "screen")
@@ -938,7 +939,7 @@
 		if(!user)
 			return 0
 		if (user.mind && user.mind.gang != src.gang)
-			boutput(usr, "<span class='alert'>You are not a member of this gang, you cannot add items to it.</span>")
+			boutput(user, "<span class='alert'>You are not a member of this gang, you cannot add items to it.</span>")
 			return 0
 
 		//cash score
@@ -1017,7 +1018,7 @@
 		if(istype(ticker.mode,/datum/game_mode/gang) && damage_warning_timeout == 0)
 			ticker.mode:broadcast_to_gang("Your locker is under attack!",src.gang)
 			damage_warning_timeout = 1
-			SPAWN_DBG(1 MINUTE)
+			SPAWN(1 MINUTE)
 				damage_warning_timeout = 0
 
 		if(health <= 0)
@@ -1070,7 +1071,7 @@
 				if (G.affecting == mode.kidnapping_target)		//Can only shove the target in, nobody else. target must be not dead and must have a kill or pin grab on em.
 					if (G.affecting.stat == 2)
 						boutput(user, "<span class='alert'>[G.affecting] is dead, you can't kidnap a dead person!</span>")
-					else if (G.state < 3)
+					else if (G.state < GRAB_AGGRESSIVE)
 						boutput(user, "<span class='alert'>You'll need a stronger grip to successfully kinapp this person!")
 					else
 						user.visible_message("<span class='notice'>[user] shoves [G.affecting] into [src]!</span></span>")
@@ -1098,7 +1099,7 @@
 
 			for(var/obj/item/plant/herb/cannabis/C in S.contents)
 				insert_item(C,null)
-				S.satchel_updateicon()
+				S.UpdateIcon()
 				hadcannabis = 1
 
 			if(hadcannabis)
@@ -1140,7 +1141,7 @@
 			O.set_loc(src.loc)
 
 		icon_state = "secure-open"
-		update_icon()
+		UpdateIcon()
 
 		return
 
@@ -1149,7 +1150,7 @@
 		set_density(1)
 		icon_state = "gang"
 
-		update_icon()
+		UpdateIcon()
 
 		return
 
@@ -1239,10 +1240,9 @@
 		if (!target.mind.special_role)
 			target.mind.special_role = ROLE_GANG_MEMBER
 		SHOW_GANG_MEMBER_TIPS(target)
-		var/datum/objective/gangObjective = new /datum/objective/specialist/gang(  )
-		gangObjective.owner = target.mind
-		gangObjective.explanation_text = "Protect your boss, recruit new members, tag up the station and beware the other gangs! [src.gang.gang_name] FOR LIFE!"
-		target.mind.objectives += gangObjective
+		new /datum/objective/specialist/gang(
+			"Protect your boss, recruit new members, tag up the station and beware the other gangs! [src.gang.gang_name] FOR LIFE!",
+			target.mind)
 		boutput(target, "<span class='notice'>You are now a member of [src.gang.gang_name]!</span>")
 		boutput(target, "<span class='notice'>Your boss has the blue G and your fellow gang members have the red G! Work together and do some crime!</span>")
 		boutput(target, "<span class='notice'>You are free to harm anyone who isn't in your gang, but be careful, they can do the same to you!</span>")
@@ -1674,7 +1674,7 @@ proc/get_gang_gear(var/mob/living/carbon/human/user)
 		..()
 		if (!ishuman(src.owner))
 			return
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			qdel(src)
 
 /obj/item/implanter/gang
