@@ -173,8 +173,6 @@
 
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
-	var/vamp_beingbitten = 0 // Are we being drained by a vampire?
-
 	var/atom/eye = null
 	var/eye_pixel_x = 0
 	var/eye_pixel_y = 0
@@ -195,13 +193,7 @@
 	var/punchMessage = "punches"
 	var/kickMessage = "kicks"
 
-//#ifdef MAP_OVERRIDE_DESTINY
-	var/last_cryotron_message = 0 // to stop relaymove spam  :I
-//#endif
-
 	var/datum/hud/render_special/render_special
-
-	//var/shamecubed = 0
 
 	// does not allow non-admins to observe them voluntarily
 	var/unobservable = 0
@@ -214,7 +206,6 @@
 	var/last_cubed = 0
 
 	var/obj/use_movement_controller = null
-	var/next_spammable_chem_reaction_time = 0
 
 	var/dir_locked = FALSE
 
@@ -303,8 +294,8 @@
 /mob/proc/update_grab_loc()
 	//robust grab : keep em close
 	for (var/obj/item/grab/G in equipped_list(check_for_magtractor = 0))
-		if (G.state < GRAB_NECK) continue
-		if (get_dist(src,G.affecting) > 1)
+		if (G.state < GRAB_AGGRESSIVE) continue
+		if (BOUNDS_DIST(src, G.affecting) > 0)
 			qdel(G)
 			continue
 		if (G.affecting.buckled) continue
@@ -332,8 +323,10 @@
 		m.set_loc(src.loc)
 		m.ghostize()
 
-	if (ghost && ghost.corpse == src)
-		ghost.corpse = null
+	// this looks sketchy, but ghostize is fairly safe- we check for an existing ghost or NPC status, and only make a new ghost if we need to
+	src.ghost = src.ghostize()
+	if (src.ghost?.corpse == src)
+		src.ghost.corpse = null
 
 	if (traitHolder)
 		traitHolder.removeAll()
@@ -535,8 +528,7 @@
 
 	if(isturf(A))
 		if((A.reagents?.get_reagent_amount("flubber") + src.reagents?.get_reagent_amount("flubber") > 0) || src.hasStatus("sugar_rush") || A.hasStatus("sugar_rush"))
-			if(!(src.next_spammable_chem_reaction_time > world.time) || src.hasStatus("sugar_rush"))
-				src.next_spammable_chem_reaction_time = world.time + 1
+			if(!ON_COOLDOWN(src, "flubber_bounce", 0.1 SECONDS) || src.hasStatus("sugar_rush"))
 				src.now_pushing = 0
 				var/atom/source = A
 				src.visible_message("<span class='alert'><B>[src]</B>'s bounces off [A]!</span>")
@@ -581,12 +573,10 @@
 					src.throw_at(get_edge_cheap(source, get_dir(tmob, src)),  20, 3)
 					return
 			if((tmob.reagents?.get_reagent_amount("flubber") + src.reagents?.get_reagent_amount("flubber") > 0) || src.hasStatus("sugar_rush") || tmob.hasStatus("sugar_rush"))
-				if(src.next_spammable_chem_reaction_time > world.time || tmob.next_spammable_chem_reaction_time > world.time)
-					src.now_pushing = 0
-					return
-				src.next_spammable_chem_reaction_time = world.time + 1
-				tmob.next_spammable_chem_reaction_time = world.time + 1
 				src.now_pushing = 0
+				if(ON_COOLDOWN(src, "flubber_bounce", 0.1 SECONDS) || ON_COOLDOWN(tmob, "flubber_bounce", 0.1 SECONDS))
+					return
+
 				var/atom/source = get_turf(tmob)
 				src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s bounce off each other!</span>")
 				playsound(source, 'sound/misc/boing/6.ogg', 100, 1)
@@ -714,7 +704,7 @@
 		// so yeah, i copy+pasted this from process_move.
 		if (old_loc != src.loc) //causes infinite pull loop without these checks. lol
 			var/list/pulling = list()
-			if ((get_dist(old_loc, src.pulling) > 1 && get_dist(src, src.pulling) > 1) || src.pulling == src) // fucks sake
+			if ((BOUNDS_DIST(old_loc, src.pulling) > 0 && BOUNDS_DIST(src, src.pulling) > 0) || src.pulling == src) // fucks sake
 				src.remove_pulling()
 				//hud.update_pulling() // FIXME
 			else
@@ -1091,9 +1081,9 @@
 	//this is so much simpler than pulling the victim and invoking movment on the captor through that chain of events.
 	if (ishuman(pulling))
 		var/mob/living/carbon/human/H = pulling
-		if (H.grabbed_by.len)
+		if (length(H.grabbed_by))
 			for (var/obj/item/grab/G in src.grabbed_by)
-				if (G.state < GRAB_NECK) continue
+				if (G.state < GRAB_AGGRESSIVE) continue
 				pulling = G.assailant
 				G.assailant.pulled_by = src
 
@@ -1464,18 +1454,6 @@
 
 /mob/verb/succumb()
 	set hidden = 1
-/*
-//prevent a
- if the person is infected with the headspider disease.
-	for (var/datum/ailment/V in src.ailments)
-		if (istype(V, /datum/ailment/parasite/headspider) || istype(V, /datum/ailment/parasite/alien_embryo))
-			boutput(src, "You can't muster the willpower. Something is preventing you from doing it.")
-			return
-*/
-//or if they are being drained of blood
-	if (src.vamp_beingbitten)
-		boutput(src, "You can't muster the willpower. Something is preventing you from doing it.")
-		return
 
 	if (src.health < 0)
 		boutput(src, "<span class='notice'>You have given up life and succumbed to death.</span>")
@@ -3061,14 +3039,14 @@
 //MOB VERBS ARE FASTER THAN OBJ VERBS, ELIMINATE ALL OBJ VERBS WHERE U CAN
 // ALSO EXCLUSIVE VERBS (LIKE ADMIN VERBS) ARE BAD FOR RCLICK TOO, TRY NOT TO USE THOSE OK
 
-/mob/verb/point(atom/A as mob|obj|turf in view(,get_turf(usr)))
+/mob/verb/point(atom/A as mob|obj|turf in view(,usr))
 	set name = "Point"
 	src.point_at(A)
 
 /mob/proc/point_at(var/atom/target) //overriden by living and dead
 	.=0
 
-/mob/verb/pull_verb(atom/movable/A as mob|obj in view(1, get_turf(usr)))
+/mob/verb/pull_verb(atom/movable/A as mob|obj in oview(1, usr))
 	set name = "Pull / Unpull"
 	set category = "Local"
 
@@ -3087,7 +3065,7 @@
 	boutput(src, result.Join("\n"))
 
 
-/mob/living/verb/interact_verb(atom/A as mob|obj|turf in view(1, get_turf(usr)))
+/mob/living/verb/interact_verb(atom/A as mob|obj|turf in oview(1, usr))
 	set name = "Pick Up / Left Click"
 	set category = "Local"
 
@@ -3112,11 +3090,6 @@
 /mob/proc/on_eat(var/atom/A)
 	return
 
-/mob/set_density(var/newdensity)
-	if(HAS_ATOM_PROPERTY(src, PROP_MOB_NEVER_DENSE))
-		..(0)
-	else
-		..(newdensity)
 
 // to check if someone is abusing cameras with stuff like artifacts, power gloves, etc
 /mob/proc/in_real_view_range(var/turf/T)

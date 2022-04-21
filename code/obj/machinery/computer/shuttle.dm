@@ -166,7 +166,7 @@
 
 	if (user)
 		var/choice = alert(user, "Would you like to launch the shuttle?","Shuttle control", "Launch", "Cancel")
-		if(get_dist(user, src) > 1 || emergency_shuttle.location != SHUTTLE_LOC_STATION) return
+		if(BOUNDS_DIST(user, src) > 0 || emergency_shuttle.location != SHUTTLE_LOC_STATION) return
 		switch(choice)
 			if("Launch")
 				boutput(world, "<span class='notice'><B>Alert: Shuttle launch time shortened to 10 seconds!</B></span>")
@@ -206,7 +206,7 @@
 			return 0
 
 		var/choice = alert(user, text("Would you like to (un)authorize a shortened launch time? [] authorization\s are still needed. Use abort to cancel all authorizations.", src.auth_need - src.authorized.len), "Shuttle Launch", "Authorize", "Repeal", "Abort")
-		if(emergency_shuttle.location != SHUTTLE_LOC_STATION || get_dist(user, src) > 1) return
+		if(emergency_shuttle.location != SHUTTLE_LOC_STATION || BOUNDS_DIST(user, src) > 0) return
 		switch(choice)
 			if("Authorize")
 				if(emergency_shuttle.timeleft() < 60)
@@ -218,7 +218,6 @@
 				else
 					boutput(world, "<span class='notice'><B>Alert: Shuttle launch time shortened to 60 seconds!</B></span>")
 					emergency_shuttle.settimeleft(60)
-					//src.authorized = null
 					qdel(src.authorized)
 					src.authorized = list(  )
 
@@ -585,6 +584,7 @@
 			for(var/x in end_location)
 				if(isliving(x) && !isintangible(x))
 					var/mob/living/M = x
+					logTheThing("combat", M, null, "was gibbed by an arriving shuttle at [log_loc(M)].")
 					M.gib(1)
 				if(istype(x, /obj/storage))
 					var/obj/storage/S = x
@@ -660,6 +660,7 @@
 		for(var/mob/living/L in end_location) // oh dear, stay behind the yellow line kids
 			if(!isintangible(L))
 				SPAWN(1 DECI SECOND)
+					logTheThing("combat", L, null, "was gibbed by an elevator at [log_loc(L)].")
 					L.gib()
 		start_location.move_contents_to(end_location, /turf/simulated/floor/arctic_elevator_shaft)
 		location = 0
@@ -730,6 +731,7 @@
 		for(var/mob/living/L in end_location) // oh dear, stay behind the yellow line kids
 			if(!isintangible(L))
 				SPAWN(1 DECI SECOND)
+					logTheThing("combat", L, null, "was gibbed by an elevator at [log_loc(L)].")
 					L.gib()
 			bioele_accident()
 		start_location.move_contents_to(end_location, /turf/unsimulated/floor/setpieces/ancient_pit/shaft)

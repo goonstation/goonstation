@@ -339,7 +339,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		return
 
 /datum/bioHolder
-	//Holds the apperanceholder aswell as the effects. Controls adding and removing of effects.
+	//Holds the appearanceholder aswell as the effects. Controls adding and removing of effects.
 	var/list/effects = new/list()
 	var/list/effectPool = new/list()
 
@@ -357,12 +357,13 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	var/Uid = "not initialized" //Unique id for the mob. Used for fingerprints and whatnot.
 	var/uid_hash
+	var/fingerprints
 
 	New(var/mob/owneri)
 		owner = owneri
 		Uid = CreateUid()
-		uid_hash = md5(Uid)
 		bioUids[Uid] = null
+		build_fingerprints()
 		mobAppearance = new/datum/appearanceHolder()
 
 		mobAppearance.owner = owner
@@ -375,6 +376,15 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 		BuildEffectPool()
 		return ..()
+
+	proc/build_fingerprints()
+		uid_hash = md5(Uid)
+		var/fprint_base = uppertext(md5_to_more_pronouncable(uid_hash))
+		var/list/fprint_parts = list()
+		for(var/i in 1 to length(fprint_base) step 6)
+			if(i + 6 <= length(fprint_base) + 1)
+				fprint_parts += copytext(fprint_base, i, i + 6)
+		fingerprints = jointext(fprint_parts, "-")
 
 	disposing()
 		for(var/D in effects)

@@ -85,7 +85,7 @@
 
 			S.amount = 0
 			user.u_equip(S)
-			S.dropped()
+			S.dropped(user)
 			qdel( S )
 			animate_storage_rustle(src)
 			playsound(src.loc, "sound/machines/ping.ogg", 75)

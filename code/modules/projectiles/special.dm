@@ -591,7 +591,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	auto_find_targets = 0
 	silentshot = 1
 	pierces = -1
-
+	max_range = 10
 	shot_sound = "sound/impact_sounds/Flesh_Tear_1.ogg"
 
 	on_launch(var/obj/projectile/P)
@@ -609,13 +609,14 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	on_hit(atom/hit, direction, var/obj/projectile/P)
 		if (("vamp" in P.special_data))
 			var/datum/abilityHolder/vampire/vampire = P.special_data["vamp"]
-			if (vampire.owner == hit && P.max_range == PROJ_INFINITE_RANGE)
+			if (vampire.owner == hit && !P.special_data["returned"])
 				P.travelled = 0
 				P.max_range = 4
+				P.special_data["returned"] = TRUE
 			..()
 
 	on_end(var/obj/projectile/P)
-		if (("vamp" in P.special_data) && ("victim" in P.special_data))
+		if (("vamp" in P.special_data) && ("victim" in P.special_data) && P.special_data["returned"])
 			var/datum/abilityHolder/vampire/vampire = P.special_data["vamp"]
 			var/mob/living/victim = P.special_data["victim"]
 
@@ -623,7 +624,8 @@ ABSTRACT_TYPE(/datum/projectile/special)
 				if (vampire.can_bite(victim,is_pointblank = 0))
 					vampire.do_bite(victim, mult = 0.3333)
 
-				vampire.owner?.add_stamina(20)
+				if(istype(vampire.owner))
+					vampire.owner?.add_stamina(20)
 				victim.remove_stamina(4)
 
 		..()
@@ -1049,7 +1051,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	sname = "chembolt"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "extinguish"
-	shot_sound = "sound/effects/spray2.ogg"
+	shot_sound = 'sound/weapons/flamethrower.ogg'
 	power = 0
 	cost = 1
 	damage_type = D_SPECIAL

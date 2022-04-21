@@ -505,6 +505,44 @@
 		icon_state = "fblue1"
 		dir = 10
 
+/turf/unsimulated/floor/carpet/blue/fancy/narrow
+	icon_state = "fblue6"
+
+	ne
+		dir = 5
+	se
+		dir = 6
+	nw
+		dir = 9
+	sw
+		dir = 10
+	T_north
+		dir = 1
+	T_south
+		dir = 2
+	T_east
+		dir = 4
+	T_west
+		dir = 8
+	north
+		icon_state = "fblue4"
+		dir = 1
+	south
+		icon_state = "fblue4"
+		dir = 2
+	east
+		icon_state = "fblue4"
+		dir = 4
+	west
+		icon_state = "fblue4"
+		dir = 8
+	northsouth
+		icon_state = "fblue1"
+		dir = 6
+	eastwest
+		icon_state = "fblue1"
+		dir = 10
+
 /turf/simulated/floor/carpet/blue/fancy/junction
 	icon_state = "fblue5"
 

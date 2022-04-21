@@ -18,6 +18,11 @@ Contains:
 #define WRENCHED 1
 #define WELDED 2
 
+#ifdef UPSCALED_MAP
+#undef SINGULARITY_MAX_DIMENSION
+#define SINGULARITY_MAX_DIMENSION 22
+#endif
+
 // I'm sorry
 //////////////////////////////////////////////////// Singularity generator /////////////////////
 
@@ -548,7 +553,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		T = get_step(T2, NSEW)
 		T2 = T
 		steps += 1
-		if(locate(/obj/machinery/field_generator) in T)
+		G = (locate(/obj/machinery/field_generator) in T)
+		if(G && G != src)
 			G = (locate(/obj/machinery/field_generator) in T)
 			steps -= 1
 			if(shortestlink==0)
@@ -783,7 +789,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "Contain_F"
 	anchored = 1
-	density = 0
+	density = 1
 	event_handler_flags = USE_FLUID_ENTER | IMMUNE_SINGULARITY
 	var/active = 1
 	var/power = 10
@@ -804,6 +810,9 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	light.enable()
 
 	..()
+
+/obj/machinery/containment_field/ex_act(severity)
+	return
 
 /obj/machinery/containment_field/attack_hand(mob/user as mob)
 	return
@@ -870,12 +879,12 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	if(user.get_burn_damage() >= 500) //This person has way too much BURN, they've probably been shocked a lot! Let's destroy them!
 		user.visible_message("<span style=\"color:red;font-weight:bold;\">[user.name] was disintegrated by the [src.name]!</span>")
+		logTheThing("user", user, null, "was elecgibbed by [src] ([src.type]) at [log_loc(user)].")
 		user.elecgib()
 		return
 	else
 		var/throwdir = get_dir(src, get_step_away(user, src))
-		if (prob(20))
-			user.set_loc(get_turf(src))
+		if (get_turf(user) == get_turf(src))
 			if (prob(50))
 				throwdir = turn(throwdir,90)
 			else
@@ -890,11 +899,20 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	src.gen_secondary.power -= 3
 	return
 
-/obj/machinery/containment_field/Cross(atom/movable/O as mob|obj)
-	if(iscarbon(O) && prob(80))
+/obj/machinery/containment_field/Bumped(atom/O)
+	. = ..()
+	if(iscarbon(O))
 		shock(O)
-	..()
 
+/obj/machinery/containment_field/Cross(atom/movable/mover)
+	. = ..()
+	if(prob(10))
+		. = TRUE
+
+/obj/machinery/containment_field/Crossed(atom/movable/AM)
+	. = ..()
+	if(iscarbon(AM))
+		shock(AM)
 
 /////////////////////////////////////////// Emitter ///////////////////////////////
 /obj/machinery/emitter
@@ -1664,7 +1682,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		return
 	if (user.stat || user.restrained() || user.lying)
 		return
-	if ((get_dist(src, user) <= 1 && istype(src.loc, /turf)))
+	if ((BOUNDS_DIST(src, user) == 0 && istype(src.loc, /turf)))
 		src.add_dialog(user)
 		/*
 		var/dat = text("<TT><B>Timing Unit</B><br>[] []:[]<br><A href='?src=\ref[];tp=-30'>-</A> <A href='?src=\ref[];tp=-1'>-</A> <A href='?src=\ref[];tp=1'>+</A> <A href='?src=\ref[];tp=30'>+</A><br></TT>", (src.timing ? text("<A href='?src=\ref[];time=0'>Timing</A>", src) : text("<A href='?src=\ref[];time=1'>Not Timing</A>", src)), minute, second, src, src, src, src)

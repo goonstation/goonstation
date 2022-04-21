@@ -25,12 +25,14 @@
 	flags = FPRINT | FLUID_SUBMERGE
 	throwforce = 10
 	pressure_resistance = 3*ONE_ATMOSPHERE
+	layer = STORAGE_LAYER //dumb
 	var/allow_unbuckle = 1
 	var/mob/living/buckled_guy = null
 	var/deconstructable = 1
 	var/securable = 0
 	var/list/scoot_sounds = null
 	var/parts_type = /obj/item/furniture_parts/stool
+	material_amt = 0.1
 
 	New()
 		if (!src.anchored && src.securable) // we're able to toggle between being secured to the floor or not, and we started unsecured
@@ -90,7 +92,7 @@
 		if (to_buckle.buckled)
 			boutput(user, "They're already buckled into something!", "red")
 			return FALSE
-		if (get_dist(src, user) > 1 || to_buckle.loc != src.loc || user.restrained() || is_incapacitated(user) || !isalive(user))
+		if (BOUNDS_DIST(src, user) > 0 || to_buckle.loc != src.loc || user.restrained() || is_incapacitated(user) || !isalive(user))
 			return FALSE
 		if (user.hasStatus("weakened"))
 			return FALSE
@@ -295,6 +297,7 @@
 	var/security = 0
 	var/obj/item/clothing/suit/bedsheet/Sheet = null
 	parts_type = /obj/item/furniture_parts/bed
+	material_amt = 0.2
 
 	brig
 		name = "brig cell bed"
@@ -457,7 +460,7 @@
 		src.Sheet = null
 
 	MouseDrop_T(atom/A as mob|obj, mob/user as mob)
-		if (get_dist(src, user) > 1 || A.loc != src.loc || user.restrained() || !isalive(user))
+		if (BOUNDS_DIST(src, user) > 0 || A.loc != src.loc || user.restrained() || !isalive(user))
 			..()
 		else if (istype(A, /obj/item/clothing/suit/bedsheet))
 			if ((!src.Sheet || (src.Sheet && src.Sheet.loc != src.loc)) && A.loc == src.loc)
@@ -532,6 +535,7 @@
 	anchored = 1
 	scoot_sounds = list( 'sound/misc/chair/normal/scoot1.ogg', 'sound/misc/chair/normal/scoot2.ogg', 'sound/misc/chair/normal/scoot3.ogg', 'sound/misc/chair/normal/scoot4.ogg', 'sound/misc/chair/normal/scoot5.ogg' )
 	parts_type = null
+	material_amt = 0.1
 
 	moveable
 		anchored = 0
@@ -649,6 +653,7 @@
 				chair_chump.changeStatus("stunned", 2 SECONDS)
 				random_brute_damage(chair_chump, 15)
 				playsound(chair_chump.loc, "swing_hit", 50, 1)
+				chair_chump.end_chair_flip_targeting()
 
 			var/obj/item/chair/folded/C = null
 			if(istype(src, /obj/stool/chair/syndicate))
@@ -687,7 +692,7 @@
 		return
 
 	mouse_drop(atom/over_object as mob|obj)
-		if(get_dist(src,usr) <= 1)
+		if(BOUNDS_DIST(src,usr) == 0)
 			src.rotate(get_dir(get_turf(src),get_turf(over_object)))
 		..()
 
@@ -869,6 +874,7 @@
 	stamina_damage = 45
 	stamina_cost = 21
 	stamina_crit_chance = 10
+	material_amt = 0.1
 	var/c_color = null
 
 	New()

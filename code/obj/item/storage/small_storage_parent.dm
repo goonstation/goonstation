@@ -231,7 +231,7 @@
 							usr.u_equip(src)
 							usr.put_in_hand_or_drop(src, 1)
 				return
-		if (over_object == usr && in_interact_range(src, usr) && isliving(usr) && !usr.stat)
+		if (over_object == usr && in_interact_range(src, usr) && isliving(usr) && !usr.stat && !isintangible(usr))
 			if (usr.s_active)
 				usr.detach_hud(usr.s_active)
 				usr.s_active = null
@@ -429,6 +429,7 @@
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = W_CLASS_BULKY
 	max_wclass = 3
+	var/fire_delay = 0.4 SECONDS
 
 	New()
 		..()
@@ -439,12 +440,14 @@
 			return
 		if (!src.contents.len)
 			return
+		if (ON_COOLDOWN(src, "rockit_firerate", src.fire_delay))
+			return
 		var/obj/item/I = pick(src.contents)
 		if (!I)
 			return
 
 		I.set_loc(get_turf(src.loc))
-		I.dropped()
+		I.dropped(user)
 		src.hud.remove_item(I) //fix the funky UI stuff
 		I.layer = initial(I.layer)
 		I.throw_at(target, 8, 2, bonus_throwforce=8)

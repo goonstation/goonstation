@@ -94,7 +94,11 @@
 	if (!I)
 		return 0
 	if (!src.put_in_hand(I))
+		#ifdef UPSCALED_MAP
+		I.set_loc(get_turf(src))
+		#else
 		I.set_loc(get_turf(I))
+		#endif
 		return 1
 	return 1
 
@@ -129,6 +133,8 @@
 
 	if (movedelay < slip_delay)
 		var/intensity = (-0.33)+(6.033763-(-0.33))/(1+(movement_delay_real/(0.4))-1.975308)  //y=d+(6.033763-d)/(1+(x/c)-1.975308)
+		if (traitHolder && traitHolder.hasTrait("super_slips"))
+			intensity = max(intensity, 12) //the 12 is copied from the range of lube slips because that's what I'm trying to emulate
 		var/throw_range = min(round(intensity),50)
 		if (intensity < 1 && intensity > 0 && throw_range <= 0)
 			throw_range = max(throw_range,1)
@@ -234,6 +240,8 @@
 	if (animation_duration <= 0)
 		return
 
+	if (check_target_immunity(src))
+		return 0
 	// Target checks.
 	var/mod_animation = 0 // Note: these aren't multipliers.
 	var/mod_weak = 0
@@ -749,7 +757,7 @@
 	var/datum/gang/gang_to_see = null
 	var/PWT_to_see = null
 
-	if (isadminghost(src) || src.client?.adventure_view)
+	if (isadminghost(src) || src.client?.adventure_view || current_state >= GAME_STATE_FINISHED)
 		see_everything = 1
 	else
 		if (istype(ticker.mode, /datum/game_mode/revolution))

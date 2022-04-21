@@ -8,6 +8,7 @@
 
 var/global/list/material_cache = list()
 /atom/var/datum/material/material = null
+/atom/var/material_amt = 1
 
 /proc/isExploitableObject(var/atom/A)
 	if(istype(A, /obj/item/tile) || istype(A, /obj/item/rods) || istype(A, /obj/item/sheet) || istype(A, /obj/item/cable_coil) || istype(A, /obj/item/raw_material/shard)) return 1
@@ -95,7 +96,6 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 		explosion_resistance = material.hasProperty("density") ? round(material.getProperty("density") / 33) : explosion_resistance
 		explosion_protection = material.hasProperty("density") ? round(material.getProperty("density") / 33) : explosion_protection
 		if( !(flags & CONDUCT) && (src.material.getProperty("electrical") >= 50)) flags |= CONDUCT
-	return
 
 
 /// Simply removes a material from an object.
@@ -118,7 +118,6 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 	src.UpdateOverlays(null, "material")
 
 	src.material = null
-	return
 
 //Time for some super verbose proc names.
 /proc/get_material_trait_desc(var/datum/material/mat1)
@@ -280,7 +279,14 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 	newMat.name = getInterpolatedName(mat1.name, mat2.name, 0.5)
 	newMat.mat_id = "([mat1.mat_id]+[mat2.mat_id])"
 	newMat.alpha = round(mat1.alpha * ot + mat2.alpha * t)
-	newMat.color = rgb(round(GetRedPart(mat1.color) * ot + GetRedPart(mat2.color) * t), round(GetGreenPart(mat1.color) * ot + GetGreenPart(mat2.color) * t), round(GetBluePart(mat1.color) * ot + GetBluePart(mat2.color) * t))
+	if(islist(mat1.color) || islist(mat2.color))
+		var/list/colA = normalize_color_to_matrix(mat1.color)
+		var/list/colB = normalize_color_to_matrix(mat2.color)
+		newMat.color = list()
+		for(var/i in 1 to length(colA))
+			newMat.color += colA[i] * ot + colB[i] * t
+	else
+		newMat.color = rgb(round(GetRedPart(mat1.color) * ot + GetRedPart(mat2.color) * t), round(GetGreenPart(mat1.color) * ot + GetGreenPart(mat2.color) * t), round(GetBluePart(mat1.color) * ot + GetBluePart(mat2.color) * t))
 	newMat.properties = mergeProperties(mat1.properties, mat2.properties, t)
 
 	newMat.edible_exact = round(mat1.edible_exact * ot + mat2.edible_exact * t)

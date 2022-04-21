@@ -108,7 +108,7 @@
 
 		var/inrange = 0
 		for(var/turf/ST in src.ship.locs)
-			if (get_dist(T,ST) <= 1)
+			if (BOUNDS_DIST(T, ST) == 0)
 				inrange = 1
 				break
 		if (!inrange)

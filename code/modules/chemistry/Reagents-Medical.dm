@@ -105,7 +105,7 @@ datum
 					if(16 to 35)
 						M.setStatus("drowsy", 40 SECONDS)
 					if(36 to INFINITY)
-						M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 3 SECONDS * mult))
+						M.setStatusMin("paralysis", 3 SECONDS * mult)
 						M.setStatus("drowsy", 40 SECONDS)
 
 				..()
@@ -152,7 +152,7 @@ datum
 					if(16 to 35)
 						M.setStatus("drowsy", 40 SECONDS)
 					if(36 to INFINITY)
-						M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 3 SECONDS * mult))
+						M.setStatusMin("paralysis", 3 SECONDS * mult)
 						M.setStatus("drowsy", 40 SECONDS)
 
 				..()
@@ -195,9 +195,9 @@ datum
 						M.change_misstep_chance(8 * mult)
 					else if (effect <= 9)
 						M.emote("twitch")
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 3 SECONDS * mult))
+						M.setStatusMin("weakened", 3 SECONDS * mult)
 					else if(effect <= 12)
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 5 SECONDS * mult))
+						M.setStatusMin("weakened", 5 SECONDS * mult)
 						M.druggy ++
 				else if (severity == 2)
 					if(effect <= 4)
@@ -205,9 +205,9 @@ datum
 						M.change_misstep_chance(14 * mult)
 					else if (effect <= 10)
 						M.emote("twitch")
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 3 SECONDS * mult))
+						M.setStatusMin("weakened", 3 SECONDS * mult)
 					else if (effect <= 13)
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 5 SECONDS * mult))
+						M.setStatusMin("weakened", 5 SECONDS * mult)
 						M.druggy ++
 
 
@@ -313,9 +313,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 
-				for(var/reagent_id in M.reagents.reagent_list)
-					if(reagent_id != id)
-						M.reagents.remove_reagent(reagent_id, 5 * mult)
+				flush(M, 5 * mult)
 				if(M.health > 20)
 					M.take_toxin_damage(5 * mult, 1)	//calomel doesn't damage organs.
 				if(probmult(6))
@@ -533,14 +531,14 @@ datum
 					if(effect <= 1)
 						M.visible_message("<span class='alert'><b>[M.name]</b> suddenly cluches their gut!</span>")
 						M.emote("scream")
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 4 SECONDS * mult))
+						M.setStatusMin("weakened", 4 SECONDS * mult)
 					else if(effect <= 3)
 						M.visible_message("<span class='alert'><b>[M.name]</b> completely spaces out for a moment.</span>")
 						M.change_misstep_chance(15 * mult)
 					else if(effect <= 5)
 						M.visible_message("<span class='alert'><b>[M.name]</b> stumbles and staggers.</span>")
 						M.dizziness += 5
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 4 SECONDS * mult))
+						M.setStatusMin("weakened", 4 SECONDS * mult)
 					else if(effect <= 7)
 						M.visible_message("<span class='alert'><b>[M.name]</b> shakes uncontrollably.</span>")
 						M.make_jittery(30)
@@ -548,14 +546,14 @@ datum
 					if(effect <= 2)
 						M.visible_message("<span class='alert'><b>[M.name]</b> suddenly cluches their gut!</span>")
 						M.emote("scream")
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 8 SECONDS * mult))
+						M.setStatusMin("weakened", 8 SECONDS * mult)
 					else if(effect <= 5)
 						M.visible_message("<span class='alert'><b>[M.name]</b> jerks bolt upright, then collapses!</span>")
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 8 SECONDS * mult))
+						M.setStatusMin("weakened", 8 SECONDS * mult)
 					else if(effect <= 8)
 						M.visible_message("<span class='alert'><b>[M.name]</b> stumbles and staggers.</span>")
 						M.dizziness += 5
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 4 SECONDS * mult))
+						M.setStatusMin("weakened", 4 SECONDS * mult)
 
 		medical/saline // COGWERKS CHEM REVISION PROJECT. magic drug, ought to use plasma or something
 			name = "saline-glucose solution"
@@ -623,6 +621,7 @@ datum
 			transparency = 40
 			value = 3
 			threshold = THRESHOLD_INIT
+			var/list/flushed_reagents = list("neurotoxin","capulettium","sulfonal","ketamine","sodium_thiopental","pancuronium")
 
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
@@ -639,19 +638,7 @@ datum
 			on_mob_life(var/mob/M, var/method=INGEST, var/mult = 1)
 				if(!M)
 					M = holder.my_atom
-				if(holder.has_reagent("neurotoxin"))
-					holder.remove_reagent("neurotoxin", 3 * mult)
-				if(holder.has_reagent("capulettium"))
-					holder.remove_reagent("capulettium", 3 * mult)
-				if(holder.has_reagent("sulfonal"))
-					holder.remove_reagent("sulfonal", 3 * mult)
-				if(holder.has_reagent("ketamine"))
-					holder.remove_reagent("ketamine", 3 * mult)
-				if(holder.has_reagent("sodium_thiopental"))
-					holder.remove_reagent("sodium_thiopental", 3 * mult)
-				if(holder.has_reagent("pancuronium"))
-					holder.remove_reagent("pancuronium", 3 * mult)
-
+				flush(M, 3 * mult, flushed_reagents)
 
 				if(method == INGEST)
 					if (M.health < -5 && M.health > -30)
@@ -721,6 +708,7 @@ datum
 			transparency = 255
 			value = 8 // 2c + 3c + 1c + 1c + 1c
 			threshold = THRESHOLD_INIT
+			var/list/flushed_reagents = list("LSD","lsd_bee","psilocybin","crank","bathsalts","THC","space_drugs","catdrugs","methamphetamine","epinephrine","synaptizine")
 
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
@@ -740,30 +728,7 @@ datum
 				if (M.druggy > 0)
 					M.druggy -= 3
 					M.druggy = max(0, M.druggy)
-				if(holder.has_reagent("LSD"))
-					holder.remove_reagent("LSD", 5 * mult)
-				if(holder.has_reagent("lsd_bee"))
-					holder.remove_reagent("lsd_bee", 5 * mult)
-				if(holder.has_reagent("psilocybin"))
-					holder.remove_reagent("psilocybin", 5 * mult)
-				if(holder.has_reagent("crank"))
-					holder.remove_reagent("crank", 5 * mult)
-				if(holder.has_reagent("bathsalts"))
-					holder.remove_reagent("bathsalts", 5 * mult)
-				if(holder.has_reagent("THC"))
-					holder.remove_reagent("THC", 5 * mult)
-				if(holder.has_reagent("space_drugs"))
-					holder.remove_reagent("space_drugs", 5 * mult)
-				if(holder.has_reagent("catdrugs"))
-					holder.remove_reagent("catdrugs", 5 * mult)
-				if(holder.has_reagent("methamphetamine"))
-					holder.remove_reagent("methamphetamine", 5 * mult)
-				if(holder.has_reagent("epinephrine"))
-					holder.remove_reagent("epinephrine", 5 * mult)
-				if(holder.has_reagent("ephedrine"))
-					holder.remove_reagent("ephedrine", 5 * mult)
-				if(holder.has_reagent("synaptizine"))
-					holder.remove_reagent("synaptizine", 5 * mult)
+				flush(M, 5 * mult, flushed_reagents)
 				if(M.hasStatus("stimulants"))
 					M.changeStatus("stimulants", -15 SECONDS * mult)
 				if(probmult(5))
@@ -789,6 +754,7 @@ datum
 			value = 17 // 5c + 5c + 4c + 1c + 1c + 1c
 			stun_resist = 10
 			threshold = THRESHOLD_INIT
+			var/list/flushed_reagents = list("histamine")
 
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
@@ -813,8 +779,7 @@ datum
 				M.changeStatus("drowsy", -10 SECONDS)
 				if(M.sleeping && probmult(5)) M.sleeping = 0
 				if(M.get_brain_damage() && prob(5)) M.take_brain_damage(-1 * mult)
-				if(holder.has_reagent("histamine"))
-					holder.remove_reagent("histamine", 2 * mult) //combats symptoms not source //ok combats source a bit more
+				flush(M, 2 * mult, flushed_reagents) //combats symptoms not source //ok combats source a bit more
 				if(M.losebreath > 3)
 					M.losebreath -= (1 * mult)
 				if(M.get_oxygen_deprivation() > 35)
@@ -839,7 +804,7 @@ datum
 					else if (effect <= 5)
 						M.visible_message("<span class='alert'><b>[M.name]</b> staggers and drools, their eyes bloodshot!</span>")
 						M.dizziness += 2
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 4 SECONDS * mult))
+						M.setStatusMin("weakened", 4 SECONDS * mult)
 					if (effect <= 15) M.emote("collapse")
 
 		medical/heparin
@@ -972,11 +937,11 @@ datum
 			fluid_b = 240
 			transparency = 50
 			value = 6
+			var/list/flushed_reagents = list("sugar")
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				if(holder.has_reagent("sugar"))
-					holder.remove_reagent("sugar", 5 * mult)
+				flush(M, 5 * mult, flushed_reagents)
 				//if(holder.has_reagent("cholesterol")) //probably doesnt actually happen but whatever
 					//holder.remove_reagent("cholesterol", 2)
 				..()
@@ -1132,7 +1097,7 @@ datum
 					else if (effect <= 5)
 						M.visible_message("<span class='alert'><b>[M.name]</b> staggers and drools, their eyes bloodshot!</span>")
 						M.dizziness += 8
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 5 SECONDS * mult))
+						M.setStatusMin("weakened", 5 SECONDS * mult)
 					if (effect <= 15)
 						M.take_toxin_damage(1 * mult)
 
@@ -1150,10 +1115,7 @@ datum
 			target_organs = list("left_kidney", "right_kidney", "liver", "stomach", "intestines")
 
 			on_mob_life(var/mob/M, var/mult = 1)
-				if (!M) M = holder.my_atom
-				for (var/reagent_id in M.reagents.reagent_list)
-					if (reagent_id != id)
-						M.reagents.remove_reagent(reagent_id, 4 * mult)
+				flush(M, 5 * mult) //flushes all chemicals but itself
 				M.changeStatus("radiation", -7 SECONDS, 1)
 				if (prob(75))
 					M.HealDamage("All", 0, 0, 4 * mult)
@@ -1179,6 +1141,7 @@ datum
 			addiction_min = 10
 			value = 10 // 4 3 1 1 1
 			threshold = THRESHOLD_INIT
+			var/list/flushed_reagents = list("histamine","itching")
 
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
@@ -1195,13 +1158,10 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				M.jitteriness = max(M.jitteriness-20,0)
-				if(holder.has_reagent("histamine"))
-					holder.remove_reagent("histamine", 3 * mult)
-				if(holder.has_reagent("itching"))
-					holder.remove_reagent("itching", 3 * mult)
+				flush(M, 3 * mult, flushed_reagents)
 				if(probmult(7)) M.emote("yawn")
 				if(prob(3))
-					M.setStatus("stunned", max(M.getStatusDuration("stunned"), 3 SECONDS * mult))
+					M.setStatusMin("stunned", 3 SECONDS * mult)
 					M.changeStatus("drowsy", 12 SECONDS)
 					M.visible_message("<span class='notice'><b>[M.name]<b> looks a bit dazed.</span>")
 				..()
@@ -1334,6 +1294,7 @@ datum
 			var/total_misstep = 0
 			value = 18 // 5 4 5 3 1
 			threshold = THRESHOLD_INIT
+			var/list/flushed_reagents = list("sarin")
 
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
@@ -1378,8 +1339,7 @@ datum
 						M.take_brain_damage(-2 * mult)
 				else if (M.health > 15 && M.get_toxin_damage() < 70)
 					M.take_toxin_damage(1 * mult)
-				if(M.reagents.has_reagent("sarin"))
-					M.reagents.remove_reagent("sarin",20 * mult)
+					flush(M, 20 * mult, flushed_reagents)
 				..()
 				return
 
@@ -1485,9 +1445,8 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				for(var/reagent_id in M.reagents.reagent_list)
-					if(reagent_id != id && prob(50)) // slow this down a bit
-						M.reagents.remove_reagent(reagent_id, 1 * mult)
+				if(prob(50))
+					flush(M, 1 * mult)
 				M.HealDamage("All", 0, 0, 1.5 * mult)
 
 				if (ishuman(M))
@@ -1526,10 +1485,11 @@ datum
 			fluid_g = 200
 			transparency = 220
 			value = 6 // 5c + 1c
+			var/list/flushed_reagents = list("ethanol")
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				if(holder.has_reagent("ethanol")) holder.remove_reagent("ethanol", 8 * mult)
+				flush(M, 8 * mult, flushed_reagents)
 				if (M.get_toxin_damage() <= 25)
 					M.take_toxin_damage(-2 * mult)
 				..()

@@ -15,7 +15,7 @@
 	soundproofing = 3
 	throwforce = 50 //ouch
 	can_flip_bust = 1
-	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT  | NO_MOUSEDROP_QOL
+	event_handler_flags = USE_FLUID_ENTER | NO_MOUSEDROP_QOL
 
 	get_desc()
 		. = ..()
@@ -35,9 +35,9 @@
 			return 1
 		return ..()
 
-	CheckExit(atom/movable/O as mob|obj, target as turf)
+	Uncross(atom/movable/O, do_bump = TRUE)
 		if(istype(O, /obj/projectile))
-			return 1
+			. = 1
 		return ..()
 
 // Gore delivers new crates - woo!
@@ -261,7 +261,7 @@
 				new /obj/critter/spirit( src )
 			return 1
 
-	open()
+	open(entanglelogic, mob/user)
 		..()
 		if(!triggered)
 			triggered = 1
@@ -289,8 +289,10 @@
 					possible_items += S
 
 		if (islist(possible_items) && length(possible_items))
+			var/list/crate_contents = list()
 			while(telecrystals < 18)
 				var/datum/syndicate_buylist/item_datum = pick(possible_items)
+				crate_contents += item_datum.name
 				if(telecrystals + item_datum.cost > 24) continue
 				var/obj/item/I = new item_datum.item(src)
 				I.Scale(NESTED_SCALING_FACTOR**nest_amt, NESTED_SCALING_FACTOR**nest_amt) //scale the contents if we're nested
@@ -299,6 +301,8 @@
 					if (owner.mind)
 						owner.mind.traitor_crate_items += item_datum
 				telecrystals += item_datum.cost
+			var/str_contents = kText.list2text(crate_contents, ", ")
+			logTheThing("debug", owner, null, "surplus crate contains: [str_contents] at [log_loc(src)]")
 		#undef NESTED_SCALING_FACTOR
 
 /obj/storage/crate/syndicate_surplus/spawnable

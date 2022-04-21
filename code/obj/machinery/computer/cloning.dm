@@ -72,6 +72,7 @@
 	desc = "A circuit module designed to improve cloning machine scanning capabilities to the point where even the deceased may be scanned."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "cloner_upgrade"
+	health = 8
 	w_class = W_CLASS_TINY
 	throwforce = 1
 
@@ -80,6 +81,7 @@
 	desc = "A circuit module designed to improve enzymatic reclaimer capabilities so that the machine will be able to reclaim more matter, faster."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "grinder_upgrade"
+	health = 8
 	w_class = W_CLASS_TINY
 	throwforce = 1
 
@@ -193,6 +195,14 @@
 	else
 		..()
 	return
+
+/obj/machinery/computer/cloning/emp_act()
+	if (length(src.records))
+		for (var/i = 0 ; i <= (min(5,length(src.records))), i += 1) //eat up to 5 records
+			var/RIP = pick(src.records)
+			src.records.Remove(RIP)
+			qdel(RIP)
+	..()
 
 // message = message you want to pass to the noticebox
 // status = warning/success/danger/info which changes the color of the noticebox on the frontend
@@ -457,7 +467,7 @@ proc/find_ghost_by_key(var/find_key)
 		if (!istype(target) || isAI(user))
 			return
 
-		if (get_dist(src,user) > 1 || get_dist(user, target) > 1)
+		if (BOUNDS_DIST(src, user) > 0 || BOUNDS_DIST(user, target) > 0)
 			return
 
 		if (target == user)
@@ -476,7 +486,7 @@ proc/find_ghost_by_key(var/find_key)
 
 
 	proc/can_operate(var/mob/M)
-		if (!IN_RANGE(src, M, 1))
+		if (!(BOUNDS_DIST(src, M) == 0))
 			return FALSE
 		if (is_incapacitated(M))
 			return FALSE

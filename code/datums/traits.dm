@@ -736,6 +736,13 @@ ABSTRACT_TYPE(/obj/trait/job)
 	points = 1
 	category = list("hemophilia")
 
+/obj/trait/weakorgans
+	name = "Frail Constitution (+2)"
+	cleanName = "Frail Constitution"
+	desc = "Your internal organs (brain included) are extremely vulnerable to damage."
+	id = "weakorgans"
+	points = 2
+
 /obj/trait/slowmetabolism
 	name = "Slow Metabolism (0)"
 	cleanName = "Slow Metabolism"
@@ -952,12 +959,12 @@ ABSTRACT_TYPE(/obj/trait/job)
 		OTHER_STOP_TRACKING_CAT(owner, TR_CAT_NERVOUS_MOBS)
 
 /obj/trait/burning
-	name = "Human Torch (+1)"
+	name = "Human Torch (+2)"
 	cleanName = "Human Torch"
-	desc = "Extends the time that you remain on fire for, when burning."
+	desc = "Fire no longer slowly peters out when you're burning."
 	id = "burning"
 	icon_state = "onfire"
-	points = 1
+	points = 2
 
 /obj/trait/carpenter
 	name = "Carpenter (-1)"
@@ -1082,6 +1089,12 @@ ABSTRACT_TYPE(/obj/trait/job)
 	onAdd(var/mob/owner)
 		..()
 		owner.put_in_hand_or_drop(new /obj/item/reagent_containers/food/snacks/cookie/dog)
+
+/obj/trait/super_slips
+	name = "Slipping Hazard (+1)"
+	id = "super_slips"
+	desc = "You never were good at managing yourself slipping."
+	points = 1
 
 //Infernal Contract Traits
 /obj/trait/hair

@@ -34,10 +34,6 @@
 	stop_observing()
 		set hidden = 1
 
-	//Alias ghostize() to boot() so that the player is correctly kicked out of the changeling.
-	ghostize()
-		boot()
-
 	disposing()
 		observers -= src
 		hivemind_owner?.hivemind -= src

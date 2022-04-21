@@ -561,7 +561,6 @@
 
 
 	var/datum/abilityHolder/changeling/changeling = null
-	var/datum/mind/owner = null
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
@@ -600,31 +599,26 @@
 
 
 /mob/living/critter/changeling/headspider/proc/filter_target(var/mob/living/C)
-		//Don't want a dead mob, don't want a mob with the same mind as the owner
-		return ismob(C) && !isdead(C) && (!owner || C.mind != owner) && src.loc != C
+		//Don't want a dead mob or a nonliving mob
+		return istype(C) && !isdead(C) && src.loc != C
 
 /mob/living/critter/changeling/headspider/proc/infect_target(mob/M)
 	if(ishuman(M) && isalive(M))
 		var/mob/living/carbon/human/H = M
-		src.set_loc(H.loc)
 		random_brute_damage(H, 10)
 		src.visible_message("<font color='#FF0000'><B>\The [src]</B> crawls down [H.name]'s throat!</font>")
 		src.set_loc(H)
-		H.setStatus("paralysis", max(H.getStatusDuration("paralysis"), 10 SECONDS))
+		H.setStatusMin("paralysis", 10 SECONDS)
 
 		var/datum/ailment_data/parasite/HS = new /datum/ailment_data/parasite
 		HS.master = get_disease_from_path(/datum/ailment/parasite/headspider)
 		HS.affected_mob = H
-		HS.source = owner
+		HS.source = src.mind
 		var/datum/ailment/parasite/headspider/HSD = HS.master
 		HSD.changeling = changeling
 		H.ailments += HS
 
-		if(owner)
-			logTheThing("combat", owner.current ? owner.current : owner, H, "'s headspider enters [constructTarget(H,"combat")] at [log_loc(src)].")
-
-		//qdel(src)
-		return
+		logTheThing("combat", src.mind, "'s headspider enters [constructTarget(H,"combat")] at [log_loc(src)].")
 
 /mob/living/critter/changeling/headspider/hand_attack(atom/target)
 	if (filter_target(target))
@@ -648,16 +642,11 @@
 			UpdateIcon()
 
 /mob/living/critter/changeling/headspider/death_effect()
-	var/datum/abilityHolder/changeling/C = changeling
-	if (C)
-		if (C.points < 10)
-			boutput(src, "You try to release a headspider but don't have enough DNA points (requires 10)!")
-		for (var/mob/living/critter/changeling/spider in C.hivemind)
+	if (changeling) // don't do this if we're an empty headspider (already took control of a body)
+		for (var/mob/living/critter/changeling/spider in changeling.hivemind)
 			boutput(spider, __red("Your telepathic link to your master has been destroyed!"))
 			spider.hivemind_owner = 0
-		for (var/mob/dead/target_observer/hivemind_observer/obs in C.hivemind)
+		for (var/mob/dead/target_observer/hivemind_observer/obs in changeling.hivemind)
 			boutput(obs, __red("Your telepathic link to your master has been destroyed!"))
 			obs.boot()
-		if (C.hivemind.len > 0)
-			boutput(src, "Contact with the hivemind has been lost.")
-		C.hivemind = list()
+		changeling.hivemind.Cut()

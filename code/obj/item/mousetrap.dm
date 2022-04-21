@@ -358,8 +358,8 @@
 			var/obj/effects/explosion/E = new /obj/effects/explosion(get_turf(src.loc))
 			E.fingerprintslast = src.fingerprintslast
 			playsound(src.loc, 'sound/voice/farts/superfart.ogg', 100, 1)
-			src.buttbomb = null
 			qdel(src.buttbomb)
+			src.buttbomb = null
 		clear_armer()
 		return
 
@@ -454,7 +454,7 @@
 		logTheThing("bombing", user, null, "releases a [src] (Payload: [src.payload]) at [log_loc(user)]. Direction: [dir2text(user.dir)].")
 
 		src.armed = 1
-		if (src.mousetrap)
+		if (!(src.mousetrap?.armed))
 			src.mousetrap.armed = 1 // Must be armed or it won't work in mousetrap.triggered().
 			src.mousetrap.set_armer(user)
 		src.set_density(1)

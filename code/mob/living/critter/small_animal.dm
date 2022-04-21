@@ -1412,6 +1412,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 /mob/living/critter/small_animal/cockroach
 	name = "cockroach"
 	real_name = "cockroach"
+	blood_id = "hemolymph"
 	desc = "An unpleasant insect that lives in filthy places."
 	icon_state = "roach"
 	icon_state_dead = "roach-dead"
@@ -1479,6 +1480,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 /mob/living/critter/small_animal/scorpion
 	name = "scorpion"
 	real_name = "scorpion"
+	blood_id = "hemolymph"
 	desc = "Ack! Get it away! AAAAAAAA."
 	icon_state = "spacescorpion"
 	icon_state_dead = "spacescorpion-dead"
@@ -1527,6 +1529,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 /mob/living/critter/small_animal/cockroach/robo
 	name = "roboroach"
 	real_name = "roboroach"
+	blood_id = "oil"
 	desc = "The vermin of the future!"
 	health_brute = 10
 	health_burn = 10
@@ -1790,6 +1793,146 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 /mob/living/critter/small_animal/opossum/morty
 	name = "Morty"
 	real_name = "Morty"
+
+/* ================================================ */
+/* ----------------- Armadillo -------------------- */
+/* ================================================ */
+
+/mob/living/critter/small_animal/armadillo
+	name = "space armadillo"
+	real_name = "space armadillo"
+	desc = "A armadillo that came from space. Or maybe went to space. Who knows how it got here?"
+	icon_state = "armadillo"
+	icon_state_dead = "armadillo-dead"
+	hand_count = 2
+	speechverb_say = "hisses"
+	speechverb_exclaim = "barks"
+	butcherable = 0
+	health_brute = 15
+	health_burn = 15
+	pet_text = list("gently baps", "pets", "cuddles")
+	density = 1
+	var/infected
+
+	New()
+		. = ..()
+		infected = prob(20)
+		START_TRACKING
+
+	disposing()
+		. = ..()
+		STOP_TRACKING
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/small_critter
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "handn"
+		HH.name = "paw"
+		HH.limb_name = "claws"
+
+		HH = hands[2]
+		HH.limb = new /datum/limb/mouth/small
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "mouth"
+		HH.name = "mouth"
+		HH.limb_name = "teeth"
+		HH.can_hold_items = 0
+
+	Life(datum/controller/process/mobs/parent)
+		. = ..(parent)
+
+	attackby(var/obj/item/I, var/mob/M)
+		..()
+		if (!src.is_balled())
+			if(prob(50))
+				src.ball_up(emote=FALSE)
+
+	attack_hand(mob/living/M as mob, params, location, control)
+		if (M.a_intent == INTENT_HARM || M.a_intent == INTENT_GRAB)
+			if (!src.is_balled())
+				if(prob(70))
+					src.ball_up(emote=FALSE)
+		..()
+		if(infected && prob(1))
+			M.infected(ez_pathogen(/datum/pathogeneffects/malevolent/leprosy), null, null, 0)
+
+	death(var/gibbed)
+		if(is_balled())
+			ball_up(emote=FALSE, force=TRUE)
+		..()
+
+	proc/is_balled()
+		. = istype(src.loc, /obj/item/armadillo_ball)
+
+	proc/ball_up(emote, force)
+		if(ON_COOLDOWN(src, "ball", 3.5 SECONDS))
+			. = "<span class='alert'><b>[src]</b> wiggles!</span>"
+			return
+		if(is_balled())
+			var/obj/item/armadillo_ball/ball = src.loc
+			if(ismob(ball.loc))
+				var/mob/M = ball.loc
+				M.remove_item(ball)
+				boutput(M,"<span class='alert'>The <b>[src]</b> slips out of your possession!</span>")
+			src.set_loc(get_turf(src))
+			if(!emote)
+				src.visible_message("<span class='alert'><b>[src]</b> uncurls from a ball!</span>",\
+						"<span class='alert'><b>You relax out of your ball!</b></span>")
+			else
+				. = "<span class='alert'><b>[src]</b> uncurls from a ball!</span>"
+			qdel(ball)
+		else
+			if(!emote)
+				src.visible_message("<span class='alert'><b>[src]</b> curls into a ball!</span>",\
+						"<span class='alert'><b>You curl into a ball!</b></span>")
+			else
+				. = "<span class='alert'><b>[src]</b> curls into a ball!</span>"
+			if(!isdead(src))
+				var/obj/item/armadillo_ball/ball = new(get_turf(src))
+				src.set_loc(ball)
+				ball.dir = src.dir
+				ball.icon = src.icon
+
+	Move(var/atom/NewLoc, direct)
+		if(src.is_balled())
+			ball_up(FALSE)
+		else
+			..()
+
+	specific_emotes(var/act, var/param = null, var/voluntary = 0)
+		switch (act)
+			if ("scream")
+				if (src.emote_check(voluntary, 50))
+					return "<span class='emote'><b>[src]</b> shrieks!</span>"
+			if ("snap","hiss")
+				if (src.emote_check(voluntary, 50))
+					playsound(src, "sound/voice/animal/cat_hiss.ogg", 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+					return "<span class='emote'><b>[src]</b> hisses!</span>"
+			if("flip")
+				return ball_up(TRUE)
+		return null
+
+	specific_emote_type(var/act)
+		switch (act)
+			if ("scream","snap","hiss")
+				return 2
+		return ..()
+
+	ai_controlled
+		is_npc = 1
+		New()
+			..()
+			src.ai = new /datum/aiHolder/wanderer(src)
+			remove_lifeprocess(/datum/lifeprocess/blindness)
+			remove_lifeprocess(/datum/lifeprocess/viruses)
+
+		death(var/gibbed)
+			qdel(src.ai)
+			src.ai = null
+			reduce_lifeprocess_on_death()
+			..()
 
 /* ================================================ */
 /* -------------------- Seal ---------------------- */
@@ -2224,6 +2367,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 /mob/living/critter/small_animal/butterfly
 	name = "butterfly"
 	real_name = "butterfly"
+	blood_id = "hemolymph"
 	desc = "It's a beautiful butterfly! How did it get here?"
 	hand_count = 2
 	icon_state = "butterfly1"
@@ -2526,7 +2670,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, "sound/voice/screams/Robot_scream_2.ogg", 50, 1, 0.1, 2.6, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/screams/Robot_Scream_2.ogg', 50, 1, 0.1, 2.6, channel=VOLUME_CHANNEL_EMOTE)
 					return "<span class='emote'><b>[src]</b> squeaks!</span>"
 			if ("dance")
 				if (src.emote_check(voluntary, 50))
@@ -2607,7 +2751,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	New()
 		..()
 		if(pick_random_icon_state)
-			icon_state = pick("bee", "buddy", "kitten", "monkey", "possum", "wendigo", "bunny", "penguin")
+			icon_state = pick("bee", "buddy", "kitten", "monkey", "possum", "brullbar", "bunny", "penguin")
 		icon_state_alive = src.icon_state
 		icon_state_dead = src.icon_state
 
@@ -3019,6 +3163,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 /mob/living/critter/small_animal/trilobite
 	name = "trilobite"
 	real_name = "trilobite"
+	blood_id = "hemolymph"
 	desc = "This is an alien trilobite."
 	icon_state = "trilobite"
 	icon_state_dead = "trilobite-dead"
@@ -3226,7 +3371,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				if (!G.affecting)
 					continue
 				animate_spin(src, prob(50) ? "L" : "R", 1, 0)
-				if (G.state >= 1 && isturf(src.loc) && isturf(G.affecting.loc))
+				if (G.state >= GRAB_STRONG && isturf(src.loc) && isturf(G.affecting.loc))
 					src.emote("scream")
 					logTheThing("combat", src, G.affecting, "crunches [constructTarget(G.affecting,"combat")] [log_loc(src)]")
 					M.lastattacker = src

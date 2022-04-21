@@ -1138,9 +1138,9 @@
 		..()
 
 		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", "toggleactivation")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"on", "activate")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"off", "deactivate")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", .proc/toggleactivation)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"on", .proc/activate)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"off", .proc/deactivate)
 
 		SPAWN(1 SECOND)
 			switch_dir = turn(dir, 90)
@@ -1417,7 +1417,7 @@
 		else if(ispulsingtool(W))
 			. = alert(user, "What should trigger the sensor?","Disposal Sensor", "Creatures", "Anything", "A mail tag")
 			if (.)
-				if (get_dist(user, src) > 1 || user.stat)
+				if (BOUNDS_DIST(user, src) > 0 || user.stat)
 					return
 
 				switch (.)
@@ -1755,9 +1755,11 @@
 		sleep(2 SECONDS)	//wait until correct animation frame
 		playsound(src, "sound/machines/hiss.ogg", 50, 0, 0)
 
-
+		var/turf/expel_loc = get_turf(src)
+		while(locate(src.type) in get_step(expel_loc, src.dir))
+			expel_loc = get_step(expel_loc, src.dir)
 		for(var/atom/movable/AM in H)
-			AM.set_loc(src.loc)
+			AM.set_loc(expel_loc)
 			AM.pipe_eject(dir)
 			AM.throw_at(target, src.throw_range, src.throw_speed)
 		H.vent_gas(src.loc)

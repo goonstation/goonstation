@@ -109,15 +109,16 @@
       step_towards(M, src)
 
 /mob/living/critter/singularity/proc/eat(atom/movable/A)
-  // TODO: heal based on consumption?
-  if(src.affects_mobs && isliving(A))
-    var/mob/living/M = A
-    if(M && !istype(M, /mob/living/critter/singularity))
-      M.gib()
-  else if(isobj(A) && A.anchored != 2)
-    A.ex_act(1.0)
-    if(A)
-      qdel(A)
+	// TODO: heal based on consumption?
+	if(src.affects_mobs && isliving(A))
+		var/mob/living/M = A
+		if(M && !istype(M, /mob/living/critter/singularity))
+			logTheThing("combat", M, null, "was gibbed by [src] ([src.type]) at [log_loc(M)].")
+			M.gib()
+	else if(isobj(A) && A.anchored != 2)
+		A.ex_act(1.0)
+		if(A)
+			qdel(A)
 
 
 /mob/living/critter/singularity/Crossed(atom/movable/A)

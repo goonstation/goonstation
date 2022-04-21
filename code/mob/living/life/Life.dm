@@ -335,11 +335,6 @@
 	src.mainframe_check()
 
 	if (!isdead(src)) //Alive.
-		// AI-controlled cyborgs always use the global lawset, so none of this applies to them (Convair880).
-		if ((src.emagged || src.syndicate) && src.mind && !src.dependent)
-			if (!src.mind.special_role)
-				src.handle_robot_antagonist_status()
-
 		if (src.health < 0)
 			death()
 
@@ -366,10 +361,6 @@
 			// sure keep trying to use power i guess.
 			use_power()
 
-	// Assign antag status if we don't have any yet (Convair880).
-	if (src.mind && (src.emagged || src.syndicate))
-		if (!src.mind.special_role)
-			src.handle_robot_antagonist_status()
 
 	hud.update()
 	process_killswitch()
@@ -568,7 +559,7 @@
 
 	handle_stamina_updates()
 		if (stamina == STAMINA_NEG_CAP)
-			setStatus("paralysis", max(getStatusDuration("paralysis"), STAMINA_NEG_CAP_STUN_TIME))
+			setStatusMin("paralysis", STAMINA_NEG_CAP_STUN_TIME)
 
 		//Modify stamina.
 		var/stam_time_passed = max(tick_spacing, TIME - last_stam_change)
@@ -708,7 +699,7 @@
 			//protection from clothing
 		if(a_zone == "All")
 			protection = (5 * GET_ATOM_PROPERTY(src, PROP_MOB_MELEEPROT_BODY) + GET_ATOM_PROPERTY(src, PROP_MOB_MELEEPROT_HEAD))/6
-		if (a_zone == "chest")
+		else if (a_zone == "chest")
 			protection = GET_ATOM_PROPERTY(src, PROP_MOB_MELEEPROT_BODY)
 		else //can only be head
 			protection = GET_ATOM_PROPERTY(src, PROP_MOB_MELEEPROT_HEAD)

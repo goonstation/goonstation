@@ -173,6 +173,7 @@ var/global/logLength = 0
 	var/online
 	var/dead = 1
 	var/mobType = null
+	var/lawracktext = null
 
 	var/mob/mobRef
 	if (ismob(ref))
@@ -234,6 +235,13 @@ var/global/logLength = 0
 			key = clientRef.key
 		if (clientRef.ckey)
 			ckey = clientRef.ckey
+	else if (istype(ref,/obj/machinery/lawrack))
+		var/list/nice_rack  = list()
+		var/obj/machinery/lawrack/rack_ref = ref
+		nice_rack += rack_ref.name
+		nice_rack += "(UID: [rack_ref.unique_id]) at "
+		nice_rack += log_loc(rack_ref)
+		return nice_rack.Join()
 	else
 		return ref
 
@@ -243,6 +251,34 @@ var/global/logLength = 0
 		else if (isshell(mobRef)) mobType = "AI Shell"
 		else if (isAI(mobRef)) mobType = "AI"
 		else if (!ckey && !mobRef.last_ckey) mobType = "NPC"
+
+	if (mobRef && (issilicon(mobRef) || isAIeye(mobRef)))
+		var/obj/machinery/lawrack/lawrack = null
+		if(isAIeye(mobRef))
+			var/mob/living/intangible/aieye/aieye = mobRef
+			lawrack = aieye?.mainframe?.law_rack_connection
+		else if(isshell(mobRef))
+			var/mob/living/silicon/sil = mobRef
+			lawrack = sil?.mainframe?.law_rack_connection
+		else
+			var/mob/living/silicon/sil = mobRef
+			lawrack = sil?.law_rack_connection
+		if(isnull(lawrack))
+			lawracktext = "NONE"
+		else
+			lawracktext = "<a href=\"#\" \
+				onMouseOver=\"this.children\[0\].style.display = 'block'\"	\
+				onMouseOut=\"this.children\[0\].style.display = 'none';\"		\
+				>[lawrack.unique_id]										\
+				<span id=\"innerContent\" style=\"							\
+					display: none;											\
+					background: #C8C8C8;									\
+					margin-left: 28px;										\
+					padding: 10px;											\
+					position: absolute;										\
+					z-index: 1000;											\
+				\">[lawrack.format_for_logs()]</span>		\
+				</a>"
 
 	var/list/data = list()
 	if (name)
@@ -274,6 +310,8 @@ var/global/logLength = 0
 			data += " \[DEAD\]"
 		else
 			data += " \[<span class='alert'>DEAD</span>\]"
+	if(lawracktext)
+		data += "\[LawRack: [lawracktext]\]"
 	return data.Join()
 
 proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
@@ -315,7 +353,10 @@ proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
 	else
 		logTheThing("combat", shooter_data, SHOT, "[vehicle ? "driving [V.name] " : ""]shoots [constructTarget(SHOT,"combat")][P.was_pointblank != 0 ? " point-blank" : ""][target_is_immune ? " (immune due to spellshield/nodamage)" : ""] at [log_loc(SHOT)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
 #else
-	logTheThing("combat", shooter_data, SHOT, "[vehicle ? "driving [V.name] " : ""]shoots [constructTarget(SHOT,"combat")][P.was_pointblank != 0 ? " point-blank" : ""][target_is_immune ? " (immune due to spellshield/nodamage)" : ""] at [log_loc(SHOT)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
+	if (shooter_data)
+		logTheThing("combat", shooter_data, SHOT, "[vehicle ? "driving [V.name] " : ""]shoots [constructTarget(SHOT,"combat")][P.was_pointblank != 0 ? " point-blank" : ""][target_is_immune ? " (immune due to spellshield/nodamage)" : ""] at [log_loc(SHOT)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
+	else
+		logTheThing("combat", SHOT, null, "is hit by a projectile [target_is_immune ? " (immune due to spellshield/nodamage)" : ""] at [log_loc(SHOT)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
 #endif
 
 
