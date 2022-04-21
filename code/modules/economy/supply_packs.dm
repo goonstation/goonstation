@@ -1164,7 +1164,8 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	contains = list(/obj/item/item_box/heartcandy,
 					/obj/item/storage/goodybag,
 					/obj/item/item_box/swedish_bag,
-					/obj/item/kitchen/peach_rings)
+					/obj/item/kitchen/peach_rings,
+					/obj/item/kitchen/gummy_worms_bag)
 	cost = 500
 	containertype = /obj/storage/crate
 	containername = "Candy Crate"
