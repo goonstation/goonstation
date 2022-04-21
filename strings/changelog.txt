@@ -1,5 +1,9 @@
 
 (t)thu apr 21 22
+(u)Hans
+(p)8276
+(e)🆕|feature
+(+)Now once tamed, scorpions can be made docile by clicking them with help intent, or aggressive by clicking them with disarm or grab intent, now you can show your friends your new dog without fear of it killing them.
 (u)Flaborized
 (p)8233
 (e)🗺🎨|mapping, sprites
