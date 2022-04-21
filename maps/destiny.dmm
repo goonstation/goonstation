@@ -42462,6 +42462,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
+/obj/storage/secure/crate/ghost/armory,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "oON" = (
