@@ -188,6 +188,11 @@
 	initial_reagents = "morphine"
 	label = "purple"
 
+/obj/item/reagent_containers/emergency_injector/strange_green_goop // in case you lose those goggles, butter-fingers
+	name = "emergency auto-injector (strange green goop)"
+	initial_reagents = "strange green goop"
+	label = "green"
+
 /obj/item/reagent_containers/emergency_injector/random
 	name = "emergency auto-injector (???)"
 	label = "black"

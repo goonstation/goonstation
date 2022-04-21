@@ -185,7 +185,7 @@
 	icon_opened = "weaponcrateopen"
 	icon_closed = "weaponcrate"
 	req_access = list(access_securitylockers)
-	spawn_contents = list(/obj/item/gun/reagent/ecto, /obj/item/storage/spooky_ammo, /obj/item/clothing/glasses/regular/ecto/goggles/advanced)
+	spawn_contents = list(/obj/item/gun/reagent/ecto, /obj/item/storage/spooky_ammo, /obj/item/clothing/glasses/regular/ecto/goggles/advanced, /obj/item/reagent_containers/emergency_injector/strange_green_goop = 3)
 
 	armory
 		req_access = list(access_maxsec)
