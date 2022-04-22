@@ -478,7 +478,7 @@ soon the light of the unwaking will rise and the shining ones will not be prepar
 /obj/item/paper/book/fake_bible // the real bible is under storage, but i need one which cant hold anything
 	name = "bible"
 	desc = "A holy scripture of some sort or another."
-	event_handler_flags = IS_FARTABLE
+	event_handler_flags = src.event_handler_flags | IS_FARTABLE
 	icon = 'icons/obj/items/storage.dmi'
 	icon_state ="bible"
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
