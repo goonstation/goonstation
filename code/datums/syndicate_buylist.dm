@@ -187,9 +187,9 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 
 /datum/syndicate_buylist/generic/dnascram
 	name = "DNA Scrambler"
-	item = /obj/item/genetics_injector/dna_scrambler
+	item = /obj/item/dna_scrambler
 	cost = 1
-	desc = "An injector that gives a new, random identity upon injection."
+	desc = "An injector that gives a new, random identity upon injection, copying the original to be injected later."
 
 /datum/syndicate_buylist/generic/derringer
 	name = "Derringer"
