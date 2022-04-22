@@ -1384,24 +1384,24 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 	if (!src.restrained() && isalive(src)) //isalive returns false for both dead and unconcious, which is what we want
 		var/struggled_grab = 0
-		if (src.canmove)
-			if(src.grabbed_by.len > 0)
+		if (!is_incapacitated(src))
+			if(length(src.grabbed_by) > 0)
 				for (var/obj/item/grab/G in src.grabbed_by)
 					G.do_resist()
-					struggled_grab = 1
+					struggled_grab = TRUE
 			else
 				if(src.pulled_by)
 					for (var/mob/O in AIviewers(src, null))
 						O.show_message(text("<span class='alert'>[] resists []'s pulling!</span>", src, src.pulled_by), 1, group = "resist")
 					src.pulled_by.remove_pulling()
-					struggled_grab = 1
+					struggled_grab = TRUE
 		else
 			for (var/obj/item/grab/G in src.grabbed_by)
 				if (G.stunned_targets_can_break())
 					G.do_resist()
-					struggled_grab = 1
+					struggled_grab = TRUE
 
-		if (!src.grabbed_by || !src.grabbed_by.len && !struggled_grab)
+		if (!src.grabbed_by || !length(src.grabbed_by) && !struggled_grab)
 			if (src.buckled)
 				src.buckled.Attackhand(src)
 				src.force_laydown_standup() //safety because buckle code is a mess
@@ -1678,7 +1678,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			. = lerp(1, . , pushpull_multiplier)
 
 
-		if (src.pushing && (src.pulling != src.pushing))
+		if (src.pushing)
 			. *= lerp(1, max(src.pushing.p_class, 1), pushpull_multiplier)
 
 		for (var/obj/item/grab/G in src.equipped_list())
@@ -1686,7 +1686,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			if (isnull(M))
 				continue //ZeWaka: If we have a null affecting, ex. someone jumped in lava when we were grabbing them
 
-			if (G.state == 0)
+			if (G.state == GRAB_PASSIVE)
 				if (get_dist(src,M) > 0 && get_dist(move_target,M) > 0) //pasted into living.dm pull slow as well (consider merge somehow)
 					if(ismob(M) && M.lying)
 						. *= lerp(1, max(M.p_class, 1), pushpull_multiplier)

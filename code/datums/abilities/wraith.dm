@@ -216,7 +216,7 @@
 		SPAWN(60 SECONDS) //time limit on possession: 1 minute
 			if (O)
 				boutput(O, "<span class='alert'><strong>Your control is wrested away! The item is no longer yours.</strong></span>")
-				usr.playsound_local(usr.loc, "sound/voice/wraith/wraithleaveoject.ogg", 50, 0)
+				usr.playsound_local(usr.loc, "sound/voice/wraith/wraithleaveobject.ogg", 50, 0)
 				O.death(FALSE)
 		return 0
 
@@ -299,7 +299,7 @@
 		else if (isobj(T))
 			var/obj/O = T
 			if(istype(O, /obj/machinery/computer/shuttle/embedded))
-				boutput(usr, "<span class='alert'>You cannot seem to alter the energy off [O].</span>" )
+				boutput(usr, "<span class='alert'>You cannot seem to alter the energy of [O].</span>" )
 				return 0
 			// go to jail, do not pass src, do not collect pushed messages
 			if (O.emag_act(null, null))

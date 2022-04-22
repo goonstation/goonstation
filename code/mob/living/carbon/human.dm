@@ -652,11 +652,15 @@
 				src.visible_message("<span class='alert'><B>[src]</B> head starts to shift around!</span>")
 				src.show_text("<b>We begin to grow a headspider...</b>", "blue")
 				var/mob/living/critter/changeling/headspider/HS = new /mob/living/critter/changeling/headspider(src) //we spawn the headspider inside this dude immediately.
-				HS.RegisterSignal(src, COMSIG_PARENT_PRE_DISPOSING, .proc/ghostize) //if this dude gets grindered or cremated or whatever, we go with it
+				HS.RegisterSignal(src, COMSIG_PARENT_PRE_DISPOSING, .proc/remove) //if this dude gets grindered or cremated or whatever, we go with it
 				src.mind?.transfer_to(HS) //ok we're a headspider now
 				C.points = max(0, C.points - 10) // This stuff isn't free, you know.
 				HS.changeling = C
-				C.transferOwnership(HS)
+				// alright everything to do with headspiders is a blasted hellscape but here's what goes on here
+				// we don't want to actually give the headspider access to the changeling abilityholder, because that would let it use all the abilities
+				// which leads to bugs and is generally bad. So we remove the HUD from corpsey over here, tell the abilityholder (C) that the headspider owns it,
+				// but we do NOT tell the headspider it has access to the abilities.
+				src.detach_hud(C.hud)
 				C.owner = HS
 				C.reassign_hivemind_target_mob()
 				sleep(20 SECONDS)
@@ -3185,6 +3189,13 @@
 		src.chest_item = null
 		return
 	src.chest_item.AttackSelf(src)
+
+///Clear chest item if it escapes/gets disposed
+/mob/living/carbon/human/Exited(atom/movable/thing)
+	..()
+	if (thing == chest_item)
+		chest_item = null
+		chest_item_sewn = 0
 
 /mob/living/carbon/human/attackby(obj/item/W, mob/M)
 	if (src.parry_or_dodge(M))

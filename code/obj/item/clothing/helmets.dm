@@ -7,6 +7,7 @@
 	item_state = "helmet"
 	desc = "Somewhat protects your head from being bashed in."
 	protective_temperature = 500
+	duration_remove = 5 SECONDS
 
 	setupProperties()
 		..()
@@ -116,29 +117,62 @@
 	desc = "Helps protect against vacuum. Comes in a unique, flashy style."
 
 /obj/item/clothing/head/helmet/space/custom
+
 	name = "bespoke space helmet"
-	desc = "Helps protect against vacuum, and is custom-made just for you!"
-	onMaterialChanged()
-		if(src.material)
-			if(material.hasProperty("thermal"))
-				var/prot = round((100 - material.getProperty("thermal")) / 2)
+	desc = "A custom built helmet with a fancy visor!"
+	icon_state = "spacemat"
+
+	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi' // inhand shit
+	item_state = "s_helmet"
+
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	var/datum/material/visr_material = null
+	var/image/fabrImg = null
+	var/image/visrImg = null
+
+	New()
+		..()
+
+		visrImg = SafeGetOverlayImage("visor", src.icon, "spacemat-vis") // prep the world icon_state for building, is made later
+		fabrImg = SafeGetOverlayImage("helmet", src.icon, "spacemat")
+
+	proc/setupVisorMat(var/datum/material/V)
+		visr_material = copyMaterial(V) // in 99% of all calls this is redundant but just in case
+		if (visr_material)
+			if (visr_material.hasProperty("thermal"))
+				var/prot = round((100 - visr_material.getProperty("thermal")) / 2)
 				setProperty("coldprot", 10+prot)
 				setProperty("heatprot", 1+round(prot/2))
 			else
 				setProperty("coldprot", 10)
 				setProperty("heatprot", 2)
 
-			if(material.hasProperty("permeable"))
-				var/prot = 100 - material.getProperty("permeable")
+			if (visr_material.hasProperty("permeable"))
+				var/prot = 100 - visr_material.getProperty("permeable")
 				setProperty("viralprot", prot)
 			else
 				setProperty("viralprot", 40)
 
-			if(material.hasProperty("density"))
-				var/prot = round(material.getProperty("density") / 20)
-				setProperty("meleeprot_head", 2+prot)
+			if (visr_material.hasProperty("density"))
+				var/prot = round(visr_material.getProperty("density") / 20)
+				setProperty("meleeprot_head", 2+ max(2, prot)) // even if soft visor, still decent helmet
 			else
-				setProperty("meleeprot_head", 2)
+				setProperty("meleeprot_head", 4) // always at least be as good as baseline item
+
+		// overlay stuff
+
+		fabrImg.color = src.material
+		UpdateOverlays(fabrImg, "helmet")
+
+		visrImg.color = visr_material.color
+		UpdateOverlays(visrImg, "visor")
+
+
+	UpdateName()
+		if (visr_material && src.material)
+			name = "[visr_material]-visored [src.material] helmet"
+		else if (visr_material)
+			name = " [src.material] helmet"
 
 // Sealab helmets
 

@@ -102,9 +102,10 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		M.visible_message("<span class='alert'><B>[M] stabs [target] with their sharp fingers!</B></span>")
-		boutput(M, __blue("You begin to pump your [pick("polluted","spooky","bad","gross","icky","evil","necrotic")] blood into [target]'s chest."))
-		boutput(target, __red("You feel cold . . ."))
+		if(istype(M))
+			M.visible_message("<span class='alert'><B>[M] stabs [target] with their sharp fingers!</B></span>")
+			boutput(M, __blue("You begin to pump your [pick("polluted","spooky","bad","gross","icky","evil","necrotic")] blood into [target]'s chest."))
+			boutput(target, __red("You feel cold . . ."))
 
 	onUpdate()
 		..()

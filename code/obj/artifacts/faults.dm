@@ -127,10 +127,11 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 			var/obj/item/I = O
 			if (I.loc == user)
 				user.u_equip(I)
-				I.dropped()
+				I.dropped(user)
 		var/turf/T = get_turf(O)
 		T.visible_message("<span class='alert'><b>The [cosmeticSource.name] utterly annihilates [user.name]!</b></span>")
 		playsound(T, "sound/effects/elec_bigzap.ogg", 40, 1) // seriously 100 volume on this file? Are you trying to deafen players?
+		logTheThing("combat", user, null, "was elecgibbed by an artifact fault from [O] at [log_loc(user)].")
 		user.elecgib()
 
 /datum/artifact_fault/explode
@@ -147,7 +148,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 		if (isitem(O))
 			var/obj/item/I = O
 			user.u_equip(I)
-			I.dropped()
+			I.dropped(user)
 		explosion(O, T, 0, 1, 2, 4)
 		O.ArtifactDestroyed()
 

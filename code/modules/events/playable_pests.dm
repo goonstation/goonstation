@@ -104,7 +104,7 @@
 			pestlandmark.visible_message("A group of pests emerge from their hidey-hole!")
 
 			if (src.num_pests >= 5)
-				command_alert("A large number of pests have been detected onboard.", "Pest invasion")
+				command_alert("A large number of pests have been detected onboard.", "Pest invasion", alert_origin = ALERT_STATION)
 		cleanup_event()
 
 	proc/cleanup_event()

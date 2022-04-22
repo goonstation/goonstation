@@ -701,6 +701,7 @@ proc/is_teleportation_allowed(var/turf/T)
 				return
 			if("gib")
 				for(var/mob/living/M in src.loc)
+					logTheThing("combat", M, null, "was gibbed by a telescience fault at [log_loc(M)].")
 					M.gib()
 				return
 			if("majormutate")
@@ -1233,9 +1234,10 @@ proc/is_teleportation_allowed(var/turf/T)
 		if (!src.host_id || !message)
 			return
 
+		if (ON_COOLDOWN(src, "hostmsg", 0.5 SECONDS))
+			return
+
 		if (file)
 			src.post_file(src.host_id,"data",message, file)
 		else
 			src.post_status(src.host_id,"command","term_message","data",message)
-
-		return

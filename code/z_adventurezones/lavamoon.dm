@@ -1352,7 +1352,16 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		if (!id)
 			id = "generic"
 
+		src.update_id()
+
+	proc/update_id(new_id)
+		if(new_id)
+			src.id = new_id
 		src.tag = "ladder_[id][src.icon_state == "ladder" ? 0 : 1]"
+
+	proc/get_other_ladder()
+		RETURN_TYPE(/atom)
+		. = locate("ladder_[id][src.icon_state == "ladder"]")
 
 	attack_hand(mob/user as mob)
 		if (src.broken) return
@@ -1369,7 +1378,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			return attack_hand(W:affecting)
 
 	proc/climb(mob/user as mob)
-		var/obj/ladder/otherLadder = locate("ladder_[id][src.icon_state == "ladder"]")
+		var/obj/ladder/otherLadder = src.get_other_ladder()
 		if (!istype(otherLadder))
 			boutput(user, "You try to climb [src.icon_state == "ladder" ? "down" : "up"] the ladder, but seriously fail! Perhaps there's nowhere to go?")
 			return
@@ -1545,6 +1554,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		playsound(src.loc, "sound/effects/mag_iceburstimpact.ogg", 25, 1)
 
 		for(var/mob/living/L in get_turf(src))
+			logTheThing("combat", L, null, "was gibbed by [src] ([src.type]) at [log_loc(L)].")
 			L.gib()
 
 		set_density(1)

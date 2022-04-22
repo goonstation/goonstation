@@ -151,7 +151,7 @@
 		var/mob/M = AM
 		if(istype(M) && M.buckled == src) //Transfer the buckle
 			M.buckled = next_conveyor
-		if(!next_conveyor.operating)
+		if(!next_conveyor.operating || next_conveyor.status & NOPOWER)
 			walk(AM, 0)
 			return
 

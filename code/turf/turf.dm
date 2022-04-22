@@ -135,6 +135,10 @@
 			if (HAS_FLAG(O.object_flags, HAS_DIRECTIONAL_BLOCKING))
 				ADD_FLAG(src.blocked_dirs, O.dir)
 
+	Del()
+		dispose()
+		..()
+
 /obj/overlay/tile_effect
 	name = ""
 	anchored = 1
@@ -338,7 +342,7 @@ proc/generate_space_color()
 		pathable = 0
 	for(var/atom/movable/AM as mob|obj in src)
 		src.Entered(AM)
-	if(!RL_Started)
+	if(current_state < GAME_STATE_WORLD_NEW)
 		RL_Init()
 
 /turf/Exit(atom/movable/AM, atom/newloc)
@@ -423,7 +427,7 @@ proc/generate_space_color()
 						M.set_loc(warptarget)
 					if (rank_to_level(mob.client.holder.rank) < LEVEL_SA)
 						M.set_loc(warptarget)
-			else if ((abs(OldLoc.x - warptarget.x) > 1) || (abs(OldLoc.y - warptarget.y) > 1))
+			else if (isturf(warptarget) && (abs(OldLoc.x - warptarget.x) > 1 || abs(OldLoc.y - warptarget.y) > 1))
 				// double set_loc is a fix for the warptarget gliding bug
 				M.set_loc(get_step(warptarget, get_dir(src, OldLoc)))
 				SPAWN(0.001) // rounds to the nearest tick, about as smooth as it's gonna get
@@ -551,11 +555,12 @@ proc/generate_space_color()
 
 	var/new_type = ispath(what) ? what : text2path(what) //what what, what WHAT WHAT WHAAAAAAAAT
 	if (new_type)
-		if(ispath(new_type, /turf/space) && delay_space_conversion()) return
+		if(ispath(new_type, /turf/space) && !ispath(new_type, /turf/space/fluid) && delay_space_conversion()) return
 		new_turf = new new_type(src)
 		if (!isturf(new_turf))
 			if (delay_space_conversion()) return
 			new_turf = new /turf/space(src)
+		if(!istype(new_turf, new_type)) return new_turf // New() replaced the turf with something else, its ReplaceWith handled everything for us already (otherwise we'd screw up lighting)
 
 	else switch(what)
 		if ("Ocean")

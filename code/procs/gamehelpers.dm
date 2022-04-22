@@ -228,11 +228,11 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","a
 				if(IN_RANGE(center, AIeye, distance))
 					. += theAI
 
-//Kinda sorta like viewers but includes observers. In theory.
+//Kinda sorta like viewers but includes target observers inside viewing mobs
 /proc/observersviewers(var/Dist=world.view, var/Center=usr)
 	var/list/viewMobs = viewers(Dist, Center)
 
-	for(var/mob/dead/target_observer/M in observers)
+	for_by_tcl(M, /mob/dead/target_observer)
 		if(!M.client) continue
 		if(M.target in view(Dist, Center) || M.target == Center)
 			viewMobs += M
@@ -610,6 +610,7 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","a
 	for (var/turf/S in turfs_src)
 		var/turf/T = locate(S.x - src_min_x + trg_min_x, S.y - src_min_y + trg_min_y, trg_z)
 		for (var/atom/movable/AM as anything in S)
+			if (istype(AM, /obj/effects/precipitation)) continue
 			if (istype(AM, /obj/forcefield) || istype(AM, /obj/overlay/tile_effect)) continue
 			if (!ignore_fluid && istype(AM, /obj/fluid)) continue
 			if (istype(AM, /obj/decal/tile_edge) && istype(S, turf_to_skip)) continue

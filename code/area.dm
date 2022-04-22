@@ -443,6 +443,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 
 	Del()
 		STOP_TRACKING
+		dispose()
 		..()
 
 /area/space // the base area you SHOULD be using for space/ocean/etc.
@@ -490,6 +491,10 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 	ambient_light = rgb(79, 164, 184)
 	dont_log_combat = TRUE
 	// filler_turf = "/turf/unsimulated/floor/setpieces/gauntlet"
+
+	fullbright
+		ambient_light = null
+		force_fullbright = 1
 
 /area/cavetiny
 	name = "Caves"
@@ -1232,6 +1237,8 @@ ABSTRACT_TYPE(/area/prefab)
 	icon_state = "orange"
 	requires_power = FALSE
 
+/area/prefab/vault
+	name = "Secure Vault"
 /area/prefab/discount_dans_asteroid
 	name = "Discount Dan's Delivery Asteroid"
 	icon_state = "orange"

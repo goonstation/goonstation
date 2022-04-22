@@ -1981,12 +1981,6 @@
 			return
 
 		if (ishuman(task.arrest_target))
-			var/mob/living/carbon/human/H = task.arrest_target
-			//if(H.bioHolder.HasEffect("lost_left_arm") || H.bioHolder.HasEffect("lost_right_arm"))
-			if(!H.limbs.l_arm || !H.limbs.r_arm)
-				task.drop_arrest_target()
-				master.set_emotion("sad")
-				return
 			task.arrest_target.handcuffs = new /obj/item/handcuffs/guardbot(task.arrest_target)
 			task.arrest_target.setStatus("handcuffed", duration = INFINITE_STATUS)
 			boutput(task.arrest_target, "<span class='alert'>[master] gently handcuffs you!  It's like the cuffs are hugging your wrists.</span>")

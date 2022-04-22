@@ -77,7 +77,7 @@
 		return
 	src.return_mainframe()
 	mainframe.eye_view()
-	mainframe.eyecam.set_loc(src)
+	mainframe.eyecam.set_loc(get_turf(src))
 
 // Moves this down from ai.dm so AI shells and AI-controlled cyborgs can use it too.
 // Also made it a little more functional and less buggy (Convair880).

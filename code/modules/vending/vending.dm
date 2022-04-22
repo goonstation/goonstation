@@ -414,7 +414,7 @@
 			W.amount = 0
 			boutput(user, "<span class='notice'>You insert [W].</span>")
 			user.u_equip(W)
-			W.dropped()
+			W.dropped(user)
 			qdel( W )
 			src.generate_HTML(1)
 			return
@@ -1131,6 +1131,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/patch/nicotine, 10, cost=PAY_TRADESMAN/10)
 		product_list += new/datum/data/vending_product(/obj/item/matchbook, 10, cost=PAY_UNTRAINED/20)
 		product_list += new/datum/data/vending_product(/obj/item/device/light/zippo, 5, cost=PAY_TRADESMAN/10)
+		product_list += new/datum/data/vending_product(/obj/item/decoration/ashtray, 5, cost=PAY_TRADESMAN/10)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/vape, 10, cost=PAY_TRADESMAN/2)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/ecig_refill_cartridge, 20, cost=PAY_TRADESMAN/5)
 
@@ -1713,6 +1714,7 @@
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "standard-frame"
 	density = 1
+	material_amt = 0.3
 	var/wrenched = FALSE
 	var/glassed = FALSE
 	var/boardinstalled = FALSE

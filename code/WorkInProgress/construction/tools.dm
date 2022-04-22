@@ -440,7 +440,7 @@
 			user.visible_message("<span class='notice'>[user] finishes stuffing materials into [src].</span>")
 
 /obj/item/room_planner
-	name = "\improper Floor and Wall Planner"
+	name = "\improper Floor and Wall Designer"
 	icon = 'icons/obj/construction.dmi'
 	icon_state = "plan"
 	item_state = "gun"

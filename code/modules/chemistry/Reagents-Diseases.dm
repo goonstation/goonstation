@@ -25,13 +25,13 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M)
 					M = holder.my_atom
+				..()
 				if (!isliving(M) || !ispath(disease))
 					return
 				if (src.volume < minimum_to_infect)
 					return
 				var/mob/living/L = M
 				L.contract_disease(disease, null, null, 1)
-				..()
 
 		disease/rainbow_fluid // Clowning Around
 			name = "rainbow fluid"

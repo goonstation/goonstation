@@ -109,7 +109,7 @@
 /// when an AM moves (thing, previous_loc, direction)
 #define COMSIG_MOVABLE_MOVED "mov_moved"
 /// when a movable is about to move, return true to prevent (thing, new_loc, direction)
-#define COMSIG_MOVABLE_BLOCK_MOVE "mov_moved"
+#define COMSIG_MOVABLE_BLOCK_MOVE "mov_block_moved"
 /// when an AM moves (thing, previous_loc)
 #define COMSIG_MOVABLE_SET_LOC "mov_set_loc"
 /// when an AM ends throw (thing, /datum/thrown_thing)
@@ -339,6 +339,11 @@
 #define CELL_SUFFICIENT_CHARGE 8
 #define CELL_RETURNED_LIST 16
 #define CELL_FULL 32
+
+// ---- obj/storage signals ----
+
+/// When the storage closes
+#define COMSIG_STORAGE_CLOSED "storage_closed"
 
 // ---- area signals ----
 /// area's active var set to true (when a client enters)

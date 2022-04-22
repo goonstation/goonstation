@@ -19,8 +19,8 @@
 	var/plate_mat = null
 	var/reinforced = FALSE
 	//Stuff for the floor & wall planner undo mode that initial() doesn't resolve.
-	var/roundstart_icon_state
-	var/roundstart_dir
+	var/tmp/roundstart_icon_state
+	var/tmp/roundstart_dir
 
 	New()
 		..()
@@ -1524,7 +1524,10 @@ DEFINE_FLOORS(grasslush/thin,
 	return ..()
 
 /turf/simulated/floor/burn_down()
-	src.ex_act(2)
+	if (src.intact)
+		src.ex_act(2)
+	else //make sure plating always burns down to space and not... plating
+		src.ex_act(1)
 
 /turf/simulated/floor/ex_act(severity)
 	switch(severity)
@@ -1911,7 +1914,7 @@ DEFINE_FLOORS(grasslush/thin,
 	if(istype(C, /obj/item/cable_coil))
 		if(!intact)
 			var/obj/item/cable_coil/coil = C
-			coil.turf_place(src, user)
+			coil.turf_place(src, get_turf(user), user)
 		else
 			boutput(user, "<span class='alert'>You must remove the plating first.</span>")
 
