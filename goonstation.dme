@@ -1391,6 +1391,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\item\cigarette.dm"
 #include "code\obj\item\cloning_modules.dm"
 #include "code\obj\item\clothing.dm"
+#include "code\obj\item\cloths.dm"
 #include "code\obj\item\clown_items.dm"
 #include "code\obj\item\coin.dm"
 #include "code\obj\item\dartboard.dm"
