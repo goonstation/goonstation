@@ -239,7 +239,7 @@
 									var/found_bible = 0
 									for (var/atom/A as anything in H.loc)
 										if (A.event_handler_flags & IS_FARTABLE)
-											if (istype(A,/obj/item/storage/bible) || istype(A,/obj/item/paper/book/fake_bible))
+											if (istype(A,/obj/item/storage/bible))
 												found_bible = 1
 									if (found_bible)
 										src.visible_message("<span class='alert'><b>A mysterious force smites [src.name] for inciting blasphemy!</b></span>")

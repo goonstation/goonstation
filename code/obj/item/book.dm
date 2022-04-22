@@ -475,15 +475,15 @@ soon the light of the unwaking will rise and the shining ones will not be prepar
 			boutput(wearer, "[voidMessage]")
 		return
 
-/obj/item/paper/book/fake_bible // the real bible is under storage, but i need one which cant hold anything
-	name = "bible"
+/obj/item/paper/book/fake_bible // the real bible is under storage, this one just cant hold anything
+	name = "nanotrasen issue bible"
 	desc = "A holy scripture of some sort or another."
 	event_handler_flags = IS_FARTABLE
 	icon = 'icons/obj/items/storage.dmi'
 	icon_state ="bible"
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 
-	proc/farty_heresy(mob/user) // shamelessly stolen from the real bible
+	proc/farty_heresy(mob/user) // shamelessly stolen from the real bible. adjusted because cargo should be able to match the true power of god
 		if(!user || user.loc != src.loc)
 			return FALSE
 
@@ -494,18 +494,23 @@ soon the light of the unwaking will rise and the shining ones will not be prepar
 		if (user.traitHolder?.hasTrait("atheist"))
 			user.visible_message("<span class='alert'>[user] farts on the bible with particular vindication.<br><b>Against all odds, [user] remains unharmed!</b></span>")
 			return FALSE
-		else if (ishuman(user) && user:unkillable)
-			user.visible_message("<span class='alert'>[user] farts on the bible.</span>")
-			user:unkillable = 0
-			user.UpdateOverlays(image('icons/misc/32x64.dmi',"halo"), "halo")
-			heavenly_spawn(user)
-			user?.gib()
-			return TRUE
 		else
-			user.visible_message("<span class='alert'>[user] farts on the bible.<br><b>A mysterious force smites [user]!</b></span>")
-			logTheThing("combat", user, null, "farted on [src] at [log_loc(src)] last touched by <b>[src.fingerprintslast ? src.fingerprintslast : "unknown"]</b>.")
-			user.gib()
-			return TRUE
+			var/mob/living/carbon/human/H = user
+			if(!istype(H) || !istype(H.organHolder))
+				return FALSE
+			if(H.organHolder.get_organ("butt"))
+				user.visible_message("<span class='alert'>[user] farts on the bible.<br><b>A mysterious force smites [user]'s butt!</b></span>")
+				logTheThing("combat", user, null, "farted on [src] at [log_loc(src)] last touched by <b>[src.fingerprintslast ? src.fingerprintslast : "unknown"]</b>.")
+				H.damage_blunt(20)
+				H.drop_and_throw_organ("butt", dist = 8, speed = 1, showtext = 0)
+				H.emote("scream")
+				bleed(H, 0, 50)
+				H.changeStatus("paralysis", 3 SECONDS)
+				H.changeStatus("stunned", 4 SECONDS)
+				H.changeStatus("weakened", 6 SECONDS)
+				return TRUE
+			else // they don't have a butt, so no smiting
+				return FALSE
 
 /******************** CUSTOM BOOKS ********************/
 
