@@ -890,6 +890,14 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/crate/packing
 	containername = "Candle Crate"
 
+/datum/supply_packs/bible
+	name = "Bible Crate"
+	desc = "Because one chaplain isn't enough."
+	contains = list(/obj/item/paper/book/fake_bible = 5)
+	cost = 1000
+	containertype = /obj/storage/crate
+	containername = "Bible Crate"
+
 /datum/supply_packs/microbrew
 	name = "Home Distillery Kit"
 	desc = "Turn Cargo into a microbrewery."

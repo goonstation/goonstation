@@ -475,6 +475,38 @@ soon the light of the unwaking will rise and the shining ones will not be prepar
 			boutput(wearer, "[voidMessage]")
 		return
 
+/obj/item/paper/book/fake_bible // the real bible is under storage, but i need one which cant hold anything
+	name = "bible"
+	desc = "A holy scripture of some sort or another."
+	event_handler_flags = IS_FARTABLE
+	icon = 'icons/obj/items/storage.dmi'
+	icon_state ="bible"
+	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
+
+	proc/farty_heresy(mob/user) // shamelessly stolen from the real bible
+		if(!user || user.loc != src.loc)
+			return FALSE
+
+		if (farty_party)
+			user.visible_message("<span class='alert'>[user] farts on the bible.<br><b>The gods seem to approve.</b></span>")
+			return FALSE
+
+		if (user.traitHolder?.hasTrait("atheist"))
+			user.visible_message("<span class='alert'>[user] farts on the bible with particular vindication.<br><b>Against all odds, [user] remains unharmed!</b></span>")
+			return FALSE
+		else if (ishuman(user) && user:unkillable)
+			user.visible_message("<span class='alert'>[user] farts on the bible.</span>")
+			user:unkillable = 0
+			user.UpdateOverlays(image('icons/misc/32x64.dmi',"halo"), "halo")
+			heavenly_spawn(user)
+			user?.gib()
+			return TRUE
+		else
+			user.visible_message("<span class='alert'>[user] farts on the bible.<br><b>A mysterious force smites [user]!</b></span>")
+			logTheThing("combat", user, null, "farted on [src] at [log_loc(src)] last touched by <b>[src.fingerprintslast ? src.fingerprintslast : "unknown"]</b>.")
+			user.gib()
+			return TRUE
+
 /******************** CUSTOM BOOKS ********************/
 
 /obj/item/paper/book/custom //custom book parent, just to avoid cluttering up normal books
