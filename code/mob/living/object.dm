@@ -365,7 +365,7 @@
 	// see if we can find someone
 	var/mob/mobtarget = holder.target
 	ENSURE_TYPE(mobtarget)
-	if (!mobtarget || !isalive(mobtarget) || GET_DIST(src, mobtarget) > 10) //slightly higher chase range than acquisition range
+	if (!mobtarget || isdead(mobtarget) || GET_DIST(holder.owner, mobtarget) > 10) //slightly higher chase range than acquisition range
 		holder.target = null
 		var/list/possible = get_targets()
 		if (length(possible))
@@ -375,9 +375,7 @@
 		holder.owner.move_dir = pick(alldirs)
 		holder.owner.process_move()
 		return
-	var/mob/living/object/spooker = holder.owner
-	process_special_intent()
-	spooker.hud.update_intent()
+	src.pre_attack()
 	if (BOUNDS_DIST(holder.target, holder.owner))
 		holder.move_to(holder.target)
 	else
@@ -396,38 +394,46 @@
 		else
 			. = !(holder.target)
 
-/// For items with special intent, bodypart, etc targeting requirements. Mostly for batons, but do tack on any other edge cases.
-/datum/aiTask/timed/targeted/living_object/proc/process_special_intent()
+/// For items with special intent/targeting requirements, or special modes of attacking- arm grenades, turn batons on, etc
+/datum/aiTask/timed/targeted/living_object/proc/pre_attack()
 	var/mob/living/object/spooker = holder.owner
-	if (istype(spooker.possessed_thing, /obj/item/baton))
-		var/obj/item/baton/bat = spooker.possessed_thing
-		if (!bat.is_active)
-			if (istype(bat, /obj/item/baton/ntso))
-				var/obj/item/baton/ntso/NTbat = bat
-				if (NTbat.state != EXTENDO_BATON_CLOSED_AND_OFF) // we never want to close the baton, only extend it
-					return
-			spooker.self_interact() // (attempt to) turn that shit on
-		if (!(SEND_SIGNAL(bat, COMSIG_CELL_CHECK_CHARGE, bat.cost_normal) & CELL_SUFFICIENT_CHARGE)) // Not enough charge for a hit
-			spooker.set_a_intent(INTENT_HARM) // harmbaton
+	var/obj/item/item = spooker.equipped()
+	if (istype(item, /obj/item/baton))
+		var/obj/item/baton/bat = item
+		if (is_incapacitated(src.holder.target) || !(SEND_SIGNAL(bat, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE)) // they're down or we're out of juice, let's harm baton
+			if (bat.is_active) // uh oh, we're on. turn off
+				spooker.self_interact()
+			spooker.set_a_intent(INTENT_HARM)
 			bat.flipped = TRUE
-			bat.UpdateIcon()
-		else
+
+		else // they're up and we have charge, let's try to stun
+			if (!bat.is_active)
+				if (istype(bat, /obj/item/baton/ntso))
+					var/obj/item/baton/ntso/NTbat = bat
+					if (NTbat.state == EXTENDO_BATON_OPEN_AND_OFF) // need 2 taps to get to 'on' in this case
+						spooker.self_interact()
+				spooker.self_interact()
+
 			spooker.set_a_intent(INTENT_DISARM) // have charge, baton normally
 			bat.flipped = FALSE
-			bat.UpdateIcon()
-	else if (istype(spooker.possessed_thing, /obj/item/sword))
-		var/obj/item/sword/saber = spooker.possessed_thing
+		bat.UpdateIcon()
+
+	else if (istype(item, /obj/item/sword))
+		var/obj/item/sword/saber = item
 		if (!saber.active)
 			spooker.self_interact() // turn that sword on
 		spooker.set_a_intent(INTENT_HARM)
-	else if(istype(spooker.possessed_thing, /obj/item/gun))
-		var/obj/item/gun/pew = spooker.possessed_thing
+	else if (istype(item, /obj/item/gun))
+		var/obj/item/gun/pew = item
 		if (pew.canshoot())
 			spooker.set_a_intent(INTENT_HARM) // we can shoot, so... shoot
 		else
 			spooker.set_a_intent(INTENT_HELP) // otherwise go on help for gun whipping
+	else if (istype(item, /obj/item/old_grenade) || istype(item, /obj/item/chem_grenade || istype(item, /obj/item/pipebomb))) //cool paths tHANKS
+		spooker.self_interact() // arm grenades
 	else
 		spooker.set_a_intent(INTENT_HARM)
+	spooker.hud.update_intent()
 
 	//TODO katana limb targeting, make guns fire at range?, c saber deflect (if possible i forget if arbitrary mobs can block)
 
