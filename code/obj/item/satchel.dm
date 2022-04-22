@@ -202,7 +202,7 @@
 				var/obj/item/seed/inserted_seed = inserted
 				var/obj/item/seed/template_seed = template
 				. = (inserted_seed.planttype.type == template_seed.planttype.type) && \
-					(inserted_seed.plantgenes.mutation.type == template_seed.plantgenes.mutation.type)
+					(inserted_seed.plantgenes.mutation?.type == template_seed.plantgenes.mutation?.type)
 
 		large
 			desc = "A leather satchel for carrying around crops and seeds. This one happens to be <em>really</em> big."
