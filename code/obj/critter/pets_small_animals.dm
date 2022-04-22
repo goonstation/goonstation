@@ -457,7 +457,7 @@ ABSTRACT_TYPE(/obj/critter/dream_creature)
 	attackby(obj/item/I as obj, mob/living/user as mob)
 		if (istype(I, /obj/item/reagent_containers/food/snacks/cookie))
 			user.drop_item()
-			I.dropped()
+			I.dropped(user)
 			qdel(I)
 			src.visible_message("<span class='notice'>[src] happily chows down on [I]!</span>")
 			playsound(src,"sound/items/eatfood.ogg", rand(10,50), 1)
@@ -691,6 +691,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			src.visible_message("<span class='combat'><B>[src]</B> stares at [M], channeling its newfound power!</span>")
 			SPAWN(1 SECOND)
 				boutput(M, "<span class='alert'><BIG><B>[voidSpeak("WELP, GUESS YOU SHOULDN'T BELIEVE EVERYTHING YOU READ!")]</B></BIG></span>")
+				logTheThing("combat", M, null, "was deleted by using a void crown on [src] at [log_loc(src)].")
 				var/mob/dead/observer/O = M.ghostize()
 				if(O)
 					O.set_loc(M.loc)
@@ -913,7 +914,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 		if (M.singing)
 			if (M.singing & BAD_SINGING || M.singing & LOUD_SINGING)
 				SPAWN(0.3 SECONDS)
-					if(get_dist(src,M) <= 1)
+					if(BOUNDS_DIST(src, M) == 0)
 						src.CritterAttack(M)
 					else
 						flick("[src.species]-flaploop", src)
@@ -999,7 +1000,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			else
 				return
 		if (src.new_treasure && src.treasure_loc)
-			if ((get_dist(src, src.treasure_loc) <= 1) && (src.new_treasure.loc == src.treasure_loc))
+			if ((BOUNDS_DIST(src, src.treasure_loc) == 0) && (src.new_treasure.loc == src.treasure_loc))
 				src.visible_message("\The [src] picks up [src.new_treasure]!")
 				src.new_treasure.set_loc(src)
 				src.treasure = src.new_treasure

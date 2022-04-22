@@ -276,7 +276,7 @@
 
 	//synd_mob.equip_if_possible(new /obj/item/reagent_containers/pill/tox(synd_mob), synd_mob.slot_in_backpack)
 	synd_mob.equip_if_possible(new /obj/item/clothing/under/misc/syndicate(synd_mob), synd_mob.slot_w_uniform)
-	synd_mob.equip_if_possible(new /obj/item/clothing/shoes/swat(synd_mob), synd_mob.slot_shoes)
+	synd_mob.equip_if_possible(new /obj/item/clothing/shoes/swat/noslip(synd_mob), synd_mob.slot_shoes)
 	synd_mob.equip_if_possible(new /obj/item/clothing/gloves/swat(synd_mob), synd_mob.slot_gloves)
 	synd_mob.equip_if_possible(new /obj/item/storage/backpack/syndie/tactical(synd_mob), synd_mob.slot_back)
 	synd_mob.equip_if_possible(new /obj/item/clothing/mask/breath(synd_mob), synd_mob.slot_wear_mask)
@@ -297,7 +297,7 @@
 	I.icon = 'icons/obj/items/card.dmi'
 	synd_mob.equip_if_possible(I, synd_mob.slot_wear_id)
 
-	var/obj/item/implant/microbomb/M = new /obj/item/implant/microbomb(synd_mob)
+	var/obj/item/implant/revenge/microbomb/M = new /obj/item/implant/revenge/microbomb(synd_mob)
 	M.implanted = 1
 	synd_mob.implant.Add(M)
 	M.implanted(synd_mob)

@@ -179,6 +179,8 @@ To remove:
 	#define PROP_TESTPRIO(x) x("test_prio", APPLY_ATOM_PROPERTY_PRIORITY, REMOVE_ATOM_PROPERTY_PRIORITY)
 */
 
+//-------------------- MOB PROPS -----------------------
+
 // Vision properties
 #define PROP_MOB_NIGHTVISION(x) x("nightvision", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE, PROP_UPDATE_SIGHT)
 #define PROP_MOB_NIGHTVISION_WEAK(x) x("nightvision_weak", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE, PROP_UPDATE_SIGHT)
@@ -233,10 +235,17 @@ To remove:
 #define PROP_MOB_STUN_RESIST_MAX(x) x("stun_resist_max", APPLY_ATOM_PROPERTY_MAX, REMOVE_ATOM_PROPERTY_MAX)
 
 //misc properties
-#define PROP_MOB_NEVER_DENSE(x) x("neverdense", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_MOB_INVISIBILITY(x) x("invisibility", APPLY_ATOM_PROPERTY_MAX, REMOVE_ATOM_PROPERTY_MAX, PROP_UPDATE_INVISIBILITY)
 #define PROP_MOB_PASSIVE_WRESTLE(x) x("wrassler", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_MOB_CANTTHROW(x) x("cantthrow", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
+
+//-------------------- OBJ PROPS ------------------------
+//------------------- MOVABLE PROPS ---------------------
+//-------------------- TURF PROPS -----------------------
+//-------------------- ATOM PROPS -----------------------
+#define PROP_ATOM_NEVER_DENSE(x) x("neverdense", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
+#define PROP_ATOM_NO_ICON_UPDATES(x) x("no_icon_updates", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
+
 
 // In lieu of comments, these are the indexes used for list access in the macros below.
 #define ATOM_PROPERTY_ACTIVE_VALUE 1
@@ -426,7 +435,7 @@ To remove:
 	} while (0)
 
 
-#define APPLY_ATOM_PROPERTY_PRIORITY(target, property, source, do_update, update_macro, value, priority) \
+#define APPLY_ATOM_PROPERTY_PRIORITY(target, property, do_update, update_macro, source, value, priority) \
 	do { \
 		LAZYLISTINIT(target.atom_properties); \
 		var/list/_L = target.atom_properties; \

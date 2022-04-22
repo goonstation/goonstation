@@ -12,6 +12,7 @@
 	var/datum/hud/object/hud
 	density = 0
 	canmove = 1
+	gender = NEUTER
 
 	var/canattack = 0
 	blinded = 0
@@ -219,7 +220,7 @@
 				else //This shouldnt ever happen.
 					src.item.Attackby(src.item, src)
 		else
-			if(src.a_intent == INTENT_GRAB && istype(target, /atom/movable) && get_dist(src, target) <= 1)
+			if(src.a_intent == INTENT_GRAB && istype(target, /atom/movable) && BOUNDS_DIST(src, target) == 0)
 				var/atom/movable/M = target
 				if(ismob(target) || !M.anchored)
 					src.visible_message("<span class='alert'>[src] grabs [target]!</span>")

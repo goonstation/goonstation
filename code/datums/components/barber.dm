@@ -208,6 +208,8 @@ TYPEINFO(/datum/component/barber)
 	if(M.stat || issilicon(user))
 		barbery_conditions = 100
 	else
+		if (M.buckled)
+			barbery_conditions += 10
 		if(istype(M.buckled, /obj/stool/chair/comfy/barber_chair))
 			barbery_conditions += 30
 
@@ -232,15 +234,17 @@ TYPEINFO(/datum/component/barber)
 			if(user.bioHolder.HasEffect("clumsy"))
 				barbery_conditions -= 20
 
-	var/degree_of_success = 0 // 0 - 3, 0 being failure, 3 being catastrophic hair success
+	var/degree_of_success = 0
 	if(prob(clamp(barbery_conditions, 10, 100)))
-		degree_of_success = 3
-	else // oh no we fucked up!
-		if(prob(50))
-			degree_of_success = 2
-		else
-			degree_of_success = rand(0,1)
-	//and then just jam all the vars into the action bar and let it handle the rest!
+		degree_of_success = 3 // success
+	else
+		switch(max(barbery_conditions, 0))
+			if (0 to 20)
+				degree_of_success = 0 // destroy all hair
+			if (20 to 50)
+				degree_of_success = 1 // cut hair off as wig
+			else
+				degree_of_success = 2 // fine haircut, but wrong style
 
 	return degree_of_success
 
@@ -481,13 +485,13 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 
 	onUpdate()
 		..()
-		if(get_dist(owner, M) > 1 || M == null || owner == null)
+		if(BOUNDS_DIST(owner, M) > 0 || M == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, M) > 1 || M == null || owner == null)
+		if(BOUNDS_DIST(owner, M) > 0 || M == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 

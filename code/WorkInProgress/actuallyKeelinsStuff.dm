@@ -1157,7 +1157,7 @@ Returns:
 
 	onEnd()
 		..()
-		if(get_dist(user, target) > 1 || target == null || user == null)
+		if(BOUNDS_DIST(user, target) > 0 || target == null || user == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -1167,7 +1167,7 @@ Returns:
 				return
 
 	onUpdate()
-		if(get_dist(user, target) > 1 || target == null || user == null)
+		if(BOUNDS_DIST(user, target) > 0 || target == null || user == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -2715,7 +2715,7 @@ Returns:
 			if(T.movable_area_prev_type != null)
 				new T.movable_area_prev_type (T)
 			else
-				new/turf/space(T)
+				T.ReplaceWithSpaceForce()
 
 		for(var/atom/movable/A in objects_to_move)
 			A.animate_movement = 0
@@ -2894,9 +2894,9 @@ Returns:
 
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		icon_state = "boomerang"
-		if(hit_atom == usr)
+		var/mob/user = thr.user
+		if(hit_atom == user)
 			if(prob(prob_clonk))
-				var/mob/living/carbon/human/user = usr
 				user.visible_message("<span class='alert'><B>[user] fumbles the catch and is clonked on the head!</B></span>")
 				playsound(user.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 				user.changeStatus("stunned", 5 SECONDS)
@@ -2904,14 +2904,13 @@ Returns:
 				user.changeStatus("paralysis", 2 SECONDS)
 				user.force_laydown_standup()
 			else
-				src.Attackhand(usr)
+				src.Attackhand(user)
 			return
 		else
 			if(ishuman(hit_atom))
-				var/mob/living/carbon/human/user = usr
-				var/safari = (istype(user.w_uniform, /obj/item/clothing/under/gimmick/safari) && istype(user.head, /obj/item/clothing/head/safari))
+				var/mob/living/carbon/human/H = hit_atom
+				var/safari = (istype(H.w_uniform, /obj/item/clothing/under/gimmick/safari) && istype(H.head, /obj/item/clothing/head/safari))
 				if(safari)
-					var/mob/living/carbon/human/H = hit_atom
 					H.changeStatus("stunned", 4 SECONDS)
 					H.changeStatus("weakened", 2 SECONDS)
 					H.force_laydown_standup()
@@ -3268,7 +3267,7 @@ Returns:
 		return attack_hand(user)
 
 	MouseDrop_T(atom/target, mob/user)
-		if (get_dist(user,src) < 1 && target == user)
+		if (BOUNDS_DIST(user, src) == 0 && target == user)
 			src.Attackhand(user)
 
 	attack_hand(mob/user as mob)
@@ -3701,7 +3700,7 @@ var/list/lag_list = new/list()
 		if(ckey_lock && user.ckey != ckey_lock)
 			boutput(user, "<span class='alert'>You are not authorized to use this item.</span>")
 			return
-		if(get_dist(target,user) > 1)
+		if(BOUNDS_DIST(target, user) > 0)
 			boutput(user, "<span class='alert'>You are too far away.</span>")
 			return
 		if(target == loc) return

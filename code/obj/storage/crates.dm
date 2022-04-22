@@ -261,7 +261,7 @@
 				new /obj/critter/spirit( src )
 			return 1
 
-	open()
+	open(entanglelogic, mob/user)
 		..()
 		if(!triggered)
 			triggered = 1
@@ -289,8 +289,10 @@
 					possible_items += S
 
 		if (islist(possible_items) && length(possible_items))
+			var/list/crate_contents = list()
 			while(telecrystals < 18)
 				var/datum/syndicate_buylist/item_datum = pick(possible_items)
+				crate_contents += item_datum.name
 				if(telecrystals + item_datum.cost > 24) continue
 				var/obj/item/I = new item_datum.item(src)
 				I.Scale(NESTED_SCALING_FACTOR**nest_amt, NESTED_SCALING_FACTOR**nest_amt) //scale the contents if we're nested
@@ -299,6 +301,8 @@
 					if (owner.mind)
 						owner.mind.traitor_crate_items += item_datum
 				telecrystals += item_datum.cost
+			var/str_contents = kText.list2text(crate_contents, ", ")
+			logTheThing("debug", owner, null, "surplus crate contains: [str_contents] at [log_loc(src)]")
 		#undef NESTED_SCALING_FACTOR
 
 /obj/storage/crate/syndicate_surplus/spawnable
@@ -515,7 +519,7 @@
 		spawn_contents = list(/obj/item/gun/kinetic/tranq_pistol,
 		/obj/item/storage/pouch/tranq_pistol_dart,
 		/obj/item/pinpointer/disk,
-		/obj/item/genetics_injector/dna_scrambler,
+		/obj/item/dna_scrambler,
 		/obj/item/voice_changer,
 		/obj/item/card/emag,
 		/obj/item/clothing/under/chameleon,

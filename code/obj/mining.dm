@@ -181,15 +181,7 @@
 		return walls
 
 	proc/check_for_unacceptable_content()
-		var/turf/origin = get_turf(src)
-		for (var/turf/T in block(locate(origin.x - 1, origin.y - 1, origin.z), locate(origin.x + width, origin.y + height, origin.z)))
-			var/mob/M = locate() in T //living
-			if (M)
-				return 1
-			var/obj/machinery/vehicle/V = locate() in T
-			if (V)
-				return 1
-		return 0
+		mining_controls.magnet_area.check_for_unacceptable_content()
 
 	proc/UL()
 		var/turf/origin = get_turf(src)
@@ -1000,6 +992,24 @@
 		fullbright = 0
 		luminosity = 1
 
+		space_overlays()
+			. = ..()
+			if (length(space_overlays))
+				var/list/color_vals = bioluminescent_algae?.get_color(src)
+				if (length(color_vals))
+					var/image/algea = image('icons/obj/sealab_objects.dmi', "algae")
+					algea.color = rgb(color_vals[1], color_vals[2], color_vals[3])
+					UpdateOverlays(algea, "glow_algae")
+					add_medium_light("glow_algae", color_vals)
+
+		destroy_asteroid(dropOre)
+			ClearSpecificOverlays("glow_algae")
+			remove_medium_light("glow_algae")
+			var/list/turf/neighbors = getNeighbors(src, alldirs)
+			for (var/turf/T as anything in neighbors)
+				if (!length(T.medium_lights)) continue
+				T.update_medium_light_visibility()
+			. = ..()
 	lighted
 		fullbright = 1
 
@@ -1524,6 +1534,7 @@
 	icon_state = "pickaxe"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "pick"
+	health = 8
 	w_class = W_CLASS_NORMAL
 	flags = ONBELT
 	force = 7

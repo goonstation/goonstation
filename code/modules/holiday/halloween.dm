@@ -73,7 +73,7 @@
 	var/teleport_next_switch = 0 //Should we hop somewhere else next switch?
 
 	attack_ai(mob/user as mob)
-		if(get_dist(src, user) <= 1)
+		if(BOUNDS_DIST(src, user) == 0)
 			return attack_hand(user)
 		else
 			boutput(user, "This jukebox is too old to be controlled remotely.")
@@ -438,7 +438,7 @@
 			src.uses--
 			if (uses == 0)
 				boutput(user, "<span class='combat'>The book crumbles away into dust! How spooooooky!</span>")
-				src.dropped()
+				src.dropped(user)
 				qdel(src)
 
 		return

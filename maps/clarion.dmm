@@ -3784,7 +3784,7 @@
 	mail_tag = "pod_fore";
 	name = "north pod bay mail router"
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/delivery,
 /area/station/hallway/secondary/exit)
 "ahE" = (
 /obj/stool/bed,
@@ -4233,7 +4233,8 @@
 	name = "autoname - SS13";
 	pixel_x = 10
 	},
-/turf/simulated/floor/black,
+/obj/machinery/navbeacon/mule/hallway_escape_north,
+/turf/simulated/floor/bot,
 /area/station/hallway/secondary/exit)
 "aig" = (
 /turf/simulated/wall/auto/supernorn,
@@ -6251,7 +6252,7 @@
 /turf/simulated/floor/plating,
 /area/station/hangar/sec)
 "alj" = (
-/obj/machinery/vehicle/miniputt/nanoputt,
+/obj/machinery/vehicle/miniputt/nanoputt/security,
 /turf/simulated/floor/engine,
 /area/station/hangar/sec)
 "alk" = (
@@ -6281,11 +6282,6 @@
 /obj/item/crowbar,
 /obj/item/device/gps,
 /obj/item/storage/belt/utility,
-/obj/machinery/door_control{
-	id = "pod_port";
-	name = "Hangar Door Control";
-	pixel_y = 28
-	},
 /turf/simulated/floor/redblack{
 	dir = 5
 	},
@@ -6562,27 +6558,8 @@
 /obj/machinery/light/runway_light/delay2,
 /turf/space,
 /area/space)
-"alN" = (
-/obj/machinery/door/poddoor/blast{
-	autoclose = 1;
-	doordir = "left";
-	icon_state = "bdoorright1";
-	id = "pod_port";
-	layer = 4;
-	name = "West Pod Hangar"
-	},
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	dir = 4;
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/turf/simulated/floor/engine{
-	icon_state = "engine_caution_we"
-	},
-/area/station/hangar/sec)
 "alO" = (
-/obj/machinery/vehicle/pod_smooth/heavy,
+/obj/machinery/vehicle/pod_smooth/heavy/security,
 /turf/simulated/floor/engine,
 /area/station/hangar/sec)
 "alP" = (
@@ -6934,23 +6911,6 @@
 	icon_state = "engine_caution_we"
 	},
 /area/station/hangar/main)
-"amh" = (
-/obj/machinery/door/poddoor/blast{
-	autoclose = 1;
-	id = "pod_port";
-	layer = 4;
-	name = "West Pod Hangar"
-	},
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	dir = 4;
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/turf/simulated/floor/engine{
-	icon_state = "engine_caution_we"
-	},
-/area/station/hangar/sec)
 "ami" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -7113,23 +7073,14 @@
 	},
 /area/station/hangar/main)
 "amy" = (
-/obj/machinery/door/poddoor/blast{
-	autoclose = 1;
-	doordir = "left";
-	icon_state = "bdoorleft1";
-	id = "pod_port";
-	layer = 4;
-	name = "West Pod Hangar"
-	},
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
 	dir = 4;
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/turf/simulated/floor/engine{
-	icon_state = "engine_caution_we"
-	},
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/security_horizontal/vertical,
+/turf/simulated/floor/engine,
 /area/station/hangar/sec)
 "amz" = (
 /obj/disposalpipe/segment{
@@ -7573,7 +7524,7 @@
 /area/station/hangar/sec)
 "ani" = (
 /obj/machinery/light,
-/obj/machinery/vehicle/miniputt/nanoputt,
+/obj/machinery/vehicle/miniputt/nanoputt/security,
 /turf/simulated/floor/engine{
 	dir = 6;
 	icon_state = "engine_caution_corners2"
@@ -7586,7 +7537,7 @@
 	},
 /area/station/hangar/sec)
 "ank" = (
-/obj/machinery/vehicle/pod_smooth/heavy,
+/obj/machinery/vehicle/pod_smooth/heavy/security,
 /turf/simulated/floor/engine{
 	allows_vehicles = 0;
 	icon_state = "engine_caution_south"
@@ -12519,7 +12470,8 @@
 	},
 /area/station/hydroponics/bay)
 "ayk" = (
-/turf/simulated/floor/green/side,
+/obj/machinery/navbeacon/mule/hydroponics_north/east,
+/turf/simulated/floor/bot,
 /area/station/hydroponics/bay)
 "ayl" = (
 /obj/disposalpipe/trunk{
@@ -13088,7 +13040,7 @@
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/delivery,
 /area/station/crew_quarters/kitchen)
 "azE" = (
 /obj/disposalpipe/segment/food{
@@ -13422,7 +13374,8 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/black,
+/obj/machinery/navbeacon/mule/catering_north,
+/turf/simulated/floor/bot,
 /area/station/crew_quarters/kitchen)
 "aAx" = (
 /obj/disposalpipe/segment{
@@ -16938,7 +16891,8 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor,
+/obj/machinery/navbeacon/mule/toolstorage_north/south,
+/turf/simulated/floor/bot,
 /area/station/storage/tools)
 "aIG" = (
 /turf/simulated/floor/orangeblack/corner{
@@ -17411,6 +17365,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/navbeacon/mule/cafeteria_north/west,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/bar)
 "aJO" = (
@@ -17443,7 +17398,7 @@
 /turf/simulated/floor/orangeblack/side,
 /area/station/storage/tools)
 "aJT" = (
-/turf/simulated/floor/orangeblack/side,
+/turf/simulated/floor/delivery,
 /area/station/storage/tools)
 "aJU" = (
 /obj/cable{
@@ -24135,7 +24090,7 @@
 	dir = 4;
 	pixel_x = 10
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/delivery,
 /area/station/bridge)
 "aYe" = (
 /obj/machinery/light_switch/north,
@@ -30431,9 +30386,8 @@
 	dir = 4;
 	pixel_x = 10
 	},
-/turf/simulated/floor/purple/side{
-	dir = 4
-	},
+/obj/machinery/navbeacon/mule/research_north/south,
+/turf/simulated/floor/bot,
 /area/station/science/lobby)
 "bmV" = (
 /obj/machinery/networked/test_apparatus/heater,
@@ -30799,9 +30753,7 @@
 /obj/disposalpipe/junction{
 	icon_state = "pipe-j2"
 	},
-/turf/simulated/floor/purple/side{
-	dir = 4
-	},
+/turf/simulated/floor/delivery,
 /area/station/science/lobby)
 "bnO" = (
 /obj/disposalpipe/segment{
@@ -32204,9 +32156,7 @@
 	},
 /area/station/hallway/primary/east)
 "bqv" = (
-/obj/machinery/door_control{
-	id = "pod_port";
-	name = "Hangar Door Control";
+/obj/machinery/door_control/podbay/security/new_walls/north{
 	pixel_y = 28
 	},
 /turf/simulated/floor/engine,
@@ -34668,9 +34618,8 @@
 /area/station/quartermaster/office)
 "buM" = (
 /obj/disposalpipe/segment,
-/turf/simulated/floor/yellow/side{
-	dir = 9
-	},
+/obj/machinery/navbeacon/mule/QM1_north/east,
+/turf/simulated/floor/bot/caution,
 /area/station/quartermaster/office)
 "buN" = (
 /turf/simulated/floor/orangeblack/side{
@@ -41883,9 +41832,7 @@
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "bJM" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "bJN" = (
 /obj/lattice{
@@ -45816,6 +45763,9 @@
 	icon_state = "fpurple3"
 	},
 /area/station/science/research_director)
+"gRV" = (
+/turf/simulated/floor/delivery,
+/area/station/hangar/main)
 "gSK" = (
 /obj/machinery/firealarm{
 	dir = 1;
@@ -46067,6 +46017,10 @@
 /obj/reagent_dispensers/heliumtank,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
+"hyV" = (
+/obj/machinery/navbeacon/mule/pool_north/south,
+/turf/simulated/floor/bot/white,
+/area/station/crew_quarters/pool)
 "hBv" = (
 /obj/disposalpipe/trunk/mail,
 /obj/machinery/disposal/mail{
@@ -47120,6 +47074,15 @@
 	icon_state = "red2"
 	},
 /area/station/security/main)
+"kmx" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/machinery/navbeacon/mule/podbay_north/south,
+/turf/simulated/floor/bot,
+/area/station/hangar/main)
 "kna" = (
 /obj/table/wood/auto,
 /obj/item/reagent_containers/food/drinks/rum_spaced,
@@ -47709,6 +47672,12 @@
 	dir = 5
 	},
 /area/station/security/hos)
+"ltT" = (
+/obj/machinery/r_door_control/podbay/security/new_walls/west{
+	pixel_x = -24
+	},
+/turf/simulated/floor/engine,
+/area/station/hangar/sec)
 "lzZ" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fpurple2"
@@ -47859,6 +47828,10 @@
 	name = "very reinforced wall"
 	},
 /area/station/engine/combustion_chamber)
+"mdJ" = (
+/obj/machinery/navbeacon/mule/QM2_north,
+/turf/simulated/floor/bot,
+/area/station/quartermaster/office)
 "mfF" = (
 /obj/pool/perspective{
 	density = 0;
@@ -48504,6 +48477,9 @@
 	dir = 8
 	},
 /area/station/security/main)
+"occ" = (
+/turf/simulated/floor/delivery,
+/area/station/quartermaster/office)
 "odS" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -48866,7 +48842,8 @@
 	name = "E APC";
 	pixel_x = 24
 	},
-/turf/simulated/floor/black,
+/obj/machinery/navbeacon/mule/bridge_north,
+/turf/simulated/floor/bot,
 /area/station/bridge)
 "oRA" = (
 /obj/cable{
@@ -49017,6 +48994,9 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/fitness)
+"pru" = (
+/turf/simulated/floor/delivery/white,
+/area/station/crew_quarters/pool)
 "ptz" = (
 /obj/machinery/vending/standard,
 /obj/machinery/power/apc/autoname_north,
@@ -49626,6 +49606,9 @@
 	icon_state = "fgreen2"
 	},
 /area/station/engine/engineering/ce/private)
+"rhb" = (
+/turf/simulated/floor/delivery/caution,
+/area/station/quartermaster/office)
 "riT" = (
 /obj/machinery/light/emergency,
 /obj/cable{
@@ -50328,6 +50311,9 @@
 	dir = 4
 	},
 /area/station/security/hos)
+"sZi" = (
+/turf/simulated/floor/delivery,
+/area/station/hydroponics/bay)
 "taa" = (
 /obj/item/storage/toilet/random{
 	dir = 4;
@@ -51021,6 +51007,10 @@
 	icon_state = "engine_caution_east"
 	},
 /area/station/hangar/sec)
+"uRy" = (
+/obj/disposalpipe/segment,
+/turf/simulated/floor/delivery,
+/area/station/hallway/primary/north)
 "uSc" = (
 /obj/machinery/door_control{
 	id = "cargo_hangar";
@@ -51262,6 +51252,15 @@
 	},
 /turf/simulated/floor/grass/random/alt,
 /area/station/garden/aviary)
+"vxy" = (
+/obj/disposalpipe/segment,
+/obj/machinery/light/emergency{
+	dir = 8;
+	pixel_x = -10
+	},
+/obj/machinery/navbeacon/mule/crewA_north,
+/turf/simulated/floor/bot,
+/area/station/hallway/primary/north)
 "vzp" = (
 /obj/storage/secure/closet/security/equipment,
 /obj/disposalpipe/segment/ejection,
@@ -77910,8 +77909,8 @@ aay
 aac
 aaT
 aiW
-alN
-amh
+amy
+amy
 amy
 aiW
 aiW
@@ -78170,7 +78169,7 @@ aiW
 bqv
 all
 all
-all
+ltT
 ali
 aoe
 anh
@@ -82812,8 +82811,8 @@ oRA
 usZ
 usZ
 usZ
-usZ
-usZ
+hyV
+pru
 vdv
 azu
 azu
@@ -83555,8 +83554,8 @@ acO
 aes
 axm
 adw
-acO
-aes
+uRy
+vxy
 acO
 adw
 adW
@@ -86411,7 +86410,7 @@ auC
 iMu
 lhP
 axw
-ayk
+sZi
 ayC
 azB
 aAu
@@ -88451,8 +88450,8 @@ alF
 alF
 anb
 anB
-anY
-alF
+kmx
+gRV
 alb
 apN
 aqw
@@ -88509,11 +88508,11 @@ bpf
 bru
 bsu
 btE
-buN
+rhb
 bvT
 bxg
-bxj
-bzr
+occ
+mdJ
 gtQ
 bBJ
 bCQ

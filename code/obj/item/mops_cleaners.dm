@@ -378,7 +378,7 @@ WET FLOOR SIGN
 			var/turf/U = get_turf(A)
 
 			if (do_after(user, 4 SECONDS))
-				if (get_dist(A, user) > 1)
+				if (BOUNDS_DIST(A, user) > 0)
 					user.show_text("You were interrupted.", "red")
 					return
 				user.show_text("You have finished mopping!", "blue")
@@ -565,7 +565,7 @@ WET FLOOR SIGN
 			selection = choices[1]
 		else
 			selection = input(user, "What do you want to do with [src]?", "Selection") as null|anything in choices
-		if (isnull(selection) || user.equipped() != src || get_dist(user, target) > 1)
+		if (isnull(selection) || user.equipped() != src || BOUNDS_DIST(user, target) > 0)
 			return
 
 		switch (selection)
@@ -840,6 +840,7 @@ WET FLOOR SIGN
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "handvac"
 	mats = list("bamboo"=3, "MET-1"=10)
+	health = 7
 	w_class = W_CLASS_SMALL
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
 	item_function_flags = USE_SPECIALS_ON_ALL_INTENTS
@@ -1025,7 +1026,7 @@ WET FLOOR SIGN
 				old_trashbag.set_loc(user.loc)
 				user.put_in_hand_or_drop(old_trashbag)
 			user.u_equip(W)
-			W.dropped()
+			W.dropped(user)
 			src.tooltip_rebuild = 1
 		else if(istype(W, /obj/item/reagent_containers/glass/bucket))
 			if(isnull(src.bucket))
@@ -1040,7 +1041,7 @@ WET FLOOR SIGN
 				old_bucket.set_loc(user.loc)
 				user.put_in_hand_or_drop(old_bucket)
 			user.u_equip(W)
-			W.dropped()
+			W.dropped(user)
 			src.tooltip_rebuild = 1
 		else
 			. = ..()
@@ -1081,7 +1082,7 @@ WET FLOOR SIGN
 		if(!isturf(user.loc)) return
 		var/turf/target_turf = get_turf(target)
 		var/turf/master_turf = get_turf(master)
-		if(params["left"] && master && (get_dist(master_turf, target_turf) > 1 || ismob(target) && target != user))
+		if(params["left"] && master && (BOUNDS_DIST(master_turf, target_turf) > 0 || ismob(target) && target != user))
 			if(ON_COOLDOWN(master, "suck", src.cooldown)) return
 			preUse(user)
 			var/direction = get_dir_pixel(user, target, params)
@@ -1128,7 +1129,7 @@ WET FLOOR SIGN
 								if(!I.cant_drop)
 									I.set_loc(M.loc)
 									M.u_equip(I)
-									I.dropped()
+									I.dropped(user)
 									boutput(M, "<span class='alert'>Your [I] is pulled from your hands by the force of [user]'s [master].</span>")
 				new/obj/effect/suck(T, get_dir(T, last))
 				last = T

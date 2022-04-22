@@ -537,6 +537,19 @@ datum/pump_ui/circulator_ui
 	density = 1
 	anchored = 1
 
+/obj/machinery/teg_connector
+	name = "\improper TEG connector"
+	desc = "Connects a Thermo-Electric Generator to its turbines."
+	icon = 'icons/obj/power.dmi'
+	icon_state = "teg_connector"
+	anchored = 1
+	density = 1
+
+/obj/machinery/teg_connector/random_appearance
+	New()
+		..()
+		src.dir = cardinal[BUILD_TIME_SECOND % 4 + 1]
+
 /obj/machinery/power/generatorTemp
 	name = "generator"
 	desc = "A high efficiency thermoelectric generator."
@@ -655,8 +668,16 @@ datum/pump_ui/circulator_ui
 		light.attach(src)
 
 		SPAWN(0.5 SECONDS)
-			src.circ1 = locate(/obj/machinery/atmospherics/binary/circulatorTemp) in get_step(src,WEST)
-			src.circ2 = locate(/obj/machinery/atmospherics/binary/circulatorTemp) in get_step(src,EAST)
+			var/turf/T = get_step(src, WEST)
+			while(locate(/obj/machinery/teg_connector) in T)
+				T = get_step(T, WEST)
+			src.circ1 = locate(/obj/machinery/atmospherics/binary/circulatorTemp) in T
+
+			T = get_step(src, EAST)
+			while(locate(/obj/machinery/teg_connector) in T)
+				T = get_step(T, EAST)
+			src.circ2 = locate(/obj/machinery/atmospherics/binary/circulatorTemp) in T
+
 			if(!src.circ1 || !src.circ2)
 				src.status |= BROKEN
 
@@ -1087,7 +1108,8 @@ datum/pump_ui/circulator_ui
 				next.Add(M)
 
 			last = target
-			target = pick(next)
+			if (length(next))
+				target = pick(next)
 
 	power_change()
 		..()

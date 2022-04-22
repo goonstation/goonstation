@@ -244,7 +244,6 @@
 	hudarrow_color = "#ffffff"
 	is_syndicate = 1
 	desc = "This little bad-boy has been pre-programmed to display the general direction of any assassination target you choose."
-	contraband = 3
 
 	attack_self(mob/user)
 		if(!active)

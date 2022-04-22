@@ -292,6 +292,13 @@
 	#endif
 	SEND_SIGNAL(src, COMSIG_ATOM_CROSSED, AM)
 
+/atom/Entered(atom/movable/AM, atom/OldLoc)
+	SHOULD_CALL_PARENT(TRUE)
+	#ifdef SPACEMAN_DMM //im cargo culter
+	..()
+	#endif
+	SEND_SIGNAL(src, COMSIG_ATOM_ENTERED, AM, OldLoc)
+
 /atom/proc/ProximityLeave(atom/movable/AM as mob|obj)
 	return
 
@@ -332,6 +339,7 @@
 /// Call this proc inplace of update_icon(...)
 /atom/proc/UpdateIcon(...)
 	SHOULD_NOT_OVERRIDE(TRUE)
+	if (HAS_ATOM_PROPERTY(src, PROP_ATOM_NO_ICON_UPDATES)) return
 	SEND_SIGNAL(src, COMSIG_ATOM_PRE_UPDATE_ICON)
 	update_icon(arglist(args))
 	SEND_SIGNAL(src, COMSIG_ATOM_POST_UPDATE_ICON)
@@ -933,10 +941,7 @@
 
 //reason for having this proc is explained below
 /atom/proc/set_density(var/newdensity)
-	src.density = newdensity
-
-/atom/movable/set_density(var/newdensity)
-	..()
+	src.density = HAS_ATOM_PROPERTY(src, PROP_ATOM_NEVER_DENSE) ? 0 : newdensity
 
 // standardized damage procs
 
@@ -963,6 +968,67 @@
 
 /// Does x cold damage to the atom
 /atom/proc/damage_cold(amount)
+
+// auto-connecting sprites
+/// Check a turf and its contents to see if they're a valid auto-connection target
+/atom/proc/should_auto_connect(var/turf/T, var/connect_to = list(), var/exceptions = list(), var/cross_areas = TRUE)
+	if (!connect_to || !islist(connect_to)) // nothing to connect to
+		return FALSE
+	if (!cross_areas && (get_area(T) != get_area(src))) // don't connect across areas
+		return FALSE
+
+	for (var/connect in connect_to)
+		var/list/matches= list()
+		if(istype(T, connect))
+			matches.Add(T)
+		else
+			for (var/atom/A in T)
+				if (!isnull(A))
+					if (istype(A, /atom/movable))
+						var/atom/movable/M = A
+						if (!M.anchored)
+							continue
+						if (istype(A, connect))
+							matches.Add(A)
+		for (var/match in matches)
+			var/valid = TRUE
+			if (exceptions && islist(exceptions))
+				for (var/exception in exceptions)
+					if (istype(match, exception))
+						valid = FALSE
+			if (valid)
+				return TRUE
+	return FALSE
+
+/// Return a bitflag that represents all potential connected icon_states
+/*
+connecting with diagonal tiles require additional bitflags
+i.e. there is a difference between N & E, and N & E & NE
+N, S, E, W, NE, SE, SW, NW
+1, 2, 4, 8, 16, 32, 64, 128
+*/
+/atom/proc/get_connected_directions_bitflag(var/valid_atoms = list(), var/exceptions = list(), var/cross_areas = TRUE, var/connect_diagonal = 0)
+	var/ordir = null
+	var/connected_directions = 0
+	if (!valid_atoms || !islist(valid_atoms))
+		return
+
+	// cardinals first
+	for (var/dir in cardinal)
+		var/turf/CT = get_step(src, dir)
+		if (should_auto_connect(CT, valid_atoms, exceptions, cross_areas))
+			connected_directions |= dir
+
+	// connect_diagonals 0 = no diagonal sprites, 1 = diagonal only if both adjacent cardinals are present, 2 = always allow diagonals
+	if (connect_diagonal)
+		for (var/i = 1 to 4)  // needed for bitshift
+			ordir = ordinal[i]
+			if (connect_diagonal < 2 && (ordir & connected_directions) != ordir)
+				continue
+			var/turf/OT = get_step(src, ordir)
+			if (should_auto_connect(OT, valid_atoms, exceptions, cross_areas))
+				connected_directions |= 8 << i
+	return connected_directions
 
 /proc/scaleatomall()
 	var/scalex = input(usr,"X Scale","1 normal, 2 double etc","1") as num

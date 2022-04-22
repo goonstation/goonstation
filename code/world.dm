@@ -65,20 +65,25 @@ var/global/mob/twitch_mob = 0
 	if (!fexists(path))
 		return null
 
-	var/savefile/F = new /savefile(path, -1)
+	var/savefile/F = new /savefile(path, 10)
+	if (!F)
+		logTheThing("debug", null, null, "Failed to load intra round value \"[field]\". Save file exists but may be locked by another process.")
+		return
 	F["[field]"] >> .
-	if(length(.) == 0)
-		return null
 
 /world/proc/save_intra_round_value(var/field, var/value)
 	if (!field || isnull(value))
 		return -1
 
-	var/savefile/F = new /savefile("data/intra_round.sav", -1)
-	F.Lock(-1)
-
-	F["[field]"] << value
-	return 0
+	var/savefile/F = new /savefile("data/intra_round.sav", 10)
+	if (!F)
+		logTheThing("debug", null, null, "Unable to save intra round value to field \"[field]\". Save file may be locked by another process.")
+		return
+	if (F.Lock(10))
+		F["[field]"] << value
+		return 0
+	else
+		logTheThing("debug", null, null, "Unable to save intra round value to field \"[field]\". Failed to obtain an exclusive save file lock.")
 
 /world/proc/load_motd()
 	join_motd = grabResource("html/motd.html")
@@ -339,6 +344,7 @@ var/f_color_selector_handler/F_Color_Selector
 		..()
 
 /world/New()
+	current_state = GAME_STATE_WORLD_NEW
 	Z_LOG_DEBUG("World/New", "World New()")
 	TgsNew(new /datum/tgs_event_handler/impl, TGS_SECURITY_TRUSTED)
 	tick_lag = MIN_TICKLAG//0.4//0.25
@@ -506,10 +512,6 @@ var/f_color_selector_handler/F_Color_Selector
 		bust_lights()
 		master_mode = "disaster" // heh pt. 2
 
-	UPDATE_TITLE_STATUS("Lighting up")
-	Z_LOG_DEBUG("World/Init", "RobustLight2 init...")
-	RL_Start()
-
 	//SpyStructures and caches live here
 	UPDATE_TITLE_STATUS("Updating cache")
 	Z_LOG_DEBUG("World/Init", "Building various caches...")
@@ -536,6 +538,10 @@ var/f_color_selector_handler/F_Color_Selector
 	Z_LOG_DEBUG("World/Init", "Setting up mining level...")
 	makeMiningLevel()
 	#endif
+
+	UPDATE_TITLE_STATUS("Lighting up")
+	Z_LOG_DEBUG("World/Init", "RobustLight2 init...")
+	RL_Start()
 
 	UPDATE_TITLE_STATUS("Building random station rooms")
 	Z_LOG_DEBUG("World/Init", "Setting up random rooms...")
@@ -568,6 +574,12 @@ var/f_color_selector_handler/F_Color_Selector
 
 	Z_LOG_DEBUG("World/Init", "Running map-specific initialization...")
 	map_settings.init()
+
+	#if !defined(GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW) && !defined(RUNTIME_CHECKING)
+	Z_LOG_DEBUG("World/Init", "Initializing region allocator...")
+	if(length(global.region_allocator.free_nodes) == 0)
+		global.region_allocator.add_z_level()
+	#endif
 
 	Z_LOG_DEBUG("World/Init", "Generating AI station map...")
 	ai_station_map = new
@@ -642,6 +654,9 @@ var/f_color_selector_handler/F_Color_Selector
 	processScheduler.stop()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_REBOOT)
 	save_intraround_jars()
+	global.save_noticeboards()
+	for_by_tcl(canvas, /obj/item/canvas/big_persistent)
+		canvas.save()
 	global.phrase_log.save()
 	for_by_tcl(P, /datum/player)
 		P.on_round_end()
@@ -1491,8 +1506,9 @@ var/f_color_selector_handler/F_Color_Selector
 			//Tells shitbee what the current AI laws are (if there are any custom ones)
 			if ("ailaws")
 				if (current_state > GAME_STATE_PREGAME)
-					var/list/laws = ticker.ai_law_rack_manager.format_for_irc()
-					return ircbot.response(laws)
+					var/ircmsg[] = new()
+					ircmsg["laws"] = ticker.ai_law_rack_manager.format_for_logs(glue = "\n", round_end = TRUE, include_link = FALSE)
+					return ircbot.response(ircmsg)
 				else
 					return 0
 

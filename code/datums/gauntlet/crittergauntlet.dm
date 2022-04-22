@@ -37,7 +37,7 @@
 		return 1
 	if (ismob(eye))
 		var/mob/M = eye
-		if (M.is_near_gauntlet())
+		if (M != src && M.is_near_gauntlet())
 			return 1
 	else if (istype(eye, /obj/observable/gauntlet))
 		return 1

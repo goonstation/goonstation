@@ -567,7 +567,7 @@
 				if (src.manuf_zap(usr, 10))
 					return
 
-		if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1 || isAI(usr)) && istype(src.loc, /turf))))
+		if ((usr.contents.Find(src) || ((BOUNDS_DIST(src, usr) == 0 || isAI(usr)) && istype(src.loc, /turf))))
 			src.add_dialog(usr)
 
 			if (src.malfunction && prob(10))
@@ -584,7 +584,7 @@
 						if (O.material && O.material.mat_id == mat_id)
 							if (!ejectamt)
 								ejectamt = input(usr,"How many material pieces do you want to eject?","Eject Materials") as num
-								if (ejectamt <= 0 || src.mode != "ready" || get_dist(src, usr) > 1 || !isnum_safe(ejectamt))
+								if (ejectamt <= 0 || src.mode != "ready" || BOUNDS_DIST(src, usr) > 0 || !isnum_safe(ejectamt))
 									break
 							if (!ejectturf)
 								break
@@ -604,12 +604,13 @@
 							break
 
 			if (href_list["speed"])
+				var/upperbound = src.hacked ? 5 : 3
+				var/given_speed = text2num(href_list["speed"])
 				if (src.mode == "working")
 					boutput(usr, "<span class='alert'>You cannot alter the speed setting while the unit is working.</span>")
+				else if (given_speed >= 1 && given_speed <= upperbound)
+					src.speed = given_speed
 				else
-					var/upperbound = 3
-					if (src.hacked)
-						upperbound = 5
 					var/newset = input(usr,"Enter from 1 to [upperbound]. Higher settings consume more power","Manufacturing Speed") as num
 					newset = clamp(newset, 1, upperbound)
 					src.speed = newset
@@ -901,7 +902,7 @@
 					playsound(src.loc, src.sound_grump, 50, 1)
 					boutput(user, "<span class='alert'>The manufacturer rejects the blueprint, as it already knows it.</span>")
 					return
-			BP.dropped()
+			BP.dropped(user)
 			src.download += BP.blueprint
 			src.visible_message("<span class='alert'>[src] emits a pleased chime!</span>")
 			playsound(src.loc, src.sound_happy, 50, 1)
@@ -1034,7 +1035,7 @@
 				src.beaker = W
 				if (user && W)
 					user.u_equip(W)
-					W.dropped()
+					W.dropped(user)
 
 		else if (istype(W,/obj/item/disk/data/floppy))
 			if (src.manudrive)
@@ -1043,7 +1044,7 @@
 				src.manudrive = W
 				if (user && W)
 					user.u_equip(W)
-					W.dropped()
+					W.dropped(user)
 				for (var/datum/computer/file/manudrive/MD in src.manudrive.root.contents)
 					src.drive_recipes = MD.drivestored
 			else
@@ -1052,7 +1053,7 @@
 				src.manudrive = W
 				if (user && W)
 					user.u_equip(W)
-					W.dropped()
+					W.dropped(user)
 				for (var/datum/computer/file/manudrive/MD in src.manudrive.root.contents)
 					src.drive_recipes = MD.drivestored
 
@@ -1123,11 +1124,11 @@
 			boutput(usr, "<span class='alert'>Only living mobs are able to set the manufacturer's output target.</span>")
 			return
 
-		if(get_dist(over_object,src) > 1)
+		if(BOUNDS_DIST(over_object, src) > 0)
 			boutput(usr, "<span class='alert'>The manufacturing unit is too far away from the target!</span>")
 			return
 
-		if(get_dist(over_object,usr) > 1)
+		if(BOUNDS_DIST(over_object, usr) > 0)
 			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
 			return
 
@@ -1172,7 +1173,7 @@
 			boutput(user, "<span class='alert'>You can't quick-load that.</span>")
 			return
 
-		if(get_dist(O,user) > 1)
+		if(BOUNDS_DIST(O, user) > 0)
 			boutput(user, "<span class='alert'>You are too far away!</span>")
 			return
 
@@ -1861,7 +1862,7 @@
 
 		if (user)
 			user.u_equip(O)
-			O.dropped()
+			O.dropped(user)
 
 		if (istype(O, src.base_material_class) && O.material)
 			var/obj/item/material_piece/P = O
@@ -1925,7 +1926,7 @@
 		if (!src.output_target)
 			return src.loc
 
-		if (get_dist(src.output_target,src) > 1)
+		if (BOUNDS_DIST(src.output_target, src) > 0)
 			src.output_target = null
 			return src.loc
 
@@ -2043,7 +2044,10 @@
 /obj/item/paper/manufacturer_blueprint/loafer
 	blueprint = /datum/manufacture/mechanics/loafer
 
+/******************** AI Law Rack Blueprint (probably a terrible idea) *******************/
 
+/obj/item/paper/manufacturer_blueprint/lawrack
+	blueprint = /datum/manufacture/mechanics/lawrack
 
 /******************** AI Display Blueprints (should be temporary but we know how that goes in coding) *******************/
 
@@ -2438,16 +2442,17 @@
 	/datum/manufacture/shoes_white,
 	/datum/manufacture/civilian_headset,
 	/datum/manufacture/jumpsuit_assistant,
-	/datum/manufacture/jumpsuit,
-	/datum/manufacture/jumpsuit_white,
+	/datum/manufacture/jumpsuit_pink,
 	/datum/manufacture/jumpsuit_red,
+	/datum/manufacture/jumpsuit_orange,
 	/datum/manufacture/jumpsuit_yellow,
 	/datum/manufacture/jumpsuit_green,
-	/datum/manufacture/jumpsuit_pink,
 	/datum/manufacture/jumpsuit_blue,
-	/datum/manufacture/jumpsuit_brown,
+	/datum/manufacture/jumpsuit_purple,
 	/datum/manufacture/jumpsuit_black,
-	/datum/manufacture/jumpsuit_orange,
+	/datum/manufacture/jumpsuit,
+	/datum/manufacture/jumpsuit_white,
+	/datum/manufacture/jumpsuit_brown,
 	/datum/manufacture/pride_lgbt,
 	/datum/manufacture/pride_ace,
 	/datum/manufacture/pride_aro,
@@ -2463,12 +2468,13 @@
 	/datum/manufacture/dress_black,
 	/datum/manufacture/hat_black,
 	/datum/manufacture/hat_white,
-	/datum/manufacture/hat_blue,
-	/datum/manufacture/hat_yellow,
-	/datum/manufacture/hat_red,
-	/datum/manufacture/hat_green,
 	/datum/manufacture/hat_pink,
+	/datum/manufacture/hat_red,
+	/datum/manufacture/hat_yellow,
 	/datum/manufacture/hat_orange,
+	/datum/manufacture/hat_green,
+	/datum/manufacture/hat_blue,
+	/datum/manufacture/hat_purple,
 	/datum/manufacture/hat_tophat,
 	/datum/manufacture/backpack,
 	/datum/manufacture/backpack_red,
@@ -2548,14 +2554,15 @@
 	/datum/manufacture/jumpsuit_assistant,
 	/datum/manufacture/jumpsuit,
 	/datum/manufacture/jumpsuit_white,
+	/datum/manufacture/jumpsuit_pink,
 	/datum/manufacture/jumpsuit_red,
+	/datum/manufacture/jumpsuit_orange,
 	/datum/manufacture/jumpsuit_yellow,
 	/datum/manufacture/jumpsuit_green,
-	/datum/manufacture/jumpsuit_pink,
 	/datum/manufacture/jumpsuit_blue,
-	/datum/manufacture/jumpsuit_brown,
+	/datum/manufacture/jumpsuit_purple,
 	/datum/manufacture/jumpsuit_black,
-	/datum/manufacture/jumpsuit_orange,
+	/datum/manufacture/jumpsuit_brown,
 	/datum/manufacture/pride_lgbt,
 	/datum/manufacture/pride_ace,
 	/datum/manufacture/pride_aro,
@@ -2567,15 +2574,15 @@
 	/datum/manufacture/pride_pan,
 	/datum/manufacture/pride_poly,
 	/datum/manufacture/pride_trans,
-	/datum/manufacture/suit_black,
 	/datum/manufacture/hat_black,
 	/datum/manufacture/hat_white,
-	/datum/manufacture/hat_blue,
-	/datum/manufacture/hat_yellow,
-	/datum/manufacture/hat_red,
-	/datum/manufacture/hat_green,
 	/datum/manufacture/hat_pink,
+	/datum/manufacture/hat_red,
+	/datum/manufacture/hat_yellow,
 	/datum/manufacture/hat_orange,
+	/datum/manufacture/hat_green,
+	/datum/manufacture/hat_blue,
+	/datum/manufacture/hat_purple,
 	/datum/manufacture/hat_tophat)
 
 	hidden = list(/datum/manufacture/id_card_gold,
