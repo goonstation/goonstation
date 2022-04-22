@@ -565,16 +565,16 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		Ov.icon = 'icons/effects/214x246.dmi'
 		Ov.icon_state = "explosion"
 
-		SPAWN(0) //Delete the overlay when finished with it.
-			sleep(1.5 SECONDS)
+		SPAWN(1.5 SECONDS) //Delete the overlay when finished with it.
 			qdel(Ov)
 
-		T.hotspot_expose(800,125)
-		explosion_new(src, T, 7 * ., 1) //The . is the tally of explosionPower in this poor slob.
-		if (ishuman(src.owner))
-			var/mob/living/carbon/human/H = src.owner
-			H.dump_contents_chance = 80 //hee hee
-		src.owner?.gib() //yer DEAD
+		SPAWN(1)
+			T.hotspot_expose(800,125)
+			explosion_new(src, T, 7 * ., 1) //The . is the tally of explosionPower in this poor slob.
+			if (ishuman(src.owner))
+				var/mob/living/carbon/human/H = src.owner
+				H.dump_contents_chance = 80 //hee hee
+			src.owner?.gib() //yer DEAD
 
 /obj/item/implant/revenge/microbomb/hunter
 	power = 4
