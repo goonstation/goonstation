@@ -205,6 +205,8 @@ obj/item/gun/reagent/syringe/love/plus // Sometimes you just need more love in y
 		set_current_projectile(new/datum/projectile/ectoblaster)
 		projectiles = list(current_projectile)
 		..()
+		src.reagents.add_reagent("ectoplasm", src.reagents.maximum_volume)
+
 
 	update_icon()
 
