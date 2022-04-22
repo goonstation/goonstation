@@ -604,7 +604,8 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				if (target)
 					arcFlash(src, target, 100000) //TODO scale this with powergrid... somehow. get area APC or smth
 
-		src.owner?.elecgib()
+		SPAWN(1)
+			src.owner?.elecgib()
 
 
 /obj/item/implant/robotalk
