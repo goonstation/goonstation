@@ -190,14 +190,32 @@ const containerCheck = (a: ReagentContainer, b: ReagentContainer): boolean => {
   return false;
 };
 
+// modified version of the shallowDiffers function from common/react.ts
+const reagentInfoDiffers = (a: ReagentInfoProps, b:ReagentInfoProps) => {
+  let i;
+  for (i in a) {
+    if (i === "container") continue;
+    if (!(i in b)) {
+      return true;
+    }
+  }
+  for (i in b) {
+    if (i === "container") continue;
+    if (a[i] !== b[i]) {
+      return true;
+    }
+  }
+  return containerCheck(a.container, b.container);
+};
+
 ReagentGraph.defaultHooks = {
   onComponentShouldUpdate: (lastProps: ReagentInfoProps, nextProps: ReagentInfoProps) => {
-    return containerCheck(lastProps.container, nextProps.container);
+    return reagentInfoDiffers(lastProps, nextProps);
   },
 };
 
 ReagentList.defaultHooks = {
   onComponentShouldUpdate: (lastProps: ReagentInfoProps, nextProps: ReagentInfoProps) => {
-    return containerCheck(lastProps.container, nextProps.container);
+    return reagentInfoDiffers(lastProps, nextProps);
   },
 };
