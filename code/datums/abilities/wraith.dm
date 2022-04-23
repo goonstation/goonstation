@@ -178,7 +178,7 @@
 	New(U, Absorb)
 		M = U
 		absorb = Absorb
-		place_to_put_bar = absorb.holder.owner
+		place_to_put_bar = M
 		..()
 
 
