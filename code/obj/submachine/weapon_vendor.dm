@@ -193,6 +193,7 @@
 		materiel_stock += new/datum/materiel/utility/bomb_decoy
 		materiel_stock += new/datum/materiel/utility/comtac
 		materiel_stock += new/datum/materiel/utility/beartraps
+		materiel_stock += new/datum/materiel/utility/sawflies
 
 	accepted_token()
 		src.credits[WEAPON_VENDOR_CATEGORY_SIDEARM]++
@@ -464,7 +465,7 @@
 /datum/materiel/utility/sawflies
 	name = "Sawflies"
 	path = /obj/item/storage/sawfly_pouch
-	description = "A pouch of 4 folding antipersonnel drones that can be folded after use.""
+	description = "A pouch of 4 folding antipersonnel drones that can be folded after use."
 
 // Requisition tokens
 
