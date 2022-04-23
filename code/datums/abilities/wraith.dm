@@ -178,7 +178,6 @@
 	New(U, Absorb)
 		M = U
 		absorb = Absorb
-		place_to_put_bar = M
 		..()
 
 
