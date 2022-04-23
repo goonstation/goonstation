@@ -151,7 +151,7 @@
 			return 1
 
 		actions.start(new/datum/action/bar/private/icon/absorb_corpse(M,src), src.holder.owner)
-		return 1
+		return 0
 
 	doCooldown()         //This makes it so wraith early game is much faster but hits a wall of high absorb cooldowns after ~5 corpses
 		if (!holder)	 //so wraiths don't hit scientific notation rates of regen without playing perfectly for a million years
@@ -239,7 +239,6 @@
 		for (var/mob/living/V in viewers(7, wraithHolder.owner))
 			boutput(V, "[M]'s corpse suddenly rots to nothing but bone!")
 		wraithHolder.corpsecount += 1
-		absorb.doCooldown()
 
 /datum/targetable/wraithAbility/possessObject
 	name = "Possess Object"
