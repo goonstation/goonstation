@@ -143,7 +143,7 @@
 
 /obj/ability_button/magboot_toggle
 	name = "(De)Activate Magboots"
-	icon_state = "shieldceon"
+	icon_state = "magbootson"
 
 	execute_ability()
 		var/obj/item/clothing/shoes/magnetic/W = the_item
