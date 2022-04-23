@@ -487,6 +487,7 @@ datum
 
 			reaction_obj(var/obj/O, var/volume)
 				if (volume < 5 || istype(O, /obj/critter) || istype(O, /obj/machinery/bot) || istype(O, /obj/decal) || O.anchored || O.invisibility) return
+				return_if_overlay_or_effect(O)
 				O.visible_message("<span class='alert'>The [O] comes to life!</span>")
 				var/obj/critter/livingobj/L = new/obj/critter/livingobj(O.loc)
 				O.set_loc(L)
@@ -2974,14 +2975,12 @@ datum
 			transparency = 170
 			hygiene_value = 0.3
 			thirst_value = -0.098
+			var/list/flushed_reagents = list("THC","CBD")
 
 			on_mob_life(var/mob/M, var/mult = 1) // cogwerks note. making atrazine toxic
 				if (!M) M = holder.my_atom
 				M.take_toxin_damage(2 * mult)
-				if(holder.has_reagent("THC"))
-					holder.remove_reagent("THC", 1)
-				if(holder.has_reagent("CBD"))
-					holder.remove_reagent("CBD", 1)
+				flush(M, 2 * mult, flushed_reagents)
 				..()
 				return
 

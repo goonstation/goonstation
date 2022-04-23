@@ -517,7 +517,7 @@
 				return contents[1]
 			else return null
 
-	proc/updateApperance()
+	proc/updateAppearance()
 		if (contents.len)
 			maptext = "[contents.len]"
 		else
@@ -530,7 +530,7 @@
 			var/obj/item/arrow/I = getArrow(user)
 			if(I)
 				user.put_in_hand(I, user.hand)
-				updateApperance()
+				updateAppearance()
 			return
 		..()
 
@@ -625,7 +625,7 @@
 					loaded = I
 					I.set_loc(src)
 					overlays += I
-					Q.updateApperance()
+					Q.updateAppearance()
 			if(istype(H.belt, /obj/item/quiver))
 				var/obj/item/quiver/Q = H.belt
 				var/obj/item/arrow/I = Q.getArrow(user)
@@ -633,7 +633,7 @@
 					loaded = I
 					I.set_loc(src)
 					overlays += I
-					Q.updateApperance()
+					Q.updateAppearance()
 		return
 
 	attack_hand(var/mob/user)

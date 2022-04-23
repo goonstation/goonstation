@@ -577,7 +577,8 @@ var/f_color_selector_handler/F_Color_Selector
 
 	#if !defined(GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW) && !defined(RUNTIME_CHECKING)
 	Z_LOG_DEBUG("World/Init", "Initializing region allocator...")
-	global.region_allocator.add_z_level()
+	if(length(global.region_allocator.free_nodes) == 0)
+		global.region_allocator.add_z_level()
 	#endif
 
 	Z_LOG_DEBUG("World/Init", "Generating AI station map...")
@@ -1732,6 +1733,12 @@ var/f_color_selector_handler/F_Color_Selector
 							UNTIL(request.is_complete())
 							response = request.into_response()
 				return 1
+
+			if("persistent_canvases")
+				var/list/response = list()
+				for_by_tcl(canvas, /obj/item/canvas/big_persistent)
+					response[canvas.id] = icon2base64(canvas.art)
+				return json_encode(response)
 
 /world/proc/setMaxZ(new_maxz)
 	if (!isnum(new_maxz) || new_maxz <= src.maxz)

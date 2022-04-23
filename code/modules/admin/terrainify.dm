@@ -31,7 +31,9 @@ var/datum/station_zlevel_repair/station_repair = new
 				if(src.weather_img)
 					T.UpdateOverlays(src.weather_img, "weather")
 				if(src.weather_effect)
-					new src.weather_effect(T)
+					var/obj/effects/E = locate(src.weather_effect) in T
+					if(!E)
+						new src.weather_effect(T)
 
 	proc/clean_up_station_level(replace_with_cars, add_sub)
 		mass_driver_fixup()
@@ -87,6 +89,8 @@ var/datum/station_zlevel_repair/station_repair = new
 
 			//Uh, make sure we don't block the shipping lanes!
 			for(var/atom/A in T)
+				if(ismob(A) || iscritter(A)) // Lets not just KILL people... ha hahah HA
+					continue
 				if(A.density)
 					qdel(A)
 
@@ -99,6 +103,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	var/additional_options
 	var/additional_toggles
 	var/static/datum/terrainify/terrainify_lock
+	var/allow_underwater = FALSE
 
 	proc/special_repair(list/turf/TS)
 		return FALSE
@@ -106,9 +111,10 @@ ABSTRACT_TYPE(/datum/terrainify)
 	proc/convert_station_level(params, datum/tgui/ui)
 		USR_ADMIN_ONLY
 #ifdef UNDERWATER_MAP
-		//to prevent tremendous lag from the entire map flooding from a single ocean tile.
-		boutput(usr, "You cannot use this command on underwater maps. Sorry!")
-		return FALSE
+		if(!allow_underwater)
+			//to prevent tremendous lag from the entire map flooding from a single ocean tile.
+			boutput(usr, "You cannot use this command on underwater maps. Sorry!")
+			return FALSE
 #endif
 		if(terrainify_lock)
 			boutput(ui.user, "Terrainify has already begone!")
@@ -349,6 +355,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	name = "Trench Station"
 	desc = "Generates trench caves on the station Z"
 	additional_toggles = list("Hostile Mobs")
+	allow_underwater = TRUE
 
 	convert_station_level(params, datum/tgui/ui)
 		if(..())
@@ -523,21 +530,26 @@ ABSTRACT_TYPE(/datum/terrainify)
 					active_options = list()
 					for(var/option in active_terrain.additional_options)
 						active_options[option] = active_terrain.additional_options[option][1]
+					. = TRUE
 
 		if("fabricator")
 			fabricator = !fabricator
+			. = TRUE
 
 		if("cars")
 			cars = !cars
+			. = TRUE
 
 		if("toggle")
 			if(params["toggle"] in active_terrain.additional_toggles)
 				src.active_toggles[params["toggle"]] = !src.active_toggles[params["toggle"]]
+				. = TRUE
 
 		if("option")
 			if(params["key"] in active_terrain.additional_options)
 				if(params["value"] in active_terrain.additional_options[params["key"]])
 					active_options[params["key"]] = params["value"]
+					. = TRUE
 
 		if("activate")
 			var/convert_params = list()
@@ -548,6 +560,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 			if(T)
 				T.convert_station_level(convert_params, ui)
 				T.terrainify_lock = null
+				. = TRUE
 
 
 #undef TERRAINIFY_VEHICLE_FABS

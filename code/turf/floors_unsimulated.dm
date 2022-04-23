@@ -32,6 +32,23 @@
 
 /////////////////////////////////////////
 
+/turf/unsimulated/floor/pryable
+	attackby(obj/item/W, mob/user)
+		if(ispryingtool(W))
+			src.name = "plating"
+			src.icon_state = "plating"
+			src.UpdateIcon()
+			setIntact(FALSE)
+			levelupdate()
+
+	scorched
+		icon_state = "floorscorched1"
+
+
+	scorched2
+		icon_state = "floorscorched2"
+
+
 /turf/unsimulated/floor/scorched
 	icon_state = "floorscorched1"
 
