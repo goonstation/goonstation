@@ -1,6 +1,6 @@
 /proc/lightning_bolt(atom/center, var/caster, var/duration = 9 SECONDS)
 	showlightning_bolt(center)
-	playsound(center, "sound/effects/thunder.ogg", 70, 1)
+	playsound(center, "sound/effects/lightning_strike.ogg", 70, 1)
 	elecflash(center,0, power=4, exclude_center = 0)
 	if(duration > 0 SECONDS)
 		residual_spark(center, caster, duration)
@@ -43,6 +43,7 @@
 		flick("residual_electricity_start", src)
 		SPAWN(duration)
 			qdel(src)
+		..()
 
 	Crossed(atom/movable/M as mob|obj)
 		if(iscarbon(M))
@@ -53,6 +54,7 @@
 				return
 			L.changeStatus("slowed", 1 SECONDS)
 			L.do_disorient(stamina_damage = 0, weakened = 0, stunned = 0, disorient = 20)
+		..()
 
 /obj/decal/lightning_bolt
 	name = "lightning bolt"
@@ -65,6 +67,7 @@
 
 	New()
 		icon_state = pick("lightning_1", "lightning_2")
+		..()
 
 /obj/lightning_target
 	anchored = 1
@@ -80,3 +83,4 @@
 		SPAWN(delay)
 			lightning_bolt(src.loc, caster)
 			qdel(src)
+		..()
