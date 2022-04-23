@@ -92512,17 +92512,6 @@
 	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/chemistry)
-"xRj" = (
-/obj/machinery/recharger/wall{
-	dir = 8;
-	pixel_x = 23
-	},
-/obj/storage/secure/crate/ghost/armory,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/hos)
 "xRl" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -142447,7 +142436,7 @@ bEf
 wgg
 qrB
 wbh
-xRj
+uUI
 yfc
 eDp
 vWl
