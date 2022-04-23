@@ -100,7 +100,8 @@
 	pointCost = 20
 	cooldown = 45 SECONDS //Starts at 45 seconds and scales upward exponentially
 	max_range = 4
-
+	var/datum/targetable/wraithAbility/absorbCorpse/absorbSuccess = 1 //Determines if wraith succesfully used the ability
+																//(long name because i need to access it in the action bar)
 	cast(atom/T)
 		if (..())
 			return 1
@@ -150,17 +151,20 @@
 			return 1
 
 		actions.start(new/datum/action/bar/private/icon/absorb_corpse(M,src), src.holder.owner)
-		return 0
+		return 1
 
 	doCooldown()         //This makes it so wraith early game is much faster but hits a wall of high absorb cooldowns after ~5 corpses
 		if (!holder)	 //so wraiths don't hit scientific notation rates of regen without playing perfectly for a million years
 			return		 //Edit: corpsecount is now added in absorb_corpse. - Josephin
-		var/datum/abilityHolder/wraith/W = holder
+		/*var/datum/abilityHolder/wraith/W = holder
 		if (istype(W))
 			if (W.corpsecount == 0)
 				cooldown = 45 SECONDS
 			else
-				cooldown += W.corpsecount * 150
+				cooldown = 45 SECONDS + W.corpsecount * 150*/
+		cooldown = 45 SECONDS
+		if(!absorbSuccess)
+			cooldown = round(cooldown / 2) //Cooldown is halved if unseccesful (unless formaldehyde was removed).
 		last_cast = world.time + cooldown
 		holder.updateButtons()
 		SPAWN(cooldown + 5)
@@ -195,6 +199,7 @@
 				return
 		if(W == null || M == null || wraithMob == null || get_dist(M, wraithMob) > absorb.max_range)
 			interrupt(INTERRUPT_ALWAYS)
+			absorb.absorbSuccess = 0
 			boutput(wraithMob, __red("Your attempt to draw essence from the corpse was interrupted!"))
 			return
 
@@ -205,6 +210,7 @@
 		duration = duration - ((M.decomp_stage - 1) * 2) SECONDS //Stage 0-1: 6 seconds, Stage 2: 4 seconds, Stage 3: 2 seconds
 		if(W == null || M == null || wraithMob == null || get_dist(M, wraithMob) > absorb.max_range)
 			interrupt(INTERRUPT_ALWAYS)
+			absorb.absorbSuccess = 0
 			boutput(wraithMob, __red("Your attempt to draw essence from the corpse was interrupted!"))
 			return
 		boutput(wraithMob, __red("You start sucking the essence out of [M]'s corpse!"))
@@ -222,6 +228,7 @@
 			qdel(M.organHolder.brain)
 		M.set_face_icon_dirty()
 		M.set_body_icon_dirty()
+		absorb.absorbSuccess = 1
 
 		logTheThing("combat", wraithMob, null, "absorbs the corpse of [constructTarget(M,"combat")] as a wraith.")
 		wraithHolder.regenRate *= 2.0
