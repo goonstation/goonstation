@@ -99,6 +99,7 @@
 	target_anything = 1
 	pointCost = 20
 	cooldown = 45 SECONDS //Starts at 45 seconds and scales upward exponentially
+	max_range = 4
 
 	cast(atom/T)
 		if (..())
@@ -148,7 +149,7 @@
 			boutput(holder.owner, "<span class='alert'>[pick("This body is too decrepit to be of any use.", "This corpse has already been run through the wringer.", "There's nothing useful left.", "This corpse is worthless now.")]</span>")
 			return 1
 
-		actions.start(new/datum/action/bar/icon/absorb_corpse(M,src,get_turf(holder.owner)), M)
+		actions.start(new/datum/action/bar/private/icon/absorb_corpse(M,src), src.holder.owner)
 		return 0
 
 	doCooldown()         //This makes it so wraith early game is much faster but hits a wall of high absorb cooldowns after ~5 corpses
@@ -165,55 +166,65 @@
 		SPAWN(cooldown + 5)
 			holder.updateButtons()
 
-/datum/action/bar/icon/absorb_corpse //Yes this will be private, this is just for testing purposes.
-	duration = 10 SECONDS
-	interrupt_flags = INTERRUPT_ACT | INTERRUPT_ACTION | INTERRUPT_MOVE
+/datum/action/bar/private/icon/absorb_corpse
+	duration = 6 SECONDS
+	interrupt_flags = INTERRUPT_ACT
 	id = "wraith_absorbCorpse"
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "wraith"
 	var/mob/living/carbon/human/M
 	var/datum/targetable/wraithAbility/absorbCorpse/absorb
-	var/turf/wraith_loc
 
 	New(U, Absorb)
 		M = U
 		absorb = Absorb
+		place_to_put_bar = absorb.holder.owner
 		..()
 
 
 	onUpdate()
 		..()
 		var/datum/abilityHolder/W = absorb.holder
-		var/datum/abilityHolder/wraith = absorb.holder.owner
-		if(W == null || M == null || wraith_loc != get_turf(absorb.holder.owner.loc))
+		var/mob/wraith/wraithMob = absorb.holder.owner
+		if (M.reagents) //Doesn't need to be in onStart(), cast() already takes care of that.
+			var/amt = M.reagents.get_reagent_amount("formaldehyde")
+			if (amt >= wraithMob.formaldehyde_tol)
+				interrupt(INTERRUPT_ALWAYS)
+				M.reagents.remove_reagent("formaldehyde", amt)
+				boutput(wraithMob, "<span class='alert'>This vessel is tainted with an... unpleasant substance... It is now removed...</span>")
+				particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#FFFFFF", 2, locate(M.x, M.y, M.z)))
+				return
+		if(W == null || M == null || wraithMob == null || get_dist(M, wraithMob) > absorb.max_range)
 			interrupt(INTERRUPT_ALWAYS)
-			boutput(wraith, __red("Your attempt to draw essence from the corpse was interrupted!"))
+			boutput(wraithMob, __red("Your attempt to draw essence from the corpse was interrupted!"))
 			return
 
 	onStart()
 		..()
 		var/datum/abilityHolder/W = absorb.holder
-		var/datum/abilityHolder/wraith = absorb.holder.owner
-		if(W == null || M == null)
+		var/mob/wraith/wraithMob = absorb.holder.owner
+		duration = duration - ((M.decomp_stage - 1) * 2) SECONDS //Stage 0-1: 6 seconds, Stage 2: 4 seconds, Stage 3: 2 seconds
+		if(W == null || M == null || wraithMob == null || get_dist(M, wraithMob) > absorb.max_range)
 			interrupt(INTERRUPT_ALWAYS)
-			boutput(wraith, __red("Your attempt to draw essence from the corpse was interrupted!"))
+			boutput(wraithMob, __red("Your attempt to draw essence from the corpse was interrupted!"))
 			return
-		boutput(wraith, __red("You start sucking the essence out of [M]'s corpse!"))
+		boutput(wraithMob, __red("You start sucking the essence out of [M]'s corpse!"))
 		particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#000000", 12, locate(M.x, M.y, M.z)))
-		for (var/mob/living/V in viewers(7, W.owner))
+		for (var/mob/living/V in viewers(7, wraithMob))
 			boutput(V, "Black smoke rises from [M]'s corpse! Freaky!")
 
 
 	onEnd()
 		..()
-		var/datum/abilityHolder/wraithHolder = absorb.holder
-		logTheThing("combat", wraithHolder, null, "absorbs the corpse of [key_name(M)] as a wraith.")
+		var/datum/abilityHolder/wraith/wraithHolder = absorb.holder
+		var/mob/wraith/wraithMob = absorb.holder.owner
 		M.decomp_stage = 4
 		if (M.organHolder && M.organHolder.brain)
 			qdel(M.organHolder.brain)
 		M.set_face_icon_dirty()
 		M.set_body_icon_dirty()
 
+		logTheThing("combat", wraithMob, null, "absorbs the corpse of [constructTarget(M,"combat")] as a wraith.")
 		wraithHolder.regenRate *= 2.0
 		wraithHolder.owner:onAbsorb(M)
 		//Messages for everyone!
@@ -221,9 +232,7 @@
 		playsound(M, "sound/voice/wraith/wraithsoulsucc[rand(1, 2)].ogg", 60, 0)
 		for (var/mob/living/V in viewers(7, wraithHolder.owner))
 			boutput(V, "[M]'s corpse suddenly rots to nothing but bone!")
-		var/datum/abilityHolder/wraith/wraithCorpse = absorb.holder
-		wraithCorpse.corpsecount += 1
-		return
+		wraithHolder.corpsecount += 1
 
 /datum/targetable/wraithAbility/possessObject
 	name = "Possess Object"
