@@ -101,6 +101,8 @@
 #define COMSIG_ATOM_EXPLODE "atom_explode"
 /// When the atom somewhere (possibly nested deep) in contents is a source of an explosion (object, args_to_explode_at)
 #define COMSIG_ATOM_EXPLODE_INSIDE "atom_explode_inside"
+/// When the atom reflects a projectile
+#define COMSIG_ATOM_PROJECTILE_REFLECTED "atom_reflect_projectile"
 
 // ---- atom/movable signals ----
 

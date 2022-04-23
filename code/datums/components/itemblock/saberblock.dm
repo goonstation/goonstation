@@ -31,6 +31,7 @@ datum/component/itemblock/saberblock/proc/do_reflect_animation(mob/user)
 datum/component/itemblock/saberblock/on_block_begin(obj/item/I, var/obj/item/grab/block/B)
 	. = ..()//Always call your parents
 	if(!can_block_check || (call(I, can_block_check)()))
+		RegisterSignal(B.assailant, COMSIG_ATOM_PROJECTILE_REFLECTED, .proc/do_reflect_animation)
 		B.setProperty("reflection", 1)
 		B.setProperty("disorient_resist", 75)
 
@@ -47,5 +48,6 @@ datum/component/itemblock/saberblock/on_block_begin(obj/item/I, var/obj/item/gra
 //proc that is called when the block is ended. The parent itemblock component has already registered this proc for the "COMSIG_ITEM_BLOCK_END" signal
 datum/component/itemblock/saberblock/on_block_end(obj/item/I, var/obj/item/grab/block/B)
 	. = ..()//always always
+	UnregisterSignal(B.assailant, COMSIG_ATOM_PROJECTILE_REFLECTED)
 	B.delProperty("reflection")
 	B.delProperty("disorient_resist")
