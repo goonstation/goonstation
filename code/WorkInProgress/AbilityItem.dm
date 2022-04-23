@@ -376,27 +376,27 @@
 
 /obj/ability_button/flashlight_engiehelm
 	name = "Toggle Helmet Light"
-	icon_state = "on"
+	icon_state = "lightoff"
 
 	execute_ability()
 		var/obj/item/clothing/head/helmet/space/engineer/J = the_item
 
 		J.flashlight_toggle(the_mob)
-		if (J.on) src.icon_state = "off"
-		else  src.icon_state = "on"
+		if (J.on) src.icon_state = "lighton"
+		else  src.icon_state = "lightoff"
 		..()
 
 ////////////////////////////////////////////////////////////
 
 /obj/ability_button/flashlight_hardhat
 	name = "Toggle Hardhat Light"
-	icon_state = "on"
+	icon_state = "lightoff"
 
 	execute_ability()
 		var/obj/item/clothing/head/helmet/hardhat/J = the_item
 
 		J.flashlight_toggle(the_mob)
-		src.icon_state = J.on ? "off" : "on"
+		src.icon_state = J.on ? "lighton" : "lightoff"
 		..()
 
 ////////////////////////////////////////////////////////////
