@@ -1,13 +1,16 @@
-/proc/lightning_bolt(atom/center, var/duration = 9 SECONDS)
+/proc/lightning_bolt(atom/center, var/caster, var/duration = 9 SECONDS)
 	showlightning_bolt(center)
 	playsound(center, "sound/effects/thunder.ogg", 70, 1)
 	elecflash(center,0, power=4, exclude_center = 0)
 	if(duration > 0 SECONDS)
-		residual_spark(center, duration)
+		residual_spark(center, caster, duration)
 
 	for(var/mob/living/M in range(1,center))
 		if (M.bioHolder?.HasEffect("resist_electric") || M.traitHolder?.hasTrait("training_chaplain"))
 			boutput(M, "<span class='notice'>The lightning bolt arcs around you harmlessly.</span>")
+		if (M != caster && iswizard(M))
+			boutput(M, "<span class='notice'>The other wizard's lightning strike refuses to hurt you out of respect to other wizards.</span>")
+			return
 		else
 			M.TakeDamage("chest", 0, 10, 0, DAMAGE_BURN)
 			boutput(M, "<span class='alert'>You feel a strong electric shock!</span>")
@@ -19,11 +22,12 @@
 	for(var/obj/machinery/bot/b in range(1,center))
 		b.explode()
 
-/proc/residual_spark(atom/center, var/duration = "9 SECONDS") //lingering shocky parts after lightning bolts
+/proc/residual_spark(atom/center, var/caster, var/duration = "9 SECONDS") //lingering shocky parts after lightning bolts
 	for(var/turf/T in range(1,center))
 		for (var/obj/residual_electricity/E in T.contents)
 			qdel(E) //no stacked shocky tiles
-		new /obj/residual_electricity(T)
+		var/obj/residual_electricity/electricity = new /obj/residual_electricity(T)
+		electricity.caster = caster
 
 /obj/residual_electricity
 	name = "residual spark"
@@ -33,6 +37,7 @@
 	opacity = 0
 	plane = PLANE_NOSHADOW_ABOVE
 	var/duration = 9 SECONDS
+	var/caster
 
 	New()
 		flick("residual_electricity_start", src)
@@ -42,9 +47,9 @@
 	Crossed(atom/movable/M as mob|obj)
 		if(iscarbon(M))
 			var/mob/living/L = M
-			if (L.bioHolder?.HasEffect("resist_electric"))
+			if (L.bioHolder?.HasEffect("resist_electric") || L.traitHolder?.hasTrait("training_chaplain"))
 				return
-			if (L.traitHolder?.hasTrait("training_chaplain"))
+			if (L != src.caster && iswizard(L))
 				return
 			L.changeStatus("slowed", 1 SECONDS)
 			L.do_disorient(stamina_damage = 0, weakened = 0, stunned = 0, disorient = 20)
@@ -69,8 +74,9 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "lightning_target"
 	var/delay = 3 SECONDS
+	var/caster
 
 	New()
 		SPAWN(delay)
-			lightning_bolt(src.loc)
+			lightning_bolt(src.loc, caster)
 			qdel(src)

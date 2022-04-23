@@ -247,7 +247,8 @@
 		if (iswizard(user))
 			thunder_charges -= 1
 			var/turf/T = get_turf(target)
-			new/obj/lightning_target(T)
+			var/obj/lightning_target/lightning = new/obj/lightning_target(T)
+				lightning.caster = user
 			..()
 
 	attack_hand(var/mob/user as mob)
