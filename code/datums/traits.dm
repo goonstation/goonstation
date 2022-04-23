@@ -535,7 +535,7 @@
 	desc = "You sold your trinket before you departed for the station. You start with a bonus of 25% of your starting cash in your inventory."
 	id = "pawnstar"
 	icon_state = "pawnP"
-	points = -1
+	points = 0
 	category = list("trinkets")
 
 /obj/trait/beestfriend
