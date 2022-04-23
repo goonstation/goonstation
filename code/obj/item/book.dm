@@ -501,13 +501,15 @@ soon the light of the unwaking will rise and the shining ones will not be prepar
 			if(H.organHolder.get_organ("butt"))
 				user.visible_message("<span class='alert'>[user] farts on the bible.<br><b>A mysterious force smites [user]'s butt!</b></span>")
 				logTheThing("combat", user, null, "farted on [src] at [log_loc(src)] last touched by <b>[src.fingerprintslast ? src.fingerprintslast : "unknown"]</b>.")
-				H.damage_blunt(20)
 				H.drop_and_throw_organ("butt", dist = 8, speed = 1, showtext = 0)
 				H.emote("scream")
-				bleed(H, 0, 50)
-				H.changeStatus("paralysis", 3 SECONDS)
-				H.changeStatus("stunned", 4 SECONDS)
-				H.changeStatus("weakened", 6 SECONDS)
+				random_brute_damage(H, 30, false)
+				random_burn_damage(H, 20, false)
+				bleed(H, 0, 10) // i have to do this else the butt wouldnt be bloody
+				bleed(H, 20)
+				H.changeStatus("paralysis", 5 SECONDS)
+				H.changeStatus("stunned", 7 SECONDS)
+				H.changeStatus("weakened", 10 SECONDS)
 				return TRUE
 			else // they don't have a butt, so no smiting
 				return FALSE
