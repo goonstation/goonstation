@@ -530,7 +530,7 @@
 	category = list("trinkets")
 
 /obj/trait/pawnstar
-	name = "Pawn Star (-1) \[Trinkets\]"
+	name = "Pawn Star (0) \[Trinkets\]"
 	cleanName = "Pawn Star"
 	desc = "You sold your trinket before you departed for the station. You start with a bonus of 25% of your starting cash in your inventory."
 	id = "pawnstar"
