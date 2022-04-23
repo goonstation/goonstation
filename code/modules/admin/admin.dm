@@ -427,7 +427,7 @@ var/global/noir = 0
 						return
 
 					if(href_list["id"])
-						if(tgui_alert(usr,"Delete This Note?",,"Yes","No") == "No")
+						if(tgui_alert(usr,"Delete This Note?","Confirmation",list("Yes","No")) != "Yes")
 							return
 						else
 							var/noteId = href_list["id"]
@@ -2354,9 +2354,6 @@ var/global/noir = 0
 				var/mob/M = locate(href_list["target"])
 				if (!M)
 					return
-				if (M.ckey && M.ckey == usr.ckey)
-					tgui_alert(usr, "You cannot modify your own spacebux.")
-					return
 				var/spacebux = input(usr, "Current Spacebux: [M.client.persistent_bank]","Set Spacebux to...") as null|num
 				if (!spacebux)
 					return
@@ -2374,7 +2371,7 @@ var/global/noir = 0
 
 		if ("grantcontributor")
 			if (src.level >= LEVEL_CODER)
-				var/confirmation = tgui_alert(usr, "Are you sure?", "Confirmation", "Yes", "No")
+				var/confirmation = tgui_alert(usr, "Are you sure?", "Confirmation", list("Yes", "No"))
 				if (confirmation != "Yes")
 					return
 				var/mob/M = locate(href_list["target"])
@@ -2387,7 +2384,7 @@ var/global/noir = 0
 				tgui_alert(usr,"You need to be at least a Coder to grant the medal.")
 		if ("revokecontributor")
 			if (src.level >= LEVEL_CODER)
-				var/confirmation = tgui_alert(usr, "Are you sure?", "Confirmation", "Yes", "No")
+				var/confirmation = tgui_alert(usr, "Are you sure?", "Confirmation", list("Yes", "No"))
 				if (confirmation != "Yes")
 					return
 				var/mob/M = locate(href_list["target"])
@@ -3579,7 +3576,7 @@ var/global/noir = 0
 						for(var/mob/living/carbon/human/H in mobs)
 							if(H.ckey)
 								if(H.bioHolder.Uid)
-									dat += "<tr><td>[H]</td><td>[H.bioHolder.uid_hash]</td></tr>"
+									dat += "<tr><td>[H]</td><td>[H.bioHolder.fingerprints]</td></tr>"
 								else if(!H.bioHolder.Uid)
 									dat += "<tr><td>[H]</td><td>H.bioHolder.Uid = null</td></tr>"
 							LAGCHECK(LAG_LOW)
@@ -3819,7 +3816,7 @@ var/global/noir = 0
 			if (src.level >= LEVEL_MOD)
 				var/newName = href_list["newName"]
 				if (set_station_name(usr, newName))
-					command_alert("The new station name is [station_name]", "Station Naming Ceremony Completion Detection Algorithm")
+					command_alert("The new station name is [station_name]", "Station Naming Ceremony Completion Detection Algorithm", alert_origin = ALERT_STATION)
 
 				usr.Browse(null, "window=stationnamechanger")
 				src.Game()
@@ -5064,10 +5061,6 @@ var/global/noir = 0
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set desc = "Respawn yourself"
 
-	if(!isobserver(usr))
-		boutput(usr, "You can't respawn unless you're dead!")
-		return
-
 	logTheThing("admin", src, null, "respawned themselves.")
 	logTheThing("diary", src, null, "respawned themselves.", "admin")
 	message_admins("[key_name(src)] respawned themselves.")
@@ -5076,6 +5069,8 @@ var/global/noir = 0
 
 	M.key = usr.client.key
 	M.Login()
+
+	usr.remove()
 
 // Handling noclip logic
 /client/Move(NewLoc, direct)

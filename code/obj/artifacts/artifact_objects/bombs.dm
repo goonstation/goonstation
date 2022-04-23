@@ -58,7 +58,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 			playsound(T, alarm_initial, 100, 1, doAlert?200:-1)
 		if (doAlert)
 			var/area/A = get_area(O)
-			command_alert("An extremely unstable object of [artitype.type_name] origin has been detected in [A]. The crew is advised to dispose of it immediately.", "Station Threat Detected")
+			command_alert("An extremely unstable object of [artitype.type_name] origin has been detected in [A]. The crew is advised to dispose of it immediately.", "Station Threat Detected", alert_origin = ALERT_ANOMALY)
 		O.add_simple_light("artbomb", lightColor)
 		animate(O, pixel_y = rand(-3,3), pixel_y = rand(-3,3),time = 1,loop = src.explode_delay + 10 SECONDS, easing = ELASTIC_EASING, flags=ANIMATION_PARALLEL)
 		animate(O.simple_light, flags=ANIMATION_PARALLEL, time = src.explode_delay + 10 SECONDS, transform = matrix() * animationScale)
@@ -105,7 +105,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		var/turf/T = get_turf(O)
 		T.visible_message("<b><span class='notice'>[O] [text_disarmed]</b></span>")
 		if(src.doAlert && !src.blewUp && !ON_COOLDOWN(O, "alertDisarm", 10 MINUTES)) // lol, don't give the message if it was destroyed by exploding itself
-			command_alert("The object of [src.artitype.type_name] origin has been neutralized. All personnel should return to their duties.", "Station Threat Neutralized")
+			command_alert("The object of [src.artitype.type_name] origin has been neutralized. All personnel should return to their duties.", "Station Threat Neutralized", alert_origin = ALERT_ANOMALY)
 
 	proc/deploy_payload(var/obj/O)
 		if (!O)
@@ -114,7 +114,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 			var/turf/T = get_turf(O)
 			T.visible_message("<b>[O] [text_dud]")
 			if(src.doAlert && !ON_COOLDOWN(O, "alertDud", 10 MINUTES))
-				command_alert("The object of [src.artitype.type_name] origin appears to be nonfunctional. All personnel should return to their duties.", "Station Threat Neutralized")
+				command_alert("The object of [src.artitype.type_name] origin appears to be nonfunctional. All personnel should return to their duties.", "Station Threat Neutralized", alert_origin = ALERT_ANOMALY)
 			O.ArtifactDeactivated()
 			return 1
 
@@ -134,7 +134,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		if(src.artifact && istype(src.artifact, /datum/artifact/bomb))
 			var/datum/artifact/bomb/B = src.artifact
 			if(B.doAlert && B.activated && !B.blewUp) // lol, don't give the message if it was destroyed by exploding itself
-				command_alert("The object of [B.artitype.type_name] origin has been neutralized. All personnel should return to their duties.", "Station Threat Neutralized")
+				command_alert("The object of [B.artitype.type_name] origin has been neutralized. All personnel should return to their duties.", "Station Threat Neutralized", alert_origin = ALERT_ANOMALY)
 
 
 
@@ -260,17 +260,13 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 		if (potential_reagents.len > 0)
 			var/looper = rand(2,5)
-			log_addendum = "Payload: "
 			while (looper > 0)
 				var/reagent = pick(potential_reagents)
 				if(payload_type == 3 && ban_from_fluid.Find(reagent)) // do not pick stuff that is banned from fluid dump
 					continue
 				looper--
 				payload_reagents += reagent
-				if (looper > 0)
-					log_addendum += "[reagent], "
-				else
-					log_addendum += "[reagent]"
+			log_addendum = "Payload: [kText.list2text(payload_reagents, ", ")]"
 
 		recharge_delay = rand(300,800)
 

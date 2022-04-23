@@ -16,6 +16,7 @@
 	var/accessory = FALSE
 	var/face = null
 	block_vision = 1
+	material_amt = 0.2
 
 	New()
 		..()

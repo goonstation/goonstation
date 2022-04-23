@@ -72,12 +72,12 @@ THROWING DARTS
 		SHOULD_CALL_PARENT(TRUE)
 		deactivate()
 		SEND_SIGNAL(src, COMSIG_IMPLANT_REMOVED, M)
-		if (ishuman(src.owner))
-			var/mob/living/carbon/human/H = owner
+		if (ishuman(M))
+			var/mob/living/carbon/human/H = M
 			H.implant -= src
-		if (ismobcritter(src.owner))
-			var/mob/living/critter/C = owner
-			C.implants -= src
+		if (ismobcritter(M))
+			var/mob/living/critter/C = M
+			C.implants?.Remove(src)
 		if (implant_overlay)
 			M.update_clothing()
 		src.owner = null
@@ -523,7 +523,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				return
 			. = 0
 			for (var/obj/item/implant/implant in src.loc)
-				if (implant.type == src.type) //only interact with implants that are the same type as us
+				if (istype(implant, src.type)) //only interact with implants that are the same type as us
 					var/obj/item/implant/revenge/revenge_implant = implant
 					if (!revenge_implant.active)
 						revenge_implant.active = TRUE
@@ -533,8 +533,10 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				source.visible_message("<span class='alert'><b>[source][big_message]!</b></span>")
 			else
 				source.visible_message("[source][small_message].")
-			logTheThing("bombing", source, null, "triggered \a [src] on death at [log_loc(source)].")
-			message_admins("[key_name(source)] triggered \a [src] on death at [log_loc(source)].")
+			var/area/A = get_area(source)
+			if (!A.dont_log_combat)
+				logTheThing("bombing", source, null, "triggered \a [src] on death at [log_loc(source)].")
+				message_admins("[key_name(source)] triggered \a [src] on death at [log_loc(source)].")
 
 /obj/item/implant/revenge/microbomb
 	name = "microbomb implant"
@@ -563,24 +565,16 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		Ov.icon = 'icons/effects/214x246.dmi'
 		Ov.icon_state = "explosion"
 
-		var/list/throwjunk = list() //List of stuff to throw as if the explosion knocked it around.
-		var/cutoff = 0 //So we don't freak out and throw more than ~25 things and act like the old mass driver bug.
-		for(var/obj/item/I in src.owner)
-			cutoff++
-			I.set_loc(T)
-			if(cutoff <= 25)
-				throwjunk += I
-
-		for(var/obj/O in throwjunk) //Throw this junk around
-			var/edge = get_edge_target_turf(T, pick(alldirs))
-			O.throw_at(edge, 80, 4)
-
-		SPAWN(0) //Delete the overlay when finished with it.
-			sleep(1.5 SECONDS)
+		SPAWN(1.5 SECONDS) //Delete the overlay when finished with it.
 			qdel(Ov)
 
-		T.hotspot_expose(800,125)
-		explosion_new(src, T, 7 * ., 1) //The . is the tally of explosionPower in this poor slob.
+		SPAWN(1)
+			T.hotspot_expose(800,125)
+			explosion_new(src, T, 7 * ., 1) //The . is the tally of explosionPower in this poor slob.
+			if (ishuman(src.owner))
+				var/mob/living/carbon/human/H = src.owner
+				H.dump_contents_chance = 80 //hee hee
+			src.owner?.gib() //yer DEAD
 
 /obj/item/implant/revenge/microbomb/hunter
 	power = 4
@@ -595,20 +589,23 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	on_death()
 		. = ..()
 		elecflash(src, ., . * 2, TRUE)
-		for (var/mob/living/M in orange(. + 1, src.owner))
+		for (var/mob/living/M in orange(. / 6 + 1, src.owner))
 			if (!isintangible(M))
-				arcFlash(src.owner, M, (250000 / get_dist(src.owner, M)) * .) // need to adjust the damage on these a bit- probably bump the lower end, lower the top end idk
-		for (var/obj/machinery/machine in orange(round(. / 2) + 1)) // machinery around you also zaps people, based on the amount of power in the grid
-			if (prob(. * 8))
+				var/dist = get_dist(src.owner, M) + 1
+				// arcflash uses some fucked up thresholds so trust me on this one
+				arcFlash(src.owner, M, (40000 * (4 - (0.4 * dist * log(dist)))) * (15 * log(.) + 3))
+		for (var/obj/machinery/machine in orange(round(. / 6) + 1)) // machinery around you also zaps people, based on the amount of power in the grid
+			if (prob(. * 7))
 				var/mob/living/target
-				for (var/mob/living/L in orange(machine, 1)) //TODO this could probably be 2 at the risk of More Lag
+				for (var/mob/living/L in orange(machine, 2))
 					if (!isintangible(L))
 						target = L
 						break
 				if (target)
-					arcFlash(src, target, 100000) //TODO scale this with powergrid... somehow. get area APC
+					arcFlash(src, target, 100000) //TODO scale this with powergrid... somehow. get area APC or smth
 
-		src.owner?.elecgib()
+		SPAWN(1)
+			src.owner?.elecgib()
 
 
 /obj/item/implant/robotalk
@@ -1118,13 +1115,13 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 
 	onUpdate()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 

@@ -254,7 +254,7 @@
 
 		if (istype(W, /obj/item/reagent_containers/food/snacks) || istype(W, /obj/item/seed))
 			boutput(user, "You offer [src] [W].")
-			if (!do_mob(user, src, 1 SECOND) || get_dist(user, src) > 1)
+			if (!do_mob(user, src, 1 SECOND) || BOUNDS_DIST(user, src) > 0)
 				if (user && ismob(user))
 					user.show_text("You were interrupted!", "red")
 				return
@@ -545,7 +545,7 @@
 
 		for (var/client/C)
 			var/mob/M = C.mob
-			if (M && src.z == M.z && get_dist(src,M) <= 10)
+			if (M && src.z == M.z && GET_DIST(src, M) <= 10)
 				if (isliving(M))
 					waking = 1
 					break
@@ -580,7 +580,7 @@
 
 		for (var/client/C)
 			var/mob/M = C.mob
-			if (M && src.z == M.z && get_dist(src,M) <= 10)
+			if (M && src.z == M.z && GET_DIST(src, M) <= 10)
 				if (isliving(M))
 					stay_awake = 1
 					break

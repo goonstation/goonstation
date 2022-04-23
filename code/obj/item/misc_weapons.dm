@@ -697,6 +697,8 @@
 /obj/item/knife/butcher/throw_impact(atom/A, datum/thrown_thing/thr)
 	if(iscarbon(A))
 		var/mob/living/carbon/C = A
+		if (C.spellshield)
+			return ..()
 		if (ismob(usr))
 			A:lastattacker = usr
 			A:lastattackertime = world.time
@@ -903,10 +905,10 @@
 		set_values()
 		return ..()
 
-	attack(mob/target, mob/user) // custom hit sounds so we can get nice n meaty
+	attack(mob/target, mob/user)
 		..()
-		playsound(target, 'sound/impact_sounds/Flesh_Stab_1.ogg', 25 * (1 + src.two_handed), pitch=0.7) // magic numbers abound. trial and error
-		playsound(target, 'sound/impact_sounds/Generic_Hit_3.ogg', 18 * (1 + src.two_handed), pitch=0.55)
+		// ugly but basically we make it louder and slightly downpitched if we're 2 handing
+		playsound(target, 'sound/impact_sounds/Fireaxe.ogg', 30 * (1 + src.two_handed), pitch=(1 - 0.3 * src.two_handed))
 
 	New()
 		..()
@@ -929,6 +931,10 @@
 	stamina_cost = 30
 	stamina_crit_chance = 15
 	mats = list("wood" = 8)
+
+	attack(mob/M, mob/user, def_zone, is_special)
+		. = ..()
+		attack_twitch(user, 3, 2)
 
 	New()
 		..()
@@ -1030,6 +1036,10 @@
 /obj/item/katana/attack(mob/target as mob, mob/user as mob, def_zone, is_special = 0)
 	if(!ishuman(target)) //only humans can currently be dismembered
 		return ..()
+	if (target.nodamage)
+		return ..()
+	if (target.spellshield)
+		return ..()
 	var/zoney = user.zone_sel.selecting
 	var/mob/living/carbon/human/H = target
 	if (handle_parry(H, user))
@@ -1065,7 +1075,7 @@
 
 /// Checks if the target is facing in some way away from the user. Or they're lying down
 /obj/item/katana/proc/SeverButtStuff(var/mob/living/carbon/human/target, var/mob/user)
-	if(ismob(target) && IN_RANGE(target, user, 1) && (target.dir == user.dir || target.lying))
+	if(ismob(target) && (BOUNDS_DIST(target, user) == 0) && (target.dir == user.dir || target.lying))
 		if(target.organHolder?.tail)
 			target.organHolder.drop_and_throw_organ("tail", dist = 5, speed = 1, showtext = 1)
 		else if(target.organHolder?.butt)

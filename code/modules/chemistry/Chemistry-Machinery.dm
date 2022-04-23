@@ -184,7 +184,7 @@
 	//MBC : moved to robot_disposal_check
 	/*
 	ProximityLeave(atom/movable/AM as mob|obj)
-		if (roboworking && AM == roboworking && get_dist(src, AM) > 1)
+		if (roboworking && AM == roboworking && BOUNDS_DIST(src, AM) > 0)
 			// Cyborg is leaving (or getting pushed away); remove its beaker
 			roboworking = null
 			beaker = null
@@ -229,7 +229,7 @@
 			// This proc is only called when a robot was at one point using the heater, so if
 			// roboworking is unset then it must have been deleted
 			set_inactive()
-		else if (get_dist(src, roboworking) > 1)
+		else if (BOUNDS_DIST(src, roboworking) > 0)
 			roboworking = null
 			beaker = null
 			set_inactive()
@@ -264,11 +264,11 @@
 			boutput(usr, "<span class='alert'>Only living mobs are able to set the Reagent Heater/Cooler's output target.</span>")
 			return
 
-		if(get_dist(over_object,src) > 1)
+		if(BOUNDS_DIST(over_object, src) > 0)
 			boutput(usr, "<span class='alert'>The Reagent Heater/Cooler is too far away from the target!</span>")
 			return
 
-		if(get_dist(over_object,usr) > 1)
+		if(BOUNDS_DIST(over_object, usr) > 0)
 			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
 			return
 
@@ -400,7 +400,7 @@
 			if(input_name && input_name != default)
 				phrase_log.log_phrase("pill", input_name, no_duplicates=TRUE)
 			var/pillname = copytext(html_encode(input_name), 1, 32)
-			if (isnull(pillname) || !src.beaker || !R || !length(pillname) || pillname == " " || get_dist(usr, src) > 1)
+			if (isnull(pillname) || !src.beaker || !R || !length(pillname) || pillname == " " || BOUNDS_DIST(usr, src) > 0)
 				return
 			var/obj/item/reagent_containers/pill/P = new/obj/item/reagent_containers/pill(src.output_target)
 			P.name = "[pillname] pill"
@@ -422,7 +422,7 @@
 			var/pillname = copytext(html_encode(input_pillname), 1, 32)
 			if(input_pillname && input_pillname != default)
 				phrase_log.log_phrase("pill", input_pillname, no_duplicates=TRUE)
-			if (isnull(pillname) || !src.beaker || !R || !length(pillname) || pillname == " " || get_dist(usr, src) > 1)
+			if (isnull(pillname) || !src.beaker || !R || !length(pillname) || pillname == " " || BOUNDS_DIST(usr, src) > 0)
 				return
 			// get the pill volume from the user
 			var/pillvol = input(usr, "Volume of chemical per pill: (Min/Max 5/100):", "Volume", 5) as null|num
@@ -458,7 +458,7 @@
 			if(input_name && input_name != default)
 				phrase_log.log_phrase("bottle", input_name, no_duplicates=TRUE)
 			var/bottlename = copytext(html_encode(input_name), 1, 32)
-			if (isnull(bottlename) || !src.beaker || !R || !length(bottlename) || bottlename == " " || get_dist(usr, src) > 1)
+			if (isnull(bottlename) || !src.beaker || !R || !length(bottlename) || bottlename == " " || BOUNDS_DIST(usr, src) > 0)
 				return
 			var/obj/item/reagent_containers/glass/bottle/B
 			if (R.total_volume <= 30)
@@ -481,7 +481,7 @@
 
 			var/input_design = input(usr, "Choose the design (1~26):", "Design", default) as null|num
 
-			if (!src.beaker || !R || !length(bottlename) || bottlename == " " || get_dist(usr, src) > 1 || isnull(input_design) || input_design > 26 || input_design < 1)
+			if (!src.beaker || !R || !length(bottlename) || bottlename == " " || BOUNDS_DIST(usr, src) > 0 || isnull(input_design) || input_design > 26 || input_design < 1)
 				return
 
 			var/obj/item/reagent_containers/food/drinks/cola/custom/C
@@ -502,7 +502,7 @@
 		else if (href_list["createpatch"])
 			var/input_name = input(usr, "Name the patch:", "Name", R.get_master_reagent_name()) as null|text
 			var/patchname = copytext(html_encode(input_name), 1, 32)
-			if (isnull(patchname) || !src.beaker || !R || !length(patchname) || patchname == " " || get_dist(usr, src) > 1)
+			if (isnull(patchname) || !src.beaker || !R || !length(patchname) || patchname == " " || BOUNDS_DIST(usr, src) > 0)
 				return
 			var/med = src.check_whitelist(R)
 			var/obj/item/reagent_containers/patch/P
@@ -544,7 +544,7 @@
 			// get the pill name from the user
 			var/input_name = input(usr, "Name the patch:", "Name", R.get_master_reagent_name()) as null|text
 			var/patchname = copytext(html_encode(input_name), 1, 32)
-			if (isnull(patchname) || !src.beaker || !R || !length(patchname) || patchname == " " || get_dist(usr, src) > 1)
+			if (isnull(patchname) || !src.beaker || !R || !length(patchname) || patchname == " " || BOUNDS_DIST(usr, src) > 0)
 				return
 			// get the pill volume from the user
 			var/patchvol = input(usr, "Volume of chemical per patch: (Min/Max 5/30)", "Volume", 5) as null|num
@@ -672,11 +672,11 @@
 			boutput(usr, "<span class='alert'>Only living mobs are able to set the CheMaster 3000's output target.</span>")
 			return
 
-		if(get_dist(over_object,src) > 1)
+		if(BOUNDS_DIST(over_object, src) > 0)
 			boutput(usr, "<span class='alert'>The CheMaster 3000 is too far away from the target!</span>")
 			return
 
-		if(get_dist(over_object,usr) > 1)
+		if(BOUNDS_DIST(over_object, usr) > 0)
 			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
 			return
 
@@ -1084,7 +1084,7 @@ datum/chemicompiler_core/stationaryCore
 			boutput(user, "<span class='notice'>You add [W] to the machine!</span>")
 
 			user.u_equip(W)
-			W.dropped()
+			W.dropped(user)
 
 			src.updateUsrDialog()
 			return
@@ -1205,7 +1205,7 @@ datum/chemicompiler_core/stationaryCore
 			src.updateUsrDialog()
 
 	Topic(href, href_list)
-		if(get_dist(usr,src) > 1 && !issilicon(usr) && !isAI(usr) )
+		if(BOUNDS_DIST(usr, src) > 0 && !issilicon(usr) && !isAI(usr) )
 			boutput(usr, "<span class='alert'>You need to be closer to the extractor to do that!</span>")
 			return
 		if(href_list["page"])
@@ -1254,7 +1254,7 @@ datum/chemicompiler_core/stationaryCore
 			var/list/ext_targets = list(src.storage_tank_1,src.storage_tank_2)
 			if (src.inserted) ext_targets.Add(src.inserted)
 			var/target = input(usr, "Extract to which target?", "Reagent Extractor", 0) in ext_targets
-			if(get_dist(usr, src) > 1) return
+			if(BOUNDS_DIST(usr, src) > 0) return
 			src.extract_to = target
 			src.updateUsrDialog()
 
@@ -1289,7 +1289,7 @@ datum/chemicompiler_core/stationaryCore
 			if (src.inserted) ext_targets.Add(src.inserted)
 			ext_targets.Remove(G)
 			var/target = input(usr, "Transfer to which target?", "Reagent Extractor", 0) in ext_targets
-			if(get_dist(usr, src) > 1) return
+			if(BOUNDS_DIST(usr, src) > 0) return
 			var/obj/item/reagent_containers/glass/T = target
 
 			if (!T) boutput(usr, "<span class='alert'>Transfer target not found.</span>")
@@ -1298,7 +1298,7 @@ datum/chemicompiler_core/stationaryCore
 				var/amt = input(usr, "Transfer how many units?", "Chemical Transfer", 0) as null|num
 				if(!isnum_safe(amt))
 					return
-				if(get_dist(usr, src) > 1) return
+				if(BOUNDS_DIST(usr, src) > 0) return
 				if (amt < 1) boutput(usr, "<span class='alert'>Invalid transfer quantity.</span>")
 				else G.reagents.trans_to(T,amt)
 

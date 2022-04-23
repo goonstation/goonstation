@@ -17,6 +17,7 @@
 	name = "Computer-frame"
 	icon = 'icons/obj/computer_frame.dmi'
 	icon_state = "0"
+	material_amt = 0.5
 	var/state = 0
 	var/obj/item/motherboard/mainboard = null
 	var/obj/item/disk/data/fixed_disk/hd = null
@@ -31,6 +32,7 @@
 		desc = "A light micro-computer frame used for terminal systems."
 		icon = 'icons/obj/terminal_frame.dmi'
 		created_icon_state = "dterm"
+		material_amt = 0.3
 		max_peripherals = 2
 		metal_given = 3
 		glass_needed = 1

@@ -436,7 +436,7 @@
 						return
 					phrase_log.log_phrase("emote", input)
 					message = "<B>[src]</B> [input]"
-					maptext_out = "<I>[input]</I>"
+					maptext_out = "<I>[regex({"(&#34;.*?&#34;)"}, "g").Replace(input, "</i>$1<i>")]</I>"
 					custom = copytext(input, 1, 10)
 
 			if ("customv")
@@ -448,7 +448,7 @@
 				param = sanitize(html_encode(param))
 				phrase_log.log_phrase("emote", param)
 				message = "<b>[src]</b> [param]"
-				maptext_out = "<I>[param]</I>"
+				maptext_out = "<I>[regex({"(&#34;.*?&#34;)"}, "g").Replace(param, "</i>$1<i>")]</I>"
 				m_type = 1
 				custom = copytext(param, 1, 10)
 
@@ -460,7 +460,7 @@
 				param = sanitize(html_encode(param))
 				phrase_log.log_phrase("emote", param)
 				message = "<b>[src]</b> [param]"
-				maptext_out = "<I>[param]</I>"
+				maptext_out = "<I>[regex({"(&#34;.*?&#34;)"}, "g").Replace(param, "</i>$1<i>")]</I>"
 				m_type = 2
 				custom = copytext(param, 1, 10)
 
@@ -471,7 +471,7 @@
 				param = sanitize(html_encode(param))
 				phrase_log.log_phrase("emote", param)
 				message = "<b>[src]</b> [param]"
-				maptext_out = "<I>[param]</I>"
+				maptext_out = "<I>[regex({"(&#34;.*?&#34;)"}, "g").Replace(param, "</i>$1<i>")]</I>"
 				m_type = 1 // default to visible
 				custom = copytext(param, 1, 10)
 
@@ -614,6 +614,7 @@
 					SPAWN(1 SECOND)
 						src.wear_mask.set_loc(src.loc)
 						src.wear_mask = null
+						logTheThing("combat", src, null, "was gibbed by emoting uguu at [log_loc(src)].")
 						src.gib()
 						return
 				else
@@ -677,6 +678,7 @@
 						src.say ("M'lady")
 						SPAWN(1 SECOND)
 							src.add_karma(-10)
+							logTheThing("combat", src, null, "was gibbed by emoting fedora tipping at [log_loc(src)].")
 							src.gib()
 
 			if ("hatstomp", "stomphat")
@@ -1769,7 +1771,7 @@
 										do_flip = FALSE
 									if(do_flip && (!oldloc.Enter(tmob) || !newloc.Enter(src)))
 										do_flip = FALSE
-									if(do_flip && !IN_RANGE(newloc, oldloc, 1))
+									if(do_flip && !(BOUNDS_DIST(newloc, oldloc) == 0))
 										do_flip = FALSE
 									if(do_flip)
 										for(var/atom/movable/obstacle in oldloc)
@@ -2321,9 +2323,9 @@
 		src.render_target = "\ref[src]"
 
 /mob/living/proc/do_suplex(obj/item/grab/G)
-	if (!(G.state >= 1 && isturf(src.loc) && isturf(G.affecting.loc)))
+	if (!(G.state >= GRAB_STRONG && isturf(src.loc) && isturf(G.affecting.loc)))
 		return null
-	if(!IN_RANGE(src, G.affecting, 1))
+	if(!(BOUNDS_DIST(src, G.affecting) == 0))
 		return null
 
 	var/obj/table/tabl = locate() in src.loc.contents
