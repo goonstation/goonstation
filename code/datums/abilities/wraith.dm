@@ -151,20 +151,19 @@
 			return 1
 
 		actions.start(new/datum/action/bar/private/icon/absorb_corpse(M,src), src.holder.owner)
-		return 0
+		return 1
 
 	doCooldown()         //This makes it so wraith early game is much faster but hits a wall of high absorb cooldowns after ~5 corpses
 		if (!holder)	 //so wraiths don't hit scientific notation rates of regen without playing perfectly for a million years
 			return		 //Edit: corpsecount is now added in absorb_corpse. - Josephin
-		/*var/datum/abilityHolder/wraith/W = holder
+		var/datum/abilityHolder/wraith/W = holder
 		if (istype(W))
 			if (W.corpsecount == 0)
 				cooldown = 45 SECONDS
 			else
-				cooldown = 45 SECONDS + W.corpsecount * 150*/
-		cooldown = 45 SECONDS
+				cooldown = 45 SECONDS + W.corpsecount * 150
 		if(!absorbSuccess)
-			cooldown = round(cooldown / 2) //Cooldown is halved if unseccesful (unless formaldehyde was removed).
+			cooldown = cooldown / 2 //Cooldown is halved if unseccesful (unless formaldehyde was removed).
 		last_cast = world.time + cooldown
 		holder.updateButtons()
 		SPAWN(cooldown + 5)
@@ -196,11 +195,13 @@
 				M.reagents.remove_reagent("formaldehyde", amt)
 				boutput(wraithMob, "<span class='alert'>This vessel is tainted with an... unpleasant substance... It is now removed...</span>")
 				particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#FFFFFF", 2, locate(M.x, M.y, M.z)))
+				absorb.doCooldown()
 				return
 		if(W == null || M == null || wraithMob == null || get_dist(M, wraithMob) > absorb.max_range)
 			interrupt(INTERRUPT_ALWAYS)
 			absorb.absorbSuccess = 0
 			boutput(wraithMob, __red("Your attempt to draw essence from the corpse was interrupted!"))
+			absorb.doCooldown()
 			return
 
 	onStart()
@@ -212,6 +213,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			absorb.absorbSuccess = 0
 			boutput(wraithMob, __red("Your attempt to draw essence from the corpse was interrupted!"))
+			absorb.doCooldown()
 			return
 		boutput(wraithMob, __red("You start sucking the essence out of [M]'s corpse!"))
 		particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#000000", 12, locate(M.x, M.y, M.z)))
@@ -232,13 +234,14 @@
 
 		logTheThing("combat", wraithMob, null, "absorbs the corpse of [constructTarget(M,"combat")] as a wraith.")
 		wraithHolder.regenRate *= 2.0
-		wraithHolder.owner:onAbsorb(M)
+		wraithMob.onAbsorb(M)
 		//Messages for everyone!
 		boutput(wraithHolder.owner, "<span class='alert'><strong>[pick("You draw the essence of death out of [M]'s corpse!", "You drain the last scraps of life out of [M]'s corpse!")]</strong></span>")
 		playsound(M, "sound/voice/wraith/wraithsoulsucc[rand(1, 2)].ogg", 60, 0)
 		for (var/mob/living/V in viewers(7, wraithHolder.owner))
 			boutput(V, "[M]'s corpse suddenly rots to nothing but bone!")
 		wraithHolder.corpsecount += 1
+		absorb.doCooldown()
 
 /datum/targetable/wraithAbility/possessObject
 	name = "Possess Object"
