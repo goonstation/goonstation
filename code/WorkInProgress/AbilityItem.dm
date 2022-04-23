@@ -309,7 +309,7 @@
 
 /obj/ability_button/flashlight_toggle
 	name = "Toggle Flashlight"
-	icon_state = "on"
+	icon_state = "lightoff"
 
 	execute_ability()
 		var/obj/item/device/light/flashlight/J = the_item
