@@ -248,7 +248,7 @@
 			thunder_charges -= 1
 			var/turf/T = get_turf(target)
 			var/obj/lightning_target/lightning = new/obj/lightning_target(T)
-				lightning.caster = user
+			lightning.caster = user
 			..()
 
 	attack_hand(var/mob/user as mob)
