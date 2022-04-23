@@ -17,7 +17,7 @@ TYPEINFO(/datum/component/extradimensional_storage)
 	else
 		src.default_init_region()
 	RegisterSignal(parent, COMSIG_ATOM_ENTERED, .proc/on_entered)
-	RegisterSignal(parent, COMSIG_STORAGE_CLOSED, .proc/on_closed)
+	RegisterSignal(parent, COMSIG_PARENT_PRE_DISPOSING, .proc/on_disposing)
 
 /datum/component/extradimensional_storage/proc/default_init_region()
 	var/obj/storage/parent = src.parent
@@ -45,28 +45,23 @@ TYPEINFO(/datum/component/extradimensional_storage)
 		new /obj/map/light/brightwhite(T)
 		T.warptarget = parent
 
-/datum/component/extradimensional_storage/proc/on_entered(atom/movable/Obj, atom/OldLoc)
-	var/obj/storage/parent = src.parent
+/datum/component/extradimensional_storage/proc/on_entered(obj/storage/locker, atom/movable/Obj, atom/OldLoc)
 	var/turf/old_turf = OldLoc
-	if(parent.open && istype(old_turf) && region.turf_in_region(old_turf))
-		Obj.set_loc(parent.loc)
+	if(istype(old_turf) && region.turf_in_region(old_turf))
+		if(locker.open)
+			Obj.set_loc(locker.loc)
+		else
+			;
+	else
+		Obj.set_loc(region.turf_at(rand(3, region.width - 2), rand(3, region.height - 2)))
 
-/datum/component/extradimensional_storage/proc/on_closed()
-	var/obj/storage/parent = src.parent
-	for(var/atom/movable/AM in parent)
-		var/turf/T = region.turf_at(rand(3, region.width - 2), rand(3, region.height - 2))
-		AM.set_loc(T)
+/datum/component/extradimensional_storage/proc/on_disposing()
+	qdel(src)
 
 /datum/component/extradimensional_storage/UnregisterFromParent()
 	var/obj/storage/parent = src.parent
-	for(var/x in 1 to region.width)
-		for(var/y in 1 to region.height)
-			var/turf/T = region.turf_at(x, y)
-			for(var/atom/movable/AM in T)
-				if(!AM.anchored)
-					AM.set_loc(parent.loc)
+	src.region.move_movables_to(parent.loc)
 	region.clean_up(/turf/space, /turf/space)
 	qdel(region)
 	UnregisterSignal(parent, COMSIG_ATOM_ENTERED)
-	UnregisterSignal(parent, COMSIG_STORAGE_CLOSED)
 	. = ..()

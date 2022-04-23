@@ -477,7 +477,8 @@
 "qa" = (
 /obj/decal/cleanable/dirt/dirt3,
 /obj/machinery/bot/secbot/neon{
-	emagged = 2
+	emagged = 2;
+	control_freq = 0
 	},
 /turf/simulated/floor/terrazzo/white,
 /area/prefab/dreamplaza)

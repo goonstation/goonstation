@@ -1407,6 +1407,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	desc = "Two small pipes joined together with grooves cut into the side."
 	icon_state = "Pipe_Frame"
 	burn_possible = 0
+	material_amt = 0.3
 	var/state = 1
 	var/strength = 5
 	var/list/item_mods = new/list() //stuff something into one or both of the pipes to change the finished product
