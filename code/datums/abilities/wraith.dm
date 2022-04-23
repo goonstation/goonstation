@@ -239,6 +239,7 @@
 		for (var/mob/living/V in viewers(7, wraithHolder.owner))
 			boutput(V, "[M]'s corpse suddenly rots to nothing but bone!")
 		wraithHolder.corpsecount += 1
+		absorb.doCooldown()
 
 /datum/targetable/wraithAbility/possessObject
 	name = "Possess Object"
