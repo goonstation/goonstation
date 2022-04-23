@@ -57122,8 +57122,8 @@
 	dir = 4;
 	pixel_x = 23
 	},
-/obj/storage/secure/crate/ghost/armory,
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
+/obj/storage/secure/crate/ghost/armory,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "qrn" = (
