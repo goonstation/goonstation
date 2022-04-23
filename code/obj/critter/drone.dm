@@ -1341,7 +1341,7 @@
 	current_projectile = new/datum/projectile/laser/drill/sawfly
 	//angertext = "detects the presence of"
 	smashes_shit = 0
-	//droploot = /obj/item/survival_machete //change this later
+	droploot = null //change this later
 	health = 50
 	maxhealth = 50
 	firevuln = 0.5
@@ -1378,12 +1378,13 @@
 				attacking = 0
 			return
 
+
 	seek_target()
 		src.anchored = 0
 		for (var/mob/living/C in view(src.seekrange,src))
 			if (C in src.friends) continue
 			if (istraitor(C) || isnukeop(C) || isspythief(C)) // frens :)
-				src.visible_message("<span class='alert'>[src]'s IFF subsystem recognize an ally!")
+				src.visible_message("<span class='alert'>[src]'s IFF subsystem recognizes an ally!")
 				friends += C
 				continue
 		..()// call mom and pops
@@ -1451,7 +1452,7 @@
 				//explosion(src, get_turf(src), -1,-1, 2, 3)
 				explosion(src, get_turf(src), 0, 0.5, 2, 3) // KERBLOOEY!
 				elecflash(src,2)
-		qdel(src)
+			qdel(src)
 
 	attack_hand(var/mob/user as mob)
 		if (istraitor(user) || isnukeop(user) || isspythief(user) || (user in src.friends))
@@ -1465,5 +1466,14 @@
 				qdel(src)
 		..()
 
+	attackby(obj/item/W as obj, mob/living/user as mob)
+		..()
 
+		if(prob(25) && alive) // imported from brullbar
+			src.target = user
+			src.oldtarget_name = user.name
+			src.task = "chasing"
+			playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 60, 1)
+			src.visible_message("<span class='alert'><b>[src]'s targeting subsystems identify</b> [src.target] as a high priority threat!</span>")
+			CritterAttack(src.target)
 

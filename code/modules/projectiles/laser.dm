@@ -509,15 +509,21 @@ toxic - poisons
 
 		on_hit(atom/hit)
 
-			if (istype(hit,/obj/critter/gunbot/drone))//NO FRIENDLY FIRE YOU STUPID FUCKING DRONES
+			if (istype(hit,/obj/critter/gunbot/drone))//No friendly fire between drones allowed
 				var/obj/critter/gunbot/drone/D
-				D.health+=36 // hopefully negate damage
-				D.maxhealth+=36
+				D.health+=22 // negates damage MAKE THIS ACCOUNT FOR ARMOR
+				D.maxhealth+=22
 				return
-			..()
+
 			if (ishuman(hit))
 				var/mob/living/carbon/human/M = hit
-				take_bleeding_damage(M, null, 15, damtype)
+				if (istraitor(M) || isnukeop(M) || isspythief(M))
+					M.HealDamage("All", 18) // only do 4 damage if the drone fucks up and accidentally hits someone
+					M.visible_message("<span class='alert'>The drone's IFF system engages and the blades graze [M]!")
+				else
+					take_bleeding_damage(M, null, 15, damtype)
+
+			..()
 
 /datum/projectile/laser/alastor
 	name = "laser"

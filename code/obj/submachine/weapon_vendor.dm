@@ -461,6 +461,11 @@
 	path = /obj/item/storage/beartrap_pouch
 	description = "A pouch of 4 pressure sensitive beartraps used to snare and maim unexpecting victims entering your target area."
 
+/datum/materiel/utility/sawflies
+	name = "Sawflies"
+	path = /obj/item/storage/sawfly_pouch
+	description = "A pouch of 4 folding antipersonnel drones that can be folded after use.""
+
 // Requisition tokens
 
 /obj/item/requisition_token
