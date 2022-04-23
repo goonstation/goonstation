@@ -6995,6 +6995,10 @@
 /area/salyut)
 "asU" = (
 /obj/decal/cleanable/oil/streak,
+/obj/decal/poster/wallsign/psa_bucket{
+	pixel_x = -28;
+	pixel_y = 3
+	},
 /turf/simulated/floor,
 /area/radiostation/engineering)
 "asV" = (

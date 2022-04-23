@@ -427,7 +427,7 @@ var/global/noir = 0
 						return
 
 					if(href_list["id"])
-						if(tgui_alert(usr,"Delete This Note?",,"Yes","No") == "No")
+						if(tgui_alert(usr,"Delete This Note?","Confirmation",list("Yes","No")) != "Yes")
 							return
 						else
 							var/noteId = href_list["id"]
@@ -2371,7 +2371,7 @@ var/global/noir = 0
 
 		if ("grantcontributor")
 			if (src.level >= LEVEL_CODER)
-				var/confirmation = tgui_alert(usr, "Are you sure?", "Confirmation", "Yes", "No")
+				var/confirmation = tgui_alert(usr, "Are you sure?", "Confirmation", list("Yes", "No"))
 				if (confirmation != "Yes")
 					return
 				var/mob/M = locate(href_list["target"])
@@ -2384,7 +2384,7 @@ var/global/noir = 0
 				tgui_alert(usr,"You need to be at least a Coder to grant the medal.")
 		if ("revokecontributor")
 			if (src.level >= LEVEL_CODER)
-				var/confirmation = tgui_alert(usr, "Are you sure?", "Confirmation", "Yes", "No")
+				var/confirmation = tgui_alert(usr, "Are you sure?", "Confirmation", list("Yes", "No"))
 				if (confirmation != "Yes")
 					return
 				var/mob/M = locate(href_list["target"])

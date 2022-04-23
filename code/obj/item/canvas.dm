@@ -357,6 +357,7 @@
 	display_mult = 4
 	plane = PLANE_FLOOR
 	var/id = null
+	var/admin_override = FALSE
 	burn_possible = FALSE
 	gray_padding = 5
 
@@ -380,11 +381,13 @@
 		save_to_id(src.id)
 
 	get_dot_color(mob/user)
-		if(user.ckey in src.artists)
+		if(text2num(user?.client.cloud_get("persistent_canvas_banned")))
+			return null
+		if((user.ckey in src.artists) && (!admin_override || user?.client?.holder?.level < LEVEL_PA))
 			boutput(user, "<span class='alert'>The first brush stroke exhausted you too much. You will need to wait until the next shift for another.</span>")
 			return null
 		. = input(user, "Please select the color to paint with.", "Your Single Brushstroke", null) as null|color
-		if(user.ckey in src.artists)
+		if((user.ckey in src.artists) && (!admin_override || user?.client?.holder?.level < LEVEL_PA))
 			return null
 
 	attackby(obj/item/W, mob/user)
