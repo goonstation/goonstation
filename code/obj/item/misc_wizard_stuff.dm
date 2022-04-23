@@ -220,6 +220,72 @@
 			src.do_brainmelt(user, 2)
 			return
 
+/obj/item/staff/thunder
+	name = "stave of thunder"
+	desc = "A staff sparkling with static electricty. Who's afraid of a little thunder?"
+	icon_state = "staffthunder"
+	item_state = "staffthunder"
+	var/thunder_charges = 3
+
+	New()
+		. = ..()
+		START_TRACKING
+
+	disposing()
+		. = ..()
+		STOP_TRACKING
+
+	pixelaction(atom/target, params, mob/user, reach)
+		if(!IN_RANGE(user, target, 10))
+			return
+		if (istype(get_area(target), /area/station/chapel) || istype(get_area(user), /area/station/chapel))
+			boutput(user, "<span class='alert'>You cannot summon lightning on holy ground!</span>") //phrasing works if either target or mob are in chapel heh
+			return
+		if (thunder_charges <= 0)
+			boutput(user, "<span class='alert'>[name] is out of charges! Magically recall it to restore it's power.</span>")
+			return
+		if (iswizard(user))
+			thunder_charges -= 1
+			var/turf/T = get_turf(target)
+			new/obj/lightning_target(T)
+			..()
+
+	attack_hand(var/mob/user as mob)
+		if (user.mind)
+			if (iswizard(user) || check_target_immunity(user))
+				if (user.mind.key != src.wizard_key && !check_target_immunity(user))
+					boutput(user, "<span class='alert'>The [src.name] is magically attuned to another wizard! You can use it, but may not summon it magically.</span>")
+				..()
+				return
+			else
+				boutput(user, "<span class='alert'>Your hand phases through the [name]'s handle, like it's not there...</span>")
+				return
+		else ..()
+
+	pull(var/mob/user)
+		if(check_target_immunity(user))
+			return ..()
+
+		if (!istype(user))
+			return
+
+		if (iswizard(user))
+			return ..()
+		else
+			boutput(user, "<span class='alert'>Your hand phases through the [name]'s handle, like it's not there...</span>")
+			return
+
+	mouse_drop(atom/over_object, src_location, over_location, over_control, params)
+		if (iswizard(usr))
+			. = ..()
+		else if(isliving(usr))
+			boutput(usr, "<span class='alert'>Your hand phases through the [name]'s handle, like it's not there...</span>")
+		else
+			return
+
+	proc/recharge_thunder()
+		thunder_charges = 3
+
 /obj/item/staff/monkey_staff
 	name = "staff of monke"
 	desc = "A staff with a cute monkey head carved into the wood."
