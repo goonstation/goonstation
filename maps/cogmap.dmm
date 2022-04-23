@@ -59343,8 +59343,8 @@
 	},
 /obj/machinery/light/small,
 /obj/item/storage/spooky_ammo,
-/obj/item/clothing/glasses/regular/ecto/goggles/advanced,
 /obj/item/gun/reagent/ecto,
+/obj/item/clothing/glasses/regular/ecto/goggles/advanced,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "oUZ" = (
