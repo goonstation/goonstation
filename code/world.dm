@@ -1734,6 +1734,12 @@ var/f_color_selector_handler/F_Color_Selector
 							response = request.into_response()
 				return 1
 
+			if("persistent_canvases")
+				var/list/response = list()
+				for_by_tcl(canvas, /obj/item/canvas/big_persistent)
+					response[canvas.id] = icon2base64(canvas.art)
+				return json_encode(response)
+
 /world/proc/setMaxZ(new_maxz)
 	if (!isnum(new_maxz) || new_maxz <= src.maxz)
 		return src.maxz

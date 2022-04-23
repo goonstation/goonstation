@@ -1954,7 +1954,7 @@
 		return
 
 	if (istype(src.mob, /mob/dead/target_observer))
-		qdel(src)
+		qdel(src.mob)
 
 	var/mob/dead/observer/O = src.mob
 	var/client/C

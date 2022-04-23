@@ -1,4 +1,37 @@
 
+(t)wed apr 22 22
+(u)pali
+(+)Satchels now distinguish between seeds based on their plant types and mutations
+(t)thu apr 21 22
+(u)Hans
+(p)8274
+(e)🆕|feature
+(+)Rattlesnakes now wander about and are butcherable.
+(u)glowbold
+(p)8101
+(e)|
+(+)AI units can now change their name via a new AI Command: "Change Designation"
+(u)Hans
+(p)8276
+(e)🆕|feature
+(+)Now once tamed, scorpions can be made docile by clicking them with help intent, or aggressive by clicking them with disarm or grab intent, now you can show your friends your new dog without fear of it killing them.
+(u)Flaborized
+(p)8233
+(e)🗺🎨|mapping, sprites
+(*)Changed DNA scramblers. On first injection, it will randomize appearance like normal. On the second shot, it'll give the appearance of the person first injected by it, and become expended and unusable. It's also now instant when using it on other people.
+(u)Nexusuxen
+(p)6684
+(e)🗺🎨|mapping, sprites
+(*)Catering maintenance on Cogmap1 has been expanded. Check it out!
+(u)Sord
+(p)7946
+(e)🎨|sprites
+(+)New jellyfish critters added to water maps
+(t)wed apr 20 22
+(u)Flappybat
+(p)8097
+(e)⚖|balance
+(+)Many Battle Royale changes. Shuttle call moved to 10 players left. Cloaking device, Wrestling Belt, Red Saw removed. Whole load of mostly useless Syndicate items removed. More weapon and armor variety added. Loot chests now always hold a weapon and 50% chance of also some armor. Vehicles removed except escape pods.
 (t)sat apr 16 22
 (u)Yellow/Myco
 (p)8168

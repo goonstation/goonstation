@@ -21491,7 +21491,7 @@
 	dir = 8
 	},
 /turf/simulated/shuttle/wall/flock,
-/area/flock_trader)
+/area/space)
 "bcr" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
@@ -21526,12 +21526,6 @@
 	dir = 4
 	},
 /turf/simulated/shuttle/wall/flock,
-/area/flock_trader)
-"bcB" = (
-/turf/simulated/shuttle/wall/cockpit/flock{
-	dir = 8
-	},
-/turf/space/fluid,
 /area/space)
 "bcC" = (
 /obj/machinery/computer3/terminal/zeta{
@@ -21795,7 +21789,7 @@
 	dir = 8
 	},
 /turf/simulated/shuttle/wall/flock,
-/area/flock_trader)
+/area/space)
 "bdI" = (
 /obj/machinery/optable,
 /obj/machinery/drainage,
@@ -22175,7 +22169,7 @@
 "beF" = (
 /obj/lattice/flock,
 /turf/space/fluid,
-/area/flock_trader)
+/area/space)
 "beG" = (
 /obj/table/glass/reinforced/auto,
 /obj/item/paper/blueprint/sealab,
@@ -22238,7 +22232,7 @@
 	dir = 8
 	},
 /turf/simulated/shuttle/wall/flock,
-/area/flock_trader)
+/area/space)
 "beR" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
 /obj/machinery/firealarm{
@@ -22369,12 +22363,13 @@
 	},
 /area/station/hallway/primary/west)
 "bfp" = (
-/turf/space/fluid,
-/area/flock_trader)
+/turf/simulated/shuttle/wall/cockpit/flock{
+	dir = 8
+	},
+/area/space)
 "bfq" = (
-/obj/lattice/flock,
 /turf/simulated/shuttle/wall/flock,
-/area/flock_trader)
+/area/space)
 "bfr" = (
 /obj/disposalpipe/segment/mail{
 	dir = 1;
@@ -22444,11 +22439,11 @@
 "bfz" = (
 /obj/decal/fakeobjects/flock/antenna,
 /turf/simulated/shuttle/wall/flock,
-/area/flock_trader)
+/area/space)
 "bfA" = (
 /obj/decal/fakeobjects/flock/antenna/end,
 /turf/simulated/shuttle/wall/flock,
-/area/flock_trader)
+/area/space)
 "bfB" = (
 /obj/machinery/hydro_mister,
 /turf/simulated/floor/black,
@@ -43007,12 +43002,6 @@
 	dir = 6
 	},
 /area/station/hallway/primary/east)
-"cgP" = (
-/obj/table/wood/auto{
-	pixel_w = -1
-	},
-/turf/simulated/floor/darkblue/checker/other,
-/area/station/crew_quarters/radio/lab)
 "cgQ" = (
 /obj/machinery/door/airlock/pyro/alt,
 /obj/cable{
@@ -44894,6 +44883,11 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/sec)
+"dwH" = (
+/turf/simulated/shuttle/wall/flock{
+	dir = 6
+	},
+/area/space)
 "dyy" = (
 /obj/storage/crate,
 /obj/item/clothing/mask/horse_mask,
@@ -45569,6 +45563,11 @@
 	},
 /turf/simulated/floor,
 /area/shuttle/sea_elevator_room)
+"gRe" = (
+/turf/simulated/shuttle/wall/flock{
+	dir = 10
+	},
+/area/space)
 "gUq" = (
 /obj/machinery/networked/printer{
 	name = "Printer - MD";
@@ -46093,6 +46092,10 @@
 	},
 /turf/simulated/floor/green,
 /area/station/hydroponics/bay)
+"kwh" = (
+/obj/wingrille_spawn/flock,
+/turf/simulated/floor/shuttle/flock,
+/area/space)
 "kwr" = (
 /obj/lattice{
 	dir = 1;
@@ -46910,6 +46913,11 @@
 /obj/machinery/light/incandescent/greenish,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
+"pTm" = (
+/turf/simulated/shuttle/wall/flock{
+	dir = 5
+	},
+/area/space)
 "pWz" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -47327,6 +47335,11 @@
 /obj/machinery/networked/storage/scanner,
 /turf/simulated/floor/plating/random,
 /area/research_outpost/maint)
+"sAl" = (
+/turf/simulated/shuttle/wall/flock{
+	dir = 9
+	},
+/area/space)
 "sBu" = (
 /obj/cable{
 	d1 = 4;
@@ -70771,7 +70784,7 @@ aqn
 aqn
 aqn
 aqn
-bcB
+aqn
 aqn
 aqn
 aqn
@@ -71373,11 +71386,11 @@ aqn
 aqn
 aqn
 aqn
-aXK
-aXK
-aXK
-aXK
-aXK
+sAl
+bfq
+bfq
+bfq
+gRe
 aqn
 aqn
 aqn
@@ -71674,13 +71687,13 @@ aqn
 aqn
 aqn
 baF
-aXK
-aXK
+sAl
+bfq
 baP
 baP
 baP
-aXK
-aXK
+bfq
+gRe
 aqn
 aqn
 bfy
@@ -71976,13 +71989,13 @@ aqn
 aqn
 aqn
 aqn
-aXK
+bfq
 baH
 baQ
 aXI
 aXI
 bdK
-aXK
+bfq
 aqn
 aqn
 aqn
@@ -72278,13 +72291,13 @@ aqn
 aqn
 aqn
 aqn
-aXK
+bfq
 baI
 baR
 aXI
 bdu
 bdR
-aXK
+bfq
 aqn
 aqn
 aqn
@@ -72580,13 +72593,13 @@ aqn
 aqn
 aqn
 aqn
-aXK
+bfq
 baJ
 baQ
 aXI
 aXI
 bdR
-aXK
+bfq
 beJ
 aqn
 aqn
@@ -72881,15 +72894,15 @@ aqn
 aqn
 aqn
 aYQ
-aXK
-aXK
+sAl
+bfq
 baH
 baT
 aXI
 bdy
 bdW
-aXK
-aXK
+bfq
+gRe
 aqn
 aqn
 bfV
@@ -73183,7 +73196,7 @@ aqn
 aqn
 aqn
 aqn
-aXK
+bfq
 aXK
 aXK
 aXK
@@ -73191,7 +73204,7 @@ bcI
 aXK
 aXK
 aXK
-aXK
+bfq
 aqn
 aqn
 aqn
@@ -73485,7 +73498,7 @@ aqn
 aqn
 aqn
 aqn
-aXK
+bfq
 aXK
 baH
 baU
@@ -73493,7 +73506,7 @@ aXI
 bdz
 bea
 aXK
-aXK
+bfq
 aqn
 aqn
 aqn
@@ -73786,8 +73799,8 @@ aqn
 aqn
 aqn
 aYQ
-aXK
-aXK
+sAl
+bfq
 baB
 baM
 baV
@@ -73795,8 +73808,8 @@ aXI
 aXI
 bdR
 aXK
-aXK
-aXK
+bfq
+gRe
 aqn
 aqn
 bfy
@@ -74088,8 +74101,8 @@ aqn
 aqn
 aqn
 aqn
-aXK
-aXK
+bfq
+bfq
 aXK
 baM
 aXI
@@ -74097,8 +74110,8 @@ aXI
 aXI
 bdR
 aXK
-aXK
-aXK
+bfq
+bfq
 aqn
 aqn
 aqn
@@ -74400,7 +74413,7 @@ bbe
 bea
 aXK
 aXK
-aXK
+bfq
 aqn
 aqn
 aqn
@@ -74702,7 +74715,7 @@ aXI
 bdR
 aXK
 aXK
-aXK
+bfq
 beF
 aqn
 aqn
@@ -75004,7 +75017,7 @@ aXI
 bdR
 aXK
 beq
-aXK
+bfq
 beF
 beF
 aqn
@@ -75306,7 +75319,7 @@ aXI
 bek
 aXK
 aYi
-aXK
+bfq
 bfq
 bfz
 bfA
@@ -75910,7 +75923,7 @@ aXI
 bek
 aXK
 aYi
-aXK
+bfq
 bfq
 bfz
 bfA
@@ -76212,7 +76225,7 @@ aXI
 bek
 aXK
 beD
-aXK
+bfq
 beF
 beF
 aqn
@@ -76514,7 +76527,7 @@ bcQ
 aYi
 aXK
 aXK
-aXK
+bfq
 beF
 aqn
 aqn
@@ -76816,7 +76829,7 @@ aXI
 baV
 baD
 aYL
-aXK
+bfq
 aqn
 aqn
 aqn
@@ -77118,7 +77131,7 @@ aXI
 baO
 aXK
 aYi
-aYi
+kwh
 aqn
 aqn
 aqn
@@ -77409,8 +77422,8 @@ aqn
 aqn
 aqn
 aqn
-aXK
-aXK
+sAl
+bfq
 aYi
 aXK
 aXK
@@ -77420,8 +77433,8 @@ aYi
 aXK
 aXK
 aYi
-aXK
-aXK
+bfq
+gRe
 aqn
 aqn
 aqn
@@ -77710,9 +77723,9 @@ aqn
 aqn
 aqn
 aqn
-aXK
-aXK
-aXK
+sAl
+bfq
+bfq
 aYi
 aYi
 aXK
@@ -77722,9 +77735,9 @@ bdE
 aXK
 aYi
 aYi
-aXK
-aXK
-aXK
+bfq
+bfq
+gRe
 aqn
 aqn
 aqn
@@ -78014,8 +78027,8 @@ aqn
 aqn
 aqn
 aYn
-aXK
-aXK
+pTm
+bfq
 baG
 aXK
 bbH
@@ -78024,7 +78037,7 @@ bdG
 aXK
 baG
 aXK
-aXK
+dwH
 aqn
 aqn
 bfZ
@@ -78317,15 +78330,15 @@ aqn
 aqn
 aqn
 aqn
-aXK
-aXK
-aXK
-aXK
+pTm
+bfq
+bfq
+bfq
 bdc
-aXK
-aXK
-aXK
-aXK
+bfq
+bfq
+bfq
+dwH
 aqn
 aqn
 aqn
@@ -108089,7 +108102,7 @@ bRa
 bSi
 bUu
 bUu
-cgP
+bUu
 cfu
 bKe
 aqn
@@ -109154,16 +109167,16 @@ aqn
 aqn
 aqn
 aqn
-aUZ
-aUZ
-aUZ
-aUZ
 aqn
-aUZ
-aUZ
-aUZ
-aUZ
-aUZ
+aqn
+aqn
+aqn
+aqn
+aqn
+aqn
+aqn
+aqn
+aqn
 aqn
 aqn
 aqn
@@ -109457,15 +109470,15 @@ aqn
 aqn
 aUZ
 aUZ
-aaA
-bOL
+aUZ
+aUZ
+aqn
 aUZ
 aUZ
 aUZ
-bPF
-bPE
-bOo
 aUZ
+aUZ
+aqn
 aqn
 aqn
 aqn
@@ -109756,18 +109769,18 @@ aqn
 aqn
 aqn
 aqn
+aUZ
+aUZ
+aaA
+bOL
+aUZ
+aUZ
+aUZ
+bPF
+bPE
+bOo
+aUZ
 aqn
-aUZ
-bOo
-bOo
-bPD
-bOo
-bPx
-aUZ
-bOo
-aaD
-aaG
-aUZ
 aqn
 aqn
 aqn
@@ -110058,18 +110071,18 @@ aqn
 aqn
 aqn
 aqn
-aqn
 aUZ
-bNJ
 bOo
-bSe
+bOo
 bPD
-bOZ
-bNY
-bOI
-aaE
-bPE
+bOo
+bPx
 aUZ
+bOo
+aaD
+aaG
+aUZ
+aqn
 aqn
 aqn
 aqn
@@ -110360,18 +110373,18 @@ aqn
 aqn
 aqn
 aqn
-aqn
 aUZ
+bNJ
 bOo
-bPE
+bSe
 bPD
-bOo
-bPx
-bPc
-bOo
-bPz
-bPF
+bOZ
+bNY
+bOI
+aaE
+bPE
 aUZ
+aqn
 aqn
 aqn
 aqn
@@ -110662,18 +110675,18 @@ aqn
 aqn
 aqn
 aqn
+aUZ
+bOo
+bPE
+bPD
+bOo
+bPx
+bPc
+bOo
+bPz
+bPF
+aUZ
 aqn
-aUZ
-aUZ
-bRL
-aUZ
-aUZ
-aUZ
-aUZ
-aUZ
-aUZ
-aUZ
-aUZ
 aqn
 aqn
 aqn
@@ -110966,15 +110979,15 @@ aqn
 aqn
 aUZ
 aUZ
-bPD
-bPD
-bOo
+bRL
 aUZ
 aUZ
-bQX
-bQP
 aUZ
-aqn
+aUZ
+aUZ
+aUZ
+aUZ
+aUZ
 aqn
 aqn
 aqn
@@ -111263,23 +111276,23 @@ aqn
 aqn
 aqn
 aqn
+aqn
+aqn
 aUZ
 aUZ
-aUZ
-aUZ
-bPK
-bPD
-bPE
 bPD
 bPD
-bPE
-bPD
-bPD
+bOo
 aUZ
 aUZ
+bQX
+bQP
 aUZ
-aUZ
-aUZ
+aqn
+aqn
+aqn
+aqn
+aqn
 aqn
 aqn
 aqn
@@ -111564,24 +111577,24 @@ aqn
 aqn
 aqn
 aqn
+aUZ
+aUZ
+aUZ
+aUZ
+bPK
+bPD
+bPE
+bPD
+bPD
+bPE
+bPD
+bPD
+aUZ
+aUZ
+aUZ
+aUZ
+aUZ
 aqn
-bPe
-bPE
-bPe
-bPD
-bOo
-bPD
-bPD
-bPD
-bRQ
-bRQ
-bPD
-bPD
-bPD
-bOo
-bPe
-bPE
-bPe
 aqn
 aqn
 aqn
@@ -111866,24 +111879,24 @@ aqn
 aqn
 aqn
 aqn
+bPe
+bPE
+bPe
+bPD
+bOo
+bPD
+bPD
+bPD
+bRQ
+bRQ
+bPD
+bPD
+bPD
+bOo
+bPe
+bPE
+bPe
 aqn
-aUZ
-aUZ
-aUZ
-bPE
-bPy
-bPD
-bPD
-bPD
-bRV
-bSt
-bPD
-bPD
-bTp
-bPE
-aUZ
-aUZ
-aUZ
 aqn
 aqn
 aqn
@@ -112168,24 +112181,24 @@ aqn
 aqn
 aqn
 aqn
+aUZ
+aUZ
+aUZ
+bPE
+bPy
+bPD
+bPD
+bPD
+bRV
+bSt
+bPD
+bPD
+bTp
+bPE
+aUZ
+aUZ
+aUZ
 aqn
-bPe
-bPE
-bPJ
-bPE
-bPD
-bPD
-bPD
-bPE
-bRW
-bSp
-bPD
-bPD
-bPD
-bPD
-bPJ
-bPD
-bPe
 aqn
 aqn
 aqn
@@ -112470,24 +112483,24 @@ aqn
 aqn
 aqn
 aqn
+bPe
+bPE
+bPJ
+bPE
+bPD
+bPD
+bPD
+bPE
+bRW
+bSp
+bPD
+bPD
+bPD
+bPD
+bPJ
+bPD
+bPe
 aqn
-aUZ
-aUZ
-aUZ
-aUZ
-bPD
-bPD
-bPD
-bPD
-bPD
-bPD
-bPD
-bRp
-aUZ
-aUZ
-aUZ
-aUZ
-aUZ
 aqn
 aqn
 aqn
@@ -112772,23 +112785,23 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-aqn
 aUZ
 aUZ
-bNw
-bQc
-bQz
+aUZ
 aUZ
 bPD
 bPD
+bPD
+bPD
+bPD
+bPD
+bPD
+bRp
 aUZ
 aUZ
-aqn
-aqn
-aqn
+aUZ
+aUZ
+aUZ
 aqn
 aqn
 aqn
@@ -113077,14 +113090,14 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
 aUZ
 aUZ
+bNw
+bQc
+bQz
 aUZ
-aUZ
-aUZ
-bRL
+bPD
+bPD
 aUZ
 aUZ
 aqn
@@ -113380,13 +113393,13 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-aqn
-bRP
-bRO
-bPD
+aUZ
+aUZ
+aUZ
+aUZ
+aUZ
+bRL
+aUZ
 aUZ
 aqn
 aqn
@@ -113685,11 +113698,11 @@ aqn
 aqn
 aqn
 aqn
+bRP
+bRO
+bPD
+aUZ
 aqn
-aUZ
-aUZ
-aUZ
-aUZ
 aqn
 aqn
 aqn
@@ -113987,10 +114000,10 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-aqn
+aUZ
+aUZ
+aUZ
+aUZ
 aqn
 aqn
 aqn
