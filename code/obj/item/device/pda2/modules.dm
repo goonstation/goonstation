@@ -311,6 +311,11 @@
 		var/area/A = get_area(src.host)
 		signal.data["message"]  = "<b><span class='alert'>***SECURITY BACKUP REQUESTED*** Location: [A ? A.name : "nowhere"]!"
 		src.host.post_signal(signal)
+		playsound(src, "sound/items/security_alert.ogg", 90, 1, 3)
+		var/map_text = null
+		map_text = make_chat_maptext(usr, "Emergency alert sent. Please assist this officer.", "color: #bbbbbb; font-size: 7px;", alpha = 180)
+		for (var/mob/O in hearers(usr))
+			O.show_message(assoc_maptext = map_text)
 		boutput(usr, "<span class='notice'>Alert sent.</span>")
 
 /obj/ability_button/pda_security_alert
