@@ -110,6 +110,9 @@ Broken RCD + Effects
 	var/matter_remove_light_fixture = 1
 	var/time_remove_light_fixture = 3 SECONDS
 
+	var/matter_remove_limb = 6
+	var/time_remove_limb = 3 SECONDS
+
 	var/shits_sparks = 1
 
 	var/material_name = "steel"
@@ -415,6 +418,47 @@ Broken RCD + Effects
 						W.attach_light_fixture_parts(user, LB, TRUE)
 						log_construction(user, "built a light fixture to a wall ([W])")
 
+ // Express limb surgery with an RCD
+	attack(mob/living/carbon/human/M as mob, mob/living/carbon/user as mob)
+
+		if(surgeryCheck(M, user) && (user.zone_sel.selecting in list("l_arm","r_arm","l_leg","r_leg")) && (src.mode == RCD_MODE_DECONSTRUCT)) //In surgery conditions and aiming for a limb in deconstruction mode? Time for ghetto surgery
+			if (M.limbs.vars[user.zone_sel.selecting] == null) // Is the limb we are aiming for missing?
+				user.visible_message("<span class='alert'><b>Tries to remove one of [M]'s limbs, but its already gone!</b> </span>")
+			else
+				var/obj/item/parts/surgery_limb = M.limbs.vars[user.zone_sel.selecting]
+				if (do_thing(user, surgery_limb, "removing one of [M]'s limbs", matter_remove_limb, time_remove_limb))
+					if (ishuman(user) && user?.bioHolder.HasEffect("clumsy") && prob(40)) //Clowns get a chance to tear off their own limb
+						var/mob/living/carbon/human/H = user
+
+						if (H.limbs.vars[user.zone_sel.selecting] == null) //Cant remove a limb that isnt there, hurt yourself really badly instead
+							playsound(user.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
+							user.visible_message("<span class='alert'><b>[user] messes up really badly with the [src] and maims themselves! </b> </span>")
+							random_brute_damage(user, 25)
+							H.changeStatus("weakened", 3 SECONDS)
+							take_bleeding_damage(user, null, 20, DAMAGE_CUT, 1)
+							user.emote("scream")
+							JOB_XP(user, "Clown", 3)
+
+						else	//Limb's here? We lose it
+							surgery_limb = H.limbs.vars[user.zone_sel.selecting]
+							surgery_limb.remove()
+							qdel(surgery_limb)
+							playsound(user.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
+							user.visible_message("<span class='alert'><b>[user] holds the [src] by the wrong end and removes his own [surgery_limb]! </b> </span>")
+							random_brute_damage(user, 15)
+							take_bleeding_damage(user, null, 15, DAMAGE_CUT, 1)
+							user.emote("scream")
+							JOB_XP(user, "Clown", 3)
+
+					else
+						surgery_limb.remove()
+						qdel(surgery_limb)
+						random_brute_damage(M, 10)
+						take_bleeding_damage(M, null, 10)
+						playsound(M.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
+						user.visible_message("<span class='alert'>Deconstructs [M]'s [surgery_limb] with the RCD.</span>")
+		else //Not in surgery conditions or aiming for a limb? Do a normal hit
+			return ..()
 
 /* flesh wall creation code
 // holy jesus christ
