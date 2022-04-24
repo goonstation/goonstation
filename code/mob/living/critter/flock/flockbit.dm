@@ -23,7 +23,7 @@
 	src.real_name = "[pick(consonants_upper)].[rand(10,99)].[rand(10,99)]"
 	src.update_name_tag()
 
-	src.AddComponent(/datum/component/flock_protection, FALSE, TRUE, TRUE)
+	src.AddComponent(/datum/component/flock_protection)
 
 /mob/living/critter/flock/bit/special_desc(dist, mob/user)
 	if(isflock(user))

@@ -45,7 +45,7 @@
 		group = f.group
 		f.group.addstructure(src)
 
-	src.AddComponent(/datum/component/flock_protection, FALSE, TRUE, TRUE)
+	src.AddComponent(/datum/component/flock_protection)
 
 /obj/flock_structure/disposing()
 	processing_items -= src

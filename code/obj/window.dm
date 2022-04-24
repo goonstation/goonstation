@@ -1055,7 +1055,7 @@
 
 /obj/window/feather/New()
 	..()
-	src.AddComponent(/datum/component/flock_protection, FALSE, TRUE, TRUE)
+	src.AddComponent(/datum/component/flock_protection)
 
 /obj/window/feather/special_desc(dist, mob/user)
   if(isflock(user))

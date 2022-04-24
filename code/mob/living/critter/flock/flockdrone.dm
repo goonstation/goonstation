@@ -64,7 +64,7 @@
 			emote("beep")
 			say(pick_string("flockmind.txt", "flockdrone_created"))
 
-	src.AddComponent(/datum/component/flock_protection, FALSE, FALSE, FALSE)
+	src.AddComponent(/datum/component/flock_protection)
 
 /mob/living/critter/flock/drone/disposing()
 	src.remove_simple_light("drone_light")

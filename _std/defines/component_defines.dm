@@ -366,3 +366,7 @@
 // ---- ability signals ----
 /// Send item to a mob
 #define COMSIG_SEND_TO_MOB "send_to_mob"
+
+// ---- Flockmind ----
+/// Action that could potentially harm the flock. (/mob)
+#define COMSIG_FLOCK_ATTACK "flock_attack"
