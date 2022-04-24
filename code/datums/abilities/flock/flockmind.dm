@@ -392,18 +392,13 @@
 	var/turf/T = get_turf(holder.owner)
 	if(!istype(T, /turf/simulated/floor/feather))
 		boutput(holder.owner, "<span class='alert'>You aren't above a flocktile.</span>")//todo maybe make this flock themed?
-		return 1
+		return TRUE
 	if(locate(/obj/flock_structure/ghost) in T)
 		boutput(holder.owner, "<span class='alert'>A tealprint has already been scheduled here!</span>")
-		return 1
+		return TRUE
 	if(locate(/obj/flock_structure) in T)
 		boutput(holder.owner, "<span class='alert'>There is already a flock structure on this flocktile!</span>")
-		return 1
-
-	for (var/atom/O in T.contents)
-		if (O.density && !isflock(O))
-			boutput(holder.owner, "<span class='alert'>That tile has something that blocks tealprint creation!</span>")
-			return 1
+		return TRUE
 
 	var/list/friendlyNames = list()
 	var/mob/living/intangible/flock/flockmind/F = holder.owner
@@ -424,7 +419,7 @@
 			break
 
 	if(structurewantedtype)
-		F.createstructure(structurewantedtype, initial(structurewantedtype.resourcecost))
+		return F.createstructure(structurewantedtype, initial(structurewantedtype.resourcecost))
 
 /////////////////////////////////////////
 
@@ -443,5 +438,35 @@
 	if(F)
 		var/datum/flock/flock = F.flock
 		flock?.ping(target, holder.owner)
+
+/////////////////////////////////////////
+
+/datum/targetable/flockmindAbility/deconstruct
+	name = "Mark for Deconstruction"
+	desc = "Mark an existing flock structure for deconstruction, refunding some resources."
+	icon_state = "ping"
+	cooldown = 0.1 SECONDS
+
+/datum/targetable/flockmindAbility/deconstruct/cast(atom/target)
+	if(..())
+		return TRUE
+	var/mob/living/intangible/flock/F = holder.owner
+	//special handling for building ghosts
+	if(istype(target,/obj/flock_structure/ghost))
+		//do the tgui window instead
+		//this actually doesn't need bonus behaviour because the cancelbuild is on click, but will need to fix this if we change that in future
+		return TRUE
+	else if(HAS_ATOM_PROPERTY(target,PROP_ATOM_FLOCK_THING)) //it's a thing we've converted, we can deconstruct it
+		F.flock.deconstruct_targets += target
+		F.flock.updateAnnotations()
+		return FALSE
+	else if(istype(target,/obj/structure/girder)) //special handling for partially decon'd walls - gnesis mats means its ours
+		if(target?.material.mat_id == "gnesis")
+			F.flock.deconstruct_targets += target
+			F.flock.updateAnnotations()
+			return FALSE
+
+	return TRUE
+
 
 

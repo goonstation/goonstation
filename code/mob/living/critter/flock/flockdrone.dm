@@ -768,7 +768,7 @@
 			return
 
 	// CONVERT TURF
-	if(!isturf(target) && !(istype(target, /obj/storage/closet/flock) || istype(target, /obj/table/flock) || istype(target, /obj/structure/girder) || istype(target, /obj/machinery/door/feather) || istype(target, /obj/flock_structure/ghost)))
+	if(!isturf(target) && !HAS_ATOM_PROPERTY(target,PROP_ATOM_FLOCK_THING))
 		target = get_turf(target)
 
 	if(istype(target, /turf) && !istype(target, /turf/simulated) && !istype(target, /turf/space))
@@ -798,26 +798,14 @@
 		if(istype(target, /turf))
 			actions.start(new/datum/action/bar/flock_convert(target), user)
 	if(user.a_intent == INTENT_HARM)
-		switch (target.type)
-			if(/obj/table/flock, /obj/table/flock/auto)
+		//furniture
+		if(HAS_ATOM_PROPERTY(target,PROP_ATOM_FLOCK_THING))
+			actions.start(new /datum/action/bar/flock_decon(target), user)
+		else if(istype(target,/obj/structure/girder)) //special handling for partially deconstructed walls
+			if(target?.material.mat_id == "gnesis")
 				actions.start(new /datum/action/bar/flock_decon(target), user)
-			if(/obj/storage/closet/flock)
-				//soap
-				actions.start(new /datum/action/bar/flock_decon(target), user)
-			if(/turf/simulated/wall/auto/feather)
-				actions.start(new /datum/action/bar/flock_decon(target), user)
-			if(/obj/structure/girder)
-				if(target?.material.mat_id == "gnesis")
-					var/atom/A = new /obj/item/sheet(get_turf(target))
-					if (target.material)
-						A.setMaterial(target.material)
-						qdel(target)
-				else
-					return
-			if(/obj/machinery/door/feather)
-				actions.start(new /datum/action/bar/flock_decon(target), user)
-			else
-				..()
+		else
+			..()
 //help intent actions
 	else if(user.a_intent == INTENT_HELP)
 		switch(target.type)//making this into switches for easy of expansion later

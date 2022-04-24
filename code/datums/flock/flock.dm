@@ -10,6 +10,7 @@
 	var/list/all_owned_tiles = list()
 	var/list/busy_tiles = list()
 	var/list/priority_tiles = list()
+	var/list/deconstruct_targets = list()
 	var/list/traces = list()
 	var/list/units = list()
 	var/list/enemies = list()
@@ -254,6 +255,7 @@
 	var/const/duration = 5 SECOND
 	var/end_time = -1
 	var/obj/dummy = null
+	var/outline_color = "#00ff9d"
 
 	Initialize()
 		if (!ismovable(parent) && !isturf(parent))
@@ -274,7 +276,7 @@
 		dummy.icon_state = target.icon_state
 		target.render_target = ref(parent)
 		dummy.render_source = target.render_target
-		dummy.add_filter("outline", 1, outline_filter(size=1,color="#00ff9d"))
+		dummy.add_filter("outline", 1, outline_filter(size=1,color=src.outline_color))
 		target.vis_contents += dummy
 
 		play_animation()
@@ -373,6 +375,21 @@
 			src.annotations[B] = I
 		// add key to list
 		valid_keys |= B
+	//highlight deconstruction targets
+	for(var/atom/D in src.deconstruct_targets)
+		if(!(D in src.annotations))
+			// create a new image
+			I = image('icons/misc/featherzone.dmi', D, "hazard")
+			I.blend_mode = BLEND_ADD
+			I.pixel_y = 16
+			I.plane = PLANE_ABOVE_LIGHTING
+			I.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+			// add to subscribers for annotations
+			images_to_add |= I
+			src.annotations[D] = I
+		// add key to list
+		if(!D.disposed)
+			valid_keys |= D
 	var/list/to_remove = list()
 	for(var/atom/key in src.annotations)
 		if(!(key in valid_keys))
@@ -554,6 +571,11 @@
 	for(var/datum/unlockable_flock_structure/ufs as anything in src.unlockableStructures)
 		ufs.process()
 
+	//handle deconstruct targets being destroyed by other means
+	for(var/atom/S in src.deconstruct_targets)
+		if(S.disposed)
+			src.deconstruct_targets -= S
+
 /datum/flock/proc/convert_turf(var/turf/T, var/converterName)
 	src.unreserveTurf(converterName)
 	src.claimTurf(flock_convert_turf(T))
@@ -622,8 +644,9 @@
 			animate_flock_convert_complete(T)
 
 	if(istype(T, /turf/simulated/wall))
-		T.ReplaceWith("/turf/simulated/wall/auto/feather", 0)
+		var/turf/converted_wall = T.ReplaceWith("/turf/simulated/wall/auto/feather", 0)
 		animate_flock_convert_complete(T)
+		APPLY_ATOM_PROPERTY(converted_wall, PROP_ATOM_FLOCK_THING, "flock_convert_turf")
 
 	// regular and flock lattices
 	var/obj/lattice/lat = locate(/obj/lattice) in T
@@ -641,7 +664,8 @@
 	if(istype(T, /turf/space))
 		var/obj/lattice/flock/FL = locate(/obj/lattice/flock) in T
 		if(!FL)
-			new /obj/lattice/flock(T)
+			FL = new /obj/lattice/flock(T) //may as well reuse the var
+			APPLY_ATOM_PROPERTY(FL, PROP_ATOM_FLOCK_THING, "flock_convert_turf")
 	else // don't do this stuff if the turf is space, it fucks it up more
 		T.RL_Cleanup()
 		T.RL_LumR = RL_LumR

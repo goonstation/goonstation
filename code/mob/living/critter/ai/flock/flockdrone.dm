@@ -24,6 +24,7 @@
 	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/harvest, list(holder, src))
 	transition_tasks += holder.get_instance(/datum/aiTask/timed/targeted/flockdrone_shoot, list(holder, src))
 	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/flockdrone_capture, list(holder, src))
+	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/deconstruct, list(holder, src))
 	transition_tasks += holder.get_instance(/datum/aiTask/timed/wander, list(holder, src))
 
 /datum/aiTask/prioritizer/flock/drone/on_reset()
