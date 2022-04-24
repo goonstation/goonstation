@@ -13,9 +13,9 @@
 /obj/machinery/door/feather/New()
 	..()
 	setMaterial("gnesis")
-	src.AddComponent(/datum/component/flock_protection, report_unarmed=FALSE)
 	var/datum/component/C = src.GetComponent(/datum/component/mechanics_holder)
 	C?.RemoveComponent()
+	src.AddComponent(/datum/component/flock_protection, FALSE, FALSE, TRUE)
 
 /obj/machinery/door/feather/special_desc(dist, mob/user)
 	if(isflock(user))

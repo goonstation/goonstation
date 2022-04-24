@@ -414,14 +414,13 @@
 /datum/flock/proc/registerUnit(var/atom/movable/D)
 	if(isflock(D))
 		src.units |= D
-	D.AddComponent(/datum/component/flock_interest, src)
 	var/datum/abilityHolder/flockmind/aH = src.flockmind.abilityHolder
 	aH.updateCompute()
 
 /datum/flock/proc/removeDrone(var/atom/movable/D)
 	if(isflock(D))
 		src.units -= D
-		D.GetComponent(/datum/component/flock_interest)?.RemoveComponent(/datum/component/flock_interest)
+
 		if(D:real_name && busy_tiles[D:real_name])
 			src.busy_tiles[D:real_name] = null
 		var/datum/abilityHolder/flockmind/aH = src.flockmind.abilityHolder
@@ -439,14 +438,12 @@
 /datum/flock/proc/registerStructure(var/atom/movable/S)
 	if(isflockstructure(S))
 		src.structures |= S
-		S.AddComponent(/datum/component/flock_interest, src)
 		var/datum/abilityHolder/flockmind/aH = src.flockmind.abilityHolder
 		aH.updateCompute()
 
 /datum/flock/proc/removeStructure(var/atom/movable/S)
 	if(isflockstructure(S))
 		src.structures -= S
-		S.GetComponent(/datum/component/flock_interest)?.RemoveComponent(/datum/component/flock_interest)
 		var/datum/abilityHolder/flockmind/aH = src.flockmind.abilityHolder
 		aH.updateCompute()
 
@@ -529,15 +526,10 @@
 /datum/flock/proc/claimTurf(var/turf/simulated/T)
 	src.all_owned_tiles |= T
 	src.priority_tiles -= T // we have it now, it's no longer priority
-	T.AddComponent(/datum/component/flock_interest, src)
-	for(var/obj/O in T.contents)
-		if(HAS_ATOM_PROPERTY(O, PROP_ATOM_FLOCK_THING))
-			O.AddComponent(/datum/component/flock_interest, src)
-		if(istype(O, /obj/flock_structure))
-			var/obj/flock_structure/structure = O
-			structure.flock = src
-			src.registerStructure(structure)
-		src.updateAnnotations()
+	for (var/obj/flock_structure/structure in T.contents)
+		structure.flock = src
+		src.registerStructure(structure)
+	src.updateAnnotations()
 
 /datum/flock/proc/isTurfFree(var/turf/simulated/T, var/queryName) // provide the drone's name here: if they own the turf it's free _to them_
 	for(var/name in src.busy_tiles)
