@@ -680,6 +680,7 @@
 							M.set_loc(converted)
 						qdel(O)
 						converted.set_dir(dir)
+						APPLY_ATOM_PROPERTY(converted, PROP_ATOM_FLOCK_THING, "flock_convert_turf")
 						animate_flock_convert_complete(converted)
 					break //we found and converted the type, don't convert it again
 

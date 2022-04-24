@@ -238,6 +238,9 @@ To remove:
 #define PROP_MOB_PASSIVE_WRESTLE(x) x("wrassler", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_MOB_CANTTHROW(x) x("cantthrow", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 
+// flock properties
+#define PROP_ATOM_FLOCK_THING(x) x("flock_thing", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
+
 // In lieu of comments, these are the indexes used for list access in the macros below.
 #define ATOM_PROPERTY_ACTIVE_VALUE 1
 #define ATOM_PROPERTY_SOURCES_LIST 2
