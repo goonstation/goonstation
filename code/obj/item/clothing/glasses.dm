@@ -141,7 +141,7 @@
 	desc = "A pair of goggles with a dumb name."
 	icon_state = "ectogoggles"
 
-/obj/item/clothing/glasses/regular/ecto/goggles/advanced
+/obj/item/clothing/glasses/regular/ecto/goggles/advanced // separating these so ghost buster can't see wraiths round start
 	name = "advanced ectoplasmoleic imager"
 	desc = "A pair of goggles with a dumb name. They give off a very spooky vibe"
 	icon_state = "ectogoggles"
