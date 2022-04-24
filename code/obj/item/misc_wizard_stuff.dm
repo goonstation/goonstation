@@ -223,7 +223,7 @@
 /obj/item/staff/thunder
 	name = "stave of thunder"
 	desc = "A staff sparkling with static electricty. Who's afraid of a little thunder?"
-	icon_state = "staffthunder"
+	icon_state = "staffthunder3"
 	item_state = "staffthunder"
 	var/thunder_charges = 3
 
@@ -248,7 +248,10 @@
 			thunder_charges -= 1
 			var/turf/T = get_turf(target)
 			var/obj/lightning_target/lightning = new/obj/lightning_target(T)
+			playsound(T, "sound/effects/electric_shock_short.ogg", 70, 1)
 			lightning.caster = user
+			UpdateIcon()
+			flick("[icon_state]_fire", src)
 			..()
 
 	attack_hand(var/mob/user as mob)
@@ -284,8 +287,17 @@
 		else
 			return
 
+	update_icon()
+		if(thunder_charges > 3) //var edit only but gets a fun special sprite
+			icon_state = "staffthunder_admin"
+		else
+			icon_state = "staffthunder[thunder_charges]"
+
 	proc/recharge_thunder()
-		thunder_charges = 3
+		if(thunder_charges <= 3) //doesn't ever reduce charge even though three is usually max
+			thunder_charges = 3
+		UpdateIcon()
+		flick("[icon_state]_fire", src)
 
 /obj/item/staff/monkey_staff
 	name = "staff of monke"
