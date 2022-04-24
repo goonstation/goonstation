@@ -104,6 +104,8 @@
 	var/needOnMouseMove = 0 //If 1, we check all the stuff required for onMouseMove for this. Leave this off unless required. Might cause extra lag.
 	var/contraband = 0 // If nonzero, bots consider this a thing people shouldn't be carrying without authorization
 	var/edible = 0 // can you eat the thing?
+	/// Prevent wizards from using this technology
+	var/wizard_blacklist = FALSE
 
 	/*_____*/
 	/*Other*/

@@ -67,6 +67,7 @@ A Flamethrower in various states of assembly
 	move_triggered = 1
 	spread_angle = 0
 	shoot_delay = 1 SECOND
+	wizard_blacklist = TRUE	// Wizards do not use technology based weapons
 
 	New()
 		..()

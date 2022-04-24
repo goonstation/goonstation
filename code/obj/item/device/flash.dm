@@ -11,6 +11,7 @@
 	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
 	item_state = "electronic"
 	mats = 2
+	wizard_blacklist = TRUE	// Wizards cannot use technology
 
 	var/status = 1 // Bulb still functional?
 	var/secure = 1 // Access panel still secured?

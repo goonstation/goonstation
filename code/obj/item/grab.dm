@@ -691,6 +691,9 @@
 
 
 /obj/item/gun/try_grab(var/mob/living/target, var/mob/living/user)
+	if (iswizard(user) && src.wizard_blacklist)
+		user.show_text("<span class='combat bold'>The thought of using [src] fills you with revulsion at technology!</span>")
+		return FALSE
 	src.hide_attack = 1
 
 	if (..())

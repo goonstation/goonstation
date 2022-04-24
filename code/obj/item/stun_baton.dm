@@ -27,6 +27,7 @@
 	stamina_cost = 21
 	stamina_crit_chance = 5
 	item_function_flags = USE_INTENT_SWITCH_TRIGGER
+	wizard_blacklist = TRUE	// Wizards cannot use technology
 
 	var/icon_on = "stunbaton_active"
 	var/icon_off = "stunbaton"
@@ -221,6 +222,9 @@
 
 	attack_self(mob/user as mob)
 		src.add_fingerprint(user)
+		if (iswizard(user) && src.wizard_blacklist)
+			user.show_text("<span class='combat bold'>The thought of using [src] fills you with revulsion at technology!</span>")
+			return
 
 		if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, cost_normal) & CELL_SUFFICIENT_CHARGE) && !(src.is_active))
 			boutput(user, "<span class='alert'>The [src.name] doesn't have enough power to be turned on.</span>")
@@ -247,6 +251,9 @@
 
 	attack(mob/M as mob, mob/user as mob)
 		src.add_fingerprint(user)
+		if (iswizard(user) && src.wizard_blacklist)
+			user.show_text("<span class='combat bold'>The thought of using [src] fills you with revulsion at technology!</span>")
+			return
 
 		if(check_target_immunity( M ))
 			user.show_message("<span class='alert'>[M] seems to be warded from attacks!</span>")

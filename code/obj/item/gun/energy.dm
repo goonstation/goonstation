@@ -15,6 +15,7 @@
 	var/can_swap_cell = 1
 	muzzle_flash = null
 	inventory_counter_enabled = 1
+	wizard_blacklist = TRUE	// Wizards cannot use energy based guns
 
 	New()
 		var/cell = null

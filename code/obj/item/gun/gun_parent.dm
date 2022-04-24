@@ -52,6 +52,8 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 	var/fire_animation = FALSE //Used for guns that have animations when firing
 
+	wizard_blacklist = FALSE // Kinetic guns are generally not too advanced for wizards
+
 	buildTooltipContent()
 		. = ..()
 		if(current_projectile)
@@ -263,6 +265,9 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if (isghostdrone(user))
 		user.show_text("<span class='combat bold'>Your internal law subroutines kick in and prevent you from using [src]!</span>")
 		return FALSE
+	if (iswizard(user) && src.wizard_blacklist)
+		user.show_text("<span class='combat bold'>The thought of using [src] fills you with revulsion at technology!</span>")
+		return FALSE
 	var/is_dual_wield = 0
 	//Ok. i know it's kind of dumb to add this param 'second_shot' to the shoot_point_blank proc just to make sure pointblanks don't repeat forever when we could just move these checks somewhere else.
 	//but if we do the double-gun checks here, it makes stuff like double-hold-at-gunpoint-pointblanks easier!
@@ -373,6 +378,9 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 /obj/item/gun/proc/shoot(var/target,var/start,var/mob/user,var/POX,var/POY,var/is_dual_wield)
 	if (isghostdrone(user))
 		user.show_text("<span class='combat bold'>Your internal law subroutines kick in and prevent you from using [src]!</span>")
+		return FALSE
+	if (iswizard(user) && src.wizard_blacklist)
+		user.show_text("<span class='combat bold'>The thought of using [src] fills you with revulsion at technology!</span>")
 		return FALSE
 	if (!canshoot())
 		if (ismob(user))
