@@ -1358,7 +1358,7 @@
 
 	New()
 		..()
-		deathtimer = rand(2, 5)
+		deathtimer = rand(1, 5)
 		death_text = "[src] jutters and falls from the air, whirring to a stop"
 		if(isnew)
 			name = "Sawfly [pick(sawflynames)]-[rand(1,999)]"
@@ -1434,29 +1434,31 @@
 		walk_to(src,0) //halt walking
 		report_death()
 		src.tokenized_message(death_text)
-		//	var/obj/item/drop1 = pick(/obj/item/electronics/battery,/obj/item/electronics/board,/obj/item/electronics/buzzer,/obj/item/electronics/frame,/obj/item/electronics/resistor,/obj/item/electronics/screen,/obj/item/electronics/relay, /obj/item/parts/robot_parts/arm/left/standard, /obj/item/parts/robot_parts/arm/right/standard)
-		//var/obj/item/drop2 = pick(/obj/item/electronics/battery,/obj/item/electronics/board,/obj/item/electronics/buzzer,/obj/item/electronics/frame,/obj/item/electronics/resistor,/obj/item/electronics/screen,/obj/item/electronics/relay, /obj/item/parts/robot_parts/arm/left/standard, /obj/item/parts/robot_parts/arm/right/standard)
-		//	new drop2(Ts)
-		//	make_cleanable( /obj/decal/cleanable/robot_debris,Ts)
 
-		if(prob(20))// chance to inflict further havoc on the station
-			src.visible_message("<span class='combat'>[src] makes a [pick("gentle hiss", "odd drone", "slight whir", "weird thump", "barely audible grinding sound")]...")
+		// IT'S TIME TO ROOOOOOLLLL THE DIIIICEEEEEE!!!!
+		// special rolls on death that determines how much postmorten chaos our sawflies cause
 
-			if(prob(66))// it catches on fire!
-				src.visible_message("<span class='combat'>[src]'s [pick("motor", "core", "head", "engine", "thruster")] [pick("combusts", "catches on fire", "ignites", "lights up", "bursts into flames")]!")
-				fireflash(src,1,TRUE)
+		if(prob(60)) // 60 percent chance to zap the area
+			elecflash(src,2)
 
-			else //(prob(50))// it blows up!
-				src.visible_message("<span class='combat'>[src]'s [pick("motor", "core", "head", "engine", "thruster")] [pick("overloads", "blows up", "catastrophically fails", "explodes")]!")
-				//SPAWN(0.5 SECONDS)// wait for iiiittttt...
-				//explosion(src, get_turf(src), -1,-1, 2, 3)
-				explosion(src, get_turf(src), 0, 0.5, 2, 3) // KERBLOOEY!
-				elecflash(src,2)
-			qdel(src)
+		if(prob(25)) // congrats, little guy! You're special! You're going to blow up!
+			if(prob(60)) //decide whether or not people get a warning
+				src.visible_message("<span class='combat'>[src] makes a [pick("gentle", "odd", "slight", "weird", "barely audible", "concerning", "quiet")] [pick("hiss", "drone", "whir", "thump", "grinding sound", "creak")].......")
+
+			SPAWN(deathtimer SECONDS) // wait for iiiittttt...
+				if(prob(66))// FWOOSH!
+					src.visible_message("<span class='combat'>[src]'s [pick("motor", "core", "fuel tank", "battery", "thruster")] [pick("combusts", "catches on fire", "ignites", "lights up", "immolates", "bursts into flames")]!")
+					fireflash(src,1,TRUE)
+
+				else // KERBLOOEY!
+					src.visible_message("<span class='combat'>[src]'s [pick("motor", "core", "head", "engine", "thruster")] [pick("overloads", "blows up", "catastrophically fails", "explodes")]!")
+					explosion(src, get_turf(src), 0, 1, 2, 3)
+					fireflash(src,0,TRUE)
+					qdel(src)
 
 	attack_hand(var/mob/user as mob)
 		if (istraitor(user) || isnukeop(user) || isspythief(user) || (user in src.friends))
-			if (user.a_intent == INTENT_HELP)
+			if (user.a_intent == INTENT_HELP || INTENT_GRAB)
 				boutput(user, "You collapse [src].")
 				var/obj/item/old_grenade/spawner/sawfly/reused/N = new /obj/item/old_grenade/spawner/sawfly/reused(get_turf(src))
 				// give it the old name and health
@@ -1469,11 +1471,17 @@
 	attackby(obj/item/W as obj, mob/living/user as mob)
 		..()
 
-		if(prob(25) && alive) // imported from brullbar
+		if(prob(50) && alive) // imported from brullbar- anti-crowd measures
 			src.target = user
 			src.oldtarget_name = user.name
 			src.task = "chasing"
 			playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 60, 1)
 			src.visible_message("<span class='alert'><b>[src]'s targeting subsystems identify</b> [src.target] as a high priority threat!</span>")
+
+			var/tturf = get_turf(src.target) //instantly retaliate
+			Shoot(tturf, src.loc, src)
+			SPAWN((attack_cooldown/2)) //follow up fast
+				attacking = 0
+
 			CritterAttack(src.target)
 

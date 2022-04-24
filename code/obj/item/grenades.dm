@@ -165,6 +165,8 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	icon_state_armed = "sawfly1"
 	payload = /obj/critter/gunbot/drone/buzzdrone/sawfly
 	is_dangerous = TRUE
+	is_syndicate = 1
+	contraband = 2
 
 	prime() // we only want one drone, rewrite old proc
 		var/turf/T =  get_turf(src)
@@ -175,7 +177,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 
 /obj/item/old_grenade/spawner/sawfly/reused
 	name = "Compact sawfly"
-	var/tempname = "CALL 1-800-IMCODER TO TALK TO A REPRESENTATIVE, SOMETIHNG'S AWRY"
+	var/tempname = "CALL 1-800-IMCODER-SOMETIHNG'S AWRY!"
 	desc = "A self-deploying area antipersonnel robot. This one has seen some use."
 	var/temphp = 0
 
@@ -194,14 +196,30 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 /obj/item/old_grenade/spawner/sawflycluster
 	name = "Cluster sawfly"
 	desc = "Jesus christ, this thing looks like someone drew it in five minutes. You hope it works."
-	det_time = 2 SECONDS // slower reaction time = better
+	det_time = 2 SECONDS // give them slightly more time to realize their fate
+
+	force = 7 //whacking people with metal on the end of a stick hurts -> this should be a decent weapon
 	throwforce = 10
-	icon_state = "clusterfly"
-	icon_state_armed = "sawfly1"
+	stamina_damage = 35
+	stamina_cost = 20
+	stamina_crit_chance = 35
+
+
+	icon_state = "clusterflyA"
+	icon_state_armed = "clusterflyA1"
 	payload = /obj/critter/gunbot/drone/buzzdrone/sawfly
 	is_dangerous = TRUE
+	is_syndicate = 1
+	contraband = 5
 
-	prime() // we only want one drone, rewrite old proc
+	New()
+		..()
+		if (prob(50)) // give em some variety
+			icon_state = "clusterflyB"
+			icon_state_armed = "clusterflyB1"
+
+
+	prime() // basically a spawner
 		var/turf/T = ..()
 		if (T)
 			new /obj/critter/gunbot/drone/buzzdrone/sawfly(T)// this is probably a shitty way of doing it but it works

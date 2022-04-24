@@ -498,31 +498,31 @@ toxic - poisons
 				V.health -= power * 1.8
 				V.checkhealth()
 
-	sawfly// sawfly weapon
+	sawfly// projectile of choice for sawflies
 		name = "Whirring Blades"
-		damtype = D_PIERCING // their main use is to buy time from secoffs, can't have armor making them useless
+
+		damage_type = D_PIERCING
+		damtype = D_PIERCING // weirdly enough, giving them stabbing damage goes through armor better than peircing
 		shot_sound = null
 		hit_human_sound = "sound/machines/chainsaw_green.ogg"
 		power = 12
 		dissipation_rate = 12
 		sname = "Whirring Blades"
 
-		on_hit(atom/hit)
 
+		on_pre_hit(var/atom/hit, var/angle, var/obj/projectile/O)
+			var/mob/M = hit
+			if (istraitor(M) || isnukeop(M) || isspythief(M)) // uh oh! we just hit a friend
+				M.visible_message("<span class='alert'>The drone's IFF system engages last second and avoids hitting [M]!")
+				//O.die()
+				. = TRUE
+
+		on_hit(atom/hit)
 			if (istype(hit,/obj/critter/gunbot/drone))//No friendly fire between drones allowed
 				var/obj/critter/gunbot/drone/D
-				D.health+=22 // negates damage MAKE THIS ACCOUNT FOR ARMOR
+				D.health+=22 // negates damage
 				D.maxhealth+=22
 				return
-
-			if (ishuman(hit))
-				var/mob/living/carbon/human/M = hit
-				if (istraitor(M) || isnukeop(M) || isspythief(M))
-					M.HealDamage("All", 18) // only do 4 damage if the drone fucks up and accidentally hits someone
-					M.visible_message("<span class='alert'>The drone's IFF system engages and the blades graze [M]!")
-				else
-					take_bleeding_damage(M, null, 15, damtype)
-
 			..()
 
 /datum/projectile/laser/alastor
