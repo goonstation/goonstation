@@ -1,6 +1,6 @@
 /obj/machinery/networked/custom
 	name = "Server"
-	desc = "A big programmable server, seems pretty big!"
+	desc = "A Nanotrasen Programmable PowerNetworking Interface, what a mouthful."
 	density = 1
 	anchored = 1
 	icon_state = "custom_servere"
@@ -8,9 +8,12 @@
 	timeout = 30
 
 	var/locked = 0
-	var/list/variables //A list of all the variables and their stored values
-	var/datum/computer/file/record/program //Where the program is stored once it is loaded
 	var/obj/item/disk/data/tape = null
+
+	var/list/globalVariables //A list of all the variables and their stored values
+	var/list/privateVariables //A list of all the variables and their stored values, used in functions
+
+	var/datum/computer/file/record/program //Where the program is stored once it is loaded
 
 	//Load program from tape
 	proc/load_program()
