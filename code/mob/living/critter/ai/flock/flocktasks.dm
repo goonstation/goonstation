@@ -954,7 +954,7 @@ butcher
 /datum/aiTask/succeedable/deconstruct/failed()
 	var/mob/living/critter/flock/drone/F = holder.owner
 	var/atom/T = holder.target
-	if(!F || !T || BOUNDS_DIST(T, F) > 0)
+	if(!F || !T || BOUNDS_DIST(T, F) > 0 || !(T in F?.flock?.deconstruct_targets))
 		return TRUE
 
 /datum/aiTask/succeedable/deconstruct/succeeded()

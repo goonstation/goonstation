@@ -457,13 +457,11 @@
 		//this actually doesn't need bonus behaviour because the cancelbuild is on click, but will need to fix this if we change that in future
 		return TRUE
 	else if(HAS_ATOM_PROPERTY(target,PROP_ATOM_FLOCK_THING)) //it's a thing we've converted, we can deconstruct it
-		F.flock.deconstruct_targets += target
-		F.flock.updateAnnotations()
+		F.flock.toggleDeconstructionFlag(target)
 		return FALSE
 	else if(istype(target,/obj/structure/girder)) //special handling for partially decon'd walls - gnesis mats means its ours
 		if(target?.material.mat_id == "gnesis")
-			F.flock.deconstruct_targets += target
-			F.flock.updateAnnotations()
+			F.flock.toggleDeconstructionFlag(target)
 			return FALSE
 
 	return TRUE
