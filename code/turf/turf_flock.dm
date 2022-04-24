@@ -95,10 +95,14 @@
 	..()
 	if(!istype(F) || !oldloc)
 		return
-	if(F.client && F.client.check_key(KEY_RUN) && !broken && !F.floorrunning)
+	if(F.client && F.client.check_key(KEY_RUN) && !broken && !F.floorrunning && F.resources >= 1)
 		F.start_floorrunning()
+
 	if(F.floorrunning && !broken)
-		if(!on)
+		F.resources--
+		if (F.resources < 1)
+			F.end_floorrunning()
+		else if(!on)
 			on()
 
 /turf/simulated/floor/feather/Exited(var/mob/living/critter/flock/drone/F, atom/newloc)
@@ -392,8 +396,13 @@ turf/simulated/floor/feather/proc/bfs(turf/start)//breadth first search, made by
 	..()
 	if(!istype(F) || !oldloc)
 		return
-	if(F.client && F.client.check_key(KEY_RUN) && !F.floorrunning)
+	if(F.client && F.client.check_key(KEY_RUN) && !F.floorrunning && F.resources >= 1)
 		F.start_floorrunning()
+
+	if(F.floorrunning)
+		F.resources--
+		if (F.resources < 1)
+			F.end_floorrunning()
 
 /turf/simulated/wall/auto/feather/Exited(var/mob/living/critter/flock/drone/F, atom/newloc)
 	..()
