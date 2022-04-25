@@ -471,7 +471,7 @@
 	name_prefix = "Sunrise "
 	iconmod = "VenneCurative"
 	crop = /obj/item/plant/herb/venne/curative
-	assoc_reagents = list("oculine","mannitol","mutadone")
+	assoc_reagents = list("mannitol","mutadone")
 	chance = 5
 
 // Houttuynia Cordata Mutations
