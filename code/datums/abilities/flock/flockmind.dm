@@ -444,7 +444,7 @@
 /datum/targetable/flockmindAbility/deconstruct
 	name = "Mark for Deconstruction"
 	desc = "Mark an existing flock structure for deconstruction, refunding some resources."
-	icon_state = "ping"
+	icon_state = "destroystructure"
 	cooldown = 0.1 SECONDS
 
 /datum/targetable/flockmindAbility/deconstruct/cast(atom/target)

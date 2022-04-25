@@ -481,7 +481,7 @@
 
 	onStart()
 		..()
-		owner.visible_message("<span style='color:blue'>[owner] begins deconstructing [target].</span>")
+		owner.visible_message("<span class='alert'>[owner] begins deconstructing [target].</span>")
 
 	onInterrupt()
 		..()
