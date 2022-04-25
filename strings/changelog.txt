@@ -1,4 +1,9 @@
 
+(t)mon apr 25 22
+(u)LeahTheTech
+(p)8170
+(e)🐛|bug
+(+)Added a new verb to re-open closed antag popups.
 (t)sun apr 24 22
 (u)zjdtmkhzt
 (p)8207
