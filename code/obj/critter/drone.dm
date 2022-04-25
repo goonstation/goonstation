@@ -1436,13 +1436,13 @@
 		src.tokenized_message(death_text)
 
 		// IT'S TIME TO ROOOOOOLLLL THE DIIIICEEEEEE!!!!
-		// special rolls on death that determines how much postmorten chaos our sawflies cause
+		// special checks that determine how much postmorten chaos our little sawflies cause
 
 		if(prob(60)) // 60 percent chance to zap the area
 			elecflash(src,2)
 
 		if(prob(25)) // congrats, little guy! You're special! You're going to blow up!
-			if(prob(60)) //decide whether or not people get a warning
+			if(prob(70)) //decide whether or not people get a warning
 				src.visible_message("<span class='combat'>[src] makes a [pick("gentle", "odd", "slight", "weird", "barely audible", "concerning", "quiet")] [pick("hiss", "drone", "whir", "thump", "grinding sound", "creak")].......")
 
 			SPAWN(deathtimer SECONDS) // wait for iiiittttt...
@@ -1461,7 +1461,7 @@
 			if (user.a_intent == INTENT_HELP || INTENT_GRAB)
 				boutput(user, "You collapse [src].")
 				var/obj/item/old_grenade/spawner/sawfly/reused/N = new /obj/item/old_grenade/spawner/sawfly/reused(get_turf(src))
-				// give it the old name and health
+				// pass our name and health
 				N.name = "Compact [name]"
 				N.tempname = src.name
 				N.temphp = src.health
@@ -1469,19 +1469,21 @@
 		..()
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
-		..()
 
-		if(prob(50) && alive) // imported from brullbar- anti-crowd measures
+
+		if(prob(50) && alive) // borrowed from brullbar- anti-crowd measures
 			src.target = user
 			src.oldtarget_name = user.name
 			src.task = "chasing"
-			playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 60, 1)
-			src.visible_message("<span class='alert'><b>[src]'s targeting subsystems identify</b> [src.target] as a high priority threat!</span>")
+			//playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 60, 1)
+			if !(istraitor(M) || isnukeop(M) || isspythief(M))
+				src.visible_message("<span class='alert'><b>[src]'s targeting subsystems identify</b> [src.target] as a high priority threat!</span>")
+				var/tturf = get_turf(src.target) //instantly retaliate, since we know we're in melee range
+				Shoot(tturf, src.loc, src)
+				SPAWN((attack_cooldown/2)) //Prepare to continue laying on pain
+					attacking = 0
+				CritterAttack(src.target)
 
-			var/tturf = get_turf(src.target) //instantly retaliate
-			Shoot(tturf, src.loc, src)
-			SPAWN((attack_cooldown/2)) //follow up fast
-				attacking = 0
+		..()
 
-			CritterAttack(src.target)
 
