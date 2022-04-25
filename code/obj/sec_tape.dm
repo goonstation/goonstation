@@ -1,20 +1,19 @@
 /obj/sec_tape
 	anchored = 1
-	icon = 'icons/obj/decals/neon_lining.dmi'
-	icon_state = "base2"
+	icon = 'icons/obj/sec_tape.dmi'
+	icon_state = "sec_tape_s"
 	name = "security cordon"
-	real_name = "security_cordon"
+	real_name = "security cordon"
+	desc = "A small cordon of security tape, used to keep assistants off crime scenes."
 	density = 1
 	flags = FPRINT | USEDELAY | ON_BORDER
 	object_flags = HAS_DIRECTIONAL_BLOCKING
 	dir = SOUTH
-	var/tape_shape = 2          												//Shapes: 1 = circle, 2 = _ that's a tile long, 3 = _ that's half a tile long, 4 = |_| shape, 5 = _| shape, 6 = _| shape but twice as wide & tall.
-	var/tape_rotation = 0		  												//Rotation: 0 = south, 1 = west, 2 = north, 3 = east.
-	var/tape_icon_state = 1													//This is used for choosing the proper icon state for reasons stated in the lining_pattern comment.
 
 	New()
 		..()
 		layerify()
+		tape_UpdateIcon()
 
 	proc/layerify()
 		SPAWN(3 DECI SECONDS)
@@ -25,12 +24,15 @@
 
 	proc/tape_UpdateIcon()
 		if (dir == SOUTH)
-			set_dir(0)
+			set_dir(2)
 		else if (dir == WEST)
+			set_icon_state("sec_tape_w")
 			set_dir(8)
 		else if (dir == NORTH)
-			set_dir(2)
+			set_icon_state("sec_tape_n")
+			set_dir(1)
 		else
+			set_icon_state("sec_tape_e")
 			set_dir(4)
 		return
 
@@ -53,12 +55,12 @@
 		UNCROSS_BUMP_CHECK(O)
 
 	attackby(obj/item/W, mob/user)
-		if (issnippingtool(W))
+		if (issnippingtool(W)) //Cut tape can be reused
 			new /obj/item/sec_tape(get_turf(src))
 			src.visible_message("[user] neatly cuts [src] with [W].")
 			qdel(src)
-		else if (!istype(W, /obj/item/sec_tape))
-			make_cleanable(/obj/decal/cleanable/blood/splatter, L.loc)
+		else if (!istype(W, /obj/item/sec_tape)) //Avoid accidentally breaking the tape trying to setup more
+			make_cleanable(/obj/decal/cleanable/sec_tape, src.loc)
 			qdel(src)
 		else
 			return
@@ -67,16 +69,17 @@
 		if (M.a_intent == INTENT_HELP)
 			src.try_vault(M)
 		else
+			make_cleanable(/obj/decal/cleanable/sec_tape, src.loc)
 			src.visible_message("[M] rips up [src].")
 			qdel(src)
 
 	Bumped(var/mob/AM as mob)
 		. = ..()
 		if(!istype(AM)) return
-		if(AM.client?.check_key(KEY_RUN))
-			make_cleanable(/obj/decal/cleanable/blood/splatter, L.loc)
+		if(AM.client?.check_key(KEY_RUN)) //In a rush? Run through it
+			make_cleanable(/obj/decal/cleanable/sec_tape, src.loc)
 			qdel(src)
-		else
+		else	//Just walking? Vault it
 			src.try_vault(AM)
 
 	proc/try_vault(mob/user, use_owner_dir = FALSE)

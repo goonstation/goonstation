@@ -3,14 +3,13 @@
 /// The security tape roll object, used to create security tapes.
 /obj/item/sec_tape
 	name = "security tape roll"
-	var/base_name = "neon lining"
+	var/base_name = "security tape roll"
 	desc = "A roll of security tape."
 	amount = STARTAMOUNT
 	max_stack = MAXTAPE
-	stack_type = /obj/item/neon_lining
-	icon = 'icons/obj/decals/neon_lining.dmi'
-	icon_state = "item_blue"
-	item_state = "electronic"
+	stack_type = /obj/item/sec_tape
+	icon = 'icons/obj/sec_tape.dmi'
+	icon_state = "sec_tape_roll"
 	throwforce = 2
 	w_class = W_CLASS_TINY
 	throw_speed = 2
@@ -24,14 +23,12 @@
 	special_grab = /obj/item/grab
 	inventory_counter_enabled = 1
 
-	//var/lining_item_color = "blue"
-
 	New(loc, length = STARTAMOUNT)
 		src.amount = length
 		pixel_x = rand(-2,2)
 		pixel_y = rand(-2,2)
 		..(loc)
-		BLOCK_SETUP(BLOCK_ROPE) //TO CHECK
+		BLOCK_SETUP(BLOCK_ROPE)
 
 	before_stack(atom/movable/O as obj, mob/user as mob)
 		user.visible_message("<span class='notice'>[user] begins awkwardly sticking the tape back onto the roll.</span>")
@@ -79,51 +76,20 @@
 		return
 
 	update_icon()
-		//set_icon_state("item_[lining_item_color]")
 		inventory_counter?.update_number(amount)
 		return
 
-/obj/item/sec_tape/cut
-	New(loc, length)
-		if (length)
-			..(loc, length)
-		else
-			..(loc, rand(1,2))
-
-/*
-/obj/item/neon_lining/cut/small
-	New(loc, length)
-		..(loc, rand(1,5))
-*/
-
-
-/obj/item/sec_tape/vended
+/obj/item/sec_tape/vended //Tape in secvends has uses preset
 	New(loc, length)
 		..(loc, 40)
-
-/*
-	Perhaps add styles?
-/obj/item/neon_lining/attack_self(mob/user as mob)
-	if (lining_item_color == "blue")
-		lining_item_color = "pink"
-	else if (lining_item_color == "pink")
-		lining_item_color = "yellow"
-	else
-		lining_item_color = "blue"
-	tooltip_rebuild = 1
-	boutput(user, "You change the [base_name]'s color to [lining_item_color].")
-	UpdateIcon()
-	return
-*/
 
 /obj/item/sec_tape/get_desc()
 	return " There's [amount] length[s_es(amount)] left."
 
 /obj/item/sec_tape/attackby(obj/item/W, mob/user)
-	if (issnippingtool(W) && src.amount > 1)
-		//src.amount-- might be needed?
-		tooltip_rebuild = 1
+	if (issnippingtool(W) && src.amount > 1) //Cut some of it off to share
 		take(1, user.loc)
+		tooltip_rebuild = 1
 		boutput(user, "You cut a piece off the [base_name].")
 		src.UpdateIcon()
 		return
@@ -132,7 +98,7 @@
 		var/obj/item/sec_tape/C = W
 
 		if (C.amount == MAXTAPE)
-			boutput(user, "The coil is too long, you cannot add any more lining to it.")
+			boutput(user, "The coil is too long, you cannot add any more tape to it.")
 			return
 
 		if ((C.amount + src.amount <= MAXTAPE))
@@ -162,7 +128,7 @@
 
 /obj/item/sec_tape/MouseDrop_T(atom/movable/O as obj, mob/user as mob)
 	..(O, user)
-	for (var/obj/item/neon_lining/C in view(1, user))
+	for (var/obj/item/sec_tape/C in view(1, user))
 		C.UpdateIcon()
 
 /obj/item/sec_tape/afterattack(turf/F, mob/user)
@@ -190,7 +156,7 @@
 			C.dir = NORTH
 		boutput(user, "You [pick("hastily", "quickly", "haphazardly")] setup a security cordon.")
 		C.add_fingerprint(user)
-		C.tape_UpdateIcon() //READD LATER
+		C.tape_UpdateIcon()
 		C.layerify()
 		use(1)
 	return
