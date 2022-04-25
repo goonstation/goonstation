@@ -449,7 +449,7 @@ Broken RCD + Effects
 
 					if(is_missing == 1) //The limb/ass is already missing, maim yourself instead
 						playsound(user.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
-						user.visible_message("<span class='alert'><b>[user] messes up really badly with the [src] and maims themselves! </b> </span>")
+						user.visible_message("<span class='alert'><b>[user] messes up really badly with [src] and maims themselves! </b> </span>")
 						random_brute_damage(user, 25)
 						H.changeStatus("weakened", 3 SECONDS)
 						take_bleeding_damage(user, null, 20, DAMAGE_CUT, 1)
