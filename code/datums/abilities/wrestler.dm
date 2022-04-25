@@ -97,7 +97,7 @@
 
 
 		if (belt_check != 1 && (src.mind && src.mind.special_role != ROLE_OMNITRAITOR && src.mind.special_role != "Faustian Wrestler"))
-			SHOW_WRESTLER_TIPS(src)
+			src.show_antag_popup("wrestler")
 
 	else return
 

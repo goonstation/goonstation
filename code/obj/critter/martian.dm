@@ -156,7 +156,7 @@
 							C.show_message("<span class='alert'>You no longer feel the [name]'s psychic glare.</span>")
 							break
 						if (gib_delay - gib_counter >= 10)
-							gib_delay += 10
+							gib_counter += 10
 							sleep(1 SECOND)
 						else
 							var/slp = gib_delay - gib_counter

@@ -1,4 +1,141 @@
 
+(t)mon apr 25 22
+(u)LeahTheTech
+(p)8170
+(e)🐛|bug
+(+)Added a new verb to re-open closed antag popups.
+(t)sun apr 24 22
+(u)zjdtmkhzt
+(p)8207
+(e)🆕|feature
+(+)Player pianos now have mechcomp integration.
+(t)wed apr 22 22
+(u)pali
+(+)Satchels now distinguish between seeds based on their plant types and mutations
+(t)thu apr 21 22
+(u)Hans
+(p)8274
+(e)🆕|feature
+(+)Rattlesnakes now wander about and are butcherable.
+(u)glowbold
+(p)8101
+(e)|
+(+)AI units can now change their name via a new AI Command: "Change Designation"
+(u)Hans
+(p)8276
+(e)🆕|feature
+(+)Now once tamed, scorpions can be made docile by clicking them with help intent, or aggressive by clicking them with disarm or grab intent, now you can show your friends your new dog without fear of it killing them.
+(u)Flaborized
+(p)8233
+(e)🗺🎨|mapping, sprites
+(*)Changed DNA scramblers. On first injection, it will randomize appearance like normal. On the second shot, it'll give the appearance of the person first injected by it, and become expended and unusable. It's also now instant when using it on other people.
+(u)Nexusuxen
+(p)6684
+(e)🗺🎨|mapping, sprites
+(*)Catering maintenance on Cogmap1 has been expanded. Check it out!
+(u)Sord
+(p)7946
+(e)🎨|sprites
+(+)New jellyfish critters added to water maps
+(t)wed apr 20 22
+(u)Flappybat
+(p)8097
+(e)⚖|balance
+(+)Many Battle Royale changes. Shuttle call moved to 10 players left. Cloaking device, Wrestling Belt, Red Saw removed. Whole load of mostly useless Syndicate items removed. More weapon and armor variety added. Loot chests now always hold a weapon and 50% chance of also some armor. Vehicles removed except escape pods.
+(t)sat apr 16 22
+(u)Yellow/Myco
+(p)8168
+(e)|
+(*)Adds names to where the announcements for anomalies/weather events/command updates are coming from.
+(u)Kubius
+(p)8193
+(e)🆕|feature
+(*)QM requisitions have received a buff / balancing pass, and a new civilian contract variant.
+(u)Bartimeus973
+(p)8197
+(e)|
+(+)Some bulky cargo orders now come as frames.
+(u)RSG250
+(p)7048
+(e)⚖|balance
+(+)Buffed Matsci shoes and Cleats Kick bonus. Cleats are now stronger than cow feet. FOOTBALL.
+(u)UrsulaMajor
+(e)🐛|bug
+(+)Martian Psychics will properly gib you again.
+(u)BatElite
+(p)8029
+(e)🆕|feature
+(+)EMPs now delete some of a cloner's records.
+(u)glowbold
+(p)7853
+(e)🆕🎨|feature, sprites
+(*)Bathtubs now apply reagents to occupants as turf fluid puddles would - but you can only drown while laying.
+(+)Bathtubs now have a tap, visually fill up over time, and occupants now appear under the fluid.
+(u)NightmarechaMillian
+(p)7367
+(e)🆕🎨⚖|feature, sprites, balance
+(*)Matsci spacesuits have been given a massive facelift and their properties have been heavily reworked. See minor changes for a full list of how this is determined.
+(+)Helmet melee protection is based off the density of the visor's crystal
+(+)Suit bullet protection is based off the density of the fabric's material
+(+)Suit melee protection is based off the density of the reinforcement's material starting at -2, but cannot go above -6 damage
+(+)Suit movespeed is dependent on the reinforcement's density, but cannot exceed the range of 0.3-0.7
+(u)Flourish
+(e)🆕|feature
+(+)You can now make dog biscuits; granola bar + meat paste + peanut butter, 6 seconds on low in the oven.
+(u)Flourish
+(e)🆕|feature
+(+)Statues can now be destroyed with large explosions.
+(u)Flourish
+(e)⛔|removal
+(+)Removed corpse Spacebux purchase.
+(u)Azrun and Jan.antilles
+(p)5797
+(e)🆕🎨|feature, sprites
+(+)Graphical assets for sand experiences and future desert planets...
+(t)fri apr 15 22
+(u)Wisemonster
+(p)8218
+(e)🆕🗺|feature, mapping
+(*)NanoTrasen has added the proper systems to Clarion to allow mule bot to function. Cargo will now have a use for that mule bot they have in storage.
+(u)Ikea
+(p)8183
+(e)|
+(*)Adjusted blob scaling so 4 should hopefully be seen. If something is bad please yell or something k thanks.
+(u)Flappybat
+(p)8198
+(e)|
+(+)Lockers, fridges and coffins now have unique opening and closing sounds.
+(u)TheMightyAltroll
+(p)8203
+(e)|
+(+)Added a new sound to flamethrowers to make them sound properly terrifying.
+(t)thu apr 14 22
+(u)Wisemonster
+(p)8152
+(e)🆕🗺|feature, mapping
+(+)Horizon has recently been fitted with the proper systems to allow mule bots to function. Additionally, a mule bot was found in storage and added to cargo. (Some assembly required).
+(u)Wisemonster
+(p)7797
+(e)🗺|mapping
+(+)Nanotrasen has added the necessary systems to Oshan for mulebots to function! (Mulebot included)
+(u)Flappybat
+(p)8071
+(e)🆕⚖|feature, balance
+(*)Closets and lockers can now be broken open by hitting them with items or shooting with projectiles. Lockers have between 100HP and 300HP depending on their security. Energy weapons and low damage items are less effective against them.
+(*)HoS, Armory and Confiscated item lockers are reinforced and can only be broken open with explosives and higher damage kinetics.
+(*)Secure lockers started bolted to the floor. They must be unbolted with a wrench to be moved.
+(u)Flaborized
+(p)7469
+(e)🆕🎨|feature, sprites
+(*)The traitor chameleon jumpsuit is now a full chameleon outfit, allowing you to further your diabolical disguises! It comes with a remote that lets you quickly swap the costume to all match a particular job.
+(u)pali
+(p)8204
+(e)|
+(*)Fingerprint IDs should now be slightly easier to remember
+(u)Gannets
+(p)8185
+(e)⚖|balance
+(*)Nuclear Operatives now spawn wearing Hi-grip Assault Boots. They have also been removed from the Syndicate Weapons Vendor purchase list.
 (t)tue apr 12 22
 (u)Sovexe
 (p)7984
