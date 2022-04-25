@@ -1,16 +1,16 @@
 /* master file for all objects pertaining to sawfly that doesn't really go anywhere else
  includes grenades, both new reused, and cluster, controller that makes them easier to click, and loot
 
-->Things it DOES NOT include that are sawfly-related, and where they can be found:
-The critter itself is at the bottom of drone.dm
-The pouch of sawflies for nukies at the bottom of ammo pouches.dm
-The projectile they use is midway through laser.dm, with the other melee drone projectiles. Try not to think too hard on that.
+-->Things it DOES NOT include that are sawfly-related, and where they can be found:
+-The critter itself is at the bottom of drone.dm
+-The pouch of sawflies for nukies at the bottom of ammo pouches.dm
+-The projectile they use is midway through laser.dm, with the other melee drone projectiles. Try not to think too hard on that.
 */
 
 // -------------------grenades-------------
 /obj/item/old_grenade/spawner/sawfly
 	name = "Compact sawfly"
-	desc = "A self-deploying area antipersonnel robot. It's folded up and offline..."
+	desc = "A self-deploying antipersonnel robot. It's folded up and offline..."
 	det_time = 1 SECONDS
 	throwforce = 7
 	icon_state = "sawfly"

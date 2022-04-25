@@ -1325,17 +1325,16 @@
 				src.health = 0
 				src.CritterDeath()
 
-/obj/critter/gunbot/drone/buzzdrone/sawfly // the sawfly. For their undeployed form check grenades.dm
-
+/obj/critter/gunbot/drone/buzzdrone/sawfly // the sawfly. For associated objects check sawfly.dm in the obj folder
 	//sawfly todo:
 	// make it so they can get ressurected after they die
-	// also make it so, if you're a friend, they can be turned back into a grenade
+
 
 
 	name = "Sawfly"
-	desc = "A folding antipersonnel drone of syndicate origin. It looks duitiful"
+	desc = "A folding antipersonnel drone of syndicate origin. It'd be adorable if it wasn't trying to kill people."
 	icon_state = "sawfly"
-	beeptext = "BEEEEEP"
+	beeptext = "UH OOH"
 	dead_state = "sawflydead"
 	projectile_type = /datum/projectile/laser/drill/sawfly
 	current_projectile = new/datum/projectile/laser/drill/sawfly
