@@ -323,7 +323,12 @@
 
 	New(loc, id)
 		..(loc)
+		START_TRACKING
 		src.id = id
+
+	disposing()
+		STOP_TRACKING
+		..()
 
 	save_to_id(id)
 		if(initialized)
