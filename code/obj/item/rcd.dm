@@ -421,69 +421,72 @@ Broken RCD + Effects
  // Express limb surgery with an RCD
 	attack(mob/living/carbon/human/M, mob/living/carbon/user)
 
-		var/obj/item/parts/surgery_target = null
-		var/is_missing = 0
-		if (surgeryCheck(M, user) && (user.zone_sel.selecting in list("l_arm","r_arm","l_leg","r_leg", "chest")) && (src.mode == RCD_MODE_DECONSTRUCT)) //In surgery conditions and aiming for a limb or an ass in deconstruction mode? Time for ghetto surgery
-			if (user.zone_sel.selecting == "chest") //Ass begone
-				if (M.organHolder.butt == null)
-					user.visible_message("<span class='alert'><b>Tries to remove [M]'s butt, but it's already gone!</b> </span>")
-					return
-				else
-					surgery_target = M.organHolder.get_organ("butt")
-			else if (user.zone_sel.selecting in list("l_arm","r_arm","l_leg","r_leg")) // Is the limb we are aiming for missing?
-				if (M.limbs.vars[user.zone_sel.selecting] == null)
-					user.visible_message("<span class='alert'><b>Tries to remove one of [M]'s limbs, but it's already gone!</b> </span>")
-					return
-				else
-					surgery_target = M.limbs.vars[user.zone_sel.selecting]
-
-			if (surgery_target != null && do_thing(user, surgery_target, "removing [M]'s [surgery_target]", matter_remove_limb, time_remove_limb))
-				if (ishuman(user) && user.bioHolder.HasEffect("clumsy") && prob(40)) //Clowns get a chance to tear off their own limb
-					var/mob/living/carbon/human/H = user
-					if (user.zone_sel.selecting == "chest")
-						if (H.organHolder.butt == null)
-							is_missing = 1
+		if (issilicon(user))
+			return ..()
+		else
+			var/obj/item/parts/surgery_target = null
+			var/is_missing = 0
+			if (surgeryCheck(M, user) && (user.zone_sel.selecting in list("l_arm","r_arm","l_leg","r_leg", "chest")) && (src.mode == RCD_MODE_DECONSTRUCT)) //In surgery conditions and aiming for a limb or an ass in deconstruction mode? Time for ghetto surgery
+				if (user.zone_sel.selecting == "chest") //Ass begone
+					if (M.organHolder.butt == null)
+						user.visible_message("<span class='alert'><b>Tries to remove [M]'s butt, but it's already gone!</b> </span>")
+						return
 					else
-						if (H.limbs.vars[user.zone_sel.selecting] == null) //Cant remove a limb that isnt there
-							is_missing = 1
+						surgery_target = M.organHolder.get_organ("butt")
+				else if (user.zone_sel.selecting in list("l_arm","r_arm","l_leg","r_leg")) // Is the limb we are aiming for missing?
+					if (M.limbs.vars[user.zone_sel.selecting] == null)
+						user.visible_message("<span class='alert'><b>Tries to remove one of [M]'s limbs, but it's already gone!</b> </span>")
+						return
+					else
+						surgery_target = M.limbs.vars[user.zone_sel.selecting]
 
-					if(is_missing == 1) //The limb/ass is already missing, maim yourself instead
-						playsound(user.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
-						user.visible_message("<span class='alert'><b>[user] messes up really badly with [src] and maims themselves! </b> </span>")
-						random_brute_damage(user, 35)
-						H.changeStatus("weakened", 3 SECONDS)
-						take_bleeding_damage(user, null, 25, DAMAGE_CUT, 1)
-						user.emote("scream")
-						JOB_XP(user, "Clown", 3)
-
-					else	//Limb's here? We lose it
+				if (surgery_target != null && do_thing(user, surgery_target, "removing [M]'s [surgery_target]", matter_remove_limb, time_remove_limb))
+					if (ishuman(user) && user.bioHolder.HasEffect("clumsy") && prob(40)) //Clowns get a chance to tear off their own limb
+						var/mob/living/carbon/human/H = user
 						if (user.zone_sel.selecting == "chest")
-							var/B = user.organHolder.drop_organ("butt")
+							if (H.organHolder.butt == null)
+								is_missing = 1
+						else
+							if (H.limbs.vars[user.zone_sel.selecting] == null) //Cant remove a limb that isnt there
+								is_missing = 1
+
+						if(is_missing == 1) //The limb/ass is already missing, maim yourself instead
+							playsound(user.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
+							user.visible_message("<span class='alert'><b>[user] messes up really badly with [src] and maims themselves! </b> </span>")
+							random_brute_damage(user, 35)
+							H.changeStatus("weakened", 3 SECONDS)
+							take_bleeding_damage(user, null, 25, DAMAGE_CUT, 1)
+							user.emote("scream")
+							JOB_XP(user, "Clown", 3)
+
+						else	//Limb's here? We lose it
+							if (user.zone_sel.selecting == "chest")
+								var/B = user.organHolder.drop_organ("butt")
+								qdel(B)
+							else
+								surgery_target = H.limbs.vars[user.zone_sel.selecting]
+								surgery_target.remove()
+								qdel(surgery_target)
+							playsound(user.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
+							user.visible_message("<span class='alert'><b>[user] holds the [src] by the wrong end and removes their own [surgery_target]! </b> </span>")
+							random_brute_damage(user, 25)
+							take_bleeding_damage(user, null, 20, DAMAGE_CUT, 1)
+							user.emote("scream")
+							JOB_XP(user, "Clown", 3)
+
+					else
+						if (user.zone_sel.selecting == "chest")
+							var/B = M.organHolder.drop_organ("butt")
 							qdel(B)
 						else
-							surgery_target = H.limbs.vars[user.zone_sel.selecting]
 							surgery_target.remove()
 							qdel(surgery_target)
-						playsound(user.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
-						user.visible_message("<span class='alert'><b>[user] holds the [src] by the wrong end and removes their own [surgery_target]! </b> </span>")
-						random_brute_damage(user, 25)
-						take_bleeding_damage(user, null, 20, DAMAGE_CUT, 1)
-						user.emote("scream")
-						JOB_XP(user, "Clown", 3)
-
-				else
-					if (user.zone_sel.selecting == "chest")
-						var/B = M.organHolder.drop_organ("butt")
-						qdel(B)
-					else
-						surgery_target.remove()
-						qdel(surgery_target)
-					random_brute_damage(M, 25)
-					take_bleeding_damage(M, null, 20)
-					playsound(M.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
-					user.visible_message("<span class='alert'>Deconstructs [M]'s [surgery_target] with the RCD.</span>")
-		else //Not in surgery conditions or aiming for a limb? Do a normal hit
-			return ..()
+						random_brute_damage(M, 25)
+						take_bleeding_damage(M, null, 20)
+						playsound(M.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
+						user.visible_message("<span class='alert'>Deconstructs [M]'s [surgery_target] with the RCD.</span>")
+			else //Not in surgery conditions or aiming for a limb? Do a normal hit
+				return ..()
 
 /* flesh wall creation code
 // holy jesus christ
