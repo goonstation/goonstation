@@ -419,26 +419,26 @@ Broken RCD + Effects
 						log_construction(user, "built a light fixture to a wall ([W])")
 
  // Express limb surgery with an RCD
-	attack(mob/living/carbon/human/M as mob, mob/living/carbon/user as mob)
+	attack(mob/living/carbon/human/M, mob/living/carbon/user)
 
 		var/obj/item/parts/surgery_target = null
 		var/is_missing = 0
 		if (surgeryCheck(M, user) && (user.zone_sel.selecting in list("l_arm","r_arm","l_leg","r_leg", "chest")) && (src.mode == RCD_MODE_DECONSTRUCT)) //In surgery conditions and aiming for a limb or an ass in deconstruction mode? Time for ghetto surgery
 			if (user.zone_sel.selecting == "chest") //Ass begone
 				if (M.organHolder.butt == null)
-					user.visible_message("<span class='alert'><b>Tries to remove [M]'s butt, but its already gone!</b> </span>")
+					user.visible_message("<span class='alert'><b>Tries to remove [M]'s butt, but it's already gone!</b> </span>")
 					return
 				else
 					surgery_target = M.organHolder.get_organ("butt")
 			else if (user.zone_sel.selecting in list("l_arm","r_arm","l_leg","r_leg")) // Is the limb we are aiming for missing?
 				if (M.limbs.vars[user.zone_sel.selecting] == null)
-					user.visible_message("<span class='alert'><b>Tries to remove one of [M]'s limbs, but its already gone!</b> </span>")
+					user.visible_message("<span class='alert'><b>Tries to remove one of [M]'s limbs, but it's already gone!</b> </span>")
 					return
 				else
 					surgery_target = M.limbs.vars[user.zone_sel.selecting]
 
 			if (surgery_target != null && do_thing(user, surgery_target, "removing [M]'s [surgery_target]", matter_remove_limb, time_remove_limb))
-				if (ishuman(user) && user?.bioHolder.HasEffect("clumsy") && prob(40)) //Clowns get a chance to tear off their own limb
+				if (ishuman(user) && user.bioHolder.HasEffect("clumsy") && prob(40)) //Clowns get a chance to tear off their own limb
 					var/mob/living/carbon/human/H = user
 					if (user.zone_sel.selecting == "chest")
 						if (H.organHolder.butt == null)
