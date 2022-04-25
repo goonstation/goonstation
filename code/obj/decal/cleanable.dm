@@ -1794,3 +1794,15 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 							elecflash(src)
 			sleep(0.1 SECONDS)
 
+/obj/decal/cleanable/sec_tape
+	name = "ripped up tape"
+	desc = "Some ripped up security tape."
+	icon = 'icons/obj/decals/cleanables.dmi'
+	icon_state = "paper"
+	random_dir = 4
+
+	New()
+		..()
+		pixel_y += rand(-4,4)
+		pixel_x += rand(-4,4)
+		return
