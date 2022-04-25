@@ -170,6 +170,18 @@ var/global/IP_alerts = 1
 	src.only_local_looc = !src.only_local_looc
 	boutput(usr, "<span class='notice'>Toggled seeing all LOOC messages [src.only_local_looc ?"off":"on"]!</span>")
 
+/client/proc/toggle_hearing_all()
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	set name = "Toggle Hearing All"
+	set desc = "Toggles the ability to hear all messages regardless of where you are, like a ghost."
+	ADMIN_ONLY
+
+	if(src.mob)
+		src.mob.mob_flags ^= MOB_HEARS_ALL
+		boutput(usr, "<span class='notice'>Toggled seeing all messages [src.mob.mob_flags & MOB_HEARS_ALL ? "on" : "off"]!</span>")
+	else
+		boutput(usr, "<span class='notice'>You don't have a mob, somehow, what!</span>")
+
 /client/proc/toggle_attack_messages()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Toggle Attack Alerts"

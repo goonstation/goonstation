@@ -31,6 +31,7 @@ var/list/admin_verbs = list(
 		/client/proc/flocksay,
 		/client/proc/silisay,
 		/client/proc/toggle_hearing_all_looc,
+		/client/proc/toggle_hearing_all,
 		/client/proc/cmd_admin_prison_unprison,
 		/client/proc/cmd_admin_playermode,
 
