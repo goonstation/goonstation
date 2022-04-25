@@ -6,6 +6,8 @@
 	icon_closed = "dresser"
 	icon_opened = "dresser-open"
 	soundproofing = 10
+	open_sound = 'sound/misc/coffin_open.ogg'
+	close_sound = 'sound/misc/coffin_close.ogg'
 	var/trick = 0 //enjoy some gimmicky bullfuckery
 	var/id = null
 	weld_image_offset_X = -6

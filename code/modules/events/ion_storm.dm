@@ -2,6 +2,7 @@
 	name = "Ion Storm"
 	centcom_headline = "Equipment Malfunction"
 	centcom_message = "An electromagnetic storm recently passed by the station. Sensitive electrical equipment may require maintenance."
+	centcom_origin = ALERT_WEATHER
 	message_delay = 5 MINUTES
 	/// The fraction of message_delay taken up by each stage of the ion storm
 	var/stage_delay

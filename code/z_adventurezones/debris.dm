@@ -9,6 +9,11 @@
 	name = "organic floor"
 	icon_state = "floor1"
 
+/turf/unsimulated/martian/floor
+	icon = 'icons/turf/martian.dmi'
+	name = "organic floor"
+	icon_state = "floor1"
+
 /turf/simulated/floor/martian/attackby(obj/item/C as obj, mob/user as mob, params)
 	if (istype(C, /obj/item/martianSeed))
 		var/obj/item/martianSeed/S = C

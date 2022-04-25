@@ -16,7 +16,7 @@
 		P.addAbility(/datum/targetable/hunter/hunter_summongear)
 
 		if (src.mind && src.mind.special_role != ROLE_OMNITRAITOR)
-			SHOW_HUNTER_TIPS(src)
+			src.show_antag_popup("hunter")
 
 	else return
 

@@ -169,7 +169,7 @@
 		boutput(H, "You're in the [name] faction!")
 		// bestow_objective(player,/datum/objective/battle_royale/win)
 		if (show_popup)
-			SHOW_POD_WARS(H)
+			H.show_antag_popup("podwars")
 		if (istype(mode))
 			mode.stats_manager?.add_player(H.mind, H.real_name, team_num, (H.mind == commander ? "Commander" : "Pilot"))
 

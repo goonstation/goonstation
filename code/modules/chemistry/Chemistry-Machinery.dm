@@ -1084,7 +1084,7 @@ datum/chemicompiler_core/stationaryCore
 			boutput(user, "<span class='notice'>You add [W] to the machine!</span>")
 
 			user.u_equip(W)
-			W.dropped()
+			W.dropped(user)
 
 			src.updateUsrDialog()
 			return

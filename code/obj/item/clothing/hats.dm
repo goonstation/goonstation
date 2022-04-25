@@ -1644,6 +1644,11 @@ ABSTRACT_TYPE(/obj/item/clothing/head/frenchberet)
 		icon_state = "beret_strawb"
 		item_state = "beret_strawb"
 
+	blueberry
+		name = "blueberry beret"
+		icon_state = "beret_blueb"
+		item_state = "beret_blueb"
+
 // Costume goggles
 
 ABSTRACT_TYPE(/obj/item/clothing/head/goggles)

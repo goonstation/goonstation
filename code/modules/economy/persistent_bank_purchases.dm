@@ -34,7 +34,6 @@ var/global/list/persistent_bank_purchaseables =	list(\
 
 	new /datum/bank_purchaseable/limbless,\
 	new /datum/bank_purchaseable/legless,\
-	new /datum/bank_purchaseable/corpse,\
 	new /datum/bank_purchaseable/space_diner,\
 	new /datum/bank_purchaseable/mail_order,\
 	new /datum/bank_purchaseable/missile_arrival,\
@@ -455,19 +454,6 @@ var/global/list/persistent_bank_purchaseables =	list(\
 						boutput( H, "<span class='notice'><b>You haven't got a leg to stand on!</b></span>" )
 				return 1
 			return 0
-
-	corpse
-		name = "Corpse"
-		cost = 15000
-		carries_over = 0
-		icon = 'icons/mob/skeleton.dmi'
-		icon_state = "skeleton"
-		icon_dir = SOUTH
-
-		Create(var/mob/living/M)
-			M.death(FALSE)
-			boutput(M, "<span class='notice'><b>You magically keel over and die! Oh, no!</b></span>")
-			return 1
 
 	space_diner
 		name = "Space Diner Patron"
