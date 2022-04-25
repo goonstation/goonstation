@@ -450,9 +450,9 @@ Broken RCD + Effects
 					if(is_missing == 1) //The limb/ass is already missing, maim yourself instead
 						playsound(user.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
 						user.visible_message("<span class='alert'><b>[user] messes up really badly with [src] and maims themselves! </b> </span>")
-						random_brute_damage(user, 25)
+						random_brute_damage(user, 35)
 						H.changeStatus("weakened", 3 SECONDS)
-						take_bleeding_damage(user, null, 20, DAMAGE_CUT, 1)
+						take_bleeding_damage(user, null, 25, DAMAGE_CUT, 1)
 						user.emote("scream")
 						JOB_XP(user, "Clown", 3)
 
@@ -466,8 +466,8 @@ Broken RCD + Effects
 							qdel(surgery_target)
 						playsound(user.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
 						user.visible_message("<span class='alert'><b>[user] holds the [src] by the wrong end and removes their own [surgery_target]! </b> </span>")
-						random_brute_damage(user, 15)
-						take_bleeding_damage(user, null, 15, DAMAGE_CUT, 1)
+						random_brute_damage(user, 25)
+						take_bleeding_damage(user, null, 20, DAMAGE_CUT, 1)
 						user.emote("scream")
 						JOB_XP(user, "Clown", 3)
 
@@ -478,8 +478,8 @@ Broken RCD + Effects
 					else
 						surgery_target.remove()
 						qdel(surgery_target)
-					random_brute_damage(M, 10)
-					take_bleeding_damage(M, null, 10)
+					random_brute_damage(M, 25)
+					take_bleeding_damage(M, null, 20)
 					playsound(M.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
 					user.visible_message("<span class='alert'>Deconstructs [M]'s [surgery_target] with the RCD.</span>")
 		else //Not in surgery conditions or aiming for a limb? Do a normal hit
