@@ -141,42 +141,41 @@
 					return 0
 
 			if (1)
-				var/obj/item/staff/thunder/S2
+				var/obj/item/staff/thunder/staff
 				for (var/C in staves)
-					S2 = staves[C]
+					staff = staves[C]
 					break
 
-				if (!S2 || !istype(S2))
+				if (!staff || !istype(staff))
 					boutput(M, "<span class='alert'You were unable to summon your staff.")
 					return 0
 
-				residual_spark(S2.loc)
-				S2.send_staff_to_target_mob(M)
-				S2.recharge_thunder()
-
+				residual_spark(staff.loc)
+				staff.send_staff_to_target_mob(M)
+				staff.recharge_thunder()
 
 
 			if (2 to INFINITY)
-				var/t1 = input("Please select a staff to summon", "Target Selection", null, null) as null|anything in staves
+				var/t1 = tgui_input_list(M, "Please select a staff to summon", "Target Selection", staves)
 				if (!t1)
 					return 1
 
-				var/obj/item/staff/thunder/S3 = staves[t1]
+				var/obj/item/staff/thunder/staff = staves[t1]
 
 				if (!M || !ismob(M))
 					return 0
-				if (!S3 || !istype(S3))
+				if (!staff || !istype(staff))
 					boutput(M, "<span class='alert'You were unable to summon your staff.")
 					return 0
 				if (M.getStatusDuration("stunned") > 0 || M.getStatusDuration("weakened") || M.getStatusDuration("paralysis") > 0 || !isalive(M) || M.restrained())
 					boutput(M, "<span class='alert'Not when you're incapacitated or restrained.")
 					return 0
-				if (M.mind.key != S3.wizard_key)
+				if (M.mind.key != staff.wizard_key)
 					boutput(M, "<span class='alert'You were unable to summon your staff.")
 					return 0
 
-				residual_spark(S3.loc)
-				S3.send_staff_to_target_mob(M)
-				S3.recharge_thunder()
+				residual_spark(staff.loc)
+				staff.send_staff_to_target_mob(M)
+				staff.recharge_thunder()
 
 		return 0
