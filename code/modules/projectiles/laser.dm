@@ -505,8 +505,8 @@ toxic - poisons
 		damtype = D_PIERCING // weirdly enough, giving them stabbing damage goes through armor better than peircing
 		shot_sound = null
 		hit_human_sound = "sound/machines/chainsaw_green.ogg"
-		power = 12
-		dissipation_rate = 12
+		power = 13
+		dissipation_rate = 13
 		sname = "Whirring Blades"
 
 
@@ -518,12 +518,10 @@ toxic - poisons
 				. = TRUE
 
 		on_hit(atom/hit)
-			if (istype(hit,/obj/critter/gunbot/drone))//No friendly fire between drones allowed
-				var/obj/critter/gunbot/drone/D
-				D.health+=22 // negates damage
-				D.maxhealth+=22
-				return
-			..()
+			if (ishuman(hit))
+				var/mob/living/carbon/human/M = hit
+				take_bleeding_damage(M, null, 15, damtype)
+
 
 /datum/projectile/laser/alastor
 	name = "laser"

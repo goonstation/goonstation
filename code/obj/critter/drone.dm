@@ -1468,6 +1468,7 @@
 				qdel(src)
 		..()
 
+
 	attackby(obj/item/W as obj, mob/living/user as mob)
 
 
@@ -1476,7 +1477,7 @@
 			src.oldtarget_name = user.name
 			src.task = "chasing"
 			//playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 60, 1)
-			if !(istraitor(M) || isnukeop(M) || isspythief(M))
+			if (!(istraitor(user) || isnukeop(user) || isspythief(user)) )
 				src.visible_message("<span class='alert'><b>[src]'s targeting subsystems identify</b> [src.target] as a high priority threat!</span>")
 				var/tturf = get_turf(src.target) //instantly retaliate, since we know we're in melee range
 				Shoot(tturf, src.loc, src)
