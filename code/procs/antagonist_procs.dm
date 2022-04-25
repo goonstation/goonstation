@@ -70,7 +70,7 @@
 		H.secure_classes["z"] = RADIOCL_SYNDICATE
 		H.set_secure_frequency("z",the_frequency)
 
-	SHOW_CONSPIRACY_TIPS(traitor_mob)
+	traitor_mob.show_antag_popup("conspiracy")
 
 /proc/equip_traitor(mob/living/carbon/human/traitor_mob)
 	if (!(traitor_mob && ishuman(traitor_mob)))
@@ -78,7 +78,7 @@
 
 	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/assday))
 		boutput(traitor_mob, "The Syndicate have clearly forgotten to give you a Syndicate Uplink. Lazy idiots.")
-		SHOW_TRAITOR_HARDMODE_TIPS(traitor_mob)
+		traitor_mob.show_antag_popup("traitorhard")
 		return
 
 	var/freq = null
@@ -131,14 +131,14 @@
 			if (traitor_mob.equip_if_possible(R, traitor_mob.slot_in_backpack) == 0)
 				qdel(R)
 				traitor_mob.verbs += /client/proc/gearspawn_traitor
-				SHOW_TRAITOR_RADIO_TIPS(traitor_mob)
+				traitor_mob.show_antag_popup("traitorradio")
 				return
 	if (!R)
 		traitor_mob.verbs += /client/proc/gearspawn_traitor
-		SHOW_TRAITOR_RADIO_TIPS(traitor_mob)
+		traitor_mob.show_antag_popup("traitorradio")
 	else
 		if (!(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/revolution)) && !(traitor_mob.mind && traitor_mob.mind.special_role == "spy"))
-			SHOW_TRAITOR_PDA_TIPS(traitor_mob)
+			traitor_mob.show_antag_popup("traitorpda")
 
 		if (istype(R, /obj/item/device/radio))
 			var/obj/item/device/radio/RR = R
@@ -252,7 +252,7 @@
 		T.setup(traitor_mob.mind, P)
 		pda_pass = T.lock_code
 
-		SHOW_SPY_THIEF_TIPS(traitor_mob)
+		traitor_mob.show_antag_popup("spythief")
 		boutput(traitor_mob, "The Syndicate have cunningly disguised a Spy Uplink as your [P.name] [loc]. Simply enter the code \"[pda_pass]\" into the ring message select to unlock its hidden features.")
 		traitor_mob.mind.store_memory("<B>Set your ring message to:</B> [pda_pass] (In the Messenger menu in the [P.name] [loc]).")
 	else
