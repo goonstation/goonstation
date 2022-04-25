@@ -256,4 +256,3 @@
 				src.owner.changeStatus("stunned", 2 SECONDS)
 			else if(prob(10))
 				boutput(src.owner,__red("You feel a sharp pain in your chest."))
-

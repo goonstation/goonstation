@@ -111,14 +111,14 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 		for( var/sound/s in playing )
 			s.status |= SOUND_UPDATE
 			var/list/vol = sound_playing[ s.channel ]
-			s.volume = vol[1] / original_volume * volume * volumes[ vol[2] ] * 100
+			s.volume = vol[1] * volume * volumes[ vol[2] ] * 100
 			src << s
 		src.chatOutput.adjustVolumeRaw( volume * getRealVolume(VOLUME_CHANNEL_ADMIN) )
 	else
 		for( var/sound/s in playing )
 			if( sound_playing[s.channel][2] == channel )
 				s.status |= SOUND_UPDATE
-				s.volume = sound_playing[s.channel][1] / original_volume * volume * volumes[1] * 100
+				s.volume = sound_playing[s.channel][1] * volume * volumes[1] * 100
 				src << s
 
 	if( channel == VOLUME_CHANNEL_ADMIN )
