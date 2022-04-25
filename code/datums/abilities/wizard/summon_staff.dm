@@ -109,7 +109,7 @@
 			return 1
 
 		if (M.getStatusDuration("stunned") > 0 || M.getStatusDuration("weakened") || M.getStatusDuration("paralysis") > 0 || !isalive(M) || M.restrained())
-			boutput(M, __red("Not when you're incapacitated or restrained."))
+			boutput(M, "<span class='alert'Not when you're incapacitated or restrained.")
 			return 1
 
 		if(!istype(get_area(M), /area/sim/gunsim)) // Avoid dead chat spam
@@ -117,24 +117,24 @@
 		..()
 
 		var/list/staves = list()
-		var/we_hold_it = 0
+		var/we_hold_it = FALSE
 		for_by_tcl(S, /obj/item/staff/thunder)
-			if (M.mind && M.mind.key == S.wizard_key)
+			if (M.mind?.key == S.wizard_key)
 				if (S == M.find_in_hand(S))
-					we_hold_it = 1
+					we_hold_it = TRUE
 					continue
 				if (!(S in staves))
-					staves["[S.name] #[staves.len + 1] [ismob(S.loc) ? "carried by [S.loc.name]" : "at [get_area(S)]"]"] += S
+					staves["[S.name] #[length(staves) + 1] [ismob(S.loc) ? "carried by [S.loc.name]" : "at [get_area(S)]"]"] += S
 
-		switch (staves.len)
+		switch (length(staves))
 			if (-INFINITY to 0)
-				if (we_hold_it != 0)
+				if (we_hold_it)
 					for (var/obj/item/staff/thunder/T in M.contents)
 						T.recharge_thunder()
-					boutput(M, __red("You charge your stave in your hand."))
+					boutput(M, "<span class='alert'You charge your stave in your hand.")
 					return 0
 				else
-					boutput(M, __red("You summon a new staff to your hands."))
+					boutput(M, "<span class='alert'You summon a new staff to your hands.")
 					var/obj/item/staff/thunder/C = new /obj/item/staff/thunder(get_turf(M))
 					C.wizard_key = M.mind?.key
 					M.put_in_hand_or_drop(C)
@@ -147,7 +147,7 @@
 					break
 
 				if (!S2 || !istype(S2))
-					boutput(M, __red("You were unable to summon your staff."))
+					boutput(M, "<span class='alert'You were unable to summon your staff.")
 					return 0
 
 				residual_spark(S2.loc)
@@ -166,18 +166,13 @@
 				if (!M || !ismob(M))
 					return 0
 				if (!S3 || !istype(S3))
-					boutput(M, __red("You were unable to summon your staff."))
+					boutput(M, "<span class='alert'You were unable to summon your staff.")
 					return 0
-				if (!isliving(M) || !M.mind || !iswizard(M))
-					boutput(M, __red("You seem to have lost all magical abilities."))
-					return 0
-				if (M.wizard_castcheck(src) == 0)
-					return 0 // Has own user feedback.
 				if (M.getStatusDuration("stunned") > 0 || M.getStatusDuration("weakened") || M.getStatusDuration("paralysis") > 0 || !isalive(M) || M.restrained())
-					boutput(M, __red("Not when you're incapacitated or restrained."))
+					boutput(M, "<span class='alert'Not when you're incapacitated or restrained.")
 					return 0
 				if (M.mind.key != S3.wizard_key)
-					boutput(M, __red("You were unable to summon your staff."))
+					boutput(M, "<span class='alert'You were unable to summon your staff.")
 					return 0
 
 				residual_spark(S3.loc)

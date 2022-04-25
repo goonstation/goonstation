@@ -248,7 +248,7 @@
 			thunder_charges -= 1
 			var/turf/T = get_turf(target)
 			var/obj/lightning_target/lightning = new/obj/lightning_target(T)
-			playsound(T, "sound/effects/electric_shock_short.ogg", 70, 1)
+			playsound(T, 'sound/effects/electric_shock_short.ogg', 70, 1)
 			lightning.caster = user
 			UpdateIcon()
 			flick("[icon_state]_fire", src)
@@ -262,7 +262,7 @@
 				..()
 				return
 			else
-				boutput(user, "<span class='alert'>Your hand phases through the [name]'s handle, like it's not there...</span>")
+				zap_person(user)
 				return
 		else ..()
 
@@ -276,14 +276,14 @@
 		if (iswizard(user))
 			return ..()
 		else
-			boutput(user, "<span class='alert'>Your hand phases through the [name]'s handle, like it's not there...</span>")
+			zap_person(user)
 			return
 
 	mouse_drop(atom/over_object, src_location, over_location, over_control, params)
 		if (iswizard(usr))
 			. = ..()
 		else if(isliving(usr))
-			boutput(usr, "<span class='alert'>Your hand phases through the [name]'s handle, like it's not there...</span>")
+			zap_person(usr)
 		else
 			return
 
@@ -298,6 +298,14 @@
 			thunder_charges = 3
 		UpdateIcon()
 		flick("[icon_state]_fire", src)
+
+	proc/zap_person(var/mob/target) //purposefully doesn't do any damage, here to offer non-chat feedback when trying to pick up
+		boutput(target, "<span class='alert'>Static electricity arcs from [name] to your hand when you try and touch it!</span>")
+		playsound(target.loc, 'sound/effects/sparks4.ogg', 70, 1)
+		if (target.bioHolder?.HasEffect("resist_electric"))
+			return
+		else
+			target.do_disorient(stamina_damage = 0, weakened = 0, stunned = 0, disorient = 20)
 
 /obj/item/staff/monkey_staff
 	name = "staff of monke"
