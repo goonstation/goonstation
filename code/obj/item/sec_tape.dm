@@ -79,9 +79,9 @@
 		inventory_counter?.update_number(amount)
 		return
 
-/obj/item/sec_tape/vended //Tape in secvends has uses preset
+/obj/item/sec_tape/vended //Tape in secvends has a pre-set amount of uses
 	New(loc, length)
-		..(loc, 40)
+		..(loc, 20)
 
 /obj/item/sec_tape/get_desc()
 	return " There's [amount] length[s_es(amount)] left."
