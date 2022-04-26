@@ -1107,7 +1107,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	name = "Lawyer"
 	linkcolor = "#FF0000"
 	wages = PAY_DOCTORATE
-	limit = 0
+	limit = 1
 	receives_badge = 1
 	slot_jump = list(/obj/item/clothing/under/misc/lawyer)
 	slot_foot = list(/obj/item/clothing/shoes/black)
