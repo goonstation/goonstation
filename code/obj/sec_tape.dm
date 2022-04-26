@@ -23,18 +23,15 @@
 			layer = OBJ_LAYER
 
 	proc/tape_UpdateIcon()
-		if (dir == SOUTH)
-			set_dir(2)
-		else if (dir == WEST)
-			set_icon_state("sec_tape_w")
-			set_dir(8)
-		else if (dir == NORTH)
-			set_icon_state("sec_tape_n")
-			set_dir(1)
-		else
-			set_icon_state("sec_tape_e")
-			set_dir(4)
-		return
+		switch (dir)
+			if (WEST)
+				set_icon_state("sec_tape_w")
+			if (NORTH)
+				set_icon_state("sec_tape_n")
+			if (EAST)
+				set_icon_state("sec_tape_e")
+			else //Default position is south
+				return
 
 	Cross(atom/movable/O as mob|obj)
 		if (O == null)
