@@ -54,7 +54,7 @@
 			var/obj/sec_tape/T4 = new /obj/sec_tape(T, src)
 			T4.tape_UpdateIcon()
 			T4.layerify()
-			//No need to set it up to the south, it already it by default
+			//No need to set it up to the south, it already is by default
 			user.death(FALSE)
 			qdel(src)
 		else
