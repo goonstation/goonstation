@@ -34,11 +34,36 @@
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span class='alert'><b>[user] wraps some tape around \his neck and tightens it.</b></span>")
-		user.take_oxygen_deprivation(160)
-		SPAWN(50 SECONDS)
-			if (user && !isdead(user))
-				user.suiciding = 0
+		//Are we on valid turf?
+		var/turf/T = get_turf(user)
+		if (isturf(user.loc) && istype(T, /turf/simulated/floor))
+			//Setup the perfect crime
+			user.visible_message("<span class='alert'><b>[user] carefully sets up some security tape around themselves then swallows the tape and chokes on it, satisfied that they created the perfect crime scene.</b></span>")
+			var/obj/sec_tape/T1 = new /obj/sec_tape(T, src)
+			T1.dir = EAST
+			T1.tape_UpdateIcon()
+			T1.layerify()
+			var/obj/sec_tape/T2 = new /obj/sec_tape(T, src)
+			T2.dir = WEST
+			T2.tape_UpdateIcon()
+			T2.layerify()
+			var/obj/sec_tape/T3 = new /obj/sec_tape(T, src)
+			T3.dir = NORTH
+			T3.tape_UpdateIcon()
+			T3.layerify()
+			var/obj/sec_tape/T4 = new /obj/sec_tape(T, src)
+			T4.tape_UpdateIcon()
+			T4.layerify()
+			//No need to set it up to the south, it already it by default
+			user.death(FALSE)
+			qdel(src)
+		else
+			//Else we'll choke ourselves out
+			user.visible_message("<span class='alert'><b>[user] wraps some tape around \his neck and tightens it.</b></span>")
+			user.take_oxygen_deprivation(160)
+			SPAWN(50 SECONDS)
+				if (user && !isdead(user))
+					user.suiciding = 0
 		return 1
 
 	proc/use(var/used) // remove "used" amount from the coil
