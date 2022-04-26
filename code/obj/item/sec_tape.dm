@@ -139,18 +139,18 @@
 	else
 		var/dirn = user.dir
 
-		var/obj/sec_tape/C = new /obj/sec_tape(F, src)
+		var/obj/sec_tape/ST = new /obj/sec_tape(F, src)
 		if (dirn == SOUTH)
-			C.dir = SOUTH
+			ST.dir = SOUTH
 		else if (dirn == EAST)
-			C.dir = EAST
+			ST.dir = EAST
 		else if (dirn == WEST)
-			C.dir = WEST
+			ST.dir = WEST
 		else
-			C.dir = NORTH
+			ST.dir = NORTH
 		boutput(user, "You [pick("hastily", "quickly", "haphazardly")] setup a security cordon.")
-		C.add_fingerprint(user)
-		C.tape_UpdateIcon()
-		C.layerify()
+		ST.add_fingerprint(user)
+		ST.tape_UpdateIcon()
+		ST.layerify()
 		use(1)
 	return

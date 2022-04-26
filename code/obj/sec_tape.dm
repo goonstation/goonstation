@@ -62,8 +62,6 @@
 		else if (!istype(W, /obj/item/sec_tape)) //Avoid accidentally breaking the tape trying to setup more
 			make_cleanable(/obj/decal/cleanable/sec_tape, src.loc)
 			qdel(src)
-		else
-			return
 
 	attack_hand(mob/M as mob)
 		if (M.a_intent == INTENT_HELP)
@@ -85,5 +83,3 @@
 	proc/try_vault(mob/user, use_owner_dir = FALSE)
 		if(!actions.hasAction(user, "railing_jump"))
 			actions.start(new /datum/action/bar/icon/railing_jump(user, src, use_owner_dir), user)
-		else
-			return
