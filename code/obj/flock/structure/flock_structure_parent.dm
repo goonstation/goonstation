@@ -36,6 +36,8 @@
 	time_started = world.timeofday
 	processing_items |= src
 	setMaterial(getMaterial("gnesis"))
+	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, "flock_structure")
+
 	if(F)
 		src.flock = F
 		src.flock.registerStructure(src)
