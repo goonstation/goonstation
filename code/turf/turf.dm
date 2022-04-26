@@ -921,10 +921,18 @@ proc/generate_space_color()
 	fullbright = 1
 
 /turf/unsimulated/wall/solidcolor/white
+#ifdef IN_MAP_EDITOR
+	icon_state = "white-map"
+#else
 	icon_state = "white"
+#endif
 
 /turf/unsimulated/wall/solidcolor/black
+#ifdef IN_MAP_EDITOR
+	icon_state = "black-map"
+#else
 	icon_state = "black"
+#endif
 
 /turf/unsimulated/wall/other
 	icon_state = "r_wall"

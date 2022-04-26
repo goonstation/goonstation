@@ -1,4 +1,17 @@
 
+(t)mon apr 25 22
+(u)LeahTheTech
+(p)8170
+(e)🐛|bug
+(+)Added a new verb to re-open closed antag popups.
+(t)sun apr 24 22
+(u)zjdtmkhzt
+(p)8207
+(e)🆕|feature
+(+)Player pianos now have mechcomp integration.
+(t)wed apr 22 22
+(u)pali
+(+)Satchels now distinguish between seeds based on their plant types and mutations
 (t)thu apr 21 22
 (u)Hans
 (p)8274
