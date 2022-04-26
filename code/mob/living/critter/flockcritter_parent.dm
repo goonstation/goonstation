@@ -354,46 +354,59 @@
 
 	onStart()
 		..()
-		if(target)
-			var/mob/living/critter/flock/F = owner
-			var/T = target
-			var/mob/living/critter/flock/C
-			if(istype(T, /mob/living/critter/flock))
-				C = T
-			if(F)
-				if(C)
-					F.tri_message("<span class='notice'>[owner] begins spraying glowing fibres onto [C].</span>",
-						F, "<span class='notice'>You begin repairing [C.real_name]. You will both need to stay still for this to work.</span>",
-						T, "<span class='notice'>[F.real_name] begins repairing you. You will both need to stay still for this to work.</span>",
-						"You hear hissing and spraying.")
-				else
-					F.tri_message("<span class='notice'>[owner] begins spraying glowing fibres onto [T].</span>",
-						F, "<span class='notice'>You begin repairing [T]. You will both need to stay still for this to work.</span>",
-						T, "<span class='notice'>[F.real_name] begins repairing you. You will both need to stay still for this to work.</span>",
-						"You hear hissing and spraying.")
-				playsound(T, "sound/misc/flockmind/flockdrone_quickbuild.ogg", 50, 1)
-				if(C?.is_npc)
-					C.ai.wait()
+		if(!target || !owner)
+			return
+		var/mob/living/critter/flock/F = owner
+		var/mob/living/critter/flock/C
+		if(istype(target, /mob/living/critter/flock))
+			C = target
+		if(C)
+			F.tri_message("<span class='notice'>[owner] begins spraying glowing fibers onto [C].</span>",
+				F, "<span class='notice'>You begin repairing [C.real_name]. You will both need to stay still for this to work.</span>",
+				target, "<span class='notice'>[F.real_name] begins repairing you. You will both need to stay still for this to work.</span>",
+				"You hear hissing and spraying.")
+			if (C.is_npc)
+				C.ai.wait()
+		else
+			F.tri_message("<span class='notice'>[owner] begins spraying glowing fibers onto [target].</span>",
+				F, "<span class='notice'>You begin repairing [target]. You will need to stay still for this to work.</span>",
+				null, null, "You hear hissing and spraying.")
+		playsound(target, "sound/misc/flockmind/flockdrone_quickbuild.ogg", 50, 1)
 
 	onEnd()
 		..()
+		if (!owner)
+			return
+		if (istype(target, /mob/living/critter/flock))
+			var/mob/living/critter/flock/flockcritter = target
+			flockcritter.HealDamage("All", flockcritter.health_brute / 3, flockcritter.health_burn / 3)
+			if (flockcritter.is_npc)
+				flockcritter.ai.interrupt()
+		else if (istype(target, /obj/flock_structure))
+			var/obj/flock_structure/structure = target
+			structure.repair()
+		else
+			switch (target.type)
+				if (/obj/machinery/door/feather)
+					var/obj/machinery/door/feather/flockdoor = target
+					flockdoor.repair()
+				if (/turf/simulated/floor/feather)
+					var/turf/simulated/floor/feather/floor = target
+					floor.repair()
+				if (/turf/simulated/wall/auto/feather)
+					var/turf/simulated/wall/auto/feather/wall = target
+					wall.repair()
+				if (/obj/window/feather)
+					var/obj/window/feather/window = target
+					window.repair()
+				if (/obj/grille/flock)
+					var/obj/grille/flock/barricade = target
+					barricade.repair()
+				if (/obj/storage/closet/flock)
+					var/obj/storage/closet/flock/closet = target
+					closet.repair()
 		var/mob/living/critter/flock/F = owner
-		var/mob/living/critter/flock/T
-		if(istype(target, /mob/living/critter/flock))
-			T = target
-		if(F)
-			if(istype(target, /obj/machinery/door/feather))
-//				dothin
-				var/obj/machinery/door/feather/D = target
-				D.health  = min(20, D.health_max - D.health) + D.health
-				if(D.broken && D.health_max/2 < D.health)
-					D.broken = 0 //fix the damn thing
-					D.icon_state = "door1"//make it not look broke
-			else
-				T.HealDamage("All", T.health_brute / 3, T.health_burn / 3)
-				if (T.is_npc)
-					T.ai.interrupt()
-			F.pay_resources(10)
+		F.pay_resources(10)
 
 /////////////////////////////////////////////////////////////////////////////////
 // ENTOMB ACTION

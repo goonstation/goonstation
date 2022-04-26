@@ -782,8 +782,8 @@
 		boutput(user, "<span class='alert'>Something about this structure prevents it from being assimilated.</span>")
 	else if(isfeathertile(target))
 		if(istype(target, /turf/simulated/floor/feather))
-			var/turf/simulated/floor/feather/flocktarget = target
 			if(user.a_intent == INTENT_DISARM)
+				var/turf/simulated/floor/feather/flocktarget = target
 				for (var/atom/O in flocktarget.contents)
 					if (istype(O, /obj/grille/flock))
 						boutput(user, "<span class='alert'>There's already a barricade here.</span>")
@@ -795,10 +795,6 @@
 					boutput(user, "<span class='alert'>Not enough resources to construct a barricade (you need 25).</span>")
 				else
 					actions.start(new/datum/action/bar/flock_construct(target), user)
-			else
-				boutput(user, "<span class='notice'>It's already been repurposed. Can't improve on perfection. (Use the disarm intent to construct a barricade.)</span>")
-		else
-			boutput(user, "<span class='notice'>It's already been repurposed. Can't improve on perfection.</span>")
 	else if(user.resources < 20 && istype(target, /turf))
 		boutput(user, "<span class='alert'>Not enough resources to convert (you need 20).</span>")
 	else
@@ -816,28 +812,60 @@
 			..()
 //help intent actions
 	else if(user.a_intent == INTENT_HELP)
-		switch(target.type)//making this into switches for easy of expansion later
-			if(/obj/machinery/door/feather)
-				var/obj/machinery/door/feather/F = target
-				if(F.broken || (F.health < F.health_max))
-					if(user.resources < 10)
-						boutput(user, "<span class='alert'>Not enough resources to repair (you need 10).</span>")
-					else
-						actions.start(new/datum/action/bar/flock_repair(F), user)
-			if(/obj/flock_structure/ghost)
-				if (user.resources <= 0)
-					boutput(user, "<span class='alert'>No resources available for construction.</span>")
-				else
-					actions.start(new /datum/action/bar/flock_deposit(target), user)
+		if (istype(target, /obj/flock_structure/ghost))
+			if (user.resources <= 0)
+				boutput(user, "<span class='alert'>No resources available for construction.</span>")
+			else
+				actions.start(new /datum/action/bar/flock_deposit(target), user)
+			return
+		if (!HAS_ATOM_PROPERTY(target, PROP_ATOM_FLOCK_THING) && !istype(target, /turf/simulated/floor/feather))
+			return
+		var/found_target = FALSE
+		if (istype(target, /obj/flock_structure))
+			var/obj/flock_structure/structure = target
+			if (structure.health < structure.health_max)
+				found_target = TRUE
+		else
+			switch(target.type)
+				if (/obj/machinery/door/feather)
+					var/obj/machinery/door/feather/flockdoor = target
+					if(flockdoor.health < flockdoor.health_max)
+						found_target = TRUE
+				if (/turf/simulated/floor/feather)
+					var/turf/simulated/floor/feather/floor = target
+					if (floor.health < initial(floor.health))
+						found_target = TRUE
+				if (/turf/simulated/wall/auto/feather)
+					var/turf/simulated/wall/auto/feather/wall = target
+					if (wall.health < wall.max_health)
+						found_target = TRUE
+				if (/obj/window/feather)
+					var/obj/window/feather/window = target
+					if (window.health < window.health_max)
+						found_target = TRUE
+				if (/obj/grille/flock)
+					var/obj/grille/flock/barricade = target
+					if (barricade.health < barricade.health_max)
+						found_target = TRUE
+				if (/obj/storage/closet/flock)
+					var/obj/storage/closet/flock/closet = target
+					if (closet.health_attack < closet.health_max)
+						found_target = TRUE
+		if (!found_target)
+			boutput(user, "<span class='alert'>The target is in perfect condition!</span>")
+		else
+			if(user.resources < 10)
+				boutput(user, "<span class='alert'>Not enough resources to repair (you need 10).</span>")
+			else
+				actions.start(new /datum/action/bar/flock_repair(target), user)
 
 /datum/limb/flock_converter/help(mob/target, var/mob/living/critter/flock/drone/user)
 	if(!target || !user)
 		return
 	if (user.floorrunning)
 		return // you'll need to be out of the floor to do anything
-	// REPAIR FLOCKDRONE
-	var/mob/living/critter/flock/drone/F = target
-	if(isflock(F))
+	var/mob/living/critter/flock/F = target
+	if(istype(F))
 		if(F.get_health_percentage() >= 1.0)
 			boutput(user, "<span class='alert'>They don't need to be repaired, they're in perfect condition.</span>")
 			return

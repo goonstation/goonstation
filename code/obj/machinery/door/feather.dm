@@ -66,6 +66,14 @@
 	src.name = initial(name)
 	src.desc = initial(desc)
 
+/obj/machinery/door/feather/proc/repair()
+	src.health = min(20, src.health_max - src.health) + src.health
+	if (src.broken && src.health_max / 2 < src.health)
+		src.name = initial(src.name)
+		src.desc = initial(src.desc)
+		src.broken = FALSE
+		src.icon_state = initial(src.icon_state)
+
 /obj/machinery/door/feather/play_animation(animation)
 	if(broken)
 		return

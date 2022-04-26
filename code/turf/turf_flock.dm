@@ -86,6 +86,20 @@
 			f.group?.removestructure(f)
 			f.group = null
 
+/turf/simulated/floor/feather/proc/repair()
+	if (src.broken)
+		src.name = initial(src.name)
+		src.desc = initial(src.desc)
+		src.icon_state = initial(src.icon_state)
+		src.broken = FALSE
+		if(!src.group)
+			checknearby() //check for groups to join
+		for(var/obj/flock_structure/f in get_turf(src))
+			if(f.usesgroups)
+				f.group = src.group
+				f.group.addstructure(f)
+	src.health = min(src.health + 10, initial(src.health))
+
 /turf/simulated/floor/feather/burn_tile()
 	return
 
@@ -138,19 +152,6 @@
 		src.desc = initial(desc)
 	src.light.disable()
 	on = 0
-
-/turf/simulated/floor/feather/proc/repair()
-	src.icon_state = "floor"
-	src.broken = 0
-	src.health = initial(health)
-	src.name = initial(name)
-	src.desc = initial(desc)
-	if(isnull(src.group))
-		checknearby() //check for groups to join
-	for(var/obj/flock_structure/f in get_turf(src))
-		if(f.usesgroups)
-			f.group = src.group
-			f.group.addstructure(f)
 
 /turf/simulated/floor/feather/broken
 	name = "weird broken floor"
@@ -391,6 +392,15 @@ turf/simulated/floor/feather/proc/bfs(turf/start)//breadth first search, made by
 	if (map_settings?.auto_walls)
 		for (var/turf/simulated/wall/auto/feather/W in orange(1, src))
 			W.UpdateIcon()
+
+/turf/simulated/wall/auto/feather/proc/repair()
+	if (src.broken)
+		src.name = initial(src.name)
+		src.desc = initial(src.desc)
+		src.broken = FALSE
+		src.UpdateIcon()
+		src.setMaterial(getMaterial("gnesis"))
+	src.health = min(src.health + 50, src.max_health)
 
 /turf/simulated/wall/auto/feather/Entered(var/mob/living/critter/flock/drone/F, atom/oldloc)
 	..()

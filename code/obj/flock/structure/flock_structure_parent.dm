@@ -165,6 +165,9 @@
 	src.flock?.removeDrone(src)
 	qdel(src)
 
+/obj/flock_structure/proc/repair()
+	src.health = min(src.health + 50, src.health_max)
+
 /obj/flock_structure/attack_hand(var/mob/user)
 	attack_particle(user, src)
 	user.lastattacked = src

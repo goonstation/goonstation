@@ -640,14 +640,8 @@
 	var/RL_AddLumB = T.RL_AddLumB
 
 	if(istype(T, /turf/simulated/floor))
-		if(istype(T, /turf/simulated/floor/feather))
-			// fix instead of replace
-			var/turf/simulated/floor/feather/TF = T
-			TF.repair()
-			animate_flock_convert_complete(T)
-		else
-			T.ReplaceWith("/turf/simulated/floor/feather", 0)
-			animate_flock_convert_complete(T)
+		T.ReplaceWith("/turf/simulated/floor/feather", 0)
+		animate_flock_convert_complete(T)
 
 	if(istype(T, /turf/simulated/wall))
 		var/turf/converted_wall = T.ReplaceWith("/turf/simulated/wall/auto/feather", 0)
