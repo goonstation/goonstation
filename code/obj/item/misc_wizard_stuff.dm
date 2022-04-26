@@ -221,7 +221,7 @@
 			return
 
 /obj/item/staff/thunder
-	name = "stave of thunder"
+	name = "staff of thunder"
 	desc = "A staff sparkling with static electricty. Who's afraid of a little thunder?"
 	icon_state = "staffthunder3"
 	item_state = "staffthunder"

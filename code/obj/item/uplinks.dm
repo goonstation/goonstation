@@ -1205,7 +1205,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	cost = 2
 
 /datum/SWFuplinkspell/staffofthunder
-	name = "Stave of Thunder"
+	name = "Staff of Thunder"
 	eqtype = "Equipment"
 	desc = "A special staff attuned to electical energies. Able to conjure three lightning bolts to strike down foes before being recharged. Capable of being summoned magically, which recharges the wand. Take care, as you're not immune to your own thunder!"
 	assoc_spell = /datum/targetable/spell/summon_thunder_staff
