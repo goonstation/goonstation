@@ -34,20 +34,26 @@
 				return
 		if(3.0)
 			if (prob(25))
-				pop_o2()
-				pop_pl()
+				while(TOTAL_O2_TANKS > 0)
+					pop_o2()
+				while(TOTAL_PL_TANKS > 0)
+					pop_pl()
 		else
 	return
 
 /obj/machinery/dispenser/blob_act(var/power)
 	if (prob(25 * power / 20))
-		pop_o2()
-		pop_pl()
+		while(TOTAL_O2_TANKS > 0)
+			pop_o2()
+		while(TOTAL_PL_TANKS > 0)
+			pop_pl()
 		qdel(src)
 
 /obj/machinery/dispenser/meteorhit()
-	pop_o2()
-	pop_pl()
+	while(TOTAL_O2_TANKS > 0)
+		pop_o2()
+	while(TOTAL_PL_TANKS > 0)
+		pop_pl()
 	qdel(src)
 	return
 
