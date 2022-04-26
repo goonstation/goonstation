@@ -425,7 +425,7 @@ Broken RCD + Effects
 			return ..()
 		else
 			var/obj/item/parts/surgery_target = null
-			var/is_missing = 0
+			var/user_limb_is_missing = false
 			if (surgeryCheck(M, user) && (user.zone_sel.selecting in list("l_arm","r_arm","l_leg","r_leg", "chest")) && (src.mode == RCD_MODE_DECONSTRUCT)) //In surgery conditions and aiming for a limb or an ass in deconstruction mode? Time for ghetto surgery
 				if (user.zone_sel.selecting == "chest") //Ass begone
 					if (M.organHolder.butt == null)
@@ -445,12 +445,12 @@ Broken RCD + Effects
 						var/mob/living/carbon/human/H = user
 						if (user.zone_sel.selecting == "chest")
 							if (H.organHolder.butt == null)
-								is_missing = 1
+								user_limb_is_missing = true
 						else
 							if (H.limbs.vars[user.zone_sel.selecting] == null) //Cant remove a limb that isnt there
-								is_missing = 1
+								user_limb_is_missing = true
 
-						if(is_missing == 1) //The limb/ass is already missing, maim yourself instead
+						if(user_limb_is_missing == true) //The limb/ass is already missing, maim yourself instead
 							playsound(user.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
 							user.visible_message("<span class='alert'><b>[user] messes up really badly with [src] and maims themselves! </b> </span>")
 							random_brute_damage(user, 35)
