@@ -216,7 +216,7 @@
 			absorb.doCooldown()
 			return
 		boutput(wraithMob, __red("You start sucking the essence out of [M]'s corpse!"))
-		particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#000000", 12, locate(M.x, M.y, M.z)))
+		particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#000000", 8, locate(M.x, M.y, M.z)))
 		for (var/mob/living/V in viewers(7, wraithMob))
 			boutput(V, "Black smoke rises from [M]'s corpse! Freaky!")
 
