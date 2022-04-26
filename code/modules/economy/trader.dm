@@ -771,7 +771,6 @@
 				src.goods_sell += new /datum/commodity/drug/lsd_bee(src)
 				src.goods_sell += new /datum/commodity/relics/bootlegfirework(src)
 				src.goods_sell += new /datum/commodity/pills/uranium(src)
-				src.goods_sell += new /datum/commodity/medical/ricin(src)
 
 				src.goods_buy += new /datum/commodity/drugs/shrooms(src)
 				src.goods_buy += new /datum/commodity/drugs/cannabis(src)
@@ -1279,7 +1278,6 @@
 		src.goods_sell += new /datum/commodity/medical/ether(src)
 		src.goods_sell += new /datum/commodity/medical/toxin(src)
 		src.goods_sell += new /datum/commodity/medical/cyanide(src)
-		src.goods_sell += new /datum/commodity/medical/ricin(src)
 		src.goods_sell += new /datum/commodity/medical/omnizine(src)
 		src.goods_sell += new /datum/commodity/medical/strange_reagent(src)
 		src.goods_sell += new /datum/commodity/medical/injectorbelt(src)

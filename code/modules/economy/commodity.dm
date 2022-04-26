@@ -2082,15 +2082,6 @@
 	upperfluc = 4000
 	lowerfluc = -1000
 
-/datum/commodity/medical/ricin
-	comname = "Ricin (1x ampoule)"
-	comtype = /obj/item/reagent_containers/ampoule/ricin
-	desc = "An ampoule full of ricin."
-	price = 1600
-	baseprice = 1400
-	upperfluc = 500
-	lowerfluc = -200
-
 /datum/commodity/medical/omnizine
 	comname = "Omnizine"
 	comtype = /obj/item/reagent_containers/glass/bottle/omnizine
