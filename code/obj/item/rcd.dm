@@ -451,14 +451,10 @@ Broken RCD + Effects
 								user_limb_is_missing = true
 
 						if(user_limb_is_missing == true) //The limb/ass is already missing, maim yourself instead
-							playsound(user.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
 							user.visible_message("<span class='alert'><b>[user] messes up really badly with [src] and maims themselves! </b> </span>")
 							random_brute_damage(user, 35)
 							H.changeStatus("weakened", 3 SECONDS)
 							take_bleeding_damage(user, null, 25, DAMAGE_CUT, 1)
-							user.emote("scream")
-							JOB_XP(user, "Clown", 3)
-
 						else	//Limb's here? We lose it
 							if (user.zone_sel.selecting == "chest")
 								var/B = user.organHolder.drop_organ("butt")
@@ -467,12 +463,12 @@ Broken RCD + Effects
 								surgery_target = H.limbs.vars[user.zone_sel.selecting]
 								surgery_target.remove()
 								qdel(surgery_target)
-							playsound(user.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
 							user.visible_message("<span class='alert'><b>[user] holds the [src] by the wrong end and removes their own [surgery_target]! </b> </span>")
 							random_brute_damage(user, 25)
 							take_bleeding_damage(user, null, 20, DAMAGE_CUT, 1)
-							user.emote("scream")
-							JOB_XP(user, "Clown", 3)
+						playsound(user.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
+						user.emote("scream")
+						JOB_XP(user, "Clown", 3)
 
 					else
 						if (user.zone_sel.selecting == "chest")
