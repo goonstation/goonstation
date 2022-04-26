@@ -10,14 +10,8 @@
 	stack_type = /obj/item/sec_tape
 	icon = 'icons/obj/sec_tape.dmi'
 	icon_state = "sec_tape_roll"
-	throwforce = 2
 	w_class = W_CLASS_TINY
-	throw_speed = 2
-	throw_range = 5
 	flags = TABLEPASS|EXTRADELAY|FPRINT|CONDUCT|ONBELT
-	stamina_damage = 5
-	stamina_cost = 5
-	stamina_crit_chance = 10
 	rand_pos = 1
 	event_handler_flags = USE_GRAB_CHOKE | USE_FLUID_ENTER
 	special_grab = /obj/item/grab
@@ -47,7 +41,7 @@
 				user.suiciding = 0
 		return 1
 
-	proc/use(var/used)
+	proc/use(var/used) // remove "used" amount from the coil
 		if (src.amount < used)
 			return 0
 		else if (src.amount == used)
@@ -59,7 +53,7 @@
 			src.UpdateIcon()
 			return 1
 
-	proc/take(var/amt, var/newloc)
+	proc/take(var/amt, var/newloc) // removes "amt" from the coil and put it somewhere, use for coil splitting with wirecutters
 		if (amt > amount)
 			amt = amount
 			tooltip_rebuild = 1
@@ -84,7 +78,7 @@
 		..(loc, 20)
 
 /obj/item/sec_tape/get_desc()
-	return " There's [amount] length[s_es(amount)] left."
+	return "There's [amount] length[s_es(amount)] left."
 
 /obj/item/sec_tape/attackby(obj/item/W, mob/user)
 	if (issnippingtool(W) && src.amount > 1) //Cut some of it off to share
