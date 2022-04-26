@@ -131,7 +131,7 @@
 				if (we_hold_it)
 					for (var/obj/item/staff/thunder/T in M.contents)
 						T.recharge_thunder()
-					boutput(M, "<span class='alert'You charge your stave in your hand.")
+					boutput(M, "<span class='alert'You charge your staff in your hand.")
 					return 0
 				else
 					boutput(M, "<span class='alert'You summon a new staff to your hands.")
