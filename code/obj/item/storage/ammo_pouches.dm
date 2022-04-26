@@ -246,6 +246,6 @@
 	icon_state = "ammopouch-sawflies"
 	health = 6
 	w_class = W_CLASS_SMALL
-	slots = 4
+	slots = 5
 	does_not_open_in_pocket = 0
-	spawn_contents = list(/obj/item/old_grenade/spawner/sawfly = 4)
+	spawn_contents = list(/obj/item/old_grenade/spawner/sawfly = 4, /obj/item/sawflysleeper)

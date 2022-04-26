@@ -1332,7 +1332,7 @@
 
 
 	name = "Sawfly"
-	desc = "A folding antipersonnel drone of syndicate origin. It'd be adorable if it wasn't trying to kill people."
+	desc = "A folding antipersonnel drone of syndicate origin. It'd be pretty cute if it wasn't trying to kill people."
 	icon_state = "sawfly"
 	beeptext = "UH OOH"
 	dead_state = "sawflydead"
@@ -1354,6 +1354,15 @@
 	var/deathtimer = 0 // for catastrophic failure on death
 	var/isnew = TRUE // for reuse
 	var/sawflynames = list("A", "B", "C", "D", "E", "F", "V", "W", "X", "Y", "Z", "Alpha", "Beta", "Gamma", "Lambda", "Delta")
+
+	proc/foldself()
+		var/obj/item/old_grenade/spawner/sawfly/reused/N = new /obj/item/old_grenade/spawner/sawfly/reused(get_turf(src))
+		// pass our name and health
+		N.name = "Compact [name]"
+		N.tempname = src.name
+		N.temphp = src.health
+		qdel(src)
+
 
 	New()
 		..()
@@ -1383,18 +1392,16 @@
 		for (var/mob/living/C in view(src.seekrange,src))
 			if (C in src.friends) continue
 			if (istraitor(C) || isnukeop(C) || isspythief(C)) // frens :)
-				src.visible_message("<span class='alert'>[src]'s IFF subsystem recognizes an ally!")
+				boutput(C, "<span class='alert'>[src]'s IFF system silently flags you as an ally!")
 				friends += C
 				continue
-		..()// call mom and pops
+		..()
 
 	CritterAttack(atom/M)
 		if (istraitor(M) || isnukeop(M) || isspythief(M) || (M in src.friends)) // BE. A. GOOD. DRONE.
-		//	src.task = "thinking" // think about your actions
 			return
 		if(target && !attacking)
 			attacking = 1
-			//playsound(src.loc, "sound/machines/whistlebeep.ogg", 55, 1)
 			src.visible_message("<span class='alert'><b>[src]</b> [pick(list("gouges", "cleaves", "lacerates", "shreds", "cuts", "tears", "hacks", "slashes",))] [M]!</span>")
 			var/tturf = get_turf(M)
 			Shoot(tturf, src.loc, src)
@@ -1402,19 +1409,33 @@
 				attacking = 0
 		return
 
+	attackby(obj/item/W as obj, mob/living/user as mob)
+		if(prob(50) && alive) // borrowed from brullbar- anti-crowd measures
+			src.target = user
+			src.oldtarget_name = user.name
+			src.task = "chasing"
+			//playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 60, 1)
+			if (!(istraitor(user) || isnukeop(user) || isspythief(user)) )
+				src.visible_message("<span class='alert'><b>[src]'s targeting subsystems identify</b> [src.target] as a high priority threat!</span>")
+				var/tturf = get_turf(src.target) //instantly retaliate, since we know we're in melee range
+				Shoot(tturf, src.loc, src)
+				SPAWN((attack_cooldown/2)) //follow up swiftly
+					attacking = 0
+				CritterAttack(src.target)
+		..()
 
+	attack_hand(var/mob/user as mob)
+		if (istraitor(user) || isnukeop(user) || isspythief(user) || (user in src.friends))
+			if (user.a_intent == INTENT_HELP || INTENT_GRAB)
+				boutput(user, "You collapse [src].")
+				src.foldself()
+		..()
 
 	CritterDeath() // rip lil guy
 		if (!src.alive) return
 		..()
-		if (get_area(src) != colosseum_controller.colosseum)
-			var/turf/Ts = get_turf(src)
-			make_cleanable( /obj/decal/cleanable/robot_debris,Ts)
-			//new drop1(Ts)
-			make_cleanable( /obj/decal/cleanable/robot_debris,Ts)
-
 		// since they're a child of a child of a child of a child
-		// and I don't know if they each all call parent,
+		// and shit gets WHACKY fast with their behaviors
 		// I'm just gonna say fuck all that and copy the critter death code
 		SHOULD_CALL_PARENT(TRUE)
 		if (!src.alive) return
@@ -1438,13 +1459,14 @@
 		// special checks that determine how much postmorten chaos our little sawflies cause
 
 		if(prob(60)) // 60 percent chance to zap the area
-			elecflash(src,2)
+			elecflash(src, 1, 2)
 
 		if(prob(25)) // congrats, little guy! You're special! You're going to blow up!
 			if(prob(70)) //decide whether or not people get a warning
 				src.visible_message("<span class='combat'>[src] makes a [pick("gentle", "odd", "slight", "weird", "barely audible", "concerning", "quiet")] [pick("hiss", "drone", "whir", "thump", "grinding sound", "creak")].......")
 
 			SPAWN(deathtimer SECONDS) // wait for iiiittttt...
+
 				if(prob(66))// FWOOSH!
 					src.visible_message("<span class='combat'>[src]'s [pick("motor", "core", "fuel tank", "battery", "thruster")] [pick("combusts", "catches on fire", "ignites", "lights up", "immolates", "bursts into flames")]!")
 					fireflash(src,1,TRUE)
@@ -1455,35 +1477,8 @@
 					fireflash(src,0,TRUE)
 					qdel(src)
 
-	attack_hand(var/mob/user as mob)
-		if (istraitor(user) || isnukeop(user) || isspythief(user) || (user in src.friends))
-			if (user.a_intent == INTENT_HELP || INTENT_GRAB)
-				boutput(user, "You collapse [src].")
-				var/obj/item/old_grenade/spawner/sawfly/reused/N = new /obj/item/old_grenade/spawner/sawfly/reused(get_turf(src))
-				// pass our name and health
-				N.name = "Compact [name]"
-				N.tempname = src.name
-				N.temphp = src.health
-				qdel(src)
-		..()
 
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
 
-
-		if(prob(50) && alive) // borrowed from brullbar- anti-crowd measures
-			src.target = user
-			src.oldtarget_name = user.name
-			src.task = "chasing"
-			//playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 60, 1)
-			if (!(istraitor(user) || isnukeop(user) || isspythief(user)) )
-				src.visible_message("<span class='alert'><b>[src]'s targeting subsystems identify</b> [src.target] as a high priority threat!</span>")
-				var/tturf = get_turf(src.target) //instantly retaliate, since we know we're in melee range
-				Shoot(tturf, src.loc, src)
-				SPAWN((attack_cooldown/2)) //Prepare to continue laying on pain
-					attacking = 0
-				CritterAttack(src.target)
-
-		..()
 
 

@@ -20,6 +20,10 @@
 	is_syndicate = 1
 	contraband = 2
 
+	new()
+		..()
+		new /obj/item/sawflysleeper(src.loc)
+
 	prime() // we only want one drone, rewrite old proc
 		var/turf/T =  get_turf(src)
 		if (T)
@@ -30,7 +34,7 @@
 /obj/item/old_grenade/spawner/sawfly/reused
 	name = "Compact sawfly"
 	var/tempname = "Someone meant to spawn /obj/item/old_grenade/spawner/sawfly but misclicked, didn't they?"
-	desc = "A self-deploying area antipersonnel robot. This one has seen some use."
+	desc = "A self-deploying antipersonnel robot. This one has seen some use."
 	var/temphp = 0
 
 
@@ -47,7 +51,7 @@
 
 /obj/item/old_grenade/spawner/sawflycluster
 	name = "Cluster sawfly"
-	desc = "A whole lot of little robots at the end of the stick, ready to shred whomever you decide to use them against."
+	desc = "A whole lot of little angry robots at the end of the stick, ready to shred whoever stands in their way."
 	det_time = 2 SECONDS // give them slightly more time to realize their fate
 
 	force = 7 //whacking people with metal on the end of a stick hurts -> this should be a decent weapon
@@ -66,6 +70,7 @@
 
 	New()
 		..()
+		new /obj/item/sawflysleeper(src.loc)
 		if (prob(50)) // give em some sprite variety
 			icon_state = "clusterflyB"
 			icon_state_armed = "clusterflyB1"
@@ -82,7 +87,7 @@
 
 /obj/item/sawflysleeper
 	name = "Sawfly deactivator"
-	desc = "A small device that can be used to temporarily disable sawflies. It looks pretty fragile and it could easily be hidden in clothing."
+	desc = "A small device that can be used to remotely deploy sawflies. It looks pretty fragile and it could easily be hidden in clothing."
 	w_class = W_CLASS_TINY
 	flags = FPRINT | TABLEPASS
 	icon = 'icons/obj/items/device.dmi'
@@ -91,13 +96,13 @@
 	var/alreadyhit = FALSE
 
 	attack_self(mob/user as mob)
-		for(var/obj/critter/gunbot/drone/buzzdrone/sawfly/S in range(get_turf(src), 6))
-			S.task = "sleeping"
+		for(var/obj/critter/gunbot/drone/buzzdrone/sawfly/S in range(get_turf(src), 3))
+			S.foldself()
 
 
 	afterattack(obj/O as obj, mob/user as mob)
 		if (O.loc == user && O != src && istype(O, /obj/item/clothing))
-			boutput(user, "<span class='hint'>You hide the remote your [O]. (Use the snap emote while wearing the clothing item to retrieve it.)</span>")
+			boutput(user, "<span class='hint'>You hide the remote your [O]. (Use the snap emote (ctrl+z) while wearing the clothing item to retrieve it.)</span>")
 			user.u_equip(src)
 			src.set_loc(O)
 			src.dropped(user)
