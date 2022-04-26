@@ -67,7 +67,7 @@ obj/machinery/air_vendor
 			W.amount = 0
 			boutput(user, "<span class='notice'>You insert [W].</span>")
 			user.u_equip(W)
-			W.dropped()
+			W.dropped(user)
 			qdel(W)
 			src.updateUsrDialog()
 		else if (istype(W, /obj/item/tank))

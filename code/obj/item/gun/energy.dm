@@ -9,6 +9,7 @@
 	var/rechargeable = 1 // Can we put this gun in a recharger? False should be a very rare exception.
 	var/robocharge = 800
 	var/cell_type = /obj/item/ammo/power_cell // Type of cell to spawn by default.
+	var/from_frame_cell_type = /obj/item/ammo/power_cell
 	var/custom_cell_max_capacity = null // Is there a limit as to what power cell (in PU) we can use?
 	var/wait_cycle = 0 // Using a self-charging cell should auto-update the gun's sprite.
 	var/can_swap_cell = 1
@@ -28,6 +29,12 @@
 		processing_items -= src
 		..()
 
+	was_built_from_frame(mob/user, newly_built)
+		. = ..()
+		if(src.can_swap_cell && from_frame_cell_type)
+			AddComponent(/datum/component/cell_holder, new from_frame_cell_type)
+
+		SEND_SIGNAL(src, COMSIG_CELL_USE, INFINITY) //also drain the cell out of spite
 
 	examine()
 		. = ..()
@@ -277,6 +284,7 @@
 	throw_range = 10
 	rechargeable = 0 // Cannot be recharged manually.
 	cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
+	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	projectiles = null
 	is_syndicate = 1
 	silenced = 1 // No conspicuous text messages, please (Convair880).
@@ -454,6 +462,7 @@
 	throw_range = 12
 	rechargeable = 0
 	cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
+	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	projectiles = null
 	is_syndicate = 1
 	custom_cell_max_capacity = 100 //endless crab
@@ -716,6 +725,7 @@
 	force = 5.0
 	mats = 0
 	cell_type = /obj/item/ammo/power_cell/self_charging/medium
+	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/disruptor
 
 
 	/*
@@ -816,7 +826,6 @@
 	w_class = W_CLASS_BULKY
 	force = 15
 	cell_type = /obj/item/ammo/power_cell/self_charging/big
-
 
 	New()
 		set_current_projectile(new /datum/projectile/special/spreader/uniform_burst/blaster)
@@ -1098,6 +1107,7 @@
 	throw_range = 10
 	rechargeable = 0 // Cannot be recharged manually.
 	cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
+	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	projectiles = null
 	is_syndicate = 1
 	silenced = 1
@@ -1236,6 +1246,7 @@
 	m_amt = 5000
 	g_amt = 2000
 	cell_type = /obj/item/ammo/power_cell/self_charging/lawbringer
+	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/lawbringer/bad
 	mats = list("MET-1"=15, "CON-2"=5, "POW-2"=5)
 	var/owner_prints = null
 	var/image/indicator_display = null
@@ -1278,7 +1289,7 @@
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if (H.bioHolder)
-				owner_prints = H.bioHolder.uid_hash
+				owner_prints = H.bioHolder.fingerprints
 				src.name = "HoS [H.real_name]'s Lawbringer"
 				tooltip_rebuild = 1
 
@@ -1297,7 +1308,7 @@
 		//only work if the voice is the same as the voice of your owner fingerprints.
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
-			if (owner_prints && (H.bioHolder.uid_hash != owner_prints))
+			if (owner_prints && (H.bioHolder.fingerprints != owner_prints))
 				are_you_the_law(M, msg[1])
 				return
 		else
@@ -1444,7 +1455,7 @@
 	// Checks if the gun can shoot based on the fingerprints of the shooter.
 	//returns true if the prints match or there are no prints stored on the gun(emagged). false if it fails
 	proc/fingerprints_can_shoot(var/mob/user)
-		if (!owner_prints || (user.bioHolder.uid_hash == owner_prints))
+		if (!owner_prints || (user.bioHolder.fingerprints == owner_prints))
 			return 1
 		return 0
 
@@ -1539,6 +1550,7 @@
 	throw_range = 10
 	rechargeable = 0 // Cannot be recharged manually.
 	cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
+	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	projectiles = null
 	is_syndicate = 1
 	silenced = 1
@@ -1575,6 +1587,7 @@
 	force = 8
 	two_handed = 0
 	cell_type = /obj/item/ammo/power_cell/self_charging/ntso_signifer
+	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/ntso_signifer/bad
 	can_swap_cell = 0
 	var/shotcount = 0
 

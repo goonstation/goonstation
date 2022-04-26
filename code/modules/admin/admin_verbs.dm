@@ -31,6 +31,7 @@ var/list/admin_verbs = list(
 		/client/proc/flocksay,
 		/client/proc/silisay,
 		/client/proc/toggle_hearing_all_looc,
+		/client/proc/toggle_hearing_all,
 		/client/proc/cmd_admin_prison_unprison,
 		/client/proc/cmd_admin_playermode,
 
@@ -391,6 +392,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_modify_market_variables,
 		/client/proc/BK_finance_debug,
 		/client/proc/BK_alter_funds,
+		/client/proc/TestMarketReq,
 		/client/proc/debug_pools,
 		/client/proc/debug_variables,
 		/client/proc/debug_global_variable,
@@ -1954,8 +1956,8 @@ var/list/fun_images = list()
 	if (microbombs_4_everyone > 0)
 		var/implanted = 0
 		for (var/mob/living/carbon/human/H in mobs)
-			var/obj/item/implant/microbomb/MB = new (H)
-			MB.explosionPower = microbombs_4_everyone
+			var/obj/item/implant/revenge/microbomb/MB = new (H)
+			MB.power = microbombs_4_everyone
 			MB.implanted = 1
 			H.implant.Add(MB)
 			MB.implanted(H, 0)

@@ -32,6 +32,23 @@
 
 /////////////////////////////////////////
 
+/turf/unsimulated/floor/pryable
+	attackby(obj/item/W, mob/user)
+		if(ispryingtool(W))
+			src.name = "plating"
+			src.icon_state = "plating"
+			src.UpdateIcon()
+			setIntact(FALSE)
+			levelupdate()
+
+	scorched
+		icon_state = "floorscorched1"
+
+
+	scorched2
+		icon_state = "floorscorched2"
+
+
 /turf/unsimulated/floor/scorched
 	icon_state = "floorscorched1"
 
@@ -990,21 +1007,39 @@
 	desc = "finest earth."
 	icon = 'icons/turf/outdoors.dmi'
 	icon_state = "sand_other"
-	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_DIRT
+	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_DIRT + 1
 	icon_state_edge = "sand_edge"
+	var/tuft_prob = 2
 
 	New()
 		..()
-		switch(rand(1,3))
-			if(1)
-				icon_state = "sand_other_texture"
-				src.set_dir(pick(alldirs))
-			if(2)
-				icon_state = "sand_other_texture2"
-				src.set_dir(pick(alldirs))
-			if(3)
-				icon_state = "sand_other_texture3"
-				src.set_dir(pick(cardinal))
+		src.set_dir(pick(cardinal))
+
+		if(prob(tuft_prob))
+			var/rand_x = rand(-5,5)
+			var/rand_y = rand(-5,5)
+			var/image/tuft
+			var/hue_shift = rand(80,95)
+
+			tuft = image('icons/turf/outdoors.dmi', "grass_tuft", src, pixel_x=rand_x, pixel_y=rand_y)
+			tuft.color = hsv_transform_color_matrix(h=hue_shift)
+			UpdateOverlays(tuft,"grass_turf")
+
+	rough
+		tuft_prob = 0.8
+		New()
+			..()
+			icon_state_edge = "sand_r_edge"
+			edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_DIRT + 2
+			switch(rand(1,3))
+				if(1)
+					icon_state = "sand_other_texture"
+					src.set_dir(pick(alldirs))
+				if(2)
+					icon_state = "sand_other_texture2"
+					src.set_dir(pick(alldirs))
+				if(3)
+					icon_state = "sand_other_texture3"
 
 
 /turf/unsimulated/floor/auto/water

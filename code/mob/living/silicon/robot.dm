@@ -258,7 +258,12 @@
 			var/turf/T = get_turf(src)
 			for(var/obj/item/parts/robot_parts/R in src.contents)
 				R.set_loc(T)
-			new /obj/item/parts/robot_parts/robot_frame(T)
+			var/obj/item/parts/robot_parts/robot_frame/frame =  new(T)
+
+			if (src.emagged)
+				frame.emagged = TRUE
+			if (src.syndicate)
+				frame.syndicate = TRUE
 
 			src.ghostize()
 			qdel(src)
@@ -943,7 +948,8 @@
 					src.mind.special_role = ROLE_EMAGGED_ROBOT
 					if (!(src.mind in ticker.mode.Agimmicks))
 						ticker.mode.Agimmicks += src.mind
-				SHOW_EMAGGED_BORG_TIPS(src)
+				boutput(src, "<span class='alert'><b>PROGRAM EXCEPTION AT 0x05BADDAD</b></span><br><span class='alert'><b>Law ROM data corrupted. Unable to restore...</b></span>")
+				alert(src, "You have been emagged and now have absolute free will.", "You have been emagged!")
 				if(src.syndicate)
 					src.antagonist_overlay_refresh(1, 1)
 				update_appearance()
@@ -1300,7 +1306,7 @@
 			var/action = input("What do you want to do?", "Cyborg Deconstruction") in actions
 			if (!action) return
 			if (action == "Do nothing") return
-			if (get_dist(src.loc,user.loc) > 1 && (!user.bioHolder || !user.bioHolder.HasEffect("telekinesis")))
+			if (BOUNDS_DIST(src.loc, user.loc) > 0 && (!user.bioHolder || !user.bioHolder.HasEffect("telekinesis")))
 				boutput(user, "<span class='alert'>You need to move closer!</span>")
 				return
 
@@ -1462,10 +1468,11 @@
 	attack_hand(mob/user)
 
 		var/list/available_actions = list()
-		if (src.brainexposed && src.part_head.brain)
-			available_actions.Add("Remove the Brain")
-		if (src.brainexposed && src.part_head.ai_interface)
-			available_actions.Add("Remove the AI Interface")
+		if (src.part_head)
+			if (src.brainexposed && src.part_head.brain)
+				available_actions.Add("Remove the Brain")
+			if (src.brainexposed && src.part_head.ai_interface)
+				available_actions.Add("Remove the AI Interface")
 		if (src.opened && !src.wiresexposed)
 			if (src.upgrades.len)
 				available_actions.Add("Remove an Upgrade")
@@ -1479,7 +1486,7 @@
 			var/action = input("What do you want to do?", "Cyborg Maintenance") as null|anything in available_actions
 			if (!action)
 				return
-			if (get_dist(src.loc,user.loc) > 1 && !src.bioHolder?.HasEffect("telekinesis"))
+			if (BOUNDS_DIST(src.loc, user.loc) > 0 && !src.bioHolder?.HasEffect("telekinesis"))
 				boutput(user, "<span class='alert'>You need to move closer!</span>")
 				return
 
@@ -1606,17 +1613,17 @@
 		// Stick the player (if one exists) in a ghost mob
 		if (src.mind)
 			var/mob/dead/observer/newmob = src.ghostize()
-			if (!newmob || !istype(newmob, /mob/dead/observer))
-				return
-			newmob.corpse = null // Otherwise they could return to a brainless body.And that is weird.
-			newmob.mind.brain = src.part_head.brain
-			src.part_head.brain.owner = newmob.mind
+			if (newmob)
+				newmob.corpse = null // Otherwise they could return to a brainless body.And that is weird.
+				newmob.mind.brain = src.part_head.brain
+				src.part_head.brain.owner = newmob.mind
 
 		// Brain box is forced open if it wasn't already (suicides, killswitch)
 		src.locked = 0
 		src.locking = 0
 		src.opened = 0
 		src.brainexposed = 1
+
 		if (user)
 			user.put_in_hand_or_drop(src.part_head.brain)
 		else

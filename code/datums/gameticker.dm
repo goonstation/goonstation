@@ -253,7 +253,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			LAGCHECK(LAG_LOW)
 			var/datum/powernet/PN = E.get_direct_powernet()
 			if(PN?.avail <= 0)
-				command_alert("Reports indicate that the engine on-board [station_name()] has not yet been started. Setting up the engine is strongly recommended, or else stationwide power failures may occur.", "Power Grid Warning")
+				command_alert("Reports indicate that the engine on-board [station_name()] has not yet been started. Setting up the engine is strongly recommended, or else stationwide power failures may occur.", "Power Grid Warning", alert_origin = ALERT_STATION)
 			break
 
 	for(var/turf/T in job_start_locations["AI"])
@@ -437,6 +437,8 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 			SPAWN(0)
 				change_ghost_invisibility(INVIS_NONE)
+				for(var/mob/M in global.mobs)
+					M.antagonist_overlay_refresh(bypass_cooldown=TRUE)
 
 			// i feel like this should probably be a proc call somewhere instead but w/e
 			if (!ooc_allowed)
@@ -761,8 +763,6 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 	for_by_tcl(P, /obj/bookshelf/persistent) //make the bookshelf save its contents
 		P.build_curr_contents()
-
-	global.save_noticeboards()
 
 #ifdef SECRETS_ENABLED
 	for_by_tcl(S, /obj/santa_helper)

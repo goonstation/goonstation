@@ -47,7 +47,7 @@
 			obj_count++
 
 		var/mob/crewmob = crewMind.current
-		if (crewmob.traitHolder && crewmob.traitHolder.hasTrait("conspiracytheorist") && prob(20))
+		if (crewmob.traitHolder && crewmob.traitHolder.hasTrait("conspiracytheorist"))
 			/*var/conspiracy_text = ""
 			var/noun = pick_string("conspiracy_theories.txt", "noun")
 			var/conspiracy = pick_string("conspiracy_theories.txt", "conspiracy")

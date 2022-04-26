@@ -920,7 +920,7 @@ TYPEINFO(/datum/mutantrace)
 
 			SPAWN(rand(4, 30))
 				M.emote("scream")
-			SHOW_ZOMBIE_TIPS(M)
+			M.show_antag_popup("zombie")
 
 	proc/make_bubs(var/mob/living/carbon/human/M)
 		M.bioHolder.AddEffect("strong")
@@ -1663,8 +1663,12 @@ TYPEINFO(/datum/mutantrace)
 	New(mob/living/carbon/human/M)
 		. = ..()
 		if(ishuman(M))
+			M.blood_id = "hemolymph"
+			//H.blood_color = "009E81"
 			M.mob_flags |= SHOULD_HAVE_A_TAIL
 		APPLY_ATOM_PROPERTY(M, PROP_MOB_RADPROT, src, 100)
+
+
 
 	say_verb()
 		return "clicks"

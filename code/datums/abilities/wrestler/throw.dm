@@ -58,7 +58,7 @@
 
 			if (M && HH)
 				// These are necessary because of the sleep call.
-				if (!G || !istype(G) || G.state < 1)
+				if (!G || !istype(G) || G.state == GRAB_PASSIVE)
 					boutput(M, __red("You can't throw the target without a firm grab!"))
 					return 0
 
@@ -93,7 +93,7 @@
 		sleep(0.1 SECONDS) //let the thrower set their dir maybe
 		if (M && HH)
 			// These are necessary because of the sleep call.
-			if (!G || !istype(G) || G.state < 1)
+			if (!G || !istype(G) || G.state == GRAB_PASSIVE)
 				boutput(M, __red("You can't throw the target without a firm grab!"))
 				return 0
 

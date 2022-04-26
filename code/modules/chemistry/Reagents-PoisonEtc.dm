@@ -340,17 +340,12 @@ datum
 			depletion_rate = 0.025
 			penetrates_skin = 0
 			target_organs = list("left_kidney","right_kidney","liver","stomach","intestines","spleen","pancreas")
+			flushing_multiplier = 0.15
 			var/counter = 1
-			var/flushing = 0.1 //standard efficacy against flushing
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 				if (!counter) counter = 1
-
-				if(holder.has_reagent("charcoal")) //to make it a tad harder to treat
-					holder.remove_reagent("charcoal", flushing * mult)
-				if(holder.has_reagent("penteticacid"))
-					holder.remove_reagent("penteticacid", flushing * mult)
 
 				switch(counter += (1 * mult))
 					if (75 to 125)
@@ -362,8 +357,6 @@ datum
 							if (H.organHolder)
 								H.organHolder.damage_organs(1*mult, 0, 1*mult, target_organs, 15)
 					if (125 to 175)
-						flushing = 1.5 //it gets a tad harder to cure here
-
 						if (probmult(8))
 							M.emote(pick("sneeze","cough","moan","groan"))
 						else if (probmult(5))
@@ -375,8 +368,6 @@ datum
 							if (H.organHolder)
 								H.organHolder.damage_organs(1*mult, 0, 1*mult, target_organs, 25)
 					if (175 to INFINITY)
-						flushing = 3 // time to ramp up that flusher flushing
-
 						if (probmult(10))
 							M.emote(pick("sneeze","drool","cough","moan","groan"))
 						if (probmult(20))
@@ -570,6 +561,7 @@ datum
 						B.desc = "This bee looks very much like [M.real_name]. How peculiar."
 						B.beeKid = "#ffdddd"
 						B.UpdateIcon()
+						logTheThing("combat", M, null, "was gibbed by reagent [name].")
 						M.gib()
 				..()
 
@@ -731,6 +723,7 @@ datum
 								bleed(H, 500, 5) // you'll be gibbed in a moment you don't need it anyway
 								H.visible_message("<span class='alert'><B>A huge bee bursts out of [H]! OH FUCK!</B></span>")
 								qdel(H.organHolder.heart)
+								logTheThing("combat", H, null, "was gibbed by reagent [name].")
 								H.gib()
 				..()
 
@@ -1219,8 +1212,45 @@ datum
 					M.make_jittery(1000)
 					SPAWN(rand(20, 100))
 						if (M) //ZeWaka: Fix for null.gib
+							logTheThing("combat", M, null, "was gibbed by reagent [name].")
 							M.gib()
 					return
+
+				..()
+				return
+
+		harmful/viper_venom
+			name = "viper venom"
+			id = "viper_venom"
+			description = "A dangerous toxin that causes massive bleeding and tissue damage"
+			reagent_state = LIQUID
+			fluid_r = 210
+			fluid_g = 180
+			fluid_b = 25
+			depletion_rate = 0.3
+			blob_damage = 1
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if (!M) M = holder.my_atom
+				M.take_toxin_damage(1*mult)
+				random_brute_damage(M, 1*mult, FALSE)
+
+				if (prob(25))
+					M.reagents.add_reagent("histamine", rand(5,10) * mult)
+
+				if (probmult(10))
+					M.setStatus("stunned", max(M.getStatusDuration("stunned"), 5 SECONDS))
+					boutput(M, "<span class='alert'><b>Your body hurts so much.</b></span>")
+					bleed(M, rand(30,60), rand(3,9))
+					if (!isdead(M))
+						M.emote(pick("cry", "tremble", "scream"))
+
+				if (probmult(10))
+					M.setStatus("slowed", max(M.getStatusDuration("slowed"), 10 SECONDS))
+					boutput(M, "<span class='alert'><b>Everything starts hurting.</b></span>")
+					M.take_toxin_damage(8)
+					if (!isdead(M))
+						M.emote(pick("shake", "tremble", "shudder"))
 
 				..()
 				return

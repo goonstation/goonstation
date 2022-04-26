@@ -111,14 +111,14 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 		for( var/sound/s in playing )
 			s.status |= SOUND_UPDATE
 			var/list/vol = sound_playing[ s.channel ]
-			s.volume = vol[1] / original_volume * volume * volumes[ vol[2] ] * 100
+			s.volume = vol[1] * volume * volumes[ vol[2] ] * 100
 			src << s
 		src.chatOutput.adjustVolumeRaw( volume * getRealVolume(VOLUME_CHANNEL_ADMIN) )
 	else
 		for( var/sound/s in playing )
 			if( sound_playing[s.channel][2] == channel )
 				s.status |= SOUND_UPDATE
-				s.volume = sound_playing[s.channel][1] / original_volume * volume * volumes[1] * 100
+				s.volume = sound_playing[s.channel][1] * volume * volumes[1] * 100
 				src << s
 
 	if( channel == VOLUME_CHANNEL_ADMIN )
@@ -221,7 +221,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 
 			//sadly, we must generate
 			if (!S) S = generate_sound(source, soundin, vol, vary, extrarange, pitch)
-			if (!S) CRASH("Did not manage to generate sound \"[soundin]\" with source [source].")
+			if (!S) CRASH("Did not manage to generate sound \"[soundin]\" with source [source]. Likely that the filename is misnamed or does not exist.")
 			C.sound_playing[ S.channel ][1] = storedVolume
 			C.sound_playing[ S.channel ][2] = channel
 
@@ -295,7 +295,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 	LISTENER_ATTEN(atten_temp)
 
 	var/sound/S = generate_sound(source, soundin, ourvolume, vary, extrarange, pitch)
-	if (!S) CRASH("Did not manage to generate sound \"[soundin]\" with source [source].")
+	if (!S) CRASH("Did not manage to generate sound \"[soundin]\" with source [source]. Likely that the filename is misnamed or does not exist.")
 	client.sound_playing[ S.channel ][1] = ourvolume
 	client.sound_playing[ S.channel ][2] = channel
 
@@ -385,7 +385,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 		EARLY_CONTINUE_IF_QUIET(ourvolume)
 
 		if (!S) S = generate_sound(source, soundin, vol, vary, extrarange=0, pitch=pitch)
-		if (!S) CRASH("Did not manage to generate sound \"[soundin]\" with source [source].")
+		if (!S) CRASH("Did not manage to generate sound \"[soundin]\" with source [source]. Likely that the filename is misnamed or does not exist.")
 		C.sound_playing[ S.channel ][1] = storedVolume
 		C.sound_playing[ S.channel ][2] = channel
 

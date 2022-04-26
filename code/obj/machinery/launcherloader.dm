@@ -458,7 +458,7 @@
 		return
 
 	afterattack(atom/target as mob|obj|turf, mob/user as mob, reach, params)
-		if(get_dist(get_turf(target), get_turf(src)) <= 1 && istype(target, /atom/movable))
+		if(BOUNDS_DIST(get_turf(target), get_turf(src)) == 0 && istype(target, /atom/movable))
 			if(target==loc && target != user) return //Backpack or something
 			target:delivery_destination = destination
 			user.visible_message("<span class='notice'>[user] sticks a [src.name] on [target].</span>")
@@ -487,9 +487,9 @@
 
 	mouse_drop(atom/over_object, src_location, over_location, over_control, params)
 		if(!istype(usr, /mob/living) || !isturf(src.loc) || \
-				get_dist(get_turf(over_object), get_turf(src)) > 1 || \
-				get_dist(usr, get_turf(over_object)) > 1 ||  \
-				get_dist(usr, src) > 1 || \
+				BOUNDS_DIST(get_turf(over_object), get_turf(src)) > 0 || \
+				BOUNDS_DIST(usr, get_turf(over_object)) > 0 ||  \
+				BOUNDS_DIST(usr, src) > 0 || \
 				over_object == usr || !istype(over_object, /atom/movable))
 			return ..()
 		var/atom/movable/target = over_object

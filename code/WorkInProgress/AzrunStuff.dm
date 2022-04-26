@@ -46,6 +46,24 @@
 		var/obj/item/storage/desk_drawer/azrun/L = new(src)
 		src.desk_drawer = L
 
+/datum/manufacture/sub/treads
+	name = "Vehicle Treads"
+	item_paths = list("MET-2","CON-1")
+	item_amounts = list(5,2)
+	item_outputs = list(/obj/item/shipcomponent/locomotion/treads)
+	time = 5 SECONDS
+	create = 1
+	category = "Component"
+
+/datum/manufacture/sub/wheels
+	name = "Vehicle Wheels"
+	item_paths = list("MET-2","CON-1")
+	item_amounts = list(5,2)
+	item_outputs = list(/obj/item/shipcomponent/locomotion/wheels)
+	time = 5 SECONDS
+	create = 1
+	category = "Component"
+
 
 /obj/machinery/plantpot/bareplant/swamp_flora
 	New()
@@ -238,4 +256,3 @@
 				src.owner.changeStatus("stunned", 2 SECONDS)
 			else if(prob(10))
 				boutput(src.owner,__red("You feel a sharp pain in your chest."))
-

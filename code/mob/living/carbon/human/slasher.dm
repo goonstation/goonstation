@@ -66,7 +66,7 @@
 					src.setStatus("incorporeal", duration = INFINITE_STATUS)
 					src.set_density(FALSE)
 					src.visible_message("<span class='alert'>[src] disappears!</span>")
-					APPLY_ATOM_PROPERTY(src, PROP_MOB_NEVER_DENSE, src)
+					APPLY_ATOM_PROPERTY(src, PROP_ATOM_NEVER_DENSE, src)
 					APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_GHOST)
 					APPLY_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS, src)
 					APPLY_ATOM_PROPERTY(src, PROP_MOB_NOCLIP, src)
@@ -89,7 +89,7 @@
 					src.delStatus("incorporeal")
 					src.set_density(TRUE)
 					REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src)
-					REMOVE_ATOM_PROPERTY(src, PROP_MOB_NEVER_DENSE, src)
+					REMOVE_ATOM_PROPERTY(src, PROP_ATOM_NEVER_DENSE, src)
 					REMOVE_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS, src)
 					REMOVE_ATOM_PROPERTY(src, PROP_MOB_NOCLIP, src)
 					src.alpha = 254
@@ -599,13 +599,13 @@ ABSTRACT_TYPE(/datum/targetable/slasher)
 			return TRUE
 		if(isdead(M))
 			if(ishuman(M) && M.hasStatus("soulstolen"))
-				if (get_dist(W, M) > 1)
+				if (BOUNDS_DIST(W, M) > 0)
 					boutput(src.holder.owner, "<span class='alert'>You must be closer in order to steal [M]'s soul.</span>")
 					return TRUE
 				else
 					return W.soulStealSetup(M, TRUE)
 			else if(ishuman(M) && (M.mind && M.mind.soul >= 100))
-				if (get_dist(W, M) > 1)
+				if (BOUNDS_DIST(W, M) > 0)
 					boutput(src.holder.owner, "<span class='alert'>You must be closer in order to steal [M]'s soul.</span>")
 					return TRUE
 				else

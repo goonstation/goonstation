@@ -49,7 +49,7 @@
 			if(shitty)
 				boutput(src, "<span class='notice'>Oh shit, your fangs just broke off! Looks like you'll have to get blood the HARD way.</span>")
 
-			SHOW_VAMPIRE_TIPS(src)
+			src.show_antag_popup("vampire")
 
 		if(shitty || nonantag)
 			boutput(src, "<span class='alert'><h2>You've been turned into a vampire!</h2> Your vampireness was achieved by in-game means, you are <i>not</i> an antagonist unless you already were one.</span>")
@@ -65,10 +65,7 @@
 
 	var/datum/abilityHolder/vampire/AH = src.get_ability_holder(/datum/abilityHolder/vampire)
 	if (AH && istype(AH))
-		if (total_blood)
-			return AH.vamp_blood
-		else
-			return AH.points
+		return AH.get_vampire_blood(total_blood)
 	else
 		return 0
 
@@ -78,40 +75,11 @@
 
 	var/datum/abilityHolder/vampire/AH = src.get_ability_holder(/datum/abilityHolder/vampire)
 	if (AH && istype(AH))
-		if (total_blood)
-			if (AH.vamp_blood < 0)
-				AH.vamp_blood = 0
-				if (haine_blood_debug) logTheThing("debug", src, null, "<b>HAINE BLOOD DEBUG:</b> [src]'s vamp_blood dropped below 0 and was reset to 0")
-
-			if (set_null == 1)
-				AH.vamp_blood = 0
-			else
-				AH.vamp_blood = max(AH.vamp_blood + change, 0)
-
-		else
-			if (AH.points < 0)
-				AH.points = 0
-				if (haine_blood_debug) logTheThing("debug", src, null, "<b>HAINE BLOOD DEBUG:</b> [src]'s vamp_blood_remaining dropped below 0 and was reset to 0")
-
-			if (set_null == 1)
-				AH.points = 0
-			else
-				AH.points = max(AH.points + change, 0)
+		AH.change_vampire_blood(change, total_blood, set_null)
 	else
 		var/datum/abilityHolder/vampiric_thrall/AHZ = src.get_ability_holder(/datum/abilityHolder/vampiric_thrall)
 		if(AHZ && istype(AHZ) && !total_blood)
-			var/mob/living/carbon/human/M = AHZ.owner
-			if(istype(M) && istype(M.mutantrace, /datum/mutantrace/vampiric_thrall))
-				var/datum/mutantrace/vampiric_thrall/V = M.mutantrace
-				if (V.blood_points < 0)
-					V.blood_points = 0
-					if (haine_blood_debug) logTheThing("debug", src, null, "<b>HAINE BLOOD DEBUG:</b> [src]'s blood_points dropped below 0 and was reset to 0")
-
-				if (set_null == 1)
-					V.blood_points = 0
-				else
-					V.blood_points = max(V.blood_points + change, 0)
-
+			AHZ.change_vampire_blood(change, total_blood, set_null)
 	return
 
 /mob/proc/check_vampire_power(var/which_power = 3) // 1: thermal | 2: xray | 3: full power
@@ -244,6 +212,33 @@
 		if (istype(newloc,/obj/storage/closet/coffin))
 			//var/obj/storage/closet/coffin/C = newloc
 			the_coffin = null
+
+	proc/change_vampire_blood(var/change = 0, var/total_blood = 0, var/set_null = 0)
+		if (total_blood)
+			if (src.vamp_blood < 0)
+				src.vamp_blood = 0
+				if (haine_blood_debug) logTheThing("debug", owner, null, "<b>HAINE BLOOD DEBUG:</b> [owner]'s vamp_blood dropped below 0 and was reset to 0")
+
+			if (set_null)
+				src.vamp_blood = 0
+			else
+				src.vamp_blood = max(src.vamp_blood + change, 0)
+
+		else
+			if (src.points < 0)
+				src.points = 0
+				if (haine_blood_debug) logTheThing("debug", owner, null, "<b>HAINE BLOOD DEBUG:</b> [owner]'s vamp_blood_remaining dropped below 0 and was reset to 0")
+
+			if (set_null)
+				src.points = 0
+			else
+				src.points = max(src.points + change, 0)
+
+	proc/get_vampire_blood(var/total_blood = 0)
+		if (total_blood)
+			return src.vamp_blood
+		else
+			return src.points
 
 	proc/blood_tracking_output(var/deduct = 0)
 		if (!src.owner || !ismob(src.owner))
@@ -385,18 +380,22 @@
 			M.full_heal()
 
 			if (M.bioHolder && M.traitHolder.hasTrait("training_chaplain"))
-				boutput(owner, __red("Wait, this is a chaplain!!! <B>AGDFHSKFGBLDFGLHSFDGHDFGH</B>"))
-				boutput(M, __blue("Your divine protection saves you from enthrallment!"))
-				owner.emote("scream")
-				owner.changeStatus("weakened", 5 SECONDS)
-				owner.TakeDamage("chest", 0, 30)
-				return
+				if(ismob(owner))
+					boutput(owner, __red("Wait, this is a chaplain!!! <B>AGDFHSKFGBLDFGLHSFDGHDFGH</B>"))
+					boutput(M, __blue("Your divine protection saves you from enthrallment!"))
+					owner.emote("scream")
+					owner.changeStatus("weakened", 5 SECONDS)
+					owner.TakeDamage("chest", 0, 30)
+					return
 
 
 			M.real_name = "thrall [M.real_name]"
 			if (M.mind)
 				M.mind.special_role = ROLE_VAMPTHRALL
-				M.mind.master = owner.ckey
+				if(ismob(owner))
+					M.mind.master = owner.ckey
+				else
+					M.mind.master = owner
 				if (!(M.mind in ticker.mode.Agimmicks))
 					ticker.mode.Agimmicks += M.mind
 
@@ -408,7 +407,7 @@
 				VZ.master = src
 
 			boutput(M, __red("<b>You awaken filled with purpose - you must serve your master vampire, [owner.real_name]!</B>"))
-			SHOW_MINDSLAVE_TIPS(M)
+			M.show_antag_popup("mindslave")
 
 			boutput(owner, __blue("[M] has been revived as your thrall."))
 			logTheThing("combat", owner, M, "enthralled [constructTarget(M,"combat")] at [log_loc(owner)].")
@@ -505,6 +504,9 @@
 
 		if (!M)
 			return 0
+
+		if(isobj(M)) //Exception for VampTEG and Sentient Objects...
+			return 1
 
 		if (!(iscarbon(M) || ismobcritter(M)))
 			boutput(M, __red("You cannot use any powers in your current form."))

@@ -5,6 +5,7 @@ obj/structure
 		icon_state = "girder"
 		anchored = 1
 		density = 1
+		material_amt = 0.2
 		var/state = 0
 		desc = "A metal support for an incomplete wall. Metal could be added to finish the wall, reinforced metal could make the girders stronger, or it could be pried to displace it."
 
@@ -140,7 +141,7 @@ obj/structure/ex_act(severity)
 
 	onUpdate()
 		..()
-		if (the_girder == null || the_tool == null || owner == null || get_dist(owner, the_girder) > 1)
+		if (the_girder == null || the_tool == null || owner == null || BOUNDS_DIST(owner, the_girder) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner

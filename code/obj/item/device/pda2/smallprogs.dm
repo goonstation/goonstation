@@ -1267,7 +1267,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 				var/newName = href_list["newName"]
 
 				if (set_station_name(usr, newName))
-					command_alert("The new station name is [station_name]", "Station Naming Ceremony Completion Detection Algorithm")
+					command_alert("The new station name is [station_name]", "Station Naming Ceremony Completion Detection Algorithm", alert_origin = ALERT_STATION)
 
 			usr.Browse(null, "window=stationnamechanger")
 			src.master.updateSelfDialog()
