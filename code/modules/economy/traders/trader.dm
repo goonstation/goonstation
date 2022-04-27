@@ -150,7 +150,7 @@
 		hikeperc = (hikeperc / goods.price) * 100
 		var/negatol = 0 - adjustedTolerance
 
-		if ((buying && (hikeperc <= negatol || askingprice < goods.baseprice / 5)) || (!buying && (hikeperc >= adjustedTolerance || askingprice > good.baseprice * 5)))
+		if ((buying && (hikeperc <= negatol || askingprice < goods.baseprice / 5)) || (!buying && (hikeperc >= adjustedTolerance || askingprice > goods.baseprice * 5)))
 			// you are being a rude nerd and pushing it too far!
 			src.current_message = pick(src.dialogue_haggle_reject)
 			src.patience--
