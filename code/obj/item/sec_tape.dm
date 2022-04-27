@@ -135,16 +135,14 @@
 
 		var/obj/sec_tape/ST = new /obj/sec_tape(F, src)
 		if (dirn == SOUTH)
-			ST.dir = SOUTH
+			ST.set_dir(SOUTH)
 		else if (dirn == EAST)
-			ST.dir = EAST
+			ST.set_dir(EAST)
 		else if (dirn == WEST)
-			ST.dir = WEST
+			ST.set_dir(WEST)
 		else
-			ST.dir = NORTH
+			ST.set_dir(NORTH)
 		boutput(user, "You [pick("hastily", "quickly", "haphazardly")] setup a security cordon.")
 		ST.add_fingerprint(user)
-		ST.tape_UpdateIcon()
-		ST.layerify()
 		change_stack_amount(-1)
 	return
