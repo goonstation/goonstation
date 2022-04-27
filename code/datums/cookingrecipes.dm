@@ -690,7 +690,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 					fillingColors += transformedFilling
 
 				// spread the total healing left for the added food among the sandwich bites
-				customSandwich.heal_amt += snack.heal_amt * snack.amount / customSandwich.amount
+				customSandwich.heal_amt += snack.heal_amt * snack.bites_left / customSandwich.bites_left
 
 				qdel(snack)
 

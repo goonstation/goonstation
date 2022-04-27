@@ -731,7 +731,7 @@
 		if (.)
 			var/obj/item/reagent_containers/food/snacks/ingredient/honey/honey = .
 			honey.icon_state = "bighoneyblob"
-			honey.amount++
+			honey.bites_left++
 
 /obj/critter/domestic_bee/queen/buddy
 	desc = "It appears to be a hybrid of a queen domestic space-bee and a PR-6 Robuddy. How is that even possible?"
@@ -1913,7 +1913,7 @@
 	desc = "A bowl of \"bee kibble.\" It is probably best not to think too hard about its composition."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "petfood"
-	amount = 4
+	bites_left = 4
 	heal_amt = 1
 	doants = 0
 	initial_volume = 50
