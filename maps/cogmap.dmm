@@ -55313,10 +55313,6 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
 /area/station/crew_quarters/cafeteria)
-"iHu" = (
-/obj/wingrille_spawn/auto,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/chapel/sanctuary)
 "iJV" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -123924,7 +123920,7 @@ aMr
 aNC
 aMI
 aPG
-iHu
+baL
 aXQ
 aXQ
 aXQ
@@ -124525,7 +124521,7 @@ baL
 aKa
 baL
 aXQ
-iHu
+baL
 aXQ
 aXQ
 aXQ
