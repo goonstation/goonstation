@@ -403,18 +403,20 @@
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Create Command Report"
 	ADMIN_ONLY
-	var/input = input(usr, "Please enter anything you want. Anything. Serious.", "What?", "") as null|message
+	var/input = input(usr, "Enter the text for the alert. Anything. Serious.", "What?", "") as null|message
 	if(!input)
 		return
-	var/input2 = input(usr, "Add a headline for this alert?", "What?", "") as null|text
+	var/input2 = input(usr, "Add a headline for this alert? leaving this blank creates no headline", "What?", "") as null|text
+	var/input3 = input(usr, "Add an origin to the transmission, leaving this blank 'Central Command Update'", "What?", "") as null|text
+	if(!input3)
+		input3 = "Central Command Update"
 
-	if (alert(src, "Headline: [input2 ? "\"[input2]\"" : "None"]\nBody: \"[input]\"", "Confirmation", "Send Report", "Cancel") == "Send Report")
+	if (alert(src, "Origin: [input3 ? "\"[input3]\"" : "None"]\nHeadline: [input2 ? "\"[input2]\"" : "None"]\nBody: \"[input]\"", "Confirmation", "Send Report", "Cancel") == "Send Report")
 		for_by_tcl(C, /obj/machinery/communications_dish)
-			C.add_centcom_report("[command_name()] Update", input)
+			C.add_centcom_report(input2, input)
 
 		var/sound_to_play = "sound/misc/announcement_1.ogg"
-		if (!input2) command_alert(input, "", sound_to_play);
-		else command_alert(input, input2, sound_to_play);
+		command_alert(input, input2, sound_to_play, alert_origin = input3);
 
 		logTheThing("admin", src, null, "has created a command report: [input]")
 		logTheThing("diary", src, null, "has created a command report: [input]", "admin")
