@@ -78,7 +78,7 @@
 		var/obj/item/sec_tape/split_tape = split_stack(1)
 		user.put_in_hand_or_drop(split_tape)
 		tooltip_rebuild = 1
-		boutput(user, "You cut a piece off the [base_name].")
+		boutput(user, "<span class='notice'>You cut a piece off the [base_name].</span>")
 		src.UpdateIcon()
 		return
 
@@ -86,12 +86,12 @@
 		var/obj/item/sec_tape/C = W
 
 		if (C.amount == src.max_stack)
-			boutput(user, "The coil is too long, you cannot add any more tape to it.")
+			boutput(user, "<span class='notice'>The coil is too long, you cannot add any more tape to it.</span>")
 			return
 
 		if ((C.amount + src.amount <= src.max_stack))
 			C.amount += src.amount
-			boutput(user, "You join the tape ends together.")
+			boutput(user, "<span class='notice'>You join the tape ends together.</span>")
 			C.tooltip_rebuild = 1
 			C.UpdateIcon()
 			if(istype(src.loc, /obj/item/storage))
@@ -105,7 +105,7 @@
 			return
 
 		else
-			boutput(user, "You transfer [src.max_stack - src.amount] length\s of tape from one roll to the other.")
+			boutput(user, "<span class='notice'>You transfer [src.max_stack - src.amount] length\s of tape from one roll to the other.</span>")
 			src.amount -= (src.max_stack-C.amount)
 			src.UpdateIcon()
 			tooltip_rebuild = 1
@@ -127,7 +127,7 @@
 		return
 
 	if (BOUNDS_DIST(F, user) > 0)
-		boutput(user, "You can't setup a cordon at a place that far away.")
+		boutput(user, "<span class='notice'>You can't setup a cordon at a place that far away.</span>")
 		return
 
 	else
@@ -142,7 +142,7 @@
 			ST.set_dir(WEST)
 		else
 			ST.set_dir(NORTH)
-		boutput(user, "You [pick("hastily", "quickly", "haphazardly")] setup a security cordon.")
+		boutput(user, "<span class='notice'>You [pick("hastily", "quickly", "haphazardly")] setup a security cordon.</span>")
 		ST.add_fingerprint(user)
 		change_stack_amount(-1)
 	return

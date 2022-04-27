@@ -12,21 +12,20 @@
 
 	New()
 		..()
-		layerify()
-		tape_UpdateIcon()
+		update_icon()
 
-	proc/layerify()
+	set_dir()
+		. = ..()
+		update_icon()
+
+	update_icon()
+		. = ..()
+		//Setup the layer
 		if (dir == SOUTH)
 			layer = MOB_LAYER + 0.1
 		else
 			layer = OBJ_LAYER
-
-	set_dir()
-		. = ..()
-		tape_UpdateIcon()
-		layerify()
-
-	proc/tape_UpdateIcon()
+		//Setup the icon
 		switch (dir)
 			if (WEST)
 				set_icon_state("sec_tape_w")
@@ -36,7 +35,6 @@
 				set_icon_state("sec_tape_e")
 			else //Default position is south
 				set_icon_state("sec_tape_s")
-				return
 
 	Cross(atom/movable/O as mob|obj)
 		if (O == null)
