@@ -94,6 +94,8 @@ const iconLookup = {
   "repairing": "tools",
   "capturing": "bars",
   "depositing": "border-style",
+  "observing": "eye",
+  "deconstructing": "trash",
 };
 const taskIcon = function (task) {
   let iconString = iconLookup[task];
