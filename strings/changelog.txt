@@ -1,5 +1,9 @@
 
 (t)wed apr 27 22
+(u)DisturbHerb
+(p)8014
+(e)🆕🎨|feature, sprites
+(*)In an effort to introduce greater diversity into the crew's diets, NanoTrasen has officially sanctioned the preparation of several new non-pasta noodle dishes. These include ramen, udon, and curry udon; available at the cafeteria today!
 (u)NightmareChamillian
 (p)7986
 (e)|
