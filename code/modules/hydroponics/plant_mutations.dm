@@ -263,6 +263,7 @@
 	name_prefix = "Ricin "
 	iconmod = "Rice"
 	assoc_reagents = list("ricin")
+	PTrange = list(60,null)
 	crop = /obj/item/reagent_containers/food/snacks/ingredient/rice_sprig
 
 // Oat Mutations
