@@ -1,5 +1,9 @@
 
 (t)wed apr 27 22
+(u)Flappybat
+(p)8351
+(e)⚖|balance
+(+)Thermite breaching charges now destroy any doors on the same tile.
 (u)Hans
 (p)8005
 (e)⚖|balance
