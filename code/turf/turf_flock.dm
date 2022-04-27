@@ -85,6 +85,9 @@
 		if(f.usesgroups)
 			f.group?.removestructure(f)
 			f.group = null
+	for (var/mob/living/critter/flock/drone/flockdrone in src.contents)
+		if (flockdrone.floorrunning)
+			flockdrone.end_floorrunning()
 
 /turf/simulated/floor/feather/proc/repair()
 	if (src.broken)
@@ -109,7 +112,7 @@
 	..()
 	if(!istype(F) || !oldloc)
 		return
-	if(F.client && F.client.check_key(KEY_RUN) && !broken && !F.floorrunning && F.resources >= 1)
+	if(F.client && F.client.check_key(KEY_RUN) && !broken && !F.floorrunning && F.can_floorrun && F.resources >= 1)
 		F.start_floorrunning()
 
 	if(F.floorrunning && !broken)
@@ -123,15 +126,23 @@
 	..()
 	if(!istype(F) || !newloc)
 		return
-	if(on && !connected)
-		off()
+	if(F.floorrunning && !connected)
+		if (locate(/mob/living/critter/flock/drone) in src.contents)
+			var/floorrunning_flockdrone = FALSE
+			for (var/mob/living/critter/flock/drone/flockdrone in src.contents)
+				if (flockdrone.floorrunning)
+					floorrunning_flockdrone = TRUE
+			if (!floorrunning_flockdrone)
+				off()
+		else
+			off()
 	if(F.floorrunning)
 		if(istype(newloc, /turf/simulated/floor/feather))
 			var/turf/simulated/floor/feather/T = newloc
 			if(T.broken)
-				F.end_floorrunning() // broken tiles won't let you continue floorrunning
+				F.end_floorrunning()
 		else if(!isfeathertile(newloc))
-			F.end_floorrunning() // you left flocktile territory, boyo
+			F.end_floorrunning()
 
 /turf/simulated/floor/feather/proc/on()
 	if(src.broken)
@@ -367,6 +378,10 @@ turf/simulated/floor/feather/proc/bfs(turf/start)//breadth first search, made by
 		src.material.setProperty("reflective", 25)
 		if (playAttackSound)
 			playsound(src, "sound/impact_sounds/Crystal_Shatter_1.ogg", 25, 1)
+
+		for (var/mob/living/critter/flock/drone/flockdrone in src.contents)
+			if (flockdrone.floorrunning)
+				flockdrone.end_floorrunning()
 
 /turf/simulated/wall/auto/feather/proc/destroy()
 	var/turf/T = get_turf(src)

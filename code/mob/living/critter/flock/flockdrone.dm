@@ -30,6 +30,7 @@
 
 	// voltron powers activate
 	var/floorrunning = 0
+	var/can_floorrun = TRUE
 
 	// antigrab powers
 	var/antigrab_counter = 0
@@ -65,6 +66,11 @@
 			say(pick_string("flockmind.txt", "flockdrone_created"))
 
 	src.AddComponent(/datum/component/flock_protection, FALSE, FALSE, FALSE)
+
+/mob/living/critter/flock/drone/click(atom/target, list/params)
+	if (src.floorrunning)
+		return
+	..()
 
 /mob/living/critter/flock/drone/disposing()
 	src.remove_simple_light("drone_light")
@@ -423,14 +429,32 @@
 		src.antigrab_counter = 0
 	if(keys & KEY_RUN && src.resources >= 1)
 		if(!src.floorrunning && isfeathertile(src.loc))
-			if(istype(src.loc, /turf/simulated/floor/feather))
+			if (length(src.grabbed_by))
+				for(var/obj/item/grab/g in src.grabbed_by)
+					if (!(g.state == GRAB_PASSIVE || g.state == GRAB_PIN)) // in the rare case you do pin a flockdrone
+						src.can_floorrun = FALSE
+						return ..()
+			src.can_floorrun = TRUE
+
+			if (istype(src.loc, /turf/simulated/floor/feather))
 				var/turf/simulated/floor/feather/floor = src.loc
+				if (floor.broken)
+					return ..()
 				if(!floor.on)
 					floor.on()
+			else
+				var/turf/simulated/wall/auto/feather/wall = src.loc
+				if (wall.broken)
+					return ..()
+
 			src.start_floorrunning()
 	else if(keys && src.floorrunning)
 		src.end_floorrunning()
-	. = ..()
+		if (istype(src.loc, /turf/simulated/floor/feather))
+			var/turf/simulated/floor/feather/floor = src.loc
+			if (floor.on && !floor.connected)
+				floor.off()
+	return ..()
 
 /mob/living/critter/flock/drone/proc/start_floorrunning()
 	if(src.floorrunning)
@@ -438,6 +462,20 @@
 	playsound(src, "sound/misc/flockmind/flockdrone_floorrun.ogg", 50, 1, -3)
 	src.floorrunning = 1
 	src.set_density(0)
+	src.throws_can_hit_me = FALSE
+	src.set_pulling(null)
+	if (src.pulled_by)
+		var/mob/M = src.pulled_by
+		M.set_pulling(null)
+
+	for (var/obj/item/grab/g in src.equipped_list())
+		if (!istype(g, /obj/item/grab/block))
+			qdel(g)
+
+	if (length(src.grabbed_by))
+		for(var/obj/item/grab/grab_grabbed_by in src.grabbed_by)
+			if (!istype(grab_grabbed_by, /obj/item/grab/block))
+				qdel(grab_grabbed_by)
 	animate_flock_floorrun_start(src)
 
 /mob/living/critter/flock/drone/proc/end_floorrunning()
@@ -446,6 +484,7 @@
 	playsound(src, "sound/misc/flockmind/flockdrone_floorrun.ogg", 50, 1, -3)
 	src.floorrunning = 0
 	src.set_density(1)
+	src.throws_can_hit_me = TRUE
 	animate_flock_floorrun_end(src)
 
 /mob/living/critter/flock/drone/movement_delay()
@@ -460,7 +499,7 @@
 	else
 		return ..()
 
-/mob/living/critter/flock/drone/Move(NewLoc, direct)
+/mob/living/critter/flock/drone/Move(turf/NewLoc, direct)
 	if(!canmove) return
 	if(floorrunning)
 		// do our custom MOVE THROUGH ANYTHING stuff
@@ -469,6 +508,17 @@
 		if(!isturf(src.loc))
 			src.set_loc(get_turf(src))
 		if(NewLoc)
+			if (NewLoc.density)
+				if (istype(NewLoc, /turf/simulated/wall/auto/feather))
+					var/turf/simulated/wall/auto/feather/flockwall = NewLoc
+					if (flockwall.broken)
+						return
+				else
+					return
+			if (!istype(NewLoc, /turf/simulated/floor/feather))
+				for (var/obj/O in NewLoc.contents)
+					if (istype(O, /obj/grille/steel) || istype(O, /obj/window) || (istype(O, /obj/machinery/door) && O.density))
+						return
 			src.set_loc(NewLoc)
 			return
 		if((direct & NORTH) && src.y < world.maxy)
@@ -762,8 +812,6 @@
 		return 0
 	if (isintangible(target))
 		return 0 // stop grabbing AI eyes dammit
-	if (user.floorrunning)
-		return 0 // you'll need to be out of the floor to do anything
 	if(prob(grab_mob_hit_prob))
 		..()
 	else
@@ -773,8 +821,6 @@
 /datum/limb/flock_grip/harm(mob/target, var/mob/living/critter/flock/drone/user)
 	if (!user || !target)
 		return 0
-	if (user.floorrunning)
-		return 0 // you'll need to be out of the floor to do anything
 	if (istype(target, /mob/living/critter/flock))
 		boutput(user, "<span class='alert'>The grip tool refuses to harm this, jamming briefly.</span>")
 	else
@@ -803,8 +849,6 @@
 		return
 	if (!istype(user))
 		return
-	if (user.floorrunning)
-		return // you'll need to be out of the floor to do anything
 
 	if(istype(target,/obj/critter)) //gods how I hate /obj/critter
 		if(user.a_intent == INTENT_DISARM)
@@ -899,8 +943,6 @@
 /datum/limb/flock_converter/help(mob/target, var/mob/living/critter/flock/drone/user)
 	if(!target || !user)
 		return
-	if (user.floorrunning)
-		return // you'll need to be out of the floor to do anything
 	var/mob/living/critter/flock/F = target
 	if(istype(F))
 		if(F.get_health_percentage() >= 1.0)
@@ -922,8 +964,6 @@
 		return
 	if(isintangible(target))
 		return // STOP CAGING AI EYES
-	if (user.floorrunning)
-		return // you'll need to be out of the floor to do anything
 	if (!user.flock)
 		boutput(user, "<span class='alert'>You do not have access to the imprisonment matrix without flockmind authorization.</span>")
 		return
@@ -941,8 +981,6 @@
  //FUCK - moonlol
 /datum/limb/flock_converter/harm(atom/target, var/mob/living/critter/flock/drone/user)
 	if(!target || !user)
-		return
-	if(user.floorrunning)
 		return
 	if(istype(target, /mob/living/critter/flock/drone))
 		var/mob/living/critter/flock/drone/f = target
@@ -964,7 +1002,7 @@
 	reloading_str = "recharging"
 
 /datum/limb/gun/flock_stunner/attack_range(atom/target, var/mob/living/critter/flock/drone/user, params)
-	if(!target || !user || user.floorrunning)
+	if(!target || !user)
 		return
 	return ..()
 
