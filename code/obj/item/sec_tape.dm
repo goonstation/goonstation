@@ -19,15 +19,13 @@
 
 	New(loc, length = STARTAMOUNT)
 		src.amount = length
-		pixel_x = rand(-2,2)
-		pixel_y = rand(-2,2)
 		..(loc)
 		BLOCK_SETUP(BLOCK_ROPE)
 
-	before_stack(atom/movable/O as obj, mob/user as mob)
+	before_stack(atom/movable/O, mob/user)
 		user.visible_message("<span class='notice'>[user] begins awkwardly sticking the tape back onto the roll.</span>")
 
-	after_stack(atom/movable/O as obj, mob/user as mob, var/added)
+	after_stack(atom/movable/O, mob/user, var/added)
 		boutput(user, "<span class='notice'>You finish sticking the tape back together.</span>")
 
 	custom_suicide = 1
@@ -36,7 +34,7 @@
 			return 0
 		//Are we on valid turf?
 		var/turf/T = get_turf(user)
-		if (isturf(user.loc) && istype(T, /turf/simulated/floor))
+		if (isturf(user.loc) && istype(T, /turf/simulated/floor) && amount >= 4)
 			//Setup the perfect crime
 			user.visible_message("<span class='alert'><b>[user] carefully sets up some security tape around themselves then swallows the tape and chokes on it, satisfied that they created the perfect crime scene.</b></span>")
 			var/obj/sec_tape/T1 = new /obj/sec_tape(T, src)
