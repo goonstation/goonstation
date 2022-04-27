@@ -1160,7 +1160,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 				if (prob(3))
 					src.create_feather()
 			else
-				src.visible_message("<b>[user]</b> [pick("gives [src] a scritch", "pets [src]", "cuddles [src]", "snuggles [src]")]!")
+				src.visible_message("<b>[user]</b> [pick("gives [src] a scritch", "pets [src]", "cuddles [src]", "snuggles [src]")]!", group="animalhug")
 				if (prob(15))
 					src.visible_message("<span class='notice'><b>[src]</b> chirps happily!</span>")
 				return
