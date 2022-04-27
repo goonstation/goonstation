@@ -936,6 +936,7 @@ datum/projectile/snowball
 	var/obj/projectile/Q = initialize_projectile(get_turf(reflector), P.proj_data, -P.xo, -P.yo, reflector)
 	if (!Q)
 		return null
+	SEND_SIGNAL(reflector, COMSIG_ATOM_PROJECTILE_REFLECTED)
 	Q.reflectcount = P.reflectcount + 1
 	if (ismob(P.shooter))
 		Q.mob_shooter = P.shooter
