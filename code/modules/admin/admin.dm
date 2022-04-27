@@ -4496,10 +4496,10 @@ var/global/noir = 0
 				if(special != "hardmode")
 					M.mind.special_role = ROLE_TRAITOR
 					M.verbs += /client/proc/gearspawn_traitor
-					SHOW_TRAITOR_RADIO_TIPS(M)
+					M.show_antag_popup("traitorradio")
 				else
 					M.mind.special_role = ROLE_HARDMODE_TRAITOR
-					SHOW_TRAITOR_HARDMODE_TIPS(M)
+					M.show_antag_popup("traitorhard")
 			if(ROLE_CHANGELING)
 				M.mind.special_role = ROLE_CHANGELING
 				M.show_text("<h2><font color=red><B>You have mutated into a changeling!</B></font></h2>", "red")
@@ -4507,7 +4507,7 @@ var/global/noir = 0
 			if(ROLE_WIZARD)
 				M.mind.special_role = ROLE_WIZARD
 				M.show_text("<h2><font color=red><B>You have been seduced by magic and become a wizard!</B></font></h2>", "red")
-				SHOW_ADMINWIZARD_TIPS(M)
+				M.show_antag_popup("adminwizard")
 				M.verbs += /client/proc/gearspawn_wizard
 			if(ROLE_VAMPIRE)
 				M.mind.special_role = ROLE_VAMPIRE
@@ -4533,7 +4533,7 @@ var/global/noir = 0
 			if(ROLE_FLOOR_GOBLIN)
 				M.mind.special_role = ROLE_FLOOR_GOBLIN
 				M.make_floor_goblin()
-				SHOW_TRAITOR_HARDMODE_TIPS(M)
+				M.show_antag_popup("traitorhard")
 				M.show_text("<h2><font color=red><B>You have become a floor goblin!</B></font></h2>", "red")
 			if(ROLE_ARCFIEND)
 				M.mind.special_role = ROLE_ARCFIEND
@@ -4570,7 +4570,7 @@ var/global/noir = 0
 				M.make_wrestler(1)
 				M.make_grinch()
 				M.show_text("<h2><font color=red><B>You have become an omnitraitor!</B></font></h2>", "red")
-				SHOW_TRAITOR_OMNI_TIPS(M)
+				M.show_antag_popup("traitoromni")
 			if(ROLE_SPY_THIEF)
 				if (M.stat || !isliving(M) || isintangible(M) || !ishuman(M) || !M.mind)
 					return

@@ -297,9 +297,9 @@
 		shittysteak.overlays = grillitem.overlays
 		shittysteak.set_loc(get_turf(src))
 		if (ismob(grillitem))
-			shittysteak.amount = 5
+			shittysteak.bites_left = 5
 		else
-			shittysteak.amount = src.grillitem.w_class
+			shittysteak.bites_left = src.grillitem.w_class
 		shittysteak.reagents = src.grillitem.reagents
 		shittysteak.reagents.my_atom = shittysteak
 
