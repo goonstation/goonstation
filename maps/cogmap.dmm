@@ -7288,7 +7288,7 @@
 "awB" = (
 /obj/table/auto,
 /obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log{
-	amount = 5;
+	bites_left = 5;
 	desc = "Don't get it mixed up it's still made of meat, but what are the chances of finding it here?.";
 	name = "improbable(tm) pepperoni"
 	},
