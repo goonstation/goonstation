@@ -48,6 +48,7 @@ MATERIAL
 	stamina_damage = 42
 	stamina_cost = 23
 	stamina_crit_chance = 10
+	material_amt = 0.1
 	var/datum/material/reinforcement = null
 	rand_pos = 1
 	inventory_counter_enabled = 1
@@ -678,6 +679,7 @@ MATERIAL
 	stamina_crit_chance = 30
 	rand_pos = 1
 	inventory_counter_enabled = 1
+	material_amt = 0.05
 
 	New()
 		..()
@@ -1023,6 +1025,7 @@ MATERIAL
 	stamina_crit_chance = 15
 	tooltip_flags = REBUILD_DIST
 	inventory_counter_enabled = 1
+	material_amt = 0.025
 
 	New(make_amount = 0)
 		..()

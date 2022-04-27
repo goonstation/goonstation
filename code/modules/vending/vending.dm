@@ -414,7 +414,7 @@
 			W.amount = 0
 			boutput(user, "<span class='notice'>You insert [W].</span>")
 			user.u_equip(W)
-			W.dropped()
+			W.dropped(user)
 			qdel( W )
 			src.generate_HTML(1)
 			return
@@ -1714,6 +1714,7 @@
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "standard-frame"
 	density = 1
+	material_amt = 0.3
 	var/wrenched = FALSE
 	var/glassed = FALSE
 	var/boardinstalled = FALSE

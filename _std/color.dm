@@ -133,7 +133,8 @@
 			color_list[1] / 255, 0, 0, 0,
 			0, color_list[2] / 255, 0, 0,
 			0, 0, color_list[3] / 255, 0,
-			0, 0, 0, color_list[4] / 255
+			0, 0, 0, color_list[4] / 255,
+			0, 0, 0, 0,
 		)
 	if(islist(color))
 		if(length(color) == 0)

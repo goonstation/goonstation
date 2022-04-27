@@ -12,6 +12,7 @@
 	var/datum/hud/object/hud
 	density = 0
 	canmove = 1
+	gender = NEUTER
 
 	var/canattack = 0
 	blinded = 0

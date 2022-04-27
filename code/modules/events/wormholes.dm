@@ -2,6 +2,7 @@
 	name = "Wormholes"
 	centcom_headline = "Spatial Anomalies"
 	centcom_message = "Multiple localized spatial anomalies detected on the station. Personnel are advised to avoid any spatial distortions."
+	centcom_origin = ALERT_ANOMALY
 	required_elapsed_round_time = 20 MINUTES
 
 	event_effect(var/source)

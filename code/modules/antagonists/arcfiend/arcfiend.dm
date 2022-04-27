@@ -26,7 +26,7 @@
 		src.ClearSpecificOverlays("resist_electric") // hide smes effect
 
 		if (src.mind && src.mind.special_role != ROLE_OMNITRAITOR)
-			SHOW_ARCFIEND_TIPS(src)
+			src.show_antag_popup("arcfiend")
 
 
 /datum/abilityHolder/arcfiend
@@ -500,7 +500,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 
 	proc/handle_move()
 		var/turf/user_turf = get_turf(holder.owner)
-		if (isrestrictedz(user_turf) || is_incapacitated(holder.owner))
+		if (isrestrictedz(user_turf.z) || is_incapacitated(holder.owner))
 			deactivate()
 			active = FALSE
 			return

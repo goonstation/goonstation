@@ -436,7 +436,7 @@
 						return
 					phrase_log.log_phrase("emote", input)
 					message = "<B>[src]</B> [input]"
-					maptext_out = "<I>[input]</I>"
+					maptext_out = "<I>[regex({"(&#34;.*?&#34;)"}, "g").Replace(input, "</i>$1<i>")]</I>"
 					custom = copytext(input, 1, 10)
 
 			if ("customv")
@@ -448,7 +448,7 @@
 				param = sanitize(html_encode(param))
 				phrase_log.log_phrase("emote", param)
 				message = "<b>[src]</b> [param]"
-				maptext_out = "<I>[param]</I>"
+				maptext_out = "<I>[regex({"(&#34;.*?&#34;)"}, "g").Replace(param, "</i>$1<i>")]</I>"
 				m_type = 1
 				custom = copytext(param, 1, 10)
 
@@ -460,7 +460,7 @@
 				param = sanitize(html_encode(param))
 				phrase_log.log_phrase("emote", param)
 				message = "<b>[src]</b> [param]"
-				maptext_out = "<I>[param]</I>"
+				maptext_out = "<I>[regex({"(&#34;.*?&#34;)"}, "g").Replace(param, "</i>$1<i>")]</I>"
 				m_type = 2
 				custom = copytext(param, 1, 10)
 
@@ -471,7 +471,7 @@
 				param = sanitize(html_encode(param))
 				phrase_log.log_phrase("emote", param)
 				message = "<b>[src]</b> [param]"
-				maptext_out = "<I>[param]</I>"
+				maptext_out = "<I>[regex({"(&#34;.*?&#34;)"}, "g").Replace(param, "</i>$1<i>")]</I>"
 				m_type = 1 // default to visible
 				custom = copytext(param, 1, 10)
 
@@ -614,6 +614,7 @@
 					SPAWN(1 SECOND)
 						src.wear_mask.set_loc(src.loc)
 						src.wear_mask = null
+						logTheThing("combat", src, null, "was gibbed by emoting uguu at [log_loc(src)].")
 						src.gib()
 						return
 				else
@@ -677,6 +678,7 @@
 						src.say ("M'lady")
 						SPAWN(1 SECOND)
 							src.add_karma(-10)
+							logTheThing("combat", src, null, "was gibbed by emoting fedora tipping at [log_loc(src)].")
 							src.gib()
 
 			if ("hatstomp", "stomphat")

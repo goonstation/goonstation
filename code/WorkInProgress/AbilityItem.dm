@@ -143,7 +143,7 @@
 
 /obj/ability_button/magboot_toggle
 	name = "(De)Activate Magboots"
-	icon_state = "shieldceon"
+	icon_state = "magbootson"
 
 	execute_ability()
 		var/obj/item/clothing/shoes/magnetic/W = the_item
@@ -229,6 +229,7 @@
 						the_mob:update_burning(1)
 						sleep(0.3 SECONDS)
 				the_mob.unlock_medal( "Too Fast Too Furious", 1 )
+				logTheThing("combat", the_mob, null, "was gibbed by rocket shoes at [log_loc(the_mob)].")
 				the_mob.gib()
 
 			return

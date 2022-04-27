@@ -181,7 +181,7 @@
 	desc = "A self-heating convenience reinterpretation of Mexican cuisine. The exact mechanism used to heat it is probably best left to speculation."
 	icon = 'icons/obj/foodNdrink/food_discountdans.dmi'
 	icon_state = "burrito"
-	amount = 3
+	bites_left = 3
 	heal_amt = 2
 	doants = 0 //Ants aren't dumb enough to try to eat these.
 	var/activated = 0
@@ -326,7 +326,7 @@
 	desc = "A highly-processed miniature cake, coated with a thin layer of solid pseudofrosting."
 	icon = 'icons/obj/foodNdrink/food_discountdans.dmi'
 	icon_state = "snackcake"
-	amount = 2
+	bites_left = 2
 	heal_amt = 2
 	var/color_prob = 100
 	initial_volume = 50
@@ -437,7 +437,7 @@
 	icon = 'icons/obj/foodNdrink/food_discountdans.dmi'
 	icon_state = "tvdinnert"
 	needfork = 1
-	amount = 2
+	bites_left = 2
 	heal_amt = 2
 	doants = 0 //Ants aren't dumb enough to try to eat these.
 	var/activated = 0
@@ -573,7 +573,7 @@
 	desc = "A gigantic toaster strudel with a fruit filling. It looks pretty decent!"
 	icon = 'icons/obj/foodNdrink/food_discountdans.dmi'
 	icon_state = "strudel"
-	amount = 2
+	bites_left = 2
 	heal_amt = 2
 	doants = 0
 	initial_volume = 30

@@ -916,7 +916,7 @@
 				LIGHT_UP_HOUSING
 				flick("comp_hscan1",src)
 				playsound(src.loc, "sound/machines/twobeep2.ogg", 90, 0)
-				var/sendstr = (send_name ? user.real_name : user.bioHolder.uid_hash)
+				var/sendstr = (send_name ? user.real_name : user.bioHolder.fingerprints)
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,sendstr)
 			else
 				boutput(user, "<span class='alert'>The hand scanner can only be used by humanoids.</span>")

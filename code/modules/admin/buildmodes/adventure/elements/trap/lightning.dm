@@ -92,6 +92,8 @@
 								M.changeStatus("stunned", stun SECONDS)
 								boutput(M, "<b><span class='alert'>You feel a powerful shock course through your body!</span></b>")
 							else
+								if(ishuman(M))
+									logTheThing("combat", M, null, "was gibbed by [src] ([src.type]) at [log_loc(M)].")
 								M:gib()
 					else
 						for (var/mob/living/M in view(src, range))
@@ -105,6 +107,8 @@
 								M.changeStatus("stunned", stun SECONDS)
 								boutput(M, "<b><span class='alert'>You feel a powerful shock course through your body!</span></b>")
 							else
+								if(ishuman(M))
+									logTheThing("combat", M, null, "was gibbed by [src] ([src.type]) at [log_loc(M)].")
 								M:gib()
 					if (attack_amt)
 						playsound(src, "sound/effects/elec_bigzap.ogg", 40, 1)

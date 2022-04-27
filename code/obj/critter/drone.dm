@@ -276,7 +276,7 @@
 
 			for (var/client/C)
 				var/mob/M = C.mob
-				if (M && src.z == M.z && BOUNDS_DIST(src, M) == 00)
+				if (M && src.z == M.z && GET_DIST(src, M) <= 10)
 					if (isliving(M))
 						waking = 1
 						break
@@ -288,7 +288,7 @@
 
 			for (var/atom in by_cat[TR_CAT_PODS_AND_CRUISERS])
 				var/atom/A = atom
-				if (A && src.z == A.z && BOUNDS_DIST(src, A) == 00)
+				if (A && src.z == A.z && GET_DIST(src, A) <= 10)
 					waking = 1
 					break
 
@@ -314,7 +314,7 @@
 
 			for (var/client/C)
 				var/mob/M = C.mob
-				if (M && src.z == M.z && BOUNDS_DIST(src, M) == 00)
+				if (M && src.z == M.z && GET_DIST(src, M) <= 10)
 					if (isliving(M))
 						stay_awake = 1
 						break
@@ -326,7 +326,7 @@
 
 			for (var/atom in by_cat[TR_CAT_PODS_AND_CRUISERS])
 				var/atom/A = atom
-				if (A && src.z == A.z && BOUNDS_DIST(src, A) == 00)
+				if (A && src.z == A.z && GET_DIST(src, A) <= 10)
 					stay_awake = 1
 					break
 

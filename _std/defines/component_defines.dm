@@ -340,6 +340,11 @@
 #define CELL_RETURNED_LIST 16
 #define CELL_FULL 32
 
+// ---- obj/storage signals ----
+
+/// When the storage closes
+#define COMSIG_STORAGE_CLOSED "storage_closed"
+
 // ---- area signals ----
 /// area's active var set to true (when a client enters)
 #define COMSIG_AREA_ACTIVATED "area_activated"

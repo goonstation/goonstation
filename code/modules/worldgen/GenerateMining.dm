@@ -323,6 +323,8 @@ var/list/miningModifiers = list()
 	var/datum/mapGenerator/D
 
 	if(map_currently_underwater)
+		bioluminescent_algae = new()
+		bioluminescent_algae.setup()
 		D = new/datum/mapGenerator/seaCaverns()
 	else
 		D = new/datum/mapGenerator/asteroidsDistance()
@@ -343,3 +345,38 @@ var/list/miningModifiers = list()
 	boutput(world, "<span class='alert'>Generated Mining Level in [((world.timeofday - startTime)/10)] seconds!")
 
 	hotspot_controller.generate_map()
+
+var/global/datum/bioluminescent_algae/bioluminescent_algae
+/datum/bioluminescent_algae
+	/// our randomized seed values
+	var/list/seeds
+	///the random offset applied to square coordinates, causes intermingling at biome borders
+	var/const/random_square_drift = 2
+	///Used to select "zoom" level into the perlin noise, higher numbers result in slower transitions
+	var/perlin_zoom = 65
+	///The absolute lowest a color value can be, e.g. if the noise at the coords was 0. To help give us bright vibrant colors
+	var/const/color_alpha = 30
+
+	proc/setup()
+		seeds = list()
+		seeds["hue"] = rand(0, 50000)
+		seeds["saturation"] = rand(0, 50000)
+		seeds["value"] = rand(0, 50000)
+		seeds["salinity"] = rand(0, 50000)
+
+	proc/get_color(atom/A)
+		var/drift_x = (A.x + rand(-random_square_drift, random_square_drift)) / perlin_zoom
+		var/drift_y = (A.y + rand(-random_square_drift, random_square_drift)) / perlin_zoom
+
+		var/salinity = text2num(rustg_noise_get_at_coordinates("[seeds["salinity"]]", "[drift_x]", "[drift_y]"))
+		if (salinity > 0.25) // no algae for you :(
+			return
+		var/hue_multiplier = text2num(rustg_noise_get_at_coordinates("[seeds["hue"]]", "[drift_x]", "[drift_y]"))
+		var/saturation_multiplier = text2num(rustg_noise_get_at_coordinates("[seeds["saturation"]]", "[drift_x]", "[drift_y]"))
+		var/value_multiplier = text2num(rustg_noise_get_at_coordinates("[seeds["value"]]", "[drift_x]", "[drift_y]"))
+
+
+		var/list/color_vals
+		color_vals = hsv2rgblist(hue_multiplier * 360, (saturation_multiplier * 25) + 60, (value_multiplier * 15) + 85)
+		color_vals += color_alpha
+		return color_vals

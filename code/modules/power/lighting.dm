@@ -11,6 +11,7 @@
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "tube-fixture"
 	mats = 4
+	material_amt = 0.2
 
 	var/installed_icon_state = "tube-empty"
 	var/installed_base_state = "tube"

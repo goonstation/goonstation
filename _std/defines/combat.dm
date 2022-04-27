@@ -33,3 +33,9 @@
 #define MELEE_DMG_SMG 8
 #define MELEE_DMG_RIFLE 12
 #define MELEE_DMG_LARGE 15
+
+// Locker health values
+
+#define LOCKER_HEALTH_WEAK		100
+#define LOCKER_HEALTH_AVERAGE	200
+#define LOCKER_HEALTH_STRONG	300

@@ -492,6 +492,10 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 	dont_log_combat = TRUE
 	// filler_turf = "/turf/unsimulated/floor/setpieces/gauntlet"
 
+	fullbright
+		ambient_light = null
+		force_fullbright = 1
+
 /area/cavetiny
 	name = "Caves"
 	icon_state = "purple"

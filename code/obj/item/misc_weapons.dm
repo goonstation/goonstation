@@ -916,10 +916,10 @@
 		set_values()
 		return ..()
 
-	attack(mob/target, mob/user) // custom hit sounds so we can get nice n meaty
+	attack(mob/target, mob/user)
 		..()
-		playsound(target, 'sound/impact_sounds/Flesh_Stab_1.ogg', 25 * (1 + src.two_handed), pitch=0.7) // magic numbers abound. trial and error
-		playsound(target, 'sound/impact_sounds/Generic_Hit_3.ogg', 18 * (1 + src.two_handed), pitch=0.55)
+		// ugly but basically we make it louder and slightly downpitched if we're 2 handing
+		playsound(target, 'sound/impact_sounds/Fireaxe.ogg', 30 * (1 + src.two_handed), pitch=(1 - 0.3 * src.two_handed))
 
 	New()
 		..()
@@ -942,6 +942,10 @@
 	stamina_cost = 30
 	stamina_crit_chance = 15
 	mats = list("wood" = 8)
+
+	attack(mob/M, mob/user, def_zone, is_special)
+		. = ..()
+		attack_twitch(user, 3, 2)
 
 	New()
 		..()

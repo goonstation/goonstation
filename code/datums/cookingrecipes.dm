@@ -690,7 +690,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 					fillingColors += transformedFilling
 
 				// spread the total healing left for the added food among the sandwich bites
-				customSandwich.heal_amt += snack.heal_amt * snack.amount / customSandwich.amount
+				customSandwich.heal_amt += snack.heal_amt * snack.bites_left / customSandwich.bites_left
 
 				qdel(snack)
 
@@ -1666,6 +1666,13 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/flour
 	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/biscuit
+
+/datum/cookingrecipe/dog_biscuit
+	item1 = /obj/item/reagent_containers/food/snacks/granola_bar
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meatpaste
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/peanutbutter
+	cookbonus = 6
+	output = /obj/item/reagent_containers/food/snacks/cookie/dog
 
 /datum/cookingrecipe/hardtack
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough

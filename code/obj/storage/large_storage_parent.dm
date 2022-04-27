@@ -29,6 +29,7 @@
 	var/icon_welded = "welded-closet"
 	var/open_sound = "sound/machines/click.ogg"
 	var/close_sound = "sound/machines/click.ogg"
+	var/volume = 15
 	var/max_capacity = 100 //Won't close past this many items.
 	var/open = 0
 	var/welded = 0
@@ -40,18 +41,18 @@
 	var/emagged = 0
 	var/jiggled = 0
 	var/legholes = 0
-	var/health = 3
+	var/flip_health = 3
 	var/can_flip_bust = 0 // Can the trapped mob damage this container by flipping?
 	var/obj/item/card/id/scan = null
 	var/datum/db_record/account = null
 	var/last_relaymove_time
 	var/is_short = 0 // can you not stand in it?  ie, crates?
-	var/open_fail_prob = 50
 	var/crunches_contents = 0 // for the syndicate trashcart & hotdog stand
 	var/crunches_deliciously = 0 // :I
 	var/owner_ckey = null // owner of the crunchy cart, so they don't get crunched
 	var/opening_anim = null
 	var/closing_anim = null
+	var/last_attackhand = 0
 
 	var/list/spawn_contents = list() // maybe better than just a bunch of stuff in New()?
 	var/made_stuff
@@ -174,12 +175,23 @@
 	alter_health()
 		. = get_turf(src)
 
+	Click(location, control, params)
+		// lets you open when inside of it
+		if((usr in src) && can_act(usr))
+			src.Attackhand(usr)
+			return
+		. = ..()
+
 	relaymove(mob/user as mob)
 		if (is_incapacitated(user))
 			return
 		if (world.time < (src.last_relaymove_time + RELAYMOVE_DELAY))
 			return
 		src.last_relaymove_time = world.time
+
+		if (src.legholes)
+			step(src,user.dir)
+			return
 
 		if (!src.open(user=user))
 			if (!src.is_short && src.legholes)
@@ -208,19 +220,16 @@
 
 			return
 
-		else if (prob(src.open_fail_prob))
-			if (src.legholes)
-				step(src,user.dir)
-			user.show_text("You kick at [src], but it doesn't budge!", "red")
-			return
-
 		// if all else fails:
 		src.open(user=user)
 		src.visible_message("<span class='alert'><b>[user]</b> kicks [src] open!</span>")
 
 	attack_hand(mob/user as mob)
+		if(world.time == src.last_attackhand) // prevent double-attackhand when entering
+			return
 		if (!in_interact_range(src, user))
 			return
+		src.last_attackhand = world.time
 
 		interact_particle(user,src)
 		add_fingerprint(user)
@@ -230,80 +239,87 @@
 		else if (!src.toggle(user))
 			return src.Attackby(null, user)
 
-	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/satchel/))
-			if(secure && locked)
+	attackby(obj/item/I as obj, mob/user as mob)
+		if (istype(I, /obj/item/satchel/))
+			if(src.secure && src.locked)
 				user.show_text("Access Denied", "red")
 				return
 			if (count_turf_items() >= max_capacity || length(contents) >= max_capacity)
 				user.show_text("[src] cannot fit any more items!", "red")
 				return
-			var/amt = length(W.contents)
+			var/amt = length(I.contents)
 			if (amt)
-				user.visible_message("<span class='notice'>[user] dumps out [W]'s contents into [src]!</span>")
+				user.visible_message("<span class='notice'>[user] dumps out [I]'s contents into [src]!</span>")
 				var/amtload = 0
-				for (var/obj/item/I in W.contents)
+				for (var/obj/item/C in I.contents)
 					if(length(contents) >= max_capacity)
 						break
 					if (open)
-						I.set_loc(src.loc)
+						C.set_loc(src.loc)
 					else
-						I.set_loc(src)
+						C.set_loc(src)
 					amtload++
-				W:UpdateIcon()
+				I:UpdateIcon()
 				if (amtload)
-					user.show_text("[amtload] [W:itemstring] dumped into [src]!", "blue")
+					user.show_text("[amtload] [I:itemstring] dumped into [src]!", "blue")
 				else
-					user.show_text("No [W:itemstring] dumped!", "red")
+					user.show_text("No [I:itemstring] dumped!", "red")
 				return
 
 		if (src.open)
-			if (!src.is_short && isweldingtool(W))
+			if ((src._health <= 0) && isweldingtool(I))
+				if(!I:try_weld(user, 1, burn_eyes = TRUE))
+					return
+				src._health = src._max_health
+				src.visible_message("<span class='alert'>[user] repairs [src] with [I].</span>")
+				return
+			if (!src.is_short && isweldingtool(I))
 				if (!src.legholes)
-					if(!W:try_weld(user, 1))
+					if(!I:try_weld(user, 1))
 						return
 					src.legholes = 1
-					src.visible_message("<span class='alert'>[user] adds some holes to the bottom of [src] with [W].</span>")
+					src.visible_message("<span class='alert'>[user] adds some holes to the bottom of [src] with [I].</span>")
 					return
 				else if(!issilicon(user))
 					if(user.drop_item())
-						if (W)
-							W:set_loc(src.loc)
+						if (I)
+							I:set_loc(src.loc)
 					return
 
-			else if (iswrenchingtool(W))
-				actions.start(new /datum/action/bar/icon/storage_disassemble(src, W), user)
+			else if (iswrenchingtool(I))
+				actions.start(new /datum/action/bar/icon/storage_disassemble(src, I), user)
 				return
 			else if (!issilicon(user))
-				if (istype(W, /obj/item/grab))
-					return src.MouseDrop_T(W:affecting, user)	//act like they were dragged onto the closet
+				if (istype(I, /obj/item/grab))
+					return src.MouseDrop_T(I:affecting, user)	//act like they were dragged onto the closet
 				if(user.drop_item())
-					if(W) W.set_loc(src.loc)
+					if(I)
+						I.set_loc(src.loc)
 				return
 
-		else if (!src.open && isweldingtool(W))
-			if(!W:try_weld(user, 1, burn_eyes = TRUE))
+		else if (!src.open && isweldingtool(I))
+			if(!I:try_weld(user, 1, burn_eyes = TRUE))
 				return
 			var/positions = src.get_welding_positions()
 			actions.start(new /datum/action/bar/private/welding(user, src, 2 SECONDS, /obj/storage/proc/weld_action, \
-				list(W, user), null, positions[1], positions[2]),user)
+				list(I, user), null, positions[1], positions[2]),user)
 			return
 
 		if (src.secure)
 			if (src.emagged)
 				user.show_text("It appears to be broken.", "red")
 				return
-			else if (src.personal && istype(W, /obj/item/card/id))
-				var/obj/item/card/id/I = W
-				if ((src.req_access && src.allowed(user)) || !src.registered || (istype(W, /obj/item/card/id) && src.registered == I.registered))
+			else if (src.personal && istype(I, /obj/item/card/id))
+				var/obj/item/card/id/ID = I
+				if ((src.req_access && src.allowed(user)) || !src.registered || (istype(ID, /obj/item/card/id) && src.registered == ID.registered))
 					//they can open all lockers, or nobody owns this, or they own this locker
 					src.locked = !( src.locked )
 					user.visible_message("<span class='notice'>The locker has been [src.locked ? null : "un"]locked by [user].</span>")
 					src.UpdateIcon()
 					if (!src.registered)
-						src.registered = I.registered
-						src.name = "[I.registered]'s [src.name]"
-						src.desc = "Owned by [I.registered]."
+						src.registered = ID.registered
+						src.name = "[ID.registered]'s [src.name]"
+						src.desc = "Owned by [ID.registered]."
 					for (var/mob/M in src.contents)
 						src.log_me(user, M, src.locked ? "locks" : "unlocks")
 					return
@@ -320,12 +336,28 @@
 					return
 
 			if (secure != 2)
-				user.show_text("Access Denied", "red")
+				if (!src.locked)
+					src.open()
+				else
+					user.show_text("Access Denied", "red")
 			user.unlock_medal("Rookie Thief", 1)
 			return
 
 		else
 			return ..()
+
+	onMaterialChanged()
+		. = ..()
+		if(isnull(src.material))
+			return
+		var/found_negative = (src.material.mat_id == "negativematter")
+		if(!found_negative)
+			for(var/datum/material/parent_mat in src.material.parent_materials)
+				if(parent_mat.mat_id == "negativematter")
+					found_negative = TRUE
+					break
+		if(found_negative)
+			src.AddComponent(/datum/component/extradimensional_storage)
 
 	proc/weld_action(obj/item/W, mob/user)
 		if(src.open)
@@ -501,11 +533,6 @@
 	alter_health()
 		. = get_turf(src)
 
-	Cross(atom/movable/mover)
-		. = open
-		if (src.is_short)
-			return 0
-
 	ex_act(severity)
 		switch (severity)
 			if (1)
@@ -567,15 +594,20 @@
 			src.dump_contents(user)
 		else
 			src.dump_contents()
+		if (!is_short)
+			src.set_density(0)
 		src.open = 1
 		src.UpdateIcon()
 		p_class = initial(p_class)
-		playsound(src.loc, src.open_sound, 15, 1, -3)
+		playsound(src.loc, src.open_sound, volume, 1, -3)
 		return 1
 
 	proc/close(var/entangleLogic)
 		flick(src.closing_anim,src)
 		if (!src.open)
+			return 0
+		if (src._health <= 0)
+			visible_message("<span class='alert'>[src] can't close; it's been smashed open!</span>")
 			return 0
 		if (!src.can_close())
 			visible_message("<span class='alert'>[src] can't close; looks like it's too full!</span>")
@@ -587,7 +619,8 @@
 		if(entangled && !entangleLogic && !entangled.can_open())
 			visible_message("<span class='alert'>It won't budge!</span>")
 			return 0
-
+		if (!is_short)
+			src.set_density(1)
 		src.open = 0
 
 		for (var/obj/O in get_turf(src))
@@ -629,7 +662,8 @@
 			entangled.open(1)
 
 		src.UpdateIcon()
-		playsound(src.loc, src.close_sound, 15, 1, -3)
+		playsound(src.loc, src.close_sound, volume, 1, -3)
+		SEND_SIGNAL(src, COMSIG_STORAGE_CLOSED)
 		return 1
 
 	proc/recalcPClass()
@@ -694,10 +728,10 @@
 			src.locked = !src.locked
 
 	proc/bust_out()
-		if (src.health)
+		if (src.flip_health)
 			src.visible_message("<span class='alert'>[src] [pick("cracks","bends","shakes","groans")].</span>")
-			src.health--
-		if (src.health <= 0)
+			src.flip_health--
+		if (src.flip_health <= 0)
 			src.visible_message("<span class='alert'>[src] breaks apart!</span>")
 			src.dump_contents()
 			SPAWN(1 DECI SECOND)
@@ -852,7 +886,7 @@
 /obj/storage/secure
 	name = "secure storage"
 	icon_state = "secure"
-	health = 6
+	flip_health = 6
 	secure = 1
 	locked = 1
 	icon_closed = "secure"

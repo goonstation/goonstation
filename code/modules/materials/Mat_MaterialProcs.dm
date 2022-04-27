@@ -529,7 +529,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if (prob(20))
 			boutput(attacker, "<span class='alert'>[owner] slips right out of your hand!</span>")
 			owner.set_loc(attacker.loc)
-			owner.dropped()
+			owner.dropped(attacker)
 		return
 
 /datum/materialProc/slippery_entered
@@ -571,7 +571,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 				OB.health = 8
 				OB.max_health = 8
 				OB.canspeak = 0
-				SHOW_SOULSTEEL_TIPS(OB)
+				OB.show_antag_popup("soulsteel")
 		return
 
 /datum/materialProc/reflective_onbullet
