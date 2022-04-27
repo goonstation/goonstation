@@ -1605,9 +1605,9 @@
 	desc = "A twitching saurian tail, you feel mildly uncomfortable looking at it."
 	icon_state = "twitchytail"
 	density = 1
-	health = 30
+	health = 20
 	flags = NOSPLASH | TABLEPASS
-	maxhealth = 60
+	maxhealth = 40
 	butcherable = 1
 
 	var/obj/item/organ/tail/lizard/tail_memory = null
@@ -1640,9 +1640,9 @@
 		..()
 
 	CritterDeath()
+		..()
 		if (tail_memory)
 			tail_memory.set_loc(get_turf(src))
 		else
 			new/obj/item/organ/tail/lizard(get_turf(src))
 		qdel(src)
-		..()
