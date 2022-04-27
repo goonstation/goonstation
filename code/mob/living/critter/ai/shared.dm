@@ -71,9 +71,6 @@
 						return
 			M.move_target = target_turf
 
-/datum/aiTask/sequence/goalbased/on_reset()
-	holder.target = null
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // WANDER TASK
 // spend a few ticks wandering aimlessly

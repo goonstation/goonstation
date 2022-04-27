@@ -205,6 +205,7 @@ var/list/ai_move_scheduled = list()
 		return null
 
 	proc/on_reset()
+		holder.target = null
 
 	proc/evaluate() // evaluate the current environment and assign priority to switching to this task
 		return 0
