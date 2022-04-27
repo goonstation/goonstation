@@ -295,14 +295,17 @@
 
 /mob/living/critter/flock/drone/specific_emotes(var/act, var/param = null, var/voluntary = 0)
 	switch (act)
+		if("stare")
+			if (src.emote_check(voluntary, 50))
+				return "<b>[src]</b> stares intently[(param ? " at [param]." : ".")]"
 		if ("whistle", "beep", "burp")
 			if (src.emote_check(voluntary, 50))
 				playsound(src, "sound/misc/flockmind/flockdrone_beep[pick("1","2","3","4")].ogg", 60, 1)
-				return "<b>[src]</b> beeps."
+				return "<b>[src]</b> [act]s[(param ? " at [param]." : ".")]"
 		if ("scream", "growl", "abeep", "grump")
 			if (src.emote_check(voluntary, 50))
 				playsound(src, "sound/misc/flockmind/flockdrone_grump[pick("1","2","3")].ogg", 60, 1)
-				return "<b>[src]</b> beeps grumpily!"
+				return "<b>[src]</b> beeps grumpily[(param? " at [param]!" : "!")]"
 		if ("fart") // i cannot ignore my heritage any longer
 			if (src.emote_check(voluntary, 50))
 				var/fart_message = pick_string("flockmind.txt", "flockdrone_fart")
@@ -310,7 +313,7 @@
 				return "<b>[src]</b> [fart_message]"
 		if ("laugh") //no good sound for it - moon
 			if (src.emote_check(voluntary, 50))
-				return "<b>[src]</b> caws heartily!"
+				return "<b>[src]</b> caws heartily[(param? " at [param]!" : "!")]"
 	return null
 
 /mob/living/critter/flock/drone/specific_emote_type(var/act)

@@ -389,6 +389,7 @@ butcher
 				has_started = TRUE
 
 /datum/aiTask/succeedable/repair/on_reset()
+	..()
 	has_started = FALSE
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -410,6 +411,7 @@ butcher
 		. = TRUE
 
 /datum/aiTask/sequence/goalbased/deposit/on_reset()
+	..()
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(F)
 		F.active_hand = 2 // nanite spray
@@ -862,6 +864,7 @@ butcher
 
 
 /datum/aiTask/sequence/goalbased/butcher/on_reset()
+	..()
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(F)
 		F.active_hand = 2 // nanite spray
@@ -929,6 +932,7 @@ butcher
 		. = TRUE
 
 /datum/aiTask/sequence/goalbased/deconstruct/on_reset()
+	..()
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(F)
 		F.active_hand = 2 // nanite spray
@@ -975,4 +979,87 @@ butcher
 				has_started = TRUE
 
 /datum/aiTask/succeedable/deconstruct/on_reset()
+	has_started = FALSE
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+// STARE AT BIRDS
+// targets: any bird critters
+// precondition: cooldown
+/datum/aiTask/sequence/goalbased/stare
+	name = "observing"
+	weight = 1 //same as wander
+
+/datum/aiTask/sequence/goalbased/stare/evaluate()
+	. = src.precondition() && length(src.get_targets()) ? 1 : 0  // it'd require every other task returning very small values for this to get selected
+
+/datum/aiTask/sequence/goalbased/stare/New(parentHolder, transTask)
+	..(parentHolder, transTask)
+	add_task(holder.get_instance(/datum/aiTask/succeedable/stare_at_bird, list(holder)))
+
+/datum/aiTask/sequence/goalbased/stare/precondition()
+	. = FALSE
+	if(!GET_COOLDOWN(holder.owner, "bird_staring"))
+		. = TRUE
+
+/datum/aiTask/sequence/goalbased/stare/get_targets()
+	. = list()
+	for(var/mob/living/critter/C in view(max_dist, holder.owner)) //I'm not handling obj/critter birds. i'm just not. deal with it.
+		if(istype(C,/mob/living/critter/small_animal/bird) || istype(C,/mob/living/critter/small_animal/ranch_base/chicken))
+			. += C
+	. = get_path_to(holder.owner, ., max_dist*2, 1)
+
+/datum/aiTask/sequence/goalbased/stare/reset()
+	return ..()
+////////
+
+/datum/aiTask/succeedable/stare_at_bird
+	name = "stur at burd"
+	var/has_started = FALSE
+
+/datum/aiTask/succeedable/stare_at_bird/failed()
+	return !IN_RANGE(holder.owner, holder.target, 1)
+
+/datum/aiTask/succeedable/stare_at_bird/succeeded()
+	return has_started
+
+/datum/aiTask/succeedable/stare_at_bird/on_tick()
+	if(has_started)
+		return
+
+	var/mob/living/critter/target = holder.target
+	var/mob/living/critter/flock/drone/F = holder.owner
+
+	if(!target)
+		return
+	if(!IN_RANGE(holder.owner, target, 1))
+		return
+	if(!ON_COOLDOWN(holder.owner,"bird_staring",rand(60 SECONDS, 180 SECONDS))) //you can only stare at birds once every now an then. randomise for staggering
+		switch(rand(1,100))
+			if(1 to 30)
+				//pat the birb
+				if(F.set_hand(1)) // manipulator hand
+					F.empty_hand(1) //drop any item we might be holding first
+					F.set_a_intent(INTENT_HELP)
+					holder.owner.set_dir(get_dir(holder.owner, holder.target))
+					F.hand_attack(target)
+					has_started = TRUE
+			if(30 to 50)
+				//attempt to communicate
+				holder.owner.set_dir(get_dir(holder.owner, holder.target))
+				F.emote("whistle [target]", FALSE)
+				has_started = TRUE
+			if(50 to 90)
+				//watch carefully
+				holder.owner.set_dir(get_dir(holder.owner, holder.target))
+				F.emote("stare [target]", FALSE)
+				has_started = TRUE
+			if(90 to 101)
+				if(istype(holder.target, /mob/living/critter/small_animal/bird/owl/))
+					F.say("hoot hoot")
+				else
+					F.say("tweet tweet")
+				has_started = TRUE
+
+/datum/aiTask/succeedable/stare_at_bird/on_reset()
+	..()
 	has_started = FALSE
