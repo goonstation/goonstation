@@ -1,5 +1,10 @@
 
 (t)wed apr 27 22
+(u)Hans
+(p)8005
+(e)⚖|balance
+(+)Makes ricin induce food poisoning instead of custom emotes.
+(+)Adds a potency requirement for ricin rice.
 (u)Ikea
 (p)8324
 (e)⚖|balance
