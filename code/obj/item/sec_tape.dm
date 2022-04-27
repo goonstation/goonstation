@@ -43,20 +43,13 @@
 			//Setup the perfect crime
 			user.visible_message("<span class='alert'><b>[user] carefully sets up some security tape around themselves then swallows the tape and chokes on it, satisfied that they created the perfect crime scene.</b></span>")
 			var/obj/sec_tape/T1 = new /obj/sec_tape(T, src)
-			T1.dir = EAST
-			T1.tape_UpdateIcon()
-			T1.layerify()
+			T1.set_dir(EAST)
 			var/obj/sec_tape/T2 = new /obj/sec_tape(T, src)
-			T2.dir = WEST
-			T2.tape_UpdateIcon()
-			T2.layerify()
+			T2.set_dir(WEST)
 			var/obj/sec_tape/T3 = new /obj/sec_tape(T, src)
-			T3.dir = NORTH
-			T3.tape_UpdateIcon()
-			T3.layerify()
+			T3.set_dir(NORTH)
 			var/obj/sec_tape/T4 = new /obj/sec_tape(T, src)
-			T4.tape_UpdateIcon()
-			T4.layerify()
+			T4.set_dir(SOUTH)
 			//No need to set it up to the south, it already is by default
 			user.death(FALSE)
 			qdel(src)
@@ -82,10 +75,8 @@
 
 /obj/item/sec_tape/attackby(obj/item/W, mob/user)
 	if (issnippingtool(W) && src.amount > 1) //Cut some of it off to share
-		//take(1, user.loc)
 		var/obj/item/sec_tape/split_tape = split_stack(1)
 		user.put_in_hand_or_drop(split_tape)
-//		split_tape.loc(src.loc)
 		tooltip_rebuild = 1
 		boutput(user, "You cut a piece off the [base_name].")
 		src.UpdateIcon()
@@ -94,11 +85,11 @@
 	else if (istype(W, /obj/item/sec_tape))
 		var/obj/item/sec_tape/C = W
 
-		if (C.amount == MAXTAPE)
+		if (C.amount == src.max_stack)
 			boutput(user, "The coil is too long, you cannot add any more tape to it.")
 			return
 
-		if ((C.amount + src.amount <= MAXTAPE))
+		if ((C.amount + src.amount <= src.max_stack))
 			C.amount += src.amount
 			boutput(user, "You join the tape ends together.")
 			C.tooltip_rebuild = 1
@@ -114,19 +105,19 @@
 			return
 
 		else
-			boutput(user, "You transfer [MAXTAPE - src.amount] length\s of tape from one roll to the other.")
-			src.amount -= (MAXTAPE-C.amount)
+			boutput(user, "You transfer [src.max_stack - src.amount] length\s of tape from one roll to the other.")
+			src.amount -= (src.max_stack-C.amount)
 			src.UpdateIcon()
 			tooltip_rebuild = 1
-			C.amount = MAXTAPE
+			C.amount = src.max_stack
 			C.UpdateIcon()
 			C.tooltip_rebuild = 1
 			return
 
 /obj/item/sec_tape/MouseDrop_T(atom/movable/O as obj, mob/user as mob)
 	..(O, user)
-	for (var/obj/item/sec_tape/C in view(1, user))
-		C.UpdateIcon()
+//	for (var/obj/item/sec_tape/C in view(1, user))
+//		C.UpdateIcon()
 
 /obj/item/sec_tape/afterattack(turf/F, mob/user)
 	if (!isturf(user.loc))

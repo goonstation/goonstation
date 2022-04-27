@@ -21,6 +21,11 @@
 		else
 			layer = OBJ_LAYER
 
+	set_dir()
+		. = ..()
+		tape_UpdateIcon()
+		layerify()
+
 	proc/tape_UpdateIcon()
 		switch (dir)
 			if (WEST)
