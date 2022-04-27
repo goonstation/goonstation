@@ -259,6 +259,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 				if (M.amount < 1)
 					user.drop_item()
 					qdel(M)
+				else
+					M.inventory_counter.update_number(M.amount)
 				if (src.brain)
 					newhead.brain = src.brain
 					src.brain.set_loc(newhead)
@@ -295,6 +297,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 				if (M.amount < 1)
 					user.drop_item()
 					qdel(M)
+				else
+					M.inventory_counter.update_number(M.amount)
 				if (src.brain)
 					newhead.brain = src.brain
 					src.brain.set_loc(newhead)
@@ -572,6 +576,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 				if (M.amount < 1)
 					user.drop_item()
 					del(M)
+				else
+					M.inventory_counter.update_number(M.amount)
 				del(src)
 				return
 			else
@@ -600,6 +606,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 				if (M.amount < 1)
 					user.drop_item()
 					del(M)
+				else
+					M.inventory_counter.update_number(M.amount)
 				del(src)
 				return
 			else
@@ -646,6 +654,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 				if (M.amount < 1)
 					user.drop_item()
 					del(M)
+				else
+					M.inventory_counter.update_number(M.amount)
 				del(src)
 				return
 			else
@@ -674,6 +684,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 				if (M.amount < 1)
 					user.drop_item()
 					del(M)
+				else
+					M.inventory_counter.update_number(M.amount)
 				del(src)
 				return
 			else
