@@ -1,5 +1,10 @@
 
 (t)wed apr 27 22
+(u)Shiiba
+(p)8340
+(e)|
+(+)Removes oculine from sunrise venne.
+(+)Adds oculine to carrots.
 (u)DisturbHerb
 (p)8014
 (e)🆕🎨|feature, sprites
