@@ -31,10 +31,16 @@
 		<br><span class='bold'>ID:</span> [src.real_name]
 		<br><span class='bold'>Flock:</span> [src.flock ? src.flock.name : "none"]
 		<br><span class='bold'>System Integrity:</span> [max(0, round(src.get_health_percentage() * 100))]%
-		<br><span class='bold'>Cognition:</span> PREDEFINED
+		<br><span class='bold'>Cognition:</span> [src.dormant ? "ABSENT" : "PREDEFINED"]
 		<br><span class='bold'>###=-</span></span>"}
 	else
 		return null // give the standard description
+
+/mob/living/critter/flock/bit/Life(datum/controller/process/mobs/parent)
+	if (..(parent))
+		return 1
+	if (!src.dormant && src.z != Z_LEVEL_STATION)
+		src.dormantize()
 
 /mob/living/critter/flock/bit/MouseDrop_T(mob/living/target, mob/user)
 	if(!target || !user)
@@ -75,6 +81,18 @@
 	HH.can_hold_items = 0
 	HH.can_attack = 1
 	HH.can_range_attack = 0
+
+/mob/living/critter/flock/bit/proc/dormantize()
+	src.dormant = TRUE
+	src.icon_state = "bit-dormant"
+	src.ai.die()
+	animate(src) // doesnt work right now
+
+	if (!src.flock)
+		return
+
+	src.flock.removeDrone(src)
+	src.flock = null
 
 /mob/living/critter/flock/bit/death(var/gibbed)
 	walk(src, 0)

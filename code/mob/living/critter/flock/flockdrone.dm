@@ -159,15 +159,45 @@
 		// clear refs
 		controller = null
 
-// sometimes we want a vegetable drone, ok
 /mob/living/critter/flock/drone/proc/dormantize()
-	src.dormant = 1
-	src.canmove = 0
-	src.anchored = 1 // unfun nerds ruin everything yet again
-	src.is_npc = 0 // technically false, but it turns off the AI
+	src.dormant = TRUE
 	src.icon_state = "drone-dormant"
-	src.set_a_intent(INTENT_DISARM ) // stop swapping places
+	src.ai?.die()
 	src.remove_simple_light("drone_light")
+
+	if (!src.flock)
+		return
+
+	src.flock.hideAnnotations(src)
+	src.flock.removeDrone(src)
+
+	if (src.controller)
+		if (src.flock.getComplexDroneCount())
+			for (var/mob/living/critter/flock/drone/F in src.flock.units)
+				if (istype(F))
+					src.controller.set_loc(get_turf(F))
+					break
+		else
+			src.controller.set_loc(pick_landmark(LANDMARK_LATEJOIN))
+
+		var/datum/mind/mind = src.mind
+		if (mind)
+			mind.transfer_to(controller)
+		else
+			if (src.client)
+				var/key = src.client.key
+				src.client.mob = controller
+				controller.mind = new /datum/mind()
+				controller.mind.ckey = ckey
+				controller.mind.key = key
+				controller.mind.current = controller
+				ticker.minds += controller.mind
+		boutput(controller, "<span class='flocksay'><b>\[SYSTEM: Connection to drone [src.real_name] lost.\]</b></span>")
+		controller = null
+	src.is_npc = TRUE // to ensure right flock_speak message
+	flock_speak(src, "Error: Out of signal range. Disconnecting.", src.flock)
+	src.is_npc = FALSE // turns off ai
+	src.flock = null
 
 /mob/living/critter/flock/drone/proc/undormantize()
 	src.dormant = 0
@@ -333,6 +363,10 @@
 				var/turf/simulated/floor/feather/floor = src.loc
 				if (floor.on && !floor.connected)
 					floor.off()
+	if (!src.dormant && src.z != Z_LEVEL_STATION)
+		src.dormantize()
+		return
+
 	var/obj/item/I = absorber.item
 
 	if(I)
