@@ -230,6 +230,7 @@
 		if(prob(src.alt_type_chance) && length(src.possible_alt_types))
 			src.comtype = pick(src.possible_alt_types)
 		src.price = rand(src.price_boundary[1],src.price_boundary[2])
+		src.baseprice = price
 
 /datum/commodity/trader/incart/
 	var/datum/commodity/reference = null
