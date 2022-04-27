@@ -91,7 +91,7 @@
 			rev_obj.find_target_by_role(head_mind.assigned_role)
 
 		equip_revolutionary(rev_mind.current)
-		SHOW_REVHEAD_TIPS(rev_mind.current)
+		rev_mind.current.show_antag_popup("revhead")
 		update_rev_icons_added(rev_mind)
 
 	for(var/datum/mind/rev_mind in head_revolutionaries)
@@ -206,7 +206,7 @@
 
 	var/list/uncons = src.get_unconvertables()
 	if (!(rev_mind in src.revolutionaries) && !(rev_mind in src.head_revolutionaries) && !(rev_mind in uncons))
-		SHOW_REVVED_TIPS(rev_mind.current)
+		rev_mind.current.show_antag_popup("revved")
 		rev_mind.current.show_text("<h2><font color=red>You are now a revolutionary! Kill the heads of staff and don't harm your fellow freedom fighters. You can identify your comrades by the R icons (blue = rev leader, red = regular member).</font></h2>")
 
 		src.revolutionaries += rev_mind
@@ -224,7 +224,7 @@
 		return 0
 
 	if (rev_mind in revolutionaries)
-		SHOW_DEREVVED_TIPS(rev_mind.current)
+		rev_mind.current.show_antag_popup("derevved")
 		rev_mind.current.show_text("<h2><font color=blue>You are no longer a revolutionary! Protect the heads of staff and help them kill the leaders of the revolution.</font></h2>", "blue")
 
 		src.revolutionaries -= rev_mind

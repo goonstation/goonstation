@@ -1670,7 +1670,7 @@
 
 	if (show_message == 1)
 		M.show_text("<h2><font color=red><B>Your antagonist status has been revoked by an admin! If this is an unexpected development, please inquire about it in adminhelp.</B></font></h2>", "red")
-		SHOW_ANTAG_REMOVED_TIPS(M)
+		M.show_antag_popup("antagremoved")
 
 	// Replace the mind first, so the new mob doesn't automatically end up with changeling etc. abilities.
 	var/datum/mind/newMind = new /datum/mind()
@@ -1954,7 +1954,7 @@
 		return
 
 	if (istype(src.mob, /mob/dead/target_observer))
-		qdel(src)
+		qdel(src.mob)
 
 	var/mob/dead/observer/O = src.mob
 	var/client/C

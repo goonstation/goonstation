@@ -474,13 +474,6 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/cheesetoast(src)
 			src.recipes += new /datum/cookingrecipe/bacontoast(src)
 			src.recipes += new /datum/cookingrecipe/eggtoast(src)
-			/*
-			src.recipes += new /datum/cookingrecipe/pizza_mushpoison(src)
-			src.recipes += new /datum/cookingrecipe/pizza_mushdrug(src)
-			src.recipes += new /datum/cookingrecipe/pizza_mushnorm(src)
-			src.recipes += new /datum/cookingrecipe/pizza_meat(src)
-			src.recipes += new /datum/cookingrecipe/pizza_plain(src)
-			*/
 			src.recipes += new /datum/cookingrecipe/nougat(src)
 			src.recipes += new /datum/cookingrecipe/candy_cane(src)
 			src.recipes += new /datum/cookingrecipe/cereal_honey(src)

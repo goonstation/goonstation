@@ -26,7 +26,7 @@
 		src.ClearSpecificOverlays("resist_electric") // hide smes effect
 
 		if (src.mind && src.mind.special_role != ROLE_OMNITRAITOR)
-			SHOW_ARCFIEND_TIPS(src)
+			src.show_antag_popup("arcfiend")
 
 
 /datum/abilityHolder/arcfiend

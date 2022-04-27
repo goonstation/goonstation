@@ -33,7 +33,7 @@
 			C.abilityHolder.addAbility(/datum/targetable/grinch/grinch_cloak)
 
 		if (src.mind && src.mind.special_role != ROLE_OMNITRAITOR)
-			SHOW_GRINCH_TIPS(src)
+			src.show_antag_popup("grinch")
 
 	else return
 

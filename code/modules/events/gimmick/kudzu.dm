@@ -444,7 +444,7 @@
 						H.abilityHolder = null
 					H.set_mutantrace(/datum/mutantrace/kudzu)
 					natural_opening = 1
-					SHOW_KUDZU_TIPS(H)
+					H.show_antag_popup("kudzu")
 					qdel(src)
 		else
 			qdel(src)
