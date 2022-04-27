@@ -1365,7 +1365,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 
 			for (var/obj/machinery/door/DR in src.loc)
 				var/area/a = get_area(DR)
-				if (DR && istype(DR) && !DR.cant_emag && !a.sanctuary)
+				if (!DR.cant_emag && !a.sanctuary)
 					qdel(DR)
 			for (var/obj/structure/girder/G in range(src.expl_range, location))
 				var/area/a = get_area(G)
