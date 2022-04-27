@@ -255,12 +255,10 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 			if (M.amount >= 2)
 				boutput(user, "<span class='notice'>You reinforce [src.name] with the metal.</span>")
 				var/obj/item/parts/robot_parts/head/sturdy/newhead = new /obj/item/parts/robot_parts/head/sturdy(get_turf(src))
-				M.amount -= 2
+				M.change_stack_amount(-2)
 				if (M.amount < 1)
 					user.drop_item()
 					qdel(M)
-				else
-					M.inventory_counter.update_number(M.amount)
 				if (src.brain)
 					newhead.brain = src.brain
 					src.brain.set_loc(newhead)
@@ -293,12 +291,10 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 			if (M.amount >= 2)
 				boutput(user, "<span class='notice'>You reinforce [src.name] with the reinforced metal.</span>")
 				var/obj/item/parts/robot_parts/head/heavy/newhead = new /obj/item/parts/robot_parts/head/heavy(get_turf(src))
-				M.amount -= 2
+				M.change_stack_amount(-2)
 				if (M.amount < 1)
 					user.drop_item()
 					qdel(M)
-				else
-					M.inventory_counter.update_number(M.amount)
 				if (src.brain)
 					newhead.brain = src.brain
 					src.brain.set_loc(newhead)
@@ -572,12 +568,10 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 			if (M.amount >= 2)
 				boutput(user, "<span class='notice'>You reinforce [src.name] with the metal.</span>")
 				new /obj/item/parts/robot_parts/arm/left/sturdy(get_turf(src))
-				M.amount -= 2
+				M.change_stack_amount(-2)
 				if (M.amount < 1)
 					user.drop_item()
 					del(M)
-				else
-					M.inventory_counter.update_number(M.amount)
 				del(src)
 				return
 			else
@@ -602,12 +596,10 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 			if (M.amount >= 2)
 				boutput(user, "<span class='notice'>You reinforce [src.name] with the reinforced metal.</span>")
 				new /obj/item/parts/robot_parts/arm/left/heavy(get_turf(src))
-				M.amount -= 2
+				M.change_stack_amount(-2)
 				if (M.amount < 1)
 					user.drop_item()
 					del(M)
-				else
-					M.inventory_counter.update_number(M.amount)
 				del(src)
 				return
 			else
@@ -650,12 +642,10 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 			if (M.amount >= 2)
 				boutput(user, "<span class='notice'>You reinforce [src.name] with the metal.</span>")
 				new /obj/item/parts/robot_parts/arm/right/sturdy(get_turf(src))
-				M.amount -= 2
+				M.change_stack_amount(-2)
 				if (M.amount < 1)
 					user.drop_item()
 					del(M)
-				else
-					M.inventory_counter.update_number(M.amount)
 				del(src)
 				return
 			else
@@ -680,12 +670,10 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 			if (M.amount >= 2)
 				boutput(user, "<span class='notice'>You reinforce [src.name] with the reinforced metal.</span>")
 				new /obj/item/parts/robot_parts/arm/right/heavy(get_turf(src))
-				M.amount -= 2
+				M.change_stack_amount(-2)
 				if (M.amount < 1)
 					user.drop_item()
 					del(M)
-				else
-					M.inventory_counter.update_number(M.amount)
 				del(src)
 				return
 			else
