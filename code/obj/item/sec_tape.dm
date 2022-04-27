@@ -94,7 +94,6 @@
 
 	update_icon()
 		inventory_counter?.update_number(amount)
-		return
 
 /obj/item/sec_tape/vended //Tape in secvends has a pre-set amount of uses
 	New(loc, length)

@@ -16,7 +16,6 @@
 		tape_UpdateIcon()
 
 	proc/layerify()
-		SPAWN(3 DECI SECONDS)
 		if (dir == SOUTH)
 			layer = MOB_LAYER + 0.1
 		else
@@ -31,6 +30,7 @@
 			if (EAST)
 				set_icon_state("sec_tape_e")
 			else //Default position is south
+				set_icon_state("sec_tape_s")
 				return
 
 	Cross(atom/movable/O as mob|obj)
@@ -65,7 +65,7 @@
 			src.try_vault(M)
 		else
 			make_cleanable(/obj/decal/cleanable/sec_tape, src.loc)
-			src.visible_message("[M] rips up [src].")
+			src.visible_message("<span class='alert'>[M] rips up [src].</span>")
 			qdel(src)
 
 	Bumped(var/mob/AM as mob)
