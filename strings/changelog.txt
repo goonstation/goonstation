@@ -1,4 +1,9 @@
 
+(t)wed apr 27 22
+(u)Ikea
+(p)8324
+(e)⚖|balance
+(+)Pawnstar now costs 0 trait points
 (t)mon apr 25 22
 (u)LeahTheTech
 (p)8170
