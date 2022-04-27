@@ -28,6 +28,11 @@
 	after_stack(atom/movable/O, mob/user, var/added)
 		boutput(user, "<span class='notice'>You finish sticking the tape back together.</span>")
 
+	change_stack_amount(diff)
+		. = ..()
+		tooltip_rebuild = 1
+		src.UpdateIcon()
+
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
@@ -64,47 +69,23 @@
 					user.suiciding = 0
 		return 1
 
-	proc/use(var/used) // remove "used" amount from the coil
-		if (src.amount < used)
-			return 0
-		else if (src.amount == used)
-			qdel(src)
-			return 1
-		else
-			amount -= used
-			tooltip_rebuild = 1
-			src.UpdateIcon()
-			return 1
-
-	proc/take(var/amt, var/newloc) // removes "amt" from the coil and put it somewhere, use for coil splitting with wirecutters
-		if (amt > amount)
-			amt = amount
-			tooltip_rebuild = 1
-			src.UpdateIcon()
-		if (amt == amount)
-			if (ismob(loc))
-				var/mob/owner = loc
-				owner.u_equip(src)
-			set_loc(newloc)
-			return src
-		src.use(amt)
-		var/obj/item/sec_tape/C = new /obj/item/sec_tape(newloc)
-		C.amount = amt
-		return
-
 	update_icon()
 		inventory_counter?.update_number(amount)
 
 /obj/item/sec_tape/vended //Tape in secvends has a pre-set amount of uses
-	New(loc, length)
-		..(loc, 20)
+	New(loc)
+		..(loc)
+		amount = 20
 
 /obj/item/sec_tape/get_desc()
 	return "There's [amount] length[s_es(amount)] left."
 
 /obj/item/sec_tape/attackby(obj/item/W, mob/user)
 	if (issnippingtool(W) && src.amount > 1) //Cut some of it off to share
-		take(1, user.loc)
+		//take(1, user.loc)
+		var/obj/item/sec_tape/split_tape = split_stack(1)
+		user.put_in_hand_or_drop(split_tape)
+//		split_tape.loc(src.loc)
 		tooltip_rebuild = 1
 		boutput(user, "You cut a piece off the [base_name].")
 		src.UpdateIcon()
@@ -174,5 +155,5 @@
 		ST.add_fingerprint(user)
 		ST.tape_UpdateIcon()
 		ST.layerify()
-		use(1)
+		change_stack_amount(-1)
 	return
