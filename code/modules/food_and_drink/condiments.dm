@@ -45,6 +45,18 @@
 	desc = "Made with real artificial maple syrup!"
 	icon_state = "syrup"
 
+/obj/item/reagent_containers/food/snacks/condiment/soysauce
+	name = "soy sauce"
+	desc = "A dark brown sauce brewed from soybeans and wheat. Salty!"
+	icon_state = "soy-sauce"
+	initial_volume = 30
+	initial_reagents = "soysauce"
+
+	heal(var/mob/M)
+		. = ..()	
+		boutput(M, "<span class='alert'>FUCK, SALTY!</span>")
+		M.emote("scream")
+
 /obj/item/reagent_containers/food/snacks/condiment/mayo
 	name = "mayonnaise"
 	desc = "The subject of many a tiresome innuendo."

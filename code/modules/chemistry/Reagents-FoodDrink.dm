@@ -2785,6 +2785,21 @@ datum
 			transparency = 255
 			taste = "pungent"
 
+		fooddrink/soysauce
+			name = "soy sauce"
+			id = "soysauce"
+			description = "A dark brown sauce brewed from soybeans and wheat. Salty!"
+			reagent_state = LIQUID
+			fluid_r = 53
+			fluid_g = 33
+			fluid_b = 28
+			transparency = 255
+			taste = "salty"
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				M.reagents.add_reagent("salt", 0.5 * mult)
+				..()
+
 		fooddrink/porktonium
 			name = "porktonium"
 			id = "porktonium"
