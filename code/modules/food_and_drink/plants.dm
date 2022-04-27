@@ -938,6 +938,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	make_reagents()
 		..()
 		reagents.add_reagent("juice_carrot",5)
+		reagents.add_reagent("oculine",5)
 
 /obj/item/reagent_containers/food/snacks/plant/pumpkin
 	name = "pumpkin"
