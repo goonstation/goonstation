@@ -136,7 +136,7 @@
 		ST.set_dir(WEST)
 	else
 		ST.set_dir(NORTH)
-	boutput(user, "<span class='notice'>You [pick("hastily", "quickly", "haphazardly")] setup a security cordon.</span>")
+	boutput(user, "<span class='notice'>You [pick("hastily", "quickly", "haphazardly")] setup a security cordon.</span>", group="sectape_setup")
 	ST.add_fingerprint(user)
 	change_stack_amount(-1)
 
