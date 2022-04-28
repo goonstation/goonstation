@@ -69,6 +69,7 @@
 	New(loc)
 		..(loc)
 		amount = 20
+		src.UpdateIcon()
 
 /obj/item/sec_tape/get_desc()
 	return "There's [amount] length[s_es(amount)] left."
@@ -108,8 +109,6 @@
 
 /obj/item/sec_tape/MouseDrop_T(atom/movable/O as obj, mob/user as mob)
 	..(O, user)
-//	for (var/obj/item/sec_tape/C in view(1, user))
-//		C.UpdateIcon()
 
 /obj/item/sec_tape/afterattack(turf/F, mob/user)
 	if (!isturf(user.loc))
@@ -138,3 +137,6 @@
 		ST.add_fingerprint(user)
 		change_stack_amount(-1)
 	return
+
+#undef MAXTAPE
+#undef STARTAMOUNT

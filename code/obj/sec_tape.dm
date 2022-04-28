@@ -12,15 +12,16 @@
 
 	New()
 		..()
-		update_icon()
+		UpdateIcon()
 
 	set_dir()
 		. = ..()
-		update_icon()
+		UpdateIcon()
 
 	update_icon()
 		. = ..()
 		//Setup the layer
+
 		if (dir == SOUTH)
 			layer = MOB_LAYER + 0.1
 		else
