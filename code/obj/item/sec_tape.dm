@@ -90,18 +90,10 @@
 			return
 
 		if ((C.amount + src.amount <= src.max_stack))
-			C.amount += src.amount
+			stack_item(W)
 			boutput(user, "<span class='notice'>You join the tape ends together.</span>")
 			C.tooltip_rebuild = 1
 			C.UpdateIcon()
-			if(istype(src.loc, /obj/item/storage))
-				var/obj/item/storage/storage = src.loc
-				storage.hud.remove_object(src)
-			else if(istype(src.loc, /mob))
-				var/mob/M = src.loc
-				M.u_equip(src)
-				M.drop_item(src)
-			qdel(src)
 			return
 
 		else
