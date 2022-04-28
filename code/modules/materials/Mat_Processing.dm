@@ -47,7 +47,6 @@
 
 			if (istype(X, /obj/item/cable_coil))
 				var/obj/item/cable_coil/C = X
-				div_factor = 30
 				second_mat = C.conductor
 
 			//Output processed amount if there is enough input material

@@ -703,6 +703,7 @@ This is basically useless for anyone but miners.
 	name = "Poison Bottle"
 	item = /obj/item/reagent_containers/glass/bottle/poison
 	cost = 1
+	vr_allowed = 0 //rat poison
 	desc = "A bottle of poison. Which poison? Who knows."
 	job = list("Medical Doctor", "Medical Director", "Research Director", "Scientist", "Bartender")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
@@ -711,6 +712,7 @@ This is basically useless for anyone but miners.
 	name = "Poison Bottle Bundle"
 	item = /obj/item/storage/box/poison
 	cost = 7
+	vr_allowed = 0 //rat poison
 	desc = "A box filled with seven random poison bottles."
 	job = list("Medical Doctor", "Medical Director", "Research Director", "Scientist", "Bartender")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
