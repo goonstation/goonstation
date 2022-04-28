@@ -423,6 +423,8 @@ Broken RCD + Effects
 
 		if (issilicon(user))
 			return ..()
+		else if (length(working_on) > 0) //Lets not get too crazy
+			boutput(user, "<span class='notice'>[src] is already working on something else.</span>")
 		else
 			var/obj/item/parts/surgery_target = null
 			var/user_limb_is_missing = false
