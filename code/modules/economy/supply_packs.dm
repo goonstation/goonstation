@@ -546,6 +546,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/crate
 	containername = "Robotics Crate"
 
+#ifndef MAP_OVERRIDE_ATLAS
 /datum/supply_packs/mulebot
 	name = "Replacement Mulebot"
 	desc = "x1 Mulebot"
@@ -554,6 +555,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	cost = 750
 	containertype = /obj/storage/crate
 	containername = "Replacement Mulebot Crate"
+#endif
 
 /datum/supply_packs/dressup
 	name = "Novelty Clothing Crate"
