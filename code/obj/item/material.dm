@@ -798,8 +798,8 @@
 					qdel(C)
 
 			else
-				output_bar_from_item(M, 1 / M.material_amt)
-				qdel(M)
+				if(output_bar_from_item(M, 1 / M.material_amt))
+					qdel(M)
 
 			sleep(smelt_interval)
 
