@@ -872,10 +872,7 @@
 					return
 				var/obj/item/inserting = usr.equipped()
 				if(istype(inserting, /obj/item/reagent_containers/glass/) || istype(inserting, /obj/item/reagent_containers/food/drinks/))
-					src.inserted = inserting
-					usr.drop_item()
-					inserting.set_loc(src)
-					if(!src.extract_to) src.extract_to = inserting
+					src.Attackby(inserting, usr)
 					. = TRUE
 			if("ejectingredient")
 				var/id = params["ingredient_id"]
