@@ -34,6 +34,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 
 	new /datum/bank_purchaseable/limbless,\
 	new /datum/bank_purchaseable/legless,\
+	new /datum/bank_purchaseable/hellfire,\
 	new /datum/bank_purchaseable/space_diner,\
 	new /datum/bank_purchaseable/mail_order,\
 	new /datum/bank_purchaseable/missile_arrival,\
@@ -454,6 +455,21 @@ var/global/list/persistent_bank_purchaseables =	list(\
 						boutput( H, "<span class='notice'><b>You haven't got a leg to stand on!</b></span>" )
 				return 1
 			return 0
+
+	hellfire
+		name = "Pyromaniac"
+		cost = 1000
+		icon = 'icons/misc/critter.dmi'
+		icon_state = "fire_elemental"
+		icon_dir = SOUTH
+
+		Create(mob/living/M)
+			if(ishuman(M))
+				SPAWN(6 SECONDS)
+					M.set_burning(rand(60,120))
+					playsound(M, 'sound/effects/flame.ogg', 50, 0)
+					M.visible_message("<span class='alert'>[M] spontaneously combusts!</span>")
+				return TRUE
 
 	space_diner
 		name = "Space Diner Patron"
