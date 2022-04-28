@@ -701,6 +701,27 @@
 		src.updateUsrDialog()
 		return
 
+	proc/get_ui_data()
+		. = list()
+
+		.["magnetHealth"] = src.health
+		.["magnetActive"] = src.active
+		.["magnetLastUsed"] = src.last_used
+		.["magnetCooldownOverride"] = src.cooldown_override
+		.["magnetAutomaticMode"] = src.automatic_mode
+
+		var/list/miningEncounters = list()
+		for(var/encounter_id in mining_controls.mining_encounters_selectable)
+			var/datum/mining_encounter/encounter = mining_controls.mining_encounters_selectable[encounter_id]
+			if(istype(encounter))
+				miningEncounters += list(list(
+					name = encounter.name,
+					id = encounter_id
+				))
+		.["miningEncounters"] = miningEncounters
+
+		.["time"] = world.time
+
 	proc/generate_interface(var/mob/user as mob)
 		src.add_dialog(user)
 
@@ -874,6 +895,54 @@
 		SPAWN(0)
 			src.connection_scan()
 
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "MineralMagnet", src.name)
+			ui.open()
+
+	ui_data(mob/user)
+		. = ..()
+		if(istype(linked_magnet))
+			. = linked_magnet.get_ui_data()
+			.["isLinked"] = TRUE
+		else
+			var/list/linkedMagnets = list()
+			for (var/obj/M in linked_magnets)
+				var/magnetData = list(
+					name = M.name,
+					x = M.x,
+					y = M.y,
+					z = M.z,
+					ref = "\ref[M]"
+				)
+				linkedMagnets += list(magnetData)
+			.["linkedMagnets"] = linkedMagnets
+			.["isLinked"] = FALSE
+
+	ui_act(action, params)
+		. = ..()
+		if(.)
+			return
+		switch(action)
+			if("overridecooldown")
+				if (!ishuman(usr))
+					boutput(usr, "<span class='alert'>AI and robotic personnel may not access the override.</span>")
+				else
+					var/mob/living/carbon/human/H = usr
+					if(!src.allowed(H))
+						boutput(usr, "<span class='alert'>Access denied. Please contact the Chief Engineer or Captain to access the override.</span>")
+					else
+						linked_magnet.cooldown_override = !linked_magnet.cooldown_override
+			if("automode")
+				linked_magnet.automatic_mode = !linked_magnet.automatic_mode
+			if("linkmagnet")
+				linked_magnet = locate(params["ref"]) in linked_magnets
+				if (!istype(linked_magnet))
+					linked_magnet = null
+					src.visible_message("<b>[src.name]</b> states, \"Designated magnet is no longer operational.\"")
+
+	/*
 	attack_hand(var/mob/user as mob)
 		if(..())
 			return
@@ -928,6 +997,7 @@
 
 		src.updateUsrDialog()
 		return
+		*/
 
 /obj/machinery/computer/magnet/connection_scan()
 	linked_magnets = list()
