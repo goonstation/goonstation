@@ -11,6 +11,11 @@
 	topBarRendered = 1
 	rendered = 1
 	notEnoughPointsMessage = "<span class='alert'>Insufficient available compute resources.</span>"
+	var/datum/targetable/flockmindAbility/droneControl/drone_controller = null
+
+	New()
+		..()
+		drone_controller = addAbility(/datum/targetable/flockmindAbility/droneControl)
 
 /datum/abilityHolder/flockmind/proc/updateCompute()
 	var/mob/living/intangible/flock/flockmind/F = owner
@@ -469,3 +474,14 @@
 
 
 
+/datum/targetable/flockmindAbility/droneControl
+	cooldown = 0
+	icon = null
+	var/task_type
+	var/mob/living/critter/flock/drone/drone = null
+
+/datum/targetable/flockmindAbility/droneControl/cast(atom/target)
+	var/datum/aiTask/task = drone.ai.get_instance(task_type, list(drone.ai, drone.ai.default_task))
+	task.target = target
+	drone.ai.priority_tasks += task
+	drone.ai.interrupt()
