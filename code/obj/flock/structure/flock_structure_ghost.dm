@@ -77,6 +77,14 @@
 		//not enough resources = do nothin
 	updatealpha()
 
+/obj/flock_structure/ghost/gib()
+	visible_message("<span class='alert'>[src] suddenly dissolves!</span>")
+	playsound(src.loc, 'sound/impact_sounds/Glass_Shatter_2.ogg', 80, 1)
+	if (currentmats > 0)
+		var/obj/item/flockcache/cache = new(get_turf(src))
+		cache.resources = src.currentmats
+	qdel(src)
+
 /obj/flock_structure/ghost/proc/updatealpha()
 	alpha = lerp(104, 255, currentmats / goal)
 
