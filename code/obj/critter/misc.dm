@@ -1604,7 +1604,7 @@
 	name = "Living tail"
 	desc = "A twitching saurian tail, you feel mildly uncomfortable looking at it."
 	icon_state = "twitchytail"
-	density = 1
+	density = 0
 	health = 20
 	flags = NOSPLASH | TABLEPASS
 	maxhealth = 40
@@ -1646,3 +1646,10 @@
 		else
 			new/obj/item/organ/tail/lizard(get_turf(src))
 		qdel(src)
+
+	Crossed(atom/movable/M as mob)
+		..()
+		if (ishuman(M) && prob(25))
+			src.visible_message("<span class='combat'>[src] coils itself around [M]'s legs and trips [him_or_her(M)]!</span>")
+			M:changeStatus("weakened", 2 SECONDS)
+		return
