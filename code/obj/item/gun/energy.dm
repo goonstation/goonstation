@@ -1236,6 +1236,12 @@
 	icon_state = "old-lawbringer0"
 	old = 1
 
+/obj/item/gun/energy/lawbringer/western
+	name = "western Lawbringer"
+	icon = 'icons/obj/items/gun.dmi'
+	icon_state = "western-lawbringer0"
+	western = 1
+
 /obj/item/gun/energy/lawbringer
 	name = "\improper Lawbringer"
 	icon = 'icons/obj/items/gun.dmi'
@@ -1243,6 +1249,7 @@
 	icon_state = "lawbringer0"
 	desc = "A gun with a microphone. Fascinating."
 	var/old = 0
+	var/western = 0
 	m_amt = 5000
 	g_amt = 2000
 	cell_type = /obj/item/ammo/power_cell/self_charging/lawbringer
@@ -1403,6 +1410,8 @@
 		var/prefix = ""
 		if(old)
 			prefix = "old-"
+		if(western)
+			prefix = "western-"
 
 		src.icon_state = "[prefix]lawbringer0"
 		src.overlays = null
@@ -1462,6 +1471,11 @@
 	proc/make_antique()
 		icon_state = "old-lawbringer0"
 		old = 1
+		UpdateIcon()
+
+	proc/make_western()
+		icon_state = "western-lawbringer0"
+		western = 1
 		UpdateIcon()
 
 	shoot(var/target,var/start,var/mob/user)
