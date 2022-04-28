@@ -121,22 +121,24 @@
 		boutput(user, "<span class='notice'>You can't setup a cordon at a place that far away.</span>")
 		return
 
-	else
-		var/dirn = user.dir
+	var/dirn = user.dir
+	for (var/obj/sec_tape/T in F)
+		if (T.dir == dirn)
+			boutput(user, "<span class='notice'>There is already a cordon setup there!</span>")
+			return
 
-		var/obj/sec_tape/ST = new /obj/sec_tape(F, src)
-		if (dirn == SOUTH)
-			ST.set_dir(SOUTH)
-		else if (dirn == EAST)
-			ST.set_dir(EAST)
-		else if (dirn == WEST)
-			ST.set_dir(WEST)
-		else
-			ST.set_dir(NORTH)
-		boutput(user, "<span class='notice'>You [pick("hastily", "quickly", "haphazardly")] setup a security cordon.</span>")
-		ST.add_fingerprint(user)
-		change_stack_amount(-1)
-	return
+	var/obj/sec_tape/ST = new /obj/sec_tape(F, src)
+	if (dirn == SOUTH)
+		ST.set_dir(SOUTH)
+	else if (dirn == EAST)
+		ST.set_dir(EAST)
+	else if (dirn == WEST)
+		ST.set_dir(WEST)
+	else
+		ST.set_dir(NORTH)
+	boutput(user, "<span class='notice'>You [pick("hastily", "quickly", "haphazardly")] setup a security cordon.</span>")
+	ST.add_fingerprint(user)
+	change_stack_amount(-1)
 
 #undef MAXTAPE
 #undef STARTAMOUNT
