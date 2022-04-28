@@ -339,7 +339,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		return
 
 /datum/bioHolder
-	//Holds the apperanceholder aswell as the effects. Controls adding and removing of effects.
+	//Holds the appearanceholder aswell as the effects. Controls adding and removing of effects.
 	var/list/effects = new/list()
 	var/list/effectPool = new/list()
 

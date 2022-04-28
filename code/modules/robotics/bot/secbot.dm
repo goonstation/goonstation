@@ -1023,10 +1023,13 @@
 		if(loc == patrol_target) // We where we want to be?
 			at_patrol_target() // Find somewhere else to go!
 			look_for_perp()
+			. = TRUE
 		else if (patrol_target && (isnull(src.bot_mover) || get_turf(src.bot_mover.the_target) != get_turf(patrol_target)))
 			navigate_to(patrol_target, delay)
 			if(src.bot_mover && !src.bot_mover.disposed)
 				. = TRUE
+		else
+			. = TRUE
 		if(!.)
 			if(!ON_COOLDOWN(src, "find new path after failure", 15 SECONDS))
 				find_patrol_target() // find next beacon I guess!

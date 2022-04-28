@@ -76,7 +76,7 @@
 			return 100
 		actions.interrupt(src, INTERRUPT_ACTION)
 		SPAWN(0)
-			B.execute_ability(target)
+			B.execute_ability(target, params)
 			src.targeting_ability = null
 			src.update_cursor()
 		return 100

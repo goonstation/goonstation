@@ -345,6 +345,7 @@ var/global/list/soundCache = list(
  	"sound/impact_sounds/Energy_Hit_1.ogg" = 'sound/impact_sounds/Energy_Hit_1.ogg',\
  	"sound/impact_sounds/Energy_Hit_2.ogg" = 'sound/impact_sounds/Energy_Hit_2.ogg',\
  	"sound/impact_sounds/Energy_Hit_3.ogg" = 'sound/impact_sounds/Energy_Hit_3.ogg',\
+ 	"sound/impact_sounds/Fireaxe.ogg" = 'sound/impact_sounds/Fireaxe.ogg',\
  	"sound/impact_sounds/Flesh_Break_1.ogg" = 'sound/impact_sounds/Flesh_Break_1.ogg',\
  	"sound/impact_sounds/Flesh_Break_2.ogg" = 'sound/impact_sounds/Flesh_Break_2.ogg',\
  	"sound/impact_sounds/Flesh_Crush_1.ogg" = 'sound/impact_sounds/Flesh_Crush_1.ogg',\

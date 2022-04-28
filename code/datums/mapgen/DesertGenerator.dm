@@ -67,9 +67,9 @@
 					humidity_level = BIOME_LOW_HUMIDITY
 				if(0.35 to 0.5)
 					humidity_level = BIOME_LOWMEDIUM_HUMIDITY
-				if(0.5 to 0.9)
+				if(0.5 to 0.92)
 					humidity_level = BIOME_HIGHMEDIUM_HUMIDITY
-				if(0.9 to 1)
+				if(0.92 to 1)
 					humidity_level = BIOME_HIGH_HUMIDITY
 			selected_biome = possible_biomes[heat_level][humidity_level]
 		else //Over 0.85; It's a mountain
@@ -89,17 +89,45 @@
 /turf/simulated/wall/asteroid/mountain/desert
 	name = "mountain"
 	desc = "a sandy mountain"
+	color = "#957a59"
+	stone_color = "#957a59"
 
 	New()
 		..()
-		color = "#957a59"
 
 	destroy_asteroid(var/dropOre=0)
 		var/new_color = src.color
+		var/image/weather = GetOverlayImage("weather")
+		var/image/ambient = GetOverlayImage("ambient")
+
 		src.RL_SetOpacity(0)
-		src.ReplaceWith(/turf/simulated/floor/plating/airless/asteroid)
+		for (var/turf/simulated/floor/plating/airless/asteroid/A in range(src,1))
+			A.UpdateIcon()
+		src.ReplaceWith(/turf/simulated/floor/plating/airless/asteroid/desert)
 		src.color = new_color
 		src.opacity = 0
 		src.levelupdate()
 
+		if(weather)
+			src.UpdateOverlays(weather, "weather")
+		if(ambient)
+			src.UpdateOverlays(ambient, "ambient")
+
 		return src
+
+/turf/simulated/floor/plating/airless/asteroid/desert
+	color = "#957a59"
+	stone_color = "#957a59"
+	oxygen = MOLES_O2STANDARD
+	nitrogen = MOLES_N2STANDARD
+	temperature = 330
+	fullbright = 0
+
+	update_icon()
+		var/image/ambient_light = src.GetOverlayImage("ambient")
+		var/image/weather = src.GetOverlayImage("weather")
+		..()
+		if(length(overlays) != length(overlay_refs)) //hack until #5872 is resolved
+			overlay_refs.len = 0
+		src.UpdateOverlays(ambient_light, "ambient")
+		src.UpdateOverlays(weather, "weather")

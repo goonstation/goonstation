@@ -60,12 +60,7 @@ TYPEINFO(/datum/component/extradimensional_storage)
 
 /datum/component/extradimensional_storage/UnregisterFromParent()
 	var/obj/storage/parent = src.parent
-	for(var/x in 1 to region.width)
-		for(var/y in 1 to region.height)
-			var/turf/T = region.turf_at(x, y)
-			for(var/atom/movable/AM in T)
-				if(!AM.anchored)
-					AM.set_loc(parent.loc)
+	src.region.move_movables_to(parent.loc)
 	region.clean_up(/turf/space, /turf/space)
 	qdel(region)
 	UnregisterSignal(parent, COMSIG_ATOM_ENTERED)

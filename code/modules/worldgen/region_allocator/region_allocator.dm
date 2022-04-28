@@ -124,25 +124,49 @@ var/global/datum/region_allocator/region_allocator = new
 		ASSERT(node.state == NODE_STATE_FREE)
 		node.set_state(NODE_STATE_USED)
 		src.node = node
-		global.region_allocator.allocated_regions[src] = 1
+		global.region_allocator.allocated_regions += get_weakref(src)
 
 	proc/free()
 		PRIVATE_PROC(TRUE)
 		ASSERT(node.state == NODE_STATE_USED)
 		node.free_up_from_used()
 		src.node = null
-		global.region_allocator.allocated_regions -= src
+		global.region_allocator.allocated_regions -= src.weakref
 
 	proc/clean_up(turf/main_turf=/turf/space, turf/edge_turf=/turf/cordon, area/main_area=/area/space)
-		for(var/x in 1 to width)
-			for(var/y in 1 to height)
-				var/turf/T = turf_at(x, y)
-				var/target_type = (x == 1 || y == 1 || x == width || y == height) ? edge_turf : main_turf
-				T.ReplaceWith(target_type, FALSE, FALSE, FALSE, force=TRUE)
-				new main_area(T)
-				for(var/atom/movable/AM in T)
-					if(!istype(AM, /obj/overlay/tile_effect))
-						qdel(AM)
+		if(ispath(main_area))
+			main_area = new main_area(null)
+		for(var/turf/T in REGION_TILES(src))
+			var/target_type = turf_on_border(T) ? edge_turf : main_turf
+			T = T.ReplaceWith(target_type, FALSE, FALSE, FALSE, force=TRUE)
+			if(!isnull(main_area))
+				main_area.contents += T
+			for(var/atom/movable/AM in T)
+				if(!istype(AM, /obj/overlay/tile_effect))
+					qdel(AM)
+
+	proc/move_movables_to(atom/destination)
+		for(var/atom/movable/AM in REGION_TILES(src))
+			if(!AM.anchored)
+				AM.set_loc(destination)
+
+	/// returns the center turf of the region, biasing towards top right if dimensions even
+	proc/get_center()
+		RETURN_TYPE(/turf)
+		. = locate(
+			src.bottom_left.x + round(src.width / 2),
+			src.bottom_left.y + round(src.height / 2),
+			src.bottom_left.z
+		)
+
+	/// returns a random turf in the region
+	proc/get_random_turf()
+		RETURN_TYPE(/turf)
+		. = locate(
+			src.bottom_left.x + rand(0, src.width - 1),
+			src.bottom_left.y + rand(0, src.height - 1),
+			src.bottom_left.z
+		)
 
 	/**
 	 * Given local coordinates (x, y) returns you a turf at these coordinates in the region.
@@ -165,6 +189,20 @@ var/global/datum/region_allocator/region_allocator = new
 	 */
 	proc/turf_in_region(turf/T)
 		return T.z == bottom_left.z && T.x >= bottom_left.x && T.x < bottom_left.x + width && T.y >= bottom_left.y && T.y < bottom_left.y + height
+
+	/**
+	 * Returns the relative coordinates of the turf in the region (1, 1) being bottom left corner.
+	 * Returns null if the turf is not in the region.
+	 */
+	proc/relative_turf_coords(turf/T)
+		if(turf_in_region(T))
+			. = list(T.x - bottom_left.x, T.y - bottom_left.y)
+
+	/// Checks if the turf is on the (inner) border of the region
+	proc/turf_on_border(turf/T)
+		if(T.z != bottom_left.z)
+			return FALSE
+		return T.x == bottom_left.x || T.x == bottom_left.x + width - 1 || T.y == bottom_left.y || T.y == bottom_left.y + height - 1
 
 	disposing()
 		free()

@@ -523,7 +523,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				return
 			. = 0
 			for (var/obj/item/implant/implant in src.loc)
-				if (implant.type == src.type) //only interact with implants that are the same type as us
+				if (istype(implant, src.type)) //only interact with implants that are the same type as us
 					var/obj/item/implant/revenge/revenge_implant = implant
 					if (!revenge_implant.active)
 						revenge_implant.active = TRUE
@@ -533,8 +533,10 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				source.visible_message("<span class='alert'><b>[source][big_message]!</b></span>")
 			else
 				source.visible_message("[source][small_message].")
-			logTheThing("bombing", source, null, "triggered \a [src] on death at [log_loc(source)].")
-			message_admins("[key_name(source)] triggered \a [src] on death at [log_loc(source)].")
+			var/area/A = get_area(source)
+			if (!A.dont_log_combat)
+				logTheThing("bombing", source, null, "triggered \a [src] on death at [log_loc(source)].")
+				message_admins("[key_name(source)] triggered \a [src] on death at [log_loc(source)].")
 
 /obj/item/implant/revenge/microbomb
 	name = "microbomb implant"
@@ -563,16 +565,16 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		Ov.icon = 'icons/effects/214x246.dmi'
 		Ov.icon_state = "explosion"
 
-		SPAWN(0) //Delete the overlay when finished with it.
-			sleep(1.5 SECONDS)
+		SPAWN(1.5 SECONDS) //Delete the overlay when finished with it.
 			qdel(Ov)
 
-		T.hotspot_expose(800,125)
-		explosion_new(src, T, 7 * ., 1) //The . is the tally of explosionPower in this poor slob.
-		if (ishuman(src.owner))
-			var/mob/living/carbon/human/H = src.owner
-			H.dump_contents_chance = 80 //hee hee
-		src.owner?.gib() //yer DEAD
+		SPAWN(1)
+			T.hotspot_expose(800,125)
+			explosion_new(src, T, 7 * ., 1) //The . is the tally of explosionPower in this poor slob.
+			if (ishuman(src.owner))
+				var/mob/living/carbon/human/H = src.owner
+				H.dump_contents_chance = 80 //hee hee
+			src.owner?.gib() //yer DEAD
 
 /obj/item/implant/revenge/microbomb/hunter
 	power = 4
@@ -602,7 +604,8 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				if (target)
 					arcFlash(src, target, 100000) //TODO scale this with powergrid... somehow. get area APC or smth
 
-		src.owner?.elecgib()
+		SPAWN(1)
+			src.owner?.elecgib()
 
 
 /obj/item/implant/robotalk
@@ -726,7 +729,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			boutput(M, "<h2><span class='alert'>You feel an unwavering loyalty to your new master, [I.real_name]! Do not tell anyone about this unless your new master tells you to!</span></h2>")
 		else
 			boutput(M, "<h2><span class='alert'>You feel an unwavering loyalty to [I.real_name]! You feel you must obey \his every order! Do not tell anyone about this unless your master tells you to!</span></h2>")
-			SHOW_MINDSLAVE_TIPS(M)
+			M.show_antag_popup("mindslave")
 		if (src.custom_orders)
 			boutput(M, "<h2><span class='alert'>[I.real_name]'s will consumes your mind! <b>\"[src.custom_orders]\"</b> It <b>must</b> be done!</span></h2>")
 

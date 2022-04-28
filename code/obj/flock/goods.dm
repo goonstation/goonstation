@@ -44,7 +44,7 @@
 	name = "flocknugget"
 	desc = "Well, it isn't any more artificial than your normal chicken nugget. Probably a lot crunchier, too."
 	icon_state = "flocknugget0"
-	amount = 2
+	bites_left = 2
 	initial_volume = 20
 
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/flock/heal(var/mob/M)

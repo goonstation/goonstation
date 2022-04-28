@@ -1363,6 +1363,10 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 						var/turf/simulated/floor/F = T
 						F.burn_tile()
 
+			for (var/obj/machinery/door/DR in src.loc)
+				var/area/a = get_area(DR)
+				if (!DR.cant_emag && !a.sanctuary)
+					DR.take_damage(DR.health)
 			for (var/obj/structure/girder/G in range(src.expl_range, location))
 				var/area/a = get_area(G)
 				if (G && istype(G) && !a.sanctuary)
