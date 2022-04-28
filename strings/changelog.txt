@@ -1,6 +1,10 @@
 
 (t)thu apr 28 22
 (u)Bartimeus973
+(p)8336
+(e)🎨|sprites
+(*)Security can now put down crime scene tape to show that business is being done! Find it in sectechs! Sprites made in collaboration with shiiba!
+(u)Bartimeus973
 (p)8333
 (e)|
 (+)You can now use an RCD on deconstruction mode for limb surgery!
