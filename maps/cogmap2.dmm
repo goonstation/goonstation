@@ -43239,7 +43239,7 @@
 	name = "mail junction (pod bay checkpoint)"
 	},
 /obj/storage/closet/wardrobe/orange,
-/turf/unsimulated/floor/red/side{
+/turf/simulated/floor/red/side{
 	dir = 1
 	},
 /area/station/security/checkpoint/podbay)
@@ -43250,7 +43250,7 @@
 	},
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/computer3/generic/secure_data,
-/turf/unsimulated/floor/red/side{
+/turf/simulated/floor/red/side{
 	dir = 1
 	},
 /area/station/security/checkpoint/podbay)
@@ -43261,14 +43261,14 @@
 	pixel_y = 24;
 	text = "NF"
 	},
-/turf/unsimulated/floor/red/side{
+/turf/simulated/floor/red/side{
 	dir = 1
 	},
 /area/station/security/checkpoint/podbay)
 "bRI" = (
 /obj/disposalpipe/segment,
 /obj/disposalpipe/segment/mail/horizontal,
-/turf/unsimulated/floor/red/side{
+/turf/simulated/floor/red/side{
 	dir = 1
 	},
 /area/station/security/checkpoint/podbay)
@@ -43285,7 +43285,7 @@
 	pixel_y = 8
 	},
 /obj/disposalpipe/segment/mail/bent/south,
-/turf/unsimulated/floor/red/side{
+/turf/simulated/floor/red/side{
 	dir = 1
 	},
 /area/station/security/checkpoint/podbay)
@@ -48838,10 +48838,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
-"cem" = (
-/obj/wingrille_spawn/auto,
-/turf/simulated/wall/auto/supernorn,
-/area/station/maintenance/southeast)
 "cen" = (
 /obj/machinery/light/small,
 /obj/disposalpipe/segment/mail/bent/north,
@@ -67758,7 +67754,7 @@
 /obj/disposalpipe/trunk/transport{
 	dir = 1
 	},
-/turf/unsimulated/floor/red/side,
+/turf/simulated/floor/red/side,
 /area/station/security/checkpoint/podbay)
 "cVU" = (
 /obj/wingrille_spawn/auto/crystal,
@@ -74285,7 +74281,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc/autoname_south,
-/turf/unsimulated/floor/red/side,
+/turf/simulated/floor/red/side,
 /area/station/security/checkpoint/podbay)
 "dki" = (
 /turf/simulated/floor/shuttlebay{
@@ -77076,7 +77072,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/turf/unsimulated/floor/red/side,
+/turf/simulated/floor/red/side,
 /area/station/security/checkpoint/podbay)
 "gky" = (
 /obj/cable{
@@ -77803,7 +77799,7 @@
 /area/shuttle/research/outpost)
 "jNp" = (
 /obj/item/paper/book/from_file/monster_manual_revised,
-/turf/simulated/wall/asteroid,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "jNE" = (
 /obj/machinery/door/airlock/pyro/external{
@@ -139910,7 +139906,7 @@ cdC
 cyX
 cAb
 aaa
-cem
+ceb
 cey
 ceX
 cib
