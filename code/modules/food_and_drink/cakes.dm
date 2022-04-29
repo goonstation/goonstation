@@ -35,7 +35,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	bites_left = 0
 	heal_amt = 2
-	use_bite_mask = 0
+	use_bite_mask = FALSE
 	flags = FPRINT | TABLEPASS | NOSPLASH
 	initial_volume = 100
 	w_class = W_CLASS_BULKY

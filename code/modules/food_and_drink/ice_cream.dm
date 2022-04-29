@@ -19,7 +19,7 @@
 	var/image/cream_image = null
 	initial_volume = 40
 	food_effects = list("food_cold")
-	use_bite_mask = 0
+	use_bite_mask = FALSE
 
 	on_reagent_change()
 		..()
