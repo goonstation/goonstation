@@ -97,7 +97,10 @@
 				var/obj/item/R = D
 				if (leftovers != 0 && R.amount)
 					R.change_stack_amount(leftovers-R.amount)
-					R.set_loc(src.loc)
+					if(R.amount < 1) //no fractionals tyvm
+						qdel(R)
+					else
+						R.set_loc(src.loc)
 					leftovers = 0
 					continue
 				D.set_loc(null)
