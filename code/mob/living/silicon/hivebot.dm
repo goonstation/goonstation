@@ -1036,6 +1036,12 @@ Frequency:
 		else
 			return ..()
 
+	disposing()
+		available_ai_shells -= src
+		..()
+
+
+
 /*-----Shell-Creation---------------------------------------*/
 
 /obj/item/ai_interface
@@ -1082,7 +1088,7 @@ Frequency:
 	else if (istype(W, /obj/item/cable_coil))
 		if (src.build_step == 1)
 			var/obj/item/cable_coil/coil = W
-			if (coil.amount >= 3)
+			if (coilamount >= 3)
 				src.build_step++
 				boutput(user, "You add \the cable to [src]!")
 				playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
