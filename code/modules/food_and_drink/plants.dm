@@ -860,10 +860,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 			if(H.traitHolder.hasTrait("training_medical"))
 				random_brute_damage(H, 5)
 				boutput(H, "<span class='alert'>The apple flies true and hits you square in the face, hurting your nose.</span>")
-			else
-				..()
-		else
-			..()
+		..()
 
 /obj/item/reagent_containers/food/snacks/plant/apple/poison
 	name = "delicious-looking apple"
