@@ -349,8 +349,13 @@ datum
 
 				switch(counter += (1 * mult))
 					if (75 to 125)
-						if (probmult(4))
-							M.emote(pick("sneeze","cough","moan","groan"))
+						if(isliving(M) && probmult(15))
+							var/mob/living/L = M
+							L.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1)
+						if (ishuman(M))
+							var/mob/living/carbon/human/H = M
+							if (H.organHolder)
+								H.organHolder.damage_organs(1*mult, 0, 1*mult, target_organs, 15)
 					if (125 to 175)
 						if (probmult(8))
 							M.emote(pick("sneeze","cough","moan","groan"))
@@ -361,13 +366,13 @@ datum
 						if (ishuman(M))
 							var/mob/living/carbon/human/H = M
 							if (H.organHolder)
-								H.organHolder.damage_organs(1*mult, 0, 1*mult, target_organs, 20)
+								H.organHolder.damage_organs(1*mult, 0, 1*mult, target_organs, 25)
 					if (175 to INFINITY)
 						if (probmult(10))
 							M.emote(pick("sneeze","drool","cough","moan","groan"))
 						if (probmult(20))
 							boutput(M, "<span class='alert'>You feel weak and drowsy.</span>")
-							M.setStatus("drowsy", 5 SECONDS)
+							M.setStatus("slowed", 5 SECONDS)
 						if (probmult(8))
 							M.visible_message("<span class='alert'>[M] vomits a lot of blood!</span>")
 							playsound(M, "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1)
@@ -377,6 +382,7 @@ datum
 							M.setStatusMin("stunned", 6 SECONDS * mult)
 							M.take_toxin_damage(3)
 						M.change_eye_blurry(5, 5)
+						M.setStatus("drowsy", 10 SECONDS)
 						if (ishuman(M))
 							var/mob/living/carbon/human/H = M
 							if (H.organHolder)

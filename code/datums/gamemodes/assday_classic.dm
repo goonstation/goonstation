@@ -83,7 +83,7 @@
 	for(var/datum/mind/traitor in traitors)
 		switch(traitor.special_role)
 			if(ROLE_TRAITOR)
-				SHOW_TRAITOR_HARDMODE_TIPS(traitor.current)
+				traitor.current.show_antag_popup("traitorhard")
 
 			if (ROLE_WRAITH)
 				generate_wraith_objectives(traitor)
