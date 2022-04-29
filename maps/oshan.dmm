@@ -47021,6 +47021,10 @@
 /obj/storage/secure/closet/fridge/blood,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
+"qLc" = (
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon19,
+/turf/simulated/floor/wood,
+/area/station/bridge/customs)
 "qLn" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -97817,7 +97821,7 @@ bvL
 bzM
 bBg
 bBi
-bBi
+qLc
 bBi
 bBi
 bGy
