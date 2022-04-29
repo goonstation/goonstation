@@ -490,13 +490,13 @@
 						var/mob/living/carbon/human/H = null
 						if (param)
 							for (var/mob/living/carbon/human/M in view(1, src))
-								if (ckey(param) == ckey(M.name))
+								if (ckey(param) == ckey(M.name) && can_act(M, TRUE))
 									H = M
 									break
 						else
 							var/list/possible_recipients = list()
 							for (var/mob/living/carbon/human/M in view(1, src))
-								if (M != src)
+								if (M != src && can_act(M, TRUE))
 									possible_recipients += M
 							if (possible_recipients.len > 1)
 								H = input(src, "Who would you like to hand your [thing] to?", "Choice") as null|anything in possible_recipients
