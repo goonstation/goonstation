@@ -580,6 +580,8 @@
 			// We don't care watever is inside the airlock when we close the airlock if we are unsafe, crush em.
 			//Maybe moving this until just after the animation looks better.
 			for(var/mob/living/L in get_turf(src))
+				if(isintangible(L))
+					continue
 				var/mob_layer = L.layer	//Make it look like we're inside the door
 				L.layer = src.layer - 0.01
 				playsound(src, 'sound/impact_sounds/Flesh_Break_1.ogg', 100, 1)
