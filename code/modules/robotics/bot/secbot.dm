@@ -1040,7 +1040,11 @@
 		if(awaiting_beacon)			// awaiting beacon response
 			awaiting_beacon++
 			if(awaiting_beacon > 5)	// wait 5 secs for beacon response
-				find_nearest_beacon()	// then go to nearest instead
+				if(text2num(new_destination) && prob(66))
+					new_destination = "[1 + text2num(new_destination)]"
+					send_status()
+				else
+					find_nearest_beacon()	// then go to nearest instead
 				return 0
 			else
 				return 1
