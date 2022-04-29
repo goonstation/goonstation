@@ -165,7 +165,6 @@
 				var/obj/item/reagent_containers/glass/inserting = usr.equipped()
 				if(istype(inserting))
 					src.Attackby(inserting, usr)
-					src.UpdateIcon()
 			if("adjustTemp")
 				src.target_temp = clamp(params["temperature"], 0, 1000)
 				src.UpdateIcon()
