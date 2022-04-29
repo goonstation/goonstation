@@ -91,6 +91,7 @@
 	var/obj/item/reagent_containers/food/snacks/ice_cream_cone/cone = null
 	var/doing_a_thing = 0
 
+/*
 	attack_hand(var/mob/user as mob)
 		src.add_dialog(user)
 		var/dat = "<b>Ice Cream-O-Mat 9900</b><br>"
@@ -112,10 +113,10 @@
 		user.Browse(dat, "window=icecream;size=400x500")
 		onclose(user, "icecream")
 		return
-
+*/
 	attack_ai(var/mob/user as mob)
 		return attack_hand(user)
-
+/*
 	Topic(href, href_list)
 		if (istype(src.loc, /turf) && (( BOUNDS_DIST(src, usr) == 0) || issilicon(usr) || isAI(usr)))
 			if (!isliving(usr) || iswraith(usr) || isintangible(usr))
@@ -186,7 +187,7 @@
 
 			src.updateUsrDialog()
 		return
-
+*/
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (W.cant_drop) // For borg held items
 			boutput(user, "<span class='alert'>You can't put that in \the [src] when it's attached to you!</span>")
@@ -233,6 +234,26 @@
 		src.icon_state = "ice_creamer[src.cone ? "1" : "0"]"
 
 		return
+
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if (!ui)
+			ui = new(user, src, "IceCream")
+			ui.open()
+
+	ui_data(mob/user)
+		var/testvar = 0
+		var/testlist = list()
+
+		. = list(
+			"ores" = testlist,
+			"vartest" = testvar,
+		)
+	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+		. = ..()
+		if(.)
+			return
+		//switch(action)
 
 /// COOKING RECODE ///
 
