@@ -570,6 +570,7 @@
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	var/const/default_duration = 1 SECOND
 	duration = default_duration
+	color_success = "#4444FF"
 	var/obj/flock_structure/ghost/target = null
 
 	New(var/obj/flock_structure/ghost/target, var/duration = default_duration)
