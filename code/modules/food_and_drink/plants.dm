@@ -855,7 +855,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 		else ..()
 
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)	//An apple a day, keeps the doctors away
-		if (ishuman(hit_atom) )
+		if (ishuman(hit_atom))
 			var/mob/living/carbon/human/H = hit_atom
 			if(H.traitHolder.hasTrait("training_medical"))
 				random_brute_damage(H, 5)
