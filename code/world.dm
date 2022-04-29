@@ -620,6 +620,7 @@ var/f_color_selector_handler/F_Color_Selector
 #endif
 #ifdef RUNTIME_CHECKING
 	populate_station()
+	check_map_correctness()
 	SPAWN(10 SECONDS)
 		Reboot_server()
 #endif
