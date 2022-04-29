@@ -45190,6 +45190,10 @@
 	dir = 5;
 	icon_state = "tile1"
 	},
+/obj/item/clothing/head/helmet/camera{
+	pixel_y = -2;
+	pixel_x = -6
+	},
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
 "mZu" = (
