@@ -604,29 +604,31 @@
 		if (!istype(W, /obj/item/clothing/mask) && !istype(W, /obj/item/clothing/head) && !istype(W, /obj/item/clothing/under) && !istype(W, /obj/item/clothing/suit))
 			boutput(user, "<span class='alert'>This type of is not compatible.</span>")
 			return
+		if (W.loc == src)
+			return
 		if (user.contents.Find(W))
-			user.drop_item()
+			user.drop_item(W)
 		W.set_loc(src)
 		boutput(user, "You insert [W].")
 		src.clothes.Add(W)
 
 	else if (istype(W, /obj/item/robot_module))
 		if (user.contents.Find(W))
-			user.drop_item()
+			user.drop_item(W)
 		W.set_loc(src)
 		boutput(user, "You insert [W].")
 		src.modules.Add(W)
 
 	else if (istype(W, /obj/item/roboupgrade))
 		if (user.contents.Find(W))
-			user.drop_item()
+			user.drop_item(W)
 		W.set_loc(src)
 		boutput(user, "You insert [W].")
 		src.upgrades.Add(W)
 
 	else if (istype(W, /obj/item/cell))
 		if (user.contents.Find(W))
-			user.drop_item()
+			user.drop_item(W)
 		W.set_loc(src)
 		boutput(user, "You insert [W].")
 		src.cells.Add(W)
@@ -636,7 +638,8 @@
 		src.cabling += C.amount
 		boutput(user, "You insert [W]. [src] now has [src.cabling] cable available.")
 		if (user.contents.Find(W))
-			user.drop_item()
+			user.drop_item(W)
+		W.set_loc(src)
 		qdel(W)
 
 	else if (istype(W, /obj/item/reagent_containers/glass))
