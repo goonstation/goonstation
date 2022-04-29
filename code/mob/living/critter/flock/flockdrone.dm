@@ -208,7 +208,8 @@
 		boutput(controller, "<span class='flocksay'><b>\[SYSTEM: Connection to drone [src.real_name] lost.\]</b></span>")
 		controller = null
 	src.is_npc = TRUE // to ensure right flock_speak message
-	flock_speak(src, "Error: Out of signal range. Disconnecting.", src.flock)
+	if (src.z != Z_LEVEL_NULL)
+		flock_speak(src, "Error: Out of signal range. Disconnecting.", src.flock)
 	src.is_npc = FALSE // turns off ai
 	src.flock = null
 
