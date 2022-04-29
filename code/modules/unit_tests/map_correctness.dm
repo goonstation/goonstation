@@ -1,10 +1,11 @@
 /// Not quite a unit test but achieves the same goal. Ran for each map unlike actual unit tests.
 
-#ifdef RUNTIME_CHECKING
+// #ifdef RUNTIME_CHECKING
 
 proc/check_map_correctness()
 	check_missing_navbeacons()
 	check_apcs_wired()
+	check_objects_in_walls()
 
 proc/check_missing_navbeacons()
 	var/list/all_beacons = list()
@@ -36,5 +37,14 @@ proc/check_apcs_wired()
 		var/problematic_areas_text = jointext(problematic_areas, ", ")
 		CRASH("APCs without cables: " + problematic_areas_text)
 
+proc/check_objects_in_walls()
+	var/list/log_lines = list()
+	for(var/obj/O in world)
+		var/turf/T = O.loc
+		if(!O.anchored && istype(T) && T?.density)
+			log_lines += "[O] [O.type] on [T.x], [T.y], [T.z]) in [T.loc]"
+	if(length(log_lines))
+		CRASH("Unanchored objects in walls:\n" + jointext(log_lines, "\n"))
 
-#endif
+
+// #endif
