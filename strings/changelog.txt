@@ -1,5 +1,9 @@
 
 (t)thu apr 28 22
+(u)LeahTheTech
+(p)7673
+(e)🆕🎨⚖|feature, sprites, balance
+(*)Added a kitchen baster for adding pois- DELICIOUS INGREDIENTS to food. Find it in the kitchen vending machine.
 (u)Bartimeus973
 (p)8336
 (e)🎨|sprites
