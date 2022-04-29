@@ -272,7 +272,7 @@
 	var/target_turf = get_pathable_turf(the_target)
 	if((BOUNDS_DIST(the_target, src) == 0))
 		return
-	if(src.bot_mover?.the_target == target_turf)
+	if(src.bot_mover?.the_target == target_turf && frustration == 0)
 		return 0
 	if(!target_turf)
 		return 0
