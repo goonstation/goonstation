@@ -11137,6 +11137,7 @@
 /area/station/storage/primary)
 "azO" = (
 /obj/disposalpipe/segment,
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon5,
 /turf/simulated/floor,
 /area/station/storage/primary)
 "azP" = (
