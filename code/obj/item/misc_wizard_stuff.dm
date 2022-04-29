@@ -232,11 +232,11 @@
 		START_TRACKING
 
 	disposing()
-		. = ..()
 		STOP_TRACKING
+		. = ..()
 
 	pixelaction(atom/target, params, mob/user, reach)
-		if(!IN_RANGE(user, target, 10))
+		if(!IN_RANGE(user, target, WIDE_TILE_WIDTH / 2))
 			return
 		if (istype(get_area(target), /area/station/chapel) || istype(get_area(user), /area/station/chapel))
 			boutput(user, "<span class='alert'>You cannot summon lightning on holy ground!</span>") //phrasing works if either target or mob are in chapel heh
