@@ -1,5 +1,9 @@
 
 (t)thu apr 28 22
+(u)FlameArrow57
+(p)7804
+(e)🆕🗺🎨⚖|feature, mapping, sprites, balance
+(+)Tranquilizer darts and syringe projectiles can now stick into your body! Along with throwing darts, these items can be pulled out using the help intent, except for the syndicate fired variety, which must be cut out using a scalpel.
 (u)LeahTheTech
 (p)7673
 (e)🆕🎨⚖|feature, sprites, balance
