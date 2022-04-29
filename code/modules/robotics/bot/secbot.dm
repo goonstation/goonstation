@@ -1028,7 +1028,7 @@
 			navigate_to(patrol_target, delay)
 			if(src.bot_mover && !src.bot_mover.disposed)
 				. = TRUE
-		else
+		else if(patrol_target)
 			. = TRUE
 		if(!.)
 			if(!ON_COOLDOWN(src, "find new path after failure", 15 SECONDS))
