@@ -18,7 +18,7 @@ mob/new_player
 
 	anchored = 1	//  don't get pushed around
 
-	var/chui/window/spend_spacebux/bank_menu
+	var/datum/spend_spacebux/bank_menu
 
 	New()
 		. = ..()
@@ -246,7 +246,10 @@ mob/new_player
 					var/obj/item/organ/brain/latejoin/latejoin = IsSiliconAvailableForLateJoin(S)
 					if(latejoin)
 						close_spawn_windows()
-						latejoin.activated = 1
+						latejoin.activated = TRUE
+						latejoin.name_prefix("activated")
+						latejoin.UpdateName()
+						latejoin.color = json_decode("\[-0.152143,1.02282,-0.546681,1.28769,-0.143153,0.610996,-0.135547,0.120332,0.935685\]") //spriters beware
 						latejoin.owner = src.mind
 						src.mind.transfer_to(S)
 						SPAWN(1 DECI SECOND)
@@ -616,7 +619,7 @@ a.latejoin-card:hover {
 		src.Browse(dat, "window=latechoices;size=800x666")
 		if(!bank_menu)
 			bank_menu = new
-		bank_menu.Subscribe( usr.client )
+		bank_menu.ui_interact(usr ,null)
 
 	proc/create_character(var/datum/job/J, var/allow_late_antagonist = 0)
 		if (!src || !src.mind || !src.client)
@@ -846,9 +849,9 @@ a.latejoin-card:hover {
 				if (usr.client) winset(src, "joinmenu.button_cancel", "is-disabled=false;is-visible=true")
 				if (usr.client) winset(src, "joinmenu.button_ready_antag", "is-disabled=true")
 				usr.Browse(null, "window=mob_occupation")
-
-				bank_menu = new
-				bank_menu.Subscribe( usr.client )
+				if(!bank_menu)
+					bank_menu = new
+				bank_menu.ui_interact( usr, null )
 				src.client.loadResources()
 		else
 			LateChoices()
@@ -861,7 +864,7 @@ a.latejoin-card:hover {
 			return
 
 		if (ticker)
-			if(ticker.pregame_timeleft <= 3)
+			if(ticker.pregame_timeleft <= 3 && !isadmin(usr))
 				boutput(usr, "<span class='alert'>It is too close to roundstart for you to unready. Please wait until setup finishes.</span>")
 				return
 			if (ticker.mode)

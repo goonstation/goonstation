@@ -38,6 +38,8 @@
 #define STAMINA_GRAB_BLOCK_CHANCE 85
 /// Chance to resist out of passive grabs.
 #define STAMINA_P_GRAB_RESIST_CHANCE 100
+/// Chance to resist out of a strong grab (i.e. werewolves)
+#define STAMINA_S_GRAB_RESIST_CHANCE 60
 /// Chance to resist out of upgraded grabs.
 #define STAMINA_U_GRAB_RESIST_CHANCE 45
 /// Cost of blocking an attack.

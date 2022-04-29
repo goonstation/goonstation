@@ -414,7 +414,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 /obj/storage/crate/freezer/hospital
 	var/keySpawned = 0
 
-	open()
+	open(entanglelogic, mob/user)
 		if (!keySpawned)
 			var/obj/item/device/key/hospital/theKey = new (src)
 			keySpawned = 1

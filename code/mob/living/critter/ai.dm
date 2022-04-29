@@ -12,6 +12,7 @@ var/list/ai_move_scheduled = list()
 	var/move_dist = 0
 	var/move_reverse = 0
 	var/move_side = 0 //merge with reverse later ok messy
+	var/list/move_path = null
 
 	var/enabled = 1
 
@@ -66,6 +67,7 @@ var/list/ai_move_scheduled = list()
 		if(isdead(owner))
 			enabled = 0
 		if(!enabled)
+			stop_move()
 			walk(owner, 0)
 			return
 		if (!current_task)
@@ -95,11 +97,25 @@ var/list/ai_move_scheduled = list()
 		if(src.enabled)
 			current_task?.reset()
 			current_task = default_task
+			stop_move()
+			tick()
 
 	proc/die()
 		src.enabled = 0
 		stop_move()
 		current_task = null
+
+	//store a path and move to it with speed - useful for going fast but using smarter pathfinding
+	proc/move_to_with_path(var/A, var/list/path = null, var/dist = 1)
+		if(!length(path))
+			CRASH("Tried to do AI pathing on an empty path. Don't do that.")
+		if (!move_target)
+			ai_move_scheduled += src
+		move_path = path
+		move_target = A
+		move_dist = dist
+		move_reverse = 0
+		move_side = 0
 
 	proc/move_to(var/A, var/dist = 1)
 		if (!move_target)
@@ -127,6 +143,7 @@ var/list/ai_move_scheduled = list()
 
 	proc/stop_move()
 		move_target = null
+		move_path = null
 		ai_move_scheduled -= src
 		walk(owner,0)
 
@@ -145,6 +162,19 @@ var/list/ai_move_scheduled = list()
 					else
 						turn += 45
 				src.owner.move_dir = turn(get_dir(src.owner,get_turf(src.move_target)),turn)
+				src.owner.process_move()
+		else if (length(src.move_path))
+			var/turf/next
+			if(src.move_path[1] == src.owner.loc) //check you've completed a step before removing it from the path
+				src.move_path.Cut(1, 2)
+
+			if(length(src.move_path))
+				next = src.move_path[1]
+			else
+				next = src.move_target
+
+			if (get_dist(src.owner,get_turf(next)) > src.move_dist)
+				src.owner.move_dir = get_dir(src.owner,get_turf(next))
 				src.owner.process_move()
 		else
 			if (get_dist(src.owner,get_turf(src.move_target)) > src.move_dist)

@@ -280,7 +280,7 @@
 		if("Detective", "Forensic Technician")
 			return list(access_brig, access_carrypermit, access_contrabandpermit, access_security, access_forensics_lockers, access_morgue, access_maint_tunnels, access_crematorium, access_medical, access_research)
 		if("Lawyer")
-			return list(access_maint_tunnels, access_security, access_brig)
+			return list(access_morgue, access_maint_tunnels)
 
 		///////////////////////////// Medical
 		if("Medical Doctor")

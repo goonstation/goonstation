@@ -24,6 +24,7 @@
 	stamina_cost = 0
 	stamina_crit_chance = 0
 	move_triggered = 1
+	duration_put = 0.25 SECONDS //crime
 	var/is_dangerous = TRUE
 	var/detonating = 0
 

@@ -99,6 +99,7 @@
 		if(4)
 			boutput(affected_mob, "<span class='alert'>You feel something pushing at your spine...</span>")
 			if(probmult(40))
+				//ALL of this is awful why are we passing a fuckingf mind in as an arg why does the headspider disease not have a reference to the HEADSPIDER my GOD
 				if(changeto)
 
 					// Absorb their DNA. Copies identities and DNA points automatically if victim was another changeling. This also inserts them into the hivemind.
@@ -120,6 +121,9 @@
 					changeling.reassign_hivemind_target_mob()
 
 					// Transfer player control.
+
+					var/mob/living/critter/changeling/headspider/HS = changeto.current
+					HS.changeling = null //so the spider doesn't have a ref to our holder as well
 					changeto.transfer_to(affected_mob)
 					changeto.is_changeling = changeling
 					changeto = null

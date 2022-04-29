@@ -133,7 +133,7 @@ var/datum/respawn_controls/respawn_controller
 			observer = the_client.mob
 		else if(istype(the_client?.mob, /mob/dead/target_observer))
 			var/mob/dead/target_observer/target_observer = the_client?.mob
-			observer = target_observer.my_ghost
+			observer = target_observer.ghost
 		if(time_left > 0)
 			observer?.hud?.get_respawn_timer().set_time_left(time_left)
 		else
@@ -190,6 +190,9 @@ var/datum/respawn_controls/respawn_controller
 		M.key = the_client.key
 		M.Login()
 		M.mind.purchased_bank_item = null
+		if(master.rp_alert)
+			M.client?.preferences.ShowChoices(M)
+			boutput(M, "<span class='alert'>Remember that you <B>must spawn as a <u>new character</u></B> and <B>have no memory of your past life!</B></span>")
 		master.unsubscribeRespawnee(src.ckey)
 
 /client/proc/respawn_via_controller()

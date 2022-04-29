@@ -66,7 +66,10 @@
 	var/cant_other_remove = 0 // Can't be removed from non-hand slots by others
 	var/cant_drop = 0 // Cant' be removed in general. I guess.
 
+	///This is for things which are stackable! It means that there are [amount] things here, which could be discretely split or stacked!
+	///if you use this to represent something other than a literal stack of items I will break your kneecaps
 	var/amount = 1
+
 	var/max_stack = 1
 	var/stack_type = null // if null, only current type. otherwise uses this
 

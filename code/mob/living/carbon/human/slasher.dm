@@ -66,7 +66,7 @@
 					src.setStatus("incorporeal", duration = INFINITE_STATUS)
 					src.set_density(FALSE)
 					src.visible_message("<span class='alert'>[src] disappears!</span>")
-					APPLY_ATOM_PROPERTY(src, PROP_MOB_NEVER_DENSE, src)
+					APPLY_ATOM_PROPERTY(src, PROP_ATOM_NEVER_DENSE, src)
 					APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_GHOST)
 					APPLY_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS, src)
 					APPLY_ATOM_PROPERTY(src, PROP_MOB_NOCLIP, src)
@@ -89,7 +89,7 @@
 					src.delStatus("incorporeal")
 					src.set_density(TRUE)
 					REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src)
-					REMOVE_ATOM_PROPERTY(src, PROP_MOB_NEVER_DENSE, src)
+					REMOVE_ATOM_PROPERTY(src, PROP_ATOM_NEVER_DENSE, src)
 					REMOVE_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS, src)
 					REMOVE_ATOM_PROPERTY(src, PROP_MOB_NOCLIP, src)
 					src.alpha = 254

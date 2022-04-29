@@ -143,6 +143,7 @@
 		if (current_blood_amt >= 1000)
 			if (prob(clamp((current_blood_amt - 1000)/10, 0, 100))) //0% at 1000, 100% at 2000, linear scaling
 				owner.visible_message("<span class='alert'><b>[owner] bursts like a bloody balloon! Holy fucking shit!!</b></span>")
+				logTheThing("combat", owner, null, "gibbed due to having over 1000 units of blood at [log_loc(src)].")
 				owner.gib(TRUE) // :v
 				return ..()
 

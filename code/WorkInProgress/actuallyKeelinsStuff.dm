@@ -2894,9 +2894,9 @@ Returns:
 
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		icon_state = "boomerang"
-		if(hit_atom == usr)
+		var/mob/user = thr.user
+		if(hit_atom == user)
 			if(prob(prob_clonk))
-				var/mob/living/carbon/human/user = usr
 				user.visible_message("<span class='alert'><B>[user] fumbles the catch and is clonked on the head!</B></span>")
 				playsound(user.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 				user.changeStatus("stunned", 5 SECONDS)
@@ -2904,14 +2904,13 @@ Returns:
 				user.changeStatus("paralysis", 2 SECONDS)
 				user.force_laydown_standup()
 			else
-				src.Attackhand(usr)
+				src.Attackhand(user)
 			return
 		else
 			if(ishuman(hit_atom))
-				var/mob/living/carbon/human/user = usr
-				var/safari = (istype(user.w_uniform, /obj/item/clothing/under/gimmick/safari) && istype(user.head, /obj/item/clothing/head/safari))
+				var/mob/living/carbon/human/H = hit_atom
+				var/safari = (istype(H.w_uniform, /obj/item/clothing/under/gimmick/safari) && istype(H.head, /obj/item/clothing/head/safari))
 				if(safari)
-					var/mob/living/carbon/human/H = hit_atom
 					H.changeStatus("stunned", 4 SECONDS)
 					H.changeStatus("weakened", 2 SECONDS)
 					H.force_laydown_standup()

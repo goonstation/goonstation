@@ -263,6 +263,7 @@
 	name_prefix = "Ricin "
 	iconmod = "Rice"
 	assoc_reagents = list("ricin")
+	PTrange = list(60,null)
 	crop = /obj/item/reagent_containers/food/snacks/ingredient/rice_sprig
 
 // Oat Mutations
@@ -471,7 +472,7 @@
 	name_prefix = "Sunrise "
 	iconmod = "VenneCurative"
 	crop = /obj/item/plant/herb/venne/curative
-	assoc_reagents = list("oculine","mannitol","mutadone")
+	assoc_reagents = list("mannitol","mutadone")
 	chance = 5
 
 // Houttuynia Cordata Mutations
