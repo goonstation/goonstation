@@ -100,15 +100,10 @@
 	requires_robes = 1
 
 	cast(mob/target)
-		if (!holder)
+		var/mob/living/M = holder?.owner
+		if (!ismob(M)) 
 			return 1
-
-		var/mob/living/M = holder.owner
-
-		if (!M)
-			return 1
-
-		if (M.getStatusDuration("stunned") > 0 || M.getStatusDuration("weakened") || M.getStatusDuration("paralysis") > 0 || !isalive(M) || M.restrained())
+		if (!can_act(M))
 			boutput(M, "<span class='alert'Not when you're incapacitated or restrained.")
 			return 1
 
@@ -127,7 +122,7 @@
 					staves["[S.name] #[length(staves) + 1] [ismob(S.loc) ? "carried by [S.loc.name]" : "at [get_area(S)]"]"] += S
 
 		switch (length(staves))
-			if (-INFINITY to 0)
+			if (0)
 				if (we_hold_it)
 					for (var/obj/item/staff/thunder/T in M.contents)
 						T.recharge_thunder()
@@ -162,12 +157,12 @@
 
 				var/obj/item/staff/thunder/staff = staves[t1]
 
-				if (!M || !ismob(M))
+				if (!M)
 					return 0
-				if (!staff || !istype(staff))
+				if (!istype(staff))
 					boutput(M, "<span class='alert'You were unable to summon your staff.")
 					return 0
-				if (M.getStatusDuration("stunned") > 0 || M.getStatusDuration("weakened") || M.getStatusDuration("paralysis") > 0 || !isalive(M) || M.restrained())
+				if (!can_act(M))
 					boutput(M, "<span class='alert'Not when you're incapacitated or restrained.")
 					return 0
 				if (M.mind.key != staff.wizard_key)

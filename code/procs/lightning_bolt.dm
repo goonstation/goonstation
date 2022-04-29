@@ -64,10 +64,13 @@
 	plane = PLANE_NOSHADOW_ABOVE
 	icon = 'icons/effects/64x128.dmi'
 	icon_state = "lightning_1"
+	pixel_x = -4
 
 	New()
-		icon_state = pick("lightning_1", "lightning_2")
 		..()
+		flick(pick("lightning_1", "lightning_2"), src)
+		SPAWN(0.7 SECONDS)
+			qdel(src)
 
 /obj/lightning_target
 	anchored = 1
