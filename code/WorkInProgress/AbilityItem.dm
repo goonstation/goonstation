@@ -403,13 +403,13 @@
 
 /obj/ability_button/tscanner_toggle
 	name = "Toggle T-Scanner"
-	icon_state = "on"
+	icon_state = "lighton" //TODO: make bespoke sprites for this I guess
 
 	execute_ability()
 		var/obj/item/device/t_scanner/J = the_item
 		J.AttackSelf(the_mob)
-		if(J.on) icon_state = "off"
-		else  icon_state = "on"
+		if(J.on) icon_state = "lightoff"
+		else  icon_state = "lighton"
 		..()
 
 ////////////////////////////////////////////////////////////
