@@ -13,6 +13,9 @@
 /obj/machinery/door/feather/New()
 	..()
 	setMaterial("gnesis")
+	if (map_settings?.auto_walls)
+		for (var/turf/simulated/wall/auto/feather/W in orange(1, src))
+			W.UpdateIcon()
 	var/datum/component/C = src.GetComponent(/datum/component/mechanics_holder)
 	C?.RemoveComponent()
 	src.AddComponent(/datum/component/flock_protection, FALSE, FALSE, TRUE)
@@ -121,6 +124,12 @@
 
 /obj/machinery/door/feather/isblocked()
 	return 0 // this door will not lock or be inaccessible to flockdrones
+
+/obj/machinery/door/feather/disposing()
+	..()
+	if (map_settings?.auto_walls)
+		for (var/turf/simulated/wall/auto/feather/W in orange(1))
+			W.UpdateIcon()
 
 ////////////////////
 // friendly variant
