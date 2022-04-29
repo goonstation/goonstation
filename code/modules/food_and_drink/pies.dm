@@ -107,7 +107,7 @@
 	icon_state = "pie"
 	bites_left = 3
 	heal_amt = 4
-	use_bite_mask = 0
+	use_bite_mask = FALSE
 
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		if (contents)

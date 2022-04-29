@@ -227,7 +227,7 @@
 
 	New(The_Owner, The_Railing, use_owner_dir = FALSE)
 		..()
-		collision_whitelist = typesof(/obj/railing, /obj/decal/stage_edge)
+		collision_whitelist = typesof(/obj/railing, /obj/decal/stage_edge, /obj/sec_tape)
 		if (The_Owner)
 			owner = The_Owner
 			ownerMob = The_Owner

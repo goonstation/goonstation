@@ -39,6 +39,9 @@
 		if (isghostdrone(user) || isAI(user))
 			boutput(user, "<span class='alert'>The [src] refuses to interface with you, as you are not a bus driver!</span>")
 			return
+		if (W.cant_drop) //For borg held items
+			boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
+			return
 		if (src.grillitem)
 			boutput(user, "<span class='alert'>There is already something on the grill!</span>")
 			return
