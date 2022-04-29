@@ -278,6 +278,12 @@
 			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
 		return
 
+	Exited(Obj, newloc)
+		if(Obj == src.beaker && newloc == null)
+			src.beaker = null
+			src.UpdateIcon()
+			tgui_process.update_uis(src)
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -685,6 +691,12 @@
 		else
 			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
 		return
+
+	Exited(Obj, newloc)
+		if(Obj == src.beaker && newloc == null)
+			src.beaker = null
+			icon_state = "mixer0"
+			src.updateUsrDialog()
 
 datum/chemicompiler_core/stationaryCore
 	statusChangeCallback = "statusChange"

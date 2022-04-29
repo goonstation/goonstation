@@ -754,6 +754,11 @@
 		<td class='r [DNA.alleles[7] ? "hyp-dominant" : ""]'>[DNA.endurance]</td>
 		"}
 
+	Exited(Obj, newloc)
+		if(Obj == src.inserted && newloc == null)
+			src.inserted = null
+			src.updateUsrDialog()
+
 ////// Reagent Extractor
 
 /obj/submachine/chem_extractor/
@@ -942,6 +947,10 @@
 
 		..()
 
+	Exited(Obj, newloc)
+		if(Obj == src.inserted && newloc == null)
+			src.inserted = null
+			tgui_process.update_uis(src)
 
 /obj/submachine/chem_extractor/proc/getContainers()
 	. = list(
