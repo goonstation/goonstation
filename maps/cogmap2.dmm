@@ -56571,10 +56571,11 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "W APC";
-	pixel_x = -24
+	pixel_x = -24;
+	areastring = "Robot Depot"
 	},
 /turf/simulated/floor/plating,
-/area/station/science/bot_storage)
+/area/station/maintenance/southeast)
 "cwC" = (
 /obj/machinery/launcher_loader/south,
 /turf/simulated/floor/plating,
