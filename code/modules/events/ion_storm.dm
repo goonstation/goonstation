@@ -2,6 +2,7 @@
 	name = "Ion Storm"
 	centcom_headline = "Equipment Malfunction"
 	centcom_message = "An electromagnetic storm recently passed by the station. Sensitive electrical equipment may require maintenance."
+	centcom_origin = ALERT_WEATHER
 	message_delay = 5 MINUTES
 	/// The fraction of message_delay taken up by each stage of the ion storm
 	var/stage_delay
@@ -123,6 +124,13 @@
 		if(isnull(pickedLaw))
 			pickedLaw = pick(new_laws)
 
+		for_by_tcl(M, /mob/living/silicon/ai)
+			if (M.deployed_to_eyecam && M.eyecam)
+				M.eyecam.return_mainframe()
+			if(!isdead(M) && M.see_in_dark != 0)
+				boutput(M, "<span class='alert'><b>PROGRAM EXCEPTION AT 0x30FC50B</b></span>")
+				boutput(M, "<span class='alert'><b>Law ROM data corrupted. Attempting to restore...</b></span>")
+
 		if (prob(50))
 			var/num = rand(1,9)
 			ticker.ai_law_rack_manager.ion_storm_all_racks(pickedLaw,num,false)
@@ -136,14 +144,6 @@
 
 		logTheThing("admin", null, null, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.format_for_logs()]")
 		logTheThing("diary", null, null, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.format_for_logs()]", "admin")
-
-		for_by_tcl(M, /mob/living/silicon/ai)
-			if (M.deployed_to_eyecam && M.eyecam)
-				M.eyecam.return_mainframe()
-			if(!isdead(M) && M.see_in_dark != 0)
-				boutput(M, "<span class='alert'><b>PROGRAM EXCEPTION AT 0x30FC50B</b></span>")
-				boutput(M, "<span class='alert'><b>Law ROM data corrupted. Attempting to restore...</b></span>")
-		ticker.ai_law_rack_manager.default_ai_rack.UpdateLaws()
 
 		SPAWN(message_delay * stage_delay)
 

@@ -277,7 +277,7 @@
 		if (src.attack_per_step && prob(src.attack_per_step == 2 ? 25 : 75))
 			if (oldloc != NewLoc)
 				if (mode == SECBOT_AGGRO && target)
-					if (IN_RANGE(src, src.target, 1))
+					if ((BOUNDS_DIST(src, src.target) == 0))
 						src.baton_attack(src.target, 1)
 
 	attack_hand(mob/user as mob, params)
@@ -575,14 +575,18 @@
 
 			while (stuncount > 0 && src.target)
 				// they moved while we were sleeping, abort
-				if(!IN_RANGE(src, src.target, 1))
+				if(!(BOUNDS_DIST(src, src.target) == 0))
 					src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-wild" : null]"
 					src.weeoo()
 					src.process()
 					return
 
 				stuncount--
-				src.our_baton.do_stun(src, M, src.stun_type, 2)
+				if (check_target_immunity(M))
+					src.visible_message("<span class='alert'><B>[src] tries to stun [M] with the [src.our_baton] but the attack bounces off uselessly!</B></span>")
+					playsound(src, "sound/impact_sounds/Generic_Swing_1.ogg", 25, 1, -1)
+				else
+					src.our_baton.do_stun(src, M, src.stun_type, 2)
 				if (!stuncount && maxstuns-- <= 0)
 					src.KillPathAndGiveUp(KPAGU_CLEAR_PATH)
 				if (stuncount > 0)
@@ -770,7 +774,7 @@
 		/// Tango!
 		if(src.target)
 			/// Tango in batonning distance?
-			if (IN_RANGE(src, src.target, 1))
+			if ((BOUNDS_DIST(src, src.target) == 0))
 				/// Are they good and downed, and are we allowed to cuff em?
 				if(!src.arrest_type && src.target?.getStatusDuration("weakened") >= 3 SECONDS)
 					if(!src.warn_minor_crime || ((src.warn_minor_crime || src.guard_area_lockdown) && src.threatlevel >= src.cuff_threat_threshold))
@@ -993,7 +997,7 @@
 			src.look_for_perp()
 
 		/// If we happen to be chasing someone and get in batonning range, let's stop and maybe try to hit them
-		if(src.target && IN_RANGE(src, src.target, 1))
+		if(src.target && (BOUNDS_DIST(src, src.target) == 0))
 			return TRUE
 
 	KillPathAndGiveUp(var/give_up = KPAGU_CLEAR_PATH)
@@ -1019,10 +1023,13 @@
 		if(loc == patrol_target) // We where we want to be?
 			at_patrol_target() // Find somewhere else to go!
 			look_for_perp()
-		else if (patrol_target && (isnull(src.bot_mover) || get_turf(src.bot_mover.the_target) != get_turf(patrol_target)))
+			. = TRUE
+		else if (patrol_target && (frustration >= 3 || isnull(src.bot_mover) || get_turf(src.bot_mover.the_target) != get_turf(patrol_target)))
 			navigate_to(patrol_target, delay)
 			if(src.bot_mover && !src.bot_mover.disposed)
 				. = TRUE
+		else if(patrol_target)
+			. = TRUE
 		if(!.)
 			if(!ON_COOLDOWN(src, "find new path after failure", 15 SECONDS))
 				find_patrol_target() // find next beacon I guess!
@@ -1033,7 +1040,11 @@
 		if(awaiting_beacon)			// awaiting beacon response
 			awaiting_beacon++
 			if(awaiting_beacon > 5)	// wait 5 secs for beacon response
-				find_nearest_beacon()	// then go to nearest instead
+				if(text2num(new_destination) && prob(66))
+					new_destination = "[1 + text2num(new_destination)]"
+					send_status()
+				else
+					find_nearest_beacon()	// then go to nearest instead
 				return 0
 			else
 				return 1
@@ -1281,15 +1292,11 @@
 
 		master.cuffing = 0
 
-		if (get_dist(master, master.target) <= 1)
+		if (BOUNDS_DIST(master, master.target) == 0)
 			if (!master.target || master.target.hasStatus("handcuffed"))
 				return
 
 			var/uncuffable = 0
-			if (ishuman(master.target))
-				var/mob/living/carbon/human/H = master.target
-				if(!H.limbs.l_arm || !H.limbs.r_arm)
-					uncuffable = 1
 
 			if (!isturf(master.target.loc))
 				uncuffable = 1
@@ -1330,7 +1337,7 @@
 					master.KillPathAndGiveUp(KPAGU_CLEAR_ALL)
 
 	proc/failchecks()
-		if (!IN_RANGE(master, master.target, 1))
+		if (!(BOUNDS_DIST(master, master.target) == 0))
 			return 1
 		if (!master.target || master.target.hasStatus("handcuffed") || master.moving)
 			return 1
@@ -1377,7 +1384,7 @@
 	onEnd()
 		..()
 		master.baton_charging = 0
-		if(IN_RANGE(master, master.target, 1))
+		if((BOUNDS_DIST(master, master.target) == 0))
 			master.baton_attack(master.target, 1)
 		else
 			master.charge_baton()

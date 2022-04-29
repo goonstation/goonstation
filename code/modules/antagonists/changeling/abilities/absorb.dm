@@ -20,20 +20,20 @@
 	onUpdate()
 		..()
 
-		if(get_dist(owner, target) > 1 || target == null || owner == null || !devour)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || !devour)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 		var/mob/ownerMob = owner
 		var/obj/item/grab/G = ownerMob.equipped()
 
-		if (!istype(G) || G.affecting != target || G.state < 1)
+		if (!istype(G) || G.affecting != target || G.state == GRAB_PASSIVE)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null || !devour)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || !devour)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -44,7 +44,7 @@
 		..()
 
 		var/mob/ownerMob = owner
-		if(owner && ownerMob && target && get_dist(owner, target) <= 1 && devour)
+		if(owner && ownerMob && target && BOUNDS_DIST(owner, target) == 0 && devour)
 			var/datum/abilityHolder/changeling/C = devour.holder
 			if (istype(C))
 				C.addDna(target)
@@ -116,14 +116,14 @@
 	onUpdate()
 		..()
 
-		if(get_dist(owner, target) > 1 || target == null || owner == null || !devour || !devour.cooldowncheck())
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || !devour || !devour.cooldowncheck())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 		var/mob/ownerMob = owner
 		var/obj/item/grab/G = ownerMob.equipped()
 
-		if (!istype(G) || G.affecting != target || G.state != 3)
+		if (!istype(G) || G.affecting != target || G.state < GRAB_CHOKE)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -143,7 +143,7 @@
 
 	onStart()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null || !devour || !devour.cooldowncheck())
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || !devour || !devour.cooldowncheck())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -163,7 +163,7 @@
 		..()
 
 		var/mob/ownerMob = owner
-		if(owner && ownerMob && target && get_dist(owner, target) <= 1 && devour)
+		if(owner && ownerMob && target && BOUNDS_DIST(owner, target) == 0 && devour)
 			var/datum/abilityHolder/changeling/C = devour.holder
 			if (istype(C))
 				C.addDna(target)

@@ -19,13 +19,13 @@
 	onUpdate()
 		..()
 
-		if(get_dist(owner, target) > 1 || target == null || owner == null || target == owner || !zombify || !zombify.cooldowncheck())
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || target == owner || !zombify || !zombify.cooldowncheck())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null || target == owner || !zombify || !zombify.cooldowncheck())
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || target == owner || !zombify || !zombify.cooldowncheck())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -41,7 +41,7 @@
 			if (target.ghost?.mind && !(target.mind && target.mind.dnr)) // if they have dnr set don't bother shoving them back in their body (Shamelessly ripped from SR code. Fight me.)
 				target.ghost.show_text("<span class='alert'><B>You feel yourself being dragged out of the afterlife!</B></span>")
 				target.ghost.mind.transfer_to(target)
-		if(owner && ownerMob && target && IN_RANGE(owner, target, 1) && zombify?.cooldowncheck())
+		if(owner && ownerMob && target && (BOUNDS_DIST(owner, target) == 0) && zombify?.cooldowncheck())
 
 			logTheThing("combat", ownerMob, target, "zombifies [constructTarget(target,"combat")].")
 			for(var/mob/O in AIviewers(ownerMob))
@@ -81,7 +81,7 @@
 		if (!ishuman(target))
 			boutput(holder.owner, __red("Invalid target."))
 			return 1
-		if (get_dist(holder.owner, target) > 1)
+		if (BOUNDS_DIST(holder.owner, target) > 0)
 			boutput(holder.owner, __red("That is too far away to zombify."))
 			return 1
 		var/mob/living/carbon/human/H = target

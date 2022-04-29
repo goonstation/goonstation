@@ -264,7 +264,7 @@ A Flamethrower in various states of assembly
 							usr.put_in_hand(src, 1)
 				return
 
-		if(get_dist(src, usr) > 1)
+		if(BOUNDS_DIST(src, usr) > 0)
 			boutput(usr, "<span class='alert'>You need to be closer to empty \the [src] out!</span>")
 			return
 

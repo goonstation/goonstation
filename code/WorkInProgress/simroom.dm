@@ -64,7 +64,7 @@
 
 
 /obj/machinery/sim/transmitter/proc/interact(mob/user)
-	if ( (get_dist(src, user) > 1 ) || (status & (BROKEN|NOPOWER)) )
+	if ( (BOUNDS_DIST(src, user) > 0 ) || (status & (BROKEN|NOPOWER)) )
 		if (!issilicon(user))
 			user.machine = null
 			user.Browse(null, "window=mm")
@@ -140,7 +140,7 @@
 	if (!ticker)
 		boutput(user, "You can't buckle anyone in before the game starts.")
 		return
-	if ((!( iscarbon(M) ) || get_dist(src, user) > 1 || M.loc != src.loc || user.restrained() || user.stat))
+	if ((!( iscarbon(M) ) || BOUNDS_DIST(src, user) > 0 || M.loc != src.loc || user.restrained() || user.stat))
 		return
 	if (M.buckled)	return
 

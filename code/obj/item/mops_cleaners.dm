@@ -54,6 +54,9 @@ WET FLOOR SIGN
 		..()
 		reagents.add_reagent("cleaner", 100)
 
+/obj/item/spraybottle/cleaner/robot/New()
+	..()
+	create_reagents(25)// no more 100 units on spawn for you, mister!
 /obj/item/spraybottle/cleaner/robot
 	name = "cybernetic cleaner spray bottle"
 	desc = "A cleaner spray bottle jury-rigged to synthesize space cleaner."
@@ -70,12 +73,25 @@ WET FLOOR SIGN
 
 	process()
 		..()
-		// starts with 100 cleaner but only autofills to 25. thanks, nanotrasen!
 		if (src.reagents.total_volume < 25)
 			src.reagents.add_reagent("cleaner", 1)
 		else
 			processing_items.Remove(src)
 		return 0
+
+/obj/item/spraybottle/cleaner/robot/drone
+	name = "cybernetic cleaning spray bottle"
+	desc = "A small spray bottle that very slowly synthesises space cleaner."
+	icon_state = "cleaner_robot"
+
+	process()
+		..()
+		if (src.reagents.total_volume < 25)
+			src.reagents.add_reagent("cleaner", 0.5)
+		else
+			processing_items.Remove(src)
+		return 0
+
 
 /obj/janitorTsunamiWave
 	name = "chemicals"
@@ -298,7 +314,7 @@ WET FLOOR SIGN
 	if(reagents?.total_volume)
 		. += "<span class='notice'>[src] is wet!</span>"
 
-/obj/item/mop/afterattack(atom/A, mob/user as mob)
+/obj/item/mop/afterattack(atom/A, mob/user as mob)// the main utility of all moppage and mopkind
 	if (ismob(A))
 		return
 	if ((src.reagents.total_volume < 1 || mopcount >= 9) && !istype(A, /obj/fluid))
@@ -306,7 +322,11 @@ WET FLOOR SIGN
 		return
 
 	if(istype(A, /obj/fluid/airborne)) // no mopping up smoke
-		A = get_turf(A)
+		var/turf/T = get_turf(A)
+		if(T.active_liquid)
+			A = T.active_liquid
+		else
+			A = T
 	if (istype(A, /turf/simulated) || istype(A, /obj/decal/cleanable) || istype(A, /obj/fluid))
 		//user.visible_message("<span class='alert'><B>[user] begins to clean [A].</B></span>")
 		actions.start(new/datum/action/bar/icon/mop_thing(src,A), user)
@@ -378,7 +398,7 @@ WET FLOOR SIGN
 			var/turf/U = get_turf(A)
 
 			if (do_after(user, 4 SECONDS))
-				if (get_dist(A, user) > 1)
+				if (BOUNDS_DIST(A, user) > 0)
 					user.show_text("You were interrupted.", "red")
 					return
 				user.show_text("You have finished mopping!", "blue")
@@ -565,7 +585,7 @@ WET FLOOR SIGN
 			selection = choices[1]
 		else
 			selection = input(user, "What do you want to do with [src]?", "Selection") as null|anything in choices
-		if (isnull(selection) || user.equipped() != src || get_dist(user, target) > 1)
+		if (isnull(selection) || user.equipped() != src || BOUNDS_DIST(user, target) > 0)
 			return
 
 		switch (selection)
@@ -638,6 +658,16 @@ WET FLOOR SIGN
 				return
 	else
 		..()
+/obj/item/sponge/ghostdronesafe
+	name = "Integrated sponge"
+	desc = "A cleaning utensil with an associated drainage system to prevent fluids from dripping when wrung out."
+
+/obj/item/sponge/ghostdronesafe/attack_self(mob/user as mob)
+	if (ON_COOLDOWN(user, "ghostdrone sponge wringing", 5 SECONDS))// Wtihout the cooldown, this is stupid powerful
+		boutput(user, "<span class='notice'> The [src] is still processing fluids, please wait!</span>")
+		return
+	user.visible_message("<span class='notice'>[user] drains the [src].</span>")
+	src.reagents.clear_reagents()
 
 /obj/item/sponge/cheese
 	name = "cheese-shaped sponge"
@@ -1026,7 +1056,7 @@ WET FLOOR SIGN
 				old_trashbag.set_loc(user.loc)
 				user.put_in_hand_or_drop(old_trashbag)
 			user.u_equip(W)
-			W.dropped()
+			W.dropped(user)
 			src.tooltip_rebuild = 1
 		else if(istype(W, /obj/item/reagent_containers/glass/bucket))
 			if(isnull(src.bucket))
@@ -1041,7 +1071,7 @@ WET FLOOR SIGN
 				old_bucket.set_loc(user.loc)
 				user.put_in_hand_or_drop(old_bucket)
 			user.u_equip(W)
-			W.dropped()
+			W.dropped(user)
 			src.tooltip_rebuild = 1
 		else
 			. = ..()
@@ -1082,7 +1112,7 @@ WET FLOOR SIGN
 		if(!isturf(user.loc)) return
 		var/turf/target_turf = get_turf(target)
 		var/turf/master_turf = get_turf(master)
-		if(params["left"] && master && (get_dist(master_turf, target_turf) > 1 || ismob(target) && target != user))
+		if(params["left"] && master && (BOUNDS_DIST(master_turf, target_turf) > 0 || ismob(target) && target != user))
 			if(ON_COOLDOWN(master, "suck", src.cooldown)) return
 			preUse(user)
 			var/direction = get_dir_pixel(user, target, params)
@@ -1129,7 +1159,7 @@ WET FLOOR SIGN
 								if(!I.cant_drop)
 									I.set_loc(M.loc)
 									M.u_equip(I)
-									I.dropped()
+									I.dropped(user)
 									boutput(M, "<span class='alert'>Your [I] is pulled from your hands by the force of [user]'s [master].</span>")
 				new/obj/effect/suck(T, get_dir(T, last))
 				last = T

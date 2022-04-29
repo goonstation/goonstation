@@ -88,6 +88,7 @@
 				logTheThing("station", src, new_rack, "the law rack [constructName(new_rack)] claims first registered SYNDICATE, and gets Syndicate laws!")
 
 		src.registered_racks |= new_rack //shouldn't be possible, but just in case - there can only be one instance of rack in registered
+		new_rack.update_last_laws()
 
 	proc/unregister_rack(var/obj/machinery/lawrack/dead_rack)
 		logTheThing("station", src, dead_rack, "[src] unregisters the law rack [constructName(dead_rack)]")
@@ -150,4 +151,8 @@
 
 				laws += "Laws for [R] at [include_link ? log_loc(R) : "([R.x], [R.y], [R.z]) in [get_area(R)]"]:[glue]" + R.format_for_logs(glue) \
 						+ "[glue]The law rack is connected to the following silicons: "+mobtextlist.Join(", ") + "[glue]--------------[glue]"
+
+			if(!length(laws) && round_end)
+				laws += "No law racks with connected silicons detected."
+
 		return jointext(laws, glue)

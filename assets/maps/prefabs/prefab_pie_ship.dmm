@@ -1,72 +1,839 @@
-"a" = (/turf/variableTurf/clear,/area/space)
-"b" = (/obj/decal/fakeobjects/shuttlethruster{real_name = "propulsion unit"; true_name = "propulsion unit"},/turf/variableTurf/clear,/area/noGenerate)
-"c" = (/turf/unsimulated/wall/setpieces/leadwall/gray{name = "Shielded Wall"; dir = 10},/area/noGenerate)
-"d" = (/turf/unsimulated/wall/setpieces/leadwall/gray{name = "Shielded Wall"; dir = 4},/area/noGenerate)
-"e" = (/obj/machinery/door/airlock/external{name = "Space"; dir = 8},/turf/unsimulated/floor/white{dir = 8},/area/noGenerate)
-"f" = (/turf/unsimulated/wall/setpieces/leadwall/gray{name = "Shielded Wall"; dir = 6},/area/noGenerate)
-"g" = (/turf/unsimulated/wall/setpieces/leadwall/gray{name = "Shielded Wall"; dir = 1},/area/noGenerate)
-"h" = (/obj/submachine/chef_oven{dir = 4},/turf/unsimulated/floor/white,/area/noGenerate)
-"i" = (/turf/unsimulated/floor/white,/area/noGenerate)
-"j" = (/obj/submachine/chef_oven{dir = 8},/turf/unsimulated/floor/white,/area/noGenerate)
-"k" = (/turf/unsimulated/wall/setpieces/leadwindow/gray{name = "Shielded Window"},/area/noGenerate)
-"l" = (/obj/submachine/chef_oven{dir = 4},/obj/adventurepuzzle/triggerable/light{is_on = 1; on_brig = 0.4; on_cblue = 0.6},/turf/unsimulated/floor/white,/area/noGenerate)
-"m" = (/obj/table/auto{icon_state = "5"},/obj/item/storage/box/clothing/chef{name = "ÿChef's equipment"; dir = 8},/obj/item/kitchen/rollingpin{dir = 8},/turf/unsimulated/floor/white,/area/noGenerate)
-"n" = (/obj/table/auto{icon_state = "9"},/obj/item/storage/box/clothing/chef{name = "ÿChef's equipment"; dir = 8},/obj/item/kitchen/rollingpin{dir = 8},/turf/unsimulated/floor/white,/area/noGenerate)
-"o" = (/obj/storage/secure/closet/fridge/kitchen{dir = 8},/turf/unsimulated/floor/white,/area/noGenerate)
-"p" = (/obj/submachine/chef_oven{dir = 8},/obj/adventurepuzzle/triggerable/light{is_on = 1; on_brig = 0.4; on_cblue = 0.6},/turf/unsimulated/floor/white,/area/noGenerate)
-"q" = (/obj/submachine/chef_sink{dir = 4},/turf/unsimulated/floor/white,/area/noGenerate)
-"r" = (/obj/table/auto{icon_state = "7"},/obj/item/storage/box/cutlery{icon_state = "donk_kit"; dir = 8},/turf/unsimulated/floor/white,/area/noGenerate)
-"s" = (/obj/table/auto{icon_state = "11"},/obj/item/storage/box/cutlery{icon_state = "donk_kit"; dir = 8},/turf/unsimulated/floor/white,/area/noGenerate)
-"t" = (/obj/machinery/vending/kitchen{current_processing_tier = 1; dir = 8; layer = 3},/turf/unsimulated/floor/white,/area/noGenerate)
-"u" = (/obj/submachine/chef_sink{dir = 8},/turf/unsimulated/floor/white,/area/noGenerate)
-"v" = (/obj/table/auto{icon_state = "6"},/obj/item/storage/box/clothing/chef{name = "ÿChef's equipment"; dir = 8},/obj/item/kitchen/rollingpin{dir = 8},/turf/unsimulated/floor/white,/area/noGenerate)
-"w" = (/obj/table/auto{icon_state = "10"},/obj/item/storage/box/clothing/chef{name = "ÿChef's equipment"; dir = 8},/obj/item/kitchen/rollingpin{dir = 8},/turf/unsimulated/floor/white,/area/noGenerate)
-"x" = (/turf/unsimulated/floor/white{dir = 4},/area/noGenerate)
-"y" = (/obj/table/auto{icon_state = "6"; dir = 8},/obj/item/storage/box/clothing/chef{name = "ÿChef's equipment"; dir = 8},/obj/item/kitchen/rollingpin{dir = 8},/turf/unsimulated/floor/white{dir = 8},/area/noGenerate)
-"z" = (/turf/unsimulated/wall/setpieces/leadwall/gray{name = "Shielded Wall"; dir = 9},/area/noGenerate)
-"A" = (/obj/stool/chair/green{dir = 4},/turf/unsimulated/floor/white,/area/noGenerate)
-"B" = (/obj/table/auto{icon_state = "1"; dir = 4},/obj/item/kitchen/utensil/spoon{dir = 4},/obj/adventurepuzzle/triggerable/light{is_on = 1; on_brig = 0.3; on_cblue = 0.6},/turf/unsimulated/floor/white{dir = 4},/area/noGenerate)
-"C" = (/obj/table/auto{icon_state = "1"; dir = 4},/obj/item/kitchen/utensil/spoon{dir = 8; pixel_y = 4},/obj/adventurepuzzle/triggerable/light{is_on = 1; on_brig = 0.3; on_cblue = 0.6},/turf/unsimulated/floor/white{dir = 4},/area/noGenerate)
-"D" = (/obj/stool/chair/red{dir = 8},/turf/unsimulated/floor/white,/area/noGenerate)
-"E" = (/turf/unsimulated/wall/setpieces/leadwall/gray{name = "Shielded Wall"; dir = 5},/area/noGenerate)
-"F" = (/obj/table/auto{icon_state = "3"; dir = 4},/obj/item/kitchen/utensil/spoon{dir = 4},/turf/unsimulated/floor/white{dir = 4},/area/noGenerate)
-"G" = (/obj/table/auto{icon_state = "3"; dir = 4},/obj/item/kitchen/utensil/spoon{dir = 8; pixel_y = 2},/turf/unsimulated/floor/white{dir = 4},/area/noGenerate)
-"H" = (/turf/unsimulated/wall/setpieces/leadwindow/gray{name = "Shielded Window"; dir = 1},/area/noGenerate)
-"I" = (/obj/table/auto{icon_state = "3"; dir = 4},/obj/item/kitchen/utensil/spoon{dir = 4; pixel_y = 3},/turf/unsimulated/floor/white{dir = 4},/area/noGenerate)
-"J" = (/obj/table/auto{icon_state = "3"; dir = 4},/obj/item/kitchen/utensil/spoon{dir = 8; pixel_y = 1},/turf/unsimulated/floor/white{dir = 4},/area/noGenerate)
-"K" = (/obj/table/auto{icon_state = "3"; dir = 4},/obj/item/kitchen/utensil/spoon{dir = 4},/obj/adventurepuzzle/triggerable/light{is_on = 1; on_brig = 0.3; on_cblue = 0.6},/turf/unsimulated/floor/white{dir = 4},/area/noGenerate)
-"L" = (/obj/table/auto{icon_state = "3"; dir = 4},/obj/item/kitchen/utensil/spoon{dir = 8; pixel_y = 1},/obj/adventurepuzzle/triggerable/light{is_on = 1; on_brig = 0.3; on_cblue = 0.6},/turf/unsimulated/floor/white{dir = 4},/area/noGenerate)
-"M" = (/obj/table/auto{icon_state = "3"; dir = 4},/obj/item/kitchen/utensil/spoon{dir = 4; pixel_y = 4},/turf/unsimulated/floor/white{dir = 4},/area/noGenerate)
-"N" = (/obj/table/auto{icon_state = "3"; dir = 4},/obj/item/kitchen/utensil/spoon{dir = 8},/turf/unsimulated/floor/white{dir = 4},/area/noGenerate)
-"O" = (/obj/table/auto{icon_state = "3"; dir = 4},/obj/item/kitchen/utensil/spoon{dir = 8; pixel_y = 3},/turf/unsimulated/floor/white{dir = 4},/area/noGenerate)
-"P" = (/obj/table/auto{icon_state = "2"; dir = 4},/obj/item/kitchen/utensil/spoon{dir = 4},/obj/adventurepuzzle/triggerable/light{is_on = 1; on_brig = 0.3; on_cblue = 0.6},/turf/unsimulated/floor/white{dir = 4},/area/noGenerate)
-"Q" = (/obj/table/auto{icon_state = "2"; dir = 4},/obj/item/kitchen/utensil/spoon{dir = 8; pixel_y = 2},/obj/adventurepuzzle/triggerable/light{is_on = 1; on_brig = 0.3; on_cblue = 0.6},/turf/unsimulated/floor/white{dir = 4},/area/noGenerate)
-"R" = (/obj/table/wood/auto{icon_state = "4"; dir = 4},/obj/adventurepuzzle/triggerable/light{is_on = 1; on_brig = 0.5; on_cblue = 0.6},/turf/unsimulated/floor/white,/area/noGenerate)
-"S" = (/obj/table/wood/auto{icon_state = "12"; dir = 4},/turf/unsimulated/floor/white,/area/noGenerate)
-"T" = (/obj/table/wood/auto{icon_state = "8"; dir = 4},/obj/adventurepuzzle/triggerable/light{is_on = 1; on_brig = 0.5; on_cblue = 0.6},/turf/unsimulated/floor/white,/area/noGenerate)
-"U" = (/obj/stool/chair/comfy,/turf/unsimulated/floor/white,/area/noGenerate)
-"V" = (/turf/unsimulated/wall/setpieces/leadwindow/gray{name = "Shielded Window"; dir = 4},/area/noGenerate)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/variableTurf/clear,
+/area/space)
+"b" = (
+/obj/decal/fakeobjects/shuttlethruster{
+	real_name = "propulsion unit";
+	true_name = "propulsion unit"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"c" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	name = "Shielded Wall";
+	dir = 10
+	},
+/area/noGenerate)
+"d" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	name = "Shielded Wall";
+	dir = 4
+	},
+/area/noGenerate)
+"e" = (
+/obj/machinery/door/airlock/external{
+	name = "Space";
+	dir = 8
+	},
+/turf/unsimulated/floor/white{
+	dir = 8
+	},
+/area/noGenerate)
+"f" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	name = "Shielded Wall";
+	dir = 6
+	},
+/area/noGenerate)
+"g" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	name = "Shielded Wall";
+	dir = 1
+	},
+/area/noGenerate)
+"h" = (
+/obj/submachine/chef_oven{
+	dir = 4
+	},
+/turf/unsimulated/floor/white,
+/area/noGenerate)
+"i" = (
+/turf/unsimulated/floor/white,
+/area/noGenerate)
+"j" = (
+/obj/submachine/chef_oven{
+	dir = 8
+	},
+/turf/unsimulated/floor/white,
+/area/noGenerate)
+"k" = (
+/turf/unsimulated/wall/setpieces/leadwindow/gray{
+	name = "Shielded Window"
+	},
+/area/noGenerate)
+"l" = (
+/obj/submachine/chef_oven{
+	dir = 4
+	},
+/obj/adventurepuzzle/triggerable/light{
+	is_on = 1;
+	on_brig = 0.4;
+	on_cblue = 0.6
+	},
+/turf/unsimulated/floor/white,
+/area/noGenerate)
+"m" = (
+/obj/table/auto{
+	icon_state = "5"
+	},
+/obj/item/storage/box/clothing/chef{
+	name = "ÿChef's equipment";
+	dir = 8
+	},
+/obj/item/kitchen/rollingpin{
+	dir = 8
+	},
+/turf/unsimulated/floor/white,
+/area/noGenerate)
+"n" = (
+/obj/table/auto{
+	icon_state = "9"
+	},
+/obj/item/storage/box/clothing/chef{
+	name = "ÿChef's equipment";
+	dir = 8
+	},
+/obj/item/kitchen/rollingpin{
+	dir = 8
+	},
+/turf/unsimulated/floor/white,
+/area/noGenerate)
+"o" = (
+/obj/storage/secure/closet/fridge/kitchen{
+	dir = 8
+	},
+/turf/unsimulated/floor/white,
+/area/noGenerate)
+"p" = (
+/obj/submachine/chef_oven{
+	dir = 8
+	},
+/obj/adventurepuzzle/triggerable/light{
+	is_on = 1;
+	on_brig = 0.4;
+	on_cblue = 0.6
+	},
+/turf/unsimulated/floor/white,
+/area/noGenerate)
+"q" = (
+/obj/submachine/chef_sink{
+	dir = 4
+	},
+/turf/unsimulated/floor/white,
+/area/noGenerate)
+"r" = (
+/obj/table/auto{
+	icon_state = "7"
+	},
+/obj/item/storage/box/cutlery{
+	icon_state = "donk_kit";
+	dir = 8
+	},
+/turf/unsimulated/floor/white,
+/area/noGenerate)
+"s" = (
+/obj/table/auto{
+	icon_state = "11"
+	},
+/obj/item/storage/box/cutlery{
+	icon_state = "donk_kit";
+	dir = 8
+	},
+/turf/unsimulated/floor/white,
+/area/noGenerate)
+"t" = (
+/obj/machinery/vending/kitchen{
+	current_processing_tier = 1;
+	dir = 8;
+	layer = 3
+	},
+/turf/unsimulated/floor/white,
+/area/noGenerate)
+"u" = (
+/obj/submachine/chef_sink{
+	dir = 8
+	},
+/turf/unsimulated/floor/white,
+/area/noGenerate)
+"v" = (
+/obj/table/auto{
+	icon_state = "6"
+	},
+/obj/item/storage/box/clothing/chef{
+	name = "ÿChef's equipment";
+	dir = 8
+	},
+/obj/item/kitchen/rollingpin{
+	dir = 8
+	},
+/turf/unsimulated/floor/white,
+/area/noGenerate)
+"w" = (
+/obj/table/auto{
+	icon_state = "10"
+	},
+/obj/item/storage/box/clothing/chef{
+	name = "ÿChef's equipment";
+	dir = 8
+	},
+/obj/item/kitchen/rollingpin{
+	dir = 8
+	},
+/turf/unsimulated/floor/white,
+/area/noGenerate)
+"x" = (
+/turf/unsimulated/floor/white{
+	dir = 4
+	},
+/area/noGenerate)
+"y" = (
+/obj/table/auto{
+	icon_state = "6";
+	dir = 8
+	},
+/obj/item/storage/box/clothing/chef{
+	name = "ÿChef's equipment";
+	dir = 8
+	},
+/obj/item/kitchen/rollingpin{
+	dir = 8
+	},
+/turf/unsimulated/floor/white{
+	dir = 8
+	},
+/area/noGenerate)
+"z" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	name = "Shielded Wall";
+	dir = 9
+	},
+/area/noGenerate)
+"A" = (
+/obj/stool/chair/green{
+	dir = 4
+	},
+/turf/unsimulated/floor/white,
+/area/noGenerate)
+"B" = (
+/obj/table/auto{
+	icon_state = "1";
+	dir = 4
+	},
+/obj/item/kitchen/utensil/spoon{
+	dir = 4
+	},
+/obj/adventurepuzzle/triggerable/light{
+	is_on = 1;
+	on_brig = 0.3;
+	on_cblue = 0.6
+	},
+/turf/unsimulated/floor/white{
+	dir = 4
+	},
+/area/noGenerate)
+"C" = (
+/obj/table/auto{
+	icon_state = "1";
+	dir = 4
+	},
+/obj/item/kitchen/utensil/spoon{
+	dir = 8;
+	pixel_y = 4
+	},
+/obj/adventurepuzzle/triggerable/light{
+	is_on = 1;
+	on_brig = 0.3;
+	on_cblue = 0.6
+	},
+/turf/unsimulated/floor/white{
+	dir = 4
+	},
+/area/noGenerate)
+"D" = (
+/obj/stool/chair/red{
+	dir = 8
+	},
+/turf/unsimulated/floor/white,
+/area/noGenerate)
+"E" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	name = "Shielded Wall";
+	dir = 5
+	},
+/area/noGenerate)
+"F" = (
+/obj/table/auto{
+	icon_state = "3";
+	dir = 4
+	},
+/obj/item/kitchen/utensil/spoon{
+	dir = 4
+	},
+/turf/unsimulated/floor/white{
+	dir = 4
+	},
+/area/noGenerate)
+"G" = (
+/obj/table/auto{
+	icon_state = "3";
+	dir = 4
+	},
+/obj/item/kitchen/utensil/spoon{
+	dir = 8;
+	pixel_y = 2
+	},
+/turf/unsimulated/floor/white{
+	dir = 4
+	},
+/area/noGenerate)
+"H" = (
+/turf/unsimulated/wall/setpieces/leadwindow/gray{
+	name = "Shielded Window";
+	dir = 1
+	},
+/area/noGenerate)
+"I" = (
+/obj/table/auto{
+	icon_state = "3";
+	dir = 4
+	},
+/obj/item/kitchen/utensil/spoon{
+	dir = 4;
+	pixel_y = 3
+	},
+/turf/unsimulated/floor/white{
+	dir = 4
+	},
+/area/noGenerate)
+"J" = (
+/obj/table/auto{
+	icon_state = "3";
+	dir = 4
+	},
+/obj/item/kitchen/utensil/spoon{
+	dir = 8;
+	pixel_y = 1
+	},
+/turf/unsimulated/floor/white{
+	dir = 4
+	},
+/area/noGenerate)
+"K" = (
+/obj/table/auto{
+	icon_state = "3";
+	dir = 4
+	},
+/obj/item/kitchen/utensil/spoon{
+	dir = 4
+	},
+/obj/adventurepuzzle/triggerable/light{
+	is_on = 1;
+	on_brig = 0.3;
+	on_cblue = 0.6
+	},
+/turf/unsimulated/floor/white{
+	dir = 4
+	},
+/area/noGenerate)
+"L" = (
+/obj/table/auto{
+	icon_state = "3";
+	dir = 4
+	},
+/obj/item/kitchen/utensil/spoon{
+	dir = 8;
+	pixel_y = 1
+	},
+/obj/adventurepuzzle/triggerable/light{
+	is_on = 1;
+	on_brig = 0.3;
+	on_cblue = 0.6
+	},
+/turf/unsimulated/floor/white{
+	dir = 4
+	},
+/area/noGenerate)
+"M" = (
+/obj/table/auto{
+	icon_state = "3";
+	dir = 4
+	},
+/obj/item/kitchen/utensil/spoon{
+	dir = 4;
+	pixel_y = 4
+	},
+/turf/unsimulated/floor/white{
+	dir = 4
+	},
+/area/noGenerate)
+"N" = (
+/obj/table/auto{
+	icon_state = "3";
+	dir = 4
+	},
+/obj/item/kitchen/utensil/spoon{
+	dir = 8
+	},
+/turf/unsimulated/floor/white{
+	dir = 4
+	},
+/area/noGenerate)
+"O" = (
+/obj/table/auto{
+	icon_state = "3";
+	dir = 4
+	},
+/obj/item/kitchen/utensil/spoon{
+	dir = 8;
+	pixel_y = 3
+	},
+/turf/unsimulated/floor/white{
+	dir = 4
+	},
+/area/noGenerate)
+"P" = (
+/obj/table/auto{
+	icon_state = "2";
+	dir = 4
+	},
+/obj/item/kitchen/utensil/spoon{
+	dir = 4
+	},
+/obj/adventurepuzzle/triggerable/light{
+	is_on = 1;
+	on_brig = 0.3;
+	on_cblue = 0.6
+	},
+/turf/unsimulated/floor/white{
+	dir = 4
+	},
+/area/noGenerate)
+"Q" = (
+/obj/table/auto{
+	icon_state = "2";
+	dir = 4
+	},
+/obj/item/kitchen/utensil/spoon{
+	dir = 8;
+	pixel_y = 2
+	},
+/obj/adventurepuzzle/triggerable/light{
+	is_on = 1;
+	on_brig = 0.3;
+	on_cblue = 0.6
+	},
+/turf/unsimulated/floor/white{
+	dir = 4
+	},
+/area/noGenerate)
+"R" = (
+/obj/table/wood/auto{
+	icon_state = "4";
+	dir = 4
+	},
+/obj/adventurepuzzle/triggerable/light{
+	is_on = 1;
+	on_brig = 0.5;
+	on_cblue = 0.6
+	},
+/turf/unsimulated/floor/white,
+/area/noGenerate)
+"S" = (
+/obj/table/wood/auto{
+	icon_state = "12";
+	dir = 4
+	},
+/turf/unsimulated/floor/white,
+/area/noGenerate)
+"T" = (
+/obj/table/wood/auto{
+	icon_state = "8";
+	dir = 4
+	},
+/obj/adventurepuzzle/triggerable/light{
+	is_on = 1;
+	on_brig = 0.5;
+	on_cblue = 0.6
+	},
+/turf/unsimulated/floor/white,
+/area/noGenerate)
+"U" = (
+/obj/stool/chair/comfy,
+/turf/unsimulated/floor/white,
+/area/noGenerate)
+"V" = (
+/turf/unsimulated/wall/setpieces/leadwindow/gray{
+	name = "Shielded Window";
+	dir = 4
+	},
+/area/noGenerate)
 
 (1,1,1) = {"
-aaaaaaaaaaaaaaaa
-aaaazdVVVVdEaaaa
-aaazfiUUUUicEaaa
-aazfiiRSSTiicEaa
-aaHiiiiiiiiiiHaa
-aagiAPxxxxQDigaa
-aaHiAFxxxxNDiHaa
-aagiAFxxxxODigaa
-aaHiAMxxxxNDiHaa
-aagiAKxxxxLDigaa
-aaHiAIxxxxJDiHaa
-aagiAFxxxxGDigaa
-azfiABxxxxCDicEa
-aghiiiiiiiiiijga
-aklivwoxioywipka
-agqirstiitrsiuga
-aklimnoiiomnipka
-aghiiiiiiiiiijga
-acdddddeedddddfa
-aaabbbaaaabbbaaa
-aaaaaaaaaaaaaaaa
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+z
+g
+k
+g
+k
+g
+c
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+a
+z
+H
+g
+H
+g
+H
+g
+H
+g
+f
+h
+l
+q
+l
+h
+d
+a
+a
+"}
+(4,1,1) = {"
+a
+a
+z
+f
+i
+i
+i
+i
+i
+i
+i
+i
+i
+i
+i
+i
+i
+i
+d
+b
+a
+"}
+(5,1,1) = {"
+a
+z
+f
+i
+i
+A
+A
+A
+A
+A
+A
+A
+A
+i
+v
+r
+m
+i
+d
+b
+a
+"}
+(6,1,1) = {"
+a
+d
+i
+i
+i
+P
+F
+F
+M
+K
+I
+F
+B
+i
+w
+s
+n
+i
+d
+b
+a
+"}
+(7,1,1) = {"
+a
+V
+U
+R
+i
+x
+x
+x
+x
+x
+x
+x
+x
+i
+o
+t
+o
+i
+d
+a
+a
+"}
+(8,1,1) = {"
+a
+V
+U
+S
+i
+x
+x
+x
+x
+x
+x
+x
+x
+i
+x
+i
+i
+i
+e
+a
+a
+"}
+(9,1,1) = {"
+a
+V
+U
+S
+i
+x
+x
+x
+x
+x
+x
+x
+x
+i
+i
+i
+i
+i
+e
+a
+a
+"}
+(10,1,1) = {"
+a
+V
+U
+T
+i
+x
+x
+x
+x
+x
+x
+x
+x
+i
+o
+t
+o
+i
+d
+a
+a
+"}
+(11,1,1) = {"
+a
+d
+i
+i
+i
+Q
+N
+O
+N
+L
+J
+G
+C
+i
+y
+r
+m
+i
+d
+b
+a
+"}
+(12,1,1) = {"
+a
+E
+c
+i
+i
+D
+D
+D
+D
+D
+D
+D
+D
+i
+w
+s
+n
+i
+d
+b
+a
+"}
+(13,1,1) = {"
+a
+a
+E
+c
+i
+i
+i
+i
+i
+i
+i
+i
+i
+i
+i
+i
+i
+i
+d
+b
+a
+"}
+(14,1,1) = {"
+a
+a
+a
+E
+H
+g
+H
+g
+H
+g
+H
+g
+c
+j
+p
+u
+p
+j
+d
+a
+a
+"}
+(15,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+E
+g
+k
+g
+k
+g
+f
+a
+a
+"}
+(16,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
 "}

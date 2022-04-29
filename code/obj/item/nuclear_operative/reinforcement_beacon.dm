@@ -49,7 +49,7 @@
 			var/datum/game_mode/nuclear/nuke_mode = ticker.mode
 			synd.mind.store_memory("The bomb must be armed in <B>[nuke_mode.target_location_name]</B>.", 0, 0)
 			nuke_mode.syndicates += synd.mind
-		SHOW_NUKEOP_GUNBOT_TIPS(synd.mind.current)
+		synd.mind.current.show_antag_popup("nukeop-gunbot")
 		SPAWN(0)
 			launch_with_missile(synd, src.loc, null, "arrival_missile_synd")
 		sleep(3 SECONDS)

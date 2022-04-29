@@ -361,6 +361,7 @@ h1.alert, h2.alert {color: #000000;}
 .bigPM {font-size: 1.2em;}
 .adminHearing .name[data-ctx] {border-bottom: 1px dotted black;}
 .blobalert {color: #4c00ff; font-size: 1.5em; font-weight: bold;}
+.lawupdate {color: #6464ff}
 
 .rstandard {color: #008000;}
 .rintercom {color: #006080;}
@@ -498,6 +499,7 @@ body.theme-dark h1.alert {color: #cfcfcf;}
 body.theme-dark h2.alert {color: #cfcfcf;}
 body.theme-dark .adminHearing .name[data-ctx] {border-bottom: 1px dotted rgb(219, 219, 219);}
 body.theme-dark .blobalert {color: #9c74fc; }
+body.theme-dark .lawupdate {color: #6464FF; }
 
 body.theme-dark .connectionClosed {background: rgb(192, 0, 0); color: white;}
 body.theme-dark .fatalError {background: rgb(192, 0, 0); color: white;}
@@ -509,8 +511,8 @@ body.theme-dark .rcommand {color: #7ca6d6;}
 body.theme-dark .rsecurity {color: #e43535;}
 body.theme-dark .rdetective {color: #af4242;}
 body.theme-dark .rengineering {color: #dda448;}
-body.theme-dark .rmedical {color: #3A88AC;}
+body.theme-dark .rmedical {color: #51DBCB;}
 body.theme-dark .rresearch {color: #bf83e2;}
 body.theme-dark .rcivilian {color: #ce45b2;}
 body.theme-dark .rsyndicate {color: #cf5757;}
-body.theme-dark .rother {color: #bd46bd;}
+body.theme-dark .rother {color: #E896E5;}

@@ -62460,38 +62460,6 @@
 	icon_state = "fred2"
 	},
 /area/station/crew_quarters/courtroom)
-"cmU" = (
-/obj/table/reinforced/bar/auto,
-/obj/item/plate{
-	pixel_y = 2
-	},
-/obj/item/implant/projectile/bardart{
-	pixel_x = -7;
-	pixel_y = 5
-	},
-/obj/item/implant/projectile/bardart{
-	pixel_x = 4;
-	pixel_y = 6
-	},
-/obj/item/implant/projectile/bardart{
-	pixel_x = 9;
-	pixel_y = 5
-	},
-/obj/item/implant/projectile/bardart{
-	pixel_x = -2;
-	pixel_y = 6
-	},
-/obj/item/implant/projectile/bardart{
-	pixel_x = 6
-	},
-/obj/item/implant/projectile/bardart{
-	pixel_x = -4
-	},
-/turf/simulated/floor/specialroom/bar/edge{
-	dir = 1;
-	transform = list(-1, 0, 0, 0, 1, 0)
-	},
-/area/station/crew_quarters/cafeteria)
 "cmW" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/shaker/pepper{
@@ -67185,9 +67153,7 @@
 /turf/space,
 /area/supply/spawn_point)
 "cDf" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "cDn" = (
 /obj/decal/cleanable/dirt,
@@ -67687,6 +67653,38 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/combustion_chamber)
+"fio" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/plate{
+	pixel_y = 2
+	},
+/obj/item/implant/projectile/body_visible/dart/bardart{
+	pixel_x = -7;
+	pixel_y = 5
+	},
+/obj/item/implant/projectile/body_visible/dart/bardart{
+	pixel_x = 4;
+	pixel_y = 6
+	},
+/obj/item/implant/projectile/body_visible/dart/bardart{
+	pixel_x = 9;
+	pixel_y = 5
+	},
+/obj/item/implant/projectile/body_visible/dart/bardart{
+	pixel_x = -2;
+	pixel_y = 6
+	},
+/obj/item/implant/projectile/body_visible/dart/bardart{
+	pixel_x = 6
+	},
+/obj/item/implant/projectile/body_visible/dart/bardart{
+	pixel_x = -4
+	},
+/turf/simulated/floor/specialroom/bar/edge{
+	dir = 1;
+	transform = list(-1, 0, 0, 0, 1, 0)
+	},
+/area/station/crew_quarters/cafeteria)
 "fno" = (
 /obj/machinery/portable_reclaimer,
 /turf/simulated/floor/shuttlebay{
@@ -68576,6 +68574,17 @@
 	},
 /turf/space,
 /area/station/turret_protected/armory_outside)
+"kAr" = (
+/obj/table/auto,
+/obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log{
+	bites_left = 5;
+	desc = "Don't get it mixed up it's still made of meat, but what are the chances of finding it here?.";
+	name = "improbable(tm) pepperoni"
+	},
+/turf/simulated/floor/green/side{
+	dir = 1
+	},
+/area/station/hydroponics/bay)
 "kEM" = (
 /obj/stool/bed,
 /obj/item/clothing/glasses/vr{
@@ -70132,17 +70141,6 @@
 /obj/machinery/turret,
 /turf/space,
 /area/station/turret_protected/armory_outside)
-"vcu" = (
-/obj/table/auto,
-/obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log{
-	amount = 5;
-	desc = "Don't get it mixed up it's still made of meat, but what are the chances of finding it here?.";
-	name = "improbable(tm) pepperoni"
-	},
-/turf/simulated/floor/green/side{
-	dir = 1
-	},
-/area/station/hydroponics/bay)
 "vdS" = (
 /obj/table/reinforced/industrial/auto,
 /obj/item/hand_labeler,
@@ -101505,7 +101503,7 @@ pDw
 hUb
 djA
 aXj
-vcu
+kAr
 aMh
 iVu
 xCY
@@ -113286,7 +113284,7 @@ cnH
 cnG
 cxn
 cmX
-cmU
+fio
 boJ
 tpj
 cnb

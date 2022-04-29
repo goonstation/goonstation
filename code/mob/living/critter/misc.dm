@@ -12,7 +12,7 @@
 	speechverb_stammer = "grumps"
 	speech_void = 1
 	death_text = "%src% dissipates!"
-	add_abilities = list(/datum/targetable/critter/envelope)
+	add_abilities = list(/datum/targetable/critter/envelop)
 
 	setup_healths()
 		add_hh_flesh(8, 0.25)

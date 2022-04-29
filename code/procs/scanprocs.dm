@@ -510,11 +510,11 @@
 			if (WG.glove_ID)
 				glove_data += "[WG.glove_ID] (<span class='notice'>[H]'s worn [WG.name]</span>)"
 			if (!WG.hide_prints)
-				fingerprint_data += "<br><span class='notice'>[H]'s fingerprints:</span> [H.bioHolder.uid_hash]"
+				fingerprint_data += "<br><span class='notice'>[H]'s fingerprints:</span> [H.bioHolder.fingerprints]"
 			else
 				fingerprint_data += "<br><span class='notice'>Unable to scan [H]'s fingerprints.</span>"
 		else
-			fingerprint_data += "<br><span class='notice'>[H]'s fingerprints:</span> [H.bioHolder.uid_hash]"
+			fingerprint_data += "<br><span class='notice'>[H]'s fingerprints:</span> [H.bioHolder.fingerprints]"
 
 		if (H.gunshot_residue) // Left by firing a kinetic gun.
 			forensic_data += "<br><span class='notice'>Gunshot residue found.</span>"

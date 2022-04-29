@@ -1245,7 +1245,7 @@
 		var/my_turf = get_turf(src)
 		var/burst = shotcount	// TODO: Make rapidfire exist, then work.
 		while(burst > 0 && target)
-			if(IN_RANGE(target_turf, my_turf, 1))
+			if((BOUNDS_DIST(target_turf, my_turf) == 0))
 				budgun.shoot_point_blank(target, src)
 			else
 				budgun.shoot(target_turf, my_turf, src)
@@ -1275,13 +1275,13 @@
 	attack_hand(mob/user as mob)
 		if(..())
 			return
-		if(user.a_intent == "help" && !user.using_dialog_of(src) && (get_dist(user,src) <= 1))
+		if(user.a_intent == "help" && !user.using_dialog_of(src) && (BOUNDS_DIST(user, src) == 0))
 			var/affection = pick("hug","cuddle","snuggle")
-			user.visible_message("<span class='notice'>[user] [affection]s [src]!</span>","<span class='notice'>You [affection] [src]!</span>")
+			user.visible_message("<span class='notice'>[user] [affection]s [src]!</span>","<span class='notice'>You [affection] [src]!</span>", group="buddyhug")
 			src.task?.task_input("hugged")
 			return
 
-		if(get_dist(user, src) > 1)
+		if(BOUNDS_DIST(user, src) > 0)
 			return
 
 		src.interacted(user)
@@ -1655,7 +1655,7 @@
 					SPAWN(3 SECONDS)
 						src.set_emotion("sad")		// Still kinda sad that someone would bully a defenseless little rectangle.
 			else if(src.tool && (src.tool.tool_id != "GUN"))
-				var/is_ranged = get_dist(src, target) > 1
+				var/is_ranged = BOUNDS_DIST(src, target) > 0
 				src.tool.bot_attack(target, src, is_ranged, lethal)
 			return
 
@@ -1981,12 +1981,6 @@
 			return
 
 		if (ishuman(task.arrest_target))
-			var/mob/living/carbon/human/H = task.arrest_target
-			//if(H.bioHolder.HasEffect("lost_left_arm") || H.bioHolder.HasEffect("lost_right_arm"))
-			if(!H.limbs.l_arm || !H.limbs.r_arm)
-				task.drop_arrest_target()
-				master.set_emotion("sad")
-				return
 			task.arrest_target.handcuffs = new /obj/item/handcuffs/guardbot(task.arrest_target)
 			task.arrest_target.setStatus("handcuffed", duration = INFINITE_STATUS)
 			boutput(task.arrest_target, "<span class='alert'>[master] gently handcuffs you!  It's like the cuffs are hugging your wrists.</span>")
@@ -2021,7 +2015,7 @@
 	proc/failchecks()
 		if (!master || !master.on || master.idle || master.stunned || master.moving)
 			return 1
-		if (!IN_RANGE(master, task.arrest_target, 1) || !task.arrest_target || task.arrest_target.hasStatus("handcuffed"))
+		if (!(BOUNDS_DIST(master, task.arrest_target) == 0) || !task.arrest_target || task.arrest_target.hasStatus("handcuffed"))
 			return 1
 
 //Robot tools.  Flash boards, batons, etc
@@ -2797,7 +2791,7 @@
 							master.set_emotion("sad")
 							return
 
-						if(get_dist(master, hug_target) <= 1)
+						if(BOUNDS_DIST(master, hug_target) == 0)
 							master.visible_message("<b>[master]</b> hugs [hug_target]!")
 							if (hug_target.reagents)
 								hug_target.reagents.add_reagent("hugs", 10)
@@ -2861,7 +2855,7 @@
 						master.frustration += 2
 
 					// Right up against them? Book em!
-					if(IN_RANGE(src.master, src.arrest_target, 1) && is_incapacitated(src.arrest_target))
+					if((BOUNDS_DIST(src.master, src.arrest_target) == 0) && is_incapacitated(src.arrest_target))
 						actions.start(new/datum/action/bar/icon/buddy_cuff(src.master, src), src.master)
 					// Otherwise, go get them!
 					else
@@ -3253,7 +3247,7 @@
 						master.set_emotion("sad")
 						return
 
-					if(get_dist(master, hug_target) <= 1)
+					if(BOUNDS_DIST(master, hug_target) == 0)
 						if (prob(2))
 							master.speak("Merry Spacemas!")
 							SPAWN(1 SECOND)
@@ -4657,7 +4651,7 @@
 		return
 
 	MouseDrop_T(obj/O as obj, mob/user as mob)
-		if(user.stat || get_dist(user,src)>1)
+		if(user.stat || BOUNDS_DIST(user, src) > 0)
 			return
 		if(istype(O, /obj/machinery/bot/guardbot) && !src.current && !O:charge_dock)
 			if(O.loc != src.loc) return

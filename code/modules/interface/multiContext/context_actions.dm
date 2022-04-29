@@ -362,7 +362,7 @@
 
 	checkRequirements(atom/target, mob/user)
 		. = FALSE
-		if (GBP && GB && (get_dist(target,user) <= 1 && isliving(user)) && !GB?.occupant)
+		if (GBP && GB && (BOUNDS_DIST(target, user) == 0 && isliving(user)) && !GB?.occupant)
 			. = TRUE
 			GB.show_admin_panel(user)
 
@@ -697,7 +697,7 @@
 		I.play_note(note,user)
 
 	checkRequirements(atom/target, mob/user)
-		. = ((user.equipped() == target) || target.density && target.loc == get_turf(target) && get_dist(user,target)<=1 && istype(target,/obj/item/instrument))
+		. = ((user.equipped() == target) || target.density && target.loc == get_turf(target) && BOUNDS_DIST(user, target) == 0 && istype(target,/obj/item/instrument))
 
 	special
 		icon_background = "key_special"

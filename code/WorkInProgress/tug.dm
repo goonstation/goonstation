@@ -13,7 +13,7 @@
 		if (!in_interact_range(user, src) || !in_interact_range(user, C) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
 			return
 
-		if (!istype(C)|| C.anchored || get_dist(user, src) > 1 || get_dist(src,C) > 1 )
+		if (!istype(C)|| C.anchored || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(src, C) > 0 )
 			return
 
 		if (istype(C, /mob/dead/))
@@ -91,7 +91,7 @@
 		if (istype(C, /atom/movable/screen) || C.anchored)
 			return
 
-		if (get_dist(C, src) > 1 || load)
+		if (BOUNDS_DIST(C, src) > 0 || load)
 			return
 
 		// if a create, close before loading

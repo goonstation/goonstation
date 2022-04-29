@@ -105,7 +105,7 @@
 		bioHolder.mobAppearance.underwear = "none"
 		bioHolder.mobAppearance.u_color = "#FFFFFF"
 		bioHolder.Uid = bioHolder.CreateUid()
-		bioHolder.uid_hash = md5(bioHolder.Uid)
+		bioHolder.build_fingerprints()
 		. = ..()
 
 obj/item/reagent_containers/iv_drip/dead_exec

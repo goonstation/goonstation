@@ -6,9 +6,7 @@
 /turf/simulated/wall/asteroid,
 /area/space)
 "aac" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "aad" = (
 /obj/grille/steel,

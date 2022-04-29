@@ -452,6 +452,9 @@
 							if (Z.type == src.type && Z.level == 1)
 								boutput(user,"<span class='alert'>No matter how hard you try, you are not able to think of a way to fit more than one [src] on a single tile.</span>")
 								return
+					if(anchored)
+						boutput(user,"<span class='alert'>[src] is already attached to something somehow.</span>")
+						return
 					boutput(user, "You attach the [src] to the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and activate it.")
 					logTheThing("station", user, null, "attaches a <b>[src]</b> to the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"]  at [log_loc(src)].")
 					level = 1
@@ -913,7 +916,7 @@
 				LIGHT_UP_HOUSING
 				flick("comp_hscan1",src)
 				playsound(src.loc, "sound/machines/twobeep2.ogg", 90, 0)
-				var/sendstr = (send_name ? user.real_name : user.bioHolder.uid_hash)
+				var/sendstr = (send_name ? user.real_name : user.bioHolder.fingerprints)
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,sendstr)
 			else
 				boutput(user, "<span class='alert'>The hand scanner can only be used by humanoids.</span>")

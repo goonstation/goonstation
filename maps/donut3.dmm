@@ -12582,6 +12582,42 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
+"dsm" = (
+/obj/table/wood/round/auto,
+/obj/item/implant/projectile/body_visible/dart/bardart{
+	dir = 8;
+	pixel_x = -1;
+	pixel_y = 8
+	},
+/obj/item/implant/projectile/body_visible/dart/bardart{
+	dir = 8;
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/implant/projectile/body_visible/dart/bardart{
+	dir = 8;
+	pixel_x = 2;
+	pixel_y = 1
+	},
+/obj/item/implant/projectile/body_visible/dart/bardart{
+	dir = 8;
+	pixel_x = 3;
+	pixel_y = 6
+	},
+/obj/item/implant/projectile/body_visible/dart/bardart{
+	dir = 8;
+	pixel_x = -4;
+	pixel_y = 11
+	},
+/obj/item/implant/projectile/body_visible/dart/bardart{
+	dir = 8;
+	pixel_x = 3;
+	pixel_y = 13
+	},
+/turf/simulated/floor/wood/eight{
+	dir = 1
+	},
+/area/station/crew_quarters/cafeteria)
 "dsw" = (
 /turf/simulated/floor/specialroom/freezer,
 /area/station/maintenance/inner/sw)
@@ -13693,42 +13729,6 @@
 	name = "reinforced plating"
 	},
 /area/station/science/chemistry)
-"dLT" = (
-/obj/table/wood/round/auto,
-/obj/item/implant/projectile/bardart{
-	dir = 8;
-	pixel_x = -1;
-	pixel_y = 8
-	},
-/obj/item/implant/projectile/bardart{
-	dir = 8;
-	pixel_x = -4;
-	pixel_y = 4
-	},
-/obj/item/implant/projectile/bardart{
-	dir = 8;
-	pixel_x = 2;
-	pixel_y = 1
-	},
-/obj/item/implant/projectile/bardart{
-	dir = 8;
-	pixel_x = 3;
-	pixel_y = 6
-	},
-/obj/item/implant/projectile/bardart{
-	dir = 8;
-	pixel_x = -4;
-	pixel_y = 11
-	},
-/obj/item/implant/projectile/bardart{
-	dir = 8;
-	pixel_x = 3;
-	pixel_y = 13
-	},
-/turf/simulated/floor/wood/eight{
-	dir = 1
-	},
-/area/station/crew_quarters/cafeteria)
 "dLW" = (
 /obj/disposalpipe/switch_junction/right/south{
 	mail_tag = "janitor"
@@ -25233,12 +25233,6 @@
 	},
 /turf/simulated/floor/purpleblack,
 /area/station/bridge)
-"haK" = (
-/obj/machinery/floorflusher/bathtub{
-	dir = 8
-	},
-/turf/simulated/floor/specialroom/freezer/white,
-/area/station/security/hos)
 "haS" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -26659,9 +26653,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "hwr" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/station/turret_protected/AIbaseoutside)
 "hwA" = (
 /obj/machinery/light_switch/north,
@@ -42320,9 +42312,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/medical/breakroom)
 "mdn" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/station/turret_protected/armory_outside)
 "mdw" = (
 /obj/decal/tile_edge/line/blue{
@@ -45266,6 +45256,10 @@
 /obj/decal/tile_edge/line/purple{
 	dir = 5;
 	icon_state = "tile1"
+	},
+/obj/item/clothing/head/helmet/camera{
+	pixel_y = -2;
+	pixel_x = -6
 	},
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
@@ -56987,9 +56981,7 @@
 /obj/machinery/turret{
 	dir = 1
 	},
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/station/turret_protected/armory_outside)
 "qny" = (
 /obj/cable{
@@ -62440,6 +62432,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
+"rNf" = (
+/obj/machinery/bathtub{
+	dir = 8
+	},
+/turf/simulated/floor/specialroom/freezer/white,
+/area/station/security/hos)
 "rNi" = (
 /obj/machinery/light_switch/south,
 /turf/simulated/floor/black,
@@ -69713,9 +69711,7 @@
 	},
 /area/station/medical/cdc)
 "tXv" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "tXG" = (
 /obj/cable{
@@ -105250,7 +105246,7 @@ jhw
 jhw
 lpZ
 jXl
-haK
+rNf
 jhw
 plN
 plN
@@ -124846,7 +124842,7 @@ hFC
 tiA
 nMN
 dJQ
-dLT
+dsm
 rNI
 rNI
 oMe

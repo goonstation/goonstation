@@ -79,7 +79,7 @@
 	SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /obj/machinery/gibber/proc/gibber_action, list(G, user), 'icons/mob/screen1.dmi', "grabbed", null, null)
 
 /obj/machinery/gibber/proc/gibber_action(obj/item/grab/G as obj, mob/user as mob)
-	if(G?.affecting && IN_RANGE(user, src, 1))
+	if(G?.affecting && (BOUNDS_DIST(user, src) == 0))
 		user.visible_message("<span class='alert'>[user] shoves [G.affecting] on top of the gibber!</span>")
 		logTheThing("combat", user, G.affecting, "forced [constructTarget(G.affecting,"combat")] into a gibber at [log_loc(src)].")
 		var/mob/M = G.affecting

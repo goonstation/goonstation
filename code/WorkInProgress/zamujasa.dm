@@ -284,7 +284,7 @@
 
 		boutput(user, "<span class='notice'>[src] mulches up [W].</span>")
 		user.u_equip(W)
-		W.dropped()
+		W.dropped(user)
 		mulch_item(W, score)
 		var/MT = start_scoring()
 		update_score(MT, score)
@@ -364,10 +364,10 @@
 		if (!isliving(user))
 			boutput(user, "<span class='alert'>Excuse me you are dead, get your gross dead hands off that!</span>")
 			return
-		if (get_dist(user,src) > 1)
+		if (BOUNDS_DIST(user, src) > 0)
 			boutput(user, "<span class='alert'>You need to move closer to [src] to do that.</span>")
 			return
-		if (get_dist(O,src) > 1 || get_dist(O,user) > 1)
+		if (BOUNDS_DIST(O, src) > 0 || BOUNDS_DIST(O, user) > 0)
 			boutput(user, "<span class='alert'>[O] is too far away to load into [src]!</span>")
 			return
 

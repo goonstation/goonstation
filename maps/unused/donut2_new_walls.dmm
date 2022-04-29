@@ -11,9 +11,7 @@
 /turf/simulated/wall/asteroid,
 /area/space)
 "aad" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "aae" = (
 /obj/lattice{

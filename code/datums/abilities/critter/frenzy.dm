@@ -30,7 +30,7 @@
 		if (!ismob(target))
 			boutput(holder.owner, __red("Nothing to frenzy at there."))
 			return 1
-		if (get_dist(holder.owner, target) > 1)
+		if (BOUNDS_DIST(holder.owner, target) > 0)
 			boutput(holder.owner, __red("That is too far away to frenzy."))
 			return 1
 		var/mob/MT = target
@@ -99,7 +99,7 @@
 		if (!ismob(target))
 			boutput(holder.owner, __red("Nothing to snip apart there."))
 			return 1
-		if (get_dist(holder.owner, target) > 1)
+		if (BOUNDS_DIST(holder.owner, target) > 0)
 			boutput(holder.owner, __red("That is too far away to pinch."))
 			return 1
 		var/mob/MT = target

@@ -16,6 +16,9 @@
 		y_min = world.maxy
 		if (!map_icon)
 			map_icon = icon('icons/obj/station_map.dmi', "blank")
+			#ifdef UPSCALED_MAP
+			map_icon.Scale(world.maxx, world.maxy)
+			#endif
 			render_map()
 			zoom_map()
 			pixel_y += 20 //magic numbers because ByondUI mis-aligns by a few pixels

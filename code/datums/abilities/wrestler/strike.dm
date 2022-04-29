@@ -45,7 +45,7 @@
 
 				M.set_loc(target.loc)
 				sleep(4)
-				if (M && (T && isturf(T) && get_dist(M, T) <= 1))
+				if (M && (T && isturf(T) && BOUNDS_DIST(M, T) == 0))
 					M.set_loc(T)
 
 			M.visible_message("<span class='alert'><b>[M] [pick_string("wrestling_belt.txt", "strike")] [target]!</b></span>")

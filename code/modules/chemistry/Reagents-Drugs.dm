@@ -289,13 +289,20 @@ datum
 			transparency = 20
 			value = 6 // 4 2
 			thirst_value = -0.03
+			var/current_color_pattern = 1
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				M.druggy = max(M.druggy, 15)
 				// TODO. Write awesome hallucination algorithm!
 //				if(M.canmove) step(M, pick(cardinal))
 //				if(prob(7)) M.emote(pick("twitch","drool","moan","giggle"))
+				if(prob(20))
+					if(src.current_color_pattern == 1)
+						animate_fade_drug_inbetween_1(M.client, 40)
+						src.current_color_pattern = 2
+					else
+						animate_fade_drug_inbetween_2(M.client, 40)
+						src.current_color_pattern = 1
 				if(probmult(6))
 					switch(rand(1,2))
 						if(1)
@@ -337,6 +344,13 @@ datum
 				if(method == INGEST)
 					boutput(M, "<span class='alert'><font face='[pick("Arial", "Georgia", "Impact", "Mucida Console", "Symbol", "Tahoma", "Times New Roman", "Verdana")]' size='[rand(3,6)]'>Holy shit, you start tripping balls!</font></span>")
 				return
+
+			on_mob_life_complete(var/mob/living/M)
+				if(src.current_color_pattern == 1)
+					animate_fade_from_drug_1(M.client, 40)
+				else
+					animate_fade_from_drug_2(M.client, 40)
+
 
 		drug/lsd_bee
 			name = "lsbee"

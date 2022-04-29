@@ -24,7 +24,7 @@
 					src.targeting_ability = S
 					update_cursor()
 				return 100
-			if (S.target_in_inventory && (!IN_RANGE(src, target, 1) && !isturf(target) && !isturf(target.loc)))
+			if (S.target_in_inventory && (!(BOUNDS_DIST(src, target) == 0) && !isturf(target) && !isturf(target.loc)))
 				if(S.sticky)
 					src.targeting_ability = S
 					update_cursor()
@@ -76,7 +76,7 @@
 			return 100
 		actions.interrupt(src, INTERRUPT_ACTION)
 		SPAWN(0)
-			B.execute_ability(target)
+			B.execute_ability(target, params)
 			src.targeting_ability = null
 			src.update_cursor()
 		return 100
@@ -86,7 +86,7 @@
 			if (abilityHolder.click(target, params))
 				return 100
 	//Pull cancel 'hotkey'
-	if (src.pulling && get_dist(src,target) > 1)
+	if (src.pulling && BOUNDS_DIST(src, target) > 0)
 		if (!islist(params))
 			params = params2list(params)
 		if(params["ctrl"])

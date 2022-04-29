@@ -59,7 +59,7 @@
 
 	boutput(wizard_mob, "You're a wizard now. You have a few starting spells; use the [SB] to choose the rest!")
 	if (!vr)
-		SHOW_WIZARD_TIPS(wizard_mob)
+		wizard_mob.show_antag_popup("wizard")
 	return
 
 ////////////////////////////////////////////// Helper procs ////////////////////////////////////////////////////

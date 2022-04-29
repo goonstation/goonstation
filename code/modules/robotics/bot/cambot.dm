@@ -273,7 +273,7 @@
 
 	SPAWN(5 SECONDS)
 		if (src.on)
-			if (get_dist(src,target) <= 1)
+			if (BOUNDS_DIST(src, target) == 0)
 				src.flash_blink(1, 5)
 				if (src.camera) // take the picture
 					var/obj/item/photo/P = src.camera.create_photo(target, src.emagged)

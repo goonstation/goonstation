@@ -112,12 +112,13 @@ var/datum/event_controller/random_events
 			var/dcp = get_dead_crew_percentage()
 			if (aap < alive_antags_threshold && (ticker?.mode?.do_antag_random_spawns))
 				do_random_event(list(pick(antag_spawn_events)), source = "spawn_antag")
-				message_admins("<span class='internal'>Antag spawn event success!<br>[100 * aap]% of the alive crew were antags.</span>")
+				message_admins("<span class='internal'>Antag spawn event success!<br>[round(100 * aap, 0.1)]% of the alive crew were antags.</span>")
 			else if (dcp > dead_players_threshold)
 				do_random_event(player_spawn_events, source = "spawn_player")
-				message_admins("<span class='internal'>Player spawn event success!<br>[100 * dcp]% of the entire crew were dead.</span>")
+				message_admins("<span class='internal'>Player spawn event success!<br>[round(100 * dcp, 0.1)]% of the entire crew were dead.</span>")
 			else
-				message_admins("<span class='internal'>A spawn event would have happened now, but it was not needed based on alive players + antagonists headcount or game mode!<br>[100 * aap]% of the alive crew were antags and [100 * dcp]% of the entire crew were dead.</span>")
+				message_admins("<span class='internal'>A spawn event would have happened now, but it was not needed based on alive players + antagonists headcount or game mode!<br> \
+								[round(100 * aap, 0.1)]% of the alive crew were antags and [round(100 * dcp, 0.1)]% of the entire crew were dead.</span>")
 
 		next_spawn_event = ticker.round_elapsed_ticks + time_between_spawn_events
 

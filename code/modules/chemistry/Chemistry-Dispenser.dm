@@ -90,7 +90,7 @@
 			if (isnull(amount) || amount <= 0)
 				return
 			amount = clamp(amount, 0, amtlimit)
-			if (get_dist(src,user) > 1)
+			if (BOUNDS_DIST(src, user) > 0)
 				boutput(user, "You need to move closer to get the chemicals!")
 				return
 			if (status & (NOPOWER|BROKEN))
@@ -141,7 +141,7 @@
 
 	proc/eject_card()
 		if (src.user_id)
-			if(IN_RANGE(usr, src, 1))
+			if((BOUNDS_DIST(usr, src) == 0))
 				usr.put_in_hand_or_drop(src.user_id)
 			else
 				src.user_id.set_loc(src.loc)
@@ -181,11 +181,11 @@
 			boutput(usr, "<span class='alert'>Only living mobs are able to set the dispenser's output target.</span>")
 			return
 
-		if(get_dist(over_object,src) > 1)
+		if(BOUNDS_DIST(over_object, src) > 0)
 			boutput(usr, "<span class='alert'>The dispenser is too far away from the target!</span>")
 			return
 
-		if(get_dist(over_object,usr) > 1)
+		if(BOUNDS_DIST(over_object, usr) > 0)
 			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
 			return
 
@@ -212,7 +212,7 @@
 	proc/remove_distant_beaker()
 		// borgs and people with item arms don't insert the beaker into the machine itself
 		// but whenever something would happen to the dispenser and the beaker is far it should disappear
-		if(beaker && !IN_RANGE(get_turf(beaker), src, 1))
+		if(beaker && BOUNDS_DIST(beaker, src) > 0)
 			beaker = null
 			src.UpdateIcon()
 
@@ -293,7 +293,7 @@
 			if ("eject")
 				if (beaker)
 					if(beaker.loc == src)
-						if(IN_RANGE(usr, src, 1))
+						if((BOUNDS_DIST(usr, src) == 0))
 							usr.put_in_hand_or_drop(beaker)
 						else
 							beaker.set_loc(src.loc)

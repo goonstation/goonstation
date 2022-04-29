@@ -782,6 +782,12 @@
 		pixel_x = -256
 		pixel_y = -256
 
+	antistes
+		icon_state = "antistes"
+		name = "Antistes"
+		pixel_x = -256
+		pixel_y = -256
+
 	station
 		name = "Space Station 14"
 		desc = "Another Nanotrasen station passing by your orbit."
@@ -985,6 +991,15 @@ obj/decoration/ceilingfan
 	anchored = 2
 	density = 0
 	layer = DECAL_LAYER
+
+obj/decoration/gibberBroken
+	name = "rusty old gibber"
+	desc = "This thing is completely broken and rusted. There's also a shredded armored jacket and some crunched up bloody bones inside. Huh."
+	icon = 'icons/obj/decoration.dmi'
+	icon_state = "gibberBroken"
+	anchored = 1
+	density = 1
+	deconstruct_flags = DECON_WRENCH | DECON_WELDER | DECON_CROWBAR
 
 /obj/decoration/syndiepc
 	name = "syndicate computer"

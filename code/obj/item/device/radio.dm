@@ -1096,7 +1096,7 @@ obj/item/device/radio/signaler/attackby(obj/item/W as obj, mob/user as mob)
 //Must be standing next to it to talk into it
 /obj/item/device/radio/intercom/loudspeaker/hear_talk(mob/M as mob, msgs, real_name, lang_id)
 	if (src.broadcasting)
-		if (get_dist(src, M) <= 1)
+		if (BOUNDS_DIST(src, M) == 0)
 			talk_into(M, msgs, null, real_name, lang_id)
 
 /obj/item/device/radio/intercom/loudspeaker/examine()

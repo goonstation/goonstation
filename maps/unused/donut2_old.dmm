@@ -41274,9 +41274,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "bIg" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "bIh" = (
 /turf/simulated/wall/asteroid{
@@ -53456,9 +53454,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "cjn" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /turf/simulated/wall/asteroid{
 	dir = 9;
 	icon_state = "astedge"
@@ -56478,9 +56474,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/fuck/main)
 "cpI" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /turf/simulated/wall/asteroid{
 	dir = 6;
 	icon_state = "astdetail"
@@ -56488,9 +56482,7 @@
 /area/fuck/main)
 "cpJ" = (
 /obj/lattice,
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "cpK" = (
 /obj/landmark/mining{
@@ -57193,9 +57185,7 @@
 /turf/space,
 /area/fuck/main)
 "crj" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /turf/simulated/wall/asteroid{
 	dir = 4;
 	icon_state = "astedge"

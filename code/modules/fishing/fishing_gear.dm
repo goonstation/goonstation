@@ -58,7 +58,7 @@
 
 	onStart()
 		..()
-		if (!IN_RANGE(src.user, src.rod, 1) || !IN_RANGE(src.user, src.target, 1) || !src.user || !src.target || !src.rod || !src.fishing_spot)
+		if (!(BOUNDS_DIST(src.user, src.rod) == 0) || !(BOUNDS_DIST(src.user, src.target) == 0) || !src.user || !src.target || !src.rod || !src.fishing_spot)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -71,7 +71,7 @@
 
 	onUpdate()
 		..()
-		if (!IN_RANGE(src.user, src.rod, 1) || !IN_RANGE(src.user, src.target, 1) || !src.user || !src.target || !src.rod || !src.fishing_spot)
+		if (!(BOUNDS_DIST(src.user, src.rod) == 0) || !(BOUNDS_DIST(src.user, src.target) == 0) || !src.user || !src.target || !src.rod || !src.fishing_spot)
 			interrupt(INTERRUPT_ALWAYS)
 			src.rod.is_fishing = false
 			src.rod.UpdateIcon()
@@ -79,7 +79,7 @@
 			return
 
 	onEnd()
-		if (!IN_RANGE(src.user, src.rod, 1) || !IN_RANGE(src.user, src.target, 1) || !src.user || !src.target || !src.rod || !src.fishing_spot)
+		if (!(BOUNDS_DIST(src.user, src.rod) == 0) || !(BOUNDS_DIST(src.user, src.target) == 0) || !src.user || !src.target || !src.rod || !src.fishing_spot)
 			..()
 			interrupt(INTERRUPT_ALWAYS)
 			src.rod.is_fishing = false

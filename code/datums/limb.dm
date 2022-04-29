@@ -235,7 +235,22 @@
 		else
 			reloaded_at = ticker.round_elapsed_ticks + reload_time
 
+	attack_hand(atom/target, mob/user, var/reach, params, location, control)
+		return
+
+	help(mob/living/target, mob/living/user)
+		return
+
+	disarm(mob/living/target, mob/living/user)
+		src.point_blank(target, user)
+
+	grab(mob/living/target, mob/living/user)
+		return
+
 	harm(mob/living/target, mob/living/user)
+		src.point_blank(target, user)
+
+	proc/point_blank(mob/living/target, mob/living/user)
 		if (reloaded_at > ticker.round_elapsed_ticks && !current_shots)
 			boutput(user, "<span class='alert'>The [holder.name] is [reloading_str]!</span>")
 			return
@@ -249,12 +264,12 @@
 				var/obj/projectile/P = initialize_projectile_pixel(user, proj, target, 0, 0)
 				if (!P)
 					return FALSE
-				if(get_dist(user,target) <= 1)
+				if(BOUNDS_DIST(user, target) == 0)
 					P.was_pointblank = 1
 					hit_with_existing_projectile(P, target) // Includes log entry.
 				else
 					P.launch()
-			user.visible_message("<b class='alert'>[user] fires at [target] with the [holder.name]!</b>")
+			user.visible_message("<b class='alert'>[user] shoots [target] point-blank with the [holder.name]!</b>")
 			next_shot_at = ticker.round_elapsed_ticks + cooldown
 			if (!current_shots)
 				reloaded_at = ticker.round_elapsed_ticks + reload_time
@@ -563,7 +578,9 @@
 		// Werewolves and shamblers grab aggressively by default.
 		var/obj/item/grab/GD = user.equipped()
 		if (GD && istype(GD) && (GD.affecting && GD.affecting == target))
-			GD.state = GRAB_AGGRESSIVE
+			GD.state = GRAB_STRONG
+			APPLY_ATOM_PROPERTY(target, PROP_MOB_CANTMOVE, GD)
+			target.update_canmove()
 			GD.UpdateIcon()
 			user.visible_message("<span class='alert'>[user] grabs hold of [target] aggressively!</span>")
 
@@ -920,7 +937,9 @@
 		var/obj/item/grab/GD = user.equipped()
 		if (GD && istype(GD) && (GD.affecting && GD.affecting == target))
 			target.changeStatus("stunned", 2 SECONDS)
-			GD.state = GRAB_AGGRESSIVE
+			GD.state = GRAB_STRONG
+			APPLY_ATOM_PROPERTY(target, PROP_MOB_CANTMOVE, GD)
+			target.update_canmove()
 			GD.UpdateIcon()
 			user.visible_message("<span class='alert'>[user] grabs hold of [target] aggressively!</span>")
 

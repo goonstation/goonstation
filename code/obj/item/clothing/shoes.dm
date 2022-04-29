@@ -441,7 +441,7 @@
 
 /obj/item/clothing/shoes/swat/knight // so heavy you can't get shoved!
 	name = "combat sabatons"
-	desc = "Massive, armored footwear for syndicate super-heavies."
+	desc = "Massive, magnetic, slip-resistant armored footwear for syndicate super-heavies."
 	icon_state = "swatheavy"
 	magnetic = 1
 	c_flags = NOSLIP
@@ -604,7 +604,7 @@
 				setProperty("coldprot", 0)
 				setProperty("heatprot", 0)
 			if(src.material.hasProperty("hard") && src.material.hasProperty("density"))
-				kick_bonus = round((src.material.getProperty("hard") * src.material.getProperty("density")) / 2500)
+				kick_bonus = round((src.material.getProperty("hard") * src.material.getProperty("density")) / 1500)
 			else
 				kick_bonus = 0
 		return

@@ -9,7 +9,7 @@
 	layer = 2
 	mats = 18
 	deconstruct_flags = DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
-	appearance_flags = TILE_BOUND
+	appearance_flags = TILE_BOUND | PIXEL_SCALE
 	var/timeBetweenUses = 20//I can see this being fun
 	var/success_sound = "sound/machines/chime.ogg"
 	var/fail_sound = 'sound/machines/alarm_a.ogg'

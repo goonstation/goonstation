@@ -700,7 +700,7 @@ TRAYS
 		boutput(user, "You put [W] on \the [src]")
 
 	mouse_drop(atom/over_object, src_location, over_location)
-		if(over_object == usr && get_dist(src, usr) <=1 && isliving(usr) && !usr.stat && !usr.restrained())
+		if(over_object == usr && BOUNDS_DIST(src, usr) == 0 && isliving(usr) && !usr.stat && !usr.restrained())
 			var/mob/M = over_object
 			if(ordered_contents.len == 0)
 				boutput(M, "There's no food to take off of \the [src]!")

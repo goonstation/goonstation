@@ -29,6 +29,7 @@ PIPE BOMBS + CONSTRUCTION
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 0
+	duration_put = 0.25 SECONDS //crime
 	var/is_dangerous = TRUE
 	var/sound_armed = null
 	var/icon_state_armed = null
@@ -62,7 +63,7 @@ PIPE BOMBS + CONSTRUCTION
 	afterattack(atom/target as mob|obj|turf, mob/user as mob)
 		if (src.state)
 			return
-		if (get_dist(user, target) <= 1 || (!isturf(target) && !isturf(target.loc)) || !isturf(user.loc) || !src.state )
+		if (BOUNDS_DIST(user, target) == 0 || (!isturf(target) && !isturf(target.loc)) || !isturf(user.loc) || !src.state )
 			return
 		if (user.equipped() == src)
 			if (!src.state)
@@ -231,18 +232,13 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				elecflash(src,power = 4)
 				qdel(src)
 				return
-			for (var/atom/X in orange(9, T))
-				if (istype(X,/obj/machinery/containment_field))
+			for (var/atom/movable/X in orange(9, T))
+				if (istypes(X, list(/obj/machinery/containment_field, /obj/machinery/field_generator, /obj/fluid, /obj/effect, /obj/overlay)))
 					continue
-				if (istype(X,/obj/machinery/field_generator))
-					continue
-				if (istype(X,/turf))
-					continue
-				if (istype(X, /obj))
-					var/area/t = get_area(X)
-					if(t?.sanctuary) continue
-					if (prob(50) && X:anchored != 2)
-						step_towards(X,src)
+				var/area/t = get_area(X)
+				if(t?.sanctuary) continue
+				if (prob(50) && X.anchored != 2)
+					step_towards(X,src)
 		qdel(src)
 		return
 
@@ -681,7 +677,11 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 
 	New()
 		..()
+		#ifdef UPSCALED_MAP
+		destination = locate(40 * 2,19 * 2,2)
+		#else
 		destination = locate(40,19,2)
+		#endif
 
 	primed
 		state = 1
@@ -693,7 +693,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 			state = 1
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if (get_dist(user, target) <= 1 || (!isturf(target) && !isturf(target.loc)) || !isturf(user.loc))
+		if (BOUNDS_DIST(user, target) == 0 || (!isturf(target) && !isturf(target.loc)) || !isturf(user.loc))
 			return
 		if (istype(target, /obj/item/storage)) return ..()
 		if (src.state == 0)
@@ -1363,6 +1363,10 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 						var/turf/simulated/floor/F = T
 						F.burn_tile()
 
+			for (var/obj/machinery/door/DR in src.loc)
+				var/area/a = get_area(DR)
+				if (!DR.cant_emag && !a.sanctuary)
+					DR.take_damage(DR.health)
 			for (var/obj/structure/girder/G in range(src.expl_range, location))
 				var/area/a = get_area(G)
 				if (G && istype(G) && !a.sanctuary)
@@ -1400,12 +1404,14 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 /obj/item/pipebomb
 	icon = 'icons/obj/items/assemblies.dmi'
 	item_state = "r_hands"
+	duration_put = 0.5 SECONDS //crime
 
 /obj/item/pipebomb/frame
 	name = "pipe frame"
 	desc = "Two small pipes joined together with grooves cut into the side."
 	icon_state = "Pipe_Frame"
 	burn_possible = 0
+	material_amt = 0.3
 	var/state = 1
 	var/strength = 5
 	var/list/item_mods = new/list() //stuff something into one or both of the pipes to change the finished product
@@ -1810,9 +1816,10 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 			boutput(M, "<span class='alert'><b>Your armor blocks the shrapnel!</b></span>")
 		else
 			var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel(M)
+			implanted.bleed_time = 25 * sqstrength
 			implanted.owner = M
 			M.implant += implanted
-			implanted.implanted(M, null, 25 * sqstrength)
+			implanted.implanted(M, null)
 			boutput(M, "<span class='alert'><b>You are struck by shrapnel!</b></span>")
 			if (!M.stat)
 				M.emote("scream")
@@ -1864,9 +1871,10 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				boutput(M, "<span class='alert'><b>Your armor blocks the chunks of [src.name]!</b></span>")
 			else
 				var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel(M)
+				implanted.bleed_time = 25 * sqstrength
 				implanted.owner = M
 				M.implant += implanted
-				implanted.implanted(M, null, 25 * sqstrength)
+				implanted.implanted(M, null)
 				boutput(M, "<span class='alert'><b>You are struck by chunks of [src.name]!</b></span>")
 				if (!M.stat)
 					M.emote("scream")

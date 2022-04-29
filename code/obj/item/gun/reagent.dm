@@ -86,7 +86,7 @@
 		if(!isliving(usr))
 			return
 
-		if(get_dist(src, usr) > 1)
+		if(BOUNDS_DIST(src, usr) > 0)
 			boutput(usr, "<span class='alert'>You need to be closer to empty \the [src] out!</span>")
 			return
 
@@ -128,7 +128,7 @@
 	tooltip_flags = REBUILD_DIST
 
 	New()
-		set_current_projectile(new/datum/projectile/syringe)
+		set_current_projectile(new/datum/projectile/syringe/syringe_barbed)
 		. = ..()
 
 	get_desc(dist)
@@ -152,6 +152,7 @@
 
 	New()
 		..()
+		set_current_projectile(new/datum/projectile/syringe)
 		if (src.safe && islist(global.chem_whitelist) && length(global.chem_whitelist))
 			src.ammo_reagents = global.chem_whitelist
 
@@ -185,6 +186,7 @@
 
 	New()
 		..()
+		set_current_projectile(new/datum/projectile/syringe)
 		src.reagents.add_reagent("love", src.reagents.maximum_volume)
 
 

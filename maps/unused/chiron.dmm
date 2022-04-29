@@ -147,9 +147,7 @@
 	},
 /area/space)
 "aao" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "aap" = (
 /turf/simulated/wall/asteroid,
