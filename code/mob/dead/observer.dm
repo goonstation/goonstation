@@ -228,7 +228,7 @@
 	src.see_in_dark = SEE_DARK_FULL
 	animate_bumble(src) // floaty ghosts  c:
 
-	if(corpse && ismob(corpse))
+	if (ismob(corpse))
 		src.corpse = corpse
 		src.set_loc(get_turf(corpse))
 		src.real_name = corpse.real_name
@@ -236,6 +236,8 @@
 		src.gender = src.bioHolder.mobAppearance.gender
 		src.UpdateName()
 		src.verbs += /mob/dead/observer/proc/reenter_corpse
+	else
+		stack_trace("Observer New() called with non-mob thing [corpse] (\ref [corpse]) as a corpse.")
 
 	hud = new(src)
 	src.attach_hud(hud)

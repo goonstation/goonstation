@@ -32,7 +32,6 @@
 	desc = "You probably shouldn't eat these."
 	icon_state = "ironfilings"
 	heal_amt = 0
-	amount = 1
 
 /obj/item/reagent_containers/food/snacks/condiment/ketchup
 	name = "ketchup"
@@ -45,6 +44,18 @@
 	name = "maple syrup"
 	desc = "Made with real artificial maple syrup!"
 	icon_state = "syrup"
+
+/obj/item/reagent_containers/food/snacks/condiment/soysauce
+	name = "soy sauce"
+	desc = "A dark brown sauce brewed from soybeans and wheat. Salty!"
+	icon_state = "soy-sauce"
+	initial_volume = 30
+	initial_reagents = "soysauce"
+
+	heal(var/mob/M)
+		. = ..()	
+		boutput(M, "<span class='alert'>FUCK, SALTY!</span>")
+		M.emote("scream")
 
 /obj/item/reagent_containers/food/snacks/condiment/mayo
 	name = "mayonnaise"
@@ -92,14 +103,14 @@
 	desc = "A perennial favourite of clowns."
 	icon_state = "custard"
 	needspoon = 1
-	amount = 2
+	bites_left = 2
 	heal_amt = 3
 
 /obj/item/reagent_containers/food/snacks/condiment/chocchips
 	name = "chocolate chips"
 	desc = "Mmm! Little bits of chocolate! Or rabbit droppings. Either or."
 	icon_state = "chocchips"
-	amount = 5
+	bites_left = 5
 	heal_amt = 1
 	initial_volume = 10
 	initial_reagents = "chocolate"
@@ -115,7 +126,6 @@
 	name = "butt-er"
 	desc = "Fluffy and fragrant."
 	icon_state = "butters"
-	amount = 1
 	heal_amt = 3
 	initial_volume = 20
 

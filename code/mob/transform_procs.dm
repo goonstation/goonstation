@@ -324,7 +324,7 @@
 				W.set_loc(locate(1, 1, 1))
 		else
 			W.set_loc(T)
-		SHOW_SLASHER_TIPS(src)
+		src.show_antag_popup("slasher")
 		if(src.mind)
 			src.mind.transfer_to(W)
 			src.mind.special_role = "slasher"

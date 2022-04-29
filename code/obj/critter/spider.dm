@@ -30,7 +30,7 @@
 			if (user.a_intent == INTENT_HARM)
 				return ..()
 			else
-				src.visible_message("<span class='alert'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>")
+				src.visible_message("<span class='alert'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>", group="spiderhug")
 				if (prob(15) && !ON_COOLDOWN(src, "playsound", 3 SECONDS))
 					for (var/mob/O in hearers(src, null))
 						O.show_message("[src] coos[prob(50) ? " happily!" : ""]!",2)

@@ -29,7 +29,7 @@
 		src.resistances += /datum/ailment/disease/lycanthropy
 
 		if (src.mind && src.mind.special_role != ROLE_OMNITRAITOR)
-			SHOW_WEREWOLF_TIPS(src)
+			src.show_antag_popup("werewolf")
 
 	else return
 

@@ -54,6 +54,9 @@ WET FLOOR SIGN
 		..()
 		reagents.add_reagent("cleaner", 100)
 
+/obj/item/spraybottle/cleaner/robot/New()
+	..()
+	create_reagents(25)// no more 100 units on spawn for you, mister!
 /obj/item/spraybottle/cleaner/robot
 	name = "cybernetic cleaner spray bottle"
 	desc = "A cleaner spray bottle jury-rigged to synthesize space cleaner."
@@ -70,12 +73,25 @@ WET FLOOR SIGN
 
 	process()
 		..()
-		// starts with 100 cleaner but only autofills to 25. thanks, nanotrasen!
 		if (src.reagents.total_volume < 25)
 			src.reagents.add_reagent("cleaner", 1)
 		else
 			processing_items.Remove(src)
 		return 0
+
+/obj/item/spraybottle/cleaner/robot/drone
+	name = "cybernetic cleaning spray bottle"
+	desc = "A small spray bottle that very slowly synthesises space cleaner."
+	icon_state = "cleaner_robot"
+
+	process()
+		..()
+		if (src.reagents.total_volume < 25)
+			src.reagents.add_reagent("cleaner", 0.5)
+		else
+			processing_items.Remove(src)
+		return 0
+
 
 /obj/janitorTsunamiWave
 	name = "chemicals"
@@ -298,7 +314,7 @@ WET FLOOR SIGN
 	if(reagents?.total_volume)
 		. += "<span class='notice'>[src] is wet!</span>"
 
-/obj/item/mop/afterattack(atom/A, mob/user as mob)
+/obj/item/mop/afterattack(atom/A, mob/user as mob)// the main utility of all moppage and mopkind
 	if (ismob(A))
 		return
 	if ((src.reagents.total_volume < 1 || mopcount >= 9) && !istype(A, /obj/fluid))
@@ -306,7 +322,11 @@ WET FLOOR SIGN
 		return
 
 	if(istype(A, /obj/fluid/airborne)) // no mopping up smoke
-		A = get_turf(A)
+		var/turf/T = get_turf(A)
+		if(T.active_liquid)
+			A = T.active_liquid
+		else
+			A = T
 	if (istype(A, /turf/simulated) || istype(A, /obj/decal/cleanable) || istype(A, /obj/fluid))
 		//user.visible_message("<span class='alert'><B>[user] begins to clean [A].</B></span>")
 		actions.start(new/datum/action/bar/icon/mop_thing(src,A), user)
@@ -638,6 +658,16 @@ WET FLOOR SIGN
 				return
 	else
 		..()
+/obj/item/sponge/ghostdronesafe
+	name = "Integrated sponge"
+	desc = "A cleaning utensil with an associated drainage system to prevent fluids from dripping when wrung out."
+
+/obj/item/sponge/ghostdronesafe/attack_self(mob/user as mob)
+	if (ON_COOLDOWN(user, "ghostdrone sponge wringing", 5 SECONDS))// Wtihout the cooldown, this is stupid powerful
+		boutput(user, "<span class='notice'> The [src] is still processing fluids, please wait!</span>")
+		return
+	user.visible_message("<span class='notice'>[user] drains the [src].</span>")
+	src.reagents.clear_reagents()
 
 /obj/item/sponge/cheese
 	name = "cheese-shaped sponge"

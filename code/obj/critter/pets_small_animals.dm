@@ -86,60 +86,7 @@
 	atk_diseases = list(/datum/ailment/disease/berserker, /datum/ailment/disease/space_madness)
 	atk_disease_prob = 35
 	atkcarbon = 1
-/*
-	CritterAttack(mob/living/M)
-		src.attacking = 1
-		src.visible_message("<span class='combat'><B>[src]</B> bites [src.target]!</span>")
-		random_brute_damage(src.target, 1)
-		SPAWN(1 SECOND)
-			src.attacking = 0
-		if(iscarbon(M))
-			if(diseased && prob(10))
-				if(prob(50))
-					M.contract_disease(/datum/ailment/disease/berserker, null, null, 1) // path, name, strain, bypass resist
-				else
-					M.contract_disease(/datum/ailment/disease/space_madness, null, null, 1) // path, name, strain, bypass resist
-*/
-/*	seek_target()
-		if(src.target)
-			src.task = "chasing"
-			return
-		var/list/visible = new()
-		for(var/obj/item/reagent_containers/food/snacks/S in view(src.seekrange,src))
-			visible.Add(S)
-		if(src.food_target && visible.Find(src.food_target))
-			src.task = "chasing food"
-			return
-		else src.task = "thinking"
-		if(visible.len)
-			src.food_target = visible[1]
-			src.task = "chasing food"
-		..()
 
-	ai_think()
-		if(task == "chasing food")
-			if(src.food_target == null)
-				src.task = "thinking"
-			else if(get_dist(src, src.food_target) <= src.attack_range)
-				src.task = "eating"
-			else
-				walk_to(src, src.food_target,1,4)
-		else if(task == "eating")
-			if (get_dist(src, src.food_target) > src.attack_range)
-				src.task = "chasing food"
-			else
-				src.visible_message("<b>[src]</b> nibbles at [src.food_target].")
-				playsound(src.loc,"sound/items/eatfood.ogg", rand(10,50), 1)
-				if (food_target.reagents.total_volume > 0 && src.reagents.total_volume < 30)
-					food_target.reagents.trans_to(src, 5)
-				src.food_target.amount--
-				SPAWN(2.5 SECONDS)
-				if(src.food_target != null && src.food_target.amount <= 0)
-					qdel(src.food_target)
-					src.task = "thinking"
-					src.food_target = null
-		return ..()
-*/
 /obj/critter/mouse/remy
 	name = "Remy"
 	desc = "A rat.  In space... wait, is it wearing a chef's hat?"
@@ -1213,7 +1160,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 				if (prob(3))
 					src.create_feather()
 			else
-				src.visible_message("<b>[user]</b> [pick("gives [src] a scritch", "pets [src]", "cuddles [src]", "snuggles [src]")]!")
+				src.visible_message("<b>[user]</b> [pick("gives [src] a scritch", "pets [src]", "cuddles [src]", "snuggles [src]")]!", group="animalhug")
 				if (prob(15))
 					src.visible_message("<span class='notice'><b>[src]</b> chirps happily!</span>")
 				return

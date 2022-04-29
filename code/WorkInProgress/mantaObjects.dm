@@ -610,7 +610,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			MagneticTether = 0
 			src.desc = "You should start by removing the outer screws from the casing. Be sure to wear some insulated gloves!"
 			playsound_global(world, "sound/effects/manta_alarm.ogg", 90)
-			command_alert("The Magnetic tether has suffered critical damage aboard NSS Manta. Jetpacks equipped with magnetic attachments are now offline, please do not venture out into the ocean until the tether has been repaired.", "Magnetic Tether Damaged",ALERT_STATION)
+			command_alert("The Magnetic tether has suffered critical damage aboard NSS Manta. Jetpacks equipped with magnetic attachments are now offline, please do not venture out into the ocean until the tether has been repaired.", "Magnetic Tether Damaged", alert_origin = ALERT_STATION)
 
 /obj/miningteleporter
 	name = "Experimental long-range mining teleporter"
