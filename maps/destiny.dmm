@@ -8764,7 +8764,6 @@
 	},
 /obj/cable,
 /obj/decal/poster/wallsign/gym,
-/obj/wingrille_spawn/auto,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/fitness)
 "aJO" = (
