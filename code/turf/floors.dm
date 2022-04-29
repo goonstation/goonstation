@@ -1400,6 +1400,20 @@ DEFINE_FLOORS(grasslush/thinner,
 DEFINE_FLOORS(grasslush/thin,
 	icon_state = "grass_thin")
 
+/////////////////////////////////////////
+
+DEFINE_FLOORS(solidcolor,
+	icon_state = "solid_white")
+
+DEFINE_FLOORS(solidcolor/fullbright,
+	fullbright = 1)
+
+DEFINE_FLOORS(solidcolor/black,
+	icon_state = "solid_black")
+
+DEFINE_FLOORS(solidcolor/black/fullbright,
+	fullbright = 1)
+
 /* ._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._. */
 /*-=-=-=-=-=-=-=-FUCK THAT SHIT MY WRIST HURTS=-=-=-=-=-=-=-=-=*/
 /* '~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~' */
@@ -1914,7 +1928,7 @@ DEFINE_FLOORS(grasslush/thin,
 	if(istype(C, /obj/item/cable_coil))
 		if(!intact)
 			var/obj/item/cable_coil/coil = C
-			coil.turf_place(src, user)
+			coil.turf_place(src, get_turf(user), user)
 		else
 			boutput(user, "<span class='alert'>You must remove the plating first.</span>")
 

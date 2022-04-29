@@ -132,7 +132,7 @@
 						qdel(G)
 				for (var/obj/item/grab/G as anything in src.grabbed_by)
 					if (istype(G) && BOUNDS_DIST(src, G.assailant) > 0)
-						if (G.state > 1)
+						if (G.state > GRAB_STRONG)
 							delay += G.assailant.p_class
 						qdel(G)
 
@@ -200,7 +200,7 @@
 
 					var/do_step = 1 //robust grab : don't even bother if we are in a chokehold. Assailant gets moved below. Makes the tile glide better without having a chain of step(src)->step(assailant)->step(me)
 					for (var/obj/item/grab/G as anything in src.grabbed_by)
-						if (G?.state < GRAB_NECK) continue
+						if (G?.state < GRAB_AGGRESSIVE) continue
 						do_step = 0
 						break
 
@@ -220,7 +220,7 @@
 
 						for (var/obj/item/grab/G as anything in src.grabbed_by)
 							if (G.assailant == pushing || G.affecting == pushing) continue
-							if (G.state < GRAB_NECK) continue
+							if (G.state < GRAB_AGGRESSIVE) continue
 							if (!G.assailant || !isturf(G.assailant.loc) || G.assailant.anchored)
 								return
 							src.set_density(0) //assailant shouldn't be able to bump us here. Density is set to 0 by the grab stuff but *SAFETY!*

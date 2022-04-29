@@ -299,7 +299,7 @@
 		else if (isobj(T))
 			var/obj/O = T
 			if(istype(O, /obj/machinery/computer/shuttle/embedded))
-				boutput(usr, "<span class='alert'>You cannot seem to alter the energy off [O].</span>" )
+				boutput(usr, "<span class='alert'>You cannot seem to alter the energy of [O].</span>" )
 				return 0
 			// go to jail, do not pass src, do not collect pushed messages
 			if (O.emag_act(null, null))

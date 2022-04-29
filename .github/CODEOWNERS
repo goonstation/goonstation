@@ -8,6 +8,9 @@
 # Adharainspace
 /_std/ @Adharainspace
 
+# Aloe
+/code/mob/dead/ @frawhst
+
 # Emily
 /maps/manta.dmm @UrsulaMejor
 
@@ -15,7 +18,7 @@
 /code/obj/item/toys.dm @flrsh
 /maps/oshan.dmm @flrsh
 
-# Gannets 
+# Gannets
 /code/datums/gamemodes/nuclear.dm @Gannets
 
 # Kyle
@@ -41,6 +44,9 @@
 /code/modules/chemistry/Reagents-Misc.dm @Tarmunora
 /code/modules/chemistry/Reagents-PoisonEtc.dm @Tarmunora
 /code/modules/chemistry/Chemistry-Recipes.dm @Tarmunora
+
+# Virvatuli
+/sound/ @virvatuli-gh
 
 # ZeWaka
 *.md @ZeWaka

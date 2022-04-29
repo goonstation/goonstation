@@ -699,7 +699,7 @@
 			//protection from clothing
 		if(a_zone == "All")
 			protection = (5 * GET_ATOM_PROPERTY(src, PROP_MOB_MELEEPROT_BODY) + GET_ATOM_PROPERTY(src, PROP_MOB_MELEEPROT_HEAD))/6
-		if (a_zone == "chest")
+		else if (a_zone == "chest")
 			protection = GET_ATOM_PROPERTY(src, PROP_MOB_MELEEPROT_BODY)
 		else //can only be head
 			protection = GET_ATOM_PROPERTY(src, PROP_MOB_MELEEPROT_HEAD)

@@ -49,7 +49,7 @@
 			if(shitty)
 				boutput(src, "<span class='notice'>Oh shit, your fangs just broke off! Looks like you'll have to get blood the HARD way.</span>")
 
-			SHOW_VAMPIRE_TIPS(src)
+			src.show_antag_popup("vampire")
 
 		if(shitty || nonantag)
 			boutput(src, "<span class='alert'><h2>You've been turned into a vampire!</h2> Your vampireness was achieved by in-game means, you are <i>not</i> an antagonist unless you already were one.</span>")
@@ -407,7 +407,7 @@
 				VZ.master = src
 
 			boutput(M, __red("<b>You awaken filled with purpose - you must serve your master vampire, [owner.real_name]!</B>"))
-			SHOW_MINDSLAVE_TIPS(M)
+			M.show_antag_popup("mindslave")
 
 			boutput(owner, __blue("[M] has been revived as your thrall."))
 			logTheThing("combat", owner, M, "enthralled [constructTarget(M,"combat")] at [log_loc(owner)].")

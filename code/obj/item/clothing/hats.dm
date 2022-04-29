@@ -52,6 +52,11 @@ proc/filter_trait_hats(var/type)
 	icon_state = "orange"
 	item_state = "ogloves"
 
+/obj/item/clothing/head/purple
+	desc = "A knit cap in orange."
+	icon_state = "purple"
+	item_state = "jgloves"
+
 /obj/item/clothing/head/dolan
 	name = "Dolan's hat"
 	desc = "A plsing hat."
@@ -1638,6 +1643,11 @@ ABSTRACT_TYPE(/obj/item/clothing/head/frenchberet)
 		name = "strawberry beret"
 		icon_state = "beret_strawb"
 		item_state = "beret_strawb"
+
+	blueberry
+		name = "blueberry beret"
+		icon_state = "beret_blueb"
+		item_state = "beret_blueb"
 
 // Costume goggles
 

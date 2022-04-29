@@ -992,6 +992,24 @@
 		fullbright = 0
 		luminosity = 1
 
+		space_overlays()
+			. = ..()
+			if (length(space_overlays))
+				var/list/color_vals = bioluminescent_algae?.get_color(src)
+				if (length(color_vals))
+					var/image/algea = image('icons/obj/sealab_objects.dmi', "algae")
+					algea.color = rgb(color_vals[1], color_vals[2], color_vals[3])
+					UpdateOverlays(algea, "glow_algae")
+					add_medium_light("glow_algae", color_vals)
+
+		destroy_asteroid(dropOre)
+			ClearSpecificOverlays("glow_algae")
+			remove_medium_light("glow_algae")
+			var/list/turf/neighbors = getNeighbors(src, alldirs)
+			for (var/turf/T as anything in neighbors)
+				if (!length(T.medium_lights)) continue
+				T.update_medium_light_visibility()
+			. = ..()
 	lighted
 		fullbright = 1
 

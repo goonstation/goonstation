@@ -72,7 +72,7 @@ ABSTRACT_TYPE(/datum/mapPrefab)
 		pre_cleanup(target)
 
 		var/dmm_suite/D = new/dmm_suite()
-		var/datum/loadedProperties/props = D.read_map(loaded, target.x, target.y, target.z, prefabPath, overwrite=overwrite_args)
+		var/datum/loadedProperties/props = D.read_map(loaded, target.x, target.y, target.z, prefabPath, flags=overwrite_args)
 		if(!isnull(prefabSizeX) && prefabSizeX != props.maxX - props.sourceX + 1 || !isnull(prefabSizeY) && prefabSizeY != props.maxY - props.sourceY + 1)
 			CRASH("size of prefab [prefabPath] is incorrect ([prefabSizeX]x[prefabSizeY] != [props.maxX - props.sourceX + 1]x[props.maxY - props.sourceY + 1])")
 
@@ -103,7 +103,7 @@ proc/get_map_prefabs(prefab_type)
 
 	if(typeinfo.stored_as_subtypes)
 		for(var/datum/mapPrefab/prefabType as anything in concrete_typesof(prefab_type, cache=FALSE))
-			var/datum/mapPrefab/prefab = new prefabType
+			var/datum/mapPrefab/prefab = get_singleton(prefabType)
 			prefab_cache[prefab_type][prefab.name] = prefab
 	else
 		for(var/base_path in list("assets/maps/[typeinfo.folder]/", "+secret/assets/[typeinfo.folder]/"))

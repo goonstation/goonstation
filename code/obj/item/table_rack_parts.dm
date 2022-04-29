@@ -91,7 +91,7 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 		actions.start(new /datum/action/bar/icon/furniture_build(src, src.furniture_name, src.build_duration, target), user)
 
 	attack_self(mob/user as mob)
-		actions.start(new /datum/action/bar/icon/furniture_build(src, src.furniture_name, src.build_duration), user)
+		actions.start(new /datum/action/bar/icon/furniture_build(src, src.furniture_name, src.build_duration, get_turf(user)), user)
 
 	disposing()
 		if (src.contained_storage && length(src.contained_storage.contents))
@@ -108,6 +108,7 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 /obj/item/furniture_parts/table
 	name = "table parts"
 	desc = "A collection of parts that can be used to make a table."
+	material_amt = 0.2
 
 	afterattack(atom/target, mob/user)
 		if (isturf(target) && target == get_turf(user))
@@ -292,6 +293,7 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 	stamina_crit_chance = 15
 	furniture_type = /obj/rack
 	furniture_name = "rack"
+	material_amt = 0.1
 
 //bookshelf part construction
 	attackby(obj/item/W as obj, mob/user as mob)

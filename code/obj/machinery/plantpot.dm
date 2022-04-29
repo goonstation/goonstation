@@ -1262,11 +1262,11 @@
 						// The unstable gene can do weird shit to your produce.
 						F.name = "[pick("awkward","irregular","crooked","lumpy","misshapen","abnormal","malformed")] [F.name]"
 						F.heal_amt += rand(-2,2)
-						F.amount += rand(-2,2)
+						F.bites_left += rand(-2,2)
 
 					if(quality_status == "jumbo")
 						F.heal_amt *= 2
-						F.amount *= 2
+						F.bites_left *= 2
 					else if(quality_status == "rotten")
 						F.heal_amt = 0
 
@@ -1309,7 +1309,7 @@
 					if(HYPCheckCommut(DNA,/datum/plant_gene_strain/unstable) && prob(33))
 						M.name = "[pick("awkward","irregular","crooked","lumpy","misshapen","abnormal","malformed")] [M.name]"
 						M.heal_amt += rand(-2,2)
-						M.amount += rand(-2,2)
+						M.bites_left += rand(-2,2)
 
 					if(quality_status == "jumbo")
 						M.heal_amt *= 2

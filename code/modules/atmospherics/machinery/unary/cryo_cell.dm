@@ -215,6 +215,8 @@
 
 	attackby(var/obj/item/G as obj, var/mob/user as mob)
 		if(istype(G, /obj/item/reagent_containers/glass))
+			if (G.cant_drop)
+				boutput(user, "<span class='alert'>You can't put that in \the [src] while it's attached to you!")
 			if(src.beaker)
 				user.show_text("A beaker is already loaded into the machine.", "red")
 				return

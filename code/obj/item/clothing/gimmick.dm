@@ -1042,9 +1042,12 @@
 	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
 	icon_state = "mime1"
+	item_state = "mime1"
 
 /obj/item/clothing/under/misc/mime/alt
 	icon_state = "mime2"
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
+	item_state = "mime2"
 	desc = "A mime outfit with a pair of dungarees. The front pocket is all stitched up, jeez."
 
 /obj/item/clothing/suit/scarf

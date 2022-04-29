@@ -51526,6 +51526,13 @@
 	},
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
+"oMF" = (
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "qmin"
+	},
+/turf/simulated/floor/airless/plating,
+/area/supply/delivery_point)
 "oNK" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/disposalpipe/junction/right/north,
@@ -60542,9 +60549,6 @@
 	dir = 1
 	},
 /area/station/bridge/captain)
-"xHo" = (
-/turf/space,
-/area/supply/delivery_point)
 "xHp" = (
 /obj/disposalpipe/segment/brig{
 	dir = 8
@@ -108059,9 +108063,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
+cnp
+cnp
+cnp
 "}
 (156,1,1) = {"
 aaa
@@ -108361,9 +108365,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
+cnp
+cnp
+cnp
 "}
 (157,1,1) = {"
 aaa
@@ -108588,12 +108592,10 @@ eAt
 usp
 lSK
 vYx
+oMF
 qpH
 qpH
 qpH
-qpH
-xHo
-aaa
 aaa
 aaa
 aaa
@@ -108665,7 +108667,9 @@ aaa
 aaa
 aaa
 cnr
-aaa
+cnp
+cnp
+cnp
 "}
 (158,1,1) = {"
 aaa
@@ -109871,9 +109875,9 @@ aaa
 aaa
 aaa
 aaa
-cnp
-cnp
-cnp
+aaa
+aaa
+aaa
 "}
 (162,1,1) = {"
 aaa
@@ -110173,9 +110177,9 @@ aaa
 aaa
 aaa
 aaa
-cnp
-cnp
-cnp
+aaa
+aaa
+aaa
 "}
 (163,1,1) = {"
 aaa

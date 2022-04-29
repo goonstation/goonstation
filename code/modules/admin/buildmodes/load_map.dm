@@ -49,7 +49,7 @@ Right Mouse Button on the mode         = Cycle loading modes<br>
 			overwrite_flags |= DMM_OVERWRITE_OBJS
 		else if(mode_number == LOAD_MODE_DEL_ALL)
 			overwrite_flags |= DMM_OVERWRITE_OBJS | DMM_OVERWRITE_MOBS
-		dmm_suite.read_map(text, A.x, A.y, A.z, overwrite = overwrite_flags)
+		dmm_suite.read_map(text, A.x, A.y, A.z, flags = overwrite_flags)
 		boutput(usr, "<span class='notice'>Loading finished.</span>")
 		loading = 0
 

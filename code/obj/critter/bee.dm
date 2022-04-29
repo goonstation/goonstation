@@ -178,7 +178,7 @@
 
 			else
 
-				src.visible_message("<span class='notice'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>")
+				src.visible_message("<span class='notice'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>", group="beehug")
 				if(prob(15))
 					for(var/mob/O in hearers(src, null))
 						O.show_message("[src] buzzes[prob(50) ? " happily!" : ""]!",2)
@@ -731,7 +731,7 @@
 		if (.)
 			var/obj/item/reagent_containers/food/snacks/ingredient/honey/honey = .
 			honey.icon_state = "bighoneyblob"
-			honey.amount++
+			honey.bites_left++
 
 /obj/critter/domestic_bee/queen/buddy
 	desc = "It appears to be a hybrid of a queen domestic space-bee and a PR-6 Robuddy. How is that even possible?"
@@ -912,7 +912,7 @@
 	attack_hand(mob/user as mob)
 		if (src.alive)
 			if (user.a_intent == INTENT_HELP)
-				src.visible_message("<span class='notice'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>")
+				src.visible_message("<span class='notice'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>", group="beehug")
 				user.add_karma(1)
 
 				if (masked == 1)
@@ -1205,7 +1205,7 @@
 
 			else
 
-				src.visible_message("<span class='notice'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>")
+				src.visible_message("<span class='notice'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>", group="beehug")
 				switch (++hug_count)
 					if (10)
 						src.visible_message("<b>[src]</b> burps!  It smells like beeswax.")
@@ -1260,7 +1260,7 @@
 	attack_hand(mob/user as mob)
 		if (src.alive && user.a_intent == "help")
 
-			src.visible_message("<span class='notice'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>")
+			src.visible_message("<span class='notice'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>", group="beehug")
 			if(prob(15))
 				for(var/mob/O in hearers(src, null))
 					O.show_message("[src] buzzes[prob(50) ? " in a comforted manner" : ""].",2)
@@ -1381,7 +1381,7 @@
 
 	attack_hand(mob/user as mob)
 		if(src.alive && user.a_intent=="help")
-			src.visible_message("<span class='emote'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>")
+			src.visible_message("<span class='emote'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>", group="beehug")
 			if(prob(15))
 				for(var/mob/O in hearers(src, null))
 					O.show_message("<span class='emote'><b>[src]</b> beeps[prob(50) ? " in a comforted manner, and gives [user] the ASCII" : ""].</span>",2)
@@ -1913,7 +1913,7 @@
 	desc = "A bowl of \"bee kibble.\" It is probably best not to think too hard about its composition."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "petfood"
-	amount = 4
+	bites_left = 4
 	heal_amt = 1
 	doants = 0
 	initial_volume = 50

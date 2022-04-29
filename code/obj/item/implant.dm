@@ -77,7 +77,7 @@ THROWING DARTS
 			H.implant -= src
 		if (ismobcritter(M))
 			var/mob/living/critter/C = M
-			C.implants -= src
+			C.implants?.Remove(src)
 		if (implant_overlay)
 			M.update_clothing()
 		src.owner = null
@@ -523,7 +523,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				return
 			. = 0
 			for (var/obj/item/implant/implant in src.loc)
-				if (implant.type == src.type) //only interact with implants that are the same type as us
+				if (istype(implant, src.type)) //only interact with implants that are the same type as us
 					var/obj/item/implant/revenge/revenge_implant = implant
 					if (!revenge_implant.active)
 						revenge_implant.active = TRUE
@@ -533,8 +533,10 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				source.visible_message("<span class='alert'><b>[source][big_message]!</b></span>")
 			else
 				source.visible_message("[source][small_message].")
-			logTheThing("bombing", source, null, "triggered \a [src] on death at [log_loc(source)].")
-			message_admins("[key_name(source)] triggered \a [src] on death at [log_loc(source)].")
+			var/area/A = get_area(source)
+			if (!A.dont_log_combat)
+				logTheThing("bombing", source, null, "triggered \a [src] on death at [log_loc(source)].")
+				message_admins("[key_name(source)] triggered \a [src] on death at [log_loc(source)].")
 
 /obj/item/implant/revenge/microbomb
 	name = "microbomb implant"
@@ -563,24 +565,16 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		Ov.icon = 'icons/effects/214x246.dmi'
 		Ov.icon_state = "explosion"
 
-		var/list/throwjunk = list() //List of stuff to throw as if the explosion knocked it around.
-		var/cutoff = 0 //So we don't freak out and throw more than ~25 things and act like the old mass driver bug.
-		for(var/obj/item/I in src.owner)
-			cutoff++
-			I.set_loc(T)
-			if(cutoff <= 25)
-				throwjunk += I
-
-		for(var/obj/O in throwjunk) //Throw this junk around
-			var/edge = get_edge_target_turf(T, pick(alldirs))
-			O.throw_at(edge, 80, 4)
-
-		SPAWN(0) //Delete the overlay when finished with it.
-			sleep(1.5 SECONDS)
+		SPAWN(1.5 SECONDS) //Delete the overlay when finished with it.
 			qdel(Ov)
 
-		T.hotspot_expose(800,125)
-		explosion_new(src, T, 7 * ., 1) //The . is the tally of explosionPower in this poor slob.
+		SPAWN(1)
+			T.hotspot_expose(800,125)
+			explosion_new(src, T, 7 * ., 1) //The . is the tally of explosionPower in this poor slob.
+			if (ishuman(src.owner))
+				var/mob/living/carbon/human/H = src.owner
+				H.dump_contents_chance = 80 //hee hee
+			src.owner?.gib() //yer DEAD
 
 /obj/item/implant/revenge/microbomb/hunter
 	power = 4
@@ -595,20 +589,23 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	on_death()
 		. = ..()
 		elecflash(src, ., . * 2, TRUE)
-		for (var/mob/living/M in orange(. + 1, src.owner))
+		for (var/mob/living/M in orange(. / 6 + 1, src.owner))
 			if (!isintangible(M))
-				arcFlash(src.owner, M, (250000 / get_dist(src.owner, M)) * .) // need to adjust the damage on these a bit- probably bump the lower end, lower the top end idk
-		for (var/obj/machinery/machine in orange(round(. / 2) + 1)) // machinery around you also zaps people, based on the amount of power in the grid
-			if (prob(. * 8))
+				var/dist = get_dist(src.owner, M) + 1
+				// arcflash uses some fucked up thresholds so trust me on this one
+				arcFlash(src.owner, M, (40000 * (4 - (0.4 * dist * log(dist)))) * (15 * log(.) + 3))
+		for (var/obj/machinery/machine in orange(round(. / 6) + 1)) // machinery around you also zaps people, based on the amount of power in the grid
+			if (prob(. * 7))
 				var/mob/living/target
-				for (var/mob/living/L in orange(machine, 1)) //TODO this could probably be 2 at the risk of More Lag
+				for (var/mob/living/L in orange(machine, 2))
 					if (!isintangible(L))
 						target = L
 						break
 				if (target)
-					arcFlash(src, target, 100000) //TODO scale this with powergrid... somehow. get area APC
+					arcFlash(src, target, 100000) //TODO scale this with powergrid... somehow. get area APC or smth
 
-		src.owner?.elecgib()
+		SPAWN(1)
+			src.owner?.elecgib()
 
 
 /obj/item/implant/robotalk
@@ -732,7 +729,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			boutput(M, "<h2><span class='alert'>You feel an unwavering loyalty to your new master, [I.real_name]! Do not tell anyone about this unless your new master tells you to!</span></h2>")
 		else
 			boutput(M, "<h2><span class='alert'>You feel an unwavering loyalty to [I.real_name]! You feel you must obey \his every order! Do not tell anyone about this unless your master tells you to!</span></h2>")
-			SHOW_MINDSLAVE_TIPS(M)
+			M.show_antag_popup("mindslave")
 		if (src.custom_orders)
 			boutput(M, "<h2><span class='alert'>[I.real_name]'s will consumes your mind! <b>\"[src.custom_orders]\"</b> It <b>must</b> be done!</span></h2>")
 
@@ -791,6 +788,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	icon = 'icons/obj/scrap.dmi'
 	icon_state = "bullet"
 	desc = "A spent bullet."
+	var/bleed_time = 60
 	var/bleed_timer = 0
 	var/forensic_ID = null // match a bullet to a gun holy heckkkkk
 
@@ -869,11 +867,62 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		desc = "A bunch of jagged shards of metal."
 		icon_state = "2metal2"
 
-	dart
-		name = "dart"
-		icon = 'icons/obj/chemical.dmi'
-		desc = "A small hollow dart."
-		icon_state = "syringeproj"
+	body_visible
+		bleed_time = 0
+		var/barbed = FALSE
+		var/pull_out_name = ""
+
+		dart
+			name = "dart"
+			pull_out_name = "dart"
+			icon = 'icons/obj/chemical.dmi'
+			desc = "A small hollow dart."
+			icon_state = "syringeproj"
+
+			tranq_dart_sleepy
+				name = "spent tranquilizer dart"
+				desc = "A small tranquilizer dart, emptied of its contents. Useful for putting animals (or people!) to sleep."
+				icon_state = "tranqdart_red"
+
+				New()
+					..()
+					implant_overlay = image(icon = 'icons/mob/human.dmi', icon_state = "tranqdart_red_stick_[rand(0, 4)]", layer = MOB_EFFECT_LAYER)
+
+			tranq_dart_sleepy_barbed
+				name = "barbed tranquilizer dart"
+				desc = "An empty tranquilizer dart, with a barbed tip. It was likely loaded with some bad stuff..."
+				icon_state = "tranqdart_red_barbed"
+				barbed = TRUE
+
+				New()
+					..()
+					implant_overlay = image(icon = 'icons/mob/human.dmi', icon_state = "tranqdart_red_stick_[rand(0, 4)]", layer = MOB_EFFECT_LAYER)
+
+			tranq_dart_mutadone
+				name = "spent tranquilizer dart"
+				desc = "A small tranquilizer dart, emptied of its contents. This one is specialized for removing genetic mutations."
+				icon_state = "tranqdart_green"
+
+				New()
+					..()
+					implant_overlay = image(icon = 'icons/mob/human.dmi', icon_state = "tranqdart_green_stick_[rand(0, 4)]", layer = MOB_EFFECT_LAYER)
+
+		syringe
+			name = "spent syringe round"
+			pull_out_name = "syringe"
+			desc = "A syringe round, of the type that is fired from a syringe gun. Whatever was inside is completely gone."
+			icon = 'icons/obj/chemical.dmi'
+			icon_state = "syringeproj"
+
+			New()
+				..()
+				implant_overlay = image(icon = 'icons/mob/human.dmi', icon_state = "syringe_stick_[rand(0, 4)]", layer = MOB_EFFECT_LAYER)
+
+			syringe_barbed
+				name = "barbed syringe round"
+				desc = "An empty syringe round, of the type that is fired from a syringe gun. It has a barbed tip. Nasty!"
+				icon_state = "syringeproj_barbed"
+				barbed = TRUE
 
 	blowdart
 		name = "blowdart"
@@ -895,22 +944,28 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		desc = "A weird flechette-like projectile."
 		icon_state = "blowdart"
 
-/obj/item/implant/projectile/implanted(mob/living/carbon/C, var/mob/I, var/bleed_time = 60)
+/obj/item/implant/projectile/implanted(mob/living/carbon/C, mob/I)
 	SEND_SIGNAL(src, COMSIG_IMPLANT_IMPLANTED, C)
+	implanted = 1
+	owner = C
+
 	if (!istype(C) || !isnull(I)) //Don't make non-organics bleed and don't act like a launched bullet if some doofus is just injecting it somehow.
 		return
 
-	if (C != src.owner)
-		src.owner = C
+	if (implant_overlay)
+		C.update_clothing()
+
+	if (!src.bleed_time)
+		return
 
 	src.blood_DNA = src.owner.bioHolder.Uid
 
 	for (var/obj/item/implant/projectile/P in C)
 		if (P.bleed_timer)
-			P.bleed_timer = max(bleed_time, P.bleed_timer)
+			P.bleed_timer = max(src.bleed_time, P.bleed_timer)
 			return
 
-	src.bleed_timer = bleed_time
+	src.bleed_timer = src.bleed_time
 	SPAWN(0.5 SECONDS)
 //		boutput(C, "<span class='alert'>You start bleeding!</span>") // the blood system takes care of this bit now
 		src.bleed_loop()
@@ -1694,13 +1749,17 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 /* ------------------------- Throwing Darts ---------------------- */
 /* =============================================================== */
 
-/obj/item/implant/projectile/bardart
+/obj/item/implant/projectile/body_visible/dart/bardart
 	name = "dart"
 	desc = "An object of d'art."
 	w_class = W_CLASS_TINY
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "dart"
 	throw_spin = 0
+
+	New()
+		..()
+		implant_overlay = image(icon = 'icons/mob/human.dmi', icon_state = "dart_stick_[rand(0, 4)]", layer = MOB_EFFECT_LAYER)
 
 	throw_impact(atom/M, datum/thrown_thing/thr)
 		..()
@@ -1711,14 +1770,14 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 			playsound(src.loc, "sound/impact_sounds/Flesh_Cut_1.ogg", 100, 1)
 			random_brute_damage(M, 1)
 			src.set_loc(M)
-			src.implanted = 1
+			src.implanted(M)
 
 	attack_hand(mob/user as mob)
 		src.pixel_x = 0
 		src.pixel_y = 0
 		..()
 
-/obj/item/implant/projectile/lawndart
+/obj/item/implant/projectile/body_visible/dart/lawndart
 	name = "lawn dart"
 	desc = "An oversized plastic dart with a metal spike at the tip. Fun for the whole family!"
 	w_class = W_CLASS_TINY
@@ -1726,6 +1785,10 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 	icon_state = "lawndart"
 	throw_spin = 0
 	throw_speed = 3
+
+	New()
+		..()
+		implant_overlay = image(icon = 'icons/mob/human.dmi', icon_state = "dart_stick_[rand(0, 4)]", layer = MOB_EFFECT_LAYER)
 
 	throw_impact(atom/M, datum/thrown_thing/thr)
 		..()
@@ -1738,4 +1801,4 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 			random_brute_damage(M, 20)//if it can get in you, it probably doesn't give a damn about your armor
 			take_bleeding_damage(M, null, 10, DAMAGE_CUT)
 			src.set_loc(M)
-			src.implanted = 1
+			src.implanted(M)

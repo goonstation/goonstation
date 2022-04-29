@@ -572,44 +572,48 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		if (M.sprint_particle.loc == T)
 			M.sprint_particle.loc = null
 
-/proc/attack_twitch(var/atom/A)
+/proc/attack_twitch(var/atom/A, move_multiplier=1, angle_multiplier=1)
 	if (!istype(A) || istype(A, /mob/living/object))
 		return		//^ possessed objects use an animate loop that is important for readability. let's not interrupt that with this dumb animation
+	if(ON_COOLDOWN(A, "attack_twitch", 0.1 SECONDS))
+		return
 	var/which = A.dir
 
-	SPAWN(0)
-		var/ipx = A.pixel_x
-		var/ipy = A.pixel_y
-		var/movepx = 0
-		var/movepy = 0
-		switch(which)
-			if (NORTH)
-				movepy = 3
-			if (WEST)
-				movepx = -3
-			if (SOUTH)
-				movepy = -3
-			if (EAST)
-				movepx = 3
-			if (NORTHEAST)
-				movepx = 3
-			if (NORTHWEST)
-				movepy = 3
-			if (SOUTHEAST)
-				movepy = -3
-			if (SOUTHWEST)
-				movepx = -3
-			else
-				return
+	var/ipx = A.pixel_x
+	var/ipy = A.pixel_y
+	var/movepx = 0
+	var/movepy = 0
+	switch(which)
+		if (NORTH)
+			movepy = 3
+		if (WEST)
+			movepx = -3
+		if (SOUTH)
+			movepy = -3
+		if (EAST)
+			movepx = 3
+		if (NORTHEAST)
+			movepx = 3
+		if (NORTHWEST)
+			movepy = 3
+		if (SOUTHEAST)
+			movepy = -3
+		if (SOUTHWEST)
+			movepx = -3
+		else
+			return
 
-		var/x = movepx + ipx
-		var/y = movepy + ipy
-		//Shift pixel offset
-		animate(A, pixel_x = x, pixel_y = y, time = 0.6,easing = EASE_OUT,flags=ANIMATION_PARALLEL)
-		var/matrix/M = matrix(A.transform)
-		animate(transform = turn(A.transform, (movepx - movepy) * 4), time = 0.6, easing = EASE_OUT)
-		animate(pixel_x = ipx, pixel_y = ipy, time = 0.6,easing = EASE_IN)
-		animate(transform = M, time = 0.6, easing = EASE_IN)
+	movepx *= move_multiplier
+	movepy *= move_multiplier
+
+	var/x = movepx + ipx
+	var/y = movepy + ipy
+	//Shift pixel offset
+	animate(A, pixel_x = x, pixel_y = y, time = 0.6,easing = EASE_OUT,flags=ANIMATION_PARALLEL)
+	var/matrix/M = matrix(A.transform)
+	animate(transform = turn(A.transform, (movepx - movepy) / move_multiplier * angle_multiplier * 4), time = 0.6, easing = EASE_OUT)
+	animate(pixel_x = ipx, pixel_y = ipy, time = 0.6,easing = EASE_IN)
+	animate(transform = M, time = 0.6, easing = EASE_IN)
 
 
 

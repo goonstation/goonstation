@@ -636,21 +636,21 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		playsound(src.loc, "rustle", 50, 1)
 		return ..(target)
 
-	throw_impact(atom/hit_atom)
-		if(hit_atom == usr)
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
+		var/mob/user = thr.user
+		if(hit_atom == user)
 			if(prob(prob_clonk))
-				var/mob/living/carbon/human/user = usr
 				user.visible_message("<span class='alert'><B>[user] fumbles the catch and accidentally discharges [src]!</B></span>")
 				src.shoot_point_blank(user, user)
 				user.force_laydown_standup()
 			else
-				src.Attackhand(usr)
+				src.Attackhand(user)
 			return
 		else
 			var/mob/M = hit_atom
 			if(istype(M))
-				var/mob/living/carbon/human/user = usr
-				if(istype(user.wear_suit, /obj/item/clothing/suit/security_badge))
+				var/mob/living/carbon/human/H = user
+				if(istype(H) && istype(H.wear_suit, /obj/item/clothing/suit/security_badge))
 					src.silenced = 1
 					src.shoot_point_blank(M, M)
 					M.visible_message("<span class='alert'><B>[src] fires, hitting [M] point blank!</B></span>")
@@ -1722,8 +1722,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 
 /obj/item/gun/kinetic/cannon
-	name = "\improper M20-CV tactical cannon"
-	desc = "A shortened conversion of a 20mm military cannon. Slow but enormously powerful."
+	name = "\improper Alphard 20mm cannon"
+	desc = "A 20mm anti-materiel recoiling cannon. Slow but enormously powerful."
 	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "cannon"
 	item_state = "cannon"
@@ -1732,6 +1732,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	ammo_cats = list(AMMO_CANNON_20MM)
 	max_ammo_capacity = 1
 	auto_eject = 1
+	fire_animation = TRUE
 
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
 	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
@@ -1759,6 +1760,41 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		..()
 		setProperty("movespeed", 0.3)
 
+/obj/item/gun/kinetic/recoilless
+	name = "\improper Carinae RCL/120"
+	desc = "An absurdly destructive 120mm recoilless gun-mortar, the largest man-portable weapon in the Almagest line."
+	icon = 'icons/obj/large/64x32.dmi'
+	icon_state = "recoilless"
+	item_state = "cannon"
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
+	force = MELEE_DMG_LARGE
+	ammo_cats = list(AMMO_HOWITZER)
+	max_ammo_capacity = 1
+	auto_eject = 1
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+
+	can_dual_wield = 0
+
+	slowdown = 10
+	slowdown_time = 15
+
+	two_handed = 1
+	w_class = W_CLASS_BULKY
+	muzzle_flash = "muzzle_flash_launch"
+	default_magazine = /obj/item/ammo/bullets/howitzer
+	ammobag_magazines = list(/obj/item/ammo/bullets/howitzer)
+	ammobag_spec_required = TRUE
+	ammobag_restock_cost = 5
+
+	New()
+		ammo = new default_magazine
+		set_current_projectile(new/datum/projectile/bullet/howitzer)
+		..()
+
+	setupProperties()
+		..()
+		setProperty("movespeed", 0.2)
 
 
 // demo
