@@ -1400,6 +1400,20 @@ DEFINE_FLOORS(grasslush/thinner,
 DEFINE_FLOORS(grasslush/thin,
 	icon_state = "grass_thin")
 
+/////////////////////////////////////////
+
+DEFINE_FLOORS(solidcolor,
+	icon_state = "solid_white")
+
+DEFINE_FLOORS(solidcolor/fullbright,
+	fullbright = 1)
+
+DEFINE_FLOORS(solidcolor/black,
+	icon_state = "solid_black")
+
+DEFINE_FLOORS(solidcolor/black/fullbright,
+	fullbright = 1)
+
 /* ._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._. */
 /*-=-=-=-=-=-=-=-FUCK THAT SHIT MY WRIST HURTS=-=-=-=-=-=-=-=-=*/
 /* '~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~' */

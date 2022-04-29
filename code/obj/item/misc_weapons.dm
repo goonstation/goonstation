@@ -103,11 +103,14 @@
 		light_c = src.AddComponent(/datum/component/loctargeting/simple_light, r, g, b, 150)
 		light_c.update(0)
 		src.setItemSpecial(/datum/item_special/swipe/csaber)
-		AddComponent(/datum/component/itemblock/saberblock, .proc/can_reflect)
+		AddComponent(/datum/component/itemblock/saberblock, .proc/can_reflect, .proc/get_reflect_color)
 		BLOCK_SETUP(BLOCK_SWORD)
 
 /obj/item/sword/proc/can_reflect()
 	return src.active
+
+/obj/item/sword/proc/get_reflect_color()
+	return get_hex_color_from_blade(src.bladecolor)
 
 /obj/item/sword/attack(mob/target, mob/user, def_zone, is_special = 0)
 	if(active)
@@ -156,20 +159,6 @@
 		if("W")
 			return "#EBE6EB"
 	return "RAND"
-
-/obj/item/sword/proc/handle_deflect_visuals(mob/user)
-	var/obj/itemspecialeffect/clash/C = new /obj/itemspecialeffect/clash
-	C.setup(user.loc)
-	C.color = get_hex_color_from_blade(src.bladecolor)
-	var/matrix/m = matrix()
-	m.Turn(rand(0,360))
-	C.transform = m
-	var/matrix/m1 = C.transform
-	m1.Scale(2,2)
-	var/turf/target = get_step(user,user.dir)
-	C.pixel_x = 32*(user.x - target.x)*0.2
-	C.pixel_y = 32*(user.y - target.y)*0.2
-	animate(C,transform=m1,time=8)
 
 /obj/item/sword/proc/handle_parry(mob/target, mob/user)
 	if (target != user && ishuman(target))
@@ -1483,6 +1472,9 @@ obj/item/whetstone
 	- Knocks back on-hit
 */
 
+#define SWIPE_MODE 1
+#define STAB_MODE 2
+
 /obj/item/heavy_power_sword
 	name = "Hadar heavy power-sword"
 	desc = "A heavy cyalume saber variant, builds generator charge when used in combat & supports multiple attack types."
@@ -1506,7 +1498,7 @@ obj/item/whetstone
 	two_handed = 1
 	uses_multiple_icon_states = 1
 
-	var/mode = 1
+	var/mode = SWIPE_MODE
 	var/maximum_force = 100
 	var/swipe_color = "#0081DF"
 	var/stab_color = "#FF0000"
@@ -1516,12 +1508,19 @@ obj/item/whetstone
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		src.setItemSpecial(/datum/item_special/swipe)
 		src.update_special_color()
-		AddComponent(/datum/component/itemblock/saberblock)
+		AddComponent(/datum/component/itemblock/saberblock, null, .proc/get_reflect_color)
 		BLOCK_SETUP(BLOCK_SWORD)
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
+
+/obj/item/heavy_power_sword/proc/get_reflect_color()
+	if (src.mode == SWIPE_MODE)
+		return src.swipe_color
+	if (src.mode == STAB_MODE)
+		return src.stab_color
+	return "#FFFFFF"
 
 /obj/item/heavy_power_sword/proc/update_special_color()
 	var/datum/item_special/swipe/swipe = src.special
@@ -1560,18 +1559,21 @@ obj/item/whetstone
 			boutput(user, "<span class='alert'>[src] transforms enabling a ranged stab!</span>")
 			icon_state = "hadar_sword1"
 			item_state = "hadar_sword1"
-			src.mode = 2
+			src.mode = STAB_MODE
 			src.setItemSpecial(/datum/item_special/rangestab)
 		if(2)
 			boutput(user, "<span class='alert'>[src] transforms in order to swing wide!</span>")
 			icon_state = "hadar_sword2"
 			item_state = "hadar_sword2"
-			src.mode = 1
+			src.mode = SWIPE_MODE
 			src.setItemSpecial(/datum/item_special/swipe)
 	user.update_inhands()
 	tooltip_rebuild = TRUE
 	src.update_special_color()
 	..()
+
+#undef SWIPE_MODE
+#undef STAB_MODE
 
 // Battering ram - a door breeching melee tool for the armory
 

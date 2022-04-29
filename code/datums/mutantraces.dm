@@ -920,7 +920,7 @@ TYPEINFO(/datum/mutantrace)
 
 			SPAWN(rand(4, 30))
 				M.emote("scream")
-			SHOW_ZOMBIE_TIPS(M)
+			M.show_antag_popup("zombie")
 
 	proc/make_bubs(var/mob/living/carbon/human/M)
 		M.bioHolder.AddEffect("strong")

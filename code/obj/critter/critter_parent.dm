@@ -701,10 +701,10 @@
 					src.visible_message("<b>[src]</b> [src.eat_text] [src.food_target].")
 					playsound(src.loc,"sound/items/eatfood.ogg", rand(10,50), 1)
 					if (food_target)
-						if (food_target.amount) src.food_target.amount-- //ZeWaka: Fix for null. amount
+						if (food_target.bites_left) src.food_target.bites_left-- //ZeWaka: Fix for null. bites_left
 						if (food_target.reagents && food_target.reagents.total_volume > 0 && src.reagents.total_volume < 30)
 							food_target.reagents.trans_to(src, 5)
-					if (src.food_target != null && src.food_target.amount <= 0)
+					if (src.food_target != null && src.food_target.bites_left <= 0)
 						src.food_target.set_loc(null)
 						SPAWN(1 SECOND)
 							qdel(src.food_target)

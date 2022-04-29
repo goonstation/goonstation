@@ -12202,6 +12202,10 @@
 	dir = 1;
 	pixel_y = 21
 	},
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/specialroom/freezer/blue,
 /area/station/medical/crematorium)
 "aHb" = (

@@ -233,10 +233,10 @@
 		fryholder.overlays = thing.overlays
 		if (isitem(thing))
 			var/obj/item/item = thing
-			fryholder.amount = item.w_class
+			fryholder.bites_left = item.w_class
 			fryholder.w_class = item.w_class
 		else
-			fryholder.amount = 5
+			fryholder.bites_left = 5
 		if (ismob(thing))
 			fryholder.w_class = W_CLASS_BULKY
 		if(thing.reagents)

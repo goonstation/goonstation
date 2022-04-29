@@ -417,7 +417,7 @@
 			newSheet.Bed = src
 			user.u_equip(newSheet)
 			newSheet.set_loc(src.loc)
-			mutual_attach(src, newSheet)
+			LAZYLISTADDUNIQUE(src.attached_objs, newSheet)
 
 			var/mob/somebody
 			if (src.buckled_guy)

@@ -1023,10 +1023,13 @@
 		if(loc == patrol_target) // We where we want to be?
 			at_patrol_target() // Find somewhere else to go!
 			look_for_perp()
-		else if (patrol_target && (isnull(src.bot_mover) || get_turf(src.bot_mover.the_target) != get_turf(patrol_target)))
+			. = TRUE
+		else if (patrol_target && (frustration >= 3 || isnull(src.bot_mover) || get_turf(src.bot_mover.the_target) != get_turf(patrol_target)))
 			navigate_to(patrol_target, delay)
 			if(src.bot_mover && !src.bot_mover.disposed)
 				. = TRUE
+		else if(patrol_target)
+			. = TRUE
 		if(!.)
 			if(!ON_COOLDOWN(src, "find new path after failure", 15 SECONDS))
 				find_patrol_target() // find next beacon I guess!
@@ -1037,7 +1040,11 @@
 		if(awaiting_beacon)			// awaiting beacon response
 			awaiting_beacon++
 			if(awaiting_beacon > 5)	// wait 5 secs for beacon response
-				find_nearest_beacon()	// then go to nearest instead
+				if(text2num(new_destination) && prob(66))
+					new_destination = "[1 + text2num(new_destination)]"
+					send_status()
+				else
+					find_nearest_beacon()	// then go to nearest instead
 				return 0
 			else
 				return 1
