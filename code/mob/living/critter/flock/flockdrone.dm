@@ -80,6 +80,11 @@
 	..()
 
 /mob/living/critter/flock/drone/disposing()
+	if (src.flock)
+		if (controller)
+			src.release_control_abrupt()
+		flock_speak(null, "Connection to drone [src.real_name] lost.", src.flock)
+		src.flock.removeDrone(src)
 	src.remove_simple_light("drone_light")
 	..()
 
@@ -171,6 +176,34 @@
 		flock_speak(null, "Control of drone [src.real_name] surrended.", src.flock)
 		// clear refs
 		controller = null
+
+/mob/living/critter/flock/drone/proc/release_control_abrupt()
+	src.flock?.hideAnnotations(src)
+	src.is_npc = TRUE
+	if(src.client && !controller)
+		controller = new/mob/living/intangible/flock/trace(src, src.flock)
+	if(!controller)
+		return
+	if (src.floorrunning)
+		src.end_floorrunning()
+		if (istype(src.loc, /turf/simulated/floor/feather))
+			var/turf/simulated/floor/feather/floor = src.loc
+			if (floor.on && !floor.connected)
+				floor.off()
+	controller.set_loc(get_turf(src))
+	var/datum/mind/mind = src.mind
+	if (mind)
+		mind.transfer_to(controller)
+	else if (src.client)
+		var/key = src.client.key
+		src.client.mob = controller
+		controller.mind = new /datum/mind()
+		controller.mind.ckey = ckey
+		controller.mind.key = key
+		controller.mind.current = controller
+		ticker.minds += controller.mind
+	boutput(controller, "<span class='flocksay'><b>\[SYSTEM: Control of drone [src.real_name] ended abruptly.\]</b></span>")
+	controller = null
 
 /mob/living/critter/flock/drone/proc/dormantize()
 	src.dormant = TRUE
@@ -684,7 +717,7 @@
 
 /mob/living/critter/flock/drone/ghostize()
 	if(src.controller)
-		src.release_control()
+		src.release_control_abrupt()
 	else
 		..()
 

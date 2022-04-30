@@ -103,6 +103,12 @@
 		src.ghostize()
 	qdel(src)
 
+/mob/living/critter/flock/bit/disposing()
+	src.flock?.removeDrone(src)
+	if (src.mind || src.client)
+		src.ghostize()
+	..()
+
 // okay so this might be fun for gimmicks
 /mob/living/critter/flock/bit/Login()
 	..()
