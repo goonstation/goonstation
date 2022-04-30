@@ -17,6 +17,12 @@
 	var/correct_bad_vision = 0
 	compatible_species = list("human", "cow", "werewolf", "flubber")
 
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (istype(W, /obj/item/cloth/handkerchief))
+			user.visible_message("<span class='notice'>[user] [pick("polishes", "shines", "cleans", "wipes")] [src] with [src].</span>")
+			return
+		return ..()
+
 /obj/item/clothing/glasses/crafted
 	name = "glasses"
 	icon_state = "crafted"

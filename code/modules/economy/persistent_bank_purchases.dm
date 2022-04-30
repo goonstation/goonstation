@@ -6,6 +6,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	new /datum/bank_purchaseable/human_item/crayon_box,\
 	new /datum/bank_purchaseable/human_item/paint_plaid,\
 	new /datum/bank_purchaseable/human_item/stickers,\
+	new /datum/bank_purchaseable/human_item/handkerchief,\
 	new /datum/bank_purchaseable/human_item/bee_egg,\
 	new /datum/bank_purchaseable/human_item/harmonica,\
 	new /datum/bank_purchaseable/human_item/airhorn,\
@@ -203,6 +204,13 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			path = /obj/item/item_box/assorted/stickers/
 			icon = 'icons/obj/items/storage.dmi'
 			icon_state = "sticker_box_assorted"
+
+		handkerchief
+			name = "Handkerchief"
+			cost = 1000
+			path = /obj/item/cloth/handkerchief/random
+			icon = 'icons/obj/items/cloths.dmi'
+			icon_state = "hanky_pink"
 
 		bee_egg
 			name = "Bee Egg"
