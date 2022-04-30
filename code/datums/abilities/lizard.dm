@@ -93,8 +93,8 @@
 			playsound(src, "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1)
 			make_cleanable(/obj/decal/cleanable/blood/splatter, L.loc)
 			C.tail_memory = L.organHolder.tail
-			C.primary_color = src.holder.owner.client?.preferences.AH.customization_second_color
-			C.secondary_color = src.holder.owner.client?.preferences.AH.customization_first_color
+			C.primary_color = L.organHolder.tail.organ_color_2
+			C.secondary_color = L.organHolder.tail.organ_color_1
 			C.setup_overlays()
 			var/obj/item/organ/tail/lizard/T = L.organHolder.drop_organ("tail")
 			T.set_loc(C)
