@@ -20,9 +20,7 @@
 	is_syndicate = 1
 	contraband = 2
 
-	new()
-		..()
-		new /obj/item/sawflysleeper(src.loc)
+
 
 	prime() // we only want one drone, rewrite old proc
 		var/turf/T =  get_turf(src)
@@ -30,7 +28,11 @@
 			new /obj/critter/gunbot/drone/buzzdrone/sawfly(T)// this is probably a shitty way of doing it but it works
 		qdel(src)
 		return
+/obj/item/old_grenade/spawner/sawfly/withremote // for traitor menu
 
+	New()
+		new /obj/item/sawflyremote(src.loc)
+		..()
 /obj/item/old_grenade/spawner/sawfly/reused
 	name = "Compact sawfly"
 	var/tempname = "Someone meant to spawn /obj/item/old_grenade/spawner/sawfly but misclicked, didn't they?"
@@ -70,7 +72,7 @@
 
 	New()
 		..()
-		new /obj/item/sawflysleeper(src.loc)
+		new /obj/item/sawflyremote(src.loc)
 		if (prob(50)) // give em some sprite variety
 			icon_state = "clusterflyB"
 			icon_state_armed = "clusterflyB1"
@@ -85,13 +87,13 @@
 
 // controller
 
-/obj/item/sawflysleeper
+/obj/item/sawflyremote
 	name = "Sawfly deactivator"
-	desc = "A small device that can be used to remotely deploy sawflies. It looks pretty fragile and it could easily be hidden in clothing."
+	desc = "A small device that can be used to remotely fold sawflies. It looks like you could hide it in your clothes. Or smash it into tiny bits, you guess."
 	w_class = W_CLASS_TINY
 	flags = FPRINT | TABLEPASS
 	icon = 'icons/obj/items/device.dmi'
-	//inhand_image_icon = 'icons/mob/inhand/tools/omnitool.dmi'
+	//inhand_image_icon = 'icons/mob/inhand/tools/omnitool.dmi'// find good inhand sprites
 	icon_state = "sawflycontr"
 	var/alreadyhit = FALSE
 
@@ -102,7 +104,7 @@
 
 	afterattack(obj/O as obj, mob/user as mob)
 		if (O.loc == user && O != src && istype(O, /obj/item/clothing))
-			boutput(user, "<span class='hint'>You hide the remote your [O]. (Use the snap emote (ctrl+z) while wearing the clothing item to retrieve it.)</span>")
+			boutput(user, "<span class='hint'>You hide the remote in your [O]. (Use the snap emote (ctrl+z) while wearing the clothing item to retrieve it.)</span>")
 			user.u_equip(src)
 			src.set_loc(O)
 			src.dropped(user)
@@ -118,6 +120,7 @@
 				qdel(src)
 			else
 				icon_state = "sawflycontr1"
+				boutput(user,"<span class='alert'> You give the [src] a hefty whack.")
 				alreadyhit = TRUE
 		..()
 

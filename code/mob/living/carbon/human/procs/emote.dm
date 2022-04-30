@@ -1362,8 +1362,8 @@
 								playsound(src.loc, src.sound_fingersnap, 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 
 							for (var/obj/item/C as anything in src.get_equipped_items())
-								if ((locate(/obj/item/sawflysleeper) in C) != null)
-									var/obj/item/sawflysleeper/O = (locate(/obj/item/sawflysleeper) in C)
+								if ((locate(/obj/item/sawflyremote) in C) != null)
+									var/obj/item/sawflyremote/O = (locate(/obj/item/sawflyremote) in C)
 									var/drophand = (src.hand == 0 ? slot_r_hand : slot_l_hand)
 									drop_item()
 									O.set_loc(src)

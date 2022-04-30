@@ -242,10 +242,10 @@
 
 /obj/item/storage/sawfly_pouch
 	name = "sawfly pouch"
-	desc = "A segmented pouch capable of carrying four compact sawflies."
+	desc = "A pouch for carrying four compact sawflies that comes with a remote."
 	icon_state = "ammopouch-sawflies"
 	health = 6
 	w_class = W_CLASS_SMALL
 	slots = 5
 	does_not_open_in_pocket = 0
-	spawn_contents = list(/obj/item/old_grenade/spawner/sawfly = 4, /obj/item/sawflysleeper)
+	spawn_contents = list(/obj/item/old_grenade/spawner/sawfly = 4, /obj/item/sawflyremote)

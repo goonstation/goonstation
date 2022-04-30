@@ -1326,9 +1326,6 @@
 				src.CritterDeath()
 
 /obj/critter/gunbot/drone/buzzdrone/sawfly // the sawfly. For associated objects check sawfly.dm in the obj folder
-	//sawfly todo:
-	// make it so they can get ressurected after they die
-
 
 
 	name = "Sawfly"
@@ -1371,6 +1368,7 @@
 		if(isnew)
 			name = "Sawfly [pick(sawflynames)]-[rand(1,999)]"
 		beeptext = "[pick(list("beeps", "boops", "bwoops", "bips", "bwips", "bops", "chirps", "whirrs", "pings", "purrs"))]"
+		animate_bumble(src) // gotta get the float goin' on
 
 	ChaseAttack(atom/M) // overriding these procs so the drone is nicer >:(
 		if (istraitor(M) || isnukeop(M) || isspythief(M) || (M in src.friends))
@@ -1379,6 +1377,9 @@
 		if(target && !attacking)
 			attacking = 1
 			src.visible_message("<span class='alert'><b>[src]</b> flies at [M]!</span>")
+			if (istraitor(M) || isnukeop(M) || isspythief(M) || (M in src.friends))
+				return
+
 			walk_to(src, src.target,1,4)
 			var/tturf = get_turf(M)
 			Shoot(tturf, src.loc, src)
@@ -1444,10 +1445,15 @@
 		SEND_SIGNAL(src, COMSIG_OBJ_CRITTER_DEATH)
 		#endif
 
-		if (!dead_state)
-			src.icon_state = "[initial(src.icon_state)]-dead"
-		else
-			src.icon_state = dead_state
+
+		//special dead sprites
+		animate(src) //stop no more float animation
+		icon_state = "sawflydead[pick("1", "2", "3", "4", "5", "6", "7", "8")]"
+		src.pixel_x += rand(-5, 5)
+		src.pixel_y += rand(-1, 5)
+
+
+
 		src.alive = 0
 		src.anchored = 0
 		src.set_density(0)
