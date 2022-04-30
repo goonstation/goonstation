@@ -527,6 +527,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 		boutput(holder.owner, __red("You are ejected from the cable!"))
 		active = FALSE
 		var/atom/movable/screen/ability/topBar/B = src.object
+		pointCost = initial(pointCost)
 		B.update_cooldown_cost()
 
 		UnregisterSignal(D, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_SET_LOC))
