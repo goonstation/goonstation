@@ -332,7 +332,7 @@ REACTOR
 					// Unequipping
 					user.u_equip(W)
 					W.set_loc(src)
-					W.dropped()
+					W.dropped(user)
 					// Letting everyone around know
 					boutput(user, "<span class='alert'>You insert the [W] into the [src].</span>")
 					for(var/mob/M in AIviewers(src))
@@ -348,7 +348,7 @@ REACTOR
 					controlRods[i] = W
 					user.u_equip(W)
 					W.set_loc(src)
-					W.dropped()
+					W.dropped(user)
 					boutput(user, "<span class='alert'>You insert the [W] into the [src].</span>")
 					for(var/mob/M in AIviewers(src))
 						if(M == user)	continue

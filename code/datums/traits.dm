@@ -530,12 +530,12 @@
 	category = list("trinkets")
 
 /obj/trait/pawnstar
-	name = "Pawn Star (-1) \[Trinkets\]"
+	name = "Pawn Star (0) \[Trinkets\]"
 	cleanName = "Pawn Star"
 	desc = "You sold your trinket before you departed for the station. You start with a bonus of 25% of your starting cash in your inventory."
 	id = "pawnstar"
 	icon_state = "pawnP"
-	points = -1
+	points = 0
 	category = list("trinkets")
 
 /obj/trait/beestfriend
@@ -735,6 +735,13 @@ ABSTRACT_TYPE(/obj/trait/job)
 	id = "hemophilia"
 	points = 1
 	category = list("hemophilia")
+
+/obj/trait/weakorgans
+	name = "Frail Constitution (+2)"
+	cleanName = "Frail Constitution"
+	desc = "Your internal organs (brain included) are extremely vulnerable to damage."
+	id = "weakorgans"
+	points = 2
 
 /obj/trait/slowmetabolism
 	name = "Slow Metabolism (0)"
@@ -952,12 +959,12 @@ ABSTRACT_TYPE(/obj/trait/job)
 		OTHER_STOP_TRACKING_CAT(owner, TR_CAT_NERVOUS_MOBS)
 
 /obj/trait/burning
-	name = "Human Torch (+1)"
+	name = "Human Torch (+2)"
 	cleanName = "Human Torch"
-	desc = "Extends the time that you remain on fire for, when burning."
+	desc = "Fire no longer slowly peters out when you're burning."
 	id = "burning"
 	icon_state = "onfire"
-	points = 1
+	points = 2
 
 /obj/trait/carpenter
 	name = "Carpenter (-1)"

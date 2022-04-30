@@ -165,7 +165,7 @@ Inlet flow: <A href='?src=\ref[src];volume_adj=-10'>-</A> <A href='?src=\ref[src
 	if (usr.stat || usr.restrained())
 		return
 
-	if (((get_dist(src, usr) <= 1) && istype(src.loc, /turf)))
+	if (((BOUNDS_DIST(src, usr) == 0) && istype(src.loc, /turf)))
 		src.add_dialog(usr)
 
 		if(href_list["power"])

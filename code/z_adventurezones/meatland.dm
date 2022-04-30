@@ -1118,7 +1118,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 
 	Topic(href, href_list)
 		..()
-		if ((usr.stat || usr.restrained()) || (get_dist(src, usr) > 1))
+		if ((usr.stat || usr.restrained()) || (BOUNDS_DIST(src, usr) > 0))
 			return
 
 		if ("enter" in href_list)
@@ -1233,7 +1233,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 		if(..())
 			return
 
-		if(get_dist(host, usr) > 1)
+		if(BOUNDS_DIST(host, usr) > 0)
 			return
 
 		src.host?.add_dialog(usr)
@@ -1265,7 +1265,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 		if(..())
 			return
 
-		if(get_dist(host, usr) > 1)
+		if(BOUNDS_DIST(host, usr) > 0)
 			return
 
 		src.host?.add_dialog(usr)
@@ -1393,7 +1393,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 			return attack_hand(user)
 
 	attack_hand(mob/user as mob)
-		if (user.stat || user.getStatusDuration("weakened") || get_dist(user, src) > 1 || !user.can_use_hands())
+		if (user.stat || user.getStatusDuration("weakened") || BOUNDS_DIST(user, src) > 0 || !user.can_use_hands())
 			return
 
 		user.visible_message("<span class='alert'>[user] presses against [src].</span>", "<span class='alert'>You press against [src].  Ew.</span>")
@@ -1529,6 +1529,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 			else
 				L.visible_message("<span class='alert'><b>[L] is gored by [src]!</b></span>", "<span class='alert'><b>OH SHIT</b></span>")
 				playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)
+				logTheThing("combat", L, null, "was gibbed by [src] ([src.type]) at [log_loc(L)].")
 				L.gib()
 
 		src.icon_state = "fangdoor1"

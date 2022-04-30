@@ -263,6 +263,7 @@
 	name_prefix = "Ricin "
 	iconmod = "Rice"
 	assoc_reagents = list("ricin")
+	PTrange = list(60,null)
 	crop = /obj/item/reagent_containers/food/snacks/ingredient/rice_sprig
 
 // Oat Mutations
@@ -471,7 +472,7 @@
 	name_prefix = "Sunrise "
 	iconmod = "VenneCurative"
 	crop = /obj/item/plant/herb/venne/curative
-	assoc_reagents = list("oculine","mannitol","mutadone")
+	assoc_reagents = list("mannitol","mutadone")
 	chance = 5
 
 // Houttuynia Cordata Mutations
@@ -493,7 +494,7 @@
 			// I know that this seems weird, but consider how many plants clutter botany at any given time. Looping through mobs and checking distance is
 			// less of a pain than looping through potentially hundreds of random seeds and crap in view(1) to see if they're mobs.
 			for (var/mob/living/L in mobs)
-				if (get_dist(L.loc,get_turf(POT)) <= 1)
+				if (BOUNDS_DIST(L.loc, get_turf(POT)) == 0)
 					nerds += L
 				else
 					continue

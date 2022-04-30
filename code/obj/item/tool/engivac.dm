@@ -229,7 +229,7 @@ obj/item/engivac/proc/find_crud_on_turf(turf/target_turf)
 obj/item/engivac/proc/attempt_fill(obj/item/target)
 	if (!target)
 		return FALSE
-	if (get_dist(target, src) > 1) //I'm sure smartasses will find a way
+	if (BOUNDS_DIST(target, src) > 0) //I'm sure smartasses will find a way
 		return FALSE
 	var/succeeded = FALSE
 	var/list/toolbox_contents = held_toolbox.get_contents()

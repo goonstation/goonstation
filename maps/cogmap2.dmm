@@ -413,32 +413,6 @@
 /obj/securearea,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/ai)
-"aaY" = (
-/obj/machinery/networked/secdetector{
-	area_access = 99;
-	detector_id = "AI Core";
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
-/area/station/turret_protected/ai)
 "aaZ" = (
 /obj/cable{
 	d2 = 4;
@@ -491,30 +465,6 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
-"abe" = (
-/obj/machinery/networked/secdetector{
-	area_access = 99;
-	detector_id = "AI Core"
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
-/area/station/turret_protected/ai)
 "abf" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/ai)
@@ -1882,29 +1832,6 @@
 	dir = 4
 	},
 /area/station/turret_protected/ai_upload)
-"adY" = (
-/obj/cable,
-/obj/machinery/power/data_terminal,
-/obj/machinery/networked/secdetector{
-	area_access = 99;
-	detector_id = "AI Core";
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
-/area/station/turret_protected/ai)
 "adZ" = (
 /obj/cable{
 	d1 = 4;
@@ -2119,28 +2046,6 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/solar/north)
-"aex" = (
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/machinery/power/data_terminal,
-/obj/machinery/networked/secdetector,
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
-/area/station/turret_protected/ai)
 "aey" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -4217,29 +4122,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
-"ajy" = (
-/obj/cable,
-/obj/machinery/power/data_terminal,
-/obj/machinery/networked/secdetector{
-	area_access = 99;
-	detector_id = "AI Core";
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
-/area/station/turret_protected/ai)
 "ajz" = (
 /obj/storage/crate,
 /obj/machinery/light/small,
@@ -4695,32 +4577,6 @@
 	},
 /turf/simulated/floor/plating/damaged3,
 /area/station/maintenance/north)
-"akB" = (
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/machinery/networked/secdetector{
-	area_access = 99;
-	detector_id = "AI Core";
-	dir = 4
-	},
-/obj/machinery/power/data_terminal,
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
-/area/station/turret_protected/ai)
 "akC" = (
 /obj/cable,
 /obj/cable{
@@ -4806,32 +4662,6 @@
 	icon_state = "0-8"
 	},
 /obj/cable,
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
-/area/station/turret_protected/ai)
-"akL" = (
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/machinery/networked/secdetector{
-	area_access = 99;
-	detector_id = "AI Core";
-	dir = 8
-	},
-/obj/machinery/power/data_terminal,
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
@@ -11307,6 +11137,7 @@
 /area/station/storage/primary)
 "azO" = (
 /obj/disposalpipe/segment,
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon5,
 /turf/simulated/floor,
 /area/station/storage/primary)
 "azP" = (
@@ -13604,34 +13435,6 @@
 	},
 /turf/simulated/floor/carpet{
 	icon_state = "fpurple1"
-	},
-/area/station/crew_quarters/cafeteria)
-"aEP" = (
-/obj/table/reinforced/bar/auto,
-/obj/item/reagent_containers/food/drinks/bowl,
-/obj/item/implant/projectile/bardart{
-	pixel_x = -5;
-	pixel_y = 7
-	},
-/obj/item/implant/projectile/bardart{
-	pixel_x = -5;
-	pixel_y = 4
-	},
-/obj/item/implant/projectile/bardart{
-	pixel_x = -1;
-	pixel_y = 7
-	},
-/obj/item/implant/projectile/bardart{
-	pixel_x = -1;
-	pixel_y = 7
-	},
-/obj/item/implant/projectile/bardart{
-	pixel_x = 2;
-	pixel_y = 5
-	},
-/turf/simulated/floor/carpet{
-	dir = 5;
-	icon_state = "fpurple3"
 	},
 /area/station/crew_quarters/cafeteria)
 "aEQ" = (
@@ -35525,36 +35328,6 @@
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/simulated/floor/plating/scorched,
 /area/station/maintenance/inner/central)
-"bDb" = (
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/machinery/networked/secdetector{
-	area_access = 99;
-	detector_id = "AI Core";
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
 "bDc" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -35578,36 +35351,6 @@
 	icon_state = "0-4"
 	},
 /obj/disposalpipe/segment/transport,
-/turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
-"bDe" = (
-/obj/machinery/power/data_terminal,
-/obj/machinery/networked/secdetector{
-	area_access = 99;
-	detector_id = "AI Core"
-	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 4;
-	opacity = 1
-	},
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/wingrille_spawn/auto,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "bDf" = (
@@ -38134,16 +37877,6 @@
 /obj/machinery/light,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/west)
-"bHM" = (
-/obj/machinery/door/poddoor/pyro{
-	dir = 4;
-	id = "pt_laser";
-	name = "Beamline Interlock"
-	},
-/obj/window/reinforced/east,
-/obj/window/reinforced/west,
-/turf/simulated/floor/circuit/off,
-/area/station/hangar/main)
 "bHN" = (
 /turf/simulated/floor/circuit/off,
 /area/station/hangar/main)
@@ -41833,33 +41566,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
-"bNV" = (
-/obj/machinery/power/data_terminal,
-/obj/cable,
-/obj/machinery/networked/secdetector{
-	area_access = 99;
-	detector_id = "AI Core";
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
 "bNW" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -41900,33 +41606,6 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engine/core)
-"bNZ" = (
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/machinery/networked/secdetector{
-	area_access = 99;
-	detector_id = "AI Core";
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/cable,
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
 "bOa" = (
 /obj/machinery/disposal/brig{
 	name = "ejection chute"
@@ -46923,40 +46602,6 @@
 /obj/disposalpipe/trunk,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
-"bYP" = (
-/obj/machinery/power/data_terminal,
-/obj/machinery/networked/secdetector{
-	area_access = 99;
-	detector_id = "AI Core"
-	},
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/machinery/door/poddoor/pyro{
-	density = 0;
-	dir = 4;
-	icon_state = "pdoor0";
-	id = "visitorlockdown";
-	layer = 6;
-	name = "Brig Visitor Lockdown";
-	opacity = 0
-	},
-/obj/wingrille_spawn/auto,
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/turf/simulated/floor/plating,
-/area/station/security/brig)
 "bYQ" = (
 /obj/machinery/light{
 	dir = 4;
@@ -47471,68 +47116,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/security/brig)
-"cab" = (
-/obj/table/reinforced/auto,
-/obj/window/reinforced/west{
-	dir = 1;
-	icon_state = "darkwindow";
-	layer = 3.1;
-	name = "divider window"
-	},
-/obj/window/reinforced/west{
-	dir = 2;
-	icon_state = "darkwindow";
-	layer = 3.1;
-	name = "divider window"
-	},
-/turf/simulated/floor/delivery,
-/area/station/security/brig)
-"cac" = (
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/cable,
-/obj/machinery/door/poddoor/pyro{
-	density = 0;
-	dir = 4;
-	icon_state = "pdoor0";
-	id = "visitorlockdown";
-	layer = 6;
-	name = "Brig Visitor Lockdown";
-	opacity = 0
-	},
-/obj/wingrille_spawn/auto,
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/turf/simulated/floor/plating,
-/area/station/security/brig)
-"cad" = (
-/obj/table/reinforced/auto,
-/obj/window/reinforced/west{
-	dir = 1;
-	icon_state = "darkwindow";
-	layer = 3.1;
-	name = "divider window"
-	},
-/obj/window/reinforced/west{
-	dir = 2;
-	icon_state = "darkwindow";
-	layer = 3.1;
-	name = "divider window"
-	},
-/turf/simulated/floor/delivery,
-/area/station/hallway/primary/east)
 "cae" = (
 /obj/stool/chair{
 	dir = 8
@@ -48458,86 +48041,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/security/brig)
-"ccr" = (
-/obj/disposalpipe/segment/mail/horizontal,
-/obj/table/reinforced/auto,
-/obj/window/reinforced/west{
-	dir = 1;
-	icon_state = "darkwindow";
-	layer = 3.1;
-	name = "divider window"
-	},
-/obj/window/reinforced/west{
-	dir = 2;
-	icon_state = "darkwindow";
-	layer = 3.1;
-	name = "divider window"
-	},
-/obj/item/decoration/ashtray{
-	butts = 5;
-	name = "grubby old ashtray"
-	},
-/obj/item/device/radio/intercom/brig{
-	broadcasting = 1
-	},
-/turf/simulated/floor/delivery,
-/area/station/security/brig)
-"ccs" = (
-/obj/disposalpipe/segment/mail/horizontal,
-/obj/cable,
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/machinery/door/poddoor/pyro{
-	density = 0;
-	dir = 4;
-	icon_state = "pdoor0";
-	id = "visitorlockdown";
-	layer = 6;
-	name = "Brig Visitor Lockdown";
-	opacity = 0
-	},
-/obj/wingrille_spawn/auto,
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/turf/simulated/floor/plating,
-/area/station/security/brig)
-"cct" = (
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/disposalpipe/segment/mail/horizontal,
-/obj/table/reinforced/auto,
-/obj/window/reinforced/west{
-	dir = 1;
-	icon_state = "darkwindow";
-	layer = 3.1;
-	name = "divider window"
-	},
-/obj/window/reinforced/west{
-	dir = 2;
-	icon_state = "darkwindow";
-	layer = 3.1;
-	name = "divider window"
-	},
-/obj/item/device/radio/intercom/brig{
-	broadcasting = 1
-	},
-/turf/simulated/floor/delivery,
-/area/station/hallway/primary/east)
 "ccu" = (
 /obj/cable{
 	d1 = 4;
@@ -57068,10 +56571,11 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "W APC";
-	pixel_x = -24
+	pixel_x = -24;
+	areastring = "Robot Depot"
 	},
 /turf/simulated/floor/plating,
-/area/station/science/bot_storage)
+/area/station/maintenance/southeast)
 "cwC" = (
 /obj/machinery/launcher_loader/south,
 /turf/simulated/floor/plating,
@@ -73704,9 +73208,7 @@
 /turf/space,
 /area/space)
 "dhQ" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "dhR" = (
 /obj/cable{
@@ -73928,23 +73430,6 @@
 	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/black,
-/area/research_outpost)
-"dip" = (
-/obj/wingrille_spawn/auto,
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 4;
-	opacity = 1
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/plating,
 /area/research_outpost)
 "diq" = (
 /obj/item/raw_material/rock,
@@ -77209,6 +76694,15 @@
 /obj/machinery/ore_cloud_storage_container,
 /turf/simulated/floor/plating,
 /area/station/mining/staff_room)
+"dOa" = (
+/obj/machinery/door/poddoor/pyro{
+	dir = 4;
+	id = "pt_laser";
+	name = "Beamline Interlock"
+	},
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/circuit/off,
+/area/station/hallway/primary/west)
 "dOs" = (
 /obj/cable{
 	d1 = 4;
@@ -77396,6 +76890,23 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hangar/science)
+"eJt" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/disposalpipe/segment/mail/horizontal,
+/obj/table/reinforced/auto,
+/obj/item/device/radio/intercom/brig{
+	broadcasting = 1
+	},
+/obj/railing/blue,
+/obj/railing/blue{
+	dir = 1
+	},
+/turf/simulated/floor/delivery,
+/area/station/hallway/primary/east)
 "eLQ" = (
 /obj/cable{
 	d1 = 1;
@@ -77606,6 +77117,21 @@
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
+"guo" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/networked/secdetector{
+	area_access = 99;
+	detector_id = "AI Core";
+	dir = 8
+	},
+/obj/cable,
+/obj/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/engine,
+/area/station/ai_monitored/armory)
 "gvX" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -77682,6 +77208,25 @@
 	dir = 10
 	},
 /area/station/medical/robotics)
+"hdY" = (
+/obj/disposalpipe/segment/mail/horizontal,
+/obj/cable,
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "visitorlockdown";
+	layer = 6;
+	name = "Brig Visitor Lockdown";
+	opacity = 0
+	},
+/obj/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/plating,
+/area/station/security/brig)
 "hfj" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -77960,6 +77505,28 @@
 	icon_state = "blue5"
 	},
 /area/station/crew_quarters/arcade/dungeon)
+"imW" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/networked/secdetector{
+	area_access = 99;
+	detector_id = "AI Core"
+	},
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "visitorlockdown";
+	layer = 6;
+	name = "Brig Visitor Lockdown";
+	opacity = 0
+	},
+/obj/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/plating,
+/area/station/security/brig)
 "ipz" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
 /turf/simulated/floor/shuttlebay,
@@ -78554,6 +78121,34 @@
 /obj/effects/background_objects/mundus,
 /turf/space,
 /area/space)
+"lHq" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/reagent_containers/food/drinks/bowl,
+/obj/item/implant/projectile/body_visible/dart/bardart{
+	pixel_x = -5;
+	pixel_y = 7
+	},
+/obj/item/implant/projectile/body_visible/dart/bardart{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/implant/projectile/body_visible/dart/bardart{
+	pixel_x = -1;
+	pixel_y = 7
+	},
+/obj/item/implant/projectile/body_visible/dart/bardart{
+	pixel_x = -1;
+	pixel_y = 7
+	},
+/obj/item/implant/projectile/body_visible/dart/bardart{
+	pixel_x = 2;
+	pixel_y = 5
+	},
+/turf/simulated/floor/carpet{
+	dir = 5;
+	icon_state = "fpurple3"
+	},
+/area/station/crew_quarters/cafeteria)
 "lLB" = (
 /obj/cable{
 	d2 = 4;
@@ -78567,6 +78162,20 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/catering)
+"lMk" = (
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/machinery/networked/secdetector{
+	area_access = 99;
+	detector_id = "AI Core";
+	dir = 4
+	},
+/obj/machinery/power/data_terminal,
+/obj/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/plating,
+/area/station/turret_protected/ai)
 "lNV" = (
 /obj/table/reinforced/auto,
 /obj/machinery/networked/storage/scanner{
@@ -78583,6 +78192,20 @@
 	icon_state = "fpurple2"
 	},
 /area/station/science/lobby)
+"lOo" = (
+/obj/machinery/networked/secdetector{
+	area_access = 99;
+	detector_id = "AI Core";
+	dir = 4
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/plating,
+/area/station/turret_protected/ai)
 "lOK" = (
 /obj/decal/tile_edge/line/blue{
 	icon_state = "noedge-tile1"
@@ -78888,6 +78511,17 @@
 /obj/item/reagent_containers/food/snacks/ranch_feed_bag,
 /turf/simulated/floor/grasstodirt,
 /area/station/ranch)
+"nny" = (
+/obj/cable,
+/obj/machinery/power/data_terminal,
+/obj/machinery/networked/secdetector{
+	area_access = 99;
+	detector_id = "AI Core";
+	dir = 1
+	},
+/obj/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/plating,
+/area/station/turret_protected/ai)
 "npI" = (
 /obj/machinery/launcher_loader/south{
 	id = "ejector_medsci"
@@ -79122,6 +78756,14 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"oyM" = (
+/obj/table/reinforced/auto,
+/obj/railing/blue,
+/obj/railing/blue{
+	dir = 1
+	},
+/turf/simulated/floor/delivery,
+/area/station/hallway/primary/east)
 "oGS" = (
 /obj/window_blinds/cog2{
 	dir = 4
@@ -79355,16 +78997,6 @@
 "qfX" = (
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
-"qid" = (
-/obj/machinery/door/poddoor/pyro{
-	dir = 4;
-	id = "pt_laser";
-	name = "Beamline Interlock"
-	},
-/obj/window/reinforced/east,
-/obj/window/reinforced/west,
-/turf/simulated/floor/circuit/off,
-/area/station/hallway/primary/west)
 "qja" = (
 /obj/machinery/light{
 	dir = 1;
@@ -79395,6 +79027,24 @@
 /turf/space,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/mining/magnet)
+"qzf" = (
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/cable,
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "visitorlockdown";
+	layer = 6;
+	name = "Brig Visitor Lockdown";
+	opacity = 0
+	},
+/obj/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/plating,
+/area/station/security/brig)
 "qBq" = (
 /obj/railing/orange/reinforced{
 	dir = 8
@@ -79492,6 +79142,14 @@
 /obj/machinery/light,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"qNE" = (
+/obj/table/reinforced/auto,
+/obj/railing/red/reinforced,
+/obj/railing/red/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/delivery,
+/area/station/security/brig)
 "qNP" = (
 /obj/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
@@ -79509,6 +79167,18 @@
 	},
 /turf/space,
 /area/shuttle/research/outpost)
+"qQR" = (
+/obj/machinery/networked/secdetector{
+	area_access = 99;
+	detector_id = "AI Core"
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/plating,
+/area/station/turret_protected/ai)
 "qTr" = (
 /obj/cable{
 	d1 = 1;
@@ -79650,6 +79320,33 @@
 	fullbright = 1
 	},
 /area/shuttle/research/outpost)
+"rZy" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/machinery/networked/secdetector{
+	area_access = 99;
+	detector_id = "AI Core";
+	dir = 4
+	},
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/engine,
+/area/station/ai_monitored/armory)
+"saH" = (
+/obj/machinery/door/poddoor/pyro{
+	dir = 4;
+	id = "pt_laser";
+	name = "Beamline Interlock"
+	},
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/circuit/off,
+/area/station/hangar/main)
 "saK" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/window/eastright,
@@ -79702,6 +79399,21 @@
 	icon_state = "blue5"
 	},
 /area/station/crew_quarters/arcade/dungeon)
+"srd" = (
+/obj/machinery/power/data_terminal,
+/obj/cable,
+/obj/machinery/networked/secdetector{
+	area_access = 99;
+	detector_id = "AI Core";
+	dir = 1
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/engine,
+/area/station/ai_monitored/armory)
 "svu" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8
@@ -79761,6 +79473,20 @@
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
+"sJz" = (
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/networked/secdetector{
+	area_access = 99;
+	detector_id = "AI Core";
+	dir = 8
+	},
+/obj/machinery/power/data_terminal,
+/obj/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/plating,
+/area/station/turret_protected/ai)
 "sKb" = (
 /turf/simulated/wall/auto/shuttle{
 	fullbright = 1;
@@ -79830,6 +79556,39 @@
 /obj/item/clothing/mask/chicken,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
+"tcI" = (
+/obj/disposalpipe/segment/mail/horizontal,
+/obj/table/reinforced/auto,
+/obj/item/decoration/ashtray{
+	butts = 5;
+	name = "grubby old ashtray"
+	},
+/obj/item/device/radio/intercom/brig{
+	broadcasting = 1
+	},
+/obj/railing/red/reinforced,
+/obj/railing/red/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/delivery,
+/area/station/security/brig)
+"tdm" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/networked/secdetector{
+	area_access = 99;
+	detector_id = "AI Core"
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/engine,
+/area/station/ai_monitored/armory)
 "tdV" = (
 /obj/table/wood/auto,
 /obj/item/item_box/gold_star{
@@ -80404,6 +80163,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
+"woP" = (
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/networked/secdetector,
+/obj/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/plating,
+/area/station/turret_protected/ai)
 "wpW" = (
 /obj/machinery/vending/fortune,
 /obj/decal/cleanable/cobweb,
@@ -94607,7 +94376,7 @@ abC
 doU
 aab
 dii
-dip
+htk
 sfG
 diN
 djb
@@ -109315,7 +109084,7 @@ bpx
 bBT
 bgQ
 bgQ
-bHM
+saH
 bgQ
 byI
 bNa
@@ -112637,7 +112406,7 @@ bWC
 bBY
 lhJ
 bgQ
-bHM
+saH
 bgg
 toG
 bNf
@@ -113845,7 +113614,7 @@ bpr
 buI
 bfc
 bhA
-qid
+dOa
 bhA
 bfc
 cdr
@@ -114407,7 +114176,7 @@ azD
 aAZ
 aCw
 aDH
-aEP
+lHq
 aGa
 aHM
 aJn
@@ -133774,13 +133543,13 @@ bvN
 bxS
 bzC
 bBk
-bDb
+rZy
 bEZ
 bGU
 bIO
 bKC
 bMo
-bNV
+srd
 bBn
 bQY
 bSE
@@ -135512,7 +135281,7 @@ aah
 aaE
 aah
 aaX
-abe
+qQR
 abl
 abl
 abl
@@ -135586,13 +135355,13 @@ bvS
 bxY
 bzH
 bBk
-bDe
+tdm
 bFf
 bGY
 bIU
 bKI
 bMu
-bNZ
+guo
 bBn
 bRe
 bSH
@@ -135813,7 +135582,7 @@ aao
 aaa
 aao
 aaa
-aaY
+lOo
 abf
 abm
 abt
@@ -135826,7 +135595,7 @@ abI
 acR
 adm
 abf
-aex
+woP
 afl
 afl
 afl
@@ -136135,7 +135904,7 @@ abI
 ahA
 abo
 abf
-akB
+lMk
 aaF
 afk
 aaa
@@ -139759,7 +139528,7 @@ aeF
 ahG
 abn
 abf
-akL
+sJz
 aaF
 ani
 aaa
@@ -139828,9 +139597,9 @@ bUw
 bWe
 bXz
 bkt
-cab
-cab
-ccr
+qNE
+qNE
+tcI
 cdj
 bkt
 biz
@@ -140060,7 +139829,7 @@ afl
 afl
 ahH
 afl
-ajy
+nny
 aaX
 aaI
 aaa
@@ -140129,10 +139898,10 @@ bSV
 bSX
 bWf
 bkt
-bYP
-cac
-cac
-ccs
+imW
+qzf
+qzf
+hdY
 cdk
 cdk
 bSD
@@ -140355,7 +140124,7 @@ abq
 abq
 bbx
 abq
-adY
+nny
 aaX
 aaB
 aaF
@@ -140432,9 +140201,9 @@ bSX
 bWg
 bBo
 bBo
-cad
-cad
-cct
+oyM
+oyM
+eJt
 bkK
 cdI
 ceh

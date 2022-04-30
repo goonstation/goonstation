@@ -28,7 +28,7 @@
 		if(T.intact || !istype(T, /turf/simulated/floor))
 			return
 
-		if(get_dist(src, user) > 1)
+		if(BOUNDS_DIST(src, user) > 0)
 			return
 
 		if(!directwired)		// only for attaching to directwired machines
@@ -228,7 +228,7 @@
 
 	else if (istype(W, /obj/item/cable_coil))
 		var/obj/item/cable_coil/coil = W
-		coil.cable_join(src, user)
+		coil.cable_join(src, get_turf(user), user, TRUE)
 		//note do shock in cable_join
 
 	else if (istype(W, /obj/item/device/t_scanner) || ispulsingtool(W) || (istype(W, /obj/item/device/pda2) && istype(W:module, /obj/item/device/pda_module/tray)))

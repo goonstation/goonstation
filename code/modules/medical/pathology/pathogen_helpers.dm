@@ -28,6 +28,16 @@
 			src.mob_inside.remove()
 			src.mob_inside = null
 
+	ex_act(severity)
+		if(severity == 1)
+			var/mob/M = src.mob_inside
+			if(M)
+				src.mob_inside = null
+				M.emote("scream")
+				M.emote("faint")
+			src.visible_message("<span class='alert'><b>[src] shatters into a million tiny pieces!</b></span>")
+			dothepixelthing(src)
+
 /mob/proc/become_statue(var/datum/material/M, var/newDesc = null, survive=FALSE)
 	var/obj/statue/statueperson = new /obj/statue(get_turf(src))
 	src.pixel_x = 0

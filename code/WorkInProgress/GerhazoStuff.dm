@@ -242,7 +242,7 @@
 		// assuming no super weird things happened, the sword should be on the ground at this point
 		for(var/i=0, i<100, i++)
 			step_to(sword, my_mob)
-			if (get_dist(sword,my_mob) <= 1)
+			if (BOUNDS_DIST(sword, my_mob) == 0)
 				playsound(my_mob, 'sound/effects/throw.ogg', 50, 1)
 				sword.set_loc(get_turf(my_mob))
 				if (my_mob.put_in_hand(sword))

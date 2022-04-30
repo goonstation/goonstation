@@ -148,9 +148,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "aaz" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "aaB" = (
 /obj/grille/steel,
@@ -295,9 +293,7 @@
 	name = "Mining Outpost"
 	},
 /obj/lattice,
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "aaT" = (
 /obj/landmark/magnet_shield,

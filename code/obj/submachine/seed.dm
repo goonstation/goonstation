@@ -241,7 +241,7 @@
 		onclose(user, "rextractor")
 
 	Topic(href, href_list)
-		if((get_dist(usr,src) > 1) && !issilicon(usr) && !isAI(usr))
+		if((BOUNDS_DIST(usr, src) > 0) && !issilicon(usr) && !isAI(usr))
 			boutput(usr, "<span class='alert'>You need to be closer to the machine to do that!</span>")
 			return
 		if(href_list["page"])
@@ -660,7 +660,7 @@
 			W.set_loc(src)
 			if (istype(W, /obj/item/seed/)) src.seeds += W
 			else src.extractables += W
-			W.dropped()
+			W.dropped(user)
 			src.updateUsrDialog()
 			return
 
@@ -690,7 +690,7 @@
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		if (!O || !user)
 			return
-		if (!in_interact_range(src, user)  || !IN_RANGE(user, O, 1))
+		if (!in_interact_range(src, user)  || BOUNDS_DIST(O, user) > 0)
 			return
 		if (!isitem(O))
 			return
@@ -1123,7 +1123,7 @@
 			onclose(user, "fabpanel")
 
 	Topic(href, href_list)
-		if(get_dist(usr,src) > 1 && !issilicon(usr) && !isAI(usr))
+		if(BOUNDS_DIST(usr, src) > 0 && !issilicon(usr) && !isAI(usr))
 			boutput(usr, "<span class='alert'>You need to be closer to the vendor to do that!</span>")
 			return
 

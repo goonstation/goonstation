@@ -219,7 +219,7 @@
 	attack_hand(mob/user as mob)
 		if (src.target)
 			var/action = input("What would you like to do with the microscope?", "Microscope", "View [target]") in list("View [target]", "[src.zoom ? "Zoom Out" : "Zoom In"]", "Remove [target]", "Cancel")
-			if (get_dist(user.loc, src.loc) <= 1)
+			if (BOUNDS_DIST(user.loc, src.loc) == 0)
 				if (action == "View [target]")
 					if (zoom)
 						user.show_message("<span class='notice'>You look at the [target] through the microscope.</span>")

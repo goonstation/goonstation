@@ -1335,9 +1335,7 @@
 	},
 /area/noGenerate)
 "ep" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/noGenerate)
 "eq" = (
 /obj/decal/cleanable/dirt,
@@ -6267,9 +6265,7 @@
 /area/evilreaver/genetics)
 "GJ" = (
 /obj/lattice,
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/noGenerate)
 "GO" = (
 /turf/unsimulated/wall/auto/adventure/martian,

@@ -73,6 +73,20 @@
 
 	playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
 	if (src == target)
+		var/mob/living/M = src
+
+		var/obj/item/implant/projectile/body_visible/P = locate(/obj/item/implant/projectile/body_visible) in M.implant
+
+		if (P)
+			if (P.barbed == FALSE)
+				src.visible_message("<span class='alert'><B>[src] pulls a [P.pull_out_name] out of themselves!</B></span>")
+				P.on_remove(M)
+				M.implant.Remove(P)
+				src.put_in_hand(P)
+			else
+				src.visible_message("<span class='alert'><B>[src] tries to pull a [P.pull_out_name] out of themselves, but it's stuck in!</B></span>")
+			return
+
 		var/obj/stool/S = (locate(/obj/stool) in src.loc)
 		if (S)
 			S.buckle_in(src,src)
@@ -93,6 +107,20 @@
 				src.visible_message("<span class='notice'>[src] pats themselves on the back. Feel better, [src].</span>")
 
 	else
+		var/mob/living/M = target
+
+		var/obj/item/implant/projectile/body_visible/P = locate(/obj/item/implant/projectile/body_visible) in M.implant
+
+		if (P)
+			if (P.barbed == FALSE)
+				src.visible_message("<span class='alert'><B>[src] pulls a [P.pull_out_name] out of [target]!</B></span>")
+				P.on_remove(M)
+				M.implant.Remove(P)
+				src.put_in_hand(P)
+			else
+				src.visible_message("<span class='alert'><B>[src] tries to pull a [P.pull_out_name] out of [target], but it's stuck in!</B></span>")
+			return
+
 		if (target.lying)
 			src.visible_message("<span class='notice'>[src] shakes [target], trying to wake them up!</span>")
 		else if(target.hasStatus("shivering"))
@@ -1275,7 +1303,7 @@
 	.= 0
 	if (prob(60) && M && src.stance == "defensive" && iswerewolf(src) && src.stat)
 		src.set_dir(get_dir(src, M))
-		playsound(src.loc, "sound/weapons/punchmiss.ogg", 50, 1)
+		playsound(src.loc, "sound/impact_sounds/Generic_Swing_1.ogg", 50, 1)
 		//dodge more likely, we're more agile than macho
 		if (prob(60))
 			src.visible_message("<span class='alert'><B>[src] dodges the blow by [M]!</B></span>")

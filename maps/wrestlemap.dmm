@@ -1728,9 +1728,7 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "aHg" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "aHh" = (
 /obj/tree1,
@@ -3426,9 +3424,7 @@
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "btr" = (
 /obj/machinery/turret,
@@ -5381,7 +5377,6 @@
 	dir = 8
 	},
 /obj/item/device/radio/intercom{
-	broadcasting = 0;
 	dir = 4;
 	pixel_x = -21
 	},
@@ -6699,9 +6694,7 @@
 	dir = 4;
 	icon_state = "lattice-dir"
 	},
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "cOU" = (
 /obj/table/reinforced/auto,
@@ -11270,8 +11263,7 @@
 	},
 /obj/disposalpipe/trunk/mail/west,
 /obj/item/device/radio/intercom/engineering{
-	pixel_x = -28;
-	pixel_y = 0
+	pixel_x = -28
 	},
 /obj/machinery/disposal/mail/autoname/mechanics{
 	mail_tag = "Mechanics"
@@ -13073,9 +13065,7 @@
 /turf/simulated/floor/wood,
 /area/station/chapel/sanctuary)
 "fsQ" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/mining/magnet)
 "fsW" = (
 /obj/storage/cart/trash,
@@ -15082,27 +15072,27 @@
 	name = "Ringside Hallway"
 	})
 "gmA" = (
-/obj/item/implant/projectile/bardart{
+/obj/item/implant/projectile/body_visible/dart/bardart{
 	pixel_x = -3;
 	pixel_y = 8
 	},
-/obj/item/implant/projectile/bardart{
+/obj/item/implant/projectile/body_visible/dart/bardart{
 	pixel_x = -3;
 	pixel_y = 6
 	},
-/obj/item/implant/projectile/bardart{
+/obj/item/implant/projectile/body_visible/dart/bardart{
 	pixel_x = -1;
 	pixel_y = 8
 	},
-/obj/item/implant/projectile/bardart{
+/obj/item/implant/projectile/body_visible/dart/bardart{
 	pixel_x = -1;
 	pixel_y = 8
 	},
-/obj/item/implant/projectile/bardart{
+/obj/item/implant/projectile/body_visible/dart/bardart{
 	pixel_x = -1;
 	pixel_y = 8
 	},
-/obj/item/implant/projectile/bardart{
+/obj/item/implant/projectile/body_visible/dart/bardart{
 	pixel_x = 3;
 	pixel_y = 6
 	},
@@ -25082,9 +25072,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/computer3/generic/engine/console_upper{
-	name = "Engine Control Console"
-	},
+/obj/machinery/computer3/generic/engine/console_upper,
 /obj/decal/tile_edge/stripe{
 	dir = 1
 	},
@@ -30374,9 +30362,7 @@
 	},
 /area/station/engine/elect)
 "mTr" = (
-/obj/machinery/atmospherics/valve/purge/horizontal{
-	name = "purge valve"
-	},
+/obj/machinery/atmospherics/valve/purge/horizontal,
 /obj/decal/tile_edge/line/red{
 	dir = 10;
 	icon_state = "line1"
@@ -31929,7 +31915,6 @@
 	icon_state = "2-8"
 	},
 /obj/item/device/radio/intercom{
-	broadcasting = 0;
 	dir = 8;
 	frequency = 1441;
 	name = "Engineering Intercom";
@@ -40801,7 +40786,6 @@
 "rvQ" = (
 /obj/storage/crate/furnacefuel,
 /obj/item/device/radio/intercom{
-	broadcasting = 0;
 	frequency = 1485;
 	name = "Security Intercom";
 	pixel_x = 26
@@ -41122,7 +41106,6 @@
 "rAB" = (
 /obj/machinery/atmospherics/pipe/simple/horizontal,
 /obj/item/device/radio/intercom{
-	broadcasting = 0;
 	dir = 4;
 	frequency = 1441;
 	name = "Engineering Intercom";
@@ -45017,9 +45000,7 @@
 	dir = 6;
 	icon_state = "lattice-dir"
 	},
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "thQ" = (
 /obj/disposalpipe/segment/morgue{

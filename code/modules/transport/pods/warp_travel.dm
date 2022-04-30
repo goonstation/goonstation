@@ -286,7 +286,7 @@
 
 	onUpdate()
 		..()
-		if (beacon == null || the_tool == null || owner == null || get_dist(owner, beacon) > 1)
+		if (beacon == null || the_tool == null || owner == null || BOUNDS_DIST(owner, beacon) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner

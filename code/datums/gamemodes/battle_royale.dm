@@ -107,6 +107,19 @@ var/global/list/datum/mind/battle_pass_holders = list()
 				qdel(MAC)
 			if (/obj/machinery/portable_atmospherics/canister/toxins)
 				qdel(MAC)
+			if (/obj/machinery/teleport/portal_generator)
+				qdel(MAC)
+			if (/obj/machinery/bot/secbot)
+				qdel(MAC)
+			if (/obj/machinery/bot/secbot/beepsky)
+				qdel(MAC)
+
+	for_by_tcl(I, /obj/item/hand_tele)
+		qdel(I)
+
+	for_by_tcl(V, /obj/machinery/vehicle)
+		if (!istype(V, /obj/machinery/vehicle/escape_pod) && !istype(V, /obj/machinery/vehicle/tank/minisub/escape_sub))
+			qdel(V)
 
 	hide_weapons_everywhere(length(living_battlers))
 	next_storm = world.time + rand(MIN_TIME_BETWEEN_STORMS,MAX_TIME_BETWEEN_STORMS)
@@ -115,8 +128,19 @@ var/global/list/datum/mind/battle_pass_holders = list()
 	ticker.ai_law_rack_manager.default_ai_rack.DeleteAllLaws()
 	ticker.ai_law_rack_manager.default_ai_rack.SetLawCustom("Battle Royale","BR Protocol in effect. Observe the effects of the BR Mind Control Program, do not interfere.",1,true,true)
 
-
 	emergency_shuttle.disabled = 1
+
+	for(var/x in 1 to world.maxx)
+		var/turf/T = locate(x, 1, Z_LEVEL_STATION)
+		T.ReplaceWith(/turf/unsimulated/wall/void, force = TRUE)
+		T = locate(x, world.maxy - 2, Z_LEVEL_STATION)	// Why is the Z change edge not at the actual edge??
+		T.ReplaceWith(/turf/unsimulated/wall/void, force = TRUE)
+
+	for(var/y in 1 to world.maxy)
+		var/turf/T = locate(1, y, Z_LEVEL_STATION)
+		T.ReplaceWith(/turf/unsimulated/wall/void, force = TRUE)
+		T = locate(world.maxx - 2, y, Z_LEVEL_STATION)	// Why is the Z change edge not at the actual edge??
+		T.ReplaceWith(/turf/unsimulated/wall/void, force = TRUE)
 	return 1
 
 
@@ -148,7 +172,7 @@ var/global/list/datum/mind/battle_pass_holders = list()
 				player.current.set_loc(pick(found_areas))
 			player.current.removeOverlayComposition(/datum/overlayComposition/shuttle_warp)
 			player.current.removeOverlayComposition(/datum/overlayComposition/shuttle_warp/ew)
-	SHOW_BATTLE_ROYALE_TIPS(player.current)
+	player.current.show_antag_popup("battle")
 
 
 /datum/game_mode/battle_royale/check_finished()
@@ -156,21 +180,25 @@ var/global/list/datum/mind/battle_pass_holders = list()
 	for(var/datum/mind/M in living_battlers)
 		if(isdead(M.current) || !ishuman(M.current) || inafterlife(M.current) || isVRghost(M.current))
 			living_battlers.Remove(M)
-			DEBUG_MESSAGE("[M.current.name] died. There are [living_battlers.len] left!")
+			DEBUG_MESSAGE("[M.current.name] died. There are [length(living_battlers)] left!")
 			recently_deceased.Add(M)
 			someone_died++
-	if(someone_died && living_battlers.len <= 5)
-		command_alert("[living_battlers.len] battlers remain!","BATTLE STATUS ANNOUNCEMENT")
-	else if(someone_died && living_battlers.len % 10 == 0)
-		command_alert("[living_battlers.len] battlers remain!","BATTLE STATUS ANNOUNCEMENT")
-	if(living_battlers.len <= 1)
+	if(someone_died && length(living_battlers) <= 5)
+		command_alert("[length(living_battlers)] battlers remain!","BATTLE STATUS ANNOUNCEMENT")
+	else if(someone_died && length(living_battlers) % 10 == 0)
+		command_alert("[length(living_battlers)] battlers remain!","BATTLE STATUS ANNOUNCEMENT")
+	if(length(living_battlers) <= 10)
+		if(!emergency_shuttle.online)
+			emergency_shuttle.incall()
+			command_alert("The escape shuttle has been automatically called. Arrival in six minutes. Escape on the shuttle, kill everyone else or die!","Escape Shuttle")
+	if(length(living_battlers) <= 1)
 		return TRUE
 	return FALSE
 
 
 /datum/game_mode/battle_royale/declare_completion()
 	boutput(world,"<h2>BATTLE COMPLETE</h2>")
-	if(living_battlers.len == 1)
+	if(length(living_battlers) == 1)
 		boutput(world,"<h2 class='alert'>[living_battlers[1].current.name] (played by [living_battlers[1].current.ckey]) has won!</h2>")
 		boutput(living_battlers[1].current,"<h1 class='notice'>Holy shit you won!!!</h1>")
 	else
@@ -202,25 +230,38 @@ var/global/list/datum/mind/battle_pass_holders = list()
 					var/turf/T = get_turf(H)
 					if (T.z != Z_LEVEL_STATION)
 						var/area/GA = get_area(T)
-						var/no_tick_damage = FALSE
+						var/safe_area = FALSE
 						for (var/EA in excluded_areas)
 							if(istype(GA, EA))
-								no_tick_damage = TRUE
+								safe_area = TRUE
 								break
-						if (!no_tick_damage)
-							boutput(H, "<span class='alert'>You are outside the battle area! Return to the station!</span>")
-							random_brute_damage(H, 8, 0)
+						if (!safe_area)
+							boutput(H, "<span class='alert'>You were outside the [station_or_ship()] during a Battle Royale!</span>")
+							H.gib()
 
-	// Is it time for a storm
-	if(src.next_storm < world.time)
-		src.next_storm = world.time + rand(MIN_TIME_BETWEEN_STORMS,MAX_TIME_BETWEEN_STORMS)
-		storm.event_effect()
-		SPAWN(85 SECONDS)
-			var/you_died_good_work = recently_deceased.len > 0 ? "The following players recently died: " : ""
-			for(var/datum/mind/M in recently_deceased)
-				you_died_good_work += " [M.current.name],"
-			recently_deceased = list()
-			command_alert("The BATTLE STORM has ended. You can run around wherever now. [you_died_good_work]", "All Clear")
+	// Is it time for a storm?
+	if (src.next_storm != null)
+		// Game ending storm
+		if (emergency_shuttle.location == SHUTTLE_LOC_STATION)
+			if (emergency_shuttle.timeleft() < 60)
+				storm.event_effect(TRUE)
+				src.next_storm = null
+				SPAWN(70 SECONDS)
+					emergency_shuttle.endtime = ticker.round_elapsed_ticks + (20 MINUTES / (1 SECOND))*10
+		else if(src.next_storm < world.time)
+			// Regular storm
+			src.next_storm = world.time + rand(MIN_TIME_BETWEEN_STORMS,MAX_TIME_BETWEEN_STORMS)
+			if (emergency_shuttle.online && (emergency_shuttle.location == SHUTTLE_LOC_CENTCOM))
+				if (emergency_shuttle.endtime > 0)
+					return
+			else
+				storm.event_effect()
+				SPAWN(85 SECONDS)
+					var/you_died_good_work = length(recently_deceased) > 0 ? "The following players recently died: " : ""
+					for(var/datum/mind/M in recently_deceased)
+						you_died_good_work += " [M.current.name],"
+					recently_deceased = list()
+					command_alert("The BATTLE STORM has ended. You can run around wherever now. [you_died_good_work]", "All Clear")
 
 	// Is it time for a supply drop?
 	if(src.next_drop < world.time)
@@ -233,106 +274,88 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 	boutput(world, "<span class='notice'>Now hiding a shitton of goodies on the [station_or_ship()]. Please be patient!</span>")
 	// Replace all lockers with generic syndicate to clear out junk items, remove sec lockers so it's not too much of a hot spot
 	// Im stealing the list of items from the surplus crate so this check needs to happen
-	if(!syndi_buylist_cache)
-		build_syndi_buylist_cache()
 
 	var/list/obj/murder_supplies = list()
-	var/list/banned_items = list(/datum/syndicate_buylist/traitor/classcrate,
-	/datum/syndicate_buylist/traitor/surplus,
-	/datum/syndicate_buylist/traitor/floorcloset,
-	/datum/syndicate_buylist/traitor/wiretap,
-	/datum/syndicate_buylist/traitor/buddy_ammofab,
-	/datum/syndicate_buylist/traitor/chargehacker,
-	/datum/syndicate_buylist/generic/psink,
-	/datum/syndicate_buylist/traitor/shotglass,
-	/datum/syndicate_buylist/generic/chamsuit,
-	/datum/syndicate_buylist/generic/telecrystal,
-	/datum/syndicate_buylist/generic/trick_telecrystal,
-	/datum/syndicate_buylist/traitor/idtracker,
-	/datum/syndicate_buylist/traitor/mindslave,
-	/datum/syndicate_buylist/traitor/deluxe_mindslave,
-	/datum/syndicate_buylist/generic/detomatix,
-	/datum/syndicate_buylist/generic/spy_sticker_kit,
-	/datum/syndicate_buylist/traitor/ringtone,
-	/datum/syndicate_buylist/traitor/sinjector,
-	/datum/syndicate_buylist/traitor/minibible,
-	/datum/syndicate_buylist/traitor/contract,
-	/datum/syndicate_buylist/traitor/maneater,
-	/datum/syndicate_buylist/traitor/hotbox_lighter,
-	/datum/syndicate_buylist/traitor/syndanalyser,
-	/datum/syndicate_buylist/traitor/powergloves,
-	/datum/syndicate_buylist/traitor/chemicompiler,
-	/datum/syndicate_buylist/traitor/robosuit,
-	/datum/syndicate_buylist/traitor/conversion_chamber,
-	/datum/syndicate_buylist/traitor/telegun,
-	/datum/syndicate_buylist/traitor/mindslave_module,
-	/datum/syndicate_buylist/traitor/deluxe_mindslave_module,
-	/datum/syndicate_buylist/surplus/cybereye_kit_sechud,
-	/datum/syndicate_buylist/generic/head_rev/revflash,
-	/datum/syndicate_buylist/generic/head_rev/revflashbang,
-	/datum/syndicate_buylist/generic/head_rev/revsign,
-	/datum/syndicate_buylist/generic/head_rev/rev_normal_flash,
-	/datum/syndicate_buylist/traitor/kudzuseed,
-	/datum/syndicate_buylist/traitor/moonshine)
 
 	for(var/datum/syndicate_buylist/D in syndi_buylist_cache)
 		if(D.item)
-			var/add_item = TRUE
-			for (var/B in banned_items)
-				if (istype(D, B))
-					add_item = FALSE
-					break
-			if (add_item)
-				murder_supplies.Add(D.item)
+			if(!D.br_allowed)
+				continue
+			murder_supplies.Add(D.item)
 
-	var/list/chest_supplies = list()
+	var/list/weapon_supplies = list()
 	// Feel free to add more!
-	chest_supplies.Add(/obj/item/gun/kinetic/light_machine_gun)
-	chest_supplies.Add(/obj/item/gun/kinetic/assault_rifle)
-	chest_supplies.Add(/obj/item/gun/kinetic/pistol)
-	chest_supplies.Add(/obj/item/gun/kinetic/detectiverevolver)
-	chest_supplies.Add(/obj/item/gun/kinetic/colt_saa)
-	chest_supplies.Add(/obj/item/gun/kinetic/riotgun)
-	chest_supplies.Add(/obj/item/gun/kinetic/airzooka)
-	chest_supplies.Add(/obj/item/gun/energy/laser_gun)
-	chest_supplies.Add(/obj/item/gun/energy/alastor)
-	chest_supplies.Add(/obj/item/gun/energy/pulse_rifle)
-	chest_supplies.Add(/obj/item/bat)
-	chest_supplies.Add(/obj/item/ratstick)
-	chest_supplies.Add(/obj/item/sword/discount)
-	chest_supplies.Add(/obj/item/nunchucks)
-	chest_supplies.Add(/obj/item/quarterstaff)
-	chest_supplies.Add(/obj/item/knife/butcher/hunterspear)
-	chest_supplies.Add(/obj/item/fireaxe)
-	chest_supplies.Add(/obj/item/katana/reverse)
-	chest_supplies.Add(/obj/item/katana_sheath/captain)
-	chest_supplies.Add(/obj/item/katana_sheath/nukeop)
-	chest_supplies.Add(/obj/item/clothing/shoes/swat)
-	chest_supplies.Add(/obj/item/clothing/shoes/swat/heavy)
-	chest_supplies.Add(/obj/item/clothing/shoes/galoshes)
-	chest_supplies.Add(/obj/item/clothing/suit/armor/vest)
-	chest_supplies.Add(/obj/item/clothing/suit/armor/NT)
-	chest_supplies.Add(/obj/item/clothing/suit/armor/NT_alt)
-	chest_supplies.Add(/obj/item/clothing/suit/armor/EOD)
-	chest_supplies.Add(/obj/item/clothing/suit/armor/hoscape)
-	chest_supplies.Add(/obj/item/clothing/suit/armor/heavy)
-	chest_supplies.Add(/obj/item/clothing/suit/armor/centcomm)
-	chest_supplies.Add(/obj/item/clothing/suit/armor/centcommcoat)
-	chest_supplies.Add(/obj/item/clothing/suit/armor/captain)
-	chest_supplies.Add(/obj/item/clothing/suit/armor/makeshift)
-	chest_supplies.Add(/obj/item/clothing/suit/armor/batman)
-	chest_supplies.Add(/obj/item/clothing/suit/armor/football)
-	chest_supplies.Add(/obj/item/clothing/head/helmet/hardhat/security)
-	chest_supplies.Add(/obj/item/clothing/head/helmet/hardhat/security/improved)
-	chest_supplies.Add(/obj/item/clothing/head/helmet/swat)
-	chest_supplies.Add(/obj/item/clothing/head/helmet/space/syndicate/specialist)
-	chest_supplies.Add(/obj/item/clothing/head/helmet/space/syndicate/specialist/knight)
-	chest_supplies.Add(/obj/item/clothing/head/helmet/space/syndicate/commissar_cap)
-	chest_supplies.Add(/obj/item/clothing/head/helmet/space/ntso)
-	chest_supplies.Add(/obj/item/clothing/head/helmet/space/nanotrasen)
-	chest_supplies.Add(/obj/item/clothing/head/helmet/viking)
-	chest_supplies.Add(/obj/item/clothing/head/helmet/football)
-	chest_supplies.Add(/obj/item/clothing/head/helmet/batman)
+	weapon_supplies.Add(/obj/item/gun/kinetic/light_machine_gun)
+	weapon_supplies.Add(/obj/item/gun/kinetic/assault_rifle)
+	weapon_supplies.Add(/obj/item/gun/kinetic/smg)
+	weapon_supplies.Add(/obj/item/gun/kinetic/spes)
+	weapon_supplies.Add(/obj/item/gun/kinetic/pistol)
+	weapon_supplies.Add(/obj/item/gun/kinetic/silenced_22)
+	weapon_supplies.Add(/obj/item/gun/kinetic/clock_188)
+	weapon_supplies.Add(/obj/item/gun/kinetic/revolver)
+	weapon_supplies.Add(/obj/item/gun/kinetic/detectiverevolver)
+	weapon_supplies.Add(/obj/item/gun/kinetic/colt_saa)
+	weapon_supplies.Add(/obj/item/gun/kinetic/riotgun)
+	weapon_supplies.Add(/obj/item/gun/kinetic/airzooka)
+	weapon_supplies.Add(/obj/item/gun/kinetic/grenade_launcher)
+	weapon_supplies.Add(/obj/item/gun/kinetic/gyrojet)
+	weapon_supplies.Add(/obj/item/gun/energy/laser_gun)
+	weapon_supplies.Add(/obj/item/gun/energy/alastor)
+	weapon_supplies.Add(/obj/item/gun/energy/pulse_rifle)
+	weapon_supplies.Add(/obj/item/gun/energy/blaster_pistol)
+	weapon_supplies.Add(/obj/item/bat)
+	weapon_supplies.Add(/obj/item/ratstick)
+	weapon_supplies.Add(/obj/item/saw)
+	weapon_supplies.Add(/obj/item/sword/discount)
+	weapon_supplies.Add(/obj/item/nunchucks)
+	weapon_supplies.Add(/obj/item/quarterstaff)
+	weapon_supplies.Add(/obj/item/fireaxe)
+	weapon_supplies.Add(/obj/item/fragile_sword)
+	weapon_supplies.Add(/obj/item/knife/butcher/hunterspear)
+	weapon_supplies.Add(/obj/item/katana_sheath/reverse)
+	weapon_supplies.Add(/obj/item/katana_sheath/captain)
+	weapon_supplies.Add(/obj/item/katana_sheath/nukeop)
+	weapon_supplies.Add(/obj/item/sword/discount)
+	weapon_supplies.Add(/obj/item/storage/box/shuriken_pouch)
+	weapon_supplies.Add(/obj/item/storage/grenade_pouch/frag)
+	weapon_supplies.Add(/obj/item/storage/grenade_pouch/high_explosive)
+	weapon_supplies.Add(/obj/item/storage/grenade_pouch/incendiary)
+	weapon_supplies.Add(/obj/item/storage/grenade_pouch/mixed_explosive)
+	weapon_supplies.Add(/obj/item/storage/banana_grenade_pouch)
+	weapon_supplies.Add(/obj/item/storage/beartrap_pouch)
+
+	var/list/armor_supplies = list()
+	// Feel free to add more!
+	armor_supplies.Add(/obj/item/clothing/shoes/rocket)
+	armor_supplies.Add(/obj/item/clothing/shoes/swat/heavy)
+	armor_supplies.Add(/obj/item/clothing/shoes/galoshes)
+	armor_supplies.Add(/obj/item/clothing/suit/armor/vest)
+	armor_supplies.Add(/obj/item/clothing/suit/armor/NT)
+	armor_supplies.Add(/obj/item/clothing/suit/armor/NT_alt)
+	armor_supplies.Add(/obj/item/clothing/suit/armor/EOD)
+	armor_supplies.Add(/obj/item/clothing/suit/armor/hoscape)
+	armor_supplies.Add(/obj/item/clothing/suit/armor/heavy)
+	armor_supplies.Add(/obj/item/clothing/suit/armor/centcomm)
+	armor_supplies.Add(/obj/item/clothing/suit/armor/centcommcoat)
+	armor_supplies.Add(/obj/item/clothing/suit/armor/captain)
+	armor_supplies.Add(/obj/item/clothing/suit/armor/makeshift)
+	armor_supplies.Add(/obj/item/clothing/suit/armor/batman)
+	armor_supplies.Add(/obj/item/clothing/suit/armor/football)
+	armor_supplies.Add(/obj/item/clothing/suit/space/syndicate)
+	armor_supplies.Add(/obj/item/clothing/suit/space/syndicate/commissar_greatcoat)
+	armor_supplies.Add(/obj/item/clothing/suit/space/syndicate/knight)
+	armor_supplies.Add(/obj/item/clothing/head/helmet/hardhat/security)
+	armor_supplies.Add(/obj/item/clothing/head/helmet/hardhat/security/improved)
+	armor_supplies.Add(/obj/item/clothing/head/helmet/swat)
+	armor_supplies.Add(/obj/item/clothing/head/helmet/space/syndicate/specialist)
+	armor_supplies.Add(/obj/item/clothing/head/helmet/space/syndicate/specialist/knight)
+	armor_supplies.Add(/obj/item/clothing/head/helmet/space/syndicate/commissar_cap)
+	armor_supplies.Add(/obj/item/clothing/head/helmet/space/ntso)
+	armor_supplies.Add(/obj/item/clothing/head/helmet/space/nanotrasen)
+	armor_supplies.Add(/obj/item/clothing/head/helmet/viking)
+	armor_supplies.Add(/obj/item/clothing/head/helmet/football)
+	armor_supplies.Add(/obj/item/clothing/head/helmet/batman)
+
 
 	var/total_storage
 	switch(total_battlers)
@@ -365,13 +388,18 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 					continue
 			else
 				if (prob(50))
+					// Syndicate gear lockers
 					var/obj/storage/closet/locker = new /obj/storage/closet/syndicate(T)
 					var/obj/weapon = pick(murder_supplies)
 					new weapon(locker)
 				else
+					// Misc weapon and armor chests
 					var/obj/storage/crate/chest/chest = new /obj/storage/crate/chest(T)
-					var/obj/weapon = pick(chest_supplies)
+					var/obj/weapon = pick(weapon_supplies)
 					new weapon(chest)
+					if (prob(50))
+						var/obj/armor = pick(armor_supplies)
+						new armor(chest)
 
 proc/equip_battler(mob/living/carbon/human/battler)
 	if (!ishuman(battler))

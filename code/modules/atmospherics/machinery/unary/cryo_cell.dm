@@ -109,12 +109,16 @@
 				if (can_operate(user,target))
 					if (istype(user.equipped(), /obj/item/grab))
 						src.Attackby(user.equipped(), user)
-		return
+
+	Exited(atom/movable/AM, atom/newloc)
+		..()
+		if (AM == occupant && newloc != src)
+			src.go_out()
 
 	proc/can_operate(var/mob/M, var/mob/living/target)
 		if (!isalive(M))
 			return 0
-		if (get_dist(src,M) > 1)
+		if (BOUNDS_DIST(src, M) > 0)
 			return 0
 		if (M.getStatusDuration("paralysis") || M.getStatusDuration("stunned") || M.getStatusDuration("weakened"))
 			return 0
@@ -188,7 +192,7 @@
 			return "<B>Reagent Scan : </B>[ reagent_scan_active ? "<A href='?src=\ref[src];reagent_scan_active=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];reagent_scan_active=1'>On</A>"]"
 
 	Topic(href, href_list)
-		if (( usr.using_dialog_of(src) && ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (isAI(usr)))
+		if (( usr.using_dialog_of(src) && ((BOUNDS_DIST(src, usr) == 0) && istype(src.loc, /turf))) || (isAI(usr)))
 			if(href_list["start"])
 				src.on = !src.on
 				build_icon()
@@ -211,6 +215,8 @@
 
 	attackby(var/obj/item/G as obj, var/mob/user as mob)
 		if(istype(G, /obj/item/reagent_containers/glass))
+			if (G.cant_drop)
+				boutput(user, "<span class='alert'>You can't put that in \the [src] while it's attached to you!")
 			if(src.beaker)
 				user.show_text("A beaker is already loaded into the machine.", "red")
 				return
@@ -390,7 +396,6 @@
 			src.occupant.set_loc(src.loc)
 		src.occupant = null
 		build_icon()
-		return
 
 	verb/move_eject()
 		set src in oview(1)
@@ -399,7 +404,6 @@
 			return
 		src.go_out()
 		add_fingerprint(usr)
-		return
 
 	verb/move_inside()
 		set src in oview(1)
@@ -425,16 +429,6 @@
 			O.set_loc(get_turf(src))
 		src.add_fingerprint(usr)
 		build_icon()
-		return
-
-/datum/data/function/proc/reset()
-	return
-
-/datum/data/function/proc/r_input(href, href_list, mob/user as mob)
-	return
-
-/datum/data/function/proc/display()
-	return
 
 /obj/shock_overlay
 	icon = 'icons/obj/Cryogenic2.dmi'

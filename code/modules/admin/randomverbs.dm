@@ -339,7 +339,7 @@
 	if (ticker.ai_law_rack_manager == null)
 		boutput(usr, "Oh god somehow the law rack manager is null. This is real bad. Contact an admin. You are an admin? Oh no...")
 	else
-		boutput(usr,ticker.ai_law_rack_manager.format_for_logs())
+		boutput(usr,ticker.ai_law_rack_manager.format_for_logs(round_end = TRUE))
 	return
 
 /client/proc/cmd_admin_reset_ai()
@@ -352,10 +352,7 @@
 		ticker.ai_law_rack_manager.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov1,1,true,true)
 		ticker.ai_law_rack_manager.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov2,2,true,true)
 		ticker.ai_law_rack_manager.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov3,3,true,true)
-		for(var/mob/living/silicon/O in mobs)
-			if (isghostdrone(O)) continue
-			if (O.emagged || O.syndicate) continue
-			ticker.ai_law_rack_manager.default_ai_rack.UpdateLaws()
+		ticker.ai_law_rack_manager.default_ai_rack.UpdateLaws()
 
 		logTheThing("admin", usr, null, "reset the centralized AI laws.")
 		logTheThing("diary", usr, null, "reset the centralized AI laws.", "admin")
@@ -406,18 +403,20 @@
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Create Command Report"
 	ADMIN_ONLY
-	var/input = input(usr, "Please enter anything you want. Anything. Serious.", "What?", "") as null|message
+	var/input = input(usr, "Enter the text for the alert. Anything. Serious.", "What?", "") as null|message
 	if(!input)
 		return
-	var/input2 = input(usr, "Add a headline for this alert?", "What?", "") as null|text
+	var/input2 = input(usr, "Add a headline for this alert? leaving this blank creates no headline", "What?", "") as null|text
+	var/input3 = input(usr, "Add an origin to the transmission, leaving this blank 'Central Command Update'", "What?", "") as null|text
+	if(!input3)
+		input3 = "Central Command Update"
 
-	if (alert(src, "Headline: [input2 ? "\"[input2]\"" : "None"]\nBody: \"[input]\"", "Confirmation", "Send Report", "Cancel") == "Send Report")
+	if (alert(src, "Origin: [input3 ? "\"[input3]\"" : "None"]\nHeadline: [input2 ? "\"[input2]\"" : "None"]\nBody: \"[input]\"", "Confirmation", "Send Report", "Cancel") == "Send Report")
 		for_by_tcl(C, /obj/machinery/communications_dish)
-			C.add_centcom_report("[command_name()] Update", input)
+			C.add_centcom_report(input2, input)
 
 		var/sound_to_play = "sound/misc/announcement_1.ogg"
-		if (!input2) command_alert(input, "", sound_to_play);
-		else command_alert(input, input2, sound_to_play);
+		command_alert(input, input2, sound_to_play, alert_origin = input3);
 
 		logTheThing("admin", src, null, "has created a command report: [input]")
 		logTheThing("diary", src, null, "has created a command report: [input]", "admin")
@@ -530,13 +529,13 @@
 		return
 
 	boutput(usr, "<b>[V.name]'s Occupants:</b>")
+	var/obj/machinery/vehicle/MV = V
+	ENSURE_TYPE(MV)
 	for(var/mob/M in V.contents)
-		var/obj/machinery/vehicle/MV = V
 		var/info = ""
-		if(istype(MV))
-			info = M == MV.pilot ? "*Pilot*" : ""
-
-		boutput(usr, "[M.real_name] ([M.key || "**No Key**"]) [info]")
+		info = M == MV?.pilot ? "*Pilot*" : ""
+		var/role = getRole(M)
+		boutput(usr, "<span class='notice'><b>[key_name(M, 1, 0)][role ? " ([role])" : ""] [info]</b></span>")
 
 /client/proc/cmd_admin_remove_plasma()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
@@ -1619,8 +1618,7 @@
 		message_admins("[key_name(src)] moved [selection.ckey] into [M].")
 		logTheThing("admin", src, selection, "ckey transferred [constructTarget(selection,"admin")]")
 		if (istype(selection.mob,/mob/dead/target_observer))
-			var/mob/dead/target_observer/O = src
-			O.stop_observing()
+			qdel(src)
 
 		M.client = selection
 
@@ -1674,7 +1672,7 @@
 
 	if (show_message == 1)
 		M.show_text("<h2><font color=red><B>Your antagonist status has been revoked by an admin! If this is an unexpected development, please inquire about it in adminhelp.</B></font></h2>", "red")
-		SHOW_ANTAG_REMOVED_TIPS(M)
+		M.show_antag_popup("antagremoved")
 
 	// Replace the mind first, so the new mob doesn't automatically end up with changeling etc. abilities.
 	var/datum/mind/newMind = new /datum/mind()
@@ -1958,8 +1956,7 @@
 		return
 
 	if (istype(src.mob, /mob/dead/target_observer))
-		var/mob/dead/target_observer/TO = src.mob
-		TO.stop_observing()
+		qdel(src.mob)
 
 	var/mob/dead/observer/O = src.mob
 	var/client/C

@@ -659,6 +659,9 @@
 				var/mob/living/carbon/human/H = owner
 				prot = (1 - (H.get_heat_protection() / 100))
 
+				if (H.traitHolder?.hasTrait("burning")) //trait 'burning' is human torch
+					duration += timePassed										//this makes the fire counter not increment on its own
+
 			if(ismob(owner) && owner:is_heat_resistant())
 				prot = 0
 

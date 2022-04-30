@@ -20,6 +20,19 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	var/incompatible_with_chem_dispensers = 0
 	var/can_mousedrop = 1
 	move_triggered = 1
+	///Types that should be quickly refilled by mousedrop
+	var/static/list/mousedrop_refill = list(
+		/obj/item/reagent_containers/glass,
+		/obj/item/reagent_containers/food/drinks,
+		/obj/reagent_dispensers,
+		/obj/item/spraybottle,
+		/obj/machinery/plantpot,
+		/obj/mopbucket,
+		/obj/item/reagent_containers/mender,
+		/obj/item/tank/jetpack/backtank,
+		/obj/item/reagent_containers/syringe/baster,
+		/obj/machinery/bathtub
+	)
 
 	var/last_new_initial_reagents = 0 //fuck
 
@@ -101,13 +114,19 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			if(!ok)
 				return
 		// First filter out everything we don't want to refill or empty quickly.
-		if (!istype(over_object, /obj/item/reagent_containers/glass) && !istype(over_object, /obj/item/reagent_containers/food/drinks) && !istype(over_object, /obj/reagent_dispensers) && !istype(over_object, /obj/item/spraybottle) && !istype(over_object, /obj/machinery/plantpot) && !istype(over_object, /obj/mopbucket) && !istype(over_object, /obj/item/reagent_containers/mender) && !istype(over_object, /obj/item/tank/jetpack/backtank))
+		// feels like there should be a macro for this or something
+		var/type_found = FALSE
+		for (var/type in mousedrop_refill)
+			if (istype(over_object, type))
+				type_found = TRUE
+				break
+		if (!type_found)
 			return ..()
 
 		if (!istype(src, /obj/item/reagent_containers/glass) && !istype(src, /obj/item/reagent_containers/food/drinks))
 			return ..()
 
-		if (usr.stat || usr.getStatusDuration("weakened") || get_dist(usr, src) > 1 || get_dist(usr, over_object) > 1)  //why has this bug been in since i joined goonstation and nobody even looked here yet wtf -ZeWaka
+		if (usr.stat || usr.getStatusDuration("weakened") || BOUNDS_DIST(usr, src) > 0 || BOUNDS_DIST(usr, over_object) > 0)  //why has this bug been in since i joined goonstation and nobody even looked here yet wtf -ZeWaka
 			boutput(usr, "<span class='alert'>That's too far!</span>")
 			return
 

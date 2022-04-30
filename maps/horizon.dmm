@@ -3192,9 +3192,7 @@
 	name = "Testing Asteroid"
 	})
 "aij" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "aik" = (
 /turf/simulated/floor/engine/vacuum{
@@ -10119,6 +10117,11 @@
 /area/station/hallway/secondary/east)
 "aBN" = (
 /obj/item/scrap,
+/obj/decal/tile_edge/stripe{
+	dir = 4;
+	icon_state = "delivery2";
+	tag = ""
+	},
 /turf/simulated/floor/plating/random,
 /area/station/storage/tools)
 "aBR" = (
@@ -10496,6 +10499,11 @@
 /turf/simulated/floor/purple/side,
 /area/station/hallway/secondary/east)
 "aCK" = (
+/obj/decal/tile_edge/stripe{
+	dir = 4;
+	icon_state = "delivery2";
+	tag = ""
+	},
 /turf/simulated/floor/purple/side{
 	dir = 6
 	},
@@ -12194,6 +12202,10 @@
 	dir = 1;
 	pixel_y = 21
 	},
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/specialroom/freezer/blue,
 /area/station/medical/crematorium)
 "aHb" = (
@@ -13832,7 +13844,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/sleeper/compact{
-	dir = 8
+	dir = 4
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 1
@@ -13841,6 +13853,11 @@
 "aKX" = (
 /obj/machinery/alarm{
 	pixel_y = 20
+	},
+/obj/decal/tile_edge/stripe{
+	dir = 4;
+	icon_state = "delivery2";
+	tag = ""
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 1
@@ -14652,7 +14669,7 @@
 	dir = 4
 	},
 /obj/machinery/sleeper/compact{
-	dir = 8
+	dir = 4
 	},
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay)
@@ -24266,11 +24283,22 @@
 /area/station/maintenance/south)
 "biV" = (
 /obj/machinery/light/emergency,
+/obj/decal/tile_edge/stripe{
+	dir = 4;
+	icon_state = "delivery2";
+	tag = ""
+	},
 /turf/simulated/floor/darkblue/checker,
 /area/station/bridge)
 "biW" = (
 /obj/cable{
 	icon_state = "1-4"
+	},
+/obj/machinery/navbeacon/mule/bridge_north/west,
+/obj/decal/tile_edge/stripe{
+	dir = 4;
+	icon_state = "bot2";
+	tag = ""
 	},
 /turf/simulated/floor/darkblue,
 /area/station/bridge)
@@ -28054,6 +28082,12 @@
 	pixel_x = 10;
 	tag = ""
 	},
+/obj/machinery/navbeacon/mule/QM2_north,
+/obj/decal/tile_edge/stripe{
+	dir = 4;
+	icon_state = "bot2";
+	tag = ""
+	},
 /turf/simulated/floor/black,
 /area/station/quartermaster/office)
 "bsG" = (
@@ -29466,6 +29500,11 @@
 /obj/disposalpipe/segment/ejection{
 	dir = 2
 	},
+/obj/decal/tile_edge/stripe{
+	dir = 4;
+	icon_state = "delivery2";
+	tag = ""
+	},
 /turf/simulated/floor/black,
 /area/station/quartermaster/office)
 "bwW" = (
@@ -30750,6 +30789,13 @@
 /obj/disposalpipe/segment/ejection{
 	dir = 2
 	},
+/obj/machinery/navbeacon/mule/QM1_north,
+/obj/decal/tile_edge/stripe{
+	dir = 4;
+	icon_state = "bot2";
+	tag = ""
+	},
+/obj/machinery/bot/mulebot/broken,
 /turf/simulated/floor/black,
 /area/station/quartermaster/office)
 "bzP" = (
@@ -32317,6 +32363,7 @@
 /obj/disposalpipe/trunk{
 	dir = 8
 	},
+/obj/stool/bench/green,
 /turf/simulated/floor/black,
 /area/station/hydroponics/lobby)
 "bDP" = (
@@ -33330,6 +33377,12 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
+/obj/machinery/navbeacon/mule/hydroponics_north/south,
+/obj/decal/tile_edge/stripe{
+	dir = 4;
+	icon_state = "bot2";
+	tag = ""
+	},
 /turf/simulated/floor/greenblack{
 	dir = 4
 	},
@@ -33664,6 +33717,12 @@
 	},
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 5
+	},
+/obj/machinery/navbeacon/mule/security_north/south,
+/obj/decal/tile_edge/stripe{
+	dir = 4;
+	icon_state = "bot2";
+	tag = ""
 	},
 /turf/simulated/floor/white,
 /area/station/security/checkpoint/sec_foyer)
@@ -34070,6 +34129,12 @@
 /obj/disposalpipe/segment/brig{
 	dir = 8
 	},
+/obj/machinery/navbeacon/mule/pool_north/west,
+/obj/decal/tile_edge/stripe{
+	dir = 4;
+	icon_state = "bot2";
+	tag = ""
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 9
 	},
@@ -34361,7 +34426,10 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/stool/bench/green/auto,
+/obj/stool/bench/green,
+/obj/landmark/start{
+	name = "Botanist"
+	},
 /turf/simulated/floor/greenblack,
 /area/station/hydroponics/lobby)
 "bJu" = (
@@ -34370,9 +34438,9 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc/autoname_east,
-/obj/stool/bench/green/auto,
-/obj/landmark/start{
-	name = "Botanist"
+/obj/decal/tile_edge/stripe{
+	icon_state = "delivery2";
+	tag = ""
 	},
 /turf/simulated/floor/greenblack{
 	dir = 6
@@ -34777,6 +34845,11 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
+/obj/decal/tile_edge/stripe{
+	dir = 4;
+	icon_state = "delivery2";
+	tag = ""
+	},
 /turf/simulated/floor/white,
 /area/station/security/checkpoint/sec_foyer)
 "bKI" = (
@@ -34889,9 +34962,7 @@
 	name = "Crew Module Infirmary"
 	})
 "bKX" = (
-/obj/item/device/radio/beacon{
-	anchored = 1
-	},
+/obj/item/device/radio/beacon,
 /turf/simulated/floor/white,
 /area/station/security/brig/genpop)
 "bKY" = (
@@ -35925,11 +35996,14 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/obj/landmark/start{
-	name = "Chef"
-	},
 /obj/disposalpipe/segment/food{
 	dir = 1
+	},
+/obj/machinery/navbeacon/mule/catering_north/south,
+/obj/decal/tile_edge/stripe{
+	dir = 4;
+	icon_state = "bot2";
+	tag = ""
 	},
 /turf/simulated/floor/white/checker{
 	dir = 6
@@ -48813,8 +48887,8 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/power/apc/autoname_north,
 /obj/item/crowbar,
+/obj/machinery/power/apc/autoname_north/noaicontrol,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
@@ -49401,12 +49475,12 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/apc/autoname_west,
 /obj/item/plate{
 	desc = "You bet your grandma would like this.";
 	name = "antique plate"
 	},
 /obj/item/item_box/banana,
+/obj/machinery/power/apc/autoname_west/noaicontrol,
 /turf/simulated/floor/black/grime,
 /area/listeningpost)
 "cwj" = (
@@ -50291,7 +50365,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/apc/autoname_east,
+/obj/machinery/power/apc/autoname_east/noaicontrol,
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/listeningpost/power)
 "cyF" = (
@@ -52683,6 +52757,14 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
+"dKY" = (
+/obj/decal/tile_edge/stripe{
+	dir = 4;
+	icon_state = "delivery2";
+	tag = ""
+	},
+/turf/simulated/floor/neutral,
+/area/station/crew_quarters/courtroom)
 "dLj" = (
 /obj/decal/tile_edge/line/blue{
 	icon_state = "line1"
@@ -53040,6 +53122,11 @@
 /area/station/crew_quarters/kitchen)
 "eyN" = (
 /obj/disposalpipe/junction/right/east,
+/obj/decal/tile_edge/stripe{
+	dir = 4;
+	icon_state = "delivery2";
+	tag = ""
+	},
 /turf/simulated/floor/white/checker{
 	dir = 6
 	},
@@ -53778,9 +53865,7 @@
 /area/station/hallway/secondary/exit)
 "gzG" = (
 /obj/disposalpipe/loafer/horizontal,
-/obj/item/device/radio/beacon{
-	anchored = 1
-	},
+/obj/item/device/radio/beacon,
 /turf/simulated/floor,
 /area/station/security/main)
 "gAc" = (
@@ -54004,6 +54089,9 @@
 /area/station/ranch)
 "hjl" = (
 /obj/disposalpipe/segment/bent/south,
+/obj/landmark/start{
+	name = "Chef"
+	},
 /turf/simulated/floor/white/checker{
 	dir = 6
 	},
@@ -54094,6 +54182,19 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
+"hxo" = (
+/obj/disposalpipe/segment/brig{
+	dir = 8
+	},
+/obj/decal/tile_edge/stripe{
+	dir = 4;
+	icon_state = "delivery2";
+	tag = ""
+	},
+/turf/simulated/floor/bluewhite{
+	dir = 9
+	},
+/area/station/crew_quarters/pool)
 "hyi" = (
 /obj/disposalpipe/segment/brig{
 	dir = 8;
@@ -54397,6 +54498,12 @@
 /area/station/storage/auxillary)
 "ibU" = (
 /obj/disposalpipe/segment/transport,
+/obj/machinery/navbeacon/mule/courtroom_north/west,
+/obj/decal/tile_edge/stripe{
+	dir = 4;
+	icon_state = "bot2";
+	tag = ""
+	},
 /turf/simulated/floor/neutral,
 /area/station/crew_quarters/courtroom)
 "icb" = (
@@ -54721,6 +54828,11 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/bent/west,
+/obj/decal/tile_edge/stripe{
+	dir = 4;
+	icon_state = "delivery2";
+	tag = ""
+	},
 /turf/simulated/floor/black,
 /area/station/quartermaster/office)
 "iPT" = (
@@ -56078,6 +56190,14 @@
 /obj/machinery/bot/medbot,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay)
+"mdX" = (
+/obj/disposalpipe/segment/brig{
+	dir = 8
+	},
+/obj/disposalpipe/segment/transport,
+/obj/machinery/navbeacon/mule/crewA_north,
+/turf/simulated/floor/wood/two,
+/area/station/crew_quarters/quarters_south)
 "mex" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -56887,6 +57007,7 @@
 /area/station/engine/substation/north)
 "nLK" = (
 /obj/disposalpipe/segment,
+/obj/machinery/navbeacon/mule/cafeteria_north/west,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/bar)
 "nOP" = (
@@ -58114,6 +58235,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
+"qNb" = (
+/obj/machinery/navbeacon/mule/hallway_escape_north/east,
+/obj/decal/tile_edge/stripe{
+	dir = 4;
+	icon_state = "bot2";
+	tag = ""
+	},
+/turf/simulated/floor/purple/side,
+/area/station/hallway/secondary/east)
 "qNy" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/ai_monitored/armory)
@@ -59590,6 +59720,18 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
+"ujr" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/navbeacon/mule/medbay_north,
+/obj/decal/tile_edge/stripe{
+	dir = 4;
+	icon_state = "bot2";
+	tag = ""
+	},
+/turf/simulated/floor/blue/checker,
+/area/station/medical/medbay)
 "ujW" = (
 /obj/machinery/vehicle/miniputt/nanoputt/security{
 	dir = 4
@@ -59780,6 +59922,15 @@
 	dir = 10
 	},
 /area/station/crew_quarters/ce)
+"uGe" = (
+/obj/machinery/navbeacon/mule/toolstorage_north,
+/obj/decal/tile_edge/stripe{
+	dir = 4;
+	icon_state = "bot2";
+	tag = ""
+	},
+/turf/simulated/floor,
+/area/station/storage/tools)
 "uGV" = (
 /obj/disposalpipe/segment/food{
 	dir = 4
@@ -60801,6 +60952,10 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/storage/tech)
+"wQJ" = (
+/obj/machinery/navbeacon/mule/chapel_north/west,
+/turf/simulated/floor/wood/two,
+/area/station/chapel/sanctuary)
 "wRq" = (
 /obj/disposalpipe/segment/cargo{
 	dir = 4
@@ -90284,7 +90439,7 @@ aNi
 aPU
 tgr
 aSq
-aPU
+dKY
 bMl
 bMl
 vwp
@@ -102362,7 +102517,7 @@ ePs
 xjd
 byp
 bBn
-bEa
+hxo
 dGc
 bJA
 bMR
@@ -106290,7 +106445,7 @@ vUi
 kex
 bEk
 cdE
-cdE
+mdX
 bNb
 aMF
 bEe
@@ -112620,7 +112775,7 @@ aRi
 aUf
 aWZ
 bau
-aIB
+wQJ
 wbU
 bjq
 blY
@@ -125902,7 +126057,7 @@ ljA
 aHJ
 aIO
 aKX
-dhV
+ujr
 aPg
 aRN
 aUT
@@ -133448,7 +133603,7 @@ cPK
 rsW
 dnV
 aFu
-aCI
+qNb
 aGJ
 aDi
 crI
@@ -135556,7 +135711,7 @@ aaa
 aro
 arp
 aBN
-arC
+uGe
 ufA
 aZb
 aBb

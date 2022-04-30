@@ -99,6 +99,7 @@
 					playsound(O, "sound/effects/screech2.ogg", 75, 1)
 					O.visible_message("<span class='alert'>[O] sparks violently!</span>")
 					for (var/mob/M in range(min(5,gen_level),T))
+						if (isintangible(M)) continue
 						arcFlash(O, M, gen_rate/2)
 						if(!M.disposed)
 							O.ArtifactFaultUsed(M) // in case you weren't already fucked enough lol

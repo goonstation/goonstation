@@ -441,6 +441,7 @@ var/reverse_mode = 0
 									boutput(user, "<span class='alert'>The relic explodes violently!</span>")
 									var/obj/effects/explosion/E = new/obj/effects/explosion( get_turf(src) )
 									E.fingerprintslast = src.fingerprintslast
+									logTheThing("user", user, null, "was gibbed by [src] ([src.type]) at [log_loc(user)].")
 									user:gib()
 									qdel(src)
 								if (4)
@@ -448,6 +449,7 @@ var/reverse_mode = 0
 									using = 1
 									harmless_smoke_puff( get_turf(src) )
 									playsound(user, "sound/effects/ghost2.ogg", 60, 0)
+									logTheThing("user", user, null, "was killed by [src] ([src.type]) at [log_loc(user)].")
 									user.flash(60)
 									var/mob/oldmob = user
 									oldmob.ghostize()
@@ -523,7 +525,7 @@ var/reverse_mode = 0
 	if (!my_target)
 		qdel(src)
 		return
-	if (get_dist(src,my_target) > 1)
+	if (BOUNDS_DIST(src, my_target) > 0)
 		step_towards(src,my_target)
 	else
 		if (prob(15))

@@ -345,7 +345,7 @@
 	siren.repeat = 1
 	siren.channel = 5
 	world << siren
-	command_alert("A massive influx of negative b-ball protons has been detected in [get_area(M)]. A Chaos Dunk is imminent. All personnel currently on [station_name(1)] have 15 seconds to reach minimum safe distance. This is not a test.")
+	command_alert("A massive influx of negative b-ball protons has been detected in [get_area(M)]. A Chaos Dunk is imminent. All personnel currently on [station_name(1)] have 15 seconds to reach minimum safe distance. This is not a test.", alert_origin = ALERT_ANOMALY)
 	for(var/area/A in world)
 		A.eject = 1
 		A.UpdateIcon()

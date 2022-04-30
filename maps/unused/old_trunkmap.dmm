@@ -179,9 +179,7 @@
 /turf/simulated/floor/airless/plating/damaged3,
 /area/space)
 "aaz" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "aaA" = (
 /obj/grille/steel,
@@ -280,9 +278,7 @@
 	name = "Mining Outpost"
 	},
 /obj/lattice,
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "aaJ" = (
 /obj/landmark/magnet_shield,
@@ -34682,9 +34678,7 @@
 	},
 /area/station/security/hos)
 "bAg" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/syndicate_station)
 "bAh" = (
 /turf/simulated/floor{

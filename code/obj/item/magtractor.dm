@@ -56,7 +56,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (!W) return 0
 
-		if (get_dist(get_turf(src), get_turf(W)) > 1)
+		if (BOUNDS_DIST(get_turf(src), get_turf(W)) > 0)
 			out(user, "<span class='alert'>\The [W] is too far away!</span>")
 			return 0
 
@@ -93,7 +93,7 @@
 
 		if (!src.holding)
 			if (!isitem(A)) return 0
-			if (get_dist(get_turf(src), get_turf(A)) > 1)
+			if (BOUNDS_DIST(get_turf(src), get_turf(A)) > 0)
 				out(user, "<span class='alert'>\The [A] is too far away!</span>")
 				return 0
 			var/obj/item/target = A

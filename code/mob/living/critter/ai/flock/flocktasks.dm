@@ -149,7 +149,7 @@
 
 /datum/aiTask/succeedable/build/failed()
 	var/turf/simulated/floor/build_target = holder.target
-	if(!build_target || get_dist(holder.owner, build_target) > 1)
+	if(!build_target || BOUNDS_DIST(holder.owner, build_target) > 0)
 		return 1
 	var/mob/living/critter/flock/F = holder.owner
 	if(!F)
@@ -221,7 +221,7 @@
 /datum/aiTask/succeedable/repair/failed()
 	var/mob/living/critter/flock/drone/F = holder.owner
 	var/mob/living/critter/flock/drone/T = holder.target
-	if(!F || !T || get_dist(T, F) > 1)
+	if(!F || !T || BOUNDS_DIST(T, F) > 0)
 		return 1
 	if(F && (!F.can_afford() || !F.abilityHolder))
 		return 1
@@ -233,7 +233,7 @@
 	if(!has_started)
 		var/mob/living/critter/flock/drone/F = holder.owner
 		var/mob/living/critter/flock/drone/T = holder.target
-		if(F && T && get_dist(holder.owner, holder.target) <= 1)
+		if(F && T && BOUNDS_DIST(holder.owner, holder.target) == 0)
 			if(F.set_hand(2)) // nanite spray
 				holder.owner.set_dir(get_dir(holder.owner, holder.target))
 				F.hand_attack(T)
@@ -286,7 +286,7 @@
 /datum/aiTask/succeedable/deposit/failed()
 	var/mob/living/critter/flock/drone/F = holder.owner
 	var/obj/flock_structure/ghost/T = holder.target
-	if(!F || !T || get_dist(T, F) > 1)
+	if(!F || !T || BOUNDS_DIST(T, F) > 0)
 		return 1
 	if(F && (!F.can_afford() || !F.abilityHolder))
 		return 1
@@ -298,7 +298,7 @@
 	if(!has_started)
 		var/mob/living/critter/flock/drone/F = holder.owner
 		var/obj/flock_structure/ghost/T = holder.target
-		if(F && T && get_dist(holder.owner, holder.target) <= 1)
+		if(F && T && BOUNDS_DIST(holder.owner, holder.target) == 0)
 			if(F.set_hand(2)) // nanite spray
 				holder.owner.set_dir(get_dir(holder.owner, holder.target))
 				F.hand_attack(T)
@@ -341,7 +341,7 @@
 
 /datum/aiTask/succeedable/open_container/failed()
 	var/obj/storage/container_target = holder.target
-	if(!container_target || get_dist(holder.owner, container_target) > 1 || fails >= max_fails)
+	if(!container_target || BOUNDS_DIST(holder.owner, container_target) > 0 || fails >= max_fails)
 		. = 1
 
 /datum/aiTask/succeedable/open_container/succeeded()
@@ -353,7 +353,7 @@
 
 /datum/aiTask/succeedable/open_container/on_tick()
 	var/obj/storage/container_target = holder.target
-	if(container_target && get_dist(holder.owner, container_target) <= 1 && !succeeded())
+	if(container_target && BOUNDS_DIST(holder.owner, container_target) == 0 && !succeeded())
 		var/mob/living/critter/flock/drone/F = holder.owner
 		if(F?.set_hand(1)) // grip tool
 			F.set_dir(get_dir(F, container_target))
@@ -398,7 +398,7 @@
 
 /datum/aiTask/succeedable/rummage/failed()
 	var/obj/item/storage/container_target = holder.target
-	if(!container_target || get_dist(holder.owner, container_target) > 1 || fails >= max_fails)
+	if(!container_target || BOUNDS_DIST(holder.owner, container_target) > 0 || fails >= max_fails)
 		. = 1
 
 /datum/aiTask/succeedable/rummage/succeeded()
@@ -410,7 +410,7 @@
 
 /datum/aiTask/succeedable/rummage/on_tick()
 	var/obj/item/storage/container_target = holder.target
-	if(container_target && get_dist(holder.owner, container_target) <= 1 && !succeeded())
+	if(container_target && BOUNDS_DIST(holder.owner, container_target) == 0 && !succeeded())
 		var/mob/living/critter/flock/drone/F = holder.owner
 		usr = F // don't ask, please, don't
 		if(F?.set_hand(1)) // grip tool
@@ -496,7 +496,7 @@
 
 /datum/aiTask/succeedable/harvest/failed()
 	var/obj/item/harvest_target = holder.target
-	if(!harvest_target || get_dist(holder.owner, harvest_target) > 1 || fails >= max_fails)
+	if(!harvest_target || BOUNDS_DIST(holder.owner, harvest_target) > 0 || fails >= max_fails)
 		. = 1
 
 /datum/aiTask/succeedable/harvest/succeeded()
@@ -504,7 +504,7 @@
 
 /datum/aiTask/succeedable/harvest/on_tick()
 	var/obj/item/harvest_target = holder.target
-	if(harvest_target && get_dist(holder.owner, harvest_target) <= 1 && !succeeded())
+	if(harvest_target && BOUNDS_DIST(holder.owner, harvest_target) == 0 && !succeeded())
 		var/mob/living/critter/flock/drone/F = holder.owner
 		if(F?.set_hand(1)) // grip tool
 			var/obj/item/already_held = F.get_active_hand().item
@@ -685,7 +685,7 @@
 /datum/aiTask/succeedable/butcher/failed()
 	var/mob/living/critter/flock/drone/F = holder.owner
 	var/mob/living/critter/flock/drone/T = holder.target
-	if(!F || !T || get_dist(T, F) > 1)
+	if(!F || !T || BOUNDS_DIST(T, F) > 0)
 		return 1
 	if(F && !F.abilityHolder)
 		return 1
@@ -697,7 +697,7 @@
 	if(!has_started)
 		var/mob/living/critter/flock/drone/F = holder.owner
 		var/mob/living/critter/flock/drone/T = holder.target
-		if(F && T && get_dist(holder.owner, holder.target) <= 1)
+		if(F && T && BOUNDS_DIST(holder.owner, holder.target) == 0)
 			if(F.set_hand(2)) // nanite spray
 				holder.owner.set_dir(get_dir(holder.owner, holder.target))
 				F.hand_attack(T)

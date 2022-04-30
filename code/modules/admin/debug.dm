@@ -311,7 +311,7 @@ var/global/debug_messages = 0
 		if(isnull(arg.output_type))
 			break
 
-		listargs += arg.output
+		listargs += list(arg.output)
 
 	return listargs
 

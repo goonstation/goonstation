@@ -100,7 +100,7 @@ var/obj/manta_speed_lever/mantaLever = null
 				user.show_text("<span class='notice'><b>You turn off the propellers.</b></span>")
 				on = 0
 				UpdateIcon()
-				command_alert("Attention, NSS Manta is slowing down to a halt. Shutting down propellers.", "NSS Manta Movement Computer")
+				command_alert("Attention, NSS Manta is slowing down to a halt. Shutting down propellers.", "NSS Manta Movement Computer", alert_origin = ALERT_STATION)
 				mantaSetMove(on)
 			else
 				user.show_text("<span class='notice'><b>You turn on the propellers.</b></span>")
@@ -108,7 +108,7 @@ var/obj/manta_speed_lever/mantaLever = null
 				playsound_global(world, "sound/effects/mantamoving.ogg", 90)
 				sleep(7 SECONDS)
 				UpdateIcon()
-				command_alert("Attention, firing up propellers.  NSS Manta will be on the move shortly.", "NSS Manta Movement Computer")
+				command_alert("Attention, firing up propellers.  NSS Manta will be on the move shortly.", "NSS Manta Movement Computer", alert_origin = ALERT_STATION)
 				mantaSetMove(on)
 			return
 		else
@@ -610,7 +610,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			MagneticTether = 0
 			src.desc = "You should start by removing the outer screws from the casing. Be sure to wear some insulated gloves!"
 			playsound_global(world, "sound/effects/manta_alarm.ogg", 90)
-			command_alert("The Magnetic tether has suffered critical damage aboard NSS Manta. Jetpacks equipped with magnetic attachments are now offline, please do not venture out into the ocean until the tether has been repaired.", "Magnetic Tether Damaged")
+			command_alert("The Magnetic tether has suffered critical damage aboard NSS Manta. Jetpacks equipped with magnetic attachments are now offline, please do not venture out into the ocean until the tether has been repaired.", "Magnetic Tether Damaged", alert_origin = ALERT_STATION)
 
 /obj/miningteleporter
 	name = "Experimental long-range mining teleporter"
@@ -641,7 +641,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 	attack_hand(mob/user as mob)
 		if(busy) return
-		if(get_dist(user, src) > 1 || user.z != src.z) return
+		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		src.add_dialog(user)
 		add_fingerprint(user)
 		busy = 1
@@ -932,7 +932,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 	onUpdate()
 		..()
-		if (propeller == null || the_tool == null || owner == null || get_dist(owner, propeller) > 1)
+		if (propeller == null || the_tool == null || owner == null || BOUNDS_DIST(owner, propeller) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner
@@ -1070,7 +1070,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 	onUpdate()
 		..()
-		if (box == null || the_tool == null || owner == null || get_dist(owner, box) > 1)
+		if (box == null || the_tool == null || owner == null || BOUNDS_DIST(owner, box) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner
@@ -1161,7 +1161,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 	onUpdate()
 		..()
-		if (magnet == null || the_tool == null || owner == null || get_dist(owner, magnet) > 1)
+		if (magnet == null || the_tool == null || owner == null || BOUNDS_DIST(owner, magnet) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner
@@ -1220,7 +1220,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			MagneticTether = 1
 			magnet.health = 100
 			magnet.desc = "A rather delicate magnetic tether array. It allows people to safely explore the ocean around NSS Manta while carrying a magnetic attachment point."
-			command_alert("The Magnetic tether has been successfully repaired. Magnetic attachment points are online once again.", "Magnetic Tether Repaired")
+			command_alert("The Magnetic tether has been successfully repaired. Magnetic attachment points are online once again.", "Magnetic Tether Repaired", alert_origin = ALERT_STATION)
 			return
 
 #ifdef MOVING_SUB_MAP //Defined in the map-specific .dm configuration file.
@@ -1230,7 +1230,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	event_effect(var/source)
 		..()
 		if (random_events.announce_events)
-			command_alert("Communication tower has been severely damaged aboard NSS Manta. Ships automated communication system will now attempt to re-establish signal through backup channel. We estimate this will take eight to ten minutes.", "Communications Malfunction")
+			command_alert("Communication tower has been severely damaged aboard NSS Manta. Ships automated communication system will now attempt to re-establish signal through backup channel. We estimate this will take eight to ten minutes.", "Communications Malfunction", alert_origin = ALERT_STATION)
 			playsound_global(world, "sound/effects/commsdown.ogg", 100)
 			sleep(rand(80,100))
 			signal_loss += 100
@@ -1238,7 +1238,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			signal_loss -= 100
 
 			if (random_events.announce_events)
-				command_alert("Communication link has been established with Oshan Laboratory through backkup channel. Communications should be restored to normal aboard NSS Manta.", "Communications Restored")
+				command_alert("Communication link has been established with Oshan Laboratory through backkup channel. Communications should be restored to normal aboard NSS Manta.", "Communications Restored", alert_origin = ALERT_STATION)
 			else
 				message_admins("<span class='internal'>Manta Comms event ceasing.</span>")
 
@@ -1252,7 +1252,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		if (J.broken)
 			return
 		J.Breakdown()
-		command_alert("Certain junction boxes are malfunctioning around NSS Manta. Please seek out and repair the malfunctioning junction boxes before they lead to power outages.", "Electrical Malfunction")
+		command_alert("Certain junction boxes are malfunctioning around NSS Manta. Please seek out and repair the malfunctioning junction boxes before they lead to power outages.", "Electrical Malfunction", alert_origin = ALERT_STATION)
 
 /datum/random_event/special/namepending
 	name = "Name Pending"

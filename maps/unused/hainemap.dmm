@@ -2414,7 +2414,7 @@
 "gU" = (
 /obj/table/reinforced,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/item/storage/toolbox/emergency,
 /obj/item/device/radio,
@@ -4643,9 +4643,7 @@
 	},
 /area/space)
 "nA" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "nB" = (
 /obj/machinery/vending/cola/red,
@@ -7054,7 +7052,7 @@
 /area/space)
 "ui" = (
 /turf/simulated/floor/black/side{
-
+	
 	},
 /area/space)
 "uj" = (

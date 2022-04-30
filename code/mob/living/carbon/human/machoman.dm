@@ -186,7 +186,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 			var/obj/item/grab/G = new /obj/item/grab(src, src, M)
 			src.put_in_hand(G, src.hand)
 			M.changeStatus("stunned", 10 SECONDS)
-			G.state = 2
+			G.state = GRAB_AGGRESSIVE
 			G.UpdateIcon()
 			src.set_dir(get_dir(src, M))
 			playsound(src.loc, "sound/impact_sounds/Generic_Shove_1.ogg", 65, 1)
@@ -1402,11 +1402,9 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 	icon_state = "slimjim"
 	item_state = "stamp"
 	heal_amt = 2
-	amount = 5
+	bites_left = 5
 	initial_volume = 50
 	initial_reagents = list("capsaicin"=20,"porktonium"=30)
-	New()
-		..()
 
 	attack(var/mob/M, var/mob/user, def_zone)
 		if (istype(M, /mob/living/carbon/human/machoman) && M == user)
@@ -1647,7 +1645,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 	targeted = 1
 	cast(atom/target)
 		var/mob/M = target
-		if (!IN_RANGE(M, holder.owner, 1))
+		if (!(BOUNDS_DIST(M, holder.owner) == 0))
 			return
 		if (istype(M) && isalive(holder.owner) && !holder.owner.transforming)
 			for (var/obj/item/grab/G in holder.owner)
@@ -1658,7 +1656,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 			var/obj/item/grab/G = new /obj/item/grab(holder.owner, holder.owner, M)
 			holder.owner.put_in_hand(G, holder.owner.hand)
 			M.changeStatus("stunned", 10 SECONDS)
-			G.state = 2
+			G.state = GRAB_AGGRESSIVE
 			G.UpdateIcon()
 			holder.owner.set_dir(get_dir(holder.owner, M))
 			playsound(holder.owner.loc, "sound/impact_sounds/Generic_Shove_1.ogg", 65, 1)
@@ -2464,7 +2462,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 	targeted = 1
 	cast(atom/target)
 		var/mob/M = target
-		if (!IN_RANGE(M, holder.owner, 1))
+		if (!(BOUNDS_DIST(M, holder.owner) == 0))
 			return
 
 		var/did_it = 0

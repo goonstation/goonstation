@@ -18009,17 +18009,13 @@
 /turf/simulated/floor/plating,
 /area/zeta)
 "Nk" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "Nl" = (
 /turf/space,
 /area/fuck/main)
 "Nm" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /turf/simulated/wall/asteroid{
 	icon_state = "nw1"
 	},
@@ -18043,9 +18039,7 @@
 	},
 /area/fuck/main)
 "Nq" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /turf/simulated/wall/asteroid{
 	icon_state = "north1"
 	},
@@ -19261,9 +19255,7 @@
 /turf/simulated/wall/asteroid,
 /area/space)
 "Qe" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /turf/simulated/wall/asteroid{
 	icon_state = "west1"
 	},
@@ -19567,9 +19559,7 @@
 /turf/simulated/floor/plating,
 /area/engine/miningoutpost)
 "QR" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /turf/simulated/wall/asteroid{
 	icon_state = "ise1"
 	},
@@ -19769,9 +19759,7 @@
 /turf/simulated/floor/plating,
 /area/fuck/main)
 "Rs" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /turf/simulated/wall/asteroid{
 	icon_state = "east1"
 	},

@@ -33,10 +33,14 @@ TOILET
 	if (istype(W, /obj/item/storage))
 		return
 	if (istype(W, /obj/item/grab))
-		playsound(src, "sound/effects/toilet_flush.ogg", 50, 1)
-		user.visible_message("<span class='notice'>[user] gives [W:affecting] a swirlie!</span>", "<span class='notice'>You give [W:affecting] a swirlie. It's like Middle School all over again!</span>")
+		var/obj/item/grab/G = W
+		playsound(src, 'sound/effects/toilet_flush.ogg', 50, 1)
+		user.visible_message("<span class='notice'>[user] gives [G.affecting] a swirlie!</span>", "<span class='notice'>You give [G.affecting] a swirlie. It's like Middle School all over again!</span>")
+		if (G.affecting.hasStatus("burning"))
+			G.affecting.changeStatus("burning", -2 SECONDS)
+			playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 70, 1)
+			return
 		return
-
 	return ..()
 
 /obj/item/storage/toilet/mouse_drop(atom/over_object, src_location, over_location)
@@ -49,7 +53,7 @@ TOILET
 	if (!ticker)
 		boutput(user, "You can't help relieve anyone before the game starts.")
 		return
-	if (!ishuman(M) || get_dist(src, user) > 1 || M.loc != src.loc || user.restrained() || user.stat)
+	if (!ishuman(M) || BOUNDS_DIST(src, user) > 0 || M.loc != src.loc || user.restrained() || user.stat)
 		return
 	if (M == user && ishuman(user))
 		var/mob/living/carbon/human/H = user

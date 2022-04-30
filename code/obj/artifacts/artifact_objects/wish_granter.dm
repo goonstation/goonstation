@@ -63,6 +63,7 @@
 						N.flash(3 SECONDS)
 						if(N.client)
 							shake_camera(N, 6, 16)
+					logTheThing("combat", user, null, "was turned into a gold statue by wishgranter [src] at [log_loc(user)].")
 					user.become_statue(getMaterial("gold"),"A statue of someone very wealthy", TRUE)
 
 				if("I wish for great power!")
@@ -72,6 +73,7 @@
 					for(var/obj/OB in affected)
 						SPAWN(0.6 SECONDS)
 							qdel(OB)
+					logTheThing("combat", user, null, "was elecgibbed by wishgranter [src] at [log_loc(user)].")
 					user.elecgib()
 		else
 			switch(wish)

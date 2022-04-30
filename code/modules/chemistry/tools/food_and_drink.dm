@@ -98,7 +98,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	desc = "yummy"
 	icon = 'icons/obj/foodNdrink/food.dmi'
 	icon_state = null
-	amount = 3
 	heal_amt = 1
 	initial_volume = 100
 	festivity = 0
@@ -107,13 +106,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	rand_pos = 1
 	var/has_cigs = 0
 
-	var/use_bite_mask = 1
+	var/use_bite_mask = TRUE
 	var/current_mask = 5
-	var/start_amount = 0
-	var/start_icon = 0
-	var/start_icon_state = 0
 	var/list/food_effects = list()
 	var/create_time = 0
+	var/bites_left = 3
 
 	var/dropped_item = null
 
@@ -122,12 +119,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 	New()
 		..()
-		start_amount = amount
-		start_icon = icon
-		start_icon_state = icon_state
 		if (doants)
 			processing_items.Add(src)
 		create_time = world.time
+		if (src.amount != 1)
+			stack_trace("[src] of type [src.type] is spawning with an amount other than 1. That's bad. Ping Aloe.")
 
 	disposing()
 		if(!made_ants)
@@ -156,14 +152,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			src.Eat(user,user)
 		else
 			..()
-		/*
-		if (istype(W, /obj/item/shaker))
-			var/obj/item/shaker/shaker = W
-			src.reagents.add_reagent("[shaker.stuff]", 2)
-			shaker.shakes ++
-			boutput(user, "You put some [shaker.stuff] onto [src].")
-		else return ..()
-		*/
 
 	attack_self(mob/user as mob)
 		if (!src.Eat(user, user))
@@ -180,7 +168,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			return 0
 		if(!M?.bioHolder.HasEffect("mattereater") && ON_COOLDOWN(M, "eat", EAT_COOLDOWN))
 			return 0
-		if (!src.amount)
+		if (!src.bites_left)
 			boutput(user, "<span class='alert'>None of [src] left, oh no!</span>")
 			user.u_equip(src)
 			qdel(src)
@@ -236,7 +224,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				src.take_a_bite(M, user)
 				return 1
 			if (check_target_immunity(M))
-				user.visible_message("<span class='alert'>You try to feed [M] [src], but fail!</span>")
+				user.visible_message("<span class='alert'>[user] tries to feed [M] [src], but fails!</span>", "<span class='alert'>You try to feed [M] [src], but fail!</span>")
+				return 0
 			else if(!M.can_eat(src))
 				user.tri_message("<span class='alert'><b>[user]</b> tries to feed [M] [src], but they can't eat that!</span>",\
 				user, "<span class='alert'>You try to feed [M] [src], but they can't eat that!</span>",\
@@ -273,14 +262,14 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 					consumer, "<span class='alert'><b>[feeder]</b> feeds you [src]!</span>")
 			logTheThing("combat", feeder, consumer, "feeds [constructTarget(consumer,"combat")] [src] [log_reagents(src)] at [log_loc(feeder)].")
 
-		src.amount--
+		src.bites_left--
 		consumer.nutrition += src.heal_amt * 10
 		src.heal(consumer)
 		playsound(consumer.loc,"sound/items/eatfood.ogg", rand(10,50), 1)
 		on_bite(consumer, feeder)
 		if (src.festivity)
 			modify_christmas_cheer(src.festivity)
-		if (!src.amount)
+		if (!src.bites_left)
 			if (istype(src, /obj/item/reagent_containers/food/snacks/plant/) && prob(20))
 				var/obj/item/reagent_containers/food/snacks/plant/P = src
 				var/doseed = 1
@@ -319,10 +308,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			on_finish(consumer, feeder)
 			qdel(src)
 
-// I don't know if this was used for something but it was breaking my important "shake salt and pepper onto things" feature
-// so it's getting commented out until I get yelled at for breaking something
-//	attackby(obj/item/I as obj, mob/user as mob)
-//		return
 	afterattack(obj/target, mob/user, flag)
 		return
 
@@ -359,15 +344,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 
 	proc/on_bite(mob/eater, mob/feeder)
-		//if (reagents?.total_volume)
-		//	reagents.reaction(M, INGEST)
-		//	reagents.trans_to(M, reagents.total_volume/(src.amount ? src.amount : 1))
 
 		if (isliving(eater))
 			if (src.reagents && src.reagents.total_volume) //only create food chunks for reagents
 				var/obj/item/reagent_containers/food/snacks/bite/B = new /obj/item/reagent_containers/food/snacks/bite
 				B.set_loc(eater)
-				B.reagents.maximum_volume = reagents.total_volume/(src.amount ? src.amount : 1) //MBC : I copied this from the Eat proc. It doesn't really handle the reagent transfer evenly??
+				B.reagents.maximum_volume = reagents.total_volume/(src.bites_left || 1) //MBC : I copied this from the Eat proc. It doesn't really handle the reagent transfer evenly??
 				src.reagents.trans_to(B,B.reagents.maximum_volume,1,0)						//i'll leave it tho because i dont wanna mess anything up
 				var/mob/living/L = eater
 				L.stomach_process += B
@@ -377,8 +359,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				for (var/effect in src.food_effects)
 					L.add_food_bonus(effect, src)
 
-		if (use_bite_mask)
-			var/desired_mask = (amount / start_amount) * 5
+		if (use_bite_mask && initial(bites_left))
+			var/desired_mask = (bites_left / initial(bites_left)) * 5
 			desired_mask = round(desired_mask)
 			desired_mask = max(1,desired_mask)
 			desired_mask = min(desired_mask, 5)
@@ -411,19 +393,18 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 							H.force_equip(I,item_slot) // mobs don't have force_equip
 							return
 			drop.set_loc(get_turf(src.loc))
-
 /obj/item/reagent_containers/food/snacks/bite
 	name = "half-digested food chunk"
 	desc = "This is a chunk of partially digested food."
 	icon = 'icons/obj/foodNdrink/food.dmi'
 	icon_state = "scotchegg"
-	amount = 1
 	heal_amt = 0
 	initial_volume = 100
 	festivity = 0
 	rc_flags = 0
 	edible = 1
 	rand_pos = 1
+	bites_left = 1
 	var/did_react = 0
 
 	proc/process_stomach(mob/living/owner, var/process_rate = 5)
@@ -566,7 +547,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			else
 				user.visible_message("<span class='alert'>[user] attempts to force [M] to drink from [src].</span>")
 				logTheThing("combat", user, M, "attempts to force [constructTarget(M,"combat")] to drink from [src] [log_reagents(src)] at [log_loc(user)].")
-
+				if (check_target_immunity(M))
+					user.visible_message("<span class='alert'>[user] attempts to force [M] to drink from [src], but fails!.</span>", "<span class='alert'>You try to force [M] to drink [src], but fail!</span>")
+					return
 				if (!do_mob(user, M))
 					if (user && ismob(user))
 						user.show_text("You were interrupted!", "red")
@@ -755,8 +738,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			newcereal.on_reagent_change()
 
 			user.visible_message("<b>[user]</b> pours [cbox] into [src].", "You pour [cbox] into [src].")
-			cbox.amount--
-			if (cbox.amount < 1)
+			cbox.bites_left--
+			if (cbox.bites_left < 1)
 				boutput(user, "<span class='alert'>You finish off the box!</span>")
 				qdel(cbox)
 
@@ -1222,7 +1205,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			return
 
 		var/selection = input(user, "What do you want to do with [src]?") as null|anything in choices
-		if (isnull(selection) || get_dist(src, user) > 1)
+		if (isnull(selection) || BOUNDS_DIST(src, user) > 0)
 			return
 
 		var/obj/item/remove_thing

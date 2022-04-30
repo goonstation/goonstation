@@ -228,6 +228,10 @@
 	desc = "Fresh free-range spacegrass."
 	icon_state = "grass"
 
+	attack_hand(mob/user)
+		. = ..()
+		game_stats.Increment("grass_touched")
+
 /obj/item/plant/herb/contusine
 	name = "contusine leaves"
 	crop_suffix	= " leaves"

@@ -155,20 +155,20 @@ TYPEINFO(/datum/component/cell_holder)
 
 	onStart()
 		..()
-		if(get_dist(user, cell_holder) > 1 || QDELETED(user) || QDELETED(cell) || QDELETED(cell_holder) || get_turf(cell_holder) != get_turf(cell) )
+		if(BOUNDS_DIST(user, cell_holder) > 0 || QDELETED(user) || QDELETED(cell) || QDELETED(cell_holder) || get_turf(cell_holder) != get_turf(cell) )
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		return
 
 	onUpdate()
 		..()
-		if(get_dist(user, cell_holder) > 1 || QDELETED(user) || QDELETED(cell) || QDELETED(cell_holder) || get_turf(cell_holder) != get_turf(cell) )
+		if(BOUNDS_DIST(user, cell_holder) > 0 || QDELETED(user) || QDELETED(cell) || QDELETED(cell_holder) || get_turf(cell_holder) != get_turf(cell) )
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
-		if(get_dist(user, cell_holder) > 1 || QDELETED(user) || QDELETED(cell) || QDELETED(cell_holder) || get_turf(cell_holder) != get_turf(cell) )
+		if(BOUNDS_DIST(user, cell_holder) > 0 || QDELETED(user) || QDELETED(cell) || QDELETED(cell_holder) || get_turf(cell_holder) != get_turf(cell) )
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		SEND_SIGNAL(cell_holder, COMSIG_CELL_SWAP, cell, user)

@@ -170,7 +170,7 @@
 		..()
 		if (user.stat || user.restrained() || user.lying)
 			return
-		if ((user.contents.Find(src) || user.contents.Find(src.master) || get_dist(src, user) <= 1 && istype(src.loc, /turf)))
+		if ((user.contents.Find(src) || user.contents.Find(src.master) || BOUNDS_DIST(src, user) == 0 && istype(src.loc, /turf)))
 			src.add_dialog(user)
 
 			var/dat = "<TT><b>Audio Logger</b><br>"

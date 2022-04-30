@@ -151,19 +151,6 @@
 				qdel(src)
 			return
 
-		var/armor = 0
-
-		if (src.material)
-			armor = blunt_resist
-
-			if (src.material.quality >= 25)
-				armor += src.material.quality * 0.25
-			else if (src.quality < 10)
-				armor = 0
-				//amount += rand(1,3)
-
-			amount -= armor
-
 		src.health = clamp(src.health - amount, 0, src.health_max)
 		if (src.health == 0)
 			UpdateIcon("cut")
@@ -304,28 +291,22 @@
 		else if (isobj(AM))
 			var/obj/O = AM
 			if (O.throwforce)
-				damage_blunt(blunt_resist ? max(0.5, O.throwforce / blunt_resist) : 0.5) // we don't want people screaming right through these and you can still get through them by kicking/cutting/etc
+				damage_blunt((max(1, O.throwforce * (1 - (blunt_resist / 100)))) / 2) // we don't want people screaming right through these and you can still get through them by kicking/cutting/etc
 		return
 
 	attack_hand(mob/user)
-		if (!islist(user)) //mbc : what the fuck. who is passing a list as an arg here. WHY. WHY i cant find it
-			user.lastattacked = src
 		if(!shock(user, 70))
 			var/damage = 1
-			var/dam_type = "blunt"
 			var/text = "[user.kickMessage] [src]"
 
-			if (user.is_hulk() && damage < 5)
+			if (user.is_hulk())
 				damage = 10
 				text = "smashes [src] with incredible strength"
 
 			src.visible_message("<span class='alert'><b>[user]</b> [text]!</span>")
 			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 80, 1)
 
-			if (dam_type == "slashing")
-				damage_slashing(damage)
-			else
-				damage_blunt(damage)
+			damage_blunt(damage)
 
 	attackby(obj/item/W, mob/user)
 		// Things that won't electrocute you
@@ -344,24 +325,7 @@
 				var/obj/window/WI
 				var/win_thin = 0
 				var/win_dir = 2
-//				var/turf/UT = get_turf(user)
 				var/turf/ST = get_turf(src)
-
-/*
-				if (UT && isturf(UT) && ST && isturf(ST))
-					// We're inside the grill.
-					if (UT == ST)
-						win_dir = usr.dir
-						win_thin = 1
-					// We're trying to install a window while standing on an adjacent tile, so make it face the mob.
-					else
-						win_dir = turn(usr.dir, 180)
-						if (win_dir in list(NORTH, EAST, SOUTH, WEST))
-							win_thin = 1
-
-				win_thin = 0 //mbc : nah this is annoying. you can just make a thindow using the popup menu and push it into place anyway.
-							 singh : if you're gonna disable it like this why not just comment out the entire thing and save the pointless checks
-*/
 
 				if (ST && isturf(ST))
 					if (S.reinforcement)
@@ -401,6 +365,7 @@
 		else if (istype(W, /obj/item/gun))
 			var/obj/item/gun/G = W
 			G.shoot_point_blank(src, user)
+			return
 		// electrocution check
 
 		var/OSHA_is_crying = 1
@@ -411,7 +376,7 @@
 		if ((src.material && src.material.hasProperty("electrical") && src.material.getProperty("electrical") > 30))
 			dmg_mod = 60 - src.material.getProperty("electrical")
 
-		if (OSHA_is_crying && IN_RANGE(src, user, 1) && shock(user, 100 - dmg_mod))
+		if (OSHA_is_crying && (BOUNDS_DIST(src, user) == 0) && shock(user, 100 - dmg_mod))
 			return
 
 		// Things that will electrocute you

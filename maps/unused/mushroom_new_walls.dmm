@@ -16508,9 +16508,7 @@
 /turf/simulated/wall/asteroid,
 /area/space)
 "blb" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "blc" = (
 /turf/simulated/shuttle/wall{

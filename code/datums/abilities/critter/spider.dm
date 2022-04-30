@@ -23,7 +23,7 @@
 				return 1
 		if (target == holder.owner)
 			return 1
-		if (get_dist(holder.owner, target) > 1)
+		if (BOUNDS_DIST(holder.owner, target) > 0)
 			boutput(holder.owner, __red("That is too far away to bite."))
 			return 1
 		var/mob/MT = target
@@ -79,7 +79,7 @@
 				return 1
 		if (target == holder.owner)
 			return 1
-		if (get_dist(holder.owner, target) > 1)
+		if (BOUNDS_DIST(holder.owner, target) > 0)
 			boutput(holder.owner, __red("That is too far away to flail at."))
 			return 1
 		var/mob/MT = target
@@ -100,7 +100,7 @@
 			while (flail > 0 && MT && !MT.disposed)
 				MT.changeStatus("weakened", 0.7 SECONDS)
 				MT.canmove = 1
-				if (get_dist(holder.owner, target) > 1)
+				if (BOUNDS_DIST(holder.owner, target) > 0)
 					break
 				if (holder.owner.getStatusDuration("stunned") || holder.owner.getStatusDuration("weakened") || holder.owner.getStatusDuration("paralysis"))
 					break
@@ -161,7 +161,7 @@
 				return 1
 		if (target == holder.owner)
 			return 1
-		if (get_dist(holder.owner, target) > 1)
+		if (BOUNDS_DIST(holder.owner, target) > 0)
 			boutput(holder.owner, __red("That is too far away to drain."))
 			return 1
 		var/mob/living/carbon/human/H = target
@@ -260,7 +260,7 @@
 				return 1
 		if (target == holder.owner)
 			return 1
-		if (get_dist(holder.owner, target) > 1)
+		if (BOUNDS_DIST(holder.owner, target) > 0)
 			boutput(holder.owner, __red("That is too far away to kick."))
 			return 1
 		var/mob/MT = target
@@ -310,7 +310,7 @@
 				return 1
 		if (target == holder.owner)
 			return 1
-		if (get_dist(holder.owner, target) > 1)
+		if (BOUNDS_DIST(holder.owner, target) > 0)
 			boutput(holder.owner, __red("That is too far away to trample."))
 			return 1
 		var/mob/MT = target

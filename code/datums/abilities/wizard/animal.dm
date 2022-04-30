@@ -128,4 +128,4 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 			if (istype(C))
 				C.change_misstep_chance(30)
 				C.stuttering = 40
-				SHOW_POLYMORPH_TIPS(C)
+				C.show_antag_popup("polymorph")

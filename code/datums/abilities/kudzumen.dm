@@ -750,19 +750,19 @@
 
 	onUpdate()
 		..()
-		if(get_dist(owner, kudzu) > 1 || kudzu == null || kudzu.growth < 20 || owner == null)	//20 growth is currently the lowest for dense kudzu. Should be a constant.
+		if(BOUNDS_DIST(owner, kudzu) > 0 || kudzu == null || kudzu.growth < 20 || owner == null)	//20 growth is currently the lowest for dense kudzu. Should be a constant.
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, kudzu) > 1 ||  kudzu == null || kudzu.growth < 20 || owner == null)
+		if(BOUNDS_DIST(owner, kudzu) > 0 ||  kudzu == null || kudzu.growth < 20 || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
-		if(get_dist(owner, kudzu) > 1 || kudzu == null || kudzu.growth < 20 || owner == null)
+		if(BOUNDS_DIST(owner, kudzu) > 0 || kudzu == null || kudzu.growth < 20 || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (!iskudzuman(owner))

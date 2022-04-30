@@ -435,7 +435,7 @@
 
 	onUpdate()
 		..()
-		if (itdr == null || the_tool == null || owner == null || get_dist(owner, itdr) > 1)
+		if (itdr == null || the_tool == null || owner == null || BOUNDS_DIST(owner, itdr) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner
