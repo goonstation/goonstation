@@ -28,21 +28,33 @@ export const TurretControl = (props, context) => {
       title={emagged ? "FATAL ERROR" : "Turret control (" + area + ")"}
       theme={emagged ? 'syndicate' : 'ntos'}
       width={400}
-      height={120}
+      height={160}
     >
       <Window.Content align="center">
         <br />
         {!emagged && (
-          <Stack width="50%" align="center">
-            <Stack.Item width="50%">
-              <Button icon="exclamation-triangle" fluid selected={enabled} onClick={() => set_enabled(true)}>Enabled</Button>
-              <Button icon="bolt" fluid selected={!lethal} onClick={() => set_lethal(false)}>Stun</Button>
-            </Stack.Item>
-            <Stack.Item width="50%">
-              <Button icon="power-off" fluid selected={!enabled} onClick={() => set_enabled(false)}>Disabled</Button>
-              <Button icon="skull-crossbones" fluid selected={lethal} onClick={() => set_lethal(true)}>Lethal</Button>
-            </Stack.Item>
-          </Stack>
+          <Box>
+            <Section width="50%">
+              <Stack>
+                <Stack.Item width="50%">
+                  <Button icon="exclamation-triangle" fluid selected={enabled} onClick={() => set_enabled(true)}>Enabled</Button>
+                </Stack.Item>
+                <Stack.Item width="50%">
+                  <Button icon="power-off" fluid selected={!enabled} onClick={() => set_enabled(false)}>Disabled</Button>
+                </Stack.Item>
+              </Stack>
+            </Section>
+            <Section width="50%">
+              <Stack>
+                <Stack.Item width="50%">
+                  <Button icon="bolt" fluid selected={!lethal} onClick={() => set_lethal(false)}>Stun</Button>
+                </Stack.Item>
+                <Stack.Item width="50%">
+                  <Button icon="skull-crossbones" fluid selected={lethal} onClick={() => set_lethal(true)}>Lethal</Button>
+                </Stack.Item>
+              </Stack>
+            </Section>
+          </Box>
         )}
         {emagged === 1 && (
           <Box>
