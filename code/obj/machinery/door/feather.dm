@@ -5,6 +5,8 @@
 	name = "weird imposing wall"
 	desc = "It sounds like it's hollow."
 	mat_appearances_to_ignore = list("steel","gnesis")
+	mat_changename = FALSE
+	mat_changedesc = FALSE
 	autoclose = 1
 	var/broken = 0
 	health = 80

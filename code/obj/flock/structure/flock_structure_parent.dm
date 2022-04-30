@@ -7,6 +7,8 @@
 	name = "uh oh"
 	desc = "CALL A CODER THIS SHOULDN'T BE SEEN"
 	flags = USEDELAY
+	mat_changename = FALSE
+	mat_changedesc = FALSE
 	var/flock_id = "ERROR"
 	/// when did we get created?
 	var/time_started = 0

@@ -275,6 +275,8 @@ turf/simulated/floor/feather/proc/bfs(turf/start)//breadth first search, made by
 	var/max_health = 250
 	flags = USEDELAY
 	mat_appearances_to_ignore = list("steel", "gnesis")
+	mat_changename = FALSE
+	mat_changedesc = FALSE
 	connects_to = list(/turf/simulated/wall/auto/feather, /obj/machinery/door/feather)
 
 	var/broken = FALSE

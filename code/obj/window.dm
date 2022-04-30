@@ -1050,6 +1050,9 @@
 	default_material = "gnesisglass"
 	hitsound = 'sound/impact_sounds/Crystal_Hit_1.ogg'
 	shattersound = 'sound/impact_sounds/Crystal_Shatter_1.ogg'
+	mat_appearances_to_ignore = list("gnesis")
+	mat_changename = FALSE
+	mat_changedesc = FALSE
 	health = 50 // as strong as reinforced glass, but not as strong as plasmaglass
 	health_max = 50
 	density = 1

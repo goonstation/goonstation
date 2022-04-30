@@ -14,6 +14,9 @@
 	speechverb_stammer = "buzzes"
 	custom_gib_handler = /proc/flockdronegibs
 	custom_vomit_type = /obj/decal/cleanable/flockdrone_debris/fluid
+	mat_appearances_to_ignore = list("gnesis")
+	mat_changename = FALSE
+	mat_changedesc = FALSE
 	// HEALTHS
 	var/health_brute = 1
 	var/health_burn = 1
@@ -52,6 +55,8 @@
 	..()
 
 	qdel(abilityHolder)
+	setMaterial(getMaterial("gnesis"))
+	src.material.setProperty("reflective", 45)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT, src, 100)
 
 	// do not automatically set up a flock if one is not provided

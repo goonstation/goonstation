@@ -18,6 +18,13 @@
 	icon = 'icons/obj/furniture/table_flock.dmi'
 	auto_type = /obj/table/flock/auto
 	parts_type = /obj/item/furniture_parts/table/flock
+	mat_appearances_to_ignore = list("gnesis")
+	mat_changename = FALSE
+	mat_changedesc = FALSE
+
+/obj/table/flock/New()
+	..()
+	setMaterial(getMaterial("gnesis"))
 
 /obj/table/flock/special_desc(dist, mob/user)
   if(isflock(user))
@@ -35,6 +42,13 @@
 	desc = "An extendable... <i>thing</i> that can be stretched out to make, uh, probably a table of some kind? Where's the goddamn instructions?!"
 	icon = 'icons/obj/furniture/table_flock.dmi'
 	furniture_type = /obj/table/flock/auto
+	mat_appearances_to_ignore = list("gnesis")
+	mat_changename = FALSE
+	mat_changedesc = FALSE
+
+/obj/item/furniture_parts/table/flock/New()
+	..()
+	setMaterial(getMaterial("gnesis"))
 
 /obj/item/furniture_parts/table/flock/special_desc(dist, mob/user)
   if(isflock(user))
@@ -59,6 +73,13 @@
 	climbable = 0
 	parts_type = /obj/item/furniture_parts/flock_chair
 	scoot_sounds = list( 'sound/misc/chair/glass/scoot1.ogg', 'sound/misc/chair/glass/scoot2.ogg', 'sound/misc/chair/glass/scoot3.ogg', 'sound/misc/chair/glass/scoot4.ogg', 'sound/misc/chair/glass/scoot5.ogg' )
+	mat_appearances_to_ignore = list("gnesis")
+	mat_changename = FALSE
+	mat_changedesc = FALSE
+
+/obj/stool/chair/comfy/flock/New()
+	..()
+	setMaterial(getMaterial("gnesis"))
 
 /obj/stool/chair/comfy/flock/special_desc(dist, mob/user)
   if(isflock(user))
@@ -78,6 +99,13 @@
 	stamina_cost = 10
 	furniture_type = /obj/stool/chair/comfy/flock
 	furniture_name = "thrumming alcove"
+	mat_appearances_to_ignore = list("gnesis")
+	mat_changename = FALSE
+	mat_changedesc = FALSE
+
+/obj/item/furniture_parts/flock_chair/New()
+	..()
+	setMaterial(getMaterial("gnesis"))
 
 /obj/item/furniture_parts/flock_chair/special_desc(dist, mob/user)
   if(isflock(user))
@@ -193,9 +221,13 @@
 	power_usage = 0
 	on = 1
 	removable_bulb = 0
+	mat_appearances_to_ignore = list("gnesis")
+	mat_changename = 0
+	mat_changedesc = 0
 
 /obj/machinery/light/flock/New()
 	..()
+	setMaterial(getMaterial("gnesis"))
 	light.set_color(0.45, 0.75, 0.675)
 	src.AddComponent(/datum/component/flock_protection, TRUE, FALSE, TRUE)
 
