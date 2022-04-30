@@ -1,4 +1,9 @@
 
+(t)sat apr 30 22
+(u)Flourish + Waffleoffle
+(p)8385
+(e)🆕🎨|feature, sprites
+(*)Added towels and handkerchiefs. Bartenders, janitors, and clowns spawn with a special towel. Handkerchiefs are available as a spacebux purchase. Check out the <a href="https://github.com/goonstation/goonstation/pull/8385">PR page</a> to learn more about what you can do with these cool pieces of cloth!
 (t)fri apr 29 22
 (u)pali
 (*)GardenGear vending machines in hydroponics now have two brand new smoke-shield generators to contain your hotboxing into a safe area! Hotbox responsibly!
