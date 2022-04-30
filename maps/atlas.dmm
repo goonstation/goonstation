@@ -4434,7 +4434,17 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "lu" = (
-/turf/simulated/wall/auto/supernorn,
+/obj/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	dir = 8;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	layer = 4;
+	name = "Bridge Lockdown Doors";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
 /area/station/bridge/captain)
 "lv" = (
 /obj/table/auto,
@@ -6837,7 +6847,7 @@
 /area/station/bridge/captain)
 "rf" = (
 /obj/disposalpipe/segment,
-/turf/simulated/wall/auto/supernorn,
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/bridge/captain)
 "rg" = (
 /obj/machinery/light{
@@ -7127,6 +7137,12 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/machinery/door_control{
+	id = "lockdown";
+	name = "Bridge Lockdown";
+	pixel_x = -24;
+	pixel_y = -8
+	},
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fblue2"
@@ -7392,14 +7408,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/poddoor/pyro{
-	density = 0;
-	dir = 4;
-	icon_state = "pdoor0";
-	id = "lockdown";
-	name = "Bridge Lockdown Doors";
-	opacity = 0
-	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fblue2"
@@ -7964,14 +7973,6 @@
 	icon_state = "1-2"
 	},
 /obj/access_spawn/heads,
-/obj/machinery/door/poddoor/pyro{
-	density = 0;
-	dir = 1;
-	icon_state = "pdoor0";
-	id = "lockdown";
-	name = "Bridge Lockdown Doors";
-	opacity = 0
-	},
 /turf/simulated/floor/black,
 /area/station/teleporter)
 "tz" = (
@@ -8053,14 +8054,7 @@
 "tH" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg,
-/obj/machinery/door/poddoor/pyro{
-	density = 0;
-	dir = 4;
-	icon_state = "pdoor0";
-	id = "lockdown";
-	name = "Bridge Lockdown Doors";
-	opacity = 0
-	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fblue2"
@@ -8376,17 +8370,10 @@
 "uo" = (
 /obj/table/reinforced/auto,
 /obj/item/paper_bin,
-/obj/machinery/door/poddoor/pyro{
-	density = 0;
-	dir = 4;
-	icon_state = "pdoor0";
-	id = "lockdown";
-	name = "Bridge Lockdown Doors";
-	opacity = 0
-	},
 /obj/item/bell/hop{
 	pixel_y = 15
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/carpet{
 	dir = 10;
 	icon_state = "fblue2"
@@ -8773,10 +8760,6 @@
 	id = "lockdown";
 	name = "Bridge Lockdown Doors";
 	opacity = 0
-	},
-/obj/machinery/secscanner{
-	dir = 4;
-	pixel_x = -20
 	},
 /turf/simulated/floor/blue,
 /area/station/bridge/customs)
@@ -9676,6 +9659,15 @@
 /area/station/hallway/primary/south)
 "xu" = (
 /obj/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	dir = 10;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	layer = 4;
+	name = "Bridge Lockdown Doors";
+	opacity = 0
+	},
 /turf/simulated/floor/plating,
 /area/station/bridge/captain)
 "xv" = (
@@ -9812,6 +9804,15 @@
 /area/station/bridge/customs)
 "xN" = (
 /obj/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	dir = 6;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	layer = 4;
+	name = "Bridge Lockdown Doors";
+	opacity = 0
+	},
 /turf/simulated/floor/plating,
 /area/station/bridge)
 "xO" = (
@@ -9864,6 +9865,15 @@
 	icon_state = "4-8"
 	},
 /obj/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	dir = 8;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	layer = 4;
+	name = "Bridge Lockdown Doors";
+	opacity = 0
+	},
 /turf/simulated/floor/plating,
 /area/station/bridge)
 "xT" = (
@@ -9953,11 +9963,6 @@
 	},
 /area/station/bridge/customs)
 "yd" = (
-/obj/machinery/door_control{
-	id = "lockdown";
-	name = "Bridge Lockdown Control";
-	pixel_x = 25
-	},
 /turf/simulated/floor/blue,
 /area/station/bridge/customs)
 "ye" = (
@@ -10047,7 +10052,17 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
 "yr" = (
-/turf/simulated/wall/auto/supernorn,
+/obj/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	dir = 6;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	layer = 4;
+	name = "Bridge Lockdown Doors";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
 /area/station/crew_quarters/heads)
 "ys" = (
 /obj/machinery/door/airlock/pyro/command/alt{
@@ -10059,14 +10074,6 @@
 /obj/access_spawn/heads,
 /obj/firedoor_spawn,
 /obj/disposalpipe/segment,
-/obj/machinery/door/poddoor/pyro{
-	density = 0;
-	dir = 1;
-	icon_state = "pdoor0";
-	id = "lockdown";
-	name = "Bridge Lockdown Doors";
-	opacity = 0
-	},
 /turf/simulated/floor/black,
 /area/station/bridge/united_command)
 "yt" = (
@@ -11074,6 +11081,19 @@
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/east)
+"AT" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	dir = 10;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	layer = 4;
+	name = "Bridge Lockdown Doors";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/station/bridge)
 "AU" = (
 /obj/machinery/door/airlock/pyro/alt{
 	dir = 4;
@@ -11823,6 +11843,14 @@
 /area/station/quartermaster/office)
 "CU" = (
 /obj/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	layer = 4;
+	name = "Bridge Lockdown Doors";
+	opacity = 0
+	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/heads)
 "CV" = (
@@ -14299,6 +14327,19 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/substation/east)
+"IW" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	dir = 5;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	layer = 4;
+	name = "Bridge Lockdown Doors";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/station/bridge/captain)
 "IX" = (
 /obj/cable{
 	d1 = 1;
@@ -18073,6 +18114,19 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/clown)
+"SK" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	dir = 9;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	layer = 4;
+	name = "Bridge Lockdown Doors";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/station/bridge)
 "SL" = (
 /obj/decal/tile_edge/stripe/big,
 /turf/simulated/floor/white,
@@ -18183,6 +18237,19 @@
 	icon_state = "fgreen2"
 	},
 /area/station/crew_quarters/heads)
+"Tc" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	dir = 5;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	layer = 4;
+	name = "Bridge Lockdown Doors";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/station/bridge)
 "Td" = (
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
@@ -18455,6 +18522,19 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/hangar/main)
+"TJ" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	dir = 8;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	layer = 4;
+	name = "Bridge Lockdown Doors";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/station/bridge)
 "TK" = (
 /obj/stool/chair{
 	dir = 8
@@ -18935,6 +19015,18 @@
 /obj/landmark/gps_waypoint,
 /turf/unsimulated/floor/blue,
 /area/station/crewquarters/cryotron)
+"Vi" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	layer = 4;
+	name = "Bridge Lockdown Doors";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/station/bridge/captain)
 "Vj" = (
 /obj/machinery/atmospherics/portables_connector/south,
 /obj/machinery/disposal/small{
@@ -19221,7 +19313,7 @@
 /area/station/mining/staff_room)
 "VY" = (
 /obj/disposalpipe/segment,
-/turf/simulated/wall/auto/supernorn,
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/heads)
 "VZ" = (
 /obj/stool/chair{
@@ -19575,6 +19667,19 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/combustion_chamber)
+"WW" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	dir = 9;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	layer = 4;
+	name = "Bridge Lockdown Doors";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/heads)
 "WZ" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
@@ -20536,6 +20641,19 @@
 	dir = 1
 	},
 /area/station/bridge/customs)
+"ZC" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	dir = 8;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	layer = 4;
+	name = "Bridge Lockdown Doors";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/heads)
 "ZD" = (
 /obj/stool/bed,
 /obj/item/clothing/glasses/vr{
@@ -78489,23 +78607,23 @@ iJ
 iJ
 hf
 mu
-lu
-lu
-lu
-lu
-lu
-lu
+mu
+mu
+mu
+mu
+mu
+mu
 xM
 xQ
 xY
 yd
 ZA
-FO
-FO
-FO
-FO
-FO
-FO
+zf
+zf
+zf
+zf
+zf
+zf
 zf
 UB
 UB
@@ -78790,19 +78908,19 @@ hf
 aa
 aa
 aa
-xu
+Vi
 Sl
 nf
 oc
 oS
 pI
-lu
+mu
 sq
 tS
 un
 sq
 sq
-yr
+BK
 Xv
 ZL
 Sk
@@ -79092,7 +79210,7 @@ hf
 aa
 aa
 aa
-xu
+Vi
 mY
 nX
 oe
@@ -79394,7 +79512,7 @@ hf
 aa
 aa
 aa
-xu
+Vi
 xx
 ob
 oQ
@@ -79702,13 +79820,13 @@ mu
 ms
 pF
 ms
-lu
+mu
 rM
 wi
 ue
 sN
 rM
-yr
+BK
 UM
 TV
 UM
@@ -80000,17 +80118,17 @@ PS
 aa
 cl
 Ps
-xu
+Vi
 oR
 pG
 pG
-lu
+mu
 rN
 sQ
 uf
 ut
 vd
-yr
+BK
 YD
 YD
 Xn
@@ -80302,17 +80420,17 @@ PS
 PS
 PS
 xG
-xu
+Vi
 xC
 pG
 pG
-lu
+mu
 Rm
 sW
 ug
 uK
 vi
-yr
+BK
 YD
 YD
 YQ
@@ -80604,21 +80722,21 @@ aa
 aa
 PS
 xG
-xu
+IW
 xu
 xE
 xI
-lu
+mu
 rR
 sX
 sX
 sX
 vj
-yr
+BK
 Vv
 TT
-CU
-CU
+WW
+yr
 mf
 PS
 aa
@@ -80907,19 +81025,19 @@ aa
 PS
 ax
 aa
-xu
-xu
+IW
+lu
 mu
 mu
-xN
+AT
 xR
 xZ
 ye
-xN
+SK
 BK
 BK
-CU
-CU
+ZC
+yr
 aa
 ax
 PS
@@ -81213,9 +81331,9 @@ aa
 aa
 aa
 aa
-xN
+Tc
 xS
-xN
+TJ
 xS
 xN
 aa
