@@ -129,12 +129,12 @@ ABSTRACT_TYPE(/obj/item/cloth/towel)
 /obj/item/cloth/towel/janitor
 	name = "trusty towel"
 	desc = "About the most massively useful thing a janitor can have."
-	icon_state = "towel_blue"
+	icon_state = "towel_jani"
 
 /obj/item/cloth/towel/bar
 	name = "bar towel"
 	desc = "About the most massively useful thing a bartender can have."
-	icon_state = "towel_black"
+	icon_state = "towel_bar"
 
 ABSTRACT_TYPE(/obj/item/cloth/handkerchief)
 /obj/item/cloth/handkerchief
@@ -183,3 +183,9 @@ ABSTRACT_TYPE(/obj/item/cloth/handkerchief)
 /obj/item/cloth/handkerchief/blue
 	name = "blue handkerchief"
 	icon_state = "hanky_blue"
+
+/obj/item/cloth/handkerchief/random
+
+/obj/item/cloth/handkerchief/random/New()
+	..()
+	icon_state = "hanky_[pick("white", "yellow", "red", "purple", "pink", "orange", "green", "blue")]"

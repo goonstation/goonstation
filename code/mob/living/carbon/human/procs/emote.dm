@@ -828,13 +828,12 @@
 					if (istype(I, /obj/item/cloth/handkerchief))
 						message = "<B>[src]</B> [act]s into [I]."
 						maptext_out = "<I>[act]s into [I]</I>"
-					else if (act == "sneeze" && prob(30) && (src.mind?.assigned_role == "Clown" || src.reagents.has_reagent("honky_tonic")))
+					else if (act == "sneeze" && prob(1) && (src.mind?.assigned_role == "Clown" || src.reagents.has_reagent("honky_tonic")))
 						message = "<B>[src]</B> sneezes out a handkerchief!"
-						maptext_out = "<I>sneezes out a handkerchief</I>"
-						var/P = pick(childrentypesof(/obj/item/cloth/handkerchief))
-						I = new P
+						maptext_out = "<I>sneezes out a handkerchief!</I>"
+						var/obj/HK = new /obj/item/cloth/handkerchief/random(get_turf(src))
 						var/turf/T = get_edge_target_turf(src, pick(alldirs))
-						I.throw_at(T, 5, 1)
+						HK.throw_at(T, 5, 1)
 					else
 						message = "<B>[src]</B> [act]s."
 						maptext_out = "<I>[act]s</I>"
