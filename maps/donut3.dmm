@@ -12584,36 +12584,6 @@
 /area/station/maintenance/outer/ne)
 "dsm" = (
 /obj/table/wood/round/auto,
-/obj/item/implant/projectile/body_visible/dart/bardart{
-	dir = 8;
-	pixel_x = -1;
-	pixel_y = 8
-	},
-/obj/item/implant/projectile/body_visible/dart/bardart{
-	dir = 8;
-	pixel_x = -4;
-	pixel_y = 4
-	},
-/obj/item/implant/projectile/body_visible/dart/bardart{
-	dir = 8;
-	pixel_x = 2;
-	pixel_y = 1
-	},
-/obj/item/implant/projectile/body_visible/dart/bardart{
-	dir = 8;
-	pixel_x = 3;
-	pixel_y = 6
-	},
-/obj/item/implant/projectile/body_visible/dart/bardart{
-	dir = 8;
-	pixel_x = -4;
-	pixel_y = 11
-	},
-/obj/item/implant/projectile/body_visible/dart/bardart{
-	dir = 8;
-	pixel_x = 3;
-	pixel_y = 13
-	},
 /turf/simulated/floor/wood/eight{
 	dir = 1
 	},
@@ -21762,9 +21732,6 @@
 /turf/simulated/floor/plating/jen,
 /area/station/science/storage)
 "gaO" = (
-/obj/machinery/secscanner{
-	dir = 4
-	},
 /obj/decal/mule/dropoff,
 /obj/machinery/door/airlock/pyro/glass/security{
 	dir = 4;
@@ -26653,7 +26620,6 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "hwr" = (
-/turf/space/asteroid,
 /area/station/turret_protected/AIbaseoutside)
 "hwA" = (
 /obj/machinery/light_switch/north,
@@ -42312,7 +42278,6 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/medical/breakroom)
 "mdn" = (
-/turf/space/asteroid,
 /area/station/turret_protected/armory_outside)
 "mdw" = (
 /obj/decal/tile_edge/line/blue{
@@ -47292,18 +47257,23 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "nDM" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
 /obj/machinery/door/airlock/pyro/glass/security{
 	dir = 4;
 	req_access = null
 	},
-/obj/decal/mule/dropoff,
-/obj/access_spawn/security,
-/obj/firedoor_spawn,
 /obj/cable{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/access_spawn/security,
+/obj/firedoor_spawn,
+/obj/decal/mule/dropoff,
 /turf/simulated/floor/red,
-/area/station/security/main)
+/area/station/security/checkpoint/sec_foyer)
 "nDQ" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 1;
@@ -56981,7 +56951,6 @@
 /obj/machinery/turret{
 	dir = 1
 	},
-/turf/space/asteroid,
 /area/station/turret_protected/armory_outside)
 "qny" = (
 /obj/cable{
@@ -69711,7 +69680,6 @@
 	},
 /area/station/medical/cdc)
 "tXv" = (
-/turf/space/asteroid,
 /area/space)
 "tXG" = (
 /obj/cable{
@@ -76367,26 +76335,9 @@
 	print_id = "Security Lobby"
 	},
 /obj/table/reinforced/auto,
-/obj/item/implant/projectile/bardart{
-	dir = 8;
-	pixel_x = -1;
-	pixel_y = 8
-	},
-/obj/item/implant/projectile/bardart{
-	dir = 8;
-	pixel_x = -4;
-	pixel_y = 4
-	},
-/obj/item/implant/projectile/bardart{
-	dir = 8;
-	pixel_x = 2;
-	pixel_y = 1
-	},
-/obj/item/implant/projectile/bardart{
-	dir = 8;
-	pixel_x = 3;
-	pixel_y = 6
-	},
+/obj/item/implant/projectile/body_visible/dart/bardart,
+/obj/item/implant/projectile/body_visible/dart/bardart,
+/obj/item/implant/projectile/body_visible/dart/bardart,
 /turf/simulated/floor/black,
 /area/station/security/main)
 "vSW" = (
