@@ -3901,6 +3901,11 @@
 	id = "crematorium"
 	},
 /obj/item/device/radio/intercom/medical,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=central_hall3";
+	location = "bathroom";
+	name = "bot navigation beacon"
+	},
 /turf/simulated/floor/black,
 /area/station/medical/crematorium)
 "aqb" = (
@@ -33100,6 +33105,11 @@
 	},
 /turf/simulated/floor/purple,
 /area/station/medical/medbay/pharmacy)
+"jLs" = (
+/obj/decal/boxingrope,
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon4,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness)
 "jLv" = (
 /obj/decal/tile_edge/line/white{
 	dir = 8;
@@ -34708,6 +34718,14 @@
 	},
 /turf/simulated/floor,
 /area/station/science/lab)
+"kHg" = (
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=lounge";
+	location = "arrivals";
+	name = "bot navigation beacon"
+	},
+/turf/simulated/floor/carpet/blue/standard,
+/area/station/crewquarters/cryotron)
 "kHn" = (
 /obj/lattice{
 	dir = 6;
@@ -47088,6 +47106,9 @@
 	dir = 1;
 	name = "N APC";
 	pixel_y = 24
+	},
+/obj/cable{
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north)
@@ -105465,7 +105486,7 @@ adv
 aaG
 nRA
 rpt
-aMy
+boq
 abr
 btU
 abr
@@ -106205,7 +106226,7 @@ aFR
 aHT
 aJN
 ciP
-wjM
+jLs
 aPl
 oDl
 aSH
@@ -108624,7 +108645,7 @@ buz
 sdV
 vMh
 uIi
-aSR
+kHg
 gfZ
 eQy
 uyz

@@ -1,4 +1,76 @@
 
+(t)fri apr 29 22
+(u)pali
+(*)GardenGear vending machines in hydroponics now have two brand new smoke-shield generators to contain your hotboxing into a safe area! Hotbox responsibly!
+(u)Flappybat
+(p)8369
+(e)🗺|mapping
+(+)Donut3 telescience has been provided with a camera helmet for safe exploration.
+(t)thu apr 28 22
+(u)FlameArrow57
+(p)7804
+(e)🆕🗺🎨⚖|feature, mapping, sprites, balance
+(+)Tranquilizer darts and syringe projectiles can now stick into your body! Along with throwing darts, these items can be pulled out using the help intent, except for the syndicate fired variety, which must be cut out using a scalpel.
+(u)LeahTheTech
+(p)7673
+(e)🆕🎨⚖|feature, sprites, balance
+(*)Added a kitchen baster for adding pois- DELICIOUS INGREDIENTS to food. Find it in the kitchen vending machine.
+(u)Bartimeus973
+(p)8336
+(e)🎨|sprites
+(*)Security can now put down crime scene tape to show that business is being done! Find it in sectechs! Sprites made in collaboration with shiiba!
+(u)Bartimeus973
+(p)8333
+(e)|
+(+)You can now use an RCD on deconstruction mode for limb surgery!
+(t)wed apr 27 22
+(u)Hans
+(p)8342
+(e)⚖|balance
+(+)Reduces the rattlesnakes's health and makes the bite cooldown bigger.
+(u)BatElite
+(p)8264
+(e)🆕|feature
+(+)You can now re-insert oxygen/plasma tanks into tank storage units, which you definitely shouldn't misuse for the purpose of crime.
+(u)Shiiba
+(p)8340
+(e)|
+(+)Removes oculine from sunrise venne.
+(+)Adds oculine to carrots.
+(u)DisturbHerb
+(p)8014
+(e)🆕🎨|feature, sprites
+(*)In an effort to introduce greater diversity into the crew's diets, NanoTrasen has officially sanctioned the preparation of several new non-pasta noodle dishes. These include ramen, udon, and curry udon; available at the cafeteria today!
+(u)NightmareChamillian
+(p)7986
+(e)|
+(*)Gives ghostdrones three new tools for maintenance: A sponge, cleaner bottle, and stack of floor tiles.
+(u)Flappybat
+(p)8351
+(e)⚖|balance
+(+)Thermite breaching charges now destroy any doors on the same tile.
+(u)Hans
+(p)8005
+(e)⚖|balance
+(+)Makes ricin induce food poisoning instead of custom emotes.
+(+)Adds a potency requirement for ricin rice.
+(u)Ikea
+(p)8324
+(e)⚖|balance
+(+)Pawnstar now costs 0 trait points
+(t)mon apr 25 22
+(u)LeahTheTech
+(p)8170
+(e)🐛|bug
+(+)Added a new verb to re-open closed antag popups.
+(t)sun apr 24 22
+(u)zjdtmkhzt
+(p)8207
+(e)🆕|feature
+(+)Player pianos now have mechcomp integration.
+(t)fri apr 22 22
+(u)pali
+(+)Satchels now distinguish between seeds based on their plant types and mutations
 (t)thu apr 21 22
 (u)Hans
 (p)8274

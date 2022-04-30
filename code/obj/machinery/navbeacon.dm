@@ -27,6 +27,7 @@
 	mechanics_type_override = /obj/machinery/navbeacon
 
 	New()
+		START_TRACKING
 		..()
 
 		UnsubscribeProcess()
@@ -41,6 +42,10 @@
 			net_id = generate_net_id(src)
 
 		set_codes()
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
 
 	// set the transponder codes assoc list from codes_txt
 	proc/set_codes()
