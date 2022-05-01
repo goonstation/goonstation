@@ -1599,3 +1599,57 @@
 
 	CritterAttack(mob/M)
 		src.task = "chasing"
+
+/obj/critter/livingtail
+	name = "Living tail"
+	desc = "A twitching saurian tail, you feel mildly uncomfortable looking at it."
+	icon_state = "twitchytail"
+	density = 0
+	health = 20
+	flags = NOSPLASH | TABLEPASS
+	maxhealth = 40
+	butcherable = 1
+
+	var/obj/item/organ/tail/lizard/tail_memory = null
+	var/maxsteps
+	var/currentsteps = 0
+	var/primary_color =	"#21a833"
+	var/secondary_color = "#000000"
+
+	New()
+		..()
+		maxsteps = rand(10,20)
+
+	proc/setup_overlays()
+		var/image/overlayprimary = image('icons/misc/critter.dmi', "twitchytail_colorkey1")
+		overlayprimary.color = primary_color
+		var/image/overlaysecondary = image('icons/misc/critter.dmi', "twitchytail_colorkey2")
+		overlaysecondary.color = secondary_color
+		src.UpdateOverlays(overlayprimary, "bottomdetail")
+		src.UpdateOverlays(overlaysecondary, "topdetail")
+
+	process()
+		currentsteps++
+
+		if (currentsteps >= maxsteps)
+			CritterDeath()
+
+		if (prob(70))
+			playsound(src, "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1)
+			make_cleanable(/obj/decal/cleanable/blood/splatter,src.loc)
+		..()
+
+	CritterDeath()
+		..()
+		if (tail_memory)
+			tail_memory.set_loc(get_turf(src))
+		else
+			new/obj/item/organ/tail/lizard(get_turf(src))
+		qdel(src)
+
+	Crossed(atom/movable/M as mob)
+		..()
+		if (ishuman(M) && prob(25))
+			src.visible_message("<span class='combat'>[src] coils itself around [M]'s legs and trips [him_or_her(M)]!</span>")
+			M:changeStatus("weakened", 2 SECONDS)
+		return
