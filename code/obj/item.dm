@@ -456,11 +456,9 @@
 	if (A)
 		if (emergency_shuttle.location == SHUTTLE_LOC_STATION)
 			if (istype(A, /area/shuttle/escape/station))
-				message_admins("station block")
 				return
 		else if (emergency_shuttle.location == SHUTTLE_LOC_TRANSIT)
 			if (istype(A, /area/shuttle/escape/transit))
-				message_admins("transit block")
 				return
 	#endif
 	START_TRACKING_CAT(TR_CAT_BURNING_ITEMS)
