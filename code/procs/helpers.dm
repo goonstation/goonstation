@@ -891,8 +891,11 @@ proc/get_angle(atom/a, atom/b)
 // used for mass driver
 /proc/get_edge_target_turf(var/atom/A, var/direction)
 
+	if (isnull(A))
+		stack_trace("get_edge_target_turf called with null reference atom.")
+
 	var/turf/target = locate(A.x, A.y, A.z)
-	if (!A || !target)
+	if (!target)
 		return 0
 		//since NORTHEAST == NORTH & EAST, etc, doing it this way allows for diagonal mass drivers in the future
 		//and isn't really any more complicated
@@ -915,6 +918,9 @@ proc/get_angle(atom/a, atom/b)
 // used for disposal system
 /proc/get_ranged_target_turf(var/atom/A, var/direction, var/range)
 
+	if (isnull(A))
+		stack_trace("get_ranged_target_turf called with null reference atom.")
+
 	var/x = A.x
 	var/y = A.y
 	if(direction & NORTH)
@@ -932,6 +938,9 @@ proc/get_angle(atom/a, atom/b)
 // returns turf relative to A offset in dx and dy tiles
 // bound to map limits
 /proc/get_offset_target_turf(var/atom/A, var/dx, var/dy)
+
+	if (isnull(A))
+		stack_trace("get_offset_target_turf called with null reference atom.")
 	var/x = clamp(A.x + dx, 1, world.maxx)
 	var/y = clamp(A.y + dy, 1, world.maxy)
 	return locate(x,y,A.z)
@@ -1941,8 +1950,8 @@ proc/countJob(rank)
 
 		if (istype(G, /mob/dead/target_observer))
 			var/mob/dead/target_observer/TO = G
-			if (TO.my_ghost && istype(TO.my_ghost, /mob/dead/observer))
-				the_ghost = TO.my_ghost
+			if (TO.ghost && istype(TO.ghost, /mob/dead/observer))
+				the_ghost = TO.ghost
 
 		if (!the_ghost || !isobserver(the_ghost) || !isdead(the_ghost))
 			return 0
@@ -2051,13 +2060,13 @@ proc/countJob(rank)
 
 	if (removal_type == "death")
 		boutput(M, "<h2><span class='alert'>Since you have died, you are no longer a mindslave! Do not obey your former master's orders even if you've been brought back to life somehow.</span></h2>")
-		SHOW_MINDSLAVE_DEATH_TIPS(M)
+		M.show_antag_popup("mindslavedeath")
 	else if (removal_type == "override")
 		boutput(M, "<h2><span class='alert'>Your mindslave implant has been overridden by a new one, cancelling out your former allegiances!</span></h2>")
-		SHOW_MINDSLAVE_OVERRIDE_TIPS(M)
+		M.show_antag_popup("mindslaveoverride")
 	else
 		boutput(M, "<h2><span class='alert'>Your mind is your own again! You no longer feel the need to obey your former master's orders.</span></h2>")
-		SHOW_MINDSLAVE_EXPIRED_TIPS(M)
+		M.show_antag_popup("mindslaveexpired")
 
 	return
 
@@ -2604,6 +2613,7 @@ proc/is_incapacitated(mob/M)
 		M.hasStatus("stunned") || \
 		M.hasStatus("weakened") || \
 		M.hasStatus("paralysis") || \
+		M.hasStatus("pinned") || \
 		M.stat)
 
 /// sets up the list of ringtones players can select through character setup

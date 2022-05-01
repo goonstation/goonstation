@@ -26,7 +26,7 @@
 		src.ClearSpecificOverlays("resist_electric") // hide smes effect
 
 		if (src.mind && src.mind.special_role != ROLE_OMNITRAITOR)
-			SHOW_ARCFIEND_TIPS(src)
+			src.show_antag_popup("arcfiend")
 
 
 /datum/abilityHolder/arcfiend
@@ -448,7 +448,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 	name = "Ride The Lightning"
 	desc = "Expend energy to travel through electrical cables"
 	icon_state = "voltron"
-	cooldown = 0 SECONDS
+	cooldown = 1 SECONDS
 	pointCost = 75
 	var/active = FALSE
 	var/view_range = 2
@@ -500,7 +500,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 
 	proc/handle_move()
 		var/turf/user_turf = get_turf(holder.owner)
-		if (isrestrictedz(user_turf) || is_incapacitated(holder.owner))
+		if (isrestrictedz(user_turf.z) || is_incapacitated(holder.owner))
 			deactivate()
 			active = FALSE
 			return
@@ -526,9 +526,8 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 	proc/deactivate()
 		boutput(holder.owner, __red("You are ejected from the cable!"))
 		active = FALSE
-		//ensure points cost is set back to where it belongs
-		pointCost = initial(pointCost)
 		var/atom/movable/screen/ability/topBar/B = src.object
+		pointCost = initial(pointCost)
 		B.update_cooldown_cost()
 
 		UnregisterSignal(D, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_SET_LOC))
@@ -537,8 +536,14 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 		D = null
 		holder.owner.delStatus("ev_voltron")
 
+	tryCast(atom/target, params)
+		. = ..()
+		//restore points cost when deactivating
+		if(!pointCost) pointCost = initial(pointCost)
+
 	proc/send_images_to_client()
-		if ((!holder.owner?.client) || (!isalive(holder.owner)) || (isrestrictedz(holder.owner.z)))
+		var/turf/T = get_turf(holder.owner)
+		if ((!holder.owner?.client) || (!isalive(holder.owner)) || (isrestrictedz(T.z)))
 			deactivate()
 			return
 		holder.owner.client.images += cable_images

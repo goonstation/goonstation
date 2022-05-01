@@ -508,6 +508,19 @@
 		else
 			..()
 
+	attack_hand(mob/M as mob)
+		if ((M.a_intent != INTENT_HARM) && (M in src.friends))
+			if(M.a_intent == INTENT_HELP && src.aggressive)
+				src.visible_message("<span class='notice'>[M] pats [src] on the head in a soothing way. It won't attack anyone now.</span>")
+				src.aggressive = FALSE
+				src.task = "thinking"
+				return
+			else if((M.a_intent == INTENT_DISARM || M.a_intent == INTENT_GRAB) && !src.aggressive)
+				src.visible_message("<span class='notice'>[M] shakes [src] to awaken it's killer instincts!</span>")
+				src.aggressive = TRUE
+				src.task = "thinking"
+				return
+		..()
 
 	ChaseAttack(mob/M)
 		..()
@@ -1509,20 +1522,25 @@
 	desc = "A rattlesnake in space."
 	icon_state = "rattlesnake"
 	dead_state = "rattlesnake_dead"
-	density = 1
-	health = 50
+	density = 0
+	health = 20
 	aggressive = 1
 	defensive = 1
-	wanderer = 0
+	wanderer = 1
 	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 1
 	atksilicon = 1
 	firevuln = 1
 	brutevuln = 1
 	angertext = "hisses at"
-	butcherable = 0
+	butcherable = 1
 	flags = NOSPLASH | OPENCONTAINER | TABLEPASS
 	flying = 0
+
+	CritterDeath()
+		..()
+		src.reagents.add_reagent("viper_venom", 40, null)
+		return
 
 	seek_target()
 		src.anchored = 0
@@ -1532,29 +1550,37 @@
 			if (issilicon(C) && !src.atksilicon) continue
 			if (C.health < 0) continue
 			if (C in src.friends) continue
+			if (isintangible(C)) continue
 
 			if(!src.attack)
 				switch(get_dist(src, C))
 					if (0 to 1)
+						src.mobile = 1
 						icon_state = "rattlesnake"
 						if (iscarbon(C) && src.atkcarbon) src.attack = 1
 						if (issilicon(C) && src.atksilicon) src.attack = 1
-						if(!ON_COOLDOWN(src, "snake bite", 10 SECONDS))
+						if(!ON_COOLDOWN(src, "snake bite", 15 SECONDS))
 							C.visible_message("<span class='combat'><B>[src]</B> bites [C.name]!</span>")
 							C.reagents?.add_reagent("viper_venom", rand(15,25))
 							playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 							C.emote("scream")
 					if (1 to 2)
+						src.mobile = 0
+						src.task = "thinking"
 						icon_state = "rattlesnake_rattle"
 						if(!ON_COOLDOWN(src, "Rattle", 6 SECONDS))
 							C.visible_message("<span class='combat'><B>[src]</B> is rattling, better not get much closer!</span>")
 							playsound(src.loc, "sound/musical_instruments/tambourine/tambourine_4.ogg", 80, 0, 0, 0.75)
 					if (2 to 3)
+						src.mobile = 0
+						src.task = "thinking"
 						icon_state = "rattlesnake_coiled"
 					if (3 to INFINITY)
+						src.mobile = 1
 						icon_state = "rattlesnake"
 
 			if (src.attack)
+				src.mobile = 1
 				icon_state = "rattlesnake"
 				src.target = C
 				src.oldtarget_name = C.name
@@ -1564,7 +1590,7 @@
 
 	ChaseAttack(mob/M)
 		..()
-		if(!ON_COOLDOWN(src, "snake bite", 10 SECONDS))
+		if(!ON_COOLDOWN(src, "snake bite", 15 SECONDS))
 			M.visible_message("<span class='combat'><B>[src]</B> bites [src.target]!</span>")
 			M.reagents?.add_reagent("viper_venom", rand(10,15))
 			playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
@@ -1574,86 +1600,56 @@
 	CritterAttack(mob/M)
 		src.task = "chasing"
 
+/obj/critter/livingtail
+	name = "Living tail"
+	desc = "A twitching saurian tail, you feel mildly uncomfortable looking at it."
+	icon_state = "twitchytail"
+	density = 0
+	health = 20
+	flags = NOSPLASH | TABLEPASS
+	maxhealth = 40
+	butcherable = 1
 
-/*/obj/critter/sawfly// critter version
-
-	var/sawflynames = list("A", "B", "C", "D", "E", "F", "V", "W", "X", "Y", "Z", "Alpha", "Beta", "Gamma", "Lambda", "Delta",)
-	name = "Sawfly"
-	desc = "A cheap antipersonnel drone of syndicate origin."
-	icon_state = "sawfly"
-	beeptext = "BEEEEEP"
-	dead_state = "sawflydead"
-	//projectile_type = /datum/projectile/laser/drill/sawfly
-	//current_projectile = new/datum/projectile/laser/drill/sawfly
-	angertext = "detects the presence of"
-	//smashes_shit = 0
-	droploot = /obj/item/survival_machete
-	health = 70
-	//maxhealth = 70
-	firevuln = 0.5
-	brutevuln = 1.2 // from brute damage they only have 50 hp
-	can_revive = 1
-	atksilicon = 0
-	firevuln = 0
-	atk_delay = 15
-	var/deathtimer = 0 // for catastrophic failure on death
+	var/obj/item/organ/tail/lizard/tail_memory = null
+	var/maxsteps
+	var/currentsteps = 0
+	var/primary_color =	"#21a833"
+	var/secondary_color = "#000000"
 
 	New()
 		..()
-		deathtimer = rand(2, 5)
-		death_text = "[src] jutters and falls from the air, whirring to a stop"
-		name = "Microdrone unit [pick(sawflynames)]-[rand(1,999)]"
-		beeptext = "[pick(list("beeps", "boops", "bwoops", "bips", "bwips", "bops", "chirps", "whirrs", "pings", "purrs"))]"
+		maxsteps = rand(10,20)
 
-	CritterAttack(mob/M)
-		random_brute_damage(target, 35,1)
+	proc/setup_overlays()
+		var/image/overlayprimary = image('icons/misc/critter.dmi', "twitchytail_colorkey1")
+		overlayprimary.color = primary_color
+		var/image/overlaysecondary = image('icons/misc/critter.dmi', "twitchytail_colorkey2")
+		overlaysecondary.color = secondary_color
+		src.UpdateOverlays(overlayprimary, "bottomdetail")
+		src.UpdateOverlays(overlaysecondary, "topdetail")
 
-	CritterDeath() // was a good life. goodnight <3
-		if (!src.alive) return
+	process()
+		currentsteps++
+
+		if (currentsteps >= maxsteps)
+			CritterDeath()
+
+		if (prob(70))
+			playsound(src, "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1)
+			make_cleanable(/obj/decal/cleanable/blood/splatter,src.loc)
 		..()
-		if (get_area(src) != colosseum_controller.colosseum)
-			var/turf/Ts = get_turf(src)
-			make_cleanable( /obj/decal/cleanable/robot_debris,Ts)
-			//new drop1(Ts)
-			make_cleanable( /obj/decal/cleanable/robot_debris,Ts)
 
-		// since they're a child of a child of a child of a child
-		// and I don't know if they each all call parent,
-		// I'm just gonna say fuck all that and copy the critter death code
-		SHOULD_CALL_PARENT(TRUE)
-		if (!src.alive) return
-
-		#ifdef COMSIG_OBJ_CRITTER_DEATH
-		SEND_SIGNAL(src, COMSIG_OBJ_CRITTER_DEATH)
-		#endif
-
-		if (!dead_state)
-			src.icon_state = "[initial(src.icon_state)]-dead"
+	CritterDeath()
+		..()
+		if (tail_memory)
+			tail_memory.set_loc(get_turf(src))
 		else
-			src.icon_state = dead_state
-		src.alive = 0
-		src.anchored = 0
-		src.set_density(0)
-		walk_to(src,0) //halt walking
-		report_death()
-		src.tokenized_message(death_text)
-		//	var/obj/item/drop1 = pick(/obj/item/electronics/battery,/obj/item/electronics/board,/obj/item/electronics/buzzer,/obj/item/electronics/frame,/obj/item/electronics/resistor,/obj/item/electronics/screen,/obj/item/electronics/relay, /obj/item/parts/robot_parts/arm/left/standard, /obj/item/parts/robot_parts/arm/right/standard)
-		//var/obj/item/drop2 = pick(/obj/item/electronics/battery,/obj/item/electronics/board,/obj/item/electronics/buzzer,/obj/item/electronics/frame,/obj/item/electronics/resistor,/obj/item/electronics/screen,/obj/item/electronics/relay, /obj/item/parts/robot_parts/arm/left/standard, /obj/item/parts/robot_parts/arm/right/standard)
-		//	new drop2(Ts)
-		//	make_cleanable( /obj/decal/cleanable/robot_debris,Ts)
+			new/obj/item/organ/tail/lizard(get_turf(src))
+		qdel(src)
 
-		if(prob(90))// Time to enact a tiny bit of vengance on your killer
-			if(prob(50))// do you get a warning or not?
-				src.visible_message("<span class='alert'>[src] makes a [pick("gentle hiss", "odd drone", "slight whir", "weird thump", "barely audible grinding sound")]...")
-			SPAWN(deathtimer SECONDS)// wait for it...
-				if(prob(50))// it catches on fire!
-					src.visible_message("<span class='alert'>[src]'s [pick("blade motor", "core", "head", "engine", "thruster")] [pick("combusts", "catches on fire", "ignites", "lights up", "bursts into flames")]!")
-					fireflash(src,1,TRUE)
-
-				if(prob(50))// it blows up!
-					src.visible_message("<span class='alert'>[src]'s [pick("blade motor", "core", "head", "engine", "thruster")] [pick("overloads", "blows up", "catastrophically fails", "explodes")]!")
-					SPAWN(0.5 SECONDS)// wait for iiiittttt...
-						explosion(src, get_turf(src), 1, 2, 1, 0) // KERBLOOEY!
-
-				qdel(src)*/
-
+	Crossed(atom/movable/M as mob)
+		..()
+		if (ishuman(M) && prob(25))
+			src.visible_message("<span class='combat'>[src] coils itself around [M]'s legs and trips [him_or_her(M)]!</span>")
+			M:changeStatus("weakened", 2 SECONDS)
+		return

@@ -19,8 +19,8 @@
 	var/plate_mat = null
 	var/reinforced = FALSE
 	//Stuff for the floor & wall planner undo mode that initial() doesn't resolve.
-	var/roundstart_icon_state
-	var/roundstart_dir
+	var/tmp/roundstart_icon_state
+	var/tmp/roundstart_dir
 
 	New()
 		..()
@@ -1400,6 +1400,20 @@ DEFINE_FLOORS(grasslush/thinner,
 DEFINE_FLOORS(grasslush/thin,
 	icon_state = "grass_thin")
 
+/////////////////////////////////////////
+
+DEFINE_FLOORS(solidcolor,
+	icon_state = "solid_white")
+
+DEFINE_FLOORS(solidcolor/fullbright,
+	fullbright = 1)
+
+DEFINE_FLOORS(solidcolor/black,
+	icon_state = "solid_black")
+
+DEFINE_FLOORS(solidcolor/black/fullbright,
+	fullbright = 1)
+
 /* ._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._. */
 /*-=-=-=-=-=-=-=-FUCK THAT SHIT MY WRIST HURTS=-=-=-=-=-=-=-=-=*/
 /* '~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~' */
@@ -1524,7 +1538,10 @@ DEFINE_FLOORS(grasslush/thin,
 	return ..()
 
 /turf/simulated/floor/burn_down()
-	src.ex_act(2)
+	if (src.intact)
+		src.ex_act(2)
+	else //make sure plating always burns down to space and not... plating
+		src.ex_act(1)
 
 /turf/simulated/floor/ex_act(severity)
 	switch(severity)
@@ -1797,16 +1814,15 @@ DEFINE_FLOORS(grasslush/thin,
 
 		// Don't replace with an [else]! If a prying tool is found above [intact] might become 0 and this runs too, which is how floor swapping works now! - BatElite
 		if (!intact)
-			restore_tile()
-			src.plate_mat = src.material
-			if(C.material)
-				src.setMaterial(C.material)
-			playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+			if(T.change_stack_amount(-1))
+				restore_tile()
+				src.plate_mat = src.material
+				if(C.material)
+					src.setMaterial(C.material)
+				playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 
-			if(!istype(src.material, /datum/material/metal/steel))
-				logTheThing("station", user, null, "constructs a floor (<b>Material:</b>: [src.material && src.material.name ? "[src.material.name]" : "*UNKNOWN*"]) at [log_loc(src)].")
-
-			T.change_stack_amount(-1)
+				if(!istype(src.material, /datum/material/metal/steel))
+					logTheThing("station", user, null, "constructs a floor (<b>Material:</b>: [src.material && src.material.name ? "[src.material.name]" : "*UNKNOWN*"]) at [log_loc(src)].")
 			//if(T && (--T.amount < 1))
 			//	qdel(T)
 			//	return
@@ -1911,7 +1927,7 @@ DEFINE_FLOORS(grasslush/thin,
 	if(istype(C, /obj/item/cable_coil))
 		if(!intact)
 			var/obj/item/cable_coil/coil = C
-			coil.turf_place(src, user)
+			coil.turf_place(src, get_turf(user), user)
 		else
 			boutput(user, "<span class='alert'>You must remove the plating first.</span>")
 

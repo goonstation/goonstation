@@ -506,6 +506,52 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	return null
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+//jellyfish
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/mob/living/critter/aquatic/fish/jellyfish
+	name = "jellyfish"
+	real_name = "jellyfish"
+	desc = "Squishy"
+	icon = 'icons/misc/sea_critter.dmi'
+	icon_state = "jellyfish"
+	base_move_delay = 2
+	hand_count = 2
+	pet_text = "pokes"
+	speechverb_say = "quibbles"
+	speechverb_exclaim = "shudders"
+	death_text = "%src% collapses in a heap on the ground!"
+	meat_type = /obj/item/device/light/glowstick/green_on //Until I think of something else. Also it's kinda funny
+	add_abilities = list(/datum/targetable/critter/sting)
+
+/mob/living/critter/aquatic/fish/jellyfish/New()
+	..()
+	src.color = random_saturated_hex_color()
+	var/list/color_list = rgb2num(src.color)
+	src.add_medium_light("jellyglow", color_list + list(100))
+	SPAWN(0)
+		if(src.client)
+			src.is_npc = 0
+		else
+			src.ai = new /datum/aiHolder/aquatic/fish(src)
+
+/mob/living/critter/aquatic/fish/jellyfish/setup_hands()
+	..()
+	var/datum/handHolder/HH = hands[1]
+	HH.limb = new /datum/limb/mouth/fish/jellyfish
+	HH.icon = 'icons/mob/critter_ui.dmi'
+	HH.icon_state = "mouth"
+	HH.name = "mouth"
+	HH.limb_name = "mouth"
+
+	HH = hands[2]
+	HH.limb = new /datum/limb/small_critter
+	HH.icon = 'icons/mob/critter_ui.dmi'
+	HH.icon_state = "handn"
+	HH.name = "tendrils"
+	HH.limb_name = "tendrils"
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 // aquatic mobcritter limbs
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -515,6 +561,10 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	dam_high = 1
 	miss_prob = 100 // you ever meet those fish that eat the dead skin off of the backs of your feet?
 	stam_damage_mult = 0.2
+
+	jellyfish
+		dam_low = 3
+		dam_high = 8
 
 /datum/limb/king_crab // modified claw limb
 

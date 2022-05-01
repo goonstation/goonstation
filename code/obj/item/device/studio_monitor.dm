@@ -162,6 +162,13 @@
 			for(var/obj/ability_button/nukie_rocker/B as anything in ability_buttons)
 				B.UpdateOverlays(null, "rocked_out")
 
+/obj/item/breaching_hammer/rock_sledge/nanotrasen
+	name = "Marsyas electric guitar"
+	desc = "A high-tech Syndicate guitar, reverse engineered by Nanotrasen and given a blue paint job."
+	icon_state = "guitar_nt"
+	item_state = "guitar_nt"
+	is_syndicate = FALSE
+
 /obj/ability_button/nukie_rocker
 	name = "Nukie Rocker Ability - You shouldn't see this..."
 	desc = "Waht you no see! This never happened"
@@ -210,7 +217,10 @@
 			var/mob/living/carbon/human/virtual/V = target
 			. = istype(V.ears, /obj/item/device/radio/headset/syndicate) || istype(V.head, /obj/item/clothing/head/helmet/space/syndicate)
 		else
-			. = istype(target.ears, /obj/item/device/radio/headset/syndicate)
+			if(is_syndicate)
+				. = istype(target.ears, /obj/item/device/radio/headset/syndicate)
+			else
+				. = istype(target.ears, /obj/item/device/radio/headset/command) //Nanotrasen guitar, Nanotrasen tunes
 
 	shred
 		name = "Shred"

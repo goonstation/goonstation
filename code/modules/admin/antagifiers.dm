@@ -29,7 +29,7 @@
 		M.show_text("<h2><font color=red><B>You have defected and become a traitor!</B></font></h2>", "red")
 		M.mind.special_role = ROLE_TRAITOR
 		M.verbs += /client/proc/gearspawn_traitor
-		SHOW_TRAITOR_RADIO_TIPS(M)
+		M.show_antag_popup("traitorradio")
 
 /obj/traitorifier/wizard
 	name = "Eldritch Altar"
@@ -41,7 +41,7 @@
 	makeAntag(mob/M as mob)
 		M.mind.special_role = ROLE_WIZARD
 		M.show_text("<h2><font color=red><B>You have been seduced by magic and become a wizard!</B></font></h2>", "red")
-		SHOW_ADMINWIZARD_TIPS(M)
+		M.show_antag_popup("adminwizard")
 		M.verbs += /client/proc/gearspawn_wizard
 
 /obj/traitorifier/changeling
@@ -125,7 +125,7 @@
 		M.make_wrestler(1)
 		M.make_grinch()
 		M.show_text("<h2><font color=red><B>You have become an omnitraitor!</B></font></h2>", "red")
-		SHOW_TRAITOR_OMNI_TIPS(M)
+		M.show_antag_popup("traitoromni")
 
 /obj/traitorifier/wraith
 	name = "Spooky Pool"

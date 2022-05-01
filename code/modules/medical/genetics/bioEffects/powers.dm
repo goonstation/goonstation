@@ -163,7 +163,7 @@
 			using = FALSE
 			return TRUE
 
-		if (!(the_object in get_filtered_atoms_in_touch_range(owner, base_path)))
+		if (!(the_object in get_filtered_atoms_in_touch_range(owner, base_path)) && !istype(the_object, /obj/the_server_ingame_whoa))
 			owner.show_text("<span class='alert'>Man, that thing is long gone, far away, just let it go.</span>")
 			return TRUE
 
@@ -296,8 +296,6 @@
 			return 1
 
 		//store both x and y as transforms mid jump can cause unwanted pixel offsetting
-		var/original_x_offset = owner.pixel_x
-		var/original_y_offset = owner.pixel_y
 		var/jump_tiles = 10 * linked_power.power
 		var/pixel_move = 8 * linked_power.power
 		var/sleep_time = 1 / linked_power.power
@@ -308,17 +306,22 @@
 			var/prevLayer = owner.layer
 			owner.layer = EFFECTS_LAYER_BASE
 
+			animate(owner,
+				pixel_y = pixel_move * jump_tiles / 2,
+				time = sleep_time * jump_tiles / 2,
+				easing = EASE_OUT | CIRCULAR_EASING,
+				flags = ANIMATION_RELATIVE | ANIMATION_PARALLEL)
+			animate(
+				pixel_y = -pixel_move * jump_tiles / 2,
+				time = sleep_time * jump_tiles / 2,
+				easing = EASE_IN | CIRCULAR_EASING,
+				flags = ANIMATION_RELATIVE)
+
 			SPAWN(0)
 				for(var/i=0, i < jump_tiles, i++)
 					step(owner, owner.dir)
-					if(i < jump_tiles / 2)
-						owner.pixel_y += pixel_move
-					else
-						owner.pixel_y -= pixel_move
 					sleep(sleep_time)
 
-				owner.pixel_x = original_x_offset
-				owner.pixel_y = original_y_offset
 				owner.layer = prevLayer
 
 		if (istype(owner.loc,/obj/))
@@ -327,16 +330,7 @@
 			owner.changeStatus("paralysis", 5 SECONDS)
 			owner.changeStatus("weakened", 5 SECONDS)
 			container.visible_message("<span class='alert'><b>[owner.loc]</b> emits a loud thump and rattles a bit.</span>")
-			playsound(owner.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
-			SPAWN(0)
-				var/wiggle = 6
-				while(wiggle > 0)
-					wiggle--
-					container.pixel_x = rand(-3,3)
-					container.pixel_y = rand(-3,3)
-					sleep(0.1 SECONDS)
-				container.pixel_x = 0
-				container.pixel_y = 0
+			animate_storage_thump(container)
 
 		return
 
@@ -980,6 +974,7 @@
 			if(owner.reagents.has_reagent("anti_fart"))
 				owner.visible_message("<span class='alert'><b>[owner.name]</b> swells up. That can't be good.</span>")
 				boutput(owner, "<span class='alert'><b>Oh god.</b></span>")
+				logTheThing("combat", owner, null, "was gibbed by superfarting while containing anti_fart at [log_loc(owner)].")
 				indigestion_gib()
 				return 1
 

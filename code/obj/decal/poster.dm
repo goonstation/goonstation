@@ -799,6 +799,10 @@
 			bound_width  = 96
 			plane = -99
 
+		psa_bucket
+			desc = "<span class='alert'><i>Stuck</i></b></span> behind a mop bucket? Never fear! Just <span class='notice'><i>slide</i></span> yourself over it!"
+			icon = 'icons/obj/decals/posters.dmi'
+			icon_state = "bucket" // sprite by BatElite!
 
 
 ///////////////////////////////////////

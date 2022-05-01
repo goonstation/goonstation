@@ -50,7 +50,7 @@
 	return 1
 
 /datum/game_mode/conspiracy/post_setup()
-	var/meetingPoint = "Your initial meet-up point is <b>[pick("the chapel", "the arcade", "the escape wing", "the bar", "the pool", "the aviary")].</b>"
+	var/meetingPoint = "Your initial meet-up point is <b>[pick("the chapel", "the bar", "disposals", "the arcade", "the escape wing", "crew quarters", "the pool", "the aviary")].</b>"
 
 	var/conspiratorList = "The conspiracy consists of: "
 	for (var/datum/mind/conspirator in traitors)

@@ -14,6 +14,8 @@
 	var/path_prot = 1 // protection from airborne pathogens, multiplier for chance to be infected
 	var/team_num
 	var/blocked_from_petasusaphilic = FALSE //Replacing the global blacklist
+	duration_remove = 1.5 SECONDS
+	duration_put = 1.5 SECONDS
 
 	setupProperties()
 		..()
@@ -49,6 +51,11 @@ proc/filter_trait_hats(var/type)
 	desc = "A knit cap in orange."
 	icon_state = "orange"
 	item_state = "ogloves"
+
+/obj/item/clothing/head/purple
+	desc = "A knit cap in orange."
+	icon_state = "purple"
+	item_state = "jgloves"
 
 /obj/item/clothing/head/dolan
 	name = "Dolan's hat"
@@ -1636,6 +1643,11 @@ ABSTRACT_TYPE(/obj/item/clothing/head/frenchberet)
 		name = "strawberry beret"
 		icon_state = "beret_strawb"
 		item_state = "beret_strawb"
+
+	blueberry
+		name = "blueberry beret"
+		icon_state = "beret_blueb"
+		item_state = "beret_blueb"
 
 // Costume goggles
 

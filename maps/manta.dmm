@@ -38703,27 +38703,27 @@
 /area/station/storage/tech)
 "oOr" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/implant/projectile/bardart{
+/obj/item/implant/projectile/body_visible/dart/bardart{
 	pixel_x = -3;
 	pixel_y = 8
 	},
-/obj/item/implant/projectile/bardart{
+/obj/item/implant/projectile/body_visible/dart/bardart{
 	pixel_x = -3;
 	pixel_y = 6
 	},
-/obj/item/implant/projectile/bardart{
+/obj/item/implant/projectile/body_visible/dart/bardart{
 	pixel_x = -1;
 	pixel_y = 8
 	},
-/obj/item/implant/projectile/bardart{
+/obj/item/implant/projectile/body_visible/dart/bardart{
 	pixel_x = -1;
 	pixel_y = 8
 	},
-/obj/item/implant/projectile/bardart{
+/obj/item/implant/projectile/body_visible/dart/bardart{
 	pixel_x = -1;
 	pixel_y = 8
 	},
-/obj/item/implant/projectile/bardart{
+/obj/item/implant/projectile/body_visible/dart/bardart{
 	pixel_x = 3;
 	pixel_y = 6
 	},

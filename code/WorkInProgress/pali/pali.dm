@@ -466,3 +466,11 @@
 			if(prob(chance))
 				var/mob/living/carbon/human/normal/H = new(T)
 				H.JobEquipSpawned(job_name)
+
+
+
+
+/obj/storage/closet/extradimensional
+	New()
+		..()
+		src.setMaterial(getMaterial("negativematter"))

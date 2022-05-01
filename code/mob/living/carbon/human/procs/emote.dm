@@ -359,6 +359,7 @@
 								message = "<B>[src]</B> [act]s [M]."
 								maptext_out = "<I>[act]s [M]</I>"
 					else
+						var/obj/item/I = src.equipped()
 						switch(act)
 							if ("hug", "sidehug")
 								message = "<B>[src]</b> [act]s [himself_or_herself(src)]."
@@ -370,8 +371,12 @@
 								message = "<B>[src]</b> points finger guns at... [himself_or_herself(src)]?"
 								maptext_out = "<I> points finger guns at... [himself_or_herself(src)]?</I>"
 							else
-								message = "<B>[src]</b> [act]s."
-								maptext_out = "<I>[act]s [M]</I>"
+								if ("wave" && istype(I, /obj/item/cloth/handkerchief))
+									message = "<B>[src]</b> waves [I]."
+									maptext_out = "<I>waves [I]</I>"
+								else
+									message = "<B>[src]</b> [act]s."
+									maptext_out = "<I>[act]s</I>"
 								src.add_karma(2)
 
 				else
@@ -436,7 +441,7 @@
 						return
 					phrase_log.log_phrase("emote", input)
 					message = "<B>[src]</B> [input]"
-					maptext_out = "<I>[input]</I>"
+					maptext_out = "<I>[regex({"(&#34;.*?&#34;)"}, "g").Replace(input, "</i>$1<i>")]</I>"
 					custom = copytext(input, 1, 10)
 
 			if ("customv")
@@ -448,7 +453,7 @@
 				param = sanitize(html_encode(param))
 				phrase_log.log_phrase("emote", param)
 				message = "<b>[src]</b> [param]"
-				maptext_out = "<I>[param]</I>"
+				maptext_out = "<I>[regex({"(&#34;.*?&#34;)"}, "g").Replace(param, "</i>$1<i>")]</I>"
 				m_type = 1
 				custom = copytext(param, 1, 10)
 
@@ -460,7 +465,7 @@
 				param = sanitize(html_encode(param))
 				phrase_log.log_phrase("emote", param)
 				message = "<b>[src]</b> [param]"
-				maptext_out = "<I>[param]</I>"
+				maptext_out = "<I>[regex({"(&#34;.*?&#34;)"}, "g").Replace(param, "</i>$1<i>")]</I>"
 				m_type = 2
 				custom = copytext(param, 1, 10)
 
@@ -471,7 +476,7 @@
 				param = sanitize(html_encode(param))
 				phrase_log.log_phrase("emote", param)
 				message = "<b>[src]</b> [param]"
-				maptext_out = "<I>[param]</I>"
+				maptext_out = "<I>[regex({"(&#34;.*?&#34;)"}, "g").Replace(param, "</i>$1<i>")]</I>"
 				m_type = 1 // default to visible
 				custom = copytext(param, 1, 10)
 
@@ -490,13 +495,13 @@
 						var/mob/living/carbon/human/H = null
 						if (param)
 							for (var/mob/living/carbon/human/M in view(1, src))
-								if (ckey(param) == ckey(M.name))
+								if (ckey(param) == ckey(M.name) && can_act(M, TRUE))
 									H = M
 									break
 						else
 							var/list/possible_recipients = list()
 							for (var/mob/living/carbon/human/M in view(1, src))
-								if (M != src)
+								if (M != src && can_act(M, TRUE))
 									possible_recipients += M
 							if (possible_recipients.len > 1)
 								H = input(src, "Who would you like to hand your [thing] to?", "Choice") as null|anything in possible_recipients
@@ -614,6 +619,7 @@
 					SPAWN(1 SECOND)
 						src.wear_mask.set_loc(src.loc)
 						src.wear_mask = null
+						logTheThing("combat", src, null, "was gibbed by emoting uguu at [log_loc(src)].")
 						src.gib()
 						return
 				else
@@ -677,6 +683,7 @@
 						src.say ("M'lady")
 						SPAWN(1 SECOND)
 							src.add_karma(-10)
+							logTheThing("combat", src, null, "was gibbed by emoting fedora tipping at [log_loc(src)].")
 							src.gib()
 
 			if ("hatstomp", "stomphat")
@@ -817,14 +824,23 @@
 				// basic audible single-word emotes
 				if (!muzzled)
 					if (lowertext(act) == "sigh" && prob(1)) act = "singh" //1% chance to change sigh to singh. a bad joke for drsingh fans.
-					message = "<B>[src]</B> [act]s."
-					maptext_out = "<I>[act]s</I>"
+					var/obj/item/I = src.equipped()
+					if (istype(I, /obj/item/cloth/handkerchief))
+						message = "<B>[src]</B> [act]s into [I]."
+						maptext_out = "<I>[act]s into [I]</I>"
+					else if (act == "sneeze" && prob(1) && (src.mind?.assigned_role == "Clown" || src.reagents.has_reagent("honky_tonic")))
+						message = "<B>[src]</B> sneezes out a handkerchief!"
+						maptext_out = "<I>sneezes out a handkerchief!</I>"
+						var/obj/HK = new /obj/item/cloth/handkerchief/random(get_turf(src))
+						var/turf/T = get_edge_target_turf(src, pick(alldirs))
+						HK.throw_at(T, 5, 1)
+					else
+						message = "<B>[src]</B> [act]s."
+						maptext_out = "<I>[act]s</I>"
 				else
 					message = "<B>[src]</B> tries to make a noise."
 					maptext_out = "<I>tries to make a noise</I>"
 				m_type = 2
-
-				maptext_out = "<I>[act]s</I>"
 
 				if (src.emote_check(voluntary,20))
 					if (act == "gasp")
@@ -2333,7 +2349,7 @@
 		src.render_target = "\ref[src]"
 
 /mob/living/proc/do_suplex(obj/item/grab/G)
-	if (!(G.state >= 1 && isturf(src.loc) && isturf(G.affecting.loc)))
+	if (!(G.state >= GRAB_STRONG && isturf(src.loc) && isturf(G.affecting.loc)))
 		return null
 	if(!(BOUNDS_DIST(src, G.affecting) == 0))
 		return null

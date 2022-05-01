@@ -45,7 +45,7 @@ var/datum/action_controller/actions
 			for(var/datum/action/OA in running[owner])
 				//Meant to catch users starting the same action twice, and saving the first-attempt from deletion
 				if(OA.id == A.id && OA.state == ACTIONSTATE_DELETE && (OA.interrupt_flags & INTERRUPT_ACTION) && OA.resumable)
-					OA.onResume()
+					OA.onResume(A)
 					qdel(A)
 					return OA
 			running[owner] += A
@@ -116,7 +116,7 @@ var/datum/action_controller/actions
 	proc/loopStart()				//Called after restarting. Meant to cotain code from -and be called from- onStart()
 		return
 
-	proc/onResume()				   //Called when the action resumes - likely from almost ending
+	proc/onResume(datum/action/attempted)	 //Called when the action resumes - likely from almost ending. Arg is the action which would have cancelled this.
 		state = ACTIONSTATE_RUNNING
 		return
 
@@ -262,7 +262,7 @@ var/datum/action_controller/actions
 				animate( target_bar, color = src.color_failure, time = 2.5 )
 		..()
 
-	onResume()
+	onResume(datum/action/attempted)
 		if (bar)
 			updateBar()
 			bar.color = src.color_active
@@ -888,13 +888,14 @@ var/datum/action_controller/actions
 		else
 			INVOKE_ASYNC(arglist(list(src.owner, src.proc_path) + src.proc_args))
 
+#define STAM_COST 30
 /datum/action/bar/icon/otherItem//Putting items on or removing items from others.
 	id = "otheritem"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "grabbed"
 
-	var/mob/living/carbon/human/source  //The person doing the action
+	var/mob/living/source  //The mob doing the action
 	var/mob/living/carbon/human/target  //The target of the action
 	var/obj/item/item				    //The item if any. If theres no item, we tried to remove something from that slot instead of putting an item there.
 	var/slot						    //The slot number
@@ -912,14 +913,14 @@ var/datum/action_controller/actions
 			if(item.duration_put > 0)
 				duration = item.duration_put
 			else
-				duration = 45
+				duration = 4.5 SECONDS
 		else
 			var/obj/item/I = target.get_slot(slot)
 			if(I)
 				if(I.duration_remove > 0)
 					duration = I.duration_remove
 				else
-					duration = 25
+					duration = 2.5 SECONDS
 
 		duration += ExtraDuration
 
@@ -935,6 +936,13 @@ var/datum/action_controller/actions
 			for(var/obj/item/grab/gunpoint/G in source.grabbed_by)
 				G.shoot()
 
+		if (source.use_stamina && source.get_stamina() < STAM_COST)
+			boutput(owner, "<span class='alert>You're too winded to [item ? "place that on" : "take that from"] [him_or_her(target)].</span>")
+			src.resumable = FALSE
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		source.remove_stamina(STAM_COST)
+
 		if(item)
 			if(!target.can_equip(item, slot))
 				boutput(source, "<span class='alert'>[item] can not be put there.</span>")
@@ -944,7 +952,7 @@ var/datum/action_controller/actions
 				boutput(source, "<span class='alert'>You can't put [item] on [target] when [(he_or_she(target))] is in [target.loc]!</span>")
 				interrupt(INTERRUPT_ALWAYS)
 				return
-			if(issilicon(source) || item.cant_drop) //Fix for putting item arm objects into others' inventory
+			if(item.cant_drop) //Fix for putting item arm objects into others' inventory
 				source.show_text("You can't put \the [item] on [target] when it's attached to you!", "red")
 				interrupt(INTERRUPT_ALWAYS)
 				return
@@ -963,12 +971,6 @@ var/datum/action_controller/actions
 				boutput(source, "<span class='alert'>You can't remove [I] from [target] when [(he_or_she(target))] is in [target.loc]!</span>")
 				interrupt(INTERRUPT_ALWAYS)
 				return
-			/* Some things use handle_other_remove to do stuff (ripping out staples, wiz hat probability, etc) should only be called once per removal.
-			if(!I.handle_other_remove(source, target))
-				boutput(source, "<span class='alert'>[I] can not be removed.</span>")
-				interrupt(INTERRUPT_ALWAYS)
-				return
-			*/
 			logTheThing("combat", source, target, "tries to remove \an [I] from [constructTarget(target,"combat")] at [log_loc(target)].")
 			var/name = "something"
 			if (!hidden)
@@ -1037,6 +1039,7 @@ var/datum/action_controller/actions
 		else
 			if(!target.get_slot(slot=slot))
 				interrupt(INTERRUPT_ALWAYS)
+#undef STAM_COST
 
 /datum/action/bar/icon/internalsOther //This is used when you try to set someones internals
 	duration = 40

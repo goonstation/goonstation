@@ -414,7 +414,7 @@
 			W.amount = 0
 			boutput(user, "<span class='notice'>You insert [W].</span>")
 			user.u_equip(W)
-			W.dropped()
+			W.dropped(user)
 			qdel( W )
 			src.generate_HTML(1)
 			return
@@ -1131,6 +1131,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/patch/nicotine, 10, cost=PAY_TRADESMAN/10)
 		product_list += new/datum/data/vending_product(/obj/item/matchbook, 10, cost=PAY_UNTRAINED/20)
 		product_list += new/datum/data/vending_product(/obj/item/device/light/zippo, 5, cost=PAY_TRADESMAN/10)
+		product_list += new/datum/data/vending_product(/obj/item/decoration/ashtray, 5, cost=PAY_TRADESMAN/10)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/vape, 10, cost=PAY_TRADESMAN/2)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/ecig_refill_cartridge, 20, cost=PAY_TRADESMAN/5)
 
@@ -1265,6 +1266,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/device/flash, 4)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/helmet/hardhat/security, 4)
 		product_list += new/datum/data/vending_product(/obj/item/device/pda2/security, 2)
+		product_list += new/datum/data/vending_product(/obj/item/sec_tape/vended, 3)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38/stun, 2)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/nine_mm_NATO, 2)
 		product_list += new/datum/data/vending_product(/obj/item/implantcase/counterrev, 3)
@@ -1633,6 +1635,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/storage/lunchbox, 12)
 		product_list += new/datum/data/vending_product(/obj/item/ladle, 1)
 		product_list += new/datum/data/vending_product(/obj/item/soup_pot, 1)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe/baster, 3)
 		product_list += new/datum/data/vending_product(/obj/item/kitchen/rollingpin, 2)
 		product_list += new/datum/data/vending_product(/obj/item/kitchen/utensil/knife/pizza_cutter, 5)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bowl, 10)
@@ -1650,6 +1653,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/condiment/syrup, 5)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/condiment/mayo, 5)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/condiment/ketchup, 5)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/condiment/soysauce, 10)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/plant/tomato, 10)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/plant/apple, 10)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/plant/lettuce, 10)
@@ -1713,6 +1717,7 @@
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "standard-frame"
 	density = 1
+	material_amt = 0.3
 	var/wrenched = FALSE
 	var/glassed = FALSE
 	var/boardinstalled = FALSE
@@ -2311,6 +2316,7 @@
 		product_list += new/datum/data/vending_product(/obj/decorative_pot, 5)
 		product_list += new/datum/data/vending_product(/obj/chicken_nesting_box,3)
 		product_list += new/datum/data/vending_product(/obj/item/chicken_carrier, 2)
+		product_list += new/datum/data/vending_product(/obj/machinery/shieldgenerator/energy_shield/botany, 2)
 
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/water_pipe, 1, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/seedplanter/hidden, 1, hidden=1)

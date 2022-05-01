@@ -11,9 +11,17 @@
 	var/allow_blind_sight = 0
 	wear_layer = MOB_GLASSES_LAYER
 	block_vision = 0
+	duration_remove = 1.5 SECONDS
+	duration_put = 1.5 SECONDS
 	var/block_eye = null // R or L
 	var/correct_bad_vision = 0
 	compatible_species = list("human", "cow", "werewolf", "flubber")
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (istype(W, /obj/item/cloth/handkerchief))
+			user.visible_message("<span class='notice'>[user] [pick("polishes", "shines", "cleans", "wipes")] [src] with [src].</span>")
+			return
+		return ..()
 
 /obj/item/clothing/glasses/crafted
 	name = "glasses"

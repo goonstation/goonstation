@@ -32,12 +32,16 @@
 			boutput(M, __red("It would be a waste of time to stun the dead."))
 			return 1
 
-		if (!M.sight_check(1))
+		if (istype(M) && !M.sight_check(1))
 			boutput(M, __red("How do you expect this to work? You can't use your eyes right now."))
 			M.visible_message("<span class='alert'>What was that? There's something odd about [M]'s eyes.</span>")
 			return 0 // Cooldown because spam is bad.
 
-		M.visible_message("<span class='alert'><B>[M]'s eyes emit a blinding flash at [target]!</B></span>")
+		if(istype(M))
+			M.visible_message("<span class='alert'><B>[M]'s eyes emit a blinding flash at [target]!</B></span>")
+		else
+			M.visible_message("<span class='alert'><B>[M] emits a blinding flash at [target]!</B></span>")
+
 		var/obj/itemspecialeffect/glare/E = new /obj/itemspecialeffect/glare
 		E.color = "#FFFFFF"
 		E.setup(M.loc)

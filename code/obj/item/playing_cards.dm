@@ -350,6 +350,7 @@
 			if(!foiled)
 				user.take_brain_damage(1000)
 			else
+				logTheThing("combat", user, null, "was partygibbed by [src] at [log_loc(src)].")
 				user.partygib(1)
 
 /obj/item/card_group //since "playing_card"s are singular cards, card_groups handling groups of playing_cards in the form of either a deck or hand
@@ -1007,7 +1008,7 @@
 			var/obj/item/playing_card/card = new /obj/item/playing_card(src)
 			stored_cards += card
 			card.icon_state = "clow-1-1"
-			card.name = "Clow Card"
+			card.name = "Clow Card #[i]"
 			update_card_information(card)
 			card.update_stored_info()
 		update_group_sprite()

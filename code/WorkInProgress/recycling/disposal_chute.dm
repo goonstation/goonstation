@@ -122,6 +122,11 @@
 				return
 			if (action == "Empty it into the chute")
 				var/obj/item/storage/S = I
+				if(istype(S, /obj/item/storage/secure))
+					var/obj/item/storage/secure/secS = S
+					if(secS.locked)
+						boutput("<span class='alert'>You need to unlock the container first.</span>")
+						return
 				for(var/obj/item/O in S)
 					O.set_loc(src)
 					S.hud.remove_object(O)
@@ -196,6 +201,7 @@
 				I.set_loc(get_turf(src))
 				if(prob(30)) //It landed cleanly!
 					I.set_loc(src)
+					update()
 					src.visible_message("<span class='alert'>\The [I] lands cleanly in \the [src]!</span>")
 				else	//Aaaa the tension!
 					src.visible_message("<span class='alert'>\The [I] teeters on the edge of \the [src]!</span>")
@@ -228,6 +234,8 @@
 					if (!is_processing)
 						SubscribeToProcess()
 						is_processing = 1
+					update()
+				else
 					update()
 		else
 			return ..()
