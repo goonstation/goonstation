@@ -229,6 +229,7 @@ var/global/list/soundCache = list(
  	"sound/effects/leakagentb.ogg" = 'sound/effects/leakagentb.ogg',\
  	"sound/effects/leakoxygen.ogg" = 'sound/effects/leakoxygen.ogg',\
  	"sound/effects/light_breaker.ogg" = 'sound/effects/light_breaker.ogg',\
+ 	"sound/effects/lightning_strike.ogg" = 'sound/effects/lightning_strike.ogg',\
  	"sound/effects/mag_fireballlaunch.ogg" = 'sound/effects/mag_fireballlaunch.ogg',\
  	"sound/effects/mag_forcewall.ogg" = 'sound/effects/mag_forcewall.ogg',\
  	"sound/effects/mag_golem.ogg" = 'sound/effects/mag_golem.ogg',\
