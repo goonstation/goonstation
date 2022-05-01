@@ -1338,10 +1338,10 @@
 	//angertext = "detects the presence of"
 	smashes_shit = 0
 	droploot = null //change this later
-	health = 50
-	maxhealth = 50
+	health = 40
+	maxhealth = 40
 	firevuln = 0.5
-	brutevuln = 1.2 // from brute damage sources they only have 50 hp
+	brutevuln = 1.2
 	can_revive = 1
 	atksilicon = 0
 	firevuln = 0
@@ -1363,7 +1363,7 @@
 	proc/blowup() // used in emagged controllers and has a chance to activate when they die
 
 		if(prob(66))
-			src.visible_message("<span class='combat'>[src]'s [pick("motor", "core", "fuel tank", "battery", "thruster")] [pick("combusts", "catches on fire", "ignites", "lights up", "immolates", "bursts into flames")]!")
+			src.visible_message("<span class='combat'>[src]'s [pick("motor", "core", "fuel tank", "battery", "thruster")] [pick("combusts", "catches on fire", "ignites", "lights up", "bursts into flames")]!")
 			fireflash(src,1,TRUE)
 
 		else
@@ -1383,7 +1383,6 @@
 		else
 			src.foldself()
 
-		src.blowup()
 
 
 	New()
@@ -1497,7 +1496,7 @@
 		if(prob(60)) // 60 percent chance to zap the area
 			elecflash(src, 1, 2)
 
-		if(prob(25)) // congrats, little guy! You're special! You're going to blow up!
+		if(prob(20)) // congrats, little guy! You're special! You're going to blow up!
 			if(prob(70)) //decide whether or not people get a warning
 				src.visible_message("<span class='combat'>[src] makes a [pick("gentle", "odd", "slight", "weird", "barely audible", "concerning", "quiet")] [pick("hiss", "drone", "whir", "thump", "grinding sound", "creak", "buzz", "khunk")].......")
 

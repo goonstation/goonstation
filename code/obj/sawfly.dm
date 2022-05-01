@@ -90,7 +90,7 @@
 
 /obj/item/sawflyremote
 	name = "Sawfly deactivator"
-	desc = "A small device that can be used to remotely fold sawflies. It looks like you could hide it in your clothes. Or smash it into tiny bits, you guess."
+	desc = "A small device that can be used to fold or deploy sawflies in range. It looks like you could hide it in your clothes. Or smash it into tiny bits, you guess."
 	w_class = W_CLASS_TINY
 	flags = FPRINT | TABLEPASS
 	icon = 'icons/obj/items/device.dmi'
@@ -100,24 +100,26 @@
 	var/emagged = FALSE
 
 	attack_self(mob/user as mob)
+		if(src.emagged || src.alreadyhit)// you broke it.
+			if(prob(10))
+				boutput(user,"<span class='alert'> The [src] suddenly falls apart!</span>")
+				qdel(src)
+				return
 		for(var/obj/critter/gunbot/drone/buzzdrone/sawfly/S in range(get_turf(src), 3)) // folds active sawflies
-			SPAWN(1 SECONDS)
-				if(emagged)
-					if(prob(10)) // controller break
-						boutput(user,"<span class='alert'> [src] suddenly falls apart!</span>")
-						qdel(src)
-					if(prob(50)) //sawfly break
+			SPAWN(0.5 SECONDS)
+				if(src.emagged)
+					if(prob(50)) //sawfly breaks
 						S.visible_message("<span class='combat'>[S] buzzes oddly and starts to sprial out of control!</span>")
-						S.blowup()
+						SPAWN(1 SECONDS)
+							S.blowup()
 					else
 						S.foldself() //business as usual
-					return
-				else
-					S.foldself() // normal function
+				else  // non-emagged activity
+					S.foldself()
 
 		for(var/obj/item/old_grenade/spawner/sawfly/S in range(get_turf(src), 3)) // unfolds passive sawflies
-			S.visible_message("<span class='combat'>[S] suddenly springs open and its engine begins to start!</span>")
-			S.icon_state = S.icon_state_armed
+			S.visible_message("<span class='combat'>[S] suddenly springs open as its engine purr to a start!</span>")
+			S.icon_state = "sawfly1"
 			SPAWN(S.det_time)
 				S.prime()
 
