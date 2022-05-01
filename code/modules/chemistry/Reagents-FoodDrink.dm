@@ -3924,9 +3924,9 @@ datum
 			transparency = 60
 			bioeffect_id = "accent_tyke"
 
-		fooddrink/bonerjuice
+		fooddrink/boneyjuice
 			name = "the satisfaction of making spaghetti"
-			id = "bonerjuice"
+			id = "boneyjuice"
 			description = "The congealed essence of cullinary passion."
 			fluid_r = 200
 			fluid_g = 231

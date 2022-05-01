@@ -1158,7 +1158,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			if (user.mob_flags & IS_BONEY)
 				D = new/obj/item/reagent_containers/food/snacks/spaghetti/sauce/skeletal(W.loc)
 				boutput(user, "<span class='alert'>... whoa, that felt good. Like really good.</span>")
-				user.reagents.add_reagent("bonerjuice",20)
+				user.reagents.add_reagent("boneyjuice",20)
 			else
 				D = new/obj/item/reagent_containers/food/snacks/spaghetti/sauce(W.loc)
 			user.u_equip(W)
