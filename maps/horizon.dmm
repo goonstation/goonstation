@@ -32397,6 +32397,14 @@
 	name = "Permanent Atmospheric Forcefield";
 	powerlevel = 1
 	},
+/obj/machinery/door/poddoor/blast{
+	dir = 4;
+	doordir = "left";
+	icon_state = "bdoorleft1";
+	id = "hangar_syndicate";
+	name = "external blast door";
+	autoclose = 1
+	},
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/listeningpost/power)
 "bDW" = (
@@ -50014,10 +50022,6 @@
 "cxx" = (
 /turf/simulated/floor/shuttlebay,
 /area/listeningpost/power)
-"cxy" = (
-/obj/landmark/artifact,
-/turf/simulated/floor/shuttlebay,
-/area/listeningpost/power)
 "cxz" = (
 /obj/item/seed/cannabis,
 /turf/simulated/floor/shuttlebay,
@@ -52771,6 +52775,20 @@
 /obj/disposalpipe/junction/right/east,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/bar)
+"dEf" = (
+/obj/forcefield/energyshield/perma{
+	desc = "A permanent force field that prevents gasses from passing through it.";
+	name = "Permanent Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/obj/machinery/door/poddoor/blast{
+	dir = 4;
+	id = "hangar_syndicate";
+	name = "external blast door";
+	autoclose = 1
+	},
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/listeningpost/power)
 "dEu" = (
 /obj/disposalpipe/segment/cargo{
 	dir = 4
@@ -56828,6 +56846,22 @@
 /obj/disposalpipe/segment/bent/east,
 /turf/simulated/floor/darkblue,
 /area/station/bridge)
+"nfZ" = (
+/obj/forcefield/energyshield/perma{
+	desc = "A permanent force field that prevents gasses from passing through it.";
+	name = "Permanent Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/obj/machinery/door/poddoor/blast{
+	dir = 4;
+	doordir = "right";
+	icon_state = "bdoorright1";
+	id = "hangar_syndicate";
+	name = "external blast door";
+	autoclose = 1
+	},
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/listeningpost/power)
 "nhu" = (
 /obj/stool/bed/moveable/hospital,
 /turf/simulated/floor/bluewhite,
@@ -57585,6 +57619,10 @@
 /area/station/storage/emergency{
 	name = "Hilarious Storage A"
 	})
+"oVu" = (
+/obj/machinery/door_control/podbay/syndicate/new_walls/east,
+/turf/simulated/floor/shuttlebay,
+/area/listeningpost/power)
 "oWg" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -141386,7 +141424,7 @@ cxx
 cxx
 cyb
 cxc
-aab
+pqC
 aab
 aaa
 aaa
@@ -141989,7 +142027,7 @@ bpf
 cxx
 bDT
 cxx
-bDU
+dEf
 aac
 aac
 aaa
@@ -142287,11 +142325,11 @@ cvW
 cwo
 cwH
 cxc
-cxy
 cxx
 cxx
 cxx
-bDU
+cxx
+dEf
 aac
 aac
 aaa
@@ -142591,9 +142629,9 @@ cwI
 cxc
 cxz
 cxx
-cxx
+oVu
 cyc
-bDU
+nfZ
 aac
 aac
 aaa
@@ -142896,7 +142934,7 @@ cxd
 cxc
 cxc
 cxc
-aab
+pqC
 aab
 aaa
 aaa
