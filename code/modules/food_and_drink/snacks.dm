@@ -2844,7 +2844,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "ramen"
 	needfork = TRUE
-	amount = 5
+	heal_amt = 2
+	bites_left = 5
 	initial_volume = 20
 	initial_reagents = "soysauce"
 	food_effects = list("food_brute","food_energized","food_warm")
@@ -2855,7 +2856,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "udon"
 	needfork = TRUE
-	amount = 5
+	heal_amt = 3
+	bites_left = 5
 	initial_volume = 20
 	initial_reagents = "soysauce"
 	food_effects = list("food_hp_up","food_explosion_resist","food_warm")
@@ -2866,7 +2868,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "udon_curry"
 	needfork = TRUE
-	amount = 5
+	heal_amt = 3
+	bites_left = 5
 	initial_volume = 20
 	initial_reagents = "currypowder"
 	food_effects = list("food_hp_up","food_refreshed","food_warm")
