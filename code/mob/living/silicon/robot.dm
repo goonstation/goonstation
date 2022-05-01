@@ -1097,7 +1097,8 @@
 					boutput(user, "The link port sparks violently! It didn't work!")
 					logTheThing("station", src, null, "[constructName(user)] tried to connect [src] to the rack [constructName(src.law_rack_connection)] but they are emagged, so it failed.")
 					elecflash(src,power=2)
-				if(src.law_rack_connection)
+
+				if(src.law_rack_connection && !src.syndicate)
 					var/raw = tgui_alert(user,"Do you want to overwrite the linked rack?", "Linker", list("Yes", "No"))
 					if (raw == "Yes")
 						src.law_rack_connection = linker.linked_rack
@@ -1107,6 +1108,9 @@
 						src.playsound_local(src, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
 						src.show_text("<h3>You have been connected to a law rack</h3>", "red")
 						src.show_laws()
+				else if(src.syndicate)
+					boutput(user, "The link port stays inert, seemingly not recognizing the target!")
+					logTheThing("station", src, null, "[constructName(user)] tried to connect [src] to the rack [constructName(src.law_rack_connection)] but they are a syndicate frame, so it failed.")
 			else
 				boutput(user,"Linker lost connection to the stored law rack!")
 			return
