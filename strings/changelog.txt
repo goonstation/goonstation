@@ -1,6 +1,10 @@
 
 (t)sun may 01 22
 (u)Chatauscours
+(p)8396
+(e)|
+(*)Added mining headset. Spawns on miners and in miner equimpent boxes.
+(u)Chatauscours
 (p)8405
 (e)⚖|balance
 (*)Changed the chameleon suit to the chameleon outfit in the infiltrator class crate.
