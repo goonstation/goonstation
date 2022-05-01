@@ -380,10 +380,6 @@
 	return attack_hand(user)
 
 /obj/machinery/turretid/ui_interact(mob/user, datum/tgui/ui)
-	if (src.locked)
-		if (!issilicon(usr) && !isAI(usr))
-			boutput(usr, "Control panel is locked!")
-			return
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "TurretControl")
@@ -395,6 +391,10 @@
 		"lethal" = src.lethal,
 		"emagged" = src.emagged
 	)
+	if (issilicon(user) || isAI(user))
+		.["locked"] = FALSE
+	else
+		.["locked"] = src.locked
 
 /obj/machinery/turretid/ui_static_data(mob/user)
 	var/area/area = get_area(src)
@@ -408,6 +408,7 @@
 /obj/machinery/turretid/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	if (..())
 		return
+
 	if (src.locked)
 		if (!issilicon(usr) && !isAI(usr))
 			boutput(usr, "Control panel is locked!")
@@ -418,6 +419,7 @@
 			src.enabled = params["enabled"]
 			logTheThing("combat", usr, null, "turned [enabled ? "ON" : "OFF"] turrets from control \[[log_loc(src)]].")
 			src.updateTurrets()
+			. = TRUE
 		if ("setLethal")
 			src.lethal = params["lethal"]
 			if(src.lethal)
@@ -427,7 +429,7 @@
 				logTheThing("combat", usr, null, "set turrets to STUN from control \[[log_loc(src)]].")
 				message_admins("[key_name(usr)] set turrets to STUN from control \[[log_loc(src)]].")
 			src.updateTurrets()
-	ui = tgui_process.try_update_ui(usr, src, ui)
+			. = TRUE
 
 /obj/machinery/turretid/receive_silicon_hotkey(var/mob/user)
 	..()

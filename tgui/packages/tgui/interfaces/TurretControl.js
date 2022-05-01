@@ -2,6 +2,25 @@ import { Window } from '../layouts';
 import { useBackend, useLocalState } from '../backend';
 import { Button, Section, Flex, Box, Stack } from '../components';
 
+const randInt = (a, b) => {
+  if (a > b) {
+    let temp = a;
+    a = b;
+    b = temp;
+  }
+  return Math.floor(Math.random() * (b - a + 1)) + a;
+};
+
+// warning, that semicolon is actually a greek question mark. do not let it escape into your code.
+const glitches = ['$', '{', ']', '%', '^', '?', '>', '¬', 'π', ';', 'и', 'ю'];
+const glitch = (text, amount) => {
+  for (let i = 0; i < amount; i++) {
+    let index = randInt(0, text.length);
+    text = text.slice(0, index) + glitches[randInt(0, glitches.length - 1)] + text.slice(index, text.length);
+  }
+  return text;
+};
+
 export const TurretControl = (props, context) => {
   const { act, data } = useBackend(context);
   const {
@@ -32,7 +51,7 @@ export const TurretControl = (props, context) => {
     >
       <Window.Content align="center">
         <br />
-        {!emagged && (
+        {!emagged && !locked && (
           <Box>
             <Section width="50%">
               <Stack>
@@ -56,15 +75,28 @@ export const TurretControl = (props, context) => {
             </Section>
           </Box>
         )}
+        {!emagged && locked && (
+          <Section>Panel locked, swipe ID card to unlock.</Section>
+        )}
         {emagged === 1 && (
-          <Box>
+          <>
             <Box align="center" fontFamily="Courier New">
-              ER{"{"}ROR: UNABLE TO R$EAD %{"{"}param{"}"} AUTH${"{"}OR\IZ#2A6F%
+              {glitch("ERROR: UNABLE TO READ AUTHORIZATION", 12)}
             </Box>
             <Box align="center" fontSize="16px">
-              Kill. Kill. Kill. Kill. Kill. Kill. Kill.
+              {() => {
+                let out = "";
+                for (let i = 0; i < 7; i++) {
+                  if (Math.random() > 0.3) {
+                    out += "Kill. ";
+                  } else {
+                    out += "KILL. ";
+                  }
+                }
+                return out;
+              }}
             </Box>
-          </Box>
+          </>
         )}
       </Window.Content>
     </Window>
