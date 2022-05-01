@@ -59,6 +59,8 @@ Important Procedures
 	return !src.gas_impermeable
 
 /turf/gas_cross(turf/target)
+	if(!target)
+		return 0
 	if(target?.gas_impermeable || src.gas_impermeable)
 		return 0
 	for(var/atom/A as anything in src)

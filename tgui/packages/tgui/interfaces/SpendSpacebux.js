@@ -1,10 +1,8 @@
 import { useBackend, useLocalState } from '../backend';
-import { BlockQuote, Button, Stack, Section } from '../components';
+import { BlockQuote, Box, Button, Divider, Flex, Stack, Section } from '../components';
 import { Window } from '../layouts';
-import { Box, Divider, Flex } from "../components";
-import { capitalize, pluralize } from './common/stringUtils';
 
-const SBPurchaseEntry = (props, context) => {
+const SBPurchaseEntry = (props) => {
   const {
     product: {
       pname,
@@ -46,7 +44,7 @@ const SBPurchaseEntry = (props, context) => {
   );
 };
 
-export const SpendSpacebux = (props, context) => {
+export const SpendSpacebux = (_props, context) => {
   const { act, data } = useBackend(context);
   const {
     purchasables,

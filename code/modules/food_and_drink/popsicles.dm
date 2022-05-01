@@ -44,7 +44,7 @@
 	desc = "A popsicle. It's in a wrapper right now."
 	icon = 'icons/obj/foodNdrink/food_popsicles.dmi'
 	icon_state = null
-	amount = 4
+	bites_left = 4
 	heal_amt = 4
 	food_color = null
 	initial_volume = 40

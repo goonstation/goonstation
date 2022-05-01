@@ -103,7 +103,7 @@
 			M.flags &= ~(NODRIFT | DOORPASS | TABLEPASS)
 			APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "floorswitching")
 			REMOVE_ATOM_PROPERTY(M, PROP_MOB_NO_MOVEMENT_PUFFS, "floorswitching")
-			REMOVE_ATOM_PROPERTY(M, PROP_MOB_NEVER_DENSE, "floorswitching")
+			REMOVE_ATOM_PROPERTY(M, PROP_ATOM_NEVER_DENSE, "floorswitching")
 			M.set_density(initial(M.density))
 			if (floorturf.intact)
 				animate_slide(floorturf, x_coeff * -slide_amount, y_coeff * -slide_amount, 4)
@@ -123,7 +123,7 @@
 				if(M)
 					REMOVE_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "floorswitching")
 					APPLY_ATOM_PROPERTY(M, PROP_MOB_NO_MOVEMENT_PUFFS, "floorswitching")
-					APPLY_ATOM_PROPERTY(M, PROP_MOB_NEVER_DENSE, "floorswitching")
+					APPLY_ATOM_PROPERTY(M, PROP_ATOM_NEVER_DENSE, "floorswitching")
 					M.flags |= NODRIFT | DOORPASS | TABLEPASS
 					M.set_density(0)
 					M.layer = BETWEEN_FLOORS_LAYER

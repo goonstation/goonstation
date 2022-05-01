@@ -1008,8 +1008,8 @@
 
 /datum/commodity/contraband/dnascram
 	comname = "DNA Scrambler"
-	comtype = /obj/item/genetics_injector/dna_scrambler
-	desc = "An injector that gives a new, random identity upon injection."
+	comtype = /obj/item/dna_scrambler
+	desc = "An injector that gives a new, random identity upon injection, storing the original for later."
 	price = 15000
 	baseprice = 15000
 	upperfluc = 3000

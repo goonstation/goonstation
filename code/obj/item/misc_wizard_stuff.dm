@@ -220,6 +220,93 @@
 			src.do_brainmelt(user, 2)
 			return
 
+/obj/item/staff/thunder
+	name = "staff of thunder"
+	desc = "A staff sparkling with static electricty. Who's afraid of a little thunder?"
+	icon_state = "staffthunder3"
+	item_state = "staffthunder"
+	var/thunder_charges = 3
+
+	New()
+		. = ..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
+
+	pixelaction(atom/target, params, mob/user, reach)
+		if(!IN_RANGE(user, target, WIDE_TILE_WIDTH / 2))
+			return
+		if (istype(get_area(target), /area/station/chapel) || istype(get_area(user), /area/station/chapel))
+			boutput(user, "<span class='alert'>You cannot summon lightning on holy ground!</span>") //phrasing works if either target or mob are in chapel heh
+			return
+		if (thunder_charges <= 0)
+			boutput(user, "<span class='alert'>[name] is out of charges! Magically recall it to restore it's power.</span>")
+			return
+		if (iswizard(user))
+			thunder_charges -= 1
+			var/turf/T = get_turf(target)
+			var/obj/lightning_target/lightning = new/obj/lightning_target(T)
+			playsound(T, 'sound/effects/electric_shock_short.ogg', 70, 1)
+			lightning.caster = user
+			UpdateIcon()
+			flick("[icon_state]_fire", src)
+			..()
+
+	attack_hand(var/mob/user as mob)
+		if (user.mind)
+			if (iswizard(user) || check_target_immunity(user))
+				if (user.mind.key != src.wizard_key && !check_target_immunity(user))
+					boutput(user, "<span class='alert'>The [src.name] is magically attuned to another wizard! You can use it, but may not summon it magically.</span>")
+				..()
+				return
+			else
+				zap_person(user)
+				return
+		else ..()
+
+	pull(var/mob/user)
+		if(check_target_immunity(user))
+			return ..()
+
+		if (!istype(user))
+			return
+
+		if (iswizard(user))
+			return ..()
+		else
+			zap_person(user)
+			return
+
+	mouse_drop(atom/over_object, src_location, over_location, over_control, params)
+		if (iswizard(usr))
+			. = ..()
+		else if(isliving(usr))
+			zap_person(usr)
+		else
+			return
+
+	update_icon()
+		if(thunder_charges > 3) //var edit only but gets a fun special sprite
+			icon_state = "staffthunder_admin"
+		else
+			icon_state = "staffthunder[thunder_charges]"
+
+	proc/recharge_thunder()
+		if(thunder_charges <= 3) //doesn't ever reduce charge even though three is usually max
+			thunder_charges = 3
+		UpdateIcon()
+		flick("[icon_state]_fire", src)
+
+	proc/zap_person(var/mob/target) //purposefully doesn't do any damage, here to offer non-chat feedback when trying to pick up
+		boutput(target, "<span class='alert'>Static electricity arcs from [name] to your hand when you try and touch it!</span>")
+		playsound(target.loc, 'sound/effects/sparks4.ogg', 70, 1)
+		if (target.bioHolder?.HasEffect("resist_electric"))
+			return
+		else
+			target.do_disorient(stamina_damage = 0, weakened = 0, stunned = 0, disorient = 20)
+
 /obj/item/staff/monkey_staff
 	name = "staff of monke"
 	desc = "A staff with a cute monkey head carved into the wood."

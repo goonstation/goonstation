@@ -108,6 +108,7 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 /obj/item/furniture_parts/table
 	name = "table parts"
 	desc = "A collection of parts that can be used to make a table."
+	material_amt = 0.2
 
 	afterattack(atom/target, mob/user)
 		if (isturf(target) && target == get_turf(user))
@@ -292,6 +293,7 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 	stamina_crit_chance = 15
 	furniture_type = /obj/rack
 	furniture_name = "rack"
+	material_amt = 0.1
 
 //bookshelf part construction
 	attackby(obj/item/W as obj, mob/user as mob)

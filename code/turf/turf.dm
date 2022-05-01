@@ -427,7 +427,7 @@ proc/generate_space_color()
 						M.set_loc(warptarget)
 					if (rank_to_level(mob.client.holder.rank) < LEVEL_SA)
 						M.set_loc(warptarget)
-			else if ((abs(OldLoc.x - warptarget.x) > 1) || (abs(OldLoc.y - warptarget.y) > 1))
+			else if (isturf(warptarget) && (abs(OldLoc.x - warptarget.x) > 1 || abs(OldLoc.y - warptarget.y) > 1))
 				// double set_loc is a fix for the warptarget gliding bug
 				M.set_loc(get_step(warptarget, get_dir(src, OldLoc)))
 				SPAWN(0.001) // rounds to the nearest tick, about as smooth as it's gonna get
@@ -921,10 +921,18 @@ proc/generate_space_color()
 	fullbright = 1
 
 /turf/unsimulated/wall/solidcolor/white
+#ifdef IN_MAP_EDITOR
+	icon_state = "white-map"
+#else
 	icon_state = "white"
+#endif
 
 /turf/unsimulated/wall/solidcolor/black
+#ifdef IN_MAP_EDITOR
+	icon_state = "black-map"
+#else
 	icon_state = "black"
+#endif
 
 /turf/unsimulated/wall/other
 	icon_state = "r_wall"

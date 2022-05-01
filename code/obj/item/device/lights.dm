@@ -87,9 +87,9 @@
 		return 1
 
 	attack_self(mob/user)
-		src.toggle(user)
+		src.toggle(user, TRUE)
 
-	proc/toggle(var/mob/user)
+	proc/toggle(var/mob/user, activated_inhand = FALSE)
 		if (src.broken)
 			name = "broken flashlight"
 			return
@@ -112,11 +112,16 @@
 				icon_state = icon_broken
 				name = "broken [name]"
 				src.broken = 1
+				return
 			else
 				light_dir.update(1)
 		else
 			set_icon_state(src.icon_off)
 			light_dir.update(0)
+
+		if (activated_inhand)
+			var/obj/ability_button/flashlight_toggle/flashlight_button = locate(/obj/ability_button/flashlight_toggle) in src.ability_buttons
+			flashlight_button.icon_state = src.on ? "lighton" : "lightoff"
 
 /obj/item/device/light/flashlight/abilities = list(/obj/ability_button/flashlight_toggle)
 

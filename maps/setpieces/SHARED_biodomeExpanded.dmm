@@ -8943,11 +8943,11 @@
 /area/crypt/sigma/crew)
 "kEQ" = (
 /obj/table/auto,
-/obj/item/implant/projectile/bardart,
-/obj/item/implant/projectile/bardart{
+/obj/item/implant/projectile/body_visible/dart/bardart,
+/obj/item/implant/projectile/body_visible/dart/bardart{
 	pixel_x = -3
 	},
-/obj/item/implant/projectile/bardart{
+/obj/item/implant/projectile/body_visible/dart/bardart{
 	pixel_x = -6
 	},
 /turf/unsimulated/floor/blue/side{

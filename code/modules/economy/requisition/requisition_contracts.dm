@@ -11,6 +11,32 @@
 	entryize.count = number_of
 	return entryize
 
+/**
+ * Proc to test a standard market contract for functionality. Test special orders with random event trigger instead.
+ *
+ * Will add the contract to requisitions list and pin the contract, ignoring the one-pin limit or any contract type pin restrictions.
+ * Don't use this in live rounds, pin behavior will be wonky.
+ */
+/client/proc/TestMarketReq()
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
+	set name = "Requisition Test"
+	set desc = "Generates a specified requisition path and pins it to market."
+
+	var/contract_path = input("Specify type path", "Requisition", null, null)
+	if (!contract_path) return
+	if (istext(contract_path))
+		contract_path = text2path(contract_path)
+	if (!ispath(contract_path))
+		boutput(usr, "<span class='alert'>Requisition test failed - no path specified.</span>")
+		return
+	var/datum/req_contract/new_contract = new contract_path
+	if(!istype(new_contract))
+		boutput(usr, "<span class='alert'>Requisition test failed - invalid type path.</span>")
+		return
+	shippingmarket.req_contracts += new_contract
+	new_contract.pinned = TRUE
+	boutput(usr, "Pinned [new_contract.name] to shipping market.")
+
 //contract entries: contract creation instantiates these for "this much of whatever"
 //these entries each have their own "validation protocol", automatically set up when instantiated
 
@@ -80,13 +106,13 @@ ABSTRACT_TYPE(/datum/rc_entry/stack)
 	var/typepath
 	///Optional alternate type path to look for. Useful when an item has two functionally interchangeable forms, such as raw or refined ore.
 	var/typepath_alt
-	///Commodity path. If defined, will augment the per-item payout with the highest market rate for that commodity, and set the type path.
+	///Commodity path. If defined, will augment the per-item payout with the highest market rate for that commodity, and set the type path if not initially specified.
 	var/commodity
 
 	New()
 		if(src.commodity) // Fetch configuration data from commodity if specified
 			var/datum/commodity/CM = src.commodity
-			src.typepath = initial(CM.comtype)
+			if(!src.typepath) src.typepath = initial(CM.comtype)
 			src.feemod += initial(CM.baseprice)
 			src.feemod += initial(CM.upperfluc)
 		..()
@@ -95,7 +121,7 @@ ABSTRACT_TYPE(/datum/rc_entry/stack)
 		. = ..()
 		if(rollcount >= count) return // Standard skip-if-complete
 		if(!istype(eval_item)) return // If it's not an item, it's not a stackable
-		if(eval_item.type == typepath || (typepath_alt && eval_item.type == typepath_alt))
+		if(istype(eval_item,typepath) || (typepath_alt && istype(eval_item,typepath_alt)))
 			rollcount += eval_item.amount
 			. = TRUE // Let manager know passed eval item is claimed by contract
 
@@ -105,10 +131,15 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent)
 	entryclass = RC_REAGENT
 	///IDs of reagents being looked for in the evaluation; can be a single one in string form, or a list containing several strings.
 	var/chem_ids = "water"
+	///Reagent container type: optionally set this to a path to require reagents be contained in that particular thing to count.
+	var/contained_in
+	///Plural description of that container - beakers, patches, pills, etc. First letter capitalized. Should be set if contained_in is set.
+	var/container_name
 
 	rc_eval(atom/eval_item)
 		. = ..()
 		if(rollcount >= count) return //standard skip-if-complete
+		if(contained_in && !istype(eval_item,contained_in)) return // Do we have a required container type? If so, validate it
 		if(eval_item.reagents)
 			var/C // Total count of matching reagents, by unit
 			if(islist(src.chem_ids)) // If there are multiple reagents to evaluate, iterate by chem IDs
@@ -214,7 +245,7 @@ ABSTRACT_TYPE(/datum/req_contract)
  */
 /datum/req_contract
 	///Title of the contract as used by the requisitions clearinghouse seen in the QM supply computer
-	var/name = "Gary's Secret Mission"
+	var/name = "Requisition Contract"
 	///Class of the requisition contract, defaulting to misc (0); aid requisitions are urgent and will not wait for you
 	var/req_class = MISC_CONTRACT
 	///Requisition code used for standard contracts; is automatically generated if not specified, but can be manually set if desired
@@ -252,34 +283,67 @@ ABSTRACT_TYPE(/datum/req_contract)
 				if(RC_ITEM)
 					src.requis_desc += "[rce.count]x [rce.name]<br>"
 				if(RC_REAGENT)
-					src.requis_desc += "[rce.count]+ unit[s_es(rce.count)] of [rce.name]<br>"
+					var/datum/rc_entry/reagent/rchem = rce
+					if(rchem.container_name)
+						src.requis_desc += "[rchem.container_name] containing [rchem.count]+ unit[s_es(rchem.count)] of [rchem.name]<br>"
+					else
+						src.requis_desc += "[rchem.count]+ unit[s_es(rchem.count)] of [rchem.name]<br>"
 				if(RC_STACK)
 					src.requis_desc += "[rce.count]+ [rce.name]<br>"
 				if(RC_SEED)
 					var/datum/rc_entry/seed/rceed = rce
-					src.requis_desc += "[rce.count]x [rceed.cropname] seed with following traits:<br>"
-					for(var/index in rceed.gene_reqs)
-						if(index == "Maturation" || index == "Production")
-							src.requis_desc += "* [index]: [rceed.gene_reqs[index]] or lower<br>"
-						else
-							src.requis_desc += "* [index]: [rceed.gene_reqs[index]] or higher<br>"
+					if(length(rceed.gene_reqs))
+						src.requis_desc += "[rce.count]x [rceed.cropname] seed with following traits:<br>"
+						for(var/index in rceed.gene_reqs)
+							if(index == "Maturation" || index == "Production")
+								src.requis_desc += "* [index]: [rceed.gene_reqs[index]] or lower<br>"
+							else
+								src.requis_desc += "* [index]: [rceed.gene_reqs[index]] or higher<br>"
+					else
+						src.requis_desc += "[rce.count]x [rceed.cropname] seed<br>"
 			src.payout += rce.feemod * rce.count
 
 	proc/requisify(obj/storage/crate/sell_crate)
-		var/contents = list() //everything in crate
+		var/contents_index = list() //registry of everything in crate, including contents of item containers within it
 		var/contents_to_cull = list() //things consumed to fulfill the requisition, extras are sent back
 		var/successes_needed = length(src.rc_entries) //decremented with each successful fulfillment, reach 0 to win
 
-		contents += sell_crate.contents
-		for(var/obj/item/storage/S in contents)
-			contents |= S.get_all_contents()
+		contents_index += sell_crate.contents
+
+		for(var/obj/item/storage/S in sell_crate.contents)
+			contents_index += S.get_all_contents()
 
 		. = REQ_RETURN_NOSALE //by default return no success
-		for(var/atom/A in contents)
+
+		//item boxes can require evaluation of items that don't physically exist, so they need special logic
+		for(var/obj/item/item_box/IB in contents_index)
+			LAGCHECK(LAG_LOW)
+			contents_index -= IB
+			if(IB.item_amount < 1) return //no empty or infinite box evals
+			contents_index += IB.contents //evaluate real items through conventional means
+			var/illusory_contents = IB.item_amount - length(IB.contents) //how many nonexistent items we have to iterate over
+			var/box_satisfies = FALSE
+
+			if(illusory_contents && IB.contained_item)
+				var/testbench_item = new IB.contained_item //create a temporary example item to check
+				while(illusory_contents > 0)
+					illusory_contents--
+					for(var/datum/rc_entry/shoppin in rc_entries)
+						if(shoppin.rc_eval(testbench_item))
+							box_satisfies = TRUE
+				qdel(testbench_item)
+
+			if(box_satisfies)
+				contents_to_cull += IB
+
+		for(var/atom/A in contents_index)
 			LAGCHECK(LAG_LOW)
 			for(var/datum/rc_entry/shoppin in rc_entries)
 				if(shoppin.rc_eval(A)) //found something that the requisition asked for, let it know
-					contents_to_cull |= A
+					if(A.loc != sell_crate && isobj(A.loc)) //if you sent your stuff in an item container, it'll be kept
+						contents_to_cull |= A.loc
+					else
+						contents_to_cull += A
 
 		for(var/datum/rc_entry/shopped in rc_entries)
 			if(shopped.rollcount >= shopped.count)
@@ -287,7 +351,7 @@ ABSTRACT_TYPE(/datum/req_contract)
 
 		if(!successes_needed)
 			if(src.req_code == "REQ-THIRDPARTY") //third party sales do not preserve leftover items, returns are only done if there is an item reward
-				for(var/atom/X in contents)
+				for(var/atom/X in contents_index)
 					if(X) qdel(X)
 				return REQ_RETURN_FULLSALE
 			if(src.pinned) shippingmarket.has_pinned_contract = FALSE //tell shipping market pinned contract was fulfilled

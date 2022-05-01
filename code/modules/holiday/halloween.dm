@@ -438,7 +438,7 @@
 			src.uses--
 			if (uses == 0)
 				boutput(user, "<span class='combat'>The book crumbles away into dust! How spooooooky!</span>")
-				src.dropped()
+				src.dropped(user)
 				qdel(src)
 
 		return

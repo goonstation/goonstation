@@ -11,6 +11,8 @@
 	var/maxZ = 0
 
 dmm_suite
+	var/flags
+	var/list/area_cache
 
 	/*-- read_map ------------------------------------
 	Generates map instances based on provided DMM formatted text. If coordinates
@@ -18,7 +20,10 @@ dmm_suite
 	coordinates saved with the map will be used. Otherwise, coordinates will
 	default to (1, 1, world.maxz+1)
 	*/
-	read_map(dmm_text as text, coordX as num, coordY as num, coordZ as num, tag as text, overwrite as num)
+	read_map(dmm_text as text, coordX as num, coordY as num, coordZ as num, tag as text, flags as num)
+		src.flags = flags
+		if(flags & DMM_BESPOKE_AREAS)
+			src.area_cache = list()
 		var/datum/loadedProperties/props = new()
 		props.sourceX = coordX
 		props.sourceY = coordY
@@ -102,7 +107,7 @@ dmm_suite
 			var/gridCoordY = text2num(coordShifts[posZ][2])  + coordY - 1
 			var/gridCoordZ = text2num(coordShifts[posZ][3])  + coordZ - 1
 
-			if(overwrite && posZ == 1) // do this only once so we don't delete our own stuff if it's big!!!
+			if(flags && posZ == 1) // do this only once so we don't delete our own stuff if it's big!!!
 				for(var/internalPosZ = 1 to gridLevels.len)
 					var/igridCoordX = text2num(coordShifts[internalPosZ][1]) + coordX - 1
 					var/igridCoordY = text2num(coordShifts[internalPosZ][2])  + coordY - 1
@@ -112,9 +117,9 @@ dmm_suite
 						for(var/posX = 1 to length(yLine)/key_len)
 							var/turf/T = locate(posX + igridCoordX - 1, posY+igridCoordY - 1, igridCoordZ)
 							for(var/x in T)
-								if(istype(x, /obj) && overwrite & DMM_OVERWRITE_OBJS && !istype(x, /obj/overlay))
+								if(istype(x, /obj) && flags & DMM_OVERWRITE_OBJS && !istype(x, /obj/overlay))
 									qdel(x)
-								else if(istype(x, /mob) && overwrite & DMM_OVERWRITE_MOBS)
+								else if(istype(x, /mob) && flags & DMM_OVERWRITE_MOBS)
 									qdel(x)
 								LAGCHECK(LAG_MED)
 
@@ -215,9 +220,13 @@ dmm_suite
 			// Handle Areas (not created every time)
 			var /atom/instance
 			if(ispath(atomPath, /area))
-				//instance = locate(atomPath)
-				//instance.contents.Add(locate(xcrd, ycrd, zcrd))
-				new atomPath(locate(xcrd, ycrd, zcrd))
+				if(src.flags & DMM_BESPOKE_AREAS)
+					if(!(atomPath in src.area_cache))
+						src.area_cache[atomPath] = new atomPath
+					var/area/ar = src.area_cache[atomPath]
+					ar.contents += locate(xcrd, ycrd, zcrd)
+				else
+					new atomPath(locate(xcrd, ycrd, zcrd))
 				location.dmm_preloader = null
 			// Handle Underlay Turfs
 			else if(istype(atomPath, /mutable_appearance))

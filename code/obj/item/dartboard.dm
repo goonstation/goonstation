@@ -12,7 +12,7 @@
 
 	Crossed(atom/movable/M)
 		..()
-		if (istype(M, /obj/item/implant/projectile/bardart) && M.dir == 1)
+		if (istype(M, /obj/item/implant/projectile/body_visible/dart/bardart) && M.dir == 1)
 			M.pixel_y += rand(22,38)
 			M.pixel_x += rand(-8,8)
 			last_score = rand(1,60)
@@ -26,4 +26,4 @@
 	name = "Lawn Darts box"
 	desc = "Contains three darts, hours of outdoors fun guaranteed!"
 	icon_state = "box"
-	spawn_contents = list(/obj/item/implant/projectile/lawndart = 3)
+	spawn_contents = list(/obj/item/implant/projectile/body_visible/dart/lawndart = 3)

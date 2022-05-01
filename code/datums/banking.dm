@@ -165,7 +165,7 @@
 				t["current_money"] += t["wage"]
 				station_budget -= t["wage"]
 			else
-				command_alert("The station budget appears to have run dry. We regret to inform you that no further wage payments are possible until this situation is rectified.","Payroll Announcement")
+				command_alert("The station budget appears to have run dry. We regret to inform you that no further wage payments are possible until this situation is rectified.","Payroll Announcement", alert_origin = ALERT_STATION)
 				wagesystem.pay_active = 0
 				break
 
@@ -677,11 +677,11 @@
 					if (wagesystem.pay_active)
 						wagesystem.pay_active = 0
 						logTheThing("station", usr, null, "suspends the station payroll.")
-						command_alert("The payroll has been suspended until further notice. No further wages will be paid until the payroll is resumed.","Payroll Announcement")
+						command_alert("The payroll has been suspended until further notice. No further wages will be paid until the payroll is resumed.","Payroll Announcement", alert_origin = ALERT_STATION)
 					else
 						wagesystem.pay_active = 1
 						logTheThing("station", usr, null, "resumes the station payroll.")
-						command_alert("The payroll has been resumed. Wages will now be paid into employee accounts normally.","Payroll Announcement")
+						command_alert("The payroll has been resumed. Wages will now be paid into employee accounts normally.","Payroll Announcement", alert_origin = ALERT_STATION)
 				else if(href_list["transfer"])
 					var/transfrom = input("Transfer from which?", "Budgeting", null, null) in list("Payroll", "Shipping", "Research")
 					if (!transfrom)

@@ -773,7 +773,8 @@
 			src.was_harmed(thr.user, AM)
 
 	TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
-		hit_twitch(src)
+		if (brute > 0 || burn > 0 || tox > 0)
+			hit_twitch(src)
 		if (nodamage)
 			return
 		var/datum/healthHolder/Br = get_health_holder("brute")
