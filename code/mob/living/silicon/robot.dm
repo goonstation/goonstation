@@ -1097,6 +1097,7 @@
 					boutput(user, "The link port sparks violently! It didn't work!")
 					logTheThing("station", src, null, "[constructName(user)] tried to connect [src] to the rack [constructName(src.law_rack_connection)] but they are emagged, so it failed.")
 					elecflash(src,power=2)
+					return
 
 				if(src.law_rack_connection && !src.syndicate)
 					var/raw = tgui_alert(user,"Do you want to overwrite the linked rack?", "Linker", list("Yes", "No"))
