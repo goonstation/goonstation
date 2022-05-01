@@ -946,7 +946,7 @@
 		if (istype(item, /obj/item/spacecash))
 			var/obj/item/spacecash/S = item
 			if (S.amount > 500)
-				boutput(user, "<span class='alert'><b>[src.name] beeps, it don't accept bills larger than $500!<b></span>")
+				boutput(user, "<span class='alert'><b>[src.name] beeps, it don't accept bills larger than 500[CREDIT_SIGN]!<b></span>")
 				return 0
 
 			gang.score_cash += round(S.amount/CASH_DIVISOR)
