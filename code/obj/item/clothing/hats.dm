@@ -277,6 +277,13 @@ proc/filter_trait_hats(var/type)
 		..()
 		setProperty("meleeprot_head", 3)
 
+/obj/item/clothing/head/det_hat/folded_spybot
+	desc = "Someone who wears this will look very smart. It looks a bit heavier than it should."
+
+	attack_self(mob/user as mob)
+		new /mob/living/critter/scuttlebot(get_turf(src))
+		qdel(src)
+
 //THE ONE AND ONLY.... GO GO GADGET DETECTIVE HAT!!!
 /obj/item/clothing/head/det_hat/gadget
 	name = "DetGadget hat"
