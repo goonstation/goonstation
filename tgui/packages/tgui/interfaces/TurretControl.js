@@ -11,7 +11,7 @@ const randInt = (a, b) => {
   return Math.floor(Math.random() * (b - a + 1)) + a;
 };
 
-// warning, that semicolon is actually a greek question mark. DO NOT let it escape into your code.
+// this is a totally real and normal semicolon I promise
 const glitches = ['$', '{', ']', '%', '^', '?', '>', '¬', 'π', ';', 'и', 'ю', '/', '#', '~'];
 const glitch = (text, amount) => {
   for (let i = 0; i < amount; i++) {
