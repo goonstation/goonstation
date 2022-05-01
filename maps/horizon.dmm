@@ -32401,7 +32401,7 @@
 	dir = 4;
 	doordir = "left";
 	icon_state = "bdoorleft1";
-	id = "hangar_syndicate";
+	id = "hangar_listeningpost";
 	name = "external blast door";
 	autoclose = 1
 	},
@@ -52787,7 +52787,7 @@
 	},
 /obj/machinery/door/poddoor/blast{
 	dir = 4;
-	id = "hangar_syndicate";
+	id = "hangar_listeningpost";
 	name = "external blast door";
 	autoclose = 1
 	},
@@ -56860,7 +56860,7 @@
 	dir = 4;
 	doordir = "right";
 	icon_state = "bdoorright1";
-	id = "hangar_syndicate";
+	id = "hangar_listeningpost";
 	name = "external blast door";
 	autoclose = 1
 	},
@@ -57624,7 +57624,9 @@
 	name = "Hilarious Storage A"
 	})
 "oVu" = (
-/obj/machinery/door_control/podbay/syndicate/new_walls/east,
+/obj/machinery/door_control/podbay/syndicate/new_walls/east{
+	id = "hangar_listeningpost"
+	},
 /turf/simulated/floor/shuttlebay,
 /area/listeningpost/power)
 "oWg" = (
