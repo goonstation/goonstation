@@ -451,16 +451,6 @@
 /obj/item/proc/combust(obj/item/W) // cogwerks- flammable items project
 	if(src.burning || (src in by_cat[TR_CAT_BURNING_ITEMS]))
 		return
-	#ifdef RP_MODE
-	var/area/A = get_area(src)
-	if (A)
-		if (emergency_shuttle.location == SHUTTLE_LOC_STATION)
-			if (istype(A, /area/shuttle/escape/station))
-				return
-		else if (emergency_shuttle.location == SHUTTLE_LOC_TRANSIT)
-			if (istype(A, /area/shuttle/escape/transit))
-				return
-	#endif
 	START_TRACKING_CAT(TR_CAT_BURNING_ITEMS)
 	src.visible_message("<span class='alert'>[src] catches on fire!</span>")
 	src.burning = 1
