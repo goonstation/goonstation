@@ -1036,6 +1036,12 @@ Frequency:
 		else
 			return ..()
 
+	disposing()
+		available_ai_shells -= src
+		..()
+
+
+
 /*-----Shell-Creation---------------------------------------*/
 
 /obj/item/ai_interface

@@ -788,6 +788,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	icon = 'icons/obj/scrap.dmi'
 	icon_state = "bullet"
 	desc = "A spent bullet."
+	var/bleed_time = 60
 	var/bleed_timer = 0
 	var/forensic_ID = null // match a bullet to a gun holy heckkkkk
 
@@ -866,11 +867,62 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		desc = "A bunch of jagged shards of metal."
 		icon_state = "2metal2"
 
-	dart
-		name = "dart"
-		icon = 'icons/obj/chemical.dmi'
-		desc = "A small hollow dart."
-		icon_state = "syringeproj"
+	body_visible
+		bleed_time = 0
+		var/barbed = FALSE
+		var/pull_out_name = ""
+
+		dart
+			name = "dart"
+			pull_out_name = "dart"
+			icon = 'icons/obj/chemical.dmi'
+			desc = "A small hollow dart."
+			icon_state = "syringeproj"
+
+			tranq_dart_sleepy
+				name = "spent tranquilizer dart"
+				desc = "A small tranquilizer dart, emptied of its contents. Useful for putting animals (or people!) to sleep."
+				icon_state = "tranqdart_red"
+
+				New()
+					..()
+					implant_overlay = image(icon = 'icons/mob/human.dmi', icon_state = "tranqdart_red_stick_[rand(0, 4)]", layer = MOB_EFFECT_LAYER)
+
+			tranq_dart_sleepy_barbed
+				name = "barbed tranquilizer dart"
+				desc = "An empty tranquilizer dart, with a barbed tip. It was likely loaded with some bad stuff..."
+				icon_state = "tranqdart_red_barbed"
+				barbed = TRUE
+
+				New()
+					..()
+					implant_overlay = image(icon = 'icons/mob/human.dmi', icon_state = "tranqdart_red_stick_[rand(0, 4)]", layer = MOB_EFFECT_LAYER)
+
+			tranq_dart_mutadone
+				name = "spent tranquilizer dart"
+				desc = "A small tranquilizer dart, emptied of its contents. This one is specialized for removing genetic mutations."
+				icon_state = "tranqdart_green"
+
+				New()
+					..()
+					implant_overlay = image(icon = 'icons/mob/human.dmi', icon_state = "tranqdart_green_stick_[rand(0, 4)]", layer = MOB_EFFECT_LAYER)
+
+		syringe
+			name = "spent syringe round"
+			pull_out_name = "syringe"
+			desc = "A syringe round, of the type that is fired from a syringe gun. Whatever was inside is completely gone."
+			icon = 'icons/obj/chemical.dmi'
+			icon_state = "syringeproj"
+
+			New()
+				..()
+				implant_overlay = image(icon = 'icons/mob/human.dmi', icon_state = "syringe_stick_[rand(0, 4)]", layer = MOB_EFFECT_LAYER)
+
+			syringe_barbed
+				name = "barbed syringe round"
+				desc = "An empty syringe round, of the type that is fired from a syringe gun. It has a barbed tip. Nasty!"
+				icon_state = "syringeproj_barbed"
+				barbed = TRUE
 
 	blowdart
 		name = "blowdart"
@@ -892,22 +944,28 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		desc = "A weird flechette-like projectile."
 		icon_state = "blowdart"
 
-/obj/item/implant/projectile/implanted(mob/living/carbon/C, var/mob/I, var/bleed_time = 60)
+/obj/item/implant/projectile/implanted(mob/living/carbon/C, mob/I)
 	SEND_SIGNAL(src, COMSIG_IMPLANT_IMPLANTED, C)
+	implanted = 1
+	owner = C
+
 	if (!istype(C) || !isnull(I)) //Don't make non-organics bleed and don't act like a launched bullet if some doofus is just injecting it somehow.
 		return
 
-	if (C != src.owner)
-		src.owner = C
+	if (implant_overlay)
+		C.update_clothing()
+
+	if (!src.bleed_time)
+		return
 
 	src.blood_DNA = src.owner.bioHolder.Uid
 
 	for (var/obj/item/implant/projectile/P in C)
 		if (P.bleed_timer)
-			P.bleed_timer = max(bleed_time, P.bleed_timer)
+			P.bleed_timer = max(src.bleed_time, P.bleed_timer)
 			return
 
-	src.bleed_timer = bleed_time
+	src.bleed_timer = src.bleed_time
 	SPAWN(0.5 SECONDS)
 //		boutput(C, "<span class='alert'>You start bleeding!</span>") // the blood system takes care of this bit now
 		src.bleed_loop()
@@ -1691,13 +1749,17 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 /* ------------------------- Throwing Darts ---------------------- */
 /* =============================================================== */
 
-/obj/item/implant/projectile/bardart
+/obj/item/implant/projectile/body_visible/dart/bardart
 	name = "dart"
 	desc = "An object of d'art."
 	w_class = W_CLASS_TINY
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "dart"
 	throw_spin = 0
+
+	New()
+		..()
+		implant_overlay = image(icon = 'icons/mob/human.dmi', icon_state = "dart_stick_[rand(0, 4)]", layer = MOB_EFFECT_LAYER)
 
 	throw_impact(atom/M, datum/thrown_thing/thr)
 		..()
@@ -1708,14 +1770,14 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 			playsound(src.loc, "sound/impact_sounds/Flesh_Cut_1.ogg", 100, 1)
 			random_brute_damage(M, 1)
 			src.set_loc(M)
-			src.implanted = 1
+			src.implanted(M)
 
 	attack_hand(mob/user as mob)
 		src.pixel_x = 0
 		src.pixel_y = 0
 		..()
 
-/obj/item/implant/projectile/lawndart
+/obj/item/implant/projectile/body_visible/dart/lawndart
 	name = "lawn dart"
 	desc = "An oversized plastic dart with a metal spike at the tip. Fun for the whole family!"
 	w_class = W_CLASS_TINY
@@ -1723,6 +1785,10 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 	icon_state = "lawndart"
 	throw_spin = 0
 	throw_speed = 3
+
+	New()
+		..()
+		implant_overlay = image(icon = 'icons/mob/human.dmi', icon_state = "dart_stick_[rand(0, 4)]", layer = MOB_EFFECT_LAYER)
 
 	throw_impact(atom/M, datum/thrown_thing/thr)
 		..()
@@ -1735,4 +1801,4 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 			random_brute_damage(M, 20)//if it can get in you, it probably doesn't give a damn about your armor
 			take_bleeding_damage(M, null, 10, DAMAGE_CUT)
 			src.set_loc(M)
-			src.implanted = 1
+			src.implanted(M)

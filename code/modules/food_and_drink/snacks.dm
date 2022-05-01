@@ -30,7 +30,7 @@
 	icon = 'icons/obj/foodNdrink/food_yuck.dmi'
 	icon_state = "fried"
 	food_effects = list("food_warm")
-	use_bite_mask = 0
+	use_bite_mask = FALSE
 	var/charcoaliness = 0 // how long it cooked - can be used to quickly check grill level
 
 	on_finish(mob/eater)
@@ -522,6 +522,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	initial_volume = 100
 	food_effects = list("food_warm")
 	dropped_item = /obj/item/reagent_containers/food/drinks/bowl
+	use_bite_mask = FALSE
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/tortilla_chip))
@@ -2844,7 +2845,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "ramen"
 	needfork = TRUE
-	amount = 5
+	heal_amt = 2
+	bites_left = 5
 	initial_volume = 20
 	initial_reagents = "soysauce"
 	food_effects = list("food_brute","food_energized","food_warm")
@@ -2855,7 +2857,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "udon"
 	needfork = TRUE
-	amount = 5
+	heal_amt = 3
+	bites_left = 5
 	initial_volume = 20
 	initial_reagents = "soysauce"
 	food_effects = list("food_hp_up","food_explosion_resist","food_warm")
@@ -2866,7 +2869,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "udon_curry"
 	needfork = TRUE
-	amount = 5
+	heal_amt = 3
+	bites_left = 5
 	initial_volume = 20
 	initial_reagents = "currypowder"
 	food_effects = list("food_hp_up","food_refreshed","food_warm")

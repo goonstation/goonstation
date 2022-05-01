@@ -80,6 +80,8 @@
 		else if (isscrewingtool(W) && src.securable)
 			src.toggle_secure(user)
 			return
+		else if (istype(W, /obj/item/cloth/towel))
+			user.visible_message("<span class='notice'>[user] wipes down [src] with [W].</span>")
 		else
 			return ..()
 

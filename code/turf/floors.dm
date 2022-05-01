@@ -1814,16 +1814,15 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 
 		// Don't replace with an [else]! If a prying tool is found above [intact] might become 0 and this runs too, which is how floor swapping works now! - BatElite
 		if (!intact)
-			restore_tile()
-			src.plate_mat = src.material
-			if(C.material)
-				src.setMaterial(C.material)
-			playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+			if(T.change_stack_amount(-1))
+				restore_tile()
+				src.plate_mat = src.material
+				if(C.material)
+					src.setMaterial(C.material)
+				playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 
-			if(!istype(src.material, /datum/material/metal/steel))
-				logTheThing("station", user, null, "constructs a floor (<b>Material:</b>: [src.material && src.material.name ? "[src.material.name]" : "*UNKNOWN*"]) at [log_loc(src)].")
-
-			T.change_stack_amount(-1)
+				if(!istype(src.material, /datum/material/metal/steel))
+					logTheThing("station", user, null, "constructs a floor (<b>Material:</b>: [src.material && src.material.name ? "[src.material.name]" : "*UNKNOWN*"]) at [log_loc(src)].")
 			//if(T && (--T.amount < 1))
 			//	qdel(T)
 			//	return

@@ -30,6 +30,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 	event_handler_flags = USE_GRAB_CHOKE | USE_FLUID_ENTER
 	special_grab = /obj/item/grab
 	inventory_counter_enabled = 1
+	material_amt = 1 / 30
 
 	var/datum/material/insulator = null
 	var/datum/material/conductor = null

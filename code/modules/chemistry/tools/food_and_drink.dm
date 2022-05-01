@@ -106,7 +106,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	rand_pos = 1
 	var/has_cigs = 0
 
-	var/use_bite_mask = 1
+	var/use_bite_mask = TRUE
 	var/current_mask = 5
 	var/list/food_effects = list()
 	var/create_time = 0
@@ -359,7 +359,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				for (var/effect in src.food_effects)
 					L.add_food_bonus(effect, src)
 
-		if (use_bite_mask)
+		if (use_bite_mask && initial(bites_left))
 			var/desired_mask = (bites_left / initial(bites_left)) * 5
 			desired_mask = round(desired_mask)
 			desired_mask = max(1,desired_mask)
