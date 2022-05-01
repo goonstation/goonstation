@@ -53252,7 +53252,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/medical/robotics)
 "eSH" = (
 /obj/storage/closet/law,
 /obj/item/reagent_containers/patch/nicotine,
