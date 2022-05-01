@@ -48745,16 +48745,13 @@
 /obj/landmark/artifact,
 /turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
-"cuk" = (
-/turf/simulated/wall/auto/gannets,
-/area/listeningpost)
 "cul" = (
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/wall/auto/gannets,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
 "cum" = (
 /obj/machinery/shuttle/engine/heater{
@@ -48831,11 +48828,8 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/space)
-"cux" = (
-/turf/simulated/wall/auto/reinforced/gannets,
-/area/syndicate_teleporter)
 "cuy" = (
-/turf/simulated/wall/auto/gannets,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/syndicate_teleporter)
 "cuz" = (
 /obj/stool/bed,
@@ -48862,11 +48856,14 @@
 	icon_state = "bedsheet-red";
 	name = "syndicate bedsheet"
 	},
-/obj/item/reagent_containers/food/drinks/bottle/ntbrew,
+/obj/item/reagent_containers/food/drinks/bottle/ntbrew{
+	pixel_y = 4;
+	pixel_x = -8
+	},
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost)
 "cuC" = (
-/turf/simulated/wall/auto/reinforced/gannets,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
 "cuD" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -48944,7 +48941,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/wall/auto/gannets,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/syndicate_teleporter)
 "cuO" = (
 /obj/machinery/vending/standard,
@@ -48992,7 +48989,10 @@
 	brightness = 2;
 	dir = 4
 	},
-/obj/item/reagent_containers/food/drinks/bottle/hobo_wine,
+/obj/item/reagent_containers/food/drinks/bottle/hobo_wine{
+	pixel_x = 5;
+	pixel_y = -5
+	},
 /turf/simulated/floor/grey/blackgrime,
 /area/listeningpost)
 "cuW" = (
@@ -49034,7 +49034,10 @@
 "cvc" = (
 /obj/table/wood/auto,
 /obj/item/crowbar,
-/obj/item/reagent_containers/food/drinks/chickensoup,
+/obj/item/reagent_containers/food/drinks/chickensoup{
+	pixel_y = 10;
+	pixel_x = -2
+	},
 /turf/simulated/floor/black/grime,
 /area/listeningpost)
 "cvd" = (
@@ -49107,7 +49110,17 @@
 /turf/simulated/floor/grey/blackgrime,
 /area/listeningpost)
 "cvp" = (
-/turf/simulated/wall/auto/gannets,
+/obj/machinery/power/furnace{
+	active = 1;
+	fuel = 600
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg3"
+	},
 /area/listeningpost/power)
 "cvq" = (
 /obj/machinery/light/small{
@@ -49141,10 +49154,21 @@
 /area/listeningpost/power)
 "cvv" = (
 /obj/table/auto,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/device/t_scanner,
-/obj/item/wrench,
-/obj/item/mining_tool/power_pick,
+/obj/item/storage/toolbox/mechanical{
+	pixel_y = -11;
+	pixel_x = -3
+	},
+/obj/item/device/t_scanner{
+	pixel_y = 9;
+	pixel_x = -6
+	},
+/obj/item/wrench{
+	pixel_y = 6
+	},
+/obj/item/mining_tool/power_pick{
+	pixel_y = -1;
+	pixel_x = 8
+	},
 /turf/simulated/floor/black,
 /area/listeningpost)
 "cvw" = (
@@ -49197,15 +49221,29 @@
 /area/listeningpost/power)
 "cvF" = (
 /obj/table/wood/auto,
-/obj/item/storage/firstaid/regular,
-/obj/item/bandage,
+/obj/item/storage/firstaid/regular{
+	pixel_x = -3;
+	pixel_y = 10
+	},
+/obj/item/bandage{
+	pixel_x = 7;
+	pixel_y = 4
+	},
 /turf/simulated/floor/carpet/red/fancy/edge/north,
 /area/listeningpost/power)
 "cvG" = (
 /obj/table/wood/auto,
-/obj/item/reagent_containers/food/drinks/bottle/tequila,
-/obj/item/card_group/plain,
-/obj/item/spacecash/hundred,
+/obj/item/reagent_containers/food/drinks/bottle/tequila{
+	pixel_x = -5;
+	pixel_y = 12
+	},
+/obj/item/card_box/plain{
+	pixel_x = 7;
+	pixel_y = 8
+	},
+/obj/item/spacecash/hundred{
+	pixel_y = -4
+	},
 /turf/simulated/floor/carpet/red/fancy/edge/north,
 /area/listeningpost/power)
 "cvH" = (
@@ -49249,9 +49287,15 @@
 /area/listeningpost/power)
 "cvM" = (
 /obj/table/auto,
-/obj/item/storage/toolbox/electrical,
-/obj/item/clothing/gloves/yellow,
-/obj/item/device/multitool,
+/obj/item/storage/toolbox/electrical{
+	pixel_y = 6
+	},
+/obj/item/clothing/gloves/yellow{
+	pixel_y = -3
+	},
+/obj/item/device/multitool{
+	pixel_x = -8
+	},
 /obj/machinery/light/small{
 	brightness = 2;
 	dir = 4
@@ -49265,7 +49309,9 @@
 /area/space)
 "cvO" = (
 /obj/table/wood/auto,
-/obj/item/cigpacket,
+/obj/item/cigpacket{
+	pixel_x = 3
+	},
 /turf/simulated/floor/black/grime,
 /area/listeningpost)
 "cvP" = (
@@ -49343,9 +49389,17 @@
 /area/listeningpost/power)
 "cvX" = (
 /obj/table/wood/auto,
-/obj/item/clothing/suit/wcoat,
-/obj/item/matchbook,
-/obj/item/pen/marker/red,
+/obj/item/clothing/suit/wcoat{
+	pixel_x = 2
+	},
+/obj/item/matchbook{
+	pixel_x = 6;
+	pixel_y = 9
+	},
+/obj/item/pen/marker/red{
+	pixel_y = 3;
+	pixel_x = -6
+	},
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -49447,11 +49501,19 @@
 "cwg" = (
 /obj/table/auto,
 /obj/item/sheet/glass/reinforced{
-	amount = 50
+	amount = 50;
+	pixel_y = 4;
+	pixel_x = 4
 	},
 /obj/item/storage/belt/utility,
-/obj/item/chem_grenade/metalfoam,
-/obj/item/chem_grenade/metalfoam,
+/obj/item/chem_grenade/metalfoam{
+	pixel_y = -1;
+	pixel_x = 7
+	},
+/obj/item/chem_grenade/metalfoam{
+	pixel_y = -3;
+	pixel_x = 4
+	},
 /turf/simulated/floor/black,
 /area/listeningpost)
 "cwh" = (
@@ -49479,7 +49541,10 @@
 	desc = "You bet your grandma would like this.";
 	name = "antique plate"
 	},
-/obj/item/item_box/banana,
+/obj/item/item_box/banana{
+	pixel_y = 8;
+	pixel_x = -4
+	},
 /obj/machinery/power/apc/autoname_west/noaicontrol,
 /turf/simulated/floor/black/grime,
 /area/listeningpost)
@@ -49565,7 +49630,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/wall/auto/gannets,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
 "cww" = (
 /obj/item/raw_material/scrap_metal,
@@ -49601,8 +49666,13 @@
 /area/listeningpost)
 "cwE" = (
 /obj/table/wood/auto,
-/obj/item/pinpointer,
-/obj/item/paper/printout/emerg1,
+/obj/item/pinpointer{
+	pixel_x = -3
+	},
+/obj/item/paper/printout/emerg1{
+	pixel_x = 4;
+	pixel_y = 5
+	},
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
 "cwF" = (
@@ -49767,7 +49837,7 @@
 /turf/simulated/floor/black/grime,
 /area/listeningpost)
 "cxc" = (
-/turf/simulated/wall/auto/reinforced/gannets,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/power)
 "cxd" = (
 /obj/machinery/door/airlock/syndicate,
@@ -49783,7 +49853,13 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/simulated/floor/plating/airless/asteroid/lighted,
+/obj/machinery/light/small{
+	brightness = 2;
+	dir = 4
+	},
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg3"
+	},
 /area/listeningpost/power)
 "cxf" = (
 /turf/space,
@@ -49952,7 +50028,15 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/wall/auto/gannets,
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/storage/crate/furnacefuel,
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg3"
+	},
 /area/listeningpost/power)
 "cxB" = (
 /obj/lattice{
@@ -50091,13 +50175,12 @@
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/listeningpost/power)
 "cxR" = (
-/obj/lattice,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/space,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/power)
 "cxS" = (
 /obj/lattice{
@@ -52856,7 +52939,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/mining/refinery)
 "eal" = (
-/obj/decal/fakeobjects/sink,
+/obj/submachine/chef_sink,
 /turf/simulated/floor/grey/blackgrime,
 /area/listeningpost)
 "eam" = (
@@ -55959,6 +56042,11 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/sand,
 /area/station/hallway/primary/central)
+"lGb" = (
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/listeningpost/power)
 "lGe" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
@@ -56437,6 +56525,14 @@
 /obj/disposalpipe/segment/bent/west,
 /turf/simulated/floor/red/checker,
 /area/station/hallway/secondary/exit)
+"mzJ" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/listeningpost/power)
 "mBx" = (
 /obj/grille/steel,
 /obj/disposalpipe/segment,
@@ -136434,9 +136530,9 @@ aaa
 aab
 aab
 aab
-akY
-akY
-akY
+pqC
+pqC
+pqC
 aab
 aab
 aab
@@ -136736,7 +136832,7 @@ aab
 aab
 aab
 aab
-akY
+pqC
 aac
 aac
 aac
@@ -137037,8 +137133,8 @@ aab
 aab
 aab
 aab
-akY
-akY
+pqC
+pqC
 aac
 aac
 aac
@@ -137339,7 +137435,7 @@ aab
 aab
 aab
 aab
-akY
+pqC
 ctW
 aac
 aac
@@ -137641,7 +137737,7 @@ aab
 aab
 aab
 aab
-akY
+pqC
 aac
 aac
 aac
@@ -139166,9 +139262,9 @@ aab
 aab
 aab
 aab
-cuk
-cuk
-cuk
+cuC
+cuC
+cuC
 cuC
 aab
 aab
@@ -139466,9 +139562,9 @@ aab
 aab
 aab
 aab
-cuk
-cuk
-cuk
+cuC
+cuC
+cuC
 cvO
 cwi
 cuC
@@ -139769,7 +139865,7 @@ cuC
 cuC
 cuC
 cuC
-cuk
+cuC
 cvz
 cuY
 cwj
@@ -140071,7 +140167,7 @@ cuC
 cuH
 cuU
 cuH
-cuk
+cuC
 cvA
 cvP
 cwj
@@ -140381,7 +140477,7 @@ cwC
 cxb
 aac
 aac
-adl
+pqC
 aab
 aab
 aab
@@ -140671,20 +140767,20 @@ aaa
 aaa
 aab
 aab
-cuk
-cuk
+cuC
+cuC
 cuV
 cvh
-cuk
+cuC
 cvk
 cvR
 cwl
 cwD
-cuk
-adl
+cuC
+pqC
 cxN
-adl
-adl
+pqC
+pqC
 aab
 aab
 aaa
@@ -140974,14 +141070,14 @@ aaa
 aab
 aab
 aab
-cuk
-cuk
-cuk
-cuk
+cuC
+cuC
+cuC
+cuC
 cvB
 cvS
-cvp
-cvp
+cxc
+cxc
 cxc
 cxc
 cxc
@@ -141276,10 +141372,10 @@ aaa
 aaa
 aac
 aab
-cuk
+cuC
 cuW
 cvi
-cuk
+cuC
 cvC
 cvT
 cwm
@@ -141880,10 +141976,10 @@ aaa
 aaa
 aac
 aab
-cuk
+cuC
 cuY
 cvk
-cuk
+cuC
 cvE
 cvV
 cwn
@@ -142182,10 +142278,10 @@ aaa
 aab
 aab
 aab
-cuk
+cuC
 cuZ
 cvl
-cuk
+cuC
 cvF
 cvW
 cwo
@@ -142482,12 +142578,12 @@ aaa
 aaa
 aaa
 aab
-cux
-cux
 cuy
 cuy
 cuy
-cvp
+cuy
+cuy
+cxc
 cvG
 cvX
 cwo
@@ -142784,7 +142880,7 @@ aaa
 aaa
 aaa
 aab
-cux
+cuy
 cuD
 cuK
 cuK
@@ -143086,7 +143182,7 @@ aaa
 aaa
 aab
 aab
-cux
+cuy
 cuE
 cuL
 cva
@@ -143388,7 +143484,7 @@ aaa
 aaa
 aab
 aab
-cux
+cuy
 cuF
 cuM
 cvb
@@ -143699,10 +143795,10 @@ cvt
 cvK
 cwb
 cws
+lGb
+lGb
 cvp
-cvp
-cvp
-cxP
+cxc
 cxP
 cxP
 aaa
@@ -143991,12 +144087,12 @@ aaa
 aab
 aab
 aab
-cuk
-cuk
-cuk
+cuC
+cuC
+cuC
 cuO
 cvc
-cuk
+cuC
 cod
 cvL
 cwc
@@ -144004,8 +144100,8 @@ cwt
 cwM
 cxe
 cxA
-cxQ
-aaa
+mzJ
+aac
 aaa
 aaa
 cyh
@@ -144291,21 +144387,21 @@ aaa
 aaa
 aaa
 aab
-cuk
-cuk
-cuk
-cuk
-cuk
+cuC
+cuC
+cuC
+cuC
+cuC
 cuP
 cvd
-cuk
-cuk
-cuk
+cuC
+cuC
+cuC
 cwd
-cuk
-cvp
-cvp
-cvp
+cuC
+cxc
+cxc
+cxc
 cxR
 cxY
 cxY
@@ -144593,18 +144689,18 @@ ctX
 ctX
 ctX
 aab
-cuk
-cuk
+cuC
+cuC
 cus
 cuz
-cuk
+cuC
 cuQ
 cve
 cvk
 cvk
 cuW
 cwe
-cuk
+cuC
 aab
 aab
 aaa
@@ -144899,7 +144995,7 @@ cul
 cup
 cut
 cuu
-cuk
+cuC
 cuR
 cvf
 cvj
@@ -145197,7 +145293,7 @@ ctX
 ctX
 ctX
 aab
-cuk
+cuC
 cuq
 cuu
 cuA
@@ -145208,7 +145304,7 @@ cuY
 cvv
 cvM
 cwg
-cuk
+cuC
 aab
 aaa
 aaa
@@ -145499,18 +145595,18 @@ aaa
 aaa
 aab
 aab
-cuk
-cuk
+cuC
+cuC
 cuv
 cuB
-cuk
+cuC
 icm
 cuY
 cuY
-cuk
-cuk
-cuk
-cuk
+cuC
+cuC
+cuC
+cuC
 aab
 aai
 aai
@@ -145802,15 +145898,15 @@ aaa
 aaa
 aab
 aab
-cuk
-cuk
-cuk
-cuk
-cuk
+cuC
+cuC
+cuC
+cuC
+cuC
 cvg
 cvn
-cuk
-cuk
+cuC
+cuC
 aab
 aab
 aab
@@ -146107,11 +146203,11 @@ aab
 aab
 aab
 aab
-cuk
-cuk
-cuk
-cuk
-cuk
+cuC
+cuC
+cuC
+cuC
+cuC
 aab
 aab
 aab
