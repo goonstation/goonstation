@@ -1,7 +1,6 @@
-/mob/living/critter/small_animal
-	name = "critter"
-	real_name = "critter"
-	desc = "you shouldn't be seeing this!"
+/mob/living/critter/scuttlebot
+	name = "scuttlebot"
+	desc = "A strangely hat shaped robot looking to spy on your deepest secrets"
 	density = 0
 	custom_gib_handler = /proc/gibs
 	hand_count = 1
@@ -9,42 +8,26 @@
 	can_throw = 1
 	can_grab = 1
 	can_disarm = 1
-	butcherable = 1
-	name_the_meat = 1
-	max_skins = 1
-	var/health_brute = 20 // moved up from birds since more than just they can use this, really
-	var/health_brute_vuln = 1
-	var/health_burn = 20
-	var/health_burn_vuln = 1
+	var/unified_health = 20
+	var/firevuln = 0.1
+	var/brutevuln = 1
 
-	var/fur_color = 0
-	var/eye_color = 0
-
-	var/is_pet = null // null = autodetect
-
-
-
-	New(loc)
-		if(isnull(src.is_pet))
-			src.is_pet = (copytext(src.name, 1, 2) in uppercase_letters)
-		if(in_centcom(loc) || current_state >= GAME_STATE_PLAYING)
-			src.is_pet = 0
-		if(src.is_pet)
-			START_TRACKING_CAT(TR_CAT_PETS)
+	New()
 		..()
+		abilityHolder.addAbility(/datum/targetable/critter/takepicture)
 
-		src.add_stam_mod_max("small_animal", -(STAMINA_MAX*0.5))
-
-	disposing()
-		if(src.is_pet)
-			STOP_TRACKING_CAT(TR_CAT_PETS)
+	setup_hands()
 		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/small_critter
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "handn"
+		HH.name = "claw"
+		HH.limb_name = "claws"
 
 	setup_healths()
 		add_hh_flesh(src.health_brute, src.health_brute_vuln)
 		add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
-		add_health_holder(/datum/healthHolder/toxin)
-		add_health_holder(/datum/healthHolder/brain)
 
 	Cross(atom/mover)
 		if (!src.density && istype(mover, /obj/projectile))
@@ -53,9 +36,18 @@
 			return ..()
 
 	death(var/gibbed)
+		..(gibbed, 0)
 		if (!gibbed)
-			src.unequip_all()
-		..()
+			make_cleanable(/obj/decal/cleanable/oil,src.loc)
+			src.audible_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
+			playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
+			elecflash(src, radius=1, power=3, exclude_center = 0)
+			//ghostize()
+			qdel(src)
+		else
+			make_cleanable(/obj/decal/cleanable/oil,src.loc)
 
+/*
 	canRideMailchutes()
-		return src.fits_under_table
+		return 1
+*/
