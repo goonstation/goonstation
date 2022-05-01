@@ -48846,7 +48846,9 @@
 	icon_state = "bedsheet-red";
 	name = "syndicate bedsheet"
 	},
-/obj/machinery/light/small,
+/obj/machinery/light/small{
+	brightness = 1.4
+	},
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost)
 "cuA" = (
@@ -48881,7 +48883,8 @@
 /area/syndicate_teleporter)
 "cuE" = (
 /obj/machinery/light/small{
-	dir = 1
+	dir = 1;
+	brightness = 1.5
 	},
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
@@ -48968,7 +48971,8 @@
 /area/listeningpost)
 "cuQ" = (
 /obj/machinery/light/small{
-	dir = 1
+	dir = 1;
+	brightness = 2
 	},
 /turf/simulated/floor/black,
 /area/listeningpost)
@@ -48994,7 +48998,7 @@
 	dir = 8
 	},
 /obj/machinery/light/small{
-	brightness = 2;
+	brightness = 1.8;
 	dir = 4
 	},
 /obj/item/reagent_containers/food/drinks/bottle/hobo_wine{
@@ -49019,8 +49023,7 @@
 /area/listeningpost)
 "cuZ" = (
 /obj/machinery/light/small{
-	dir = 1;
-	status = 2
+	dir = 1
 	},
 /obj/storage/closet/emergency,
 /turf/simulated/floor/black/grime,
@@ -49029,12 +49032,6 @@
 /obj/cable{
 	icon_state = "2-5"
 	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
-	},
-/area/syndicate_teleporter)
-"cvb" = (
-/obj/machinery/light/small,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
@@ -49080,7 +49077,9 @@
 /turf/simulated/floor/grey/blackgrime,
 /area/listeningpost)
 "cvi" = (
-/obj/machinery/light/small,
+/obj/machinery/light/small{
+	brightness = 1.5
+	},
 /turf/simulated/floor/black/grime,
 /area/listeningpost)
 "cvj" = (
@@ -49132,7 +49131,8 @@
 /area/listeningpost/power)
 "cvq" = (
 /obj/machinery/light/small{
-	dir = 1
+	dir = 1;
+	brightness = 1.4
 	},
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg3"
@@ -49199,7 +49199,8 @@
 /obj/disposalpipe/trunk,
 /obj/machinery/disposal,
 /obj/machinery/light/small{
-	dir = 1
+	dir = 1;
+	brightness = 1.4
 	},
 /turf/simulated/floor/black,
 /area/listeningpost)
@@ -49279,7 +49280,7 @@
 /area/listeningpost/power)
 "cvL" = (
 /obj/machinery/light/small{
-	brightness = 2;
+	brightness = 1.6;
 	dir = 4
 	},
 /obj/decal/cleanable/paper,
@@ -49305,7 +49306,7 @@
 	pixel_x = -8
 	},
 /obj/machinery/light/small{
-	brightness = 2;
+	brightness = 1.6;
 	dir = 4
 	},
 /turf/simulated/floor/black,
@@ -49707,7 +49708,9 @@
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
 "cwH" = (
-/obj/machinery/light/small,
+/obj/machinery/light/small{
+	brightness = 1.4
+	},
 /obj/cable{
 	icon_state = "4-9"
 	},
@@ -49862,7 +49865,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/light/small{
-	brightness = 2;
+	brightness = 1.4;
 	dir = 4
 	},
 /turf/simulated/floor/plating{
@@ -50011,7 +50014,8 @@
 "cxv" = (
 /obj/reagent_dispensers/fueltank,
 /obj/machinery/light/small{
-	dir = 1
+	dir = 1;
+	brightness = 1.4
 	},
 /turf/simulated/floor/shuttlebay,
 /area/listeningpost/power)
@@ -143525,7 +143529,7 @@ aab
 cuy
 cuF
 cuM
-cvb
+cuK
 cuy
 cvs
 cvJ
