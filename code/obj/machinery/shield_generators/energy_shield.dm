@@ -159,6 +159,10 @@
 		for (var/obj/machinery/door/D in orange(src.range,src))
 			if(!D.linked_forcefield && !istype(D,/obj/machinery/door/firedoor))
 				createDoorForcefield(D)
+
+		src.anchored = 1
+		src.active = 1
+
 		// update_nearby_tiles()
 		playsound(src.loc, src.sound_on, 50, 1)
 		if (src.power_level == 1)
