@@ -5137,7 +5137,7 @@ var/global/noir = 0
 		<title>Trait Management Panel</title>
 		<style>
 		table {
-			border:1px solid #ff4444;
+			border:1px solid #44aaff;
 			border-collapse: collapse;
 			width: 100%;
 		}
@@ -5148,7 +5148,7 @@ var/global/noir = 0
 		}
 
 		th {
-			background-color: #ff4444;
+			background-color: #44aaff;
 			color: white;
 			padding: 8px;
 			text-align: left;
