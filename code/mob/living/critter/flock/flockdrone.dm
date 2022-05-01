@@ -377,11 +377,11 @@
 				return "<b>[src]</b> stares intently[(param ? " at [param]." : ".")]"
 		if ("whistle", "beep", "burp")
 			if (src.emote_check(voluntary, 50))
-				playsound(src, "sound/misc/flockmind/flockdrone_beep[pick("1","2","3","4")].ogg", 60, 1)
+				playsound(src, "sound/misc/flockmind/flockdrone_beep[pick("1","2","3","4")].ogg", 30, 1)
 				return "<b>[src]</b> [act]s[(param ? " at [param]." : ".")]"
 		if ("scream", "growl", "abeep", "grump")
 			if (src.emote_check(voluntary, 50))
-				playsound(src, "sound/misc/flockmind/flockdrone_grump[pick("1","2","3")].ogg", 60, 1)
+				playsound(src, "sound/misc/flockmind/flockdrone_grump[pick("1","2","3")].ogg", 30, 1)
 				return "<b>[src]</b> beeps grumpily[(param? " at [param]!" : "!")]"
 		if ("fart") // i cannot ignore my heritage any longer
 			if (src.emote_check(voluntary, 50))
@@ -420,9 +420,9 @@
 		var/absorb = clamp(src.absorb_rate, 0, I.health)
 		I.health -= absorb
 		src.resources += src.absorb_per_health * absorb
-		playsound(src, "sound/effects/sparks[rand(1,6)].ogg", 50, 1)
+		playsound(src, "sound/effects/sparks[rand(1,6)].ogg", 30, 1)
 		if(I && I.health <= 0) // fix runtime Cannot read null.health
-			playsound(src, "sound/impact_sounds/Energy_Hit_1.ogg", 50, 1)
+			playsound(src, "sound/impact_sounds/Energy_Hit_1.ogg", 30, 1)
 			I.dropped(src)
 			if(I.contents.len > 0)
 				var/anything_tumbled = 0
