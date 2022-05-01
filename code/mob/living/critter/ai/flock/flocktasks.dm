@@ -1033,7 +1033,7 @@ butcher
 	. = (!actions.hasAction(holder.owner, "flock_decon")) // for whatever reason, the required action has stopped
 	if(.)
 		var/mob/living/critter/flock/drone/F = holder.owner
-		F?.flock?.deconstruct_targets -= holder.target
+		F?.flock?.toggleDeconstructionFlag(holder.target)
 
 /datum/aiTask/succeedable/deconstruct/on_tick()
 	if(!has_started)

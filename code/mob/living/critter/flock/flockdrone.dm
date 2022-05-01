@@ -921,7 +921,14 @@
 		boutput(user, "<span class='alert'>Not enough resources to convert (you need 20).</span>")
 	else
 		if(istype(target, /turf))
-			actions.start(new/datum/action/bar/flock_convert(target), user)
+			if (user.flock)
+				for (var/name in user.flock.busy_tiles)
+					if (user.flock.busy_tiles[name] == target && name != user.real_name)
+						boutput(user, "<span class='alert'>This tile has already been reserved!</span>")
+						return
+				actions.start(new/datum/action/bar/flock_convert(target), user)
+			else
+				actions.start(new/datum/action/bar/flock_convert(target), user)
 	if(user.a_intent == INTENT_HARM)
 		if(istype(target, /obj/flock_structure/ghost))
 			return
