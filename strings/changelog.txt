@@ -1,5 +1,9 @@
 
 (t)sun may 01 22
+(u)Bartimeus973
+(p)8262
+(e)🎨|sprites
+(*)Using the "regrow tail" ability as a reptilian will now make the tail twitchy for a bit!
 (u)Flaborized & TheMightyAltroll
 (p)8315
 (e)🆕🎨|feature, sprites
