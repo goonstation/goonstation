@@ -854,6 +854,14 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 			qdel(src)
 		else ..()
 
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)	//An apple a day, keeps the doctors away
+		if (ishuman(hit_atom))
+			var/mob/living/carbon/human/H = hit_atom
+			if(H.traitHolder.hasTrait("training_medical"))
+				random_brute_damage(H, 3)
+				boutput(H, "<span class='alert'>The apple flies true and hits you square in the face, hurting your nose.</span>")
+		..()
+
 /obj/item/reagent_containers/food/snacks/plant/apple/poison
 	name = "delicious-looking apple"
 	crop_prefix = "delicious-looking "
