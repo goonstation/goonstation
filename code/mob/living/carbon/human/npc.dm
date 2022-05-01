@@ -921,9 +921,9 @@
 		var/obj/storage/closet/C = src.loc
 		if (C.open)
 			C.close()
-			C.open()
+			C.open(user=src)
 		else
-			C.open()
+			C.open(user=src)
 
 	else if(istype(src.loc, /obj/vehicle/))
 		var/obj/vehicle/V = src.loc
@@ -969,10 +969,10 @@
 		return
 	for (var/obj/storage/closet/C in view(1,src))
 		if (!C.open)
-			C.open()
+			C.open(user=src)
 	for (var/obj/storage/secure/closet/S in view(1,src))
 		if (!S.open && !S.locked)
-			S.open()
+			S.open(user=src)
 
 
 #undef IS_NPC_HATED_ITEM

@@ -69,17 +69,22 @@
 
 		//Attach shit to tools
 		src.tools = list(
+			new /obj/item/device/light/flashlight(src),
 			new /obj/item/magtractor(src),
 			new /obj/item/tool/omnitool/silicon(src),
 			new /obj/item/rcd/material/cardboard(src),
 			new /obj/item/lamp_manufacturer(src),
+			new /obj/item/spraybottle/cleaner/robot/drone(src),
+			new /obj/item/sponge/ghostdronesafe(src),
 			new /obj/item/device/analyzer/atmospheric(src),
 			new /obj/item/device/t_scanner(src),
 			new /obj/item/electronics/soldering(src),
 			new /obj/item/electronics/scanner(src),
 			new /obj/item/deconstructor/borg(src),
 			new /obj/item/weldingtool(src),
-			new /obj/item/device/light/flashlight(src)
+			new /obj/item/tile/cardboard/fullstack(src)
+
+
 		)
 
 		var/obj/item/cable_coil/W = new /obj/item/cable_coil(src)
@@ -1034,7 +1039,6 @@
 			if (dd_hasprefix(message, ";"))
 				message = trim(copytext(message, 2, MAX_MESSAGE_LEN))
 				broadcast = 1
-
 		if (broadcast)
 			return src.drone_broadcast(message)
 		else

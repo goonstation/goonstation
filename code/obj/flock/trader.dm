@@ -20,7 +20,12 @@
 ////////////////
 /turf/simulated/shuttle/wall/flock
 	icon = 'icons/misc/featherzone.dmi'
+#ifdef UNDERWATER_MAP
+	color = OCEAN_COLOR
+	icon_state = "shuttle-wall-oshan"
+#else
 	icon_state = "shuttle-wall"
+#endif
 
 /////////////////
 // SHUTTLE FLOORS

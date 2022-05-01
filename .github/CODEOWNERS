@@ -42,6 +42,9 @@
 /code/modules/chemistry/Reagents-PoisonEtc.dm @Tarmunora
 /code/modules/chemistry/Chemistry-Recipes.dm @Tarmunora
 
+# Virvatuli
+/sound/ @virvatuli-gh
+
 # ZeWaka
 *.md @ZeWaka
 /.github/ @ZeWaka

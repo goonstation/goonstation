@@ -1068,7 +1068,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 		src.temp += "Requisition Code: [RC.req_code]<br><br>"
 		if(RC.flavor_desc) src.temp += "[RC.flavor_desc]<br><br>"
 		src.temp += "[RC.requis_desc]"
-		if(RC.req_class == AID_CONTRACT)
+		if(RC.req_class == AID_CONTRACT && !RC.pinned) // Cannot ordinarily be pinned. Unpin support included for contract testing.
 			src.temp += "URGENT - Cannot Be Reserved<br>"
 		else
 			src.temp += "<A href='[topicLink("pin_contract","\ref[RC]")]'>[RC.pinned ? "Unpin Contract" : "Pin Contract"]</A><br>"

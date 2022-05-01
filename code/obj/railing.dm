@@ -12,6 +12,7 @@
 	object_flags = HAS_DIRECTIONAL_BLOCKING
 	dir = SOUTH
 	custom_suicide = 1
+	material_amt = 0.1
 	var/broken = 0
 	var/is_reinforced = 0
 

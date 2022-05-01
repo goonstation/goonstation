@@ -42,24 +42,13 @@
 			var/mat_id
 
 			//Check for exploitable inputs and divide the result accordingly
-			var/div_factor = 1
+			var/div_factor = 1 / X.material_amt
 			var/second_mat = null
-			if (istype(X, /obj/item/sheet))
-				div_factor = 10
 
-			else if (istype(X, /obj/item/rods))
-				div_factor = 20
-
-			else if (istype(X, /obj/item/tile))
-				div_factor = 40
-
-			else if (istype(X, /obj/item/cable_coil))
+			if (istype(X, /obj/item/cable_coil))
 				var/obj/item/cable_coil/C = X
 				div_factor = 30
 				second_mat = C.conductor
-
-			else if (istype(X, /obj/item/raw_material/shard))
-				div_factor = 10
 
 			//Output processed amount if there is enough input material
 			var/out_amount = round(totalAmount/div_factor)
@@ -154,7 +143,7 @@
 			boutput(user, "<span class='notice'>You put \the [W] into \the [src].</span>")
 			user.u_equip(W)
 			W.set_loc(src)
-			W.dropped()
+			W.dropped(user)
 			return
 
 		return
@@ -247,7 +236,7 @@
 		if(W in user && !W.cant_drop)
 			user.u_equip(W)
 			W.set_loc(src.loc)
-			W.dropped()
+			W.dropped(user)
 
 
 		//if (istype(W, /obj/item/raw_material/) || istype(W, /obj/item/sheet/) || istype(W, /obj/item/rods/) || istype(W, /obj/item/tile/) || istype(W, /obj/item/cable_coil))
@@ -267,7 +256,7 @@
 		user.visible_message("<span class='notice'>[user] begins quickly stuffing [O] into [src]!</span>")
 		user.u_equip(O)
 		O.set_loc(src)
-		O.dropped()
+		O.dropped(user)
 		var/staystill = user.loc
 		for(var/obj/item/M in view(1,user))
 			if (!M || M.loc == user)

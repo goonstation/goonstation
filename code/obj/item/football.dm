@@ -47,7 +47,7 @@
 	desc = "Sharp cleats made for playing football at a professional level. They must be expensive!"
 	icon_state = "cleats"
 	item_state = "bl_shoes"
-	kick_bonus = 4
+	kick_bonus = 6
 	step_sound = "step_plating"
 	step_priority = STEP_PRIORITY_LOW
 	item_function_flags = IMMUNE_TO_ACID

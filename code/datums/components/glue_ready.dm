@@ -86,6 +86,8 @@ TYPEINFO(/datum/component/glue_ready)
 			boutput(user, "<span class='alert'>\The [glued_to]'s radiation dissolves the glue.</span>")
 		qdel(src)
 		return FALSE
+	if(istype(thing_glued, /obj/machinery/portapuke))
+		return FALSE
 	if(isturf(glued_to))
 		var/turf/glued_turf = glued_to
 		if(glued_turf.density)

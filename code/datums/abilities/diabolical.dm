@@ -330,7 +330,7 @@
 			usr.flags &= ~(NODRIFT | DOORPASS | TABLEPASS)
 			APPLY_ATOM_PROPERTY(usr, PROP_MOB_CANTMOVE, "floorswitching")
 			REMOVE_ATOM_PROPERTY(usr, PROP_MOB_NO_MOVEMENT_PUFFS, "floorswitching")
-			REMOVE_ATOM_PROPERTY(usr, PROP_MOB_NEVER_DENSE, "floorswitching")
+			REMOVE_ATOM_PROPERTY(usr, PROP_ATOM_NEVER_DENSE, "floorswitching")
 			usr.set_density(initial(usr.density))
 			animate_slide(floorturf, x_coeff * -slide_amount, y_coeff * -slide_amount, 4)
 			SPAWN(0.4 SECONDS)
@@ -348,7 +348,7 @@
 				if(usr)
 					REMOVE_ATOM_PROPERTY(usr, PROP_MOB_CANTMOVE, "floorswitching")
 					APPLY_ATOM_PROPERTY(usr, PROP_MOB_NO_MOVEMENT_PUFFS, "floorswitching")
-					APPLY_ATOM_PROPERTY(usr, PROP_MOB_NEVER_DENSE, "floorswitching")
+					APPLY_ATOM_PROPERTY(usr, PROP_ATOM_NEVER_DENSE, "floorswitching")
 					usr.flags |= NODRIFT | DOORPASS | TABLEPASS
 					usr.set_density(0)
 					usr.layer = 4

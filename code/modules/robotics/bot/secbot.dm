@@ -582,7 +582,11 @@
 					return
 
 				stuncount--
-				src.our_baton.do_stun(src, M, src.stun_type, 2)
+				if (check_target_immunity(M))
+					src.visible_message("<span class='alert'><B>[src] tries to stun [M] with the [src.our_baton] but the attack bounces off uselessly!</B></span>")
+					playsound(src, "sound/impact_sounds/Generic_Swing_1.ogg", 25, 1, -1)
+				else
+					src.our_baton.do_stun(src, M, src.stun_type, 2)
 				if (!stuncount && maxstuns-- <= 0)
 					src.KillPathAndGiveUp(KPAGU_CLEAR_PATH)
 				if (stuncount > 0)
@@ -1286,10 +1290,6 @@
 				return
 
 			var/uncuffable = 0
-			if (ishuman(master.target))
-				var/mob/living/carbon/human/H = master.target
-				if(!H.limbs.l_arm || !H.limbs.r_arm)
-					uncuffable = 1
 
 			if (!isturf(master.target.loc))
 				uncuffable = 1

@@ -1108,7 +1108,8 @@ datum/pump_ui/circulator_ui
 				next.Add(M)
 
 			last = target
-			target = pick(next)
+			if (length(next))
+				target = pick(next)
 
 	power_change()
 		..()

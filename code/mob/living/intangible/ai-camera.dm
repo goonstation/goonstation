@@ -107,7 +107,7 @@
 
 		src.closeContextActions()
 		// contextbuttons can also exist on our mainframe and the eye shares the same hud, fun stuff.
-		src.mainframe.closeContextActions()
+		src.mainframe?.closeContextActions()
 
 		if (src.mainframe)
 			src.mainframe.tracker.cease_track()
@@ -490,6 +490,11 @@
 		set category = "AI Commands"
 		mainframe?.open_map()
 
+	verb/rename_self()
+		set category = "AI Commands"
+		set name = "Change Designation"
+		set desc = "Change your name."
+		mainframe?.rename_self()
 
 //---TURF---//
 /turf/var/image/aiImage
@@ -520,7 +525,7 @@
 
 /obj/machinery/camera/proc/updateCoverage()
 	LAZYLISTADDUNIQUE(camerasToRebuild, src)
-	if (current_state > GAME_STATE_WORLD_INIT && !global.explosions.exploding)
+	if (current_state > GAME_STATE_WORLD_NEW && !global.explosions.exploding)
 		world.updateCameraVisibility()
 
 //---MISC---//

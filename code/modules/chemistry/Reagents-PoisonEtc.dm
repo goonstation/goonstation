@@ -340,25 +340,23 @@ datum
 			depletion_rate = 0.025
 			penetrates_skin = 0
 			target_organs = list("left_kidney","right_kidney","liver","stomach","intestines","spleen","pancreas")
+			flushing_multiplier = 0.15
 			var/counter = 1
-			var/flushing = 0.1 //standard efficacy against flushing
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 				if (!counter) counter = 1
 
-				if(holder.has_reagent("charcoal")) //to make it a tad harder to treat
-					holder.remove_reagent("charcoal", flushing * mult)
-				if(holder.has_reagent("penteticacid"))
-					holder.remove_reagent("penteticacid", flushing * mult)
-
 				switch(counter += (1 * mult))
 					if (75 to 125)
-						if (probmult(4))
-							M.emote(pick("sneeze","cough","moan","groan"))
+						if(isliving(M) && probmult(15))
+							var/mob/living/L = M
+							L.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1)
+						if (ishuman(M))
+							var/mob/living/carbon/human/H = M
+							if (H.organHolder)
+								H.organHolder.damage_organs(1*mult, 0, 1*mult, target_organs, 15)
 					if (125 to 175)
-						flushing = 1.5 //it gets a tad harder to cure here
-
 						if (probmult(8))
 							M.emote(pick("sneeze","cough","moan","groan"))
 						else if (probmult(5))
@@ -368,15 +366,13 @@ datum
 						if (ishuman(M))
 							var/mob/living/carbon/human/H = M
 							if (H.organHolder)
-								H.organHolder.damage_organs(1*mult, 0, 1*mult, target_organs, 20)
+								H.organHolder.damage_organs(1*mult, 0, 1*mult, target_organs, 25)
 					if (175 to INFINITY)
-						flushing = 3 // time to ramp up that flusher flushing
-
 						if (probmult(10))
 							M.emote(pick("sneeze","drool","cough","moan","groan"))
 						if (probmult(20))
 							boutput(M, "<span class='alert'>You feel weak and drowsy.</span>")
-							M.setStatus("drowsy", 5 SECONDS)
+							M.setStatus("slowed", 5 SECONDS)
 						if (probmult(8))
 							M.visible_message("<span class='alert'>[M] vomits a lot of blood!</span>")
 							playsound(M, "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1)
@@ -386,6 +382,7 @@ datum
 							M.setStatusMin("stunned", 6 SECONDS * mult)
 							M.take_toxin_damage(3)
 						M.change_eye_blurry(5, 5)
+						M.setStatus("drowsy", 10 SECONDS)
 						if (ishuman(M))
 							var/mob/living/carbon/human/H = M
 							if (H.organHolder)
@@ -564,6 +561,7 @@ datum
 						B.desc = "This bee looks very much like [M.real_name]. How peculiar."
 						B.beeKid = "#ffdddd"
 						B.UpdateIcon()
+						logTheThing("combat", M, null, "was gibbed by reagent [name].")
 						M.gib()
 				..()
 
@@ -725,6 +723,7 @@ datum
 								bleed(H, 500, 5) // you'll be gibbed in a moment you don't need it anyway
 								H.visible_message("<span class='alert'><B>A huge bee bursts out of [H]! OH FUCK!</B></span>")
 								qdel(H.organHolder.heart)
+								logTheThing("combat", H, null, "was gibbed by reagent [name].")
 								H.gib()
 				..()
 
@@ -1213,6 +1212,7 @@ datum
 					M.make_jittery(1000)
 					SPAWN(rand(20, 100))
 						if (M) //ZeWaka: Fix for null.gib
+							logTheThing("combat", M, null, "was gibbed by reagent [name].")
 							M.gib()
 					return
 

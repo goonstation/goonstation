@@ -19,7 +19,7 @@
 	health = 10
 	var/team_num
 
-	duration_remove = 6.5 SECONDS
+	duration_remove = 7.5 SECONDS
 
 	setupProperties()
 		..()

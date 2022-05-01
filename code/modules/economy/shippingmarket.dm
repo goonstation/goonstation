@@ -419,6 +419,7 @@
 					pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_SALES), "sender"="00000000", "message"="[returnmsg]")
 					pdaSignal.transmission_method = TRANSMISSION_RADIO
 					radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
+					return
 			if(req_contracts.Find(contract_to_clear))
 				req_contracts -= contract_to_clear
 				complete_orders += contract_to_clear
@@ -485,24 +486,6 @@
 						P.close()
 
 		shipped_thing.throw_at(target, 100, 1)
-
-	proc/clear_path_to_market()
-		var/list/turf/to_clear = get_path_to_market()
-		for(var/turf/T as anything in to_clear)
-			//Wacks asteroids and skip normal turfs that belong
-			if(istype(T, /turf/simulated/wall/asteroid))
-				var/turf/simulated/wall/asteroid/AST = T
-				AST.destroy_asteroid(dropOre=FALSE)
-				continue
-			else if(!istype(T, /turf/unsimulated))
-				continue
-
-			//Uh, make sure we don't block the shipping lanes!
-			for(var/atom/A in T)
-				if(A.density)
-					qdel(A)
-
-			LAGCHECK(LAG_MED)
 
 	proc/get_path_to_market()
 		var/list/bounds = get_area_turfs(/area/supply/delivery_point)

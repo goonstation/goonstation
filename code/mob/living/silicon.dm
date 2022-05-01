@@ -77,7 +77,7 @@
 		return
 	src.return_mainframe()
 	mainframe.eye_view()
-	mainframe.eyecam.set_loc(src)
+	mainframe.eyecam.set_loc(get_turf(src))
 
 // Moves this down from ai.dm so AI shells and AI-controlled cyborgs can use it too.
 // Also made it a little more functional and less buggy (Convair880).
@@ -627,7 +627,7 @@ var/global/list/module_editors = list()
 
 	logTheThing("station", src, null, "[src]'s status as a [role != "" ? "[role]" : "rogue robot"] was removed[persistent == 1 ? " (actual antagonist role unchanged)" : ""].[cause ? " Source: [constructTarget(cause,"combat")]" : ""]")
 	boutput(src, "<h2><span class='alert'>You have been deactivated, removing your antagonist status. Do not commit traitorous acts if you've been brought back to life somehow.</h></span>")
-	SHOW_ROGUE_BORG_REMOVED_TIPS(src)
+	src.show_antag_popup("rogueborgremoved")
 
 	src.law_rack_connection = ticker?.ai_law_rack_manager?.default_ai_rack
 	logTheThing("station", src, null, "[src.name] is connected to the default rack [constructName(src.law_rack_connection)] [cause ? " Source: [constructTarget(cause,"combat")]" : ""]")

@@ -215,6 +215,11 @@
 		if(check_target_immunity(donor))
 			return 0
 
+		if(donor.traitHolder?.hasTrait("weakorgans"))
+			brute *=2
+			burn *=2
+			tox *=2
+
 		if (islist(src.organ_list))
 			var/obj/item/organ/O = src.organ_list[organ]
 			if (istype(O))

@@ -462,54 +462,53 @@
 ABSTRACT_TYPE(/datum/projectile)
 datum/projectile
 	// These vars were copied from the an projectile datum. I am not sure which version, probably not 4407.
-	var
-		name = "projectile"
-		icon = 'icons/obj/projectiles.dmi'
-		icon_state = "bullet"	// A special note: the icon state, if not a point-symmetric sprite, should face NORTH by default.
-		icon_turf_hit = null // what kinda overlay they puke onto turfs when they hit
-		brightness = 0
-		color_red = 0
-		color_green = 0
-		color_blue = 0
-		color_icon = "#ffffff"
-		override_color = 0
-		power = 20               // How much of a punch this has
-		cost = 1                 // How much ammo this costs
-		max_range = PROJ_INFINITE_RANGE            // How many ticks can this projectile go for if not stopped, if it doesn't die from falloff
-		dissipation_rate = 2     // How fast the power goes away
-		dissipation_delay = 10   // How many tiles till it starts to lose power - not exactly tiles, because falloff works on ticks, and doesn't seem to quite match 1-1 to tiles.
-		                         // When firing in a straight line, I was getting doubled falloff values on the fourth tile from the shooter, as well as others further along. -Tarm
-		ks_ratio = 1.0           /* Kill/Stun ratio, when it hits a mob the damage/stun is based upon this and the power
-		                            eg 1.0 will cause damage = to power while 0.0 would cause just stun = to power */
+	var/name = "projectile"
+	var/icon = 'icons/obj/projectiles.dmi'
+	var/icon_state = "bullet"	// A special note: the icon state, if not a point-symmetric sprite, should face NORTH by default.
+	var/icon_turf_hit = null // what kinda overlay they puke onto turfs when they hit
+	var/brightness = 0
+	var/color_red = 0
+	var/color_green = 0
+	var/color_blue = 0
+	var/color_icon = "#ffffff"
+	var/override_color = 0
+	var/power = 20               // How much of a punch this has
+	var/cost = 1                 // How much ammo this costs
+	var/max_range = PROJ_INFINITE_RANGE            // How many ticks can this projectile go for if not stopped, if it doesn't die from falloff
+	var/dissipation_rate = 2     // How fast the power goes away
+	var/dissipation_delay = 10   // How many tiles till it starts to lose power - not exactly tiles, because falloff works on ticks, and doesn't seem to quite match 1-1 to tiles.
+									// When firing in a straight line, I was getting doubled falloff values on the fourth tile from the shooter, as well as others further along. -Tarm
+	var/ks_ratio = 1.0           /* Kill/Stun ratio, when it hits a mob the damage/stun is based upon this and the power
+	                                eg 1.0 will cause damage = to power while 0.0 would cause just stun = to power */
 
-		sname = "stun"           // name of the projectile setting, used when you change a guns setting
-		shot_sound = 'sound/weapons/Taser.ogg' // file location for the sound you want it to play
-		shot_sound_extrarange = 0 //should the sound have extra range?
-		shot_volume = 100		 // How loud the sound plays (thank you mining drills for making this a needed thing)
-		shot_number = 0          // How many projectiles should be fired, each will cost the full cost
-		shot_delay = 0.1 SECONDS          // Time between shots in a burst.
-		damage_type = D_KINETIC  // What is our damage type
-		hit_type = null          // For blood system damage - DAMAGE_BLUNT, DAMAGE_CUT and DAMAGE_STAB
-		hit_ground_chance = 0    // With what % do we hit mobs laying down
-		window_pass = 0          // Can we pass windows
-		obj/projectile/master = null
-		silentshot = 0           // Standard visible message upon bullet_act.
-		implanted                // Path of "bullet" left behind in the mob on successful hit
-		disruption = 0           // planned thing to deal with pod electronics / etc
-		zone = null              // todo: if fired from a handheld gun, check the targeted zone --- this should be in the goddamn obj
+	var/sname = "stun"           // name of the projectile setting, used when you change a guns setting
+	var/shot_sound = 'sound/weapons/Taser.ogg' // file location for the sound you want it to play
+	var/shot_sound_extrarange = 0 //should the sound have extra range?
+	var/shot_volume = 100		 // How loud the sound plays (thank you mining drills for making this a needed thing)
+	var/shot_number = 0          // How many projectiles should be fired, each will cost the full cost
+	var/shot_delay = 0.1 SECONDS          // Time between shots in a burst.
+	var/damage_type = D_KINETIC  // What is our damage type
+	var/hit_type = null          // For blood system damage - DAMAGE_BLUNT, DAMAGE_CUT and DAMAGE_STAB
+	var/hit_ground_chance = 0    // With what % do we hit mobs laying down
+	var/window_pass = 0          // Can we pass windows
+	var/obj/projectile/master = null
+	var/silentshot = 0           // Standard visible message upon bullet_act.
+	var/implanted                // Path of "bullet" left behind in the mob on successful hit
+	var/disruption = 0           // planned thing to deal with pod electronics / etc
+	var/zone = null              // todo: if fired from a handheld gun, check the targeted zone --- this should be in the goddamn obj
 
-		datum/material/material = null
+	var/datum/material/material = null
 
-		casing = null
-		reagent_payload = null
-		forensic_ID = null
-		precalculated = 1
+	var/casing = null
+	var/reagent_payload = null
+	var/forensic_ID = null
+	var/precalculated = 1
 
-		hit_object_sound = 0
-		hit_mob_sound = 0
+	var/hit_object_sound = 0
+	var/hit_mob_sound = 0
 
-		///if a fullauto-capable weapon should be able to fullauto this ammo type
-		fullauto_valid = 0
+	///if a fullauto-capable weapon should be able to fullauto this ammo type
+	var/fullauto_valid = 0
 
 	// Determines the amount of length units the projectile travels each tick
 	// A tile is 32 wide, 32 long, and 32 * sqrt(2) across.
@@ -653,6 +652,9 @@ datum/projectile/bullet/autocannon/huge
 
 datum/projectile/bullet/cannon
 	impact_range = 8
+
+datum/projectile/bullet/howitzer
+	impact_range = 28
 
 datum/projectile/bullet/glitch
 	impact_range = 4
@@ -934,6 +936,7 @@ datum/projectile/snowball
 	var/obj/projectile/Q = initialize_projectile(get_turf(reflector), P.proj_data, -P.xo, -P.yo, reflector)
 	if (!Q)
 		return null
+	SEND_SIGNAL(reflector, COMSIG_ATOM_PROJECTILE_REFLECTED)
 	Q.reflectcount = P.reflectcount + 1
 	if (ismob(P.shooter))
 		Q.mob_shooter = P.shooter

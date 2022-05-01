@@ -420,7 +420,7 @@
 			boutput(user, "<span class='notice'>[src] mulches up [W].</span>")
 			playsound(src.loc, "sound/impact_sounds/Slimy_Hit_4.ogg", 30, 1)
 			user.u_equip(W)
-			W.dropped()
+			W.dropped(user)
 			qdel( W )
 			return
 		else ..()
@@ -503,7 +503,7 @@
 
 			if (load)
 				user.u_equip(W)
-				W.dropped()
+				W.dropped(user)
 				qdel(W)
 				return
 			else  ..()

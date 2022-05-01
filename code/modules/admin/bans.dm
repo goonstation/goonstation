@@ -259,7 +259,7 @@ var/global/list/playersSeen = list()
 
 //Starts the dialog for banning a dude
 /client/proc/genericBanDialog(target)
-	if (src.holder && usr.level >= LEVEL_SA)
+	if (src.holder?.level >= LEVEL_SA)
 		var/mob/M
 		var/mobRef = 0
 		if (target && ismob(target))
@@ -267,27 +267,27 @@ var/global/list/playersSeen = list()
 			M = target
 
 		if (mobRef)
-			if (M.client && M.client.holder && (M.client.holder.level >= usr.level))
+			if (M.client && M.client.holder && (M.client.holder.level >= src.holder.level))
 				alert("You can't ban another admin you huge jerk!!!!!")
 				return null
 
 		var/data[] = new()
 
 		if (!mobRef)
-			data["ckey"] = input(usr, "Ckey (lowercase, only alphanumeric, no spaces, leave blank to skip)", "Ban") as null|text
+			data["ckey"] = input(src, "Ckey (lowercase, only alphanumeric, no spaces, leave blank to skip)", "Ban") as null|text
 			var/auto = alert("Attempt to autofill IP and compID with most recent?","Autofill?","Yes","No")
 			if (auto == "No")
-				data["compID"] = input(usr, "Computer ID", "Ban") as null|text
-				data["ip"] = input(usr, "IP Address", "Ban") as null|text
+				data["compID"] = input(src, "Computer ID", "Ban") as null|text
+				data["ip"] = input(src, "IP Address", "Ban") as null|text
 			else if (data["ckey"])
 				var/list/response
 				try
 					response = apiHandler.queryAPI("playerInfo/get", list("ckey" = data["ckey"]), forceResponse = 1)
 				catch ()
-					boutput(usr, "<span class='alert'>Failed to query API, try again later.</span>")
+					boutput(src, "<span class='alert'>Failed to query API, try again later.</span>")
 					return
 				if (text2num(response["seen"]) < 1)
-					boutput(usr, "<span class='alert'>No data found for target, IP and/or compID will be left blank.</span>")
+					boutput(src, "<span class='alert'>No data found for target, IP and/or compID will be left blank.</span>")
 				data["ip"] = response["last_ip"]
 				data["compID"] = response["last_compID"]
 		else
@@ -296,26 +296,26 @@ var/global/list/playersSeen = list()
 			data["ip"] = M.lastKnownIP
 
 		if (!data["ckey"] && !data["ip"] && !data["compID"])
-			boutput(usr, "<span class='alert'>You need to input a ckey or IP or computer ID, all cannot be blank.</span>")
+			boutput(src, "<span class='alert'>You need to input a ckey or IP or computer ID, all cannot be blank.</span>")
 			return null
 
-		boutput(usr, "<span class='alert'><b>You are currently banning the following player:</b></span>")
-		boutput(usr, "<b>Mob:</b> [mobRef ? M.name : "N/A"]")
-		boutput(usr, "<b>Key:</b> [data["ckey"] ? data["ckey"] : "N/A"] (IP: [data["ip"] ? data["ip"] : "N/A"], CompID: [data["compID"] ? data["compID"] : "N/A"])")
-		boutput(usr, "<span class='alert'><b>Make sure this is who you want to ban before continuing!</b></span>")
+		boutput(src, "<span class='alert'><b>You are currently banning the following player:</b></span>")
+		boutput(src, "<b>Mob:</b> [mobRef ? M.name : "N/A"]")
+		boutput(src, "<b>Key:</b> [data["ckey"] ? data["ckey"] : "N/A"] (IP: [data["ip"] ? data["ip"] : "N/A"], CompID: [data["compID"] ? data["compID"] : "N/A"])")
+		boutput(src, "<span class='alert'><b>Make sure this is who you want to ban before continuing!</b></span>")
 
-		var/reason = input(usr,"Reason for ban?","Ban") as null|text
+		var/reason = input(src,"Reason for ban?","Ban") as null|text
 		if(!reason)
-			boutput(usr, "<span class='alert'>You need to enter a reason for the ban.</span>")
+			boutput(src, "<span class='alert'>You need to enter a reason for the ban.</span>")
 			return
 		data["reason"] = reason
 
-		var/datum/game_server/game_server = global.game_servers.input_server(usr, "What server does the ban apply to?", "Ban", can_pick_all=TRUE)
+		var/datum/game_server/game_server = global.game_servers.input_server(src, "What server does the ban apply to?", "Ban", can_pick_all=TRUE)
 		if(isnull(game_server))
 			return null
 		data["server"] = istype(game_server) ? game_server.id : null // null = all servers
 
-		var/ban_time = input(usr,"How long will the ban be?","Ban") as null|anything in \
+		var/ban_time = input(src,"How long will the ban be?","Ban") as null|anything in \
 			list("Half-hour","One Hour","Six Hours","One Day","Half a Week","One Week","Two Weeks","One Month","Until Appeal","Permanent","Custom")
 		var/mins = 0
 		switch(ban_time)
@@ -340,18 +340,18 @@ var/global/list/playersSeen = list()
 			if("Permanent")
 				mins = 0
 			else
-				var/cust_mins = input(usr,"How many minutes? (1440 = one day)","BAN HE",1440) as null|num
+				var/cust_mins = input(src,"How many minutes? (1440 = one day)","BAN HE",1440) as null|num
 				if(!cust_mins)
-					boutput(usr, "<span class='alert'>No time entered, cancelling ban.</span>")
+					boutput(src, "<span class='alert'>No time entered, cancelling ban.</span>")
 					return null
 				if(cust_mins >= 525600)
-					boutput(usr, "<span class='alert'>Ban time too long. Ban shortened to one year (525599 minutes).</span>")
+					boutput(src, "<span class='alert'>Ban time too long. Ban shortened to one year (525599 minutes).</span>")
 					mins = 525599
 				else
 					mins = cust_mins
 		data["mins"] = mins
 		data["text_ban_length"] = ban_time
-		data["akey"] = usr.ckey
+		data["akey"] = src.ckey
 		return data
 	else
 		alert("You need to be at least a Secondary Administrator to ban players.")
@@ -431,32 +431,32 @@ var/global/list/playersSeen = list()
 
 
 /client/proc/editBanDialog(id, ckey, compID, ip, oreason, otimestamp)
-	if (src.holder && usr.level >= LEVEL_SA)
+	if (src.holder?.level >= LEVEL_SA)
 		var/CMinutes = (world.realtime / 10) / 60
 		var/remaining = (text2num(otimestamp) - CMinutes)
 		if(!remaining || remaining < 0) remaining = 0
 
 		var/data[] = new()
-		data["ckey"] = input(usr, "Ckey (lowercase, only alphanumeric, no spaces)", "Ban", ckey) as null|text
-		data["compID"] = input(usr, "Computer ID (leave blank to skip)", "Ban", compID) as null|text
-		data["ip"] = input(usr, "IP Address", "Ban", ip) as null|text
+		data["ckey"] = input(src, "Ckey (lowercase, only alphanumeric, no spaces)", "Ban", ckey) as null|text
+		data["compID"] = input(src, "Computer ID (leave blank to skip)", "Ban", compID) as null|text
+		data["ip"] = input(src, "IP Address", "Ban", ip) as null|text
 
 		if (!data["ckey"] && !data["ip"] && !data["compID"])
-			boutput(usr, "<span class='alert'>You need to input a ckey or a compID or an IP, all cannot be blank.</span>")
+			boutput(src, "<span class='alert'>You need to input a ckey or a compID or an IP, all cannot be blank.</span>")
 			return
 
-		var/reason = input(usr,"Reason for ban?","Ban", oreason) as null|text
+		var/reason = input(src,"Reason for ban?","Ban", oreason) as null|text
 		if(!reason)
-			boutput(usr, "<span class='alert'>You need to enter a reason for the ban.</span>")
+			boutput(src, "<span class='alert'>You need to enter a reason for the ban.</span>")
 			return
 		data["reason"] = reason
 
-		var/datum/game_server/game_server = global.game_servers.input_server(usr, "What server does the ban apply to?", "Ban", can_pick_all=TRUE)
+		var/datum/game_server/game_server = global.game_servers.input_server(src, "What server does the ban apply to?", "Ban", can_pick_all=TRUE)
 		if(isnull(game_server))
 			return
 		data["server"] = istype(game_server) ? game_server.id : null // null = all servers
 
-		var/ban_time = input(usr,"How long will the ban be? (select Custom to alter existing duration)","Ban") as null|anything in \
+		var/ban_time = input(src,"How long will the ban be? (select Custom to alter existing duration)","Ban") as null|anything in \
 			list("Half-hour","One Hour","Six Hours","One Day","Half a Week","One Week","One Month","Until Appeal","Permanent","Custom")
 		var/mins = 0
 		switch(ban_time)
@@ -479,12 +479,12 @@ var/global/list/playersSeen = list()
 			if("Permanent")
 				mins = 0
 			else
-				var/cust_mins = input(usr,"How many minutes? (1440 = one day)","BAN HE",remaining ? remaining : 1440) as null|num
+				var/cust_mins = input(src,"How many minutes? (1440 = one day)","BAN HE",remaining ? remaining : 1440) as null|num
 				if(!cust_mins)
-					boutput(usr, "<span class='alert'>No time entered, cancelling ban.</span>")
+					boutput(src, "<span class='alert'>No time entered, cancelling ban.</span>")
 					return
 				if(cust_mins >= 525600)
-					boutput(usr, "<span class='alert'>Ban time too long. Ban shortened to one year (525599 minutes).</span>")
+					boutput(src, "<span class='alert'>Ban time too long. Ban shortened to one year (525599 minutes).</span>")
 					mins = 525599
 				else
 					mins = cust_mins
@@ -493,7 +493,7 @@ var/global/list/playersSeen = list()
 		data["reason"] = reason
 		data["mins"] = mins
 		data["text_ban_length"] = ban_time
-		data["akey"] = usr.ckey
+		data["akey"] = src.ckey
 		editBan(data)
 
 		src.holder.banPanel()
@@ -551,8 +551,8 @@ var/global/list/playersSeen = list()
 
 
 /client/proc/deleteBanDialog(id, ckey, compID, ip, akey)
-	if (src.holder && usr.level >= LEVEL_SA)
-		if(alert(usr, "Are you sure you want to unban [ckey]?", "Confirmation", "Yes", "No") == "Yes")
+	if (src.holder?.level >= LEVEL_SA)
+		if(alert(src, "Are you sure you want to unban [ckey]?", "Confirmation", "Yes", "No") == "Yes")
 			var/data[] = new()
 			data["id"] = id
 			data["ckey"] = ckey
@@ -652,9 +652,9 @@ var/global/list/playersSeen = list()
 		src.holder.banPanel()
 	else
 		alert("UM, EXCUSE ME??  YOU AREN'T AN ADMIN, GET DOWN FROM THERE!")
-		usr << sound('sound/voice/farts/poo2.ogg')
-		logTheThing("admin", usr, null, "tried to access the ban panel")
-		logTheThing("diary", usr, null, "tried to access the ban panel", "admin")
+		src << sound('sound/voice/farts/poo2.ogg')
+		logTheThing("admin", src, null, "tried to access the ban panel")
+		logTheThing("diary", src, null, "tried to access the ban panel", "admin")
 	return
 
 

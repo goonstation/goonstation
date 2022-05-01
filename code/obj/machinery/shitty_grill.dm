@@ -56,7 +56,7 @@
 					M.HealDamage("All", 100, 100)
 				user.u_equip(W)
 				W.set_loc(src)
-				W.dropped()
+				W.dropped(user)
 				src.cooktime = 0
 				src.grillitem = W
 				src.on = 1
@@ -66,6 +66,7 @@
 				return
 			else
 				boutput(user, "<span class='alert'>Your hubris will not be tolerated.</span>")
+				logTheThing("user", user, null, "was gibbed by [src] ([src.type]) at [log_loc(user)].")
 				user.gib()
 				qdel(W)
 				return
@@ -117,7 +118,7 @@
 		src.visible_message("<span class='notice'>[user] slaps [W] onto the [src].</span>")
 		user.u_equip(W)
 		W.set_loc(src)
-		W.dropped()
+		W.dropped(user)
 		src.cooktime = 0
 		src.grillitem = W
 		src.on = 1
@@ -296,9 +297,9 @@
 		shittysteak.overlays = grillitem.overlays
 		shittysteak.set_loc(get_turf(src))
 		if (ismob(grillitem))
-			shittysteak.amount = 5
+			shittysteak.bites_left = 5
 		else
-			shittysteak.amount = src.grillitem.w_class
+			shittysteak.bites_left = src.grillitem.w_class
 		shittysteak.reagents = src.grillitem.reagents
 		shittysteak.reagents.my_atom = shittysteak
 

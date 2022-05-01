@@ -644,6 +644,11 @@
 		..()
 		setProperty("coldprot", 10)
 
+	Move()
+		. = ..()
+		if(src.Bed)
+			src.Bed.Move(src.loc)
+
 	New()
 		..()
 		src.UpdateIcon()
@@ -1040,6 +1045,8 @@
 	item_state = "s_suit"
 	c_flags = SPACEWEAR
 	body_parts_covered = TORSO|LEGS|ARMS
+	duration_remove = 6 SECONDS
+	duration_put = 6 SECONDS
 	permeability_coefficient = 0.1
 	protective_temperature = 1000
 
@@ -1283,32 +1290,58 @@
 	item_state = "space-neon"
 
 /obj/item/clothing/suit/space/custom // Used for nanofabs
+	icon_state = "spacemat"
+	inhand_image_icon = "s_suit"
+	item_state = "spacemat"
 	name = "bespoke space suit"
-	desc = "A suit that protects against low pressure environments, custom-made just for you!"
-	onMaterialChanged()
-		if(src.material)
-			if(material.hasProperty("thermal"))
-				var/prot = 100 - material.getProperty("thermal")
+	desc = "A custom built suit that protects your fragile body from hard vacuum."
+	var/datum/material/renf=null
+	var/prot = 0 //tired of this being initalized in the setup code so it gets a special place now
+
+	proc/setupReinforcement(var/datum/material/R) // passes the reinforcement variable, sets up protection
+		renf = R
+		if (src.material && renf)
+			if (src.material.hasProperty("thermal"))
+				var/prot = 100 - src.material.getProperty("thermal")
 				setProperty("coldprot", prot)
 				setProperty("heatprot", round(prot/2))
 			else
 				setProperty("coldprot", 30)
 				setProperty("heatprot", 15)
 
-			if(material.hasProperty("permeable"))
-				var/prot = 100 - material.getProperty("permeable")
-				setProperty("viralprot", prot)
+			if (src.material.hasProperty("permeable"))
+				var/permprot = 100 - src.material.getProperty("permeable")
+				setProperty("viralprot", permprot)
 			else
 				setProperty("viralprot", 40)
 
-			if(material.hasProperty("density"))
-				var/prot = round(material.getProperty("density") / 13)
-				setProperty("meleeprot", prot)
+			if(src.material.hasProperty("density"))
+				prot = round(src.material.getProperty("density") / 13)// for RANGED
 				setProperty("rangedprot", (0.2 + round(prot/10, 0.1)))
 			else
-				setProperty("meleeprot", 2)
 				setProperty("rangedprot", 0.4)
 
+			if(renf.hasProperty("density"))
+				prot = round(((renf.getProperty("density") / 20)+2), 0.5)// for MELEE- scaling of protection/density with formula y=(x/20)+2
+				prot = clamp(prot, 2, 6)// it shouldn't be outside these two numbers but just in case
+				setProperty("meleeprot", prot)
+
+				 // for MOVESPEED
+				var/clunk = round((((renf.getProperty("density")/20) /10)+0.3), 0.1) // one-line fuckyou code that scales speed between 0.3 and 0.7
+				clunk = clamp(clunk, 0.3, 0.7) // again, keep it safe
+				setProperty("space_movespeed", clunk)
+
+			else
+				setProperty("meleeprot", 3)
+				setProperty("space_movespeed", 0.6)
+
+
+
+	UpdateName()
+		if (src.material && renf)
+			name = "[renf]-reinforced [src.material] bespoke space suit"
+		else if (src.material)
+			name = " [src.material] bespoke space suit"
 // Sealab suits
 
 /obj/item/clothing/suit/space/diving

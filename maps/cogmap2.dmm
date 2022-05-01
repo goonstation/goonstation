@@ -419,24 +419,12 @@
 	detector_id = "AI Core";
 	dir = 4
 	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
 "aaZ" = (
@@ -496,23 +484,11 @@
 	area_access = 99;
 	detector_id = "AI Core"
 	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 2
-	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
 "abf" = (
@@ -1882,29 +1858,6 @@
 	dir = 4
 	},
 /area/station/turret_protected/ai_upload)
-"adY" = (
-/obj/cable,
-/obj/machinery/power/data_terminal,
-/obj/machinery/networked/secdetector{
-	area_access = 99;
-	detector_id = "AI Core";
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
-/area/station/turret_protected/ai)
 "adZ" = (
 /obj/cable{
 	d1 = 4;
@@ -2126,19 +2079,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/machinery/networked/secdetector,
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
 "aey" = (
@@ -4225,19 +4166,7 @@
 	detector_id = "AI Core";
 	dir = 1
 	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
 "ajz" = (
@@ -4706,19 +4635,7 @@
 	dir = 4
 	},
 /obj/machinery/power/data_terminal,
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
 "akC" = (
@@ -4820,19 +4737,7 @@
 	dir = 8
 	},
 /obj/machinery/power/data_terminal,
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
 "akM" = (
@@ -35536,23 +35441,11 @@
 	detector_id = "AI Core";
 	dir = 4
 	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "bDc" = (
@@ -35586,19 +35479,6 @@
 	area_access = 99;
 	detector_id = "AI Core"
 	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 4;
-	opacity = 1
-	},
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -35607,7 +35487,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "bDf" = (
@@ -38140,8 +38020,7 @@
 	id = "pt_laser";
 	name = "Beamline Interlock"
 	},
-/obj/window/reinforced/east,
-/obj/window/reinforced/west,
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor/circuit/off,
 /area/station/hangar/main)
 "bHN" = (
@@ -41841,23 +41720,11 @@
 	detector_id = "AI Core";
 	dir = 1
 	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "bNW" = (
@@ -41911,20 +41778,8 @@
 	detector_id = "AI Core";
 	dir = 8
 	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
 /obj/cable,
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "bOa" = (
@@ -46942,19 +46797,7 @@
 	name = "Brig Visitor Lockdown";
 	opacity = 0
 	},
-/obj/wingrille_spawn/auto,
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 2
-	},
+/obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "bYQ" = (
@@ -47473,17 +47316,9 @@
 /area/station/security/brig)
 "cab" = (
 /obj/table/reinforced/auto,
-/obj/window/reinforced/west{
-	dir = 1;
-	icon_state = "darkwindow";
-	layer = 3.1;
-	name = "divider window"
-	},
-/obj/window/reinforced/west{
-	dir = 2;
-	icon_state = "darkwindow";
-	layer = 3.1;
-	name = "divider window"
+/obj/railing/red/reinforced,
+/obj/railing/red/reinforced{
+	dir = 1
 	},
 /turf/simulated/floor/delivery,
 /area/station/security/brig)
@@ -47502,34 +47337,14 @@
 	name = "Brig Visitor Lockdown";
 	opacity = 0
 	},
-/obj/wingrille_spawn/auto,
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 2
-	},
+/obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "cad" = (
 /obj/table/reinforced/auto,
-/obj/window/reinforced/west{
-	dir = 1;
-	icon_state = "darkwindow";
-	layer = 3.1;
-	name = "divider window"
-	},
-/obj/window/reinforced/west{
-	dir = 2;
-	icon_state = "darkwindow";
-	layer = 3.1;
-	name = "divider window"
+/obj/railing/blue,
+/obj/railing/blue{
+	dir = 1
 	},
 /turf/simulated/floor/delivery,
 /area/station/hallway/primary/east)
@@ -48461,24 +48276,16 @@
 "ccr" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/table/reinforced/auto,
-/obj/window/reinforced/west{
-	dir = 1;
-	icon_state = "darkwindow";
-	layer = 3.1;
-	name = "divider window"
-	},
-/obj/window/reinforced/west{
-	dir = 2;
-	icon_state = "darkwindow";
-	layer = 3.1;
-	name = "divider window"
-	},
 /obj/item/decoration/ashtray{
 	butts = 5;
 	name = "grubby old ashtray"
 	},
 /obj/item/device/radio/intercom/brig{
 	broadcasting = 1
+	},
+/obj/railing/red/reinforced,
+/obj/railing/red/reinforced{
+	dir = 1
 	},
 /turf/simulated/floor/delivery,
 /area/station/security/brig)
@@ -48498,19 +48305,7 @@
 	name = "Brig Visitor Lockdown";
 	opacity = 0
 	},
-/obj/wingrille_spawn/auto,
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 2
-	},
+/obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "cct" = (
@@ -48521,20 +48316,12 @@
 	},
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/table/reinforced/auto,
-/obj/window/reinforced/west{
-	dir = 1;
-	icon_state = "darkwindow";
-	layer = 3.1;
-	name = "divider window"
-	},
-/obj/window/reinforced/west{
-	dir = 2;
-	icon_state = "darkwindow";
-	layer = 3.1;
-	name = "divider window"
-	},
 /obj/item/device/radio/intercom/brig{
 	broadcasting = 1
+	},
+/obj/railing/blue,
+/obj/railing/blue{
+	dir = 1
 	},
 /turf/simulated/floor/delivery,
 /area/station/hallway/primary/east)
@@ -73927,23 +73714,6 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/black,
 /area/research_outpost)
-"dip" = (
-/obj/wingrille_spawn/auto,
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 4;
-	opacity = 1
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/plating,
-/area/research_outpost)
 "diq" = (
 /obj/item/raw_material/rock,
 /obj/storage/crate/loot,
@@ -79359,8 +79129,7 @@
 	id = "pt_laser";
 	name = "Beamline Interlock"
 	},
-/obj/window/reinforced/east,
-/obj/window/reinforced/west,
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor/circuit/off,
 /area/station/hallway/primary/west)
 "qja" = (
@@ -94605,7 +94374,7 @@ abC
 doU
 aab
 dii
-dip
+htk
 sfG
 diN
 djb
@@ -140353,7 +140122,7 @@ abq
 abq
 bbx
 abq
-adY
+ajy
 aaX
 aaB
 aaF
