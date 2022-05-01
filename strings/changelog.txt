@@ -1,5 +1,9 @@
 
 (t)sun may 01 22
+(u)Flaborized & TheMightyAltroll
+(p)8315
+(e)🆕🎨|feature, sprites
+(*)Added a new wizard spell, 'Stave Of Thunder'. It can summon three lightning bolts to strike your foes with lingering disorientating electricity before needing to be recharged by recalling it. Awesome lightning bolt sound effect from TheMightyAltroll!
 (u)Chatauscours
 (p)8387
 (e)🗺|mapping
