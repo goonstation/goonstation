@@ -72,20 +72,21 @@
 
 	New()
 		..()
+		src.setItemSpecial(/datum/item_special/swipe)
 		new /obj/item/sawflyremote(src.loc)
 		if (prob(50)) // give em some sprite variety
 			icon_state = "clusterflyB"
 			icon_state_armed = "clusterflyB1"
 
 
-	prime() // I've de-spawnerized the spanwer grenade for sawflies and how I'm respawnerizing them. the irony.
+	prime() // I've de-spawnerized the spanwer grenade for sawflies and now I'm respawnerizing them. the irony.
 		var/turf/T = ..()
 		if (T)
 			new /obj/critter/gunbot/drone/buzzdrone/sawfly(T)
 		qdel(src)
 		return
 
-// controller
+// -------------------controller---------------
 
 /obj/item/sawflyremote
 	name = "Sawfly deactivator"
@@ -93,34 +94,58 @@
 	w_class = W_CLASS_TINY
 	flags = FPRINT | TABLEPASS
 	icon = 'icons/obj/items/device.dmi'
-	//inhand_image_icon = 'icons/mob/inhand/tools/omnitool.dmi'// find good inhand sprites
+	//inhand_image_icon = 'icons/mob/inhand/tools/omnitool.dmi'// find good inhand sprites later
 	icon_state = "sawflycontr"
 	var/alreadyhit = FALSE
+	var/emagged = FALSE
 
 	attack_self(mob/user as mob)
-		for(var/obj/critter/gunbot/drone/buzzdrone/sawfly/S in range(get_turf(src), 3))
-			S.foldself()
+		for(var/obj/critter/gunbot/drone/buzzdrone/sawfly/S in range(get_turf(src), 3)) // folds active sawflies
+			SPAWN(1 SECONDS)
+				if(emagged)
+					if(prob(10)) // controller break
+						boutput(user,"<span class='alert'> [src] suddenly falls apart!</span>")
+						qdel(src)
+					if(prob(50)) //sawfly break
+						S.visible_message("<span class='combat'>[S] buzzes oddly and starts to sprial out of control!</span>")
+						S.blowup()
+					else
+						S.foldself() //business as usual
+					return
+				else
+					S.foldself() // normal function
 
+		for(var/obj/item/old_grenade/spawner/sawfly/S in range(get_turf(src), 3)) // unfolds passive sawflies
+			S.visible_message("<span class='combat'>[S] suddenly springs open and its engine begins to start!</span>")
+			S.icon_state = S.icon_state_armed
+			SPAWN(S.det_time)
+				S.prime()
 
 	afterattack(obj/O as obj, mob/user as mob)
 		if (O.loc == user && O != src && istype(O, /obj/item/clothing))
-			boutput(user, "<span class='hint'>You hide the remote in your [O]. (Use the snap emote (ctrl+z) while wearing the clothing item to retrieve it.)</span>")
+			boutput(user, "<span class='hint'>You hide the remote in your [O]. (Use the snap emote (ctrl+z) while wearing the clothing to retrieve it.)</span>")
 			user.u_equip(src)
 			src.set_loc(O)
 			src.dropped(user)
 			return
-
 		..()
+
+	emag_act(var/mob/user)
+		boutput(user, "<span class='hint'> The controller buzzes..... oddly. You're unsure exactly what that did, but it did do something</span>")
+		icon_state = "sawflycontr1"
+		alreadyhit = TRUE
+		emagged = TRUE
+
 	attackby(obj/item/S as obj, mob/user as mob)
 		if(S.force < 3)
-			boutput(user, "<span class='hint'>You feel like you'd need something heftier to break the [src].")
+			boutput(user, "<span class='hint'>You feel like you'd need something heftier to break the [src].</span>")
 		else
 			if(alreadyhit)
-				boutput(user,"<span class='alert'> You smash the [src] into tiny bits!")
+				boutput(user,"<span class='alert'> You smash the [src] into tiny bits!</span>")
 				qdel(src)
 			else
 				icon_state = "sawflycontr1"
-				boutput(user,"<span class='alert'> You give the [src] a hefty whack.")
+				boutput(user,"<span class='alert'> You give the [src] a hefty whack.</span>")
 				alreadyhit = TRUE
 		..()
 

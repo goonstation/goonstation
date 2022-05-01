@@ -1325,7 +1325,7 @@
 				src.health = 0
 				src.CritterDeath()
 
-/obj/critter/gunbot/drone/buzzdrone/sawfly // the sawfly. For associated objects check sawfly.dm in the obj folder
+/obj/critter/gunbot/drone/buzzdrone/sawfly // For associated objects check sawfly.dm in the obj folder
 
 
 	name = "Sawfly"
@@ -1359,6 +1359,31 @@
 		N.tempname = src.name
 		N.temphp = src.health
 		qdel(src)
+
+	proc/blowup() // used in emagged controllers and has a chance to activate when they die
+
+		if(prob(66))
+			src.visible_message("<span class='combat'>[src]'s [pick("motor", "core", "fuel tank", "battery", "thruster")] [pick("combusts", "catches on fire", "ignites", "lights up", "immolates", "bursts into flames")]!")
+			fireflash(src,1,TRUE)
+
+		else
+			src.visible_message("<span class='combat'>[src]'s [pick("motor", "core", "head", "engine", "thruster")] [pick("overloads", "blows up", "catastrophically fails", "explodes")]!")
+			fireflash(src,0,TRUE)
+			explosion(src, get_turf(src), 0, 1, 2, 3)
+			qdel(src)
+
+		if(alive) // prevents weirdness from emagged controllers
+			qdel(src)
+
+	emp_act() //same thing as if you emagged the controller, but much higher chance
+		if(prob(80))
+			src.visible_message("<span class='combat'>[src] buzzes oddly and starts to sprial out of contro!</span>")
+			SPAWN(2 SECONDS)
+				src.blowup()
+		else
+			src.foldself()
+
+		src.blowup()
 
 
 	New()
@@ -1430,6 +1455,11 @@
 			if (user.a_intent == INTENT_HELP || INTENT_GRAB)
 				boutput(user, "You collapse [src].")
 				src.foldself()
+		else
+			if(prob(50))
+				boutput(user,"<span class='alert' In your attempt to pet the [src], you cut yourself on it's blades! </span>")
+				random_brute_damage(user, 7)
+				take_bleeding_damage(user, null, 7, DAMAGE_CUT, 1)
 		..()
 
 	CritterDeath() // rip lil guy
@@ -1469,19 +1499,10 @@
 
 		if(prob(25)) // congrats, little guy! You're special! You're going to blow up!
 			if(prob(70)) //decide whether or not people get a warning
-				src.visible_message("<span class='combat'>[src] makes a [pick("gentle", "odd", "slight", "weird", "barely audible", "concerning", "quiet")] [pick("hiss", "drone", "whir", "thump", "grinding sound", "creak")].......")
+				src.visible_message("<span class='combat'>[src] makes a [pick("gentle", "odd", "slight", "weird", "barely audible", "concerning", "quiet")] [pick("hiss", "drone", "whir", "thump", "grinding sound", "creak", "buzz", "khunk")].......")
 
-			SPAWN(deathtimer SECONDS) // wait for iiiittttt...
-
-				if(prob(66))// FWOOSH!
-					src.visible_message("<span class='combat'>[src]'s [pick("motor", "core", "fuel tank", "battery", "thruster")] [pick("combusts", "catches on fire", "ignites", "lights up", "immolates", "bursts into flames")]!")
-					fireflash(src,1,TRUE)
-
-				else // KERBLOOEY!
-					src.visible_message("<span class='combat'>[src]'s [pick("motor", "core", "head", "engine", "thruster")] [pick("overloads", "blows up", "catastrophically fails", "explodes")]!")
-					explosion(src, get_turf(src), 0, 1, 2, 3)
-					fireflash(src,0,TRUE)
-					qdel(src)
+			SPAWN(deathtimer SECONDS) // pause, for dramatic effect
+				src.blowup()
 
 
 
