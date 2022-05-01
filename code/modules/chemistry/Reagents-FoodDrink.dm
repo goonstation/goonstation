@@ -64,7 +64,7 @@ datum
 						for (var/obj/item/organ/O in H.organs)
 							if (O.bones)
 								O.bones.repair_damage(1 * mult)
-					if(H.mob_flags & IS_BONER)
+					if(H.mob_flags & IS_BONEY)
 						M.HealDamage("All", 1 * mult, 1 * mult)
 						if(probmult(15))
 							boutput(H, "<span class='notice'>The milk comforts your [pick("boanes","bones","bonez","boens","bowns","beaunes","brones","bonse")]!</span>")

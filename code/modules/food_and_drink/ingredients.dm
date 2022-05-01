@@ -822,7 +822,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles)
 		if(istype(W,/obj/item/reagent_containers/food/snacks/condiment/ketchup))
 			boutput(user, "<span class='notice'>You create [random_spaghetti_name()] with tomato sauce...</span>")
 			var/obj/item/reagent_containers/food/snacks/spaghetti/sauce/D
-			if (user.mob_flags & IS_BONER)
+			if (user.mob_flags & IS_BONEY)
 				D = new/obj/item/reagent_containers/food/snacks/spaghetti/sauce/skeletal(W.loc)
 				boutput(user, "<span class='alert'>... whoa, that felt good. Like really good.</span>")
 				user.reagents.add_reagent("bonerjuice",20)
