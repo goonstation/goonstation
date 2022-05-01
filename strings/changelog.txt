@@ -1,5 +1,9 @@
 
 (t)sun may 01 22
+(u)Chatauscours
+(p)8405
+(e)⚖|balance
+(*)Changed the chameleon suit to the chameleon outfit in the infiltrator class crate.
 (u)Bartimeus973
 (p)8262
 (e)🎨|sprites
