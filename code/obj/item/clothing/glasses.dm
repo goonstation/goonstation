@@ -424,6 +424,9 @@
 
 	unequipped(var/mob/user)
 		..()
+		var/mob/living/carbon/human/H = user
+		if(connected_scuttlebot != null)
+			user.mind.transfer_to(connected_scuttlebot.controller)
 		/*if(ishuman(user) && user:network_device == src)
 			//user.verbs -= /mob/proc/jack_in
 			user:network_device = null
