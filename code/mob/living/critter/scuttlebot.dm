@@ -14,10 +14,18 @@
 	var/health_brute_vuln = 1
 	var/health_burn = 25
 	var/health_burn_vuln = 0.2
+	var/connected_remote = null
+	var/controller = null
 
 	New()
 		..()
+		var/obj/item/clothing/glasses/scuttlebot_vr/R = new /obj/item/clothing/glasses/scuttlebot_vr(src.loc)
+		connected_remote = R
+		R.connected_scuttlebot = src
+
 		abilityHolder.addAbility(/datum/targetable/critter/takepicture)
+		abilityHolder.addAbility(/datum/targetable/critter/control_owner)
+		abilityHolder.addAbility(/datum/targetable/critter/flash)
 
 	setup_hands()
 		..()
@@ -50,6 +58,11 @@
 		else
 			make_cleanable(/obj/decal/cleanable/oil,src.loc)
 
+	attackby(obj/item/W, mob/M)
+		if(istype(W, /obj/item/clothing/glasses/scuttlebot_vr))
+			new /obj/item/clothing/head/det_hat/folded_scuttlebot(get_turf(src))
+			qdel(W)
+			qdel(src)
 /*
 	canRideMailchutes()
 		return 1

@@ -1,8 +1,9 @@
 /datum/targetable/critter/takepicture
 	name = "Snap picture"
 	desc = "Take a picture."
-	cooldown = 100
+	cooldown = 10 SECONDS
 	targeted = 1
+	target_anything = 1
 	cast(atom/target)
 		if (..())
 			return 1
@@ -10,7 +11,6 @@
 		if (!target)
 			return 0
 		var/turf/the_turf = get_turf(target)
-		logTheThing("debug", null, null, "Debug1")
 		var/image/photo = image(the_turf.icon, null, the_turf.icon_state, OBJ_LAYER, the_turf.dir)
 		var/icon/photo_icon = getFlatIcon(the_turf)
 		if (!photo)
@@ -29,7 +29,6 @@
 
 		var/mobnumber = 0 // above 3 and it'll stop listing what they're holding and if they're hurt
 		var/itemnumber = 0
-		logTheThing("debug", null, null, "Debug2")
 		for (var/atom/A in the_turf)
 			if (A.invisibility || istype(A, /obj/overlay/tile_effect))
 				continue
@@ -82,7 +81,6 @@
 						item_detail = "\a [A]"
 					else
 						item_detail += " and \a [A]"
-		logTheThing("debug", null, null, "Debug3")
 		var/finished_title = null
 		var/finished_detail = null
 
@@ -102,9 +100,31 @@
 		photo.icon = photo_icon
 
 		var/obj/item/photo/P
-		P = new/obj/item/photo(get_turf(src), photo, photo_icon, finished_title, finished_detail)
-		logTheThing("debug", null, null, "Debug4")
+		P = new/obj/item/photo(get_turf(holder.owner), photo, photo_icon, finished_title, finished_detail)
 		return P
-///datum/targetable/critter/flash
 
-///datum/targetable/critter/control_owner
+/datum/targetable/critter/flash
+	name = "Blinding flash"
+	desc = "Flash someone in the eyes."
+	cooldown = 30 SECONDS
+	targeted = 1
+	cast(atom/target)
+		if (..())
+			return 1
+		if (BOUNDS_DIST(holder.owner, target) > 1)
+			boutput(holder.owner, __red("That is too far away to flash."))
+			return 1
+		if (target == holder.owner)
+			return 1
+		var/mob/MT = target
+		MT.apply_flash(10, 10, stamina_damage = 100, eyes_blurry = 10, eyes_damage = 5)
+
+/datum/targetable/critter/control_owner
+	name = "Return to body"
+	desc = "Leave the scuttlebot and return to your body"
+	cast(atom/target)
+		if (..())
+			return 1
+		if (istype(holder.owner, /mob/living/critter/scuttlebot))
+			var/mob/living/critter/scuttlebot/E = holder.owner
+			E.mind.transfer_to(E.controller)
