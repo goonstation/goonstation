@@ -11,6 +11,7 @@
 	can_disarm = 1
 	fits_under_table = 1
 	icon_state = "scuttlebot"
+	speechverb_say = "beeps"
 	var/health_brute = 25
 	var/health_brute_vuln = 1
 	var/health_burn = 25
