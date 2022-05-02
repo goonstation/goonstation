@@ -1351,6 +1351,17 @@
 	var/isnew = TRUE // for reuse
 	var/sawflynames = list("A", "B", "C", "D", "E", "F", "V", "W", "X", "Y", "Z", "Alpha", "Beta", "Gamma", "Lambda", "Delta")
 
+
+	New()
+		..()
+		deathtimer = rand(1, 5)
+		death_text = "[src] jutters and falls from the air, whirring to a stop"
+		if(isnew)
+			name = "Sawfly [pick(sawflynames)]-[rand(1,999)]"
+		beeptext = "[pick(list("beeps", "boops", "bwoops", "bips", "bwips", "bops", "chirps", "whirrs", "pings", "purrs"))]"
+		animate_bumble(src) // gotta get the float goin' on
+
+
 	proc/foldself()
 		var/obj/item/old_grenade/spawner/sawfly/reused/N = new /obj/item/old_grenade/spawner/sawfly/reused(get_turf(src))
 		// pass our name and health
@@ -1358,6 +1369,7 @@
 		N.tempname = src.name
 		N.temphp = src.health
 		qdel(src)
+
 
 	proc/blowup() // used in emagged controllers and has a chance to activate when they die
 
@@ -1374,6 +1386,7 @@
 		if(alive) // prevents weirdness from emagged controllers
 			qdel(src)
 
+
 	emp_act() //same thing as if you emagged the controller, but much higher chance
 		if(prob(80))
 			src.visible_message("<span class='combat'>[src] buzzes oddly and starts to sprial out of contro!</span>")
@@ -1382,16 +1395,6 @@
 		else
 			src.foldself()
 
-
-
-	New()
-		..()
-		deathtimer = rand(1, 5)
-		death_text = "[src] jutters and falls from the air, whirring to a stop"
-		if(isnew)
-			name = "Sawfly [pick(sawflynames)]-[rand(1,999)]"
-		beeptext = "[pick(list("beeps", "boops", "bwoops", "bips", "bwips", "bops", "chirps", "whirrs", "pings", "purrs"))]"
-		animate_bumble(src) // gotta get the float goin' on
 
 	ChaseAttack(atom/M) // overriding these procs so the drone is nicer >:(
 		if (istraitor(M) || isnukeop(M) || isspythief(M) || (M in src.friends))
@@ -1421,6 +1424,7 @@
 				continue
 		..()
 
+
 	CritterAttack(atom/M)
 		if (istraitor(M) || isnukeop(M) || isspythief(M) || (M in src.friends)) // BE. A. GOOD. DRONE.
 			return
@@ -1432,6 +1436,7 @@
 			SPAWN(attack_cooldown)
 				attacking = 0
 		return
+
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
 		if(prob(50) && alive) // borrowed from brullbar- anti-crowd measures
@@ -1448,6 +1453,7 @@
 				CritterAttack(src.target)
 		..()
 
+
 	attack_hand(var/mob/user as mob)
 		if (istraitor(user) || isnukeop(user) || isspythief(user) || (user in src.friends))
 			if (user.a_intent == INTENT_HELP || INTENT_GRAB)
@@ -1459,6 +1465,7 @@
 				random_brute_damage(user, 7)
 				take_bleeding_damage(user, null, 7, DAMAGE_CUT, 1)
 		..()
+
 
 	CritterDeath() // rip lil guy
 		if (!src.alive) return
