@@ -98,8 +98,8 @@
 		photo.icon = photo_icon
 
 		var/obj/item/photo/P
-		new/obj/item/photo(get_turf(holder.owner), photo, photo_icon, finished_title, finished_detail)
-		return !isnull(P)
+		P = new/obj/item/photo(get_turf(holder.owner), photo, photo_icon, finished_title, finished_detail)
+		return isnull(P)
 
 /datum/targetable/critter/flash
 	name = "Blinding flash"
