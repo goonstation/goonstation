@@ -133,7 +133,7 @@
 
 			var/mob/living/critter/scuttlebot/E = holder.owner
 			if (!E.controller)
-				boutput(holder.owner, __red("You didnt have a body to go back to! The scuttlebot shuts down with a sad boop."))
+				boutput(holder.owner, __red("You didn't have a body to go back to! The scuttlebot shuts down with a sad boop."))
 				holder.owner.ghostize()
 				return 1
 			E.mind.transfer_to(E.controller)

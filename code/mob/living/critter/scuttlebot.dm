@@ -9,6 +9,7 @@
 	can_throw = 1
 	can_grab = 1
 	can_disarm = 1
+	fits_under_table = 1
 	icon_state = "scuttlebot"
 	var/health_brute = 25
 	var/health_brute_vuln = 1
