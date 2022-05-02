@@ -14,7 +14,7 @@
 	var/health_brute_vuln = 1
 	var/health_burn = 25
 	var/health_burn_vuln = 0.2
-	var/controller = null
+	var/mob/living/carbon/human/controller = null
 
 	New()
 		..()
@@ -39,21 +39,24 @@
 		add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
 
 	Cross(atom/mover)
-		if (!src.density && istype(mover, /obj/projectile))
+		if (istype(mover, /obj/projectile))
 			return prob(50)
 		else
 			return ..()
 
 	death(var/gibbed)
-		..(gibbed, 0)
 		if (controller != null)
-			src.mind.transfer_to(controller)
+			if (!controller.mind)
+				src.mind.transfer_to(controller)
+			else
+				boutput(src, "<span class='alert'>Your conscience tries to reintegrate your body, but its already possessed by something!</span>")
+		..(gibbed, 0)
+
 		if (!gibbed)
 			make_cleanable(/obj/decal/cleanable/oil,src.loc)
 			src.audible_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
 			playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
 			elecflash(src, radius=1, power=3, exclude_center = 0)
-			//ghostize()
 			qdel(src)
 		else
 			playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
@@ -62,14 +65,18 @@
 	attackby(obj/item/W, mob/M)
 		if(istype(W, /obj/item/clothing/glasses/scuttlebot_vr))
 			new /obj/item/clothing/head/det_hat/folded_scuttlebot(get_turf(src))
+			boutput(M, "You stuff the goggles back into the hat. It powers down with a low whirr.")
 			qdel(W)
 			qdel(src)
+		else
+			..()
 
 	proc/return_to_owner()
 		if (controller != null)
-			SPAWN(0)
+			if(!controller.loc)
+				boutput(src, "<span class='alert'>A horrible sense of dread looms over you. You feel like your body has disappeared.</span>")
+			else if (!isalive(controller))
+				boutput(src, "<span class='alert'>A horrible sense of dread looms over you. Your real body is dead! The scuttlebot's advanced AI takes over and retains your conscience.</span>")
+			else
 				src.mind.transfer_to(controller)
-/*
-	canRideMailchutes()
-		return 1
-*/
+			controller = null

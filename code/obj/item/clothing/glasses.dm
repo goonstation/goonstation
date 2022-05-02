@@ -404,38 +404,27 @@
 	desc = "A pair of VR goggles running a personal simulation."
 	icon_state = "vr"
 	item_state = "sunglasses"
-//	var/network = LANDMARK_VR_DET_NET
 	var/mob/living/critter/scuttlebot/connected_scuttlebot = null
 
 	equipped(var/mob/user, var/slot)
 		..()
 		var/mob/living/carbon/human/H = user
-		if(connected_scuttlebot != null) //might need a loc
+		if(connected_scuttlebot != null)
 			if(connected_scuttlebot.mind)
 				boutput(user, "<span class='alert'>The scuttlebot is already active somehow!</span>")
+			else if(!connected_scuttlebot.loc)
+				boutput(user, "<span class='alert'>You put on the glasses but they show no signal. The scuttlebot couldnt be found.</span>")
 			else
 				connected_scuttlebot.controller = H
 				user.mind.transfer_to(connected_scuttlebot)
 		else
 			boutput(user, "<span class='alert'>You put on the glasses but they show no signal. The scuttlebot is likely destroyed.</span>")
 
-		/*if(istype(H) && slot == SLOT_GLASSES && !H.network_device && !inafterlife(H))
-			user.network_device = src
-			//user.verbs += /mob/proc/jack_in
-			Station_VNet.Enter_Vspace(H, src,src.network)
-		return*/
 
 	unequipped(var/mob/user)
 		..()
-		//var/mob/living/carbon/human/H = user
 		if(connected_scuttlebot != null)
 			connected_scuttlebot.return_to_owner()
-			//user.mind.transfer_to(connected_scuttlebot.controller)
-		/*if(ishuman(user) && user:network_device == src)
-			//user.verbs -= /mob/proc/jack_in
-			user:network_device = null
-		return
-		*/
 
 /obj/item/clothing/glasses/vr_fake //Only exist IN THE MATRIX.  Used to log out.
 	name = "\improper VR goggles"

@@ -132,6 +132,7 @@
 				holder.owner.ghostize()
 				return 1
 			E.mind.transfer_to(E.controller)
+			E.controller = null
 		else
 			boutput(holder.owner, __red("You dont have a body to go back to!"))
 			return 1
