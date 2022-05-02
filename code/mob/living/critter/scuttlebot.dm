@@ -23,8 +23,8 @@
 		R.connected_scuttlebot = src
 
 		abilityHolder.addAbility(/datum/targetable/critter/takepicture)
-		abilityHolder.addAbility(/datum/targetable/critter/control_owner)
 		abilityHolder.addAbility(/datum/targetable/critter/flash)
+		abilityHolder.addAbility(/datum/targetable/critter/control_owner)
 
 	setup_hands()
 		..()
