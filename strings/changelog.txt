@@ -71,7 +71,7 @@
 (e)|
 (+)Removes oculine from sunrise venne.
 (+)Adds oculine to carrots.
-(u)DisturbHerb
+(u)DisturbHerb + Waffleoffle
 (p)8014
 (e)🆕🎨|feature, sprites
 (*)In an effort to introduce greater diversity into the crew's diets, NanoTrasen has officially sanctioned the preparation of several new non-pasta noodle dishes. These include ramen, udon, and curry udon; available at the cafeteria today!
