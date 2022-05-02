@@ -21,7 +21,7 @@
 
 	var/msg = input("Please enter your help request to admins.\nAdminhelps are also sent to admins via Discord.\n\nFor questions on game mechanics, use Mentorhelp (F3).", "Adminhelp") as null|text
 
-	msg = copytext(html_encode(msg), 1, MAX_MESSAGE_LEN)
+	msg = copytext(html_encode(msg), 1, MAX_MESSAGE_LEN * 4)
 
 	if (!msg)
 		return
@@ -86,7 +86,7 @@
 	var/mob/dead/target_observer/mentor_mouse_observer/mmouse = locate() in src
 	if(mmouse) // mouse in your pocket takes precedence over mhelps
 		var/msg = input("Please enter your whispers to the mouse:") as null|text
-		msg = copytext(strip_html(msg), 1, MAX_MESSAGE_LEN)
+		msg = copytext(strip_html(msg), 1, MAX_MESSAGE_LEN * 4)
 		if (!msg)
 			return
 		var/class = mmouse.is_admin ? "adminooc" : "mhelp"
@@ -112,7 +112,7 @@
 
 	var/msg = input("Enter your help request to mentors.\nMentorhelps are sent to mentors via Discord.\n\nPlease use Adminhelp (F1) for rules questions.", "mentorhelp") as null|text
 
-	msg = copytext(strip_html(msg), 1, MAX_MESSAGE_LEN)
+	msg = copytext(strip_html(msg), 1, MAX_MESSAGE_LEN * 4)
 	if (client.can_see_mentor_pms())
 		msg = linkify(msg)
 
@@ -248,7 +248,7 @@
 		user = user_client.mob
 
 		if(!(user && user.client && user.client.holder && (user.client.holder.rank in list("Host", "Coder"))))
-			t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
+			t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN * 4)
 		if (!( t ))
 			return
 

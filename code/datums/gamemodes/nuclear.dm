@@ -193,7 +193,7 @@
 			synd_mind.current.real_name = "[syndicate_name()] [leader_title]"
 			equip_syndicate(synd_mind.current, 1)
 			new /obj/item/device/audio_log/nuke_briefing(synd_mind.current.loc, target_location_name)
-			SHOW_NUKEOP_COMMANDER_TIPS(synd_mind.current)
+			synd_mind.current.show_antag_popup("nukeop-commander")
 		else
 			synd_mind.current.set_loc(pick_landmark(LANDMARK_SYNDICATE))
 			var/callsign = pick(callsign_list)
@@ -202,7 +202,7 @@
 			equip_syndicate(synd_mind.current, 0)
 			var/obj/item/device/radio/headset/syndicate/headset = synd_mind.current.ears
 			headset.icon_override = "syndie_letters/[copytext(callsign, 1, 2)]"
-			SHOW_NUKEOP_TIPS(synd_mind.current)
+			synd_mind.current.show_antag_popup("nukeop")
 		boutput(synd_mind.current, "<span class='alert'>Your headset allows you to communicate on the syndicate radio channel by prefacing messages with :h, as (say \":h Agent reporting in!\").</span>")
 
 		synd_mind.current.antagonist_overlay_refresh(1, 0)

@@ -1,6 +1,6 @@
 /datum/custom_soup
 	var/name
-	var/amount = 3
+	var/bites_left = 3
 	var/heal_amt = 0
 	var/desc = null
 	var/initial_volume = 60
@@ -12,7 +12,7 @@
 	icon_state = "soup_custom"
 	name = null
 	desc = "Ah, the, uh, wonders of the kitchen stove."
-	amount = null
+	bites_left = null
 	heal_amt = null
 	initial_volume = null
 	initial_reagents = null
@@ -24,7 +24,7 @@
 			qdel(src)
 			return
 		src.name = S.name
-		src.amount = S.amount
+		src.bites_left = S.bites_left
 		if(S.desc)
 			src.desc = S.desc
 		src.heal_amt = S.heal_amt
@@ -165,7 +165,7 @@
 
 		var/datum/custom_soup/S = new()
 
-		S.amount = pot.total_wclass
+		S.bites_left = pot.total_wclass
 
 		var/soup_name_i = ""
 		var/soup_name_b = ""
@@ -204,9 +204,9 @@
 			if(istype(F))
 				S.food_effects |= F.food_effects
 				S.heal_amt += F.heal_amt/pot.total_wclass
-				S.amount += F.amount/pot.total_wclass
+				S.bites_left += F.bites_left/pot.total_wclass
 			else
-				S.amount += F.w_class/pot.total_wclass/2
+				S.bites_left += F.w_class/pot.total_wclass/2
 				S.heal_amt -= F.w_class/pot.total_wclass/2
 
 			if(I.reagents)
@@ -217,7 +217,7 @@
 						S.initial_reagents += id
 						S.initial_reagents[id] = I.reagents.reagent_list[id].volume/pot.total_wclass
 
-		S.amount = max(1,round(S.amount))
+		S.bites_left = max(1,round(S.bites_left))
 
 		if(biggester)
 			if(biggest)

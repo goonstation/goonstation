@@ -83,7 +83,7 @@ var/list/area/blacklist_flora_gen = list(/area/shuttle, /area/mining)
 /datum/biome/jungle/deep
 	flora_density = 65
 
-	fauna_types = list(/mob/living/critter/small_animal/dragonfly/ai_controlled=50, /mob/living/critter/small_animal/firefly/lightning=2, /mob/living/critter/small_animal/firefly/pyre=1, /mob/living/critter/small_animal/firefly=10)
+	fauna_types = list(/mob/living/critter/small_animal/dragonfly/ai_controlled=50, /mob/living/critter/small_animal/firefly/lightning/ai_controlled=2, /mob/living/critter/small_animal/firefly/pyre/ai_controlled=1, /mob/living/critter/small_animal/firefly/ai_controlled=10)
 	fauna_density = 0.8
 
 /datum/biome/wasteland
