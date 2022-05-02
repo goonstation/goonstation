@@ -1324,3 +1324,192 @@
 				task = "sleeping"
 				src.health = 0
 				src.CritterDeath()
+
+/obj/critter/gunbot/drone/buzzdrone/sawfly // old sawfly object.
+
+	name = "Sawfly"
+	desc = "A folding antipersonnel drone of syndicate origin. It'd be pretty cute if it wasn't trying to kill people."
+	icon_state = "sawfly"
+	beeptext = "UH OOH"
+	dead_state = "sawflydead"
+	projectile_type = /datum/projectile/laser/drill/sawfly
+	current_projectile = new/datum/projectile/laser/drill/sawfly
+	smashes_shit = 0
+	droploot = null //change this later
+	health = 40
+	maxhealth = 40
+	firevuln = 0.5
+	brutevuln = 1.2
+	can_revive = 1
+	atksilicon = 0
+	firevuln = 0
+	atk_delay = 5
+	attack_cooldown = 8
+	seekrange = 15
+	var/deathtimer = 0 // for catastrophic failure on death
+	var/isnew = TRUE // for reuse
+	var/sawflynames = list("A", "B", "C", "D", "E", "F", "V", "W", "X", "Y", "Z", "Alpha", "Beta", "Gamma", "Lambda", "Delta")
+
+
+	New()
+		..()
+		deathtimer = rand(1, 5)
+		death_text = "[src] jutters and falls from the air, whirring to a stop"
+		if(isnew)
+			name = "Sawfly [pick(sawflynames)]-[rand(1,999)]"
+		beeptext = "[pick(list("beeps", "boops", "bwoops", "bips", "bwips", "bops", "chirps", "whirrs", "pings", "purrs"))]"
+		animate_bumble(src) // gotta get the float goin' on
+
+
+	proc/foldself()
+		var/obj/item/old_grenade/spawner/sawfly/reused/N = new /obj/item/old_grenade/spawner/sawfly/reused(get_turf(src))
+		// pass our name and health
+		N.name = "Compact [name]"
+		N.tempname = src.name
+		N.temphp = src.health
+		qdel(src)
+
+
+	proc/blowup() // used in emagged controllers and has a chance to activate when they die
+
+		if(prob(66))
+			src.visible_message("<span class='combat'>[src]'s [pick("motor", "core", "fuel tank", "battery", "thruster")] [pick("combusts", "catches on fire", "ignites", "lights up", "bursts into flames")]!")
+			fireflash(src,1,TRUE)
+
+		else
+			src.visible_message("<span class='combat'>[src]'s [pick("motor", "core", "head", "engine", "thruster")] [pick("overloads", "blows up", "catastrophically fails", "explodes")]!")
+			fireflash(src,0,TRUE)
+			explosion(src, get_turf(src), 0, 1, 2, 3)
+			qdel(src)
+
+		if(alive) // prevents weirdness from emagged controllers
+			qdel(src)
+
+
+	emp_act() //same thing as if you emagged the controller, but much higher chance
+		if(prob(80))
+			src.visible_message("<span class='combat'>[src] buzzes oddly and starts to sprial out of contro!</span>")
+			SPAWN(2 SECONDS)
+				src.blowup()
+		else
+			src.foldself()
+
+
+	ChaseAttack(atom/M) // overriding these procs so the drone is nicer >:(
+		if (istraitor(M) || isnukeop(M) || isspythief(M) || (M in src.friends))
+
+			return
+		if(target && !attacking)
+			attacking = 1
+			src.visible_message("<span class='alert'><b>[src]</b> flies at [M]!</span>")
+			if (istraitor(M) || isnukeop(M) || isspythief(M) || (M in src.friends))
+				return
+
+			walk_to(src, src.target,1,4)
+			var/tturf = get_turf(M)
+			Shoot(tturf, src.loc, src)
+			SPAWN(attack_cooldown)
+				attacking = 0
+			return
+
+
+	seek_target()
+		src.anchored = 0
+		for (var/mob/living/C in view(src.seekrange,src))
+			if (C in src.friends) continue
+			if (istraitor(C) || isnukeop(C) || isspythief(C)) // frens :)
+				boutput(C, "<span class='alert'>[src]'s IFF system silently flags you as an ally!")
+				friends += C
+				continue
+		..()
+
+
+	CritterAttack(atom/M)
+		if (istraitor(M) || isnukeop(M) || isspythief(M) || (M in src.friends)) // BE. A. GOOD. DRONE.
+			return
+		if(target && !attacking)
+			attacking = 1
+			src.visible_message("<span class='alert'><b>[src]</b> [pick(list("gouges", "cleaves", "lacerates", "shreds", "cuts", "tears", "hacks", "slashes",))] [M]!</span>")
+			var/tturf = get_turf(M)
+			Shoot(tturf, src.loc, src)
+			SPAWN(attack_cooldown)
+				attacking = 0
+		return
+
+
+	attackby(obj/item/W as obj, mob/living/user as mob)
+		if(prob(50) && alive) // borrowed from brullbar- anti-crowd measures
+			src.target = user
+			src.oldtarget_name = user.name
+			src.task = "chasing"
+			//playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 60, 1)
+			if (!(istraitor(user) || isnukeop(user) || isspythief(user)) )
+				src.visible_message("<span class='alert'><b>[src]'s targeting subsystems identify</b> [src.target] as a high priority threat!</span>")
+				var/tturf = get_turf(src.target) //instantly retaliate, since we know we're in melee range
+				Shoot(tturf, src.loc, src)
+				SPAWN((attack_cooldown/2)) //follow up swiftly
+					attacking = 0
+				CritterAttack(src.target)
+		..()
+
+
+	attack_hand(var/mob/user as mob)
+		if (istraitor(user) || isnukeop(user) || isspythief(user) || (user in src.friends))
+			if (user.a_intent == INTENT_HELP || INTENT_GRAB)
+				boutput(user, "You collapse [src].")
+				src.foldself()
+		else
+			if(prob(50))
+				boutput(user,"<span class='alert' In your attempt to pet the [src], you cut yourself on it's blades! </span>")
+				random_brute_damage(user, 7)
+				take_bleeding_damage(user, null, 7, DAMAGE_CUT, 1)
+		..()
+
+
+	CritterDeath() // rip lil guy
+		if (!src.alive) return
+		..()
+		// since they're a child of a child of a child of a child
+		// and shit gets WHACKY fast with their behaviors
+		// I'm just gonna say fuck all that and copy the critter death code
+		SHOULD_CALL_PARENT(TRUE)
+		if (!src.alive) return
+
+		#ifdef COMSIG_OBJ_CRITTER_DEATH
+		SEND_SIGNAL(src, COMSIG_OBJ_CRITTER_DEATH)
+		#endif
+
+
+		//special dead sprites
+		animate(src) //stop no more float animation
+		icon_state = "sawflydead[pick("1", "2", "3", "4", "5", "6", "7", "8")]"
+		src.pixel_x += rand(-5, 5)
+		src.pixel_y += rand(-1, 5)
+
+
+
+		src.alive = 0
+		src.anchored = 0
+		src.set_density(0)
+		walk_to(src,0) //halt walking
+		report_death()
+		src.tokenized_message(death_text)
+
+		// IT'S TIME TO ROOOOOOLLLL THE DIIIICEEEEEE!!!!
+		// special checks that determine how much postmorten chaos our little sawflies cause
+
+		if(prob(60)) // 60 percent chance to zap the area
+			elecflash(src, 1, 2)
+
+		if(prob(20)) // congrats, little guy! You're special! You're going to blow up!
+			if(prob(70)) //decide whether or not people get a warning
+				src.visible_message("<span class='combat'>[src] makes a [pick("gentle", "odd", "slight", "weird", "barely audible", "concerning", "quiet")] [pick("hiss", "drone", "whir", "thump", "grinding sound", "creak", "buzz", "khunk")].......")
+
+			SPAWN(deathtimer SECONDS) // pause, for dramatic effect
+				src.blowup()
+
+
+
+
+
+

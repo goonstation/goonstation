@@ -3,7 +3,7 @@
 
 -->Things it DOES NOT include that are sawfly-related, and where they can be found:
 -The pouch of sawflies for nukies at the bottom of ammo pouches.dm
--The projectile they use is midway through laser.dm, with the other melee drone projectiles. Try not to think too hard on that.
+-The projectile they use is midway through laser.dm, with the other melee drone projectiles.
 */
 
 // -------------------grenades-------------
@@ -117,7 +117,7 @@
 					S.foldself()
 
 		for(var/obj/item/old_grenade/spawner/sawfly/S in range(get_turf(src), 3)) // unfolds passive sawflies
-			S.visible_message("<span class='combat'>[S] suddenly springs open as its engine purr to a start!</span>")
+			S.visible_message("<span class='combat'>[S] suddenly springs open as its engine purrs to a start!</span>")
 			S.icon_state = "sawfly1"
 			SPAWN(S.det_time)
 				S.prime()
@@ -154,29 +154,64 @@
 
 //------------- THE SAWFLY ITSELF----------
 
-/obj/critter/gunbot/drone/buzzdrone/sawfly
+/mob/living/critter/sawfly // new sawfly
 	name = "Sawfly"
 	desc = "A folding antipersonnel drone of syndicate origin. It'd be pretty cute if it wasn't trying to kill people."
+	icon = 'icons/obj/ship.dmi'
 	icon_state = "sawfly"
-	beeptext = "UH OOH"
-	dead_state = "sawflydead"
-	projectile_type = /datum/projectile/laser/drill/sawfly
-	current_projectile = new/datum/projectile/laser/drill/sawfly
-	smashes_shit = 0
-	droploot = null //change this later
+
+
+
+
+	var/beeptext = "UH OOH"
+	var/dead_state = "sawflydead"
+	var/angertext = "flies at"
+	var/projectile_type = /datum/projectile/laser/drill/sawfly
+	var/datum/projectile/current_projectile = new/datum/projectile/laser/drill/sawfly
+	var/smashes_shit = 0
+	var/obj/item/droploot = null //change this later
+
+
+
 	health = 40
-	maxhealth = 40
-	firevuln = 0.5
-	brutevuln = 1.2
-	can_revive = 1
-	atksilicon = 0
-	firevuln = 0
-	atk_delay = 5
-	attack_cooldown = 8
-	seekrange = 15
+	var/maxhealth = 40
+	var/firevuln = 0.5
+	var/brutevuln = 1.2
+	var/can_revive = 1
+	var/atksilicon = 1
+	var/atkcarbon = 1
+	var/alive = 1
+
+	// I HAVE HAD TO INITALIZE DO MANY FUCKING VARIABLES
+	// TO GET THIS TO WORK AS A MOB/LIVING OBJECT
+	var/list/friends = list()
+	var/attacking = 0
+	var/atk_delay = 5
+	var/attack_cooldown = 8
+	var/seekrange = 15
+	var/attacker = null
+	var/atom/movable/target = null
+	var/oldtarget_name = null
+	var/attack = 0
+	var/task = "thinking"
+	var/frustration = 0
+	var/dying = 0
+	var/atom/target_lastloc = null
+	var/aggressive = 1
+	var/last_found = null
+	var/steps = 0
+	var/sleep_check = 10
+	var/wander_check = 0
+
+
+
 	var/deathtimer = 0 // for catastrophic failure on death
 	var/isnew = TRUE // for reuse
 	var/sawflynames = list("A", "B", "C", "D", "E", "F", "V", "W", "X", "Y", "Z", "Alpha", "Beta", "Gamma", "Lambda", "Delta")
+
+	var/beepsound = 'sound/machines/twobeep.ogg' // todo: make these custom sounds
+	var/alertsound1 = 'sound/machines/whistlealert.ogg'
+	var/alertsound2 = 'sound/machines/whistlebeep.ogg'
 
 
 	New()
@@ -223,9 +258,8 @@
 			src.foldself()
 
 
-	ChaseAttack(atom/M) // overriding these procs so the drone is nicer >:(
+	proc/ChaseAttack(atom/M) // overriding these procs so the drone is nicer >:(
 		if (istraitor(M) || isnukeop(M) || isspythief(M) || (M in src.friends))
-
 			return
 		if(target && !attacking)
 			attacking = 1
@@ -241,7 +275,7 @@
 			return
 
 
-	seek_target()
+	proc/seek_target()
 		src.anchored = 0
 		for (var/mob/living/C in view(src.seekrange,src))
 			if (C in src.friends) continue
@@ -249,10 +283,21 @@
 				boutput(C, "<span class='alert'>[src]'s IFF system silently flags you as an ally!")
 				friends += C
 				continue
-		..()
+			if (!src.alive) break
+			if (C.health < -50) continue
+			if (C.name == src.attacker) src.attack = 1
+			if (iscarbon(C) && src.atkcarbon) src.attack = 1
+			if (issilicon(C) && src.atksilicon) src.attack = 1
+			if (src.attack)
+				select_target(C)
+				src.attack = 0
+				return
+			else continue
+
+		//..()
 
 
-	CritterAttack(atom/M)
+	proc/CritterAttack(atom/M)
 		if (istraitor(M) || isnukeop(M) || isspythief(M) || (M in src.friends)) // BE. A. GOOD. DRONE.
 			return
 		if(target && !attacking)
@@ -278,10 +323,85 @@
 				SPAWN((attack_cooldown/2)) //follow up swiftly
 					attacking = 0
 				CritterAttack(src.target)
-		..()
+		//CRITTER ATTACKBY CODE BELOW
+		user.lastattacked = src
+		attack_particle(user,src)
+
+		var/attack_force = 0
+		var/damage_type = "brute"
+		if (istype(W, /obj/item/artifact/melee_weapon))
+			var/datum/artifact/melee/ME = W.artifact
+			attack_force = ME.dmg_amount
+			damage_type = ME.damtype
+		else
+			attack_force = W.force
+			switch(W.hit_type)
+				if (DAMAGE_BURN)
+					damage_type = "fire"
+				else
+					damage_type = "brute"
 
 
-	attack_hand(var/mob/user as mob)
+
+		//Simplified weapon properties for critters. Fuck this shit.
+		if(W.getProperty("searing"))
+			damage_type = "fire"
+			attack_force += W.getProperty("searing")
+
+		if(W.hasProperty("vorpal"))
+			attack_force += W.getProperty("vorpal")
+
+		if(W.hasProperty("unstable"))
+			attack_force = rand(attack_force, round(attack_force * W.getProperty("unstable")))
+
+		if(W.hasProperty("frenzy"))
+			SPAWN(0)
+				var/frenzy = W.getProperty("frenzy")
+				W.click_delay -= frenzy
+				sleep(3 SECONDS)
+				W.click_delay += frenzy
+
+		if (!attack_force)
+			return
+
+		if (src.sleeping)
+			sleeping = 0
+			on_wake()
+
+		switch(damage_type)
+			if("fire")
+				src.health -= attack_force * max(1,(src.firevuln + W.getProperty("piercing")/100)) //Extremely half assed piercing for critters
+			if("brute")
+				src.health -= attack_force * max(1,(src.brutevuln + W.getProperty("piercing")/100))
+			else
+				src.health -= attack_force * max(1,(0 + W.getProperty("piercing")/100))
+
+		if (src.alive && src.health <= 0) src.CritterDeath()
+
+
+		if (W?.hitsound)
+			playsound(src,W.hitsound,50,1)
+
+		if (src.alive)
+			registered_area.wake_critters(user)
+
+		if(W.hasProperty("impact"))
+			var/turf/T = get_edge_target_turf(src, get_dir(user, src))
+			src.throw_at(T, 2, W.getProperty("impact"))
+
+		if (src.target == user && src.task == "attacking")
+			if (prob(50 - attack_force))
+				return
+			else
+				src.visible_message("<span class='alert'><b>[src]</b> loses control for a second!</span>")
+			src.target = user
+			src.oldtarget_name = user.name
+			src.visible_message("<span class='alert'><b>[src]</b> [src]'s flies aggressively towards [user.name]!</span>")
+			src.task = "chasing"
+
+
+
+	attack_hand(var/mob/user as mob) // this one's safe
 		if (istraitor(user) || isnukeop(user) || isspythief(user) || (user in src.friends))
 			if (user.a_intent == INTENT_HELP || INTENT_GRAB)
 				boutput(user, "You collapse [src].")
@@ -294,12 +414,22 @@
 		..()
 
 
-	CritterDeath() // rip lil guy
+	proc/CritterDeath() // rip lil guy
 		if (!src.alive) return
-		..()
-		// since they're a child of a child of a child of a child
-		// and shit gets WHACKY fast with their behaviors
-		// I'm just gonna say fuck all that and copy the critter death code
+		if(dying) return
+		icon_state = dead_state
+
+		dying = 1 // this was dying = 0. ha ha.
+		SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_DRONE_DEATH, src)
+
+		if (prob(20))
+			new /obj/item/device/prox_sensor(src.loc) // maybe change this later
+
+
+		//	..()
+			return
+
+
 		SHOULD_CALL_PARENT(TRUE)
 		if (!src.alive) return
 
@@ -320,7 +450,7 @@
 		src.anchored = 0
 		src.set_density(0)
 		walk_to(src,0) //halt walking
-		report_death()
+		//report_death()
 		src.tokenized_message(death_text)
 
 		// IT'S TIME TO ROOOOOOLLLL THE DIIIICEEEEEE!!!!
@@ -335,4 +465,165 @@
 
 			SPAWN(deathtimer SECONDS) // pause, for dramatic effect
 				src.blowup()
+
+// COPY PASTED AI SHIT FROM DRONE/GUNBOT HERE
+
+	proc/ai_think()
+		switch(task)
+			if("thinking")
+				src.attack = 0
+				src.target = null
+
+				walk_to(src,0)
+				if (src.aggressive) seek_target()
+				if (!src.target) src.task = "wandering"
+			if("chasing")
+				if (src.frustration >= rand(20,40))
+					src.target = null
+					src.last_found = world.time
+					src.frustration = 0
+					src.task = "thinking"
+					walk_to(src,0)
+				if (target)
+					if (get_dist(src, src.target) <= 7)
+						var/mob/living/carbon/M = src.target
+						if (M)
+							if(!src.attacking) ChaseAttack(M)
+							src.task = "attacking"
+							src.anchored = 1
+							src.target_lastloc = M.loc
+							if(prob(15)) walk_rand(src,4) // juke around and dodge shots
+
+					else
+						var/turf/olddist = get_dist(src, src.target)
+
+
+						if(prob(20)) walk_rand(src,2)
+						else walk_to(src, src.target,1,4)
+
+						if ((get_dist(src, src.target)) >= (olddist))
+							src.frustration++
+
+						else
+							src.frustration = 0
+				else src.task = "thinking"
+			if("attacking")
+				if(prob(15)) walk_rand(src,4) // juke around and dodge shots
+				// see if he got away
+				if ((BOUNDS_DIST(src, src.target) > 0) || ((src.target:loc != src.target_lastloc)))
+					src.anchored = 0
+					src.task = "chasing"
+				else
+					if (BOUNDS_DIST(src, src.target) == 0)
+						var/mob/living/carbon/M = src.target
+						if (!src.attacking) CritterAttack(src.target)
+
+						else
+							if(M!=null)
+								if (M.health < 0)
+									src.task = "thinking"
+									src.target = null
+									src.anchored = 0
+									src.last_found = world.time
+									src.frustration = 0
+									src.attacking = 0
+					else
+						src.anchored = 0
+						src.attacking = 0
+						src.task = "chasing"
+			if("wandering")
+				patrol_step()
+		return 1
+
+	Life() // override so drones don't just loaf all fuckin day
+		if (!src.alive) return 0
+
+		if(sleeping > 0)
+			sleeping--
+			return 0
+
+
+
+		if(prob(7))
+			src.visible_message("<b>[src] [beeptext].</b>")
+			if (beepsound)
+				playsound(src, beepsound, 55, 1)
+
+
+		if(task == "sleeping")
+			var/waking = 0
+
+			for (var/client/C)
+				var/mob/M = C.mob
+				if (M && src.z == M.z && GET_DIST(src, M) <= 10)
+					if (isliving(M))
+						waking = 1
+						break
+
+			if (!waking)
+				if (get_area(src) == colosseum_controller.colosseum)
+					waking = 1
+
+			if(waking)
+				task = "thinking"
+			else
+				sleeping = 5
+				return 0
+		else if(sleep_check <= 0)
+			sleep_check = 5
+
+			var/stay_awake = 0
+
+			for (var/client/C)
+				var/mob/M = C.mob
+				if (M && src.z == M.z && GET_DIST(src, M) <= 10)
+					if (isliving(M))
+						stay_awake = 1
+						break
+
+			for (var/atom in by_cat[TR_CAT_PODS_AND_CRUISERS])
+				var/atom/A = atom
+				if (A && src.z == A.z && GET_DIST(src, A) <= 10)
+					stay_awake = 1
+					break
+
+
+			if(!stay_awake)
+				sleeping = 5
+				task = "sleeping"
+				return 0
+
+		else
+			sleep_check--
+
+		return ai_think()
+
+	proc/Shoot(var/target, var/start, var/user, var/bullet = 0)
+		if(target == start)
+			return
+
+		if (!isturf(target))
+			return
+
+		shoot_projectile_ST(src,  new/datum/projectile/bullet/revolver_38(), target) // THIS DOES NOT WORK
+		return
+
+	proc/select_target(var/atom/newtarget)
+		src.target = newtarget
+		src.oldtarget_name = newtarget.name
+		if (alertsound1 || alertsound2)
+			playsound(src.loc, ismob(newtarget) ? alertsound2 : alertsound1, 55, 1)
+		src.visible_message("<span class='alert'><b>[src]</b> fliew towards [src.target]!</span>")
+		task = "chasing"
+
+
+	proc/patrol_step()
+		var/turf/moveto = locate(src.x + rand(-1,1),src.y + rand(-1, 1),src.z)
+		if(isturf(moveto) && !moveto.density) step_to(src, moveto)
+		if(src.aggressive) seek_target()
+		steps += 1
+		if (steps == wander_check)
+			src.task = "thinking"
+			wander_check = rand(5,20)
+
 
