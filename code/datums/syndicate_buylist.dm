@@ -196,7 +196,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 /datum/syndicate_buylist/generic/sawflymany
 	name = "Cluster Sawfly deployer"
 	item = /obj/item/old_grenade/spawner/sawflycluster
-	cost = 7
+	cost = 4
 	vr_allowed = 0
 	desc = "An assembly of five antipersonnel robots that will not attack anyone of syndicate affiliation. They can be individually folded up after use."
 	can_buy = UPLINK_SPY_THIEF | UPLINK_NUKE_OP
