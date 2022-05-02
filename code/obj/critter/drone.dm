@@ -1335,7 +1335,6 @@
 	dead_state = "sawflydead"
 	projectile_type = /datum/projectile/laser/drill/sawfly
 	current_projectile = new/datum/projectile/laser/drill/sawfly
-	//angertext = "detects the presence of"
 	smashes_shit = 0
 	droploot = null //change this later
 	health = 40
@@ -1396,7 +1395,7 @@
 
 	ChaseAttack(atom/M) // overriding these procs so the drone is nicer >:(
 		if (istraitor(M) || isnukeop(M) || isspythief(M) || (M in src.friends))
-		//	src.task = "thinking"
+
 			return
 		if(target && !attacking)
 			attacking = 1

@@ -177,47 +177,7 @@
 				src.icon_state = "mimic_[src.toolbox_style]2"
 				src.name = "mimic"
 				src.desc = "Oh shit, that's no toolbox at all!"
-/*
-/obj/critter/mimic_old
-	name = "mechanical toolbox"
-	desc = null
-	icon_state = "mimic1"
-	health = 20
-	aggressive = 1
-	defensive = 1
-	wanderer = 0
-	atkcarbon = 1
-	atksilicon = 1
-	brutevuln = 0.5
-	seekrange = 1
-	angertext = "suddenly comes to life and lunges at"
-	death_text = "%src% crumbles to pieces!"
 
-	ai_think()
-		..()
-		if (src.alive)
-			switch(task)
-				if("thinking")
-					src.icon_state = "mimic1"
-					src.name = "mechanical toolbox"
-				if("chasing")
-					src.icon_state = "mimic2"
-					src.name = "mimic"
-				if("attacking")
-					src.icon_state = "mimic2"
-					src.name = "mimic"
-
-	ChaseAttack(mob/M)
-		src.visible_message("<span class='combat'><B>[src]</B> hurls itself at [M]!</span>")
-		if (prob(33)) M.weakened += rand(3,6)
-
-	CritterAttack(mob/M)
-		src.attacking = 1
-		src.visible_message("<span class='combat'><B>[src]</B> bites [src.target]!</span>")
-		random_brute_damage(src.target, rand(2,4))
-		SPAWN(2.5 SECONDS)
-			src.attacking = 0
-*/
 /obj/critter/wraithskeleton
 	name = "skeleton"
 	desc = "It looks rather crumbly."

@@ -133,7 +133,7 @@
 		..()
 
 	emag_act(var/mob/user)
-		boutput(user, "<span class='hint'> The controller buzzes..... oddly. You're unsure exactly what that did, but it did do something</span>")
+		boutput(user, "<span class='hint'> The controller buzzes... oddly. You're unsure exactly what that did, but it did do something</span>")
 		icon_state = "sawflycontr1"
 		alreadyhit = TRUE
 		emagged = TRUE

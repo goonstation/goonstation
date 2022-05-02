@@ -156,7 +156,6 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	payload = /obj/critter/spacebee
 	is_dangerous = TRUE
 
-
 /obj/item/old_grenade/thing_thrower
 	desc = "It is set to detonate in 3 seconds."
 	name = "banana grenade"
