@@ -46,7 +46,7 @@
 					if (iscarbon(M))
 						var/mob/living/carbon/temp = M
 						if (temp.l_hand || temp.r_hand)
-							var/they_are = M.gender == "male" ? "He's" : M.gender == "female" ? "She's" : "They're"
+							var/they_are = "[hes_or_shes(M)]"
 							if (temp.l_hand)
 								holding = "[they_are] holding \a [temp.l_hand]"
 							if (temp.r_hand)
