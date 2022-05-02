@@ -2312,6 +2312,22 @@ datum
 			addiction_prob2 = 5
 			energy_value = 0
 
+		fooddrink/coffee/mate
+			name = "mate"
+			id = "mate"
+			description = "Basically coffee but green."
+			depletion_rate = 0.2
+			thirst_value = 0.25
+			energy_value = 0.2
+			caffeine_rush = 2
+			addiction_prob = 1
+			addiction_prob2 = 2
+			stun_resist = 3
+			fluid_r = 107
+			fluid_g = 188
+			fluid_b = 20
+			taste = "bitter"
+
 		fooddrink/coffee/energydrink
 			name = "energy drink"
 			id = "energydrink"
