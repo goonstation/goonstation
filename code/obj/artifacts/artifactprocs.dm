@@ -189,7 +189,7 @@
 			src.ArtifactStimulus("carbtouch", round(volume / 5))
 		if("carbon","synthflesh","blood","bloodc","meat_slurry")
 			src.ArtifactStimulus("carbtouch", round(volume / 5)) //require at least 5 units
-		if("silicon","silicon_dioxide","nanites","corruptnanites","silicate")
+		if("silicon","silicon_dioxide","nanites","corruptnanites","goodnanites","silicate")
 			src.ArtifactStimulus("silitouch", round(volume / 5)) //require at least 5 units
 		if("radium")
 			src.ArtifactStimulus("radiate", round(volume / 10))
