@@ -410,9 +410,12 @@
 	equipped(var/mob/user, var/slot)
 		..()
 		var/mob/living/carbon/human/H = user
-		if(connected_scuttlebot != null)
-			user.mind.transfer_to(connected_scuttlebot)
-			connected_scuttlebot.controller = H
+		if(connected_scuttlebot != null) //might need a loc
+			if(connected_scuttlebot.mind)
+				boutput(user, "<span class='alert'>The scuttlebot is already active somehow!</span>")
+			else
+				connected_scuttlebot.controller = H
+				user.mind.transfer_to(connected_scuttlebot)
 		else
 			boutput(user, "<span class='alert'>You put on the glasses but they show no signal. The scuttlebot is likely destroyed.</span>")
 
@@ -424,9 +427,10 @@
 
 	unequipped(var/mob/user)
 		..()
-		var/mob/living/carbon/human/H = user
+		//var/mob/living/carbon/human/H = user
 		if(connected_scuttlebot != null)
-			user.mind.transfer_to(connected_scuttlebot.controller)
+			connected_scuttlebot.return_to_owner()
+			//user.mind.transfer_to(connected_scuttlebot.controller)
 		/*if(ishuman(user) && user:network_device == src)
 			//user.verbs -= /mob/proc/jack_in
 			user:network_device = null

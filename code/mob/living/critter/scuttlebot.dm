@@ -14,13 +14,11 @@
 	var/health_brute_vuln = 1
 	var/health_burn = 25
 	var/health_burn_vuln = 0.2
-	var/connected_remote = null
 	var/controller = null
 
 	New()
 		..()
 		var/obj/item/clothing/glasses/scuttlebot_vr/R = new /obj/item/clothing/glasses/scuttlebot_vr(src.loc)
-		connected_remote = R
 		R.connected_scuttlebot = src
 
 		abilityHolder.addAbility(/datum/targetable/critter/takepicture)
@@ -48,6 +46,8 @@
 
 	death(var/gibbed)
 		..(gibbed, 0)
+		if (controller != null)
+			src.mind.transfer_to(controller)
 		if (!gibbed)
 			make_cleanable(/obj/decal/cleanable/oil,src.loc)
 			src.audible_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
@@ -56,6 +56,7 @@
 			//ghostize()
 			qdel(src)
 		else
+			playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
 			make_cleanable(/obj/decal/cleanable/oil,src.loc)
 
 	attackby(obj/item/W, mob/M)
@@ -63,6 +64,11 @@
 			new /obj/item/clothing/head/det_hat/folded_scuttlebot(get_turf(src))
 			qdel(W)
 			qdel(src)
+
+	proc/return_to_owner()
+		if (controller != null)
+			SPAWN(0)
+				src.mind.transfer_to(controller)
 /*
 	canRideMailchutes()
 		return 1

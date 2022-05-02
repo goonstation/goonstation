@@ -1,7 +1,7 @@
 /datum/targetable/critter/takepicture
 	name = "Snap picture"
 	desc = "Take a picture."
-	cooldown = 10 SECONDS
+	cooldown = 5 SECONDS
 	targeted = 1
 	target_anything = 1
 	cast(atom/target)
@@ -16,18 +16,13 @@
 		if (!photo)
 			return
 
-		//photo.overlays += the_turf
-
-		//turficon.Scale(22,20)
-
 		var/mob_title = null
 		var/mob_detail = null
-		//POSSIBLe gc woes later, on that is if we ever fuckin get mobs to gc at all hahaha
 
 		var/item_title = null
 		var/item_detail = null
 
-		var/mobnumber = 0 // above 3 and it'll stop listing what they're holding and if they're hurt
+		var/mobnumber = 0
 		var/itemnumber = 0
 		for (var/atom/A in the_turf)
 			if (A.invisibility || istype(A, /obj/overlay/tile_effect))
@@ -48,7 +43,7 @@
 					if (iscarbon(M))
 						var/mob/living/carbon/temp = M
 						if (temp.l_hand || temp.r_hand)
-							var/they_are = M.gender == "male" ? "He's" : M.gender == "female" ? "She's" : "They're" // I wanna just use he_or_she() but it wouldn't really work
+							var/they_are = M.gender == "male" ? "He's" : M.gender == "female" ? "She's" : "They're"
 							if (temp.l_hand)
 								holding = "[they_are] holding \a [temp.l_hand]"
 							if (temp.r_hand)
@@ -106,18 +101,18 @@
 /datum/targetable/critter/flash
 	name = "Blinding flash"
 	desc = "Flash someone in the eyes."
-	cooldown = 30 SECONDS
+	cooldown = 20 SECONDS
 	targeted = 1
 	cast(atom/target)
 		if (..())
 			return 1
-		if (BOUNDS_DIST(holder.owner, target) > 1)
+		if (BOUNDS_DIST(holder.owner, target) > 2)
 			boutput(holder.owner, __red("That is too far away to flash."))
 			return 1
 		if (target == holder.owner)
 			return 1
 		var/mob/MT = target
-		MT.apply_flash(10, 10, stamina_damage = 100, eyes_blurry = 10, eyes_damage = 5)
+		MT.apply_flash(10, 10, stamina_damage = 100, eyes_blurry = 5, eyes_damage = 5)
 		playsound(src, "sound/weapons/flash.ogg", 100, 1)
 
 /datum/targetable/critter/control_owner
@@ -127,5 +122,16 @@
 		if (..())
 			return 1
 		if (istype(holder.owner, /mob/living/critter/scuttlebot))
+			if(!holder.owner.mind)
+				boutput(holder.owner, __red("You dont have a mind somehow."))
+				return 1
+
 			var/mob/living/critter/scuttlebot/E = holder.owner
+			if (!E.controller)
+				boutput(holder.owner, __red("You didnt have a body to go back to! The scuttlebot shuts down with a sad boop."))
+				holder.owner.ghostize()
+				return 1
 			E.mind.transfer_to(E.controller)
+		else
+			boutput(holder.owner, __red("You dont have a body to go back to!"))
+			return 1
