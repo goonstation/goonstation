@@ -184,11 +184,14 @@
 		return
 	var/datum/artifact/A = src.artifact
 	switch(reagent_id)
-		if("carbon","synthflesh","blood","bloodc")
+		if("porktonium")
+			src.ArtifactStimulus("radiate", round(volume / 10))
+			src.ArtifactStimulus("carbtouch", round(volume / 5))
+		if("carbon","synthflesh","blood","bloodc","meat_slurry")
 			src.ArtifactStimulus("carbtouch", round(volume / 5)) //require at least 5 units
 		if("silicon","silicon_dioxide","nanites","corruptnanites","silicate")
 			src.ArtifactStimulus("silitouch", round(volume / 5)) //require at least 5 units
-		if("radium","porktonium")
+		if("radium")
 			src.ArtifactStimulus("radiate", round(volume / 10))
 		if("strange_reagent")
 			src.ArtifactStimulus("radiate", round(volume / 5))
