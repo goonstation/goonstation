@@ -244,7 +244,7 @@
 		if (istype(A, /area/station/chapel))
 			boutput(user, "<span class='alert'>You cannot summon lightning on holy ground!</span>") //phrasing works if either target or mob are in chapel heh
 			return
-		if (A?.sanctuary)
+		if (A?.sanctuary || istype(a, /area/wizard_station))
 			boutput(user, "<span class='alert'>You cannot summon lightning in this place!</span>")
 			return
 		if (thunder_charges <= 0)
