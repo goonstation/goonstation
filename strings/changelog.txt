@@ -1,5 +1,9 @@
 
 (t)mon may 02 22
+(u)Hans
+(p)8374
+(e)🆕🎨|feature, sprites
+(*)Adds yerba mate and mate gourds to the game, available through the coffee vendors.
 (u)Flappybat
 (p)8398
 (e)🆕|feature
