@@ -3,14 +3,17 @@
 	desc = "A strangely hat shaped robot looking to spy on your deepest secrets"
 	density = 0
 	custom_gib_handler = /proc/gibs
+	flags = TABLEPASS | DOORPASS
 	hand_count = 1
 	can_help = 1
 	can_throw = 1
 	can_grab = 1
 	can_disarm = 1
-	var/unified_health = 20
-	var/firevuln = 0.1
-	var/brutevuln = 1
+	icon_state = "mouse_white"
+	var/health_brute = 25
+	var/health_brute_vuln = 1
+	var/health_burn = 25
+	var/health_burn_vuln = 0.2
 
 	New()
 		..()
