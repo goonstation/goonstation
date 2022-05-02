@@ -57,7 +57,7 @@
 							else if (holding)
 								holding += "."
 
-					var/they_look = M.gender == "male" ? "he looks" : M.gender == "female" ? "she looks" : "they look"
+					var/they_look = "[he_or_she(M)] looks"
 					var/health_info = M.health < 75 ? " - [they_look][M.health < 25 ? " really" : null] hurt" : null
 					if (!mob_detail)
 						mob_detail = "In the photo, you can see [M][M.lying ? " lying on [the_turf]" : null][health_info][holding ? ". [holding]" : "."]"
