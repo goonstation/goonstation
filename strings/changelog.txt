@@ -1,5 +1,9 @@
 
 (t)mon may 02 22
+(u)LeahTheTech
+(p)8040
+(e)🆕⚖|feature, balance
+(*)Conspirators are now joined by a single lone antagonist.
 (u)Virvatuli
 (e)⚖|balance
 (*)Reduced shotsound volume of the Gwydion tranquilizer pistol, and it now acts like a suppressed gun.
