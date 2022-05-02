@@ -399,14 +399,15 @@
 			user:network_device = null
 		return
 
+//Goggles used to assume control of a linked scuttlebot
 /obj/item/clothing/glasses/scuttlebot_vr
-	name = "Scuttlebot VR goggles"
-	desc = "A pair of VR goggles running a personal simulation."
+	name = "Scuttlebot remote controller"
+	desc = "A pair of VR goggles connected to a remote scuttlebot."
 	icon_state = "vr"
 	item_state = "sunglasses"
 	var/mob/living/critter/scuttlebot/connected_scuttlebot = null
 
-	equipped(var/mob/user, var/slot)
+	equipped(var/mob/user, var/slot) //On equip, if there's a scuttlebot, control it
 		..()
 		var/mob/living/carbon/human/H = user
 		if(connected_scuttlebot != null)
@@ -421,7 +422,7 @@
 			boutput(user, "<span class='alert'>You put on the glasses but they show no signal. The scuttlebot is likely destroyed.</span>")
 
 
-	unequipped(var/mob/user)
+	unequipped(var/mob/user) //Someone might have removed them from us. If we're inside the scuttlebot, we're forced out
 		..()
 		if(connected_scuttlebot != null)
 			connected_scuttlebot.return_to_owner()

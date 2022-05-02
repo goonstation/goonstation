@@ -277,6 +277,7 @@ proc/filter_trait_hats(var/type)
 		..()
 		setProperty("meleeprot_head", 3)
 
+//A robot in disguise, ready to go and spy on everyone for you
 /obj/item/clothing/head/det_hat/folded_scuttlebot
 	desc = "Someone who wears this will look very smart. It looks a bit heavier than it should."
 

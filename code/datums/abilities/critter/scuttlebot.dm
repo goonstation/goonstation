@@ -1,3 +1,5 @@
+//Abilities of the scuttlebot
+
 /datum/targetable/critter/takepicture
 	name = "Snap picture"
 	desc = "Take a picture."
@@ -106,7 +108,7 @@
 	cast(atom/target)
 		if (..())
 			return 1
-		if (BOUNDS_DIST(holder.owner, target) > 2)
+		if (BOUNDS_DIST(holder.owner, target) > 0)
 			boutput(holder.owner, __red("That is too far away to flash."))
 			return 1
 		if (target == holder.owner)
@@ -133,6 +135,6 @@
 				return 1
 			E.mind.transfer_to(E.controller)
 			E.controller = null
-		else
+		else //In case this ability is put on another mob
 			boutput(holder.owner, __red("You dont have a body to go back to!"))
 			return 1

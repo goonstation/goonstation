@@ -14,10 +14,11 @@
 	var/health_brute_vuln = 1
 	var/health_burn = 25
 	var/health_burn_vuln = 0.2
-	var/mob/living/carbon/human/controller = null
+	var/mob/living/carbon/human/controller = null //Who's controlling us? Lets keep track so we can put them back in their body
 
 	New()
 		..()
+		//Comes with the goggles
 		var/obj/item/clothing/glasses/scuttlebot_vr/R = new /obj/item/clothing/glasses/scuttlebot_vr(src.loc)
 		R.connected_scuttlebot = src
 
@@ -45,11 +46,12 @@
 			return ..()
 
 	death(var/gibbed)
-		if (controller != null)
+		if (controller != null)//Lets put the person back in their body first to avoid death messages
 			if (!controller.mind)
 				src.mind.transfer_to(controller)
 			else
 				boutput(src, "<span class='alert'>Your conscience tries to reintegrate your body, but its already possessed by something!</span>")
+
 		..(gibbed, 0)
 
 		if (!gibbed)
