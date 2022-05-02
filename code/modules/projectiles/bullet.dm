@@ -255,6 +255,8 @@ toxic - poisons
 		pistol
 			casing = /obj/item/casing/small
 			shot_sound = 'sound/weapons/tranq_pistol.ogg'
+			shot_volume = 30
+			silentshot = 1
 
 	//haha gannets, fuck you I stole ur shit! - kyle
 	law_giver

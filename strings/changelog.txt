@@ -1,4 +1,9 @@
 
+(t)mon may 02 22
+(u)Virvatuli
+(e)⚖|balance
+(*)Reduced shotsound volume of the Gwydion tranquilizer pistol, and it now acts like a suppressed gun.
+(*)Drastically reduced volume and range of melee range vampire bloodsucking sounds.
 (t)sun may 01 22
 (u)NightmareChamillian
 (p)8383
