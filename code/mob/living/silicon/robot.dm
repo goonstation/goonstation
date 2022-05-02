@@ -1093,7 +1093,7 @@
 				return
 
 			if(linker.linked_rack in ticker.ai_law_rack_manager.registered_racks)
-				if(src.emagged || src.syndicate)
+				if(src.emagged)
 					boutput(user, "The link port sparks violently! It didn't work!")
 					logTheThing("station", src, null, "[constructName(user)] tried to connect [src] to the rack [constructName(src.law_rack_connection)] but they are emagged, so it failed.")
 					elecflash(src,power=2)
