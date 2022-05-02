@@ -184,6 +184,10 @@
 		return
 	var/datum/artifact/A = src.artifact
 	switch(reagent_id)
+		if("carbon","synthflesh","blood","bloodc")
+			src.ArtifactStimulus("carbtouch", round(volume / 5)) //require at least 5 units
+		if("silicon","silicon_dioxide","nanites","corruptnanites","silicate")
+			src.ArtifactStimulus("silitouch", round(volume / 5)) //require at least 5 units
 		if("radium","porktonium")
 			src.ArtifactStimulus("radiate", round(volume / 10))
 		if("strange_reagent")
