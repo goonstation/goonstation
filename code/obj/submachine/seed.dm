@@ -879,7 +879,7 @@
 					return
 				var/obj/item/inserting = usr.equipped()
 				if(istype(inserting, /obj/item/reagent_containers/glass/) || istype(inserting, /obj/item/reagent_containers/food/drinks/))
-					src.Attackby(inserting, usr)
+					tryInsert(inserting, usr)
 					. = TRUE
 			if("ejectingredient")
 				var/id = params["ingredient_id"]
@@ -934,20 +934,23 @@
 
 	attackby(var/obj/item/W as obj, var/mob/user as mob)
 		if(istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/))
-			if (isrobot(user))
-				boutput(user, "This machine does not accept containers from robots!")
-				return
-			if(src.inserted)
-				boutput(user, "<span class='alert'>A container is already loaded into the machine.</span>")
-				return
-			src.inserted =  W
-			user.drop_item()
-			W.set_loc(src)
-			if(!src.extract_to) src.extract_to = W
-			boutput(user, "<span class='notice'>You add [W] to the machine!</span>")
-			src.ui_interact(user)
+			tryInsert(W, user)
 
 		..()
+
+	proc/tryInsert(var/obj/item/W, var/mob/user)
+		if (isrobot(user))
+			boutput(user, "This machine does not accept containers from robots!")
+			return
+		if(src.inserted)
+			boutput(user, "<span class='alert'>A container is already loaded into the machine.</span>")
+			return
+		src.inserted =  W
+		user.drop_item()
+		W.set_loc(src)
+		if(!src.extract_to) src.extract_to = W
+		boutput(user, "<span class='notice'>You add [W] to the machine!</span>")
+		src.ui_interact(user)
 
 	Exited(Obj, newloc)
 		if(Obj == src.inserted)

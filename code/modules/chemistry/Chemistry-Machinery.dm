@@ -34,9 +34,10 @@
 
 	attackby(var/obj/item/reagent_containers/glass/B as obj, var/mob/user as mob)
 
-		if(!istype(B, /obj/item/reagent_containers/glass))
-			return
+		if(istype(B, /obj/item/reagent_containers/glass))
+			tryInsert(B, user)
 
+	proc/tryInsert(obj/item/reagent_containers/glass/B, var/mob/user)
 		if (status & (NOPOWER|BROKEN))
 			user.show_text("[src] seems to be out of order.", "red")
 			return
@@ -164,7 +165,7 @@
 					return
 				var/obj/item/reagent_containers/glass/inserting = usr.equipped()
 				if(istype(inserting))
-					src.Attackby(inserting, usr)
+					tryInsert(inserting, usr)
 			if("adjustTemp")
 				src.target_temp = clamp(params["temperature"], 0, 1000)
 				src.UpdateIcon()
