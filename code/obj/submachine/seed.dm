@@ -254,10 +254,11 @@
 			src.updateUsrDialog()
 
 		else if(href_list["ejectbeaker"])
-			if (!src.inserted) boutput(usr, "<span class='alert'>No receptacle found to eject.</span>")
+			var/obj/item/I = src.inserted
+			if (!I) boutput(usr, "<span class='alert'>No receptacle found to eject.</span>")
 			else
-				src.inserted.set_loc(src.loc)
-				usr.put_in_hand_or_eject(src.inserted) // try to eject it into the users hand, if we can
+				I.set_loc(src.loc)
+				usr.put_in_hand_or_eject(I) // try to eject it into the users hand, if we can
 				src.inserted = null
 			src.updateUsrDialog()
 
@@ -755,7 +756,7 @@
 		"}
 
 	Exited(Obj, newloc)
-		if(Obj == src.inserted && newloc == null)
+		if(Obj == src.inserted)
 			src.inserted = null
 			src.updateUsrDialog()
 
@@ -865,11 +866,12 @@
 		var/list/containers = src.getContainers()
 		switch(action)
 			if("ejectcontainer")
-				if (!src.inserted)
+				var/obj/item/I = src.inserted
+				if (!I)
 					return
-				if (src.inserted == src.extract_to) src.extract_to = null
-				TRANSFER_OR_DROP(src, src.inserted)
-				usr.put_in_hand_or_eject(src.inserted)
+				if (I == src.extract_to) src.extract_to = null
+				TRANSFER_OR_DROP(src, I)
+				usr.put_in_hand_or_eject(I)
 				src.inserted = null
 				. = TRUE
 			if("insertcontainer")
@@ -948,7 +950,7 @@
 		..()
 
 	Exited(Obj, newloc)
-		if(Obj == src.inserted && newloc == null)
+		if(Obj == src.inserted)
 			src.inserted = null
 			tgui_process.update_uis(src)
 

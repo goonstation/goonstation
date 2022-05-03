@@ -278,7 +278,7 @@
 		return
 
 	Exited(Obj, newloc)
-		if(Obj == src.beaker && newloc == null)
+		if(Obj == src.beaker)
 			src.beaker = null
 			src.UpdateIcon()
 			tgui_process.update_uis(src)
@@ -389,9 +389,10 @@
 			attack_hand(usr)
 			return
 		else if (href_list["eject"])
-			if (src.beaker)
-				beaker.set_loc(src.output_target)
-			usr.put_in_hand_or_eject(beaker) // try to eject it into the users hand, if we can
+			var/obj/item/I = src.beaker
+			if (I)
+				I.set_loc(src.output_target)
+			usr.put_in_hand_or_eject(I) // try to eject it into the users hand, if we can
 			beaker = null
 			icon_state = "mixer0"
 			src.updateUsrDialog()
@@ -692,7 +693,7 @@
 		return
 
 	Exited(Obj, newloc)
-		if(Obj == src.beaker && newloc == null)
+		if(Obj == src.beaker)
 			src.beaker = null
 			icon_state = "mixer0"
 			src.updateUsrDialog()
