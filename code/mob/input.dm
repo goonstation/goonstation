@@ -11,11 +11,13 @@
 	return ..()
 
 /mob/keys_changed(keys, changed)
-	if (changed & KEY_EXAMINE)
-		if (keys & KEY_EXAMINE && HAS_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES))
-			src.client?.get_plane(PLANE_EXAMINE).alpha = 255
+	if (changed & KEY_EXAMINE && HAS_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES) && src.client)
+		if (keys & KEY_EXAMINE)
+			for (var/mob/M as anything in mobs)
+				M.name_tag?.show_images(src.client, TRUE, FALSE)
 		else
-			src.client?.get_plane(PLANE_EXAMINE).alpha = 0
+			for (var/mob/M as anything in mobs)
+				M.name_tag?.show_images(src.client, FALSE, FALSE)
 
 	if (src.use_movement_controller)
 		var/datum/movement_controller/controller = src.use_movement_controller.get_movement_controller()
