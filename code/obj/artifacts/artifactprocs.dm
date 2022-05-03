@@ -187,14 +187,12 @@
 		if("porktonium")
 			src.ArtifactStimulus("radiate", round(volume / 10))
 			src.ArtifactStimulus("carbtouch", round(volume / 5))
-		if("carbon","synthflesh","blood","bloodc","meat_slurry")
+		if("synthflesh","blood","bloodc","meat_slurry") //not carbon, because it's about detecting *lifeforms*, not elements
 			src.ArtifactStimulus("carbtouch", round(volume / 5)) //require at least 5 units
-		if("silicon","silicon_dioxide","nanites","corruptnanites","goodnanites","silicate")
+		if("nanites","corruptnanites","goodnanites","flockdrone_fluid") //not silicon&friends for the same reason
 			src.ArtifactStimulus("silitouch", round(volume / 5)) //require at least 5 units
 		if("radium")
 			src.ArtifactStimulus("radiate", round(volume / 10))
-		if("strange_reagent")
-			src.ArtifactStimulus("radiate", round(volume / 5))
 		if("uranium","polonium")
 			src.ArtifactStimulus("radiate", round(volume / 2))
 		if("dna_mutagen","mutagen","omega_mutagen")
