@@ -111,7 +111,7 @@
 		controller = new/mob/living/intangible/flock/trace(src, src.flock)
 		src.is_npc = 0
 
-/mob/living/critter/flock/drone/proc/take_control(mob/living/intangible/flock/pilot)
+/mob/living/critter/flock/drone/proc/take_control(mob/living/intangible/flock/pilot, give_alert = TRUE)
 	if(!pilot)
 		return // fuck it
 	if(controller)
@@ -141,13 +141,15 @@
 	controller = pilot
 	src.client?.color = null // stop being all fucked up and weird aaaagh
 	src.hud?.update_intent()
-	boutput(src, "<span class='flocksay'><b>\[SYSTEM: Control of drone [src.real_name] established.\]</b></span>")
+	if (give_alert)
+		boutput(src, "<span class='flocksay'><b>\[SYSTEM: Control of drone [src.real_name] established.\]</b></span>")
 
-/mob/living/critter/flock/drone/proc/release_control()
+/mob/living/critter/flock/drone/proc/release_control(give_alerts = TRUE)
 	src.flock?.hideAnnotations(src)
 	src.is_npc = 1
-	emote("beep")
-	say(pick_string("flockmind.txt", "flockdrone_player_kicked"))
+	if (give_alerts)
+		emote("beep")
+		say(pick_string("flockmind.txt", "flockdrone_player_kicked"))
 	if(src.client && !controller)
 		// don't know how this happened but you need a controller right now
 		controller = new/mob/living/intangible/flock/trace(src, src.flock)
@@ -173,7 +175,8 @@
 				controller.mind.key = key
 				controller.mind.current = controller
 				ticker.minds += controller.mind
-		flock_speak(null, "Control of drone [src.real_name] surrended.", src.flock)
+		if (give_alerts)
+			flock_speak(null, "Control of drone [src.real_name] surrended.", src.flock)
 		// clear refs
 		controller = null
 

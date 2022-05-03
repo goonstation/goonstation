@@ -69,6 +69,33 @@
 		stat("Flock:", "none")
 		stat("Drones:", 0)
 
+/mob/living/intangible/flock/trace/proc/promoteToFlockmind(remove_flockmind_from_flock)
+	var/was_in_drone = FALSE
+	var/mob/living/critter/flock/drone/controlled = src.loc
+	if (istype(controlled))
+		was_in_drone = TRUE
+		controlled.release_control(FALSE)
+
+	boutput(src, "<span class='flocksay'><b>\[SYSTEM: New functions detected. Control of Flock assumed.\]</b></span>")
+	flock_speak(null, "Flocktrace [src.real_name] has been promoted to Flockmind.", src.flock)
+
+	var/mob/living/intangible/flock/flockmind/original = src.flock.flockmind
+	if (remove_flockmind_from_flock)
+		var/mob/living/intangible/flock/flockmind/F = new (get_turf(src), src.flock)
+		src.mind.transfer_to(F)
+		if (was_in_drone)
+			controlled.take_control(F, FALSE)
+		src.flock.removeTrace(src)
+		src.flock.hideAnnotations(original)
+		original.ghostize()
+		qdel(original)
+		qdel(src)
+	else
+		src.mind.swap_with(original)
+		if (was_in_drone)
+			src.set_loc(get_turf(original))
+			controlled.take_control(original, FALSE)
+
 /mob/living/intangible/flock/trace/Life(datum/controller/process/mobs/parent)
 	if (..(parent))
 		return 1
