@@ -570,6 +570,7 @@
 	force_fullbright = 1
 	icon_state = "purple"
 	dont_log_combat = TRUE
+	teleport_blocked = 1
 
 /area/football/field
 	name = "Space American Football Field"
@@ -619,6 +620,7 @@
 	icon_state = "landmark"
 	deleted_on_start = TRUE
 	add_to_landmarks = FALSE
+
 
 	New()
 		football_spawns[src.name] += src.loc
