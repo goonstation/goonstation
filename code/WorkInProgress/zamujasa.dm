@@ -621,7 +621,6 @@
 	deleted_on_start = TRUE
 	add_to_landmarks = FALSE
 
-
 	New()
 		football_spawns[src.name] += src.loc
 		..()
