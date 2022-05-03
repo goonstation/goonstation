@@ -42,17 +42,29 @@ MATERIAL
 
 	var/list/obj/machinery/atmospherics/node_list = list()
 	var/list/datum/pipe_network/nodenet_list = list()
-	if (hasvar(R,"node1") && !isnull(R.node1))
+	if (hasvar(R,"node1") && !isnull(R.node1)) // pipes
 		node_list += R.node1
 		nodenet_list += R.node1?.return_network()
-	if (hasvar(R,"node2") && !isnull(R.node2))
+	if (hasvar(R,"node2") && !isnull(R.node2)) // pipes
 		node_list += R.node2
 		nodenet_list += R.node2?.return_network()
-	if (hasvar(R,"node3") && !isnull(R.node3))
+	if (hasvar(R,"node3") && !isnull(R.node3)) // manifolds
 		node_list += R.node3
 		nodenet_list += R.node3?.return_network()
 
-	if(length(node_list) == 2 && length(nodenet_list) == 2) // atleast two sides are filled in, meaning we are surrounded
+	if(length(node_list) == 3 && length(nodenet_list) == 3) // 3 sides are filled in, for manifolds
+		nodenet_list[1].merge(nodenet_list[2])
+		nodenet_list[1].merge(nodenet_list[3])
+		R.network_expand(nodenet_list[1],R)
+		R.initialize()
+		R.UpdateIcon(R)
+		node_list[1].initialize()
+		node_list[1].UpdateIcon()
+		node_list[2].initialize()
+		node_list[2].UpdateIcon()
+		node_list[3].initialize()
+		node_list[3].UpdateIcon()
+	else if(length(node_list) == 2 && length(nodenet_list) == 2) // 3 sides are filled in, meaning we are surrounded
 		nodenet_list[1].merge(nodenet_list[2])
 		R.network_expand(nodenet_list[1],R)
 		R.initialize()
@@ -61,7 +73,7 @@ MATERIAL
 		node_list[1].UpdateIcon()
 		node_list[2].initialize()
 		node_list[2].UpdateIcon()
-	else if (length(node_list) == 1 && length(nodenet_list) == 1)
+	else if (length(node_list) == 1 && length(nodenet_list) == 1) // next to something with a network
 		R.network_expand(nodenet_list[1],R)
 		R.initialize()
 		R.UpdateIcon(R)
