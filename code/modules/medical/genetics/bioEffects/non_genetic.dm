@@ -271,3 +271,28 @@
 			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "outline", layer = MOB_LIMB_LAYER)
 			overlay_image.color = "#007BFF"
 		..()
+
+//Wraith curses
+/datum/bioEffect/blood_curse
+	name = "Blood curse"
+	desc = "Curse of blood."
+	id = "blood_curse"
+	effectType = EFFECT_TYPE_DISABILITY
+	can_copy = 0
+	isBad = 1
+
+	OnAdd()
+		if (ishuman(owner))
+			owner.traitHolder?.addTrait("hemophilia")
+
+	OnLife()
+		if (prob(50))
+			owner.visible_message("<span class='alert'>[owner] vomits blood!</span>")
+			playsound(owner.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+			random_brute_damage(owner, rand(5,8))
+			bleed(owner, rand(5,8), 5)
+
+	OnRemove()
+		if (ishuman(owner))
+			owner.traitHolder?.removeTrait("hemophilia")
+		. = ..()

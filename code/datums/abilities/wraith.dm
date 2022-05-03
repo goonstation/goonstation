@@ -735,6 +735,71 @@
 		boutput(P, "[W] is your master! Spread mischeif and do their bidding!")
 		boutput(P, "Don't venture too far from your portal or your master!")
 
+/datum/targetable/wraithAbility/specialize
+	name = "Choose specialisation"
+	icon_state = "spook"
+	desc = "Evolve"
+	targeted = 0
+	pointCost = 1
+
+	var/status = 0
+	var/static/list/effects = list("Rot" = 1, "Summoner" = 2, "Trickster" = 3)
+	var/list/effects_buttons = list()
+
+
+	New()
+		..()
+		object.contextLayout = new /datum/contextLayout/screen_HUD_default(2, 16, 16)//, -32, -32)
+		if (!object.contextActions)
+			object.contextActions = list()
+
+		for(var/i=1, i<=3, i++)
+			var/datum/contextAction/wraith_evolve_button/newcontext = new /datum/contextAction/wraith_evolve_button(i)
+			object.contextActions += newcontext
+
+	cast()
+		if (..())
+			return 1
+
+	proc/evolve(var/effect as text)
+		var/mob/wraith/W
+		switch (effect)
+			if (1)
+				W = new/mob/wraith/wraith_decay(holder.owner)
+				boutput(holder.owner, "<span class='notice'>You turn into a decay wraith!!</span>")
+			if (2)
+				W = new/mob/wraith/wraith_invocation(holder.owner)
+				boutput(holder.owner, "<span class='notice'>You turn into a posession wraith!!</span>")
+			if (3)
+				W = new/mob/wraith/wraith_trickster(holder.owner)
+				boutput(holder.owner, "<span class='notice'>You turn into a trickster wraith!!</span>")
+
+		W.real_name = holder.owner.real_name
+		W.UpdateName()
+		var/turf/T = get_turf(holder.owner)
+		W.set_loc(T)
+
+		holder.owner.mind.transfer_to(W)
+		qdel(holder.owner)
+
+		return W
+
+/datum/targetable/wraithAbility/curseBrand
+	name = "Hex"
+	icon_state = "skeleton"
+	desc = "Curse a human with a thing."
+	targeted = 1
+	pointCost = 20
+	cooldown = 40 SECONDS
+
+	cast(atom/target)
+		if (..())
+			return 1
+
+		if (ishuman(target))
+			usr.playsound_local(usr.loc, "sound/voice/wraith/wraithspook[rand(1, 2)].ogg", 80, 0)
+			var/mob/living/carbon/H = target
+			H.bioHolder.AddEffect("blood_curse")
 
 /obj/spookMarker
 	name = "Spooky Marker"

@@ -97,7 +97,7 @@
 		qdel(orbit_anchor)
 		..()
 
-	addAllAbilities()
+	addAllBasicAbilities()
 		src.addAbility(/datum/targetable/wraithAbility/decay)
 		src.addAbility(/datum/targetable/wraithAbility/command)
 		src.addAbility(/datum/targetable/wraithAbility/animateObject)

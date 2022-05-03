@@ -344,6 +344,49 @@
 		user.closeContextActions()
 		return 0
 
+/datum/contextAction/wraith_evolve_button
+	name = "wraith"
+	desc = "Test"
+	icon = 'icons/ui/context32x32.dmi'
+	icon_state = "minus"
+	icon_background = ""
+	var/ability_code = 0
+
+	New(code as num)
+		..()
+		src.ability_code = code
+		switch(code)
+			if (1)
+				name = "Option 1"
+				desc = "Do stuff 1."
+				icon_state = "wraith-switch"
+			if (2)
+				name = "Option 2"
+				desc = "Do stuff 2."
+				icon_state = "wraith-break-lights"
+			if (3)
+				name = "Option 3"
+				desc = "Do stuff 3."
+				icon_state = "wraith-smoke"
+
+	checkRequirements(atom/target, mob/user)
+		. = TRUE
+		if (istype(target, /atom/movable/screen/ability/topBar/wraith))
+			var/atom/movable/screen/ability/topBar/wraith/B = target
+			if (istype(B.owner, /datum/targetable/wraithAbility/specialize))
+				var/datum/targetable/wraithAbility/specialize/A = B.owner
+				if (!A.cooldowncheck())
+					return FALSE
+
+	execute(atom/target, mob/user)
+		if (istype(target, /atom/movable/screen/ability/topBar/wraith))
+			var/atom/movable/screen/ability/topBar/wraith/B = target
+			if (istype(B.owner, /datum/targetable/wraithAbility/specialize))
+				var/datum/targetable/wraithAbility/specialize/A = B.owner
+				A.evolve(ability_code)
+				A.doCooldown()
+		user.closeContextActions()
+		return 0
 
 /datum/contextAction/genebooth_product
 	icon = 'icons/ui/context32x32.dmi'

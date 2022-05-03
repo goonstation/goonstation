@@ -81,7 +81,7 @@
 		src.see_in_dark = SEE_DARK_FULL
 		src.abilityHolder = new /datum/abilityHolder/wraith(src)
 		src.abilityHolder.points = 50
-		src.addAllAbilities()
+		src.addAllBasicAbilities()
 		last_life_update = world.timeofday
 		src.hud = new hud_path (src)
 		src.attach_hud(hud)
@@ -515,6 +515,8 @@
 
 
 
+
+
 	//////////////
 	// Wraith Procs
 	//////////////
@@ -553,20 +555,25 @@
 			return 0
 
 
-		addAllAbilities()
+		addAllBasicAbilities()
 			src.addAbility(/datum/targetable/wraithAbility/help)
 			src.addAbility(/datum/targetable/wraithAbility/absorbCorpse)
 			src.addAbility(/datum/targetable/wraithAbility/possessObject)
-			src.addAbility(/datum/targetable/wraithAbility/makeRevenant)
+			//src.addAbility(/datum/targetable/wraithAbility/makeRevenant)
 			src.addAbility(/datum/targetable/wraithAbility/decay)
 			src.addAbility(/datum/targetable/wraithAbility/command)
-			src.addAbility(/datum/targetable/wraithAbility/raiseSkeleton)
+			//src.addAbility(/datum/targetable/wraithAbility/raiseSkeleton)
 			src.addAbility(/datum/targetable/wraithAbility/animateObject)
 			src.addAbility(/datum/targetable/wraithAbility/haunt)
 			src.addAbility(/datum/targetable/wraithAbility/spook)
 			src.addAbility(/datum/targetable/wraithAbility/whisper)
 			src.addAbility(/datum/targetable/wraithAbility/blood_writing)
-			src.addAbility(/datum/targetable/wraithAbility/make_poltergeist)
+			//src.addAbility(/datum/targetable/wraithAbility/make_poltergeist)
+			src.addAbility(/datum/targetable/wraithAbility/specialize)
+
+		addAllDecayAbilities()
+			src.addAbility(/datum/targetable/wraithAbility/raiseSkeleton)
+			src.addAbility(/datum/targetable/wraithAbility/curseBrand)
 
 		removeAllAbilities()
 			src.removeAbility(/datum/targetable/wraithAbility/help)
@@ -634,6 +641,31 @@
 //////////////
 // Related procs and verbs
 //////////////
+
+/mob/wraith/wraith_decay
+	name = "Plaguebringer"
+	real_name = "Plaguebringer" //todo: construct name from a user input (e.g. <x> the Impaler)
+	desc = "A terrifyingly bloated spirit."
+	icon = 'icons/mob/mob.dmi'
+	icon_state = "wraith"
+
+	New(var/mob/M)
+		..()
+		src.addAllDecayAbilities()
+
+/mob/wraith/wraith_invocation
+	name = "Plaguebringer"
+	real_name = "Plaguebringer" //todo: construct name from a user input (e.g. <x> the Impaler)
+	desc = "A terrifyingly bloated spirit."
+	icon = 'icons/mob/mob.dmi'
+	icon_state = "wraith"
+
+/mob/wraith/wraith_trickster
+	name = "Plaguebringer"
+	real_name = "Plaguebringer" //todo: construct name from a user input (e.g. <x> the Impaler)
+	desc = "A terrifyingly bloated spirit."
+	icon = 'icons/mob/mob.dmi'
+	icon_state = "wraith"
 
 // i am dumb - marq
 /mob/proc/wraithize()
