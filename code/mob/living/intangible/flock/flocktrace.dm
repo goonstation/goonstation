@@ -27,6 +27,7 @@
 		src.flock.addTrace(src)
 	else
 		src.death() // f u
+
 	src.addAbility(/datum/targetable/flockmindAbility/designateEnemy)
 	src.addAbility(/datum/targetable/flockmindAbility/ping)
 
