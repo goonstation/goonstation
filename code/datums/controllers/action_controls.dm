@@ -692,7 +692,8 @@ var/datum/action_controller/actions
 		if (istype(R))
 			R.amount = amount
 			R.inventory_counter?.update_number(R.amount)
-		R.set_dir(owner.dir)
+		if(!istype(R,/obj/machinery/atmospherics/pipe)) // constructable atmos pipe time
+			R.set_dir(owner.dir)
 		sheet.change_stack_amount(-cost)
 		if (sheet2 && cost2)
 			sheet2.change_stack_amount(-cost2)

@@ -32,6 +32,45 @@ MATERIAL
 		else
 			W = new /obj/window/reinforced(usr.loc)
 
+/proc/atmos_pipe_callback(var/datum/action/bar/icon/build/B, var/obj/machinery/atmospherics/pipe/manifold/R)
+
+	if(isnull(R))
+		return
+	//SPAWN(0.1 SECONDS) using hasvars so this can be THE atmos construction setup proc
+
+	R.initialize() // this proc sets up the nodes for us (adjacent pipes that will connect)
+
+	var/list/obj/machinery/atmospherics/node_list = list()
+	var/list/datum/pipe_network/nodenet_list = list()
+	if (hasvar(R,"node1") && !isnull(R.node1))
+		node_list += R.node1
+		nodenet_list += R.node1?.return_network()
+	if (hasvar(R,"node2") && !isnull(R.node2))
+		node_list += R.node2
+		nodenet_list += R.node2?.return_network()
+	if (hasvar(R,"node3") && !isnull(R.node3))
+		node_list += R.node3
+		nodenet_list += R.node3?.return_network()
+
+	if(length(node_list) == 2 && length(nodenet_list) == 2) // atleast two sides are filled in, meaning we are surrounded
+		nodenet_list[1].merge(nodenet_list[2])
+		R.network_expand(nodenet_list[1],R)
+		R.initialize()
+		R.UpdateIcon(R)
+		node_list[1].initialize()
+		node_list[1].UpdateIcon()
+		node_list[2].initialize()
+		node_list[2].UpdateIcon()
+	else if (length(node_list) == 1 && length(nodenet_list) == 1)
+		R.network_expand(nodenet_list[1],R)
+		R.initialize()
+		R.UpdateIcon(R)
+		node_list[1].initialize()
+		node_list[1].UpdateIcon(node_list[1])
+	else // no pipes around us are setup and we have no network
+		R.build_network()
+	R.UpdateIcon(R)
+
 /obj/item/sheet
 	name = "sheet"
 	icon = 'icons/obj/metal.dmi'
@@ -270,6 +309,9 @@ MATERIAL
 				L["light"] = "Light Fixture Parts, Tube (2 Sheets)"
 				L["light2"] = "Light Fixture Parts, Bulb (2 Sheets)"
 				L["light3"] = "Light Fixture Parts, floor (2 Sheets)"
+				L["apipes"] = "Straight Atmospheric Pipes (2 Sheets)"
+				L["apipec"] = "Corner Atmospheric Pipes (2 Sheets)"
+				L["apipem"] = "Atmospheric Pipe Manifold (2 Sheets)"
 				L["bed"] = "Bed (2 Sheets)"
 				L["closet"] = "Closet (2 Sheets)"
 				L["construct"] = "Wall Girders (2 Sheets)"
@@ -467,6 +509,57 @@ MATERIAL
 					a_icon = 'icons/obj/items/assemblies.dmi'
 					a_icon_state = "Pipe_Frame"
 					a_name = "a pipe frame"
+
+				if("apipes")
+					if (!amount_check(3,usr)) return
+					switch(usr.dir)
+						if(NORTH , SOUTH)
+							a_type = /obj/machinery/atmospherics/pipe/simple/vertical
+						if(EAST , WEST)
+							a_type = /obj/machinery/atmospherics/pipe/simple/horizontal
+					a_amount = 1
+					a_cost = 3
+					a_icon = 'icons/obj/atmospherics/pipes/regular_pipe.dmi'
+					a_icon_state = "intact"
+					a_name = "a pipe"
+					a_callback = /proc/atmos_pipe_callback
+
+				if("apipec")
+					if (!amount_check(3,usr)) return
+					switch(usr.dir)
+						if(NORTH)
+							a_type = /obj/machinery/atmospherics/pipe/simple/northwest
+						if(SOUTH)
+							a_type = /obj/machinery/atmospherics/pipe/simple/southeast
+						if(EAST)
+							a_type = /obj/machinery/atmospherics/pipe/simple/northeast
+						if(WEST)
+							a_type = /obj/machinery/atmospherics/pipe/simple/southwest
+					a_amount = 1
+					a_cost = 3
+					a_icon = 'icons/obj/atmospherics/pipes/regular_pipe.dmi'
+					a_icon_state = "intact"
+					a_name = "a pipe"
+					a_callback = /proc/atmos_pipe_callback
+
+				if("apipem")
+					if (!amount_check(3,usr)) return
+					switch(usr.dir)
+						if(NORTH)
+							a_type = /obj/machinery/atmospherics/pipe/manifold/north
+						if(SOUTH)
+							a_type = /obj/machinery/atmospherics/pipe/manifold/south
+						if(EAST)
+							a_type = /obj/machinery/atmospherics/pipe/manifold/east
+						if(WEST)
+							a_type = /obj/machinery/atmospherics/pipe/manifold/west
+					a_amount = 1
+					a_cost = 3
+					a_icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi'
+					a_icon_state = "manifold"
+					a_name = "a pipe manifold"
+					a_callback = /proc/atmos_pipe_callback
+
 
 				if("bed")
 					if (!amount_check(2,usr)) return

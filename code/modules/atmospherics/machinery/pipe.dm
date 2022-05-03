@@ -497,12 +497,12 @@ obj/machinery/atmospherics/pipe
 			else
 				icon_state = "exposed"//[invisibility ? "-f" : "" ]"
 				alpha = invisibility ? 128 : 255
+				if(is_cardinal(dir)) // this broke some stuff on corner pipes
+					if(node1)
+						dir = get_dir(src, node1)
 
-				if(node1)
-					dir = get_dir(src, node1)
-
-				else if(node2)
-					dir = get_dir(src, node2)
+					else if(node2)
+						dir = get_dir(src, node2)
 
 				// Deletion should be added as part of constructable atmos
 				//else
