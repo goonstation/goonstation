@@ -686,6 +686,7 @@
 			update_inhands()
 		for (var/datum/equipmentHolder/EH in equipment)
 			if (EH.item == I)
+				EH.on_unequip()
 				EH.item = null
 				hud.remove_object(I)
 				clothing = 1
