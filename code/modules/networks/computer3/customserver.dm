@@ -13,21 +13,24 @@
 	var/list/globalVariables //A list of all the variables and their stored values
 	var/list/privateVariables //A list of all the variables and their stored values, used in functions
 
-	var/datum/computer/file/record/program //Where the program is stored once it is loaded
-
 	//Load program from tape
 	proc/load_program()
+		if (!src.tape)
+			return
+		src.program = src.tape.contents
+
 
 	proc/clear_variables()
-		src.variables.Cut()
+		src.globalVariables.Cut()
+		src.privateVariables.Cut()
 
 
 	power_change()
-		if(!src.tape)
+		if (!src.tape)
 			icon_state = "custom_servere"
 			return
 
-		else if(powered())
+		else if (powered())
 			icon_state = "custom_server1"
 			status &= ~NOPOWER
 		else
