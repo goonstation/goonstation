@@ -36,10 +36,10 @@ o+`        `-` ``..-:yooos-..----------..`
 //////////// CONVENIENCE OPTIONS FOR TESTING ETC
 //#define STOP_DISTRACTING_ME //All of the below
 
-//#define I_AM_ABOVE_THE_LAW // Prevents all secbots and guardbuddies from spawning, useful for gun testing
-//#define ALL_ROBOT_AND_COMPUTERS_MUST_SHUT_THE_HELL_UP // Prevents ALL bots from spawning (not cyborgs)
-//#define BAD_MONKEY_NO_BANANA // Prevents landmark monkeys from spawning- monkeys can still be vended etc
-//#define CLONING_IS_A_SIN // Don't prebake clones
+#define I_AM_ABOVE_THE_LAW // Prevents all secbots and guardbuddies from spawning, useful for gun testing
+#define ALL_ROBOT_AND_COMPUTERS_MUST_SHUT_THE_HELL_UP // Prevents ALL bots from spawning (not cyborgs)
+#define BAD_MONKEY_NO_BANANA // Prevents landmark monkeys from spawning- monkeys can still be vended etc
+#define CLONING_IS_A_SIN // Don't prebake clones
 //#define I_KNOW_WHAT_IM_DOING_PROBABLY //surpresses gottagofast warning about only using one z-level.
 
 //#define Z_LOG_ENABLE 1  // Enable additional world.log logging
@@ -96,8 +96,8 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_CONSTRUCTION		// Construction mode
 //#define MAP_OVERRIDE_DESTINY			// Destiny/RP
 //#define MAP_OVERRIDE_CLARION			// Destiny/Alt RP
-#define MAP_OVERRIDE_COGMAP
-//#define MAP_OVERRIDE_COGMAP2			// Cogmap 2
+//#define MAP_OVERRIDE_COGMAP
+#define MAP_OVERRIDE_COGMAP2			// Cogmap 2
 //#define MAP_OVERRIDE_DONUT2			// Updated Donut2
 //#define MAP_OVERRIDE_DONUT3			// Donut3 by Ryumi
 //#define MAP_OVERRIDE_MUSHROOM			// Updated Mushroom
@@ -113,7 +113,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_FLEET
 //#define MAP_OVERRIDE_ICARUS
 //#define MAP_OVERRIDE_GEHENNA			// Warcrimes WIP do not use
-//#define MAP_OVERRIDE_PAMGOC			// Pamgoc
+#define MAP_OVERRIDE_PAMGOC			// Pamgoc
 //#define MAP_OVERRIDE_WRESTLEMAP   // Wrestlemap by Overtone
 // #define MAP_OVERRIDE_POD_WARS   // 500x500 Pod Wars map
 
