@@ -1224,6 +1224,11 @@
 	.=0
 
 /mob/living/carbon/human
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (!istype(W, /obj/item/device/flash) && src.glasses && user.zone_sel.selecting == "head")
+			src.glasses.breakglasses()
+		..()
+
 	updateStatusUi()
 		if(src.hud && istype(src.hud, /datum/hud/human))
 			var/datum/hud/human/H = src.hud
