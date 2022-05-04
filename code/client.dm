@@ -917,6 +917,8 @@ var/global/curr_day = null
 	if (deliver_warning)
 		var/msg = "(IP: [address], ID: [computer_id]) has a recent join date of [jd]."
 		message_admins("[key_name(src)] [msg]")
+		logTheThing("admin", src, null, msg)
+		logTheThing("diary", src, null, msg, "admin")
 		var/addr = address
 		var/ck = ckey
 		var/cid = computer_id
