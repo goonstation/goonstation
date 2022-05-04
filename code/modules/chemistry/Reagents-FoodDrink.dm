@@ -64,7 +64,7 @@ datum
 						for (var/obj/item/organ/O in H.organs)
 							if (O.bones)
 								O.bones.repair_damage(1 * mult)
-					if(H.mob_flags & IS_BONER)
+					if(H.mob_flags & IS_BONEY)
 						M.HealDamage("All", 1 * mult, 1 * mult)
 						if(probmult(15))
 							boutput(H, "<span class='notice'>The milk comforts your [pick("boanes","bones","bonez","boens","bowns","beaunes","brones","bonse")]!</span>")
@@ -3940,9 +3940,9 @@ datum
 			transparency = 60
 			bioeffect_id = "accent_tyke"
 
-		fooddrink/bonerjuice
+		fooddrink/boneyjuice
 			name = "the satisfaction of making spaghetti"
-			id = "bonerjuice"
+			id = "boneyjuice"
 			description = "The congealed essence of cullinary passion."
 			fluid_r = 200
 			fluid_g = 231
