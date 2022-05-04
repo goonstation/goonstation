@@ -68,6 +68,7 @@
 
 	attackby(obj/item/W, mob/M)
 		if(istype(W, /obj/item/clothing/glasses/scuttlebot_vr))
+			src.drop_item()
 			new /obj/item/clothing/head/det_hat/folded_scuttlebot(get_turf(src))
 			boutput(M, "You stuff the goggles back into the hat. It powers down with a low whirr.")
 			qdel(W)
