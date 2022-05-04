@@ -21,9 +21,10 @@
 	..()
 	src.appearance_flags |= NO_CLIENT_COLOR
 	src.blend_mode = BLEND_ADD
-	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_FLOCKMIND)
+	REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_FLOCK)
 	src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
-	src.see_invisible = INVIS_GHOST
+	src.see_invisible = INVIS_FLOCK
 	src.see_in_dark = SEE_DARK_FULL
 	/// funk that color matrix up, my friend
 	src.apply_color_matrix(COLOR_MATRIX_FLOCKMIND, COLOR_MATRIX_FLOCKMIND_LABEL)

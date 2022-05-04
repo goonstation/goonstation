@@ -273,7 +273,7 @@
 		dummy = new()
 		dummy.layer = target.layer
 		dummy.plane = PLANE_FLOCKVISION
-		dummy.invisibility = INVIS_FLOCKMIND
+		dummy.invisibility = INVIS_FLOCK
 		dummy.appearance_flags = PIXEL_SCALE | RESET_TRANSFORM | RESET_COLOR | PASS_MOUSE
 		dummy.icon = target.icon
 		dummy.icon_state = target.icon_state
