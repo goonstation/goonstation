@@ -127,7 +127,7 @@
 		if(spell.offensive && A.sanctuary)
 			boutput( src, "You cannot cast offensive spells in a sanctuary." )
 			return 0
-		if (spell.offensive == 1 && src.bioHolder.HasEffect("arcane_shame"))
+		if (spell.offensive && src.bioHolder.HasEffect("arcane_shame"))
 			boutput(src, "You are too consumed with shame to cast that spell!")
 			return 0
 	else
