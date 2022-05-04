@@ -102,6 +102,32 @@
 			piped_list -= piped_list[1]
 			piping--
 
+			var/subPlace = findtext(text, "_sub")
+
+			while (subPlace)
+
+				var/subIndex = text2num_safe( copytext( text, subPlace+4, subPlace+5) )
+
+				if (isnum(subIndex) && subIndex > 0 && subIndex <= subcommands.len)
+
+					previous_pipeout = ""
+					suppress_out = 1
+					if (!input_text(subcommands[subIndex], 0))
+
+						if (dd_hassuffix(previous_pipeout, "|n"))
+							previous_pipeout = copytext(previous_pipeout, 1, -2)
+
+						text = "[copytext(text, 1, subPlace)][previous_pipeout][copytext(text, subPlace+5)]"
+						//boutput(world, " --> \"[text]\"")
+						suppress_out = 0
+
+
+					else
+						suppress_out = 0
+						return 1
+
+				subPlace = findtext(text, "_sub")
+
 			//var/list/command_list = parse_string(text, (script_iteration ? src.scriptvars : null))
 			var/list/command_list = parse_string(text, src.scriptvars)
 			var/command = lowertext(command_list[1])
