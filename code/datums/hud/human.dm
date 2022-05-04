@@ -1225,7 +1225,7 @@
 
 /mob/living/carbon/human
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (!istype(W, /obj/item/device/flash) && src.glasses && user.zone_sel.selecting == "head")
+		if (W.force && !istype(W, /obj/item/device/flash) && src.glasses && user.zone_sel.selecting == "head")
 			src.glasses.breakglasses()
 		..()
 
