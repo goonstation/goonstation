@@ -1,5 +1,9 @@
 
 (t)wed may 04 22
+(u)NightmareChamillian
+(p)8434
+(e)🎨|sprites
+(*)Added a 6-slot tactical pouch utility for nukies to use
 (u)Flappybat
 (p)8427
 (e)⚖|balance
