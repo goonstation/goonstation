@@ -65,6 +65,17 @@
 			JOB_XP(user, "Botanist", 2)
 
 	combust_ended()
+		// Prevent RP shuttle hotboxing
+		#ifdef RP_MODE
+		var/area/A = get_area(src)
+		if (A)
+			if (emergency_shuttle.location == SHUTTLE_LOC_STATION)
+				if (istype(A, /area/shuttle/escape/station))
+					return
+			else if (emergency_shuttle.location == SHUTTLE_LOC_TRANSIT)
+				if (istype(A, /area/shuttle/escape/transit))
+					return
+		#endif
 		var/turf/T = get_turf(src)
 		if (T.allow_unrestricted_hotbox) // traitor hotboxing
 			src.reagents.maximum_volume *= HERB_HOTBOX_MULTIPLIER
