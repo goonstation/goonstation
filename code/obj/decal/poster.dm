@@ -774,9 +774,63 @@
 
 		teleport_sign
 			name = "Teleport Sign"
-			desc = "Teleports to the left."
+			desc = "A sign that points to the nearest teleporter."
 			icon = 'icons/obj/decals/wallsigns.dmi'
 			icon_state = "wall_teleport"
+
+		escape_sign
+			name = "Escape Sign"
+			desc = "A sign that points to the station's departures wing."
+			icon = 'icons/obj/decals/wallsigns.dmi'
+			icon_state = "escape"
+
+		security_sign
+			name = "Security Sign"
+			desc = "A sign that points to the station's security department."
+			icon = 'icons/obj/decals/wallsigns.dmi'
+			icon_state = "security"
+
+		engine_sign
+			name = "Engine Sign"
+			desc = "A sign that points to the station's engineering department."
+			icon = 'icons/obj/decals/wallsigns.dmi'
+			icon_state = "engine"
+
+		research_sign
+			name = "Teleport Sign"
+			desc = "A handy sign that points to the source of all your problems."
+			icon = 'icons/obj/decals/wallsigns.dmi'
+			icon_state = "research"
+
+		medbay_sign
+			name = "Medbay Sign"
+			desc = "A sign that points to the station's medical department."
+			icon = 'icons/obj/decals/wallsigns.dmi'
+			icon_state = "medbay"
+
+		botany_sign
+			name = "Botany Sign"
+			desc = "A sign that points to the station's botany department."
+			icon = 'icons/obj/decals/wallsigns.dmi'
+			icon_state = "botany"
+
+		customs_sign
+			name = "Customs Sign"
+			desc = "A sign that points to the station's customs desk, commonly referred to as the Head of Personnel's office even if that is not the case."
+			icon = 'icons/obj/decals/wallsigns.dmi'
+			icon_state = "customs"
+
+		no_smoking
+			name = "Sign"
+			desc = "No smoking in this area!"
+			icon = 'icons/obj/decals/wallsigns.dmi'
+			icon_state = "nosmoking"
+
+		read_me
+			name = "Important Sign"
+			desc = "The huge header takes up most of the sign, everything else is so tiny it's illegible."
+			icon = 'icons/obj/decals/wallsigns.dmi'
+			icon_state = "read_me"
 
 		landscape
 			desc = "A beautiful painting of a landscape that is engulfed by flames."
