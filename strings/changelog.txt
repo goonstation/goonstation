@@ -1,5 +1,9 @@
 
 (t)wed may 04 22
+(u)Wisemonster
+(p)8459
+(e)🗺|mapping
+(*)Adds status displays to cog1 that the captain/head of personell/AI can use through their pda.
 (u)Amylizzle
 (p)8432
 (e)|
