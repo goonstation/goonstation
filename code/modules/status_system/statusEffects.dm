@@ -1618,6 +1618,15 @@
 	maxDuration = null
 	change = -5
 
+/datum/statusEffect/staminaregen/cursed
+	id = "weakcurse"
+	name = "Enfeebled"
+	desc = "You feel really weak"
+	icon_state = "stam-"
+	duration = INFINITE_STATUS
+	maxDuration = null
+	change = -5
+
 /datum/statusEffect/miasma
 	id = "miasma"
 	name = "Miasma"

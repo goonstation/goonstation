@@ -289,10 +289,73 @@
 		if (prob(50))
 			owner.visible_message("<span class='alert'>[owner] vomits blood!</span>")
 			playsound(owner.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
-			random_brute_damage(owner, rand(5,8))
+			//random_brute_damage(owner, rand(5,8))
 			bleed(owner, rand(5,8), 5)
 
 	OnRemove()
 		if (ishuman(owner))
 			owner.traitHolder?.removeTrait("hemophilia")
+		. = ..()
+
+/datum/bioEffect/blindness_curse
+	name = "Blind curse"
+	desc = "Curse of blind."
+	id = "blind_curse"
+	effectType = EFFECT_TYPE_DISABILITY
+	can_copy = 0
+	isBad = 1
+
+	OnLife()
+		if (prob(20))
+			if (ishuman(owner))
+				owner.eye_damage += 10
+				owner.visible_message("<span class='alert'>[owner]'s eyes cloud!</span>")
+
+/datum/bioEffect/weak_curse
+	name = "Weakness curse"
+	desc = "Curse of enfeeblement."
+	id = "weak_curse"
+	effectType = EFFECT_TYPE_DISABILITY
+	can_copy = 0
+	isBad = 1
+
+	OnAdd()
+		if (ishuman(owner))
+			owner.changeStatus("weakcurse", 1 SECONDS)
+
+	OnLife()
+		if (prob(50))
+			owner.visible_message("<span class='alert'>[owner] is weakened!!</span>")
+			owner.changeStatus("slowed", 2 SECONDS)
+
+	OnRemove()
+		if (ishuman(owner))
+			owner.delStatus("weakcurse")
+		. = ..()
+
+/datum/bioEffect/rot_curse
+	name = "Rot curse"
+	desc = "Curse of rot."
+	id = "rot_curse"
+	effectType = EFFECT_TYPE_DISABILITY
+	can_copy = 0
+	isBad = 1
+
+	OnAdd()
+		if (ishuman(owner))
+			owner.bioHolder.AddEffect("stinky")
+
+	OnLife()
+		if (prob(50))
+			owner.visible_message("<span class='alert'>[owner] vomits a bunch!!</span>")
+			owner.vomit(rand(3,5))
+		if (prob(25))
+			owner.emote("cough")
+		if (prob(10))
+			owner.emote("sneeze")
+
+
+	OnRemove()
+		if (ishuman(owner))
+			owner.bioHolder.RemoveEffect("stinky")
 		. = ..()

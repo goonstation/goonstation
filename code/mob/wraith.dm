@@ -29,6 +29,7 @@
 	var/haunting = 0
 	var/hauntBonus = 0
 	var/justdied = 0
+	var/absorbcount = 0 //Keep track of how many souls we absorbed
 
 	var/last_life_update = 0
 	var/const/life_tick_spacing = 20
@@ -574,6 +575,11 @@
 		addAllDecayAbilities()
 			src.addAbility(/datum/targetable/wraithAbility/raiseSkeleton)
 			src.addAbility(/datum/targetable/wraithAbility/curseBrand)
+			src.addAbility(/datum/targetable/wraithAbility/weakBrand)
+			src.addAbility(/datum/targetable/wraithAbility/blindBrand)
+			src.addAbility(/datum/targetable/wraithAbility/rotBrand)
+			src.removeAbility(/datum/targetable/wraithAbility/specialize)
+			src.removeAbility(/datum/targetable/wraithAbility/poison)
 
 		removeAllAbilities()
 			src.removeAbility(/datum/targetable/wraithAbility/help)
