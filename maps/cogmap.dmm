@@ -50306,7 +50306,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "cxU" = (
-/obj/decal/fakeobjects/sink,
+/obj/submachine/chef_sink,
 /obj/machinery/light{
 	dir = 1;
 	pixel_y = 21
@@ -53046,6 +53046,11 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/security/main)
+"dZb" = (
+/obj/railing/orange/reinforced,
+/mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled,
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "dZw" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/wingrille_spawn/auto,
@@ -125108,7 +125113,7 @@ adC
 adC
 apY
 atX
-azp
+dZb
 avl
 jiQ
 atW

@@ -192,6 +192,11 @@
 			qdel(src)
 		else ..()
 
+/obj/item/reagent_containers/food/snacks/ingredient/yerba
+	name = "yerba mate packet"
+	desc = "A packet of yerba mate."
+	icon_state = "yerba"
+	food_color = "#32d440"
 
 /obj/item/reagent_containers/food/snacks/ingredient/flour
 	name = "flour"

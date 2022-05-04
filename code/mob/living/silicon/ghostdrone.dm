@@ -82,11 +82,14 @@
 			new /obj/item/electronics/scanner(src),
 			new /obj/item/deconstructor/borg(src),
 			new /obj/item/weldingtool(src),
-			new /obj/item/tile/cardboard/fullstack(src)
+
 
 
 		)
 
+		var/obj/item/tile/cardboard/T  =new /obj/item/tile/cardboard/(src)
+		T.amount = 600
+		src.tools += T
 		var/obj/item/cable_coil/W = new /obj/item/cable_coil(src)
 		W.amount = 1000
 		src.tools += W
