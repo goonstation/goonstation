@@ -14,7 +14,7 @@
 	throwforce = 7
 	icon_state = "sawfly"
 	icon_state_armed = "sawfly1"
-	payload = /obj/critter/gunbot/drone/buzzdrone/sawfly
+	payload = /mob/living/critter/sawfly
 	is_dangerous = TRUE
 	is_syndicate = 1
 	contraband = 2
@@ -24,7 +24,7 @@
 	prime() // we only want one drone, rewrite old proc
 		var/turf/T =  get_turf(src)
 		if (T)
-			new /obj/critter/gunbot/drone/buzzdrone/sawfly(T)// this is probably a shitty way of doing it but it works
+			new /mob/living/critter/sawfly(T)// this is probably a shitty way of doing it but it works
 		qdel(src)
 		return
 /obj/item/old_grenade/spawner/sawfly/withremote // for traitor menu
@@ -42,11 +42,11 @@
 	prime()
 		var/turf/T =  get_turf(src)
 		if (T)
-			var/obj/critter/gunbot/drone/buzzdrone/sawfly/D = new /obj/critter/gunbot/drone/buzzdrone/sawfly(T)
+			var/mob/living/critter/sawfly/D = new /mob/living/critter/sawfly(T)
 			D.isnew = FALSE // give it characteristics of old drone
 			D.name = tempname
 			D.health = temphp
-			D.maxhealth = temphp
+
 		qdel(src)
 		return
 
@@ -64,7 +64,7 @@
 
 	icon_state = "clusterflyA"
 	icon_state_armed = "clusterflyA1"
-	payload = /obj/critter/gunbot/drone/buzzdrone/sawfly
+	payload = /mob/living/critter/sawfly
 	is_dangerous = TRUE
 	is_syndicate = 1
 	contraband = 5
@@ -81,7 +81,7 @@
 	prime() // I've de-spawnerized the spanwer grenade for sawflies and now I'm respawnerizing them. the irony.
 		var/turf/T = ..()
 		if (T)
-			new /obj/critter/gunbot/drone/buzzdrone/sawfly(T)
+			new /mob/living/critter/sawfly(T)
 		qdel(src)
 		return
 
@@ -104,7 +104,7 @@
 				boutput(user,"<span class='alert'> The [src] suddenly falls apart!</span>")
 				qdel(src)
 				return
-		for(var/obj/critter/gunbot/drone/buzzdrone/sawfly/S in range(get_turf(src), 3)) // folds active sawflies
+		for(var/mob/living/critter/sawfly/S in range(get_turf(src), 3)) // folds active sawflies
 			SPAWN(0.5 SECONDS)
 				if(src.emagged)
 					if(prob(50)) //sawfly breaks
@@ -152,16 +152,13 @@
 
 
 
-//------------- THE SAWFLY ITSELF----------
+//------------- THE BEAST SAWFLY ITSELF----------
 
 /mob/living/critter/sawfly // new sawfly
 	name = "Sawfly"
 	desc = "A folding antipersonnel drone of syndicate origin. It'd be pretty cute if it wasn't trying to kill people."
 	icon = 'icons/obj/ship.dmi'
 	icon_state = "sawfly"
-
-
-
 
 	var/beeptext = "UH OOH"
 	var/dead_state = "sawflydead"
@@ -173,16 +170,23 @@
 
 
 
-	health = 40
-	var/maxhealth = 40
+//	health = 50
+//	var/maxhealth = 40
 	var/firevuln = 0.5
 	var/brutevuln = 1.2
-	var/can_revive = 1
-	var/atksilicon = 1
-	var/atkcarbon = 1
-	var/alive = 1
+	var/brutedam //shitty way of doing it yes
+	var/burndam
+	setup_healths()
+		add_hh_robot(40, 1) // fuck you and your way of doing health that isn't my way of doing it
+		add_hh_robot_burn(40, 1)
+	custom_gib_handler = /proc/robogibs
+	blood_id = "oil"
+	var/can_revive = TRUE
+	var/atksilicon = TRUE
+	var/atkcarbon = TRUE
+	var/alive = TRUE
 
-	// I HAVE HAD TO INITALIZE DO MANY FUCKING VARIABLES
+	// I HAVE HAD TO INITALIZE SO MANY FUCKING VARIABLES
 	// TO GET THIS TO WORK AS A MOB/LIVING OBJECT
 	var/list/friends = list()
 	var/attacking = 0
@@ -195,9 +199,8 @@
 	var/attack = 0
 	var/task = "thinking"
 	var/frustration = 0
-	var/dying = 0
 	var/atom/target_lastloc = null
-	var/aggressive = 1
+	var/aggressive = 1 // change to TRUE
 	var/last_found = null
 	var/steps = 0
 	var/sleep_check = 10
@@ -218,6 +221,8 @@
 		..()
 		deathtimer = rand(1, 5)
 		death_text = "[src] jutters and falls from the air, whirring to a stop"
+		if(prob(0.1))
+			death_text = "[src] IS CRUNKED OFF ITS GOURD!!"
 		if(isnew)
 			name = "Sawfly [pick(sawflynames)]-[rand(1,999)]"
 		beeptext = "[pick(list("beeps", "boops", "bwoops", "bips", "bwips", "bops", "chirps", "whirrs", "pings", "purrs"))]"
@@ -229,7 +234,7 @@
 		// pass our name and health
 		N.name = "Compact [name]"
 		N.tempname = src.name
-		N.temphp = src.health
+		N.temphp = (src.get_health_percentage()) / 2
 		qdel(src)
 
 
@@ -284,7 +289,7 @@
 				friends += C
 				continue
 			if (!src.alive) break
-			if (C.health < -50) continue
+			//if (C.health < -50) continue
 			if (C.name == src.attacker) src.attack = 1
 			if (iscarbon(C) && src.atkcarbon) src.attack = 1
 			if (issilicon(C) && src.atksilicon) src.attack = 1
@@ -298,7 +303,7 @@
 
 
 	proc/CritterAttack(atom/M)
-		if (istraitor(M) || isnukeop(M) || isspythief(M) || (M in src.friends)) // BE. A. GOOD. DRONE.
+		if (istraitor(M) || isnukeop(M) || isspythief(M) || (M in src.friends)) // BE. A. GOOD. FUCKING. DRONE.
 			return
 		if(target && !attacking)
 			attacking = 1
@@ -307,6 +312,10 @@
 			Shoot(tturf, src.loc, src)
 			SPAWN(attack_cooldown)
 				attacking = 0
+			if(prob(20))
+				walk(src, 0) // stolen from flock code, hope to fuck this works
+				walk_rand(src, 1, 10)
+				src.visible_message("THE SAWFLY IS CRUNKED OFF IT'S GOURD!")
 		return
 
 
@@ -324,10 +333,29 @@
 					attacking = 0
 				CritterAttack(src.target)
 		//CRITTER ATTACKBY CODE BELOW
+
 		user.lastattacked = src
 		attack_particle(user,src)
+		if (W?.hitsound)
+			playsound(src,W.hitsound,50,1)
 
-		var/attack_force = 0
+		if (src.alive)
+			registered_area.wake_critters(user)
+
+		if(W.hasProperty("impact"))
+			var/turf/T = get_edge_target_turf(src, get_dir(user, src))
+			src.throw_at(T, 2, W.getProperty("impact"))
+
+		if (src.target == user && src.task == "attacking")
+
+			src.visible_message("<span class='alert'><b>[src]</b> loses control for a second!</span>")
+			src.target = user
+			src.oldtarget_name = user.name
+			src.visible_message("<span class='alert'><b>[src]</b> [src]'s flies aggressively towards [user.name]!</span>")
+			src.task = "chasing"
+
+		..() // call living critter parent procs and pray to sweet little baby jesus It Just Works
+		/*var/attack_force = 0
 		var/damage_type = "brute"
 		if (istype(W, /obj/item/artifact/melee_weapon))
 			var/datum/artifact/melee/ME = W.artifact
@@ -376,28 +404,11 @@
 			else
 				src.health -= attack_force * max(1,(0 + W.getProperty("piercing")/100))
 
-		if (src.alive && src.health <= 0) src.CritterDeath()
+		if (src.alive && src.health <= 0)
+			src.CritterDeath()*/
 
 
-		if (W?.hitsound)
-			playsound(src,W.hitsound,50,1)
 
-		if (src.alive)
-			registered_area.wake_critters(user)
-
-		if(W.hasProperty("impact"))
-			var/turf/T = get_edge_target_turf(src, get_dir(user, src))
-			src.throw_at(T, 2, W.getProperty("impact"))
-
-		if (src.target == user && src.task == "attacking")
-			if (prob(50 - attack_force))
-				return
-			else
-				src.visible_message("<span class='alert'><b>[src]</b> loses control for a second!</span>")
-			src.target = user
-			src.oldtarget_name = user.name
-			src.visible_message("<span class='alert'><b>[src]</b> [src]'s flies aggressively towards [user.name]!</span>")
-			src.task = "chasing"
 
 
 
@@ -415,11 +426,11 @@
 
 
 	proc/CritterDeath() // rip lil guy
-		if (!src.alive) return
-		if(dying) return
-		icon_state = dead_state
+		//if (!src.alive) return
+		if (src.alive) return
 
-		dying = 1 // this was dying = 0. ha ha.
+
+		src.visible_message("<span class='alert'><b>[src] IS CRUNKED OFF ITS GOURD!")
 		SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_DRONE_DEATH, src)
 
 		if (prob(20))
@@ -431,7 +442,7 @@
 
 
 		SHOULD_CALL_PARENT(TRUE)
-		if (!src.alive) return
+		//if (!src.alive) return
 
 		#ifdef COMSIG_OBJ_CRITTER_DEATH
 		SEND_SIGNAL(src, COMSIG_OBJ_CRITTER_DEATH)
@@ -605,7 +616,7 @@
 		if (!isturf(target))
 			return
 
-		shoot_projectile_ST(src,  new/datum/projectile/bullet/revolver_38(), target) // THIS DOES NOT WORK
+		shoot_projectile_ST(src,  new/datum/projectile/laser/drill/sawfly(), target) // THIS DOES NOT WORK WELL FOR SOME REASON
 		return
 
 	proc/select_target(var/atom/newtarget)
@@ -613,7 +624,7 @@
 		src.oldtarget_name = newtarget.name
 		if (alertsound1 || alertsound2)
 			playsound(src.loc, ismob(newtarget) ? alertsound2 : alertsound1, 55, 1)
-		src.visible_message("<span class='alert'><b>[src]</b> fliew towards [src.target]!</span>")
+		src.visible_message("<span class='alert'><b>[src]</b> flies towards [src.target]!</span>")
 		task = "chasing"
 
 
@@ -626,4 +637,5 @@
 			src.task = "thinking"
 			wander_check = rand(5,20)
 
-
+	death() // FUCK YOUUUUUUUUUUUUUUUUUUUUUUU
+		CritterDeath()

@@ -1325,7 +1325,7 @@
 				src.health = 0
 				src.CritterDeath()
 
-/obj/critter/gunbot/drone/buzzdrone/sawfly // old sawfly object.
+/obj/critter/gunbot/drone/buzzdrone/sawflyold // this is the old sawfly. New one is in sawfly misc for now.
 
 	name = "Sawfly"
 	desc = "A folding antipersonnel drone of syndicate origin. It'd be pretty cute if it wasn't trying to kill people."
