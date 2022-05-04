@@ -56416,6 +56416,10 @@
 /obj/access_spawn/medlab,
 /turf/simulated/floor/delivery,
 /area/station/medical/research)
+"jFB" = (
+/obj/machinery/status_display,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/crew_quarters/market)
 "jFF" = (
 /obj/machinery/door/airlock/pyro/security{
 	name = "Interrogation Room";
@@ -61439,6 +61443,15 @@
 /obj/access_spawn/bar,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/entry)
+"spT" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/machinery/status_display{
+	pixel_x = 32
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "sqK" = (
 /obj/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/manifold{
@@ -97098,7 +97111,7 @@ iQw
 aho
 anH
 aoS
-aho
+jfN
 arJ
 asZ
 aum
@@ -98608,7 +98621,7 @@ alC
 amx
 aho
 aho
-jfN
+aho
 aho
 aho
 auX
@@ -102898,7 +102911,7 @@ bAt
 bxw
 bAt
 bzu
-bAt
+jFB
 bBr
 bCg
 bDb
@@ -105616,7 +105629,7 @@ buc
 bxy
 bxx
 bzy
-bxx
+hVW
 bxy
 bCh
 bDd
@@ -107124,7 +107137,7 @@ buV
 bvU
 buc
 bxx
-hVW
+bxx
 mCn
 bxx
 bxx
@@ -110181,7 +110194,7 @@ lbv
 ahh
 ceN
 vQt
-ceN
+kqf
 cdu
 cdu
 cdu
@@ -113802,7 +113815,7 @@ cbZ
 ciB
 cjL
 bBM
-kqf
+ceN
 adC
 adC
 kgh
@@ -116219,7 +116232,7 @@ ceN
 cjL
 clr
 cdw
-cmG
+spT
 cdw
 coY
 cdw
