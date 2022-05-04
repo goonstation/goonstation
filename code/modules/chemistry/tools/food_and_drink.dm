@@ -397,7 +397,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	name = "half-digested food chunk"
 	desc = "This is a chunk of partially digested food."
 	icon = 'icons/obj/foodNdrink/food.dmi'
-	icon_state = "scotchegg"
+	icon_state = "foodchunk"
 	heal_amt = 0
 	initial_volume = 100
 	festivity = 0
