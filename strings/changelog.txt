@@ -1,5 +1,9 @@
 
 (t)wed may 04 22
+(u)Bartimeus973
+(p)8430
+(e)🎨|sprites
+(*)The detective and spy thieves now have access to a new item: The scuttlebot! A strangely hat-shaped robot that is eager to spy on everything and everyone.
 (u)Flappybat
 (p)8410
 (e)🗺|mapping
