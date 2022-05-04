@@ -60,3 +60,14 @@ obj/machinery/atmospherics
 			// Is permitted to return null
 
 		disconnect(obj/machinery/atmospherics/reference)
+
+		deconstruct(var/obj/machinery/atmospherics/pipe/manifold/R)
+			if(isnull(R))
+				return
+			var/atom/A = new /obj/item/sheet(R.loc)
+			if (R.material)
+				A.setMaterial(R.material)
+			else
+				var/datum/material/M = getMaterial("steel")
+				A.setMaterial(M)
+			qdel(R)

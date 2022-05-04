@@ -396,15 +396,19 @@ obj/machinery/atmospherics/pipe
 				var/positions = src.get_welding_positions()
 				actions.start(new /datum/action/bar/private/welding(user, src, 2 SECONDS, /obj/machinery/atmospherics/pipe/simple/proc/repair_pipe, \
 						list(user), "<span class='notice'>[user] repairs the [src.name].</span>", positions[1], positions[2]),user)
-
-
-			else if(destroyed && istype(W, /obj/item/rods))
 				var/duration = 15 SECONDS
 				if (user.traitHolder.hasTrait("carpenter") || user.traitHolder.hasTrait("training_engineer"))
 					duration = round(duration / 2)
 				var/obj/item/rods/S = W
 				var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, duration, /obj/machinery/atmospherics/pipe/simple/proc/reconstruct_pipe,\
-				list(user, S), W.icon, W.icon_state, "[user] finishes working with \the [src].")
+				list(S, src), W.icon, W.icon_state, "[user] finishes working with \the [src].")
+				actions.start(action_bar, user)
+
+			else if(iswrenchingtool(W)) // deconstruct
+				boutput(user, "You start to disassemble the [src.name].")
+				var/duration = 15 SECONDS
+				var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, duration, /obj/machinery/atmospherics/proc/deconstruct,\
+				list(src), W.icon, W.icon_state, "[user] finishes disassembling \the [src].")
 				actions.start(action_bar, user)
 
 		proc/get_welding_positions()
@@ -566,6 +570,33 @@ obj/machinery/atmospherics/pipe
 			UpdateIcon()
 
 			return null
+
+		proc/construct(var/datum/action/bar/icon/build/B,var/obj/machinery/atmospherics/pipe/simple/R)
+			if(isnull(R))
+				return
+			R.initialize()
+			var/list/datum/pipe_network/nodenet_list = list()
+			// probably best if we ignore non-networked pipes
+
+			if(R?.node2)
+				R.node2.initialize()
+				R.node2.UpdateIcon()
+				nodenet_list += R.node2?.return_network()
+			if(R?.node1)
+				R.node1.initialize()
+				R.node1.UpdateIcon()
+				nodenet_list += R.node1?.return_network()
+
+			if(length(nodenet_list) == 2) // between two pipes
+				nodenet_list[1].merge(nodenet_list[2])
+				R.network_expand(nodenet_list[1],R)
+			else if(length(nodenet_list) == 1) // one pipe nearby
+				R.network_expand(nodenet_list[1],R)
+			else if(length(nodenet_list) == 0)// no pipes around us
+				R.build_network()
+
+			R.initialize()
+			R.UpdateIcon()
 
 	simple/insulated
 		//icon = 'icons/obj/atmospherics/pipes/red_pipe.dmi'
@@ -1262,3 +1293,38 @@ obj/machinery/atmospherics/pipe
 			var/turf/T = src.loc			// hide if turf is not intact
 			hide(T.intact)
 			//UpdateIcon()
+
+		proc/construct(var/datum/action/bar/icon/build/B,var/obj/machinery/atmospherics/pipe/manifold/R)
+			if(isnull(R))
+				return
+			R.initialize()
+
+			var/list/datum/pipe_network/nodenet_list = list()
+
+			if (R?.node3) // manifolds have 3 nodes, any of them could / could not exist
+				R.node3.initialize()
+				R.node3.UpdateIcon()
+				nodenet_list += R.node3?.return_network()
+			if (R?.node2) // side 2
+				R.node2.initialize()
+				R.node2.UpdateIcon()
+				nodenet_list += R.node2?.return_network()
+			if (R?.node1) // side 1
+				R.node1.initialize()
+				R.node1.UpdateIcon()
+				nodenet_list += R.node1?.return_network()
+
+			if(length(nodenet_list) == 3) // between 3 pipes
+				nodenet_list[1].merge(nodenet_list[2])
+				nodenet_list[1].merge(nodenet_list[3])
+				R.network_expand(nodenet_list[1],R)
+			else if(length(nodenet_list) == 2) // between two pipes
+				nodenet_list[1].merge(nodenet_list[2])
+				R.network_expand(nodenet_list[1],R)
+			else if(length(nodenet_list) == 1) // next one pipe
+				R.network_expand(nodenet_list[1],R)
+			else if(length(nodenet_list) == 0)// no pipes around us
+				R.build_network()
+
+			R.initialize()
+			R.UpdateIcon()
