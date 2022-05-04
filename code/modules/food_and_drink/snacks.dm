@@ -1155,10 +1155,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 		if(istype(W,/obj/item/reagent_containers/food/snacks/condiment/ketchup) && icon_state == "spag_plain" )// don't forget, other shit inherits this too!
 			boutput(user, "<span class='notice'>You create [random_spaghetti_name()] with tomato sauce...</span>")
 			var/obj/item/reagent_containers/food/snacks/spaghetti/sauce/D
-			if (user.mob_flags & IS_BONER)
+			if (user.mob_flags & IS_BONEY)
 				D = new/obj/item/reagent_containers/food/snacks/spaghetti/sauce/skeletal(W.loc)
 				boutput(user, "<span class='alert'>... whoa, that felt good. Like really good.</span>")
-				user.reagents.add_reagent("bonerjuice",20)
+				user.reagents.add_reagent("boneyjuice",20)
 			else
 				D = new/obj/item/reagent_containers/food/snacks/spaghetti/sauce(W.loc)
 			user.u_equip(W)
@@ -1668,7 +1668,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 #ifdef HALLOWEEN
 				wowspooky = 1
 #endif
-				if (user.mob_flags & IS_BONER)
+				if (user.mob_flags & IS_BONEY)
 					wowspooky = 1
 				if (wowspooky)
 					user.visible_message("[user] adds a bun to [src].","You add a bun to [src].")

@@ -1700,14 +1700,21 @@ var/datum/action_controller/actions
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
 	var/mob/mob_owner
 	var/mob/consumer
-	var/obj/item/reagent_containers/food/snacks/foodish //only works with food for now, will generalize for organs and glasses and such later
+	var/obj/item/reagent_containers/food/snacks/food
+	var/obj/item/reagent_containers/food/drinks/drink
 
-	New(var/mob/consumer, var/foodish, var/icon, var/icon_state)
+	New(var/mob/consumer, var/item, var/icon, var/icon_state)
 		..()
 		src.consumer = consumer
-		src.foodish = foodish
+		if (istype(item, /obj/item/reagent_containers/food/snacks))
+			src.food = item
+		else if (istype(item, /obj/item/reagent_containers/food/drinks/))
+			src.drink = item
+		else
+			logTheThing("debug", src, null, "/datum/action/bar/icon/forcefeed called with invalid food/drink type [item].")
 		src.icon = icon
 		src.icon_state = icon_state
+
 
 	onStart()
 		if (!ismob(owner))
@@ -1716,24 +1723,26 @@ var/datum/action_controller/actions
 
 		src.mob_owner = owner
 
-		if(BOUNDS_DIST(owner, consumer) > 0 || !consumer || !owner || mob_owner.equipped() != foodish)
+		if(BOUNDS_DIST(owner, consumer) > 0 || !consumer || !owner || (mob_owner.equipped() != food && mob_owner.equipped() != drink))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		..()
 
 	onUpdate()
 		..()
-		if(BOUNDS_DIST(owner, consumer) > 0 || !consumer || !owner || mob_owner.equipped() != foodish)
+		if(BOUNDS_DIST(owner, consumer) > 0 || !consumer || !owner || (mob_owner.equipped() != food && mob_owner.equipped() != drink))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
-		if(BOUNDS_DIST(owner, consumer) > 0 || !consumer || !owner || mob_owner.equipped() != foodish)
+		if(BOUNDS_DIST(owner, consumer) > 0 || !consumer || !owner || (mob_owner.equipped() != food && mob_owner.equipped() != drink))
 			interrupt(INTERRUPT_ALWAYS)
 			return
-
-		foodish.take_a_bite(consumer, mob_owner)
+		if (!isnull(food))
+			food.take_a_bite(consumer, mob_owner)
+		else
+			drink.take_a_drink(consumer, mob_owner)
 
 /datum/action/bar/private/spy_steal //Used when a spy tries to steal a large object
 	duration = 30

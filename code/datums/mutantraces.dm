@@ -1108,12 +1108,12 @@ TYPEINFO(/datum/mutantrace)
 	New(var/mob/living/carbon/human/M)
 		..()
 		if(ishuman(M))
-			M.mob_flags |= IS_BONER
+			M.mob_flags |= IS_BONEY
 			M.blood_id = "calcium"
 
 	disposing()
 		if (ishuman(mob))
-			mob.mob_flags &= ~IS_BONER
+			mob.mob_flags &= ~IS_BONEY
 		. = ..()
 
 

@@ -221,7 +221,7 @@
 					else
 						. += "<br><span class='notice'>[src.name] has [src.organHolder.tail.name] attached just above [t_his] butt.</span>"
 				// don't bother telling people that you have the tail you're supposed to have. nobody congratulates me for having all my legs
-				if (src.organHolder.chest.op_stage >= 10.0 && src.mob_flags & ~IS_BONER) // assive ass wound? and not a skeleton?
+				if (src.organHolder.chest.op_stage >= 10.0 && src.mob_flags & ~IS_BONEY) // assive ass wound? and not a skeleton?
 					. += "<br><span class='alert'><B>[src.name] has a long incision around the base of [t_his] tail!</B></span>"
 
 			else // missing a tail?
