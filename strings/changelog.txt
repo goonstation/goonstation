@@ -1,5 +1,9 @@
 
 (t)wed may 04 22
+(u)Amylizzle
+(p)8432
+(e)|
+(+)Carbon and silicon touch artifacts can be activated with appropriate life-related and robot-related chems now.
 (u)NightmareChamillian
 (p)8434
 (e)🎨|sprites
