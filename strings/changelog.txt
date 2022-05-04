@@ -1,6 +1,10 @@
 
 (t)wed may 04 22
 (u)Flappybat
+(p)8410
+(e)🗺|mapping
+(*)The Horizon Listening Post has been reinforced with stronger walls, a podbay blast door and backup power furnace.
+(u)Flappybat
 (p)8415
 (e)⚖|balance
 (*)RP shuttles have been fitted with the newly developed hotbox shields to reduce complaints.
