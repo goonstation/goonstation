@@ -76,6 +76,7 @@
 		. = ..()
 		if(!istype(AM)) return
 		if(AM.client?.check_key(KEY_RUN)) //In a rush? Run through it
+			playsound(src, 'sound/effects/snaptape.ogg', 10)
 			make_cleanable(/obj/decal/cleanable/sec_tape, src.loc)
 			qdel(src)
 		else	//Just walking? Vault it

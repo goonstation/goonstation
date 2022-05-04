@@ -81,16 +81,17 @@ WET FLOOR SIGN
 
 /obj/item/spraybottle/cleaner/robot/drone
 	name = "cybernetic cleaning spray bottle"
-	desc = "A small spray bottle that very slowly synthesises space cleaner."
+	desc = "A small spray bottle that slowly synthesises space cleaner."
 	icon_state = "cleaner_robot"
 
 	process()
 		..()
 		if (src.reagents.total_volume < 25)
-			src.reagents.add_reagent("cleaner", 0.5)
+			src.reagents.add_reagent("cleaner", 0.75)
 		else
 			processing_items.Remove(src)
 		return 0
+
 
 
 /obj/janitorTsunamiWave
@@ -660,7 +661,7 @@ WET FLOOR SIGN
 		..()
 /obj/item/sponge/ghostdronesafe
 	name = "Integrated sponge"
-	desc = "A cleaning utensil with an associated drainage system to prevent fluids from dripping when wrung out."
+	desc = "A cleaning utensil with an associated drainage system to prevent excess fluids from dripping when wrung out."
 
 /obj/item/sponge/ghostdronesafe/attack_self(mob/user as mob)
 	if (ON_COOLDOWN(user, "ghostdrone sponge wringing", 5 SECONDS))// Wtihout the cooldown, this is stupid powerful

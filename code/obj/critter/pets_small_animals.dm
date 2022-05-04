@@ -199,19 +199,26 @@
 	seek_target()
 		src.anchored = 0
 		//for (var/obj/critter/mouse/C in view(src.seekrange,src))
-		var/list/mice_in_area = list()
+		var/list/targets_in_area = list()
 		for (var/obj/critter/mouse/C in view(src.seekrange,src))
-			mice_in_area += C
+			targets_in_area += C
 		for (var/mob/living/critter/small_animal/mouse/C in view(src.seekrange,src))
-			mice_in_area += C
-		for (var/atom/movable/C in mice_in_area)
+			targets_in_area += C
+		for (var/obj/critter/livingtail/C in view(src.seekrange, src))
+			targets_in_area += C
+		for (var/atom/movable/C in targets_in_area)
 			if (src.target)
 				src.task = "chasing"
 				break
 			if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100))
 				continue
-			if (isobj(C))
+			//if (isobj(C))
+			if (istype(C, /obj/critter/mouse))
 				var/obj/critter/mouse/OC = C
+				if (OC.health <= 0)
+					continue
+			if (istype(C, /obj/critter/livingtail))
+				var/obj/critter/livingtail/OC = C
 				if (OC.health <= 0)
 					continue
 			else if (ismob(C))

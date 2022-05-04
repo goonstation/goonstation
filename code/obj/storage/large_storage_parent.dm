@@ -792,7 +792,7 @@
 		set desc = "Open or close the closet/crate/whatever. Woah!"
 		set category = "Local"
 
-		if (usr.stat || !usr.can_use_hands() || isAI(usr))
+		if (usr.stat || !usr.can_use_hands() || isAI(usr) || !can_reach(usr, src))
 			return
 
 		return toggle()
