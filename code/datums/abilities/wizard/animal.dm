@@ -63,7 +63,7 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 		actions.start(new/datum/action/bar/polymorph(usr, target, src), holder.owner)
 
 /datum/action/bar/polymorph
-	duration = 2 SECONDS
+	duration = 3 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "polymorph_spell"
 
