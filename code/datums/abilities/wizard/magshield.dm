@@ -3,7 +3,7 @@
 	desc = "Temporarily shield yourself from melee attacks and projectiles. It also absorbs some of the blast of explosions."
 	icon_state = "spellshield"
 	targeted = 0
-	cooldown = 400
+	cooldown = 300
 	requires_robes = 1
 	voice_grim = "sound/voice/wizard/MagicShieldGrim.ogg"
 	voice_fem = "sound/voice/wizard/MagicShieldFem.ogg"
@@ -28,7 +28,7 @@
 		boutput(holder.owner, "<span class='notice'><b>You are surrounded by a magical barrier!</b></span>")
 		holder.owner.visible_message("<span class='alert'>[holder.owner] is encased in a protective shield.</span>")
 		playsound(holder.owner,"sound/effects/MagShieldUp.ogg",50,1)
-		SPAWN(5.5 SECONDS)
+		SPAWN(10 SECONDS)
 			if(holder.owner && holder.owner.spellshield)
 				holder.owner.spellshield = 0
 				holder.owner.underlays -= shield_overlay
