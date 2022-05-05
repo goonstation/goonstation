@@ -1431,6 +1431,52 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 		return
 
 	attackby(obj/item/W, mob/user)
+		if(iswrenchingtool(W) && state < 2 && src.loc == user) // buildable atmos pipes using "pipe frames"
+			var/a_type
+			var/a_icon
+			var/a_icon_state
+			var/a_name
+			switch(alert(user, "Which pipe do you want to craft?",,"Straight Pipe","Curved Pipe","Manifold"))
+				if("Straight Pipe")
+					switch(usr.dir)
+						if(NORTH , SOUTH)
+							a_type = /obj/machinery/atmospherics/pipe/simple/vertical
+						if(EAST , WEST)
+							a_type = /obj/machinery/atmospherics/pipe/simple/horizontal
+					a_icon = 'icons/obj/atmospherics/pipes/regular_pipe.dmi'
+					a_icon_state = "intact"
+					a_name = "a pipe"
+				if("Curved Pipe")
+					switch(usr.dir)
+						if(NORTH)
+							a_type = /obj/machinery/atmospherics/pipe/simple/northwest
+						if(SOUTH)
+							a_type = /obj/machinery/atmospherics/pipe/simple/southeast
+						if(EAST)
+							a_type = /obj/machinery/atmospherics/pipe/simple/northeast
+						if(WEST)
+							a_type = /obj/machinery/atmospherics/pipe/simple/southwest
+					a_icon = 'icons/obj/atmospherics/pipes/regular_pipe.dmi'
+					a_icon_state = "intact"
+					a_name = "a pipe"
+				if("Manifold")
+					switch(usr.dir)
+						if(NORTH)
+							a_type = /obj/machinery/atmospherics/pipe/manifold/north
+						if(SOUTH)
+							a_type = /obj/machinery/atmospherics/pipe/manifold/south
+						if(EAST)
+							a_type = /obj/machinery/atmospherics/pipe/manifold/east
+						if(WEST)
+							a_type = /obj/machinery/atmospherics/pipe/manifold/west
+					a_icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi'
+					a_icon_state = "manifold"
+					a_name = "a pipe manifold"
+			if (a_type && src.loc == user)
+				if(locate(/obj/machinery/atmospherics) in user.loc)
+					boutput(user, "<span class='notice'>You cant build another pipe there!</span>")
+				else
+					actions.start(new /datum/action/bar/icon/build(src, a_type, 1, src.material, 1, a_icon, a_icon_state, a_name, /obj/machinery/atmospherics/proc/construct), usr)
 
 		if(isweldingtool(W) && state == 1)
 			if(!W:try_weld(user, 1))

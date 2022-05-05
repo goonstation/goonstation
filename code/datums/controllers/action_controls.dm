@@ -673,10 +673,6 @@ var/datum/action_controller/actions
 			boutput(owner, "<span class='notice'>You have nothing to build with!</span>")
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		if(locate(/obj/machinery/atmospherics) in owner.loc)
-			boutput(owner, "<span class='notice'>You cant build another pipe there!</span>")
-			interrupt(INTERRUPT_ALWAYS)
-			return
 
 		owner.visible_message("<span class='notice'>[owner] begins assembling [objname]!</span>")
 

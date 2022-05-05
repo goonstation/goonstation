@@ -273,9 +273,6 @@ MATERIAL
 				L["bed"] = "Bed (2 Sheets)"
 				L["closet"] = "Closet (2 Sheets)"
 				L["construct"] = "Wall Girders (2 Sheets)"
-				L["apipes"] = "Straight Atmospheric Pipes (3 Sheets)"
-				L["apipec"] = "Corner Atmospheric Pipes (3 Sheets)"
-				L["apipem"] = "Atmospheric Pipe Manifold (3 Sheets)"
 				L["pipef"] = "Pipe Frame (3 Sheets)"
 				L["tcomputer"] = "Computer Terminal Frame (3 Sheets)"
 				L["computer"] = "Console Frame (5 Sheets)"
@@ -470,57 +467,6 @@ MATERIAL
 					a_icon = 'icons/obj/items/assemblies.dmi'
 					a_icon_state = "Pipe_Frame"
 					a_name = "a pipe frame"
-
-				if("apipes")
-					if (!amount_check(3,usr)) return
-					switch(usr.dir)
-						if(NORTH , SOUTH)
-							a_type = /obj/machinery/atmospherics/pipe/simple/vertical
-						if(EAST , WEST)
-							a_type = /obj/machinery/atmospherics/pipe/simple/horizontal
-					a_amount = 1
-					a_cost = 3
-					a_icon = 'icons/obj/atmospherics/pipes/regular_pipe.dmi'
-					a_icon_state = "intact"
-					a_name = "a pipe"
-					a_callback = /obj/machinery/atmospherics/proc/construct
-
-				if("apipec")
-					if (!amount_check(3,usr)) return
-					switch(usr.dir)
-						if(NORTH)
-							a_type = /obj/machinery/atmospherics/pipe/simple/northwest
-						if(SOUTH)
-							a_type = /obj/machinery/atmospherics/pipe/simple/southeast
-						if(EAST)
-							a_type = /obj/machinery/atmospherics/pipe/simple/northeast
-						if(WEST)
-							a_type = /obj/machinery/atmospherics/pipe/simple/southwest
-					a_amount = 1
-					a_cost = 3
-					a_icon = 'icons/obj/atmospherics/pipes/regular_pipe.dmi'
-					a_icon_state = "intact"
-					a_name = "a pipe"
-					a_callback = /obj/machinery/atmospherics/proc/construct
-
-				if("apipem")
-					if (!amount_check(3,usr)) return
-					switch(usr.dir)
-						if(NORTH)
-							a_type = /obj/machinery/atmospherics/pipe/manifold/north
-						if(SOUTH)
-							a_type = /obj/machinery/atmospherics/pipe/manifold/south
-						if(EAST)
-							a_type = /obj/machinery/atmospherics/pipe/manifold/east
-						if(WEST)
-							a_type = /obj/machinery/atmospherics/pipe/manifold/west
-					a_amount = 1
-					a_cost = 3
-					a_icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi'
-					a_icon_state = "manifold"
-					a_name = "a pipe manifold"
-					a_callback = /obj/machinery/atmospherics/proc/construct
-
 
 				if("bed")
 					if (!amount_check(2,usr)) return
