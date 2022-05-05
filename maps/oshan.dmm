@@ -35695,6 +35695,9 @@
 /obj/item/clothing/suit/bedsheet/orange,
 /obj/item/instrument/harmonica,
 /obj/item/clothing/glasses/vr/arcade,
+/obj/machinery/status_display{
+	pixel_x = -32
+	},
 /turf/simulated/floor,
 /area/station/security/brig)
 "bNq" = (
