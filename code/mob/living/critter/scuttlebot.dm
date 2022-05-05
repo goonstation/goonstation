@@ -59,6 +59,7 @@
 		if (!gibbed)
 			make_cleanable(/obj/decal/cleanable/oil,src.loc)
 			src.audible_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
+			src.drop_item()
 			playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
 			elecflash(src, radius=1, power=3, exclude_center = 0)
 			qdel(src)
