@@ -167,27 +167,25 @@
 	var/datum/projectile/current_projectile = new/datum/projectile/laser/drill/sawfly
 	var/smashes_shit = 0
 	var/obj/item/droploot = null //change this later
+	var/deathtimer = 0 // for catastrophic failure on death
+	var/isnew = TRUE // for reuse
+	var/sawflynames = list("A", "B", "C", "D", "E", "F", "V", "W", "X", "Y", "Z", "Alpha", "Beta", "Gamma", "Lambda", "Delta")
 
 
 
-	health = 40
+
+	health = 20
 //	var/maxhealth = 40
 	var/firevuln = 0.5
 	var/brutevuln = 1.2
 	//var/brutedam //shitty way of doing it yes
-//	var/burndam
-	setup_healths()
-		add_hh_robot(40, 1) // fuck you and your way of doing health that isn't my way of doing it
-		add_hh_robot_burn(40, 1)
-	custom_gib_handler = /proc/robogibs
-	blood_id = "oil"
+
 	var/can_revive = TRUE
 	var/atksilicon = TRUE
 	var/atkcarbon = TRUE
 	var/alive = TRUE
 
-	// I HAVE HAD TO INITALIZE SO MANY FUCKING VARIABLES
-	// TO GET THIS TO WORK AS A MOB/LIVING OBJECT
+// OBJ/CRITTER/DRONE FUCK SHIT HERE
 	var/list/friends = list()
 	var/attacking = 0
 	var/atk_delay = 5
@@ -207,10 +205,17 @@
 	var/wander_check = 0
 
 
+	// MOB/LIVING/CRITTER FUCK SHIT HERE
 
-	var/deathtimer = 0 // for catastrophic failure on death
-	var/isnew = TRUE // for reuse
-	var/sawflynames = list("A", "B", "C", "D", "E", "F", "V", "W", "X", "Y", "Z", "Alpha", "Beta", "Gamma", "Lambda", "Delta")
+	setup_healths()
+		add_hh_robot(20, 1) // fuck you and your way of doing health that isn't my way of doing it
+		add_hh_robot_burn(20, 1)
+	custom_gib_handler = /proc/robogibs
+	blood_id = "oil"
+	use_stamina = FALSE
+	can_bleed = FALSE
+	canbegrabbed = FALSE
+
 
 	var/beepsound = 'sound/machines/twobeep.ogg' // todo: make these custom sounds
 	var/alertsound1 = 'sound/machines/whistlealert.ogg'
@@ -219,14 +224,17 @@
 
 	New()
 		..()
+		if(isnew)
+			name = "Sawfly [pick(sawflynames)]-[rand(1,999)]"
 		deathtimer = rand(1, 5)
 		death_text = "[src] jutters and falls from the air, whirring to a stop"
 		if(prob(0.1))
 			death_text = "[src] IS CRUNKED OFF ITS GOURD!!"
-		if(isnew)
-			name = "Sawfly [pick(sawflynames)]-[rand(1,999)]"
+
 		beeptext = "[pick(list("beeps", "boops", "bwoops", "bips", "bwips", "bops", "chirps", "whirrs", "pings", "purrs"))]"
 		animate_bumble(src) // gotta get the float goin' on
+
+		src.set_a_intent(INTENT_HARM) // incredibly stupid way of ensuring they aren't passable
 
 
 	proc/foldself()
@@ -247,7 +255,7 @@
 		else
 			src.visible_message("<span class='combat'>[src]'s [pick("motor", "core", "head", "engine", "thruster")] [pick("overloads", "blows up", "catastrophically fails", "explodes")]!")
 			fireflash(src,0,TRUE)
-			explosion(src, get_turf(src), 0, 1, 2, 3)
+			explosion(src, get_turf(src), 0, 0.75, 1.5, 3)
 			qdel(src)
 
 		if(alive) // prevents weirdness from emagged controllers
@@ -283,6 +291,7 @@
 	proc/seek_target()
 		src.anchored = 0
 		for (var/mob/living/C in view(src.seekrange,src))
+			if(C == oldtarget_name) continue
 			if (C in src.friends) continue
 			if (istraitor(C) || isnukeop(C) || isspythief(C)) // frens :)
 				boutput(C, "<span class='alert'>[src]'s IFF system silently flags you as an ally!")
@@ -304,6 +313,9 @@
 
 	proc/CritterAttack(atom/M)
 		if (istraitor(M) || isnukeop(M) || isspythief(M) || (M in src.friends)) // BE. A. GOOD. FUCKING. DRONE.
+
+			oldtarget_name = M
+			seek_target()
 			return
 		if(target && !attacking)
 			attacking = 1
@@ -335,7 +347,7 @@
 					attacking = 0
 				CritterAttack(src.target)
 		//CRITTER ATTACKBY CODE BELOW
-
+/*
 		user.lastattacked = src
 		attack_particle(user,src)
 		if (W?.hitsound)
@@ -405,9 +417,8 @@
 				health -= attack_force * max(1,(src.brutevuln + W.getProperty("piercing")/100))
 			else
 				health -= attack_force * max(1,(0 + W.getProperty("piercing")/100))
+*/
 
-		if (src.alive && src.health <= 0)
-			src.CritterDeath()
 
 		if(health<=0)
 			CritterDeath()
@@ -421,8 +432,9 @@
 	attack_hand(var/mob/user as mob) // this one's safe
 		if (istraitor(user) || isnukeop(user) || isspythief(user) || (user in src.friends))
 			if (user.a_intent == INTENT_HELP || INTENT_GRAB)
-				boutput(user, "You collapse [src].")
-				src.foldself()
+				if(src.alive)
+					boutput(user, "You collapse [src].")
+					src.foldself()
 		else
 			if(prob(50))
 				boutput(user,"<span class='alert' In your attempt to pet the [src], you cut yourself on it's blades! </span>")
@@ -432,8 +444,11 @@
 
 
 	proc/CritterDeath() // rip lil guy
-		//if (!src.alive) return
-		if (src.alive) return
+		if (!src.alive) return // can't double-die
+
+		alive = FALSE
+		src.tokenized_message(death_text)
+		src.is_npc = FALSE // stop any and all possible non-critterAI thought
 
 
 		src.visible_message("<span class='alert'><b>[src] IS CRUNKED OFF ITS GOURD!")
@@ -455,20 +470,18 @@
 		#endif
 
 
-		//special dead sprites
+		//code custom to sawflies below
 		animate(src) //stop no more float animation
 		icon_state = "sawflydead[pick("1", "2", "3", "4", "5", "6", "7", "8")]"
 		src.pixel_x += rand(-5, 5)
 		src.pixel_y += rand(-1, 5)
-
-
 
 		src.alive = 0
 		src.anchored = 0
 		src.set_density(0)
 		walk_to(src,0) //halt walking
 		//report_death()
-		src.tokenized_message(death_text)
+
 
 		// IT'S TIME TO ROOOOOOLLLL THE DIIIICEEEEEE!!!!
 		// special checks that determine how much postmorten chaos our little sawflies cause
@@ -486,6 +499,7 @@
 // COPY PASTED AI SHIT FROM DRONE/GUNBOT HERE
 
 	proc/ai_think()
+		if(!alive) return // STOP THINKING IF YOU'RE DEAD
 		switch(task)
 			if("thinking")
 				src.attack = 0
@@ -513,7 +527,6 @@
 
 					else
 						var/turf/olddist = get_dist(src, src.target)
-
 
 						if(prob(20)) walk_rand(src,2)
 						else walk_to(src, src.target,1,4)
@@ -555,13 +568,17 @@
 	Life() // override so drones don't just loaf all fuckin day
 
 
-		if(health<=0)
+		if(!alive) // check that sees whether or not it's dead
+			return
+
+		if(health<=0 && alive) // check that kills it
 			CritterDeath()
 			return 0
 
 		if(sleeping > 0)
 			sleeping--
 			return 0
+
 
 
 
@@ -617,8 +634,9 @@
 		else
 			sleep_check--
 
-		return ai_think()
 		..()
+		return ai_think()
+
 
 	proc/Shoot(var/target, var/start, var/user, var/bullet = 0)
 		if(target == start)
@@ -640,6 +658,7 @@
 
 
 	proc/patrol_step()
+		if(!alive) return
 		var/turf/moveto = locate(src.x + rand(-1,1),src.y + rand(-1, 1),src.z)
 		if(isturf(moveto) && !moveto.density) step_to(src, moveto)
 		if(src.aggressive) seek_target()
@@ -648,6 +667,7 @@
 			src.task = "thinking"
 			wander_check = rand(5,20)
 
-	death() // FUCK YOUUUUUUUUUUUUUUUUUUUUUUU
-		CritterDeath()
-		alive = FALSE
+	death() //FUCK YOU
+		CritterDeath() // FUCK YOU
+		alive = FALSE // AND MOST CERTAINLY
+		//..() // FUUUUUUCK. YOUUUUUUU.
