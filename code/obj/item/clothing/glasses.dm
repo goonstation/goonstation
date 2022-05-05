@@ -24,30 +24,6 @@
 			return
 		return ..()
 
-	proc/breakglasses(var/alwaysbreak = 0)
-		var/turf/T = get_turf(src)
-		if (!T)
-			qdel(src)
-			return
-
-		var/mob/M
-		if (ismob(src.loc))
-			M = src.loc
-
-		if (src.strength == 10)
-			return
-
-		if (alwaysbreak || !src.strength || prob(rand(100 - (src.strength * 10))))
-			if (M)
-				T.visible_message("<span class='alert'>[M]'s [src] shatter!</span>")
-			else
-				T.visible_message("<span class='alert'>[src] shatter!</span>")
-
-			playsound(T, "sound/impact_sounds/Glass_Shatter_[rand(1,3)].ogg", 100, 1)
-			var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
-			G.set_loc(T)
-			qdel(src)
-
 /obj/item/clothing/glasses/crafted
 	name = "glasses"
 	icon_state = "crafted"

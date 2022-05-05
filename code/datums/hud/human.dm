@@ -1224,6 +1224,34 @@
 	.=0
 
 /mob/living/carbon/human
+
+	proc/removeglasses()
+		if (!src.glasses)
+			return
+
+		var/obj/item/clothing/glasses/G = src.glasses
+		var/turf/T = get_turf(src)
+
+		if (!T)
+			qdel(src)
+			return
+
+		if (src.head && src.head.c_flags & COVERSEYES)
+			return
+
+		if (prob(50)) //Temp change this
+			T.visible_message("<span class='alert'>[G] fly off [src]'s face!</span>")
+			playsound(T, "sound/impact_sounds/slap.ogg", 100, 1)
+
+			G.force_drop(src)
+			target = get_offset_target_turf(G.loc, rand(5)-rand(5), rand(5)-rand(5))
+			G.throw_at(target, 5, 1)
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (W.force && !istype(W, /obj/item/device/flash) && src.glasses && user.zone_sel.selecting == "head")
+			src.removeglasses()
+		..()
+
 	updateStatusUi()
 		if(src.hud && istype(src.hud, /datum/hud/human))
 			var/datum/hud/human/H = src.hud
