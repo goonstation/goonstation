@@ -501,28 +501,67 @@
 			boutput(usr, "<span class='alert'>There is no object here to animate!</span>")
 			return 1
 
+/datum/targetable/wraithAbility/choose_haunt_appearance
+	name = "Choose haunt appearance"
+	icon_state = "haunt"
+	targeted = 1
+	pointCost = 0
+	min_req_dist = INFINITY
+
+	cast(atom/object)
+		if (..())
+			return 1
+
+		if ((istype(holder.owner, /mob/wraith/wraith_trickster)) && (istype(object, /mob/living/carbon/human/)))
+			var/mob/wraith/wraith_trickster/W = holder.owner
+			boutput(holder.owner, "copying")
+			//var/mutable_appearance/ma = mutable_appearance(fake_appearance.icon, fake_appearance.icon_state)
+			W.copied_appearance = new/mutable_appearance(object)
+			///var/mutable_appearance/ma = fake_appearance.appearance
+			boutput(holder.owner, "Selected [object] for copying.")
+
 /datum/targetable/wraithAbility/haunt
 	name = "Haunt"
 	icon_state = "haunt"
 	desc = "Become corporeal for 30 seconds. During this time, you gain additional biopoints, depending on the amount of humans in your vicinity. You cannot use this ability while already corporeal."
 	targeted = 0
 	pointCost = 0
-	cooldown = 1 MINUTE
+	cooldown = 10 SECONDS
 	min_req_dist = INFINITY
 
 	cast()
 		if (..())
 			return 1
 
-		var/mob/wraith/W = src.holder.owner
+		var/mob/wraith/K = src.holder.owner
+		if (K.density)
+			boutput(holder.owner, "disappear")
+			cooldown = 5 SECONDS
+			//Fix this shit
+			var/mob/wraith/wraith_trickster/N = K
+			N.appearance = N.backup_appearance
+			return N.disappear()
+		else
+			boutput(holder.owner, "Appear")
+			if ((istype(holder.owner, /mob/wraith/wraith_trickster)))
+				var/mob/wraith/wraith_trickster/W = holder.owner
+				if (W.copied_appearance == null)
+					boutput(holder.owner, "No appearance")
+				else
+					W.backup_appearance = new/mutable_appearance(W)
+					W.appearance = W.copied_appearance
 
-		//check done in case a poltergeist uses this from within their master.
-		if (iswraith(W.loc))
-			boutput(W, "You can't become corporeal while inside another wraith! How would that even work?!")
-			return 1
+			var/mob/wraith/W = src.holder.owner
 
-		usr.playsound_local(usr.loc, "sound/voice/wraith/wraithhaunt.ogg", 80, 0)
-		return W.haunt()
+			//check done in case a poltergeist uses this from within their master.
+			if (iswraith(W.loc))
+				boutput(W, "You can't become corporeal while inside another wraith! How would that even work?!")
+				return 1
+
+			if (!istype(holder.owner, /mob/wraith/wraith_trickster))
+				usr.playsound_local(usr.loc, "sound/voice/wraith/wraithhaunt.ogg", 80, 0)
+			cooldown = 10 SECONDS
+			return W.haunt()
 
 /datum/targetable/wraithAbility/spook
 	name = "Spook"
@@ -830,7 +869,7 @@
 
 	proc/evolve(var/effect as text)
 		var/mob/wraith/O = src.holder.owner
-		if (O.absorbcount < 1)
+		if (O.absorbcount < 0)
 			boutput(holder.owner, "<span class='notice'>You need to absorb at least 1 corpse!!</span>")
 			return 1
 		else

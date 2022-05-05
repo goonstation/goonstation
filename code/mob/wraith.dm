@@ -277,6 +277,17 @@
 			return
 		health -= burn
 		health -= brute * 3
+
+		//add turn back
+		if((burn + brute )> 5 && istype(src, /mob/wraith/wraith_trickster))
+			var/mob/wraith/wraith_trickster/WT = src
+			if(WT.copied_appearance != null && WT.backup_appearance != null)
+				WT.appearance = WT.backup_appearance
+				if(!WT.density)
+					haunt()
+				WT.copied_appearance = null
+				WT.backup_appearance = null
+
 		health = min(max_health, health)
 		if (src.health <= 0)
 			src.death(FALSE)
@@ -547,14 +558,17 @@
 			src.makeCorporeal()
 			src.haunting = 1
 			src.flags &= !UNCRUSHABLE
-
-			SPAWN(haunt_duration)
-				src.makeIncorporeal()
-				src.haunting = 0
-				src.flags |= UNCRUSHABLE
-
 			return 0
 
+		disappear()
+			if(!src.density)
+				src.show_message("<span class='alert'>You are already a specter! You cannot use this ability.</span>")
+				return 1
+
+			src.makeIncorporeal()
+			src.haunting = 0
+			src.flags |= UNCRUSHABLE
+			return 0
 
 		addAllBasicAbilities()
 			src.addAbility(/datum/targetable/wraithAbility/help)
@@ -580,6 +594,9 @@
 			src.addAbility(/datum/targetable/wraithAbility/rotBrand)
 			src.removeAbility(/datum/targetable/wraithAbility/specialize)
 			src.removeAbility(/datum/targetable/wraithAbility/poison)
+
+		addAllTricksterAbilities()
+			src.addAbility(/datum/targetable/wraithAbility/choose_haunt_appearance)
 
 		removeAllAbilities()
 			src.removeAbility(/datum/targetable/wraithAbility/help)
@@ -672,6 +689,12 @@
 	desc = "A terrifyingly bloated spirit."
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "wraith"
+	var/mutable_appearance/copied_appearance = null
+	var/mutable_appearance/backup_appearance = null
+
+	New(var/mob/M)
+		..()
+		addAllTricksterAbilities()
 
 // i am dumb - marq
 /mob/proc/wraithize()
