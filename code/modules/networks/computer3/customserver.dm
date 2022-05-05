@@ -19,11 +19,12 @@
 			return
 		src.program = src.tape.contents
 
-
 	proc/clear_variables()
 		src.globalVariables.Cut()
 		src.privateVariables.Cut()
 
+	proc/inteperet_line(var/line)
+		switch (string)
 
 	power_change()
 		if (!src.tape)
