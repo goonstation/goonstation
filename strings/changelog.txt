@@ -1,5 +1,9 @@
 
 (t)wed may 04 22
+(u)Wisemonster
+(p)8464
+(e)🗺|mapping
+(*)Status Displays have been added to Oshan for the captain/HoP/AI to use from their pdas.
 (u)Chatauscours
 (p)8399
 (e)🗺|mapping
