@@ -14,6 +14,9 @@
 		if(!holder)
 			return
 
+		if(is_incapacitated(holder.owner))
+			boutput(holder.owner, "<span class='notice'>You can't use this spell while incapacitated.</span>")
+			return 1
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
 			holder.owner.say("SYCAR TYN")
 		..()
