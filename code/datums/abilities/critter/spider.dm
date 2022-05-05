@@ -332,7 +332,7 @@
 				MT.changeStatus("stunned", 1 SECOND)
 				if (holder.owner.getStatusDuration("stunned") || holder.owner.getStatusDuration("weakened") || holder.owner.getStatusDuration("paralysis"))
 					break
-				playsound(holder.owner, "sound/impact_sounds/flesh_break_1.ogg", 50, 1)
+				playsound(holder.owner, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 				playsound(holder.owner, src.sound_kick, 50, 1)
 				if (issilicon(MT))
 					var/mob/living/silicon/robot/R = MT

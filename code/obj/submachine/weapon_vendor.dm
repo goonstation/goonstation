@@ -196,6 +196,7 @@
 		materiel_stock += new/datum/materiel/utility/bomb_decoy
 		materiel_stock += new/datum/materiel/utility/comtac
 		materiel_stock += new/datum/materiel/utility/beartraps
+		materiel_stock += new/datum/materiel/utility/miscpouch
 		materiel_stock += new/datum/materiel/utility/sawflies
 
 	accepted_token()
@@ -472,11 +473,15 @@
 	path = /obj/item/storage/beartrap_pouch
 	description = "A pouch of 4 pressure sensitive beartraps used to snare and maim unexpecting victims entering your target area."
 
+/datum/materiel/utility/miscpouch
+	name = "High capacity tactical pouch"
+	path = /obj/item/storage/pouch/highcap
+	description = "A 6-slot pouch for carrying multiple different ammunitions at once"
+
 /datum/materiel/utility/sawflies
 	name = "Sawflies"
 	path = /obj/item/storage/sawfly_pouch
 	description = "A pouch of 4 folding antipersonnel drones that can be folded after use."
-
 // Requisition tokens
 
 /obj/item/requisition_token

@@ -256,3 +256,181 @@
 				src.owner.changeStatus("stunned", 2 SECONDS)
 			else if(prob(10))
 				boutput(src.owner,__red("You feel a sharp pain in your chest."))
+
+/datum/gimmick_event
+	var/interaction = 0
+	var/duration = 1 DECI SECOND
+	var/description
+	var/visible_message
+	var/notify_admins = FALSE
+
+	test1
+		interaction = TOOL_PULSING
+		duration = 2 SECONDS
+		description = "A pulsing of this is needed!"
+		visible_message = "sends a few pulses into the device."
+
+	test2
+		interaction = TOOL_SCREWING
+		duration = 5 SECONDS
+		description = "A few screws are still remaining to be, well, screwed."
+		visible_message = "screws in the last few remaining screws."
+		notify_admins = TRUE
+
+/obj/gimmick_obj
+	var/list/gimmick_events
+	var/active_stage
+	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE
+
+	get_desc()
+		var/datum/gimmick_event/AE = get_active_event()
+		if(!AE)
+			return
+		else
+			. += AE.description
+
+	attack_hand(mob/user as mob)
+		var/datum/gimmick_event/AE = get_active_event()
+
+		if(!AE)
+			..()
+		else if(AE.interaction == 0)
+			SETUP_GENERIC_ACTIONBAR(user, src, AE.duration, .proc/complete_stage, list(user, null), null, null, null, null)
+		else
+			..()
+
+	attackby(obj/item/W as obj, mob/user as mob)
+
+		var/attempt = FALSE
+		var/datum/gimmick_event/AE = get_active_event()
+
+		if(!AE)
+			return
+
+		if(AE.interaction & TOOL_CUTTING && iscuttingtool(W))
+			attempt = TRUE
+		else if(AE.interaction & TOOL_PULSING && ispulsingtool(W))
+			attempt = TRUE
+		else if(AE.interaction & TOOL_CUTTING && iscuttingtool(W))
+			attempt = TRUE
+		else if(AE.interaction & TOOL_PRYING && ispryingtool(W))
+			attempt = TRUE
+		else if(AE.interaction & TOOL_SCREWING && isscrewingtool(W))
+			attempt = TRUE
+		else if(AE.interaction & TOOL_SNIPPING && issnippingtool(W))
+			attempt = TRUE
+		else if(AE.interaction & TOOL_WRENCHING && iswrenchingtool(W))
+			attempt = TRUE
+		else if(AE.interaction & TOOL_WELDING && isweldingtool(W))
+			if(W:try_weld(user,1))
+				attempt = TRUE
+
+		if(attempt)
+			SETUP_GENERIC_ACTIONBAR(user, src, AE.duration, .proc/complete_stage, list(user, W), W.icon, W.icon_state, null, null)
+
+	proc/complete_stage(mob/user as mob, obj/item/W as obj)
+		var/datum/gimmick_event/AE = get_active_event()
+		if(!AE)
+			return
+		if(AE.visible_message)
+			src.visible_message("[user] [AE.visible_message]")
+
+		if(AE.notify_admins)
+			message_admins("[key_name(user)] completed stage [active_stage] on [src].  [log_loc(src)]")
+
+		active_stage++
+
+	proc/get_active_event()
+		if(length(gimmick_events) && active_stage <= length(gimmick_events))
+			return(gimmick_events[active_stage])
+
+	test
+		icon = 'icons/obj/machines/nuclear.dmi'
+		icon_state = "neutinj"
+
+		New()
+			..()
+			gimmick_events = list()
+			gimmick_events += new /datum/gimmick_event/test1
+			gimmick_events += new /datum/gimmick_event/test2
+			active_stage = 1
+
+/obj/gimmick_obj/ui_state(mob/user)
+	return tgui_admin_state
+
+/obj/gimmick_obj/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "GimmickObject")
+		ui.open()
+
+/obj/gimmick_obj/ui_static_data(mob/user)
+	. = list()
+	.["interactiveTypes"] = list("Clamp"=TOOL_CLAMPING, "Cut"=TOOL_CUTTING, "Pry"=TOOL_PRYING, "Pulse"=TOOL_PULSING, "Saw"=TOOL_SAWING, "Screw"=TOOL_SCREWING, "Snip"=TOOL_SNIPPING, "Spoon"=TOOL_SPOONING, "Weld"=TOOL_WELDING, "Wrench"=TOOL_WRENCHING, "Chop"=TOOL_CHOPPING)
+
+/obj/gimmick_obj/ui_data()
+	. = list()
+
+
+	.["activeStage"] = active_stage
+	.["eventList"] = list()
+	for(var/datum/gimmick_event/GE as anything in gimmick_events)
+		.["eventList"] += list(list(
+			"interaction" = GE.interaction,
+			"description" = GE.description,
+			"duration" = GE.duration/10,
+			"message"=GE.visible_message,
+			"notify"=GE.notify_admins ))
+
+/obj/gimmick_obj/ui_act(action, list/params, datum/tgui/ui)
+	. = ..()
+	if(.)
+		return
+
+	var/id = params["event"]
+	var/value = params["value"]
+	var/datum/gimmick_event/GE
+	if(!isnull(id) && length(gimmick_events) && id <= length(gimmick_events))
+		id++
+		GE = gimmick_events[id]
+
+	switch(action)
+		if("add_new")
+			gimmick_events += new /datum/gimmick_event
+			. = TRUE
+
+		if("delete_event")
+			gimmick_events -= GE
+			. = TRUE
+
+		if("interaction")
+			GE.interaction ^= value
+			. = TRUE
+
+		if("message")
+			GE.visible_message = value
+			. = TRUE
+
+		if("description")
+			GE.description = value
+			. = TRUE
+
+		if("duration")
+			GE.duration = value * 10
+			. = TRUE
+
+		if("notify")
+			GE.notify_admins = value
+			. = TRUE
+
+		if("move-up")
+			gimmick_events.Swap(id, id-1)
+			. = TRUE
+
+		if("move-down")
+			gimmick_events.Swap(id, id+1)
+			. = TRUE
+
+		if("active_step")
+			active_stage = id
+			. = TRUE
