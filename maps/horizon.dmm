@@ -39827,11 +39827,6 @@
 /obj/disposalpipe/segment/bent/south,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
-"bXs" = (
-/obj/grille/steel,
-/obj/window/auto/reinforced,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/medical/robotics)
 "bXu" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 8
@@ -53361,7 +53356,7 @@
 /obj/disposalpipe/segment/cargo{
 	dir = 4
 	},
-/turf/simulated/wall/auto/reinforced/supernorn,
+/turf/simulated/floor/plating,
 /area/station/medical/robotics)
 "eSH" = (
 /obj/storage/closet/law,
@@ -116841,9 +116836,9 @@ bzq
 bzv
 aXc
 aXc
-bXs
+aFG
 eQJ
-bXs
+aFG
 aEN
 jEd
 brW
