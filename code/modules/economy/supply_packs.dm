@@ -909,6 +909,34 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containername = "Radiation Array Crate (Cardlocked \[Engineering])"
 	access = access_engineering
 
+/obj/item/electronics/frame/generatorTemp // BUILDABLE TEG / ATMOS MACHINES
+	name = "Thermo Electric Generator Frame"
+	store_type = /obj/machinery/power/generatorTemp
+/obj/item/electronics/frame/circulatorTemp
+	name = "Hot Gas Circulator Frame"
+	store_type = /obj/machinery/atmospherics/binary/circulatorTemp
+/obj/item/electronics/frame/circulatorTempRight
+	name = "Cold Gas Circulator Frame"
+	store_type = /obj/machinery/atmospherics/binary/circulatorTemp/right
+/datum/supply_packs/thermoelectric_generator
+	name = "Thermo Electric Generator Crate"
+	desc = "The main component of a good engine setup, this part connects to two circulators. (Pipes and Semiconductor not included)"
+	category = "Engineering Department"
+	contains = list(/obj/item/electronics/frame/generatorTemp)
+	cost = 60000
+	containertype = /obj/storage/secure/crate
+	containername = "Thermo Electric Generator Crate (Cardlocked \[Chief Engineer])"
+	access = access_engineering_chief
+/datum/supply_packs/circulators
+	name = "Circulator Crate"
+	desc = "These two circulators are necessary components for the Thermo Electric Generator (Pipes and Generator not included)"
+	category = "Engineering Department"
+	contains = list(/obj/item/electronics/frame/circulatorTemp,/obj/item/electronics/frame/circulatorTempRight)
+	cost = 15000
+	containertype = /obj/storage/secure/crate
+	containername = "Thermo Electric Generator Crate (Cardlocked \[Chief Engineer])"
+	access = access_engineering_chief
+
 /datum/supply_packs/radiation_emergency
 	name = "Radioactive Emergency Supplies"
 	desc = "Equipment for dealing with a radioactive emergency. No, the crate itself is not radioactive."
