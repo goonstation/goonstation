@@ -280,11 +280,14 @@ turf/simulated/floor/feather/proc/bfs(turf/start)//breadth first search, made by
 	connects_to = list(/turf/simulated/wall/auto/feather, /obj/machinery/door/feather)
 
 	var/broken = FALSE
+	var/on = FALSE
 
 	update_icon()
 		..()
 		if (src.broken)
 			icon_state = icon_state + "b"
+		else
+			icon_state = icon_state + (src.on ? "on" : "")
 
 /turf/simulated/wall/auto/feather/New()
 	..()
@@ -430,15 +433,35 @@ turf/simulated/floor/feather/proc/bfs(turf/start)//breadth first search, made by
 		F.resources--
 		if (F.resources < 1)
 			F.end_floorrunning()
+		else if (!src.on)
+			src.on()
 
 /turf/simulated/wall/auto/feather/Exited(var/mob/living/critter/flock/drone/F, atom/newloc)
 	..()
 	if(!istype(F) || !newloc)
 		return
 	if(F.floorrunning)
+		if (locate(/mob/living/critter/flock/drone) in src.contents)
+			var/floorrunning_flockdrone = FALSE
+			for (var/mob/living/critter/flock/drone/flockdrone in src.contents)
+				if (flockdrone.floorrunning)
+					floorrunning_flockdrone = TRUE
+			if (!floorrunning_flockdrone)
+				src.off()
+		else
+			src.off()
+
 		if(istype(newloc, /turf/simulated/floor/feather))
 			var/turf/simulated/floor/feather/T = newloc
 			if(T.broken)
-				F.end_floorrunning() // broken tiles won't let you continue floorrunning
+				F.end_floorrunning()
 		else if(!isfeathertile(newloc))
-			F.end_floorrunning() // you left flocktile territory, boyo
+			F.end_floorrunning()
+
+/turf/simulated/wall/auto/feather/proc/on()
+	src.on = TRUE
+	src.UpdateIcon()
+
+/turf/simulated/wall/auto/feather/proc/off()
+	src.on = FALSE
+	src.UpdateIcon()
