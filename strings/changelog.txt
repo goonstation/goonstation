@@ -3,7 +3,7 @@
 (u)Wisemonster
 (p)8210
 (e)🆕🗺|feature, mapping
-(*)NanoTrasen Has added the proper systems to Donut 3 to allow mulebots to function. (Mule bot included)
+(+)NanoTrasen Has added the proper systems to Donut 3 to allow mulebots to function. (Mule bot included)
 (t)wed may 04 22
 (u)Wisemonster
 (p)8464
