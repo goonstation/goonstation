@@ -1155,10 +1155,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 		if(istype(W,/obj/item/reagent_containers/food/snacks/condiment/ketchup) && icon_state == "spag_plain" )// don't forget, other shit inherits this too!
 			boutput(user, "<span class='notice'>You create [random_spaghetti_name()] with tomato sauce...</span>")
 			var/obj/item/reagent_containers/food/snacks/spaghetti/sauce/D
-			if (user.mob_flags & IS_BONER)
+			if (user.mob_flags & IS_BONEY)
 				D = new/obj/item/reagent_containers/food/snacks/spaghetti/sauce/skeletal(W.loc)
 				boutput(user, "<span class='alert'>... whoa, that felt good. Like really good.</span>")
-				user.reagents.add_reagent("bonerjuice",20)
+				user.reagents.add_reagent("boneyjuice",20)
 			else
 				D = new/obj/item/reagent_containers/food/snacks/spaghetti/sauce(W.loc)
 			user.u_equip(W)
@@ -1668,7 +1668,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 #ifdef HALLOWEEN
 				wowspooky = 1
 #endif
-				if (user.mob_flags & IS_BONER)
+				if (user.mob_flags & IS_BONEY)
 					wowspooky = 1
 				if (wowspooky)
 					user.visible_message("[user] adds a bun to [src].","You add a bun to [src].")
@@ -2845,7 +2845,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "ramen"
 	needfork = TRUE
-	amount = 5
+	heal_amt = 2
+	bites_left = 5
 	initial_volume = 20
 	initial_reagents = "soysauce"
 	food_effects = list("food_brute","food_energized","food_warm")
@@ -2856,7 +2857,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "udon"
 	needfork = TRUE
-	amount = 5
+	heal_amt = 3
+	bites_left = 5
 	initial_volume = 20
 	initial_reagents = "soysauce"
 	food_effects = list("food_hp_up","food_explosion_resist","food_warm")
@@ -2867,7 +2869,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "udon_curry"
 	needfork = TRUE
-	amount = 5
+	heal_amt = 3
+	bites_left = 5
 	initial_volume = 20
 	initial_reagents = "currypowder"
 	food_effects = list("food_hp_up","food_refreshed","food_warm")

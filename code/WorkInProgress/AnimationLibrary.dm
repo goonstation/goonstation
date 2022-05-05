@@ -1210,6 +1210,14 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 			qdel(e)
 	return
 
+/proc/showlightning_bolt(var/atom/target)
+	if (!target)
+		return
+	var/turf/target_turf = get_turf(target)
+	if (!target_turf)
+		return
+	new /obj/decal/lightning_bolt(target_turf)
+
 /proc/leavepurge(var/atom/target, var/current_increment, var/sword_direction)
 	if (!target)
 		return

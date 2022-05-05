@@ -949,6 +949,9 @@
 	},
 /obj/cable,
 /obj/machinery/power/data_terminal,
+/obj/machinery/status_display{
+	pixel_y = -30
+	},
 /turf/simulated/floor/green/side,
 /area/station/turret_protected/Zeta)
 "acb" = (
@@ -3775,6 +3778,9 @@
 /area/station/chapel/sanctuary)
 "aiI" = (
 /obj/item/instrument/large/organ,
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
 "aiJ" = (
@@ -6616,6 +6622,9 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/machinery/status_display{
+	pixel_x = -32
+	},
 /turf/simulated/floor/red,
 /area/station/security/main)
 "apC" = (
@@ -7596,6 +7605,9 @@
 	name = "Staff Assistant"
 	},
 /obj/machinery/light_switch/auto,
+/obj/machinery/status_display{
+	pixel_x = 32
+	},
 /turf/simulated/floor/blueblack{
 	dir = 4
 	},
@@ -8376,6 +8388,9 @@
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/status_display{
+	pixel_x = 32
+	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "atO" = (
@@ -24715,6 +24730,9 @@
 	pixel_y = 8
 	},
 /obj/machinery/light/incandescent/netural,
+/obj/machinery/status_display{
+	pixel_x = -32
+	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "blW" = (
@@ -30667,6 +30685,9 @@
 "bAM" = (
 /obj/machinery/disposal/ore,
 /obj/disposalpipe/trunk/mineral,
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -32515,6 +32536,9 @@
 	pixel_x = 10;
 	tag = ""
 	},
+/obj/machinery/status_display{
+	pixel_y = -32
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 6
 	},
@@ -32634,6 +32658,9 @@
 "bFw" = (
 /obj/machinery/computer/stockexchange{
 	dir = 8
+	},
+/obj/machinery/status_display{
+	pixel_x = 32
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/info{
@@ -35668,6 +35695,9 @@
 /obj/item/clothing/suit/bedsheet/orange,
 /obj/item/instrument/harmonica,
 /obj/item/clothing/glasses/vr/arcade,
+/obj/machinery/status_display{
+	pixel_x = -32
+	},
 /turf/simulated/floor,
 /area/station/security/brig)
 "bNq" = (
@@ -36639,6 +36669,9 @@
 	pixel_x = 6;
 	pixel_y = 14
 	},
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
 /turf/simulated/floor/darkpurple/side{
 	dir = 1
 	},
@@ -36719,6 +36752,9 @@
 /obj/item/clothing/mask/cigarette/propuffs{
 	pixel_x = -7;
 	pixel_y = 14
+	},
+/obj/machinery/status_display{
+	pixel_y = 30
 	},
 /turf/simulated/floor/darkpurple/side{
 	dir = 1
@@ -41901,6 +41937,9 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/status_display{
+	pixel_y = -32
+	},
 /turf/simulated/floor/stairs/wide/other{
 	dir = 4
 	},
@@ -44634,6 +44673,14 @@
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
+"diY" = (
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
+/turf/simulated/floor/escape{
+	dir = 5
+	},
+/area/station/hallway/secondary/exit)
 "dkm" = (
 /obj/cable{
 	d1 = 4;
@@ -45285,6 +45332,18 @@
 /obj/machinery/light_switch/auto,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
+"gqz" = (
+/obj/decal/tile_edge/line/purple{
+	dir = 8;
+	icon_state = "line1"
+	},
+/obj/machinery/status_display{
+	pixel_x = -32
+	},
+/turf/simulated/floor/purpleblack{
+	dir = 8
+	},
+/area/station/science/lobby)
 "gtx" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -45301,6 +45360,9 @@
 "gxB" = (
 /obj/table/wood/round/auto,
 /obj/item/disk/data/floppy/read_only/communications,
+/obj/machinery/status_display{
+	pixel_x = 32
+	},
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "blue2"
@@ -45684,6 +45746,12 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/caution/west,
 /area/station/maintenance/south)
+"iUm" = (
+/obj/machinery/status_display{
+	pixel_x = 32
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "iUC" = (
 /obj/item/pen/crayon/pink,
 /turf/simulated/floor/plating/random,
@@ -45960,6 +46028,17 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost)
+"koq" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/status_display{
+	pixel_y = -30
+	},
+/turf/simulated/floor/blue/checker{
+	dir = 4
+	},
+/area/station/medical/medbay/lobby)
 "ksg" = (
 /turf/simulated/floor/black,
 /area/research_outpost)
@@ -47392,6 +47471,12 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
+"tpf" = (
+/obj/machinery/status_display{
+	pixel_x = 32
+	},
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/bar)
 "tsX" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/bot/mulebot/QM1,
@@ -83304,7 +83389,7 @@ bjX
 bjX
 bjX
 bmD
-biB
+tpf
 bhQ
 boy
 brh
@@ -93535,7 +93620,7 @@ awg
 axo
 ayA
 azA
-aAO
+koq
 atw
 aCz
 aAT
@@ -107731,7 +107816,7 @@ ayT
 aAc
 aBg
 aAc
-aAc
+gqz
 aDI
 bZG
 aJe
@@ -109599,7 +109684,7 @@ byZ
 bAl
 bBH
 byY
-byY
+iUm
 byY
 byZ
 cLH
@@ -113823,7 +113908,7 @@ aqn
 aqn
 aqn
 byq
-bzl
+diY
 bAp
 bAp
 bCR
