@@ -1,5 +1,9 @@
 
 (t)thu may 05 22
+(u)Boussard's Bargains Budget Bot
+(p)8460
+(e)|
+(+)Civilian cyborg modules now have three product satchels.
 (u)Wisemonster
 (p)8210
 (e)🆕🗺|feature, mapping
