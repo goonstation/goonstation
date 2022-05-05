@@ -6,7 +6,7 @@
  */
 
 import { useBackend } from "../backend";
-import { Box, Button, Collapsible, Dimmer, Section, TimeDisplay } from "../components";
+import { Box, Button, Collapsible, Dimmer, Icon, Section, TimeDisplay } from "../components";
 import { formatTime } from "../format";
 import { Window } from '../layouts';
 
@@ -24,25 +24,16 @@ export const MineralMagnet = (_props, context) => {
   const { isLinked, magnetActive, magnetAutomaticMode, magnetCooldownOverride, magnetHealth, magnetLastUsed } = data;
   const { time } = data;
   const linkedMagnets = data.linkedMagnets || [];
+  const miningEncounters = data.miningEncounters || [];
 
-  const onCooldown = true;
+  const onCooldown = magnetLastUsed > time;
 
   return (
     <Window
       width={300}
-      height={500}>
+      height={350}>
       <Window.Content>
-        <Box>
-          {linkedMagnets.map(magnet => (
-            <Button
-              key={magnet.ref}
-              onClick={() => act('linkmagnet', magnet)}
-            >
-              {`${magnet.name} at (${magnet.x}, ${magnet.y})`}
-            </Button>
-          ))}
-        </Box>
-        {!isLinked || (
+        {isLinked ? (
           <>
             <Section title="Magnet Status">
               <Box>
@@ -62,31 +53,63 @@ export const MineralMagnet = (_props, context) => {
             </Section>
             <Section title="Magnet Controls">
               <Section textAlign="center">
-                {onCooldown && !magnetCooldownOverride && (
-                  <Dimmer fontSize={1.75}>
-                    On Cooldown
+                {((onCooldown && !magnetCooldownOverride)) && (
+                  <Dimmer fontSize={1.75} pb={2}>
+                    {magnetActive ? "Magnet Active" : "On Cooldown"}
                   </Dimmer>
                 )}
                 <Button
                   textAlign="center"
                   color={onCooldown && magnetCooldownOverride && "average"}
+                  icon="magnet"
+                  onClick={() => act('activatemagnet')}
                   fluid >
                   Activate Magnet
                 </Button>
-                <Collapsible title="Activate telescope location"
+                <Collapsible title={<><Icon name="search" />Activate telescope location</>}
                   textAlign="center"
                   color={onCooldown && magnetCooldownOverride && "average"} >
-                  placeholder
+                  <Section height={6} scrollable fill>
+                    {miningEncounters.map(encounter => (
+                      <Button key={encounter.id}
+                        onClick={() => act('activateselectable', { encounter_id: encounter.id })}
+                        fluid>
+                        {encounter.name}
+                      </Button>
+                    ))}
+                  </Section>
                 </Collapsible>
                 <Button.Checkbox checked={magnetCooldownOverride}
+                  onClick={() => act('overridecooldown')}
                   style={{ 'z-index': '2' }}>
                   Override Cooldown
                 </Button.Checkbox>
-
+                <Button.Checkbox checked={magnetAutomaticMode}
+                  onClick={() => act('automode')}
+                  style={{ 'z-index': '2' }}>
+                  Automatic Mode
+                </Button.Checkbox>
               </Section>
-
+              <Button
+                textAlign="center"
+                icon="rss"
+                onClick={() => act('geoscan')}
+                fluid >
+                Scan
+              </Button>
             </Section>
           </>
+        ) : (
+          <Box>
+            {linkedMagnets.map(magnet => (
+              <Button
+                key={magnet.ref}
+                onClick={() => act('linkmagnet', magnet)}
+              >
+                {`${magnet.name} at (${magnet.x}, ${magnet.y})`}
+              </Button>
+            ))}
+          </Box>
         )}
       </Window.Content>
     </Window>
