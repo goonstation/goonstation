@@ -698,6 +698,9 @@ datum/pump_ui/circulator_ui
 
 			if(!src.semiconductor && (current_state < GAME_STATE_PLAYING)) // no free semiconductors for you, NERDS
 				semiconductor = new(src)
+			else
+				semiconductor_state = TEG_SEMI_STATE_MISSING
+				status = BROKEN
 
 			UpdateIcon()
 
@@ -715,8 +718,6 @@ datum/pump_ui/circulator_ui
 			. += "<br>[semiconductor_repair]"
 
 	update_icon()
-		if((status & (BROKEN)) && src.circ1 && src.circ2 && (src.semiconductor_state = TEG_SEMI_STATE_CONNECTED))
-			status &= ~BROKEN // incase the circulators get reattached
 		if(status & (NOPOWER))
 			UpdateOverlays(null, "power")
 		else if(status & (BROKEN))
