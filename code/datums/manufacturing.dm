@@ -3107,3 +3107,70 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	time = 40 SECONDS
 	create = 1
 	category = "Miscellaneous"
+
+/************ BUILDABLE ATMOS STUFF ************/
+
+/datum/manufacture/cryo_cell	//
+	name = "cryogenic healing pod"
+	item_paths = list("MET-1", "CRY-1", "CON-1")
+	item_amounts = list(15, 25, 5)
+	item_outputs = list(/obj/machinery/atmospherics/unary/cryo_cell)	//cryo tube
+	time = 30 SECONDS
+	create = 1
+	category = "Machinery"
+/datum/manufacture/valve
+	name = "manual valve"
+	item_paths = list("MET-1", "CON-1")
+	item_amounts = list(10, 5)
+	item_outputs = list(/obj/machinery/atmospherics/valve)	//pipe valve
+	time = 10 SECONDS
+	create = 1
+	category = "Machinery"
+/datum/manufacture/atmospump
+	name = "Gas pump"
+	item_paths = list("MET-1", "CON-1")
+	item_amounts = list(10, 15)
+	item_outputs = list(/obj/machinery/atmospherics/binary/pump)	//atmospump
+	time = 20 SECONDS
+	create = 1
+	category = "Machinery"
+/datum/manufacture/connector
+	name = "Connector Port"
+	item_paths = list("MET-1", "CON-1")
+	item_amounts = list(20, 15)
+	item_outputs = list(/obj/machinery/atmospherics/portables_connector)	//atmospump
+	time = 25 SECONDS
+	create = 1
+	category = "Machinery"
+/datum/manufacture/generatorTemp
+	name = "generator"
+	item_paths = list("MET-2", "CON-2")
+	item_amounts = list(20, 25)
+	item_outputs = list(/obj/machinery/power/generatorTemp/)	//TEG
+	time = 30 SECONDS
+	create = 1
+	category = "Machinery"
+/datum/manufacture/circulatorTemp
+	name = "hot gas circulator"
+	item_paths = list("MET-2", "CON-1","INS-1")
+	item_amounts = list(20, 15, 10)
+	item_outputs = list(/obj/machinery/atmospherics/binary/circulatorTemp)	//TEG
+	time = 30 SECONDS
+	create = 1
+	category = "Machinery"
+/datum/manufacture/circulatorTempRight
+	name = "cold gas circulator"
+	item_paths = list("MET-2", "CON-1","INS-1")
+	item_amounts = list(20, 15, 10)
+	item_outputs = list(/obj/machinery/atmospherics/binary/circulatorTemp/right)	//TEG
+	time = 30 SECONDS
+	create = 1
+	category = "Machinery"
+/datum/manufacture/Freezer
+	name = "freezer"
+	item_paths = list("MET-1", "CON-1","INS-1")
+	item_amounts = list(15, 5, 10)
+	item_outputs = list(/obj/machinery/atmospherics/unary/cold_sink/freezer)	//freezer
+	time = 20 SECONDS
+	create = 1
+	category = "Machinery"

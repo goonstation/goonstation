@@ -570,33 +570,8 @@ obj/machinery/atmospherics/pipe
 			UpdateIcon()
 
 			return null
-
-		proc/construct(var/datum/action/bar/icon/build/B,var/obj/machinery/atmospherics/pipe/simple/R)
-			if(isnull(R))
-				return
-			R.initialize()
-			var/list/datum/pipe_network/nodenet_list = list()
-			// probably best if we ignore non-networked pipes
-
-			if(R?.node2)
-				R.node2.initialize()
-				R.node2.UpdateIcon()
-				nodenet_list += R.node2?.return_network()
-			if(R?.node1)
-				R.node1.initialize()
-				R.node1.UpdateIcon()
-				nodenet_list += R.node1?.return_network()
-
-			if(length(nodenet_list) == 2) // between two pipes
-				nodenet_list[1].merge(nodenet_list[2])
-				R.network_expand(nodenet_list[1],R)
-			else if(length(nodenet_list) == 1) // one pipe nearby
-				R.network_expand(nodenet_list[1],R)
-			else if(length(nodenet_list) == 0)// no pipes around us
-				R.build_network()
-
-			R.initialize()
-			R.UpdateIcon()
+		return_all_nodes(obj/machinery/atmospherics/pipe/simple/R)
+			return list(R.node1,R.node2)
 
 	simple/insulated
 		//icon = 'icons/obj/atmospherics/pipes/red_pipe.dmi'
@@ -984,6 +959,8 @@ obj/machinery/atmospherics/pipe
 			UpdateIcon()
 
 			return null
+		return_all_nodes(obj/machinery/atmospherics/pipe/tank/R)
+			return list(node1)
 
 	vent
 		icon = 'icons/obj/atmospherics/pipe_vent.dmi'
@@ -1059,6 +1036,8 @@ obj/machinery/atmospherics/pipe
 				dir = get_dir(src, node1)
 			else
 				icon_state = "exposed"
+		return_all_nodes(obj/machinery/atmospherics/pipe/vent/R)
+			return list(node1)
 
 	vertical_pipe
 		icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi'
@@ -1127,6 +1106,8 @@ obj/machinery/atmospherics/pipe
 
 			UpdateIcon()
 			return null
+		return_all_nodes(obj/machinery/atmospherics/pipe/vertical_pipe/R)
+			return list(node1,node2)
 
 
 	manifold
@@ -1294,37 +1275,5 @@ obj/machinery/atmospherics/pipe
 			hide(T.intact)
 			//UpdateIcon()
 
-		proc/construct(var/datum/action/bar/icon/build/B,var/obj/machinery/atmospherics/pipe/manifold/R)
-			if(isnull(R))
-				return
-			R.initialize()
-
-			var/list/datum/pipe_network/nodenet_list = list()
-
-			if (R?.node3) // manifolds have 3 nodes, any of them could / could not exist
-				R.node3.initialize()
-				R.node3.UpdateIcon()
-				nodenet_list += R.node3?.return_network()
-			if (R?.node2) // side 2
-				R.node2.initialize()
-				R.node2.UpdateIcon()
-				nodenet_list += R.node2?.return_network()
-			if (R?.node1) // side 1
-				R.node1.initialize()
-				R.node1.UpdateIcon()
-				nodenet_list += R.node1?.return_network()
-
-			if(length(nodenet_list) == 3) // between 3 pipes
-				nodenet_list[1].merge(nodenet_list[2])
-				nodenet_list[1].merge(nodenet_list[3])
-				R.network_expand(nodenet_list[1],R)
-			else if(length(nodenet_list) == 2) // between two pipes
-				nodenet_list[1].merge(nodenet_list[2])
-				R.network_expand(nodenet_list[1],R)
-			else if(length(nodenet_list) == 1) // next one pipe
-				R.network_expand(nodenet_list[1],R)
-			else if(length(nodenet_list) == 0)// no pipes around us
-				R.build_network()
-
-			R.initialize()
-			R.UpdateIcon()
+		return_all_nodes(obj/machinery/atmospherics/pipe/manifold/R)
+			return list(R.node1,R.node2,R.node3)

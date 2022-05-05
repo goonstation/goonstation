@@ -52,9 +52,10 @@
 	desc = "The gas circulator of a thermoeletric generator. This one is designed to handle hot air."
 	icon = 'icons/obj/atmospherics/pipes.dmi'
 	icon_state = "circ1-off"
+	mats = list("MET-2"=20, "CON-1"=15,"INS-1"=10)
 	var/obj/machinery/power/generatorTemp/generator = null
 
-	var/side = null // 1=left 2=right
+	var/side = 1 // 1=left 2=right  constructable atmos demands this start as 1 instead of null
 	var/last_pressure_delta = 0
 	var/static/list/circulator_preferred_reagents // white list of prefferred reagents where viscocity should be ignored for special value
 	var/lube_cycle = 0 // current state in cycle
@@ -413,7 +414,8 @@
 	icon_state = "circ2-off"
 	name = "cold gas circulator"
 	desc = "The gas circulator of a thermoeletric generator. This one is designed to handle cold air."
-
+	side = 2
+	mats = list("MET-2"=20, "CON-1"=15,"INS-1"=10)
 
 /datum/action/bar/icon/teg_circulator_repair
 	id = "teg_circulator_repair1"
@@ -556,6 +558,7 @@ datum/pump_ui/circulator_ui
 	icon_state = "teg"
 	anchored = 1
 	density = 1
+	mats = list("MET-2"=20, "CON-2"=25)
 	//var/lightsbusted = 0
 
 	var/obj/machinery/atmospherics/binary/circulatorTemp/circ1
@@ -693,7 +696,7 @@ datum/pump_ui/circulator_ui
 
 			src.generate_variants()
 
-			if(!src.semiconductor)
+			if(!src.semiconductor && (current_state < GAME_STATE_PLAYING)) // no free semiconductors for you, NERDS
 				semiconductor = new(src)
 
 			UpdateIcon()
@@ -712,6 +715,8 @@ datum/pump_ui/circulator_ui
 			. += "<br>[semiconductor_repair]"
 
 	update_icon()
+		if((status & (BROKEN)) && src.circ1 && src.circ2 && (src.semiconductor_state = TEG_SEMI_STATE_CONNECTED))
+			status &= ~BROKEN // incase the circulators get reattached
 		if(status & (NOPOWER))
 			UpdateOverlays(null, "power")
 		else if(status & (BROKEN))

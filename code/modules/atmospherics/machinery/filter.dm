@@ -317,3 +317,6 @@ Filter types:
 			node_in = null
 
 		return null
+
+	return_all_nodes(obj/machinery/atmospherics/filter/R)
+		return list(R.node_out1,R.node_out2,R.node_in)

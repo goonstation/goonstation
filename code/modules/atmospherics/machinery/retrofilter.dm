@@ -508,3 +508,6 @@ obj/machinery/atmospherics/retrofilter
 			node_in = null
 
 		return null
+
+	return_all_nodes(obj/machinery/atmospherics/retrofilter/R)
+		return list(R.node_in,R.node_out1,R.node_out2)

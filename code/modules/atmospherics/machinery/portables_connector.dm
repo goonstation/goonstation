@@ -12,6 +12,7 @@
 	var/on = 0
 	level = 0
 	layer = PIPE_LAYER
+	mats = list("MET-1"=20,"CON-1"=15)
 
 	north
 		dir = NORTH
@@ -136,3 +137,5 @@
 			node = null
 
 		return null
+	return_all_nodes(obj/machinery/atmospherics/portables_connector/R)
+		return list(R.node)

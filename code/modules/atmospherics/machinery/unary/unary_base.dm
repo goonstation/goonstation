@@ -94,24 +94,6 @@
 			node = null
 
 		return null
-	proc/construct(var/datum/action/bar/icon/build/B,var/obj/machinery/atmospherics/unary/R) // it gets angry if i dont use manifold
-
-		if(isnull(R))
-			return
-		R.initialize()
-		var/list/datum/pipe_network/nodenet_list = list()
-		// probably best if we ignore non-networked pipes
-
-		if(R?.node)
-			R.node.initialize()
-			R.node.UpdateIcon()
-			nodenet_list += R.node?.return_network()
-
-		if (length(nodenet_list) == 1) // next to something
-			R.network_expand(nodenet_list[1],R)
-		else if (length(nodenet_list) == 0)// no pipes around us
-			R.build_network()
-
-		R.initialize()
-		R.UpdateIcon()
+	return_all_nodes(obj/machinery/atmospherics/unary/R)
+		return list(R.node)
 

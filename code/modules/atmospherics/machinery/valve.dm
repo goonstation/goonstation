@@ -7,6 +7,7 @@ obj/machinery/atmospherics/valve
 	initialize_directions = SOUTH|NORTH
 	layer = PIPE_MACHINE_LAYER
 	plane = PLANE_NOSHADOW_BELOW
+	mats = list("MET-1"=10,"CON-1"=5)
 	var/open = 0
 	var/high_risk = 0 //Does this valve have enough grief potential that the admins should be messaged when this is opened?
 	var/obj/machinery/atmospherics/node1
@@ -312,7 +313,8 @@ obj/machinery/atmospherics/valve
 			node2 = null
 
 		return null
-
+	return_all_nodes(obj/machinery/atmospherics/valve/R)
+		return list(R.node1,R.node2)
 obj/machinery/atmospherics/manifold_valve
 	icon = 'icons/obj/atmospherics/manifold_valve.dmi'
 	icon_state = "manifold_valve0"
@@ -595,3 +597,5 @@ obj/machinery/atmospherics/manifold_valve
 					undivert()
 				else
 					divert()
+	return_all_nodes(obj/machinery/atmospherics/manifold_valve/R)
+		return list(R.node1,R.node2,R.node3)

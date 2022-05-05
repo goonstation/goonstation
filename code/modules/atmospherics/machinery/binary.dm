@@ -1,7 +1,4 @@
 obj/machinery/atmospherics/binary
-	dir = SOUTH
-	initialize_directions = SOUTH|NORTH
-//
 	var/datum/gas_mixture/air1
 	var/datum/gas_mixture/air2
 
@@ -12,16 +9,18 @@ obj/machinery/atmospherics/binary
 	var/datum/pipe_network/network2
 
 	New()
-		..()
-		switch(dir)
-			if(NORTH)
-				initialize_directions = NORTH|SOUTH
+		SPAWN(0.5 SECONDS) // regardless of the dir passed in, this stupid thing kept chosing the same result
+		switch(dir) // apparently mappers decided to ignore this for however long and just edit the var
 			if(SOUTH)
-				initialize_directions = NORTH|SOUTH
+				initialize_directions = SOUTH|NORTH
+			if(NORTH)
+				initialize_directions = SOUTH|NORTH
 			if(EAST)
 				initialize_directions = EAST|WEST
 			if(WEST)
 				initialize_directions = EAST|WEST
+		..()
+
 		air1 = new /datum/gas_mixture
 		air2 = new /datum/gas_mixture
 
@@ -155,3 +154,6 @@ obj/machinery/atmospherics/binary
 			node2 = null
 
 		return null
+
+	return_all_nodes(obj/machinery/atmospherics/binary/R)
+		return list(R.node1,R.node2)

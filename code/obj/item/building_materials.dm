@@ -483,7 +483,7 @@ MATERIAL
 					a_icon = 'icons/obj/atmospherics/pipes/regular_pipe.dmi'
 					a_icon_state = "intact"
 					a_name = "a pipe"
-					a_callback = /obj/machinery/atmospherics/pipe/simple/proc/construct
+					a_callback = /obj/machinery/atmospherics/proc/construct
 
 				if("apipec")
 					if (!amount_check(3,usr)) return
@@ -501,7 +501,7 @@ MATERIAL
 					a_icon = 'icons/obj/atmospherics/pipes/regular_pipe.dmi'
 					a_icon_state = "intact"
 					a_name = "a pipe"
-					a_callback = /obj/machinery/atmospherics/pipe/simple/proc/construct
+					a_callback = /obj/machinery/atmospherics/proc/construct
 
 				if("apipem")
 					if (!amount_check(3,usr)) return
@@ -519,7 +519,7 @@ MATERIAL
 					a_icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi'
 					a_icon_state = "manifold"
 					a_name = "a pipe manifold"
-					a_callback = /obj/machinery/atmospherics/pipe/manifold/proc/construct
+					a_callback = /obj/machinery/atmospherics/proc/construct
 
 
 				if("bed")

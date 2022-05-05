@@ -20,6 +20,7 @@ obj/machinery/atmospherics/binary/pump
 	desc = "A pump"
 	layer = PIPE_MACHINE_LAYER
 	plane = PLANE_NOSHADOW_BELOW
+	mats = list("MET-1"=10,"CON-1"=15)
 
 	var/on = 0
 	var/target_pressure = ONE_ATMOSPHERE

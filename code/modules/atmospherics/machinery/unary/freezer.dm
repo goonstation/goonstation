@@ -5,6 +5,7 @@
 	density = 1
 	anchored = 1.0
 	current_heat_capacity = 1000
+	mats = list("MET-1"=15, "CON-1"=5,"INS-1"=10)
 	var/pipe_direction = 1
 
 	north

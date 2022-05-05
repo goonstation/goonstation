@@ -7,6 +7,7 @@
 	anchored = 1.0
 	layer = EFFECTS_LAYER_BASE//MOB_EFFECT_LAYER
 	flags = NOSPLASH
+	mats = list("MET-1"=15,"CRY-1"=25,"CON-1"=5)
 	var/on = 0
 	var/datum/light/light
 	var/ARCHIVED(temperature)

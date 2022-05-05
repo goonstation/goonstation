@@ -14,7 +14,11 @@ obj/machinery/atmospherics
 	anchored = 1
 
 	var/initialize_directions = 0
-
+	New()
+		..()
+		if(current_state >= GAME_STATE_PLAYING) // we dont want to possibly mess up the engine
+			SPAWN(0.5 SECONDS)
+			construct(. , src) // action bar is for crafting it
 	process()
 		build_network()
 		..()
@@ -60,6 +64,35 @@ obj/machinery/atmospherics
 			// Is permitted to return null
 
 		disconnect(obj/machinery/atmospherics/reference)
+
+
+		return_all_nodes(var/obj/machinery/atmospherics/R)
+			// Have you ever had enough with how atmos pipes name their vars?
+			// do you want to stop slamming your head on your keyboard in frustration as your code fails to compile?
+			// well now you can use this and skip the headache and just get a list of all the nodes of a machine.
+			// revolutionary new technology
+
+		construct(var/datum/action/bar/icon/build/B,var/obj/machinery/atmospherics/R)
+			if(isnull(R))
+				return
+			R.initialize()
+			var/list/obj/machinery/atmospherics/node_list = R.return_all_nodes(R)
+			var/list/datum/pipe_network/nodenet_list = list()
+			for(var/obj/machinery/atmospherics/N in node_list)
+				if(N?.return_network()) // only add networked nodes to our list
+					nodenet_list += N.return_network()
+				N.UpdateIcon()
+				N.initialize() // update it for good measure anyway
+			R.build_network()
+			if(R.return_network()) // some devices CANT have a network, such as valves
+				for(var/datum/pipe_network/nodenet in nodenet_list)
+					nodenet.merge(R.return_network())
+
+				 // crazy idea: what if we built a network first
+				 // and skipped all the logic we would need otherwise
+
+			R.UpdateIcon()
+			R.initialize()
 
 		deconstruct(var/obj/machinery/atmospherics/pipe/manifold/R)
 			if(isnull(R))
