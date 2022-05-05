@@ -599,8 +599,8 @@
 		src.visible_message("<span class='notice'>[src] harmlessly absorbs [P].</span>")
 	else
 		..()
-		var/mob/attacker = P.shooter
-		if(istype(attacker))
+		var/attacker = P.shooter
+		if(attacker)
 			src.harmedBy(attacker)
 
 /mob/living/critter/flock/drone/hitby(atom/movable/AM, datum/thrown_thing/thr)
