@@ -170,12 +170,12 @@
 
 
 
-//	health = 50
+	health = 40
 //	var/maxhealth = 40
 	var/firevuln = 0.5
 	var/brutevuln = 1.2
-	var/brutedam //shitty way of doing it yes
-	var/burndam
+	//var/brutedam //shitty way of doing it yes
+//	var/burndam
 	setup_healths()
 		add_hh_robot(40, 1) // fuck you and your way of doing health that isn't my way of doing it
 		add_hh_robot_burn(40, 1)
@@ -320,6 +320,8 @@
 
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
+
+
 		if(prob(50) && alive) // borrowed from brullbar- anti-crowd measures
 			src.target = user
 			src.oldtarget_name = user.name
@@ -354,8 +356,8 @@
 			src.visible_message("<span class='alert'><b>[src]</b> [src]'s flies aggressively towards [user.name]!</span>")
 			src.task = "chasing"
 
-		..() // call living critter parent procs and pray to sweet little baby jesus It Just Works
-		/*var/attack_force = 0
+
+		var/attack_force = 0
 		var/damage_type = "brute"
 		if (istype(W, /obj/item/artifact/melee_weapon))
 			var/datum/artifact/melee/ME = W.artifact
@@ -398,16 +400,20 @@
 
 		switch(damage_type)
 			if("fire")
-				src.health -= attack_force * max(1,(src.firevuln + W.getProperty("piercing")/100)) //Extremely half assed piercing for critters
+				health -= attack_force * max(1,(src.firevuln + W.getProperty("piercing")/100)) //Extremely half assed piercing for critters
 			if("brute")
-				src.health -= attack_force * max(1,(src.brutevuln + W.getProperty("piercing")/100))
+				health -= attack_force * max(1,(src.brutevuln + W.getProperty("piercing")/100))
 			else
-				src.health -= attack_force * max(1,(0 + W.getProperty("piercing")/100))
+				health -= attack_force * max(1,(0 + W.getProperty("piercing")/100))
 
 		if (src.alive && src.health <= 0)
-			src.CritterDeath()*/
+			src.CritterDeath()
+
+		if(health<=0)
+			CritterDeath()
 
 
+		..() // call living critter parent procs and pray to sweet little baby jesus It Just Works
 
 
 
@@ -547,7 +553,11 @@
 		return 1
 
 	Life() // override so drones don't just loaf all fuckin day
-		if (!src.alive) return 0
+
+
+		if(health<=0)
+			CritterDeath()
+			return 0
 
 		if(sleeping > 0)
 			sleeping--
@@ -608,6 +618,7 @@
 			sleep_check--
 
 		return ai_think()
+		..()
 
 	proc/Shoot(var/target, var/start, var/user, var/bullet = 0)
 		if(target == start)
@@ -639,3 +650,4 @@
 
 	death() // FUCK YOUUUUUUUUUUUUUUUUUUUUUUU
 		CritterDeath()
+		alive = FALSE
