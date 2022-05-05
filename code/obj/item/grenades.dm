@@ -1436,7 +1436,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 			var/a_icon
 			var/a_icon_state
 			var/a_name
-			switch(alert(user, "Which pipe do you want to craft?",,"Straight Pipe","Curved Pipe","Manifold"))
+			switch(tgui_alert(user, "Which pipe do you want to craft?","Craft",list("Straight Pipe","Curved Pipe","Manifold","Nevermind")))
 				if("Straight Pipe")
 					switch(usr.dir)
 						if(NORTH , SOUTH)
