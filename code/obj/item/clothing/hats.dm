@@ -486,6 +486,12 @@ proc/filter_trait_hats(var/type)
 	icon_state = "souschef"
 	item_state = "chefhat" //TODO: unique inhand sprite?
 
+/obj/item/clothing/head/itamaehat
+	name = "Itamae hat"
+	desc = "A hat commonly worn by Japanese Chefs. Itamae translates literally to \"In front of the board\"."
+	icon_state = "itamae"
+	item_state = "itamae"
+
 /obj/item/clothing/head/dramachefhat
 	name = "Dramatic Chef's Hat"
 	icon_state = "drama"
