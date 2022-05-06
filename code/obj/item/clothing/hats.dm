@@ -282,7 +282,7 @@ proc/filter_trait_hats(var/type)
 	desc = "Someone who wears this will look very smart. It looks a bit heavier than it should."
 
 	attack_self(mob/user)
-		boutput(user, "You reach inside the hat and pull out a pair of goggles. The scuttlebot wakes up!")
+		boutput(user, "You reach inside the hat and pull out a pair of goggles. The scuttlebot wakes up! Use the goggles on the bot to make it dormant again.")
 		new /mob/living/critter/scuttlebot(get_turf(src))
 		qdel(src)
 	setupProperties()
