@@ -1,5 +1,9 @@
 
 (t)fri may 06 22
+(u)SgtManGuy
+(p)8356
+(e)🎨|sprites
+(*)Added a sushi chef outfit as a chef job award (Level 0).
 (u)Bartimeus973
 (p)8234
 (e)|
