@@ -476,7 +476,7 @@ proc/filter_trait_hats(var/type)
 
 /obj/item/clothing/head/itamaehat
 	name = "Itamae hat"
-	desc = "A hat commonly worn by Japanese Chefs. itamae translates literally to \"In front of the board\"."
+	desc = "A hat commonly worn by Japanese Chefs. Itamae translates literally to \"In front of the board\"."
 	icon_state = "itamae"
 	item_state = "itamae"
 
