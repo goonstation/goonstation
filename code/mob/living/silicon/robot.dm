@@ -504,7 +504,7 @@
 
 			if ("birdwell", "burp")
 				if (src.emote_check(voluntary, 50))
-					playsound(src.loc, 'sound/vox/birdwell.ogg', 50, 1, 0, src.get_age_pitch() * vocal_pitch, channel=VOLUME_CHANNEL_EMOTE) // vocal pitch added
+					playsound(src.loc, 'sound/vox/birdwell.ogg', 50, 1, 0, src.get_age_pitch() * vocal_pitch, channel=VOLUME_CHANNEL_EMOTE) // vocal pitch added - isn't super noticeable since its already random
 					message = "<b>[src]</b> birdwells."
 
 			if ("scream")
