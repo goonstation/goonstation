@@ -3108,7 +3108,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	create = 1
 	category = "Miscellaneous"
 
-/************ BUILDABLE ATMOS STUFF ************/
+/* ------------ BUILDABLE ATMOS STUFF ------------ */
 
 /datum/manufacture/cryo_cell	//
 	name = "cryogenic healing pod"
