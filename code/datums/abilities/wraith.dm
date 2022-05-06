@@ -1028,6 +1028,67 @@
 			boutput(W, __red("You failed to poison [target]."))
 			return 1
 
+/datum/targetable/wraithAbility/mass_whisper
+	name = "Mass Whisper"
+	icon_state = "whisper"
+	desc = "Send an ethereal message to all close living beings."
+	pointCost = 10
+	targeted = 0
+	cooldown = 10 SECONDS
+	proc/ghostify_message(var/message)
+		return message
+
+	cast()
+		if (..())
+			return 1
+
+		var/message = html_encode(input("What would you like to whisper to everyone?", "Whisper", "") as text)
+		for (var/mob/living/M in range(8))
+			if (ishuman(M) && !isdead(M))
+				var/mob/living/carbon/human/H = M
+				logTheThing("say", usr, M, "WRAITH WHISPER TO [constructTarget(M,"say")]: [message]")
+				message = ghostify_message(trim(copytext(sanitize(message), 1, 255)))
+				if (!message)
+					return 1
+				boutput(M, "<b>A netherworldly voice whispers into your ears... </b> [message]")
+				usr.playsound_local(usr.loc, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65, 0)
+				H.playsound_local(H.loc, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65, 0)
+
+		boutput(usr, "<b>You whisper to everyone around you:</b> [message]")
+
+/datum/targetable/wraithAbility/mass_emag
+	name = "Mass Emagging"
+	icon_state = "whisper"
+	desc = "Emag everything around you."
+	pointCost = 10
+	targeted = 0
+	cooldown = 10 SECONDS
+
+	cast()
+		if (..())
+			return 1
+
+		boutput(usr, "<span class='notice'>You begin to gather your energy.</span>")
+		sleep(5 SECONDS)
+		for (var/atom/A in range(3))
+			if (ishuman(A))
+				var/mob/living/carbon/H = A
+				boutput(T, "<span class='alert'>You feel a sudden dizzyness!</span>")
+				H.emote("pale")
+				return 0
+			else if (isobj(A))
+				var/obj/O = A
+				if (O.emag_act(null, null) && !istype(O, /obj/machinery/computer/shuttle/embedded))
+					boutput(usr, "<span class='notice'>You alter the energy of [O].</span>")
+
+/datum/targetable/wraithAbility/hallucinate
+	name = "Mass Emagging"
+	icon_state = "whisper"
+	desc = "Emag everything around you."
+	pointCost = 10
+	targeted = 0
+	cooldown = 10 SECONDS
+
 /obj/spookMarker
 	name = "Spooky Marker"
 	desc = "What is this? You feel like you shouldn't be able to see it, but it has an ominous and slightly mischevious aura."

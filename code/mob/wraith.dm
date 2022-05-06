@@ -35,6 +35,8 @@
 	var/const/life_tick_spacing = 20
 	var/haunt_duration = 300
 	var/death_icon_state = "wraith-die"
+	var/static/image/speech_bubble = image('icons/mob/mob.dmi', "speech")
+	var/last_typing = null
 
 	var/list/poltergeists
 	//holy water, formaldehyde tolerances.
@@ -468,20 +470,29 @@
 				boutput(src, "You are currently muted and may not speak.")
 				return
 
-			if (copytext(message, 1, 2) == "*")
-				src.emote(copytext(message, 2))
-				return
+			if (istype (src, /mob/wraith/wraith_trickster))
+				message = trim(message)
+
+				UpdateOverlays(speech_bubble, "speech_bubble")
+				var/speech_bubble_time = src.last_typing
+				SPAWN(1.5 SECONDS)
+					if(speech_bubble_time == src.last_typing)
+						UpdateOverlays(null, "speech_bubble")
+
+				playsound(src, sounds_speak["1"],  55, 0.01, 8)
+
+				var/rendered = "<strong>[src.name]</strong> says [message]."
+				var/list/listening = all_hearers(null, src)
+				listening |= src
+				//Todo, typing indicator, maybe impersonate voice/speech pattern, overhead text
+				for (var/mob/M in listening)
+					M.show_message(rendered, 2)
 			else
-				src.emote(pick("hiss", "murmur", "drone", "wheeze", "grustle", "rattle"))
-
-			//Todo: random pick of spooky things or maybe parse the original message somehow
-			/*var/rendered = "<strong>[src.name]</strong> screeches incomprehensibly!"
-
-			var/list/listening = all_hearers(null, src)
-			listening |= src
-
-			for (var/mob/M in listening)
-				M.show_message(rendered, 2)*/
+				if (copytext(message, 1, 2) == "*")
+					src.emote(copytext(message, 2))
+					return
+				else
+					src.emote(pick("hiss", "murmur", "drone", "wheeze", "grustle", "rattle"))
 
 		else //Speak in ghostchat if not corporeal
 			if (copytext(message, 1, 2) == "*")
@@ -593,10 +604,14 @@
 			src.addAbility(/datum/targetable/wraithAbility/blindBrand)
 			src.addAbility(/datum/targetable/wraithAbility/rotBrand)
 			src.removeAbility(/datum/targetable/wraithAbility/specialize)
-			src.removeAbility(/datum/targetable/wraithAbility/poison)
+			src.addAbility(/datum/targetable/wraithAbility/poison)
 
 		addAllTricksterAbilities()
 			src.addAbility(/datum/targetable/wraithAbility/choose_haunt_appearance)
+			src.addAbility(/datum/targetable/wraithAbility/make_poltergeist)
+			src.addAbility(/datum/targetable/wraithAbility/mass_whisper)
+			src.addAbility(/datum/targetable/wraithAbility/mass_emag)
+			src.removeAbility(/datum/targetable/wraithAbility/specialize)
 
 		removeAllAbilities()
 			src.removeAbility(/datum/targetable/wraithAbility/help)
