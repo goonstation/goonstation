@@ -1807,6 +1807,13 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 		var/obj/item/tile/T = C
 		if(intact)
 			var/obj/P = user.find_tool_in_hand(TOOL_PRYING)
+
+			if (isghostdrone(user)) // Give the drones a little QOL so cleaning up welderbombs isn't a complete PITA
+				var/mob/living/silicon/ghostdrone/drone = user
+				var/obj/item/tool/omnitool/omni = locate(/obj/item/tool/omnitool) in drone.tools
+				if (omni?.tool_flags & TOOL_PRYING)
+					P = omni
+
 			if (!P)
 				return
 			// Call ourselves w/ the tool, then continue
