@@ -94,6 +94,7 @@
 			node = null
 
 		return null
+
 	return_all_nodes(obj/machinery/atmospherics/unary/R)
 		return list(R.node)
 

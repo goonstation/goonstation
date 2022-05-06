@@ -914,16 +914,19 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	store_type = /obj/machinery/power/generatorTemp
 	secured = 2
 	icon_state = "dbox"
+
 /obj/item/electronics/frame/circulatorTemp
 	name = "Hot Gas Circulator Frame"
 	store_type = /obj/machinery/atmospherics/binary/circulatorTemp
 	secured = 2
 	icon_state = "dbox"
+
 /obj/item/electronics/frame/circulatorTempRight
 	name = "Cold Gas Circulator Frame"
 	store_type = /obj/machinery/atmospherics/binary/circulatorTemp/right
 	secured = 2
 	icon_state = "dbox"
+
 /datum/supply_packs/thermoelectric_generator
 	name = "Thermo Electric Generator Crate"
 	desc = "The main component of a good engine setup, this part connects to two circulators. (Pipes, Circulators, and Semiconductor not included)"
@@ -933,6 +936,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/secure/crate
 	containername = "Thermo Electric Generator Crate (Cardlocked \[Chief Engineer])"
 	access = access_engineering_chief
+
 /datum/supply_packs/circulators
 	name = "Circulator Crate"
 	desc = "These two circulators are necessary components for the Thermo Electric Generator (Pipes and Generator not included)"

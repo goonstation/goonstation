@@ -12,12 +12,11 @@ Pipelines + Other Objects -> Pipe network
 //
 obj/machinery/atmospherics
 	anchored = 1
-	var/big_pipe = FALSE // needed for heat_conducting pipes to not connect to non junctions
+	var/big_pipe = 0 // needed for heat_conducting pipes to not connect to non junctions
 
 	var/initialize_directions = 0
 	New()
 		..()
-		SPAWN(0 SECONDS)
 		if(current_state >= GAME_STATE_PLAYING) // we dont want to possibly mess up the engine
 			construct(. , src) // action bar is for crafting it
 

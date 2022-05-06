@@ -313,8 +313,10 @@ obj/machinery/atmospherics/valve
 			node2 = null
 
 		return null
+
 	return_all_nodes(obj/machinery/atmospherics/valve/R)
 		return list(R.node1,R.node2)
+
 obj/machinery/atmospherics/manifold_valve
 	icon = 'icons/obj/atmospherics/manifold_valve.dmi'
 	icon_state = "manifold_valve0"
@@ -597,5 +599,6 @@ obj/machinery/atmospherics/manifold_valve
 					undivert()
 				else
 					divert()
+
 	return_all_nodes(obj/machinery/atmospherics/manifold_valve/R)
 		return list(R.node1,R.node2,R.node3)

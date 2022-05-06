@@ -418,6 +418,7 @@ obj/machinery/atmospherics/mixer
 			node_out = null
 
 		return null
+
 	return_all_nodes(obj/machinery/atmospherics/mixer/R)
 		return list(R.node_in1,R.node_in2,R.node_out)
 

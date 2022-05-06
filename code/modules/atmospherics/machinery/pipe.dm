@@ -71,7 +71,7 @@ obj/machinery/atmospherics/pipe
 
 		name = "pipe"
 		desc = "A one meter section of regular pipe."
-		big_pipe = FALSE
+		big_pipe = 0
 		volume = 70
 
 		dir = SOUTH
@@ -572,6 +572,7 @@ obj/machinery/atmospherics/pipe
 			UpdateIcon()
 
 			return null
+
 		return_all_nodes(obj/machinery/atmospherics/pipe/simple/R)
 			return list(R.node1,R.node2)
 
@@ -1000,6 +1001,7 @@ obj/machinery/atmospherics/pipe
 			UpdateIcon()
 
 			return null
+
 		return_all_nodes(obj/machinery/atmospherics/pipe/tank/R)
 			return list(node1)
 
@@ -1077,6 +1079,7 @@ obj/machinery/atmospherics/pipe
 				dir = get_dir(src, node1)
 			else
 				icon_state = "exposed"
+
 		return_all_nodes(obj/machinery/atmospherics/pipe/vent/R)
 			return list(node1)
 
@@ -1147,6 +1150,7 @@ obj/machinery/atmospherics/pipe
 
 			UpdateIcon()
 			return null
+
 		return_all_nodes(obj/machinery/atmospherics/pipe/vertical_pipe/R)
 			return list(node1,node2)
 
@@ -1163,7 +1167,7 @@ obj/machinery/atmospherics/pipe
 		var/obj/machinery/atmospherics/node1
 		var/obj/machinery/atmospherics/node2
 		var/obj/machinery/atmospherics/node3
-		big_pipe = FALSE
+		big_pipe = 0
 
 		north
 			dir = NORTH

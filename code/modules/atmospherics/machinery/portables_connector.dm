@@ -137,5 +137,6 @@
 			node = null
 
 		return null
+
 	return_all_nodes(obj/machinery/atmospherics/portables_connector/R)
 		return list(R.node)
