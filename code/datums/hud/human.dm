@@ -1224,6 +1224,13 @@
 	.=0
 
 /mob/living/carbon/human
+	proc/areglassesprotected()
+		if (src.head && (src.head.c_flags & COVERSEYES))
+			return 1
+		if (src.wear_mask && (src.wear_mask.c_flags & COVERSEYES))
+			return 1
+		return 0
+
 	proc/throwglasses(alwaysbreak = FALSE)
 		if (!src.glasses)
 			return 1
@@ -1235,7 +1242,7 @@
 			qdel(src)
 			return 2
 
-		if (!alwaysbreak && src.head && src.head.c_flags & COVERSEYES)
+		if (!alwaysbreak && src.areglassesprotected())
 			return 3
 
 		if (alwaysbreak || prob(100 - G.stability))
@@ -1255,10 +1262,10 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (W.force && !istype(W, /obj/item/device/flash) && src.glasses && user.zone_sel.selecting == "head")
-			if (!src.head || (src.head && !(src.head.c_flags & COVERSEYES)))
+			if (!src.areglassesprotected())
 				src.glasses.stability -= (10 + clamp(W.force / 2, 0, 20))
-			if (src.glasses.stability < 30)
-				src.throwglasses()
+				if (src.glasses.stability < 30)
+					src.throwglasses()
 		..()
 
 	updateStatusUi()
