@@ -41,7 +41,12 @@
 		var/list/area/stationAreas = get_accessible_station_areas()
 
 		if(!generator)
-			generator = locate(/obj/machinery/power/generatorTemp) in machine_registry[MACHINES_POWER]
+			var/list/generators = list()
+			for(var/obj/machinery/power/generatorTemp/tegs in machine_registry[MACHINES_POWER])
+				if(tegs.status != BROKEN) // why choose a broken one (constructed ones start broken)
+					generators += tegs
+			generator = pick(generators) // there can be multiple now, lets pick one
+
 		if (!generator || generator.disposed || generator.z != Z_LEVEL_STATION )
 			message_admins("The Vampire TEG event failed to find TEG!")
 			return

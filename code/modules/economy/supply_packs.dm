@@ -912,15 +912,21 @@ ABSTRACT_TYPE(/datum/supply_packs)
 /obj/item/electronics/frame/generatorTemp // BUILDABLE TEG / ATMOS MACHINES
 	name = "Thermo Electric Generator Frame"
 	store_type = /obj/machinery/power/generatorTemp
+	secured = 2
+	icon_state = "dbox"
 /obj/item/electronics/frame/circulatorTemp
 	name = "Hot Gas Circulator Frame"
 	store_type = /obj/machinery/atmospherics/binary/circulatorTemp
+	secured = 2
+	icon_state = "dbox"
 /obj/item/electronics/frame/circulatorTempRight
 	name = "Cold Gas Circulator Frame"
 	store_type = /obj/machinery/atmospherics/binary/circulatorTemp/right
+	secured = 2
+	icon_state = "dbox"
 /datum/supply_packs/thermoelectric_generator
 	name = "Thermo Electric Generator Crate"
-	desc = "The main component of a good engine setup, this part connects to two circulators. (Pipes and Semiconductor not included)"
+	desc = "The main component of a good engine setup, this part connects to two circulators. (Pipes, Circulators, and Semiconductor not included)"
 	category = "Engineering Department"
 	contains = list(/obj/item/electronics/frame/generatorTemp)
 	cost = 60000
