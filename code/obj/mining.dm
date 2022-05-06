@@ -1181,7 +1181,8 @@
 			src.dig_asteroid(user,T)
 			if (T.status)
 				T.process_charges(T.digcost)
-
+		else if (istype(W, /obj/item/mining_tools))
+			return // matsci `mining_tools` handle their own digging
 		else if (istype(W, /obj/item/oreprospector))
 			var/message = "----------------------------------<br>"
 			message += "<B>Geological Report:</B><br><br>"
@@ -1200,7 +1201,6 @@
 					message += "<span class='alert'>[E.analysis_string]</span><br>"
 			message += "----------------------------------"
 			boutput(user, message)
-
 		else
 			boutput(user, "<span class='alert'>You hit the [src.name] with [W], but nothing happens!</span>")
 		return
