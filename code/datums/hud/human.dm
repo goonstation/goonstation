@@ -1257,7 +1257,7 @@
 		if (!src.glasses)
 			return ..()
 		if (src.zone_sel.selecting == "head")
-			src.glasses.setstability(src.glasses.stability += 20)
+			src.glasses.setstability(src.glasses.stability += 40)
 		..()
 
 	attackby(obj/item/W as obj, mob/user as mob)

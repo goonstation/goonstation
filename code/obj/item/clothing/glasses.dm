@@ -23,7 +23,7 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/cloth/handkerchief))
-			src.setstability(src.stability += 20)
+			src.setstability(src.stability += 50)
 			user.visible_message("<span class='notice'>[user] [pick("polishes", "shines", "cleans", "wipes")] [src] with [W].</span>")
 			return
 		return ..()
