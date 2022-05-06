@@ -342,6 +342,7 @@
 /obj/item/clothing/shoes/cowboy
 	name = "Cowboy boots"
 	icon_state = "cowboy"
+	compatible_species = list("human", "cow")
 
 /obj/item/clothing/shoes/cowboy/boom
 	name = "Boom Boots"
@@ -709,6 +710,7 @@
 	name = "Real Cowboy Boots"
 	icon_state = "westboot"
 	desc = "Perfect for riding horses, if only you had one!"
+	compatible_species = list("human", "cow")
 
 /obj/item/clothing/shoes/westboot/black
 	name = "Black Cowboy Boots"

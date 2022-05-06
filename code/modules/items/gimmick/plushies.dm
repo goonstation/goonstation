@@ -151,15 +151,17 @@
 	rand_pos = 1
 
 /obj/item/toy/plush/proc/say_something(mob/user as mob)
-	var/message = input("What should [src] say?")
-	message = trim(copytext(sanitize(html_encode(message)), 1, MAX_MESSAGE_LEN))
-	if (!message || BOUNDS_DIST(src, user) > 0)
-		return
-	logTheThing("say", user, null, "makes [src] say, \"[message]\"")
-	user.audible_message("<span class='emote'>[src] says, \"[message]\"</span>")
-	var/mob/living/carbon/human/H = user
-	if (H.sims)
-		H.sims.affectMotive("fun", 1)
+	if(user.client) // stupid monkeys...
+		var/message = input("What should [src] say?")
+		message = trim(copytext(sanitize(html_encode(message)), 1, MAX_MESSAGE_LEN))
+		if (!message || BOUNDS_DIST(src, user) > 0)
+			return
+		phrase_log.log_phrase("plushie", message)
+		logTheThing("say", user, null, "makes [src] say, \"[message]\"")
+		user.audible_message("<span class='emote'>[src] says, \"[message]\"</span>")
+		var/mob/living/carbon/human/H = user
+		if (H.sims)
+			H.sims.affectMotive("fun", 1)
 
 /obj/item/toy/plush/attack_self(mob/user as mob)
 	src.say_something(user)
