@@ -136,9 +136,9 @@
 		if (isblob(M.current))
 			blobs += M.current
 	if (!blobs.len)
-		return "<span style='font-size:20px; color:red'><b>Station victory!</b> - All blobs have been exterminated!"
+		return "<span style='font-size:20px'><b>Station victory!</b> - All blobs have been exterminated!</span>"
 	else
-		return "<span style='font-size:20px; color:red'><b>Blob victory!</b> - The crew has failed to stop the overmind! The station is lost to the blob!"
+		return "<span style='font-size:20px'><b>Blob victory!</b> - The crew has failed to stop the overmind! The station is lost to the blob!</span>"
 
 /datum/game_mode/blob/declare_completion()
 	boutput(world, src.victory_msg())
