@@ -402,7 +402,7 @@
 //Goggles used to assume control of a linked scuttlebot
 /obj/item/clothing/glasses/scuttlebot_vr
 	name = "Scuttlebot remote controller"
-	desc = "A pair of VR goggles connected to a remote scuttlebot."
+	desc = "A pair of VR goggles connected to a remote scuttlebot. Use them on the scuttlebot to turn it back into a hat."
 	icon_state = "vr"
 	item_state = "sunglasses"
 	var/mob/living/critter/scuttlebot/connected_scuttlebot = null
