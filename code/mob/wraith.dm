@@ -37,6 +37,10 @@
 	var/death_icon_state = "wraith-die"
 	var/static/image/speech_bubble = image('icons/mob/mob.dmi', "speech")
 	var/last_typing = null
+	var/list/area/booster_locations = list()
+	var/list/area/valid_locations = list()
+	var/list/area/excluded_areas = list(/area/shuttle/escape/transit, /area/shuttle_transit_space)
+	var/next_area_change = 10 SECONDS
 
 	var/list/poltergeists
 	//holy water, formaldehyde tolerances.
@@ -89,12 +93,15 @@
 		src.hud = new hud_path (src)
 		src.attach_hud(hud)
 		src.flags |= UNCRUSHABLE
+		valid_locations = get_accessible_station_areas()
+		next_area_change = world.time + (5 SECONDS)
 
 		if (!movement_controller)
 			movement_controller = new /datum/movement_controller/poltergeist (src)
 
 		real_name = make_name()
 		src.UpdateName()
+
 
 	is_spacefaring()
 		return !density
@@ -142,12 +149,30 @@
 
 		var/life_time_passed = max(life_tick_spacing, world.timeofday - last_life_update)
 
+
+		src.hauntBonus = 0
 		if (src.haunting)
-			src.hauntBonus = 0
 			for (var/mob/living/carbon/human/H in viewers(6, src))
 				if (!H.stat && !H.bioHolder.HasEffect("revenant"))
 					src.hauntBonus += 5
+
+		if (src.next_area_change != null)
+			if (src.next_area_change < world.time)
+				next_area_change = world.time + rand(10 SECONDS, 15 SECONDS)
+				get_new_booster_zones()
+
+		var/area/mob_area = get_area(src)
+		var/is_in_area = false
+		for (var/area/A in booster_locations)
+			if (mob_area == A)
+				is_in_area = true
+				break
+		if(is_in_area) //Double points in the area
+			hauntBonus = (hauntBonus * 2) + 2
+
+		if(hauntBonus > 0)
 			src.abilityHolder.addBonus(src.hauntBonus * (life_time_passed / life_tick_spacing))
+
 
 		src.abilityHolder.generatePoints(mult = (life_time_passed / life_tick_spacing))
 		src.abilityHolder.updateText()
@@ -539,7 +564,6 @@
 
 
 
-
 	//////////////
 	// Wraith Procs
 	//////////////
@@ -605,6 +629,7 @@
 			src.addAbility(/datum/targetable/wraithAbility/rotBrand)
 			src.removeAbility(/datum/targetable/wraithAbility/specialize)
 			src.addAbility(/datum/targetable/wraithAbility/poison)
+			src.addAbility(/datum/targetable/wraithAbility/summon_rot_hulk)
 
 		addAllTricksterAbilities()
 			src.addAbility(/datum/targetable/wraithAbility/choose_haunt_appearance)
@@ -628,6 +653,20 @@
 			src.removeAbility(/datum/targetable/wraithAbility/blood_writing)
 			src.removeAbility(/datum/targetable/wraithAbility/make_poltergeist)
 
+		get_new_booster_zones()
+			booster_locations = list()
+			var/list/safe_area_names = list()
+			var/num_safe_areas = clamp(3, 1, 5)
+			var/area/temp = null
+			var/list/locations_copy = list()
+			for(var/A in valid_locations)
+				locations_copy.Add(A)
+			for(var/i = 0, i < num_safe_areas, i++)
+				temp = pick(locations_copy)
+				locations_copy.Remove(temp)
+				safe_area_names.Add(temp)
+				booster_locations.Add(valid_locations[temp])
+			boutput(src, "You will gather energy more rapidly if you are close to [get_battle_area_names(safe_area_names)]!")
 
 		updateButtons()
 			abilityHolder.updateButtons()
@@ -779,3 +818,11 @@
 			new/datum/objective/specialist/wraith/survive(null, traitor)
 		if(3)
 			new/datum/objective/specialist/wraith/flawless(null, traitor)
+
+proc/get_area_names(var/list/strings)
+	. = ""
+	if(strings.len == 1)
+		return "[strings[1]]"
+	for(var/i = 1, i < strings.len; i++)
+		. += strings[i] + ", "
+	. += "or [strings[strings.len]]"

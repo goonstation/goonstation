@@ -963,6 +963,36 @@
 			var/mob/living/carbon/H = target
 			H.bioHolder.AddEffect("rot_curse")
 
+/datum/targetable/wraithAbility/summon_rot_hulk
+	name = "Rot Hulk"
+	desc = "Check area for filth and summon a rot hulk."
+	icon_state = "grinchpoison"
+	targeted = 0
+	cooldown = 10 SECONDS
+	pointCost = 10
+
+	cast()
+		if (..())
+			return 1
+
+		var/decal_count = 0
+		var/list/decal_list = list()
+		for (var/obj/decal/cleanable/C in range(3))
+			//Use a list here fuck
+			if(!istype(C, /obj/decal/cleanable/writing) && !istype(C, /obj/decal/cleanable/sakura) && !istype(C, /obj/decal/cleanable/paint) && !istype(C, /obj/decal/cleanable/saltpile) && !istype(C, /obj/decal/cleanable/greenglow) && !istype(C, /obj/decal/cleanable/gangtag))
+				decal_count += 1
+				decal_list += list(C)
+		if (decal_count > 10)
+			new /mob/living/critter/exploder(get_turf(holder.owner))
+			if (decal_count > 15)
+				boutput(holder.owner, __red("Big filth"))
+			else
+				boutput(holder.owner, __red("Small filth"))
+			for(var/obj/decal/cleanable/C in decal_list)
+				qdel(C)
+		else
+			boutput(holder.owner, __red("There isnt enough filth?"))
+
 /datum/targetable/wraithAbility/poison
 	name = "Poison item"
 	desc = "Ruin a food item or drink by adding horrible poison to it."
@@ -1073,7 +1103,7 @@
 		for (var/atom/A in range(3))
 			if (ishuman(A))
 				var/mob/living/carbon/H = A
-				boutput(T, "<span class='alert'>You feel a sudden dizzyness!</span>")
+				boutput(H, "<span class='alert'>You feel a sudden dizzyness!</span>")
 				H.emote("pale")
 				return 0
 			else if (isobj(A))

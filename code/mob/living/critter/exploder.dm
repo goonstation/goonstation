@@ -69,6 +69,22 @@
 	death(var/gibbed)
 		..(gibbed, 0)
 
+		src.visible_message("[src] explodes!")
+		for (var/mob/M in view(3, src.loc))
+			if (ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if(istype(H.wear_suit, /obj/item/clothing/suit/bio_suit) && istype(H.head, /obj/item/clothing/head/bio_hood))
+					boutput(M, "<span class='notice'>You are sprayed with guts, but your biosuit protects you!</span>")
+					continue
+			M.emote("scream")
+			M.take_toxin_damage(25)
+			if (M.reagents)
+				M.reagents.add_reagent("miasma", 20, null, T0C)
+			boutput(M, "<span class='alert'>You are sprayed with disgusting rotting flesh!</span>")
+		var/turf/U = get_turf(src)
+		U.fluid_react_single("miasma", 120, airborne = 1)
+		U.fluid_react_single("blood", 60, airborne = 0)
+
 		if (!gibbed)
 			gibs(src.loc) //cmon let's let them really make a mess
 			playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
@@ -129,19 +145,3 @@
 /mob/living/critter/exploder/Life(datum/controller/process/mobs/parent)
 	if (..(parent)) //??
 		return 1
-
-/mob/living/critter/exploder/proc/explode_suicide()
-	src.visible_message("[src] explodes!")
-	for (var/mob/M in view(4, src.loc))
-		if(iscarbon(M))
-			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if(istype(H.wear_suit, /obj/item/clothing/suit/bio_suit) && istype(H.head, /obj/item/clothing/head/bio_hood))
-					boutput(M, "<span class='notice'>You are sprayed with guts, but your biosuit protects you!</span>")
-					continue
-			M.emote("scream")
-			M.take_toxin_damage(25)
-			if (M.reagents)
-				M.reagents.add_reagent("miasma", 30, null, T0C)
-			boutput(M, "<span class='alert'>You are sprayed with sizzling hot blood!</span>")
-	src.gib()

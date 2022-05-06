@@ -19,7 +19,7 @@
 /datum/aiTask/sequence/goalbased/rushdown
 	name = "rushdown"
 	weight = 1
-	max_dist = 7
+	max_dist = 9
 
 /datum/aiTask/sequence/goalbased/rushdown/New(parentHolder, transTask) //????
 	..(parentHolder, transTask)
@@ -61,7 +61,7 @@
 			F.emote("scream")
 			holder.owner.visible_message("Preparing suicide")
 			sleep(2 SECONDS)
-			return F.explode_suicide() // fix runtime Cannot read null.contents
+			return F.gib() // fix runtime Cannot read null.contents
 	else
 		holder.owner.visible_message("no success")
 		return FALSE
