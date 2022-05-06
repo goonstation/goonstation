@@ -1,6 +1,6 @@
 
 
-/proc/scan_health(var/mob/M as mob, var/verbose_reagent_info = 0, var/disease_detection = 1, var/organ_scan = 0, var/visible = 0)
+/proc/scan_health(var/mob/M as mob, var/verbose_reagent_info = 0, var/disease_detection = 1, var/organ_scan = 0, var/visible = 0, syndicate = FALSE)
 	if (!M)
 		return "<span class='alert'>ERROR: NO SUBJECT DETECTED</span>"
 
@@ -65,6 +65,7 @@
 	var/reagent_data = null
 	var/pathogen_data = null
 	var/disease_data = null
+	var/implant_data = null
 	var/organ_data = null
 	var/interesting_data = null
 
@@ -109,10 +110,38 @@
 
 
 			var/bad_stuff = 0
-			if (L.implant && L.implant.len > 0)
+			if (length(L.implant))
+				var/list/implant_list = list()
 				for (var/obj/item/implant/I in L.implant)
 					if (istype(I, /obj/item/implant/projectile))
-						bad_stuff ++
+						bad_stuff++
+						continue
+					if (istype(I, /obj/item/implant/health))
+						if (!istype(I, /obj/item/implant/health/security/anti_mindslave))
+							implant_list["Health"]++
+						else
+							implant_list["Mind-protection"]++
+					else if (istype(I, /obj/item/implant/cloner))
+						implant_list["Cloner"]++
+					else if (istype(I, /obj/item/implant/antirot))
+						implant_list["Rotbusttec"]++
+					else if (istype(I, /obj/item/implant/robotalk))
+						implant_list["Machine translator"]++
+					else if (istype(I, /obj/item/implant/access))
+						implant_list["Access"]++
+					else if (istype(I, /obj/item/implant/tracking))
+						implant_list["Tracking"]++
+					else if (istype(I, /obj/item/implant/robust))
+						implant_list["Robustec"]++
+					else if (istype(I, /obj/item/implant/counterrev))
+						implant_list["Counter-revolutionary"]++
+					else if (syndicate && istype(I, /obj/item/implant/revenge/microbomb))
+						implant_list["Microbomb"]++
+
+				if (length(implant_list))
+					implant_data = "<span style='color:#2770BF'><b>Implants detected:</b></span>"
+					for (var/implant in implant_list)
+						implant_data += "<br><span style='color:#2770BF'>[implant_list[implant]]x [implant] implant</span>"
 
 			if (ishuman)
 				var/mob/living/carbon/human/H = L
@@ -222,6 +251,7 @@
 	[nrad_data ? "<br>[nrad_data]" : null]\
 	[blood_data ? "<br>[blood_data]" : null]\
 	[brain_data ? "<br>[brain_data]" : null]\
+	[implant_data ? "<br>[implant_data]" : null]\
 	[organ_data ? "<br>[organ_data]" : null]\
 	[reagent_data ? "<br>[reagent_data]" : null]\
 	[pathogen_data ? "<br>[pathogen_data]" : null]\
