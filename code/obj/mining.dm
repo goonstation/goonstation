@@ -944,150 +944,7 @@
 	return 2
 
 // Turf Defines
-
-/turf/simulated/wall/asteroid
-	icon = 'icons/turf/asteroid.dmi'
-	icon_state = "ast1"
-	plane = PLANE_WALL-1
-	var/stone_color = "#CCCCCC"
-
-
-#ifdef UNDERWATER_MAP
-	var/hardness = 1
-#else
-	var/hardness = 0
-#endif
-
-	var/weakened = 0
-	var/amount = 2
-	var/invincible = 0
-	var/quality = 0
-	var/default_ore = /obj/item/raw_material/rock
-	var/datum/ore/ore = null
-	var/datum/ore/event/event = null
-	var/list/space_overlays = list()
-
-	//NEW VARS
-	var/mining_health = 120
-	var/mining_max_health = 120
-	var/mining_toughness = 1 //Incoming damage divided by this unless tool has power enough to overcome.
-
-	dark
-		fullbright = 0
-		luminosity = 1
-
-		proc/space_overlays()
-			. = ..()
-			if (length(space_overlays))
-				var/list/color_vals = bioluminescent_algae?.get_color(src)
-				if (length(color_vals))
-					var/image/algea = image('icons/obj/sealab_objects.dmi', "algae")
-					algea.color = rgb(color_vals[1], color_vals[2], color_vals[3])
-					UpdateOverlays(algea, "glow_algae")
-					add_medium_light("glow_algae", color_vals)
-
-		proc/destroy_asteroid(dropOre)
-			ClearSpecificOverlays("glow_algae")
-			remove_medium_light("glow_algae")
-			var/list/turf/neighbors = getNeighbors(src, alldirs)
-			for (var/turf/T as anything in neighbors)
-				if (!length(T.medium_lights)) continue
-				T.update_medium_light_visibility()
-			. = ..()
-
-	lighted
-		fullbright = 1
-
-	ice
-		name = "comet chunk"
-		desc = "That's some cold stuff right there."
-		stone_color = "#D1E6FF"
-		default_ore = /obj/item/raw_material/ice
-
-	geode
-		name = "compacted stone"
-		desc = "This rock looks really hard to dig out."
-		stone_color = "#575A5E"
-		default_ore = null
-		hardness = 10
-
-
-// cogwerks - adding some new wall types for cometmap and whatever else
-
-	comet
-		fullbright = 0
-		name = "regolith"
-		desc = "It's dusty and cold."
-		stone_color = "#95A1AF"
-		icon_state = "comet"
-		hardness = 1
-		default_ore = /obj/item/raw_material/rock
-
-		// varied layers
-
-		ice
-			name = "comet ice"
-			icon_state = "comet_ice"
-			stone_color = "#D1E6FF"
-			default_ore = /obj/item/raw_material/ice
-			hardness = 2
-
-		ice_dense
-			name = "dense ice"
-			desc = "A compressed layer of comet ice."
-			icon_state = "comet_ice_dense"
-			stone_color = "#2070CC"
-			default_ore = /obj/item/raw_material/ice
-			hardness = 5
-			quality = 15
-			amount = 6
-
-		ice_char
-			name = "dark regolith"
-			icon_state = "comet_char"
-			desc = "An inky-black assortment of carbon-rich dust and ice."
-			stone_color = "#111111"
-			default_ore = /obj/item/raw_material/char
-
-		glassy
-			name = "blasted regolith"
-			desc = "This stuff has been blasted and fused by stellar radiation and impacts."
-			icon_state = "comet_glassy"
-			stone_color = "#111111"
-			default_ore = /obj/item/raw_material/molitz
-			hardness = 4
-
-		copper
-			name = "metallic rock"
-			desc = "Rich in soft metals."
-			icon_state = "comet_copper"
-			stone_color = "#553333"
-			default_ore = /obj/item/raw_material/pharosium
-
-		iron
-			name = "ferrous rock"
-			desc = "Dense metallic rock."
-			icon_state = "comet_iron"
-			stone_color = "#333333"
-			default_ore = /obj/item/raw_material/mauxite
-			hardness = 8
-
-		plasma
-			name = "plasma ice"
-			desc = "Concentrated plasma trapped in dense ice."
-			icon_state = "comet_plasma"
-			default_ore = /obj/item/raw_material/plasmastone
-			hardness = 5
-
-		radioactive
-			name = "radioactive metal"
-			desc = "There's a hazardous amount of radioactive material in this metallic layer."
-			icon_state = "comet_radioactive"
-			stone_color = "#114444"
-			default_ore = /obj/item/raw_material/cerenkite
-			hardness = 10
-
-/turf/simulated/wall/auto/asteroid // perspective asteroids made from sprites found in the files. i put this here to try to get it working more easily
+/turf/simulated/wall/auto/asteroid
 	icon = 'icons/turf/walls_asteroid.dmi'
 	mod = "asteroid-"
 	light_mod = "wall-"
@@ -1096,6 +953,7 @@
 	connect_overlay = 0
 	connect_diagonal = 1
 	connects_to = list(/turf/simulated/wall/auto/asteroid, /turf/simulated/wall/false_wall, /obj/structure/woodwall)
+
 #ifdef UNDERWATER_MAP
 	name = "cavern wall"
 	desc = "A cavern wall, possibly flowing with mineral deposits."

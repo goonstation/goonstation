@@ -15461,7 +15461,7 @@
 /turf/simulated/floor/green/checker,
 /area/station/storage/emergency2)
 "epP" = (
-/turf/simulated/wall/asteroid/dark,
+/turf/simulated/wall/auto/asteroid/dark,
 /area/space)
 "epR" = (
 /obj/stool/chair/office/red{

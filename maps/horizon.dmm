@@ -3,7 +3,7 @@
 /turf/space,
 /area/space)
 "aab" = (
-/turf/simulated/wall/asteroid/lighted,
+/turf/simulated/wall/auto/asteroid/lighted,
 /area/space)
 "aac" = (
 /turf/simulated/floor/plating/airless/asteroid/lighted,
@@ -312,7 +312,7 @@
 /turf/space,
 /area/station/solar/east)
 "aaO" = (
-/turf/simulated/wall/asteroid/lighted,
+/turf/simulated/wall/auto/asteroid/lighted,
 /area/station/solar/east)
 "aaP" = (
 /turf/space,
@@ -2333,13 +2333,13 @@
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/station/solar/small_backup3)
 "afG" = (
-/turf/simulated/wall/asteroid/lighted,
+/turf/simulated/wall/auto/asteroid/lighted,
 /area/station/solar/small_backup3)
 "afH" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/wall/asteroid/lighted,
+/turf/simulated/wall/auto/asteroid/lighted,
 /area/station/solar/small_backup3)
 "afI" = (
 /turf/simulated/floor/plating/airless/random,
@@ -2522,7 +2522,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/wall/asteroid/lighted,
+/turf/simulated/wall/auto/asteroid/lighted,
 /area/station/solar/small_backup3)
 "agn" = (
 /obj/cable{
@@ -2537,7 +2537,7 @@
 /turf/simulated/floor/engine,
 /area/station/science/construction)
 "ago" = (
-/turf/simulated/wall/asteroid/lighted,
+/turf/simulated/wall/auto/asteroid/lighted,
 /area/station/engine/substation/pylon)
 "agp" = (
 /obj/decal/fakeobjects/firelock_broken{
@@ -2749,7 +2749,7 @@
 /turf/simulated/wall/auto/gannets,
 /area/station/crew_quarters/lounge)
 "agQ" = (
-/turf/simulated/wall/asteroid/lighted,
+/turf/simulated/wall/auto/asteroid/lighted,
 /area/station/storage/emergency2{
 	name = "Hilarious Storage B"
 	})
@@ -2808,7 +2808,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/wall/asteroid/lighted,
+/turf/simulated/wall/auto/asteroid/lighted,
 /area/station/solar/small_backup3)
 "aha" = (
 /turf/simulated/floor/industrial,
@@ -2917,7 +2917,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/wall/asteroid/lighted,
+/turf/simulated/wall/auto/asteroid/lighted,
 /area/station/engine/substation/pylon)
 "ahs" = (
 /obj/cable{
@@ -2925,7 +2925,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/turf/simulated/wall/asteroid/lighted,
+/turf/simulated/wall/auto/asteroid/lighted,
 /area/station/engine/substation/pylon)
 "aht" = (
 /obj/cable,
@@ -4488,7 +4488,7 @@
 	name = "Testing Asteroid"
 	})
 "alX" = (
-/turf/simulated/wall/asteroid/lighted,
+/turf/simulated/wall/auto/asteroid/lighted,
 /area/station/science/laser{
 	name = "Testing Asteroid"
 	})
@@ -4612,7 +4612,7 @@
 /turf/simulated/floor/grey/blackgrime,
 /area/station/science/spectral)
 "amx" = (
-/turf/simulated/wall/asteroid/lighted,
+/turf/simulated/wall/auto/asteroid/lighted,
 /area/station/science/gen_storage)
 "amy" = (
 /obj/decal/tile_edge/line/purple{
@@ -4991,7 +4991,7 @@
 	name = "Hilarious Storage B"
 	})
 "anG" = (
-/turf/simulated/wall/asteroid/lighted,
+/turf/simulated/wall/auto/asteroid/lighted,
 /area/station/storage/emergency{
 	name = "Hilarious Storage A"
 	})
@@ -5314,7 +5314,7 @@
 	})
 "aoM" = (
 /obj/machinery/atmospherics/pipe/simple/overfloor/vertical,
-/turf/simulated/wall/asteroid/lighted,
+/turf/simulated/wall/auto/asteroid/lighted,
 /area/station/science/laser{
 	name = "Testing Asteroid"
 	})
@@ -5435,7 +5435,7 @@
 /turf/simulated/floor/grey/whitegrime,
 /area/station/science/gen_storage)
 "apl" = (
-/turf/simulated/wall/asteroid/lighted,
+/turf/simulated/wall/auto/asteroid/lighted,
 /area/station/science/construction)
 "apm" = (
 /obj/grille/catwalk,
@@ -5969,7 +5969,7 @@
 /turf/simulated/floor/grey/blackgrime,
 /area/station/science/restroom)
 "aqF" = (
-/turf/simulated/wall/asteroid/lighted,
+/turf/simulated/wall/auto/asteroid/lighted,
 /area/station/science/restroom)
 "aqG" = (
 /obj/machinery/atmospherics/valve/purge/vertical{
@@ -6061,7 +6061,7 @@
 /area/space)
 "aqR" = (
 /obj/machinery/atmospherics/pipe/simple/overfloor/vertical,
-/turf/simulated/wall/asteroid/lighted,
+/turf/simulated/wall/auto/asteroid/lighted,
 /area/station/science/construction)
 "aqS" = (
 /obj/cable{
@@ -11379,7 +11379,7 @@
 	dir = 9;
 	icon_state = "lattice-dir"
 	},
-/turf/simulated/wall/asteroid/lighted,
+/turf/simulated/wall/auto/asteroid/lighted,
 /area/space)
 "aEI" = (
 /obj/machinery/light,
@@ -11476,7 +11476,7 @@
 /area/station/hallway/secondary/exit)
 "aEZ" = (
 /obj/lattice,
-/turf/simulated/wall/asteroid/lighted,
+/turf/simulated/wall/auto/asteroid/lighted,
 /area/space)
 "aFa" = (
 /obj/decal/poster/wallsign/stencil/left/r,
@@ -11504,7 +11504,7 @@
 	dir = 1;
 	icon_state = "lattice-dir-b"
 	},
-/turf/simulated/wall/asteroid/lighted,
+/turf/simulated/wall/auto/asteroid/lighted,
 /area/space)
 "aFg" = (
 /turf/simulated/wall/auto/supernorn,
@@ -12008,7 +12008,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/wall/asteroid/lighted,
+/turf/simulated/wall/auto/asteroid/lighted,
 /area/station/solar/small_backup3)
 "aGt" = (
 /turf/simulated/wall/auto/supernorn,
@@ -49751,7 +49751,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/wall/asteroid/lighted,
+/turf/simulated/wall/auto/asteroid/lighted,
 /area/space)
 "cwO" = (
 /obj/decal/fakeobjects{
@@ -50167,7 +50167,7 @@
 	},
 /area/listeningpost/power)
 "cxP" = (
-/turf/simulated/wall/asteroid/lighted,
+/turf/simulated/wall/auto/asteroid/lighted,
 /area/listeningpost/power)
 "cxQ" = (
 /obj/cable{
@@ -57642,7 +57642,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/northwest)
 "oZy" = (
-/turf/simulated/wall/asteroid/lighted,
+/turf/simulated/wall/auto/asteroid/lighted,
 /area/station/storage/auxillary)
 "oZz" = (
 /obj/structure/girder/reinforced,
@@ -60433,7 +60433,7 @@
 /area/station/maintenance/disposal)
 "vAq" = (
 /obj/decal/cleanable/fungus,
-/turf/simulated/wall/asteroid/lighted,
+/turf/simulated/wall/auto/asteroid/lighted,
 /area/station/storage/auxillary)
 "vBf" = (
 /obj/grille/steel,

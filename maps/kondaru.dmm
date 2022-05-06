@@ -6,7 +6,7 @@
 /turf/space/asteroid,
 /area/space)
 "aac" = (
-/turf/simulated/wall/asteroid/dark,
+/turf/simulated/wall/auto/asteroid/dark,
 /area/space)
 "aad" = (
 /obj/lattice{
@@ -409,7 +409,7 @@
 /turf/space,
 /area/space)
 "abi" = (
-/turf/simulated/wall/asteroid/dark,
+/turf/simulated/wall/auto/asteroid/dark,
 /area/station/garden/owlery)
 "abj" = (
 /obj/cable{
@@ -36273,7 +36273,7 @@
 /turf/simulated/floor/plating/airless/asteroid/dark,
 /area/research_outpost/indigo_rye)
 "ciD" = (
-/turf/simulated/wall/asteroid/dark,
+/turf/simulated/wall/auto/asteroid/dark,
 /area/research_outpost/indigo_rye)
 "ciE" = (
 /turf/space,
