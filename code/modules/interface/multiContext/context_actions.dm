@@ -8,6 +8,7 @@
 	var/use_tooltip = 1
 	var/close_clicked = 1
 	var/flick_on_click = null
+	var/dir = NORTH // rarely used
 
 	/// Is this action even allowed to show up under the given circumstances? TRUE=yes, FALSE=no
 	proc/checkRequirements(atom/target, mob/user)
@@ -786,6 +787,103 @@
 				user.u_equip(c)
 			user.put_in_hand_or_drop(c)
 
+/datum/contextAction/atmos_pipes
+	icon = 'icons/ui/context16x16.dmi'
+	name = "Pipe construction action"
+	desc = "You shouldn't be reading this, bug."
+	icon_state = "wrench"
+
+	checkRequirements(var/atom/target, var/mob/user)
+		return TRUE
+
+	Straight
+		name = "Straight Pipe"
+		desc = "Build a straight pipe segment."
+		icon_state = "straightpipe"
+		execute(var/atom/target, var/mob/user)
+			var/obj/machinery/atmospherics/t = target
+			switch(user.dir)
+				if(NORTH , SOUTH)
+					new /obj/machinery/atmospherics/pipe/simple/vertical(user.loc)
+				if(EAST , WEST)
+					new /obj/machinery/atmospherics/pipe/simple/horizontal(user.loc)
+			qdel(t)
+	Corner
+		name = "Corner Pipe"
+		desc = "Build a corner pipe segment."
+		icon_state = "cornerpipe"
+		execute(var/atom/target, var/mob/user)
+			var/obj/machinery/atmospherics/t = target
+			switch(user.dir)
+				if(NORTH)
+					new /obj/machinery/atmospherics/pipe/simple/northwest(user.loc)
+				if(SOUTH)
+					new /obj/machinery/atmospherics/pipe/simple/southeast(user.loc)
+				if(EAST)
+					new /obj/machinery/atmospherics/pipe/simple/northeast(user.loc)
+				if(WEST)
+					new /obj/machinery/atmospherics/pipe/simple/southwest(user.loc)
+			qdel(t)
+	Manifold
+		name = "Manifold Pipe"
+		desc = "Build a Manifold pipe segment."
+		icon_state = "manifold"
+		execute(var/atom/target, var/mob/user)
+			var/obj/machinery/atmospherics/t = target
+			switch(user.dir)
+				if(NORTH)
+					new /obj/machinery/atmospherics/pipe/manifold/north(user.loc)
+				if(SOUTH)
+					new /obj/machinery/atmospherics/pipe/manifold/south(user.loc)
+				if(EAST)
+					new /obj/machinery/atmospherics/pipe/manifold/east(user.loc)
+				if(WEST)
+					new /obj/machinery/atmospherics/pipe/manifold/west(user.loc)
+			qdel(t)
+	Heatexchanging
+		name = "Heat Exchanger Straight Pipe"
+		desc = "Build a Straight Heat Exchanger pipe segment."
+		icon_state = "straightheatpipe"
+		execute(var/atom/target, var/mob/user)
+			var/obj/machinery/atmospherics/t = target
+			switch(user.dir)
+				if(NORTH,SOUTH)
+					new /obj/machinery/atmospherics/pipe/simple/heat_exchanging/vertical(user.loc)
+				if(EAST,WEST)
+					new /obj/machinery/atmospherics/pipe/simple/heat_exchanging/horizontal(user.loc)
+			qdel(t)
+	Heatexchangingcorner
+		name = "Heat Exchanger Corner Pipe"
+		desc = "Build a Corner Heat Exchanger pipe segment."
+		icon_state = "cornerheatpipe"
+		execute(var/atom/target, var/mob/user)
+			var/obj/machinery/atmospherics/t = target
+			switch(user.dir)
+				if(NORTH)
+					new /obj/machinery/atmospherics/pipe/simple/heat_exchanging/northwest(user.loc)
+				if(SOUTH)
+					new /obj/machinery/atmospherics/pipe/simple/heat_exchanging/southeast(user.loc)
+				if(EAST)
+					new /obj/machinery/atmospherics/pipe/simple/heat_exchanging/northeast(user.loc)
+				if(WEST)
+					new /obj/machinery/atmospherics/pipe/simple/heat_exchanging/southwest(user.loc)
+			qdel(t)
+	junction
+		name = "Heat Exchanger Junction Pipe"
+		desc = "Build a Heat Exchanger Junction pipe segment."
+		icon_state = "junction"
+		execute(var/atom/target, var/mob/user)
+			var/obj/machinery/atmospherics/t = target
+			switch(user.dir)
+				if(NORTH)
+					new /obj/machinery/atmospherics/pipe/simple/junction/north(user.loc)
+				if(SOUTH)
+					new /obj/machinery/atmospherics/pipe/simple/junction/south(user.loc)
+				if(EAST)
+					new /obj/machinery/atmospherics/pipe/simple/junction/east(user.loc)
+				if(WEST)
+					new /obj/machinery/atmospherics/pipe/simple/junction/west(user.loc)
+			qdel(t)
 /datum/contextAction/lamp_manufacturer
 	name = "Lamp Manufacturer Setting"
 	desc = "This button seems kinda meta."

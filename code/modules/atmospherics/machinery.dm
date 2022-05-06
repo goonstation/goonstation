@@ -12,13 +12,15 @@ Pipelines + Other Objects -> Pipe network
 //
 obj/machinery/atmospherics
 	anchored = 1
+	var/big_pipe = FALSE // needed for heat_conducting pipes to not connect to non junctions
 
 	var/initialize_directions = 0
 	New()
 		..()
+		SPAWN(0 SECONDS)
 		if(current_state >= GAME_STATE_PLAYING) // we dont want to possibly mess up the engine
-			SPAWN(0.5 SECONDS)
 			construct(. , src) // action bar is for crafting it
+
 	process()
 		build_network()
 		..()
@@ -79,7 +81,7 @@ obj/machinery/atmospherics
 			var/list/obj/machinery/atmospherics/node_list = R.return_all_nodes(R)
 			var/list/datum/pipe_network/nodenet_list = list()
 			for(var/obj/machinery/atmospherics/N in node_list)
-				if(N?.return_network()) // only add networked nodes to our list
+				if(N?.return_network())// only add networked nodes to our list
 					nodenet_list += N.return_network()
 				N.UpdateIcon()
 				N.initialize() // update it for good measure anyway
@@ -90,14 +92,14 @@ obj/machinery/atmospherics
 
 				 // crazy idea: what if we built a network first
 				 // and skipped all the logic we would need otherwise
-
+			R.build_network() // make sure we have a network
 			R.UpdateIcon()
 			R.initialize()
 
 		deconstruct(var/obj/machinery/atmospherics/pipe/manifold/R)
 			if(isnull(R))
 				return
-			var/atom/A = new /obj/item/sheet(R.loc)
+			var/atom/A = new /obj/item/pipebomb/frame(R.loc)
 			if (R.material)
 				A.setMaterial(R.material)
 			else

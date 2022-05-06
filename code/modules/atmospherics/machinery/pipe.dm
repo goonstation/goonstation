@@ -1,11 +1,11 @@
 // Problem: Pumps seem to reset the temperature or something??
 // Had a pipe on one end of a pump with 240 C, the other end was 20 C.
 
+#define JUNCTION_SIZE 2 // special case where junctions bypass a check
 obj/machinery/atmospherics/pipe
 	text = ""
 	layer = PIPE_LAYER
 	plane = PLANE_NOSHADOW_BELOW
-
 	var/datum/gas_mixture/air_temporary //used when reconstructing a pipeline that broke
 	var/datum/pipeline/parent
 
@@ -71,7 +71,7 @@ obj/machinery/atmospherics/pipe
 
 		name = "pipe"
 		desc = "A one meter section of regular pipe."
-
+		big_pipe = FALSE
 		volume = 70
 
 		dir = SOUTH
@@ -531,8 +531,9 @@ obj/machinery/atmospherics/pipe
 				if(direction&connect_directions)
 					for(var/obj/machinery/atmospherics/target in get_step(src,direction))
 						if(target.initialize_directions & get_dir(target,src))
-							node1 = target
-							break
+							if(target.big_pipe == src.big_pipe || src.big_pipe == JUNCTION_SIZE || target.big_pipe == JUNCTION_SIZE)
+								node1 = target
+								break
 
 					connect_directions &= ~direction
 					break
@@ -542,8 +543,9 @@ obj/machinery/atmospherics/pipe
 				if(direction&connect_directions)
 					for(var/obj/machinery/atmospherics/target in get_step(src,direction))
 						if(target.initialize_directions & get_dir(target,src))
-							node2 = target
-							break
+							if(target.big_pipe == src.big_pipe || src.big_pipe == JUNCTION_SIZE || target.big_pipe == JUNCTION_SIZE)
+								node2 = target
+								break
 
 					connect_directions &= ~direction
 					break
@@ -620,6 +622,7 @@ obj/machinery/atmospherics/pipe
 		level = 2
 		alpha = 255
 		fatigue_pressure = INFINITY
+		big_pipe = JUNCTION_SIZE // bypasses some checks
 
 		north
 			dir = NORTH
@@ -656,6 +659,7 @@ obj/machinery/atmospherics/pipe
 		icon_state = "intact"
 		level = 2
 		alpha = 255
+		big_pipe = 1 // i couldn't find a way to make this work otherwise
 
 		minimum_temperature_difference = 20
 		thermal_conductivity = WINDOW_HEAT_TRANSFER_COEFFICIENT
@@ -683,6 +687,43 @@ obj/machinery/atmospherics/pipe
 				var/node2_direction = get_dir(src, node2)
 
 				icon_state = "[node1_direction|node2_direction]"
+		initialize()
+			var/connect_directions
+			switch(dir)
+				if(NORTH,SOUTH)
+					connect_directions = NORTH|SOUTH
+				if(EAST,WEST)
+					connect_directions = EAST|WEST
+				else
+					connect_directions = dir
+
+			for(var/direction in cardinal)
+				if(direction&connect_directions)
+					for(var/obj/machinery/atmospherics/target in get_step(src,direction))
+						if(target.initialize_directions & get_dir(target,src))
+							if(target.big_pipe == src.big_pipe || src.big_pipe == JUNCTION_SIZE || target.big_pipe == JUNCTION_SIZE)
+								node1 = target
+								break
+
+					connect_directions &= ~direction
+					break
+
+
+			for(var/direction in cardinal)
+				if(direction&connect_directions)
+					for(var/obj/machinery/atmospherics/target in get_step(src,direction))
+						if(target.initialize_directions & get_dir(target,src))
+							if(target.big_pipe == src.big_pipe || src.big_pipe == JUNCTION_SIZE || target.big_pipe == JUNCTION_SIZE)
+								node2 = target
+								break
+
+
+					connect_directions &= ~direction
+					break
+
+			var/turf/T = src.loc			// hide if turf is not intact
+			hide(T.intact)
+			//UpdateIcon()
 
 	tank
 		icon = 'icons/obj/atmospherics/tanks/grey_pipe_tank.dmi'
@@ -1122,6 +1163,7 @@ obj/machinery/atmospherics/pipe
 		var/obj/machinery/atmospherics/node1
 		var/obj/machinery/atmospherics/node2
 		var/obj/machinery/atmospherics/node3
+		big_pipe = FALSE
 
 		north
 			dir = NORTH
