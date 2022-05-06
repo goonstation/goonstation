@@ -976,7 +976,7 @@
 		fullbright = 0
 		luminosity = 1
 
-		space_overlays()
+		proc/space_overlays()
 			. = ..()
 			if (length(space_overlays))
 				var/list/color_vals = bioluminescent_algae?.get_color(src)
@@ -986,7 +986,7 @@
 					UpdateOverlays(algea, "glow_algae")
 					add_medium_light("glow_algae", color_vals)
 
-		destroy_asteroid(dropOre)
+		proc/destroy_asteroid(dropOre)
 			ClearSpecificOverlays("glow_algae")
 			remove_medium_light("glow_algae")
 			var/list/turf/neighbors = getNeighbors(src, alldirs)
@@ -1169,7 +1169,7 @@
 	geode
 		name = "compacted stone"
 		desc = "This rock looks really hard to dig out."
-		stone_color = "#575A5E"
+		stone_color = "#4c535c"
 		default_ore = null
 		hardness = 10
 
@@ -1180,7 +1180,7 @@
 		fullbright = 0
 		name = "regolith"
 		desc = "It's dusty and cold."
-		stone_color = "#95A1AF"
+		stone_color = "#7d93ad"
 		icon_state = "comet"
 		hardness = 1
 		default_ore = /obj/item/raw_material/rock
@@ -1190,7 +1190,7 @@
 		ice
 			name = "comet ice"
 			icon_state = "comet_ice"
-			stone_color = "#D1E6FF"
+			stone_color = "#a8cdfa"
 			default_ore = /obj/item/raw_material/ice
 			hardness = 2
 
@@ -1397,6 +1397,7 @@
 		var/image/top_overlay = image('icons/turf/walls_asteroid.dmi',"top[src.topnumber]")
 		top_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask2[src.icon_state]"))
 		src.overlays += top_overlay
+
 	proc/space_overlays()
 		for (var/turf/space/A in orange(src,1))
 			var/image/edge_overlay = image('icons/turf/walls_asteroid.dmi', "edge[get_dir(A,src)]")
@@ -1591,7 +1592,7 @@
 	step_priority = STEP_PRIORITY_MED
 	has_material = FALSE
 	var/sprite_variation = 1
-	var/stone_color = "#CCCCCC"
+	var/stone_color = "#D1E6FF"
 	var/image/coloration_overlay = null
 	var/list/space_overlays = list()
 	turf_flags = MOB_SLIP | MOB_STEP | IS_TYPE_SIMULATED | FLUID_MOVE
