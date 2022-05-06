@@ -34907,7 +34907,6 @@
 /turf/simulated/floor/grass/random,
 /area/station/medical/dome)
 "kMO" = (
-/obj/machinery/door/firedoor/border_only,
 /obj/cable{
 	icon_state = "4-8"
 	},
