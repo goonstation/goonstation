@@ -297,7 +297,7 @@
 	if(finished > 0)
 		var/value = world.load_intra_round_value("nukie_loss")
 #ifdef DATALOGGER
-			game_stats.Increment("traitorloss")
+		game_stats.Increment("traitorloss")
 #endif
 		if(isnull(value))
 			value = 0
@@ -305,7 +305,7 @@
 	else if(finished < 0)
 		var/value = world.load_intra_round_value("nukie_win")
 #ifdef DATALOGGER
-			game_stats.Increment("traitorwin")
+		game_stats.Increment("traitorwin")
 #endif
 		if(isnull(value))
 			value = 0
