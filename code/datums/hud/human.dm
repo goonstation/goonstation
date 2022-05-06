@@ -1224,32 +1224,40 @@
 	.=0
 
 /mob/living/carbon/human
-
-	proc/removeglasses()
+	proc/throwglasses()
 		if (!src.glasses)
-			return
+			return 1
 
 		var/obj/item/clothing/glasses/G = src.glasses
 		var/turf/T = get_turf(src)
 
 		if (!T)
 			qdel(src)
-			return
+			return 2
 
 		if (src.head && src.head.c_flags & COVERSEYES)
-			return
+			return 3
 
-		if (prob(50)) //Temp change this
+		if (prob(100 - G.stability))
 			T.visible_message("<span class='alert'>[G] fly off [src]'s face!</span>")
 			playsound(T, "sound/impact_sounds/slap.ogg", 100, 1)
 
-			src.drop_from_slot(G, T)
-			target = get_offset_target_turf(G.loc, rand(5)-rand(5), rand(5)-rand(5))
+			src.u_equip(G)
+			target = get_offset_target_turf(G.loc, rand(-5,5), rand(-5,5))
 			G.throw_at(target, 5, 1)
+
+	shake_awake(mob/living/target)
+		if (!src.glasses)
+			return ..()
+		if (src.zone_sel.selecting == "head")
+			src.glasses.setstability(src.glasses.stability += 20)
+		..()
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (W.force && !istype(W, /obj/item/device/flash) && src.glasses && user.zone_sel.selecting == "head")
-			src.removeglasses()
+			src.glasses.stability -= (10 + (W.force / 2))
+			if (src.glasses.stability < 40)
+				src.throwglasses()
 		..()
 
 	updateStatusUi()

@@ -15,14 +15,23 @@
 	duration_put = 1.5 SECONDS
 	var/block_eye = null // R or L
 	var/correct_bad_vision = 0
-	var/strength = 8 // 0 will always break, 10 will never break. rand(100 - (src.strength * 10))
+	var/stability = 100 // how stable they are on your face, using help on yourself raises this
 	compatible_species = list("human", "cow", "werewolf", "flubber")
+
+	proc/setstability(var/amount)
+		stability = clamp(amount, 0, 100)
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/cloth/handkerchief))
-			user.visible_message("<span class='notice'>[user] [pick("polishes", "shines", "cleans", "wipes")] [src] with [src].</span>")
+			src.setstability(src.stability += 20)
+			user.visible_message("<span class='notice'>[user] [pick("polishes", "shines", "cleans", "wipes")] [src] with [W].</span>")
 			return
 		return ..()
+
+	equipped(mob/user, slot)
+		if (slot || istype(slot, SLOT_GLASSES))
+			src.setstability(100)
+		..()
 
 /obj/item/clothing/glasses/crafted
 	name = "glasses"
@@ -38,7 +47,6 @@
 				block_vision = 1
 			alpha = 255
 
-		strength = clamp(src.material.getProperty("hard") / 10, 0, 10)
 		setProperty("disorient_resist_eye", src.material.getProperty("density") * 0.6)
 
 
@@ -48,7 +56,6 @@
 	item_state = "blindfold"
 	desc = "A strip of cloth painstakingly designed to wear around your eyes so you cannot see."
 	block_vision = 1
-	strength = 10
 
 	attack(mob/M as mob, mob/user as mob, def_zone) //this is for equipping blindfolds on head attack.
 		if (user.zone_sel.selecting == "head" && ishuman(M)) //ishuman() works on monkeys too apparently.
@@ -125,7 +132,6 @@
 	item_state = "glasses"
 	desc = "Corrective lenses, perfect for the near-sighted."
 	correct_bad_vision = 1
-	strength = 6
 
 /obj/item/clothing/glasses/regular/ecto
 	name = "peculiar spectacles"
@@ -162,7 +168,6 @@
 	color_r = 0.9 // darken a little
 	color_g = 0.9
 	color_b = 0.95 // kinda blue
-	strength = 7
 
 	setupProperties()
 		..()
@@ -183,7 +188,6 @@
 	desc = "Strangely ancient technology used to help provide rudimentary eye cover. This pair has a label that says: \"For tanning use only.\""
 	mats = 4
 	color_b = 0.95
-	strength = 7
 
 	setupProperties()
 		..()
@@ -196,7 +200,6 @@
 	color_r = 0.95 // darken a little, kinda red
 	color_g = 0.9
 	color_b = 0.9
-	strength = 9
 
 	emp_act()
 		if (ishuman(src.loc))
@@ -227,7 +230,6 @@
 	color_r = 1
 	color_g = 1
 	color_b = 1
-	strength = 10
 
 /obj/item/clothing/glasses/thermal
 	name = "optical thermal scanner"
@@ -240,7 +242,6 @@
 	color_b = 0.8
 	/// For seeing through walls
 	var/upgraded = FALSE
-	strength = 9
 
 	equipped(mob/user, slot)
 		. = ..()
@@ -284,7 +285,6 @@
 	color_g = 0.75 // slightly more red?
 	color_b = 0.75
 	upgraded = TRUE
-	strength = 10
 
 /obj/item/clothing/glasses/thermal/orange
 	name = "orange-tinted glasses"
@@ -293,7 +293,6 @@
 	color_r = 1
 	color_g = 0.9 // orange tint?
 	color_b = 0.8
-	strength = 9
 
 /obj/item/clothing/glasses/visor
 	name = "\improper VISOR goggles"
@@ -334,7 +333,6 @@
 	block_eye = "R"
 	var/pinhole = 0
 	var/mob/living/carbon/human/equipper
-	strength = 10
 
 	setupProperties()
 		..()
@@ -385,7 +383,6 @@
 	icon_state = "vr"
 	item_state = "sunglasses"
 	var/network = LANDMARK_VR_DET_NET
-	strength = 9
 
 	setupProperties()
 		..()
@@ -525,7 +522,6 @@
 	icon_state = "machoglasses"
 	color = "#FF00FF"
 	var/client/assigned = null
-	strength = 10
 
 	process()
 		if (assigned)
@@ -595,7 +591,6 @@
 	color_r = 0.5
 	color_g = 1
 	color_b = 0.5
-	strength = 9
 
 	equipped(mob/user, slot)
 		. = ..()
