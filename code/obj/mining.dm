@@ -948,7 +948,7 @@
 /turf/simulated/wall/asteroid
 	icon = 'icons/turf/asteroid.dmi'
 	icon_state = "ast1"
-	plane = PLANE_WALL
+	plane = PLANE_WALL-1
 	var/stone_color = "#CCCCCC"
 
 
@@ -975,6 +975,25 @@
 	dark
 		fullbright = 0
 		luminosity = 1
+
+		space_overlays()
+			. = ..()
+			if (length(space_overlays))
+				var/list/color_vals = bioluminescent_algae?.get_color(src)
+				if (length(color_vals))
+					var/image/algea = image('icons/obj/sealab_objects.dmi', "algae")
+					algea.color = rgb(color_vals[1], color_vals[2], color_vals[3])
+					UpdateOverlays(algea, "glow_algae")
+					add_medium_light("glow_algae", color_vals)
+
+		destroy_asteroid(dropOre)
+			ClearSpecificOverlays("glow_algae")
+			remove_medium_light("glow_algae")
+			var/list/turf/neighbors = getNeighbors(src, alldirs)
+			for (var/turf/T as anything in neighbors)
+				if (!length(T.medium_lights)) continue
+				T.update_medium_light_visibility()
+			. = ..()
 
 	lighted
 		fullbright = 1
@@ -1072,6 +1091,7 @@
 	icon = 'icons/turf/walls_asteroid.dmi'
 	mod = "asteroid-"
 	light_mod = "wall-"
+	plane = PLANE_WALL-1
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 	connect_overlay = 0
 	connect_diagonal = 1
@@ -1090,7 +1110,7 @@
 	var/hardness = 0
 #endif
 
-	var/stone_color = "#CCCCCC"
+	var/stone_color = "#D1E6FF"
 	var/weakened = 0
 	var/amount = 2
 	var/invincible = 0
@@ -1136,13 +1156,14 @@
 				if (!length(T.medium_lights)) continue
 				T.update_medium_light_visibility()
 			. = ..()
+
 	lighted
 		fullbright = 1
 
 	ice
 		name = "comet chunk"
 		desc = "That's some cold stuff right there."
-		stone_color = "#D1E6FF"
+		stone_color = "#9cc4f5"
 		default_ore = /obj/item/raw_material/ice
 
 	geode
@@ -1381,7 +1402,7 @@
 			var/image/edge_overlay = image('icons/turf/walls_asteroid.dmi', "edge[get_dir(A,src)]")
 			edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
 			edge_overlay.layer = src.layer + 1
-			edge_overlay.plane = PLANE_WALL
+			edge_overlay.plane = PLANE_WALL-1
 			edge_overlay.layer = TURF_EFFECTS_LAYER
 			edge_overlay.color = src.stone_color
 			A.overlays += edge_overlay
