@@ -1325,8 +1325,8 @@
 				src.health = 0
 				src.CritterDeath()
 
-/obj/critter/gunbot/drone/buzzdrone/sawflyold // this is the old sawfly. New one is in sawfly misc for now.
-
+/obj/critter/gunbot/drone/buzzdrone/sawflyold
+// this is the old sawfly and you shouldn't ever use it. New one is in sawfly misc for now.
 	name = "Sawfly"
 	desc = "A folding antipersonnel drone of syndicate origin. It'd be pretty cute if it wasn't trying to kill people."
 	icon_state = "sawfly"
@@ -1335,7 +1335,6 @@
 	projectile_type = /datum/projectile/laser/drill/sawfly
 	current_projectile = new/datum/projectile/laser/drill/sawfly
 	smashes_shit = 0
-	droploot = null //change this later
 	health = 40
 	maxhealth = 40
 	firevuln = 0.5
@@ -1452,7 +1451,6 @@
 				CritterAttack(src.target)
 		..()
 
-
 	attack_hand(var/mob/user as mob)
 		if (istraitor(user) || isnukeop(user) || isspythief(user) || (user in src.friends))
 			if (user.a_intent == INTENT_HELP || INTENT_GRAB)
@@ -1469,12 +1467,8 @@
 	CritterDeath() // rip lil guy
 		if (!src.alive) return
 		..()
-		// since they're a child of a child of a child of a child
-		// and shit gets WHACKY fast with their behaviors
-		// I'm just gonna say fuck all that and copy the critter death code
 		SHOULD_CALL_PARENT(TRUE)
 		if (!src.alive) return
-
 		#ifdef COMSIG_OBJ_CRITTER_DEATH
 		SEND_SIGNAL(src, COMSIG_OBJ_CRITTER_DEATH)
 		#endif
@@ -1507,9 +1501,3 @@
 
 			SPAWN(deathtimer SECONDS) // pause, for dramatic effect
 				src.blowup()
-
-
-
-
-
-

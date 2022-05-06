@@ -152,44 +152,36 @@
 
 
 
-//------------- THE BEAST SAWFLY ITSELF----------
+//-------------The star baby boy of the show itself----------
 
-/mob/living/critter/sawfly // new sawfly
+/mob/living/critter/sawfly
 	name = "Sawfly"
 	desc = "A folding antipersonnel drone of syndicate origin. It'd be pretty cute if it wasn't trying to kill people."
 	icon = 'icons/obj/ship.dmi'
 	icon_state = "sawfly"
 
-	var/beeptext = "UH OOH"
+	var/beeptext = " "
 	var/dead_state = "sawflydead"
 	var/angertext = "flies at"
 	var/projectile_type = /datum/projectile/laser/drill/sawfly
 	var/datum/projectile/current_projectile = new/datum/projectile/laser/drill/sawfly
-	var/smashes_shit = 0
-	var/obj/item/droploot = null //change this later
+	var/obj/item/droploot = null // the prox sensors they drop in death are handled in the critterdeath proc
 	var/deathtimer = 0 // for catastrophic failure on death
-	var/isnew = TRUE // for reuse
+	var/isnew = TRUE // for seeing whether or not they will make a new name on redeployment
 	var/sawflynames = list("A", "B", "C", "D", "E", "F", "V", "W", "X", "Y", "Z", "Alpha", "Beta", "Gamma", "Lambda", "Delta")
 
-
-
-
-	health = 20
-//	var/maxhealth = 40
-	var/firevuln = 0.5
-	var/brutevuln = 1.2
-	//var/brutedam //shitty way of doing it yes
-
+	health = 20 // ignore this, they have 40 hp.
 	var/can_revive = TRUE
 	var/atksilicon = TRUE
 	var/atkcarbon = TRUE
 	var/alive = TRUE
 
 // OBJ/CRITTER/DRONE FUCK SHIT HERE
+	var/smashes_shit = 0
 	var/list/friends = list()
 	var/attacking = 0
 	var/atk_delay = 5
-	var/attack_cooldown = 8
+	var/attack_cooldown = 10
 	var/seekrange = 15
 	var/attacker = null
 	var/atom/movable/target = null
@@ -198,7 +190,7 @@
 	var/task = "thinking"
 	var/frustration = 0
 	var/atom/target_lastloc = null
-	var/aggressive = 1 // change to TRUE
+	var/aggressive = 1
 	var/last_found = null
 	var/steps = 0
 	var/sleep_check = 10
@@ -206,18 +198,21 @@
 
 
 	// MOB/LIVING/CRITTER FUCK SHIT HERE
-
 	setup_healths()
 		add_hh_robot(20, 1) // fuck you and your way of doing health that isn't my way of doing it
 		add_hh_robot_burn(20, 1)
 	custom_gib_handler = /proc/robogibs
 	blood_id = "oil"
 	use_stamina = FALSE
+	use_stunned_icon = FALSE
+	butcherable = FALSE
 	can_bleed = FALSE
 	canbegrabbed = FALSE
+	can_lie = FALSE
+	can_burn = FALSE
+	pet_text = "cuddles"
 
-
-	var/beepsound = 'sound/machines/twobeep.ogg' // todo: make these custom sounds
+	var/beepsound = 'sound/machines/twobeep.ogg' // todo: make these sounds custom
 	var/alertsound1 = 'sound/machines/whistlealert.ogg'
 	var/alertsound2 = 'sound/machines/whistlebeep.ogg'
 
@@ -227,13 +222,9 @@
 		if(isnew)
 			name = "Sawfly [pick(sawflynames)]-[rand(1,999)]"
 		deathtimer = rand(1, 5)
-		death_text = "[src] jutters and falls from the air, whirring to a stop"
-		if(prob(0.1))
-			death_text = "[src] IS CRUNKED OFF ITS GOURD!!"
-
+		death_text = "[src] jutters and falls from the air, whirring to a stop."
 		beeptext = "[pick(list("beeps", "boops", "bwoops", "bips", "bwips", "bops", "chirps", "whirrs", "pings", "purrs"))]"
 		animate_bumble(src) // gotta get the float goin' on
-
 		src.set_a_intent(INTENT_HARM) // incredibly stupid way of ensuring they aren't passable
 
 
@@ -246,20 +237,7 @@
 		qdel(src)
 
 
-	proc/blowup() // used in emagged controllers and has a chance to activate when they die
 
-		if(prob(66))
-			src.visible_message("<span class='combat'>[src]'s [pick("motor", "core", "fuel tank", "battery", "thruster")] [pick("combusts", "catches on fire", "ignites", "lights up", "bursts into flames")]!")
-			fireflash(src,1,TRUE)
-
-		else
-			src.visible_message("<span class='combat'>[src]'s [pick("motor", "core", "head", "engine", "thruster")] [pick("overloads", "blows up", "catastrophically fails", "explodes")]!")
-			fireflash(src,0,TRUE)
-			explosion(src, get_turf(src), 0, 0.75, 1.5, 3)
-			qdel(src)
-
-		if(alive) // prevents weirdness from emagged controllers
-			qdel(src)
 
 
 	emp_act() //same thing as if you emagged the controller, but much higher chance
@@ -271,7 +249,74 @@
 			src.foldself()
 
 
-	proc/ChaseAttack(atom/M) // overriding these procs so the drone is nicer >:(
+	proc/CritterDeath() // rip lil guy
+
+		if (!src.alive) return // can't double-die
+		alive = FALSE
+		src.tokenized_message(death_text)
+		src.is_npc = FALSE // stop any and all possible non-critter AI thought
+		SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_DRONE_DEATH, src)
+
+		if (prob(20))
+			new /obj/item/device/prox_sensor(src.loc) // maybe change this later
+			return
+
+
+		/*SHOULD_CALL_PARENT(TRUE) //commenting this out because I'm afraid everything will break if I delete it
+		#ifdef COMSIG_OBJ_CRITTER_DEATH
+		SEND_SIGNAL(src, COMSIG_OBJ_CRITTER_DEATH)
+		#endif*/
+
+
+		//death behavior custom to sawflies below
+		animate(src) //stop no more float animation
+		icon_state = "sawflydead[pick("1", "2", "3", "4", "5", "6", "7", "8")]"
+		src.pixel_x += rand(-5, 5)
+		src.pixel_y += rand(-1, 5)
+
+		src.alive = 0
+		src.anchored = 0
+		src.set_density(0)
+		walk_to(src,0) //halt walking
+
+		// special checks that determine how much postmorten chaos our little sawflies cause
+
+		if(prob(60)) // 60 percent chance to zap the area
+			elecflash(src, 1, 2)
+
+		if(prob(20)) // congrats, little guy! You're special! You're going to blow up!
+			if(prob(70)) //decide whether or not people get a warning
+				src.visible_message("<span class='combat'>[src] makes a [pick("gentle", "odd", "slight", "weird", "barely audible", "concerning", "quiet")] [pick("hiss", "drone", "whir", "thump", "grinding sound", "creak", "buzz", "khunk")].......")
+			SPAWN(deathtimer SECONDS) // pause, for dramatic effect
+				src.blowup()
+
+
+	proc/blowup() // used in emagged controllers and has a chance to activate when they die
+
+		if(prob(66))
+			src.visible_message("<span class='combat'>[src]'s [pick("motor", "core", "fuel tank", "battery", "thruster")] [pick("combusts", "catches on fire", "ignites", "lights up", "bursts into flames")]!")
+			fireflash(src,1,TRUE)
+		else
+			src.visible_message("<span class='combat'>[src]'s [pick("motor", "core", "head", "engine", "thruster")] [pick("overloads", "blows up", "catastrophically fails", "explodes")]!")
+			fireflash(src,0,TRUE)
+			explosion(src, get_turf(src), 0, 0.75, 1.5, 3)
+			qdel(src)
+
+		if(alive) // prevents weirdness from emagged controllers causing frankenstein sawflies
+			qdel(src)
+
+
+
+	death() //FUCK YOU
+		CritterDeath() // FUCK YOU. AND MOST CERTAINLY,
+		alive = FALSE // FUUUUUUCK. YOUUUUUUU.
+
+
+	// Ported critter AI stuff from hereon out
+
+
+
+	proc/ChaseAttack(atom/M) // overriding these attack procs so drone is nicer to traitors >:(
 		if (istraitor(M) || isnukeop(M) || isspythief(M) || (M in src.friends))
 			return
 		if(target && !attacking)
@@ -279,7 +324,7 @@
 			src.visible_message("<span class='alert'><b>[src]</b> flies at [M]!</span>")
 			if (istraitor(M) || isnukeop(M) || isspythief(M) || (M in src.friends))
 				return
-
+			task = "chasing"
 			walk_to(src, src.target,1,4)
 			var/tturf = get_turf(M)
 			Shoot(tturf, src.loc, src)
@@ -298,7 +343,7 @@
 				friends += C
 				continue
 			if (!src.alive) break
-			//if (C.health < -50) continue
+			if (C.health < -50) continue // ignore people who are badly wounded
 			if (C.name == src.attacker) src.attack = 1
 			if (iscarbon(C) && src.atkcarbon) src.attack = 1
 			if (issilicon(C) && src.atksilicon) src.attack = 1
@@ -307,8 +352,6 @@
 				src.attack = 0
 				return
 			else continue
-
-		//..()
 
 
 	proc/CritterAttack(atom/M)
@@ -324,102 +367,40 @@
 			Shoot(tturf, src.loc, src)
 			SPAWN(attack_cooldown)
 				attacking = 0
-			if(prob(20))
-				walk(src, 0) // stolen from flock code, hope to fuck this works
+
+			if(prob(10))
+				walk_rand(src,4)
+
+			if(prob(1))
+				walk(src, 0)
 				walk_rand(src, 1, 10)
 				src.visible_message("THE SAWFLY IS CRUNKED OFF IT'S GOURD!")
 		return
 
 
+	proc/Shoot(var/target, var/start, var/user, var/bullet = 0)
+		if(target == start)
+			return
+
+		if (!isturf(target))
+			return
+
+		shoot_projectile_ST(src,  new/datum/projectile/laser/drill/sawfly(), target) // THIS DOES NOT WORK WELL FOR SOME REASON
+		return
+
+
 	attackby(obj/item/W as obj, mob/living/user as mob)
-
-
 		if(prob(50) && alive) // borrowed from brullbar- anti-crowd measures
 			src.target = user
 			src.oldtarget_name = user.name
 			src.task = "chasing"
-			//playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 60, 1)
-			if (!(istraitor(user) || isnukeop(user) || isspythief(user)) )
+			if (!(istraitor(user) || isnukeop(user) || isspythief(user)))
 				src.visible_message("<span class='alert'><b>[src]'s targeting subsystems identify</b> [src.target] as a high priority threat!</span>")
 				var/tturf = get_turf(src.target) //instantly retaliate, since we know we're in melee range
 				Shoot(tturf, src.loc, src)
 				SPAWN((attack_cooldown/2)) //follow up swiftly
 					attacking = 0
 				CritterAttack(src.target)
-		//CRITTER ATTACKBY CODE BELOW
-/*
-		user.lastattacked = src
-		attack_particle(user,src)
-		if (W?.hitsound)
-			playsound(src,W.hitsound,50,1)
-
-		if (src.alive)
-			registered_area.wake_critters(user)
-
-		if(W.hasProperty("impact"))
-			var/turf/T = get_edge_target_turf(src, get_dir(user, src))
-			src.throw_at(T, 2, W.getProperty("impact"))
-
-		if (src.target == user && src.task == "attacking")
-
-			src.visible_message("<span class='alert'><b>[src]</b> loses control for a second!</span>")
-			src.target = user
-			src.oldtarget_name = user.name
-			src.visible_message("<span class='alert'><b>[src]</b> [src]'s flies aggressively towards [user.name]!</span>")
-			src.task = "chasing"
-
-
-		var/attack_force = 0
-		var/damage_type = "brute"
-		if (istype(W, /obj/item/artifact/melee_weapon))
-			var/datum/artifact/melee/ME = W.artifact
-			attack_force = ME.dmg_amount
-			damage_type = ME.damtype
-		else
-			attack_force = W.force
-			switch(W.hit_type)
-				if (DAMAGE_BURN)
-					damage_type = "fire"
-				else
-					damage_type = "brute"
-
-
-
-		//Simplified weapon properties for critters. Fuck this shit.
-		if(W.getProperty("searing"))
-			damage_type = "fire"
-			attack_force += W.getProperty("searing")
-
-		if(W.hasProperty("vorpal"))
-			attack_force += W.getProperty("vorpal")
-
-		if(W.hasProperty("unstable"))
-			attack_force = rand(attack_force, round(attack_force * W.getProperty("unstable")))
-
-		if(W.hasProperty("frenzy"))
-			SPAWN(0)
-				var/frenzy = W.getProperty("frenzy")
-				W.click_delay -= frenzy
-				sleep(3 SECONDS)
-				W.click_delay += frenzy
-
-		if (!attack_force)
-			return
-
-		if (src.sleeping)
-			sleeping = 0
-			on_wake()
-
-		switch(damage_type)
-			if("fire")
-				health -= attack_force * max(1,(src.firevuln + W.getProperty("piercing")/100)) //Extremely half assed piercing for critters
-			if("brute")
-				health -= attack_force * max(1,(src.brutevuln + W.getProperty("piercing")/100))
-			else
-				health -= attack_force * max(1,(0 + W.getProperty("piercing")/100))
-*/
-
-
 		if(health<=0)
 			CritterDeath()
 
@@ -427,11 +408,9 @@
 		..() // call living critter parent procs and pray to sweet little baby jesus It Just Works
 
 
-
-
-	attack_hand(var/mob/user as mob) // this one's safe
+	attack_hand(var/mob/user as mob)
 		if (istraitor(user) || isnukeop(user) || isspythief(user) || (user in src.friends))
-			if (user.a_intent == INTENT_HELP || INTENT_GRAB)
+			if (user.a_intent == (INTENT_HELP || INTENT_GRAB))
 				if(src.alive)
 					boutput(user, "You collapse [src].")
 					src.foldself()
@@ -441,60 +420,6 @@
 				random_brute_damage(user, 7)
 				take_bleeding_damage(user, null, 7, DAMAGE_CUT, 1)
 		..()
-
-
-	proc/CritterDeath() // rip lil guy
-		if (!src.alive) return // can't double-die
-
-		alive = FALSE
-		src.tokenized_message(death_text)
-		src.is_npc = FALSE // stop any and all possible non-critterAI thought
-
-
-		src.visible_message("<span class='alert'><b>[src] IS CRUNKED OFF ITS GOURD!")
-		SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_DRONE_DEATH, src)
-
-		if (prob(20))
-			new /obj/item/device/prox_sensor(src.loc) // maybe change this later
-
-
-		//	..()
-			return
-
-
-		SHOULD_CALL_PARENT(TRUE)
-		//if (!src.alive) return
-
-		#ifdef COMSIG_OBJ_CRITTER_DEATH
-		SEND_SIGNAL(src, COMSIG_OBJ_CRITTER_DEATH)
-		#endif
-
-
-		//code custom to sawflies below
-		animate(src) //stop no more float animation
-		icon_state = "sawflydead[pick("1", "2", "3", "4", "5", "6", "7", "8")]"
-		src.pixel_x += rand(-5, 5)
-		src.pixel_y += rand(-1, 5)
-
-		src.alive = 0
-		src.anchored = 0
-		src.set_density(0)
-		walk_to(src,0) //halt walking
-		//report_death()
-
-
-		// IT'S TIME TO ROOOOOOLLLL THE DIIIICEEEEEE!!!!
-		// special checks that determine how much postmorten chaos our little sawflies cause
-
-		if(prob(60)) // 60 percent chance to zap the area
-			elecflash(src, 1, 2)
-
-		if(prob(20)) // congrats, little guy! You're special! You're going to blow up!
-			if(prob(70)) //decide whether or not people get a warning
-				src.visible_message("<span class='combat'>[src] makes a [pick("gentle", "odd", "slight", "weird", "barely audible", "concerning", "quiet")] [pick("hiss", "drone", "whir", "thump", "grinding sound", "creak", "buzz", "khunk")].......")
-
-			SPAWN(deathtimer SECONDS) // pause, for dramatic effect
-				src.blowup()
 
 // COPY PASTED AI SHIT FROM DRONE/GUNBOT HERE
 
@@ -565,28 +490,22 @@
 				patrol_step()
 		return 1
 
+
 	Life() // override so drones don't just loaf all fuckin day
-
-
 		if(!alive) // check that sees whether or not it's dead
 			return
-
 		if(health<=0 && alive) // check that kills it
 			CritterDeath()
 			return 0
-
 		if(sleeping > 0)
 			sleeping--
 			return 0
-
-
 
 
 		if(prob(7))
 			src.visible_message("<b>[src] [beeptext].</b>")
 			if (beepsound)
 				playsound(src, beepsound, 55, 1)
-
 
 		if(task == "sleeping")
 			var/waking = 0
@@ -609,9 +528,7 @@
 				return 0
 		else if(sleep_check <= 0)
 			sleep_check = 5
-
 			var/stay_awake = 0
-
 			for (var/client/C)
 				var/mob/M = C.mob
 				if (M && src.z == M.z && GET_DIST(src, M) <= 10)
@@ -625,7 +542,6 @@
 					stay_awake = 1
 					break
 
-
 			if(!stay_awake)
 				sleeping = 5
 				task = "sleeping"
@@ -637,16 +553,6 @@
 		..()
 		return ai_think()
 
-
-	proc/Shoot(var/target, var/start, var/user, var/bullet = 0)
-		if(target == start)
-			return
-
-		if (!isturf(target))
-			return
-
-		shoot_projectile_ST(src,  new/datum/projectile/laser/drill/sawfly(), target) // THIS DOES NOT WORK WELL FOR SOME REASON
-		return
 
 	proc/select_target(var/atom/newtarget)
 		src.target = newtarget
@@ -666,8 +572,3 @@
 		if (steps == wander_check)
 			src.task = "thinking"
 			wander_check = rand(5,20)
-
-	death() //FUCK YOU
-		CritterDeath() // FUCK YOU
-		alive = FALSE // AND MOST CERTAINLY
-		//..() // FUUUUUUCK. YOUUUUUUU.

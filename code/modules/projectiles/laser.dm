@@ -498,15 +498,15 @@ toxic - poisons
 				V.health -= power * 1.8
 				V.checkhealth()
 
-	sawfly// projectile of choice for sawflies
+	sawfly// projectile used by sawflies
 		name = "Whirring Blades"
 
 		damage_type = D_PIERCING
 		damtype = D_PIERCING // weirdly enough, giving them stabbing damage goes through armor better than peircing
 		shot_sound = null
 		hit_human_sound = "sound/machines/chainsaw_green.ogg"
-		power = 16
-		dissipation_rate = 16
+		power = 14
+		dissipation_rate = 14
 		sname = "Whirring Blades"
 
 
@@ -514,7 +514,9 @@ toxic - poisons
 			var/mob/M = hit
 			if (istraitor(M) || isnukeop(M) || isspythief(M)) // uh oh! we just hit a friend
 				M.visible_message("<span class='alert'>The drone's IFF system engages last second and avoids hitting [M]!")
-				. = TRUE // don't hurt your buddies, little guy!
+				. = TRUE
+			else if (istype(M, /mob/living/critter/sawfly)) //so you can't just bait swarms into killing themselves
+				. = TRUE
 
 		on_hit(atom/hit)
 			if (ishuman(hit))
