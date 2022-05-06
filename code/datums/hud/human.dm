@@ -1242,7 +1242,7 @@
 			T.visible_message("<span class='alert'>[G] fly off [src]'s face!</span>")
 			playsound(T, "sound/impact_sounds/slap.ogg", 100, 1)
 
-			src.u_equip(G)
+			src.drop_from_slot(G, T)
 			target = get_offset_target_turf(G.loc, rand(-5,5), rand(-5,5))
 			G.throw_at(target, 5, 1)
 
