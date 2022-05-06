@@ -135,8 +135,11 @@
 						implant_list["Robustec"]++
 					else if (istype(I, /obj/item/implant/counterrev))
 						implant_list["Counter-revolutionary"]++
-					else if (syndicate && istype(I, /obj/item/implant/revenge/microbomb))
-						implant_list["Microbomb"]++
+					else if (syndicate)
+						if (istype(I, /obj/item/implant/revenge/microbomb))
+							implant_list["Microbomb"]++
+						else if (istype(I, /obj/item/implanter/freedom))
+							implant_list["Freedom"]++
 
 				if (length(implant_list))
 					implant_data = "<span style='color:#2770BF'><b>Implants detected:</b></span>"
