@@ -8612,6 +8612,9 @@
 /area/station/bridge)
 "uL" = (
 /obj/decal/tile_edge/stripe/extra_big,
+/obj/machinery/status_display{
+	pixel_x = -32
+	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "uM" = (
