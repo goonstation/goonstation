@@ -22,7 +22,7 @@
 	plane = PLANE_NOSHADOW_ABOVE
 	var/last_time_sound_played_in_seconds = 0
 	var/sound_length_in_seconds = 27
-	var/charge_time_length = 600 // also in seconds
+	var/charge_time_length = 360 // also in seconds
 	var/final_charge_time_length = 18
 	var/col_r = 0.1
 	var/col_g = 0.7
@@ -42,6 +42,10 @@
 	flock_speak(null, "RELAY CONSTRUCTED! DEFEND THE RELAY!!", src.flock)
 	SPAWN(1 SECOND)
 		radial_flock_conversion(src, 20)
+	SPAWN(10 SECONDS)
+		var/msg = "Overwhelming anomalous power signatures detected on station. This is an existential threat to the station. All personnel must contain this event."
+		msg = radioGarbleText(msg, 7)
+		command_alert(msg, sound_to_play = "sound/misc/announcement_1.ogg", alert_origin = ALERT_ANOMALY)
 
 /obj/flock_structure/relay/disposing()
 	..()
