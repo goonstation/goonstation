@@ -296,6 +296,14 @@
 		var/message
 		var/maptext_out = 0
 		var/custom = 0
+		var/brain_gender_pitch = 0
+
+		// gives female brains a slightly higher voice pitch than default.
+		switch(gender)
+			if("female")
+				brain_gender_pitch = 1.25
+			else
+				brain_gender_pitch = 1.0
 
 		switch(lowertext(act))
 
@@ -502,7 +510,7 @@
 
 			if ("birdwell", "burp")
 				if (src.emote_check(voluntary, 50))
-					playsound(src.loc, 'sound/vox/birdwell.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src.loc, 'sound/vox/birdwell.ogg', 50, 1, 0, src.get_age_pitch() * brain_gender_pitch, channel=VOLUME_CHANNEL_EMOTE)
 					message = "<b>[src]</b> birdwells."
 
 			if ("scream")
@@ -510,7 +518,7 @@
 					if (narrator_mode)
 						playsound(src.loc, 'sound/vox/scream.ogg', 50, 1, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 					else
-						playsound(src, src.sound_scream, 80, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+						playsound(src, src.sound_scream, 80, 0, 0, src.get_age_pitch() * brain_gender_pitch, channel=VOLUME_CHANNEL_EMOTE)
 					message = "<b>[src]</b> screams!"
 
 			if ("johnny")
