@@ -8,7 +8,7 @@
 "ch" = (
 /obj/machinery/computer/shuttle/embedded/south,
 /obj/stool/chair/comfy/shuttle/pilot,
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "The remains of the captain of this, uh, part of station. Not sure if all of the station parts are from the same place.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body7"
@@ -108,7 +108,7 @@
 /turf/unsimulated/outdoors/grass,
 /area/centcom/outside)
 "nq" = (
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body1";
@@ -294,7 +294,7 @@
 /turf/unsimulated/floor/plating/damaged2,
 /area/shuttle/escape/centcom)
 "Tq" = (
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body8";
@@ -306,7 +306,7 @@
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "Ve" = (
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body3";

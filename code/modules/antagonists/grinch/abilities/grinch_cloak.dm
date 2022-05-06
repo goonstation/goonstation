@@ -27,13 +27,13 @@
 				boutput(M, __red("You are already invisible."))
 				return 1
 
-			APPLY_MOB_PROPERTY(M, PROP_INVISIBILITY, src, INVIS_CLOAK)
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_INVISIBILITY, src, INVIS_CLOAK)
 			M.UpdateOverlays(image('icons/mob/mob.dmi', "icon_state" = "shield"), "shield")
 			boutput(M, __blue("<b>Your cloak will remain active for the next [src.cloak_duration / 60] minutes.</b>"))
 
 			SPAWN(src.cloak_duration * 10)
 				if (M && ismobcritter(M))
-					REMOVE_MOB_PROPERTY(M, PROP_INVISIBILITY, src)
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_INVISIBILITY, src)
 					M.UpdateOverlays(null, "shield")
 					boutput(M, __red("<b>You are no longer invisible.</b>"))
 

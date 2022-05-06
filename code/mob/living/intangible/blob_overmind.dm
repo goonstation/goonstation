@@ -69,7 +69,7 @@
 		if (tutorial)
 			return
 		tutorial = new(src)
-		if (tutorial.tutorial_area)
+		if (tutorial.initial_turf)
 			tutorial.Start()
 		else
 			boutput(src, "<span class='alert'>Could not start tutorial! Please try again later or call Wire.</span>")
@@ -82,7 +82,7 @@
 		src.add_ability(/datum/blob_ability/set_color)
 		src.add_ability(/datum/blob_ability/tutorial)
 		src.add_ability(/datum/blob_ability/help)
-		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_SPOOKY)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_SPOOKY)
 		src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 		src.see_invisible = INVIS_SPOOKY
 		src.see_in_dark = SEE_DARK_FULL
@@ -114,7 +114,9 @@
 		..()
 
 	set_loc(atom/newloc)
-		if (isturf(newloc) && newloc.z != Z_LEVEL_STATION && !tutorial)
+		// Blobs can only move to turfs. Blobs shouldn't be moving off station Z UNLESS they're riding the escape shuttle or the game has ended (so they can spread to centcom)
+		// Letting them move off station Z causes Issues when blobs take the mining shuttle, sea elevator, etc
+		if (isturf(newloc) && newloc.z != Z_LEVEL_STATION && !tutorial && !istype(get_area(newloc), /area/shuttle/escape/transit) && global.current_state < GAME_STATE_FINISHED)
 			return
 		..()
 

@@ -12,6 +12,7 @@
 			if (!src.throwing)
 				break
 			if(A == src) continue
+			if(A.GetComponent(/datum/component/glued)) continue
 			if(isliving(A))
 				var/mob/living/L = A
 				if (!L.throws_can_hit_me) continue
@@ -51,6 +52,8 @@
 		return
 
 	reagents?.physical_shock(20)
+	if(SEND_SIGNAL(src, COMSIG_MOVABLE_HIT_THROWN, hit_atom, thr))
+		return
 	if(SEND_SIGNAL(hit_atom, COMSIG_ATOM_HITBY_THROWN, src, thr))
 		return
 	var/impact_sfx = hit_atom.hitby(src, thr)
@@ -139,7 +142,7 @@
 
 	if(isliving(src) && (throwing & THROW_PEEL_SLIP))
 		var/mob/living/L = src
-		APPLY_MOB_PROPERTY(L, PROP_CANTMOVE, "peel_slip_\ref[thr]")
+		APPLY_ATOM_PROPERTY(L, PROP_MOB_CANTMOVE, "peel_slip_\ref[thr]")
 
 	LAZYLISTADD(throwing_controller.thrown, thr)
 	throwing_controller.start()

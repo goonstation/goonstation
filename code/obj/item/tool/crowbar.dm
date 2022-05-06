@@ -9,6 +9,7 @@
 
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	tool_flags = TOOL_PRYING
+	health = 5
 	w_class = W_CLASS_SMALL
 
 	force = 7.0

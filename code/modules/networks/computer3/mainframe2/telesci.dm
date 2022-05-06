@@ -492,7 +492,7 @@ proc/is_teleportation_allowed(var/turf/T)
 				logTheThing("station", usr, which, "sent [constructTarget(which,"station")] to [log_loc(target)] from [log_loc(src)] with a telepad")
 			which.set_loc(target)
 
-		showswirl(src.loc)
+		showswirl_out(src.loc)
 		leaveresidual(src.loc)
 		showswirl(target)
 		leaveresidual(target)
@@ -523,7 +523,7 @@ proc/is_teleportation_allowed(var/turf/T)
 			which.set_loc(src.loc)
 		showswirl(src.loc)
 		leaveresidual(src.loc)
-		showswirl(receiveturf)
+		showswirl_out(receiveturf)
 		leaveresidual(receiveturf)
 		use_power(1500)
 		if(prob(2) && prob(2))
@@ -581,7 +581,7 @@ proc/is_teleportation_allowed(var/turf/T)
 		return P
 
 	proc/badsend()
-		showswirl(src.loc)
+		showswirl_error(src.loc)
 
 		var/effect = ""
 		if(prob(90)) //MINOR EFFECTS
@@ -594,7 +594,7 @@ proc/is_teleportation_allowed(var/turf/T)
 		processbadeffect(effect)
 
 	proc/badreceive()
-		showswirl(src.loc)
+		showswirl_error(src.loc)
 
 		var/effect = ""
 		if(prob(80)) //MINOR EFFECTS
@@ -701,6 +701,7 @@ proc/is_teleportation_allowed(var/turf/T)
 				return
 			if("gib")
 				for(var/mob/living/M in src.loc)
+					logTheThing("combat", M, null, "was gibbed by a telescience fault at [log_loc(M)].")
 					M.gib()
 				return
 			if("majormutate")
@@ -1233,9 +1234,10 @@ proc/is_teleportation_allowed(var/turf/T)
 		if (!src.host_id || !message)
 			return
 
+		if (ON_COOLDOWN(src, "hostmsg", 0.5 SECONDS))
+			return
+
 		if (file)
 			src.post_file(src.host_id,"data",message, file)
 		else
 			src.post_status(src.host_id,"command","term_message","data",message)
-
-		return

@@ -117,7 +117,7 @@
 /proc/SortList(var/list/toSort, var/sortMethod)
 	sortMethod ? AuxSort(toSort, sortMethod, 1, toSort.len) : AuxSortLT(toSort, 1, toSort.len)
 
-proc/compareName(atom/a, atom/b)
+/proc/compareName(atom/a, atom/b)
 	return a.name < b.name
 
 /proc/assoc_list_to_list(var/list/l)
@@ -132,3 +132,8 @@ proc/compareName(atom/a, atom/b)
 	. = list()
 	for(var/i = 1,i <= length(first),i++)
 		.[first[i]] = second[i]
+
+/proc/compareArtifactTypes(var/datum/artifact/A1, var/datum/artifact/A2)
+	if(A1.type_size == A2.type_size)
+		return A1.type_name < A2.type_name
+	return A1.type_size > A2.type_size

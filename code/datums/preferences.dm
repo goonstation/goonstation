@@ -268,7 +268,7 @@ datum/preferences
 					return
 
 				if (!isnull(index) && isnum(index))
-					src.savefile_save(client, index)
+					src.savefile_save(client.key, index)
 					src.profile_number = index
 					boutput(usr, "<span class='notice'><b>Character saved to Slot [index].</b></span>")
 					return TRUE

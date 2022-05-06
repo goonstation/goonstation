@@ -20,7 +20,7 @@
 	..()
 	src.appearance_flags |= NO_CLIENT_COLOR
 	src.blend_mode = BLEND_ADD
-	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_FLOCKMIND)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_FLOCKMIND)
 	src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 	src.see_invisible = INVIS_GHOST
 	src.see_in_dark = SEE_DARK_FULL

@@ -118,4 +118,6 @@
 		if(ismob(AM))
 			var/mob/M = AM
 			boutput(AM, "<span class='alert'><b>Your body is destroyed as the merchant shuttle passes [pick("an eldritch decomposure field", "a life negation ward", "a telekinetic assimilation plant", "a swarm of matter devouring nanomachines", "an angry Greek god", "a burnt-out coder", "a death ray fired millenia ago from a galaxy far, far away")].</b></span>")
+			if(isliving(M))
+				logTheThing("combat", M, null, "was gibbed by trying to hide on a merchant shuttle.")
 			M.gib()

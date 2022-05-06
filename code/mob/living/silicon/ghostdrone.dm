@@ -69,19 +69,27 @@
 
 		//Attach shit to tools
 		src.tools = list(
+			new /obj/item/device/light/flashlight(src),
 			new /obj/item/magtractor(src),
 			new /obj/item/tool/omnitool/silicon(src),
 			new /obj/item/rcd/material/cardboard(src),
 			new /obj/item/lamp_manufacturer(src),
+			new /obj/item/spraybottle/cleaner/robot/drone(src),
+			new /obj/item/sponge/ghostdronesafe(src),
 			new /obj/item/device/analyzer/atmospheric(src),
 			new /obj/item/device/t_scanner(src),
 			new /obj/item/electronics/soldering(src),
 			new /obj/item/electronics/scanner(src),
 			new /obj/item/deconstructor/borg(src),
 			new /obj/item/weldingtool(src),
-			new /obj/item/device/light/flashlight(src)
+
+
+
 		)
 
+		var/obj/item/tile/cardboard/T  =new /obj/item/tile/cardboard/(src)
+		T.amount = 600
+		src.tools += T
 		var/obj/item/cable_coil/W = new /obj/item/cable_coil(src)
 		W.amount = 1000
 		src.tools += W
@@ -206,6 +214,7 @@
 	examine()
 		. = ..()
 
+		. += "\n It's a cute little maintenance drone. There seems to be a glowing source inside it." // I hereby that declare the ghost part of ghostdrone is what makes them glow
 		. += "*---------*"
 
 		if (isdead(src))
@@ -278,7 +287,7 @@
 		return 1
 
 	proc/setFaceDialog()
-		var/newFace = input(usr, "Select your faceplate", "Drone", src.faceType) as null|anything in list("Happy", "Sad", "Mad")
+		var/newFace = input(usr, "Select your faceplate", "Drone", src.faceType) as null|anything in list("Happy", "Sad", "Mad", "Heart", "Sleepy", "Exclaim", "Question", "Lopsy", "Kitty", "Eye")
 		if (!newFace) return 0
 		var/newColor = input(usr, "Select your faceplate color", "Drone", src.faceColor) as null|color
 		if (!newFace && !newColor) return 0
@@ -368,7 +377,7 @@
 
 		var/obj/item/item = target
 		if (istype(item) && item == src.equipped())
-			item.attack_self(src)
+			item.AttackSelf(src)
 			return
 
 		if (src.client && src.client.check_key(KEY_PULL))
@@ -420,7 +429,7 @@
 		W.set_loc(src)
 		var/image/hatImage = image(icon = W.icon, icon_state = W.icon_state, layer = src.layer+0.1)
 		hatImage.pixel_y = 5
-		hatImage.transform *= 0.85
+		hatImage.transform *= 0.90
 		UpdateOverlays(hatImage, "hat")
 		return 1
 
@@ -722,6 +731,16 @@
 					message = "<B>[src]</B> claps."
 					m_type = 2
 
+			if ("nod")  // we want it so ghostdrones can answer yes/no wuestions
+				if (!src.restrained())
+					message = "<B>[src]</B> nods its head."
+					m_type = 2
+
+			if ("snap")
+				if (!src.restrained())
+					message = "<B>[src]</B> shakes its head."
+					m_type = 2
+
 			if ("flap")
 				if (!src.restrained())
 					message = "<B>[src]</B> flaps its wings."
@@ -767,7 +786,7 @@
 				message = "<b>[src]</b> [param]"
 				m_type = 1
 
-			if ("smile","grin","smirk","frown","scowl","grimace","sulk","pout","blink","nod","shrug","think","ponder","contemplate")
+			if ("smile","grin","smirk","frown","scowl","grimace","sulk","pout","blink","shrug","think","ponder","contemplate")
 				// basic visible single-word emotes
 				message = "<B>[src]</B> [act]s."
 				m_type = 1
@@ -906,7 +925,7 @@
 					game_stats.Increment("farts")
 #endif
 			else
-				src.show_text("Invalid Emote: [act]")
+				if (voluntary) src.show_text("Invalid Emote: [act]")
 				return
 
 		if (message && isalive(src))
@@ -1023,7 +1042,6 @@
 			if (dd_hasprefix(message, ";"))
 				message = trim(copytext(message, 2, MAX_MESSAGE_LEN))
 				broadcast = 1
-
 		if (broadcast)
 			return src.drone_broadcast(message)
 		else
@@ -1102,7 +1120,7 @@
 		return 0
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
-		setFace(pick("happy", "sad", "mad"), random_color())
+		setFace(pick("happy", "sad", "mad", "heart", "sleepy", "exclaim", "question", "lopsy", "kitty", "eye"), random_color())
 
 		if (limiter.canISpawn(/obj/effects/sparks))
 			var/obj/sparks = new /obj/effects/sparks
@@ -1278,7 +1296,7 @@
 	M.transforming = 1
 	M.canmove = 0
 	M.icon = null
-	APPLY_MOB_PROPERTY(M, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+	APPLY_ATOM_PROPERTY(M, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 	if (isobserver(M) && M:corpse)
 		G.oldmob = M:corpse

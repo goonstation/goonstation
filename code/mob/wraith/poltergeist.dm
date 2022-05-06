@@ -122,7 +122,7 @@
 	makeCorporeal()
 		if (!src.density)
 			src.set_density(1)
-			REMOVE_MOB_PROPERTY(src, PROP_INVISIBILITY, src)
+			REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src)
 			src.icon_state = "poltergeist-corp"
 			src.see_invisible = INVIS_NONE
 			src.visible_message(pick("<span class='alert'>A horrible apparition fades into view!</span>", "<span class='alert'>A pool of shadow forms!</span>"), pick("<span class='alert'>A shell of ectoplasm forms around you!</span>", "<span class='alert'>You manifest!</span>"))
@@ -132,7 +132,7 @@
 		if (src.density)
 			src.visible_message(pick("<span class='alert'>[src] vanishes!</span>", "<span class='alert'>The poltergeist dissolves into shadow!</span>"), pick("<span class='notice'>The ectoplasm around you dissipates!</span>", "<span class='notice'>You fade into the aether!</span>"))
 			src.set_density(0)
-			APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_GHOST)
+			APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_GHOST)
 			src.icon_state = "poltergeist"
 			src.see_invisible = INVIS_GHOST
 		update_body()

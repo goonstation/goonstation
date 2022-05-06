@@ -304,7 +304,7 @@
 /area/space)
 "aR" = (
 /obj/decal/cleanable/dirt,
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "Gross.";
 	icon = 'icons/mob/human.dmi';
 	icon_state = "husk_l";
@@ -4236,7 +4236,7 @@
 /turf/space,
 /area/space)
 "lA" = (
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /obj/item/paper/printout/emerg1,
 /turf/simulated/floor/airless/plating/damaged3,
 /area/space)
@@ -4926,7 +4926,7 @@
 /obj/item/storage/secure/ssafe/pilot_cargo1{
 	pixel_y = 32
 	},
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "Rest in peace.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body8";
@@ -5647,7 +5647,7 @@
 /area/space)
 "pb" = (
 /obj/decal/cleanable/dirt,
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "Gross.";
 	icon = 'icons/mob/human.dmi';
 	icon_state = "husk_l";
@@ -5729,7 +5729,7 @@
 /obj/decal/cleanable/oil,
 /obj/decal/cleanable/dirt,
 /obj/machinery/optable,
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "Gross.";
 	icon = 'icons/mob/human.dmi';
 	icon_state = "husk_l";
@@ -6215,7 +6215,7 @@
 /turf/simulated/floor/airless/plating/damaged1,
 /area/space)
 "qF" = (
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "The remains of a human. The skull has a hole in it.  An extra one, I mean.";
 	layer = 2.5;
 	pixel_y = 8
@@ -6348,7 +6348,7 @@
 /area/space)
 "qV" = (
 /obj/stool/bed,
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body6";

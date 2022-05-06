@@ -277,6 +277,13 @@
 			for (var/mob/dead/target_observer/hivemind_observer/O in src.hivemind)
 				O.set_observe_target(src.owner)
 
+	/// Get all hivemind members (including the changeling) who are still present
+	proc/get_current_hivemind()
+		. = list()
+		for (var/mob/member in (hivemind + owner))
+			if (isdead(member) || istype(member, /mob/living/critter/changeling) || (member == owner))
+				. += member
+
 	onAbilityStat()
 		..()
 		.= list()

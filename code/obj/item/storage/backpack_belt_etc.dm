@@ -13,6 +13,8 @@
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	does_not_open_in_pocket = 0
 	spawn_contents = list(/obj/item/storage/box/starter)
+	duration_remove = 3 SECONDS
+	duration_put = 3 SECONDS
 
 	blue
 		icon_state = "backpackb"
@@ -631,6 +633,22 @@
 	)
 	in_list_or_max = 1
 
+/obj/item/storage/belt/roboticist
+	icon_state = "utilrobotics"
+	name = "Roboticist's belt"
+	item_state = "robotics"
+	desc = "A utility belt, in the departmental colors of someone who loves robots and surgery."
+
+/obj/item/storage/belt/roboticist/prepared
+	spawn_contents = list(
+	/obj/item/crowbar,
+	/obj/item/weldingtool,
+	/obj/item/wirecutters,
+	/obj/item/screwdriver,
+	/obj/item/wrench,
+	/obj/item/circular_saw,
+	/obj/item/scalpel
+	)
 /obj/item/storage/belt/mining
 	name = "miner's belt"
 	desc = "Can hold various mining tools."
@@ -715,7 +733,7 @@
 		spawn_contents = list(/obj/item/gun/energy/signifer2, /obj/item/gun/kinetic/clock_188, /obj/item/baton/ntso, /obj/item/instrument/whistle, /obj/item/clothing/mask/gas/NTSO, /obj/item/storage/ntso_pouch, /obj/item/barrier) //secbelt subtype that only spawns on NTSO, not in vendor
 
 	baton
-		spawn_contents = list(/obj/item/baton, /obj/item/barrier)
+		spawn_contents = list(/obj/item/baton, /obj/item/barrier, /obj/item/requisition_token/security/utility)
 
 	tasersmg
 		spawn_contents = list(/obj/item/gun/energy/tasersmg, /obj/item/baton, /obj/item/barrier)

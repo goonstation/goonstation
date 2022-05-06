@@ -182,6 +182,7 @@
 /datum/artifact/pitcher
 	associated_object = /obj/item/reagent_containers/food/drinks/drinkingglass/artifact
 	type_name = "Pitcher"
+	type_size = ARTIFACT_SIZE_MEDIUM
 	rarity_weight = 350
 	validtypes = list("martian","wizard","eldritch")
 	min_triggers = 0

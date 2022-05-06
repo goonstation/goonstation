@@ -211,7 +211,7 @@
 /atom/proc/update_medium_light_visibility()
 	if(src.medium_lights[1].invisibility == 101) // toggled off
 		return
-	if(!isturf(src.loc))
+	if(!isturf(src.loc) && !isturf(src))
 		for (var/obj/overlay/simple_light/medium/light as anything in src.medium_lights)
 			src:vis_contents -= light
 		return

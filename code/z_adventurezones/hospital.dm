@@ -204,7 +204,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 			boutput(target, "<span><B>no no no no no no no no no no no no non&#9617;NO&#9617;NNnNNO</B></span>")
 			if (LANDMARK_SAMOSTREL_WARP in landmarks)
 				var/target_original_loc = target.loc
-				target.setStatus("paralysis", max(target.getStatusDuration("paralysis"), 10 SECONDS))
+				target.setStatusMin("paralysis", 10 SECONDS)
 				do_teleport(target, pick_landmark(LANDMARK_SAMOSTREL_WARP), 0, 0)
 
 				if (ishuman(target))
@@ -414,7 +414,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 /obj/storage/crate/freezer/hospital
 	var/keySpawned = 0
 
-	open()
+	open(entanglelogic, mob/user)
 		if (!keySpawned)
 			var/obj/item/device/key/hospital/theKey = new (src)
 			keySpawned = 1

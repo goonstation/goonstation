@@ -1,0 +1,73 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/random,
+/turf/simulated/floor/grime,
+/area/dmm_suite/clear_area)
+"f" = (
+/obj/item/storage/wall/random,
+/obj/table/auto,
+/obj/item/device/light/lava_lamp{
+	pixel_y = 8
+	},
+/turf/simulated/floor/grime,
+/area/dmm_suite/clear_area)
+"k" = (
+/obj/table/auto,
+/obj/random_item_spawner/desk_stuff,
+/turf/simulated/floor/grime,
+/area/dmm_suite/clear_area)
+"z" = (
+/obj/decal/poster/wallsign/poster_rand{
+	pixel_y = 28
+	},
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/random,
+/turf/simulated/floor/grime,
+/area/dmm_suite/clear_area)
+"M" = (
+/obj/storage/closet/wardrobe/mixed,
+/turf/simulated/floor/grime,
+/area/dmm_suite/clear_area)
+"N" = (
+/obj/storage/closet/wardrobe/pride,
+/turf/simulated/floor/grime,
+/area/dmm_suite/clear_area)
+"Q" = (
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/random,
+/turf/simulated/floor/grime,
+/area/dmm_suite/clear_area)
+"R" = (
+/turf/simulated/floor/grime,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+f
+R
+N
+"}
+(2,1,1) = {"
+z
+R
+a
+"}
+(3,1,1) = {"
+R
+R
+R
+"}
+(4,1,1) = {"
+Q
+R
+a
+"}
+(5,1,1) = {"
+k
+R
+M
+"}

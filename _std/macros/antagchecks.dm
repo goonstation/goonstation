@@ -1,6 +1,7 @@
 
 // Macros with abilityHolder or mutantrace defines are used for more than antagonist checks, so don't replace them with mind.special_role.
 #define istraitor(x) (istype(x, /mob/living/carbon/human) && x:mind && x:mind:special_role == ROLE_TRAITOR)
+#define isconspirator(x) (istype(x, /mob/living/carbon/human) && x:mind && x:mind:special_role == ROLE_CONSPIRATOR)
 #define ischangeling(x) (istype(x, /mob/living/carbon/human) && x:get_ability_holder(/datum/abilityHolder/changeling) != null)
 #define isabomination(x) (istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/abomination))
 #define isnukeop(x) (istype(x, /mob/living/carbon/human) && x:mind && x:mind:special_role == ROLE_NUKEOP)
@@ -9,7 +10,7 @@
 #define iswizard(x) ((istype(x, /mob/living/carbon/human) || istype(x, /mob/living/critter)) && x:get_ability_holder(/datum/abilityHolder/wizard) != null)
 #define ishunter(x) (istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/hunter))
 #define iswerewolf(x) (istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/werewolf))
-#define iswrestler(x) ((istype(x, /mob/living/carbon/human) || istype(x, /mob/living/critter)) && (x:get_ability_holder(/datum/abilityHolder/wrestler) != null || HAS_MOB_PROPERTY(x, PROP_PASSIVE_WRESTLE)))
+#define iswrestler(x) ((istype(x, /mob/living/carbon/human) || istype(x, /mob/living/critter)) && (x:get_ability_holder(/datum/abilityHolder/wrestler) != null || HAS_ATOM_PROPERTY(x, PROP_MOB_PASSIVE_WRESTLE)))
 #define iswraith(x) istype(x, /mob/wraith)
 #define ispoltergeist(x) istype(x, /mob/wraith/poltergeist)
 

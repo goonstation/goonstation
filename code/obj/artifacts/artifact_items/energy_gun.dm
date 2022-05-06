@@ -99,6 +99,7 @@
 /datum/artifact/energygun
 	associated_object = /obj/item/gun/energy/artifact
 	type_name = "Energy Gun"
+	type_size = ARTIFACT_SIZE_MEDIUM
 	rarity_weight = 350
 	validtypes = list("ancient","eldritch","precursor")
 	react_elec = list(0.02,0,5)

@@ -138,7 +138,7 @@
 		onclose(user, "gps")
 
 	attack_self(mob/user as mob)
-		if ((user.contents.Find(src) || user.contents.Find(src.master) || get_dist(src, user) <= 1))
+		if ((user.contents.Find(src) || user.contents.Find(src.master) || BOUNDS_DIST(src, user) == 0))
 			src.show_HTML(user)
 		else
 			user.Browse(null, "window=gps_[src]")

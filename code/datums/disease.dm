@@ -328,7 +328,12 @@
 	else
 		return 1 // you caught the virus! do you want to give the captured virus a nickname? virus has been recorded in lurgydex
 
-/mob/living/proc/contract_disease(var/ailment_path, var/ailment_name, var/datum/ailment_data/disease/strain, bypass_resistance = 0)
+/// Contract the specified disease.
+/// @param ailment_path Path of the ailment to add. If both ailment_path and ailment_name are passed, this is used.
+/// @param ailment_name Name of the ailment to add. This is not cosmetic; the ailment type is retrieved via this name.
+/// @param strain Instance of the ailment to add. Used to transfer an existing ailment to a person (such as in the case of a diseased organ transplant)
+/// @param bypass_resistance If disease resistance should be bypassed while adding a disease.
+/mob/living/proc/contract_disease(var/ailment_path, var/ailment_name, var/datum/ailment_data/disease/strain, bypass_resistance = FALSE)
 	if (!src)
 		return null
 	if (!ailment_path && !ailment_name && !(istype(strain,/datum/ailment_data/disease) || istype(strain,/datum/ailment_data/malady))) // maladies use strain to transfer specific instances of their selves via organ transplant/etc
@@ -549,10 +554,10 @@
 	var/numMid = round((1 * shockInput) / 10)
 	var/numLow = round((1 * shockInput) / 20)
 	if (src.organHolder.heart && src.organHolder.heart.robotic && src.organHolder.heart.emagged && !src.organHolder.heart.broken)
-		APPLY_MOB_PROPERTY(src, PROP_STAMINA_REGEN_BONUS, "heart_shock", 5)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "heart_shock", 5)
 		src.add_stam_mod_max("heart_shock", 20)
 		SPAWN(9000)
-			REMOVE_MOB_PROPERTY(src, PROP_STAMINA_REGEN_BONUS, "heart_shock")
+			REMOVE_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "heart_shock")
 			src.remove_stam_mod_max("heart_shock")
 		if (prob(numHigh))
 			boutput(src, "<span class='alert'>Your cyberheart spasms violently!</span>")
@@ -571,10 +576,10 @@
 			src.organHolder.heart.breakme()
 			src.contract_disease(/datum/ailment/malady/flatline, null, null, 1)
 	else if (src.organHolder.heart && src.organHolder.heart.robotic && !src.organHolder.heart.emagged && !src.organHolder.heart.broken)
-		APPLY_MOB_PROPERTY(src, PROP_STAMINA_REGEN_BONUS, "heart_shock", 1)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "heart_shock", 1)
 		src.add_stam_mod_max("heart_shock", 10)
 		SPAWN(9000)
-			REMOVE_MOB_PROPERTY(src, PROP_STAMINA_REGEN_BONUS, "heart_shock")
+			REMOVE_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "heart_shock")
 			src.remove_stam_mod_max("heart_shock")
 		if (prob(numMid))
 			boutput(src, "<span class='alert'>Your cyberheart spasms violently!</span>")

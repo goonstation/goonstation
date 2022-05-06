@@ -110,7 +110,7 @@
 
 	onUpdate()
 		..()
-		if (plank == null || owner == null || get_dist(owner, plank) > 1)
+		if (plank == null || owner == null || BOUNDS_DIST(owner, plank) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner
@@ -150,7 +150,7 @@
 
 	onUpdate()
 		..()
-		if (plank == null || owner == null || otherplank == null || get_dist(owner, plank) > 1 || get_dist(owner, otherplank) > 1)
+		if (plank == null || owner == null || otherplank == null || BOUNDS_DIST(owner, plank) > 0 || BOUNDS_DIST(owner, otherplank) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner
@@ -196,7 +196,7 @@
 
 	onUpdate()
 		..()
-		if (plank == null || owner == null || get_dist(owner, wall) > 1)
+		if (plank == null || owner == null || BOUNDS_DIST(owner, wall) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner

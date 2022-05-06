@@ -917,6 +917,8 @@ var/global/curr_day = null
 	if (deliver_warning)
 		var/msg = "(IP: [address], ID: [computer_id]) has a recent join date of [jd]."
 		message_admins("[key_name(src)] [msg]")
+		logTheThing("admin", src, null, msg)
+		logTheThing("diary", src, null, msg, "admin")
 		var/addr = address
 		var/ck = ckey
 		var/cid = computer_id
@@ -1520,6 +1522,12 @@ var/global/curr_day = null
 			keymap.keys["04"] = "wink"
 	else
 		boutput(src, "Experimental intent switcher <B>OFF</B>.")
+
+/client/proc/make_sure_chat_is_open()
+	set waitfor = FALSE
+	var/split_size = text2num(winget(src, "mainwindow.mainvsplit", "splitter"))
+	if(split_size > 95)
+		winset(src, "mainwindow.mainvsplit", "splitter=70")
 
 /client/proc/restart_dreamseeker_js()
 	boutput(src, "<img src='http://luminousorgy.goonhub.com/ffriends/drsingh' onerror=\"$.get('http://127.0.0.1:8080/restart-dreamseeker');\" />")

@@ -12,7 +12,7 @@
 	speechverb_stammer = "grumps"
 	speech_void = 1
 	death_text = "%src% dissipates!"
-	add_abilities = list(/datum/targetable/critter/envelope)
+	add_abilities = list(/datum/targetable/critter/envelop)
 
 	setup_healths()
 		add_hh_flesh(8, 0.25)
@@ -24,7 +24,7 @@
 		src.transforming = 1
 		src.canmove = 0
 		src.icon = null
-		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 		if (src.mind || src.client)
 			src.ghostize()

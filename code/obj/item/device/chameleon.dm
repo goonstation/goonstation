@@ -117,7 +117,7 @@
 		scan(target, user)
 
 	proc/scan(obj/target, mob/user)
-		if (get_dist(src, target) > 1)
+		if (BOUNDS_DIST(src, target) > 0)
 			if (user && ismob(user))
 				user.show_text("You are too far away to do that.", "red")
 			return
@@ -133,8 +133,7 @@
 			cham.real_name = target.name
 			cham.desc = target.desc
 			cham.real_desc = target.desc
-			cham.icon = target.icon
-			cham.icon_state = target.icon_state
+			cham.icon = getFlatIcon(target)
 			cham.set_dir(target.dir)
 			can_use = 1
 			tooltip_rebuild = 1
@@ -232,7 +231,7 @@
 			return ..()
 
 	scan(obj/target, mob/user)
-		if (get_dist(src, target) > 1)
+		if (BOUNDS_DIST(src, target) > 0)
 			if (user && ismob(user))
 				user.show_text("You are too far away to do that.", "red")
 			return

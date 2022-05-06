@@ -6,11 +6,12 @@
 	canmove = 1
 	blinded = 0
 	anchored = 1
+	throws_can_hit_me = FALSE
 	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY
 
 	New()
 		. = ..()
-		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_GHOST)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_GHOST)
 		src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 		src.see_invisible = INVIS_GHOST
 		src.see_in_dark = SEE_DARK_FULL

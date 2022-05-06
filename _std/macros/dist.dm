@@ -1,6 +1,8 @@
 
 /// Returns distance of two objects in tiles like get_dist but being inside another object doesn't break it and being on a different z-level returns INFINITY
 #define GET_DIST(A, B) (get_step(A, 0)?.z == get_step(B, 0)?.z ? max(abs(get_step(A, 0)?.x - get_step(B, 0)?.x), abs(get_step(A, 0)?.y - get_step(B, 0)?.y)) : INFINITY)
+/// Returns 0 if A and B are on adjacent turfs, through any amount of nested objs/mobs. Otherwise returns bounds_dist.
+#define BOUNDS_DIST(A, B) ((GET_DIST(A, B) <= 1 ? 0 : max(0, bounds_dist(A, B))))
 /// Returns if A is in range of B given range
 #define IN_RANGE(A, B, range) (GET_DIST(A, B) <= range)
 /// Returns the manhattan distance between two turfs or movable objects

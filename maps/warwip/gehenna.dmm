@@ -638,7 +638,7 @@
 /turf/simulated/floor/white,
 /area/station/mining/refinery)
 "bV" = (
-/obj/decal/oven{
+/obj/decal/fakeobjects/oven{
 	icon_state = "oven_off";
 	dir = 8
 	},
@@ -814,7 +814,7 @@
 	},
 /area/station/mining/refinery)
 "cw" = (
-/obj/decal/oven{
+/obj/decal/fakeobjects/oven{
 	icon_state = "oven_off";
 	dir = 4
 	},

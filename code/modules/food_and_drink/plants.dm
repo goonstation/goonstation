@@ -1,4 +1,5 @@
 
+ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 /obj/item/reagent_containers/food/snacks/plant/
 	name = "fruit or vegetable"
 	icon = 'icons/obj/foodNdrink/food_produce.dmi'
@@ -70,14 +71,14 @@
 	desc = "The tender and crunchy edible portion of a bamboo plant."
 	icon_state = "shoot"
 	food_color = "#B7B675"
-	amount = 1
+	bites_left = 1
 
 /obj/item/reagent_containers/food/snacks/plant/tomato/
 	name = "tomato"
 	desc = "You say tomato, I toolbox you."
 	icon_state = "tomato"
 	planttype = /datum/plant/fruit/tomato
-	amount = 1
+	bites_left = 1
 	heal_amt = 1
 	throwforce = 0
 	force = 0
@@ -127,7 +128,7 @@
 	desc = "The assistants call it maize."
 	icon_state = "corn"
 	planttype = /datum/plant/crop/corn
-	amount = 3
+	bites_left = 3
 	heal_amt = 1
 	throwforce = 0
 	force = 0
@@ -159,7 +160,7 @@
 	desc = "Pure grain ethanol in a vague corn shape."
 	icon_state = "clearcorn"
 	planttype = /datum/plant/crop/corn
-	amount = 3
+	bites_left = 3
 	heal_amt = 3
 	food_color = "#FFFFFF"
 	plant_reagent = "ethanol"
@@ -170,7 +171,7 @@
 	desc = "Wha? Why's this called corn? It's pepper!"
 	icon_state = "peppercorn"
 	planttype = /datum/plant/crop/corn
-	amount = 3
+	bites_left = 3
 	heal_amt = 3
 	food_color = "#373232"
 	plant_reagent = "pepper"
@@ -182,7 +183,7 @@
 	desc = "These soybeans are as close as two beans in a pod. Probably because they are literally beans in a pod."
 	planttype = /datum/plant/crop/soy
 	icon_state = "soy"
-	amount = 3
+	bites_left = 3
 	heal_amt = 1
 	throwforce = 0
 	force = 0
@@ -193,10 +194,10 @@
 /obj/item/reagent_containers/food/snacks/plant/bean
 	name = "bean pod"
 	crop_suffix = " pod"
-	desc = "This bean pod contains an inordinately large amount of beans due to genetic engineering. How convenient."
+	desc = "This bean pod contains an inordinately large bites_left of beans due to genetic engineering. How convenient."
 	planttype = /datum/plant/crop/beans
 	icon_state = "beanpod"
-	amount = 1
+	bites_left = 1
 	heal_amt = 1
 	throwforce = 0
 	force = 0
@@ -210,7 +211,7 @@
 	desc = "These peas are like peas in a pod. Yeah."
 	planttype = /datum/plant/crop/peas
 	icon_state = "peapod"
-	amount = 1
+	bites_left = 1
 	heal_amt = 1
 	throwforce = 0
 	force = 0
@@ -231,7 +232,7 @@
 	desc = "Contains high-energy plankton!"
 	planttype = /datum/plant/crop/soy
 	icon_state = "soylent"
-	amount = 3
+	bites_left = 3
 	heal_amt = 2
 	throwforce = 0
 	force = 0
@@ -242,7 +243,7 @@
 	desc = "Bitter."
 	icon_state = "orange"
 	planttype = /datum/plant/fruit/orange
-	amount = 3
+	bites_left = 3
 	heal_amt = 1
 	food_color = "#FF8C00"
 	plant_reagent = "juice_orange"
@@ -293,7 +294,7 @@
 	initial_volume = 6
 	throwforce = 0
 	w_class = W_CLASS_TINY
-	amount = 1
+	bites_left = 1
 	validforhat = 0
 
 	make_reagents()
@@ -321,7 +322,7 @@
 	crop_prefix = "synth"
 	desc = "Bitter. Moreso."
 	icon_state = "orange"
-	amount = 3
+	bites_left = 3
 	heal_amt = 2
 
 /obj/item/reagent_containers/food/snacks/plant/grape/
@@ -329,7 +330,7 @@
 	desc = "Not the green ones."
 	icon_state = "grapes"
 	planttype = /datum/plant/fruit/grape
-	amount = 5
+	bites_left = 5
 	heal_amt = 1
 	food_color = "#FF00FF"
 	brewable = 1
@@ -341,7 +342,7 @@
 	name = "grapes"
 	desc = "Not the purple ones."
 	icon_state = "Ggrapes"
-	amount = 5
+	bites_left = 5
 	heal_amt = 2
 	food_color = "#AAFFAA"
 	brew_result = "white_wine"
@@ -351,7 +352,7 @@
 	desc = "A delicious grape fruit."
 	icon_state = "grapefruit"
 	planttype = /datum/plant/fruit/grape
-	amount = 3
+	bites_left = 3
 	heal_amt = 1
 	food_color = "#FF9F87"
 	brew_result = "juice_grapefruit"
@@ -379,7 +380,7 @@
 	icon = 'icons/obj/foodNdrink/drinks.dmi'
 	throwforce = 0
 	w_class = W_CLASS_TINY
-	amount = 1
+	bites_left = 1
 	initial_volume = 6
 
 	New()
@@ -391,7 +392,7 @@
 	desc = "Sweet and tart."
 	icon_state = "cherry"
 	planttype = /datum/plant/fruit/cherry
-	amount = 5
+	bites_left = 5
 	heal_amt = 1
 	food_color = "#CC0000"
 	brewable = 1
@@ -442,7 +443,7 @@
 	planttype = /datum/plant/fruit/melon
 	throwforce = 0
 	w_class = W_CLASS_TINY
-	amount = 1
+	bites_left = 1
 	heal_amt = 2
 	food_color = "#7FFF00"
 	food_effects = list("food_cold", "food_refreshed")
@@ -505,7 +506,7 @@
 	icon_state = "george-melon-slice"
 	throwforce = 5
 	w_class = W_CLASS_TINY
-	amount = 1
+	bites_left = 1
 	heal_amt = 2
 	plant_reagent = "george_melonium"
 	initial_volume = 30
@@ -617,7 +618,7 @@
 	icon_state = "chili"
 	planttype = /datum/plant/fruit/chili
 	w_class = W_CLASS_TINY
-	amount = 1
+	bites_left = 1
 	heal_amt = 2
 	plant_reagent = "capsaicin"
 	initial_volume = 100
@@ -635,7 +636,7 @@
 	icon_state = "chilly"
 	//planttype = /datum/plant/fruit/chili
 	w_class = W_CLASS_TINY
-	amount = 1
+	bites_left = 1
 	heal_amt = 2
 	food_color = "#00CED1"
 	plant_reagent = "cryostylane"
@@ -659,7 +660,7 @@
 	icon_state = "ghost_chili"
 	//planttype = /datum/plant/fruit/chili
 	w_class = W_CLASS_TINY
-	amount = 1
+	bites_left = 1
 	heal_amt = 1
 	food_color = "#FFFF00"
 	plant_reagent = "ghostchilijuice"
@@ -683,7 +684,7 @@
 	icon_state = "lettuce-leaf"
 	planttype = /datum/plant/veg/lettuce
 	w_class = W_CLASS_TINY
-	amount = 1
+	bites_left = 1
 	heal_amt = 1
 	food_color = "#008000"
 
@@ -693,7 +694,7 @@
 	icon_state = "cucumber"
 	planttype = /datum/plant/veg/cucumber
 	w_class = W_CLASS_TINY
-	amount = 2
+	bites_left = 2
 	heal_amt = 1
 	food_color = "#008000"
 	food_effects = list("food_cold", "food_refreshed")
@@ -703,7 +704,7 @@
 	desc = "A freshly picked strawberry."
 	icon_state = "strawberry"
 	planttype = /datum/plant/fruit/strawberry
-	amount = 1
+	bites_left = 1
 	heal_amt = 1
 	food_color = "#FF2244"
 	plant_reagent = "juice_strawberry"
@@ -715,7 +716,7 @@
 	desc = "A freshly picked blueberry."
 	icon_state = "blueberry"
 	planttype = /datum/plant/fruit/blueberry
-	amount = 1
+	bites_left = 1
 	heal_amt = 1
 	food_color = "#0000FF"
 	plant_reagent = "juice_blueberry"
@@ -726,7 +727,7 @@
 	desc = "A freshly picked blackberry."
 	icon_state = "blackberry"
 	planttype = /datum/plant/fruit/raspberry
-	amount = 1
+	bites_left = 1
 	heal_amt = 1
 	food_color = "#1d222f"
 	plant_reagent = "juice_blackberry"
@@ -737,7 +738,7 @@
 	desc = "A freshly picked raspberry."
 	icon_state = "raspberry"
 	planttype = /datum/plant/fruit/raspberry
-	amount = 1
+	bites_left = 1
 	heal_amt = 1
 	food_color = "#a30325"
 	plant_reagent = "juice_raspberry"
@@ -748,7 +749,7 @@
 	desc = "A freshly picked blue raspberry."
 	icon_state = "blueraspberry"
 	planttype = /datum/plant/fruit/raspberry
-	amount = 1
+	bites_left = 1
 	heal_amt = 1
 	food_color = "#65d8e6"
 	plant_reagent = "juice_blueraspberry"
@@ -759,7 +760,7 @@
 	desc = "Whether or not you like the taste, its freshness is appearant."
 	icon_state = "pear"
 	planttype = /datum/plant/fruit/pear
-	amount = 1
+	bites_left = 1
 	heal_amt = 2
 	brewable = 1
 	brew_result = "cider" // pear cider is delicious, fuck you.
@@ -771,7 +772,7 @@
 	desc = "You'd definitely become terribly ill if you ate this."
 	icon_state = "pear"
 	//planttype = ///datum/plant/pear
-	amount = 1
+	bites_left = 1
 	heal_amt = 2
 	brewable = 1
 	plant_reagent = "too much"
@@ -789,7 +790,7 @@
 	desc = "Feelin' peachy now, but after you eat it it's the pits."
 	icon_state = "peach"
 	planttype = /datum/plant/fruit/peach
-	amount = 1
+	bites_left = 1
 	heal_amt = 2
 	food_color = "#DEBA5F"
 
@@ -805,7 +806,7 @@
 	desc = "Implied by folklore to repel medical staff."
 	icon_state = "apple"
 	planttype = /datum/plant/fruit/apple
-	amount = 3
+	bites_left = 3
 	heal_amt = 1
 	food_color = "#40C100"
 	brewable = 1
@@ -853,6 +854,14 @@
 			qdel(src)
 		else ..()
 
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)	//An apple a day, keeps the doctors away
+		if (ishuman(hit_atom))
+			var/mob/living/carbon/human/H = hit_atom
+			if(H.traitHolder.hasTrait("training_medical"))
+				random_brute_damage(H, 3)
+				boutput(H, "<span class='alert'>The apple flies true and hits you square in the face, hurting your nose.</span>")
+		..()
+
 /obj/item/reagent_containers/food/snacks/plant/apple/poison
 	name = "delicious-looking apple"
 	crop_prefix = "delicious-looking "
@@ -890,7 +899,7 @@
 	desc = "Cavendish, of course."
 	icon_state = "banana"
 	planttype = /datum/plant/fruit/banana
-	amount = 2
+	bites_left = 2
 	heal_amt = 2
 	food_color = "#FFFF00"
 	plant_reagent = "potassium"
@@ -928,7 +937,7 @@
 	icon_state = "carrot"
 	planttype = /datum/plant/veg/carrot
 	w_class = W_CLASS_TINY
-	amount = 3
+	bites_left = 3
 	heal_amt = 1
 	food_color = "#FF9900"
 	validforhat = 1
@@ -937,6 +946,7 @@
 	make_reagents()
 		..()
 		reagents.add_reagent("juice_carrot",5)
+		reagents.add_reagent("oculine",5)
 
 /obj/item/reagent_containers/food/snacks/plant/pumpkin
 	name = "pumpkin"
@@ -984,7 +994,7 @@
 	desc = "A very sour green fruit."
 	icon_state = "lime"
 	planttype = /datum/plant/fruit/lime
-	amount = 2
+	bites_left = 2
 	heal_amt = 1
 	food_color = "#008000"
 	plant_reagent = "juice_lime"
@@ -1016,7 +1026,7 @@
 	icon = 'icons/obj/foodNdrink/drinks.dmi'
 	throwforce = 0
 	w_class = W_CLASS_TINY
-	amount = 1
+	bites_left = 1
 	initial_volume = 6
 	validforhat = 0
 
@@ -1029,7 +1039,7 @@
 	desc = "Suprisingly not a commentary on the station's workmanship."
 	icon_state = "lemon"
 	planttype = /datum/plant/fruit/lemon
-	amount = 2
+	bites_left = 2
 	heal_amt = 1
 	food_color = "#FFFF00"
 	plant_reagent = "juice_lemon"
@@ -1060,7 +1070,7 @@
 	icon = 'icons/obj/foodNdrink/drinks.dmi'
 	throwforce = 0
 	w_class = W_CLASS_TINY
-	amount = 1
+	bites_left = 1
 	initial_volume = 6
 	validforhat = 0
 
@@ -1074,7 +1084,7 @@
 	desc = "An extremely poisonous, bitter fruit.  The slurrypod fruit is regarded as a delicacy in some outer colony worlds."
 	icon_state = "slurry"
 	planttype = /datum/plant/weed/slurrypod
-	amount = 1
+	bites_left = 1
 	heal_amt = -1
 	food_color = "#008000"
 	plant_reagent = "toxic_slurry"
@@ -1085,7 +1095,7 @@
 	crop_prefix = "omega "
 	desc = "An extremely poisonous, bitter fruit.  A strange light pulses from within."
 	icon_state = "slurrymut"
-	amount = 1
+	bites_left = 1
 	heal_amt = -1
 	initial_volume = 50
 
@@ -1099,7 +1109,7 @@
 	desc = "A pile of peanuts."
 	icon_state = "peanuts"
 	planttype = /datum/plant/crop/peanut
-	amount = 1
+	bites_left = 1
 	heal_amt = 2
 	food_color = "#D2691E"
 	food_effects = list("food_energized", "food_brute")
@@ -1123,7 +1133,7 @@
 	desc = "It needs peeling first."
 	icon_state = "potato"
 	planttype = /datum/plant/veg/potato
-	amount = 1
+	bites_left = 1
 	heal_amt = 0
 	food_color = "#F0E68C"
 	brewable = 1
@@ -1193,7 +1203,7 @@
 	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
 	icon_state = "onion-ring"
 	food_color = "#B923EB"
-	amount = 1
+	bites_left = 1
 	food_effects = list("food_bad_breath")
 
 /obj/item/reagent_containers/food/snacks/plant/garlic
@@ -1293,7 +1303,7 @@
 	desc = "Tropical meat!"
 	icon_state = "coconut-meat"
 	planttype = /datum/plant/fruit/coconut
-	amount = 1
+	bites_left = 1
 	heal_amt = 2
 	food_color = "#4D2600"
 	food_effects = list("food_refreshed","food_cold")
@@ -1337,7 +1347,7 @@
 	desc = "Juicy!"
 	icon_state = "pineapple-slice"
 	planttype = /datum/plant/fruit/pineapple
-	amount = 1
+	bites_left = 1
 	heal_amt = 2
 	food_color = "#F8D016"
 	food_effects = list("food_refreshed","food_cold")
@@ -1352,7 +1362,7 @@
 	desc = "They are also called cherries and are found on coffee plants."
 	icon_state = "coffeeberries"
 	planttype = /datum/plant/crop/coffee
-	amount = 1
+	bites_left = 1
 	heal_amt = 3
 	food_color = "#302013"
 	validforhat = 1
@@ -1388,7 +1398,7 @@
 	desc = "Even though the coffee beans are seeds, they are referred to as 'beans' because of their resemblance to true beans.."
 	icon_state = "coffeebeans"
 	planttype = /datum/plant/crop/coffee
-	amount = 1
+	bites_left = 1
 	heal_amt = 1
 	food_color = "#302013"
 	validforhat = 1
@@ -1414,7 +1424,7 @@
 	crop_suffix = " berry"
 	icon_state = "lashberry"
 	planttype = /datum/plant/weed/lasher
-	amount = 4
+	bites_left = 4
 	heal_amt = 2
 	food_color = "#FF00FF"
 	validforhat = 1
@@ -1428,7 +1438,7 @@
 	crop_suffix = " goop"
 	icon_state = "yuckpurple"
 	planttype = /datum/plant/artifact/dripper
-	amount = 1
+	bites_left = 1
 	heal_amt = 0
 	food_color = "#9865c5"
 	initial_volume = 25
@@ -1456,7 +1466,7 @@
 	crop_suffix = " fruit"
 	icon_state = "glowfruit"
 	planttype = /datum/plant/artifact/litelotus
-	amount = 4
+	bites_left = 4
 	heal_amt = 1
 	food_color = "#ccccff"
 	validforhat = 1

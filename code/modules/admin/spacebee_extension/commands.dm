@@ -296,7 +296,7 @@
 	argument_types = list(/datum/command_argument/string="headline", /datum/command_argument/the_rest="body")
 	execute(user, headline, body)
 		for_by_tcl(C, /obj/machinery/communications_dish)
-			C.add_centcom_report("[command_name()] Update", body)
+			C.add_centcom_report(ALERT_GENERAL, body)
 		body = discord_emojify(body)
 		headline = discord_emojify(headline)
 		command_alert(body, headline, "sound/misc/announcement_1.ogg")

@@ -27,6 +27,7 @@ $nanotrasen: #384e68;
     'background-color': rgba(0, 0, 0, 0.5),
   ));
   @include meta.load-css('../components/Section.scss');
+  @include meta.load-css('../components/goonstation/SectionEx.scss');
 
   // Layouts
   @include meta.load-css('../layouts/Layout.scss');

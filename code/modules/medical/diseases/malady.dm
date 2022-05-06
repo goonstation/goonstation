@@ -225,7 +225,7 @@
 	..()
 	if (iscarbon(affected_mob))
 		var/mob/living/carbon/C = affected_mob
-		REMOVE_MOB_PROPERTY(C, PROP_STAMINA_REGEN_BONUS, "bloodclot")
+		REMOVE_ATOM_PROPERTY(C, PROP_MOB_STAMINA_REGEN_BONUS, "bloodclot")
 		C.remove_stam_mod_max("bloodclot")
 
 /datum/ailment/malady/bloodclot/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/malady/D, mult)
@@ -271,7 +271,7 @@
 					return
 				if (probmult(5) && iscarbon(affected_mob))
 					var/mob/living/carbon/C = affected_mob
-					APPLY_MOB_PROPERTY(C, PROP_STAMINA_REGEN_BONUS, "bloodclot", -2)
+					APPLY_ATOM_PROPERTY(C, PROP_MOB_STAMINA_REGEN_BONUS, "bloodclot", -2)
 					C.add_stam_mod_max("bloodclot", -10)
 				if (probmult(5))
 					affected_mob.losebreath ++
@@ -287,7 +287,7 @@
 					return
 				if (probmult(5) && iscarbon(affected_mob))
 					var/mob/living/carbon/C = affected_mob
-					APPLY_MOB_PROPERTY(C, PROP_STAMINA_REGEN_BONUS, "bloodclot", -2)
+					APPLY_ATOM_PROPERTY(C, PROP_MOB_STAMINA_REGEN_BONUS, "bloodclot", -2)
 					C.add_stam_mod_max("bloodclot", -10)
 				if (probmult(8))
 					affected_mob.take_brain_damage(10)
@@ -319,7 +319,7 @@
 					D.affected_area = null
 					if (iscarbon(affected_mob))
 						var/mob/living/carbon/C = affected_mob
-						REMOVE_MOB_PROPERTY(C, PROP_STAMINA_REGEN_BONUS, "bloodclot")
+						REMOVE_ATOM_PROPERTY(C, PROP_MOB_STAMINA_REGEN_BONUS, "bloodclot")
 						C.remove_stam_mod_max("bloodclot")
 
 /* -------------------- Heart Disease -------------------- */
@@ -337,14 +337,14 @@
 	..()
 	if (iscarbon(affected_mob))
 		var/mob/living/carbon/C = affected_mob
-		APPLY_MOB_PROPERTY(C, PROP_STAMINA_REGEN_BONUS, "heartdisease", -2)
+		APPLY_ATOM_PROPERTY(C, PROP_MOB_STAMINA_REGEN_BONUS, "heartdisease", -2)
 		C.add_stam_mod_max("heartdisease", -10)
 
 /datum/ailment/malady/heartdisease/on_remove(var/mob/living/affected_mob,var/datum/ailment_data/malady/D)
 	..()
 	if (iscarbon(affected_mob))
 		var/mob/living/carbon/C = affected_mob
-		REMOVE_MOB_PROPERTY(C, PROP_STAMINA_REGEN_BONUS, "heartdisease")
+		REMOVE_ATOM_PROPERTY(C, PROP_MOB_STAMINA_REGEN_BONUS, "heartdisease")
 		C.remove_stam_mod_max("heartdisease")
 
 /datum/ailment/malady/heartdisease/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/malady/D, mult)

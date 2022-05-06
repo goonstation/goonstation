@@ -22,8 +22,8 @@
 
 		if (!holder.owner.bioHolder.HasEffect("hulk"))
 			holder.owner.bioHolder.AddEffect("hulk", 0, 0, 0, 1)
-		APPLY_MOB_PROPERTY(holder.owner, PROP_PASSIVE_WRESTLE, "empower")
-		APPLY_MOB_PROPERTY(holder.owner, PROP_STAMINA_REGEN_BONUS, "empower", 5)
+		APPLY_ATOM_PROPERTY(holder.owner, PROP_MOB_PASSIVE_WRESTLE, "empower")
+		APPLY_ATOM_PROPERTY(holder.owner, PROP_MOB_STAMINA_REGEN_BONUS, "empower", 5)
 		var/SPtime = 150
 		if (holder.owner.wizard_spellpower(src))
 			SPtime = 300
@@ -33,5 +33,5 @@
 			if (!QDELETED(holder.owner))
 				if (holder.owner.bioHolder.HasEffect("hulk"))
 					holder.owner.bioHolder.RemoveEffect("hulk")
-				REMOVE_MOB_PROPERTY(holder.owner, PROP_PASSIVE_WRESTLE, "empower")
-				REMOVE_MOB_PROPERTY(holder.owner, PROP_STAMINA_REGEN_BONUS, "empower")
+				REMOVE_ATOM_PROPERTY(holder.owner, PROP_MOB_PASSIVE_WRESTLE, "empower")
+				REMOVE_ATOM_PROPERTY(holder.owner, PROP_MOB_STAMINA_REGEN_BONUS, "empower")

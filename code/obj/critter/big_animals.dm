@@ -371,7 +371,7 @@ obj/critter/bear/care
 						src.visible_message("<span class='alert'><B>Whoops, looks like [src] bit down a bit too hard.</span>")
 
 			//stand next to bat, and point towards some blood, the bat will try to drink it
-			else if (istype(over_object,/obj/item/reagent_containers/) && get_dist(usr, src) <= 1)
+			else if (istype(over_object,/obj/item/reagent_containers/) && BOUNDS_DIST(usr, src) == 0)
 				src.task = "chasing blood"
 				src.drink_target = over_object
 				src.visible_message("[usr] gestures towards [over_object] to try to get [src] to drink from it.")

@@ -1,25 +1,203 @@
-"a" = (/turf/variableTurf/clear,/area/space)
-"b" = (/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/sandy_ruins)
-"c" = (/obj/landmark/artifact,/turf/simulated/floor/sand,/area/prefab/sandy_ruins)
-"d" = (/turf/simulated/floor/sand,/area/prefab/sandy_ruins)
-"e" = (/obj/critter/bloodling,/turf/simulated/floor/sand,/area/prefab/sandy_ruins)
-"f" = (/obj/structure/girder/reinforced,/turf/simulated/floor/sand,/area/prefab/sandy_ruins)
-"g" = (/obj/item/paper{icon_state = "paper_caution_bloody"; info = "I met a traveller from an antique land,<BR>Who said - &#34;Two vast and trunkless legs of stone<BR>Stand in the desert. . . . Near them, on the sand,<BR>Half sunk a shattered visage lies, whose frown,<BR>And wrinkled lip, and sneer of cold command,<BR>Tell that its sculptor well those passions read<BR>Which yet survive, stamped on these lifeless things,<BR>The hand that mocked them, and the heart that fed;<BR>And on the pedestal, these words appear:<BR>My name is Ozymandias, King of Kings;<BR>Look on my Works, ye Mighty, and despair!<BR>Nothing beside remains. Round the decay<BR>Of that colossal Wreck, boundless and bare<BR>The lone and level sands stretch far away.&#34"; name = "bloody parchment"},/turf/simulated/floor/sand,/area/prefab/sandy_ruins)
-"h" = (/obj/structure/girder/displaced,/turf/simulated/floor/sand,/area/prefab/sandy_ruins)
-"w" = (/turf/variableTurf/clear,/area/noGenerate)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/variableTurf/clear,
+/area/space)
+"b" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/sandy_ruins)
+"c" = (
+/obj/landmark/artifact,
+/turf/simulated/floor/sand,
+/area/prefab/sandy_ruins)
+"d" = (
+/turf/simulated/floor/sand,
+/area/prefab/sandy_ruins)
+"e" = (
+/obj/critter/bloodling,
+/turf/simulated/floor/sand,
+/area/prefab/sandy_ruins)
+"f" = (
+/obj/structure/girder/reinforced,
+/turf/simulated/floor/sand,
+/area/prefab/sandy_ruins)
+"g" = (
+/obj/item/paper{
+	icon_state = "paper_caution_bloody";
+	info = "I met a traveller from an antique land,<BR>Who said - &#34;Two vast and trunkless legs of stone<BR>Stand in the desert. . . . Near them, on the sand,<BR>Half sunk a shattered visage lies, whose frown,<BR>And wrinkled lip, and sneer of cold command,<BR>Tell that its sculptor well those passions read<BR>Which yet survive, stamped on these lifeless things,<BR>The hand that mocked them, and the heart that fed;<BR>And on the pedestal, these words appear:<BR>My name is Ozymandias, King of Kings;<BR>Look on my Works, ye Mighty, and despair!<BR>Nothing beside remains. Round the decay<BR>Of that colossal Wreck, boundless and bare<BR>The lone and level sands stretch far away.&#34";
+	name = "bloody parchment"
+	},
+/turf/simulated/floor/sand,
+/area/prefab/sandy_ruins)
+"h" = (
+/obj/structure/girder/displaced,
+/turf/simulated/floor/sand,
+/area/prefab/sandy_ruins)
+"w" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
 
 (1,1,1) = {"
-aaaaaaaaaaa
-aaaabbbaaaa
-aaabbcbbaaa
-aabbdddbbwa
-aabeddddfwa
-abbdddddbba
-abcddgddcba
-abbddddebba
-awfdddddbaa
-awbbeddbbaa
-aaabbdbbaaa
-aaaabhbaaaa
-aaaawwwaaaa
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+b
+b
+b
+w
+w
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+a
+b
+b
+b
+c
+b
+f
+b
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+a
+b
+b
+e
+d
+d
+d
+d
+b
+b
+a
+a
+"}
+(5,1,1) = {"
+a
+b
+b
+d
+d
+d
+d
+d
+d
+e
+b
+b
+w
+"}
+(6,1,1) = {"
+a
+b
+c
+d
+d
+d
+g
+d
+d
+d
+d
+h
+w
+"}
+(7,1,1) = {"
+a
+b
+b
+d
+d
+d
+d
+d
+d
+d
+b
+b
+w
+"}
+(8,1,1) = {"
+a
+a
+b
+b
+d
+d
+d
+e
+d
+b
+b
+a
+a
+"}
+(9,1,1) = {"
+a
+a
+a
+b
+f
+b
+c
+b
+b
+b
+a
+a
+a
+"}
+(10,1,1) = {"
+a
+a
+a
+w
+w
+b
+b
+b
+a
+a
+a
+a
+a
+"}
+(11,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
 "}

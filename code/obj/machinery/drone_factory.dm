@@ -257,6 +257,9 @@ var/global/list/ghostdrone_candidates = list()
 			return
 
 		for (var/obj/machinery/conveyor/C as anything in src.conveyors)
+			if(C.disposed)
+				src.conveyors -= C
+				continue
 			C.operating = 0
 			C.setdir()
 
@@ -274,6 +277,9 @@ var/global/list/ghostdrone_candidates = list()
 			src.current_assembly = null
 
 		for (var/obj/machinery/conveyor/C as anything in src.conveyors)
+			if(C.disposed)
+				src.conveyors -= C
+				continue
 			C.operating = 1
 			C.setdir()
 
@@ -382,6 +388,9 @@ var/global/list/ghostdrone_candidates = list()
 	proc/set_conveyors(var/set_active = 0)
 		src.conveyors_active = set_active
 		for (var/obj/machinery/conveyor/C as anything in src.conveyors)
+			if(C.disposed)
+				src.conveyors -= C
+				continue
 			C.operating = set_active
 			C.setdir()
 

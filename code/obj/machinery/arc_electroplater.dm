@@ -51,10 +51,6 @@
 			boutput(user, "<span class='alert'>You need to process \the [W] first before using it in [src]!</span>")
 			return
 
-		if(W.amount > 1)
-			boutput(user, "<span class='alert'>You'll need to split the stack of \the [W] first before using it in [src]!</span>")
-			return
-
 		if(istype(W,/obj/item/material_piece))
 			if(my_bar)
 				boutput(user, "<span class='alert'>There is already a source material loaded in [src]!</span>")
@@ -97,7 +93,7 @@
 			src.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>")
 			user.u_equip(W)
 			W.set_loc(src)
-			W.dropped()
+			W.dropped(user)
 			src.cooktime = 0
 			src.target_item = W
 			src.icon_state = "plater1"

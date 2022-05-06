@@ -9,7 +9,7 @@ TYPEINFO(/datum/component/loc_invisibility)
 	if(!ismob(parent))
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, COMSIG_MOVABLE_SET_LOC, .proc/on_set_loc)
-	RegisterSignal(parent, COMSIG_MOB_PROP_INVISIBILITY, .proc/on_invis_change)
+	RegisterSignal(parent, COMSIG_ATOM_PROP_MOB_INVISIBILITY, .proc/on_invis_change)
 
 /datum/component/loc_invisibility/RegisterWithParent()
 	. = ..()
@@ -31,5 +31,5 @@ TYPEINFO(/datum/component/loc_invisibility)
 		M.loc.invisibility = M.invisibility
 
 /datum/component/loc_invisibility/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_MOVABLE_SET_LOC, COMSIG_MOB_PROP_INVISIBILITY))
+	UnregisterSignal(parent, list(COMSIG_MOVABLE_SET_LOC, COMSIG_ATOM_PROP_MOB_INVISIBILITY))
 	. = ..()

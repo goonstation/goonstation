@@ -828,7 +828,7 @@ What are the archived variables for?
 	return 1
 
 /datum/gas_mixture/proc/check_if_dangerous()
-	if(temperature > T100C || temperature < T0C || trace_gases || toxins || farts || carbon_dioxide || (nitrogen && !oxygen))
+	if(TOTAL_MOLES(src) && (temperature > T100C || temperature < T0C || trace_gases || toxins || farts || carbon_dioxide || (nitrogen && !oxygen)))
 		return TRUE
 	else
 		return FALSE

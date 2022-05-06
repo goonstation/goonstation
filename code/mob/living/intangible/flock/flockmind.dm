@@ -14,7 +14,7 @@
 /mob/living/intangible/flock/flockmind/New()
 	..()
 
-	APPLY_MOB_PROPERTY(src, PROP_EXAMINE_ALL_NAMES, src)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 	src.abilityHolder = new /datum/abilityHolder/flockmind(src)
 	src.last_time = world.timeofday
 
@@ -86,7 +86,7 @@
 	if(src.client)
 		boutput(src, "<span class='alert'>With the last of your drones dying, nothing is left to compute your consciousness. You abruptly cease to exist.</span>")
 	src.flock?.perish()
-	REMOVE_MOB_PROPERTY(src, PROP_INVISIBILITY, src)
+	REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src)
 	src.icon_state = "blank"
 	src.canmove = 0
 	flick("flockmind-death", src)

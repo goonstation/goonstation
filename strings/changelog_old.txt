@@ -3888,7 +3888,7 @@
 (t)fri jun 27 14
 (u)Dr. Cogwerks
 (*)Most critters now have a chance to random quality-derived names
-(*)An awful wendigo or a fancy bee won't do anything different yet, but SOON
+(*)An awful brullbar or a fancy bee won't do anything different yet, but SOON
 (*)Crew backpacks will now have some goofy personalized trinkets
 (-)
 (t)sat jun 21 14

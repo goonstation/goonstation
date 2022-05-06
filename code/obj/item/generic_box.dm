@@ -178,7 +178,7 @@
 					next_use = world.timeofday + use_delay
 					var/obj/item/sticker/stikur = take_from()
 					if(!stikur) return
-					var/ret = stikur.afterattack(A, user, reach, params)
+					var/ret = stikur.AfterAttack(A, user, reach, params)
 					if(!ret)
 						qdel(stikur)
 					return

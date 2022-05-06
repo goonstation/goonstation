@@ -507,7 +507,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	desc = "A snowball. Made of snow."
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "snowball"
-	amount = 2
+	bites_left = 2
 	w_class = W_CLASS_TINY
 	throwforce = 1
 	doants = 0
@@ -547,7 +547,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		if (message)
 			M.visible_message("<span class='alert'><b>[M]</b> is hit by [src]!</span>",\
 			"<span class='alert'>You get hit by [src]![pick("", " Brr!", " Ack!", " Cold!")]</span>")
-		src.amount -= rand(1, 2)
+		src.bites_left -= rand(1, 2)
 
 	attack(mob/M as mob, mob/user as mob)
 		if (user.bioHolder.HasEffect("clumsy") && prob(50))
@@ -559,7 +559,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 
 		src.add_fingerprint(user)
 
-		if (src.amount <= 0)
+		if (src.bites_left <= 0)
 			src.visible_message("[src] collapses into a poof of snow!")
 			qdel(src)
 			return
@@ -579,7 +579,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		if (ismob(A))
 			src.hit(A)
-		if (src.amount <= 0)
+		if (src.bites_left <= 0)
 			src.visible_message("[src] collapses into a poof of snow!")
 			qdel(src)
 			return
@@ -1113,7 +1113,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 				var/obj/item/grab/G = new /obj/item/grab(src, src, M)
 				usr.put_in_hand_or_drop(G)
 				M.changeStatus("stunned", 1 SECOND)
-				G.state = 1
+				G.state = GRAB_AGGRESSIVE
 				G.UpdateIcon()
 				src.set_dir(get_dir(src, M))
 				playsound(src.loc, "sound/voice/animal/werewolf_attack3.ogg", 65, 1, 0, 0.5)
@@ -1135,7 +1135,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 					src.visible_message("<span class='alert'><B>[src] begins squeezing [H] in \his hand!</B></span>")
 					H.set_loc(src.loc)
 					while (!isdead(H))
-						if (src.stat || src.transforming || get_dist(src,H) > 1)
+						if (src.stat || src.transforming || BOUNDS_DIST(src, H) > 0)
 							boutput(src, "<span class='alert'>Your victim escaped! Curses!</span>")
 							qdel(G)
 							src.verbs += /mob/living/carbon/human/krampus/verb/krampus_crush
@@ -1175,7 +1175,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 					src.visible_message("<span class='alert'><B>[src] raises [H] up to \his mouth! Oh shit!</B></span>")
 					H.set_loc(src.loc)
 					sleep(6 SECONDS)
-					if (src.stat || src.transforming || get_dist(src,H) > 1)
+					if (src.stat || src.transforming || BOUNDS_DIST(src, H) > 0)
 						boutput(src, "<span class='alert'>Your prey escaped! Curses!</span>")
 					else
 						src.visible_message("<span class='alert'><B>[src] devours [H] whole!</B></span>")

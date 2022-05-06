@@ -60,8 +60,8 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring/wizard)
 			..()
 			if (user?.bioHolder.RemoveEffect("hulk"))
 				boutput(user, "<span class='alert'><b>Removing [src] removes its powers with it!</b></span>")
-			REMOVE_MOB_PROPERTY(user, PROP_PASSIVE_WRESTLE, "empower")
-			REMOVE_MOB_PROPERTY(user, PROP_STAMINA_REGEN_BONUS, "empower")
+			REMOVE_ATOM_PROPERTY(user, PROP_MOB_PASSIVE_WRESTLE, "empower")
+			REMOVE_ATOM_PROPERTY(user, PROP_MOB_STAMINA_REGEN_BONUS, "empower")
 
 	staff
 		name = "ring of cthulhu"
@@ -76,6 +76,28 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring/wizard)
 			//can only make one staff per ring. Anyone who equips the ring claims the staff
 			if (!created_staff)
 				var/obj/item/staff/cthulhu/staff = new /obj/item/staff/cthulhu(get_turf(user))
+				created_staff = staff
+
+			if (created_staff?.wizard_key != user?.mind.key)
+				boutput(user, "<span class='notice'><b>You claim [created_staff] as your own!</b></span>")
+				created_staff.wizard_key = user?.mind.key
+
+		disposing()
+			created_staff = null
+			..()
+
+	staff_thunder
+		name = "ring of thunder"
+		desc = "Little arcs of electricty run along the outside of this ring."
+		icon_state = "stave_of_thunder"
+		ability_path = /datum/targetable/spell/summon_thunder_staff
+		var/obj/item/staff/thunder/created_staff
+
+		equipped(var/mob/user, var/slot)
+			..()
+
+			if (!created_staff)
+				var/obj/item/staff/thunder/staff = new /obj/item/staff/thunder(get_turf(user))
 				created_staff = staff
 
 			if (created_staff?.wizard_key != user?.mind.key)

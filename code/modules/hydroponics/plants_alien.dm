@@ -80,6 +80,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 		else if(focus_level <= 6)
 			boutput(M, "<span style=\"color:red;font-size:3em\">Run.</span>")
 		else
+			logTheThing("combat", M, null, "was gibbed by [src] ([src.type]) at [log_loc(M)].")
 			if (M.organHolder)
 				var/obj/brain = M.organHolder.drop_organ("brain")
 				brain?.throw_at(get_edge_cheap(get_turf(M), pick(cardinal)), 16, 3)
@@ -90,10 +91,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 					M.gib()
 			else if(istype(M, /mob/living/silicon/robot))
 				var/mob/living/silicon/robot/R = M
-				if(R.brain)
-					R.brain.set_loc(get_turf(R))
-					R.brain.throw_at(get_edge_cheap(get_turf(R), pick(cardinal)), 16, 3)
-					R.brain = null
+				R.eject_brain(fling = TRUE)
 				R.update_appearance()
 				R.TakeDamage("head", 420, 0)
 			else

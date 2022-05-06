@@ -103,7 +103,7 @@
 /obj/machinery/bot/mining/process()
 	if(!src.on) return
 	if(src.digging) return
-	if(!istype(target, /turf/simulated/wall/asteroid/))
+	if(!istype(target, /turf/simulated/wall/auto/asteroid/))
 		src.target = null
 	if(!src.target)
 		src.findTarget()
@@ -129,7 +129,7 @@
 	digbottargets = list()
 	for(var/obj/machinery/bot/mining/bot in machine_registry[MACHINES_BOTS])
 		if(bot != src) digbottargets += bot.target
-	for (var/turf/simulated/wall/asteroid/D in view(7,src))
+	for (var/turf/simulated/wall/auto/asteroid/D in view(7,src))
 		if(!(D in digbottargets) && D != src.oldtarget)
 			if (D.hardness <= src.hardthreshold)
 				if (!src.digsuspicious && D.event)
@@ -233,7 +233,7 @@
 	onEnd()
 		if(checkStillValid())
 			target.damage_asteroid(bot.diglevel)
-			if(!istype(target, /turf/simulated/wall/asteroid/))
+			if(!istype(target, /turf/simulated/wall/auto/asteroid/))
 				bot.target = null
 		if(bot != null)
 			bot.stopDiggingEffects()
@@ -248,7 +248,7 @@
 		if(bot == null || target == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return false
-		if(!bot.on || !istype(target, /turf/simulated/wall/asteroid/))
+		if(!bot.on || !istype(target, /turf/simulated/wall/auto/asteroid/))
 			bot.target = null
 			interrupt(INTERRUPT_ALWAYS)
 			return false
@@ -287,7 +287,7 @@
 	show_ui(usr)
 
 /datum/digbot_ui/proc/show_ui(mob/user)
-	if (user.client.tooltipHolder)
+	if (user.client?.tooltipHolder)
 		user.client.tooltipHolder.showClickTip(bot, list("title" = "Digbot Controls", "content" = render()))
 
 /datum/digbot_ui/proc/render()

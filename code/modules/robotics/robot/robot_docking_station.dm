@@ -35,17 +35,14 @@
 
 /obj/machinery/recharge_station/process(mult)
 	if (!(src.status & BROKEN))
-		// todo / at some point id like to fix the disparity between cells and 'normal power'
-		if (src.occupant)
-			src.power_usage = 500
-		else
-			src.power_usage = 50
+		src.power_usage = src.occupant ? 500 : 50
+		// syndicate gear is nuclear powered or something
+		if (src.conversion_chamber) src.power_usage = 0
 		..()
-	if (src.status & (NOPOWER | BROKEN) || !src.anchored)
+	if (src.status & BROKEN || (src.status & NOPOWER && !conversion_chamber))
 		if (src.occupant)
 			boutput(src.occupant, "<span class='alert'>You are automatically ejected from [src]!</span>")
 			src.go_out()
-			src.build_icon()
 		return
 
 	if (src.occupant)
@@ -71,7 +68,7 @@
 	if (src.status & BROKEN)
 		boutput(user, "<span class='alert'>[src] is broken and cannot be used.</span>")
 		return
-	if (src.status & NOPOWER)
+	if (src.status & NOPOWER && !src.conversion_chamber)
 		boutput(user, "<span class='alert'>[src] is out of power and cannot be used.</span>")
 		return
 	if (!src.anchored)
@@ -272,11 +269,7 @@
 	if (usr.stat || usr.restrained() || isghostcritter(usr))
 		return
 
-	if (!src.anchored)
-		usr.show_text("You must attach [src]'s floor bolts before the machine will work.", "red")
-		return
-
-	if ((usr.contents.Find(src) || src.contents.Find(usr) || can_access_remotely(usr) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))))
+	if ((usr.contents.Find(src) || src.contents.Find(usr) || can_access_remotely(usr) || ((BOUNDS_DIST(src, usr) == 0) && istype(src.loc, /turf))))
 		src.add_dialog(usr)
 
 		if (href_list["refresh"])
@@ -311,7 +304,7 @@
 				return
 			var/mob/living/silicon/robot/R = src.occupant
 			var/newname = copytext(strip_html(sanitize(input(usr, "What do you want to rename [R]?", "Cyborg Maintenance", R.name) as null|text)), 1, 64)
-			if ((!issilicon(usr) && (get_dist(usr, src) > 1)) || usr.stat || !newname)
+			if ((!issilicon(usr) && (BOUNDS_DIST(usr, src) > 0)) || usr.stat || !newname)
 				return
 			if (url_regex?.Find(newname))
 				boutput(usr, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
@@ -347,7 +340,7 @@
 					boutput(usr, "<span class='alert'>Not enough welding fuel for repairs.</span>")
 					return
 				var/usage = input(usr, "How much welding fuel do you want to use?", "Docking Station", 0) as num
-				if ((!issilicon(usr) && (get_dist(usr, src) > 1)) || usr.stat || !isnum_safe(usage))
+				if ((!issilicon(usr) && (BOUNDS_DIST(usr, src) > 0)) || usr.stat || !isnum_safe(usage))
 					return
 				if (usage > R.compborg_get_total_damage(1))
 					usage = R.compborg_get_total_damage(1)
@@ -363,7 +356,7 @@
 					boutput(usr, "<span class='alert'>Not enough wiring for repairs.</span>")
 					return
 				var/usage = input(usr, "How much wiring do you want to use?", "Docking Station", 0) as num
-				if ((!issilicon(usr) && (get_dist(usr, src) > 1)) || usr.stat || !isnum_safe(usage))
+				if ((!issilicon(usr) && (BOUNDS_DIST(usr, src) > 0)) || usr.stat || !isnum_safe(usage))
 					return
 				if (usage > R.compborg_get_total_damage(2))
 					usage = R.compborg_get_total_damage(2)
@@ -657,35 +650,43 @@
 
 	else if (istype(W, /obj/item/grab))
 		var/obj/item/grab/G = W
-		if (!src.conversion_chamber)
-			boutput(user, "<span class='alert'>Humans cannot enter recharging stations.</span>")
-			return
-		if (!ishuman(G.affecting))
-			boutput(user, "<span class='alert'>Non-Humans are not compatible with this device.</span>")
-			return
-		if (isdead(G.affecting))
-			boutput(user, "<span class='alert'>[G.affecting] is dead and cannot be forced inside.</span>")
-			return
-		if (G.state < GRAB_AGGRESSIVE)
+		if (G.state == GRAB_PASSIVE)
 			boutput(user, "<span class='alert'>You need a tighter grip!</span>")
 			return
-
-		var/mob/living/carbon/human/H = G.affecting
-		logTheThing("combat", user, H, "puts [constructTarget(H,"combat")] into a conversion chamber at [log_loc(src)]")
-		user.visible_message("<span class='notice>[user] stuffs [H] into \the [src].")
-
-		H.remove_pulling()
-		H.set_loc(src)
-		src.add_fingerprint(user)
-		src.occupant = H
-		src.build_icon()
-		qdel(G)
+		if (src.move_human_inside(user, G.affecting))
+			qdel(G)
 
 	else
 		..()
 
+/// check if we may put this human inside the chamber
+/// on success returns true, else returns false
+/obj/machinery/recharge_station/proc/move_human_inside(mob/user, mob/victim)
+	if (!src.conversion_chamber)
+		boutput(user, "<span class='alert'>Humans cannot enter recharging stations.</span>")
+		return FALSE
+	if (!ishuman(victim))
+		boutput(user, "<span class='alert'>Non-Humans are not compatible with this device.</span>")
+		return FALSE
+	if (isdead(victim))
+		boutput(user, "<span class='alert'>[victim] is dead and cannot be forced inside.</span>")
+		return FALSE
+	if (!src.anchored)
+		boutput(user, "<span class='alert'>You must attach [src]'s floor bolts before the machine will work.</span>")
+		return FALSE
+
+	var/mob/living/carbon/human/H = victim
+	logTheThing("combat", user, H, "puts [constructTarget(H,"combat")] into a conversion chamber at [log_loc(src)]")
+	user.visible_message("<span class='notice>[user] stuffs [H] into \the [src].")
+
+	H.remove_pulling()
+	H.set_loc(src)
+	src.add_fingerprint(user)
+	src.occupant = H
+	src.build_icon()
+
 /obj/machinery/recharge_station/MouseDrop_T(atom/movable/AM as mob|obj, mob/user as mob)
-	if (get_dist(AM, user) > 1 || get_dist(src, user) > 1)
+	if (BOUNDS_DIST(AM, user) > 0 || BOUNDS_DIST(src, user) > 0)
 		return
 	if (!isliving(user) || isAI(user))
 		return
@@ -735,15 +736,7 @@
 		src.build_icon()
 
 	if (ishuman(AM))
-		var/mob/living/carbon/human/H = AM
-		logTheThing("combat", user, null, "puts [himself_or_herself(user)] into a conversion chamber at [log_loc(src)]")
-		user.visible_message("<span class='notice>[user] stuffs [himself_or_herself(user)] into \the [src].")
-
-		H.remove_pulling()
-		H.set_loc(src)
-		src.occupant = H
-		src.add_fingerprint(user)
-		src.build_icon()
+		src.move_human_inside(user, AM)
 
 /obj/machinery/recharge_station/proc/build_icon()
 	if (src.occupant)
@@ -822,7 +815,7 @@
 				boutput(H, "<span class='alert'>You feel... different.</span>")
 				src.go_out()
 
-				SPAWN(0) // handle_robot_antagonist_status can sleep if it needs to grab a resource so here we are
+				SPAWN(0)
 					var/bdna = null // For forensics (Convair880).
 					var/btype = null
 					if (H.bioHolder.Uid && H.bioHolder.bloodType)
@@ -889,6 +882,8 @@
 /obj/machinery/recharge_station/syndicate/attackby(obj/item/W as obj, mob/user as mob)
 	if (iswrenchingtool(W))
 		src.anchored = !src.anchored
+		if (!anchored)
+			src.go_out()
 		user.show_text("You [src.anchored ? "attach" : "release"] \the [src]'s floor clamps", "red")
 		playsound(src, "sound/items/Ratchet.ogg", 40, 0, 0)
 		return

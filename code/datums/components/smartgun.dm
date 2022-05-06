@@ -1,6 +1,6 @@
 TYPEINFO(/datum/component/holdertargeting/smartgun)
 	initialization_args = list(
-		ARG_INFO("maxlocks", "num", "Maximum number of lock-ons the gun will get on a given target at once", 3)
+		ARG_INFO("maxlocks", DATA_INPUT_NUM, "Maximum number of lock-ons the gun will get on a given target at once", 3)
 	)
 
 /datum/component/holdertargeting/smartgun

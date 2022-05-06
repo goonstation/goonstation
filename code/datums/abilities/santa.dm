@@ -217,8 +217,11 @@
 	cooldown = 30 SECONDS
 
 	cast()
-		var/A
-		A = input("Area to jump to", "TELEPORTATION", A) in get_teleareas()
+		var/list/tele_areas = get_teleareas()
+		var/A = tgui_input_list(src, "Area to jump to", "Teleportation", tele_areas)
+		if (isnull(A))
+			boutput(src, "<span class='alert'>Invalid area selected.</span>")
+			return 1
 		var/area/thearea = get_telearea(A)
 		if(thearea.teleport_blocked)
 			boutput(src, "<span class='alert'>That area is blocked from teleportation.</span>")

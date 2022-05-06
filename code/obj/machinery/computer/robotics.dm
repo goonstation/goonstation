@@ -70,7 +70,7 @@
 			dat += "[R.name] |"
 			if(R.disposed)
 				dat += " Missing |"
-			else if(isnull(R.brain))
+			else if(isnull(R.part_head?.brain))
 				dat += " Intelligence Cortex Missing |"
 			else if(R.stat)
 				dat += " Not Responding |"

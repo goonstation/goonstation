@@ -63,6 +63,9 @@
 		if (player.ready && !player.mind.assigned_role)
 			unassigned += player
 
+	var/percent_readied_up = length(clients) ? (length(unassigned)/length(clients)) * 100 : 0
+	logTheThing("debug", null, null, "<b>Aloe</b>: roughly [percent_readied_up]% of players were readied up at roundstart (blobs and wraiths don't count).")
+
 	if (unassigned.len == 0)
 		return 0
 
@@ -504,7 +507,9 @@
 						valid_beds += bed
 
 			if (length(valid_beds) > 0)
-				src.set_loc(get_turf(pick(valid_beds)))
+				var/obj/stool/bed/picked = pick(valid_beds)
+				src.set_loc(get_turf(picked))
+				logTheThing("station", src, null, "has the Heavy Sleeper trait and spawns in a bed at [log_loc(picked)]")
 				src.setStatus("resting", INFINITE_STATUS)
 				src.setStatus("paralysis", 10 SECONDS)
 				src.force_laydown_standup()
@@ -535,11 +540,12 @@
 							A.announce_arrival(src)
 
 		//Equip_Bank_Purchase AFTER special_setup() call, because they might no longer be a human after that
-		if (possible_new_mob)
-			var/mob/living/newmob = possible_new_mob
-			newmob.Equip_Bank_Purchase(newmob.mind.purchased_bank_item)
-		else
-			src.Equip_Bank_Purchase(src.mind?.purchased_bank_item)
+	//this was previously indented in the ishuman() block, but I don't think it needs to be - Amylizzle
+	if (possible_new_mob)
+		var/mob/living/newmob = possible_new_mob
+		newmob.Equip_Bank_Purchase(newmob.mind.purchased_bank_item)
+	else
+		src.Equip_Bank_Purchase(src.mind?.purchased_bank_item)
 
 	return
 

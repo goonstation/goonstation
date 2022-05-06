@@ -80,6 +80,7 @@
 /datum/artifact/powercell
 	associated_object = /obj/item/cell/artifact
 	type_name = "Large power cell"
+	type_size = ARTIFACT_SIZE_TINY
 	rarity_weight = 350
 	validtypes = list("ancient","martian","wizard","precursor")
 	automatic_activation = 1

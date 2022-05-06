@@ -297,7 +297,7 @@
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gib4"
 	},
-/obj/decal/skeleton/decomposed_corpse,
+/obj/decal/fakeobjects/skeleton/decomposed_corpse,
 /turf/simulated/floor/plating,
 /area/prefab/space_casino)
 "Gp" = (

@@ -206,7 +206,7 @@
 	spawn_contents = list(/obj/item/clothing/under/rank/overalls,\
 	/obj/item/clothing/shoes/orange,\
 	/obj/item/clothing/gloves/black,\
-	/obj/item/device/radio/headset/engineer,\
+	/obj/item/device/radio/headset/miner,\
 	/obj/item/device/pda2/mining)
 
 /obj/item/storage/box/clothing/qm

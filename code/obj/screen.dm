@@ -74,7 +74,7 @@
 					src.icon = hud_style
 
 	proc/getDesc(var/mob/living/C)
-		return "[C.stamina] / [C.stamina_max] Stamina. Regeneration rate : [(C.stamina_regen + GET_MOB_PROPERTY(C, PROP_STAMINA_REGEN_BONUS))]"
+		return "[C.stamina] / [C.stamina_max] Stamina. Regeneration rate : [(C.stamina_regen + GET_ATOM_PROPERTY(C, PROP_MOB_STAMINA_REGEN_BONUS))]"
 
 	proc/update_value(var/mob/living/C)
 		last_update = TIME

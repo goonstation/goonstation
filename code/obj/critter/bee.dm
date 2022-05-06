@@ -178,7 +178,7 @@
 
 			else
 
-				src.visible_message("<span class='notice'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>")
+				src.visible_message("<span class='notice'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>", group="beehug")
 				if(prob(15))
 					for(var/mob/O in hearers(src, null))
 						O.show_message("[src] buzzes[prob(50) ? " happily!" : ""]!",2)
@@ -731,7 +731,7 @@
 		if (.)
 			var/obj/item/reagent_containers/food/snacks/ingredient/honey/honey = .
 			honey.icon_state = "bighoneyblob"
-			honey.amount++
+			honey.bites_left++
 
 /obj/critter/domestic_bee/queen/buddy
 	desc = "It appears to be a hybrid of a queen domestic space-bee and a PR-6 Robuddy. How is that even possible?"
@@ -912,7 +912,7 @@
 	attack_hand(mob/user as mob)
 		if (src.alive)
 			if (user.a_intent == INTENT_HELP)
-				src.visible_message("<span class='notice'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>")
+				src.visible_message("<span class='notice'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>", group="beehug")
 				user.add_karma(1)
 
 				if (masked == 1)
@@ -1147,7 +1147,7 @@
 			if ((get_dist(src, M) <= 6) && src.alive)
 				M.visible_message("<span class='alert'><b>[M.name] clutches their temples!</b></span>")
 				M.emote("scream")
-				M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 10 SECONDS))
+				M.setStatusMin("paralysis", 10 SECONDS)
 				M.take_brain_damage(10)
 
 				do_teleport(M, locate((world.maxx/2) + rand(-10,10), (world.maxy/2) + rand(-10,10), 1), 0)
@@ -1205,7 +1205,7 @@
 
 			else
 
-				src.visible_message("<span class='notice'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>")
+				src.visible_message("<span class='notice'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>", group="beehug")
 				switch (++hug_count)
 					if (10)
 						src.visible_message("<b>[src]</b> burps!  It smells like beeswax.")
@@ -1260,7 +1260,7 @@
 	attack_hand(mob/user as mob)
 		if (src.alive && user.a_intent == "help")
 
-			src.visible_message("<span class='notice'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>")
+			src.visible_message("<span class='notice'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>", group="beehug")
 			if(prob(15))
 				for(var/mob/O in hearers(src, null))
 					O.show_message("[src] buzzes[prob(50) ? " in a comforted manner" : ""].",2)
@@ -1381,7 +1381,7 @@
 
 	attack_hand(mob/user as mob)
 		if(src.alive && user.a_intent=="help")
-			src.visible_message("<span class='emote'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>")
+			src.visible_message("<span class='emote'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>", group="beehug")
 			if(prob(15))
 				for(var/mob/O in hearers(src, null))
 					O.show_message("<span class='emote'><b>[src]</b> beeps[prob(50) ? " in a comforted manner, and gives [user] the ASCII" : ""].</span>",2)
@@ -1460,7 +1460,8 @@
 	var/grow_anim = "grow"
 	var/beeMomCkey = null
 	var/scolded = 0
-
+	/// stored when a larva is puked up by someone. when the larva grows up, the bee puts on this hat
+	var/obj/item/clothing/head/stored_hat
 	var/tmp/blog = "larvalog|"
 
 	bonnet
@@ -1516,6 +1517,12 @@
 
 					grownbee.beeMom = src.beeMom
 					grownbee.beeMomCkey = src.beeMomCkey
+
+					if (src.stored_hat && !grownbee.cant_take_hat && (src.stored_hat.icon_state in grownbee.hat_list))
+						grownbee.hat_that_bee(src.stored_hat)
+						src.stored_hat.set_loc(grownbee)
+						src.stored_hat = null
+
 					grownbee.UpdateIcon()
 					src.reagents = null
 					qdel(src)
@@ -1542,6 +1549,12 @@
 					grownbee.beeMomCkey = src.beeMomCkey
 					grownbee.UpdateIcon()
 					grownbee.blog = src.blog + "all grown up!|"
+
+					if (src.stored_hat && !grownbee.cant_take_hat && (src.stored_hat.icon_state in grownbee.hat_list))
+						grownbee.hat_that_bee(src.stored_hat)
+						src.stored_hat.set_loc(grownbee)
+						src.stored_hat = null
+
 					src.reagents = null
 					qdel(src)
 
@@ -1900,7 +1913,7 @@
 	desc = "A bowl of \"bee kibble.\" It is probably best not to think too hard about its composition."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "petfood"
-	amount = 4
+	bites_left = 4
 	heal_amt = 1
 	doants = 0
 	initial_volume = 50

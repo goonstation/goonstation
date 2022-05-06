@@ -6,7 +6,7 @@
 	flora_types = list(/obj/stone/random = 10, /obj/decal/fakeobjects/smallrocks = 10)
 	flora_density = 1
 
-	fauna_types = list(/obj/critter/sealpup=15, /obj/critter/wendigo=5, /obj/critter/yeti=1)
+	fauna_types = list(/obj/critter/sealpup=15, /obj/critter/brullbar=5, /obj/critter/yeti=1)
 	fauna_density = 0.5
 
 /datum/biome/icemoon/snow/trees
@@ -16,7 +16,7 @@
 /datum/biome/icemoon/ice
 	turf_type = /turf/unsimulated/floor/arctic/snow/ice
 
-	fauna_types = list(/obj/critter/spider/ice/queen=1, /obj/critter/spider/ice/nice=5, /obj/critter/spider/ice=20, /obj/critter/wendigo=5)
+	fauna_types = list(/obj/critter/spider/ice/queen=1, /obj/critter/spider/ice/nice=5, /obj/critter/spider/ice=20, /obj/critter/brullbar=5)
 	fauna_density = 0.5
 
 /datum/biome/icemoon/icewall

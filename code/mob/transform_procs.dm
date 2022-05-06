@@ -84,7 +84,7 @@
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 	for(var/t in src.organs)
 		qdel(src.organs[t])
 		src.organs[t] = null
@@ -117,10 +117,7 @@
 	boutput(O, "To use something, simply double-click it.")
 	boutput(O, "Currently right-click functions will not work for the AI (except examine), and will either be replaced with dialogs or won't be usable by the AI.")
 
-//	O.laws_object = new /datum/ai_laws/asimov
-//	O.laws_object = ticker.centralized_ai_laws
-//	O.current_law_set = O.laws_object
-	ticker.centralized_ai_laws.show_laws(O)
+	O.show_laws()
 	boutput(O, "<b>These laws may be changed by other players.</b>")
 
 	O.verbs += /mob/living/silicon/ai/proc/ai_call_shuttle
@@ -151,6 +148,7 @@
 	O.verbs += /mob/living/silicon/ai/proc/ai_colorchange
 	O.verbs += /mob/living/silicon/ai/proc/ai_station_announcement
 	O.verbs += /mob/living/silicon/ai/proc/view_messageLog
+	O.verbs += /mob/living/silicon/ai/verb/rename_self
 	O.job = "AI"
 
 	SPAWN(0)
@@ -208,7 +206,7 @@
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 	for(var/t in src.organs) qdel(src.organs[text("[t]")])
 
 	var/mob/living/silicon/robot/cyborg = new /mob/living/silicon/robot/(src.loc, null, 1, syndie = syndicate)
@@ -232,7 +230,7 @@
 			src.mind.transfer_to(cyborg)
 	cyborg.set_loc(get_turf(src.loc))
 	if (syndicate)
-		cyborg.handle_robot_antagonist_status("converted")
+		cyborg.make_syndicate("Robotize_MK2 (probably cyborg converter)")
 		boutput(cyborg, "<B>You have been transformed into a <i>syndicate</i> Cyborg. Cyborgs can interact with most electronic objects in their view.</B>")
 		boutput(cyborg, "<B>You must follow your laws and assist syndicate agents, who are identifiable by their icon.</B>")
 	else
@@ -262,7 +260,7 @@
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 	for(var/t in src.organs)
 		qdel(src.organs[text("[t]")])
 
@@ -326,7 +324,7 @@
 				W.set_loc(locate(1, 1, 1))
 		else
 			W.set_loc(T)
-		SHOW_SLASHER_TIPS(src)
+		src.show_antag_popup("slasher")
 		if(src.mind)
 			src.mind.transfer_to(W)
 			src.mind.special_role = "slasher"
@@ -474,7 +472,7 @@
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 	for(var/t in src.organs) qdel(src.organs[text("[t]")])
 
 	var/mob/living/critter/mechmonstrosity/suffering/O = new /mob/living/critter/mechmonstrosity/suffering/(src.loc,null,1)

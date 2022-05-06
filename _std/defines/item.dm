@@ -142,8 +142,8 @@
 #define LIMB_STONE    (1<<12)
 /// Limb typically belongs to a vicious bear
 #define LIMB_BEAR     (1<<13)
-/// Limb typically belongs to a wendigo
-#define LIMB_WENDIGO  (1<<14)
+/// Limb typically belongs to a brullbar
+#define LIMB_BRULLBAR  (1<<14)
 /// Limb typically belongs to a large angry dog
 #define LIMB_WOLF     (1<<15)
 /// Limb is kinda boney
@@ -164,13 +164,13 @@
 #define isitemlimb(x)     HAS_FLAG(x:kind_of_limb, LIMB_ITEM)
 #define isstonelimb(x)    HAS_FLAG(x:kind_of_limb, LIMB_STONE)
 #define isbearlimb(x)     HAS_FLAG(x:kind_of_limb, LIMB_BEAR)
-#define iswendigolimb(x)  HAS_FLAG(x:kind_of_limb, LIMB_WENDIGO)
+#define isbrullbarlimb(x)  HAS_FLAG(x:kind_of_limb, LIMB_BRULLBAR)
 #define iswolflimb(x)     HAS_FLAG(x:kind_of_limb, LIMB_WOLF)
 #define isskeletonlimb(x) HAS_FLAG(x:kind_of_limb, LIMB_SKELLY)
 #define ismonsterlimb(x) (HAS_FLAG(x:kind_of_limb, LIMB_ZOMBIE) |\
                           HAS_FLAG(x:kind_of_limb, LIMB_HUNTER) |\
                           HAS_FLAG(x:kind_of_limb, LIMB_BEAR) |\
-                          HAS_FLAG(x:kind_of_limb, LIMB_WENDIGO) |\
+                          HAS_FLAG(x:kind_of_limb, LIMB_BRULLBAR) |\
                           HAS_FLAG(x:kind_of_limb, LIMB_ABOM) |\
                           HAS_FLAG(x:kind_of_limb, LIMB_WOLF))
 #define isrobolimb(x) (HAS_FLAG(x:kind_of_limb, LIMB_ROBOT) |\

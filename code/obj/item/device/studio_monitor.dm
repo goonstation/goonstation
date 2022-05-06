@@ -162,6 +162,13 @@
 			for(var/obj/ability_button/nukie_rocker/B as anything in ability_buttons)
 				B.UpdateOverlays(null, "rocked_out")
 
+/obj/item/breaching_hammer/rock_sledge/nanotrasen
+	name = "Marsyas electric guitar"
+	desc = "A high-tech Syndicate guitar, reverse engineered by Nanotrasen and given a blue paint job."
+	icon_state = "guitar_nt"
+	item_state = "guitar_nt"
+	is_syndicate = FALSE
+
 /obj/ability_button/nukie_rocker
 	name = "Nukie Rocker Ability - You shouldn't see this..."
 	desc = "Waht you no see! This never happened"
@@ -210,7 +217,10 @@
 			var/mob/living/carbon/human/virtual/V = target
 			. = istype(V.ears, /obj/item/device/radio/headset/syndicate) || istype(V.head, /obj/item/clothing/head/helmet/space/syndicate)
 		else
-			. = istype(target.ears, /obj/item/device/radio/headset/syndicate)
+			if(is_syndicate)
+				. = istype(target.ears, /obj/item/device/radio/headset/syndicate)
+			else
+				. = istype(target.ears, /obj/item/device/radio/headset/command) //Nanotrasen guitar, Nanotrasen tunes
 
 	shred
 		name = "Shred"
@@ -379,7 +389,7 @@
 		..()
 		icon_image.pixel_y += 8
 		icon_image.alpha = 200
-		if(get_dist(owner, instrument) > 1 || instrument == null || owner == null) //If the thing is out of range, interrupt the action. Also interrupt if the user or the item disappears.
+		if(BOUNDS_DIST(owner, instrument) > 0 || instrument == null || owner == null) //If the thing is out of range, interrupt the action. Also interrupt if the user or the item disappears.
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/M = owner
@@ -492,15 +502,15 @@
 		. = ..()
 		if(ismob(owner))
 			var/mob/M = owner
-			APPLY_MOB_PROPERTY(M, PROP_DISARM_RESIST, "focus_music", 10)
-			APPLY_MOB_PROPERTY(M, PROP_DISORIENT_RESIST_BODY, "focus_music", 10)
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_DISARM_RESIST, "focus_music", 10)
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_DISORIENT_RESIST_BODY, "focus_music", 10)
 
 	onRemove()
 		. = ..()
 		if(ismob(owner))
 			var/mob/M = owner
-			REMOVE_MOB_PROPERTY(M, PROP_DISARM_RESIST, "focus_music")
-			REMOVE_MOB_PROPERTY(M, PROP_DISORIENT_RESIST_BODY, "focus_music")
+			REMOVE_ATOM_PROPERTY(M, PROP_MOB_DISARM_RESIST, "focus_music")
+			REMOVE_ATOM_PROPERTY(M, PROP_MOB_DISORIENT_RESIST_BODY, "focus_music")
 
 	getTooltip()
 		. = "Your feel like you would be difficult to stop."
@@ -589,20 +599,20 @@
 		. = ..()
 		if(ismob(owner))
 			var/mob/M = owner
-			APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "stims", 100)
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "stims", 100)
 			M.add_stam_mod_max("stims", 100)
-			APPLY_MOB_PROPERTY(M, PROP_STUN_RESIST, "stims", 100)
-			APPLY_MOB_PROPERTY(M, PROP_STUN_RESIST_MAX, "stims", 100)
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST, "stims", 100)
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "stims", 100)
 
 	onRemove()
 		. = ..()
 		if(ismob(owner))
 			var/mob/M = owner
 			M.jitteriness = 110
-			REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "stims")
+			REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "stims")
 			M.remove_stam_mod_max("stims")
-			REMOVE_MOB_PROPERTY(M, PROP_STUN_RESIST, "stims")
-			REMOVE_MOB_PROPERTY(M, PROP_STUN_RESIST_MAX, "stims")
+			REMOVE_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST, "stims")
+			REMOVE_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "stims")
 
 	onUpdate(timePassed)
 		. = ..()

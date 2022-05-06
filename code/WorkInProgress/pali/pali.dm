@@ -329,7 +329,7 @@
 			src.transforming = 1
 			src.canmove = 0
 			src.icon = null
-			APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+			APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 			if (src.mind || src.client)
 				src.ghostize()
 			qdel(src)
@@ -466,3 +466,11 @@
 			if(prob(chance))
 				var/mob/living/carbon/human/normal/H = new(T)
 				H.JobEquipSpawned(job_name)
+
+
+
+
+/obj/storage/closet/extradimensional
+	New()
+		..()
+		src.setMaterial(getMaterial("negativematter"))

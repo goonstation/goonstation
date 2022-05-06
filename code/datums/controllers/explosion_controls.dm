@@ -9,6 +9,10 @@ var/datum/explosion_controller/explosions
 	var/next_turf_safe = FALSE
 
 	proc/explode_at(atom/source, turf/epicenter, power, brisance = 1, angle = 0, width = 360, turf_safe=FALSE)
+		SEND_SIGNAL(source, COMSIG_ATOM_EXPLODE, args)
+		if(istype(source)) // Oshan hotspots rudely send a datum here 😐
+			for(var/atom/movable/loc_ancestor in obj_loc_chain(source))
+				SEND_SIGNAL(loc_ancestor, COMSIG_ATOM_EXPLODE_INSIDE, args)
 		var/atom/A = epicenter
 		if(istype(A))
 			var/severity = power >= 6 ? 1 : power > 3 ? 2 : 3

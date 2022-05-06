@@ -293,7 +293,7 @@ ABSTRACT_TYPE(/datum/plant)
 		..()
 
 	onUpdate()
-		if(plant_pot == null || source == null || (get_dist(source, plant_pot) > 1))
+		if(plant_pot == null || source == null || (BOUNDS_DIST(source, plant_pot) > 0))
 			interrupt(INTERRUPT_ALWAYS)
 			plant_pot.actionpassed = POT_ACTIONFAILED
 			reset()

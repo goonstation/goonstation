@@ -13,6 +13,9 @@
 
 	New()
 		..()
+		#ifdef UPSCALED_MAP
+		groups_to_create *= 4
+		#endif
 		#ifdef UNDERWATER_MAP
 		var/datum/sea_hotspot/new_hotspot = 0
 		for (var/i = 1, i <= groups_to_create, i++)
@@ -231,7 +234,7 @@
 
 				//ahhhh shit
 				var/turf/center = S.center.turf()
-				if (get_dist(T,center) > 1) //smash center to lock me in place
+				if (BOUNDS_DIST(T, center) > 0) //smash center to lock me in place
 					S.can_drift = 1
 					.= 1
 				else
@@ -574,12 +577,18 @@
 				SPAWN(1.5 SECONDS)
 					UpdateOverlays(null, "speech_bubble")
 
+	attackby(var/obj/item/I as obj, var/mob/M as mob)
+		if (ispryingtool(I))
+			if (deployed)
+				src.undeploy()
+			else
+				if (src in M.contents)
+					src.force_drop()
+				src.deploy()
+		..()
 
 	attack_hand(var/mob/living/carbon/human/user as mob)
-		icon_state = "dowsing_hands"
-		deployed = 0
-		closest_hotspot = 0
-		processing_items -= src
+		src.undeploy()
 		..()
 
 	afterattack(var/turf/T, var/mob/user)
@@ -593,6 +602,11 @@
 			return
 		..()
 
+	proc/undeploy()
+		src.icon_state = "dowsing_hands"
+		deployed = 0
+		closest_hotspot = 0
+		processing_items -= src
 
 	proc/deploy()
 		processing_items |= src
@@ -964,7 +978,7 @@
 				playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 99, 1, 0.1, 0.7)
 
 		for (var/datum/sea_hotspot/H in hotspot_controller.get_hotspots_list(get_turf(src)))
-			if (get_dist(src,H.center.turf()) <= 1)
+			if (BOUNDS_DIST(src, H.center.turf()) == 0)
 				playsound(src, "sound/machines/twobeep.ogg", 50, 1,0.1,0.7)
 				for (var/mob/O in hearers(src, null))
 					O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"Hotspot pinned.\"</span></span>", 2)
@@ -1014,19 +1028,19 @@
 
 	onUpdate()
 		..()
-		if(get_dist(owner, T) > 1 || V == null || owner == null || T == null || V.loc != T)
+		if(BOUNDS_DIST(owner, T) > 0 || V == null || owner == null || T == null || V.loc != T)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, T) > 1 || V == null || owner == null || T == null || V.loc != T)
+		if(BOUNDS_DIST(owner, T) > 0 || V == null || owner == null || T == null || V.loc != T)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
-		if(get_dist(owner, T) > 1 || V == null || owner == null || T == null || V.loc != T)
+		if(BOUNDS_DIST(owner, T) > 0 || V == null || owner == null || T == null || V.loc != T)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if(locate(/obj/machinery/power/vent_capture) in T)
@@ -1051,19 +1065,19 @@
 
 	onUpdate()
 		..()
-		if(get_dist(owner, V) > 1 || V == null || owner == null)
+		if(BOUNDS_DIST(owner, V) > 0 || V == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, V) > 1 || V == null || owner == null)
+		if(BOUNDS_DIST(owner, V) > 0 || V == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
-		if(get_dist(owner, V) > 1 || V == null || owner == null)
+		if(BOUNDS_DIST(owner, V) > 0 || V == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if(owner && V)
@@ -1084,19 +1098,19 @@
 
 	onUpdate()
 		..()
-		if(get_dist(owner, T) > 1 || T == null)
+		if(BOUNDS_DIST(owner, T) > 0 || T == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, T) > 1 || T == null)
+		if(BOUNDS_DIST(owner, T) > 0 || T == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
-		if(get_dist(owner, T) > 1 || T == null)
+		if(BOUNDS_DIST(owner, T) > 0 || T == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 

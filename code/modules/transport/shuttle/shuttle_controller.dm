@@ -145,6 +145,8 @@ datum/shuttle_controller
 									continue // skip ghosties
 								if (istype(AM, /obj/overlay/tile_effect))
 									continue
+								if (istype(AM, /obj/effects/precipitation))
+									continue
 								AM.set_loc(D)
 								// NOTE: Commenting this out to avoid recreating mass driver glitch
 								/*
@@ -267,6 +269,12 @@ datum/shuttle_controller
 						for (var/turf/O in end_location)
 							if (istype(O, map_turf))
 								O.ReplaceWith(transit_turf, keep_old_material = 0, force=1)
+
+						if(station_repair.station_generator)
+							var/list/turf/turfs_to_fix = get_area_turfs(start_location)
+							if(length(turfs_to_fix))
+								station_repair.repair_turfs(turfs_to_fix)
+
 						DEBUG_MESSAGE("Done moving shuttle!")
 						settimeleft(SHUTTLETRANSITTIME)
 						boutput(world, "<B>The Emergency Shuttle has left for CentCom! It will arrive in [timeleft()/60] minute[s_es(timeleft()/60)]!</B>")
