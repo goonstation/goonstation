@@ -691,6 +691,12 @@
 	icon_state = "souschef"
 	item_state = "souschef"
 
+/obj/item/clothing/under/misc/itamae
+	name = "itamae uniform"
+	desc = "A coat and apron worn commonly worn by Japanese Chefs, waiting to be ruined with the blood you'll inevitably cover it in."
+	icon_state = "itamae"
+	item_state = "itamae"
+
 /obj/item/clothing/under/misc/lawyer
 	name = "lawyer's suit"
 	desc = "A rather objectionable piece of clothing."
