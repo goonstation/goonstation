@@ -894,7 +894,9 @@
 			AST.amount = rand(O.amount_per_tile_min,O.amount_per_tile_max)
 			AST.ClearAllOverlays() // i know theres probably a better way to handle this
 			AST.UpdateIcon()
+#ifndef UNDERWATER_MAP // We don't want fullbright ore underwater.
 			AST.overlays += /image/fullbright
+#endif
 			AST.top_overlays()
 			var/image/ore_overlay = image('icons/turf/walls_asteroid.dmi',"[O.name][AST.orenumber]")
 			ore_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask-side_[AST.icon_state]"))
@@ -952,7 +954,9 @@
 			AST.amount = rand(O.amount_per_tile_min,O.amount_per_tile_max)
 			AST.ClearAllOverlays() // i know theres probably a better way to handle this
 			AST.UpdateIcon()
+#ifndef UNDERWATER_MAP // We don't want fullbright ore underwater.
 			AST.overlays += /image/fullbright
+#endif
 			AST.top_overlays()
 			var/image/ore_overlay = image('icons/turf/walls_asteroid.dmi',"[O.name][AST.orenumber]")
 			ore_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask-side_[AST.icon_state]"))

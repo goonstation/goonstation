@@ -259,7 +259,9 @@
 			ore_overlay.layer = AST.layer + 0.01 // so meson goggle nerds can still nerd away
 			AST.UpdateOverlays(ore_overlay, "ast_ore")
 
-			//AST.overlays += /image/fullbright
+#ifndef UNDERWATER_MAP // We don't want fullbright ore underwater.
+			AST.overlays += /image/fullbright
+#endif
 
 			ORE.onGenerate(AST)
 			AST.mining_health = ORE.mining_health

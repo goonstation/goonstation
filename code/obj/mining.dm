@@ -1268,6 +1268,9 @@
 			edge_overlay.color = src.stone_color
 			A.UpdateOverlays(edge_overlay, "ast_edge_[get_dir(A,src)]")
 			src.space_overlays += edge_overlay
+#ifndef UNDERWATER_MAP // We don't want fullbright edges underwater. This fixes 'shadow' issue.
+			A.overlays += /image/fullbright
+#endif
 
 	proc/dig_asteroid(var/mob/living/user, var/obj/item/mining_tool/tool)
 		if (!user || !tool || !istype(src)) return
@@ -1393,14 +1396,16 @@
 			A.ClearAllOverlays() // i know theres probably a better way to handle this
 			A.UpdateIcon()
 			var/image/top_overlay = image('icons/turf/walls_asteroid.dmi',"top[A.topnumber]")
-			top_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask2[src.icon_state]"))
+			top_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask2[A.icon_state]"))
 			A.UpdateOverlays(top_overlay, "ast_top_rock")
 			if(A?.ore) // make sure ores dont turn invisible
 				var/image/ore_overlay = image('icons/turf/walls_asteroid.dmi',"[A.ore.name][A.orenumber]")
 				ore_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask-side_[A.icon_state]"))
 				ore_overlay.layer = A.layer + 0.01 // so meson goggle nerds can still nerd away
 				A.UpdateOverlays(ore_overlay, "ast_ore")
-			//A.overlays += /image/fullbright
+#ifndef UNDERWATER_MAP // We don't want fullbright ore underwater.
+			A.overlays += /image/fullbright
+#endif
 		for (var/turf/simulated/floor/plating/airless/asteroid/A in range(src,1))
 			A.UpdateIcon()
 #ifdef UNDERWATER_MAP
@@ -1533,6 +1538,9 @@
 			edge_overlay.color = src.stone_color
 			A.UpdateOverlays(edge_overlay, "ast_edge_[get_dir(A,src)]")
 			src.space_overlays += edge_overlay
+#ifndef UNDERWATER_MAP // We don't want fullbright edges underwater. This fixes 'shadow' issue.
+			A.overlays += /image/fullbright
+#endif
 
 
 // Tool Defines
