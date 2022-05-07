@@ -21781,11 +21781,7 @@
 "jFF" = (
 /obj/structure/woodwall{
 	color = "#CCCCCC";
-	name = "odd wall";
-	
-	},
-/obj{
-	name = "---Merge conflict marker---"
+	name = "odd wall"
 	},
 /turf/space,
 /area/space)
