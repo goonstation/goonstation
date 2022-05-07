@@ -1525,6 +1525,39 @@
 			H.TakeDamage(zone="All", brute=damage)
 			bleed(H, damage, bleed)
 
+/datum/statusEffect/terror
+	id = "terror"
+	name = "Terror"
+	desc = "terrorized"
+	icon_state = "mentor_mouse"
+	unique = 1
+	duration = 40 SECONDS
+	maxDuration = 3 MINUTES
+	var/mob/living/carbon/human/H
+	var/list/wall_list = list()
+
+	onAdd(optional=null)
+		. = ..()
+		if (ishuman(owner))
+			H = owner
+			H.see_invisible = INVIS_HALLUCINATION
+		else
+			owner.delStatus("terror")
+
+	onRemove()
+		. = ..()
+			H.see_invisible = INVIS_NONE
+
+	onUpdate()
+		for (var/turf/simulated/wall/auto/W in orange(5, H))
+			wall_list += W
+		if (wall_list != null) // todo Check if empty
+			var/turf/simulated/wall/auto/W = pick(wall_list)
+			var/obj/decal/cleanable/sakura/S = new /obj/decal/cleanable/sakura(get_turf(W))
+			APPLY_ATOM_PROPERTY(S, PROP_MOB_INVISIBILITY, S, INVIS_HALLUCINATION)
+			new /obj/decal/cleanable/vomit(get_turf(W))
+			logTheThing("debug", null, null, "setup a thing at [W]")
+
 /datum/statusEffect/mentor_mouse
 	id = "mentor_mouse"
 	name = "Mentor Mouse"

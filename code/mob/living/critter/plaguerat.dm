@@ -1,5 +1,6 @@
 //Todo Get buff from cheese
 //Add death
+//Add check for spawns if there's too much
 
 /mob/living/critter/plaguerat
 	name = "plague rat"
@@ -9,9 +10,7 @@
 	density = 1
 	hand_count = 2 // spiders!!!
 	add_abilities = list(/datum/targetable/critter/plague_rat/eat_filth,
-						/datum/targetable/critter/plague_rat/rat_bite,
-						/datum/targetable/critter/plague_rat/spawn_warren,
-						/datum/targetable/critter/slam)
+						/datum/targetable/critter/plague_rat/rat_bite)
 
 	var/eaten_amount = 0
 	var/amount_to_grow = 0
@@ -142,6 +141,7 @@
 	feeding = 0
 	venom = "venom"  // making these modular so i don't have to rewrite this gigantic goddamn section for all the subtypes
 	bite_transfer_amt = 1
+	flags = TABLEPASS | DOORPASS
 	adultpath = /mob/living/critter/plaguerat/medium
 	health_brute = 30
 	health_brute_vuln = 0.45
@@ -177,6 +177,7 @@
 	icon_state = "big_spide"
 	feeding = 0
 	amount_to_grow = 2
+	flags = DOORPASS
 	venom = "venom"  // making these modular so i don't have to rewrite this gigantic goddamn section for all the subtypes
 	bite_transfer_amt = 2.5
 	adultpath = /mob/living/critter/plaguerat/adult
@@ -184,6 +185,7 @@
 	health_brute_vuln = 0.45
 	health_burn = 40
 	health_burn_vuln = 0.65
+	add_abilities = list(/datum/targetable/critter/plague_rat/spawn_warren)
 
 	can_help = 1
 	can_throw = 0
@@ -219,6 +221,9 @@
 	health_brute_vuln = 0.45
 	health_burn = 60
 	health_burn_vuln = 0.65
+	add_abilities = list(/datum/targetable/critter/plague_rat/spawn_warren,
+						/datum/targetable/critter/slam,
+						/datum/targetable/wraithAbility/make_plague_rat)
 
 	can_help = 1
 	can_throw = 1

@@ -846,26 +846,40 @@
 	desc = "Attempt to breach the veil between worlds to allow a lesser spirit to enter this realm."
 	icon_state = "make_poltergeist"
 	targeted = 0
-	pointCost = 1
+	pointCost = 0
 	cooldown = 10 SECONDS
 	var/in_use = 0
 	var/ghost_confirmation_delay  = 30 SECONDS
+	var/max_allowed_rats = 5
 
 	// cast(turf/target, params)
 	cast(atom/target, params)
 		if (..())
 			return 1
 
-		var/turf/T = get_turf(holder.owner)
-		if (isturf(T) && !istype(T, /turf/space))
-			boutput(holder.owner, "You begin to channel power to call a spirit to this realm, you won't be able to cast any other spells for the next 30 seconds!")
-			make_plague_rat(holder.owner, T)
+		var/total_plague_rats = 0
+		for (var/client/C in clients)
+			LAGCHECK(LAG_LOW)
+			// not sure how this could happen, but be safe about it
+			if (!C.mob)
+				continue
+			var/mob/M = C.mob
+			if (istype(M, /mob/living/critter/plaguerat))
+				total_plague_rats ++
+		if(total_plague_rats < max_allowed_rats)
+			var/turf/T = get_turf(holder.owner)
+			if (isturf(T) && !istype(T, /turf/space))
+				boutput(holder.owner, "You begin to channel power to call a spirit to this realm, you won't be able to cast any other spells for the next 30 seconds!")
+				make_plague_rat(holder.owner, T)
+			else
+				boutput(holder.owner, "<span class='alert'>You can't cast this spell on your current tile!</span>")
+				return 1
 		else
-			boutput(holder.owner, "<span class='alert'>You can't cast this spell on your current tile!</span>")
+			boutput(holder.owner, "<span class='alert'>The station is already a rat hive, you cannot summon another rat!</span>")
 			return 1
 
-	proc/make_plague_rat(var/mob/wraith/W, var/turf/T, var/tries = 0)
-		if (!istype(W))
+	proc/make_plague_rat(var/mob/W, var/turf/T, var/tries = 0)
+		if (!istype(W, /mob/wraith/wraith_decay) || !istype(W, /mob/living/critter/plaguerat))
 			boutput(W, "something went terribly wrong, call 1-800-CODER")
 			return
 
@@ -1181,13 +1195,83 @@
 				if (O.emag_act(null, null) && !istype(O, /obj/machinery/computer/shuttle/embedded))
 					boutput(usr, "<span class='notice'>You alter the energy of [O].</span>")
 
+/datum/targetable/wraithAbility/possess
+	name = "Possession"
+	icon_state = "whisper"
+	desc = "possess a dude"
+	pointCost = 10
+	targeted = 1
+	cooldown = 10 SECONDS
+	var/wraith_key = null
+
+	cast(mob/target)
+		if (..())
+			return 1
+		if (istype(holder.owner, /mob/wraith/wraith_trickster))
+			var/mob/wraith/wraith_trickster/W = holder.owner
+			if (W.possession_points > W.points_to_possess)
+				if (ishuman(target))
+					var/mob/living/carbon/human/H = target
+					var/has_mind = false
+					var/mob/dead/target_observer/slasher_ghost/WG = null
+					wraith_key = holder.owner.ckey
+					H.emote("scream")
+					boutput(H, __red("<span class='notice'>You are feeling awfully woozy.</span>"))
+					H.change_misstep_chance(20)
+					sleep(10 SECONDS)
+					boutput(H, __red("<span class='notice'>You hear a cacophony of otherwordly voices in your head.</span>"))
+					H.emote("faint")
+					H.setStatusMin("weakened", 5 SECONDS)
+					sleep(15 SECONDS)
+					H.change_misstep_chance(-20)
+					H.emote("scream")
+					H.setStatusMin("weakened", 8 SECONDS)
+					H.setStatusMin("paralysis", 8 SECONDS)
+					sleep(8 SECONDS)
+					var/mob/dead/observer/O = H.ghostize()
+					if (O?.mind)
+						boutput(O, "<span class='bold' style='color:red;font-size:150%'>You have been temporarily removed from your body!</span>")
+						WG = O.insert_slasher_observer(H)
+						WG.mind.dnr = TRUE
+						WG.verbs -= list(/mob/verb/setdnr)
+						has_mind = true
+					W.mind.transfer_to(H)
+
+					sleep(90 SECONDS)
+					if(!H.loc) //H gibbed
+						var/mob/M2 = ckey_to_mob(wraith_key)
+						M2.mind.transfer_to(W)
+					if(!W.loc) //wraith got gibbed
+						return
+					H.mind.transfer_to(W)
+					if (has_mind)
+						sleep(5 DECI SECONDS)
+						WG.mind.dnr = FALSE
+						WG.verbs += list(/mob/verb/setdnr)
+						WG.mind.transfer_to(H)
+						playsound(H, "sound/effects/ghost2.ogg", 50, 0)
+					W.possession_points = 0
+					logTheThing("debug", null, null, "step 5")
+					qdel(WG)
+			else
+				boutput(holder.owner, "You cannot possess with only [W.possession_points] possession power. You'll need at least [(W.points_to_possess - W.possession_points)]")
+
 /datum/targetable/wraithAbility/hallucinate
-	name = "Mass Emagging"
+	name = "Hallucinate"
 	icon_state = "whisper"
 	desc = "Emag everything around you."
 	pointCost = 10
-	targeted = 0
+	targeted = 1
 	cooldown = 10 SECONDS
+
+	cast(atom/target)
+		if (..())
+			return 1
+
+		if (ishuman(target))
+			usr.playsound_local(usr.loc, "sound/voice/wraith/wraithspook[rand(1, 2)].ogg", 80, 0)
+			var/mob/living/carbon/H = target
+			H.changeStatus("terror", 1 SECONDS)
 
 /obj/spookMarker
 	name = "Spooky Marker"

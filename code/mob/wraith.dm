@@ -88,6 +88,8 @@
 		src.see_in_dark = SEE_DARK_FULL
 		src.abilityHolder = new /datum/abilityHolder/wraith(src)
 		src.abilityHolder.points = 50
+		if (!istype(src, /mob/wraith/wraith_trickster) && !istype(src, /mob/wraith/wraith_decay) && !istype(src, /mob/wraith/wraith_invocation))
+			src.addAbility(/datum/targetable/wraithAbility/specialize)
 		src.addAllBasicAbilities()
 		last_life_update = world.timeofday
 		src.hud = new hud_path (src)
@@ -619,14 +621,12 @@
 			src.addAbility(/datum/targetable/wraithAbility/whisper)
 			src.addAbility(/datum/targetable/wraithAbility/blood_writing)
 			//src.addAbility(/datum/targetable/wraithAbility/make_poltergeist)
-			src.addAbility(/datum/targetable/wraithAbility/specialize)
 
 		addAllDecayAbilities()
 			src.addAbility(/datum/targetable/wraithAbility/curseBrand)
 			src.addAbility(/datum/targetable/wraithAbility/weakBrand)
 			src.addAbility(/datum/targetable/wraithAbility/blindBrand)
 			src.addAbility(/datum/targetable/wraithAbility/rotBrand)
-			src.removeAbility(/datum/targetable/wraithAbility/specialize)
 			src.addAbility(/datum/targetable/wraithAbility/poison)
 			src.addAbility(/datum/targetable/wraithAbility/summon_rot_hulk)
 			src.addAbility(/datum/targetable/wraithAbility/make_plague_rat)
@@ -636,7 +636,8 @@
 			src.addAbility(/datum/targetable/wraithAbility/make_poltergeist)
 			src.addAbility(/datum/targetable/wraithAbility/mass_whisper)
 			src.addAbility(/datum/targetable/wraithAbility/mass_emag)
-			src.removeAbility(/datum/targetable/wraithAbility/specialize)
+			src.addAbility(/datum/targetable/wraithAbility/possess)
+			src.addAbility(/datum/targetable/wraithAbility/hallucinate)
 
 		removeAllAbilities()
 			src.removeAbility(/datum/targetable/wraithAbility/help)
@@ -743,6 +744,8 @@
 	desc = "A terrifyingly bloated spirit."
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "wraith"
+	var/points_to_possess = 5
+	var/possession_points = 0
 	var/mutable_appearance/copied_appearance = null
 	var/mutable_appearance/backup_appearance = null
 
@@ -750,6 +753,13 @@
 		..()
 		addAllTricksterAbilities()
 
+	Life(parent)
+		if (..(parent))
+			return 1
+		for (var/mob/living/carbon/human/H in viewers(6, src)) //If they can see us, we are corporeal, might need to come back to this because admin shenanigans or spooky goggles
+			if (!H.stat && !H.bioHolder.HasEffect("revenant"))
+				possession_points ++
+		//if (src.haunting)
 // i am dumb - marq
 /mob/proc/wraithize()
 	if (src.mind || src.client)
