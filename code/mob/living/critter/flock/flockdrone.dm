@@ -806,6 +806,9 @@
 			continue // no UI elements please
 		. += O
 
+/mob/living/critter/flock/drone/message_admin_on_attack()
+	return
+
 // TODO: do this better
 /mob/living/critter/flock/drone/change_eye_blurry(var/amount, var/cap = 0)
 	if (amount < 0)
