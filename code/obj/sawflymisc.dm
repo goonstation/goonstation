@@ -175,6 +175,7 @@
 	var/atksilicon = TRUE
 	var/atkcarbon = TRUE
 	var/alive = TRUE
+	var/alreadydead = FALSE // prevents any bullshit from happening with death
 
 // OBJ/CRITTER/DRONE FUCK SHIT HERE
 	var/smashes_shit = 0
@@ -259,35 +260,32 @@
 
 	proc/CritterDeath() // rip lil guy
 
-		if (!src.alive) return // can't double-die
+
+		if (alreadydead) return // prevents any death behavior from ever happening more than once
+
 		alive = FALSE
 		src.tokenized_message(death_text)
 		src.is_npc = FALSE // stop any and all possible non-critter AI thought
-		SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_DRONE_DEATH, src)
-
-		if (prob(20))
-			new /obj/item/device/prox_sensor(src.loc) // maybe change this later
-			return
-
-
-		/*SHOULD_CALL_PARENT(TRUE) //commenting this out because I'm afraid everything will break if I delete it
-		#ifdef COMSIG_OBJ_CRITTER_DEATH
-		SEND_SIGNAL(src, COMSIG_OBJ_CRITTER_DEATH)
-		#endif*/
 
 
 		//death behavior custom to sawflies below
+
 		animate(src) //stop no more float animation
 		icon_state = "sawflydead[pick("1", "2", "3", "4", "5", "6", "7", "8")]"
 		src.pixel_x += rand(-5, 5)
 		src.pixel_y += rand(-1, 5)
+		src.force_laydown_standup()
 
-		src.alive = 0
 		src.anchored = 0
 		src.set_density(0)
 		walk_to(src,0) //halt walking
 
 		// special checks that determine how much postmorten chaos our little sawflies cause
+
+
+		if (prob(20))
+			new /obj/item/device/prox_sensor(src.loc) // maybe change this later
+			return
 
 		if(prob(60)) // 60 percent chance to zap the area
 			elecflash(src, 1, 2)
@@ -297,6 +295,9 @@
 				src.visible_message("<span class='combat'>[src] makes a [pick("gentle", "odd", "slight", "weird", "barely audible", "concerning", "quiet")] [pick("hiss", "drone", "whir", "thump", "grinding sound", "creak", "buzz", "khunk")].......")
 			SPAWN(deathtimer SECONDS) // pause, for dramatic effect
 				src.blowup()
+
+		alreadydead = TRUE
+
 
 
 	proc/blowup() // used in emagged controllers and has a chance to activate when they die
@@ -316,12 +317,8 @@
 
 
 	death() //FUCK YOU
-		CritterDeath() // FUCK YOU. AND MOST CERTAINLY,
-		alive = FALSE // FUUUUUUCK. YOUUUUUUU.
-
-
-	// Ported critter AI stuff from hereon out
-
+		CritterDeath() // FUCK YOU.
+		//..() // AND FUCK YOU
 
 
 	proc/ChaseAttack(atom/M) // overriding these attack procs so drone is nicer to traitors >:(
@@ -579,3 +576,6 @@
 		if (steps == wander_check)
 			src.task = "thinking"
 			wander_check = rand(5,20)
+
+	animate_lying(lying)
+		//more overwritten stuff
