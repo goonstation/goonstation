@@ -2224,7 +2224,7 @@
 		set name = "Change vocal pitch"
 
 		var/list/vocal_pitches = list("Low", "Medium", "High")
-		var/vocal_pitch_choice = input("Select a vocal pitch", "Robot", null, null) in vocal_pitches
+		var/vocal_pitch_choice = tgui_input_list(src, "Select a vocal pitch:", "Robot Voice", vocal_pitches)
 		switch(vocal_pitch_choice)
 			if("Low")
 				vocal_pitch = 0.9
