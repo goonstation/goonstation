@@ -70,7 +70,7 @@
 					C.stains = list("damp")
 					C.UpdateName()
 				I.clean_forensic()
-			if (src.occupant)
+			if (src.occupant && ishuman(src.occupant))
 				H.sims?.affectMotive("Hygiene", 100)
 			src.cycle = DRY
 			src.cycle_current = 0

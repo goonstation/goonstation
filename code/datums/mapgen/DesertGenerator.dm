@@ -86,7 +86,7 @@
 
 
 ///for the mapgen mountains, temp until we get something better
-/turf/simulated/wall/asteroid/mountain/desert
+/turf/simulated/wall/auto/asteroid/mountain/desert
 	name = "mountain"
 	desc = "a sandy mountain"
 	color = "#957a59"
