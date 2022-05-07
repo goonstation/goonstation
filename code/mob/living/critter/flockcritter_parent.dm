@@ -167,6 +167,7 @@
 	id = "flock_convert"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 45
+	resumable = FALSE
 
 	var/turf/simulated/target
 	var/obj/decal/decal
@@ -236,6 +237,7 @@
 	id = "flock_construct"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 30
+	resumable = FALSE
 
 	var/turf/simulated/target
 	var/obj/decal/decal
@@ -299,6 +301,7 @@
 	id = "flock_egg"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 80
+	resumable = FALSE
 
 	New(var/duration_i)
 		..()
@@ -340,6 +343,7 @@
 	id = "flock_repair"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 10
+	resumable = FALSE
 
 	var/atom/target
 
@@ -421,6 +425,7 @@
 	id = "flock_entomb"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 60
+	resumable = FALSE
 
 	var/atom/target
 	var/obj/decal/decal
@@ -481,6 +486,7 @@
 	id = "flock_decon"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 60
+	resumable = FALSE
 
 	var/atom/target
 
@@ -575,6 +581,7 @@
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	var/const/default_duration = 1 SECOND
 	duration = default_duration
+	resumable = FALSE
 	color_success = "#4444FF"
 	var/obj/flock_structure/ghost/target = null
 
