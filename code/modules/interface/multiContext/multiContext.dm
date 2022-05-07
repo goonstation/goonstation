@@ -33,7 +33,6 @@
 		var/atom/movable/screen/contextButton/B = new /atom/movable/screen/contextButton
 		B.setup(C, src, target)
 		B.alpha = 0
-		B.dir = src.dir // atmos pipe crafting uses this to show the pipe dir
 		buttons.Add(B)
 
 	if (customContextLayout)

@@ -9,8 +9,7 @@ obj/machinery/atmospherics/binary
 	var/datum/pipe_network/network2
 
 	New()
-		SPAWN(0.5 SECONDS) // regardless of the dir passed in, this stupid thing kept chosing the same result
-		switch(dir) // apparently mappers decided to ignore this for however long and just edit the var
+		switch(dir)
 			if(SOUTH)
 				initialize_directions = SOUTH|NORTH
 			if(NORTH)

@@ -8,7 +8,6 @@
 	var/use_tooltip = 1
 	var/close_clicked = 1
 	var/flick_on_click = null
-	var/dir = NORTH // rarely used
 
 	/// Is this action even allowed to show up under the given circumstances? TRUE=yes, FALSE=no
 	proc/checkRequirements(atom/target, mob/user)
