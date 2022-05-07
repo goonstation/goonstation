@@ -507,6 +507,16 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 				user.unlock_medal("Law 1: Don't be an asshat", 1)
 		return
 
+	else if(istype(W,/obj/item/ai_plating_kit))
+		if(src.coreSkin != "default") // to avoid having your hard-earned skin being lost because someone bought the clown one or something
+			user.show_message("<span class='alert'>[src] already has a plating kit installed!")
+		else
+			var/obj/item/ai_plating_kit/kit = W
+			src.setSkin(kit.skin)
+			playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+			user.visible_message("<span class='notice'>[user] permanently installs the [W] on [src]!</span>")
+			qdel(W)
+
 	else ..()
 	src.update_appearance()
 
@@ -2670,13 +2680,13 @@ ABSTRACT_TYPE(/obj/item/ai_plating_kit)
 
 /obj/item/ai_plating_kit/syndicate
 	name = "AI Frame Plating Kit"
-	desc = "A kit for putting the plating on an AI frame! WARNING: Choking hazard, not intended for children under 3 years. <i>(Syndicate AI system not included)</i>"
+	desc = "A kit for putting the plating on an AI! WARNING: Choking hazard, not intended for children under 3 years. <i>(Syndicate AI system not included)</i>"
 	icon_state = "syndie_kit" // get it???
 	skin = "syndicate"
 	contraband = 1 // crime
 
 /obj/item/ai_plating_kit/clown
 	name = "AI Frame Plating Kit"
-	desc = "A kit for putting the plating on an AI frame! WARNING: Choking hazard, not intended for children under 3 years. It smells funny."
+	desc = "A kit for putting the plating on an AI! WARNING: Choking hazard, not intended for children under 3 years. It smells funny."
 	icon_state = "clown_kit"
 	skin = "clown"
