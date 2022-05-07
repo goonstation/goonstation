@@ -998,11 +998,13 @@
 
 		space_overlays()
 			. = ..()
-			if (length(space_overlays))
+			if (length(space_overlays)) // Are we on the edge of a chunk wall
+				if (src.ore) return // Skip if there's ore here already
 				var/list/color_vals = bioluminescent_algae?.get_color(src)
 				if (length(color_vals))
 					var/image/algea = image('icons/obj/sealab_objects.dmi', "algae")
 					algea.color = rgb(color_vals[1], color_vals[2], color_vals[3])
+					algea.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask-side_[src.icon_state]"))
 					UpdateOverlays(algea, "glow_algae")
 					add_medium_light("glow_algae", color_vals)
 
@@ -1391,14 +1393,14 @@
 			A.ClearAllOverlays() // i know theres probably a better way to handle this
 			A.UpdateIcon()
 			var/image/top_overlay = image('icons/turf/walls_asteroid.dmi',"top[A.topnumber]")
-			top_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask2[A.icon_state]"))
+			top_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask2[src.icon_state]"))
 			A.UpdateOverlays(top_overlay, "ast_top_rock")
 			if(A?.ore) // make sure ores dont turn invisible
 				var/image/ore_overlay = image('icons/turf/walls_asteroid.dmi',"[A.ore.name][A.orenumber]")
-				ore_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask[A.icon_state]"))
+				ore_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask-side_[A.icon_state]"))
 				ore_overlay.layer = A.layer + 0.01 // so meson goggle nerds can still nerd away
 				A.UpdateOverlays(ore_overlay, "ast_ore")
-			A.overlays += /image/fullbright
+			//A.overlays += /image/fullbright
 		for (var/turf/simulated/floor/plating/airless/asteroid/A in range(src,1))
 			A.UpdateIcon()
 #ifdef UNDERWATER_MAP

@@ -897,8 +897,9 @@
 			AST.overlays += /image/fullbright
 			AST.top_overlays()
 			var/image/ore_overlay = image('icons/turf/walls_asteroid.dmi',"[O.name][AST.orenumber]")
-			ore_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask[AST.icon_state]"))
-			AST.overlays += ore_overlay
+			ore_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask-side_[AST.icon_state]"))
+			AST.UpdateOverlays(ore_overlay, "ast_ore")
+
 			O.onGenerate(AST)
 			AST.mining_health = O.mining_health
 			AST.mining_max_health = O.mining_health
@@ -954,9 +955,10 @@
 			AST.overlays += /image/fullbright
 			AST.top_overlays()
 			var/image/ore_overlay = image('icons/turf/walls_asteroid.dmi',"[O.name][AST.orenumber]")
-			ore_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask[AST.icon_state]"))
+			ore_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask-side_[AST.icon_state]"))
 			ore_overlay.layer = AST.layer + 0.01 // so meson goggle nerds can still nerd away
-			AST.overlays += ore_overlay
+			AST.UpdateOverlays(ore_overlay, "ast_ore")
+
 			O.onGenerate(AST)
 			AST.mining_health = O.mining_health
 			AST.mining_max_health = O.mining_health

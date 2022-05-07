@@ -260,10 +260,10 @@ var/list/pw_rewards_tier3 = null
 		src.hardness += O.hardness_mod
 		src.amount = rand(O.amount_per_tile_min,O.amount_per_tile_max)
 		var/image/ore_overlay = image('icons/turf/walls_asteroid.dmi',"[O.name][src.orenumber]")
-		ore_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask[src.icon_state]"))
+		ore_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask-side_[src.icon_state]"))
 		ore_overlay.layer = src.layer + 0.01 // so meson goggle nerds can still nerd away
 
-		src.overlays += ore_overlay
+		src.UpdateOverlays(ore_overlay, "ast_ore")
 
 		if(prob(OC.gem_prob))
 			add_event(/datum/ore/event/gem, O)

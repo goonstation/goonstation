@@ -255,10 +255,12 @@
 			AST.ClearAllOverlays() // i know theres probably a better way to handle this
 			AST.UpdateIcon()
 			var/image/ore_overlay = image('icons/turf/walls_asteroid.dmi',"[ORE.name][AST.orenumber]")
-			ore_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask[AST.icon_state]"))
+			ore_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask-side_[AST.icon_state]"))
 			ore_overlay.layer = AST.layer + 0.01 // so meson goggle nerds can still nerd away
-			AST.overlays += ore_overlay
-			AST.overlays += /image/fullbright
+			AST.UpdateOverlays(ore_overlay, "ast_ore")
+
+			//AST.overlays += /image/fullbright
+
 			ORE.onGenerate(AST)
 			AST.mining_health = ORE.mining_health
 			AST.mining_max_health = ORE.mining_health
