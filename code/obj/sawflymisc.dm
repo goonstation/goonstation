@@ -212,9 +212,10 @@
 	can_burn = FALSE
 	pet_text = "cuddles"
 
-	var/beepsound = 'sound/machines/twobeep.ogg' // todo: make these sounds custom
-	var/alertsound1 = 'sound/machines/whistlealert.ogg'
-	var/alertsound2 = 'sound/machines/whistlebeep.ogg'
+// special noises so they can't be confused with robots
+	var/beep1 = 'sound/machines/sawfly1.ogg'
+	var/beep2 = 'sound/machines/sawfly2.ogg'
+	var/beep3 = 'sound/machines/sawfly3.ogg'
 
 
 	New()
@@ -223,7 +224,7 @@
 			name = "Sawfly [pick(sawflynames)]-[rand(1,999)]"
 		deathtimer = rand(1, 5)
 		death_text = "[src] jutters and falls from the air, whirring to a stop."
-		beeptext = "[pick(list("beeps", "boops", "bwoops", "bips", "bwips", "bops", "chirps", "whirrs", "pings", "purrs"))]"
+		beeptext = "[pick(list("beeps",  "boops", "bwoops", "bips", "bwips", "bops", "chirps", "whirrs", "pings", "purrs", "thrums"))]"
 		animate_bumble(src) // gotta get the float goin' on
 		src.set_a_intent(INTENT_HARM) // incredibly stupid way of ensuring they aren't passable
 
@@ -236,7 +237,14 @@
 		N.temphp = (src.get_health_percentage()) / 2
 		qdel(src)
 
-
+	proc/randombeep() //adds some variety into the noises they make
+		var/beepnum=rand(1, 3)
+		if (beepnum == 1)
+			playsound(src, beep1, 55, 1)
+		else if (beepnum == 2)
+			playsound(src, beep2, 55, 1)
+		else
+			playsound(src, beep3, 55, 1)
 
 
 
@@ -396,6 +404,7 @@
 			src.task = "chasing"
 			if (!(istraitor(user) || isnukeop(user) || isspythief(user)))
 				src.visible_message("<span class='alert'><b>[src]'s targeting subsystems identify</b> [src.target] as a high priority threat!</span>")
+				randombeep()
 				var/tturf = get_turf(src.target) //instantly retaliate, since we know we're in melee range
 				Shoot(tturf, src.loc, src)
 				SPAWN((attack_cooldown/2)) //follow up swiftly
@@ -504,8 +513,7 @@
 
 		if(prob(7))
 			src.visible_message("<b>[src] [beeptext].</b>")
-			if (beepsound)
-				playsound(src, beepsound, 55, 1)
+			randombeep()
 
 		if(task == "sleeping")
 			var/waking = 0
@@ -557,8 +565,7 @@
 	proc/select_target(var/atom/newtarget)
 		src.target = newtarget
 		src.oldtarget_name = newtarget.name
-		if (alertsound1 || alertsound2)
-			playsound(src.loc, ismob(newtarget) ? alertsound2 : alertsound1, 55, 1)
+		randombeep()
 		src.visible_message("<span class='alert'><b>[src]</b> flies towards [src.target]!</span>")
 		task = "chasing"
 
