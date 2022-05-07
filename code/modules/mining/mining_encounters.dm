@@ -960,7 +960,7 @@
 			AST.top_overlays()
 			var/image/ore_overlay = image('icons/turf/walls_asteroid.dmi',"[O.name][AST.orenumber]")
 			ore_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask-side_[AST.icon_state]"))
-			ore_overlay.layer = AST.layer + 0.01 // so meson goggle nerds can still nerd away
+			ore_overlay.layer = AST.layer + 0.02 // so meson goggle nerds can still nerd away
 			AST.UpdateOverlays(ore_overlay, "ast_ore")
 
 			O.onGenerate(AST)

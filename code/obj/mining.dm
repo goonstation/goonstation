@@ -1256,6 +1256,7 @@
 	proc/top_overlays() // replaced what was here with cool stuff for autowalls
 		var/image/top_overlay = image('icons/turf/walls_asteroid.dmi',"top[src.topnumber]")
 		top_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask2[src.icon_state]"))
+		top_overlay.layer = src.layer + 0.01
 		UpdateOverlays(top_overlay, "ast_top_rock")
 
 	proc/space_overlays()
@@ -1397,11 +1398,12 @@
 			A.UpdateIcon()
 			var/image/top_overlay = image('icons/turf/walls_asteroid.dmi',"top[A.topnumber]")
 			top_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask2[A.icon_state]"))
+			top_overlay.layer = A.layer + 0.01
 			A.UpdateOverlays(top_overlay, "ast_top_rock")
 			if(A?.ore) // make sure ores dont turn invisible
 				var/image/ore_overlay = image('icons/turf/walls_asteroid.dmi',"[A.ore.name][A.orenumber]")
 				ore_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask-side_[A.icon_state]"))
-				ore_overlay.layer = A.layer + 0.01 // so meson goggle nerds can still nerd away
+				ore_overlay.layer = A.layer + 0.02 // so meson goggle nerds can still nerd away
 				A.UpdateOverlays(ore_overlay, "ast_ore")
 #ifndef UNDERWATER_MAP // We don't want fullbright ore underwater.
 			A.overlays += /image/fullbright
