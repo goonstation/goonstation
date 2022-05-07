@@ -622,7 +622,6 @@
 			src.addAbility(/datum/targetable/wraithAbility/specialize)
 
 		addAllDecayAbilities()
-			src.addAbility(/datum/targetable/wraithAbility/raiseSkeleton)
 			src.addAbility(/datum/targetable/wraithAbility/curseBrand)
 			src.addAbility(/datum/targetable/wraithAbility/weakBrand)
 			src.addAbility(/datum/targetable/wraithAbility/blindBrand)
@@ -630,6 +629,7 @@
 			src.removeAbility(/datum/targetable/wraithAbility/specialize)
 			src.addAbility(/datum/targetable/wraithAbility/poison)
 			src.addAbility(/datum/targetable/wraithAbility/summon_rot_hulk)
+			src.addAbility(/datum/targetable/wraithAbility/make_plague_rat)
 
 		addAllTricksterAbilities()
 			src.addAbility(/datum/targetable/wraithAbility/choose_haunt_appearance)

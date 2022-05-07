@@ -1,0 +1,94 @@
+/datum/targetable/critter/plague_rat/eat_filth
+	name = "Eat filth"
+	desc = "Eat some filth"
+	icon_state = "clown_spider_bite"
+	cooldown = 5
+	targeted = 1
+	target_anything = 1
+
+	cast(atom/target)
+		if (..())
+			return 1
+		//Todo, check turf for list of decals
+		if (!istype(target, /obj/decal/cleanable))
+			boutput(holder.owner, __red("there is nothing to eat here."))
+			return 1
+		if (BOUNDS_DIST(holder.owner, target) > 0)
+			boutput(holder.owner, __red("That is too far away to eat."))
+			return 1
+		var/obj/decal/cleanable/T = target
+		var/mob/living/critter/plaguerat/P = holder.owner
+		holder.owner.visible_message("<span class='combat'><b>[holder.owner] begins eating [T]!</b></span>",\
+		"<span class='combat'><b>You start eating [T]!</b></span>")
+
+		var/eat_duration = rand(8, 15)
+		holder.owner.set_loc(T.loc)
+		holder.owner.canmove = 0
+		while (eat_duration > 0 && T && !T.disposed)
+			if (T.loc && holder.owner.loc != T.loc)
+				break
+			if (holder.owner.getStatusDuration("stunned") || holder.owner.getStatusDuration("weakened") || holder.owner.getStatusDuration("paralysis"))
+				break
+			sleep(0.8 SECONDS)
+			playsound(holder.owner.loc,"sound/items/eatfood.ogg", rand(10, 50), 1)
+			eat_twitch(holder.owner)
+			eat_duration--
+		if (T && holder.owner.loc == T.loc)
+			P.eaten_amount ++
+			holder.owner.visible_message("<span class='combat'><b>[holder.owner] eats [T]!</b></span>",\
+			"<span class='combat'><b>You finish eating [T]!</b></span>")
+			qdel(T)
+		if (P.eaten_amount >= P.amount_to_grow)
+			P.grow_up()
+		return 0
+
+/datum/targetable/critter/plague_rat/rat_bite
+	name = "Bite"
+	desc = "Bite a mob, doing a little damage and roll a low chance to infect them with the plague"
+	icon_state = "clown_spider_bite"
+	cooldown = 5
+	targeted = 1
+
+	cast(atom/target)
+		if (..())
+			return 1
+		if (isobj(target))
+			target = get_turf(target)
+		if (isturf(target))
+			target = locate(/mob/living) in target
+			if (!target)
+				boutput(holder.owner, __red("Nothing to bite there."))
+				return 1
+		if (target == holder.owner)
+			return 1
+		if (BOUNDS_DIST(holder.owner, target) > 0)
+			boutput(holder.owner, __red("That is too far away to bite."))
+			return 1
+		var/mob/MT = target
+		var/mob/living/critter/plaguerat/P = holder.owner
+		MT.TakeDamageAccountArmor("All", rand(1,3), 0, 0, DAMAGE_BLUNT)
+		MT.changeStatus("slowed", 2 SECONDS)
+		holder.owner.visible_message("<span class='combat'><b>[holder.owner] bites [MT]!</b></span>",\
+		"<span class='combat'><b>You bite [MT]!</b></span>")
+		P.venom_bite(MT)
+		return 0
+
+/datum/targetable/critter/plague_rat/spawn_warren
+	name = "spawn warren"
+	desc = "Spawn a warren"
+	icon_state = "clown_spider_bite"
+	cooldown = 5 SECONDS
+	targeted = 0
+
+	cast(atom/target)
+		if (..())
+			return 1
+		if (istype(holder.owner, /mob/living/critter/plaguerat))
+			var/mob/living/critter/plaguerat/P = holder.owner
+			if (P.linked_warren == null)
+				var/obj/machinery/warren/W = new /obj/machinery/warren(P.loc)
+				P.linked_warren = W
+				boutput (P, "You spawn a warren")
+			else
+				boutput (P, "You already have a warren")
+		return 0

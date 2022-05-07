@@ -87,6 +87,14 @@
 	atk_disease_prob = 35
 	atkcarbon = 1
 
+/obj/critter/mouse/mad/warren
+	var/obj/machinery/warren/linked_warren = null
+
+	CritterDeath()
+		..()
+		if(linked_warren.linked_critters > 0)
+			linked_warren.linked_critters --
+
 /obj/critter/mouse/remy
 	name = "Remy"
 	desc = "A rat.  In space... wait, is it wearing a chef's hat?"

@@ -841,6 +841,74 @@
 		boutput(P, "[W] is your master! Spread mischeif and do their bidding!")
 		boutput(P, "Don't venture too far from your portal or your master!")
 
+/datum/targetable/wraithAbility/make_plague_rat
+	name = "Make PlagueRat"
+	desc = "Attempt to breach the veil between worlds to allow a lesser spirit to enter this realm."
+	icon_state = "make_poltergeist"
+	targeted = 0
+	pointCost = 1
+	cooldown = 10 SECONDS
+	var/in_use = 0
+	var/ghost_confirmation_delay  = 30 SECONDS
+
+	// cast(turf/target, params)
+	cast(atom/target, params)
+		if (..())
+			return 1
+
+		var/turf/T = get_turf(holder.owner)
+		if (isturf(T) && !istype(T, /turf/space))
+			boutput(holder.owner, "You begin to channel power to call a spirit to this realm, you won't be able to cast any other spells for the next 30 seconds!")
+			make_plague_rat(holder.owner, T)
+		else
+			boutput(holder.owner, "<span class='alert'>You can't cast this spell on your current tile!</span>")
+			return 1
+
+	proc/make_plague_rat(var/mob/wraith/W, var/turf/T, var/tries = 0)
+		if (!istype(W))
+			boutput(W, "something went terribly wrong, call 1-800-CODER")
+			return
+
+		var/obj/spookMarker/marker = new /obj/spookMarker(T)
+		var/list/text_messages = list()
+		text_messages.Add("Would you like to respawn as a poltergeist? Your name will be added to the list of eligible candidates and set to DNR if selected.")
+		text_messages.Add("You are eligible to be respawned as a poltergeist. You have [src.ghost_confirmation_delay / 10] seconds to respond to the offer.")
+		text_messages.Add("You have been added to the list of eligible candidates. The game will pick a player soon. Good luck!")
+
+		// The proc takes care of all the necessary work (job-banned etc checks, confirmation delay).
+		usr.playsound_local(usr.loc, "sound/voice/wraith/wraithportal.ogg", 50, 0)
+		message_admins("Sending poltergeist offer to eligible ghosts. They have [src.ghost_confirmation_delay / 10] seconds to respond.")
+		var/list/datum/mind/candidates = dead_player_list(1, src.ghost_confirmation_delay, text_messages)
+		if (!islist(candidates) || candidates.len <= 0)
+			message_admins("Couldn't set up poltergeist ; no ghosts responded. Source: [src.holder]")
+			logTheThing("admin", null, null, "Couldn't set up poltergeist ; no ghosts responded. Source: [src.holder]")
+			if (tries >= 1)
+				boutput(W, "No spirits responded. The portal closes.")
+				qdel(marker)
+				return
+			else
+				boutput(W, "Couldn't set up poltergeist ; no spirits responded. Trying again in 3 minutes.")
+				qdel(marker)
+				SPAWN(3 MINUTES)
+					make_plague_rat(W, T, tries++)
+			return
+		var/datum/mind/lucky_dude = pick(candidates)
+
+		//add poltergeist to master's list is done in /mob/wraith/potergeist/New
+		var/mob/living/critter/plaguerat/P = new /mob/living/critter/plaguerat(T, W, marker)
+		lucky_dude.special_role = ROLE_PLAGUERAT
+		lucky_dude.dnr = 1
+		lucky_dude.transfer_to(P)
+		ticker.mode.Agimmicks |= lucky_dude
+		//P.ckey = lucky_dude.ckey
+		//P.antagonist_overlay_refresh(1, 0)
+		message_admins("[lucky_dude.key] respawned as a poltergeist for [src.holder.owner].")
+		usr.playsound_local(usr.loc, "sound/voice/wraith/ghostrespawn.ogg", 50, 0)
+		logTheThing("admin", lucky_dude.current, null, "respawned as a poltergeist for [src.holder.owner].")
+		boutput(P, "<span class='notice'><b>You have been respawned as a poltergeist!</b></span>")
+		boutput(P, "[W] is your master! Spread mischeif and do their bidding!")
+		boutput(P, "Don't venture too far from your portal or your master!")
+
 /datum/targetable/wraithAbility/specialize
 	name = "Choose specialisation"
 	icon_state = "spook"
@@ -974,6 +1042,8 @@
 	cast()
 		if (..())
 			return 1
+
+		// use step_towards(N,M) when eating
 
 		var/decal_count = 0
 		var/list/decal_list = list()

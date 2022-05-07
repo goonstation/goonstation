@@ -273,6 +273,14 @@
 			clear_armer()
 			src.visible_message("<span class='alert'><b>[M] is caught in the trap!</b></span>")
 			M.CritterDeath()
+		else if (istype(AM, /mob/living/critter/plaguerat) && src.armed)
+			var/mob/living/critter/plaguerat/P = AM
+			playsound(src.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
+			icon_state = "mousetrap"
+			src.armed = 0
+			clear_armer()
+			src.visible_message("<span class='alert'><b>[P] is caught in the trap!</b></span>")
+			P.gib()
 		..()
 		return
 
