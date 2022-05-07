@@ -1254,7 +1254,7 @@
 	proc/top_overlays() // replaced what was here with cool stuff for autowalls
 		var/image/top_overlay = image('icons/turf/walls_asteroid.dmi',"top[src.topnumber]")
 		top_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask2[src.icon_state]"))
-		src.overlays += top_overlay
+		UpdateOverlays(top_overlay, "ast_top_rock")
 
 	proc/space_overlays()
 		for (var/turf/space/A in orange(src,1))
@@ -1264,7 +1264,7 @@
 			edge_overlay.plane = PLANE_WALL-1
 			edge_overlay.layer = TURF_EFFECTS_LAYER
 			edge_overlay.color = src.stone_color
-			A.overlays += edge_overlay
+			A.UpdateOverlays(edge_overlay, "ast_edge_[get_dir(A,src)]")
 			src.space_overlays += edge_overlay
 
 	proc/dig_asteroid(var/mob/living/user, var/obj/item/mining_tool/tool)
@@ -1392,12 +1392,12 @@
 			A.UpdateIcon()
 			var/image/top_overlay = image('icons/turf/walls_asteroid.dmi',"top[A.topnumber]")
 			top_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask2[A.icon_state]"))
-			A.overlays += top_overlay
+			A.UpdateOverlays(top_overlay, "ast_top_rock")
 			if(A?.ore) // make sure ores dont turn invisible
 				var/image/ore_overlay = image('icons/turf/walls_asteroid.dmi',"[A.ore.name][A.orenumber]")
 				ore_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask[A.icon_state]"))
 				ore_overlay.layer = A.layer + 0.01 // so meson goggle nerds can still nerd away
-				A.overlays += ore_overlay
+				A.UpdateOverlays(ore_overlay, "ast_ore")
 			A.overlays += /image/fullbright
 		for (var/turf/simulated/floor/plating/airless/asteroid/A in range(src,1))
 			A.UpdateIcon()
@@ -1529,7 +1529,7 @@
 			edge_overlay.plane = PLANE_FLOOR
 			edge_overlay.layer = TURF_EFFECTS_LAYER
 			edge_overlay.color = src.stone_color
-			A.overlays += edge_overlay
+			A.UpdateOverlays(edge_overlay, "ast_edge_[get_dir(A,src)]")
 			src.space_overlays += edge_overlay
 
 
