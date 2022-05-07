@@ -337,233 +337,34 @@
 					setup_bg_color = "#4242E7"
 
 	return
+/obj/machinery/computer3/ui_interact(mob/user, datum/tgui/ui)
+  ui = tgui_process.try_update_ui(user, src, ui)
+  if(!ui)
+    ui = new(user, src, "Terminal")
+    ui.open()
 
-/obj/machinery/computer3/attack_hand(mob/user as mob)
-	if(..() && !istype(user, /mob/dead/target_observer/mentor_mouse_observer))
-		return
+/obj/machinery/computer3/ui_data(mob/user)
+  . = list(
+    "fdisk" = src.diskette, // floppy disk
+	"temp" = strip_html_tags(src.temp), // display data
+	"TermActive" = src.active_program,
+	"idcard" = null
+  )
 
-	if(!user.literate)
-		boutput(user, "<span class='alert'>You don't know how to read or write, operating a computer isn't going to work!</span>")
-		return
+/obj/machinery/computer3/ui_act(action, params)
+	. = ..()
+	if (.) return
 
-	if (user.using_dialog_of(src))
-		if (!src.temp)
-			user << output(null, "comp3.browser:con_clear")
-
-		if (src.temp_add)
-			user << output(url_encode(src.temp_add), "comp3.browser:con_output")
-/*
-			if (src.current_user == user)
-				src.temp += temp_add
-				src.temp_add = null
-*/
-		update_peripheral_menu(user)
-	else
-		src.add_dialog(user)
-
-		if (src.temp_add)
-			src.temp += temp_add
-			temp_add = null
-
-		var/dat = {"<title>Computer Terminal</title>
-		<style type="text/css">
-		body
-		{
-			background-color:#999876;
-		}
-
-		img
-		{
-			border-style: none;
-		}
-
-		#consolelog
-		{
-			border: 1px grey solid;
-			height: 280px;
-			width: 410px;
-			overflow-y: scroll;
-			word-wrap: break-word;
-			word-break: break-all;
-			background-color:[src.setup_bg_color];
-			color:[src.setup_font_color];
-			font-family: "Consolas", monospace;
-			font-size:10pt;
-		}
-
-		#consoleshell
-		{
-			border: 1px grey solid;
-			height: 280px;
-			width: 410px;
-			overflow-x: hidden;
-			overflow-y: hidden;
-			word-wrap: break-word;
-			word-break: break-all;
-			background-color:#1B1E1B;
-			color:#19A319;
-			font-family: "Consolas", monospace;
-			font-size:10pt;
-		}
-
-		</style>
-		<body scroll=no>
-		<div id=\"consolelog\">[src.temp]</div>
-		<script language="JavaScript">
-			var objDiv = document.getElementById("consolelog");
-			objDiv.scrollTop = objDiv.scrollHeight;
-
-var lastVals = new Array();
-var lastValsOffset = 0;
-function keydownfunc (event)
-{
-	var theKey = (event.which) ? event.which : event.keyCode;
-	if (theKey == 38)
-	{
-		if (lastVals.length > lastValsOffset)
-		{
-			document.getElementById("consoleinput_text").value = lastVals\[lastVals.length - lastValsOffset - 1];
-			lastValsOffset++;
-			if (lastValsOffset >= lastVals.length)
-			{
-				lastValsOffset = 0;
-			}
-		}
-	}
-	else if (theKey == 40)
-	{
-		if (lastValsOffset > 0)
-		{
-			lastValsOffset--;
-			document.getElementById("consoleinput_text").value = lastVals\[lastVals.length - lastValsOffset - 1];
-		}
-	}
-}
-
-function lineEnter (ev)
-{
-	if (document.getElementById("consoleinput_text").value != null)
-	{
-		lastVals.push(document.getElementById("consoleinput_text").value);
-		document.location = "byond://?src=\ref[src]&command=" + encodeURIComponent(document.getElementById("consoleinput_text").value);
-		document.getElementById("consoleinput_text").focus();
-		if (lastVals.length > 10)
-		{
-			lastVals.shift();
-		}
-	}
-	ev.preventDefault();
-	return false;
-}
-
-		</script>
-		<br>
-		<form name="consoleinput" action="byond://?src=\ref[src]" method="get" onsubmit="javascript:return lineEnter(event)">
-			<input id = "consoleinput_text" type="text" name="command" maxlength="300" size="40" onKeyDown="javascript:return keydownfunc(event)">
-			<input type="submit" value="Enter">
-		</form>
-		<table cellspacing=5><tr>"}
-		if(setup_has_internal_disk)
-			dat += "<td id=\"internaldisk\">Disk: <a href='byond://?src=\ref[src];disk=1'>[src.diskette ? "Eject" : "-----"]</a></td>"
-		else
-			dat += "<td id = \"internaldisk\" style=\"display: none;\"></td>"
-
-		//Show up to two card "badges," so ID scanners can present a slot, etc
-		var/count = 0
-		for(var/obj/item/peripheral/C in src.peripherals)
-			if(C.setup_has_badge) //If it has an interface to present here, let it
-				dat += "<td id=\"badge[count]\">[C.return_badge()]</td>"
-				count++
-
-		if(!count)
-			dat += "<td></td><td></td>"
-
-		dat += {"<script language="JavaScript">
-		document.consoleinput.command.focus();
-		var printing = "";
-		var t_count = 0;
-		var last_output;
-
-		function input_clear()
-		{
-			document.getElementById("consoleinput_text").value = '';
-		}
-
-		function setInternalDisk(t)
-		{
-			document.getElementById("internaldisk").innerHTML = t;
-		}
-
-		function setBadge0(t)
-		{
-			document.getElementById("badge0").innerHTML = t;
-		}
-
-		function setBadge1(t)
-		{
-			document.getElementById("badge1").innerHTML = t;
-		}
-
-
-		function setBadge2(t)
-		{
-			document.getElementById("badge2").innerHTML = t;
-		}
-
-		function con_output(t)
-		{
-			if (printing.length > 0)
-			{
-				var toadd = t.split("<br>");
-				if (t.substr(t.length - 4,4) == "<br>")
-				{
-					toadd.pop();
-				}
-				printing = printing.concat(toadd);
-			}
-			else
-			{
-				printing = t.split("<br>");
-				if (t.substr(t.length - 4,4) == "<br>")
-				{
-					printing.pop();
-				}
-				last_output = window.setInterval((function () {real_con_output();}), 10);
-			}
-
-		}
-
-		function real_con_output()
-		{
-			if (printing.length > 0)
-			{
-				var t_bit = printing.shift();
-				if (t_bit != undefined)
-				{
-					objDiv.innerHTML += t_bit + "<br>";
-				}
-				objDiv.scrollTop = objDiv.scrollHeight;
-				return;
-			}
-
-			window.clearTimeout(last_output);
-			return;
-		}
-
-		function con_clear()
-		{
-			printing.length = 0;
-			objDiv.innerHTML = "";
-		}
-
-		</script>"}
-
-		dat += {"<td><a href='byond://?src=\ref[src];restart=1'>Restart</a></td>
-		</body>"}
-
-		user.Browse(dat,"window=comp3;size=455x405")
-		onclose(user,"comp3")
-	return
+	switch(action)
+		if("restart")
+			src.restart()
+		if("ejectdisk")
+			src.diskette = null
+		if("text")
+			if(src.active_program && params["value"]) // haha it fucking works WOOOOOO
+				src.active_program.input_text(params["value"])
+	. = TRUE
+	update_icon() // Not applicable to all objects.
 
 /obj/machinery/computer3/proc/update_peripheral_menu(mob/user as mob)
 	var/count = 0
@@ -1082,10 +883,6 @@ function lineEnter (ev)
 				W.set_loc(src)
 				src.diskette = W
 				boutput(user, "You insert [W].")
-				if(user.using_dialog_of(src))
-					src.updateUsrDialog()
-					user << output(url_encode("Disk: <a href='byond://?src=\ref[src];disk=1'>Eject</a>"),"comp3.browser:setInternalDisk")
-				return
 			else if(src.diskette)
 				boutput(user, "<span class='alert'>There's already a disk inside!</span>")
 			else if(!src.setup_has_internal_disk)
@@ -1113,13 +910,9 @@ function lineEnter (ev)
 				src.cell = W
 				boutput(user, "You insert [W].")
 				src.power_change()
-				src.updateUsrDialog()
-
 			return
-
 		else
 			src.Attackhand(user)
-
 		return
 
 	powered()
