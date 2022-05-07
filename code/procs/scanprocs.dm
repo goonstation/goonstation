@@ -138,6 +138,13 @@
 					else if (syndicate)
 						if (istype(I, /obj/item/implant/revenge/microbomb))
 							implant_list["Microbomb"]++
+						else if (istype(I, /obj/item/implant/revenge/zappy))
+							implant_list["Flyzapper"]++
+						else if (istype(I, /obj/item/implant/mindslave))
+							if (!istype(I, /obj/item/implant/mindslave/super))
+								implant_list["Mindslave"]++
+							else
+								implant_list["Mindslave Deluxe"]++
 						else if (istype(I, /obj/item/implanter/freedom))
 							implant_list["Freedom"]++
 
