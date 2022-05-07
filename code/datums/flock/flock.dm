@@ -347,13 +347,14 @@
 /datum/flock/proc/registerUnit(var/atom/movable/D)
 	if(isflock(D))
 		src.units |= D
+	D.AddComponent(/datum/component/flock_interest, src)
 	var/datum/abilityHolder/flockmind/aH = src.flockmind.abilityHolder
 	aH.updateCompute()
 
 /datum/flock/proc/removeDrone(var/atom/movable/D)
 	if(isflock(D))
 		src.units -= D
-
+		D.GetComponent(/datum/component/flock_interest)?.RemoveComponent(/datum/component/flock_interest)
 		if(D:real_name && busy_tiles[D:real_name])
 			src.unreserveTurf(D:real_name)
 		var/datum/abilityHolder/flockmind/aH = src.flockmind.abilityHolder
@@ -371,12 +372,14 @@
 /datum/flock/proc/registerStructure(var/atom/movable/S)
 	if(isflockstructure(S))
 		src.structures |= S
+		S.AddComponent(/datum/component/flock_interest, src)
 		var/datum/abilityHolder/flockmind/aH = src.flockmind.abilityHolder
 		aH.updateCompute()
 
 /datum/flock/proc/removeStructure(var/atom/movable/S)
 	if(isflockstructure(S))
 		src.structures -= S
+		S.GetComponent(/datum/component/flock_interest)?.RemoveComponent(/datum/component/flock_interest)
 		var/datum/abilityHolder/flockmind/aH = src.flockmind.abilityHolder
 		aH.updateCompute()
 
@@ -498,9 +501,14 @@
 /datum/flock/proc/claimTurf(var/turf/simulated/T)
 	src.all_owned_tiles |= T
 	src.priority_tiles -= T
-	for (var/obj/flock_structure/structure in T.contents)
-		structure.flock = src
-		src.registerStructure(structure)
+	T.AddComponent(/datum/component/flock_interest, src)
+	for(var/obj/O in T.contents)
+		if(HAS_ATOM_PROPERTY(O, PROP_ATOM_FLOCK_THING))
+			O.AddComponent(/datum/component/flock_interest, src)
+		if(istype(O, /obj/flock_structure))
+			var/obj/flock_structure/structure = O
+			structure.flock = src
+			src.registerStructure(structure)
 
 	var/image/I = src.annotations_priority_tiles[T]
 	src.annotations_priority_tiles -= T
@@ -646,9 +654,8 @@
 		animate_flock_convert_complete(T)
 
 	if(istype(T, /turf/simulated/wall))
-		var/turf/converted_wall = T.ReplaceWith("/turf/simulated/wall/auto/feather", 0)
+		T.ReplaceWith("/turf/simulated/wall/auto/feather", 0)
 		animate_flock_convert_complete(T)
-		APPLY_ATOM_PROPERTY(converted_wall, PROP_ATOM_FLOCK_THING, "flock_convert_turf")
 
 	// regular and flock lattices
 	var/obj/lattice/lat = locate(/obj/lattice) in T
@@ -667,7 +674,6 @@
 		var/obj/lattice/flock/FL = locate(/obj/lattice/flock) in T
 		if(!FL)
 			FL = new /obj/lattice/flock(T) //may as well reuse the var
-			APPLY_ATOM_PROPERTY(FL, PROP_ATOM_FLOCK_THING, "flock_convert_turf")
 	else // don't do this stuff if the turf is space, it fucks it up more
 		T.RL_Cleanup()
 		T.RL_LumR = RL_LumR
@@ -706,7 +712,6 @@
 							M.set_loc(converted)
 						qdel(O)
 						converted.set_dir(dir)
-						APPLY_ATOM_PROPERTY(converted, PROP_ATOM_FLOCK_THING, "flock_convert_turf")
 						animate_flock_convert_complete(converted)
 					break //we found and converted the type, don't convert it again
 

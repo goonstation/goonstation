@@ -1059,7 +1059,8 @@
 
 /obj/window/feather/New()
 	..()
-	src.AddComponent(/datum/component/flock_protection, FALSE, TRUE, TRUE)
+	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
+	src.AddComponent(/datum/component/flock_protection)
 
 /obj/window/feather/special_desc(dist, mob/user)
   if(isflock(user))
