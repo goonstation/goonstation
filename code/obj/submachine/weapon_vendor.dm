@@ -474,7 +474,7 @@
 	description = "A pouch of 4 pressure sensitive beartraps used to snare and maim unexpecting victims entering your target area."
 
 /datum/materiel/utility/miscpouch
-	name = "High capacity tactical pouch"
+	name = "high capacity tactical pouch"
 	path = /obj/item/storage/pouch/highcap
 	description = "A 6-slot pouch for carrying multiple different ammunitions at once"
 

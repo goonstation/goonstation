@@ -241,7 +241,7 @@
 	spawn_contents = list(/obj/item/beartrap = 4)
 
 /obj/item/storage/pouch/highcap
-	name = "Tactical pouch"
+	name = "tactical pouch"
 	desc = "A large pouch for carrying multiple miscallenous things at once."
 	icon_state = "ammopouch-quad"
 	w_class = W_CLASS_SMALL

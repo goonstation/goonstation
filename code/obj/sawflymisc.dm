@@ -16,7 +16,7 @@
 	icon_state_armed = "sawfly1"
 	payload = /mob/living/critter/sawfly
 	is_dangerous = TRUE
-	is_syndicate = 1
+	is_syndicate = TRUE
 	contraband = 2
 
 
@@ -66,7 +66,7 @@
 	icon_state_armed = "clusterflyA1"
 	payload = /mob/living/critter/sawfly
 	is_dangerous = TRUE
-	is_syndicate = 1
+	is_syndicate = TRUE
 	contraband = 5
 
 	New()
@@ -169,18 +169,19 @@
 	var/deathtimer = 0 // for catastrophic failure on death
 	var/isnew = TRUE // for seeing whether or not they will make a new name on redeployment
 	var/sawflynames = list("A", "B", "C", "D", "E", "F", "V", "W", "X", "Y", "Z", "Alpha", "Beta", "Gamma", "Lambda", "Delta")
+	var/beeps = list('sound/machines/sawfly1.ogg','sound/machines/sawfly2.ogg','sound/machines/sawfly3.ogg')
 
-	health = 20 // ignore this, they have 40 hp.
+	health = 40
 	var/can_revive = TRUE
 	var/atksilicon = TRUE
 	var/atkcarbon = TRUE
 	var/alive = TRUE
-	var/alreadydead = FALSE // prevents any bullshit from happening with death
+	var/alreadydead = FALSE // prevents any bullshit from happening with repeated
 
 // OBJ/CRITTER/DRONE FUCK SHIT HERE
-	var/smashes_shit = 0
+	var/smashes_shit = FALSE
 	var/list/friends = list()
-	var/attacking = 0
+	var/attacking = FALSE
 	var/atk_delay = 5
 	var/attack_cooldown = 10
 	var/seekrange = 15
@@ -191,7 +192,7 @@
 	var/task = "thinking"
 	var/frustration = 0
 	var/atom/target_lastloc = null
-	var/aggressive = 1
+	var/aggressive = FALSE
 	var/last_found = null
 	var/steps = 0
 	var/sleep_check = 10
@@ -213,11 +214,6 @@
 	can_burn = FALSE
 	pet_text = "cuddles"
 
-// special noises so they can't be confused with robots
-	var/beep1 = 'sound/machines/sawfly1.ogg'
-	var/beep2 = 'sound/machines/sawfly2.ogg'
-	var/beep3 = 'sound/machines/sawfly3.ogg'
-
 
 	New()
 		..()
@@ -228,6 +224,7 @@
 		beeptext = "[pick(list("beeps",  "boops", "bwoops", "bips", "bwips", "bops", "chirps", "whirrs", "pings", "purrs", "thrums"))]"
 		animate_bumble(src) // gotta get the float goin' on
 		src.set_a_intent(INTENT_HARM) // incredibly stupid way of ensuring they aren't passable
+		// custom noises so they cannot be mistaken for ghostdrones or borgs
 
 
 	proc/foldself()
@@ -237,15 +234,6 @@
 		N.tempname = src.name
 		N.temphp = (src.get_health_percentage()) / 2
 		qdel(src)
-
-	proc/randombeep() //adds some variety into the noises they make
-		var/beepnum=rand(1, 3)
-		if (beepnum == 1)
-			playsound(src, beep1, 55, 1)
-		else if (beepnum == 2)
-			playsound(src, beep2, 55, 1)
-		else
-			playsound(src, beep3, 55, 1)
 
 
 
@@ -258,8 +246,11 @@
 			src.foldself()
 
 
-	proc/CritterDeath() // rip lil guy
+	death() //FUCK YOU
+		CritterDeath() // FUCK YOU TOO
 
+
+	proc/CritterDeath() // rip lil guy
 
 		if (alreadydead) return // prevents any death behavior from ever happening more than once
 
@@ -281,8 +272,6 @@
 		walk_to(src,0) //halt walking
 
 		// special checks that determine how much postmorten chaos our little sawflies cause
-
-
 		if (prob(20))
 			new /obj/item/device/prox_sensor(src.loc) // maybe change this later
 			return
@@ -295,8 +284,7 @@
 				src.visible_message("<span class='combat'>[src] makes a [pick("gentle", "odd", "slight", "weird", "barely audible", "concerning", "quiet")] [pick("hiss", "drone", "whir", "thump", "grinding sound", "creak", "buzz", "khunk")].......")
 			SPAWN(deathtimer SECONDS) // pause, for dramatic effect
 				src.blowup()
-
-		alreadydead = TRUE
+		alreadydead = TRUE // HIGHLY important variable
 
 
 
@@ -315,17 +303,11 @@
 			qdel(src)
 
 
-
-	death() //FUCK YOU
-		CritterDeath() // FUCK YOU.
-		//..() // AND FUCK YOU
-
-
 	proc/ChaseAttack(atom/M) // overriding these attack procs so drone is nicer to traitors >:(
 		if (istraitor(M) || isnukeop(M) || isspythief(M) || (M in src.friends))
 			return
 		if(target && !attacking)
-			attacking = 1
+			attacking = TRUE
 			src.visible_message("<span class='alert'><b>[src]</b> flies at [M]!</span>")
 			if (istraitor(M) || isnukeop(M) || isspythief(M) || (M in src.friends))
 				return
@@ -334,12 +316,12 @@
 			var/tturf = get_turf(M)
 			Shoot(tturf, src.loc, src)
 			SPAWN(attack_cooldown)
-				attacking = 0
+				attacking = FALSE
 			return
 
 
 	proc/seek_target()
-		src.anchored = 0
+		src.anchored = FALSE
 		for (var/mob/living/C in view(src.seekrange,src))
 			if(C == oldtarget_name) continue
 			if (C in src.friends) continue
@@ -401,7 +383,7 @@
 			src.task = "chasing"
 			if (!(istraitor(user) || isnukeop(user) || isspythief(user)))
 				src.visible_message("<span class='alert'><b>[src]'s targeting subsystems identify</b> [src.target] as a high priority threat!</span>")
-				randombeep()
+				playsound(src, pick(src.beeps), 55, 1)
 				var/tturf = get_turf(src.target) //instantly retaliate, since we know we're in melee range
 				Shoot(tturf, src.loc, src)
 				SPAWN((attack_cooldown/2)) //follow up swiftly
@@ -510,7 +492,7 @@
 
 		if(prob(7))
 			src.visible_message("<b>[src] [beeptext].</b>")
-			randombeep()
+			playsound(src, pick(src.beeps), 55, 1)
 
 		if(task == "sleeping")
 			var/waking = 0
@@ -562,7 +544,7 @@
 	proc/select_target(var/atom/newtarget)
 		src.target = newtarget
 		src.oldtarget_name = newtarget.name
-		randombeep()
+		playsound(src, pick(src.beeps), 55, 1)
 		src.visible_message("<span class='alert'><b>[src]</b> flies towards [src.target]!</span>")
 		task = "chasing"
 
