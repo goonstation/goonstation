@@ -1099,7 +1099,7 @@
 /turf/simulated/floor/neutral,
 /area/prefab/safehouse)
 "Zd" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/noGenerate)
 "Zf" = (
 /turf/simulated/floor/carpet/red/standard/narrow/east,
