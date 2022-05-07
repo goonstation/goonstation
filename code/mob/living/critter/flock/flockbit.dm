@@ -113,7 +113,7 @@
 /mob/living/critter/flock/bit/Login()
 	..()
 	src.client?.color = null
-	walk(src, 0)
+	src.ai?.stop_move()
 	src.is_npc = 0
 
 /mob/living/critter/flock/bit/specific_emotes(var/act, var/param = null, var/voluntary = 0)

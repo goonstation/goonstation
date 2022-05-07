@@ -151,7 +151,7 @@
 	if(!src.move_target)
 		fails++
 		return
-	if(!src.found_path)
+	if(!src.found_path || !length(src.found_path))
 		get_path()
 	if(length(src.found_path))
 		holder.move_to_with_path(move_target,src.found_path,0)

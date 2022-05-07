@@ -152,6 +152,7 @@ var/list/ai_move_scheduled = list()
 		move_target = null
 		move_path = null
 		ai_move_scheduled -= src
+		owner.move_dir = 0
 		walk(owner,0)
 
 	proc/move_step()
