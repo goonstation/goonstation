@@ -212,9 +212,7 @@
 				if (!is_processing)
 					SubscribeToProcess()
 					is_processing = 1
-				update()
-			else
-				update()
+			update()
 		else
 			return ..()
 
