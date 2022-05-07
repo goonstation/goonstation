@@ -1331,7 +1331,7 @@
 			src.hardness /= 2
 		else
 			src.hardness = 0
-		src.overlays += image('icons/turf/asteroid.dmi', "weakened")
+		src.overlays += image('icons/turf/walls_asteroid.dmi', "weakened")
 
 	proc/damage_asteroid(var/power,var/allow_zero = 0)
 		// use this for stuff that arent mining tools but still attack asteroids
@@ -1449,7 +1449,7 @@
 
 /turf/simulated/floor/plating/airless/asteroid
 	name = "asteroid"
-	icon = 'icons/turf/asteroid.dmi'
+	icon = 'icons/turf/walls_asteroid.dmi'
 	icon_state = "astfloor1"
 	plane = PLANE_FLOOR //Try to get the edge overlays to work with shadowing. I dare ya.
 	oxygen = 0.001

@@ -118,7 +118,7 @@
 
 	New()
 		..()
-		warning_overlay = image('icons/turf/asteroid.dmi', "unstable")
+		warning_overlay = image('icons/turf/walls_asteroid.dmi', "unstable")
 
 	onHit(var/turf/simulated/wall/auto/asteroid/AST)
 		if (..())
