@@ -15652,7 +15652,7 @@
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/treatment)
 "byX" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "byY" = (
 /obj/stool/chair/office/blue{
@@ -15779,13 +15779,13 @@
 /turf/simulated/floor/plating/airless,
 /area/listeningpost)
 "bzD" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1
 	},
 /area/space)
 "bzE" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1
 	},
 /area/space)
@@ -15796,7 +15796,7 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
 "bzG" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5
 	},
 /area/space)
@@ -15805,7 +15805,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "bzJ" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10
 	},
 /area/space)
@@ -15813,7 +15813,7 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
 "bzL" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4
 	},
 /area/space)
@@ -15874,7 +15874,7 @@
 /turf/simulated/floor/plating,
 /area/listeningpost)
 "bzU" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8
 	},
 /area/space)
@@ -15929,7 +15929,7 @@
 /area/listeningpost)
 "bAb" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5
 	},
 /area/space)
@@ -15961,12 +15961,12 @@
 /area/listeningpost)
 "bAi" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8
 	},
 /area/space)
 "bAj" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6
 	},
 /area/space)
@@ -16001,13 +16001,13 @@
 /area/listeningpost)
 "bAo" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4
 	},
 /area/space)
 "bAp" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10
 	},
 /area/space)
@@ -16248,7 +16248,7 @@
 	},
 /area/listeningpost)
 "bBc" = (
-/turf/simulated/wall/asteroid/ice,
+/turf/simulated/wall/auto/asteroid/ice,
 /area/space)
 "bBd" = (
 /obj/cable{
@@ -16375,13 +16375,13 @@
 /area/space)
 "bBt" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6
 	},
 /area/space)
 "bBu" = (
 /turf/space,
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "bBv" = (
 /turf/simulated/floor/plating/airless,
@@ -17823,7 +17823,7 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/fitness)
 "ckn" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1
 	},
 /turf/simulated/floor/plating/airless/asteroid,
@@ -31835,7 +31835,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "jfh" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10
 	},
 /turf/simulated/floor/plating/airless/asteroid,
@@ -34907,7 +34907,6 @@
 /turf/simulated/floor/grass/random,
 /area/station/medical/dome)
 "kMO" = (
-/obj/machinery/door/firedoor/border_only,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -36533,7 +36532,7 @@
 	},
 /area/station/medical/medbay/cloner)
 "lKi" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5
 	},
 /turf/simulated/floor/plating/airless/asteroid,
@@ -45023,7 +45022,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "qmd" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9
 	},
 /turf/simulated/floor/plating/airless/asteroid,
@@ -47558,7 +47557,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/ai_monitored/armory)
 "rCv" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10
 	},
 /turf/simulated/floor/plating/airless,

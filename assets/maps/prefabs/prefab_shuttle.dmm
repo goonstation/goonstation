@@ -79,7 +79,7 @@
 	},
 /area/noGenerate)
 "ao" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/noGenerate)
 "ap" = (
 /obj/random_item_spawner/landmine,
@@ -298,7 +298,7 @@
 /area/noGenerate)
 "aR" = (
 /obj/decal/cleanable/oil,
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/noGenerate)
 "aS" = (
 /obj/decal/fakeobjects{
@@ -660,7 +660,7 @@
 /area/noGenerate)
 "bG" = (
 /obj/item/raw_material/rock,
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/noGenerate)
 "bH" = (
 /obj/decal/floatingtiles{

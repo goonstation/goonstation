@@ -7,11 +7,13 @@
 	hand_count = 1
 	can_help = 1
 	can_throw = 1
-	can_grab = 1
+	can_grab = 0
 	can_disarm = 1
 	fits_under_table = 1
 	icon_state = "scuttlebot"
 	speechverb_say = "beeps"
+	speechverb_exclaim = "boops"
+	speechverb_ask = "beeps curiously"
 	var/health_brute = 25
 	var/health_brute_vuln = 1
 	var/health_burn = 25
@@ -46,6 +48,14 @@
 			return prob(50)
 		else
 			return ..()
+
+	specific_emotes(var/act, var/param = null, var/voluntary = 0)
+		switch (act)
+			if ("scream")
+				if (src.emote_check(voluntary, 50))
+					playsound(src, "sound/voice/screams/robot_scream.ogg" , 60, 1, channel=VOLUME_CHANNEL_EMOTE)
+					return "<b>[src]</b> screams!"
+		return null
 
 	death(var/gibbed)
 		if (controller != null)//Lets put the person back in their body first to avoid death messages

@@ -5467,7 +5467,7 @@
 /turf/simulated/floor/yellowblack,
 /area/station/engine/inner)
 "bsa" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/station/garden/owlery)
 "bsi" = (
 /obj/machinery/camera{
@@ -9081,7 +9081,7 @@
 /turf/simulated/floor/wood,
 /area/station/quartermaster/office)
 "csA" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "csB" = (
 /obj/lantern{
@@ -30454,7 +30454,7 @@
 /turf/simulated/floor/black,
 /area/station/science/bot_storage)
 "iCP" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/spacehabitat/pool)
 "iCT" = (
 /obj/machinery/door/airlock/pyro/engineering,
