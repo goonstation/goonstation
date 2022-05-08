@@ -575,21 +575,21 @@
 	var/turf/busy_turf
 	for(var/name in src.busy_tiles)
 		busy_turf = src.busy_tiles[name]
-		if (busy_turf.disposed)
+		if (QDELETED(busy_turf))
 			src.unreserveTurf(busy_turf)
 
 	for(var/turf/T in src.priority_tiles)
-		if (T.disposed)
+		if (QDELETED(T))
 			src.togglePriorityTurf(T)
 
 	for(var/atom/S in src.deconstruct_targets)
-		if(S.disposed)
+		if(QDELETED(S))
 			src.toggleDeconstructionFlag(S)
 
 	var/atom/M
 	for(var/enemy in src.enemies)
 		M = src.enemies[enemy]["mob"]
-		if (M.disposed)
+		if (QDELETED(M))
 			src.removeEnemy(M)
 
 /datum/flock/proc/convert_turf(var/turf/T, var/converterName)
