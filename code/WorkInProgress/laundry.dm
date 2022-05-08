@@ -236,7 +236,7 @@
 /obj/submachine/laundry_machine/ui_data(mob/user)
   . = list(
     "on" = on,
-	"door" = open,
+    "door" = open,
   )
 
 /obj/submachine/laundry_machine/ui_act(action, params, datum/tgui/ui)
@@ -250,6 +250,7 @@
 				return
 			else
 				src.open = !src.open
+				. = TRUE
 				src.visible_message("[usr] [src.open ? "opens" : "closes"] [src]'s door.")
 				if (src.open)
 					src.unload()
@@ -257,6 +258,7 @@
 		if("cycle")
 			if (!occupant) //You cant turn it on or off if someone is inside to prevent people getting stuck inside
 				src.on = !src.on
+				. = TRUE
 				src.visible_message("[usr] switches [src] [src.on ? "on" : "off"].")
 				if (src.on)
 					src.cycle = PRE
@@ -264,7 +266,6 @@
 					if (!processing_items.Find(src))
 						processing_items.Add(src)
 	src.UpdateIcon()
-	. = TRUE
 
 #undef PRE
 #undef WASH
