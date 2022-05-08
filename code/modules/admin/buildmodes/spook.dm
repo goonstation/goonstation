@@ -127,7 +127,7 @@ Right Mouse Button on turf/mob/obj     = Select spook<br>
 			animate(src, pixel_y = 32, transform = matrix(rdeg, MATRIX_ROTATE), time = 10, loop = -1, easing = SINE_EASING)
 			animate(pixel_y = 0, transform = matrix(rdeg * -1, MATRIX_ROTATE), time = 10, loop = -1, easing = SINE_EASING)
 		if("Come Alive")
-			var/mob/living/object/L = new/mob/living/object(src.loc, src)
+			new/mob/living/object/ai_controlled(src.loc, src)
 		else
 			.	=	..()
 

@@ -29,7 +29,7 @@
 			logTheThing("combat", usr, null, "used the Brass Gauntlet and triggered the [src.name]'s effect at [log_loc(usr)]")
 			for(var/obj/item/I in oview(5, usr)) //No longer brings your organs to life, killing you as they desperately try to attack you from the inside!
 				if (I.anchored || I.invisibility) continue
-				var/mob/living/object/L = new/mob/living/object(src.loc, src)
+				new/mob/living/object/ai_controlled(src.loc, src)
 		..()
 		return 1
 
