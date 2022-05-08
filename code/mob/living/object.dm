@@ -21,6 +21,7 @@
 	blinded = FALSE
 	anchored = FALSE
 	a_intent = "disarm"
+	can_bleed = FALSE
 	var/name_prefix = "living "
 
 	New(var/atom/loc, var/obj/possessed, var/mob/controller)
