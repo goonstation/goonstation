@@ -322,8 +322,6 @@
 		..()
 
 
-
-
 // Extremely simple AI for living objects.
 // Essentially:
 // 1. Is there a person to hit? If yes, go hit the closest person. If no, wander around
@@ -346,9 +344,6 @@
 
 /datum/aiTask/timed/targeted/living_object
 	name = "attack"
-	minimum_task_ticks = 8
-	maximum_task_ticks = 20
-	frustration_threshold = 2
 
 /datum/aiTask/timed/targeted/living_object/get_targets()
 	var/list/humans = list() // Only care about humans since that's all wraiths eat. TODO maybe borgs too?
@@ -381,18 +376,6 @@
 	else
 		attack_twitch(src)
 		holder.owner.weapon_attack(holder.target, holder.owner.equipped(), TRUE)
-
-/datum/aiTask/timed/targeted/living_object/frustration_check()
-	.= 0
-	if (holder)
-		if (!IN_RANGE(holder.owner, holder.target, target_range))
-			return 1
-
-		if (ismob(holder.target))
-			var/mob/M = holder.target
-			. = !(holder.target && isalive(M))
-		else
-			. = !(holder.target)
 
 /// For items with special intent/targeting requirements, or special modes of attacking- arm grenades, turn batons on, etc
 /datum/aiTask/timed/targeted/living_object/proc/pre_attack()
