@@ -88,7 +88,7 @@ export const TurretControl = (props, context) => {
               </Section>
             </Box>
           )}
-          {!emagged && locked === 1 && (
+          {!emagged && !!locked && (
             <Section>Panel locked, swipe ID card to unlock.</Section>
           )}
           {!!emagged && (
