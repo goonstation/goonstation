@@ -80,6 +80,8 @@
 		else if (isscrewingtool(W) && src.securable)
 			src.toggle_secure(user)
 			return
+		else if (istype(W, /obj/item/cloth/towel))
+			user.visible_message("<span class='notice'>[user] wipes down [src] with [W].</span>")
 		else
 			return ..()
 
@@ -417,7 +419,7 @@
 			newSheet.Bed = src
 			user.u_equip(newSheet)
 			newSheet.set_loc(src.loc)
-			mutual_attach(src, newSheet)
+			LAZYLISTADDUNIQUE(src.attached_objs, newSheet)
 
 			var/mob/somebody
 			if (src.buckled_guy)

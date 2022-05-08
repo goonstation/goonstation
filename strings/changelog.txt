@@ -1,4 +1,199 @@
 
+(t)sun may 08 22
+(u)aloe
+(p)8303
+(e)|
+(+)Things which animate objects now make the living objects act like the objects they came from; batons will stun you, food will feed itself to people, etc.
+(u)LeahTheTech
+(p)8378
+(e)📄|tgui
+(+)The control panels for AI chamber and armoury turrets have been upgraded to TGUI.
+(u)ImJustAStrangeMan
+(e)🎨|sprites
+(+)Resprited the traitor cloaking field generator.
+(t)sat may 07 22
+(u)LeahTheTech
+(p)8486
+(e)|
+(+)Added round victory messages to the scorescreen popup, will hopefully reduce "OOC: who won tho" by up to 12%!
+(u)Arborinus, ZeWaka, & skeletonman0
+(p)7514
+(e)🗺🎨|mapping, sprites
+(*)Asteroid and trench walls/floors have new perspective sprites and ways of displaying ore/algae.
+(t)fri may 06 22
+(u)SgtManGuy
+(p)8356
+(e)🎨|sprites
+(*)Added a sushi chef outfit as a chef job award (Level 0).
+(u)Bartimeus973
+(p)8234
+(e)|
+(+)You can now stuff people directly into washing machines for efficient cleaning.
+(t)thu may 05 22
+(u)Boussard's Bargains Budget Bot
+(p)8460
+(e)|
+(+)Civilian cyborg modules now have three product satchels.
+(u)Wisemonster
+(p)8210
+(e)🆕🗺|feature, mapping
+(+)NanoTrasen Has added the proper systems to Donut 3 to allow mulebots to function. (Mule bot included)
+(t)wed may 04 22
+(u)Wisemonster
+(p)8464
+(e)🗺|mapping
+(+)Status Displays have been added to Oshan for the captain/HoP/AI to use from their pdas.
+(u)Chatauscours
+(p)8399
+(e)🗺|mapping
+(+)Removed reinforced walls from under windows in horizon robotics.
+(u)Bartimeus973
+(p)8430
+(e)🎨|sprites
+(*)The detective and spy thieves now have access to a new item: The scuttlebot! A strangely hat-shaped robot that is eager to spy on everything and everyone.
+(u)Flappybat
+(p)8410
+(e)🗺|mapping
+(*)The Horizon Listening Post has been reinforced with stronger walls, a podbay blast door and backup power furnace.
+(u)Flappybat
+(p)8415
+(e)⚖|balance
+(*)RP shuttles have been fitted with the newly developed hotbox shields to reduce complaints.
+(u)zjdtmkhzt
+(p)8422
+(e)⚖|balance
+(*)Cowpeople can now wear cowboy boots.
+(u)Wisemonster
+(p)8459
+(e)🗺|mapping
+(*)Adds status displays to cog1 that the captain/head of personell/AI can use through their pda.
+(u)Amylizzle
+(p)8432
+(e)|
+(+)Carbon and silicon touch artifacts can be activated with appropriate life-related and robot-related chems now.
+(u)NightmareChamillian
+(p)8434
+(e)🎨|sprites
+(*)Added a 6-slot tactical pouch utility for nukies to use
+(u)Flappybat
+(p)8427
+(e)⚖|balance
+(+)Football cleats now have extra grip.
+(t)tue may 03 22
+(u)Shiiba
+(p)8420
+(e)🎨|sprites
+(+)A new sprite for the compost bag!
+(t)mon may 02 22
+(u)Hans
+(p)8374
+(e)🆕🎨|feature, sprites
+(*)Adds yerba mate and mate gourds to the game, available through the coffee vendors.
+(u)Flappybat
+(p)8398
+(e)🆕|feature
+(*)Forcing another to drink now uses an action bar.
+(u)LeahTheTech
+(p)8040
+(e)🆕⚖|feature, balance
+(*)Conspirators are now joined by a single lone antagonist.
+(u)Virvatuli
+(e)⚖|balance
+(*)Reduced shotsound volume of the Gwydion tranquilizer pistol, and it now acts like a suppressed gun.
+(*)Drastically reduced volume and range of melee range vampire bloodsucking sounds.
+(t)sun may 01 22
+(u)NightmareChamillian
+(p)8383
+(e)|
+(+)Drones now get a more inbuilt floor tiles. 500 more, to be precise.
+(u)Bartimeus973
+(p)8371
+(e)|
+(+)An apple a day will keep doctors away if you throw it hard enough
+(u)Chatauscours
+(p)8396
+(e)|
+(*)Added mining headset. Spawns on miners and in miner equimpent boxes.
+(u)Chatauscours
+(p)8405
+(e)⚖|balance
+(*)Changed the chameleon suit to the chameleon outfit in the infiltrator class crate.
+(u)Bartimeus973
+(p)8262
+(e)🎨|sprites
+(*)Using the "regrow tail" ability as a reptilian will now make the tail twitchy for a bit!
+(u)Flaborized & TheMightyAltroll
+(p)8315
+(e)🆕🎨|feature, sprites
+(*)Added a new wizard spell, 'Stave Of Thunder'. It can summon three lightning bolts to strike your foes with lingering disorientating electricity before needing to be recharged by recalling it. Awesome lightning bolt sound effect from TheMightyAltroll!
+(u)Chatauscours
+(p)8387
+(e)🗺|mapping
+(+)Redesined bridge lockdown on Atlas
+(t)sat apr 30 22
+(u)Flourish + Waffleoffle
+(p)8385
+(e)🆕🎨|feature, sprites
+(*)Added towels and handkerchiefs, sprites by Waffleoffle. Bartenders, janitors, and clowns spawn with a special towel. Handkerchiefs are available as a spacebux purchase. Check out the <a href="https://github.com/goonstation/goonstation/pull/8385" target="_blank">PR page</a> to learn more about what you can do with these cool pieces of cloth!
+(t)fri apr 29 22
+(u)pali
+(*)GardenGear vending machines in hydroponics now have two brand new smoke-shield generators to contain your hotboxing into a safe area! Hotbox responsibly!
+(u)Flappybat
+(p)8369
+(e)🗺|mapping
+(+)Donut3 telescience has been provided with a camera helmet for safe exploration.
+(t)thu apr 28 22
+(u)FlameArrow57
+(p)7804
+(e)🆕🗺🎨⚖|feature, mapping, sprites, balance
+(+)Tranquilizer darts and syringe projectiles can now stick into your body! Along with throwing darts, these items can be pulled out using the help intent, except for the syndicate fired variety, which must be cut out using a scalpel.
+(u)LeahTheTech
+(p)7673
+(e)🆕🎨⚖|feature, sprites, balance
+(*)Added a kitchen baster for adding pois- DELICIOUS INGREDIENTS to food. Find it in the kitchen vending machine.
+(u)Bartimeus973
+(p)8336
+(e)🎨|sprites
+(*)Security can now put down crime scene tape to show that business is being done! Find it in sectechs! Sprites made in collaboration with shiiba!
+(u)Bartimeus973
+(p)8333
+(e)|
+(+)You can now use an RCD on deconstruction mode for limb surgery!
+(t)wed apr 27 22
+(u)Hans
+(p)8342
+(e)⚖|balance
+(+)Reduces the rattlesnakes's health and makes the bite cooldown bigger.
+(u)BatElite
+(p)8264
+(e)🆕|feature
+(+)You can now re-insert oxygen/plasma tanks into tank storage units, which you definitely shouldn't misuse for the purpose of crime.
+(u)Shiiba
+(p)8340
+(e)|
+(+)Removes oculine from sunrise venne.
+(+)Adds oculine to carrots.
+(u)DisturbHerb & Waffleoffle
+(p)8014
+(e)🆕🎨|feature, sprites
+(*)In an effort to introduce greater diversity into the crew's diets, NanoTrasen has officially sanctioned the preparation of several new non-pasta noodle dishes. These include ramen, udon, and curry udon; available at the cafeteria today!
+(u)NightmareChamillian
+(p)7986
+(e)|
+(*)Gives ghostdrones three new tools for maintenance: A sponge, cleaner bottle, and stack of floor tiles.
+(u)Flappybat
+(p)8351
+(e)⚖|balance
+(+)Thermite breaching charges now destroy any doors on the same tile.
+(u)Hans
+(p)8005
+(e)⚖|balance
+(+)Makes ricin induce food poisoning instead of custom emotes.
+(+)Adds a potency requirement for ricin rice.
+(u)Ikea
+(p)8324
+(e)⚖|balance
+(+)Pawnstar now costs 0 trait points
 (t)mon apr 25 22
 (u)LeahTheTech
 (p)8170
@@ -9,7 +204,7 @@
 (p)8207
 (e)🆕|feature
 (+)Player pianos now have mechcomp integration.
-(t)wed apr 22 22
+(t)fri apr 22 22
 (u)pali
 (+)Satchels now distinguish between seeds based on their plant types and mutations
 (t)thu apr 21 22

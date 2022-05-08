@@ -235,7 +235,7 @@
 
 // We've had like 10+ code snippets for a variation of the same thing, now it's just one mob proc (Convair880).
 /mob/living/apply_flash(var/animation_duration = 30, var/weak = 8, var/stun = 0, var/misstep = 0, var/eyes_blurry = 0, var/eyes_damage = 0, var/eye_tempblind = 0, var/burn = 0, var/uncloak_prob = 50, var/stamina_damage = 130,var/disorient_time = 60)
-	if (!src || !isliving(src) || isintangible(src) || istype(src, /mob/living/object))
+	if (isintangible(src) || islivingobject(src))
 		return
 	if (animation_duration <= 0)
 		return
@@ -379,7 +379,7 @@
 // Similar concept to apply_flash(). One proc in place of a bunch of individually implemented code snippets (Convair880).
 #define DO_NOTHING (!weak && !stun && !misstep && !slow && !drop_item && !ears_damage && !ear_tempdeaf)
 /mob/living/apply_sonic_stun(var/weak = 0, var/stun = 8, var/misstep = 0, var/slow = 0, var/drop_item = 0, var/ears_damage = 0, var/ear_tempdeaf = 0, var/stamina_damage = 130)
-	if (!src || !isliving(src) || isintangible(src) || istype(src, /mob/living/object))
+	if (isintangible(src) || islivingobject(src))
 		return
 	if (DO_NOTHING)
 		return

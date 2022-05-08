@@ -527,6 +527,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 		boutput(holder.owner, __red("You are ejected from the cable!"))
 		active = FALSE
 		var/atom/movable/screen/ability/topBar/B = src.object
+		pointCost = initial(pointCost)
 		B.update_cooldown_cost()
 
 		UnregisterSignal(D, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_SET_LOC))
@@ -541,7 +542,8 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 		if(!pointCost) pointCost = initial(pointCost)
 
 	proc/send_images_to_client()
-		if ((!holder.owner?.client) || (!isalive(holder.owner)) || (isrestrictedz(holder.owner.z)))
+		var/turf/T = get_turf(holder.owner)
+		if ((!holder.owner?.client) || (!isalive(holder.owner)) || (isrestrictedz(T.z)))
 			deactivate()
 			return
 		holder.owner.client.images += cable_images

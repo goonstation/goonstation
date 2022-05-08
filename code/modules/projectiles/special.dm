@@ -1142,12 +1142,6 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		var/turf/T = get_turf(O)
 		src.emit_chems(target, O)
 		src.emit_gas(T, 1)
-	on_end(var/obj/projectile/O)
-		if(O.reagents?.total_volume < 0.01)
-			return
-		var/turf/T = get_turf(O)
-		src.emit_chems(T, O)
-		src.emit_gas(T, 1)
 	on_max_range_die(obj/projectile/O)
 		if(O.reagents?.total_volume < 0.01)
 			return

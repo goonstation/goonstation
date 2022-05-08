@@ -1606,7 +1606,9 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	set name = "Set Fake Laws"
 
 	#define FAKE_LAW_LIMIT 12
-	var/law_base_choice = input(usr,"Which lawset would you like to use as a base for your new fake laws?", "Fake Laws", "Fake Laws") in list("Real Laws", "Fake Laws")
+	var/law_base_choice = tgui_input_list(usr,"Which lawset would you like to use as a base for your new fake laws?", "Fake Laws", list("Real Laws", "Fake Laws"))
+	if (!law_base_choice)
+		return
 	var/law_base = ""
 	if(law_base_choice == "Real Laws")
 		if(src.law_rack_connection)
@@ -1654,7 +1656,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 /mob/living/silicon/ai/proc/ai_state_laws_all()
 	set category = "AI Commands"
 	set name = "State All Laws"
-	if (alert(src.get_message_mob(), "Are you sure you want to reveal ALL your laws? You will be breaking the rules if a law forces you to keep it secret.","State Laws","State Laws","Cancel") != "State Laws")
+	if (tgui_alert(src.get_message_mob(), "Are you sure you want to reveal ALL your laws? You will be breaking the rules if a law forces you to keep it secret.", "State Laws", list("State Laws", "Cancel")) != "State Laws")
 		return
 
 	if(!src.law_rack_connection)
@@ -1712,7 +1714,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		if (R.shell && !R.dependent && !isdead(R))
 			bodies += R
 
-	var/mob/living/silicon/target_shell = input(usr, "Which body to control?") as null|anything in bodies
+	var/mob/living/silicon/target_shell = tgui_input_list(usr, "Which body to control?", "Deploy", sortList(bodies))
 
 	if (!target_shell || isdead(target_shell) || !(isshell(target_shell) || isrobot(target_shell)))
 		return
@@ -1779,7 +1781,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		return
 	var/list/L = custom_emotions ? custom_emotions : ai_emotions	//In case an AI uses the reward, use a local list instead
 
-	var/newEmotion = input("Select a status!", "AI Status", src.faceEmotion) as null|anything in L
+	var/newEmotion = tgui_input_list(src.get_message_mob(), "Select a status!", "AI Status", sortList(L))
 	var/newMessage = scrubbed_input(usr, "Enter a message for your status displays!", "AI Message", src.status_message)
 	if (!newEmotion && !newMessage)
 		return
@@ -1851,7 +1853,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	if (!src || !message_mob.client || isdead(src))
 		return
 
-	if(alert("Are you sure?",,"Yes","No") == "Yes")
+	if(tgui_alert(message_mob, "Are you sure?", "Confirmation", list("Yes", "No")) == "Yes")
 		for_by_tcl(D, /obj/machinery/door/airlock)
 			if (D.z == 1 && D.canAIControl() && !D.isWireCut(AIRLOCK_WIRE_ELECTRIFY) && D.secondsElectrified != 0 )
 				D.secondsElectrified = 0
@@ -1873,7 +1875,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	if (!src || !message_mob.client || isdead(src))
 		return
 
-	if(alert("Are you sure?",,"Yes","No") == "Yes")
+	if(tgui_alert(message_mob, "Are you sure?", "Confirmation", list("Yes", "No")) == "Yes")
 		for_by_tcl(D, /obj/machinery/door/airlock)
 			if (D.z == 1 && D.canAIControl() && D.locked && !D.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS) && D.arePowerSystemsOn())
 				D.locked = 0
@@ -1925,7 +1927,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	if (!src || !message_mob.client || isdead(src))
 		return
 
-	var/obj/item/device/radio/which = input("Which Radio?","AI Radio") as null|obj in list(src.radio1,src.radio2,src.radio3)
+	var/obj/item/device/radio/which = tgui_input_list(message_mob, "Which Radio?", "AI Radio", list(src.radio1, src.radio2, src.radio3))
 	if (!which)
 		return
 
@@ -2284,7 +2286,7 @@ proc/is_mob_trackable_by_AI(var/mob/M)
 proc/get_mobs_trackable_by_AI()
 	var/list/names = list()
 	var/list/namecounts = list()
-	var/list/creatures = list("* Sort alphabetically...")
+	var/list/creatures = list()
 
 	for (var/mob/M in mobs)
 		if (istype(M, /mob/new_player))
@@ -2344,7 +2346,7 @@ proc/get_mobs_trackable_by_AI()
 	var/message = copytext(message_in, 1, 140)
 
 	if(message_len != length(message))
-		if(alert("Your message was shortened to: \"[message]\", continue anyway?", "Too wordy!", "Yes", "No") != "Yes")
+		if(tgui_alert(src.get_message_mob(), "Your message was shortened to: \"[message]\", continue anyway?", "Too wordy!", list("Yes", "No")) != "Yes")
 			return
 
 	message = vox_playerfilter(message)
@@ -2381,7 +2383,7 @@ proc/get_mobs_trackable_by_AI()
 	var/message = copytext(message_in, 1, 280)
 
 	if(message_len != length(message))
-		if(alert("Your message was shortened to: \"[message]\", continue anyway?", "Too wordy!", "Yes", "No") != "Yes")
+		if(tgui_alert(src.get_message_mob(), "Your message was shortened to: \"[message]\", continue anyway?", "Too wordy!", list("Yes", "No")) != "Yes")
 			return
 
 	var/sound_to_play = "sound/misc/announcement_1.ogg"
@@ -2426,7 +2428,7 @@ proc/get_mobs_trackable_by_AI()
 				src.show_text("Your name cannot be blank. Please choose a different name.", "red")
 				continue
 			else
-				if (alert(src, "Use the name [newname]?", newname, "Yes", "No") == "Yes")
+				if (tgui_alert(src, "Use the name [newname]?", newname, list("Yes", "No")) == "Yes")
 					src.real_name = newname
 					break
 				else

@@ -44,7 +44,7 @@ PIPE BOMBS + CONSTRUCTION
 			logGrenade(user)
 			if (user?.bioHolder.HasEffect("clumsy"))
 				boutput(user, "<span class='alert'>Huh? How does this thing work?!</span>")
-				src.icon_state = src.icon_state_armed
+				src.UpdateIcon()
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
 				src.add_fingerprint(user)
 				SPAWN(0.5 SECONDS)
@@ -52,13 +52,13 @@ PIPE BOMBS + CONSTRUCTION
 					return
 			else
 				boutput(user, "<span class='alert'>You prime [src]! [det_time/10] seconds!</span>")
-				src.icon_state = src.icon_state_armed
+				src.UpdateIcon()
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
 				src.add_fingerprint(user)
 				SPAWN(src.det_time)
 					if (src) prime(user)
 					return
-		return
+
 // warcrimes: Why the fuck is autothrow a feature why would this ever be a feature WHY. Now it wont do it unless it's primed i think.
 	afterattack(atom/target as mob|obj|turf, mob/user as mob)
 		if (src.state)
@@ -68,7 +68,7 @@ PIPE BOMBS + CONSTRUCTION
 		if (user.equipped() == src)
 			if (!src.state)
 				src.state = 1
-				src.icon_state = src.icon_state_armed
+				src.UpdateIcon()
 				logGrenade(user)
 				boutput(user, "<span class='alert'>You prime [src]! [det_time/10] seconds!</span>")
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
@@ -78,7 +78,6 @@ PIPE BOMBS + CONSTRUCTION
 			user.drop_item()
 			src.throw_at(get_turf(target), 10, 3)
 			src.add_fingerprint(user)
-		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (isscrewingtool(W))
@@ -91,7 +90,13 @@ PIPE BOMBS + CONSTRUCTION
 				user.show_message("<span class='notice'>You set [src] for a [det_time/10] second detonation time.</span>")
 				src.desc = "It is set to detonate in [det_time/10] seconds."
 			src.add_fingerprint(user)
-		return
+
+	update_icon()
+		..()
+		if (src.state)
+			src.icon_state = src.icon_state_armed
+		else
+			src.icon_state = initial(src.icon_state)
 
 	proc/prime(mob/user) // Most grenades require a turf reference.
 		var/turf/T = get_turf(src)
@@ -1369,6 +1374,10 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 						var/turf/simulated/floor/F = T
 						F.burn_tile()
 
+			for (var/obj/machinery/door/DR in src.loc)
+				var/area/a = get_area(DR)
+				if (!DR.cant_emag && !a.sanctuary)
+					DR.take_damage(DR.health)
 			for (var/obj/structure/girder/G in range(src.expl_range, location))
 				var/area/a = get_area(G)
 				if (G && istype(G) && !a.sanctuary)
@@ -1818,9 +1827,10 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 			boutput(M, "<span class='alert'><b>Your armor blocks the shrapnel!</b></span>")
 		else
 			var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel(M)
+			implanted.bleed_time = 25 * sqstrength
 			implanted.owner = M
 			M.implant += implanted
-			implanted.implanted(M, null, 25 * sqstrength)
+			implanted.implanted(M, null)
 			boutput(M, "<span class='alert'><b>You are struck by shrapnel!</b></span>")
 			if (!M.stat)
 				M.emote("scream")
@@ -1872,9 +1882,10 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				boutput(M, "<span class='alert'><b>Your armor blocks the chunks of [src.name]!</b></span>")
 			else
 				var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel(M)
+				implanted.bleed_time = 25 * sqstrength
 				implanted.owner = M
 				M.implant += implanted
-				implanted.implanted(M, null, 25 * sqstrength)
+				implanted.implanted(M, null)
 				boutput(M, "<span class='alert'><b>You are struck by chunks of [src.name]!</b></span>")
 				if (!M.stat)
 					M.emote("scream")
