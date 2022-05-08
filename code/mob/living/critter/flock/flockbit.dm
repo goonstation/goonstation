@@ -54,12 +54,6 @@
 	else
 		..()
 
-/mob/living/critter/flock/bit/bullet_act(var/obj/projectile/P)
-	if(istype(P.proj_data, /datum/projectile/energy_bolt/flockdrone))
-		src.visible_message("<span class='notice'>[src] harmlessly absorbs [P].</span>")
-		return
-	..()
-
 /mob/living/critter/flock/bit/setup_hands()
 	..()
 	var/datum/handHolder/HH = hands[1]
@@ -82,29 +76,19 @@
 	HH.can_attack = 1
 	HH.can_range_attack = 0
 
-/mob/living/critter/flock/bit/proc/dormantize()
-	src.dormant = TRUE
+/mob/living/critter/flock/bit/dormantize()
 	src.icon_state = "bit-dormant"
-	src.ai.die()
 	animate(src) // doesnt work right now
-
-	if (!src.flock)
-		return
-
-	src.flock.removeDrone(src)
-	src.flock = null
+	..()
 
 /mob/living/critter/flock/bit/death(var/gibbed)
-	walk(src, 0)
-	src.flock?.removeDrone(src)
-	playsound(src, "sound/impact_sounds/Glass_Shatter_3.ogg", 50, 1)
+	..()
 	flockdronegibs(get_turf(src))
-	if (src.mind || src.client) //Shouldn't be possible, but someone managed it
+	if (src.mind || src.client)
 		src.ghostize()
 	qdel(src)
 
 /mob/living/critter/flock/bit/disposing()
-	src.flock?.removeDrone(src)
 	if (src.mind || src.client)
 		src.ghostize()
 	..()
