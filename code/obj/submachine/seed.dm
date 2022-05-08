@@ -257,10 +257,8 @@
 			var/obj/item/I = src.inserted
 			if (!I) boutput(usr, "<span class='alert'>No receptacle found to eject.</span>")
 			else
-				I.set_loc(src.loc)
+				I.set_loc(src.loc) // causes Exited proc to be called
 				usr.put_in_hand_or_eject(I) // try to eject it into the users hand, if we can
-				src.inserted = null
-			src.updateUsrDialog()
 
 		else if(href_list["ejectseeds"])
 			for (var/obj/item/seed/S in src.seeds)
@@ -870,10 +868,8 @@
 				if (!I)
 					return
 				if (I == src.extract_to) src.extract_to = null
-				TRANSFER_OR_DROP(src, I)
+				TRANSFER_OR_DROP(src, I) // causes Exited proc to be called
 				usr.put_in_hand_or_eject(I)
-				src.inserted = null
-				. = TRUE
 			if("insertcontainer")
 				if (src.inserted)
 					return

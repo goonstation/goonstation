@@ -155,11 +155,8 @@
 						return
 					src.roboworking = null
 				else
-					container.set_loc(src.output_target)
+					container.set_loc(src.output_target) // causes Exited proc to be called
 					usr.put_in_hand_or_eject(container) // try to eject it into the users hand, if we can
-
-				src.beaker = null
-				src.UpdateIcon()
 			if("insert")
 				if (container)
 					return
@@ -392,11 +389,8 @@
 		else if (href_list["eject"])
 			var/obj/item/I = src.beaker
 			if (I)
-				I.set_loc(src.output_target)
+				I.set_loc(src.output_target) // causes Exited proc to be called
 			usr.put_in_hand_or_eject(I) // try to eject it into the users hand, if we can
-			beaker = null
-			icon_state = "mixer0"
-			src.updateUsrDialog()
 			return
 
 		else if (href_list["createpill"])
