@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aab" = (
-/turf/simulated/wall/asteroid/ice,
+/turf/simulated/wall/auto/asteroid/ice,
 /area/space)
 "aad" = (
 /obj/landmark/artifact,
@@ -3913,6 +3913,9 @@
 	pixel_y = 4
 	},
 /obj/machinery/light/emergency,
+/obj/machinery/status_display{
+	pixel_y = -30
+	},
 /turf/simulated/floor/blue/corner,
 /area/station/crew_quarters/quarters)
 "alN" = (
@@ -7900,6 +7903,9 @@
 "awF" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
+	},
+/obj/machinery/status_display{
+	pixel_y = 30
 	},
 /turf/simulated/floor/green/side{
 	dir = 1
@@ -14725,6 +14731,9 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/machinery/status_display{
+	pixel_x = 32
+	},
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fred2"
@@ -15754,6 +15763,9 @@
 	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
+	},
+/obj/machinery/status_display{
+	pixel_y = 30
 	},
 /turf/simulated/floor,
 /area/station/bridge)
@@ -39585,6 +39597,9 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/machinery/status_display{
+	pixel_x = 32
+	},
 /turf/simulated/floor/neutral/side{
 	dir = 4
 	},
@@ -42247,6 +42262,9 @@
 /obj/shrub{
 	icon = 'icons/obj/stationobjs.dmi';
 	icon_state = "plant"
+	},
+/obj/machinery/status_display{
+	pixel_y = 30
 	},
 /turf/simulated/floor/wood,
 /area/station/medical/medbay/lobby)
@@ -50306,7 +50324,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "cxU" = (
-/obj/decal/fakeobjects/sink,
+/obj/submachine/chef_sink,
 /obj/machinery/light{
 	dir = 1;
 	pixel_y = 21
@@ -51567,7 +51585,7 @@
 	},
 /area/station/medical/medbay)
 "cBQ" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cBR" = (
 /turf/simulated/shuttle/wall{
@@ -53046,6 +53064,11 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/security/main)
+"dZb" = (
+/obj/railing/orange/reinforced,
+/mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled,
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "dZw" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/wingrille_spawn/auto,
@@ -55500,6 +55523,14 @@
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
+"hVP" = (
+/obj/machinery/status_display,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/science/lobby)
+"hVW" = (
+/obj/machinery/status_display,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/turret_protected/ai_upload_foyer)
 "hXA" = (
 /obj/table/reinforced/industrial/auto,
 /obj/item/hand_labeler,
@@ -55897,6 +55928,10 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
 /area/station/crew_quarters/cafeteria)
+"iJw" = (
+/obj/machinery/status_display,
+/turf/simulated/wall/auto/supernorn,
+/area/station/crew_quarters/market)
 "iJV" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -56087,6 +56122,10 @@
 	},
 /turf/simulated/floor/red/corner,
 /area/station/security/main)
+"jfN" = (
+/obj/machinery/status_display,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/security/brig)
 "jfV" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 9
@@ -56277,6 +56316,17 @@
 /obj/disposalpipe/trunk/produce,
 /turf/simulated/floor/delivery,
 /area/station/hydroponics/bay)
+"jvb" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/station/quartermaster/refinery)
 "jvO" = (
 /turf/simulated/floor/green/side,
 /area/station/hydroponics/bay)
@@ -56366,6 +56416,10 @@
 /obj/access_spawn/medlab,
 /turf/simulated/floor/delivery,
 /area/station/medical/research)
+"jFB" = (
+/obj/machinery/status_display,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/crew_quarters/market)
 "jFF" = (
 /obj/machinery/door/airlock/pyro/security{
 	name = "Interrogation Room";
@@ -56879,6 +56933,10 @@
 	icon_state = "floor"
 	},
 /area/shuttle/arrival/station)
+"kqf" = (
+/obj/machinery/status_display,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/hallway/secondary/exit)
 "krl" = (
 /obj/cable,
 /obj/wingrille_spawn/auto,
@@ -58374,6 +58432,10 @@
 /obj/machinery/glass_recycler,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
+"ntv" = (
+/obj/machinery/status_display,
+/turf/simulated/wall/auto/supernorn,
+/area/station/crew_quarters/cafeteria)
 "ntA" = (
 /obj/stool/chair/couch{
 	dir = 4
@@ -59036,6 +59098,9 @@
 	},
 /obj/cable/brown{
 	icon_state = "0-8"
+	},
+/obj/machinery/status_display{
+	pixel_y = 30
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -61378,6 +61443,15 @@
 /obj/access_spawn/bar,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/entry)
+"spT" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/machinery/status_display{
+	pixel_x = 32
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "sqK" = (
 /obj/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/manifold{
@@ -61761,6 +61835,10 @@
 	name = "reinforced plating"
 	},
 /area/station/quartermaster/refinery)
+"sNI" = (
+/obj/machinery/status_display,
+/turf/simulated/wall/auto/supernorn,
+/area/station/security/secwing)
 "sOG" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -64180,6 +64258,17 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/north)
+"wCc" = (
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
+/turf/simulated/floor/bluewhite{
+	dir = 1
+	},
+/area/station/medical/medbay)
 "wCy" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -97022,7 +97111,7 @@ iQw
 aho
 anH
 aoS
-aho
+jfN
 arJ
 asZ
 aum
@@ -98009,7 +98098,7 @@ bPJ
 bRd
 bWx
 bUa
-bVj
+hVP
 bWC
 bWC
 bZg
@@ -98548,7 +98637,7 @@ azN
 aHQ
 sjX
 aKp
-ayy
+sNI
 ayy
 aOc
 aMC
@@ -99788,7 +99877,7 @@ bmV
 bnG
 bgL
 bpe
-bfS
+iJw
 bfS
 bfS
 brd
@@ -102822,7 +102911,7 @@ bAt
 bxw
 bAt
 bzu
-bAt
+jFB
 bBr
 bCg
 bDb
@@ -104668,7 +104757,7 @@ cca
 cca
 cca
 cca
-coH
+wCc
 cpG
 cqL
 crO
@@ -105540,7 +105629,7 @@ buc
 bxy
 bxx
 bzy
-bxx
+hVW
 bxy
 bCh
 bDd
@@ -110105,7 +110194,7 @@ lbv
 ahh
 ceN
 vQt
-ceN
+kqf
 cdu
 cdu
 cdu
@@ -111526,7 +111615,7 @@ apB
 apB
 apB
 apw
-apw
+ntv
 apw
 apw
 aFM
@@ -116143,7 +116232,7 @@ ceN
 cjL
 clr
 cdw
-cmG
+spT
 cdw
 coY
 cdw
@@ -125108,7 +125197,7 @@ adC
 adC
 apY
 atX
-azp
+dZb
 avl
 jiQ
 atW
@@ -131539,7 +131628,7 @@ bWm
 bWn
 bWn
 bWm
-gDG
+jvb
 gDG
 bWm
 bWn

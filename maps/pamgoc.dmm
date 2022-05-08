@@ -66512,10 +66512,10 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
 "cyX" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cyY" = (
-/turf/simulated/wall/asteroid/ice,
+/turf/simulated/wall/auto/asteroid/ice,
 /area/space)
 "czf" = (
 /turf/simulated/wall/auto/reinforced/supernorn,

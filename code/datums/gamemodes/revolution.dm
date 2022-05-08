@@ -408,6 +408,14 @@
 		return 0
 	return 1
 
+/datum/game_mode/revolution/victory_msg()
+	switch (finished)
+		if(1)
+			return "<span class='alert'><FONT size = 3><B> The heads of staff were killed or abandoned the [station_or_ship()]! The revolutionaries win!</B></FONT></span>"
+		if(2)
+			return "<span class='alert'><FONT size = 3><B> The heads of staff managed to stop the revolution!</B></FONT></span>"
+		if(3)
+			return "<span class='alert'><FONT size = 3><B> Everyone was terminated! CentCom wins!</B></FONT></span>"
 
 /datum/game_mode/revolution/declare_completion()
 

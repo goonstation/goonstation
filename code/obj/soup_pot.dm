@@ -8,8 +8,8 @@
 	var/list/food_effects = list()
 
 /obj/item/reagent_containers/food/snacks/soup/custom
-	icon = 'icons/obj/soup_pot.dmi'
-	icon_state = "soup_custom"
+	icon = 'icons/obj/kitchen.dmi'
+	icon_state = "bowl"
 	name = null
 	desc = "Ah, the, uh, wonders of the kitchen stove."
 	bites_left = null
@@ -41,7 +41,7 @@
 				temp -= effect
 
 
-		fluid_icon = image("icon" = 'icons/obj/soup_pot.dmi', "icon_state" = "soup_custom-f")
+		fluid_icon = image("icon" = 'icons/obj/kitchen.dmi', "icon_state" = "fluid")
 
 		..()
 

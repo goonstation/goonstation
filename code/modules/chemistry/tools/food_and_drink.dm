@@ -397,7 +397,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	name = "half-digested food chunk"
 	desc = "This is a chunk of partially digested food."
 	icon = 'icons/obj/foodNdrink/food.dmi'
-	icon_state = "scotchegg"
+	icon_state = "foodchunk"
 	heal_amt = 0
 	initial_volume = 100
 	festivity = 0
@@ -518,9 +518,27 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			boutput(user, "<span class='alert'>Nothing left in [src], oh no!</span>")
 			return 0
 
-		if (iscarbon(M) || ismobcritter(M))
-			var/tasteMessage
-			if (M.mind && M.mind.assigned_role == "Bartender")
+		if (M == user)
+			src.take_a_drink(M, user)
+			return 1
+		else
+			user.visible_message("<span class='alert'>[user] attempts to force [M] to drink from [src].</span>")
+			logTheThing("combat", user, M, "attempts to force [constructTarget(M,"combat")] to drink from [src] [log_reagents(src)] at [log_loc(user)].")
+			if (check_target_immunity(M))
+				user.visible_message("<span class='alert'>[user] attempts to force [M] to drink from [src], but fails!.</span>", "<span class='alert'>You try to force [M] to drink [src], but fail!</span>")
+				return 0
+			if (!src.reagents || !src.reagents.total_volume)
+				boutput(user, "<span class='alert'>Nothing left in [src], oh no!</span>")
+				return 0
+
+			actions.start(new/datum/action/bar/icon/forcefeed(M, src, src.icon, src.icon_state), user)
+			return 1
+
+	///Called when we successfully take a drink of something (or make someone else take a drink of something)
+	proc/take_a_drink(var/mob/consumer, var/mob/feeder)
+		var/tasteMessage
+		if (iscarbon(consumer) || ismobcritter(consumer))
+			if (consumer.mind && consumer.mind.assigned_role == "Bartender")
 				var/reag_list = ""
 				for (var/current_id in reagents.reagent_list)
 					var/datum/reagent/current_reagent = reagents.reagent_list[current_id]
@@ -541,40 +559,22 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 						tasteMessage = "<span class='notice'>Tastes kind of [tastes[1]] and [tastes[2]].</span>"
 					else
 						tasteMessage = "<span class='notice'>Tastes kind of [tastes[1]], [tastes[2]], and a little bit [tastes[3]].</span>"
+		if (consumer == feeder)
+			consumer.visible_message("<span class='notice'>[consumer] takes a sip from [src].</span>","<span class='notice'>You take a sip from [src].</span>\n[tasteMessage]", group = "drinkMessages")
+		else
+			consumer.visible_message("<span class='alert'>[feeder] makes [consumer] drink from the [src].</span>",
+			"<span class='alert'>[feeder] makes you drink from the [src].</span>\n[tasteMessage]",
+				group = "drinkMessages")
+		if (src.reagents.total_volume)
+			logTheThing("combat", feeder, consumer, "[feeder == consumer ? "takes a sip from" : "makes [constructTarget(consumer,"combat")] drink from"] [src] [log_reagents(src)] at [log_loc(feeder)].")
+			src.reagents.reaction(consumer, INGEST, clamp(reagents.total_volume, CHEM_EPSILON, min(src.gulp_size, (consumer.reagents?.maximum_volume - consumer.reagents?.total_volume))))
+			SPAWN(0.5 SECONDS)
+				if (src?.reagents && consumer?.reagents)
+					src.reagents.trans_to(consumer, min(reagents.total_volume, src.gulp_size))
 
-			if (M == user)
-				M.visible_message("<span class='notice'>[M] takes a sip from [src].</span>","<span class='notice'>You take a sip from [src].</span>\n[tasteMessage]", group = "drinkMessages")
-			else
-				user.visible_message("<span class='alert'>[user] attempts to force [M] to drink from [src].</span>")
-				logTheThing("combat", user, M, "attempts to force [constructTarget(M,"combat")] to drink from [src] [log_reagents(src)] at [log_loc(user)].")
-				if (check_target_immunity(M))
-					user.visible_message("<span class='alert'>[user] attempts to force [M] to drink from [src], but fails!.</span>", "<span class='alert'>You try to force [M] to drink [src], but fail!</span>")
-					return
-				if (!do_mob(user, M))
-					if (user && ismob(user))
-						user.show_text("You were interrupted!", "red")
-					return
-				if (!src.reagents || !src.reagents.total_volume)
-					boutput(user, "<span class='alert'>Nothing left in [src], oh no!</span>")
-					return
-				M.visible_message("<span class='alert'>[user] makes [M] drink from the [src].</span>",
-				"<span class='alert'>[user] makes you drink from the [src].</span>\n[tasteMessage]",
-				 group = "drinkMessages")
-
-			if (src.reagents.total_volume)
-				logTheThing("combat", user, M, "[user == M ? "takes a sip from" : "makes [constructTarget(M,"combat")] drink from"] [src] [log_reagents(src)] at [log_loc(user)].")
-				src.reagents.reaction(M, INGEST, clamp(reagents.total_volume, CHEM_EPSILON, min(gulp_size, (M.reagents?.maximum_volume - M.reagents?.total_volume))))
-				SPAWN(0.5 SECONDS)
-					if (src?.reagents && M?.reagents)
-						src.reagents.trans_to(M, min(reagents.total_volume, gulp_size))
-
-			playsound(M.loc,"sound/items/drink.ogg", rand(10,50), 1)
-			M.urine += 0.1
-			eat_twitch(M)
-
-			return 1
-
-		return 0
+		playsound(consumer.loc,"sound/items/drink.ogg", rand(10,50), 1)
+		consumer.urine += 0.1
+		eat_twitch(consumer)
 
 	//bleck, i dont like this at all. (Copied from chemistry-tools reagent_containers/glass/ definition w minor adjustments)
 	afterattack(obj/target, mob/user , flag)

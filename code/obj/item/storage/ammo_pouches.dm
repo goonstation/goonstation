@@ -239,3 +239,12 @@
 	slots = 4
 	does_not_open_in_pocket = 0
 	spawn_contents = list(/obj/item/beartrap = 4)
+
+/obj/item/storage/pouch/highcap
+	name = "actical pouch"
+	desc = "A large pouch for carrying multiple miscallenous things at once."
+	icon_state = "ammopouch-quad"
+	w_class = W_CLASS_SMALL
+	slots = 6
+	does_not_open_in_pocket = 0
+	can_hold = list(/obj/item/ammo, /obj/item/old_grenade, /obj/item/chem_grenade, /obj/item/reagent_containers, /obj/item/deployer/barricade, /obj/item/tool, /obj/item/breaching_charge, /obj/item/pinpointer, /obj/item/mine, /obj/item/remote, )

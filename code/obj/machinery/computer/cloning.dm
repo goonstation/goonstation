@@ -236,7 +236,7 @@
 	if (istype(subject.mutantrace, /datum/mutantrace/zombie))
 		show_message("Error: Incompatible cellular structure.", "danger")
 		return
-	if (subject.mob_flags & IS_BONER)
+	if (subject.mob_flags & IS_BONEY)
 		show_message("Error: No tissue mass present.<br>Total ossification of subject detected.", "danger")
 		return
 

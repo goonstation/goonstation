@@ -184,10 +184,15 @@
 		return
 	var/datum/artifact/A = src.artifact
 	switch(reagent_id)
-		if("radium","porktonium")
+		if("porktonium")
 			src.ArtifactStimulus("radiate", round(volume / 10))
-		if("strange_reagent")
-			src.ArtifactStimulus("radiate", round(volume / 5))
+			src.ArtifactStimulus("carbtouch", round(volume / 5))
+		if("synthflesh","blood","bloodc","meat_slurry") //not carbon, because it's about detecting *lifeforms*, not elements
+			src.ArtifactStimulus("carbtouch", round(volume / 5)) //require at least 5 units
+		if("nanites","corruptnanites","goodnanites","flockdrone_fluid") //not silicon&friends for the same reason
+			src.ArtifactStimulus("silitouch", round(volume / 5)) //require at least 5 units
+		if("radium")
+			src.ArtifactStimulus("radiate", round(volume / 10))
 		if("uranium","polonium")
 			src.ArtifactStimulus("radiate", round(volume / 2))
 		if("dna_mutagen","mutagen","omega_mutagen")

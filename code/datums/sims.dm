@@ -262,11 +262,11 @@
 			protection = round(value / 5)
 
 		onLife()
-			if (value < 15 && prob(33))
-				if (holder.owner.bioHolder && !(holder.owner.bioHolder.HasEffect("sims_stinky")))
-					holder.owner.bioHolder.AddEffect("sims_stinky")
-			else if ((value >= 85 ) && (holder.owner.bioHolder.HasEffect("sims_stinky")))
-				holder.owner.bioHolder.RemoveEffect("sims_stinky")
+			if (value < SIMS_HYGIENE_THRESHOLD_FILTHY && prob(33))
+				if (holder.owner.bioHolder && !(holder.owner.bioHolder.HasEffect("sims_stinky")) && !holder.owner.hasStatus("filthy"))
+					holder.owner.setStatus("filthy", 3 MINUTES)
+			else if ((value >= SIMS_HYGIENE_THRESHOLD_CLEAN ) && holder.owner.hasStatus("rancid"))
+				holder.owner.delStatus("rancid")
 			/*
 			if (value < 10 && prob((10 - value) * 1.5))
 				for (var/mob/living/carbon/human/H in viewers(2, holder.owner))

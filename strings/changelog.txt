@@ -1,4 +1,106 @@
 
+(t)sun may 08 22
+(u)aloe
+(p)8303
+(e)|
+(+)Things which animate objects now make the living objects act like the objects they came from; batons will stun you, food will feed itself to people, etc.
+(u)LeahTheTech
+(p)8378
+(e)📄|tgui
+(+)The control panels for AI chamber and armoury turrets have been upgraded to TGUI.
+(u)ImJustAStrangeMan
+(e)🎨|sprites
+(+)Resprited the traitor cloaking field generator.
+(t)sat may 07 22
+(u)LeahTheTech
+(p)8486
+(e)|
+(+)Added round victory messages to the scorescreen popup, will hopefully reduce "OOC: who won tho" by up to 12%!
+(u)Arborinus, ZeWaka, & skeletonman0
+(p)7514
+(e)🗺🎨|mapping, sprites
+(*)Asteroid and trench walls/floors have new perspective sprites and ways of displaying ore/algae.
+(t)fri may 06 22
+(u)SgtManGuy
+(p)8356
+(e)🎨|sprites
+(*)Added a sushi chef outfit as a chef job award (Level 0).
+(u)Bartimeus973
+(p)8234
+(e)|
+(+)You can now stuff people directly into washing machines for efficient cleaning.
+(t)thu may 05 22
+(u)Boussard's Bargains Budget Bot
+(p)8460
+(e)|
+(+)Civilian cyborg modules now have three product satchels.
+(u)Wisemonster
+(p)8210
+(e)🆕🗺|feature, mapping
+(+)NanoTrasen Has added the proper systems to Donut 3 to allow mulebots to function. (Mule bot included)
+(t)wed may 04 22
+(u)Wisemonster
+(p)8464
+(e)🗺|mapping
+(+)Status Displays have been added to Oshan for the captain/HoP/AI to use from their pdas.
+(u)Chatauscours
+(p)8399
+(e)🗺|mapping
+(+)Removed reinforced walls from under windows in horizon robotics.
+(u)Bartimeus973
+(p)8430
+(e)🎨|sprites
+(*)The detective and spy thieves now have access to a new item: The scuttlebot! A strangely hat-shaped robot that is eager to spy on everything and everyone.
+(u)Flappybat
+(p)8410
+(e)🗺|mapping
+(*)The Horizon Listening Post has been reinforced with stronger walls, a podbay blast door and backup power furnace.
+(u)Flappybat
+(p)8415
+(e)⚖|balance
+(*)RP shuttles have been fitted with the newly developed hotbox shields to reduce complaints.
+(u)zjdtmkhzt
+(p)8422
+(e)⚖|balance
+(*)Cowpeople can now wear cowboy boots.
+(u)Wisemonster
+(p)8459
+(e)🗺|mapping
+(*)Adds status displays to cog1 that the captain/head of personell/AI can use through their pda.
+(u)Amylizzle
+(p)8432
+(e)|
+(+)Carbon and silicon touch artifacts can be activated with appropriate life-related and robot-related chems now.
+(u)NightmareChamillian
+(p)8434
+(e)🎨|sprites
+(*)Added a 6-slot tactical pouch utility for nukies to use
+(u)Flappybat
+(p)8427
+(e)⚖|balance
+(+)Football cleats now have extra grip.
+(t)tue may 03 22
+(u)Shiiba
+(p)8420
+(e)🎨|sprites
+(+)A new sprite for the compost bag!
+(t)mon may 02 22
+(u)Hans
+(p)8374
+(e)🆕🎨|feature, sprites
+(*)Adds yerba mate and mate gourds to the game, available through the coffee vendors.
+(u)Flappybat
+(p)8398
+(e)🆕|feature
+(*)Forcing another to drink now uses an action bar.
+(u)LeahTheTech
+(p)8040
+(e)🆕⚖|feature, balance
+(*)Conspirators are now joined by a single lone antagonist.
+(u)Virvatuli
+(e)⚖|balance
+(*)Reduced shotsound volume of the Gwydion tranquilizer pistol, and it now acts like a suppressed gun.
+(*)Drastically reduced volume and range of melee range vampire bloodsucking sounds.
 (t)sun may 01 22
 (u)NightmareChamillian
 (p)8383
@@ -71,7 +173,7 @@
 (e)|
 (+)Removes oculine from sunrise venne.
 (+)Adds oculine to carrots.
-(u)DisturbHerb
+(u)DisturbHerb & Waffleoffle
 (p)8014
 (e)🆕🎨|feature, sprites
 (*)In an effort to introduce greater diversity into the crew's diets, NanoTrasen has officially sanctioned the preparation of several new non-pasta noodle dishes. These include ramen, udon, and curry udon; available at the cafeteria today!

@@ -3,12 +3,12 @@
 /turf/space,
 /area/space)
 "aab" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "ast1"
 	},
 /area/space)
 "aac" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "aad" = (
 /turf/space/asteroid,
@@ -57,14 +57,14 @@
 /turf/simulated/floor/plating/airless,
 /area/listeningpost)
 "aak" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1;
 	icon_state = "ast1"
 	},
 /area/space)
 "aal" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1;
 	icon_state = "ast1"
 	},
@@ -80,13 +80,13 @@
 	},
 /area/listeningpost)
 "aan" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "ast1"
 	},
 /area/space)
 "aao" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -99,7 +99,7 @@
 /turf/space,
 /area/space)
 "aar" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4;
 	icon_state = "ast1"
 	},
@@ -110,7 +110,7 @@
 /area/space)
 "aat" = (
 /turf/simulated/floor/plating/airless/asteroid,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -182,7 +182,7 @@
 /turf/space,
 /area/space)
 "aaB" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8;
 	icon_state = "ast1"
 	},
@@ -250,14 +250,14 @@
 /area/listeningpost)
 "aaI" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "ast1"
 	},
 /area/space)
 "aaJ" = (
 /turf/simulated/floor/plating/airless/asteroid,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "ast1"
 	},
@@ -294,13 +294,13 @@
 /area/listeningpost)
 "aaP" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8;
 	icon_state = "ast1"
 	},
 /area/space)
 "aaQ" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "ast1"
 	},
@@ -343,21 +343,21 @@
 /area/listeningpost)
 "aaV" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4;
 	icon_state = "ast1"
 	},
 /area/space)
 "aaW" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
 /area/space)
 "aaX" = (
 /turf/simulated/floor/plating/airless/asteroid,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "ast1"
 	},
@@ -416,14 +416,14 @@
 /area/listeningpost)
 "abf" = (
 /turf/simulated/floor/plating/airless/asteroid,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1;
 	icon_state = "ast1"
 	},
 /area/space)
 "abg" = (
 /turf/simulated/floor/plating/airless,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -785,14 +785,14 @@
 /area/listeningpost)
 "abX" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "ast1"
 	},
 /area/space)
 "abY" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "ast1"
 	},
 /area/space)

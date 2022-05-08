@@ -20,7 +20,7 @@
 	fauna_density = 0.5
 
 /datum/biome/icemoon/icewall
-	turf_type = /turf/simulated/wall/asteroid/icemoon
+	turf_type = /turf/simulated/wall/auto/asteroid/icemoon
 
 /datum/biome/icemoon/abyss
 	turf_type = /turf/unsimulated/floor/arctic/abyss
@@ -108,7 +108,7 @@
 
 
 ///for the mapgen mountains, temp until we get something better
-/turf/simulated/wall/asteroid/icemoon
+/turf/simulated/wall/auto/asteroid/icemoon
 	name = "ice wall"
 	desc = "You're inside a glacier. Wow."
 	icon = 'icons/turf/walls.dmi'

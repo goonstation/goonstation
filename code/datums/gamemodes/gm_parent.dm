@@ -61,6 +61,10 @@
 		return 1
 	return 0
 
+///An optional message to indicate who won the round
+/datum/game_mode/proc/victory_msg()
+	return ""
+
 // Did some streamlining here (Convair880).
 /datum/game_mode/proc/declare_completion()
 	var/list/datum/mind/antags = list()
@@ -295,6 +299,119 @@
 		return list()
 	else
 		return candidates
+
+/// Set up an antag with default equipment, objectives etc as they would be in mixed
+/datum/game_mode/proc/equip_antag(var/datum/mind/antag)
+	var/objective_set_path = null
+
+	if (antag.assigned_role == "Chaplain" && antag.special_role == ROLE_VAMPIRE)
+		// vamp will burn in the chapel before he can react
+		if (prob(50))
+			antag.special_role = ROLE_TRAITOR
+		else
+			antag.special_role = ROLE_CHANGELING
+
+	switch (antag.special_role)
+		if (ROLE_TRAITOR)
+		#ifdef RP_MODE
+			objective_set_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
+		#else
+			objective_set_path = pick(typesof(/datum/objective_set/traitor))
+		#endif
+			equip_traitor(antag.current)
+
+		if (ROLE_CHANGELING)
+			objective_set_path = /datum/objective_set/changeling
+			antag.current.make_changeling()
+
+		if (ROLE_WIZARD)
+			objective_set_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
+			antag.current.unequip_all(1)
+
+			if (!job_start_locations["wizard"])
+				boutput(antag.current, "<B><span class='alert'>A starting location for you could not be found, please report this bug!</span></B>")
+			else
+				antag.current.set_loc(pick(job_start_locations["wizard"]))
+
+			equip_wizard(antag.current)
+
+			var/randomname
+			if (antag.current.gender == "female")
+				randomname = pick_string_autokey("names/wizard_female.txt")
+			else
+				randomname = pick_string_autokey("names/wizard_male.txt")
+
+			SPAWN(0)
+				var/newname = input(antag.current,"You are a Wizard. Would you like to change your name to something else?", "Name change",randomname)
+				if(newname && newname != randomname)
+					phrase_log.log_phrase("name-wizard", randomname, no_duplicates=TRUE)
+				if (length(ckey(newname)) == 0)
+					newname = randomname
+
+				if (newname)
+					if (length(newname) >= 26) newname = copytext(newname, 1, 26)
+					newname = strip_html(newname)
+					antag.current.real_name = newname
+					antag.current.UpdateName()
+
+		if (ROLE_WRAITH)
+			generate_wraith_objectives(antag)
+
+		if (ROLE_VAMPIRE)
+			objective_set_path = /datum/objective_set/vampire
+			antag.current.make_vampire()
+
+		if (ROLE_HUNTER)
+			objective_set_path = /datum/objective_set/hunter
+			antag.current.show_text("<h2><font color=red><B>You are a hunter!</B></font></h2>", "red")
+			antag.current.make_hunter()
+
+		if (ROLE_GRINCH)
+			objective_set_path = /datum/objective_set/grinch
+			boutput(antag.current, "<h2><font color=red><B>You are a grinch!</B></font></h2>")
+			antag.current.make_grinch()
+
+		if (ROLE_BLOB)
+			objective_set_path = /datum/objective_set/blob
+			SPAWN(0)
+				var/newname = input(antag.current, "You are a Blob. Please choose a name for yourself, it will show in the form: <name> the Blob", "Name change") as text
+
+				if (newname)
+					phrase_log.log_phrase("name-blob", newname, no_duplicates=TRUE)
+					if (length(newname) >= 26) newname = copytext(newname, 1, 26)
+					newname = strip_html(newname) + " the Blob"
+					antag.current.real_name = newname
+					antag.current.name = newname
+
+		if (ROLE_SPY_THIEF)
+			objective_set_path = /datum/objective_set/spy_theft
+			SPAWN(1 SECOND) //dumb delay to avoid race condition where spy assignment bugs
+				equip_spy_theft(antag.current)
+
+			if (!src.spy_market)
+				src.spy_market = new /datum/game_mode/spy_theft
+				sleep(5 SECONDS) //Some possible bounty items (like organs) need some time to get set up properly and be assigned names
+				src.spy_market.build_bounty_list()
+				src.spy_market.update_bounty_readouts()
+
+		if (ROLE_WEREWOLF)
+			objective_set_path = /datum/objective_set/werewolf
+			antag.current.make_werewolf()
+
+		if (ROLE_ARCFIEND) // TODO: EV objectives
+		#ifdef RP_MODE
+			objective_set_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
+		#else
+			objective_set_path = pick(typesof(/datum/objective_set/traitor))
+		#endif
+			antag.current.make_arcfiend()
+
+	if (!isnull(objective_set_path)) // Cannot create objects of type null. [wraiths use a special proc]
+		new objective_set_path(antag)
+	var/obj_count = 1
+	for (var/datum/objective/objective in antag.objectives)
+		boutput(antag.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
+		obj_count++
 
 /datum/game_mode/proc/check_win()
 

@@ -277,6 +277,18 @@ proc/filter_trait_hats(var/type)
 		..()
 		setProperty("meleeprot_head", 3)
 
+//A robot in disguise, ready to go and spy on everyone for you
+/obj/item/clothing/head/det_hat/folded_scuttlebot
+	desc = "Someone who wears this will look very smart. It looks a bit heavier than it should."
+
+	attack_self(mob/user)
+		boutput(user, "You reach inside the hat and pull out a pair of goggles. The scuttlebot wakes up! Use the goggles on the bot to make it dormant again.")
+		new /mob/living/critter/scuttlebot(get_turf(src))
+		qdel(src)
+	setupProperties()
+		..()
+		setProperty("meleeprot_head", 5)
+
 //THE ONE AND ONLY.... GO GO GADGET DETECTIVE HAT!!!
 /obj/item/clothing/head/det_hat/gadget
 	name = "DetGadget hat"
@@ -473,6 +485,12 @@ proc/filter_trait_hats(var/type)
 	name = "Sous-Chef's hat"
 	icon_state = "souschef"
 	item_state = "chefhat" //TODO: unique inhand sprite?
+
+/obj/item/clothing/head/itamaehat
+	name = "Itamae hat"
+	desc = "A hat commonly worn by Japanese Chefs. Itamae translates literally to \"In front of the board\"."
+	icon_state = "itamae"
+	item_state = "itamae"
 
 /obj/item/clothing/head/dramachefhat
 	name = "Dramatic Chef's Hat"

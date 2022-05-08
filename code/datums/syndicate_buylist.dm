@@ -949,6 +949,14 @@ This is basically useless for anyone but miners.
 	cost = 1
 	desc = "A roll of duct tape for makeshift handcuffs. Lets you restrain someone 10 times before being used up."
 
+/datum/syndicate_buylist/traitor/scuttlebot
+	name = "Remote controlled Scuttlebot"
+	item = /obj/item/clothing/head/det_hat/folded_scuttlebot
+	cost = 2
+	desc = "A sneaky robot armed with a camera disguised as a hat, used to spy on people. Comes with it's own remote controlling glasses."
+	job = list("Detective")
+	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
+
 /////////////////////////////////////////// Surplus-exclusive items //////////////////////////////////////////////////
 
 ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
