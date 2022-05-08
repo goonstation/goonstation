@@ -67,7 +67,7 @@
 				text = replacetext(text, "%mrand_name%", rand_mob_mult.name)
 				text = replacetext(text, "%mrand_job%", rand_mob_mult.job ? rand_mob_mult.job : "space hobo")
 
-				boutput(M, "<h1 class='alert'>[command_name()] Update</h1>")
+				boutput(M, "<h1 class='alert'>[ALERT_GENERAL]</h1>")
 				if(title != "") boutput(M, "<h2 class='alert'>[title]</h2>")
 				boutput(M, "<span class='alert'>[text]</span><br>")
 

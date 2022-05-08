@@ -2490,6 +2490,7 @@
 
 	hidden = list(/datum/manufacture/breathmask,
 	/datum/manufacture/patch,
+	/datum/manufacture/towel,
 	/datum/manufacture/tricolor,
 	/datum/manufacture/hat_ltophat)
 	///datum/manufacture/hermes) //all hail the shoe lord - needs adjusting for the new movement system which I cba to do right now

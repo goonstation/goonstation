@@ -602,9 +602,10 @@ TRAYS
 
 		var/turf/shardturf = get_turf(M)
 
-		if(src.cant_drop == 1)
-			var/mob/living/carbon/human/H = user
-			H.sever_limb(H.hand == 1 ? "l_arm" : "r_arm")
+		if(src.cant_drop == TRUE)
+			if (istype(user, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = user
+				H.sever_limb(H.hand == 1 ? "l_arm" : "r_arm")
 		else
 			user.drop_item()
 			src.set_loc(shardturf)
@@ -927,6 +928,10 @@ TRAYS
 		tooltip_rebuild = 1
 
 		src.visible_message("\The [src] looks less sturdy now.")
+
+	MouseDrop_T(atom/movable/a as mob|obj, mob/user as mob)
+		if(!istype(a, /obj/item/plate)) //plate stacking is banned for trays
+			return ..()
 
 //sushiiiiiii
 /obj/item/kitchen/sushi_roller

@@ -644,6 +644,11 @@
 		..()
 		setProperty("coldprot", 10)
 
+	Move()
+		. = ..()
+		if(src.Bed)
+			src.Bed.Move(src.loc)
+
 	New()
 		..()
 		src.UpdateIcon()

@@ -1355,7 +1355,7 @@ datum/achievementReward/ai_dwaine
 		if (!isobserver(activator))
 			boutput(activator, "<span class='alert'>You gotta be dead to use this, you goof!</span>")
 			return
-		var/mob/living/object/O = new /mob/living/object(new /obj/item/sticker/ribbon/participant(get_turf(usr)), usr)
+		var/mob/living/object/O = new /mob/living/object(get_turf(usr), new /obj/item/sticker/ribbon/participant, usr)
 		O.say_language = "animal"
 		O.literate = 0
 		return 1

@@ -703,6 +703,7 @@ This is basically useless for anyone but miners.
 	name = "Poison Bottle"
 	item = /obj/item/reagent_containers/glass/bottle/poison
 	cost = 1
+	vr_allowed = 0 //rat poison
 	desc = "A bottle of poison. Which poison? Who knows."
 	job = list("Medical Doctor", "Medical Director", "Research Director", "Scientist", "Bartender")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
@@ -711,6 +712,7 @@ This is basically useless for anyone but miners.
 	name = "Poison Bottle Bundle"
 	item = /obj/item/storage/box/poison
 	cost = 7
+	vr_allowed = 0 //rat poison
 	desc = "A box filled with seven random poison bottles."
 	job = list("Medical Doctor", "Medical Director", "Research Director", "Scientist", "Bartender")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
@@ -946,6 +948,14 @@ This is basically useless for anyone but miners.
 	item = /obj/item/handcuffs/tape_roll
 	cost = 1
 	desc = "A roll of duct tape for makeshift handcuffs. Lets you restrain someone 10 times before being used up."
+
+/datum/syndicate_buylist/traitor/scuttlebot
+	name = "Remote controlled Scuttlebot"
+	item = /obj/item/clothing/head/det_hat/folded_scuttlebot
+	cost = 2
+	desc = "A sneaky robot armed with a camera disguised as a hat, used to spy on people. Comes with it's own remote controlling glasses."
+	job = list("Detective")
+	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /////////////////////////////////////////// Surplus-exclusive items //////////////////////////////////////////////////
 

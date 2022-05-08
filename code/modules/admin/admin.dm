@@ -3189,7 +3189,7 @@ var/global/noir = 0
 
 							if (tgui_alert(src, "Headline: [input2 ? "\"[input2]\"" : "None"] | Body: \"[input]\"", "Confirmation", list("Send Report", "Cancel")) == "Send Report")
 								for_by_tcl(C, /obj/machinery/communications_dish)
-									C.add_centcom_report("[command_name()] Update", input)
+									C.add_centcom_report(ALERT_GENERAL, input)
 
 								var/sound_to_play = "sound/musical_instruments/artifact/Artifact_Eldritch_4.ogg"
 								if (!input2) command_alert(input, "", sound_to_play);
@@ -3209,7 +3209,7 @@ var/global/noir = 0
 
 							if (tgui_alert(src, "Headline: [input2 ? "\"[input2]\"" : "None"] | Body: \"[input]\"", "Confirmation", list("Send Report", "Cancel")) == "Send Report")
 								for_by_tcl(C, /obj/machinery/communications_dish)
-									C.add_centcom_report("[command_name()] Update", input)
+									C.add_centcom_report("[ALERT_GENERAL] Update", input)
 
 								var/sound_to_play = "sound/ambience/spooky/Void_Calls.ogg"
 								if (!input2) command_alert(input, "", sound_to_play);

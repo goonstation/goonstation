@@ -2,6 +2,8 @@
 #define WASH "w"
 #define DRY "d"
 #define POST 1
+#define CYCLE_TIME_MOB_INSIDE 5
+#define CYCLE_TIME 10
 
 /obj/submachine/laundry_machine
 	name = "laundry machine"
@@ -14,8 +16,9 @@
 	var/on = 0
 	var/open = 0
 	var/cycle = PRE
-	var/cycle_time = 10
 	var/cycle_current = 0
+	var/cycle_max = CYCLE_TIME
+	var/mob/occupant = null
 	var/image/image_door = null
 	var/image/image_light = null
 	//var/image/image_panel = null
@@ -58,7 +61,8 @@
 		src.generate_html()
 		return
 
-	if (src.cycle_current >= src.cycle_time) // cycle done!
+	var/mob/living/carbon/human/H = src.occupant
+	if (src.cycle_current >= src.cycle_max) // cycle done! The cycle is faster if a human is inside
 		if (src.cycle == WASH) // we have to dry things now!
 			for (var/obj/item/I in src.contents)
 				if (istype(I, /obj/item/clothing))
@@ -66,6 +70,8 @@
 					C.stains = list("damp")
 					C.UpdateName()
 				I.clean_forensic()
+			if (src.occupant && ishuman(src.occupant))
+				H.sims?.affectMotive("Hygiene", 100)
 			src.cycle = DRY
 			src.cycle_current = 0
 			src.visible_message("[src] lets out a beep and hums as it switches to its drying cycle.")
@@ -82,13 +88,48 @@
 			src.cycle_current = 0
 			src.visible_message("[src] lets out a happy beep!")
 			playsound(src, "sound/machines/ding.ogg", 50, 1)
+			if(src.occupant) // If someone is inside we eject immediatly so as to not keep people hostage
+				H.changeStatus("weakened", 1 SECONDS)
+				H.make_dizzy(15) //Makes you dizzy for fifteen seconds due to the spinning
+				H.change_misstep_chance(65)
+				src.open = 1
+				src.unload()
+				src.cycle = PRE
+				src.visible_message("[src]'s door flings open and [H] flops on the ground, squeaky clean.")
+			src.occupant = null
+			src.cycle_max = CYCLE_TIME
+			src.on = 0
 			src.UpdateIcon()
 			src.generate_html()
 	else
 		src.cycle_current++
+		if (src.occupant)
+			H.TakeDamage("All", 2, 0, 0, DAMAGE_BLUNT) //Getting washed like that has gotta hurt
+			H.take_oxygen_deprivation(rand(0,3)) //Hard to keep breathing while in the machine
+			src.shake()
+			playsound(src, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
+			if (src.cycle_current == 2 && src.cycle == WASH)
+				src.visible_message("[src] groans horribly, some water drips out!")
+				playsound(src, "sound/impact_sounds/Metal_Clang_3.ogg", 100, 1)
+			else if (src.cycle_current == 4 && src.cycle == WASH)
+				src.visible_message("[src] is making a horrible ratchet! [H]'s face can be seen pressed against the glass.")
+				if(isliving(H))
+					H.emote("scream")
+			else if (src.cycle_current == 2 && src.cycle == DRY)
+				src.visible_message("[src] is shaking around threateningly!")
+				if(isliving(H))
+					H.emote("scream")
+			else if (src.cycle_current == 4 && src.cycle == DRY)
+				src.visible_message("[src] is quaking like a jackhammer!")
+
 		if (src.cycle == PRE) // just started up!
 			src.cycle = WASH
-			src.visible_message("[src] clicks locked and sloshes a bit as it starts its washing cycle.")
+			if (src.occupant)
+				src.visible_message("[src] clicks locked, grumps a bit and starts its washing cycle.")
+				H.clean_forensic()
+				H.delStatus("marker_painted")
+			else
+				src.visible_message("[src] clicks locked and sloshes a bit as it starts its washing cycle.")
 			playsound(src, "sound/machines/click.ogg", 50, 1)
 			playsound(src, "sound/impact_sounds/Liquid_Slosh_2.ogg", 100, 1)
 			src.UpdateIcon()
@@ -118,7 +159,7 @@
 		if (!src.open)
 			src.visible_message("[user] tries to put [W] into [src], but [src]'s door is closed, so [he_or_she(user)] just smooshes [W] against the door.[prob(40) ? " What a doofus!" : null]")
 			return
-		else if (!istype(W, /obj/item/clothing) && W.w_class > W_CLASS_HUGE)
+		else if ((!istype(W, /obj/item/clothing) || !istype(W, /obj/item/grab)) && W.w_class > W_CLASS_HUGE)
 			src.visible_message("[user] tries [his_or_her(user)] best to put [W] into [src], but [W] is too big to fit!")
 			return
 		else if (src.contents.len >= src.load_max)
@@ -128,11 +169,16 @@
 			src.visible_message("[user] tries [his_or_her(user)] best to put [W] into [src], but [W] is stuck to [him_or_her(user)]!")
 			return
 		else
-			user.u_equip(W)
-			W.set_loc(src)
-			src.visible_message("[user] puts [W] into [src].")
-			src.UpdateIcon()
-			return
+			if (istype(W, /obj/item/clothing))
+				user.u_equip(W)
+				W.set_loc(src)
+				src.visible_message("[user] puts [W] into [src].")
+				src.UpdateIcon()
+				return
+			else if (istype(W, /obj/item/grab)) //If its a person, we're trying to stuff them into the washing machine
+				var/obj/item/grab/G = W
+				user.visible_message("<span class='alert'>[user] starts to put [G.affecting] into the washing machine!</span>")
+				SETUP_GENERIC_ACTIONBAR(user, src, 4 SECONDS, /obj/submachine/laundry_machine/proc/force_into_machine, list(G, user), 'icons/mob/screen1.dmi', "grabbed", null, null) //Sounds about right since it's a lengthy stun afterwards
 	else
 		return ..()
 
@@ -140,6 +186,29 @@
 	if (!user || user.restrained() || user.lying || user.stat)
 		return
 	src.show_window(user)
+
+/obj/submachine/laundry_machine/proc/force_into_machine(obj/item/grab/W as obj, mob/user as mob)
+	if (src.on == 0)
+		if(W?.affecting && (BOUNDS_DIST(user, src) == 0))
+			user.visible_message("<span class='alert'>[user] shoves [W.affecting] into the laundry machine and turns it on!</span>")
+			src.add_fingerprint(user)
+			logTheThing("combat", user, W.affecting, "forced [constructTarget(W.affecting,"combat")] into a laundry machine at [log_loc(src)].")
+			W.affecting.set_loc(src)
+			src.open = 0
+			src.on = 1
+			var/mob/M = W.affecting
+			src.occupant = M
+			src.update_icon()
+			cycle_max = CYCLE_TIME_MOB_INSIDE
+			if (!processing_items.Find(src))
+				processing_items.Add(src)
+			var/mob/living/L = user
+
+			if (L.pulling == W.affecting)
+				L.remove_pulling()
+			qdel(W)
+	else //Prevents stuffing more than one person in at a time
+		user.visible_message("<span class='alert'>[user] tries to shove [W.affecting] into the laundry machine but it was already running.</span>")
 
 /obj/submachine/laundry_machine/proc/generate_html()
 	src.HTML = "<center><big><b>WashMan 550</b></big></center><hr><br>"
@@ -188,12 +257,13 @@
 		return 1
 	src.add_fingerprint(usr)
 	if (href_list["cycle"])
-		src.on = !src.on
-		src.visible_message("[usr] switches [src] [src.on ? "on" : "off"].")
-		if (src.on)
-			src.open = 0
-			if (!processing_items.Find(src))
-				processing_items.Add(src)
+		if (!occupant) //You cant turn it on or off if someone is inside to prevent people getting stuck inside
+			src.on = !src.on
+			src.visible_message("[usr] switches [src] [src.on ? "on" : "off"].")
+			if (src.on)
+				src.open = 0
+				if (!processing_items.Find(src))
+					processing_items.Add(src)
 
 	else if (href_list["door"])
 		if (src.on)

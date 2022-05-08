@@ -1653,7 +1653,7 @@
 	if (istype(src, /mob/dead/observer) || istype(src, /mob/dead/target_observer))
 		return
 
-	src.death()
+	src.death(TRUE)
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
