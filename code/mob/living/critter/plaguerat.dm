@@ -185,7 +185,9 @@
 	health_brute_vuln = 0.45
 	health_burn = 40
 	health_burn_vuln = 0.65
-	add_abilities = list(/datum/targetable/critter/plague_rat/spawn_warren)
+	add_abilities = list(/datum/targetable/critter/plague_rat/eat_filth,
+						/datum/targetable/critter/plague_rat/rat_bite,
+						/datum/targetable/critter/plague_rat/spawn_warren)
 
 	can_help = 1
 	can_throw = 0
@@ -221,7 +223,9 @@
 	health_brute_vuln = 0.45
 	health_burn = 60
 	health_burn_vuln = 0.65
-	add_abilities = list(/datum/targetable/critter/plague_rat/spawn_warren,
+	add_abilities = list(/datum/targetable/critter/plague_rat/eat_filth,
+						/datum/targetable/critter/plague_rat/rat_bite,
+						/datum/targetable/critter/plague_rat/spawn_warren,
 						/datum/targetable/critter/slam,
 						/datum/targetable/wraithAbility/make_plague_rat)
 

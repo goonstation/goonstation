@@ -1271,7 +1271,7 @@
 		if (ishuman(target))
 			usr.playsound_local(usr.loc, "sound/voice/wraith/wraithspook[rand(1, 2)].ogg", 80, 0)
 			var/mob/living/carbon/H = target
-			H.changeStatus("terror", 1 SECONDS)
+			H.setStatus("terror", 45 SECONDS)
 
 /obj/spookMarker
 	name = "Spooky Marker"

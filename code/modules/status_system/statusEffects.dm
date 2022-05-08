@@ -1535,28 +1535,106 @@
 	maxDuration = 3 MINUTES
 	var/mob/living/carbon/human/H
 	var/list/wall_list = list()
+	var/sound_effect = null
+	var/illusion_icon = null
+	var/illusion_icon_state = null
+	var/volume = null
+	var/has_faked_armory = false
+	var/has_faked_nuke = false
+	var/has_faked_shuttle = false
 
 	onAdd(optional=null)
 		. = ..()
 		if (ishuman(owner))
 			H = owner
-			H.see_invisible = INVIS_HALLUCINATION
+			get_image_group(CLIENT_IMAGE_GROUP_ILLUSSION).add_mob(H)
 		else
 			owner.delStatus("terror")
 
 	onRemove()
 		. = ..()
-			H.see_invisible = INVIS_NONE
+		H = owner
+		get_image_group(CLIENT_IMAGE_GROUP_ILLUSSION).add_mob(H)
 
 	onUpdate()
-		for (var/turf/simulated/wall/auto/W in orange(5, H))
-			wall_list += W
-		if (wall_list != null) // todo Check if empty
-			var/turf/simulated/wall/auto/W = pick(wall_list)
-			var/obj/decal/cleanable/sakura/S = new /obj/decal/cleanable/sakura(get_turf(W))
-			APPLY_ATOM_PROPERTY(S, PROP_MOB_INVISIBILITY, S, INVIS_HALLUCINATION)
-			new /obj/decal/cleanable/vomit(get_turf(W))
-			logTheThing("debug", null, null, "setup a thing at [W]")
+		if (prob(50))	//Make a wall decal
+			switch (rand(1,3))
+				if (1) // Image based
+					for (var/turf/W in range(6, H))
+						wall_list += W
+					if (wall_list != null)
+						var/turf/W = pick(wall_list)
+						switch(rand(1,5))
+							if (1)
+								sound_effect = 'sound/effects/Explosion2.ogg'
+								illusion_icon = 'icons/effects/64x64.dmi'
+								illusion_icon_state = "explo_fiery"
+								volume = 45
+							if (2)
+								sound_effect = 'sound/effects/Explosion2.ogg'
+								illusion_icon = 'icons/effects/96x96.dmi'
+								illusion_icon_state = "explo_smoky"
+								volume = 45
+							if (3)
+								sound_effect = "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg"
+								illusion_icon = 'icons/mob/mob.dmi'
+								illusion_icon_state = "wraith"
+								volume = 65
+								//separate
+							if (3)
+
+								illusion_icon = null
+								illusion_icon_state = null
+								volume = 45
+						var/image/illusionIcon = image(illusion_icon, W, null, EFFECTS_LAYER_UNDER_4)
+						illusionIcon.icon_state = illusion_icon_state
+						get_image_group(CLIENT_IMAGE_GROUP_ILLUSSION).add_image(illusionIcon)
+						if (sound_effect != null)
+							H.playsound_local(H.loc,sound_effect, volume, 1)
+						sleep(5 SECONDS)
+						qdel(illusionIcon)
+				if (2) //sound based
+					switch(rand(1,3))
+						if (1)
+							sound_effect = "sound/machines/phones/ring_incoming.ogg"
+							volume = 60
+						if (2)
+							sound_effect = 'sound/effects/explosionfar.ogg'
+							volume = 70
+							shake_camera(H, 2, 8)
+						if (3)
+							if(!has_faked_nuke)
+								sound_effect = 'sound/machines/bomb_planted.ogg'
+								volume = 90
+								boutput(H, "<h2 class='alert'>A nuclear bomb has been armed in [pick("the Bridge", "the Bar", "the security lobby", "the medical lobby")]</h2>")
+								boutput(H, "<span class='alert'>It will explode in 5 minutes. All personnel must report to the plant area to disarm the bomb immediatly.</span>")
+								has_faked_nuke = true
+						//Add fake shuttle call
+					H.playsound_local(H.loc,sound_effect, volume, 1)
+				if (3) //Wall based
+					for (var/turf/simulated/wall/auto/W in orange(5, H))
+						wall_list += W
+					if (wall_list != null) // todo Check if empty and add blood effect
+						var/turf/simulated/wall/auto/W = pick(wall_list)
+						switch(rand(1,2))
+							if (1)
+								illusion_icon = 'icons/effects/effects.dmi'
+								illusion_icon_state = "sparks"
+							if (2)
+								illusion_icon = 'icons/effects/effects.dmi'
+								illusion_icon_state = "sparks"
+						var/image/illusionIcon = image(illusion_icon, W, null, EFFECTS_LAYER_UNDER_4)
+						illusionIcon.icon_state = illusion_icon_state
+						get_image_group(CLIENT_IMAGE_GROUP_ILLUSSION).add_image(illusionIcon)
+						SPAWN(2 SECONDS)
+							while(illusionIcon.alpha > 0)
+								sleep(5 DECI SECOND)
+								illusionIcon.alpha -= 10
+							qdel(illusionIcon)
+	//Make a mob walk
+		wall_list = list()
+			//Add fake can bomb announcement
+
 
 /datum/statusEffect/mentor_mouse
 	id = "mentor_mouse"

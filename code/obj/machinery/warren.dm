@@ -26,7 +26,7 @@
 			qdel(src)
 
 	process()
-		if (src.next_spawn_check != null)
+		if (src.next_spawn_check != null)//Check about mad mice assaulting the plague rat
 			if (src.next_spawn_check < world.time)
 				next_spawn_check = world.time + rand(10 SECONDS, 15 SECONDS)
 				if (linked_critters < max_critters)
@@ -35,8 +35,8 @@
 					linked_critters ++
 
 		for (var/mob/living/critter/plaguerat/P in range(5, src))
-			if((P.health_brute < 50) || (P.health_burn < 50))
+			if((P.health < 100))
 				for(var/damage_type in P.healthlist)
 					var/datum/healthHolder/hh = P.healthlist[damage_type]
-					hh.HealDamage(1)
+					hh.HealDamage(3)
 				boutput(P, "The proximity of the warren fills you with renewed malevolence.")

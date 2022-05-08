@@ -321,7 +321,7 @@
 
 	OnAdd()
 		if (ishuman(owner))
-			owner.changeStatus("weakcurse", 1 SECONDS)
+			owner.setStatus("weakcurse", 1 SECONDS)
 
 	OnLife()
 		if (prob(50))

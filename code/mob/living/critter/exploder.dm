@@ -97,9 +97,6 @@
 /mob/living/critter/exploder/New(var/atom/L, var/datum/flock/F=null)
 	..()
 	src.ai = new /datum/aiHolder/wraith_critters/exploder(src)
-	abilityHolder.addAbility(/datum/targetable/critter/takepicture)
-	abilityHolder.addAbility(/datum/targetable/critter/flash)
-	abilityHolder.addAbility(/datum/targetable/critter/control_owner)
 
 	// do not automatically set up a flock if one is not provided
 	// flockless drones act differently

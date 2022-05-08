@@ -9,5 +9,6 @@
 #define CLIENT_IMAGE_GROUP_ARREST_ICONS "arrest_icons"
 #define CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS "health_mon_icons"
 #define CLIENT_IMAGE_GROUP_PACKETVISION "packetvision"
+#define CLIENT_IMAGE_GROUP_ILLUSSION "illusion_icons"
 
 #define CAM_RANGE 7
