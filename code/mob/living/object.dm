@@ -375,7 +375,6 @@
 	if (BOUNDS_DIST(holder.target, holder.owner))
 		holder.move_to(holder.target)
 	else
-		attack_twitch(src)
 		holder.owner.weapon_attack(holder.target, holder.owner.equipped(), TRUE)
 
 /// For items with special intent/targeting requirements, or special modes of attacking- arm grenades, turn batons on, etc
