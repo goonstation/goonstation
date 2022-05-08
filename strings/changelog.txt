@@ -1,4 +1,9 @@
 
+(t)sun may 08 22
+(u)LeahTheTech
+(p)8378
+(e)📄|tgui
+(+)The control panels for AI chamber and armoury turrets have been upgraded to TGUI.
 (t)sat may 07 22
 (u)LeahTheTech
 (p)8486
