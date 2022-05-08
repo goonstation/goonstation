@@ -359,7 +359,8 @@
 		"internalFdisk" = src.setup_has_internal_disk,
 		"icon" = "save",
 		"card" = "internal",
-		"color" = src.diskette
+		"color" = src.diskette,
+		"label" = "Disk"
 		)))
 	for(var/obj/item/peripheral/periph in src.peripherals) // originally i had all this stuff in static data, but the buttons didnt update.
 		if(periph.setup_has_badge)
