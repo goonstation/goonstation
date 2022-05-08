@@ -1,8 +1,8 @@
 /**
  * Playable bots
  */
-ABSTRACT_TYPE(/mob/living/critter/bot)
-/mob/living/critter/bot
+ABSTRACT_TYPE(/mob/living/critter/robotic/bot)
+/mob/living/critter/robotic/bot
 	name = "base bot mob (you should never see me)"
 	icon = 'icons/obj/bots/aibots.dmi'
 	blood_id = "oil"
@@ -204,8 +204,8 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 
 		playsound(get_turf(master), "sound/impact_sounds/Liquid_Slosh_2.ogg", 25, 1)
 		master.anchored = 1
-		if(istype(master, /mob/living/critter/bot))
-			var/mob/living/critter/bot/bot = master
+		if(istype(master, /mob/living/critter/robotic/bot))
+			var/mob/living/critter/robotic/bot/bot = master
 			master.icon_state = "[bot.icon_state_base]-c"
 		master.visible_message("<span class='alert'>[master] begins to clean the [T.name].</span>")
 
@@ -217,8 +217,8 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 
 	onInterrupt(flag)
 		. = ..()
-		if(istype(master, /mob/living/critter/bot))
-			var/mob/living/critter/bot/bot = master
+		if(istype(master, /mob/living/critter/robotic/bot))
+			var/mob/living/critter/robotic/bot/bot = master
 			master.icon_state = "[bot.icon_state_base]1"
 
 	onEnd()
@@ -234,12 +234,12 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 				if (T.active_liquid.group)
 					T.active_liquid.group.drain(T.active_liquid,1,master)
 
-			if(istype(master, /mob/living/critter/bot))
-				var/mob/living/critter/bot/bot = master
+			if(istype(master, /mob/living/critter/robotic/bot))
+				var/mob/living/critter/robotic/bot/bot = master
 				master.icon_state = "[bot.icon_state_base]1"
 		..()
 
-/mob/living/critter/bot/firebot
+/mob/living/critter/robotic/bot/firebot
 	name = "firebot"
 	real_name = "firebot"
 	desc = "A little fire-fighting robot!  He looks so darn chipper."
