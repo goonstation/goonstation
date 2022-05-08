@@ -42,15 +42,9 @@ export const TurretControl = (props, context) => {
   } = data;
 
   const set_lethal = (value) => {
-    if (value === !!lethal) {
-      return;
-    }
     act("setLethal", { "lethal": value });
   };
   const set_enabled = (value) => {
-    if (value === !!enabled) {
-      return;
-    }
     act("setEnabled", { "enabled": value });
   };
   return (

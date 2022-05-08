@@ -416,11 +416,15 @@
 
 	switch (action)
 		if ("setEnabled")
+			if (src.enabled == params["enabled"])
+				return
 			src.enabled = params["enabled"]
 			logTheThing("combat", usr, null, "turned [enabled ? "ON" : "OFF"] turrets from control \[[log_loc(src)]].")
 			src.updateTurrets()
 			. = TRUE
 		if ("setLethal")
+			if (src.lethal == params["lethal"])
+				return
 			src.lethal = params["lethal"]
 			if(src.lethal)
 				logTheThing("combat", usr, null, "set turrets to LETHAL from control \[[log_loc(src)]].")
