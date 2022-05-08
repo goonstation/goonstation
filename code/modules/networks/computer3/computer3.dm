@@ -435,62 +435,6 @@
 
 	. = TRUE
 
-/obj/machinery/computer3/proc/update_peripheral_menu(mob/user as mob)
-	var/count = 0
-	for (var/obj/item/peripheral/pCard in src.peripherals)
-		if (pCard.setup_has_badge)
-			user <<  output(url_encode(pCard.return_badge()),"comp3.browser:setBadge[count]")
-			count++
-
-	return
-
-/obj/machinery/computer3/Topic(href, href_list)
-	if(..())
-		return
-
-	src.add_dialog(usr)
-
-	if((href_list["command"]) && src.active_program)
-		usr << output(null, "comp3.browser:input_clear")
-		src.active_program.input_text(href_list["command"])
-		playsound(src.loc, "keyboard", 50, 1, -15)
-
-	else if(href_list["disk"])
-		if (src.diskette)
-			//Ai/cyborgs cannot press a physical button from a room away.
-			if((issilicon(usr) || isAI(usr)) && BOUNDS_DIST(src, usr) > 0)
-				boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
-				return
-
-			for(var/datum/computer/file/terminal_program/P in src.processing_programs)
-				P.disk_ejected(src.diskette)
-
-			usr.put_in_hand_or_eject(src.diskette) // try to eject it into the users hand, if we can
-			src.diskette = null
-			usr << output(url_encode("Disk: <a href='byond://?src=\ref[src];disk=1'>-----</a>"),"comp3.browser:setInternalDisk")
-		else
-			var/obj/item/I = usr.equipped()
-			if (istype(I, /obj/item/disk/data/floppy))
-				usr.drop_item()
-				I.set_loc(src)
-				src.diskette = I
-				usr << output(url_encode("Disk: <a href='byond://?src=\ref[src];disk=1'>Eject</a>"),"comp3.browser:setInternalDisk")
-			else if (istype(I, /obj/item/magtractor))
-				var/obj/item/magtractor/mag = I
-				if (istype(mag.holding, /obj/item/disk/data/floppy))
-					I = mag.holding
-					mag.dropItem(0)
-					I.set_loc(src)
-					src.diskette = I
-					usr << output(url_encode("Disk: <a href='byond://?src=\ref[src];disk=1'>Eject</a>"),"comp3.browser:setInternalDisk")
-
-	else if(href_list["restart"] && !src.restarting)
-		src.restart()
-
-	src.add_fingerprint(usr)
-	src.updateUsrDialog()
-	return
-
 /obj/machinery/computer3/updateUsrDialog()
 	..()
 	if (src.temp_add)
