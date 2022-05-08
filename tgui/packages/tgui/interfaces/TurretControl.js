@@ -3,12 +3,9 @@ import { useBackend, useLocalState } from '../backend';
 import { Button, Section, Flex, Box, Stack } from '../components';
 
 const randInt = (a, b) => {
-  if (a > b) {
-    let temp = a;
-    a = b;
-    b = temp;
-  }
-  return Math.floor(Math.random() * (b - a + 1)) + a;
+  const min = b > a ? a : b;
+  const max = b > a ? b : a;
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
 // this is a totally real and normal semicolon I promise
