@@ -29,21 +29,7 @@
 			logTheThing("combat", usr, null, "used the Brass Gauntlet and triggered the [src.name]'s effect at [log_loc(usr)]")
 			for(var/obj/item/I in oview(5, usr)) //No longer brings your organs to life, killing you as they desperately try to attack you from the inside!
 				if (I.anchored || I.invisibility) continue
-				var/obj/critter/livingobj/L = new/obj/critter/livingobj(I.loc)
-				I.set_loc(L)
-				L.name = "Living [I.name]"
-				L.desc = "[I.desc]. It appears to be alive!"
-				L.overlays += I
-				L.health = rand(10, 50)
-				L.atk_brute_amt = 5
-				L.defensive = 1
-				L.aggressive = 1
-				L.atkcarbon = 1
-				L.atksilicon = 1
-				L.opensdoors = pick(1,0)
-				L.friends = list(usr)
-				L.original_object = I
-				animate_float(L, -1, 30)
+				new/mob/living/object/ai_controlled(src.loc, src)
 		..()
 		return 1
 
