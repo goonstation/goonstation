@@ -91,7 +91,7 @@ export const TurretControl = (props, context) => {
           {!emagged && locked === 1 && (
             <Section>Panel locked, swipe ID card to unlock.</Section>
           )}
-          {emagged === 1 && (
+          {!!emagged && (
             <Box py="20px">
               <Box align="center" fontFamily="Courier New">
                 {glitch("ERROR: UNABLE TO READ AUTHORIZATION", 12)}
