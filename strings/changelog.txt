@@ -1,5 +1,9 @@
 
 (t)sun may 08 22
+(u)aloe
+(p)8303
+(e)|
+(+)Things which animate objects now make the living objects act like the objects they came from; batons will stun you, food will feed itself to people, etc.
 (u)LeahTheTech
 (p)8378
 (e)📄|tgui
