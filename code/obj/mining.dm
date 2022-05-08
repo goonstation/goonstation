@@ -2165,7 +2165,7 @@ obj/item/clothing/gloves/concussive
 
 /proc/mining_scandecal(var/mob/living/user, var/turf/T, var/decalicon)
 	if(!user || !T || !decalicon) return
-	var/image/O = image('icons/obj/items/mining.dmi',T,decalicon,AREA_LAYER+1)
+	var/image/O = image('icons/obj/items/mining.dmi',T,decalicon,TURF_LAYER + 1)
 	user << O
 	SPAWN(2 MINUTES)
 		if (user?.client)
