@@ -212,7 +212,7 @@
 	if (!user || !over_object || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, over_object) > 0 || is_incapacitated(user) || (issilicon(user) && BOUNDS_DIST(src, user) > 0))
 		return
 	if (src.on || !src.open)
-		src.visible_message("[user] tries to open [src]'s door, but the door is closed!")
+		src.visible_message("[user] tries to unload items from [src], but the door is closed!")
 		return
 	var/turf/T = get_turf(over_object)
 	if (!T)
