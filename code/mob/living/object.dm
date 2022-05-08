@@ -419,7 +419,3 @@
 	spooker.hud.update_intent()
 
 	//TODO katana limb targeting, make guns fire at range?, c saber deflect (if possible i forget if arbitrary mobs can block)
-
-/datum/aiTask/timed/wander/living_object //shorter so we're more responsive
-	minimum_task_ticks = 1
-	maximum_task_ticks = 5
