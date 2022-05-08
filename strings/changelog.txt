@@ -4,6 +4,9 @@
 (p)8378
 (e)📄|tgui
 (+)The control panels for AI chamber and armoury turrets have been upgraded to TGUI.
+(u)ImJustAStrangeMan
+(e)🎨|sprites
+(+)Resprited the traitor cloaking field generator.
 (t)sat may 07 22
 (u)LeahTheTech
 (p)8486
