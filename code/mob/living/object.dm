@@ -250,7 +250,7 @@
 					if (OS)
 						O.set_loc(OS)
 					else
-						O.z = 1
+						O.z = Z_LEVEL_STATION
 				if (src.client)
 					src.client.mob = O
 				O.name = src.name
@@ -302,7 +302,7 @@
 	proc/item_position_check()
 		if (!src.possessed_thing || src.possessed_thing.loc != src) //item somewhere else? we no longer exist
 			boutput(src, "<span class='alert'>You feel yourself being ripped away from this object!</h1>")
-			src.death(0)
+			src.death(FALSE)
 			return FALSE
 		return TRUE
 
