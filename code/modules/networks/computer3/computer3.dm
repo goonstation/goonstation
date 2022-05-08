@@ -8,7 +8,7 @@
 	density = 1
 	anchored = 1.0
 	var/base_icon_state = "computer_generic"
-	var/temp = "<b>Thinktronic BIOS V2.1</b><br>"
+	var/temp = "Thinktronic BIOS V2.1\n"
 	var/temp_add = null
 	var/obj/item/disk/data/fixed_disk/hd = null
 	var/datum/computer/file/terminal_program/active_program
@@ -343,13 +343,31 @@
     ui = new(user, src, "Terminal")
     ui.open()
 
+
 /obj/machinery/computer3/ui_data(mob/user)
-  . = list(
-    "fdisk" = src.diskette, // floppy disk
-	"temp" = strip_html_tags(src.temp), // display data
-	"TermActive" = src.active_program,
-	"idcard" = null
+ . = list(
+	"temp" = src.temp, // display data
+	"TermActive" = src.active_program, // is the terminal running or restarting
+	"fdisk" = src.diskette, // for showing if the internal diskette slot is filled
+	"windowName" = src.name,
+	"user" = user,
+	"fontColor" = src.setup_font_color, // display monochrome values
+	"bgColor" = src.setup_bg_color
   )
+	if(src.setup_has_internal_disk) // the magic internal floppy drive is in here
+		. += list("peripherals" = list(list(
+		"internalFdisk" = src.setup_has_internal_disk,
+		"icon" = "save",
+		"card" = "internal",
+		"color" = src.diskette
+		)))
+	for(var/obj/item/peripheral/periph in src.peripherals) // originally i had all this stuff in static data, but the buttons didnt update.
+		if(periph.setup_has_badge)
+			var/pdata = periph.return_badge() // reduces copy pasting
+			if(pdata)
+				var/bcolor = pdata["contents"]
+				pdata += list("color" = bcolor, "card" = periph.type)
+				.["peripherals"] += list(pdata)
 
 /obj/machinery/computer3/ui_act(action, params)
 	. = ..()
@@ -358,13 +376,63 @@
 	switch(action)
 		if("restart")
 			src.restart()
-		if("ejectdisk")
-			src.diskette = null
+			src.updateUsrDialog()
 		if("text")
 			if(src.active_program && params["value"]) // haha it fucking works WOOOOOO
+				if(params["value"] == "term_clear")
+					src.temp = "Cleared\n"
+					return
 				src.active_program.input_text(params["value"])
+				playsound(src.loc, "keyboard", 50, 1, -15)
+				src.updateUsrDialog()
+		if("buttonPressed")
+			var/obj/item/I = usr.equipped() // how the old code did it
+			if(params["card"] == "internal") // the hacky magic floppy disk reader
+				if(src.diskette)
+					usr.put_in_hand_or_eject(src.diskette)
+					src.diskette= null
+				else if(istype(I,/obj/item/disk/data/floppy))
+					usr.drop_item()
+					I.loc = src
+					src.diskette = I
+			else if(params["card"] == "/obj/item/peripheral/card_scanner")
+				var/obj/item/peripheral/card_scanner/dv = locate(/obj/item/peripheral/card_scanner) in src.peripherals
+				if(dv.authid)
+					usr.put_in_hand_or_eject(dv.authid)
+					dv.authid = null
+				else if(istype(I,/obj/item/card/id))
+					usr.drop_item()
+					I.loc = src
+					dv.authid = I
+			else if(params["card"] == "/obj/item/peripheral/drive/tape_reader")
+				var/obj/item/peripheral/drive/tape_reader/dv = locate(/obj/item/peripheral/drive/tape_reader) in src.peripherals
+				if(dv.disk)
+					usr.put_in_hand_or_eject(dv.disk)
+					dv.disk = null
+				else if(istype(I,/obj/item/card/id))
+					usr.drop_item()
+					I.loc = src
+					dv.disk = I
+			else if(params["card"] == "/obj/item/peripheral/drive/cart_reader")
+				var/obj/item/peripheral/drive/cart_reader/dv = locate(/obj/item/peripheral/drive/cart_reader) in src.peripherals
+				if(dv.disk)
+					usr.put_in_hand_or_eject(dv.disk)
+					dv.disk = null
+				else if(istype(I,/obj/item/disk/data/cartridge))
+					usr.drop_item()
+					I.loc = src
+					dv.disk = I
+			else if(params["card"] == "/obj/item/peripheral/drive")
+				var/obj/item/peripheral/drive/dv = locate(/obj/item/peripheral/drive) in src.peripherals
+				if(dv.disk)
+					usr.put_in_hand_or_eject(dv.disk)
+					dv.disk = null
+				else if(istype(I,/obj/item/disk/data/floppy))
+					usr.drop_item()
+					I.loc = src
+					dv.disk = I
+
 	. = TRUE
-	update_icon() // Not applicable to all objects.
 
 /obj/machinery/computer3/proc/update_peripheral_menu(mob/user as mob)
 	var/count = 0
@@ -425,7 +493,7 @@
 /obj/machinery/computer3/updateUsrDialog()
 	..()
 	if (src.temp_add)
-		src.temp += src.temp_add
+		src.temp += strip_html_tags(src.temp_add) // we arent using html anymore
 		src.temp_add = null
 
 /obj/machinery/computer3/process()
@@ -687,8 +755,8 @@
 		src.host_program?.restart()
 		src.host_program = null
 		src.processing_programs = new
-		src.temp = null
-		src.temp_add = "Restarting system...<br>"
+		src.temp = ""
+		src.temp_add = "Restarting system...\n"
 		src.updateUsrDialog()
 		playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
 		SPAWN(2 SECONDS)
