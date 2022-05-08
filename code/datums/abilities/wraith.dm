@@ -415,7 +415,7 @@
 			if(istype(O, /obj/critter) || istype(O, /obj/machinery/bot) || istype(O, /obj/decal) || O.anchored || O.invisibility)
 				boutput(usr, "<span class='alert'>That is not a valid target for animation!</span>")
 				return 1
-			var/mob/living/object/L = new/mob/living/object(src.loc, src)
+			var/mob/living/object/L = new/mob/living/object(O.loc, O)
 			L.playsound_local(usr.loc, "sound/voice/wraith/wraithlivingobject.ogg", 50, 0)
 			return 0
 		else
