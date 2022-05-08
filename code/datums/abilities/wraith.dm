@@ -415,23 +415,8 @@
 			if(istype(O, /obj/critter) || istype(O, /obj/machinery/bot) || istype(O, /obj/decal) || O.anchored || O.invisibility)
 				boutput(usr, "<span class='alert'>That is not a valid target for animation!</span>")
 				return 1
-			O.visible_message("<span class='alert'>The [O] comes to life!</span>")
-			var/obj/critter/livingobj/L = new/obj/critter/livingobj(O.loc)
-			O.set_loc(L)
-			L.name = "Living [O.name]"
-			L.desc = "[O.desc]. It appears to be alive!"
-			L.overlays += O
-			L.health = rand(10, 50)
-			L.atk_brute_amt = rand(5, 20)
-			L.defensive = 1
-			L.aggressive = 1
-			L.atkcarbon = 1
-			L.atksilicon = 1
-			L.opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
-			L.stunprob = 15
-			L.original_object = O
-			animate_levitate(L, -1, 30)
-			usr.playsound_local(usr.loc, "sound/voice/wraith/wraithlivingobject.ogg", 50, 0)
+			var/mob/living/object/L = new/mob/living/object(src.loc, src)
+			L.playsound_local(usr.loc, "sound/voice/wraith/wraithlivingobject.ogg", 50, 0)
 			return 0
 		else
 			boutput(usr, "<span class='alert'>There is no object here to animate!</span>")
