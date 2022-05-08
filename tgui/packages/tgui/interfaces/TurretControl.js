@@ -11,11 +11,12 @@ const randInt = (a, b) => {
 // this is a totally real and normal semicolon I promise
 const glitches = ['$', '{', ']', '%', '^', '?', '>', '¬', 'π', ';', 'и', 'ю', '/', '#', '~'];
 const glitch = (text, amount) => {
+  const chars = text.split('');
   for (let i = 0; i < amount; i++) {
-    let index = randInt(0, text.length);
-    text = text.slice(0, index) + glitches[randInt(0, glitches.length - 1)] + text.slice(index, text.length);
+    const charIndex = randInt(0, chars.length);
+    chars[charIndex] = glitches[randInt(0, glitches.length - 1)];
   }
-  return text;
+  return chars.join('');
 };
 
 const generate_kill = (number) => {
