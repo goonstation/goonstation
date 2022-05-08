@@ -1,6 +1,6 @@
 import { Window } from '../layouts';
-import { useBackend, useLocalState } from '../backend';
-import { Button, Section, Flex, Box, Stack } from '../components';
+import { useBackend } from '../backend';
+import { Button, Section, Box, Stack } from '../components';
 
 const randInt = (a, b) => {
   const min = b > a ? a : b;
