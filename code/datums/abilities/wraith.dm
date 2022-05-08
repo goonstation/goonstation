@@ -415,7 +415,6 @@
 			if(istype(O, /obj/critter) || istype(O, /obj/machinery/bot) || istype(O, /obj/decal) || O.anchored || O.invisibility)
 				boutput(usr, "<span class='alert'>That is not a valid target for animation!</span>")
 				return 1
-			O.visible_message("<span class='alert'>The [O] comes to life!</span>")
 			new/mob/living/object/ai_controlled(O.loc, O)
 			usr.playsound_local(usr.loc, "sound/voice/wraith/wraithlivingobject.ogg", 50, 0)
 			return 0
