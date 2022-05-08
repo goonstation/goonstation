@@ -169,7 +169,7 @@
 	var/deathtimer = 0 // for catastrophic failure on death
 	var/isnew = TRUE // for seeing whether or not they will make a new name on redeployment
 	var/sawflynames = list("A", "B", "C", "D", "E", "F", "V", "W", "X", "Y", "Z", "Alpha", "Beta", "Gamma", "Lambda", "Delta")
-	var/beeps = list('sound/machines/sawfly1.ogg','sound/machines/sawfly2.ogg','sound/machines/sawfly3.ogg')
+	var/beeps = list('sound/machines/sawfly1.ogg','sound/machines/sawfly2.ogg','sound/machines/sawfly3.ogg') // custom noises so they cannot be mistaken for ghostdrones or borgs
 
 	health = 40
 	var/can_revive = TRUE
@@ -179,7 +179,6 @@
 	var/alreadydead = FALSE // prevents any bullshit from happening with repeated
 
 // OBJ/CRITTER/DRONE FUCK SHIT HERE
-	var/smashes_shit = FALSE
 	var/list/friends = list()
 	var/attacking = FALSE
 	var/atk_delay = 5
@@ -224,7 +223,7 @@
 		beeptext = "[pick(list("beeps",  "boops", "bwoops", "bips", "bwips", "bops", "chirps", "whirrs", "pings", "purrs", "thrums"))]"
 		animate_bumble(src) // gotta get the float goin' on
 		src.set_a_intent(INTENT_HARM) // incredibly stupid way of ensuring they aren't passable
-		// custom noises so they cannot be mistaken for ghostdrones or borgs
+
 
 
 	proc/foldself()
@@ -250,7 +249,7 @@
 		CritterDeath() // FUCK YOU TOO
 
 
-	proc/CritterDeath() // rip lil guy
+	proc/CritterDeath() //  SUPER important proc do NOT touch this or everything will break and You Will Cry
 
 		if (alreadydead) return // prevents any death behavior from ever happening more than once
 
@@ -262,7 +261,7 @@
 		//death behavior custom to sawflies below
 
 		animate(src) //stop no more float animation
-		icon_state = "sawflydead[pick("1", "2", "3", "4", "5", "6", "7", "8")]"
+		icon_state = "sawflydead[pick("1", "2", "3", "4", "5", "6", "7", "8")]" //randomly selects death icon and displaces them
 		src.pixel_x += rand(-5, 5)
 		src.pixel_y += rand(-1, 5)
 		src.force_laydown_standup()
@@ -276,7 +275,7 @@
 			new /obj/item/device/prox_sensor(src.loc) // maybe change this later
 			return
 
-		if(prob(60)) // 60 percent chance to zap the area
+		if(prob(60)) // a miniscule tad of tomfoolery
 			elecflash(src, 1, 2)
 
 		if(prob(20)) // congrats, little guy! You're special! You're going to blow up!
@@ -296,11 +295,13 @@
 		else
 			src.visible_message("<span class='combat'>[src]'s [pick("motor", "core", "head", "engine", "thruster")] [pick("overloads", "blows up", "catastrophically fails", "explodes")]!")
 			fireflash(src,0,TRUE)
-			explosion(src, get_turf(src), 0, 0.75, 1.5, 3)
+			explosion(src, get_turf(src), 0, 1, 1.5, 3)
 			qdel(src)
 
 		if(alive) // prevents weirdness from emagged controllers causing frankenstein sawflies
 			qdel(src)
+
+// FROM HERE ON OUT IS AI SHIT, MOST OF WHICH IS PORTED FROM CRITTERS
 
 
 	proc/ChaseAttack(atom/M) // overriding these attack procs so drone is nicer to traitors >:(
@@ -343,17 +344,16 @@
 
 	proc/CritterAttack(atom/M)
 		if (istraitor(M) || isnukeop(M) || isspythief(M) || (M in src.friends)) // BE. A. GOOD. FUCKING. DRONE.
-
 			oldtarget_name = M
 			seek_target()
 			return
 		if(target && !attacking)
-			attacking = 1
+			attacking = TRUE
 			src.visible_message("<span class='alert'><b>[src]</b> [pick(list("gouges", "cleaves", "lacerates", "shreds", "cuts", "tears", "hacks", "slashes",))] [M]!</span>")
 			var/tturf = get_turf(M)
 			Shoot(tturf, src.loc, src)
 			SPAWN(attack_cooldown)
-				attacking = 0
+				attacking = FALSE
 
 			if(prob(10))
 				walk_rand(src,4)
@@ -387,7 +387,7 @@
 				var/tturf = get_turf(src.target) //instantly retaliate, since we know we're in melee range
 				Shoot(tturf, src.loc, src)
 				SPAWN((attack_cooldown/2)) //follow up swiftly
-					attacking = 0
+					attacking = FALSE
 				CritterAttack(src.target)
 		if(health<=0)
 			CritterDeath()
@@ -409,7 +409,6 @@
 				take_bleeding_damage(user, null, 7, DAMAGE_CUT, 1)
 		..()
 
-// COPY PASTED AI SHIT FROM DRONE/GUNBOT HERE
 
 	proc/ai_think()
 		if(!alive) return // STOP THINKING IF YOU'RE DEAD
@@ -469,10 +468,10 @@
 									src.anchored = 0
 									src.last_found = world.time
 									src.frustration = 0
-									src.attacking = 0
+									src.attacking = FALSE
 					else
 						src.anchored = 0
-						src.attacking = 0
+						src.attacking = FALSE
 						src.task = "chasing"
 			if("wandering")
 				patrol_step()
