@@ -395,7 +395,7 @@
 					usr.drop_item()
 					I.loc = src
 					src.diskette = I
-			else if(params["card"] == "/obj/item/peripheral/card_scanner")
+			else if(findtext(params["card"],"/obj/item/peripheral/card_scanner"))
 				var/obj/item/peripheral/card_scanner/dv = locate(/obj/item/peripheral/card_scanner) in src.peripherals
 				if(dv.authid)
 					usr.put_in_hand_or_eject(dv.authid)
