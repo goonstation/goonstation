@@ -57,7 +57,7 @@ export const TurretControl = (props, context) => {
   };
   return (
     <Window
-      title={emagged ? "FATAL ERROR" : "Turret control (" + area + ")"}
+      title={emagged ? "FATAL ERROR" : `Turret control (${area})`}
       theme={emagged ? 'syndicate' : 'ntos'}
       width={400}
       height={160}
