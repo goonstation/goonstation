@@ -602,7 +602,7 @@ TRAYS
 
 		var/turf/shardturf = get_turf(M)
 
-		if(src.cant_drop == 1)
+		if(src.cant_drop == TRUE && istype(user, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = user
 			H.sever_limb(H.hand == 1 ? "l_arm" : "r_arm")
 		else
