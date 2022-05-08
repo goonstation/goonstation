@@ -11,6 +11,7 @@
 	var/broken = 0
 	health = 80
 	health_max = 80
+	alien = TRUE
 
 /obj/machinery/door/feather/New()
 	..()
@@ -139,6 +140,7 @@
 ////////////////////
 /obj/machinery/door/feather/friendly
 	// whee
+	alien = FALSE //non flock are allowed
 
 /obj/machinery/door/feather/friendly/allowed(mob/M)
 	return 1 // everyone welcome
