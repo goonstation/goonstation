@@ -259,6 +259,7 @@
 				src.on = !src.on
 				src.visible_message("[usr] switches [src] [src.on ? "on" : "off"].")
 				if (src.on)
+					src.cycle = PRE
 					src.open = 0
 					if (!processing_items.Find(src))
 						processing_items.Add(src)
