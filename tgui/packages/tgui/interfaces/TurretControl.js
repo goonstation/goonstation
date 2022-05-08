@@ -8,7 +8,6 @@ const randInt = (a, b) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-// this is a totally real and normal semicolon I promise
 const glitches = ['$', '{', ']', '%', '^', '?', '>', '¬', 'π', ';', 'и', 'ю', '/', '#', '~'];
 const glitch = (text, amount) => {
   const chars = text.split('');
