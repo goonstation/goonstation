@@ -690,7 +690,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 					fillingColors += transformedFilling
 
 				// spread the total healing left for the added food among the sandwich bites
-				customSandwich.heal_amt += snack.heal_amt * snack.amount / customSandwich.amount
+				customSandwich.heal_amt += snack.heal_amt * snack.bites_left / customSandwich.bites_left
 
 				qdel(snack)
 
@@ -1624,6 +1624,11 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/ingredient/meatpaste/
 
+/datum/cookingrecipe/fishpaste
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/
+	cookbonus = 4
+	output = /obj/item/reagent_containers/food/snacks/ingredient/fishpaste/
+
 /datum/cookingrecipe/sloppyjoe
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meatpaste
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/dough
@@ -1789,6 +1794,30 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	item4 = /obj/item/reagent_containers/food/snacks/plant/pineappleslice
 	cookbonus = 7
 	output = /obj/item/reagent_containers/food/snacks/chickenpineapplecurry
+
+/datum/cookingrecipe/ramen_bowl
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles/ramen
+	item2 = /obj/item/reagent_containers/food/snacks/condiment/soysauce
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/seaweed
+	item4 = /obj/item/reagent_containers/food/snacks/ingredient/egg/hardboiled
+	cookbonus = 14
+	output = /obj/item/reagent_containers/food/snacks/ramen_bowl
+
+/datum/cookingrecipe/udon_bowl
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles/udon
+	item2 = /obj/item/reagent_containers/food/snacks/condiment/soysauce
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/seaweed
+	item4 = /obj/item/reagent_containers/food/snacks/ingredient/kamaboko
+	cookbonus = 14
+	output = /obj/item/reagent_containers/food/snacks/udon_bowl
+
+/datum/cookingrecipe/curry_udon_bowl
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles/udon
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/currypowder
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/seaweed
+	item4 = /obj/item/reagent_containers/food/snacks/ingredient/egg/hardboiled
+	cookbonus = 14
+	output = /obj/item/reagent_containers/food/snacks/curry_udon_bowl
 
 // Recipe for zongzi is a WIP; we're gonna need rice balls or something
 

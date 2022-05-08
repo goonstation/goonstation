@@ -571,7 +571,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 				OB.health = 8
 				OB.max_health = 8
 				OB.canspeak = 0
-				SHOW_SOULSTEEL_TIPS(OB)
+				OB.show_antag_popup("soulsteel")
 		return
 
 /datum/materialProc/reflective_onbullet

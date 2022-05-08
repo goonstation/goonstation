@@ -554,7 +554,7 @@
 /turf/space,
 /area/prefab/crashed_hop_shuttle)
 "Ij" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/noGenerate)
 "IT" = (
 /obj/fluid_spawner{

@@ -129,6 +129,24 @@
 				if (lowertext(sechud_flag) != "none")
 					. += "<br><span class='notice'>[src.name] has a Security HUD flag set:</span> <span class='alert'>[sechud_flag]</span>"
 
+	if (locate(/obj/item/implant/projectile/body_visible/dart) in src.implant)
+		var/count = 0
+		for (var/obj/item/implant/projectile/body_visible/dart/P in src.implant)
+			count++
+		. += "<br><span class='alert'>[src] has [count > 1 ? "darts" : "a dart"] stuck in them!</span>"
+
+	if (locate(/obj/item/implant/projectile/body_visible/syringe) in src.implant)
+		var/count = 0
+		for (var/obj/item/implant/projectile/body_visible/syringe/P in src.implant)
+			count++
+		. += "<br><span class='alert'>[src] has [count > 1 ? "syringes" : "a syringe"] stuck in them!</span>"
+
+	if (locate(/obj/item/implant/projectile/body_visible/arrow) in src.implant)
+		var/count = 0
+		for (var/obj/item/implant/projectile/body_visible/arrow/P in src.implant)
+			count++
+		. += "<br><span class='alert'>[src] has [count > 1 ? "arrows" : "an arrow"] stuck in them!</span>"
+
 	if (src.is_jittery)
 		switch(src.jitteriness)
 			if (300 to INFINITY)
@@ -203,7 +221,7 @@
 					else
 						. += "<br><span class='notice'>[src.name] has [src.organHolder.tail.name] attached just above [t_his] butt.</span>"
 				// don't bother telling people that you have the tail you're supposed to have. nobody congratulates me for having all my legs
-				if (src.organHolder.chest.op_stage >= 10.0 && src.mob_flags & ~IS_BONER) // assive ass wound? and not a skeleton?
+				if (src.organHolder.chest.op_stage >= 10.0 && src.mob_flags & ~IS_BONEY) // assive ass wound? and not a skeleton?
 					. += "<br><span class='alert'><B>[src.name] has a long incision around the base of [t_his] tail!</B></span>"
 
 			else // missing a tail?

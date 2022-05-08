@@ -145,6 +145,8 @@
 		else if (amount > 0)
 			SEND_SIGNAL(src, COMSIG_CELL_CHARGE, src.cost_normal * amount)
 
+		src.UpdateIcon()
+
 		if(istype(user)) // user can be a Securitron sometims, scream
 			user.update_inhands()
 		return
@@ -212,7 +214,6 @@
 			dude_to_stun.lastattacker = user
 			dude_to_stun.lastattackertime = world.time
 
-		src.UpdateIcon()
 		return
 
 	attack_self(mob/user as mob)

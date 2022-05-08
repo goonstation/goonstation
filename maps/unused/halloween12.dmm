@@ -39340,63 +39340,63 @@
 /turf/space/asteroid,
 /area/space)
 "bCF" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astedge"
 	},
 /area/space)
 "bCG" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1;
 	icon_state = "astedge"
 	},
 /area/space)
 "bCH" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astedge"
 	},
 /area/space)
 "bCI" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astdetail"
 	},
 /area/space)
 "bCJ" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "bCK" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astdetail"
 	},
 /area/space)
 "bCL" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8;
 	icon_state = "astedge"
 	},
 /area/space)
 "bCM" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "astedge"
 	},
 /area/space)
 "bCN" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4;
 	icon_state = "astedge"
 	},
 /area/space)
 "bCO" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "astedge"
 	},
 /area/space)
 "bCP" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "astdetail"
 	},
 /area/space)
@@ -39405,31 +39405,31 @@
 /turf/simulated/floor/plating,
 /area/space)
 "bCR" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "astdetail"
 	},
 /area/space)
 "bCS" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astdetail"
 	},
 /area/space)
 "bCT" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astedge"
 	},
 /area/space)
 "bCU" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1;
 	icon_state = "astdetail"
 	},
 /area/space)
 "bCV" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4;
 	icon_state = "astdetail"
 	},
@@ -46826,7 +46826,7 @@
 /area/evilreaver/chapel)
 "bUz" = (
 /turf/simulated/floor/plating,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4;
 	icon_state = "astedge"
 	},
@@ -46983,7 +46983,7 @@
 	tag = "icon-brokengrille"
 	},
 /turf/simulated/floor/plating,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astedge"
 	},
@@ -47083,7 +47083,7 @@
 /area/space)
 "bVb" = (
 /obj/window/reinforced,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astedge"
 	},
@@ -47428,7 +47428,7 @@
 /turf/space,
 /area/space)
 "bVX" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8;
 	icon_state = "astdetail"
 	},
@@ -48310,49 +48310,49 @@
 /area/space)
 "bXR" = (
 /turf/space/asteroid,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astedge"
 	},
 /area/space)
 "bXS" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1;
 	icon_state = "astedge"
 	},
 /area/space)
 "bXT" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astedge"
 	},
 /area/space)
 "bXU" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astedge"
 	},
 /area/space)
 "bXV" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astdetail"
 	},
 /area/space)
 "bXW" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4;
 	icon_state = "astedge"
 	},
 /area/space)
 "bXX" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astdetail"
 	},
@@ -48360,7 +48360,7 @@
 "bXY" = (
 /obj/grille/steel,
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1;
 	icon_state = "astedge"
 	},
@@ -48470,7 +48470,7 @@
 /area/mining/quarters)
 "bYn" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "astdetail"
 	},
@@ -48520,7 +48520,7 @@
 /area/mining/quarters)
 "bYu" = (
 /obj/lattice,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "astedge"
 	},
 /area/space)
@@ -48586,7 +48586,7 @@
 /area/station/engine/substation/west)
 "bYE" = (
 /obj/lattice,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "astedge"
 	},
@@ -49371,14 +49371,14 @@
 /area/station/engine/substation/west)
 "cap" = (
 /obj/lattice,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astedge"
 	},
 /area/space)
 "caq" = (
 /obj/lattice,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4;
 	icon_state = "astedge"
 	},
@@ -49399,7 +49399,7 @@
 /area/station/engine/substation/west)
 "cat" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astdetail"
 	},
@@ -49407,7 +49407,7 @@
 "cau" = (
 /obj/lattice,
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astedge"
 	},
@@ -49418,7 +49418,7 @@
 	name = "CoCl14";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astdetail"
 	},
@@ -49429,7 +49429,7 @@
 	name = "CoCl4";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cax" = (
 /obj/landmark{
@@ -49437,18 +49437,18 @@
 	name = "RaVe10";
 	dir = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cay" = (
 /obj/lattice,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1;
 	icon_state = "astedge"
 	},
 /area/space)
 "caz" = (
 /obj/lattice,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astdetail"
 	},
@@ -49571,7 +49571,7 @@
 	name = "CoCl14";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "caL" = (
 /obj/landmark{
@@ -49579,7 +49579,7 @@
 	name = "FullAst65";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8;
 	icon_state = "astdetail"
 	},
@@ -49590,7 +49590,7 @@
 	name = "FullAst65";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astedge"
 	},
@@ -49601,7 +49601,7 @@
 	name = "RaVe5";
 	dir = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "caO" = (
 /obj/landmark{
@@ -49609,7 +49609,7 @@
 	name = "FullAstTest";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astedge"
 	},
@@ -49620,7 +49620,7 @@
 	name = "FullAstTest";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astedge"
 	},
@@ -49771,7 +49771,7 @@
 	name = "FullAst65";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "astdetail"
 	},
 /area/space)
@@ -49781,7 +49781,7 @@
 	name = "FullAst71";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1;
 	icon_state = "astdetail"
 	},
@@ -49792,7 +49792,7 @@
 	name = "CoCl18";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cbj" = (
 /obj/landmark{
@@ -49800,7 +49800,7 @@
 	name = "FullAstTest";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "astedge"
 	},
@@ -49811,7 +49811,7 @@
 	name = "FullAstTest";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cbl" = (
 /obj/machinery/conveyor_switch{
@@ -49840,7 +49840,7 @@
 	name = "FullAst71";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "astedge"
 	},
@@ -49851,7 +49851,7 @@
 	name = "FullAst71";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4;
 	icon_state = "astdetail"
 	},
@@ -49862,14 +49862,14 @@
 	name = "FullAstTest";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astedge"
 	},
 /area/space)
 "cbr" = (
 /obj/lattice,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astedge"
 	},
@@ -49877,7 +49877,7 @@
 "cbs" = (
 /obj/lattice,
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8;
 	icon_state = "astedge"
 	},
@@ -49907,7 +49907,7 @@
 /area/mining/exit_east)
 "cby" = (
 /turf/space/asteroid,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astdetail"
 	},
@@ -49918,7 +49918,7 @@
 /area/space)
 "cbA" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "astedge"
 	},
@@ -50068,7 +50068,7 @@
 	name = "FullAst9";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astedge"
 	},
@@ -50079,14 +50079,14 @@
 	name = "FullAst9";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astedge"
 	},
 /area/space)
 "cbS" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8;
 	icon_state = "astedge"
 	},
@@ -50132,7 +50132,7 @@
 /area/mining/exit_east)
 "cbY" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astedge"
 	},
@@ -50143,7 +50143,7 @@
 	name = "FullAst68";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8;
 	icon_state = "astdetail"
 	},
@@ -50154,7 +50154,7 @@
 	name = "FullAst68";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4;
 	icon_state = "astdetail"
 	},
@@ -50165,7 +50165,7 @@
 	name = "FullAst9";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astdetail"
 	},
@@ -50176,7 +50176,7 @@
 	name = "FullAst9";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4;
 	icon_state = "astedge"
 	},
@@ -50187,7 +50187,7 @@
 	name = "RaVe12";
 	dir = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cce" = (
 /obj/landmark{
@@ -50195,7 +50195,7 @@
 	name = "CoCl1";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ccf" = (
 /obj/machinery/portable_atmospherics/pump,
@@ -50232,7 +50232,7 @@
 /area/mining/exit_east)
 "ccl" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "astedge"
 	},
 /area/space)
@@ -50242,7 +50242,7 @@
 	name = "FullAst9";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "astedge"
 	},
@@ -50253,7 +50253,7 @@
 	name = "FullAst9";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "astedge"
 	},
 /area/space)
@@ -50263,7 +50263,7 @@
 	name = "FullAst9";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astedge"
 	},
@@ -50310,7 +50310,7 @@
 	name = "CoCl12";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cct" = (
 /obj/landmark{
@@ -50318,7 +50318,7 @@
 	name = "FullAst72";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astedge"
 	},
@@ -50329,7 +50329,7 @@
 	name = "FullAst72";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astedge"
 	},
@@ -50339,7 +50339,7 @@
 	name = "CoVe2";
 	dir = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ccw" = (
 /turf/simulated/wall,
@@ -50409,7 +50409,7 @@
 	name = "FullAst72";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "astedge"
 	},
@@ -50420,7 +50420,7 @@
 	name = "FullAst72";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4;
 	icon_state = "astedge"
 	},
@@ -50431,7 +50431,7 @@
 	name = "RaVe14";
 	dir = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ccE" = (
 /obj/machinery/portable_atmospherics/pump,
@@ -50461,7 +50461,7 @@
 	name = "FullAst72";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "astdetail"
 	},
 /area/space)
@@ -50470,7 +50470,7 @@
 	name = "CoVe13";
 	dir = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ccK" = (
 /obj/machinery/conveyor{
@@ -50503,7 +50503,7 @@
 	name = "RaCl8";
 	dir = 4
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ccO" = (
 /obj/machinery/light{
@@ -50519,7 +50519,7 @@
 	name = "FullAst67";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1;
 	icon_state = "astdetail"
 	},
@@ -50530,11 +50530,11 @@
 	name = "CoCl19";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ccR" = (
 /turf/space/asteroid,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4;
 	icon_state = "astedge"
 	},
@@ -50545,7 +50545,7 @@
 	name = "FullAst69";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1;
 	icon_state = "astdetail"
 	},
@@ -50556,7 +50556,7 @@
 	name = "FullAst67";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "astdetail"
 	},
 /area/space)
@@ -50566,7 +50566,7 @@
 	name = "RaVe7";
 	dir = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ccV" = (
 /obj/machinery/door/airlock/external{
@@ -50580,7 +50580,7 @@
 	name = "FullAst69";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "astedge"
 	},
@@ -50591,7 +50591,7 @@
 	name = "FullAst69";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4;
 	icon_state = "astdetail"
 	},
@@ -50601,7 +50601,7 @@
 	name = "CoVe18";
 	dir = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ccZ" = (
 /obj/landmark{
@@ -50609,7 +50609,7 @@
 	name = "CoCl16";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cda" = (
 /obj/landmark{
@@ -50617,14 +50617,14 @@
 	name = "RaVe9";
 	dir = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdb" = (
 /obj/landmark{
 	name = "CoVe20";
 	dir = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdc" = (
 /obj/landmark{
@@ -50632,7 +50632,7 @@
 	name = "RaVe3";
 	dir = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdd" = (
 /obj/landmark{
@@ -50640,7 +50640,7 @@
 	name = "CoCl31";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cde" = (
 /obj/landmark{
@@ -50648,7 +50648,7 @@
 	name = "RaCl10";
 	dir = 4
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdf" = (
 /obj/landmark{
@@ -50656,7 +50656,7 @@
 	name = "CoCl15";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdg" = (
 /obj/landmark{
@@ -50664,7 +50664,7 @@
 	name = "RaVe6";
 	dir = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdh" = (
 /obj/crate/loot,
@@ -50676,7 +50676,7 @@
 	name = "CoCl5";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdj" = (
 /obj/landmark{
@@ -50684,7 +50684,7 @@
 	name = "CoCl6";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdk" = (
 /obj/landmark{
@@ -50692,7 +50692,7 @@
 	name = "RaCl4";
 	dir = 4
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdl" = (
 /obj/stool,
@@ -50703,14 +50703,14 @@
 	name = "CoVe11";
 	dir = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdn" = (
 /obj/landmark{
 	name = "CoVe38";
 	dir = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdo" = (
 /obj/table,
@@ -50725,7 +50725,7 @@
 	name = "CoVe19";
 	dir = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdq" = (
 /obj/landmark{
@@ -50733,7 +50733,7 @@
 	name = "RaCl9";
 	dir = 4
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdr" = (
 /obj/item/paper{
@@ -50748,7 +50748,7 @@
 	name = "RaVe18";
 	dir = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdt" = (
 /obj/item/mine/stun,
@@ -50759,7 +50759,7 @@
 	name = "CoVe15";
 	dir = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdv" = (
 /obj/landmark{
@@ -50767,18 +50767,18 @@
 	name = "CoCl30";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdw" = (
 /obj/landmark{
 	name = "CoVe12";
 	dir = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdx" = (
 /obj/lattice,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astedge"
 	},
@@ -50789,7 +50789,7 @@
 	name = "CoCl32";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astdetail"
 	},
@@ -50799,7 +50799,7 @@
 	name = "CoVe15";
 	dir = 1
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astdetail"
 	},
@@ -50807,7 +50807,7 @@
 "cdA" = (
 /obj/lattice,
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astedge"
 	},
@@ -50818,14 +50818,14 @@
 	name = "CoCl32";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdC" = (
 /obj/landmark{
 	name = "CoVe10";
 	dir = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdD" = (
 /obj/landmark{
@@ -50833,7 +50833,7 @@
 	name = "RaVe19";
 	dir = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdE" = (
 /obj/landmark{
@@ -50841,7 +50841,7 @@
 	name = "RaVe17";
 	dir = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdF" = (
 /obj/landmark{
@@ -50849,7 +50849,7 @@
 	name = "CoCl21";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdG" = (
 /obj/landmark{
@@ -50857,7 +50857,7 @@
 	name = "FullAst75";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1;
 	icon_state = "astdetail"
 	},
@@ -50868,7 +50868,7 @@
 	name = "FullAst10";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astedge"
 	},
@@ -50879,7 +50879,7 @@
 	name = "FullAst10";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1;
 	icon_state = "astedge"
 	},
@@ -50890,7 +50890,7 @@
 	name = "FullAst10";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astedge"
 	},
@@ -50901,7 +50901,7 @@
 	name = "RaCl7";
 	dir = 4
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdL" = (
 /obj/landmark{
@@ -50909,7 +50909,7 @@
 	name = "RaVe20";
 	dir = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdM" = (
 /obj/landmark{
@@ -50917,7 +50917,7 @@
 	name = "FullAst75";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "astedge"
 	},
@@ -50928,7 +50928,7 @@
 	name = "FullAst75";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astedge"
 	},
@@ -50939,7 +50939,7 @@
 	name = "FullAst10";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "astedge"
 	},
@@ -50950,7 +50950,7 @@
 	name = "FullAst10";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "astdetail"
 	},
@@ -50961,7 +50961,7 @@
 	name = "FullAst10";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4;
 	icon_state = "astedge"
 	},
@@ -50976,7 +50976,7 @@
 	name = "FullAst70";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astedge"
 	},
@@ -50987,7 +50987,7 @@
 	name = "FullAst70";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astedge"
 	},
@@ -50998,7 +50998,7 @@
 	name = "FullAst75";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "astdetail"
 	},
 /area/space)
@@ -51014,7 +51014,7 @@
 	name = "FullAst10";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astedge"
 	},
@@ -51025,7 +51025,7 @@
 	name = "FullAst70";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "astedge"
 	},
@@ -51036,7 +51036,7 @@
 	name = "FullAst70";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astedge"
 	},
@@ -51046,14 +51046,14 @@
 	name = "CoVe14";
 	dir = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cea" = (
 /obj/landmark{
 	name = "CoVe16";
 	dir = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ceb" = (
 /obj/landmark{
@@ -51061,7 +51061,7 @@
 	name = "RaCl24";
 	dir = 4
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cec" = (
 /obj/landmark{
@@ -51069,7 +51069,7 @@
 	name = "RaVe15";
 	dir = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ced" = (
 /obj/landmark{
@@ -51077,7 +51077,7 @@
 	name = "RaVe17";
 	dir = 3
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astdetail"
 	},
@@ -51087,7 +51087,7 @@
 	name = "CoVe9";
 	dir = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cef" = (
 /obj/landmark{
@@ -51095,7 +51095,7 @@
 	name = "RaVe16";
 	dir = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ceg" = (
 /obj/landmark{
@@ -51103,7 +51103,7 @@
 	name = "CoCl24";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ceh" = (
 /obj/landmark{
@@ -51111,14 +51111,14 @@
 	name = "RaVe22";
 	dir = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cei" = (
 /obj/landmark{
 	name = "CoVe17";
 	dir = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cej" = (
 /obj/landmark{
@@ -51126,10 +51126,10 @@
 	name = "RaCl17";
 	dir = 4
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cek" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "oe1"
 	},
 /area/space)
@@ -51139,7 +51139,7 @@
 	name = "CoCl7";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cem" = (
 /obj/landmark{
@@ -51147,7 +51147,7 @@
 	name = "CoCl29";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cen" = (
 /obj/landmark{
@@ -51155,7 +51155,7 @@
 	name = "FullAst11";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astedge"
 	},
@@ -51166,7 +51166,7 @@
 	name = "FullAst11";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astedge"
 	},
@@ -51177,7 +51177,7 @@
 	name = "FullAst11";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astdetail"
 	},
@@ -51188,7 +51188,7 @@
 	name = "FullAst11";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astedge"
 	},
@@ -51199,7 +51199,7 @@
 	name = "CoCl25";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ces" = (
 /obj/landmark{
@@ -51207,7 +51207,7 @@
 	name = "RaVe21";
 	dir = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cet" = (
 /obj/landmark{
@@ -51215,7 +51215,7 @@
 	name = "FullAst11";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "astdetail"
 	},
 /area/space)
@@ -51225,7 +51225,7 @@
 	name = "RaVe27";
 	dir = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cev" = (
 /obj/landmark{
@@ -51233,7 +51233,7 @@
 	name = "CoCl29";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astdetail"
 	},
@@ -51244,7 +51244,7 @@
 	name = "CoCl20";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cex" = (
 /obj/landmark{
@@ -51252,7 +51252,7 @@
 	name = "RaVe27";
 	dir = 3
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astdetail"
 	},
@@ -51263,14 +51263,14 @@
 	name = "CoCl22";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cez" = (
 /obj/landmark{
 	name = "CoVe25";
 	dir = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ceA" = (
 /obj/landmark{
@@ -51278,7 +51278,7 @@
 	name = "FullAst13";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astedge"
 	},
@@ -51289,7 +51289,7 @@
 	name = "FullAst13";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astedge"
 	},
@@ -51300,7 +51300,7 @@
 	name = "RaCl5";
 	dir = 4
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ceD" = (
 /obj/landmark{
@@ -51308,7 +51308,7 @@
 	name = "FullAst13";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8;
 	icon_state = "astedge"
 	},
@@ -51319,7 +51319,7 @@
 	name = "FullAst13";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4;
 	icon_state = "astedge"
 	},
@@ -51330,7 +51330,7 @@
 	name = "FullAst12";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8;
 	icon_state = "astdetail"
 	},
@@ -51341,7 +51341,7 @@
 	name = "FullAst12";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astedge"
 	},
@@ -51352,7 +51352,7 @@
 	name = "FullAst13";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "astedge"
 	},
@@ -51363,7 +51363,7 @@
 	name = "FullAst13";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astedge"
 	},
@@ -51374,7 +51374,7 @@
 	name = "FullAst12";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "astdetail"
 	},
 /area/space)
@@ -51383,7 +51383,7 @@
 	name = "CoVe22";
 	dir = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ceL" = (
 /obj/landmark{
@@ -51391,7 +51391,7 @@
 	name = "CoCl61";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ceM" = (
 /obj/landmark{
@@ -51399,7 +51399,7 @@
 	name = "CoCl61";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astdetail"
 	},
@@ -51410,7 +51410,7 @@
 	name = "RaCl11";
 	dir = 4
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astdetail"
 	},
@@ -51421,7 +51421,7 @@
 	name = "RaCl11";
 	dir = 4
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ceP" = (
 /obj/landmark{
@@ -51429,7 +51429,7 @@
 	name = "RaVe25";
 	dir = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ceQ" = (
 /obj/landmark{
@@ -51437,7 +51437,7 @@
 	name = "RaCl11";
 	dir = 4
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astdetail"
 	},
@@ -51448,7 +51448,7 @@
 	name = "RaVe23";
 	dir = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ceS" = (
 /obj/landmark{
@@ -51456,7 +51456,7 @@
 	name = "RaCl11";
 	dir = 4
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "astdetail"
 	},
@@ -51466,7 +51466,7 @@
 	name = "CoVe26";
 	dir = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ceU" = (
 /obj/landmark{
@@ -51474,7 +51474,7 @@
 	name = "CoCl70";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ceV" = (
 /obj/landmark{
@@ -51482,28 +51482,28 @@
 	name = "RaCl16";
 	dir = 4
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ceW" = (
 /obj/landmark{
 	name = "CoVe23";
 	dir = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ceX" = (
 /obj/landmark{
 	name = "CoVe24";
 	dir = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ceY" = (
 /obj/landmark{
 	name = "CoVe21";
 	dir = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ceZ" = (
 /obj/landmark{
@@ -51511,7 +51511,7 @@
 	name = "CoCl26";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfa" = (
 /obj/landmark{
@@ -51519,7 +51519,7 @@
 	name = "RaCl6";
 	dir = 4
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfb" = (
 /obj/landmark{
@@ -51527,7 +51527,7 @@
 	name = "CoCl50";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfc" = (
 /obj/landmark{
@@ -51535,7 +51535,7 @@
 	name = "CoCl33";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfd" = (
 /obj/landmark{
@@ -51543,7 +51543,7 @@
 	name = "RaVe26";
 	dir = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfe" = (
 /obj/landmark{
@@ -51551,7 +51551,7 @@
 	name = "FullAst17";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8;
 	icon_state = "astdetail"
 	},
@@ -51562,7 +51562,7 @@
 	name = "FullAst17";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astedge"
 	},
@@ -51573,7 +51573,7 @@
 	name = "CoCl62";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfh" = (
 /obj/landmark{
@@ -51581,7 +51581,7 @@
 	name = "FullAst17";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "astedge"
 	},
@@ -51592,7 +51592,7 @@
 	name = "RaCl23";
 	dir = 4
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfj" = (
 /obj/landmark{
@@ -51600,7 +51600,7 @@
 	name = "FullAst17";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "astdetail"
 	},
 /area/space)
@@ -51609,7 +51609,7 @@
 	name = "CoVe24";
 	dir = 1
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astdetail"
 	},
@@ -51619,7 +51619,7 @@
 	name = "CoVe27";
 	dir = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfm" = (
 /obj/landmark{
@@ -51627,7 +51627,7 @@
 	name = "CoCl27";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfn" = (
 /obj/landmark{
@@ -51635,7 +51635,7 @@
 	name = "RaCl22";
 	dir = 4
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfo" = (
 /obj/landmark{
@@ -51643,7 +51643,7 @@
 	name = "RaVe24";
 	dir = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfp" = (
 /obj/landmark{
@@ -51651,7 +51651,7 @@
 	name = "FullAst15";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astedge"
 	},
@@ -51662,7 +51662,7 @@
 	name = "FullAst15";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astedge"
 	},
@@ -51673,7 +51673,7 @@
 	name = "FullAst15";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "astedge"
 	},
@@ -51684,7 +51684,7 @@
 	name = "FullAst15";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "astedge"
 	},
 /area/space)
@@ -51694,7 +51694,7 @@
 	name = "FullAst15";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1;
 	icon_state = "astedge"
 	},
@@ -51705,7 +51705,7 @@
 	name = "FullAst16";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1;
 	icon_state = "astdetail"
 	},
@@ -51716,7 +51716,7 @@
 	name = "RaVe43";
 	dir = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfw" = (
 /obj/landmark{
@@ -51724,7 +51724,7 @@
 	name = "RaVe42";
 	dir = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfx" = (
 /obj/landmark{
@@ -51732,7 +51732,7 @@
 	name = "FullAst15";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astdetail"
 	},
@@ -51743,7 +51743,7 @@
 	name = "FullAst16";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8;
 	icon_state = "astdetail"
 	},
@@ -51754,7 +51754,7 @@
 	name = "FullAst16";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1;
 	icon_state = "astedge"
 	},
@@ -51765,7 +51765,7 @@
 	name = "FullAst16";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4;
 	icon_state = "astedge"
 	},
@@ -51776,7 +51776,7 @@
 	name = "FullAst15";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4;
 	icon_state = "astdetail"
 	},
@@ -51787,7 +51787,7 @@
 	name = "FullAst16";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "astedge"
 	},
@@ -51798,7 +51798,7 @@
 	name = "FullAst16";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astedge"
 	},
@@ -51809,7 +51809,7 @@
 	name = "FullAst16";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "astdetail"
 	},
 /area/space)
@@ -51819,7 +51819,7 @@
 	name = "RaVe46";
 	dir = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfG" = (
 /obj/landmark{
@@ -51827,7 +51827,7 @@
 	name = "FullAst14";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astedge"
 	},
@@ -51838,7 +51838,7 @@
 	name = "FullAst14";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astedge"
 	},
@@ -51854,14 +51854,14 @@
 	name = "RaVe42";
 	dir = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfJ" = (
 /obj/landmark{
 	name = "CoVe44";
 	dir = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfK" = (
 /obj/landmark{
@@ -51869,7 +51869,7 @@
 	name = "FullAst14";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8;
 	icon_state = "astedge"
 	},
@@ -51880,7 +51880,7 @@
 	name = "FullAst14";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4;
 	icon_state = "astedge"
 	},
@@ -51891,7 +51891,7 @@
 	name = "FullAst14";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "astedge"
 	},
@@ -51902,7 +51902,7 @@
 	name = "FullAst14";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astedge"
 	},
@@ -51913,7 +51913,7 @@
 	name = "RaVe44";
 	dir = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfP" = (
 /obj/landmark{
@@ -51921,7 +51921,7 @@
 	name = "CoCl36";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfQ" = (
 /obj/landmark{
@@ -51929,7 +51929,7 @@
 	name = "FullAst18";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astedge"
 	},
@@ -51940,7 +51940,7 @@
 	name = "FullAst18";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astedge"
 	},
@@ -51951,7 +51951,7 @@
 	name = "FullAst18";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8;
 	icon_state = "astedge"
 	},
@@ -51962,7 +51962,7 @@
 	name = "FullAst18";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4;
 	icon_state = "astedge"
 	},
@@ -51972,7 +51972,7 @@
 	name = "CoVe37";
 	dir = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfW" = (
 /obj/landmark{
@@ -51980,7 +51980,7 @@
 	name = "FullAst63";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astedge"
 	},
@@ -51991,7 +51991,7 @@
 	name = "FullAst63";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astedge"
 	},
@@ -52002,7 +52002,7 @@
 	name = "FullAst18";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "astedge"
 	},
@@ -52013,7 +52013,7 @@
 	name = "FullAst18";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astedge"
 	},
@@ -52024,7 +52024,7 @@
 	name = "RaCl15";
 	dir = 4
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgb" = (
 /obj/critter/fermid,
@@ -52035,7 +52035,7 @@
 	name = "CoVe45";
 	dir = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgd" = (
 /obj/landmark{
@@ -52043,7 +52043,7 @@
 	name = "FullAst63";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8;
 	icon_state = "astedge"
 	},
@@ -52054,7 +52054,7 @@
 	name = "FullAst63";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astedge"
 	},
@@ -52064,7 +52064,7 @@
 	name = "CoVe28";
 	dir = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgg" = (
 /obj/landmark{
@@ -52072,7 +52072,7 @@
 	name = "CoCl23";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgh" = (
 /obj/landmark{
@@ -52080,7 +52080,7 @@
 	name = "CoCl35";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgi" = (
 /obj/landmark{
@@ -52088,7 +52088,7 @@
 	name = "FullAst63";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "astdetail"
 	},
 /area/space)
@@ -52098,7 +52098,7 @@
 	name = "FullAst19";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1;
 	icon_state = "astdetail"
 	},
@@ -52109,7 +52109,7 @@
 	name = "RaCl21";
 	dir = 4
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgl" = (
 /obj/landmark{
@@ -52117,14 +52117,14 @@
 	name = "RaVe41";
 	dir = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgm" = (
 /obj/landmark{
 	name = "CoVe39";
 	dir = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgn" = (
 /obj/landmark{
@@ -52132,7 +52132,7 @@
 	name = "FullAst19";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "astedge"
 	},
@@ -52143,7 +52143,7 @@
 	name = "FullAst19";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4;
 	icon_state = "astdetail"
 	},
@@ -52154,7 +52154,7 @@
 	name = "RaVe28";
 	dir = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgq" = (
 /obj/item/clothing/head/helmet/space/engineer,
@@ -52170,7 +52170,7 @@
 	name = "CoCl28";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgt" = (
 /obj/overlay{
@@ -52189,7 +52189,7 @@
 	name = "FullAst21";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astedge"
 	},
@@ -52200,7 +52200,7 @@
 	name = "FullAst21";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astedge"
 	},
@@ -52211,7 +52211,7 @@
 	name = "RaVe50";
 	dir = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgx" = (
 /obj/landmark{
@@ -52219,7 +52219,7 @@
 	name = "FullAst21";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "astedge"
 	},
@@ -52230,7 +52230,7 @@
 	name = "FullAst21";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4;
 	icon_state = "astedge"
 	},
@@ -52240,7 +52240,7 @@
 	name = "CoVe42";
 	dir = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgA" = (
 /obj/landmark{
@@ -52248,7 +52248,7 @@
 	name = "CoCl59";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgB" = (
 /obj/landmark{
@@ -52256,7 +52256,7 @@
 	name = "FullAst21";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "astdetail"
 	},
 /area/space)
@@ -52266,7 +52266,7 @@
 	name = "CoCl34";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgF" = (
 /obj/landmark{
@@ -52274,7 +52274,7 @@
 	name = "FullAst20";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astedge"
 	},
@@ -52285,7 +52285,7 @@
 	name = "FullAst20";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4;
 	icon_state = "astdetail"
 	},
@@ -52295,7 +52295,7 @@
 	name = "CoVe40";
 	dir = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgI" = (
 /obj/landmark{
@@ -52303,7 +52303,7 @@
 	name = "FullAst20";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astedge"
 	},
@@ -52314,7 +52314,7 @@
 	name = "CoCl64";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgK" = (
 /obj/landmark{
@@ -52322,7 +52322,7 @@
 	name = "FullAst58";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astedge"
 	},
@@ -52333,7 +52333,7 @@
 	name = "FullAst58";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astedge"
 	},
@@ -52344,7 +52344,7 @@
 	name = "FullAst20";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "astdetail"
 	},
 /area/space)
@@ -52354,7 +52354,7 @@
 	name = "FullAst58";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astdetail"
 	},
@@ -52365,7 +52365,7 @@
 	name = "FullAst58";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astedge"
 	},
@@ -52376,7 +52376,7 @@
 	name = "RaVe42";
 	dir = 3
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astdetail"
 	},
@@ -52387,7 +52387,7 @@
 	name = "CoCl60";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgR" = (
 /obj/landmark{
@@ -52395,7 +52395,7 @@
 	name = "FullAst58";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "astedge"
 	},
@@ -52406,7 +52406,7 @@
 	name = "CoCl60";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "astdetail"
 	},
@@ -52417,7 +52417,7 @@
 	name = "RaVe40";
 	dir = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgU" = (
 /obj/landmark{
@@ -52425,7 +52425,7 @@
 	name = "RaCl18";
 	dir = 4
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgV" = (
 /obj/landmark{
@@ -52433,7 +52433,7 @@
 	name = "FullAst56";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astedge"
 	},
@@ -52444,7 +52444,7 @@
 	name = "FullAst56";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astedge"
 	},
@@ -52455,7 +52455,7 @@
 	name = "FullAst56";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astdetail"
 	},
@@ -52466,7 +52466,7 @@
 	name = "FullAst56";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astedge"
 	},
@@ -52477,7 +52477,7 @@
 	name = "RaVe45";
 	dir = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cha" = (
 /obj/landmark{
@@ -52485,7 +52485,7 @@
 	name = "FullAst56";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "astedge"
 	},
@@ -52495,14 +52495,14 @@
 	name = "CoVe49";
 	dir = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chc" = (
 /obj/landmark{
 	name = "CoVe49";
 	dir = 1
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astdetail"
 	},
@@ -52512,7 +52512,7 @@
 	name = "CoVe29";
 	dir = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "che" = (
 /obj/landmark{
@@ -52520,7 +52520,7 @@
 	name = "RaVe47";
 	dir = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chf" = (
 /obj/landmark{
@@ -52528,7 +52528,7 @@
 	name = "FullAst60";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astedge"
 	},
@@ -52539,7 +52539,7 @@
 	name = "FullAst60";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4;
 	icon_state = "astdetail"
 	},
@@ -52550,7 +52550,7 @@
 	name = "FullAst60";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "astdetail"
 	},
 /area/space)
@@ -52560,7 +52560,7 @@
 	name = "RaVe29";
 	dir = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chj" = (
 /obj/landmark/spawner/loot,
@@ -52572,7 +52572,7 @@
 	name = "CoCl65";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chl" = (
 /obj/landmark{
@@ -52580,7 +52580,7 @@
 	name = "FullAst22";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astedge"
 	},
@@ -52591,7 +52591,7 @@
 	name = "FullAst22";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1;
 	icon_state = "astedge"
 	},
@@ -52602,7 +52602,7 @@
 	name = "FullAst22";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astedge"
 	},
@@ -52613,7 +52613,7 @@
 	name = "FullAst57";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astedge"
 	},
@@ -52624,7 +52624,7 @@
 	name = "FullAst57";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astedge"
 	},
@@ -52635,7 +52635,7 @@
 	name = "FullAst22";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8;
 	icon_state = "astedge"
 	},
@@ -52646,7 +52646,7 @@
 	name = "FullAst22";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astdetail"
 	},
@@ -52657,7 +52657,7 @@
 	name = "FullAst22";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "astedge"
 	},
 /area/space)
@@ -52667,7 +52667,7 @@
 	name = "FullAst22";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astedge"
 	},
@@ -52678,7 +52678,7 @@
 	name = "FullAst57";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "astedge"
 	},
@@ -52689,7 +52689,7 @@
 	name = "FullAst57";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astedge"
 	},
@@ -52700,7 +52700,7 @@
 	name = "FullAst62";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astedge"
 	},
@@ -52711,7 +52711,7 @@
 	name = "FullAst62";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astedge"
 	},
@@ -52722,7 +52722,7 @@
 	name = "FullAst22";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "astedge"
 	},
@@ -52733,7 +52733,7 @@
 	name = "CoCl67";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chA" = (
 /obj/landmark{
@@ -52741,7 +52741,7 @@
 	name = "FullAst62";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "astedge"
 	},
@@ -52752,7 +52752,7 @@
 	name = "FullAst62";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astedge"
 	},
@@ -52763,7 +52763,7 @@
 	name = "FullAst55";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astedge"
 	},
@@ -52774,7 +52774,7 @@
 	name = "FullAst55";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astedge"
 	},
@@ -52785,7 +52785,7 @@
 	name = "CoCl58";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chF" = (
 /obj/landmark{
@@ -52793,7 +52793,7 @@
 	name = "FullAst55";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astdetail"
 	},
@@ -52804,7 +52804,7 @@
 	name = "FullAst55";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astedge"
 	},
@@ -52819,7 +52819,7 @@
 	name = "CoVe50";
 	dir = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chJ" = (
 /obj/landmark{
@@ -52827,7 +52827,7 @@
 	name = "FullAst55";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "astedge"
 	},
@@ -52838,7 +52838,7 @@
 	name = "RaCl19";
 	dir = 4
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chL" = (
 /obj/stocking{
@@ -52855,7 +52855,7 @@
 	name = "CoCl47";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chN" = (
 /obj/landmark{
@@ -52863,7 +52863,7 @@
 	name = "FullAst23";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astedge"
 	},
@@ -52874,7 +52874,7 @@
 	name = "FullAst23";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1;
 	icon_state = "astedge"
 	},
@@ -52885,7 +52885,7 @@
 	name = "FullAst23";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astedge"
 	},
@@ -52896,7 +52896,7 @@
 	name = "RaVe39";
 	dir = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chR" = (
 /obj/landmark{
@@ -52904,7 +52904,7 @@
 	name = "FullAst23";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8;
 	icon_state = "astedge"
 	},
@@ -52915,7 +52915,7 @@
 	name = "FullAst23";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "astedge"
 	},
 /area/space)
@@ -52925,7 +52925,7 @@
 	name = "FullAst23";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astedge"
 	},
@@ -52936,14 +52936,14 @@
 	name = "RaCl20";
 	dir = 4
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chV" = (
 /obj/landmark{
 	name = "CoVe47";
 	dir = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chW" = (
 /obj/landmark{
@@ -52951,7 +52951,7 @@
 	name = "FullAst23";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "astdetail"
 	},
 /area/space)
@@ -52961,14 +52961,14 @@
 	name = "CoCl51";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chY" = (
 /obj/landmark{
 	name = "CoVe30";
 	dir = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chZ" = (
 /obj/landmark{
@@ -52976,7 +52976,7 @@
 	name = "FullAst61";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1;
 	icon_state = "astdetail"
 	},
@@ -52987,7 +52987,7 @@
 	name = "CoCl57";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cib" = (
 /obj/landmark{
@@ -52995,7 +52995,7 @@
 	name = "RaVe30";
 	dir = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cic" = (
 /obj/landmark{
@@ -53003,7 +53003,7 @@
 	name = "FullAst53";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1;
 	icon_state = "astdetail"
 	},
@@ -53014,7 +53014,7 @@
 	name = "CoCl69";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cie" = (
 /obj/landmark{
@@ -53022,7 +53022,7 @@
 	name = "FullAst61";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "astdetail"
 	},
 /area/space)
@@ -53032,7 +53032,7 @@
 	name = "FullAst53";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8;
 	icon_state = "astdetail"
 	},
@@ -53043,7 +53043,7 @@
 	name = "FullAst53";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astedge"
 	},
@@ -53054,7 +53054,7 @@
 	name = "FullAst25";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1;
 	icon_state = "astdetail"
 	},
@@ -53065,7 +53065,7 @@
 	name = "FullAst48";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astedge"
 	},
@@ -53076,7 +53076,7 @@
 	name = "FullAst48";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1;
 	icon_state = "astedge"
 	},
@@ -53087,7 +53087,7 @@
 	name = "FullAst48";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astedge"
 	},
@@ -53098,7 +53098,7 @@
 	name = "FullAst54";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astedge"
 	},
@@ -53109,7 +53109,7 @@
 	name = "FullAst54";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astedge"
 	},
@@ -53120,7 +53120,7 @@
 	name = "RaVe48";
 	dir = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cio" = (
 /obj/landmark{
@@ -53128,7 +53128,7 @@
 	name = "FullAst25";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "astedge"
 	},
@@ -53139,7 +53139,7 @@
 	name = "FullAst25";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astedge"
 	},
@@ -53150,7 +53150,7 @@
 	name = "FullAst48";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "astedge"
 	},
@@ -53161,7 +53161,7 @@
 	name = "FullAst48";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "astedge"
 	},
 /area/space)
@@ -53171,7 +53171,7 @@
 	name = "FullAst48";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astedge"
 	},
@@ -53182,7 +53182,7 @@
 	name = "FullAst54";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astdetail"
 	},
@@ -53193,7 +53193,7 @@
 	name = "FullAst54";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astedge"
 	},
@@ -53204,7 +53204,7 @@
 	name = "CoCl37";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ciw" = (
 /obj/landmark{
@@ -53212,7 +53212,7 @@
 	name = "FullAst25";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "astdetail"
 	},
 /area/space)
@@ -53222,7 +53222,7 @@
 	name = "FullAst54";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "astedge"
 	},
@@ -53233,7 +53233,7 @@
 	name = "FullAst49";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1;
 	icon_state = "astdetail"
 	},
@@ -53243,7 +53243,7 @@
 	name = "CoVe48";
 	dir = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ciA" = (
 /obj/landmark{
@@ -53251,7 +53251,7 @@
 	name = "RaVe39";
 	dir = 3
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astdetail"
 	},
@@ -53262,7 +53262,7 @@
 	name = "FullAst49";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "astdetail"
 	},
 /area/space)
@@ -53272,7 +53272,7 @@
 	name = "CoCl45";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ciD" = (
 /obj/landmark{
@@ -53280,7 +53280,7 @@
 	name = "FullAst50";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astedge"
 	},
@@ -53291,7 +53291,7 @@
 	name = "FullAst50";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astedge"
 	},
@@ -53302,7 +53302,7 @@
 	name = "FullAst50";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8;
 	icon_state = "astedge"
 	},
@@ -53313,7 +53313,7 @@
 	name = "FullAst50";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astedge"
 	},
@@ -53324,7 +53324,7 @@
 	name = "CoCl68";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ciI" = (
 /obj/landmark{
@@ -53332,7 +53332,7 @@
 	name = "FullAst50";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "astdetail"
 	},
 /area/space)
@@ -53342,7 +53342,7 @@
 	name = "CoCl45";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astdetail"
 	},
@@ -53352,7 +53352,7 @@
 	name = "CoVe36";
 	dir = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ciL" = (
 /obj/landmark{
@@ -53360,7 +53360,7 @@
 	name = "FullAst47";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1;
 	icon_state = "astdetail"
 	},
@@ -53371,7 +53371,7 @@
 	name = "FullAst26";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astedge"
 	},
@@ -53382,7 +53382,7 @@
 	name = "FullAst26";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1;
 	icon_state = "astedge"
 	},
@@ -53393,7 +53393,7 @@
 	name = "FullAst26";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astedge"
 	},
@@ -53404,7 +53404,7 @@
 	name = "FullAst47";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "astedge"
 	},
@@ -53415,7 +53415,7 @@
 	name = "FullAst47";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astedge"
 	},
@@ -53426,7 +53426,7 @@
 	name = "FullAst26";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "astedge"
 	},
@@ -53437,7 +53437,7 @@
 	name = "FullAst26";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "astedge"
 	},
 /area/space)
@@ -53447,7 +53447,7 @@
 	name = "FullAst26";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astedge"
 	},
@@ -53458,7 +53458,7 @@
 	name = "RaCl12";
 	dir = 4
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ciV" = (
 /obj/landmark{
@@ -53466,7 +53466,7 @@
 	name = "FullAst24";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astedge"
 	},
@@ -53477,7 +53477,7 @@
 	name = "FullAst24";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4;
 	icon_state = "astdetail"
 	},
@@ -53488,14 +53488,14 @@
 	name = "RaVe32";
 	dir = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ciY" = (
 /obj/landmark{
 	name = "CoVe33";
 	dir = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ciZ" = (
 /obj/landmark{
@@ -53503,7 +53503,7 @@
 	name = "FullAst47";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "astdetail"
 	},
 /area/space)
@@ -53513,7 +53513,7 @@
 	name = "FullAst44";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astedge"
 	},
@@ -53524,7 +53524,7 @@
 	name = "FullAst44";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astedge"
 	},
@@ -53535,7 +53535,7 @@
 	name = "FullAst24";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "astdetail"
 	},
 /area/space)
@@ -53545,7 +53545,7 @@
 	name = "FullAst52";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astedge"
 	},
@@ -53556,7 +53556,7 @@
 	name = "FullAst52";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astedge"
 	},
@@ -53567,7 +53567,7 @@
 	name = "FullAst59";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astedge"
 	},
@@ -53578,7 +53578,7 @@
 	name = "FullAst59";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astedge"
 	},
@@ -53588,7 +53588,7 @@
 	name = "CoVe46";
 	dir = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cji" = (
 /obj/landmark{
@@ -53596,7 +53596,7 @@
 	name = "CoCl49";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cjj" = (
 /obj/landmark{
@@ -53604,7 +53604,7 @@
 	name = "FullAst44";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8;
 	icon_state = "astedge"
 	},
@@ -53615,7 +53615,7 @@
 	name = "FullAst44";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4;
 	icon_state = "astedge"
 	},
@@ -53626,7 +53626,7 @@
 	name = "FullAst27";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astedge"
 	},
@@ -53637,7 +53637,7 @@
 	name = "FullAst27";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1;
 	icon_state = "astedge"
 	},
@@ -53648,7 +53648,7 @@
 	name = "FullAst27";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astedge"
 	},
@@ -53659,7 +53659,7 @@
 	name = "FullAst52";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "astedge"
 	},
@@ -53670,7 +53670,7 @@
 	name = "FullAst52";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astdetail"
 	},
@@ -53681,7 +53681,7 @@
 	name = "FullAst59";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "astedge"
 	},
@@ -53692,7 +53692,7 @@
 	name = "FullAst59";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "astdetail"
 	},
@@ -53703,7 +53703,7 @@
 	name = "FullAst44";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "astedge"
 	},
@@ -53714,7 +53714,7 @@
 	name = "FullAst44";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astedge"
 	},
@@ -53725,7 +53725,7 @@
 	name = "FullAst27";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8;
 	icon_state = "astedge"
 	},
@@ -53736,7 +53736,7 @@
 	name = "FullAst27";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astdetail"
 	},
@@ -53747,7 +53747,7 @@
 	name = "FullAst27";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astedge"
 	},
@@ -53758,7 +53758,7 @@
 	name = "FullAst52";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astedge"
 	},
@@ -53769,7 +53769,7 @@
 	name = "FullAst59";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astedge"
 	},
@@ -53780,7 +53780,7 @@
 	name = "FullAst27";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "astedge"
 	},
@@ -53791,7 +53791,7 @@
 	name = "FullAst28";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astedge"
 	},
@@ -53802,7 +53802,7 @@
 	name = "FullAst28";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astedge"
 	},
@@ -53813,7 +53813,7 @@
 	name = "FullAst28";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "astedge"
 	},
@@ -53824,7 +53824,7 @@
 	name = "FullAst28";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4;
 	icon_state = "astedge"
 	},
@@ -53835,7 +53835,7 @@
 	name = "FullAst29";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1;
 	icon_state = "astdetail"
 	},
@@ -53846,7 +53846,7 @@
 	name = "FullAst28";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "astdetail"
 	},
 /area/space)
@@ -53856,7 +53856,7 @@
 	name = "FullAst29";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "astedge"
 	},
@@ -53867,7 +53867,7 @@
 	name = "FullAst29";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4;
 	icon_state = "astdetail"
 	},
@@ -53878,7 +53878,7 @@
 	name = "RaVe35";
 	dir = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cjJ" = (
 /obj/landmark{
@@ -53886,7 +53886,7 @@
 	name = "CoCl54";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cjK" = (
 /obj/landmark{
@@ -53894,7 +53894,7 @@
 	name = "CoCl56";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cjL" = (
 /obj/landmark{
@@ -53902,7 +53902,7 @@
 	name = "FullAst46";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8;
 	icon_state = "astdetail"
 	},
@@ -53913,7 +53913,7 @@
 	name = "FullAst46";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4;
 	icon_state = "astdetail"
 	},
@@ -53924,7 +53924,7 @@
 	name = "RaVe49";
 	dir = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cjO" = (
 /obj/landmark{
@@ -53932,7 +53932,7 @@
 	name = "CoCl41";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cjP" = (
 /obj/landmark{
@@ -53940,7 +53940,7 @@
 	name = "CoCl42";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "astdetail"
 	},
@@ -53951,7 +53951,7 @@
 	name = "CoCl42";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cjR" = (
 /obj/landmark{
@@ -53959,7 +53959,7 @@
 	name = "FullAst30";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astedge"
 	},
@@ -53970,7 +53970,7 @@
 	name = "FullAst30";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1;
 	icon_state = "astedge"
 	},
@@ -53981,7 +53981,7 @@
 	name = "FullAst30";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astedge"
 	},
@@ -53992,7 +53992,7 @@
 	name = "FullAst30";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "astedge"
 	},
@@ -54003,7 +54003,7 @@
 	name = "FullAst30";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "astedge"
 	},
 /area/space)
@@ -54013,7 +54013,7 @@
 	name = "FullAst30";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astedge"
 	},
@@ -54024,7 +54024,7 @@
 	name = "CoCl48";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cjY" = (
 /obj/landmark{
@@ -54032,7 +54032,7 @@
 	name = "RaCl14";
 	dir = 4
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cjZ" = (
 /obj/landmark{
@@ -54040,7 +54040,7 @@
 	name = "FullAst45";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1;
 	icon_state = "astdetail"
 	},
@@ -54051,7 +54051,7 @@
 	name = "FullAst51";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astedge"
 	},
@@ -54062,7 +54062,7 @@
 	name = "FullAst51";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astedge"
 	},
@@ -54073,7 +54073,7 @@
 	name = "FullAst45";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "astdetail"
 	},
 /area/space)
@@ -54083,7 +54083,7 @@
 	name = "FullAst51";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "astedge"
 	},
@@ -54094,7 +54094,7 @@
 	name = "FullAst51";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astedge"
 	},
@@ -54105,7 +54105,7 @@
 	name = "RaVe36";
 	dir = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ckg" = (
 /obj/landmark{
@@ -54113,7 +54113,7 @@
 	name = "FullAst40";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1;
 	icon_state = "astdetail"
 	},
@@ -54124,7 +54124,7 @@
 	name = "CoCl63";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cki" = (
 /obj/landmark{
@@ -54132,7 +54132,7 @@
 	name = "FullAst41";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astedge"
 	},
@@ -54143,7 +54143,7 @@
 	name = "FullAst41";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1;
 	icon_state = "astedge"
 	},
@@ -54154,7 +54154,7 @@
 	name = "FullAst41";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astedge"
 	},
@@ -54165,7 +54165,7 @@
 	name = "FullAst40";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astedge"
 	},
@@ -54176,7 +54176,7 @@
 	name = "FullAst40";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4;
 	icon_state = "astedge"
 	},
@@ -54186,7 +54186,7 @@
 	name = "CoVe43";
 	dir = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cko" = (
 /obj/landmark{
@@ -54194,7 +54194,7 @@
 	name = "FullAst41";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8;
 	icon_state = "astedge"
 	},
@@ -54205,7 +54205,7 @@
 	name = "FullAst41";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "astedge"
 	},
 /area/space)
@@ -54215,7 +54215,7 @@
 	name = "FullAst41";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astdetail"
 	},
@@ -54226,7 +54226,7 @@
 	name = "FullAst40";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astdetail"
 	},
@@ -54237,7 +54237,7 @@
 	name = "CoCl53";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ckt" = (
 /obj/landmark{
@@ -54245,7 +54245,7 @@
 	name = "FullAst41";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "astdetail"
 	},
 /area/space)
@@ -54255,7 +54255,7 @@
 	name = "FullAst41";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "astedge"
 	},
@@ -54266,7 +54266,7 @@
 	name = "FullAst41";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astedge"
 	},
@@ -54277,7 +54277,7 @@
 	name = "FullAst40";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "astedge"
 	},
@@ -54288,7 +54288,7 @@
 	name = "FullAst40";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "astedge"
 	},
 /area/space)
@@ -54298,7 +54298,7 @@
 	name = "FullAst40";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astedge"
 	},
@@ -54308,14 +54308,14 @@
 	name = "CoVe34";
 	dir = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ckA" = (
 /obj/landmark{
 	name = "CoVe32";
 	dir = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ckB" = (
 /obj/landmark{
@@ -54323,7 +54323,7 @@
 	name = "CoCl55";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ckC" = (
 /obj/landmark{
@@ -54331,7 +54331,7 @@
 	name = "FullAst43";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8;
 	icon_state = "astdetail"
 	},
@@ -54342,7 +54342,7 @@
 	name = "FullAst43";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astedge"
 	},
@@ -54353,7 +54353,7 @@
 	name = "RaCl1";
 	dir = 4
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ckF" = (
 /obj/landmark{
@@ -54361,7 +54361,7 @@
 	name = "RaVe34";
 	dir = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ckG" = (
 /obj/landmark{
@@ -54369,7 +54369,7 @@
 	name = "FullAst43";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "astdetail"
 	},
 /area/space)
@@ -54379,7 +54379,7 @@
 	name = "RaVe31";
 	dir = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ckI" = (
 /obj/landmark{
@@ -54387,14 +54387,14 @@
 	name = "RaVe33";
 	dir = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ckJ" = (
 /obj/landmark{
 	name = "CoVe31";
 	dir = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ckK" = (
 /obj/landmark{
@@ -54402,7 +54402,7 @@
 	name = "FullAst34";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astedge"
 	},
@@ -54413,7 +54413,7 @@
 	name = "FullAst34";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astedge"
 	},
@@ -54424,7 +54424,7 @@
 	name = "FullAst34";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "astedge"
 	},
@@ -54435,7 +54435,7 @@
 	name = "FullAst34";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "astdetail"
 	},
@@ -54445,7 +54445,7 @@
 	name = "CoVe35";
 	dir = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ckP" = (
 /obj/landmark{
@@ -54453,7 +54453,7 @@
 	name = "CoCl38";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ckQ" = (
 /obj/landmark{
@@ -54461,7 +54461,7 @@
 	name = "FullAst34";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astedge"
 	},
@@ -54472,7 +54472,7 @@
 	name = "FullAst36";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astedge"
 	},
@@ -54483,7 +54483,7 @@
 	name = "FullAst36";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astedge"
 	},
@@ -54494,7 +54494,7 @@
 	name = "CoCl44";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ckU" = (
 /obj/landmark{
@@ -54502,7 +54502,7 @@
 	name = "CoCl40";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ckV" = (
 /obj/landmark{
@@ -54510,7 +54510,7 @@
 	name = "FullAst36";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8;
 	icon_state = "astedge"
 	},
@@ -54521,7 +54521,7 @@
 	name = "FullAst36";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4;
 	icon_state = "astedge"
 	},
@@ -54532,7 +54532,7 @@
 	name = "RaVe37";
 	dir = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ckY" = (
 /obj/landmark{
@@ -54540,7 +54540,7 @@
 	name = "CoCl39";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ckZ" = (
 /obj/landmark{
@@ -54548,7 +54548,7 @@
 	name = "FullAst36";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "astedge"
 	},
@@ -54559,7 +54559,7 @@
 	name = "FullAst36";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astedge"
 	},
@@ -54570,7 +54570,7 @@
 	name = "FullAst39";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astedge"
 	},
@@ -54581,7 +54581,7 @@
 	name = "FullAst39";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astedge"
 	},
@@ -54592,7 +54592,7 @@
 	name = "FullAst39";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "astedge"
 	},
@@ -54603,7 +54603,7 @@
 	name = "FullAst39";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astdetail"
 	},
@@ -54614,7 +54614,7 @@
 	name = "RaVe38";
 	dir = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "clg" = (
 /obj/landmark{
@@ -54622,7 +54622,7 @@
 	name = "FullAst39";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astedge"
 	},
@@ -54632,7 +54632,7 @@
 	name = "CoVe32";
 	dir = 1
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astdetail"
 	},
@@ -54643,7 +54643,7 @@
 	name = "CoCl52";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "clj" = (
 /obj/landmark{
@@ -54651,7 +54651,7 @@
 	name = "FullAst31";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1;
 	icon_state = "astdetail"
 	},
@@ -54662,7 +54662,7 @@
 	name = "RaCl13";
 	dir = 4
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cll" = (
 /obj/landmark{
@@ -54670,7 +54670,7 @@
 	name = "FullAst31";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astedge"
 	},
@@ -54681,7 +54681,7 @@
 	name = "FullAst31";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4;
 	icon_state = "astedge"
 	},
@@ -54692,7 +54692,7 @@
 	name = "FullAst31";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "astedge"
 	},
@@ -54703,7 +54703,7 @@
 	name = "FullAst31";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astedge"
 	},
@@ -54714,7 +54714,7 @@
 	name = "RaCl2";
 	dir = 4
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "clq" = (
 /obj/landmark{
@@ -54722,7 +54722,7 @@
 	name = "FullAst38";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astedge"
 	},
@@ -54733,7 +54733,7 @@
 	name = "FullAst38";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astedge"
 	},
@@ -54744,7 +54744,7 @@
 	name = "CoCl43";
 	dir = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "clt" = (
 /obj/landmark{
@@ -54752,7 +54752,7 @@
 	name = "FullAst38";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astdetail"
 	},
@@ -54763,7 +54763,7 @@
 	name = "FullAst38";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astedge"
 	},
@@ -54774,7 +54774,7 @@
 	name = "FullAst38";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8;
 	icon_state = "astdetail"
 	},
@@ -54785,7 +54785,7 @@
 	name = "FullAst38";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "astedge"
 	},
 /area/space)
@@ -54795,7 +54795,7 @@
 	name = "FullAst32";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astedge"
 	},
@@ -54806,7 +54806,7 @@
 	name = "FullAst32";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astedge"
 	},
@@ -54817,7 +54817,7 @@
 	name = "FullAst33";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1;
 	icon_state = "astdetail"
 	},
@@ -54828,7 +54828,7 @@
 	name = "FullAst37";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astedge"
 	},
@@ -54839,7 +54839,7 @@
 	name = "FullAst37";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astedge"
 	},
@@ -54850,7 +54850,7 @@
 	name = "FullAst32";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "astedge"
 	},
@@ -54861,7 +54861,7 @@
 	name = "FullAst32";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astedge"
 	},
@@ -54872,7 +54872,7 @@
 	name = "FullAst33";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8;
 	icon_state = "astedge"
 	},
@@ -54883,7 +54883,7 @@
 	name = "FullAst33";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4;
 	icon_state = "astdetail"
 	},
@@ -54894,7 +54894,7 @@
 	name = "FullAst35";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8;
 	icon_state = "astdetail"
 	},
@@ -54905,7 +54905,7 @@
 	name = "FullAst35";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "astedge"
 	},
@@ -54916,7 +54916,7 @@
 	name = "FullAst37";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "astdetail"
 	},
@@ -54927,7 +54927,7 @@
 	name = "FullAst37";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4;
 	icon_state = "astedge"
 	},
@@ -54938,7 +54938,7 @@
 	name = "FullAst33";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "astdetail"
 	},
 /area/space)
@@ -54948,7 +54948,7 @@
 	name = "FullAst35";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "astdetail"
 	},
 /area/space)
@@ -54958,7 +54958,7 @@
 	name = "FullAst37";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8;
 	icon_state = "astdetail"
 	},
@@ -54969,7 +54969,7 @@
 	name = "FullAst37";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "astedge"
 	},
 /area/space)
@@ -54979,7 +54979,7 @@
 	name = "FullAst37";
 	dir = 6
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "astedge"
 	},
@@ -55003,7 +55003,7 @@
 /turf/simulated/floor/ancient,
 /area/crunch)
 "clU" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/crunch)
 "clV" = (
 /obj/item/skull,

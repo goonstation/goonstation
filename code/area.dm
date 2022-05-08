@@ -333,7 +333,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 			C.wake_from_hibernation()
 		if(enteringM?.client)
 			for (var/mob/living/M as anything in src.mobs_not_in_global_mobs_list)
-				if(!M.skipped_mobs_list)
+				if(!M.skipped_mobs_list && get_area(M) == src)
 					stack_trace("Attempting to add [M] to global mobs list but its flag is not set.")
 				if(M.skipped_mobs_list & SKIPPED_AI_MOBS_LIST)
 					global.ai_mobs |= M

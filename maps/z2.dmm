@@ -30311,7 +30311,7 @@
 /turf/unsimulated/floor/ancient,
 /area/crunch)
 "bJX" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/crunch)
 "bJY" = (
 /obj/decal/fakeobjects/teleport_pad,
@@ -75881,7 +75881,9 @@
 	},
 /area/titlescreen)
 "upc" = (
-/obj/decal/poster/wallsign/teleport_sign,
+/obj/decal/poster/wallsign/teleport_sign{
+	dir = 8
+	},
 /turf/unsimulated/wall/auto/supernorn/wood,
 /area/wizard_station)
 "usD" = (

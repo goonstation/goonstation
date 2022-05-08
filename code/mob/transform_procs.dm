@@ -324,7 +324,7 @@
 				W.set_loc(locate(1, 1, 1))
 		else
 			W.set_loc(T)
-		SHOW_SLASHER_TIPS(src)
+		src.show_antag_popup("slasher")
 		if(src.mind)
 			src.mind.transfer_to(W)
 			src.mind.special_role = "slasher"
@@ -718,6 +718,9 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	set desc = "Visit the Afterlife Bar"
 	set category = null
 
+	if (current_state < GAME_STATE_PLAYING)
+		boutput(src, "It's too early to go to the bar!")
+		return
 	if(!isdead(src) || !src.mind || !ticker || !ticker.mode)
 		return
 	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/football))

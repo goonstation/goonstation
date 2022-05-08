@@ -586,6 +586,9 @@
 								ejectamt = input(usr,"How many material pieces do you want to eject?","Eject Materials") as num
 								if (ejectamt <= 0 || src.mode != "ready" || BOUNDS_DIST(src, usr) > 0 || !isnum_safe(ejectamt))
 									break
+								if (round(ejectamt) != ejectamt)
+									boutput(usr, "<span class='alert'>You can only eject a whole number of a material</span>")
+									break
 							if (!ejectturf)
 								break
 							if (ejectamt > O.amount)
@@ -2487,6 +2490,7 @@
 
 	hidden = list(/datum/manufacture/breathmask,
 	/datum/manufacture/patch,
+	/datum/manufacture/towel,
 	/datum/manufacture/tricolor,
 	/datum/manufacture/hat_ltophat)
 	///datum/manufacture/hermes) //all hail the shoe lord - needs adjusting for the new movement system which I cba to do right now
