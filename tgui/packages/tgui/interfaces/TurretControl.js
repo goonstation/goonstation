@@ -23,7 +23,7 @@ const glitch = (text, amount) => {
 
 const generate_kill = (number) => {
   let out = [];
-  for (let i = 0; i < 7; i++) {
+  for (let i = 0; i < number; i++) {
     if (Math.random() > 0.3) {
       out.push("Kill. ");
     } else {
