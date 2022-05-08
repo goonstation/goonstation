@@ -1,7 +1,3 @@
-#define CLOSED_AND_OFF 1
-#define OPEN_AND_ON 2
-#define OPEN_AND_OFF 3
-
 // Contains:
 // - Baton parent
 // - Subtypes
@@ -145,7 +141,7 @@
 						src.is_active = FALSE
 						if (istype(src, /obj/item/baton/ntso)) //since ntso batons have some extra stuff, we need to set their state var to the correct value to make this work
 							var/obj/item/baton/ntso/B = src
-							B.state = OPEN_AND_OFF
+							B.state = EXTENDO_BATON_OPEN_AND_OFF
 		else if (amount > 0)
 			SEND_SIGNAL(src, COMSIG_CELL_CHARGE, src.cost_normal * amount)
 
@@ -299,7 +295,7 @@
 			src.setItemSpecial(/datum/item_special/simple)
 			src.UpdateIcon()
 			user.update_inhands()
-			user.show_text("<B>You flip \the [src] and grab it by the head! [src.is_active ? "It seems pretty unsafe to hold it like this while it's on!" : "At least its off!"]</B>", "red")
+			user.show_text("<B>You flip \the [src] and grab it by the head! [src.is_active ? "It seems pretty unsafe to hold it like this while it's on!" : "At least it's off!"]</B>", "red")
 		else //not already flipped
 			if (!src.flipped) //swapping hands triggers the intent switch too, so we dont wanna spam that
 				return
@@ -400,7 +396,7 @@
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/disruptor
 	item_function_flags = 0
 	//bascially overriding is_active, but it's kinda hacky in that they both are used jointly
-	var/state = CLOSED_AND_OFF
+	var/state = EXTENDO_BATON_CLOSED_AND_OFF
 
 	New()
 		..()
@@ -409,7 +405,7 @@
 	//change for later for more interestings whatsits
 	// can_stun(var/requires_electricity = 0, var/amount = 1, var/mob/user)
 	// 	..(requires_electricity, amount, user)
-	// 	if (state == CLOSED_AND_OFF || state == OPEN_AND_OFF)
+	// 	if (state == EXTENDO_BATON_CLOSED_AND_OFF || state == EXTENDO_BATON_OPEN_AND_OFF)
 	// 		return 0
 
 	attack_self(mob/user as mob)
@@ -424,10 +420,10 @@
 
 		//move to next state
 		switch (src.state)
-			if (CLOSED_AND_OFF)		//move to open/on state
+			if (EXTENDO_BATON_CLOSED_AND_OFF)		//move to open/on state
 				if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, cost_normal) & CELL_SUFFICIENT_CHARGE)) //ugly copy pasted code to move to next state if its depowered, cleanest solution i could think of
 					boutput(user, "<span class='alert'>The [src.name] doesn't have enough power to be turned on.</span>")
-					src.state = OPEN_AND_OFF
+					src.state = EXTENDO_BATON_OPEN_AND_OFF
 					src.is_active = FALSE
 					src.w_class = W_CLASS_BULKY
 					src.force = 7
@@ -438,22 +434,22 @@
 					return
 
 				//this is the stuff that normally happens
-				src.state = OPEN_AND_ON
+				src.state = EXTENDO_BATON_OPEN_AND_ON
 				src.is_active = TRUE
 				boutput(user, "<span class='notice'>The [src.name] is now open and on.</span>")
 				src.w_class = W_CLASS_BULKY
 				src.force = 7
 				playsound(src, "sparks", 75, 1, -1)
-			if (OPEN_AND_ON)		//move to open/off state
-				src.state = OPEN_AND_OFF
+			if (EXTENDO_BATON_OPEN_AND_ON)		//move to open/off state
+				src.state = EXTENDO_BATON_OPEN_AND_OFF
 				src.is_active = FALSE
 				src.w_class = W_CLASS_BULKY
 				src.force = 7
 				playsound(src, "sound/misc/lightswitch.ogg", 75, 1, -1)
 				boutput(user, "<span class='notice'>The [src.name] is now open and unpowered.</span>")
 				// playsound(src, "sparks", 75, 1, -1)
-			if (OPEN_AND_OFF)		//move to closed/off state
-				src.state = CLOSED_AND_OFF
+			if (EXTENDO_BATON_OPEN_AND_OFF)		//move to closed/off state
+				src.state = EXTENDO_BATON_CLOSED_AND_OFF
 				src.is_active = FALSE
 				src.w_class = W_CLASS_SMALL
 				src.force = 1
@@ -463,40 +459,32 @@
 		src.UpdateIcon()
 		user.update_inhands()
 
-		return
 
 	update_icon()
 
 		if (!src || !istype(src))
 			return
 		switch (src.state)
-			if (CLOSED_AND_OFF)
+			if (EXTENDO_BATON_CLOSED_AND_OFF)
 				src.set_icon_state(src.icon_off)
 				src.item_state = src.item_off
-			if (OPEN_AND_ON)
+			if (EXTENDO_BATON_OPEN_AND_ON)
 				src.set_icon_state(src.icon_on)
 				src.item_state = src.item_on
-			if (OPEN_AND_OFF)
+			if (EXTENDO_BATON_OPEN_AND_OFF)
 				src.set_icon_state(src.icon_off_open)
 				src.item_state = src.item_off_open
-		return
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		if(isliving(A))
-			if (src.state == OPEN_AND_ON && src.can_stun())
+			if (src.state == EXTENDO_BATON_OPEN_AND_ON && src.can_stun())
 				src.do_stun(usr, A, "stun")
 				return
 		..()
 
 	emp_act()
-		if (state == OPEN_AND_ON)
-			state = OPEN_AND_OFF
+		if (state == EXTENDO_BATON_OPEN_AND_ON)
+			state = EXTENDO_BATON_OPEN_AND_OFF
 		src.is_active = FALSE
 		usr.show_text("The [src.name] is now open and unpowered.", "blue")
 		src.process_charges(-INFINITY)
-
-		return
-
-#undef CLOSED_AND_OFF
-#undef OPEN_AND_ON
-#undef OPEN_AND_OFF
