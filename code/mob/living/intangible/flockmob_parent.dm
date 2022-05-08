@@ -16,6 +16,7 @@
 	var/compute = 0
 	var/datum/flock/flock = null
 	var/wear_id = null // to prevent runtimes from AIs tracking down radio signals
+	var/control_icon = "flocktrace_face"
 
 /mob/living/intangible/flock/New()
 	..()
