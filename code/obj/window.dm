@@ -1044,6 +1044,31 @@
 
 
 // Flockdrone BS goes here - cirr
+/obj/window/auto/feather
+	default_material = "gnesisglass"
+
+/obj/window/auto/feather/New()
+	connects_to += /turf/simulated/wall/auto/feather
+	..()
+	src.AddComponent(/datum/component/flock_protection, FALSE, TRUE, TRUE)
+
+/obj/window/auto/feather/special_desc(dist, mob/user)
+	if(isflock(user))
+		return {"
+		<span class='flocksay'>
+			<span class='bold'>###=-</span> Ident confirmed, data packet received.
+			<br><span class='bold'>ID:</span> Fibrewoven Window
+			<br><span class='bold'>System Integrity:</span> [round((src.health/src.health_max)*100)]%
+			<br><span class='bold'>###=-</span>
+		</span>
+		"}
+	else
+		return null // give the standard description
+
+/obj/window/auto/feather/proc/repair()
+	src.health = min(src.health + 10, src.health_max)
+
+
 /obj/window/feather
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "window"

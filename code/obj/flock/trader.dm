@@ -397,6 +397,7 @@
 	win_path = "/obj/window/feather"
 	grille_path = "/obj/grille/flock"
 	full_win = 1
+	no_dirs = TRUE
 
 ////////////////////
 // FLOCKTRADER DOOR

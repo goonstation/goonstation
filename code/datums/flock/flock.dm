@@ -623,7 +623,7 @@
 // see /obj/machinery/light/small/floor and /obj/machinery/light for examples of this
 /var/list/flock_conversion_paths = list(
 	/obj/grille/steel = /obj/grille/flock,
-	/obj/window = /obj/window/feather,
+	/obj/window = /obj/window/auto/feather,
 	/obj/machinery/door/airlock = /obj/machinery/door/feather,
 	/obj/machinery/door = null,
 	/obj/stool = /obj/stool/chair/comfy/flock,

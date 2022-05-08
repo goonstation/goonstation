@@ -436,6 +436,9 @@
 				if (/obj/window/feather)
 					var/obj/window/feather/window = target
 					window.repair()
+				if (/obj/window/auto/feather)
+					var/obj/window/auto/feather/window = target
+					window.repair()
 				if (/obj/grille/flock)
 					var/obj/grille/flock/barricade = target
 					barricade.repair()
@@ -586,7 +589,7 @@
 			qdel(target)
 		if(istype(target, /obj/grille/flock))
 			qdel(target)
-		if(istype(target, /obj/window/feather))
+		if(istype(target, /obj/window/feather) || istype(target, /obj/window/auto/feather))
 			var/obj/window/the_window = target
 			//copied wholesale from the /obj/window deconstruction code
 			var/obj/item/sheet/A = new /obj/item/sheet(get_turf(the_window))

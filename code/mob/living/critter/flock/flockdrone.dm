@@ -964,6 +964,10 @@
 					var/obj/window/feather/window = target
 					if (window.health < window.health_max)
 						found_target = TRUE
+				if (/obj/window/auto/feather)
+					var/obj/window/auto/feather/window = target
+					if (window.health < window.health_max)
+						found_target = TRUE
 				if (/obj/grille/flock)
 					var/obj/grille/flock/barricade = target
 					if (barricade.health < barricade.health_max)
