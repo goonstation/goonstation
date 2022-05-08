@@ -124,18 +124,6 @@ var/list/ai_move_scheduled = list()
 		move_reverse = 0
 		move_side = 0
 
-	//store a path and move to it with speed - useful for going fast but using smarter pathfinding
-	proc/move_to_with_path(var/A, var/list/path = null, var/dist = 1)
-		if(!length(path))
-			CRASH("Tried to do AI pathing on an empty path. Don't do that.")
-		if (!move_target)
-			ai_move_scheduled += src
-		move_path = path
-		move_target = A
-		move_dist = dist
-		move_reverse = 0
-		move_side = 0
-
 	proc/move_to(var/A, var/dist = 1)
 		if (!move_target)
 			ai_move_scheduled += src
