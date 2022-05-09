@@ -1095,4 +1095,6 @@
 	var/obj/item/temp = item
 	if(temp)
 		animate(temp) // cancel animation
+		if(temp.material)
+			temp.setMaterialAppearance(temp.material)
 	..()

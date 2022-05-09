@@ -541,7 +541,8 @@ butcher
 	add_task(holder.get_instance(/datum/aiTask/succeedable/rummage, list(holder)))
 
 /datum/aiTask/sequence/goalbased/rummage/precondition()
-	. = TRUE // no precondition required that isn't already checked for targets
+	var/mob/living/critter/flock/drone/F = holder.owner
+	return !(F?.absorber?.item) //only go rummaging if you ain't got stuff to eat
 
 /datum/aiTask/sequence/goalbased/rummage/get_targets()
 	. = list()
@@ -578,9 +579,8 @@ butcher
 		var/mob/living/critter/flock/drone/F = holder.owner
 		usr = F // don't ask, please, don't
 		if(F?.set_hand(1)) // grip tool
-			// drop whatever we're holding
 			if(!F.is_in_hands(container_target)) //if it's not in any of our hands, pick it up
-				F.drop_item()
+				F.drop_item() // drop whatever we're holding
 				F.set_dir(get_dir(F, container_target))
 				F.hand_attack(container_target) //try and pick it up
 			if(F.is_in_hands(container_target)) //did we do it?
@@ -589,7 +589,7 @@ butcher
 					container_target.MouseDrop(get_turf(F)) //this will do nothing on a locked secure storage
 					// might as well eat the container now
 					F.absorber.equip(container_target) //eating the container drops the contents anyway
-					return
+				return
 			else
 				// we've opened a HUD, do a fake HUD click, because i am dedicated to this whole puppetry schtick
 				container_target.hud.relay_click("boxes", F, dummy_params)
