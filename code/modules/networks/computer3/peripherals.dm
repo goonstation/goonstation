@@ -969,7 +969,10 @@
 		func_tag = "CLOWN_ID_SCANNER"
 		clownifies_card = 1
 
-			// this used to use comic sans here, but i havent found a way to change the font of just one part
+		return_badge()
+			// label text, icon, contents
+			var/dat = list("label" = "Card","icon" = "id-card","contents" = src.authid,"Clown" = TRUE)
+			return dat
 
 	return_status_text()
 		var/status_text = "No card loaded"

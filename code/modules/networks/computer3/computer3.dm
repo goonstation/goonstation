@@ -343,6 +343,23 @@
     ui = new(user, src, "Terminal")
     ui.open()
 
+/obj/machinery/computer3/ui_static_data(mob/user)
+	. = list()
+	if(src.setup_has_internal_disk) // the magic internal floppy drive is in here
+		. += list("peripherals" = list(list(
+		"icon" = "save",
+		"card" = "internal",
+		"color" = src.diskette,
+		"contents" = src.diskette,
+		"label" = "Disk"
+		)))
+	for(var/obj/item/peripheral/periph in src.peripherals) // originally i had all this stuff in static data, but the buttons didnt update.
+		if(periph.setup_has_badge)
+			var/pdata = periph.return_badge() // reduces copy pasting
+			if(pdata)
+				var/bcolor = pdata["contents"]
+				pdata += list("color" = bcolor, "card" = periph.type)
+				.["peripherals"] += list(pdata)
 
 /obj/machinery/computer3/ui_data(mob/user)
  . = list(
@@ -354,21 +371,6 @@
 	"fontColor" = src.setup_font_color, // display monochrome values
 	"bgColor" = src.setup_bg_color
   )
-	if(src.setup_has_internal_disk) // the magic internal floppy drive is in here
-		. += list("peripherals" = list(list(
-		"internalFdisk" = src.setup_has_internal_disk,
-		"icon" = "save",
-		"card" = "internal",
-		"color" = src.diskette,
-		"label" = "Disk"
-		)))
-	for(var/obj/item/peripheral/periph in src.peripherals) // originally i had all this stuff in static data, but the buttons didnt update.
-		if(periph.setup_has_badge)
-			var/pdata = periph.return_badge() // reduces copy pasting
-			if(pdata)
-				var/bcolor = pdata["contents"]
-				pdata += list("color" = bcolor, "card" = periph.type)
-				.["peripherals"] += list(pdata)
 
 /obj/machinery/computer3/ui_act(action, params)
 	. = ..()
@@ -396,6 +398,37 @@
 					usr.drop_item()
 					I.loc = src
 					src.diskette = I
+				update_static_data(usr)
+			else if(findtext(params["card"],"/obj/item/peripheral/card_scanner/editor"))
+				var/obj/item/peripheral/card_scanner/dv = locate(/obj/item/peripheral/card_scanner/editor) in src.peripherals
+				if(dv.authid)
+					usr.put_in_hand_or_eject(dv.authid)
+					dv.authid = null
+				else if(istype(I,/obj/item/card/id))
+					usr.drop_item()
+					I.loc = src
+					dv.authid = I
+				update_static_data(usr)
+			else if(findtext(params["card"],"/obj/item/peripheral/card_scanner/register"))
+				var/obj/item/peripheral/card_scanner/dv = locate(/obj/item/peripheral/card_scanner/register) in src.peripherals
+				if(dv.authid)
+					usr.put_in_hand_or_eject(dv.authid)
+					dv.authid = null
+				else if(istype(I,/obj/item/card/id))
+					usr.drop_item()
+					I.loc = src
+					dv.authid = I
+				update_static_data(usr)
+			else if(findtext(params["card"],"/obj/item/peripheral/card_scanner/clownifier"))
+				var/obj/item/peripheral/card_scanner/dv = locate(/obj/item/peripheral/card_scanner/clownifier) in src.peripherals
+				if(dv.authid)
+					usr.put_in_hand_or_eject(dv.authid)
+					dv.authid = null
+				else if(istype(I,/obj/item/card/id))
+					usr.drop_item()
+					I.loc = src
+					dv.authid = I
+				update_static_data(usr)
 			else if(findtext(params["card"],"/obj/item/peripheral/card_scanner"))
 				var/obj/item/peripheral/card_scanner/dv = locate(/obj/item/peripheral/card_scanner) in src.peripherals
 				if(dv.authid)
@@ -405,6 +438,7 @@
 					usr.drop_item()
 					I.loc = src
 					dv.authid = I
+				update_static_data(usr)
 			else if(params["card"] == "/obj/item/peripheral/drive/tape_reader")
 				var/obj/item/peripheral/drive/tape_reader/dv = locate(/obj/item/peripheral/drive/tape_reader) in src.peripherals
 				if(dv.disk)
@@ -414,6 +448,7 @@
 					usr.drop_item()
 					I.loc = src
 					dv.disk = I
+				update_static_data(usr)
 			else if(params["card"] == "/obj/item/peripheral/drive/cart_reader")
 				var/obj/item/peripheral/drive/cart_reader/dv = locate(/obj/item/peripheral/drive/cart_reader) in src.peripherals
 				if(dv.disk)
@@ -423,6 +458,7 @@
 					usr.drop_item()
 					I.loc = src
 					dv.disk = I
+				update_static_data(usr)
 			else if(params["card"] == "/obj/item/peripheral/drive")
 				var/obj/item/peripheral/drive/dv = locate(/obj/item/peripheral/drive) in src.peripherals
 				if(dv.disk)
@@ -432,6 +468,7 @@
 					usr.drop_item()
 					I.loc = src
 					dv.disk = I
+				update_static_data(usr)
 
 	. = TRUE
 

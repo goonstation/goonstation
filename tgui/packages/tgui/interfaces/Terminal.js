@@ -25,13 +25,13 @@ export const Terminal = (props, context) => {
       theme="retro-dark"
       title={windowName}
       width="380"
-      font-family="Consolas"
+      fontFamily="Consolas"
       font-size="10pt"
       height="350">
       <Window.Content>
         <Section backgroundColor="#0f0f0f" scrollable fill height="70%" >
           <Box color={fontColor} backgroundColor={bgColor} minHeight="99%" maxHeight="500em">
-            <Box mx="1%" preserveWhitespace fill color={fontColor} backgroundColor={bgColor}>{temp}</Box>
+            <Box mx="1%" fontFamily="Consolas" preserveWhitespace fill color={fontColor} backgroundColor={bgColor}>{temp}</Box>
           </Box>
         </Section>
         <Section mt="1%" fitted>
@@ -57,6 +57,7 @@ export const Terminal = (props, context) => {
                 key={peripheral.card}
                 icon={peripheral.icon}
                 content={peripheral.label}
+                fontFamily={peripheral.Clown ? "Comic Sans MS" : "Consolas"}
                 color={peripheral.color ? "green" : "grey"}
                 onClick={() => act('buttonPressed', {
                   card: peripheral.card })}
