@@ -98,7 +98,7 @@
 
 	mouse_drop(atom/over_object, src_location, over_location, over_control, params)
 		. = ..()
-		src.possessed_thing.MouseDrop(over_object, src_location, over_location, over_control, params)
+		src.possessed_thing?.MouseDrop(over_object, src_location, over_location, over_control, params)
 
 	MouseDrop_T(atom/dropped, mob/user)
 		. = ..()
@@ -106,19 +106,19 @@
 
 	Bumped(atom/movable/AM)
 		. = ..()
-		src.possessed_thing.Bumped(AM)
+		src.possessed_thing?.Bumped(AM)
 
 	bump(atom/A)
 		. = ..()
-		src.possessed_thing.Bump(A)
+		src.possessed_thing?.Bump(A)
 
 	Cross(atom/movable/mover)
 		. = ..()
-		src.possessed_thing.Cross(mover)
+		src.possessed_thing?.Cross(mover)
 
 	Crossed(atom/movable/AM)
 		. = ..()
-		src.possessed_thing.Crossed(AM)
+		src.possessed_thing?.Crossed(AM)
 
 
 	disposing()
