@@ -1,4 +1,4 @@
-/mob/living/critter/gunbot
+/mob/living/critter/robotic/gunbot
 	name = "robot"
 	real_name = "robot"
 	desc = "A Security Robot, something seems a bit off."
@@ -135,7 +135,7 @@
 					else
 						return ..()
 
-/mob/living/critter/gunbot/syndicate
+/mob/living/critter/robotic/gunbot/syndicate
 	name = "Syndicate robot"
 	real_name = "Syndicate robot"
 	desc = "A retrofitted Syndicate gunbot, it seems angry."

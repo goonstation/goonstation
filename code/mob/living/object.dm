@@ -94,11 +94,32 @@
 		remove_lifeprocess(/datum/lifeprocess/blood)
 		remove_lifeprocess(/datum/lifeprocess/breath)
 
+	// Relay these procs
+
 	mouse_drop(atom/over_object, src_location, over_location, over_control, params)
-		src.possessed_thing.MouseDrop(over_object, src_location, over_location, over_control, params)
+		. = ..()
+		src.possessed_thing?.MouseDrop(over_object, src_location, over_location, over_control, params)
 
 	MouseDrop_T(atom/dropped, mob/user)
-		return src.possessed_thing._MouseDrop_T(dropped, user)
+		. = ..()
+		dropped.MouseDrop(src.possessed_thing)
+
+	Bumped(atom/movable/AM)
+		. = ..()
+		src.possessed_thing?.Bumped(AM)
+
+	bump(atom/A)
+		. = ..()
+		src.possessed_thing?.Bump(A)
+
+	Cross(atom/movable/mover)
+		. = ..()
+		src.possessed_thing?.Cross(mover)
+
+	Crossed(atom/movable/AM)
+		. = ..()
+		src.possessed_thing?.Crossed(AM)
+
 
 	disposing()
 		REMOVE_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "living_object")
@@ -290,9 +311,6 @@
 	can_strip()
 		return FALSE
 
-	Cross(atom/movable/mover) //Makes radioactive stuff work. Also glass shards and whatever
-		return src.possessed_thing.Cross(mover)
-
 	update_icon()
 		..()
 		src.appearance = src.possessed_thing.appearance
@@ -361,8 +379,9 @@
 	// see if we can find someone
 	var/mob/mobtarget = holder.target
 	ENSURE_TYPE(mobtarget)
-	if (!mobtarget || isdead(mobtarget) || GET_DIST(holder.owner, mobtarget) > 10) //slightly higher chase range than acquisition range
+	if (!mobtarget || isdead(mobtarget) || GET_DIST(holder.owner, mobtarget) > 10 || frustration > 8) //slightly higher chase range than acquisition range
 		holder.target = null
+		frustration = 0
 		var/list/possible = get_targets()
 		if (length(possible))
 			holder.target = pick(possible)
@@ -375,8 +394,19 @@
 	if (BOUNDS_DIST(holder.target, holder.owner))
 		holder.move_to(holder.target)
 	else
-		attack_twitch(src)
 		holder.owner.weapon_attack(holder.target, holder.owner.equipped(), TRUE)
+
+/datum/aiTask/timed/targeted/living_object/frustration_check()
+	. = 0
+	if (holder)
+		if (!IN_RANGE(holder.owner, holder.target, target_range))
+			return 1
+
+		if (ismob(holder.target))
+			var/mob/M = holder.target
+			. = !(holder.target && isalive(M))
+		else
+			. = !(holder.target)
 
 /// For items with special intent/targeting requirements, or special modes of attacking- arm grenades, turn batons on, etc
 /datum/aiTask/timed/targeted/living_object/proc/pre_attack()
@@ -415,8 +445,21 @@
 			spooker.set_a_intent(INTENT_HELP) // otherwise go on help for gun whipping
 	else if (istype(item, /obj/item/old_grenade) || istype(item, /obj/item/chem_grenade || istype(item, /obj/item/pipebomb))) //cool paths tHANKS
 		spooker.self_interact() // arm grenades
+	else if (istype(item, /obj/item/katana)) 		// this will also apply for non-limb-slicey katanas but it shouldn't really matter
+		if (ishuman(holder.target))
+			var/mob/living/carbon/human/H = holder.target
+			var/limbless = TRUE
+			for (var/limb in list("l_leg", "r_leg", "l_arm", "r_arm"))
+				if (H.limbs.vars[limb]) // sue me
+					spooker.zone_sel.select_zone(limb)
+					limbless = FALSE
+					break
+			if (limbless) // >:^)
+				spooker.zone_sel.select_zone("head")
+
 	else
 		spooker.set_a_intent(INTENT_HARM)
+		spooker.zone_sel.select_zone("head")
 	spooker.hud.update_intent()
 
-	//TODO katana limb targeting, make guns fire at range?, c saber deflect (if possible i forget if arbitrary mobs can block)
+	//TODO make guns fire at range?, c saber deflect (if possible i forget if arbitrary mobs can block)

@@ -1,8 +1,8 @@
 /**
  * Playable bots
  */
-ABSTRACT_TYPE(/mob/living/critter/bot)
-/mob/living/critter/bot
+ABSTRACT_TYPE(/mob/living/critter/robotic/bot)
+/mob/living/critter/robotic/bot
 	name = "base bot mob (you should never see me)"
 	icon = 'icons/obj/bots/aibots.dmi'
 	blood_id = "oil"
@@ -108,6 +108,7 @@ ABSTRACT_TYPE(/mob/living/critter/bot)
 			src.reagents.add_reagent("cleaner", 10)
 			src.abilityHolder.addAbility(/datum/targetable/critter/bot/mop_floor)
 			src.abilityHolder.addAbility(/datum/targetable/critter/bot/reagent_scan_self)
+			src.abilityHolder.addAbility(/datum/targetable/critter/bot/dump_reagents)
 
 		emag_act(mob/user, obj/item/card/emag/E)
 			. = ..()
@@ -171,8 +172,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	name = "Reagent Scan Self"
 	desc = "Scan yourself for reagents."
 	targeted = FALSE
-	cooldown = 10 SECONDS
-	icon = 'icons/mob/critter_ui.dmi'
+	cooldown = 5 SECONDS
 	icon_state = "clean_scan"
 	var/reagent_id = null
 
@@ -180,6 +180,21 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 		if(!holder?.owner?.reagents)
 			return TRUE
 		boutput(holder.owner, "[scan_reagents(holder.owner, visible = 1)]")
+
+/datum/targetable/critter/bot/dump_reagents
+	name = "Dump Reagents"
+	desc = "Dump all your reagents on the floor."
+	targeted = FALSE
+	cooldown = 10 SECONDS
+	icon_state = "clean_dump"
+
+	cast()
+		if (!holder?.owner?.reagents)
+			return TRUE
+		holder.owner.setStatus("resting", INFINITE_STATUS) // flop over to spill the reagents
+		holder.owner.force_laydown_standup()
+		holder.owner.reagents.reaction(get_turf(holder.owner), TOUCH)
+		holder.owner.reagents.clear_reagents()
 
 /datum/action/bar/icon/mob_cleanbot_clean
 	duration = 1 SECOND
@@ -204,8 +219,8 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 
 		playsound(get_turf(master), "sound/impact_sounds/Liquid_Slosh_2.ogg", 25, 1)
 		master.anchored = 1
-		if(istype(master, /mob/living/critter/bot))
-			var/mob/living/critter/bot/bot = master
+		if(istype(master, /mob/living/critter/robotic/bot))
+			var/mob/living/critter/robotic/bot/bot = master
 			master.icon_state = "[bot.icon_state_base]-c"
 		master.visible_message("<span class='alert'>[master] begins to clean the [T.name].</span>")
 
@@ -217,8 +232,8 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 
 	onInterrupt(flag)
 		. = ..()
-		if(istype(master, /mob/living/critter/bot))
-			var/mob/living/critter/bot/bot = master
+		if(istype(master, /mob/living/critter/robotic/bot))
+			var/mob/living/critter/robotic/bot/bot = master
 			master.icon_state = "[bot.icon_state_base]1"
 
 	onEnd()
@@ -234,12 +249,12 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 				if (T.active_liquid.group)
 					T.active_liquid.group.drain(T.active_liquid,1,master)
 
-			if(istype(master, /mob/living/critter/bot))
-				var/mob/living/critter/bot/bot = master
+			if(istype(master, /mob/living/critter/robotic/bot))
+				var/mob/living/critter/robotic/bot/bot = master
 				master.icon_state = "[bot.icon_state_base]1"
 		..()
 
-/mob/living/critter/bot/firebot
+/mob/living/critter/robotic/bot/firebot
 	name = "firebot"
 	real_name = "firebot"
 	desc = "A little fire-fighting robot!  He looks so darn chipper."
