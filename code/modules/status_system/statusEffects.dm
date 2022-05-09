@@ -655,12 +655,12 @@
 			switchStage(getStage())
 
 			var/prot = 1
-			if (ismob(owner))
-				var/mob/M = owner
-				if(M.is_heat_resistant())
+			if (isliving(owner))
+				var/mob/living/L = owner
+				if(L.is_heat_resistant())
 					prot = 0
 				else
-					prot = (1 - (M.get_heat_protection() / 100))
+					prot = (1 - (L.get_heat_protection() / 100))
 			if(istype(owner, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = owner
 				if (H.traitHolder?.hasTrait("burning")) //trait 'burning' is human torch
