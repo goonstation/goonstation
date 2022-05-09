@@ -639,6 +639,11 @@
 			src.addAbility(/datum/targetable/wraithAbility/possess)
 			src.addAbility(/datum/targetable/wraithAbility/hallucinate)
 
+		addAllHarbingerAbilities()
+			src.addAbility(/datum/targetable/wraithAbility/create_summon_portal)
+			src.addAbility(/datum/targetable/wraithAbility/raiseSkeleton)
+			src.addAbility(/datum/targetable/wraithAbility/makeRevenant)
+
 		removeAllAbilities()
 			src.removeAbility(/datum/targetable/wraithAbility/help)
 			src.removeAbility(/datum/targetable/wraithAbility/absorbCorpse)
