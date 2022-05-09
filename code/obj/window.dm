@@ -1050,6 +1050,7 @@
 /obj/window/auto/feather/New()
 	connects_to += /turf/simulated/wall/auto/feather
 	..()
+	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection, FALSE, TRUE, TRUE)
 
 /obj/window/auto/feather/special_desc(dist, mob/user)
