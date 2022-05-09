@@ -15089,7 +15089,6 @@
 "aUY" = (
 /obj/structure/woodwall{
 	color = "#CCCCCC";
-	icon = 'icons/turf/fake_woodwall.dmi';
 	name = "odd asteroid wall";
 	plane = -105
 	},
