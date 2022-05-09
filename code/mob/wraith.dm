@@ -34,14 +34,15 @@
 
 	var/last_life_update = 0
 	var/const/life_tick_spacing = 20
-	var/haunt_duration = 300
+	var/haunt_duration = 30 SECOND
 	var/death_icon_state = "wraith-die"
 	var/static/image/speech_bubble = image('icons/mob/mob.dmi', "speech")
 	var/last_typing = null
-	var/list/area/booster_locations = list()
-	var/list/area/valid_locations = list()
+	var/list/area/booster_locations = list()	//Zones in which you get more points
+	var/list/area/valid_locations = list()	//Zones that can become booster zones
 	var/list/area/excluded_areas = list(/area/shuttle/escape/transit, /area/shuttle_transit_space)
 	var/next_area_change = 10 SECONDS
+	var/list/mob/living/critter/summons = list()	//Keep track of who we summoned to the material plane
 
 	var/list/poltergeists
 	//holy water, formaldehyde tolerances.
@@ -631,6 +632,7 @@
 			src.addAbility(/datum/targetable/wraithAbility/poison)
 			src.addAbility(/datum/targetable/wraithAbility/summon_rot_hulk)
 			src.addAbility(/datum/targetable/wraithAbility/make_plague_rat)
+			src.addAbility(/datum/targetable/wraithAbility/speak)
 
 		addAllTricksterAbilities()
 			src.addAbility(/datum/targetable/wraithAbility/choose_haunt_appearance)
@@ -645,6 +647,7 @@
 			src.addAbility(/datum/targetable/wraithAbility/raiseSkeleton)
 			src.addAbility(/datum/targetable/wraithAbility/makeRevenant)
 			src.addAbility(/datum/targetable/wraithAbility/harbinger_summon)
+			src.addAbility(/datum/targetable/wraithAbility/speak)
 
 		removeAllAbilities()
 			src.removeAbility(/datum/targetable/wraithAbility/help)

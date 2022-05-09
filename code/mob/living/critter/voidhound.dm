@@ -1,6 +1,6 @@
 /mob/living/critter/voidhound
-	name = "voidhound"
-	desc = "A strangely hat shaped robot looking to spy on your deepest secrets"
+	name = "Voidhound"
+	desc = "Todo"
 	density = 1
 	hand_count = 1
 	can_help = 1
@@ -12,11 +12,16 @@
 	var/health_brute_vuln = 0.7
 	var/health_burn = 30
 	var/health_burn_vuln = 1
-	var/mob/wraith/controller = null
+	var/mob/wraith/master = null
 
-	New()
-		..()
-		//Let us spawn as stuff
+	New(var/turf/T, var/mob/wraith/M = null)
+		..(T)
+		if(M != null)
+			src.master = M
+
+			if (isnull(M.summons))
+				M.summons = list()
+			M.summons += src
 		abilityHolder.addAbility(/datum/targetable/critter/voidhound/cloak)
 		abilityHolder.addAbility(/datum/targetable/critter/voidhount/rushdown)
 		abilityHolder.addAbility(/datum/targetable/critter/slam)
@@ -24,7 +29,7 @@
 	setup_hands()//Todo find a weaker arm
 		..()
 		var/datum/handHolder/HH = hands[1]
-		HH.limb = new /datum/limb/brullbar
+		HH.limb = new /datum/limb/claw
 		HH.icon = 'icons/mob/critter_ui.dmi'
 		HH.icon_state = "handn"
 		HH.name = "claw"

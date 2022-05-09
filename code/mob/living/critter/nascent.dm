@@ -1,18 +1,26 @@
 /mob/living/critter/nascent
-	name = "nascent voidling"
-	real_name = "nascent voidling"
-	desc = "Oh god."
+	name = "???"
+	real_name = "???"
+	desc = "It looks unfinished"
 	density = 1
 	icon_state = "abear"
 	hand_count = 0
 	var/health_brute = 50
-	var/health_brute_vuln = 0.5
+	var/health_brute_vuln = 1
 	var/health_burn = 50
-	var/health_burn_vuln = 0.7
+	var/health_burn_vuln = 0.8
 	var/mob/wraith/master = null
 
-	New()
-		..()
+	New(var/turf/T, var/mob/wraith/M = null)
+		..(T)
+		if(M != null)
+			src.master = M
+
+			if (isnull(M.summons))
+				M.summons = list()
+			M.summons += src
+
+
 		//Let us spawn as stuff
 		abilityHolder.addAbility(/datum/targetable/critter/nascent/become_spiker)
 		abilityHolder.addAbility(/datum/targetable/critter/nascent/become_voidhound)

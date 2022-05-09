@@ -1,6 +1,6 @@
 /mob/living/critter/spiker
-	name = "spiker"
-	desc = "A strangely hat shaped robot looking to spy on your deepest secrets"
+	name = "Tentacle fiend"
+	desc = "Todo"
 	density = 1
 	hand_count = 1
 	can_help = 1
@@ -12,11 +12,16 @@
 	var/health_brute_vuln = 1
 	var/health_burn = 30
 	var/health_burn_vuln = 1
-	var/mob/wraith/controller = null
+	var/mob/wraith/master = null
 
-	New()
-		..()
-		//Let us spawn as stuff
+	New(var/turf/T, var/mob/wraith/M = null)
+		..(T)
+		if(M != null)
+			src.master = M
+
+			if (isnull(M.summons))
+				M.summons = list()
+			M.summons += src
 		abilityHolder.addAbility(/datum/targetable/critter/spiker/hook)
 		abilityHolder.addAbility(/datum/targetable/critter/spiker/lash)
 
@@ -32,11 +37,10 @@
 		HH.icon_state = "tentacles"				// the icon state of the hand UI background
 		HH.limb_name = "long range stun tentacles"					// name for the dummy holder
 		HH.limb = new /datum/limb		// if not null, the special limb to use when attack_handing
-		HH.can_hold_items = 0
-		HH.can_attack = 0
-		HH.can_range_attack = 1
+		HH.can_hold_items = 1
+		HH.can_attack = 1
 
-/datum/projectile/special/tentacle
+/datum/projectile/special/tentacle	//Get over here!
 	name = "tentacle"
 	dissipation_rate = 1
 	dissipation_delay = 7
@@ -48,18 +52,28 @@
 	var/list/previous_line = list()
 
 	on_hit(atom/hit, angle, var/obj/projectile/P)
-		if (previous_line != null)
+		if (previous_line != null)	//Lets clean up the line
 			for (var/obj/O in previous_line)
 				qdel(O)
-		if (ismob(hit))
+		if (ismob(hit))	//Drag them to us
 			var/mob/M = hit
 			if(hit == P.special_data["owner"]) return 1
 			var/turf/destination = get_turf(P.special_data["owner"])
 			if (destination)
-				do_teleport(M, destination, 0, sparks=0) ///You will appear adjacent to Hastur.
+				do_teleport(M, destination, 0, sparks=0)
 				playsound(M, "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1)
+				random_brute_damage(M, 5,1)
+				take_bleeding_damage(M, null, 10, DAMAGE_CUT, 0, get_turf(M))
 				M.changeStatus("paralysis", 3 SECONDS)
 				M.visible_message("<span class='alert'>[M] gets grabbed by a tentacle and dragged!</span>")
+
+		previous_line = DrawLine(P.special_data["owner"], P, /obj/line_obj/tentacle ,'icons/obj/projectiles.dmi',"WholeTentacle",1,1,"HalfStartTentacle","HalfEndTentacle",OBJ_LAYER,1)
+		sleep(7 DECI SECOND)	//Make it last a bit for impact
+		if (previous_line != null)
+			for (var/obj/O in previous_line)
+				qdel(O)
+
+		qdel(P)
 
 	on_launch(var/obj/projectile/P)
 		..()
@@ -67,8 +81,14 @@
 			P.die()
 			return
 
+	on_end(var/obj/projectile/P)
+		..()
+		sleep(7 DECI SECOND)
+		if (previous_line != null)
+			for (var/obj/O in previous_line)
+				qdel(O)
 
-	tick(var/obj/projectile/P)
+	tick(var/obj/projectile/P)	//Trail the projectile
 		..()
 		if (previous_line != null)
 			for (var/obj/O in previous_line)

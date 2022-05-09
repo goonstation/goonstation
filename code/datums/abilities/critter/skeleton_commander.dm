@@ -1,3 +1,6 @@
+////////////////////////////////
+// Skeleton commander abilities
+////////////////////////////////
 /datum/targetable/critter/skeleton_commander/rally
 	name = "rally"
 	desc = "rally"
@@ -26,5 +29,5 @@
 			return 1
 		var/turf/T = get_turf(target)
 		if (isturf(T))
-			new /obj/critter/wraithskeleton(T)
-			boutput(holder.owner, "Make skeleton")
+			new /obj/critter/wraithskeleton(T)//Todo animate a fade in
+			boutput(holder.owner, "We summon a skeleton from the void")

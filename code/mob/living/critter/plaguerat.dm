@@ -27,6 +27,7 @@
 	var/health_burn_vuln = 0.65
 	var/obj/machinery/warren/linked_warren = null
 	reagent_capacity = 100
+	var/master = null
 
 	can_help = 1
 	can_throw = 1
@@ -39,6 +40,15 @@
 	blood_id = "miasma"
 
 	var/bite_transfer_amt = 1
+
+	New(var/turf/T, var/mob/wraith/M = null)
+		..(T)
+		if(M != null)
+			src.master = M
+
+			if (isnull(M.summons))
+				M.summons = list()
+			M.summons += src
 
 	setup_hands()
 		..()
@@ -105,14 +115,21 @@
 				M.TakeDamageAccountArmor("All", rand(1,3), 0, 0, DAMAGE_STAB)
 			M.reagents.add_reagent(src.venom, bite_transfer_amt)
 
-	proc/grow_up()
+	proc/grow_up(var/mob/wraith/M = null)
 		if (!ispath(src.adultpath))
 			return 0
 		src.unequip_all()
 		src.visible_message("<span class='alert'><b>[src] bloats and grows up in size. The smell is utterly revolting!</b></span>",\
 		"<span class='notice'><b>You grow up!</b></span>")
 		SPAWN(0)
-			src.make_critter(src.adultpath)
+			var/MA = null
+			if(src.master != null)
+				MA = master
+			var/mob/living/critter/plaguerat/new_rat = new adultpath(get_turf(src), MA)
+			var/mob/living/critter/plaguerat/old_rat = src
+			src.mind.transfer_to(new_rat)
+			qdel(old_rat)
+			//src.make_critter(src.adultpath)
 
 /mob/living/critter/plaguerat/young
 	name = "Diseased rat"

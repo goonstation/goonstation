@@ -12,14 +12,20 @@
 	var/health_brute_vuln = 0.8
 	var/health_burn = 80
 	var/health_burn_vuln = 0.3
-	var/mob/wraith/controller = null
+	var/mob/wraith/master = null
 
-	New()
-		..()
+	New(var/turf/T, var/mob/wraith/M = null)
+		..(T)
+		if(M != null)
+			src.master = M
+
+			if (isnull(M.summons))
+				M.summons = list()
+			M.summons += src
+
 		abilityHolder.addAbility(/datum/targetable/critter/skeleton_commander/rally)
 		abilityHolder.addAbility(/datum/targetable/wrestler/strike)
 		abilityHolder.addAbility(/datum/targetable/critter/skeleton_commander/summon_lesser_skeleton)
-		//src.setStatus("weakcurse")
 		src.add_stam_mod_max("slow", STAMINA_MAX / 0.5)
 
 	Life(datum/controller/process/mobs/parent)

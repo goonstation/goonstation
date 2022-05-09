@@ -1,5 +1,5 @@
 /mob/living/critter/exploder
-	name = "exploder"
+	name = "bloated abomination"
 	desc = "A rotting, walking mass of flesh."
 	icon = 'icons/misc/critter.dmi'
 	icon_state = "mouse"
@@ -10,34 +10,17 @@
 	can_grab = 1
 	can_disarm = 1
 	can_help = 1
-/*
-	say_language = "feather"
-	voice_name = "synthetic chirps"
-	speechverb_say = "chirps"
-	speechverb_exclaim = "screeches"
-	speechverb_ask = "inquires"
-	speechverb_gasp = "clatters"
-	speechverb_stammer = "buzzes"
-	custom_gib_handler = /proc/flockdronegibs
-	custom_vomit_type = /obj/decal/cleanable/flockdrone_debris/fluid
-	mat_appearances_to_ignore = list("gnesis")
-	mat_changename = FALSE
-	mat_changedesc = FALSE
-*/
 	// HEALTHS
 	var/health_brute = 50
 	var/health_burn = 50
-	var/health_brute_vuln = 1.5
-	var/health_burn_vuln = 1
-	// this body sucks i want a different one
-	var/mob/living/intangible/flock/controller = null
-	// AI STUFF
+	var/health_brute_vuln = 1
+	var/health_burn_vuln = 1.5
 	is_npc = 1
 
-	use_stamina = 0 //haha no
+	use_stamina = 0
 
-	can_lie = 0 // no rotate when dead
-	//blood_id = "flockdrone_fluid"
+	can_lie = 0
+	blood_id = "miasma"
 
 	setup_healths()
 		add_hh_flesh(src.health_brute, src.health_brute_vuln)
@@ -46,13 +29,13 @@
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
-		HH.limb = new /datum/limb/bear
+		HH.limb = new /datum/limb/hunter
 		HH.icon_state = "handl"				// the icon state of the hand UI background
 		HH.limb_name = "left bear arm"
 
 		HH = hands[2]
 		HH.icon = 'icons/mob/hud_human.dmi'
-		HH.limb = new /datum/limb/bear
+		HH.limb = new /datum/limb/hunter
 		HH.name = "right hand"
 		HH.suffix = "-R"
 		HH.icon_state = "handr"				// the icon state of the hand UI background
@@ -86,25 +69,17 @@
 		U.fluid_react_single("blood", 60, airborne = 0)
 
 		if (!gibbed)
-			gibs(src.loc) //cmon let's let them really make a mess
+			gibs(src.loc)
 			playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
 			src.drop_item()
 			qdel(src)
 		else
-			gibs(src.loc) //cmon let's let them really make a mess
+			gibs(src.loc)
 			playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
 
-/mob/living/critter/exploder/New(var/atom/L, var/datum/flock/F=null)
+/mob/living/critter/exploder/New(var/atom/L)
 	..()
 	src.ai = new /datum/aiHolder/wraith_critters/exploder(src)
-
-	// do not automatically set up a flock if one is not provided
-	// flockless drones act differently
-	//src.flock = F
-	// wait for like one tick for the unit to set up properly before registering
-	/*SPAWN(1 DECI SECOND)
-		if(!isnull(src.flock))
-			src.flock.registerUnit(src)*/
 
 /mob/living/critter/exploder/proc/describe_state()
 	var/list/state = list()
@@ -120,12 +95,12 @@
 	return state
 
 
-/mob/living/critter/exploder/say(message, involuntary = 0)
+/mob/living/critter/exploder/say(message, involuntary = 0)	//Should probably remove this
 	if(isdead(src) && src.is_npc)
-		return // NO ONE CARES
+		return
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
-	..(message) // caw at the non-drones
+	..(message)
 
 	if (involuntary || message == "" || stat)
 		return
@@ -137,8 +112,31 @@
 
 	if(!src.is_npc)
 		message = gradientText("#3cb5a3", "#124e43", message)
-	//flock_speak(src, message, src.flock)
 
-/mob/living/critter/exploder/Life(datum/controller/process/mobs/parent)
+/mob/living/critter/exploder/Life(datum/controller/process/mobs/parent)	//most likely not needed, maybe
 	if (..(parent)) //??
 		return 1
+
+
+/mob/living/critter/exploder/strong
+	name = "huge plague-ridden goliath"
+	desc = "A rotting, walking mass of flesh."
+	health_brute = 80
+	health_burn = 80
+	health_brute_vuln = 1
+	health_burn_vuln = 1.3
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/abomination
+		HH.icon_state = "handl"				// the icon state of the hand UI background
+		HH.limb_name = "left bear arm"
+
+		HH = hands[2]
+		HH.icon = 'icons/mob/hud_human.dmi'
+		HH.limb = new /datum/limb/abomination
+		HH.name = "right hand"
+		HH.suffix = "-R"
+		HH.icon_state = "handr"				// the icon state of the hand UI background
+		HH.limb_name = "right bear arm"

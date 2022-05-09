@@ -901,6 +901,10 @@
 
 	cast(atom/target)
 		if (..())
+
+			return 1
+		if (istype(get_area(target), /area/station/chapel))
+			boutput(holder.owner, "The holy ground this creature is standing on repels the curse immediatly.")
 			return 1
 
 		if (ishuman(target))
@@ -920,7 +924,17 @@
 				if (3)
 					boutput(H, "<span class='alert'>You hear whisper in your head, pushing you towards your doom.</span>")
 				if (4)
-					boutput(H, "<span class='alert'>A cacophony of otherworldly voices resonates within your mind. You sense a feeling of impending doom!</span>")
+					boutput(H, "<span class='alert'>A cacophony of otherworldly voices resonates within your mind. You sense a feeling of impending doom! You should seek salvation in the chapel.</span>")
+
+		//Lets not spam every curse at once.
+		var/datum/targetable/ability = holder.getAbility(/datum/targetable/wraithAbility/curse/blood)
+		ability.doCooldown()
+		ability = holder.getAbility(/datum/targetable/wraithAbility/curse/blindness)
+		ability.doCooldown()
+		ability = holder.getAbility(/datum/targetable/wraithAbility/curse/enfeeble)
+		ability.doCooldown()
+		ability = holder.getAbility(/datum/targetable/wraithAbility/curse/rot)
+		ability.doCooldown()
 
 /datum/targetable/wraithAbility/curse/blood
 	name = "Curse of blood"
@@ -980,7 +994,7 @@
 	targeted = 1
 	pointCost = 20
 	cooldown = 40 SECONDS
-	//Todo add inability to eat
+
 	cast(atom/target)
 		if (..())
 			return 1
@@ -989,6 +1003,55 @@
 			usr.playsound_local(usr.loc, "sound/voice/wraith/wraithspook[rand(1, 2)].ogg", 80, 0)
 			var/mob/living/carbon/H = target
 			H.bioHolder.AddEffect("rot_curse")
+
+/datum/targetable/wraithAbility/curse/death
+	name = "Curse of death"
+	icon_state = "skeleton"
+	desc = "Reap a fully cursed being's soul"
+	targeted = 1
+	pointCost = 20
+	cooldown = 40 SECONDS
+
+	cast(atom/target)
+		if (..())
+			return 1
+
+		if (ishuman(target))
+			var/mob/living/carbon/human/H = target
+			var/mob/wraith/W = holder.owner
+			if (H?.bioHolder.HasEffect("rot_curse") && H?.bioHolder.HasEffect("weak_curse") && H?.bioHolder.HasEffect("blind_curse") && H?.bioHolder.HasEffect("blood_curse"))
+				boutput(holder.owner, "<span class='alert'>That soul is OURS</span>")
+				boutput(H, "The voices in your heads are reaching a crescendo")
+				sleep(4 SECOND)
+				H.make_jittery(50)
+				H.changeStatus("stunned", 2 SECONDS)
+				H.emote("scream")
+				boutput(holder.owner, "You feel netherworldly hands grasping you.")
+				sleep(3 SECOND)
+				random_brute_damage(H, 10)
+				playsound(H.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 70, 1)
+				H.visible_message("<span class='alert'>[H]'s flesh tears open before your very eyes!!</span>")
+				sleep(1 SECOND)
+				random_brute_damage(H, 10)
+				playsound(H.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 70, 1)
+				sleep(1 SECOND)
+				random_brute_damage(H, 20)
+				playsound(H.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 70, 1)
+				sleep(2 SECOND)
+				boutput(H, "<span class='alert'>IT'S COMING FOR YOU!</span>")
+				H.remove_stamina( rand(100, 120) )
+				H.changeStatus("stunned", 4 SECONDS)
+				sleep(3 SECOND)
+				H.gib()
+				boutput(holder.owner, "<span class='alert'>What delicious agony!</span>")
+				var/turf/T = get_turf(H)
+				T.fluid_react_single("miasma", 60, airborne = 1)
+				holder.points += 100
+				holder.regenRate += 2.0
+				W.absorbcount++
+			else
+				boutput(holder.owner, "That being's soul is not weakened enough. We need to curse it some more.")
+				return 1
 
 
 /datum/targetable/wraithAbility/summon_rot_hulk
@@ -1028,11 +1091,12 @@
 			for(var/obj/decal/cleanable/C in found_decal_list)
 				step_towards(C,T)
 			sleep(1.5 SECOND)
-			new /mob/living/critter/exploder(T)
-			if (decal_count > 30)	//Todo make the hulk stronger if big filth
-				boutput(holder.owner, __red("Big filth"))
+			if (decal_count > 30)
+				new /mob/living/critter/exploder/strong(T)
+				boutput(holder.owner, "The great amount of filth coalesces into a rotting goliath")
 			else
-				boutput(holder.owner, __red("Small filth"))
+				new /mob/living/critter/exploder(T)
+				boutput(holder.owner, "The filth accumulates into a living bloated abomination")
 			for(var/obj/decal/cleanable/C in found_decal_list)
 				qdel(C)
 		else
@@ -1198,8 +1262,12 @@
 						WG.verbs -= list(/mob/verb/setdnr)
 						has_mind = true
 					W.mind.transfer_to(H)
-
-					sleep(90 SECONDS)
+					APPLY_ATOM_PROPERTY(H, PROP_MOB_NO_SELF_HARM, H)	//Subject to change.
+					sleep(70 SECONDS)
+					boutput(H, "<span class='bold' style='color:red;font-size:150%'>Your control on this body is weakening, you will soon be kicked out of it.</span>")
+					sleep(20 SECONDS)
+					boutput(H, "<span class='bold' style='color:red;font-size:150%'>Your hold on this body has been broken! You return to the aether.</span>")
+					REMOVE_ATOM_PROPERTY(H, PROP_MOB_NO_SELF_HARM, H)
 					if(!H.loc) //H gibbed
 						var/mob/M2 = ckey_to_mob(wraith_key)
 						M2.mind.transfer_to(W)
@@ -1215,6 +1283,9 @@
 					W.possession_points = 0
 					logTheThing("debug", null, null, "step 5")
 					qdel(WG)
+					H.take_brain_damage(70)
+					H.setStatus("weakened", 5 SECOND)
+					boutput(H, "The presence has left your body and you are thrusted back into it, immediatly assaulted with a winging headacke.")
 			else
 				boutput(holder.owner, "You cannot possess with only [W.possession_points] possession power. You'll need at least [(W.points_to_possess - W.possession_points)]")
 
@@ -1325,7 +1396,7 @@
 		var/datum/mind/lucky_dude = pick(candidates)
 
 		//add poltergeist to master's list is done in /mob/wraith/potergeist/New
-		var/mob/living/critter/nascent/P = new /mob/living/critter/nascent(T)
+		var/mob/living/critter/nascent/P = new /mob/living/critter/nascent(T, W)
 		lucky_dude.special_role = ROLE_HARBINGERSUMMON
 		lucky_dude.dnr = 1
 		lucky_dude.transfer_to(P)
@@ -1405,12 +1476,13 @@
 			return
 		var/datum/mind/lucky_dude = pick(candidates)
 
-		//add poltergeist to master's list is done in /mob/wraith/potergeist/New
-		var/mob/living/critter/plaguerat/P = new /mob/living/critter/plaguerat(T, W, marker)
+		//add plague rat to master's list is done in /mob/living/critter/plaguerat/New
+		var/mob/living/critter/plaguerat/P = new /mob/living/critter/plaguerat(T, W)
 		lucky_dude.special_role = ROLE_PLAGUERAT
 		lucky_dude.dnr = 1
 		lucky_dude.transfer_to(P)
 		ticker.mode.Agimmicks |= lucky_dude
+		//Might need to re-add those.
 		//P.ckey = lucky_dude.ckey
 		//P.antagonist_overlay_refresh(1, 0)
 		message_admins("[lucky_dude.key] respawned as a plague rat for [src.holder.owner].")
@@ -1419,6 +1491,49 @@
 		boutput(P, "<span class='notice'><b>You have been respawned as a plague rat!</b></span>")
 		boutput(P, "[W] is your master! Spread mischeif and do their bidding!")
 		boutput(P, "Don't venture too far from your portal or your master!")
+
+/datum/targetable/wraithAbility/speak
+	name = "Spirit message"
+	desc = "Telepathically speak to your minions."
+	icon_state = "thrallspeak"
+	targeted = 0
+	target_nodamage_check = 1
+	max_range = 1
+	cooldown = 0
+	pointCost = 0
+	proc/ghostify_message(var/message)
+		return message
+
+
+	cast(mob/target)
+		if (!holder)
+			return 1
+
+		var/mob/wraith/W = holder.owner
+
+		if (!W)
+			return 1
+
+		var/message = html_encode(input("What would you like to whisper to your minions?", "Whisper", "") as text)
+
+		if (W.summons.len == 0)
+			boutput(W, "You have no minions to talk to.")
+			return 1
+		for(var/mob/living/critter/C in W.summons)
+			logTheThing("say", W, C, "WRAITH WHISPER TO [constructTarget(C,"say")]: [message]")
+			message = ghostify_message(trim(copytext(sanitize(message), 1, 255)))
+			if (!message)
+				return 1
+			boutput(C, "<b>A netherworldly voice whispers into your ears... </b> [message]")
+			C.playsound_local(C.loc, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65, 0)
+
+		W.playsound_local(W.loc, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65, 0)
+		boutput(usr, "<b>You whisper to your summons:</b> [message]")
+		return 0
+
+
+
+
 
 /obj/spookMarker
 	name = "Spooky Marker"

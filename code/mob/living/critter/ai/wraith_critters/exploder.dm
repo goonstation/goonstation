@@ -32,7 +32,6 @@
 	. = list()
 	for(var/mob/living/carbon/human/T in view(max_dist, holder.owner))
 		if(isliving(T) && !is_incapacitated(T))
-			holder.owner.visible_message("[src] acquired!")
 			. += T
 	. = get_path_to(holder.owner, ., max_dist*2, 1)
 
@@ -42,16 +41,12 @@
 /datum/aiTask/succeedable/rushdown/failed()
 	var/mob/living/carbon/human/human_target = holder.target
 	if(!human_target || BOUNDS_DIST(holder.owner, human_target) > 0 || fails >= max_fails)
-		holder.owner.visible_message("failure")
 		. = TRUE
 
 /datum/aiTask/succeedable/rushdown/succeeded()
-	holder.owner.visible_message("check success!")
 	var/mob/living/carbon/human/human_target = holder.target
 	var/mob/living/critter/exploder/F = holder.owner
-	//var/mob/living/critter/exploder/F = holder.owner
 	if(BOUNDS_DIST(holder.owner, human_target) < 1)
-		holder.owner.visible_message("success")
 		holder.owner.visible_message(holder.owner.health)
 		if (F.health > 60)
 			F.set_a_intent(INTENT_HARM)
@@ -59,27 +54,7 @@
 			F.hand_attack(human_target)
 		else
 			F.emote("scream")
-			holder.owner.visible_message("Preparing suicide")
 			sleep(2 SECONDS)
-			return F.gib() // fix runtime Cannot read null.contents
+			return F.gib()
 	else
-		holder.owner.visible_message("no success")
 		return FALSE
-
-/*
-/datum/aiTask/succeedable/rushdown/on_tick()
-	holder.owner.visible_message("ticking!")
-	var/mob/living/carbon/human/human_target = holder.target
-	var/mob/living/critter/exploder/F = holder.owner
-	if (human_target && BOUNDS_DIST(holder.owner, human_target) == 0 && !succeeded())
-		if (F.health < 40)
-			F.set_a_intent(INTENT_HARM)
-			F.set_dir(get_dir(holder.owner, holder.target))
-			F.hand_attack(human_target)
-		else
-			holder.owner.visible_message("engagin suicide!")
-			usr = F // don't ask, please, don't
-			F.set_dir(get_dir(F, human_target))
-			var/mob/living/critter/exploder/E = holder.owner
-			E.explode_suicide()*/
-	//fails++

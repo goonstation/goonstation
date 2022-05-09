@@ -11,7 +11,15 @@
 	cast()
 		if (..())
 			return 1
-		holder.owner.make_critter(/mob/living/critter/skeleton_commander)
+		var/mob/wraith/W = null
+		if(istype(holder.owner, /mob/living/critter/nascent))
+			var/mob/living/critter/nascent/N = holder.owner
+			if(N.master != null)
+				W = N.master
+		var/mob/living/critter/skeleton_commander/S = new /mob/living/critter/skeleton_commander(get_turf(holder.owner), W)
+		var/mob/living/critter/nascent/N = holder.owner
+		holder.owner.mind.transfer_to(S)
+		qdel(N)
 
 /datum/targetable/critter/nascent/become_voidhound
 	name = "Become voidhound"
@@ -23,7 +31,15 @@
 	cast()
 		if (..())
 			return 1
-		holder.owner.make_critter(/mob/living/critter/voidhound)
+		var/mob/wraith/W = null
+		if(istype(holder.owner, /mob/living/critter/nascent))
+			var/mob/living/critter/nascent/N = holder.owner
+			if(N.master != null)
+				W = N.master
+		var/mob/living/critter/voidhound/S = new /mob/living/critter/voidhound(get_turf(holder.owner), W)
+		var/mob/living/critter/nascent/N = holder.owner
+		holder.owner.mind.transfer_to(S)
+		qdel(N)
 
 /datum/targetable/critter/nascent/become_spiker
 	name = "Become ranged"
@@ -35,5 +51,13 @@
 	cast()
 		if (..())
 			return 1
-		holder.owner.make_critter(/mob/living/critter/spiker)
+		var/mob/wraith/W = null
+		if(istype(holder.owner, /mob/living/critter/nascent))
+			var/mob/living/critter/nascent/N = holder.owner
+			if(N.master != null)
+				W = N.master
+		var/mob/living/critter/spiker/S = new /mob/living/critter/spiker(get_turf(holder.owner), W)
+		var/mob/living/critter/nascent/N = holder.owner
+		holder.owner.mind.transfer_to(S)
+		qdel(N)
 

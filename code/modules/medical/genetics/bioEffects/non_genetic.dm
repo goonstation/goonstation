@@ -271,8 +271,9 @@
 			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "outline", layer = MOB_LIMB_LAYER)
 			overlay_image.color = "#007BFF"
 		..()
-
+////////////////////
 //Wraith curses
+////////////////////
 /datum/bioEffect/blood_curse
 	name = "Blood curse"
 	desc = "Curse of blood."
@@ -286,11 +287,20 @@
 			owner.traitHolder?.addTrait("hemophilia")
 
 	OnLife()
-		if (prob(50))
-			owner.visible_message("<span class='alert'>[owner] vomits blood!</span>")
+		if (istype(get_area(owner), /area/station/chapel))
+			if (prob(25))
+				boutput(owner, "You feel purified. Your heart rhythm stabilizes.")
+				owner.bioHolder.RemoveEffect("blood_curse")
+		if (prob(5))
+			owner.emote("cough")
+			var/turf/T = get_turf(owner)
+			new /obj/decal/cleanable/blood/drip(T)
+		if (prob(3))
+			owner.visible_message("<span class='alert'>[owner] vomits a lot of blood!</span>")
 			playsound(owner.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 			//random_brute_damage(owner, rand(5,8))
 			bleed(owner, rand(5,8), 5)
+
 
 	OnRemove()
 		if (ishuman(owner))
@@ -299,17 +309,28 @@
 
 /datum/bioEffect/blindness_curse
 	name = "Blind curse"
-	desc = "Curse of blind."
+	desc = "Curse of blindness."
 	id = "blind_curse"
 	effectType = EFFECT_TYPE_DISABILITY
 	can_copy = 0
 	isBad = 1
 
 	OnLife()
-		if (prob(20))
+		if (istype(get_area(owner), /area/station/chapel))
+			if (prob(25))
+				boutput(owner, "You feel purified. Your vision stabilizes.")
+				owner.bioHolder.RemoveEffect("blind_curse")
+		if (prob(8))
 			if (ishuman(owner))
 				owner.eye_damage += 10
-				owner.visible_message("<span class='alert'>[owner]'s eyes cloud!</span>")
+				if (owner.eye_damage > 90)
+					boutput(owner, "A shadowy veil falls over your vision.")
+				else if (owner.eye_damage > 50)
+					boutput(owner, "You can't seem to be able to see things clearly anymore.")
+				else
+					owner.emote("blink")
+					boutput(owner, "You blink and notice that your vision is blurier than before.")
+
 
 /datum/bioEffect/weak_curse
 	name = "Weakness curse"
@@ -321,12 +342,22 @@
 
 	OnAdd()
 		if (ishuman(owner))
-			owner.setStatus("weakcurse", 1 SECONDS)
+			owner.setStatus("weakcurse")
 
 	OnLife()
-		if (prob(50))
-			owner.visible_message("<span class='alert'>[owner] is weakened!!</span>")
-			owner.changeStatus("slowed", 2 SECONDS)
+		if (istype(get_area(owner), /area/station/chapel))
+			if (prob(25))
+				boutput(owner, "You feel purified. Your weakness fades.")
+				owner.bioHolder.RemoveEffect("weak_curse")
+		if (prob(5))
+			boutput(owner, "You suddenly feel very [pick("winded", "tired")].")
+			owner.changeStatus("slowed")
+		if (prob(3))
+			boutput(owner, pick("Your muscles tense up.", "You feel light-headed.", "Your legs almost give in."))
+			owner.emote("pale")
+		if (prob(1))
+			boutput(owner, pick("Your conscience slips."))
+			owner.emote("faint")
 
 	OnRemove()
 		if (ishuman(owner))
@@ -346,13 +377,15 @@
 			owner.bioHolder.AddEffect("stinky")
 
 	OnLife()
-		if (prob(50))
-			owner.visible_message("<span class='alert'>[owner] vomits a bunch!!</span>")
+		if (istype(get_area(owner), /area/station/chapel))
+			if (prob(25))
+				boutput(owner, "You feel purified. your stomach settles down.")
+				owner.bioHolder.RemoveEffect("rot_curse")
+		if (prob(5))
+			owner.visible_message("<span class='alert'>[owner] suddenly vomits on the floor!</span>")
 			owner.vomit(rand(3,5))
-		if (prob(25))
-			owner.emote("cough")
-		if (prob(10))
-			owner.emote("sneeze")
+		if (prob(3))
+			owner.emote(pick("cough", "sneeze"))
 
 
 	OnRemove()

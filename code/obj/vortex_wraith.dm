@@ -5,32 +5,47 @@
 	desc = "I wonder what this is."
 	anchored = 1
 	density = 0
-	_health = 20
+	_health = 30
 	var/list/mob_list = list()
-
+	var/amount_to_spawn = 5
+	var/elite_amount_to_spawn = 2
 	New()
 		..()
-
+		//Todo add fade in and out. Make creatures despawn with an animation
 		src.visible_message("<span class='alert'>A [src] appears into view, some shadows coalesce within!</b></span>")
-		SPAWN(5 SECOND)
+		SPAWN(7 SECOND)
+			src._health += 40
 			var/amount_to_spawn = rand(4,7)
 			var/mob_type = null
 			var/amount_spawned = 0
+			var/elite_spawned = 0
+			var/chance_increase = 0
 			while (amount_spawned < amount_to_spawn)
-				if(prob(10)) //Chance for strong critter
-					mob_type = /obj/critter/gunbot/heavy
+				if ((elite_spawned < elite_amount_to_spawn) && prob(10 + chance_increase)) //Chance for strong critter
+					mob_type = pick(/obj/critter/gunbot/heavy,
+					/obj/critter/bear,
+					/obj/critter/brullbar,
+					/obj/critter/gunbot/drone)
+					elite_spawned++
+					chance_increase == 0
 				else
 					mob_type = pick(/obj/critter/shade,
 					/obj/critter/crunched,
 					/obj/critter/ancient_thing,
-					/obj/critter/ancient_repairbot/grumpy,
-					/obj/critter/gunbot/drone/buzzdrone)
+					/obj/critter/ancient_repairbot/security,
+					/obj/critter/gunbot/drone/buzzdrone,
+					/obj/critter/mechmonstrositycrawler,
+					/obj/critter/bat/buff,
+					/obj/critter/lion,
+					/obj/critter/wraithskeleton,
+					/obj/critter/spider/aggressive)
+					chance_increase += 30
 				var/obj/minion = new mob_type(src.loc)
 				mob_list += minion
 				src.visible_message("<span class='alert'><b>[minion] emerges from the [src]!</b></span>")
-				sleep(7 SECOND)
+				sleep(8 SECOND)
 				amount_spawned++
-			sleep(60 SECOND)
+			sleep(180 SECOND)
 			for (var/obj/C in mob_list)
 				qdel(C)
 		qdel(src)

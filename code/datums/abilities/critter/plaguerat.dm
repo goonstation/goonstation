@@ -29,34 +29,34 @@
 			return 1
 
 		for (var/D in decal_list)
-			if (!istype(target, D))
-				boutput(holder.owner, __red("You can't eat that, it doesnt satisfy your appetite."))
-				return 1
-		var/obj/decal/cleanable/T = target
-		var/mob/living/critter/plaguerat/P = holder.owner
-		holder.owner.visible_message("<span class='combat'><b>[holder.owner] begins eating [T]!</b></span>",\
-		"<span class='combat'><b>You start eating [T]!</b></span>")
+			if (istype(target, D))
+				var/obj/decal/cleanable/T = target
+				var/mob/living/critter/plaguerat/P = holder.owner
+				holder.owner.visible_message("<span class='combat'><b>[holder.owner] begins eating [T]!</b></span>",\
+				"<span class='combat'><b>You start eating [T]!</b></span>")
 
-		var/eat_duration = rand(6, 12)
-		holder.owner.set_loc(T.loc)
-		holder.owner.canmove = 0
-		while (eat_duration > 0 && T && !T.disposed)
-			if (T.loc && holder.owner.loc != T.loc)
-				break
-			if (holder.owner.getStatusDuration("stunned") || holder.owner.getStatusDuration("weakened") || holder.owner.getStatusDuration("paralysis"))
-				break
-			sleep(0.8 SECONDS)
-			playsound(holder.owner.loc,"sound/items/eatfood.ogg", rand(10, 50), 1)
-			eat_twitch(holder.owner)
-			eat_duration--
-		if (T && holder.owner.loc == T.loc)
-			P.eaten_amount ++
-			holder.owner.visible_message("<span class='combat'><b>[holder.owner] eats [T]!</b></span>",\
-			"<span class='combat'><b>You finish eating [T]!</b></span>")
-			qdel(T)
-		if (P.eaten_amount >= P.amount_to_grow)
-			P.grow_up()
-		return 0
+				var/eat_duration = rand(6, 12)
+				holder.owner.set_loc(T.loc)
+				holder.owner.canmove = 0
+				while (eat_duration > 0 && T && !T.disposed)
+					if (T.loc && holder.owner.loc != T.loc)
+						break
+					if (holder.owner.getStatusDuration("stunned") || holder.owner.getStatusDuration("weakened") || holder.owner.getStatusDuration("paralysis"))
+						break
+					sleep(0.8 SECONDS)
+					playsound(holder.owner.loc,"sound/items/eatfood.ogg", rand(10, 50), 1)
+					eat_twitch(holder.owner)
+					eat_duration--
+				if (T && holder.owner.loc == T.loc)
+					P.eaten_amount ++
+					holder.owner.visible_message("<span class='combat'><b>[holder.owner] eats [T]!</b></span>",\
+					"<span class='combat'><b>You finish eating [T]!</b></span>")
+					qdel(T)
+				if (P.eaten_amount >= P.amount_to_grow)
+					P.grow_up()
+				return 0
+		boutput(holder.owner, __red("You can't eat that, it doesnt satisfy your appetite."))
+		return 1
 
 /datum/targetable/critter/plague_rat/rat_bite
 	name = "Bite"

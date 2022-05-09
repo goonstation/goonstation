@@ -1,6 +1,9 @@
+///////////////////////
+// Voidhound Abilities
+///////////////////////
 /datum/targetable/critter/voidhound/cloak
-	name = "cloak"
-	desc = "cloak"
+	name = "Cloak"
+	desc = "Slip into the void and make yourself hard to discern for a short time"
 	icon_state = "clown_spider_bite"
 	cooldown = 10 SECOND
 	targeted = 0
@@ -10,17 +13,14 @@
 			return 1
 
 		animate(holder.owner, alpha=50, time=3 SECONDS)
-		boutput(holder.owner, "going invis")
-		sleep(5 SECOND)
+		boutput(holder.owner, "We slip into the shadows")
+		sleep(12 SECOND)
 		animate(holder.owner, alpha=255, time=3 SECONDS)
-		boutput(holder.owner, "going visible")
-		//Get list of stuff you can buff
-		//Look for them
-		//Buff them
+		boutput(holder.owner, "We reappear")
 
 /datum/targetable/critter/voidhount/rushdown
-	name = "rushdown"
-	desc = "rushdown"
+	name = "Rush down"
+	desc = "Leap forward and knock down those in your way"
 	icon_state = "clown_spider_bite"
 	cooldown = 10 SECOND
 	targeted = 0
@@ -54,7 +54,8 @@
 				//get the mobs on the next step in the pounce, throw em to the side if they are standing.
 				var/turf/next_step = get_step(M, M.dir)
 				for (var/mob/A in next_step)
-					A.setStatus("weakened", 3 SECONDS)
+					playsound(M.loc, "sound/impact_sounds/Generic_Hit_3.ogg", 50, 1)
+					A.setStatus("weakened", 2.5 SECONDS)
 				step(M, M.dir)
 				if(i < jump_tiles / 2)
 					M.pixel_y += pixel_move
