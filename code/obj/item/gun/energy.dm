@@ -1260,7 +1260,7 @@
 		// projectiles = list(current_projectile,new/datum/projectile/bullet/revolver_38/lb,new/datum/projectile/bullet/smoke,new/datum/projectile/bullet/tranq_dart/law_giver,new/datum/projectile/bullet/flare,new/datum/projectile/bullet/aex/lawbringer,new/datum/projectile/bullet/clownshot)
 
 		src.indicator_display = image('icons/obj/items/gun.dmi', "")
-		asign_name(M)
+		assign_name(M)
 
 		..()
 
@@ -1271,7 +1271,7 @@
 	attack_hand(mob/user as mob)
 		if (!owner_prints)
 			boutput(user, "<span class='alert'>[src] has accepted your fingerprint ID. You are its owner!</span>")
-			asign_name(user)
+			assign_name(user)
 		..()
 
 
@@ -1281,11 +1281,11 @@
 		src.add_fingerprint(user)
 		if (!owner_prints)
 			boutput(user, "<span class='alert'>[src] has accepted your fingerprint ID. You are its owner!</span>")
-			asign_name(user)
+			assign_name(user)
 		else
 			boutput(user, "<span class='notice'>There don't seem to be any buttons on [src] to press.</span>")
 
-	proc/asign_name(var/mob/M)
+	proc/assign_name(var/mob/M)
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if (H.bioHolder)

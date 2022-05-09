@@ -238,21 +238,26 @@
 	pixelaction(atom/target, params, mob/user, reach)
 		if(!IN_RANGE(user, target, WIDE_TILE_WIDTH / 2))
 			return
-		if (istype(get_area(target), /area/station/chapel) || istype(get_area(user), /area/station/chapel))
+		if (!user.wizard_castcheck())
+			return
+		var/area/A = get_area(target)
+		if (istype(A, /area/station/chapel))
 			boutput(user, "<span class='alert'>You cannot summon lightning on holy ground!</span>") //phrasing works if either target or mob are in chapel heh
+			return
+		if (A?.sanctuary || istype(A, /area/wizard_station))
+			boutput(user, "<span class='alert'>You cannot summon lightning in this place!</span>")
 			return
 		if (thunder_charges <= 0)
 			boutput(user, "<span class='alert'>[name] is out of charges! Magically recall it to restore it's power.</span>")
 			return
-		if (iswizard(user))
-			thunder_charges -= 1
-			var/turf/T = get_turf(target)
-			var/obj/lightning_target/lightning = new/obj/lightning_target(T)
-			playsound(T, 'sound/effects/electric_shock_short.ogg', 70, 1)
-			lightning.caster = user
-			UpdateIcon()
-			flick("[icon_state]_fire", src)
-			..()
+		thunder_charges -= 1
+		var/turf/T = get_turf(target)
+		var/obj/lightning_target/lightning = new/obj/lightning_target(T)
+		playsound(T, 'sound/effects/electric_shock_short.ogg', 70, 1)
+		lightning.caster = user
+		UpdateIcon()
+		flick("[icon_state]_fire", src)
+		..()
 
 	attack_hand(var/mob/user as mob)
 		if (user.mind)

@@ -93,7 +93,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/research_outpost/indigo_rye)
 "aan" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/research_outpost/indigo_rye)
 "aao" = (
 /turf/space,
@@ -25193,7 +25193,7 @@
 /turf/space/asteroid,
 /area/space)
 "bbz" = (
-/turf/simulated/wall/asteroid/lighted,
+/turf/simulated/wall/auto/asteroid/lighted,
 /area/space)
 "bbA" = (
 /obj/cable{

@@ -3,7 +3,7 @@
 /turf/space,
 /area/space)
 "aab" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "aac" = (
 /obj/grille/catwalk{
@@ -5166,6 +5166,9 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "alS" = (
+/obj/machinery/status_display{
+	pixel_x = -32
+	},
 /turf/simulated/floor/caution/corner/sw,
 /area/station/turret_protected/ai_upload_foyer)
 "alT" = (
@@ -6994,6 +6997,9 @@
 /area/station/chapel/sanctuary)
 "aqt" = (
 /obj/disposalpipe/segment/mail/bent/south,
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fpurple2"
@@ -13779,6 +13785,9 @@
 "aFK" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/light_switch/north,
+/obj/machinery/status_display{
+	pixel_x = 32
+	},
 /turf/simulated/floor/green/side{
 	dir = 5
 	},
@@ -16205,6 +16214,9 @@
 /area/station/crew_quarters/cafeteria)
 "aMa" = (
 /obj/machinery/light/emergency,
+/obj/machinery/status_display{
+	pixel_y = -30
+	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "aMb" = (
@@ -22536,6 +22548,9 @@
 	dir = 8
 	},
 /obj/machinery/light,
+/obj/machinery/status_display{
+	pixel_y = -30
+	},
 /turf/simulated/floor/neutral/side,
 /area/station/hallway/secondary/entry)
 "baG" = (
@@ -30988,6 +31003,9 @@
 /area/station/security/main)
 "bum" = (
 /obj/disposalpipe/segment/ejection,
+/obj/machinery/status_display{
+	pixel_x = -32
+	},
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
@@ -40397,6 +40415,9 @@
 /obj/cable,
 /obj/item/paper/engine,
 /obj/cable,
+/obj/machinery/status_display{
+	pixel_y = -30
+	},
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
@@ -41856,6 +41877,9 @@
 	},
 /area/station/bridge)
 "bOC" = (
+/obj/machinery/status_display{
+	pixel_y = -30
+	},
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fblue6"
@@ -47048,6 +47072,9 @@
 	desc = "It's all ripped and grimy. Gross.";
 	dir = 4;
 	name = "grody blue chair"
+	},
+/obj/machinery/status_display{
+	pixel_x = -32
 	},
 /turf/simulated/floor/grime,
 /area/station/security/brig)
@@ -56569,10 +56596,10 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/cable,
 /obj/machinery/power/apc{
+	areastring = "Robot Depot";
 	dir = 8;
 	name = "W APC";
-	pixel_x = -24;
-	areastring = "Robot Depot"
+	pixel_x = -24
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
@@ -60429,6 +60456,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/status_display{
+	pixel_y = -30
+	},
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/lobby)
 "cFu" = (
@@ -61131,6 +61161,9 @@
 "cHh" = (
 /obj/machinery/computer/ordercomp{
 	dir = 4
+	},
+/obj/machinery/status_display{
+	pixel_x = -32
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/crew_quarters/market)
@@ -71389,6 +71422,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/status_display{
+	pixel_y = -30
+	},
 /turf/simulated/floor/airless/plating/damaged3,
 /area/station/mining/magnet)
 "ddy" = (
@@ -74451,6 +74487,9 @@
 	dir = 4;
 	name = "camera - test chamber"
 	},
+/obj/machinery/status_display{
+	pixel_x = -32
+	},
 /turf/simulated/floor/engine{
 	dir = 4;
 	icon_state = "engine_caution_misc"
@@ -75277,13 +75316,13 @@
 	},
 /area/station/solar/small_backup1)
 "dmC" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1
 	},
 /area/space)
 "dmD" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1
 	},
 /area/space)
@@ -75296,12 +75335,12 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/space)
 "dmF" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5
 	},
 /area/space)
 "dmG" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10
 	},
 /area/space)
@@ -75335,7 +75374,7 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/power)
 "dmL" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4
 	},
 /area/space)
@@ -75491,7 +75530,7 @@
 /area/station/solar/small_backup1)
 "dmU" = (
 /turf/simulated/floor/plating/airless/asteroid,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10
 	},
 /area/space)
@@ -75581,7 +75620,7 @@
 	},
 /area/listeningpost/solars)
 "dne" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8
 	},
 /area/space)
@@ -75658,7 +75697,7 @@
 /area/listeningpost/power)
 "dnl" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5
 	},
 /area/space)
@@ -75697,7 +75736,7 @@
 /area/space)
 "dnp" = (
 /turf/simulated/floor/plating/airless/asteroid,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9
 	},
 /area/space)
@@ -75734,12 +75773,12 @@
 /area/listeningpost/power)
 "dnu" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8
 	},
 /area/space)
 "dnv" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6
 	},
 /area/space)
@@ -75778,19 +75817,19 @@
 /area/listeningpost)
 "dnB" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4
 	},
 /area/space)
 "dnC" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10
 	},
 /area/space)
 "dnD" = (
 /turf/simulated/floor/plating/airless/asteroid,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5
 	},
 /area/space)
@@ -75850,7 +75889,7 @@
 /area/listeningpost)
 "dnK" = (
 /turf/simulated/floor/plating/airless/asteroid,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1
 	},
 /area/space)
@@ -76241,13 +76280,13 @@
 /area/syndicate_teleporter)
 "doI" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6
 	},
 /area/space)
 "doJ" = (
 /turf/space,
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "doK" = (
 /obj/item/space_thing,
@@ -76657,6 +76696,19 @@
 "dzW" = (
 /turf/space,
 /area/shuttle/research/station)
+"dAU" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/info{
+	name = "Net Cafe"
+	})
 "dCP" = (
 /obj/machinery/lawrack,
 /obj/machinery/power/data_terminal,
@@ -77804,7 +77856,7 @@
 /area/shuttle/research/outpost)
 "jNp" = (
 /obj/item/paper/book/from_file/monster_manual_revised,
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "jNE" = (
 /obj/machinery/door/airlock/pyro/external{
@@ -78498,6 +78550,9 @@
 "ndb" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/light/emergency/exitsign,
+/obj/machinery/status_display{
+	pixel_y = -30
+	},
 /turf/simulated/floor/arrival,
 /area/station/hallway/secondary/exit)
 "nfB" = (
@@ -78764,6 +78819,10 @@
 	},
 /turf/simulated/floor/delivery,
 /area/station/hallway/primary/east)
+"oCV" = (
+/obj/machinery/status_display,
+/turf/simulated/wall/auto/supernorn,
+/area/station/science/chemistry)
 "oGS" = (
 /obj/window_blinds/cog2{
 	dir = 4
@@ -78997,6 +79056,10 @@
 "qfX" = (
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"qiA" = (
+/obj/machinery/status_display,
+/turf/simulated/wall/auto/supernorn,
+/area/station/medical/medbay)
 "qja" = (
 /obj/machinery/light{
 	dir = 1;
@@ -80090,6 +80153,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
+"vBx" = (
+/obj/machinery/status_display{
+	pixel_x = -32
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/quartersA)
 "vDV" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/cable{
@@ -108220,7 +108289,7 @@ cBU
 cDm
 cFc
 cGs
-cHW
+oCV
 cIW
 cKH
 cMg
@@ -112154,7 +112223,7 @@ cNK
 cPg
 cQC
 cSp
-cHZ
+qiA
 cVl
 cPg
 cXH
@@ -137122,7 +137191,7 @@ aaa
 aaa
 aaa
 avU
-axc
+dAU
 ayX
 aAo
 aBR
@@ -137742,7 +137811,7 @@ aQG
 yiG
 aNX
 aNX
-aNX
+vBx
 aUs
 aNX
 aXc
