@@ -98,7 +98,7 @@
 		src.possessed_thing.MouseDrop(over_object, src_location, over_location, over_control, params)
 
 	MouseDrop_T(atom/dropped, mob/user)
-		return src.possessed_thing._MouseDrop_T(dropped, user)
+		return dropped.MouseDrop(src.possessed_thing)
 
 	disposing()
 		REMOVE_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "living_object")
