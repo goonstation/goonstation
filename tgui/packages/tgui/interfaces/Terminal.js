@@ -46,20 +46,22 @@ export const Terminal = (props, context) => {
             placeholder="Type Here"
             selfClear
             value={textInput}
-            width="70%"
+            width="80%"
             mt="1%"
-            mx="3%"
+            ml="1%"
             onChange={(e, value) => act('text', { value: value })}
           />
-          <Button ml="5%" icon="power-off"
+          <Button ml="11%" icon="power-off"
             color={data.TermActive ? "green" : "red"}
             onClick={() => act('restart')} />
         </Section>
-        <Section fitted minHeight="20%" maxHeight="100%">
+        <Section fitted fill height="20%">
           {peripherals.map(peripheral => {
             return (
               <Button
-                ml="5%"
+                ml="1%"
+                mt="8%"
+                mb="5%"
                 key={peripheral.card}
                 icon={peripheral.icon}
                 content={peripheral.label}
