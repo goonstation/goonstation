@@ -108,6 +108,7 @@ ABSTRACT_TYPE(/mob/living/critter/robotic/bot)
 			src.reagents.add_reagent("cleaner", 10)
 			src.abilityHolder.addAbility(/datum/targetable/critter/bot/mop_floor)
 			src.abilityHolder.addAbility(/datum/targetable/critter/bot/reagent_scan_self)
+			src.abilityHolder.addAbility(/datum/targetable/critter/bot/dump_reagents)
 
 		emag_act(mob/user, obj/item/card/emag/E)
 			. = ..()
@@ -171,8 +172,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	name = "Reagent Scan Self"
 	desc = "Scan yourself for reagents."
 	targeted = FALSE
-	cooldown = 10 SECONDS
-	icon = 'icons/mob/critter_ui.dmi'
+	cooldown = 5 SECONDS
 	icon_state = "clean_scan"
 	var/reagent_id = null
 
@@ -180,6 +180,21 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 		if(!holder?.owner?.reagents)
 			return TRUE
 		boutput(holder.owner, "[scan_reagents(holder.owner, visible = 1)]")
+
+/datum/targetable/critter/bot/dump_reagents
+	name = "Dump Reagents"
+	desc = "Dump all your reagents on the floor."
+	targeted = FALSE
+	cooldown = 10 SECONDS
+	icon_state = "clean_dump"
+
+	cast()
+		if (!holder?.owner?.reagents)
+			return TRUE
+		holder.owner.setStatus("resting", INFINITE_STATUS) // flop over to spill the reagents
+		holder.owner.force_laydown_standup()
+		holder.owner.reagents.reaction(get_turf(holder.owner), TOUCH)
+		holder.owner.reagents.clear_reagents()
 
 /datum/action/bar/icon/mob_cleanbot_clean
 	duration = 1 SECOND
