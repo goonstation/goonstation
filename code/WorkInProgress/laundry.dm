@@ -179,7 +179,7 @@
 		return ..()
 
 /obj/submachine/laundry_machine/attack_hand(mob/user)
-	if (!user || user.restrained() || user.lying || user.stat)
+	if (!can_act(user))
 		return
 	src.add_fingerprint(usr)
 	ui_interact(user)
@@ -263,7 +263,7 @@
 				if (src.on)
 					src.cycle = PRE
 					src.open = 0
-					if (!processing_items.Find(src))
+					if (!(src in processing_items))
 						processing_items.Add(src)
 	src.UpdateIcon()
 
