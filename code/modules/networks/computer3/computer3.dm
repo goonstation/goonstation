@@ -8,7 +8,7 @@
 	density = 1
 	anchored = 1.0
 	var/base_icon_state = "computer_generic"
-	var/temp = "Thinktronic BIOS V2.1\n"
+	var/temp = "<b>Thinktronic BIOS V2.1</b><br>"
 	var/temp_add = null
 	var/obj/item/disk/data/fixed_disk/hd = null
 	var/datum/computer/file/terminal_program/active_program
@@ -363,7 +363,7 @@
 
 /obj/machinery/computer3/ui_data(mob/user)
  . = list(
-	"temp" = src.temp, // display data
+	"displayHTML" = src.temp, // display data
 	"TermActive" = src.active_program, // is the terminal running or restarting
 	"fdisk" = src.diskette, // for showing if the internal diskette slot is filled
 	"windowName" = src.name,
@@ -475,7 +475,7 @@
 /obj/machinery/computer3/updateUsrDialog()
 	..()
 	if (src.temp_add)
-		src.temp += strip_html_tags(src.temp_add) // we arent using html anymore
+		src.temp += src.temp_add
 		src.temp_add = null
 
 /obj/machinery/computer3/process()
@@ -738,7 +738,7 @@
 		src.host_program = null
 		src.processing_programs = new
 		src.temp = ""
-		src.temp_add = "Restarting system...\n"
+		src.temp_add = "Restarting system...<br>"
 		src.updateUsrDialog()
 		playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
 		SPAWN(2 SECONDS)

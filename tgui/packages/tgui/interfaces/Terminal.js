@@ -11,7 +11,7 @@ export const Terminal = (props, context) => {
   const {
     fdisk,
     idcard,
-    temp,
+    displayHTML,
     TermActive,
     windowName,
     user,
@@ -31,7 +31,13 @@ export const Terminal = (props, context) => {
       <Window.Content>
         <Section backgroundColor="#0f0f0f" scrollable fill height="70%" >
           <Box color={fontColor} backgroundColor={bgColor} minHeight="99%" maxHeight="500em">
-            <Box mx="1%" fontFamily="Consolas" preserveWhitespace fill color={fontColor} backgroundColor={bgColor}>{temp}</Box>
+            <Box mx="1%"
+              fontFamily="Consolas"
+              fill
+              color={fontColor}
+              backgroundColor={bgColor}
+              dangerouslySetInnerHTML={{ __html: displayHTML }}
+            />
           </Box>
         </Section>
         <Section mt="1%" fitted>
