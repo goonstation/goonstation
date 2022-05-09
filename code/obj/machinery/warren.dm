@@ -26,7 +26,7 @@
 			qdel(src)
 
 	process()
-		if (src.next_spawn_check != null)//Check about mad mice assaulting the plague rat
+		if (src.next_spawn_check != null)//Todo Check about mad mice assaulting the plague rat
 			if (src.next_spawn_check < world.time)
 				next_spawn_check = world.time + rand(10 SECONDS, 15 SECONDS)
 				if (linked_critters < max_critters)

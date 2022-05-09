@@ -1,3 +1,6 @@
+////////////////////////////
+//	Plague rat abilities
+////////////////////////////
 /datum/targetable/critter/plague_rat/eat_filth
 	name = "Eat filth"
 	desc = "Eat some filth"
@@ -5,23 +8,36 @@
 	cooldown = 5
 	targeted = 1
 	target_anything = 1
+	var/list/decal_list = list(/obj/decal/cleanable/blood,
+	/obj/decal/cleanable/ketchup,
+	/obj/decal/cleanable/rust,
+	/obj/decal/cleanable/urine,
+	/obj/decal/cleanable/vomit,
+	/obj/decal/cleanable/greenpuke,
+	/obj/decal/cleanable/slime,
+	/obj/decal/cleanable/fungus)
+
 
 	cast(atom/target)
 		if (..())
 			return 1
-		//Todo, check turf for list of decals
 		if (!istype(target, /obj/decal/cleanable))
 			boutput(holder.owner, __red("there is nothing to eat here."))
 			return 1
 		if (BOUNDS_DIST(holder.owner, target) > 0)
 			boutput(holder.owner, __red("That is too far away to eat."))
 			return 1
+
+		for (var/D in decal_list)
+			if (!istype(target, D))
+				boutput(holder.owner, __red("You can't eat that, it doesnt satisfy your appetite."))
+				return 1
 		var/obj/decal/cleanable/T = target
 		var/mob/living/critter/plaguerat/P = holder.owner
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner] begins eating [T]!</b></span>",\
 		"<span class='combat'><b>You start eating [T]!</b></span>")
 
-		var/eat_duration = rand(8, 15)
+		var/eat_duration = rand(6, 12)
 		holder.owner.set_loc(T.loc)
 		holder.owner.canmove = 0
 		while (eat_duration > 0 && T && !T.disposed)
@@ -44,7 +60,7 @@
 
 /datum/targetable/critter/plague_rat/rat_bite
 	name = "Bite"
-	desc = "Bite a mob, doing a little damage and roll a low chance to infect them with the plague"
+	desc = "Bite a mob, doing a little damage and injecting them with some rat poison"
 	icon_state = "clown_spider_bite"
 	cooldown = 5
 	targeted = 1
@@ -89,6 +105,10 @@
 				var/obj/machinery/warren/W = new /obj/machinery/warren(P.loc)
 				P.linked_warren = W
 				boutput (P, "You spawn a warren")
+			else if (!P.linked_warren.loc)
+				var/obj/machinery/warren/W = new /obj/machinery/warren(P.loc)
+				P.linked_warren = W
+				boutput (P, "You spawn a new warren")
 			else
 				boutput (P, "You already have a warren")
 		return 0

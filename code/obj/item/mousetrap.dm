@@ -259,6 +259,15 @@
 				H.visible_message("<span class='alert'><B>[H] accidentally steps on the mousetrap.</B></span>",\
 				"<span class='alert'><B>You accidentally step on the mousetrap!</B></span>")
 
+		else if (istype(AM, /mob/living/critter/plaguerat) && src.armed)
+			var/mob/living/critter/plaguerat/P = AM
+			playsound(src.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
+			icon_state = "mousetrap"
+			src.armed = 0
+			clear_armer()
+			src.visible_message("<span class='alert'><b>[P] is caught in the trap and explodes violently into a rain of gibs!</b></span>")
+			P.gib()
+
 		else if ((ismobcritter(AM)) && (src.armed))
 			var/mob/living/critter/C = AM
 			src.triggered(C)
@@ -273,14 +282,6 @@
 			clear_armer()
 			src.visible_message("<span class='alert'><b>[M] is caught in the trap!</b></span>")
 			M.CritterDeath()
-		else if (istype(AM, /mob/living/critter/plaguerat) && src.armed)
-			var/mob/living/critter/plaguerat/P = AM
-			playsound(src.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
-			icon_state = "mousetrap"
-			src.armed = 0
-			clear_armer()
-			src.visible_message("<span class='alert'><b>[P] is caught in the trap!</b></span>")
-			P.gib()
 		..()
 		return
 

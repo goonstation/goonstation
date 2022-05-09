@@ -1,22 +1,21 @@
 //Todo Get buff from cheese
 //Add death
-//Add check for spawns if there's too much
 
 /mob/living/critter/plaguerat
 	name = "plague rat"
 	real_name = "plague rat"
-	desc = "A diseased looking rat."
+	desc = "Shouldnt be seeing this."
 	icon_state = "big_spide"
 	density = 1
-	hand_count = 2 // spiders!!!
+	hand_count = 2
 	add_abilities = list(/datum/targetable/critter/plague_rat/eat_filth,
 						/datum/targetable/critter/plague_rat/rat_bite)
 
-	var/eaten_amount = 0
-	var/amount_to_grow = 0
+	var/eaten_amount = 0	//How much filth did we eat
+	var/amount_to_grow = 0	//How much is needed to grow
 	var/feeding = 0
-	var/venom = "venom"  // making these modular so i don't have to rewrite this gigantic goddamn section for all the subtypes
-	var/adultpath = null
+	var/venom = "rat_venom"	//What are we injecting on bite
+	var/adultpath = null	//What do we grow into
 	var/bitesound = "sound/weapons/handcuffs.ogg"
 	var/deathsound = "sound/impact_sounds/Generic_Snap_1.ogg"
 	death_text = "%src% falls on its back!"
@@ -31,24 +30,15 @@
 
 	can_help = 1
 	can_throw = 1
-	can_grab = 1
+	can_grab = 0
 	can_disarm = 1
 
 	butcherable = 1
 	max_skins = 1
 
-	blood_id = "vomit"
+	blood_id = "miasma"
 
-	var/bite_transfer_amt = 3
-
-	New()
-		..()
-		/*
-		if (src.icon_state == "big_spide")
-			src.icon_state = "big_spide[pick("", "-red", "-green", "-blue")]"
-			src.icon_state_alive = src.icon_state
-			src.icon_state_dead = "[src.icon_state]-dead"
-			*/
+	var/bite_transfer_amt = 1
 
 	setup_hands()
 		..()
@@ -71,25 +61,18 @@
 		..()
 		add_hh_flesh(health_brute, health_brute_vuln)
 		add_hh_flesh_burn(health_burn, health_burn_vuln)
-		add_health_holder(/datum/healthHolder/toxin)
-		add_health_holder(/datum/healthHolder/brain)
 
 	on_pet(mob/user)
 		if (..())
 			return 1
-		if (prob(50))
-			boutput(user, "As you approach your hand to pet [src], it snatches at you and bites your hand.")
+		if (prob(50))	//You probably shouldnt be petting them
+			boutput(user, "As you approach to pet [src], it snaps at you and bites your hand.")
 			random_brute_damage(user, 5)
 			user.emote("scream")
+			playsound(src.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 70, 1)
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
 				H.contract_disease(/datum/ailment/disease/space_plague, null, null, 1)
-			//Add chance to catch disease
-			/*
-		if (prob(15) && !ON_COOLDOWN(src, "playsound", 3 SECONDS))
-			playsound(src, "sound/voice/babynoise.ogg", 30, 1)
-			src.visible_message("<span class='notice'><b>[src]</b> coos!</span>",\
-			"<span class='notice'>You coo!</span>")*/
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
@@ -120,36 +103,34 @@
 				R.compborg_take_critter_damage("[pick("l","r")]_[pick("arm","leg")]", rand(2,4))
 			else
 				M.TakeDamageAccountArmor("All", rand(1,3), 0, 0, DAMAGE_STAB)
-			// now spiders won't poison themselves - cirr
 			M.reagents.add_reagent(src.venom, bite_transfer_amt)
 
 	proc/grow_up()
 		if (!ispath(src.adultpath))
 			return 0
 		src.unequip_all()
-		src.visible_message("<span class='alert'><b>[src] grows up!</b></span>",\
+		src.visible_message("<span class='alert'><b>[src] bloats and grows up in size. The smell is utterly revolting!</b></span>",\
 		"<span class='notice'><b>You grow up!</b></span>")
 		SPAWN(0)
 			src.make_critter(src.adultpath)
 
 /mob/living/critter/plaguerat/young
-	name = "plague rat small"
-	real_name = "plague rat small"
+	name = "Diseased rat"
+	real_name = "diseased rat"
 	desc = "A diseased looking rat."
 	icon_state = "big_spide"
 	amount_to_grow = 3
 	feeding = 0
-	venom = "venom"  // making these modular so i don't have to rewrite this gigantic goddamn section for all the subtypes
 	bite_transfer_amt = 1
 	flags = TABLEPASS | DOORPASS
 	adultpath = /mob/living/critter/plaguerat/medium
 	health_brute = 30
-	health_brute_vuln = 0.45
+	health_brute_vuln = 0.8
 	health_burn = 30
-	health_burn_vuln = 0.65
+	health_burn_vuln = 1.2
 
 	can_help = 1
-	can_throw = 0
+	can_throw = 1
 	can_grab = 0
 	can_disarm = 1
 
@@ -171,20 +152,19 @@
 		HH.can_hold_items = 0
 
 /mob/living/critter/plaguerat/medium
-	name = "plague rat medium"
-	real_name = "plague rat medium"
-	desc = "A diseased looking rat."
+	name = "Plague-ridden rat"
+	real_name = "plague ridden rat"
+	desc = "A wretched, disgusting rat."
 	icon_state = "big_spide"
 	feeding = 0
 	amount_to_grow = 2
 	flags = DOORPASS
-	venom = "venom"  // making these modular so i don't have to rewrite this gigantic goddamn section for all the subtypes
 	bite_transfer_amt = 2.5
 	adultpath = /mob/living/critter/plaguerat/adult
 	health_brute = 40
-	health_brute_vuln = 0.45
+	health_brute_vuln = 0.7
 	health_burn = 40
-	health_burn_vuln = 0.65
+	health_burn_vuln = 1.3
 	add_abilities = list(/datum/targetable/critter/plague_rat/eat_filth,
 						/datum/targetable/critter/plague_rat/rat_bite,
 						/datum/targetable/critter/plague_rat/spawn_warren)
@@ -212,17 +192,16 @@
 		HH.can_hold_items = 0
 
 /mob/living/critter/plaguerat/adult
-	name = "plague rat adult"
-	real_name = "plague rat adult"
-	desc = "A diseased looking rat."
+	name = "Bloated rat mass"
+	real_name = "bloated rat mass"
+	desc = "A horrible mass of puss and warts, that once used to look like a rat."
 	icon_state = "big_spide"
 	feeding = 0
-	venom = "venom"  // making these modular so i don't have to rewrite this gigantic goddamn section for all the subtypes
 	bite_transfer_amt = 4
 	health_brute = 60
-	health_brute_vuln = 0.45
+	health_brute_vuln = 0.6
 	health_burn = 60
-	health_burn_vuln = 0.65
+	health_burn_vuln = 1.4
 	add_abilities = list(/datum/targetable/critter/plague_rat/eat_filth,
 						/datum/targetable/critter/plague_rat/rat_bite,
 						/datum/targetable/critter/plague_rat/spawn_warren,

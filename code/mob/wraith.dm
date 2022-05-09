@@ -30,6 +30,7 @@
 	var/hauntBonus = 0
 	var/justdied = 0
 	var/absorbcount = 0 //Keep track of how many souls we absorbed
+	var/absorbs_to_evolve = 1
 
 	var/last_life_update = 0
 	var/const/life_tick_spacing = 20
@@ -623,10 +624,10 @@
 			//src.addAbility(/datum/targetable/wraithAbility/make_poltergeist)
 
 		addAllDecayAbilities()
-			src.addAbility(/datum/targetable/wraithAbility/curseBrand)
-			src.addAbility(/datum/targetable/wraithAbility/weakBrand)
-			src.addAbility(/datum/targetable/wraithAbility/blindBrand)
-			src.addAbility(/datum/targetable/wraithAbility/rotBrand)
+			src.addAbility(/datum/targetable/wraithAbility/curse/blood)
+			src.addAbility(/datum/targetable/wraithAbility/curse/enfeeble)
+			src.addAbility(/datum/targetable/wraithAbility/curse/blindness)
+			src.addAbility(/datum/targetable/wraithAbility/curse/rot)
 			src.addAbility(/datum/targetable/wraithAbility/poison)
 			src.addAbility(/datum/targetable/wraithAbility/summon_rot_hulk)
 			src.addAbility(/datum/targetable/wraithAbility/make_plague_rat)
@@ -643,6 +644,7 @@
 			src.addAbility(/datum/targetable/wraithAbility/create_summon_portal)
 			src.addAbility(/datum/targetable/wraithAbility/raiseSkeleton)
 			src.addAbility(/datum/targetable/wraithAbility/makeRevenant)
+			src.addAbility(/datum/targetable/wraithAbility/harbinger_summon)
 
 		removeAllAbilities()
 			src.removeAbility(/datum/targetable/wraithAbility/help)
@@ -742,6 +744,10 @@
 	desc = "A terrifyingly bloated spirit."
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "wraith"
+
+	New(var/mob/M)
+		..()
+		src.addAllHarbingerAbilities()
 
 /mob/wraith/wraith_trickster
 	name = "Plaguebringer"

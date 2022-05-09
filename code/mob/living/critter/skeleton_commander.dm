@@ -1,6 +1,6 @@
 /mob/living/critter/skeleton_commander
 	name = "skeleton commander"
-	desc = "A strangely hat shaped robot looking to spy on your deepest secrets"
+	desc = "A bulky skeleton here to encourage his friends."
 	density = 1
 	hand_count = 2
 	can_help = 1
@@ -16,11 +16,11 @@
 
 	New()
 		..()
-		//Let us spawn as stuff
 		abilityHolder.addAbility(/datum/targetable/critter/skeleton_commander/rally)
 		abilityHolder.addAbility(/datum/targetable/wrestler/strike)
 		abilityHolder.addAbility(/datum/targetable/critter/skeleton_commander/summon_lesser_skeleton)
-		src.setStatus("weakcurse")
+		//src.setStatus("weakcurse")
+		src.add_stam_mod_max("slow", STAMINA_MAX / 0.5)
 
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))
@@ -36,7 +36,7 @@
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb
-		HH.icon_state = "handl"				// the icon state of the hand UI background
+		HH.icon_state = "handl"
 		HH.limb_name = "left arm"
 
 		HH = hands[2]
@@ -44,5 +44,5 @@
 		HH.limb = new /datum/limb
 		HH.name = "right hand"
 		HH.suffix = "-R"
-		HH.icon_state = "handr"				// the icon state of the hand UI background
+		HH.icon_state = "handr"
 		HH.limb_name = "right arm"

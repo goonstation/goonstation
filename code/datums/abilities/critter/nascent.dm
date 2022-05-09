@@ -1,3 +1,6 @@
+///////////////////////////////////
+//	Nascent abilities, morph into other critters
+///////////////////////////////////
 /datum/targetable/critter/nascent/become_commander
 	name = "Become commander"
 	desc = "Become a commander"
