@@ -25,7 +25,7 @@ export const Terminal = (props, context) => {
       theme="retro-dark"
       title={windowName}
       width="380"
-      font-family="monospace"
+      font-family="Consolas"
       font-size="10pt"
       height="350">
       <Window.Content>
