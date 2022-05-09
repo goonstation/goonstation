@@ -1131,7 +1131,7 @@
 	set name = "Possess"
 	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set popup_menu = 0
-	new /mob/living/object(O, usr)
+	new /mob/living/object(get_turf(O), O, usr)
 
 /proc/possessmob(mob/M as mob in world)
 	set name = "Possess Mob"

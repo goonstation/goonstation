@@ -126,12 +126,12 @@
 	cast(atom/target)
 		if (..())
 			return 1
-		if (istype(holder.owner, /mob/living/critter/scuttlebot))
+		if (istype(holder.owner, /mob/living/critter/robotic/scuttlebot))
 			if(!holder.owner.mind)
 				boutput(holder.owner, __red("You dont have a mind somehow."))
 				return 1
 
-			var/mob/living/critter/scuttlebot/E = holder.owner
+			var/mob/living/critter/robotic/scuttlebot/E = holder.owner
 			if (!E.controller)
 				boutput(holder.owner, __red("You didn't have a body to go back to! The scuttlebot shuts down with a sad boop."))
 				holder.owner.ghostize()

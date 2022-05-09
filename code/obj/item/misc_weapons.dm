@@ -211,9 +211,8 @@
 	src.active = !( src.active )
 	tooltip_rebuild = 1
 	if (src.active)
+		src.UpdateIcon()
 		SET_BLOCKS(BLOCK_ALL)
-		var/datum/component/loctargeting/simple_light/light_c = src.GetComponent(/datum/component/loctargeting/simple_light)
-		light_c.update(1)
 		boutput(user, "<span class='notice'>The sword is now active.</span>")
 		hit_type = DAMAGE_CUT
 		stamina_damage = active_stamina_dmg
@@ -223,18 +222,11 @@
 			else playsound(U,"sound/weapons/female_cswordturnon.ogg" , 100, 0, 5, clamp(1.0 + (30 - U.bioHolder.age)/50, 0.7, 1.4))
 		src.force = active_force
 		src.stamina_cost = active_stamina_cost
-		if (src.bladecolor)
-			if (!(src.bladecolor in src.valid_colors))
-				src.bladecolor = null
-		src.icon_state = "[state_name]1-[src.bladecolor]"
-		src.item_state = "[state_name]1-[src.bladecolor]"
-		flick("sword_extend-[src.bladecolor]", src)
 		src.w_class = W_CLASS_BULKY
 		user.unlock_medal("The Force is strong with this one", 1)
 	else
-		var/datum/component/loctargeting/simple_light/light_c = src.GetComponent(/datum/component/loctargeting/simple_light)
+		src.UpdateIcon()
 		SET_BLOCKS(BLOCK_SWORD)
-		light_c.update(0)
 		boutput(user, "<span class='notice'>The sword can now be concealed.</span>")
 		hit_type = DAMAGE_BLUNT
 		stamina_damage = inactive_stamina_dmg
@@ -244,9 +236,6 @@
 			else playsound(U,"sound/weapons/female_cswordturnoff.ogg", 100, 0, 5, clamp(1.0 + (30 - U.bioHolder.age)/50, 0.7, 1.4))
 		src.force = inactive_force
 		src.stamina_cost = inactive_stamina_cost
-		src.icon_state = "[state_name]0"
-		src.item_state = "[state_name]0"
-		flick("sword_retract-[src.bladecolor]", src)
 		src.w_class = off_w_class
 	user.update_inhands()
 	src.add_fingerprint(user)
@@ -353,6 +342,20 @@
 			src.icon_state = "[state_name]-open"
 			return
 	..()
+
+/obj/item/sword/update_icon()
+	. = ..()
+	var/datum/component/loctargeting/simple_light/light_c = src.GetComponent(/datum/component/loctargeting/simple_light)
+	if (src.active)
+		light_c.update(TRUE)
+		src.icon_state = "[state_name]1-[src.bladecolor]"
+		src.item_state = "[state_name]1-[src.bladecolor]"
+		flick("sword_extend-[src.bladecolor]", src)
+	else
+		light_c.update(FALSE)
+		src.icon_state = "[state_name]0"
+		src.item_state = "[state_name]0"
+		flick("sword_retract-[src.bladecolor]", src)
 
 /obj/item/sword/red
 	bladecolor = "R"

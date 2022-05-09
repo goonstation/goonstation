@@ -409,27 +409,6 @@
 	if (..(parent))
 		return 1
 
-	if (!src.item)
-		src.death(FALSE)
-
-	if (src.item && src.item.loc != src) //ZeWaka: Fix for null.loc
-		if (isturf(src.item.loc))
-			src.item.set_loc(src)
-		else
-			src.death(FALSE)
-
-	for (var/atom/A as obj|mob in src)
-		if (A != src.item && A != src.dummy && A != src.owner && !istype(A, /atom/movable/screen))
-			if (isobj(A) || ismob(A)) // what the heck else would this be?
-				A:set_loc(src.loc)
-
-	src.set_density(src.item ? src.item.density : 0)
-	src.item.set_dir(src.dir)
-	src.icon = src.item.icon
-	src.icon_state = src.item.icon_state
-	src.color = src.item.color
-	src.overlays = src.item.overlays
-
 /mob/living/carbon/cube
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))
