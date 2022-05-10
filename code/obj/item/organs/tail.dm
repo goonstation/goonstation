@@ -72,7 +72,7 @@
 			src.human_getting_monkeytail = 0
 			src.monkey_getting_humantail = 0
 
-		if (!H.organHolder.tail && H.mob_flags & IS_BONER)
+		if (!H.organHolder.tail && H.mob_flags & IS_BONEY)
 			attachment_successful = 1 // Just slap that tailbone in place, its fine
 			boned = 1	// No need to sew it up
 

@@ -2496,6 +2496,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 3 //because a shoe god has to have acolytes
 	category = "Clothing"
 
+/datum/manufacture/towel
+	name = "Towel"
+	item_paths = list("FAB-1")
+	item_amounts = list(8)
+	item_outputs = list(/obj/item/cloth/towel/white)
+	time = 8 SECONDS
+	create = 1
+	category = "Resource"
+
 /////// pod construction components
 
 /datum/manufacture/pod/parts

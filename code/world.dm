@@ -620,6 +620,7 @@ var/f_color_selector_handler/F_Color_Selector
 #endif
 #ifdef RUNTIME_CHECKING
 	populate_station()
+	check_map_correctness()
 	SPAWN(10 SECONDS)
 		Reboot_server()
 #endif
@@ -1733,6 +1734,28 @@ var/f_color_selector_handler/F_Color_Selector
 							UNTIL(request.is_complete())
 							response = request.into_response()
 				return 1
+
+			if("persistent_canvases")
+				var/list/response = list()
+				for_by_tcl(canvas, /obj/item/canvas/big_persistent)
+					response[canvas.id] = icon2base64(canvas.art)
+				return json_encode(response)
+
+			if("lazy_canvas_list")
+				var/list/response = list()
+				for_by_tcl(canvas, /obj/item/canvas/lazy_restore)
+					response += canvas.id
+				return json_encode(response)
+
+			if("lazy_canvas_get")
+				var/list/response = list()
+				for_by_tcl(canvas, /obj/item/canvas/lazy_restore)
+					if(canvas.id == plist["id"])
+						if(!canvas.initialized)
+							canvas.load_from_id(canvas.id)
+						response[canvas.id] = icon2base64(canvas.art)
+				return json_encode(response)
+
 
 /world/proc/setMaxZ(new_maxz)
 	if (!isnum(new_maxz) || new_maxz <= src.maxz)

@@ -459,7 +459,7 @@
 				M.playsound_local(M.loc, "warp", 50, 1)
 				continue
 #endif
-			if (isobserver(M) || iswraith(M) || isintangible(M) || istype(M, /mob/living/object))
+			if (isobserver(M) || iswraith(M) || isintangible(M) || islivingobject(M))
 				continue
 			if (src.crunches_contents)
 				src.crunch(M)

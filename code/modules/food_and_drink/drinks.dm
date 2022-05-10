@@ -183,6 +183,37 @@
 	initial_volume = 50
 	initial_reagents = "water"
 
+/obj/item/reagent_containers/food/drinks/mate
+	name = "mate gourd"
+	desc = "A gourd and a straw for drinking mate"
+	icon_state = "mate_empty"
+	initial_volume = 20
+	var/yerba_left = 0
+	var/water_amount
+
+	on_reagent_change()
+		if((yerba_left > 1) && reagents.get_reagent_amount("water") > 0)
+			changetomate()
+		if((yerba_left < 1) && !reagents.get_reagent_amount("mate"))
+			yerba_left = 0
+			icon_state = "mate_empty"
+		..()
+
+	proc/changetomate()
+		water_amount = src.reagents.get_reagent_amount("water")
+		src.reagents.remove_reagent("water", water_amount)
+		src.reagents.add_reagent("mate", water_amount)
+		yerba_left -= water_amount
+		return
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/yerba))
+			src.icon_state = "mate"
+			yerba_left = 100
+			boutput(user, "<span class='notice'>You add [W] to [src]!</span>")
+			qdel (W)
+		else ..()
+
 /obj/item/reagent_containers/food/drinks/tea
 	name = "tea"
 	desc = "A fine cup of tea.  Possibly Earl Grey.  Temperature undetermined."

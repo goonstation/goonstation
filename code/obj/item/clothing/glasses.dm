@@ -17,6 +17,12 @@
 	var/correct_bad_vision = 0
 	compatible_species = list("human", "cow", "werewolf", "flubber")
 
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (istype(W, /obj/item/cloth/handkerchief))
+			user.visible_message("<span class='notice'>[user] [pick("polishes", "shines", "cleans", "wipes")] [src] with [src].</span>")
+			return
+		return ..()
+
 /obj/item/clothing/glasses/crafted
 	name = "glasses"
 	icon_state = "crafted"
@@ -392,6 +398,34 @@
 			//user.verbs -= /mob/proc/jack_in
 			user:network_device = null
 		return
+
+//Goggles used to assume control of a linked scuttlebot
+/obj/item/clothing/glasses/scuttlebot_vr
+	name = "Scuttlebot remote controller"
+	desc = "A pair of VR goggles connected to a remote scuttlebot. Use them on the scuttlebot to turn it back into a hat."
+	icon_state = "vr"
+	item_state = "sunglasses"
+	var/mob/living/critter/robotic/scuttlebot/connected_scuttlebot = null
+
+	equipped(var/mob/user, var/slot) //On equip, if there's a scuttlebot, control it
+		..()
+		var/mob/living/carbon/human/H = user
+		if(connected_scuttlebot != null)
+			if(connected_scuttlebot.mind)
+				boutput(user, "<span class='alert'>The scuttlebot is already active somehow!</span>")
+			else if(!connected_scuttlebot.loc)
+				boutput(user, "<span class='alert'>You put on the glasses but they show no signal. The scuttlebot couldnt be found.</span>")
+			else
+				connected_scuttlebot.controller = H
+				user.mind.transfer_to(connected_scuttlebot)
+		else
+			boutput(user, "<span class='alert'>You put on the glasses but they show no signal. The scuttlebot is likely destroyed.</span>")
+
+
+	unequipped(var/mob/user) //Someone might have removed them from us. If we're inside the scuttlebot, we're forced out
+		..()
+		if(connected_scuttlebot != null)
+			connected_scuttlebot.return_to_owner()
 
 /obj/item/clothing/glasses/vr_fake //Only exist IN THE MATRIX.  Used to log out.
 	name = "\improper VR goggles"

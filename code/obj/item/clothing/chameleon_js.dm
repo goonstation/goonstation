@@ -1737,7 +1737,7 @@
 		backpack_type = new/datum/chameleon_backpack_pattern
 
 	research_director
-		name = "Medical Director"
+		name = "Research Director"
 		jumpsuit_type = new/datum/chameleon_jumpsuit_pattern/rank/research_director
 		hat_type = new/datum/chameleon_hat_pattern/fancy
 		suit_type = new/datum/chameleon_suit_pattern/labcoat

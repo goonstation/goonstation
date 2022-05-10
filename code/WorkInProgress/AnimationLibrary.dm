@@ -573,7 +573,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 			M.sprint_particle.loc = null
 
 /proc/attack_twitch(var/atom/A, move_multiplier=1, angle_multiplier=1)
-	if (!istype(A) || istype(A, /mob/living/object))
+	if (!istype(A) || islivingobject(A))
 		return		//^ possessed objects use an animate loop that is important for readability. let's not interrupt that with this dumb animation
 	if(ON_COOLDOWN(A, "attack_twitch", 0.1 SECONDS))
 		return
@@ -619,7 +619,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 
 
 /proc/hit_twitch(var/atom/A)
-	if (!A || istype(A, /mob/living/object) || ON_COOLDOWN(A, "hit_twitch", 0.1 SECONDS))
+	if (!A || islivingobject(A)|| ON_COOLDOWN(A, "hit_twitch", 0.1 SECONDS))
 		return
 	var/which = 0
 	if (usr)
@@ -1209,6 +1209,14 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		if (e)
 			qdel(e)
 	return
+
+/proc/showlightning_bolt(var/atom/target)
+	if (!target)
+		return
+	var/turf/target_turf = get_turf(target)
+	if (!target_turf)
+		return
+	new /obj/decal/lightning_bolt(target_turf)
 
 /proc/leavepurge(var/atom/target, var/current_increment, var/sword_direction)
 	if (!target)

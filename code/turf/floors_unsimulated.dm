@@ -32,6 +32,23 @@
 
 /////////////////////////////////////////
 
+/turf/unsimulated/floor/pryable
+	attackby(obj/item/W, mob/user)
+		if(ispryingtool(W))
+			src.name = "plating"
+			src.icon_state = "plating"
+			src.UpdateIcon()
+			setIntact(FALSE)
+			levelupdate()
+
+	scorched
+		icon_state = "floorscorched1"
+
+
+	scorched2
+		icon_state = "floorscorched2"
+
+
 /turf/unsimulated/floor/scorched
 	icon_state = "floorscorched1"
 
@@ -951,11 +968,12 @@
 				var/turf/unsimulated/floor/auto/TA = T
 				if (TA.edge_priority_level >= src.edge_priority_level)
 					continue
-			var/image/edge_overlay = image(src.icon, "[icon_state_edge][get_dir(T,src)]")
+			var/direction = get_dir(T,src)
+			var/image/edge_overlay = image(src.icon, "[icon_state_edge][direction]")
 			edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
 			edge_overlay.layer = src.layer + (src.edge_priority_level / 1000)
 			edge_overlay.plane = PLANE_FLOOR
-			T.overlays += edge_overlay
+			T.UpdateOverlays(edge_overlay, "edge_[direction]")
 
 /turf/unsimulated/floor/auto/grass/swamp_grass
 	name = "swamp grass"

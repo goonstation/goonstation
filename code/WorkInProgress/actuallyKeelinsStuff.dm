@@ -3231,6 +3231,7 @@ Returns:
 
 
 	Cross(atom/movable/mover)
+		ENSURE_TYPE(mover)
 		if (mover?.throwing)
 			return 1
 		return ..()

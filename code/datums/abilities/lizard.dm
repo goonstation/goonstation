@@ -89,7 +89,15 @@
 
 		//shoot off tail
 		if (L.organHolder?.tail)
-			L.drop_and_throw_organ("tail", dist = 2, speed = 1, showtext = 1)
+			var/obj/critter/livingtail/C = new /obj/critter/livingtail(get_turf(src.holder.owner))
+			playsound(src, "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1)
+			make_cleanable(/obj/decal/cleanable/blood/splatter, L.loc)
+			C.tail_memory = L.organHolder.tail
+			C.primary_color = L.organHolder.tail.organ_color_2
+			C.secondary_color = L.organHolder.tail.organ_color_1
+			C.setup_overlays()
+			var/obj/item/organ/tail/lizard/T = L.organHolder.drop_organ("tail")
+			T.set_loc(C)
 
 		//simply make a new tail
 		L.visible_message("<span class='notice'><b>[L.name]</b> visibly exerts [himself_or_herself(L)] and a new tail starts to sprout!</span>")
