@@ -34314,14 +34314,14 @@
 /turf/simulated/floor/plating/airless,
 /area/listeningpost)
 "bAX" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1;
 	icon_state = "ast1"
 	},
 /area/space)
 "bAY" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1;
 	icon_state = "ast1"
 	},
@@ -34337,24 +34337,24 @@
 	},
 /area/listeningpost)
 "bBa" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "ast1"
 	},
 /area/space)
 "bBb" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "ast1"
 	},
 /area/space)
 "bBc" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
 /area/space)
 "bBd" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "bBe" = (
 /turf/simulated/shuttle/wall{
@@ -34362,14 +34362,14 @@
 	},
 /area/listeningpost)
 "bBf" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4;
 	icon_state = "ast1"
 	},
 /area/space)
 "bBg" = (
 /turf/simulated/floor/plating/airless/asteroid,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -34434,7 +34434,7 @@
 /turf/simulated/floor/plating,
 /area/listeningpost)
 "bBn" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8;
 	icon_state = "ast1"
 	},
@@ -34502,14 +34502,14 @@
 /area/listeningpost)
 "bBu" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "ast1"
 	},
 /area/space)
 "bBv" = (
 /turf/simulated/floor/plating/airless/asteroid,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "ast1"
 	},
@@ -34546,13 +34546,13 @@
 /area/listeningpost)
 "bBB" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8;
 	icon_state = "ast1"
 	},
 /area/space)
 "bBC" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "ast1"
 	},
@@ -34595,21 +34595,21 @@
 /area/listeningpost)
 "bBH" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4;
 	icon_state = "ast1"
 	},
 /area/space)
 "bBI" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
 /area/space)
 "bBJ" = (
 /turf/simulated/floor/plating/airless/asteroid,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "ast1"
 	},
@@ -34664,14 +34664,14 @@
 /area/listeningpost)
 "bBR" = (
 /turf/simulated/floor/plating/airless/asteroid,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1;
 	icon_state = "ast1"
 	},
 /area/space)
 "bBS" = (
 /turf/simulated/floor/plating/airless,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -35034,14 +35034,14 @@
 /area/listeningpost)
 "bCK" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "ast1"
 	},
 /area/space)
 "bCL" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "ast1"
 	},
 /area/space)

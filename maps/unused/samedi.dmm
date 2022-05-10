@@ -3,7 +3,7 @@
 /turf/space,
 /area/space)
 "aab" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "aac" = (
 /turf/space/asteroid,
@@ -13,7 +13,7 @@
 /turf/simulated/floor/plating/airless,
 /area/station/storage/primary)
 "aae" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -1375,7 +1375,7 @@
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "acU" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -5381,7 +5381,7 @@
 /area/station/maintenance/north)
 "alt" = (
 /obj/disposalpipe/segment/horizontal,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -8229,7 +8229,7 @@
 	},
 /area/station/maintenance/storage)
 "arK" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -10269,7 +10269,7 @@
 /turf/simulated/floor/airless/black,
 /area/station/crew_quarters/quartersB)
 "awC" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -11247,7 +11247,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "ayS" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -24051,7 +24051,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bbc" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -29792,7 +29792,7 @@
 	},
 /area/station/solar/west)
 "bno" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -34209,7 +34209,7 @@
 /turf/simulated/floor/plating,
 /area/station/hangar/escape)
 "bxx" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -36346,7 +36346,7 @@
 /turf/simulated/floor/grey/blackgrime,
 /area/station/storage/tools)
 "bCA" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -36862,7 +36862,7 @@
 /turf/simulated/floor/plating/airless,
 /area/station/maintenance/southwest)
 "bDK" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -38179,7 +38179,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/ai_upload)
 "bGM" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -40391,7 +40391,7 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "bLy" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -46494,7 +46494,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/quarters_south)
 "bYb" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/station/hallway/secondary/construction2)
 "bYc" = (
 /obj/machinery/atmospherics/binary/pump{
@@ -46846,7 +46846,7 @@
 /area/listeningpost)
 "bYK" = (
 /obj/map/light/brightwhite,
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "bYL" = (
 /obj/storage/crate/loot,
@@ -48422,13 +48422,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
 "ccr" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
 /area/station/maintenance/east)
 "ccs" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -48439,7 +48439,7 @@
 	},
 /area/station/hallway/primary/east)
 "ccu" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -48469,7 +48469,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "ccx" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -48562,7 +48562,7 @@
 	},
 /area/station/medical/medbay)
 "ccI" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -48573,7 +48573,7 @@
 	},
 /area/station/hydroponics/bay)
 "ccK" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -48642,7 +48642,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "ccR" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -48661,13 +48661,13 @@
 /turf/simulated/floor/plating/damaged3,
 /area/station/hallway/secondary/construction2)
 "ccU" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
 /area/station/crew_quarters/quartersA)
 "ccV" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -48678,7 +48678,7 @@
 	},
 /area/station/maintenance/southwest)
 "ccX" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -48706,13 +48706,13 @@
 	},
 /area/station/hallway/primary/south)
 "cdb" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
 /area/station/storage/auxillary)
 "cdc" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -48756,19 +48756,19 @@
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/crew_quarters/fitness)
 "cdk" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
 /area/station/hallway/primary/south)
 "cdl" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
 /area/station/science/chemistry)
 "cdm" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},

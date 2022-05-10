@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aab" = (
-/turf/simulated/wall/asteroid/ice,
+/turf/simulated/wall/auto/asteroid/ice,
 /area/space)
 "aad" = (
 /obj/landmark/artifact,
@@ -51585,7 +51585,7 @@
 	},
 /area/station/medical/medbay)
 "cBQ" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cBR" = (
 /turf/simulated/shuttle/wall{

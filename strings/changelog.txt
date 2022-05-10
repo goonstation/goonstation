@@ -1,4 +1,30 @@
 
+(t)mon may 09 22
+(u)Wisemonster
+(p)8474
+(e)🗺|mapping
+(+)Mr. Rathens has been rescued from the singularity generator area on Donut 3 and safely moved to the engineering break room.
+(t)sun may 08 22
+(u)aloe
+(p)8303
+(e)|
+(+)Things which animate objects now make the living objects act like the objects they came from; batons will stun you, food will feed itself to people, etc.
+(u)LeahTheTech
+(p)8378
+(e)📄|tgui
+(+)The control panels for AI chamber and armoury turrets have been upgraded to TGUI.
+(u)ImJustAStrangeMan
+(e)🎨|sprites
+(+)Resprited the traitor cloaking field generator.
+(t)sat may 07 22
+(u)LeahTheTech
+(p)8486
+(e)|
+(+)Added round victory messages to the scorescreen popup, will hopefully reduce "OOC: who won tho" by up to 12%!
+(u)Arborinus, ZeWaka, & skeletonman0
+(p)7514
+(e)🗺🎨|mapping, sprites
+(*)Asteroid and trench walls/floors have new perspective sprites and ways of displaying ore/algae.
 (t)fri may 06 22
 (u)SgtManGuy
 (p)8356

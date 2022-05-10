@@ -514,6 +514,7 @@
 
 			if (src.authenticated)
 
+				var/total_funds = wagesystem.station_budget + wagesystem.research_budget + wagesystem.shipping_budget
 				var/payroll = 0
 				for(var/datum/db_record/R as anything in data_core.bank.records)
 					payroll += R["wage"]
@@ -528,7 +529,7 @@
 					<tr><th>Payroll Budget</th><td class='r'>$[num2text(round(wagesystem.station_budget),50)]</td></tr>
 					<tr><th>Shipping Budget</th><td class='r'>$[num2text(round(wagesystem.shipping_budget),50)]</td></tr>
 					<tr><th>Research Budget</th><td class='r'>$[num2text(round(wagesystem.research_budget),50)]</td></tr>
-					<tr><th>Total Funds</th><th class='r'>$[num2text(round(wagesystem.research_budget),50)]</th></tr>
+					<tr><th>Total Funds</th><th class='r'>$[num2text(round(total_funds),50)]</th></tr>
 					<tr><th colspan="2" class='second'>Payroll Details</th></tr>
 					<tr><th>Payroll Stipend</th><td class='r'>$[num2text(round(wagesystem.payroll_stipend),50)]</td></tr>
 					<tr><th>Payroll Cost</th><td class='r'>$[num2text(round(payroll),50)]</td></tr>

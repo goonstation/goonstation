@@ -1234,7 +1234,7 @@
 /turf/simulated/floor/terrazzo,
 /area/prefab/dreamplaza)
 "Ng" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/noGenerate)
 "Nl" = (
 /obj/lattice{
