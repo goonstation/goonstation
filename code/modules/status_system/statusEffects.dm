@@ -1557,14 +1557,14 @@
 		get_image_group(CLIENT_IMAGE_GROUP_ILLUSSION).add_mob(H)
 
 	onUpdate()
-		if (prob(50))	//Make a wall decal
+		if (prob(50))
 			switch (rand(1,3))
-				if (1) // Image based
-					for (var/turf/W in range(6, H))
+				if (1) // Image based illusion
+					for (var/turf/W in range(6, H))	//Check for surrounding spots
 						wall_list += W
 					if (wall_list != null)
 						var/turf/W = pick(wall_list)
-						switch(rand(1,5))
+						switch(rand(1,3))
 							if (1)
 								sound_effect = 'sound/effects/Explosion2.ogg'
 								illusion_icon = 'icons/effects/64x64.dmi'
@@ -1580,21 +1580,15 @@
 								illusion_icon = 'icons/mob/mob.dmi'
 								illusion_icon_state = "wraith"
 								volume = 65
-								//separate
-							if (3)
-
-								illusion_icon = null
-								illusion_icon_state = null
-								volume = 45
 						var/image/illusionIcon = image(illusion_icon, W, null, EFFECTS_LAYER_UNDER_4)
 						illusionIcon.icon_state = illusion_icon_state
-						get_image_group(CLIENT_IMAGE_GROUP_ILLUSSION).add_image(illusionIcon)
+						get_image_group(CLIENT_IMAGE_GROUP_ILLUSSION).add_image(illusionIcon)	//Put the image in a group so the illusion is shared
 						if (sound_effect != null)
 							H.playsound_local(H.loc,sound_effect, volume, 1)
 						sleep(5 SECONDS)
 						qdel(illusionIcon)
 				if (2) //sound based
-					switch(rand(1,3))
+					switch(rand(1,4))
 						if (1)
 							sound_effect = "sound/machines/phones/ring_incoming.ogg"
 							volume = 60
@@ -1606,15 +1600,23 @@
 							if(!has_faked_nuke)
 								sound_effect = 'sound/machines/bomb_planted.ogg'
 								volume = 90
-								boutput(H, "<h2 class='alert'>A nuclear bomb has been armed in [pick("the Bridge", "the Bar", "the security lobby", "the medical lobby")]</h2>")
-								boutput(H, "<span class='alert'>It will explode in 5 minutes. All personnel must report to the plant area to disarm the bomb immediatly.</span>")
+								boutput(H, "<h1 class='notice'>Frontier Authority Update</h1>")
+								boutput(H, "<h2 class='notice'>Nuclear Weapon Detected</h2>")
+								boutput(H, "<span class='alert'>A nuclear bomb has been armed in [pick("the Bridge", "the Bar", "the security lobby", "the medical lobby")]. It will explode in 5 minutes. All personnel must report to the plant area to disarm the bomb immediatly.</span>")
 								has_faked_nuke = true
-						//Add fake shuttle call
+						if (4)
+							if(!has_faked_shuttle)
+								sound_effect = 'sound/misc/shuttle_enroute.ogg'
+								volume = 80
+								boutput(H, "<h2 class='notice'>The Emergency Shuttle Has Been Called</h2>")
+								boutput(H, "<span>No reason given.</span>")
+								boutput(H, "<span class='alert'>It will arrive in 6 minutes.</span>")
+								has_faked_shuttle = true
 					H.playsound_local(H.loc,sound_effect, volume, 1)
-				if (3) //Wall based
+				if (3) //Wall based, blood pouring out of the walls and other spooky stuff
 					for (var/turf/simulated/wall/auto/W in orange(5, H))
 						wall_list += W
-					if (wall_list != null) // todo Check if empty and add blood effect
+					if (wall_list != null)
 						var/turf/simulated/wall/auto/W = pick(wall_list)
 						switch(rand(1,2))
 							if (1)
@@ -1631,9 +1633,7 @@
 								sleep(5 DECI SECOND)
 								illusionIcon.alpha -= 10
 							qdel(illusionIcon)
-	//Make a mob walk
 		wall_list = list()
-			//Add fake can bomb announcement
 
 
 /datum/statusEffect/mentor_mouse

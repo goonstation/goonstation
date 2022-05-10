@@ -26,7 +26,7 @@
 			qdel(src)
 
 	process()
-		if (src.next_spawn_check != null)//Todo Check about mad mice assaulting the plague rat
+		if (src.next_spawn_check != null)//Todo Check about mad mice assaulting the plague rat, maybe make custom mob
 			if (src.next_spawn_check < world.time)
 				next_spawn_check = world.time + rand(10 SECONDS, 15 SECONDS)
 				if (linked_critters < max_critters)
@@ -34,8 +34,8 @@
 					M.linked_warren = src
 					linked_critters ++
 
-		for (var/mob/living/critter/plaguerat/P in range(5, src))//Todo check why warren isnt healing, likely wrong health value
-			if((P.health < 100))
+		for (var/mob/living/critter/plaguerat/P in range(5, src))
+			if((P.health < (P.health_brute + P.health_burn)))
 				for(var/damage_type in P.healthlist)
 					var/datum/healthHolder/hh = P.healthlist[damage_type]
 					hh.HealDamage(3)

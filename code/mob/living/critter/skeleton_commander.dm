@@ -41,7 +41,9 @@
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
+		HH.icon = 'icons/mob/hud_human.dmi'
 		HH.limb = new /datum/limb
+		HH.suffix = "-L"
 		HH.icon_state = "handl"
 		HH.limb_name = "left arm"
 

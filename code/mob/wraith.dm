@@ -72,6 +72,7 @@
 				theName += pick(con)
 		var/fc = copytext(theName, 1, 2)
 		theName = "[uppertext(fc)][copytext(theName, 2)]"
+
 		theName = theName  + "[pick(" the Impaler", " the Tormentor", " the Forsaken", " the Destroyer", " the Devourer", " the Tyrant", " the Overlord", " the Damned", " the Desolator", " the Exiled")]"
 		return theName
 
@@ -103,9 +104,10 @@
 		if (!movement_controller)
 			movement_controller = new /datum/movement_controller/poltergeist (src)
 
-		real_name = make_name()
+		var/default_name = make_name()
+		//Needs more testing
+		src.choose_name(3, "Wraith", default_name)
 		src.UpdateName()
-
 
 	is_spacefaring()
 		return !density

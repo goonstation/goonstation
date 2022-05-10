@@ -342,7 +342,7 @@
 
 	OnAdd()
 		if (ishuman(owner))
-			owner.setStatus("weakcurse")
+			owner.setStatus("weakcurse", duration = null)
 
 	OnLife()
 		if (istype(get_area(owner), /area/station/chapel))

@@ -50,7 +50,7 @@
 	ks_ratio = 1.0
 	shot_sound = 'sound/misc/hastur/tentacle_hit.ogg'
 	var/list/previous_line = list()
-
+	//This whole line thing might be a bit inneficient and chuggy.
 	on_hit(atom/hit, angle, var/obj/projectile/P)
 		if (previous_line != null)	//Lets clean up the line
 			for (var/obj/O in previous_line)
@@ -68,12 +68,12 @@
 				M.visible_message("<span class='alert'>[M] gets grabbed by a tentacle and dragged!</span>")
 
 		previous_line = DrawLine(P.special_data["owner"], P, /obj/line_obj/tentacle ,'icons/obj/projectiles.dmi',"WholeTentacle",1,1,"HalfStartTentacle","HalfEndTentacle",OBJ_LAYER,1)
-		sleep(7 DECI SECOND)	//Make it last a bit for impact
-		if (previous_line != null)
-			for (var/obj/O in previous_line)
-				qdel(O)
-
+		SPAWN(7 DECI SECOND)	//Make it last a bit for impact
+			if (previous_line != null)
+				for (var/obj/O in previous_line)
+					qdel(O)
 		qdel(P)
+
 
 	on_launch(var/obj/projectile/P)
 		..()

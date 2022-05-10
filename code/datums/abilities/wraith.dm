@@ -106,7 +106,7 @@
 		if (!T)
 			T = get_turf(holder.owner)
 
-		if ((istype(holder.owner, /mob/wraith/wraith_decay))) // Rewrite this shit, check formaldehyde and holy water; check points
+		if ((istype(holder.owner, /mob/wraith/wraith_decay)))
 			//Find a suitable corpse
 			var/error = 0
 			var/mob/living/carbon/human/M
@@ -926,15 +926,15 @@
 				if (4)
 					boutput(H, "<span class='alert'>A cacophony of otherworldly voices resonates within your mind. You sense a feeling of impending doom! You should seek salvation in the chapel.</span>")
 
-		//Lets not spam every curse at once.
-		var/datum/targetable/ability = holder.getAbility(/datum/targetable/wraithAbility/curse/blood)
-		ability.doCooldown()
-		ability = holder.getAbility(/datum/targetable/wraithAbility/curse/blindness)
-		ability.doCooldown()
-		ability = holder.getAbility(/datum/targetable/wraithAbility/curse/enfeeble)
-		ability.doCooldown()
-		ability = holder.getAbility(/datum/targetable/wraithAbility/curse/rot)
-		ability.doCooldown()
+			//Lets not spam every curse at once.
+			var/datum/targetable/ability = holder.getAbility(/datum/targetable/wraithAbility/curse/blood)
+			ability.doCooldown()
+			ability = holder.getAbility(/datum/targetable/wraithAbility/curse/blindness)
+			ability.doCooldown()
+			ability = holder.getAbility(/datum/targetable/wraithAbility/curse/enfeeble)
+			ability.doCooldown()
+			ability = holder.getAbility(/datum/targetable/wraithAbility/curse/rot)
+			ability.doCooldown()
 
 /datum/targetable/wraithAbility/curse/blood
 	name = "Curse of blood"
@@ -952,6 +952,9 @@
 			usr.playsound_local(usr.loc, "sound/voice/wraith/wraithspook[rand(1, 2)].ogg", 80, 0)
 			var/mob/living/carbon/H = target
 			H.bioHolder.AddEffect("blood_curse")
+			return 0
+		else
+			return 1
 
 /datum/targetable/wraithAbility/curse/blindness
 	name = "Curse of blindness"
@@ -969,6 +972,9 @@
 			usr.playsound_local(usr.loc, "sound/voice/wraith/wraithspook[rand(1, 2)].ogg", 80, 0)
 			var/mob/living/carbon/H = target
 			H.bioHolder.AddEffect("blind_curse")
+			return 0
+		else
+			return 1
 
 /datum/targetable/wraithAbility/curse/enfeeble
 	name = "Curse of weakness"
@@ -986,6 +992,9 @@
 			usr.playsound_local(usr.loc, "sound/voice/wraith/wraithspook[rand(1, 2)].ogg", 80, 0)
 			var/mob/living/carbon/H = target
 			H.bioHolder.AddEffect("weak_curse")
+			return 0
+		else
+			return 1
 
 /datum/targetable/wraithAbility/curse/rot
 	name = "Curse of rot"
@@ -1003,6 +1012,9 @@
 			usr.playsound_local(usr.loc, "sound/voice/wraith/wraithspook[rand(1, 2)].ogg", 80, 0)
 			var/mob/living/carbon/H = target
 			H.bioHolder.AddEffect("rot_curse")
+			return 0
+		else
+			return 1
 
 /datum/targetable/wraithAbility/curse/death
 	name = "Curse of death"
@@ -1099,8 +1111,10 @@
 				boutput(holder.owner, "The filth accumulates into a living bloated abomination")
 			for(var/obj/decal/cleanable/C in found_decal_list)
 				qdel(C)
+			return 0
 		else
 			boutput(holder.owner, __red("This place is much too clean to summon a rot hulk."))
+			return 1
 
 /datum/targetable/wraithAbility/poison
 	name = "Poison item"
@@ -1286,8 +1300,10 @@
 					H.take_brain_damage(70)
 					H.setStatus("weakened", 5 SECOND)
 					boutput(H, "The presence has left your body and you are thrusted back into it, immediatly assaulted with a winging headacke.")
+					return 0
 			else
 				boutput(holder.owner, "You cannot possess with only [W.possession_points] possession power. You'll need at least [(W.points_to_possess - W.possession_points)]")
+				return 1
 
 /datum/targetable/wraithAbility/hallucinate
 	name = "Hallucinate"
@@ -1306,6 +1322,9 @@
 			var/mob/living/carbon/H = target
 			H.setStatus("terror", 45 SECONDS)
 			boutput(holder.owner, "We terrorize [H]")
+			return 0
+		else
+			return 1
 
 /datum/targetable/wraithAbility/create_summon_portal
 	name = "Summon void portal"
@@ -1323,8 +1342,10 @@
 		if (isturf(T) && !istype(T, /turf/space))
 			boutput(holder.owner, "You gather your energy and open a portal")
 			new /obj/vortex_wraith(get_turf(holder.owner))
+			return 0
 		else
 			boutput(holder.owner, "We cannot open a portal here")
+			return 1
 
 /datum/targetable/wraithAbility/choose_haunt_appearance
 	name = "Choose haunt appearance"
@@ -1428,13 +1449,21 @@
 		var/total_plague_rats = 0
 		for (var/client/C in clients)
 			LAGCHECK(LAG_LOW)
-			// not sure how this could happen, but be safe about it
 			if (!C.mob)
 				continue
 			var/mob/M = C.mob
 			if (istype(M, /mob/living/critter/plaguerat))
-				total_plague_rats ++
+				total_plague_rats++
 		if(total_plague_rats < max_allowed_rats)
+			if (istype(holder.owner, /mob/living/critter/plaguerat))
+				var/near_warren = false
+				var/turf/T = get_turf(holder.owner)
+				for (var/obj/O in T.contents)
+					if(istype(O, /obj/machinery/warren))
+						near_warren = true
+				if(!near_warren)
+					boutput(holder.owner, "We arent close enough to a warren to do this.")
+					return 1
 			var/turf/T = get_turf(holder.owner)
 			if (isturf(T) && !istype(T, /turf/space))
 				boutput(holder.owner, "You begin to channel power to call a spirit to this realm, you won't be able to cast any other spells for the next 30 seconds!")
@@ -1443,7 +1472,7 @@
 				boutput(holder.owner, "<span class='alert'>You can't cast this spell on your current tile!</span>")
 				return 1
 		else
-			boutput(holder.owner, "<span class='alert'>The station is a rat den, you cannot summon another rat!</span>")
+			boutput(holder.owner, "<span class='alert'>The station is already a rat den, you cannot summon another rat!</span>")
 			return 1
 
 	proc/make_plague_rat(var/mob/W, var/turf/T, var/tries = 0)

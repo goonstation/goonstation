@@ -27,7 +27,7 @@
 					/obj/critter/brullbar,
 					/obj/critter/gunbot/drone)
 					elite_spawned++
-					chance_increase == 0
+					chance_increase = 0
 				else
 					mob_type = pick(/obj/critter/shade,
 					/obj/critter/crunched,

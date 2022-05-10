@@ -68,8 +68,8 @@
 			while (frenz > 0 && MT && !MT.disposed)
 				MT.changeStatus("weakened", 2 SECONDS)
 				MT.canmove = 0
-				if (MT.loc)
-					holder.owner.set_loc(MT.loc)
+				if (MT.loc && holder.owner.loc != MT.loc)
+					break
 				if (is_incapacitated(holder?.owner))
 					break
 				playsound(holder.owner, pick("sound/impact_sounds/Flesh_Tear_3.ogg", "sound/impact_sounds/Flesh_Stab_1.ogg"), 80, 1)
