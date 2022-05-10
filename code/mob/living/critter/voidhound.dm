@@ -29,7 +29,7 @@
 		abilityHolder.addAbility(/datum/targetable/critter/voidhount/rushdown)
 		abilityHolder.addAbility(/datum/targetable/critter/slam)
 
-	setup_hands()//Todo might need a weaker arm
+	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/claw

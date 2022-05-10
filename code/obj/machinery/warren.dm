@@ -1,4 +1,4 @@
-/obj/machinery/warren
+/obj/machinery/wraith_warren
 	name = "rat warren"
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "anom"

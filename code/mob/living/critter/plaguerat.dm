@@ -1,4 +1,3 @@
-//Todo Get buff from cheese
 //Add death
 
 /mob/living/critter/plaguerat
@@ -24,7 +23,7 @@
 	var/health_brute_vuln = 0.45
 	var/health_burn = 50
 	var/health_burn_vuln = 0.65
-	var/obj/machinery/warren/linked_warren = null
+	var/obj/machinery/wraith_warren/linked_warren = null
 	reagent_capacity = 100
 	var/master = null
 

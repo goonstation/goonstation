@@ -91,7 +91,7 @@
 		src.see_in_dark = SEE_DARK_FULL
 		src.abilityHolder = new /datum/abilityHolder/wraith(src)
 		src.abilityHolder.points = 50
-		if (!istype(src, /mob/wraith/wraith_trickster) && !istype(src, /mob/wraith/wraith_decay) && !istype(src, /mob/wraith/wraith_invocation))
+		if (!istype(src, /mob/wraith/wraith_trickster) && !istype(src, /mob/wraith/wraith_decay) && !istype(src, /mob/wraith/wraith_harbinger))
 			src.addAbility(/datum/targetable/wraithAbility/specialize)
 		src.addAllBasicAbilities()
 		last_life_update = world.timeofday
@@ -759,7 +759,7 @@
 		..()
 		src.addAllDecayAbilities()
 
-/mob/wraith/wraith_invocation
+/mob/wraith/wraith_harbinger
 	name = "Harbinger"
 	real_name = "harbinger"
 	desc = "An evil looking, regal specter."

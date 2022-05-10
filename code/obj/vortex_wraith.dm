@@ -1,4 +1,4 @@
-/obj/vortex_wraith
+/obj/wraith/vortex_wraith
 	name = "Summoning portal"
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "anom"

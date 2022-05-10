@@ -873,7 +873,7 @@
 					W = new/mob/wraith/wraith_decay(holder.owner)
 					boutput(holder.owner, "<span class='notice'>You turn into a plaguebringer!</span>")
 				if (2)
-					W = new/mob/wraith/wraith_invocation(holder.owner)
+					W = new/mob/wraith/wraith_harbinger(holder.owner)
 					boutput(holder.owner, "<span class='notice'>You turn into a harbinger!</span>")
 				if (3)
 					W = new/mob/wraith/wraith_trickster(holder.owner)
@@ -1100,10 +1100,13 @@
 			T.visible_message("<span class='alert'>All the filth and grime around begins to writhe and move!</span>")
 			for(var/obj/decal/cleanable/C in found_decal_list)
 				step_towards(C,T)
-			sleep(1.5 SECOND)
+			sleep(1 SECOND)
 			for(var/obj/decal/cleanable/C in found_decal_list)
 				step_towards(C,T)
-			sleep(1.5 SECOND)	//Todo add a cool effect here.
+			sleep(1 SECOND)
+			for(var/obj/decal/cleanable/C in found_decal_list)
+				step_towards(C,T)
+			sleep(1 SECOND)	//Todo add a cool effect here.
 			if (decal_count > 30)
 				var/mob/living/critter/exploder/strong/E = new /mob/living/critter/exploder/strong(T)
 				T.visible_message("<span class='alert'>A [E] slowly emerges from the gigantic pile of grime!</span>")
@@ -1345,7 +1348,7 @@
 				var/mob/wraith/W = holder.owner
 				if(W.haunting)
 					boutput(holder.owner, "You gather your energy and open a portal")
-					new /obj/vortex_wraith(get_turf(holder.owner))
+					new /obj/wraith/vortex_wraith(get_turf(holder.owner))
 					return 0
 				else
 					boutput(holder.owner, "Your connection to the physical plane is too weak. You must be manifested to do this.")
@@ -1474,7 +1477,7 @@
 				var/near_warren = false
 				var/turf/T = get_turf(holder.owner)
 				for (var/obj/O in T.contents)
-					if(istype(O, /obj/machinery/warren))
+					if(istype(O, /obj/machinery/wraith_warren))
 						near_warren = true
 				if(!near_warren)
 					boutput(holder.owner, "We arent close enough to a warren to do this.")

@@ -88,7 +88,7 @@
 	atkcarbon = 1
 
 /obj/critter/mouse/mad/warren
-	var/obj/machinery/warren/linked_warren = null
+	var/obj/machinery/wraith_warren/linked_warren = null
 
 	CritterDeath()
 		..()

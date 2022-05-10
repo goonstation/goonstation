@@ -41,7 +41,7 @@
 				while (eat_duration > 0 && T && !T.disposed)
 					if (T.loc && holder.owner.loc != T.loc)
 						break
-					if (holder.owner.getStatusDuration("stunned") || holder.owner.getStatusDuration("weakened") || holder.owner.getStatusDuration("paralysis"))
+					if (!can_act(holder.owner))
 						break
 					sleep(0.8 SECONDS)
 					playsound(holder.owner.loc,"sound/items/eatfood.ogg", rand(10, 50), 1)
@@ -102,11 +102,11 @@
 		if (istype(holder.owner, /mob/living/critter/plaguerat))
 			var/mob/living/critter/plaguerat/P = holder.owner
 			if (P.linked_warren == null)
-				var/obj/machinery/warren/W = new /obj/machinery/warren(P.loc)
+				var/obj/machinery/wraith_warren/W = new /obj/machinery/wraith_warren(P.loc)
 				P.linked_warren = W
 				boutput (P, "You spawn a warren")
 			else if (!P.linked_warren.loc)
-				var/obj/machinery/warren/W = new /obj/machinery/warren(P.loc)
+				var/obj/machinery/wraith_warren/W = new /obj/machinery/wraith_warren(P.loc)
 				P.linked_warren = W
 				boutput (P, "You spawn a new warren")
 			else

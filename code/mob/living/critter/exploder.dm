@@ -31,7 +31,7 @@
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/hunter
 		HH.icon_state = "handl"				// the icon state of the hand UI background
-		HH.limb_name = "left bear arm"
+		HH.limb_name = "hand"
 
 		HH = hands[2]
 		HH.icon = 'icons/mob/hud_human.dmi'
@@ -39,7 +39,7 @@
 		HH.name = "right hand"
 		HH.suffix = "-R"
 		HH.icon_state = "handr"				// the icon state of the hand UI background
-		HH.limb_name = "right bear arm"
+		HH.limb_name = "hand"
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
@@ -53,17 +53,18 @@
 		..(gibbed, 0)
 
 		src.visible_message("[src] explodes!")	//Shouldnt stand close to this thing
-		for (var/mob/M in view(3, src.loc))	//Todo might need to swap view for orange
+		for (var/mob/M in view(3, src.loc))
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if(istype(H.wear_suit, /obj/item/clothing/suit/bio_suit) && istype(H.head, /obj/item/clothing/head/bio_hood))
 					boutput(M, "<span class='notice'>You are sprayed with guts, but your biosuit protects you!</span>")
 					continue
+				else
+					boutput(M, "<span class='alert'>You are sprayed with disgusting rotting flesh! You're pretty sure some of it got in your mouth.</span>")
 			M.emote("scream")
 			M.take_toxin_damage(25)
 			if (M.reagents)
 				M.reagents.add_reagent("miasma", 20, null, T0C)
-			boutput(M, "<span class='alert'>You are sprayed with disgusting rotting flesh! You're pretty sure some of it got in your mouth.</span>")
 		var/turf/U = get_turf(src)
 		U.fluid_react_single("miasma", 120, airborne = 1)
 		U.fluid_react_single("blood", 60, airborne = 0)
@@ -129,14 +130,14 @@
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
-		HH.limb = new /datum/limb/abomination	//Todo probably a bit too strong? Needs a weaker arm.
-		HH.icon_state = "handl"				// the icon state of the hand UI background
-		HH.limb_name = "left bear arm"
+		HH.limb = new /datum/limb/brullbar
+		HH.icon_state = "handl"
+		HH.limb_name = "hand"
 
 		HH = hands[2]
 		HH.icon = 'icons/mob/hud_human.dmi'
-		HH.limb = new /datum/limb/abomination
+		HH.limb = new /datum/limb/brullbar
 		HH.name = "right hand"
 		HH.suffix = "-R"
-		HH.icon_state = "handr"				// the icon state of the hand UI background
-		HH.limb_name = "right bear arm"
+		HH.icon_state = "handr"
+		HH.limb_name = "hand"

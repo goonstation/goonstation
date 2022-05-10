@@ -19,6 +19,7 @@
 		var/mob/living/critter/skeleton_commander/S = new /mob/living/critter/skeleton_commander(get_turf(holder.owner), W)
 		var/mob/living/critter/nascent/N = holder.owner
 		holder.owner.mind.transfer_to(S)
+		holder.owner.unequip_all()
 		qdel(N)
 
 /datum/targetable/critter/nascent/become_voidhound
@@ -39,6 +40,7 @@
 		var/mob/living/critter/voidhound/S = new /mob/living/critter/voidhound(get_turf(holder.owner), W)
 		var/mob/living/critter/nascent/N = holder.owner
 		holder.owner.mind.transfer_to(S)
+		holder.owner.unequip_all()
 		qdel(N)
 
 /datum/targetable/critter/nascent/become_spiker
@@ -59,5 +61,6 @@
 		var/mob/living/critter/spiker/S = new /mob/living/critter/spiker(get_turf(holder.owner), W)
 		var/mob/living/critter/nascent/N = holder.owner
 		holder.owner.mind.transfer_to(S)
+		holder.owner.unequip_all()
 		qdel(N)
 
