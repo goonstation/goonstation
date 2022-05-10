@@ -978,7 +978,8 @@
 					x = M.x,
 					y = M.y,
 					z = M.z,
-					ref = "\ref[M]"
+					ref = "\ref[M]",
+					angle = -arctan(M.x - user.x, M.y - user.y)
 				)
 				linkedMagnets += list(magnetData)
 			.["linkedMagnets"] = linkedMagnets
