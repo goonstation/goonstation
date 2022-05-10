@@ -195,10 +195,10 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 			targeting = 1
 			//target<< 'sound/misc/chefsong_start.ogg'
 			SPAWN(8 SECONDS)
-				playsound(target, "sound/ambience/loop/Static_Horror_Loop.ogg", 100, 0, 0, 1, 0, VOLUME_CHANNEL_AMBIENT)
+				playsound(target, "sound/ambience/loop/Static_Horror_Loop.ogg", 100)
 				sleep(rand(100,400))
 				if(target)
-					playsound(target, 'sound/ambience/loop/Static_Horror_Loop_End.ogg', 100, 0, 0, 1, 0, VOLUME_CHANNEL_AMBIENT)
+					playsound(target, 'sound/ambience/loop/Static_Horror_Loop_End.ogg', 100)
 				qdel(src)
 			walk_towards(src, src.target, 3)
 
