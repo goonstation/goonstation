@@ -31,7 +31,7 @@ export const MineralMagnet = (_props, context) => {
   return (
     <Window
       width={300}
-      height={350}>
+      height={352}>
       <Window.Content>
         <Section title="Magnet Status">
           <Box>
