@@ -173,6 +173,7 @@
 			if (mob_area == A)
 				is_in_area = true
 				break
+		//Todo maybe instead of double points make it so abilities cost less? Avoids hoarding points in a corner.
 		if(is_in_area) //Double points in the area, and a small bonus
 			hauntBonus = (hauntBonus * 2) + 2
 

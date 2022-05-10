@@ -1,7 +1,7 @@
 ////////////////////////////////
 // Skeleton commander abilities
 ////////////////////////////////
-/datum/targetable/critter/skeleton_commander/rally
+/datum/targetable/critter/skeleton_commander/rally	//Todo doesnt seem to work, come back to this
 	name = "rally"
 	desc = "rally"
 	icon_state = "clown_spider_bite"
@@ -54,7 +54,11 @@
 			return 1
 		var/turf/T = get_turf(target)
 		if (isturf(T))
-			new /obj/critter/wraithskeleton(T)//Todo animate a fade in
+			var/obj/critter/wraithskeleton/S = new /obj/critter/wraithskeleton(T)
+			S.alpha = 0
+			animate(S, alpha=255, time=2 SECONDS)
+			S.playsound_local(S.loc, "sound/voice/wraith/wraithhaunt.ogg", 80, 0)
+			S.visible_message("<span class='alert'>[holder.owner] raises its arms and a skeleton appears in front of your eyes!</span>")
 			boutput(holder.owner, "We summon a skeleton from the void")
 		else
 			boutput(holder.owner, "We cannot summon a skeleton here")
