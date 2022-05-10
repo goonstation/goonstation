@@ -702,9 +702,8 @@
 		src.updateUsrDialog()
 		return
 
-	proc/get_ui_data()
-		. = list()
-
+	ui_data(mob/user)
+		. = ..()
 		.["magnetHealth"] = src.health
 		.["magnetActive"] = src.active
 		.["magnetLastUsed"] = src.last_used
@@ -722,6 +721,68 @@
 		.["miningEncounters"] = miningEncounters
 
 		.["time"] = world.time
+
+	ui_act(action, params)
+		var/magnetNotReady = src.active || (src.last_used > world.time && !src.cooldown_override) || src.last_use_attempt > world.time
+		switch(action)
+			if ("geoscan")
+				if (!src)
+					return
+				var/MC = src.get_magnetic_center()
+				if (!MC)
+					boutput(usr, "Error. Magnet is not magnetized.")
+					return
+				mining_scan(MC, usr, src.get_scan_range())
+			if ("activateselectable")
+				if (magnetNotReady)
+					return
+				if (src.uses_global_controls && !istype(mining_controls.magnet_area))
+					boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder!")
+					return
+
+				if (src.check_for_unacceptable_content())
+					src.visible_message("<b>[src.name]</b> states, \"Safety lock engaged. Please remove all personnel and vehicles from the magnet area.\"")
+				else
+					src.last_use_attempt = world.time + 10
+					SPAWN(0)
+						if (src)
+							src.pull_new_source(params["encounter_id"])
+					. = TRUE
+			if ("activatemagnet")
+				if (magnetNotReady)
+					return
+				if (src.uses_global_controls && !istype(mining_controls.magnet_area))
+					boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder!")
+					return
+
+				if (src.check_for_unacceptable_content())
+					src.visible_message("<b>[src.name]</b> states, \"Safety lock engaged. Please remove all personnel and vehicles from the magnet area.\"")
+				else
+					src.last_use_attempt = world.time + 10 // This is to prevent href exploits or autoclickers from pulling multiple times simultaneously
+					SPAWN(0)
+						if (src)
+							src.pull_new_source()
+					. = TRUE
+			if("overridecooldown")
+				if (!src)
+					return
+				if (!ishuman(usr))
+					boutput(usr, "<span class='alert'>AI and robotic personnel may not access the override.</span>")
+				else
+					var/mob/living/carbon/human/H = usr
+					if(!src.allowed(H))
+						boutput(usr, "<span class='alert'>Access denied. Please contact the Chief Engineer or Captain to access the override.</span>")
+					else
+						src.cooldown_override = !src.cooldown_override
+					. = TRUE
+			if("automode")
+				if (!src)
+					return
+				src.automatic_mode = !src.automatic_mode
+				. = TRUE
+
+	ui_status(mob/user, datum/ui_state/state)
+		. = tgui_broken_state.can_use_topic(src, user)
 
 	proc/generate_interface(var/mob/user as mob)
 		src.add_dialog(user)
@@ -907,7 +968,7 @@
 		.["linkedMagnets"] = null
 
 		if(istype(linked_magnet))
-			. = linked_magnet.get_ui_data()
+			. = linked_magnet.ui_data(user)
 			.["isLinked"] = TRUE
 		else
 			var/list/linkedMagnets = list()
@@ -927,64 +988,7 @@
 		. = ..()
 		if (.)
 			return
-		var/obj/machinery/mining_magnet/M = src.linked_magnet
-		var/magnetNotReady = !M || M.active || (M.last_used > world.time && !M.cooldown_override) || M.last_use_attempt > world.time
 		switch(action)
-			if ("geoscan")
-				if (!M)
-					return
-				var/MC = M.get_magnetic_center()
-				if (!MC)
-					boutput(usr, "Error. Magnet is not magnetized.")
-					return
-				mining_scan(MC, usr, M.get_scan_range())
-			if ("activateselectable")
-				if (magnetNotReady)
-					return
-				if (M.uses_global_controls && !istype(mining_controls.magnet_area))
-					boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder!")
-					return
-
-				if (M.check_for_unacceptable_content())
-					M.visible_message("<b>[M.name]</b> states, \"Safety lock engaged. Please remove all personnel and vehicles from the magnet area.\"")
-				else
-					M.last_use_attempt = world.time + 10
-					SPAWN(0)
-						if (M)
-							M.pull_new_source(params["encounter_id"])
-					. = TRUE
-			if ("activatemagnet")
-				if (magnetNotReady)
-					return
-				if (M.uses_global_controls && !istype(mining_controls.magnet_area))
-					boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder!")
-					return
-
-				if (M.check_for_unacceptable_content())
-					M.visible_message("<b>[M.name]</b> states, \"Safety lock engaged. Please remove all personnel and vehicles from the magnet area.\"")
-				else
-					M.last_use_attempt = world.time + 10 // This is to prevent href exploits or autoclickers from pulling multiple times simultaneously
-					SPAWN(0)
-						if (M)
-							M.pull_new_source()
-					. = TRUE
-			if("overridecooldown")
-				if (!M)
-					return
-				if (!ishuman(usr))
-					boutput(usr, "<span class='alert'>AI and robotic personnel may not access the override.</span>")
-				else
-					var/mob/living/carbon/human/H = usr
-					if(!M.allowed(H))
-						boutput(usr, "<span class='alert'>Access denied. Please contact the Chief Engineer or Captain to access the override.</span>")
-					else
-						M.cooldown_override = !M.cooldown_override
-					. = TRUE
-			if("automode")
-				if (!M)
-					return
-				M.automatic_mode = !M.automatic_mode
-				. = TRUE
 			if("linkmagnet")
 				linked_magnet = locate(params["ref"]) in linked_magnets
 				if (!istype(linked_magnet))
@@ -1003,6 +1007,14 @@
 			if ("unlinkmagnet")
 				src.linked_magnet = null
 				. = TRUE
+			else
+				if(istype(src.linked_magnet))
+					. = src.linked_magnet.ui_act(action, params)
+
+	ui_status(mob/user, datum/ui_state/state)
+		. = ..()
+		if(istype(src.linked_magnet))
+			. = min(., linked_magnet.ui_status(user))
 
 	/*
 	attack_hand(var/mob/user as mob)
