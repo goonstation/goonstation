@@ -3,7 +3,7 @@
 
 /mob/wraith
 	name = "Wraith"
-	real_name = "Wraith" //todo: construct name from a user input (e.g. <x> the Impaler)
+	real_name = "Wraith"
 	desc = "Jesus Christ, how spooky."
 	icon = 'icons/mob/mob.dmi'
 #if defined(XMAS) || (BUILD_TIME_MONTH == 2 && BUILD_TIME_DAY == 14)
@@ -105,7 +105,7 @@
 			movement_controller = new /datum/movement_controller/poltergeist (src)
 
 		var/default_name = make_name()
-		//Needs more testing
+		//Todo might not work, Needs more testing
 		src.choose_name(3, "Wraith", default_name)
 		src.UpdateName()
 
@@ -156,7 +156,7 @@
 		var/life_time_passed = max(life_tick_spacing, world.timeofday - last_life_update)
 
 
-		src.hauntBonus = 0
+		src.hauntBonus = 0	//Todo, give a numbers pass here. Adjust for each type of wraith
 		if (src.haunting)
 			for (var/mob/living/carbon/human/H in viewers(6, src))
 				if (!H.stat && !H.bioHolder.HasEffect("revenant"))
@@ -169,11 +169,11 @@
 
 		var/area/mob_area = get_area(src)
 		var/is_in_area = false
-		for (var/area/A in booster_locations)
+		for (var/area/A in booster_locations)	//Are we in a booster zone?
 			if (mob_area == A)
 				is_in_area = true
 				break
-		if(is_in_area) //Double points in the area
+		if(is_in_area) //Double points in the area, and a small bonus
 			hauntBonus = (hauntBonus * 2) + 2
 
 		if(hauntBonus > 0)
@@ -311,12 +311,12 @@
 		health -= burn
 		health -= brute * 3
 
-		//add turn back
-		if((burn + brute )> 5 && istype(src, /mob/wraith/wraith_trickster))
+		//Enough damage breaks the trickster's disguise.
+		if ((burn + brute)> 5 && istype(src, /mob/wraith/wraith_trickster))
 			var/mob/wraith/wraith_trickster/WT = src
 			if(WT.copied_appearance != null && WT.backup_appearance != null)
 				WT.appearance = WT.backup_appearance
-				if(!WT.density)
+				if(!WT.density)	//Giving back the appearance might make use incorporeal again, lets make sure it doesnt happen.
 					haunt()
 				WT.copied_appearance = null
 				WT.backup_appearance = null
@@ -335,7 +335,7 @@
 			hud.update_health()
 		return
 
-	Move(var/turf/NewLoc, direct)
+	Move(var/turf/NewLoc, direct)	//Todo Need to increase movespeed and allow door opening when manifested as trickster.
 		if (loc)
 			if (!isturf(loc) && !density)
 				src.set_loc(get_turf(loc))
@@ -501,7 +501,7 @@
 				boutput(src, "You are currently muted and may not speak.")
 				return
 
-			if (istype (src, /mob/wraith/wraith_trickster))
+			if (istype (src, /mob/wraith/wraith_trickster))	//Todo, redo this thing. Copy appearance's speech sound. Add overhead text. Sanitize and log. Add typing indicator.
 				message = trim(message)
 
 				UpdateOverlays(speech_bubble, "speech_bubble")
@@ -615,16 +615,13 @@
 			src.addAbility(/datum/targetable/wraithAbility/help)
 			src.addAbility(/datum/targetable/wraithAbility/absorbCorpse)
 			src.addAbility(/datum/targetable/wraithAbility/possessObject)
-			//src.addAbility(/datum/targetable/wraithAbility/makeRevenant)
 			src.addAbility(/datum/targetable/wraithAbility/decay)
 			src.addAbility(/datum/targetable/wraithAbility/command)
-			//src.addAbility(/datum/targetable/wraithAbility/raiseSkeleton)
 			src.addAbility(/datum/targetable/wraithAbility/animateObject)
 			src.addAbility(/datum/targetable/wraithAbility/haunt)
 			src.addAbility(/datum/targetable/wraithAbility/spook)
 			src.addAbility(/datum/targetable/wraithAbility/whisper)
 			src.addAbility(/datum/targetable/wraithAbility/blood_writing)
-			//src.addAbility(/datum/targetable/wraithAbility/make_poltergeist)
 
 		addAllDecayAbilities()
 			src.addAbility(/datum/targetable/wraithAbility/curse/blood)
@@ -665,8 +662,26 @@
 			src.removeAbility(/datum/targetable/wraithAbility/whisper)
 			src.removeAbility(/datum/targetable/wraithAbility/blood_writing)
 			src.removeAbility(/datum/targetable/wraithAbility/make_poltergeist)
+			src.removeAbility(/datum/targetable/wraithAbility/curse/blood)
+			src.removeAbility(/datum/targetable/wraithAbility/curse/enfeeble)
+			src.removeAbility(/datum/targetable/wraithAbility/curse/blindness)
+			src.removeAbility(/datum/targetable/wraithAbility/curse/rot)
+			src.removeAbility(/datum/targetable/wraithAbility/poison)
+			src.removeAbility(/datum/targetable/wraithAbility/summon_rot_hulk)
+			src.removeAbility(/datum/targetable/wraithAbility/make_plague_rat)
+			src.removeAbility(/datum/targetable/wraithAbility/speak)
+			src.removeAbility(/datum/targetable/wraithAbility/choose_haunt_appearance)
+			src.removeAbility(/datum/targetable/wraithAbility/make_poltergeist)
+			src.removeAbility(/datum/targetable/wraithAbility/mass_whisper)
+			src.removeAbility(/datum/targetable/wraithAbility/mass_emag)
+			src.removeAbility(/datum/targetable/wraithAbility/possess)
+			src.removeAbility(/datum/targetable/wraithAbility/hallucinate)
+			src.removeAbility(/datum/targetable/wraithAbility/create_summon_portal)
+			src.removeAbility(/datum/targetable/wraithAbility/raiseSkeleton)
+			src.removeAbility(/datum/targetable/wraithAbility/makeRevenant)
+			src.removeAbility(/datum/targetable/wraithAbility/harbinger_summon)
 
-		get_new_booster_zones()
+		get_new_booster_zones()	//Get new zones you can get more power in.
 			booster_locations = list()
 			var/list/safe_area_names = list()
 			var/num_safe_areas = clamp(3, 1, 5)
@@ -679,7 +694,7 @@
 				locations_copy.Remove(temp)
 				safe_area_names.Add(temp)
 				booster_locations.Add(valid_locations[temp])
-			boutput(src, "You will gather energy more rapidly if you are close to [get_battle_area_names(safe_area_names)]!")
+			boutput(src, "<span class='alert'>You will gather energy more rapidly if you are close to [get_battle_area_names(safe_area_names)]!</span>")
 
 		updateButtons()
 			abilityHolder.updateButtons()
@@ -734,7 +749,7 @@
 
 /mob/wraith/wraith_decay
 	name = "Plaguebringer"
-	real_name = "Plaguebringer" //todo: construct name from a user input (e.g. <x> the Impaler)
+	real_name = "plaguebringer"
 	desc = "A terrifyingly bloated spirit."
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "wraith"
@@ -744,9 +759,9 @@
 		src.addAllDecayAbilities()
 
 /mob/wraith/wraith_invocation
-	name = "Plaguebringer"
-	real_name = "Plaguebringer" //todo: construct name from a user input (e.g. <x> the Impaler)
-	desc = "A terrifyingly bloated spirit."
+	name = "Harbinger"
+	real_name = "harbinger"
+	desc = "An evil looking, regal specter."
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "wraith"
 
@@ -755,14 +770,14 @@
 		src.addAllHarbingerAbilities()
 
 /mob/wraith/wraith_trickster
-	name = "Plaguebringer"
-	real_name = "Plaguebringer" //todo: construct name from a user input (e.g. <x> the Impaler)
-	desc = "A terrifyingly bloated spirit."
+	name = "trickster"
+	real_name = "trickster"
+	desc = "A ghost seeking to disrupt the station with lies and deception."
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "wraith"
-	var/points_to_possess = 5
-	var/possession_points = 0
-	var/mutable_appearance/copied_appearance = null
+	var/points_to_possess = 30	//How many points do we need to possess someone?
+	var/possession_points = 0	//How many do we currently have?
+	var/mutable_appearance/copied_appearance = null	//Steal someone's appearance and use it during haunt
 	var/mutable_appearance/backup_appearance = null
 
 	New(var/mob/M)
@@ -772,10 +787,10 @@
 	Life(parent)
 		if (..(parent))
 			return 1
-		for (var/mob/living/carbon/human/H in viewers(6, src)) //If they can see us, we are corporeal, might need to come back to this because admin shenanigans or spooky goggles
+		for (var/mob/living/carbon/human/H in viewers(6, src)) //Todo If they can see us, we are corporeal, might need to come back to this because admin shenanigans or spooky goggles
 			if (!H.stat && !H.bioHolder.HasEffect("revenant"))
 				possession_points ++
-		//if (src.haunting)
+
 // i am dumb - marq
 /mob/proc/wraithize()
 	if (src.mind || src.client)

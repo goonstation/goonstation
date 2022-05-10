@@ -1,3 +1,6 @@
+//Only used to morph into something else.
+//Avoids the issue of the game crashing when chosen and the transform prompt being lost.
+
 /mob/living/critter/nascent
 	name = "???"
 	real_name = "???"

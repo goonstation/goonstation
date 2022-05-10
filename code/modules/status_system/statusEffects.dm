@@ -1525,7 +1525,7 @@
 			H.TakeDamage(zone="All", brute=damage)
 			bleed(H, damage, bleed)
 
-/datum/statusEffect/terror
+/datum/statusEffect/terror	//Todo add more illusions
 	id = "terror"
 	name = "Terror"
 	desc = "terrorized"

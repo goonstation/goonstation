@@ -9,7 +9,7 @@
 	can_disarm = 1
 	icon_state = "scuttlebot"
 	var/health_brute = 80
-	var/health_brute_vuln = 0.8
+	var/health_brute_vuln = 0.7
 	var/health_burn = 80
 	var/health_burn_vuln = 0.3
 	var/mob/wraith/master = null
@@ -26,7 +26,7 @@
 		abilityHolder.addAbility(/datum/targetable/critter/skeleton_commander/rally)
 		abilityHolder.addAbility(/datum/targetable/wrestler/strike)
 		abilityHolder.addAbility(/datum/targetable/critter/skeleton_commander/summon_lesser_skeleton)
-		src.add_stam_mod_max("slow", STAMINA_MAX / 0.5)
+		src.add_stam_mod_max("slow", STAMINA_MAX / 0.5)	//We are always slow and cant sprint fast.
 
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))

@@ -1,8 +1,8 @@
 /obj/machinery/warren
-	name = "warren"
+	name = "rat warren"
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "anom"
-	desc = "A rat warren."
+	desc = "A pile of garbage vaguely ressembling a nest."
 	anchored = 1
 	density = 0
 	_health = 25

@@ -81,7 +81,7 @@
 			P.die()
 			return
 
-	on_end(var/obj/projectile/P)
+	on_end(var/obj/projectile/P)	//Clean up behind us
 		..()
 		sleep(7 DECI SECOND)
 		if (previous_line != null)

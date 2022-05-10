@@ -1,3 +1,6 @@
+//Quick, stealthy, squishy assassin
+//Take the heat off of the wraith by attracting attention
+
 /mob/living/critter/voidhound
 	name = "Voidhound"
 	desc = "Todo"
@@ -26,7 +29,7 @@
 		abilityHolder.addAbility(/datum/targetable/critter/voidhount/rushdown)
 		abilityHolder.addAbility(/datum/targetable/critter/slam)
 
-	setup_hands()//Todo find a weaker arm
+	setup_hands()//Todo might need a weaker arm
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/claw

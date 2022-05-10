@@ -55,7 +55,7 @@
 				var/turf/next_step = get_step(M, M.dir)
 				for (var/mob/A in next_step)
 					playsound(M.loc, "sound/impact_sounds/Generic_Hit_3.ogg", 50, 1)
-					A.setStatus("weakened", 2.5 SECONDS)
+					A.setStatus("weakened", 3 SECONDS)
 				step(M, M.dir)
 				if(i < jump_tiles / 2)
 					M.pixel_y += pixel_move

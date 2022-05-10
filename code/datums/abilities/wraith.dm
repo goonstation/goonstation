@@ -530,7 +530,6 @@
 		if (K.density)
 			boutput(holder.owner, "We fade back into the shadows")
 			cooldown = 0 SECONDS
-			//Fix this shit
 			if (istype(K, /mob/wraith/wraith_trickster))
 				var/mob/wraith/wraith_trickster/T = K
 				T.appearance = T.backup_appearance
@@ -541,12 +540,23 @@
 			boutput(holder.owner, "We show ourselves")
 			var/mob/wraith/W = holder.owner
 
-			if ((istype(W, /mob/wraith/wraith_trickster)))
+			//Todo bugfix: Cooldown doesnt begin when manifesting as a human
+			cooldown = 10 SECONDS
+
+			if ((istype(W, /mob/wraith/wraith_trickster)))	//Trickster can appear as a human, living or dead.
 				var/mob/wraith/wraith_trickster/T = holder.owner
 				if (T.copied_appearance != null)
 					T.backup_appearance = new/mutable_appearance(T)
-					T.appearance = T.copied_appearance
-
+					T.appearance = T.copied_appearance	//Appearace might make use dense already. So we cant use the W.haunt() proc
+					usr.playsound_local(usr.loc, "sound/voice/wraith/wraithhaunt.ogg", 80, 0)
+					animate(T, alpha=255, time=2 SECONDS)
+					if (!T.density)
+						T.set_density(1)
+					REMOVE_ATOM_PROPERTY(T, PROP_MOB_INVISIBILITY, T)
+					T.see_invisible = INVIS_NONE
+					T.haunting = 1
+					T.flags &= !UNCRUSHABLE
+					return 0
 
 			//check done in case a poltergeist uses this from within their master.
 			if (iswraith(W.loc))
@@ -554,7 +564,7 @@
 				return 1
 
 			usr.playsound_local(usr.loc, "sound/voice/wraith/wraithhaunt.ogg", 80, 0)
-			cooldown = 10 SECONDS
+
 			return W.haunt()
 
 /datum/targetable/wraithAbility/spook
@@ -841,7 +851,7 @@
 	desc = "Choose a form to evolve into once you have grown strong enough"
 	targeted = 0
 	pointCost = 1
-	//Todo: Fix list appearing on the left of the screen
+	//Todo: copied from "spook". Fix list appearing on the left of the screen
 	var/status = 0
 	var/static/list/effects = list("Rot" = 1, "Summoner" = 2, "Trickster" = 3)
 	var/list/effects_buttons = list()
@@ -891,6 +901,9 @@
 
 			return W
 
+////////////////////////
+// Curses
+////////////////////////
 /datum/targetable/wraithAbility/curse
 	name = "Base curse"
 	icon_state = "skeleton"
@@ -903,11 +916,12 @@
 		if (..())
 
 			return 1
-		if (istype(get_area(target), /area/station/chapel))
+		//Todo maybe give lasting immunity if you stood in the chapel? Avoids harassing the same person over and over, but perhaps its fine.
+		if (istype(get_area(target), /area/station/chapel))	//Dont spam curses in the chapel.
 			boutput(holder.owner, "The holy ground this creature is standing on repels the curse immediatly.")
 			return 1
 
-		if (ishuman(target))
+		if (ishuman(target))	//Lets let people know they have been cursed, might not be obvious at first glance
 			var/mob/living/carbon/H = target
 			var/curseCount = 0
 			if (H.bioHolder.HasEffect("blood_curse"))
@@ -1016,10 +1030,10 @@
 		else
 			return 1
 
-/datum/targetable/wraithAbility/curse/death
+/datum/targetable/wraithAbility/curse/death	//Only castable if you already put 4 curses on someone
 	name = "Curse of death"
 	icon_state = "skeleton"
-	desc = "Reap a fully cursed being's soul"
+	desc = "Reap a fully cursed being's soul!"
 	targeted = 1
 	pointCost = 20
 	cooldown = 40 SECONDS
@@ -1028,14 +1042,14 @@
 		if (..())
 			return 1
 
-		if (ishuman(target))
+		if (ishuman(target))	//Todo maybe cancel the affect if you manage to get dragged to the chapel? Might feel bad for the wraith, so perhaps not.
 			var/mob/living/carbon/human/H = target
 			var/mob/wraith/W = holder.owner
 			if (H?.bioHolder.HasEffect("rot_curse") && H?.bioHolder.HasEffect("weak_curse") && H?.bioHolder.HasEffect("blind_curse") && H?.bioHolder.HasEffect("blood_curse"))
 				boutput(holder.owner, "<span class='alert'>That soul is OURS</span>")
 				boutput(H, "The voices in your heads are reaching a crescendo")
 				sleep(4 SECOND)
-				H.make_jittery(50)
+				H.make_jittery(50)	//Todo, this doesnt work, need to fix it.
 				H.changeStatus("stunned", 2 SECONDS)
 				H.emote("scream")
 				boutput(holder.owner, "You feel netherworldly hands grasping you.")
@@ -1086,8 +1100,6 @@
 		if (..())
 			return 1
 
-		// use step_towards(N,M) when eating
-
 		var/decal_count = 0
 		var/list/found_decal_list = list()
 		for (var/obj/decal/cleanable/C in range(3, get_turf(holder.owner)))
@@ -1097,17 +1109,20 @@
 					found_decal_list += C
 		if (decal_count > 15)
 			var/turf/T = get_turf(holder.owner)
+			T.visible_message("<span class='alert'>All the filth and grime around begins to writhe and move!</span>")
 			for(var/obj/decal/cleanable/C in found_decal_list)
 				step_towards(C,T)
 			sleep(1.5 SECOND)
 			for(var/obj/decal/cleanable/C in found_decal_list)
 				step_towards(C,T)
-			sleep(1.5 SECOND)
+			sleep(1.5 SECOND)	//Todo add a cool effect here.
 			if (decal_count > 30)
-				new /mob/living/critter/exploder/strong(T)
+				var/mob/living/critter/exploder/strong/E = new /mob/living/critter/exploder/strong(T)
+				T.visible_message("<span class='alert'>A [E] slowly emerges from the gigantic pile of grime!</span>")
 				boutput(holder.owner, "The great amount of filth coalesces into a rotting goliath")
 			else
-				new /mob/living/critter/exploder(T)
+				var/mob/living/critter/exploder/E = new /mob/living/critter/exploder(T)
+				T.visible_message("<span class='alert'>A [E] slowly rises up from the coalesced filth!</span>")
 				boutput(holder.owner, "The filth accumulates into a living bloated abomination")
 			for(var/obj/decal/cleanable/C in found_decal_list)
 				qdel(C)
@@ -1141,14 +1156,13 @@
 			boutput(W, __red("Why would you want to poison yourself?"))
 			return 1
 
-		// Written in such a way that adding other reagent containers (e.g. medicine) would be trivial.
 		var/obj/item/reagent_containers/RC = null
 		var/attempt_success = 0
 
-		if (istype(target, /obj/item/reagent_containers/food)) // Food and drinking glass/bottle parent.
+		if (istype(target, /obj/item/reagent_containers/food))
 			RC = target
 		else
-			boutput(W, __red("You can't poison [target], only food items and drinks."))
+			boutput(W, __red("You can't poison [target], only food items, drinks and glass containers."))
 			return 1
 
 		var/poison_choice = input("Select the target poison: ", "Target Poison", null) as null|anything in the_poison
@@ -1209,10 +1223,10 @@
 
 		boutput(usr, "<b>You whisper to everyone around you:</b> [message]")
 
-/datum/targetable/wraithAbility/mass_emag
+/datum/targetable/wraithAbility/mass_emag	//Todo, check if emagging borgs is okay
 	name = "Mass Decay"
 	icon_state = "whisper"
-	desc = "Break every machinery around you."
+	desc = "Disrupt the energy of every machinery around you."
 	pointCost = 10
 	targeted = 0
 	cooldown = 10 SECONDS
@@ -1222,18 +1236,17 @@
 			return 1
 
 		boutput(usr, "<span class='notice'>You begin to gather your energy.</span>")
+		var/turf/T = get_turf(holder.owner)
 		sleep(5 SECONDS)
-		for (var/mob/living/carbon/human/A in range(4))
+		for (var/mob/living/carbon/human/A in range(4, T))
 			if (!isdead(A))
 				var/mob/living/carbon/H = A
 				boutput(H, "<span class='alert'>You feel a sudden dizzyness!</span>")
 				H.emote("pale")
 				return 0
-		for (var/obj/A in range(4))
-			if (isobj(A))
-				var/obj/O = A
-				if (O.emag_act(null, null) && !istype(O, /obj/machinery/computer/shuttle/embedded))
-					boutput(usr, "<span class='notice'>You alter the energy of [O].</span>")
+		for (var/obj/A in range(4, T))
+			if (A.emag_act(null, null) && !istype(A, /obj/machinery/computer/shuttle/embedded))
+				boutput(usr, "<span class='notice'>You alter the energy of [A].</span>")
 
 /datum/targetable/wraithAbility/possess
 	name = "Possession"
@@ -1302,7 +1315,7 @@
 					boutput(H, "The presence has left your body and you are thrusted back into it, immediatly assaulted with a winging headacke.")
 					return 0
 			else
-				boutput(holder.owner, "You cannot possess with only [W.possession_points] possession power. You'll need at least [(W.points_to_possess - W.possession_points)]")
+				boutput(holder.owner, "You cannot possess with only [W.possession_points] possession power. You'll need at least [(W.points_to_possess - W.possession_points)] more.")
 				return 1
 
 /datum/targetable/wraithAbility/hallucinate
@@ -1340,9 +1353,15 @@
 
 		var/turf/T = get_turf(holder.owner)
 		if (isturf(T) && !istype(T, /turf/space))
-			boutput(holder.owner, "You gather your energy and open a portal")
-			new /obj/vortex_wraith(get_turf(holder.owner))
-			return 0
+			if(istype(holder.owner, /mob/wraith))
+				var/mob/wraith/W = holder.owner
+				if(W.haunting)
+					boutput(holder.owner, "You gather your energy and open a portal")
+					new /obj/vortex_wraith(get_turf(holder.owner))
+					return 0
+				else
+					boutput(holder.owner, "Your connection to the physical plane is too weak. You must be manifested to do this.")
+					return 1
 		else
 			boutput(holder.owner, "We cannot open a portal here")
 			return 1
@@ -1361,7 +1380,16 @@
 			var/mob/wraith/wraith_trickster/W = holder.owner
 			boutput(holder.owner, "We steal [target]'s appearance for ourselves.")
 			W.copied_appearance = new/mutable_appearance(target)
+			//Todo instead check if lying, and if lying transform.turn
+			W.copied_appearance.transform = null
+			W.copied_appearance.alpha = 0
 			return 0
+		else if((istype(holder.owner, /mob/wraith/wraith_trickster)) && (istype(target, /mob/wraith/wraith_trickster)))
+			var/mob/wraith/wraith_trickster/W = holder.owner
+			boutput(W, "We discard our stored appearance.")
+			W.copied_appearance = null
+		else
+			boutput(holder.owner, "We cannot copy this appearance")
 
 /datum/targetable/wraithAbility/harbinger_summon
 	name = "Summon void creature"
@@ -1373,7 +1401,6 @@
 	var/in_use = 0
 	var/ghost_confirmation_delay  = 30 SECONDS
 
-	// cast(turf/target, params)
 	cast(atom/target, params)
 		if (..())
 			return 1
@@ -1455,7 +1482,7 @@
 			if (istype(M, /mob/living/critter/plaguerat))
 				total_plague_rats++
 		if(total_plague_rats < max_allowed_rats)
-			if (istype(holder.owner, /mob/living/critter/plaguerat))
+			if (istype(holder.owner, /mob/living/critter/plaguerat))	//plaguerats must be near their warren
 				var/near_warren = false
 				var/turf/T = get_turf(holder.owner)
 				for (var/obj/O in T.contents)
@@ -1559,10 +1586,6 @@
 		W.playsound_local(W.loc, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65, 0)
 		boutput(usr, "<b>You whisper to your summons:</b> [message]")
 		return 0
-
-
-
-
 
 /obj/spookMarker
 	name = "Spooky Marker"

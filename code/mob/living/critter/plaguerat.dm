@@ -13,7 +13,6 @@
 
 	var/eaten_amount = 0	//How much filth did we eat
 	var/amount_to_grow = 0	//How much is needed to grow
-	var/feeding = 0
 	var/venom = "rat_venom"	//What are we injecting on bite
 	var/adultpath = null	//What do we grow into
 	var/bitesound = "sound/weapons/handcuffs.ogg"
@@ -39,7 +38,7 @@
 
 	blood_id = "miasma"
 
-	var/bite_transfer_amt = 1
+	var/bite_transfer_amt = 1	//How much rat venom are we giving to people?
 
 	New(var/turf/T, var/mob/wraith/M = null)
 		..(T)
@@ -60,11 +59,11 @@
 		HH.limb_name = "claws"
 
 		HH = hands[2]
-		HH.limb = new /datum/limb/mouth/small	// if not null, the special limb to use when attack_handing
-		HH.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
-		HH.icon_state = "mouth"					// the icon state of the hand UI background
-		HH.name = "mouth"						// designation of the hand - purely for show
-		HH.limb_name = "teeth"					// name for the dummy holder
+		HH.limb = new /datum/limb/mouth/small
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "mouth"
+		HH.name = "mouth"
+		HH.limb_name = "teeth"
 		HH.can_hold_items = 0
 
 	setup_healths()
@@ -75,7 +74,7 @@
 	on_pet(mob/user)
 		if (..())
 			return 1
-		if (prob(50))	//You probably shouldnt be petting them
+		if (prob(10))	//You probably shouldnt be petting them
 			boutput(user, "As you approach to pet [src], it snaps at you and bites your hand.")
 			random_brute_damage(user, 5)
 			user.emote("scream")
@@ -122,14 +121,13 @@
 		src.visible_message("<span class='alert'><b>[src] bloats and grows up in size. The smell is utterly revolting!</b></span>",\
 		"<span class='notice'><b>You grow up!</b></span>")
 		SPAWN(0)
-			var/MA = null
+			var/MA = null	//Do we have a master? Lets transfer it to the new rat.
 			if(src.master != null)
 				MA = master
 			var/mob/living/critter/plaguerat/new_rat = new adultpath(get_turf(src), MA)
 			var/mob/living/critter/plaguerat/old_rat = src
 			src.mind.transfer_to(new_rat)
 			qdel(old_rat)
-			//src.make_critter(src.adultpath)
 
 /mob/living/critter/plaguerat/young
 	name = "Diseased rat"
@@ -137,7 +135,6 @@
 	desc = "A diseased looking rat."
 	icon_state = "big_spide"
 	amount_to_grow = 3
-	feeding = 0
 	bite_transfer_amt = 1
 	flags = TABLEPASS | DOORPASS
 	adultpath = /mob/living/critter/plaguerat/medium
@@ -161,11 +158,11 @@
 		HH.limb_name = "claws"
 
 		HH = hands[2]
-		HH.limb = new /datum/limb/mouth/small	// if not null, the special limb to use when attack_handing
-		HH.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
-		HH.icon_state = "mouth"					// the icon state of the hand UI background
-		HH.name = "mouth"						// designation of the hand - purely for show
-		HH.limb_name = "teeth"					// name for the dummy holder
+		HH.limb = new /datum/limb/mouth/small
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "mouth"
+		HH.name = "mouth"
+		HH.limb_name = "teeth"
 		HH.can_hold_items = 0
 
 /mob/living/critter/plaguerat/medium
@@ -173,7 +170,6 @@
 	real_name = "plague ridden rat"
 	desc = "A wretched, disgusting rat."
 	icon_state = "big_spide"
-	feeding = 0
 	amount_to_grow = 2
 	flags = DOORPASS
 	bite_transfer_amt = 2.5
@@ -201,11 +197,11 @@
 		HH.limb_name = "claws"
 
 		HH = hands[2]
-		HH.limb = new /datum/limb/mouth/small	// if not null, the special limb to use when attack_handing
-		HH.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
-		HH.icon_state = "mouth"					// the icon state of the hand UI background
-		HH.name = "mouth"						// designation of the hand - purely for show
-		HH.limb_name = "teeth"					// name for the dummy holder
+		HH.limb = new /datum/limb/mouth/small
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "mouth"
+		HH.name = "mouth"
+		HH.limb_name = "teeth"
 		HH.can_hold_items = 0
 
 /mob/living/critter/plaguerat/adult
@@ -213,7 +209,6 @@
 	real_name = "bloated rat mass"
 	desc = "A horrible mass of puss and warts, that once used to look like a rat."
 	icon_state = "big_spide"
-	feeding = 0
 	bite_transfer_amt = 4
 	health_brute = 60
 	health_brute_vuln = 0.6
@@ -240,9 +235,9 @@
 		HH.limb_name = "claws"
 
 		HH = hands[2]
-		HH.limb = new /datum/limb/mouth/small	// if not null, the special limb to use when attack_handing
-		HH.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
-		HH.icon_state = "mouth"					// the icon state of the hand UI background
-		HH.name = "mouth"						// designation of the hand - purely for show
-		HH.limb_name = "teeth"					// name for the dummy holder
+		HH.limb = new /datum/limb/mouth/small
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "mouth"
+		HH.name = "mouth"
+		HH.limb_name = "teeth"
 		HH.can_hold_items = 0

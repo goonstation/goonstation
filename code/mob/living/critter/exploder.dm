@@ -1,5 +1,5 @@
 /mob/living/critter/exploder
-	name = "bloated abomination"
+	name = "Bloated abomination"
 	desc = "A rotting, walking mass of flesh."
 	icon = 'icons/misc/critter.dmi'
 	icon_state = "mouse"
@@ -52,8 +52,8 @@
 	death(var/gibbed)
 		..(gibbed, 0)
 
-		src.visible_message("[src] explodes!")
-		for (var/mob/M in view(3, src.loc))
+		src.visible_message("[src] explodes!")	//Shouldnt stand close to this thing
+		for (var/mob/M in view(3, src.loc))	//Todo might need to swap view for orange
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if(istype(H.wear_suit, /obj/item/clothing/suit/bio_suit) && istype(H.head, /obj/item/clothing/head/bio_hood))
@@ -63,7 +63,7 @@
 			M.take_toxin_damage(25)
 			if (M.reagents)
 				M.reagents.add_reagent("miasma", 20, null, T0C)
-			boutput(M, "<span class='alert'>You are sprayed with disgusting rotting flesh!</span>")
+			boutput(M, "<span class='alert'>You are sprayed with disgusting rotting flesh! You're pretty sure some of it got in your mouth.</span>")
 		var/turf/U = get_turf(src)
 		U.fluid_react_single("miasma", 120, airborne = 1)
 		U.fluid_react_single("blood", 60, airborne = 0)
@@ -118,8 +118,8 @@
 		return 1
 
 
-/mob/living/critter/exploder/strong
-	name = "huge plague-ridden goliath"
+/mob/living/critter/exploder/strong	//Summoned by rot hulk if we find a big pile of filth
+	name = "Huge plague-ridden goliath"
 	desc = "A rotting, walking mass of flesh."
 	health_brute = 80
 	health_burn = 80
@@ -129,7 +129,7 @@
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
-		HH.limb = new /datum/limb/abomination
+		HH.limb = new /datum/limb/abomination	//Todo probably a bit too strong? Needs a weaker arm.
 		HH.icon_state = "handl"				// the icon state of the hand UI background
 		HH.limb_name = "left bear arm"
 
