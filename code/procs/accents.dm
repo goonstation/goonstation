@@ -2342,3 +2342,140 @@ var/list/zalgo_mid = list(
 		modded += pick(" rhaggy!"," rir bruddy."," rhoinks!"," rharoo!")
 
 	return modded
+
+/**
+ * Southern drawl
+ *
+ * https://en.wikipedia.org/wiki/Southern_American_English
+ */
+/proc/southify(var/string)
+	// The rest goes word by word. We need to match a pair of words for a few.
+	// It ain't pretty, but it works.
+	string = replacetext(string, "you all", "y'all", 1)
+	string = replacetext(string, "going to", "fixin' t'", 1)
+	string = replacetext(string, "about to", "fixin' t'", 1)
+	string = replacetext(string, "am not", "ain't", 1)
+	string = replacetext(string, "are not", "ain't", 1)
+	string = replacetext(string, "over there", "o'er yonder", 1)
+	string = replacetext(string, "what the fuck", "what 'n tarnation", 1)
+
+	var/list/tokens = splittext(string, " ")
+	var/list/modded_tokens = list()
+
+	var/regex/punct_check = regex("\\W+\\Z", "i")
+	for(var/token in tokens)
+		// check to see if we can just swap out the token
+		var/modified_token = ""
+		var/original_word = ""
+		var/punct = ""
+		var/punct_index = findtext(token, punct_check)
+		if(punct_index)
+			punct = copytext(token, punct_index)
+			original_word = copytext(token, 1, punct_index)
+		else
+			original_word = token
+
+		var/matching_token = strings("language/cowboy.txt", lowertext(original_word), 1)
+		if(matching_token)
+			modified_token = replacetext(original_word, lowertext(original_word), matching_token)
+		else // otherwise run it through the fallback roamer
+			var/datum/text_roamer/T = new/datum/text_roamer(original_word)
+			for(var/i = 0, i < length(original_word), i=i)
+				var/datum/parse_result/P = south_parse(T)
+				modified_token += P.string
+				i += P.chars_used
+				T.curr_char_pos = T.curr_char_pos + P.chars_used
+				T.update()
+
+		modified_token += punct
+		modded_tokens += modified_token
+
+	var/modded = jointext(modded_tokens, " ")
+	if(prob(2))
+		modded += pick(" Ya hear?")
+
+	return modded
+
+/proc/south_parse(var/datum/text_roamer/R)
+	var/new_string = ""
+	var/used = 0
+
+	switch(R.curr_char)
+
+		if("e")
+
+			if(lowertext(R.next_char) == "r")
+				new_string = "'r"
+				used = 2
+
+		if("h")
+
+			if(lowertext(R.next_char) == "e")
+
+				if(R.next_next_char == "")
+					new_string = "'e"
+					used = 2
+
+				if(R.next_next_char == "r")
+					new_string = "'er"
+					used = 3
+			if(lowertext(R.next_char) == "i" && lowertext(R.next_next_char) == "m")
+				new_string = "'im"
+				used = 3
+
+		if("i")
+
+			if(R.next_char == "")
+				new_string = "ah"
+				used = 1
+
+			if(lowertext(R.next_char) == "c")
+
+				if(lowertext(R.next_next_char) == "a")
+					new_string = "'ca"
+					used = 3
+
+				if(lowertext(R.next_next_char) == "e")
+					new_string = "ahce"
+					used = 3
+
+			if(lowertext(R.next_char) == "n" && lowertext(R.next_next_char) =="g")
+				new_string = "in'"
+				used = 3
+
+			if(lowertext(R.next_char) == "t" && R.next_next_char == "")
+				new_string = "'t"
+				used = 2
+
+		if("o")
+
+			if(lowertext(R.next_char) == "f")
+				new_string = "'f"
+				used = 2
+
+		if("s")
+
+			if(lowertext(R.next_char) == "t" && R.next_next_char == "")
+				new_string = "s'"
+				used = 2
+
+		if("t")
+
+			if(lowertext(R.next_char) == "h")
+
+				if(lowertext(R.next_next_char) != "" && lowertext(R.next_next_char) != "r")
+					new_string = "th'"
+					used = 3
+
+			if(lowertext(R.next_char) == "o" && lowertext(R.next_next_char != "u"))
+				new_string = "t'"
+				used = 2
+
+	if(new_string == "")
+		new_string = R.curr_char
+		used = 1
+
+	var/datum/parse_result/P = new/datum/parse_result
+	P.string = new_string
+	P.chars_used = used
+	return P

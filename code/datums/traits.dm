@@ -416,6 +416,18 @@
 	onAdd(var/mob/owner)
 		owner.bioHolder?.AddEffect("accent_tyke")
 
+/obj/trait/southern
+	name = "Southern (0) \[Language\]"
+	cleanName = "Southern"
+	desc = "Ye hang yer hat someplace where th' hats 're ten gall'ns large."
+	id = "southern"
+	icon_state = "southern"
+	points = 0
+	category = list("language")
+
+	onAdd(var/mob/owner)
+		owner.bioHolder?.AddEffect("accent_south")
+
 // VISION/SENSES - Green Border
 
 /obj/trait/cateyes

@@ -451,6 +451,29 @@
 
 		return message
 
+/datum/bioEffect/speech/south
+	name = "Frontal Gyrus Alteration Type-CB"
+	desc = "Causes the language center of the subject's brain to drawl a thick southern manner speech."
+	id = "accent_south"
+	effectType = EFFECT_TYPE_DISABILITY
+	msgGain = "Y'all feel a longin' f'r th' misty taste 'f moonshine."
+	msgLose = "You feel less in tune with Appalachia."
+	reclaim_fail = 10
+	lockProb = 25
+	lockedGaps = 2
+	lockedDiff = 2
+	lockedChars = list("G", "C")
+	lockedTries = 3
+	icon_state = "speech"
+
+	OnSpeak(var/message)
+		if(!istext(message))
+			return ""
+
+		message = southify(message)
+
+		return message
+
 /datum/bioEffect/speech/quiet_voice
 	name = "Constricted Larynx"
 	desc = "Decreases airflow speed and capacity through the subject's larynx."
