@@ -191,7 +191,7 @@ mob/new_player
 		if(href_list["observe"])
 			if(alert(src,"Are you sure you wish to observe? You will not be able to play this round!","Player Setup","Yes","No") == "Yes")
 				if(!src.client) return
-				var/mob/dead/observer/observer = new()
+				var/mob/dead/observer/observer = new(src)
 
 				src.spawning = 1
 

@@ -20578,15 +20578,6 @@
 /obj/storage/closet/emergency,
 /turf/simulated/floor/black,
 /area/station/medical/medbay)
-"fGh" = (
-/obj/lattice{
-	icon_state = "lattice-dir"
-	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_rathen"
-	},
-/turf/space,
-/area/station/engine/singcore)
 "fGq" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -64643,6 +64634,14 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/engineering/ce)
+"swZ" = (
+/obj/landmark/spawner{
+	name = "monkeyspawn_rathen"
+	},
+/turf/simulated/floor/carpet/green/fancy/edge{
+	dir = 9
+	},
+/area/station/engine/engineering/breakroom)
 "sxd" = (
 /turf/simulated/floor/orangeblack,
 /area/listeningpost)
@@ -74529,8 +74528,8 @@
 	icon_state = "tile1"
 	},
 /obj/item/clothing/head/helmet/camera{
-	pixel_y = -2;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = -2
 	},
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
@@ -146630,7 +146629,7 @@ rnd
 cKx
 wsM
 qna
-fGh
+qna
 ojz
 qna
 qna
@@ -150566,7 +150565,7 @@ mjE
 ewf
 mWJ
 hyP
-xqn
+swZ
 wqA
 mkB
 mTt

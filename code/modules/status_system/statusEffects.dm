@@ -655,15 +655,16 @@
 			switchStage(getStage())
 
 			var/prot = 1
+			if (isliving(owner))
+				var/mob/living/L = owner
+				if(L.is_heat_resistant())
+					prot = 0
+				else
+					prot = (1 - (L.get_heat_protection() / 100))
 			if(istype(owner, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = owner
-				prot = (1 - (H.get_heat_protection() / 100))
-
 				if (H.traitHolder?.hasTrait("burning")) //trait 'burning' is human torch
 					duration += timePassed										//this makes the fire counter not increment on its own
-
-			if(ismob(owner) && owner:is_heat_resistant())
-				prot = 0
 
 			switch(stage)
 				if(1)

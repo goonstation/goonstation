@@ -159,6 +159,9 @@
 			input = input(custom_message || "Select a mob:", custom_title) as null|mob in world
 
 		if (DATA_INPUT_MATRIX)
+			var/matrix/M = default
+			if (!M) M = matrix()
+			default = "[M.a],[M.b],[M.c],[M.d],[M.e],[M.f]"
 			input = input("Create a matrix:  (format: \"a,b,c,d,e,f\" without quotes). Must have a leading 0 for decimals:", custom_title, default) as null|message
 			if(input == null)
 				boutput(src, "<span class='alert'>Cancelled.</span>")
