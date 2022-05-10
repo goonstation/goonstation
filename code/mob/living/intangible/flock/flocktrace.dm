@@ -84,6 +84,7 @@
 	if (remove_flockmind_from_flock)
 		var/mob/living/intangible/flock/flockmind/F = new (get_turf(src), src.flock)
 		src.mind.transfer_to(F)
+		F.flock.flockmind_mind = src.mind
 		if (was_in_drone)
 			controlled.take_control(F, FALSE)
 		src.flock.removeTrace(src)

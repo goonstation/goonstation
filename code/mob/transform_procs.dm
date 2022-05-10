@@ -860,6 +860,8 @@ var/respawn_arena_enabled = 0
 		O.mind.key = key
 		O.mind.current = O
 		ticker.minds += O.mind
+	O.flock.flockmind_mind = O.mind
+	O.mind.special_role = ROLE_FLOCKMIND
 	qdel(src)
 	boutput(O, "<B>You are a flockmind, the collective machine consciousness of a flock of drones! Your existence is tied to your flock! Ensure that it survives and thrives!</B>")
 	boutput(O, "<B>Silicon units are able to detect your transmissions and messages (with some signal corruption), so exercise caution in what you say.</B>")
@@ -878,6 +880,7 @@ var/respawn_arena_enabled = 0
 		var/mob/living/intangible/flock/trace/O = new/mob/living/intangible/flock/trace(spawnloc, flock)
 		if (src.mind)
 			src.mind.transfer_to(O)
+			flock.trace_minds[O.name] = O.mind
 		else
 			var/key = src.client.key
 			if (src.client)
@@ -888,10 +891,10 @@ var/respawn_arena_enabled = 0
 			O.mind.current = O
 			ticker.minds += O.mind
 
-		if (!src.mind?.special_role) // Preserve existing antag role (if any).
-			src.mind.special_role = ROLE_FLOCKTRACE
-		if (!(src.mind in ticker.mode.Agimmicks))
-			ticker.mode.Agimmicks += src.mind
+		if (!O.mind.special_role) // Preserve existing antag role (if any).
+			O.mind.special_role = ROLE_FLOCKTRACE
+		if (!(O.mind in ticker.mode.Agimmicks))
+			ticker.mode.Agimmicks += O.mind
 		qdel(src)
 
 		boutput(O, "<span class='bold'>You are a Flocktrace, a partition of the Flock's collective computation!</span>")

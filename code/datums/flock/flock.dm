@@ -12,6 +12,10 @@
 	var/list/priority_tiles = list()
 	var/list/deconstruct_targets = list()
 	var/list/traces = list()
+	/// Store a list of all minds who have been flocktraces of this flock at some point, indexed by name
+	var/list/trace_minds = list()
+	/// Store the mind of the current flockmind
+	var/datum/mind/flockmind_mind = null
 	var/list/units = list()
 	var/list/enemies = list()
 	var/list/annotation_viewers = list()
@@ -485,7 +489,8 @@
 	annotations_priority_tiles = null
 	annotations_enemies = null
 	flockmind = null
-	qdel(src)
+	//while this is neat cleanup, we still need the flock datum for tracking flocktrace mind connections
+	// qdel(src)
 
 // TURFS
 

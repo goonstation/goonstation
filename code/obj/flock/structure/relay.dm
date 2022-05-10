@@ -108,8 +108,9 @@
 		emergency_shuttle.disabled = FALSE
 		emergency_shuttle.incall()
 		emergency_shuttle.can_recall = 0 // yeah centcom's coming no matter what
+		emergency_shuttle.settimeleft(180) // cut the time down to keep some sense of urgency
 		boutput(world, "<span class='notice'><B>Alert: The emergency shuttle has been called.</B></span>")
-		boutput(world, "<span class='notice'>- - - <b>Reason:</b> Hostile transmission intercepted. Sending emergency shuttle.</span>")
+		boutput(world, "<span class='notice'>- - - <b>Reason:</b> Hostile transmission intercepted. Sending rapid response emergency shuttle.</span>")
 		boutput(world, "<span class='notice'><B>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B></span>")
 	sleep(2 SECONDS)
 	for(var/x = -2 to 2)
@@ -117,6 +118,8 @@
 			flockdronegibs(locate(location.x + x, location.y + y, location.z))
 	explosion_new(src, location, 2000)
 	gib(location)
+	var/datum/game_mode/flock/gamemode = ticker.mode
+	gamemode.signal_unleashed = TRUE
 	sleep(2 SECONDS) //allow them to hear the explosion before their headsets scream and die
 	destroy_radios()
 
