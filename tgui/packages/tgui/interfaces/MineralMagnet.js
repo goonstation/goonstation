@@ -116,6 +116,7 @@ export const MineralMagnet = (_props, context) => {
             <Button
               textAlign="center"
               color="teal"
+              icon="rss"
               fluid
               onClick={() => act('magnetscan')}
             >
