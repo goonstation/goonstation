@@ -726,8 +726,6 @@
 		var/magnetNotReady = src.active || (src.last_used > world.time && !src.cooldown_override) || src.last_use_attempt > world.time
 		switch(action)
 			if ("geoscan")
-				if (!src)
-					return
 				var/MC = src.get_magnetic_center()
 				if (!MC)
 					boutput(usr, "Error. Magnet is not magnetized.")
@@ -764,8 +762,6 @@
 							src.pull_new_source()
 					. = TRUE
 			if("overridecooldown")
-				if (!src)
-					return
 				if (!ishuman(usr))
 					boutput(usr, "<span class='alert'>AI and robotic personnel may not access the override.</span>")
 				else
@@ -776,8 +772,6 @@
 						src.cooldown_override = !src.cooldown_override
 					. = TRUE
 			if("automode")
-				if (!src)
-					return
 				src.automatic_mode = !src.automatic_mode
 				. = TRUE
 
