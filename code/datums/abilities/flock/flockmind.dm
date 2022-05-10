@@ -459,12 +459,9 @@
 	if(..())
 		return TRUE
 	var/mob/living/intangible/flock/F = holder.owner
-	//special handling for building ghosts
-	if(istype(target,/obj/flock_structure/ghost))
-		//do the tgui window instead
-		//this actually doesn't need bonus behaviour because the cancelbuild is on click, but will need to fix this if we change that in future
-		return TRUE
-	else if(HAS_ATOM_PROPERTY(target,PROP_ATOM_FLOCK_THING)) //it's a thing we've converted, we can deconstruct it
+	if(HAS_ATOM_PROPERTY(target,PROP_ATOM_FLOCK_THING))
+		if (isflockdeconimmune(target)) // ghost structure on click opens tgui window
+			return TRUE
 		F.flock.toggleDeconstructionFlag(target)
 		return FALSE
 	else if(istype(target,/obj/structure/girder)) //special handling for partially decon'd walls - gnesis mats means its ours
