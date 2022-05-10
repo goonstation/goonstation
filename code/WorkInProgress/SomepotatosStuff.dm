@@ -69,7 +69,6 @@
 		return
 	var/list/targets = list()
 	var/list/wtfbyond = list()
-	var/turf/OT = get_turf(src)
 	var/list/paths = get_path_to(src, landmarks[LANDMARK_GPS_WAYPOINT], max_distance=120, id=ID, skip_first=FALSE, cardinal_only=FALSE)
 
 	for(var/turf/wp in paths)
