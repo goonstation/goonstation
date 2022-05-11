@@ -75,6 +75,7 @@
 	var/sound_automaton_ratchet = 'sound/misc/automaton_ratchet.ogg'
 	var/sound_automaton_tickhum = 'sound/misc/automaton_tickhum.ogg'
 	var/sound_sad_robot = 'sound/voice/Sad_Robot.ogg'
+	var/vocal_pitch = 1.0 // set default vocal pitch
 
 	var/image/i_critdmg
 	var/image/i_panel
@@ -297,6 +298,7 @@
 		var/maptext_out = 0
 		var/custom = 0
 
+
 		switch(lowertext(act))
 
 			if ("help")
@@ -502,7 +504,7 @@
 
 			if ("birdwell", "burp")
 				if (src.emote_check(voluntary, 50))
-					playsound(src.loc, 'sound/vox/birdwell.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src.loc, 'sound/vox/birdwell.ogg', 50, 1, 0, vocal_pitch, channel=VOLUME_CHANNEL_EMOTE) // vocal pitch added
 					message = "<b>[src]</b> birdwells."
 
 			if ("scream")
@@ -510,7 +512,7 @@
 					if (narrator_mode)
 						playsound(src.loc, 'sound/vox/scream.ogg', 50, 1, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 					else
-						playsound(src, src.sound_scream, 80, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+						playsound(src, src.sound_scream, 80, 0, 0, vocal_pitch, channel=VOLUME_CHANNEL_EMOTE) // vocal pitch added
 					message = "<b>[src]</b> screams!"
 
 			if ("johnny")
@@ -2217,6 +2219,20 @@
 			src.internal_pda.AttackSelf(src)
 		else
 			boutput(usr, "<span class='alert'><b>Internal PDA not found!</span>")
+
+	verb/change_voice_pitch()
+		set category = "Robot Commands"
+		set name = "Change vocal pitch"
+
+		var/list/vocal_pitches = list("Low", "Medium", "High")
+		var/vocal_pitch_choice = tgui_input_list(src, "Select a vocal pitch:", "Robot Voice", vocal_pitches)
+		switch(vocal_pitch_choice)
+			if("Low")
+				vocal_pitch = 0.9
+			if("Medium")
+				vocal_pitch = 1.0
+			if("High")
+				vocal_pitch = 1.25
 
 	proc/pick_module()
 		if(src.module) return
