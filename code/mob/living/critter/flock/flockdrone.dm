@@ -890,8 +890,20 @@
 			src.disarm(target,user)
 			return
 
+	if(user.a_intent == INTENT_HARM)
+		if(HAS_ATOM_PROPERTY(target,PROP_ATOM_FLOCK_THING))
+			if(isflockdeconimmune(target))
+				return
+			actions.start(new /datum/action/bar/flock_decon(target), user)
+		else if(istype(target,/obj/structure/girder)) //special handling for partially deconstructed walls
+			if(target?.material.mat_id == "gnesis")
+				actions.start(new /datum/action/bar/flock_decon(target), user)
+		else
+			..()
+		return
+
 	// CONVERT TURF
-	if(!isturf(target) && !HAS_ATOM_PROPERTY(target,PROP_ATOM_FLOCK_THING) && !istype(target, /obj/structure/girder))
+	if(!isturf(target) && (!HAS_ATOM_PROPERTY(target,PROP_ATOM_FLOCK_THING) || istype(target, /obj/lattice/flock)) && !istype(target, /obj/structure/girder))
 		target = get_turf(target)
 
 	if(istype(target, /turf) && !istype(target, /turf/simulated) && !istype(target, /turf/space))
@@ -923,18 +935,9 @@
 				actions.start(new/datum/action/bar/flock_convert(target), user)
 			else
 				actions.start(new/datum/action/bar/flock_convert(target), user)
-	if(user.a_intent == INTENT_HARM)
-		if(HAS_ATOM_PROPERTY(target,PROP_ATOM_FLOCK_THING))
-			if(isflockdeconimmune(target))
-				return
-			actions.start(new /datum/action/bar/flock_decon(target), user)
-		else if(istype(target,/obj/structure/girder)) //special handling for partially deconstructed walls
-			if(target?.material.mat_id == "gnesis")
-				actions.start(new /datum/action/bar/flock_decon(target), user)
-		else
-			..()
+
 //help intent actions
-	else if(user.a_intent == INTENT_HELP)
+	if(user.a_intent == INTENT_HELP)
 		if (istype(target, /obj/flock_structure/ghost))
 			if (user.resources <= 0)
 				boutput(user, "<span class='alert'>No resources available for construction.</span>")
