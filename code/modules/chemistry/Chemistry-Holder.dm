@@ -1021,7 +1021,11 @@ datum
 			for (var/current_id in src.reagent_list)
 				var/datum/reagent/current_reagent = src.reagent_list[current_id]
 				if (current_reagent.taste)
-					reag_list[current_reagent.taste] += current_reagent.volume
+					if (islist(current_reagent.taste))
+						for (var/taste in current_reagent.taste)
+							reag_list[taste] += current_reagent.volume
+					else
+						reag_list[current_reagent.taste] += current_reagent.volume
 			// restrict number of tastes
 			num_val = min(num_val, length(reag_list))
 			// make empty lists for results

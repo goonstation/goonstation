@@ -481,28 +481,11 @@ datum
 
 				return
 
-			reaction_mob(var/mob/target, var/method=TOUCH, var/volume_passed)
-				. = ..()
-				return
-
 			reaction_obj(var/obj/O, var/volume)
 				if (volume < 5 || istype(O, /obj/critter) || istype(O, /obj/machinery/bot) || istype(O, /obj/decal) || O.anchored || O.invisibility) return
+				return_if_overlay_or_effect(O)
 				O.visible_message("<span class='alert'>The [O] comes to life!</span>")
-				var/obj/critter/livingobj/L = new/obj/critter/livingobj(O.loc)
-				O.set_loc(L)
-				L.name = "Living [O.name]"
-				L.desc = "[O.desc]. It appears to be alive!"
-				L.overlays += O
-				L.health = rand(10, 150)
-				L.atk_brute_amt = rand(1, 35)
-				L.defensive = 1
-				L.aggressive = pick(1,0)
-				L.atkcarbon = pick(1,0)
-				L.atksilicon = pick(1,0)
-				L.opensdoors = pick(1,0)
-				L.original_object = O
-				animate_float(L, -1, 30)
-				return
+				new /mob/living/object/ai_controlled(get_turf(O), O)
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
@@ -1538,6 +1521,8 @@ datum
 					M.make_jittery(1000)
 					SPAWN(rand(20, 100))
 						var/turf/Mturf = get_turf(M)
+						if (ishuman(M))
+							logTheThing("combat", M, null, "was transformed into a dog by reagent [name] at [log_loc(M)].")
 						M.gib()
 						new /obj/critter/dog/george (Mturf)
 					return
@@ -1576,6 +1561,8 @@ datum
 					M.setStatusMin("weakened", 15 SECONDS * mult)
 					M.make_jittery(1000)
 					SPAWN(rand(20, 100))
+						if (ishuman(M))
+							logTheThing("combat", M, null, "was owlgibbed by reagent [name] at [log_loc(M)].")
 						M.owlgib(control_chance = 100)
 					return
 				..()
@@ -2123,6 +2110,7 @@ datum
 							H.visible_message("<span class='alert bold'>[H] is torn apart from the inside as some weird floaty thing rips its way out of their body! Holy fuck!!</span>")
 							var/mob/living/critter/flock/bit/B = new()
 							B.set_loc(get_turf(H))
+							logTheThing("combat", H, null, "was gibbed by reagent [name] at [log_loc(H)].")
 							H.gib()
 					else
 						// DO SPOOKY THINGS
@@ -2969,14 +2957,12 @@ datum
 			transparency = 170
 			hygiene_value = 0.3
 			thirst_value = -0.098
+			var/list/flushed_reagents = list("THC","CBD")
 
 			on_mob_life(var/mob/M, var/mult = 1) // cogwerks note. making atrazine toxic
 				if (!M) M = holder.my_atom
 				M.take_toxin_damage(2 * mult)
-				if(holder.has_reagent("THC"))
-					holder.remove_reagent("THC", 1)
-				if(holder.has_reagent("CBD"))
-					holder.remove_reagent("CBD", 1)
+				flush(M, 2 * mult, flushed_reagents)
 				..()
 				return
 
@@ -3363,6 +3349,8 @@ datum
 				one_with_everything(M)
 				#else
 				M.ex_act(1)
+				if (ishuman(M))
+					logTheThing("combat", M, null, "was gibbed by reagent [name] at [log_loc(M)].")
 				M.gib()
 				#endif
 				M.reagents.del_reagent(src.id)
@@ -3395,6 +3383,8 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				..()
 				M.ex_act(1)
+				if (isliving(M))
+					logTheThing("combat", M, null, "was gibbed by reagent [name] at [log_loc(M)].")
 				M.gib()
 				M.reagents.del_reagent(src.id)
 

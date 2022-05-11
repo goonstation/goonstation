@@ -39,7 +39,7 @@
 /datum/aiTask/sequence/goalbased/proc/score_target(var/atom/target)
 	. = 0
 	if(target)
-		return max_dist - GET_MANHATTAN_DIST(get_turf(holder.owner), get_turf(target))
+		return 100*(max_dist - GET_MANHATTAN_DIST(get_turf(holder.owner), get_turf(target)))/max_dist //normalize distance weighting
 
 /datum/aiTask/sequence/goalbased/proc/precondition()
 	// useful for goals that have a requirement, return 0 to instantly make this state score 0 and not be picked
@@ -57,7 +57,7 @@
 	..()
 	if(!holder.target)
 		holder.target = get_best_target(get_targets())
-	if(subtask_index == 1) // MOVE TASK
+	if(istype(subtasks[subtask_index], /datum/aiTask/succeedable/move)) // MOVE TASK
 		// make sure we both set our target and move to our target correctly
 		var/datum/aiTask/succeedable/move/M = subtasks[subtask_index]
 		if(M && !M.move_target)
@@ -122,7 +122,7 @@
 /datum/aiTask/timed/targeted/proc/score_target(var/atom/target)
 	. = 0
 	if(target)
-		return target_range - GET_MANHATTAN_DIST(get_turf(holder.owner), get_turf(target))
+		return 100*(target_range - GET_MANHATTAN_DIST(get_turf(holder.owner), get_turf(target)))/target_range //normalize distance weighting
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // MOVE TASK
@@ -147,30 +147,18 @@
 	src.move_target = null
 
 /datum/aiTask/succeedable/move/on_tick()
-	walk(holder.owner, 0)
-	if(src.found_path)
-		if(src.found_path.len > 0)
-			// follow the path
-			src.found_path.Cut(1, 2)
-			var/turf/next
-			if(src.found_path.len >= 1)
-				next = src.found_path[1]
-			else
-				next = move_target
-			walk_to(holder.owner, next, 0, 4)
-			if(BOUNDS_DIST(get_turf(holder.owner), next) == 0)
-				fails = 0
-			else
-				// we aren't where we ought to be
-				fails++
-				get_path()
-	else
-		// get a path
+	if(!src.move_target)
+		fails++
+		return
+	if(!src.found_path)
 		get_path()
+	if(length(src.found_path))
+		holder.move_to_with_path(move_target,src.found_path,0)
 
 /datum/aiTask/succeedable/move/succeeded()
 	if(move_target)
-		return ((get_dist(get_turf(holder.owner), get_turf(move_target)) == 0) || (src.found_path && src.found_path.len <= 0))
+		. = (get_dist(holder.owner, src.move_target) == 0)
+		return
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // WAIT TASK

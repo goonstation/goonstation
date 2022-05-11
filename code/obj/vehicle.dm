@@ -1082,7 +1082,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 			clown_tally += 1
 		if(istype(user:wear_mask, /obj/item/clothing/mask/clown_hat))
 			clown_tally += 1
-	if(clown_tally < 2)
+	if(clown_tally < 2 && !IS_LIVING_OBJECT_USING_SELF(user))
 		boutput(user, "<span class='notice'>You don't feel funny enough to use the [src].</span>")
 		return
 
@@ -2341,7 +2341,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		boutput(user, "You don't think [src] has enough utensil strength to pick this up.")
 		return
 
-	if(ishuman(A) && BOUNDS_DIST(user, src) == 01  && BOUNDS_DIST(A, user) == 0 && !rider)
+	if(ishuman(A) && BOUNDS_DIST(user, src) == 0  && BOUNDS_DIST(A, user) == 0 && !rider)
 		if (A == user)
 			boutput(user, "You get into [src].")
 		else

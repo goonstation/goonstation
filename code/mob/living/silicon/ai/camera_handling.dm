@@ -44,8 +44,6 @@
 
 	attack_ai(get_message_mob())
 
-#define SORT "* Sort alphabetically..."
-
 /mob/living/silicon/ai/proc/ai_camera_track()
 	set category = "AI Commands"
 	set name = "Track With Camera"
@@ -53,18 +51,9 @@
 		boutput(usr, "You can't track with camera because you are dead!")
 		return
 
-	var/list/creatures = get_mobs_trackable_by_AI()
+	var/list/creatures = sortList(get_mobs_trackable_by_AI())
 
-	var/target_name = input(usr, "Which creature should you track?") as null|anything in creatures
-
-	//sort alphabetically if user so chooses
-	if (target_name == SORT)
-		creatures.Remove(SORT)
-
-		creatures = sortList(creatures)
-
-		//redisplay sorted list
-		target_name = input(usr, "Which creature should you track?") as null|anything in creatures
+	var/target_name = tgui_input_list(usr, "Which creature should you track?", "Track", creatures)
 
 	if (!target_name)
 		//usr:cameraFollow = null
@@ -81,8 +70,7 @@
 		boutput(usr, "You can't track with camera because you are dead!")
 		return
 
-	var/list/mob/creatures = get_mobs_trackable_by_AI()
-	creatures.Remove(SORT)
+	var/list/mob/creatures = sortList(get_mobs_trackable_by_AI())
 	var/list/candidates = list()
 
 	for(var/C in creatures)
@@ -94,18 +82,16 @@
 	var/target_name = null
 	var/mob/target = null
 
-	if(candidates.len > 0)
-		if(candidates.len == 1)
+	if(length(candidates))
+		if(length(candidates) == 1)
 			target = candidates[candidates[1]]
 			ai_actual_track(target)
 		else
-			target_name = input(usr, "Which creature should you track?") as null|anything in candidates
+			target_name = tgui_input_list(usr, "Which creature should you track?", "Track", candidates)
 			target = candidates[target_name]
 			ai_actual_track(target)
 	else
 		boutput(usr, "Not able to locate a creature by the name of \"[heard_name]\" on camera.")
-
-#undef SORT
 
 /mob/living/silicon/proc/ai_actual_track(mob/target as mob)
 	if (isnull(target) || !ismob(target) || !isAIControlled(src))
@@ -169,7 +155,6 @@
 
 	var/list/D = list()
 	var/counter = 1
-	D["Cancel"] = "Cancel"
 	for (var/obj/machinery/camera/C in L)
 		if (C.network == src.network)
 			var/T = text("[][]", C.c_tag, (C.camera_status ? null : " (Deactivated)"))
@@ -179,9 +164,9 @@
 				D[T] = C
 				counter = 1
 
-	var/t = input(user, "Which camera should you change to?") as null|anything in D
+	var/t = tgui_input_list(user, "Which camera should you change to?", "View Camera", D)
 
-	if (!t || t == "Cancel")
+	if (!t)
 		src.tracker.cease_track()
 		src.switchCamera(null)
 		return 0

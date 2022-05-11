@@ -342,6 +342,7 @@
 /obj/item/clothing/shoes/cowboy
 	name = "Cowboy boots"
 	icon_state = "cowboy"
+	compatible_species = list("human", "cow")
 
 /obj/item/clothing/shoes/cowboy/boom
 	name = "Boom Boots"
@@ -441,7 +442,7 @@
 
 /obj/item/clothing/shoes/swat/knight // so heavy you can't get shoved!
 	name = "combat sabatons"
-	desc = "Massive, armored footwear for syndicate super-heavies."
+	desc = "Massive, magnetic, slip-resistant armored footwear for syndicate super-heavies."
 	icon_state = "swatheavy"
 	magnetic = 1
 	c_flags = NOSLIP
@@ -604,7 +605,7 @@
 				setProperty("coldprot", 0)
 				setProperty("heatprot", 0)
 			if(src.material.hasProperty("hard") && src.material.hasProperty("density"))
-				kick_bonus = round((src.material.getProperty("hard") * src.material.getProperty("density")) / 2500)
+				kick_bonus = round((src.material.getProperty("hard") * src.material.getProperty("density")) / 1500)
 			else
 				kick_bonus = 0
 		return
@@ -709,6 +710,7 @@
 	name = "Real Cowboy Boots"
 	icon_state = "westboot"
 	desc = "Perfect for riding horses, if only you had one!"
+	compatible_species = list("human", "cow")
 
 /obj/item/clothing/shoes/westboot/black
 	name = "Black Cowboy Boots"

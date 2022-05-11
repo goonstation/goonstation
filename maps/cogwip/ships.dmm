@@ -5447,7 +5447,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "ou" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ov" = (
 /obj/stocking{

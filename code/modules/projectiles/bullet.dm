@@ -238,25 +238,25 @@ toxic - poisons
 /datum/projectile/bullet/tranq_dart
 	name = "dart"
 	power = 10
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "syringeproj"
+	icon_state = "tranqdart_red"
 	damage_type = D_TOXIC
 	hit_type = DAMAGE_BLUNT
-	implanted = null
+	implanted = /obj/item/implant/projectile/body_visible/dart/tranq_dart_sleepy
 	shot_sound = 'sound/effects/syringeproj.ogg'
 	dissipation_delay = 10
 	reagent_payload = "haloperidol"
 	casing = /obj/item/casing/rifle
 
-	on_hit(atom/hit, dirflag)
-		return
-
 	syndicate
 		reagent_payload = "sodium_thiopental" // HEH
+		icon_state = "tranqdart_red_barbed"
+		implanted = /obj/item/implant/projectile/body_visible/dart/tranq_dart_sleepy_barbed
 
 		pistol
 			casing = /obj/item/casing/small
 			shot_sound = 'sound/weapons/tranq_pistol.ogg'
+			shot_volume = 30
+			silentshot = 1
 
 	//haha gannets, fuck you I stole ur shit! - kyle
 	law_giver
@@ -266,6 +266,8 @@ toxic - poisons
 
 	anti_mutant
 		reagent_payload = "mutadone" // HAH
+		icon_state = "tranqdart_green"
+		implanted = /obj/item/implant/projectile/body_visible/dart/tranq_dart_mutadone
 
 /datum/projectile/bullet/lmg
 	name = "bullet"
@@ -922,7 +924,7 @@ datum/projectile/bullet/autocannon
 		var/max_turn_rate = 20
 		var/type_to_seek = /obj/critter/gunbot/drone //what are we going to seek
 		precalculated = 0
-		disruption = INFINITY //distrupt every system at once
+		disruption = INFINITY //disrupt every system at once
 		on_hit(atom/hit, angle, var/obj/projectile/P)
 			if (P.data)
 				..()

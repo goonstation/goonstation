@@ -300,7 +300,7 @@
 			if(!pooled_type)
 				fuel_name = W.name
 				user.u_equip(W)
-				W.dropped()
+				W.dropped(user)
 			boutput(user, "<span class='notice'>You load [fuel_name] into [src]!</span>")
 
 			if(src.fuel > src.maxfuel)

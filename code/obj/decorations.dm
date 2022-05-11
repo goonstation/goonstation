@@ -992,6 +992,15 @@ obj/decoration/ceilingfan
 	density = 0
 	layer = DECAL_LAYER
 
+obj/decoration/gibberBroken
+	name = "rusty old gibber"
+	desc = "This thing is completely broken and rusted. There's also a shredded armored jacket and some crunched up bloody bones inside. Huh."
+	icon = 'icons/obj/decoration.dmi'
+	icon_state = "gibberBroken"
+	anchored = 1
+	density = 1
+	deconstruct_flags = DECON_WRENCH | DECON_WELDER | DECON_CROWBAR
+
 /obj/decoration/syndiepc
 	name = "syndicate computer"
 	desc = "It looks rather sinister with all the red text. I wonder what does it all mean?"

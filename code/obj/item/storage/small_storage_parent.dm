@@ -231,7 +231,7 @@
 							usr.u_equip(src)
 							usr.put_in_hand_or_drop(src, 1)
 				return
-		if (over_object == usr && in_interact_range(src, usr) && isliving(usr) && !usr.stat)
+		if (over_object == usr && in_interact_range(src, usr) && isliving(usr) && !usr.stat && !isintangible(usr))
 			if (usr.s_active)
 				usr.detach_hud(usr.s_active)
 				usr.s_active = null
@@ -271,7 +271,7 @@
 	attack_hand(mob/user as mob)
 		if (!src.sneaky)
 			playsound(src.loc, "rustle", 50, 1, -2)
-		if (src.loc == user && (!does_not_open_in_pocket || src == user.l_hand || src == user.r_hand))
+		if (src.loc == user && (!does_not_open_in_pocket || src == user.l_hand || src == user.r_hand || IS_LIVING_OBJECT_USING_SELF(user)))
 			if (ishuman(user))
 				var/mob/living/carbon/human/H = user
 				if (H.limbs) // this check is probably dumb. BUT YOU NEVER KNOW
@@ -447,7 +447,7 @@
 			return
 
 		I.set_loc(get_turf(src.loc))
-		I.dropped()
+		I.dropped(user)
 		src.hud.remove_item(I) //fix the funky UI stuff
 		I.layer = initial(I.layer)
 		I.throw_at(target, 8, 2, bonus_throwforce=8)

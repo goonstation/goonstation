@@ -192,10 +192,11 @@
 		materiel_stock += new/datum/materiel/utility/rpg_ammo
 		materiel_stock += new/datum/materiel/utility/donk
 		materiel_stock += new/datum/materiel/utility/sarin_grenade
-		materiel_stock += new/datum/materiel/utility/noslip_boots
+		//materiel_stock += new/datum/materiel/utility/noslip_boots
 		materiel_stock += new/datum/materiel/utility/bomb_decoy
 		materiel_stock += new/datum/materiel/utility/comtac
 		materiel_stock += new/datum/materiel/utility/beartraps
+		materiel_stock += new/datum/materiel/utility/miscpouch
 
 	accepted_token()
 		src.credits[WEAPON_VENDOR_CATEGORY_SIDEARM]++
@@ -320,9 +321,9 @@
 	description = "A spare (200u) power cell. Fits in standard issue energy weapons."
 
 /datum/materiel/ammo/self_charging
-	name = "Distruptor Power Cell"
+	name = "Disruptor Power Cell"
 	path = /obj/item/ammo/power_cell/self_charging/disruptor
-	description = "A small(100u) self-charging power cell repurposed from a decommissioned distruptor blaster."
+	description = "A small(100u) self-charging power cell repurposed from a decommissioned disruptor blaster."
 
 /datum/materiel/assistant/basic
 	name = "Assistant"
@@ -471,6 +472,10 @@
 	path = /obj/item/storage/beartrap_pouch
 	description = "A pouch of 4 pressure sensitive beartraps used to snare and maim unexpecting victims entering your target area."
 
+/datum/materiel/utility/miscpouch
+	name = "High capacity tactical pouch"
+	path = /obj/item/storage/pouch/highcap
+	description = "A 6-slot pouch for carrying multiple different ammunitions at once"
 // Requisition tokens
 
 /obj/item/requisition_token

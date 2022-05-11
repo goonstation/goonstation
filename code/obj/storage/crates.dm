@@ -519,10 +519,10 @@
 		spawn_contents = list(/obj/item/gun/kinetic/tranq_pistol,
 		/obj/item/storage/pouch/tranq_pistol_dart,
 		/obj/item/pinpointer/disk,
-		/obj/item/genetics_injector/dna_scrambler,
+		/obj/item/dna_scrambler,
 		/obj/item/voice_changer,
 		/obj/item/card/emag,
-		/obj/item/clothing/under/chameleon,
+		/obj/item/storage/backpack/chameleon,
 		/obj/item/device/chameleon,
 		/obj/item/clothing/suit/space/syndicate/specialist,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/infiltrator)

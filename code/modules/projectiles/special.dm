@@ -1051,7 +1051,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	sname = "chembolt"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "extinguish"
-	shot_sound = "sound/effects/spray2.ogg"
+	shot_sound = 'sound/weapons/flamethrower.ogg'
 	power = 0
 	cost = 1
 	damage_type = D_SPECIAL
@@ -1141,12 +1141,6 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	on_pointblank(var/obj/projectile/O, var/mob/target)
 		var/turf/T = get_turf(O)
 		src.emit_chems(target, O)
-		src.emit_gas(T, 1)
-	on_end(var/obj/projectile/O)
-		if(O.reagents?.total_volume < 0.01)
-			return
-		var/turf/T = get_turf(O)
-		src.emit_chems(T, O)
 		src.emit_gas(T, 1)
 	on_max_range_die(obj/projectile/O)
 		if(O.reagents?.total_volume < 0.01)

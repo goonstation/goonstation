@@ -71,6 +71,8 @@
 			for(var/mob/M in view(7, src.loc))
 				shake_camera(M, 20, 8)
 				if(gib_mobs && M.loc == src.loc && isliving(M) && !isintangible(M))
+					if(isliving(M))
+						logTheThing("combat", M, null, "was gibbed by [src] ([src.type]) at [log_loc(M)].")
 					M.gib(1, 1)
 			sleep(0.5 SECONDS)
 			if (obj_path && no_lootbox)

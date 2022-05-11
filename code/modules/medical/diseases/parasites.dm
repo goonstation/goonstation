@@ -75,6 +75,7 @@
 				while(babyspiders-- > 0)
 					new/obj/critter/spider/ice/baby(affected_mob.loc)
 				affected_mob.visible_message("<span class='alert'><b>[affected_mob] bursts open! Holy fuck!</b></span>")
+				logTheThing("combat", affected_mob, null, "was gibbed by the disease [name] at [log_loc(affected_mob)].")
 				affected_mob:gib()
 				return
 

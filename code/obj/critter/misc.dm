@@ -1,59 +1,3 @@
-/obj/critter/livingobj
-	name = ""
-	desc = ""
-	icon_state = "livingobj"
-	density = 0
-	health = 10
-	aggressive = 0
-	defensive = 0
-	wanderer = 1
-	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
-	atkcarbon = 0
-	atksilicon = 0
-	generic = 0
-	butcherable = 1 //Because "toolbox meat" would be hilarious
-	atk_text = "slams into"
-	atk_brute_amt = 2
-	crit_chance = 0
-	chase_text = "leaps at"
-	var/stunprob = 0
-	layer = 5
-	var/obj/original_object = null
-
-	CritterAttack(var/mob/M)
-		playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
-		..()
-
-	attack_hand(mob/user as mob)
-		if (src.alive && (user.a_intent != INTENT_HARM))
-			src.visible_message("<span class='combat'><b>[user]</b> pets [src]!</span>")
-			return
-		..()
-
-	CritterDeath()
-		src.visible_message("<b>[src]</b> stops moving!")
-		animate_float(src, 1, 5)
-		playsound(src.loc, "sound/effects/suck.ogg", 40, 1, -1, 0.6)
-		SPAWN(10 SECONDS) //Give time for people to butcher it if they want.
-			if (!src.disposed && src.loc && original_object)
-				original_object.set_loc(src.loc)
-				original_object = null
-				qdel(src)
-		return ..()
-
-	ChaseAttack(mob/M)
-		..()
-		if (prob(stunprob))
-			M.changeStatus("weakened", 2 SECONDS)
-		//playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
-
-	disposing()
-		if (original_object)
-			original_object.dispose()
-			original_object = null
-		..()
-
-
 /obj/critter/spore
 	name = "plasma spore"
 	desc = "A barely intelligent colony of organisms. Very volatile."
@@ -508,6 +452,19 @@
 		else
 			..()
 
+	attack_hand(mob/M as mob)
+		if ((M.a_intent != INTENT_HARM) && (M in src.friends))
+			if(M.a_intent == INTENT_HELP && src.aggressive)
+				src.visible_message("<span class='notice'>[M] pats [src] on the head in a soothing way. It won't attack anyone now.</span>")
+				src.aggressive = FALSE
+				src.task = "thinking"
+				return
+			else if((M.a_intent == INTENT_DISARM || M.a_intent == INTENT_GRAB) && !src.aggressive)
+				src.visible_message("<span class='notice'>[M] shakes [src] to awaken it's killer instincts!</span>")
+				src.aggressive = TRUE
+				src.task = "thinking"
+				return
+		..()
 
 	ChaseAttack(mob/M)
 		..()
@@ -1509,20 +1466,25 @@
 	desc = "A rattlesnake in space."
 	icon_state = "rattlesnake"
 	dead_state = "rattlesnake_dead"
-	density = 1
-	health = 50
+	density = 0
+	health = 20
 	aggressive = 1
 	defensive = 1
-	wanderer = 0
+	wanderer = 1
 	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 1
 	atksilicon = 1
 	firevuln = 1
 	brutevuln = 1
 	angertext = "hisses at"
-	butcherable = 0
+	butcherable = 1
 	flags = NOSPLASH | OPENCONTAINER | TABLEPASS
 	flying = 0
+
+	CritterDeath()
+		..()
+		src.reagents.add_reagent("viper_venom", 40, null)
+		return
 
 	seek_target()
 		src.anchored = 0
@@ -1532,29 +1494,37 @@
 			if (issilicon(C) && !src.atksilicon) continue
 			if (C.health < 0) continue
 			if (C in src.friends) continue
+			if (isintangible(C)) continue
 
 			if(!src.attack)
 				switch(get_dist(src, C))
 					if (0 to 1)
+						src.mobile = 1
 						icon_state = "rattlesnake"
 						if (iscarbon(C) && src.atkcarbon) src.attack = 1
 						if (issilicon(C) && src.atksilicon) src.attack = 1
-						if(!ON_COOLDOWN(src, "snake bite", 10 SECONDS))
+						if(!ON_COOLDOWN(src, "snake bite", 15 SECONDS))
 							C.visible_message("<span class='combat'><B>[src]</B> bites [C.name]!</span>")
 							C.reagents?.add_reagent("viper_venom", rand(15,25))
 							playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 							C.emote("scream")
 					if (1 to 2)
+						src.mobile = 0
+						src.task = "thinking"
 						icon_state = "rattlesnake_rattle"
 						if(!ON_COOLDOWN(src, "Rattle", 6 SECONDS))
 							C.visible_message("<span class='combat'><B>[src]</B> is rattling, better not get much closer!</span>")
 							playsound(src.loc, "sound/musical_instruments/tambourine/tambourine_4.ogg", 80, 0, 0, 0.75)
 					if (2 to 3)
+						src.mobile = 0
+						src.task = "thinking"
 						icon_state = "rattlesnake_coiled"
 					if (3 to INFINITY)
+						src.mobile = 1
 						icon_state = "rattlesnake"
 
 			if (src.attack)
+				src.mobile = 1
 				icon_state = "rattlesnake"
 				src.target = C
 				src.oldtarget_name = C.name
@@ -1564,7 +1534,7 @@
 
 	ChaseAttack(mob/M)
 		..()
-		if(!ON_COOLDOWN(src, "snake bite", 10 SECONDS))
+		if(!ON_COOLDOWN(src, "snake bite", 15 SECONDS))
 			M.visible_message("<span class='combat'><B>[src]</B> bites [src.target]!</span>")
 			M.reagents?.add_reagent("viper_venom", rand(10,15))
 			playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
@@ -1573,3 +1543,57 @@
 
 	CritterAttack(mob/M)
 		src.task = "chasing"
+
+/obj/critter/livingtail
+	name = "Living tail"
+	desc = "A twitching saurian tail, you feel mildly uncomfortable looking at it."
+	icon_state = "twitchytail"
+	density = 0
+	health = 20
+	flags = NOSPLASH | TABLEPASS
+	maxhealth = 40
+	butcherable = 1
+
+	var/obj/item/organ/tail/lizard/tail_memory = null
+	var/maxsteps
+	var/currentsteps = 0
+	var/primary_color =	"#21a833"
+	var/secondary_color = "#000000"
+
+	New()
+		..()
+		maxsteps = rand(10,20)
+
+	proc/setup_overlays()
+		var/image/overlayprimary = image('icons/misc/critter.dmi', "twitchytail_colorkey1")
+		overlayprimary.color = primary_color
+		var/image/overlaysecondary = image('icons/misc/critter.dmi', "twitchytail_colorkey2")
+		overlaysecondary.color = secondary_color
+		src.UpdateOverlays(overlayprimary, "bottomdetail")
+		src.UpdateOverlays(overlaysecondary, "topdetail")
+
+	process()
+		currentsteps++
+
+		if (currentsteps >= maxsteps)
+			CritterDeath()
+
+		if (prob(70))
+			playsound(src, "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1)
+			make_cleanable(/obj/decal/cleanable/blood/splatter,src.loc)
+		..()
+
+	CritterDeath()
+		..()
+		if (tail_memory)
+			tail_memory.set_loc(get_turf(src))
+		else
+			new/obj/item/organ/tail/lizard(get_turf(src))
+		qdel(src)
+
+	Crossed(atom/movable/M as mob)
+		..()
+		if (ishuman(M) && prob(25))
+			src.visible_message("<span class='combat'>[src] coils itself around [M]'s legs and trips [him_or_her(M)]!</span>")
+			M:changeStatus("weakened", 2 SECONDS)
+		return

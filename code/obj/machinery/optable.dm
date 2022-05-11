@@ -78,10 +78,10 @@
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
 				H.hud.update_resting()
-			M.set_loc(src.loc)
+			M.set_loc(get_turf(src))
 			src.visible_message("<span class='alert'>[M] has been laid on the operating table by [user].</span>")
 			for(var/obj/O in src)
-				O.set_loc(src.loc)
+				O.set_loc(get_turf(src))
 			src.add_fingerprint(user)
 			icon_state = "table2-active"
 			src.victim = M
@@ -89,7 +89,7 @@
 			return
 	user.drop_item()
 	if(W?.loc)
-		W.set_loc(src.loc)
+		W.set_loc(get_turf(src))
 	return
 
 /obj/machinery/optable/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
@@ -120,7 +120,7 @@
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			H.hud.update_resting()
-		user.set_loc(src.loc)
+		user.set_loc(get_turf(src))
 		src.victim = user
 	else
 		src.visible_message("<span class='alert'><b>[user.name]</b> starts to move [C.name] onto the operating table.</span>")
@@ -130,7 +130,7 @@
 			if (ishuman(C))
 				var/mob/living/carbon/human/H = C
 				H.hud.update_resting()
-			C.set_loc(src.loc)
+			C.set_loc(get_turf(src))
 			src.victim = C
 		else
 			boutput(user, "<span class='alert'>You were interrupted!</span>")

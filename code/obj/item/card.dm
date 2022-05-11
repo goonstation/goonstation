@@ -249,6 +249,7 @@ GAUNTLET CARDS
 		O.icon = 'icons/effects/214x246.dmi'
 		O.icon_state = "explosion"
 		SPAWN(3.5 SECONDS) qdel(O)
+		logTheThing("combat", user, null, "was gibbed by the explosive Captain's Spare at [log_loc(user)].")
 		user.gib()
 
 /obj/item/card/id/attack_self(mob/user as mob)

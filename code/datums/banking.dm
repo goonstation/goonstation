@@ -165,7 +165,7 @@
 				t["current_money"] += t["wage"]
 				station_budget -= t["wage"]
 			else
-				command_alert("The station budget appears to have run dry. We regret to inform you that no further wage payments are possible until this situation is rectified.","Payroll Announcement")
+				command_alert("The station budget appears to have run dry. We regret to inform you that no further wage payments are possible until this situation is rectified.","Payroll Announcement", alert_origin = ALERT_STATION)
 				wagesystem.pay_active = 0
 				break
 
@@ -514,6 +514,7 @@
 
 			if (src.authenticated)
 
+				var/total_funds = wagesystem.station_budget + wagesystem.research_budget + wagesystem.shipping_budget
 				var/payroll = 0
 				for(var/datum/db_record/R as anything in data_core.bank.records)
 					payroll += R["wage"]
@@ -528,7 +529,7 @@
 					<tr><th>Payroll Budget</th><td class='r'>$[num2text(round(wagesystem.station_budget),50)]</td></tr>
 					<tr><th>Shipping Budget</th><td class='r'>$[num2text(round(wagesystem.shipping_budget),50)]</td></tr>
 					<tr><th>Research Budget</th><td class='r'>$[num2text(round(wagesystem.research_budget),50)]</td></tr>
-					<tr><th>Total Funds</th><th class='r'>$[num2text(round(wagesystem.research_budget),50)]</th></tr>
+					<tr><th>Total Funds</th><th class='r'>$[num2text(round(total_funds),50)]</th></tr>
 					<tr><th colspan="2" class='second'>Payroll Details</th></tr>
 					<tr><th>Payroll Stipend</th><td class='r'>$[num2text(round(wagesystem.payroll_stipend),50)]</td></tr>
 					<tr><th>Payroll Cost</th><td class='r'>$[num2text(round(payroll),50)]</td></tr>
@@ -677,11 +678,11 @@
 					if (wagesystem.pay_active)
 						wagesystem.pay_active = 0
 						logTheThing("station", usr, null, "suspends the station payroll.")
-						command_alert("The payroll has been suspended until further notice. No further wages will be paid until the payroll is resumed.","Payroll Announcement")
+						command_alert("The payroll has been suspended until further notice. No further wages will be paid until the payroll is resumed.","Payroll Announcement", alert_origin = ALERT_STATION)
 					else
 						wagesystem.pay_active = 1
 						logTheThing("station", usr, null, "resumes the station payroll.")
-						command_alert("The payroll has been resumed. Wages will now be paid into employee accounts normally.","Payroll Announcement")
+						command_alert("The payroll has been resumed. Wages will now be paid into employee accounts normally.","Payroll Announcement", alert_origin = ALERT_STATION)
 				else if(href_list["transfer"])
 					var/transfrom = input("Transfer from which?", "Budgeting", null, null) in list("Payroll", "Shipping", "Research")
 					if (!transfrom)

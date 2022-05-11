@@ -126,6 +126,19 @@ var/global/obj/flashDummy
 		var/obj/O = getFlashDummy()
 		O.set_loc(target)
 		target_r = O
+	if(wattage && isliving(target)) //Grilles can reroute arcflashes
+		for(var/obj/grille/L in range(target,1)) // check for nearby grilles
+			if(!L.ruined && L.anchored)
+				if (L.material?.hasProperty("electrical"))
+					if (prob(L.material?.getProperty("electrical")/2) && L.get_connection())
+						target = L
+						target_r = L
+						continue
+				else
+					if (prob(30) && L.get_connection()) // hopefully half the default is low enough
+						target = L
+						target_r = L
+						continue
 
 	playsound(target, "sound/effects/elec_bigzap.ogg", 30, 1)
 
@@ -2060,13 +2073,13 @@ proc/countJob(rank)
 
 	if (removal_type == "death")
 		boutput(M, "<h2><span class='alert'>Since you have died, you are no longer a mindslave! Do not obey your former master's orders even if you've been brought back to life somehow.</span></h2>")
-		SHOW_MINDSLAVE_DEATH_TIPS(M)
+		M.show_antag_popup("mindslavedeath")
 	else if (removal_type == "override")
 		boutput(M, "<h2><span class='alert'>Your mindslave implant has been overridden by a new one, cancelling out your former allegiances!</span></h2>")
-		SHOW_MINDSLAVE_OVERRIDE_TIPS(M)
+		M.show_antag_popup("mindslaveoverride")
 	else
 		boutput(M, "<h2><span class='alert'>Your mind is your own again! You no longer feel the need to obey your former master's orders.</span></h2>")
-		SHOW_MINDSLAVE_EXPIRED_TIPS(M)
+		M.show_antag_popup("mindslaveexpired")
 
 	return
 

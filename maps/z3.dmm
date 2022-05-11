@@ -3,7 +3,7 @@
 /turf/space,
 /area/space)
 "aab" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "aac" = (
 /turf/simulated/floor/plating/airless/asteroid,
@@ -78,12 +78,12 @@
 /turf/unsimulated/floor/setpieces/hivefloor,
 /area/space_hive)
 "aar" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9
 	},
 /area/space)
 "aas" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6
 	},
 /area/space)
@@ -92,7 +92,7 @@
 /turf/simulated/floor/blue,
 /area/radiostation/bridge)
 "aau" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10
 	},
 /area/space)
@@ -141,7 +141,7 @@
 	},
 /area/space_hive)
 "aaz" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4
 	},
 /area/space)
@@ -190,7 +190,7 @@
 /turf/space,
 /area/space)
 "aaH" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8
 	},
 /area/space)
@@ -332,12 +332,12 @@
 /turf/unsimulated/floor/setpieces/hivefloor,
 /area/space_hive)
 "abf" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1
 	},
 /area/space)
 "abg" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5
 	},
 /area/space)
@@ -931,7 +931,7 @@
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/space)
 "acS" = (
-/turf/simulated/wall/asteroid/lighted,
+/turf/simulated/wall/auto/asteroid/lighted,
 /area/space)
 "acT" = (
 /obj/submachine/chef_oven,
@@ -1634,23 +1634,23 @@
 /area/space)
 "aeN" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1
 	},
 /area/mining/mainasteroid)
 "aeO" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5
 	},
 /area/mining/mainasteroid)
 "aeP" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9
 	},
 /area/mining/mainasteroid)
 "aeQ" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1
 	},
 /area/mining/mainasteroid)
@@ -1753,16 +1753,16 @@
 /area/mining/mainasteroid)
 "afe" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9
 	},
 /area/mining/mainasteroid)
 "aff" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/mining/mainasteroid)
 "afg" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4
 	},
 /area/mining/mainasteroid)
@@ -1811,7 +1811,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/radiostation/podbay)
 "afn" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5
 	},
 /area/mining/mainasteroid)
@@ -1964,7 +1964,7 @@
 /area/space_hive)
 "afO" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10
 	},
 /area/mining/mainasteroid)
@@ -2029,7 +2029,7 @@
 /turf/simulated/floor/black,
 /area/mining/quarters)
 "age" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10
 	},
 /area/mining/mainasteroid)
@@ -2132,7 +2132,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro{
-	dir = 2;
 	name = "Maint Crew Quarters"
 	},
 /turf/simulated/floor,
@@ -2182,7 +2181,7 @@
 /area/radiostation/serverroom)
 "agA" = (
 /turf/space,
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/mining/mainasteroid)
 "agB" = (
 /turf/simulated/floor/damaged2,
@@ -2428,7 +2427,7 @@
 /area/mining/comms)
 "ahq" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8
 	},
 /area/mining/mainasteroid)
@@ -2990,7 +2989,7 @@
 /turf/simulated/floor/grime,
 /area/mining/magnet_control)
 "aiK" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4
 	},
 /area/mining/mainasteroid)
@@ -4903,7 +4902,7 @@
 /area/mining/mainasteroid)
 "anK" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6
 	},
 /area/mining/mainasteroid)
@@ -5244,7 +5243,7 @@
 /area/mining/mainasteroid)
 "aoG" = (
 /turf/space/asteroid,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6
 	},
 /area/mining/mainasteroid)
@@ -5729,7 +5728,7 @@
 /turf/simulated/floor/plating/airless,
 /area/mining/manufacturing)
 "apV" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6
 	},
 /area/mining/mainasteroid)
@@ -5825,7 +5824,7 @@
 /area/flock_trader)
 "aqi" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9
 	},
 /area/space)
@@ -5836,7 +5835,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/mining/mainasteroid)
 "aqk" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8
 	},
 /area/mining/mainasteroid)
@@ -5862,7 +5861,7 @@
 /area/buddyfactory)
 "aqo" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10
 	},
 /area/space)
@@ -6995,6 +6994,10 @@
 /area/salyut)
 "asU" = (
 /obj/decal/cleanable/oil/streak,
+/obj/decal/poster/wallsign/psa_bucket{
+	pixel_x = -28;
+	pixel_y = 3
+	},
 /turf/simulated/floor,
 /area/radiostation/engineering)
 "asV" = (
@@ -7299,13 +7302,13 @@
 /area/buddyfactory)
 "atG" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1
 	},
 /area/space)
 "atH" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5
 	},
 /area/space)
@@ -7586,7 +7589,7 @@
 /area/space)
 "aus" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4
 	},
 /area/space)
@@ -7832,7 +7835,7 @@
 /area/space)
 "avb" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6
 	},
 /area/space)
@@ -7938,7 +7941,7 @@
 /area/buddyfactory)
 "avs" = (
 /turf/space,
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "avt" = (
 /obj/decal/cleanable/gangtag{
@@ -9319,12 +9322,12 @@
 /turf/space,
 /area/space)
 "aEO" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9
 	},
 /area/h7/asteroid)
 "aEP" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1
 	},
 /area/h7/asteroid)
@@ -9381,7 +9384,7 @@
 /turf/simulated/floor,
 /area/abandonedoutpostthing)
 "aFj" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/h7/asteroid)
 "aFk" = (
 /obj/machinery/light/worn{
@@ -9598,7 +9601,7 @@
 /turf/simulated/floor,
 /area/abandonedoutpostthing)
 "aGf" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8
 	},
 /area/h7/asteroid)
@@ -9707,7 +9710,6 @@
 /area/radiostation/bedroom)
 "aGy" = (
 /obj/machinery/door/airlock/pyro{
-	dir = 2;
 	name = "Bathroom"
 	},
 /turf/simulated/floor/wood/two,
@@ -9964,7 +9966,7 @@
 /turf/simulated/floor/airless/plating/damaged1,
 /area/abandonedmedicalship)
 "aHr" = (
-/turf/simulated/wall/asteroid/geode,
+/turf/simulated/wall/auto/asteroid/geode,
 /area/space)
 "aHs" = (
 /obj/decal/cleanable/dirt,
@@ -10438,7 +10440,7 @@
 /turf/simulated/floor/airless/white,
 /area/abandonedmedicalship)
 "aIL" = (
-/turf/simulated/wall/asteroid/ice,
+/turf/simulated/wall/auto/asteroid/ice,
 /area/space)
 "aIM" = (
 /obj/stocking{
@@ -10578,7 +10580,7 @@
 /turf/simulated/floor,
 /area/h7/control)
 "aJh" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4
 	},
 /area/h7/asteroid)
@@ -11740,7 +11742,7 @@
 /turf/simulated/floor/plating/random,
 /area/abandonedoutpostthing)
 "aMg" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10
 	},
 /area/h7/asteroid)
@@ -12594,15 +12596,11 @@
 	icon_state = "husk_l";
 	name = "dessicated husk"
 	},
-/turf/simulated/floor/plating/airless/asteroid{
-	stone_color = "#D1E6FF"
-	},
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "aOw" = (
 /obj/landmark/artifact,
-/turf/simulated/floor/plating/airless/asteroid{
-	stone_color = "#D1E6FF"
-	},
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "aOy" = (
 /obj/decal/fakeobjects{
@@ -13050,7 +13048,7 @@
 /turf/simulated/floor/caution/northsouth,
 /area/derelict_ai_sat/core)
 "aPA" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6
 	},
 /area/h7/asteroid)
@@ -13402,7 +13400,6 @@
 "aQD" = (
 /obj/table/reinforced/auto,
 /obj/item/device/radio/intercom{
-	broadcasting = 0;
 	dir = 4;
 	frequency = 1489;
 	name = "Prison Ship Intercom"
@@ -13753,17 +13750,17 @@
 /turf/simulated/floor/wood/two,
 /area/derelict_ai_sat)
 "aRE" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9
 	},
 /area/fermid_hive)
 "aRF" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1
 	},
 /area/fermid_hive)
 "aRG" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5
 	},
 /area/fermid_hive)
@@ -13908,7 +13905,7 @@
 	},
 /area/derelict_ai_sat)
 "aSb" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/fermid_hive)
 "aSc" = (
 /obj/table/reinforced/auto,
@@ -14125,7 +14122,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "aSC" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8
 	},
 /area/fermid_hive)
@@ -14306,12 +14303,12 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/fermid_hive)
 "aSY" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4
 	},
 /area/fermid_hive)
 "aSZ" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5
 	},
 /area/h7/asteroid)
@@ -14406,7 +14403,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/abandonedship)
 "aTn" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/abandonedship)
 "aTo" = (
 /obj/decal/fakeobjects/firealarm_broken{
@@ -14642,7 +14639,7 @@
 /turf/simulated/floor,
 /area/h7/crew)
 "aTN" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10
 	},
 /area/fermid_hive)
@@ -15050,7 +15047,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/fermid_hive)
 "aUS" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6
 	},
 /area/fermid_hive)
@@ -15092,7 +15089,6 @@
 "aUY" = (
 /obj/structure/woodwall{
 	color = "#CCCCCC";
-	icon = 'icons/turf/fake_woodwall.dmi';
 	name = "odd asteroid wall";
 	plane = -105
 	},
@@ -18306,7 +18302,7 @@
 /area/h7/lab)
 "bfm" = (
 /turf/space,
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/h7/asteroid)
 "bfn" = (
 /obj/cable{
@@ -18367,7 +18363,7 @@
 /area/helldrone)
 "bfw" = (
 /turf/space,
-/turf/simulated/wall/asteroid/ice,
+/turf/simulated/wall/auto/asteroid/ice,
 /area/space)
 "bfx" = (
 /obj/table/auto,
@@ -20125,7 +20121,7 @@
 /obj/decal/tile_edge/stripe/big{
 	dir = 4
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "bkC" = (
 /obj/stool,
@@ -20650,7 +20646,7 @@
 	dir = 8;
 	icon_state = "wall3_trans"
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /turf/space,
 /area/space)
 "bmu" = (
@@ -20977,7 +20973,7 @@
 /area/space)
 "boJ" = (
 /obj/grille/catwalk,
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "boK" = (
 /obj/machinery/light_switch{
@@ -21120,7 +21116,7 @@
 /obj/railing/orange/reinforced{
 	dir = 4
 	},
-/turf/simulated/floor/airless/carpet/office,
+/turf/simulated/floor/carpet/office,
 /area/mining/hangar)
 "cvi" = (
 /obj/decal/fakeobjects{
@@ -21273,7 +21269,7 @@
 /turf/simulated/floor/white/grime,
 /area/derelict_ai_sat)
 "fgb" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1
 	},
 /area/abandonedmedicalship)
@@ -21386,7 +21382,6 @@
 "gNo" = (
 /obj/machinery/door/airlock/pyro/command{
 	aiControlDisabled = 1;
-	dir = 2;
 	name = "Drone Computer Core";
 	req_access_txt = ""
 	},
@@ -21403,7 +21398,7 @@
 	network = "Mining";
 	tag = ""
 	},
-/turf/simulated/floor/airless/carpet/office,
+/turf/simulated/floor/carpet/office,
 /area/mining/hangar)
 "hme" = (
 /obj/indestructible/shuttle_corner{
@@ -21515,8 +21510,7 @@
 /area/timewarp/ship)
 "ivG" = (
 /obj/noticeboard{
-	pixel_x = 10;
-	pixel_y = 32
+	pixel_x = 10
 	},
 /turf/simulated/floor/wood/two,
 /area/radiostation/bedroom)
@@ -21630,7 +21624,7 @@
 /obj/item/device/radio/intercom/engineering{
 	dir = 4
 	},
-/turf/simulated/floor/airless/carpet/office,
+/turf/simulated/floor/carpet/office,
 /area/mining/hangar)
 "jVk" = (
 /obj/decal/fakeobjects/lightbulb_broken{
@@ -21642,7 +21636,7 @@
 /obj/stool/chair/comfy{
 	dir = 4
 	},
-/turf/simulated/floor/airless/carpet/office,
+/turf/simulated/floor/carpet/office,
 /area/mining/hangar)
 "jZt" = (
 /obj/machinery/door/unpowered/shuttle,
@@ -21848,7 +21842,7 @@
 /obj/stool/chair/comfy{
 	dir = 8
 	},
-/turf/simulated/floor/airless/carpet/office,
+/turf/simulated/floor/carpet/office,
 /area/mining/hangar)
 "mea" = (
 /turf/simulated/floor/caution/east,
@@ -21911,7 +21905,7 @@
 /obj/item/decoration/ashtray{
 	pixel_x = -3
 	},
-/turf/simulated/floor/airless/carpet/office,
+/turf/simulated/floor/carpet/office,
 /area/mining/hangar)
 "mHM" = (
 /obj/decal/tile_edge/stripe/big{
@@ -22292,7 +22286,7 @@
 	},
 /obj/table/wood/round/champagne,
 /obj/machinery/phone,
-/turf/simulated/floor/airless/carpet/office,
+/turf/simulated/floor/carpet/office,
 /area/mining/hangar)
 "pfn" = (
 /obj/decal/fakeobjects{
@@ -22415,12 +22409,6 @@
 /obj/structure/woodwall,
 /turf/simulated/floor/plating/airless,
 /area/derelict_ai_sat)
-"qum" = (
-/turf/space,
-/turf/simulated/floor/stairs{
-	dir = 1
-	},
-/area/mining/hangar)
 "qyC" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -22488,7 +22476,7 @@
 /turf/unsimulated/floor/white/grime,
 /area/timewarp/ship)
 "rbG" = (
-/turf/simulated/floor/airless/carpet/office,
+/turf/simulated/floor/carpet/office,
 /area/mining/hangar)
 "rdq" = (
 /obj/decal/cleanable/gangtag{
@@ -22603,7 +22591,7 @@
 /area/helldrone)
 "sjy" = (
 /obj/stool/chair/comfy,
-/turf/simulated/floor/airless/carpet/office,
+/turf/simulated/floor/carpet/office,
 /area/mining/hangar)
 "skQ" = (
 /obj/decal/timeplug{
@@ -22758,12 +22746,6 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
-"txH" = (
-/obj/critter/gunbot/drone/cutterdrone,
-/turf/simulated/floor/plating/airless/asteroid{
-	stone_color = "#D1E6FF"
-	},
-/area/space)
 "tEh" = (
 /obj/stool/chair/office,
 /turf/simulated/floor/shuttle{
@@ -22837,7 +22819,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "uIh" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	name = "weak compacted stone";
 	stone_color = "#575A5E"
 	},
@@ -22945,7 +22927,7 @@
 /obj/item/device/radio/intercom/cargo{
 	dir = 4
 	},
-/turf/simulated/floor/airless/carpet/office,
+/turf/simulated/floor/carpet/office,
 /area/mining/hangar)
 "vPx" = (
 /obj/decal/fakeobjects/lightbulb_broken,
@@ -23177,11 +23159,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/helldrone)
-"xOl" = (
-/turf/simulated/floor/plating/airless/asteroid{
-	stone_color = "#D1E6FF"
-	},
-/area/space)
 "ycy" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
@@ -71589,7 +71566,7 @@ vjf
 iZr
 vjf
 iZr
-qum
+vjf
 rbG
 rbG
 maw
@@ -85907,9 +85884,9 @@ aIL
 aIL
 aIL
 aIL
-xOl
+aac
 aIL
-xOl
+aac
 aIL
 aIL
 aIL
@@ -86208,12 +86185,12 @@ aIL
 aIL
 aIL
 aIL
-xOl
-xOl
-xOl
-xOl
-xOl
-xOl
+aac
+aac
+aac
+aac
+aac
+aac
 aIL
 aIL
 aIL
@@ -86506,17 +86483,17 @@ aaa
 aaa
 aaa
 aaa
-xOl
-xOl
-xOl
+aac
+aac
+aac
 aIL
-xOl
-aIL
-aIL
+aac
 aIL
 aIL
-xOl
-xOl
+aIL
+aIL
+aac
+aac
 aIL
 aIL
 aIL
@@ -86809,15 +86786,15 @@ aaa
 aaa
 aaa
 aIL
-xOl
-xOl
+aac
+aac
 aIL
 aIL
 aIL
 aIL
 aIL
-xOl
-xOl
+aac
+aac
 aIL
 aIL
 aIL
@@ -87111,20 +87088,20 @@ aaa
 aaa
 aIL
 aIL
-xOl
-xOl
-xOl
-xOl
+aac
+aac
+aac
+aac
 aIL
-xOl
-aIL
-aIL
-xOl
-xOl
+aac
 aIL
 aIL
-xOl
-xOl
+aac
+aac
+aIL
+aIL
+aac
+aac
 aaa
 aaa
 aaa
@@ -87413,19 +87390,19 @@ aaa
 aaa
 aIL
 aIL
-xOl
+aac
 aIL
 aIL
-xOl
+aac
 aIL
-xOl
+aac
 aIL
-xOl
-xOl
-xOl
-xOl
-xOl
-xOl
+aac
+aac
+aac
+aac
+aac
+aac
 aIL
 aaa
 aaa
@@ -87718,16 +87695,16 @@ aIL
 aIL
 aIL
 aIL
-xOl
-xOl
-xOl
+aac
+aac
+aac
 aIL
 aIL
 aIL
-xOl
+aac
 aIL
-xOl
-xOl
+aac
+aac
 aIL
 aIL
 aaa
@@ -88020,13 +87997,13 @@ aIL
 aIL
 aIL
 aIL
-xOl
+aac
 aIL
 aIL
 aIL
-xOl
-xOl
-xOl
+aac
+aac
+aac
 aIL
 aIL
 aIL
@@ -88320,13 +88297,13 @@ aaa
 aaa
 aIL
 aIL
-xOl
-xOl
-xOl
+aac
+aac
+aac
 aIL
-xOl
-xOl
-xOl
+aac
+aac
+aac
 aIL
 aIL
 aIL
@@ -88621,19 +88598,19 @@ aaa
 aaa
 aaa
 aIL
-xOl
-xOl
+aac
+aac
 aIL
 aIL
 aIL
-xOl
-xOl
-xOl
+aac
+aac
+aac
 aIL
-xOl
-xOl
-xOl
-xOl
+aac
+aac
+aac
+aac
 aIL
 aaa
 aaa
@@ -88924,18 +88901,18 @@ aaa
 aIL
 aIL
 aIL
-xOl
+aac
 aIL
-xOl
-txH
-xOl
+aac
+aAl
+aac
 aIL
-xOl
-xOl
-xOl
+aac
+aac
+aac
 aIL
 aIL
-xOl
+aac
 aIL
 aaa
 aaa
@@ -89226,18 +89203,18 @@ aIL
 aIL
 aIL
 aIL
-xOl
-xOl
-xOl
-xOl
-xOl
+aac
+aac
+aac
+aac
+aac
 aIL
 aIL
 aIL
 aIL
 aIL
-xOl
-xOl
+aac
+aac
 aIL
 aaa
 aaa
@@ -89527,14 +89504,14 @@ aaa
 aIL
 aIL
 aIL
-xOl
-xOl
+aac
+aac
 aIL
-xOl
+aac
 aIL
-xOl
+aac
 aIL
-xOl
+aac
 aIL
 aIL
 aIL
@@ -89827,16 +89804,16 @@ aaa
 aaa
 aaa
 aIL
-xOl
-xOl
-xOl
+aac
+aac
+aac
 aIL
 aIL
 aIL
 aIL
-xOl
+aac
 aIL
-xOl
+aac
 aIL
 aIL
 aIL
@@ -90131,16 +90108,16 @@ aaa
 aIL
 aIL
 aIL
-xOl
+aac
 aIL
 aIL
 aIL
-xOl
-xOl
-xOl
-xOl
+aac
+aac
+aac
+aac
 aIL
-xOl
+aac
 aIL
 aIL
 aaa
@@ -90437,12 +90414,12 @@ aIL
 aIL
 aIL
 aOv
-xOl
+aac
 aIL
 aIL
-xOl
-xOl
-xOl
+aac
+aac
+aac
 aIL
 aIL
 aaa
@@ -90739,13 +90716,13 @@ aIL
 aIL
 aIL
 aIL
-xOl
+aac
 aIL
 aIL
-xOl
+aac
 aIL
-xOl
-xOl
+aac
+aac
 aIL
 aaa
 aaa
@@ -91039,15 +91016,15 @@ aaa
 aIL
 aIL
 aIL
-xOl
-xOl
-xOl
+aac
+aac
+aac
 aIL
 aIL
 aIL
 aIL
 aIL
-xOl
+aac
 aIL
 aaa
 aaa
