@@ -58,9 +58,6 @@ const DropperAmountSection = (props) => {
     <Section>
       <Stack align="center" pb={1}>
         <Stack.Item>
-          <ColorBox color={reagentColor} />
-        </Stack.Item>
-        <Stack.Item>
           <Box
             textAlign="right"
             width="3em"
@@ -73,7 +70,7 @@ const DropperAmountSection = (props) => {
             value={curReagentVol}
             minValue={0}
             maxValue={maxTransferAmt}
-
+            color={reagentColor}
           />
         </Stack.Item>
         <Stack.Item>
