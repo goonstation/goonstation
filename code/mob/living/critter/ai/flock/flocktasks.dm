@@ -1210,3 +1210,38 @@ butcher
 	on_reset()
 		..()
 		holder.target = src.target
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+/// Wander override for better wandering
+/datum/aiTask/timed/wander/flock
+	minimum_task_ticks = 5
+	maximum_task_ticks = 7 //you go a lot further with this wandering, so shorten the task time
+	var/turf/startpos
+	var/turf/targetpos
+	var/path
+
+/datum/aiTask/timed/wander/flock/on_tick()
+	if(!startpos)
+		startpos = get_turf(holder.owner)
+	if(targetpos && GET_DIST(holder.owner,targetpos) > 0) //if we have a target and we're not already there
+		if(!path || !length(path))
+			path = get_path_to(holder.owner, targetpos, 5, 1) //short search, we don't want this to be expensive
+		if(length(path))
+			holder.move_to_with_path(targetpos, path, 0)
+			return
+
+	//pick a random tile that is not space, and not closer to startpos than we are now
+	var/list/turfs = list()
+	path = null
+	targetpos = null
+	for(var/turf/T in range(holder.owner,2))
+		if(!istype(T,/turf/space) && !is_blocked_turf(T) && GET_DIST(holder.owner,startpos) <= GET_DIST(T,startpos))
+			turfs += T
+	if(!length(turfs))
+		//oh shit we must be in space, better wander in the direction of the station
+		turfs += pick_landmark(LANDMARK_LATEJOIN)
+	if(length(turfs))
+		targetpos = pick(turfs)
+	else
+		//well I guess the station is gone and everyone is dead. Back to default wander behaviour
+		..()
