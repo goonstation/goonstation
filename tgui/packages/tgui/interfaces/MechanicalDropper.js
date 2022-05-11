@@ -11,7 +11,6 @@ import {
   Slider,
   Tabs,
   ProgressBar,
-  ColorBox,
 } from '../components';
 
 const TO_SELF = 0;
