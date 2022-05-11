@@ -29,6 +29,7 @@
 	var/haunting = 0
 	var/hauntBonus = 0
 	var/justdied = 0
+	var/justmanifested = 0	//To track if a candle forced us to manifest
 	var/absorbcount = 0 //Keep track of how many souls we absorbed
 	var/absorbs_to_evolve = 1
 
@@ -190,6 +191,9 @@
 		else if (src.health < src.max_health)
 			HealDamage("chest", 1 * (life_time_passed / life_tick_spacing), 0)
 		last_life_update = world.timeofday
+
+		if(justmanifested > 0)
+			justmanifested--
 
 	// No log entries for unaffected mobs (Convair880).
 	ex_act(severity)

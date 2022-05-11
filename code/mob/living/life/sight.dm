@@ -103,6 +103,12 @@
 			if (owner.see_invisible < INVIS_GHOST)
 				owner.see_invisible = INVIS_GHOST
 
+		if (HAS_ATOM_PROPERTY(owner, PROP_MOB_WRAITHVISION) && (T && !isrestrictedz(T.z)))
+			if (owner.see_in_dark != 1)
+				owner.see_in_dark = 1
+			if (owner.see_invisible < INVIS_SPOOKY)
+				owner.see_invisible = INVIS_SPOOKY
+
 		if (owner.client?.adventure_view)
 			owner.see_invisible = INVIS_ADVENTURE
 

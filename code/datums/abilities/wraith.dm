@@ -528,7 +528,6 @@
 			boutput(holder.owner, "We show ourselves")
 			var/mob/wraith/W = holder.owner
 
-			//Todo bugfix: Cooldown doesnt begin when manifesting as a human
 			cooldown = 10 SECONDS
 
 			if ((istype(W, /mob/wraith/wraith_trickster)))	//Trickster can appear as a human, living or dead.
@@ -838,7 +837,7 @@
 	icon_state = "spook"
 	desc = "Choose a form to evolve into once you have grown strong enough"
 	targeted = 0
-	pointCost = 1
+	pointCost = 0
 	//Todo: copied from "spook". Fix list appearing on the left of the screen
 	var/status = 0
 	var/static/list/effects = list("Rot" = 1, "Summoner" = 2, "Trickster" = 3)
@@ -864,8 +863,9 @@
 		if (O.absorbcount < O.absorbs_to_evolve)
 			boutput(holder.owner, "<span class='notice'>You didn't absorb enough souls. You need to absorb at least [O.absorbs_to_evolve - O.absorbcount] more!</span>")
 			return 1
-		if (holder.points < pointCost)//Todo check if this is necessary
-			boutput(holder.owner, "<span class='notice'>You do not have enough points to cast that</span>")
+		if (holder.points < pointCost)
+			boutput(holder.owner, "<span class='notice'>You do not have enough points to cast this. You need at least [pointCost] points.</span>")
+			return 1
 		else
 			var/mob/wraith/W
 			switch (effect)	//Todo, add messages and windows on transform
@@ -1030,14 +1030,14 @@
 		if (..())
 			return 1
 
-		if (ishuman(target))	//Todo maybe cancel the affect if you manage to get dragged to the chapel? Might feel bad for the wraith, so perhaps not.
+		if (ishuman(target))
 			var/mob/living/carbon/human/H = target
 			var/mob/wraith/W = holder.owner
 			if (H?.bioHolder.HasEffect("rot_curse") && H?.bioHolder.HasEffect("weak_curse") && H?.bioHolder.HasEffect("blind_curse") && H?.bioHolder.HasEffect("blood_curse"))
 				boutput(holder.owner, "<span class='alert'>That soul is OURS</span>")
 				boutput(H, "The voices in your heads are reaching a crescendo")
 				sleep(4 SECOND)
-				H.make_jittery(50)	//Todo, this doesnt work, need to fix it.
+				H.make_jittery(3)	//Todo, this doesnt work, need to fix it.
 				H.changeStatus("stunned", 2 SECONDS)
 				H.emote("scream")
 				boutput(holder.owner, "You feel netherworldly hands grasping you.")

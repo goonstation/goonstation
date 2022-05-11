@@ -11,7 +11,6 @@
 	var/elite_amount_to_spawn = 2
 	New()
 		..()
-		//Todo add fade in and out. Make creatures despawn with an animation
 		src.visible_message("<span class='alert'>A [src] appears into view, some shadows coalesce within!</b></span>")
 		sleep(7 SECOND)	//Give crew some time to bash it while it's weak
 		src._health += 40
@@ -41,13 +40,17 @@
 				/obj/critter/spider/aggressive)
 				chance_increase += 20
 			var/obj/minion = new mob_type(src.loc)
+			minion.alpha = 0
+			animate(minion, alpha=255, time=2 SECONDS)
 			mob_list += minion
 			src.visible_message("<span class='alert'><b>[minion] emerges from the [src]!</b></span>")
 			sleep(8 SECOND)
 			amount_spawned++
 		sleep(180 SECOND)
 		for (var/obj/C in mob_list)
-			qdel(C)
+			animate(C, alpha=0, time=2 SECONDS)
+			SPAWN(2 SECOND)
+				qdel(C)
 		qdel(src)
 		return
 
@@ -60,5 +63,7 @@
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)
 		if(src._health <= 0)
 			for (var/obj/C in mob_list)
-				qdel(C)
+				animate(C, alpha=0, time=2 SECONDS)
+				SPAWN(2 SECOND)
+					qdel(C)
 			qdel(src)

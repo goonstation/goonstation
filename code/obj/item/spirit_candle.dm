@@ -1,0 +1,117 @@
+//Your offensive weapon against wraiths and invisible folks
+/obj/item/device/light/spirit_candle
+	name = "spirit candle"
+	desc = "Feels vaguely ominous!"
+	icon = 'icons/obj/items/sparklers.dmi'
+	icon_state = "sparkler-off"
+	icon_on = "sparkler-on"
+	icon_off = "sparkler-off"
+	inhand_image_icon = 'icons/obj/items/sparklers.dmi'
+	item_state = "sparkler-off"
+	var/item_on = "sparkler-on"
+	var/item_off = "sparkler-off"
+	w_class = W_CLASS_SMALL
+	density = 0
+	anchored = 0
+	opacity = 0
+	col_r = 0.2
+	col_g = 0.2
+	col_b = 0.8
+	var/sparks = 7
+	var/burnt = false
+	var/light_ticks = 10
+	var/mob/linked_mob = null	//We are bound to a soul.
+
+	New()
+		..()
+
+	attack_self(mob/user)
+		if (src.on)
+			src.visible_message("<span class='notice'>[user] blows on [src], its eyes emit a threatening glow!</span>")
+			for(var/mob/wraith/W in orange(4, user))
+				if (W.justmanifested <= 0)
+					SPAWN(5 DECI SECOND)	//Give them half a second to flee
+						W.makeCorporeal()
+						boutput(W, "<span class='alert'>A malignant spirit pulls you into the physical world! You being to gather your forces to try and escape to the spirit realm...</span>")
+						SPAWN(30 SECOND)
+							W.makeIncorporeal()
+							W.justmanifested = 5	//To avoid spamming the candle
+			var/turf/T = get_turf(src)
+			playsound(src.loc, "sound/voice/chanting.ogg", 50, 0)
+			new /obj/overlay/darkness_field(T, 10 SECOND, radius = 7.5, max_alpha = 250)
+			new /obj/overlay/darkness_field{plane = PLANE_SELFILLUM}(T, 10 SECOND, radius = 7.5, max_alpha = 250)
+			src.put_out(user)
+
+	attackby(obj/item/W, mob/user)
+		if (!src.on && !burnt)
+			if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
+				src.light(user, "<span class='alert'><b>[user]</b> casually lights [src] with [W], what a badass.</span>")
+
+			else if (istype(W, /obj/item/clothing/head/cakehat) && W:on)
+				src.light(user, "<span class='alert'>Did [user] just light \his [src] with [W]? Holy Shit.</span>")
+
+			else if (istype(W, /obj/item/device/igniter))
+				src.light(user, "<span class='alert'><b>[user]</b> fumbles around with [W]; sparks erupt from [src].</span>")
+
+			else if (istype(W, /obj/item/device/light/zippo) && W:on)
+				src.light(user, "<span class='alert'>With a single flick of their wrist, [user] smoothly lights [src] with [W]. Damn they're cool.</span>")
+
+			else if ((istype(W, /obj/item/match) || istype(W, /obj/item/device/light/candle)) && W:on)
+				src.light(user, "<span class='alert'><b>[user] lights [src] with [W].</span>")
+
+			else if (W.burning)
+				src.light(user, "<span class='alert'><b>[user]</b> lights [src] with [W]. Goddamn.</span>")
+		else
+			return ..()
+
+	process()
+		var/turf/location = src.loc
+		var/mob/M = null
+
+		if (ismob(location))
+			M = location
+			if (M == master)
+				M.setStatus("spirit_sight", duration = 5 SECONDS)
+
+		if (src.on)
+			light_ticks --
+		if (light_ticks <= 0)
+			src.put_out()
+
+	temperature_expose(datum/gas_mixture/air, temperature, volume)
+		if((temperature > T0C+400))
+			src.light()
+		..()
+
+	proc/light(var/mob/user, var/message)
+		if (!src) return
+		if (burnt) return
+		if (!src.on)
+			logTheThing("combat", user, null, "lights the [src] at [log_loc(src)].")
+			src.on = 1
+			src.hit_type = DAMAGE_BURN
+			src.force = 3
+			src.icon_state = src.icon_on
+			src.item_state = src.item_on
+			light.enable()
+			processing_items |= src
+			if(user)
+				user.update_inhands()
+				master = user
+		return
+
+	proc/put_out(var/mob/user = null)
+		if (!src) return
+		if (src.on)
+			src.on = 0
+			src.hit_type = DAMAGE_BLUNT
+			src.force = 0
+			src.icon_state = src.icon_off
+			src.item_state = src.item_off
+			src.burnt = true
+			light.disable()
+			processing_items -= src
+			if(user)
+				user.update_inhands()
+		return
+

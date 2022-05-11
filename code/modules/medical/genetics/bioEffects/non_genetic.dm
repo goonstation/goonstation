@@ -271,9 +271,11 @@
 			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "outline", layer = MOB_LIMB_LAYER)
 			overlay_image.color = "#007BFF"
 		..()
+
 ////////////////////
 //Wraith curses
 ////////////////////
+
 /datum/bioEffect/blood_curse
 	name = "Blood curse"
 	desc = "Curse of blood."
@@ -298,7 +300,6 @@
 		if (prob(3))
 			owner.visible_message("<span class='alert'>[owner] vomits a lot of blood!</span>")
 			playsound(owner.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
-			//random_brute_damage(owner, rand(5,8))
 			bleed(owner, rand(5,8), 5)
 
 
@@ -357,14 +358,14 @@
 			owner.emote("pale")
 		if (prob(1))
 			boutput(owner, pick("Your conscience slips."))
-			owner.emote("faint")
+			owner.changeStatus("drowsy", 10 SECONDS)
 
 	OnRemove()
 		if (ishuman(owner))
 			owner.delStatus("weakcurse")
 		. = ..()
 
-/datum/bioEffect/rot_curse
+/datum/bioEffect/rot_curse	//Also prevents eating entirely.
 	name = "Rot curse"
 	desc = "Curse of rot."
 	id = "rot_curse"
@@ -379,7 +380,7 @@
 	OnLife()
 		if (istype(get_area(owner), /area/station/chapel))
 			if (prob(25))
-				boutput(owner, "You feel purified. your stomach settles down.")
+				boutput(owner, "You feel purified. Your stomach settles down.")
 				owner.bioHolder.RemoveEffect("rot_curse")
 		if (prob(5))
 			owner.visible_message("<span class='alert'>[owner] suddenly vomits on the floor!</span>")

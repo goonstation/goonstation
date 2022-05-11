@@ -41,6 +41,7 @@
 		HH.can_attack = 1
 
 /datum/projectile/special/tentacle	//Get over here!
+	//Todo Make it throw the person to us instead of teleport
 	name = "tentacle"
 	dissipation_rate = 1
 	dissipation_delay = 7
