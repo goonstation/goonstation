@@ -28,6 +28,15 @@
 		if (src.mind && src.mind.special_role != ROLE_OMNITRAITOR)
 			src.show_antag_popup("arcfiend")
 
+/mob/proc/get_arcfiend_power(var/lifetime_energy = 0)
+	if (!isarcfiend(src))
+		return 0
+
+	var/datum/abilityHolder/arcfiend/AH = src.get_ability_holder(/datum/abilityHolder/arcfiend)
+	if (AH && istype(AH))
+		return AH.get_arcfiend_power(lifetime_energy)
+	else
+		return 0
 
 /datum/abilityHolder/arcfiend
 	usesPoints = 1
@@ -46,6 +55,12 @@
 		src.lifetime_energy += add_points
 		var/points = min((MAX_ARCFIEND_POINTS - src.points), add_points)
 		. = ..(points, target_ah_type)
+
+	proc/get_arcfiend_power(var/total_power = 0)
+		if (total_power)
+			return src.lifetime_energy
+		else
+			return src.points
 
 ABSTRACT_TYPE(/datum/targetable/arcfiend)
 /datum/targetable/arcfiend
