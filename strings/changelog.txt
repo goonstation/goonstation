@@ -1,5 +1,9 @@
 
 (t)wed may 11 22
+(u)zcrow
+(p)8493
+(e)|
+(*)Added "Change vocal pitch" verb to Robot Commands. Borgs can now modify their voices to better express themselves.
 (u)Wisemonster
 (p)8489
 (e)🗺|mapping
