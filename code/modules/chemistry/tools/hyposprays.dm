@@ -73,7 +73,6 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 		var/list/reagentData = list(
 			maxVolume = R.maximum_volume,
 			totalVolume = R.total_volume,
-			temperature = R.total_temperature,
 			contents = list(),
 			finalColor = "#000000"
 		)
