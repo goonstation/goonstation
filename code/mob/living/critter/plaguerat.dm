@@ -80,7 +80,11 @@
 			playsound(src.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 70, 1)
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
-				H.contract_disease(/datum/ailment/disease/space_plague, null, null, 1)
+				if(istype(H.wear_suit, /obj/item/clothing/suit/bio_suit))
+					boutput(H, "The bite is painful, but at least your biosuit protected you from the rat's diseases.")
+				else
+					boutput(H, "Your hand immediatly starts to painfully puff up, that can't be good.")
+					H.contract_disease(/datum/ailment/disease/space_plague, null, null, 1)
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
@@ -111,6 +115,11 @@
 				R.compborg_take_critter_damage("[pick("l","r")]_[pick("arm","leg")]", rand(2,4))
 			else
 				M.TakeDamageAccountArmor("All", rand(1,3), 0, 0, DAMAGE_STAB)
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if(istype(H.wear_suit, /obj/item/clothing/suit/bio_suit))	//Protective wear will stop it
+					boutput(H, "The bite hurt alot, but it didn't manage to pierce your protective suit.")
+					return 1
 			M.reagents.add_reagent(src.venom, bite_transfer_amt)
 
 	proc/grow_up(var/mob/wraith/M = null)
