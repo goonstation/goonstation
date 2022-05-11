@@ -550,17 +550,7 @@ proc/find_ghost_by_key(var/find_key)
 			boutput(user, "<span class='notice'><B>The scanner is already occupied!</B></span>")
 			return
 
-		var/mob/M = G.affecting
-		M.set_loc(src)
-		src.occupant = M
-		src.icon_state = "scanner_1"
-
-		playsound(src.loc, "sound/machines/sleeper_close.ogg", 50, 1)
-
-		for(var/obj/O in src)
-			O.set_loc(src.loc)
-
-		src.add_fingerprint(user)
+		move_mob_inside(G.affecting)
 		qdel(G)
 		return
 
