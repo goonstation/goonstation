@@ -19,6 +19,8 @@
 	// HEALTHS
 	var/health_brute = 1
 	var/health_burn = 1
+	// no medicine for radio birds
+	metabolizes = FALSE
 	//base compute provided
 	var/compute = 0
 	// if we're extinguishing ourselves don't extinguish ourselves repeatedly
