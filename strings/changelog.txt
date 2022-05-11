@@ -1,5 +1,9 @@
 
 (t)wed may 11 22
+(u)BatElite
+(p)8484
+(e)|
+(+)Ghostdrones can now auto-pry floors when placing tiles, provided they left their omnitool on prying
 (u)Nexusuxen
 (p)8502
 (e)|
