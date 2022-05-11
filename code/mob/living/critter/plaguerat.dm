@@ -4,7 +4,8 @@
 	name = "plague rat"
 	real_name = "plague rat"
 	desc = "Shouldnt be seeing this."
-	icon_state = "big_spide"
+	icon = 'icons/mob/wraith_critters.dmi'
+	icon_state = "smallRat"
 	density = 1
 	hand_count = 2
 	add_abilities = list(/datum/targetable/critter/plague_rat/eat_filth,
@@ -141,7 +142,7 @@
 	name = "Diseased rat"
 	real_name = "diseased rat"
 	desc = "A diseased looking rat."
-	icon_state = "big_spide"
+	icon_state = "smallRat"
 	amount_to_grow = 3
 	bite_transfer_amt = 1
 	flags = TABLEPASS | DOORPASS
@@ -177,7 +178,7 @@
 	name = "Plague-ridden rat"
 	real_name = "plague ridden rat"
 	desc = "A wretched, disgusting rat."
-	icon_state = "big_spide"
+	icon_state = "mediumRat"
 	amount_to_grow = 2
 	flags = DOORPASS
 	bite_transfer_amt = 2.5
@@ -216,7 +217,7 @@
 	name = "Bloated rat mass"
 	real_name = "bloated rat mass"
 	desc = "A horrible mass of puss and warts, that once used to look like a rat."
-	icon_state = "big_spide"
+	icon_state = "giantRat"
 	bite_transfer_amt = 4
 	health_brute = 60
 	health_brute_vuln = 0.6

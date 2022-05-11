@@ -74,11 +74,11 @@
 
 		if (src.on)
 			light_ticks --
-		if ((light_ticks > (light_ticks / 3)) && (light_ticks < (light_ticks - (light_ticks / 3))) && (burn_state != 1)) //A third burnt
+		if ((light_ticks < 40) && (burn_state < 1))
 			burn_state = 1
 			src.icon_state = "smelted-lit"
 			src.visible_message("<span class='notice'>[src]'s light begins to flicker!</span>")
-		else if (light_ticks <= (light_ticks / 3) && (burn_state != 2))
+		else if ((light_ticks < 20) && (burn_state < 2))
 			burn_state = 2
 			src.icon_state = "melted-lit"
 			src.visible_message("<span class='notice'>[src]'s light is almost out!</span>")

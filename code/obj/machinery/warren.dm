@@ -1,7 +1,7 @@
 /obj/machinery/wraith_warren
 	name = "rat warren"
 	icon = 'icons/obj/objects.dmi'
-	icon_state = "anom"
+	icon_state = "rat_den"
 	desc = "A pile of garbage vaguely ressembling a nest."
 	anchored = 1
 	density = 0
@@ -21,6 +21,8 @@
 		user.lastattacked = src
 		hit_twitch(src)
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)
+		if(prob(20))
+			playsound(src.loc, 'sound/voice/animal/mouse_squeak.ogg', 60, 1)
 		if(src._health <= 0)
 			src.gib(src.loc)
 			qdel(src)
