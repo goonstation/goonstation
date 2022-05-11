@@ -2936,29 +2936,13 @@ var/global/noir = 0
 					if ("woodstation")
 						if (src.level >= LEVEL_PA)
 							message_admins("[key_name(usr)] began replacing all Z1 floors and walls with wooden ones.")
-							var/nornwalls = 0
-							if (map_settings?.walls == /turf/simulated/wall/auto/supernorn)
-								nornwalls = 1
 							for (var/turf/simulated/wall/W in world)
 								if (atom_emergency_stop)
 									message_admins("[key_name(usr)]'s command to replace all Z1 floors and walls with wooden ones was terminated due to the atom emerygency stop!")
 									return
 								if (W.z != 1)
 									break
-								if (nornwalls)
-									var/turf/simulated/wall/auto/AW = W
-									if (istype(AW))
-										if (AW.icon != 'icons/turf/walls_wood.dmi')
-											AW.icon = 'icons/turf/walls_wood.dmi'
-											if (istype(AW, /turf/simulated/wall/auto/reinforced))
-												AW.icon_state = copytext(W.icon_state,2)
-											if (AW.connect_image) // I will get you to work you shit fuck butt FART OVERLAY
-												AW.connect_image = image(AW.icon, "connect[AW.connect_overlay_dir]")
-												AW.UpdateOverlays(AW.connect_image, "connect")
-								else
-									if (W.icon_state != "wooden")
-										W.icon = 'icons/turf/walls.dmi'
-										W.icon_state = "wooden"
+								new /turf/simulated/wall/auto/supernorn/wood(get_turf(W))
 								LAGCHECK(LAG_LOW)
 							for (var/turf/simulated/floor/F in world)
 								if (atom_emergency_stop)
