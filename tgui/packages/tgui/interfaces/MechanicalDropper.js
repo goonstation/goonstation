@@ -11,6 +11,7 @@ import {
   Slider,
   Tabs,
   ProgressBar,
+  ColorBox,
 } from '../components';
 
 const TO_SELF = 0;
@@ -50,11 +51,15 @@ const DropperAmountSection = (props) => {
     maxTransferAmt,
     onTransferAmtChange,
     curReagentVol,
+    reagentColor,
   } = props;
 
   return (
     <Section>
       <Stack align="center" pb={1}>
+        <Stack.Item>
+          <ColorBox color={reagentColor} />
+        </Stack.Item>
         <Stack.Item>
           <Box
             textAlign="right"
@@ -68,6 +73,7 @@ const DropperAmountSection = (props) => {
             value={curReagentVol}
             minValue={0}
             maxValue={maxTransferAmt}
+
           />
         </Stack.Item>
         <Stack.Item>
@@ -120,6 +126,7 @@ export const MechanicalDropper = (_props, context) => {
     maxTransferAmt,
     transferMode,
     curReagentVol,
+    reagentColor,
   } = data;
 
   const onTransferModeChange = (mode) => {
@@ -148,6 +155,7 @@ export const MechanicalDropper = (_props, context) => {
               maxTransferAmt={maxTransferAmt}
               onTransferAmtChange={onTransferAmtChange}
               curReagentVol={curReagentVol}
+              reagentColor={reagentColor}
             />
           </Stack.Item>
         </Stack>

@@ -105,7 +105,7 @@
 
 		return
 
-	proc/log_me(var/user, var/target, var/delayed = 0)
+	proc/log_me(user, target, delayed = 0)
 		if (!src || !istype(src) || !user|| !target)
 			return
 
@@ -158,6 +158,7 @@
 			"curTransferAmt" = src.transfer_amount,
 			"transferMode" = transfer_mode,
 			"curReagentVol" = src.reagents.total_volume,
+			"reagentColor" = src.reagents.get_average_color().to_rgb(),
 		)
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
