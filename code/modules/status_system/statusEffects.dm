@@ -1636,36 +1636,6 @@
 							qdel(illusionIcon)
 		wall_list = list()
 
-/datum/statusEffect/spirit_sight
-	id = "spirit_sight"
-	name = "Spirit sight"
-	desc = "The skull is sharing it's vision"
-	icon_state = "mentor_mouse"
-	unique = 1
-	duration = 5 SECONDS
-	maxDuration = 15 SECONDS
-
-	onAdd(optional=null)
-		. = ..()
-		var/mob/M = owner
-		if (ishuman(M))
-			APPLY_ATOM_PROPERTY(M, PROP_MOB_WRAITHVISION, src)
-			boutput(M, "A soothing voice begins to hum in your head, you feel as though your mind expands.")
-
-	onUpdate()
-		var/mob/M = owner
-		if (ishuman(M))
-			if (M.hasStatus("terror"))
-				M.delStatus("terror")
-		. = ..()
-
-	onRemove()
-		. = ..()
-		var/mob/M = owner
-		if (ishuman(M))
-			REMOVE_ATOM_PROPERTY(M, PROP_MOB_WRAITHVISION, src)
-			boutput(M, "The guiding spirit leaves your mind. Your senses feel dull.")
-
 /datum/statusEffect/mentor_mouse
 	id = "mentor_mouse"
 	name = "Mentor Mouse"
