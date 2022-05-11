@@ -1,5 +1,9 @@
 
 (t)wed may 11 22
+(u)Nexusuxen
+(p)8502
+(e)|
+(+)AI plating kits can now be applied to existing AIs that have the default skin!
 (u)zcrow
 (p)8493
 (e)|
