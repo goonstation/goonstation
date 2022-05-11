@@ -376,9 +376,9 @@
 		process()
 			if (!target)
 				return
-			if (automatic_mode && last_used < world.time && last_delay < world.time)
+			if (automatic_mode && last_used < TIME && last_delay < TIME)
 				if (target.check_for_unacceptable_content())
-					last_delay = world.time + auto_delay
+					last_delay = TIME + auto_delay
 					return
 				else
 					SPAWN(0)
@@ -401,10 +401,10 @@
 
 			active = 1
 
-			if (last_used > world.time)
+			if (last_used > TIME)
 				damage(rand(2,6))
 
-			last_used = world.time + cooldown_time
+			last_used = TIME + cooldown_time
 			playsound(src.loc, sound_activate, 100, 0, 3, 0.25)
 			build_icon()
 
@@ -483,9 +483,9 @@
 
 	process()
 		..()
-		if (automatic_mode && last_used < world.time && last_delay < world.time)
+		if (automatic_mode && last_used < TIME && last_delay < TIME)
 			if (mining_controls.magnet_area.check_for_unacceptable_content())
-				last_delay = world.time + auto_delay
+				last_delay = TIME + auto_delay
 				return
 			else
 				SPAWN(0) //Did you know that if you sleep directly in process() you are the old lady at the mall who only pays in quarters.
@@ -629,10 +629,10 @@
 
 		active = 1
 
-		if (last_used > world.time)
+		if (last_used > TIME)
 			damage(rand(2,6))
 
-		last_used = world.time + cooldown_time
+		last_used = TIME + cooldown_time
 		playsound(src.loc, sound_activate, 100, 0, 3, 0.25)
 		build_icon()
 
@@ -720,10 +720,10 @@
 				))
 		.["miningEncounters"] = miningEncounters
 
-		.["time"] = world.time
+		.["time"] = TIME
 
 	ui_act(action, params)
-		var/magnetNotReady = src.active || (src.last_used > world.time && !src.cooldown_override) || src.last_use_attempt > world.time
+		var/magnetNotReady = src.active || (src.last_used > TIME && !src.cooldown_override) || src.last_use_attempt > TIME
 		switch(action)
 			if ("geoscan")
 				var/MC = src.get_magnetic_center()
@@ -741,7 +741,7 @@
 				if (src.check_for_unacceptable_content())
 					src.visible_message("<b>[src.name]</b> states, \"Safety lock engaged. Please remove all personnel and vehicles from the magnet area.\"")
 				else
-					src.last_use_attempt = world.time + 10
+					src.last_use_attempt = TIME + 10
 					SPAWN(0)
 						if (src)
 							src.pull_new_source(params["encounter_id"])
@@ -756,7 +756,7 @@
 				if (src.check_for_unacceptable_content())
 					src.visible_message("<b>[src.name]</b> states, \"Safety lock engaged. Please remove all personnel and vehicles from the magnet area.\"")
 				else
-					src.last_use_attempt = world.time + 10 // This is to prevent href exploits or autoclickers from pulling multiple times simultaneously
+					src.last_use_attempt = TIME + 10 // This is to prevent href exploits or autoclickers from pulling multiple times simultaneously
 					SPAWN(0)
 						if (src)
 							src.pull_new_source()
