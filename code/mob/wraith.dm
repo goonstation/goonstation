@@ -29,6 +29,8 @@
 	var/haunting = 0
 	var/hauntBonus = 0
 	var/justdied = 0
+	var/forcedVisible = false	//Spirit candles can force us to show ourself
+	var/visibleTimer = 3	//Spirit candles reset the timer periodically when close.
 	var/justmanifested = 0	//To track if a candle forced us to manifest
 	var/absorbcount = 0 //Keep track of how many souls we absorbed
 	var/absorbs_to_evolve = 1
@@ -156,6 +158,11 @@
 
 		var/life_time_passed = max(life_tick_spacing, world.timeofday - last_life_update)
 
+		if (src.forcedVisible && !src.density && !src.haunting)
+			if (src.visibleTimer > 0)
+				src.visibleTimer--
+			if (src.visibleTimer <= 0)
+				makeInvisible()
 
 		src.hauntBonus = 0	//Todo, give a numbers pass here. Adjust for each type of wraith
 		if (src.haunting)
@@ -595,6 +602,16 @@
 				APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_SPOOKY)
 				src.alpha = 160
 				src.see_invisible = INVIS_SPOOKY
+
+		makeVisible()
+			if(!src.density && !src.forcedVisible)
+				REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src)
+				src.forcedVisible = true
+
+		makeInvisible()
+			if(!src.density)
+				APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_SPOOKY)
+			src.forcedVisible = false
 
 		haunt()
 			if (src.density)

@@ -19,8 +19,8 @@
 	col_b = 0.8
 	var/sparks = 7
 	var/burnt = false
-	var/light_ticks = 10
-	var/mob/linked_mob = null	//We are bound to a soul.
+	var/light_ticks = 60
+	//var/mob/linked_mob = null	//We are bound to a soul.
 
 	New()
 		..()
@@ -67,11 +67,16 @@
 	process()
 		var/turf/location = src.loc
 		var/mob/M = null
-
+		var/origin = null
 		if (ismob(location))
 			M = location
-			if (M == master)
-				M.setStatus("spirit_sight", duration = 5 SECONDS)
+			origin = get_turf(M)
+		else
+			origin = location
+		//Check for wraiths in range and reveal them
+		for (var/mob/wraith/W in range(4, origin))
+			W.makeVisible()
+			W.visibleTimer = 3	//Reset the wraith timer when nearby
 
 		if (src.on)
 			light_ticks --

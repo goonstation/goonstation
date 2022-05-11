@@ -25,15 +25,16 @@
 			src.gib(src.loc)
 			qdel(src)
 
-	process()
-		if (src.next_spawn_check != null)//Todo Check about mad mice assaulting the plague rat, maybe make custom mob
+	process()	//Spawn some mad mice once in awhile
+		if (src.next_spawn_check != null)
 			if (src.next_spawn_check < world.time)
-				next_spawn_check = world.time + rand(10 SECONDS, 15 SECONDS)
+				next_spawn_check = world.time + rand(20 SECONDS, 25 SECONDS)
 				if (linked_critters < max_critters)
 					var/obj/critter/mouse/mad/warren/M = new /obj/critter/mouse/mad/warren(src.loc)
 					M.linked_warren = src
 					linked_critters ++
 
+		//Plague rats in range heal up slowly
 		for (var/mob/living/critter/plaguerat/P in range(5, src))
 			if((P.health < (P.health_brute + P.health_burn)))
 				for(var/damage_type in P.healthlist)

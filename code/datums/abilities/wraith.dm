@@ -943,8 +943,8 @@
 	icon_state = "skeleton"
 	desc = "Curse the living with a plague of blood."
 	targeted = 1
-	pointCost = 20
-	cooldown = 40 SECONDS
+	pointCost = 40
+	cooldown = 45 SECONDS
 
 	cast(atom/target)
 		if (..())
@@ -963,8 +963,8 @@
 	icon_state = "skeleton"
 	desc = "Curse the living with blindness."
 	targeted = 1
-	pointCost = 20
-	cooldown = 40 SECONDS
+	pointCost = 40
+	cooldown = 45 SECONDS
 
 	cast(atom/target)
 		if (..())
@@ -983,8 +983,8 @@
 	icon_state = "skeleton"
 	desc = "Curse the living with weakness and lower stamina regeneration."
 	targeted = 1
-	pointCost = 20
-	cooldown = 40 SECONDS
+	pointCost = 40
+	cooldown = 45 SECONDS
 
 	cast(atom/target)
 		if (..())
@@ -1003,8 +1003,8 @@
 	icon_state = "skeleton"
 	desc = "Curse the living with a netherworldly plague."
 	targeted = 1
-	pointCost = 20
-	cooldown = 40 SECONDS
+	pointCost = 40
+	cooldown = 45 SECONDS
 
 	cast(atom/target)
 		if (..())
@@ -1023,8 +1023,8 @@
 	icon_state = "skeleton"
 	desc = "Reap a fully cursed being's soul!"
 	targeted = 1
-	pointCost = 20
-	cooldown = 40 SECONDS
+	pointCost = 80
+	cooldown = 45 SECONDS
 
 	cast(atom/target)
 		if (..())
@@ -1069,12 +1069,12 @@
 
 
 /datum/targetable/wraithAbility/summon_rot_hulk
-	name = "Rot Hulk"
-	desc = "Check area for filth and summon a rot hulk."
+	name = "Create rot hulk"
+	desc = "Assimilate the filth in an area and create an unstable servant."
 	icon_state = "grinchpoison"
 	targeted = 0
-	cooldown = 10 SECONDS
-	pointCost = 10
+	cooldown = 90 SECONDS
+	pointCost = 200
 	var/list/decal_list = list(/obj/decal/cleanable/blood,
 	/obj/decal/cleanable/ketchup,
 	/obj/decal/cleanable/rust,
@@ -1100,19 +1100,21 @@
 			T.visible_message("<span class='alert'>All the filth and grime around begins to writhe and move!</span>")
 			for(var/obj/decal/cleanable/C in found_decal_list)
 				step_towards(C,T)
-			sleep(1 SECOND)
+			sleep(2 SECOND)
 			for(var/obj/decal/cleanable/C in found_decal_list)
 				step_towards(C,T)
-			sleep(1 SECOND)
+			sleep(1.5 SECOND)
 			for(var/obj/decal/cleanable/C in found_decal_list)
 				step_towards(C,T)
 			sleep(1 SECOND)	//Todo add a cool effect here.
 			if (decal_count > 30)
 				var/mob/living/critter/exploder/strong/E = new /mob/living/critter/exploder/strong(T)
+				animate_portal_tele(E)
 				T.visible_message("<span class='alert'>A [E] slowly emerges from the gigantic pile of grime!</span>")
 				boutput(holder.owner, "The great amount of filth coalesces into a rotting goliath")
 			else
 				var/mob/living/critter/exploder/E = new /mob/living/critter/exploder(T)
+				animate_portal_tele(E)
 				T.visible_message("<span class='alert'>A [E] slowly rises up from the coalesced filth!</span>")
 				boutput(holder.owner, "The filth accumulates into a living bloated abomination")
 			for(var/obj/decal/cleanable/C in found_decal_list)
@@ -1130,8 +1132,8 @@
 	target_anything = 1
 	target_nodamage_check = 1
 	cooldown = 50 SECONDS
-	pointCost = 50
-	var/list/the_poison = list("bee", "cyanide", "grave_dust", "loose_screws", "mucus", "plague", "rotting")
+	pointCost = 100
+	var/list/the_poison = list("rat_venom", "grave_dust", "cyanide", "loose_screws", "rotting", "bee", "mucus")
 	var/amount_per_poison = 10
 
 	cast(mob/target)
@@ -1453,8 +1455,8 @@
 	desc = "Attempt to breach the veil between worlds to allow a plague rat to enter this realm."
 	icon_state = "make_poltergeist"
 	targeted = 0
-	pointCost = 0
-	cooldown = 10 SECONDS
+	pointCost = 500
+	cooldown = 180 SECONDS
 	var/in_use = 0
 	var/ghost_confirmation_delay  = 30 SECONDS
 	var/max_allowed_rats = 5
@@ -1484,7 +1486,7 @@
 					return 1
 			var/turf/T = get_turf(holder.owner)
 			if (isturf(T) && !istype(T, /turf/space))
-				boutput(holder.owner, "You begin to channel power to call a spirit to this realm, you won't be able to cast any other spells for the next 30 seconds!")
+				boutput(holder.owner, "You begin to channel power to summon a plague rat into this realm, you won't be able to cast any other spells for the next 30 seconds!")
 				make_plague_rat(holder.owner, T)
 			else
 				boutput(holder.owner, "<span class='alert'>You can't cast this spell on your current tile!</span>")
@@ -1536,8 +1538,8 @@
 		usr.playsound_local(usr.loc, "sound/voice/wraith/ghostrespawn.ogg", 50, 0)
 		logTheThing("admin", lucky_dude.current, null, "respawned as a plague rat for [src.holder.owner].")
 		boutput(P, "<span class='notice'><b>You have been respawned as a plague rat!</b></span>")
-		boutput(P, "[W] is your master! Spread mischeif and do their bidding!")
-		boutput(P, "Don't venture too far from your portal or your master!")
+		boutput(P, "[W] is your master! Eat filth, spread disease and reproduce!")
+		boutput(P, "Obey your master's orders, avoid mouse traps and live the rat life!")
 
 /datum/targetable/wraithAbility/speak
 	name = "Spirit message"
@@ -1571,7 +1573,7 @@
 			message = ghostify_message(trim(copytext(sanitize(message), 1, 255)))
 			if (!message)
 				return 1
-			boutput(C, "<b>A netherworldly voice whispers into your ears... </b> [message]")
+			boutput(C, "<b>Your master's voice resonates in your head... </b> [message]")
 			C.playsound_local(C.loc, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65, 0)
 
 		W.playsound_local(W.loc, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65, 0)
