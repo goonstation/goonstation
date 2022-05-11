@@ -413,6 +413,8 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 			target.shock(user, wattage, ignore_gloves = TRUE)
 			if (target.bioHolder?.HasEffect("resist_electric") && prob(20))
 				cure_arrest()
+			if (!target.bioHolder?.HasEffect("resist_electric")) //prevent the arcfiend from hurting their heart while shocking it
+				target.organHolder.damage_organ(0, 4, 0, "heart")
 			var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
 			s.set_up(5, FALSE, target)
 			s.start()
