@@ -351,7 +351,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
  */
 /datum/targetable/arcfiend/jolt
 	name = "Jolt"
-	desc = "Release a series of powerful jolts into your target, eventually stopping their heart. When used on those resistant to electricity it can restart their heart instead."
+	desc = "Release a series of powerful jolts into your target, burning and eventually stopping their heart. When used on those resistant to electricity it can restart their heart instead."
 	icon_state = "jolt"
 	cooldown = 2 MINUTES
 	pointCost = 500
