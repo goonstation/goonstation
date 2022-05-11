@@ -768,6 +768,7 @@ a.latejoin-card:hover {
 
 			if (ROLE_ARCFIEND)
 				traitor.special_role = ROLE_ARCFIEND
+				objective_set_path = /datum/objective_set/arcfiend
 				traitormob.make_arcfiend()
 			#ifdef RP_MODE
 				objective_set_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))

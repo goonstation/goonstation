@@ -1390,6 +1390,27 @@ ABSTRACT_TYPE(/datum/objective/conspiracy)
 		return 1
 
 /////////////////////////////////////////////////////////
+// Arcfiend Objectives                                 //
+/////////////////////////////////////////////////////////
+
+/datum/objective/specialist/powerdrain // this is basically just a repurposed vamp objective, but it should work.
+	var/powercount
+
+	set_up()
+#ifdef RP_MODE
+		powercount = rand(80,120) * 10
+#else
+		powercount = rand(150,250) * 10
+#endif
+		explanation_text = "Accumulate at least [powercount] units of charge in total."
+
+	check_completion()
+		if (owner.current && owner.current.get_arcfiend_power(1) >= powercount)
+			return 1
+		else
+			return 0
+
+/////////////////////////////////////////////////////////
 // Neatly packaged objective sets for your convenience //
 /////////////////////////////////////////////////////////
 
@@ -1458,6 +1479,11 @@ ABSTRACT_TYPE(/datum/objective/conspiracy)
 /datum/objective_set/blob
 	objective_list = list(/datum/objective/specialist/blob)
 	escape_choices = list(/datum/objective/escape/survive)
+
+/datum/objective_set/arcfiend
+	objective_list = list(/datum/objective/specialist/powerdrain)
+	escape_choices = list(/datum/objective/escape,
+	/datum/objective/escape/hijack)
 
 // Wraith not listed since it has its own dedicated proc
 
