@@ -65,6 +65,7 @@
 		SPAWN(0)
 			var/frenz = 8
 			holder.owner.canmove = 0
+			holder.owner.set_loc(MT.loc)
 			while (frenz > 0 && MT && !MT.disposed)
 				MT.changeStatus("weakened", 2 SECONDS)
 				MT.canmove = 0

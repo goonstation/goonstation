@@ -38,8 +38,8 @@
 							W.justmanifested = 5	//To avoid spamming the candle
 			var/turf/T = get_turf(src)
 			playsound(src.loc, "sound/voice/chanting.ogg", 50, 0)
-			new /obj/overlay/darkness_field(T, 10 SECOND, radius = 7.5, max_alpha = 250)
-			new /obj/overlay/darkness_field{plane = PLANE_SELFILLUM}(T, 10 SECOND, radius = 7.5, max_alpha = 250)
+			new /obj/overlay/darkness_field(T, 10 SECOND, radius = 5.5, max_alpha = 250)
+			new /obj/overlay/darkness_field{plane = PLANE_SELFILLUM}(T, 10 SECOND, radius = 5.5, max_alpha = 250)
 			src.put_out(user)
 
 	attackby(obj/item/W, mob/user)

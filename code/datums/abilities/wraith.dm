@@ -1037,15 +1037,15 @@
 				boutput(holder.owner, "<span class='alert'>That soul is OURS</span>")
 				boutput(H, "The voices in your heads are reaching a crescendo")
 				sleep(4 SECOND)
-				H.make_jittery(3)	//Todo, this doesnt work, need to fix it.
+				H.make_jittery(300)	//Todo, this doesnt work, need to fix it.
 				H.changeStatus("stunned", 2 SECONDS)
 				H.emote("scream")
-				boutput(holder.owner, "You feel netherworldly hands grasping you.")
+				boutput(H, "You feel netherworldly hands grasping you.")
 				sleep(3 SECOND)
 				random_brute_damage(H, 10)
 				playsound(H.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 70, 1)
 				H.visible_message("<span class='alert'>[H]'s flesh tears open before your very eyes!!</span>")
-				sleep(1 SECOND)
+				sleep(3 SECOND)
 				random_brute_damage(H, 10)
 				playsound(H.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 70, 1)
 				sleep(1 SECOND)

@@ -41,13 +41,12 @@
 		HH.can_attack = 1
 
 /datum/projectile/special/tentacle	//Get over here!
-	//Todo Make it throw the person to us instead of teleport
 	name = "tentacle"
 	dissipation_rate = 1
 	dissipation_delay = 7
 	icon_state = ""
 	power = 1
-	hit_ground_chance = 10
+	hit_ground_chance = 0
 	ks_ratio = 1.0
 	shot_sound = 'sound/misc/hastur/tentacle_hit.ogg'
 	var/list/previous_line = list()
@@ -61,10 +60,12 @@
 			if(hit == P.special_data["owner"]) return 1
 			var/turf/destination = get_turf(P.special_data["owner"])
 			if (destination)
-				do_teleport(M, destination, 0, sparks=0)
+
+				M.throw_at(destination, 10, 1)
+
 				playsound(M, "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1)
-				random_brute_damage(M, 5,1)
-				take_bleeding_damage(M, null, 10, DAMAGE_CUT, 0, get_turf(M))
+				M.TakeDamageAccountArmor("All", rand(3,4), 0, 0, DAMAGE_CUT)
+				M.force_laydown_standup()
 				M.changeStatus("paralysis", 3 SECONDS)
 				M.visible_message("<span class='alert'>[M] gets grabbed by a tentacle and dragged!</span>")
 
@@ -83,11 +84,11 @@
 			return
 
 	on_end(var/obj/projectile/P)	//Clean up behind us
-		..()
-		sleep(7 DECI SECOND)
+		SPAWN(7 DECI SECOND)
 		if (previous_line != null)
 			for (var/obj/O in previous_line)
 				qdel(O)
+		..()
 
 	tick(var/obj/projectile/P)	//Trail the projectile
 		..()

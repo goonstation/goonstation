@@ -633,6 +633,7 @@
 			src.addAbility(/datum/targetable/wraithAbility/curse/enfeeble)
 			src.addAbility(/datum/targetable/wraithAbility/curse/blindness)
 			src.addAbility(/datum/targetable/wraithAbility/curse/rot)
+			src.addAbility(/datum/targetable/wraithAbility/curse/death)
 			src.addAbility(/datum/targetable/wraithAbility/poison)
 			src.addAbility(/datum/targetable/wraithAbility/summon_rot_hulk)
 			src.addAbility(/datum/targetable/wraithAbility/make_plague_rat)
