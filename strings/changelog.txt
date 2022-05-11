@@ -1,4 +1,9 @@
 
+(t)wed may 11 22
+(u)Wisemonster
+(p)8489
+(e)🗺|mapping
+(+)Added status displays to Atlas.
 (t)mon may 09 22
 (u)Wisemonster
 (p)8474
