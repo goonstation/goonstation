@@ -31,7 +31,7 @@ export const MineralMagnet = (_props, context) => {
   return (
     <Window
       width={300}
-      height={352}>
+      height={364}>
       <Window.Content>
         <Section title="Magnet Status">
           <Box>
@@ -76,7 +76,7 @@ export const MineralMagnet = (_props, context) => {
               <Collapsible title={<><Icon name="search" />Activate telescope location</>}
                 textAlign="center"
                 color={onCooldown && magnetCooldownOverride ? "average" : "purple"} >
-                <Section height={6} pl={2} scrollable fill>
+                <Section height={7} pl={2} scrollable fill>
                   {miningEncounters.map(encounter => (
                     <Button key={encounter.id}
                       onClick={() => act('activateselectable', { encounter_id: encounter.id })}
