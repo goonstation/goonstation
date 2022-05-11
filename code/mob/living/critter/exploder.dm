@@ -1,8 +1,8 @@
 /mob/living/critter/exploder
 	name = "Bloated abomination"
 	desc = "A rotting, walking mass of flesh."
-	icon = 'icons/misc/critter.dmi'
-	icon_state = "mouse"
+	icon = 'icons/mob/wraith_critters.dmi'
+	icon_state = "rot_hulk"
 	density = 1
 	speechverb_say = "moans"
 	hand_count = 2

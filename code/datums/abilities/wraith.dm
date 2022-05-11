@@ -905,12 +905,18 @@
 
 			return 1
 		//Todo maybe give lasting immunity if you stood in the chapel? Avoids harassing the same person over and over, but perhaps its fine.
-		if (istype(get_area(target), /area/station/chapel))	//Dont spam curses in the chapel.
-			boutput(holder.owner, "The holy ground this creature is standing on repels the curse immediatly.")
-			return 1
 
-		if (ishuman(target))	//Lets let people know they have been cursed, might not be obvious at first glance
+		if (ishuman(target))
+			if (istype(get_area(target), /area/station/chapel))	//Dont spam curses in the chapel.
+				boutput(holder.owner, "The holy ground this creature is standing on repels the curse immediatly.")
+				boutput(target, "You feel as though some weight was added to your soul, but the feeling immediatly dissipates.")
+				return 1
+
+			//Lets let people know they have been cursed, might not be obvious at first glance
 			var/mob/living/carbon/H = target
+			if (H.traitHolder.hasTrait("training_chaplain"))
+				boutput(holder.owner, "<span class='notice'>A strange force prevents you from cursing this being, your energy is wasted.</span>")
+				return 0
 			var/curseCount = 0
 			if (H.bioHolder.HasEffect("blood_curse"))
 				curseCount ++
@@ -1258,6 +1264,9 @@
 			if (W.possession_points > W.points_to_possess)
 				if (ishuman(target) && !isdead(target))
 					var/mob/living/carbon/human/H = target
+					if (H.traitHolder.hasTrait("training_chaplain"))
+						boutput(holder.owner, "<span class='alert'>As you try to reach inside this creature's mind, it instantly kicks you back into the aether!</span>")
+						return 0
 					var/has_mind = false
 					var/mob/dead/target_observer/slasher_ghost/WG = null
 					wraith_key = holder.owner.ckey
@@ -1324,8 +1333,10 @@
 			return 1
 
 		if (ishuman(target))
+			var/mob/living/carbon/human/H = target
+			if (H.traitHolder.hasTrait("training_chaplain"))
+				boutput(holder.owner, "<span class='notice'>Despite your best efforts, that creature seems totally unnaffected by your horrific visions.</span>")
 			usr.playsound_local(usr.loc, "sound/voice/wraith/wraithspook[rand(1, 2)].ogg", 80, 0)
-			var/mob/living/carbon/H = target
 			H.setStatus("terror", 45 SECONDS)
 			boutput(holder.owner, "We terrorize [H]")
 			return 0
@@ -1413,8 +1424,8 @@
 
 		var/obj/spookMarker/marker = new /obj/spookMarker(T)
 		var/list/text_messages = list()
-		text_messages.Add("Would you like to respawn as a harbinger summon? Your name will be added to the list of eligible candidates and set to DNR if selected.")
-		text_messages.Add("You are eligible to be respawned as a harbinger summon. You have [src.ghost_confirmation_delay / 10] seconds to respond to the offer.")
+		text_messages.Add("Would you like to respawn as a harbinger's summon? Your name will be added to the list of eligible candidates and set to DNR if selected.")
+		text_messages.Add("You are eligible to be respawned as a harbinger's summon. You have [src.ghost_confirmation_delay / 10] seconds to respond to the offer.")
 		text_messages.Add("You have been added to the list of eligible candidates. The game will pick a player soon. Good luck!")
 
 		// The proc takes care of all the necessary work (job-banned etc checks, confirmation delay).
@@ -1459,7 +1470,8 @@
 	cooldown = 180 SECONDS
 	var/in_use = 0
 	var/ghost_confirmation_delay  = 30 SECONDS
-	var/max_allowed_rats = 5
+	var/max_allowed_rats = 3	//Todo, currently checks for all rats, not just your own, might need to change
+	var/player_count = 0
 
 	// cast(turf/target, params)
 	cast(atom/target, params)
@@ -1471,10 +1483,11 @@
 			LAGCHECK(LAG_LOW)
 			if (!C.mob)
 				continue
+			player_count++
 			var/mob/M = C.mob
 			if (istype(M, /mob/living/critter/plaguerat))
 				total_plague_rats++
-		if(total_plague_rats < max_allowed_rats)
+		if(total_plague_rats < (max_allowed_rats + (player_count / 30)))
 			if (istype(holder.owner, /mob/living/critter/plaguerat))	//plaguerats must be near their warren
 				var/near_warren = false
 				var/turf/T = get_turf(holder.owner)

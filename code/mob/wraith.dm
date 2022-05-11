@@ -164,15 +164,17 @@
 			if (src.visibleTimer <= 0)
 				makeInvisible()
 
-		src.hauntBonus = 0	//Todo, give a numbers pass here. Adjust for each type of wraith
+		src.hauntBonus = 0
 		if (src.haunting)
 			for (var/mob/living/carbon/human/H in viewers(6, src))
 				if (!H.stat && !H.bioHolder.HasEffect("revenant"))
 					src.hauntBonus += 5
+					if(istype(src, /mob/wraith/wraith_trickster))
+						src.hauntBonus += 2
 
 		if (src.next_area_change != null)
 			if (src.next_area_change < world.time)
-				next_area_change = world.time + rand(10 SECONDS, 15 SECONDS)
+				next_area_change = world.time + 15 MINUTES
 				get_new_booster_zones()
 
 		var/area/mob_area = get_area(src)
@@ -181,7 +183,7 @@
 			if (mob_area == A)
 				is_in_area = true
 				break
-		//Todo maybe instead of double points make it so abilities cost less? Avoids hoarding points in a corner.
+
 		if(is_in_area) //Double points in the area, and a small bonus
 			hauntBonus = (hauntBonus * 2) + 2
 
@@ -710,8 +712,18 @@
 			var/num_safe_areas = clamp(3, 1, 5)
 			var/area/temp = null
 			var/list/locations_copy = list()
+			var/has_client = false
 			for(var/A in valid_locations)
-				locations_copy.Add(A)
+				for(var/mob/living/carbon/human/M in A)	//Check for player_controlled mobs in the zone
+					if(M.client != null)
+						has_client = true
+						continue
+				if (has_client)
+					locations_copy.Add(A)
+					has_client = false
+			if (locations_copy.len < 3) //Not enough people?
+				for(var/A in valid_locations)
+					locations_copy.Add(A)
 			for(var/i = 0, i < num_safe_areas, i++)
 				temp = pick(locations_copy)
 				locations_copy.Remove(temp)
@@ -780,6 +792,7 @@
 	New(var/mob/M)
 		..()
 		src.addAllDecayAbilities()
+		src.abilityHolder.regenRate = 3
 
 /mob/wraith/wraith_harbinger
 	name = "Harbinger"
@@ -791,6 +804,7 @@
 	New(var/mob/M)
 		..()
 		src.addAllHarbingerAbilities()
+		src.abilityHolder.regenRate = 3
 
 /mob/wraith/wraith_trickster
 	name = "trickster"
@@ -806,6 +820,7 @@
 	New(var/mob/M)
 		..()
 		addAllTricksterAbilities()
+		src.abilityHolder.regenRate = 3
 
 	Life(parent)
 		if (..(parent))

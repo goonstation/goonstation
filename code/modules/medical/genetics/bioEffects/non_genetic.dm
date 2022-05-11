@@ -289,10 +289,6 @@
 			owner.traitHolder?.addTrait("hemophilia")
 
 	OnLife()
-		if (istype(get_area(owner), /area/station/chapel))
-			if (prob(25))
-				boutput(owner, "You feel purified. Your heart rhythm stabilizes.")
-				owner.bioHolder.RemoveEffect("blood_curse")
 		if (prob(5))
 			owner.emote("cough")
 			var/turf/T = get_turf(owner)
@@ -317,10 +313,6 @@
 	isBad = 1
 
 	OnLife()
-		if (istype(get_area(owner), /area/station/chapel))
-			if (prob(25))
-				boutput(owner, "You feel purified. Your vision stabilizes.")
-				owner.bioHolder.RemoveEffect("blind_curse")
 		if (prob(8))
 			if (ishuman(owner))
 				owner.eye_damage += 10
@@ -346,10 +338,6 @@
 			owner.setStatus("weakcurse", duration = null)
 
 	OnLife()
-		if (istype(get_area(owner), /area/station/chapel))
-			if (prob(25))
-				boutput(owner, "You feel purified. Your weakness fades.")
-				owner.bioHolder.RemoveEffect("weak_curse")
 		if (prob(5))
 			boutput(owner, "You suddenly feel very [pick("winded", "tired")].")
 			owner.changeStatus("slowed")
@@ -378,10 +366,6 @@
 			owner.bioHolder.AddEffect("stinky")
 
 	OnLife()
-		if (istype(get_area(owner), /area/station/chapel))
-			if (prob(25))
-				boutput(owner, "You feel purified. Your stomach settles down.")
-				owner.bioHolder.RemoveEffect("rot_curse")
 		if (prob(5))
 			owner.visible_message("<span class='alert'>[owner] suddenly vomits on the floor!</span>")
 			owner.vomit(rand(3,5))

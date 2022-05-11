@@ -2,14 +2,8 @@
 /obj/item/device/light/spirit_candle
 	name = "spirit candle"
 	desc = "Feels vaguely ominous!"
-	icon = 'icons/obj/items/sparklers.dmi'
-	icon_state = "sparkler-off"
-	icon_on = "sparkler-on"
-	icon_off = "sparkler-off"
-	inhand_image_icon = 'icons/obj/items/sparklers.dmi'
-	item_state = "sparkler-off"
-	var/item_on = "sparkler-on"
-	var/item_off = "sparkler-off"
+	icon = 'icons/obj/items/skull_candle.dmi'
+	icon_state = "unmelted-unlit"
 	w_class = W_CLASS_SMALL
 	density = 0
 	anchored = 0
@@ -18,9 +12,9 @@
 	col_g = 0.2
 	col_b = 0.8
 	var/sparks = 7
+	var/burn_state = 0
 	var/burnt = false
 	var/light_ticks = 60
-	//var/mob/linked_mob = null	//We are bound to a soul.
 
 	New()
 		..()
@@ -80,6 +74,14 @@
 
 		if (src.on)
 			light_ticks --
+		if ((light_ticks > (light_ticks / 3)) && (light_ticks < (light_ticks - (light_ticks / 3))) && (burn_state != 1)) //A third burnt
+			burn_state = 1
+			src.icon_state = "smelted-lit"
+			src.visible_message("<span class='notice'>[src]'s light begins to flicker!</span>")
+		else if (light_ticks <= (light_ticks / 3) && (burn_state != 2))
+			burn_state = 2
+			src.icon_state = "melted-lit"
+			src.visible_message("<span class='notice'>[src]'s light is almost out!</span>")
 		if (light_ticks <= 0)
 			src.put_out()
 
@@ -96,8 +98,7 @@
 			src.on = 1
 			src.hit_type = DAMAGE_BURN
 			src.force = 3
-			src.icon_state = src.icon_on
-			src.item_state = src.item_on
+			src.icon_state = "unmelted-lit"
 			light.enable()
 			processing_items |= src
 			if(user)
@@ -111,8 +112,13 @@
 			src.on = 0
 			src.hit_type = DAMAGE_BLUNT
 			src.force = 0
-			src.icon_state = src.icon_off
-			src.item_state = src.item_off
+			switch(burn_state)
+				if(0)
+					src.icon_state = "unmelted-unlit"
+				if(1)
+					src.icon_state = "smelted-unlit"
+				if(2)
+					src.icon_state = "melted-unlit"
 			src.burnt = true
 			light.disable()
 			processing_items -= src
