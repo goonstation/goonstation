@@ -122,7 +122,7 @@
 
 		if (isliving(hit_atom))
 			var/mob/living/M = hit_atom
-			SEND_SIGNAL(src, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
+			SEND_SIGNAL(src, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 			if (check_target_immunity(M, source = src))
 				src.visible_message("<b><span class='alert'>[src] bounces off [M] harmlessly!</span></b>")
 				return

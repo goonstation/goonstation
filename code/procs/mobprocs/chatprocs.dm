@@ -746,7 +746,7 @@
 	return
 
 /mob/proc/item_attack_message(var/mob/T, var/obj/item/S, var/d_zone, var/devastating = 0, var/armor_blocked = 0)
-	if (d_zone)
+	if (d_zone && ishuman(T))
 		if(armor_blocked)
 			return "<span class='alert'><B>[src] attacks [T] in the [d_zone] with [S], but [T]'s armor blocks it!</B></span>"
 		else
