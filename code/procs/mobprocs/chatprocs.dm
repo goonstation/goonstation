@@ -8,23 +8,6 @@
 	set name = "whisper"
 	return src.whisper(message)
 
-/*/mob/verb/start_typing()
-	set name = ".starttyping"
-	set hidden = TRUE
-
-	var/mob/living/M = src
-	if(!istype(M) || !isalive(M) || isAIeye(M))
-		return
-
-	M.speech_bubble.icon_state = "typing"
-	UpdateOverlays(M.speech_bubble, "speech_bubble")
-	var/start_time = TIME
-	M.last_typing = start_time
-
-	SPAWN(15 SECONDS)
-		if(M.last_typing == start_time && src.GetOverlayImage("speech_bubble")?.icon_state == "typing")
-			src.UpdateOverlays(null, "speech_bubble")*/
-
 /mob/verb/say_verb(message as text)
 	set name = "say"
 	if (!message)

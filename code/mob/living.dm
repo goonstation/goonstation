@@ -939,12 +939,6 @@
 			if(!src.stuttering && prob(8))
 				message = stutter(message)
 
-	/*UpdateOverlays(speech_bubble, "speech_bubble")
-	var/speech_bubble_time = src.last_typing
-	SPAWN(1.5 SECONDS)
-		if(speech_bubble_time == src.last_typing)
-			UpdateOverlays(null, "speech_bubble")*/
-
 	//Blobchat handling
 	if (src.mob_flags & SPEECH_BLOB)
 		message = html_encode(src.say_quote(message))
