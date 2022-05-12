@@ -73,4 +73,5 @@
 
 /datum/aiTask/succeedable/rushdown/on_reset()
 
+	..()
 	logTheThing("debug", src, null, "rushdown reset")

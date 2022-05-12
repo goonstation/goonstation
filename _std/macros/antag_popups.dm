@@ -63,6 +63,8 @@
 	<a href='?src=\ref[src];action=kudzu'>Kudzu Person</a> |
 	<a href='?src=\ref[src];action=slasher'>The Slasher</a>
 	<a href='?src=\ref[src];action=arcfiend'>Arcfiend Person</a>
+	<a href='?src=\ref[src];action=plaguebringer'>Plaguebringer wraith</a>
+	<a href='?src=\ref[src];action=plaguerat'>Plague rat</a>
 </div>
 <div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Misc</b>
 	<a href='?src=\ref[src];action=rogueborgremoved'>Rogue Borg Removed</a> |
@@ -186,6 +188,10 @@
 				filename = "html/traitorTips/slasherTips.html"
 			if ("arcfiend")
 				filename = "html/traitorTips/arcfiendTips.html"
+			if ("plaguebringer")
+				filename = "html/traitorTips/plaguebringer.html"
+			if ("plaguerat")
+				filename = "html/traitorTips/plaguerat.html"
 			if ("football")
 				filename = "html/traitorTips/football.html"
 			if ("podwars")

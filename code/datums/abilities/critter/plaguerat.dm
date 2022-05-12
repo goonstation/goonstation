@@ -4,7 +4,8 @@
 /datum/targetable/critter/plague_rat/eat_filth
 	name = "Eat filth"
 	desc = "Eat some filth"
-	icon_state = "clown_spider_bite"
+	icon = 'icons/mob/critter_ui.dmi'
+	icon_state = "eat_filth"
 	cooldown = 3 SECOND
 	targeted = 1
 	target_anything = 1
@@ -16,7 +17,6 @@
 	/obj/decal/cleanable/greenpuke,
 	/obj/decal/cleanable/slime,
 	/obj/decal/cleanable/fungus)
-
 
 	cast(atom/target)
 		if (..())
@@ -61,9 +61,13 @@
 /datum/targetable/critter/plague_rat/rat_bite
 	name = "Bite"
 	desc = "Bite a mob, doing a little damage and injecting them with some rat poison"
-	icon_state = "clown_spider_bite"
+	icon = 'icons/mob/critter_ui.dmi'
+	icon_state = "ratbite"
 	cooldown = 5 SECOND
 	targeted = 1
+	var/border_icon = 'icons/mob/wraith_ui.dmi'
+	var/border_state = "plague_frame"
+
 
 	cast(atom/target)
 		if (..())
@@ -88,6 +92,11 @@
 		"<span class='combat'><b>You bite [MT]!</b></span>")
 		P.venom_bite(MT)
 		return 0
+
+	onAttach(datum/abilityHolder/holder)
+		..()
+		var/atom/movable/screen/ability/topBar/B = src.object
+		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
 
 /datum/targetable/critter/plague_rat/spawn_warren
 	name = "spawn warren"
