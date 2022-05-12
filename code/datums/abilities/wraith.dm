@@ -834,11 +834,13 @@
 
 /datum/targetable/wraithAbility/specialize
 	name = "Evolve"
-	icon_state = "spook"
+	icon_state = "evolve"
 	desc = "Choose a form to evolve into once you have grown strong enough"
 	targeted = 0
-	pointCost = 0
-	//Todo: copied from "spook". Fix list appearing on the left of the screen
+	pointCost = 300
+	tooltip_flags = TOOLTIP_LEFT
+	special_screen_loc="NORTH-1,EAST"
+
 	var/status = 0
 	var/static/list/effects = list("Rot" = 1, "Summoner" = 2, "Trickster" = 3)
 	var/list/effects_buttons = list()
@@ -846,7 +848,8 @@
 
 	New()
 		..()
-		object.contextLayout = new /datum/contextLayout/screen_HUD_default(2, 16, 16)//, -32, -32)
+
+		object.contextLayout = new /datum/contextLayout/screen_HUD_default(2, 16, 16)
 		if (!object.contextActions)
 			object.contextActions = list()
 
@@ -871,13 +874,13 @@
 			switch (effect)	//Todo, add messages and windows on transform
 				if (1)
 					W = new/mob/wraith/wraith_decay(holder.owner)
-					boutput(holder.owner, "<span class='notice'>You turn into a plaguebringer!</span>")
+					boutput(holder.owner, "<span class='notice'>You evolve into a plaguebringer! Spread rot and disease all around!</span>")
 				if (2)
 					W = new/mob/wraith/wraith_harbinger(holder.owner)
-					boutput(holder.owner, "<span class='notice'>You turn into a harbinger!</span>")
+					boutput(holder.owner, "<span class='notice'>You turn into a harbinger! Command your army of minions to bring ruin to the station!</span>")
 				if (3)
 					W = new/mob/wraith/wraith_trickster(holder.owner)
-					boutput(holder.owner, "<span class='notice'>You turn into a trickster!</span>")
+					boutput(holder.owner, "<span class='notice'>You turn into a trickster! Decieve the crew and turn them against one another!</span>")
 
 			W.real_name = holder.owner.real_name
 			W.UpdateName()

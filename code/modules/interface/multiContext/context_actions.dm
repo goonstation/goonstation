@@ -345,9 +345,9 @@
 		return 0
 
 /datum/contextAction/wraith_evolve_button
-	name = "wraith"
-	desc = "Test"
-	icon = 'icons/ui/context32x32.dmi'
+	name = "Specialize"
+	desc = "Ascend into a stronger form"
+	icon = 'icons/mob/wraith_ui.dmi'
 	icon_state = "minus"
 	icon_background = ""
 	var/ability_code = 0
@@ -357,16 +357,16 @@
 		src.ability_code = code
 		switch(code)
 			if (1)
-				name = "Option 1"
-				desc = "Do stuff 1."
-				icon_state = "wraith-switch"
+				name = "Plaguebringer"
+				desc = "Become a disease spreading spirit."
+				icon_state = "choose_plague"
 			if (2)
-				name = "Option 2"
-				desc = "Do stuff 2."
-				icon_state = "wraith-break-lights"
+				name = "Harbinger"
+				desc = "Lead an army of otherwoldly foes."
+				icon_state = "choose_harbinger"
 			if (3)
-				name = "Option 3"
-				desc = "Do stuff 3."
+				name = "Trickster"
+				desc = "Fool the crew with illusions and let them tear themselves apart."
 				icon_state = "wraith-smoke"
 
 	checkRequirements(atom/target, mob/user)

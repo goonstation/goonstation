@@ -58,7 +58,8 @@
 				/datum/ailment/disease/berserker,
 				/datum/ailment/disease/appendicitis,
 				/datum/ailment/disease/liver_failure,
-				/datum/ailment/disease/kuru)
+				/datum/ailment/disease/kuru,
+				/datum/ailment/disease/infection)
 				affected_mob.contract_disease(pick(disease_list),null,null,1)
 		else
 			return

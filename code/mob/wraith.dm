@@ -33,7 +33,7 @@
 	var/visibleTimer = 3	//Spirit candles reset the timer periodically when close.
 	var/justmanifested = 0	//To track if a candle forced us to manifest
 	var/absorbcount = 0 //Keep track of how many souls we absorbed
-	var/absorbs_to_evolve = 1
+	var/absorbs_to_evolve = 3
 
 	var/last_life_update = 0
 	var/const/life_tick_spacing = 20
@@ -721,7 +721,7 @@
 				if (has_client)
 					locations_copy.Add(A)
 					has_client = false
-			if (locations_copy.len < 3) //Not enough people?
+			if (length(locations_copy) < 3) //Not enough people?
 				for(var/A in valid_locations)
 					locations_copy.Add(A)
 			for(var/i = 0, i < num_safe_areas, i++)
@@ -787,7 +787,7 @@
 	real_name = "plaguebringer"
 	desc = "A terrifyingly bloated spirit."
 	icon = 'icons/mob/mob.dmi'
-	icon_state = "wraith"
+	icon_state = "wraith_plague"
 
 	New(var/mob/M)
 		..()
@@ -799,7 +799,7 @@
 	real_name = "harbinger"
 	desc = "An evil looking, regal specter."
 	icon = 'icons/mob/mob.dmi'
-	icon_state = "wraith"
+	icon_state = "wraith_harbinger"
 
 	New(var/mob/M)
 		..()
@@ -900,8 +900,8 @@
 
 proc/get_area_names(var/list/strings)
 	. = ""
-	if(strings.len == 1)
+	if(length(strings) == 1)
 		return "[strings[1]]"
-	for(var/i = 1, i < strings.len; i++)
+	for(var/i = 1, i < length(strings); i++)
 		. += strings[i] + ", "
-	. += "or [strings[strings.len]]"
+	. += "or [strings[length(strings)]]"

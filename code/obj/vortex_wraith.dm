@@ -1,7 +1,7 @@
 /obj/wraith/vortex_wraith
 	name = "Summoning portal"
 	icon = 'icons/obj/objects.dmi'
-	icon_state = "anom"
+	icon_state = "harbinger_circle-charging"
 	desc = "I wonder what this is."
 	anchored = 1
 	density = 0
