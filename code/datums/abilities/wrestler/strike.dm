@@ -33,7 +33,7 @@
 			M.visible_message("<span class='alert'>You seem to attack [target]!</span>")
 			return 1
 
-		SEND_SIGNAL(M, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
+		SEND_SIGNAL(M, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 
 		var/turf/T = get_turf(M)
 		if (T && isturf(T) && target && isturf(target.loc))

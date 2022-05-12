@@ -474,7 +474,7 @@
 
 		src.UpdateIcon()
 		playsound(src.loc, "sound/effects/cargodoor.ogg", 15, 1, -3)
-		SEND_SIGNAL(src, COMSIG_STORAGE_CLOSED)
+		SEND_SIGNAL(src, COMSIG_OBJ_STORAGE_CLOSED)
 		return 1
 
 	attackby(obj/item/W as obj, mob/user as mob)
