@@ -153,9 +153,9 @@
 			for (var/obj/O in T)
 				if (!(O.type in mining_controls.magnet_do_not_erase) && !istype(O, /obj/magnet_target_marker))
 					qdel(O)
-			T.overlays.len = 0 //clear out the astroid edges and scan effects
+			T.ClearAllOverlays()
 			T.ReplaceWithSpace()
-			T.overlays += /image/fullbright //reapply fullbright image
+			T.UpdateOverlays(/image/fullbright, "fullbright", TRUE)
 
 	proc/generate_walls()
 		var/list/walls = list()
