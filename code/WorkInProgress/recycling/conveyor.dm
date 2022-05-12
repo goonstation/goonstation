@@ -107,6 +107,8 @@
 		return
 	if(istype(A, /obj/critter) && A:flying)		//They are flying above it, ok.
 		return
+	if(isflock(A))
+		return
 	var/movedir = dir	// base movement dir
 	if(divert && dir == divdir)	// update if diverter present
 		movedir = divert
