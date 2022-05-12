@@ -1139,7 +1139,7 @@
 	target_nodamage_check = 1
 	cooldown = 50 SECONDS
 	pointCost = 100
-	var/list/the_poison = list("rat_venom", "grave_dust", "cyanide", "loose_screws", "rotting", "bee", "mucus")
+	var/list/the_poison = list("rat_spit", "grave_dust", "cyanide", "loose_screws", "rotting", "bee", "mucus")
 	var/amount_per_poison = 10
 
 	cast(mob/target)
@@ -1466,8 +1466,8 @@
 	desc = "Attempt to breach the veil between worlds to allow a plague rat to enter this realm."
 	icon_state = "make_poltergeist"
 	targeted = 0
-	pointCost = 500
-	cooldown = 180 SECONDS
+	pointCost = 0
+	cooldown = 300 SECONDS
 	var/in_use = 0
 	var/ghost_confirmation_delay  = 30 SECONDS
 	var/max_allowed_rats = 3	//Todo, currently checks for all rats, not just your own, might need to change

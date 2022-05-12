@@ -992,6 +992,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\medical\diseases\panacaea.dm"
 #include "code\modules\medical\diseases\parasites.dm"
 #include "code\modules\medical\diseases\plasmatoid.dm"
+#include "code\modules\medical\diseases\rat_plague.dm"
 #include "code\modules\medical\diseases\robotic_transformation.dm"
 #include "code\modules\medical\diseases\space_madness.dm"
 #include "code\modules\medical\diseases\space_plague.dm"

@@ -122,6 +122,7 @@
 /mob/living/critter/exploder/strong	//Summoned by rot hulk if we find a big pile of filth
 	name = "Huge plague-ridden goliath"
 	desc = "A rotting, walking mass of flesh."
+	icon_state = "rot_hulk_buff"
 	health_brute = 80
 	health_burn = 80
 	health_brute_vuln = 1

@@ -5,7 +5,7 @@
 	name = "Eat filth"
 	desc = "Eat some filth"
 	icon_state = "clown_spider_bite"
-	cooldown = 5
+	cooldown = 3 SECOND
 	targeted = 1
 	target_anything = 1
 	var/list/decal_list = list(/obj/decal/cleanable/blood,
@@ -62,7 +62,7 @@
 	name = "Bite"
 	desc = "Bite a mob, doing a little damage and injecting them with some rat poison"
 	icon_state = "clown_spider_bite"
-	cooldown = 5
+	cooldown = 5 SECOND
 	targeted = 1
 
 	cast(atom/target)
@@ -93,7 +93,7 @@
 	name = "spawn warren"
 	desc = "Spawn a warren"
 	icon_state = "clown_spider_bite"
-	cooldown = 5 SECONDS
+	cooldown = 60 SECONDS
 	targeted = 0
 
 	cast(atom/target)

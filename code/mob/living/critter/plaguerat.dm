@@ -13,7 +13,7 @@
 
 	var/eaten_amount = 0	//How much filth did we eat
 	var/amount_to_grow = 0	//How much is needed to grow
-	var/venom = "rat_venom"	//What are we injecting on bite
+	var/venom = "rat_spit"	//What are we injecting on bite
 	var/adultpath = null	//What do we grow into
 	var/bitesound = "sound/weapons/handcuffs.ogg"
 	var/deathsound = "sound/impact_sounds/Generic_Snap_1.ogg"
@@ -250,3 +250,11 @@
 		HH.name = "mouth"
 		HH.limb_name = "teeth"
 		HH.can_hold_items = 0
+
+	specific_emotes(var/act, var/param = null, var/voluntary = 0)
+		switch (act)
+			if ("scream")
+				if (src.emote_check(voluntary, 50))
+					playsound(src, "sound/voice/animal/mouse_squeak.ogg", 80, 0.5, channel=VOLUME_CHANNEL_EMOTE)
+					return "<span class='emote'><b>[src]</b> squeaks!</span>"
+		return null
