@@ -2022,7 +2022,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 
 	New()
 		..()
-		AddComponent(/datum/component/floor_slime, "badgrease", slime_chance)
+		AddComponent(/datum/component/floor_slime, "badgrease", slime_chance, 10)
 
 	attack_hand(mob/user as mob)
 		if (src.alive && (user.a_intent != INTENT_HARM))

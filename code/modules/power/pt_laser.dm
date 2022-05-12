@@ -539,7 +539,7 @@
 		if(burn_living(L,power) && source) //returns 1 if they were gibbed
 			source.affecting_mobs -= L
 
-/obj/lpt_laser/proc/burn_living(var/mob/living/L, var/power = 0)
+/obj/proc/burn_living(var/mob/living/L, var/power = 0)
 	if(power < 10) return
 	if(isintangible(L)) return // somehow flocktraces are still getting destroyed by the laser. maybe this will fix it
 

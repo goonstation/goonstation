@@ -2343,7 +2343,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	New()
 		..()
-		AddComponent(/datum/component/floor_slime, "badgrease", slime_chance)
+		AddComponent(/datum/component/floor_slime, "badgrease", slime_chance, 10)
 
 	setup_hands()
 		..()
