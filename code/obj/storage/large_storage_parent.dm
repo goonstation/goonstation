@@ -516,7 +516,7 @@
 					if (src.open)
 						src.close()
 			if(!stuffed)
-				if(check_if_enterable(O))
+				if(check_if_enterable(O) && in_interact_range(user, src) && in_interact_range(user, O))
 					O.set_loc(T)
 					if (user != O)
 						user.visible_message("<span class='alert'>[user] stuffs [O] into [src]!</span>",\
