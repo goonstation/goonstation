@@ -6,6 +6,7 @@
 	var/product_amount
 	var/product_hidden
 	var/logged_on_vend
+	var/static/list/product_base64_cache = list()
 
 	var/static/list/product_name_cache = list(/obj/item/reagent_containers/mender/brute = "brute auto-mender", /obj/item/reagent_containers/mender/burn = "burn auto-mender")
 
@@ -35,6 +36,18 @@
 		src.product_hidden = hidden
 		src.logged_on_vend = logged_on_vend
 
+	proc/getBase64Img()
+		var/path = src.product_path
+		. = product_base64_cache[path]
+		if(isnull(.))
+			var/atom/dummy_atom = new path // people demand overlays on their vending machine bottles
+			SPAWN(0)
+				var/icon/dummy_icon = getFlatIcon(dummy_atom,initial(dummy_atom.dir),no_anim=TRUE)
+				qdel(dummy_atom) // above is a hack to get this to work. if anyone has any better way of doing this, go ahead.
+				. = icon2base64(dummy_icon)
+				product_base64_cache[path] = .
+
+
 /obj/machinery/vending
 	name = "Vendomat"
 	desc = "A generic vending machine."
@@ -46,6 +59,7 @@
 	layer = OBJ_LAYER - 0.1 // so items get spawned at 3, don't @ me
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_MULTITOOL
 	object_flags = CAN_REPROGRAM_ACCESS
+	flags = TGUI_INTERACTIVE
 	var/freestuff = 0
 	var/obj/item/card/id/scan = null
 
@@ -503,16 +517,166 @@
 /obj/machinery/vending/attack_ai(mob/user as mob)
 	return attack_hand(user)
 
+/obj/machinery/vending/ui_interact(mob/user, datum/tgui/ui)
+  ui = tgui_process.try_update_ui(user, src, ui)
+  if(!ui)
+    ui = new(user, src, "Vendors")
+    ui.open()
+
+/obj/machinery/vending/ui_data(mob/user)
+	var/bankaccount = FindBankAccountByName(src.scan?.registered)
+ . = list(
+	"windowName" = src.name,
+	"wiresOpen" = src.panel_open ? TRUE : null,
+	"wiresList" = list(),
+	"lightColors" = list(),
+	"bankMoney" = bankaccount ? bankaccount["current_money"] : 0,
+	"cash" = src.credit,
+	"acceptCard" = src.acceptcard,
+	"requiresMoney" = src.pay,
+	"cardname" = src.scan?.name,
+	"playerBuilt" = src.isplayer
+ 	)
+	src.vendwires = list("Violet" = 1,\
+	"Orange" = 2,\
+	"Goldenrod" = 3,\
+	"Green" = 4)
+
+	var/wireGuiColors = list("Violet" = "#882BCB",\
+	"Orange" = "#ffa500",\
+	"Goldenrod" = "#B8860B",\
+	"Green" = "#00ff00") // this is so we can have fancy stuff on the gui
+
+	var/lightcolors = list("electrified" = FALSE,\
+	"shootinventory" = FALSE,\
+	"extendedinventory" = FALSE,\
+	"ai_control" = FALSE)
+
+	for (var/wiredesc in vendwires)
+		var/is_uncut = src.wires & APCWireColorToFlag[vendwires[wiredesc]]
+		.["wiresList"] += list(list("name" = wiredesc,"color" = wireGuiColors[wiredesc],"uncut" = is_uncut))
+	if(src.seconds_electrified > 0)
+		lightcolors["electrified"] = TRUE
+	if(src.shoot_inventory)
+		lightcolors["shootinventory"] = TRUE
+	if(src.extended_inventory)
+		lightcolors["extendedinventory"] = TRUE
+	if(src.ai_control_enabled)
+		lightcolors["ai_control"] = TRUE
+	.["lightColors"] += lightcolors
+	/*html_parts += "The orange light is [(src.seconds_electrified == 0) ? "off" : "on"].<BR>"
+	html_parts += "The red light is [src.shoot_inventory ? "off" : "blinking"].<BR>"
+	html_parts += "The green light is [src.extended_inventory ? "on" : "off"].<BR>"
+	html_parts += "The [(src.wires & WIRE_SCANID) ? "purple" : "yellow"] light is on.<BR>"
+	html_parts += "The AI control indicator is [src.ai_control_enabled ? "lit" : "unlit"].<BR>"*/
+	for (var/datum/data/vending_product/R in src.product_list)
+		if (R.product_hidden && !src.extended_inventory)
+			continue
+		var/display_amount = R.product_amount
+		if (R.product_amount < 1)
+			display_amount = "OUT OF STOCK"
+		.["productList"] += list(list("path" = R.product_path,"name" = R.product_name,"amount" = display_amount,"cost" = R.product_cost,"img" = R.getBase64Img()))
+
+	for (var/datum/data/vending_product/player_product/R in src.player_list)
+		if (R.product_hidden && !src.extended_inventory)
+			continue
+		var/display_amount = R.product_amount
+		if (R.product_amount < 1)
+			display_amount = "OUT OF STOCK"
+		.["productList"] += list(list("path" = R.product_path,"name" = R.product_name,"amount" = display_amount,"cost" = R.product_cost,"img" = R.getBase64Img()))
+
+/obj/machinery/vending/ui_act(action, params)
+	. = ..()
+	if (.) return
+
+	switch(action)
+		if("cutwire")
+			if(params["wire"])
+				src.cut(src.vendwires[params["wire"]])
+		if("mendwire")
+			if(params["wire"])
+				src.mend(src.vendwires[params["wire"]])
+		if("pulsewire")
+			if(params["wire"])
+				src.pulse(src.vendwires[params["wire"]])
+		if("logout")
+			src.scan = null
+		if("returncash")
+			SPAWN(src.vend_delay)
+				if (src.credit > 0)
+					var/obj/item/spacecash/returned = new /obj/item/spacecash
+					returned.setup(src.get_output_location(), src.credit)
+					src.credit = 0
+		if("vend")
+			if(params["target"])
+				src.vend_ready = 1
+				var/datum/db_record/account = null
+				account = FindBankAccountByName(src.scan?.registered)
+				if ((!src.allowed(usr)) && (!src.emagged) && (src.wires & WIRE_SCANID))
+					boutput(usr, "<span class='alert'>Access denied.</span>") //Unless emagged of course
+					flick(src.icon_deny,src)
+					return
+				if (src.pay)
+					if (src.acceptcard && src.scan)
+						if (!account)
+							boutput(usr, "<span class='alert'>No bank account associated with ID found.</span>")
+							flick(src.icon_deny,src)
+							src.vend_ready = 0
+							src.paying_for = params["target"]
+							return
+						if (account["current_money"] < params["cost"])
+							boutput(usr, "<span class='alert'>Insufficient funds in account. To use machine credit, log out.</span>")
+							flick(src.icon_deny,src)
+							src.vend_ready = 0
+							src.paying_for = params["target"]
+							return
+					else
+						if (src.credit < params["cost"])
+							boutput(usr, "<span class='alert'>Insufficient Credit.</span>")
+							flick(src.icon_deny,src)
+							src.vend_ready = 0
+							src.paying_for = params["target"]
+							return
+ // copy pasted stuff below here
+				SPAWN(src.vend_delay)
+					var/product_amount = 0 // this is to make absolutely sure that these numbers arent desynced
+					var/datum/data/vending_product/product
+					for (var/datum/data/vending_product/R in src.product_list)
+						if(R.product_path == text2path(params["target"]))
+							product_amount = R.product_amount
+							product = R
+					if(!vend_ready) // do not proceed if players dont have money
+						return
+					if(product_amount >= 0 && text2path(params["target"]))
+						src.prevend_effect()
+						var/atom/product_path = text2path(params["target"])
+						var/atom/movable/vended = new product_path(src.get_output_location())
+						vended.loc = src.get_output_location()
+						vended.layer = src.layer + 0.1 //So things stop spawning under the fukin thing
+						if(isitem(vended))
+							usr.put_in_hand_or_eject(vended) // try to eject it into the users hand, if we can
+							src.postvend_effect()
+						product.product_amount--
+						if (src.pay && vended) // do we need to take their money
+							if (src.acceptcard && account)
+								account["current_money"] -= product.product_cost
+							else
+								src.credit -= product.product_cost
+						src.vend_ready = 1
+	. = TRUE
+
 /obj/machinery/vending/attack_hand(mob/user as mob)
 	if (status & (BROKEN|NOPOWER))
 		return
-	src.add_dialog(user)
+	//src.add_dialog(user)
 
 	if (src.seconds_electrified != 0)
 		if (src.shock(user, 100))
 			return
 
-	if (!src.HTML)
+	ui_interact(user)
+
+	/*if (!src.HTML)
 		src.generate_HTML()
 	else
 		if (src.HTML && !src.vending_HTML)
@@ -524,7 +688,7 @@
 		user.Browse(src.HTML, "window=vending;size=[window_size]")
 	else
 		user.Browse(src.HTML, "window=vending")
-	onclose(user, "vending")
+	onclose(user, "vending")*/
 
 	interact_particle(user,src)
 	return
@@ -931,7 +1095,6 @@
 	switch(wireIndex)
 		if(WIRE_EXTEND)
 			src.extended_inventory = 0
-			src.generate_HTML(1)
 		if(WIRE_SHOCK)
 			src.seconds_electrified = -1
 		if (WIRE_SHOOTINV)
@@ -960,7 +1123,6 @@
 	switch (wireIndex)
 		if (WIRE_EXTEND)
 			src.extended_inventory = !src.extended_inventory
-			src.generate_HTML(1)
 		if (WIRE_SCANID)
 			src.ai_control_enabled = !src.ai_control_enabled
 		if (WIRE_SHOCK)
