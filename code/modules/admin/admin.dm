@@ -4656,7 +4656,7 @@ var/global/noir = 0
 		var/safe_matches = matches - list(/database, /client, /icon, /sound, /savefile)
 		chosen = tgui_input_list(usr, "Select an atom type", "Matches for pattern", safe_matches)
 		if(!chosen)
-			return null
+			return FALSE // need to return something other than null to distinguish between "didn't find anything" and hitting 'cancel'
 
 	. = chosen
 
