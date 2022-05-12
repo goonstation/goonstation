@@ -121,7 +121,6 @@ var/list/input_window_presets =  list(
 
 /client/proc/create_preset_input_window(name, force=FALSE, show=TRUE)
 	var/arglist = input_window_presets[name]
-
 	create_input_window(arglist[1], arglist[2], arglist[3], arglist[4], force=force, show=show)
 
 //Those verbs are used by the hotkeys to ensure the window is created when you try to use it
