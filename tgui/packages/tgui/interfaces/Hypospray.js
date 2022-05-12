@@ -9,6 +9,7 @@ import { useBackend } from "../backend";
 import { Button, Section, Slider } from "../components";
 import { Window } from '../layouts';
 import { ReagentGraph, ReagentList } from './common/ReagentInfo';
+import { glitch } from './common/stringUtils';
 
 export const Hypospray = (_props, context) => {
   const { act, data } = useBackend(context);
@@ -20,7 +21,7 @@ export const Hypospray = (_props, context) => {
       height={300}
       theme={emagged ? "syndicate" : "nanotrasen"}>
       <Window.Content>
-        <Section title="Contents"
+        <Section title={emagged ? glitch("Contents", 3) : "Contents"}
           buttons={
             <Button
               icon="times"
@@ -39,7 +40,7 @@ export const Hypospray = (_props, context) => {
             value={injectionAmount}
             format={value => value + "u"}
             minValue={1}
-            maxValue={30}
+            maxValue={reagentData.maxVolume}
             step={1}
             stepPixelSize={10}
             onChange={(e, value) => act('changeAmount', { amount: value })}
