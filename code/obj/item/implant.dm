@@ -27,6 +27,7 @@ THROWING DARTS
 	var/death_triggered = 0
 	var/online = 0
 	var/instant = 1
+	var/scan_category = "other" // "health", "cloner", "other", "syndicate", or "not_shown"
 
 	//For PDA/signal alert stuff on implants
 	var/uses_radio = 0
@@ -204,6 +205,7 @@ THROWING DARTS
 	name = "cloner record implant"
 	icon_state = "implant-b"
 	impcolor = "b"
+	scan_category = "cloner"
 	var/area/scanned_here
 
 	New()
@@ -232,6 +234,7 @@ THROWING DARTS
 	name = "health implant"
 	icon_state = "implant-b"
 	impcolor = "b"
+	scan_category = "health"
 	var/healthstring = ""
 	uses_radio = 1
 	mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH, MGD_SPIRITUALAFFAIRS)
@@ -335,6 +338,7 @@ THROWING DARTS
 	icon_state = "implant-r"
 	var/uses = 1.0
 	impcolor = "r"
+	scan_category = "syndicate"
 	var/activation_emote = "chuckle"
 
 	New()
@@ -508,6 +512,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	icon_state = "implant-r"
 	impcolor = "r"
 	instant = TRUE
+	scan_category = "syndicate"
 	var/active = FALSE
 	var/power = 1 //! Means different things for different implants, but in a general sense how Powerful the effect is. Scales additively with implant number.
 	var/big_message = " fucks up really bad why did you do this"
@@ -609,7 +614,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 
 
 /obj/item/implant/robotalk
-	name = "machine translator"
+	name = "machine translator implant"
 	icon_state = "implant-b"
 	var/active = 0
 
@@ -634,6 +639,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	icon_state = "implant-r"
 	impcolor = "r"
 	instant = 1
+	scan_category = "syndicate"
 	var/uses = 1
 	var/expire = 1
 	var/expired = 0
@@ -788,6 +794,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	icon = 'icons/obj/scrap.dmi'
 	icon_state = "bullet"
 	desc = "A spent bullet."
+	scan_category = "not_shown"
 	var/bleed_time = 60
 	var/bleed_timer = 0
 	var/forensic_ID = null // match a bullet to a gun holy heckkkkk

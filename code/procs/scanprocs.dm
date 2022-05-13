@@ -116,42 +116,17 @@
 					if (istype(I, /obj/item/implant/projectile))
 						bad_stuff++
 						continue
-					if (istype(I, /obj/item/implant/health))
-						if (!istype(I, /obj/item/implant/health/security/anti_mindslave))
-							implant_list["Health"]++
-						else
-							implant_list["Mind-protection"]++
-					else if (istype(I, /obj/item/implant/cloner))
-						implant_list["Cloner"]++
-					else if (istype(I, /obj/item/implant/antirot))
-						implant_list["Rotbusttec"]++
-					else if (istype(I, /obj/item/implant/robotalk))
-						implant_list["Machine translator"]++
-					else if (istype(I, /obj/item/implant/access))
-						implant_list["Access"]++
-					else if (istype(I, /obj/item/implant/tracking))
-						implant_list["Tracking"]++
-					else if (istype(I, /obj/item/implant/robust))
-						implant_list["Robustec"]++
-					else if (istype(I, /obj/item/implant/counterrev))
-						implant_list["Counter-revolutionary"]++
+					if (I.scan_category == "not_shown")
+						continue
+					if (I.scan_category != "syndicate")
+						implant_list[capitalize(I.name)]++
 					else if (syndicate)
-						if (istype(I, /obj/item/implant/revenge/microbomb))
-							implant_list["Microbomb"]++
-						else if (istype(I, /obj/item/implant/revenge/zappy))
-							implant_list["Flyzapper"]++
-						else if (istype(I, /obj/item/implant/mindslave))
-							if (!istype(I, /obj/item/implant/mindslave/super))
-								implant_list["Mindslave"]++
-							else
-								implant_list["Mindslave Deluxe"]++
-						else if (istype(I, /obj/item/implanter/freedom))
-							implant_list["Freedom"]++
+						implant_list[capitalize(I.name)]++
 
 				if (length(implant_list))
 					implant_data = "<span style='color:#2770BF'><b>Implants detected:</b></span>"
 					for (var/implant in implant_list)
-						implant_data += "<br><span style='color:#2770BF'>[implant_list[implant]]x [implant] implant</span>"
+						implant_data += "<br><span style='color:#2770BF'>[implant_list[implant]]x [implant]</span>"
 
 			if (ishuman)
 				var/mob/living/carbon/human/H = L
