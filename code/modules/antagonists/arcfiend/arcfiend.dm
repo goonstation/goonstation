@@ -56,12 +56,6 @@
 		var/points = min((MAX_ARCFIEND_POINTS - src.points), add_points)
 		. = ..(points, target_ah_type)
 
-	proc/get_arcfiend_power(var/total_power = 0)
-		if (total_power)
-			return src.lifetime_energy
-		else
-			return src.points
-
 ABSTRACT_TYPE(/datum/targetable/arcfiend)
 /datum/targetable/arcfiend
 	name = "base arcfiend ability (you should never see me)"
