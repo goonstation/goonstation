@@ -28,15 +28,6 @@
 		if (src.mind && src.mind.special_role != ROLE_OMNITRAITOR)
 			src.show_antag_popup("arcfiend")
 
-/mob/proc/get_arcfiend_power(var/lifetime_energy = 0)
-	if (!isarcfiend(src))
-		return 0
-
-	var/datum/abilityHolder/arcfiend/AH = src.get_ability_holder(/datum/abilityHolder/arcfiend)
-	if (AH && istype(AH))
-		return AH.get_arcfiend_power(lifetime_energy)
-	else
-		return 0
 
 /datum/abilityHolder/arcfiend
 	usesPoints = 1
