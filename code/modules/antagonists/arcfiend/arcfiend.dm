@@ -70,7 +70,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 
 /datum/targetable/arcfiend/sap_power
 	name = "Sap Power"
-	desc = "Drain power from a target entity or machine"
+	desc = "Drain power from a target person or machine"
 	cooldown = 0
 	target_anything = TRUE
 	targeted = TRUE
