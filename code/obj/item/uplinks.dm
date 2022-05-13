@@ -1177,7 +1177,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			user.abilityHolder.updateButtons()
 		if (src.assoc_item)
 			var/obj/item/I = new src.assoc_item(user.loc)
-			if (istype(I, /obj/item/staff) && user.mind)
+			if (istype(I, /obj/item/staff) && user.mind && !isvirtual(user))
 				var/obj/item/staff/S = I
 				S.wizard_key = user.mind.key
 		book.uses -= src.cost
