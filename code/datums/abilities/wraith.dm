@@ -432,15 +432,18 @@
 
 		//If you targeted a turf for some reason, find a corpse on it
 		if (istype(T, /turf))
-			for (var/mob/living/carbon/human/target in T.contents)
+			for (var/mob/living/carbon/human/target in T)
 				if (isdead(target) && target:decomp_stage == 4)
 					T = target
 					break
 			//Or a locker
-			for (var/obj/storage/closet/target in T.contents)
-				if (target.open == 0)
-					T = target
-					break
+			for (var/obj/storage/closet/target in T)
+				T = target
+				break
+			//Or a secure locker
+			for (var/obj/storage/secure/closet/target in T)
+				T = target
+				break
 
 		if (ishuman(T))
 			var/mob/living/carbon/human/H = T
@@ -455,14 +458,21 @@
 			usr.playsound_local(usr.loc, "sound/voice/wraith/wraithraise[rand(1, 3)].ogg", 80, 0)
 			return 0
 		if (isobj(T))
-			var/obj/critter/wraithskeleton/S = new /obj/critter/wraithskeleton(T)
-			S.name = "Locker skeleton"
-			S.health = 20
-			usr.playsound_local(usr.loc, "sound/voice/wraith/wraithraise[rand(1, 3)].ogg", 80, 0)
-			//Todo maybe open the locker after a bit?
-			//var/obj/storage/closet/C
-			//C.open()
-			return 0
+			if (istype(T, /obj/storage/closet) || istype(T, /obj/storage/secure/closet))
+				var/obj/storage/C = T
+				for (var/obj/critter/wraithskeleton/S in C)
+					boutput(holder.owner, "That container is already rattling, you can't summon a skeleton in there!")
+					return 1
+				if (C.open)
+					C.close()
+				var/obj/critter/wraithskeleton/S = new /obj/critter/wraithskeleton(C)
+				S.name = "Locker skeleton"
+				S.health = 20
+				usr.playsound_local(usr.loc, "sound/voice/wraith/wraithraise[rand(1, 3)].ogg", 80, 0)
+				return 0
+			else
+				boutput(usr, "<span class='alert'>You can't summon a skeleton there!</span>")
+				return 1
 		else
 			boutput(usr, "<span class='alert'>There are no skeletonized corpses here to raise!</span>")
 			return 1
@@ -1213,7 +1223,7 @@
 		var/poison_choice = input("Select the target poison: ", "Target Poison", null) as null|anything in the_poison
 
 		if (RC && istype(RC))
-			if (src.the_poison.len > 1)
+			if (length(src.the_poison) > 1)
 				if (!RC.reagents)
 					RC.reagents = new /datum/reagents(src.amount_per_poison)
 					RC.reagents.my_atom = RC
@@ -1396,22 +1406,78 @@
 	pointCost = 10
 	targeted = 0
 	cooldown = 5 SECONDS
+	var/list/mob_types = list("Bears",
+	"Brullbars",
+	"Crunched",
+	"Ancient things",
+	"Ancient repairbots",
+	"Heavy gunner drones",
+	"Monstrosity crawlers",
+	"Bats",
+	"Shades",
+	"Lions",
+	"Skeletons",
+	"Random")
+
+
+
 
 	cast()
 		if (..())
 			return 1
 
 		var/turf/T = get_turf(holder.owner)
-		if (isturf(T) && !istype(T, /turf/space))
+		if (isturf(T) && !istype(T, /turf/space) && !istype(T, /turf/simulated/wall) && !istype(T, /turf/unsimulated/wall))
 			if(istype(holder.owner, /mob/wraith))
 				var/mob/wraith/W = holder.owner
-				if(W.haunting)
-					boutput(holder.owner, "You gather your energy and open a portal")
-					new /obj/wraith/vortex_wraith(get_turf(holder.owner))
-					return 0
-				else
+				if (!W.haunting)
 					boutput(holder.owner, "Your connection to the physical plane is too weak. You must be manifested to do this.")
 					return 1
+				if (W.linked_portal)
+					if (alert(holder.owner, "You already have a portal. Do you want to destroy the old one?", "Confirmation", "Yes", "No") == "Yes")
+						W.linked_portal.deleteLinkedMobs()
+						qdel(W.linked_portal)
+						W.linked_portal = null
+					else
+						return 1
+				var/mob_choice = null
+				if (length(src.mob_types) > 1)
+					mob_choice = input("What should the portal spawn?", "Target mob type", null) as null|anything in mob_types
+				switch(mob_choice)
+					if("Crunched")
+						mob_choice = /obj/critter/crunched
+					if("Ancient things")
+						mob_choice = /obj/critter/ancient_thing
+					if("Ancient repairbots")
+						mob_choice = /obj/critter/ancient_repairbot/security
+					if("Monstrosity crawlers")
+						mob_choice = /obj/critter/mechmonstrositycrawler
+					if("Shades")
+						mob_choice = /obj/critter/shade
+					if("Bats")
+						mob_choice = /obj/critter/bat/buff
+					if("Lions")
+						mob_choice = /obj/critter/lion
+					if("Skeletons")
+						mob_choice = /obj/critter/wraithskeleton
+					if("Bears")
+						mob_choice = /obj/critter/bear
+					if("Brullbars")
+						mob_choice = /obj/critter/brullbar
+					if("Heavy gunner drones")
+						mob_choice = /obj/critter/gunbot/heavy
+					if("Random")
+						mob_choice = null
+				boutput(holder.owner, "You gather your energy and open a portal")
+				var/obj/machinery/wraith/vortex_wraith/V = new /obj/machinery/wraith/vortex_wraith(mob_choice)
+				if(mob_choice == null)
+					V.random_mode = true
+				V.set_loc(W.loc)
+				V.master = W
+				V.alpha = 0
+				animate(V, alpha=255, time = 1 SECONDS)
+				W.linked_portal = V
+				return 0
 		else
 			boutput(holder.owner, "We cannot open a portal here")
 			return 1

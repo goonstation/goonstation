@@ -1,5 +1,3 @@
-//Todo, fix ai tick rate. Seems to stop to think too often. Also stops before attacking.
-
 /datum/aiHolder/wraith_critters/exploder
 
 /datum/aiHolder/wraith_critters/exploder/New()

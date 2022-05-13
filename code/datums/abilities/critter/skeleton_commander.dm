@@ -17,7 +17,6 @@
 	/obj/critter/bat/buff,
 	/obj/critter/lion,
 	/obj/critter/wraithskeleton,
-	/obj/critter/spider/aggressive,
 	/obj/critter/gunbot/heavy,
 	/obj/critter/bear,
 	/obj/critter/brullbar,
@@ -31,7 +30,7 @@
 		for (var/obj/critter/C in range(6, get_turf(holder.owner)))
 			for (var/obj/O in critter_list)
 				if (istype(C, O))
-					C.health = C.health * 2 + 10
+					C.health = (C.health * 2 + 10)
 					affected_critter += C
 					//Todo maybe add a damage/speed/seekrange buff, add a sound effect and maybe overlay
 		SPAWN(25 SECOND)

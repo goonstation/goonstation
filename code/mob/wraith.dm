@@ -34,6 +34,7 @@
 	var/justmanifested = 0	//To track if a candle forced us to manifest
 	var/absorbcount = 0 //Keep track of how many souls we absorbed
 	var/absorbs_to_evolve = 3
+	var/obj/machinery/wraith/vortex_wraith/linked_portal = null //The portal harbinger can spawn
 
 	var/last_life_update = 0
 	var/const/life_tick_spacing = 20
@@ -171,6 +172,10 @@
 					src.hauntBonus += 5
 					if(istype(src, /mob/wraith/wraith_trickster))
 						src.hauntBonus += 2
+
+		for (var/obj/machinery/wraith/vortex_wraith/V in range(8, src))
+			if (V == linked_portal)
+				src.hauntBonus += 2
 
 		if (src.next_area_change != null)
 			if (src.next_area_change < world.time)
@@ -825,9 +830,10 @@
 	Life(parent)
 		if (..(parent))
 			return 1
-		for (var/mob/living/carbon/human/H in viewers(6, src)) //Todo If they can see us, we are corporeal, might need to come back to this because admin shenanigans or spooky goggles
-			if (!H.stat && !H.bioHolder.HasEffect("revenant"))
-				possession_points ++
+		if(src.haunting)
+			for (var/mob/living/carbon/human/H in viewers(6, src))
+				if (!H.stat && !H.bioHolder.HasEffect("revenant"))
+					possession_points ++
 
 // i am dumb - marq
 /mob/proc/wraithize()

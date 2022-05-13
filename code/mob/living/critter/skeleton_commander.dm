@@ -7,7 +7,8 @@
 	can_throw = 1
 	can_grab = 1
 	can_disarm = 1
-	icon_state = "scuttlebot"
+	icon = 'icons/mob/skeleton_commander.dmi'
+	icon_state = "skeleton_commander"
 	var/health_brute = 80
 	var/health_brute_vuln = 0.7
 	var/health_burn = 80
