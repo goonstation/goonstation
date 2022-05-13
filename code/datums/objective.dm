@@ -1394,19 +1394,19 @@ ABSTRACT_TYPE(/datum/objective/conspiracy)
 /////////////////////////////////////////////////////////
 
 /datum/objective/specialist/powerdrain // this is basically just a repurposed vamp objective, but it should work.
-	var/powercount
+	var/powergoal
 
 	set_up()
 #ifdef RP_MODE
-		powercount = rand(150,200) * 10
+		powergoal = rand(150,200) * 10
 #else
-		powercount = rand(210,250) * 10
+		powergoal = rand(210,250) * 10
 #endif
-		explanation_text = "Accumulate at least [powercount] units of charge in total."
+		explanation_text = "Accumulate at least [powergoal] units of charge in total."
 
 	check_completion()
 		var/datum/abilityHolder/arcfiend/AH = owner.current?.get_ability_holder(/datum/abilityHolder/arcfiend)
-		return (AH?.lifetime_energy >= powercount)
+		return (AH?.lifetime_energy >= powergoal)
 
 /////////////////////////////////////////////////////////
 // Neatly packaged objective sets for your convenience //
