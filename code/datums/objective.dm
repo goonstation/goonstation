@@ -1405,10 +1405,8 @@ ABSTRACT_TYPE(/datum/objective/conspiracy)
 		explanation_text = "Accumulate at least [powercount] units of charge in total."
 
 	check_completion()
-		if (owner.current && owner.current.get_arcfiend_power(1) >= powercount)
-			return 1
-		else
-			return 0
+		var/datum/abilityHolder/arcfiend/AH = owner.current?.get_ability_holder(/datum/abilityHolder/arcfiend)
+		return (AH?.lifetime_energy >= powercount)
 
 /////////////////////////////////////////////////////////
 // Neatly packaged objective sets for your convenience //
