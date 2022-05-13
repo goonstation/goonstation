@@ -1226,17 +1226,17 @@
 /mob/living/carbon/human
 	proc/throwglasses()
 		if (!src.glasses)
-			return 1
+			return
 
 		var/obj/item/clothing/glasses/G = src.glasses
 		var/turf/T = get_turf(src)
 
 		if (!T)
 			qdel(src)
-			return 2
+			return
 
 		if (src.head && src.head.c_flags & COVERSEYES)
-			return 3
+			return
 
 		if (prob(100 - G.stability))
 			T.visible_message("<span class='alert'>[G] fly off [src]'s face!</span>")
