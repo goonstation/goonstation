@@ -1797,14 +1797,14 @@
 ///// PARENT /////
 
 /obj/item/parts/human_parts/arm/mutant/skeleton
-	icon = 'icons/mob/skeleton.dmi'
-	partIcon = 'icons/mob/skeleton.dmi'
+	icon = 'icons/mob/skeleton/human.dmi'
+	partIcon = 'icons/mob/skeleton/human.dmi'
 	easy_attach = 1 // Its just a bone... full of meat. Kind of.
 	kind_of_limb = (LIMB_MUTANT | LIMB_SKELLY)
 
 /obj/item/parts/human_parts/leg/mutant/skeleton
-	icon = 'icons/mob/skeleton.dmi'
-	partIcon = 'icons/mob/skeleton.dmi'
+	icon = 'icons/mob/skeleton/human.dmi'
+	partIcon = 'icons/mob/skeleton/human.dmi'
 	easy_attach = 1
 	kind_of_limb = (LIMB_MUTANT | LIMB_SKELLY)
 
