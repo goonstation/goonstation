@@ -69,8 +69,7 @@
 		return
 	var/list/targets = list()
 	var/list/wtfbyond = list()
-	var/turf/OT = get_turf(src)
-	var/list/paths = get_path_to(OT, landmarks[LANDMARK_GPS_WAYPOINT], max_distance=120, id=ID, skip_first=FALSE, cardinal_only=FALSE)
+	var/list/paths = get_path_to(src, landmarks[LANDMARK_GPS_WAYPOINT], max_distance=120, id=ID, skip_first=FALSE, cardinal_only=FALSE)
 
 	for(var/turf/wp in paths)
 		var/path = paths[wp]
@@ -93,7 +92,7 @@
 			var/max_trav
 			boutput( usr, "Area ([area.name]) not found in 300 or not accessable" )
 			for(max_trav=300; max_trav<500;max_trav=max_trav+100)
-				path = get_path_to(OT, get_turf(wp), max_distance=max_trav, id=ID, skip_first=FALSE)
+				path = get_path_to(src, get_turf(wp), max_distance=max_trav, id=ID, skip_first=FALSE)
 				if(path)
 					boutput( usr, "Area ([area.name]) found in [length(path)] with maxtraverse of [max_trav]" )
 					break

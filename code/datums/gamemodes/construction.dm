@@ -256,7 +256,7 @@
 			AST.UpdateIcon()
 			var/image/ore_overlay = image('icons/turf/walls_asteroid.dmi',"[ORE.name][AST.orenumber]")
 			ore_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask-side_[AST.icon_state]"))
-			ore_overlay.layer = AST.layer + 0.01 // so meson goggle nerds can still nerd away
+			ore_overlay.layer = ASTEROID_TOP_OVERLAY_LAYER // so meson goggle nerds can still nerd away
 			AST.UpdateOverlays(ore_overlay, "ast_ore")
 
 #ifndef UNDERWATER_MAP // We don't want fullbright ore underwater.

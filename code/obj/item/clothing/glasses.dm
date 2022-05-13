@@ -405,7 +405,7 @@
 	desc = "A pair of VR goggles connected to a remote scuttlebot. Use them on the scuttlebot to turn it back into a hat."
 	icon_state = "vr"
 	item_state = "sunglasses"
-	var/mob/living/critter/scuttlebot/connected_scuttlebot = null
+	var/mob/living/critter/robotic/scuttlebot/connected_scuttlebot = null
 
 	equipped(var/mob/user, var/slot) //On equip, if there's a scuttlebot, control it
 		..()

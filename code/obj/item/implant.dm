@@ -60,7 +60,7 @@ THROWING DARTS
 	proc/implanted(mob/M, mob/I)
 		logTheThing("combat", I, M, "has implanted [constructTarget(M,"combat")] with a [src] implant ([src.type]) at [log_loc(M)].")
 		implanted = 1
-		SEND_SIGNAL(src, COMSIG_IMPLANT_IMPLANTED, M)
+		SEND_SIGNAL(src, COMSIG_ITEM_IMPLANT_IMPLANTED, M)
 		owner = M
 		if (implant_overlay)
 			M.update_clothing()
@@ -71,7 +71,7 @@ THROWING DARTS
 	proc/on_remove(var/mob/M)
 		SHOULD_CALL_PARENT(TRUE)
 		deactivate()
-		SEND_SIGNAL(src, COMSIG_IMPLANT_REMOVED, M)
+		SEND_SIGNAL(src, COMSIG_ITEM_IMPLANT_REMOVED, M)
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			H.implant -= src
@@ -945,7 +945,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		icon_state = "blowdart"
 
 /obj/item/implant/projectile/implanted(mob/living/carbon/C, mob/I)
-	SEND_SIGNAL(src, COMSIG_IMPLANT_IMPLANTED, C)
+	SEND_SIGNAL(src, COMSIG_ITEM_IMPLANT_IMPLANTED, C)
 	implanted = 1
 	owner = C
 

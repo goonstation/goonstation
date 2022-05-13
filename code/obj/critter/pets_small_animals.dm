@@ -2020,6 +2020,10 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	flags = FPRINT | CONDUCT | USEDELAY | TABLEPASS | FLUID_SUBMERGE
 	var/slime_chance = 22
 
+	New()
+		..()
+		AddComponent(/datum/component/floor_slime, "badgrease", slime_chance, 10)
+
 	attack_hand(mob/user as mob)
 		if (src.alive && (user.a_intent != INTENT_HARM))
 			src.visible_message("<span class='combat'><b>[user]</b> pets [src]!</span>")
@@ -2044,20 +2048,11 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 				return
 		..()
 
-	Move(var/atom/NewLoc, direct)
-		.=..()
-		if (prob(src.slime_chance) && (istype(src.loc, /turf/simulated/floor) || istype(src.loc, /turf/unsimulated/floor)))
-			if (locate(/obj/decal/cleanable/slime) in src.loc)
-				return
-			else
-				make_cleanable( /obj/decal/cleanable/slime,src.loc)
-
-/obj/critter/slug/snail
+/obj/critter/snail
 	name = "snail"
 	desc = "It's basically just a slug with a shell on it. This makes it less gross."
 	icon_state = "snail"
 	health = 20
-	slime_chance = 11
 
 
 

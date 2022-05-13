@@ -62742,30 +62742,6 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
-"dzM" = (
-/obj/decal/garland{
-	pixel_y = 32
-	},
-/obj/decal/xmas_lights{
-	pixel_y = 32
-	},
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/stocking{
-	pixel_x = -32
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/ines)
-"dzN" = (
-/obj/decal/garland{
-	pixel_y = 32
-	},
-/obj/decal/xmas_lights{
-	pixel_y = 32
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/ines)
 "dzS" = (
 /obj/machinery/door/unpowered/wood{
 	icon = 'icons/obj/doors/door_office.dmi';
@@ -62903,31 +62879,6 @@
 /obj/table/auto,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/pacra)
-"dAs" = (
-/obj/machinery/door/unpowered/wood{
-	icon = 'icons/obj/doors/door_office.dmi';
-	lock_dir = 8
-	},
-/turf/unsimulated/floor/black,
-/area/centcom/offices/ines)
-"dAt" = (
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/ines)
-"dAu" = (
-/obj/decal/fakeobjects{
-	icon = 'icons/misc/old_or_unused.dmi';
-	icon_state = "tree2";
-	name = "spacemas tree"
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/ines)
-"dAv" = (
-/obj/stool/chair/comfy/purple{
-	dir = 4
-	},
-/obj/item/clothing/head/longbee,
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/ines)
 "dAw" = (
 /obj/shrub{
 	icon = 'icons/obj/stationobjs.dmi';
@@ -63034,73 +62985,6 @@
 /obj/machinery/light,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/pacra)
-"dAS" = (
-/obj/shrub{
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant_small";
-	layer = 3;
-	pixel_y = 18
-	},
-/obj/item/reagent_containers/food/drinks/cola/random,
-/obj/item/reagent_containers/food/drinks/cola{
-	initial_reagents = list("cola" = 10, "VHFCS" = 10, "energydrink" = 10);
-	name = "energy drink";
-	pixel_x = -8
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	name = "energy drink";
-	pixel_x = 14
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	name = "energy drink";
-	pixel_x = 4
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	name = "energy drink";
-	pixel_x = 1;
-	pixel_y = -10
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	initial_reagents = list("cola" = 10, "VHFCS" = 10, "energydrink" = 10);
-	name = "energy drink";
-	pixel_y = 7
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	name = "energy drink";
-	pixel_x = -10;
-	pixel_y = -9
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/ines)
-"dAT" = (
-/obj/machinery/bot/guardbot/xmas,
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/ines)
-"dAU" = (
-/obj/machinery/light,
-/obj/item/reagent_containers/food/drinks/cola/random,
-/obj/item/reagent_containers/food/drinks/cola{
-	name = "energy drink";
-	pixel_x = 7;
-	pixel_y = 1
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	name = "energy drink";
-	pixel_x = 13;
-	pixel_y = -6
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	name = "energy drink";
-	pixel_x = 1;
-	pixel_y = -6
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	name = "energy drink";
-	pixel_x = -8;
-	pixel_y = -12
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/ines)
 "dAW" = (
 /obj/machinery/light{
 	dir = 1
@@ -63133,17 +63017,6 @@
 "dAZ" = (
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/hydro)
-"dBb" = (
-/obj/admin_plaque{
-	name = "Souricelle's Office";
-	pixel_x = 32
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/centcom/offices{
-	icon_state = "blue"
-	})
 "dBf" = (
 /obj/machinery/light{
 	dir = 1
@@ -69429,17 +69302,6 @@
 	},
 /turf/unsimulated/floor/wood/six,
 /area/centcom/offices/zamujasa)
-"dRP" = (
-/obj/admin_plaque{
-	name = "Ines's Office";
-	pixel_x = -32
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/centcom/offices{
-	icon_state = "blue"
-	})
 "dRQ" = (
 /obj/storage/crate/bin,
 /obj/item/paper{
@@ -71535,12 +71397,6 @@
 	pixel_x = -4;
 	pixel_y = -2
 	},
-/obj/item/paper{
-	icon_state = "paper";
-	name = "Promotion to Double Mentor";
-	pixel_x = 3;
-	pixel_y = 4
-	},
 /turf/unsimulated/floor/wood/seven,
 /area/centcom/offices/sovexe)
 "hQy" = (
@@ -72194,60 +72050,6 @@
 "jXJ" = (
 /turf/unsimulated/wall/auto/lead/white,
 /area/moon)
-"jYh" = (
-/obj/decal/garland{
-	pixel_y = 32
-	},
-/obj/decal/xmas_lights{
-	pixel_y = 32
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	initial_reagents = list("cola" = 10, "VHFCS" = 10, "energydrink" = 10);
-	name = "energy drink";
-	pixel_y = -1
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	name = "energy drink";
-	pixel_x = 14;
-	pixel_y = 6
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	name = "energy drink";
-	pixel_x = -10
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	name = "energy drink";
-	pixel_x = -8;
-	pixel_y = 17
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	name = "energy drink";
-	pixel_x = 4;
-	pixel_y = 16
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	initial_reagents = list("cola" = 10, "VHFCS" = 10, "energydrink" = 10);
-	name = "energy drink";
-	pixel_x = -6;
-	pixel_y = -11
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	name = "energy drink";
-	pixel_x = 3;
-	pixel_y = -8
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	name = "energy drink";
-	pixel_x = 9;
-	pixel_y = 3
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	name = "energy drink";
-	pixel_x = -3;
-	pixel_y = 13
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/ines)
 "kbk" = (
 /obj/decal/aliencomputer{
 	desc = "This appears to be some sort of martian computer. A broken one, at that.";
@@ -76778,6 +76580,7 @@
 	},
 /obj/table/wood/auto/desk,
 /obj/item/gimmickbomb/grenyanda/inert,
+/obj/item/staff/monkey_staff,
 /turf/unsimulated/floor/wood/seven,
 /area/centcom/offices/sovexe)
 "xoW" = (
@@ -152401,9 +152204,9 @@ goR
 sPY
 tma
 wel
-dzM
-dAt
-dAS
+dvW
+dvW
+dCj
 wel
 nRU
 iyY
@@ -152703,9 +152506,9 @@ plh
 uvs
 nWE
 wel
-dzN
-dAv
-dAt
+dvW
+dvW
+dvW
 wel
 ezH
 vWb
@@ -153005,9 +152808,9 @@ wPn
 uvs
 vnh
 wel
-dzN
-dAu
-dAT
+dvX
+dvW
+dvW
 wel
 qMN
 fUa
@@ -153307,9 +153110,9 @@ eOA
 uvs
 iQw
 wel
-jYh
-dAt
-dAU
+dvW
+dvW
+dvW
 qvY
 fqO
 kAr
@@ -153610,7 +153413,7 @@ dqa
 wel
 wel
 wel
-dAs
+kKw
 wel
 wel
 wel
@@ -153911,7 +153714,7 @@ vsg
 dvy
 dvy
 dvy
-dRP
+rUQ
 dvy
 dxa
 dvy
@@ -162081,7 +161884,7 @@ dCH
 dvy
 dxn
 dvy
-dBb
+dwd
 dvy
 dvy
 dzo

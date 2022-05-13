@@ -1308,9 +1308,11 @@ var/datum/action_controller/actions
 	duration = 2 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "welding"
+	var/call_proc_on = null
 	var/obj/effects/welding/E
 	var/list/start_offset
 	var/list/end_offset
+
 
 	id = null
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
@@ -1326,7 +1328,7 @@ var/datum/action_controller/actions
 	var/list/proc_args = null
 	bar_on_owner = FALSE
 
-	New(owner, target, duration, proc_path, proc_args, end_message, start, stop)
+	New(owner, target, duration, proc_path, proc_args, end_message, start, stop, call_proc_on)
 		..()
 		src.owner = owner
 		src.target = target
@@ -1339,6 +1341,8 @@ var/datum/action_controller/actions
 		src.end_message = end_message
 		src.start_offset = start
 		src.end_offset = stop
+		if(call_proc_on)
+			src.call_proc_on = call_proc_on
 
 	onStart()
 		..()
@@ -1346,18 +1350,22 @@ var/datum/action_controller/actions
 			interrupt(INTERRUPT_ALWAYS)
 		if (src.target && !IN_RANGE(src.owner, src.target, src.maximum_range))
 			interrupt(INTERRUPT_ALWAYS)
-		if(!E && ismovable(src.target))
-			var/atom/movable/M = src.target
-			E = new(M)
-			M.vis_contents += E
+		if(!E)
+			if(ismovable(src.target))
+				var/atom/movable/M = src.target
+				E = new(M)
+				M.vis_contents += E
+			else
+				E = new(src.target)
 			E.pixel_x = start_offset[1]
 			E.pixel_y = start_offset[2]
 			animate(E, time=src.duration, pixel_x=end_offset[1], pixel_y=end_offset[2])
 
 	onDelete(var/flag)
-		if(E && ismovable(src.target))
-			var/atom/movable/M = src.target
-			M.vis_contents -= E
+		if(E)
+			if(ismovable(src.target))
+				var/atom/movable/M = src.target
+				M.vis_contents -= E
 			qdel(E)
 		..()
 
@@ -1371,14 +1379,17 @@ var/datum/action_controller/actions
 		if (end_message)
 			src.owner.visible_message("[src.end_message]")
 
-		if (src.target)
+		if (src.call_proc_on)
+			INVOKE_ASYNC(arglist(list(src.call_proc_on, src.proc_path) + src.proc_args))
+		else if (src.target)
 			INVOKE_ASYNC(arglist(list(src.target, src.proc_path) + src.proc_args))
 		else
 			INVOKE_ASYNC(arglist(list(src.owner, src.proc_path) + src.proc_args))
 
-		if(E && ismovable(src.target))
-			var/atom/movable/M = src.target
-			M.vis_contents -= E
+		if(E)
+			if(ismovable(src.target))
+				var/atom/movable/M = src.target
+				M.vis_contents -= E
 			qdel(E)
 
 //CLASSES & OBJS

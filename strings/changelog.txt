@@ -1,5 +1,38 @@
 
+(t)thu may 12 22
+(u)Wisemonster
+(p)8549
+(e)⚖|balance
+(*)Arcfiend's Jolt ability will now apply burn damage to a target's heart throughout the ability if they do not have a gene resistant to electricity.
+(u)aloe
+(+)You can now meat spike monkeys by throwing them at the spike. You can also scan the spikes with a device analyzer.
+(t)wed may 11 22
+(u)BatElite
+(p)8484
+(e)|
+(+)Ghostdrones can now auto-pry floors when placing tiles, provided they left their omnitool on prying
+(u)Nexusuxen
+(p)8502
+(e)|
+(+)AI plating kits can now be applied to existing AIs that have the default skin!
+(u)zcrow
+(p)8493
+(e)|
+(*)Added "Change vocal pitch" verb to Robot Commands. Borgs can now modify their voices to better express themselves.
+(u)Wisemonster
+(p)8489
+(e)🗺|mapping
+(+)Added status displays to Atlas.
+(t)mon may 09 22
+(u)Wisemonster
+(p)8474
+(e)🗺|mapping
+(+)Mr. Rathens has been rescued from the singularity generator area on Donut 3 and safely moved to the engineering break room.
 (t)sun may 08 22
+(u)aloe
+(p)8303
+(e)|
+(+)Things which animate objects now make the living objects act like the objects they came from; batons will stun you, food will feed itself to people, etc.
 (u)LeahTheTech
 (p)8378
 (e)📄|tgui

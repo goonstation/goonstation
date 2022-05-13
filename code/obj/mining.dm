@@ -153,9 +153,9 @@
 			for (var/obj/O in T)
 				if (!(O.type in mining_controls.magnet_do_not_erase) && !istype(O, /obj/magnet_target_marker))
 					qdel(O)
-			T.overlays.len = 0 //clear out the astroid edges and scan effects
+			T.ClearAllOverlays()
 			T.ReplaceWithSpace()
-			T.overlays += /image/fullbright //reapply fullbright image
+			T.UpdateOverlays(/image/fullbright, "fullbright", TRUE)
 
 	proc/generate_walls()
 		var/list/walls = list()
@@ -949,6 +949,7 @@
 	mod = "asteroid-"
 	light_mod = "wall-"
 	plane = PLANE_WALL-1
+	layer = ASTEROID_LAYER
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 	connect_overlay = 0
 	connect_diagonal = 1
@@ -1256,7 +1257,7 @@
 	proc/top_overlays() // replaced what was here with cool stuff for autowalls
 		var/image/top_overlay = image('icons/turf/walls_asteroid.dmi',"top[src.topnumber]")
 		top_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask2[src.icon_state]"))
-		top_overlay.layer = src.layer + 0.01
+		top_overlay.layer = ASTEROID_TOP_OVERLAY_LAYER
 		UpdateOverlays(top_overlay, "ast_top_rock")
 
 	proc/space_overlays()
@@ -1398,12 +1399,12 @@
 			A.UpdateIcon()
 			var/image/top_overlay = image('icons/turf/walls_asteroid.dmi',"top[A.topnumber]")
 			top_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask2[A.icon_state]"))
-			top_overlay.layer = A.layer + 0.01
+			top_overlay.layer = ASTEROID_TOP_OVERLAY_LAYER
 			A.UpdateOverlays(top_overlay, "ast_top_rock")
 			if(A?.ore) // make sure ores dont turn invisible
 				var/image/ore_overlay = image('icons/turf/walls_asteroid.dmi',"[A.ore.name][A.orenumber]")
 				ore_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask-side_[A.icon_state]"))
-				ore_overlay.layer = A.layer + 0.02 // so meson goggle nerds can still nerd away
+				ore_overlay.layer = ASTEROID_ORE_OVERLAY_LAYER // so meson goggle nerds can still nerd away
 				A.UpdateOverlays(ore_overlay, "ast_ore")
 #ifndef UNDERWATER_MAP // We don't want fullbright ore underwater.
 			A.overlays += /image/fullbright
@@ -2165,7 +2166,7 @@ obj/item/clothing/gloves/concussive
 
 /proc/mining_scandecal(var/mob/living/user, var/turf/T, var/decalicon)
 	if(!user || !T || !decalicon) return
-	var/image/O = image('icons/obj/items/mining.dmi',T,decalicon,TURF_LAYER + 1)
+	var/image/O = image('icons/obj/items/mining.dmi',T,decalicon,ASTEROID_MINING_SCAN_DECAL_LAYER)
 	user << O
 	SPAWN(2 MINUTES)
 		if (user?.client)
