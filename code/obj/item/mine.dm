@@ -54,7 +54,7 @@
 		..()
 
 	pull()
-		if(..())
+		if (..())
 			return
 		if (src.armed && !src.used_up)
 			if (!src.suppress_flavourtext)
