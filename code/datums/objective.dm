@@ -1398,9 +1398,9 @@ ABSTRACT_TYPE(/datum/objective/conspiracy)
 
 	set_up()
 #ifdef RP_MODE
-		powercount = rand(80,120) * 10
+		powercount = rand(150,200) * 10
 #else
-		powercount = rand(150,250) * 10
+		powercount = rand(210,250) * 10
 #endif
 		explanation_text = "Accumulate at least [powercount] units of charge in total."
 
