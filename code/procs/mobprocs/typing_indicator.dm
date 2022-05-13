@@ -34,7 +34,6 @@ Both the say/me wrappers and cancel_typing remove the typing indicator.
 	set name = ".start_typing"
 	set hidden = 1
 
-	winset(src, "saywindow.input", "focus=true")
 	create_typing_indicator()
 
 /// Hide the typing indicator. The source signifies what action the user was typing for.
