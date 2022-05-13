@@ -1,5 +1,9 @@
 
 (t)thu may 12 22
+(u)Wisemonster
+(p)8549
+(e)⚖|balance
+(*)Arcfiend's Jolt ability will now apply burn damage to a target's heart throughout the ability if they do not have a gene resistant to electricity.
 (u)aloe
 (+)You can now meat spike monkeys by throwing them at the spike. You can also scan the spikes with a device analyzer.
 (t)wed may 11 22
