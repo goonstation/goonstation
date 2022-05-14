@@ -39996,7 +39996,8 @@
 /area/station/security/checkpoint/customs)
 "bLe" = (
 /obj/disposalpipe/segment/mail/horizontal,
-/turf/simulated/wall/auto/reinforced/supernorn,
+/obj/wingrille_spawn/auto/crystal,
+/turf/simulated/floor,
 /area/station/security/checkpoint/customs)
 "bLf" = (
 /obj/disposalpipe/switch_junction/left/south{
@@ -40006,6 +40007,7 @@
 /obj/machinery/door/airlock/pyro/command{
 	name = "Bridge Access"
 	},
+/obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/blueblack,
 /area/station/security/checkpoint/customs)
 "bLh" = (
@@ -80255,12 +80257,13 @@
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "wff" = (
-/obj/machinery/light{
-	dir = 8;
-	tag = ""
-	},
 /obj/table/auto,
 /obj/random_item_spawner/tableware,
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "blue2"
