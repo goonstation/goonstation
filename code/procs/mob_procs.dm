@@ -757,6 +757,7 @@
 	var/datum/gang/gang_to_see = null
 	var/PWT_to_see = null
 	var/datum/abilityHolder/vampire/V = null
+	var/datum/abilityHolder/vampiric_thrall/VT = null
 
 	if (isadminghost(src) || src.client?.adventure_view || current_state >= GAME_STATE_FINISHED)
 		see_everything = 1
@@ -794,10 +795,10 @@
 			see_wizards = 1
 		else if (isvampire(src))
 			V = src.get_ability_holder(/datum/abilityHolder/vampire)
+		else if (isvampiricthrall(src))
+			VT = src.get_ability_holder(/datum/abilityHolder/vampiric_thrall)
 		else if (src.mind && src.mind.special_role == ROLE_GRINCH)
 			see_xmas = 1
-		else if (src.mind.special_role == ROLE_VAMPTHRALL)
-			see_special = 1
 
 	// Clear existing overlays.
 	delete_overlays:
@@ -812,7 +813,7 @@
 	if (remove)
 		return
 
-	if (!see_traitors && !see_nukeops && !see_wizards && !see_revs && !see_heads && !see_xmas && !see_special && !see_everything && gang_to_see == null && PWT_to_see == null && !V)
+	if (!see_traitors && !see_nukeops && !see_wizards && !see_revs && !see_heads && !see_xmas && !see_special && !see_everything && gang_to_see == null && PWT_to_see == null && !V && !VT)
 		src.last_overlay_refresh = world.time
 		return
 
@@ -872,7 +873,8 @@
 						var/I = image(antag_werewolf, loc = M.current)
 						can_see.Add(I)
 				if (ROLE_VAMPTHRALL)
-					if (see_everything || (M.current in V?.thralls)) // they're your thrall
+					var/datum/abilityHolder/vampiric_thrall/VT2 = M.current.get_ability_holder(/datum/abilityHolder/vampiric_thrall)
+					if (see_everything || (M.current in V?.thralls) || (VT?.master == VT2.master)) // they're your thrall or they have the same vamp master
 						var/I = image(antag_vampthrall, loc = M.current)
 						can_see.Add(I)
 				if (ROLE_WRAITH)
