@@ -686,10 +686,6 @@ SYNDICATE DRONE FACTORY AREAS
 
 			var/turf/T = O.loc
 
-			// if turf / object in whip path is dense, stop whipping
-			if (!T.Cross(O))
-				break
-
 			if(locate(/obj/decal/stalagmite) in T)
 				boutput(user, "<span class='alert'>You pull yourself to the stalagmite using the whip.</span>")
 				user.set_loc(T)
