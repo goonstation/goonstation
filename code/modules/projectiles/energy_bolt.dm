@@ -225,11 +225,12 @@ toxic - poisons
 
 //Projectile for Azungars NT gun.
 /datum/projectile/energy_bolt/ntburst // fixed overlapping path - /datum/projectile/energy_bolt/burst already exists for taser burst fire
-	shot_number = 1
-	power = 15
+	shot_number = 2
+	power = 10
+	dissipation_delay = 6 // Trying to go for the child of a semi auto, burst, and long range taser. Should be easy to hit things with.
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "minispark"
-	cost = 5
+	cost = 20
 	sname = "burst stun"
 
 //lawgiver detain

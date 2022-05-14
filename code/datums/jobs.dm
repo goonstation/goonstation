@@ -2395,9 +2395,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_poc2 = list(/obj/item/storage/pouch/bullet_9mm)
 	items_in_backpack = list(/obj/item/gun/energy/ntgun,
 							/obj/item/device/pda2/heads,
-							/obj/item/old_grenade/stinger/frag,
 							/obj/item/storage/firstaid/regular,
-							/obj/item/storage/pouch/powercell_medium,
 							/obj/item/gun/kinetic/pistol)
 
 	New()

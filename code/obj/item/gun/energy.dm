@@ -359,14 +359,14 @@
 //Azungar's Nanotrasen inspired Laser Assault Rifle for RP gimmicks
 /obj/item/gun/energy/ntgun
 	name = "laser assault rifle"
-	icon_state = "ntneutral100"
+	icon_state = "ntstun100"
 	desc = "Rather futuristic assault rifle with two firing modes."
 	item_state = "ntgun"
 	force = 10.0
 	contraband = 8
 	two_handed = 1
-	spread_angle = 6
-	cell_type = /obj/item/ammo/power_cell/med_power
+	can_dual_wield = 0
+	cell_type = /obj/item/ammo/power_cell/self_charging/medium
 
 	New()
 		set_current_projectile(new/datum/projectile/energy_bolt/ntburst)
@@ -382,8 +382,6 @@
 				src.icon_state = "ntstun[ratio]"
 			else if (current_projectile.type == /datum/projectile/laser/ntburst)
 				src.icon_state = "ntlethal[ratio]"
-			else
-				src.icon_state = "ntneutral[ratio]"
 	attack_self()
 		..()
 		UpdateIcon()

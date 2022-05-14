@@ -323,12 +323,12 @@ toxic - poisons
 	shot_sound = 'sound/weapons/lasersound.ogg'
 	dissipation_delay = 8
 	dissipation_rate = 5
-	cost = 5
-	power = 15
+	shot_number = 2
+	cost = 25
+	power = 20
 	color_red = 0.4
 	color_green = 0.5
 	color_blue = 0.7
-	shot_number = 1
 
 
 // blaster projectiles
