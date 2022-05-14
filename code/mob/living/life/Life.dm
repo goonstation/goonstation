@@ -297,7 +297,7 @@
 				D.foreign_limb_effect()
 
 	if (src.glasses)
-		src.glasses.setstability(src.glasses.stability + 5)
+		src.glasses.setstability(src.glasses.stability + 3)
 
 	if (src.mutantrace)
 		src.mutantrace.onLife(mult)
