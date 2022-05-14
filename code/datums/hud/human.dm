@@ -1232,17 +1232,13 @@
 		return 0
 
 	proc/throwglasses(alwaysbreak = FALSE)
-		if (!src.glasses)
+		if (!src.glasses || (!alwaysbreak && src.areglassesprotected()))
 			return
 
 		var/obj/item/clothing/glasses/G = src.glasses
 		var/turf/T = get_turf(src)
 
 		if (!T)
-			qdel(src)
-			return
-
-		if (!alwaysbreak && src.areglassesprotected())
 			return
 
 		if (alwaysbreak || prob(100 - G.stability))
@@ -1254,9 +1250,7 @@
 			G.throw_at(target, 5, 1)
 
 	shake_awake(mob/living/target)
-		if (!src.glasses)
-			return ..()
-		if (src.zone_sel.selecting == "head")
+		if (src.glasses && src.zone_sel.selecting == "head")
 			src.glasses.setstability(src.glasses.stability += 30)
 		..()
 
