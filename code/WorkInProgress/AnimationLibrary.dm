@@ -104,6 +104,14 @@
 	animate(transform = M, time = 3,easing = BOUNCE_EASING)
 	return
 
+/proc/animate_smush(var/atom/A, var/y_scale = 0.9)
+	if (!istype(A))
+		return
+	var/matrix/M = matrix(A.transform)
+	animate(A, transform = A.transform.Scale(1, y_scale), time = 2, easing = BOUNCE_EASING, flags=ANIMATION_PARALLEL)
+	animate(transform = M, time = 2, easing = BOUNCE_EASING)
+	return
+
 /proc/animate_flockdrone_item_absorb(var/atom/A)
 	if(!istype(A))
 		return
