@@ -32001,6 +32001,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/status_display{
+	pixel_x = -32
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/market)
 "jcb" = (
@@ -34252,6 +34255,9 @@
 	},
 /obj/decal/tile_edge/stripe/corner/big2{
 	dir = 10
+	},
+/obj/machinery/status_display{
+	pixel_x = 32
 	},
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/lobby)
