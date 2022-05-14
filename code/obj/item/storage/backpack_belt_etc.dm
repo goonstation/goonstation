@@ -752,6 +752,7 @@
 	can_hold = list(/obj/item/ammo/bullets)
 	in_list_or_max = 0
 
+ABSTRACT_TYPE(/obj/item/storage/belt/gun)
 /obj/item/storage/belt/gun
 	var/gun_type
 
