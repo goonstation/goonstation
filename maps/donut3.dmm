@@ -1456,6 +1456,9 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
 /turf/simulated/floor/yellowblack{
 	dir = 1
 	},
@@ -25869,6 +25872,9 @@
 /obj/machinery/light/incandescent/warm{
 	dir = 1
 	},
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
 /turf/simulated/floor/yellowblack{
 	dir = 1
 	},
@@ -26157,6 +26163,9 @@
 "hqr" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 8
+	},
+/obj/machinery/status_display{
+	pixel_x = -32
 	},
 /turf/simulated/floor/wood/eight{
 	dir = 1
@@ -31279,6 +31288,17 @@
 /obj/disposalpipe/segment/transport,
 /turf/simulated/wall/auto/jen,
 /area/station/crew_quarters/quartersA)
+"iQr" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 4
+	},
+/obj/machinery/status_display{
+	pixel_x = 32
+	},
+/turf/simulated/floor/escape{
+	dir = 4
+	},
+/area/station/hallway/secondary/exit)
 "iQC" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
@@ -32391,6 +32411,9 @@
 /obj/machinery/disposal/mail/small/autoname/security/brig/west,
 /obj/disposalpipe/trunk/mail{
 	dir = 8
+	},
+/obj/machinery/status_display{
+	pixel_x = 32
 	},
 /turf/simulated/floor/black/grime,
 /area/station/security/brig/north_side)
@@ -35013,6 +35036,9 @@
 	dir = 8
 	},
 /obj/machinery/defib_mount,
+/obj/machinery/status_display{
+	pixel_x = -32
+	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/treatment)
 "jXo" = (
@@ -35041,6 +35067,9 @@
 	pixel_y = 10
 	},
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
+/obj/machinery/status_display{
+	pixel_y = -30
+	},
 /turf/simulated/floor/black,
 /area/station/mining/staff_room)
 "jYa" = (
@@ -36508,6 +36537,9 @@
 	pixel_x = -4;
 	pixel_y = 22;
 	tag = ""
+	},
+/obj/machinery/status_display{
+	pixel_x = -32
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/AIsat)
@@ -42057,6 +42089,9 @@
 	dir = 10;
 	icon_state = "line1"
 	},
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "maP" = (
@@ -44723,6 +44758,15 @@
 /area/station/chapel/sanctuary{
 	name = "Funeral Parlor"
 	})
+"mTc" = (
+/obj/machinery/plantpot{
+	anchored = 1
+	},
+/obj/machinery/status_display{
+	pixel_y = -30
+	},
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics/bay)
 "mTd" = (
 /obj/disposalpipe/segment/food,
 /turf/simulated/wall/auto/reinforced/supernorn/blackred,
@@ -51617,6 +51661,9 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 4
 	},
+/obj/machinery/status_display{
+	pixel_x = 32
+	},
 /turf/simulated/floor/wood/eight{
 	dir = 1
 	},
@@ -52768,6 +52815,9 @@
 /obj/decal/tile_edge/line/black{
 	dir = 10;
 	icon_state = "line1"
+	},
+/obj/machinery/status_display{
+	pixel_x = -32
 	},
 /turf/simulated/floor/stairs/wide,
 /area/station/security/main)
@@ -58995,6 +59045,9 @@
 /obj/item/storage/bible,
 /obj/machinery/light/incandescent/netural{
 	dir = 1
+	},
+/obj/machinery/status_display{
+	pixel_y = 30
 	},
 /turf/simulated/floor/carpet/purple/fancy,
 /area/station/chapel/sanctuary)
@@ -67994,6 +68047,9 @@
 "tyd" = (
 /obj/disposalpipe/segment,
 /obj/machinery/navbeacon/mule/crewA_north,
+/obj/machinery/status_display{
+	pixel_x = -32
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters)
 "tyo" = (
@@ -69763,6 +69819,12 @@
 	dir = 1
 	},
 /area/station/engine/inner)
+"tZm" = (
+/obj/machinery/status_display{
+	pixel_y = -30
+	},
+/turf/simulated/floor/arrival,
+/area/station/hangar/arrivals)
 "tZn" = (
 /obj/critter/opossum/morty{
 	dir = 4
@@ -70521,6 +70583,9 @@
 "umi" = (
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
 /obj/machinery/light/incandescent/warm,
+/obj/machinery/status_display{
+	pixel_y = -30
+	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "uml" = (
@@ -73585,6 +73650,9 @@
 /obj/disposalpipe/trunk/ejection{
 	dir = 8
 	},
+/obj/machinery/status_display{
+	pixel_y = -30
+	},
 /turf/simulated/floor/carpet{
 	dir = 10;
 	icon_state = "fblue6"
@@ -75998,6 +76066,9 @@
 "vNj" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 8
+	},
+/obj/machinery/status_display{
+	pixel_x = -32
 	},
 /turf/simulated/floor/carpet{
 	dir = 10;
@@ -79810,6 +79881,9 @@
 "wSo" = (
 /obj/disposalpipe/segment{
 	dir = 4
+	},
+/obj/machinery/status_display{
+	pixel_y = 30
 	},
 /turf/simulated/floor/purpleblack{
 	dir = 1
@@ -110331,7 +110405,7 @@ cPY
 dne
 hwA
 jUI
-czv
+tZm
 sGu
 quz
 quz
@@ -132673,7 +132747,7 @@ mke
 gNW
 mke
 mke
-kHx
+mTc
 wqJ
 paG
 lns
@@ -147770,7 +147844,7 @@ tpY
 sdZ
 vBz
 wLo
-iQK
+iQr
 qQq
 fyq
 qQq
