@@ -918,7 +918,6 @@
 		if (..())
 
 			return 1
-		//Todo maybe give lasting immunity if you stood in the chapel? Avoids harassing the same person over and over, but perhaps its fine.
 
 		if (ishuman(target))
 			if (istype(get_area(target), /area/station/chapel))	//Dont spam curses in the chapel.
@@ -1091,7 +1090,7 @@
 				W.playsound_local(W.loc, "sound/voice/wraith/wraithhaunt.ogg", 80, 0)
 				boutput(holder.owner, "<span class='alert'>That soul is OURS</span>")
 				boutput(H, "The voices in your heads are reaching a crescendo")
-				H.make_jittery(300)	//Todo, this doesnt work, need to fix it.
+				H.make_jittery(300)
 				sleep(4 SECOND)
 				H.changeStatus("stunned", 2 SECONDS)
 				H.emote("scream")
@@ -1168,7 +1167,7 @@
 			sleep(1.5 SECOND)
 			for(var/obj/decal/cleanable/C in found_decal_list)
 				step_towards(C,T)
-			sleep(1 SECOND)	//Todo add a cool effect here.
+			sleep(1 SECOND)
 			if (decal_count > 30)
 				var/mob/living/critter/exploder/strong/E = new /mob/living/critter/exploder/strong(T)
 				animate_portal_tele(E)
