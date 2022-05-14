@@ -283,11 +283,6 @@ var/f_color_selector_handler/F_Color_Selector
 					do_thing
 		*/
 
-		Z_LOG_DEBUG("Preload", "  /datum/generatorPrefab")
-		for(var/A in childrentypesof(/datum/generatorPrefab))
-			var/datum/generatorPrefab/R = new A()
-			miningModifiers.Add(R)
-
 #if ENABLE_ARTEMIS
 		Z_LOG_DEBUG("Preload", "  /datum/generatorPlanetPrefab")
 		for(var/A in childrentypesof(/datum/generatorPlanetPrefab))

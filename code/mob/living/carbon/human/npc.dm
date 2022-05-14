@@ -38,7 +38,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if(spawn_mutantrace)
 				src.set_mutantrace(text2path(spawn_mutantrace))
 				randomize_look(src, change_gender=1, change_blood=1, change_age=1, change_name=(!real_name), change_underwear=1, remove_effects=0)

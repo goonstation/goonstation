@@ -38,7 +38,7 @@ var/list/miningModifiers = list()
 		icon_state = "wall"
 		place()
 			if(src.z == planetZLevel)
-				src.ReplaceWith(/turf/simulated/wall/asteroid/dark, FALSE, TRUE, FALSE, TRUE)
+				src.ReplaceWith(/turf/simulated/wall/auto/asteroid/dark, FALSE, TRUE, FALSE, TRUE)
 			else
 				src.ReplaceWith(/turf/simulated/wall/asteroid, FALSE, TRUE, FALSE, TRUE)
 
