@@ -106,7 +106,7 @@
 	if(src.stat)
 		boutput(src, "You can't cast spells while incapacitated.")
 		return 0
-	if (src.bioHolder.HasEffect("arcane_power") == 2)
+	if(src.bioHolder.HasEffect("arcane_power") == 2)
 		return 1
 	if(spell && istype(src.gloves, /obj/item/clothing/gloves/ring/wizard))
 		var/obj/item/clothing/gloves/ring/wizard/WR = src.gloves
@@ -119,16 +119,24 @@
 	if(!istype(src.head, /obj/item/clothing/head/wizard))
 		boutput(src, "You don't feel strong enough without a magical hat.")
 		return 0
-	var/area/getarea = get_area(src)
-	if(spell.offensive && getarea.sanctuary)
-		boutput( src, "You cannot cast offensive spells in a sanctuary." )
-		return 0
-	if(getarea.name == "Chapel" || getarea.name == "Chapel Office")
+	var/area/A = get_area(src)
+	if(istype(A, /area/station/chapel))
 		boutput(src, "You cannot cast spells on hallowed ground!")// Maybe if the station were more corrupted...")
 		return 0
-	if (spell.offensive == 1 && src.bioHolder.HasEffect("arcane_shame"))
-		boutput(src, "You are too consumed with shame to cast that spell!")
-		return 0
+	if(spell)
+		if(spell.offensive && A.sanctuary)
+			boutput( src, "You cannot cast offensive spells in a sanctuary." )
+			return 0
+		if (spell.offensive && src.bioHolder.HasEffect("arcane_shame"))
+			boutput(src, "You are too consumed with shame to cast that spell!")
+			return 0
+	else
+		if(A.sanctuary)
+			boutput( src, "You cannot cast offensive spells in a sanctuary." )
+			return 0
+		if(src.bioHolder.HasEffect("arcane_shame"))
+			boutput(src, "You are too consumed with shame to cast that spell!")
+			return 0
 	return 1
 
 /mob/living/critter/wizard_castcheck(var/datum/targetable/spell/spell = null)

@@ -8,6 +8,7 @@
 
 ////////////////
 proc/make_cleanable(var/type,var/loc,var/list/viral_list)
+	RETURN_TYPE(/obj/decal/cleanable)
 	return new type(loc, viral_list)
 
 /obj/decal/cleanable
@@ -1139,7 +1140,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	slippery = 10
 	can_dry = 1
 	can_sample = 1
-	sample_reagent = "slime"
+	sample_reagent = "badgrease"
 	stain = "slimy"
 
 	Dry(var/time = rand(100,200))
@@ -1794,3 +1795,9 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 							elecflash(src)
 			sleep(0.1 SECONDS)
 
+/obj/decal/cleanable/sec_tape
+	name = "ripped up tape"
+	desc = "Some ripped up security tape."
+	icon = 'icons/obj/decals/cleanables.dmi'
+	icon_state = "sec_tape_1"
+	random_icon_states = list("sec_tape_1", "sec_tape_2")

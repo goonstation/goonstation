@@ -191,7 +191,7 @@ mob/new_player
 		if(href_list["observe"])
 			if(alert(src,"Are you sure you wish to observe? You will not be able to play this round!","Player Setup","Yes","No") == "Yes")
 				if(!src.client) return
-				var/mob/dead/observer/observer = new()
+				var/mob/dead/observer/observer = new(src)
 
 				src.spawning = 1
 
@@ -768,6 +768,7 @@ a.latejoin-card:hover {
 
 			if (ROLE_ARCFIEND)
 				traitor.special_role = ROLE_ARCFIEND
+				objective_set_path = /datum/objective_set/arcfiend
 				traitormob.make_arcfiend()
 			#ifdef RP_MODE
 				objective_set_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
@@ -893,7 +894,7 @@ a.latejoin-card:hover {
 
 		if(alert(src,"Are you sure you wish to observe? You will not be able to play this round!","Player Setup","Yes","No") == "Yes")
 			if(!src.client) return
-			var/mob/dead/observer/observer = new()
+			var/mob/dead/observer/observer = new(src)
 			if (src.client && src.client.using_antag_token) //ZeWaka: Fix for null.using_antag_token
 				src.client.using_antag_token = 0
 				src.show_text("Token refunded, your new total is [src.client.antag_tokens].", "red")

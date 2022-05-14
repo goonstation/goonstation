@@ -2341,6 +2341,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	base_walk_delay = 8
 	var/slime_chance = 22
 
+	New()
+		..()
+		AddComponent(/datum/component/floor_slime, "badgrease", slime_chance, 10)
+
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
@@ -2350,14 +2354,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		HH.name = "mouth"						// designation of the hand - purely for show
 		HH.limb_name = "mouth thing"			// name for the dummy holder
 		HH.can_hold_items = 0
-
-	Move(var/atom/NewLoc, direct)
-		.=..()
-		if (prob(src.slime_chance) && (istype(src.loc, /turf/simulated/floor) || istype(src.loc, /turf/unsimulated/floor)))
-			if (locate(/obj/decal/cleanable/slime) in src.loc)
-				return
-			else
-				make_cleanable(/obj/decal/cleanable/slime,src.loc)
 
 /* -------------------- Snail -------------------- */
 

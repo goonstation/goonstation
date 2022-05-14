@@ -13,6 +13,7 @@
 #define iswrestler(x) ((istype(x, /mob/living/carbon/human) || istype(x, /mob/living/critter)) && (x:get_ability_holder(/datum/abilityHolder/wrestler) != null || HAS_ATOM_PROPERTY(x, PROP_MOB_PASSIVE_WRESTLE)))
 #define iswraith(x) istype(x, /mob/wraith)
 #define ispoltergeist(x) istype(x, /mob/wraith/poltergeist)
+#define isarcfiend(x) (istype(x, /mob/living/carbon/human) && x:get_ability_holder(/datum/abilityHolder/arcfiend) != null)
 
 #define isblob(x) istype(x, /mob/living/intangible/blob_overmind)
 #define isspythief(x) (istype(x, /mob/living/carbon/human) && x:mind && x:mind:special_role == ROLE_SPY_THIEF)
@@ -26,4 +27,4 @@
 #define ismartian(x) (istype(x, /mob/living/critter/martian) || (istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/martian)))
 #define isprematureclone(x) (istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/premature_clone))
 #define iskudzuman(x) (istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/kudzu))
-#define isnukeopgunbot(x) (istype(x, /mob/living/critter/gunbot/syndicate) && x:mind && x:mind:special_role == ROLE_NUKEOP_GUNBOT)
+#define isnukeopgunbot(x) (istype(x, /mob/living/critter/robotic/gunbot/syndicate) && x:mind && x:mind:special_role == ROLE_NUKEOP_GUNBOT)

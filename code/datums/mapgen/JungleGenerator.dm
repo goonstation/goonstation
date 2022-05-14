@@ -84,7 +84,7 @@
 
 
 ///for the mapgen mountains, temp until we get something better
-/turf/simulated/wall/asteroid/mountain
+/turf/simulated/wall/auto/asteroid/mountain
 	name = "mountain"
 	desc = "a rocky mountain"
 	fullbright = 0

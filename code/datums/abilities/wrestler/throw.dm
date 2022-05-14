@@ -35,7 +35,7 @@
 		HH.set_loc(M.loc)
 		HH.set_dir(get_dir(HH, M))
 
-		SEND_SIGNAL(M, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
+		SEND_SIGNAL(M, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 
 		HH.changeStatus("stunned", 4 SECONDS)
 		M.visible_message("<span class='alert'><B>[M] starts spinning around with [HH]!</B></span>")
