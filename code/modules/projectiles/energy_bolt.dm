@@ -291,7 +291,7 @@ toxic - poisons
 		animate(transform=m2,time=5)
 
 
-		SPAWN_DBG(7 DECI SECONDS) qdel(src)
+		SPAWN(7 DECI SECONDS) qdel(src)
 
 /datum/projectile/energy_bolt/pulse
 	name = "pulse"

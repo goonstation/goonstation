@@ -96,6 +96,9 @@ toxic - poisons
 	color_green = 0
 	color_blue = 1
 
+/datum/projectile/laser/heavy/law_safe //subclass of heavy laser that can't damage the law rack - for AI turrets
+	name = "heavy laser"
+
 /datum/projectile/laser/asslaser // heh
 	name = "assault laser"
 	icon_state = "u_laser"
@@ -143,8 +146,8 @@ toxic - poisons
 		color_blue = 1
 
 		on_hit(atom/hit)
-			if (istype(hit, /turf/simulated/wall/asteroid))
-				var/turf/simulated/wall/asteroid/T = hit
+			if (istype(hit, /turf/simulated/wall/auto/asteroid))
+				var/turf/simulated/wall/auto/asteroid/T = hit
 				if (power <= 0)
 					return
 				T.damage_asteroid(0,allow_zero = 1)
@@ -434,8 +437,8 @@ toxic - poisons
 	color_blue = 0
 
 	on_hit(atom/hit)
-		if (istype(hit, /turf/simulated/wall/asteroid))
-			var/turf/simulated/wall/asteroid/T = hit
+		if (istype(hit, /turf/simulated/wall/auto/asteroid))
+			var/turf/simulated/wall/auto/asteroid/T = hit
 			if (power <= 0)
 				return
 			T.damage_asteroid(round(power / 5))
@@ -459,8 +462,8 @@ toxic - poisons
 	var/hit_human_sound = "sound/impact_sounds/Slimy_Splat_1.ogg"
 	on_hit(atom/hit)
 		//playsound(hit.loc, "sound/machines/engine_grump1.ogg", 45, 1)
-		if (istype(hit, /turf/simulated/wall/asteroid))
-			var/turf/simulated/wall/asteroid/T = hit
+		if (istype(hit, /turf/simulated/wall/auto/asteroid))
+			var/turf/simulated/wall/auto/asteroid/T = hit
 			if (power <= 0)
 				return
 			T.damage_asteroid(round(power / 7),1)
@@ -484,7 +487,7 @@ toxic - poisons
 		power = 5
 		dissipation_rate = 5
 		sname = "saw teeth"
-		shot_sound = 'sound/machines/chainsaw_green.ogg'
+		shot_sound = 'sound/machines/chainsaw.ogg'
 		hit_human_sound = "sound/impact_sounds/Flesh_Tear_1.ogg"
 		damtype = DAMAGE_CUT
 

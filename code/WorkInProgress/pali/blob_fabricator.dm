@@ -78,7 +78,7 @@ ABSTRACT_TYPE(/datum/manufacture/mechanics/blob)
 
 /obj/machinery/manufacturer/blob
 	name = "Blob Fabricator"
-	desc = "A manufacturing unit designed to create blobs. What."
+	desc = "A 3D printer-like machine that can construct a variety of items. This one is for producing blobs. What?."
 	icon_state = "fab-hangar"
 	icon_base = "hangar"
 	accept_blueprints = TRUE

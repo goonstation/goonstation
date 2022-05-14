@@ -6,6 +6,7 @@ RACK PARTS
 */
 
 /* -------------------- Furniture Parts-------------------- */
+ABSTRACT_TYPE(/obj/item/furniture_parts)
 /obj/item/furniture_parts
 	name = "furniture parts"
 	desc = "A collection of parts that can be used to make some kind of furniture."
@@ -16,11 +17,13 @@ RACK PARTS
 	stamina_damage = 35
 	stamina_cost = 22
 	stamina_crit_chance = 10
+	health = 8
 	var/furniture_type = /obj/table/auto
 	var/furniture_name = "table"
 	var/reinforced = 0
 	var/build_duration = 50
 	var/obj/contained_storage = null // used for desks' drawers atm, if src is deconstructed it'll dump its contents on the ground and be deleted
+	var/density_check = TRUE //! Do we want to prevent building on turfs with something dense there?
 
 	New(loc, obj/storage_thing)
 		..()
@@ -39,7 +42,7 @@ RACK PARTS
 		if (ispath(src.furniture_type))
 			newThing = new src.furniture_type(T, src.contained_storage ? src.contained_storage : null)
 		else
-			logTheThing("diary", user, null, "tries to build a piece of furniture from [src] ([src.type]) but its furniture_type is null and it is being deleted.", "station")
+			stack_trace("[user] tries to build a piece of furniture from [src] ([src.type]) but its furniture_type is null and it is being deleted.")
 			user.u_equip(src)
 			qdel(src)
 			return
@@ -82,8 +85,13 @@ RACK PARTS
 		else
 			return ..()
 
+	afterattack(atom/target, mob/user)
+		if (!isturf(target) || target:density)
+			return ..()
+		actions.start(new /datum/action/bar/icon/furniture_build(src, src.furniture_name, src.build_duration, target), user)
+
 	attack_self(mob/user as mob)
-		actions.start(new /datum/action/bar/icon/furniture_build(src, src.furniture_name, src.build_duration), user)
+		actions.start(new /datum/action/bar/icon/furniture_build(src, src.furniture_name, src.build_duration, get_turf(user)), user)
 
 	disposing()
 		if (src.contained_storage && length(src.contained_storage.contents))
@@ -96,9 +104,23 @@ RACK PARTS
 		..()
 
 /* ---------- Table Parts ---------- */
+#define TABLE_WARNING(user) boutput(user, "<span class='alert'>You can't build a table under yourself! You'll have to build it somewhere adjacent instead.</span>")
 /obj/item/furniture_parts/table
 	name = "table parts"
 	desc = "A collection of parts that can be used to make a table."
+	material_amt = 0.2
+
+	afterattack(atom/target, mob/user)
+		if (isturf(target) && target == get_turf(user))
+			TABLE_WARNING(user)
+			return
+		else
+			return ..()
+
+	attack_self(mob/user)
+		TABLE_WARNING(user)
+
+#undef TABLE_WARNING
 
 /obj/item/furniture_parts/table/desk
 	name = "desk parts"
@@ -185,6 +207,7 @@ RACK PARTS
 	mat_appearances_to_ignore = list("glass")
 	furniture_type = /obj/table/glass/auto
 	furniture_name = "glass table"
+	density_check = FALSE //FOR NOW
 	var/has_glass = 1
 	var/default_material = "glass"
 
@@ -270,6 +293,7 @@ RACK PARTS
 	stamina_crit_chance = 15
 	furniture_type = /obj/rack
 	furniture_name = "rack"
+	material_amt = 0.1
 
 //bookshelf part construction
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -520,19 +544,21 @@ RACK PARTS
 /datum/action/bar/icon/furniture_build
 	id = "furniture_build"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	duration = 50
+	duration = 5 SECONDS
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "working"
 
-	var/obj/item/furniture_parts/fparts
-	var/fname = "piece of furniture"
+	var/obj/item/furniture_parts/parts //! The parts we're building from
+	var/furniture_name = "piece of furniture" //! Displayed name for the thing we're building (for chat)
+	var/turf/target_turf = null //! The turf we're trying to build on
 
-	New(var/obj/item/furniture_parts/fp, var/fn, var/duration_i)
+	New(var/obj/item/furniture_parts/parts, var/name, var/duration, var/target_turf)
 		..()
-		fparts = fp
-		fname = fn
-		if (duration_i)
-			duration = duration_i
+		src.parts = parts
+		src.furniture_name = name
+		src.target_turf = target_turf
+		if (duration)
+			src.duration = duration
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
@@ -540,7 +566,7 @@ RACK PARTS
 
 	onUpdate()
 		..()
-		if (fparts == null || owner == null || get_dist(owner, fparts) > 1)
+		if (parts == null || owner == null || BOUNDS_DIST(owner, parts) > 0 || BOUNDS_DIST(owner, target_turf) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner
@@ -549,19 +575,39 @@ RACK PARTS
 			if(istype(source.equipped(), /obj/item/magtractor))
 				// check to see it's holding the right thing
 				var/obj/item/magtractor/M = source.equipped()
-				if(fparts != M.holding)
+				if(parts != M.holding)
 					interrupt(INTERRUPT_ALWAYS)
-			else if (fparts != source.equipped())
+			else if (parts != source.equipped())
 				interrupt(INTERRUPT_ALWAYS)
 
 	onStart()
 		..()
-		owner.visible_message("<span class='notice'>[owner] begins constructing \an [fname]!</span>")
+		if (parts.density_check)
+			if (length(target_turf.contents) > 50) // chosen fairly arbitrarily; prevent too much iteration. also how the fuck did you even click the turf
+				boutput(owner, "<span class='alert'>There's way too much stuff in the way to build there!</span>")
+
+			var/obj/blocker
+			for (var/obj/O in target_turf)
+				if (O.density)
+					blocker = O
+					break
+
+			if (blocker)
+				boutput(owner, "<span class='alert'>You try to build \a [furniture_name], but there's \a [blocker] in the way!</span>")
+				src.resumable = FALSE
+				interrupt(INTERRUPT_ALWAYS)
+				return
+		owner.visible_message("<span class='notice'>[owner] begins constructing \a [furniture_name]!</span>")
+
+	onResume(datum/action/bar/icon/furniture_build/attempted) //guaranteed since we only resume with the same type
+		..()
+		if (attempted.target_turf != src.target_turf)
+			interrupt(INTERRUPT_ALWAYS)
 
 	onEnd()
 		..()
-		owner.visible_message("<span class='notice'>[owner] constructs \an [fname]!</span>")
-		fparts.construct(owner)
+		owner.visible_message("<span class='notice'>[owner] constructs \a [furniture_name]!</span>")
+		parts.construct(owner, target_turf)
 
 /datum/action/bar/icon/furniture_deconstruct
 	id = "furniture_deconstruct"
@@ -591,7 +637,7 @@ RACK PARTS
 
 	onUpdate()
 		..()
-		if (the_furniture == null || the_tool == null || owner == null || get_dist(owner, the_furniture) > 1)
+		if (the_furniture == null || the_tool == null || owner == null || BOUNDS_DIST(owner, the_furniture) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner

@@ -17,7 +17,7 @@
 		src.artifact = AS
 		// The other three are normal for energy gun setup, so proceed as usual i guess
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.ArtifactSetup()
 			var/datum/artifact/A = src.artifact
 
@@ -99,6 +99,7 @@
 /datum/artifact/energygun
 	associated_object = /obj/item/gun/energy/artifact
 	type_name = "Energy Gun"
+	type_size = ARTIFACT_SIZE_MEDIUM
 	rarity_weight = 350
 	validtypes = list("ancient","eldritch","precursor")
 	react_elec = list(0.02,0,5)

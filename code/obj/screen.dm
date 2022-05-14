@@ -68,13 +68,13 @@
 		if (C && istype(C))
 			src.desc = src.getDesc(C)
 		if (ishuman(C))
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/icon/hud_style = hud_style_selection[get_hud_style(C)]
 				if (isicon(hud_style))
 					src.icon = hud_style
 
 	proc/getDesc(var/mob/living/C)
-		return "[C.stamina] / [C.stamina_max] Stamina. Regeneration rate : [(C.stamina_regen + GET_MOB_PROPERTY(C, PROP_STAMINA_REGEN_BONUS))]"
+		return "[C.stamina] / [C.stamina_max] Stamina. Regeneration rate : [(C.stamina_regen + GET_ATOM_PROPERTY(C, PROP_MOB_STAMINA_REGEN_BONUS))]"
 
 	proc/update_value(var/mob/living/C)
 		last_update = TIME

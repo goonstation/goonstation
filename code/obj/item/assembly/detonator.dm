@@ -245,7 +245,7 @@
 
 	if(force_dud)
 		var/turf/T = get_turf(src)
-		message_admins("A canister bomb would have detonated at at [T.loc.name] ([showCoords(T.x, T.y, T.z)]) but was forced to dud!")
+		message_admins("A canister bomb would have detonated at at [T.loc.name] ([log_loc(T)]) but was forced to dud!")
 		return
 
 	src.attachedTo.anchored = 0
@@ -279,8 +279,8 @@
 		return
 
 	var/turf/epicenter = get_turf(loc)
-	logTheThing("bombing", null, null, "A canister bomb detonates at [epicenter.loc.name] ([showCoords(epicenter.x, epicenter.y, epicenter.z)])")
-	message_admins("A canister bomb detonates at [epicenter.loc.name] ([showCoords(epicenter.x, epicenter.y, epicenter.z)])")
+	logTheThing("bombing", null, null, "A canister bomb detonates at [epicenter.loc.name] ([log_loc(epicenter)])")
+	message_admins("A canister bomb detonates at [epicenter.loc.name] ([log_loc(epicenter)])")
 	src.attachedTo.visible_message("<b><span class='alert'>The ruptured canister shatters from the pressure, and the hot gas ignites.</span></b>")
 
 	var/power = min(850 * (MIXTURE_PRESSURE(attachedTo.air_contents) + attachedTo.air_contents.temperature - 107000) / 233196469.0 + 200, 7000) //the second arg is the max explosion power
@@ -309,8 +309,8 @@
 	src.dispatch_event("prime")
 
 	command_alert("A canister bomb is primed in [get_area(src)] at coordinates (<b>X</b>: [src.master.x], <b>Y</b>: [src.master.y], <b>Z</b>: [src.master.z])! It is set to go off in [src.part_fs.time] seconds.")
-	logTheThing("bombing", usr, null, "primes a canister bomb at [get_area(src.master)] ([showCoords(src.master.x, src.master.y, src.master.z)])")
-	message_admins("[key_name(usr)] primes a canister bomb at [get_area(src.master)] ([showCoords(src.master.x, src.master.y, src.master.z)])")
+	logTheThing("bombing", usr, null, "primes a canister bomb at [get_area(src.master)] ([log_loc(src.master)])")
+	message_admins("[key_name(usr)] primes a canister bomb at [get_area(src.master)] ([log_loc(src.master)])")
 	src.attachedTo.visible_message("<B><font color=#FF0000>The detonator's priming process initiates. Its timer shows [src.part_fs.time] seconds.</font></B>")
 
 // Legacy.

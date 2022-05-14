@@ -198,7 +198,7 @@
 	..()
 	if(usr.restrained() || usr.lying)
 		return
-	if ((((get_dist(src, usr) <= 1 || usr.telekinesis == 1) || isAI(usr)) && istype(src.loc, /turf)))
+	if ((((BOUNDS_DIST(src, usr) == 0 || usr.telekinesis == 1) || isAI(usr)) && istype(src.loc, /turf)))
 		src.add_dialog(usr)
 		if (href_list["close"])
 			usr << browse(null, "window=pipefilter;")
@@ -226,7 +226,7 @@
 		status &= ~NOPOWER
 	else
 		status |= NOPOWER
-	SPAWN_DBG(rand(1,15))	//so all the filters don't come on at once
+	SPAWN(rand(1,15))	//so all the filters don't come on at once
 		UpdateIcon()
 
 /obj/machinery/pipefilter/UpdateIcon()

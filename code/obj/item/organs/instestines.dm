@@ -19,20 +19,20 @@
 	on_transplant(mob/M)
 		. = ..()
 		if(!broken)
-			APPLY_MOB_PROPERTY(M, PROP_DIGESTION_EFFICIENCY, src, digestion_efficiency)
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_DIGESTION_EFFICIENCY, src, digestion_efficiency)
 
 	on_removal()
-		REMOVE_MOB_PROPERTY(src.donor, PROP_DIGESTION_EFFICIENCY, src)
+		REMOVE_ATOM_PROPERTY(src.donor, PROP_MOB_DIGESTION_EFFICIENCY, src)
 		. = ..()
 
 	unbreakme()
 		..()
 		if(..() && donor)
-			APPLY_MOB_PROPERTY(src.donor, PROP_DIGESTION_EFFICIENCY, src, digestion_efficiency)
+			APPLY_ATOM_PROPERTY(src.donor, PROP_MOB_DIGESTION_EFFICIENCY, src, digestion_efficiency)
 
 	breakme()
 		if(..() && donor)
-			REMOVE_MOB_PROPERTY(src.donor, PROP_DIGESTION_EFFICIENCY, src)
+			REMOVE_ATOM_PROPERTY(src.donor, PROP_MOB_DIGESTION_EFFICIENCY, src)
 
 	disposing()
 		if (holder)

@@ -57,7 +57,7 @@
 		playsound(loc, 'sound/items/gavel.ogg', 75, 1)
 		user.visible_message("<span class='alert'><b> Sweet Jesus! [user] is bashing their head in with [name]!</b></span>")
 		user.TakeDamage("head", 150, 0)
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -121,7 +121,7 @@
 	name = "gooncode hard disk drive"
 	desc = "The prized, sought after spaghetti and pooballs code, and the only known cure to apiphobia. Conveniently on a fancy hard drive that connects to PDAs. \
 	The most stealable thing in the universe."
-	icon = 'icons/obj/cloning.dmi' // sprite is an altered harddisk
+	icon = 'icons/obj/items/disks.dmi' // sprite is an altered harddisk
 	icon_state = "gooncode"
 	flags = SUPPRESSATTACK
 	throwforce = 3

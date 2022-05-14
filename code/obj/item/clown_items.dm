@@ -78,7 +78,7 @@ VUVUZELA
 		icon_state = "crushed-5"
 		playsound(user.loc, "sound/items/can_open.ogg", 50, 0)
 
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			// Wow your joke sucks
 			if(prob(5))
 				playsound(user.loc,"sound/misc/laughter/boo.ogg",50,0)

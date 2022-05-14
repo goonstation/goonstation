@@ -30,7 +30,7 @@
 		src.Attackhand()
 
 	Bumped(M as mob|obj)
-		SPAWN_DBG( 0 )
+		SPAWN( 0 )
 			if (src.icon_state == "tele1")
 				teleport(M)
 				use_power(5000)

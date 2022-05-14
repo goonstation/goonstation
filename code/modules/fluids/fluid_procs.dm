@@ -122,8 +122,7 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 
 	if (!airborne)
 		var/turf/simulated/floor/T = src
-		if (T.messy <= 0) return
-		if (istype(T))
+		if (istype(T) && T.messy > 0)
 			var/found_cleanable = 0
 			for (var/obj/decal/cleanable/C in T)
 				if (istype(T) && !T.cleanable_fluid_react(C, 1)) // Some cleanables need special treatment
@@ -131,6 +130,8 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 					break
 			if (found_cleanable)
 				T.cleanable_fluid_react(0,1)
+
+	F.trigger_fluid_enter()
 
 /turf/proc/fluid_react_single(var/reagent_name, var/react_volume, var/airborne = 0) //same as the above, but using a reagent_id instead of a datum
 	if (react_volume <= 0) return
@@ -189,8 +190,7 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 
 	if (!airborne)
 		var/turf/simulated/floor/T = src
-		if (T.messy <= 0) return
-		if (istype(T))
+		if (istype(T) && T.messy > 0)
 			var/found_cleanable = 0
 			for (var/obj/decal/cleanable/C in T)
 				if (istype(T) && !T.cleanable_fluid_react(C, 1))
@@ -198,6 +198,8 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 					break
 			if (found_cleanable)
 				T.cleanable_fluid_react(0,1)
+
+	F.trigger_fluid_enter()
 
 
 /turf/proc/react_all_cleanables() //Same procedure called in fluid_react and fluid_react_single. copypasted cause i dont wanna proc call overhead up in hea

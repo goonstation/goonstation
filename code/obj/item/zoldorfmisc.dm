@@ -154,7 +154,7 @@
 	dropped(mob/user as mob) //volatility 100
 		..()
 
-		SPAWN_DBG(0.1 SECONDS)
+		SPAWN(0.1 SECONDS)
 			if(src.loc != user)
 				if(src.inuse)
 					src.inuse = 0
@@ -163,7 +163,7 @@
 	relaymove(var/mob/user, direction)
 		if(can_move&&(!istype(src.loc,/obj)&&(!istype(src.loc,/mob))))
 			can_move = 0
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				can_move = 1
 			step(src,direction)
 		return
@@ -280,7 +280,7 @@
 				redraw = 0
 				reference = src
 			if("Traitor")
-				var/list/buylist = typesof(/datum/syndicate_buylist)
+				var/list/buylist = concrete_typesof(/datum/syndicate_buylist)
 				var/datum/syndicate_buylist/thing = pick(buylist)
 				var/datum/syndicate_buylist/thing2 = new thing
 				if(thing2.item != null)
@@ -294,6 +294,7 @@
 				deck.inuse = 0
 				user.u_equip(deck)
 				deck.set_loc(get_turf(user))
+				logTheThing("combat", user, null, "was gibbed by Zoldorf's crusher card at [log_loc(user)].")
 				user.gib(1)
 			if("Geneticist")
 				var/list/effectpool = list("xray","hulk","breathless","thermal_resist","regenerator","detox")
@@ -426,6 +427,7 @@
 					return
 				if(isrestrictedz(user.z))
 					boutput(user, "<span class='alert'>You are suddenly zapped apart!</span>")
+					logTheThing("user", user, null, "was gibbed for trying to use Zoldorf's presto scroll at [log_loc(user)].")
 					user.gib()
 
 				var/list/randomturfs = new/list()

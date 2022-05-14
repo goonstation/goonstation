@@ -157,7 +157,7 @@
 
 		//This second bit is for the in-round player equipping (when cloned)
 		else if (istype(H))
-			SPAWN_DBG(0)
+			SPAWN(0)
 				H.JobEquipSpawned(H.mind.assigned_role)
 
 		if (!ishuman(H))
@@ -169,7 +169,7 @@
 		boutput(H, "You're in the [name] faction!")
 		// bestow_objective(player,/datum/objective/battle_royale/win)
 		if (show_popup)
-			SHOW_POD_WARS(H)
+			H.show_antag_popup("podwars")
 		if (istype(mode))
 			mode.stats_manager?.add_player(H.mind, H.real_name, team_num, (H.mind == commander ? "Commander" : "Pilot"))
 

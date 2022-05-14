@@ -6,6 +6,7 @@
 			return ..()
 		var/environment_heat_capacity = HEAT_CAPACITY(environment)
 		var/loc_temp = T0C
+		var/mult = get_multiplier()
 		if (istype(owner.loc, /turf/space))
 			var/turf/space/S = owner.loc
 			environment_heat_capacity = S.heat_capacity
@@ -55,7 +56,7 @@
 			var/scaling_factor = max((owner.base_body_temp - T0C)*6,1)
 			var/chance = round((diff/scaling_factor)*100)
 			chance = clamp(chance,0,100)
-			if(prob(percentmult(chance, get_multiplier())))
+			if(probmult(chance))
 				owner.changeStatus("shivering", lerp(chance/100, 1, 0.25) * 6 SECONDS)
 		else
 			owner.delStatus("shivering")

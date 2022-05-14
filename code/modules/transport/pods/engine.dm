@@ -22,7 +22,7 @@
 		return
 	////Warp requires recharge time
 	ready()
-		SPAWN_DBG(warprecharge)
+		SPAWN(warprecharge)
 			ready = 1
 			wormholeQueued = 0
 
@@ -145,7 +145,7 @@
 	switch(direction)
 		if(NORTH)
 			A.pixel_y = -dist*32
-		if(SOUTH) 
+		if(SOUTH)
 			A.pixel_y = dist*32
 		if(EAST)
 			A.pixel_x = -dist*32

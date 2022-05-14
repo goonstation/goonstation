@@ -53,7 +53,7 @@
 			if(bodypart)
 				parts_to_remove += part_loc
 		boutput(H, "<span class='alert'>Caution! Remain stationary!</span>")
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			playsound(H.loc, "sound/items/ocular_implanter_start.ogg", 50, 0, -1)
 			SETUP_GENERIC_ACTIONBAR(H, src, 10 SECONDS, /obj/item/device/ocular_implanter/proc/end_replace_eye, list(target, H), src.icon, src.icon_state,"[src] finishes replacing your eye.", null)
 
@@ -77,7 +77,7 @@
 			implants_available = implants_available ^ EYE_LEFT
 		boutput(H, "<span class='alert'><b>[pick("IT HURTS!", "OH GOD!", "JESUS FUCK!")]</b></span>")
 		bleed(H, 5, 5)
-		SPAWN_DBG(5 DECI SECOND)
+		SPAWN(5 DECI SECOND)
 			H.emote("scream")
 		if (implants_available & EYE_RIGHT)
 			icon_state = "ocular_implanter-R"

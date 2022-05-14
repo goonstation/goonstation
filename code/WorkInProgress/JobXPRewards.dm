@@ -12,7 +12,7 @@ mob/verb/checkrewards()
 	return
 
 /proc/showJobRewards(var/job) //Pass in job instead
-	SPAWN_DBG(0)
+	SPAWN(0)
 		var/mob/M = usr
 		if(job)
 			if(!winexists(M, "winjobrewards_[M.ckey]"))
@@ -323,13 +323,22 @@ mob/verb/checkrewards()
 		boutput(C.mob, "<span class='emote'>A pamphlet flutters out.</span>")
 		return
 
-/datum/jobXpReward/head_of_security_LG/old
+/datum/jobXpReward/head_of_security_LG_old
 	name = "The Antique Lawbringer"
 	desc = "Gain access to a voice activated weapon of the past-future-past by sacrificing your gun of the future-past. I.E. The Lawbringer."
-	sacrifice_path = /obj/item/gun/energy/lawbringer
-	reward_path = /obj/item/gun/energy/lawbringer/old
-	sacrifice_name = "Lawbringer"
 	required_levels = list("Head of Security"=5)
+	claimable = 1
+	claimPerRound = 1
+
+	activate(var/client/C)
+		var/obj/item/gun/energy/lawbringer/I = C.mob.find_type_in_hand(/obj/item/gun/energy/lawbringer)
+
+		if (I)
+			I.make_antique()
+			boutput(C.mob, "Your Lawbringer becomes a little more antique!")
+		else
+			boutput(C.mob, "You need to be holding your Lawbringer in order to claim this reward.")
+			src.claimedNumbers[usr.key] --
 
 //Captain
 
@@ -595,6 +604,25 @@ mob/verb/checkrewards()
 		I.set_loc(get_turf(C.mob))
 		C.mob.put_in_hand_or_drop(I)
 		boutput(C.mob, "You look away for a second and the shaker turns into golden from top to bottom!")
+
+/////////////Chef////////////////
+
+/datum/jobXpReward/chefitamae
+	name = "Sushi Chef Outfit"
+	desc = "Om nom nom mmmm I love sushi"
+	required_levels = list("Chef"=0)
+	claimable = 1
+	claimPerRound = 1
+
+	activate(var/client/C)
+		var/obj/item/clothing/head/itamaehat/H = new/obj/item/clothing/head/itamaehat(get_turf(C.mob))
+		var/obj/item/clothing/under/misc/itamae/U = new/obj/item/clothing/under/misc/itamae(get_turf(C.mob))
+		H.set_loc(get_turf(C.mob))
+		U.set_loc(get_turf(C.mob))
+		C.mob.put_in_hand(H)
+		C.mob.put_in_hand(U)
+		boutput(C.mob, "You look down and notice that a whole sushi chef outfit has materialized in your hands! What on earth?")
+		return
 
 /////////////Mime////////////////
 

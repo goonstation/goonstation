@@ -129,7 +129,7 @@
 //			waldo.current << browse('waldo.jpg',"window=some;titlebar=1;size=550x400;can_minimize=0;can_resize=0")
 
 
-	SPAWN_DBG (rand(waittime_l, waittime_h))
+	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
 
 /datum/game_mode/waldo/proc/equip_waldo(mob/living/carbon/human/waldo_mob)

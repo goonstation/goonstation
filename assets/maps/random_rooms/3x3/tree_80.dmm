@@ -1,0 +1,26 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/floor/grass/leafy,
+/area/dmm_suite/clear_area)
+"S" = (
+/obj/tree1{
+	pixel_x = -27
+	},
+/turf/simulated/floor/grass/leafy,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+S
+a
+"}
+(3,1,1) = {"
+a
+a
+a
+"}

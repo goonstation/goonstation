@@ -159,7 +159,7 @@
 				else
 					src.lockdown = 0
 				var/area/guardthis = input(usr, "Please type 'Here' or the name of an area. Capitalization matters!", "GuardTron 0.0.1a", "Here") as text
-				if(IN_RANGE(get_turf(usr), get_turf(src.master), 1))
+				if((BOUNDS_DIST(get_turf(usr), get_turf(src.master)) == 0))
 					if(guardthis == "Here")
 						guardthis = get_area(get_turf(src.master))
 					else if(guardthis in stationAreas)
@@ -181,7 +181,7 @@
 						if (!botlist.len)
 							PDA.updateSelfDialog()
 							return
-						SPAWN_DBG(0)
+						SPAWN(0)
 							// yeah its cheating, but holy heck is it laggy to send a zillion signals via PDA
 							var/list/bots = list()
 							for(var/obj/machinery/bot/secbot/bot in src.botlist)
@@ -212,7 +212,7 @@
 				if (!botlist.len)
 					PDA.updateSelfDialog()
 					return
-				SPAWN_DBG(0)
+				SPAWN(0)
 					var/list/bots = list()
 					// again, yeah, cheating, but let's just pretend it isnt
 					for(var/obj/machinery/bot/secbot/bot in src.botlist)

@@ -45,7 +45,7 @@ TODO: Enforce ping rate limit here as well in case someone futzes with the javas
 
 		onclose(user, "telescope", src)
 
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			callJsFunc(user, "setRef", list("\ref[src]")) //This is shit but without it, it calls the JS before the window is open and doesn't work. (Is this still true?!?!)
 			rebuildEventList(user)
 			callJsFunc(using, "showFooterMsg", list("Left-Click: Ping , Right-Click: Clear map"))

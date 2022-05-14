@@ -78,7 +78,7 @@
 
 		working = 1
 
-		SPAWN_DBG(5 SECONDS)
+		SPAWN(5 SECONDS)
 			for(var/turf/simulated/T in maintaining_turfs)
 				if(!T.air && T.density)
 					continue
@@ -126,7 +126,7 @@
 		working = 1
 		maintaining_bridge = 1
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			path.Cut()
 
 			var/turf/current = src.loc
@@ -208,7 +208,7 @@
 		maintaining_bridge = 0
 		playsound(src.loc, "sound/machines/warning-buzzer.ogg", 50, 1)
 
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 			var/list/path_reverse = reverse_list(path)
 
 			for(var/obj/light in src.my_lights)
@@ -283,7 +283,7 @@
 		..()
 		update_status()
 		if (starts_established && length(links))
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				do_initial_extend()
 
 	disposing()
@@ -305,7 +305,7 @@
 		..()
 		update_status()
 		if (starts_established && length(links))
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				do_initial_extend()
 		return
 
@@ -421,21 +421,21 @@
 				boutput(usr, "<span class='alert'>Access denied.</span>")
 				return
 			if (src.establish_bridge())
-				logTheThing("station", usr, null, "extended the airbridge at [usr.loc.loc] ([showCoords(usr.x, usr.y, usr.z)])")
+				logTheThing("station", usr, null, "extended the airbridge at [usr.loc.loc] ([log_loc(usr)])")
 
 		else if (href_list["remove"])
 			if (!(src.allowed(usr)))
 				boutput(usr, "<span class='alert'>Access denied.</span>")
 				return
 			if (src.remove_bridge())
-				logTheThing("station", usr, null, "retracted the airbridge at [usr.loc.loc] ([showCoords(usr.x, usr.y, usr.z)])")
+				logTheThing("station", usr, null, "retracted the airbridge at [usr.loc.loc] ([log_loc(usr)])")
 
 		else if (href_list["air"])
 			if (!(src.allowed(usr)))
 				boutput(usr, "<span class='alert'>Access denied.</span>")
 				return
 			if (src.pressurize())
-				logTheThing("station", usr, null, "pressurized the airbridge at [usr.loc.loc] ([showCoords(usr.x, usr.y, usr.z)])")
+				logTheThing("station", usr, null, "pressurized the airbridge at [usr.loc.loc] ([log_loc(usr)])")
 
 		update_status()
 		src.updateDialog()
@@ -451,7 +451,7 @@
 			status &= ~NOPOWER
 			light.enable()
 		else
-			SPAWN_DBG(rand(0, 15))
+			SPAWN(rand(0, 15))
 				icon_state = "airbroff"
 				status |= NOPOWER
 				light.disable()

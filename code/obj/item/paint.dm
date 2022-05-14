@@ -224,7 +224,7 @@
 						src.desc = "Damaged beyond all repair, this will never dispense paint ever again."
 
 						flick("vendbreak", src)
-						SPAWN_DBG(0.8 SECONDS)
+						SPAWN(0.8 SECONDS)
 							src.icon_state = "fallen"
 							sleep(7 SECONDS)
 							playsound(src.loc, "sound/effects/Explosion2.ogg", 100, 1)
@@ -268,7 +268,7 @@ var/list/cached_colors = new/list()
 		generate_icon()
 
 	afterattack(atom/target as mob|obj|turf, mob/user as mob)
-		if(target == loc || get_dist(src,target) > 1 || istype(target,/obj/machinery/vending/paint) ) return
+		if(target == loc || BOUNDS_DIST(src, target) > 0 || istype(target,/obj/machinery/vending/paint) ) return
 
 		if(!uses)
 			boutput(user, "It's empty.")
@@ -321,7 +321,7 @@ var/list/cached_colors = new/list()
 	uses = 5
 	New()
 		..()
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			var/colorname = "Weird"
 			switch(rand(1,6))
 				if(1)
@@ -386,7 +386,7 @@ var/list/cached_colors = new/list()
 		currentpattern = 1
 
 	afterattack(atom/target as mob|obj|turf, mob/user as mob)
-		if(target == loc || get_dist(src,target) > 1 || istype(target,/obj/machinery/vending/paint) ) return
+		if(target == loc || BOUNDS_DIST(src, target) > 0 || istype(target,/obj/machinery/vending/paint) ) return
 
 		if(!uses)
 			boutput(user, "It's empty.")

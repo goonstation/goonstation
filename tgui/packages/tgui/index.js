@@ -9,6 +9,7 @@ import './styles/main.scss';
 // import './styles/themes/abductor.scss';
 // import './styles/themes/cardtable.scss';
 import './styles/themes/genetek.scss';
+import './styles/themes/genetek-disabled.scss';
 // import './styles/themes/hackerman.scss';
 // import './styles/themes/malfunction.scss';
 // import './styles/themes/neutral.scss';

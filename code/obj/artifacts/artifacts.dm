@@ -18,7 +18,7 @@
 		if (forceartiorigin) AS.validtypes = list("[forceartiorigin]")
 		src.artifact = AS
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.ArtifactSetup()
 
 	disposing()
@@ -125,7 +125,7 @@
 			AS.validtypes = list("[forceartiorigin]")
 		src.artifact = AS
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.ArtifactSetup()
 
 	disposing()
@@ -230,7 +230,7 @@
 			AS.validtypes = list("[forceartiorigin]")
 		src.artifact = AS
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.ArtifactSetup()
 
 	disposing()
@@ -280,7 +280,7 @@
 			playsound(T,"sound/effects/teleport.ogg",50,1)
 			var/obj/decal/teleport_swirl/swirl = new /obj/decal/teleport_swirl
 			swirl.set_loc(T)
-			SPAWN_DBG(1.5 SECONDS)
+			SPAWN(1.5 SECONDS)
 				qdel(swirl)
 		Artifact_Spawn(T,forceartiorigin)
 		qdel(src)

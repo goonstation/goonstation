@@ -217,7 +217,7 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 				var/change = text2num_safe(href_list["adj_pressure"])
 				pressure_setting = clamp(pressure_setting + change, 0, 50*ONE_ATMOSPHERE)
 
-			SPAWN_DBG(0.7 SECONDS)
+			SPAWN(0.7 SECONDS)
 				attack_hand(usr)
 
 	fuel_injection
@@ -595,7 +595,7 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 
 			else if (href_list["pressure_set"])
 				var/change = input(usr,"Target Pressure (0 - [MAX_PRESSURE]):", "Enter target pressure", pressure) as num
-				if ((get_dist(src, usr) > 1 && !issilicon(usr)) || !isliving(usr) || iswraith(usr) || isintangible(usr))
+				if ((BOUNDS_DIST(src, usr) > 0 && !issilicon(usr)) || !isliving(usr) || iswraith(usr) || isintangible(usr))
 					return 0
 				if (is_incapacitated(usr) || usr.restrained())
 					return 0

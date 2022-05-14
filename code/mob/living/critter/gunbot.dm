@@ -1,4 +1,4 @@
-/mob/living/critter/gunbot
+/mob/living/critter/robotic/gunbot
 	name = "robot"
 	real_name = "robot"
 	desc = "A Security Robot, something seems a bit off."
@@ -21,7 +21,7 @@
 
 	New()
 		. = ..()
-		APPLY_MOB_PROPERTY(src, PROP_THERMALVISION, src)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_THERMALVISION, src)
 		var/image/eye_light = image(icon, "[eye_light_icon]")
 		eye_light.plane = PLANE_SELFILLUM
 		src.UpdateOverlays(eye_light, "eye_light")
@@ -135,7 +135,7 @@
 					else
 						return ..()
 
-/mob/living/critter/gunbot/syndicate
+/mob/living/critter/robotic/gunbot/syndicate
 	name = "Syndicate robot"
 	real_name = "Syndicate robot"
 	desc = "A retrofitted Syndicate gunbot, it seems angry."

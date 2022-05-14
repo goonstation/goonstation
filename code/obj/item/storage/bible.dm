@@ -233,7 +233,7 @@ var/global/list/bible_contents = list()
 		src.layer = initial(src.layer)
 		src.set_loc(user.loc)
 		var/list/gibz = user.gib(0, 1)
-		SPAWN_DBG(3 SECONDS)//this code is awful lol.
+		SPAWN(3 SECONDS)//this code is awful lol.
 			for( var/i = 1, i <= 500, i++ )
 				for( var/obj/gib in gibz )
 					if(!gib.loc) continue
@@ -253,7 +253,7 @@ var/global/list/bible_contents = list()
 		src.layer = initial(src.layer)
 		src.set_loc(user.loc)
 		var/list/gibz = user.gib(0, 1)
-		SPAWN_DBG(3 SECONDS)//this code is awful lol.
+		SPAWN(3 SECONDS)//this code is awful lol.
 			for( var/i = 1, i <= 50, i++ )
 				for( var/obj/gib in gibz )
 					step_to( gib, src )

@@ -78,12 +78,13 @@
 			// idk about the above. walls still use [src]=1 ...
 			// the bottom is much faster in my testing and works just as well
 			// maybe should be converted to this everywhere?
-			worldgenCandidates += src //Adding self to possible worldgen turfs
+			if(src.z == Z_LEVEL_STATION || src.z == Z_LEVEL_MINING)
+				worldgenCandidates += src //Adding self to possible worldgen turfs
 
 		if(current_state > GAME_STATE_WORLD_INIT)
 			for(var/dir in cardinal)
 				var/turf/T = get_step(src, dir)
-				if(T?.ocean_canpass() && !istype(T, /turf/space))
+				if(istype(T) && T.ocean_canpass() && !istype(T, /turf/space))
 					src.tilenotify(T)
 					break
 
@@ -92,6 +93,12 @@
 		#else
 		src.name = ocean_name
 		#endif
+
+		if(ocean_color)
+			var/fluid_color = hex_to_rgb_list(ocean_color)
+			light_r = fluid_color[1] / 255
+			light_g = fluid_color[2] / 255
+			light_b = fluid_color[3] / 255
 
 		//let's replicate old behaivor
 		if (generateLight)
@@ -174,6 +181,7 @@
 				//mbc : bleh init() happens BFORRE this, most likely
 				P.initialize()
 
+		#ifndef UPSCALED_MAP
 		if(spawningFlags & SPAWN_FISH) //can spawn bad fishy
 			if (src.z == 5 && prob(1) && prob(2))
 				new /obj/critter/gunbot/drone/buzzdrone/fish(src)
@@ -193,6 +201,7 @@
 					O = new /obj/naval_mine/rusted(src)
 				if (O)
 					O.initialize()
+		#endif
 
 		if(spawningFlags & SPAWN_TRILOBITE)
 			if (prob(17))
@@ -254,7 +263,7 @@
 	attackby(obj/item/C as obj, mob/user as mob, params) //i'm sorry
 		if(istype(C, /obj/item/cable_coil))
 			var/obj/item/cable_coil/coil = C
-			coil.turf_place(src, user)
+			coil.turf_place(src, get_turf(user), user)
 		..()
 
 
@@ -306,6 +315,7 @@
 				L+=T
 
 	Entered(var/atom/movable/AM)
+		. = ..()
 		if (istype(AM,/mob/dead) || istype(AM,/mob/wraith) || istype(AM,/mob/living/intangible) || istype(AM, /obj/lattice) || istype(AM, /obj/cable/reinforced) || istype(AM,/obj/torpedo_targeter) || istype(AM,/obj/overlay) || istype (AM, /obj/arrival_missile) || istype(AM, /obj/sea_ladder_deployed))
 			return
 		if (locate(/obj/lattice) in src)
@@ -315,7 +325,7 @@
 		try_build_turf_list()
 
 		if (length(L))
-			SPAWN_DBG(0.3 SECONDS)//you can 'jump' over a hole by running real fast or being thrown!!
+			SPAWN(0.3 SECONDS)//you can 'jump' over a hole by running real fast or being thrown!!
 				if (istype(AM.loc, /turf/space/fluid/warp_z5))
 					visible_message("<span class='alert'>[AM] falls down [src]!</span>")
 					if (ismob(AM))
@@ -535,7 +545,7 @@
 					active = 1
 					C.visible_message("<span class='alert'>The elevator begins to move!</span>")
 					playsound(C.loc, "sound/machines/elevator_move.ogg", 100, 0)
-				SPAWN_DBG(5 SECONDS)
+				SPAWN(5 SECONDS)
 					call_shuttle()
 
 		if (href_list["close"])
@@ -558,7 +568,7 @@
 		var/area/start_location = locate(/area/shuttle/sea_elevator/upper)
 		var/area/end_location = locate(/area/shuttle/sea_elevator/lower)
 		for(var/mob/M in end_location) // oh dear, stay behind the yellow line kids
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				random_brute_damage(M, 30)
 				M.changeStatus("weakened", 5 SECONDS)
 				M.emote("scream")

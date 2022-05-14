@@ -43,7 +43,7 @@
 		return
 	last_cast = world.time + cooldown
 	holder.updateButtons()
-	SPAWN_DBG(cooldown + 5)
+	SPAWN(cooldown + 5)
 		holder.updateButtons()
 
 /////////////////////////////////////////
@@ -191,7 +191,7 @@
 		sleep(1.5 SECONDS)
 		for(var/obj/machinery/door/airlock/A in targets)
 			// open the door
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				A.open()
 	else
 		boutput(holder.owner, "<span class='alert'>No targets in range that can be opened via radio.</span>")

@@ -69,8 +69,7 @@
 		return
 	var/list/targets = list()
 	var/list/wtfbyond = list()
-	var/turf/OT = get_turf(src)
-	var/list/paths = get_path_to(OT, landmarks[LANDMARK_GPS_WAYPOINT], max_distance=120, id=ID, skip_first=FALSE, cardinal_only=FALSE)
+	var/list/paths = get_path_to(src, landmarks[LANDMARK_GPS_WAYPOINT], max_distance=120, id=ID, skip_first=FALSE, cardinal_only=FALSE)
 
 	for(var/turf/wp in paths)
 		var/path = paths[wp]
@@ -93,7 +92,7 @@
 			var/max_trav
 			boutput( usr, "Area ([area.name]) not found in 300 or not accessable" )
 			for(max_trav=300; max_trav<500;max_trav=max_trav+100)
-				path = get_path_to(OT, get_turf(wp), max_distance=max_trav, id=ID, skip_first=FALSE)
+				path = get_path_to(src, get_turf(wp), max_distance=max_trav, id=ID, skip_first=FALSE)
 				if(path)
 					boutput( usr, "Area ([area.name]) found in [length(path)] with maxtraverse of [max_trav]" )
 					break
@@ -132,7 +131,7 @@
 			boutput( usr, "Could not locate a path! Try moving around, or if its an area you don't have access to, get more access!" )
 		return
 	client.GPS_Images = list()
-	SPAWN_DBG(0)
+	SPAWN(0)
 		var/list/path = client.GPS_Path
 		for(var/i = 2, i < path.len, i++)
 			if(!client.GPS_Path) break
@@ -271,15 +270,15 @@ world/proc/updateCameraVisibility()
 		t.cameraTotal++
 
 /turf/MouseEntered()
-	if(istype(usr,/mob/dead/aieye))//todo, make this a var for cheapernesseress?
+	if(istype(usr,/mob/living/intangible/aieye))//todo, make this a var for cheapernesseress?
 		if(aiImage)
 			usr.client.show_popup_menus = !!cameraTotal
 
 /client/Click(thing)
-	if(isturf(thing) && istype(src.mob,/mob/dead/aieye) && !thing:cameraTotal)
+	if(isturf(thing) && istype(src.mob,/mob/living/intangible/aieye) && !thing:cameraTotal)
 		return
 	return ..()
-/mob/dead/aieye
+/mob/living/intangible/aieye
 	name = "AI Eyeball"
 	icon = 'icons/mob/ai.dmi'
 	icon_state = "a-eye"

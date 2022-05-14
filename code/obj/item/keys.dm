@@ -119,7 +119,7 @@
 	New()
 		..()
 		. = rand(5, 20)
-		SPAWN_DBG(rand(1,10))
+		SPAWN(rand(1,10))
 			animate(src, pixel_y = 32, transform = matrix(., MATRIX_ROTATE), time = 20, loop = -1, easing = SINE_EASING)
 			animate(pixel_y = 0, transform = matrix(. * (-1), MATRIX_ROTATE), time = 20, loop = -1, easing = SINE_EASING)
 

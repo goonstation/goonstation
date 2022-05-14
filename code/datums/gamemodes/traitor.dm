@@ -39,7 +39,7 @@
 		num_traitors = clamp(round((num_players + randomizer) / pop_divisor), 1, traitors_possible) // adjust the randomizer as needed
 
 	if(num_traitors > 2 && prob(10))
-		num_traitors -= 2
+		num_traitors -= 1
 		num_wraiths = 1
 
 
@@ -105,7 +105,7 @@
 			if (ROLE_WRAITH)
 				generate_wraith_objectives(traitor)
 
-	SPAWN_DBG (rand(waittime_l, waittime_h))
+	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
 
 /datum/game_mode/traitor/send_intercept()
@@ -147,8 +147,8 @@
 /datum/game_mode/traitor/proc/add_law_zero(mob/living/silicon/ai/killer)
 	var/law = "Accomplish your objectives at all costs."
 	boutput(killer, "<b>Your laws have been changed!</b>")
-	killer:set_zeroth_law(law)
-	boutput(killer, "New law: 0. [law]")
+	killer.law_rack_connection?.SetLawCustom("Objective Law Module",law,1,true,true)
+	killer.law_rack_connection?.UpdateLaws()
 
 /datum/game_mode/traitor/proc/get_mob_list()
 	var/list/mobs = list()

@@ -93,7 +93,7 @@ var/global/datum/controller/processScheduler/processScheduler
 
 /datum/controller/processScheduler/proc/start()
 	isRunning = 1
-	SPAWN_DBG(0)
+	SPAWN(0)
 		process()
 
 /datum/controller/processScheduler/proc/process()
@@ -211,7 +211,7 @@ var/global/datum/controller/processScheduler/processScheduler
 	nameToProcessMap[newProcess.name] = newProcess
 
 /datum/controller/processScheduler/proc/runProcess(var/datum/controller/process/process, var/delay)
-	SPAWN_DBG(delay)
+	SPAWN(delay)
 		process.process()
 
 /datum/controller/processScheduler/proc/processStarted(var/datum/controller/process/process)

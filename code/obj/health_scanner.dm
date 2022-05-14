@@ -8,7 +8,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			src.find_partners(src.find_in_range)
 		START_TRACKING
 

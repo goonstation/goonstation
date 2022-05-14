@@ -57,7 +57,7 @@
 		healthbar.onStart()
 		healthbar.onUpdate()
 
-		SPAWN_DBG(0.1 SECONDS)
+		SPAWN(0.1 SECONDS)
 			for (var/mob/living/carbon/human/H in src.loc)
 				if (H.decomp_stage == 4 || check_target_immunity(H))//too decomposed or too cool to be eaten
 					continue
@@ -404,7 +404,7 @@
 					src.poison += amount * damage_mult
 					updatePoisonOverlay()
 					if (!overmind)
-						SPAWN_DBG(1 SECOND)
+						SPAWN(1 SECOND)
 							while (poison)
 								Life()
 								sleep(1 SECOND)
@@ -551,7 +551,7 @@
 		if (overmind != user)
 			return
 		if (isitem(O))
-			if (get_dist(O, src) > 1)
+			if (BOUNDS_DIST(O, src) > 0)
 				return
 			var/datum/blob_ability/devour_item/D = overmind.get_ability(/datum/blob_ability/devour_item)
 			if (D)
@@ -1084,12 +1084,11 @@
 	name = "mitochondria"
 	state_overlay = "mitochondria"
 	special_icon = 1
-	desc = "It's a giant energy converting cell. It seems to be knitting together nearby holes in the blob."
+	desc = "It's a giant energy converting cell. It seems to be knitting together nearby holes in the blob... and pushing around any toxins."
 	armor = 0
 	gen_rate_value = 0
 	can_absorb = 0
 	runOnLife = 1
-	poison_coefficient = 2
 	poison_spread_coefficient = 2
 	var/heal_range = 2
 	var/heal_amount = 4
@@ -1101,6 +1100,17 @@
 			if (B.health < B.health_max)
 				B.heal_damage(heal_amount)
 
+			if(B.poison && !istype(B, /obj/blob/mitochondria) && !istype(B, /obj/blob/lipid))
+				src.poison += B.poison/2
+				B.poison = 0
+
+		for (var/obj/blob/lipid/B in view(1))
+			if(istype(B, /obj/blob/lipid))
+				if(B.poison < 50)
+					B.poison += src.poison / 2 + 2
+					src.poison /= 2
+					src.poison -= 2
+
 /obj/blob/reflective
 	name = "reflective membrane"
 	state_overlay = "reflective"
@@ -1110,8 +1120,8 @@
 	gen_rate_value = 0
 	can_absorb = 0
 	opacity = 1
-	health = 85
-	health_max = 85
+	health = 40
+	health_max = 40
 	gas_impermeable = TRUE
 
 	bullet_act(var/obj/projectile/P)
@@ -1218,11 +1228,11 @@
 	name = "lipid"
 	state_overlay = "lipid"
 	special_icon = 1
-	desc = "It's an energy storage cell. It stores biopoints."
+	desc = "It's an energy storage cell. It stores biopoints... and toxins."
 	armor = 0
 	can_absorb = 0
+	fire_coefficient = 1.5
 	poison_coefficient = 0
-	poison_spread_coefficient = 3
 
 	onAttach(var/mob/living/intangible/blob_overmind/O)
 		..()
@@ -1235,6 +1245,7 @@
 		set_loc(null)
 		var/obj/blob/B = new /obj/blob(T)
 		B.overmind = overmind
+		B.poison = src.poison
 		overmind.blobs += B
 		B.color = overmind.color
 		qdel(src)
@@ -1301,6 +1312,8 @@
 	armor = 1
 	can_absorb = 0
 	gas_impermeable = TRUE
+	health = 40
+	health_max = 40
 
 	take_damage(amount, mult, damtype, mob/user)
 		if (damtype == "burn")

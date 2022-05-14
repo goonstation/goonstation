@@ -24,7 +24,7 @@
 /obj/item/basketball/suicide(var/mob/user as mob)
 	user.visible_message("<span class='alert'><b>[user] fouls out, permanently.</b></span>")
 	user.TakeDamage("head", 175, 0)
-	SPAWN_DBG(30 SECONDS)
+	SPAWN(30 SECONDS)
 		if (user)
 			user.suiciding = 0
 	return 1
@@ -120,7 +120,7 @@
 				JOB_XP(user, "Clown", 1)
 
 			if (!src.shoot(W, user))
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					src.visible_message("<span class='alert'>[user] whiffs the dunk.</span>")
 		return
 
@@ -178,7 +178,7 @@
 				src.visible_message("<span class='alert'>[O] teeters on the edge of [src]!</span>")
 				var/delay = rand(5, 15)
 				animate_horizontal_wiggle(O, delay, 5, 1, -1) // target, number of animation loops, speed, positive x variation, negative x variation
-				SPAWN_DBG(delay)
+				SPAWN(delay)
 					if (O && O.loc == src.loc)
 						if (prob(40)) // It goes in!
 							src.visible_message("<span class='notice'>[O] slips into [src]!</span>")
@@ -201,7 +201,7 @@
 		playsound(src, "rustle", 75, 1)
 		A.invisibility = INVIS_ALWAYS_ISH
 		flick("bbasket1", src)
-		SPAWN_DBG(1.5 SECONDS)
+		SPAWN(1.5 SECONDS)
 			A.invisibility = INVIS_NONE
 			src.active = 0
 

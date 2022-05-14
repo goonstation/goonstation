@@ -19,7 +19,7 @@
 	New()
 		..()
 		var/obj/item/remote/cloak_gen/remote = new /obj/item/remote/cloak_gen(src.loc)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			remote.my_gen = src
 
 	disposing()

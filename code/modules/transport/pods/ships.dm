@@ -191,12 +191,16 @@ obj/machinery/vehicle/miniputt/pilot
 
 	New()
 		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		src.lock = new /obj/item/shipcomponent/secondary_system/lock(src)
 		src.lock.ship = src
 		src.components += src.lock
 		myhud.update_systems()
 		myhud.update_states()
-		return
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 //syndiput spawner
 /obj/syndi_putt_spawner
@@ -402,7 +406,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	attack_self(mob/user as mob)
 		boutput(user, "<span class='notice'>You dump out the box of parts onto the floor.</span>")
 		var/obj/O = new /obj/structure/vehicleframe/puttframe( get_turf(user) )
-		logTheThing("station", user, null, "builds [O] in [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
+		logTheThing("station", user, null, "builds [O] in [get_area(user)] ([log_loc(user)])")
 		O.fingerprints = src.fingerprints
 		O.fingerprints_full = src.fingerprints_full
 		qdel(src)
@@ -416,7 +420,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	attack_self(mob/user as mob)
 		boutput(user, "<span class='notice'>You dump out the box of parts onto the floor.</span>")
 		var/obj/O = new /obj/structure/vehicleframe/subframe( get_turf(user) )
-		logTheThing("station", user, null, "builds [O] in [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
+		logTheThing("station", user, null, "builds [O] in [get_area(user)] ([log_loc(user)])")
 		O.fingerprints = src.fingerprints
 		O.fingerprints_full = src.fingerprints_full
 		qdel(src)
@@ -527,7 +531,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 		// all other steps were tool applications, no more parts to create
 
 	O = new src.box_type( get_turf(src) )
-	logTheThing("station", usr, null, "deconstructs [src] in [get_area(usr)] ([showCoords(usr.x, usr.y, usr.z)])")
+	logTheThing("station", usr, null, "deconstructs [src] in [get_area(usr)] ([log_loc(usr)])")
 	O.fingerprints = src.fingerprints
 	O.fingerprints_full = src.fingerprints_full
 	qdel(src)
@@ -721,7 +725,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 				if (src.armor_type == /obj/item/podarmor/armor_custom)
 					V.name = src.vehicle_name
 					V.setMaterial(src.material)
-				logTheThing("station", user, null, "finishes building a [V] in [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
+				logTheThing("station", user, null, "finishes building a [V] in [get_area(user)] ([log_loc(user)])")
 				qdel(src)
 
 			else
@@ -910,7 +914,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 					P.pixel_y = V * 5
 	ex_act(severity)
 		if(!maxboom)
-			SPAWN_DBG(0.1 SECONDS)
+			SPAWN(0.1 SECONDS)
 				..()
 				maxboom = 0
 		maxboom = max(severity, maxboom)
@@ -963,18 +967,18 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 
 	New()
 		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		myhud.update_systems()
 		myhud.update_states()
-		return
-
-	New()
-		..()
 		src.lock = new /obj/item/shipcomponent/secondary_system/lock(src)
 		src.lock.ship = src
 		src.components += src.lock
 		myhud.update_systems()
 		myhud.update_states()
 
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 /obj/machinery/vehicle/pod_smooth/black
 	name = "Pod X-"
 	desc = "????"
@@ -1139,7 +1143,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 		src.pilot = M
 		src.ion_trail.start()
 
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		boarding = 0*/
 
 
@@ -1149,7 +1153,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 		boutput(M, "<span class='alert'><b>You are ejected from [src]!</b></span>")
 		src.eject(M)
 		var/atom/target = get_edge_target_turf(M,pick(alldirs))
-		SPAWN_DBG(0)
+		SPAWN(0)
 		M.throw_at(target, 10, 2)*/
 
 //Returns the correct tile to spawn projectiles on for either side of the ship, given the current direction.
@@ -1334,7 +1338,7 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 		if (canbuild)
 			boutput(user, "<span class='notice'>You dump out the box of parts onto the floor.</span>")
 			var/obj/O = new /obj/structure/vehicleframe/podframe( get_turf(user) )
-			logTheThing("station", user, null, "builds [O] in [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
+			logTheThing("station", user, null, "builds [O] in [get_area(user)] ([log_loc(user)])")
 			O.fingerprints = src.fingerprints
 			O.fingerprints_full = src.fingerprints_full
 			qdel(src)
@@ -1411,7 +1415,7 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 	finish_board_pod(var/mob/boarder)
 		..()
 		if (!src.pilot) return //if they were stopped from entering by other parts of the board proc from ..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.escape()
 
 	proc/escape()
@@ -1503,7 +1507,7 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 					var/mob/living/carbon/human/H = pilot
 					for(var/effect in list("sever_left_leg","sever_right_leg","sever_left_arm","sever_right_arm"))
 						if(prob(40))
-							SPAWN_DBG(rand(0,5))
+							SPAWN(rand(0,5))
 								H.bioHolder.AddEffect(effect)
 				src.leave_pod(pilot)
 				src.icon_state = "escape_nowindow"

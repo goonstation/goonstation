@@ -29,7 +29,7 @@
 	for(var/mob/M in AIviewers(src))
 		boutput(M, "<span class='alert'><B>[src.name]</B> becomes angry!</span>")
 	src.desc = "[src] looks angry"
-	SPAWN_DBG(rand(1000,3000))
+	SPAWN(rand(1000,3000))
 		src.visible_message("<b>[src.name] calms down.</b>")
 		src.desc = "[src] looks a bit annoyed."
 		src.angry = 0

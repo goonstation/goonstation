@@ -33,7 +33,7 @@
 				implants += I
 
 			H.in_fakedeath = 1
-			APPLY_MOB_PROPERTY(C, PROP_CANTMOVE, src.type)
+			APPLY_ATOM_PROPERTY(C, PROP_MOB_CANTMOVE, src.type)
 
 			C.lying = 1
 			C.canmove = 0
@@ -41,7 +41,7 @@
 
 			C.emote("deathgasp")
 
-			SPAWN_DBG(cooldown)
+			SPAWN(cooldown)
 				changeling_super_heal_step(C, 100, 100) //get those limbs back i didn't lay here for 45 seconds to be hopping around on one leg dang it
 				if (C && !isdead(C))
 					C.HealDamage("All", 1000, 1000)
@@ -69,7 +69,7 @@
 
 				C.set_clothing_icon_dirty()
 				H.in_fakedeath = 0
-				REMOVE_MOB_PROPERTY(C, PROP_CANTMOVE, src.type)
+				REMOVE_ATOM_PROPERTY(C, PROP_MOB_CANTMOVE, src.type)
 		return 0
 
 /proc/changeling_super_heal_step(var/mob/living/carbon/human/healed, var/limb_regen_prob = 25, var/eye_regen_prob = 25, var/mult = 1, var/changer = 1)

@@ -17,11 +17,11 @@ Alt+Shift+Left Mouse Button = Set a multiplier for matrix randomization value ge
 	var/color_three_picked
 	var/color_three_mapped_to
 	var/calculated_matrix
-	var/busy
+	var/tmp/busy
 	var/using_random = FALSE
 	var/randomization_multiplier = 1
 
-	var/stage = 1
+	var/tmp/stage = 1
 
 	selected()
 		. = ..()

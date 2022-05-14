@@ -64,6 +64,10 @@
 		if(W.cant_drop)
 			boutput(user, "<span class='alert'>You cannot put [W] into [src]!</span>")
 			return
+		if(istype(W, /obj/item/reagent_containers/glass/jar) && length(W.contents))
+			boutput(user, "<span class='alert'>You need to empty [W] first!</span>")
+			return
+
 
 		var/success = FALSE //did we successfully recycle a thing?
 		if(istype(W, /obj/item/reagent_containers/glass))

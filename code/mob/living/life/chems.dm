@@ -17,10 +17,10 @@
 				owner.reagents.remove_reagent("[owner.blood_id]", blood2absorb)
 				owner.blood_volume += blood2absorb
 			if (owner.metabolizes && owner.reagents)//idk it runtimes)
-				owner.reagents.metabolize(owner, multiplier = reagent_time_multiplier * (HAS_MOB_PROPERTY(owner, PROP_METABOLIC_RATE) ? GET_MOB_PROPERTY(owner, PROP_METABOLIC_RATE) : 1))
+				owner.reagents.metabolize(owner, multiplier = reagent_time_multiplier * (HAS_ATOM_PROPERTY(owner, PROP_MOB_METABOLIC_RATE) ? GET_ATOM_PROPERTY(owner, PROP_MOB_METABOLIC_RATE) : 1))
 
-			if(HAS_MOB_PROPERTY(owner, PROP_CHEM_PURGE))
-				owner.reagents.remove_any(GET_MOB_PROPERTY(owner, PROP_CHEM_PURGE) * reagent_time_multiplier)
+			if(HAS_ATOM_PROPERTY(owner, PROP_MOB_CHEM_PURGE))
+				owner.reagents.remove_any(GET_ATOM_PROPERTY(owner, PROP_MOB_CHEM_PURGE) * reagent_time_multiplier)
 
 
 		if (owner.nutrition > owner.blood_volume)

@@ -22,7 +22,7 @@
 	if(prob(60) && src.on == 1)
 		src.navigate_to(get_step_rand(src))
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if(prob(src.emagged * 20))
 				drama()
 			if(prob(30 + src.emagged * 30))

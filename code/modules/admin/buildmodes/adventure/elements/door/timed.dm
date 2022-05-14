@@ -20,7 +20,7 @@
 				door.time_limit = door_delay
 				if (door_type == "glass" || door_type == "runes")
 					door.opacity = 0
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					door.color = color_rgb
 		else if ("right" in pa)
 			if (istype(object, /obj/adventurepuzzle/triggerable/door))
@@ -39,7 +39,7 @@
 		openid++
 		var/myid = openid
 
-		SPAWN_DBG(time_limit + 10)
+		SPAWN(time_limit + 10)
 			if (myid == openid)
 				close()
 

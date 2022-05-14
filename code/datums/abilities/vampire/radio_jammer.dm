@@ -30,7 +30,7 @@
 
 		boutput(M, __blue("<b>You will disrupt radio signals in your immediate vicinity for the next [src.duration / 10] seconds.</b>"))
 		OTHER_START_TRACKING_CAT(M, TR_CAT_RADIO_JAMMERS)
-		SPAWN_DBG (src.duration)
+		SPAWN(src.duration)
 			if (M && istype(M) && radio_controller && istype(radio_controller) && (M in by_cat[TR_CAT_RADIO_JAMMERS]))
 				boutput(M, __red("<b>You no longer disrupt radio signals.</b>"))
 				OTHER_STOP_TRACKING_CAT(M, TR_CAT_RADIO_JAMMERS)

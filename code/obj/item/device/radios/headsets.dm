@@ -15,6 +15,8 @@
 	icon_override = "civ"
 	icon_tooltip = "Civilian"
 	wear_layer = MOB_EARS_LAYER
+	duration_remove = 1.5 SECONDS
+	duration_put = 1.5 SECONDS
 	var/haswiretap
 	hardened = 0
 
@@ -31,6 +33,7 @@
 				"r" = R_FREQ_RESEARCH,
 				"m" = R_FREQ_MEDICAL,
 				"c" = R_FREQ_CIVILIAN,
+				"z" = R_FREQ_SYNDICATE,
 				)
 			src.secure_classes = list(
 				"h" = RADIOCL_COMMAND,
@@ -39,6 +42,7 @@
 				"r" = RADIOCL_RESEARCH,
 				"m" = RADIOCL_MEDICAL,
 				"c" = RADIOCL_CIVILIAN,
+				"z" = RADIOCL_SYNDICATE,
 				)
 			boutput(user, "<span class='notice'>Wiretap Radio Upgrade successfully installed in the [src].</span>")
 			playsound(src.loc ,"sound/items/Deconstruct.ogg", 80, 0)
@@ -220,19 +224,6 @@
 	icon_override = "md"
 	icon_tooltip = "Medical Director"
 
-/obj/item/device/radio/headset/command/hs
-	name = "Head Surgeon's Headset"
-	secure_frequencies = list(
-		"h" = R_FREQ_COMMAND,
-		"m" = R_FREQ_MEDICAL,
-	)
-	secure_classes = list(
-		"h" = RADIOCL_COMMAND,
-		"m" = RADIOCL_MEDICAL,
-	)
-	icon_override = "hs"
-	icon_tooltip = "Head Surgeon"
-
 /obj/item/device/radio/headset/command/ce
 	name = "Chief Engineer's Headset"
 	secure_frequencies = list(
@@ -329,6 +320,18 @@
 	icon_override = "qm"
 	icon_tooltip = "Quartermaster"
 
+/obj/item/device/radio/headset/miner
+	name = "Mining Headset"
+	desc = "A radio headset that is also capable of communicating over the Engineering channel."
+	icon_state = "shipping headset"
+	secure_frequencies = list(
+	"e" = R_FREQ_ENGINEERING)
+	secure_classes = list(
+		"e" = RADIOCL_ENGINEERING,
+		)
+	icon_override = "min"
+	icon_tooltip = "Miner"
+
 /obj/item/device/radio/headset/mail
 	name = "Mailman's Headset"
 	desc = "A radio headset that is also capable of communicating over the Engineering and Command channels."
@@ -362,7 +365,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			var/the_frequency = R_FREQ_SYNDICATE
 			if (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
 				var/datum/game_mode/nuclear/N = ticker.mode
@@ -390,7 +393,7 @@
 
 		pickup(mob/user)
 			if(isvirtual(user))
-				SPAWN_DBG(0)
+				SPAWN(0)
 					var/obj/item/clothing/ears/plugs = new /obj/item/clothing/ears/earmuffs/earplugs(src.loc)
 					plugs.name = src.name
 					plugs.desc = src.desc
@@ -486,7 +489,7 @@ Secure Frequency:
 
 /obj/item/device/radio_upgrade //traitor radio upgrader
 	name = "Wiretap Radio Upgrade"
-	desc = "An illegal device capable of picking up and sending all secure station radio signals. Can be installed in a radio headset. Does not actually work by wiretapping."
+	desc = "An illegal device capable of picking up and sending all secure station radio signals, along with a secure Syndicate frequency. Can be installed in a radio headset. Does not actually work by wiretapping."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "syndie_upgr"
 	w_class = W_CLASS_TINY

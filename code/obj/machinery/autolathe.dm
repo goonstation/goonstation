@@ -43,7 +43,7 @@
 */
 	if (istype(O, /obj/item/sheet/metal))
 		if (src.m_amount < 150000.0)
-			SPAWN_DBG(1.6 SECONDS) {
+			SPAWN(1.6 SECONDS) {
 				flick("autolathe_c",src)
 				src.m_amount += O:height * O:width * O:length * 100000.0
 				O:amount--
@@ -54,7 +54,7 @@
 			boutput(user, "The autolathe is full. Please remove metal from the autolathe in order to insert more.")
 	else if (istype(O, /obj/item/sheet/glass) || istype(O, /obj/item/sheet/glass/reinforced))
 		if (src.g_amount < 75000.0)
-			SPAWN_DBG(1.6 SECONDS) {
+			SPAWN(1.6 SECONDS) {
 				flick("autolathe_c",src)
 				src.g_amount += O:height * O:width * O:length * 100000.0
 				O:amount--
@@ -65,7 +65,7 @@
 			boutput(user, "The autolathe is full. Please remove glass from the autolathe in order to insert more.")
 
 	else if (O.g_amt || O.m_amt)
-		SPAWN_DBG(1.6 SECONDS) {
+		SPAWN(1.6 SECONDS) {
 			flick("autolathe_c",src)
 			src.g_amount += O.g_amt
 			src.m_amount += O.m_amt
@@ -127,7 +127,7 @@
 				src.m_amount = 0
 			if(src.g_amount < 0)
 				src.g_amount = 0
-			SPAWN_DBG(1.6 SECONDS)
+			SPAWN(1.6 SECONDS)
 				flick("autolathe_c",src)
 				sleep(1.6 SECONDS)
 				flick("autolathe_o",src)
@@ -145,15 +145,15 @@
 				else
 					if(src.hack_wire == href_list["wire"])
 						src.hacked = !src.hacked
-						SPAWN_DBG(10 SECONDS) src.hacked = !src.hacked
+						SPAWN(10 SECONDS) src.hacked = !src.hacked
 					if(src.disable_wire == href_list["wire"])
 						src.disabled = !src.disabled
 						src.shock(usr)
-						SPAWN_DBG(10 SECONDS) src.disabled = !src.disabled
+						SPAWN(10 SECONDS) src.disabled = !src.disabled
 					if(src.shock_wire == href_list["wire"])
 						src.shocked = !src.shocked
 						src.shock(usr)
-						SPAWN_DBG(10 SECONDS) src.shocked = !src.shocked
+						SPAWN(10 SECONDS) src.shocked = !src.shocked
 		if(href_list["act"] == "wire")
 			if (!usr.find_tool_in_hand(TOOL_SNIPPING))
 				boutput(usr, "You need wirecutters!")

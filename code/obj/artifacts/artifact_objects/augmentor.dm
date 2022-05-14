@@ -5,6 +5,7 @@
 /datum/artifact/augmentor
 	associated_object = /obj/artifact/augmentor
 	type_name = "Surgery machine"
+	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 350
 	validtypes = list("ancient","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
@@ -152,7 +153,7 @@
 			T.visible_message("<b>[O]</b> withdraws its instruments and slams shut.")
 			working = 0
 			recharging = 1
-			SPAWN_DBG(recharge_time)
+			SPAWN(recharge_time)
 			recharging = 0
 			T.visible_message("<b>[O]</b> opens itself up again.")
 		else

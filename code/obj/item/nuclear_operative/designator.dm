@@ -208,7 +208,7 @@
 		var/atom/movable/overlay/animation = new /atom/movable/overlay(firing_turf)
 		animation.icon = 'icons/obj/large/96x32.dmi'
 		animation.icon_state = "nothing"
-		SPAWN_DBG(0)
+		SPAWN(0)
 			flick("152mm-flash", animation)
 			sleep(1.2 SECONDS)
 			qdel(animation)
@@ -224,5 +224,13 @@
 
 	syndicate
 		firingfrom = "Cairngorm"
+
+		New()
+			..()
+			START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+
+		disposing()
+			STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+			..()
 
 #undef DESIGNATOR_MAX_RANGE

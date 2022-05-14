@@ -1,3 +1,4 @@
+ABSTRACT_TYPE(/datum/cookingrecipe)
 /datum/cookingrecipe
 	var/item1 = null
 	var/item2 = null
@@ -458,6 +459,14 @@
 	output = /obj/item/reagent_containers/food/snacks/sandwich/elvis_meat_h
 	useshumanmeat = 1
 
+/datum/cookingrecipe/c_butty
+	item1 = /obj/item/reagent_containers/food/snacks/breadslice
+	amt1 = 2
+	item2 = /obj/item/reagent_containers/food/snacks/condiment/ketchup
+	item3 = /obj/item/reagent_containers/food/snacks/fries
+	cookbonus = 7
+	output = /obj/item/reagent_containers/food/snacks/sandwich/c_butty
+
 /datum/cookingrecipe/elviswich_m_m
 	item1 = /obj/item/reagent_containers/food/snacks/breadslice/elvis
 	amt1 = 2
@@ -681,7 +690,7 @@
 					fillingColors += transformedFilling
 
 				// spread the total healing left for the added food among the sandwich bites
-				customSandwich.heal_amt += snack.heal_amt * snack.amount / customSandwich.amount
+				customSandwich.heal_amt += snack.heal_amt * snack.bites_left / customSandwich.bites_left
 
 				qdel(snack)
 
@@ -1177,6 +1186,12 @@
 	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/pie/pumpkin
 
+/datum/cookingrecipe/pie_chocolate
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
+	item2 = /obj/item/reagent_containers/food/snacks/candy/chocolate
+	cookbonus = 10
+	output = /obj/item/reagent_containers/food/snacks/pie/chocolate
+
 /datum/cookingrecipe/pie_cream
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
 	item2 = /obj/item/reagent_containers/food/snacks/condiment/cream
@@ -1295,13 +1310,6 @@
 	item2 = /obj/item/clothing/head/butt
 	cookbonus = 15
 	output = /obj/item/reagent_containers/food/snacks/pie/ass
-
-/datum/cookingrecipe/pie_chocolate
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
-	item2 = /obj/item/reagent_containers/food/snacks/candy/chocolate
-	item3 = /obj/item/reagent_containers/food/snacks/ingredient/butter
-	cookbonus = 10
-	output = /obj/item/reagent_containers/food/snacks/pie/chocolate
 
 /datum/cookingrecipe/pot_pie
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
@@ -1616,6 +1624,11 @@
 	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/ingredient/meatpaste/
 
+/datum/cookingrecipe/fishpaste
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/
+	cookbonus = 4
+	output = /obj/item/reagent_containers/food/snacks/ingredient/fishpaste/
+
 /datum/cookingrecipe/sloppyjoe
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meatpaste
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/dough
@@ -1658,6 +1671,13 @@
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/flour
 	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/biscuit
+
+/datum/cookingrecipe/dog_biscuit
+	item1 = /obj/item/reagent_containers/food/snacks/granola_bar
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meatpaste
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/peanutbutter
+	cookbonus = 6
+	output = /obj/item/reagent_containers/food/snacks/cookie/dog
 
 /datum/cookingrecipe/hardtack
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
@@ -1774,6 +1794,30 @@
 	item4 = /obj/item/reagent_containers/food/snacks/plant/pineappleslice
 	cookbonus = 7
 	output = /obj/item/reagent_containers/food/snacks/chickenpineapplecurry
+
+/datum/cookingrecipe/ramen_bowl
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles/ramen
+	item2 = /obj/item/reagent_containers/food/snacks/condiment/soysauce
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/seaweed
+	item4 = /obj/item/reagent_containers/food/snacks/ingredient/egg/hardboiled
+	cookbonus = 14
+	output = /obj/item/reagent_containers/food/snacks/ramen_bowl
+
+/datum/cookingrecipe/udon_bowl
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles/udon
+	item2 = /obj/item/reagent_containers/food/snacks/condiment/soysauce
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/seaweed
+	item4 = /obj/item/reagent_containers/food/snacks/ingredient/kamaboko
+	cookbonus = 14
+	output = /obj/item/reagent_containers/food/snacks/udon_bowl
+
+/datum/cookingrecipe/curry_udon_bowl
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles/udon
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/currypowder
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/seaweed
+	item4 = /obj/item/reagent_containers/food/snacks/ingredient/egg/hardboiled
+	cookbonus = 14
+	output = /obj/item/reagent_containers/food/snacks/curry_udon_bowl
 
 // Recipe for zongzi is a WIP; we're gonna need rice balls or something
 

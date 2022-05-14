@@ -78,7 +78,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 			return
 		if (!abil.holder)
 			return
-		SPAWN_DBG(0)
+		SPAWN(0)
 			abil.handleCast()
 
 #ifdef HALLOWEEN
@@ -417,7 +417,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 			return 1
 
 		boutput(holder.owner, "<span class='alert'>You exert some force to levitate [target]!</span>")
-		SPAWN_DBG(rand(30,50))
+		SPAWN(rand(30,50))
 			if (!holder)
 				return
 			//levitates the target chair, as well as any mobs mobs buckled in. Since buckled mobs are placed into the chair/bed's contents
@@ -492,7 +492,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 				if (4)
 					new/obj/item/reagent_containers/food/snacks/plant/pumpkin/summon(T)
 				if (5)
-					new/obj/decal/skeleton/unanchored/summon(T)
+					new/obj/decal/fakeobjects/skeleton/unanchored/summon(T)
 				if (6)
 					new/obj/decal/cleanable/vomit/spiders(T)
 
@@ -610,7 +610,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		if (istype(holder, /datum/abilityHolder/ghost_observer))
 			var/datum/abilityHolder/ghost_observer/GAH = holder
 			GAH.spooking = 1
-		REMOVE_MOB_PROPERTY(src.holder.owner, PROP_INVISIBILITY, src.holder.owner)
+		REMOVE_ATOM_PROPERTY(src.holder.owner, PROP_MOB_INVISIBILITY, src.holder.owner)
 		boutput(holder.owner, "<span class='notice'>You start being spooky! The living can all see you!</span>")
 
 	//remove the filter animation when we're done.
@@ -619,7 +619,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		if (istype(holder, /datum/abilityHolder/ghost_observer))
 			var/datum/abilityHolder/ghost_observer/GAH = holder
 			GAH.spooking = 0
-		APPLY_MOB_PROPERTY(src.holder.owner, PROP_INVISIBILITY, src.holder.owner, ghost_invisibility)
+		APPLY_ATOM_PROPERTY(src.holder.owner, PROP_MOB_INVISIBILITY, src.holder.owner, ghost_invisibility)
 		boutput(holder.owner, "<span class='alert'>You stop being spooky!</span>")
 
 #endif

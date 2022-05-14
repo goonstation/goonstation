@@ -1008,8 +1008,8 @@
 
 /datum/commodity/contraband/dnascram
 	comname = "DNA Scrambler"
-	comtype = /obj/item/genetics_injector/dna_scrambler
-	desc = "An injector that gives a new, random identity upon injection."
+	comtype = /obj/item/dna_scrambler
+	desc = "An injector that gives a new, random identity upon injection, storing the original for later."
 	price = 15000
 	baseprice = 15000
 	upperfluc = 3000
@@ -1023,6 +1023,15 @@
 	baseprice = 4000
 	upperfluc = 500
 	lowerfluc = -500
+
+/datum/commodity/contraband/syndicate_headset
+	comname = "Illegal Headset"
+	comtype = /obj/item/device/radio/headset/syndicate
+	desc = "This headset allows you to speak over a highly illegal Syndicate frequency."
+	price = 500
+	baseprice = 500
+	upperfluc = 250
+	lowerfluc = -250
 
 /datum/commodity/contraband/briefcase
 	comname = "Briefcase Valve Assembly"

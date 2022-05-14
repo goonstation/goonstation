@@ -8,7 +8,7 @@
 #if defined(DEBUG_ARTEMIS)
 /mob/living/carbon/human/New()
 	. = ..()
-	SPAWN_DBG(4 SECONDS)
+	SPAWN(4 SECONDS)
 		if(src.client)
 			for(var/turf/T in landmarks[LANDMARK_SHIPS])
 				if(landmarks[LANDMARK_SHIPS][T] == "artemis")

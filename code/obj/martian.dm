@@ -30,7 +30,7 @@
 	else if(prob(10))
 		boutput(user, "<span class='alert'><B>Something has clamped down on your hand!</B></span>")
 		user.changeStatus("stunned", 10 SECONDS)
-		SPAWN_DBG(3 SECONDS)
+		SPAWN(3 SECONDS)
 			if(prob(25))
 				boutput(user, "<span class='alert'><B>You fail to break free!</B></span>")
 				sleep(1 SECONDS)
@@ -44,6 +44,7 @@
 					var/datum/human_limbs/HL = H.limbs
 					HL.sever("both_arms", user)
 				else
+					logTheThing("user", user, null, "was gibbed by [src] ([src.type]) at [log_loc(user)].")
 					user.gib()
 				icon_state = "crevice1"
 				desc = "The crevice has closed"

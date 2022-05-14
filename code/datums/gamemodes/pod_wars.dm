@@ -134,7 +134,7 @@ var/list/pw_rewards_tier3 = null
 
 /datum/game_mode/pod_wars/post_setup()
 	//Setup Capture Points. We do it based on the Capture point computers. idk why. I don't have much time, and I'm tired.
-	SPAWN_DBG(-1)
+	SPAWN(-1)
 		//search each of these areas for the computer, then make the control_point datum from em.
 		// add_control_point(/area/pod_wars/spacejunk/reliant, RELIANT)
 		// add_control_point(/area/pod_wars/spacejunk/fstation, FORTUNA)
@@ -144,7 +144,7 @@ var/list/pw_rewards_tier3 = null
 		setup_critical_systems()
 		setup_manufacturer_resources()
 
-	SPAWN_DBG(-1)
+	SPAWN(-1)
 		setup_asteroid_ores()
 
 	round_start_time = TIME
@@ -154,7 +154,7 @@ var/list/pw_rewards_tier3 = null
 
 
 	if(round_limit > 0)
-		SPAWN_DBG (round_limit) // this has got to end soon
+		SPAWN(round_limit) // this has got to end soon
 			command_alert("Something something radiation.","Emergency Update")
 			sleep(10 MINUTES)
 			command_alert("More radiation, too much...", "Emergency Update")
@@ -212,7 +212,7 @@ var/list/pw_rewards_tier3 = null
 	var/datum/ore_cluster/minor/minor_ores = new /datum/ore_cluster/minor
 	for(var/area/pod_wars/asteroid/minor/A in world)
 		if(!istype(A, /area/pod_wars/asteroid/minor/nospawn))
-			for(var/turf/simulated/wall/asteroid/pod_wars/AST in A)
+			for(var/turf/simulated/wall/auto/asteroid/pod_wars/AST in A)
 				//Do the ore_picking
 				AST.randomize_ore(minor_ores)
 
@@ -225,7 +225,7 @@ var/list/pw_rewards_tier3 = null
 		OC.quantity -= 1
 		if(OC.quantity <= 0) oreClusts -= OC
 		//oreClusts -= OC
-		for(var/turf/simulated/wall/asteroid/pod_wars/AST in A)
+		for(var/turf/simulated/wall/auto/asteroid/pod_wars/AST in A)
 			if(prob(OC.fillerprob))
 				AST.randomize_ore(minor_ores)
 			else
@@ -235,7 +235,7 @@ var/list/pw_rewards_tier3 = null
 
 //////////////////
 ///////////////pod_wars asteroids
-/turf/simulated/wall/asteroid/pod_wars
+/turf/simulated/wall/auto/asteroid/pod_wars
 	fullbright = 1
 	name = "asteroid"
 	desc = "It's asteroid material."
@@ -259,11 +259,11 @@ var/list/pw_rewards_tier3 = null
 		src.ore = O
 		src.hardness += O.hardness_mod
 		src.amount = rand(O.amount_per_tile_min,O.amount_per_tile_max)
-		var/image/ore_overlay = image('icons/turf/asteroid.dmi',O.name)
-		ore_overlay.transform = turn(ore_overlay.transform, pick(0,90,180,-90))
-		ore_overlay.pixel_x += rand(-6,6)
-		ore_overlay.pixel_y += rand(-6,6)
-		src.overlays += ore_overlay
+		var/image/ore_overlay = image('icons/turf/walls_asteroid.dmi',"[O.name][src.orenumber]")
+		ore_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask-side_[src.icon_state]"))
+		ore_overlay.layer = ASTEROID_ORE_OVERLAY_LAYER  // so meson goggle nerds can still nerd away
+
+		src.UpdateOverlays(ore_overlay, "ast_ore")
 
 		if(prob(OC.gem_prob))
 			add_event(/datum/ore/event/gem, O)
@@ -892,7 +892,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 			owner.holder.owner.targeting_ability = owner
 			owner.holder.owner.update_cursor()
 		else
-			SPAWN_DBG(0)
+			SPAWN(0)
 				spell.handleCast()
 		return
 
@@ -938,7 +938,7 @@ proc/setup_pw_crate_lists()
 	O.pixel_y = -96
 	O.icon = 'icons/effects/214x246.dmi'
 	O.icon_state = "explosion"
-	SPAWN_DBG(3.5 SECONDS)
+	SPAWN(3.5 SECONDS)
 		qdel(O)
 
 /obj/decoration/memorial/

@@ -9,12 +9,12 @@
 	var/health = 25
 
 	New()
-		SPAWN_DBG(90 SECONDS)
+		SPAWN(90 SECONDS)
 			if(src.health > 0)
 				src.open()
 
 	proc/open()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.set_density(0)
 			src.icon_state = "egg_hatched"
 			new /obj/alien/facehugger(src.loc)

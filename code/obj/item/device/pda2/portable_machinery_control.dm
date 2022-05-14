@@ -51,7 +51,7 @@
 				return 0 // It's not a Port-a-Sci, okay.
 
 		var/turf/our_loc = get_turf(src.master)
-		if(istype(test_mob, /mob/dead/aieye))
+		if(isAIeye(test_mob))
 			our_loc = get_turf(test_mob)
 		if (our_loc.loc:teleport_blocked == 2) return 0
 
@@ -235,6 +235,7 @@
 							var/obj/storage/closet/port_a_sci/PS = P4
 							PS.on_teleport()
 
+						flick("[P4.icon_state]-tele", P4)
 						elecflash(P4)
 
 			if ("return")
@@ -281,7 +282,7 @@
 						if (istype(P5, /obj/storage/closet/port_a_sci/))
 							var/obj/storage/closet/port_a_sci/PS2 = P5
 							PS2.on_teleport()
-
+						flick("[P5.icon_state]-tele", P5)
 						elecflash(P5)
 
 		PDA.updateSelfDialog()

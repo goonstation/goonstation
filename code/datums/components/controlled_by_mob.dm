@@ -15,7 +15,7 @@
 
 TYPEINFO(/datum/component/controlled_by_mob)
 	initialization_args = list(
-		ARG_INFO("controlling_mob", "mob reference", "Mob to control the component")
+		ARG_INFO("controlling_mob", DATA_INPUT_MOB_REFERENCE, "Mob to control the component")
 	)
 
 /datum/component/controlled_by_mob

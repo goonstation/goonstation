@@ -119,7 +119,7 @@
 			src.target = AM
 			set_attack()
 		else if(ismob(AM))
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/turf/T = get_turf(src)
 				AM:set_loc(T)
 
@@ -241,7 +241,7 @@
 						return
 					else
 						set_null()
-						SPAWN_DBG(cycle_pause) src.process()
+						SPAWN(cycle_pause) src.process()
 						return
 
 				step_towards(src,get_step_towards2(src , target))
@@ -251,7 +251,7 @@
 					path_attack(target)
 					if(!path_target)
 						set_null()
-						SPAWN_DBG(cycle_pause) src.process()
+						SPAWN(cycle_pause) src.process()
 						return
 				else
 					var/turf/next = path_target[1]
@@ -272,10 +272,10 @@
 			if(frustration >= 35) set_null()
 
 		if(quick_move)
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				src.process()
 		else
-			SPAWN_DBG(cycle_pause)
+			SPAWN(cycle_pause)
 				src.process()
 
 	proc/idle()
@@ -285,7 +285,7 @@
 
 		if(locate(/obj/alien/weeds) in src.loc && health < maxhealth)
 			health++
-			SPAWN_DBG(cycle_pause) idle()
+			SPAWN(cycle_pause) idle()
 			return
 
 		if(!path_idle || !length(path_idle))
@@ -298,7 +298,7 @@
 					if(!path_idle)
 						trg_idle = null
 						set_idle()
-						SPAWN_DBG(cycle_pause) src.idle()
+						SPAWN(cycle_pause) src.idle()
 						return
 			else
 				var/obj/alien/weeds/W = null
@@ -317,11 +317,11 @@
 					path_idle(W)
 					if(!path_idle)
 						trg_idle = null
-						SPAWN_DBG(cycle_pause) src.idle()
+						SPAWN(cycle_pause) src.idle()
 						return
 				else
 					for(var/mob/living/carbon/alien/humanoid/H in range(1,src))
-						SPAWN_DBG(cycle_pause) src.idle()
+						SPAWN(cycle_pause) src.idle()
 						return
 					step(src,pick(cardinal))
 
@@ -347,7 +347,7 @@
 					path_idle(trg_idle)
 
 				if(!path_idle)
-					SPAWN_DBG(cycle_pause) src.idle()
+					SPAWN(cycle_pause) src.idle()
 					return
 				else
 					next = path_idle[1]
@@ -356,10 +356,10 @@
 					quick_move = 1
 
 		if(quick_move)
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				idle()
 		else
-			SPAWN_DBG(cycle_pause)
+			SPAWN(cycle_pause)
 				idle()
 
 	proc/path_idle(var/atom/trg)

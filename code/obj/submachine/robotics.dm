@@ -415,7 +415,7 @@ ported and crapped up by: haine
 	can_chug = 0
 
 	afterattack(obj/target, mob/user)
-		if (get_dist(user, src) > 1 || get_dist(user, target) > 1)
+		if (BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, target) > 0)
 			user.show_text("You're too far away!", "red")
 
 		if (istype(target, /obj/machinery) || ismob(target) || isturf(target)) // Do nothing if the user is trying to put it in a machine or feeding a mob.

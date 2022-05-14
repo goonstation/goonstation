@@ -1,6 +1,6 @@
 /obj/machinery/imp/chair
 	name = "Implant Chair"
-	desc = "Implants the user with a loyalty implant"
+	desc = "Implants the user with an counter-revolutionary implant"
 	icon = 'icons/misc/simroom.dmi'
 	icon_state = "simchair"
 	anchored = 1
@@ -15,7 +15,7 @@
 	if (!ticker)
 		boutput(user, "You can't buckle anyone in before the game starts.")
 		return
-	if ((!( iscarbon(M) ) || get_dist(src, user) > 1 || M.loc != src.loc || user.restrained() || user.stat))
+	if ((!( iscarbon(M) ) || BOUNDS_DIST(src, user) > 0 || M.loc != src.loc || user.restrained() || user.stat))
 		return
 	if (M.buckled)	return
 	if (M == user)
@@ -48,7 +48,7 @@
 	if (!ismob(M))
 		return
 
-	src.imp = new/obj/item/implant/antirev(src)
+	src.imp = new/obj/item/implant/counterrev(src)
 
 	M.visible_message("<span class='alert'>[M] has been implanted by the [src].</span>")
 

@@ -27,7 +27,7 @@
 		if(!istype(par))
 			return
 
-		SPAWN_DBG(P.particle_lifespan)
+		SPAWN(P.particle_lifespan)
 			if (par)
 				par.alpha = 255
 				par.blend_mode = 0

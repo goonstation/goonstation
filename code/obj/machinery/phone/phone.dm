@@ -211,7 +211,7 @@
 		// Dial the number
 		src.dialing = 1
 		src.handset.holder?.playsound_local(src.handset.holder,"sound/machines/phones/dial.ogg" ,50,0)
-		SPAWN_DBG(4 SECONDS)
+		SPAWN(4 SECONDS)
 			// Is it busy?
 			if(!target.can_be_called())
 				playsound(src.loc,"sound/machines/phones/phone_busy.ogg" ,50,0)
@@ -298,7 +298,7 @@
 		if(!src.parent)
 			qdel(src)
 			return
-		if(src.parent.answered == 1 && get_dist(src,src.parent) > 1)
+		if(src.parent.answered == 1 && BOUNDS_DIST(src, src.parent) > 0)
 			boutput(src.holder,"<span class='alert'>The phone cord reaches it limit and the handset is yanked back to its base!</span>")
 			src.holder.drop_item(src)
 			src.parent.hang_up()
@@ -322,7 +322,7 @@
 		// Dial the number
 		src.dialing = 1
 		src.handset.holder?.playsound_local(src.handset.holder,"sound/machines/phones/dial.ogg" ,50,0)
-		SPAWN_DBG(4 SECONDS)
+		SPAWN(4 SECONDS)
 			// Is it busy?
 			if(!target.can_be_called())
 				playsound(src.loc,"sound/machines/phones/phone_busy.ogg" ,50,0)

@@ -24,7 +24,7 @@
 				door.door_type = door_type
 				if (door_type == "glass" || door_type == "runes")
 					door.RL_SetOpacity(0)
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					door.color = color_rgb
 		else if ("right" in pa)
 			if (istype(object, /obj/adventurepuzzle/triggerable/door))
@@ -93,7 +93,7 @@
 		src.set_density(1)
 		flick("door_[door_type]_closing", src)
 		src.icon_state = "door_[door_type]_closed"
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.opening = 0
 
 	proc/open()
@@ -105,7 +105,7 @@
 			return
 		src.opening = 1
 		flick("door_[door_type]_opening", src)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.set_density(0)
 			if (opacity != 0)
 				orig_opacity = opacity

@@ -205,7 +205,7 @@
 					var/surplus
 					if(istype(A, /area/station/))
 						var/obj/machinery/power/apc/P = A.area_apc
-						if(P)
+						if(P?.cell)
 							apc_charge = P.terminal.powernet?.perapc
 							cell_wattage = P.cell.charge/CELLRATE
 							surplus = P.surplus()
@@ -537,6 +537,19 @@ datum/pump_ui/circulator_ui
 	density = 1
 	anchored = 1
 
+/obj/machinery/teg_connector
+	name = "\improper TEG connector"
+	desc = "Connects a Thermo-Electric Generator to its turbines."
+	icon = 'icons/obj/power.dmi'
+	icon_state = "teg_connector"
+	anchored = 1
+	density = 1
+
+/obj/machinery/teg_connector/random_appearance
+	New()
+		..()
+		src.dir = cardinal[BUILD_TIME_SECOND % 4 + 1]
+
 /obj/machinery/power/generatorTemp
 	name = "generator"
 	desc = "A high efficiency thermoelectric generator."
@@ -654,9 +667,17 @@ datum/pump_ui/circulator_ui
 		light = new /datum/light/point
 		light.attach(src)
 
-		SPAWN_DBG(0.5 SECONDS)
-			src.circ1 = locate(/obj/machinery/atmospherics/binary/circulatorTemp) in get_step(src,WEST)
-			src.circ2 = locate(/obj/machinery/atmospherics/binary/circulatorTemp) in get_step(src,EAST)
+		SPAWN(0.5 SECONDS)
+			var/turf/T = get_step(src, WEST)
+			while(locate(/obj/machinery/teg_connector) in T)
+				T = get_step(T, WEST)
+			src.circ1 = locate(/obj/machinery/atmospherics/binary/circulatorTemp) in T
+
+			T = get_step(src, EAST)
+			while(locate(/obj/machinery/teg_connector) in T)
+				T = get_step(T, EAST)
+			src.circ2 = locate(/obj/machinery/atmospherics/binary/circulatorTemp) in T
+
 			if(!src.circ1 || !src.circ2)
 				src.status |= BROKEN
 
@@ -848,7 +869,7 @@ datum/pump_ui/circulator_ui
 			else if (genlev && !running)
 				playsound(src.loc, sound_tractorrev, 55, 0)
 				running = 1
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				spam_limiter = 0
 		else if(warnings > WARNING_5MIN && !(src.status & (BROKEN | NOPOWER)))
 			// Allow for klaxon to trigger when off cooldown if UpdateIcon() not called
@@ -1073,7 +1094,7 @@ datum/pump_ui/circulator_ui
 			var/list/affected = DrawLine(last, target, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 			for(var/obj/O in affected)
-				SPAWN_DBG(0.6 SECONDS) qdel(O)
+				SPAWN(0.6 SECONDS) qdel(O)
 
 			//var/turf/currTurf = get_turf(target)
 			//currTurf.hotspot_expose(2000, 400)
@@ -1087,7 +1108,8 @@ datum/pump_ui/circulator_ui
 				next.Add(M)
 
 			last = target
-			target = pick(next)
+			if (length(next))
+				target = pick(next)
 
 	power_change()
 		..()

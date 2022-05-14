@@ -25,7 +25,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 			if (!activated)
 				src.icon_state = sleeping_icon_state
 

@@ -63,7 +63,7 @@
 			sliding = 0
 			return
 		else
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/waited = 0
 				while (waiting?.sliding)
 					waited++

@@ -209,10 +209,10 @@
 	//loop through range(30) three times. sure. whatever.
 	//FIX LATER, putting it in a spawn and lagchecking for now.
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		for (var/obj/machinery/door/window/brigdoor/M in range(30, src))
 			if (M.id == src.id)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					if (M) M.close()
 			LAGCHECK(LAG_HIGH)
 
@@ -352,6 +352,6 @@
 		else if (src.time > 0)
 			icon_state = "doortimer0"
 		else
-			SPAWN_DBG(5 SECONDS)
+			SPAWN(5 SECONDS)
 				icon_state = "doortimer0"
 			icon_state = "doortimer2"

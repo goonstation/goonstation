@@ -2,8 +2,6 @@
 //TODO: refactor types of fish. add fish "qualities" which influence sell values?? but who do you sell fish to?? idk.
 
 /obj/item/fish
-	throwforce = 3
-	force = 5
 	icon = 'icons/obj/foodNdrink/food_fish.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	item_state = "fish"

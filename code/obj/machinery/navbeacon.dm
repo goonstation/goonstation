@@ -10,6 +10,7 @@
 	level = 1		// underfloor
 	layer = 2.5 // TODO layer whatever
 	anchored = 1
+	plane = PLANE_NOSHADOW_BELOW
 
 	var/open = 0		// true if cover is open
 	var/locked = 1		// true if controls are locked
@@ -26,6 +27,7 @@
 	mechanics_type_override = /obj/machinery/navbeacon
 
 	New()
+		START_TRACKING
 		..()
 
 		UnsubscribeProcess()
@@ -40,6 +42,10 @@
 			net_id = generate_net_id(src)
 
 		set_codes()
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
 
 	// set the transponder codes assoc list from codes_txt
 	proc/set_codes()
@@ -99,7 +105,7 @@
 
 		var/beaconrequest = signal.data["findbeacon"] || signal.data["address_tag"]
 		if(beaconrequest && ((beaconrequest in codes) || beaconrequest == "any" || beaconrequest == location))
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				post_status(signal.data["sender"] || signal.data["netid"])
 			return
 
@@ -356,7 +362,7 @@ Transponder Codes:<UL>"}
 		var/turf/T = get_turf(src)
 		hide(T.intact)
 
-		SPAWN_DBG(0.6 SECONDS)
+		SPAWN(0.6 SECONDS)
 			if(!nav_tag)
 				src.nav_tag = "NOWHERE"
 				var/area/A = get_area(src)
@@ -393,7 +399,7 @@ Transponder Codes:<UL>"}
 			reply.data["netid"] = src.net_id
 			reply.data["data"] = src.nav_tag
 			reply.data["navdat"] = "x=[src.x]&y=[src.y]&z=[src.z]"
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				src.link.post_signal(src, reply)
 			return
 
@@ -706,6 +712,36 @@ Transponder Codes:<UL>"}
 			codes_txt = "delivery;dir=8"
 	hallway_central_north
 		location = "Central Primary Hallway"
+		codes_txt = "delivery;dir=1"
+
+		east
+			codes_txt = "delivery;dir=4"
+		south
+			codes_txt = "delivery;dir=2"
+		west
+			codes_txt = "delivery;dir=8"
+	ranch_north
+		location = "Ranch"
+		codes_txt = "delivery;dir=1"
+
+		east
+			codes_txt = "delivery;dir=4"
+		south
+			codes_txt = "delivery;dir=2"
+		west
+			codes_txt = "delivery;dir=8"
+	pool_north
+		location = "Pool"
+		codes_txt = "delivery;dir=1"
+
+		east
+			codes_txt = "delivery;dir=4"
+		south
+			codes_txt = "delivery;dir=2"
+		west
+			codes_txt = "delivery;dir=8"
+	news_office
+		location = "News Office"
 		codes_txt = "delivery;dir=1"
 
 		east

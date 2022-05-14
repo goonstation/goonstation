@@ -74,7 +74,7 @@
 				return
 
 		// Don't lock up the event controller.
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (src) src.do_event(source)
 
 		return
@@ -181,7 +181,7 @@
 					objective_path = /datum/objective_set/blob
 					send_to = 3
 
-					SPAWN_DBG(0)
+					SPAWN(0)
 						var/newname = input(B, "You are a Blob. Please choose a name for yourself, it will show in the form: <name> the Blob", "Name change") as text
 						if (B && newname)
 							phrase_log.log_phrase("name-blob", newname, no_duplicates=TRUE)
@@ -223,7 +223,7 @@
 					role = ROLE_WIZARD
 					objective_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
 
-					SPAWN_DBG(0)
+					SPAWN(0)
 						if (R.gender && R.gender == "female")
 							R.real_name = pick_string_autokey("names/wizard_female.txt")
 						else
@@ -262,7 +262,7 @@
 					objective_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
 
 					var/antag_type = src.antagonist_type
-					SPAWN_DBG(0)
+					SPAWN(0)
 						R2.choose_name(3, antag_type, R2.real_name + " the " + antag_type)
 				else
 					failed = 1
@@ -276,7 +276,7 @@
 					objective_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
 
 					var/antag_type = src.antagonist_type
-					SPAWN_DBG(0)
+					SPAWN(0)
 						C.choose_name(3, antag_type, C.real_name + " the " + antag_type)
 				else
 					failed = 1
@@ -374,7 +374,7 @@
 		//nah
 		/*
 		if (src.centcom_headline && src.centcom_message && random_events.announce_events)
-			SPAWN_DBG (src.message_delay)
+			SPAWN(src.message_delay)
 				command_alert("[src.centcom_message]", "[src.centcom_headline]")
 		*/
 

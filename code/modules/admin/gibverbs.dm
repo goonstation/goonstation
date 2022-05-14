@@ -22,9 +22,9 @@
 		O.pixel_y = -96
 		O.icon = 'icons/effects/214x246.dmi'
 		O.icon_state = "explosion"
-		//SPAWN_DBG(0.5 SECONDS)
+		//SPAWN(0.5 SECONDS)
 		M.gib()
-		SPAWN_DBG(3.5 SECONDS)
+		SPAWN(3.5 SECONDS)
 			if (O)
 				O.delaydispose()
 
@@ -219,7 +219,7 @@
 			logTheThing("diary", usr, M, "has set a floor cluwne upon [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has set a floor cluwne upon [key_name(M)]")
 
-		SPAWN_DBG(0.5 SECONDS) M.cluwnegib(duration)
+		SPAWN(0.5 SECONDS) M.cluwnegib(duration)
 
 /client/proc/cmd_admin_admindamn(mob/M as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -237,7 +237,7 @@
 			logTheThing("diary", usr, M, "has damned [constructTarget(M,"diary")] to hell", "admin")
 			message_admins("[key_name(usr)] has damned [key_name(M)]")
 
-		SPAWN_DBG(0.5 SECONDS) M.damn()
+		SPAWN(0.5 SECONDS) M.damn()
 
 /client/proc/cmd_admin_adminundamn(mob/M as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -272,7 +272,7 @@
 		O.icon = 'icons/effects/214x246.dmi'
 		O.icon_state = "explosion"
 		O.mouse_opacity = 0
-		SPAWN_DBG(3.5 SECONDS)
+		SPAWN(3.5 SECONDS)
 			qdel(O)
 	src.mob.gib(FALSE, TRUE)
 
@@ -360,15 +360,15 @@
 	var/tysonspeed = 1
 
 	New()
-		SPAWN_DBG(0) process()
+		SPAWN(0) process()
 		..()
 
 	bump(atom/M as turf|obj|mob)
 		if(M.density)
 			M.density = 0
-			SPAWN_DBG(0.4 SECONDS)
+			SPAWN(0.4 SECONDS)
 				M.density = 1
-		SPAWN_DBG(0.1 SECONDS)
+		SPAWN(0.1 SECONDS)
 			var/turf/T = get_turf(M)
 			src.x = T.x
 			src.y = T.y
@@ -384,7 +384,7 @@
 				src.z = tysontarget2.z
 				banproc()
 				return
-			else if (get_dist(src, src.tysontarget2) <= 1)
+			else if (BOUNDS_DIST(src, src.tysontarget2) == 0)
 				for(var/mob/O in AIviewers(src, null))
 					O.show_message("<span class='alert'><B>[src]</B> punches [tysontarget2]!</span>", 1)
 				tysontarget2.changeStatus("weakened", 10 SECONDS)
@@ -438,22 +438,22 @@
 	var/mob/caller = null
 
 	New()
-		SPAWN_DBG(0) process()
+		SPAWN(0) process()
 		..()
 
 	bump(atom/M as turf|obj|mob)
 		if(M.density)
 			M.density = 0
-			SPAWN_DBG(0.4 SECONDS)
+			SPAWN(0.4 SECONDS)
 				M.density = 1
-		SPAWN_DBG(0.1 SECONDS)
+		SPAWN(0.1 SECONDS)
 			var/turf/T = get_turf(M)
 			src.x = T.x
 			src.y = T.y
 
 	proc/process()
 		while (!disposed)
-			if (get_dist(src, src.tysontarget2) <= 1)
+			if (BOUNDS_DIST(src, src.tysontarget2) == 0)
 				for(var/mob/O in AIviewers(src, null))
 					O.show_message("<span class='alert'><B>[src]</B> punches [tysontarget2]!</span>", 1)
 				tysontarget2.changeStatus("weakened", 10 SECONDS)
@@ -471,7 +471,7 @@
 	proc/gibproc()
 		// drsingh for various cannot read null.
 		sleep(1.5 SECONDS)
-		if (get_dist(src, src.tysontarget2) <= 1)
+		if (BOUNDS_DIST(src, src.tysontarget2) == 0)
 			for(var/mob/O in AIviewers(src, null))
 				O.show_message("<span class='alert'><B>[src]</B> KOs [tysontarget2] in one punch!</span>", 1)
 			playsound(src.loc, 'sound/impact_sounds/generic_hit_3.ogg', 30, 1, -2)

@@ -476,7 +476,7 @@
 				use_targeted = 2 // Abort parent proc.
 			else if (targets.len == 1) // Only one guy nearby, but we need the mob reference for handleCast() then.
 				use_targeted = 0
-				SPAWN_DBG(0)
+				SPAWN(0)
 					spell.handleCast(targets[1])
 				use_targeted = 2 // Abort parent proc.
 			else
@@ -511,7 +511,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND) //sorry, some race condition i couldt figure out
+		SPAWN(1 SECOND) //sorry, some race condition i couldt figure out
 			if (ishuman(owner?.owner))
 				var/mob/living/carbon/human/H = owner?.owner
 				H.hud?.update_ability_hotbar()
@@ -586,7 +586,7 @@
 		if (isnull(darkener)) // fuck. -drsingh
 			darkener = image('icons/mob/spell_buttons.dmi',"darkener")
 		darkener.alpha = 100
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if(owner)
 				T.color = owner.cd_text_color
 				S.color = owner.cd_text_color
@@ -947,7 +947,7 @@
 				target.visible_message("<span class='alert'><B>[src.holder.owner]'s attack has no effect on [target] whatsoever!</B></span>")
 				src.holder.locked = 0
 				return 998
-			if (!castcheck())
+			if (!castcheck(target))
 				src.holder.locked = 0
 				return 998
 			var/datum/abilityHolder/localholder = src.holder
@@ -963,7 +963,7 @@
 		doCooldown()
 			src.last_cast = world.time + src.cooldown
 
-		castcheck()
+		castcheck(atom/target)
 			return 1
 
 		cooldowncheck()

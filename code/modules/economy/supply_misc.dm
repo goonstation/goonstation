@@ -1,3 +1,7 @@
+ABSTRACT_TYPE(/area/supply)
+/area/supply/
+	expandable = FALSE
+
 /area/supply/spawn_point //the area supplies are spawned at and fired from
 	name = "supply spawn point"
 	icon_state = "shuttle3"
@@ -51,7 +55,7 @@
 	density = 0
 	anchored = 1
 	layer = EFFECTS_LAYER_UNDER_1
-	event_handler_flags = USE_FLUID_ENTER 
+	event_handler_flags = USE_FLUID_ENTER
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WIRECUTTERS
 
 /obj/plasticflaps/Cross(atom/A)

@@ -40,7 +40,7 @@
 		else
 			user.set_eye(C)
 
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				attack_self(user)
 
 /obj/item/device/camera_viewer/ranch

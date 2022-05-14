@@ -63,7 +63,7 @@
 			if(new_port.loc != loc)
 				return 0
 
-			//logTheThing("combat", usr, null, "attaches [src] to [new_port] at [showCoords(new_port.x, new_port.y, new_port.z)].")
+			//logTheThing("combat", usr, null, "attaches [src] to [new_port] at [log_loc(new_port)].")
 
 			add_fingerprint(usr)
 

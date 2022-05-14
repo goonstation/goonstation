@@ -316,7 +316,7 @@
 				// Necessary, as the foamer doesn't use the global fire proc (Convair880).
 				logTheThing("combat", user, null, "driving [ship.name] fires [src.name], creating metal foam at [log_loc(ship)].")
 
-				SPAWN_DBG(0)
+				SPAWN(0)
 					step_towards(D, get_step(D, D.dir))
 					var/location = get_turf(D)
 					for(var/mob/M in AIviewers(5, location))
@@ -387,7 +387,7 @@
 			boutput(ship.pilot, "<span class='alert'><B>The weapon requires a unique power source to function!</B></span>")
 			return
 		playsound(src.loc, "sound/weapons/heavyioncharge.ogg", 75, 1)
-		logTheThing("combat", usr, null, "driving [ship.name] fires [src.name] from [log_loc(ship)].")
+		logTheThing("combat", user, null, "driving [ship.name] fires [src.name] from [log_loc(ship)].")
 		var/obj/overlay/purge = new/obj/overlay{mouse_opacity=FALSE; icon='icons/misc/retribution/320x320.dmi'; plane=PLANE_SELFILLUM; appearance_flags=RESET_TRANSFORM}
 		purge.dir = ship.facing
 		if(!is_cardinal(purge.dir))
@@ -407,7 +407,7 @@
 			purge.pixel_x -= 144
 			purge.pixel_y -= 144
 
-		SPAWN_DBG(1.2 SECONDS)
+		SPAWN(1.2 SECONDS)
 			var/destruction_point_x
 			var/destruction_point_y
 			ship.vis_contents -= purge

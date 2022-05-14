@@ -45,7 +45,7 @@
 					else dogrowth = 0
 			if (dogrowth == 1)
 				var/obj/alien/weeds/B = new /obj/alien/weeds(Vspread)
-				SPAWN_DBG(5 SECONDS)
+				SPAWN(5 SECONDS)
 					if(B)
 						B.Life()
 			count++
@@ -70,7 +70,7 @@
 /*
 /obj/alien/weeds/burn(fi_amount)
 	if (fi_amount > 18000)
-		SPAWN_DBG( 0 )
+		SPAWN( 0 )
 			qdel(src)
 			return
 		return 0

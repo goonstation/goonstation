@@ -62,7 +62,7 @@ var/list/genetek_hair_styles = list()
 		if (!istype(target) || isAI(user))
 			return
 
-		if (get_dist(src,user) > 1 || get_dist(user, target) > 1)
+		if (BOUNDS_DIST(src, user) > 0 || BOUNDS_DIST(user, target) > 0)
 			return
 
 		if (target == user)
@@ -73,7 +73,7 @@ var/list/genetek_hair_styles = list()
 			user.drop_item()
 			target.Attackhand(user)
 			user.set_a_intent(previous_user_intent)
-			SPAWN_DBG(user.combat_click_delay + 2)
+			SPAWN(user.combat_click_delay + 2)
 				if (can_operate(user,target))
 					if (istype(user.equipped(), /obj/item/grab))
 						src.Attackby(user.equipped(), user)
@@ -82,7 +82,7 @@ var/list/genetek_hair_styles = list()
 	proc/can_operate(var/mob/M, var/mob/living/target)
 		if (!isalive(M))
 			return 0
-		if (get_dist(src,M) > 1)
+		if (BOUNDS_DIST(src, M) > 0)
 			return 0
 		if (M.getStatusDuration("paralysis") || M.getStatusDuration("stunned") || M.getStatusDuration("weakened"))
 			return 0
@@ -121,13 +121,12 @@ var/list/genetek_hair_styles = list()
 		set category = "Local"
 
 		move_mob_inside(usr)
-		return
 
 	attack_hand(mob/user as mob)
 		..()
 		eject_occupant(user)
 
-	MouseDrop(mob/user as mob)
+	mouse_drop(mob/user as mob)
 		if (can_operate(user))
 			eject_occupant(user)
 		else
@@ -139,7 +138,6 @@ var/list/genetek_hair_styles = list()
 		set category = "Local"
 
 		eject_occupant(usr)
-		return
 
 
 	verb/eject_occupant(var/mob/user)
@@ -153,10 +151,7 @@ var/list/genetek_hair_styles = list()
 		add_fingerprint(user)
 
 	attackby(var/obj/item/grab/G as obj, user as mob)
-		if ((!( istype(G, /obj/item/grab) ) || !( ismob(G.affecting) )))
-			return
-		if (!isliving(user))
-			boutput(user, "<span class='alert'>You're dead! Quit that!</span>")
+		if (!istype(G))
 			return
 
 		if (src.occupant)
@@ -183,7 +178,6 @@ var/list/genetek_hair_styles = list()
 
 		src.add_fingerprint(user)
 		qdel(G)
-		return
 
 	verb/lock()
 		set name = "Scanner Lock"

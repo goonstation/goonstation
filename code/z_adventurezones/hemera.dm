@@ -411,7 +411,7 @@ Obsidian Crown
 
 				if(isrestrictedz(M.z))
 					for(var/turf/T in view(M, 4))
-						if (!(istype(get_area(M), /area/solarium) && T.loc.type != /area/space)) //If we're in a telesci area and this is a change in area.
+						if (!istype(get_area(M), /area/solarium)) //If we're in a telesci area and this is a change in area.
 							continue
 						if(T.density)
 							continue
@@ -428,10 +428,11 @@ Obsidian Crown
 								continue
 						randomturfs.Add(T)
 
-				boutput(M, "<span class='notice'>You are caught in a magical warp field!</span>")
-				M.visible_message("<span class='combat'>[M] is warped away!</span>")
-				playsound(M.loc, "sound/effects/mag_warp.ogg", 25, 1, -1)
-				M.set_loc(pick(randomturfs))
+				if(length(randomturfs))
+					boutput(M, "<span class='notice'>You are caught in a magical warp field!</span>")
+					M.visible_message("<span class='combat'>[M] is warped away!</span>")
+					playsound(M.loc, "sound/effects/mag_warp.ogg", 25, 1, -1)
+					M.set_loc(pick(randomturfs))
 
 		if (armor_paired != -1 && prob(50) && host.max_health > 10)
 			host.max_health--

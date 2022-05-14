@@ -87,7 +87,7 @@
 
 		spell_invisibility(M, src.duration, 1)
 		H.locked = 1 // Can't use any powers during phaseshift.
-		SPAWN_DBG (src.duration)
+		SPAWN(src.duration)
 			if (H) H.locked = 0
 
 		logTheThing("combat", M, null, "uses mist form at [log_loc(M)].")

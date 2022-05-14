@@ -41,7 +41,7 @@
 
 	..()
 
-	SPAWN_DBG(3 SECONDS) // aaaaaaa
+	SPAWN(3 SECONDS) // aaaaaaa
 		src.zone_sel.change_hud_style('icons/mob/flock_ui.dmi')
 
 	src.name = "[pick_string("flockmind.txt", "flockdrone_name_adj")] [pick_string("flockmind.txt", "flockdrone_name_noun")]"
@@ -590,9 +590,9 @@
 	for(var/i=1 to num_bits)
 		B = new(get_turf(src), F = src.flock)
 		src.flock?.registerUnit(B)
-		SPAWN_DBG(0.2 SECONDS)
+		SPAWN(0.2 SECONDS)
 			B.set_loc(pick(candidate_turfs))
-	SPAWN_DBG(0.1 SECONDS) // make sure the animation finishes
+	SPAWN(0.1 SECONDS) // make sure the animation finishes
 		// finally, away with us
 		src.ghostize()
 		qdel(src)

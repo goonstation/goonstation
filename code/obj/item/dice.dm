@@ -31,7 +31,7 @@ var/list/rollList = list()
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			initialName = name
 			initialDesc = desc
 
@@ -48,7 +48,7 @@ var/list/rollList = list()
 			return 0
 		user.visible_message("<span class='alert'><b>[user] attempts to swallow [src] and chokes on it.</b></span>")
 		user.take_oxygen_deprivation(160)
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -291,7 +291,7 @@ var/list/rollList = list()
 			if (src.addPal(O, user))
 				user.visible_message("<b>[user]</b> gathers up some dice.",\
 				"You gather up some dice.")
-				SPAWN_DBG(0.2 SECONDS)
+				SPAWN(0.2 SECONDS)
 					for (var/obj/item/dice/D in range(1, user))
 						if (D == src)
 							continue
@@ -373,7 +373,7 @@ var/list/rollList = list()
 			user.u_equip(src)
 			src.layer = initial(src.layer)
 			src.set_loc(user.loc)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			user.visible_message("<span class='alert'><b>[user] is crushed into a bloody ball by an unseen force, and vanishes into nothingness!</b></span>")
 			user.implode()
 		return 1

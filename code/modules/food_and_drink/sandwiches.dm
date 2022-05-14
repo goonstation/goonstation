@@ -1,7 +1,7 @@
 
 /obj/item/reagent_containers/food/snacks/sandwich/
 	icon = 'icons/obj/foodNdrink/food_bread.dmi'
-	amount = 4
+	bites_left = 4
 	heal_amt = 2
 	var/hname = null
 	var/job = null
@@ -61,6 +61,13 @@
 		icon_state = "sandwich_blt"
 		initial_reagents = list("bread"=10,"juice_tomato"=2,"cholesterol"=3,"porktonium"=3)
 		food_effects = list("food_refreshed", "food_energized_big")
+
+	c_butty
+		name = "chip butty"
+		desc = "French fries and ketchup between two slices of bread."
+		icon_state = "c_butty"
+		initial_reagents = list("innitium"=25,"ketchup"=20)
+		food_effects = list("food_sweaty", "food_energized_big")
 
 	elvis_meat_h
 		name = "elvismanwich"
@@ -173,7 +180,7 @@
 		name = "meatball sub"
 		desc = "A submarine sandwich consisting of meatballs, cheese, and marinara sauce."
 		icon_state = "meatball_sub"
-		amount = 6
+		bites_left = 6
 		heal_amt = 4
 		food_effects = list("food_hp_up_big", "food_energized_big")
 
@@ -199,7 +206,7 @@
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "hburger"
 	item_state = "burger"
-	amount = 5
+	bites_left = 5
 	heal_amt = 2
 	food_color ="#663300"
 	initial_volume = 20
@@ -208,7 +215,7 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/condiment/))
-			src.amount += 1
+			src.bites_left += 1
 		else return ..()
 
 /obj/item/reagent_containers/food/snacks/burger/buttburger
@@ -277,7 +284,7 @@
 	name = "moldy burger"
 	desc = "A rather disgusting looking burger."
 	icon_state ="moldyburger"
-	amount = 1
+	bites_left = 1
 	heal_amt = 1
 	initial_volume = 15
 	initial_reagents = null
@@ -304,7 +311,7 @@
 	name = "burgle"
 	desc = "The plagueburger."
 	icon_state = "moldyburger"
-	amount = 1
+	bites_left = 1
 	heal_amt = 1
 	initial_volume = 15
 	initial_reagents = null
@@ -329,7 +336,7 @@
 	name = "roburger"
 	desc = "The lettuce is the only organic component. Beep."
 	icon_state = "roburger"
-	amount = 3
+	bites_left = 3
 	heal_amt = 1
 	food_color = "#C8C8C8"
 	brewable = 1
@@ -340,7 +347,7 @@
 	name = "cheeseborger"
 	desc = "The cheese really helps smooth out the metallic flavor."
 	icon_state = "cheeseborger"
-	amount = 3
+	bites_left = 3
 	heal_amt = 1
 	food_color = "#C8C8C8"
 	brewable = 1
@@ -351,7 +358,7 @@
 	name = "synthburger"
 	desc = "A thoroughly artificial snack."
 	icon_state = "hburger"
-	amount = 5
+	bites_left = 5
 	heal_amt = 2
 	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_DINNER
 
@@ -359,7 +366,7 @@
 	name = "baconatrix"
 	desc = "The official food of the Lunar Football League! Also possibly one of the worst things you could ever eat."
 	icon_state = "baconburger"
-	amount = 5
+	bites_left = 5
 	heal_amt = 1
 	initial_volume = 50
 	initial_reagents = list("cholesterol"=5,"porktonium"=45)
@@ -375,7 +382,7 @@
 	name = "sloppy joe"
 	desc = "A rather messy burger."
 	icon_state = "sloppyjoe"
-	amount = 5
+	bites_left = 5
 	heal_amt = 2
 	food_effects = list("food_hp_up_big", "food_sweaty")
 	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_DINNER
@@ -395,7 +402,7 @@
 	name = "dubious burger"
 	desc = "A burger of indeterminate meat type."
 	icon_state = "mysteryburger"
-	amount = 5
+	bites_left = 5
 	heal_amt = 1
 	food_effects = list("food_bad_breath", "food_hp_up_big")
 
@@ -422,7 +429,7 @@
 	name = "cheeseburger"
 	desc = "Tasty, but not particularly healthy."
 	icon_state = "cburger"
-	amount = 6
+	bites_left = 6
 	heal_amt = 2
 	initial_volume = 50
 	initial_reagents = list("cholesterol"=10,"cheese"=1)
@@ -433,7 +440,7 @@
 	name = "weird cheeseburger"
 	desc = "You're not sure if you should eat this, considering the green hue of what you assume to be the cheese."
 	icon_state = "wcburger"
-	amount = 6
+	bites_left = 6
 	heal_amt = 2
 	initial_volume = 50
 	initial_reagents = list("mercury"=1,"LSD"=1,"ethanol"=1,"gcheese"=1,"yuck"=5,"cholesterol"=10)
@@ -444,7 +451,7 @@
 	name = "monkey cheese burger"
 	desc = "How very dadaist."
 	icon_state = "cburger-monkey"
-	amount = 6
+	bites_left = 6
 	heal_amt = 2
 	initial_volume = 50
 	initial_reagents = list("cholesterol"=10,"cheese"=5)
@@ -467,7 +474,7 @@
 	name = "Coronator"
 	desc = "The king of burgers. You can feel your digestive system shutting down just LOOKING at it."
 	icon_state = "bigburger"
-	amount = 10
+	bites_left = 10
 	heal_amt = 5
 	initial_volume = 100
 	initial_reagents = list("cholesterol"=50)
@@ -478,7 +485,7 @@
 	name = "THE MONSTER"
 	desc = "There are no words to describe the sheer unhealthiness of this abomination."
 	icon_state = "giantburger"
-	amount = 1
+	bites_left = 1
 	heal_amt = 50
 	throwforce = 10
 	initial_volume = 330
@@ -495,7 +502,7 @@
 	desc = "Lightly salted potato fingers."
 	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
 	icon_state = "fries"
-	amount = 6
+	bites_left = 6
 	heal_amt = 1
 	initial_volume = 5
 	initial_reagents = list("cholesterol"=1)
@@ -506,7 +513,7 @@
 	desc = "You might want to start over, I'm not exactly lovin' it."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "macguffin"
-	amount = 4
+	bites_left = 4
 	heal_amt = 1
 	initial_reagents = list("cholesterol"=1)
 	meal_time_flags = MEAL_TIME_BREAKFAST

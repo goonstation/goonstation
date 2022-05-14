@@ -46,6 +46,13 @@ var/datum/job_controller/job_controls
 			if (!J.name)
 				src.special_jobs -= J
 
+		#ifdef UPSCALED_MAP
+		for (var/datum/job/J in staple_jobs)
+			if (J.limit > 0)
+				J.limit *= 4
+		#endif
+
+
 	proc/job_config()
 		var/dat = "<html><body><title>Job Controller</title>"
 		dat += "<b><u>Job Controls</u></b><HR>"
@@ -180,7 +187,7 @@ var/datum/job_controller/job_controls
 
 	Topic(href, href_list[])
 		// JOB CONFIG COMMANDS
-		usr_admin_only
+		USR_ADMIN_ONLY
 		if(href_list["AlterCap"])
 			var/list/alljobs = src.staple_jobs | src.special_jobs
 			var/datum/job/JOB = locate(href_list["AlterCap"]) in alljobs
@@ -954,13 +961,13 @@ var/datum/job_controller/job_controls
 
 		if(href_list["Save"])
 			if (!src.check_user_changed())
-				src.savefile_save(usr, (isnum(text2num(href_list["Save"])) ? text2num(href_list["Save"]) : 1))
+				src.savefile_save(usr.client, (isnum(text2num(href_list["Save"])) ? text2num(href_list["Save"]) : 1))
 				boutput(usr, "<span class='notice'><b>Job saved to Slot [text2num(href_list["Save"])].</b></span>")
 			src.job_creator()
 
 		if(href_list["Load"])
 			if (!src.check_user_changed())
-				if (!src.savefile_load(usr, (isnum(text2num(href_list["Load"])) ? text2num(href_list["Load"]) : 1)))
+				if (!src.savefile_load(usr.client, (isnum(text2num(href_list["Load"])) ? text2num(href_list["Load"]) : 1)))
 					alert(usr, "You do not have a job saved in this slot.")
 				else
 					boutput(usr, "<span class='notice'><b>Job loaded from Slot [text2num(href_list["Load"])].</b></span>")
@@ -974,7 +981,7 @@ var/datum/job_controller/job_controls
 		if (href_list["LoadDifKey"])
 			var/key = input("Which admin's jobs? (Enter ckey)","Job Creator")
 			src.load_another_ckey = key
-			if (!src.savefile_path_exists(usr))
+			if (!src.savefile_path_exists(key))
 				src.load_another_ckey = null
 				alert(usr, "Could not find a savefile with that ckey!.")
 			src.job_creator()

@@ -9,6 +9,7 @@
 	var/preddesc = "A trophy from a less interesting kill." // See assign_gimmick_skull().
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "skull"
+	health = 4
 	w_class = W_CLASS_TINY
 	var/mob/donor = null
 	var/donor_name = null
@@ -23,7 +24,7 @@
 
 	New(loc, datum/organHolder/nholder)
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (istype(nholder) && nholder.donor)
 				src.holder = nholder
 				src.donor = nholder.donor

@@ -51,7 +51,7 @@
 			return
 		last_cast = world.time + cooldown
 		holder.updateButtons()
-		SPAWN_DBG(cooldown + 5)
+		SPAWN(cooldown + 5)
 			holder.updateButtons()
 
 /proc/assemble_name(var/datum/abilityHolder/religious/religiousHolder)

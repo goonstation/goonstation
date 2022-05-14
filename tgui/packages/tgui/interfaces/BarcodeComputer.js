@@ -1,4 +1,4 @@
-import { useBackend } from '../backend';
+import { useBackend, useLocalState } from '../backend';
 import { Button, LabeledList, NumberInput, Section, Flex, Box, Stack } from '../components';
 import { Window } from '../layouts';
 
@@ -7,6 +7,7 @@ const BarcodeComputerSection = (props, context) => {
     title,
     destinations,
     act,
+    amount,
   } = props;
   return (
     <Section title={title}>
@@ -21,7 +22,7 @@ const BarcodeComputerSection = (props, context) => {
             align="center"
             key={crate_tag}
             content={name ? name : crate_tag}
-            onClick={() => act('print', { crate_tag })}
+            onClick={() => act('print', { crate_tag, amount })}
           />
         );
       })}
@@ -51,10 +52,10 @@ const IDCard = (props, context) => {
 export const BarcodeComputer = (props, context) => {
   const { act, data } = useBackend(context);
   const {
-    amount,
     sections,
     card,
   } = data;
+  const [amount, setAmount] = useLocalState(context, 'amount', 1);
   return (
     <Window
       title="Barcode computer"
@@ -71,7 +72,7 @@ export const BarcodeComputer = (props, context) => {
                   minValue={1} maxValue={5}
                   stepPixelSize={15}
                   unit={"Barcodes"}
-                  onChange={(e, value) => act('set_amount', { value })}
+                  onDrag={(e, value) => setAmount(value)}
                 />
               </Box>
             </Section>
@@ -98,7 +99,8 @@ export const BarcodeComputer = (props, context) => {
                 <BarcodeComputerSection
                   title={title}
                   destinations={destinations}
-                  act={act} />
+                  act={act}
+                  amount={amount} />
               </Stack.Item>
             );
           })}

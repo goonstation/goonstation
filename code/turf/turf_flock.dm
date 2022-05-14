@@ -194,7 +194,7 @@
 		count++ //enumerate nearby tiles
 //TODO: fail safe for if there are more then 1 group.
 	if(!src) return
-	src.group.removetile(src)
+	src.group?.removetile(src)
 	src.group = null
 	for(var/obj/flock_structure/s in src)
 		s.group = null

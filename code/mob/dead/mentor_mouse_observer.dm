@@ -28,7 +28,7 @@
 		if(keys && src.move_dir && !src.leave_popup_open)
 			src.leave_popup_open = TRUE
 			if(alert(src, "Are you sure you want to leave?", "Hop out of the pocket", "Yes", "No") == "Yes")
-				src.stop_observing()
+				qdel(src)
 			src.leave_popup_open = FALSE
 
 	click(atom/target, params) // TODO spam delay
@@ -58,7 +58,7 @@
 		animate(src.ping, transform = M, time = 1 SECOND, easing = BACK_EASING, flags = ANIMATION_PARALLEL)
 		qdel(M)
 
-		SPAWN_DBG(1 SECONDS)
+		SPAWN(1 SECONDS)
 			if(my_id == src.ping_id) // spam clicking and stuff
 				animate(src.ping, alpha = 0, time = 0.3 SECOND, easing = SINE_EASING)
 				animate(src.ping, transform = null, time = 0.3 SECOND, easing = SINE_EASING, flags = ANIMATION_PARALLEL)
@@ -121,9 +121,6 @@
 		src.my_mouse.emote(act, voluntary)
 
 	stop_observing()
-		boot()
-
-	ghostize()
 		boot()
 
 	disposing()

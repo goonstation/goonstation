@@ -146,7 +146,7 @@
 			playsound(src.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 20, 1, -2)
 			boutput(user, "<span class='notice'>You snap open the child-protective safety tape on [src].</span>")
 
-	MouseDrop(atom/over_object, src_location, over_location)
+	mouse_drop(atom/over_object, src_location, over_location)
 		if(!src.open)
 			if (over_object == usr && in_interact_range(src, usr) && isliving(usr) && !usr.stat)
 				return

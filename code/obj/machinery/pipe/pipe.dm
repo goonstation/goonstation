@@ -738,7 +738,7 @@ var/linenums = 0
 
 	if(circ_status == 1)
 		circ_status = 2
-		SPAWN_DBG(3 SECONDS)				// 3 second delay for slow-off
+		SPAWN(3 SECONDS)				// 3 second delay for slow-off
 			if(circ_status == 2)
 				circ_status = 0
 				UpdateIcon()
@@ -761,7 +761,7 @@ var/linenums = 0
 	if(circ_status == 1)
 		if(!on)
 			circ_status = 2
-			SPAWN_DBG(3 SECONDS)
+			SPAWN(3 SECONDS)
 				if(circ_status == 2)
 					circ_status = 0
 					UpdateIcon()
@@ -892,7 +892,7 @@ var/linenums = 0
 	//agas = new/obj/substance/gas()
 
 	gasflowlist += src
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		var/obj/machinery/atmoalter/A = locate(/obj/machinery/atmoalter, src.loc)
 
 		if(A && A.c_status != 0)
@@ -1718,7 +1718,7 @@ var/linenums = 0
 	else
 
 		status |= NOPOWER
-	SPAWN_DBG(rand(1,15))	// So they don't all turn off at the same time
+	SPAWN(rand(1,15))	// So they don't all turn off at the same time
 		UpdateIcon()
 
 // Filter inlet
@@ -1805,7 +1805,7 @@ var/linenums = 0
 		status &= ~NOPOWER
 	else
 		status |= NOPOWER
-	SPAWN_DBG(rand(1,15))
+	SPAWN(rand(1,15))
 		UpdateIcon()
 	return
 
@@ -1835,7 +1835,7 @@ var/linenums = 0
 		status &= ~NOPOWER
 	else
 		status |= NOPOWER
-	SPAWN_DBG(rand(1,15))
+	SPAWN(rand(1,15))
 		UpdateIcon()
 	return
 

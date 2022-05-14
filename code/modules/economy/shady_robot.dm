@@ -110,7 +110,7 @@
 			rare_products -= C //so we don't get duplicates
 
 	proc/process()
-		SPAWN_DBG(30 SECONDS)
+		SPAWN(30 SECONDS)
 			if(prob(20) && !scan)
 				teleport()
 			process()
@@ -120,7 +120,7 @@
 			boutput(M, "<span class='alert'><B>[src.name]</B> becomes angry!</span>")
 		src.desc = "[src] looks angry."
 		teleport()
-		SPAWN_DBG(rand(1000,3000))
+		SPAWN(rand(1000,3000))
 			src.visible_message("<b>[src.name] calms down.</b>")
 			src.desc = "[src] looks a bit annoyed."
 			src.temp = "[src.name] has calmed down.<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"

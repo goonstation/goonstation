@@ -101,7 +101,7 @@
 
 		// ptoato said to just call del directly so blame them
 		// pali: potato was wrong
-		SPAWN_DBG(4 SECONDS)
+		SPAWN(4 SECONDS)
 			qdel(src)
 
 
@@ -126,11 +126,11 @@
 		maptext = "<span class='pixel c sh' style=\"[style]\">[msg]</span>"
 		animate(src, alpha = 255, maptext_y = 34, time = 4)
 
-		SPAWN_DBG(4 SECONDS)
+		SPAWN(4 SECONDS)
 			bump_up()
 
 
-		SPAWN_DBG(7 SECONDS)
+		SPAWN(7 SECONDS)
 			del(src)
 
 	proc/bump_up()
@@ -284,7 +284,7 @@
 
 		boutput(user, "<span class='notice'>[src] mulches up [W].</span>")
 		user.u_equip(W)
-		W.dropped()
+		W.dropped(user)
 		mulch_item(W, score)
 		var/MT = start_scoring()
 		update_score(MT, score)
@@ -350,7 +350,7 @@
 		animate(transform = matrix(1, 0, 0, 0, 1, 0), time = 5)
 		animate(pixel_y = 20 + 6, time = 5)
 		animate(pixel_y = 20 + 12, alpha = 0, time = 5)
-		SPAWN_DBG(4 SECONDS)
+		SPAWN(4 SECONDS)
 			working--
 			if (working == 0)
 				// if > 1 then the score is still changing so just wait a while...
@@ -364,10 +364,10 @@
 		if (!isliving(user))
 			boutput(user, "<span class='alert'>Excuse me you are dead, get your gross dead hands off that!</span>")
 			return
-		if (get_dist(user,src) > 1)
+		if (BOUNDS_DIST(user, src) > 0)
 			boutput(user, "<span class='alert'>You need to move closer to [src] to do that.</span>")
 			return
-		if (get_dist(O,src) > 1 || get_dist(O,user) > 1)
+		if (BOUNDS_DIST(O, src) > 0 || BOUNDS_DIST(O, user) > 0)
 			boutput(user, "<span class='alert'>[O] is too far away to load into [src]!</span>")
 			return
 
@@ -402,7 +402,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			gunsim = locate() in world
 
 	attack_hand(mob/user as mob)
@@ -415,7 +415,7 @@
 		icon_state = "cleanbot-c"
 		user.visible_message("CLEANIN UP THE MURDERBOX STAND CLEAR")
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for (var/obj/item/I in gunsim)
 				if(istype(I, /obj/item/device/radio/intercom)) //lets not delete the intercoms inside shall we?
 					continue
@@ -439,7 +439,7 @@
 			for (var/obj/decal/D in gunsim)
 				qdel(D)
 */
-		SPAWN_DBG(60 SECONDS)
+		SPAWN(60 SECONDS)
 			active = 0
 			alpha = 255
 			icon_state = "cleanbot1"
@@ -467,7 +467,7 @@
 		//T.x = src.x + 1 // move it to the right
 
 
-		SPAWN_DBG(10 SECONDS)
+		SPAWN(10 SECONDS)
 			active = 0
 			alpha = 255
 
@@ -752,7 +752,7 @@
 		src.update_monitor()
 		if (src.update_delay)
 			UnsubscribeProcess()
-			SPAWN_DBG(0)
+			SPAWN(0)
 				while (src.update_delay)
 					src.update_monitor()
 					sleep(update_delay)
@@ -918,7 +918,7 @@
 				// no! how did you even get here. jesus
 				return
 
-			return call(src.effective_callee, src.monitored_proc)(src.monitored_args)
+			return call(src.effective_callee, src.monitored_proc)(arglist(src.monitored_args))
 
 
 		emergency_shuttle
@@ -983,6 +983,38 @@
 				set_loc(null)
 
 
+
+	health
+		require_var_or_list = 0
+		maptext_prefix = ""
+		maptext_suffix = ""
+
+		validate_monitored()
+			return iscarbon(monitored)
+
+		get_value()
+			. = scan_health_generate_text(monitored)
+
+
+		constantly_overhead
+			appearance_flags = TILE_BOUND | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_APART | PIXEL_SCALE
+
+			New()
+				..()
+				src.pixel_y += 34
+
+				var/atom/movable/home = src.loc
+				// Put it inside something to make it constantly show its location.
+				if (istype(home))
+					home.vis_contents += src
+				else
+					// if we are not home then we are gone, bye
+					qdel(src)
+					return
+				src.monitored = src.loc
+				set_loc(null)
+
+
 	stats
 		monitored_list = "stats"
 		ding_on_change = 1
@@ -1029,6 +1061,20 @@
 		clones
 			monitored_var = "clones"
 			maptext_prefix = "<span class='c pixel sh'>Clones:\n<span class='vga'>"
+
+
+		last_death
+			require_var_or_list = 0
+			maptext_prefix = "<span class='c pixel sh'>Last Death:<br><span class='vga'>"
+			maptext_suffix = "</span>"
+			ding_sound = "sound/misc/lose.ogg"
+
+			get_value()
+				if (!src.monitored["stats"]["lastdeath"])
+					return "None... yet</span>"
+				return "[src.monitored["stats"]["lastdeath"]["name"]]</span><br>[src.monitored["stats"]["lastdeath"]["whereText"]]"
+
+
 
 	budget
 		New()
@@ -1426,7 +1472,7 @@ Other Goonstation servers:[serverList]</span>"})
 		src.victim = home
 		set_loc(null)
 		// gib_time = ticker.round_elapsed_ticks + time_until_gib
-		SPAWN_DBG(0)
+		SPAWN(0)
 			countdown()
 
 	// These are admin gimmick bombs so a while...sleep() delay isn't going to murder things
@@ -1453,3 +1499,33 @@ Other Goonstation servers:[serverList]</span>"})
 			victim.gib()
 
 		qdel(src)
+
+
+	fast
+		t100		// ~10 sec
+			gib_time = 100
+		t1000		// ~100 sec
+			gib_time = 1000
+		t3000		// ~300 sec (5 min)
+			gib_time = 3000
+		t6000		// ~600 sec (10 min)
+			gib_time = 6000
+
+		countdown()
+			do
+				sleep(0.1 SECOND)
+				gib_time--
+				switch (gib_time)
+					if (100 to INFINITY)
+						maptext = "<span class='vb c ol ps2p'>[round(gib_time)]</span>"
+					else
+						maptext = "<span class='vb c ol ps2p' style='color: #ff4444;'>[round(gib_time)]</span>"
+
+			while (gib_time > 0 && !src.qdeled && !victim.qdeled)
+
+			if (victim && !victim.qdeled)
+				victim.vis_contents -= src
+				src.maptext = null
+				victim.gib()
+
+			qdel(src)

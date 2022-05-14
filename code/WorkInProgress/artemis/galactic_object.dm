@@ -323,11 +323,18 @@ var/global/datum/galaxy/GALAXY = new
 	New()
 		..()
 		if(src.destination_name)
+<<<<<<< HEAD
 			SPAWN_DBG(1 SECOND)
 				for(var/turf/T in landmarks[LANDMARK_PLANETS])
 					if(landmarks[LANDMARK_PLANETS][T] == src.destination_name)
 						if(!src.landing_zones) src.landing_zones = list()
 						src.landing_zones[name] = T
+=======
+			SPAWN(1 SECOND)
+				for(var/obj/landmark/destination_landmark/D in world)
+					if(D.destination_name == src.destination_name)
+						src.landing_zone = D
+>>>>>>> upstream/master
 						return
 
 	proc/check_distance(max_distance)

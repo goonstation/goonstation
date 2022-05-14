@@ -8,6 +8,7 @@
 
 ////////////////
 proc/make_cleanable(var/type,var/loc,var/list/viral_list)
+	RETURN_TYPE(/obj/decal/cleanable)
 	return new type(loc, viral_list)
 
 /obj/decal/cleanable
@@ -205,7 +206,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 					C.add_stain(src.stain)
 					return
 			else
-				SPAWN_DBG(0) //sorry. i want to lagcheck this. DO SOMETHING BETTER LATER ARUUGh
+				SPAWN(0) //sorry. i want to lagcheck this. DO SOMETHING BETTER LATER ARUUGh
 					for (var/mob/living/carbon/human/H in src.loc)
 						if (H.lying)
 							if (H.wear_suit)
@@ -292,7 +293,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 
 		..()
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (!src.disposed && src.loc && length(src.loc.contents) < 15)
 				for (var/obj/O in src.loc)
 					LAGCHECK(LAG_LOW)
@@ -839,7 +840,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 				user.show_text("All that won't fit on [src]!", "red")
 				pen.in_use = 0
 				return
-			logTheThing("station", user, null, "writes on [src] with [pen] at [showCoords(src.x, src.y, src.z)]: [t]")
+			logTheThing("station", user, null, "writes on [src] with [pen] at [log_loc(src)]: [t]")
 			t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
 			if (pen.uses_handwriting && user?.mind?.handwriting)
 				src.font = user.mind.handwriting
@@ -1139,7 +1140,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	slippery = 10
 	can_dry = 1
 	can_sample = 1
-	sample_reagent = "slime"
+	sample_reagent = "badgrease"
 	stain = "slimy"
 
 	Dry(var/time = rand(100,200))
@@ -1231,7 +1232,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	Cross(atom/A)
 		if (ismob(A))
 			A.changeStatus("slowed", 0.2 SECONDS)
-			SPAWN_DBG(-1)
+			SPAWN(-1)
 				qdel(src)		//break when walked over
 		else return 1
 		..()
@@ -1570,7 +1571,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		on_fire = image('icons/effects/fire.dmi', "2old")
 		visible_message("<span class='alert'>[src] ignites!</span>")
 		src.overlays += on_fire
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/turf/T = get_turf(src)
 			while (burn_time > 0)
 				if (loc == T && !disposed && on_fire)
@@ -1757,7 +1758,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		kind_of_cleanable = "FLOCK"
 	else
 		kind_of_cleanable = "BLOOD"
-	SPAWN_DBG(0)
+	SPAWN(0)
 		/// Number of tiles where it should try to make a splatter
 		var/num_splats = rand(round(dist * 0.2), dist) + 1
 		for (var/turf/T in linepath)
@@ -1794,3 +1795,9 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 							elecflash(src)
 			sleep(0.1 SECONDS)
 
+/obj/decal/cleanable/sec_tape
+	name = "ripped up tape"
+	desc = "Some ripped up security tape."
+	icon = 'icons/obj/decals/cleanables.dmi'
+	icon_state = "sec_tape_1"
+	random_icon_states = list("sec_tape_1", "sec_tape_2")

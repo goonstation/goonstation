@@ -89,6 +89,7 @@
 			var/mob/living/carbon/human/H = target
 			logTheThing("combat", H, null, "stood on a [src] at [log_loc(src)].")
 			H.changeStatus("stunned", 4 SECONDS)
+			H.force_laydown_standup()
 			random_brute_damage(H, 50, 0)
 			take_bleeding_damage(H, null, 15, DAMAGE_CUT)
 			H.UpdateDamageIcon()

@@ -62,7 +62,7 @@
 		..()
 		if (health < 0 && !isdead(src))
 			setdead(src)
-			death(0)
+			death(FALSE)
 
 	swap_hand(var/switchto = 0)
 		if (!switchto)
@@ -107,7 +107,7 @@
 		return active_tools[active_tool]
 
 	bump(atom/movable/AM as mob|obj)
-		SPAWN_DBG( 0 )
+		SPAWN( 0 )
 			if (src.now_pushing)
 				return
 			..()

@@ -241,7 +241,7 @@
 				logTheThing("admin", "[user] (Discord)", null, "displayed an alert to [constructTarget(C,"admin")] with the message \"[message]\"")
 				logTheThing("diary", "[user] (Discord)", null, "displayed an alert to  [constructTarget(C,"diary")] with the message \"[message]\"", "admin")
 				if (C?.mob)
-					SPAWN_DBG(0)
+					SPAWN(0)
 						C.mob.playsound_local(C.mob, "sound/voice/animal/goose.ogg", 100, flags = SOUND_IGNORE_SPACE)
 						if (alert(C.mob, message, "!! Admin Alert !!", "OK") == "OK")
 							message_admins("[ckey] acknowledged the alert from [user] (Discord).")
@@ -296,7 +296,7 @@
 	argument_types = list(/datum/command_argument/string="headline", /datum/command_argument/the_rest="body")
 	execute(user, headline, body)
 		for_by_tcl(C, /obj/machinery/communications_dish)
-			C.add_centcom_report("[command_name()] Update", body)
+			C.add_centcom_report(ALERT_GENERAL, body)
 		body = discord_emojify(body)
 		headline = discord_emojify(headline)
 		command_alert(body, headline, "sound/misc/announcement_1.ogg")
@@ -396,6 +396,24 @@
 		logTheThing("admin", "[user] (Discord)", target, "delimbed [constructTarget(target,"admin")]")
 		logTheThing("diary", "[user] (Discord)", target, "delimbed [constructTarget(target,"diary")].", "admin")
 		message_admins("[user] (Discord) delimbed [key_name(target)].")
+		return TRUE
+
+/datum/spacebee_extension_command/state_based/confirmation/mob_targeting/cryo
+	name = "cryo"
+	help_message = "Cryos a given ckey."
+	action_name = "cryo"
+
+	perform_action(user, mob/target)
+		if (!length(by_type[/obj/cryotron]))
+			system.reply("Error, no cryotron detected.", user)
+			return FALSE
+		var/obj/cryotron/C = pick(by_type[/obj/cryotron])
+		if (!C.add_person_to_storage(target, FALSE))
+			system.reply("Error, cryoing failed.", user)
+			return FALSE
+		logTheThing("admin", "[user] (Discord)", target, "cryos [constructTarget(target,"admin")]")
+		logTheThing("diary", "[user] (Discord)", target, "cryos [constructTarget(target,"diary")].", "admin")
+		message_admins("[user] (Discord) cryos [key_name(target)].")
 		return TRUE
 
 /datum/spacebee_extension_command/state_based/confirmation/mob_targeting/send_to_arrivals
@@ -593,3 +611,25 @@
 		logTheThing("diary", "[user] (Discord)", null, logMessage, "admin")
 		message_admins("[user] (Discord) [logMessage]")
 		system.reply(logMessage)
+
+
+/datum/spacebee_extension_command/state_based/confirmation/renamestation
+	name = "renamestation"
+	help_message = "Rename the station."
+	argument_types = list(/datum/command_argument/the_rest="new_name")
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+	var/new_name = null
+
+	prepare(user, new_name)
+		src.new_name = new_name
+		return "You are about to rename the station to `[new_name]`."
+
+	do_it(user)
+		if(isnull(src.new_name))
+			return
+		set_station_name(user, new_name, admin_override=TRUE)
+		message_admins("<span class='alert'>Admin [user] (Discord) renamed station to [src.new_name]!</span>")
+		logTheThing("admin", "[user] (Discord)", null, "renamed station to [src.new_name]!")
+		logTheThing("diary", "[user] (Discord)", null, "renamed station to [src.new_name]!", "admin")
+		var/success_msg = "Station renamed to [src.new_name]."
+		system.reply(success_msg)

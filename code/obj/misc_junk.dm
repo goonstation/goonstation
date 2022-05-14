@@ -267,7 +267,7 @@
 			if (M != user)
 				M.change_misstep_chance(50)
 
-		SPAWN_DBG(6 SECONDS)
+		SPAWN(6 SECONDS)
 			spam_flag = 0
 
 /obj/item/rubber_hammer
@@ -405,7 +405,7 @@
 			usr.restrain_time = TIME + 40
 			src.smoke.set_up(1, 0, target_loc,null,R.get_average_color())
 			src.smoke.attach(target_loc)
-			SPAWN_DBG(0) //vape is just the best for not annoying crowds I swear
+			SPAWN(0) //vape is just the best for not annoying crowds I swear
 				src.smoke.start()
 				sleep(1 SECOND)
 
@@ -500,7 +500,7 @@
 		boutput(user, "<span class='notice'><b>You are surrounded by a BATTLE BARRIER!</b></span>")
 		user.visible_message("<span class='alert'>[user] is encased in a protective shield.</span>")
 		user.spellshield = 1
-		SPAWN_DBG(10 SECONDS)
+		SPAWN(10 SECONDS)
 			user.spellshield = 0
 			boutput(user, "<span class='notice'><b>Your magical barrier fades away!</b></span>")
 			user.visible_message("<span class='alert'>The shield protecting [user] fades away.</span>")

@@ -20,7 +20,7 @@
         return 1
     if (target == holder.owner)
       return 1
-    if (get_dist(holder.owner, target) > 1)
+    if (BOUNDS_DIST(holder.owner, target) > 0)
       boutput(holder.owner, __red("That is too far away to mark."))
       return 1
     var/mob/M = target
@@ -35,7 +35,7 @@
       E.marked_target = M
 
       // TODO: NOT THIS, THERE MUST BE A BETTER WAY
-      SPAWN_DBG(1 MINUTE) // 60 second timeout for marks
+      SPAWN(1 MINUTE) // 60 second timeout for marks
         if(E.marked_target && E.marked_target == M)
           boutput(E, "<span class='alert'>Our mark on [E.marked_target] has faded.</span>")
           E.marked_target = null

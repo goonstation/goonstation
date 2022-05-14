@@ -37,7 +37,7 @@
 				used = 1
 				user.drop_item(src)
 				faction_reset(user.client)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					boutput(user,"It is done.<br>The papers vanish in a puff of smoke. Politics is easy!")
 				qdel(src)
 

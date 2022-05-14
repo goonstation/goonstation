@@ -16,7 +16,7 @@
 		return
 
 	M.verbs -= /mob/proc/bball_nova
-	SPAWN_DBG(30 SECONDS)
+	SPAWN(30 SECONDS)
 		M.verbs += /mob/proc/bball_nova
 
 	M.visible_message("<span class='alert'>A swarm of basketballs erupts from [M]!</span>")
@@ -49,7 +49,7 @@
 		return
 
 	M.verbs -= /mob/proc/showboat_slam
-	SPAWN_DBG(30 SECONDS)
+	SPAWN(30 SECONDS)
 		M.verbs += /mob/proc/showboat_slam
 
 	for(var/obj/item/basketball/B in M.contents)
@@ -84,7 +84,7 @@
 	O.pixel_y = -96
 	O.icon = 'icons/effects/214x246.dmi'
 	O.icon_state = "explosion"
-	SPAWN_DBG(3.5 SECONDS) qdel(O)
+	SPAWN(3.5 SECONDS) qdel(O)
 
 	for(var/mob/N in AIviewers(M, null))
 		if(get_dist(N, target) <= 2)
@@ -111,7 +111,7 @@
 		return
 
 	M.verbs -= /mob/proc/holy_jam
-	SPAWN_DBG(15 SECONDS)
+	SPAWN(15 SECONDS)
 		M.verbs += /mob/proc/holy_jam
 
 	for(var/obj/item/basketball/B in M.contents)
@@ -177,7 +177,7 @@
 	if(!isturf(picked)) return
 	M.set_loc(picked)
 	M.verbs -= /mob/proc/blitz_slam
-	SPAWN_DBG(4 SECONDS)
+	SPAWN(4 SECONDS)
 		M.verbs += /mob/proc/blitz_slam
 
 /mob/proc/clown_jam(mob/living/target as mob in oview(6))
@@ -194,7 +194,7 @@
 	var/SPtime = 3000
 	if (M.bball_spellpower()) SPtime = 900
 	M.verbs -= /mob/proc/clown_jam
-	SPAWN_DBG(SPtime)
+	SPAWN(SPtime)
 	M.verbs += /mob/proc/clown_jam
 
 	for(var/obj/item/basketball/B in M.contents)
@@ -324,7 +324,7 @@
 
 	M.verbs -= /mob/proc/chaos_dunk
 
-	logTheThing("combat", M, null, "<b>triggers a chaos dunk in [M.loc.loc] ([showCoords(M.x, M.y, M.z)])!</b>")
+	logTheThing("combat", M, null, "<b>triggers a chaos dunk in [M.loc.loc] ([log_loc(M)])!</b>")
 
 	for(var/obj/item/basketball/B in M.contents)
 		B.item_state = "bball2"
@@ -345,14 +345,14 @@
 	siren.repeat = 1
 	siren.channel = 5
 	world << siren
-	command_alert("A massive influx of negative b-ball protons has been detected in [get_area(M)]. A Chaos Dunk is imminent. All personnel currently on [station_name(1)] have 15 seconds to reach minimum safe distance. This is not a test.")
+	command_alert("A massive influx of negative b-ball protons has been detected in [get_area(M)]. A Chaos Dunk is imminent. All personnel currently on [station_name(1)] have 15 seconds to reach minimum safe distance. This is not a test.", alert_origin = ALERT_ANOMALY)
 	for(var/area/A in world)
 		A.eject = 1
 		A.UpdateIcon()
 		LAGCHECK(LAG_LOW)
 	for(var/mob/N in mobs)
 		shake_camera(N, 120, 8)
-	SPAWN_DBG(0)
+	SPAWN(0)
 		var/thunder = 70
 		while(thunder > 0)
 			thunder--
@@ -416,7 +416,7 @@
 	M.transforming = 0
 
 	M.verbs -= /mob/proc/spin
-	SPAWN_DBG(4 SECONDS)
+	SPAWN(4 SECONDS)
 		M.verbs += /mob/proc/spin
 
 /obj/item/bball_uplink
@@ -539,7 +539,7 @@
 			src.temp = "<A href='byond://?src=\ref[src];selfdestruct2=1'>Self-Destruct</A>"
 		else if (href_list["selfdestruct2"])
 			src.selfdestruct = 1
-			SPAWN_DBG(10 SECONDS)
+			SPAWN(10 SECONDS)
 				explode()
 				return
 		else

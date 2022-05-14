@@ -48,7 +48,7 @@
 	// flockless drones act differently
 	src.flock = F
 	// wait for like one tick for the unit to set up properly before registering
-	SPAWN_DBG(1 DECI SECOND)
+	SPAWN(1 DECI SECOND)
 		if(!isnull(src.flock))
 			src.flock.registerUnit(src)
 
@@ -111,12 +111,12 @@
 		playsound(src, "sound/weapons/rev_flash_startup.ogg", 40, 1, -3)
 		boutput(src, "<span class='flocksay'><b>\[SYSTEM: Fire detected in critical systems. Integrated extinguishing systems are engaging.\]</b></span>")
 		src.extinguishing = 1
-		SPAWN_DBG(5 SECONDS)
+		SPAWN(5 SECONDS)
 			var/obj/fire_foam/F = (locate(/obj/fire_foam) in src.loc)
 			if (!F)
 				F = new /obj/fire_foam
 				F.set_loc(src.loc)
-				SPAWN_DBG(10 SECONDS)
+				SPAWN(10 SECONDS)
 					if (F && !F.disposed)
 						qdel(F)
 			playsound(src, "sound/effects/spray.ogg", 50, 1, -3)

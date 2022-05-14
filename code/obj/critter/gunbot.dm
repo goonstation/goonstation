@@ -37,11 +37,11 @@
 
 				playsound(src.loc, "sound/weapons/Gunshot.ogg", 50, 1)
 				var/tturf = get_turf(target)
-				SPAWN_DBG(1 DECI SECOND)
+				SPAWN(1 DECI SECOND)
 					Shoot(tturf, src.loc, src)
-				SPAWN_DBG(0.4 SECONDS)
+				SPAWN(0.4 SECONDS)
 					Shoot(tturf, src.loc, src)
-				SPAWN_DBG(0.6 SECONDS)
+				SPAWN(0.6 SECONDS)
 					Shoot(tturf, src.loc, src)
 
 				src.attack = 0
@@ -64,11 +64,11 @@
 
 				playsound(src.loc, "sound/weapons/Gunshot.ogg", 50, 1)
 				var/tturf = get_turf(target)
-				SPAWN_DBG(1 DECI SECOND)
+				SPAWN(1 DECI SECOND)
 					Shoot(tturf, src.loc, src)
-				SPAWN_DBG(0.4 SECONDS)
+				SPAWN(0.4 SECONDS)
 					Shoot(tturf, src.loc, src)
-				SPAWN_DBG(0.6 SECONDS)
+				SPAWN(0.6 SECONDS)
 					Shoot(tturf, src.loc, src)
 
 				src.attack = 0
@@ -90,6 +90,6 @@
 			new drop2(Ts)
 			make_cleanable( /obj/decal/cleanable/robot_debris,Ts)
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			elecflash(src,2)
 			qdel(src)
