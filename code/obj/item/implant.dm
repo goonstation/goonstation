@@ -792,6 +792,10 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	var/bleed_timer = 0
 	var/forensic_ID = null // match a bullet to a gun holy heckkkkk
 
+	New()
+		..()
+		implant_overlay = image(icon = 'icons/mob/human.dmi', icon_state = "bullet_wound-[rand(0, 4)]", layer = MOB_EFFECT_LAYER)
+
 	bullet_357
 		name = ".357 round"
 		desc = "A powerful revolver bullet, likely of criminal origin."
@@ -822,6 +826,10 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		icon_state = "bulletplastic"
 		desc = "A small, sublethal plastic projectile."
 
+		New()
+			..()
+			implant_overlay = null
+
 	bullet_308
 		name = "Rifle Round" // this is used by basically every rifle in the game, ignore the "308" path
 		icon_state = "bulletbig"
@@ -846,10 +854,17 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		icon_state = "buckshot"
 		desc = "A collection of buckshot rounds, a very commonly used load for shotguns."
 
+		New()
+			..()
+			implant_overlay = image(icon = 'icons/mob/human.dmi', icon_state = "buckshot_wound-[rand(0, 1)]", layer = MOB_EFFECT_LAYER)
 	staple
 		name = "staple"
 		icon_state = "staple"
 		desc = "Well that's not very nice."
+
+		New()
+			..()
+			implant_overlay = null
 
 	stinger_ball
 		name = "rubber ball"
@@ -866,6 +881,10 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		icon = 'icons/obj/scrap.dmi'
 		desc = "A bunch of jagged shards of metal."
 		icon_state = "2metal2"
+
+		New()
+			..()
+			implant_overlay = null
 
 	body_visible
 		bleed_time = 0

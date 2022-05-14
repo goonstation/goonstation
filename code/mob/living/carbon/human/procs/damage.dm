@@ -436,6 +436,16 @@
 
 	src.take_toxin_damage(-tox)
 
+	if (burn > 0)
+		if (burn >= 10 || src.get_burn_damage() <= 5)
+			for (var/i in 0 to 4)
+				src.UpdateOverlays(null, "laser_wound-[i]")
+		else if (prob(10))
+			for (var/i in 0 to 4)
+				if (src.GetOverlayImage("laser_wound-[i]"))
+					src.UpdateOverlays(null, "laser_wound-[i]")
+					break
+
 	if (zone == "All")
 		var/bruteOrganCount = 0.0 		//How many organs have brute damage?
 		var/burnOrganCount = 0.0		//How many organs have burn damage?
