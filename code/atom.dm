@@ -557,7 +557,7 @@
 	*/
 /atom/movable/proc/OnMove(source = null)
 
-/// Base pull proc, returns 1 if the various checks for pulling fail, so that it can be overriden to add extra functionality without copypasting all the conditions.
+/// Base pull proc, returns 1 if the various checks for pulling fail, so that it can be overriden to add extra functionality without rewriting all the conditions.
 /atom/movable/proc/pull()
 	if (!( usr ))
 		return 1
