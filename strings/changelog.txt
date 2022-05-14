@@ -1,5 +1,9 @@
 
 (t)sat may 14 22
+(u)Wisemonster
+(p)8550
+(e)🆕|feature
+(*)Add a new objective for Arcfiends!
 (u)LeahTheTech
 (p)8512
 (e)🗺⚖|mapping, balance
