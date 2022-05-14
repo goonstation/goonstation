@@ -1224,7 +1224,14 @@
 	.=0
 
 /mob/living/carbon/human
-	proc/throwglasses()
+	proc/areglassesprotected()
+		if (src.head && (src.head.c_flags & COVERSEYES))
+			return 1
+		if (src.wear_mask && (src.wear_mask.c_flags & COVERSEYES))
+			return 1
+		return 0
+
+	proc/throwglasses(alwaysbreak = FALSE)
 		if (!src.glasses)
 			return
 
@@ -1235,14 +1242,14 @@
 			qdel(src)
 			return
 
-		if (src.head && src.head.c_flags & COVERSEYES)
+		if (!alwaysbreak && src.areglassesprotected())
 			return
 
-		if (prob(100 - G.stability))
+		if (alwaysbreak || prob(100 - G.stability))
 			T.visible_message("<span class='alert'>[G] fly off [src]'s face!</span>")
 			playsound(T, "sound/impact_sounds/slap.ogg", 100, 1)
 
-			src.drop_from_slot(G, T)
+			src.drop_item(G)
 			target = get_offset_target_turf(G.loc, rand(-5,5), rand(-5,5))
 			G.throw_at(target, 5, 1)
 
@@ -1250,14 +1257,15 @@
 		if (!src.glasses)
 			return ..()
 		if (src.zone_sel.selecting == "head")
-			src.glasses.setstability(src.glasses.stability += 20)
+			src.glasses.setstability(src.glasses.stability += 30)
 		..()
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (W.force && !istype(W, /obj/item/device/flash) && src.glasses && user.zone_sel.selecting == "head")
-			src.glasses.stability -= (10 + (W.force / 2))
-			if (src.glasses.stability < 40)
-				src.throwglasses()
+			if (!src.areglassesprotected())
+				src.glasses.setstability(src.glasses.stability -= (10 + clamp(W.force / 2, 0, 20)))
+				if (src.glasses.stability < 30)
+					src.throwglasses()
 		..()
 
 	updateStatusUi()
