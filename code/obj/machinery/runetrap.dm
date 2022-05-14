@@ -187,12 +187,12 @@
 				if (length(randomturfs) <= 0)
 					return 1
 				src.visible_message("<span class='alert>[M] steps on [src] and triggers it! A flame engulfs them immediatly!</span>")
-				sleep(5 DECI SECONDS)
-				boutput(M, text("<span class='alert'>You blink, and suddenly you're somewhere else!</span>"))
-				playsound(M.loc, "sound/effects/mag_warp.ogg", 25, 1, -1)
-				M.set_loc(pick(randomturfs))
-				elecflash(src, 1, 1)
-				qdel(src)
+				SPAWN(5 DECI SECONDS)
+					boutput(M, text("<span class='alert'>You blink, and suddenly you're somewhere else!</span>"))
+					playsound(M.loc, "sound/effects/mag_warp.ogg", 25, 1, -1)
+					M.set_loc(pick(randomturfs))
+					elecflash(src, 1, 1)
+					qdel(src)
 
 /obj/machinery/wraith/runetrap/explosive
 
