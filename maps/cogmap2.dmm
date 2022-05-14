@@ -79269,8 +79269,8 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/light,
-/obj/machinery/navbeacon/mule/bridge_north/east,
 /obj/decal/mule/beacon,
+/obj/machinery/navbeacon/mule/bridge_north/west,
 /turf/simulated/floor/circuit/off,
 /area/station/security/checkpoint/customs)
 "qTr" = (
