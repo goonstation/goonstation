@@ -80258,7 +80258,6 @@
 /area/station/ranch)
 "wff" = (
 /obj/table/auto,
-/obj/random_item_spawner/tableware,
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
