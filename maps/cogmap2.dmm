@@ -33193,6 +33193,7 @@
 	},
 /area/station/crew_quarters/heads)
 "byC" = (
+/obj/filing_cabinet,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fblue2"
@@ -34582,6 +34583,13 @@
 	icon = 'icons/obj/stationobjs.dmi';
 	icon_state = "plant"
 	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "blue2"
@@ -35626,6 +35634,10 @@
 /obj/vehicle/tug{
 	desc = "Pretty much just an airport baggage cart, really.";
 	name = "utility tractor"
+	},
+/obj/item/device/radio/intercom/bridge{
+	broadcasting = 0;
+	dir = 8
 	},
 /turf/simulated/floor/carpet{
 	dir = 6;
@@ -37778,6 +37790,8 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/autoname_east,
+/obj/table/auto,
+/obj/bedsheetbin,
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
@@ -38926,6 +38940,8 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/disposal/mail/small/autoname/checkpoint/customs/south,
+/obj/disposalpipe/trunk/mail/south,
 /turf/simulated/floor/circuit/off,
 /area/station/security/checkpoint/customs)
 "bJs" = (
@@ -38935,8 +38951,6 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment/mail/vertical,
-/obj/machinery/navbeacon/mule/bridge_north/east,
-/obj/decal/mule/beacon,
 /turf/simulated/floor/circuit/off,
 /area/station/security/checkpoint/customs)
 "bJt" = (
@@ -38950,6 +38964,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/machinery/manufacturer/uniform,
 /turf/simulated/floor/circuit/off,
 /area/station/security/checkpoint/customs)
 "bJu" = (
@@ -38960,12 +38975,12 @@
 	name = "Bridge Lockdown Doors";
 	opacity = 0
 	},
-/obj/wingrille_spawn/auto,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/circuit/off,
 /area/station/security/checkpoint/customs)
 "bJv" = (
@@ -39293,9 +39308,8 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/disposalpipe/segment/ejection{
-	dir = 4;
-	icon_state = "pipe-c"
+/obj/disposalpipe/junction{
+	icon_state = "pipe-j2"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
@@ -39975,26 +39989,23 @@
 	},
 /area/station/hallway/primary/east)
 "bLd" = (
-/obj/disposalpipe/trunk/mail/east,
-/obj/machinery/disposal/mail/small/autoname/checkpoint/customs/east,
-/turf/simulated/floor/blueblack,
+/obj/disposalpipe/segment/mail/bent/north,
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/checkpoint/customs)
 "bLe" = (
 /obj/disposalpipe/segment/mail/horizontal,
-/turf/simulated/floor/blueblack,
+/obj/wingrille_spawn/auto/crystal,
+/turf/simulated/floor,
 /area/station/security/checkpoint/customs)
 "bLf" = (
 /obj/disposalpipe/switch_junction/left/south{
 	mail_tag = "customs checkpoint";
 	name = "mail junction (customs)"
 	},
-/turf/simulated/floor/blueblack,
-/area/station/security/checkpoint/customs)
-"bLg" = (
-/obj/item/device/radio/intercom/bridge{
-	broadcasting = 0;
-	dir = 8
+/obj/machinery/door/airlock/pyro/command{
+	name = "Bridge Access"
 	},
+/obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/blueblack,
 /area/station/security/checkpoint/customs)
 "bLh" = (
@@ -40968,12 +40979,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
-"bMO" = (
-/obj/machinery/light,
-/turf/simulated/floor/blueblack{
-	dir = 1
-	},
-/area/station/security/checkpoint/customs)
 "bMP" = (
 /obj/disposalpipe/switch_junction/right/south{
 	mail_tag = "bridge";
@@ -40985,6 +40990,11 @@
 /area/station/security/checkpoint/customs)
 "bMQ" = (
 /obj/disposalpipe/segment/mail/horizontal,
+/obj/machinery/firealarm{
+	pixel_x = 1;
+	pixel_y = 26;
+	text = "NF"
+	},
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
@@ -41809,12 +41819,14 @@
 	},
 /area/space)
 "bOt" = (
-/obj/machinery/manufacturer/uniform,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
 	pixel_x = 10
 	},
+/obj/storage/secure/closet/fridge,
+/obj/item/storage/box/donkpocket_kit,
+/obj/item/storage/box/donkpocket_kit,
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "blue2"
@@ -42456,23 +42468,17 @@
 /turf/simulated/floor/delivery,
 /area/station/hallway/primary/east)
 "bPP" = (
-/obj/disposalpipe/junction{
-	dir = 8;
-	icon_state = "pipe-j2"
+/obj/disposalpipe/segment/ejection{
+	icon_state = "pipe-c"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn,
+/obj/table/auto,
+/obj/random_item_spawner/tableware,
+/turf/simulated/floor/carpet/blue/standard/edge/sw,
 /area/station/security/checkpoint/customs)
 "bPQ" = (
-/obj/machinery/disposal/brig{
-	name = "ejection chute"
-	},
-/obj/disposalpipe/trunk/ejection{
-	dir = 8
-	},
-/turf/simulated/floor/carpet{
-	dir = 10;
-	icon_state = "blue2"
-	},
+/obj/table/auto,
+/obj/machinery/microwave,
+/turf/simulated/floor/carpet/blue/standard/edge,
 /area/station/security/checkpoint/customs)
 "bPR" = (
 /obj/disposalpipe/segment/mail/vertical,
@@ -42481,14 +42487,16 @@
 	},
 /area/station/security/checkpoint/customs)
 "bPS" = (
-/obj/table/auto,
-/obj/bedsheetbin,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 10;
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/machinery/disposal/brig{
+	name = "ejection chute"
+	},
+/obj/disposalpipe/trunk/ejection,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "blue2"
@@ -48122,9 +48130,11 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "ccz" = (
-/obj/filing_cabinet,
+/obj/stool/chair/blue{
+	dir = 8
+	},
 /turf/simulated/floor/carpet{
-	dir = 9;
+	dir = 1;
 	icon_state = "blue2"
 	},
 /area/station/security/checkpoint/customs)
@@ -76746,6 +76756,17 @@
 /obj/machinery/ore_cloud_storage_container,
 /turf/simulated/floor/plating,
 /area/station/mining/staff_room)
+"dNr" = (
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	name = "Bridge Lockdown Doors";
+	opacity = 0
+	},
+/obj/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/black,
+/area/station/security/checkpoint/customs)
 "dOa" = (
 /obj/machinery/door/poddoor/pyro{
 	dir = 4;
@@ -77312,6 +77333,18 @@
 	icon_state = "blue1"
 	},
 /area/station/crew_quarters/arcade/dungeon)
+"hni" = (
+/obj/table/auto,
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/turf/simulated/floor/carpet{
+	dir = 9;
+	icon_state = "blue2"
+	},
+/area/station/security/checkpoint/customs)
 "hoU" = (
 /obj/cable{
 	d1 = 1;
@@ -78537,6 +78570,10 @@
 	name = "very reinforced wall"
 	},
 /area/station/mining/magnet)
+"mYr" = (
+/obj/disposalpipe/segment/ejection,
+/turf/simulated/wall/auto/supernorn,
+/area/station/security/checkpoint/customs)
 "mYy" = (
 /turf/simulated/wall/auto/reinforced/supernorn{
 	explosion_resistance = 15;
@@ -79477,6 +79514,17 @@
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
+"suZ" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/light,
+/obj/decal/mule/beacon,
+/obj/machinery/navbeacon/mule/bridge_north/west,
+/turf/simulated/floor/circuit/off,
+/area/station/security/checkpoint/customs)
 "svu" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8
@@ -79833,6 +79881,12 @@
 	},
 /turf/simulated/floor/grey/blackgrime,
 /area/station/hangar/science)
+"tGm" = (
+/obj/disposalpipe/segment/ejection{
+	dir = 4
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/security/checkpoint/customs)
 "tGo" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/purple,
@@ -143887,7 +143941,7 @@ bJp
 bLc
 bMJ
 bOr
-bBw
+bPO
 bRx
 bTa
 tGo
@@ -144188,8 +144242,8 @@ bHu
 bJq
 bzZ
 bMR
-bzZ
-bPO
+dNr
+tGm
 bRv
 bTb
 bUB
@@ -144489,8 +144543,8 @@ bFx
 bHv
 bJr
 bLd
-bMO
-bzZ
+bHw
+hni
 bPP
 bRy
 bTc
@@ -144789,7 +144843,7 @@ bBE
 bDA
 bFy
 bHw
-bJr
+suZ
 bLe
 bHw
 ccz
@@ -145394,11 +145448,11 @@ bDC
 bFA
 bHy
 bJt
-bLg
+bzZ
 bMQ
 bOt
 bPS
-bAb
+mYr
 bJT
 bNg
 bhX
@@ -145698,7 +145752,7 @@ bzZ
 bJu
 bzZ
 bNv
-bzZ
+dNr
 bzZ
 bzZ
 bLu
