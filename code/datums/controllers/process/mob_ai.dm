@@ -3,7 +3,7 @@
 datum/controller/process/mob_ai
 	setup()
 		name = "Mob AI"
-		schedule_interval = 0.1 SECONDS
+		schedule_interval = 0.2 SECONDS
 
 	doWork()
 		for(var/X in ai_mobs)
@@ -14,14 +14,18 @@ datum/controller/process/mob_ai
 			if (!M)
 				continue
 
-			if ((M.mob_flags & LIGHTWEIGHT_AI_MOB) && ticks % 60 == 0) //call life() with a slowed update rate on mobs we manage that arent part of the standard mobs list
+			//in case it isn't obvious, what we're doing here is taking a unique ref in the form [0x00000000] and mod 30ing it to determine if a mob should tick
+			//this spreads out lightweight mob ticks, which still happen once every 6 seconds, but not all at the same time
+			//text2num returns null on a bad input, and null % num == 0 (lol DM) so it's all good, if a little hacky
+			var/refnum = text2num(copytext("\ref[M]",4,12)) + ticks
+			if ((M.mob_flags & LIGHTWEIGHT_AI_MOB) && (refnum % 30) == 0) //call life() with a slowed update rate on mobs we manage that arent part of the standard mobs list
 				if( M.z == 4 && !Z4_ACTIVE ) continue
 				if (istype(X, /mob/living))
 					var/mob/living/L = X
 					L.Life(src)
 				scheck()
 
-			if ((ticks % 30) == 0)
+			if ((refnum % 15) == 0)
 				M.handle_stamina_updates()
 				if (!M.client) continue
 
@@ -33,7 +37,7 @@ datum/controller/process/mob_ai
 							M.abilityHolder.next_update = 10 SECONDS
 				scheck()
 
-			if((M.mob_flags & HEAVYWEIGHT_AI_MOB) || ticks % 10 == 0) //either we can tick every time, or we tick every 1 second
+			if((M.mob_flags & HEAVYWEIGHT_AI_MOB) || (refnum % 5) == 0) //either we can tick every time, or we tick every 1 second
 				var/mob/living/L = M
 				if((isliving(M) && (L.is_npc || L.ai_active) || !isliving(M)))
 					if(istype(X, /mob/living/carbon/human))
