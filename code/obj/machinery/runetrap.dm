@@ -228,16 +228,12 @@
 				elecflash(src, 1, 1)
 
 /proc/checkRun(var/mob/M)	//If we are above walking speed, this triggers
-	logTheThing("debug", src, null, "Checking run")
 	if(M != null)
-		logTheThing("debug", src, null, "not null")
 		var/slip_delay = BASE_SPEED_SUSTAINED + WALK_DELAY_ADD
 		var/movement_delay_real = max(M.movement_delay(get_step(M,M.move_dir), 0),world.tick_lag)
 		var/movedelay = clamp(world.time - M.next_move, movement_delay_real, world.time - M.last_pulled_time)
 
 		if (movedelay < slip_delay)
-			logTheThing("debug", src, null, "ran")
 			return TRUE
 		else
-			logTheThing("debug", src, null, "didnt run")
 			return FALSE
