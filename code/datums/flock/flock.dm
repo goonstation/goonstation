@@ -286,6 +286,8 @@
 		target.render_target = ref(parent)
 		dummy.render_source = target.render_target
 		dummy.add_filter("outline", 1, outline_filter(size=1,color=src.outline_color))
+		if (isturf(target))
+			dummy.add_filter("mask", 2, alpha_mask_filter(icon=dummy.icon, flags=MASK_INVERSE))
 		target.vis_contents += dummy
 
 		play_animation()
