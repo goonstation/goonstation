@@ -139,6 +139,7 @@
 	controller = pilot
 	src.client?.color = null // stop being all fucked up and weird aaaagh
 	src.hud?.update_intent()
+	src.update_health_icon()
 	flock.add_control_icon(src, pilot)
 	if (give_alert)
 		boutput(src, "<span class='flocksay'><b>\[SYSTEM: Control of drone [src.real_name] established.\]</b></span>")
@@ -175,6 +176,7 @@
 			flock_speak(null, "Control of drone [src.real_name] surrended.", src.flock)
 		// clear refs
 		controller = null
+		src.update_health_icon()
 
 /mob/living/critter/flock/drone/proc/release_control_abrupt()
 	src.flock?.hideAnnotations(src)
@@ -199,6 +201,7 @@
 		ticker.minds += controller.mind
 	boutput(controller, "<span class='flocksay'><b>\[SYSTEM: Control of drone [src.real_name] ended abruptly.\]</b></span>")
 	controller = null
+	src.update_health_icon()
 
 /mob/living/critter/flock/drone/dormantize()
 	src.icon_state = "drone-dormant"

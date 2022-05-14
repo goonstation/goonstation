@@ -22,6 +22,7 @@
 	var/list/annotations_busy_tiles = list()  // key is atom ref, value is image
 	var/list/annotations_priority_tiles = list()
 	var/list/annotations_deconstruct_targets = list()
+	var/list/annotations_health = list()
 	var/list/annotations_enemies = list()
 	var/list/annotations_control_icons = list()
 	var/list/obj/flock_structure/structures = list()
@@ -323,6 +324,8 @@
 			C.images |= src.annotations_priority_tiles[key]
 		for(var/atom/key in src.annotations_busy_tiles)
 			C.images |= src.annotations_busy_tiles[key]
+		for(var/atom/key in src.annotations_health)
+			C.images |= src.annotations_health[key]
 		for(var/atom/key in src.annotations_enemies)
 			C.images |= src.annotations_enemies[key]
 		for(var/atom/key in src.annotations_control_icons)
@@ -338,6 +341,8 @@
 			C.images -= src.annotations_priority_tiles[key]
 		for(var/atom/key in src.annotations_busy_tiles)
 			C.images -= src.annotations_busy_tiles[key]
+		for(var/atom/key in src.annotations_health)
+			C.images -= src.annotations_health[key]
 		for(var/atom/key in src.annotations_enemies)
 			C.images -= src.annotations_enemies[key]
 		for(var/atom/key in src.annotations_control_icons)

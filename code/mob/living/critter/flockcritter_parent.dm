@@ -69,6 +69,8 @@
 		if(!isnull(src.flock))
 			src.flock.registerUnit(src)
 
+	src.update_health_icon()
+
 /mob/living/critter/flock/proc/describe_state()
 	var/list/state = list()
 	state["update"] = "flockcritter"
@@ -83,6 +85,10 @@
 		state["area"] = "???"
 	return state
 
+/mob/living/critter/flock/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
+	..()
+	src.update_health_icon()
+
 /mob/living/critter/flock/proc/dormantize()
 	src.dormant = TRUE
 	src.ai?.die()
@@ -90,6 +96,7 @@
 	if (!src.flock)
 		return
 
+	src.update_health_icon()
 	src.flock.removeDrone(src)
 	src.flock = null
 
@@ -161,6 +168,28 @@
 			sleep(2 SECONDS)
 			src.extinguishing = 0
 
+/mob/living/critter/flock/proc/update_health_icon()
+	if (!src.flock)
+		return
+	var/image/I
+	if (src in src.flock.annotations_health)
+		I = src.flock.annotations_health[src]
+		src.flock.annotations_health -= src
+		src.flock.removeClientImage(I)
+
+	if (isdead(src) || src.dormant || src.disposed)
+		return
+
+	I = image('icons/misc/featherzone.dmi', src, "hp-[round(src.get_health_percentage() * 10) * 10]")
+	I.blend_mode = BLEND_ADD
+	I.pixel_x = 10
+	I.pixel_y = 16
+	I.plane = PLANE_ABOVE_LIGHTING
+	I.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+	src.flock.annotations_health[src] = I
+	src.flock.addClientImage(I)
+	src.client?.images -= I
+
 // all flock bots should have the ability to rally somewhere (it's applicable to anything with flock AI)
 /mob/living/critter/flock/proc/rally(atom/movable/target)
 	if(src.is_npc)
@@ -176,11 +205,13 @@
 	..()
 	src.ai.die()
 	walk(src, 0)
+	src.update_health_icon()
 	src.flock?.removeDrone(src)
 	playsound(src, "sound/impact_sounds/Glass_Shatter_3.ogg", 50, 1)
 
 /mob/living/critter/flock/disposing()
 	if (src.flock)
+		src.update_health_icon()
 		src.flock.removeDrone(src)
 	..()
 
