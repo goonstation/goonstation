@@ -204,10 +204,10 @@
 			var/mob/M = A
 			if(checkRun(M))
 				src.visible_message("<span class='alert>[M] steps on [src] and triggers it! You hear a buzzing sound!</span>")
-				sleep(5 DECI SECOND)
-				explosion(src, src, -1, 1, 2, 4)
-				elecflash(src, 1, 1)
-				qdel(src)
+				SPAWN(5 DECI SECOND)
+					explosion(src, src, -1, 1, 2, 4)
+					elecflash(src, 1, 1)
+					qdel(src)
 
 /obj/machinery/wraith/runetrap/slipping
 
