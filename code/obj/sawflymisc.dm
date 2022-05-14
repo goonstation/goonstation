@@ -14,6 +14,7 @@
 	throwforce = 7
 	icon_state = "sawfly"
 	icon_state_armed = "sawfly1"
+	inhand_image_icon = 'icons/mob/inhand/tools/omnitool.dmi' // could be better but it's distinct enough
 	payload = /mob/living/critter/sawfly
 	is_dangerous = TRUE
 	is_syndicate = TRUE
@@ -38,10 +39,10 @@
 
 		if(prob(30)) //you fumble the grenade
 			user.take_oxygen_deprivation(200)
-			user.visible_message("<span class='alert'><b>[user] chokes on the [src]!</b></span>")
+			user.visible_message("<span class='alert'><b>[user] chokes on [src]!</b></span>")
 
 		else if(prob(50))
-			user.visible_message("<span class='alert'><b> The [src] explodes out of [user]'s throat, holy shit!</b></span>")
+			user.visible_message("<span class='alert'><b> [src] explodes out of [user]'s throat, holy shit!</b></span>")
 			playsound(user.loc, "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
 			blood_slash(user, 25)
 			var/obj/head = user.organHolder.drop_organ("head")
@@ -72,7 +73,7 @@
 /obj/item/old_grenade/spawner/sawfly/withremote // for traitor menu
 
 	New()
-		new /obj/item/sawflyremote(src.loc)
+		new /obj/item/remote/sawflyremote(src.loc)
 		..()
 
 /obj/item/old_grenade/spawner/sawfly/reused
@@ -115,7 +116,7 @@
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
-		new /obj/item/sawflyremote(src.loc)
+		new /obj/item/remote/sawflyremote(src.loc)
 		if (prob(50)) // give em some sprite variety
 			icon_state = "clusterflyB"
 			icon_state_armed = "clusterflyB1"
@@ -130,13 +131,13 @@
 
 // -------------------controller---------------
 
-/obj/item/sawflyremote
+/obj/item/remote/sawflyremote
 	name = "Sawfly deactivator"
 	desc = "A small device that can be used to fold or deploy sawflies in range. It looks like you could hide it in your clothes. Or smash it into tiny bits, you guess."
 	w_class = W_CLASS_TINY
 	flags = FPRINT | TABLEPASS
 	icon = 'icons/obj/items/device.dmi'
-	//inhand_image_icon = 'icons/mob/inhand/tools/omnitool.dmi'// find good inhand sprites later
+	inhand_image_icon = 'icons/mob/inhand/tools/omnitool.dmi'
 	icon_state = "sawflycontr"
 	var/alreadyhit = FALSE
 	var/emagged = FALSE
@@ -519,6 +520,8 @@
 						src.task = "chasing"
 			if("wandering")
 				patrol_step()
+				seek_target()
+
 		return 1
 
 

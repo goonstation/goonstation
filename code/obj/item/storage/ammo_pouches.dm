@@ -260,5 +260,5 @@
 	spawn_contents = list(/obj/item/old_grenade/spawner/sawfly = 4)
 
 	New()
-		new /obj/item/sawflyremote(src.loc)
+		new /obj/item/remote/sawflyremote(src.loc)
 		..()
