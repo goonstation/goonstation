@@ -1,6 +1,6 @@
 /mob/living/critter/spiker
 	name = "Tentacle fiend"
-	desc = "Todo"
+	desc = "Standing still is probably not a good idea."
 	density = 1
 	hand_count = 1
 	can_help = 1

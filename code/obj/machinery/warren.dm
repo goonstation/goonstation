@@ -15,7 +15,7 @@
 		next_spawn_check = world.time + (10 SECONDS)
 		return
 
-	attackby(obj/item/P as obj, mob/living/user as mob)
+	attackby(obj/item/P, mob/living/user)
 		src._health -= P.force
 		attack_particle(user,src)
 		user.lastattacked = src

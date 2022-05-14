@@ -881,7 +881,7 @@
 			return 1
 		else
 			var/mob/wraith/W
-			switch (effect)	//Todo, add messages and windows on transform
+			switch (effect)
 				if (1)
 					W = new/mob/wraith/wraith_decay(holder.owner)
 					boutput(holder.owner, "<span class='notice'>You evolve into a plaguebringer! Spread rot and disease all around!</span>")
@@ -1398,6 +1398,115 @@
 		else
 			return 1
 
+/datum/targetable/wraithAbility/fake_sound
+	name = "Fake sound"
+	icon_state = "whisper"
+	desc = "Play a fake sound at a location of your choice"
+	pointCost = 10
+	targeted = 1
+	target_anything = 1
+	cooldown = 5 SECONDS
+	var/list/sound_list = list("Death gasp",
+	"Gasp",
+	"Gunshot",
+	"AK47",
+	"Csaber unsheathe",
+	"Csaber attack",
+	"Shotgun",
+	"Energy sniper",
+	"Cluwne",
+	"Chainsaw",
+	"Stab",
+	"Bones breaking")
+
+	cast(atom/target)
+		if (..())
+			return 1
+
+		var/sound_choice = null
+		if (length(src.sound_list) > 1)
+			sound_choice = input("What sound do you wish to play?", "Chosen sound", null) as null|anything in sound_list
+		switch(sound_choice)
+			if("Death gasp")
+				sound_choice = "sound/voice/death_[rand(1, 2)].ogg"
+			if("Revolver")
+				sound_choice = "sound/weapons/Gunshot.ogg"
+			if("AK47")
+				sound_choice = "sound/weapons/ak47shot.ogg"
+				playsound(target, sound_choice, 70, 0)
+				sleep(3 DECI SECONDS)
+				playsound(target, sound_choice, 70, 0)
+				sleep(3 DECI SECONDS)
+				playsound(target, sound_choice, 70, 0)
+				boutput(holder.owner, "You use your powers to create a sound.")
+				return 0
+			if("Csaber unsheathe")
+				sound_choice = "sound/weapons/male_cswordstart.ogg"
+			if("Csaber attack")
+				sound_choice = "sound/weapons/male_cswordattack[rand(1, 2)].ogg"
+			if("Shotgun")
+				sound_choice = "sound/weapons/shotgunshot.ogg"
+			if("Energy sniper")
+				sound_choice = "sound/weapons/snipershot.ogg"
+			if("Cluwne")
+				sound_choice = "sound/voice/cluwnelaugh[rand(1, 3)].ogg"
+			if("Gasp")
+				sound_choice = pick("sound/voice/male_gasp_[pick("1", "5")].ogg", "sound/voice/female_gasp_[pick("1", "5")].ogg")
+			if("Chainsaw")
+				sound_choice = "sound/machines/chainsaw_red.ogg"
+			if("Stab")
+				sound_choice = "sound/impact_sounds/Blade_Small_Bloody.ogg"
+			if("Bones breaking")
+				sound_choice = "sound/effects/bones_break.ogg"
+
+		playsound(target, sound_choice, 70, 0)
+		boutput(holder.owner, "You use your powers to create a sound.")
+		return 0
+
+/datum/targetable/wraithAbility/lay_trap
+	name = "Place rune trap"
+	icon_state = "whisper"
+	desc = "Create a rune trap you can then spring later"
+	pointCost = 50
+	targeted = 0
+	cooldown = 30 SECONDS
+	var/list/trap_types = list("Madness",
+	"Burning",
+	"Teleporting")
+
+	cast()
+		if (..())
+			return 1
+
+		if (!istype(holder.owner, /mob/wraith))
+			boutput(holder.owner, "You cannot cast this under your current form.")
+			return 1
+		var/mob/wraith/W = holder.owner
+		if (!W.haunting)
+			boutput(holder.owner, "You must be manifested to place a trap!")
+			return 1
+		var/trap_choice = null
+		var/turf/T = get_turf(holder.owner)
+		if (!isturf(T) || istype(T, /turf/space) || istype(T, /turf/simulated/wall) || istype(T, /turf/unsimulated/wall))
+			boutput(holder.owner, "You cannot open a portal here.")
+			return 1
+		for (var/obj/machinery/wraith/runetrap/R in range(T, 3))
+			boutput(holder.owner, "That is too close to another trap.")
+			return 1
+		if (length(src.trap_types) > 1)
+			trap_choice = input("What type of trap do you want?", "Target trap type", null) as null|anything in trap_types
+		switch(trap_choice)
+			if("Madness")
+				trap_choice = /obj/machinery/wraith/runetrap/madness
+			if("Burning")
+				trap_choice = /obj/machinery/wraith/runetrap
+			if("Teleporting")
+				trap_choice = /obj/machinery/wraith/runetrap
+
+		var/obj/machinery/wraith/runetrap/R = new /obj/machinery/wraith/runetrap(T)
+		boutput(holder.owner, "You place a [trap_choice] on the floor, it begins to charge up.")
+		return 0
+
 /datum/targetable/wraithAbility/create_summon_portal
 	name = "Summon void portal"
 	icon_state = "whisper"
@@ -1429,7 +1538,7 @@
 		if (isturf(T) && !istype(T, /turf/space) && !istype(T, /turf/simulated/wall) && !istype(T, /turf/unsimulated/wall))
 			if(istype(holder.owner, /mob/wraith))
 				var/mob/wraith/W = holder.owner
-				if (!W.haunting)
+				if (!W.density)
 					boutput(holder.owner, "Your connection to the physical plane is too weak. You must be manifested to do this.")
 					return 1
 				if (W.linked_portal)
@@ -1581,7 +1690,7 @@
 	cooldown = 300 SECONDS
 	var/in_use = 0
 	var/ghost_confirmation_delay  = 30 SECONDS
-	var/max_allowed_rats = 3	//Todo, currently checks for all rats, not just your own, might need to change
+	var/max_allowed_rats = 3
 	var/player_count = 0
 
 	// cast(turf/target, params)
@@ -1598,7 +1707,7 @@
 			var/mob/M = C.mob
 			if (istype(M, /mob/living/critter/plaguerat))
 				total_plague_rats++
-		if(total_plague_rats < (max_allowed_rats + (player_count / 30)))
+		if(total_plague_rats < (max_allowed_rats + (player_count / 30)))	//Population scaling
 			if (istype(holder.owner, /mob/living/critter/plaguerat))	//plaguerats must be near their warren
 				var/near_warren = false
 				var/turf/T = get_turf(holder.owner)

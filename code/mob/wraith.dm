@@ -670,6 +670,8 @@
 			src.addAbility(/datum/targetable/wraithAbility/mass_emag)
 			src.addAbility(/datum/targetable/wraithAbility/possess)
 			src.addAbility(/datum/targetable/wraithAbility/hallucinate)
+			src.addAbility(/datum/targetable/wraithAbility/fake_sound)
+			src.addAbility(/datum/targetable/wraithAbility/lay_trap)
 
 		addAllHarbingerAbilities()
 			src.addAbility(/datum/targetable/wraithAbility/create_summon_portal)

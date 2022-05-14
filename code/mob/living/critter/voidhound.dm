@@ -3,7 +3,7 @@
 
 /mob/living/critter/voidhound
 	name = "Voidhound"
-	desc = "Todo"
+	desc = "You probably shouldn't be staring at this thing."
 	density = 1
 	hand_count = 1
 	can_help = 1
