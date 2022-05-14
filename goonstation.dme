@@ -1234,6 +1234,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\worldgen\prefab\allocated.dm"
 #include "code\modules\worldgen\prefab\mapPrefab.dm"
 #include "code\modules\worldgen\prefab\mining.dm"
+#include "code\modules\worldgen\prefab\planet.dm"
 #include "code\modules\worldgen\prefab\random_rooms.dm"
 #include "code\modules\worldgen\prefab\shuttle.dm"
 #include "code\modules\worldgen\region_allocator\region_allocator.dm"

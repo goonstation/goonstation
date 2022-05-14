@@ -303,7 +303,7 @@ ABSTRACT_TYPE(/datum/generatorPlanetPrefab)
 	icon_state = "x3"
 	add_to_landmarks = FALSE
 
-	init()
+	init(delay_qdel=TRUE)
 		if(!planetZLevel)
 			planetZLevel = src.z
 		..()

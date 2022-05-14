@@ -149,7 +149,7 @@ var/global/matrix/GLOBAL_ANIMATION_MATRIX = matrix()
 
 		var/r_sqrd = (actual_y**2 + actual_x**2)
 		if(r_sqrd > max_r_squared)
-			SPAWN_DBG(animation_speed-1)
+			SPAWN(animation_speed-1)
 				var/apparent_angle = vel_angle - ship_angle
 				var/theta = apparent_angle + (90*((rand()*2)-1))
 

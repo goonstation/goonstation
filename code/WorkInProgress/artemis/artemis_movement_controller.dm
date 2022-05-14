@@ -83,7 +83,7 @@
 					ship.engines.use_power(list("sw", "se", "s"), ship.full_throttle)
 
 
-					SPAWN_DBG(ship.animation_speed)
+					SPAWN(ship.animation_speed)
 						ship.accelerating = 0
 
 			if(!(keys & KEY_FORWARD) && (keys & KEY_BACKWARD))
@@ -109,7 +109,7 @@
 						flick("[ship.icon_base]_thruster_front_r",ship.front_right)
 					ship.engines.use_power(list("nw", "ne"))
 
-					SPAWN_DBG(ship.animation_speed)
+					SPAWN(ship.animation_speed)
 						ship.accelerating = 0
 
 			if(!(keys & KEY_LEFT) && (keys & KEY_RIGHT))
@@ -126,7 +126,7 @@
 						ship.rot_mag = max(ship.rot_mag,-ship.rot_max_speed)
 
 					if(!ship.rot_loop_on)
-						SPAWN_DBG(0)
+						SPAWN(0)
 							ship.rotate_ship()
 
 					if(ship.back_left)
@@ -136,7 +136,7 @@
 						flick("[ship.icon_base]_thruster_front_r",ship.front_right)
 					ship.engines.use_power(list("ne", "sw"))
 
-					SPAWN_DBG(ship.animation_speed)
+					SPAWN(ship.animation_speed)
 						ship.rotating = 0
 
 
@@ -153,7 +153,7 @@
 						ship.rot_mag = max(ship.rot_mag,-ship.rot_max_speed)
 
 					if(!ship.rot_loop_on)
-						SPAWN_DBG(0)
+						SPAWN(0)
 							ship.rotate_ship()
 
 					if(ship.front_left)
@@ -163,7 +163,7 @@
 						flick("[ship.icon_base]_thruster_back_r",ship.back_right)
 					ship.engines.use_power(list("nw", "se"))
 
-					SPAWN_DBG(ship.animation_speed)
+					SPAWN(ship.animation_speed)
 						ship.rotating = 0
 
 		return ship.animation_speed
@@ -216,7 +216,7 @@
 					M.update_my_stuff()
 					M.engines.use_power(list("s"))
 
-					SPAWN_DBG(M.animation_speed)
+					SPAWN(M.animation_speed)
 						M.accelerating = 0
 
 			if(keys & KEY_BACKWARD)
@@ -233,7 +233,7 @@
 					M.update_my_stuff()
 					M.engines.use_power(list("nw", "ne"))
 
-					SPAWN_DBG(M.animation_speed)
+					SPAWN(M.animation_speed)
 						M.accelerating = 0
 
 			if(!M.vel_mag)
@@ -253,10 +253,10 @@
 						M.rot_mag = max(M.rot_mag,-M.rot_max_speed)
 
 					if(!M.rot_loop_on)
-						SPAWN_DBG(0)
+						SPAWN(0)
 							M.rotate_ship()
 
-					SPAWN_DBG(M.animation_speed)
+					SPAWN(M.animation_speed)
 						M.rotating = 0
 
 
@@ -273,7 +273,7 @@
 						M.rot_mag = max(M.rot_mag,-M.rot_max_speed)
 
 					if(!M.rot_loop_on)
-						SPAWN_DBG(0)
+						SPAWN(0)
 							M.rotate_ship()
 
 					if(M.front_left)
@@ -282,7 +282,7 @@
 					if(M.back_right)
 						flick("[M.icon_base]_thruster_back_r",M.back_right)
 
-					SPAWN_DBG(M.animation_speed)
+					SPAWN(M.animation_speed)
 						M.rotating = 0
 
 		return ship.animation_speed

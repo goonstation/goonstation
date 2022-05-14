@@ -18,11 +18,11 @@ var/global/datum/galaxy/GALAXY = new
 		Rand = new(rand(3, 50000))
 #endif
 
-		src.bodies += new/datum/galactic_object/test()
 		src.bodies += new/datum/galactic_object/eyesenhower()
 		src.bodies += new/datum/galactic_object/station()
 
 #if defined(DEBUG_ARTEMIS)
+		src.bodies += new/datum/galactic_object/test()
 		src.bodies += new/datum/galactic_object/bhole
 		src.bodies += new/datum/galactic_object/star
 		src.bodies += new/datum/galactic_object/asteroid
@@ -31,7 +31,7 @@ var/global/datum/galaxy/GALAXY = new
 		for(var/i in 1 to 5)
 			src.bodies += new/datum/galactic_object/asteroid/random(src)
 
-		SPAWN_DBG(20 SECONDS)
+		SPAWN(20 SECONDS)
 			populate_galaxy()
 
 	/// Random Integer from (L,H) otherwise 0-1
@@ -155,7 +155,7 @@ var/global/datum/galaxy/GALAXY = new
 	New()
 		..()
 		GALAXY.asteroids.asteroid_markers[src.name] = src
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			construct()
 
 /datum/galactic_object
@@ -323,7 +323,7 @@ var/global/datum/galaxy/GALAXY = new
 	New()
 		..()
 		if(src.destination_name)
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				for(var/turf/T in landmarks[LANDMARK_PLANETS])
 					if(landmarks[LANDMARK_PLANETS][T] == src.destination_name)
 						if(!src.landing_zones) src.landing_zones = list()
@@ -360,7 +360,7 @@ var/global/datum/galaxy/GALAXY = new
 
 		var/matrix/M = GLOBAL_ANIMATION_MATRIX.Reset()
 		if(scale)
-			M = M.Scale(scale)
+			M = M.Scale(src.scale)
 		M = M.Translate(actual_x, actual_y)
 		animate(src, transform = M, time = animation_speed, loop = 0, flags = ANIMATION_PARALLEL)
 

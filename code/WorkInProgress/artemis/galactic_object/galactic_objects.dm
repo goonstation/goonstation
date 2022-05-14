@@ -45,7 +45,7 @@
 				navigable = TRUE
 #endif
 
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				for(var/turf/T in landmarks[LANDMARK_PLANETS])
 					if(landmarks[LANDMARK_PLANETS][T] == src.destination_name)
 						var/area/map_gen/planet/A = get_area(T)
@@ -296,7 +296,7 @@
 
 			if(squared_pixel_distance < 32)
 				if(!ON_COOLDOWN(src.my_ship, "hot_star", 5 SECONDS))
-					SPAWN_DBG(0)
+					SPAWN(0)
 						var/area = get_area(src.my_ship.controls)
 						for(var/mob/M in area)
 							M.temperature_expose(null, 5778, CELL_VOLUME)
@@ -325,7 +325,7 @@
 			if(R.dir)
 				dir = R.dir
 
-			SPAWN_DBG(1)
+			SPAWN(1)
 				if(src.galaxy_icon)
 					var/obj/effects/E = new
 					E.particles = new/particles/artemis/star
@@ -355,7 +355,7 @@
 		if (isliving(O))
 			var/mob/living/M = O
 			if (!M.is_heat_resistant())
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					M.visible_message("<span class='alert'><b>[M]</b> burns away into ash! Stars are quite warm!</span>",\
 					"<span class='alert'><b>You burn away into ash! Stars are hot afterall!</b></span>")
 					M.firegib()
@@ -408,7 +408,7 @@
 
 			if(squared_pixel_distance < 32)
 				if(!ON_COOLDOWN(src.my_ship, "blackhole", 5 SECONDS))
-					SPAWN_DBG(0)
+					SPAWN(0)
 						var/old_mag = ship.vel_mag
 						var/old_angle = ship.vel_angle
 						ship.engines.malfunction = TRUE

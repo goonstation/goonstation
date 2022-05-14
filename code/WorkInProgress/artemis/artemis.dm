@@ -143,7 +143,7 @@
 
 		gen_stars()
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			do_process = 1
 			src.fast_process()
 
@@ -293,10 +293,10 @@
 				src.unload_body(G)
 
 		if(my_galactic_objects.len > 0 && !src.tracking)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				src.begin_tracking()
 		else if (my_galactic_objects.len == 0 && src.tracking)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				src.end_tracking()
 
 	proc/load_body(var/datum/galactic_object/G, var/force_tracking_update = 0)
@@ -321,7 +321,7 @@
 
 			if(force_tracking_update)
 				if(my_galactic_objects.len > 0 && !src.tracking)
-					SPAWN_DBG(0)
+					SPAWN(0)
 						src.begin_tracking()
 
 	proc/unload_body(var/datum/galactic_object/G, var/force_tracking_update = 0)
@@ -341,7 +341,7 @@
 
 			if(force_tracking_update)
 				if (my_galactic_objects.len == 0 && src.tracking)
-					SPAWN_DBG(0)
+					SPAWN(0)
 						src.end_tracking()
 
 	proc/update_my_stuff(var/vel, var/rot, var/vang, var/sang)
@@ -681,7 +681,7 @@
 				mob_count = 2
 				body_count = 8
 			if("Assault")
-				mob_types = list(/obj/decal/skeleton/decomposed_corpse=5,/obj/decoration/syndcorpse5=1,/obj/decoration/syndcorpse10=1,/obj/dialogueobj/engineerscorpse=4,/obj/dialogueobj/securitycorpse1=4,/obj/dialogueobj/securitycorpse6=4,/obj/dialogueobj/securitycorpse7=1,/obj/dialogueobj/syndiecorpse7=1)
+				mob_types = list(/obj/decoration/syndcorpse5=1,/obj/decoration/syndcorpse10=1,/obj/dialogueobj/engineerscorpse=4,/obj/dialogueobj/securitycorpse1=4,/obj/dialogueobj/securitycorpse6=4,/obj/dialogueobj/securitycorpse7=1,/obj/dialogueobj/syndiecorpse7=1)
 				mob_count = 6
 				body_count = 4
 				broken_lights = 5

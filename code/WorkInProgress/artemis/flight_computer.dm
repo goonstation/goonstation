@@ -147,7 +147,7 @@
 			user.drop_item()
 			target.attack_hand(user)
 			user.a_intent = previous_user_intent
-			SPAWN_DBG(user.combat_click_delay + 2)
+			SPAWN(user.combat_click_delay + 2)
 				if (istype(user.equipped(), /obj/item/grab))
 					src.log_in(target)
 
