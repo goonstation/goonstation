@@ -9,6 +9,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	item_state = "box"
 	var/list/can_hold = null//new/list()
+	var/list/can_hold_exact = null
 	var/in_list_or_max = 0 // sorry for the dumb var name - if can_hold has stuff in it, if this is set, something will fit if it's at or below max_wclass OR if it's in can_hold, otherwise only things in can_hold will fit
 	var/datum/hud/storage/hud
 	var/sneaky = 0 //Don't print a visible message on use.
@@ -124,6 +125,10 @@
 				for (var/A in src.can_hold)
 					if (ispath(A) && istype(W, A))
 						ok = 1
+				if (!ok)
+					for (var/A in src.can_hold_exact)
+						if (ispath(A) && W.type == A)
+							ok = 1
 			if (!ok)
 				return 0
 
