@@ -19,19 +19,62 @@
 	is_syndicate = TRUE
 	contraband = 2
 
+	custom_suicide = 1
 
 
 	prime() // we only want one drone, rewrite old proc
-		var/turf/T =  get_turf(src)
-		if (T)
-			new /mob/living/critter/sawfly(T)// this is probably a shitty way of doing it but it works
-		qdel(src)
+		SPAWN(2) // super short delay to prevent fuckiness with suicide code
+			var/turf/T =  get_turf(src)
+			if (T)
+				new /mob/living/critter/sawfly(T)// this is probably a shitty way of doing it but it works
+			qdel(src)
 		return
+
+
+	suicide(var/mob/living/carbon/human/user)
+		if (!src.user_can_suicide(user))
+			return FALSE
+		user.visible_message("<span class='alert'><b>[user] primes the [src] and swallows it!</b></span>")
+
+		if(prob(30)) //you fumble the grenade
+			user.take_oxygen_deprivation(200)
+			user.visible_message("<span class='alert'><b>[user] chokes on the [src]!</b></span>")
+
+		else if(prob(50))
+			user.visible_message("<span class='alert'><b> The [src] explodes out of [user]'s throat, holy shit!</b></span>")
+			playsound(user.loc, "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
+			blood_slash(user, 25)
+			var/obj/head = user.organHolder.drop_organ("head")
+			qdel(head)
+
+		else
+			user.visible_message("<span class='alert'><b> The [src] explodes out of [user]'s chest, jesus fuck!</b></span>")
+			playsound(user.loc, "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
+			user.organHolder.drop_organ("head") //bye bye extremities
+			if(user.limbs.l_arm)
+				user.limbs.l_arm.sever()
+			if(user.limbs.r_arm)
+				user.limbs.r_arm.sever()
+			if(user.limbs.l_leg)
+				user.limbs.l_leg.sever()
+			if(user.limbs.r_leg)
+				user.limbs.r_leg.sever()
+			SPAWN(2)
+				user.gib()
+
+		src.prime()
+		return TRUE
+
+
+
+
+
 /obj/item/old_grenade/spawner/sawfly/withremote // for traitor menu
 
 	New()
 		new /obj/item/sawflyremote(src.loc)
 		..()
+
 /obj/item/old_grenade/spawner/sawfly/reused
 	name = "Compact sawfly"
 	var/tempname = "Someone meant to spawn /obj/item/old_grenade/spawner/sawfly but misclicked, didn't they?"
@@ -362,6 +405,7 @@
 				walk(src, 0)
 				walk_rand(src, 1, 10)
 				src.visible_message("THE SAWFLY IS CRUNKED OFF IT'S GOURD!")
+				playsound(src, pick(src.beeps), 55, 1)
 		return
 
 
