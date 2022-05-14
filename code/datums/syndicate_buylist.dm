@@ -189,7 +189,8 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	name = "Compact Sawfly"
 	item = /obj/item/old_grenade/spawner/sawfly/withremote
 	cost = 2
-	vr_allowed = 0
+	vr_allowed = FALSE
+	br_allowed = TRUE // A smidge of tomfoolery, if you will
 	desc = "A small antipersonnel robot that will not attack anyone of syndicate affiliation. It can be folded up after use."
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF | UPLINK_HEAD_REV
 
@@ -197,7 +198,8 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	name = "Cluster Sawfly deployer"
 	item = /obj/item/old_grenade/spawner/sawflycluster
 	cost = 5
-	vr_allowed = 0
+	vr_allowed = FALSE
+	br_allowed = TRUE
 	desc = "An assembly of five antipersonnel robots that will not attack anyone of syndicate affiliation. They can be individually folded up after use."
 	can_buy = UPLINK_SPY_THIEF | UPLINK_NUKE_OP
 /datum/syndicate_buylist/generic/dnascram
