@@ -1470,28 +1470,36 @@
 	pointCost = 50
 	targeted = 0
 	cooldown = 30 SECONDS
+	var/max_traps = 2
 	var/list/trap_types = list("Madness",
 	"Burning",
-	"Teleporting")
+	"Teleporting",
+	"Illusions",
+	"EMP",
+	"Blinding",
+	"Sleepyness")
 
 	cast()
 		if (..())
 			return 1
 
-		if (!istype(holder.owner, /mob/wraith))
-			boutput(holder.owner, "You cannot cast this under your current form.")
+		if (!istype(holder.owner, /mob/wraith/wraith_trickster))
+			boutput(holder.owner, "<span class='notice'>You cannot cast this under your current form.</span>")
 			return 1
-		var/mob/wraith/W = holder.owner
+		var/mob/wraith/wraith_trickster/W = holder.owner
 		if (!W.haunting)
-			boutput(holder.owner, "You must be manifested to place a trap!")
+			boutput(holder.owner, "<span class='notice'>You must be manifested to place a trap!</span>")
 			return 1
 		var/trap_choice = null
 		var/turf/T = get_turf(holder.owner)
 		if (!isturf(T) || istype(T, /turf/space) || istype(T, /turf/simulated/wall) || istype(T, /turf/unsimulated/wall))
-			boutput(holder.owner, "You cannot open a portal here.")
+			boutput(holder.owner, "<span class='notice'>You cannot open a portal here.</span>")
 			return 1
 		for (var/obj/machinery/wraith/runetrap/R in range(T, 3))
-			boutput(holder.owner, "That is too close to another trap.")
+			boutput(holder.owner, "<span class='notice'>That is too close to another trap.</span>")
+			return 1
+		if (W.traps_laid >= max_traps)
+			boutput(holder.owner, "<span class='notice'>You already have too many traps!</span>")
 			return 1
 		if (length(src.trap_types) > 1)
 			trap_choice = input("What type of trap do you want?", "Target trap type", null) as null|anything in trap_types
@@ -1499,12 +1507,21 @@
 			if("Madness")
 				trap_choice = /obj/machinery/wraith/runetrap/madness
 			if("Burning")
-				trap_choice = /obj/machinery/wraith/runetrap
+				trap_choice = /obj/machinery/wraith/runetrap/fire
 			if("Teleporting")
-				trap_choice = /obj/machinery/wraith/runetrap
+				trap_choice = /obj/machinery/wraith/runetrap/teleport
+			if("Illusions")
+				trap_choice = /obj/machinery/wraith/runetrap/terror
+			if("EMP")
+				trap_choice = /obj/machinery/wraith/runetrap/emp
+			if("Blinding")
+				trap_choice = /obj/machinery/wraith/runetrap/stunning
+			if("Sleepyness")
+				trap_choice = /obj/machinery/wraith/runetrap/sleepyness
 
-		var/obj/machinery/wraith/runetrap/R = new /obj/machinery/wraith/runetrap(T)
-		boutput(holder.owner, "You place a [trap_choice] on the floor, it begins to charge up.")
+		new trap_choice(T, W)
+		W.traps_laid++
+		boutput(holder.owner, "You place a trap on the floor, it begins to charge up.")
 		return 0
 
 /datum/targetable/wraithAbility/create_summon_portal

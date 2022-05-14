@@ -823,6 +823,7 @@
 	var/possession_points = 0	//How many do we currently have?
 	var/mutable_appearance/copied_appearance = null	//Steal someone's appearance and use it during haunt
 	var/mutable_appearance/backup_appearance = null
+	var/traps_laid = 0
 
 	New(var/mob/M)
 		..()
