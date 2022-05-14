@@ -2228,6 +2228,14 @@
 		product_list += new/datum/data/vending_product(/obj/item/clothing/mask/monkey_translator, rand(1,2), hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/plant/banana, rand(1,20), hidden=1)
 
+/obj/machinery/vending/monkey/kitchen
+	req_access = list(access_kitchen, access_heads)
+
+/obj/machinery/vending/monkey/genetics
+	req_access = list(access_medical_lockers, access_heads)
+
+/obj/machinery/vending/monkey/research
+	req_access = list(access_research, access_heads)
 
 /obj/machinery/vending/magivend
 	name = "MagiVend"

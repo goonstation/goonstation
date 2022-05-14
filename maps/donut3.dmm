@@ -41043,7 +41043,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "lMW" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/research,
 /turf/simulated/floor/plating/jen,
 /area/station/science/gen_storage)
 "lMZ" = (
@@ -47750,7 +47750,7 @@
 /turf/simulated/wall/auto/jen,
 /area/station/crew_quarters/cafeteria)
 "nNu" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/genetics,
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
@@ -48838,7 +48838,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "obw" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/kitchen,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/catering)
 "obC" = (
@@ -70901,7 +70901,7 @@
 /area/station/crew_quarters/captain)
 "utd" = (
 /obj/machinery/light/small/sticky/harsh,
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/research,
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "utl" = (
