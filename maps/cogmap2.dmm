@@ -38951,8 +38951,6 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment/mail/vertical,
-/obj/machinery/navbeacon/mule/bridge_north/east,
-/obj/decal/mule/beacon,
 /turf/simulated/floor/circuit/off,
 /area/station/security/checkpoint/customs)
 "bJt" = (
@@ -40992,6 +40990,11 @@
 /area/station/security/checkpoint/customs)
 "bMQ" = (
 /obj/disposalpipe/segment/mail/horizontal,
+/obj/machinery/firealarm{
+	pixel_x = 1;
+	pixel_y = 26;
+	text = "NF"
+	},
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
@@ -79266,6 +79269,8 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/light,
+/obj/machinery/navbeacon/mule/bridge_north/east,
+/obj/decal/mule/beacon,
 /turf/simulated/floor/circuit/off,
 /area/station/security/checkpoint/customs)
 "qTr" = (
