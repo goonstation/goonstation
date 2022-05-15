@@ -1,6 +1,6 @@
 #define TYPING_OVERLAY_KEY "speech_bubble"
 
-///Singletons for typing indicators
+// Singletons for typing indicators
 var/mutable_appearance/living_speech_bubble = mutable_appearance('icons/mob/mob.dmi', "speech")
 var/mutable_appearance/living_typing_bubble = mutable_appearance('icons/mob/mob.dmi', "typing")
 /mob/proc/create_typing_indicator()
