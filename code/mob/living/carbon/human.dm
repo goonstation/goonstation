@@ -2208,8 +2208,20 @@
 		if (slot_l_store, slot_r_store)
 			if (I.w_class <= W_CLASS_SMALL && src.w_uniform)
 				return 1
-		if (slot_l_hand, slot_r_hand)
-			return 1
+		if (slot_l_hand)
+			if (src.limbs.l_arm)
+				if (!istype(src.limbs.l_arm, /obj/item/parts/human_parts))
+					return 0
+				if (istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item))
+					return 0
+				return 1
+		if (slot_r_hand)
+			if (src.limbs.r_arm)
+				if (!istype(src.limbs.r_arm, /obj/item/parts/human_parts))
+					return 0
+				if (istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item))
+					return 0
+				return 1
 		if (slot_belt)
 			if ((I.flags & ONBELT) && src.w_uniform)
 				return 1
@@ -2222,6 +2234,8 @@
 			if (I.flags & ONBACK)
 				return 1
 		if (slot_wear_mask) // It's not pretty, but the mutantrace check will do for the time being (Convair880).
+			if (!src.organHolder.head)
+				return 0
 			if (istype(I, /obj/item/clothing/mask))
 				var/obj/item/clothing/M = I
 				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !M.compatible_species.Find(src.mutantrace.name)))
@@ -2230,15 +2244,23 @@
 				else
 					return 1
 		if (slot_ears)
+			if (!src.organHolder.head)
+				return 0
 			if (istype(I, /obj/item/clothing/ears) || istype(I,/obj/item/device/radio/headset))
 				return 1
 		if (slot_glasses)
+			if (!src.organHolder.head)
+				return 0
 			if (istype(I, /obj/item/clothing/glasses))
 				return 1
 		if (slot_gloves)
+			if ((!src.limbs.l_arm) && (!src.limbs.r_arm))
+				return 0
 			if (istype(I, /obj/item/clothing/gloves))
 				return 1
 		if (slot_head)
+			if (!src.organHolder.head)
+				return 0
 			if (istype(I, /obj/item/clothing/head))
 				var/obj/item/clothing/H = I
 				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !(src.mutantrace.name in H.compatible_species)))
@@ -2247,6 +2269,8 @@
 				else
 					return 1
 		if (slot_shoes)
+			if ((!src.limbs.l_leg) && (!src.limbs.r_leg))
+				return 0
 			if (istype(I, /obj/item/clothing/shoes))
 				var/obj/item/clothing/SH = I
 				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !(src.mutantrace.name in SH.compatible_species)))
