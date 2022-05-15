@@ -22,4 +22,3 @@
 			failmsg += "\"[dupe || "***EMPTY STRING***"]\": [english_list(names[dupe])]"
 
 		Fail(failmsg)
-
