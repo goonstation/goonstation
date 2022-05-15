@@ -3,6 +3,7 @@
 //Flashlight module.
 //T-ray scanner module.
 //Computer 3 Emulator / Associated Bits
+//Medic yell module
 
 /obj/item/device/pda_module
 	name = "PDA module"
@@ -321,3 +322,60 @@
 		var/obj/item/device/pda_module/alert/J = the_item
 		if (J.host)
 			J.send_alert()
+
+/obj/item/device/pda_module/flashlight/yell_medic
+	name = "medic yelling medule"
+	desc = "A PDA module that lets you quickly YELL YOU ARE A MEDIC."
+	icon_state = "pdamod_medic"
+	abilities = list(/obj/ability_button/pda_flashlight_toggle, /obj/ability_button/yell_medic)
+	var/datum/light/MedicLight
+	var/colorChangeCycles
+	var/MedicLightBrightness = 0.225
+	var/MedicalSiren = "sound/effects/manta_alarm.ogg"//sounds:manta_alert;lavamoon_alarm1;lavamoon_plantalarm;pod_alarm;siren_police;tram_bell;sad_server_death
+
+	New()
+		..()
+		MedicLight = new /datum/light/point
+		MedicLight.set_brightness(MedicLightBrightness)
+		MedicLight.attach(src.host.loc)
+
+	install()
+		..()
+		MedicLight.attach(usr)
+
+	uninstall()
+		..()
+		MedicLight.disable()
+
+	proc/toggle_yell()
+		if (!src.host)
+			boutput(usr, "<span class='alert'>No PDA detected.")
+			return
+		if (ON_COOLDOWN(src, "toggle_yell", 0.5 SECONDS))
+			boutput(usr, "<span class='alert'>[src] is still on cooldown mode!</span>")
+			return
+		tell_medic()
+		colorChangeCycles = 8
+		src.MedicLight.enable()
+		playsound(src.host.loc, MedicalSiren, 35, 1)
+		while(colorChangeCycles>0)
+			src.MedicLight.set_color(28, 138, 118)
+			sleep(0.4 SECONDS)
+			src.MedicLight.set_color(143, 29, 65)
+			sleep(0.4 SECONDS)
+			colorChangeCycles--
+		src.MedicLight.disable()
+
+	proc/tell_medic()
+		var/messages = list("[usr] is a doctor [usr.get_pronouns().subjective] can heal you", "[usr] here to heal you", "Medic here to patch you up", "Get healed by [usr]", "Gonna patch you up", "[usr] will heal you", "Stop running you half dead moron [usr] will heal you because you aren´t gonna make it to the crater that once WAS mebay and [usr] stockpiled on every single med known to mankind only for this very moment", "[usr] will patch you up", "Don´t run from [usr] [usr.get_pronouns().subjective] can patch you up", "MEDIC HERE", "[usr] is a doctor", "")
+		usr.visible_message("<span style='color:#73ffb3;'><b>[pick(messages)]</b></span>")
+		return
+
+/obj/ability_button/yell_medic
+	name = "MEDIC HERE"
+	icon_state = "alert"
+
+	execute_ability()
+		var/obj/item/device/pda_module/flashlight/yell_medic/J = the_item
+		if (J.host)
+			J.toggle_yell()
