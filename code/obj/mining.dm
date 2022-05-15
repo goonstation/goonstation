@@ -646,7 +646,7 @@
 			for (var/turf/unsimulated/UT in mining_controls.magnet_area.contents)
 				UT.ReplaceWith("Space", force=TRUE)
 		for (var/turf/space/S in mining_controls.magnet_area.contents)
-			S.overlays = list()
+			S.ClearAllOverlays()
 
 		var/sleep_time = attract_time
 		if (sleep_time < 1)
@@ -1332,7 +1332,7 @@
 			src.hardness /= 2
 		else
 			src.hardness = 0
-		src.overlays += image('icons/turf/walls_asteroid.dmi', "weakened")
+		src.UpdateOverlays(image('icons/turf/walls_asteroid.dmi', "weakened"), "asteroid_weakened")
 
 	proc/damage_asteroid(var/power,var/allow_zero = 0)
 		// use this for stuff that arent mining tools but still attack asteroids
