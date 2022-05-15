@@ -1,4 +1,22 @@
 
+(t)sat may 14 22
+(u)Flaborized
+(p)8499
+(e)|
+(+)Throwing things into disposal chutes isn't luck based anymore, and you can throw more mobs into chutes. Clumsy people will always set the chute off when thrown in.
+(u)Wisemonster
+(p)8550
+(e)🆕|feature
+(*)Add a new objective for Arcfiends!
+(u)LeahTheTech
+(p)8512
+(e)🗺⚖|mapping, balance
+(+)Donut 3's AI upload chamber has been redesigned slightly to remove a safespot.
+(u)Emily
+(*)Dungeon Master 2.0 has completed its takeover of the VR Dungeon. It has gone through extensive remodelling, and there is now a new prize for completing it. Enjoy!
+(t)fri may 13 22
+(u)Flourish
+(+)Vampires and their thralls can now identify each other through small V icons.
 (t)thu may 12 22
 (u)Wisemonster
 (p)8549

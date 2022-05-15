@@ -408,6 +408,8 @@
 
 			boutput(M, __red("<b>You awaken filled with purpose - you must serve your master vampire, [owner.real_name]!</B>"))
 			M.show_antag_popup("mindslave")
+			M.antagonist_overlay_refresh(1)
+			owner.antagonist_overlay_refresh(1)
 
 			boutput(owner, __blue("[M] has been revived as your thrall."))
 			logTheThing("combat", owner, M, "enthralled [constructTarget(M,"combat")] at [log_loc(owner)].")

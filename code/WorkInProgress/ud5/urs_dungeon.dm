@@ -279,6 +279,8 @@
 
 		H.set_loc(pick(L))
 
+		H.unlock_medal("Virtual Ascension",1)
+
 		return
 
 /obj/adventurepuzzle/triggerable/adventure_announcement
