@@ -18,15 +18,15 @@ datum/controller/process/mob_ai
 			//this spreads out mob ticks, which still happen once every 6 seconds, but not all at the same time
 			if(isnull(M.ai_tick_schedule))
 				M.ai_tick_schedule = rand(0,30) //if you need bigger delays in the future, don't forget to increase this number proportionally
-			var/refnum = M.ai_tick_schedule + ticks
-			if ((M.mob_flags & LIGHTWEIGHT_AI_MOB) && (refnum % 30) == 0) //call life() with a slowed update rate on mobs we manage that arent part of the standard mobs list
+			var/ticknum = M.ai_tick_schedule + ticks
+			if ((M.mob_flags & LIGHTWEIGHT_AI_MOB) && (ticknum % 30) == 0) //call life() with a slowed update rate on mobs we manage that arent part of the standard mobs list
 				if( M.z == 4 && !Z4_ACTIVE ) continue
 				if (istype(X, /mob/living))
 					var/mob/living/L = X
 					L.Life(src)
 				scheck()
 
-			if ((refnum % 15) == 0)
+			if ((ticknum % 15) == 0)
 				M.handle_stamina_updates()
 				if (!M.client) continue
 
@@ -38,7 +38,7 @@ datum/controller/process/mob_ai
 							M.abilityHolder.next_update = 10 SECONDS
 				scheck()
 
-			if((M.mob_flags & HEAVYWEIGHT_AI_MOB) || (refnum % 5) == 0) //either we can tick every time, or we tick every 1 second
+			if((M.mob_flags & HEAVYWEIGHT_AI_MOB) || (ticknum % 5) == 0) //either we can tick every time, or we tick every 1 second
 				var/mob/living/L = M
 				if((isliving(M) && (L.is_npc || L.ai_active) || !isliving(M)))
 					if(istype(X, /mob/living/carbon/human))
