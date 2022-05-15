@@ -14,10 +14,11 @@ datum/controller/process/mob_ai
 			if (!M)
 				continue
 
-			//in case it isn't obvious, what we're doing here is taking a unique ref in the form [0x00000000] and mod 30ing it to determine if a mob should tick
-			//this spreads out lightweight mob ticks, which still happen once every 6 seconds, but not all at the same time
-			//text2num returns null on a bad input, and null % num == 0 (lol DM) so it's all good, if a little hacky
-			var/refnum = text2num(copytext("\ref[M]",4,12)) + ticks
+			//in case it isn't obvious, what we're doing here is giving each mob a raffle ticket, and mod 30ing it to determine if a mob should tick
+			//this spreads out mob ticks, which still happen once every 6 seconds, but not all at the same time
+			if(isnull(M.ai_tick_schedule))
+				M.ai_tick_schedule = rand(0,30) //if you need bigger delays in the future, don't forget to increase this number proportionally
+			var/refnum = M.ai_tick_schedule + ticks
 			if ((M.mob_flags & LIGHTWEIGHT_AI_MOB) && (refnum % 30) == 0) //call life() with a slowed update rate on mobs we manage that arent part of the standard mobs list
 				if( M.z == 4 && !Z4_ACTIVE ) continue
 				if (istype(X, /mob/living))
