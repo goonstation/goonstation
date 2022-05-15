@@ -12,7 +12,7 @@
 
 	var/list/dupes = list()
 	for (var/name in names)
-		if (names[name] > 1)
+		if (len(names[name]) > 1)
 			dupes += name
 
 	if (length(dupes))
