@@ -259,8 +259,8 @@
 			if (client) client.color = null
 
 			animation = new(src.loc)
-			animation.icon_state = "blank"
 			animation.icon = 'icons/mob/mob.dmi'
+			animation.icon_state = "wraithdie"
 			animation.master = src
 			flick(death_icon_state, animation)
 
@@ -331,14 +331,17 @@
 		health -= brute * 3
 
 		//Enough damage breaks the trickster's disguise.
-		if ((burn + brute)> 5 && istype(src, /mob/wraith/wraith_trickster))
+		if ((burn + brute)> 4 && istype(src, /mob/wraith/wraith_trickster))
 			var/mob/wraith/wraith_trickster/WT = src
 			if(WT.copied_appearance != null && WT.backup_appearance != null)
 				WT.appearance = WT.backup_appearance
-				if(!WT.density)	//Giving back the appearance might make use incorporeal again, lets make sure it doesnt happen.
-					haunt()
 				WT.copied_appearance = null
 				WT.backup_appearance = null
+				makeCorporeal()
+				APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_SPOOKY)	//Dumb hack, but it works...
+				REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src)
+				//	src.see_invisible = INVIS_NONE
+				//Todo bugfix, figure out why the wraith is invisible
 
 		health = min(max_health, health)
 		if (src.health <= 0)
@@ -354,7 +357,7 @@
 			hud.update_health()
 		return
 
-	Move(var/turf/NewLoc, direct)	//Todo Need to increase movespeed and allow door opening when manifested as trickster.
+	Move(var/turf/NewLoc, direct)
 		if (loc)
 			if (!isturf(loc) && !density)
 				src.set_loc(get_turf(loc))
@@ -377,6 +380,12 @@
 
 			var/mydir = get_dir(src, NewLoc)
 			var/salted = 0
+
+			if(src.density)
+				for(var/obj/machinery/door/airlock/A in NewLoc)
+					if(!A.welded && !A.locked && !A.operating && A.arePowerSystemsOn() && !A.isWireCut(AIRLOCK_WIRE_OPEN_DOOR) && !(A.status & NOPOWER))
+						A.open()
+
 			if (mydir == NORTH || mydir == EAST || mydir == WEST || mydir == SOUTH)
 				if (src.density && !NewLoc.canpass())
 					return
@@ -532,11 +541,13 @@
 				playsound(src, sounds_speak["1"],  55, 0.01, 8)
 
 				var/rendered = "<strong>[src.name]</strong> says [message]."
+
 				var/list/listening = all_hearers(null, src)
 				listening |= src
 				//Todo, typing indicator, maybe impersonate voice/speech pattern, overhead text
 				for (var/mob/M in listening)
 					M.show_message(rendered, 2)
+
 			else
 				if (copytext(message, 1, 2) == "*")
 					src.emote(copytext(message, 2))
@@ -823,6 +834,8 @@
 	var/possession_points = 0	//How many do we currently have?
 	var/mutable_appearance/copied_appearance = null	//Steal someone's appearance and use it during haunt
 	var/mutable_appearance/backup_appearance = null
+	var/backup_desc = null
+	var/copied_desc = null
 	var/traps_laid = 0
 
 	New(var/mob/M)

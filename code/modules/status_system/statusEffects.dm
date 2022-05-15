@@ -1601,15 +1601,15 @@
 							if(!has_faked_nuke)
 								sound_effect = 'sound/machines/bomb_planted.ogg'
 								volume = 90
-								boutput(H, "<h1 class='notice'>Frontier Authority Update</h1>")
-								boutput(H, "<h2 class='notice'>Nuclear Weapon Detected</h2>")
+								boutput(H, "<h1><span class='notice'>Frontier Authority Update</h1>")
+								boutput(H, "<h2><span class='notice'>Nuclear Weapon Detected</h2>")
 								boutput(H, "<span class='alert'>A nuclear bomb has been armed in [pick("the Bridge", "the Bar", "the security lobby", "the medical lobby")]. It will explode in 5 minutes. All personnel must report to the plant area to disarm the bomb immediatly.</span>")
 								has_faked_nuke = true
 						if (4)
 							if(!has_faked_shuttle)
 								sound_effect = 'sound/misc/shuttle_enroute.ogg'
 								volume = 80
-								boutput(H, "<h2 class='notice'>The Emergency Shuttle Has Been Called</h2>")
+								boutput(H, "<h2><span class='notice'>The Emergency Shuttle Has Been Called</h2>")
 								boutput(H, "<span>No reason given.</span>")
 								boutput(H, "<span class='alert'>It will arrive in 6 minutes.</span>")
 								has_faked_shuttle = true

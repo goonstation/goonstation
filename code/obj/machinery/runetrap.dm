@@ -91,13 +91,9 @@
 						M.reagents.remove_any(M.reagents.total_volume + amount_to_inject - M.reagents.maximum_volume)
 					M.reagents.add_reagent("haloperidol", src.amount_to_inject)
 					src.visible_message("<span class='alert>[M] steps on [src] and triggers it!</span>")
-					boutput(M, "<span class='alert'>Visions of murder and blood fill your mind. Rage builds up inside of you!</span>")
+					boutput(M, "<span class='notice'>You start to feel really sleepy!</span>")
 					elecflash(src, 1, 1)
 					qdel(src)
-				src.visible_message("<span class='alert>[M] steps on [src] and triggers it!</span>")
-				boutput(M, "<span class='notice'>You start to feel really sleepy!</span>")
-				elecflash(src, 1, 1)
-				qdel(src)
 
 /obj/machinery/wraith/runetrap/stunning
 

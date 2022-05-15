@@ -1,7 +1,7 @@
 ////////////////////////////////
 // Skeleton commander abilities
 ////////////////////////////////
-/datum/targetable/critter/skeleton_commander/rally	//Todo doesnt seem to work, come back to this
+/datum/targetable/critter/skeleton_commander/rally
 	name = "rally"
 	desc = "rally"
 	icon_state = "clown_spider_bite"
@@ -28,15 +28,21 @@
 
 		var/list/obj/critter/affected_critter = list()
 		for (var/obj/critter/C in range(6, get_turf(holder.owner)))
-			for (var/obj/O in critter_list)
+			logTheThing("debug", src, null, "init spin")
+			for (var/O in critter_list)
+				logTheThing("debug", src, null, "spin")
 				if (istype(C, O))
-					C.health = (C.health * 2 + 10)
+					logTheThing("debug", src, null, "Affected")
+					C.atk_delay = (C.atk_delay / 1.5)
+					C.atk_brute_amt = (C.atk_brute_amt * 1.5)
+					C.atk_burn_amt = (C.atk_burn_amt * 1.5)
 					affected_critter += C
-					//Todo maybe add a damage/speed/seekrange buff, add a sound effect and maybe overlay
 		SPAWN(25 SECOND)
 			for (var/obj/critter/C in affected_critter)
 				if (C.loc)
-					C.health = C.health / 2
+					C.atk_delay = (C.atk_delay * 1.5)
+					C.atk_brute_amt = (C.atk_brute_amt / 1.5)
+					C.atk_burn_amt = (C.atk_burn_amt / 1.5)
 
 
 

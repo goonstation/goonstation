@@ -517,7 +517,7 @@
 	desc = "Become corporeal for 30 seconds. During this time, you gain additional biopoints, depending on the amount of humans in your vicinity. You cannot use this ability while already corporeal."
 	targeted = 0
 	pointCost = 0
-	cooldown = 10 SECONDS
+	cooldown = 30 SECONDS
 	min_req_dist = INFINITY
 
 	cast()
@@ -531,6 +531,7 @@
 			if (istype(K, /mob/wraith/wraith_trickster))
 				var/mob/wraith/wraith_trickster/T = K
 				T.appearance = T.backup_appearance
+				T.desc = T.backup_desc
 				return T.disappear()
 			else
 				return K.disappear()
@@ -544,7 +545,8 @@
 				var/mob/wraith/wraith_trickster/T = holder.owner
 				if (T.copied_appearance != null)
 					T.backup_appearance = new/mutable_appearance(T)
-					T.appearance = T.copied_appearance	//Appearace might make use dense already. So we cant use the W.haunt() proc
+					T.appearance = T.copied_appearance	//Appearance might make us dense already. So we cant use the W.haunt() proc
+					T.desc = T.copied_desc
 					usr.playsound_local(usr.loc, "sound/voice/wraith/wraithhaunt.ogg", 80, 0)
 					animate(T, alpha=255, time=2 SECONDS)
 					if (!T.density)
@@ -1451,7 +1453,7 @@
 			if("Cluwne")
 				sound_choice = "sound/voice/cluwnelaugh[rand(1, 3)].ogg"
 			if("Gasp")
-				sound_choice = pick("sound/voice/male_gasp_[pick("1", "5")].ogg", "sound/voice/female_gasp_[pick("1", "5")].ogg")
+				sound_choice = pick("sound/voice/gasps/male_gasp_[pick("1", "5")].ogg", "sound/voice/gasps/female_gasp_[pick("1", "5")].ogg")
 			if("Chainsaw")
 				sound_choice = "sound/machines/chainsaw_red.ogg"
 			if("Stab")
@@ -1492,8 +1494,8 @@
 			return 1
 		var/trap_choice = null
 		var/turf/T = get_turf(holder.owner)
-		if (!isturf(T) || istype(T, /turf/space) || istype(T, /turf/simulated/wall) || istype(T, /turf/unsimulated/wall))
-			boutput(holder.owner, "<span class='notice'>You cannot open a portal here.</span>")
+		if (!isturf(T) || !istype(T,/turf/simulated/floor))
+			boutput(holder.owner, "<span class='notice'>You cannot open a trap here.</span>")
 			return 1
 		for (var/obj/machinery/wraith/runetrap/R in range(T, 3))
 			boutput(holder.owner, "<span class='notice'>That is too close to another trap.</span>")
@@ -1503,6 +1505,8 @@
 			return 1
 		if (length(src.trap_types) > 1)
 			trap_choice = input("What type of trap do you want?", "Target trap type", null) as null|anything in trap_types
+		if(trap_choice == null)
+			return 1
 		switch(trap_choice)
 			if("Madness")
 				trap_choice = /obj/machinery/wraith/runetrap/madness
@@ -1544,15 +1548,12 @@
 	"Skeletons",
 	"Random")
 
-
-
-
 	cast()
 		if (..())
 			return 1
 
 		var/turf/T = get_turf(holder.owner)
-		if (isturf(T) && !istype(T, /turf/space) && !istype(T, /turf/simulated/wall) && !istype(T, /turf/unsimulated/wall))
+		if (isturf(T) && istype(T,/turf/simulated/floor))
 			if(istype(holder.owner, /mob/wraith))
 				var/mob/wraith/W = holder.owner
 				if (!W.density)
@@ -1568,6 +1569,8 @@
 				var/mob_choice = null
 				if (length(src.mob_types) > 1)
 					mob_choice = input("What should the portal spawn?", "Target mob type", null) as null|anything in mob_types
+				if (mob_choice == null)
+					return 1
 				switch(mob_choice)
 					if("Crunched")
 						mob_choice = /obj/critter/crunched
@@ -1621,9 +1624,10 @@
 			var/mob/wraith/wraith_trickster/W = holder.owner
 			boutput(holder.owner, "We steal [target]'s appearance for ourselves.")
 			W.copied_appearance = new/mutable_appearance(target)
-			//Todo instead check if lying, and if lying transform.turn
-			W.copied_appearance.transform = null
+			W.copied_appearance.transform = null	//Reset the transform so people lying when copied will be standing up. Living corpses!
 			W.copied_appearance.alpha = 0
+			W.copied_desc = target.get_desc()
+			W.backup_desc = W.desc
 			return 0
 		else if((istype(holder.owner, /mob/wraith/wraith_trickster)) && (istype(target, /mob/wraith/wraith_trickster)))
 			var/mob/wraith/wraith_trickster/W = holder.owner
