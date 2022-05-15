@@ -66,7 +66,7 @@ Both the say/me wrappers and cancel_typing remove the typing indicator.
 
 // -- Human Typing Indicators -- //
 /mob/living/create_typing_indicator()
-	if(!src.has_typing_indicator && src.stat == 0) //Prevents sticky overlays and typing while in any state besides conscious
+	if(!src.has_typing_indicator && isalive(src)) //Prevents sticky overlays and typing while in any state besides conscious
 		src.UpdateOverlays(living_typing_bubble, TYPING_OVERLAY_KEY)
 		src.has_typing_indicator = TRUE
 
