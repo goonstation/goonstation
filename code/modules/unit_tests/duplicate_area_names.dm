@@ -17,8 +17,5 @@
 
 	if (length(dupes))
 		// Build descriptive failure message
-		var/failmsg = "The following area names are duplicated: \n"
 		for (var/dupe in dupes)
-			failmsg += "\"[dupe || "***EMPTY STRING***"]\": [english_list(names[dupe])]"
-
-		Fail(failmsg)
+			Fail("The following areas have duplicate name \"[dupe || "***EMPTY STRING***"]\": [english_list(names[dupe])]")
