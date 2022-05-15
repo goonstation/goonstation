@@ -502,11 +502,12 @@
 			if(!module)
 				if (last_laws[i])
 					//load the law number and text from our saved law list
-					var/lawtext = last_laws[i]["law"]
+					var/list/lawtext = last_laws[i]["law"]
 					if (islist(lawtext))
 						for (var/law in lawtext)
 							removed_laws += "<del class=\"alert\">[last_laws[i]["number"] + removed_law_offset]: [law]</del>"
-							removed_law_offset++
+							if (lawtext.Find(law) != length(lawtext)) //screm
+								removed_law_offset++
 					else
 						removed_laws += "<del class=\"alert\">[last_laws[i]["number"] + removed_law_offset]: [lawtext]</del>"
 				continue
