@@ -2168,6 +2168,11 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 		desc = "This floor is covered in vines."
 		icon_state = "rootfloor_1"
 
+		random
+			New()
+				. = ..()
+				icon_state = "rootfloor_[rand(1,3)]"
+
 	oldfloor
 		name = "floor"
 		desc = "Looks a bit different."
