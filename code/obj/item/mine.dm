@@ -53,14 +53,14 @@
 
 		..()
 
-	pull(mob/user as mob)
+	pull()
+		if (..())
+			return
 		if (src.armed && !src.used_up)
 			if (!src.suppress_flavourtext)
-				src.visible_message("<font color='red'><b>[user] tries to pull the [src.name], triggering the anti-tamper mechanism!</b></span>")
-			src.triggered(user)
+				src.visible_message("<font color='red'><b>[usr] tries to pull the [src.name], triggering the anti-tamper mechanism!</b></span>")
+			src.triggered(usr)
 			return
-
-		..()
 
 	attack_self(mob/user as mob)
 		src.add_fingerprint(user)

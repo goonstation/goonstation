@@ -6,7 +6,7 @@
 /turf/space/asteroid,
 /area/space)
 "aac" = (
-/turf/simulated/wall/asteroid/dark,
+/turf/simulated/wall/auto/asteroid/dark,
 /area/space)
 "aad" = (
 /obj/lattice{
@@ -409,7 +409,7 @@
 /turf/space,
 /area/space)
 "abi" = (
-/turf/simulated/wall/asteroid/dark,
+/turf/simulated/wall/auto/asteroid/dark,
 /area/station/garden/owlery)
 "abj" = (
 /obj/cable{
@@ -20732,6 +20732,9 @@
 	icon = 'icons/obj/stationobjs.dmi';
 	icon_state = "plant"
 	},
+/obj/decal/tile_edge/floorguide/medbay{
+	dir = 8
+	},
 /turf/simulated/floor/blue/side{
 	dir = 10
 	},
@@ -21135,6 +21138,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/decal/tile_edge/floorguide/catering{
+	dir = 1
+	},
 /turf/simulated/floor/orange/side{
 	dir = 4
 	},
@@ -21464,6 +21470,9 @@
 /obj/item/device/radio/intercom/cargo{
 	dir = 4
 	},
+/obj/decal/tile_edge/floorguide/botany{
+	dir = 4
+	},
 /turf/simulated/floor/orange/side{
 	dir = 10
 	},
@@ -21479,6 +21488,7 @@
 	icon_state = "1-2"
 	},
 /obj/reagent_dispensers/still,
+/obj/decal/tile_edge/floorguide/botany,
 /turf/simulated/floor/orange/side{
 	dir = 6
 	},
@@ -25384,9 +25394,7 @@
 "bAB" = (
 /obj/machinery/vending/hydroponics,
 /turf/simulated/floor/green/side,
-/area/station/security/checkpoint/sec_foyer{
-	name = "Secure Release Foyer"
-	})
+/area/station/hydroponics/bay)
 "bAF" = (
 /obj/submachine/chem_extractor{
 	dir = 8
@@ -25880,6 +25888,9 @@
 	},
 /obj/table/auto,
 /obj/machinery/cell_charger,
+/obj/decal/tile_edge/floorguide/mining{
+	dir = 1
+	},
 /turf/simulated/floor/orangeblack/side{
 	dir = 9
 	},
@@ -27096,6 +27107,9 @@
 "bFu" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/disposalpipe/segment/vertical,
+/obj/decal/tile_edge/floorguide/qm{
+	dir = 4
+	},
 /turf/simulated/floor/orangeblack/side,
 /area/station/hallway/primary/south)
 "bFv" = (
@@ -35324,7 +35338,7 @@
 	frequency = 1229
 	},
 /turf/simulated/floor/purplewhite,
-/area/space)
+/area/station/science/lab)
 "cfE" = (
 /obj/machinery/light/small/floor,
 /obj/cable{
@@ -36259,7 +36273,7 @@
 /turf/simulated/floor/plating/airless/asteroid/dark,
 /area/research_outpost/indigo_rye)
 "ciD" = (
-/turf/simulated/wall/asteroid/dark,
+/turf/simulated/wall/auto/asteroid/dark,
 /area/research_outpost/indigo_rye)
 "ciE" = (
 /turf/space,
@@ -41101,9 +41115,7 @@
 /area/station/maintenance/inner/sw)
 "efi" = (
 /obj/disposalpipe/segment/mail/vertical,
-/obj/decal/tile_edge/floorguide/medbay{
-	dir = 8
-	},
+/obj/decal/tile_edge/floorguide/medbay,
 /turf/simulated/floor/blue/side{
 	dir = 8
 	},
@@ -41476,7 +41488,7 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/disposalpipe/segment/vertical,
 /obj/decal/tile_edge/floorguide/hop,
-/turf/simulated/floor/red/side,
+/turf/simulated/floor/red/corner,
 /area/station/hallway/primary/south)
 "ewL" = (
 /obj/wingrille_spawn/auto,
@@ -43868,7 +43880,9 @@
 /obj/decal/tile_edge/floorguide/arrow_s{
 	dir = 4
 	},
-/turf/simulated/floor/red/side,
+/turf/simulated/floor/red/corner{
+	dir = 8
+	},
 /area/station/hallway/primary/south)
 "gNY" = (
 /obj/cable{
@@ -44621,6 +44635,12 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/mining/staff_room)
+"huD" = (
+/obj/decal/tile_edge/floorguide/evac{
+	dir = 1
+	},
+/turf/simulated/floor/grey,
+/area/station/hallway/secondary/exit)
 "hvr" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/right,
@@ -44964,6 +44984,11 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/maintenance/inner/sw)
+"hSs" = (
+/obj/disposalpipe/segment/mail/horizontal,
+/obj/decal/tile_edge/floorguide/security,
+/turf/simulated/floor/red/side,
+/area/station/hallway/primary/south)
 "hSz" = (
 /obj/machinery/drainage,
 /obj/disposalpipe/junction/right/north,
@@ -45866,6 +45891,17 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
 /area/station/bridge)
+"iQy" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/floorguide/arrow_s{
+	dir = 4
+	},
+/turf/simulated/floor/escape/corner{
+	dir = 4
+	},
+/area/station/hallway/secondary/exit)
 "iQW" = (
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/red/side{
@@ -46715,7 +46751,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/airless/grey,
-/area/space)
+/area/station/maintenance/southwest)
 "jRX" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -48566,10 +48602,26 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
 /area/station/crew_quarters/md)
+"lJO" = (
+/obj/decal/tile_edge/floorguide/arrow_s,
+/turf/simulated/floor/grey,
+/area/station/hallway/secondary/exit)
 "lJY" = (
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/grey,
 /area/station/hallway/secondary/exit)
+"lLE" = (
+/obj/disposalpipe/segment/brig{
+	dir = 8
+	},
+/obj/disposalpipe/segment/mail/vertical,
+/obj/decal/tile_edge/floorguide/botany{
+	dir = 8
+	},
+/turf/simulated/floor/green/side{
+	dir = 1
+	},
+/area/station/hallway/primary/south)
 "lLT" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -49645,12 +49697,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/turretid{
-	name = "External perimeter turret deactivation control";
-	pixel_y = -24;
-	req_access = null;
-	turretArea = /area/station/turret_protected/armory_outside
-	},
 /obj/access_spawn/hos,
 /obj/deployable_turret/riot{
 	active = 1;
@@ -50170,6 +50216,9 @@
 	name = "Secure Release Foyer"
 	})
 "num" = (
+/obj/decal/tile_edge/floorguide/catering{
+	dir = 4
+	},
 /turf/simulated/floor/orange/side{
 	dir = 4
 	},
@@ -50212,7 +50261,7 @@
 /obj/decal/tile_edge/floorguide/arrow_w{
 	dir = 4
 	},
-/turf/simulated/floor/red/side,
+/turf/simulated/floor,
 /area/station/hallway/primary/south)
 "nAw" = (
 /obj/wingrille_spawn/auto/crystal,
@@ -51116,6 +51165,13 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/maintenance/inner/east)
+"opn" = (
+/obj/decal/tile_edge/floorguide/evac,
+/obj/decal/tile_edge/floorguide/arrow_e{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "opG" = (
 /turf/simulated/floor/shuttlebay,
 /area/station/hallway/secondary/exit)
@@ -54480,6 +54536,15 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
+"rMi" = (
+/obj/decal/tile_edge/floorguide/evac{
+	dir = 8
+	},
+/obj/decal/tile_edge/floorguide/arrow_e{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "rMk" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -55087,6 +55152,18 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
+"stD" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/floorguide/evac{
+	dir = 4
+	},
+/obj/decal/tile_edge/floorguide/arrow_n{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "stK" = (
 /obj/table/reinforced/auto,
 /turf/simulated/floor/blue,
@@ -55564,6 +55641,12 @@
 /area/station/security/main)
 "sSD" = (
 /obj/storage/secure/crate/weapon/armory/tranquilizer,
+/obj/machinery/turretid{
+	name = "External perimeter turret deactivation control";
+	pixel_x = -24;
+	req_access = null;
+	turretArea = /area/station/turret_protected/armory_outside
+	},
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "sSL" = (
@@ -56198,9 +56281,10 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/escape{
-	dir = 4
+/obj/decal/tile_edge/floorguide/arrow_n{
+	dir = 1
 	},
+/turf/simulated/floor/escape/corner,
 /area/station/hallway/secondary/exit)
 "tuz" = (
 /obj/machinery/light/small,
@@ -57646,6 +57730,12 @@
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
+"uMH" = (
+/obj/decal/tile_edge/floorguide/evac{
+	dir = 4
+	},
+/turf/simulated/floor/grey,
+/area/station/hallway/secondary/exit)
 "uMJ" = (
 /obj/machinery/atmospherics/binary/passive_gate{
 	dir = 4;
@@ -58224,7 +58314,7 @@
 /turf/simulated/floor/purplewhite{
 	dir = 10
 	},
-/area/space)
+/area/station/science/lab)
 "vuD" = (
 /obj/machinery/recharge_station,
 /turf/simulated/floor/plating,
@@ -58495,6 +58585,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/west)
+"vIN" = (
+/obj/decal/tile_edge/floorguide/arrow_n{
+	dir = 8
+	},
+/turf/simulated/floor/grey,
+/area/station/hallway/secondary/exit)
 "vIY" = (
 /obj/wingrille_spawn/auto,
 /obj/cable,
@@ -59815,6 +59911,18 @@
 	dir = 10
 	},
 /area/station/quartermaster/cargobay)
+"wWN" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/floorguide/evac{
+	dir = 1
+	},
+/obj/decal/tile_edge/floorguide/arrow_s{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "wXg" = (
 /obj/structure/woodwall,
 /turf/simulated/floor/plating/damaged1,
@@ -107359,7 +107467,7 @@ coF
 bCo
 bDw
 bDA
-gVs
+bFs
 bHT
 bHS
 bJt
@@ -107960,7 +108068,7 @@ byd
 bmH
 bAm
 xqz
-mRv
+bCq
 bDy
 bEr
 bFy
@@ -108265,7 +108373,7 @@ coI
 bCq
 bDz
 bDJ
-bFs
+gVs
 bHT
 bHV
 bJw
@@ -108564,7 +108672,7 @@ bye
 bzk
 rgh
 coJ
-bCq
+mRv
 bDA
 bvY
 bFs
@@ -112492,7 +112600,7 @@ bAt
 tah
 bCz
 mWm
-bEv
+bEB
 bGl
 cov
 bIg
@@ -113398,7 +113506,7 @@ jEe
 tah
 tvw
 bDA
-bEB
+bEv
 dYo
 cor
 bIj
@@ -114002,7 +114110,7 @@ bAB
 boo
 qhQ
 bDA
-bEv
+hSs
 oXa
 bGK
 bIl
@@ -114302,7 +114410,7 @@ byq
 mHd
 iSH
 boo
-tvw
+fli
 bDA
 fZB
 wHZ
@@ -114851,7 +114959,7 @@ apW
 dMh
 ase
 jjV
-aum
+aHW
 auT
 uZE
 axo
@@ -114906,7 +115014,7 @@ ncI
 wVT
 uRm
 boq
-fli
+tvw
 bDA
 bEv
 xSq
@@ -116114,7 +116222,7 @@ nEE
 fBk
 fqR
 iOg
-gYU
+lLE
 wOh
 hir
 xSq
@@ -132695,13 +132803,13 @@ lfK
 oBx
 qtW
 tfR
-tfR
+stD
 tsX
 tEZ
 sPZ
 tfR
-tfR
-tfR
+iQy
+wWN
 tEZ
 tfR
 nap
@@ -132990,7 +133098,7 @@ aER
 bKX
 bSV
 bkL
-bri
+rMi
 bri
 bri
 lpn
@@ -133015,7 +133123,7 @@ lXB
 guD
 bri
 xEO
-bri
+opn
 lXB
 aaa
 aci
@@ -136314,7 +136422,7 @@ aNu
 lXB
 lXB
 ftt
-aQf
+uMH
 aNu
 aQf
 aNu
@@ -136335,7 +136443,7 @@ wzw
 aNu
 aQf
 aNu
-aQf
+huD
 bik
 lXB
 lXB
@@ -136616,7 +136724,7 @@ bTq
 bTq
 dzX
 aPf
-aQf
+lJO
 aNu
 wWo
 aNu
@@ -136637,7 +136745,7 @@ wzw
 aNu
 uiH
 aNu
-aQf
+vIN
 bik
 dzX
 bTq

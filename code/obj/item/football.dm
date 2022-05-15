@@ -44,9 +44,10 @@
 
 /obj/item/clothing/shoes/cleats
 	name = "cleats"
-	desc = "Sharp cleats made for playing football at a professional level. They must be expensive!"
+	desc = "Sharp cleats made for playing football at a professional level. The cleats provide excellent grip. They must be expensive!"
 	icon_state = "cleats"
 	item_state = "bl_shoes"
+	c_flags = NOSLIP
 	kick_bonus = 6
 	step_sound = "step_plating"
 	step_priority = STEP_PRIORITY_LOW

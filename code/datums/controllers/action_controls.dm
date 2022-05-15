@@ -895,7 +895,7 @@ var/datum/action_controller/actions
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "grabbed"
 
-	var/mob/living/carbon/human/source  //The person doing the action
+	var/mob/living/source  //The mob doing the action
 	var/mob/living/carbon/human/target  //The target of the action
 	var/obj/item/item				    //The item if any. If theres no item, we tried to remove something from that slot instead of putting an item there.
 	var/slot						    //The slot number
@@ -936,7 +936,7 @@ var/datum/action_controller/actions
 			for(var/obj/item/grab/gunpoint/G in source.grabbed_by)
 				G.shoot()
 
-		if (source.get_stamina() < STAM_COST)
+		if (source.use_stamina && source.get_stamina() < STAM_COST)
 			boutput(owner, "<span class='alert>You're too winded to [item ? "place that on" : "take that from"] [him_or_her(target)].</span>")
 			src.resumable = FALSE
 			interrupt(INTERRUPT_ALWAYS)
@@ -952,7 +952,7 @@ var/datum/action_controller/actions
 				boutput(source, "<span class='alert'>You can't put [item] on [target] when [(he_or_she(target))] is in [target.loc]!</span>")
 				interrupt(INTERRUPT_ALWAYS)
 				return
-			if(issilicon(source) || item.cant_drop) //Fix for putting item arm objects into others' inventory
+			if(item.cant_drop) //Fix for putting item arm objects into others' inventory
 				source.show_text("You can't put \the [item] on [target] when it's attached to you!", "red")
 				interrupt(INTERRUPT_ALWAYS)
 				return
@@ -1308,9 +1308,11 @@ var/datum/action_controller/actions
 	duration = 2 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "welding"
+	var/call_proc_on = null
 	var/obj/effects/welding/E
 	var/list/start_offset
 	var/list/end_offset
+
 
 	id = null
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
@@ -1326,7 +1328,7 @@ var/datum/action_controller/actions
 	var/list/proc_args = null
 	bar_on_owner = FALSE
 
-	New(owner, target, duration, proc_path, proc_args, end_message, start, stop)
+	New(owner, target, duration, proc_path, proc_args, end_message, start, stop, call_proc_on)
 		..()
 		src.owner = owner
 		src.target = target
@@ -1339,6 +1341,8 @@ var/datum/action_controller/actions
 		src.end_message = end_message
 		src.start_offset = start
 		src.end_offset = stop
+		if(call_proc_on)
+			src.call_proc_on = call_proc_on
 
 	onStart()
 		..()
@@ -1346,18 +1350,22 @@ var/datum/action_controller/actions
 			interrupt(INTERRUPT_ALWAYS)
 		if (src.target && !IN_RANGE(src.owner, src.target, src.maximum_range))
 			interrupt(INTERRUPT_ALWAYS)
-		if(!E && ismovable(src.target))
-			var/atom/movable/M = src.target
-			E = new(M)
-			M.vis_contents += E
+		if(!E)
+			if(ismovable(src.target))
+				var/atom/movable/M = src.target
+				E = new(M)
+				M.vis_contents += E
+			else
+				E = new(src.target)
 			E.pixel_x = start_offset[1]
 			E.pixel_y = start_offset[2]
 			animate(E, time=src.duration, pixel_x=end_offset[1], pixel_y=end_offset[2])
 
 	onDelete(var/flag)
-		if(E && ismovable(src.target))
-			var/atom/movable/M = src.target
-			M.vis_contents -= E
+		if(E)
+			if(ismovable(src.target))
+				var/atom/movable/M = src.target
+				M.vis_contents -= E
 			qdel(E)
 		..()
 
@@ -1371,14 +1379,17 @@ var/datum/action_controller/actions
 		if (end_message)
 			src.owner.visible_message("[src.end_message]")
 
-		if (src.target)
+		if (src.call_proc_on)
+			INVOKE_ASYNC(arglist(list(src.call_proc_on, src.proc_path) + src.proc_args))
+		else if (src.target)
 			INVOKE_ASYNC(arglist(list(src.target, src.proc_path) + src.proc_args))
 		else
 			INVOKE_ASYNC(arglist(list(src.owner, src.proc_path) + src.proc_args))
 
-		if(E && ismovable(src.target))
-			var/atom/movable/M = src.target
-			M.vis_contents -= E
+		if(E)
+			if(ismovable(src.target))
+				var/atom/movable/M = src.target
+				M.vis_contents -= E
 			qdel(E)
 
 //CLASSES & OBJS
@@ -1700,14 +1711,21 @@ var/datum/action_controller/actions
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
 	var/mob/mob_owner
 	var/mob/consumer
-	var/obj/item/reagent_containers/food/snacks/foodish //only works with food for now, will generalize for organs and glasses and such later
+	var/obj/item/reagent_containers/food/snacks/food
+	var/obj/item/reagent_containers/food/drinks/drink
 
-	New(var/mob/consumer, var/foodish, var/icon, var/icon_state)
+	New(var/mob/consumer, var/item, var/icon, var/icon_state)
 		..()
 		src.consumer = consumer
-		src.foodish = foodish
+		if (istype(item, /obj/item/reagent_containers/food/snacks))
+			src.food = item
+		else if (istype(item, /obj/item/reagent_containers/food/drinks/))
+			src.drink = item
+		else
+			logTheThing("debug", src, null, "/datum/action/bar/icon/forcefeed called with invalid food/drink type [item].")
 		src.icon = icon
 		src.icon_state = icon_state
+
 
 	onStart()
 		if (!ismob(owner))
@@ -1716,24 +1734,26 @@ var/datum/action_controller/actions
 
 		src.mob_owner = owner
 
-		if(BOUNDS_DIST(owner, consumer) > 0 || !consumer || !owner || mob_owner.equipped() != foodish)
+		if(BOUNDS_DIST(owner, consumer) > 0 || !consumer || !owner || (mob_owner.equipped() != food && mob_owner.equipped() != drink))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		..()
 
 	onUpdate()
 		..()
-		if(BOUNDS_DIST(owner, consumer) > 0 || !consumer || !owner || mob_owner.equipped() != foodish)
+		if(BOUNDS_DIST(owner, consumer) > 0 || !consumer || !owner || (mob_owner.equipped() != food && mob_owner.equipped() != drink))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
-		if(BOUNDS_DIST(owner, consumer) > 0 || !consumer || !owner || mob_owner.equipped() != foodish)
+		if(BOUNDS_DIST(owner, consumer) > 0 || !consumer || !owner || (mob_owner.equipped() != food && mob_owner.equipped() != drink))
 			interrupt(INTERRUPT_ALWAYS)
 			return
-
-		foodish.take_a_bite(consumer, mob_owner)
+		if (!isnull(food))
+			food.take_a_bite(consumer, mob_owner)
+		else
+			drink.take_a_drink(consumer, mob_owner)
 
 /datum/action/bar/private/spy_steal //Used when a spy tries to steal a large object
 	duration = 30

@@ -1008,7 +1008,7 @@
 			var/obj/item/playing_card/card = new /obj/item/playing_card(src)
 			stored_cards += card
 			card.icon_state = "clow-1-1"
-			card.name = "Clow Card"
+			card.name = "Clow Card #[i]"
 			update_card_information(card)
 			card.update_stored_info()
 		update_group_sprite()

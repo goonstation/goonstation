@@ -372,7 +372,26 @@ CONTENTS:
 		UpdateIcons()
 
 	proc/can_operate()
-		return chair1 && ishuman(chair1.buckled_guy) && !chair1.buckled_guy:on_chair && chair2 && ishuman(chair2.buckled_guy) && !chair2.buckled_guy:on_chair
+		return valid_mindswap(chair1?.buckled_guy) && valid_mindswap(chair2?.buckled_guy)
+
+	proc/valid_mindswap(mob/M)
+		. = 0
+		if(isliving(M))
+			. = 1
+
+		if(issilicon(M))
+			. = 0
+
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(H.on_chair)
+				. = 0
+		if(istype(M, /mob/living/critter))
+			var/mob/living/critter/C = M
+			if(C.dormant || C.ghost_spawned)
+				. = 0
+		if(istype(M, /mob/living/critter/small_animal/mouse/weak/mentor) || istype(M, /mob/living/critter/flock) || istype(M, /mob/living/intangible))
+			. = 0
 
 	proc/do_swap()
 

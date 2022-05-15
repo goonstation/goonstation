@@ -212,7 +212,7 @@ var/list/pw_rewards_tier3 = null
 	var/datum/ore_cluster/minor/minor_ores = new /datum/ore_cluster/minor
 	for(var/area/pod_wars/asteroid/minor/A in world)
 		if(!istype(A, /area/pod_wars/asteroid/minor/nospawn))
-			for(var/turf/simulated/wall/asteroid/pod_wars/AST in A)
+			for(var/turf/simulated/wall/auto/asteroid/pod_wars/AST in A)
 				//Do the ore_picking
 				AST.randomize_ore(minor_ores)
 
@@ -225,7 +225,7 @@ var/list/pw_rewards_tier3 = null
 		OC.quantity -= 1
 		if(OC.quantity <= 0) oreClusts -= OC
 		//oreClusts -= OC
-		for(var/turf/simulated/wall/asteroid/pod_wars/AST in A)
+		for(var/turf/simulated/wall/auto/asteroid/pod_wars/AST in A)
 			if(prob(OC.fillerprob))
 				AST.randomize_ore(minor_ores)
 			else
@@ -235,7 +235,7 @@ var/list/pw_rewards_tier3 = null
 
 //////////////////
 ///////////////pod_wars asteroids
-/turf/simulated/wall/asteroid/pod_wars
+/turf/simulated/wall/auto/asteroid/pod_wars
 	fullbright = 1
 	name = "asteroid"
 	desc = "It's asteroid material."
@@ -259,11 +259,11 @@ var/list/pw_rewards_tier3 = null
 		src.ore = O
 		src.hardness += O.hardness_mod
 		src.amount = rand(O.amount_per_tile_min,O.amount_per_tile_max)
-		var/image/ore_overlay = image('icons/turf/asteroid.dmi',O.name)
-		ore_overlay.transform = turn(ore_overlay.transform, pick(0,90,180,-90))
-		ore_overlay.pixel_x += rand(-6,6)
-		ore_overlay.pixel_y += rand(-6,6)
-		src.overlays += ore_overlay
+		var/image/ore_overlay = image('icons/turf/walls_asteroid.dmi',"[O.name][src.orenumber]")
+		ore_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask-side_[src.icon_state]"))
+		ore_overlay.layer = ASTEROID_ORE_OVERLAY_LAYER  // so meson goggle nerds can still nerd away
+
+		src.UpdateOverlays(ore_overlay, "ast_ore")
 
 		if(prob(OC.gem_prob))
 			add_event(/datum/ore/event/gem, O)

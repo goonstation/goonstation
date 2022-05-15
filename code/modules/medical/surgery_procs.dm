@@ -2009,7 +2009,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 /* ---------- crowbar - chest ---------- */
 	if (surgeon.zone_sel.selecting == "chest")
-		if (patient.mob_flags & IS_BONER)
+		if (patient.mob_flags & IS_BONEY)
 			playsound(patient, "sound/items/Crowbar.ogg", 50, 1)	// Dont really need much surgery to remove a bone from a skeleton
 
 			patient.tri_message("<span class='alert'><b>[surgeon]</b> jams one end of the [src] just below [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] sacrum and pries [his_or_her(patient)] tail off!</span>",\

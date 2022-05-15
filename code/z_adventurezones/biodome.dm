@@ -658,7 +658,7 @@ SYNDICATE DRONE FACTORY AREAS
 		. = ..()
 		src.special = null
 
-	afterattack(atom/target as mob|obj|turf, mob/user as mob)
+	afterattack(atom/target, mob/user)
 		if(target == user) return
 
 		if(get_dist(user, target) > 5)
@@ -670,15 +670,25 @@ SYNDICATE DRONE FACTORY AREAS
 		if(isturf(target))
 			target_r = new/obj/whip_trg_dummy(target)
 
-		playsound(src, 'sound/impact_sounds/Generic_Snap_1.ogg', 40, 1)
+		var/list/viewable_atoms = view(5, user)
+
+		// if targetted turf is not viewable, dont do whip
+		if (!viewable_atoms.Find(target_r))
+			return
 
 		var/list/affected = DrawLine(src.loc, target_r, /obj/line_obj/whip ,'icons/obj/projectiles.dmi',"WholeWhip",1,1,"HalfStartWhip","HalfEndWhip",OBJ_LAYER,1)
+
+		playsound(src, 'sound/impact_sounds/Generic_Snap_1.ogg', 40, 1)
 
 		for(var/obj/O in affected)
 			O.anchored = 1 //Proc wont spawn the right object type so lets do that here.
 			O.name = "Whip"
 
 			var/turf/T = O.loc
+
+			// if turf / object in whip path is dense, stop whipping
+			if (T && !T.Cross(O))
+				break
 
 			if(locate(/obj/decal/stalagmite) in T)
 				boutput(user, "<span class='alert'>You pull yourself to the stalagmite using the whip.</span>")
@@ -687,9 +697,12 @@ SYNDICATE DRONE FACTORY AREAS
 				boutput(user, "<span class='alert'>You pull yourself to the stalagtite using the whip.</span>")
 				user.set_loc(T)
 
-			SPAWN(0.2 SECONDS) qdel(O)
-
-		if(istype(target_r, /obj/whip_trg_dummy)) qdel(target_r)
+		// cleanup whip visuals
+		sleep(0.2 SECONDS)
+		for (var/obj/O in affected)
+			qdel(O)
+		if(istype(target_r, /obj/whip_trg_dummy))
+			qdel(target_r)
 
 		return
 

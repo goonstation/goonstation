@@ -122,7 +122,7 @@
 
 	proc/early_warning()
 		for_by_tcl(C, /obj/machinery/communications_dish)
-			C.add_centcom_report("[command_name()] Update", early_warning_text)
+			C.add_centcom_report(ALERT_GENERAL, early_warning_text)
 
 		if (!early_warning_heading)
 			command_alert(early_warning_text)
@@ -131,7 +131,7 @@
 
 	proc/set_up()
 		for_by_tcl(C, /obj/machinery/communications_dish)
-			C.add_centcom_report("[command_name()] Update", warning_text)
+			C.add_centcom_report(ALERT_GENERAL, warning_text)
 
 		if (!warning_heading)
 			command_alert(warning_text)

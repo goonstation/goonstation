@@ -327,7 +327,7 @@
 		if (score > 10000)
 			var/command_report = "A Pod Colosseum match has concluded with score [score]. Congratulations to: [moblist_names]."
 			for_by_tcl(C, /obj/machinery/communications_dish)
-				C.add_centcom_report("[command_name()] Update", command_report)
+				C.add_centcom_report(ALERT_GENERAL, command_report)
 
 			command_alert(command_report, "Pod Colosseum match finished")
 		statlog_gauntlet(moblist_names, score, 0)

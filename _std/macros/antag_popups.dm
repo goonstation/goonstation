@@ -88,20 +88,10 @@
 		M << link("https://wiki.ss13.co/index.php?search=[phrase]")
 
 	Topic(href, href_list)
-		var/mob/M
-		if (ismob(usr))
-			M = usr
-			if (M.client.holder.level < 0)
-				alert("UM, EXCUSE ME??  YOU AREN'T AN ADMIN, GET DOWN FROM THERE!")
-				M << csound("sound/voice/farts/poo2.ogg")
-				return
-		else
-			alert("How the hell are you not a mob?! I can't show the panel to you, you don't exist!")
-			return
 		if (href_list["action"])
-			M.show_antag_popup(href_list["action"], FALSE)
+			usr.show_antag_popup(href_list["action"], FALSE)
 		if (href_list["wiki"])
-			searchWiki(M, href_list["wiki"])
+			searchWiki(usr, href_list["wiki"])
 
 	//show antag popup to a mob
 	proc/show_popup(mob/M, var/popup_name)

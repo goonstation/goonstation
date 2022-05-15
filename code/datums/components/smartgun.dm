@@ -124,7 +124,7 @@ TYPEINFO(/datum/component/holdertargeting/smartgun)
 
 	RegisterSignal(user, COMSIG_FULLAUTO_MOUSEDRAG, .proc/retarget)
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/moveRetarget)
-	RegisterSignal(user, COMSIG_MOUSEUP, .proc/shoot_tracked_targets)
+	RegisterSignal(user, COMSIG_MOB_MOUSEUP, .proc/shoot_tracked_targets)
 
 	for(var/x in ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 - 1 to ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 + 1)
 		for(var/y in 7 to 9)
@@ -177,7 +177,7 @@ TYPEINFO(/datum/component/holdertargeting/smartgun)
 	if(tracking)
 		stopping = 1
 	UnregisterSignal(user, COMSIG_FULLAUTO_MOUSEDRAG)
-	UnregisterSignal(user, COMSIG_MOUSEUP)
+	UnregisterSignal(user, COMSIG_MOB_MOUSEUP)
 	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 	tracked_targets = list()
 	mouse_target = null

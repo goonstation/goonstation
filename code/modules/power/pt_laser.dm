@@ -280,7 +280,7 @@
 		laser.bound_height *= scale_factor
 		laser.Scale(scale_factor, scale_factor)
 		laser.Translate((scale_factor - 1) * world.icon_size / 2, (scale_factor - 1) * world.icon_size / 2)
-		laser.set_dir(dir)
+		laser.set_dir(src.dir)
 		laser.power = round(abs(output)*PTLEFFICIENCY)
 		laser.source = src
 		laser.active = 0
@@ -344,7 +344,7 @@
 
 /obj/machinery/power/pt_laser/proc/melt_blocking_objects()
 	for (var/obj/O in blocking_objects)
-		if (istype(O, /obj/machinery/door/poddoor))
+		if (istype(O, /obj/machinery/door/poddoor) || isrestrictedz(O.z))
 			continue
 		else if (prob((abs(output)*PTLEFFICIENCY)/5e5))
 			O.visible_message("<b>[O.name] is melted away by the [src]!</b>")
@@ -539,7 +539,7 @@
 		if(burn_living(L,power) && source) //returns 1 if they were gibbed
 			source.affecting_mobs -= L
 
-/obj/proc/burn_living(var/mob/living/L,var/power = 0)
+/obj/proc/burn_living(var/mob/living/L, var/power = 0)
 	if(power < 10) return
 	if(isintangible(L)) return // somehow flocktraces are still getting destroyed by the laser. maybe this will fix it
 
