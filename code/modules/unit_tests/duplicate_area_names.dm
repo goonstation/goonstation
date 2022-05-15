@@ -6,8 +6,8 @@
 	for (var/AT in concrete_typesof(/area))
 		A = new AT
 		if (!names[A.name])
-			names[A.name] = 0
-		names[A.name] += 1
+			names[A.name] = list()
+		names[A.name] += AT
 		qdel(A)
 
 	var/list/dupes = list()
@@ -16,4 +16,9 @@
 			dupes += name
 
 	if (length(dupes))
+		// Build descriptive failure message
+		var/failmsg = "The following area names are duplicated: \n"
+		for (var/dupe in dupes)
+			failmsg += "\"[dupe || "***EMPTY STRING***"]\": [english_list(names[dupe])]"
+
 		Fail("The following area names are duplicated: [english_list(dupes)]")
