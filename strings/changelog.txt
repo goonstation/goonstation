@@ -1,5 +1,9 @@
 
 (t)sat may 14 22
+(u)Flaborized
+(p)8499
+(e)|
+(+)Throwing things into disposal chutes isn't luck based anymore, and you can throw more mobs into chutes. Clumsy people will always set the chute off when thrown in.
 (u)Wisemonster
 (p)8550
 (e)🆕|feature
