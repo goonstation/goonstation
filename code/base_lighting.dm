@@ -20,7 +20,7 @@
 	New()
 		..()
 		if (force_fullbright)
-			overlays += /image/fullbright
+			src.UpdateOverlays(new /image/fullbright, "fullbright")
 		else if (ambient_light)
 			var/image/I = new /image/ambient
 			I.color = ambient_light
@@ -28,9 +28,9 @@
 
 	proc/update_fullbright()
 		if (force_fullbright)
-			overlays += /image/fullbright
+			src.UpdateOverlays(new /image/fullbright, "fullbright")
 		else
-			overlays -= /image/fullbright
+			src.UpdateOverlays(null, "fullbright")
 			for (var/turf/T as anything in src)
 				T.RL_Init()
 
@@ -50,4 +50,4 @@
 
 		// space handles its own lighting via simple lights which already cover the turf itself too
 		if (!istype(src, /turf/space) && !A.force_fullbright && fullbright) // if the area's fullbright we'll use a single overlay on the area instead
-			overlays += /image/fullbright
+			src.UpdateOverlays(new /image/fullbright, "fullbright")

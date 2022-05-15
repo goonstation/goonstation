@@ -1519,7 +1519,7 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 	animate(slide, transform=tr, time=time)
 	if(!had_fullbright && T.fullbright) // eww
 		T.fullbright = 0
-		T.overlays -= /image/fullbright
+		T.UpdateOverlays(null, "fullbright")
 		T.RL_Init() // turning off fullbright
 		var/obj/full_light = new/obj/overlay/tile_effect/fake_fullbright(T)
 		full_light.color = T.color
@@ -1545,7 +1545,7 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 		qdel(slide)
 	if(initial(T.fullbright))
 		T.fullbright = 1
-		T.overlays += /image/fullbright
+		T.UpdateOverlays(new /image/fullbright, "fullbright")
 		T.RL_Init()
 
 /proc/animate_open_from_floor(atom/A, time=1 SECOND, self_contained=1)

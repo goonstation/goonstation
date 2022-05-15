@@ -155,7 +155,7 @@
 					qdel(O)
 			T.ClearAllOverlays()
 			T.ReplaceWithSpace()
-			T.UpdateOverlays(/image/fullbright, "fullbright", TRUE)
+			T.UpdateOverlays(new /image/fullbright, "fullbright")
 
 	proc/generate_walls()
 		var/list/walls = list()
@@ -1271,7 +1271,7 @@
 			A.UpdateOverlays(edge_overlay, "ast_edge_[get_dir(A,src)]")
 			src.space_overlays += edge_overlay
 #ifndef UNDERWATER_MAP // We don't want fullbright edges underwater. This fixes 'shadow' issue.
-			A.UpdateOverlays(/image/fullbright, "fullbright")
+			A.UpdateOverlays(new /image/fullbright, "fullbright")
 #endif
 
 	proc/dig_asteroid(var/mob/living/user, var/obj/item/mining_tool/tool)
@@ -1407,7 +1407,7 @@
 				ore_overlay.layer = ASTEROID_ORE_OVERLAY_LAYER // so meson goggle nerds can still nerd away
 				A.UpdateOverlays(ore_overlay, "ast_ore")
 #ifndef UNDERWATER_MAP // We don't want fullbright ore underwater.
-			A.overlays += /image/fullbright
+			A.UpdateOverlays(new /image/fullbright, "fullbright")
 #endif
 		for (var/turf/simulated/floor/plating/airless/asteroid/A in range(src,1))
 			A.UpdateIcon()
@@ -1529,7 +1529,7 @@
 		src.color = src.stone_color
 		#ifndef UNDERWATER_MAP
 		if (fullbright)
-			src.overlays += /image/fullbright //Fixes perma-darkness
+			src.UpdateOverlays(new /image/fullbright, "fullbright")
 		#endif
 
 	proc/space_overlays() //For overlays ON THE SPACE TILE
@@ -1542,7 +1542,7 @@
 			A.UpdateOverlays(edge_overlay, "ast_edge_[get_dir(A,src)]")
 			src.space_overlays += edge_overlay
 #ifndef UNDERWATER_MAP // We don't want fullbright edges underwater. This fixes 'shadow' issue.
-			A.overlays += /image/fullbright
+			A.UpdateOverlays(new /image/fullbright, "fullbright")
 #endif
 
 
