@@ -21,4 +21,5 @@
 		for (var/dupe in dupes)
 			failmsg += "\"[dupe || "***EMPTY STRING***"]\": [english_list(names[dupe])]"
 
-		Fail("The following area names are duplicated: [english_list(dupes)]")
+		Fail(failmsg)
+
