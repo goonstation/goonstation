@@ -3,7 +3,7 @@
 /datum/unit_test/duplicate_area_names/Run()
 	var/list/names = list()
 	var/area/A
-	for (var/AT in concretetypesof(/area))
+	for (var/AT in concrete_typesof(/area))
 		A = new AT
 		if (!names[A.name])
 			names[A.name] = 0
