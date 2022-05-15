@@ -193,7 +193,7 @@
 				if (M.client.ignore_sound_flags)
 					if (M.client.ignore_sound_flags & SOUND_ALL)
 						continue
-				M.playsound_local(M, soundfile, 30, 0, flags = SOUND_IGNORE_SPACE)
+				M.playsound_local(M, soundfile, 15, 0)
 		sleep(1 SECOND)
 
 	proc/play_all_numbers()

@@ -38,7 +38,7 @@
 			boutput(M, __red("You can use this move on prone opponents only!"))
 			return 1
 
-		SEND_SIGNAL(M, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
+		SEND_SIGNAL(M, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 
 		var/obj/surface = null
 		var/turf/ST = null

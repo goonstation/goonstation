@@ -125,7 +125,7 @@
 			//die()
 			return
 
-		var/sigreturn = SEND_SIGNAL(src, COMSIG_PROJ_COLLIDE, A)
+		var/sigreturn = SEND_SIGNAL(src, COMSIG_OBJ_PROJ_COLLIDE, A)
 		sigreturn |= SEND_SIGNAL(A, COMSIG_ATOM_HITBY_PROJ, src)
 		if(QDELETED(src)) //maybe a signal proc QDELETED(src) us
 			return
@@ -170,8 +170,8 @@
 			if (src.proj_data) //ZeWaka: Fix for null.ticks_between_mob_hits
 				if (proj_data.hit_mob_sound)
 					playsound(A.loc, proj_data.hit_mob_sound, 60, 0.5)
-			SEND_SIGNAL(A, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
-			SEND_SIGNAL(A, COMSIG_DISGUISER_DEACTIVATE)
+			SEND_SIGNAL(A, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
+			SEND_SIGNAL(A, COMSIG_MOB_DISGUISER_DEACTIVATE)
 			if (ishuman(A))
 				var/mob/living/carbon/human/H = A
 				H.stamina_stun()
@@ -936,6 +936,7 @@ datum/projectile/snowball
 	var/obj/projectile/Q = initialize_projectile(get_turf(reflector), P.proj_data, -P.xo, -P.yo, reflector)
 	if (!Q)
 		return null
+	SEND_SIGNAL(reflector, COMSIG_ATOM_PROJECTILE_REFLECTED)
 	Q.reflectcount = P.reflectcount + 1
 	if (ismob(P.shooter))
 		Q.mob_shooter = P.shooter

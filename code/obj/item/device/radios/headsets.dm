@@ -320,6 +320,18 @@
 	icon_override = "qm"
 	icon_tooltip = "Quartermaster"
 
+/obj/item/device/radio/headset/miner
+	name = "Mining Headset"
+	desc = "A radio headset that is also capable of communicating over the Engineering channel."
+	icon_state = "shipping headset"
+	secure_frequencies = list(
+	"e" = R_FREQ_ENGINEERING)
+	secure_classes = list(
+		"e" = RADIOCL_ENGINEERING,
+		)
+	icon_override = "min"
+	icon_tooltip = "Miner"
+
 /obj/item/device/radio/headset/mail
 	name = "Mailman's Headset"
 	desc = "A radio headset that is also capable of communicating over the Engineering and Command channels."

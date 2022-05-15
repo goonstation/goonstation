@@ -459,7 +459,7 @@
 				M.playsound_local(M.loc, "warp", 50, 1)
 				continue
 #endif
-			if (isobserver(M) || iswraith(M) || isintangible(M) || istype(M, /mob/living/object))
+			if (isobserver(M) || iswraith(M) || isintangible(M) || islivingobject(M))
 				continue
 			if (src.crunches_contents)
 				src.crunch(M)
@@ -474,7 +474,7 @@
 
 		src.UpdateIcon()
 		playsound(src.loc, "sound/effects/cargodoor.ogg", 15, 1, -3)
-		SEND_SIGNAL(src, COMSIG_STORAGE_CLOSED)
+		SEND_SIGNAL(src, COMSIG_OBJ_STORAGE_CLOSED)
 		return 1
 
 	attackby(obj/item/W as obj, mob/user as mob)

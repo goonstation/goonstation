@@ -30,7 +30,7 @@
 		if(check_target_immunity( HH ))
 			M.visible_message("<span class='alert'>You seem to attack [M]!</span>")
 			return 1
-		SEND_SIGNAL(M, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
+		SEND_SIGNAL(M, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 
 		HH.set_loc(M.loc)
 		M.set_dir(get_dir(M, HH))

@@ -522,7 +522,7 @@
 					src.next_click = world.time + (equipped ? equipped.click_delay : src.click_delay)
 
 				if (src.invisibility > INVIS_NONE && (isturf(target) || (target != src && isturf(target.loc)))) // dont want to check for a cloaker every click if we're not invisible
-					SEND_SIGNAL(src, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
+					SEND_SIGNAL(src, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 
 				if (equipped)
 					weapon_attack(target, equipped, reach, params)
@@ -1811,10 +1811,6 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 	if (!P.was_pointblank && HAS_ATOM_PROPERTY(src, PROP_MOB_REFLECTPROT))
 		var/obj/item/equipped = src.equipped()
-		if (equipped && istype(equipped,/obj/item/sword))
-			var/obj/item/sword/S = equipped
-			S.handle_deflect_visuals(src)
-
 		var/obj/projectile/Q = shoot_reflected_to_sender(P, src)
 		P.die()
 		src.visible_message("<span class='alert'>[src] reflected [Q.name] with [equipped]!</span>")

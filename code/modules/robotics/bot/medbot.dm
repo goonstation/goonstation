@@ -618,7 +618,7 @@
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "medbot_inject"
 	icon = 'icons/obj/syringe.dmi'
-	icon_state = "0"
+	icon_state = "syringe_15"
 	var/obj/machinery/bot/medbot/master
 	var/list/reagent_id
 	var/did_spooky = 0

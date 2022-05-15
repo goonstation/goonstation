@@ -59,6 +59,8 @@
 		/obj/item/device/igniter,
 		/obj/item/saw/cyborg,
 		/obj/item/satchel/hydro, // TODO: make more versatile version
+		/obj/item/satchel/hydro,
+		/obj/item/satchel/hydro,
 		/obj/item/paper_bin/robot,
 		/obj/item/reagent_containers/glass/bucket, // TODO: make large version
 		/obj/item/spraybottle/cleaner/robot,

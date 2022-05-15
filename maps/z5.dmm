@@ -5926,7 +5926,7 @@
 /turf/space,
 /area/diner/jucer_trader)
 "Bt" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8
 	},
 /area/noGenerate)
@@ -6057,7 +6057,7 @@
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/atmospherics)
 "DW" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9
 	},
 /area/noGenerate)
@@ -6337,7 +6337,7 @@
 /turf/simulated/martian/floor,
 /area/evilreaver/security)
 "HU" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6
 	},
 /area/noGenerate)
@@ -6452,7 +6452,7 @@
 /turf/simulated/martian/floor,
 /area/evilreaver/security)
 "Kc" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/noGenerate)
 "Ke" = (
 /obj/effects/background_objects/star_red{
@@ -6986,7 +6986,7 @@
 /turf/unsimulated/wall/auto/adventure/martian,
 /area/evilreaver/storage/tools)
 "RK" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1
 	},
 /area/noGenerate)
@@ -7764,7 +7764,7 @@
 /turf/space,
 /area/noGenerate)
 "ZS" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5
 	},
 /area/noGenerate)

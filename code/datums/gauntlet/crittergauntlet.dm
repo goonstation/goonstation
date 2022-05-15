@@ -282,7 +282,7 @@
 		if (current_level > 50)
 			var/command_report = "A Critter Gauntlet match has concluded at level [current_level]. Congratulations to: [moblist_names]."
 			for_by_tcl(C, /obj/machinery/communications_dish)
-				C.add_centcom_report("[command_name()] Update", command_report)
+				C.add_centcom_report(ALERT_GENERAL, command_report)
 
 			command_alert(command_report, "Critter Gauntlet match finished")
 		statlog_gauntlet(moblist_names, score, current_level)

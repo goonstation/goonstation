@@ -1121,7 +1121,7 @@
 				return
 		else
 			if (src.client.check_key(KEY_THROW) || src.in_throw_mode)
-				SEND_SIGNAL(src, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
+				SEND_SIGNAL(src, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 				src.throw_item(target, params)
 				return
 
@@ -2799,43 +2799,17 @@
 	if (!src.bioHolder || !src.bioHolder.mobAppearance)
 		return null
 	var/obj/item/clothing/head/wig/W = new(src)
-	var/actuallyHasHair = 0
 	W.name = "[real_name]'s hair"
 	W.real_name = "[real_name]'s hair" // The clothing parent setting real_name is probably good for other stuff so I'll just do this
 	W.icon = 'icons/mob/human_hair.dmi'
 	W.icon_state = "bald" // Let's give the actual hair a chance to shine
-/* commenting this out and making it an overlay to fix issues with colors stacking
-	W.icon = 'icons/mob/human_hair.dmi'
-	W.icon_state = H.bioHolder.mobAppearance.customization_first.id
-	W.color = src.bioHolder.mobAppearance.customization_first_color
-	W.wear_image_icon = 'icons/mob/human_hair.dmi'
-	W.wear_image = image(W.wear_image_icon, W.icon_state)
-	W.wear_image.color = src.bioHolder.mobAppearance.customization_first_color*/
 
-	if (!istype(src.bioHolder.mobAppearance.customization_first,/datum/customization_style/none))
-		var/image/h_image = image('icons/mob/human_hair.dmi', src.bioHolder.mobAppearance.customization_first.id)
-		h_image.color = src.bioHolder.mobAppearance.customization_first_color
-		W.overlays += h_image
-		W.wear_image.overlays += h_image
-		actuallyHasHair = 1
+	var/hair_list = list()
+	hair_list[src.bioHolder.mobAppearance.customization_first.id] = src.bioHolder.mobAppearance.customization_first_color
+	hair_list[src.bioHolder.mobAppearance.customization_second.id] = src.bioHolder.mobAppearance.customization_second_color
+	hair_list[src.bioHolder.mobAppearance.customization_third.id] = src.bioHolder.mobAppearance.customization_third_color
 
-	if (!istype(src.bioHolder.mobAppearance.customization_second,/datum/customization_style/none))
-		var/image/f_image = image('icons/mob/human_hair.dmi', src.bioHolder.mobAppearance.customization_second.id)
-		f_image.color = src.bioHolder.mobAppearance.customization_second_color
-		W.overlays += f_image
-		W.wear_image.overlays += f_image
-		actuallyHasHair = 1
-
-
-	if (!istype(src.bioHolder.mobAppearance.customization_third,/datum/customization_style/none))
-		var/image/d_image = image('icons/mob/human_hair.dmi', src.bioHolder.mobAppearance.customization_third.id)
-		d_image.color = src.bioHolder.mobAppearance.customization_third_color
-		W.overlays += d_image
-		W.wear_image.overlays += d_image
-		actuallyHasHair = 1
-
-	if(!actuallyHasHair) // Guess they didnt have any, ah well
-		W.icon_state = "short"
+	W.setup_wig(hair_list)
 
 	return W
 

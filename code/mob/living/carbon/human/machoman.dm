@@ -1402,11 +1402,9 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 	icon_state = "slimjim"
 	item_state = "stamp"
 	heal_amt = 2
-	amount = 5
+	bites_left = 5
 	initial_volume = 50
 	initial_reagents = list("capsaicin"=20,"porktonium"=30)
-	New()
-		..()
 
 	attack(var/mob/M, var/mob/user, def_zone)
 		if (istype(M, /mob/living/carbon/human/machoman) && M == user)
