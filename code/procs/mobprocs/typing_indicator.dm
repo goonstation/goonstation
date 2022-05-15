@@ -13,7 +13,7 @@ var/mutable_appearance/living_typing_bubble = mutable_appearance('icons/mob/mob.
 	remove_typing_indicator()
 	. = ..()
 
-////Typing verbs////
+// -- Typing verbs -- //
 //Those are used to show the typing indicator for the player without waiting on the client.
 
 /*
