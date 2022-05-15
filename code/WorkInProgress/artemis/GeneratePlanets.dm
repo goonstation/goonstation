@@ -28,7 +28,7 @@ var/list/planet_seeds = list()
 			var/num_to_place = PLANET_NUMPREFABS + GALAXY.Rand.xor_rand(0, PLANET_NUMPREFABSEXTRA)
 			for (var/n = 1, n <= num_to_place, n++)
 				game_start_countdown?.update_status("Setting up planet level...\n(Prefab [n]/[num_to_place])")
-				var/datum/generatorPlanetPrefab/M = pickPlanetPrefab()
+				var/datum/mapPrefab/planet/M = pick_map_prefab(/datum/mapPrefab/planet)
 				if (M)
 					var/maxX = (world.maxx - M.prefabSizeX - PLANET_MAPBORDER)
 					var/maxY = (world.maxy - M.prefabSizeY - PLANET_MAPBORDER)
@@ -101,55 +101,21 @@ var/list/planet_seeds = list()
 
 	boutput(world, "<span class='alert'>Generated Planet Level in [((world.timeofday - startTime)/10)] seconds!")
 
-/proc/pickPlanetPrefab()
-	var/list/eligible = list()
-	var/list/required = list()
+/obj/landmark/artemis_planets
+	name = "zlevel"
+	icon_state = "x3"
+	add_to_landmarks = FALSE
 
-	for(var/datum/generatorPlanetPrefab/M in planetModifiers)
-		if(M.type in planetModifiersUsed)
-			if(M.required) continue
-			if(M.maxNum != -1)
-				if(planetModifiersUsed[M.type] >= M.maxNum)
-					continue
-				else
-					eligible.Add(M)
-					eligible[M] = M.probability
-			else
-				eligible.Add(M)
-				eligible[M] = M.probability
-		else
-			eligible.Add(M)
-			eligible[M] = M.probability
-			if(M.required) required.Add(M)
-
-	if(required.len)
-		var/datum/generatorPlanetPrefab/P = required[1]
-		planetModifiersUsed.Add(P.type)
-		planetModifiersUsed[P.type] = 1
-		return P
-	else
-		if(eligible.len)
-			var/datum/generatorPlanetPrefab/P = GALAXY.Rand.xor_weighted_pick(eligible)
-			if(P.type in planetModifiersUsed)
-				planetModifiersUsed[P.type] = (planetModifiersUsed[P.type] + 1)
-			else
-				planetModifiersUsed.Add(P.type)
-				planetModifiersUsed[P.type] = 1
-			return P
-		else return null
+	init(delay_qdel=TRUE)
+		if(!planetZLevel)
+			planetZLevel = src.z
+		..()
 
 #define DEFINE_PLANET(_PATH, _NAME) \
 	/area/map_gen/planet/_PATH{name=_NAME};\
 	/area/map_gen/planet/_PATH/no_prefab{allow_prefab = FALSE};
 
 /area/map_gen/planet
-	name = "planet generation area"
-	var/map_generator_path = /datum/map_generator/jungle_generator
-	var/list/turf/biome_turfs = list()
-	var/list/datum/loadedProperties/prefabs = list()
-	var/allow_prefab = TRUE
-	var/generated = FALSE
-
 	generate_perlin_noise_terrain(list/seed_list)
 		if(generated)
 			return
@@ -185,126 +151,126 @@ DEFINE_PLANET(gamma, "Gamma")
 DEFINE_PLANET(hotel, "Hotel")
 DEFINE_PLANET(indigo, "Indigo")
 
-ABSTRACT_TYPE(/datum/generatorPlanetPrefab)
-/datum/generatorPlanetPrefab
-	var/probability = 0
-	var/maxNum = 0
-	var/prefabPath = ""
-	var/prefabSizeX = 5
-	var/prefabSizeY = 5
-	var/required = 0   //If 1 we will try to always place thing thing no matter what. Required prefabs will only ever be placed once.
-	var/std_prefab_path
-	var/underwater
-	var/list/required_biomes // ensure area has these biomes somewhere...
 
-	proc/applyTo(var/turf/target)
-		var/adjustX = target.x
-		var/adjustY = target.y
-
-		 //Move prefabs backwards if they would end up outside the map.
-		if((adjustX + prefabSizeX) > (world.maxx - PLANET_MAPBORDER))
-			adjustX -= ((adjustX + prefabSizeX) - (world.maxx - PLANET_MAPBORDER))
-
-		if((adjustY + prefabSizeY) > (world.maxy - PLANET_MAPBORDER))
-			adjustY -= ((adjustY + prefabSizeY) - (world.maxy - PLANET_MAPBORDER))
-
-		var/turf/T = locate(adjustX, adjustY, target.z)
-
-		if(!check_biome_requirements(T))
-			return
-
-		for(var/x=0, x<prefabSizeX; x++)
-			for(var/y=0, y<prefabSizeY; y++)
-				var/turf/L = locate(T.x+x, T.y+y, T.z)
-
-				var/area/map_gen/planet/P = get_area(L)
-				if(L?.loc && !(istype(P) && P.allow_prefab))
-					return
-				if(T.density)
-					return
-
-		var/area_type = get_area(T)
-		var/loaded = file2text(prefabPath)
-		if(T && loaded)
-			var/dmm_suite/D = new/dmm_suite()
-			var/datum/loadedProperties/props = D.read_map(loaded, T.x, T.y, T.z, prefabPath, DMM_OVERWRITE_MOBS | DMM_OVERWRITE_OBJS)
-			if(prefabSizeX != props.maxX - props.sourceX + 1 || prefabSizeY != props.maxY - props.sourceY + 1)
-				CRASH("size of prefab [prefabPath] is incorrect ([prefabSizeX]x[prefabSizeY] != [props.maxX - props.sourceX + 1]x[props.maxY - props.sourceY + 1])")
-			convertSpace(T, prefabSizeX, prefabSizeY, area_type)
-			return props
-		else return
-
-	proc/check_biome_requirements(turf/T)
-		. = TRUE
-		var/area/map_gen/planet/A = get_area(T)
-		if(length(required_biomes) && istype(A))
-			for(var/biome in A.biome_turfs)
-				if(!(biome in required_biomes))
-					. = FALSE
-					break
-
-	proc/convertSpace(turf/start, prefabSizeX, prefabSizeY, area/prev_area)
-		//var/list/areas_to_revert = list(/area/noGenerate, /area/allowGenerate)
-		var/child_path = "[prev_area.type]/no_prefab"
-		var/list/turf/turfs = block(locate(start.x, start.y, start.z), locate(start.x+prefabSizeX-1, start.y+prefabSizeY-1, start.z))
-		for(var/turf/T in turfs)
-			//if( T.loc.type in areas_to_revert)
-			if(istype(T.loc, /area/noGenerate))
-				new child_path(T)
-			else if(istype(T.loc, /area/allowGenerate))
-				new prev_area.type(T)
-
-
-	tomb // small little tomb
-		maxNum = 1
-		probability = 20
-		prefabPath = "assets/maps/prefabs/prefab_tomb.dmm"
-		prefabSizeX = 13
-		prefabSizeY = 10
-
-	vault
-		maxNum = 1
-		probability = 25
-		prefabPath = "assets/maps/prefabs/prefab_vault.dmm"
-		prefabSizeX = 7
-		prefabSizeY = 7
-
-	bear_trap
-		maxNum = 1
-		probability = 25
-		prefabPath = "assets/maps/prefabs/prefab_planet_bear_den.dmm"
-		prefabSizeX = 15
-		prefabSizeY = 15
-
-	tomato_den
-		maxNum = 1
-		probability = 25
-		prefabPath = "assets/maps/prefabs/prefab_planet_tomato_den.dmm"
-		prefabSizeX = 13
-		prefabSizeY = 10
-
-	corn_n_weed
-		maxNum = 1
-		probability = 25
-		prefabPath = "assets/maps/prefabs/prefab_corn_and_weed.dmm"
-		prefabSizeX = 15
-		prefabSizeY = 16
-
-	organic_organs
-		maxNum = 1
-		probability = 25
-		prefabPath = "assets/maps/prefabs/prefab_organic_organs.dmm"
-		prefabSizeX = 15
-		prefabSizeY = 15
-
-
-/obj/landmark/artemis_planets
-	name = "zlevel"
-	icon_state = "x3"
-	add_to_landmarks = FALSE
-
-	init(delay_qdel=TRUE)
-		if(!planetZLevel)
-			planetZLevel = src.z
-		..()
 #endif
+
+/area/map_gen/planet
+	name = "planet generation area"
+	var/map_generator_path = /datum/map_generator/jungle_generator
+	var/list/turf/biome_turfs = list()
+	var/list/datum/loadedProperties/prefabs = list()
+	var/allow_prefab = TRUE
+	var/generated = FALSE
+
+
+/datum/planetManager
+	var/list/datum/allocated_region/regions = list()
+
+var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
+
+/proc/GeneratePlanetChunk(width=null, height=null, prefabs_to_place=1, datum/map_generator/generator=/datum/map_generator/desert_generator, color=null, name=null, use_lrt=TRUE)
+	var/turf/T
+
+	if(ispath(generator)) generator = new generator()
+	if(!width)	width = rand(80,130)
+	if(!height)	height = rand(80,130)
+	if(!name)
+		name = ""
+		if (prob(50))
+			name += pick_string("station_name.txt", "greek")
+		else
+			name += pick_string("station_name.txt", "militaryLetters")
+		name += " "
+
+		if (prob(30))
+			name += pick_string("station_name.txt", "romanNum")
+		else
+			name += "[rand(2, 99)]"
+
+	//Generate and cleanup region
+	var/datum/allocated_region/region = global.region_allocator.allocate(width, height)
+	region.clean_up(main_area=/area/map_gen/planet)
+
+	//Populate with Biome!
+	var/turfs = block(locate(region.bottom_left.x+1, region.bottom_left.y+1, region.bottom_left.z), locate(region.bottom_left.x+region.width-2, region.bottom_left.y+region.height-2, region.bottom_left.z) )
+	generator.generate_terrain(turfs, reuse_seed=TRUE)
+
+	// Workaround while region.cleanup() uses REGION_TILES(src) which excludes border tiles...
+	var/area/border_area = new /area/cordon(null)
+	for(var/x in 1 to region.width)
+		for(var/y in 1 to region.height)
+			if(x == 1 || y == 1 || x == region.width || y == region.height)
+				T = region.turf_at(x, y)
+				T.ReplaceWith(/turf/cordon)
+				border_area.contents += T
+
+			if (current_state >= GAME_STATE_PLAYING)
+				LAGCHECK(LAG_LOW)
+			else
+				LAGCHECK(LAG_HIGH)
+
+	//Lighten' Up the Place
+	var/image/ambient_light = new /image/ambient
+	if(!color)
+		ambient_light.color = "#888888"
+	else
+		ambient_light.color = color
+
+	for(T in turfs)
+		T.UpdateOverlays(ambient_light, "ambient")
+		LAGCHECK(LAG_LOW)
+
+	PLANET_LOCATIONS.regions.Add(region)
+
+	//Make it interesting, slap some prefabs on that thing
+	for (var/n = 1, n <= prefabs_to_place, n++)
+		var/datum/mapPrefab/planet/P = pick_map_prefab(/datum/mapPrefab/planet)
+		if (P)
+			var/maxX = (region.bottom_left.x + region.width - P.prefabSizeX - AST_MAPBORDER)
+			var/maxY = (region.bottom_left.y + region.height - P.prefabSizeY - AST_MAPBORDER)
+			var/stop = 0
+			var/count= 0
+			var/maxTries = (P.required ? 200:33)
+			while (!stop && count < maxTries) //Kinda brute forcing it. Dumb but whatever.
+				var/turf/target = locate(rand(region.bottom_left.x+AST_MAPBORDER, maxX), rand(region.bottom_left.y+AST_MAPBORDER,maxY), region.bottom_left.z)
+				var/ret = P.applyTo(target)
+				if (ret)
+					logTheThing("debug", null, null, "Prefab placement #[n] [P.type][P.required?" (REQUIRED)":""] succeeded. [target] @ [log_loc(target)]")
+					stop = 1
+				else
+					logTheThing("debug", null, null, "Prefab placement #[n] [P.type] failed due to blocked area. [target] @ [log_loc(target)]")
+				count++
+				if (count >= 33)
+					logTheThing("debug", null, null, "Prefab placement #[n] [P.type] failed due to maximum tries [maxTries][P.required?" WARNING: REQUIRED FAILED":""]. [target] @ [log_loc(target)]")
+		else break
+
+	//Allow folks to like uh, get here?
+	if(use_lrt)
+		var/lrt_placed = FALSE
+		var/maxTries = 80
+		while(!lrt_placed)
+			if(!maxTries)
+				message_admins("Planet region failed to place LRT coordinates!!!")
+				break
+
+			T = pick(turfs)
+			if(T.density)
+				maxTries--
+				continue
+
+			new /obj/landmark/lrt/planet(T, name)
+			new /obj/decal/teleport_mark(T)
+			lrt_placed = TRUE
+			special_places.Add(name)
+
+	logTheThing("admin", usr, null, "Planet region generated at [log_loc(region.bottom_left)] with [generator].")
+	logTheThing("diary", usr, null, "Planet region generated at [log_loc(region.bottom_left)] with [generator].", "admin")
+	message_admins("Planet region generated at [log_loc(region.bottom_left)] with [generator].")
+
+
+/obj/landmark/lrt/planet //for use with long range teleporter locations, please add new subtypes of this for new locations and use those
+	name_override = LANDMARK_LRT
+
+	New(newLoc, name)
+		src.name = name // store name
+		..()

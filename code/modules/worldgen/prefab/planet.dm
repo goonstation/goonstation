@@ -1,4 +1,3 @@
-#if ENABLE_ARTEMIS
 TYPEINFO(/datum/mapPrefab/planet)
 	stored_as_subtypes = TRUE
 
@@ -107,5 +106,3 @@ ABSTRACT_TYPE(/datum/mapPrefab/planet)
 		prefabPath = "assets/maps/prefabs/prefab_organic_organs.dmm"
 		prefabSizeX = 15
 		prefabSizeY = 15
-
-#endif

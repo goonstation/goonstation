@@ -162,7 +162,7 @@ var/global/matrix/GLOBAL_ANIMATION_MATRIX = matrix()
 				src.transform = N
 				src.set_state()
 		else
-			if(r_sqrd > max_visibility)
+			if(r_sqrd > src.max_visibility)
 				if( src.alpha )
 					src.alpha = 0
 			else if(!src.alpha)

@@ -92,7 +92,7 @@
 	var/image/back = null
 	var/has_back = 1
 
-	var/num_stars = 200
+	var/num_stars = 80 // 200
 	var/map_size = ARTEIMS_MAP_VIEW_SIZE
 
 	var/datum/galactic_object/ship/background_ship_datum

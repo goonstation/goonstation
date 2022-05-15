@@ -162,6 +162,7 @@
 				busy = 0
 				qdel(S)
 
+#endif
 
 obj/decal/teleport_mark
 	icon = 'icons/misc/artemis/temps.dmi'
@@ -178,5 +179,3 @@ obj/decal/teleport_mark
 			if(istype(O, /obj/decal/teleport_mark) || istype(O,/obj/machinery/lrteleporter) || istype(O,/obj/decal/fakeobjects/teleport_pad) )
 				qdel(src)
 				return
-
-#endif
