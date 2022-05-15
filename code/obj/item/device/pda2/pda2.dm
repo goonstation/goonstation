@@ -167,6 +167,7 @@
 		icon_state = "pda-md"
 		setup_default_pen = /obj/item/pen/fancy
 		setup_default_cartridge = /obj/item/disk/data/cartridge/medical_director
+		setup_default_module = /obj/item/device/pda_module/flashlight/yell_medic
 		setup_drive_size = 32
 		mailgroups = list(MGD_MEDRESEACH,MGD_MEDBAY,MGD_COMMAND,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_CRISIS)
@@ -174,6 +175,7 @@
 	medical
 		icon_state = "pda-m"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/medical
+		setup_default_module = /obj/item/device/pda_module/flashlight/yell_medic
 		mailgroups = list(MGD_MEDBAY ,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_CRISIS)
 
