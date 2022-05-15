@@ -1271,7 +1271,7 @@
 			A.UpdateOverlays(edge_overlay, "ast_edge_[get_dir(A,src)]")
 			src.space_overlays += edge_overlay
 #ifndef UNDERWATER_MAP // We don't want fullbright edges underwater. This fixes 'shadow' issue.
-			A.overlays += /image/fullbright
+			A.UpdateOverlays(/image/fullbright, "fullbright")
 #endif
 
 	proc/dig_asteroid(var/mob/living/user, var/obj/item/mining_tool/tool)
