@@ -1519,13 +1519,7 @@
 
 	update_icon()
 
-		src.overlays = list()
-		/*
-		if (!coloration_overlay)
-			coloration_overlay = image(src.icon, "color_overlay")
-		coloration_overlay.color = src.stone_color
-		src.overlays += coloration_overlay
-		*/
+		src.ClearAllOverlays()
 		src.color = src.stone_color
 		#ifndef UNDERWATER_MAP
 		if (fullbright)
