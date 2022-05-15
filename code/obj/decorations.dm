@@ -957,6 +957,12 @@ obj/decoration/ceilingfan
 			light.dispose()
 		..()
 
+	prelit
+		New()
+			. = ..()
+			src.lit = TRUE
+			UpdateIcon()
+
 /obj/decoration/rustykrab
 	name = "rusty krab sign"
 	desc = "It's one of those old neon signs that diners used to have."
