@@ -1572,6 +1572,28 @@
 	duration = 0.5 SECONDS
 	visible = 0
 
+/datum/statusEffect/cornicened
+	id = "cornicened"
+	name = "Cornicened"
+	desc = "A Cornicen spreader bolt has put you off-balance! Also you should never be seeing this!"
+	icon_state = null
+	visible = FALSE
+	duration = 0.5 SECONDS
+	var/stacks = 1
+
+	onChange(optional)
+		. = ..()
+
+		stacks++
+		if(stacks >= 3)
+			owner.setStatus("cornicened2")
+
+/datum/statusEffect/cornicened2
+	id = "cornicened2"
+	name = "Cornicened2"
+	desc = "A Cornicen spreader bolt has put you off-balance! Also you should never be seeing this!"
+	duration = 0.5 SECONDS
+
 /datum/statusEffect/shivering
 	id = "shivering"
 	name = "Shivering"
