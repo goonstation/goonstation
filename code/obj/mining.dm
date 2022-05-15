@@ -576,21 +576,21 @@
 					src.damage(damage)
 
 	proc/build_icon()
-		src.overlays = list()
+		src.ClearAllOverlays()
 
 		if (damage_overlays.len == 4)
 			switch(src.health)
 				if (70 to 94)
-					src.overlays += damage_overlays[1]
+					src.UpdateOverlays(damage_overlays[1], "magnet_damage")
 				if (40 to 69)
-					src.overlays += damage_overlays[2]
+					src.UpdateOverlays(damage_overlays[2], "magnet_damage")
 				if (10 to 39)
-					src.overlays += damage_overlays[3]
+					src.UpdateOverlays(damage_overlays[3], "magnet_damage")
 				if (-INFINITY to 10)
-					src.overlays += damage_overlays[4]
+					src.UpdateOverlays(damage_overlays[4], "magnet_damage")
 
 		if (src.active)
-			src.overlays += src.active_overlay
+			src.UpdateOverlays(src.active_overlay, "magnet_active")
 
 	proc/damage(var/amount)
 		if (!isnum(amount))
