@@ -600,7 +600,8 @@
 	icon_state = "red-medical"
 	icon_opened = "open-white"
 	desc = "A handy medical locker for storing your doctoring apparel."
-	spawn_contents = list(/obj/item/clothing/head/nursehat = 3,
+	spawn_contents = list(/obj/item/clothing/head/nursehat = 2,
+					/obj/item/clothing/head/traditionalnursehat = 2,
 					/obj/item/clothing/suit/nursedress = 3,
 					/obj/item/clothing/suit/wintercoat/medical = 3,
 					/obj/item/clothing/head/headmirror = 3,
