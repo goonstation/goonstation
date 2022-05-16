@@ -459,9 +459,9 @@
 					spooker.zone_sel.select_zone("head")
 
 		else if (istype(item, /obj/item/weldingtool))
-				var/obj/item/weldingtool/welder = item
-				if (!welder.welding)
-					spooker.self_interact()
+			var/obj/item/weldingtool/welder = item
+			if (!welder.welding)
+				spooker.self_interact()
 		else
 			spooker.set_a_intent(INTENT_HARM)
 			spooker.zone_sel.select_zone("head") // head for plates n stuff
