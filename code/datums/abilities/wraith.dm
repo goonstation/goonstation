@@ -1284,7 +1284,7 @@
 
 		boutput(usr, "<b>You whisper to everyone around you:</b> [message]")
 
-/datum/targetable/wraithAbility/mass_emag	//Todo, check if emagging borgs is okay
+/datum/targetable/wraithAbility/mass_emag
 	name = "Mass Decay"
 	icon_state = "whisper"
 	desc = "Disrupt the energy of every machinery around you."

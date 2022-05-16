@@ -27,7 +27,6 @@
 		abilityHolder.addAbility(/datum/targetable/critter/skeleton_commander/rally)
 		abilityHolder.addAbility(/datum/targetable/wrestler/strike)
 		abilityHolder.addAbility(/datum/targetable/critter/skeleton_commander/summon_lesser_skeleton)
-		src.add_stam_mod_max("slow", STAMINA_MAX / 0.5)	//We are always slow and cant sprint fast.
 
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))
@@ -50,8 +49,102 @@
 
 		HH = hands[2]
 		HH.icon = 'icons/mob/hud_human.dmi'
-		HH.limb = new /datum/limb
-		HH.name = "right hand"
+		HH.limb = new /datum/limb/hallberd
+		HH.name = "hallberd"
 		HH.suffix = "-R"
-		HH.icon_state = "handr"
-		HH.limb_name = "right arm"
+		HH.icon_state = "handr"	//Todo add special icon
+		HH.limb_name = "hallberd"
+		HH.can_hold_items = 0
+		HH.can_attack = 1
+		HH.can_range_attack = 1
+
+/datum/limb/hallberd
+
+	attack_range(atom/target, var/mob/user, params)
+
+		switch (user.a_intent)
+			if (INTENT_HELP)
+				return 0
+			if (INTENT_DISARM)
+				if(!isturf(target.loc) && !isturf(target)) return
+
+				var/direction = get_dir_pixel(user, target, params)
+				if(direction == NORTHEAST || direction == NORTHWEST || direction == SOUTHEAST || direction == SOUTHWEST)
+					direction = (prob(50) ? turn(direction, 45) : turn(direction, -45))
+
+				var/list/attacked = list()
+
+				var/turf/one = get_step(user, direction)
+				var/turf/effect = get_step(one, direction)
+				var/turf/two = get_step(one, turn(direction, 90))
+				var/turf/three = get_step(one, turn(direction, -90))
+
+				var/obj/itemspecialeffect/swipe/swipe = new /obj/itemspecialeffect/swipe
+				swipe.color = "#EBE6EB"
+				swipe.setup(effect)
+				swipe.set_dir(direction)
+
+				var/hit = 0
+				for(var/turf/T in list(one, two, three))
+					for(var/atom/movable/A in T)
+						if(A in attacked) continue
+						if(ismob(A))
+							var/mob/M = A
+							M.Attackby(user, user, params, 1)
+							M.TakeDamageAccountArmor("All", rand(6,8), 0, 0, DAMAGE_BLUNT)
+							attacked += A
+							hit = 1
+
+				if (!hit)
+					playsound(user, "sound/effects/swoosh.ogg", 50, 0)
+				else
+					playsound(user, "sound/impact_sounds/Generic_Hit_3.ogg", 50, 0)
+				return 0
+
+			if (INTENT_GRAB)
+
+				if(!isturf(target.loc) && !isturf(target)) return
+				var/direction = get_dir_pixel(user, target, params)
+				var/list/attacked = list()
+
+				var/turf/one = get_step(user, direction)
+				var/turf/two = get_step(one, direction)
+
+				var/obj/itemspecialeffect/stab = new /obj/itemspecialeffect
+				stab.alpha = 255
+				stab.color = "#EBE6EB"
+				stab.icon_state = "spear"
+				stab.setup(get_turf(user))
+				stab.set_dir(direction)
+				var/hit = 0
+				for(var/turf/T in list(one, two))
+					for(var/atom/A in T)
+						if(A in attacked) continue
+						if(ismob(A))
+							var/mob/M = A
+							M.Attackby(user, user, params, 1)
+							M.TakeDamageAccountArmor("All", rand(7,9), 0, 0, DAMAGE_STAB)
+							attacked += A
+							hit = 1
+
+				if (!hit)
+					playsound(user, 'sound/effects/swoosh.ogg', 50, 0)
+				else
+					playsound(user, 'sound/impact_sounds/Flesh_Stab_3.ogg', 80)
+
+			if (INTENT_HARM)
+				return 0
+
+	harm(mob/target, var/mob/living/user)
+		if(check_target_immunity( target ))
+			return 0
+		logTheThing("combat", user, target, "stabs [constructTarget(target,"combat")] with [src] at [log_loc(user)].")
+		var/obj/item/affecting = target.get_affecting(user)
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 6, 9, rand(5,9))
+		user.attack_effects(target, affecting)
+		var/action = pick("slashe", "stab", "pierce")
+		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target] with their [src.holder]!</span></b>"
+		msgs.played_sound = "sound/impact_sounds/Flesh_Stab_3.ogg"
+		msgs.damage_type = DAMAGE_STAB
+		msgs.flush(SUPPRESS_LOGS)
+		user.lastattacked = target
