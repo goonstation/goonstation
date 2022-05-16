@@ -17,6 +17,22 @@ particles/rain
 	dense
 		spawning = 60
 
+		tile
+			count = 10
+			spawning = 1.2
+			fade = 4
+			fadein = 2
+			lifespan = generator("num", 6, 8, LINEAR_RAND)
+			position = generator("box", list(-32,32,0), list(32,40,50))
+			bound1 = list(-32, -32, -1000)
+			bound2 = list(40, 40, 1000)
+			// Start up initial speed and gain for tile based emitter due to shorter travel (acceleration)
+			gravity = list(0, 0, 0)
+			velocity = list(3, -9, 0)
+			drift = generator("box", list(0.1, -1*2, 0), list(0.4*2, 0, 0))
+			width = 96
+			height = 96
+
 	sideways
 		rotation = generator("num", -10, -20 )
 		gravity = list(0.4, -3)
