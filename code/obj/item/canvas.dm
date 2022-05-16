@@ -412,6 +412,24 @@
 	icon_state = "centcomcanvas"
 	mouse_over_pointer = MOUSE_HAND_POINTER
 
+	attackby(obj/item/W, mob/user)
+		. = ..()
+		if (istype(W, /obj/item/pixel_pass))
+			if (user.ckey in artists)
+				artists -= user.ckey
+				user.drop_item(W)
+				qdel(W)
+				user.show_text("[W] glows brightly before away into dust leaving you feeling invigorated with the strength to place down an additional pixel!")
+			else
+				user.show_text("You already have an unused pixel, you'll need to place it before redeeming another.")
+
+/obj/item/pixel_pass
+	name = "pixel pass"
+	desc = "A mysterious pixel shaped token that can be used at the centcom canvas to place an additional pixel. Be sure to keep it safe until you have a chance to redeem it."
+	icon_state = "pixel_pass"
+	burn_possible = FALSE
+	w_class = W_CLASS_TINY
+
 // the intro at the start of this file is a joke:
 // https://www.youtube.com/watch?v=wpNxzJk7xUc#t=42s
 // ...and is not to be taken seriously, or as any definition

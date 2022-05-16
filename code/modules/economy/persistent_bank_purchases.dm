@@ -32,6 +32,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	new /datum/bank_purchaseable/nt_backpack,\
 	new /datum/bank_purchaseable/bp_studded,\
 	new /datum/bank_purchaseable/bp_itabag,\
+	new /datum/bank_purchaseable/human_item/pixel_pass,\
 
 	new /datum/bank_purchaseable/limbless,\
 	new /datum/bank_purchaseable/legless,\
@@ -331,7 +332,12 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			icon = 'icons/obj/dojo.dmi'
 			icon_state = "scroll"
 
-
+		pixel_pass
+			name = "Pixel Pass"
+			cost = 10000
+			path = /obj/item/pixel_pass
+			carries_over = FALSE
+			icon_state = "pixel_pass"
 
 	altjumpsuit
 		name = "Alternate Jumpsuit"
