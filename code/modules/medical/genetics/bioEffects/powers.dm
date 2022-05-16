@@ -196,7 +196,12 @@
 				affecting.heal_damage(4, 0)
 			owner.UpdateDamageIcon()
 
-		qdel(the_object)
+		if (istype(the_object,/obj/item/parts))
+			var/obj/item/parts/part = the_object
+			part.delete()
+			owner.holder.hud.update_hands()
+		else
+			qdel(the_object)
 
 		using = FALSE
 
