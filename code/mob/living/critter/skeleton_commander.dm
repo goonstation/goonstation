@@ -9,9 +9,9 @@
 	can_disarm = 1
 	icon = 'icons/mob/skeleton_commander.dmi'
 	icon_state = "skeleton_commander"
-	var/health_brute = 80
+	var/health_brute = 90
 	var/health_brute_vuln = 0.7
-	var/health_burn = 80
+	var/health_burn = 90
 	var/health_burn_vuln = 0.3
 	var/mob/wraith/master = null
 

@@ -5,7 +5,7 @@
 	name = "rally"
 	desc = "rally"
 	icon_state = "clown_spider_bite"
-	cooldown = 10 SECOND
+	cooldown = 60 SECONDS
 	targeted = 0
 	//List of critters we can buff, same as the one the wraith portal has.
 	var/list/critter_list = list(/obj/critter/shade,
@@ -50,7 +50,7 @@
 	name = "summon lesser skeleton"
 	desc = "rally"
 	icon_state = "clown_spider_bite"
-	cooldown = 10 SECOND
+	cooldown = 30 SECONDS
 	targeted = 1
 	target_anything = 1
 
@@ -65,6 +65,10 @@
 			playsound(S.loc, "sound/voice/wraith/wraithhaunt.ogg", 80, 0)
 			S.visible_message("<span class='alert'>[holder.owner] raises its arms and a skeleton appears in front of your eyes!</span>")
 			boutput(holder.owner, "We summon a skeleton from the void")
+			SPAWN(30 SECONDS)
+				animate(S, alpha=0, time=2 SECONDS)
+				SPAWN(2 SECONDS)
+					qdel(S)
 		else
 			boutput(holder.owner, "We cannot summon a skeleton here")
 			return 1

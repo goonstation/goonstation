@@ -6,7 +6,7 @@
 	name = "Tentacle hook"
 	desc = "Launch a tentacle at your target and drag it to you"
 	icon_state = "clown_spider_bite"
-	cooldown = 10 SECOND
+	cooldown = 30 SECONDS
 	targeted = 1
 	target_anything = 1
 
@@ -27,7 +27,7 @@
 /datum/targetable/critter/spiker/lash	//Combo it with the tentacle throw to slap someone silly
 	name = "Lash"
 	desc = "Go into a bloody frenzy on a weakened target and rip them to shreds."
-	cooldown = 10 SECOND
+	cooldown = 50 SECONDS
 	targeted = 1
 	target_anything = 1
 	icon_state = "frenzy"

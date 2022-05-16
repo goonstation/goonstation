@@ -5,7 +5,7 @@
 	name = "Cloak"
 	desc = "Slip into the void and make yourself hard to discern for a short time"
 	icon_state = "clown_spider_bite"
-	cooldown = 10 SECOND
+	cooldown = 40 SECONDS
 	targeted = 0
 
 	cast()
@@ -14,7 +14,7 @@
 
 		animate(holder.owner, alpha=50, time=3 SECONDS)
 		boutput(holder.owner, "We slip into the shadows")
-		sleep(12 SECOND)
+		sleep(20 SECONDS)
 		animate(holder.owner, alpha=255, time=3 SECONDS)
 		boutput(holder.owner, "We reappear")
 
@@ -22,7 +22,7 @@
 	name = "Rush down"
 	desc = "Leap forward and knock down those in your way"
 	icon_state = "clown_spider_bite"
-	cooldown = 10 SECOND
+	cooldown = 40 SECONDS
 	targeted = 0
 	max_range = 5
 

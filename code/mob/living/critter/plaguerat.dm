@@ -143,7 +143,7 @@
 	real_name = "diseased rat"
 	desc = "A diseased looking rat."
 	icon_state = "smallRat"
-	amount_to_grow = 3
+	amount_to_grow = 4
 	bite_transfer_amt = 1
 	flags = TABLEPASS | DOORPASS
 	adultpath = /mob/living/critter/plaguerat/medium
@@ -179,13 +179,13 @@
 	real_name = "plague ridden rat"
 	desc = "A wretched, disgusting rat."
 	icon_state = "mediumRat"
-	amount_to_grow = 2
+	amount_to_grow = 8
 	flags = DOORPASS
 	bite_transfer_amt = 2.5
 	adultpath = /mob/living/critter/plaguerat/adult
-	health_brute = 40
+	health_brute = 45
 	health_brute_vuln = 0.7
-	health_burn = 40
+	health_burn = 45
 	health_burn_vuln = 1.3
 	add_abilities = list(/datum/targetable/critter/plague_rat/eat_filth,
 						/datum/targetable/critter/plague_rat/rat_bite,
@@ -219,9 +219,9 @@
 	desc = "A horrible mass of puss and warts, that once used to look like a rat."
 	icon_state = "giantRat"
 	bite_transfer_amt = 4
-	health_brute = 60
+	health_brute = 70
 	health_brute_vuln = 0.6
-	health_burn = 60
+	health_burn = 70
 	health_burn_vuln = 1.4
 	add_abilities = list(/datum/targetable/critter/plague_rat/eat_filth,
 						/datum/targetable/critter/plague_rat/rat_bite,

@@ -45,7 +45,7 @@
 	var/list/area/booster_locations = list()	//Zones in which you get more points
 	var/list/area/valid_locations = list()	//Zones that can become booster zones
 	var/list/area/excluded_areas = list(/area/shuttle/escape/transit, /area/shuttle_transit_space)
-	var/next_area_change = 10 SECONDS
+	var/next_area_change = 10 MINUTES
 	var/list/mob/living/critter/summons = list()	//Keep track of who we summoned to the material plane
 
 	var/list/poltergeists
@@ -109,9 +109,8 @@
 			movement_controller = new /datum/movement_controller/poltergeist (src)
 
 		var/default_name = make_name()
-		//Todo might not work, Needs more testing
-		src.choose_name(3, "Wraith", default_name)
 		src.UpdateName()
+		src.choose_name(3, "Wraith", default_name)
 
 	is_spacefaring()
 		return !density
@@ -189,8 +188,8 @@
 				is_in_area = true
 				break
 
-		if(is_in_area) //Double points in the area, and a small bonus
-			hauntBonus = (hauntBonus * 2) + 2
+		if(is_in_area) //Double points in the area
+			hauntBonus = (hauntBonus * 2)
 
 		if(hauntBonus > 0)
 			src.abilityHolder.addBonus(src.hauntBonus * (life_time_passed / life_tick_spacing))
@@ -214,7 +213,6 @@
 		return
 
 	death(gibbed)
-		//Todo: some cool-ass effects here
 
 		//Back to square one with you!
 
@@ -331,7 +329,7 @@
 		health -= brute * 3
 
 		//Enough damage breaks the trickster's disguise.
-		if ((burn + brute)> 4 && istype(src, /mob/wraith/wraith_trickster))
+		if ((burn + brute) >= 4 && istype(src, /mob/wraith/wraith_trickster))
 			var/mob/wraith/wraith_trickster/WT = src
 			if(WT.copied_appearance != null && WT.backup_appearance != null)
 				WT.appearance = WT.backup_appearance
@@ -340,8 +338,6 @@
 				makeCorporeal()
 				APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_SPOOKY)	//Dumb hack, but it works...
 				REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src)
-				//	src.see_invisible = INVIS_NONE
-				//Todo bugfix, figure out why the wraith is invisible
 
 		health = min(max_health, health)
 		if (src.health <= 0)
@@ -676,13 +672,13 @@
 
 		addAllTricksterAbilities()
 			src.addAbility(/datum/targetable/wraithAbility/choose_haunt_appearance)
-			src.addAbility(/datum/targetable/wraithAbility/make_poltergeist)
 			src.addAbility(/datum/targetable/wraithAbility/mass_whisper)
 			src.addAbility(/datum/targetable/wraithAbility/mass_emag)
-			src.addAbility(/datum/targetable/wraithAbility/possess)
 			src.addAbility(/datum/targetable/wraithAbility/hallucinate)
 			src.addAbility(/datum/targetable/wraithAbility/fake_sound)
 			src.addAbility(/datum/targetable/wraithAbility/lay_trap)
+			src.addAbility(/datum/targetable/wraithAbility/make_poltergeist)
+			src.addAbility(/datum/targetable/wraithAbility/possess)
 
 		addAllHarbingerAbilities()
 			src.addAbility(/datum/targetable/wraithAbility/create_summon_portal)
@@ -723,6 +719,8 @@
 			src.removeAbility(/datum/targetable/wraithAbility/raiseSkeleton)
 			src.removeAbility(/datum/targetable/wraithAbility/makeRevenant)
 			src.removeAbility(/datum/targetable/wraithAbility/harbinger_summon)
+			src.removeAbility(/datum/targetable/wraithAbility/fake_sound)
+			src.removeAbility(/datum/targetable/wraithAbility/lay_trap)
 
 		get_new_booster_zones()	//Get new zones you can get more power in.
 			booster_locations = list()
@@ -740,7 +738,7 @@
 					locations_copy.Add(A)
 					has_client = false
 			if (length(locations_copy) < 3) //Not enough people?
-				for(var/A in valid_locations)
+				for(var/A in valid_locations)	//Get random available areas instead
 					locations_copy.Add(A)
 			for(var/i = 0, i < num_safe_areas, i++)
 				temp = pick(locations_copy)
@@ -834,8 +832,8 @@
 	var/possession_points = 0	//How many do we currently have?
 	var/mutable_appearance/copied_appearance = null	//Steal someone's appearance and use it during haunt
 	var/mutable_appearance/backup_appearance = null
+	var/copied_desc = null	//Steal their descriptions too
 	var/backup_desc = null
-	var/copied_desc = null
 	var/traps_laid = 0
 
 	New(var/mob/M)
@@ -890,7 +888,7 @@
 		boutput(W, "<B>You are a wraith! Terrorize the mortals and drive them into releasing their life essence!</B>")
 		boutput(W, "Your astral powers enable you to survive one banishment. Beware of salt.")
 		boutput(W, "Use the question mark button in the lower right corner to get help on your abilities.")
-
+		W.choose_name(3, "Wraith")
 		return W
 	return null
 

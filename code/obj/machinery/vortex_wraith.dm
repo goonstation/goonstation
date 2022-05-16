@@ -2,7 +2,7 @@
 	name = "Summoning portal"
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "harbinger_circle-charging"
-	desc = "I wonder what this is."
+	desc = "It hums and thrums as you stare at it. Dark shadows wieve in and out of sight within."
 	anchored = 1
 	density = 1
 	_health = 40
@@ -13,7 +13,7 @@
 	var/next_spawn = 5 SECONDS
 	var/total_mob_value = 0	//Total point value of all linked mobs
 	var/obj/mob_type = null
-	var/random_mode = false
+	var/random_mode = true
 	var/mob/wraith/master = null
 	var/list/default_mobs = list(/obj/critter/crunched,	//Useful for random mode or when we dont have a mob_type on spawn
 	/obj/critter/ancient_thing,
@@ -28,14 +28,15 @@
 	/obj/critter/gunbot/heavy)
 
 	New(var/mob_type_chosen = null)
-		..()
 		if(mob_type_chosen != null)
-			mob_type = mob_type_chosen
+			src.mob_type = mob_type_chosen
 		else	//In case we arent spawned by a wraith, or are spawned on random mode
-			mob_type = pick(src.default_mobs)
+			src.mob_type = pick(src.default_mobs)
+		logTheThing("debug", src, null, "mob type: [src.mob_type]")
 		src.visible_message("<span class='alert'>A [src] appears into view, some shadows coalesce within!</b></span>")
 		next_growth = world.time + (30 SECONDS)
 		next_spawn = world.time + (31 SECONDS)	//Should call the first spawn check after the portal grew once.
+		..()
 
 	process()
 		if ((src.next_growth != null) && (growth < 4))	//Dont grow if we are at max level
@@ -73,12 +74,15 @@
 					if (src.random_mode)
 						src.mob_type = pick(src.default_mobs)
 					minion_value = getMobValue(src.mob_type)
+					logTheThing("debug", src, null, "mob value: [minion_value]")
+					logTheThing("debug", src, null, "mob type: [src.mob_type]")
 					if ((src.total_mob_value + minion_value) <= src.mob_value_cap)
+						logTheThing("debug", src, null, "mob type: [src.mob_type]")
+						logTheThing("debug", src, null, "chosen turf: [chosen_turf]")
 						var/obj/minion = new src.mob_type(chosen_turf)
 						src.mob_list += minion
 						minion.alpha = 0
 						animate(minion, alpha=255, time = 2 SECONDS)
-						//Todo add a unique overlay to the mob to make it clearly wraith-spawned
 						src.visible_message("<span class='alert'><b>[minion] emerges from the [src]!</b></span>")
 						src.total_mob_value += minion_value
 			next_spawn = world.time + (20 SECONDS) + (minion_value * 5) SECONDS

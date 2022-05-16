@@ -8,9 +8,9 @@
 	can_grab = 1
 	can_disarm = 1
 	icon_state = "scuttlebot"
-	var/health_brute = 30
+	var/health_brute = 50
 	var/health_brute_vuln = 1
-	var/health_burn = 30
+	var/health_burn = 50
 	var/health_burn_vuln = 1
 	var/mob/wraith/master = null
 

@@ -468,6 +468,7 @@
 				var/obj/critter/wraithskeleton/S = new /obj/critter/wraithskeleton(C)
 				S.name = "Locker skeleton"
 				S.health = 20
+				S.icon_state = "skeleton"
 				usr.playsound_local(usr.loc, "sound/voice/wraith/wraithraise[rand(1, 3)].ogg", 80, 0)
 				return 0
 			else
@@ -539,7 +540,7 @@
 			boutput(holder.owner, "We show ourselves")
 			var/mob/wraith/W = holder.owner
 
-			cooldown = 10 SECONDS
+			cooldown = 30 SECONDS
 
 			if ((istype(W, /mob/wraith/wraith_trickster)))	//Trickster can appear as a human, living or dead.
 				var/mob/wraith/wraith_trickster/T = holder.owner
@@ -775,7 +776,6 @@
 			G.pixel_y = rand(-4,4)
 		src.in_use = 0
 
-//this is the spooky_writing ability from spooktober ghosts
 /datum/targetable/wraithAbility/make_poltergeist
 	name = "Make Poltergeist"
 	desc = "Attempt to breach the veil between worlds to allow a lesser spirit to enter this realm."
@@ -886,14 +886,19 @@
 			switch (effect)
 				if (1)
 					W = new/mob/wraith/wraith_decay(holder.owner)
-					boutput(holder.owner, "<span class='notice'>You evolve into a plaguebringer! Spread rot and disease all around!</span>")
+					boutput(holder.owner, "<span class='notice'>You use some of your energy to evolve into a plaguebringer! Spread rot and disease all around!</span>")
 					holder.owner.show_antag_popup("plaguebringer")
 				if (2)
 					W = new/mob/wraith/wraith_harbinger(holder.owner)
-					boutput(holder.owner, "<span class='notice'>You turn into a harbinger! Command your army of minions to bring ruin to the station!</span>")
+					boutput(holder.owner, "<span class='notice'>You use some of your energy to evolve into a harbinger! Command your army of minions to bring ruin to the station!</span>")
+					holder.owner.show_antag_popup("harbinger")
 				if (3)
 					W = new/mob/wraith/wraith_trickster(holder.owner)
-					boutput(holder.owner, "<span class='notice'>You turn into a trickster! Decieve the crew and turn them against one another!</span>")
+					boutput(holder.owner, "<span class='notice'>You use some of your energy to evolve into a trickster! Decieve the crew and turn them against one another!</span>")
+					holder.owner.show_antag_popup("trickster")
+
+			W.abilityHolder.regenRate = (holder.regenRate - 2)
+			W.abilityHolder.points = (holder.points - 300)
 
 			W.real_name = holder.owner.real_name
 			W.UpdateName()
@@ -913,8 +918,8 @@
 	icon_state = "skeleton"
 	desc = "This should never be seen."
 	targeted = 1
-	pointCost = 20
-	cooldown = 40 SECONDS
+	pointCost = 30
+	cooldown = 45 SECONDS
 
 	cast(atom/target)
 		if (..())
@@ -1091,12 +1096,12 @@
 			if (H?.bioHolder.HasEffect("rot_curse") && H?.bioHolder.HasEffect("weak_curse") && H?.bioHolder.HasEffect("blind_curse") && H?.bioHolder.HasEffect("blood_curse"))
 				W.playsound_local(W.loc, "sound/voice/wraith/wraithhaunt.ogg", 80, 0)
 				boutput(holder.owner, "<span class='alert'>That soul is OURS</span>")
-				boutput(H, "The voices in your heads are reaching a crescendo")
+				boutput(H, "<span class='alert'>The voices in your heads are reaching a crescendo</span>")
 				H.make_jittery(300)
 				sleep(4 SECOND)
 				H.changeStatus("stunned", 2 SECONDS)
 				H.emote("scream")
-				boutput(H, "You feel netherworldly hands grasping you.")
+				boutput(H, "<span class='alert'>You feel netherworldly hands grasping you.</span>")
 				sleep(3 SECOND)
 				random_brute_damage(H, 10)
 				playsound(H.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 70, 1)
@@ -1188,14 +1193,14 @@
 			return 1
 
 /datum/targetable/wraithAbility/poison
-	name = "Poison item"
-	desc = "Ruin a food item or drink by adding horrible poison to it."
+	name = "Defile"
+	desc = "Manifest some horrible poison inside a food item or a container."
 	icon_state = "grinchpoison"
 	targeted = 1
 	target_anything = 1
 	target_nodamage_check = 1
 	cooldown = 50 SECONDS
-	pointCost = 70
+	pointCost = 50
 	var/list/the_poison = list("rat_spit", "grave_dust", "cyanide", "loose_screws", "rotting", "bee", "mucus")
 	var/amount_per_poison = 10
 
@@ -1255,7 +1260,7 @@
 	name = "Mass Whisper"
 	icon_state = "whisper"
 	desc = "Send an ethereal message to all close living beings."
-	pointCost = 10
+	pointCost = 5
 	targeted = 0
 	cooldown = 10 SECONDS
 	proc/ghostify_message(var/message)
@@ -1283,9 +1288,9 @@
 	name = "Mass Decay"
 	icon_state = "whisper"
 	desc = "Disrupt the energy of every machinery around you."
-	pointCost = 10
+	pointCost = 80
 	targeted = 0
-	cooldown = 10 SECONDS
+	cooldown = 1 MINUTE
 
 	cast()
 		if (..())
@@ -1308,9 +1313,9 @@
 	name = "Possession"
 	icon_state = "whisper"
 	desc = "Channel your energy and slowly gain control over a living being"
-	pointCost = 10
+	pointCost = 400
 	targeted = 1
-	cooldown = 10 SECONDS
+	cooldown = 3 MINUTES
 	var/wraith_key = null
 
 	cast(mob/target)
@@ -1381,9 +1386,9 @@
 	name = "Hallucinate"
 	icon_state = "whisper"
 	desc = "Induce terror inside a mortal's mind and make them hallucinate."
-	pointCost = 10
+	pointCost = 30
 	targeted = 1
-	cooldown = 10 SECONDS
+	cooldown = 45 SECONDS
 
 	cast(atom/target)
 		if (..())
@@ -1404,7 +1409,7 @@
 	name = "Fake sound"
 	icon_state = "whisper"
 	desc = "Play a fake sound at a location of your choice"
-	pointCost = 10
+	pointCost = 5
 	targeted = 1
 	target_anything = 1
 	cooldown = 5 SECONDS
@@ -1532,9 +1537,9 @@
 	name = "Summon void portal"
 	icon_state = "whisper"
 	desc = "Summon a void portal from which otherworldly creatures pour out"
-	pointCost = 10
+	pointCost = 150
 	targeted = 0
-	cooldown = 5 SECONDS
+	cooldown = 3 MINUTES
 	var/list/mob_types = list("Bears",
 	"Brullbars",
 	"Crunched",
@@ -1598,8 +1603,8 @@
 						mob_choice = null
 				boutput(holder.owner, "You gather your energy and open a portal")
 				var/obj/machinery/wraith/vortex_wraith/V = new /obj/machinery/wraith/vortex_wraith(mob_choice)
-				if(mob_choice == null)
-					V.random_mode = true
+				if(mob_choice != null)
+					V.random_mode = false
 				V.set_loc(W.loc)
 				V.master = W
 				V.alpha = 0
@@ -1641,8 +1646,8 @@
 	desc = "Attempt to breach the veil between worlds to allow a lesser void creature to enter this realm."
 	icon_state = "make_poltergeist"
 	targeted = 0
-	pointCost = 10
-	cooldown = 10 SECOND
+	pointCost = 400
+	cooldown = 150 SECONDS
 	var/in_use = 0
 	var/ghost_confirmation_delay  = 30 SECONDS
 

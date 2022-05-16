@@ -6,7 +6,7 @@
 	desc = "Eat some filth"
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "eat_filth"
-	cooldown = 3 SECOND
+	cooldown = 3 SECONDS
 	targeted = 1
 	target_anything = 1
 	var/list/decal_list = list(/obj/decal/cleanable/blood,
@@ -102,7 +102,7 @@
 	name = "spawn warren"
 	desc = "Spawn a warren"
 	icon_state = "clown_spider_bite"
-	cooldown = 60 SECONDS
+	cooldown = 90 SECONDS
 	targeted = 0
 
 	cast(atom/target)
