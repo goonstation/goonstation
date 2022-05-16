@@ -28,6 +28,7 @@
 	icon_body = "aloebee"
 	icon_state_dead = "aloebee-dead"
 	icon_state_sleep = "aloebee-sleep"
+	honey_color = "#0F0F0F"
 	add_abilities = list(/datum/targetable/critter/bite/bee,
 		/datum/targetable/critter/bee_sting/random)
 
