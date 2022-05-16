@@ -208,6 +208,9 @@ obj/effects/precipitation/rain
 	dense
 		particles = new/particles/rain/dense
 
+		tile
+			particles = new/particles/rain/dense/tile
+
 	sideways
 		particles = new/particles/rain/sideways
 
