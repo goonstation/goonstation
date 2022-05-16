@@ -77,16 +77,16 @@
 		src.right_eye = null
 
 		src.head = null
-		if (donor.head)
+		if (donor?.head)
 			qdel(donor.head)
 		src.ears = null
-		if (donor.ears)
+		if (donor?.ears)
 			qdel(donor.ears)
 		src.wear_mask = null
-		if (donor.wear_mask)
+		if (donor?.wear_mask)
 			qdel(donor.wear_mask)
 		src.glasses = null
-		if (donor.glasses)
+		if (donor?.glasses)
 			qdel(donor.glasses)
 		src.UpdateIcon()
 		..()
