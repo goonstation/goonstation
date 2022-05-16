@@ -458,8 +458,7 @@
 				if (limbless) // >:^)
 					spooker.zone_sel.select_zone("head")
 
-		else
-			if (istype(item, /obj/item/weldingtool))
+		else if (istype(item, /obj/item/weldingtool))
 				var/obj/item/weldingtool/welder = item
 				if (!welder.welding)
 					spooker.self_interact()
