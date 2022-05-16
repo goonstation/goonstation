@@ -393,7 +393,7 @@
 			scan_health_overhead(src, usr)
 			update_medical_record(src)
 		else if (istype(H.head, /obj/item/clothing/head/helmet/space/syndicate/specialist/medic))
-			. += "<br><span class='alert'>Your health monitor analyzes [src]'s vitals.</span><br>[scan_health(src, 0, 0)]"
+			. += "<br><span class='alert'>Your health monitor analyzes [src]'s vitals.</span><br>[scan_health(src, 0, 0, syndicate = TRUE)]"
 			scan_health_overhead(src, usr)
 			update_medical_record(src)
 

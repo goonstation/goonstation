@@ -2234,6 +2234,10 @@
 			if("High")
 				vocal_pitch = 1.25
 
+	// hacky, but this is used for says etc.
+	get_age_pitch_for_talk()
+		return vocal_pitch
+
 	proc/pick_module()
 		if(src.module) return
 		if(!src.freemodule) return
