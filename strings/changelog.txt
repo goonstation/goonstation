@@ -1,5 +1,9 @@
 
 (t)sun may 15 22
+(u)Flappybat
+(p)8586
+(e)🎨⚖|sprites, balance
+(+)Nuclear Operative pistol belt sprites show if they contain a pistol.
 (u)FlameArrow57
 (p)8478
 (e)🆕🎨⚖🔄|feature, sprites, balance, rework
