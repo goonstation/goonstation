@@ -1253,8 +1253,8 @@
 			cant_other_remove = 1
 
 /obj/item/clothing/suit/space/ntso
-	name = "NT-SO combat dress"
-	desc = "A Nanotrasen special forces combat dress system, pressurized for space travel."
+	name = "NT combat dress"
+	desc = "Nanotrasen paramilitary forces combat dress system, pressurized for space travel."
 	icon_state = "ntso_specialist"
 	item_state = "ntso_specialist"
 
