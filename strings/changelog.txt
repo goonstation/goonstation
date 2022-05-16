@@ -1,5 +1,8 @@
 
 (t)sun may 15 22
+(u)Pali + Sord
+(e)🆕🗺|feature, mapping
+(+)Added randomized rooms to Oshan!
 (u)Flappybat
 (p)8586
 (e)🎨⚖|sprites, balance
