@@ -26,9 +26,8 @@
 	// too lazy, might as well use existing stuff
 	butcherable = 1
 
-	var/absorb_rate = 2 // how much item health is removed per tick when absorbing
-	var/absorb_per_health = 3 // how much resources we get per item health
-	var/absorb_completion = 6 // how much resources we get after the item is totally eaten
+	var/health_absorb_rate = 2 // how much item health is removed per tick when absorbing
+	var/resources_per_health = 1 // how much resources we get per item health
 
 	// dormancy means do nothing
 
@@ -409,41 +408,58 @@
 
 	var/obj/item/I = absorber.item
 
-	if(I)
-		var/absorb = clamp(src.absorb_rate, 0, I.health)
-		I.health -= absorb
-		src.resources += src.absorb_per_health * absorb
-		playsound(src, "sound/effects/sparks[rand(1,6)].ogg", 30, 1)
-		if(I && I.health <= 0) // fix runtime Cannot read null.health
-			playsound(src, "sound/impact_sounds/Energy_Hit_1.ogg", 30, 1)
-			I.dropped(src)
-			if(I.contents.len > 0)
-				var/anything_tumbled = 0
-				for(var/obj/O in I.contents)
-					if(istype(O, /obj/item))
-						O.set_loc(src.loc)
-						anything_tumbled = 1
-					else
-						qdel(O)
-				if(anything_tumbled)
-					src.visible_message("<span class='alert'>The contents of [I] tumble out of [src].</span>",
-						"<span class='alert'>The contents of [I] tumble out of you.</span>",
-						"<span class='alert'>You hear things fall onto the floor.</span")
-			src.resources += src.absorb_completion
-			boutput(src, "<span class='notice'>You finish converting [I] into resources (you now have [src.resources] resource[src.resources == 1 ? "" : "s"]).</span>")
-			if(istype(I, /obj/item/organ/heart/flock))
-				var/obj/item/organ/heart/flock/F = I
-				src.resources += F.resources
-				boutput(src, "<span class='notice'>You assimilate [F]'s resource cache, adding <span class='bold'>[F.resources]</span> resources to your own (you now have [src.resources] resource[src.resources == 1 ? "" : "s"]).</span>")
-			else if(istype(I, /obj/item/flockcache))
-				var/obj/item/flockcache/C = I
-				src.resources += C.resources
-				boutput(src, "<span class='notice'>You break down the resource cache, adding <span class='bold'>[C.resources]</span> resources to your own (you now have [src.resources] resource[src.resources == 1 ? "" : "s"]). </span>")
-			if(istype(I, /obj/item/raw_material))
-				qdel(I) //gotta pool stuff bruh
+	if (!I)
+		return
+
+	var/health_absorbed = min(src.health_absorb_rate, I.health)
+	if (absorber.instant_absorb && !absorber.ignore_amount)
+		boutput(src, "<span class='alert'>[I] is weak enough that it breaks apart instantly!</span>")
+		src.resources += round(src.resources_per_health * health_absorbed * I.amount)
+	else
+		I.health -= health_absorbed
+		src.resources += round(src.resources_per_health * health_absorbed)
+		if (I.health > 0 || (I.health == 0 && I.amount > 1 && !absorber.ignore_amount))
+			playsound(src, "sound/effects/sparks[rand(1, 6)].ogg", 50, 1)
+		if (I.health > 0)
+			return
+		if (I.amount > 1 && !absorber.ignore_amount)
+			if (initial(I.health))
+				I.health = initial(I.health)
 			else
-				qdel(I)
-	// AI ticks are handled in mob_ai.dm, as they ought to be
+				I.set_health()
+			I.change_stack_amount(-1)
+			return
+
+	playsound(src, "sound/impact_sounds/Energy_Hit_1.ogg", 50, 1)
+
+	if(length(I.contents))
+		var/anything_tumbled = FALSE
+		for(var/obj/O in I.contents)
+			if(istype(O, /obj/item))
+				O.set_loc(src.loc)
+				anything_tumbled = TRUE
+			else
+				qdel(O)
+		if(anything_tumbled)
+			src.visible_message("<span class='alert'>The contents of [I] tumble out of [src].</span>",
+				"<span class='alert'>The contents of [I] tumble out of you.</span>",
+				"<span class='alert'>You hear things fall onto the floor.</span")
+
+	if (istype(I, /obj/item/flockcache))
+		var/obj/item/flockcache/C = I
+		src.resources += C.resources
+		boutput(src, "<span class='notice'>You break down the resource cache, adding <span class='bold'>[C.resources]</span> resource[C.resources > 1 ? "s" : null] to your own. </span>")
+	else if(istype(I, /obj/item/organ/heart/flock))
+		var/obj/item/organ/heart/flock/F = I
+		if (F.resources == 0)
+			boutput(src, "<span class='notice'>[F]'s resource cache is assimilated, but contains no resources.</span>")
+		else
+			src.resources += F.resources
+			boutput(src, "<span class='notice'>You assimilate [F]'s resource cache, adding <span class='bold'>[F.resources]</span> resource[F.resources > 1 ? "s" : null] to your own.</span>")
+	else
+		boutput(src, "<span class='notice'>You finish converting [I] into resources.</span>")
+	qdel(I)
+
 
 /mob/living/critter/flock/drone/process_move(keys)
 	if(keys && length(src.grabbed_by))
@@ -1087,6 +1103,8 @@
 	type_filters = list(/obj/item)
 	icon = 'icons/mob/flock_ui.dmi'
 	icon_state = "absorber"
+	var/instant_absorb = FALSE
+	var/ignore_amount = FALSE
 
 /datum/equipmentHolder/flockAbsorption/can_equip(var/obj/item/I)
 	if (istype(I, /obj/item/grab))
@@ -1094,7 +1112,16 @@
 	return ..()
 
 /datum/equipmentHolder/flockAbsorption/on_equip()
-	holder.visible_message("<span class='alert'>[holder] absorbs [item]!</span>", "<span class='notice'>You place [item] into [src.name] and begin breaking it down.</span>")
+	if (item.burning)
+		item.combust_ended()
+
+	var/mob/living/critter/flock/drone/F = holder
+	src.instant_absorb = item.amount > 1 && round(F.resources_per_health * item.health) == 0
+	src.ignore_amount = istype(item, /obj/item/spacecash)
+
+	item.inventory_counter?.show_count()
+
+	holder.visible_message("<span class='alert'>[holder] starts absorbing [item]!</span>", "<span class='notice'>You place [item] into [src.name] and begin breaking it down.</span>")
 	animate_flockdrone_item_absorb(item)
 
 /datum/equipmentHolder/flockAbsorption/on_unequip()
