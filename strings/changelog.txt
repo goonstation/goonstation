@@ -1,5 +1,22 @@
 
+(t)mon may 16 22
+(u)Wisemonster
+(p)8591
+(e)🗺|mapping
+(+)Added status displays to Donut 3
 (t)sun may 15 22
+(u)Pali + Sord
+(e)🆕🗺|feature, mapping
+(+)Added randomized rooms to Oshan!
+(u)Flappybat
+(p)8586
+(e)🎨⚖|sprites, balance
+(+)Nuclear Operative pistol belt sprites show if they contain a pistol.
+(u)FlameArrow57
+(p)8478
+(e)🆕🎨⚖🔄|feature, sprites, balance, rework
+(*)Health analyzers will now show non-syndicate type implants in those scanned. The Nuclear Operative Field Medic helmet is exempt from that restriction.
+(*)ProDoc health goggles now show an orange indicator on health icons for those with an implant in them other than a health or cloner record implant.
 (u)Roddy
 (p)8506
 (e)🎨|sprites

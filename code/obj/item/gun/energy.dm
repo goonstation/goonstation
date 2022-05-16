@@ -1642,6 +1642,48 @@
 		shotcount = 0
 		. = ..()
 
+/obj/item/gun/energy/cornicen3
+	name = "\improper Cornicen III"
+	desc = "It's a shotgun? Or an assault rifle? You can't tell."
+	icon = 'icons/obj/large/48x32.dmi'
+	muzzle_flash = "muzzle_flash_bluezap"
+	icon_state = "cornicen_close"
+	item_state = "ntgun2"
+	w_class = W_CLASS_NORMAL		//for clarity
+	two_handed = TRUE
+	force = 9
+	cell_type = /obj/item/ammo/power_cell/self_charging/big
+	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/mediumbig
+	can_swap_cell = 0
+	rechargeable = 0
+	shoot_delay = 8 DECI SECONDS
+	spread_angle = 3
+	var/extended = FALSE
+
+	New()
+		set_current_projectile(new/datum/projectile/special/spreader/plasma_spreader)
+		projectiles = list(current_projectile,new/datum/projectile/laser/plasma/burst)
+		..()
+
+	update_icon()
+		..()
+		if(!src.extended)
+			src.icon_state = "cornicen_close"
+			src.item_state = "cornicen"
+			w_class = W_CLASS_NORMAL
+		else
+			src.icon_state = "cornicen_ext"
+			src.item_state = "cornicen_ext"
+			w_class = W_CLASS_BULKY
+
+	attack_self(var/mob/M)
+		..()
+		src.extended = !src.extended
+		UpdateIcon()
+		if(src.extended)
+			flick("cornicen_open", src)
+		M.update_inhands()
+
 /obj/item/gun/energy/tasersmg
 	name = "taser SMG"
 	icon_state = "tsmg_burst100"
