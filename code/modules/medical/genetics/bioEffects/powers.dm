@@ -199,7 +199,9 @@
 		if (istype(the_object,/obj/item/parts))
 			var/obj/item/parts/part = the_object
 			part.delete()
-			owner.holder.hud.update_hands()
+			if (ishuman(owner))
+				var/mob/living/carbon/human/H = owner
+				H.hud.update_hands()
 		else
 			qdel(the_object)
 
