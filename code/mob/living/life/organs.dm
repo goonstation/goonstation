@@ -39,7 +39,7 @@
 		sleep(1 SECOND)
 
 	var/datum/organHolder/oH = src.organHolder
-	if (!oH.head && !src.nodamage)
+	if (!oH.head && !isskeleton(src) && !src.nodamage) // skeletons can survive without their head
 		src.death()
 
 	// time to find out why this wasn't added - cirr

@@ -1801,12 +1801,14 @@
 	partIcon = 'icons/mob/skeleton.dmi'
 	easy_attach = 1 // Its just a bone... full of meat. Kind of.
 	kind_of_limb = (LIMB_MUTANT | LIMB_SKELLY)
+	force = 10
 
 /obj/item/parts/human_parts/leg/mutant/skeleton
 	icon = 'icons/mob/skeleton.dmi'
 	partIcon = 'icons/mob/skeleton.dmi'
 	easy_attach = 1
 	kind_of_limb = (LIMB_MUTANT | LIMB_SKELLY)
+	force = 10
 
 //// LIMBS ////
 /obj/item/parts/human_parts/arm/mutant/skeleton/left

@@ -436,7 +436,7 @@
 				if (!src.head)
 					return 0
 				var/obj/item/organ/head/myHead = src.head
-				if (src.brain)
+				if (src.brain && !isskeleton(src.donor)) // skeletons move their brain elsewhere so they can detach their head without dying
 					myHead.brain = src.drop_organ("brain", myHead)
 				if (src.skull)
 					myHead.skull = src.drop_organ("skull", myHead)
@@ -472,6 +472,7 @@
 				myHead.holder = null
 				src.head = null
 				src.organ_list["head"] = null
+				src.donor.client?.eye = myHead
 				src.donor.update_body()
 				src.donor.UpdateDamageIcon()
 				src.donor.update_clothing()
@@ -767,8 +768,6 @@
 					else
 						return 0
 				var/obj/item/organ/head/newHead = I
-				if (src.donor.client)
-					src.donor.client.mob = new /mob/dead/observer(src.donor)
 				if (newHead.brain && newHead.brain.owner)
 					newHead.brain.owner.transfer_to(src.donor)
 				newHead.op_stage = op_stage

@@ -430,7 +430,7 @@
 	attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
 		/* Overrides parent function to handle special case for attaching heads. */
 		var/mob/living/carbon/human/H = M
-		if (!src.can_attach_organ(H, user))
+		if (!isskeleton(M) && !src.can_attach_organ(H, user))
 			return 0
 
 		var/fluff = pick("attach", "shove", "place", "drop", "smoosh", "squish")
@@ -442,14 +442,13 @@
 
 			if (user.find_in_hand(src))
 				user.u_equip(src)
-			H.organHolder.receive_organ(src, "head", 3.0)
+			H.organHolder.receive_organ(src, "head", isskeleton(M) ? 0 : 3.0)
 
 			SPAWN(rand(50,500))
-				if (H?.organHolder?.head && H.organHolder.head == src) // aaaaaa
-					if (src.op_stage != 0.0)
-						H.visible_message("<span class='alert'><b>[H]'s head comes loose and tumbles off of [his_or_her(H)] neck!</b></span>",\
-						"<span class='alert'><b>Your head comes loose and tumbles off of your neck!</b></span>")
-						H.organHolder.drop_organ("head") // :I
+				if (H?.organHolder?.head == src && src.op_stage != 0.0) // head has not been secured
+					H.visible_message("<span class='alert'><b>[H]'s head comes loose and tumbles off of [his_or_her(H)] neck!</b></span>",\
+					"<span class='alert'><b>Your head comes loose and tumbles off of your neck!</b></span>")
+					H.organHolder.drop_organ("head") // :I
 
 			return 1
 		else
