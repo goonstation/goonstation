@@ -183,7 +183,8 @@
 		if(reagents.has_reagent(target_fluid, create_egg_at_fluid))
 			reagents.remove_reagent(target_fluid, create_egg_at_fluid)
 			spawnEgg()
-
+		if(occupant && src.flock)
+			src.flock.updateEnemy(occupant)
 		// process stuff into fluids
 		if(isnull(target))
 			// find a new thing to eat

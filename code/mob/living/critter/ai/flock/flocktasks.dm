@@ -76,6 +76,12 @@ butcher
 	can_be_adjacent_to_target = FALSE
 	max_dist = 0
 
+	New()
+		..()
+		var/datum/aiTask/succeedable/move/movesubtask = subtasks[subtask_index]
+		if(istype(movesubtask))
+			movesubtask.max_path_dist = 300
+
 	on_tick()
 		if (!holder.target)
 			holder.target = get_turf(src.target)
@@ -364,10 +370,11 @@ butcher
 
 /datum/aiTask/sequence/goalbased/repair/get_targets()
 	. = list()
+	var/mob/living/critter/flock/drone/FH = holder.owner
 	for(var/mob/living/critter/flock/drone/F in view(max_dist, holder.owner))
 		if(F == holder.owner)
 			continue
-		if(F.get_health_percentage() < 0.66 && !isdead(F))//yeesh dont try to repair something which is dead
+		if(FH.flock == F.flock && F.get_health_percentage() < 0.66 && !isdead(F))//yeesh dont try to repair something which is dead
 			// if we can get a valid path to the target, include it for consideration
 			. += F
 	. = get_path_to(holder.owner, ., max_dist*2, 1)
@@ -707,9 +714,20 @@ butcher
 	var/run_range = 3
 	var/list/dummy_params = list("icon-x" = 16, "icon-y" = 16)
 
+/datum/aiTask/timed/targeted/flockdrone_shoot/proc/precondition()
+	//if we know there are enemies, and gun is charged and ready
+	var/mob/living/critter/flock/drone/F = holder.owner
+	if(length(F.flock?.enemies))
+		var/datum/handHolder/HH = F.hands[3]
+		var/datum/limb/gun/stunner = HH?.limb
+		if(istype(stunner) && !stunner.is_on_cooldown())
+			return TRUE
 
 /datum/aiTask/timed/targeted/flockdrone_shoot/evaluate()
-	return weight * score_target(get_best_target(get_targets()))
+	if(src.precondition())
+		return weight * score_target(get_best_target(get_targets()))
+	else
+		return 0
 
 /datum/aiTask/timed/targeted/flockdrone_shoot/on_tick()
 	var/mob/living/critter/owncritter = holder.owner
@@ -757,32 +775,22 @@ butcher
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(!F?.flock)
 		return
-	for(var/atom/T in view(target_range, holder.owner))
-		//handle vehicles first
-		if (isvehicle(T))
-			var/vehicle_is_enemy = F.flock.isEnemy(T) //if someone gets in an enemy pod, attack
-			var/enemy_found = FALSE
-			for (var/mob/occupant in T)
-				if (!F.flock.isEnemy(occupant) && !vehicle_is_enemy)
+
+	for(var/atom/T in F.flock.enemies)
+		if(istype(T.loc, /obj/flock_structure/cage)) //already got the bastard, don't need to do anything else
+			continue
+		if (isvehicle(T.loc))
+			if(T.loc in view(holder.owner, target_range))
+				F.flock.updateEnemy(T)
+				F.flock.updateEnemy(T.loc)
+				. += T.loc
+		else if(T in view(holder.owner,target_range))
+			F.flock.updateEnemy(T)
+			if(isliving(T))
+				var/mob/living/M = T
+				if(is_incapacitated(M))
 					continue
-				F.flock.updateEnemy(occupant)
-				enemy_found = TRUE
-				break
-			if (enemy_found) //bad guy in pod
-				. += T
-			//continue regardless of whether we find an enemy or not, since we don't want to attack empty pods
-			continue
-		if(!F.flock.isEnemy(T))
-			continue
-		if(isliving(T))
-			var/mob/living/M = T
-			if(is_incapacitated(M))
-				continue
-		// mob is a valid target, check if they're not already in a cage
-		if(!istype(T.loc.type, /obj/flock_structure/cage))
-			// if we can get a valid path to the target, include it for consideration
 			. += T
-		F.flock.updateEnemy(T)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -800,7 +808,7 @@ butcher
 
 /datum/aiTask/sequence/goalbased/flockdrone_capture/precondition()
 	var/mob/living/critter/flock/F = holder.owner
-	return F?.can_afford(15)
+	return F?.can_afford(15) && (length(F.flock?.enemies)) //gotta have enemies if we're gonna cage em
 
 /datum/aiTask/sequence/goalbased/flockdrone_capture/evaluate()
 	. = precondition() * weight * score_target(get_best_target(get_targets()))
@@ -828,11 +836,11 @@ butcher
 	. = list()
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(F?.flock)
-		for(var/atom/T in view(max_dist, holder.owner))
-			if (valid_target(T))
-				// if we can get a valid path to the target, include it for consideration
-				. += T
-				F.flock.updateEnemy(T)
+		for(var/atom/T in F.flock.enemies)
+			if(IN_RANGE(T,holder.owner,max_dist))
+				if (valid_target(T))
+					. += T
+					F.flock.updateEnemy(T)
 	. = get_path_to(holder.owner, ., max_dist*2, 1)
 
 /datum/aiTask/succeedable/capture
@@ -1149,6 +1157,12 @@ butcher
 
 /////// Targetable AI tasks, instead of looking for targets around them they just override with their own target var
 /datum/aiTask/sequence/goalbased/build/targetable
+	New()
+		..()
+		var/datum/aiTask/succeedable/move/movesubtask = subtasks[subtask_index]
+		if(istype(movesubtask))
+			movesubtask.max_path_dist = 300
+
 	switched_to()
 		on_reset()
 		if (!valid_target(holder.target))
@@ -1161,6 +1175,12 @@ butcher
 		holder.target = get_turf(src.target)
 
 /datum/aiTask/sequence/goalbased/flockdrone_capture/targetable
+	New()
+		..()
+		var/datum/aiTask/succeedable/move/movesubtask = subtasks[subtask_index]
+		if(istype(movesubtask))
+			movesubtask.max_path_dist = 300
+
 	switched_to()
 		on_reset()
 		if (!valid_target(holder.target))
@@ -1185,6 +1205,12 @@ butcher
 			return TRUE
 
 /datum/aiTask/sequence/goalbased/barricade/targetable
+	New()
+		..()
+		var/datum/aiTask/succeedable/move/movesubtask = subtasks[subtask_index]
+		if(istype(movesubtask))
+			movesubtask.max_path_dist = 300
+
 	switched_to()
 		on_reset()
 		if (!valid_target(holder.target))
@@ -1197,6 +1223,7 @@ butcher
 		holder.target = get_turf(src.target)
 
 /datum/aiTask/timed/targeted/flockdrone_shoot/targetable
+
 	switched_to()
 		on_reset()
 		if (!(ismob(src.target) || iscritter(src.target) || isvehicle(src.target)) || isflock(src.target))
@@ -1234,14 +1261,25 @@ butcher
 	var/list/turfs = list()
 	path = null
 	targetpos = null
-	for(var/turf/T in range(holder.owner,2))
-		if(!istype(T,/turf/space) && !is_blocked_turf(T) && GET_DIST(holder.owner,startpos) <= GET_DIST(T,startpos))
+	var/inspace = TRUE
+	for(var/turf/T in range(2,holder.owner))
+		if(!istype(T,/turf/space) && T != holder.owner.loc && !flock_is_blocked_turf(T) && GET_DIST(holder.owner,startpos) <= GET_DIST(T,startpos))
 			turfs += T
-	if(!length(turfs))
+			inspace = FALSE
+
+		if(inspace && !istype(T,/turf/space))
+			inspace = FALSE
+	if(inspace)
 		//oh shit we must be in space, better wander in the direction of the station
-		turfs += pick_landmark(LANDMARK_LATEJOIN)
+		turfs += get_step(holder.owner,get_dir(holder.owner,pick_landmark(LANDMARK_LATEJOIN)))
 	if(length(turfs))
 		targetpos = pick(turfs)
 	else
 		//well I guess the station is gone and everyone is dead. Back to default wander behaviour
 		..()
+
+/datum/aiTask/timed/wander/flock/on_reset()
+	src.startpos = null
+	src.targetpos = null
+	src.path = null
+	holder.stop_move()

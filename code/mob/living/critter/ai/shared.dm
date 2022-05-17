@@ -127,7 +127,8 @@
 // target: holder target assigned by a sequence task
 /datum/aiTask/succeedable/move
 	name = "moving"
-	max_fails = 5
+	max_fails = 2
+	var/max_path_dist = 50 //keeping this low by default, but you can override it - see /datum/aiTask/sequence/goalbased/rally for details
 	var/list/found_path = null
 	var/atom/move_target = null
 
@@ -136,7 +137,7 @@
 	if(!move_target)
 		fails++
 		return
-	src.found_path = get_path_to(holder.owner, move_target, 300, 0) //this could get expensive, please limit your max_dist in the target search
+	src.found_path = get_path_to(holder.owner, move_target, src.max_path_dist, 0)
 	if(!src.found_path) // no path :C
 		fails++
 

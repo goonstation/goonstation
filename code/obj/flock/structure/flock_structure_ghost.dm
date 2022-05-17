@@ -47,16 +47,6 @@
 		flock_speak(null, "ERROR: Build area is blocked by an obstruction.", flock)
 		return
 
-/obj/flock_structure/ghost/proc/flock_is_blocked_turf(var/turf/T)
-	// nicked from is_blocked_turf
-	if (!T) return 0
-	if(T.density) return 1
-	for(var/atom/A in T)
-		if(A?.density && !isflock(A))//ignores flockdrones/flockbits
-			return 1
-	return 0
-
-
 /obj/flock_structure/ghost/Click(location, control, params)
 	if (("alt" in params2list(params)) || !istype(usr, /mob/living/intangible/flock/flockmind))
 		return ..()
