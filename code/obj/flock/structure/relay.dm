@@ -41,7 +41,7 @@
 	play_sound()
 	flock_speak(null, "RELAY CONSTRUCTED! DEFEND THE RELAY!!", src.flock)
 	SPAWN(1 SECOND)
-		radial_flock_conversion(src, 20)
+		radial_flock_conversion(src, src.flock, 20)
 	SPAWN(10 SECONDS)
 		var/msg = "Overwhelming anomalous power signatures detected on station. This is an existential threat to the station. All personnel must contain this event."
 		msg = radioGarbleText(msg, 7)
