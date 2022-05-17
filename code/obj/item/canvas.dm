@@ -436,7 +436,7 @@
 			user.drop_item(src)
 			qdel(src)
 		else
-			user.show_text("Theres no need to redeem this now, you're already brimming with artistic ability.")
+			user.show_text("There's no need to redeem this now, you're already brimming with artistic ability.")
 
 // the intro at the start of this file is a joke:
 // https://www.youtube.com/watch?v=wpNxzJk7xUc#t=42s
