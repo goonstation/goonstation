@@ -13,6 +13,7 @@
 	var/base_state = "mflash"
 	var/datum/light/light
 	anchored = 1
+	req_access = list(access_security)
 
 	// Please keep synchronizied with these lists for easy map changes:
 	// /obj/storage/secure/closet/brig/automatic (secure_closets.dm)
@@ -234,7 +235,10 @@
 	if(iscarbon(AM))
 		var/mob/living/carbon/M = AM
 		if ((M.m_intent != "walk") && (src.anchored))
-			src.flash()
+			if (ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if (!src.check_access(H.wear_id))
+					src.flash()
 
 /obj/machinery/flasher/portable/attackby(obj/item/W as obj, mob/user as mob)
 	if (iswrenchingtool(W))
