@@ -356,7 +356,7 @@
 			return
 		MedicLight.attach(usr)
 		tell_medic()
-		ColorChangeCycles = 7
+		ColorChangeCycles = 6
 		src.MedicLight.enable()
 		playsound(src.host.loc, MedicalSiren, 15, 0)
 		while(ColorChangeCycles>0)
