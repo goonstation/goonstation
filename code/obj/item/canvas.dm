@@ -420,6 +420,8 @@
 				user.drop_item(W)
 				qdel(W)
 				user.show_text("[W] glows brightly before crumbling away into dust leaving you feeling invigorated with the strength to place down an additional pixel!")
+				if (user.client?.persistent_bank_item == "Pixel Pass")
+					user.client.persistent_bank_item = "none"
 			else
 				user.show_text("Theres no need to redeem this now, you're already brimming with artistic ability.")
 
