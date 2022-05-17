@@ -330,7 +330,7 @@
 	abilities = list(/obj/ability_button/pda_flashlight_toggle, /obj/ability_button/yell_medic)
 	var/datum/light/MedicLight
 	var/ColorChangeCycles
-	var/MedicLightBrightness = 0.225
+	var/MedicLightBrightness = 0.12
 	var/MedicalSiren = "sound/effects/manta_alarm.ogg"
 	var/Messages = list()
 
@@ -356,9 +356,9 @@
 			return
 		MedicLight.attach(usr)
 		tell_medic()
-		ColorChangeCycles = 8
+		ColorChangeCycles = 7
 		src.MedicLight.enable()
-		playsound(src.host.loc, MedicalSiren, 35, 1)
+		playsound(src.host.loc, MedicalSiren, 15, 0)
 		while(ColorChangeCycles>0)
 			src.MedicLight.set_color(28, 138, 118)
 			sleep(0.4 SECONDS)
