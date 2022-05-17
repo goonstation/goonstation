@@ -22,6 +22,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	new /datum/bank_purchaseable/human_item/sparkler_box,\
 	new /datum/bank_purchaseable/human_item/dabbing_license,\
 	new /datum/bank_purchaseable/human_item/chem_hint,\
+	new /datum/bank_purchaseable/human_item/pixel_pass,\
 
 	new /datum/bank_purchaseable/altjumpsuit,\
 	new /datum/bank_purchaseable/altclown,\
@@ -32,7 +33,6 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	new /datum/bank_purchaseable/nt_backpack,\
 	new /datum/bank_purchaseable/bp_studded,\
 	new /datum/bank_purchaseable/bp_itabag,\
-	new /datum/bank_purchaseable/human_item/pixel_pass,\
 
 	new /datum/bank_purchaseable/limbless,\
 	new /datum/bank_purchaseable/legless,\
