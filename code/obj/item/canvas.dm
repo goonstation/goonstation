@@ -419,9 +419,9 @@
 				artists -= user.ckey
 				user.drop_item(W)
 				qdel(W)
-				user.show_text("[W] glows brightly before away into dust leaving you feeling invigorated with the strength to place down an additional pixel!")
+				user.show_text("[W] glows brightly before crumbling away into dust leaving you feeling invigorated with the strength to place down an additional pixel!")
 			else
-				user.show_text("You already have an unused pixel, you'll need to place it before redeeming another.")
+				user.show_text("Theres no need to redeem this now, you're already brimming with artistic ability.")
 
 /obj/item/pixel_pass
 	name = "pixel pass"
