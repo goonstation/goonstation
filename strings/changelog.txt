@@ -1,5 +1,9 @@
 
 (t)tue may 17 22
+(u)Sovexe
+(p)8615
+(e)🎨|sprites
+(*)New spacebux purchasable, the Pixel Pass. Can be redeemed at the Centcom canvas to place an additional pixel. Keep it safe until you get there!
 (u)aloe
 (*)Dart and syringe projectiles (lawbringer dart, syringe gun, tranq rifle, tranq pistol, etc) now apply their reagents slowly rather than instantly, and stop applying their reagents after pulled out. As a reminder, you can pull a dart out of yourself or someone else by clicking them on help intent. Syndicate darts (nukie pistol, traitor syringe gun) are barbed and require surgery to remove.
 (*)The reagents added by darts are no longer reduced by armor.
