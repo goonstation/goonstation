@@ -341,7 +341,7 @@ TYPEINFO(/datum/mutantrace)
 				var/typeinfo/datum/mutantrace/typeinfo = src.get_typeinfo()
 				if(typeinfo.special_styles)
 					if (!AH.special_style || !typeinfo.special_styles[AH.special_style]) // missing or invalid style
-						AH.special_style = typeinfo.special_styles[1]
+						AH.special_style = pick(typeinfo.special_styles)
 					src.special_style = AH.special_style
 					src.mutant_folder = typeinfo.special_styles[AH.special_style]
 
@@ -1087,16 +1087,10 @@ TYPEINFO(/datum/mutantrace)
 				remove_mindslave_status(mob)
 		..()
 
-TYPEINFO(/datum/mutantrace/skeleton)
-	special_styles = list("human" = 'icons/mob/skeleton/human.dmi',
-	"cow" = 'icons/mob/skeleton/cow.dmi',
-	"lizard" = 'icons/mob/skeleton/lizard.dmi',
-	"pug" = 'icons/mob/skeleton/pug.dmi',
-	"roach" = 'icons/mob/skeleton/roach.dmi',)
 /datum/mutantrace/skeleton
 	name = "skeleton"
-	icon = 'icons/mob/skeleton/human.dmi'
-	mutant_folder = 'icons/mob/skeleton/human.dmi'
+	icon = 'icons/mob/skeleton.dmi'
+	mutant_folder = 'icons/mob/skeleton.dmi'
 	icon_state = "skeleton"
 	voice_override = "skelly"
 	mutant_organs = list("left_eye" = /obj/item/organ/eye/skeleton,
