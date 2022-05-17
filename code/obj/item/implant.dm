@@ -879,6 +879,11 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		var/barbed = FALSE
 		var/pull_out_name = ""
 
+		on_life(mult)
+			. = ..()
+			if (src.reagents?.total_volume)
+				src.reagents.trans_to(owner, 1 * mult)
+
 		dart
 			name = "dart"
 			pull_out_name = "dart"

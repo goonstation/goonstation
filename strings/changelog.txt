@@ -1,4 +1,7 @@
 
+(t)tue may 17 22
+(u)aloe
+(*)Dart and syringe projectiles (lawbringer dart, syringe gun, tranq rifle, tranq pistol, etc) now apply their reagents slowly rather than instantly, and stop applying their reagents after pulled out. As a reminder, you can pull a dart out of yourself or someone else by clicking them on help intent. Syndicate darts (nukie pistol, traitor syringe gun) are barbed and require surgery to remove.
 (t)mon may 16 22
 (u)Wisemonster
 (p)8591

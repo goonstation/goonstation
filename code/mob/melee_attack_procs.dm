@@ -79,10 +79,9 @@
 
 		if (P)
 			if (P.barbed == FALSE)
-				src.visible_message("<span class='alert'><B>[src] pulls a [P.pull_out_name] out of themselves!</B></span>")
-				P.on_remove(M)
-				M.implant.Remove(P)
-				src.put_in_hand(P)
+				SETUP_GENERIC_ACTIONBAR(src, target, 1 SECOND, /mob/living/proc/pull_out_implant, list(target, P), P.icon, P.icon_state, \
+					src.visible_message("<span class='alert'><B>[src] pulls a [P.pull_out_name] out of themselves!</B></span>"), \
+					INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
 			else
 				src.visible_message("<span class='alert'><B>[src] tries to pull a [P.pull_out_name] out of themselves, but it's stuck in!</B></span>")
 			return
@@ -113,10 +112,9 @@
 
 		if (P)
 			if (P.barbed == FALSE)
-				src.visible_message("<span class='alert'><B>[src] pulls a [P.pull_out_name] out of [target]!</B></span>")
-				P.on_remove(M)
-				M.implant.Remove(P)
-				src.put_in_hand(P)
+				SETUP_GENERIC_ACTIONBAR(src, target, 1 SECOND, /mob/living/proc/pull_out_implant, list(src, P), P.icon, P.icon_state, \
+					src.visible_message("<span class='alert'><B>[src] pulls a [P.pull_out_name] out of [target]!</B></span>"), \
+					INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
 			else
 				src.visible_message("<span class='alert'><B>[src] tries to pull a [P.pull_out_name] out of [target], but it's stuck in!</B></span>")
 			return
@@ -162,6 +160,10 @@
 				src.visible_message("<span class='notice'>[src] shakes [target], trying to grab their attention!</span>")
 	hit_twitch(target)
 
+/mob/living/proc/pull_out_implant(var/mob/living/user, var/obj/item/implant/dart)
+	dart.on_remove(src)
+	src.implant.Remove(dart)
+	user.put_in_hand_or_drop(dart)
 
 /mob/proc/administer_CPR(var/mob/living/carbon/human/target)
 	boutput(src, "<span class='alert'>You have no idea how to perform CPR.</span>")
