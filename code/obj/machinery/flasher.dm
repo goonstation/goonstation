@@ -229,12 +229,12 @@
 	return
 
 /obj/machinery/flasher/portable/HasProximity(atom/movable/AM as mob|obj)
-	if ((src.disable) || (src.last_flash && world.time < src.last_flash + 150))
+	if (!src.anchored || (src.disable) || (src.last_flash && world.time < src.last_flash + 150))
 		return
 
 	if(iscarbon(AM))
 		var/mob/living/carbon/M = AM
-		if ((M.m_intent != "walk") && (src.anchored))
+		if (M.m_intent != "walk")
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if (!src.check_access(H.wear_id))
