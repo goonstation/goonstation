@@ -2210,14 +2210,14 @@
 				return 1
 		if (slot_l_hand)
 			if (src.limbs.l_arm)
-				if (!istype(src.limbs.l_arm, /obj/item/parts/human_parts))
+				if (!istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm) && !istype(src.limbs.l_arm, /obj/item/parts/robot_parts/arm))
 					return 0
 				if (istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item))
 					return 0
 				return 1
 		if (slot_r_hand)
 			if (src.limbs.r_arm)
-				if (!istype(src.limbs.r_arm, /obj/item/parts/human_parts))
+				if (!istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm) && !istype(src.limbs.r_arm, /obj/item/parts/robot_parts/arm))
 					return 0
 				if (istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item))
 					return 0
