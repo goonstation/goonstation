@@ -26,7 +26,7 @@
 				if (W.justmanifested <= 0)
 					SPAWN(5 DECI SECOND)	//Give them half a second to flee
 						W.makeCorporeal()
-						boutput(W, "<span class='alert'>A malignant spirit pulls you into the physical world! You being to gather your forces to try and escape to the spirit realm...</span>")
+						boutput(W, "<span class='alert'>A malignant spirit pulls you into the physical world! You begin to gather your forces to try and escape to the spirit realm...</span>")
 						SPAWN(30 SECOND)
 							W.makeIncorporeal()
 							W.justmanifested = 5	//To avoid spamming the candle
