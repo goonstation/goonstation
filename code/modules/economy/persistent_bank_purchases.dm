@@ -336,7 +336,6 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			name = "Pixel Pass"
 			cost = 10000
 			path = /obj/item/pixel_pass
-			carries_over = FALSE
 			icon_state = "pixel_pass"
 
 	altjumpsuit
