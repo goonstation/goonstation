@@ -1,9 +1,5 @@
 
 (t)mon may 16 22
-(u)Flourish + Flaborized
-(p)8573
-(e)🆕🎨|feature, sprites
-(*)Added additional skeleton styles - cow, lizard, pug, and roach - which can be selected in character setup with the "Special Style" option. Sprites by Flaborized!
 (u)Wisemonster
 (p)8591
 (e)🗺|mapping
