@@ -415,15 +415,8 @@
 	attackby(obj/item/W, mob/user)
 		. = ..()
 		if (istype(W, /obj/item/pixel_pass))
-			if (user.ckey in artists)
-				artists -= user.ckey
-				user.drop_item(W)
-				qdel(W)
-				user.show_text("[W] glows brightly before crumbling away into dust leaving you feeling invigorated with the strength to place down an additional pixel!")
-				if (user.client?.persistent_bank_item == "Pixel Pass")
-					user.client.persistent_bank_item = "none"
-			else
-				user.show_text("Theres no need to redeem this now, you're already brimming with artistic ability.")
+			var/obj/item/pixel_pass/PP = W
+			PP.redeem(user, src)
 
 /obj/item/pixel_pass
 	name = "pixel pass"
@@ -431,6 +424,19 @@
 	icon_state = "pixel_pass"
 	burn_possible = FALSE
 	w_class = W_CLASS_TINY
+
+	proc/redeem(mob/user, obj/item/canvas/canvas)
+		if (!user?.client || !canvas) return
+
+		if (user.ckey in canvas.artists)
+			canvas.artists -= user.ckey
+			user.show_text("[src] glows brightly before crumbling away into dust leaving you feeling invigorated with the strength to place down an additional pixel!")
+			if (user.client.persistent_bank_item == "Pixel Pass")
+				user.client.persistent_bank_item = "none"
+			user.drop_item(src)
+			qdel(src)
+		else
+			user.show_text("Theres no need to redeem this now, you're already brimming with artistic ability.")
 
 // the intro at the start of this file is a joke:
 // https://www.youtube.com/watch?v=wpNxzJk7xUc#t=42s
