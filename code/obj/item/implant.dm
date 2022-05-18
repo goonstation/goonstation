@@ -1178,7 +1178,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 					B.blood_type = "unknown"
 
 					if (prob(10))
-						H.visible_message("<span class='alert'><i>Bloooood.....</i></span>")
+						boutput(H, "<span class='alert'><i>Bloooood.....</i></span>")
 		..()
 
 /obj/item/implant/artifact/eldritch/eldritch_bad
