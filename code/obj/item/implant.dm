@@ -28,7 +28,7 @@ THROWING DARTS
 	var/death_triggered = 0
 	var/online = 0
 	var/instant = 1
-	var/scan_category = "other" // "health", "cloner", "other", "syndicate", or "not_shown"
+	var/scan_category = "other" // "health", "cloner", "other", "syndicate", "unknown", or "not_shown"
 	var/cant_take_out = FALSE
 	var/artifact_implant = FALSE
 
@@ -1067,6 +1067,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 
 /obj/item/implant/artifact
 	artifact_implant = TRUE
+	scan_category = "unknown"
 	var/artifact_implant_type = null
 	var/active = FALSE
 
