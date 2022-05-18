@@ -10,10 +10,11 @@
 /obj/item/old_grenade/spawner/sawfly
 	name = "Compact sawfly"
 	desc = "A self-deploying antipersonnel robot. It's folded up and offline..."
-	det_time = 1 SECONDS
+	det_time = 1.5 SECONDS
 	throwforce = 7
 	icon_state = "sawfly"
 	icon_state_armed = "sawfly1"
+	sound_armed = 'sound/machines/sawfly4.ogg'
 	inhand_image_icon = 'icons/mob/inhand/tools/omnitool.dmi' // could be better but it's distinct enough
 	payload = /mob/living/critter/sawfly
 	is_dangerous = TRUE
@@ -104,7 +105,6 @@
 	stamina_damage = 35
 	stamina_cost = 20
 	stamina_crit_chance = 35
-
 
 	icon_state = "clusterflyA"
 	icon_state_armed = "clusterflyA1"
@@ -289,18 +289,32 @@
 			src.foldself()
 
 
+	Cross(atom/movable/mover) //code that ensure projectiles hit them when they're alive, but won't when they're dead
+		if(istype(mover, /obj/projectile))
+			if(!src.alive)
+				return 1
+		return ..()
+
+
+	Uncross(atom/movable/O, do_bump = TRUE)
+		if(istype(O, /obj/projectile))
+			. = 1
+		return ..()
+
+
 	death() //FUCK YOU
 		CritterDeath() // FUCK YOU TOO
-
 
 	proc/CritterDeath() //  SUPER important proc do NOT touch this or everything will break and You Will Cry
 
 		if (alreadydead) return // prevents any death behavior from ever happening more than once
 
 		alive = FALSE
+		src.set_density(0)
+		src.force_laydown_standup()
 		src.tokenized_message(death_text)
 		src.is_npc = FALSE // stop any and all possible non-critter AI thought
-
+		src.throws_can_hit_me = FALSE  //prevent getting hit by thrown stuff- super important in avoiding jank
 
 		//death behavior custom to sawflies below
 
@@ -308,7 +322,6 @@
 		icon_state = "sawflydead[pick("1", "2", "3", "4", "5", "6", "7", "8")]" //randomly selects death icon and displaces them
 		src.pixel_x += rand(-5, 5)
 		src.pixel_y += rand(-1, 5)
-		src.force_laydown_standup()
 
 		src.anchored = 0
 		src.set_density(0)
@@ -319,8 +332,8 @@
 			new /obj/item/device/prox_sensor(src.loc) // maybe change this later
 			return
 
-		if(prob(60)) // a miniscule tad of tomfoolery
-			elecflash(src, 1, 2)
+		if(prob(60)) // a miniscule smidge of tomfoolery
+			elecflash(src, 1, 3)
 
 		if(prob(20)) // congrats, little guy! You're special! You're going to blow up!
 			if(prob(70)) //decide whether or not people get a warning
@@ -427,7 +440,7 @@
 			src.oldtarget_name = user.name
 			src.task = "chasing"
 			if (!(istraitor(user) || isnukeop(user) || isspythief(user)))
-				src.visible_message("<span class='alert'><b>[src]'s targeting subsystems identify</b> [src.target] as a high priority threat!</span>")
+				src.visible_message("<span class='alert'><b>[src]'s targeting subsystems identify [src.target] as a high priority threat!</b></span>")
 				playsound(src, pick(src.beeps), 55, 1)
 				var/tturf = get_turf(src.target) //instantly retaliate, since we know we're in melee range
 				Shoot(tturf, src.loc, src)
@@ -536,7 +549,7 @@
 			return 0
 
 
-		if(prob(7))
+		if(prob(5))
 			src.visible_message("<b>[src] [beeptext].</b>")
 			playsound(src, pick(src.beeps), 55, 1)
 
@@ -607,3 +620,4 @@
 
 	animate_lying(lying)
 		//more overwritten stuff
+

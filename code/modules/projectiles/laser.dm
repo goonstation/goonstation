@@ -505,8 +505,8 @@ toxic - poisons
 		damtype = D_PIERCING // weirdly enough, giving them stabbing damage goes through armor better than peircing
 		shot_sound = null
 		hit_human_sound = "sound/machines/chainsaw_green.ogg"
-		power = 14
-		dissipation_rate = 14
+		power = 16
+		dissipation_rate = 16
 		sname = "Whirring Blades"
 
 
