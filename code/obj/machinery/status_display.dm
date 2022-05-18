@@ -18,7 +18,7 @@
 	density = 0
 	mats = 14
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
-	var/backlit_screen = TRUE
+	var/glow_in_dark_screen = TRUE
 	var/image/screen_image
 
 	var/mode = 1	// 0 = Blank
@@ -62,7 +62,7 @@
 
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
 
-		if(backlit_screen)
+		if(glow_in_dark_screen)
 			src.screen_image = image('icons/obj/status_display.dmi', src.icon_state, -1)
 			screen_image.plane = PLANE_LIGHTING
 			screen_image.blend_mode = BLEND_ADD
@@ -155,7 +155,7 @@
 
 				update_display_lines(line1,line2)
 
-		if(backlit_screen) // should re-add the glow if power is restored
+		if(glow_in_dark_screen) // should re-add the glow if power is restored
 			screen_image.plane = PLANE_LIGHTING
 			screen_image.blend_mode = BLEND_ADD
 			screen_image.layer = LIGHTING_LAYER_BASE
