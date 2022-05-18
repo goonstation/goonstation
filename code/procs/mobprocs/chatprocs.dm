@@ -518,7 +518,7 @@
 		if (dead_check && isdead(src))
 			src.emote_allowed = 0
 			return 0
-		if (voluntary && src.getStatusDuration("paralysis") > 0)
+		if (voluntary && (src.getStatusDuration("paralysis") > 0 || isunconscious(src)))
 			return 0
 		if (world.time >= (src.last_emote_time + src.last_emote_wait))
 			if (!no_emote_cooldowns && !(src.client && (src.client.holder && admin_bypass) && !src.client.player_mode) && voluntary)
@@ -746,7 +746,7 @@
 	return
 
 /mob/proc/item_attack_message(var/mob/T, var/obj/item/S, var/d_zone, var/devastating = 0, var/armor_blocked = 0)
-	if (d_zone)
+	if (d_zone && ishuman(T))
 		if(armor_blocked)
 			return "<span class='alert'><B>[src] attacks [T] in the [d_zone] with [S], but [T]'s armor blocks it!</B></span>"
 		else

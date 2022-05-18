@@ -11,7 +11,7 @@
 	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
 	icon_state = "cake_batter"
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
-	amount = 12
+	bites_left = 12
 	heal_amt = 1
 	var/obj/item/reagent_containers/custom_item
 	initial_volume = 50
@@ -22,7 +22,7 @@
 	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
 	icon_state = "yellowcake"
 	w_class = W_CLASS_TINY
-	amount = 1
+	bites_left = 1
 	heal_amt = 2
 	initial_volume = 5
 	initial_reagents = "uranium"
@@ -33,9 +33,9 @@
 	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
 	icon_state = "cake1-base_custom"
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
-	amount = 0
+	bites_left = 0
 	heal_amt = 2
-	use_bite_mask = 0
+	use_bite_mask = FALSE
 	flags = FPRINT | TABLEPASS | NOSPLASH
 	initial_volume = 100
 	w_class = W_CLASS_BULKY
@@ -118,7 +118,7 @@
 			return
 		var/frostingtype
 		frostingtype = input("Which frosting style would you like?", "Frosting Style", null) as null|anything in frostingstyles
-		if(frostingtype && (get_dist(src, user) <= 1))
+		if(frostingtype && (BOUNDS_DIST(src, user) == 0))
 			var/tag
 			var/datum/color/average = tube.reagents.get_average_color()
 			switch(frostingtype)
@@ -214,7 +214,7 @@
 			schild.desc = "a delicious slice of cake!"
 			schild.food_color = src.food_color
 			schild.sliced = TRUE
-			schild.amount = 1
+			schild.bites_left = 1
 
 			schild.set_loc(get_turf(src.loc))
 		qdel(s) //cleaning up the template slice
@@ -546,7 +546,7 @@
 	desc = "A little birthday cupcake for a bee. May not taste good to non-bees. This doesn't seem to be homemade; maybe that's why it looks so generic."
 	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
 	icon_state = "b_cupcake"
-	amount = 4
+	bites_left = 4
 	heal_amt = 1
 	doants = 0
 
@@ -643,7 +643,7 @@
 	desc = "The most disgusting dessert ever devised. Legend says there's only one of these in the galaxy, passed from location to location by vengeful deities."
 	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
 	icon_state = "cake_fruit"
-	amount = 12
+	bites_left = 12
 	heal_amt = 3
 	initial_volume = 50
 	initial_reagents = "yuck"

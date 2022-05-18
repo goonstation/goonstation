@@ -14,6 +14,8 @@
 	var/path_prot = 1 // protection from airborne pathogens, multiplier for chance to be infected
 	var/team_num
 	var/blocked_from_petasusaphilic = FALSE //Replacing the global blacklist
+	duration_remove = 1.5 SECONDS
+	duration_put = 1.5 SECONDS
 
 	setupProperties()
 		..()
@@ -49,6 +51,11 @@ proc/filter_trait_hats(var/type)
 	desc = "A knit cap in orange."
 	icon_state = "orange"
 	item_state = "ogloves"
+
+/obj/item/clothing/head/purple
+	desc = "A knit cap in orange."
+	icon_state = "purple"
+	item_state = "jgloves"
 
 /obj/item/clothing/head/dolan
 	name = "Dolan's hat"
@@ -270,6 +277,18 @@ proc/filter_trait_hats(var/type)
 		..()
 		setProperty("meleeprot_head", 3)
 
+//A robot in disguise, ready to go and spy on everyone for you
+/obj/item/clothing/head/det_hat/folded_scuttlebot
+	desc = "Someone who wears this will look very smart. It looks a bit heavier than it should."
+
+	attack_self(mob/user)
+		boutput(user, "You reach inside the hat and pull out a pair of goggles. The scuttlebot wakes up! Use the goggles on the bot to make it dormant again.")
+		new /mob/living/critter/robotic/scuttlebot(get_turf(src))
+		qdel(src)
+	setupProperties()
+		..()
+		setProperty("meleeprot_head", 5)
+
 //THE ONE AND ONLY.... GO GO GADGET DETECTIVE HAT!!!
 /obj/item/clothing/head/det_hat/gadget
 	name = "DetGadget hat"
@@ -467,6 +486,12 @@ proc/filter_trait_hats(var/type)
 	icon_state = "souschef"
 	item_state = "chefhat" //TODO: unique inhand sprite?
 
+/obj/item/clothing/head/itamaehat
+	name = "Itamae hat"
+	desc = "A hat commonly worn by Japanese Chefs. Itamae translates literally to \"In front of the board\"."
+	icon_state = "itamae"
+	item_state = "itamae"
+
 /obj/item/clothing/head/dramachefhat
 	name = "Dramatic Chef's Hat"
 	icon_state = "drama"
@@ -661,17 +686,12 @@ proc/filter_trait_hats(var/type)
 	item_state = "wizard"
 	magical = 1
 	item_function_flags = IMMUNE_TO_ACID
+	duration_remove = 10 SECONDS
 
 	setupProperties()
 		..()
 		setProperty("disorient_resist_eye", 15)
 		setProperty("disorient_resist_ear", 15)
-
-	handle_other_remove(var/mob/source, var/mob/living/carbon/human/target)
-		. = ..()
-		if (prob(75))
-			source.show_message(text("<span class='alert'>\The [src] writhes in your hands as though it is alive! It just barely wriggles out of your grip!</span>"), 1)
-			. = 0
 
 /obj/item/clothing/head/wizard/red
 	name = "red wizard hat"
@@ -1151,6 +1171,13 @@ proc/filter_trait_hats(var/type)
 	desc = "A hat often worn by a nurse. And nurse enthusiasts."
 	icon_state = "nursehat"
 	item_state = "nursehat"
+
+/obj/item/clothing/head/traditionalnursehat
+	name = "Traditional Nurse Hat"
+	desc = "A nurse hat from the past."
+	icon_state = "traditionalnursehat"
+	item_state = "traditionalnursehat"
+	seal_hair = 1
 
 /obj/item/clothing/head/chemhood
 	name = "chemical protection hood"
@@ -1641,6 +1668,11 @@ ABSTRACT_TYPE(/obj/item/clothing/head/frenchberet)
 		name = "strawberry beret"
 		icon_state = "beret_strawb"
 		item_state = "beret_strawb"
+
+	blueberry
+		name = "blueberry beret"
+		icon_state = "beret_blueb"
+		item_state = "beret_blueb"
 
 // Costume goggles
 

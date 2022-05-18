@@ -325,7 +325,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 		return 0
 
-#define CHECK1 (get_dist(src, usr) > 1 || !usr.contents.Find(src) || !isliving(usr) || iswraith(usr) || isintangible(usr))
+#define CHECK1 (BOUNDS_DIST(src, usr) > 0 || !usr.contents.Find(src) || !isliving(usr) || iswraith(usr) || isintangible(usr))
 #define CHECK2 (is_incapacitated(usr) || usr.restrained())
 	Topic(href, href_list)
 		..()
@@ -591,7 +591,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			src.uses = 0
 		if (isnull(src.hostpda) || !src.active)
 			return
-		if (get_dist(src.hostpda, usr) > 1 || !usr.contents.Find(src.hostpda) || !isliving(usr) || iswraith(usr) || isintangible(usr))
+		if (!in_interact_range(src.hostpda, usr) || !usr.contents.Find(src.hostpda) || !isliving(usr) || iswraith(usr) || isintangible(usr))
 			return
 		if (is_incapacitated(usr) || usr.restrained())
 			return
@@ -816,10 +816,13 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 							H.changeStatus("weakened", 3 SECONDS)
 							playsound(H.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
 							H.emote("scream")
+							logTheThing("combat", user, null, "spy thief claimed [constructTarget(H)]'s [HP] at [log_loc(user)]")
 						else
 							user.show_text("That isn't the right limb!", "red")
 					else
 						M.drop_from_slot(delivery,get_turf(M))
+				if (!istype(delivery,/obj/item/parts))
+					logTheThing("debug", user, null, "spy thief claimed delivery of: [delivery] at [log_loc(user)]")
 				qdel(delivery)
 				if (user.mind && user.mind.special_role == ROLE_SPY_THIEF)
 					user.mind.spy_stolen_items += B.name
@@ -842,7 +845,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			loops += 1
 
 	proc/spawn_reward(var/datum/bounty_item/B, var/mob/user)
-		B.spawn_reward(user,src)
+		B.spawn_reward(user,src.loc)
 
 		if (uses == 0)//Spawn ID tracker. Last item!
 
@@ -978,7 +981,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	Topic(href, href_list)
 		if (isnull(src.hostpda) || !src.active)
 			return
-		if (get_dist(src.hostpda, usr) > 1 || !usr.contents.Find(src.hostpda) || !isliving(usr) || iswraith(usr) || isintangible(usr))
+		if (BOUNDS_DIST(src.hostpda, usr) > 0 || !usr.contents.Find(src.hostpda) || !isliving(usr) || iswraith(usr) || isintangible(usr))
 			return
 		if (is_incapacitated(usr) || usr.restrained())
 			return
@@ -1127,6 +1130,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	var/list/spells = list()
 	flags = FPRINT | ONBELT | TABLEPASS
 	throwforce = 5
+	health = 5
 	w_class = W_CLASS_SMALL
 	throw_speed = 4
 	throw_range = 20
@@ -1173,7 +1177,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			user.abilityHolder.updateButtons()
 		if (src.assoc_item)
 			var/obj/item/I = new src.assoc_item(user.loc)
-			if (istype(I, /obj/item/staff) && user.mind)
+			if (istype(I, /obj/item/staff) && user.mind && !isvirtual(user))
 				var/obj/item/staff/S = I
 				S.wizard_key = user.mind.key
 		book.uses -= src.cost
@@ -1198,6 +1202,14 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	desc = "The crew will normally steal your staff and run off with it to cripple your casting abilities, but that doesn't work so well with this version. Any non-wizard dumb enough to touch or pull the Staff of Cthulhu takes massive brain damage and is knocked down for quite a while, and hiding the staff in a closet or somewhere else is similarly ineffective given that you can summon it to your active hand at will. It also makes a much better bludgeoning weapon than the regular staff, hitting harder and occasionally inflicting brain damage."
 	assoc_spell = /datum/targetable/spell/summon_staff
 	assoc_item = /obj/item/staff/cthulhu
+	cost = 2
+
+/datum/SWFuplinkspell/staffofthunder
+	name = "Staff of Thunder"
+	eqtype = "Equipment"
+	desc = "A special staff attuned to electical energies. Able to conjure three lightning bolts to strike down foes before being recharged. Capable of being summoned magically, which recharges the wand. Take care, as you're not immune to your own thunder!"
+	assoc_spell = /datum/targetable/spell/summon_thunder_staff
+	assoc_item = /obj/item/staff/thunder
 	cost = 2
 
 /datum/SWFuplinkspell/bull

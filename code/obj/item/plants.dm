@@ -21,6 +21,7 @@
 
 /obj/item/plant/herb
 	name = "herb base"
+	health = 4
 	burn_point = 330
 	burn_output = 800
 	burn_possible = 2
@@ -64,6 +65,17 @@
 			JOB_XP(user, "Botanist", 2)
 
 	combust_ended()
+		// Prevent RP shuttle hotboxing
+		#ifdef RP_MODE
+		var/area/A = get_area(src)
+		if (A)
+			if (emergency_shuttle.location == SHUTTLE_LOC_STATION)
+				if (istype(A, /area/shuttle/escape/station))
+					return
+			else if (emergency_shuttle.location == SHUTTLE_LOC_TRANSIT)
+				if (istype(A, /area/shuttle/escape/transit))
+					return
+		#endif
 		var/turf/T = get_turf(src)
 		if (T.allow_unrestricted_hotbox) // traitor hotboxing
 			src.reagents.maximum_volume *= HERB_HOTBOX_MULTIPLIER
@@ -226,6 +238,10 @@
 	name = "grass"
 	desc = "Fresh free-range spacegrass."
 	icon_state = "grass"
+
+	attack_hand(mob/user)
+		. = ..()
+		game_stats.Increment("grass_touched")
 
 /obj/item/plant/herb/contusine
 	name = "contusine leaves"

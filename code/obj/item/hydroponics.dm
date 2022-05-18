@@ -187,12 +187,18 @@
 				else
 					qdel(C)
 				return
-			else
-				C.changeStatus("weakened", 3 SECONDS)
 
 		if (!ishuman(target))
+			target.changeStatus("weakened", 3 SECONDS)
 			return ..()
 
+		if (target.nodamage)
+			return ..()
+
+		if (target.spellshield)
+			return ..()
+
+		target.changeStatus("weakened", 3 SECONDS)
 		var/mob/living/carbon/human/H = target
 		if(prob(35))
 			gibs(target.loc, blood_DNA=H.bioHolder.Uid, blood_type=H.bioHolder.bloodType, headbits=FALSE, source=H)
@@ -390,7 +396,7 @@
 	mats = 4
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
-		if (get_dist(A, user) > 1)
+		if (BOUNDS_DIST(A, user) > 0)
 			return
 
 		boutput(user, scan_plant(A, user, visible = 1)) // Replaced with global proc (Convair880).

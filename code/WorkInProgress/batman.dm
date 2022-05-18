@@ -332,7 +332,7 @@
 	usr.visible_message("<span class='alert'><B>[usr] launches towards [T]</B>!</span>", "<span class='alert'><B>You launch towards [T]</B>!</span>")
 	for(var/i=0, i<100, i++)
 		step_to(usr,T,0)
-		if (get_dist(usr,T) <= 1)
+		if (BOUNDS_DIST(usr, T) == 0)
 			batman_pow(T.loc)
 			T.setStatus("weakened", T.getStatusDuration("weakened") + 10 SECONDS)
 			T.setStatus("stunned", T.getStatusDuration("stunned") + 10 SECONDS)

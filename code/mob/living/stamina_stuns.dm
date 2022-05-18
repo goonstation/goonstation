@@ -153,7 +153,7 @@
 		src.changeStatus("stunned", STAMINA_STUN_ON_CRIT_SEV)
 		#endif
 		#if STAMINA_NEG_CRIT_KNOCKOUT == 1
-		if(!src.getStatusDuration("weakened"))
+		if(!src.getStatusDuration("weakened") && isalive(src))
 			src.visible_message("<span class='alert'>[src] collapses!</span>")
 			src.changeStatus("weakened", (STAMINA_STUN_CRIT_TIME) SECONDS)
 		#endif
@@ -178,7 +178,7 @@
 		var/chance = STAMINA_SCALING_KNOCKOUT_BASE
 		chance += (src.stamina / STAMINA_NEG_CAP) * STAMINA_SCALING_KNOCKOUT_SCALER
 		if(prob(chance))
-			if(!src.getStatusDuration("weakened"))
+			if(!src.getStatusDuration("weakened") && isalive(src))
 				src.visible_message("<span class='alert'>[src] collapses!</span>")
 				src.changeStatus("weakened", (STAMINA_STUN_TIME * stunmult) SECONDS)
 				src.force_laydown_standup()

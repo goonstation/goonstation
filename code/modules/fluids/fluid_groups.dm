@@ -617,7 +617,7 @@
 					if (F.blood_type && !C.blood_type)
 						C.blood_type = F.blood_type
 
-					members += C
+					members |= C
 					.++
 
 				if ((membercount + .)<=0) //this can happen somehow

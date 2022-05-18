@@ -8,7 +8,7 @@
 		BIOME_LOW_HUMIDITY = /datum/biome/plains,
 		BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/mudlands,
 		BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/mudlands,
-		BIOME_HIGH_HUMIDITY = /datum/biome/water
+		BIOME_HIGH_HUMIDITY = /datum/biome/water/swamp
 		),
 	BIOME_LOWMEDIUM_HEAT = list(
 		BIOME_LOW_HUMIDITY = /datum/biome/plains,
@@ -84,7 +84,7 @@
 
 
 ///for the mapgen mountains, temp until we get something better
-/turf/simulated/wall/asteroid/mountain
+/turf/simulated/wall/auto/asteroid/mountain
 	name = "mountain"
 	desc = "a rocky mountain"
 	fullbright = 0

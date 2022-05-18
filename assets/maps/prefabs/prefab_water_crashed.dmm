@@ -90,11 +90,6 @@
 "av" = (
 /turf/simulated/floor/darkblue,
 /area/station/turret_protected/sea_crashed)
-"aw" = (
-/obj/decal/cleanable/dirt,
-/obj/item/aiModule/rename,
-/turf/simulated/floor/darkblue,
-/area/station/turret_protected/sea_crashed)
 "ax" = (
 /obj/item/raw_material/scrap_metal,
 /obj/grille/steel/broken,
@@ -2104,7 +2099,7 @@ aa
 (19,1,1) = {"
 aa
 ai
-aw
+aD
 av
 av
 av

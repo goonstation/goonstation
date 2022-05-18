@@ -24,7 +24,8 @@
 	var/burn_possible = 1 //cogwerks fire project - can object catch on fire - let's have all sorts of shit burn at hellish temps
 	//MBC : im shit. change burn_possible to '2' if you want it to pool itself instead of qdeling when burned
 	var/burning = null
-	var/health = 4 //burn faster
+	/// How long an item takes to burn (or be consumed by other means), based on the weight class if no value is set
+	var/health = null
 	var/burn_point = 15000  //this already exists but nothing uses it???
 	var/burn_output = 1500 //how hot should it burn
 	var/burn_type = 0 //0 = ash, 1 = melt
@@ -65,7 +66,10 @@
 	var/cant_other_remove = 0 // Can't be removed from non-hand slots by others
 	var/cant_drop = 0 // Cant' be removed in general. I guess.
 
+	///This is for things which are stackable! It means that there are [amount] things here, which could be discretely split or stacked!
+	///if you use this to represent something other than a literal stack of items I will break your kneecaps
 	var/amount = 1
+
 	var/max_stack = 1
 	var/stack_type = null // if null, only current type. otherwise uses this
 
@@ -164,7 +168,7 @@
 			for(var/datum/objectProperty/P in src.properties)
 				if(!P.hidden)
 					. += "<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> [P.name]: [P.getTooltipDesc(src, src.properties[P])]"
-			SEND_SIGNAL(src, COMSIG_TOOLTIP_BLOCKING_APPEND, .)
+			SEND_SIGNAL(src, COMSIG_ITEM_BLOCK_TOOLTIP_BLOCKING_APPEND, .)
 
 		//Item block section
 		if(src.c_flags & HAS_GRAB_EQUIP)
@@ -179,7 +183,7 @@
 					for(var/datum/objectProperty/P in B.properties)
 						if(!P.hidden)
 							. += "<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> [P.name]: [P.getTooltipDesc(B, B.properties[P])]"
-			SEND_SIGNAL(src, COMSIG_TOOLTIP_BLOCKING_APPEND, .)
+			SEND_SIGNAL(src, COMSIG_ITEM_BLOCK_TOOLTIP_BLOCKING_APPEND, .)
 		else if(src.c_flags & BLOCK_TOOLTIP)
 			. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/prot.png")]\" width=\"12\" height=\"12\" /> Block+: RESIST with this item for more info"
 
@@ -296,6 +300,12 @@
 		if (src.amount != 1)
 			// this is a gross hack to make things not just show "1" by default
 			src.inventory_counter.update_number(src.amount)
+	if (isnull(src.health))
+		switch (src.w_class)
+			if (W_CLASS_TINY to W_CLASS_NORMAL)
+				src.health = src.w_class + 1
+			else
+				src.health = src.w_class + 2
 	..()
 
 /obj/item/set_loc(var/newloc as turf|mob|obj in world)
@@ -397,7 +407,7 @@
 
 		if (!do_mob(user, M))
 			return 0
-		if (get_dist(user,M) > 1)
+		if (BOUNDS_DIST(user, M) > 0)
 			return 0
 
 		user.tri_message("<span class='alert'><b>[user]</b> feeds [M] [src]!</span>",\
@@ -602,7 +612,7 @@
 
 /obj/item/MouseDrop_T(atom/movable/O as obj, mob/user as mob)
 	..()
-	if (max_stack > 1 && src.loc == user && get_dist(O, user) <= 1 && check_valid_stack(O))
+	if (max_stack > 1 && src.loc == user && BOUNDS_DIST(O, user) == 0 && check_valid_stack(O))
 		if ( src.amount >= max_stack)
 			failed_stack(O, user)
 			return
@@ -649,7 +659,7 @@
 		if (user == over_object)
 			actions.start(new /datum/action/bar/private/icon/pickup(src), user)
 		//else // use laterr, after we improve the 'give' dialog to work with multicontext
-		//	if (get_dist(user,over_object) <= 1 && src_exists_inside_usr_or_usr_storage)
+		//	if (BOUNDS_DIST(user, over_object) == 0 && src_exists_inside_usr_or_usr_storage)
 		//		user.give_to(over_object)
 	else
 
@@ -1033,7 +1043,7 @@
 		return
 
 	.= 1
-	SEND_SIGNAL(M, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
+	SEND_SIGNAL(M, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 	if (issmallanimal(M))
 		var/mob/living/critter/small_animal = M
 

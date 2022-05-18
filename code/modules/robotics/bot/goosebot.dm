@@ -49,7 +49,7 @@
 	dat += "BUMP THE SHOT WILL TURN A CORNER<BR>"
 	dat += "INSTALL THE EGG<BR>"
 
-	if (user.client.tooltipHolder)
+	if (user.client?.tooltipHolder)
 		user.client.tooltipHolder.showClickTip(src, list(
 			"params" = params,
 			"title" = "THE GOOSE",

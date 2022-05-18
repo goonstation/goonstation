@@ -296,7 +296,7 @@
 	argument_types = list(/datum/command_argument/string="headline", /datum/command_argument/the_rest="body")
 	execute(user, headline, body)
 		for_by_tcl(C, /obj/machinery/communications_dish)
-			C.add_centcom_report("[command_name()] Update", body)
+			C.add_centcom_report(ALERT_GENERAL, body)
 		body = discord_emojify(body)
 		headline = discord_emojify(headline)
 		command_alert(body, headline, "sound/misc/announcement_1.ogg")
@@ -396,6 +396,24 @@
 		logTheThing("admin", "[user] (Discord)", target, "delimbed [constructTarget(target,"admin")]")
 		logTheThing("diary", "[user] (Discord)", target, "delimbed [constructTarget(target,"diary")].", "admin")
 		message_admins("[user] (Discord) delimbed [key_name(target)].")
+		return TRUE
+
+/datum/spacebee_extension_command/state_based/confirmation/mob_targeting/cryo
+	name = "cryo"
+	help_message = "Cryos a given ckey."
+	action_name = "cryo"
+
+	perform_action(user, mob/target)
+		if (!length(by_type[/obj/cryotron]))
+			system.reply("Error, no cryotron detected.", user)
+			return FALSE
+		var/obj/cryotron/C = pick(by_type[/obj/cryotron])
+		if (!C.add_person_to_storage(target, FALSE))
+			system.reply("Error, cryoing failed.", user)
+			return FALSE
+		logTheThing("admin", "[user] (Discord)", target, "cryos [constructTarget(target,"admin")]")
+		logTheThing("diary", "[user] (Discord)", target, "cryos [constructTarget(target,"diary")].", "admin")
+		message_admins("[user] (Discord) cryos [key_name(target)].")
 		return TRUE
 
 /datum/spacebee_extension_command/state_based/confirmation/mob_targeting/send_to_arrivals

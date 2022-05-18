@@ -45,7 +45,7 @@
 
 	Topic(href, href_list)
 		if(busy) return
-		if(get_dist(usr, src) > 1 || usr.z != src.z) return
+		if(BOUNDS_DIST(usr, src) > 0 || usr.z != src.z) return
 
 		if(href_list["send"])
 			var/obj/landmark/destination_landmark/L = locate(href_list["send"])

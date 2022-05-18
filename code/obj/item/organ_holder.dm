@@ -215,6 +215,11 @@
 		if(check_target_immunity(donor))
 			return 0
 
+		if(donor.traitHolder?.hasTrait("weakorgans"))
+			brute *=2
+			burn *=2
+			tox *=2
+
 		if (islist(src.organ_list))
 			var/obj/item/organ/O = src.organ_list[organ]
 			if (istype(O))
@@ -763,7 +768,7 @@
 						return 0
 				var/obj/item/organ/head/newHead = I
 				if (src.donor.client)
-					src.donor.client.mob = new /mob/dead/observer(src)
+					src.donor.client.mob = new /mob/dead/observer(src.donor)
 				if (newHead.brain && newHead.brain.owner)
 					newHead.brain.owner.transfer_to(src.donor)
 				newHead.op_stage = op_stage
@@ -850,7 +855,7 @@
 					return 0
 				var/obj/item/organ/brain/newBrain = I
 				if (src.donor.client)
-					src.donor.client.mob = new /mob/dead/observer(src)
+					src.donor.client.mob = new /mob/dead/observer(src.donor)
 				if (newBrain.owner)
 					newBrain.owner.transfer_to(src.donor)
 				newBrain.op_stage = op_stage

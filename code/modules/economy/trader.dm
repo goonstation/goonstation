@@ -474,13 +474,13 @@
 		hikeperc = (hikeperc / H.price) * 100
 		var/negatol = 0 - src.hiketolerance
 		if (buying == 1) // we're buying, so price must be checked for negative
-			if (hikeperc <= negatol)
+			if (hikeperc <= negatol || askingprice < H.baseprice / 5)
 				src.temp = "<B>Cost:</B> [H.price] Credits<BR>"
 				src.temp += src.errormsgs[5]
 				H.haggleattempts++
 				return
 		else
-			if (hikeperc >= src.hiketolerance) // we're selling, so check hike for positive
+			if (hikeperc >= src.hiketolerance || askingprice > H.baseprice * 5) // we're selling, so check hike for positive
 				src.temp = src.errormsgs[5]
 				H.haggleattempts++
 				return
@@ -509,7 +509,7 @@
 	///////////////////////////////////
 
 	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
-		if(get_dist(O,user) > 1) return
+		if(BOUNDS_DIST(O, user) > 0) return
 		if(!isliving(user)) return
 		if(!src.scan)
 			boutput(user, "<span class='alert'>You have to scan your ID first!</span>")

@@ -61,7 +61,7 @@
 		/obj/item/gimmickbomb/hotdog,
 		/obj/item/card/id/captains_spare,
 		/obj/item/storage/banana_grenade_pouch,
-		/obj/critter/wendigo, // have fun!
+		/obj/critter/brullbar, // have fun!
 		/obj/item/artifact/teleport_wand,
 		/obj/item/storage/firstaid/crit
 	)

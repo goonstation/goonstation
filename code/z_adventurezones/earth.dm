@@ -564,6 +564,7 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 
 /area/centcom/offices/enakai
 	Entered(atom/movable/Obj,atom/OldLoc)
+		. = ..()
 		if (isliving(Obj))
 			var/mob/living/L = Obj
 			if (down_under_verification(L))		//The aussies are immune due to constant exposure

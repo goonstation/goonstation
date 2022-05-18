@@ -26,7 +26,7 @@
 		src.ClearSpecificOverlays("resist_electric") // hide smes effect
 
 		if (src.mind && src.mind.special_role != ROLE_OMNITRAITOR)
-			SHOW_ARCFIEND_TIPS(src)
+			src.show_antag_popup("arcfiend")
 
 
 /datum/abilityHolder/arcfiend
@@ -70,7 +70,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 
 /datum/targetable/arcfiend/sap_power
 	name = "Sap Power"
-	desc = "Drain power from a target entity or machine"
+	desc = "Drain power from a target person or machine"
 	cooldown = 0
 	target_anything = TRUE
 	targeted = TRUE
@@ -79,7 +79,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 	cast(atom/target)
 		. = ..()
 		if (target == holder.owner) return
-		if (!IN_RANGE(holder.owner, target, 1)) return TRUE
+		if (!(BOUNDS_DIST(holder.owner, target) == 0)) return TRUE
 		if (isnpcmonkey(target))
 			boutput(holder.owner, "<span class='alert'>This creature lacks sufficient energy to consume.")
 			return
@@ -119,13 +119,13 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 
 	onUpdate()
 		..()
-		if(!IN_RANGE(user, target, 1))
+		if(!(BOUNDS_DIST(user, target) == 0))
 			interrupt(INTERRUPT_ALWAYS)
 
 	onStart()
 		..()
 		P.spawning = initial(P.spawning)
-		if(!IN_RANGE(user, target, 1))
+		if(!(BOUNDS_DIST(user, target) == 0))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		src.loopStart()
@@ -135,7 +135,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 		. = ..()
 
 	onEnd()
-		if(!IN_RANGE(user, target, 1))
+		if(!(BOUNDS_DIST(user, target) == 0))
 			..()
 			interrupt(INTERRUPT_ALWAYS)
 
@@ -227,7 +227,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 	cast(atom/target)
 		. = ..()
 		if (target == holder.owner) return TRUE
-		if (!IN_RANGE(holder.owner, target, 1)) return TRUE
+		if (!(BOUNDS_DIST(holder.owner, target) == 0)) return TRUE
 		if (ismob(target))
 			var/mob/M = target
 			M.shock(holder.owner, wattage, ignore_gloves = TRUE)
@@ -351,7 +351,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
  */
 /datum/targetable/arcfiend/jolt
 	name = "Jolt"
-	desc = "Release a series of powerful jolts into your target, eventually stopping their heart. When used on those resistant to electricity it can restart their heart instead."
+	desc = "Release a series of powerful jolts into your target, burning and eventually stopping their heart. When used on those resistant to electricity it can restart their heart instead."
 	icon_state = "jolt"
 	cooldown = 2 MINUTES
 	pointCost = 500
@@ -361,7 +361,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 
 	cast(atom/target)
 		. = ..()
-		if (!IN_RANGE(holder.owner, target, 1)) return TRUE
+		if (!(BOUNDS_DIST(holder.owner, target) == 0)) return TRUE
 		if (ishuman(target))
 			if (target == holder.owner)
 				self_cast(target)
@@ -405,7 +405,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 
 	onUpdate(timePassed)
 		..()
-		if(!IN_RANGE(user, target, 1))
+		if(!(BOUNDS_DIST(user, target) == 0))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (!ON_COOLDOWN(owner, "jolt", 1 SECOND))
@@ -413,6 +413,8 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 			target.shock(user, wattage, ignore_gloves = TRUE)
 			if (target.bioHolder?.HasEffect("resist_electric") && prob(20))
 				cure_arrest()
+			if (!target.bioHolder?.HasEffect("resist_electric")) //prevent the arcfiend from hurting their heart while shocking it
+				target.organHolder.damage_organ(0, 4, 0, "heart")
 			var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
 			s.set_up(5, FALSE, target)
 			s.start()
@@ -421,7 +423,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 	onStart()
 		..()
 		P.spawning = initial(P.spawning)
-		if(!IN_RANGE(user, target, 1))
+		if(!(BOUNDS_DIST(user, target) == 0))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -448,7 +450,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 	name = "Ride The Lightning"
 	desc = "Expend energy to travel through electrical cables"
 	icon_state = "voltron"
-	cooldown = 0 SECONDS
+	cooldown = 1 SECONDS
 	pointCost = 75
 	var/active = FALSE
 	var/view_range = 2
@@ -500,7 +502,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 
 	proc/handle_move()
 		var/turf/user_turf = get_turf(holder.owner)
-		if (isrestrictedz(user_turf) || is_incapacitated(holder.owner))
+		if (isrestrictedz(user_turf.z) || is_incapacitated(holder.owner))
 			deactivate()
 			active = FALSE
 			return
@@ -526,9 +528,8 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 	proc/deactivate()
 		boutput(holder.owner, __red("You are ejected from the cable!"))
 		active = FALSE
-		//ensure points cost is set back to where it belongs
-		pointCost = initial(pointCost)
 		var/atom/movable/screen/ability/topBar/B = src.object
+		pointCost = initial(pointCost)
 		B.update_cooldown_cost()
 
 		UnregisterSignal(D, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_SET_LOC))
@@ -537,8 +538,14 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 		D = null
 		holder.owner.delStatus("ev_voltron")
 
+	tryCast(atom/target, params)
+		. = ..()
+		//restore points cost when deactivating
+		if(!pointCost) pointCost = initial(pointCost)
+
 	proc/send_images_to_client()
-		if ((!holder.owner?.client) || (!isalive(holder.owner)) || (isrestrictedz(holder.owner.z)))
+		var/turf/T = get_turf(holder.owner)
+		if ((!holder.owner?.client) || (!isalive(holder.owner)) || (isrestrictedz(T.z)))
 			deactivate()
 			return
 		holder.owner.client.images += cable_images

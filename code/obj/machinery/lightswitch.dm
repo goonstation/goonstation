@@ -35,7 +35,7 @@
 		UpdateIcon()
 
 		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"trigger", "trigger")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"trigger", .proc/trigger)
 
 		if (on)
 			light.set_color(0.5, 1, 0.50)

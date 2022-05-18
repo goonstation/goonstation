@@ -307,7 +307,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	is_friend(var/mob/living/C)
 		if (!C.ckey || !C.mind)
 			return 1
-		if (C.mind?.special_role == "NanoTrasen")
+		if (C.mind?.special_role != "Syndicate")
 			return 1
 		else
 			return 0
@@ -339,7 +339,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	is_friend(var/mob/living/C)
 		if (!C.ckey || !C.mind)
 			return 1
-		if (C.mind.special_role == "Syndicate")
+		if (C.mind.special_role != "NanoTrasen")
 			return 1
 		else
 			return 0

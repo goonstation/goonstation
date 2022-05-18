@@ -99,7 +99,7 @@
 /mob/proc/is_heat_resistant()
 	if (!src)
 		return 0
-	if(src.bioHolder && src.bioHolder.HasOneOfTheseEffects("fire_resist") || src.bioHolder?.HasEffect("thermal_resist") > 1)
+	if(src.bioHolder && src.bioHolder.HasOneOfTheseEffects("fire_resist") || src.bioHolder.HasEffect("thermal_resist") > 1)
 		return 1
 	if(src.nodamage)
 		return 1
@@ -231,7 +231,7 @@
 				boutput(user, "<span class='alert'>You can't press it when you're incapacitated.</span>")
 				being_pressed = 0
 				return
-			if (get_dist(user,src) > 1)
+			if (BOUNDS_DIST(user, src) > 0)
 				boutput(user, "<span class='alert'>You can't press it from over there.</span>")
 				being_pressed = 0
 				return

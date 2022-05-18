@@ -126,6 +126,19 @@ var/global/obj/flashDummy
 		var/obj/O = getFlashDummy()
 		O.set_loc(target)
 		target_r = O
+	if(wattage && isliving(target)) //Grilles can reroute arcflashes
+		for(var/obj/grille/L in range(target,1)) // check for nearby grilles
+			if(!L.ruined && L.anchored)
+				if (L.material?.hasProperty("electrical"))
+					if (prob(L.material?.getProperty("electrical")/2) && L.get_connection())
+						target = L
+						target_r = L
+						continue
+				else
+					if (prob(30) && L.get_connection()) // hopefully half the default is low enough
+						target = L
+						target_r = L
+						continue
 
 	playsound(target, "sound/effects/elec_bigzap.ogg", 30, 1)
 
@@ -891,8 +904,11 @@ proc/get_angle(atom/a, atom/b)
 // used for mass driver
 /proc/get_edge_target_turf(var/atom/A, var/direction)
 
+	if (isnull(A))
+		stack_trace("get_edge_target_turf called with null reference atom.")
+
 	var/turf/target = locate(A.x, A.y, A.z)
-	if (!A || !target)
+	if (!target)
 		return 0
 		//since NORTHEAST == NORTH & EAST, etc, doing it this way allows for diagonal mass drivers in the future
 		//and isn't really any more complicated
@@ -915,6 +931,9 @@ proc/get_angle(atom/a, atom/b)
 // used for disposal system
 /proc/get_ranged_target_turf(var/atom/A, var/direction, var/range)
 
+	if (isnull(A))
+		stack_trace("get_ranged_target_turf called with null reference atom.")
+
 	var/x = A.x
 	var/y = A.y
 	if(direction & NORTH)
@@ -932,6 +951,9 @@ proc/get_angle(atom/a, atom/b)
 // returns turf relative to A offset in dx and dy tiles
 // bound to map limits
 /proc/get_offset_target_turf(var/atom/A, var/dx, var/dy)
+
+	if (isnull(A))
+		stack_trace("get_offset_target_turf called with null reference atom.")
 	var/x = clamp(A.x + dx, 1, world.maxx)
 	var/y = clamp(A.y + dy, 1, world.maxy)
 	return locate(x,y,A.z)
@@ -1941,8 +1963,8 @@ proc/countJob(rank)
 
 		if (istype(G, /mob/dead/target_observer))
 			var/mob/dead/target_observer/TO = G
-			if (TO.my_ghost && istype(TO.my_ghost, /mob/dead/observer))
-				the_ghost = TO.my_ghost
+			if (TO.ghost && istype(TO.ghost, /mob/dead/observer))
+				the_ghost = TO.ghost
 
 		if (!the_ghost || !isobserver(the_ghost) || !isdead(the_ghost))
 			return 0
@@ -2051,13 +2073,13 @@ proc/countJob(rank)
 
 	if (removal_type == "death")
 		boutput(M, "<h2><span class='alert'>Since you have died, you are no longer a mindslave! Do not obey your former master's orders even if you've been brought back to life somehow.</span></h2>")
-		SHOW_MINDSLAVE_DEATH_TIPS(M)
+		M.show_antag_popup("mindslavedeath")
 	else if (removal_type == "override")
 		boutput(M, "<h2><span class='alert'>Your mindslave implant has been overridden by a new one, cancelling out your former allegiances!</span></h2>")
-		SHOW_MINDSLAVE_OVERRIDE_TIPS(M)
+		M.show_antag_popup("mindslaveoverride")
 	else
 		boutput(M, "<h2><span class='alert'>Your mind is your own again! You no longer feel the need to obey your former master's orders.</span></h2>")
-		SHOW_MINDSLAVE_EXPIRED_TIPS(M)
+		M.show_antag_popup("mindslaveexpired")
 
 	return
 
@@ -2604,6 +2626,7 @@ proc/is_incapacitated(mob/M)
 		M.hasStatus("stunned") || \
 		M.hasStatus("weakened") || \
 		M.hasStatus("paralysis") || \
+		M.hasStatus("pinned") || \
 		M.stat)
 
 /// sets up the list of ringtones players can select through character setup
@@ -2613,3 +2636,12 @@ proc/get_all_character_setup_ringtones()
 			var/datum/ringtone/R_prime = new R
 			selectable_ringtones[R_prime.name] = R_prime
 	return selectable_ringtones
+
+/// converts `get_connected_directions_bitflag()` diagonal bits to byond direction flags
+proc/connectdirs_to_byonddirs(var/connectdir_bitflag)
+	. = 0
+	if (!connectdir_bitflag) return
+	if(16 & connectdir_bitflag) .|= NORTHEAST
+	if(32 & connectdir_bitflag) .|= SOUTHEAST
+	if(64 & connectdir_bitflag) .|= SOUTHWEST
+	if(128 & connectdir_bitflag) .|= NORTHWEST

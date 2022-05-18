@@ -11,6 +11,7 @@
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "tube-fixture"
 	mats = 4
+	material_amt = 0.2
 
 	var/installed_icon_state = "tube-empty"
 	var/installed_base_state = "tube"
@@ -507,6 +508,12 @@
 		very
 			name = "very harsh incandescent light fixture"
 			light_type = /obj/item/light/tube/harsh/very
+
+	broken
+
+		New()
+			..()
+			current_lamp.light_status = LIGHT_BROKEN
 
 	small
 		icon_state = "bulb1"

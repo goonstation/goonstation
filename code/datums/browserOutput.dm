@@ -265,7 +265,8 @@ var/global
 				if (jumptarget)
 					src.owner.jumptoturf(get_turf(jumptarget))
 		if ("get")
-			src.owner.Getmob(targetMob)
+			if (tgui_alert(src.owner, "Are you sure you want to get [targetMob]?", "Confirmation", list("Yes", "No")) == "Yes")
+				src.owner.Getmob(targetMob)
 		if ("boot")
 			src.owner.cmd_boot(targetMob)
 		if ("ban")
@@ -283,7 +284,7 @@ var/global
 				src.owner.mob:insert_observer(targetMob)
 		if ("teleport")
 			if (istype(src.owner.mob, /mob/dead/target_observer))
-				src.owner.mob:stop_observing()
+				qdel(src.owner.mob)
 			if(istype(src.owner.mob, /mob/dead/observer))
 				src.owner.mob.set_loc(get_turf(targetMob))
 

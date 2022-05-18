@@ -98,10 +98,16 @@
 						var/obj/fluid/airborne/F = T.active_airborne_liquid
 						F.just_do_the_apply_thing(owner, mult, hasmask = 1)
 
-		else if (istype(owner.loc, /mob/living/object))
+		else if (islivingobject(owner.loc))
 			return // no breathing inside possessed objects
 		else if (istype(owner.loc, /obj/machinery/atmospherics/unary/cryo_cell))
 			return
+		else if (istype(owner.loc, /obj/machinery/bathtub) && owner.lying)
+			var/obj/machinery/bathtub/B = owner.loc
+			if (B.reagents.total_volume > B.suffocation_volume)
+				var/obj/fluid/F = new // used for underwater breathing check
+				F.reagents = owner.loc.reagents
+				underwater = F
 
 		//if (istype(loc, /obj/machinery/clonepod)) return
 

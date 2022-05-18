@@ -77,10 +77,14 @@
 			return
 
 	on_removal()
-		..()
 		if (donor)
 			if (src.donor.reagents && src.reagents)
 				src.donor.reagents.trans_to(src, src.reagents.maximum_volume - src.reagents.total_volume)
+
+			if (!ischangeling(donor) && !donor.nodamage)
+				donor.changeStatus("weakened", 8 SECONDS)
+				donor.losebreath += 20
+				donor.take_oxygen_deprivation(20)
 
 			src.blood_id = src.donor.blood_id //keep our owner's blood (for mutantraces etc)
 
@@ -98,6 +102,7 @@
 				donor.ailments.Remove(HD)
 				HD.affected_mob = null
 				src.diseases.Add(HD)
+		..()
 		return
 
 	attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)

@@ -77,7 +77,7 @@
 
 		src.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>")
 		user.u_equip(W)
-		W.dropped()
+		W.dropped(user)
 		src.start_frying(W)
 		SubscribeToProcess()
 
@@ -233,9 +233,12 @@
 		fryholder.overlays = thing.overlays
 		if (isitem(thing))
 			var/obj/item/item = thing
-			fryholder.amount = item.w_class
+			fryholder.bites_left = item.w_class
+			fryholder.w_class = item.w_class
 		else
-			fryholder.amount = 5
+			fryholder.bites_left = 5
+		if (ismob(thing))
+			fryholder.w_class = W_CLASS_BULKY
 		if(thing.reagents)
 			fryholder.reagents.maximum_volume += thing.reagents.total_volume
 			thing.reagents.trans_to(fryholder, thing.reagents.total_volume)

@@ -72,7 +72,7 @@ Contains:
 	..()
 	if (usr.stat || usr.restrained())
 		return
-	if ((usr.contents.Find(src) || (usr.contents.Find(src.master) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf)))))
+	if ((usr.contents.Find(src) || (usr.contents.Find(src.master) || ((BOUNDS_DIST(src, usr) == 0) && istype(src.loc, /turf)))))
 		src.add_dialog(usr)
 		if (href_list["passive"])
 			src.passive = !( src.passive )
@@ -141,8 +141,8 @@ Contains:
 					I.process()
 				return
 	if (!( src.state ))
-		//src.first = null
 		qdel(src.first)
+		//src.first = null
 	return
 
 /obj/item/device/infra/attackby(obj/item/device/radio/signaler/S as obj, mob/user as mob)
@@ -212,8 +212,8 @@ Contains:
 	return
 
 /obj/item/device/infra/attack_hand()
-	//src.first = null
 	qdel(src.first)
+	//src.first = null
 	..()
 	return
 
@@ -221,8 +221,8 @@ Contains:
 	var/t = src.dir
 	..()
 	src.set_dir(t)
-	//src.first = null
 	qdel(src.first)
+	//src.first = null
 	return
 
 /obj/item/device/infra/verb/rotate()
@@ -306,8 +306,8 @@ Contains:
 	var/t = src.dir
 	..()
 	src.set_dir(t)
-	//src.part2.first = null
 	qdel(src.part2.first)
+	//src.part2.first = null
 	return
 
 /obj/item/assembly/rad_infra/attack_hand(M)

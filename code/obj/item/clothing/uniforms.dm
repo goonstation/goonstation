@@ -16,10 +16,10 @@
 	burn_point = 400
 	burn_output = 800
 	burn_possible = 1
-	health = 50
+	health = 10
 	var/team_num
 
-	duration_remove = 6.5 SECONDS
+	duration_remove = 7.5 SECONDS
 
 	setupProperties()
 		..()
@@ -691,6 +691,12 @@
 	icon_state = "souschef"
 	item_state = "souschef"
 
+/obj/item/clothing/under/misc/itamae
+	name = "itamae uniform"
+	desc = "A coat and apron worn commonly worn by Japanese Chefs, waiting to be ruined with the blood you'll inevitably cover it in."
+	icon_state = "itamae"
+	item_state = "itamae"
+
 /obj/item/clothing/under/misc/lawyer
 	name = "lawyer's suit"
 	desc = "A rather objectionable piece of clothing."
@@ -733,8 +739,8 @@
 	#endif
 
 /obj/item/clothing/under/misc/turds
-	name = "NT-SO Jumpsuit"
-	desc = "A Nanotrasen Special Operations jumpsuit."
+	name = "NT combat uniform"
+	desc = "A Nanotrasen paramilitary jumpsuit."
 	icon_state = "turdsuit"
 	item_state = "turdsuit"
 	team_num = TEAM_NANOTRASEN

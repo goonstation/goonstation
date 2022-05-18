@@ -4,6 +4,7 @@
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "satchel"
 	flags = ONBELT
+	health = 6
 	w_class = W_CLASS_TINY
 	event_handler_flags = USE_FLUID_ENTER | NO_MOUSEDROP_QOL
 	var/maxitems = 50
@@ -29,7 +30,7 @@
 		if (src.contents.len < src.maxitems)
 			user.u_equip(W)
 			W.set_loc(src)
-			W.dropped()
+			W.dropped(user)
 			boutput(user, "<span class='notice'>You put [W] in [src].</span>")
 			W.add_fingerprint(user)
 			if (src.contents.len == src.maxitems) boutput(user, "<span class='notice'>[src] is now full!</span>")
@@ -113,7 +114,7 @@
 
 
 	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
-		if (!in_interact_range(src, user)  || !IN_RANGE(user, O, 1))
+		if (!in_interact_range(src, user)  || BOUNDS_DIST(O, user) > 0)
 			return
 		var/proceed = 0
 		for(var/check_path in src.allowed)
@@ -130,7 +131,7 @@
 			var/staystill = user.loc
 			var/interval = 0
 			for(var/obj/item/I in view(1,user))
-				if (!istype(I, O)) continue
+				if (!matches(I, O)) continue
 				if (I in user)
 					continue
 				I.set_loc(src)
@@ -146,6 +147,9 @@
 		else boutput(user, "<span class='alert'>\The [src] is already full!</span>")
 		src.UpdateIcon()
 		tooltip_rebuild = 1
+
+	proc/matches(atom/movable/inserted, atom/movable/template)
+		. = istype(inserted, template.type)
 
 	update_icon()
 
@@ -191,6 +195,14 @@
 		/obj/item/raw_material/cotton,
 		/obj/item/feather)
 		itemstring = "items of produce"
+
+		matches(atom/movable/inserted, atom/movable/template)
+			. = ..()
+			if(. && istype(template, /obj/item/seed))
+				var/obj/item/seed/inserted_seed = inserted
+				var/obj/item/seed/template_seed = template
+				. = (inserted_seed.planttype.type == template_seed.planttype.type) && \
+					(inserted_seed.plantgenes.mutation?.type == template_seed.plantgenes.mutation?.type)
 
 		large
 			desc = "A leather satchel for carrying around crops and seeds. This one happens to be <em>really</em> big."

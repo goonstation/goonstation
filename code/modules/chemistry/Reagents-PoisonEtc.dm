@@ -270,17 +270,17 @@ datum
 					if (20 to 30)
 						if (prob(15))
 							boutput(M, "<span class='alert'>You feel weak.</span>")
-							M.setStatus("stunned", max(M.getStatusDuration("stunned"), 0.5 SECONDS * mult))
+							M.setStatusMin("stunned", 0.5 SECONDS * mult)
 							M.take_toxin_damage(0.5 * mult)
 					if (30 to 45)
 						if (prob(20))
 							boutput(M, "<span class='alert'>You feel very weak.</span>")
-							M.setStatus("stunned", max(M.getStatusDuration("stunned"), 1 SECONDS * mult))
+							M.setStatusMin("stunned", 1 SECONDS * mult)
 							M.take_toxin_damage(1 * mult)
 					if (45 to INFINITY)
 						if (prob(25))
 							boutput(M, "<span class='alert'>You feel horribly weak.</span>")
-							M.setStatus("stunned", max(M.getStatusDuration("stunned"), 2 SECONDS * mult))
+							M.setStatusMin("stunned", 2 SECONDS * mult)
 							M.take_toxin_damage(1.5 * mult)
 
 				..()
@@ -313,11 +313,11 @@ datum
 						M.change_eye_blurry(5, 5)
 						if (prob(8))
 							boutput(M, "<span class='alert'><b>You feel [pick("weak", "horribly weak", "numb", "like you can barely move", "tingly")].</b></span>")
-							M.setStatus("stunned", max(M.getStatusDuration("stunned"), 2 SECONDS * mult))
+							M.setStatusMin("stunned", 2 SECONDS * mult)
 						else if (probmult(8))
 							M.emote(pick("drool","pale", "gasp"))
 					if (11 to INFINITY)
-						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 4 SECONDS * mult))
+						M.setStatusMin("stunned", 4 SECONDS * mult)
 						M.setStatus("drowsy", 40 SECONDS)
 						if (probmult(20) && !M.stat)
 							M.emote(pick("drool", "faint", "pale", "gasp", "collapse"))
@@ -325,6 +325,68 @@ datum
 							boutput(M, "<span class='alert'><b>You can't [pick("breathe", "move", "feel your legs", "feel your face", "feel anything")]!</b></span>")
 							M.losebreath += (1 * mult)
 
+				..()
+				return
+
+		harmful/ricin
+			name = "space ricin"
+			id = "ricin"
+			reagent_state = LIQUID
+			fluid_r = 255
+			fluid_g = 255
+			fluid_b = 255
+			transparency = 255
+			description = "Extremely toxic, but slow acting, stealthy, and hard to cure agent that causes organ failure."
+			depletion_rate = 0.025
+			penetrates_skin = 0
+			target_organs = list("left_kidney","right_kidney","liver","stomach","intestines","spleen","pancreas")
+			flushing_multiplier = 0.15
+			var/counter = 1
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if (!M) M = holder.my_atom
+				if (!counter) counter = 1
+
+				switch(counter += (1 * mult))
+					if (75 to 125)
+						if(isliving(M) && probmult(15))
+							var/mob/living/L = M
+							L.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1)
+						if (ishuman(M))
+							var/mob/living/carbon/human/H = M
+							if (H.organHolder)
+								H.organHolder.damage_organs(1*mult, 0, 1*mult, target_organs, 15)
+					if (125 to 175)
+						if (probmult(8))
+							M.emote(pick("sneeze","cough","moan","groan"))
+						else if (probmult(5))
+							boutput(M, "<span class='alert'>You feel weak and tired.</span>")
+							M.setStatus("drowsy", 4 SECONDS)
+							M.change_eye_blurry(5, 5)
+						if (ishuman(M))
+							var/mob/living/carbon/human/H = M
+							if (H.organHolder)
+								H.organHolder.damage_organs(1*mult, 0, 1*mult, target_organs, 25)
+					if (175 to INFINITY)
+						if (probmult(10))
+							M.emote(pick("sneeze","drool","cough","moan","groan"))
+						if (probmult(20))
+							boutput(M, "<span class='alert'>You feel weak and drowsy.</span>")
+							M.setStatus("slowed", 5 SECONDS)
+						if (probmult(8))
+							M.visible_message("<span class='alert'>[M] vomits a lot of blood!</span>")
+							playsound(M, "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1)
+							make_cleanable(/obj/decal/cleanable/blood/splatter,M.loc)
+						else if (probmult(5))
+							boutput(M, "<span class='alert'>You feel a sudden pain in your chest.</span>")
+							M.setStatusMin("stunned", 6 SECONDS * mult)
+							M.take_toxin_damage(3)
+						M.change_eye_blurry(5, 5)
+						M.setStatus("drowsy", 10 SECONDS)
+						if (ishuman(M))
+							var/mob/living/carbon/human/H = M
+							if (H.organHolder)
+								H.organHolder.damage_organs(1*mult, 0, 1*mult, target_organs, 50)
 				..()
 				return
 
@@ -433,7 +495,7 @@ datum
 					M.take_toxin_damage(rand(5,25) * mult)
 				if (prob(33))
 					boutput(M, "<span class='alert'>You feel horribly weak.</span>")
-					M.setStatus("stunned", max(M.getStatusDuration("stunned"), 3 SECONDS * mult))
+					M.setStatusMin("stunned", 3 SECONDS * mult)
 				if (prob(10))
 					boutput(M, "<span class='alert'>You cannot breathe!</span>")
 					M.take_oxygen_deprivation(10 * mult)
@@ -442,7 +504,7 @@ datum
 					boutput(M, "<span class='alert'>Your chest is burning with pain!</span>")
 					M.take_oxygen_deprivation(10 * mult)
 					M.losebreath += (1 * mult)
-					M.setStatus("weakened", max(M.getStatusDuration("weakened"), 4 SECONDS * mult))
+					M.setStatusMin("weakened", 4 SECONDS * mult)
 					M.contract_disease(/datum/ailment/malady/flatline, null, null, 1) // path, name, strain, bypass resist
 				..()
 
@@ -471,11 +533,11 @@ datum
 					if (1 to 8)
 						if (prob(33))
 							boutput(M, "<span class='alert'>You feel weak.</span>")
-							M.setStatus("stunned", max(M.getStatusDuration("stunned"), 2 SECONDS * mult))
+							M.setStatusMin("stunned", 2 SECONDS * mult)
 					if (9 to 30)
 						if (prob(33))
 							boutput(M, "<span class='alert'><I>You feel very weak.</I></span>")
-							M.setStatus("stunned", max(M.getStatusDuration("stunned"), 3 SECONDS * mult))
+							M.setStatusMin("stunned", 3 SECONDS * mult)
 						if (prob(10))
 							boutput(M, "<span class='alert'><I>You have trouble breathing!</I></span>")
 							M.take_oxygen_deprivation(2 * mult)
@@ -483,7 +545,7 @@ datum
 					if (31 to 50)
 						if (prob(33))
 							boutput(M, "<span class='alert'><B>You feel horribly weak.</B></span>")
-							M.setStatus("stunned", max(M.getStatusDuration("stunned"), 4 SECONDS * mult))
+							M.setStatusMin("stunned", 4 SECONDS * mult)
 						if (prob(10))
 							boutput(M, "<span class='alert'><B>You cannot breathe!</B></span>")
 							M.take_oxygen_deprivation(2 * mult)
@@ -492,13 +554,14 @@ datum
 							boutput(M, "<span class='alert'><B>Your heart flutters in your chest!</B></span>")
 							M.take_oxygen_deprivation(5 * mult)
 							M.losebreath += (1 * mult)
-							M.setStatus("weakened", max(M.getStatusDuration("weakened"), 5 SECONDS * mult))
+							M.setStatusMin("weakened", 5 SECONDS * mult)
 					if (51 to INFINITY) //everything after
 						var/obj/critter/domestic_bee/B = new/obj/critter/domestic_bee(M.loc)
 						B.name = M.real_name
 						B.desc = "This bee looks very much like [M.real_name]. How peculiar."
 						B.beeKid = "#ffdddd"
 						B.UpdateIcon()
+						logTheThing("combat", M, null, "was gibbed by reagent [name].")
 						M.gib()
 				..()
 
@@ -535,11 +598,11 @@ datum
 							if (1 to 4)
 								if (prob(33))
 									boutput(H, "<span class='alert'>You feel weak.</span>")
-									M.setStatus("stunned", max(M.getStatusDuration("stunned"), 2 SECONDS * mult))
+									M.setStatusMin("stunned", 2 SECONDS * mult)
 							if (5 to 15)
 								if (prob(33))
 									boutput(H, "<span class='alert'><I>You feel very weak.</I></span>")
-									M.setStatus("stunned", max(M.getStatusDuration("stunned"), 3 SECONDS * mult))
+									M.setStatusMin("stunned", 3 SECONDS * mult)
 								if (prob(10))
 									boutput(H, "<span class='alert'><I>You have trouble breathing!</I></span>")
 									H.take_oxygen_deprivation(2 * mult)
@@ -547,7 +610,7 @@ datum
 							if (16 to 25)
 								if (prob(33))
 									boutput(H, "<span class='alert'><B>You feel horribly weak.</B></span>")
-									M.setStatus("stunned", max(M.getStatusDuration("stunned"), 4 SECONDS * mult))
+									M.setStatusMin("stunned", 4 SECONDS * mult)
 								if (prob(10))
 									boutput(H, "<span class='alert'><B>You cannot breathe!</B></span>")
 									H.take_oxygen_deprivation(2 * mult)
@@ -556,7 +619,7 @@ datum
 									boutput(H, "<span class='alert'><B>Your heart flutters in your chest!</B></span>")
 									H.take_oxygen_deprivation(5 * mult)
 									H.losebreath += (1 * mult)
-									M.setStatus("weakened", max(M.getStatusDuration("weakened"), 5 SECONDS * mult))
+									M.setStatusMin("weakened", 5 SECONDS * mult)
 							if (26 to INFINITY)
 
 								var/obj/critter/domestic_bee/B
@@ -615,11 +678,11 @@ datum
 							if (1 to 4)
 								if (prob(33))
 									boutput(H, "<span class='alert'>You feel weak.</span>")
-									M.setStatus("weakened", max(M.getStatusDuration("weakened"), 2 SECONDS * mult))
+									M.setStatusMin("weakened", 2 SECONDS * mult)
 							if (5 to 15)
 								if (prob(33))
 									boutput(H, "<span class='alert'><I>You feel very weak.</I></span>")
-									M.setStatus("weakened", max(M.getStatusDuration("weakened"), 3 SECONDS * mult))
+									M.setStatusMin("weakened", 3 SECONDS * mult)
 								if (prob(10))
 									boutput(H, "<span class='alert'><I>You have trouble breathing!</I></span>")
 									H.take_oxygen_deprivation(2 * mult)
@@ -627,7 +690,7 @@ datum
 							if (16 to 25)
 								if (prob(33))
 									boutput(H, "<span class='alert'><B>You feel horribly weak.</B></span>")
-									M.setStatus("weakened", max(M.getStatusDuration("weakened"), 4 SECONDS * mult))
+									M.setStatusMin("weakened", 4 SECONDS * mult)
 								if (prob(10))
 									boutput(H, "<span class='alert'><B>You cannot breathe!</B></span>")
 									H.take_oxygen_deprivation(2 * mult)
@@ -636,7 +699,7 @@ datum
 									boutput(H, "<span class='alert'><B>Your heart flutters in your chest!</B></span>")
 									H.take_oxygen_deprivation(5 * mult)
 									H.losebreath += (1 * mult)
-									M.setStatus("weakened", max(M.getStatusDuration("weakened"), 5 SECONDS * mult))
+									M.setStatusMin("weakened", 5 SECONDS * mult)
 							if (26 to INFINITY)
 
 								var/obj/critter/domestic_bee/queen/B
@@ -660,6 +723,7 @@ datum
 								bleed(H, 500, 5) // you'll be gibbed in a moment you don't need it anyway
 								H.visible_message("<span class='alert'><B>A huge bee bursts out of [H]! OH FUCK!</B></span>")
 								qdel(H.organHolder.heart)
+								logTheThing("combat", H, null, "was gibbed by reagent [name].")
 								H.gib()
 				..()
 
@@ -705,13 +769,13 @@ datum
 				else if (holder.get_reagent_amount(src.id) >= 45 && prob(holder.get_reagent_amount(src.id)*0.08))
 					boutput(M, "<span class='alert'>Your chest [pick("hurts","stings","aches","burns")]!</span>")
 					M.take_toxin_damage(rand(2,4) * mult)
-					M.setStatus("stunned", max(M.getStatusDuration("stunned"), 2 SECONDS * mult))
+					M.setStatusMin("stunned", 2 SECONDS * mult)
 					if (probmult(5))
 						M.contract_disease(/datum/ailment/malady/heartdisease, null, null, 1) // path, name, strain, bypass resist
 				else if (holder.get_reagent_amount(src.id) >= 150 && prob(holder.get_reagent_amount(src.id)*0.01))
 					boutput(M, "<span class='alert'>Your chest is burning with pain!</span>")
 					//M.losebreath += (1 * mult) //heartfailure handles this just fine
-					M.setStatus("weakened", max(M.getStatusDuration("weakened"), 3 SECONDS * mult))
+					M.setStatusMin("weakened", 3 SECONDS * mult)
 					M.contract_disease(/datum/ailment/malady/heartdisease, null, null, 1) // path, name, strain, bypass resist
 				..()
 
@@ -742,7 +806,7 @@ datum
 				if (prob(15))
 					M.visible_message("<span class='alert'><b>[M.name]</b> scratches at an itch.</span>")
 					random_brute_damage(M, 1 * mult)
-					M.setStatus("stunned", max(M.getStatusDuration("stunned"), 2 SECONDS * mult))
+					M.setStatusMin("stunned", 2 SECONDS * mult)
 					M.emote("grumble")
 				if (prob(10))
 					boutput(M, "<span class='alert'><b>So itchy!</b></span>")
@@ -752,7 +816,7 @@ datum
 				if (prob(2))
 					boutput(M, "<span class='alert'><b><font size='[rand(2,5)]'>AHHHHHH!</font></b></span>")
 					random_brute_damage(M,5 * mult)
-					M.setStatus("weakened", max(M.getStatusDuration("weakened"), 6 SECONDS * mult))
+					M.setStatusMin("weakened", 6 SECONDS * mult)
 					M.make_jittery(6)
 					M.visible_message("<span class='alert'><b>[M.name]</b> falls to the floor, scratching themselves violently!</span>")
 					M.emote("scream")
@@ -912,11 +976,11 @@ datum
 					if (6 to 10)
 						if (prob(8))
 							boutput(M, "<span class='alert'><b>You feel [pick("weak", "horribly weak", "numb", "like you can barely move", "tingly")].</b></span>")
-							M.setStatus("stunned", max(M.getStatusDuration("stunned"), 2 SECONDS * mult))
+							M.setStatusMin("stunned", 2 SECONDS * mult)
 						else if (probmult(8))
 							M.emote(pick("drool", "tremble"))
 					if (11 to INFINITY)
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 20 SECONDS * mult))
+						M.setStatusMin("weakened", 20 SECONDS * mult)
 						if (prob(10))
 							M.emote(pick("drool", "tremble", "gasp"))
 							M.losebreath += (1 * mult)
@@ -988,9 +1052,9 @@ datum
 						M.changeStatus("drowsy", 1 MINUTE)
 					if (5)
 						M.emote("faint")
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 5 SECONDS * mult))
+						M.setStatusMin("weakened", 5 SECONDS * mult)
 					if (6 to INFINITY)
-						M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 5 SECONDS * mult))
+						M.setStatusMin("paralysis", 5 SECONDS * mult)
 
 				M.jitteriness = max(M.jitteriness-50,0)
 
@@ -1038,9 +1102,9 @@ datum
 						if (probmult(35)) M.emote("yawn")
 					if (10)
 						M.emote("faint")
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 5 SECONDS * mult))
+						M.setStatusMin("weakened", 5 SECONDS * mult)
 					if (11 to INFINITY)
-						M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 25 SECONDS * mult))
+						M.setStatusMin("paralysis", 25 SECONDS * mult)
 
 				..()
 				return
@@ -1089,7 +1153,7 @@ datum
 					if (22 to INFINITY)
 						if (prob(20))
 							M.emote("faint")
-							M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 8 SECONDS * mult))
+							M.setStatusMin("paralysis", 8 SECONDS * mult)
 						M.setStatus("drowsy", 40 SECONDS)
 				M.take_toxin_damage(1 * mult)
 				..()
@@ -1144,12 +1208,49 @@ datum
 
 				if (our_amt > 40 && probmult(4))
 					M.visible_message("<span class='alert'><B>[M]</B> starts convulsing violently!</span>", "You feel as if your body is tearing itself apart!")
-					M.setStatus("weakened", max(M.getStatusDuration("weakened"), 15 SECONDS * mult))
+					M.setStatusMin("weakened", 15 SECONDS * mult)
 					M.make_jittery(1000)
 					SPAWN(rand(20, 100))
 						if (M) //ZeWaka: Fix for null.gib
+							logTheThing("combat", M, null, "was gibbed by reagent [name].")
 							M.gib()
 					return
+
+				..()
+				return
+
+		harmful/viper_venom
+			name = "viper venom"
+			id = "viper_venom"
+			description = "A dangerous toxin that causes massive bleeding and tissue damage"
+			reagent_state = LIQUID
+			fluid_r = 210
+			fluid_g = 180
+			fluid_b = 25
+			depletion_rate = 0.3
+			blob_damage = 1
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if (!M) M = holder.my_atom
+				M.take_toxin_damage(1*mult)
+				random_brute_damage(M, 1*mult, FALSE)
+
+				if (prob(25))
+					M.reagents.add_reagent("histamine", rand(5,10) * mult)
+
+				if (probmult(10))
+					M.setStatus("stunned", max(M.getStatusDuration("stunned"), 5 SECONDS))
+					boutput(M, "<span class='alert'><b>Your body hurts so much.</b></span>")
+					bleed(M, rand(30,60), rand(3,9))
+					if (!isdead(M))
+						M.emote(pick("cry", "tremble", "scream"))
+
+				if (probmult(10))
+					M.setStatus("slowed", max(M.getStatusDuration("slowed"), 10 SECONDS))
+					boutput(M, "<span class='alert'><b>Everything starts hurting.</b></span>")
+					M.take_toxin_damage(8)
+					if (!isdead(M))
+						M.emote(pick("shake", "tremble", "shudder"))
 
 				..()
 				return
@@ -1187,7 +1288,7 @@ datum
 						if (!fainted)
 							M.emote("faint")
 							fainted = 1
-						M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 10 SECONDS * mult))
+						M.setStatusMin("paralysis", 10 SECONDS * mult)
 						M.setStatus("drowsy", 40 SECONDS)
 
 				M.jitteriness = max(M.jitteriness-30,0)
@@ -1322,7 +1423,7 @@ datum
 					M.emote("gasp")
 				if (prob(10))
 					boutput(M, "<span class='alert'>You feel horribly weak.</span>")
-					M.setStatus("stunned", max(M.getStatusDuration("stunned"), 3 SECONDS * mult))
+					M.setStatusMin("stunned", 3 SECONDS * mult)
 					M.take_toxin_damage(2 * mult)
 				..()
 				return
@@ -1344,7 +1445,7 @@ datum
 					M.take_toxin_damage(rand(2.4) * mult)
 				if (prob(7))
 					boutput(M, "<span class='alert'>A horrible migraine overpowers you.</span>")
-					M.setStatus("stunned", max(M.getStatusDuration("stunned"), 3 SECONDS * mult))
+					M.setStatusMin("stunned", 3 SECONDS * mult)
 				if (probmult(7))
 					for(var/mob/O in AIviewers(M, null))
 						O.show_message("<span class='alert'>[M] vomits up some green goo.</span>", 1)
@@ -1430,14 +1531,14 @@ datum
 						if (prob(40))
 							M.emote(pick("choke","gasp"))
 							M.take_oxygen_deprivation(6 * mult)
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 8 SECONDS * mult))
+						M.setStatusMin("weakened", 8 SECONDS * mult)
 					else if (effect <= 7)
 						boutput(M, "<span class='alert'><b>Your heartbeat is pounding inside your head!</b></span>")
 						M.playsound_local(M.loc, "sound/effects/heartbeat.ogg", 50, 1)
 						M.emote("collapse")
 						M.take_oxygen_deprivation(8 * mult)
 						M.take_toxin_damage(3 * mult)
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 4 SECONDS * mult))
+						M.setStatusMin("weakened", 4 SECONDS * mult)
 						M.emote(pick("choke", "gasp"))
 						boutput(M, "<span class='alert'><b>You feel like you're dying!</b></span>")
 
@@ -1476,19 +1577,19 @@ datum
 						if (prob(10))
 							M.change_misstep_chance(15 * mult)
 						if (prob(15))
-							M.setStatus("stunned", max(M.getStatusDuration("stunned"), 2 SECONDS * mult))
+							M.setStatusMin("stunned", 2 SECONDS * mult)
 							if (!isdead(M))
 								M.emote("scream")
 					if (30 to 60)
 						M.change_eye_blurry(5, 5)
 						M.stuttering = max(M.stuttering, 5)
 						if (prob(10))
-							M.setStatus("stunned", max(M.getStatusDuration("stunned"), 2 SECONDS * mult))
+							M.setStatusMin("stunned", 2 SECONDS * mult)
 							M.emote(pick("twitch","twitch_v","drool","shake","tremble"))
 						if (probmult(5))
 							M.emote("collapse")
 						if (prob(5))
-							M.setStatus("weakened", max(M.getStatusDuration("weakened"), 4 SECONDS * mult))
+							M.setStatusMin("weakened", 4 SECONDS * mult)
 							M.visible_message("<span class='alert'><b>[M] has a seizure!</b></span>")
 							M.make_jittery(1000)
 						if (prob(5))
@@ -1501,7 +1602,7 @@ datum
 						M.losebreath = max(5, M.losebreath + (5 * mult))
 						M.take_toxin_damage(1 * mult)
 						M.take_brain_damage(1 * mult)
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 5 SECONDS * mult))
+						M.setStatusMin("weakened", 5 SECONDS * mult)
 				if (probmult(8))
 					M.visible_message("<span class='alert'>[M] pukes all over [himself_or_herself(M)].</span>", "<span class='alert'>You puke all over yourself!</span>")
 					M.vomit()

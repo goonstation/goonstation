@@ -6,8 +6,8 @@
 	density = 0
 	var/orientation = 1  //shield extend direction 0 = north/south, 1 = east/west
 	power_level = 1 //1 for atmos shield, 2 for liquid, 3 for solid material
-	var/const/MAX_POWER_LEVEL = 3
-	var/const/MIN_POWER_LEVEL = 1
+	var/MAX_POWER_LEVEL = 3
+	var/MIN_POWER_LEVEL = 1
 	min_range = 1
 	max_range = 4
 	direction = "dir"
@@ -48,7 +48,14 @@
 		if(active)
 			boutput(user, "<span class='alert'>You can't change the power level or range while the generator is active.</span>")
 			return
-		var/input = input("Select a config to modify!", "Config", null) as null|anything in list("Set Range","Set Power Level")
+		var/list/choices = list("Set Range")
+		if(MAX_POWER_LEVEL != MIN_POWER_LEVEL)
+			choices += "Set Power Level"
+		var/input
+		if(length(choices) == 1)
+			input = choices[1]
+		else
+			input = input("Select a config to modify!", "Config", null) as null|anything in choices
 		if(input && (user in range(1,src)))
 			switch(input)
 				if("Set Range")
@@ -57,7 +64,7 @@
 					var/the_level = input("Enter a power level from [src.MIN_POWER_LEVEL]-[src.MAX_POWER_LEVEL]. Higher levels use more power.","[src.name]",1) as null|num
 					if(!the_level)
 						return
-					if(get_dist(user,src) > 1)
+					if(BOUNDS_DIST(user, src) > 0)
 						boutput(user, "<span class='alert'>You flail your arms at [src] from across the room like a complete muppet. Move closer, genius!</span>")
 						return
 					the_level = clamp(the_level, MIN_POWER_LEVEL, MAX_POWER_LEVEL)
@@ -109,22 +116,38 @@
 			orientation = 1
 
 	//this is so long because I wanted the tiles to look like one seamless object. Otherwise it could just be a single line
-	proc/createForcefieldObject(var/xa as num, var/ya as num)
-		var/obj/forcefield/energyshield/S = new /obj/forcefield/energyshield (locate((src.x + xa),(src.y + ya),src.z), src, 1 ) //1 update tiles
+	proc/createForcefieldObject(xa, ya, turf/T)
+		if(isnull(T))
+			T = locate((src.x + xa), (src.y + ya), src.z)
+		var/obj/forcefield/energyshield/S = new /obj/forcefield/energyshield(T, src, TRUE)
 		S.layer = 2
-		if (xa == -range)
-			S.set_dir(SOUTHWEST)
-		else if (xa == range)
-			S.set_dir(SOUTHEAST)
-		else if (ya == -range)
-			S.set_dir(NORTHWEST)
-		else if (ya == range)
-			S.set_dir(NORTHEAST)
-		else if (orientation)
-			S.set_dir(NORTH)
-		else if (!orientation)
-			S.set_dir(EAST)
-
 		src.deployed_shields += S
-
 		return S
+
+
+/obj/machinery/shieldgenerator/energy_shield/botany
+	name = "smoke shield generator"
+	icon_state = "botanygen"
+	desc = "For all your hotboxing needs."
+	density = 0
+	MIN_POWER_LEVEL = 1
+	MAX_POWER_LEVEL = 1
+
+	update_orientation()
+		orientation = 0
+
+	generate_shield()
+		for(var/turf/T in orange(src, range))
+			if(GET_DIST(T, src) != range)
+				continue
+			if (!T.density && !T.gas_impermeable)
+				var/obj/forcefield/energyshield/shield = createForcefieldObject(T=T)
+				animate(shield, time=5 SECONDS, loop=-1, easing=SINE_EASING, color="#88FF00")
+				animate(time=5 SECONDS, loop=-1, easing=SINE_EASING, color="#0088FF")
+
+		src.anchored = 1
+		src.active = 1
+
+		playsound(src.loc, src.sound_on, 50, 1)
+		display_active.color = "#00FF00"
+		build_icon()

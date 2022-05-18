@@ -10,6 +10,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	inhand_image_icon = 'icons/mob/inhand/hand_feethand.dmi'
 	protective_temperature = 400
 	wear_layer = MOB_HAND_LAYER2
+	duration_remove = 2 SECONDS
 	var/uses = 0
 	var/max_uses = 0 // If can_be_charged == 1, how many charges can these gloves store?
 	var/stunready = 0
@@ -504,7 +505,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 				netnum = C.netnum
 				break
 
-		if(get_dist(user, target) > 1 && !user:equipped())
+		if(BOUNDS_DIST(user, target) > 0 && !user:equipped())
 
 			if(!netnum)
 				boutput(user, "<span class='alert'>The gloves find no cable to draw power from.</span>")
@@ -522,7 +523,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 			playsound(user, "sound/effects/elec_bigzap.ogg", 40, 1)
 
-			SEND_SIGNAL(user, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
+			SEND_SIGNAL(user, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 
 			if(isturf(target))
 				target_r = new/obj/elec_trg_dummy(target)

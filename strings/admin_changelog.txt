@@ -1,3 +1,12 @@
+(t)sun apr 17 22
+(u)yellow
+(*)Create Command Alert verb now allows you to input a custom origin to the alert. Leaving it blank will set it to Central Command Update
+(t)sun apr 10 22
+(u)Azrun
+(*)New precipitation build mode.
+(t)thu mar 24 22
+(u)aloe
+(*)Data input (editing variables, proc-call, list editing) has been generally improved and standardized. There will probably be bugs, ping me if you find any.<br>Also ping me if you want more input options for a certain context- see _std/defines/data_input.dm for a list of current options.<br>New functions:<br>* You can input an icon_state when uploading an icon, so you can use DMIs as sources<br>* List building for proc args or variable editing<br>* Call-proc-all is easier to use
 (t)sun mar 06 22
 (u)aloe
 (*)New glue build mode. The gist: right click thing, left click other thing, glues first thing to other thing. More options and multi-glueing also possible.

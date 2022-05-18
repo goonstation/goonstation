@@ -316,15 +316,14 @@
 	set category = "AI Commands"
 	set name = "Call Emergency Shuttle"
 
-	if (usr == src || usr == src.eyecam)
-		if((alert(usr, "Are you sure?",,"Yes","No") != "Yes"))
-			return
+	var/call_reason = input("Please state the nature of your current emergency.", "Emergency Shuttle Call Reason", "") as text|null
 
-	var/call_reason = input("Please state the nature of your current emergency.", "Emergency Shuttle Call Reason", "") as text
-
+	if (isnull(call_reason)) // Cancel
+		return
 	if(isdead(src))
 		boutput(usr, "You can't call the shuttle because you are dead!")
 		return
+
 	logTheThing("admin", usr, null,  "called the Emergency Shuttle (reason: [call_reason])")
 	logTheThing("diary", usr, null, "called the Emergency Shuttle (reason: [call_reason])", "admin")
 	message_admins("<span class='internal'>[key_name(usr)] called the Emergency Shuttle to the station</span>")

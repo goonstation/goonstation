@@ -3,7 +3,11 @@
 /obj/machinery/door
 	name = "door"
 	icon_state = "door1"
+	#ifdef UPSCALED_MAP
+	opacity = 0
+	#else
 	opacity = 1
+	#endif
 	density = 1
 	flags = FPRINT | ALWAYS_SOLID_FLUID
 	event_handler_flags = USE_FLUID_ENTER
@@ -164,7 +168,7 @@
 		..()
 		UnsubscribeProcess()
 		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", "toggleinput")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", .proc/toggleinput)
 		update_nearby_tiles(need_rebuild=1)
 		START_TRACKING
 		for (var/turf/simulated/wall/auto/T in orange(1))
@@ -576,6 +580,8 @@
 			// We don't care watever is inside the airlock when we close the airlock if we are unsafe, crush em.
 			//Maybe moving this until just after the animation looks better.
 			for(var/mob/living/L in get_turf(src))
+				if(isintangible(L))
+					continue
 				var/mob_layer = L.layer	//Make it look like we're inside the door
 				L.layer = src.layer - 0.01
 				playsound(src, 'sound/impact_sounds/Flesh_Break_1.ogg', 100, 1)
@@ -678,14 +684,22 @@
 	icon = 'icons/turf/shuttle.dmi'
 	name = "door"
 	icon_state = "door1"
+	#ifdef UPSCALED_MAP
+	opacity = 0
+	#else
 	opacity = 1
+	#endif
 	density = 1
 
 /obj/machinery/door/unpowered/martian
 	icon = 'icons/turf/martian.dmi'
 	name = "Orifice"
 	icon_state = "door1"
+	#ifdef UPSCALED_MAP
+	opacity = 0
+	#else
 	opacity = 1
+	#endif
 	density = 1
 	var/id = null
 
@@ -703,7 +717,11 @@
 	name = "door"
 	icon = 'icons/obj/doors/door_wood.dmi'
 	icon_state = "door1"
+	#ifdef UPSCALED_MAP
+	opacity = 0
+	#else
 	opacity = 1
+	#endif
 	density = 1
 	p_open = 0
 	operating = 0
@@ -828,7 +846,7 @@
 
 	onUpdate()
 		..()
-		if (the_door == null || the_tool == null || owner == null || get_dist(owner, the_door) > 1 || !the_door.locked || the_door.operating)
+		if (the_door == null || the_tool == null || owner == null || BOUNDS_DIST(owner, the_door) > 0 || !the_door.locked || the_door.operating)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner

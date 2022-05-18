@@ -122,6 +122,11 @@
 				return
 			if (action == "Empty it into the chute")
 				var/obj/item/storage/S = I
+				if(istype(S, /obj/item/storage/secure))
+					var/obj/item/storage/secure/secS = S
+					if(secS.locked)
+						boutput("<span class='alert'>You need to unlock the container first.</span>")
+						return
 				for(var/obj/item/O in S)
 					O.set_loc(src)
 					S.hud.remove_object(O)
@@ -159,7 +164,7 @@
 	//
 	MouseDrop_T(atom/target, mob/user)
 		//jesus fucking christ
-		if (!IN_RANGE(src,user,1) || !IN_RANGE(src,target,1) || isAI(user) || is_incapacitated(user) || isghostcritter(user))
+		if (BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(target, src) > 0 || isAI(user) || is_incapacitated(user) || isghostcritter(user))
 			return
 
 		if (iscritter(target))
@@ -191,44 +196,23 @@
 
 		if(isitem(MO))
 			var/obj/item/I = MO
+			I.set_loc(src)
+			update()
+			src.visible_message("<span class='alert'>\The [I] lands cleanly in \the [src]!</span>")
 
-			if(prob(20)) //It might land!
-				I.set_loc(get_turf(src))
-				if(prob(30)) //It landed cleanly!
-					I.set_loc(src)
-					src.visible_message("<span class='alert'>\The [I] lands cleanly in \the [src]!</span>")
-				else	//Aaaa the tension!
-					src.visible_message("<span class='alert'>\The [I] teeters on the edge of \the [src]!</span>")
-					var/delay = rand(5, 15)
-					SPAWN(0)
-						var/in_x = I.pixel_x
-						for(var/d = 0; d < delay; d++)
-							if(I) I.pixel_x = in_x + rand(-1, 1)
-							sleep(0.1 SECONDS)
-						if(I) I.pixel_x = in_x
-					SPAWN(delay)
-						if(I && I.loc == src.loc)
-							if(prob(40)) //It goes in!
-								src.visible_message("<span class='alert'>\The [I] slips into \the [src]!</span>")
-								I.set_loc(src)
-							else
-								src.visible_message("<span class='alert'>\The [I] slips off of the edge of \the [src]!</span>")
-
-		else if (ishuman(MO))
-			var/mob/living/carbon/human/H = MO
-			H.set_loc(get_turf(src))
-			if(prob(30))
-				H.visible_message("<span class='alert'><B>[H] falls into the disposal outlet!</B></span>")
-				logTheThing("combat", H, null, "is thrown into a [src.name] at [log_loc(src)].")
-				H.set_loc(src)
-				if(prob(20))
-					src.visible_message("<span class='alert'><B><I>...accidentally hitting the handle!</I></B></span>")
-					H.show_text("<B><I>...accidentally hitting the handle!</I></B>", "red")
-					flush = 1
-					if (!is_processing)
-						SubscribeToProcess()
-						is_processing = 1
-					update()
+		else if (istype(MO, /mob/living))
+			var/mob/living/H = MO
+			H.visible_message("<span class='alert'><B>[H] falls into the disposal outlet!</B></span>")
+			logTheThing("combat", H, null, "is thrown into a [src.name] at [log_loc(src)].")
+			H.set_loc(src)
+			if(prob(10) || H.bioHolder?.HasEffect("clumsy"))
+				src.visible_message("<span class='alert'><B><I>...accidentally hitting the handle!</I></B></span>")
+				H.show_text("<B><I>...accidentally hitting the handle!</I></B>", "red")
+				flush = 1
+				if (!is_processing)
+					SubscribeToProcess()
+					is_processing = 1
+			update()
 		else
 			return ..()
 
@@ -596,7 +580,7 @@
 	plane = PLANE_NOSHADOW_BELOW
 
 	MouseDrop_T(obj/storage/cart/target, mob/user)
-		if (!istype(target) || target.loc != src.loc || get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user) || isAI(user))
+		if (!istype(target) || target.loc != src.loc || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, target) > 0 || is_incapacitated(user) || isAI(user))
 			return ..()
 
 		if (!target.contents.len)
@@ -605,7 +589,7 @@
 		src.visible_message("[user] begins depositing [target]'s contents into [src].")
 		playsound(src.loc ,"sound/items/Deconstruct.ogg", 80, 0)
 		for (var/atom/movable/AM in target)
-			if (get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user))
+			if (BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, target) > 0 || is_incapacitated(user))
 				break
 			if (AM.anchored || AM.loc != target)
 				continue
@@ -630,7 +614,7 @@
 		return
 
 	MouseDrop_T(mob/target, mob/user)
-		if (!istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user) || isAI(user) || isAI(target) || isghostcritter(user))
+		if (!istype(target) || target.buckled || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, target) > 0 || is_incapacitated(user) || isAI(user) || isAI(target) || isghostcritter(user))
 			return
 		..()
 		flush = 1
@@ -685,7 +669,7 @@
 
 	onEnd()
 		if(checkStillValid())
-			if (target.buckled || get_dist(user, chute) > 1 || get_dist(user, target) > 1 || ((is_incapacitated(user) && user != target)))
+			if (target.buckled || BOUNDS_DIST(user, chute) > 0 || BOUNDS_DIST(user, target) > 0 || ((is_incapacitated(user) && user != target)))
 				..()
 				return
 

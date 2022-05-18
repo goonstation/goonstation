@@ -64,6 +64,7 @@
 					affected_mob.gib()
 					qdel(affected_mob)
 				else if (ishuman(affected_mob))
+					logTheThing("combat", affected_mob, null, "was transformed into a cyborg by the disease [name] at [log_loc(affected_mob)].")
 					gibs(T, null, null, bdna, btype)
 					affected_mob:Robotize_MK2(1)
 

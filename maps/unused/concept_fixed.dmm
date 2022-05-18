@@ -7289,7 +7289,6 @@
 	icon_state = "tabledir";
 	dir = 10
 	},
-/obj/item/aiModule/rename,
 /obj/item/aiModule/freeform,
 /turf/simulated/floor/purple,
 /area/space{
@@ -7314,7 +7313,6 @@
 	},
 /obj/item/aiModule/protectStation,
 /obj/item/aiModule/notHuman,
-/obj/item/aiModule/reset,
 /turf/simulated/floor/purple,
 /area/space{
 	name = "Module Storage"
@@ -7348,7 +7346,6 @@
 	icon_state = "tabledir";
 	dir = 4
 	},
-/obj/item/aiModule/reset,
 /obj/item/clothing/glasses/meson,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
@@ -7827,23 +7824,6 @@
 	dir = 2;
 	name = "S APC";
 	pixel_y = -24
-	},
-/turf/simulated/floor/plating,
-/area/station/storage/tech)
-"aoO" = (
-/obj/rack,
-/obj/item/circuitboard/aiupload,
-/obj/item/circuitboard/teleporter,
-/obj/item/circuitboard/card,
-/obj/item/circuitboard/robot_module_rewriter,
-/obj/item/circuitboard/cloning,
-/obj/machinery/light_switch{
-	name = "S light switch";
-	pixel_y = -24
-	},
-/obj/machinery/camera{
-	c_tag = "Technical Storage";
-	dir = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
@@ -9117,11 +9097,6 @@
 	d1 = 2;
 	d2 = 8
 	},
-/turf/simulated/floor/purple,
-/area/space)
-"arE" = (
-/obj/machinery/power/data_terminal,
-/obj/machinery/computer/aiupload,
 /turf/simulated/floor/purple,
 /area/space)
 "arF" = (
@@ -28410,13 +28385,6 @@
 	dir = 8
 	},
 /area/station/crew_quarters/kitchen)
-"bbW" = (
-/obj/decal/fakeobjects/skeleton,
-/obj/item/clothing/suit/chef,
-/obj/item/clothing/head/chefhat,
-/obj/decal/cleanable/cobweb,
-/turf/simulated/aprilfools,
-/area/station/hallway/primary/west)
 "bbX" = (
 /obj/decal/cleanable/tomatosplat,
 /obj/creepy_sound_trigger,
@@ -37191,6 +37159,34 @@
 "cqb" = (
 /turf/space,
 /area/space)
+"gcn" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/lawrack,
+/turf/simulated/floor/purple,
+/area/space)
+"tBe" = (
+/obj/decal/fakeobjects/skeleton,
+/obj/item/clothing/suit/chef,
+/obj/item/clothing/head/chefhat,
+/obj/decal/cleanable/cobweb,
+/turf/simulated/aprilfools,
+/area/station/hallway/primary/west)
+"vEx" = (
+/obj/rack,
+/obj/item/circuitboard/teleporter,
+/obj/item/circuitboard/card,
+/obj/item/circuitboard/robot_module_rewriter,
+/obj/item/circuitboard/cloning,
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
+/obj/machinery/camera{
+	c_tag = "Technical Storage";
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/storage/tech)
 
 (1,1,1) = {"
 cqb
@@ -55429,7 +55425,7 @@ amR
 anq
 anP
 anq
-aoO
+vEx
 apn
 apH
 apH
@@ -55716,7 +55712,7 @@ aWn
 aVj
 aVj
 aPE
-bbW
+tBe
 aPE
 bZO
 cnn
@@ -68827,7 +68823,7 @@ apF
 cae
 aqy
 aqZ
-arE
+gcn
 asi
 aqy
 cae

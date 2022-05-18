@@ -1,3 +1,4 @@
+ABSTRACT_TYPE(/mob/living/critter)
 /mob/living/critter
 	name = "critter"
 	desc = "A beastie!"
@@ -84,10 +85,6 @@
 	blood_id = "blood"
 
 	New()
-//		if (ispath(default_task))
-//			default_task = new default_task
-//		if (ispath(current_task))
-//			current_task = new current_task
 
 		setup_hands()
 		post_setup_hands()
@@ -95,7 +92,7 @@
 		setup_reagents()
 		setup_healths()
 		if (!healthlist.len)
-			message_coders("ALERT: Critter [type] ([name]) does not have health holders.")
+			stack_trace("Critter [type] ([name]) \[\ref[src]\] does not have health holders.")
 		count_healths()
 
 		SPAWN(0)
@@ -667,7 +664,7 @@
 	equipped()
 		RETURN_TYPE(/obj/item)
 		if (active_hand)
-			if (hands.len >= active_hand)
+			if (length(src.hands) >= active_hand)
 				var/datum/handHolder/HH = hands[active_hand]
 				return HH.item
 		return null
@@ -773,7 +770,8 @@
 			src.was_harmed(thr.user, AM)
 
 	TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
-		hit_twitch(src)
+		if (brute > 0 || burn > 0 || tox > 0)
+			hit_twitch(src)
 		if (nodamage)
 			return
 		var/datum/healthHolder/Br = get_health_holder("brute")
@@ -1202,7 +1200,7 @@
 		return O
 
 	drop_item()
-		..()
+		. = ..()
 		src.update_inhands()
 
 	proc/on_sleep()
@@ -1242,6 +1240,13 @@
 				src.click(W, list())
 		if ("togglethrow")
 			src.toggle_throw_mode()
+		if ("walk")
+			if (src.m_intent == "run")
+				src.m_intent = "walk"
+			else
+				src.m_intent = "run"
+			out(src, "You are now [src.m_intent == "walk" ? "walking" : "running"].")
+			hud.update_mintent()
 		else
 			return ..()
 
@@ -1323,3 +1328,34 @@
 
 	src.TakeDamage("All", damage, 0)
 	return
+
+/mob/living/critter/Logout()
+	..()
+	if (src.ai && !src.ai.enabled && src.is_npc)
+		ai.enabled = TRUE
+
+/mob/living/critter/Login()
+	..()
+	if (src.ai?.enabled && src.is_npc)
+		ai.enabled = FALSE
+		var/datum/targetable/A = src.abilityHolder?.getAbility(/datum/targetable/ai_toggle)
+		A?.updateObject()
+
+
+
+ABSTRACT_TYPE(/mob/living/critter/robotic)
+/// Parent for robotic critters. Handles some traits that robots should have- damaged by EMPs, immune to fire and rads
+/mob/living/critter/robotic
+	name = "a fucked up robot"
+	var/emp_vuln = 1
+
+	New()
+		..()
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT, src, 100)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_HEATPROT, src, 100)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_COLDPROT, src, 100)
+
+	/// EMP does 10 brute and 10 burn by default, can be adjusted linearly with emp_vuln
+	emp_act()
+		src.emag_act() // heh
+		src.TakeDamage(10 * emp_vuln, 10 * emp_vuln)

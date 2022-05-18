@@ -333,7 +333,6 @@
 	icon_state = "yellow"
 	requires_power = 0
 	luminosity = 1
-	force_fullbright = 1
 
 /obj/machinery/computer/solar_control/derelict_ai_sat
 	id = "derelict_ai_sat"

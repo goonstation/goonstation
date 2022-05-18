@@ -1,14 +1,26 @@
 var/datum/artifact_controller/artifact_controls
 
 /datum/artifact_controller
+	/// list of all artifacts
 	var/list/artifacts = list()
+	/// list with an instance of each artifact type, sorted by size and alphabetically
 	var/list/datum/artifact/artifact_types = list()
+	/// associative list with the instance from above, with the key being the type name
+	var/list/datum/artifact/artifact_types_from_name = list()
+	/// associative list of lists, with the keys being artifact origin names (and "all") and artifact types
+	/// the value is the rarity of the type.
+	/// This is used with weighted_pick for randomly generated artifacts (sometimes of specific origin)
 	var/list/artifact_rarities = list()
+	/// list with an instance of each artifact origin
 	var/list/artifact_origins = list()
 
+	/// list of artifact origin names, for artifact forms
 	var/list/artifact_origin_names = list()
+	/// list of artifact type names, for artifact forms
 	var/list/artifact_type_names = list()
+	/// list of artifact fault names, for artifact forms
 	var/list/artifact_fault_names = list()
+	/// list of artifact trigger names, for artifact forms (unused)
 	var/list/artifact_trigger_names = list()
 	var/spawner_type = null
 	var/spawner_cine = 0
@@ -24,14 +36,10 @@ var/datum/artifact_controller/artifact_controls
 			artifact_origin_names += AO.type_name
 			artifact_rarities[AO.name] = list()
 
-		// type list
-		// also make one list for each origin of all artifact types
-		// and also one that just holds all types
-		// the type is the index, the value the rarity
-		// for use with weighted_pick
 		for (var/A in concrete_typesof(/datum/artifact))
 			var/datum/artifact/AI = new A
 			artifact_types += AI
+			artifact_types_from_name[AI.type_name] = AI
 
 			artifact_rarities["all"][A] = AI.rarity_weight
 			for (var/origin in artifact_rarities)

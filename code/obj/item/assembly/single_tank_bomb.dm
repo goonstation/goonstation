@@ -276,12 +276,12 @@
 
 /obj/item/assembly/radio_bomb/disposing()
 
-	//src.part1 = null
 	qdel(src.part1)
-	//src.part2 = null
+	src.part1 = null
 	qdel(src.part2)
-	//src.part3 = null
+	src.part2 = null
 	qdel(src.part3)
+	src.part3 = null
 	..()
 	return
 

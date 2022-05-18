@@ -7,9 +7,9 @@
 /area/dmm_suite/clear_area)
 "o" = (
 /obj/table/wood/auto,
-/obj/item/card_group,
 /obj/machinery/light/small/floor/netural,
 /obj/item/decoration/ashtray,
+/obj/item/card_box/plain,
 /turf/simulated/floor/wood/seven,
 /area/dmm_suite/clear_area)
 "w" = (

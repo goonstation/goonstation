@@ -109,16 +109,20 @@
 						src.organHolder.damage_organ(0, damage, 0, target_organ)
 
 			if (D_TOXIC)
-				if (P.proj_data.reagent_payload)
+				if (P.reagents)
 					if (P.implanted)
 						if (istext(P.implanted))
 							P.implanted = text2path(P.implanted)
 							if (!P.implanted)
 								return
 						var/obj/item/implant/projectile/implanted = new P.implanted
+						implanted.create_reagents(P.reagents.maximum_volume)
+						P.reagents.trans_to(implanted, P.reagents.maximum_volume)
 						implanted.set_loc(src)
 						if (istype(implanted))
 							implanted.owner = src
+							if (P.forensic_ID)
+								implanted.forensic_ID = P.forensic_ID
 							src.implant += implanted
 							implanted.setMaterial(P.proj_data.material)
 							implanted.implanted(src, null, 0)
@@ -187,11 +191,17 @@
 	if(src.bioHolder && src.bioHolder.HasEffect("shoot_limb"))
 		delib_chance += 20
 
-	if (src.traitHolder && src.traitHolder.hasTrait("explolimbs") || src.getStatusDuration("food_explosion_resist"))
+	if (src.getStatusDuration("food_explosion_resist"))
 		delib_chance = round(delib_chance / 2)
 
 	if (prob(delib_chance) && !shielded)
-		src.sever_limb(pick(list("l_arm","r_arm","l_leg","r_leg"))) //max one delimb at once
+		if (src.traitHolder && src.traitHolder.hasTrait("explolimbs"))
+			if(prob(50))
+				boutput(src, "<span class='notice'><b>Your unusually strong bones keep your limbs attached through the blast!</b></span>")
+			else
+				src.sever_limb(pick(list("l_arm","r_arm","l_leg","r_leg")))
+		else
+			src.sever_limb(pick(list("l_arm","r_arm","l_leg","r_leg"))) //max one delimb at once
 
 	switch (power)
 		if (-INFINITY to 0) //blocked

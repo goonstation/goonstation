@@ -428,7 +428,7 @@ END GUIDE
 			qdel(src)
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
-		if (!isliving(M) || isghostdrone(M) || issilicon(M))
+		if (!isliving(M) || isghostdrone(M) || issilicon(M) || isintangible(M))
 			return
 		if (!user.find_type_in_hand(/obj/item/pen/fancy/satan))
 			return
@@ -440,20 +440,8 @@ END GUIDE
 				boutput(user, "<span class='notice'>Unfortunately they don't know how to write. Their signature will mean nothing.</span>")
 				return
 			else if (src.inuse != 1)
-				src.inuse = 1
-				M.visible_message("<span class='alert'><B>[user] is guiding [M]'s hand to the signature field of [src]!</B></span>")
-				if (!do_mob(user, M, 4 SECONDS)) //150 (or 15 seconds) was way too long to actually be useful, turns out that 7 seconds was too long too
-					if (user && ismob(user))
-						user.show_text("You were interrupted!", "red")
-						src.inuse = 0
-						return
-				M.visible_message("<span class='alert'>[user] forces [M] to sign [src]!</span>")
-				logTheThing("combat", user, M, "forces [M] to sign a [src] at [log_loc(user)].")
-				MagicEffect(M, user)
-				SPAWN(1 DECI SECOND)
-					src.inuse = 0
-					soulcheck(user)
-					updateuses(M, user)
+				actions.start(new/datum/action/bar/icon/force_sign(user, M, src), user)
+
 		else
 			return
 
@@ -479,6 +467,61 @@ END GUIDE
 				return
 		else
 			return
+
+/datum/action/bar/icon/force_sign
+	var/mob/living/target
+	var/obj/item/contract/my_contract
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	duration = 4 SECONDS
+
+	New(owner, target, contract)
+		. = ..()
+		src.owner = owner
+		src.target = target
+		src.my_contract = contract
+		icon = my_contract.icon
+		icon_state = my_contract.icon_state
+
+	onStart()
+		. = ..()
+		if (!isliving(target) || isghostdrone(target) || issilicon(target) || isintangible(target))
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		if (BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || my_contract == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		var/mob/living/user = owner
+		if (!user.find_type_in_hand(/obj/item/pen/fancy/satan))
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		target.visible_message("<span class='alert'><B>[owner] is guiding [target]'s hand to the signature field of [my_contract]!</B></span>")
+
+
+	onUpdate()
+		..()
+		if (BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || my_contract == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		var/mob/living/user = owner
+		if (!user.find_type_in_hand(/obj/item/pen/fancy/satan))
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onInterrupt(flag)
+		. = ..()
+		var/mob/living/user = owner
+		user.show_text("You were interrupted!", "red")
+		my_contract.inuse = 0
+
+	onEnd()
+		. = ..()
+		target.visible_message("<span class='alert'>[owner] forces [target] to sign [my_contract]!</span>")
+		logTheThing("combat", owner, target, "forces [target] to sign a [my_contract] at [log_loc(owner)].")
+		my_contract.MagicEffect(target, owner)
+		SPAWN(1 DECI SECOND)
+			my_contract.inuse = 0
+			soulcheck(owner)
+			my_contract.updateuses(target, owner)
 
 obj/item/contract/satan
 	desc = "A contract that promises to bestow upon whomever signs it near immortality, great power, and some other stuff you can't be bothered to read."

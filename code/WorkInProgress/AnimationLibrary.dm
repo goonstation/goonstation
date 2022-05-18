@@ -30,6 +30,34 @@
 	animate(A, color=list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1), time=time, easing=SINE_EASING)
 	return
 
+/proc/animate_fade_from_drug_1(var/atom/A, var/time=5) //This smoothly fades from animated_fade_drug_inbetween_1 to normal colors
+	if (!istype(A) && !isclient(A))
+		return
+	A.color = list(0,0,1,0, 1,0,0,0, 0,1,0,0, 0,0,0,1)
+	animate(A, color=list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1), time=time, easing=SINE_EASING)
+	return
+
+/proc/animate_fade_from_drug_2(var/atom/A, var/time=5) //This smoothly fades from animated_fade_drug_inbetween_2 to normal colors
+	if (!istype(A) && !isclient(A))
+		return
+	A.color = list(0,1,0,0, 0,0,1,0, 1,0,0,0, 0,0,0,1)
+	animate(A, color=list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1), time=time, easing=SINE_EASING)
+	return
+
+/proc/animate_fade_drug_inbetween_1(var/atom/A, var/time=5) //This fades from red being green, green being blue and blue being red to red being blue, green being red and blue being green
+	if (!istype(A) && !isclient(A))
+		return
+	A.color = list(0,0,1,0, 1,0,0,0, 0,1,0,0, 0,0,0,1)
+	animate(A, color=list(0,1,0,0, 0,0,1,0, 1,0,0,0, 0,0,0,1), time=time, easing=SINE_EASING)
+	return
+
+/proc/animate_fade_drug_inbetween_2(var/atom/A, var/time=5) //This fades from rred being blue, green being red and blue being green to red being green, green being blue and blue being red
+	if (!istype(A) && !isclient(A))
+		return
+	A.color = list(0,1,0,0, 0,0,1,0, 1,0,0,0, 0,0,0,1)
+	animate(A, color=list(0,0,1,0, 1,0,0,0, 0,1,0,0, 0,0,0,1), time=time, easing=SINE_EASING)
+	return
+
 /proc/animate_melt_pixel(var/atom/A)
 	if (!istype(A))
 		return
@@ -74,6 +102,14 @@
 	var/matrix/M = matrix(A.transform)
 	animate(A, transform = A.transform.Scale(0.6, 1), time = 3,easing = BOUNCE_EASING,flags=ANIMATION_PARALLEL)
 	animate(transform = M, time = 3,easing = BOUNCE_EASING)
+	return
+
+/proc/animate_smush(var/atom/A, var/y_scale = 0.9)
+	if (!istype(A))
+		return
+	var/matrix/M = matrix(A.transform)
+	animate(A, transform = A.transform.Scale(1, y_scale), time = 2, easing = BOUNCE_EASING, flags=ANIMATION_PARALLEL)
+	animate(transform = M, time = 2, easing = BOUNCE_EASING)
 	return
 
 /proc/animate_flockdrone_item_absorb(var/atom/A)
@@ -544,50 +580,54 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		if (M.sprint_particle.loc == T)
 			M.sprint_particle.loc = null
 
-/proc/attack_twitch(var/atom/A)
-	if (!istype(A) || istype(A, /mob/living/object))
+/proc/attack_twitch(var/atom/A, move_multiplier=1, angle_multiplier=1)
+	if (!istype(A) || islivingobject(A))
 		return		//^ possessed objects use an animate loop that is important for readability. let's not interrupt that with this dumb animation
+	if(ON_COOLDOWN(A, "attack_twitch", 0.1 SECONDS))
+		return
 	var/which = A.dir
 
-	SPAWN(0)
-		var/ipx = A.pixel_x
-		var/ipy = A.pixel_y
-		var/movepx = 0
-		var/movepy = 0
-		switch(which)
-			if (NORTH)
-				movepy = 3
-			if (WEST)
-				movepx = -3
-			if (SOUTH)
-				movepy = -3
-			if (EAST)
-				movepx = 3
-			if (NORTHEAST)
-				movepx = 3
-			if (NORTHWEST)
-				movepy = 3
-			if (SOUTHEAST)
-				movepy = -3
-			if (SOUTHWEST)
-				movepx = -3
-			else
-				return
+	var/ipx = A.pixel_x
+	var/ipy = A.pixel_y
+	var/movepx = 0
+	var/movepy = 0
+	switch(which)
+		if (NORTH)
+			movepy = 3
+		if (WEST)
+			movepx = -3
+		if (SOUTH)
+			movepy = -3
+		if (EAST)
+			movepx = 3
+		if (NORTHEAST)
+			movepx = 3
+		if (NORTHWEST)
+			movepy = 3
+		if (SOUTHEAST)
+			movepy = -3
+		if (SOUTHWEST)
+			movepx = -3
+		else
+			return
 
-		var/x = movepx + ipx
-		var/y = movepy + ipy
-		//Shift pixel offset
-		animate(A, pixel_x = x, pixel_y = y, time = 0.6,easing = EASE_OUT,flags=ANIMATION_PARALLEL)
-		var/matrix/M = matrix(A.transform)
-		animate(transform = turn(A.transform, (movepx - movepy) * 4), time = 0.6, easing = EASE_OUT)
-		animate(pixel_x = ipx, pixel_y = ipy, time = 0.6,easing = EASE_IN)
-		animate(transform = M, time = 0.6, easing = EASE_IN)
+	movepx *= move_multiplier
+	movepy *= move_multiplier
+
+	var/x = movepx + ipx
+	var/y = movepy + ipy
+	//Shift pixel offset
+	animate(A, pixel_x = x, pixel_y = y, time = 0.6,easing = EASE_OUT,flags=ANIMATION_PARALLEL)
+	var/matrix/M = matrix(A.transform)
+	animate(transform = turn(A.transform, (movepx - movepy) / move_multiplier * angle_multiplier * 4), time = 0.6, easing = EASE_OUT)
+	animate(pixel_x = ipx, pixel_y = ipy, time = 0.6,easing = EASE_IN)
+	animate(transform = M, time = 0.6, easing = EASE_IN)
 
 
 
 
 /proc/hit_twitch(var/atom/A)
-	if (!A || istype(A, /mob/living/object) || ON_COOLDOWN(A, "hit_twitch", 0.1 SECONDS))
+	if (!A || islivingobject(A)|| ON_COOLDOWN(A, "hit_twitch", 0.1 SECONDS))
 		return
 	var/which = 0
 	if (usr)
@@ -1129,6 +1169,40 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 			qdel(swirl)
 	return
 
+/proc/showswirl_out(var/atom/target, var/play_sound = TRUE)
+	if (!target)
+		return
+	var/turf/target_turf = get_turf(target)
+	if (!target_turf)
+		return
+	var/obj/decal/teleport_swirl/swirl/ = new /obj/decal/teleport_swirl/out
+	swirl.set_loc(target_turf)
+	swirl.pixel_y = 10
+	if (play_sound)
+		playsound(target_turf, "sound/effects/teleport.ogg", 50, 1)
+	SPAWN(1.5 SECONDS)
+		if (swirl)
+			swirl.pixel_y = 0
+			qdel(swirl)
+	return
+
+/proc/showswirl_error(var/atom/target, var/play_sound = TRUE)
+	if (!target)
+		return
+	var/turf/target_turf = get_turf(target)
+	if (!target_turf)
+		return
+	var/obj/decal/teleport_swirl/swirl/ = new /obj/decal/teleport_swirl/error
+	swirl.set_loc(target_turf)
+	swirl.pixel_y = 10
+	if (play_sound)
+		playsound(target_turf, "sound/effects/teleport.ogg", 50, 1)
+	SPAWN(1.5 SECONDS)
+		if (swirl)
+			swirl.pixel_y = 0
+			qdel(swirl)
+	return
+
 /proc/leaveresidual(var/atom/target)
 	if (!target)
 		return
@@ -1143,6 +1217,14 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		if (e)
 			qdel(e)
 	return
+
+/proc/showlightning_bolt(var/atom/target)
+	if (!target)
+		return
+	var/turf/target_turf = get_turf(target)
+	if (!target_turf)
+		return
+	new /obj/decal/lightning_bolt(target_turf)
 
 /proc/leavepurge(var/atom/target, var/current_increment, var/sword_direction)
 	if (!target)
@@ -1437,7 +1519,7 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 	animate(slide, transform=tr, time=time)
 	if(!had_fullbright && T.fullbright) // eww
 		T.fullbright = 0
-		T.overlays -= /image/fullbright
+		T.UpdateOverlays(null, "fullbright")
 		T.RL_Init() // turning off fullbright
 		var/obj/full_light = new/obj/overlay/tile_effect/fake_fullbright(T)
 		full_light.color = T.color
@@ -1463,7 +1545,7 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 		qdel(slide)
 	if(initial(T.fullbright))
 		T.fullbright = 1
-		T.overlays += /image/fullbright
+		T.UpdateOverlays(new /image/fullbright, "fullbright")
 		T.RL_Init()
 
 /proc/animate_open_from_floor(atom/A, time=1 SECOND, self_contained=1)

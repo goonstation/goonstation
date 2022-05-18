@@ -184,10 +184,15 @@
 		return
 	var/datum/artifact/A = src.artifact
 	switch(reagent_id)
-		if("radium","porktonium")
+		if("porktonium")
 			src.ArtifactStimulus("radiate", round(volume / 10))
-		if("strange_reagent")
-			src.ArtifactStimulus("radiate", round(volume / 5))
+			src.ArtifactStimulus("carbtouch", round(volume / 5))
+		if("synthflesh","blood","bloodc","meat_slurry") //not carbon, because it's about detecting *lifeforms*, not elements
+			src.ArtifactStimulus("carbtouch", round(volume / 5)) //require at least 5 units
+		if("nanites","corruptnanites","goodnanites","flockdrone_fluid") //not silicon&friends for the same reason
+			src.ArtifactStimulus("silitouch", round(volume / 5)) //require at least 5 units
+		if("radium")
+			src.ArtifactStimulus("radiate", round(volume / 10))
 		if("uranium","polonium")
 			src.ArtifactStimulus("radiate", round(volume / 2))
 		if("dna_mutagen","mutagen","omega_mutagen")
@@ -319,7 +324,7 @@
 
 			var/mob/M = GRAB.affecting
 			var/mob/A = GRAB.assailant
-			if (get_dist(src.loc, M.loc) > 1)
+			if (BOUNDS_DIST(src.loc, M.loc) > 0)
 				return
 			src.visible_message("<strong class='combat'>[A] shoves [M] against \the [src]!</strong>")
 			logTheThing("combat", A, M, "forces [constructTarget(M,"combat")] to touch \an ([src.type]) artifact at [log_loc(src)].")
@@ -567,11 +572,11 @@
 	var/datum/artifact/A = O.artifact
 
 	if ((target && ismob(target)) && type_of_action == "weapon")
-		logTheThing("combat", user, target, "attacks [constructTarget(target,"combat")] with an active artifact ([A.type])[special_addendum ? ", [special_addendum]" : ""] at [log_loc(target)].")
+		logTheThing("combat", user, target, "attacks [constructTarget(target,"combat")] with an active artifact ([A.type_name])[special_addendum ? ", [special_addendum]" : ""] at [log_loc(target)].")
 	else
-		logTheThing(type_of_action == "detonated" ? "bombing" : "station", user, target, "an artifact ([A.type]) was [type_of_action] [special_addendum ? "([special_addendum])" : ""] at [target && isturf(target) ? "[log_loc(target)]" : "[log_loc(O)]"].[type_of_action == "detonated" ? " Last touched by: [O.fingerprintslast ? "[O.fingerprintslast]" : "*null*"]" : ""]")
+		logTheThing(type_of_action == "detonated" ? "bombing" : "station", user, target, "an artifact ([A.type_name]) was [type_of_action] [special_addendum ? "([special_addendum])" : ""] at [target && isturf(target) ? "[log_loc(target)]" : "[log_loc(O)]"].[type_of_action == "detonated" ? " Last touched by: [O.fingerprintslast ? "[O.fingerprintslast]" : "*null*"]" : ""]")
 
 	if (trigger_alert)
-		message_admins("An artifact ([A.type]) was [type_of_action] [special_addendum ? "([special_addendum])" : ""] at [log_loc(O)]. Last touched by: [key_name(O.fingerprintslast)]")
+		message_admins("An artifact ([A.type_name]) was [type_of_action] [special_addendum ? "([special_addendum])" : ""] at [log_loc(O)]. Last touched by: [key_name(O.fingerprintslast)]")
 
 	return

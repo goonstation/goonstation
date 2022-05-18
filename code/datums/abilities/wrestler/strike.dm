@@ -7,7 +7,7 @@
 	target_nodamage_check = 1
 	target_selection_check = 1
 	max_range = 1
-	cooldown = 250
+	cooldown = 150
 	start_on_cooldown = 1
 	pointCost = 0
 	when_stunned = 1
@@ -33,7 +33,7 @@
 			M.visible_message("<span class='alert'>You seem to attack [target]!</span>")
 			return 1
 
-		SEND_SIGNAL(M, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
+		SEND_SIGNAL(M, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 
 		var/turf/T = get_turf(M)
 		if (T && isturf(T) && target && isturf(target.loc))
@@ -45,7 +45,7 @@
 
 				M.set_loc(target.loc)
 				sleep(4)
-				if (M && (T && isturf(T) && get_dist(M, T) <= 1))
+				if (M && (T && isturf(T) && BOUNDS_DIST(M, T) == 0))
 					M.set_loc(T)
 
 			M.visible_message("<span class='alert'><b>[M] [pick_string("wrestling_belt.txt", "strike")] [target]!</b></span>")
@@ -54,6 +54,7 @@
 			if (!fake)
 				random_brute_damage(target, 15, 1)
 				target.changeStatus("paralysis", 2 SECONDS)
+				target.changeStatus("weakened", 3 SECONDS)
 				target.force_laydown_standup()
 				target.change_misstep_chance(25)
 

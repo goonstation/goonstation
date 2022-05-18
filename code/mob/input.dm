@@ -128,11 +128,11 @@
 						C.rotate(src.move_dir)
 
 				for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
-					if (get_dist(src, G.affecting) > 1)
+					if (BOUNDS_DIST(src, G.affecting) > 0)
 						qdel(G)
 				for (var/obj/item/grab/G as anything in src.grabbed_by)
-					if (istype(G) && get_dist(src, G.assailant) > 1)
-						if (G.state > 1)
+					if (istype(G) && BOUNDS_DIST(src, G.assailant) > 0)
+						if (G.state > GRAB_STRONG)
 							delay += G.assailant.p_class
 						qdel(G)
 
@@ -200,7 +200,7 @@
 
 					var/do_step = 1 //robust grab : don't even bother if we are in a chokehold. Assailant gets moved below. Makes the tile glide better without having a chain of step(src)->step(assailant)->step(me)
 					for (var/obj/item/grab/G as anything in src.grabbed_by)
-						if (G?.state < GRAB_NECK) continue
+						if (G?.state < GRAB_AGGRESSIVE) continue
 						do_step = 0
 						break
 
@@ -220,7 +220,7 @@
 
 						for (var/obj/item/grab/G as anything in src.grabbed_by)
 							if (G.assailant == pushing || G.affecting == pushing) continue
-							if (G.state < GRAB_NECK) continue
+							if (G.state < GRAB_AGGRESSIVE) continue
 							if (!G.assailant || !isturf(G.assailant.loc) || G.assailant.anchored)
 								return
 							src.set_density(0) //assailant shouldn't be able to bump us here. Density is set to 0 by the grab stuff but *SAFETY!*
@@ -247,7 +247,7 @@
 
 						var/list/pulling = list()
 						if (src.pulling)
-							if ((!IN_RANGE(old_loc, src.pulling, 1) && !IN_RANGE(src, src.pulling, 1)) || !isturf(src.pulling.loc) || src.pulling == src) // fucks sake
+							if ((BOUNDS_DIST(old_loc, src.pulling) > 0 && BOUNDS_DIST(src, src.pulling) > 0) || !isturf(src.pulling.loc) || src.pulling == src) // fucks sake
 								src.remove_pulling()
 								//hud.update_pulling() // FIXME
 							else

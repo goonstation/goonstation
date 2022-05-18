@@ -15,7 +15,7 @@
 	var/dump_contents_chance = 20
 
 	var/image/health_mon = null
-	var/image/health_implant = null
+	var/list/implant_icons = null
 	var/image/arrestIcon = null
 
 	var/pin = null
@@ -198,8 +198,12 @@
 	health_mon = image('icons/effects/healthgoggles.dmi',src,"100",EFFECTS_LAYER_UNDER_4)
 	get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_image(health_mon)
 
-	health_implant = image('icons/effects/healthgoggles.dmi',src,"100",EFFECTS_LAYER_UNDER_4)
-	get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_image(health_implant)
+	implant_icons = list()
+	implant_icons["health"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
+	implant_icons["cloner"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
+	implant_icons["other"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
+	for (var/implant in implant_icons)
+		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_image(implant_icons[implant])
 
 	arrestIcon = image('icons/effects/sechud.dmi',src,null,EFFECTS_LAYER_UNDER_4)
 	get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).add_image(arrestIcon)
@@ -234,11 +238,11 @@
 	// for pope
 	if (microbombs_4_everyone)
 		if (isnum(microbombs_4_everyone))
-			var/obj/item/implant/microbomb/MB = new (src)
-			MB.explosionPower = microbombs_4_everyone
-			MB.implanted = 1
+			var/obj/item/implant/revenge/microbomb/MB = new (src)
+			MB.power = microbombs_4_everyone
+			MB.implanted = TRUE
 			src.implant.Add(MB)
-			INVOKE_ASYNC(MB, /obj/item/implant/microbomb.proc/implanted, src)
+			INVOKE_ASYNC(MB, /obj/item/implant/revenge/microbomb.proc/implanted, src)
 
 	src.text = "<font color=#[random_hex(3)]>@"
 	src.update_colorful_parts()
@@ -507,10 +511,12 @@
 		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_image(health_mon)
 		health_mon.dispose()
 		health_mon = null
-	if(health_implant)
-		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_image(health_implant)
-		health_implant.dispose()
-		health_implant = null
+	if(implant_icons)
+		for (var/implant in implant_icons)
+			var/image/I = implant_icons[implant]
+			get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_image(I)
+			I.dispose()
+		implant_icons = null
 	if(arrestIcon)
 		get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_image(arrestIcon)
 		arrestIcon.dispose()
@@ -651,19 +657,25 @@
 				emote("deathgasp")
 				src.visible_message("<span class='alert'><B>[src]</B> head starts to shift around!</span>")
 				src.show_text("<b>We begin to grow a headspider...</b>", "blue")
-				var/datum/mind/M = src.mind
-				sleep(20 SECONDS)
-				if(!M || M.disposed || M.current != src || isalive(src))
-					return
-				if (M.current)
-					M.current.show_text("<b>We released a headspider, using up some of our DNA reserves.</b>", "blue")
-				src.visible_message("<span class='alert'><B>[src]</B> head detaches, sprouts legs and wanders off looking for food!</span>")
-				//make a headspider, have it crawl to find a host, give the host the disease, hand control to the player again afterwards
-				var/mob/living/critter/changeling/headspider/HS = new /mob/living/critter/changeling/headspider(get_turf(src))
+				var/mob/living/critter/changeling/headspider/HS = new /mob/living/critter/changeling/headspider(src) //we spawn the headspider inside this dude immediately.
+				HS.RegisterSignal(src, COMSIG_PARENT_PRE_DISPOSING, .proc/remove) //if this dude gets grindered or cremated or whatever, we go with it
+				src.mind?.transfer_to(HS) //ok we're a headspider now
 				C.points = max(0, C.points - 10) // This stuff isn't free, you know.
-				M.transfer_to(HS)
-				HS.owner = M //In case we ghosted ourselves then the body won't hold the mind. Bad times.
 				HS.changeling = C
+				// alright everything to do with headspiders is a blasted hellscape but here's what goes on here
+				// we don't want to actually give the headspider access to the changeling abilityholder, because that would let it use all the abilities
+				// which leads to bugs and is generally bad. So we remove the HUD from corpsey over here, tell the abilityholder (C) that the headspider owns it,
+				// but we do NOT tell the headspider it has access to the abilities.
+				src.detach_hud(C.hud)
+				C.owner = HS
+				C.reassign_hivemind_target_mob()
+				sleep(20 SECONDS)
+				if(HS.disposed || !HS.mind || HS.mind.disposed || isdead(HS)) // we went somewhere else, or suicided, or something idk
+					return
+				boutput(HS, "<b class = 'hint'>We released a headspider, using up some of our DNA reserves.</b>")
+				HS.set_loc(get_turf(src)) //be free!!!
+				src.visible_message("<span class='alert'><B>[src]</B>'s head detaches, sprouts legs and wanders off looking for food!</span>")
+				//make a headspider, have it crawl to find a host, give the host the disease, hand control to the player again afterwards
 				remove_ability_holder(/datum/abilityHolder/changeling/)
 
 				if(src.client)
@@ -672,10 +684,6 @@
 
 				logTheThing("combat", src, null, "became a headspider at [log_loc(src)].")
 
-
-				HS.changeling.transferOwnership(HS)
-				HS.changeling.owner = HS
-				HS.changeling.reassign_hivemind_target_mob()
 				if(src.wear_mask)
 					var/obj/item/dropped_mask = src.wear_mask
 					src.u_equip(dropped_mask)
@@ -694,10 +702,6 @@
 					dropped_earwear.set_loc(src.loc)
 				var/obj/item/organ/head/organ_head = src.organHolder.drop_organ("head")
 				qdel(organ_head)
-
-				//HS.process() //A little kickstart to get you out into the big world (and some chump), li'l guy! O7
-
-				return
 	/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 			NORMAL BUSINESS
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -1123,7 +1127,7 @@
 				return
 		else
 			if (src.client.check_key(KEY_THROW) || src.in_throw_mode)
-				SEND_SIGNAL(src, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
+				SEND_SIGNAL(src, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 				src.throw_item(target, params)
 				return
 
@@ -1352,7 +1356,7 @@
 	..()
 	if (M != usr) return
 	if (usr == src) return
-	if (get_dist(usr,src) > 1) return
+	if (BOUNDS_DIST(usr, src) > 0) return
 	if (!M.can_strip(src)) return
 	if (LinkBlocked(usr.loc,src.loc)) return
 	if (isAI(usr) || isAI(src)) return
@@ -2801,43 +2805,17 @@
 	if (!src.bioHolder || !src.bioHolder.mobAppearance)
 		return null
 	var/obj/item/clothing/head/wig/W = new(src)
-	var/actuallyHasHair = 0
 	W.name = "[real_name]'s hair"
 	W.real_name = "[real_name]'s hair" // The clothing parent setting real_name is probably good for other stuff so I'll just do this
 	W.icon = 'icons/mob/human_hair.dmi'
 	W.icon_state = "bald" // Let's give the actual hair a chance to shine
-/* commenting this out and making it an overlay to fix issues with colors stacking
-	W.icon = 'icons/mob/human_hair.dmi'
-	W.icon_state = H.bioHolder.mobAppearance.customization_first.id
-	W.color = src.bioHolder.mobAppearance.customization_first_color
-	W.wear_image_icon = 'icons/mob/human_hair.dmi'
-	W.wear_image = image(W.wear_image_icon, W.icon_state)
-	W.wear_image.color = src.bioHolder.mobAppearance.customization_first_color*/
 
-	if (!istype(src.bioHolder.mobAppearance.customization_first,/datum/customization_style/none))
-		var/image/h_image = image('icons/mob/human_hair.dmi', src.bioHolder.mobAppearance.customization_first.id)
-		h_image.color = src.bioHolder.mobAppearance.customization_first_color
-		W.overlays += h_image
-		W.wear_image.overlays += h_image
-		actuallyHasHair = 1
+	var/hair_list = list()
+	hair_list[src.bioHolder.mobAppearance.customization_first.id] = src.bioHolder.mobAppearance.customization_first_color
+	hair_list[src.bioHolder.mobAppearance.customization_second.id] = src.bioHolder.mobAppearance.customization_second_color
+	hair_list[src.bioHolder.mobAppearance.customization_third.id] = src.bioHolder.mobAppearance.customization_third_color
 
-	if (!istype(src.bioHolder.mobAppearance.customization_second,/datum/customization_style/none))
-		var/image/f_image = image('icons/mob/human_hair.dmi', src.bioHolder.mobAppearance.customization_second.id)
-		f_image.color = src.bioHolder.mobAppearance.customization_second_color
-		W.overlays += f_image
-		W.wear_image.overlays += f_image
-		actuallyHasHair = 1
-
-
-	if (!istype(src.bioHolder.mobAppearance.customization_third,/datum/customization_style/none))
-		var/image/d_image = image('icons/mob/human_hair.dmi', src.bioHolder.mobAppearance.customization_third.id)
-		d_image.color = src.bioHolder.mobAppearance.customization_third_color
-		W.overlays += d_image
-		W.wear_image.overlays += d_image
-		actuallyHasHair = 1
-
-	if(!actuallyHasHair) // Guess they didnt have any, ah well
-		W.icon_state = "short"
+	W.setup_wig(hair_list)
 
 	return W
 
@@ -2890,13 +2868,13 @@
 			return
 
 	if (mutantrace?.override_attack)
-		mutantrace.custom_attack(target)
-	else
-		var/obj/item/parts/arm = null
-		if (limbs) //Wire: fix for null.r_arm and null.l_arm
-			arm = hand ? limbs.l_arm : limbs.r_arm // I'm so sorry I couldent kill all this shitcode at once
-		if (arm)
-			arm.limb_data.attack_hand(target, src, can_reach(src, target), params, location, control)
+		if(mutantrace.custom_attack(target))
+			return
+	var/obj/item/parts/arm = null
+	if (limbs) //Wire: fix for null.r_arm and null.l_arm
+		arm = hand ? limbs.l_arm : limbs.r_arm // I'm so sorry I couldent kill all this shitcode at once
+	if (arm)
+		arm.limb_data.attack_hand(target, src, can_reach(src, target), params, location, control)
 
 /mob/living/carbon/human/hand_range_attack(atom/target, params, location, control, origParams)
 	//This looks bad but it really isn't anymore. <3
@@ -3191,6 +3169,13 @@
 		src.chest_item = null
 		return
 	src.chest_item.AttackSelf(src)
+
+///Clear chest item if it escapes/gets disposed
+/mob/living/carbon/human/Exited(atom/movable/thing)
+	..()
+	if (thing == chest_item)
+		chest_item = null
+		chest_item_sewn = 0
 
 /mob/living/carbon/human/attackby(obj/item/W, mob/M)
 	if (src.parry_or_dodge(M))

@@ -245,8 +245,12 @@ var/datum/score_tracker/score_tracker
 					most_damaged_escapee = M
 
 				var/cash_total = get_cash_in_thing(M)
-				if (richest_total < cash_total)
-					richest_total = cash_total
+				var/bank_account = data_core.bank.find_record("name", M.real_name)
+				var/bank_total = 0
+				if(bank_account)
+					bank_total = bank_account["current_money"]
+				if (richest_total < (cash_total + bank_total))
+					richest_total = cash_total + bank_total
 					richest_escapee = M
 
 		command_pets_escaped = list()
@@ -374,7 +378,10 @@ var/datum/score_tracker/score_tracker
 		return
 
 	if (!score_tracker.score_text)
-		score_tracker.score_text = {"<B>Round Statistics and Score</B><BR><HR>"}
+		score_tracker.score_text = ticker.mode.victory_msg()
+		if (length(score_tracker.score_text))
+			score_tracker.score_text += "<br><br>"
+		score_tracker.score_text += {"<B>Round Statistics and Score</B><BR><HR>"}
 		score_tracker.score_text += "<B><U>TOTAL SCORE: [round(score_tracker.final_score_all)]%</U></B>"
 		if(round(score_tracker.final_score_all) == 69)
 			score_tracker.score_text += " <b>nice</b>"

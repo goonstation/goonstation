@@ -1026,7 +1026,7 @@ Frequency:
 		if (istype(aiMainframe))
 			aiMainframe.show_laws(0, src)
 		else
-			ticker.centralized_ai_laws.show_laws(src)
+			boutput(src, "<span class='alert'>You lack a dedicated mainframe! This is a bug, report to an admin!</span>")
 
 		return
 
@@ -1035,6 +1035,12 @@ Frequency:
 			src.mainframe.return_to(src)
 		else
 			return ..()
+
+	disposing()
+		available_ai_shells -= src
+		..()
+
+
 
 /*-----Shell-Creation---------------------------------------*/
 

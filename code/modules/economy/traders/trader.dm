@@ -150,7 +150,7 @@
 		hikeperc = (hikeperc / goods.price) * 100
 		var/negatol = 0 - adjustedTolerance
 
-		if ((buying && hikeperc <= negatol) || (!buying && hikeperc >= adjustedTolerance))
+		if ((buying && (hikeperc <= negatol || askingprice < goods.baseprice / 5)) || (!buying && (hikeperc >= adjustedTolerance || askingprice > goods.baseprice * 5)))
 			// you are being a rude nerd and pushing it too far!
 			src.current_message = pick(src.dialogue_haggle_reject)
 			src.patience--
@@ -230,6 +230,7 @@
 		if(prob(src.alt_type_chance) && length(src.possible_alt_types))
 			src.comtype = pick(src.possible_alt_types)
 		src.price = rand(src.price_boundary[1],src.price_boundary[2])
+		src.baseprice = price
 
 /datum/commodity/trader/incart/
 	var/datum/commodity/reference = null

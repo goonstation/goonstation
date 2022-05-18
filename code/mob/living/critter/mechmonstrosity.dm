@@ -189,7 +189,7 @@
 				return 1
 		if (target == holder.owner)
 			return 1
-		if (get_dist(holder.owner, target) > 1)
+		if (BOUNDS_DIST(holder.owner, target) > 0)
 			boutput(holder.owner, __red("That is too far away to inject."))
 			return 1
 		var/mob/MT = target
@@ -258,13 +258,13 @@
 	onUpdate()
 		..()
 
-		if(get_dist(owner, target) > 1 || target == null || owner == null || target == owner || !mechanimate || !mechanimate.cooldowncheck())
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || target == owner || !mechanimate || !mechanimate.cooldowncheck())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null || target == owner || !mechanimate || !mechanimate.cooldowncheck())
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || target == owner || !mechanimate || !mechanimate.cooldowncheck())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -274,7 +274,7 @@
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
-		if(ownerMob && target && IN_RANGE(owner, target, 1) && mechanimate?.cooldowncheck())
+		if(ownerMob && target && (BOUNDS_DIST(owner, target) == 0) && mechanimate?.cooldowncheck())
 			logTheThing("combat", ownerMob, target, "injects [constructTarget(target,"combat")]. Crawler transformation")
 			for(var/mob/O in AIviewers(ownerMob))
 				O.show_message("<span class='alert'><B>[owner] successfully injected [target]!</B></span>", 1)
