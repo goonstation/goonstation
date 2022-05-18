@@ -3226,7 +3226,28 @@
 	if (head)
 		worn += head.name
 	else
-		worn += "hair"
+		if (istype(src:mutantrace, /datum/mutantrace/lizard))
+			worn += "scales"
+		else if (istype(src:mutantrace, /datum/mutantrace/werewolf) || istype(src:mutantrace, /datum/mutantrace/pug) || (ismonkey(src)))
+			worn += "fur"
+		else if (istype(src:mutantrace, /datum/mutantrace/cow))
+			worn += "hooves"
+			worn += "fur"
+		else if (istype(src:mutantrace, /datum/mutantrace/roach))
+			worn += "exoskeleton"
+			worn += "antenna"
+			worn += "thorax"
+		else if (istype(src.mutantrace, /datum/mutantrace/skeleton))
+			worn += "ribcage"
+			worn += "funny bone"
+			worn += "femur"
+			worn += "scapula"
+		else if (istype(src.mutantrace, /datum/mutantrace/ithillid))
+			worn += "gills"
+		else if (istype(src.mutantrace, /datum/mutantrace/abomination))
+			worn += "disgusting writhing appendages"
+		else
+			worn += "hair"
 
 	.= pick(worn)
 
