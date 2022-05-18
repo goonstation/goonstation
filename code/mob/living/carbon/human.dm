@@ -202,6 +202,7 @@
 	implant_icons["health"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
 	implant_icons["cloner"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
 	implant_icons["other"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
+	implant_icons["unknown"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
 	for (var/implant in implant_icons)
 		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_image(implant_icons[implant])
 

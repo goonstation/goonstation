@@ -39,6 +39,7 @@
 			var/has_health = FALSE
 			var/has_cloner = FALSE
 			var/has_other = FALSE
+			var/has_unknown = FALSE
 			for (var/obj/item/implant/I in H.implant)
 				if (I.scan_category == "not_shown")
 					continue
@@ -48,6 +49,8 @@
 					has_cloner = TRUE
 				else if (I.scan_category == "other")
 					has_other = TRUE
+				else if (I.scan_category == "unknown")
+					has_unknown = TRUE
 			var/image/I
 			I = H.implant_icons["health"]
 			I.icon_state = has_health ? "implant-health" : null
@@ -55,4 +58,6 @@
 			I.icon_state = has_cloner ? "implant-cloner" : null
 			I = H.implant_icons["other"]
 			I.icon_state = has_other ? "implant-other" : null
+			I = H.implant_icons["unknown"]
+			I.icon_state = has_unknown ? "implant-unknown" : null
 		..()
