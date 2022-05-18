@@ -1284,30 +1284,29 @@
 
 		boutput(usr, "<b>You whisper to everyone around you:</b> [message]")
 
-/datum/targetable/wraithAbility/mass_emag
-	name = "Mass Decay"
+/datum/targetable/wraithAbility/dread
+	name = "Creeping dread"
 	icon_state = "whisper"
-	desc = "Disrupt the energy of every machinery around you."
+	desc = "Instill a fear of the dark in a human's mind, causing terror and heart attacks if they do not stay in the light."
 	pointCost = 80
-	targeted = 0
+	targeted = 1
 	cooldown = 1 MINUTE
 
-	cast()
+	cast(mob/target)
 		if (..())
 			return 1
 
-		boutput(usr, "<span class='notice'>You begin to gather your energy.</span>")
-		var/turf/T = get_turf(holder.owner)
-		sleep(5 SECONDS)
-		for (var/mob/living/carbon/human/A in range(4, T))
-			if (!isdead(A))
-				var/mob/living/carbon/H = A
-				boutput(H, "<span class='alert'>You feel a sudden dizzyness!</span>")
-				H.emote("pale")
+		if (ishuman(target) && !isdead(target))
+			var/mob/living/carbon/human/H = target
+			if (H.traitHolder.hasTrait("training_chaplain"))
+				boutput(holder.owner, "<span class='notice'>This one does not fear what lurks in the dark. Your effort is wasted.</span>")
 				return 0
-		for (var/obj/A in range(4, T))
-			if (A.emag_act(null, null) && !istype(A, /obj/machinery/computer/shuttle/embedded))
-				boutput(usr, "<span class='notice'>You alter the energy of [A].</span>")
+			boutput(holder.owner, "<span class='notice'>We curse this being with a creeping feeling of dread.</span>")
+			H.setStatus("creeping_dread", 20 SECONDS)
+			holder.owner.playsound_local(holder.owner, "sound/voice/wraith/wraithspook[pick("1","2")].ogg", 60)
+			return 0
+
+		return 1
 
 /datum/targetable/wraithAbility/possess
 	name = "Possession"

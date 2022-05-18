@@ -1526,11 +1526,116 @@
 			H.TakeDamage(zone="All", brute=damage)
 			bleed(H, damage, bleed)
 
-/datum/statusEffect/terror	//Todo add more illusions
+/datum/statusEffect/creeping_dread	//Aka fear of the dark
+	id = "creeping_dread"
+	name = "Creeping dread"
+	desc = "The dark is trying to get you! Stay in the light!"
+	icon_state = "mentor_mouse"
+	//Todo change icon as status progresses or regresses
+	unique = 1
+	duration = 20 SECONDS
+	maxDuration = 3 MINUTES
+	var/mob/living/carbon/human/H
+
+	onUpdate(var/timePassed)
+
+		var/found_light = FALSE
+		var/mult = timePassed / (2 SECONDS)
+
+		if (!ishuman(owner))
+			return
+
+		H = owner
+		for (var/obj/machinery/light/L in view(3, H))
+			if(L.on && !istype(L, /obj/machinery/light/emergency) && !istype(L, /obj/machinery/light/emergencyflashing))	//Those can't be broken, so ignore them.
+				found_light = TRUE
+				continue
+		if (!found_light)	//Staying in the dark makes it worse and worse
+			duration += 5
+		if (probmult(6) && (duration <= 30 SECONDS))
+			switch (rand(1,5))
+				if (1)
+					H.emote("pale")
+				if (2)
+					H.emote("shiver")
+					boutput(H, pick("The shadows grow colder", "You feel a chill run down your spine"))
+				if (3)
+					H.emote("scream")
+					boutput(H, pick("<span class='alert'>You feel something brush against your arm!<span>", "<span class='alert'>Oh god! Did you see that?!</span>"))
+				if (4)
+					H.emote("twitch")
+					boutput(H, "You hear some clicking noises, akin to an insect.")
+				if (5)
+					H.emote("twitch_v")
+					boutput(H, pick("<span class='alert'>You feel something crawling on your back<span class='alert'>", "<span class='alert'>Something just crawled up your leg!</span>"))
+		if ((duration > 30 SECONDS) && (duration < 60 SECONDS) && probmult(9))
+			switch (rand(1,3))
+				if (1)
+					H.emote("scream")
+					boutput(H, pick("<span class='alert'>The shadows are getting thicker! YOU HAVE TO <b>RUN</b>!<span class='alert'>", "<span class='alert'>You hate it here! Find some light, NOW!"))
+				if (2)
+					H.emote("flipout")
+					boutput(H, "<span class='alert'>You can't stay in the dark! RUN!</span>")
+				if (3)
+					H.setStatus("stunned", 2 SECONDS)
+					H.visible_message("<span class='alert'>[H] flails around wildly, trying to get some invisible things off [himself_or_herself(H)].</span>", "<span class='alert'>You flail around wildly trying to defend yourself from the shadows!</span>")
+		if ((duration >= 60 SECONDS) && (duration < 90 SECONDS))
+			SPAWN(1 SECOND)
+				H.playsound_local(H, "sound/effects/heartbeat.ogg", 50)
+			H.make_jittery(30)
+			H.setStatus("terror", 30 SECONDS)
+			if(probmult(12))
+				switch (rand(1, 4))
+					if (1)
+						H.take_brain_damage(10)
+						boutput(H, pick("<span class='alert'>YOU CANT THINK IN THE DARK LIKE THIS! FIND SOME LIGHT!</span>", "<span class='alert'>You hate it! ALL OF IT!</span>, <span class='alert'>Your temples pound, you cant think like this!</span>"))
+					if (2)
+						H.losebreath += 2
+						boutput(H, pick("<span class='notice'>You cant control your breathing!</span>", "<span class='notice'>You hyperventilate</span>"))
+						H.playsound_local(H, "sound/effects/hyperventstethoscope.ogg", 50)
+					if (3)
+						H.emote("panic")
+						boutput(H, pick("<span class='alert'>THE DARK! STAY OUT OF THE DARK!</span>", "<span class='alert'>What the <b>FUCK</b> was THAT?"))
+					if (4)
+						random_brute_damage(H, 3)
+						H.playsound_local(H, "sound/impact_sounds/Flesh_Tear_[pick("1", "2", "3")].ogg", 70)
+						boutput(H, pick("<span class='alert'>SOMETHING BIT YOU, HOLY SHIT!!!</span>"))
+		if ((duration >= 90 SECONDS) && (duration < 130 SECONDS))
+			SPAWN(5 DECI SECONDS)
+				H.playsound_local(H, "sound/effects/heartbeat.ogg", 70)
+			H.make_jittery(30)
+			H.setStatus("terror", 30 SECONDS)
+			if(probmult(15))
+				switch (rand(1, 4))
+					if (1)
+						H.take_brain_damage(10)
+						boutput(H, pick("<span class='alert'>YOU CANT TAKE IT ANYMORE!!!</span>", "<span class='alert'>This cant be real!</span>", "<span class='alert'>It's ALL LIES! ALL OF IT!</span>"))
+					if (2)
+						H.emote("scream")
+						boutput(H, "<span class='alert'>NO, NO, NO!</span>")
+					if (3)
+						H.emote("panic")
+						boutput(H, pick("<span class='alert'>IT'S RIGHT HERE, YOU JUST CAN'T SEE IT!</span>", "<span class='alert'>IT'S WATCHING YOU, LAUGHING! YOU KNOW IT!</span>"))
+					if (4)
+						H.contract_disease(/datum/ailment/malady/heartfailure,null,null,1)	//Bad luck
+						H.visible_message("<span class='alert'>[H] suddenly clutches their chest with a terrified expression</span>", "<span class='alert'>Your heart is beating out of your chest! You feel like death!</span>")
+		if ((duration >= 130 SECONDS))
+			H.contract_disease(/datum/ailment/malady/heartfailure,null,null,1)
+			H.contract_disease(/datum/ailment/malady/flatline,null,null,1)
+			H.visible_message("<span class='alert'>[H]'s face goes blank as they start to collapse to the ground</span>", "<span class='alert'>Your nerves can't take it any longer! Your heart is giving up on you!</span>")
+			duration = 60 SECONDS
+
+		for (var/obj/item/device/pda2/P in range(3, H)) //Turn off all nearby pda lights
+			if((P.module != null) && istype(P.module, /obj/item/device/pda_module/flashlight))
+				var/obj/item/device/pda_module/flashlight/F = P.module
+				if (F.on)
+					F.toggle_light()
+
+/datum/statusEffect/terror	//Todo add more illusions and hide status
 	id = "terror"
 	name = "Terror"
 	desc = "terrorized"
-	icon_state = "mentor_mouse"
+	//icon_state = "mentor_mouse"
 	unique = 1
 	duration = 40 SECONDS
 	maxDuration = 3 MINUTES
@@ -1555,7 +1660,7 @@
 	onRemove()
 		. = ..()
 		H = owner
-		get_image_group(CLIENT_IMAGE_GROUP_ILLUSSION).add_mob(H)
+		get_image_group(CLIENT_IMAGE_GROUP_ILLUSSION).remove_mob(H)
 
 	onUpdate()
 		if (prob(50))
