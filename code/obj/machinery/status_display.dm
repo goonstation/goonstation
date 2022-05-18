@@ -67,7 +67,7 @@
 			screen_image.plane = PLANE_LIGHTING
 			screen_image.blend_mode = BLEND_ADD
 			screen_image.layer = LIGHTING_LAYER_BASE
-			screen_image.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
+			screen_image.color = list(0.66,0.66,0.66, 0.66,0.66,0.66, 0.66,0.66,0.66)
 			src.UpdateOverlays(screen_image, "screen_image")
 
 
@@ -159,7 +159,7 @@
 			screen_image.plane = PLANE_LIGHTING
 			screen_image.blend_mode = BLEND_ADD
 			screen_image.layer = LIGHTING_LAYER_BASE
-			screen_image.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
+			screen_image.color = list(0.66,0.66,0.66, 0.66,0.66,0.66, 0.66,0.66,0.66)
 			src.UpdateOverlays(screen_image, "screen_image")
 
 
