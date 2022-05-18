@@ -923,6 +923,10 @@ datum/projectile/snowball
 	else
 		P.max_range = min(DATA.dissipation_delay + round(P.power / DATA.dissipation_rate), DATA.max_range)
 
+	if (DATA.reagent_payload)
+		P.create_reagents(15)
+		P.reagents.add_reagent(DATA.reagent_payload, 15)
+
 	return P
 
 /proc/stun_bullet_hit(var/obj/projectile/O, var/mob/living/L)

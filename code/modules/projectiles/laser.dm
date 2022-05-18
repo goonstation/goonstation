@@ -558,3 +558,52 @@ toxic - poisons
 				random_brute_damage(hit, rand(5,10), 0)
 				hit.delStatus("signified")
 			..()
+
+/datum/projectile/special/spreader/plasma_spreader
+	name = "energy bolt"
+	sname = "plasma spray"
+	cost = 30
+	power = 60 //a chunky pointblank
+	ks_ratio = 0
+	damage_type = D_SPECIAL
+	pellets_to_fire = 4
+	spread_projectile_type = /datum/projectile/laser/plasma/mini
+	split_type = 0
+	shot_sound = 'sound/weapons/plasma_gun.ogg'
+	var/spread_angle_variance = 10
+
+	new_pellet(var/obj/projectile/P, var/turf/PT, var/datum/projectile/F)
+		var/obj/projectile/FC = initialize_projectile(PT, F, P.xo, P.yo, P.shooter)
+		FC.rotateDirection(rand(0-spread_angle_variance,spread_angle_variance))
+		FC.launch()
+
+/datum/projectile/laser/plasma/mini
+	dissipation_delay = 4
+	dissipation_rate = 3
+	power = 15
+
+	on_hit(atom/movable/hit, dir, datum/projectile/P)
+		. = ..()
+
+		if(hit.hasStatus("cornicened2") && ismovable(hit))
+			hit.throw_at(get_edge_target_turf(hit, dir), 7, 1, throw_type = THROW_GUNIMPACT)
+			hit.delStatus("cornicened")
+			hit.delStatus("cornicened2")
+		else
+			hit.setStatus("cornicened", 0.5 SECONDS)
+
+/datum/projectile/laser/plasma/burst
+	cost = 60
+	power = 25
+	shot_number = 4
+	shot_delay = 1
+
+	on_hit(atom/movable/hit, dir, datum/projectile/P)
+		. = ..()
+		if(hit.hasStatus("cornicened2"))
+			elecflash(get_turf(hit),radius=0, power=6, exclude_center = 0)
+			random_brute_damage(hit, rand(10,20), 0)
+			hit.delStatus("cornicened")
+			hit.delStatus("cornicened2")
+		else
+			hit.setStatus("cornicened")
