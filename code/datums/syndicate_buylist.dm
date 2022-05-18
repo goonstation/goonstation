@@ -1022,6 +1022,13 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
 	desc = "Honk."
 	can_buy = UPLINK_TRAITOR | UPLINK_HEAD_REV | UPLINK_NUKE_OP
 
+/datum/syndicate_buylist/surplus/concussiongrenades
+	name = "Concussion Grenades"
+	item = /obj/item/storage/concussion_grenade_pouch
+	cost = 2
+	desc = "A pouch full of corpo-war surplus concussion grenades."
+	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
+
 /datum/syndicate_buylist/surplus/turboflash_box
 	name = "Flash/cell assembly box"
 	item = /obj/item/storage/box/turbo_flash_kit
