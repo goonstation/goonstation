@@ -3,7 +3,7 @@
 //Flashlight module.
 //T-ray scanner module.
 //Computer 3 Emulator / Associated Bits
-//Medic yell module
+//Medic siren module
 
 /obj/item/device/pda_module
 	name = "PDA module"
@@ -328,16 +328,9 @@
 	desc = "A PDA module that lets you announce your presence as medical personnel to your surroundings."
 	icon_state = "pdamod_medic"
 	abilities = list(/obj/ability_button/pda_flashlight_toggle, /obj/ability_button/yell_medic)
-	var/datum/light/MedicLight
 	var/ColorChangeCycles
-	var/MedicLightBrightness = 0.12
 	var/MedicalSiren = "sound/effects/manta_alarm.ogg"
 	var/Messages = list()
-
-	New()
-		..()
-		MedicLight = new /datum/light/point
-		MedicLight.set_brightness(MedicLightBrightness)
 
 	install()
 		..()
@@ -345,7 +338,7 @@
 
 	uninstall()
 		..()
-		MedicLight.disable()
+		usr.remove_sm_light("MedLight")
 
 	proc/toggle_yell()
 		if(!src.host)
@@ -354,18 +347,17 @@
 		if(ON_COOLDOWN(src, "toggle_yell", 90 SECONDS))
 			boutput(usr, "<span class='alert'>[src] is still on cooldown mode!</span>")
 			return
-		MedicLight.attach(usr)
 		tell_medic()
 		ColorChangeCycles = 6
-		src.MedicLight.enable()
 		playsound(src.host.loc, MedicalSiren, 15, 0)
 		while(ColorChangeCycles>0)
-			src.MedicLight.set_color(28, 138, 118)
+			usr.add_sm_light("MedLight", list(0, 255, 157, 255), 1)
 			sleep(0.4 SECONDS)
-			src.MedicLight.set_color(143, 29, 65)
+			usr.remove_sm_light("MedLight")
+			usr.add_sm_light("MedLight", list(166, 15, 55, 255), 1)
 			sleep(0.4 SECONDS)
+			usr.remove_sm_light("MedLight")
 			ColorChangeCycles--
-		src.MedicLight.disable()
 
 	proc/tell_medic()
 		switch(rand(100))
