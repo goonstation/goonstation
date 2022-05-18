@@ -636,7 +636,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 						if(surgeon == patient) continue
 						remove_mindslave_status(patient, "otherslave", "surgery")
 
-				if (!I.artifact_implant)
+				if (!istype(I, /obj/item/implant/artifact))
 					patient.tri_message("<span class='alert'><b>[surgeon]</b> cuts out an implant from [patient == surgeon ? "[him_or_her(patient)]self" : "[patient]"] with [src]!</span>",\
 					surgeon, "<span class='alert'>You cut out an implant from [surgeon == patient ? "yourself" : "[patient]"] with [src]!</span>",\
 					patient, "<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] out an implant from you with [src]!</span>")
@@ -652,7 +652,8 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					newcase.blood_DNA = patient.bioHolder.Uid
 					newcase.blood_type = patient.bioHolder.bloodType
 				else
-					if (I.cant_take_out)
+					var/obj/item/implant/artifact/imp = I
+					if (imp.cant_take_out)
 						patient.tri_message("<span class='alert'><b>[surgeon]</b> tries to cut out something from [patient == surgeon ? "[him_or_her(patient)]self" : "[patient]"] with [src]!</span>",\
 						surgeon, "<span class='alert'>Whatever you try to cut out from [surgeon == patient ? "yourself" : "[patient]"] won't come out!</span>",\
 						patient, "<span class='alert'>[patient == surgeon ? "You try to cut" : "<b>[surgeon]</b> tries to cut"] out something from you with [src]!</span>")
@@ -660,11 +661,11 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 						patient.tri_message("<span class='alert'><b>[surgeon]</b> cuts out something alien from [patient == surgeon ? "[him_or_her(patient)]self" : "[patient]"] with [src]!</span>",\
 						surgeon, "<span class='alert'>You cut out something alien from [surgeon == patient ? "yourself" : "[patient]"] with [src]!</span>",\
 						patient, "<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] out something alien from you with [src]!</span>")
-						I.pixel_x = rand(-2, 5)
-						I.pixel_y = rand(-6, 1)
-						I.set_loc(get_turf(patient))
-						I.on_remove(patient)
-						patient.implant.Remove(I)
+						imp.pixel_x = rand(-2, 5)
+						imp.pixel_y = rand(-6, 1)
+						imp.set_loc(get_turf(patient))
+						imp.on_remove(patient)
+						patient.implant.Remove(imp)
 				return 1
 
 		/* chest op_stage description
