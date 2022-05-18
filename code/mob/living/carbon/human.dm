@@ -3226,14 +3226,14 @@
 	if (head)
 		worn += head.name
 	else
-		if (istype(src:mutantrace, /datum/mutantrace/lizard))
+		if (istype(src.mutantrace, /datum/mutantrace/lizard))
 			worn += "scales"
-		else if (istype(src:mutantrace, /datum/mutantrace/werewolf) || istype(src:mutantrace, /datum/mutantrace/pug) || (ismonkey(src)))
+		else if (istype(src.mutantrace, /datum/mutantrace/werewolf) || istype(src:mutantrace, /datum/mutantrace/pug) || (ismonkey(src)))
 			worn += "fur"
-		else if (istype(src:mutantrace, /datum/mutantrace/cow))
+		else if (istype(src.mutantrace, /datum/mutantrace/cow))
 			worn += "hooves"
 			worn += "fur"
-		else if (istype(src:mutantrace, /datum/mutantrace/roach))
+		else if (istype(src.mutantrace, /datum/mutantrace/roach))
 			worn += "exoskeleton"
 			worn += "antenna"
 			worn += "thorax"
