@@ -64890,11 +64890,6 @@
 	name = "Morgue";
 	req_access_txt = "5"
 	},
-/obj/machinery/door/airlock/pyro/medical{
-	dir = 4;
-	name = "Morgue";
-	req_access_txt = "5"
-	},
 /turf/unsimulated/floor/white/grime,
 /area/crypt/sigma/lab)
 "dFE" = (
