@@ -328,9 +328,8 @@
 	desc = "A PDA module that lets you announce your presence as medical personnel to your surroundings."
 	icon_state = "pdamod_medic"
 	abilities = list(/obj/ability_button/pda_flashlight_toggle, /obj/ability_button/yell_medic)
-	var/ColorChangeCycles
-	var/MedicalSiren = "sound/effects/manta_alarm.ogg"
-	var/Messages = list()
+	var/medicalSiren = "sound/effects/manta_alarm.ogg"
+	var/colorChangeCycles = 2
 
 	install()
 		..()
@@ -338,7 +337,7 @@
 
 	uninstall()
 		..()
-		usr.remove_sm_light("MedLight")
+		usr.remove_sm_light("medicLight")
 
 	proc/toggle_yell()
 		if(!src.host)
@@ -348,24 +347,23 @@
 			boutput(usr, "<span class='alert'>[src] is still on cooldown mode!</span>")
 			return
 		tell_medic()
-		ColorChangeCycles = 6
-		playsound(src.host.loc, MedicalSiren, 15, 0)
-		while(ColorChangeCycles>0)
-			usr.add_sm_light("MedLight", list(0, 255, 157, 255), 1)
+		playsound(src.host.loc, medicalSiren, 15, 0)
+		for(var/i = 1 to colorChangeCycles)
+			usr.add_sm_light("medicLight", list(0, 255, 157, 255), 1)
 			sleep(0.4 SECONDS)
-			usr.remove_sm_light("MedLight")
-			usr.add_sm_light("MedLight", list(166, 15, 55, 255), 1)
+			usr.remove_sm_light("medicLight")
+			usr.add_sm_light("medicLight", list(166, 15, 55, 255), 1)
 			sleep(0.4 SECONDS)
-			usr.remove_sm_light("MedLight")
-			ColorChangeCycles--
+			usr.remove_sm_light("medicLight")
 
 	proc/tell_medic()
+		var/messages = list()
 		switch(rand(100))
 			if(0 to 97)
-				Messages = list("Doctor, this way!", "Medical personnel coming through", "[usr] is a medical professional", "[usr] can provide medical assistance", "Medical support here", "Doctor here", "[usr] is a doctor", "MEDIC HERE", "Don´t run from [usr] [usr.get_pronouns().subjective] can patch you up", "[usr] will heal you", "[usr] will patch you up", "Get healed by [usr]", "[usr] is a doctor [usr.get_pronouns().subjective] can heal you", "[usr] is here to heal you", "Medic here to patch you up")
+				messages = list("Doctor, this way!", "Medical personnel coming through.", "[usr] is a medical professional.", "[usr] can provide medical assistance.", "Medical support here.", "Doctor here.", "[usr] is a doctor.", "MEDIC HERE!", "Don't run from [usr]., [usr.get_pronouns().subjective] can patch you up.", "[usr] will heal you.", "[usr] will patch you up.", "Get healed by [usr].", "[usr] is a doctor, [usr.get_pronouns().subjective] can heal you.", "[usr] is here to heal you.", "Medic here to patch you up.")
 			if(98 to 100)
-				Messages = list("Boss, thats a serious injury. It won´t heal on its own. You´ll need to treat it with first aid.", "Ready to heal! Dummkopfs", "Stop running you half dead moron [usr] will heal you because you aren´t gonna make it to the crater that once WAS mebay and [usr] stockpiled on every single med known to mankind only for this very moment")
-		usr.visible_message("<span style='color:#73ffb3;'><b>[pick(Messages)]</b></span>")
+				messages = list("Boss, thats a serious injury. It won't heal on its own. You'll need to treat it with first aid.", "Ready to heal! Dummkopfs.", "Stop running, you half dead moron. [usr] will heal you because you aren't gonna make it to the crater that once WAS mebay and [usr] stockpiled on every single med known to mankind only for this very moment.")
+		usr.visible_message("<span style='color:#3ca688;'><b>[pick(messages)]</b></span>")
 
 /obj/ability_button/yell_medic
 	name = "Sound your siren"
