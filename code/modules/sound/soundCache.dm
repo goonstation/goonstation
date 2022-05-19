@@ -686,6 +686,7 @@ var/global/list/soundCache = list(
  	"sound/machines/sawfly1.ogg" = 'sound/machines/sawfly1.ogg',\
  	"sound/machines/sawfly2.ogg" = 'sound/machines/sawfly2.ogg',\
  	"sound/machines/sawfly3.ogg" = 'sound/machines/sawfly3.ogg',\
+ 	"sound/machines/sawflyrev.ogg" = 'sound/machines/sawflyrev.ogg',\
  	"sound/machines/scan.ogg" = 'sound/machines/scan.ogg',\
  	"sound/machines/scan2.ogg" = 'sound/machines/scan2.ogg',\
  	"sound/machines/seed_destroyed.ogg" = 'sound/machines/seed_destroyed.ogg',\

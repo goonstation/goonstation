@@ -14,7 +14,7 @@
 	throwforce = 7
 	icon_state = "sawfly"
 	icon_state_armed = "sawfly1"
-	sound_armed = 'sound/machines/sawfly4.ogg'
+	sound_armed = 'sound/machines/sawflyrev.ogg'
 	inhand_image_icon = 'icons/mob/inhand/tools/omnitool.dmi' // could be better but it's distinct enough
 	payload = /mob/living/critter/sawfly
 	is_dangerous = TRUE
@@ -105,7 +105,7 @@
 	stamina_damage = 35
 	stamina_cost = 20
 	stamina_crit_chance = 35
-
+	sound_armed = 'sound/machines/sawflyrev.ogg'
 	icon_state = "clusterflyA"
 	icon_state_armed = "clusterflyA1"
 	payload = /mob/living/critter/sawfly
