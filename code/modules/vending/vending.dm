@@ -2252,11 +2252,11 @@
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/wizard/green, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wizrobe/green, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/wizard/witch, 2)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/head/wizard/necro, 2)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wizrobe/necro, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/wizard/necro, 2, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wizrobe/necro, 2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/sandal, 8)
 		product_list += new/datum/data/vending_product(/obj/item/staff, 4)
-		product_list += new/datum/data/vending_product(/obj/item/staff/crystal, 4)
+		product_list += new/datum/data/vending_product(/obj/item/staff/crystal, 4, hidden=1)
 
 /obj/machinery/vending/standard
 	desc = "A vending machine full of various useful tools and devices that definitely cannot be used to make bombs"
