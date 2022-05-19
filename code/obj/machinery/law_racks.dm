@@ -595,6 +595,8 @@
 		tgui_process.update_uis(src)
 
 	proc/insert_module_callback(var/slotNum,var/mob/user,var/obj/item/aiModule/equipped)
+		if(src.law_circuits[slotNum])
+			return FALSE
 		src.law_circuits[slotNum]=equipped
 		user.u_equip(equipped)
 		equipped.set_loc(src)
