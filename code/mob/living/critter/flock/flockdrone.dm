@@ -148,7 +148,7 @@
 /mob/living/critter/flock/drone/proc/release_control(give_alerts = TRUE)
 	src.flock?.hideAnnotations(src)
 	src.is_npc = 1
-	if (give_alerts)
+	if (give_alerts && src.z == Z_LEVEL_STATION)
 		emote("beep")
 		say(pick_string("flockmind.txt", "flockdrone_player_kicked"))
 	if(src.client && !controller)
@@ -158,7 +158,10 @@
 		if (src.floorrunning)
 			src.end_floorrunning(TRUE)
 		// move controller out
-		controller.set_loc(get_turf(src))
+		if (src.z == Z_LEVEL_STATION)
+			controller.set_loc(get_turf(src))
+		else
+			src.move_controller_to_station()
 		// move us over to the controller
 		var/datum/mind/mind = src.mind
 		if (mind)
@@ -176,7 +179,7 @@
 			flock.removeAnnotation(src, FLOCK_ANNOTATION_FLOCKMIND_CONTROL)
 		else
 			flock.removeAnnotation(src, FLOCK_ANNOTATION_FLOCKTRACE_CONTROL)
-		if (give_alerts)
+		if (give_alerts && src.z == Z_LEVEL_STATION)
 			flock_speak(null, "Control of drone [src.real_name] surrended.", src.flock)
 		// clear refs
 		controller = null
@@ -191,7 +194,10 @@
 		return
 	if (src.floorrunning)
 		src.end_floorrunning(TRUE)
-	controller.set_loc(get_turf(src))
+	if (src.z == Z_LEVEL_STATION)
+		controller.set_loc(get_turf(src))
+	else
+		src.move_controller_to_station()
 	var/datum/mind/mind = src.mind
 	if (mind)
 		mind.transfer_to(controller)
@@ -222,13 +228,7 @@
 	src.flock.hideAnnotations(src)
 
 	if (src.controller)
-		if (src.flock.getComplexDroneCount())
-			for (var/mob/living/critter/flock/drone/F in src.flock.units)
-				if (istype(F) && F != src)
-					src.controller.set_loc(get_turf(F))
-					break
-		else
-			src.controller.set_loc(pick_landmark(LANDMARK_LATEJOIN))
+		src.move_controller_to_station()
 
 		var/datum/mind/mind = src.mind
 		if (mind)
@@ -245,11 +245,19 @@
 		boutput(controller, "<span class='flocksay'><b>\[SYSTEM: Connection to drone [src.real_name] lost.\]</b></span>")
 		controller = null
 	src.is_npc = TRUE // to ensure right flock_speak message
-	if (src.z != Z_LEVEL_NULL)
-		flock_speak(src, "Error: Out of signal range. Disconnecting.", src.flock)
+	flock_speak(src, "Error: Out of signal range. Disconnecting.", src.flock)
 	src.is_npc = FALSE // turns off ai
 
 	..()
+
+/mob/living/critter/flock/drone/proc/move_controller_to_station()
+	if (src.flock?.getComplexDroneCount() > 1)
+		for (var/mob/living/critter/flock/drone/F in src.flock.units)
+			if (istype(F) && F != src)
+				src.controller.set_loc(get_turf(F))
+				break
+	else
+		src.controller.set_loc(pick_landmark(LANDMARK_LATEJOIN))
 
 /mob/living/critter/flock/drone/proc/undormantize()
 	src.dormant = 0
@@ -406,8 +414,10 @@
 		src.resources--
 		if (src.resources < 1)
 			src.end_floorrunning(TRUE)
-	if (!src.dormant && src.z != Z_LEVEL_STATION)
+	if (!src.dormant && src.z != Z_LEVEL_STATION && src.z != Z_LEVEL_NULL)
 		src.dormantize()
+		return
+	if (src.dormant)
 		return
 
 	var/obj/item/I = absorber.item

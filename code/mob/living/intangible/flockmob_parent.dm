@@ -139,7 +139,7 @@
 		return
 
 	var/mob/living/critter/flock/drone/drone = target
-	if (istype(drone))
+	if (istype(drone) && !drone.dormant)
 		//we have to do this manually in order to handle the input properly
 		var/datum/contextAction/active_actions = list()
 		for (var/datum/contextAction/action as anything in drone.contexts)

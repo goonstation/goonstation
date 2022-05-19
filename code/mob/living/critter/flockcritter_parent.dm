@@ -92,6 +92,7 @@
 /mob/living/critter/flock/proc/dormantize()
 	src.dormant = TRUE
 	src.ai?.die()
+	actions.stop_all(src)
 
 	if (!src.flock)
 		return
