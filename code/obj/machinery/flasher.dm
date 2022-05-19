@@ -283,7 +283,7 @@
 				if (src.last_flash && world.time < src.cooldown_end)
 					icon_state = "[base_state]1-c"
 				else
-				icon_state = "[base_state]1"
+					icon_state = "[base_state]1"
 			else
 				icon_state = "[base_state]1-p"
 			user.show_message(text("<span class='alert'>[src] is now secured.</span>"))
