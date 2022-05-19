@@ -105,6 +105,7 @@
 		src.visible_message("<span class='notice'>[src] harmlessly absorbs [P].</span>")
 		return FALSE
 	..()
+	return TRUE
 
 //compute - override if behaviour is weird
 /mob/living/critter/flock/proc/compute_provided()

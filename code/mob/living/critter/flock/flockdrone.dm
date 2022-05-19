@@ -592,6 +592,8 @@
 
 // catchall for shitlisting a dude that attacks us
 /mob/living/critter/flock/drone/proc/harmedBy(var/atom/enemy)
+	if (!enemy)
+		return
 	if(isflock(enemy))
 		return
 	if(!isdead(src) && src.is_npc && src.flock)
@@ -608,10 +610,12 @@
 /mob/living/critter/flock/drone/bullet_act(var/obj/projectile/P)
 	if(floorrunning)
 		return FALSE
-	if (..())
-		var/attacker = P.shooter
-		if(attacker)
-			src.harmedBy(attacker)
+	if (!..())
+		return
+	var/attacker = P.shooter
+	if(!(ismob(attacker) || iscritter(attacker) || isvehicle(attacker)))
+		attacker = P.mob_shooter //shooter is updated on reflection, so we fall back to mob_shooter if it turns out to be a wall or something
+	src.harmedBy(attacker)
 
 /mob/living/critter/flock/drone/hitby(atom/movable/AM, datum/thrown_thing/thr)
 	. = ..()
