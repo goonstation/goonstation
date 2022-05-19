@@ -242,7 +242,10 @@
 			light.enable()
 
 /obj/machinery/flasher/portable/HasProximity(atom/movable/AM as mob|obj)
-	if (!powered() || !src.anchored || src.disable || (src.last_flash && world.time < src.cooldown_end))
+	if (!src.anchored || src.disable || (src.last_flash && world.time < src.cooldown_end))
+		return
+
+	if (!powered())
 		return
 
 	if(iscarbon(AM))
