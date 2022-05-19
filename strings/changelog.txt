@@ -1,5 +1,9 @@
 
 (t)wed may 18 22
+(u)Wisemonster
+(p)8610
+(e)|
+(+)Status display screens' now glow in the dark!
 (u)DimWhat
 (p)8628
 (e)🎨|sprites
