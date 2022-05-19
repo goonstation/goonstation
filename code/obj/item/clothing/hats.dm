@@ -283,7 +283,7 @@ proc/filter_trait_hats(var/type)
 
 	attack_self(mob/user)
 		boutput(user, "You reach inside the hat and pull out a pair of goggles. The scuttlebot wakes up! Use the goggles on the bot to make it dormant again.")
-		new /mob/living/critter/scuttlebot(get_turf(src))
+		new /mob/living/critter/robotic/scuttlebot(get_turf(src))
 		qdel(src)
 	setupProperties()
 		..()
@@ -1171,6 +1171,13 @@ proc/filter_trait_hats(var/type)
 	desc = "A hat often worn by a nurse. And nurse enthusiasts."
 	icon_state = "nursehat"
 	item_state = "nursehat"
+
+/obj/item/clothing/head/traditionalnursehat
+	name = "Traditional Nurse Hat"
+	desc = "A nurse hat from the past."
+	icon_state = "traditionalnursehat"
+	item_state = "traditionalnursehat"
+	seal_hair = 1
 
 /obj/item/clothing/head/chemhood
 	name = "chemical protection hood"

@@ -557,28 +557,29 @@
 	*/
 /atom/movable/proc/OnMove(source = null)
 
+/// Base pull proc, returns 1 if the various checks for pulling fail, so that it can be overriden to add extra functionality without rewriting all the conditions.
 /atom/movable/proc/pull()
 	if (!( usr ))
-		return
+		return 1
 
 	if(src.loc == usr)
-		return
+		return 1
 
 	if (!isliving(usr))
-		return
+		return 1
 
 	if (isintangible(usr)) //can't pull shit if you can't touch shit
-		return
+		return 1
 
 	// no pulling other mobs for ghostdrones (but they can pull other ghostdrones)
 	else if (isghostdrone(usr) && ismob(src) && !isghostdrone(src))
-		return
+		return 1
 
 	if (isghostcritter(usr))
 		var/mob/living/critter/C = usr
 		if (!C.can_pull(src))
 			boutput(usr,"<span class='alert'><b>[src] is too heavy for you pull in your half-spectral state!</b></span>")
-			return
+			return 1
 
 	if (iscarbon(usr) || issilicon(usr))
 		add_fingerprint(usr)
@@ -586,7 +587,7 @@
 	if (istype(src,/obj/item/old_grenade/light_gimmick))
 		boutput(usr, "<span class='notice'>You feel your hand reach out and clasp the grenade.</span>")
 		src.Attackhand(usr)
-		return
+		return 1
 	if (!( src.anchored ))
 		var/mob/user = usr
 		user.set_pulling(src)

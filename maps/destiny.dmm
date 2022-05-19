@@ -11955,9 +11955,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/wall{
-	icon_state = "wooden"
-	},
+/turf/simulated/wall/auto/supernorn/wood,
 /area/station/crew_quarters/sauna)
 "bal" = (
 /obj/cable,
@@ -12169,9 +12167,7 @@
 	dir = 8
 	},
 /obj/machinery/meter,
-/turf/simulated/wall{
-	icon_state = "wooden"
-	},
+/turf/simulated/wall/auto/supernorn/wood,
 /area/station/crew_quarters/sauna)
 "bbx" = (
 /obj/stool/bench/red/auto,
@@ -12191,9 +12187,7 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 10
 	},
-/turf/simulated/wall{
-	icon_state = "wooden"
-	},
+/turf/simulated/wall/auto/supernorn/wood,
 /area/station/crew_quarters/sauna)
 "bbB" = (
 /obj/machinery/light/incandescent/cool{
@@ -12804,9 +12798,7 @@
 "bgk" = (
 /obj/decal/poster/wallsign/fire,
 /obj/machinery/atmospherics/pipe/simple,
-/turf/simulated/wall{
-	icon_state = "wooden"
-	},
+/turf/simulated/wall/auto/supernorn/wood,
 /area/station/crew_quarters/sauna)
 "bgl" = (
 /obj/stool/bench/red/auto,
@@ -12819,9 +12811,7 @@
 /area/station/crew_quarters/sauna)
 "bgn" = (
 /obj/machinery/atmospherics/pipe/simple,
-/turf/simulated/wall{
-	icon_state = "wooden"
-	},
+/turf/simulated/wall/auto/supernorn/wood,
 /area/station/crew_quarters/sauna)
 "bgq" = (
 /obj/cable{
@@ -13052,9 +13042,7 @@
 /obj/machinery/atmospherics/valve{
 	name = "sauna gas valve"
 	},
-/turf/simulated/wall{
-	icon_state = "wooden"
-	},
+/turf/simulated/wall/auto/supernorn/wood,
 /area/station/crew_quarters/sauna)
 "bhP" = (
 /obj/cable{
@@ -19689,9 +19677,7 @@
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe{
 	dir = 6
 	},
-/turf/simulated/wall{
-	icon_state = "wooden"
-	},
+/turf/simulated/wall/auto/supernorn/wood,
 /area/station/crew_quarters/sauna)
 "daL" = (
 /obj/disposalpipe/segment{
@@ -19981,9 +19967,7 @@
 	},
 /area/station/science/research_director)
 "dgK" = (
-/turf/simulated/wall{
-	icon_state = "wooden"
-	},
+/turf/simulated/wall/auto/supernorn/wood,
 /area/station/crew_quarters/sauna)
 "dgX" = (
 /obj/disposalpipe/segment/mail,
@@ -20226,9 +20210,7 @@
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4
 	},
-/turf/simulated/wall{
-	icon_state = "wooden"
-	},
+/turf/simulated/wall/auto/supernorn/wood,
 /area/station/crew_quarters/sauna)
 "dnC" = (
 /obj/stool/bed/moveable,
@@ -30482,9 +30464,7 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 9
 	},
-/turf/simulated/wall{
-	icon_state = "wooden"
-	},
+/turf/simulated/wall/auto/supernorn/wood,
 /area/station/crew_quarters/sauna)
 "ioC" = (
 /obj/disposalpipe/segment/mail,
@@ -32910,9 +32890,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/wall{
-	icon_state = "wooden"
-	},
+/turf/simulated/wall/auto/supernorn/wood,
 /area/station/crew_quarters/sauna)
 "jGv" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -45984,9 +45962,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/wall{
-	icon_state = "wooden"
-	},
+/turf/simulated/wall/auto/supernorn/wood,
 /area/station/crew_quarters/sauna)
 "qJg" = (
 /obj/disposalpipe/segment,
@@ -51248,9 +51224,7 @@
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 8
 	},
-/turf/simulated/wall{
-	icon_state = "wooden"
-	},
+/turf/simulated/wall/auto/supernorn/wood,
 /area/station/crew_quarters/sauna)
 "tFq" = (
 /obj/cable{

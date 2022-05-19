@@ -895,7 +895,7 @@
 			AST.ClearAllOverlays() // i know theres probably a better way to handle this
 			AST.UpdateIcon()
 #ifndef UNDERWATER_MAP // We don't want fullbright ore underwater.
-			AST.overlays += /image/fullbright
+			AST.UpdateOverlays(new /image/fullbright, "fullbright")
 #endif
 			AST.top_overlays()
 			var/image/ore_overlay = image('icons/turf/walls_asteroid.dmi',"[O.name][AST.orenumber]")
@@ -955,12 +955,12 @@
 			AST.ClearAllOverlays() // i know theres probably a better way to handle this
 			AST.UpdateIcon()
 #ifndef UNDERWATER_MAP // We don't want fullbright ore underwater.
-			AST.overlays += /image/fullbright
+			AST.UpdateOverlays(new /image/fullbright, "fullbright")
 #endif
 			AST.top_overlays()
 			var/image/ore_overlay = image('icons/turf/walls_asteroid.dmi',"[O.name][AST.orenumber]")
 			ore_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask-side_[AST.icon_state]"))
-			ore_overlay.layer = AST.layer + 0.02 // so meson goggle nerds can still nerd away
+			ore_overlay.layer = ASTEROID_ORE_OVERLAY_LAYER // so meson goggle nerds can still nerd away
 			AST.UpdateOverlays(ore_overlay, "ast_ore")
 
 			O.onGenerate(AST)

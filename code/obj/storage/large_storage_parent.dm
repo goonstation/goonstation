@@ -431,18 +431,18 @@
 					user.visible_message("<span class='alert'><b>[user]</b> trips over [src]!</span>",\
 					"<span class='alert'>You trip over [src]!</span>")
 					playsound(user.loc, 'sound/impact_sounds/Generic_Hit_2.ogg', 15, 1, -3)
-					user.set_loc(src.loc)
+					user.set_loc(T)
 					if (!user.hasStatus("weakened"))
 						user.changeStatus("weakened", 10 SECONDS)
 					JOB_XP(user, "Clown", 3)
 					return
 				else
 					user.show_text("You scoot around [src].")
-					user.set_loc(src.loc)
+					user.set_loc(T)
 					return
 			if (issilicon(O))
 				user.show_text("You scoot around [src].")
-				user.set_loc(src.loc)
+				user.set_loc(T)
 				return
 
 		if (src.locked)
@@ -503,7 +503,7 @@
 						continue
 					if (thing.loc == src || thing.loc == src.loc) // we're already there!
 						continue
-					thing.set_loc(src.loc)
+					thing.set_loc(T)
 					sleep(0.5)
 					if (!src.open)
 						break
@@ -516,8 +516,8 @@
 					if (src.open)
 						src.close()
 			if(!stuffed)
-				if(check_if_enterable(O))
-					O.set_loc(src.loc)
+				if(check_if_enterable(O) && in_interact_range(user, src) && in_interact_range(user, O))
+					O.set_loc(T)
 					if (user != O)
 						user.visible_message("<span class='alert'>[user] stuffs [O] into [src]!</span>",\
 						"<span class='alert'>You stuff [O] into [src]!</span>")
@@ -647,7 +647,7 @@
 				M.playsound_local(M.loc, "warp", 50, 1)
 				continue
 #endif
-			if (isobserver(M) || iswraith(M) || isintangible(M) || istype(M, /mob/living/object))
+			if (isobserver(M) || iswraith(M) || isintangible(M) || islivingobject(M))
 				continue
 			if (src.crunches_contents)
 				src.crunch(M)
@@ -663,7 +663,7 @@
 
 		src.UpdateIcon()
 		playsound(src.loc, src.close_sound, volume, 1, -3)
-		SEND_SIGNAL(src, COMSIG_STORAGE_CLOSED)
+		SEND_SIGNAL(src, COMSIG_OBJ_STORAGE_CLOSED)
 		return 1
 
 	proc/recalcPClass()

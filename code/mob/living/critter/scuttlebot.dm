@@ -1,4 +1,4 @@
-/mob/living/critter/scuttlebot
+/mob/living/critter/robotic/scuttlebot
 	name = "scuttlebot"
 	desc = "A strangely hat shaped robot looking to spy on your deepest secrets"
 	density = 0

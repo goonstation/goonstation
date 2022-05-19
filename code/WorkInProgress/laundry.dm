@@ -58,7 +58,6 @@
 		playsound(src, "sound/machines/buzz-two.ogg", 50, 1)
 		src.on = 0
 		src.UpdateIcon()
-		src.generate_html()
 		return
 
 	var/mob/living/carbon/human/H = src.occupant
@@ -78,7 +77,6 @@
 			playsound(src, "sound/machines/chime.ogg", 30, 1)
 			playsound(src, "sound/machines/engine_highpower.ogg", 30, 1)
 			src.UpdateIcon()
-			src.generate_html()
 		else // drying is done!
 			processing_items.Remove(src)
 			for (var/obj/item/clothing/C in src.contents)
@@ -100,7 +98,6 @@
 			src.cycle_max = CYCLE_TIME
 			src.on = 0
 			src.UpdateIcon()
-			src.generate_html()
 	else
 		src.cycle_current++
 		if (src.occupant)
@@ -133,7 +130,6 @@
 			playsound(src, "sound/machines/click.ogg", 50, 1)
 			playsound(src, "sound/impact_sounds/Liquid_Slosh_2.ogg", 100, 1)
 			src.UpdateIcon()
-			src.generate_html()
 
 		else if (src.cycle == WASH && prob(40)) // play a washery sound
 			playsound(src, "sound/impact_sounds/Liquid_Slosh_2.ogg", 100, 1)
@@ -183,9 +179,10 @@
 		return ..()
 
 /obj/submachine/laundry_machine/attack_hand(mob/user)
-	if (!user || user.restrained() || user.lying || user.stat)
+	if (!can_act(user))
 		return
-	src.show_window(user)
+	src.add_fingerprint(usr)
+	ui_interact(user)
 
 /obj/submachine/laundry_machine/proc/force_into_machine(obj/item/grab/W as obj, mob/user as mob)
 	if (src.on == 0)
@@ -210,32 +207,12 @@
 	else //Prevents stuffing more than one person in at a time
 		user.visible_message("<span class='alert'>[user] tries to shove [W.affecting] into the laundry machine but it was already running.</span>")
 
-/obj/submachine/laundry_machine/proc/generate_html()
-	src.HTML = "<center><big><b>WashMan 550</b></big></center><hr><br>"
-	if (src.on && src.cycle != POST)
-		src.HTML += "<b>STATUS: [src.cycle == DRY ? "Drying" : "Washing"]</b><br>Please wait, machine is currently running."
-		return
-	else
-		if (src.cycle == POST)
-			src.HTML += "<b>STATUS: Cycle Complete</b><br>"
-		else
-			src.HTML += "<b>STATUS: Idle</b><br>"
-		src.HTML += "CYCLE: <a href='byond://?src=\ref[src];cycle=1'>[src.on ? "Stop" : "Start"]</a><br>"
-		src.HTML += "DOOR: <a href='byond://?src=\ref[src];door=1'>[src.open ? "Close" : "Open"]</a><br>"
-
-/obj/submachine/laundry_machine/proc/show_window(mob/user)
-	if (!user)
-		return
-	if (!src.HTML)
-		src.generate_html()
-	user.Browse(src.HTML, "window=laundry_machine;size=300x200;title=[capitalize(src.name)]")
-
 /obj/submachine/laundry_machine/mouse_drop(over_object,src_location,over_location)
 	var/mob/user = usr
 	if (!user || !over_object || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, over_object) > 0 || is_incapacitated(user) || (issilicon(user) && BOUNDS_DIST(src, user) > 0))
 		return
-	if (src.on)
-		src.visible_message("[user] tries to open [src]'s door, but [src] is running and the door is locked!")
+	if (src.on || !src.open)
+		src.visible_message("[user] tries to unload items from [src], but the door is closed!")
 		return
 	var/turf/T = get_turf(over_object)
 	if (!T)
@@ -250,36 +227,45 @@
 			AM.set_loc(T)
 		src.UpdateIcon()
 
-/obj/submachine/laundry_machine/Topic(href, href_list)
-	..()
-	DEBUG_MESSAGE(json_encode(href_list))
-	if (!usr || usr.restrained() || usr.lying || usr.stat || (!issilicon(usr) && BOUNDS_DIST(src, usr) > 0))
-		return 1
-	src.add_fingerprint(usr)
-	if (href_list["cycle"])
-		if (!occupant) //You cant turn it on or off if someone is inside to prevent people getting stuck inside
-			src.on = !src.on
-			src.visible_message("[usr] switches [src] [src.on ? "on" : "off"].")
+/obj/submachine/laundry_machine/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if (!ui)
+		ui = new(user, src, "Laundry")
+		ui.open()
+
+/obj/submachine/laundry_machine/ui_data(mob/user)
+  . = list(
+    "on" = on,
+    "door" = open,
+  )
+
+/obj/submachine/laundry_machine/ui_act(action, params, datum/tgui/ui)
+	. = ..()
+	if (.)
+		return
+	switch(action)
+		if("door")
 			if (src.on)
-				src.open = 0
-				if (!processing_items.Find(src))
-					processing_items.Add(src)
-
-	else if (href_list["door"])
-		if (src.on)
-			src.visible_message("[usr] tries to open [src]'s door, but [src] is running and the door is locked!")
-			return
-		else
-			src.open = !src.open
-			src.visible_message("[usr] [src.open ? "opens" : "closes"] [src]'s door.")
-			if (src.open)
-				src.unload()
-				src.cycle = PRE
-
+				src.visible_message("[usr] tries to open [src]'s door, but [src] is running and the door is locked!")
+				return
+			else
+				src.open = !src.open
+				. = TRUE
+				src.visible_message("[usr] [src.open ? "opens" : "closes"] [src]'s door.")
+				if (src.open)
+					src.unload()
+					src.cycle = PRE
+		if("cycle")
+			if (!occupant) //You cant turn it on or off if someone is inside to prevent people getting stuck inside
+				src.on = !src.on
+				. = TRUE
+				src.visible_message("[usr] switches [src] [src.on ? "on" : "off"].")
+				if (src.on)
+					src.cycle = PRE
+					src.open = 0
+					if (!(src in processing_items))
+						processing_items.Add(src)
 	src.UpdateIcon()
-	src.generate_html()
-	src.show_window(usr)
-	return
 
 #undef PRE
 #undef WASH

@@ -46,7 +46,8 @@
 				else
 					boutput(M, __red("You summon a new staff to your hands."))
 					var/obj/item/staff/cthulhu/C = new /obj/item/staff/cthulhu(get_turf(M))
-					C.wizard_key = M.mind?.key
+					if(!isvirtual(M))
+						C.wizard_key = M.mind?.key
 					M.put_in_hand_or_drop(C)
 					return 0
 
@@ -131,7 +132,8 @@
 				else
 					boutput(M, "<span class='alert'You summon a new staff to your hands.")
 					var/obj/item/staff/thunder/C = new /obj/item/staff/thunder(get_turf(M))
-					C.wizard_key = M.mind?.key
+					if(!isvirtual(M))
+						C.wizard_key = M.mind?.key
 					M.put_in_hand_or_drop(C)
 					return 0
 

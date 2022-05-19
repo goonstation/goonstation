@@ -400,18 +400,19 @@
 			W.onMouseUp(object,location,control,params)
 
 /mob/living/MouseDrop_T(atom/dropped, mob/dropping_user)
-	if (istype(dropped, /obj/item/organ/) || istype(dropped, /obj/item/clothing/head/butt/) || istype(dropped, /obj/item/skull/))
-		// because butts are clothing you're born with, and skull primarily exist to reenact hamlet... for some insane reason
-		var/obj/item/organ/dropping_organ = dropped
-		var/success = dropping_organ.attach_organ(src, dropping_user)
-		if (success)
-			return
-	else if (istype(dropped, /obj/item/parts/human_parts/))
-		var/obj/item/parts/dropping_limb = dropped
-		dropping_limb.attach(src, dropping_user)
-	else if (istype(dropped, /obj/item/parts/robot_parts/arm/) || istype(dropped, /obj/item/parts/robot_parts/leg/))
-		var/obj/item/parts/robot_parts/dropping_limb = dropped
-		dropping_limb.attack(src, dropping_user) // Attaching robot parts to humans is a bit complicated so we're going to be lazy and re-use attack.
+	if(in_interact_range(src, dropping_user) && in_interact_range(dropped, dropping_user))
+		if (istype(dropped, /obj/item/organ/) || istype(dropped, /obj/item/clothing/head/butt/) || istype(dropped, /obj/item/skull/))
+			// because butts are clothing you're born with, and skull primarily exist to reenact hamlet... for some insane reason
+			var/obj/item/organ/dropping_organ = dropped
+			var/success = dropping_organ.attach_organ(src, dropping_user)
+			if (success)
+				return
+		else if (istype(dropped, /obj/item/parts/human_parts/))
+			var/obj/item/parts/dropping_limb = dropped
+			dropping_limb.attach(src, dropping_user)
+		else if (istype(dropped, /obj/item/parts/robot_parts/arm/) || istype(dropped, /obj/item/parts/robot_parts/leg/))
+			var/obj/item/parts/robot_parts/dropping_limb = dropped
+			dropping_limb.attack(src, dropping_user) // Attaching robot parts to humans is a bit complicated so we're going to be lazy and re-use attack.
 	return ..()
 
 /mob/living/hotkey(name)
@@ -522,7 +523,7 @@
 					src.next_click = world.time + (equipped ? equipped.click_delay : src.click_delay)
 
 				if (src.invisibility > INVIS_NONE && (isturf(target) || (target != src && isturf(target.loc)))) // dont want to check for a cloaker every click if we're not invisible
-					SEND_SIGNAL(src, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
+					SEND_SIGNAL(src, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 
 				if (equipped)
 					weapon_attack(target, equipped, reach, params)
@@ -1929,12 +1930,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 					src.remove_stamina(min(round(stun/rangedprot) * 30, 125)) //thanks to the odd scaling i have to cap this.
 					src.stamina_stun()
 
-				if (P.proj_data.reagent_payload)
-					src.TakeDamage("chest", (damage/rangedprot), 0, 0, P.proj_data.hit_type)
-					if (isalive(src))
-						lastgasp()
-					src.reagents.add_reagent(P.proj_data.reagent_payload, 15/rangedprot)
-				else
+				if (!P.reagents)
 					src.take_toxin_damage(damage)
 				if(rangedprot > 1)
 					armor_msg = ", but your armor softens the hit!"

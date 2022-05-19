@@ -640,6 +640,8 @@ WET FLOOR SIGN
 				JOB_XP(user, "Janitor", 3)
 				if (target.reagents)
 					target.reagents.trans_to(src, 5)
+				playsound(src, 'sound/items/sponge.ogg', 20, 1)
+				animate_smush(target)
 				return
 
 			if ("Wring out")
