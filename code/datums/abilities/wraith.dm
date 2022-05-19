@@ -100,7 +100,7 @@
 	pointCost = 20
 	cooldown = 45 SECONDS //Starts at 45 seconds and scales upward exponentially
 	max_range = 4
-	//Determines if the wraith succesfully used the ability
+	/// Determines if the wraith successfully used the ability
 	var/absorbSuccess = FALSE
 	cast(atom/T)
 		if (..())
