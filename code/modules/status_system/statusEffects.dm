@@ -1724,17 +1724,30 @@
 						wall_list += W
 					if (wall_list != null)
 						var/turf/simulated/wall/auto/W = pick(wall_list)
-						switch(rand(1,2))
+						switch(rand(1,3))
 							if (1)
-								illusion_icon = 'icons/effects/effects.dmi'
-								illusion_icon_state = "sparks"
+								illusion_icon = 'icons/effects/wraitheffects.dmi'
+								illusion_icon_state = "bloodpour"
 							if (2)
-								illusion_icon = 'icons/effects/effects.dmi'
-								illusion_icon_state = "sparks"
+								illusion_icon = 'icons/effects/wraitheffects.dmi'
+								illusion_icon_state = "bloodpour2"
+							if (3)
+								illusion_icon = 'icons/effects/wraitheffects.dmi'
+								illusion_icon_state = "blooddrops"
+								var/image/dripIcon = image(illusion_icon, W, null, EFFECTS_LAYER_UNDER_4)
+								dripIcon.icon_state = illusion_icon_state
+								get_image_group(CLIENT_IMAGE_GROUP_ILLUSSION).add_image(dripIcon)
+								SPAWN(10 SECONDS)
+									while(dripIcon.alpha > 0)
+										sleep(5 DECI SECOND)
+										dripIcon.alpha -= 10
+									qdel(dripIcon)
+								illusion_icon = 'icons/effects/wraitheffects.dmi'
+								illusion_icon_state = "bloodrip"
 						var/image/illusionIcon = image(illusion_icon, W, null, EFFECTS_LAYER_UNDER_4)
 						illusionIcon.icon_state = illusion_icon_state
 						get_image_group(CLIENT_IMAGE_GROUP_ILLUSSION).add_image(illusionIcon)
-						SPAWN(2 SECONDS)
+						SPAWN(10 SECONDS)
 							while(illusionIcon.alpha > 0)
 								sleep(5 DECI SECOND)
 								illusionIcon.alpha -= 10
