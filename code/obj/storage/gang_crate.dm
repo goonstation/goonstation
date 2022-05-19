@@ -51,17 +51,20 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 		New()
 			var/contents[10]
 			lootMaster.generate_loot(src,contents)
+			lootMaster.set_size(4,3)
 			..()
 	some_gear
 		New()
 			var/contents[10]
 			contents[GANG_CRATE_GEAR] = 3
+			lootMaster.set_size(4,3)
 			lootMaster.generate_loot(src,contents)
 			..()
-	all_gear
+	only_gear
 		New()
 			var/contents[10]
 			contents[GANG_CRATE_GEAR] = 99
+			lootMaster.set_size(4,3)
 			lootMaster.generate_loot(src,contents)
 			..()
 	guns_and_gear
@@ -69,26 +72,14 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 			var/contents[10]
 			contents[GANG_CRATE_GEAR] = 3
 			contents[GANG_CRATE_GUN_WEAK] = 3
-			lootMaster.generate_loot(src,contents)
-			..()
-	early_game
-		New()
-			var/contents[10]
-			contents[GANG_CRATE_GEAR] = 5
-			contents[GANG_CRATE_GUN_WEAK] = 3
-			lootMaster.generate_loot(src,contents)
-			..()
-	early_game
-		New()
-			var/contents[10]
-			contents[GANG_CRATE_GEAR] = 5
-			contents[GANG_CRATE_GUN_STRONG] = 3
+			lootMaster.set_size(4,3)
 			lootMaster.generate_loot(src,contents)
 			..()
 	only_guns
 		New()
 			var/contents[10]
 			contents[GANG_CRATE_GUN_WEAK] = 99
+			lootMaster.set_size(4,3)
 			lootMaster.generate_loot(src,contents)
 			..()
 
@@ -221,7 +212,7 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 		user.u_equip(src)
 		qdel(src)
 
-/obj/gangloot_instance
+/obj/gangloot_instance //data class representing a single loot item
 	var/size_x=0
 	var/size_y=0
 	var/offset_x=0
@@ -231,23 +222,31 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 
 /obj/gangloot_master
 	var/list/lootSpawns
-	var/max_loot_x = 4 //how many loot items can fit, horizontal
-	var/loot_x_pixels = 8 //pixels per loot_x
-	var/loot_x_offset = -16 //offset for spawns_x
-	var/max_loot_y = 3 //samesies, vertical
-	var/loot_y_pixels = 8 //pixels per loot_y
-	var/loot_y_offset = -16 //offset for spawns_y
+	var/max_loot_x = 4 //X grid size for loot items
+	var/max_loot_y = 3 //Y grid size for loot items
 
+
+	var/loot_x_pixels = 8
+	var/loot_y_pixels = 8
+	var/loot_x_offset = -16
+	var/loot_y_offset = -16
+
+
+	var/lootGrid[][]//boolean representation of available grid
 	var/list/spawners[4][4]
 	New()
 		populate()
 
+	//Set loot container grid size
 	proc/set_size(var/x,var/y)
 		max_loot_x = x
 		max_loot_y = y
 		loot_x_offset = -loot_x_pixels*(x/2)
 		loot_y_offset = -loot_y_pixels*(y/2)
-	//Create an instance of all our child classes,for each given size
+
+
+
+	//Create an instance of all the relevant spawners,for each given size, so they can initialize
 	proc/populate()
 		spawners[1][1] = new /obj/gangloot_spawner/small()
 		spawners[2][1] = new /obj/gangloot_spawner/medium()
@@ -258,8 +257,10 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 		spawners[3][2] = new /obj/gangloot_spawner/long_tall()
 		spawners[4][2] = new /obj/gangloot_spawner/xlong_tall()
 
+	proc/create_loot_grid()
+		lootGrid = new/list(max_loot_x,max_loot_y)
 
-
+	//Generates all loot, totalValue is what types of loot may be spawned
 	proc/generate_loot(var/target, var/list/totalValue)
 		var/lootSpawns = generate_loot_layout()
 		generate_loot_objects(target, lootSpawns, totalValue)
@@ -512,6 +513,9 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 		src.create_loot(get_turf(user),instance)
 		del(src)
 		return refund_token
+
+	proc/pick_weighted()
+
 
 	proc/pick_weighted()
 
@@ -915,7 +919,13 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 			create_loot(var/C,var/I)
 				spawn_item(C,I,/obj/item/gun/energy/phaser_gun,rot=90,scale_y=0.7,scale_x=0.7)
 
-		syndieomnitool
+/*		handguns_heavy //deagle n revolver
+			tier = GANG_CRATE_GUN_STRONG
+			create_loot(var/C,var/I)
+				spawn_item(C,I,/obj/item/gun/kinetic/deagle,off_x=-8)
+				spawn_item(C,I,/obj/item/gun/kinetic/colt_saa,off_x=8)*/
+
+		phasers
 			tier = GANG_CRATE_GUN_WEAK
 			create_loot(var/C,var/I)
 				spawn_item(C,I,/obj/item/tool/omnitool/syndicate,0,0)
@@ -961,7 +971,8 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 
 		airhorn
 			create_loot(var/C,var/I)
-				spawn_item(C,I,/obj/item/instrument/bikehorn/airhorn,0,0)
+				spawn_item(C,I,/obj/item/instrument/bikehorn/airhorn)
+
 	medium_tall //2x2
 		size = list(2,2)
 
@@ -991,28 +1002,29 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 		gold
 			tier = GANG_CRATE_GEAR
 			create_loot(var/C,var/I)
-				spawn_item(C,I,/obj/item/material_piece/gold,-4,0)
-				spawn_item(C,I,/obj/item/material_piece/gold,0,0)
-				spawn_item(C,I,/obj/item/material_piece/gold,4,0)
+				spawn_item(C,I,/obj/item/material_piece/gold,off_x=-4)
+				spawn_item(C,I,/obj/item/material_piece/gold)
+				spawn_item(C,I,/obj/item/material_piece/gold,off_x=4)
 		mixed_sec
 			tier = GANG_CRATE_GEAR
 			create_loot(var/C,var/I)
-				spawn_item(C,I,/obj/item/chem_grenade/flashbang,-4,4)
-				spawn_item(C,I,/obj/item/chem_grenade/flashbang,4,4)
-				spawn_item(C,I,/obj/item/chem_grenade/cryo,-4,-4)
-				spawn_item(C,I,/obj/item/chem_grenade/shock,4,-4)
+				spawn_item(C,I,/obj/item/chem_grenade/flashbang,off_x=-4,off_y=4)
+				spawn_item(C,I,/obj/item/chem_grenade/flashbang,off_x=4,off_y=4)
+				spawn_item(C,I,/obj/item/chem_grenade/cryo,off_x=-4,off_y=-4)
+				spawn_item(C,I,/obj/item/chem_grenade/shock,off_x=4,off_y=-4)
 
 		stingers
 			tier = GANG_CRATE_GEAR
 			create_loot(var/C,var/I)
-				spawn_item(C,I,/obj/item/old_grenade/stinger,-4,0)
-				spawn_item(C,I,/obj/item/old_grenade/stinger,4,0)
+				spawn_item(C,I,/obj/item/old_grenade/stinger,off_x=-4)
+				spawn_item(C,I,/obj/item/old_grenade/stinger,off_x=4)
+				spawn_item(C,I,/obj/item/old_grenade/energy_concussion,off_y=-6,rot=90)
 		helmet
 			tier = GANG_CRATE_GEAR
 			create_loot(var/C,var/I)
-				spawn_item(C,I,pick(filtered_concrete_typesof(/obj/item/clothing/head/helmet, /proc/filter_trait_hats)),0,-2,scale_x=0.7,scale_y=0.7)
-				spawn_item(C,I,pick(filtered_concrete_typesof(/obj/item/clothing/head/helmet, /proc/filter_trait_hats)),0,0,scale_x=0.7,scale_y=0.7)
-				spawn_item(C,I,pick(filtered_concrete_typesof(/obj/item/clothing/head/helmet, /proc/filter_trait_hats)),0,2,scale_x=0.7,scale_y=0.7)
+				spawn_item(C,I,pick(filtered_concrete_typesof(/obj/item/clothing/head/helmet, /proc/filter_trait_hats)),off_y=-2,scale_x=0.7,scale_y=0.7)
+				spawn_item(C,I,pick(filtered_concrete_typesof(/obj/item/clothing/head/helmet, /proc/filter_trait_hats)),off_y=0,scale_x=0.7,scale_y=0.7)
+				spawn_item(C,I,pick(filtered_concrete_typesof(/obj/item/clothing/head/helmet, /proc/filter_trait_hats)),off_y=2,scale_x=0.7,scale_y=0.7)
 
 		gold
 			tier = GANG_CRATE_GEAR
@@ -1195,18 +1207,18 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 
 		money
 			create_loot(var/C,var/I)
-				spawn_item(C,I,/obj/item/spacecash/fivehundred, -8,-6)
-				spawn_item(C,I,/obj/item/spacecash/fivehundred, -8,-4)
-				spawn_item(C,I,/obj/item/spacecash/fivehundred, -8,-2)
-				spawn_item(C,I,/obj/item/spacecash/fivehundred, -8,0)
-				spawn_item(C,I,/obj/item/spacecash/fivehundred, -8,2)
-				spawn_item(C,I,/obj/item/spacecash/fivehundred, -8,4)
-				spawn_item(C,I,/obj/item/spacecash/fivehundred, 8,-6)
-				spawn_item(C,I,/obj/item/spacecash/fivehundred, 8,-4)
-				spawn_item(C,I,/obj/item/spacecash/fivehundred, 8,-2)
-				spawn_item(C,I,/obj/item/spacecash/fivehundred, 8,0)
-				spawn_item(C,I,/obj/item/spacecash/fivehundred, 8,2)
-				spawn_item(C,I,/obj/item/spacecash/fivehundred, 8,4)
+				spawn_item(C,I,/obj/item/spacecash/fivehundred, off_x=-8,off_y=-6)
+				spawn_item(C,I,/obj/item/spacecash/fivehundred, off_x=-8,off_y=-4)
+				spawn_item(C,I,/obj/item/spacecash/fivehundred, off_x=-8,off_y=-2)
+				spawn_item(C,I,/obj/item/spacecash/fivehundred, off_x=-8,off_y=0)
+				spawn_item(C,I,/obj/item/spacecash/fivehundred, off_x=-8,off_y=2)
+				spawn_item(C,I,/obj/item/spacecash/fivehundred, off_x=-8,off_y=4)
+				spawn_item(C,I,/obj/item/spacecash/fivehundred, off_x=8,off_y=-6)
+				spawn_item(C,I,/obj/item/spacecash/fivehundred, off_x=8,off_y=-4)
+				spawn_item(C,I,/obj/item/spacecash/fivehundred, off_x=8,off_y=-2)
+				spawn_item(C,I,/obj/item/spacecash/fivehundred, off_x=8,off_y=0)
+				spawn_item(C,I,/obj/item/spacecash/fivehundred, off_x=8,off_y=2)
+				spawn_item(C,I,/obj/item/spacecash/fivehundred, off_xs=8,off_y=4)
 
 		mac10s
 			tier = GANG_CRATE_GUN_WEAK
