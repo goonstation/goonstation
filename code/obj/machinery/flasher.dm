@@ -164,16 +164,6 @@
 		if (prob(30 + power))
 			qdel(src)
 
-/obj/machinery/flasher/portable //Portable version of the flasher. Only flashes when anchored
-	name = "portable flasher"
-	desc = "A portable flashing device. Wrench to activate and deactivate. Cannot detect slow movements."
-	icon_state = "pflash1"
-	strength = 8
-	anchored = 0
-	base_state = "pflash"
-	density = 1
-	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
-
 /obj/machinery/flasher/New()
 	..()
 	light = new /datum/light/point
@@ -208,10 +198,10 @@
 		return
 
 /obj/machinery/flasher/proc/flash()
-	if (!(powered()))
+	if (!powered())
 		return
 
-	if ((src.disable) || (src.last_flash && world.time < src.last_flash + 150))
+	if (src.disable)
 		return
 
 	playsound(src.loc, "sound/weapons/flash.ogg", 100, 1)
@@ -228,8 +218,21 @@
 
 	return
 
+/obj/machinery/flasher/portable //Portable version of the flasher. Only flashes when anchored
+	name = "portable flasher"
+	desc = "A portable flashing device. Wrench to activate and deactivate. Cannot detect slow movements."
+	icon_state = "pflash1"
+	strength = 8
+	anchored = 0
+	base_state = "pflash"
+	density = 1
+	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
+	var/cooldown_flash = 15 SECONDS
+	var/cooldown_scan = 2 SECONDS
+	var/cooldown_end = 0
+
 /obj/machinery/flasher/portable/HasProximity(atom/movable/AM as mob|obj)
-	if (!src.anchored || (src.disable) || (src.last_flash && world.time < src.last_flash + 150))
+	if (!powered() || !src.anchored || src.disable || (src.last_flash && world.time < src.cooldown_end))
 		return
 
 	if(iscarbon(AM))
@@ -237,7 +240,11 @@
 		if (M.m_intent != "walk")
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
-				if (!src.check_access(H.wear_id))
+				if (src.check_access(H.wear_id))
+					src.last_flash = world.time
+					src.cooldown_end = (world.time + src.cooldown_scan)
+				else
+					src.cooldown_end = (world.time + src.cooldown_flash)
 					src.flash()
 
 /obj/machinery/flasher/portable/attackby(obj/item/W as obj, mob/user as mob)
@@ -251,7 +258,7 @@
 			src.UpdateOverlays(null, "anchor")
 
 		else if (src.anchored)
-			if ( powered() )
+			if (powered())
 				light.enable()
 			user.show_message(text("<span class='alert'>[src] is now secured.</span>"))
 			src.UpdateOverlays(image(src.icon, "[base_state]-s"), "anchor")
