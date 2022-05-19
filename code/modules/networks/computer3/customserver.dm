@@ -1,6 +1,6 @@
 /obj/machinery/networked/custom
 	name = "Server"
-	desc = "A Nanotrasen Programmable PowerNetworking Interface, what a mouthful."
+	desc = "A Nanotrasen Programmable Power Networking Interface, what a mouthful."
 	density = 1
 	anchored = 1
 	icon_state = "custom_servere"
@@ -12,6 +12,15 @@
 
 	var/list/globalVariables //A list of all the variables and their stored values
 	var/list/privateVariables //A list of all the variables and their stored values, used in functions
+
+	proc/readingorwriting()
+		flick("custom_server1")
+
+		var/turf/T = get_turf()
+		if (!T)
+			return
+
+		playsound(T, pick(ambience_computer), 50, 1)
 
 	//Load program from tape
 	proc/load_program()
@@ -32,8 +41,9 @@
 			return
 
 		else if (powered())
-			icon_state = "custom_server1"
+			icon_state = "custom_server"
 			status &= ~NOPOWER
+
 		else
 			SPAWN(rand(0, 15))
 				icon_state = "custom_server0"
@@ -65,4 +75,3 @@
 			..()
 
 		return
-

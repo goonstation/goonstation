@@ -384,3 +384,13 @@
 			asciiVersion += "|n"
 
 		return asciiVersion
+
+/datum/computer/file/compiled
+	extension = "BYT" // byte code or something (probably change this)
+	size = 2
+
+	var/list/operations = null
+
+	disposing()
+		src.operations = null
+		. = ..()
