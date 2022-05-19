@@ -506,7 +506,7 @@
 					if (islist(lawtext))
 						for (var/law in lawtext)
 							removed_laws += "<del class=\"alert\">[last_laws[i]["number"] + removed_law_offset]: [law]</del>"
-							if (lawtext.Find(law) != length(lawtext)) //screm
+							if ((law in lawtext) != length(lawtext)) //screm
 								removed_law_offset++
 					else
 						removed_laws += "<del class=\"alert\">[last_laws[i]["number"] + removed_law_offset]: [lawtext]</del>"
