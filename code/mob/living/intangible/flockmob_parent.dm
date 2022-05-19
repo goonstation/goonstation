@@ -16,7 +16,6 @@
 	var/compute = 0
 	var/datum/flock/flock = null
 	var/wear_id = null // to prevent runtimes from AIs tracking down radio signals
-	var/control_icon = "flocktrace_face"
 
 /mob/living/intangible/flock/New()
 	..()
@@ -48,7 +47,6 @@
 			plane.alpha = 255
 
 /mob/living/intangible/flock/Logout()
-	src.flock?.hideAnnotations(src)
 	if(src.client)
 		var/atom/plane = src.client.get_plane(PLANE_LIGHTING)
 		if (plane)

@@ -7,7 +7,6 @@
 	desc = "The collective machine consciousness of a bunch of glass peacock things."
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "flockmind"
-	control_icon = "flockmind_face"
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 
 	var/started = 0
@@ -26,7 +25,6 @@
 	src.name = src.real_name
 	src.update_name_tag()
 	src.flock.registerFlockmind(src)
-	src.flock.showAnnotations(src)
 	if (!F)
 		src.addAbility(/datum/targetable/flockmindAbility/spawnEgg)
 		src.addAbility(/datum/targetable/flockmindAbility/ping)

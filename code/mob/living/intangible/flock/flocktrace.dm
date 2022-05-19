@@ -9,7 +9,6 @@
 	desc = "The representation of a partition of the will of the flockmind."
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "flocktrace"
-	control_icon = "flocktrace_face"
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 
 	compute = -100 //it is expensive to run more threads

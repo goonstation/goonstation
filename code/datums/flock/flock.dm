@@ -18,13 +18,10 @@
 	var/datum/mind/flockmind_mind = null
 	var/list/units = list()
 	var/list/enemies = list()
-	var/list/annotation_viewers = list()
-	var/list/annotations_busy_tiles = list()  // key is atom ref, value is image
-	var/list/annotations_priority_tiles = list()
-	var/list/annotations_deconstruct_targets = list()
-	var/list/annotations_health = list()
-	var/list/annotations_enemies = list()
-	var/list/annotations_control_icons = list()
+	///Associative list of objects to an associative list of their annotation names to images
+	var/list/annotations = list()
+	///Static cache of annotation images
+	var/static/list/annotation_imgs = null
 	var/list/obj/flock_structure/structures = list()
 	var/list/datum/unlockable_flock_structure/unlockableStructures = list()
 	///list of strings that lets flock record achievements for structure unlocks
@@ -41,6 +38,8 @@
 	processing_items |= src
 	for(var/DT in childrentypesof(/datum/unlockable_flock_structure))
 		src.unlockableStructures += new DT(src)
+	if (!annotation_imgs)
+		annotation_imgs = build_annotation_imgs()
 
 /datum/flock/ui_status(mob/user)
 	// only flockminds and admins allowed
@@ -229,6 +228,7 @@
 	if(!T)
 		return
 	src.traces -= T
+	hideAnnotations(T)
 	var/datum/abilityHolder/flockmind/aH = src.flockmind.abilityHolder
 	aH?.updateCompute()
 
@@ -315,48 +315,95 @@
 			animate(time = duration/9, alpha = 100)
 // ANNOTATIONS
 
+///Init some annotation images to copy
+/datum/flock/proc/build_annotation_imgs()
+	. = list()
+
+	var/image/hazard = image('icons/misc/featherzone.dmi', icon_state = "hazard")
+	hazard.blend_mode = BLEND_ADD
+	hazard.plane = PLANE_ABOVE_LIGHTING
+	hazard.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+	hazard.pixel_y = 16
+	.[FLOCK_ANNOTATION_HAZARD] = .[FLOCK_ANNOTATION_DECONSTRUCT] = hazard
+
+	var/image/priority = image('icons/misc/featherzone.dmi', icon_state = "frontier")
+	priority.appearance_flags = RESET_ALPHA | RESET_COLOR
+	priority.alpha = 180
+	priority.plane = PLANE_ABOVE_LIGHTING
+	priority.mouse_opacity = FALSE
+	.[FLOCK_ANNOTATION_PRIORITY] = priority
+
+	var/image/reserved = image('icons/misc/featherzone.dmi', icon_state = "frontier")
+	reserved.appearance_flags = RESET_ALPHA | RESET_COLOR
+	reserved.alpha = 80
+	reserved.plane = PLANE_ABOVE_LIGHTING
+	reserved.mouse_opacity = FALSE
+	.[FLOCK_ANNOTATION_RESERVED] = reserved
+
+	var/image/flock_face = image('icons/misc/featherzone.dmi', icon_state = "flockmind_face")
+	flock_face.blend_mode = BLEND_ADD
+	flock_face.plane = PLANE_ABOVE_LIGHTING
+	flock_face.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+	flock_face.pixel_y = 16
+	.[FLOCK_ANNOTATION_FLOCKMIND_CONTROL] = flock_face
+
+	var/image/trace_face = image('icons/misc/featherzone.dmi', icon_state = "flocktrace_face")
+	trace_face.blend_mode = BLEND_ADD
+	trace_face.plane = PLANE_ABOVE_LIGHTING
+	trace_face.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+	trace_face.pixel_y = 16
+	.[FLOCK_ANNOTATION_FLOCKTRACE_CONTROL] = trace_face
+
+	var/image/health = image('icons/misc/featherzone.dmi', icon_state = "hp-100")
+	health.blend_mode = BLEND_ADD
+	health.pixel_x = 10
+	health.pixel_y = 16
+	health.plane = PLANE_ABOVE_LIGHTING
+	health.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+	.[FLOCK_ANNOTATION_HEALTH] = health
+
+///proc to get the indexed list of annotations on a particular mob
+/datum/flock/proc/getAnnotations(atom/target)
+	var/active = src.annotations[target]
+	if(!islist(active))
+		active = list()
+		src.annotations[target] = active
+	return active
+
+///Toggle a named annotation
+/datum/flock/proc/toggleAnnotation(atom/target, var/annotation)
+	var/active = getAnnotations(target)
+	if (annotation in active)
+		removeAnnotation(target, annotation)
+	else
+		addAnnotation(target, annotation)
+
+///Add a named annotation
+/datum/flock/proc/addAnnotation(atom/target, var/annotation)
+	var/active = getAnnotations(target)
+	if(!(annotation in active))
+		var/image/icon = image(src.annotation_imgs[annotation], loc=target)
+		if (isturf(target))
+			var/turf/T = target
+			icon.loc = T.RL_MulOverlay || T
+		active[annotation] = icon
+		get_image_group(src).add_image(icon)
+
+///Remove a named annotation
+/datum/flock/proc/removeAnnotation(atom/target, var/annotation)
+	var/active = getAnnotations(target)
+	var/image/image = active[annotation]
+	if (image)
+		get_image_group(src).remove_image(image)
+		active -= annotation
+		qdel(image)
+
 // currently both flockmind and player units get the same annotations: what tiles are marked for conversion, and who is shitlisted
 /datum/flock/proc/showAnnotations(var/mob/M)
-	if(!M)
-		return
-	src.annotation_viewers |= M
-	var/client/C = M.client
-	if(C)
-		for(var/atom/key in src.annotations_priority_tiles)
-			C.images |= src.annotations_priority_tiles[key]
-		for(var/atom/key in src.annotations_busy_tiles)
-			C.images |= src.annotations_busy_tiles[key]
-		for(var/atom/key in src.annotations_health)
-			C.images |= src.annotations_health[key]
-		for(var/atom/key in src.annotations_enemies)
-			C.images |= src.annotations_enemies[key]
-		for(var/atom/key in src.annotations_control_icons)
-			C.images |= src.annotations_control_icons[key]
+	get_image_group(src).add_mob(M)
 
 /datum/flock/proc/hideAnnotations(var/mob/M)
-	if(!M)
-		return
-	src.annotation_viewers -= M
-	var/client/C = M.client
-	if(C)
-		for(var/atom/key in src.annotations_priority_tiles)
-			C.images -= src.annotations_priority_tiles[key]
-		for(var/atom/key in src.annotations_busy_tiles)
-			C.images -= src.annotations_busy_tiles[key]
-		for(var/atom/key in src.annotations_health)
-			C.images -= src.annotations_health[key]
-		for(var/atom/key in src.annotations_enemies)
-			C.images -= src.annotations_enemies[key]
-		for(var/atom/key in src.annotations_control_icons)
-			C.images -= src.annotations_control_icons[key]
-
-/datum/flock/proc/addClientImage(image/I)
-	for (var/mob/M in src.annotation_viewers)
-		M.client?.images += I
-
-/datum/flock/proc/removeClientImage(image/I)
-	for (var/mob/M in src.annotation_viewers)
-		M.client?.images -= I
+	get_image_group(src).remove_mob(M)
 
 // UNITS
 
@@ -406,37 +453,8 @@
 	return count
 
 /datum/flock/proc/toggleDeconstructionFlag(var/atom/target)
-	var/image/I
-	if(target in src.deconstruct_targets)
-		src.deconstruct_targets -= target
-
-		I = src.annotations_deconstruct_targets[target]
-		src.annotations_deconstruct_targets -= target
-		src.removeClientImage(I)
-	else
-		src.deconstruct_targets += target
-
-		I = add_overhead_image('icons/misc/featherzone.dmi', target, "hazard")
-		src.annotations_deconstruct_targets[target] = I
-
-/// Just because this was duplicated a bunch
-/datum/flock/proc/add_overhead_image(icon, target, icon_state)
-	var/image/I = image(icon, target, icon_state)
-	I.blend_mode = BLEND_ADD
-	I.pixel_y = 16
-	I.plane = PLANE_ABOVE_LIGHTING
-	I.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
-	src.addClientImage(I)
-	return I
-
-/datum/flock/proc/add_control_icon(var/mob/living/critter/flock/flockthing, var/mob/living/intangible/flock/sentient)
-	var/image/icon = src.add_overhead_image('icons/misc/featherzone.dmi', flockthing, sentient.control_icon)
-	src.annotations_control_icons[flockthing] = icon
-
-/datum/flock/proc/remove_control_icon(var/mob/living/critter/flock/flockthing)
-	var/image/I = src.annotations_control_icons[flockthing]
-	src.annotations_control_icons -= flockthing
-	src.removeClientImage(I)
+	toggleAnnotation(target, FLOCK_ANNOTATION_DECONSTRUCT)
+	src.deconstruct_targets ^= target
 
 // ENEMIES
 
@@ -458,12 +476,10 @@
 		enemy_deets["mob"] = M
 		enemy_deets["last_seen"] = enemy_area
 		src.enemies[enemy_name] = enemy_deets
+		addAnnotation(M, FLOCK_ANNOTATION_HAZARD)
 	else
 		enemy_deets = src.enemies[enemy_name]
 		enemy_deets["last_seen"] = get_area(M)
-	if (!(M in src.annotations_enemies))
-		var/image/I = add_overhead_image('icons/misc/featherzone.dmi', M, "hazard")
-		src.annotations_enemies[M] = I
 
 /datum/flock/proc/removeEnemy(atom/M)
 	// call off all drones attacking this guy
@@ -471,9 +487,7 @@
 		return
 	src.enemies -= M
 
-	var/image/I = src.annotations_enemies[M]
-	src.annotations_enemies -= M
-	src.removeClientImage(I)
+	removeAnnotation(M, FLOCK_ANNOTATION_HAZARD)
 
 /datum/flock/proc/isEnemy(atom/M)
 	var/enemy_name = M
@@ -487,14 +501,13 @@
 		hideAnnotations(src.flockmind)
 	for(var/mob/M in src.units)
 		hideAnnotations(M)
+	qdel(get_image_group(src))
+	annotations = null
 	all_owned_tiles = null
 	busy_tiles = null
 	priority_tiles = null
 	units = null
 	enemies = null
-	annotations_busy_tiles = null
-	annotations_priority_tiles = null
-	annotations_enemies = null
 	flockmind = null
 	//while this is neat cleanup, we still need the flock datum for tracking flocktrace mind connections
 	// qdel(src)
@@ -507,22 +520,12 @@
 	if(name in src.busy_tiles)
 		return
 	src.busy_tiles[name] = T
-
-	var/image/I = image('icons/misc/featherzone.dmi', T.RL_MulOverlay ? T.RL_MulOverlay : T, "frontier")
-	I.appearance_flags = RESET_ALPHA | RESET_COLOR
-	I.alpha = 80
-	I.plane = PLANE_ABOVE_LIGHTING
-	I.mouse_opacity = FALSE
-	src.annotations_busy_tiles[T] = I
-	src.addClientImage(I)
+	addAnnotation(T, FLOCK_ANNOTATION_RESERVED)
 
 /datum/flock/proc/unreserveTurf(var/name)
 	var/turf/simulated/T = src.busy_tiles[name]
 	src.busy_tiles -= name
-
-	var/image/I = src.annotations_busy_tiles[T]
-	src.annotations_busy_tiles -= T
-	src.removeClientImage(I)
+	removeAnnotation(T, FLOCK_ANNOTATION_RESERVED)
 
 /datum/flock/proc/claimTurf(var/turf/simulated/T)
 	src.all_owned_tiles |= T
@@ -535,10 +538,7 @@
 			var/obj/flock_structure/structure = O
 			structure.flock = src
 			src.registerStructure(structure)
-
-	var/image/I = src.annotations_priority_tiles[T]
-	src.annotations_priority_tiles -= T
-	src.removeClientImage(I)
+	removeAnnotation(T, FLOCK_ANNOTATION_PRIORITY)
 
 /datum/flock/proc/isTurfFree(var/turf/simulated/T, var/queryName) // provide the drone's name here: if they own the turf it's free _to them_
 	for(var/name in src.busy_tiles)
@@ -549,25 +549,10 @@
 	return 1
 
 /datum/flock/proc/togglePriorityTurf(var/turf/T)
-	if(!T)
+	if (!T)
 		return TRUE
-	var/image/I
-	if(T in priority_tiles)
-		priority_tiles -= T
-
-		I = src.annotations_priority_tiles[T]
-		src.annotations_priority_tiles -= T
-		src.removeClientImage(I)
-	else
-		priority_tiles |= T
-
-		I = image('icons/misc/featherzone.dmi', T.RL_MulOverlay ? T.RL_MulOverlay : T, "frontier")
-		I.appearance_flags = RESET_ALPHA | RESET_COLOR
-		I.alpha = 180
-		I.plane = PLANE_ABOVE_LIGHTING
-		I.mouse_opacity = FALSE
-		src.annotations_priority_tiles[T] = I
-		src.addClientImage(I)
+	toggleAnnotation(T, FLOCK_ANNOTATION_PRIORITY)
+	priority_tiles ^= T
 
 // get closest unclaimed tile to requester
 /datum/flock/proc/getPriorityTurfs(var/mob/living/critter/flock/drone/requester)
