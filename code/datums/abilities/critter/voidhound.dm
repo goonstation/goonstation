@@ -82,3 +82,9 @@
 				sleep(0.1 SECONDS)
 			container.pixel_x = 0
 			container.pixel_y = 0
+			if (prob(25))
+				if (istype(container, /obj/storage))
+					var/obj/storage/C = container
+					if (C.can_flip_bust == 1)
+						boutput(src, "<span class='alert'>[C] [pick("busts","bends","cracks")] open.</span>")
+						C.bust_out()

@@ -56,7 +56,7 @@
 		for (var/mob/M in view(3, src.loc))
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
-				if(istype(H.wear_suit, /obj/item/clothing/suit/bio_suit) && istype(H.head, /obj/item/clothing/head/bio_hood))
+				if(H.clothing_protects_from_chems())
 					boutput(M, "<span class='notice'>You are sprayed with guts, but your biosuit protects you!</span>")
 					continue
 				else

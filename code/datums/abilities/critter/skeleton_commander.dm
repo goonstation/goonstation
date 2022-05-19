@@ -65,10 +65,10 @@
 			playsound(S.loc, "sound/voice/wraith/wraithhaunt.ogg", 80, 0)
 			S.visible_message("<span class='alert'>[holder.owner] raises its arms and a skeleton appears in front of your eyes!</span>")
 			boutput(holder.owner, "We summon a skeleton from the void")
-			SPAWN(30 SECONDS)
-				animate(S, alpha=0, time=2 SECONDS)
-				SPAWN(2 SECONDS)
-					qdel(S)
+			sleep(30 SECONDS)
+			animate(S, alpha=0, time=2 SECONDS)
+			sleep(2 SECONDS)
+			qdel(S)
 		else
 			boutput(holder.owner, "We cannot summon a skeleton here")
 			return 1
