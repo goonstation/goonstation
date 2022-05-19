@@ -273,7 +273,10 @@
 
 		if (!src.anchored)
 			light.disable()
-			icon_state = "[base_state]1-c"
+			if (powered())
+				icon_state = "[base_state]1-c"
+			else
+				icon_state = "[base_state]1"
 			user.show_message(text("<span class='alert'>[src] can now be moved.</span>"))
 			src.UpdateOverlays(null, "anchor")
 
