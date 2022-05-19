@@ -329,7 +329,7 @@
 	icon_state = "pdamod_medic"
 	abilities = list(/obj/ability_button/pda_flashlight_toggle, /obj/ability_button/yell_medic)
 	var/medicalSiren = "sound/effects/manta_alarm.ogg"
-	var/colorChangeCycles = 2
+	var/colorChangeCycles = 6
 
 	install()
 		..()
