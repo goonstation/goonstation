@@ -282,11 +282,13 @@
 
 	proc/communalbeep() // distribues the beepchance among the number of sawflies nearby
 		fliesnearby = 1 //that's you, little man! :)
-		for(mob/living/critter/sawfly in range(get_turf(src), 10))
+		for(var/mob/living/critter/sawfly/E in range(get_turf(src), 18))
 			src.fliesnearby += 1 //that's your buddies!
 		var/beepchance = (1 / fliesnearby) * 100 //have it so that, if there's 2 sawflies, it's a 1/2 chance for each, then convert to %
+		if(fliesnearby<3) beepchance -=20
 		if(prob(beepchance))
-			playsound(src, pick(src.beeps), 55, 1)
+			playsound(src, pick(src.beeps), 40, 1)
+			src.visible_message("<b>[src] [beeptext].</b>")
 
 
 
@@ -377,7 +379,7 @@
 		if(target && !attacking)
 			attacking = TRUE
 			src.visible_message("<span class='alert'><b>[src]</b> flies at [M]!</span>")
-			if(prob(50)) communalbeep()
+			if(prob(25)) communalbeep()
 			if (istraitor(M) || isnukeop(M) || isspythief(M) || (M in src.friends))
 				return
 			task = "chasing"
@@ -412,14 +414,14 @@
 			else continue
 
 
-	proc/CritterAttack(atom/mob/living/M)
+	proc/CritterAttack(mob/M)
 		if (istraitor(M) || isnukeop(M) || isspythief(M) || (M in src.friends)) // BE. A. GOOD. FUCKING. DRONE.
 			oldtarget_name = M
 			seek_target()
 			return
 		if(target && !attacking)
 			attacking = TRUE
-			if (C.health <=-75 && prob(60)) //purposefully don't overwrite oldtarget so if they attack again we can maybe finish them off
+			if (M.health <=-75 && prob(60)) //purposefully don't overwrite oldtarget so if they attack again we can maybe finish them off
 				seek_target()
 				return
 			src.visible_message("<span class='alert'><b>[src]</b> [pick(list("gouges", "cleaves", "lacerates", "shreds", "cuts", "tears", "hacks", "slashes",))] [M]!</span>")
@@ -567,9 +569,7 @@
 			return 0
 
 
-		if(prob(10))
-			src.visible_message("<b>[src] [beeptext].</b>")
-			playsound(src, pick(src.beeps), 55, 1)
+		if(prob(5)) communalbeep()
 
 		if(task == "sleeping")
 			var/waking = 0
