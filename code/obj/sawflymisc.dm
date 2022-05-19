@@ -203,6 +203,7 @@
 	desc = "A folding antipersonnel drone of syndicate origin. It'd be pretty cute if it wasn't trying to kill people."
 	icon = 'icons/obj/ship.dmi'
 	icon_state = "sawfly"
+	flags = TABLEPASS
 
 	var/beeptext = " "
 	var/dead_state = "sawflydead"
@@ -214,13 +215,9 @@
 	var/isnew = TRUE // for seeing whether or not they will make a new name on redeployment
 	var/sawflynames = list("A", "B", "C", "D", "E", "F", "V", "W", "X", "Y", "Z", "Alpha", "Beta", "Gamma", "Lambda", "Delta")
 	var/beeps = list('sound/machines/sawfly1.ogg','sound/machines/sawfly2.ogg','sound/machines/sawfly3.ogg') // custom noises so they cannot be mistaken for ghostdrones or borgs
-
 	health = 40
-	var/can_revive = TRUE
-	var/atksilicon = TRUE
-	var/atkcarbon = TRUE
-	var/alive = TRUE
-	var/alreadydead = FALSE // prevents any bullshit from happening with repeated
+	var/fliesnearby = 0 //for rolling chance to beep
+
 
 // OBJ/CRITTER/DRONE FUCK SHIT HERE
 	var/list/friends = list()
@@ -240,6 +237,11 @@
 	var/steps = 0
 	var/sleep_check = 10
 	var/wander_check = 0
+	var/can_revive = TRUE
+	var/atksilicon = TRUE
+	var/atkcarbon = TRUE
+	var/alive = TRUE
+	var/alreadydead = FALSE // prevents any bullshit from happening with repeated
 
 
 	// MOB/LIVING/CRITTER FUCK SHIT HERE
@@ -277,6 +279,14 @@
 		N.tempname = src.name
 		N.temphp = (src.get_health_percentage()) / 2
 		qdel(src)
+
+	proc/communalbeep() // distribues the beepchance among the number of sawflies nearby
+		fliesnearby = 1 //that's you, little man! :)
+		for(mob/living/critter/sawfly in range(get_turf(src), 10))
+			src.fliesnearby += 1 //that's your buddies!
+		var/beepchance = (1 / fliesnearby) * 100 //have it so that, if there's 2 sawflies, it's a 1/2 chance for each, then convert to %
+		if(prob(beepchance))
+			playsound(src, pick(src.beeps), 55, 1)
 
 
 
@@ -367,6 +377,7 @@
 		if(target && !attacking)
 			attacking = TRUE
 			src.visible_message("<span class='alert'><b>[src]</b> flies at [M]!</span>")
+			if(prob(50)) communalbeep()
 			if (istraitor(M) || isnukeop(M) || isspythief(M) || (M in src.friends))
 				return
 			task = "chasing"
@@ -382,16 +393,18 @@
 		src.anchored = FALSE
 		for (var/mob/living/C in view(src.seekrange,src))
 			if(C == oldtarget_name) continue
+
 			if (C in src.friends) continue
 			if (istraitor(C) || isnukeop(C) || isspythief(C)) // frens :)
 				boutput(C, "<span class='alert'>[src]'s IFF system silently flags you as an ally!")
 				friends += C
 				continue
 			if (!src.alive) break
-			if (C.health < -50) continue // ignore people who are badly wounded
-			if (C.name == src.attacker) src.attack = 1
-			if (iscarbon(C) && src.atkcarbon) src.attack = 1
-			if (issilicon(C) && src.atksilicon) src.attack = 1
+			if (C.health < -50) continue // ignore people who are badly wounded when searching
+			if (C.job == "Security Officer" || C.job == "Head of Security")  src.attack = TRUE //prioritize enemy #1 of antags
+			if (C.name == src.attacker) src.attack = TRUE
+			if (iscarbon(C)) src.attack = TRUE
+			if (issilicon(C)) src.attack = TRUE
 			if (src.attack)
 				select_target(C)
 				src.attack = 0
@@ -399,13 +412,16 @@
 			else continue
 
 
-	proc/CritterAttack(atom/M)
+	proc/CritterAttack(atom/mob/living/M)
 		if (istraitor(M) || isnukeop(M) || isspythief(M) || (M in src.friends)) // BE. A. GOOD. FUCKING. DRONE.
 			oldtarget_name = M
 			seek_target()
 			return
 		if(target && !attacking)
 			attacking = TRUE
+			if (C.health <=-75 && prob(60)) //purposefully don't overwrite oldtarget so if they attack again we can maybe finish them off
+				seek_target()
+				return
 			src.visible_message("<span class='alert'><b>[src]</b> [pick(list("gouges", "cleaves", "lacerates", "shreds", "cuts", "tears", "hacks", "slashes",))] [M]!</span>")
 			var/tturf = get_turf(M)
 			Shoot(tturf, src.loc, src)
@@ -424,6 +440,8 @@
 
 
 	proc/Shoot(var/target, var/start, var/user, var/bullet = 0)
+		if(prob(5)) communalbeep()
+
 		if(target == start)
 			return
 
@@ -549,7 +567,7 @@
 			return 0
 
 
-		if(prob(5))
+		if(prob(10))
 			src.visible_message("<b>[src] [beeptext].</b>")
 			playsound(src, pick(src.beeps), 55, 1)
 
@@ -603,7 +621,7 @@
 	proc/select_target(var/atom/newtarget)
 		src.target = newtarget
 		src.oldtarget_name = newtarget.name
-		playsound(src, pick(src.beeps), 55, 1)
+		communalbeep()
 		src.visible_message("<span class='alert'><b>[src]</b> flies towards [src.target]!</span>")
 		task = "chasing"
 
