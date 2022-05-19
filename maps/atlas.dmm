@@ -2086,6 +2086,12 @@
 /obj/item/storage/box/ic_cones,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/catering)
+"ft" = (
+/obj/machinery/status_display{
+	pixel_y = -30
+	},
+/turf/simulated/floor/purplewhite,
+/area/station/science/teleporter)
 "fu" = (
 /obj/machinery/light{
 	dir = 1;
@@ -2819,6 +2825,9 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/machinery/status_display{
+	pixel_x = 32
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 5
@@ -3678,6 +3687,9 @@
 /area/station/crew_quarters/cafeteria)
 "jE" = (
 /obj/machinery/vending/medical_public,
+/obj/machinery/status_display{
+	pixel_x = -32
+	},
 /turf/unsimulated/floor/caution/north,
 /area/station/crewquarters/cryotron)
 "jF" = (
@@ -5094,6 +5106,9 @@
 /area/station/security/main)
 "mW" = (
 /obj/vehicle/segway,
+/obj/machinery/status_display{
+	pixel_x = 32
+	},
 /turf/simulated/floor/bot,
 /area/station/security/main)
 "mX" = (
@@ -5671,6 +5686,9 @@
 /obj/item/device/radio,
 /obj/item/clothing/ears/earmuffs,
 /obj/machinery/cell_charger,
+/obj/machinery/status_display{
+	pixel_x = -32
+	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/engineering)
 "ol" = (
@@ -6925,6 +6943,9 @@
 /obj/item/plantanalyzer,
 /obj/item/pen/pencil{
 	pixel_x = -6
+	},
+/obj/machinery/status_display{
+	pixel_x = -32
 	},
 /turf/simulated/floor/green,
 /area/station/hydroponics/bay)
@@ -8591,6 +8612,9 @@
 /area/station/bridge)
 "uL" = (
 /obj/decal/tile_edge/stripe/extra_big,
+/obj/machinery/status_display{
+	pixel_x = -32
+	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "uM" = (
@@ -8733,6 +8757,9 @@
 	name = "Printer - Bridge";
 	pixel_y = 5;
 	print_id = "Bridge"
+	},
+/obj/machinery/status_display{
+	pixel_y = -30
 	},
 /turf/simulated/floor/carpet{
 	dir = 10;
@@ -9703,6 +9730,9 @@
 /area/station/bridge/captain)
 "xy" = (
 /obj/machinery/ore_cloud_storage_container,
+/obj/machinery/status_display{
+	pixel_y = -30
+	},
 /turf/simulated/floor/yellow/side,
 /area/station/mining/staff_room)
 "xz" = (
@@ -11399,6 +11429,9 @@
 /area/station/storage/tech)
 "BI" = (
 /obj/submachine/laundry_machine,
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
 /turf/simulated/floor/bot,
 /area/station/crew_quarters/lounge)
 "BJ" = (
@@ -12262,6 +12295,9 @@
 "Eb" = (
 /obj/stool/chair/comfy/wheelchair{
 	dir = 8
+	},
+/obj/machinery/status_display{
+	pixel_x = 32
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 6
@@ -17830,6 +17866,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
+"RT" = (
+/obj/machinery/status_display{
+	pixel_x = 32
+	},
+/turf/simulated/floor/white/checker,
+/area/station/hallway/secondary/exit)
 "RU" = (
 /obj/machinery/light{
 	dir = 4;
@@ -18779,6 +18821,14 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"Uy" = (
+/obj/machinery/status_display{
+	pixel_x = 32
+	},
+/turf/simulated/floor/specialroom/chapel{
+	dir = 4
+	},
+/area/station/chapel/sanctuary)
 "Uz" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/camera{
@@ -19137,6 +19187,12 @@
 	icon_state = "fred2"
 	},
 /area/station/crew_quarters/lounge)
+"Vz" = (
+/obj/machinery/status_display{
+	pixel_x = 32
+	},
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/cafeteria)
 "VB" = (
 /obj/reagent_dispensers/heliumtank,
 /turf/simulated/floor/grime,
@@ -20658,6 +20714,9 @@
 /obj/stool/bed,
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
+	},
+/obj/machinery/status_display{
+	pixel_x = -32
 	},
 /turf/simulated/floor/red,
 /area/station/security/brig/genpop)
@@ -63230,7 +63289,7 @@ EE
 Fk
 Gd
 GH
-UE
+ft
 GG
 Cs
 IT
@@ -71360,7 +71419,7 @@ ju
 WZ
 Uz
 Qf
-nJ
+Vz
 oy
 oz
 qG
@@ -76179,7 +76238,7 @@ bc
 bs
 cf
 cf
-cf
+RT
 ek
 ew
 ew
@@ -78303,7 +78362,7 @@ hQ
 jR
 iG
 jN
-kI
+Uy
 ct
 mk
 ct

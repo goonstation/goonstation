@@ -36,7 +36,7 @@ var/global/crew_creds = null
 					continue
 
 				// Security?
-				if("Head of Security","Security Officer","Detective","Vice Officer","Part-time Vice Officer","Security Assistant","Lawyer","Nanotrasen Security Operative","Nanotrasen Special Operative")
+				if("Head of Security","Security Officer","Detective","Vice Officer","Part-time Vice Officer","Security Assistant","Lawyer","Nanotrasen Security Operative","Nanotrasen Tactical Operative")
 					round_security.Add(M)
 					continue
 

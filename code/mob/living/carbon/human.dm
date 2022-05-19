@@ -15,7 +15,7 @@
 	var/dump_contents_chance = 20
 
 	var/image/health_mon = null
-	var/image/health_implant = null
+	var/list/implant_icons = null
 	var/image/arrestIcon = null
 
 	var/pin = null
@@ -198,8 +198,12 @@
 	health_mon = image('icons/effects/healthgoggles.dmi',src,"100",EFFECTS_LAYER_UNDER_4)
 	get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_image(health_mon)
 
-	health_implant = image('icons/effects/healthgoggles.dmi',src,"100",EFFECTS_LAYER_UNDER_4)
-	get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_image(health_implant)
+	implant_icons = list()
+	implant_icons["health"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
+	implant_icons["cloner"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
+	implant_icons["other"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
+	for (var/implant in implant_icons)
+		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_image(implant_icons[implant])
 
 	arrestIcon = image('icons/effects/sechud.dmi',src,null,EFFECTS_LAYER_UNDER_4)
 	get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).add_image(arrestIcon)
@@ -507,10 +511,12 @@
 		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_image(health_mon)
 		health_mon.dispose()
 		health_mon = null
-	if(health_implant)
-		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_image(health_implant)
-		health_implant.dispose()
-		health_implant = null
+	if(implant_icons)
+		for (var/implant in implant_icons)
+			var/image/I = implant_icons[implant]
+			get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_image(I)
+			I.dispose()
+		implant_icons = null
 	if(arrestIcon)
 		get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_image(arrestIcon)
 		arrestIcon.dispose()
@@ -1121,7 +1127,7 @@
 				return
 		else
 			if (src.client.check_key(KEY_THROW) || src.in_throw_mode)
-				SEND_SIGNAL(src, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
+				SEND_SIGNAL(src, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 				src.throw_item(target, params)
 				return
 
@@ -2799,43 +2805,17 @@
 	if (!src.bioHolder || !src.bioHolder.mobAppearance)
 		return null
 	var/obj/item/clothing/head/wig/W = new(src)
-	var/actuallyHasHair = 0
 	W.name = "[real_name]'s hair"
 	W.real_name = "[real_name]'s hair" // The clothing parent setting real_name is probably good for other stuff so I'll just do this
 	W.icon = 'icons/mob/human_hair.dmi'
 	W.icon_state = "bald" // Let's give the actual hair a chance to shine
-/* commenting this out and making it an overlay to fix issues with colors stacking
-	W.icon = 'icons/mob/human_hair.dmi'
-	W.icon_state = H.bioHolder.mobAppearance.customization_first.id
-	W.color = src.bioHolder.mobAppearance.customization_first_color
-	W.wear_image_icon = 'icons/mob/human_hair.dmi'
-	W.wear_image = image(W.wear_image_icon, W.icon_state)
-	W.wear_image.color = src.bioHolder.mobAppearance.customization_first_color*/
 
-	if (!istype(src.bioHolder.mobAppearance.customization_first,/datum/customization_style/none))
-		var/image/h_image = image('icons/mob/human_hair.dmi', src.bioHolder.mobAppearance.customization_first.id)
-		h_image.color = src.bioHolder.mobAppearance.customization_first_color
-		W.overlays += h_image
-		W.wear_image.overlays += h_image
-		actuallyHasHair = 1
+	var/hair_list = list()
+	hair_list[src.bioHolder.mobAppearance.customization_first.id] = src.bioHolder.mobAppearance.customization_first_color
+	hair_list[src.bioHolder.mobAppearance.customization_second.id] = src.bioHolder.mobAppearance.customization_second_color
+	hair_list[src.bioHolder.mobAppearance.customization_third.id] = src.bioHolder.mobAppearance.customization_third_color
 
-	if (!istype(src.bioHolder.mobAppearance.customization_second,/datum/customization_style/none))
-		var/image/f_image = image('icons/mob/human_hair.dmi', src.bioHolder.mobAppearance.customization_second.id)
-		f_image.color = src.bioHolder.mobAppearance.customization_second_color
-		W.overlays += f_image
-		W.wear_image.overlays += f_image
-		actuallyHasHair = 1
-
-
-	if (!istype(src.bioHolder.mobAppearance.customization_third,/datum/customization_style/none))
-		var/image/d_image = image('icons/mob/human_hair.dmi', src.bioHolder.mobAppearance.customization_third.id)
-		d_image.color = src.bioHolder.mobAppearance.customization_third_color
-		W.overlays += d_image
-		W.wear_image.overlays += d_image
-		actuallyHasHair = 1
-
-	if(!actuallyHasHair) // Guess they didnt have any, ah well
-		W.icon_state = "short"
+	W.setup_wig(hair_list)
 
 	return W
 
