@@ -221,15 +221,25 @@
 /obj/machinery/flasher/portable //Portable version of the flasher. Only flashes when anchored
 	name = "portable flasher"
 	desc = "A portable flashing device. Wrench to activate and deactivate. Cannot detect slow movements."
-	icon_state = "pflash1"
+	icon_state = "pflash1-c"
 	strength = 8
 	anchored = 0
 	base_state = "pflash"
 	density = 1
 	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 	var/cooldown_flash = 15 SECONDS
-	var/cooldown_scan = 2 SECONDS
+	var/cooldown_scan = 1.5 SECONDS
 	var/cooldown_end = 0
+
+/obj/machinery/flasher/portable/power_change()
+	..()
+	if (powered())
+		if (!src.anchored)
+			icon_state = "[base_state]1-c"
+		else
+			if (src.last_flash && world.time < src.cooldown_end)
+				icon_state = "[base_state]1-c"
+			light.enable()
 
 /obj/machinery/flasher/portable/HasProximity(atom/movable/AM as mob|obj)
 	if (!powered() || !src.anchored || src.disable || (src.last_flash && world.time < src.cooldown_end))
@@ -240,12 +250,21 @@
 		if (M.m_intent != "walk")
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
+				icon_state = "[base_state]1-c"
 				if (src.check_access(H.wear_id))
 					src.last_flash = world.time
 					src.cooldown_end = (world.time + src.cooldown_scan)
+					SPAWN(cooldown_scan)
+						if (src)
+							if (powered() && src.anchored)
+								icon_state = "[base_state]1"
 				else
 					src.cooldown_end = (world.time + src.cooldown_flash)
 					src.flash()
+					SPAWN(cooldown_flash)
+						if (src)
+							if (powered() && src.anchored)
+								icon_state = "[base_state]1"
 
 /obj/machinery/flasher/portable/attackby(obj/item/W as obj, mob/user as mob)
 	if (iswrenchingtool(W))
@@ -254,11 +273,18 @@
 
 		if (!src.anchored)
 			light.disable()
+			icon_state = "[base_state]1-c"
 			user.show_message(text("<span class='alert'>[src] can now be moved.</span>"))
 			src.UpdateOverlays(null, "anchor")
 
 		else if (src.anchored)
 			if (powered())
 				light.enable()
+				if (src.last_flash && world.time < src.cooldown_end)
+					icon_state = "[base_state]1-c"
+				else
+				icon_state = "[base_state]1"
+			else
+				icon_state = "[base_state]1-p"
 			user.show_message(text("<span class='alert'>[src] is now secured.</span>"))
 			src.UpdateOverlays(image(src.icon, "[base_state]-s"), "anchor")
