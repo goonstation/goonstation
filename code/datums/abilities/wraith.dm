@@ -193,14 +193,14 @@
 			if (amt >= wraithMob.formaldehyde_tol)
 				interrupt(INTERRUPT_ALWAYS)
 				M.reagents.remove_reagent("formaldehyde", amt)
-				boutput(wraithMob, "<span class='alert'>This vessel is tainted with an... unpleasant substance... It is now removed...</span>")
+				wraithMob.visible_message("<span class='alert'>This vessel is tainted with an... unpleasant substance... It is now removed...</span>")
 				particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#FFFFFF", 2, locate(M.x, M.y, M.z)))
 				absorb.doCooldown()
 				return
 		if(W == null || M == null || wraithMob == null || GET_DIST(M, wraithMob) > absorb.max_range)
 			interrupt(INTERRUPT_ALWAYS)
 			absorb.absorbSuccess = TRUE
-			boutput(wraithMob, "<span class='alert'>Your attempt to draw essence from the corpse was interrupted!</span>")
+			wraithMob.visible_message("<span class='alert'>Your attempt to draw essence from the corpse was interrupted!</span>")
 			absorb.doCooldown()
 			return
 
@@ -212,10 +212,10 @@
 		if(W == null || M == null || wraithMob == null || GET_DIST(M, wraithMob) > absorb.max_range)
 			interrupt(INTERRUPT_ALWAYS)
 			absorb.absorbSuccess = TRUE
-			boutput(wraithMob, "<span class='alert'>Your attempt to draw essence from the corpse was interrupted!</span>")
+			wraithMob.visible_message("<span class='alert'>Your attempt to draw essence from the corpse was interrupted!</span>")
 			absorb.doCooldown()
 			return
-		boutput(wraithMob, "<span class='alert'>You start sucking the essence out of [M]'s corpse!</span>")
+		wraithMob.visible_message("<span class='alert'>You start sucking the essence out of [M]'s corpse!</span>")
 		particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#000000", 8, locate(M.x, M.y, M.z)))
 		M.visible_message("Black smoke rises from [M]'s corpse! Freaky!")
 
