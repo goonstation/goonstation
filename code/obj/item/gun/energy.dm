@@ -248,12 +248,12 @@
 
 //////////////////////////////////////// Phaser
 /obj/item/gun/energy/phaser_gun
-	name = "phaser gun"
+	name = "RP-4 phaser gun"
 	icon_state = "phaser-new"
 	uses_multiple_icon_states = 1
 	item_state = "phaser"
 	force = 7.0
-	desc = "A gun that produces a harmful phaser bolt, causing substantial damage."
+	desc = "An energy weapon designed by Radnor Photonics. Popular among frontier adventurers and explorers."
 	muzzle_flash = "muzzle_flash_phaser"
 	cell_type = /obj/item/ammo/power_cell/med_power
 
@@ -270,6 +270,63 @@
 			ratio = round(ratio, 0.25) * 100
 			src.icon_state = "phaser-new[ratio]"
 			return
+
+
+/obj/item/gun/energy/phaser_small
+	name = "RP-3 micro phaser"
+	icon_state = "phaser-tiny"
+	uses_multiple_icon_states = 1
+	item_state = "phaser"
+	force = 4.0
+	desc = "A diminutive sidearm produced by Radnor Photonics. It's not much, but it might just save your life."
+	muzzle_flash = "muzzle_flash_phaser"
+	cell_type = /obj/item/ammo/power_cell/med_power
+
+	New()
+		set_current_projectile(new/datum/projectile/laser/light/tiny)
+		projectiles = list(current_projectile)
+		..()
+
+	update_icon()
+		..()
+		var/list/ret = list()
+		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+			var/ratio = min(1, ret["charge"] / ret["max_charge"])
+			ratio = round(ratio, 0.25) * 100
+			src.icon_state = "phaser-tiny[ratio]"
+			return
+
+
+
+/obj/item/gun/energy/phaser_huge
+	name = "RP-5 macro phaser"
+	icon_state = "phaser-xl"
+	uses_multiple_icon_states = 1
+	item_state = "phaser"
+	force = 10.0
+	desc = "The largest phaser from Radnor Photonics. A big gun for big problems."
+	muzzle_flash = "muzzle_flash_phaser"
+	cell_type = /obj/item/ammo/power_cell/higherish_power
+	shoot_delay = 20
+
+	New()
+		set_current_projectile(new/datum/projectile/laser/light/huge) // light/huge - whatev!!!! this should probably be refactored
+		projectiles = list(current_projectile)
+		..()
+
+	update_icon()
+		..()
+		var/list/ret = list()
+		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+			var/ratio = min(1, ret["charge"] / ret["max_charge"])
+			ratio = round(ratio, 0.25) * 100
+			src.icon_state = "phaser-xl[ratio]"
+			return
+
+
+
+
+
 
 ///////////////////////////////////////Rad Crossbow
 /obj/item/gun/energy/crossbow
