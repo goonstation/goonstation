@@ -9,13 +9,11 @@
 
 /datum/aiTask/prioritizer/exploder/New()
 	..()
-	logTheThing("debug", src, null, "initialize")
 	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/rushdown, list(holder, src))
 	transition_tasks += holder.get_instance(/datum/aiTask/timed/wander, list(holder, src))
 
 /datum/aiTask/prioritizer/exploder/on_reset()
 	..()
-	logTheThing("debug", src, null, "resetted")
 	walk(holder.owner, 0)
 
 /datum/aiTask/sequence/goalbased/rushdown
@@ -25,15 +23,12 @@
 
 /datum/aiTask/sequence/goalbased/rushdown/New(parentHolder, transTask) //????
 	..(parentHolder, transTask)
-	logTheThing("debug", src, null, "Adding task")
 	add_task(holder.get_instance(/datum/aiTask/succeedable/rushdown, list(holder)))
 
 /datum/aiTask/sequence/goalbased/rushdown/precondition()
-	logTheThing("debug", src, null, "Preconditions")
 	. = TRUE // no precondition required that isn't already checked for targets
 
 /datum/aiTask/sequence/goalbased/rushdown/get_targets()
-	logTheThing("debug", src, null, "Get targets")
 	. = list()
 	for(var/mob/living/carbon/human/T in view(max_dist, holder.owner))
 		if(isliving(T) && !is_incapacitated(T))
@@ -44,19 +39,14 @@
 	name = "rushdown subtask"
 
 /datum/aiTask/succeedable/rushdown/failed()
-	logTheThing("debug", src, null, "Failure check")
 	var/mob/living/carbon/human/human_target = holder.target
 	if(!human_target || BOUNDS_DIST(holder.owner, human_target) > 0 || fails >= max_fails)
-		logTheThing("debug", src, null, "Failure")
 		. = TRUE
 
 /datum/aiTask/succeedable/rushdown/succeeded()
-	logTheThing("debug", src, null, "SuccessCheck")
 	var/mob/living/carbon/human/human_target = holder.target
 	var/mob/living/critter/exploder/F = holder.owner
-	if(BOUNDS_DIST(holder.owner, human_target) < 1)
-		logTheThing("debug", src, null, "Success")
-		holder.owner.visible_message(holder.owner.health)
+	if(BOUNDS_DIST(holder.owner, human_target) < 1 && !isdead(human_target))
 		if (F.health > 60)
 			F.set_a_intent(INTENT_HARM)
 			F.set_dir(get_dir(holder.owner, holder.target))
@@ -65,11 +55,10 @@
 			F.emote("scream")
 			sleep(2 SECONDS)
 			return F.gib()
+		sleep(18 DECI SECONDS)
 	else
-		logTheThing("debug", src, null, "NO success")
 		return FALSE
 
 /datum/aiTask/succeedable/rushdown/on_reset()
 
 	..()
-	logTheThing("debug", src, null, "rushdown reset")

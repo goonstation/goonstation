@@ -10,6 +10,7 @@
 	can_grab = 1
 	can_disarm = 1
 	can_help = 1
+	mob_flags = HEAVYWEIGHT_AI_MOB
 	// HEALTHS
 	var/health_brute = 50
 	var/health_burn = 50
