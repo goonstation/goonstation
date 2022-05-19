@@ -1,4 +1,9 @@
+
 (t)wed may 18 22
+(u)DimWhat
+(p)8628
+(e)🎨|sprites
+(+)Respriited the captain's antique lasergun
 (u)Virvatuli
 (e)🆕|feature
 (*)New addition to surplus crates and spy bounties: energy-based concussion grenades! Those who have played Pod Wars should be familiar with them. These stick grenades let loose a forceful energy wave upon detonation, similar to being hit by a pulse rifle. They work best in tight spaces where you can disarm your targets when they are flung into a wall.
