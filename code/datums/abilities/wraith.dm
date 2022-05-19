@@ -193,14 +193,14 @@
 			if (amt >= wraithMob.formaldehyde_tol)
 				interrupt(INTERRUPT_ALWAYS)
 				M.reagents.remove_reagent("formaldehyde", amt)
-				wraithMob.visible_message("<span class='alert'>This vessel is tainted with an... unpleasant substance... It is now removed...</span>")
+				boutput(wraithMob, "<span class='alert'>This vessel is tainted with an... unpleasant substance... It is now removed...</span>")
 				particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#FFFFFF", 2, locate(M.x, M.y, M.z)))
 				absorb.doCooldown()
 				return
 		if(W == null || M == null || wraithMob == null || GET_DIST(M, wraithMob) > absorb.max_range)
 			interrupt(INTERRUPT_ALWAYS)
 			absorb.absorbSuccess = TRUE
-			wraithMob.visible_message("<span class='alert'>Your attempt to draw essence from the corpse was interrupted!</span>")
+			boutput(wraithMob, "<span class='alert'>Your attempt to draw essence from the corpse was interrupted!</span>")
 			absorb.doCooldown()
 			return
 
@@ -212,13 +212,12 @@
 		if(W == null || M == null || wraithMob == null || GET_DIST(M, wraithMob) > absorb.max_range)
 			interrupt(INTERRUPT_ALWAYS)
 			absorb.absorbSuccess = TRUE
-			wraithMob.visible_message("<span class='alert'>Your attempt to draw essence from the corpse was interrupted!</span>")
+			boutput(wraithMob, "<span class='alert'>Your attempt to draw essence from the corpse was interrupted!</span>")
 			absorb.doCooldown()
 			return
-		wraithMob.visible_message("<span class='alert'>You start sucking the essence out of [M]'s corpse!</span>")
+		boutput(wraithMob, "<span class='alert'>You start sucking the essence out of [M]'s corpse!</span>")
 		particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#000000", 8, locate(M.x, M.y, M.z)))
-		for (var/mob/living/V in viewers(7, wraithMob))
-			V.visible_message("Black smoke rises from [M]'s corpse! Freaky!")
+		M.visible_message("Black smoke rises from [M]'s corpse! Freaky!")
 
 
 	onEnd()
@@ -236,10 +235,9 @@
 		wraithHolder.regenRate *= 2.0
 		wraithMob.onAbsorb(M)
 		//Messages for everyone!
-		wraithMob.visible_message("<span class='alert'><strong>[pick("You draw the essence of death out of [M]'s corpse!", "You drain the last scraps of life out of [M]'s corpse!")]</strong></span>")
+		boutput(wraithMob, "<span class='alert'><strong>[pick("You draw the essence of death out of [M]'s corpse!", "You drain the last scraps of life out of [M]'s corpse!")]</strong></span>")
 		playsound(M, "sound/voice/wraith/wraithsoulsucc[rand(1, 2)].ogg", 60, 0)
-		for (var/mob/living/V in viewers(7, wraithMob))
-			V.visible_message("[M]'s corpse suddenly rots to nothing but bone!")
+		M.visible_message("[M]'s corpse suddenly rots to nothing but bone!")
 		wraithHolder.corpsecount += 1
 		absorb.doCooldown()
 
