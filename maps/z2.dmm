@@ -64890,11 +64890,6 @@
 	name = "Morgue";
 	req_access_txt = "5"
 	},
-/obj/machinery/door/airlock/pyro/medical{
-	dir = 4;
-	name = "Morgue";
-	req_access_txt = "5"
-	},
 /turf/unsimulated/floor/white/grime,
 /area/crypt/sigma/lab)
 "dFE" = (
@@ -70416,6 +70411,16 @@
 	icon_state = "floor"
 	},
 /area/centcom/lounge)
+"evP" = (
+/obj/stool/chair/comfy/shuttle/pilot{
+	dir = 1
+	},
+/obj/critter/domestic_bee/aloe_bee,
+/obj/effects/precipitation/rain/dense/tile,
+/turf/unsimulated/floor/carpet/darkcarpet/border{
+	dir = 9
+	},
+/area/centcom/offices/aloe)
 "ewi" = (
 /turf/unsimulated/floor/carpet/clowncarpet/border{
 	dir = 10
@@ -71039,6 +71044,10 @@
 	dir = 1
 	},
 /area/centcom)
+"gCS" = (
+/obj/stool/bee_bed,
+/turf/unsimulated/floor/carpet/darkcarpet/border,
+/area/centcom/offices/aloe)
 "gDk" = (
 /obj/table/reinforced/auto,
 /obj/item/plate/tray,
@@ -71275,6 +71284,12 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/left_centcom/cogmap)
+"hyC" = (
+/obj/effects/precipitation/rain/dense/tile,
+/turf/unsimulated/floor/carpet/darkcarpet/border{
+	dir = 5
+	},
+/area/centcom/offices/aloe)
 "hBd" = (
 /obj/critter/frog{
 	anchored = 1;
@@ -71467,6 +71482,11 @@
 	},
 /turf/unsimulated/floor/carpet/purple/fancy/edge/west,
 /area/centcom/offices/virvatuli)
+"hZA" = (
+/turf/unsimulated/floor/carpet/darkcarpet/border{
+	dir = 6
+	},
+/area/centcom/offices/aloe)
 "iag" = (
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater"
@@ -72474,6 +72494,10 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"loK" = (
+/obj/effects/precipitation/rain/dense/tile,
+/turf/unsimulated/floor/wood/six,
+/area/centcom/offices/aloe)
 "lqh" = (
 /turf/unsimulated/wall/auto/adventure/shuttle{
 	opacity = 0
@@ -72779,6 +72803,18 @@
 	icon_state = "floor"
 	},
 /area/centcom/lounge)
+"mvU" = (
+/obj/admin_plaque{
+	desc = "a nameplate signifying who this office belongs to.";
+	name = "\proper aloe's office";
+	pixel_x = -32
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "mxo" = (
 /obj/admin_plaque{
 	name = "Azrun's Office";
@@ -73938,6 +73974,17 @@
 	},
 /turf/unsimulated/floor/circuit/red,
 /area/syndicate_station/assault_pod)
+"ptp" = (
+/obj/table/wood/auto,
+/obj/machinery/light/lamp{
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/artifact{
+	pixel_y = 4
+	},
+/obj/effects/precipitation/rain/dense/tile,
+/turf/unsimulated/floor/wood/six,
+/area/centcom/offices/aloe)
 "ptv" = (
 /obj/admin_plaque{
 	name = "Mark's Code Dungeon";
@@ -74014,6 +74061,13 @@
 	},
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel/flingy)
+"pFd" = (
+/obj/machinery/door/unpowered/wood{
+	icon = 'icons/obj/doors/door_office.dmi';
+	lock_dir = 8
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/aloe)
 "pFm" = (
 /obj/reagent_dispensers/watertank/fountain/piss,
 /obj/machinery/light{
@@ -74310,6 +74364,12 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"qjb" = (
+/obj/item/clothing/under/misc/flame_purple,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/offices/pali)
 "qkO" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-6"
@@ -74414,6 +74474,27 @@
 	},
 /turf/unsimulated/floor/caution/north,
 /area/centcom/offices/azrun)
+"qJM" = (
+/obj/noticeboard/persistent{
+	name = "aloe's personal persistent notice board";
+	persistent_id = "aloe"
+	},
+/obj/effects/precipitation/rain/dense/tile,
+/obj/storage/crate/bin,
+/obj/item/paper{
+	icon_state = "paper";
+	info = "<h1>IOU</h1><br>one lesson in how git works (realistically like 7)";
+	name = "IOU"
+	},
+/obj/item/paper{
+	icon_state = "paper";
+	info = "<h1>DO NOT TRUST THE WIDE AREA SPAWN TOOL</h1>";
+	name = "note to self";
+	pixel_x = -2;
+	pixel_y = -9
+	},
+/turf/unsimulated/floor/wood/six,
+/area/centcom/offices/aloe)
 "qJO" = (
 /obj/machinery/vending/cola/blue,
 /turf/unsimulated/floor{
@@ -74434,6 +74515,12 @@
 "qJS" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/upper_arctic/comms)
+"qMM" = (
+/obj/effects/precipitation/rain/dense/tile,
+/turf/unsimulated/floor/carpet/darkcarpet/border{
+	dir = 1
+	},
+/area/centcom/offices/aloe)
 "qMN" = (
 /obj/machinery/light{
 	dir = 1
@@ -74705,6 +74792,12 @@
 	dir = 4
 	},
 /area/centcom)
+"rvM" = (
+/obj/machinery/light/small/floor/warm/very,
+/turf/unsimulated/floor/carpet/darkcarpet/border{
+	dir = 10
+	},
+/area/centcom/offices/aloe)
 "rwD" = (
 /obj/machinery/door/airlock/pyro/classic{
 	dir = 4
@@ -75167,6 +75260,20 @@
 "sjM" = (
 /turf/unsimulated/floor/white/checker,
 /area/wizard_station)
+"skF" = (
+/obj/storage/closet/dresser,
+/obj/machinery/light/small/floor/warm/very,
+/obj/effects/precipitation/rain/dense/tile,
+/obj/item/clothing/head/NTberet,
+/obj/item/clothing/suit/bio_suit/paramedic/armored/prenerf,
+/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/shoes/black,
+/obj/item/storage/backpack/satchel/blue,
+/obj/item/clothing/under/misc/flame_purple,
+/obj/item/clothing/head/helmet/space/captain/blue,
+/obj/item/clothing/mask/gas/swat/rainbow,
+/turf/unsimulated/floor/wood/six,
+/area/centcom/offices/aloe)
 "smg" = (
 /turf/unsimulated/floor/dream/space,
 /area/titlescreen)
@@ -75500,6 +75607,15 @@
 	icon_state = "red2"
 	},
 /area/diner/cow)
+"tzl" = (
+/obj/table/wood/auto/desk/aloe,
+/obj/item/luggable_computer/personal{
+	pixel_y = 5
+	},
+/obj/machinery/light/small/floor/warm/very,
+/obj/effects/precipitation/rain/dense/tile,
+/turf/unsimulated/floor/wood/six,
+/area/centcom/offices/aloe)
 "tAi" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/shuttle/merchant_shuttle/left_centcom/cogmap)
@@ -75903,6 +76019,13 @@
 /obj/critter/cat/cathara,
 /turf/unsimulated/floor/carpet/office/other,
 /area/centcom/offices/adhara)
+"vis" = (
+/obj/machinery/light/small/floor/warm/very,
+/obj/machinery/recharge_station/cat{
+	name = "cat docking station"
+	},
+/turf/unsimulated/floor/wood/six,
+/area/centcom/offices/aloe)
 "viL" = (
 /obj/item/paper/book/from_file/guardbot_guide,
 /turf/unsimulated/floor/yellow,
@@ -150707,7 +150830,7 @@ dCF
 eTm
 wel
 iOu
-iOu
+qjb
 iOu
 wel
 wvy
@@ -152224,9 +152347,9 @@ dvW
 dvW
 dCj
 wel
-dvW
-dvW
-dCj
+tzl
+evP
+rvM
 wel
 dEM
 dES
@@ -152526,9 +152649,9 @@ dvW
 dvW
 dvW
 wel
-dvW
-dvW
-dvW
+ptp
+qMM
+gCS
 wel
 dEN
 dER
@@ -152828,9 +152951,9 @@ dvX
 dvW
 dvW
 wel
-dvX
-dvW
-dvW
+qJM
+hyC
+hZA
 wel
 dRJ
 dEQ
@@ -153130,9 +153253,9 @@ dvW
 dvW
 dvW
 wel
-dvW
-dvW
-dvW
+skF
+loK
+vis
 wel
 dEP
 dER
@@ -153433,7 +153556,7 @@ kKw
 wel
 wel
 wel
-kKw
+pFd
 wel
 wel
 dvy
@@ -153734,7 +153857,7 @@ rUQ
 dvy
 dxa
 dvy
-rUQ
+mvU
 dvy
 dvy
 dvy

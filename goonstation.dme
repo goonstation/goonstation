@@ -1773,6 +1773,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\turf\walls.dm"
 #include "code\WorkInProgress\AbilityItem.dm"
 #include "code\WorkInProgress\actuallyKeelinsStuff.dm"
+#include "code\WorkInProgress\aloe_stuff_public.dm"
 #include "code\WorkInProgress\AnimationLibrary.dm"
 #include "code\WorkInProgress\AphsStuff.dm"
 #include "code\WorkInProgress\apiFallbackRoutes.dm"

@@ -850,6 +850,7 @@
 			SPAWN(1 DECI SECOND)
 				qdel (src.cell)
 				src.cell = null
+				src.part_chest?.cell = null
 
 		update_bodypart()
 
@@ -999,6 +1000,7 @@
 					SPAWN(1 DECI SECOND)
 						qdel(src.cell)
 						src.cell = null
+						src.part_chest?.cell = null
 			src.update_bodypart()
 
 	temperature_expose(null, temp, volume)
@@ -1021,6 +1023,7 @@
 				SPAWN(1 DECI SECOND)
 					qdel (src.cell)
 					src.cell = null
+					src.part_chest?.cell = null
 
 	bump(atom/movable/AM as mob|obj)
 		if ( src.now_pushing)
@@ -1156,6 +1159,7 @@
 				user.drop_item()
 				W.set_loc(src)
 				cell = W
+				src.part_chest?.cell = W
 				boutput(user, "You insert [W].")
 				src.update_appearance()
 
@@ -1560,6 +1564,7 @@
 					logTheThing("combat", user, src, "removes [constructTarget(src,"combat")]'s power cell at [log_loc(src)].") // Renders them mute and helpless (Convair880).
 					cell.add_fingerprint(user)
 					cell.UpdateIcon()
+					src.part_chest.cell = null
 					src.cell = null
 
 			update_appearance()
@@ -2233,6 +2238,10 @@
 				vocal_pitch = 1.0
 			if("High")
 				vocal_pitch = 1.25
+
+	// hacky, but this is used for says etc.
+	get_age_pitch_for_talk()
+		return vocal_pitch
 
 	proc/pick_module()
 		if(src.module) return

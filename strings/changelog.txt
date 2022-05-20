@@ -1,5 +1,42 @@
 
+(t)wed may 18 22
+(u)Wisemonster
+(p)8610
+(e)|
+(+)Status display screens' now glow in the dark!
+(u)DimWhat
+(p)8628
+(e)🎨|sprites
+(+)Respriited the captain's antique lasergun
+(u)Virvatuli
+(e)🆕|feature
+(*)New addition to surplus crates and spy bounties: energy-based concussion grenades! Those who have played Pod Wars should be familiar with them. These stick grenades let loose a forceful energy wave upon detonation, similar to being hit by a pulse rifle. They work best in tight spaces where you can disarm your targets when they are flung into a wall.
+(t)tue may 17 22
+(u)Sovexe
+(p)8615
+(e)🎨|sprites
+(*)New spacebux purchasable, the Pixel Pass. Can be redeemed at the Centcom canvas to place an additional pixel. Keep it safe until you get there!
+(u)aloe
+(*)Dart and syringe projectiles (lawbringer dart, syringe gun, tranq rifle, tranq pistol, etc) now apply their reagents slowly rather than instantly, and stop applying their reagents after pulled out. As a reminder, you can pull a dart out of yourself or someone else by clicking them on help intent. Syndicate darts (nukie pistol, traitor syringe gun) are barbed and require surgery to remove.
+(*)The reagents added by darts are no longer reduced by armor.
+(t)mon may 16 22
+(u)Wisemonster
+(p)8591
+(e)🗺|mapping
+(+)Added status displays to Donut 3
 (t)sun may 15 22
+(u)Pali + Sord
+(e)🆕🗺|feature, mapping
+(+)Added randomized rooms to Oshan!
+(u)Flappybat
+(p)8586
+(e)🎨⚖|sprites, balance
+(+)Nuclear Operative pistol belt sprites show if they contain a pistol.
+(u)FlameArrow57
+(p)8478
+(e)🆕🎨⚖🔄|feature, sprites, balance, rework
+(*)Health analyzers will now show non-syndicate type implants in those scanned. The Nuclear Operative Field Medic helmet is exempt from that restriction.
+(*)ProDoc health goggles now show an orange indicator on health icons for those with an implant in them other than a health or cloner record implant.
 (u)Roddy
 (p)8506
 (e)🎨|sprites
