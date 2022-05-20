@@ -102,6 +102,50 @@
 		item_state = "hoodie-red"
 		hcolor = "red"
 
+/obj/item/clothing/suit/overalls
+	name = "overalls"
+	desc = "Commonly referred to as 'necklace pants' or the 'Amantes Tuxedo'"
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
+	icon_state = "overalls_blue"
+	item_state = "overalls_blue"
+	body_parts_covered = TORSO
+
+	setupProperties()
+		..()
+		setProperty("coldprot", 15)
+		setProperty("heatprot", 25)
+		setProperty("meleeprot", 1)
+
+
+	grey
+		desc = "The most commonly worn overalls among spacers. It's weird seeing it without sweat and grease stains."
+		icon_state = "overalls_grey"
+		item_state = "overalls_grey"
+		inhand
+
+	black
+		desc = "Worn by those making a daring fashion statement... or those tired of oil stains from working on pods."
+		icon_state = "overalls_black"
+		item_state = "overalls_black"
+
+	orange
+		desc = "High visibility, saftey overalls."
+		icon_state = "overalls_orange"
+		item_state = "overalls_orange"
+
+	olive
+		desc = "Overalls often worn by botanists on Regina."
+		icon_state = "overalls_olive"
+		item_state = "overalls_olive"
+
+	red
+		desc = "Apparently people wearing red are more likely to die in space."
+		icon_state = "overalls_red"
+		item_state = "overalls_red"
+
+
 /obj/item/clothing/suit/hoodie/random
 	New()
 		if (prob(50))
