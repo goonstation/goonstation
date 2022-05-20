@@ -8,10 +8,10 @@
 	var/id = null
 	var/range = 2 //this is roughly the size of brig cell
 	var/disable = 0
-	var/last_flash = 0 //Don't want it getting spammed like regular flashes
 	var/strength = 10 //How weakened targets are when flashed.
 	var/base_state = "mflash"
 	var/datum/light/light
+	var/cooldown_flash = 15 SECONDS
 	anchored = 1
 	req_access = list(access_security)
 
@@ -206,7 +206,7 @@
 
 	playsound(src.loc, "sound/weapons/flash.ogg", 100, 1)
 	flick("[base_state]_flash", src)
-	src.last_flash = world.time
+	ON_COOLDOWN(src, "flash", cooldown_flash)
 	use_power(1000)
 
 	for (var/mob/O in viewers(src, null))
@@ -227,7 +227,6 @@
 	base_state = "pflash"
 	density = 1
 	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
-	var/cooldown_flash = 15 SECONDS
 	var/cooldown_scan = 1.5 SECONDS
 	var/cooldown_end = 0
 
