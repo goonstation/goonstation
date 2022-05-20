@@ -75271,6 +75271,7 @@
 /obj/item/storage/backpack/satchel/blue,
 /obj/item/clothing/under/misc/flame_purple,
 /obj/item/clothing/head/helmet/space/captain/blue,
+/obj/item/clothing/mask/gas/swat/rainbow,
 /turf/unsimulated/floor/wood/six,
 /area/centcom/offices/aloe)
 "smg" = (

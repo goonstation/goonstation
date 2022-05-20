@@ -873,7 +873,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	return
 
 /proc/animate_rainbow_glow(var/atom/A)
-	if (!istype(A))
+	if (!istype(A) && !isclient(A))
 		return
 	animate(A, color = "#FF0000", time = rand(5,10), loop = -1, easing = LINEAR_EASING)
 	animate(color = "#FFFF00", time = rand(5,10), loop = -1, easing = LINEAR_EASING)
