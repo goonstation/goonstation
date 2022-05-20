@@ -239,10 +239,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/casual)
 	cost = PAY_TRADESMAN/3
 	hidden = 1
 
-/datum/clothingbooth_item/casual/dirtyvest
-	name = "Dirty Tank Top Vest"
-	path = /obj/item/clothing/under/misc/dirty_vest
-
 /datum/clothingbooth_item/casual/bandshirt
 	name = "Band Shirt"
 	path = /obj/item/clothing/under/misc/bandshirt
@@ -1222,4 +1218,49 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/western/westboot)
 		name = "Brown Cowboy Boots"
 		path = /obj/item/clothing/shoes/westboot/brown
 
+//Spacer
 
+ABSTRACT_TYPE(/datum/clothingbooth_item/spacer)
+/datum/clothingbooth_item/spacer
+	name = "spacer"
+	category = "Spacer"
+	slot = SLOT_W_UNIFORM
+	cost = PAY_UNTRAINED/1
+
+//overalls
+ABSTRACT_TYPE(/datum/clothingbooth_item/spacer/overalls)
+/datum/clothingbooth_item/spacer/overalls
+	name = "Overalls"
+	slot = SLOT_HEAD
+	cost = PAY_TRADESMAN/3
+
+	blue
+		name = "Blue Overalls"
+		path = /obj/item/clothing/suit/overalls
+
+	grey
+		name = "Grey Overalls"
+		path = /obj/item/clothing/suit/overalls/grey
+
+	black
+		name = "Black Overalls"
+		path = /obj/item/clothing/suit/overalls/black
+
+	orange
+		name = "Orange Overalls"
+		path = /obj/item/clothing/suit/overalls/orange
+
+	olive
+		name = "Olive Overalls"
+		path = /obj/item/clothing/suit/overalls/olive
+
+	red
+		name = "Red Overalls"
+		path = /obj/item/clothing/suit/overalls/red
+
+//jumpsuits
+
+
+/datum/clothingbooth_item/spacer/dirtyvest
+	name = "Dirty Tank Top Vest"
+	path = /obj/item/clothing/under/misc/dirty_vest
