@@ -2214,6 +2214,12 @@
 					return FALSE
 				if (istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item))
 					return FALSE
+				if (I.two_handed)
+					if (src.limbs.r_arm)
+						if(src.r_hand)
+							return FALSE
+					else
+						return FALSE
 				return TRUE
 		if (slot_r_hand)
 			if (src.limbs.r_arm)
@@ -2221,6 +2227,12 @@
 					return FALSE
 				if (istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item))
 					return FALSE
+				if (I.two_handed)
+					if (src.limbs.l_arm)
+						if(src.l_hand)
+							return FALSE
+					else
+						return FALSE
 				return TRUE
 		if (slot_belt)
 			if ((I.flags & ONBELT) && src.w_uniform)
