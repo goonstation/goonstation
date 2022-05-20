@@ -701,48 +701,6 @@
 		boutput(activator, "<span class='alert'>Unable to redeem... Only humans can redeem this.</span>")
 		return
 
-/datum/achievementReward/med_labcoat
-	title = "(Skin) Medical Labcoat"
-	desc = "Requires that you wear a labcoat in your suit slot."
-	required_medal = "Patchwork"
-	once_per_round = 0
-
-	rewardActivate(var/mob/activator)
-		if (ishuman(activator))
-			var/mob/living/carbon/human/H = activator
-			if (H.wear_suit)
-				var/obj/item/clothing/suit/labcoat/M = H.wear_suit
-				if (istype(M))
-					var/prev = M.name
-					M.icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
-					M.inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit.dmi'
-					if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/overcoat/hand_suit.dmi'
-					M.wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
-					if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
-
-					//change the icon if you've bought the alt jumpsuit thing (so the coat matches the alt medical jumpsuit)
-					if (activator.mind && istype(activator.mind.purchased_bank_item, /datum/bank_purchaseable/altjumpsuit))
-						M.icon_state = findtext(M.icon_state, "_o") ? "MDlabcoat-alt_o" : "MDlabcoat-alt"
-						M.item_state = "MDlabcoat-alt"
-						M.coat_style = "MDlabcoat-alt"
-						M.desc = "A protective laboratory coat with the blue markings of a fancy Medical Doctor. (Base Item: [prev])"
-					else
-						M.icon_state = findtext(M.icon_state, "_o") ? "MDlabcoat_o" : "MDlabcoat"
-						M.item_state = "MDlabcoat"
-						M.coat_style = "MDlabcoat"
-						M.desc = "A protective laboratory coat with the red markings of a Medical Doctor. (Base Item: [prev])"
-
-					M.name = "doctor's labcoat"
-					M.real_name = "doctor's labcoat"
-					H.set_clothing_icon_dirty()
-					return 1
-
-			boutput(activator, "<span class='alert'>Unable to redeem... you need to be wearing a labcoat.</span>")
-			return
-
-		boutput(activator, "<span class='alert'>Unable to redeem... Only humans can redeem this.</span>")
-		return
-
 /datum/achievementReward/sci_labcoat
 	title = "(Skin) Science Labcoat"
 	desc = "Requires that you wear a labcoat in your suit slot."
