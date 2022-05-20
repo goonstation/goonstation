@@ -237,32 +237,34 @@
 		if (!src.anchored)
 			icon_state = "[base_state]1-c"
 		else
-			if (src.last_flash && world.time < src.cooldown_end)
+			if (GET_COOLDOWN(src, "flash"))
 				icon_state = "[base_state]1-c"
 			light.enable()
 
 /obj/machinery/flasher/portable/HasProximity(atom/movable/AM as mob|obj)
-	if (!src.anchored || src.disable || (src.last_flash && world.time < src.cooldown_end))
+	if (!src.anchored || src.disable)
+		return
+
+	if (GET_COOLDOWN(src, "flash"))
 		return
 
 	if (!powered())
 		return
 
-	if(iscarbon(AM))
+	if (iscarbon(AM))
 		var/mob/living/carbon/M = AM
 		if (M.m_intent != "walk")
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
 				icon_state = "[base_state]1-c"
 				if (src.check_access(H.wear_id))
-					src.last_flash = world.time
-					src.cooldown_end = (world.time + src.cooldown_scan)
+					ON_COOLDOWN(src, "flash", cooldown_scan)
 					SPAWN(cooldown_scan)
 						if (src)
 							if (powered() && src.anchored)
 								icon_state = "[base_state]1"
 				else
-					src.cooldown_end = (world.time + src.cooldown_flash)
+					ON_COOLDOWN(src, "flash", cooldown_flash)
 					src.flash()
 					SPAWN(cooldown_flash)
 						if (src)
@@ -279,14 +281,14 @@
 			if (powered())
 				icon_state = "[base_state]1-c"
 			else
-				icon_state = "[base_state]1"
+				icon_state = "[base_state]1-p"
 			user.show_message(text("<span class='alert'>[src] can now be moved.</span>"))
 			src.UpdateOverlays(null, "anchor")
 
 		else if (src.anchored)
 			if (powered())
 				light.enable()
-				if (src.last_flash && world.time < src.cooldown_end)
+				if (GET_COOLDOWN(src, "flash"))
 					icon_state = "[base_state]1-c"
 				else
 					icon_state = "[base_state]1"
