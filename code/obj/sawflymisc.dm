@@ -24,7 +24,7 @@
 	custom_suicide = 1
 
 
-	prime() // we only want one drone, rewrite old proc
+	prime()
 		SPAWN(2) // super short delay to prevent fuckiness with suicide code
 			var/turf/T =  get_turf(src)
 			if (T)
@@ -98,9 +98,9 @@
 /obj/item/old_grenade/spawner/sawflycluster
 	name = "Cluster sawfly"
 	desc = "A whole lot of little angry robots at the end of the stick, ready to shred whoever stands in their way."
-	det_time = 2 SECONDS // give them slightly more time to realize their fate
+	det_time = 2 SECONDS // more reasonable reaction time
 
-	force = 7 //whacking people with metal on the end of a stick hurts -> this should be a decent weapon
+	force = 7
 	throwforce = 10
 	stamina_damage = 35
 	stamina_cost = 20
@@ -153,7 +153,9 @@
 				if(src.emagged)
 					if(prob(50)) //sawfly breaks
 						S.visible_message("<span class='combat'>[S] buzzes oddly and starts to sprial out of control!</span>")
-						SPAWN(1 SECONDS)
+						walk(src, 0)
+						walk_rand(src, 1, 10)
+						SPAWN(2 SECONDS)
 							S.blowup()
 					else
 						S.foldself() //business as usual
@@ -241,12 +243,12 @@
 	var/atksilicon = TRUE
 	var/atkcarbon = TRUE
 	var/alive = TRUE
-	var/alreadydead = FALSE // prevents any bullshit from happening with repeated
+	var/alreadydead = FALSE // prevents any bullshit from happening with repeated death calls
 
 
 	// MOB/LIVING/CRITTER FUCK SHIT HERE
 	setup_healths()
-		add_hh_robot(20, 1) // fuck you and your way of doing health that isn't my way of doing it
+		add_hh_robot(20, 1)
 		add_hh_robot_burn(20, 1)
 	custom_gib_handler = /proc/robogibs
 	blood_id = "oil"
@@ -284,8 +286,8 @@
 		fliesnearby = 1 //that's you, little man! :)
 		for(var/mob/living/critter/sawfly/E in range(get_turf(src), 18))
 			src.fliesnearby += 1 //that's your buddies!
-		var/beepchance = (1 / fliesnearby) * 100 //have it so that, if there's 2 sawflies, it's a 1/2 chance for each, then convert to %
-		if(fliesnearby<3) beepchance -=20
+		var/beepchance = (1 / fliesnearby) * 100 //if two sawflies, give 50% chance that any one will beep
+		if(fliesnearby<3) beepchance -=20 //heavily reduce chance of beep in swarm
 		if(prob(beepchance))
 			playsound(src, pick(src.beeps), 40, 1)
 			src.visible_message("<b>[src] [beeptext].</b>")
@@ -328,31 +330,28 @@
 		src.is_npc = FALSE // stop any and all possible non-critter AI thought
 		src.throws_can_hit_me = FALSE  //prevent getting hit by thrown stuff- super important in avoiding jank
 
-		//death behavior custom to sawflies below
 
 		animate(src) //stop no more float animation
 		icon_state = "sawflydead[pick("1", "2", "3", "4", "5", "6", "7", "8")]" //randomly selects death icon and displaces them
 		src.pixel_x += rand(-5, 5)
 		src.pixel_y += rand(-1, 5)
-
 		src.anchored = 0
-		src.set_density(0)
 		walk_to(src,0) //halt walking
 
-		// special checks that determine how much postmorten chaos our little sawflies cause
+		// special checks that determine how much damage they do after death
 		if (prob(20))
-			new /obj/item/device/prox_sensor(src.loc) // maybe change this later
+			new /obj/item/device/prox_sensor(src.loc)
 			return
 
-		if(prob(60)) // a miniscule smidge of tomfoolery
+		if(prob(60))
 			elecflash(src, 1, 3)
 
 		if(prob(20)) // congrats, little guy! You're special! You're going to blow up!
 			if(prob(70)) //decide whether or not people get a warning
 				src.visible_message("<span class='combat'>[src] makes a [pick("gentle", "odd", "slight", "weird", "barely audible", "concerning", "quiet")] [pick("hiss", "drone", "whir", "thump", "grinding sound", "creak", "buzz", "khunk")].......")
-			SPAWN(deathtimer SECONDS) // pause, for dramatic effect
+			SPAWN(deathtimer SECONDS)
 				src.blowup()
-		alreadydead = TRUE // HIGHLY important variable
+		alreadydead = TRUE
 
 
 
@@ -370,11 +369,10 @@
 		if(alive) // prevents weirdness from emagged controllers causing frankenstein sawflies
 			qdel(src)
 
-// FROM HERE ON OUT IS AI SHIT, MOST OF WHICH IS PORTED FROM CRITTERS
+// FROM HERE ON OUT IS BEHAVIOR SHIT, MOST OF WHICH IS PORTED FROM CRITTERS
 
-
-	proc/ChaseAttack(atom/M) // overriding these attack procs so drone is nicer to traitors >:(
-		if (istraitor(M) || isnukeop(M) || isspythief(M) || (M in src.friends))
+	proc/ChaseAttack(atom/M)
+		if (istraitor(M) || isnukeop(M) || isspythief(M) ||(M in src.friends))
 			return
 		if(target && !attacking)
 			attacking = TRUE
@@ -393,9 +391,16 @@
 
 	proc/seek_target()
 		src.anchored = FALSE
-		for (var/mob/living/C in view(src.seekrange,src))
-			if(C == oldtarget_name) continue
 
+		for (var/mob/living/C in view(src.seekrange,src)) //search for secoffs before targeting any crew
+			if(C == oldtarget_name) continue
+			if (C.health < -50) continue
+			if (C.job == "Security Officer" || C.job == "Head of Security")
+				select_target(C)
+				return
+
+		for (var/mob/living/C in view(src.seekrange,src)) // no secoffs found, look for non-security
+			if(C == oldtarget_name) continue
 			if (C in src.friends) continue
 			if (istraitor(C) || isnukeop(C) || isspythief(C)) // frens :)
 				boutput(C, "<span class='alert'>[src]'s IFF system silently flags you as an ally!")
@@ -403,25 +408,24 @@
 				continue
 			if (!src.alive) break
 			if (C.health < -50) continue // ignore people who are badly wounded when searching
-			if (C.job == "Security Officer" || C.job == "Head of Security")  src.attack = TRUE //prioritize enemy #1 of antags
 			if (C.name == src.attacker) src.attack = TRUE
-			if (iscarbon(C)) src.attack = TRUE
 			if (issilicon(C)) src.attack = TRUE
 			if (src.attack)
 				select_target(C)
-				src.attack = 0
+				src.attack = FALSE
 				return
 			else continue
 
 
 	proc/CritterAttack(mob/M)
-		if (istraitor(M) || isnukeop(M) || isspythief(M) || (M in src.friends)) // BE. A. GOOD. FUCKING. DRONE.
-			oldtarget_name = M
+		if (istraitor(M) || isnukeop(M) || isspythief(M) || (M in src.friends))
+			src.oldtarget_name = M
 			seek_target()
 			return
 		if(target && !attacking)
 			attacking = TRUE
-			if (M.health <=-75 && prob(60)) //purposefully don't overwrite oldtarget so if they attack again we can maybe finish them off
+			if (M.health <=-75 && prob(60))
+				src.oldtarget_name = M
 				seek_target()
 				return
 			src.visible_message("<span class='alert'><b>[src]</b> [pick(list("gouges", "cleaves", "lacerates", "shreds", "cuts", "tears", "hacks", "slashes",))] [M]!</span>")
@@ -450,16 +454,16 @@
 		if (!isturf(target))
 			return
 
-		shoot_projectile_ST(src,  new/datum/projectile/laser/drill/sawfly(), target) // THIS DOES NOT WORK WELL FOR SOME REASON
+		shoot_projectile_ST(src,  new/datum/projectile/laser/drill/sawfly(), target)
 		return
 
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
 		if(prob(50) && alive) // borrowed from brullbar- anti-crowd measures
-			src.target = user
-			src.oldtarget_name = user.name
-			src.task = "chasing"
 			if (!(istraitor(user) || isnukeop(user) || isspythief(user)))
+				src.target = user
+				src.oldtarget_name = user.name
+				src.task = "chasing"
 				src.visible_message("<span class='alert'><b>[src]'s targeting subsystems identify [src.target] as a high priority threat!</b></span>")
 				playsound(src, pick(src.beeps), 55, 1)
 				var/tturf = get_turf(src.target) //instantly retaliate, since we know we're in melee range
@@ -528,8 +532,8 @@
 							src.frustration = 0
 				else src.task = "thinking"
 			if("attacking")
-				if(prob(15)) walk_rand(src,4) // juke around and dodge shots
-				// see if he got away
+				if(prob(15)) walk_rand(src,4) // juke around and dodge shots, again
+				// see if they got away
 				if ((BOUNDS_DIST(src, src.target) > 0) || ((src.target:loc != src.target_lastloc)))
 					src.anchored = 0
 					src.task = "chasing"
@@ -558,10 +562,10 @@
 		return 1
 
 
-	Life() // override so drones don't just loaf all fuckin day
+	Life()
 		if(!alive) // check that sees whether or not it's dead
 			return
-		if(health<=0 && alive) // check that kills it
+		if(health<=0 && alive) // another death check for redundancy's sake
 			CritterDeath()
 			return 0
 		if(sleeping > 0)
@@ -636,6 +640,5 @@
 			src.task = "thinking"
 			wander_check = rand(5,20)
 
-	animate_lying(lying)
-		//more overwritten stuff
+
 

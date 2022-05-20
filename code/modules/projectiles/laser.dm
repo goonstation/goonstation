@@ -513,7 +513,7 @@ toxic - poisons
 		on_pre_hit(var/atom/hit, var/angle, var/obj/projectile/O)
 			var/mob/M = hit
 			if (istraitor(M) || isnukeop(M) || isspythief(M)) // uh oh! we just hit a friend
-				M.visible_message("<span class='alert'>The drone's IFF system engages last second and avoids hitting [M]!")
+				M.visible_message("<span class='alert'>The drone's IFF system engages last second and barely avoids hitting you!")
 				. = TRUE
 			else if (istype(M, /mob/living/critter/sawfly)) //so you can't just bait swarms into killing themselves
 				. = TRUE

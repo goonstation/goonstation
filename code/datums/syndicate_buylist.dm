@@ -192,7 +192,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	vr_allowed = FALSE
 	br_allowed = TRUE
 	desc = "A small antipersonnel robot that will not attack anyone of syndicate affiliation. It can be folded up after use."
-	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF | UPLINK_HEAD_REV
+	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/generic/sawflymany
 	name = "Cluster Sawfly deployer"
