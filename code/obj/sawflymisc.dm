@@ -7,7 +7,7 @@
 */
 
 // -------------------grenades-------------
-/obj/item/old_grenade/spawner/sawfly
+/obj/item/old_grenade/sawfly
 	name = "Compact sawfly"
 	desc = "A self-deploying antipersonnel robot. It's folded up and offline..."
 	det_time = 1.5 SECONDS
@@ -16,7 +16,6 @@
 	icon_state_armed = "sawfly1"
 	sound_armed = 'sound/machines/sawflyrev.ogg'
 	inhand_image_icon = 'icons/mob/inhand/tools/omnitool.dmi' // could be better but it's distinct enough
-	payload = /mob/living/critter/sawfly
 	is_dangerous = TRUE
 	is_syndicate = TRUE
 	contraband = 2
@@ -71,15 +70,15 @@
 
 
 
-/obj/item/old_grenade/spawner/sawfly/withremote // for traitor menu
+/obj/item/old_grenade/sawfly/withremote // for traitor menu
 
 	New()
 		new /obj/item/remote/sawflyremote(src.loc)
 		..()
 
-/obj/item/old_grenade/spawner/sawfly/reused
+/obj/item/old_grenade/sawfly/reused
 	name = "Compact sawfly"
-	var/tempname = "Someone meant to spawn /obj/item/old_grenade/spawner/sawfly but misclicked, didn't they?"
+	var/tempname = "Uh oh! Call 1-800-imcoder!"
 	desc = "A self-deploying antipersonnel robot. This one has seen some use."
 	var/temphp = 0
 
@@ -90,7 +89,7 @@
 			var/mob/living/critter/sawfly/D = new /mob/living/critter/sawfly(T)
 			D.isnew = FALSE // give it characteristics of old drone
 			D.name = tempname
-			D.health = temphp
+			D.TakeDamage("All", (50 - temphp))
 
 		qdel(src)
 		return
@@ -120,14 +119,6 @@
 		if (prob(50)) // give em some sprite variety
 			icon_state = "clusterflyB"
 			icon_state_armed = "clusterflyB1"
-
-
-	prime() // I've de-spawnerized the spanwer grenade for sawflies and now I'm respawnerizing them. the irony.
-		var/turf/T = ..()
-		if (T)
-			new /mob/living/critter/sawfly(T)
-		qdel(src)
-		return
 
 // -------------------controller---------------
 
@@ -162,7 +153,7 @@
 				else  // non-emagged activity
 					S.foldself()
 
-		for(var/obj/item/old_grenade/spawner/sawfly/S in range(get_turf(src), 3)) // unfolds passive sawflies
+		for(var/obj/item/old_grenade/sawfly/S in range(get_turf(src), 3)) // unfolds passive sawflies
 			S.visible_message("<span class='combat'>[S] suddenly springs open as its engine purrs to a start!</span>")
 			S.icon_state = "sawfly1"
 			SPAWN(S.det_time)
@@ -275,11 +266,11 @@
 
 
 	proc/foldself()
-		var/obj/item/old_grenade/spawner/sawfly/reused/N = new /obj/item/old_grenade/spawner/sawfly/reused(get_turf(src))
+		var/obj/item/old_grenade/sawfly/reused/N = new /obj/item/old_grenade/sawfly/reused(get_turf(src))
 		// pass our name and health
 		N.name = "Compact [name]"
 		N.tempname = src.name
-		N.temphp = (src.get_health_percentage()) / 2
+		N.temphp = src.health
 		qdel(src)
 
 	proc/communalbeep() // distribues the beepchance among the number of sawflies nearby
@@ -316,8 +307,8 @@
 		return ..()
 
 
-	death() //FUCK YOU
-		CritterDeath() // FUCK YOU TOO
+	death()
+		CritterDeath()
 
 	proc/CritterDeath() //  SUPER important proc do NOT touch this or everything will break and You Will Cry
 

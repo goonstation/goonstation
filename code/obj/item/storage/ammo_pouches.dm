@@ -257,7 +257,7 @@
 	w_class = W_CLASS_SMALL
 	slots = 4
 	does_not_open_in_pocket = 0
-	spawn_contents = list(/obj/item/old_grenade/spawner/sawfly = 4)
+	spawn_contents = list(/obj/item/old_grenade/sawfly = 4)
 
 	New()
 		new /obj/item/remote/sawflyremote(src.loc)
