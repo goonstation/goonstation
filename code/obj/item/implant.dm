@@ -1070,22 +1070,22 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	var/active = FALSE
 
 	eldritch
-		name = "mysterious Eldritch object"
-		desc = "A mysterious Eldritch object, used for who knows what purpose?"
+		name = "mysterious object"
+		desc = "A mysterious object, used for who knows what purpose?"
 		icon_state = "implant-eldritch"
 		artifact_implant_type = "eldritch"
 		impcolor = "eldritch"
 
 	ancient
-		name = "spiky Silicon object"
-		desc = "A spiky Silicon object. Good thing it isn't so large."
+		name = "spiky thing"
+		desc = "Some spiky thing. Good thing it isn't so large."
 		icon_state = "implant-ancient"
 		artifact_implant_type = "ancient"
 		impcolor = "ancient"
 
 	wizard
-		name = "fancy Wizard object"
-		desc = "A fancy Wizard object, quite shiny!"
+		name = "fancy stone"
+		desc = "A fancy stone, set in an unknown material. It's quite shiny!"
 		icon_state = "implant-wizard"
 		artifact_implant_type = "wizard"
 		impcolor = "wizard"
