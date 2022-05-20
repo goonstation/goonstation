@@ -27,7 +27,7 @@
 	butcherable = 1
 
 	var/health_absorb_rate = 2 // how much item health is removed per tick when absorbing
-	var/resources_per_health = 1 // how much resources we get per item health
+	var/resources_per_health = 2 // how much resources we get per item health
 
 	// dormancy means do nothing
 

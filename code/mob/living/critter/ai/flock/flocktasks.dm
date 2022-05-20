@@ -294,7 +294,7 @@ butcher
 
 /datum/aiTask/sequence/goalbased/build/drone/precondition()
 	var/mob/living/critter/flock/F = holder.owner
-	return F?.can_afford(20)
+	return F?.can_afford(20) && (F?.flock?.getComplexDroneCount() > 10) //prioritise egg laying in the early game
 
 
 /datum/aiTask/sequence/goalbased/build/drone/get_targets()
