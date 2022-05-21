@@ -293,6 +293,11 @@ ABSTRACT_TYPE(/datum/bioEffect)
 			boutput(user, "<span class='alert'>That ability is on cooldown for [round((owner.last_cast - world.time) / 10)] seconds.</span>")
 			return
 
+		if (owner.targeted && user.targeting_ability == owner)
+			user.targeting_ability = null
+			user.update_cursor()
+			return
+
 		if (!owner.targeted)
 			owner.handleCast()
 			return
@@ -346,6 +351,7 @@ ABSTRACT_TYPE(/datum/bioEffect)
 						H.hud.update_ability_hotbar()
 
 	tryCast(atom/target)
+		message_admins("basebio try")
 		if (can_act_check && !can_act(owner, needs_hands))
 			return 999
 		if (last_cast > world.time)
@@ -369,6 +375,7 @@ ABSTRACT_TYPE(/datum/bioEffect)
 			. = cast(target)
 
 	handleCast(atom/target)
+		message_admins("basebio handlecast")
 		var/result = tryCast(target)
 		if (result && result != 999)
 			last_cast = 0 // reset cooldown
@@ -377,6 +384,7 @@ ABSTRACT_TYPE(/datum/bioEffect)
 		afterCast()
 
 	cast(atom/target)
+		message_admins("basebio cast")
 		if (!owner)
 			return 1
 		if (!linked_power)
