@@ -1,4 +1,9 @@
 
+(t)sat may 21 22
+(u)Azrun
+(p)8560
+(e)🎨⚖|sprites, balance
+(*)Adds visual indicator of pipe gas leaks. Gas leaks more and will scale with insanity pressures.
 (t)wed may 18 22
 (u)Wisemonster
 (p)8610
