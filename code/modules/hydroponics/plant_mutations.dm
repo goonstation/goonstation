@@ -76,6 +76,7 @@
 /datum/plantmutation/corn/clear
 	crop = /obj/item/reagent_containers/food/snacks/plant/corn/clear
 	iconmod = "CornClear"
+	name_prefix = "Clear "
 	assoc_reagents = list("ethanol")
 
 /datum/plantmutation/corn/pepper
