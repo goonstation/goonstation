@@ -2464,7 +2464,7 @@
 /turf/simulated/floor/black,
 /area/station/storage/tools)
 "gA" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/kitchen,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "gB" = (
@@ -11385,7 +11385,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/genetics,
 /turf/simulated/floor/white/checker2{
 	dir = 5
 	},
