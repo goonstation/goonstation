@@ -57,14 +57,7 @@
 		stat("Drones:", 0)
 
 /mob/living/intangible/flock/flockmind/proc/getTraceToPromote()
-	var/eligible_traces = list()
-	for (var/mob/living/intangible/flock/trace/T as anything in src.flock.traces)
-		if (T.client)
-			eligible_traces += T
-		else if (istype(T.loc, /mob/living/critter/flock/drone))
-			var/mob/living/critter/flock/drone/flockdrone = T.loc
-			if (flockdrone.client)
-				eligible_traces += T
+	var/list/eligible_traces = src.flock.getActiveTraces()
 	if (length(eligible_traces))
 		return tgui_input_list(src, "Choose Flocktrace to promote to Flockmind", "Promotion", sortList(eligible_traces))
 	else
@@ -87,8 +80,7 @@
 
 /mob/living/intangible/flock/flockmind/proc/spawnEgg()
 	if(src.flock)
-		var/obj/flock_structure/rift/r = new(get_turf(src), src.flock)
-		r.mainflock = src.flock
+		new /obj/flock_structure/rift(get_turf(src), src.flock)
 		playsound(src, "sound/impact_sounds/Metal_Clang_1.ogg", 30, 1)
 	else
 		boutput(src, "<span class='alert'>You don't have a flock, it's not going to listen to you! Also call a coder, this should be impossible!</span>")
@@ -110,9 +102,12 @@
 	src.addAbility(/datum/targetable/flockmindAbility/createStructure)
 	src.addAbility(/datum/targetable/flockmindAbility/deconstruct)
 
-/mob/living/intangible/flock/flockmind/death(gibbed)
+/mob/living/intangible/flock/flockmind/death(gibbed, suicide = FALSE)
 	if(src.client)
-		boutput(src, "<span class='alert'>With no drones left in your Flock, nothing is left to compute your consciousness. You abruptly cease to exist.</span>")
+		if (!suicide)
+			boutput(src, "<span class='alert'>With no drones left in your Flock, nothing is left to compute your consciousness. You abruptly cease to exist.</span>")
+		else
+			boutput(src, "<span class='alert'>You deactivate your Flock and abruptly cease to exist.</span>")
 	src.flock?.perish()
 	REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src)
 	src.icon_state = "blank"

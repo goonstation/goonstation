@@ -106,8 +106,10 @@
 		boutput(src, "<span class='alert'>The Flock has insufficient compute to sustain your consciousness!</span>")
 		src.death() // get rekt
 
-/mob/living/intangible/flock/trace/death(gibbed)
+/mob/living/intangible/flock/trace/death(gibbed, suicide = FALSE)
 	if(src.client)
+		if (suicide)
+			flock_speak(null, "Flocktrace [src.real_name] relinquishes their computational designation and reintegrates themselves back into the Flock.", src.flock)
 		boutput(src, "<span class='alert'>You cease to exist abruptly.</span>")
 	src.flock?.removeTrace(src)
 	REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src)

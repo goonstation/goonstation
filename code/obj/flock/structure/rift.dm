@@ -12,7 +12,6 @@
 	health = 200 // stronk little thing
 	var/decal_made = 0 // for splashing stuff on throw
 	var/list/eject = list()
-	var/mainflock = null // for when a flockmind is spawning the little shits(read:drones) get assigned to it
 
 /obj/flock_structure/rift/New(var/atom/location, var/datum/flock/F=null)
 	..()
@@ -35,7 +34,6 @@
 		for(var/i=1, i<5, i++)
 			var/obj/flock_structure/egg/e = new(src.contents, src.flock)
 			eject += e
-			e.flock = mainflock
 		var/list/candidate_turfs = list()
 		for(var/turf/simulated/floor/S in orange(src, 4))
 			candidate_turfs += S
@@ -45,7 +43,10 @@
 					candidate_turfs -= S
 					continue
 				if(prob(25))
-					src.flock.claimTurf(flock_convert_turf(S))
+					if (src.flock)
+						src.flock.claimTurf(flock_convert_turf(S))
+					else
+						flock_convert_turf(S)
 					candidate_turfs -= S
 					break
 		flockdronegibs(src.loc, null, eject)//here they are actually ejected
