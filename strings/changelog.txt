@@ -1,5 +1,9 @@
 
 (t)sat may 21 22
+(u)Flappybat & Dimwhat
+(p)8582
+(e)🗺🎨⚖|mapping, sprites, balance
+(*)Due to increasing number of monkey uprisings the Valuchimp vending machines are now access restricted according to their station area.
 (u)Azrun
 (p)8560
 (e)🎨⚖|sprites, balance
