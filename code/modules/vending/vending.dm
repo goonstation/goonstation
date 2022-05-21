@@ -535,7 +535,7 @@
 	"acceptCard" = src.acceptcard,
 	"requiresMoney" = src.pay,
 	"cardname" = src.scan?.name,
-	"playerBuilt" = src.isplayer
+	"playerBuilt" = src.player_list ? TRUE : FALSE
  	)
 	src.vendwires = list("Violet" = 1,\
 	"Orange" = 2,\

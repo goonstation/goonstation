@@ -20,13 +20,20 @@ export const Vendors = (props, context) => {
     playerBuilt,
   } = data;
 
+  const canVend = (a) => (
+    (((a.cost <= cash) || (a.cost <= bankMoney)) || !requiresMoney)
+  );
+  const getCost = (a) => (
+    (((a.cost) && requiresMoney) ? `$${a.cost}` : "Free")
+  );
+
   return (
     <Window
       title={windowName}
-      width="400"
+      width="350"
       fontFamily="Consolas"
       font-size="10pt"
-      height="600">
+      height="400">
       <Window.Content>
         <Stack vertical fill minHeight="1%" maxHeight="100%">
 
@@ -66,7 +73,7 @@ export const Vendors = (props, context) => {
                 <Divider />
                 {playerBuilt && (
                   <>
-                    <Button content={"Owner: "+ownerID} onClick={() => act("togglelock")} />
+                    <Button content={"Owner: "} onClick={() => act("togglelock")} />
                     <Button content="Unlock" onClick={() => act("togglelock")} />
                     <Button content="Loading Chute" onClick={() => act("togglechute")} />
                   </>
@@ -126,9 +133,9 @@ export const Vendors = (props, context) => {
                         </Table.Cell>
                         <Table.Cell bold textAlign="right">
                           <Button
-                            color={product.amount > 0 && ((product.cost <= cash) || (product.cost <= bankMoney)) ? "green" : "grey"}
-                            content={(product.cost ? "$" + product.cost : "Free")}
-                            disabled={(product.amount < 1) || ((product.cost > cash) && (product.cost > bankMoney))}
+                            color={canVend(product) ? "green" : "grey"}
+                            content={getCost(product)}
+                            disabled={canVend(product) ? false : true}
                             onClick={() => act('vend', {
                               target: product.path, cost: product.cost, amount: product.amount })}
                           />
