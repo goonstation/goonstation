@@ -473,6 +473,7 @@
 	else
 		boutput(src, "<span class='notice'>You finish converting [I] into resources.</span>")
 	qdel(I)
+	absorber.item = null
 
 
 /mob/living/critter/flock/drone/process_move(keys)
