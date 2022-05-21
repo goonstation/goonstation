@@ -27,3 +27,11 @@
 
 /obj/flock_structure/compute/building_specific_info()
 	return {"<span class='bold'>Compute generation:</span> Currently generating [src.compute_provided()]."}
+
+/obj/flock_structure/compute/mainframe
+	name = "big weird lookin' thinking thing"
+	desc = "It almost looks like a corrupted computer of some kind."
+	flock_id = "Major compute node"
+	health = 100
+	icon_state = "compute_mainframe"
+	compute = 180

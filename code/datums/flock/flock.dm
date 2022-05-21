@@ -666,6 +666,7 @@
 	/obj/machinery/computer3 = /obj/flock_structure/compute,
 	/obj/machinery/computer = /obj/flock_structure/compute,
 	/obj/machinery/networked/teleconsole = /obj/flock_structure/compute,
+	/obj/machinery/networked/mainframe = /obj/flock_structure/compute/mainframe,
 	)
 
 /proc/flock_convert_turf(var/turf/T)
