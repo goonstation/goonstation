@@ -252,7 +252,7 @@
 
 /mob/living/critter/flock/drone/proc/move_controller_to_station()
 	if (src.flock?.getComplexDroneCount() > 1)
-		for (var/mob/living/critter/flock/drone/F in src.flock.units)
+		for (var/mob/living/critter/flock/drone/F as anything in src.flock.units[/mob/living/critter/flock/drone])
 			if (istype(F) && F != src)
 				src.controller.set_loc(get_turf(F))
 				break
