@@ -443,13 +443,9 @@
 
 	if (burn > 0)
 		if (burn >= 10 || src.get_burn_damage() <= 5)
-			for (var/i in 0 to 4)
-				src.UpdateOverlays(null, "laser_wound-[i]")
+			src.heal_laser_wound("all")
 		else if (prob(10))
-			for (var/i in 0 to 4)
-				if (src.GetOverlayImage("laser_wound-[i]"))
-					src.UpdateOverlays(null, "laser_wound-[i]")
-					break
+			src.heal_laser_wound("single")
 
 	if (zone == "All")
 		var/bruteOrganCount = 0.0 		//How many organs have brute damage?
@@ -524,6 +520,16 @@
 		else
 			return 0
 	return
+
+/mob/living/carbon/human/proc/heal_laser_wound(type)
+	if (type == "single")
+		for (var/i in 0 to 4)
+			if (src.GetOverlayImage("laser_wound-[i]"))
+				src.UpdateOverlays(null, "laser_wound-[i]")
+				break
+	else if (type == "all")
+		for (var/i in 0 to 4)
+			src.UpdateOverlays(null, "laser_wound-[i]")
 
 /mob/living/carbon/human/take_eye_damage(var/amount, var/tempblind = 0, var/side)
 	if (!src || !ishuman(src) || (!isnum(amount) || amount == 0))
