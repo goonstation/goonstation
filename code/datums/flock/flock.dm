@@ -18,6 +18,8 @@
 	var/datum/mind/flockmind_mind = null
 	/// Stores associative lists of type => list(units) - do not edit directly, use removeDrone() and registerUnit()
 	var/list/units = list()
+	/// associative list of used names (for traces, drones, and bits) to true values
+	var/list/active_names = list()
 	var/list/enemies = list()
 	///Associative list of objects to an associative list of their annotation names to images
 	var/list/annotations = list()
@@ -34,7 +36,7 @@
 
 /datum/flock/New()
 	..()
-	src.name = "[pick(consonants_lower)][pick(vowels_lower)].[pick(consonants_lower)][pick(vowels_lower)]"
+	src.name = src.pick_name("flock")
 	flocks[src.name] = src
 	processing_items |= src
 	for(var/DT in childrentypesof(/datum/unlockable_flock_structure))
@@ -233,6 +235,7 @@
 	if(!T)
 		return
 	src.traces -= T
+	src.active_names -= T.real_name
 	hideAnnotations(T)
 	var/datum/abilityHolder/flockmind/aH = src.flockmind.abilityHolder
 	aH?.updateCompute()
@@ -410,23 +413,56 @@
 /datum/flock/proc/hideAnnotations(var/mob/M)
 	get_image_group(src).remove_mob(M)
 
+// naming
+
+/datum/flock/proc/pick_name(flock_type)
+	var/name
+	var/name_found = FALSE
+	var/tries = 0
+	var/max_tries = 5000 // really shouldn't occur
+
+	while (!name_found && tries < max_tries)
+		if (flock_type == "flock")
+			name = "[pick(consonants_lower)][pick(vowels_lower)].[pick(consonants_lower)][pick(vowels_lower)]"
+			if (!flocks[name])
+				name_found = TRUE
+		else
+			if (flock_type == "flocktrace")
+				name = "[pick(consonants_upper)][pick(vowels_lower)].[pick(vowels_lower)]"
+			if (flock_type == "flockdrone")
+				name = "[pick(consonants_lower)][pick(vowels_lower)].[pick(consonants_lower)][pick(vowels_lower)].[pick(consonants_lower)][pick(vowels_lower)]"
+			else if (flock_type == "flockbit")
+				name = "[pick(consonants_upper)].[rand(10,99)].[rand(10,99)]"
+
+			if (!src.active_names[name])
+				name_found = TRUE
+				src.active_names[name] = TRUE
+		tries++
+	if (!name_found && tries == max_tries)
+		logTheThing("debug", null, null, "Too many tries were reached in trying to name a flock or one of its units.")
+		return "error"
+	return name
+
 // UNITS
 
-/datum/flock/proc/registerUnit(var/atom/movable/D)
+/datum/flock/proc/registerUnit(var/mob/living/critter/flock/D, check_name_uniqueness = FALSE)
 	if(isflock(D))
 		if(!src.units[D.type])
 			src.units[D.type] = list()
 		src.units[D.type] |= D
+		if (check_name_uniqueness && src.active_names[D.real_name])
+			D.real_name = istype(D, /mob/living/critter/flock/drone) ? src.pick_name("flockdrone") : src.pick_name("flockbit")
 	D.AddComponent(/datum/component/flock_interest, src)
 	var/datum/abilityHolder/flockmind/aH = src.flockmind.abilityHolder
 	aH.updateCompute()
 
-/datum/flock/proc/removeDrone(var/atom/movable/D)
+/datum/flock/proc/removeDrone(var/mob/living/critter/flock/D)
 	if(isflock(D))
 		src.units[D.type] -= D
+		src.active_names -= D.real_name
 		D.GetComponent(/datum/component/flock_interest)?.RemoveComponent(/datum/component/flock_interest)
-		if(D:real_name && busy_tiles[D:real_name])
-			src.unreserveTurf(D:real_name)
+		if(D.real_name && busy_tiles[D.real_name])
+			src.unreserveTurf(D.real_name)
 		var/datum/abilityHolder/flockmind/aH = src.flockmind.abilityHolder
 		aH.updateCompute()
 
@@ -532,6 +568,7 @@
 	busy_tiles = null
 	priority_tiles = null
 	units = null
+	active_names = null
 	enemies = null
 	flockmind = null
 	//while this is neat cleanup, we still need the flock datum for tracking flocktrace mind connections

@@ -18,15 +18,15 @@
 
 	src.abilityHolder = new /datum/abilityHolder/flockmind(src)
 
-	src.real_name = "[pick(consonants_upper)][pick(vowels_lower)].[pick(vowels_lower)]"
-	src.name = src.real_name
-	src.update_name_tag()
-
 	if(istype(F))
 		src.flock = F
 		src.flock.addTrace(src)
 	else
 		src.death() // f u
+
+	src.real_name = src.flock ? src.flock.pick_name("flocktrace") : name
+	src.name = src.real_name
+	src.update_name_tag()
 
 	src.addAbility(/datum/targetable/flockmindAbility/designateEnemy)
 	src.addAbility(/datum/targetable/flockmindAbility/ping)
