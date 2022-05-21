@@ -166,7 +166,7 @@
 					if(src.check_can_hold(I) > 0 && !I.anchored)
 						src.Attackby(I, user, S)
 				return
-			if(!does_not_open_in_pocket)
+			if(!does_not_open_in_pocket && !istype(W, /obj/item/magtractor))
 				attack_hand(user)
 			switch (canhold)
 				if(0)

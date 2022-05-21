@@ -12,6 +12,7 @@
 /datum/robot/module_tool_creator/recursive/module/brobocop
 	definitions = list(
 		/obj/item/noisemaker,
+		/obj/item/magtractor/cyborg/brobocop,
 		/obj/item/robot_foodsynthesizer,
 		/obj/item/reagent_containers/food/drinks/bottle/beer/borg,
 		/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
@@ -69,6 +70,7 @@
 		/obj/item/lamp_manufacturer,
 		/obj/item/device/camera_viewer,
 		// TODO: some sort of nutrient dispenser?
+		/obj/item/magtractor/cyborg/civilian,
 		/obj/item/kitchen/utensil/knife/bread,
 		/obj/item/ladle,
 		/obj/item/kitchen/rollingpin/light,
@@ -128,6 +130,7 @@
 		#ifdef MAP_OVERRIDE_OSHAN
 			/obj/item/mining_tool/power_shovel/borg,
 		#endif
+		/obj/item/magtractor/cyborg/engineering,
 		/datum/robot/module_tool_creator/item_type/amount/steel_tile,
 		/datum/robot/module_tool_creator/item_type/amount/steel_rod,
 		/datum/robot/module_tool_creator/item_type/amount/steel_sheet,

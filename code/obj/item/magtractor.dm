@@ -5,6 +5,8 @@
 	icon = 'icons/obj/items/items.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "magtractor"
+	var/inactive_icon_state = "magtractor"
+	var/active_icon_state = "magtractor-active"
 	opacity = 0
 	density = 0
 	anchored = 0.0
@@ -22,6 +24,7 @@
 	var/working = 0
 	var/mob/holder //this is hacky way to get the user without looping through all mobs in process
 	var/processHeld = 0
+	var/allowHPMtoggle = TRUE
 	var/highpower = 0 //high power mode (holding during movement)
 
 	var/datum/action/holdAction
@@ -31,7 +34,8 @@
 		processing_items |= src
 		if (user)
 			src.holder = user
-			src.verbs |= /obj/item/magtractor/proc/toggleHighPower
+			if(allowHPMtoggle)
+				src.verbs |= /obj/item/magtractor/proc/toggleHighPower
 
 	process()
 		//power usage here maybe??
@@ -44,7 +48,8 @@
 	pickup(mob/user)
 		..()
 		src.holder = user
-		src.verbs |= /obj/item/magtractor/proc/toggleHighPower
+		if(allowHPMtoggle)
+			src.verbs |= /obj/item/magtractor/proc/toggleHighPower
 		src.set_mob(user)
 		src.show_buttons()
 
@@ -199,7 +204,7 @@
 		src.processHeld = 1
 		src.w_class = W_CLASS_BULKY //bulky
 		src.useInnerItem = 1
-		src.icon_state = "magtractor-active"
+		src.icon_state = active_icon_state
 
 		src.UpdateOverlays(null, "magField")
 		var/image/I = image('icons/obj/items/items.dmi', "magtractor-field")
@@ -252,7 +257,7 @@
 
 		for (var/obj/ability_button/magtractor_drop/abil in src)
 			abil.icon_state = "mag_drop0"
-		src.icon_state = "magtractor"
+		src.icon_state = inactive_icon_state
 		src.UpdateOverlays(null, "magField")
 		src.updateHeldOverlay()
 		//TODO: playsound, de-power thing
@@ -261,4 +266,62 @@
 
 		return 1
 
+	Exited(Obj, newloc) // THIS FIXES ISSUES WITH QDELED ITEMS WHY IS THIS NOT USED MORE
+		if(Obj == src.holding)
+			actions.stopId("magpickerhold", src.holder)
+
 /obj/item/magtractor/abilities = list(/obj/ability_button/magtractor_toggle, /obj/ability_button/magtractor_drop)
+
+// CYBORG MAGTRACTORS
+/obj/item/magtractor/cyborg
+	name = "cyborg magtractor"
+	force = 0.0
+	allowHPMtoggle = FALSE
+	highpower = 1 // Cyborg magtractors are always high power mode, could be changed later
+	var/list/allowed_types = list(/obj/item)
+
+	New(mob/user, list/allowed_types)
+		..()
+		if(allowed_types)
+			src.allowed_types = allowed_types
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		var/mob/living/silicon/robot/robo = user
+		if(istype(robo) && !(W in robo.module?.tools))
+			if(checktype(W))
+				return ..()
+			else if(isitem(W))
+				out(user, "<span class='notice'>\The [src] can't hold that type of item!</span>")
+		return FALSE
+
+	afterattack(atom/A, mob/user as mob)
+		var/mob/living/silicon/robot/robo = user
+		if(istype(robo) && !(A in robo.module?.tools))
+			if(checktype(A))
+				return ..()
+			else if(isitem(A))
+				out(user, "<span class='notice'>\The [src] can't hold that type of item!</span>")
+		return FALSE
+
+	proc/checktype(atom/A)
+		. = FALSE
+		for(var/T in allowed_types)
+			if(istype(A, T))
+				return TRUE
+
+	civilian
+		name = "foodtractor"
+		desc = "A device capable of attracting flavor particles, allowing you to pick up and manipulate food."
+		allowed_types = list(/obj/item/reagent_containers/food/snacks)
+
+	engineering
+		name = "constructotractor"
+		desc = "A device used to pick up and hold material sheets and furniture parts for construction, via the power of the Home Depot. And magnets."
+		allowed_types = list(/obj/item/sheet, /obj/item/rods, /obj/item/tile, /obj/item/cable_coil, /obj/item/furniture_parts/)
+
+	brobocop
+		name = "harmonitractor"
+		desc = "A device fit to pick up and play instruments, for the musical automaton."
+		allowed_types = list(/obj/item/instrument)
+
+/obj/item/magtractor/cyborg/abilities = list(/obj/ability_button/magtractor_drop)

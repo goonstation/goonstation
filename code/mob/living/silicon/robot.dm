@@ -249,6 +249,10 @@
 
 	death(gibbed)
 		logTheThing("combat", src, null, "was destroyed at [log_loc(src)].")
+		//So the CYBORG cant pick up an item and then die, sending the item ~to the void~
+		var/obj/item/magtractor/mag = locate(/obj/item/magtractor) in src.module?.tools
+		var/obj/item/magHeld = mag?.holding ? mag.holding : null
+		if (magHeld) magHeld.set_loc(get_turf(src))
 		src.mind?.register_death()
 		if (src.syndicate)
 			src.remove_syndicate("death")
@@ -1851,6 +1855,13 @@
 		if (module_states[i])
 			if (src.module)
 				var/obj/I = module_states[i]
+				var/obj/item/magtractor/mag = I
+				if (istype(mag) && mag.holding)
+					actions.stopId("magpickerhold", src)
+					hud.update_tools()
+					hud.update_equipment()
+					update_appearance()
+					return
 				if (isitem(I))
 					var/obj/item/IT = I
 					IT.dropped(src) // Handle light datums and the like.

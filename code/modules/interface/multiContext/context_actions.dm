@@ -697,7 +697,7 @@
 		I.play_note(note,user)
 
 	checkRequirements(atom/target, mob/user)
-		. = ((user.equipped() == target) || target.density && target.loc == get_turf(target) && BOUNDS_DIST(user, target) == 0 && istype(target,/obj/item/instrument))
+		. = ((user.equipped() == target) || (target in user.equipped_list(1)) || target.density && target.loc == get_turf(target) && BOUNDS_DIST(user, target) == 0 && istype(target,/obj/item/instrument))
 
 	special
 		icon_background = "key_special"

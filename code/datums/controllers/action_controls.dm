@@ -1473,6 +1473,8 @@ var/datum/action_controller/actions
 				if (our_drone.cell.charge >= hpm_cost * 2)
 					duration /= 3
 					our_drone.cell.use(hpm_cost)
+			if(isrobot(owner))
+				duration /= 3
 
 	onInterrupt(var/flag) //They did something else while picking it up. I guess you dont have to do anything here unless you want to.
 		..()
