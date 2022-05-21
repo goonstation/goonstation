@@ -865,7 +865,8 @@
 			if(alert("Clear this tray?",,"Yes","No") == "Yes")
 				usr.visible_message("<b>[usr.name]</b> dumps out the tray's contents.")
 				src.reagents.clear_reagents()
-
+				UpdateIcon()
+				update_name()
 		return
 
 	MouseDrop_T(atom/over_object as obj, mob/user as mob) // ty to Razage for the initial code
