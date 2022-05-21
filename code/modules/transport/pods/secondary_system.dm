@@ -158,7 +158,7 @@
 	return
 
 /obj/item/shipcomponent/secondary_system/cargo/deactivate()
-	for(var/obj/O in load) //Drop cargo.
+	for(var/atom/movable/O in load) //Drop cargo.
 		src.unload(O)
 	return
 
