@@ -1,5 +1,9 @@
 
 (t)sat may 21 22
+(u)FlameArrow57
+(p)7498
+(e)🆕🎨|feature, sprites
+(*)Added the implanter artifact, complete with nine new alien implants!
 (u)Flappybat & Dimwhat
 (p)8582
 (e)🗺🎨⚖|mapping, sprites, balance
