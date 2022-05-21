@@ -170,9 +170,6 @@
 			if (src.proj_data) //ZeWaka: Fix for null.ticks_between_mob_hits
 				if (proj_data.hit_mob_sound)
 					playsound(A.loc, proj_data.hit_mob_sound, 60, 0.5)
-				if (istype(src.proj_data, /datum/projectile/laser) && ishuman(A))
-					var/image/I = image(icon = 'icons/mob/human.dmi', icon_state = "laser_wound-[rand(0, 4)]", layer = MOB_EFFECT_LAYER)
-					A.UpdateOverlays(I, "laser_wound-[rand(0, 4)]")
 			SEND_SIGNAL(A, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 			SEND_SIGNAL(A, COMSIG_MOB_DISGUISER_DEACTIVATE)
 			if (ishuman(A))
