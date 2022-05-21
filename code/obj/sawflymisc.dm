@@ -238,9 +238,7 @@
 
 
 	// MOB/LIVING/CRITTER FUCK SHIT HERE
-	setup_healths()
-		add_hh_robot(20, 1)
-		add_hh_robot_burn(20, 1)
+
 	custom_gib_handler = /proc/robogibs
 	blood_id = "oil"
 	use_stamina = FALSE
@@ -252,6 +250,9 @@
 	can_burn = FALSE
 	pet_text = "cuddles"
 
+	setup_healths()
+		add_hh_robot(20, 1)
+		add_hh_robot_burn(20, 1)
 
 	New()
 		..()
@@ -298,12 +299,6 @@
 		if(istype(mover, /obj/projectile))
 			if(!src.alive)
 				return 1
-		return ..()
-
-
-	Uncross(atom/movable/O, do_bump = TRUE)
-		if(istype(O, /obj/projectile))
-			. = 1
 		return ..()
 
 
