@@ -593,7 +593,7 @@ obj/machinery/atmospherics/pipe
 		//icon = 'icons/obj/atmospherics/pipes/red_pipe.dmi'
 		icon = 'icons/obj/atmospherics/pipes/color_pipe.dmi'
 		icon_state = "intact"
-		color = "#FF0000"
+		color = "#fd2427"
 		minimum_temperature_difference = 10000
 		thermal_conductivity = 0
 		level = 2
@@ -615,7 +615,7 @@ obj/machinery/atmospherics/pipe
 
 		cold
 			//icon = 'icons/obj/atmospherics/pipes/blue_pipe.dmi'
-			color = "#017FFF"
+			color = "#4975d4"
 
 			vertical
 				dir = NORTH
