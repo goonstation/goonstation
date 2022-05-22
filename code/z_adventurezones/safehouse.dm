@@ -57,7 +57,8 @@
 	desc = "A free-floating mineral deposit from space."
 	icon_base = "adoor"
 	doordir = "single"
-	color = "#cccccc" //To match with asteroid var/stone_color, change if you need it to match something.
+	plane = PLANE_WALL-1 //We don't want depth shadows
+	color = "#D1E6FF" //To match with asteroid var/stone_color, change if you need it to match something.
 
 	flags = FPRINT | IS_PERSPECTIVE_FLUID | ALWAYS_SOLID_FLUID //The poddoors aren't inherently fullbright, need a suitable turf or area underneath.
 
@@ -65,7 +66,7 @@
 		autoclose = 1
 
 		asteroid_horizontal
-			name = "podbay (asteroid)"
+			name = "asteroid"
 			id = "podbay_saferoom"
 			dir = NORTH
 
@@ -158,7 +159,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 
 /obj/machinery/bio_handscanner/attack_hand(mob/user as mob)
 	src.add_fingerprint(user)
-	if(ON_COOLDOWN(src, "bio_handscanner_attackhhand", cooldown)) // To reduce chat spam in case of multi-click
+	if(ON_COOLDOWN(src, "bio_handscanner_attackhand", cooldown)) // To reduce chat spam in case of multi-click
 		return
 	playsound(src.loc, "sound/effects/handscan.ogg", 50, 1)
 	if(ishuman(user))
@@ -212,7 +213,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 			qdel(M)
 
 	attack_hand(mob/user as mob)
-		boutput(user, "An advanced cloning pod, designed to be operated automatically through packets. What a great idea!<br>Currently idle.<br><span class='alert'>Biomatter reserves are depleted.</span>")
+		boutput(user, "An advanced cloning pod, designed to be operated automatically through packets. What a great idea!<br>Currently idle.<br><span class='alert'>Alert: Biomatter reserves are low (5% full).</span>")
 		playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1)
 		src.add_fingerprint(user)
 		return
@@ -283,7 +284,6 @@ obj/item/reagent_containers/iv_drip/dead_exec
 				var/datum/traitHolder/traits = R["traits"]
 				if(traits.hasTrait("puritan")) //Does the user's clone record have puritan?
 					has_puritan = TRUE
-					boutput(H,"Subject had puritan")
 				if(prob(20) && !has_puritan) //If the scan doesn't have puritan, roll a dice. Too uncommon to weaponise too common for general use.
 					traits.addTrait("puritan") // Signal has degraded. Did the player learn nothing from the prefab??
 
