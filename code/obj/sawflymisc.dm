@@ -279,9 +279,10 @@
 				return 1
 		return ..()
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
-			src.target = user
- 			src.ai.interupt()
+	//attackby(obj/item/W as obj, mob/living/user as mob)
+		//src.target = user
+ 		//src.ai.interupt()
+		 //Impliment lizzy's attackby fix, doofus
 
 
 	death()

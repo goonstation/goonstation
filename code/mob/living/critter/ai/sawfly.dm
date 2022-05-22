@@ -66,7 +66,7 @@
 			owncritter.hand_range_attack(holder.target, dummy_params)
 			SPAWN(10)
 				if(dist > target_range) // double check you're still in range
-				holder.move_to(holder.target,1)
+					holder.move_to(holder.target,1)
 				else
 					owncritter.set_dir(get_dir(owncritter, holder.target))
 					owncritter.hand_range_attack(holder.target, dummy_params)
