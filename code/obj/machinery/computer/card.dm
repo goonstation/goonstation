@@ -84,7 +84,6 @@
 	density = 0
 	var/obj/item/cell/cell //We have limited power! Immersion!!
 	var/setup_charge_maximum = 15000
-	var/obj/item/luggable_computer/personal/case //The object that holds us when we're all closed up.
 	var/deployed = 1
 
 	New()
