@@ -1,4 +1,17 @@
 
+(t)sat may 21 22
+(u)FlameArrow57
+(p)7498
+(e)🆕🎨|feature, sprites
+(*)Added the implanter artifact, complete with nine new alien implants!
+(u)Flappybat & Dimwhat
+(p)8582
+(e)🗺🎨⚖|mapping, sprites, balance
+(*)Due to increasing number of monkey uprisings the Valuchimp vending machines are now access restricted according to their station area.
+(u)Azrun
+(p)8560
+(e)🎨⚖|sprites, balance
+(*)Adds visual indicator of pipe gas leaks. Gas leaks more and will scale with insanity pressures.
 (t)wed may 18 22
 (u)Wisemonster
 (p)8610

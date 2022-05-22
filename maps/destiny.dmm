@@ -9001,7 +9001,7 @@
 	name = "East Central Maintenance"
 	})
 "aKL" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/genetics,
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
@@ -20693,7 +20693,7 @@
 	},
 /area/station/science/research_director)
 "dAT" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/kitchen,
 /obj/machinery/firealarm{
 	layer = 3.5;
 	pixel_y = 28
@@ -48791,7 +48791,7 @@
 	name = "East Central Maintenance"
 	})
 "soM" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/research,
 /obj/decal/poster/wallsign/testsubject{
 	pixel_y = 32
 	},

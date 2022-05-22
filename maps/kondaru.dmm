@@ -15822,7 +15822,7 @@
 	},
 /area/station/medical/cdc)
 "aTy" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/genetics,
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
 "aTz" = (
@@ -35958,7 +35958,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/research,
 /turf/simulated/floor/shuttlebay{
 	name = "test chamber plating"
 	},
@@ -44030,7 +44030,7 @@
 /area/station/engine/core)
 "gTc" = (
 /obj/disposalpipe/segment/mail/horizontal,
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/kitchen,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "gTx" = (

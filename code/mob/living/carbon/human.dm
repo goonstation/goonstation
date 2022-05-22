@@ -2213,88 +2213,124 @@
 	switch (slot)
 		if (slot_l_store, slot_r_store)
 			if (I.w_class <= W_CLASS_SMALL && src.w_uniform)
-				return 1
-		if (slot_l_hand, slot_r_hand)
-			return 1
+				return TRUE
+		if (slot_l_hand)
+			if (src.limbs.l_arm)
+				if (!istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm) && !istype(src.limbs.l_arm, /obj/item/parts/robot_parts/arm))
+					return FALSE
+				if (istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item))
+					return FALSE
+				if (I.two_handed)
+					if (src.limbs.r_arm)
+						if(src.r_hand)
+							return FALSE
+					else
+						return FALSE
+				return TRUE
+		if (slot_r_hand)
+			if (src.limbs.r_arm)
+				if (!istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm) && !istype(src.limbs.r_arm, /obj/item/parts/robot_parts/arm))
+					return FALSE
+				if (istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item))
+					return FALSE
+				if (I.two_handed)
+					if (src.limbs.l_arm)
+						if(src.l_hand)
+							return FALSE
+					else
+						return FALSE
+				return TRUE
 		if (slot_belt)
 			if ((I.flags & ONBELT) && src.w_uniform)
-				return 1
+				return TRUE
 		if (slot_wear_id)
 			if (istype(I, /obj/item/card/id) && src.w_uniform)
-				return 1
+				return TRUE
 			if (istype(I, /obj/item/device/pda2) && src.w_uniform) // removed the check for the ID card in here because tbh it was silly that you could only equip it to the ID slot when it had a card  :I
-				return 1
+				return TRUE
 		if (slot_back)
 			if (I.flags & ONBACK)
-				return 1
+				return TRUE
 		if (slot_wear_mask) // It's not pretty, but the mutantrace check will do for the time being (Convair880).
-			if (istype(I, /obj/item/clothing/mask) && src.organHolder.head)
+			if (!src.organHolder.head)
+				return FALSE
+			if (istype(I, /obj/item/clothing/mask))
 				var/obj/item/clothing/M = I
 				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !M.compatible_species.Find(src.mutantrace.name)))
 					//DEBUG_MESSAGE("[src] can't wear [I].")
-					return 0
+					return FALSE
 				else
-					return 1
+					return TRUE
 		if (slot_ears)
-			if ((istype(I, /obj/item/clothing/ears) || istype(I,/obj/item/device/radio/headset)) && src.organHolder.head)
-				return 1
+			if (!src.organHolder.head)
+				return FALSE
+			if (istype(I, /obj/item/clothing/ears) || istype(I,/obj/item/device/radio/headset))
+				return TRUE
 		if (slot_glasses)
-			if (istype(I, /obj/item/clothing/glasses) && src.organHolder.head)
-				return 1
+			if (!src.organHolder.head)
+				return FALSE
+			if (istype(I, /obj/item/clothing/glasses))
+				return TRUE
 		if (slot_gloves)
+			if ((!src.limbs.l_arm) && (!src.limbs.r_arm))
+				return FALSE
 			if (istype(I, /obj/item/clothing/gloves))
-				return 1
+				return TRUE
 		if (slot_head)
-			if (istype(I, /obj/item/clothing/head) && src.organHolder.head)
+			if (!src.organHolder.head)
+				return FALSE
+			if (istype(I, /obj/item/clothing/head))
 				var/obj/item/clothing/H = I
 				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !(src.mutantrace.name in H.compatible_species)))
 					//DEBUG_MESSAGE("[src] can't wear [I].")
-					return 0
+					return FALSE
 				else
-					return 1
+					return TRUE
 		if (slot_shoes)
+			if ((!src.limbs.l_leg) && (!src.limbs.r_leg))
+				return FALSE
 			if (istype(I, /obj/item/clothing/shoes))
 				var/obj/item/clothing/SH = I
 				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !(src.mutantrace.name in SH.compatible_species)))
 					//DEBUG_MESSAGE("[src] can't wear [I].")
-					return 0
+					return FALSE
 				else
-					return 1
+					return TRUE
 		if (slot_wear_suit)
 			if (istype(I, /obj/item/clothing/suit))
 				var/obj/item/clothing/SU = I
 				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !(src.mutantrace.name in SU.compatible_species)))
 					//DEBUG_MESSAGE("[src] can't wear [I].")
-					return 0
+					return FALSE
 				else
-					return 1
+					return TRUE
 		if (slot_w_uniform)
 			if (istype(I, /obj/item/clothing/under))
 				var/obj/item/clothing/U = I
 				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !(src.mutantrace.name in U.compatible_species)))
 					//DEBUG_MESSAGE("[src] can't wear [I].")
-					return 0
+					return FALSE
 				else
-					return 1
+					return TRUE
 		if (slot_in_backpack) // this slot is stupid
 			if (src.back && istype(src.back, /obj/item/storage))
 				var/obj/item/storage/S = src.back
 				if (S.contents.len < 7 && I.w_class <= W_CLASS_NORMAL)
-					return 1
+					return TRUE
 		if (slot_in_belt) // this slot is also stupid
 			if (src.belt && istype(src.belt, /obj/item/storage))
 				var/obj/item/storage/S = src.belt
 				if (S.contents.len < 7 && I.w_class <= W_CLASS_NORMAL)
-					return 1
-	return 0
+					return TRUE
+	return FALSE
 
 /mob/living/carbon/human/proc/equip_new_if_possible(path, slot)
 	var/obj/item/I = new path(src)
 	src.equip_if_possible(I, slot)
 	if(slot != slot_in_backpack && slot != slot_in_belt && src.get_slot(slot) != I)
 		qdel(I)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /mob/living/carbon/human/proc/equip_if_possible(obj/item/I, slot)
 	if (can_equip(I, slot))
