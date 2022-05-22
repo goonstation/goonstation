@@ -266,7 +266,7 @@
 
 		return 1
 
-	Exited(Obj, newloc) // THIS FIXES ISSUES WITH QDELED ITEMS WHY IS THIS NOT USED MORE
+	Exited(Obj, newloc) // handles the held item going byebye
 		if(Obj == src.holding)
 			actions.stopId("magpickerhold", src.holder)
 
