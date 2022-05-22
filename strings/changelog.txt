@@ -1,5 +1,9 @@
 
 (t)sun may 22 22
+(u)Blackrep
+(p)8162
+(e)📄|tgui
+(+)The mechanical dropper has been updated to a fancy new UI!
 (u)KubeRoot, Kapu1178
 (p)8056
 (e)🆕|feature
