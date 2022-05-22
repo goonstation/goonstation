@@ -824,11 +824,6 @@
 	},
 /turf/simulated/floor/carpet/red/fancy/narrow/se,
 /area/prefab/safehouse)
-"Fn" = (
-/turf/simulated/wall/auto/asteroid{
-	icon_state = ''asteroid-6''
-	},
-/area/noGenerate)
 "Fs" = (
 /turf/simulated/floor/specialroom/bar,
 /area/prefab/safehouse)
@@ -918,7 +913,7 @@
 /area/prefab/safehouse)
 "Pn" = (
 /turf/simulated/wall/auto/asteroid{
-	icon_state = ''asteroid-10"
+	icon_state = null
 	},
 /area/noGenerate)
 "Qc" = (
@@ -1786,7 +1781,7 @@ YA
 YA
 YA
 YA
-Fn
+Pn
 Zd
 Zd
 Zd
