@@ -71917,9 +71917,7 @@
 	},
 /area/titlescreen)
 "jwG" = (
-/obj/stool/chair/wooden{
-	dir = 1
-	},
+/obj/item/storage/toilet/goldentoilet/azrun,
 /turf/unsimulated/floor/caution/south,
 /area/centcom/offices/azrun)
 "jxX" = (
