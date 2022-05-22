@@ -60,31 +60,12 @@
 		src.desc = "A briefcase with an identification computer inside. A breakthrough in briefcase technology!"
 		BLOCK_SETUP(BLOCK_BOOK)
 
-	attack_self(mob/user)
-		deploy(user)
-
-	verb/unfold()
-		set src in view(1)
-		set category = "Local"
-		set name = "Unfold"
-		deploy(usr)
-
-	proc/deploy(var/mob/user)
-
-		if(src.loc == user)
-			user.drop_from_slot(src)
-		user.visible_message("<span class='alert'>[user] unfolds the foldable portable identification computer from a briefcase!</span>")
-		var/obj/machinery/computer/card/portable/T = new/obj/machinery/computer/card/portable()
-		T.set_loc(get_turf(src))
-		qdel(src)
-
 /obj/machinery/computer/card/portable
 	name = "portable identification computer"
 	icon_state = "idportC"
 	density = 0
 	var/obj/item/cell/cell //We have limited power! Immersion!!
 	var/setup_charge_maximum = 15000
-	var/obj/item/luggable_computer/personal/case
 	var/deployed = 1
 
 	New()
@@ -98,11 +79,6 @@
 		if (src.cell)
 			src.cell.dispose()
 			src.cell = null
-
-		if (case && case.loc == src)
-			case.dispose()
-			case = null
-
 		..()
 
 	attackby(obj/item/W as obj, mob/user as mob)
