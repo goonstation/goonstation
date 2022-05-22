@@ -465,11 +465,11 @@
 			setProperty("heatprot", 10)
 			setProperty("movespeed", 0.4)
 
-/obj/item/clothing/suit/apron/surgeon
-	name = "surgeon's apron"
+/obj/item/clothing/suit/apron/white
+	name = "white apron"
 	desc = "A white apron with a tendency to be spattered with red substances."
-	icon_state = "apron-surgeon"
-	item_state = "apron-surgeon"
+	icon_state = "apron-white"
+	item_state = "apron-white"
 
 /obj/item/clothing/suit/labcoat
 	name = "labcoat"

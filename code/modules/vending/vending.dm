@@ -1624,6 +1624,7 @@
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/chefhat, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/chef, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/apron/white, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/apron,2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/souschefhat, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/souschef, 2)
