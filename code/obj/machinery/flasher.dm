@@ -232,13 +232,19 @@
 
 /obj/machinery/flasher/portable/power_change()
 	..()
+	UpdateIcon()
+
+/obj/machinery/flasher/portable/update_icon()
 	if (powered())
 		if (!src.anchored)
 			icon_state = "[base_state]1-c"
 		else
 			if (GET_COOLDOWN(src, "flash"))
 				icon_state = "[base_state]1-c"
-			light.enable()
+			else
+				icon_state = "[base_state]1"
+	else
+		icon_state = "[base_state]1-p"
 
 /obj/machinery/flasher/portable/HasProximity(atom/movable/AM as mob|obj)
 	if (!src.anchored || src.disable)
@@ -251,24 +257,20 @@
 		return
 
 	if (iscarbon(AM))
-		var/mob/living/carbon/M = AM
+		var/mob/M = AM
 		if (M.m_intent != "walk")
-			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
-				icon_state = "[base_state]1-c"
-				if (src.check_access(H.wear_id))
-					ON_COOLDOWN(src, "flash", cooldown_scan)
-					SPAWN(cooldown_scan)
-						if (src)
-							if (powered() && src.anchored)
-								icon_state = "[base_state]1"
-				else
-					ON_COOLDOWN(src, "flash", cooldown_flash)
-					src.flash()
-					SPAWN(cooldown_flash)
-						if (src)
-							if (powered() && src.anchored)
-								icon_state = "[base_state]1"
+			if (src.allowed(M))
+				ON_COOLDOWN(src, "flash", cooldown_scan)
+				SPAWN(cooldown_scan)
+					if (src)
+						UpdateIcon()
+			else
+				ON_COOLDOWN(src, "flash", cooldown_flash)
+				src.flash()
+				SPAWN(cooldown_flash)
+					if (src)
+						UpdateIcon()
+			UpdateIcon()
 
 /obj/machinery/flasher/portable/attackby(obj/item/W as obj, mob/user as mob)
 	if (iswrenchingtool(W))
@@ -277,21 +279,13 @@
 
 		if (!src.anchored)
 			light.disable()
-			if (powered())
-				icon_state = "[base_state]1-c"
-			else
-				icon_state = "[base_state]1-p"
+			UpdateIcon()
 			user.show_message(text("<span class='alert'>[src] can now be moved.</span>"))
 			src.UpdateOverlays(null, "anchor")
 
 		else if (src.anchored)
 			if (powered())
 				light.enable()
-				if (GET_COOLDOWN(src, "flash"))
-					icon_state = "[base_state]1-c"
-				else
-					icon_state = "[base_state]1"
-			else
-				icon_state = "[base_state]1-p"
+			UpdateIcon()
 			user.show_message(text("<span class='alert'>[src] is now secured.</span>"))
 			src.UpdateOverlays(image(src.icon, "[base_state]-s"), "anchor")
