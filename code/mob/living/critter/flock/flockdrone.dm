@@ -936,7 +936,7 @@
 				else
 					actions.start(new/datum/action/bar/flock_construct(target), user)
 	else if(user.resources < FLOCK_CONVERT_COST && istype(target, /turf))
-		boutput(user, "<span class='alert'>Not enough resources to convert (you need FLOCK_CONVERT_COST).</span>")
+		boutput(user, "<span class='alert'>Not enough resources to convert (you need [FLOCK_CONVERT_COST]).</span>")
 	else
 		if(istype(target, /turf))
 			if (user.flock)
