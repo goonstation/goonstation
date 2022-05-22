@@ -1357,7 +1357,6 @@
 							src.sound_fingersnap = 'sound/musical_instruments/WeirdChime_5.ogg'
 							src.sound_snap = 'sound/impact_sounds/Glass_Shards_Hit_1.ogg'
 
-
 						if (prob(5))
 							message = "<font color=red><B>[src]</B> snaps [his_or_her(src)] fingers RIGHT OFF!</font>"
 							/*

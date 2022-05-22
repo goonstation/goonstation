@@ -481,7 +481,7 @@
 /datum/materiel/utility/sawflies
 	name = "Sawflies"
 	path = /obj/item/storage/sawfly_pouch
-	description = "A pouch of 4 folding antipersonnel drones that can be folded after use."
+	description = "A pouch of 4 antipersonnel drones that can be folded after use."
 // Requisition tokens
 
 /obj/item/requisition_token
