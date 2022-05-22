@@ -659,6 +659,10 @@ stare
 
 /datum/aiTask/succeedable/harvest/on_tick()
 	var/obj/item/harvest_target = holder.target
+	if(!harvest_target || !isturf(harvest_target.loc)) //sometimes there are race conditions, and we should deal with that
+		holder.target = null
+		fails++
+		return
 	if(harvest_target && BOUNDS_DIST(holder.owner, harvest_target) == 0 && !succeeded())
 		var/mob/living/critter/flock/drone/F = holder.owner
 		if(F?.set_hand(1)) // grip tool
