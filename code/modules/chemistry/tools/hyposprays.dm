@@ -109,9 +109,7 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 
 
 	attack_self(mob/user as mob)
-		UpdateIcon()
 		ui_interact(user)
-		return
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (!safe)

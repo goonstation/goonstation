@@ -8,7 +8,7 @@ const glitches = ['$', '{', ']', '%', '^', '?', '>', '¬', 'π', ';', 'и', 'ю'
 export const glitch = (text: string, amount: number) => {
   const chars = text.split('');
   for (let i = 0; i < amount; i++) {
-    const charIndex = randInt(0, chars.length - 1);
+    const charIndex = randInt(0, chars.length ? chars.length - 1 : 0);
     chars[charIndex] = glitches[randInt(0, glitches.length - 1)];
   }
   return chars.join('');
