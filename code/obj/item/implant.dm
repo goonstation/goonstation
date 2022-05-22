@@ -948,6 +948,10 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		desc = "a sharp little dart with a little poison reservoir."
 		icon_state = "blowdart"
 
+		New()
+			..()
+			implant_overlay = null
+
 	flintlock
 		name= "flintlock round"
 		desc = "Rather unperfect round ball. Looks very old."
