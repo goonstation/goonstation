@@ -221,6 +221,16 @@
 	spawn_contents = list(/obj/item/old_grenade/sonic = 5,\
 	/obj/item/clothing/ears/earmuffs/earplugs)
 
+/obj/item/storage/concussion_grenade_pouch
+	name = "concussion grenade pouch"
+	desc = "A pouch full of odd energy-based concussion grenades. Likely dusty old surplus from the corporate wars."
+	icon_state = "ammopouch-quad"
+	health = 6
+	w_class = W_CLASS_SMALL
+	slots = 6
+	does_not_open_in_pocket = 0
+	spawn_contents = list(/obj/item/old_grenade/energy_concussion = 5)
+
 /obj/item/storage/banana_grenade_pouch
 	name = "banana grenade pouch"
 	desc = "A fun pouch designed to hold banana grenades."

@@ -144,6 +144,7 @@
 								"Caused multiple seemingly unrelated accidents.")
 		S["ma_crim_d"] = "No details provided."
 
+
 		var/randomNote = pick("Huge nerd.", "Total jerkface.", "Absolute dingus.", "Insanely endearing.", "Worse than clown.", "Massive crapstain.");
 		if(S["notes"] == "No notes.")
 			S["notes"] = randomNote
@@ -158,8 +159,13 @@
 		H.mind.store_memory("- [S["mi_crim"]]")
 		H.mind.store_memory("- [S["ma_crim"]]")
 	else
-		S["criminal"] = "None"
-		S["mi_crim"] = "None"
+		if (H.mind?.assigned_role == "Clown")
+			S["criminal"] = "Clown"
+			S["mi_crim"] = "Clown"
+		else
+			S["criminal"] = "None"
+			S["mi_crim"] = "None"
+
 		S["mi_crim_d"] = "No minor crime convictions."
 		S["ma_crim"] = "None"
 		S["ma_crim_d"] = "No major crime convictions."

@@ -62742,30 +62742,6 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
-"dzM" = (
-/obj/decal/garland{
-	pixel_y = 32
-	},
-/obj/decal/xmas_lights{
-	pixel_y = 32
-	},
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/stocking{
-	pixel_x = -32
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/ines)
-"dzN" = (
-/obj/decal/garland{
-	pixel_y = 32
-	},
-/obj/decal/xmas_lights{
-	pixel_y = 32
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/ines)
 "dzS" = (
 /obj/machinery/door/unpowered/wood{
 	icon = 'icons/obj/doors/door_office.dmi';
@@ -62903,31 +62879,6 @@
 /obj/table/auto,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/pacra)
-"dAs" = (
-/obj/machinery/door/unpowered/wood{
-	icon = 'icons/obj/doors/door_office.dmi';
-	lock_dir = 8
-	},
-/turf/unsimulated/floor/black,
-/area/centcom/offices/ines)
-"dAt" = (
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/ines)
-"dAu" = (
-/obj/decal/fakeobjects{
-	icon = 'icons/misc/old_or_unused.dmi';
-	icon_state = "tree2";
-	name = "spacemas tree"
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/ines)
-"dAv" = (
-/obj/stool/chair/comfy/purple{
-	dir = 4
-	},
-/obj/item/clothing/head/longbee,
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/ines)
 "dAw" = (
 /obj/shrub{
 	icon = 'icons/obj/stationobjs.dmi';
@@ -63034,73 +62985,6 @@
 /obj/machinery/light,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/pacra)
-"dAS" = (
-/obj/shrub{
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant_small";
-	layer = 3;
-	pixel_y = 18
-	},
-/obj/item/reagent_containers/food/drinks/cola/random,
-/obj/item/reagent_containers/food/drinks/cola{
-	initial_reagents = list("cola" = 10, "VHFCS" = 10, "energydrink" = 10);
-	name = "energy drink";
-	pixel_x = -8
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	name = "energy drink";
-	pixel_x = 14
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	name = "energy drink";
-	pixel_x = 4
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	name = "energy drink";
-	pixel_x = 1;
-	pixel_y = -10
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	initial_reagents = list("cola" = 10, "VHFCS" = 10, "energydrink" = 10);
-	name = "energy drink";
-	pixel_y = 7
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	name = "energy drink";
-	pixel_x = -10;
-	pixel_y = -9
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/ines)
-"dAT" = (
-/obj/machinery/bot/guardbot/xmas,
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/ines)
-"dAU" = (
-/obj/machinery/light,
-/obj/item/reagent_containers/food/drinks/cola/random,
-/obj/item/reagent_containers/food/drinks/cola{
-	name = "energy drink";
-	pixel_x = 7;
-	pixel_y = 1
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	name = "energy drink";
-	pixel_x = 13;
-	pixel_y = -6
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	name = "energy drink";
-	pixel_x = 1;
-	pixel_y = -6
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	name = "energy drink";
-	pixel_x = -8;
-	pixel_y = -12
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/ines)
 "dAW" = (
 /obj/machinery/light{
 	dir = 1
@@ -63133,17 +63017,6 @@
 "dAZ" = (
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/hydro)
-"dBb" = (
-/obj/admin_plaque{
-	name = "Souricelle's Office";
-	pixel_x = 32
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/centcom/offices{
-	icon_state = "blue"
-	})
 "dBf" = (
 /obj/machinery/light{
 	dir = 1
@@ -65012,11 +64885,6 @@
 /area/crypt/sigma/morgue)
 "dFD" = (
 /obj/creepy_sound_trigger,
-/obj/machinery/door/airlock/pyro/medical{
-	dir = 4;
-	name = "Morgue";
-	req_access_txt = "5"
-	},
 /obj/machinery/door/airlock/pyro/medical{
 	dir = 4;
 	name = "Morgue";
@@ -69429,17 +69297,6 @@
 	},
 /turf/unsimulated/floor/wood/six,
 /area/centcom/offices/zamujasa)
-"dRP" = (
-/obj/admin_plaque{
-	name = "Ines's Office";
-	pixel_x = -32
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/centcom/offices{
-	icon_state = "blue"
-	})
 "dRQ" = (
 /obj/storage/crate/bin,
 /obj/item/paper{
@@ -70554,6 +70411,16 @@
 	icon_state = "floor"
 	},
 /area/centcom/lounge)
+"evP" = (
+/obj/stool/chair/comfy/shuttle/pilot{
+	dir = 1
+	},
+/obj/critter/domestic_bee/aloe_bee,
+/obj/effects/precipitation/rain/dense/tile,
+/turf/unsimulated/floor/carpet/darkcarpet/border{
+	dir = 9
+	},
+/area/centcom/offices/aloe)
 "ewi" = (
 /turf/unsimulated/floor/carpet/clowncarpet/border{
 	dir = 10
@@ -71177,6 +71044,10 @@
 	dir = 1
 	},
 /area/centcom)
+"gCS" = (
+/obj/stool/bee_bed,
+/turf/unsimulated/floor/carpet/darkcarpet/border,
+/area/centcom/offices/aloe)
 "gDk" = (
 /obj/table/reinforced/auto,
 /obj/item/plate/tray,
@@ -71413,6 +71284,12 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/left_centcom/cogmap)
+"hyC" = (
+/obj/effects/precipitation/rain/dense/tile,
+/turf/unsimulated/floor/carpet/darkcarpet/border{
+	dir = 5
+	},
+/area/centcom/offices/aloe)
 "hBd" = (
 /obj/critter/frog{
 	anchored = 1;
@@ -71535,12 +71412,6 @@
 	pixel_x = -4;
 	pixel_y = -2
 	},
-/obj/item/paper{
-	icon_state = "paper";
-	name = "Promotion to Double Mentor";
-	pixel_x = 3;
-	pixel_y = 4
-	},
 /turf/unsimulated/floor/wood/seven,
 /area/centcom/offices/sovexe)
 "hQy" = (
@@ -71611,6 +71482,11 @@
 	},
 /turf/unsimulated/floor/carpet/purple/fancy/edge/west,
 /area/centcom/offices/virvatuli)
+"hZA" = (
+/turf/unsimulated/floor/carpet/darkcarpet/border{
+	dir = 6
+	},
+/area/centcom/offices/aloe)
 "iag" = (
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater"
@@ -72194,60 +72070,6 @@
 "jXJ" = (
 /turf/unsimulated/wall/auto/lead/white,
 /area/moon)
-"jYh" = (
-/obj/decal/garland{
-	pixel_y = 32
-	},
-/obj/decal/xmas_lights{
-	pixel_y = 32
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	initial_reagents = list("cola" = 10, "VHFCS" = 10, "energydrink" = 10);
-	name = "energy drink";
-	pixel_y = -1
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	name = "energy drink";
-	pixel_x = 14;
-	pixel_y = 6
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	name = "energy drink";
-	pixel_x = -10
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	name = "energy drink";
-	pixel_x = -8;
-	pixel_y = 17
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	name = "energy drink";
-	pixel_x = 4;
-	pixel_y = 16
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	initial_reagents = list("cola" = 10, "VHFCS" = 10, "energydrink" = 10);
-	name = "energy drink";
-	pixel_x = -6;
-	pixel_y = -11
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	name = "energy drink";
-	pixel_x = 3;
-	pixel_y = -8
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	name = "energy drink";
-	pixel_x = 9;
-	pixel_y = 3
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	name = "energy drink";
-	pixel_x = -3;
-	pixel_y = 13
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/ines)
 "kbk" = (
 /obj/decal/aliencomputer{
 	desc = "This appears to be some sort of martian computer. A broken one, at that.";
@@ -72672,6 +72494,10 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"loK" = (
+/obj/effects/precipitation/rain/dense/tile,
+/turf/unsimulated/floor/wood/six,
+/area/centcom/offices/aloe)
 "lqh" = (
 /turf/unsimulated/wall/auto/adventure/shuttle{
 	opacity = 0
@@ -72977,6 +72803,18 @@
 	icon_state = "floor"
 	},
 /area/centcom/lounge)
+"mvU" = (
+/obj/admin_plaque{
+	desc = "a nameplate signifying who this office belongs to.";
+	name = "\proper aloe's office";
+	pixel_x = -32
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "mxo" = (
 /obj/admin_plaque{
 	name = "Azrun's Office";
@@ -74136,6 +73974,17 @@
 	},
 /turf/unsimulated/floor/circuit/red,
 /area/syndicate_station/assault_pod)
+"ptp" = (
+/obj/table/wood/auto,
+/obj/machinery/light/lamp{
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/artifact{
+	pixel_y = 4
+	},
+/obj/effects/precipitation/rain/dense/tile,
+/turf/unsimulated/floor/wood/six,
+/area/centcom/offices/aloe)
 "ptv" = (
 /obj/admin_plaque{
 	name = "Mark's Code Dungeon";
@@ -74212,6 +74061,13 @@
 	},
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel/flingy)
+"pFd" = (
+/obj/machinery/door/unpowered/wood{
+	icon = 'icons/obj/doors/door_office.dmi';
+	lock_dir = 8
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/aloe)
 "pFm" = (
 /obj/reagent_dispensers/watertank/fountain/piss,
 /obj/machinery/light{
@@ -74508,6 +74364,12 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"qjb" = (
+/obj/item/clothing/under/misc/flame_purple,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/offices/pali)
 "qkO" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-6"
@@ -74612,6 +74474,27 @@
 	},
 /turf/unsimulated/floor/caution/north,
 /area/centcom/offices/azrun)
+"qJM" = (
+/obj/noticeboard/persistent{
+	name = "aloe's personal persistent notice board";
+	persistent_id = "aloe"
+	},
+/obj/effects/precipitation/rain/dense/tile,
+/obj/storage/crate/bin,
+/obj/item/paper{
+	icon_state = "paper";
+	info = "<h1>IOU</h1><br>one lesson in how git works (realistically like 7)";
+	name = "IOU"
+	},
+/obj/item/paper{
+	icon_state = "paper";
+	info = "<h1>DO NOT TRUST THE WIDE AREA SPAWN TOOL</h1>";
+	name = "note to self";
+	pixel_x = -2;
+	pixel_y = -9
+	},
+/turf/unsimulated/floor/wood/six,
+/area/centcom/offices/aloe)
 "qJO" = (
 /obj/machinery/vending/cola/blue,
 /turf/unsimulated/floor{
@@ -74632,6 +74515,12 @@
 "qJS" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/upper_arctic/comms)
+"qMM" = (
+/obj/effects/precipitation/rain/dense/tile,
+/turf/unsimulated/floor/carpet/darkcarpet/border{
+	dir = 1
+	},
+/area/centcom/offices/aloe)
 "qMN" = (
 /obj/machinery/light{
 	dir = 1
@@ -74903,6 +74792,12 @@
 	dir = 4
 	},
 /area/centcom)
+"rvM" = (
+/obj/machinery/light/small/floor/warm/very,
+/turf/unsimulated/floor/carpet/darkcarpet/border{
+	dir = 10
+	},
+/area/centcom/offices/aloe)
 "rwD" = (
 /obj/machinery/door/airlock/pyro/classic{
 	dir = 4
@@ -75365,6 +75260,20 @@
 "sjM" = (
 /turf/unsimulated/floor/white/checker,
 /area/wizard_station)
+"skF" = (
+/obj/storage/closet/dresser,
+/obj/machinery/light/small/floor/warm/very,
+/obj/effects/precipitation/rain/dense/tile,
+/obj/item/clothing/head/NTberet,
+/obj/item/clothing/suit/bio_suit/paramedic/armored/prenerf,
+/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/shoes/black,
+/obj/item/storage/backpack/satchel/blue,
+/obj/item/clothing/under/misc/flame_purple,
+/obj/item/clothing/head/helmet/space/captain/blue,
+/obj/item/clothing/mask/gas/swat/rainbow,
+/turf/unsimulated/floor/wood/six,
+/area/centcom/offices/aloe)
 "smg" = (
 /turf/unsimulated/floor/dream/space,
 /area/titlescreen)
@@ -75698,6 +75607,15 @@
 	icon_state = "red2"
 	},
 /area/diner/cow)
+"tzl" = (
+/obj/table/wood/auto/desk/aloe,
+/obj/item/luggable_computer/personal{
+	pixel_y = 5
+	},
+/obj/machinery/light/small/floor/warm/very,
+/obj/effects/precipitation/rain/dense/tile,
+/turf/unsimulated/floor/wood/six,
+/area/centcom/offices/aloe)
 "tAi" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/shuttle/merchant_shuttle/left_centcom/cogmap)
@@ -76101,6 +76019,13 @@
 /obj/critter/cat/cathara,
 /turf/unsimulated/floor/carpet/office/other,
 /area/centcom/offices/adhara)
+"vis" = (
+/obj/machinery/light/small/floor/warm/very,
+/obj/machinery/recharge_station/cat{
+	name = "cat docking station"
+	},
+/turf/unsimulated/floor/wood/six,
+/area/centcom/offices/aloe)
 "viL" = (
 /obj/item/paper/book/from_file/guardbot_guide,
 /turf/unsimulated/floor/yellow,
@@ -76778,6 +76703,7 @@
 	},
 /obj/table/wood/auto/desk,
 /obj/item/gimmickbomb/grenyanda/inert,
+/obj/item/staff/monkey_staff,
 /turf/unsimulated/floor/wood/seven,
 /area/centcom/offices/sovexe)
 "xoW" = (
@@ -150904,7 +150830,7 @@ dCF
 eTm
 wel
 iOu
-iOu
+qjb
 iOu
 wel
 wvy
@@ -152401,9 +152327,9 @@ goR
 sPY
 tma
 wel
-dzM
-dAt
-dAS
+dvW
+dvW
+dCj
 wel
 nRU
 iyY
@@ -152421,9 +152347,9 @@ dvW
 dvW
 dCj
 wel
-dvW
-dvW
-dCj
+tzl
+evP
+rvM
 wel
 dEM
 dES
@@ -152703,9 +152629,9 @@ plh
 uvs
 nWE
 wel
-dzN
-dAv
-dAt
+dvW
+dvW
+dvW
 wel
 ezH
 vWb
@@ -152723,9 +152649,9 @@ dvW
 dvW
 dvW
 wel
-dvW
-dvW
-dvW
+ptp
+qMM
+gCS
 wel
 dEN
 dER
@@ -153005,9 +152931,9 @@ wPn
 uvs
 vnh
 wel
-dzN
-dAu
-dAT
+dvX
+dvW
+dvW
 wel
 qMN
 fUa
@@ -153025,9 +152951,9 @@ dvX
 dvW
 dvW
 wel
-dvX
-dvW
-dvW
+qJM
+hyC
+hZA
 wel
 dRJ
 dEQ
@@ -153307,9 +153233,9 @@ eOA
 uvs
 iQw
 wel
-jYh
-dAt
-dAU
+dvW
+dvW
+dvW
 qvY
 fqO
 kAr
@@ -153327,9 +153253,9 @@ dvW
 dvW
 dvW
 wel
-dvW
-dvW
-dvW
+skF
+loK
+vis
 wel
 dEP
 dER
@@ -153610,7 +153536,7 @@ dqa
 wel
 wel
 wel
-dAs
+kKw
 wel
 wel
 wel
@@ -153630,7 +153556,7 @@ kKw
 wel
 wel
 wel
-kKw
+pFd
 wel
 wel
 dvy
@@ -153911,7 +153837,7 @@ vsg
 dvy
 dvy
 dvy
-dRP
+rUQ
 dvy
 dxa
 dvy
@@ -153931,7 +153857,7 @@ rUQ
 dvy
 dxa
 dvy
-rUQ
+mvU
 dvy
 dvy
 dvy
@@ -162081,7 +162007,7 @@ dCH
 dvy
 dxn
 dvy
-dBb
+dwd
 dvy
 dvy
 dzo

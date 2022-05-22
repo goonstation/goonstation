@@ -1,6 +1,6 @@
 
 
-/proc/scan_health(var/mob/M as mob, var/verbose_reagent_info = 0, var/disease_detection = 1, var/organ_scan = 0, var/visible = 0)
+/proc/scan_health(var/mob/M as mob, var/verbose_reagent_info = 0, var/disease_detection = 1, var/organ_scan = 0, var/visible = 0, syndicate = FALSE)
 	if (!M)
 		return "<span class='alert'>ERROR: NO SUBJECT DETECTED</span>"
 
@@ -65,6 +65,7 @@
 	var/reagent_data = null
 	var/pathogen_data = null
 	var/disease_data = null
+	var/implant_data = null
 	var/organ_data = null
 	var/interesting_data = null
 
@@ -109,10 +110,26 @@
 
 
 			var/bad_stuff = 0
-			if (L.implant && L.implant.len > 0)
+			if (length(L.implant))
+				var/list/implant_list = list()
 				for (var/obj/item/implant/I in L.implant)
 					if (istype(I, /obj/item/implant/projectile))
-						bad_stuff ++
+						bad_stuff++
+						continue
+					if (I.scan_category == "not_shown")
+						continue
+					if (I.scan_category != "syndicate")
+						if (I.scan_category != "unknown")
+							implant_list[capitalize(I.name)]++
+						else
+							implant_list["Unknown implant"]++
+					else if (syndicate)
+						implant_list[capitalize(I.name)]++
+
+				if (length(implant_list))
+					implant_data = "<span style='color:#2770BF'><b>Implants detected:</b></span>"
+					for (var/implant in implant_list)
+						implant_data += "<br><span style='color:#2770BF'>[implant_list[implant]]x [implant]</span>"
 
 			if (ishuman)
 				var/mob/living/carbon/human/H = L
@@ -222,6 +239,7 @@
 	[nrad_data ? "<br>[nrad_data]" : null]\
 	[blood_data ? "<br>[blood_data]" : null]\
 	[brain_data ? "<br>[brain_data]" : null]\
+	[implant_data ? "<br>[implant_data]" : null]\
 	[organ_data ? "<br>[organ_data]" : null]\
 	[reagent_data ? "<br>[reagent_data]" : null]\
 	[pathogen_data ? "<br>[pathogen_data]" : null]\

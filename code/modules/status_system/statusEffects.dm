@@ -655,15 +655,16 @@
 			switchStage(getStage())
 
 			var/prot = 1
+			if (isliving(owner))
+				var/mob/living/L = owner
+				if(L.is_heat_resistant())
+					prot = 0
+				else
+					prot = (1 - (L.get_heat_protection() / 100))
 			if(istype(owner, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = owner
-				prot = (1 - (H.get_heat_protection() / 100))
-
 				if (H.traitHolder?.hasTrait("burning")) //trait 'burning' is human torch
 					duration += timePassed										//this makes the fire counter not increment on its own
-
-			if(ismob(owner) && owner:is_heat_resistant())
-				prot = 0
 
 			switch(stage)
 				if(1)
@@ -1570,6 +1571,28 @@
 	icon_state = null
 	duration = 0.5 SECONDS
 	visible = 0
+
+/datum/statusEffect/cornicened
+	id = "cornicened"
+	name = "Cornicened"
+	desc = "A Cornicen spreader bolt has put you off-balance! Also you should never be seeing this!"
+	icon_state = null
+	visible = FALSE
+	duration = 0.5 SECONDS
+	var/stacks = 1
+
+	onChange(optional)
+		. = ..()
+
+		stacks++
+		if(stacks >= 3)
+			owner.setStatus("cornicened2")
+
+/datum/statusEffect/cornicened2
+	id = "cornicened2"
+	name = "Cornicened2"
+	desc = "A Cornicen spreader bolt has put you off-balance! Also you should never be seeing this!"
+	duration = 0.5 SECONDS
 
 /datum/statusEffect/shivering
 	id = "shivering"

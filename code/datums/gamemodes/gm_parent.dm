@@ -398,12 +398,8 @@
 			objective_set_path = /datum/objective_set/werewolf
 			antag.current.make_werewolf()
 
-		if (ROLE_ARCFIEND) // TODO: EV objectives
-		#ifdef RP_MODE
-			objective_set_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
-		#else
-			objective_set_path = pick(typesof(/datum/objective_set/traitor))
-		#endif
+		if (ROLE_ARCFIEND)
+			objective_set_path = /datum/objective_set/arcfiend
 			antag.current.make_arcfiend()
 
 	if (!isnull(objective_set_path)) // Cannot create objects of type null. [wraiths use a special proc]

@@ -193,22 +193,23 @@ obj/item/reagent_containers/iv_drip/dead_exec
 		light.attach(src)
 		light.enable()
 
-		var/mob/living/carbon/human/dead_exec/M //Setting up the puzzle
-		M = new /mob/living/carbon/human/dead_exec(src.loc) //aka Jean
-		var/datum/bioHolder/D = new/datum/bioHolder(null)
-		D.CopyOther(M.bioHolder)
+		SPAWN(5 SECONDS) //give it a sec
+			var/mob/living/carbon/human/dead_exec/M //Setting up the puzzle
+			M = new /mob/living/carbon/human/dead_exec(src.loc) //aka Jean
+			var/datum/bioHolder/D = new/datum/bioHolder(null)
+			D.CopyOther(M.bioHolder)
 
-		for_by_tcl(O, /obj/machinery/bio_handscanner)
-			O.allowed_bioHolders = D.Uid //Copy the Uid only, copying and comparing against all bioHolder data is too prone to error.
+			for_by_tcl(O, /obj/machinery/bio_handscanner)
+				O.allowed_bioHolders = D.Uid //Copy the Uid only, copying and comparing against all bioHolder data is too prone to error.
 
-		for_by_tcl(O, /obj/item/reagent_containers/iv_drip/dead_exec)
-			if(!O.reagents.has_reagent("blood"))
-				return
-			var/datum/reagent/blood/B = O.reagents.reagent_list["blood"]
-			B.data = D //Give the blood Jean's bioHolder info.
+			for_by_tcl(O, /obj/item/reagent_containers/iv_drip/dead_exec)
+				if(!O.reagents.has_reagent("blood"))
+					return
+				var/datum/reagent/blood/B = O.reagents.reagent_list["blood"]
+				B.data = D //Give the blood Jean's bioHolder info.
 
-		SPAWN(5 SECONDS) //Jean's just here to set up the puzzle, we don't want him sticking around.
-		qdel(M)
+			sleep(5 SECONDS) //Jean's just here to set up the puzzle, we don't want him sticking around.
+			qdel(M)
 
 	attack_hand(mob/user as mob)
 		boutput(user, "An advanced cloning pod, designed to be operated automatically through packets. What a great idea!<br>Currently idle.<br><span class='alert'>Biomatter reserves are depleted.</span>")
