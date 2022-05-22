@@ -1066,6 +1066,10 @@ ABSTRACT_TYPE(/obj/trait/job)
 	category = list("species", "cloner_stuff")
 	mutantRace = /datum/mutantrace/skeleton
 
+	onAdd(var/mob/owner)
+		..()
+		owner.put_in_hand_or_drop(new /obj/item/joint_wax)
+
 /obj/trait/roach
 	name = "Roach (-1) \[Species\]"
 	cleanName = "Roach"

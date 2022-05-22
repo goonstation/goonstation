@@ -2013,14 +2013,14 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		patient.organHolder.drop_organ("tail")
 		return TRUE
 
-	// else if (surgeon.zone_sel.selecting == "head" && patient.organHolder.head)
-	// 	var/obj/item/organ/head/H = patient.organHolder.head
-	// 	if (H.remove_stage != 1)
-	// 		return FALSE
-	// 	H.remove_stage = 2
-	// 	surgeon.visible_message("<span class='alert'><b>[surgeon]</b> pries [H] loose with [src].</span>")
-	// 	playsound(patient, "sound/items/Crowbar.ogg", 50, 1)
-	// 	return TRUE
+	else if (surgeon.zone_sel.selecting == "head" && patient.organHolder.head)
+		var/obj/item/organ/head/H = patient.organHolder.head
+		if (H.op_stage != 1)
+			return FALSE
+		H.op_stage = 2
+		surgeon.visible_message("<span class='alert'><b>[surgeon]</b> pries [H] loose with [src].</span>")
+		playsound(patient, "sound/items/Crowbar.ogg", 50, 1)
+		return TRUE
 
 	else if (surgeon.zone_sel.selecting in patient.limbs.vars)
 		var/obj/item/parts/limb = patient.limbs.vars[surgeon.zone_sel.selecting]
@@ -2043,32 +2043,32 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 	src.add_fingerprint(surgeon)
 
-	// if (surgeon.zone_sel.selecting == "head" && patient.organHolder.head)
-	// 	var/obj/item/organ/head/H = patient.organHolder.head
-	// 	if (H.remove_stage == 0)
-	// 		H.remove_stage = 1
-	// 		surgeon.visible_message("<span class='alert'><b>[surgeon]</b> loosens [patient]'s [H] with [src].</span>")
-	// 		playsound(patient, "sound/items/Screwdriver.ogg", 50, 1)
-	// 		return TRUE
-	// 	else if (H.remove_stage == 2)
-	// 		patient.organHolder.drop_organ("head", get_turf(patient))
-	// 		surgeon.visible_message("<span class='alert'><b>[surgeon]</b> twists [patient]'s [H] off with [src].</span>")
-	// 		playsound(patient, "sound/items/Rachet.ogg", 50, 1)
-	// 		return TRUE
+	if (surgeon.zone_sel.selecting == "head" && patient.organHolder.head)
+		var/obj/item/organ/head/H = patient.organHolder.head
+		if (H.op_stage == 0)
+			H.op_stage = 1
+			surgeon.visible_message("<span class='alert'><b>[surgeon]</b> loosens [H] with [src].</span>")
+			playsound(patient, "sound/items/Screwdriver.ogg", 50, 1)
+			return TRUE
+		else if (H.op_stage == 2)
+			patient.organHolder.drop_organ("head", get_turf(patient))
+			surgeon.visible_message("<span class='alert'><b>[surgeon]</b> twists [H] off with [src].</span>")
+			playsound(patient, "sound/items/Ratchet.ogg", 50, 1)
+			return TRUE
 
-	if (surgeon.zone_sel.selecting in patient.limbs.vars)
+	else if (surgeon.zone_sel.selecting in patient.limbs.vars)
 		var/obj/item/parts/limb = patient.limbs.vars[surgeon.zone_sel.selecting]
 		if (!isskeletonlimb(limb))
 			return FALSE
 		if (limb.remove_stage == 0)
 			limb.remove_stage = 1
-			surgeon.visible_message("<span class='alert'><b>[surgeon]</b> loosens [patient]'s [limb] with [src].</span>")
+			surgeon.visible_message("<span class='alert'><b>[surgeon]</b> loosens [limb] with [src].</span>")
 			playsound(patient, "sound/items/Screwdriver.ogg", 50, 1)
 			return TRUE
 		else if (limb.remove_stage == 2)
 			limb.remove(FALSE)
-			surgeon.visible_message("<span class='alert'><b>[surgeon]</b> twists [patient]'s [limb] off with [src].</span>")
-			playsound(patient, "sound/items/Rachet.ogg", 50, 1)
+			surgeon.visible_message("<span class='alert'><b>[surgeon]</b> twists [limb] off with [src].</span>")
+			playsound(patient, "sound/items/Ratchet.ogg", 50, 1)
 			return TRUE
 
 #undef CREATE_BLOOD_SPLOOSH

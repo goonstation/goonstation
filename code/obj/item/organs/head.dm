@@ -333,7 +333,10 @@
 			else
 				boutput(user, "<span class='alert'>[src.name] is already wearing [src.glasses.name]!</span>")
 			return
-
+		if (istype(W, /obj/item/cloth) || istype(W, /obj/item/sponge))
+			playsound(src, "sound/items/towel.ogg", 25, 1)
+			user.visible_message("<span class='notice'>[user] [pick("buffs", "shines", "cleans", "wipes", "polishes")] [src] with [W].</span>")
+			return
 
 		if (src.skull || src.brain)
 

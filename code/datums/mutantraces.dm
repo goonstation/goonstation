@@ -1116,6 +1116,27 @@ TYPEINFO(/datum/mutantrace)
 			mob.mob_flags &= ~IS_BONEY
 		. = ..()
 
+/obj/item/joint_wax
+	name = "joint wax"
+	desc = "Does what it says on the tube."
+	icon_state = "amp-1"
+	w_class = W_CLASS_SMALL
+	var/amount_left = 10
+
+	attack(mob/M as mob, mob/user as mob)
+		if (isskeleton(M))
+			var/mob/living/carbon/human/H = M
+			if (user.zone_sel.selecting in H.limbs.vars)
+				var/obj/item/parts/limb = H.limbs.vars[user.zone_sel.selecting]
+				if (!limb)
+					if (!src.amount_left)
+						boutput(user, "<span class='alert'>The joint wax is empty!</alert>")
+					else
+						H.changeStatus("spry", 1 MINUTE)
+						H.visible_message("<span class='notice'>[user] applies some joint wax to [H].</notice>")
+						src.amount_left--
+					return
+		..()
 
 /*
 /datum/mutantrace/ape
