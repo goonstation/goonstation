@@ -820,6 +820,7 @@ var/global/list/soundCache = list(
  	"sound/misc/flockmind/flockmind_cast.ogg" = 'sound/misc/flockmind/flockmind_cast.ogg',\
  	"sound/misc/flockmind/flockmind_caw.ogg" = 'sound/misc/flockmind/flockmind_caw.ogg',\
  	"sound/misc/flockmind/flockmind_deathcry.ogg" = 'sound/misc/flockmind/flockmind_deathcry.ogg',\
+ 	"sound/misc/flockmind/ping.ogg" = 'sound/misc/flockmind/ping.ogg',\
  	"sound/misc/footstep1.ogg" = 'sound/misc/footstep1.ogg',\
  	"sound/misc/footstep2.ogg" = 'sound/misc/footstep2.ogg',\
  	"sound/misc/fridge_close.ogg" = 'sound/misc/fridge_close.ogg',\
