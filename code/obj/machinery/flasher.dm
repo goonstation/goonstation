@@ -256,8 +256,10 @@
 	if (!powered())
 		return
 
-	if (iscarbon(AM))
+	if (isliving(AM))
 		var/mob/M = AM
+		if (isghostcritter(M) || (issmallanimal(M)) || (isghostdrone(M)) || (isintangible(M)))
+			return
 		if (M.m_intent != "walk")
 			if (src.allowed(M))
 				ON_COOLDOWN(src, "flash", cooldown_scan)
