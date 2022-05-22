@@ -34,6 +34,7 @@
 	var/snoop_clarity = 80 // how easily we can see silicon messages, how easily silicons can see this flock's messages
 	var/snooping = FALSE //are both sides of communication currently accessible?
 	var/datum/tgui/flockpanel
+	var/ui_tab = "drones"
 
 /datum/flock/New()
 	..()
@@ -50,7 +51,7 @@
 	return istype(user, /mob/living/intangible/flock/flockmind) || tgui_admin_state.can_use_topic(src, user)
 
 /datum/flock/ui_data(mob/user)
-	return describe_state()
+	return describe_state(src.ui_tab)
 
 /datum/flock/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
@@ -100,43 +101,56 @@
 			var/obj/flock_structure/ghost/tealprint = locate(params["origin"])
 			if (tealprint)
 				tealprint.cancelBuild()
+		if ("change_tab")
+			if (src.ui_tab != params["tab"]) //don't force a ui update if the tab hasn't changed
+				src.ui_tab = params["tab"]
+				. = TRUE
 
-/datum/flock/proc/describe_state()
+/datum/flock/proc/describe_state(var/category)
 	var/list/state = list()
 	state["update"] = "flock"
+	state["partitions"] = list()
+	state["drones"] = list()
+	state["structures"] = list()
+	state["enemies"] = list()
+	state["category_lengths"] = list(
+		"traces" = length(src.traces),
+		"drones" = length(src.units[/mob/living/critter/flock/drone]),
+		"structures" = length(src.structures),
+		"enemies" = length(src.enemies),
+	)
+	state["category"] = category
+	//we only return data needed by the current tab, cursed but faster
+	switch (category)
+		if ("traces")
+			// DESCRIBE TRACES
+			for(var/mob/living/intangible/flock/trace/T as anything in src.traces)
+				state["partitions"] += list(T.describe_state())
 
-	// DESCRIBE TRACES
-	var/list/tracelist = list()
-	for(var/mob/living/intangible/flock/trace/T as anything in src.traces)
-		tracelist += list(T.describe_state())
-	state["partitions"] = tracelist
+		if ("drones")
+			// DESCRIBE DRONES
+			for(var/mob/living/critter/flock/drone/F as anything in src.units[/mob/living/critter/flock/drone])
+				state["drones"] += list(F.describe_state())
 
-	// DESCRIBE DRONES
-	var/list/dronelist = list()
-	for(var/mob/living/critter/flock/drone/F as anything in src.units[/mob/living/critter/flock/drone])
-		dronelist += list(F.describe_state())
-	state["drones"] = dronelist
+		if ("structures")
+			// DESCRIBE STRUCTURES
+			for(var/obj/flock_structure/structure as anything in src.structures)
+				state["structures"] += list(structure.describe_state())
 
-	// DESCRIBE STRUCTURES
-	var/list/structureList = list()
-	for(var/obj/flock_structure/structure as anything in src.structures)
-		structureList += list(structure.describe_state())
-	state["structures"] = structureList
-
-	// DESCRIBE ENEMIES
-	var/list/enemylist = list()
-	for(var/name in src.enemies)
-		var/list/enemy_stats = src.enemies[name]
-		var/atom/M = enemy_stats["mob"]
-		if(!QDELETED(M))
-			var/list/enemy = list()
-			enemy["name"] = M.name
-			enemy["area"] = enemy_stats["last_seen"]
-			enemy["ref"] = "\ref[M]"
-			enemylist += list(enemy)
-		else
-			src.enemies -= name
-	state["enemies"] = enemylist
+		if ("enemies")
+			// DESCRIBE ENEMIES
+			for(var/name in src.enemies)
+				var/list/enemy_stats = src.enemies[name]
+				var/atom/M = enemy_stats["mob"]
+				if(!QDELETED(M))
+					var/list/enemy = list()
+					enemy["name"] = M.name
+					enemy["area"] = enemy_stats["last_seen"]
+					enemy["ref"] = "\ref[M]"
+					state["enemies"] += list(enemy)
+				else
+					// enemy no longer exists, let's do something about that
+					src.enemies -= name
 
 	// DESCRIBE VITALS
 	var/list/vitals = list()

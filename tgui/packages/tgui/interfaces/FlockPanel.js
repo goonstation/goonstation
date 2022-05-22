@@ -289,7 +289,6 @@ const FlockEnemies = (props, context) => {
 
 export const FlockPanel = (props, context) => {
   const { data, act } = useBackend(context);
-  const [tabIndex, setTabIndex] = useLocalState(context, 'tabIndex', 1);
   const [sortBy, setSortBy] = useLocalState(context, 'sortBy', 'resources');
   const {
     vitals,
@@ -297,6 +296,8 @@ export const FlockPanel = (props, context) => {
     drones,
     structures,
     enemies,
+    category_lengths,
+    category,
   } = data;
   return (
     <Window
@@ -308,28 +309,36 @@ export const FlockPanel = (props, context) => {
       <Window.Content scrollable>
         <Tabs>
           <Tabs.Tab
-            selected={tabIndex === 1}
-            onClick={() => setTabIndex(1)}>
-            Drones {"(" + drones.length + ")"}
+            selected={category === 'drones'}
+            onClick={() => {
+              act('change_tab', { 'tab': 'drones' });
+            }}>
+            Drones {`(${category_lengths['drones']})`}
           </Tabs.Tab>
           <Tabs.Tab
-            selected={tabIndex === 2}
-            onClick={() => setTabIndex(2)}>
-            Partitions {"(" + partitions.length + ")"}
+            selected={category === 'traces'}
+            onClick={() => {
+              act('change_tab', { 'tab': 'traces' });
+            }}>
+            Partitions {`(${category_lengths['traces']})`}
           </Tabs.Tab>
           <Tabs.Tab
-            selected={tabIndex === 3}
-            onClick={() => setTabIndex(3)}>
-            Structures {"(" + structures.length + ")"}
+            selected={category === 'structures'}
+            onClick={() => {
+              act('change_tab', { 'tab': 'structures' });
+            }}>
+            Structures {`(${category_lengths['structures']})`}
           </Tabs.Tab>
           <Tabs.Tab
-            selected={tabIndex === 4}
-            onClick={() => setTabIndex(4)}>
-            Enemies {"(" + enemies.length + ")"}
+            selected={category === 'enemies'}
+            onClick={() => {
+              act('change_tab', { 'tab': 'enemies' });
+            }}>
+            Enemies {`(${category_lengths['enemies']})`}
           </Tabs.Tab>
         </Tabs>
 
-        {tabIndex === 1
+        {category === 'drones'
         && (
           <Box>
             <Dropdown
@@ -340,9 +349,9 @@ export const FlockPanel = (props, context) => {
             <FlockDrones drones={drones} sortBy={sortBy} />
           </Box>
         )}
-        {tabIndex === 2 && <FlockPartitions partitions={partitions} />}
-        {tabIndex === 3 && <FlockStructures structures={structures} />}
-        {tabIndex === 4 && <FlockEnemies enemies={enemies} />}
+        {category === 'traces' && <FlockPartitions partitions={partitions} />}
+        {category === 'structures' && <FlockStructures structures={structures} />}
+        {category === 'enemies' && <FlockEnemies enemies={enemies} />}
       </Window.Content>
     </Window>
   );
