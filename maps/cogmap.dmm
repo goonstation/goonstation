@@ -3759,7 +3759,7 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "ali" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/kitchen,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "alk" = (
@@ -48579,7 +48579,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/testchamber)
 "ctV" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/research,
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
 "ctW" = (
@@ -60285,7 +60285,7 @@
 	name = "Tool Storage"
 	})
 "qBE" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/genetics,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},

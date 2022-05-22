@@ -161,6 +161,12 @@
 						<a href='[playeropt_link(M, "removeabil")]'>Remove</a> &bull;
 						<a href='[playeropt_link(M, "abilholder")]'>New Holder</a>
 				 	</div>
+					<div class='l'>Traits<a href='?src=\ref[src];action=secretsfun;type=traitlist_help'>*</a></div>
+					<div class='r'>
+						<a href='[playeropt_link(M, "managetraits")]'>Manage</a> &bull;
+						<a href='[playeropt_link(M, "addtrait")]'>Add</a> &bull;
+						<a href='[playeropt_link(M, "removetrait")]'>Remove</a>
+				 	</div>
 					<div class='l'>StatusEffects<a href='?src=\ref[src];action=secretsfun;type=statuseffect_help'>*</a></div>
 					<div class='r'>
 						<a href='[playeropt_link(M, "setstatuseffect")]'>Set</a> &bull;

@@ -18,6 +18,41 @@
 	desc = "You can't tell the difference, Honest!"
 	icon_state= "wig"
 
+	///Takes a list of style ids to colors and generates a wig from it
+	proc/setup_wig(var/style_list)
+		if (!style_list)
+			return
+		var/actuallyHasHair = FALSE
+		for (var/style_id in style_list)
+			if (style_id == "none")
+				continue
+			var/image/h_image = image('icons/mob/human_hair.dmi', style_id)
+			h_image.color = style_list[style_id]
+			src.overlays += h_image
+			src.wear_image.overlays += h_image
+			actuallyHasHair = TRUE
+		if (!actuallyHasHair)
+			src.icon_state = "short"
+
+///A type to allow you to spawn custom wigs from the map editor
+/obj/item/clothing/head/wig/spawnable
+	icon = 'icons/mob/human_hair.dmi'
+	icon_state = "bald"
+	var/first_id = "none"
+	var/first_color = "#101010"
+	var/second_id = "none"
+	var/second_color = "#101010"
+	var/third_id = "none"
+	var/third_color = "#101010"
+
+	New()
+		..()
+		var/hair_list = list()
+		hair_list[first_id] = first_color
+		hair_list[second_id] = second_color
+		hair_list[third_id] = third_color
+		src.setup_wig(hair_list)
+
 /obj/item/clothing/head/bald_cap
 	name = "bald cap"
 	desc = "You can't tell the difference, Honest!"

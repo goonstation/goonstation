@@ -365,6 +365,13 @@
 	slot = "l_arm"
 	handlistPart = "hand_left"
 
+	disposing()
+		if (src.holder)
+			if (ishuman(src.holder))
+				var/mob/living/carbon/human/H = src.holder
+				H.drop_from_slot(H?.l_hand)
+		. = ..()
+
 /obj/item/parts/human_parts/arm/right
 	name = "right arm"
 	desc = "Someone's right hand.... hand. Or arm, whatever."
@@ -373,6 +380,13 @@
 	slot = "r_arm"
 	side = "right"
 	handlistPart = "hand_right"
+
+	disposing()
+		if (src.holder)
+			if (ishuman(src.holder))
+				var/mob/living/carbon/human/H = src.holder
+				H.drop_from_slot(H?.r_hand)
+		. = ..()
 
 /obj/item/parts/human_parts/leg
 	name = "placeholder item (don't use this!)"

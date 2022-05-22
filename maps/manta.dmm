@@ -17152,7 +17152,7 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 4
 	},
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/kitchen,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
 "aWZ" = (
@@ -17306,7 +17306,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/research)
 "aXy" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/genetics,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -26413,7 +26413,7 @@
 	dir = 9;
 	icon_state = "line4"
 	},
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/research,
 /turf/simulated/floor/greenwhite/corner,
 /area/station/medical/cdc)
 "buH" = (

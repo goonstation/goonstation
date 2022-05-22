@@ -7153,7 +7153,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "aqP" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/kitchen,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
@@ -51430,7 +51430,7 @@
 /area/station/science/construction)
 "ckU" = (
 /obj/decal/cleanable/cobweb2,
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/research,
 /turf/simulated/floor/plating/scorched,
 /area/station/science/construction)
 "ckV" = (
@@ -71290,7 +71290,7 @@
 	},
 /area/station/medical/dome)
 "ddf" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/genetics,
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/grass{
 	name = "astroturf"
@@ -74851,7 +74851,7 @@
 	},
 /area/research_outpost/chamber)
 "dlu" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/research,
 /turf/simulated/floor/engine{
 	dir = 4;
 	icon_state = "engine_caution_corners"
