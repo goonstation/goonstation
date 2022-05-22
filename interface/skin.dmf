@@ -1,3 +1,5 @@
+macro "input_box_macro"
+
 macro "base_macro"
 	elem
 		name = "Tab"
@@ -10,7 +12,7 @@ macro "base_macro"
 		command = "dsay"
 	elem "startsay"
 		name = "T"
-		command = ".starttyping\nsay"
+		command = ".winset \"command=\".start_typing say\";command=.init_say;saywindow.is-visible=true;saywindow.input.focus=true\""
 	elem "radiosay"
 		name = ";"
 		command = "say_main_radio"
@@ -1710,3 +1712,50 @@ window "winJobRewards"
 		cells = 1x1
 		current-cell = 1,1
 		highlight-color = #80ffff
+
+window "input_box"
+	elem "input_box"
+		type = MAIN
+		pos = 759,487
+		size = 302x86
+		anchor1 = 50,50
+		anchor2 = 50,50
+		background-color = none
+		is-visible = false
+		saved-params = ""
+		statusbar = false
+		can-minimize = false
+		can-resize = false
+		outer-size = 308x114
+		inner-size = 302x86
+	elem "input"
+		type = INPUT
+		pos = 11,17
+		size = 281x23
+		anchor1 = 4,20
+		anchor2 = 96,47
+		font-size = 7
+		border = sunken
+		saved-params = ""
+	elem "accept"
+		type = BUTTON
+		pos = 52,52
+		size = 75x23
+		anchor1 = 17,60
+		anchor2 = 42,87
+		font-size = 7
+		background-color = none
+		saved-params = ""
+		text = "OK"
+		command = ""
+	elem "cancel"
+		type = BUTTON
+		pos = 179,52
+		size = 75x23
+		anchor1 = 59,60
+		anchor2 = 84,87
+		font-size = 7
+		background-color = none
+		saved-params = ""
+		text = "Cancel"
+		command = ""
