@@ -233,5 +233,5 @@
 		icon_state = "apc0"
 
 		makeAntag(mob/living/carbon/human/M as mob)
-			M.make_arcfiend(1)
+			M.make_arcfiend()
 			boutput(M, "<span class='combat'>The simulation grants you a small portion of it's power.</span>")
