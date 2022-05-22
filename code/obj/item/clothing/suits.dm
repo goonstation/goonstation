@@ -1728,6 +1728,12 @@
 	icon_state = "nursedress"
 	item_state = "nursedress"
 	body_parts_covered = TORSO|LEGS|ARMS
+/obj/item/clothing/suit/nursedress/red
+	name = "red nurse dress"
+	desc = "A traditional dress worn by a nurse, now in red."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	icon_state = "nursedressred"
+	item_state = "nursedressred"
 
 /obj/item/clothing/suit/chemsuit
 	name = "chemical protection suit"
