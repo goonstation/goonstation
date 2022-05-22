@@ -1214,6 +1214,31 @@ datum/projectile/bullet/autocannon
 			if(P)
 				P.travelled = max(proj.travelled, (max_range-2) * 32)
 
+/datum/projectile/bullet/pbpellet //direct less-lethal 40mm option
+	name = "plastic baton round"
+	shot_sound = 'sound/weapons/launcher.ogg'
+	power = 15
+	ks_ratio = 0.5
+	dissipation_rate = 5
+	dissipation_delay = 4
+	max_range = 20
+	implanted = null
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_BLUNT
+	icon_turf_hit = "bhole-large"
+	casing = /obj/item/casing/grenade
+	implanted = null
+
+	on_hit(atom/hit, dirflag, obj/projectile/proj)
+		if (ishuman(hit))
+			hit.changeStatus("staggered", clamp(proj.power/8, 5, 1) SECONDS)
+		if(!ismob(hit))
+			shot_volume = 0
+			var/obj/projectile/P = shoot_reflected_bounce(proj, hit, 1, PROJ_RAPID_HEADON_BOUNCE)
+			shot_volume = 100
+			if(P)
+				P.travelled = max(proj.travelled, (max_range-2) * 32)
+
 /datum/projectile/bullet/grenade_shell
 	name = "40mm grenade conversion shell"
 	window_pass = 0

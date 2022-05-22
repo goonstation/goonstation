@@ -275,6 +275,21 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	damage_type = D_SPECIAL
 	power = 50
 
+
+
+/datum/projectile/special/spreader/buckshot_burst/rubber
+	name = "rubber pellets"
+	sname = "rubber pellets"
+	implanted= null
+	cost = 1
+	pellets_to_fire = 24
+	spread_projectile_type = /datum/projectile/bullet/pbpellet
+	casing = /obj/item/casing/shotgun/gray
+	spread_angle_variance = 14
+	damage_type = D_SPECIAL
+	power = 50
+
+
 /datum/projectile/special/spreader/uniform_burst/circle
 	name = "circular spread"
 	sname = "circular spread"

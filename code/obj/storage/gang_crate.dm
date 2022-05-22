@@ -50,8 +50,8 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 
 	New()
 		src.light = image('icons/obj/large_storage.dmi',"lootcratelocklight")
-		SPAWN(0)
-			update_icon()
+	//	SPAWN(0)
+	//		update_icon()
 
 
 	update_icon()
