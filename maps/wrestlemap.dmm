@@ -18506,7 +18506,7 @@
 	name = "Corpse Tunnel"
 	})
 "hLN" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/kitchen,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 3;
@@ -24136,7 +24136,7 @@
 /obj/decal/boxingrope{
 	dir = 4
 	},
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/genetics,
 /turf/simulated/floor/specialroom/gym,
 /area/station/medical/dome)
 "kgf" = (
@@ -32122,7 +32122,7 @@
 /turf/simulated/floor/delivery,
 /area/station/mining/staff_room)
 "nIF" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/research,
 /obj/decal/boxingropeenter,
 /turf/unsimulated/floor/stairs/dark{
 	dir = 1
@@ -52445,7 +52445,7 @@
 /turf/simulated/floor/neutral/side,
 /area/station/hallway/primary/south)
 "wwI" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/research,
 /turf/simulated/floor/blue,
 /area/station/medical/cdc)
 "wxe" = (

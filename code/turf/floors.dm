@@ -1740,6 +1740,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 			var/datum/material/M = getMaterial("steel")
 			A.setMaterial(M)
 		.= A //return tile for crowbar special attack ok
+		user.unlock_medal("Misclick", 1)
 
 	to_plating()
 	playsound(src, "sound/items/Crowbar.ogg", 80, 1)
@@ -2166,6 +2167,11 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 		name = "overgrown floor"
 		desc = "This floor is covered in vines."
 		icon_state = "rootfloor_1"
+
+		random
+			New()
+				. = ..()
+				icon_state = "rootfloor_[rand(1,3)]"
 
 	oldfloor
 		name = "floor"

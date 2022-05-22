@@ -41,14 +41,16 @@
 			input = input(custom_message  || "Enter number:", custom_title, default) as null|num
 
 		if (DATA_INPUT_TYPE)
-			var/stub = input(custom_message  || "Enter part of type:", custom_title) as null|text
-			if (!stub)
-				boutput(src, "<span class='alert'>Cancelled.</span>")
-				return
-			while (!input)
+			var/stub
+			while (!stub)
+				stub = input(custom_message  || "Enter part of type:", custom_title) as null|text
+				if (!stub)
+					boutput(src, "<span class='alert'>Cancelled.</span>")
+					return
 				input = get_one_match(stub, /datum, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
-				if (!input)
+				if (isnull(input))
 					alert("No types found matching that string.")
+					stub = null
 
 
 		if (DATA_INPUT_COLOR)

@@ -666,7 +666,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 	equipped()
 		RETURN_TYPE(/obj/item)
 		if (active_hand)
-			if (hands.len >= active_hand)
+			if (length(src.hands) >= active_hand)
 				var/datum/handHolder/HH = hands[active_hand]
 				return HH.item
 		return null

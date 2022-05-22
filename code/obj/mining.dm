@@ -153,9 +153,9 @@
 			for (var/obj/O in T)
 				if (!(O.type in mining_controls.magnet_do_not_erase) && !istype(O, /obj/magnet_target_marker))
 					qdel(O)
-			T.overlays.len = 0 //clear out the astroid edges and scan effects
+			T.ClearAllOverlays()
 			T.ReplaceWithSpace()
-			T.overlays += /image/fullbright //reapply fullbright image
+			T.UpdateOverlays(new /image/fullbright, "fullbright")
 
 	proc/generate_walls()
 		var/list/walls = list()
@@ -576,21 +576,21 @@
 					src.damage(damage)
 
 	proc/build_icon()
-		src.overlays = list()
+		src.ClearAllOverlays()
 
 		if (damage_overlays.len == 4)
 			switch(src.health)
 				if (70 to 94)
-					src.overlays += damage_overlays[1]
+					src.UpdateOverlays(damage_overlays[1], "magnet_damage")
 				if (40 to 69)
-					src.overlays += damage_overlays[2]
+					src.UpdateOverlays(damage_overlays[2], "magnet_damage")
 				if (10 to 39)
-					src.overlays += damage_overlays[3]
+					src.UpdateOverlays(damage_overlays[3], "magnet_damage")
 				if (-INFINITY to 10)
-					src.overlays += damage_overlays[4]
+					src.UpdateOverlays(damage_overlays[4], "magnet_damage")
 
 		if (src.active)
-			src.overlays += src.active_overlay
+			src.UpdateOverlays(src.active_overlay, "magnet_active")
 
 	proc/damage(var/amount)
 		if (!isnum(amount))
@@ -646,7 +646,7 @@
 			for (var/turf/unsimulated/UT in mining_controls.magnet_area.contents)
 				UT.ReplaceWith("Space", force=TRUE)
 		for (var/turf/space/S in mining_controls.magnet_area.contents)
-			S.overlays = list()
+			S.ClearAllOverlays()
 
 		var/sleep_time = attract_time
 		if (sleep_time < 1)
@@ -1271,7 +1271,7 @@
 			A.UpdateOverlays(edge_overlay, "ast_edge_[get_dir(A,src)]")
 			src.space_overlays += edge_overlay
 #ifndef UNDERWATER_MAP // We don't want fullbright edges underwater. This fixes 'shadow' issue.
-			A.overlays += /image/fullbright
+			A.UpdateOverlays(new /image/fullbright, "fullbright")
 #endif
 
 	proc/dig_asteroid(var/mob/living/user, var/obj/item/mining_tool/tool)
@@ -1332,7 +1332,7 @@
 			src.hardness /= 2
 		else
 			src.hardness = 0
-		src.overlays += image('icons/turf/walls_asteroid.dmi', "weakened")
+		src.UpdateOverlays(image('icons/turf/walls_asteroid.dmi', "weakened"), "asteroid_weakened")
 
 	proc/damage_asteroid(var/power,var/allow_zero = 0)
 		// use this for stuff that arent mining tools but still attack asteroids
@@ -1407,7 +1407,7 @@
 				ore_overlay.layer = ASTEROID_ORE_OVERLAY_LAYER // so meson goggle nerds can still nerd away
 				A.UpdateOverlays(ore_overlay, "ast_ore")
 #ifndef UNDERWATER_MAP // We don't want fullbright ore underwater.
-			A.overlays += /image/fullbright
+			A.UpdateOverlays(new /image/fullbright, "fullbright")
 #endif
 		for (var/turf/simulated/floor/plating/airless/asteroid/A in range(src,1))
 			A.UpdateIcon()
@@ -1519,17 +1519,11 @@
 
 	update_icon()
 
-		src.overlays = list()
-		/*
-		if (!coloration_overlay)
-			coloration_overlay = image(src.icon, "color_overlay")
-		coloration_overlay.color = src.stone_color
-		src.overlays += coloration_overlay
-		*/
+		src.ClearAllOverlays()
 		src.color = src.stone_color
 		#ifndef UNDERWATER_MAP
 		if (fullbright)
-			src.overlays += /image/fullbright //Fixes perma-darkness
+			src.UpdateOverlays(new /image/fullbright, "fullbright")
 		#endif
 
 	proc/space_overlays() //For overlays ON THE SPACE TILE
@@ -1542,7 +1536,7 @@
 			A.UpdateOverlays(edge_overlay, "ast_edge_[get_dir(A,src)]")
 			src.space_overlays += edge_overlay
 #ifndef UNDERWATER_MAP // We don't want fullbright edges underwater. This fixes 'shadow' issue.
-			A.overlays += /image/fullbright
+			A.UpdateOverlays(new /image/fullbright, "fullbright")
 #endif
 
 
