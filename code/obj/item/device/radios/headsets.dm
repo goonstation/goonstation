@@ -329,7 +329,7 @@
 	secure_classes = list(
 		"e" = RADIOCL_ENGINEERING,
 		)
-	icon_override = "min"
+	icon_override = "Min"
 	icon_tooltip = "Miner"
 
 /obj/item/device/radio/headset/mail
