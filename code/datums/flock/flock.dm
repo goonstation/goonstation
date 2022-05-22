@@ -65,7 +65,7 @@
 	switch(action)
 		if("jump_to")
 			var/atom/movable/origin = locate(params["origin"])
-			if(origin)
+			if(!QDELETED(origin))
 				var/turf/T = get_turf(origin)
 				if(T.z != Z_LEVEL_STATION)
 					// make sure they're not trying to spoof data and jump into a z-level they ought not to go
@@ -132,7 +132,7 @@
 	for(var/name in src.enemies)
 		var/list/enemy_stats = src.enemies[name]
 		var/atom/M = enemy_stats["mob"]
-		if(M)
+		if(!QDELETED(M))
 			var/list/enemy = list()
 			enemy["name"] = M.name
 			enemy["area"] = enemy_stats["last_seen"]
