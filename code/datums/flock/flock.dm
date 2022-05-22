@@ -565,7 +565,7 @@
 		for(var/mob/living/critter/flock/F as anything in src.units[pathkey])
 			F.dormantize()
 	for(var/obj/flock_structure/S as anything in src.structures)
-		src.removeStructure(S)
+		S.gib()
 	qdel(get_image_group(src))
 	annotations = null
 	all_owned_tiles = null
