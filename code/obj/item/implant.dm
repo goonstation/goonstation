@@ -791,6 +791,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	var/bleed_time = 60
 	var/bleed_timer = 0
 	var/forensic_ID = null // match a bullet to a gun holy heckkkkk
+	var/leaves_wound = TRUE
 
 	New()
 		..()
@@ -825,6 +826,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		name = "9mm Plastic round"
 		icon_state = "bulletplastic"
 		desc = "A small, sublethal plastic projectile."
+		leaves_wound = FALSE
 
 		New()
 			..()
@@ -861,6 +863,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		name = "staple"
 		icon_state = "staple"
 		desc = "Well that's not very nice."
+		leaves_wound = FALSE
 
 		New()
 			..()
@@ -881,6 +884,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		icon = 'icons/obj/scrap.dmi'
 		desc = "A bunch of jagged shards of metal."
 		icon_state = "2metal2"
+		leaves_wound = FALSE
 
 		New()
 			..()
@@ -888,6 +892,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 
 	body_visible
 		bleed_time = 0
+		leaves_wound = FALSE
 		var/barbed = FALSE
 		var/pull_out_name = ""
 
@@ -947,6 +952,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		name = "blowdart"
 		desc = "a sharp little dart with a little poison reservoir."
 		icon_state = "blowdart"
+		leaves_wound = FALSE
 
 		New()
 			..()
@@ -976,6 +982,9 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		return
 
 	if (implant_overlay)
+		if (ishuman(C) && leaves_wound)
+			var/datum/reagent/contained_blood = reagents_cache[C.blood_id]
+			implant_overlay.color = rgb(contained_blood.fluid_r, contained_blood.fluid_g, contained_blood.fluid_b, contained_blood.transparency)
 		C.update_clothing()
 
 	if (!src.bleed_time)
