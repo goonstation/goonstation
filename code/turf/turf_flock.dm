@@ -1,5 +1,3 @@
-// flockdrone stuff
-
 // -----
 // FLOOR
 // -----
@@ -10,9 +8,9 @@
 	icon_state = "floor"
 	flags = USEDELAY
 	mat_appearances_to_ignore = list("steel","gnesis")
-	mat_changename = 0
-	mat_changedesc = 0
-	broken = 0
+	mat_changename = FALSE
+	mat_changedesc = FALSE
+	broken = FALSE
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
 	var/health = 50
@@ -21,8 +19,8 @@
 	var/col_b = 0.6
 	var/datum/light/light
 	var/brightness = 0.5
-	var/on = 0
-	var/connected = 0 //used for collector
+	var/on = FALSE
+	var/connected = FALSE //used for collector
 	var/datum/flock_tile_group/group = null //the group its connected to
 
 
@@ -34,19 +32,18 @@
 	light.set_color(col_r, col_g, col_b)
 	light.attach(src)
 	src.checknearby() //check for nearby groups
-	if(!group)//if no group found
-		initializegroup() //make a new one
+	if(!group)
+		initializegroup()
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection, report_unarmed=FALSE, report_thrown=FALSE, report_proj=FALSE)
 
 /turf/simulated/floor/feather/special_desc(dist, mob/user)
-  if(isflock(user))
-    return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-    <br><span class='bold'>ID:</span> Conduit
-    <br><span class='bold'>System Integrity:</span> [round((src.health/50)*100)]%
-    <br><span class='bold'>###=-</span></span>"}
-  else
-    return null // give the standard description
+	if (!isflock(user))
+		return
+	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+		<br><span class='bold'>ID:</span> Conduit
+		<br><span class='bold'>System Integrity:</span> [round((src.health/50)*100)]%
+		<br><span class='bold'>###=-</span></span>"}
 
 /turf/simulated/floor/feather/attackby(obj/item/C as obj, mob/user as mob, params)
 	// do not call parent, this is not an ordinary floor
@@ -72,7 +69,6 @@
 	user.lastattacked = src
 
 /turf/simulated/floor/feather/break_tile_to_plating()
-	// if the turf's on, turn it off
 	off()
 	var/turf/simulated/floor/F = src.ReplaceWithFloor()
 	F.to_plating()
@@ -80,7 +76,7 @@
 /turf/simulated/floor/feather/break_tile()
 	off()
 	icon_state = "floor-broken"
-	broken = 1
+	broken = TRUE
 	splitgroup()
 	for(var/obj/flock_structure/f in src)
 		if(f.usesgroups)
@@ -107,8 +103,6 @@
 /turf/simulated/floor/feather/burn_tile()
 	return
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-// stuff to make floorrunning possible (god i wish i could think of a better verb than "floorrunning")
 /turf/simulated/floor/feather/Entered(var/mob/living/critter/flock/drone/F, atom/oldloc)
 	..()
 	if(!istype(F) || !oldloc)
@@ -151,45 +145,42 @@
 	src.icon_state = "floor-on"
 	src.name = "weird glowing floor"
 	src.desc = "Looks like disco's not dead after all."
-	on = 1
+	on = TRUE
 	//playsound(src.loc, "sound/machines/ArtifactFea3.ogg", 25, 1)
 	src.light.enable()
 
 /turf/simulated/floor/feather/proc/off()
-	if(src.broken) // i guess this could potentially happen
+	if(src.broken)
 		src.icon_state = "floor-broken"
 	else
 		src.icon_state = "floor"
 		src.name = initial(name)
 		src.desc = initial(desc)
 	src.light.disable()
-	on = 0
+	on = FALSE
 
 /turf/simulated/floor/feather/broken
 	name = "weird broken floor"
 	desc = "Disco's dead, baby."
 	icon_state = "floor-broken"
-	broken = 1
-
-////////////////////////////////////////////////////////////////////////////////////////
-//start of flocktilegroup stuff
+	broken = TRUE
 
 /turf/simulated/floor/feather/proc/initializegroup() //make a new group
 	group = new/datum/flock_tile_group
 	group.addtile(src)
 
 /turf/simulated/floor/feather/proc/checknearby()//handles merging groups
-	var/list/groups_found = list() //list of tile groups found
-	var/datum/flock_tile_group/largestgroup = null //largest group
+	var/list/groups_found = list()
+	var/datum/flock_tile_group/largestgroup = null
 	var/max_group_size = 0
-	for(var/turf/simulated/floor/feather/F in getneighbours(src))//check for nearby flocktiles
+	for(var/turf/simulated/floor/feather/F in getneighbours(src))
 		if(F.group)
 			if(F.group.size > max_group_size)
 				max_group_size = F.group.size
 				largestgroup = F.group
 			groups_found |= F.group
 	if(length(groups_found) == 1)
-		src.group = groups_found[1] //set it to the group found.
+		src.group = groups_found[1]
 		src.group.addtile(src)
 	else if(length(groups_found) > 1) //if there is more then one, then join the largest (add merging functionality here later)
 		for(var/datum/flock_tile_group/oldgroup in groups_found)
@@ -211,7 +202,7 @@
 	var/count = 0 //count of nearby tiles
 	var/datum/flock_tile_group/oldgroup = src.group
 	for(var/turf/simulated/floor/feather/F in getneighbours(get_turf(src)))
-		count++ //enumerate nearby tiles
+		count++
 //TODO: fail safe for if there are more then 1 group.
 	if(!src) return
 	src.group?.removetile(src)
@@ -224,15 +215,15 @@
 		return
 
 	for(var/turf/simulated/floor/feather/tile in getneighbours(get_turf(src)))
-		if(tile.group == oldgroup)//check if the tile is the same as the old group
+		if(tile.group == oldgroup)
 			var/list/listotiles = bfs(tile)//compile a list of connected tiles
 			var/datum/flock_tile_group/newgroup = new
 			for(tile in listotiles)
-				tile.group.removetile(tile)//reassign tiles in the list to new group
+				tile.group.removetile(tile)
 				tile.group = newgroup
 				tile.group.addtile(tile)
 				for(var/obj/flock_structure/s in tile)
-					s.groupcheck()//reassign any structures aswell
+					s.groupcheck()
 	qdel(oldgroup)
 
 // TODO: make this use typecheckless lists
@@ -243,7 +234,7 @@ turf/simulated/floor/feather/proc/bfs(turf/start)//breadth first search, made by
 	var/turf/current = null
 
 	if(!istype(start, /turf/simulated/floor/feather))
-		return //dont bother if it SOMEHOW gets called on a non flock turf
+		return
 	// start node
 	queue += start
 	visited[start] = TRUE
@@ -259,13 +250,14 @@ turf/simulated/floor/feather/proc/bfs(turf/start)//breadth first search, made by
 			if(!visited[next_turf] && istype(next_turf, /turf/simulated/floor/feather))
 				var/turf/simulated/floor/feather/f = next_turf
 				if(f.broken)
-					continue //skip broken tiles
+					continue
 				queue += f
 				visited[next_turf] = TRUE
 	return visited
 
-//end of flocktilegroup stuff
-////////////////////////////////////////////////////////////////////////////////////////
+// -----
+// WALL
+// -----
 
 /turf/simulated/wall/auto/feather
 	name = "weird glowing wall"
@@ -302,13 +294,12 @@ turf/simulated/floor/feather/proc/bfs(turf/start)//breadth first search, made by
 	src.AddComponent(/datum/component/flock_protection)
 
 /turf/simulated/wall/auto/feather/special_desc(dist, mob/user)
-  if(isflock(user))
-    return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-    <br><span class='bold'>ID:</span> Nanite Block
-    <br><span class='bold'>System Integrity:</span> [round((src.health/src.max_health)*100)]%
-    <br><span class='bold'>###=-</span></span>"}
-  else
-    return null
+	if (!isflock(user))
+		return
+	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+		<br><span class='bold'>ID:</span> Nanite Block
+		<br><span class='bold'>System Integrity:</span> [round((src.health/src.max_health)*100)]%
+		<br><span class='bold'>###=-</span></span>"}
 
 /turf/simulated/wall/auto/feather/attack_hand(mob/user)
 	if (user.a_intent == INTENT_HARM)
@@ -412,7 +403,8 @@ turf/simulated/floor/feather/proc/bfs(turf/start)//breadth first search, made by
 		for (var/turf/simulated/wall/auto/feather/W in orange(1))
 			W.UpdateIcon()
 
-/turf/simulated/wall/auto/feather/proc/destroy_resources()
+/turf/simulated/wall/auto/feather/proc/deconstruct()
+	make_cleanable(/obj/decal/cleanable/flockdrone_debris/fluid, get_turf(src))
 	src.ReplaceWith("/turf/simulated/floor/feather", FALSE)
 
 	if (map_settings?.auto_walls)

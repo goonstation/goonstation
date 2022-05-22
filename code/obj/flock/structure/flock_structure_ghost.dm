@@ -1,13 +1,12 @@
-//so this is like a fuckinn building ghost, ya know? the ones that like a lot of games have. drones should hopefully waltz over to it and input resources
 /obj/flock_structure/ghost
 	name = "weird lookin ghost building"
 	desc = "It's some weird looking ghost building. Seems like its under construction, You can see faint strands of material floating in it."
-// Ma theres a weird fuckin cat outside.
+
 	var/goal = 0 //mats needed to make the thing actually build
 	var/building = null //thing thats being built
 	var/currentmats = 0 //mats currently in the thing.
 	flock_id = "Construction Tealprint"
-	density = 0
+	density = FALSE
 
 
 /obj/flock_structure/ghost/building_specific_info()
@@ -22,7 +21,7 @@
 		icon_state = initial(b.icon_state)
 		src.color = COLOR_MATRIX_FLOCKMIND
 		src.alpha = 104
-		src.goal = goal //???? wuh
+		src.goal = goal
 		src.building = building
 		src.bound_width = initial(b.bound_width)
 		src.bound_height = initial(b.bound_height)
@@ -32,7 +31,7 @@
 		src.bound_y = initial(b.bound_y)
 	else
 		flock_speak(null, "ERROR: No Structure Tealprint Assigned, Deleting", flock)
-		qdel(src) //no exist if building null
+		qdel(src)
 		return
 
 	//bounds checking goes here
@@ -64,7 +63,6 @@
 		src.completebuild()
 	else if(currentmats == goal)
 		src.completebuild()
-		//not enough resources = do nothin
 	updatealpha()
 
 /obj/flock_structure/ghost/gib()

@@ -4,12 +4,12 @@
 
 /datum/abilityHolder/flockmind
 	tabName = "Flockmind"
-	usesPoints = 1
+	usesPoints = TRUE
 	points = 0 //total compute - used compute
 	var/totalCompute = 0
 	regenRate = 0
-	topBarRendered = 1
-	rendered = 1
+	topBarRendered = TRUE
+	rendered = TRUE
 	notEnoughPointsMessage = "<span class='alert'>Insufficient available compute resources.</span>"
 	var/datum/targetable/flockmindAbility/droneControl/drone_controller = null
 
@@ -29,7 +29,6 @@
 	..()
 	.= list()
 	.["Compute:"] = "[round(src.points)]/[round(src.totalCompute)]"
-	//.["Total Compute:"] = round(F.flock?.total_compute())
 	return
 
 /atom/movable/screen/ability/topBar/flockmind
@@ -45,8 +44,8 @@
 	icon_state = "template"
 	cooldown = 40
 	last_cast = 0
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 	preferred_holder_type = /datum/abilityHolder/flockmind
 	theme = "flock"
 
@@ -61,8 +60,8 @@
 
 /datum/targetable/flockmindAbility/cast(atom/target)
 	if (!holder || !holder.owner)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /datum/targetable/flockmindAbility/doCooldown()
 	if (!holder)
@@ -78,7 +77,7 @@
 	name = "Spawn Rift"
 	desc = "Spawn an rift where you are, and from there, begin."
 	icon_state = "spawn_egg"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 0
 
 /datum/targetable/flockmindAbility/spawnEgg/cast(atom/target)
@@ -124,19 +123,19 @@
 	desc = "Add or remove a tile to the urgent tiles the flock should claim."
 	icon_state = "designate_tile"
 	cooldown = 0
-	sticky = 1
+	sticky = TRUE
 
 /datum/targetable/flockmindAbility/designateTile/cast(atom/target)
 	if(..())
-		return 1
+		return TRUE
 	var/mob/living/intangible/flock/flockmind/F = holder.owner
 	var/turf/T = get_turf(target)
 	if(!(istype(T, /turf/simulated) || istype(T, /turf/space)))
 		boutput(holder.owner, "<span class='alert'>The flock can't convert this.</span>")
-		return 1
+		return TRUE
 	if(isfeathertile(T))
 		boutput(holder.owner, "<span class='alert'>This tile has already been converted.</span>")
-		return 1
+		return TRUE
 	if (!(T in F.flock.priority_tiles))
 		for (var/name in F.flock.busy_tiles)
 			if (T == F.flock.busy_tiles[name])
@@ -151,7 +150,6 @@
 	desc = "Mark or unmark someone as an enemy."
 	icon_state = "designate_enemy"
 	cooldown = 0
-	//sticky = 1
 
 /datum/targetable/flockmindAbility/designateEnemy/cast(atom/target)
 	if(..())
@@ -182,7 +180,7 @@
 	desc = "Divide and conquer."
 	icon_state = "awaken_drone"
 	cooldown = 60 SECONDS
-	targeted = 0
+	targeted = FALSE
 	///Are we still waiting for ghosts to respond
 	var/waiting = FALSE
 
@@ -266,18 +264,16 @@
 	for(var/obj/machinery/door/airlock/A in range(10, holder.owner))
 		if(A.canAIControl())
 			targets += A
-	if(targets.len > 1)
-		// do casty stuff here
+	if(length(targets))
 		playsound(holder.owner, "sound/misc/flockmind/flockmind_cast.ogg", 80, 1)
 		boutput(holder.owner, "<span class='notice'>You force open all the doors around you.</span>")
 		sleep(1.5 SECONDS)
 		for(var/obj/machinery/door/airlock/A in targets)
-			// open the door
 			SPAWN(1 DECI SECOND)
 				A.open()
 	else
 		boutput(holder.owner, "<span class='alert'>No targets in range that can be opened via radio.</span>")
-		return 1
+		return TRUE
 
 /////////////////////////////////////////
 
@@ -286,23 +282,19 @@
 	desc = "Overwhelm the radio headsets of everyone nearby. Will not work on broken or non-existent headsets."
 	icon_state = "radio_stun"
 	cooldown = 20 SECONDS
-	targeted = 0
+	targeted = FALSE
 
 /datum/targetable/flockmindAbility/radioStun/cast(atom/target)
 	if(..())
-		return 1
+		return TRUE
 	var/list/targets = list()
 	for(var/mob/living/M in range(10, holder.owner))
-		if(isflock(M))
-			continue // don't affect us or our flockdrones, yeesh
 		if(M.ear_disability)
-			// skip this one
 			continue
-		var/obj/item/device/radio/R = M.ears
-		if(istype(R) && R.listening)
-			// your headset's on, you're fair game!!
+		var/obj/item/device/radio/R = M.ears // wont work on flock as they have no slot for this
+		if(istype(R) && R.listening) // working and toggled on
 			targets += M
-	if(targets.len >= 1)
+	if(length(targets))
 		playsound(holder.owner, "sound/misc/flockmind/flockmind_cast.ogg", 80, 1)
 		boutput(holder.owner, "<span class='notice'>You transmit the worst static you can weave into the headsets around you.</span>")
 		for(var/mob/living/M in targets)
@@ -311,7 +303,7 @@
 			M.apply_sonic_stun(3, 6, 60, 0, 0, rand(1, 3), rand(1, 3))
 	else
 		boutput(holder.owner, "<span class='alert'>No targets in range with active radio headsets.</span>")
-		return 1
+		return TRUE
 
 /////////////////////////////////////////
 
@@ -323,12 +315,11 @@
 
 /datum/targetable/flockmindAbility/directSay/cast(atom/target)
 	if(..())
-		return 1
+		return TRUE
 	var/obj/item/device/radio/R
 	var/message
 	if(ismob(target))
 		var/mob/living/M = target
-		// RADIO CHECK
 		if(istype(M.ears, /obj/item/device/radio))
 			R = M.ears
 		else
@@ -344,15 +335,14 @@
 			message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 			var/flockName = "--.--"
 			var/mob/living/intangible/flock/flockmind/F = holder.owner
-			if(F)
-				var/datum/flock/flock = F.flock
-				if(flock)
-					flockName = flock.name
+			var/datum/flock/flock = F.flock
+			if(flock)
+				flockName = flock.name
 			R.audible_message("<span class='radio' style='color: [R.device_color]'><span class='name'>Unknown</span><b> [bicon(R)]\[[flockName]\]</b> <span class='message'>crackles, \"[message]\"</span></span>")
 			boutput(holder.owner, "<span class='flocksay'>You transmit to [M.name], \"[message]\"</span>")
 		else
 			boutput(holder.owner, "<span class='alert'>They don't have any compatible radio devices that you can find.</span>")
-			return 1
+			return TRUE
 	else if(istype(target, /obj/item/device/radio))
 		R = target
 		message = html_encode(input("What would you like to broadcast to [R]?", "Transmission", "") as text)
@@ -369,7 +359,7 @@
 		holder.owner.name = name
 	else
 		boutput(holder.owner, "<span class='alert'>That isn't a valid target.</span>")
-		return 1
+		return TRUE
 
 /////////////////////////////////////////
 
@@ -377,7 +367,7 @@
 	name = "Flock Control Panel"
 	desc = "Open the Flock control panel."
 	icon_state = "radio_stun"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 0
 
 /datum/targetable/flockmindAbility/controlPanel/cast(atom/target)
@@ -440,12 +430,10 @@
 /datum/targetable/flockmindAbility/ping/cast(atom/target)
 	if(..())
 		return TRUE
-	var/mob/living/intangible/flock/F = holder.owner
 	if (!isturf(target.loc) && !isturf(target))
 		return TRUE
-	if(F)
-		var/datum/flock/flock = F.flock
-		flock?.ping(target, holder.owner)
+	var/mob/living/intangible/flock/F = holder.owner
+	F.flock?.ping(target, holder.owner)
 
 /////////////////////////////////////////
 

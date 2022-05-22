@@ -2,12 +2,12 @@
 	name = "floaty gewgaw"
 	desc = "Well, that's a thing."
 	icon_state = "flockbit"
-	density = 0
+	density = FALSE
 	hand_count = 2
-	pays_to_construct = 0 // free buildings!!
-	health_brute = 5 // fragile, handle with care (one smack will destroy them)
+	pays_to_construct = FALSE
+	health_brute = 5
 	health_burn = 5
-	fits_under_table = 1
+	fits_under_table = TRUE
 	flags = TABLEPASS
 
 /mob/living/critter/flock/bit/New(var/atom/location, var/datum/flock/F=null)
@@ -15,7 +15,7 @@
 
 	src.ai = new /datum/aiHolder/flock/bit(src)
 
-	SPAWN(1 SECOND) // aaaaaaa
+	SPAWN(1 SECOND)
 		animate_bumble(src)
 		src.zone_sel.change_hud_style('icons/mob/flock_ui.dmi')
 
@@ -27,19 +27,18 @@
 	src.AddComponent(/datum/component/flock_protection)
 
 /mob/living/critter/flock/bit/special_desc(dist, mob/user)
-	if(isflock(user))
-		return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+	if (!isflock(user))
+		return
+	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
 		<br><span class='bold'>ID:</span> [src.real_name]
 		<br><span class='bold'>Flock:</span> [src.flock ? src.flock.name : "none"]
 		<br><span class='bold'>System Integrity:</span> [max(0, round(src.get_health_percentage() * 100))]%
 		<br><span class='bold'>Cognition:</span> [src.dormant ? "ABSENT" : "PREDEFINED"]
 		<br><span class='bold'>###=-</span></span>"}
-	else
-		return null // give the standard description
 
 /mob/living/critter/flock/bit/Life(datum/controller/process/mobs/parent)
 	if (..(parent))
-		return 1
+		return TRUE
 	if (!src.dormant && src.z != Z_LEVEL_STATION && src.z != Z_LEVEL_NULL)
 		src.dormantize()
 
@@ -48,10 +47,9 @@
 		return
 	if(target == user)
 		if(istype(user, /mob/living/intangible/flock))
-			// whoops
 			boutput(user, "<span class='flocksay'>Insufficient processing power for partition override.</span>")
 		else
-			..() // do ghost observes, i guess
+			..() // ghost observe
 	else
 		..()
 
@@ -63,9 +61,9 @@
 	HH.icon = 'icons/mob/flock_ui.dmi'
 	HH.icon_state = "griptool"
 	HH.limb_name = HH.name
-	HH.can_hold_items = 1
-	HH.can_attack = 1
-	HH.can_range_attack = 0
+	HH.can_hold_items = TRUE
+	HH.can_attack = TRUE
+	HH.can_range_attack = FALSE
 
 	HH = hands[2]
 	HH.limb = new /datum/limb/flockbit_converter
@@ -73,9 +71,9 @@
 	HH.icon = 'icons/mob/flock_ui.dmi'
 	HH.icon_state = "converter"
 	HH.limb_name = HH.name
-	HH.can_hold_items = 0
-	HH.can_attack = 1
-	HH.can_range_attack = 0
+	HH.can_hold_items = FALSE
+	HH.can_attack = TRUE
+	HH.can_range_attack = FALSE
 
 /mob/living/critter/flock/bit/dormantize()
 	src.icon_state = "bit-dormant"
@@ -94,12 +92,12 @@
 		src.ghostize()
 	..()
 
-// okay so this might be fun for gimmicks
+// for gimmicks
 /mob/living/critter/flock/bit/Login()
 	..()
 	src.client?.color = null
 	src.ai?.stop_move()
-	src.is_npc = 0
+	src.is_npc = FALSE
 
 /mob/living/critter/flock/bit/specific_emotes(var/act, var/param = null, var/voluntary = 0)
 	switch (act)
@@ -110,7 +108,7 @@
 		if ("flip")
 			if (src.emote_check(voluntary, 50) && !src.shrunk)
 				SPAWN(1 SECOND)
-					animate_bumble(src) // start the floaty animation again (stolen from bees of course)
+					animate_bumble(src)
 				return null
 	return null
 
@@ -125,7 +123,7 @@
 		return
 	if (!istype(user))
 		return
-	// CONVERT TURF
+
 	if(!isturf(target))
 		target = get_turf(target)
 

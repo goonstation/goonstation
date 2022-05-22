@@ -7,8 +7,8 @@
 	mat_appearances_to_ignore = list("steel","gnesis")
 	mat_changename = FALSE
 	mat_changedesc = FALSE
-	autoclose = 1
-	var/broken = 0
+	autoclose = TRUE
+	var/broken = FALSE
 	health = 80
 	health_max = 80
 	alien = TRUE
@@ -25,21 +25,20 @@
 	C?.RemoveComponent()
 
 /obj/machinery/door/feather/special_desc(dist, mob/user)
-	if(isflock(user))
-		var/special_desc = {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+	if (!isflock(user))
+		return
+	var/special_desc = {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
 		<br><span class='bold'>ID:</span> Solid Seal Aperture
 		<br><span class='bold'>System Integrity:</span> [round((src.health/src.health_max)*100)]%"}
-		if(broken)
-			special_desc += {"<br><span class='bold'>FUNCTION CRITICALLY IMPAIRED, REPAIRS REQUIRED</span>
+	if(broken)
+		special_desc += {"<br><span class='bold'>FUNCTION CRITICALLY IMPAIRED, REPAIRS REQUIRED</span>
 			<br><span class='bold'>###=-</span></span>"}
-		return special_desc
-	else
-		return null // give the standard description
+	return special_desc
 
 /obj/machinery/door/feather/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (src.density)
 		boutput(user, "<span class='alert'>No reaction, apparently.</span>")
-	return 0
+	return FALSE
 
 /obj/machinery/door/feather/take_damage(var/amount, var/mob/user = 0)
 	..()
@@ -48,7 +47,7 @@
 		src.name = "shattered wall door thing"
 		src.desc = "Well, no one's opening this thing anymore."
 		src.icon_state = "door-broke"
-		src.broken = 1
+		src.broken = TRUE
 
 /obj/machinery/door/feather/break_me_complitely()
 	var/turf/T = get_turf(src)
@@ -61,13 +60,13 @@
 
 /obj/machinery/door/feather/open()
 	if(broken)
-		return 1
+		return TRUE
 	else
 		return ..()
 
 /obj/machinery/door/feather/heal_damage()
 	src.icon_state = "door1"
-	src.broken = 0
+	src.broken = FALSE
 	close()
 	src.health = initial(health)
 	src.name = initial(name)
@@ -80,6 +79,15 @@
 		src.desc = initial(src.desc)
 		src.broken = FALSE
 		src.icon_state = initial(src.icon_state)
+
+/obj/machinery/door/feather/proc/deconstruct()
+	var/turf/T = get_turf(src)
+	playsound(T, "sound/impact_sounds/Glass_Shatter_3.ogg", 25, 1)
+	var/obj/item/raw_material/shard/S = new /obj/item/raw_material/shard(T)
+	S.setMaterial(getMaterial("gnesisglass"))
+	S = new /obj/item/raw_material/shard(T)
+	S.setMaterial(getMaterial("gnesis"))
+	qdel(src)
 
 /obj/machinery/door/feather/play_animation(animation)
 	if(broken)
@@ -103,7 +111,6 @@
 
 
 /obj/machinery/door/feather/attack_ai(mob/user as mob)
-	// do nothing, AI and borgs can't interface with the door
 	boutput(user, "<span class='alert'>No response. It doesn't seem compatible with your systems.</span>")
 	return
 
@@ -116,7 +123,7 @@
 	..()
 
 /obj/machinery/door/feather/allowed(mob/M)
-	return isflock(M) // haha fuck you everyone else
+	return isflock(M)
 
 /obj/machinery/door/feather/open()
 	if(..())
@@ -127,7 +134,7 @@
 		playsound(src.loc, "sound/misc/flockmind/flockdrone_door.ogg", 50, 1)
 
 /obj/machinery/door/feather/isblocked()
-	return 0 // this door will not lock or be inaccessible to flockdrones
+	return FALSE // this door will not lock or be inaccessible to flockdrones
 
 /obj/machinery/door/feather/disposing()
 	..()
@@ -138,9 +145,9 @@
 ////////////////////
 // friendly variant
 ////////////////////
+// everyone allowed to open
 /obj/machinery/door/feather/friendly
-	// whee
-	alien = FALSE //non flock are allowed
+	alien = FALSE
 
 /obj/machinery/door/feather/friendly/allowed(mob/M)
-	return 1 // everyone welcome
+	return TRUE

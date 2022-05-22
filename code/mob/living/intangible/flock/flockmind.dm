@@ -7,10 +7,9 @@
 	desc = "The collective machine consciousness of a bunch of glass peacock things."
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "flockmind"
-	layer = NOLIGHT_EFFECTS_LAYER_BASE
 
-	var/started = 0
-	var/last_time // when i say per second I MEAN PER SECOND DAMMIT
+	var/started = FALSE
+	var/last_time
 
 
 /mob/living/intangible/flock/flockmind/New(turf/newLoc, datum/flock/F = null)
@@ -33,28 +32,16 @@
 		src.addAllAbilities()
 
 /mob/living/intangible/flock/flockmind/special_desc(dist, mob/user)
-  if(isflock(user))
-    return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-    <br><span class='bold'>ID:</span> [src.real_name]
-    <br><span class='bold'>Flock:</span> [src.flock ? src.flock.name : "none, somehow"]
-    <br><span class='bold'>Resources:</span> [src.flock.total_resources()]
-	<br><span class='bold'>Total Compute:</span> [src.flock.total_compute()]
-    <br><span class='bold'>System Integrity:</span> [round(src.flock.total_health_percentage()*100)]%
-    <br><span class='bold'>Cognition:</span> COMPUTATIONAL NEXUS
-    <br>###=-</span></span>"}
-  else
-    return null // give the standard description
-
-// TEMPORARY, I FUCKING HATE STAT PANELS
-/mob/living/intangible/flock/flockmind/Stat()
-	..()
-	stat(null, " ")
-	if(src.flock)
-		stat("Flock:", src.flock.name)
-		stat("Drones:", src.flock.units.len)
-	else
-		stat("Flock:", "none")
-		stat("Drones:", 0)
+	if (!isflock(user))
+		return
+	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+		<br><span class='bold'>ID:</span> [src.real_name]
+		<br><span class='bold'>Flock:</span> [src.flock ? src.flock.name : "none, somehow"]
+		<br><span class='bold'>Resources:</span> [src.flock.total_resources()]
+		<br><span class='bold'>Total Compute:</span> [src.flock.total_compute()]
+		<br><span class='bold'>System Integrity:</span> [round(src.flock.total_health_percentage()*100)]%
+		<br><span class='bold'>Cognition:</span> COMPUTATIONAL NEXUS
+		<br>###=-</span></span>"}
 
 /mob/living/intangible/flock/flockmind/proc/getTraceToPromote()
 	var/list/eligible_traces = src.flock.getActiveTraces()
@@ -85,7 +72,7 @@
 	else
 		boutput(src, "<span class='alert'>You don't have a flock, it's not going to listen to you! Also call a coder, this should be impossible!</span>")
 		return
-	src.started = 1
+	src.started = TRUE
 	src.removeAbility(/datum/targetable/flockmindAbility/spawnEgg)
 	src.addAllAbilities()
 
@@ -111,7 +98,7 @@
 	src.flock?.perish()
 	REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src)
 	src.icon_state = "blank"
-	src.canmove = 0
+	src.canmove = FALSE
 	flick("flockmind-death", src)
 	src.ghostize()
 	spawn(2 SECONDS) // wait for the animation to finish
@@ -122,10 +109,11 @@
 	if (!O)
 		return null
 
+	// manual ghost icon creation
 	O.icon = src.icon
 	O.icon_state = "flockmind-ghost"
 	O.pixel_y = initial(O.pixel_y) // WHY DO I NEED TO DO THIS TOO I DON'T EVEN ANIMATE THE PIXEL_Y
-	animate_bumble(O) // bob up and down
+	animate_bumble(O)
 	O.alpha = 160
 	return O
 

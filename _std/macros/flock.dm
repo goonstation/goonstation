@@ -1,4 +1,4 @@
-// hi here's some flockdrone BS - cirr
+// type check macros
 #define isfeathertile(x) (istype(x, /turf/simulated/floor/feather) || istype(x, /turf/simulated/wall/auto/feather))
 #define isflock(x) (istype(x, /mob/living/intangible/flock) || istype(x, /mob/living/critter/flock))
 #define isflockstructure(x) (istype(x, /obj/flock_structure))
@@ -12,3 +12,11 @@
 #define FLOCK_ANNOTATION_FLOCKMIND_CONTROL "flockmind_face"
 #define FLOCK_ANNOTATION_FLOCKTRACE_CONTROL "flocktrace_face"
 #define FLOCK_ANNOTATION_HEALTH "health"
+
+// costs
+#define FLOCK_CONVERT_COST 20
+#define FLOCK_BARRICADE_COST 25
+#define FLOCK_CAGE_COST 15
+#define FLOCK_LAY_EGG_COST 100
+#define FLOCK_REPAIR_COST 10
+#define FLOCK_GHOST_DEPOSIT_AMOUNT 10

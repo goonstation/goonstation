@@ -2,12 +2,12 @@
 	name = "weird glowy thing"
 	desc = "Is it broccoli? A glass chicken? A peacock? A green roomba? A shiny discobot? A crystal turkey? A bugbird? A radio pigeon??"
 	icon_state = "drone"
-	density = 1
+	density = TRUE
 	hand_count = 3
-	can_throw = 1
-	can_grab = 1
-	can_disarm = 1
-	can_help = 1
+	can_throw = TRUE
+	can_grab = TRUE
+	can_disarm = TRUE
+	can_help = TRUE
 	compute = 10
 	death_text = "%src% clatters into a heap of fragments."
 	pet_text = list("taps", "pats", "drums on", "ruffles", "touches", "pokes", "prods")
@@ -23,16 +23,12 @@
 
 	var/damaged = 0 // used for state management for description showing, as well as preventing drones from screaming about being hit
 
-	// too lazy, might as well use existing stuff
-	butcherable = 1
+	butcherable = TRUE
 
 	var/health_absorb_rate = 2 // how much item health is removed per tick when absorbing
 	var/resources_per_health = 2 // how much resources we get per item health
 
-	// dormancy means do nothing
-
-	// voltron powers activate
-	var/floorrunning = 0
+	var/floorrunning = FALSE
 	var/can_floorrun = TRUE
 
 	// antigrab powers
@@ -42,13 +38,12 @@
 	var/glow_color = "#26ffe6a2"
 
 /mob/living/critter/flock/drone/New(var/atom/location, var/datum/flock/F=null)
-	// ai setup
 	src.ai = new /datum/aiHolder/flock/drone(src)
 
 	..()
 	abilityHolder = new /datum/abilityHolder/critter/flockdrone(src)
 
-	SPAWN(3 SECONDS) // aaaaaaa
+	SPAWN(3 SECONDS)
 		//this is terrible, but diffracting a drone immediately causes a runtime
 		src?.zone_sel?.change_hud_style('icons/mob/flock_ui.dmi')
 
@@ -61,9 +56,8 @@
 	else
 		src.add_simple_light("drone_light", rgb2num(glow_color))
 		if(src.client)
-			// create a flocktrace for ourselves
 			controller = new/mob/living/intangible/flock/trace(src, src.flock)
-			src.is_npc = 0
+			src.is_npc = FALSE
 		else
 			emote("beep")
 			say(pick_string("flockmind.txt", "flockdrone_created"))
@@ -104,23 +98,22 @@
 /mob/living/critter/flock/drone/Login()
 	..()
 	src.client?.color = null
-	if(isnull(controller)) // finally i can just use swap bodies again
-		// make a new controller
+	if(isnull(controller))
 		controller = new/mob/living/intangible/flock/trace(src, src.flock)
-		src.is_npc = 0
+		src.is_npc = FALSE
 
 /mob/living/critter/flock/drone/proc/take_control(mob/living/intangible/flock/pilot, give_alert = TRUE)
 	if(!pilot)
-		return // fuck it
+		return
 	if(controller)
 		boutput(pilot, "<span class='alert'>This drone is already being controlled.</span>")
 		return
 	src.controller = pilot
-	src.ai.stop_move() //cancel any pathing that's happening
-	src.is_npc = 0
-	src.dormant = 0
-	src.anchored = 0
-	// move mind into flockdrone
+	src.ai.stop_move()
+	src.is_npc = FALSE
+	src.dormant = FALSE
+	src.anchored = FALSE
+
 	var/datum/mind/mind = pilot.mind
 	if (mind)
 		mind.transfer_to(src)
@@ -133,10 +126,10 @@
 			src.mind.key = key
 			src.mind.current = src
 			ticker.minds += src.mind
-	// move controller into ourselves
+
 	pilot.set_loc(src)
 	controller = pilot
-	src.client?.color = null // stop being all fucked up and weird aaaagh
+	src.client?.color = null
 	src.hud?.update_intent()
 	if (istype(pilot, /mob/living/intangible/flock/flockmind))
 		flock.addAnnotation(src, FLOCK_ANNOTATION_FLOCKMIND_CONTROL)
@@ -147,22 +140,21 @@
 
 /mob/living/critter/flock/drone/proc/release_control(give_alerts = TRUE)
 	src.flock?.hideAnnotations(src)
-	src.is_npc = 1
+	src.is_npc = TRUE
 	if (give_alerts && src.z == Z_LEVEL_STATION)
 		emote("beep")
 		say(pick_string("flockmind.txt", "flockdrone_player_kicked"))
 	if(src.client && !controller)
-		// don't know how this happened but you need a controller right now
 		controller = new/mob/living/intangible/flock/trace(src, src.flock)
 	if(controller)
 		if (src.floorrunning)
 			src.end_floorrunning(TRUE)
-		// move controller out
+
 		if (src.z == Z_LEVEL_STATION)
 			controller.set_loc(get_turf(src))
 		else
 			src.move_controller_to_station()
-		// move us over to the controller
+
 		var/datum/mind/mind = src.mind
 		if (mind)
 			mind.transfer_to(controller)
@@ -181,7 +173,7 @@
 			flock.removeAnnotation(src, FLOCK_ANNOTATION_FLOCKTRACE_CONTROL)
 		if (give_alerts && src.z == Z_LEVEL_STATION)
 			flock_speak(null, "Control of drone [src.real_name] surrended.", src.flock)
-		// clear refs
+
 		controller = null
 		src.update_health_icon()
 
@@ -260,44 +252,43 @@
 		src.controller.set_loc(pick_landmark(LANDMARK_LATEJOIN))
 
 /mob/living/critter/flock/drone/proc/undormantize()
-	src.dormant = 0
-	src.canmove = 1
-	src.anchored = 0
+	src.dormant = FALSE
+	src.canmove = TRUE
+	src.anchored = FALSE
 	src.damaged = -1
 	src.check_health() // handles updating the icon to something more appropriate
 	src.visible_message("<span class='notice'><b>[src]</b> begins to glow and hover.</span>")
-	src.set_a_intent(INTENT_HELP ) // default
+	src.set_a_intent(INTENT_HELP)
 	src.add_simple_light("drone_light", rgb2num(glow_color))
 	if(src.client)
 		controller = new/mob/living/intangible/flock/trace(src, src.flock)
-		src.is_npc = 0
+		src.is_npc = FALSE
 	else
-		src.is_npc = 1
+		src.is_npc = TRUE
 
 
 /mob/living/critter/flock/drone/special_desc(dist, mob/user)
-	if(isflock(user))
-		var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
-		if(src.controller)
-			special_desc += "<br><span class='bold'>ID:</span> <b>[src.controller.real_name]</b> (controlling [src.real_name])"
-		else
-			special_desc += "<br><span class='bold'>ID:</span> [src.real_name]"
-		special_desc += {"<br><span class='bold'>Flock:</span> [src.flock ? src.flock.name : "none"]
+	if (!isflock(user))
+		return
+	var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
+	if(src.controller)
+		special_desc += "<br><span class='bold'>ID:</span> <b>[src.controller.real_name]</b> (controlling [src.real_name])"
+	else
+		special_desc += "<br><span class='bold'>ID:</span> [src.real_name]"
+	special_desc += {"<br><span class='bold'>Flock:</span> [src.flock ? src.flock.name : "none"]
 		<br><span class='bold'>Resources:</span> [src.resources]
 		<br><span class='bold'>System Integrity:</span> [max(0, round(src.get_health_percentage() * 100))]%
 		<br><span class='bold'>Cognition:</span> [isalive(src) && !dormant ? src.is_npc ? "TORPID" : "SAPIENT" : "ABSENT"]"}
-		if (src.is_npc && istype(src.ai.current_task))
-			special_desc += "<br><span class='bold'>Task:</span> [uppertext(src.ai.current_task.name)]"
-		special_desc += "<br><span class='bold'>###=-</span></span>"
-		return special_desc
-	else
-		return null // give the standard description
+	if (src.is_npc && istype(src.ai.current_task))
+		special_desc += "<br><span class='bold'>Task:</span> [uppertext(src.ai.current_task.name)]"
+	special_desc += "<br><span class='bold'>###=-</span></span>"
+	return special_desc
 
 /mob/living/critter/flock/drone/proc/changeFlock(var/flockName)
 	src.flock?.removeDrone(src)
 	if(flocks[flockName])
 		src.flock = flocks[flockName]
-		src.flock.registerUnit(src, TRUE) // for the sake of the flockmind
+		src.flock.registerUnit(src, TRUE)
 	controller?.flock = flocks[flockName]
 	boutput(src, "<span class='notice'>You are now part of the <span class='bold'>[src.flock.name]</span> flock.</span>")
 
@@ -308,7 +299,8 @@
 	if(src.flock)
 		src.flock.showAnnotations(src)
 
-/mob/living/critter/flock/drone/is_spacefaring() return 1
+/mob/living/critter/flock/drone/is_spacefaring()
+	return TRUE
 
 /mob/living/critter/flock/drone/Cross(atom/movable/mover)
 	if(isflock(mover))
@@ -320,13 +312,11 @@
 	if(!target || !user)
 		return
 	if(target == user)
-		// only allow people to jump into flockdrones if they're doing it themselves
 		var/mob/living/intangible/flock/F = user
 		if(istype(F) && F.flock && F.flock == src.flock)
-			// jump on in there!
 			src.take_control(user)
 		else
-			..() // do ghost observes, i guess
+			..() // ghost observe
 	else
 		..()
 
@@ -336,17 +326,6 @@
 			src.equip_click(absorber)
 		else
 			return ..()
-
-// TODO: PURGE THIS GODAWFUL THING
-// TEMPORARY TEMPORARY TEMPORARY
-/mob/living/critter/flock/drone/Stat()
-	..()
-	stat(null, " ")
-	if(src.flock)
-		stat("Flock:", src.flock.name)
-	else
-		stat("Flock:", "none")
-	stat("Resources:", src.resources)
 
 /mob/living/critter/flock/drone/setup_equipment_slots()
 	absorber = new /datum/equipmentHolder/flockAbsorption(src)
@@ -378,7 +357,7 @@
 	HH.can_hold_items = FALSE
 	HH.can_range_attack = TRUE
 
-/mob/living/critter/flock/drone/specific_emotes(var/act, var/param = null, var/voluntary = 0)
+/mob/living/critter/flock/drone/specific_emotes(var/act, var/param = null, var/voluntary = FALSE)
 	switch (act)
 		if("stare")
 			if (src.emote_check(voluntary, 50))
@@ -396,7 +375,7 @@
 				var/fart_message = pick_string("flockmind.txt", "flockdrone_fart")
 				playsound(src, "sound/misc/flockmind/flockdrone_fart.ogg", 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 				return "<b>[src]</b> [fart_message]"
-		if ("laugh") //no good sound for it - moon
+		if ("laugh")
 			if (src.emote_check(voluntary, 50))
 				return "<b>[src]</b> caws heartily[(param? " at [param]!" : "!")]"
 	return null
@@ -409,7 +388,7 @@
 
 /mob/living/critter/flock/drone/Life(datum/controller/process/mobs/parent)
 	if (..(parent))
-		return 1
+		return TRUE
 	if (src.floorrunning && src.resources >= 1)
 		src.resources--
 		if (src.resources < 1)
@@ -478,7 +457,6 @@
 
 /mob/living/critter/flock/drone/process_move(keys)
 	if(keys && length(src.grabbed_by))
-		// someone is grabbing us, and we want to move
 		if (length(src.grabbed_by) == 1 && src.find_type_in_hand(/obj/item/grab/block))
 			src.antigrab_counter = 0
 		else
@@ -523,8 +501,8 @@
 	if(src.floorrunning)
 		return
 	playsound(src, "sound/misc/flockmind/flockdrone_floorrun.ogg", 50, 1, -3)
-	src.floorrunning = 1
-	src.set_density(0)
+	src.floorrunning = TRUE
+	src.set_density(FALSE)
 	src.throws_can_hit_me = FALSE
 	src.set_pulling(null)
 	if (src.pulled_by)
@@ -545,8 +523,8 @@
 	if(!src.floorrunning)
 		return
 	playsound(src, "sound/misc/flockmind/flockdrone_floorrun.ogg", 50, 1, -3)
-	src.floorrunning = 0
-	src.set_density(1)
+	src.floorrunning = FALSE
+	src.set_density(TRUE)
 	src.throws_can_hit_me = TRUE
 	if (check_lights)
 		if (istype(src.loc, /turf/simulated/floor/feather))
@@ -567,7 +545,7 @@
 
 /mob/living/critter/flock/drone/Cross(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(floorrunning)
-		return 1
+		return TRUE
 	else
 		return ..()
 
@@ -605,23 +583,21 @@
 		// do normal movement
 		return ..(NewLoc, direct)
 
-// catchall for shitlisting a dude that attacks us
+// catchall for marking people who attack flockdrones as enemies
 /mob/living/critter/flock/drone/proc/harmedBy(var/atom/enemy)
 	if (!enemy)
 		return
 	if(isflock(enemy))
 		return
 	if(!isdead(src) && src.is_npc && src.flock)
-		// if this is a new guy to add to our enemies, call it out
 		var/enemy_name = lowertext(enemy.name)
 		if(enemy_name != "unknown")
-			if(!src.flock.isEnemy(enemy)) // a new challenger emerges
+			if(!src.flock.isEnemy(enemy))
 				emote("scream")
 				say("[pick_string("flockmind.txt", "flockdrone_enemy")] [enemy_name]")
 			src.flock.updateEnemy(enemy)
 			src.ai.interrupt()
 
-// and then the numerous procs that use that catchall proc
 /mob/living/critter/flock/drone/bullet_act(var/obj/projectile/P)
 	if(floorrunning)
 		return FALSE
@@ -639,18 +615,16 @@
 		src.harmedBy(attacker)
 
 /mob/living/critter/flock/drone/attackby(var/obj/item/I, var/mob/M)
-	// check whatever reagents are about to get dumped on us
-	var/has_harmful_chemicals = 0
+	var/has_harmful_chemicals = FALSE
 	if(istype(I, /obj/item/reagent_containers/glass))
 		var/list/reagent_list = I.reagents.reagent_list
 		for(var/reagent_id in reagent_list)
 			var/datum/reagent/current_reagent = reagent_list[reagent_id]
-			// if the reagent mix dumped on us includes a combustible or harmful reagent, the mob has harmful intent
-			// (there's other reagents that might be effective on these things without them realising it's dangerous outright)
+
+			// currently only checking for combustible and harmful reagents
 			if(istype(current_reagent, /datum/reagent/combustible) || istype(current_reagent, /datum/reagent/harmful))
-				has_harmful_chemicals = 1
+				has_harmful_chemicals = TRUE
 				break
-	// get reagents dumped on us or whatever
 	..()
 	if(I.force)
 		src.harmedBy(M)
@@ -662,7 +636,6 @@
 	if(M.a_intent in list(INTENT_HARM,INTENT_DISARM,INTENT_GRAB))
 		src.harmedBy(M)
 
-// also maybe we've just had environmental damage, who knows
 /mob/living/critter/flock/drone/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 	..()
 	src.check_health()
@@ -670,8 +643,7 @@
 		return
 	var/prev_damaged = src.damaged
 	if(!isdead(src) && src.is_npc)
-		// if we've been damaged a new stage, call it out
-		if(prev_damaged != src.damaged && src.damaged > 0)
+		if(prev_damaged != src.damaged && src.damaged > 0) // damaged to a new state
 			src.emote("scream")
 			say("[pick_string("flockmind.txt", "flockdrone_hurt")]")
 			src.ai.interrupt()
@@ -706,7 +678,7 @@
 				src.icon_state = "drone-d2"
 	return
 
-/mob/living/critter/flock/drone/proc/reduce_lifeprocess_on_death() //used for AI mobs we dont give a dang about them after theyre dead
+/mob/living/critter/flock/drone/proc/reduce_lifeprocess_on_death()
 	remove_lifeprocess(/datum/lifeprocess/blood)
 	remove_lifeprocess(/datum/lifeprocess/canmove)
 	remove_lifeprocess(/datum/lifeprocess/disability)
@@ -725,7 +697,7 @@
 		if(src.is_npc)
 			emote("scream")
 			say(pick_string("flockmind.txt", "flockdrone_death"))
-			src.is_npc = 0 // stop ticking the AI for this mob
+			src.is_npc = FALSE // stop ticking the AI for this mob
 		else
 			emote("scream")
 			say("\[System notification: drone lost.\]")
@@ -747,7 +719,6 @@
 		..()
 
 /mob/living/critter/flock/drone/butcher(var/mob/M)
-	// break us down into pieces, this is our last retort
 	var/num_pieces = rand(3, 6)
 	var/my_turf = get_turf(src)
 	var/atom/movable/B
@@ -772,9 +743,8 @@
 	qdel(src)
 
 /mob/living/critter/flock/drone/proc/split_into_bits()
-	// turn into 3 flockbits
 	var/num_bits = 3
-	// handle the cleanup of this drone first
+
 	walk(src, 0)
 	if(src.floorrunning)
 		src.end_floorrunning()
@@ -784,40 +754,44 @@
 	if(src.controller)
 		src.release_control()
 	src.flock?.removeDrone(src)
-	// create the flockbits
-	animate_flock_drone_split(src)
-	var/mob/living/critter/flock/bit/B
-	// get candidate places to move them
+
 	var/turf/T = get_turf(src)
+
+	// get possible turfs to move flockbits, to create a spread out effect
 	var/list/candidate_turfs = getneighbours(src)
 	for(var/turf/n in candidate_turfs)
-		if(is_blocked_turf(n))
+		if(flock_is_blocked_turf(n))
 			candidate_turfs -= n
 	candidate_turfs += T //ensure there's always at least the turf we're stood on
+
+	animate_flock_drone_split(src)
+
+	var/mob/living/critter/flock/bit/B
 	for(var/i=1 to num_bits)
-		B = new(get_turf(src), F = src.flock)
+		B = new(T, src.flock)
 		src.flock?.registerUnit(B)
 		SPAWN(0.2 SECONDS)
 			B.set_loc(pick(candidate_turfs))
-	// drop any resources the drone has
+
+	// so that drone's resources aren't lost
 	if (src.resources > 0)
 		var/obj/item/flockcache/cache = new(T)
 		cache.resources = src.resources
+
 	SPAWN(0.1 SECONDS) // make sure the animation finishes
-		// finally, away with us
 		src.ghostize()
 		qdel(src)
 
 
 /mob/living/critter/flock/drone/update_inhands()
-	return // no dammit
+	return
 
 /mob/living/critter/flock/drone/proc/create_egg()
 	if(isnull(src.flock))
 		boutput(src, "<span class='alert'>You do not have flockmind authorization to synthesize eggs.</span>")
 		return
-	if(src.resources < 100)
-		boutput(src, "<span class='alert'>Not enough resources (you need 100).</span>")
+	if(src.resources < FLOCK_LAY_EGG_COST)
+		boutput(src, "<span class='alert'>Not enough resources (you need [FLOCK_LAY_EGG_COST]).</span>")
 		return
 	var/turf/simulated/floor/feather/nest = get_turf(src)
 	if(!istype(nest, /turf/simulated/floor/feather))
@@ -845,19 +819,19 @@
 	if (amount < 0)
 		return ..()
 	else
-		return 1
+		return TRUE
 
 /mob/living/critter/flock/drone/take_eye_damage(var/amount, var/tempblind = 0)
 	if (amount < 0)
 		return ..()
 	else
-		return 1
+		return TRUE
 
 /mob/living/critter/flock/drone/take_ear_damage(var/amount, var/tempdeaf = 0)
 	if (amount < 0)
 		return ..()
 	else
-		return 1
+		return TRUE
 
 /////////////////////////////////////////////////////////////////////////////////
 // FLOCKDRONE SPECIFIC LIMBS AND EQUIPMENT SLOTS
@@ -882,9 +856,9 @@
 
 /datum/limb/flock_grip/grab(mob/target, var/mob/living/critter/flock/drone/user)
 	if (!user || !target)
-		return 0
+		return FALSE
 	if (isintangible(target))
-		return 0 // stop grabbing AI eyes dammit
+		return FALSE
 	if(prob(grab_mob_hit_prob))
 		..()
 	else
@@ -893,7 +867,7 @@
 
 /datum/limb/flock_grip/harm(mob/target, var/mob/living/critter/flock/drone/user)
 	if (!user || !target)
-		return 0
+		return FALSE
 	if (istype(target, /mob/living/critter/flock))
 		boutput(user, "<span class='alert'>The grip tool refuses to harm this, jamming briefly.</span>")
 	else
@@ -905,7 +879,7 @@
 			user.attack_effects(target, affecting)
 			var/list/specific_attack_messages = pick(attack_messages)
 			msgs.base_attack_message = "<span class='combat bold'>[user] [specific_attack_messages[1]] [target] [specific_attack_messages[2]]!</span>"
-			msgs.flush(0)
+			msgs.flush(FALSE)
 			user.lastattacked = target
 		else
 			user.visible_message("<span class='combat bold'>[user] attempts to prod [target] but misses!</span>")
@@ -913,7 +887,7 @@
 
 /////////////////////////////////////////////////////////////////////////////////
 
-/datum/limb/flock_converter // requires 20 resources to initiate a conversion action, 10 for a repair (give target drone 33% of max health)
+/datum/limb/flock_converter
 
 /datum/limb/flock_converter/attack_hand(atom/target, var/mob/living/critter/flock/drone/user, var/reach, params, location, control)
 	if (!holder)
@@ -957,12 +931,12 @@
 					if ((O.density && !isflock(O)) || istype(O, /obj/flock_structure/ghost))
 						boutput(user, "<span class='alert'>This tile has something that blocks barricade construction!</span>")
 						return
-				if (user.resources < 25)
-					boutput(user, "<span class='alert'>Not enough resources to construct a barricade (you need 25).</span>")
+				if (user.resources < FLOCK_BARRICADE_COST)
+					boutput(user, "<span class='alert'>Not enough resources to construct a barricade (you need [FLOCK_BARRICADE_COST]).</span>")
 				else
 					actions.start(new/datum/action/bar/flock_construct(target), user)
-	else if(user.resources < 20 && istype(target, /turf))
-		boutput(user, "<span class='alert'>Not enough resources to convert (you need 20).</span>")
+	else if(user.resources < FLOCK_CONVERT_COST && istype(target, /turf))
+		boutput(user, "<span class='alert'>Not enough resources to convert (you need FLOCK_CONVERT_COST).</span>")
 	else
 		if(istype(target, /turf))
 			if (user.flock)
@@ -1022,8 +996,8 @@
 		if (!found_target)
 			boutput(user, "<span class='alert'>The target is in perfect condition!</span>")
 		else
-			if(user.resources < 10)
-				boutput(user, "<span class='alert'>Not enough resources to repair (you need 10).</span>")
+			if(user.resources < FLOCK_REPAIR_COST)
+				boutput(user, "<span class='alert'>Not enough resources to repair (you need [FLOCK_REPAIR_COST]).</span>")
 			else
 				actions.start(new /datum/action/bar/flock_repair(target), user)
 
@@ -1037,8 +1011,8 @@
 			return
 		if (isdead(F))
 			return
-		if(user.resources < 10)
-			boutput(user, "<span class='alert'>Not enough resources to repair (you need 10).</span>")
+		if(user.resources < FLOCK_REPAIR_COST)
+			boutput(user, "<span class='alert'>Not enough resources to repair (you need [FLOCK_REPAIR_COST]).</span>")
 		else
 			actions.start(new/datum/action/bar/flock_repair(F), user)
 	else
@@ -1050,7 +1024,7 @@
 	if(!(isliving(target) || iscritter(target)))
 		return
 	if(isintangible(target))
-		return // STOP CAGING AI EYES
+		return
 	if (!user.flock)
 		boutput(user, "<span class='alert'>You do not have access to the imprisonment matrix without flockmind authorization.</span>")
 		return
@@ -1058,14 +1032,13 @@
 	if(isflock(target))
 		boutput(user, "<span class='alert'>The imprisonment matrix doesn't work on flockdrones.</span>")
 		return
-	else if(user.resources < 15)
-		boutput(user, "<span class='alert'>Not enough resources to imprison (you need 15).</span>")
+	else if(user.resources < FLOCK_CAGE_COST)
+		boutput(user, "<span class='alert'>Not enough resources to imprison (you need [FLOCK_CAGE_COST]).</span>")
 	else if(istype(target.loc, /obj/flock_structure/cage))
 		boutput(user, "<span class='alert'>They're already imprisoned, you can't double-imprison them!</span>")
 	else
 		actions.start(new/datum/action/bar/flock_entomb(target), user)
 
- //FUCK - moonlol
 /datum/limb/flock_converter/harm(atom/target, var/mob/living/critter/flock/drone/user)
 	if(!target || !user)
 		return
@@ -1093,8 +1066,6 @@
 		return
 	return ..()
 
-// I CAN DEFINE WHATEVER PROJECTILES I WANT HERE OK
-// YOU'RE NOT MY REAL PARENTS
 /datum/projectile/energy_bolt/flockdrone
 	name = "incapacitor bolt"
 	icon = 'icons/misc/featherzone.dmi'
@@ -1106,7 +1077,7 @@
 	sname = "stunbolt"
 	shot_sound = 'sound/weapons/laser_f.ogg'
 	shot_number = 1
-	window_pass = 1
+	window_pass = TRUE
 	brightness = 1
 	color_red = 0.5
 	color_green = 0.9
@@ -1146,7 +1117,7 @@
 /datum/equipmentHolder/flockAbsorption/on_unequip()
 	var/obj/item/temp = item
 	if(temp)
-		animate(temp) // cancel animation
+		animate(temp)
 		if(temp.material)
 			temp.setMaterialAppearance(temp.material)
 	..()

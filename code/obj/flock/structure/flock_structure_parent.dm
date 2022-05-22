@@ -2,8 +2,8 @@
 /obj/flock_structure
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "egg"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	name = "uh oh"
 	desc = "CALL A CODER THIS SHOULDN'T BE SEEN"
 	flags = USEDELAY
@@ -13,10 +13,10 @@
 	/// when did we get created?
 	var/time_started = 0
 	var/build_time = 6 // in seconds
-	var/health = 30 // fragile little thing
+	var/health = 30
 	var/health_max = 30
 	var/bruteVuln = 1.2
-	/// very flame-retardant
+
 	var/fireVuln = 0.2
 	var/datum/flock/flock = null
 	//base compute provided
@@ -25,11 +25,11 @@
 	var/resourcecost = 50
 	/// can flockdrones pass through this akin to a grille? need to set USE_CANPASS to make this work however
 	var/passthrough = FALSE
-	/// not everything needs a group so dont check for everysingle god damn structure
+
 	var/usesgroups = FALSE
 	/// what group are we connected to?
 	var/datum/flock_tile_group/group = null
-	/// the tile which its "connected to" and handles the group
+	/// the tile which its "connected to" and that handles the group
 	var/turf/simulated/floor/feather/grouptile = null
 
 /obj/flock_structure/New(var/atom/location, var/datum/flock/F=null)
@@ -73,18 +73,17 @@
 	return state
 
 /obj/flock_structure/special_desc(dist, mob/user)
-	if(isflock(user))
-		var/special_desc = {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+	if (!isflock(user))
+		return
+	var/special_desc = {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
 		<br><span class='bold'>ID:</span> [flock_id]
 		<br><span class='bold'>Flock:</span> [src.flock ? src.flock.name : "none"]
 		<br><span class='bold'>System Integrity:</span> [round((src.health/src.health_max)*100)]%"}
-		var/info = building_specific_info()
-		if(!isnull(info))
-			special_desc += "<br>[info]"
-		special_desc += "<br><span class='bold'>###=-</span></span>"
-		return special_desc
-	else
-		return null // give the standard description
+	var/info = building_specific_info()
+	if(!isnull(info))
+		special_desc += "<br>[info]"
+	special_desc += "<br><span class='bold'>###=-</span></span>"
+	return special_desc
 
 //override this if compute is conditional or something
 /obj/flock_structure/proc/compute_provided()
@@ -126,20 +125,18 @@
 			var/half = round(amount/2)
 			amount = half * bruteVuln + (amount - half) * fireVuln
 	health -= amount
-	checkhealth() // die if necessary
+	checkhealth()
 
 /obj/flock_structure/proc/checkhealth()
 	if(src.health <= 0)
 		src.gib()
 
 /obj/flock_structure/proc/deconstruct()
-	//you can have half your resources back
 	visible_message("<span class='alert'>[src.name] suddenly dissolves!</span>")
-	var/refund = round((src.health/src.health_max) * 0.5 * src.resourcecost) //this is floor(), depsite the name
+	var/refund = round((src.health/src.health_max) * 0.5 * src.resourcecost)
 	if(refund >= 1)
 		var/obj/item/flockcache/cache = new(get_turf(src))
 		cache.resources = refund
-	src.flock?.removeDrone(src)
 	qdel(src)
 
 
@@ -164,7 +161,6 @@
 				B.setMaterial(getMaterial("gnesisglass"))
 		if(prob(30))
 			B.throw_at(get_edge_cheap(location, pick(alldirs)), rand(10), 3)
-	src.flock?.removeDrone(src)
 	qdel(src)
 
 /obj/flock_structure/proc/repair()
