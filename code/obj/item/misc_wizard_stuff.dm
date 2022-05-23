@@ -206,17 +206,17 @@
 		else
 			return
 
-	pull()
-		if(check_target_immunity(usr))
+	pull(var/mob/user as mob)
+		if(check_target_immunity(user))
 			return ..()
 
-		if (!istype(usr))
+		if (!istype(user))
 			return
 
-		if (iswizard(usr))
+		if (iswizard(user))
 			return ..()
 		else
-			src.do_brainmelt(usr, 2)
+			src.do_brainmelt(user, 2)
 			return
 
 /obj/item/staff/thunder
@@ -270,17 +270,17 @@
 				return
 		else ..()
 
-	pull()
-		if(check_target_immunity(usr))
+	pull(var/mob/user as mob)
+		if(check_target_immunity(user))
 			return ..()
 
-		if (!istype(usr))
+		if (!istype(user))
 			return
 
-		if (iswizard(usr))
+		if (iswizard(user))
 			return ..()
 		else
-			zap_person(usr)
+			zap_person(user)
 			return
 
 	mouse_drop(atom/over_object, src_location, over_location, over_control, params)

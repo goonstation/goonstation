@@ -506,7 +506,7 @@
 		else if (params["ctrl"])
 			var/atom/movable/movable = target
 			if (istype(movable))
-				movable.pull()
+				movable.pull(src)
 
 				if (mob_flags & AT_GUNPOINT)
 					for(var/obj/item/grab/gunpoint/G in grabbed_by)

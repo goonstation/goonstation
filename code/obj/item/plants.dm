@@ -399,14 +399,14 @@
 				A:lastattackertime = world.time
 			A:weakened += 15
 
-	pull()
-		if (!istype(usr))
+	pull(var/mob/user as mob)
+		if (!istype(user))
 			return
-		if (!iswerewolf(usr))
+		if (!iswerewolf(user))
 			return ..()
 		else
-			boutput(usr, "<span class='alert'>You can't drag that aconite! It burns!</span>")
-			usr.take_toxin_damage(10)
+			boutput(user, "<span class='alert'>You can't drag that aconite! It burns!</span>")
+			user.take_toxin_damage(10)
 			return
 
 // FLOWERS //
