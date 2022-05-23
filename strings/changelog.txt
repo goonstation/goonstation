@@ -1,5 +1,9 @@
 
 (t)sun may 22 22
+(u)Flappybat
+(p)8671
+(e)🗺|mapping
+(*)Some layout changes have been made to Cogmap2 security, in particular the Solitary cell controls have moved north from the tables to the wall outside the cell.
 (u)Wisemonster
 (p)8693
 (e)⚖|balance
