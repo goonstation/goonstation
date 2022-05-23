@@ -406,7 +406,7 @@ proc/filter_trait_hats(var/type)
 		return ..()
 
 	attack_self (mob/user as mob)
-		user.visible_message("<span class='combat'><b>[user] turns their detgadget hat into a spiffy scuttlebot!</b></span>")
+		user.visible_message("<span class='combat'><b>[user] turns [his_or_her(user)] detgadget hat into a spiffy scuttlebot!</b></span>")
 		var/mob/living/critter/robotic/scuttlebot/weak/S = new /mob/living/critter/robotic/scuttlebot/weak(get_turf(src))
 		S.linked_hat = src
 		user.drop_item()
