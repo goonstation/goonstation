@@ -1,5 +1,38 @@
 
+(t)mon may 23 22
+(u)Wisemonster
+(p)8607
+(e)🆕🗺|feature, mapping
+(+)The VR murderbox has been upgraded with an arcfiend simulation.
+(u)Flappybat
+(p)8662
+(e)⛔|removal
+(+)The noise_maker artifact has been removed, reducing incidents of exploding speakers by 57%.
+(t)sun may 22 22
+(u)Azrun
+(e)🚽🎣
+(+)Toilet Fishing
+(u)Flappybat
+(p)8671
+(e)🗺|mapping
+(*)Some layout changes have been made to Cogmap2 security, in particular the Solitary cell controls have moved north from the tables to the wall outside the cell.
+(u)Wisemonster
+(p)8693
+(e)⚖|balance
+(+)The med/hydro restock cartridges purchase from qm has been split into two separate purchases.
+(u)Blackrep
+(p)8162
+(e)📄|tgui
+(+)The mechanical dropper has been updated to a fancy new UI!
+(u)KubeRoot, Kapu1178
+(p)8056
+(e)🆕|feature
+(*)The 'say' verb and typing indicators should now be much more responsive
 (t)sat may 21 22
+(u)FlameArrow57
+(p)7498
+(e)🆕🎨|feature, sprites
+(*)Added the implanter artifact, complete with nine new alien implants!
 (u)Flappybat & Dimwhat
 (p)8582
 (e)🗺🎨⚖|mapping, sprites, balance

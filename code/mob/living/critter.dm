@@ -1284,7 +1284,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 		..(message)
 		return
 
-	if (src.robot_talk_understand && !src.stat)
+	if (src.robot_talk_understand && !src.stat && !ghost_spawned)
 		if (length(message) >= 2)
 			if (copytext(lowertext(message), 1, 3) == ":s")
 				message = copytext(message, 3)

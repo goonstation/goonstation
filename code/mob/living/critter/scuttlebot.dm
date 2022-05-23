@@ -81,6 +81,7 @@
 		if(istype(W, /obj/item/clothing/glasses/scuttlebot_vr))
 			new /obj/item/clothing/head/det_hat/folded_scuttlebot(get_turf(src))
 			boutput(M, "You stuff the goggles back into the hat. It powers down with a low whirr.")
+			empty_hands()
 			qdel(W)
 			qdel(src)
 		else
