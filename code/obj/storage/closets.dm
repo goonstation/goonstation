@@ -603,7 +603,6 @@
 	spawn_contents = list(/obj/item/clothing/head/nursehat = 2,
 					/obj/item/clothing/head/traditionalnursehat = 2,
 					/obj/item/clothing/suit/nursedress = 3,
-					/obj/item/clothing/suit/nursedress/red = 3,
 					/obj/item/clothing/suit/wintercoat/medical = 3,
 					/obj/item/clothing/head/headmirror = 3,
 					/obj/item/clothing/suit/labcoat/medical = 3)
