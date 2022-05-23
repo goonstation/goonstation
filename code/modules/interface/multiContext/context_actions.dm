@@ -367,7 +367,7 @@
 			if (3)
 				name = "Trickster"
 				desc = "Fool the crew with illusions and let them tear themselves apart."
-				icon_state = "wraith-smoke"
+				icon_state = "choose_trickster"
 
 	checkRequirements(atom/target, mob/user)
 		. = TRUE

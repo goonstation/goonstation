@@ -163,7 +163,8 @@
 /datum/targetable/critter/plague_rat/spawn_warren
 	name = "spawn warren"
 	desc = "Spawn a warren"
-	icon_state = "clown_spider_bite"
+	icon = 'icons/mob/critter_ui.dmi'
+	icon_state = "ratden"
 	cooldown = 90 SECONDS
 	targeted = 0
 	var/border_icon = 'icons/mob/wraith_ui.dmi'
@@ -185,6 +186,17 @@
 			else
 				boutput (P, "You already have a warren")
 		return 0
+
+	onAttach(datum/abilityHolder/holder)
+		..()
+		var/atom/movable/screen/ability/topBar/B = src.object
+		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
+
+/datum/targetable/critter/slam/rat
+	icon = 'icons/mob/critter_ui.dmi'
+	icon_state = "ratrush"
+	var/border_icon = 'icons/mob/wraith_ui.dmi'
+	var/border_state = "plague_frame"
 
 	onAttach(datum/abilityHolder/holder)
 		..()

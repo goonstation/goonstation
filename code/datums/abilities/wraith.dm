@@ -36,6 +36,8 @@
 	target_anything = 1
 	preferred_holder_type = /datum/abilityHolder/wraith
 	theme = "wraith"
+	var/border_icon = 'icons/mob/wraith_ui.dmi'
+	var/border_state = null
 	var/min_req_dist = INFINITY		//What minimum distance from your power well (marker/wraith master) the poltergeist needs to case this spell.
 
 	New()
@@ -65,6 +67,17 @@
 		SPAWN(cooldown + 5)
 			holder.updateButtons()
 
+	onAttach(datum/abilityHolder/holder)
+		..()
+		if (istype(holder.owner, /mob/wraith/wraith_decay) || istype(holder.owner, /mob/living/critter/plaguerat))
+			border_state = "plague_frame"
+		else if (istype(holder.owner, /mob/wraith/wraith_harbinger))
+			border_state = "harbinger_frame"
+		else if (istype(holder.owner, /mob/wraith/wraith_trickster))
+			border_state = "trickster_frame"
+
+		var/atom/movable/screen/ability/topBar/B = src.object
+		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
 
 /datum/targetable/wraithAbility/help
 	name = "Toggle Help Mode"
@@ -956,7 +969,7 @@
 
 /datum/targetable/wraithAbility/curse/blood
 	name = "Curse of blood"
-	icon_state = "skeleton"
+	icon_state = "bloodcurse"
 	desc = "Curse the living with a plague of blood."
 	targeted = 1
 	pointCost = 40
@@ -987,7 +1000,7 @@
 
 /datum/targetable/wraithAbility/curse/blindness
 	name = "Curse of blindness"
-	icon_state = "skeleton"
+	icon_state = "blindcurse"
 	desc = "Curse the living with blindness."
 	targeted = 1
 	pointCost = 40
@@ -1018,7 +1031,7 @@
 
 /datum/targetable/wraithAbility/curse/enfeeble
 	name = "Curse of weakness"
-	icon_state = "skeleton"
+	icon_state = "weakcurse"
 	desc = "Curse the living with weakness and lower stamina regeneration."
 	targeted = 1
 	pointCost = 40
@@ -1049,7 +1062,7 @@
 
 /datum/targetable/wraithAbility/curse/rot
 	name = "Curse of rot"
-	icon_state = "skeleton"
+	icon_state = "rotcurse"
 	desc = "Curse the living with a netherworldly plague."
 	targeted = 1
 	pointCost = 40
@@ -1080,7 +1093,7 @@
 
 /datum/targetable/wraithAbility/curse/death	//Only castable if you already put 4 curses on someone
 	name = "Curse of death"
-	icon_state = "skeleton"
+	icon_state = "deathcurse"
 	desc = "Reap a fully cursed being's soul!"
 	targeted = 1
 	pointCost = 80
@@ -1139,7 +1152,7 @@
 /datum/targetable/wraithAbility/summon_rot_hulk
 	name = "Create rot hulk"
 	desc = "Assimilate the filth in an area and create an unstable servant."
-	icon_state = "grinchpoison"
+	icon_state = "summongoo"
 	targeted = 0
 	cooldown = 90 SECONDS
 	pointCost = 120
@@ -1192,10 +1205,11 @@
 			boutput(holder.owner, __red("This place is much too clean to summon a rot hulk."))
 			return 1
 
+
 /datum/targetable/wraithAbility/poison
 	name = "Defile"
 	desc = "Manifest some horrible poison inside a food item or a container."
-	icon_state = "grinchpoison"
+	icon_state = "wraithpoison"
 	targeted = 1
 	target_anything = 1
 	target_nodamage_check = 1
@@ -1256,6 +1270,7 @@
 			boutput(W, __red("You failed to poison [target]."))
 			return 1
 
+
 /datum/targetable/wraithAbility/mass_whisper
 	name = "Mass Whisper"
 	icon_state = "mass_whisper"
@@ -1263,8 +1278,6 @@
 	pointCost = 5
 	targeted = 0
 	cooldown = 10 SECONDS
-	var/border_icon = 'icons/mob/wraith_ui.dmi'
-	var/border_state = "trickster_frame"
 	proc/ghostify_message(var/message)
 		return message
 
@@ -1286,10 +1299,6 @@
 
 		boutput(usr, "<b>You whisper to everyone around you:</b> [message]")
 
-	onAttach(datum/abilityHolder/holder)
-		..()
-		var/atom/movable/screen/ability/topBar/B = src.object
-		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
 
 /datum/targetable/wraithAbility/dread
 	name = "Creeping dread"
@@ -1298,8 +1307,6 @@
 	pointCost = 80
 	targeted = 1
 	cooldown = 1 MINUTE
-	var/border_icon = 'icons/mob/wraith_ui.dmi'
-	var/border_state = "trickster_frame"
 
 	cast(mob/target)
 		if (..())
@@ -1317,11 +1324,6 @@
 
 		return 1
 
-	onAttach(datum/abilityHolder/holder)
-		..()
-		var/atom/movable/screen/ability/topBar/B = src.object
-		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
-
 /datum/targetable/wraithAbility/possess
 	name = "Possession"
 	icon_state = "possession"
@@ -1330,8 +1332,6 @@
 	targeted = 1
 	cooldown = 3 MINUTES
 	var/wraith_key = null
-	var/border_icon = 'icons/mob/wraith_ui.dmi'
-	var/border_state = "trickster_frame"
 
 	cast(mob/target)
 		if (..())
@@ -1397,11 +1397,6 @@
 				boutput(holder.owner, "You cannot possess with only [W.possession_points] possession power. You'll need at least [(W.points_to_possess - W.possession_points)] more.")
 				return 1
 
-	onAttach(datum/abilityHolder/holder)
-		..()
-		var/atom/movable/screen/ability/topBar/B = src.object
-		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
-
 /datum/targetable/wraithAbility/hallucinate
 	name = "Hallucinate"
 	icon_state = "terror"
@@ -1409,8 +1404,6 @@
 	pointCost = 30
 	targeted = 1
 	cooldown = 45 SECONDS
-	var/border_icon = 'icons/mob/wraith_ui.dmi'
-	var/border_state = "trickster_frame"
 
 	cast(atom/target)
 		if (..())
@@ -1427,11 +1420,6 @@
 		else
 			return 1
 
-	onAttach(datum/abilityHolder/holder)
-		..()
-		var/atom/movable/screen/ability/topBar/B = src.object
-		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
-
 /datum/targetable/wraithAbility/fake_sound
 	name = "Fake sound"
 	icon_state = "fake_sound"
@@ -1440,8 +1428,6 @@
 	targeted = 1
 	target_anything = 1
 	cooldown = 5 SECONDS
-	var/border_icon = 'icons/mob/wraith_ui.dmi'
-	var/border_state = "trickster_frame"
 	var/list/sound_list = list("Death gasp",
 	"Gasp",
 	"Gunshot",
@@ -1499,11 +1485,6 @@
 		boutput(holder.owner, "You use your powers to create a sound.")
 		return 0
 
-	onAttach(datum/abilityHolder/holder)
-		..()
-		var/atom/movable/screen/ability/topBar/B = src.object
-		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
-
 /datum/targetable/wraithAbility/lay_trap
 	name = "Place rune trap"
 	icon_state = "runetrap"
@@ -1512,8 +1493,6 @@
 	targeted = 0
 	cooldown = 30 SECONDS
 	var/max_traps = 2
-	var/border_icon = 'icons/mob/wraith_ui.dmi'
-	var/border_state = "trickster_frame"
 	var/list/trap_types = list("Madness",
 	"Burning",
 	"Teleporting",
@@ -1569,14 +1548,9 @@
 		boutput(holder.owner, "You place a trap on the floor, it begins to charge up.")
 		return 0
 
-	onAttach(datum/abilityHolder/holder)
-		..()
-		var/atom/movable/screen/ability/topBar/B = src.object
-		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
-
 /datum/targetable/wraithAbility/create_summon_portal
 	name = "Summon void portal"
-	icon_state = "whisper"
+	icon_state = "open_portal"
 	desc = "Summon a void portal from which otherworldly creatures pour out"
 	pointCost = 150
 	targeted = 0
@@ -1751,7 +1725,7 @@
 /datum/targetable/wraithAbility/make_plague_rat
 	name = "Summon Plague rat"
 	desc = "Attempt to breach the veil between worlds to allow a plague rat to enter this realm."
-	icon_state = "make_poltergeist"
+	icon_state = "summonrats"
 	targeted = 0
 	pointCost = 0
 	cooldown = 300 SECONDS
@@ -1845,7 +1819,7 @@
 /datum/targetable/wraithAbility/speak
 	name = "Spirit message"
 	desc = "Telepathically speak to your minions."
-	icon_state = "thrallspeak"
+	icon_state = "speak_summons"
 	targeted = 0
 	target_nodamage_check = 1
 	max_range = 1

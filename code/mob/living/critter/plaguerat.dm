@@ -227,7 +227,7 @@ ABSTRACT_TYPE(/mob/living/critter/plaguerat)
 	add_abilities = list(/datum/targetable/critter/plague_rat/eat_filth,
 						/datum/targetable/critter/plague_rat/rat_bite,
 						/datum/targetable/critter/plague_rat/spawn_warren,
-						/datum/targetable/critter/slam,
+						/datum/targetable/critter/slam/rat,
 						/datum/targetable/wraithAbility/make_plague_rat)
 
 	can_help = 1
