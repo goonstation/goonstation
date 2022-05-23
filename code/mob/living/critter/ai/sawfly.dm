@@ -2,6 +2,7 @@
 //
 
 /datum/aiHolder/sawfly
+
 	New()
 		..()
 		default_task = get_instance(/datum/aiTask/prioritizer/sawfly, list(src))
@@ -29,6 +30,7 @@
 
 // Attack code - looks for adjacent targets, tries to stab them
 /datum/aiTask/timed/targeted/sawfly_attack
+	var/found_path = null
 	name = "attacking"
 	minimum_task_ticks = 10
 	maximum_task_ticks = 25
@@ -59,14 +61,34 @@
 
 		var/dist = get_dist(owncritter, holder.target)
 		if(dist > target_range)
-			holder.move_to(holder.target,1)
+			//replaced
+			if(!src.found_path)
+				src.found_path = get_path_to(holder.owner, holder.target, 18, 0)
+			if(src.found_path)
+				holder.move_to_with_path(holder.target, src.found_path, 1)
+				if(prob(20)) walk_rand(src,4)
+				owncritter.set_dir(get_dir(owncritter, holder.target)) //attack regardless
+				owncritter.hand_range_attack(holder.target, dummy_params)
+			else
+				//o no
+				frustration++
 			frustration++ //if frustration gets too high, the task is ended and re-evaluated
 		else
 			owncritter.set_dir(get_dir(owncritter, holder.target))
 			owncritter.hand_range_attack(holder.target, dummy_params)
 			SPAWN(10)
 				if(dist > target_range) // double check you're still in range
-					holder.move_to(holder.target,1)
+					//replaced
+					if(!src.found_path)
+						src.found_path = get_path_to(holder.owner, holder.target, 18, 0)
+					if(src.found_path)
+						holder.move_to_with_path(holder.target, src.found_path, 1)
+						if(prob(20)) walk_rand(src,4)
+						owncritter.set_dir(get_dir(owncritter, holder.target))
+						owncritter.hand_range_attack(holder.target, dummy_params)
+					else
+						frustration++
+						//o no
 				else
 					owncritter.set_dir(get_dir(owncritter, holder.target))
 					owncritter.hand_range_attack(holder.target, dummy_params)
@@ -97,6 +119,7 @@
 	weight = 15
 	max_dist = 12
 	can_be_adjacent_to_target = TRUE
+	var/found_path = null
 
 /datum/aiTask/sequence/goalbased/sawfly_chase_n_stab/New(parentHolder, transTask)
 	..(parentHolder, transTask)
@@ -132,6 +155,7 @@
 
 /datum/aiTask/succeedable/sawfly_stab
 	name = "capture subtask"
+	var/found_path = null
 	var/has_started = FALSE
 	var/list/dummy_params = list("icon-x" = 16, "icon-y" = 16)
 
@@ -160,4 +184,5 @@
 
 /datum/aiTask/succeedable/sawfly_stab/on_reset()
 	has_started = FALSE
+	src.found_path = null
 	..()

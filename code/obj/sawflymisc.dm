@@ -670,7 +670,7 @@
 				src.target = null
 
 				walk_to(src,0)
-				if (src.aggressive) seek_target()
+				seek_target()
 				if (!src.target) src.task = "wandering"
 			if("chasing")
 				if (src.frustration >= rand(20,40))
@@ -804,7 +804,7 @@
 		if(!alive) return
 		var/turf/moveto = locate(src.x + rand(-1,1),src.y + rand(-1, 1),src.z)
 		if(isturf(moveto) && !moveto.density) step_to(src, moveto)
-		if(src.aggressive) seek_target()
+		seek_target()
 		steps += 1
 		if (steps == wander_check)
 			src.task = "thinking"
