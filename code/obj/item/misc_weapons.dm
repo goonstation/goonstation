@@ -1654,19 +1654,19 @@ obj/item/whetstone
 				return
 		else ..()
 
-	pull(var/mob/user)
-		if(check_target_immunity(user))
+	pull()
+		if(check_target_immunity(usr))
 			return ..()
 
-		if (!istype(user))
+		if (!istype(usr))
 			return
 
-		if (isslasher(user))
+		if (isslasher(usr))
 			return ..()
 		else
-			random_brute_damage(user, 2*src.force)
-			boutput(user,"<span style=\"color:red\">You feel immense pain!</span>")
-			user.changeStatus("weakened", 80)
+			random_brute_damage(usr, 2*src.force)
+			boutput(usr,"<span style=\"color:red\">You feel immense pain!</span>")
+			usr.changeStatus("weakened", 80)
 			return
 
 	throw_impact(atom/A, datum/thrown_thing/thr)

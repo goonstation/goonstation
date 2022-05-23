@@ -769,11 +769,11 @@ WET FLOOR SIGN
 			return
 		..()
 
-	pull(var/mob/user)
-		if (!istype(user))
+	pull()
+		if (!istype(usr))
 			return
-		if(user.key != ownerKey && ownerKey != null)
-			boutput(user, "<span style='color: red; font-weight: bold'>The [src.name] makes a grumpy buzzing sound and delivers a small electric shock! You drop it.</span>")
+		if(usr.key != ownerKey && ownerKey != null)
+			boutput(usr, "<span style='color: red; font-weight: bold'>The [src.name] makes a grumpy buzzing sound and delivers a small electric shock! You drop it.</span>")
 			return
 		return ..()
 
