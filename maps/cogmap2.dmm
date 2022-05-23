@@ -24138,7 +24138,7 @@
 /area/station/catwalk/north)
 "bez" = (
 /obj/machinery/atmospherics/pipe/tank/air_repressurization/east,
-/turf/simulated/wall/auto/reinforced/supernorn,
+/turf/simulated/floor/plating/damaged3,
 /turf/simulated/floor/plating/damaged2,
 /area/station/engine/substation/west)
 "beA" = (
@@ -26674,8 +26674,8 @@
 /obj/item/device/radio/intercom/brig,
 /obj/machinery/phone,
 /obj/blind_switch/area{
-	pixel_x = -22;
 	dir = 4;
+	pixel_x = -22;
 	pixel_y = 4
 	},
 /turf/simulated/floor/carpet/grime,
@@ -31905,9 +31905,9 @@
 /obj/item/reagent_containers/syringe/haloperidol,
 /obj/random_item_spawner/desk_stuff,
 /obj/machinery/light_switch/north{
-	pixel_y = 0;
+	dir = 4;
 	pixel_x = 22;
-	dir = 4
+	pixel_y = 0
 	},
 /turf/simulated/floor/red/side{
 	dir = 4
@@ -33699,8 +33699,8 @@
 /area/station/security/main)
 "bzL" = (
 /obj/drink_rack/mug{
-	pixel_y = 4;
-	pixel_x = -22
+	pixel_x = -22;
+	pixel_y = 4
 	},
 /obj/table/reinforced/auto,
 /obj/machinery/coffeemaker/security,
