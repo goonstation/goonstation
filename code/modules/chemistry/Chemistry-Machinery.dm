@@ -34,9 +34,10 @@
 
 	attackby(var/obj/item/reagent_containers/glass/B as obj, var/mob/user as mob)
 
-		if(!istype(B, /obj/item/reagent_containers/glass))
-			return
+		if(istype(B, /obj/item/reagent_containers/glass))
+			tryInsert(B, user)
 
+	proc/tryInsert(obj/item/reagent_containers/glass/B, var/mob/user)
 		if (status & (NOPOWER|BROKEN))
 			user.show_text("[src] seems to be out of order.", "red")
 			return
@@ -154,20 +155,18 @@
 						return
 					src.roboworking = null
 				else
-					container.set_loc(src.output_target)
+					container.set_loc(src.output_target) // causes Exited proc to be called
 					usr.put_in_hand_or_eject(container) // try to eject it into the users hand, if we can
-
 				src.beaker = null
 				src.UpdateIcon()
+				return
+
 			if("insert")
 				if (container)
 					return
 				var/obj/item/reagent_containers/glass/inserting = usr.equipped()
 				if(istype(inserting))
-					src.beaker = inserting
-					usr.drop_item()
-					inserting.set_loc(src)
-					src.UpdateIcon()
+					tryInsert(inserting, usr)
 			if("adjustTemp")
 				src.target_temp = clamp(params["temperature"], 0, 1000)
 				src.UpdateIcon()
@@ -280,6 +279,12 @@
 			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
 		return
 
+	Exited(Obj, newloc)
+		if(Obj == src.beaker)
+			src.beaker = null
+			src.UpdateIcon()
+			tgui_process.update_uis(src)
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -386,12 +391,10 @@
 			attack_hand(usr)
 			return
 		else if (href_list["eject"])
-			if (src.beaker)
-				beaker.set_loc(src.output_target)
-			usr.put_in_hand_or_eject(beaker) // try to eject it into the users hand, if we can
-			beaker = null
-			icon_state = "mixer0"
-			src.updateUsrDialog()
+			var/obj/item/I = src.beaker
+			if (I)
+				I.set_loc(src.output_target) // causes Exited proc to be called
+			usr.put_in_hand_or_eject(I) // try to eject it into the users hand, if we can
 			return
 
 		else if (href_list["createpill"])
@@ -687,6 +690,12 @@
 		else
 			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
 		return
+
+	Exited(Obj, newloc)
+		if(Obj == src.beaker)
+			src.beaker = null
+			icon_state = "mixer0"
+			src.updateUsrDialog()
 
 datum/chemicompiler_core/stationaryCore
 	statusChangeCallback = "statusChange"

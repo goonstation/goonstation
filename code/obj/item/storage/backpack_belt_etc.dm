@@ -752,34 +752,62 @@
 	can_hold = list(/obj/item/ammo/bullets)
 	in_list_or_max = 0
 
-/obj/item/storage/belt/revolver
+ABSTRACT_TYPE(/obj/item/storage/belt/gun)
+/obj/item/storage/belt/gun
+	var/gun_type
+
+	New()
+		..()
+		icon_state = initial(icon_state) + "-1"
+
+	Entered(Obj, OldLoc)
+		..()
+		for (var/obj/item/O in contents)
+			if (istype(O, gun_type))
+				icon_state = initial(icon_state) + "-1"
+				return
+
+	Exited(Obj, newloc)
+		..()
+		for (var/obj/item/O in contents)
+			if (istype(O, gun_type))
+				return
+		icon_state = initial(icon_state) + "-0"
+
+/obj/item/storage/belt/gun/revolver
 	name = "revolver belt"
 	desc = "A stylish leather belt for holstering a revolver and it's ammo."
 	icon_state = "revolver_belt"
 	item_state = "revolver_belt"
 	slots = 4
 	in_list_or_max = 0
-	can_hold = list(/obj/item/gun/kinetic/revolver, /obj/item/ammo/bullets/a357)
-
+	gun_type = /obj/item/gun/kinetic/revolver
+	can_hold = list(/obj/item/ammo/bullets/a357)
+	can_hold_exact = list(/obj/item/gun/kinetic/revolver)
 	spawn_contents = list(/obj/item/gun/kinetic/revolver, /obj/item/ammo/bullets/a357 = 2, /obj/item/ammo/bullets/a357/AP)
-/obj/item/storage/belt/pistol
+
+/obj/item/storage/belt/gun/pistol
 	name = "pistol belt"
 	desc = "A rugged belt fitted with a pistol holster and some magazine pouches."
 	icon_state = "pistol_belt"
 	item_state = "pistol_belt"
 	slots = 5
 	in_list_or_max = 0
-	can_hold = list(/obj/item/gun/kinetic/pistol, /obj/item/ammo/bullets/bullet_9mm)
+	gun_type = /obj/item/gun/kinetic/pistol
+	can_hold = list(/obj/item/ammo/bullets/bullet_9mm)
+	can_hold_exact = list(/obj/item/gun/kinetic/pistol)
 	spawn_contents = list(/obj/item/gun/kinetic/pistol, /obj/item/ammo/bullets/bullet_9mm = 4)
 
-/obj/item/storage/belt/smartgun
+/obj/item/storage/belt/gun/smartgun
 	name = "smartpistol belt"
 	desc = "A rugged belt fitted with a smart pistol holster and some magazine pouches."
 	icon_state = "smartgun_belt"
 	item_state = "smartgun_belt"
 	slots = 5
 	in_list_or_max = 0
-	can_hold = list(/obj/item/gun/kinetic/pistol/smart/mkII, /obj/item/ammo/bullets/bullet_22/smartgun)
+	gun_type = /obj/item/gun/kinetic/pistol/smart/mkII
+	can_hold = list(/obj/item/ammo/bullets/bullet_22/smartgun)
+	can_hold_exact = list(/obj/item/gun/kinetic/pistol/smart/mkII)
 	spawn_contents = list(/obj/item/gun/kinetic/pistol/smart/mkII, /obj/item/ammo/bullets/bullet_22/smartgun = 4)
 
 

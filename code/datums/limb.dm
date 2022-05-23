@@ -83,13 +83,13 @@
 	proc/attack_range(atom/target, var/mob/user, params)
 		if(user.a_intent == "disarm")
 			if(disarm_special)
-				SEND_SIGNAL(user, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
+				SEND_SIGNAL(user, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 				disarm_special.pixelaction(target,params,user)
 				.= 1
 		else if (user.a_intent == "harm")
 			if(harm_special)
 				for (var/obj/item/cloaking_device/I in user)
-					SEND_SIGNAL(user, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
+					SEND_SIGNAL(user, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 				harm_special.pixelaction(target,params,user)
 				.= 1
 		else
@@ -1346,7 +1346,8 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 	/obj/item/gun/kinetic/airzooka,\
 	/obj/machinery/computer,\
 	/obj/machinery/power/smes,
-	/obj/item/tinyhammer,
+	/obj/item/tinyhammer,\
+	/obj/machinery/manufacturer,\
 	/obj/item/device/light/zippo) //Items that ghostcritters simply cannot interact, regardless of w_class
 	. = list()
 	for (var/blocked_type in blocked_types)

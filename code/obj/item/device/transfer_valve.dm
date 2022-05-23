@@ -28,8 +28,8 @@
 
 	New()
 		..()
-		RegisterSignal(src, COMSIG_BOMB_SIGNAL_START, .proc/signal_start)
-		RegisterSignal(src, COMSIG_BOMB_SIGNAL_CANCEL, .proc/signal_cancel)
+		RegisterSignal(src, COMSIG_ITEM_BOMB_SIGNAL_START, .proc/signal_start)
+		RegisterSignal(src, COMSIG_ITEM_BOMB_SIGNAL_CANCEL, .proc/signal_cancel)
 		processing_items |= src
 
 	disposing()

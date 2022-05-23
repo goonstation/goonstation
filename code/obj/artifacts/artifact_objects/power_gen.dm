@@ -55,6 +55,7 @@
 					mode = 2
 					boutput(user, "[O] connects itself to the cable. Weird.")
 					playsound(O, "sound/effects/ship_charge.ogg", 75, 1)
+					logTheThing("station", user, O, "connected power generator artifact [O] at [log_loc(O)].")
 					var/obj/machinery/artifact/power_gen/L = O
 					if (L.light)
 						L.light.enable()
@@ -66,6 +67,7 @@
 			attached = 0
 			boutput(user, "[O] disconnects itself from the cable.")
 			playsound(O, "sound/effects/shielddown2.ogg", 75, 1, 0, 2)
+			logTheThing("station", user, O, "discconnected power generator artifact [O] at [log_loc(O)].")
 			var/obj/machinery/artifact/power_gen/L = O
 			if (L.light)
 				L.light.disable()

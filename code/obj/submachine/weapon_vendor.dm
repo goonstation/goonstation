@@ -334,17 +334,17 @@
 
 /datum/materiel/sidearm/smartgun
 	name = "Hydra Smart Pistol"
-	path = /obj/item/storage/belt/smartgun
+	path = /obj/item/storage/belt/gun/smartgun
 	description = "A gun-belt containing a pistol capable of locking onto multiple targets and firing on them in rapid sequence and four magazines."
 
 /datum/materiel/sidearm/pistol
 	name = "Branwen Pistol"
-	path = /obj/item/storage/belt/pistol
+	path = /obj/item/storage/belt/gun/pistol
 	description = "A gun-belt containing a semi-automatic, 9mm caliber service pistol and three magazines."
 
 /datum/materiel/sidearm/revolver
 	name = "Predator Revolver"
-	path = /obj/item/storage/belt/revolver
+	path = /obj/item/storage/belt/gun/revolver
 	description = "A gun-belt containing a hefty combat revolver and two .357 caliber speedloaders."
 
 /datum/materiel/loadout/assault

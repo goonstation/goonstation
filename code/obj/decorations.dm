@@ -233,7 +233,11 @@
 		if(ishuman(AM))
 			var/mob/living/carbon/human/H = AM
 			H.arrestIcon?.alpha = 0
-			H.health_implant?.alpha = 0
+			if (H.implant_icons)
+				var/image/I
+				for (var/implant in H.implant_icons)
+					I = H.implant_icons[implant]
+					I.alpha = 0
 			H.health_mon?.alpha = 0
 
 	Uncrossed(atom/movable/AM)
@@ -244,7 +248,11 @@
 		if(ishuman(AM))
 			var/mob/living/carbon/human/H = AM
 			H.arrestIcon?.alpha = 255
-			H.health_implant?.alpha = 255
+			if (H.implant_icons)
+				var/image/I
+				for (var/implant in H.implant_icons)
+					I = H.implant_icons[implant]
+					I.alpha = 255
 			H.health_mon?.alpha = 255
 
 	attackby(var/obj/item/W as obj, mob/user as mob)
@@ -956,6 +964,12 @@ obj/decoration/ceilingfan
 		if (light)
 			light.dispose()
 		..()
+
+	prelit
+		New()
+			. = ..()
+			src.lit = TRUE
+			UpdateIcon()
 
 /obj/decoration/rustykrab
 	name = "rusty krab sign"

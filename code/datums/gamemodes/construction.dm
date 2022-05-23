@@ -260,7 +260,7 @@
 			AST.UpdateOverlays(ore_overlay, "ast_ore")
 
 #ifndef UNDERWATER_MAP // We don't want fullbright ore underwater.
-			AST.overlays += /image/fullbright
+			AST.UpdateOverlays(new /image/fullbright, "fullbright")
 #endif
 
 			ORE.onGenerate(AST)

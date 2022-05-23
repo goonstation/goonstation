@@ -523,7 +523,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 			playsound(user, "sound/effects/elec_bigzap.ogg", 40, 1)
 
-			SEND_SIGNAL(user, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
+			SEND_SIGNAL(user, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 
 			if(isturf(target))
 				target_r = new/obj/elec_trg_dummy(target)

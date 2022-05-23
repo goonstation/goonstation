@@ -18,7 +18,7 @@
 		return 1
 
 // These two procs were so similar that I combined them (Convair880).
-/mob/proc/teleportscroll(var/effect = 0, var/perform_check = 0, var/obj/item_to_check = null, var/datum/targetable/spell/teleport/spell)
+/mob/proc/teleportscroll(var/effect = 0, var/perform_check = 0, var/obj/item_to_check = null, var/datum/targetable/spell/teleport/spell, var/abort_if_incapacitated = FALSE)
 	var/voice_grim = "sound/voice/wizard/TeleportGrim.ogg"
 	var/voice_fem = "sound/voice/wizard/TeleportFem.ogg"
 	var/voice_other = "sound/voice/wizard/TeleportLoud.ogg"
@@ -60,10 +60,14 @@
 	else
 		A = tgui_input_list(src, "Area to jump to", "Teleportation", tele_areas)
 
+	if(abort_if_incapacitated && !can_act(src))
+		boutput(src, "<span class='alert'>Not when you're incapacitated.</span>")
+		return 0
+
 	if(!thearea)
 		if (isnull(A))
 			boutput(src, "<span class='alert'>Invalid area selected.</span>")
-			return 1
+			return 0
 		thearea = get_telearea(A)
 
 	if (!thearea || !istype(thearea))
