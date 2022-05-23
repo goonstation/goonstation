@@ -1,5 +1,9 @@
 
 (t)mon may 23 22
+(u)Wisemonster
+(p)8607
+(e)🆕🗺|feature, mapping
+(+)The VR murderbox has been upgraded with an arcfiend simulation.
 (u)Flappybat
 (p)8662
 (e)⛔|removal
