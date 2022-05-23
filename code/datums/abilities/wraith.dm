@@ -1258,11 +1258,13 @@
 
 /datum/targetable/wraithAbility/mass_whisper
 	name = "Mass Whisper"
-	icon_state = "whisper"
+	icon_state = "mass_whisper"
 	desc = "Send an ethereal message to all close living beings."
 	pointCost = 5
 	targeted = 0
 	cooldown = 10 SECONDS
+	var/border_icon = 'icons/mob/wraith_ui.dmi'
+	var/border_state = "trickster_frame"
 	proc/ghostify_message(var/message)
 		return message
 
@@ -1284,13 +1286,20 @@
 
 		boutput(usr, "<b>You whisper to everyone around you:</b> [message]")
 
+	onAttach(datum/abilityHolder/holder)
+		..()
+		var/atom/movable/screen/ability/topBar/B = src.object
+		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
+
 /datum/targetable/wraithAbility/dread
 	name = "Creeping dread"
-	icon_state = "whisper"
+	icon_state = "dread"
 	desc = "Instill a fear of the dark in a human's mind, causing terror and heart attacks if they do not stay in the light."
 	pointCost = 80
 	targeted = 1
 	cooldown = 1 MINUTE
+	var/border_icon = 'icons/mob/wraith_ui.dmi'
+	var/border_state = "trickster_frame"
 
 	cast(mob/target)
 		if (..())
@@ -1308,14 +1317,21 @@
 
 		return 1
 
+	onAttach(datum/abilityHolder/holder)
+		..()
+		var/atom/movable/screen/ability/topBar/B = src.object
+		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
+
 /datum/targetable/wraithAbility/possess
 	name = "Possession"
-	icon_state = "whisper"
+	icon_state = "possession"
 	desc = "Channel your energy and slowly gain control over a living being"
 	pointCost = 400
 	targeted = 1
 	cooldown = 3 MINUTES
 	var/wraith_key = null
+	var/border_icon = 'icons/mob/wraith_ui.dmi'
+	var/border_state = "trickster_frame"
 
 	cast(mob/target)
 		if (..())
@@ -1381,13 +1397,20 @@
 				boutput(holder.owner, "You cannot possess with only [W.possession_points] possession power. You'll need at least [(W.points_to_possess - W.possession_points)] more.")
 				return 1
 
+	onAttach(datum/abilityHolder/holder)
+		..()
+		var/atom/movable/screen/ability/topBar/B = src.object
+		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
+
 /datum/targetable/wraithAbility/hallucinate
 	name = "Hallucinate"
-	icon_state = "whisper"
+	icon_state = "terror"
 	desc = "Induce terror inside a mortal's mind and make them hallucinate."
 	pointCost = 30
 	targeted = 1
 	cooldown = 45 SECONDS
+	var/border_icon = 'icons/mob/wraith_ui.dmi'
+	var/border_state = "trickster_frame"
 
 	cast(atom/target)
 		if (..())
@@ -1404,14 +1427,21 @@
 		else
 			return 1
 
+	onAttach(datum/abilityHolder/holder)
+		..()
+		var/atom/movable/screen/ability/topBar/B = src.object
+		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
+
 /datum/targetable/wraithAbility/fake_sound
 	name = "Fake sound"
-	icon_state = "whisper"
+	icon_state = "fake_sound"
 	desc = "Play a fake sound at a location of your choice"
 	pointCost = 5
 	targeted = 1
 	target_anything = 1
 	cooldown = 5 SECONDS
+	var/border_icon = 'icons/mob/wraith_ui.dmi'
+	var/border_state = "trickster_frame"
 	var/list/sound_list = list("Death gasp",
 	"Gasp",
 	"Gunshot",
@@ -1469,14 +1499,21 @@
 		boutput(holder.owner, "You use your powers to create a sound.")
 		return 0
 
+	onAttach(datum/abilityHolder/holder)
+		..()
+		var/atom/movable/screen/ability/topBar/B = src.object
+		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
+
 /datum/targetable/wraithAbility/lay_trap
 	name = "Place rune trap"
-	icon_state = "whisper"
+	icon_state = "runetrap"
 	desc = "Create a rune trap you can then spring later"
 	pointCost = 50
 	targeted = 0
 	cooldown = 30 SECONDS
 	var/max_traps = 2
+	var/border_icon = 'icons/mob/wraith_ui.dmi'
+	var/border_state = "trickster_frame"
 	var/list/trap_types = list("Madness",
 	"Burning",
 	"Teleporting",
@@ -1531,6 +1568,11 @@
 		W.traps_laid++
 		boutput(holder.owner, "You place a trap on the floor, it begins to charge up.")
 		return 0
+
+	onAttach(datum/abilityHolder/holder)
+		..()
+		var/atom/movable/screen/ability/topBar/B = src.object
+		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
 
 /datum/targetable/wraithAbility/create_summon_portal
 	name = "Summon void portal"

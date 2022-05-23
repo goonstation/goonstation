@@ -677,8 +677,8 @@
 			src.addAbility(/datum/targetable/wraithAbility/hallucinate)
 			src.addAbility(/datum/targetable/wraithAbility/fake_sound)
 			src.addAbility(/datum/targetable/wraithAbility/lay_trap)
-			src.addAbility(/datum/targetable/wraithAbility/make_poltergeist)
 			src.addAbility(/datum/targetable/wraithAbility/possess)
+			src.addAbility(/datum/targetable/wraithAbility/make_poltergeist)
 
 		addAllHarbingerAbilities()
 			src.addAbility(/datum/targetable/wraithAbility/create_summon_portal)
