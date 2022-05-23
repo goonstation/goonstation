@@ -406,7 +406,7 @@
 			return ..()
 		else
 			boutput(usr, "<span class='alert'>You can't drag that aconite! It burns!</span>")
-			usr.take_toxin_damage(10)
+			usr.take_toxin_damage(-10)
 			return
 
 // FLOWERS //
