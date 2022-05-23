@@ -285,6 +285,12 @@
 		if(allowed_types)
 			src.allowed_types = allowed_types
 
+	process()
+		..()
+		if ((src.holding && !checktype(src.holding)) && src.holder && processHeld) //If the item is not an allowed type somehow
+			actions.stopId("magpickerhold", src.holder)
+			processHeld = 0
+
 	attackby(obj/item/W as obj, mob/user as mob)
 		var/mob/living/silicon/robot/robo = user
 		if(istype(robo) && !(W in robo.module?.tools))

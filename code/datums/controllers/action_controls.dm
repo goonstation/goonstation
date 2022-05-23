@@ -1516,6 +1516,10 @@ var/datum/action_controller/actions
 		if(picker == null || owner == null) //Interrupt if the user or the magpicker dont exist.
 			interrupt(INTERRUPT_ALWAYS)
 			return
+		var/obj/item/magtractor/cyborg/borg_mag = picker
+		if(istype(borg_mag) && !borg_mag.checktype(borg_mag.holding)) //Interrupt if the item isn't actually allowed.
+			interrupt(INTERRUPT_ALWAYS)
+			return
 
 	onEnd()
 		..()
