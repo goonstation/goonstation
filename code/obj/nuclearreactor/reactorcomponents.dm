@@ -31,19 +31,23 @@ ABSTRACT_TYPE(/obj/reactor_component)
 ////////////////////////////////////////////////////////////////
 //Fuel rod
 /obj/item/reactor_component/fuel_rod
-
+	name = "fuel rod"
+	desc = "A fuel rod for a nuclear reactor"
 
 ////////////////////////////////////////////////////////////////
 //Control rod
 /obj/item/reactor_component/control_rod
-
+	name = "control rod"
+	desc = "A control rod assembly for a nuclear reactor"
 
 ////////////////////////////////////////////////////////////////
 //Heat exchanger
 /obj/item/reactor_component/heat_exchanger
-
+	name = "heat exchanger"
+	desc = "A heat exchanger component for a nuclear reactor"
 
 ////////////////////////////////////////////////////////////////
 //Gas channel
 /obj/item/reactor_component/gas_channel
-
+	name = "gas channel"
+	desc = "A gas channel component for a nuclear reactor"
