@@ -62,7 +62,7 @@ var/global/list/mapNames = list(
 			//Fallback for an unfound map. Should never occur!!
 			if (!map_settings)
 				map_settings = new /datum/map_settings
-				CRASH("A mapName entry for '[src.name]' wasn't found!")
+				//CRASH("A mapName entry for '[src.name]' wasn't found!")
 		..()
 
 //Setting maps to be underwater is handled in the map config file, aka [mapname].dm
