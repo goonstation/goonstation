@@ -383,7 +383,9 @@
 				</div>
 			</div>
 			"}
-
+#ifdef SECRETS_ENABLED
+	dat += restricted_playeroptions(M)
+#endif
 	var/windowHeight = "450"
 	if (src.level == LEVEL_ADMIN)
 		windowHeight = "550"
