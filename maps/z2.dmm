@@ -71917,9 +71917,7 @@
 	},
 /area/titlescreen)
 "jwG" = (
-/obj/stool/chair/wooden{
-	dir = 1
-	},
+/obj/item/storage/toilet/goldentoilet/azrun,
 /turf/unsimulated/floor/caution/south,
 /area/centcom/offices/azrun)
 "jxX" = (
@@ -75271,6 +75269,7 @@
 /obj/item/storage/backpack/satchel/blue,
 /obj/item/clothing/under/misc/flame_purple,
 /obj/item/clothing/head/helmet/space/captain/blue,
+/obj/item/clothing/mask/gas/swat/rainbow,
 /turf/unsimulated/floor/wood/six,
 /area/centcom/offices/aloe)
 "smg" = (

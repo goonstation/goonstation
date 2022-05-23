@@ -119,7 +119,10 @@
 					if (I.scan_category == "not_shown")
 						continue
 					if (I.scan_category != "syndicate")
-						implant_list[capitalize(I.name)]++
+						if (I.scan_category != "unknown")
+							implant_list[capitalize(I.name)]++
+						else
+							implant_list["Unknown implant"]++
 					else if (syndicate)
 						implant_list[capitalize(I.name)]++
 

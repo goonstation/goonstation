@@ -4486,7 +4486,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/dome)
 "akD" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/genetics,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 0;
@@ -6975,7 +6975,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/science/storage)
 "aqt" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/research,
 /turf/simulated/floor/plating/random,
 /area/station/science/storage)
 "aqu" = (
@@ -7945,7 +7945,7 @@
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "asN" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/research,
 /turf/simulated/floor/engine,
 /area/research_outpost/chamber)
 "asO" = (
@@ -23498,7 +23498,7 @@
 	name = "Catering Hangar"
 	})
 "biT" = (
-/obj/machinery/vending/monkey{
+/obj/machinery/vending/monkey/kitchen{
 	pixel_y = 8
 	},
 /turf/simulated/floor/white,
