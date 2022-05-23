@@ -637,6 +637,7 @@
 /obj/landmark{
 	name = "Observer-Start"
 	},
+/obj/machinery/light/small/floor,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "bN" = (
@@ -672,6 +673,43 @@
 	},
 /turf/space,
 /area/space)
+"jX" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/shuttle,
+/area/shuttle/arrival/station)
+"kK" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/shuttlebay{
+	icon_state = "engine_caution_south"
+	},
+/area/shuttle/arrival/station)
+"lR" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/shuttlebay,
+/area/shuttle/arrival/station)
+"sP" = (
+/obj/landmark/start/latejoin,
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/shuttle,
+/area/shuttle/arrival/station)
+"FE" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/shuttle,
+/area/shuttle/arrival/station)
+"KG" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/shuttle,
+/area/shuttle/arrival/station)
 
 (1,1,1) = {"
 aa
@@ -42501,7 +42539,7 @@ aa
 af
 aj
 am
-as
+lR
 ai
 aC
 aJ
@@ -42510,12 +42548,12 @@ aq
 aq
 aq
 aq
-aW
+jX
 aq
-aW
+jX
 ai
 bw
-bB
+FE
 ai
 ai
 ai
@@ -43108,14 +43146,14 @@ ao
 au
 ay
 aE
-aE
+KG
 aE
 aE
 bb
 bb
 bb
 aE
-aE
+KG
 aE
 aE
 aE
@@ -43414,11 +43452,11 @@ aL
 aR
 aW
 aq
+sP
 aq
-aq
+jX
 aW
-aW
-aW
+jX
 aW
 aW
 bB
@@ -44013,7 +44051,7 @@ aj
 aq
 aq
 aq
-aq
+sP
 aq
 aq
 aW
@@ -44313,21 +44351,21 @@ aa
 af
 aj
 aq
+sP
 aq
 aq
 aq
-aq
-aq
+sP
 aX
 ai
 as
 bh
 bl
-bp
+kK
 bt
 ai
 bw
-bB
+FE
 ai
 ai
 ai
