@@ -11,7 +11,7 @@
 		var/list/L = list("Spy Camera", "Scuttlebot")
 		var/result = tgui_input_list(usr, "Choose a device", "Transforming box...", L)
 
-		if(result == null)
+		if(result == null) // runtime be gone!
 			return
 		if(result == "Spy Camera")
 			var/spycamera = new /obj/item/camera/spy(get_turf(src))
