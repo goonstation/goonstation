@@ -450,7 +450,7 @@
 					else //we must be a public door
 						continue
 				return FALSE
-		else if(!A.Cross(passer))
+		if(!A.Cross(passer))
 			return FALSE
 
 #undef CAN_STEP

@@ -155,7 +155,7 @@
 		H.check_for_unlocks()
 
 	eat_twitch(src.owner)
-	playsound(src.owner.loc,"sound/items/drink.ogg", rand(10,50), 1, pitch = 1.4)
+	playsound(src.owner.loc,"sound/items/drink.ogg", rand(5,20), 1, pitch = 1.4)
 	HH.was_harmed(M, special = "vamp")
 
 /datum/abilityHolder/vampiric_thrall/var/list/blood_tally
@@ -308,7 +308,7 @@
 		HH.death(FALSE)
 
 	eat_twitch(src.owner)
-	playsound(src.owner.loc,"sound/items/drink.ogg", rand(10,50), 1, pitch = 1.4)
+	playsound(src.owner.loc,"sound/items/drink.ogg", rand(5,20), 1, pitch = 1.4)
 	HH.was_harmed(M, special = "vamp")
 
 /datum/targetable/vampire/blood_steal

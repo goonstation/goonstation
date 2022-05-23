@@ -539,7 +539,7 @@
 
 	New()
 		..()
-		setProperty("density", 25)
+		setProperty("density", 40)
 		setProperty("hard", 30)
 		addTrigger(triggersTemp, new /datum/materialProc/molitz_temp())
 		addTrigger(triggersOnHit, new /datum/materialProc/molitz_on_hit())
@@ -554,9 +554,9 @@
 
 		New()
 			..()
-			..()
-			removeTrigger(triggersTemp, /datum/materialProc/molitz_temp) // no need to remove molitz_on_hit, all it
-			addTrigger(triggersTemp, new /datum/materialProc/molitz_temp/agent_b()) // does is call molitz_temp
+			// no need to remove molitz_on_hit, all it does is call molitz_temp
+			removeTrigger(triggersTemp, /datum/materialProc/molitz_temp)
+			addTrigger(triggersTemp, new /datum/materialProc/molitz_temp/agent_b())
 			return
 
 /datum/material/crystal/claretine
@@ -862,10 +862,10 @@
 	color = "#B5E0FF"
 	alpha = 80
 	quality = 45
+	value = 1000
 
 	New()
 		..()
-		value = 1000
 		setProperty("reflective", 90)
 		setProperty("density", 85)
 		setProperty("hard", 85)
@@ -897,10 +897,10 @@
 /datum/material/crystal/wizard
 	quality = 50
 	alpha = 100
+	value = 650
 
 	New()
 		..()
-		value = 650
 		setProperty("density", 60)
 		setProperty("hard", 60)
 		addTrigger(triggersOnAdd, new /datum/materialProc/enchanted_add())

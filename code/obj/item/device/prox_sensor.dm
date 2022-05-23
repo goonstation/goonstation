@@ -5,7 +5,7 @@
 	var/timing = 0.0
 	var/time = null
 	flags = FPRINT | TABLEPASS| CONDUCT
-	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 	w_class = W_CLASS_SMALL
 	item_state = "electronic"
 	m_amt = 300
@@ -54,6 +54,7 @@
 			src.armed = 1
 			src.time = 0
 			src.timing = 0
+			src.event_handler_flags |= USE_PROXIMITY
 			src.UpdateIcon()
 
 
@@ -127,6 +128,10 @@
 			src.master.add_dialog(usr)
 		if (href_list["arm"])
 			src.armed = !src.armed
+			if (src.armed)
+				src.event_handler_flags |= USE_PROXIMITY
+			else
+				src.event_handler_flags = src.event_handler_flags & ~USE_PROXIMITY
 			src.UpdateIcon()
 			if(timing || armed) processing_items |= src
 
@@ -134,16 +139,16 @@
 			if (master && istype(master, /obj/item/device/transfer_valve))
 				logTheThing("bombing", usr, null, "[armed ? "armed" : "disarmed"] a proximity device on a transfer valve at [log_loc(T)].")
 				message_admins("[key_name(usr)] [armed ? "armed" : "disarmed"] a proximity device on a transfer valve at [log_loc(T)].")
-				SEND_SIGNAL(src.master, "[timing ? COMSIG_BOMB_SIGNAL_START : COMSIG_BOMB_SIGNAL_CANCEL]")
+				SEND_SIGNAL(src.master, "[timing ? COMSIG_ITEM_BOMB_SIGNAL_START : COMSIG_ITEM_BOMB_SIGNAL_CANCEL]")
 			else if (src.master && istype(src.master, /obj/item/assembly/prox_ignite)) //Prox-detonated beaker assemblies
 				var/obj/item/assembly/rad_ignite/RI = src.master
 				logTheThing("bombing", usr, null, "[armed ? "armed" : "disarmed"] a proximity device on a radio-igniter assembly at [T ? log_loc(T) : "horrible no-loc nowhere void"]. Contents: [log_reagents(RI.part3)]")
-				SEND_SIGNAL(src.master, "[timing ? COMSIG_BOMB_SIGNAL_START : COMSIG_BOMB_SIGNAL_CANCEL]")
+				SEND_SIGNAL(src.master, "[timing ? COMSIG_ITEM_BOMB_SIGNAL_START : COMSIG_ITEM_BOMB_SIGNAL_CANCEL]")
 
 			else if(src.master && istype(src.master, /obj/item/assembly/proximity_bomb))	//Prox-detonated single-tank bombs
 				logTheThing("bombing", usr, null, "[armed ? "armed" : "disarmed"] a proximity device on a single-tank bomb at [T ? log_loc(T) : "horrible no-loc nowhere void"].")
 				message_admins("[key_name(usr)] [armed ? "armed" : "disarmed"] a proximity device on a single-tank bomb at [T ? showCoords(T.x, T.y, T.z) : "horrible no-loc nowhere void"].")
-				SEND_SIGNAL(src.master, "[timing ? COMSIG_BOMB_SIGNAL_START : COMSIG_BOMB_SIGNAL_CANCEL]")
+				SEND_SIGNAL(src.master, "[timing ? COMSIG_ITEM_BOMB_SIGNAL_START : COMSIG_ITEM_BOMB_SIGNAL_CANCEL]")
 
 		if (href_list["time"])
 			src.timing = text2num_safe(href_list["time"])
@@ -154,16 +159,16 @@
 			if (master && istype(master, /obj/item/device/transfer_valve))
 				logTheThing("bombing", usr, null, "[timing ? "initiated" : "defused"] a prox-arming timer on a transfer valve at [log_loc(T)].")
 				message_admins("[key_name(usr)] [timing ? "initiated" : "defused"] a prox-arming timer on a transfer valve at [log_loc(T)].")
-				SEND_SIGNAL(src.master, "[timing ? COMSIG_BOMB_SIGNAL_START : COMSIG_BOMB_SIGNAL_CANCEL]")
+				SEND_SIGNAL(src.master, "[timing ? COMSIG_ITEM_BOMB_SIGNAL_START : COMSIG_ITEM_BOMB_SIGNAL_CANCEL]")
 			else if (src.master && istype(src.master, /obj/item/assembly/prox_ignite)) //Proximity-detonated beaker assemblies
 				var/obj/item/assembly/rad_ignite/RI = src.master
 				logTheThing("bombing", usr, null, "[timing ? "initiated" : "defused"] a prox-arming timer on a radio-igniter assembly at [T ? log_loc(T) : "horrible no-loc nowhere void"]. Contents: [log_reagents(RI.part3)]")
-				SEND_SIGNAL(src.master, "[timing ? COMSIG_BOMB_SIGNAL_START : COMSIG_BOMB_SIGNAL_CANCEL]")
+				SEND_SIGNAL(src.master, "[timing ? COMSIG_ITEM_BOMB_SIGNAL_START : COMSIG_ITEM_BOMB_SIGNAL_CANCEL]")
 
 			else if(src.master && istype(src.master, /obj/item/assembly/proximity_bomb))	//Radio-detonated single-tank bombs
 				logTheThing("bombing", usr, null, "[timing ? "initiated" : "defused"] a prox-arming timer on a single-tank bomb at [T ? log_loc(T) : "horrible no-loc nowhere void"].")
 				message_admins("[key_name(usr)] [timing ? "initiated" : "defused"] a prox-arming timer on a single-tank bomb at [T ? showCoords(T.x, T.y, T.z) : "horrible no-loc nowhere void"].")
-				SEND_SIGNAL(src.master, "[timing ? COMSIG_BOMB_SIGNAL_START : COMSIG_BOMB_SIGNAL_CANCEL]")
+				SEND_SIGNAL(src.master, "[timing ? COMSIG_ITEM_BOMB_SIGNAL_START : COMSIG_ITEM_BOMB_SIGNAL_CANCEL]")
 
 		if (href_list["tp"])
 			var/tp = text2num_safe(href_list["tp"])

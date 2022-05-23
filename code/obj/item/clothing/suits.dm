@@ -644,6 +644,11 @@
 		..()
 		setProperty("coldprot", 10)
 
+	Move()
+		. = ..()
+		if(src.Bed)
+			src.Bed.Move(src.loc)
+
 	New()
 		..()
 		src.UpdateIcon()
@@ -1248,8 +1253,8 @@
 			cant_other_remove = 1
 
 /obj/item/clothing/suit/space/ntso
-	name = "NT-SO combat dress"
-	desc = "A Nanotrasen special forces combat dress system, pressurized for space travel."
+	name = "NT pressure suit"
+	desc = "A Nanotrasen paramilitary space suit, with an integrated chest rig."
 	icon_state = "ntso_specialist"
 	item_state = "ntso_specialist"
 

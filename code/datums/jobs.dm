@@ -753,7 +753,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	slot_jump = list(/obj/item/clothing/under/rank/overalls)
 	slot_foot = list(/obj/item/clothing/shoes/orange)
 	slot_glov = list(/obj/item/clothing/gloves/black)
-	slot_ears = list(/obj/item/device/radio/headset/engineer)
+	slot_ears = list(/obj/item/device/radio/headset/miner)
 	slot_poc1 = list(/obj/item/device/pda2/mining)
 	#ifdef UNDERWATER_MAP
 	slot_suit = list(/obj/item/clothing/suit/space/diving/engineering)
@@ -884,9 +884,9 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_foot = list(/obj/item/clothing/shoes/black)
 	slot_suit = list(/obj/item/clothing/suit/armor/vest)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
-	slot_poc1 = list(/obj/item/paper/book/from_file/pocketguide/bartending)
-	slot_lhan = list(/obj/item/reagent_containers/food/drinks/cocktailshaker)
-	items_in_backpack = list(/obj/item/gun/kinetic/riotgun)
+	slot_poc1 = list(/obj/item/cloth/towel/bar)
+	slot_poc2 = list(/obj/item/reagent_containers/food/drinks/cocktailshaker)
+	items_in_backpack = list(/obj/item/gun/kinetic/riotgun, /obj/item/paper/book/from_file/pocketguide/bartending)
 
 	New()
 		..()
@@ -946,6 +946,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_foot = list(/obj/item/clothing/shoes/galoshes)
 	slot_glov = list(/obj/item/clothing/gloves/long)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	slot_poc1 = list(/obj/item/cloth/towel/janitor)
 	items_in_backpack = list(/obj/item/handheld_vacuum)
 
 	New()
@@ -1008,6 +1009,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_poc2 = list(/obj/item/reagent_containers/food/snacks/plant/banana)
 	slot_card = /obj/item/card/id/clown
 	slot_ears = list(/obj/item/device/radio/headset/clown)
+	items_in_belt = list(/obj/item/cloth/towel/clown)
 	change_name_on_spawn = 1
 
 	New()
@@ -1694,6 +1696,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_foot = list(/obj/item/clothing/shoes/black)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
 	slot_lhan = list(/obj/item/plate/tray)
+	slot_poc1 = list(/obj/item/cloth/towel/white)
 	items_in_backpack = list(/obj/item/storage/box/glassbox,/obj/item/storage/box/cutlery)
 
 	New()
@@ -2376,9 +2379,9 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_belt = list(/obj/item/storage/fanny)
 	//more
 
-/datum/job/special/ntso_specialist
+/datum/job/special/nt_tactical_op
 	linkcolor = "#3348ff"
-	name = "Nanotrasen Special Operative"
+	name = "Nanotrasen Tactical Operative"
 	limit = 0
 	wages = PAY_IMPORTANT
 	allow_traitors = 0
@@ -2417,7 +2420,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 
 
 // Use this one for late respawns to dael with existing antags. they are weaker cause they dont get a laser rifle or frags
-/datum/job/special/ntso_specialist_weak
+/datum/job/special/nt_security_op
 	linkcolor = "#3348ff"
 	name = "Nanotrasen Security Operative"
 	limit = 1 // backup during HELL WEEK. players will probably like it
@@ -2443,7 +2446,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_poc2 = list(/obj/item/spacecash/fivehundred)
 	items_in_backpack = list(/obj/item/storage/firstaid/regular,
 							/obj/item/clothing/head/helmet/space/ntso,
-							/obj/item/clothing/suit/space/ntso)
+							/obj/item/clothing/suit/space/ntso,
+							/obj/item/cloth/handkerchief/nt)
 
 	New()
 		..()

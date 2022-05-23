@@ -161,6 +161,12 @@
 						<a href='[playeropt_link(M, "removeabil")]'>Remove</a> &bull;
 						<a href='[playeropt_link(M, "abilholder")]'>New Holder</a>
 				 	</div>
+					<div class='l'>Traits<a href='?src=\ref[src];action=secretsfun;type=traitlist_help'>*</a></div>
+					<div class='r'>
+						<a href='[playeropt_link(M, "managetraits")]'>Manage</a> &bull;
+						<a href='[playeropt_link(M, "addtrait")]'>Add</a> &bull;
+						<a href='[playeropt_link(M, "removetrait")]'>Remove</a>
+				 	</div>
 					<div class='l'>StatusEffects<a href='?src=\ref[src];action=secretsfun;type=statuseffect_help'>*</a></div>
 					<div class='r'>
 						<a href='[playeropt_link(M, "setstatuseffect")]'>Set</a> &bull;
@@ -377,11 +383,13 @@
 				</div>
 			</div>
 			"}
-
-	var/windowHeight = "450"
-	if (src.level == LEVEL_ADMIN)
-		windowHeight = "550"
-	else if (src.level == LEVEL_CODER)
-		windowHeight = "754"	//weird number, but for chui screen, it removes the scrolling.
-
+	var/windowHeight = 450
+	if (src.level >= LEVEL_CODER)
+		windowHeight = 754	//weird number, but for chui screen, it removes the scrolling.
+	else if (src.level >= LEVEL_ADMIN)
+		windowHeight = 550
+#ifdef SECRETS_ENABLED
+	dat += restricted_playeroptions(M)
+	windowHeight += 45
+#endif
 	usr.Browse(dat.Join(), "window=adminplayeropts[M.ckey];size=600x[windowHeight]")

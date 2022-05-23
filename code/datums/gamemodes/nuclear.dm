@@ -273,43 +273,40 @@
 
 	return 0
 
-/datum/game_mode/nuclear/declare_completion()
+/datum/game_mode/nuclear/victory_msg()
 	switch(finished)
 		if(-2) // Major Synd Victory - nuke successfully detonated
-			boutput(world, "<FONT size = 3><B>Total Syndicate Victory</B></FONT>")
-			boutput(world, "The operatives have destroyed [station_name(1)]!")
-#ifdef DATALOGGER
-			game_stats.Increment("traitorwin")
-#endif
+			return "<FONT size = 3><B>Total Syndicate Victory</B></FONT><br>\
+					The operatives have destroyed [station_name(1)]!"
 		if(-1) // Minor Synd Victory - station abandoned while nuke armed
-			boutput(world, "<FONT size = 3><B>Syndicate Victory</B></FONT>")
-			boutput(world, "The crew of [station_name(1)] abandoned the [station_or_ship()] while the bomb was armed! The [station_or_ship()] will surely be destroyed!")
-#ifdef DATALOGGER
-			game_stats.Increment("traitorwin")
-#endif
+			return "<FONT size = 3><B>Syndicate Victory</B></FONT><br>\
+					The crew of [station_name(1)] abandoned the [station_or_ship()] while the bomb was armed! The [station_or_ship()] will surely be destroyed!"
 		if(0) // Uhhhhhh
-			boutput(world, "<FONT size = 3><B>Stalemate</B></FONT>")
-			boutput(world, "Everybody loses!")
+			return "<FONT size = 3><B>Stalemate</B></FONT><br>\
+					Everybody loses!"
 		if(1) // Minor Crew Victory - station evacuated, bombing averted, operatives survived
-			boutput(world, "<FONT size = 3><B>Crew Victory</B></FONT>")
-			boutput(world, "The crew of [station_name(1)] averted the bombing! However, some of the operatives survived.")
-#ifdef DATALOGGER
-			game_stats.Increment("traitorloss")
-#endif
+			return "<FONT size = 3><B>Crew Victory</B></FONT><br>\
+					The crew of [station_name(1)] averted the bombing! However, some of the operatives survived."
 		if(2) // Major Crew Victory - bombing averted, all ops dead/captured
-			boutput(world, "<FONT size = 3><B>Total Crew Victory</B></FONT>")
-			boutput(world, "The crew of [station_name(1)] averted the bombing and eliminated all Syndicate operatives!")
-#ifdef DATALOGGER
-			game_stats.Increment("traitorloss")
-#endif
+			return "<FONT size = 3><B>Total Crew Victory</B></FONT><br>\
+					The crew of [station_name(1)] averted the bombing and eliminated all Syndicate operatives!"
+
+/datum/game_mode/nuclear/declare_completion()
+	boutput(world, src.victory_msg())
 
 	if(finished > 0)
 		var/value = world.load_intra_round_value("nukie_loss")
+#ifdef DATALOGGER
+		game_stats.Increment("traitorloss")
+#endif
 		if(isnull(value))
 			value = 0
 		world.save_intra_round_value("nukie_loss", value + 1)
 	else if(finished < 0)
 		var/value = world.load_intra_round_value("nukie_win")
+#ifdef DATALOGGER
+		game_stats.Increment("traitorwin")
+#endif
 		if(isnull(value))
 			value = 0
 		world.save_intra_round_value("nukie_win", value + 1)

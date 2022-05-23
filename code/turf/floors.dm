@@ -1463,7 +1463,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 /turf/simulated/floor/blob
 	name = "blob floor"
 	desc = "Blob floors to lob blobs over."
-	icon = 'icons/mob/blob.dmi'
+	icon = 'icons/mob/blob_organs.dmi'
 	icon_state = "bridge"
 	default_melt_cap = 80
 	allows_vehicles = 1
@@ -1740,6 +1740,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 			var/datum/material/M = getMaterial("steel")
 			A.setMaterial(M)
 		.= A //return tile for crowbar special attack ok
+		user.unlock_medal("Misclick", 1)
 
 	to_plating()
 	playsound(src, "sound/items/Crowbar.ogg", 80, 1)
@@ -1814,16 +1815,15 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 
 		// Don't replace with an [else]! If a prying tool is found above [intact] might become 0 and this runs too, which is how floor swapping works now! - BatElite
 		if (!intact)
-			restore_tile()
-			src.plate_mat = src.material
-			if(C.material)
-				src.setMaterial(C.material)
-			playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+			if(T.change_stack_amount(-1))
+				restore_tile()
+				src.plate_mat = src.material
+				if(C.material)
+					src.setMaterial(C.material)
+				playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 
-			if(!istype(src.material, /datum/material/metal/steel))
-				logTheThing("station", user, null, "constructs a floor (<b>Material:</b>: [src.material && src.material.name ? "[src.material.name]" : "*UNKNOWN*"]) at [log_loc(src)].")
-
-			T.change_stack_amount(-1)
+				if(!istype(src.material, /datum/material/metal/steel))
+					logTheThing("station", user, null, "constructs a floor (<b>Material:</b>: [src.material && src.material.name ? "[src.material.name]" : "*UNKNOWN*"]) at [log_loc(src)].")
 			//if(T && (--T.amount < 1))
 			//	qdel(T)
 			//	return
@@ -2167,6 +2167,11 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 		name = "overgrown floor"
 		desc = "This floor is covered in vines."
 		icon_state = "rootfloor_1"
+
+		random
+			New()
+				. = ..()
+				icon_state = "rootfloor_[rand(1,3)]"
 
 	oldfloor
 		name = "floor"

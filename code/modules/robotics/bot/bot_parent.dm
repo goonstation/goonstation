@@ -35,7 +35,7 @@
 	/// The noise that happens whenever the bot speaks
 	var/bot_voice = 'sound/misc/talk/bottalk_1.ogg'
 	/// The bot's speech bubble
-	var/static/image/bot_speech_bubble = image('icons/mob/mob.dmi', "speech")
+	var/static/mutable_appearance/bot_speech_bubble = mutable_appearance('icons/mob/mob.dmi', "speech")
 	var/use_speech_bubble = 1
 	/// Is this bot *dynamic* enough to need a higher processing tier when being watched?
 	/// Set to 0 for bots that don't typically directly interact with people, like ducks and floorbots
@@ -272,7 +272,7 @@
 	var/target_turf = get_pathable_turf(the_target)
 	if((BOUNDS_DIST(the_target, src) == 0))
 		return
-	if(src.bot_mover?.the_target == target_turf)
+	if(src.bot_mover?.the_target == target_turf && frustration == 0)
 		return 0
 	if(!target_turf)
 		return 0

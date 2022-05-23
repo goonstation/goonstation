@@ -3901,6 +3901,11 @@
 	id = "crematorium"
 	},
 /obj/item/device/radio/intercom/medical,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=central_hall3";
+	location = "bathroom";
+	name = "bot navigation beacon"
+	},
 /turf/simulated/floor/black,
 /area/station/medical/crematorium)
 "aqb" = (
@@ -8996,7 +9001,7 @@
 	name = "East Central Maintenance"
 	})
 "aKL" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/genetics,
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
@@ -11950,9 +11955,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/wall{
-	icon_state = "wooden"
-	},
+/turf/simulated/wall/auto/supernorn/wood,
 /area/station/crew_quarters/sauna)
 "bal" = (
 /obj/cable,
@@ -12164,9 +12167,7 @@
 	dir = 8
 	},
 /obj/machinery/meter,
-/turf/simulated/wall{
-	icon_state = "wooden"
-	},
+/turf/simulated/wall/auto/supernorn/wood,
 /area/station/crew_quarters/sauna)
 "bbx" = (
 /obj/stool/bench/red/auto,
@@ -12186,9 +12187,7 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 10
 	},
-/turf/simulated/wall{
-	icon_state = "wooden"
-	},
+/turf/simulated/wall/auto/supernorn/wood,
 /area/station/crew_quarters/sauna)
 "bbB" = (
 /obj/machinery/light/incandescent/cool{
@@ -12799,9 +12798,7 @@
 "bgk" = (
 /obj/decal/poster/wallsign/fire,
 /obj/machinery/atmospherics/pipe/simple,
-/turf/simulated/wall{
-	icon_state = "wooden"
-	},
+/turf/simulated/wall/auto/supernorn/wood,
 /area/station/crew_quarters/sauna)
 "bgl" = (
 /obj/stool/bench/red/auto,
@@ -12814,9 +12811,7 @@
 /area/station/crew_quarters/sauna)
 "bgn" = (
 /obj/machinery/atmospherics/pipe/simple,
-/turf/simulated/wall{
-	icon_state = "wooden"
-	},
+/turf/simulated/wall/auto/supernorn/wood,
 /area/station/crew_quarters/sauna)
 "bgq" = (
 /obj/cable{
@@ -13047,9 +13042,7 @@
 /obj/machinery/atmospherics/valve{
 	name = "sauna gas valve"
 	},
-/turf/simulated/wall{
-	icon_state = "wooden"
-	},
+/turf/simulated/wall/auto/supernorn/wood,
 /area/station/crew_quarters/sauna)
 "bhP" = (
 /obj/cable{
@@ -15647,7 +15640,7 @@
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/treatment)
 "byX" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "byY" = (
 /obj/stool/chair/office/blue{
@@ -15774,13 +15767,13 @@
 /turf/simulated/floor/plating/airless,
 /area/listeningpost)
 "bzD" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1
 	},
 /area/space)
 "bzE" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1
 	},
 /area/space)
@@ -15791,7 +15784,7 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
 "bzG" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5
 	},
 /area/space)
@@ -15800,7 +15793,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "bzJ" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10
 	},
 /area/space)
@@ -15808,7 +15801,7 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
 "bzL" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4
 	},
 /area/space)
@@ -15869,7 +15862,7 @@
 /turf/simulated/floor/plating,
 /area/listeningpost)
 "bzU" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8
 	},
 /area/space)
@@ -15924,7 +15917,7 @@
 /area/listeningpost)
 "bAb" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5
 	},
 /area/space)
@@ -15956,12 +15949,12 @@
 /area/listeningpost)
 "bAi" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8
 	},
 /area/space)
 "bAj" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6
 	},
 /area/space)
@@ -15996,13 +15989,13 @@
 /area/listeningpost)
 "bAo" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4
 	},
 /area/space)
 "bAp" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10
 	},
 /area/space)
@@ -16243,7 +16236,7 @@
 	},
 /area/listeningpost)
 "bBc" = (
-/turf/simulated/wall/asteroid/ice,
+/turf/simulated/wall/auto/asteroid/ice,
 /area/space)
 "bBd" = (
 /obj/cable{
@@ -16370,13 +16363,13 @@
 /area/space)
 "bBt" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6
 	},
 /area/space)
 "bBu" = (
 /turf/space,
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "bBv" = (
 /turf/simulated/floor/plating/airless,
@@ -17818,7 +17811,7 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/fitness)
 "ckn" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1
 	},
 /turf/simulated/floor/plating/airless/asteroid,
@@ -19684,9 +19677,7 @@
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe{
 	dir = 6
 	},
-/turf/simulated/wall{
-	icon_state = "wooden"
-	},
+/turf/simulated/wall/auto/supernorn/wood,
 /area/station/crew_quarters/sauna)
 "daL" = (
 /obj/disposalpipe/segment{
@@ -19976,9 +19967,7 @@
 	},
 /area/station/science/research_director)
 "dgK" = (
-/turf/simulated/wall{
-	icon_state = "wooden"
-	},
+/turf/simulated/wall/auto/supernorn/wood,
 /area/station/crew_quarters/sauna)
 "dgX" = (
 /obj/disposalpipe/segment/mail,
@@ -20221,9 +20210,7 @@
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4
 	},
-/turf/simulated/wall{
-	icon_state = "wooden"
-	},
+/turf/simulated/wall/auto/supernorn/wood,
 /area/station/crew_quarters/sauna)
 "dnC" = (
 /obj/stool/bed/moveable,
@@ -20706,7 +20693,7 @@
 	},
 /area/station/science/research_director)
 "dAT" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/kitchen,
 /obj/machinery/firealarm{
 	layer = 3.5;
 	pixel_y = 28
@@ -30477,9 +30464,7 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 9
 	},
-/turf/simulated/wall{
-	icon_state = "wooden"
-	},
+/turf/simulated/wall/auto/supernorn/wood,
 /area/station/crew_quarters/sauna)
 "ioC" = (
 /obj/disposalpipe/segment/mail,
@@ -31830,7 +31815,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "jfh" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10
 	},
 /turf/simulated/floor/plating/airless/asteroid,
@@ -32905,9 +32890,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/wall{
-	icon_state = "wooden"
-	},
+/turf/simulated/wall/auto/supernorn/wood,
 /area/station/crew_quarters/sauna)
 "jGv" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -33100,6 +33083,11 @@
 	},
 /turf/simulated/floor/purple,
 /area/station/medical/medbay/pharmacy)
+"jLs" = (
+/obj/decal/boxingrope,
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon4,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness)
 "jLv" = (
 /obj/decal/tile_edge/line/white{
 	dir = 8;
@@ -34708,6 +34696,14 @@
 	},
 /turf/simulated/floor,
 /area/station/science/lab)
+"kHg" = (
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=lounge";
+	location = "arrivals";
+	name = "bot navigation beacon"
+	},
+/turf/simulated/floor/carpet/blue/standard,
+/area/station/crewquarters/cryotron)
 "kHn" = (
 /obj/lattice{
 	dir = 6;
@@ -34889,7 +34885,6 @@
 /turf/simulated/floor/grass/random,
 /area/station/medical/dome)
 "kMO" = (
-/obj/machinery/door/firedoor/border_only,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -36515,7 +36510,7 @@
 	},
 /area/station/medical/medbay/cloner)
 "lKi" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5
 	},
 /turf/simulated/floor/plating/airless/asteroid,
@@ -45005,7 +45000,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "qmd" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9
 	},
 /turf/simulated/floor/plating/airless/asteroid,
@@ -45967,9 +45962,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/wall{
-	icon_state = "wooden"
-	},
+/turf/simulated/wall/auto/supernorn/wood,
 /area/station/crew_quarters/sauna)
 "qJg" = (
 /obj/disposalpipe/segment,
@@ -47089,6 +47082,9 @@
 	name = "N APC";
 	pixel_y = 24
 	},
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north)
 "rpy" = (
@@ -47537,7 +47533,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/ai_monitored/armory)
 "rCv" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10
 	},
 /turf/simulated/floor/plating/airless,
@@ -48795,7 +48791,7 @@
 	name = "East Central Maintenance"
 	})
 "soM" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/research,
 /obj/decal/poster/wallsign/testsubject{
 	pixel_y = 32
 	},
@@ -51228,9 +51224,7 @@
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 8
 	},
-/turf/simulated/wall{
-	icon_state = "wooden"
-	},
+/turf/simulated/wall/auto/supernorn/wood,
 /area/station/crew_quarters/sauna)
 "tFq" = (
 /obj/cable{
@@ -105465,7 +105459,7 @@ adv
 aaG
 nRA
 rpt
-aMy
+boq
 abr
 btU
 abr
@@ -106205,7 +106199,7 @@ aFR
 aHT
 aJN
 ciP
-wjM
+jLs
 aPl
 oDl
 aSH
@@ -108624,7 +108618,7 @@ buz
 sdV
 vMh
 uIi
-aSR
+kHg
 gfZ
 eQy
 uyz

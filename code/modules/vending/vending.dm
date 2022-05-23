@@ -1069,8 +1069,10 @@
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/coffee, 25, cost=PAY_TRADESMAN/10)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/tea, 10, cost=PAY_TRADESMAN/10)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/xmas, 10, cost=PAY_TRADESMAN/10)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/yerba, 10, cost=PAY_TRADESMAN/6)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/chickensoup, 10, cost=PAY_TRADESMAN/5)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/weightloss_shake, 10, cost=PAY_TRADESMAN/2)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/mate, 3, cost=PAY_TRADESMAN/1.5)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/covfefe, 10, cost=PAY_TRADESMAN, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/cola, rand(1, 6), cost=PAY_UNTRAINED/5, hidden=1)
 
@@ -1266,6 +1268,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/device/flash, 4)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/helmet/hardhat/security, 4)
 		product_list += new/datum/data/vending_product(/obj/item/device/pda2/security, 2)
+		product_list += new/datum/data/vending_product(/obj/item/sec_tape/vended, 3)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38/stun, 2)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/nine_mm_NATO, 2)
 		product_list += new/datum/data/vending_product(/obj/item/implantcase/counterrev, 3)
@@ -1634,6 +1637,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/storage/lunchbox, 12)
 		product_list += new/datum/data/vending_product(/obj/item/ladle, 1)
 		product_list += new/datum/data/vending_product(/obj/item/soup_pot, 1)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe/baster, 3)
 		product_list += new/datum/data/vending_product(/obj/item/kitchen/rollingpin, 2)
 		product_list += new/datum/data/vending_product(/obj/item/kitchen/utensil/knife/pizza_cutter, 5)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bowl, 10)
@@ -1651,6 +1655,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/condiment/syrup, 5)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/condiment/mayo, 5)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/condiment/ketchup, 5)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/condiment/soysauce, 10)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/plant/tomato, 10)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/plant/apple, 10)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/plant/lettuce, 10)
@@ -2223,6 +2228,26 @@
 		product_list += new/datum/data/vending_product(/obj/item/clothing/mask/monkey_translator, rand(1,2), hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/plant/banana, rand(1,20), hidden=1)
 
+/obj/machinery/vending/monkey/kitchen
+	icon_state = "monkey-k"
+	req_access = list(access_kitchen, access_heads)
+
+	get_desc()
+		. += "This vendor is restricted to kitchen access."
+
+/obj/machinery/vending/monkey/genetics
+	icon_state = "monkey-g"
+	req_access = list(access_medical_lockers, access_heads)
+
+	get_desc()
+		. += "This vendor is restricted to medical access."
+
+/obj/machinery/vending/monkey/research
+	icon_state = "monkey-r"
+	req_access = list(access_research, access_heads)
+
+	get_desc()
+		. += "This vendor is restricted to research access."
 
 /obj/machinery/vending/magivend
 	name = "MagiVend"
@@ -2238,21 +2263,20 @@
 
 	create_products()
 		..()
-		product_list += new/datum/data/vending_product(/obj/item/clothing/head/wizard, 1)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wizrobe, 1)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/sandal, 1)
-		product_list += new/datum/data/vending_product(/obj/item/staff, 2)
-
-		product_list += new/datum/data/vending_product(/obj/item/clothing/head/wizard/red, 1, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wizrobe/red, 1, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/head/wizard/purple, 1, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wizrobe/purple, 1, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/head/wizard/green, 1, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wizrobe/green, 1, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/head/wizard/witch, 1, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/head/wizard/necro, 1, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wizrobe/necro, 1, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/staff/crystal, 1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/wizard, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wizrobe, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/wizard/red, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wizrobe/red, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/wizard/purple, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wizrobe/purple, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/wizard/green, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wizrobe/green, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/wizard/witch, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/wizard/necro, 2, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wizrobe/necro, 2, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/sandal, 8)
+		product_list += new/datum/data/vending_product(/obj/item/staff, 4)
+		product_list += new/datum/data/vending_product(/obj/item/staff/crystal, 4, hidden=1)
 
 /obj/machinery/vending/standard
 	desc = "A vending machine full of various useful tools and devices that definitely cannot be used to make bombs"
@@ -2313,6 +2337,7 @@
 		product_list += new/datum/data/vending_product(/obj/decorative_pot, 5)
 		product_list += new/datum/data/vending_product(/obj/chicken_nesting_box,3)
 		product_list += new/datum/data/vending_product(/obj/item/chicken_carrier, 2)
+		product_list += new/datum/data/vending_product(/obj/machinery/shieldgenerator/energy_shield/botany, 2)
 
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/water_pipe, 1, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/seedplanter/hidden, 1, hidden=1)

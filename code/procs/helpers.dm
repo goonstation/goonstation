@@ -126,6 +126,19 @@ var/global/obj/flashDummy
 		var/obj/O = getFlashDummy()
 		O.set_loc(target)
 		target_r = O
+	if(wattage && isliving(target)) //Grilles can reroute arcflashes
+		for(var/obj/grille/L in range(target,1)) // check for nearby grilles
+			if(!L.ruined && L.anchored)
+				if (L.material?.hasProperty("electrical"))
+					if (prob(L.material?.getProperty("electrical")/2) && L.get_connection())
+						target = L
+						target_r = L
+						continue
+				else
+					if (prob(30) && L.get_connection()) // hopefully half the default is low enough
+						target = L
+						target_r = L
+						continue
 
 	playsound(target, "sound/effects/elec_bigzap.ogg", 30, 1)
 

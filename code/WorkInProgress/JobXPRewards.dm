@@ -605,6 +605,25 @@ mob/verb/checkrewards()
 		C.mob.put_in_hand_or_drop(I)
 		boutput(C.mob, "You look away for a second and the shaker turns into golden from top to bottom!")
 
+/////////////Chef////////////////
+
+/datum/jobXpReward/chefitamae
+	name = "Sushi Chef Outfit"
+	desc = "Om nom nom mmmm I love sushi"
+	required_levels = list("Chef"=0)
+	claimable = 1
+	claimPerRound = 1
+
+	activate(var/client/C)
+		var/obj/item/clothing/head/itamaehat/H = new/obj/item/clothing/head/itamaehat(get_turf(C.mob))
+		var/obj/item/clothing/under/misc/itamae/U = new/obj/item/clothing/under/misc/itamae(get_turf(C.mob))
+		H.set_loc(get_turf(C.mob))
+		U.set_loc(get_turf(C.mob))
+		C.mob.put_in_hand(H)
+		C.mob.put_in_hand(U)
+		boutput(C.mob, "You look down and notice that a whole sushi chef outfit has materialized in your hands! What on earth?")
+		return
+
 /////////////Mime////////////////
 
 /datum/jobXpReward/mime/mimefancy

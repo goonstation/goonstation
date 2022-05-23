@@ -70,7 +70,7 @@
 	// Adjust reward based off target job to estimate risk level
 		if (job == "Head of Security" || job == "Captain")
 			return 3
-		else if (job == "Medical Director" || job == "Head of Personnel" || job == "Chief Engineer" || job == "Research Director" || job == "Nanotrasen Special Operative" || job == "Security Officer" || job == "Detective")
+		else if (job == "Medical Director" || job == "Head of Personnel" || job == "Chief Engineer" || job == "Research Director" || job == "Nanotrasen Security Operative" || job == "Security Officer" || job == "Detective")
 			return 2
 		else
 			return 1
@@ -450,6 +450,7 @@
 	station_bounties[/obj/item/device/radio/headset/mail] = 1
 	station_bounties[/obj/item/device/radio/headset/clown] = 1
 	station_bounties[/obj/item/device/radio/headset/deaf] = 1
+	station_bounties[/obj/item/device/radio/headset/miner] = 1
 	station_bounties[/obj/item/device/radio/headset/security] = 2
 	station_bounties[/obj/item/device/radio/headset/command/radio_show_host] = 2
 	station_bounties[/obj/item/device/radio/headset/command/hop] = 2

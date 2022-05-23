@@ -128,7 +128,7 @@
 	tooltip_flags = REBUILD_DIST
 
 	New()
-		set_current_projectile(new/datum/projectile/syringe)
+		set_current_projectile(new/datum/projectile/syringe/syringe_barbed)
 		. = ..()
 
 	get_desc(dist)
@@ -142,6 +142,12 @@
 		else
 			. += "<br><span class='notice'>&emsp; Nothing</span>"
 
+	shoot(target, start, mob/user, POX, POY, is_dual_wield)
+		var/obj/projectile/P = ..()
+		if (istype(P)) //we actually shot something
+			P.create_reagents()
+
+
 /obj/item/gun/reagent/syringe/NT
 	name = "NT syringe gun"
 	icon_state = "syringegun-NT"
@@ -152,6 +158,7 @@
 
 	New()
 		..()
+		set_current_projectile(new/datum/projectile/syringe)
 		if (src.safe && islist(global.chem_whitelist) && length(global.chem_whitelist))
 			src.ammo_reagents = global.chem_whitelist
 
@@ -185,6 +192,7 @@
 
 	New()
 		..()
+		set_current_projectile(new/datum/projectile/syringe)
 		src.reagents.add_reagent("love", src.reagents.maximum_volume)
 
 

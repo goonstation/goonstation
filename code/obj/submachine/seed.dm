@@ -254,12 +254,11 @@
 			src.updateUsrDialog()
 
 		else if(href_list["ejectbeaker"])
-			if (!src.inserted) boutput(usr, "<span class='alert'>No receptacle found to eject.</span>")
+			var/obj/item/I = src.inserted
+			if (!I) boutput(usr, "<span class='alert'>No receptacle found to eject.</span>")
 			else
-				src.inserted.set_loc(src.loc)
-				usr.put_in_hand_or_eject(src.inserted) // try to eject it into the users hand, if we can
-				src.inserted = null
-			src.updateUsrDialog()
+				I.set_loc(src.loc) // causes Exited proc to be called
+				usr.put_in_hand_or_eject(I) // try to eject it into the users hand, if we can
 
 		else if(href_list["ejectseeds"])
 			for (var/obj/item/seed/S in src.seeds)
@@ -754,6 +753,11 @@
 		<td class='r [DNA.alleles[7] ? "hyp-dominant" : ""]'>[DNA.endurance]</td>
 		"}
 
+	Exited(Obj, newloc)
+		if(Obj == src.inserted)
+			src.inserted = null
+			src.updateUsrDialog()
+
 ////// Reagent Extractor
 
 /obj/submachine/chem_extractor/
@@ -860,22 +864,18 @@
 		var/list/containers = src.getContainers()
 		switch(action)
 			if("ejectcontainer")
-				if (!src.inserted)
+				var/obj/item/I = src.inserted
+				if (!I)
 					return
-				if (src.inserted == src.extract_to) src.extract_to = null
-				TRANSFER_OR_DROP(src, src.inserted)
-				usr.put_in_hand_or_eject(src.inserted)
-				src.inserted = null
-				. = TRUE
+				if (I == src.extract_to) src.extract_to = null
+				TRANSFER_OR_DROP(src, I) // causes Exited proc to be called
+				usr.put_in_hand_or_eject(I)
 			if("insertcontainer")
 				if (src.inserted)
 					return
 				var/obj/item/inserting = usr.equipped()
 				if(istype(inserting, /obj/item/reagent_containers/glass/) || istype(inserting, /obj/item/reagent_containers/food/drinks/))
-					src.inserted = inserting
-					usr.drop_item()
-					inserting.set_loc(src)
-					if(!src.extract_to) src.extract_to = inserting
+					tryInsert(inserting, usr)
 					. = TRUE
 			if("ejectingredient")
 				var/id = params["ingredient_id"]
@@ -930,21 +930,28 @@
 
 	attackby(var/obj/item/W as obj, var/mob/user as mob)
 		if(istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/))
-			if (isrobot(user))
-				boutput(user, "This machine does not accept containers from robots!")
-				return
-			if(src.inserted)
-				boutput(user, "<span class='alert'>A container is already loaded into the machine.</span>")
-				return
-			src.inserted =  W
-			user.drop_item()
-			W.set_loc(src)
-			if(!src.extract_to) src.extract_to = W
-			boutput(user, "<span class='notice'>You add [W] to the machine!</span>")
-			src.ui_interact(user)
+			tryInsert(W, user)
 
 		..()
 
+	proc/tryInsert(var/obj/item/W, var/mob/user)
+		if (isrobot(user))
+			boutput(user, "This machine does not accept containers from robots!")
+			return
+		if(src.inserted)
+			boutput(user, "<span class='alert'>A container is already loaded into the machine.</span>")
+			return
+		src.inserted =  W
+		user.drop_item()
+		W.set_loc(src)
+		if(!src.extract_to) src.extract_to = W
+		boutput(user, "<span class='notice'>You add [W] to the machine!</span>")
+		src.ui_interact(user)
+
+	Exited(Obj, newloc)
+		if(Obj == src.inserted)
+			src.inserted = null
+			tgui_process.update_uis(src)
 
 /obj/submachine/chem_extractor/proc/getContainers()
 	. = list(
