@@ -583,6 +583,11 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/black,
 /area/space)
 "bE" = (
@@ -675,6 +680,7 @@
 /area/space)
 "dx" = (
 /obj/machinery/portable_atmospherics/pressurizer,
+/obj/machinery/light/small/floor,
 /turf/simulated/floor/black,
 /area/space)
 "jX" = (
@@ -691,6 +697,14 @@
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/arrival/station)
+"pi" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/black,
+/area/space)
 "qr" = (
 /obj/machinery/atmospherics/pipe/manifold,
 /turf/simulated/floor/black,
@@ -722,14 +736,17 @@
 /area/space)
 "yk" = (
 /obj/reactor_component/heat_exchanger,
+/obj/machinery/light/small/floor,
 /turf/simulated/floor/black,
 /area/space)
 "zQ" = (
 /obj/machinery/portable_atmospherics/canister/air,
+/obj/machinery/light/small/floor,
 /turf/simulated/floor/black,
 /area/space)
 "BN" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
+/obj/machinery/light/small/floor,
 /turf/simulated/floor/black,
 /area/space)
 "BR" = (
@@ -742,6 +759,10 @@
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/black,
 /area/space)
+"CO" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/black,
+/area/space)
 "Dx" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
 /turf/simulated/floor/black,
@@ -750,6 +771,11 @@
 /obj/machinery/atmospherics/pipe/simple/color_pipe{
 	dir = 6
 	},
+/turf/simulated/floor/black,
+/area/space)
+"Er" = (
+/obj/machinery/power/terminal,
+/obj/machinery/power/apc,
 /turf/simulated/floor/black,
 /area/space)
 "Ez" = (
@@ -773,8 +799,16 @@
 /obj/machinery/nuclear_reactor,
 /turf/simulated/floor/black,
 /area/space)
+"HG" = (
+/obj/machinery/atmospherics/pipe/simple/color_pipe{
+	dir = 1
+	},
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/black,
+/area/space)
 "HW" = (
 /obj/reactor_component/control_rod,
+/obj/machinery/light/small/floor,
 /turf/simulated/floor/black,
 /area/space)
 "KG" = (
@@ -807,6 +841,18 @@
 /obj/machinery/atmospherics/pipe/simple/color_pipe{
 	dir = 10
 	},
+/turf/simulated/floor/black,
+/area/space)
+"Pv" = (
+/obj/machinery/atmospherics/binary/volume_pump,
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/black,
+/area/space)
+"PO" = (
+/obj/machinery/atmospherics/pipe/simple/color_pipe{
+	dir = 4
+	},
+/obj/machinery/light/small/floor,
 /turf/simulated/floor/black,
 /area/space)
 "QU" = (
@@ -45700,8 +45746,8 @@ Lg
 Lg
 Lg
 Lg
-Yq
-Yq
+Er
+pi
 Yq
 Lg
 Lg
@@ -46292,23 +46338,23 @@ aa
 aa
 Lg
 Yq
+CO
 Yq
+CO
 Yq
+CO
 Yq
+CO
 Yq
+CO
 Yq
+CO
 Yq
+CO
 Yq
+CO
 Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
+CO
 Lg
 aa
 aa
@@ -47198,23 +47244,23 @@ aa
 aa
 Lg
 Yq
+CO
+Yq
+CO
+Yq
+CO
 Yq
 Yq
+CO
 Yq
 Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
+CO
 ZL
 HW
 Yq
+CO
 Yq
-Yq
-Yq
+CO
 Lg
 aa
 aa
@@ -48104,21 +48150,21 @@ aa
 aa
 Lg
 Yq
+CO
+Yq
+CO
+Yq
+CO
 Yq
 Yq
 Yq
 Yq
 Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
+CO
 ZL
 yk
 Yq
-Yq
+CO
 Yq
 dx
 Lg
@@ -49010,21 +49056,21 @@ aa
 aa
 Lg
 Yq
+CO
+Yq
+CO
+Yq
+CO
 Yq
 Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-ZL
+PO
 Yq
 Sh
-QY
+Pv
 qr
+CO
 Yq
-Yq
-Yq
+CO
 Yq
 zQ
 Lg
@@ -49916,21 +49962,21 @@ aa
 aa
 Lg
 Yq
+CO
+Yq
+CO
+Yq
+CO
 Yq
 Yq
+PO
 Yq
 Yq
-Yq
-Yq
-Yq
+CO
 ZL
+CO
 Yq
-Yq
-Yq
-ZL
-Yq
-Yq
-Yq
+CO
 Yq
 BN
 Lg
@@ -51124,23 +51170,23 @@ aa
 aa
 Lg
 Yq
+CO
+Yq
+CO
+Yq
+CO
 Yq
 Yq
+CO
 Yq
 Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
+CO
 ZL
+CO
 Yq
+CO
 Yq
-Yq
-Yq
-Yq
+CO
 Lg
 aa
 aa
@@ -52030,23 +52076,23 @@ aa
 aa
 Lg
 Yq
+CO
 Yq
+CO
 Yq
-Yq
-Yq
-Yq
+CO
 Yq
 Yq
 OH
 Oq
 Oq
-Oq
+HG
 sI
+CO
 Yq
+CO
 Yq
-Yq
-Yq
-Yq
+CO
 Lg
 aa
 aa
@@ -52937,22 +52983,22 @@ aa
 Lg
 Yq
 Yq
+CO
 Yq
 Yq
 Yq
+CO
 Yq
 Yq
+CO
 Yq
 Yq
+CO
 Yq
 Yq
+CO
 Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
+CO
 Lg
 aa
 aa
@@ -53845,7 +53891,7 @@ Yq
 Yq
 Yq
 Yq
-Yq
+CO
 Yq
 Yq
 Yq
@@ -54144,23 +54190,23 @@ aa
 aa
 Lg
 Yq
+CO
 Yq
 Yq
 Yq
 Yq
 Yq
 Yq
+CO
 Yq
 Yq
 Yq
+CO
 Yq
 Yq
+CO
 Yq
-Yq
-Yq
-Yq
-Yq
-Yq
+CO
 Lg
 aa
 aa

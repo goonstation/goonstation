@@ -20,5 +20,15 @@
 
 	New()
 		..()
-		src.setMaterial(getMaterial("steel"))
+
+	process()
+		. = ..()
+		for(var/i=1 to 6)
+			for(var/j=1 to 6)
+				if(src.component_grid[i][j])
+					var/obj/item/reactor_component/comp = src.component_grid[i][j]
+					comp.processGas()
+					comp.processHeat()
+					comp.processNeutrons()
+
 

@@ -3,11 +3,13 @@
 /////////////////////////////////////////////////////////////////
 
 ABSTRACT_TYPE(/obj/reactor_component)
-/obj/reactor_component //base component
+/obj/item/reactor_component //base component
 	name = "base reactor component"
 	desc = "You really shouldn't be seeing this - call a coder"
 	icon = 'icons/misc/reactorcomponents.dmi'
 	icon_state = "fuel_rod"
+	w_class = W_CLASS_BULKY
+
 	var/icon_state_inserted = "component_cap"
 	var/temperature = 293 //room temp kelvin as default
 	_max_health = 100
@@ -28,20 +30,20 @@ ABSTRACT_TYPE(/obj/reactor_component)
 		return list()
 ////////////////////////////////////////////////////////////////
 //Fuel rod
-/obj/reactor_component/fuel_rod
+/obj/item/reactor_component/fuel_rod
 
 
 ////////////////////////////////////////////////////////////////
 //Control rod
-/obj/reactor_component/control_rod
+/obj/item/reactor_component/control_rod
 
 
 ////////////////////////////////////////////////////////////////
 //Heat exchanger
-/obj/reactor_component/heat_exchanger
+/obj/item/reactor_component/heat_exchanger
 
 
 ////////////////////////////////////////////////////////////////
 //Gas channel
-/obj/reactor_component/gas_channel
+/obj/item/reactor_component/gas_channel
 
