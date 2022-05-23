@@ -1640,18 +1640,6 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	containername = "Field Generator Crate (Cardlocked \[Engineering])"
 	access = access_engineering
 
-/datum/supply_packs/complex/atmos
-	name = "Atmospherics Supplies"
-	desc = "For when you need to be breathing."
-	category = "Basic Materials"
-	contains = list(/obj/item/tank/air,
-					/obj/item/tank/oxygen,
-					/obj/item/clothing/under/misc/atmospheric_technician)
-	frames = list(/obj/machinery/portable_atmospherics/scrubber = 2)
-	cost = 8000
-	containertype = /obj/storage/crate/wooden
-	containername = "Atmospherics Supplies"
-
 /datum/supply_packs/complex/winter
 	name = "Cold Weather Gear"
 	desc = "Warm winter gear to ward off the winter chills."
