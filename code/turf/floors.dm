@@ -1463,7 +1463,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 /turf/simulated/floor/blob
 	name = "blob floor"
 	desc = "Blob floors to lob blobs over."
-	icon = 'icons/mob/blob.dmi'
+	icon = 'icons/mob/blob_organs.dmi'
 	icon_state = "bridge"
 	default_melt_cap = 80
 	allows_vehicles = 1
