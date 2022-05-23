@@ -176,3 +176,49 @@
 		name = "Lab Monkey Crate"
 		desc = "Warning: Contains live monkeys!"
 		req_access = list(access_medical_lockers, access_tox_storage)
+
+	cdctier1
+		name = "Low-Risk CDC Pathogen Sample Crate"
+		desc = "Contains a pathogen sample with unknown properties."
+		spawn_contents = list(/obj/item/paper/cdc_pamphlet)
+		/*
+		attack_self(mob/user as mob)
+			src.add_fingerprint(user)
+			if (!owner_prints)
+				boutput(user, "<span class='alert'>[src] has accepted your fingerprint ID. You are its owner!</span>")
+				assign_name(user)
+			else
+				boutput(user, "<span class='notice'>There don't seem to be any buttons on [src] to press.</span>")
+
+		*/
+
+	cdctier2 //Ideally these would be authorized like lawbringer
+		name = "Medium-Risk CDC Pathogen Sample Crate"
+		desc = "Contains a pathogen sample with unknown properties. Requires both a Pathologist and the Medical Director's fingerprint to unlock."
+		spawn_contents = list(/obj/item/paper/cdc_pamphlet)
+		/*
+		attack_self(mob/user as mob)
+			src.add_fingerprint(user)
+			if (!owner_prints)
+				boutput(user, "<span class='alert'>[src] has accepted your fingerprint ID. You are its owner!</span>")
+				assign_name(user)
+			else
+				boutput(user, "<span class='notice'>There don't seem to be any buttons on [src] to press.</span>")
+
+		*/
+
+
+	cdctier3 //Ideally these would be authorized like lawbringer
+		name = "High-Risk CDC Pathogen Sample Crate"
+		desc = "Contains a pathogen sample with unknown properties. Requires a Pathologist, Medical Director, and a second Head's fingerprint to unlock."
+		spawn_contents = list(/obj/item/paper/cdc_pamphlet)
+		/*
+		attack_self(mob/user as mob)
+			src.add_fingerprint(user)
+			if (!owner_prints)
+				boutput(user, "<span class='alert'>[src] has accepted your fingerprint ID. You are its owner!</span>")
+				assign_name(user)
+			else
+				boutput(user, "<span class='notice'>There don't seem to be any buttons on [src] to press.</span>")
+
+		*/

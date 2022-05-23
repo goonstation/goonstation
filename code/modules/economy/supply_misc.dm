@@ -37,7 +37,7 @@ ABSTRACT_TYPE(/area/supply)
 			art = O.artifact
 		if(art)
 			shippingmarket.sell_artifact(AM, art)
-		else if (istype(AM, /obj/storage/crate/biohazard/cdc))
+		else if (istype(AM, /obj/storage/secure/crate/medical/cdctier1) || istype(AM, /obj/storage/secure/crate/medical/cdctier2) || istype(AM, /obj/storage/secure/crate/medical/cdctier3))
 			QM_CDC.receive_pathogen_samples(AM)
 		else if (istype(AM, /obj/storage/crate) || istype(AM, /obj/storage/secure/crate/))
 			if (AM.delivery_destination)
