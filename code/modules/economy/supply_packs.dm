@@ -1154,16 +1154,23 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/crate
 	containername = "Necessities Vending Machine Restocking Pack"
 
-/datum/supply_packs/med_hydro_vending_restock
-	name = "Medical/Hydroponics Vending Machine Restocking Pack"
-	desc = "Various Vending Machine Restock Cartridges for Med/Hydro"
+/datum/supply_packs/catering_vending_restock
+	name = "Catering Vending Machine Restocking Pack"
+	desc = "Various Vending Machine Restock Cartridges for catering"
 	contains = list(/obj/item/vending/restock_cartridge/hydroponics,
-					/obj/item/vending/restock_cartridge/medical,
-					/obj/item/vending/restock_cartridge/medical_public,
 					/obj/item/vending/restock_cartridge/kitchen)
-	cost = 3000
+	cost = 1000
 	containertype = /obj/storage/crate
-	containername = "Med/Hydro Vending Machine Restocking Pack"
+	containername = "Catering Vending Machine Restocking Pack"
+
+/datum/supply_packs/medical_vending_restock
+	name = "Medical Vending Machine Restock Pack"
+	desc = "Various Vending Machine Restock Cartridges for medical"
+	contains = list(/obj/item/vending/restock_cartridge/medical,
+					/obj/item/vending/restock_cartridge/medical_public,)
+	cost = 2000
+	containertype = /obj/storage/crate
+	containername = "Medical Vending Machine Restocking Pack"
 
 /datum/supply_packs/security_vending_restock
 	name = "Security Vending Machine Restocking Pack"
