@@ -1,28 +1,23 @@
-/obj/item/device/spytheifbox // the box spy thieves start with to choose their item
-	name = "storage"
+/obj/item/device/spybox // the box spy thieves start with to choose their item
+	name = "Box"
 	icon = 'icons/obj/items/storage.dmi'
-	icon_state = "blank_box"
+	icon_state = "box"
 	desc = "A box that can hold a number of small items. There appears to be a button on it"
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	item_state = "box"
 
 
-	attack_self(var/mob/M)
-		..()
-		choose_item()
+	attack_self()
+		var/list/L = list("Spy Camera", "Scuttlebot")
+		var/result = tgui_input_list(usr, "Choose a device", "Transforming box...", L)
 
-		var/mob/living/carbon/human/H = holder.owner
-
-
-
-	proc/choose_item(var/mob/living/carbon/human/C)
-		var/list/choices = list()
-		choices += ("Camera with built-in flash")
-		choices += ("Scuttlebot")
-
-		var/choice = input("Choose which item you want: ", "Select Item", null) as null|anything in choices
-		if (!choice)
-			boutput(holder.owner, __blue("You leave the box alone."))
-			return 1
-		var/choice_index = choices.Find(choice)
-
+		if(result == null)
+			return
+		if(result == "Spy Camera")
+			var/spycamera = new /obj/item/camera/spy(get_turf(src))
+			usr.put_in_hand_or_drop(spycamera)
+		if(result == "Scuttlebot")
+			var/scuttlebot = new /obj/item/clothing/head/det_hat/folded_scuttlebot(get_turf(src))
+			usr.put_in_hand_or_drop(scuttlebot)
+		boutput(usr, "<span class='notice'>The box transforms into a [result]!</span>")
+		qdel(src)
