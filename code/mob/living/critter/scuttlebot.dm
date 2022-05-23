@@ -82,8 +82,6 @@
 			playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
 			make_cleanable(/obj/decal/cleanable/oil,src.loc)
 
-<<<<<<< HEAD
-=======
 	attackby(obj/item/W, mob/M)
 		if(istype(W, /obj/item/clothing/glasses/scuttlebot_vr))
 			new /obj/item/clothing/head/det_hat/folded_scuttlebot(get_turf(src))
@@ -94,7 +92,6 @@
 		else
 			..()
 
->>>>>>> 2d0b3040b5a9255aec28f95dbea3a9f216649fda
 	proc/return_to_owner()
 		if (controller != null)
 			if(!controller.loc)
