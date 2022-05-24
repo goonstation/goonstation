@@ -11,14 +11,23 @@ ABSTRACT_TYPE(/obj/reactor_component)
 	w_class = W_CLASS_BULKY
 
 	var/icon_state_inserted = "component_cap"
+	var/ui_image = null
 	var/temperature = 293 //room temp kelvin as default
 	_max_health = 100
 
+	var/static/list/ui_image_base64_cache = list()
 
 	New()
 		..()
 		src.setMaterial(getMaterial("steel"))
 		_health = _max_health
+		var/img_check = ui_image_base64_cache[src.type]
+		if (img_check)
+			src.ui_image = img_check
+		else
+			var/icon/dummy_icon = icon(initial(src.icon), initial(src.icon_state_inserted))
+			src.ui_image = icon2base64(dummy_icon)
+			ui_image_base64_cache[src.type] = src.ui_image
 
 	proc/processGas(var/inGas)
 		return inGas //most components won't touch gas
@@ -28,6 +37,7 @@ ABSTRACT_TYPE(/obj/reactor_component)
 
 	proc/processNeutrons(var/list/inNeutrons)
 		return list()
+
 ////////////////////////////////////////////////////////////////
 //Fuel rod
 /obj/item/reactor_component/fuel_rod

@@ -735,7 +735,7 @@
 /turf/simulated/floor/black,
 /area/space)
 "yk" = (
-/obj/reactor_component/heat_exchanger,
+/obj/item/reactor_component/heat_exchanger,
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/black,
 /area/space)
@@ -807,7 +807,7 @@
 /turf/simulated/floor/black,
 /area/space)
 "HW" = (
-/obj/reactor_component/control_rod,
+/obj/item/reactor_component/control_rod,
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/black,
 /area/space)
@@ -856,7 +856,7 @@
 /turf/simulated/floor/black,
 /area/space)
 "QU" = (
-/obj/reactor_component/gas_channel,
+/obj/item/reactor_component/gas_channel,
 /turf/simulated/floor/black,
 /area/space)
 "QY" = (
@@ -864,7 +864,7 @@
 /turf/simulated/floor/black,
 /area/space)
 "RE" = (
-/obj/reactor_component/fuel_rod,
+/obj/item/reactor_component/fuel_rod,
 /turf/simulated/floor/black,
 /area/space)
 "Sh" = (
