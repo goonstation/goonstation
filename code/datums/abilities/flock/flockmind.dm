@@ -22,8 +22,7 @@
 	if(!F?.flock)
 		return //someone made a flockmind without a flock, or gave this ability holder to something else.
 	src.totalCompute = F.flock.total_compute()
-	var/usedCompute = F.flock.used_compute()
-	src.points = src.totalCompute - usedCompute
+	src.points = src.totalCompute - F.flock.used_compute()
 
 /datum/abilityHolder/flockmind/onAbilityStat()
 	..()
