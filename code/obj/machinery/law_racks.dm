@@ -493,6 +493,7 @@
 	**/
 	proc/format_for_display(var/glue = "<br>")
 		var/law_counter = 1 //make the laws always sequential regardless of where in the rack they are
+		var/removed_law_offset = 0
 		var/list/lawOut = new
 		var/list/removed_laws = new
 
@@ -501,7 +502,14 @@
 			if(!module)
 				if (last_laws[i])
 					//load the law number and text from our saved law list
-					removed_laws += "<del class=\"alert\">[last_laws[i]["number"]]: [last_laws[i]["law"]]</del>"
+					var/list/lawtext = last_laws[i]["law"]
+					if (islist(lawtext))
+						for (var/law in lawtext)
+							removed_laws += "<del class=\"alert\">[last_laws[i]["number"] + removed_law_offset]: [law]</del>"
+							if (lawtext.Find(law) != length(lawtext)) //screm
+								removed_law_offset++
+					else
+						removed_laws += "<del class=\"alert\">[last_laws[i]["number"] + removed_law_offset]: [lawtext]</del>"
 				continue
 			var/lt = module.get_law_text(TRUE)
 			var/class = "regular"
@@ -595,6 +603,8 @@
 		tgui_process.update_uis(src)
 
 	proc/insert_module_callback(var/slotNum,var/mob/user,var/obj/item/aiModule/equipped)
+		if(src.law_circuits[slotNum])
+			return FALSE
 		src.law_circuits[slotNum]=equipped
 		user.u_equip(equipped)
 		equipped.set_loc(src)

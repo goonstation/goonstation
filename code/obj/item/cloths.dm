@@ -73,6 +73,8 @@ ABSTRACT_TYPE(/obj/item/cloth/towel)
 	JOB_XP(user, "Janitor", 3)
 	if (M.reagents)
 		M.reagents.trans_to(src, 5)
+	playsound(src, 'sound/items/towel.ogg', 20, 1)
+	animate_smush(M)
 
 /obj/item/cloth/towel/afterattack(atom/target, mob/user as mob)
 	if (istype(target, /obj/item/reagent_containers/food/drinks))

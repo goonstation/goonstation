@@ -48,9 +48,7 @@
 	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))))
 		src.add_dialog(usr)
 		if (href_list["spell_teleport"])
-			if (!can_act(H))
-				return
-			if (src.uses >= 1 && usr.teleportscroll(1, 1, src) == 1)
+			if (src.uses >= 1 && usr.teleportscroll(1, 1, src, null, TRUE) == 1)
 				src.uses -= 1
 		if (ismob(src.loc))
 			attack_self(src.loc)
@@ -151,6 +149,7 @@
 		return
 
 /obj/item/staff/crystal // goes with Gannets' purple wizard robes - it looks different, and that's about it  :I  (always b fabulous)
+	name = "crystal wizard's staff"
 	desc = "A magical staff used for channeling spells. It's got a big crystal on the end."
 	icon_state = "staff_crystal"
 	item_state = "staff_crystal"

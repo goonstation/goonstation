@@ -664,7 +664,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 	equipped()
 		RETURN_TYPE(/obj/item)
 		if (active_hand)
-			if (hands.len >= active_hand)
+			if (length(src.hands) >= active_hand)
 				var/datum/handHolder/HH = hands[active_hand]
 				return HH.item
 		return null
@@ -1281,7 +1281,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 		..(message)
 		return
 
-	if (src.robot_talk_understand && !src.stat)
+	if (src.robot_talk_understand && !src.stat && !ghost_spawned)
 		if (length(message) >= 2)
 			if (copytext(lowertext(message), 1, 3) == ":s")
 				message = copytext(message, 3)

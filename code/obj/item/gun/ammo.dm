@@ -364,7 +364,7 @@
 	icon_state = "stenag_mag"
 	amount_left = 20.0
 	max_amount = 20.0
-	ammo_cat = AMMO_AUTO_562
+	ammo_cat = AMMO_AUTO_556
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 
 	armor_piercing

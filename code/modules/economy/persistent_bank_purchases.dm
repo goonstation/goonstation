@@ -22,6 +22,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	new /datum/bank_purchaseable/human_item/sparkler_box,\
 	new /datum/bank_purchaseable/human_item/dabbing_license,\
 	new /datum/bank_purchaseable/human_item/chem_hint,\
+	new /datum/bank_purchaseable/human_item/pixel_pass,\
 
 	new /datum/bank_purchaseable/altjumpsuit,\
 	new /datum/bank_purchaseable/altclown,\
@@ -331,7 +332,11 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			icon = 'icons/obj/dojo.dmi'
 			icon_state = "scroll"
 
-
+		pixel_pass
+			name = "Pixel Pass"
+			cost = 5000
+			path = /obj/item/pixel_pass
+			icon_state = "pixel_pass"
 
 	altjumpsuit
 		name = "Alternate Jumpsuit"

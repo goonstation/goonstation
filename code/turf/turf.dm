@@ -435,6 +435,9 @@ proc/generate_space_color()
 			else
 				M.set_loc(warptarget)
 #endif
+	// https://www.byond.com/forum/post/2382205
+	// Default behavior of turf/Entered() is to call Crossed() this will maintain that behavior
+	Crossed(M)
 
 // Ported from unstable r355
 /turf/space/Entered(atom/movable/A as mob|obj)

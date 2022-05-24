@@ -54,7 +54,7 @@
 #define AMMO_RIFLE_308 "rifle_308"
 #define AMMO_AUTO_308 "auto_308"
 
-#define AMMO_AUTO_562 "auto_5.56mm"
+#define AMMO_AUTO_556 "auto_5.56mm"
 #define AMMO_SMG_9MM "auto_9mm"
 
 #define AMMO_9MM_ALL AMMO_AUTO_9MM, AMMO_PISTOL_9MM, AMMO_TRANQ_9MM
