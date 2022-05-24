@@ -296,13 +296,11 @@
 		setProperty("meleeprot", 5)
 		setProperty("rangedprot", 1)
 
-
 	para_troop
 		icon_state = "para_sec"
 		item_state = "para_sec"
 		name = "rapid response armor"
 		desc = "A protective padded suit for emergency reponse personnel. Tailored for ground operations, not vaccuum rated. This one bears security insignia."
-		mats = 50
 
 	para_eng
 		name = "rapid response armor"
@@ -1409,17 +1407,28 @@
 		icon_state = "syndie_specialist-heavy"
 		item_state = "syndie_specialist-heavy"
 
+	ntso
+
+		name = "NT-SO heavy operative combat armor"
+		desc = "A Nanotrasen special forces heavy combat dress system, pressurized for space travel and reinforced for greater protection in firefights."
+		is_syndicate = FALSE
+		icon_state = "ntso_specialist-heavy"
+		item_state = "ntso_specialist-heavy"
+
+		setupProperties()
+			..()
+			setProperty("meleeprot", 9)
+			setProperty("rangedprot", 2)
+
 //NT pod wars suits
 /obj/item/clothing/suit/space/nanotrasen
 	name = "Nanotrasen Heavy Armor"
-	icon_state = "ntarmor2"
-	item_state = "ntarmor2"
+	icon_state = "nanotrasen_pilot"
+	item_state = "nanotrasen_pilot"
 	desc = "Heavy armor used by certain Nanotrasen bodyguards."
 
 	pilot
 		name = "NT space suit"
-		icon_state = "nanotrasen_pilot"
-		item_state = "nanotrasen_pilot"
 		desc = "A suit that protects against low pressure environments. Issued to nanotrasen pilots."
 		team_num = TEAM_NANOTRASEN
 		#ifdef MAP_OVERRIDE_POD_WARS
