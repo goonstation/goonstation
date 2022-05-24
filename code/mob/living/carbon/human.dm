@@ -672,6 +672,7 @@
 				sleep(20 SECONDS)
 				if(HS.disposed || !HS.mind || HS.mind.disposed || isdead(HS)) // we went somewhere else, or suicided, or something idk
 					return
+				HS.UnregisterSignal(src, COMSIG_PARENT_PRE_DISPOSING) // We no longer want to disappear if the body gets del'd
 				boutput(HS, "<b class = 'hint'>We released a headspider, using up some of our DNA reserves.</b>")
 				HS.set_loc(get_turf(src)) //be free!!!
 				src.visible_message("<span class='alert'><B>[src]</B>'s head detaches, sprouts legs and wanders off looking for food!</span>")
