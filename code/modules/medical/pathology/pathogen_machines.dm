@@ -405,7 +405,7 @@
 	var/manipulating = false //are we currently irradiating the pathogen?
 	New()
 		..()
-		gui = new("html/pathoComp.html", "pathology", "size=715x685", src)
+		gui = //new("html/pathoComp.html", "pathology", "size=715x685", src)
 		gui.validate_user = 1
 		SPAWN(5 SECONDS)
 			rescan()
