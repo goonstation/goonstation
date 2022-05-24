@@ -86,11 +86,11 @@
 
 	var/turf/T = get_turf(F)
 
-	if (istype(T, /turf/space/) || istype(T.loc, /area/station/solar) || istype(T.loc, /area/station/mining/magnet))
-		boutput(F, "<span class='alert'>Space and exposed areas are unsuitable for rift placement!</span>")
-		return TRUE
-
 	if (!isadmin(F))
+		if (istype(T, /turf/space/) || istype(T.loc, /area/station/solar) || istype(T.loc, /area/station/mining/magnet))
+			boutput(F, "<span class='alert'>Space and exposed areas are unsuitable for rift placement!</span>")
+			return TRUE
+
 		if(IS_ARRIVALS(T.loc))
 			boutput(F, "<spawn class='alert'>Your rift can't be placed inside arrivals!</span>")
 			return TRUE
