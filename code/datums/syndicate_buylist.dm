@@ -954,7 +954,7 @@ This is basically useless for anyone but miners.
 	item = /obj/item/clothing/head/det_hat/folded_scuttlebot
 	cost = 2
 	vr_allowed = 0
-	desc = "A sneaky robot armed with a camera disguised as a hat, used to spy on people. Comes with it's own remote controlling glasses. Can lift heavy items and has a disabling flash."
+	desc = "A sneaky robot armed with a camera disguised as a hat, used to spy on people. Comes with it's own remote controlling glasses. Can lift small items and has a disabling flash."
 	job = list("Detective")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
