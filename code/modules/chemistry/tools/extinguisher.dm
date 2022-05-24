@@ -143,6 +143,8 @@
 				return
 
 		playsound(src, "sound/effects/spray.ogg", 30, 1, -3)
+		if (prob(20) && checkonomatopoeic(user))
+			user.say(pick("Fwoosh", "Whoosh!", "Pssshhh!"))
 
 		var/direction = get_dir(src,target)
 

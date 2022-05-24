@@ -985,6 +985,13 @@
 
 /obj/item/proc/afterattack(atom/target, mob/user, reach, params)
 	PROTECTED_PROC(TRUE)
+	if (prob(10) && checkonomatopoeic(user))
+		switch (src.hit_type)
+			if (DAMAGE_BLUNT, DAMAGE_CRUSH)
+				user.say(pick("Clonk.", "Whack!", "BONK", "Bam!", "Bonk!", "Bash!", "Bong.", "Boink!", "Smack!", "THUD"))
+			if (DAMAGE_CUT, DAMAGE_STAB)
+				if (ismob(target) || iscritter(target))
+					user.say(pick("Splch", "Squitch", "Splat!"))
 	return
 
 /obj/item/dummy/ex_act()

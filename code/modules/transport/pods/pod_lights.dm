@@ -104,7 +104,8 @@
 	proc/weeoo()
 		if (weeoo_in_progress)
 			return
-
+		if (prob(70) && checkonomatopoeic(ship.pilot))
+			ship.pilot.say(pick("Wee woo wee woo!", "Weeooweeoo", "Nee naah nee naah!"))
 		weeoo_in_progress = 10
 		SPAWN(0)
 			playsound(src.loc, "sound/machines/siren_police.ogg", 50, 1)

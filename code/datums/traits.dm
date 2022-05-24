@@ -416,6 +416,15 @@
 	onAdd(var/mob/owner)
 		owner.bioHolder?.AddEffect("accent_tyke")
 
+/obj/trait/onomatopoeic
+	name = "Onomatopoeic (1) \[Language\]"
+	cleanName = "Onomatopoeic"
+	desc = "You are unable to stop yourself adding sound effects to your actions."
+	id = "onomatopoeic"
+	icon_state = "onomatopoeic"
+	points = 1
+	category = list("language")
+
 // VISION/SENSES - Green Border
 
 /obj/trait/cateyes

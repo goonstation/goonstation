@@ -32,6 +32,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 	var/booster_upgrade = 0 //do we go through space?
 	var/booster_image = null //what overlay icon do we use for the booster upgrade? (we have to initialize this in new)
 	var/emagged = FALSE
+	var/moving = FALSE
 
 	New()
 		. = ..()
@@ -196,7 +197,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 		// We finally actually walk the src vehicle in the dir direction with td delay between steps
 		// The vehicle will keep moving in this direction until stopped or the direction is changed
 		walk(src, dir, td)
-
+		moving = TRUE
 		// We.... uhhhhhh... well, we do the glide_size and animation adjustments AGAIN.
 		// I really have no idea why we do this, but it was present in pod movement code,
 		// and I asked mbc about it and we were both too scared to change it
@@ -218,6 +219,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 
 
 	proc/Stopped()
+		moving = FALSE
 		ClearSpecificOverlays("booster_image") //so we don't see thrusters firing on a parked vehicle
 		return
 
@@ -266,6 +268,8 @@ ABSTRACT_TYPE(/obj/vehicle)
 	weeoo_in_progress = 10
 	SPAWN(0)
 		playsound(src.loc, "sound/machines/siren_police.ogg", 50, 1)
+		if (prob(70) && checkonomatopoeic(src.rider))
+			src.rider.say(pick("Wee woo wee woo!", "Weeooweeoo", "Nee naah nee naah!"))
 		light.enable()
 		src.icon_state = "[src.icon_base][src.icon_weeoo_state]"
 		while (weeoo_in_progress--)
@@ -316,7 +320,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 		return
 	if(ON_COOLDOWN(AM, "vehicle_bump", 10 SECONDS))
 		return
-	walk(src, 0)
+	stop()
 	update()
 	..()
 	in_bump = 1
@@ -405,7 +409,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 	var/mob/living/rider = src.rider
 	..()
 	rider.pixel_y = 0
-	walk(src, 0)
+	stop()
 	if(crashed)
 		if(crashed == 2)
 			playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
@@ -774,7 +778,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 		return
 	if(ON_COOLDOWN(AM, "vehicle_bump", 10 SECONDS))
 		return
-	walk(src, 0)
+	stop()
 	update()
 	..()
 	in_bump = 1
@@ -816,7 +820,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 	var/mob/living/rider = src.rider
 	..()
 	rider.pixel_y = 0
-	walk(src, 0)
+	stop()
 	src.log_rider(rider, 1)
 	if(crashed)
 		if(crashed == 2)
@@ -961,7 +965,6 @@ ABSTRACT_TYPE(/obj/vehicle)
 	desc = "A funny-looking car designed for circus events. Seats 30, very roomy!"
 	icon_state = "clowncar"
 	var/antispam = 0
-	var/moving = 0
 	rider_visible = 0
 	is_syndicate = 1
 	mats = 15
@@ -1115,7 +1118,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 		return
 	if(ON_COOLDOWN(AM, "vehicle_bump", 10 SECONDS))
 		return
-	walk(src, 0)
+	stop()
 	moving = 0
 	icon_state = "clowncar"
 	..()
@@ -1157,8 +1160,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 
 /obj/vehicle/clowncar/Bumped(var/atom/movable/AM as mob|obj)
 	if (moving && ismob(AM) && !isghostcritter(AM)) //If we're moving and they're in front of us then bump they
-		walk(src, 0)
-		moving = 0
+		stop()
 		bumpstun(AM)
 
 	..()
@@ -1197,7 +1199,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 		return
 	var/mob/living/rider = src.rider
 	..()
-	walk(src, 0)
+	stop()
 	moving = 0
 	src.log_me(src.rider, null, "rider_exit")
 	if(crashed)
@@ -1385,7 +1387,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		return
 	if(ON_COOLDOWN(AM, "vehicle_bump", 10 SECONDS))
 		return
-	walk(src, 0)
+	stop()
 	..()
 	in_bump = 1
 	if((isturf(AM) || istype(AM, /mob/living/carbon/wall)) && (rider.bioHolder.HasEffect("clumsy") || rider.reagents.has_reagent("ethanol")))
@@ -1444,7 +1446,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	..()
 	rider.pixel_y = 0
 	src.icon_state = initial(src.icon_state)
-	walk(src, 0)
+	stop()
 	if(crashed)
 		if(crashed == 2)
 			playsound(src.loc, "sound/voice/animal/cat.ogg", 70, 1)
@@ -1794,7 +1796,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		return
 	if(is_badmin_bus && ON_COOLDOWN(AM, "vehicle_bump", 5 SECONDS))
 		return
-	walk(src, 0)
+	stop()
 	icon_state = nonmoving_state
 	..()
 	in_bump = 1
@@ -1878,7 +1880,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	var/mob/living/rider = src.rider
 	..()
 	rider.remove_adminbus_powers()
-	walk(src, 0)
+	stop()
 	if(crashed)
 		if(crashed == 2)
 			playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)

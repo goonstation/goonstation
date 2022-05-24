@@ -599,7 +599,8 @@ TRAYS
 		attack_particle(user,M)
 		M.TakeDamageAccountArmor("head", force, 0, 0, DAMAGE_BLUNT)
 		playsound(src, "sound/impact_sounds/plate_break.ogg", 50, 1)
-
+		if (prob(60) && checkonomatopoeic(user))
+			user.say(pick("Smash!", "Crash!"))
 		var/turf/shardturf = get_turf(M)
 
 		if(src.cant_drop == TRUE)
@@ -915,6 +916,8 @@ TRAYS
 	unique_attack_garbage_fuck(mob/M as mob, mob/user as mob)
 		M.TakeDamageAccountArmor("head", src.force, 0, 0, DAMAGE_BLUNT)
 		playsound(src, "sound/weapons/trayhit.ogg", 50, 1)
+		if (prob(60) && checkonomatopoeic(user))
+			user.say(pick("Clang!", "Clong!", "Bonk!"))
 		src.visible_message("\The [src] falls out of [user]'s hands due to the impact!")
 		user.drop_item(src)
 

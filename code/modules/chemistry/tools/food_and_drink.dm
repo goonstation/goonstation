@@ -266,6 +266,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		consumer.nutrition += src.heal_amt * 10
 		src.heal(consumer)
 		playsound(consumer.loc,"sound/items/eatfood.ogg", rand(10,50), 1)
+		if (prob(15) && checkonomatopoeic(consumer))
+			consumer.say("Nom", "Crunch", "Chomp", "Munch")
 		on_bite(consumer, feeder)
 		if (src.festivity)
 			modify_christmas_cheer(src.festivity)
@@ -573,6 +575,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 					src.reagents.trans_to(consumer, min(reagents.total_volume, src.gulp_size))
 
 		playsound(consumer.loc,"sound/items/drink.ogg", rand(10,50), 1)
+		if (prob(10) && checkonomatopoeic(consumer))
+			consumer.say(pick("Slurp", "Sip"))
 		consumer.urine += 0.1
 		eat_twitch(consumer)
 

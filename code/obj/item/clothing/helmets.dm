@@ -748,6 +748,9 @@
 		weeoo_in_progress = 10
 		SPAWN(0)
 			playsound(src.loc, "sound/machines/siren_police.ogg", 50, 1)
+			var/mob/M = src.loc
+			if (prob(70) && checkonomatopoeic(M))
+				M.say(pick("Wee woo wee woo!", "Weeooweeoo", "Nee naah nee naah!"))
 			light.enable()
 			src.icon_state = "siren1"
 			for (weeoo_in_progress, weeoo_in_progress > 0, weeoo_in_progress--)

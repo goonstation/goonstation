@@ -436,6 +436,8 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 	if (ismob(user))
 		var/mob/M = user
+		if (prob(40) && checkonomatopoeic(M))
+			M.say(pick("Pew!", "Pew pew!", "Pow!", "Bang!", "Shoot."))
 		if (ishuman(M) && src.add_residue) // Additional forensic evidence for kinetic firearms (Convair880).
 			var/mob/living/carbon/human/H = user
 			H.gunshot_residue = 1

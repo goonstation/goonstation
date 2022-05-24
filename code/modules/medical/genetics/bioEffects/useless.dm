@@ -456,6 +456,19 @@
 			holder.age = rand(-80, 80)
 
 
+/datum/bioEffect/onomatopoeic
+	name = "Onomatopoeic"
+	desc = "The subject is unable to stop themselves from adding sound effects to their actions."
+	id = "onomatopoeic"
+	msgGain = "You feel a sudden urge to add sound effects to everything you do."
+	msgLose = "You feel less expressive."
+	OnLife(mult)
+		..()
+		if (istype(holder.owner?.loc, /obj/vehicle) && prob(10) && checkonomatopoeic(holder.owner))
+			var/obj/vehicle/vehicle = holder.owner.loc
+			if (vehicle.moving)
+				holder.owner.say(pick("Zooom!", "Zoom!", "Zoooom", "Wheee!", "Nyyoom!"))
+
 //////////////////////
 // Combination Only //
 //////////////////////
