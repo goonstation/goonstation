@@ -399,7 +399,7 @@
 	var/mob/living/intangible/flock/flockmind/F = holder.owner
 	for(var/datum/unlockable_flock_structure/ufs as anything in F.flock.unlockableStructures)
 		if(ufs.check_unlocked())
-			friendlyNames += ufs.friendly_name
+			friendlyNames[ufs.friendly_name] = ufs
 
 
 	//todo: replace with FANCY tgui/chui window with WHEELS and ICONS and stuff!
@@ -408,11 +408,8 @@
 
 	if (!structurewanted)
 		return TRUE
-	var/obj/flock_structure/structurewantedtype = null
-	for(var/datum/unlockable_flock_structure/ufs as anything in F.flock.unlockableStructures)
-		if(ufs.friendly_name == structurewanted)
-			structurewantedtype = ufs.structType
-			break
+	var/datum/unlockable_flock_structure/ufs = friendlyNames[structurewanted]
+	var/obj/flock_structure/structurewantedtype = ufs.structType //this is a mildly cursed abuse of type paths, where you can cast a type path to a typed var to get access to its members
 
 	if(structurewantedtype)
 		return F.createstructure(structurewantedtype, initial(structurewantedtype.resourcecost))
