@@ -216,7 +216,6 @@
 
 	playsound(holder.owner, "sound/misc/flockmind/flockmind_cast.ogg", 80, 1)
 	boutput(holder.owner, "<span class='notice'>You focus the flock's efforts on fixing [target.real_name]</span>")
-	sleep(1.5 SECONDS)
 	target.HealDamage("All", 200, 200)
 	target.visible_message("<span class='notice'><b>[target]</b> suddenly reforms its broken parts into a solid whole!</span>", "<span class='notice'>The flockmind has restored you to full health!</span>")
 
@@ -267,8 +266,7 @@
 		boutput(holder.owner, "<span class='notice'>You force open all the doors around you.</span>")
 		sleep(1.5 SECONDS)
 		for(var/obj/machinery/door/airlock/A in targets)
-			SPAWN(1 DECI SECOND)
-				A.open()
+			A.open()
 	else
 		boutput(holder.owner, "<span class='alert'>No targets in range that can be opened via radio.</span>")
 		return TRUE
@@ -423,7 +421,7 @@
 	name = "Ping"
 	desc = "Request attention from other elements of the flock."
 	icon_state = "ping"
-	cooldown = 0.1 SECONDS
+	cooldown = 0.3 SECONDS
 
 /datum/targetable/flockmindAbility/ping/cast(atom/target)
 	if(..())
