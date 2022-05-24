@@ -33,7 +33,6 @@
 	var/sound_deny = 0
 	var/has_crush = 1 //flagged to true when the door has a secret admirer. also if the var == 1 then the door doesn't have the ability to crush items.
 	var/close_trys = 0
-	var/alien = FALSE /// is a weird alien door that secbots shouldn't be able to open
 
 	var/health = 400
 	var/health_max = 400
@@ -72,7 +71,7 @@
 
 	else if (istype(AM, /obj/machinery/bot))
 		var/obj/machinery/bot/B = AM
-		if (!src.alien && src.check_access(B.botcard))
+		if (src.check_access(B.botcard))
 			if (src.density)
 				src.open()
 

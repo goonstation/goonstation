@@ -11,7 +11,6 @@
 	var/broken = FALSE
 	health = 80
 	health_max = 80
-	alien = TRUE
 
 /obj/machinery/door/feather/New()
 	..()
@@ -125,6 +124,9 @@
 /obj/machinery/door/feather/allowed(mob/M)
 	return isflock(M)
 
+/obj/machinery/door/feather/check_access()
+	return FALSE
+
 /obj/machinery/door/feather/open()
 	if(..())
 		playsound(src.loc, "sound/misc/flockmind/flockdrone_door.ogg", 50, 1)
@@ -147,7 +149,9 @@
 ////////////////////
 // everyone allowed to open
 /obj/machinery/door/feather/friendly
-	alien = FALSE
 
 /obj/machinery/door/feather/friendly/allowed(mob/M)
+	return TRUE
+
+/obj/machinery/door/feather/friendly/check_access()
 	return TRUE
