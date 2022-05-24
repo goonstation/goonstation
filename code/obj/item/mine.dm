@@ -53,7 +53,7 @@
 
 		..()
 
-	pull(var/mob/user as mob)
+	pull(mob/user)
 		if (..())
 			return
 		if (src.armed && !src.used_up)
