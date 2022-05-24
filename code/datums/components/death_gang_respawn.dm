@@ -8,7 +8,7 @@
 
 /datum/component/death_gang_respawn/proc/queue_respawn()
 	var/mob/M = parent
-	SPAWN_DBG(2 SECONDS)
+	SPAWN(2 SECONDS)
 		var/obj/ganglocker/locker = M.mind.gang.locker
 		var/mob/new_mob = locker.respawn_member(M)
 		src.parent = new_mob

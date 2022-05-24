@@ -20,12 +20,10 @@ var/global/noir = 0
 		if (!asay && rank_to_level(C.holder.rank) < LEVEL_MOD) // No confidential info for goat farts (Convair880).
 			continue
 		if (C.player_mode)
-			if (asay && C.player_mode_asay)
-				boutput(C, replacetext(replacetext(rendered, "%admin_ref%", "\ref[C.holder]"), "%client_ref%", "\ref[C]"))
-			else
+			if (!asay || (asay && !C.player_mode_asay))
 				continue
-		else
-			boutput(C, replacetext(replacetext(rendered, "%admin_ref%", "\ref[C.holder]"), "%client_ref%", "\ref[C]"))
+		boutput(C, replacetext(replacetext(rendered, "%admin_ref%", "\ref[C.holder]"), "%client_ref%", "\ref[C]"))
+
 
 /proc/message_coders(var/text) //Shamelessly adapted from message_admins
 	var/rendered = "<span class=\"admin\"><span class=\"prefix\">CODER<br>LOG</span>: <span class=\"message\">[text]</span></span>"
@@ -44,7 +42,7 @@ var/global/noir = 0
 /proc/message_attack(var/text) //Sends a message to folks when an attack goes down
 	var/rendered = "<span class=\"admin\"><span class=\"prefix\">ATTACK<br>LOG</span>: <span class=\"message\">[text]</span></span>"
 	for (var/client/C)
-		if (C.mob && C.holder && rank_to_level(C.holder.rank) >= LEVEL_MOD && C.holder.attacktoggle && !C.player_mode)
+		if (C.mob && C.holder && C.holder.attacktoggle && !C.player_mode && rank_to_level(C.holder.rank) >= LEVEL_MOD)
 			boutput(C.mob, replacetext(rendered, "%admin_ref%", "\ref[C.holder]"))
 
 /proc/rank_to_level(var/rank)
@@ -123,7 +121,7 @@ var/global/noir = 0
 		originWindow = href_list["origin"]
 
 	if (!href_list["action"])
-		//alert("You must define an action! Yell at Wire if you see this.")
+		//tgui_alert(usr,"You must define an action! Yell at Wire if you see this.")
 		return
 	switch(href_list["action"])
 		if ("ah_mute")//gguhHUhguHUGH
@@ -270,7 +268,7 @@ var/global/noir = 0
 							src.auto_stealth_name = null
 							boutput(usr, "<span class='notice'>Auto Stealth name removed.</span>")
 							return src.show_pref_window(usr)
-						if (alert("Use \"[new_key]\" as your Auto Stealth name?", "Confirmation", "OK", "Cancel") == "OK")
+						if (tgui_alert(usr,"Use \"[new_key]\" as your Auto Stealth name?", "Confirmation", list("OK", "Cancel")) == "OK")
 							src.auto_stealth_name = new_key
 							src.set_stealth_mode(src.auto_stealth_name)
 						else
@@ -285,7 +283,7 @@ var/global/noir = 0
 					src.auto_stealth_name = null
 					boutput(usr, "<span class='notice'>Auto Stealth name removed.</span>")
 					return
-				if (alert("Use \"[new_key]\" as your Auto Stealth name?", "Confirmation", "OK", "Cancel") == "OK")
+				if (tgui_alert(usr,"Use \"[new_key]\" as your Auto Stealth name?", "Confirmation", list("OK", "Cancel")) == "OK")
 					src.auto_stealth_name = new_key
 					src.show_pref_window(usr)
 				else
@@ -309,7 +307,7 @@ var/global/noir = 0
 							src.auto_alt_key_name = null
 							boutput(usr, "<span class='hint'>Auto Alt Key removed.</span>")
 							return src.show_pref_window(usr)
-						if (alert("Use \"[new_key]\" as your Auto Alt Key?", "Confirmation", "OK", "Cancel") == "OK")
+						if (tgui_alert(usr,"Use \"[new_key]\" as your Auto Alt Key?", "Confirmation", list("OK", "Cancel")) == "OK")
 							src.auto_alt_key_name = new_key
 							src.set_alt_key(src.auto_alt_key_name)
 						else
@@ -324,7 +322,7 @@ var/global/noir = 0
 					src.auto_alt_key_name = null
 					boutput(usr, "<span class='notice'>Auto Alt Key removed.</span>")
 					return
-				if (alert("Use \"[new_key]\" as your Auto Alt Key?", "Confirmation", "OK", "Cancel") == "OK")
+				if (tgui_alert(usr,"Use \"[new_key]\" as your Auto Alt Key?", "Confirmation", list("OK", "Cancel")) == "OK")
 					src.auto_alt_key_name = new_key
 					src.show_pref_window(usr)
 				else
@@ -376,7 +374,7 @@ var/global/noir = 0
 								logTheThing(LOG_DIARY, usr, "sent the Emergency Shuttle back", "admin")
 								message_admins("<span class='internal'>[key_name(usr)] recalled the Emergency Shuttle</span>")
 			else
-				alert("You need to be at least a Secondary Administrator to do a shuttle call.")
+				tgui_alert(usr,"You need to be at least a Secondary Administrator to do a shuttle call.")
 
 		if("edit_shuttle_time")
 			if (src.level >= LEVEL_PA)
@@ -388,7 +386,7 @@ var/global/noir = 0
 				logTheThing(LOG_DIARY, usr, "edited the Emergency Shuttle's timeleft to [timeleft]", "admin")
 				message_admins("<span class='internal'>[key_name(usr)] edited the Emergency Shuttle's timeleft to [timeleft]</span>")
 			else
-				alert("You need to be at least a Primary Administrator to edit the shuttle timer.")
+				tgui_alert(usr,"You need to be at least a Primary Administrator to edit the shuttle timer.")
 
 		if("toggle_shuttle_calling")
 			if (src.level >= LEVEL_PA)
@@ -414,7 +412,7 @@ var/global/noir = 0
 				ircmsg["msg"] = logmsg
 				ircbot.export_async("admin", ircmsg)
 			else
-				alert("You need to be at least a Primary Administrator to enable/disable shuttle calling.")
+				tgui_alert(usr,"You need to be at least a Primary Administrator to enable/disable shuttle calling.")
 
 		if("toggle_shuttle_recalling")
 			if (src.level >= LEVEL_PA)
@@ -423,7 +421,7 @@ var/global/noir = 0
 				logTheThing(LOG_DIARY, usr, "[emergency_shuttle.can_recall ? "en" : "dis"]abled recalling the Emergency Shuttle", "admin")
 				message_admins("<span class='internal'>[key_name(usr)] [emergency_shuttle.can_recall ? "en" : "dis"]abled recalling the Emergency Shuttle</span>")
 			else
-				alert("You need to be at least a Primary Administrator to enable/disable shuttle recalling.")
+				tgui_alert(usr,"You need to be at least a Primary Administrator to enable/disable shuttle recalling.")
 
 		if("notes")
 			var/player = null
@@ -444,11 +442,11 @@ var/global/noir = 0
 			switch(href_list["type"])
 				if("del")
 					if(src.level < LEVEL_SA)
-						alert("You need to be at least a Secondary Administrator to delete notes.")
+						tgui_alert(usr,"You need to be at least a Secondary Administrator to delete notes.")
 						return
 
 					if(href_list["id"])
-						if(alert("Delete This Note?",,"Yes","No") == "No")
+						if(tgui_alert(usr,"Delete This Note?","Confirmation",list("Yes","No")) != "Yes")
 							return
 						else
 							var/noteId = href_list["id"]
@@ -464,11 +462,11 @@ var/global/noir = 0
 							ircmsg["key"] = src.owner:key
 							ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 							ircmsg["msg"] = "Deleted note [noteId] belonging to [player]"
-							ircbot.export("admin", ircmsg)
+							ircbot.export_async("admin", ircmsg)
 
 				if("add")
 					if(src.level < LEVEL_SA)
-						alert("You need to be at least a Secondary Adminstrator to add notes.")
+						tgui_alert(usr,"You need to be at least a Secondary Adminstrator to add notes.")
 						return
 
 					var/the_note = input("Write your note here!", "Note for [player]") as null|message
@@ -476,7 +474,7 @@ var/global/noir = 0
 						return
 
 					addPlayerNote(player, usr.ckey, the_note)
-					SPAWN_DBG(2 SECONDS) src.viewPlayerNotes(player)
+					SPAWN(2 SECONDS) src.viewPlayerNotes(player)
 
 					logTheThing(LOG_ADMIN, usr, "added a note for [player]: [the_note]")
 					logTheThing(LOG_DIARY, usr, "added a note for [player]: [the_note]", "admin")
@@ -486,7 +484,7 @@ var/global/noir = 0
 					ircmsg["key"] = src.owner:key
 					ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 					ircmsg["msg"] = "Added a note for [player]: [the_note]"
-					ircbot.export("admin", ircmsg)
+					ircbot.export_async("admin", ircmsg)
 
 		if("loginnotice")
 			var/player = null
@@ -534,7 +532,7 @@ var/global/noir = 0
 
 				usr.client.editBanDialog(id, ckey, compID, ip, reason, timestamp)
 			else
-				alert("You need to be at least a Secondary Administrator to edit bans.")
+				tgui_alert(usr,"You need to be at least a Secondary Administrator to edit bans.")
 
 		if("unbanf") //Delete ban
 			if (src.level >= LEVEL_SA)
@@ -546,7 +544,7 @@ var/global/noir = 0
 
 				usr.client.deleteBanDialog(id, ckey, compID, ip, akey)
 			else
-				alert("You need to be at least a Secondary Administrator to remove bans.")
+				tgui_alert(usr,"You need to be at least a Secondary Administrator to remove bans.")
 		/////////////////////////////////////end ban stuff
 
 		if("jobbanpanel")
@@ -640,24 +638,24 @@ var/global/noir = 0
 				var/job = href_list["type"]
 				if (!M) return
 				if ((M.client && M.client.holder && (M.client.holder.level > src.level)))
-					alert("You cannot perform this action. You must be of a higher administrative rank!")
+					tgui_alert(usr,"You cannot perform this action. You must be of a higher administrative rank!")
 					return
 				var/datum/player/player = make_player(M.ckey) //Get the player so we can use their bancache.
 				if (jobban_isbanned(M, job))
 					if(player.cached_jobbans.Find("Everything Except Assistant") && job != "Everything Except Assistant")
-						alert("This person is banned from Everything Except Assistant. You must lift that ban first.")
+						tgui_alert(usr,"This person is banned from Everything Except Assistant. You must lift that ban first.")
 						return
 					if(job in list("Mining Supervisor","Engineer","Atmospheric Technician","Miner"))
 						if(player.cached_jobbans.Find("Engineering Department"))
-							alert("This person is banned from Engineering Department. You must lift that ban first.")
+							tgui_alert(usr,"This person is banned from Engineering Department. You must lift that ban first.")
 							return
 					if(job in list("Security Officer","Security Assistant","Vice Officer","Part-time Vice Officer","Detective"))
 						if(player.cached_jobbans.Find("Security Department"))
-							alert("This person is banned from Security Department. You must lift that ban first.")
+							tgui_alert(usr,"This person is banned from Security Department. You must lift that ban first.")
 							return
 					if(job in list("Captain","Head of Personnel","Head of Security","Chief Engineer","Research Director"))
 						if(player.cached_jobbans.Find("Heads of Staff"))
-							alert("This person is banned from Heads of Staff. You must lift that ban first.")
+							tgui_alert(usr,"This person is banned from Heads of Staff. You must lift that ban first.")
 							return
 					logTheThing(LOG_ADMIN, usr, "unbanned [constructTarget(M,"admin")] from [job]")
 					logTheThing(LOG_DIARY, usr, "unbanned [constructTarget(M,"diary")] from [job]", "admin")
@@ -695,7 +693,7 @@ var/global/noir = 0
 					jobban_fullban(M, job, usr.ckey)
 					if (announce_jobbans) boutput(M, "<span class='alert'><b>[key_name(usr)] has job-banned you from [job].</b></span>")
 			else
-				alert("You need to be at least a Secondary Administrator to work with job bans.")
+				tgui_alert(usr,"You need to be at least a Secondary Administrator to work with job bans.")
 
 		if("jobban_offline")
 			if (src.level >= LEVEL_SA)
@@ -705,19 +703,19 @@ var/global/noir = 0
 				if (!M) return
 				if (jobban_isbanned(cache, job))
 					if(cache.Find("Everything Except Assistant") && job != "Everything Except Assistant")
-						alert("This person is banned from Everything Except Assistant. You must lift that ban first.")
+						tgui_alert(usr,"This person is banned from Everything Except Assistant. You must lift that ban first.")
 						return
 					if(job in list("Mining Supervisor","Engineer","Atmospheric Technician","Miner"))
 						if(cache.Find("Engineering Department"))
-							alert("This person is banned from Engineering Department. You must lift that ban first.")
+							tgui_alert(usr,"This person is banned from Engineering Department. You must lift that ban first.")
 							return
 					if(job in list("Security Officer","Security Assistant","Vice Officer","Part-time Vice Officer","Detective"))
 						if(cache.Find("Security Department"))
-							alert("This person is banned from Security Department. You must lift that ban first.")
+							tgui_alert(usr,"This person is banned from Security Department. You must lift that ban first.")
 							return
 					if(job in list("Captain","Head of Personnel","Head of Security","Chief Engineer","Research Director"))
 						if(cache.Find("Heads of Staff"))
-							alert("This person is banned from Heads of Staff. You must lift that ban first.")
+							tgui_alert(usr,"This person is banned from Heads of Staff. You must lift that ban first.")
 							return
 					logTheThing(LOG_ADMIN, usr, "unbanned [M](Offline) from [job]")
 					logTheThing(LOG_DIARY, usr, "unbanned [M](Offline) from [job]", "admin")
@@ -753,7 +751,7 @@ var/global/noir = 0
 								jobban_unban(M,Trank4, usr.ckey, usr.ckey)
 					jobban_fullban(M, job, usr.ckey)
 			else
-				alert("You need to be at least a Secondary Administrator to work with job bans.")
+				tgui_alert(usr,"You need to be at least a Secondary Administrator to work with job bans.")
 
 
 		if ("boot")
@@ -775,7 +773,7 @@ var/global/noir = 0
 					message_admins("<span class='internal'>[key_name(usr)] has [(muted ? "permanently muted" : "unmuted")] [key_name(M)].</span>")
 					boutput(M, "You have been [(muted ? "permanently muted" : "unmuted")].")
 			else
-				alert("You need to be at least a Moderator to mute people.")
+				tgui_alert(usr,"You need to be at least a Moderator to mute people.")
 
 		if ("tempmute")
 			if (src.level >= LEVEL_MOD)
@@ -792,7 +790,7 @@ var/global/noir = 0
 					message_admins("<span class='internal'>[key_name(usr)] has [(muted ? "temporarily muted" : "unmuted")] [key_name(M)].</span>")
 					boutput(M, "You have been [(muted ? "temporarily muted" : "unmuted")].")
 			else
-				alert("You need to be at least a Moderator to mute people.")
+				tgui_alert(usr,"You need to be at least a Moderator to mute people.")
 		if ("banooc")
 			if (src.level >= LEVEL_MOD)
 				var/mob/M = locate(href_list["target"])
@@ -812,7 +810,7 @@ var/global/noir = 0
 				ticker.hide_mode = !ticker.hide_mode
 				Topic(null, list("src" = "\ref[src]", "action" = "c_mode_panel"))
 			else
-				alert("You need to be at least a Secondary Administrator to hide the game mode.")
+				tgui_alert(usr,"You need to be at least a Secondary Administrator to hide the game mode.")
 
 		if ("c_mode_panel") // I removed some broken/discontinued game modes here (Convair880).
 			if (src.level >= LEVEL_SA)
@@ -851,12 +849,12 @@ var/global/noir = 0
 				dat += "</body></html>"
 				usr.Browse(dat.Join(), "window=c_mode")
 			else
-				alert("You need to be at least a Secondary Adminstrator to change the game mode.")
+				tgui_alert(usr,"You need to be at least a Secondary Adminstrator to change the game mode.")
 
 		if ("c_mode_current")
 			if (src.level >= LEVEL_SA)
 				if (current_state > GAME_STATE_PREGAME)
-					return alert(usr, "The game has already started.", null, null, null, null)
+					return tgui_alert(usr, "The game has already started.")
 
 #ifndef MAP_OVERRIDE_POD_WARS
 				if (href_list["type"] == "pod_wars")
@@ -879,12 +877,12 @@ var/global/noir = 0
 					else if (lobby_titlecard.is_game_mode)
 						lobby_titlecard = new /datum/titlecard()
 						lobby_titlecard.set_pregame_html()
-					if (alert("Declare mode change to all players?","Mode Change","Yes","No") == "Yes")
+					if (tgui_alert(usr,"Declare mode change to all players?","Mode Change",list("Yes", "No")) == "Yes")
 						boutput(world, "<span class='notice'><b>The mode is now: [requestedMode]</b></span>")
 				else
 					boutput(usr, "<span class='alert'><b>That is not a valid game mode!</b></span>")
 			else
-				alert("You need to be at least a Secondary Adminstrator to change the game mode.")
+				tgui_alert(usr,"You need to be at least a Secondary Adminstrator to change the game mode.")
 
 		if ("c_mode_next")
 			if (src.level >= LEVEL_SA)
@@ -893,10 +891,10 @@ var/global/noir = 0
 				logTheThing(LOG_DIARY, usr, "set the next round's mode as [newmode].", "admin")
 				message_admins("<span class='internal'>[key_name(usr)] set the next round's mode as [newmode].</span>")
 				world.save_mode(newmode)
-				if (alert("Declare mode change to all players?","Mode Change","Yes","No") == "Yes")
+				if (tgui_alert(usr,"Declare mode change to all players?","Mode Change",list("Yes", "No")) == "Yes")
 					boutput(world, "<span class='notice'><b>The next round's mode will be: [newmode]</b></span>")
 			else
-				alert("You need to be at least a Secondary Adminstrator to change the game mode.")
+				tgui_alert(usr,"You need to be at least a Secondary Adminstrator to change the game mode.")
 
 		if ("monkeyone")
 			if (src.level >= LEVEL_SA)
@@ -913,13 +911,13 @@ var/global/noir = 0
 					boutput(usr, "<span class='alert'>You can't transform that mob type into a monkey.</span>")
 					return
 			else
-				alert("You need to be at least a Secondary Adminstrator to monkeyize players.")
+				tgui_alert(usr,"You need to be at least a Secondary Adminstrator to monkeyize players.")
 
 		if ("forcespeech")
 			var/mob/M = locate(href_list["target"])
 			if (src.level >= LEVEL_PA || isnull(M.client) && src.level >= LEVEL_SA)
 				if (ismob(M))
-					var/speech = input("What will [M] say?", "Force speech", "")
+					var/speech = input("What will [M] say?", "Force speech", null) as text
 					if(!speech)
 						return
 					M.say(speech)
@@ -929,7 +927,7 @@ var/global/noir = 0
 					if(M.client)
 						message_admins("<span class='internal'>[key_name(usr)] forced [key_name(M)] to say: [speech]</span>")
 			else
-				alert("You need to be at least a Primary Administrator to force players to say things.")
+				tgui_alert(usr,"You need to be at least a Primary Administrator to force players to say things.")
 
 		if ("prison")
 			if (src.level >= LEVEL_MOD)
@@ -937,7 +935,7 @@ var/global/noir = 0
 				if (!M || !ismob(M)) return
 				usr.client.cmd_admin_prison_unprison(M)
 			else
-				alert("You need to be at least a Moderator to send players to prison.")
+				tgui_alert(usr,"You need to be at least a Moderator to send players to prison.")
 
 		if ("shamecube")
 			if (src.level >= LEVEL_MOD)
@@ -945,7 +943,7 @@ var/global/noir = 0
 				if (!M) return
 				usr.client.cmd_shame_cube(M)
 			else
-				alert("You need to be at least a Moderator to shame cube a player.")
+				tgui_alert(usr,"You need to be at least a Moderator to shame cube a player.")
 
 		if ("tdome")
 			if (src.level >= LEVEL_SA)
@@ -968,14 +966,14 @@ var/global/noir = 0
 				boutput(M, "<span class='notice'><b>Prepare for combat. If you are not let out of the preparation area within a few minutes, please adminhelp. (F1 key)</b></span>")
 
 			else
-				alert("You need to be at least a Secondary Adminstrator to send players to Thunderdome.")
+				tgui_alert(usr,"You need to be at least a Secondary Adminstrator to send players to Thunderdome.")
 
 		if ("revive")
 			if (src.level >= LEVEL_SA)
 				var/mob/M = locate(href_list["target"])
 				if (ismob(M))
 					if(isobserver(M))
-						alert("You can't revive a ghost! How does that even work?!")
+						tgui_alert(usr,"You can't revive a ghost! How does that even work?!")
 						return
 					if(config.allow_admin_rev)
 						M.revive()
@@ -983,33 +981,39 @@ var/global/noir = 0
 						logTheThing(LOG_ADMIN, usr, "healed / revived [constructTarget(M,"admin")]")
 						logTheThing(LOG_DIARY, usr, "healed / revived [constructTarget(M,"diary")]", "admin")
 					else
-						alert("Reviving is currently disabled.")
+						tgui_alert(usr,"Reviving is currently disabled.")
 			else
-				alert("You need to be at least a Primary Adminstrator to revive players.")
+				tgui_alert(usr,"You need to be at least a Primary Adminstrator to revive players.")
 
 		if ("makeai")
 			if (src.level >= LEVEL_SA)
 				var/mob/M = locate(href_list["target"])
-				var/mob/newM = usr.client.cmd_admin_makeai(M)
-				href_list["target"] = "\ref[newM]"
+				if (!M) return
+				if (tgui_alert(usr,"Make [M] an AI?", "Make AI", list("Yes", "No")) == "Yes")
+					var/mob/newM = usr.client.cmd_admin_makeai(M)
+					href_list["target"] = "\ref[newM]"
 			else
-				alert("You need to be at least a Secondary Adminstrator to turn players into AI units.")
+				tgui_alert(usr,"You need to be at least a Secondary Adminstrator to turn players into AI units.")
 
 		if ("makecyborg")
 			if (src.level >= LEVEL_SA)
 				var/mob/M = locate(href_list["target"])
-				var/mob/newM = usr.client.cmd_admin_makecyborg(M)
-				href_list["target"] = "\ref[newM]"
+				if (!M) return
+				if (tgui_alert(usr,"Make [M] a Cyborg?", "Make Cyborg", list("Yes", "No")) == "Yes")
+					var/mob/newM = usr.client.cmd_admin_makecyborg(M)
+					href_list["target"] = "\ref[newM]"
 			else
-				alert("You need to be at least a Secondary Adminstrator to turn players into Cyborgs.")
+				tgui_alert(usr,"You need to be at least a Secondary Adminstrator to turn players into Cyborgs.")
 
 		if ("makeghostdrone")
 			if (src.level >= LEVEL_SA)
 				var/mob/M = locate(href_list["target"])
-				var/mob/newM = usr.client.cmd_admin_makeghostdrone(M)
-				href_list["target"] = "\ref[newM]"
+				if (!M) return
+				if (tgui_alert(usr,"Make [M] a Ghost Drone?", "Make Ghost Drone", list("Yes", "No")) == "Yes")
+					var/mob/newM = usr.client.cmd_admin_makeghostdrone(M)
+					href_list["target"] = "\ref[newM]"
 			else
-				alert("You need to be at least a Secondary Adminstrator to turn players into Ghostdrones.")
+				tgui_alert(usr,"You need to be at least a Secondary Adminstrator to turn players into Ghostdrones.")
 
 		if ("modifylimbs")
 			if (src.level >= LEVEL_SA)
@@ -1017,7 +1021,7 @@ var/global/noir = 0
 				if (MC && usr.client)
 					usr.client.modify_parts(MC, usr)
 			else
-				alert("You need to be at least a Secondary Administrator to modify limbs.")
+				tgui_alert(usr,"You need to be at least a Secondary Administrator to modify limbs.")
 
 
 		if ("jumpto")
@@ -1031,7 +1035,7 @@ var/global/noir = 0
 					if (jumptarget)
 						usr.client.jumptoturf(get_turf(jumptarget))
 			else
-				alert("You need to be at least a Secondary Adminstrator to jump to mobs.")
+				tgui_alert(usr,"You need to be at least a Secondary Adminstrator to jump to mobs.")
 
 		if ("observe")
 			if(src.level >= LEVEL_SA)
@@ -1043,7 +1047,7 @@ var/global/noir = 0
 				var/mob/dead/observer/ghost = usr
 				ghost.insert_observer(M)
 			else
-				alert("You need to be at least a Secondary Adminstrator to observe mobs... For some reason.")
+				tgui_alert(usr,"You need to be at least a Secondary Adminstrator to observe mobs... For some reason.")
 
 		if ("jumptocoords")
 			if(src.level >= LEVEL_SA)
@@ -1051,7 +1055,7 @@ var/global/noir = 0
 				if (coords.len < 3) return
 				usr.client.jumptocoord(text2num(coords[1]), text2num(coords[2]), text2num(coords[3]))
 			else
-				alert("You need to be at least a Secondary Adminstrator to jump to coords.")
+				tgui_alert(usr,"You need to be at least a Secondary Adminstrator to jump to coords.")
 
 		if ("getmob")
 			if(( src.level >= LEVEL_ADMIN ) || ((src.level >= LEVEL_SA) ))
@@ -1059,7 +1063,7 @@ var/global/noir = 0
 				if (!M) return
 				usr.client.Getmob(M)
 			else
-				alert("If you are below the rank of Administrator, you need to be observing and at least a Secondary Administrator to get a player.")
+				tgui_alert(usr,"If you are below the rank of Administrator, you need to be observing and at least a Secondary Administrator to get a player.")
 
 		if ("sendmob")
 			if(( src.level >= LEVEL_ADMIN ) || ((src.level >= LEVEL_PA) ))
@@ -1074,7 +1078,7 @@ var/global/noir = 0
 				if (area)
 					usr.client.sendmob(M, area)
 			else
-				alert("If you are below the rank of Administrator, you need to be observing and at least a Primary Administrator to get a player.")
+				tgui_alert(usr,"If you are below the rank of Administrator, you need to be observing and at least a Primary Administrator to get a player.")
 
 		if ("gib")
 			if( src.level >= LEVEL_PA )
@@ -1082,7 +1086,7 @@ var/global/noir = 0
 				if (!M) return
 				usr.client.cmd_admin_gib(M)
 			else
-				alert("You need to be at least a Primary Admin to gib a dude.")
+				tgui_alert(usr,"You need to be at least a Primary Admin to gib a dude.")
 
 		if ("buttgib")
 			if( src.level >= LEVEL_PA )
@@ -1090,7 +1094,7 @@ var/global/noir = 0
 				if (!M) return
 				usr.client.cmd_admin_buttgib(M)
 			else
-				alert("You need to be at least a Primary Admin to buttgib a dude.")
+				tgui_alert(usr,"You need to be at least a Primary Admin to buttgib a dude.")
 
 		if ("partygib")
 			if( src.level >= LEVEL_PA )
@@ -1098,7 +1102,7 @@ var/global/noir = 0
 				if (!M) return
 				usr.client.cmd_admin_partygib(M)
 			else
-				alert("You need to be at least a Primary Admin to party gib a dude.")
+				tgui_alert(usr,"You need to be at least a Primary Admin to party gib a dude.")
 
 		if ("owlgib")
 			if( src.level >= LEVEL_PA )
@@ -1106,7 +1110,7 @@ var/global/noir = 0
 				if (!M) return
 				usr.client.cmd_admin_owlgib(M)
 			else
-				alert("A loud hooting noise is heard. It sounds angry. I guess you aren't allowed to do this.")
+				tgui_alert(usr,"A loud hooting noise is heard. It sounds angry. I guess you aren't allowed to do this.")
 
 		if ("firegib")
 			if( src.level >= LEVEL_PA )
@@ -1114,7 +1118,7 @@ var/global/noir = 0
 				if (!M) return
 				usr.client.cmd_admin_firegib(M)
 			else
-				alert("You need to be at least a Primary Admin to fire gib a dude.")
+				tgui_alert(usr,"You need to be at least a Primary Admin to fire gib a dude.")
 
 		if ("elecgib")
 			if( src.level >= LEVEL_PA )
@@ -1122,7 +1126,7 @@ var/global/noir = 0
 				if (!M) return
 				usr.client.cmd_admin_elecgib(M)
 			else
-				alert("You need to be at least a Primary Admin to elec gib a dude.")
+				tgui_alert(usr,"You need to be at least a Primary Admin to elec gib a dude.")
 
 		if ("sharkgib")
 			if( src.level >= LEVEL_PA )
@@ -1130,7 +1134,7 @@ var/global/noir = 0
 				if (!M) return
 				usr.client.sharkgib(M)
 			else
-				alert("You need to be at least a Primary Admin to shark gib a dude.")
+				tgui_alert(usr,"You need to be at least a Primary Admin to shark gib a dude.")
 
 		if ("icegib")
 			if( src.level >= LEVEL_PA )
@@ -1138,7 +1142,7 @@ var/global/noir = 0
 				if (!M) return
 				usr.client.cmd_admin_icegib(M)
 			else
-				alert("You need to be at least a Primary Admin to ice gib a dude.")
+				tgui_alert(usr,"You need to be at least a Primary Admin to ice gib a dude.")
 
 		if ("goldgib")
 			if( src.level >= LEVEL_PA )
@@ -1146,7 +1150,7 @@ var/global/noir = 0
 				if (!M) return
 				usr.client.cmd_admin_goldgib(M)
 			else
-				alert("You need to be at least a Primary Admin to gold gib a dude.")
+				tgui_alert(usr,"You need to be at least a Primary Admin to gold gib a dude.")
 
 		if("spidergib")
 			if( src.level >= LEVEL_PA )
@@ -1154,7 +1158,7 @@ var/global/noir = 0
 				if (!M) return
 				usr.client.cmd_admin_spidergib(M)
 			else
-				alert("You need to be at least a Primary Admin to spider gib a dude.")
+				tgui_alert(usr,"You need to be at least a Primary Admin to spider gib a dude.")
 
 		if("implodegib")
 			if( src.level >= LEVEL_PA )
@@ -1162,7 +1166,7 @@ var/global/noir = 0
 				if (!M) return
 				usr.client.cmd_admin_implodegib(M)
 			else
-				alert("You need to be at least a Primary Admin to implode a dude.")
+				tgui_alert(usr,"You need to be at least a Primary Admin to implode a dude.")
 
 		if("cluwnegib")
 			if( src.level >= LEVEL_PA )
@@ -1184,7 +1188,7 @@ var/global/noir = 0
 				if (!M) return
 				usr.client.cmd_admin_tysongib(M)
 			else
-				alert("You need to be at least a Primary Admin to tyson gib a dude.")
+				tgui_alert(usr,"You need to be at least a Primary Admin to tyson gib a dude.")
 		if("damn")
 			if(src.level >= LEVEL_PA)
 				var/mob/M = locate(href_list["target"])
@@ -1205,10 +1209,11 @@ var/global/noir = 0
 			if(( src.level >= LEVEL_PA ) || ((src.level >= LEVEL_SA) ))
 				var/mob/M = locate(href_list["target"])
 				if (!ishuman(M))
-					alert("This secret can only be used on human mobs.")
+					tgui_alert(usr,"This secret can only be used on human mobs.")
 					return
 				var/mob/living/carbon/human/H = M
-				var/which = input("Transform them into what?","Transform") as null|anything in list("Monkey","Cyborg","Lizardman","Squidman","Martian","Skeleton","Flashman", "Kudzuman","Ghostdrone","Flubber","Cow")
+
+				var/which = tgui_input_list(src, "Transform them into what?", "Transform", list("Monkey","Cyborg","Lizardman","Squidman","Martian","Skeleton","Flashman", "Kudzuman","Ghostdrone","Flubber","Cow"))
 				if (!which)
 					return
 				. = 0
@@ -1244,7 +1249,7 @@ var/global/noir = 0
 				if(.)
 					message_admins("<span class='internal'>[key_name(usr)] transformed [H.real_name] into a [which].</span>")
 			else
-				alert("If you are below the rank of Primary Admin, you need to be observing and at least a Secondary Administrator to transform a player.")
+				tgui_alert(usr,"If you are below the rank of Primary Admin, you need to be observing and at least a Secondary Administrator to transform a player.")
 
 		if ("setstatuseffect")
 			if(( src.level >= LEVEL_PA ) || ((src.level >= LEVEL_SA) ))
@@ -1264,14 +1269,38 @@ var/global/noir = 0
 					return
 
 				if (duration <= 0)
+					M.delStatus(initial(effect.id))
+					message_admins("[key_name(usr)] removed the [initial(effect.id)] status-effect from [key_name(M)].")
+				else
+					M.setStatus(initial(effect.id), duration SECONDS)
+					message_admins("[key_name(usr)] added the [initial(effect.id)] status-effect on [key_name(M)] for [duration] seconds.")
+
+			else
+				tgui_alert(usr,"If you are below the rank of Primary Admin, you need to be observing and at least a Secondary Administrator to statuseffect a player.")
+
+		if ("modifystatuseffect")
+			if(( src.level >= LEVEL_PA ) || ((src.level >= LEVEL_SA) ))
+				var/mob/M = locate(href_list["target"])	//doesn't really have to be mob, could be atom.
+
+				var/list/statusList = M.getStatusList()
+				var/datum/statusEffect/effect = tgui_input_list(usr, "Which Status Effect?", "Modify Status Effect", statusList)
+
+				if (!effect)
+					return
+				message_admins("selected [effect]")
+				var/duration = input("Duration (in seconds)?","Status Effect Duration") as null|num
+				if (isnull(duration))
+					return
+
+				if (duration <= 0)
 					M.delStatus(effect)
 					message_admins("[key_name(usr)] removed the [effect] status-effect from [key_name(M)].")
 				else
 					M.setStatus(effect, duration SECONDS)
-					message_admins("[key_name(usr)] added the [effect] status-effect to [key_name(M)] for [duration] seconds.")
+					message_admins("[key_name(usr)] modified the [effect] status-effect on [key_name(M)] to [duration] seconds.")
 
 			else
-				alert("If you are below the rank of Primary Admin, you need to be observing and at least a Secondary Administrator to statuseffect a player.")
+				tgui_alert(usr,"If you are below the rank of Primary Admin, you need to be observing and at least a Secondary Administrator to statuseffect a player.")
 
 		if ("managebioeffect")
 			if(src.level >= LEVEL_SA)
@@ -1280,14 +1309,14 @@ var/global/noir = 0
 				usr.client.cmd_admin_managebioeffect(M)
 
 			else
-				alert("You need to be at least a Secondary Administrator to manage the bioeffects of a player.")
+				tgui_alert(usr,"You need to be at least a Secondary Administrator to manage the bioeffects of a player.")
 
 		if ("managebioeffect_debug_vars")
 			if (src.level >= LEVEL_PA)
 				var/datum/bioEffect/B = locate(href_list["bioeffect"])
 				usr.client.debug_variables(B)
 			else
-				alert("You must be at least a Primary Administrator to view variables!")
+				tgui_alert(usr,"You must be at least a Primary Administrator to view variables!")
 
 		if ("managebioeffect_remove")
 			if(src.level >= LEVEL_SA)
@@ -1297,7 +1326,7 @@ var/global/noir = 0
 
 				message_admins("[key_name(usr)] removed the [href_list["bioeffect"]] bio-effect from [key_name(M)].")
 			else
-				alert("You need to be at least a Secondary Administrator to remove the bioeffects of a player.")
+				tgui_alert(usr,"You need to be at least a Secondary Administrator to remove the bioeffects of a player.")
 				return
 
 		if("managebioeffect_alter_stable")
@@ -1443,7 +1472,7 @@ var/global/noir = 0
 				return
 
 			else
-				alert("You need to be at least a Secondary Administrator to modify the bioeffects of a player.")
+				tgui_alert(usr,"You need to be at least a Secondary Administrator to modify the bioeffects of a player.")
 
 		if ("managebioeffect_add")
 			if(src.level >= LEVEL_SA)
@@ -1456,14 +1485,14 @@ var/global/noir = 0
 					usr.client.cmd_admin_managebioeffect(M)
 					message_admins("[key_name(usr)] added the [initial(BE.id)] bio-effect to [key_name(M)].")
 			else
-				alert("You need to be at least a Secondary Administrator to add bioeffects to a player.")
+				tgui_alert(usr,"You need to be at least a Secondary Administrator to add bioeffects to a player.")
 
 		if ("managebioeffect_refresh")
 			if(src.level >= LEVEL_SA)
 				var/mob/M = locate(href_list["target"])
 				usr.client.cmd_admin_managebioeffect(M)
 			else
-				alert("You need to be at least a Secondary Administrator to manage the bioeffects of a player.")
+				tgui_alert(usr,"You need to be at least a Secondary Administrator to manage the bioeffects of a player.")
 
 		if ("managebioeffect_alter_genetic_stability")
 			if(src.level >= LEVEL_SA)
@@ -1477,7 +1506,7 @@ var/global/noir = 0
 					M.bioHolder.genetic_stability = round(input)
 				usr.client.cmd_admin_managebioeffect(M)
 			else
-				alert("You need to be at least a Secondary Administrator to modify the genetic stability of a player.")
+				tgui_alert(usr,"You need to be at least a Secondary Administrator to modify the genetic stability of a player.")
 
 		if ("addbioeffect")
 			if(( src.level >= LEVEL_PA ) || ((src.level >= LEVEL_SA) ))
@@ -1499,7 +1528,7 @@ var/global/noir = 0
 
 					message_admins("[key_name(usr)] added the [string_version] bio-effect[picklist.len > 1 ? "s" : ""] to [key_name(M)].")
 			else
-				alert("If you are below the rank of Primary Admin, you need to be observing and at least a Secondary Administrator to bioeffect a player.")
+				tgui_alert(usr,"If you are below the rank of Primary Admin, you need to be observing and at least a Secondary Administrator to bioeffect a player.")
 
 		if ("removebioeffect")
 			if(( src.level >= LEVEL_PA ) || ((src.level >= LEVEL_SA) ))
@@ -1521,7 +1550,7 @@ var/global/noir = 0
 
 					message_admins("[key_name(usr)] removed the [string_version] bio-effect[picklist.len > 1 ? "s" : ""] from [M.real_name].")
 			else
-				alert("If you are below the rank of Primary Admin, you need to be observing and at least a Secondary Administrator to bioeffect a player.")
+				tgui_alert(usr,"If you are below the rank of Primary Admin, you need to be observing and at least a Secondary Administrator to bioeffect a player.")
 
 		if ("removehandcuff")
 			if (src.level >= LEVEL_SA)
@@ -1529,7 +1558,7 @@ var/global/noir = 0
 				if (istype(M))
 					usr.client.cmd_admin_unhandcuff(M)
 				else
-					alert("Only mobs can have handcuffs, doofus! Are you trying to unhandcuff a shrub or something? Stop that!")
+					tgui_alert(usr,"Only mobs can have handcuffs, doofus! Are you trying to unhandcuff a shrub or something? Stop that!")
 
 		if ("checkhealth")
 			if (src.level >= LEVEL_SA)
@@ -1574,7 +1603,7 @@ var/global/noir = 0
 				message_admins("[key_name(usr)] added [amount] units of [reagent.id] to [key_name(M)] at [log_loc(M)].")
 
 			else
-				alert("If you are below the rank of Primary Admin, you need to be observing and at least a Secondary Administrator to affect player reagents.")
+				tgui_alert(usr,"If you are below the rank of Primary Admin, you need to be observing and at least a Secondary Administrator to affect player reagents.")
 
 		if ("checkreagent")
 			if (src.level >= LEVEL_SA)
@@ -1605,27 +1634,34 @@ var/global/noir = 0
 				pick = tgui_input_list(usr, "Select Reagent:", "Select", target_reagents)
 				if (!pick)
 					return
+				var/pick_id
+				if(!isnull(reagents.reagent_list[pick]))
+					pick_id = pick
+				else
+					for (var/current_id in reagents.reagent_list)
+						if(pick == reagents.reagent_list[current_id].name)
+							var/datum/reagent/current_reagent = reagents.reagent_list[current_id]
+							pick_id = current_reagent.id
+							break
 
-				var/list/picklist = params2list(pick)
-				if (length(picklist))
+				if (pick_id)
 					var/string_version
 
-					for(pick in picklist)
-						var/amt = input("How much of [pick]?","Remove Reagent") as null|num
-						if(!amt || amt < 0)
-							return
+					var/amt = input("How much of [pick]?","Remove Reagent") as null|num
+					if(!amt || amt < 0)
+						return
 
-						if (M.reagents)
-							M.reagents.remove_reagent(pick,amt)
+					if (M.reagents)
+						M.reagents.remove_reagent(pick_id,amt)
 
-						if (string_version)
-							string_version = "[string_version], [amt] \"[pick]\""
-						else
-							string_version = "[amt] \"[pick]\""
+					if (string_version)
+						string_version = "[string_version], [amt] \"[pick]\""
+					else
+						string_version = "[amt] \"[pick]\""
 
 					message_admins("[key_name(usr)] removed [string_version] from [M.real_name].")
 			else
-				alert("If you are below the rank of Primary Admin, you need to be observing and at least a Secondary Administrator to affect player reagents.")
+				tgui_alert(usr,"If you are below the rank of Primary Admin, you need to be observing and at least a Secondary Administrator to affect player reagents.")
 
 		if ("possessmob")
 			if( src.level >= LEVEL_PA )
@@ -1636,7 +1672,7 @@ var/global/noir = 0
 				else
 					possessmob(M)
 			else
-				alert("You need to be at least a Primary Administrator to possess or release mobs.")
+				tgui_alert(usr,"You need to be at least a Primary Administrator to possess or release mobs.")
 
 		if ("checkcontents")
 			if(( src.level >= LEVEL_PA ) || ((src.level >= LEVEL_SA) ))
@@ -1644,16 +1680,16 @@ var/global/noir = 0
 				if (!M) return
 				usr.client.cmd_admin_check_contents(M)
 			else
-				alert("If you are below the rank of Primary Admin, you need to be observing and at least a Secondary Administrator to check player contents.")
+				tgui_alert(usr,"If you are below the rank of Primary Admin, you need to be observing and at least a Secondary Administrator to check player contents.")
 
 		if ("dropcontents")
 			if(( src.level >= LEVEL_ADMIN ) || ((src.level >= LEVEL_PA) ))
 				var/mob/M = locate(href_list["target"])
 				if (!M) return
-				if (alert(usr, "Make [M] drop everything?", "Confirmation", "Yes", "No") == "Yes")
+				if (tgui_alert(usr, "Make [M] drop everything?", "Confirmation", list("Yes", "No")) == "Yes")
 					usr.client.cmd_admin_drop_everything(M)
 			else
-				alert("If you are below the rank of Shit Guy, you need to be observing and at least a Primary Admin to drop player contents.")
+				tgui_alert(usr,"If you are below the rank of Shit Guy, you need to be observing and at least a Primary Admin to drop player contents.")
 
 		if ("addabil")
 			if (src.level >= LEVEL_PA)
@@ -1661,7 +1697,7 @@ var/global/noir = 0
 				var/origin = href_list["origin"]
 				if (!M) return
 				if (!M.abilityHolder)
-					alert("No ability holder detected. Create a holder first!")
+					tgui_alert(usr,"No ability holder detected. Create a holder first!")
 					return
 				var/list/L = list()
 				for(var/R in concrete_typesof(/datum/targetable))
@@ -1677,14 +1713,14 @@ var/global/noir = 0
 				if (origin == "manageabils")//called via ability management panel
 					usr.client.cmd_admin_manageabils(M)
 			else
-				alert("You must be at least a Primary Administrator to do this!")
+				tgui_alert(usr,"You must be at least a Primary Administrator to do this!")
 
 		if ("removeabil")
 			if (src.level >= LEVEL_PA)
 				var/mob/M = locate(href_list["target"])
 				if (!M) return
 				if (!M.abilityHolder)
-					alert("No ability holder detected.")
+					tgui_alert(usr,"No ability holder detected.")
 					return
 
 				var/datum/targetable/ab_to_rem = null
@@ -1712,7 +1748,7 @@ var/global/noir = 0
 				M.abilityHolder.removeAbilityInstance(ab_to_rem)
 				M.abilityHolder.updateButtons()
 			else
-				alert("You must be at least a Primary Administrator to do this!")
+				tgui_alert(usr,"You must be at least a Primary Administrator to do this!")
 
 		if ("abilholder")
 			if (src.level >= LEVEL_PA)
@@ -1724,7 +1760,7 @@ var/global/noir = 0
 				message_admins("[key_name(usr)] created abilityHolder [ab_to_add] for [key_name(M)].")
 				logTheThing(LOG_ADMIN, usr, "created abilityHolder [ab_to_add] for [constructTarget(M,"admin")].")
 			else
-				alert("You must be at least a Primary Administrator to do this!")
+				tgui_alert(usr,"You must be at least a Primary Administrator to do this!")
 
 		if ("manageabils")
 			if (src.level >= LEVEL_PA)
@@ -1732,7 +1768,7 @@ var/global/noir = 0
 				if (!M) return
 				usr.client.cmd_admin_manageabils(M)
 			else
-				alert("You must be at least a Primary Administrator to do this!")
+				tgui_alert(usr,"You must be at least a Primary Administrator to do this!")
 
 		if ("manageabils_remove")
 			if (src.level >= LEVEL_PA)
@@ -1745,7 +1781,7 @@ var/global/noir = 0
 				M.abilityHolder.updateButtons()
 				usr.client.cmd_admin_manageabils(M)
 			else
-				alert("You must be at least a Primary Administrator to do this!")
+				tgui_alert(usr,"You must be at least a Primary Administrator to do this!")
 
 		if ("manageabils_alter_cooldown")
 			if (src.level >= LEVEL_PA)
@@ -1761,7 +1797,7 @@ var/global/noir = 0
 					A.cooldown = round(input)
 				usr.client.cmd_admin_manageabils(M)
 			else
-				alert("You must be at least a Primary Administrator to do this!")
+				tgui_alert(usr,"You must be at least a Primary Administrator to do this!")
 
 		if ("manageabilt_debug_vars")
 			if (src.level >= LEVEL_PA)
@@ -1919,14 +1955,14 @@ var/global/noir = 0
 
 		if ("makewraith")
 			if( src.level < LEVEL_PA)
-				alert("You must be at least a Primary Administrator to make someone a wraith.")
+				tgui_alert(usr,"You must be at least a Primary Administrator to make someone a wraith.")
 				return
 			if(!ticker || !ticker.mode)
-				alert("The game hasn't started yet!")
+				tgui_alert(usr,"The game hasn't started yet!")
 				return
 			var/mob/M = locate(href_list["target"])
 			if (!M) return
-			if (alert("Make [M] a wraith?", "Make Wraith", "Yes", "No") == "Yes")
+			if (tgui_alert(usr,"Make [M] a wraith?", "Make Wraith", list("Yes", "No")) == "Yes")
 				var/datum/mind/mind = M.mind
 				if (!mind)
 					mind = new /datum/mind(  )
@@ -1945,10 +1981,7 @@ var/global/noir = 0
 						do
 							WO = input("What objective?", "Objective", null) as null|anything in childrentypesof(/datum/objective/specialist/wraith)
 							if (WO)
-								var/datum/objective/specialist/wraith/WObj = new WO()
-								WObj.owner = mind
-								WObj.set_up()
-								mind.objectives += WObj
+								new WO(null, mind)
 						while (WO != null)
 					if ("Random")
 						generate_wraith_objectives(mind)
@@ -1971,14 +2004,14 @@ var/global/noir = 0
 
 		if ("makeblob")
 			if( src.level < LEVEL_PA )
-				alert("You must be at least a Primary Administrator to make someone a blob.")
+				tgui_alert(usr,"You must be at least a Primary Administrator to make someone a blob.")
 				return
 			if(!ticker || !ticker.mode)
-				alert("The game hasn't started yet!")
+				tgui_alert(usr,"The game hasn't started yet!")
 				return
 			var/mob/M = locate(href_list["target"])
 			if (!M) return
-			if (alert("Make [M] a blob?", "Make Blob", "Yes", "No") == "Yes")
+			if (tgui_alert(usr,"Make [M] a blob?", "Make Blob", list("Yes", "No")) == "Yes")
 				var/mob/B = M.blobize()
 				if (B)
 					if (B.mind)
@@ -2005,34 +2038,34 @@ var/global/noir = 0
 
 		if ("makemacho")
 			if( src.level < LEVEL_PA )
-				alert("You must be at least a Primary Administrator to make someone a Macho Man.")
+				tgui_alert(usr,"You must be at least a Primary Administrator to make someone a Macho Man.")
 				return
 			if(!ticker || !ticker.mode)
-				alert("The game hasn't started yet!")
+				tgui_alert(usr,"The game hasn't started yet!")
 				return
 			var/mob/M = locate(href_list["target"])
 			if (!M) return
-			if (alert("Make [M] a macho man?", "Make Macho", "Yes", "No") == "Yes")
+			if (tgui_alert(usr,"Make [M] a macho man?", "Make Macho", list("Yes", "No")) == "Yes")
 				M.machoize()
 
 		if ("makeslasher")
 			if( src.level < LEVEL_PA )
-				alert("You must be at least a Primary Administrator to make someone a Slasher.")
+				tgui_alert(usr,"You must be at least a Primary Administrator to make someone a Slasher.")
 				return
 			if(!ticker || !ticker.mode)
-				alert("The game hasn't started yet!")
+				tgui_alert(usr,"The game hasn't started yet!")
 				return
 			var/mob/M = locate(href_list["target"])
 			if (!M) return
-			if (alert("Make [M] into a Slasher?", "Make Slasher", "Yes", "No") == "Yes")
+			if (tgui_alert(usr,"Make [M] into a Slasher?", "Make Slasher", list("Yes", "No")) == "Yes")
 				M.slasherize()
 
 		if ("makecritter")
 			if( src.level < LEVEL_PA )
-				alert("You must be at least a Primary Administrator to make someone a Critter.")
+				tgui_alert(usr,"You must be at least a Primary Administrator to make someone a Critter.")
 				return
 			if(!ticker || !ticker.mode)
-				alert("The game hasn't started yet!")
+				tgui_alert(usr,"The game hasn't started yet!")
 				return
 			var/mob/M = locate(href_list["target"])
 			if (!M) return
@@ -2053,14 +2086,14 @@ var/global/noir = 0
 
 		if ("makecube")
 			if( src.level < LEVEL_PA )
-				alert("You must be at least a Primary Administrator to make someone a Cube.")
+				tgui_alert(usr,"You must be at least a Primary Administrator to make someone a Cube.")
 				return
 			if(!ticker || !ticker.mode)
-				alert("The game hasn't started yet!")
+				tgui_alert(usr,"The game hasn't started yet!")
 				return
 			var/mob/M = locate(href_list["target"])
 			if (!M) return
-			if (alert("Make [M] a cube?", "Make Cube", "Yes", "No") == "Yes")
+			if (tgui_alert(usr,"Make [M] a cube?", "Make Cube", list("Yes", "No")) == "Yes")
 				var/CT = input("What kind of cube?", "Make Cube", null) as null|anything in childrentypesof(/mob/living/carbon/cube)
 				if (CT != null)
 					var/amt = input("How long should it live?","Cube Lifetime") as null|num
@@ -2070,14 +2103,14 @@ var/global/noir = 0
 
 		if ("makeflock")
 			if( src.level < LEVEL_PA)
-				alert("You must be at least a Primary Administrator to make someone a flockmind or flocktrace.")
+				tgui_alert(usr,"You must be at least a Primary Administrator to make someone a flockmind or flocktrace.")
 				return
 			if(!ticker || !ticker.mode)
-				alert("The game hasn't started yet!")
+				tgui_alert(usr,"The game hasn't started yet!")
 				return
 			var/mob/M = locate(href_list["target"])
 			if (!M) return
-			if (alert("Make [M] a flockmind or flocktrace?", "Make Flockmind", "Yes", "No") == "Yes")
+			if (tgui_alert(usr,"Make [M] a flockmind or flocktrace?", "Make Flockmind", list("Yes", "No")) == "Yes")
 				var/datum/mind/mind = M.mind
 				if (!mind)
 					mind = new /datum/mind()
@@ -2108,36 +2141,36 @@ var/global/noir = 0
 
 		if("makefloorgoblin")
 			if( src.level < LEVEL_PA)
-				alert("You must be at least a Primary Administrator to make someone a floor goblin.")
+				tgui_alert(usr,"You must be at least a Primary Administrator to make someone a floor goblin.")
 				return
 			if(!ticker || !ticker.mode)
-				alert("The game hasn't started yet!")
+				tgui_alert(usr,"The game hasn't started yet!")
 				return
 			var/mob/M = locate(href_list["target"])
 			if (!M) return
-			if (alert("Make [M] a floor goblin?", "Make Floor Goblin", "Yes", "No") == "Yes")
+			if (tgui_alert(usr,"Make [M] a floor goblin?", "Make Floor Goblin", list("Yes", "No")) == "Yes")
 				evilize(M, ROLE_FLOOR_GOBLIN)
 
 		if ("remove_traitor")
 			if ( src.level < LEVEL_SA )
-				alert("You must be at least a Secondary Administrator to remove someone's status as an antagonist.")
+				tgui_alert(usr,"You must be at least a Secondary Administrator to remove someone's status as an antagonist.")
 				return
 			if (!ticker || !ticker.mode)
-				alert("The game hasn't started yet!")
+				tgui_alert(usr,"The game hasn't started yet!")
 				return
 			var/mob/M = locate(href_list["target"])
 			if (!M) return
-			if (alert("Remove [M]'s antag status?", "Remove Antag", "Yes", "No") == "Yes")
+			if (tgui_alert(usr,"Remove [M]'s antag status?", "Remove Antag", list("Yes", "No")) == "Yes")
 				if (!M) return
 				if (!isturf(M.loc))
 					// They could be in a pod or whatever, which would have unfortunate results when respawned (Convair880).
-					alert(usr, "You currently cannot remove the antagonist status of somebody hiding in a pod, closet or other container.", "An error occurred")
+					tgui_alert(usr, "You currently cannot remove the antagonist status of somebody hiding in a pod, closet or other container.", "An error occurred")
 					return
 				remove_antag(M, usr, 0, 1)
 
 		if ("traitor")
 			if(!ticker || !ticker.mode)
-				alert("The game hasn't started yet!")
+				tgui_alert(usr,"The game hasn't started yet!")
 				return
 			var/mob/M = locate(href_list["target"])
 			if (!M) return
@@ -2146,14 +2179,14 @@ var/global/noir = 0
 			var/datum/game_mode/current_mode = ticker.mode
 			if (istype(current_mode, /datum/game_mode/revolution))
 				if(M.mind in current_mode:head_revolutionaries)
-					alert("Head Revolutionary!")
+					tgui_alert(usr,"Head Revolutionary!")
 					return
 				else if(M.mind in current_mode:revolutionaries)
-					alert("Revolutionary!")
+					tgui_alert(usr,"Revolutionary!")
 					return
 			else if (istype(current_mode, /datum/game_mode/nuclear))
 				if(M.mind in current_mode:syndicates)
-					alert("Syndicate Operative!", "[M.key]")
+					tgui_alert(usr,"Syndicate Operative!", "[M.key]")
 					return
 			else if (istype(current_mode, /datum/game_mode/spy))
 				if(M.mind in current_mode:leaders)
@@ -2165,15 +2198,15 @@ var/global/noir = 0
 						t += "[OB.explanation_text]\n"
 					if(antagonist.objectives.len == 0)
 						t = "None defined."
-					alert("Infiltrator. Objective(s):\n[t]", "[M.key]")
+					tgui_alert(usr,"Infiltrator. Objective(s):\n[t]", "[M.key]")
 					return
 			else if (istype(current_mode, /datum/game_mode/gang))
 				if(M.mind in current_mode:leaders)
-					alert("Leader of [M.mind.gang.gang_name].", "[M.key]")
+					tgui_alert(usr,"Leader of [M.mind.gang.gang_name].", "[M.key]")
 					return
 				for(var/datum/gang/G in current_mode:gangs)
 					if(M.mind in G.members)
-						alert("Member of [G.gang_name].", "[M.key]")
+						tgui_alert(usr,"Member of [G.gang_name].", "[M.key]")
 						return
 
 			// traitor, or other modes where traitors/counteroperatives would be.
@@ -2186,7 +2219,7 @@ var/global/noir = 0
 					t += "[OB.explanation_text]\n"
 				if(antagonist.objectives.len == 0)
 					t = "None defined."
-				alert("Assigned [M.mind.special_role]. Objective(s):\n[t]", "[M.key]")
+				tgui_alert(usr,"Assigned [M.mind.special_role]. Objective(s):\n[t]", "[M.key]")
 				return
 			if(M.mind in ticker.mode.Agimmicks)
 				var/datum/mind/antagonist = M.mind
@@ -2197,13 +2230,13 @@ var/global/noir = 0
 					t += "[OB.explanation_text]\n"
 				if(antagonist.objectives.len == 0)
 					t = "None defined."
-				alert("Assigned [M.mind.special_role]. Objective(s):\n[t]", "[M.key]")
+				tgui_alert(usr,"Assigned [M.mind.special_role]. Objective(s):\n[t]", "[M.key]")
 				return
 
 			//they're nothing so turn them into a traitor!
 			if(ishuman(M) || isAI(M) || isrobot(M) || ismobcritter(M))
 				var/antagonize = "Cancel"
-				antagonize = alert("Is not an antagonist, make antagonist?", "antagonist", "Yes", "Cancel")
+				antagonize = tgui_alert(usr,"Is not an antagonist, make antagonist?", "antagonist", list("Yes", "Cancel"))
 				if(antagonize == "Cancel")
 					return
 				if(antagonize == "Yes")
@@ -2229,7 +2262,7 @@ var/global/noir = 0
 						var/selection = input(usr, "Select traitor type.", "Traitorize", ROLE_TRAITOR) as null|anything in traitor_types
 						switch(selection)
 							if(ROLE_TRAITOR)
-								if (alert("Hard Mode?","Treachery","Yes","No") == "Yes")
+								if (tgui_alert(usr,"Hard Mode?","Treachery",list("Yes", "No")) == "Yes")
 									evilize(M, ROLE_TRAITOR, "hardmode")
 								else
 									evilize(M, ROLE_TRAITOR)
@@ -2242,7 +2275,7 @@ var/global/noir = 0
 								evilize(M, selection)
 			//they're a ghost/hivebotthing/etc
 			else
-				alert("Cannot make this mob a traitor")
+				tgui_alert(usr,"Cannot make this mob a traitor")
 
 		if ("add_antagonist")
 			if (src.level < LEVEL_PA)
@@ -2320,19 +2353,19 @@ var/global/noir = 0
 			if (src.level >= LEVEL_SA)
 				create_object(usr)
 			else
-				alert("You need to be at least a Primary Adminstrator to create objects.")
+				tgui_alert(usr,"You need to be at least a Primary Adminstrator to create objects.")
 
 		if ("create_turf")
 			if (src.level >= LEVEL_SA)
 				create_turf(usr)
 			else
-				alert("You need to be at least a Primary Adminstrator to create turfs.")
+				tgui_alert(usr,"You need to be at least a Primary Adminstrator to create turfs.")
 
 		if ("create_mob")
 			if (src.level >= LEVEL_SA)
 				create_mob(usr)
 			else
-				alert("You need to be at least a Primary Administrator to create mobs.")
+				tgui_alert(usr,"You need to be at least a Primary Administrator to create mobs.")
 
 		if ("prom_demot")
 			if (src.level >= LEVEL_PA)
@@ -2340,7 +2373,7 @@ var/global/noir = 0
 				if (!M) return
 				var/client/C = M.client
 				if(C.holder && (C.holder.level >= src.level) && C != usr.client)
-					alert("This cannot be done as [C] isn't of a lower rank than you!")
+					tgui_alert(usr,"This cannot be done as [C] isn't of a lower rank than you!")
 					return
 				var/dat = "[C] is a [C.holder ? "[C.holder.rank]" : "non-admin"]<br><br>Change [C]'s rank?<br>"
 				if (C == usr.client)
@@ -2363,7 +2396,7 @@ var/global/noir = 0
 							"}
 				usr.Browse(dat, "window=prom_demot;size=480x300")
 			else
-				alert("You need to be at least a Primary Adminstrator to promote or demote.")
+				tgui_alert(usr,"You need to be at least a Primary Adminstrator to promote or demote.")
 
 		if ("chgadlvl")
 			if (src.level >= LEVEL_PA)
@@ -2372,11 +2405,11 @@ var/global/noir = 0
 				if (!rank || !C) return
 
 				if (C.holder && (C.holder.level >= src.level) && C != usr.client)
-					alert("This cannot be done as [C] isn't of a lower rank than you!")
+					tgui_alert(usr,"This cannot be done as [C] isn't of a lower rank than you!")
 					return
 
 				if (src.level < rank_to_level(rank))
-					alert("You can't promote people above your own rank, dork.")
+					tgui_alert(usr,"You can't promote people above your own rank, dork.")
 					return
 
 				if (rank == "Remove")
@@ -2390,7 +2423,7 @@ var/global/noir = 0
 					ircmsg["key"] = usr.client.key
 					ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 					ircmsg["msg"] = "has removed [C]'s adminship"
-					ircbot.export("admin", ircmsg)
+					ircbot.export_async("admin", ircmsg)
 
 					admins.Remove(C.ckey)
 					onlineAdmins.Remove(C)
@@ -2405,12 +2438,12 @@ var/global/noir = 0
 					ircmsg["key"] = usr.client.key
 					ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 					ircmsg["msg"] = "has made [C] a [rank]"
-					ircbot.export("admin", ircmsg)
+					ircbot.export_async("admin", ircmsg)
 
 					admins[C.ckey] = rank
 					onlineAdmins.Add(C)
 			else
-				alert("You need to be at least a Primary Adminstrator to promote or demote.")
+				tgui_alert(usr,"You need to be at least a Primary Adminstrator to promote or demote.")
 
 		if ("object_list")
 			if (src.level >= LEVEL_SA)
@@ -2441,10 +2474,10 @@ var/global/noir = 0
 					if (!paths)
 						return
 					else if (length(paths) > 5)
-						alert("Select five or less object types only, you colossal ass!")
+						tgui_alert(usr,"Select five or less object types only, you colossal ass!")
 						return
 					else if (length(removed_paths))
-						alert("Spawning of these objects is blocked:\n" + jointext(removed_paths, "\n"))
+						tgui_alert(usr,"Spawning of these objects is blocked:\n" + jointext(removed_paths, "\n"))
 						return
 
 					var/list/offset = splittext(href_list["offset"],",")
@@ -2501,10 +2534,10 @@ var/global/noir = 0
 							LAGCHECK(LAG_LOW)
 					return
 				else
-					alert("Object spawning is currently disabled for anyone below the rank of Administrator.")
+					tgui_alert(usr,"Object spawning is currently disabled for anyone below the rank of Administrator.")
 					return
 			else
-				alert("You need to be at least an Adminstrator to spawn objects.")
+				tgui_alert(usr,"You need to be at least an Adminstrator to spawn objects.")
 
 		if ("polymorph")
 			if (src.level >= LEVEL_SA) //gave SA+ restricted polymorph
@@ -2512,7 +2545,7 @@ var/global/noir = 0
 				if (!M) return
 				usr.client.cmd_admin_polymorph(M)
 			else
-				alert("You need to be at least a Secondary Admin to polymorph a dude.")
+				tgui_alert(usr,"You need to be at least a Secondary Admin to polymorph a dude.")
 
 		if ("modcolor")
 			if (src.level >= LEVEL_ADMIN)
@@ -2520,7 +2553,7 @@ var/global/noir = 0
 				if (!M) return
 				mod_color(M)
 			else
-				alert("You need to be at least a Administrator to modify an icon.")
+				tgui_alert(usr,"You need to be at least a Administrator to modify an icon.")
 
 		if("giveantagtoken") //Gives player a token they can redeem to guarantee an antagonist role
 			if (src.level >= LEVEL_SA)
@@ -2528,7 +2561,7 @@ var/global/noir = 0
 				if (!M)
 					return
 				if (M.ckey && M.ckey == usr.ckey)
-					alert(usr, "You cannot modify your own antag tokens.")
+					tgui_alert(usr, "You cannot modify your own antag tokens.")
 					return
 				var/tokens = input(usr, "Current Tokens: [M.client.antag_tokens]","Set Antag Tokens to...") as null|num
 				if (!tokens)
@@ -2547,9 +2580,6 @@ var/global/noir = 0
 				var/mob/M = locate(href_list["target"])
 				if (!M)
 					return
-				if (M.ckey && M.ckey == usr.ckey)
-					alert(usr, "You cannot modify your own spacebux.")
-					return
 				var/spacebux = input(usr, "Current Spacebux: [M.client.persistent_bank]","Set Spacebux to...") as null|num
 				if (!spacebux)
 					return
@@ -2563,11 +2593,11 @@ var/global/noir = 0
 				if (!M) return
 				usr.client.view_save_data(M)
 			else
-				alert("You need to be at least a Administrator to view save data.")
+				tgui_alert(usr,"You need to be at least a Administrator to view save data.")
 
 		if ("grantcontributor")
 			if (src.level >= LEVEL_CODER)
-				var/confirmation = alert(usr, "Are you sure?", "Confirmation", "Yes", "No")
+				var/confirmation = tgui_alert(usr, "Are you sure?", "Confirmation", list("Yes", "No"))
 				if (confirmation != "Yes")
 					return
 				var/mob/M = locate(href_list["target"])
@@ -2577,10 +2607,10 @@ var/global/noir = 0
 				logTheThing(LOG_DIARY, usr, "gave [constructTarget(M,"diary")] contributor status.")
 				message_admins( "[key_name(usr)] gave [key_name(M)] contributor status." )
 			else
-				alert("You need to be at least a Coder to grant the medal.")
+				tgui_alert(usr,"You need to be at least a Coder to grant the medal.")
 		if ("revokecontributor")
 			if (src.level >= LEVEL_CODER)
-				var/confirmation = alert(usr, "Are you sure?", "Confirmation", "Yes", "No")
+				var/confirmation = tgui_alert(usr, "Are you sure?", "Confirmation", list("Yes", "No"))
 				if (confirmation != "Yes")
 					return
 				var/mob/M = locate(href_list["target"])
@@ -2596,7 +2626,7 @@ var/global/noir = 0
 				else
 					boutput( usr, "<span class='alert'>Failed to revoke, did they have the medal to begin with?</span>" )
 			else
-				alert("You need to be at least a Coder to revoke the medal.")
+				tgui_alert(usr,"You need to be at least a Coder to revoke the medal.")
 		if ("grantclown")
 			if (src.level >= LEVEL_SA)
 				var/mob/M = locate(href_list["target"])
@@ -2606,7 +2636,7 @@ var/global/noir = 0
 				logTheThing(LOG_DIARY, usr, "gave [constructTarget(M,"diary")] their clown college diploma.")
 				message_admins( "[key_name(usr)] gave [key_name(M)] their clown college diploma." )
 			else
-				alert("You need to be at least an SA to grant this.")
+				tgui_alert(usr,"You need to be at least an SA to grant this.")
 		if ("revokeclown")
 			if (src.level >= LEVEL_SA)
 				var/mob/M = locate(href_list["target"])
@@ -2622,7 +2652,7 @@ var/global/noir = 0
 				else
 					boutput( usr, "<span class='alert'>Failed to revoke, did they have the medal to begin with?</span>" )
 			else
-				alert("You need to be at least an SA to revoke this.")
+				tgui_alert(usr,"You need to be at least an SA to revoke this.")
 
 		if ("viewvars")
 			if (src.level >= LEVEL_PA)
@@ -2630,7 +2660,7 @@ var/global/noir = 0
 				if (!M) return
 				usr.client.debug_variables(M)
 			else
-				alert("You need to be at least a Primary Administrator to view variables.")
+				tgui_alert(usr,"You need to be at least a Primary Administrator to view variables.")
 
 		if ("adminplayeropts")
 			var/mob/M = locate(href_list["target"])
@@ -2666,7 +2696,7 @@ var/global/noir = 0
 						if (!who)
 							return
 						if (!ishuman(who))
-							alert("This secret can only be used on human mobs.")
+							tgui_alert(usr,"This secret can only be used on human mobs.")
 							return
 						var/mob/living/carbon/human/H = who
 						var/which = input("Transform them into what?","Transform") as null|anything in list("Monkey","Cyborg","Lizardman","Squidman","Martian","Skeleton","Flashman","Cow")
@@ -2715,7 +2745,7 @@ var/global/noir = 0
 						logTheThing(LOG_DIARY, usr, "transformed everyone into a [which].", "admin")
 					if("prisonwarp")
 						if(!ticker)
-							alert("The game hasn't started yet!", null, null, null, null, null)
+							tgui_alert(usr,"The game hasn't started yet!")
 							return
 						message_admins("<span class='internal'>[key_name(usr)] teleported all players to the prison zone.</span>")
 						logTheThing(LOG_ADMIN, usr, "teleported all players to the prison zone.")
@@ -2770,7 +2800,7 @@ var/global/noir = 0
 					if("traitor_all")
 						if (src.level >= LEVEL_SA)
 							if(!ticker)
-								alert("The game hasn't started yet!")
+								tgui_alert(usr,"The game hasn't started yet!")
 								return
 
 							var/which_traitor = input("What kind of traitor?","Everyone's a Traitor") as null|anything in list(ROLE_TRAITOR,ROLE_WIZARD,ROLE_CHANGELING,ROLE_WEREWOLF,ROLE_VAMPIRE,ROLE_ARCFIEND,ROLE_HUNTER,ROLE_WRESTLER,ROLE_GRINCH,ROLE_OMNITRAITOR)
@@ -2778,7 +2808,7 @@ var/global/noir = 0
 								return
 							var/hardmode = null
 							if (which_traitor == ROLE_TRAITOR)
-								if (alert("Hard Mode?","Everyone's a Traitor","Yes","No") == "Yes")
+								if (tgui_alert(usr,"Hard Mode?","Everyone's a Traitor",list("Yes", "No")) == "Yes")
 									hardmode = "hardmode"
 							var/custom_objective = input("What should the objective be?","Everyone's a Traitor") as null|text
 							if (!custom_objective)
@@ -2799,7 +2829,7 @@ var/global/noir = 0
 							logTheThing(LOG_ADMIN, usr, "made everyone a[hardmode ? " hard-mode" : ""] [which_traitor]. Objective is [custom_objective]")
 							logTheThing(LOG_DIARY, usr, "made everyone a[hardmode ? " hard-mode" : ""] [which_traitor]. Objective is [custom_objective]", "admin")
 						else
-							alert("You're not of a high enough rank to do this")
+							tgui_alert(usr,"You're not of a high enough rank to do this")
 					if("flicklights")
 						while(!usr.stat)
 							//knock yourself out to stop the ghosts
@@ -2809,7 +2839,7 @@ var/global/noir = 0
 									if(AffectedArea.name != "Space" && AffectedArea.name != "Ocean" && AffectedArea.name != "Engine Walls" && AffectedArea.name != "Chemical Lab Test Chamber" && AffectedArea.name != "Escape Shuttle" && AffectedArea.name != "Arrival Area" && AffectedArea.name != "Arrival Shuttle" && AffectedArea.name != "start area" && AffectedArea.name != "Engine Combustion Chamber")
 										AffectedArea.power_light = 0
 										AffectedArea.power_change()
-										SPAWN_DBG(rand(55,185))
+										SPAWN(rand(55,185))
 											AffectedArea.power_light = 1
 											AffectedArea.power_change()
 										var/Message = rand(1,4)
@@ -2832,7 +2862,7 @@ var/global/noir = 0
 							LAGCHECK(LAG_LOW)
 					if("stupify")
 						if (src.level >= LEVEL_ADMIN)
-							if (alert("Do you wish to give everyone brain damage?", "Confirmation", "Yes", "No") != "Yes")
+							if (tgui_alert(usr,"Do you wish to give everyone brain damage?", "Confirmation", list("Yes", "No")) != "Yes")
 								return
 							for (var/mob/living/carbon/human/H in mobs)
 								if (H.get_brain_damage() < 60)
@@ -2846,12 +2876,12 @@ var/global/noir = 0
 							logTheThing(LOG_ADMIN, usr, "gave everybody severe brain damage.")
 							logTheThing(LOG_DIARY, usr, "gave everybody severe brain damage.", "admin")
 						else
-							alert("You cannot perform this action. You must be of a higher administrative rank!")
+							tgui_alert(usr,"You cannot perform this action. You must be of a higher administrative rank!")
 							return
 					// FUN SECRETS CODE
 					if ("randomguns")
 						if (src.level >= LEVEL_PA)
-							if (alert("Do you want to give everyone a gun?", "Confirmation", "Yes", "No") != "Yes")
+							if (tgui_alert(usr,"Do you want to give everyone a gun?", "Confirmation", list("Yes", "No")) != "Yes")
 								return
 							for (var/mob/living/L in mobs)
 								new /obj/random_item_spawner/kineticgun(get_turf(L))
@@ -2859,7 +2889,7 @@ var/global/noir = 0
 							logTheThing(LOG_ADMIN, usr, "gave everyone a random firearm.")
 							logTheThing(LOG_DIARY, usr, "gave everyone a random firearm.", "admin")
 						else
-							alert("You must be at least a Primary Administrator")
+							tgui_alert(usr,"You must be at least a Primary Administrator")
 							return
 
 					if	("swaprooms")
@@ -2870,7 +2900,7 @@ var/global/noir = 0
 							logTheThing(LOG_ADMIN, usr, "swapped the stations rooms.")
 							logTheThing(LOG_DIARY, usr, "swapped the stations rooms.", "admin")
 						else
-							alert("You must be at least a Primary Administrator")
+							tgui_alert(usr,"You must be at least a Primary Administrator")
 							return
 
 					if	("timewarp")
@@ -2884,7 +2914,7 @@ var/global/noir = 0
 							logTheThing(LOG_ADMIN, usr, "triggered a time warp.")
 							logTheThing(LOG_DIARY, usr, "triggered a time warp.", "admin")
 						else
-							alert("You must be at least a Primary Administrator")
+							tgui_alert(usr,"You must be at least a Primary Administrator")
 							return
 
 					if ("bioeffect_help")
@@ -2946,7 +2976,7 @@ var/global/noir = 0
 								logTheThing(LOG_ADMIN, usr, "[adding ? "added" : "removed"] the [string_version] bio-effect[picklist.len > 1 ? "s" : ""] [adding ? "to" : "from"] [key_name(M)].")
 								logTheThing(LOG_DIARY, usr, "[adding ? "added" : "removed"] the [string_version] bio-effect[picklist.len > 1 ? "s" : ""] [adding ? "to" : "from"] [key_name(M)].", "admin")
 						else
-							alert("You must be at least a Primary Administrator to bioeffect players.")
+							tgui_alert(usr,"You must be at least a Primary Administrator to bioeffect players.")
 							return
 					if ("add_ability_one","remove_ability_one")
 						if (src.level >= LEVEL_PA)
@@ -2958,7 +2988,7 @@ var/global/noir = 0
 								return
 
 							if (!M.abilityHolder)
-								alert("No ability holder detected. Create a holder first!")
+								tgui_alert(usr,"No ability holder detected. Create a holder first!")
 								return
 
 							var/ab_to_do = tgui_input_list(owner, "Which ability?", "[adding ? "Give" : "Remove"] Ability", childrentypesof(/datum/targetable))
@@ -2972,7 +3002,7 @@ var/global/noir = 0
 							logTheThing(LOG_ADMIN, usr, "[adding ? "added" : "removed"] the [ab_to_do] ability [adding ? "to" : "from"] [key_name(M)].")
 							logTheThing(LOG_DIARY, usr, "[adding ? "added" : "removed"] the [ab_to_do] ability [adding ? "to" : "from"] [key_name(M)].", "admin")
 						else
-							alert("You must be at least a Primary Administrator to change player abilities.")
+							tgui_alert(usr,"You must be at least a Primary Administrator to change player abilities.")
 							return
 
 					if ("add_reagent_one","remove_reagent_one")
@@ -3015,7 +3045,7 @@ var/global/noir = 0
 								logTheThing(LOG_ADMIN, usr, "[adding ? "added" : "removed"] [string_version] [adding ? "to" : "from"] [key_name(M)].")
 								logTheThing(LOG_DIARY, usr, "[adding ? "added" : "removed"] [string_version] [adding ? "to" : "from"] [key_name(M)].", "admin")
 						else
-							alert("You must be at least a Primary Administrator to affect player reagents.")
+							tgui_alert(usr,"You must be at least a Primary Administrator to affect player reagents.")
 							return
 
 					if ("add_bioeffect_all","remove_bioeffect_all")
@@ -3035,7 +3065,7 @@ var/global/noir = 0
 									else
 										string_version = "\"[pick]\""
 
-								SPAWN_DBG(0)
+								SPAWN(0)
 									for(var/mob/living/carbon/X in mobs)
 										for(pick in picklist)
 											if (adding)
@@ -3048,7 +3078,7 @@ var/global/noir = 0
 								logTheThing(LOG_ADMIN, usr, "[adding ? "added" : "removed"] the [string_version] bio-effect[picklist.len > 1 ? "s" : ""] [adding ? "to" : "from"] everyone.")
 								logTheThing(LOG_DIARY, usr, "[adding ? "added" : "removed"] the [string_version] bio-effect[picklist.len > 1 ? "s" : ""] [adding ? "to" : "from"] everyone.", "admin")
 						else
-							alert("You must be at least a Primary Administrator to bioeffect players.")
+							tgui_alert(usr,"You must be at least a Primary Administrator to bioeffect players.")
 							return
 
 					if ("add_ability_all","remove_ability_all")
@@ -3074,7 +3104,7 @@ var/global/noir = 0
 							logTheThing(LOG_ADMIN, usr, "[adding ? "added" : "removed"] the [ab_to_do] ability [adding ? "to" : "from"] everyone.")
 							logTheThing(LOG_DIARY, usr, "[adding ? "added" : "removed"] the [ab_to_do] ability [adding ? "to" : "from"] everyone.", "admin")
 						else
-							alert("You must be at least a Primary Administrator to change player abilities.")
+							tgui_alert(usr,"You must be at least a Primary Administrator to change player abilities.")
 							return
 
 					if ("add_reagent_all","remove_reagent_all")
@@ -3099,7 +3129,7 @@ var/global/noir = 0
 									else
 										string_version = "[amt] \"[pick]\""
 
-								SPAWN_DBG(0)
+								SPAWN(0)
 									for(var/mob/living/carbon/X in mobs)
 										for(pick in picklist)
 											var/amt = picklist[pick]
@@ -3118,7 +3148,7 @@ var/global/noir = 0
 								logTheThing(LOG_DIARY, usr, "[adding ? "added" : "removed"] [string_version] [adding ? "to" : "from"] everyone.", "admin")
 
 						else
-							alert("You must be at least a Primary Administrator to affect player reagents.")
+							tgui_alert(usr,"You must be at least a Primary Administrator to affect player reagents.")
 							return
 
 					if ("ballpit")
@@ -3162,35 +3192,19 @@ var/global/noir = 0
 							logTheThing(LOG_ADMIN, usr, "replaced z1 pools with ballpits.")
 							logTheThing(LOG_DIARY, usr, "replaced z1 pools with ballpits.", "admin")
 						else
-							alert("You cannot perform this action. You must be of a higher administrative rank!")
+							tgui_alert(usr,"You cannot perform this action. You must be of a higher administrative rank!")
 							return
 
 					if ("woodstation")
 						if (src.level >= LEVEL_PA)
 							message_admins("[key_name(usr)] began replacing all Z1 floors and walls with wooden ones.")
-							var/nornwalls = 0
-							if (map_settings?.walls == /turf/simulated/wall/auto/supernorn)
-								nornwalls = 1
 							for (var/turf/simulated/wall/W in world)
 								if (atom_emergency_stop)
 									message_admins("[key_name(usr)]'s command to replace all Z1 floors and walls with wooden ones was terminated due to the atom emerygency stop!")
 									return
 								if (W.z != 1)
 									break
-								if (nornwalls)
-									var/turf/simulated/wall/auto/AW = W
-									if (istype(AW))
-										if (AW.icon != 'icons/turf/walls_wood.dmi')
-											AW.icon = 'icons/turf/walls_wood.dmi'
-											if (istype(AW, /turf/simulated/wall/auto/reinforced))
-												AW.icon_state = copytext(W.icon_state,2)
-											if (AW.connect_image) // I will get you to work you shit fuck butt FART OVERLAY
-												AW.connect_image = image(AW.icon, "connect[AW.connect_overlay_dir]")
-												AW.UpdateOverlays(AW.connect_image, "connect")
-								else
-									if (W.icon_state != "wooden")
-										W.icon = 'icons/turf/walls.dmi'
-										W.icon_state = "wooden"
+								new /turf/simulated/wall/auto/supernorn/wood(get_turf(W))
 								LAGCHECK(LAG_LOW)
 							for (var/turf/simulated/floor/F in world)
 								if (atom_emergency_stop)
@@ -3208,7 +3222,7 @@ var/global/noir = 0
 							logTheThing(LOG_ADMIN, usr, "replaced z1 floors and walls with wooden doors.")
 							logTheThing(LOG_DIARY, usr, "replaced z1 floors and walls with wooden doors.", "admin")
 						else
-							alert("You cannot perform this action. You must be of a higher administrative rank!")
+							tgui_alert(usr,"You cannot perform this action. You must be of a higher administrative rank!")
 							return
 
 					if ("yeolde")
@@ -3229,7 +3243,7 @@ var/global/noir = 0
 							logTheThing(LOG_ADMIN, usr, "replaced z1 airlocks with wooden doors.")
 							logTheThing(LOG_DIARY, usr, "replaced z1 airlocks with wooden doors.", "admin")
 						else
-							alert("You cannot perform this action. You must be of a higher administrative rank!")
+							tgui_alert(usr,"You cannot perform this action. You must be of a higher administrative rank!")
 							return
 
 					if("fakeguns")
@@ -3245,7 +3259,7 @@ var/global/noir = 0
 							logTheThing(LOG_ADMIN, usr, "used Fake Gun secret.")
 							logTheThing(LOG_DIARY, usr, "used Fake Gun secret.", "admin")
 						else
-							alert("You cannot perform this action. You must be of a higher administrative rank!")
+							tgui_alert(usr,"You cannot perform this action. You must be of a higher administrative rank!")
 							return
 
 					if("flipstation")
@@ -3266,7 +3280,7 @@ var/global/noir = 0
 							logTheThing(LOG_ADMIN, src, "set station direction to [direction].")
 							logTheThing(LOG_DIARY, src, "set station direction to [direction]", "admin")
 						else
-							alert("You cannot perform this action. You must be of a higher administrative rank!")
+							tgui_alert(usr,"You cannot perform this action. You must be of a higher administrative rank!")
 							return
 
 					if("raiseundead")
@@ -3287,13 +3301,13 @@ var/global/noir = 0
 							logTheThing(LOG_ADMIN, usr, "brought back all dead humans as zombies.")
 							logTheThing(LOG_DIARY, usr, "brought back all dead humans as zombies", "admin")
 						else
-							alert("You cannot perform this action. You must be of a higher administrative rank!")
+							tgui_alert(usr,"You cannot perform this action. You must be of a higher administrative rank!")
 							return
 
 					if("forcerandomnames")
 						if (src.level >= LEVEL_PA)
 							if(current_state > GAME_STATE_PREGAME)
-								alert("You can only only trigger this before the game starts, sorry pal!")
+								tgui_alert(usr,"You can only only trigger this before the game starts, sorry pal!")
 								return
 
 							force_random_names = 1
@@ -3307,13 +3321,13 @@ var/global/noir = 0
 							logTheThing(LOG_ADMIN, usr, "set all players to use random names.")
 							logTheThing(LOG_DIARY, usr, "set all players to use random names.", "admin")
 						else
-							alert("You cannot perform this action. You must be of a higher administrative rank!")
+							tgui_alert(usr,"You cannot perform this action. You must be of a higher administrative rank!")
 							return
 
 					if("forcerandomlooks")
 						if (src.level >= LEVEL_PA)
 							if(current_state > GAME_STATE_PREGAME)
-								alert("You can only only trigger this before the game starts, sorry pal!")
+								tgui_alert(usr,"You can only only trigger this before the game starts, sorry pal!")
 								return
 
 							force_random_looks = 1
@@ -3327,7 +3341,7 @@ var/global/noir = 0
 							logTheThing(LOG_ADMIN, usr, "set all players to use random appearances.")
 							logTheThing(LOG_DIARY, usr, "set all players to use random appearances.", "admin")
 						else
-							alert("You cannot perform this action. You must be of a higher administrative rank!")
+							tgui_alert(usr,"You cannot perform this action. You must be of a higher administrative rank!")
 							return
 
 					if("sawarms")
@@ -3358,12 +3372,12 @@ var/global/noir = 0
 							logTheThing(LOG_DIARY, usr, "used the Saw Arms secret.", "admin")
 
 						else
-							alert("You cannot perform this action. You must be of a higher administrative rank!")
+							tgui_alert(usr,"You cannot perform this action. You must be of a higher administrative rank!")
 							return
 
 					if("emag_all_things")
 						if (src.level >= LEVEL_ADMIN)
-							if (alert("Do you really want to emag everything?","Bad Idea", "Yes", "No") == "Yes")
+							if (tgui_alert(usr,"Do you really want to emag everything?","Bad Idea", list("Yes", "No")) == "Yes")
 								message_admins("[key_name(usr)] has started emagging everything!")
 								logTheThing(LOG_ADMIN, usr, "used the Emag Everything secret.")
 								logTheThing(LOG_DIARY, usr, "used the Emag Everything secret.", "admin")
@@ -3376,7 +3390,7 @@ var/global/noir = 0
 								return
 
 						else
-							alert("You need to be at least a Administrator to emag everything")
+							tgui_alert(usr,"You need to be at least a Administrator to emag everything")
 							return
 
 					if("shakecamera")
@@ -3389,24 +3403,24 @@ var/global/noir = 0
 							logTheThing(LOG_DIARY, src, "created a shake effect (intensity [intensity], length [time])", "admin")
 							message_admins("[key_name(usr)] has created a shake effect (intensity [intensity], length [time]).")
 							for (var/mob/M in mobs)
-								SPAWN_DBG(0)
+								SPAWN(0)
 									shake_camera(M, time * 10, intensity)
 								if (intensity >= 64)
 									M.changeStatus("weakened", 2 SECONDS)
 
 						else
-							alert("You need to be at least a Administrator to shake the camera.")
+							tgui_alert(usr,"You need to be at least a Administrator to shake the camera.")
 							return
 
 					if("creepifystation")
 						if (src.level >= LEVEL_ADMIN)
-							if (alert("Are you sure you should creepify the station? There's no going back.", "PARENTAL CONTROL", "Sure thing!", "Not really.") == "Sure thing!")
+							if (tgui_alert(usr,"Are you sure you should creepify the station? There's no going back.", "PARENTAL CONTROL", list("Yes", "No")) == "Yes")
 								message_admins("[key_name(usr)] creepified the station.")
 								logTheThing(LOG_ADMIN, usr, "used the Creepify Station button")
 								logTheThing(LOG_DIARY, usr, "used the Creepify Station button", "admin")
 								creepify_station()
 						else
-							alert("You need to be at least a Administrator to creepify the station.")
+							tgui_alert(usr,"You need to be at least a Administrator to creepify the station.")
 							return
 
 
@@ -3458,7 +3472,7 @@ var/global/noir = 0
 					if ("noir")
 						if(src.level >= LEVEL_ADMIN)
 							if (noir)
-								if (alert("Had enough of noir?", "Good decisions", "Yes!", "Never!") == "Yes!")
+								if (tgui_alert(usr,"Had enough of noir?", "Good decisions", list("Yes", "No")) == "Yes")
 									noir = 0
 									for (var/mob/M in mobs)
 										if (M.client)
@@ -3506,7 +3520,7 @@ var/global/noir = 0
 							else
 								return
 						else
-							alert("You are not a shit enough guy to switcharoo, bub.")
+							tgui_alert(usr,"You are not a shit enough guy to switcharoo, bub.")
 
 
 					if("fartyparty")
@@ -3526,7 +3540,7 @@ var/global/noir = 0
 				if (usr) logTheThing(LOG_ADMIN, usr, "used secret [href_list["secretsfun"]]")
 				logTheThing(LOG_DIARY, usr, "used secret [href_list["secretsfun"]]", "admin")
 			else
-				alert("You need to be at least an Adminstrator to use the secrets panel.")
+				tgui_alert(usr,"You need to be at least an Adminstrator to use the secrets panel.")
 				return
 
 		if ("secretsdebug")
@@ -3577,7 +3591,7 @@ var/global/noir = 0
 					if("globalprocs")
 						src.owner:show_proc_list(null)
 			else
-				alert("You need to be at least a Coder to use debugging secrets.")
+				tgui_alert(usr,"You need to be at least a Coder to use debugging secrets.")
 
 		if ("secretsadmin")
 			if (src.level >= LEVEL_MOD)
@@ -3736,7 +3750,7 @@ var/global/noir = 0
 							usr.Browse(dat, "window=roundstatus;size=400x500")
 							#undef isdeadplayer
 						else
-							alert("The game hasn't started yet!")
+							tgui_alert(usr,"The game hasn't started yet!")
 					if("shuttle_panel")
 						if (current_state >= GAME_STATE_PLAYING)
 							var/dat = "<html><head><title>Shuttle Controls</title></head><body><h1><B>Shuttle Controls</B></h1>"
@@ -3799,7 +3813,7 @@ var/global/noir = 0
 						for(var/mob/living/carbon/human/H in mobs)
 							if(H.ckey)
 								if(H.bioHolder.Uid)
-									dat += "<tr><td>[H]</td><td>[H.bioHolder.uid_hash]</td></tr>"
+									dat += "<tr><td>[H]</td><td>[H.bioHolder.fingerprints]</td></tr>"
 								else if(!H.bioHolder.Uid)
 									dat += "<tr><td>[H]</td><td>H.bioHolder.Uid = null</td></tr>"
 							LAGCHECK(LAG_LOW)
@@ -3816,7 +3830,7 @@ var/global/noir = 0
 						boutput(world, text("<B>A secret has been activated by []!</B>", usr.key))
 				return
 			else
-				alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
+				tgui_alert(usr,"You cannot perform this action. You must be of a higher administrative rank!")
 
 		if ("view_logs_web")
 			if ((src.level >= LEVEL_MOD) && !src.tempmin)
@@ -3839,7 +3853,7 @@ var/global/noir = 0
 
 				usr.Browse(adminLogHtml, "window=[logType]_log_[gettxt];size=750x500")
 			else
-				alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
+				tgui_alert(usr,"You cannot perform this action. You must be of a higher administrative rank!")
 
 		if ("view_logs_pathology_strain")
 			if (src.level >= LEVEL_MOD)
@@ -3955,7 +3969,7 @@ var/global/noir = 0
 
 					else
 			else
-				alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
+				tgui_alert(usr,"You cannot perform this action. You must be of a higher administrative rank!")
 		if ("respawntarget")
 			if (src.level >= LEVEL_SA)
 				var/mob/M = locate(href_list["target"])
@@ -3974,7 +3988,7 @@ var/global/noir = 0
 				var/datum/job/job = tgui_input_list(usr, "Select job to respawn", "Respawn As", jobs)
 				if(!job) return
 				var/mob/new_player/newM = usr.client.respawn_target(M)
-				newM.AttemptLateSpawn(job, force=1)
+				newM?.AttemptLateSpawn(job, force=1)
 				href_list["target"] = "\ref[C.mob]"
 			else
 				alert ("You must be at least a Secondary Admin to respawn a target.")
@@ -3996,7 +4010,8 @@ var/global/noir = 0
 			if (src.level >= LEVEL_PA)
 				var/mob/M = locate(href_list["target"])
 				if (!M) return
-				usr.client.cmd_admin_clownify(M)
+				if (tgui_alert(usr,"Make [M] a cluwne?", "Make Cluwne", list("Yes", "No")) == "Yes")
+					usr.client.cmd_admin_clownify(M)
 			else
 				alert ("You must be at least a Primary Admin to clownify a player.")
 		if ("plainmsg")
@@ -4018,14 +4033,14 @@ var/global/noir = 0
 			if( src.level >= LEVEL_PA )
 				var/mob/M = locate(href_list["target"])
 				if (!M || !M.client)
-					alert( "That player doesn't exist!" )
+					tgui_alert( "That player doesn't exist!" )
 					return
 				src.show_chatbans(M.client)
 			else
-				alert( "You must be at least a Primary Admin to manage chat bans." )
+				tgui_alert( "You must be at least a Primary Admin to manage chat bans." )
 		if ("change_station_name")
 			if (!station_name_changing)
-				return alert("Station name changing is currently disabled.")
+				return tgui_alert(usr,"Station name changing is currently disabled.")
 
 			if (src.level >= LEVEL_MOD)
 				usr.openStationNameChangeWindow(src, "action=change_station_name_2")
@@ -4033,58 +4048,58 @@ var/global/noir = 0
 				alert ("You must be at least a Moderator to change the station name.")
 		if ("change_station_name_2")
 			if (!station_name_changing)
-				return alert("Station name changing is currently disabled.")
+				return tgui_alert(usr,"Station name changing is currently disabled.")
 
 			if (src.level >= LEVEL_MOD)
 				var/newName = href_list["newName"]
 				if (set_station_name(usr, newName))
-					command_alert("The new station name is [station_name]", "Station Naming Ceremony Completion Detection Algorithm")
+					command_alert("The new station name is [station_name]", "Station Naming Ceremony Completion Detection Algorithm", alert_origin = ALERT_STATION)
 
 				usr.Browse(null, "window=stationnamechanger")
 				src.Game()
 
 		if ("switch_map")
 			if (src.level < LEVEL_PA)
-				return alert("You must be at least a Primary Admin to switch maps.")
+				return tgui_alert(usr,"You must be at least a Primary Admin to switch maps.")
 
 			usr.client.cmd_change_map()
 
 		if ("start_map_vote")
 			if (src.level < LEVEL_PA)
-				return alert("You must be at least a Primary Admin to start map votes.")
+				return tgui_alert(usr,"You must be at least a Primary Admin to start map votes.")
 
 			if (!mapSwitcher.votingAllowed)
-				return alert("Map votes are currently toggled off.")
+				return tgui_alert(usr,"Map votes are currently toggled off.")
 
 			usr.client.cmd_start_map_vote()
 
 		if ("end_map_vote")
 			if (src.level < LEVEL_PA)
-				return alert("You must be at least a Primary Admin to end map votes.")
+				return tgui_alert(usr,"You must be at least a Primary Admin to end map votes.")
 
 			usr.client.cmd_end_map_vote()
 
 		if ("cancel_map_vote")
 			if (src.level < LEVEL_PA)
-				return alert("You must be at least a Primary Admin to cancel map votes.")
+				return tgui_alert(usr,"You must be at least a Primary Admin to cancel map votes.")
 
 			usr.client.cmd_cancel_map_vote()
 
 		if ("view_runtimes")
 			if (src.level < LEVEL_SA)
-				return alert("You must be at least a Secondary Admin to view runtimes.")
+				return tgui_alert(usr,"You must be at least a Secondary Admin to view runtimes.")
 
 			usr.client.cmd_view_runtimes()
 
 		if ("viewantaghistory")
 			if (src.level < LEVEL_SA)
-				return alert("You must be at least a Secondary Admin to view antag history.")
+				return tgui_alert(usr,"You must be at least a Secondary Admin to view antag history.")
 
 			usr.client.cmd_antag_history(href_list["targetckey"])
 
 		if ("show_player_stats")
 			if (src.level < LEVEL_SA)
-				return alert("You must be at least a Secondary Admin to view player stats.")
+				return tgui_alert(usr,"You must be at least a Secondary Admin to view player stats.")
 
 			//Shortcut to popup with defined params if present, otherwise just call verb
 			if (href_list["targetckey"])
@@ -4094,7 +4109,7 @@ var/global/noir = 0
 
 		if ("show_player_ips")
 			if (src.level < LEVEL_SA)
-				return alert("You must be at least a Secondary Admin to view player IPs.")
+				return tgui_alert(usr,"You must be at least a Secondary Admin to view player IPs.")
 
 			//Shortcut to popup with defined params if present, otherwise just call verb
 			if (href_list["ckey"])
@@ -4105,7 +4120,7 @@ var/global/noir = 0
 
 		if ("show_player_compids")
 			if (src.level < LEVEL_SA)
-				return alert("You must be at least a Secondary Admin to view player Computer IDs.")
+				return tgui_alert(usr,"You must be at least a Secondary Admin to view player Computer IDs.")
 
 			//Shortcut to popup with defined params if present, otherwise just call verb
 			if (href_list["ckey"])
@@ -4116,49 +4131,49 @@ var/global/noir = 0
 
 		if ("lightweight_doors")
 			if (src.level < LEVEL_PA)
-				return alert("You must be at least a Primary Admin to do this.")
+				return tgui_alert(usr,"You must be at least a Primary Admin to do this.")
 
 			usr.client.lightweight_doors()
 
 		if ("lightweight_mobs")
 			if (src.level < LEVEL_PA)
-				return alert("You must be at least a Primary Admin to do this.")
+				return tgui_alert(usr,"You must be at least a Primary Admin to do this.")
 
 			usr.client.lightweight_mobs()
 
 		if ("slow_atmos")
 			if (src.level < LEVEL_PA)
-				return alert("You must be at least a Primary Admin to do this.")
+				return tgui_alert(usr,"You must be at least a Primary Admin to do this.")
 
 			usr.client.slow_atmos()
 
 		if ("slow_fluids")
 			if (src.level < LEVEL_PA)
-				return alert("You must be at least a Primary Admin to do this.")
+				return tgui_alert(usr,"You must be at least a Primary Admin to do this.")
 
 			usr.client.slow_fluids()
 
 		if ("special_sea_fullbright")
 			if (src.level < LEVEL_PA)
-				return alert("You must be at least a Primary Admin to do this.")
+				return tgui_alert(usr,"You must be at least a Primary Admin to do this.")
 
 			usr.client.special_fullbright()
 
 		if ("slow_ticklag")
 			if (src.level < LEVEL_PA)
-				return alert("You must be at least a Primary Admin to do this.")
+				return tgui_alert(usr,"You must be at least a Primary Admin to do this.")
 
 			usr.client.slow_ticklag()
 
 		if ("disable_deletions")
 			if (src.level < LEVEL_PA)
-				return alert("You must be at least a Primary Admin to do this.")
+				return tgui_alert(usr,"You must be at least a Primary Admin to do this.")
 
 			usr.client.disable_deletions()
 
 		if ("disable_ingame_logs")
 			if (src.level < LEVEL_PA)
-				return alert("You must be at least a Primary Admin to do this.")
+				return tgui_alert(usr,"You must be at least a Primary Admin to do this.")
 
 			usr.client.disable_ingame_logs()
 
@@ -4473,7 +4488,7 @@ var/global/noir = 0
 	set name = "Restart"
 	set desc= "Restarts the world"
 
-	var/confirm = alert("Restart the game world?", "Restart", "Yes", "Cancel")
+	var/confirm = tgui_alert(usr,"Restart the game world?", "Restart", list("Yes", "Cancel"))
 	if(confirm == "Cancel")
 		return
 	if(confirm == "Yes")
@@ -4485,9 +4500,9 @@ var/global/noir = 0
 		ircmsg["key"] = usr.client.key
 		ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 		ircmsg["msg"] = "manually restarted the server."
-		ircbot.export("admin", ircmsg)
+		ircbot.export_async("admin", ircmsg)
 
-		round_end_data(2) //Wire: Export round end packet (manual restart)
+		round_end_data(2) //Wire: export_async round end packet (manual restart)
 
 		sleep(3 SECONDS)
 		Reboot_server()
@@ -4509,7 +4524,7 @@ var/global/noir = 0
 	set desc="Start the round RIGHT NOW"
 	set name="Start Now"
 	if(!ticker)
-		alert("Unable to start the game as it is not set up.")
+		tgui_alert(usr,"Unable to start the game as it is not set up.")
 		return
 	if(current_state <= GAME_STATE_PREGAME)
 		current_state = GAME_STATE_SETTING_UP
@@ -4518,7 +4533,7 @@ var/global/noir = 0
 		message_admins("<span class='internal'>[usr.key] has started the game.</span>")
 		return 1
 	else
-		//alert("Game has already started you fucking jerk, stop spamming up the chat :ARGH:") //no, FUCK YOU coder, for making this annoying popup
+		//tgui_alert(usr,"Game has already started you fucking jerk, stop spamming up the chat :ARGH:") //no, FUCK YOU coder, for making this annoying popup
 		boutput(usr,"Game is already started.")
 		return 0
 
@@ -4528,7 +4543,7 @@ var/global/noir = 0
 	set name="Delay Round Start"
 
 	if (current_state > GAME_STATE_PREGAME)
-		return alert("Too late... The game has already started!", null, null, null, null, null)
+		return tgui_alert(usr,"Too late... The game has already started!")
 	game_start_delayed = !(game_start_delayed)
 
 	if (game_start_delayed)
@@ -4571,7 +4586,7 @@ var/global/noir = 0
 		ircmsg["key"] = (usr?.client) ? usr.client.key : "NULL"
 		ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 		ircmsg["msg"] = "has delayed the server restart."
-		ircbot.export("admin", ircmsg)
+		ircbot.export_async("admin", ircmsg)
 
 	else if (game_end_delayed == 1)
 		game_end_delayed = 0
@@ -4584,7 +4599,7 @@ var/global/noir = 0
 		ircmsg["key"] = (usr?.client) ? usr.client.key : "NULL"
 		ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 		ircmsg["msg"] = "has removed the server restart delay."
-		ircbot.export("admin", ircmsg)
+		ircbot.export_async("admin", ircmsg)
 
 /mob/proc/revive()
 	if(ishuman(src))
@@ -4709,7 +4724,7 @@ var/global/noir = 0
 		var/mob/living/silicon/ai/A = M
 		A.syndicate = 1
 		A.syndicate_possible = 1
-		A.handle_robot_antagonist_status("admin", 0, usr)
+		A.make_syndicate("admin")
 	else if (isrobot(M))
 		var/mob/living/silicon/robot/R = M
 		if (R.dependent)
@@ -4717,7 +4732,7 @@ var/global/noir = 0
 			return
 		R.syndicate = 1
 		R.syndicate_possible = 1
-		R.handle_robot_antagonist_status("admin", 0, usr)
+		R.make_syndicate("admin")
 	else if (ishuman(M) || ismobcritter(M))
 		switch(traitor_type)
 			if(ROLE_TRAITOR)
@@ -4725,10 +4740,10 @@ var/global/noir = 0
 				if(special != "hardmode")
 					M.mind.special_role = ROLE_TRAITOR
 					M.verbs += /client/proc/gearspawn_traitor
-					SHOW_TRAITOR_RADIO_TIPS(M)
+					M.show_antag_popup("traitorradio")
 				else
 					M.mind.special_role = ROLE_HARDMODE_TRAITOR
-					SHOW_TRAITOR_HARDMODE_TIPS(M)
+					M.show_antag_popup("traitorhard")
 			if(ROLE_CHANGELING)
 				M.show_text("<h2><font color=red><B>You have mutated into a changeling!</B></font></h2>", "red")
 				M.mind.add_antagonist(ROLE_CHANGELING, source = ANTAGONIST_SOURCE_ADMIN)
@@ -4756,7 +4771,7 @@ var/global/noir = 0
 			if(ROLE_FLOOR_GOBLIN)
 				M.mind.special_role = ROLE_FLOOR_GOBLIN
 				M.make_floor_goblin()
-				SHOW_TRAITOR_HARDMODE_TIPS(M)
+				M.show_antag_popup("traitorhard")
 				M.show_text("<h2><font color=red><B>You have become a floor goblin!</B></font></h2>", "red")
 			if(ROLE_ARCFIEND)
 				M.show_text("<h2><font color=red><B>You feel starved for power!</B></font></h2>", "red")
@@ -4795,7 +4810,7 @@ var/global/noir = 0
 				M.make_wrestler(1)
 				M.make_grinch()
 				M.show_text("<h2><font color=red><B>You have become an omnitraitor!</B></font></h2>", "red")
-				SHOW_TRAITOR_OMNI_TIPS(M)
+				M.show_antag_popup("traitoromni")
 			if(ROLE_SPY_THIEF)
 				if (M.stat || !isliving(M) || isintangible(M) || !ishuman(M) || !M.mind)
 					return
@@ -4832,23 +4847,6 @@ var/global/noir = 0
 		logTheThing(LOG_DIARY, usr, "made [constructTarget(M,"diary")] a[special ? " [special]" : ""] [traitor_type].", "admin")
 		message_admins("<span class='internal'>[key_name(usr)] has made [key_name(M)] a[special ? " [special]" : ""] [traitor_type].</span>")
 	return
-
-/datum/admins/proc/get_item_desc(var/target)
-	switch (target)
-		if (1)
-			return "a fully loaded laser gun"
-		if (2)
-			return "a hand teleporter"
-		if (3)
-			return "a fully armed and heated plasma bomb"
-		if (4)
-			return "a jet pack"
-		if (5)
-			return "an ID card with universal access"
-		if (6)
-			return "a captain's dark green jumpsuit"
-		else
-			return "Error: Invalid theft target: [target]"
 
 /proc/get_matches_string(var/text, var/list/possibles)
 	var/list/matches = new()
@@ -4946,7 +4944,7 @@ var/global/noir = 0
 			logTheThing(LOG_DIARY, usr, "spawned [chosen] at ([showCoords(usr.x, usr.y, usr.z, 1)])", "admin")
 
 	else
-		alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
+		tgui_alert(usr,"You cannot perform this action. You must be of a higher administrative rank!")
 		return
 
 /datum/admins/proc/spawn_figurine(var/figurine as text)
@@ -4973,7 +4971,7 @@ var/global/noir = 0
 			logTheThing(LOG_DIARY, usr, "spawned figurine [chosen] at ([showCoords(usr.x, usr.y, usr.z, 1)])", "admin")
 
 	else
-		alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
+		tgui_alert(usr,"You cannot perform this action. You must be of a higher administrative rank!")
 		return
 
 /datum/admins/proc/heavenly_spawn_obj(var/obj/object as text)
@@ -4994,7 +4992,7 @@ var/global/noir = 0
 			logTheThing(LOG_DIARY, usr, "spawned [chosen] at ([showCoords(T.x, T.y, T.z, 1)])", "admin")
 
 	else
-		alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
+		tgui_alert(usr,"You cannot perform this action. You must be of a higher administrative rank!")
 		return
 
 /datum/admins/proc/supplydrop_spawn_obj(var/obj/object as text)
@@ -5014,7 +5012,7 @@ var/global/noir = 0
 			logTheThing(LOG_DIARY, usr, "spawned [chosen] at ([showCoords(T.x, T.y, T.z, 1)])", "admin")
 
 	else
-		alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
+		tgui_alert(usr,"You cannot perform this action. You must be of a higher administrative rank!")
 		return
 
 /datum/admins/proc/demonically_spawn_obj(var/obj/object as text)
@@ -5035,12 +5033,12 @@ var/global/noir = 0
 			logTheThing(LOG_DIARY, usr, "spawned [chosen] at ([showCoords(T.x, T.y, T.z, 1)])", "admin")
 
 	else
-		alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
+		tgui_alert(usr,"You cannot perform this action. You must be of a higher administrative rank!")
 		return
 
 /datum/admins/proc/show_chatbans(var/client/C)//do not use this as an example of how to write DM please.
 	if( !C.cloud_available() )
-		alert( "Failed to communicate to Goonhub." )
+		tgui_alert( "Failed to communicate to Goonhub." )
 		return
 	var/built = {"<title>Chat Bans (todo: prettify)</title>"}
 	if(C.cloud_get( "adminhelp_banner" ))
@@ -5092,7 +5090,7 @@ var/global/noir = 0
 	set name = "Manage Bioeffects"
 	set desc = "Select a mob to manage its bioeffects."
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 
 	var/list/dat = list()
 	dat += {"
@@ -5202,7 +5200,7 @@ var/global/noir = 0
 	set name = "Manage Abilities"
 	set desc = "Select a mob to manage its abilities."
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 
 	var/list/dat = list()
 	dat += {"
@@ -5487,9 +5485,11 @@ var/global/noir = 0
 	M.key = usr.client.key
 	M.Login()
 
+	usr.remove()
+
 // Handling noclip logic
 /client/Move(NewLoc, direct)
-	if(usr.client.flying || (ismob(usr) && HAS_MOB_PROPERTY(usr, PROP_NOCLIP)))
+	if(usr.client.flying || (ismob(usr) && HAS_ATOM_PROPERTY(usr, PROP_MOB_NOCLIP)))
 		if(isnull(NewLoc))
 			return
 
