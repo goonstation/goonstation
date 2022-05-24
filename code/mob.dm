@@ -1070,7 +1070,7 @@
 	if(src.pulling)
 		src.remove_pulling()
 
-	if(!can_reach(src, A))
+	if(!can_reach(src, A) || src.restrained())
 		return
 
 	pulling = A
