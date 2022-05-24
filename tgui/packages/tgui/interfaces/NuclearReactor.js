@@ -47,26 +47,75 @@ const ReactorComponentEntry = (props) => {
   );
 };
 
+const ReactorRow = (shape) => {
+  const {
+    onClick,
+    components,
+    rowID,
+  } = shape;
+  return (
+    <Table.Row>
+      {components.map((c, index) => {
+        if (c === null)
+        {
+          return (
+            <Table.Cell>
+              <Button
+                key={name}
+                fluid
+                onClick={() => onClick('slot', { "x": rowID+1, "y": index+1 })}
+                height={5}
+                weidth={5}>
+                EMPTY
+              </Button>
+            </Table.Cell>
+          );
+        }
+        else
+        {
+          const { x, y, name, img } = c;
+          return (
+            <Table.Cell>
+              <Button
+                key={name}
+                fluid
+                onClick={() => onClick('slot', { "x": x, "y": y })}
+                height={5}
+                weidth={5}>
+                <img
+                  src={`data:image/png;base64,${img}`}
+                  style={{
+                    'vertical-align': 'middle',
+                    'horizontal-align': 'middle',
+                  }}
+                />
+              </Button>
+            </Table.Cell>);
+        }
+      })}
+    </Table.Row>
+  );
+};
+
 const ReactorGrid = (shape) => {
   const {
-    gridW,
-    gridH,
-    comps,
+    onClick,
+    components,
   } = shape;
-
-  let rows = [];
-  for (let i = 0; i < gridW; i++) {
-    let cols = [];
-    for (let j = 0; j < gridH; j++) {
-      cols.push(
-        <Table.Cell>
-          <Button>EMPTY</Button>
-        </Table.Cell>);
-    }
-    rows.push(<Table.Row>{cols}</Table.Row>);
-  }
-  return <Table>{rows}</Table>;
+  return (
+    <Table>
+      {components.map((r, index) => { const { comp } = r;
+        return (
+          <Table.Row key>
+            <ReactorRow rowID={index} components={r} onClick={onClick} />
+          </Table.Row>
+        );
+      })}
+    </Table>
+  );
 };
+
+
 
 export const NuclearReactor = (props, context) => {
   const { act, data } = useBackend(context);
@@ -86,7 +135,10 @@ export const NuclearReactor = (props, context) => {
           <Box >
             <ReactorGrid
               gridW={gridW}
-              gridH={gridH} />
+              gridH={gridH}
+              onClick={act}
+              components={components}
+            />
           </Box>
         </Section>
       </Window.Content>

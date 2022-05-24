@@ -45,19 +45,18 @@
 		)
 
 	ui_data()
-		var/comps = list()
+		var/comps[6][6]
 		for(var/i=1 to 6)
 			for(var/j=1 to 6)
 				if(src.component_grid[i][j])
 					var/obj/item/reactor_component/comp = src.component_grid[i][j]
-					comps += list(
-						list(
+					comps[i][j]=list(
 							"x" = i,
 							"y" = j,
 							"name" = comp.name,
 							"img" = comp.ui_image,
 						)
-					)
+
 		. = list(
 			"components" = comps,
 		)
@@ -76,8 +75,11 @@
 						boutput(ui.user,"Your clunky robot hands can't grip the [src.component_grid[i][j]]!")
 						return
 					ui.user.visible_message("<span class='alert'>[ui.user] starts removing a [component_grid[i][j]]!</span>", "<span class='alert'>You start removing the [component_grid[i][j]]!</span>")
-					SETUP_GENERIC_ACTIONBAR(ui.user, src, 5 SECONDS, .proc/remove_comp_callback, list(i,j,ui.user), component_grid[i][j].icon, component_grid[i][j].icon_state, \
+					var/datum/action/bar/icon/callback/A = new(ui.user, src, 5 SECONDS, .proc/remove_comp_callback, list(i,j,ui.user), component_grid[i][j].icon, component_grid[i][j].icon_state,\
 					"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
+					A.maximum_range=3
+					actions.start(A,ui.user)
+
 				else
 					var/equipped = ui.user.equipped()
 					if(!equipped)
@@ -88,8 +90,10 @@
 						return
 
 					ui.user.visible_message("<span class='alert'>[ui.user] starts inserting \a [equipped]!</span>", "<span class='alert'>You start inserting the [equipped]!</span>")
-					SETUP_GENERIC_ACTIONBAR(ui.user, src, 5 SECONDS, .proc/insert_comp_callback, list(i,j,ui.user,equipped), ui.user.equipped().icon, ui.user.equipped().icon_state, \
+					var/datum/action/bar/icon/callback/A = new(ui.user, src, 5 SECONDS, .proc/insert_comp_callback, list(i,j,ui.user,equipped), ui.user.equipped().icon, ui.user.equipped().icon_state, \
 					"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
+					A.maximum_range=3
+					actions.start(A,ui.user)
 
 	proc/insert_comp_callback(var/x,var/y,var/mob/user,var/obj/item/reactor_component/equipped)
 		if(src.component_grid[x][y])
