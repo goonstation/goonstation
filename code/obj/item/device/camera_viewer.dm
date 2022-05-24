@@ -10,7 +10,7 @@
 
 	attack_self(mob/user as mob)
 		src.add_dialog(user)
-		user.unlock_medal("Peeping Tom", 1)
+		user.unlock_medal("I Spy", 1)
 
 		var/list/L = list()
 		for_by_tcl(C, /obj/machinery/camera)

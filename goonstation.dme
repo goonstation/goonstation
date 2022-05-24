@@ -1313,7 +1313,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\artifacts\artifact_machines\gas_radiator.dm"
 #include "code\obj\artifacts\artifact_machines\grav_well.dm"
 #include "code\obj\artifacts\artifact_machines\heal_field.dm"
-#include "code\obj\artifacts\artifact_machines\noise_maker.dm"
 #include "code\obj\artifacts\artifact_machines\plant_helper.dm"
 #include "code\obj\artifacts\artifact_machines\turret.dm"
 #include "code\obj\artifacts\artifact_machines\warper.dm"
