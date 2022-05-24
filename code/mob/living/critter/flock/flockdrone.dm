@@ -67,11 +67,6 @@
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection, FALSE, FALSE, FALSE, FALSE)
 
-/mob/living/critter/flock/drone/click(atom/target, list/params)
-	if (src.floorrunning)
-		return
-	..()
-
 /mob/living/critter/flock/drone/disposing()
 	if (src.flock)
 		if (controller)
@@ -505,6 +500,7 @@
 	src.set_density(FALSE)
 	src.throws_can_hit_me = FALSE
 	src.set_pulling(null)
+	src.can_throw = FALSE
 	if (src.pulled_by)
 		var/mob/M = src.pulled_by
 		M.set_pulling(null)
@@ -526,6 +522,7 @@
 	src.floorrunning = FALSE
 	src.set_density(TRUE)
 	src.throws_can_hit_me = TRUE
+	src.can_throw = TRUE
 	if (check_lights)
 		if (istype(src.loc, /turf/simulated/floor/feather))
 			var/turf/simulated/floor/feather/floor = src.loc
@@ -536,6 +533,9 @@
 			if (wall.on)
 				wall.off()
 	animate_flock_floorrun_end(src)
+
+/mob/living/critter/flock/drone/restrained()
+	return ..() || src.floorrunning
 
 /mob/living/critter/flock/drone/movement_delay()
 	if(floorrunning)

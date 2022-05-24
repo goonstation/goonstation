@@ -584,11 +584,6 @@
 	if (iscarbon(usr) || issilicon(usr))
 		add_fingerprint(usr)
 
-	if (istype(usr, /mob/living/critter/flock/drone))
-		var/mob/living/critter/flock/drone/flockdrone = usr
-		if (flockdrone.floorrunning)
-			return
-
 	if (istype(src,/obj/item/old_grenade/light_gimmick))
 		boutput(usr, "<span class='notice'>You feel your hand reach out and clasp the grenade.</span>")
 		src.Attackhand(usr)
