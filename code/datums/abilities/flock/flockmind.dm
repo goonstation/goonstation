@@ -28,7 +28,6 @@
 	..()
 	.= list()
 	.["Compute:"] = "[round(src.points)]/[round(src.totalCompute)]"
-	return
 
 /atom/movable/screen/ability/topBar/flockmind
 	tens_offset_x = 19
