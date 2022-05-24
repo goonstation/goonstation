@@ -1728,7 +1728,7 @@ window "input_box"
 		can-resize = false
 		outer-size = 308x114
 		inner-size = 302x86
-	elem "chat_input"
+	elem "input"
 		type = INPUT
 		pos = 11,17
 		size = 281x23
