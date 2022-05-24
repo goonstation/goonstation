@@ -1036,7 +1036,7 @@
 
 		var/thisR = ""
 
-		if((isflock(M)) || (M.client.holder && !M.client.player_mode) || (isobserver(M) && !(istype(M, /mob/dead/target_observer/hivemind_observer))))
+		if((isflockmob(M)) || (M.client.holder && !M.client.player_mode) || (isobserver(M) && !(istype(M, /mob/dead/target_observer/hivemind_observer))))
 			thisR = rendered
 		if(flock?.snooping && M.client && M.robot_talk_understand)
 			thisR = siliconrendered

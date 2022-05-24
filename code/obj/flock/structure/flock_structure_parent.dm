@@ -73,7 +73,7 @@
 	return state
 
 /obj/flock_structure/special_desc(dist, mob/user)
-	if (!isflock(user))
+	if (!isflockmob(user))
 		return
 	var/special_desc = {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
 		<br><span class='bold'>ID:</span> [flock_id]
@@ -171,7 +171,7 @@
 	user.lastattacked = src
 
 	if(user.a_intent == INTENT_HARM)
-		if(isflock(user))
+		if(isflockmob(user))
 			boutput(user, "<span class='alert'>You find you can't bring yourself to harm [src]!</span>")
 		else
 			user.visible_message("<span class='alert'><b>[user]</b> punches [src]! It's very ineffective!</span>")

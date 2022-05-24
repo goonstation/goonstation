@@ -193,7 +193,7 @@
 				H.blood_volume += converted_amt
 
 /obj/item/organ/heart/flock/special_desc(dist, mob/user)
-	if (!isflock(user))
+	if (!isflockmob(user))
 		return
 	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
 		<br><span class='bold'>ID:</span> Resource repository

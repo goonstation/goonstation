@@ -162,7 +162,7 @@
 			boutput(M, "<span class='flocksay italics'><i>... [pick_string("flockmind.txt", "brain")] ...</i></span>")
 
 /obj/item/organ/brain/flockdrone/special_desc(dist, mob/user)
-	if (!isflock(user))
+	if (!isflockmob(user))
 		return
 	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
 		<br><span class='bold'>ID:</span> Computational core

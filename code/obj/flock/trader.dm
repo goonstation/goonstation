@@ -251,7 +251,7 @@
 	src.visible_message("<B>[src.name]</B> screeches, \"[gradientText(grad_col_1, grad_col_2, "We will not tolerate this!")]\"")
 	for(var/turf/T in get_area_turfs( get_area(src) ))
 		for(var/mob/living/L in T)
-			if(isflock(L))
+			if(isflockmob(L))
 				continue // don't zap our buddies
 			arcFlash(src, L, 2000000)
 

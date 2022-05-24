@@ -74,7 +74,7 @@
 	..()
 
 /obj/item/gun/energy/flock/special_desc(dist, mob/user)
-	if (!isflock(user))
+	if (!isflockmob(user))
 		return
 	var/list/ret = list()
 	if(!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST))
@@ -97,7 +97,7 @@
 	var/resources = 10
 
 /obj/item/flockcache/special_desc(dist, mob/user)
-	if (!isflock(user))
+	if (!isflockmob(user))
 		return
 	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed. data packet received.
 		<br><span class='bold'>ID:</span> Resource Cache

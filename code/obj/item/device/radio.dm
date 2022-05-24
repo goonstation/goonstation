@@ -396,7 +396,7 @@ var/list/headset_channel_lookup
 				heard_masked += R
 			else if (isghostdrone(R))
 				heard_voice += R
-			else if(!isflock(R)) // a special exemption for flockdrones/flockminds who never get to hear normal radio
+			else if(!isflockmob(R)) // a special exemption for flockdrones/flockminds who never get to hear normal radio
 				heard_normal += R
 		else
 			if (M.voice_message)

@@ -263,7 +263,7 @@
 
 
 /mob/living/critter/flock/drone/special_desc(dist, mob/user)
-	if (!isflock(user))
+	if (!isflockmob(user))
 		return
 	var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
 	if(src.controller)
@@ -298,7 +298,7 @@
 	return TRUE
 
 /mob/living/critter/flock/drone/Cross(atom/movable/mover)
-	if(isflock(mover))
+	if(isflockmob(mover))
 		return TRUE
 	else
 		return !src.density
@@ -587,7 +587,7 @@
 /mob/living/critter/flock/drone/proc/harmedBy(var/atom/enemy)
 	if (!enemy)
 		return
-	if(isflock(enemy))
+	if(isflockmob(enemy))
 		return
 	if(!isdead(src) && src.is_npc && src.flock)
 		var/enemy_name = lowertext(enemy.name)
@@ -611,7 +611,7 @@
 /mob/living/critter/flock/drone/hitby(atom/movable/AM, datum/thrown_thing/thr)
 	. = ..()
 	var/mob/attacker = thr.user
-	if(istype(attacker) && !isflock(attacker))
+	if(istype(attacker) && !isflockmob(attacker))
 		src.harmedBy(attacker)
 
 /mob/living/critter/flock/drone/attackby(var/obj/item/I, var/mob/M)
@@ -928,7 +928,7 @@
 					if (istype(O, /obj/grille/flock))
 						boutput(user, "<span class='alert'>There's already a barricade here.</span>")
 						return
-					if ((O.density && !isflock(O)) || istype(O, /obj/flock_structure/ghost))
+					if ((O.density && !isflockmob(O)) || istype(O, /obj/flock_structure/ghost))
 						boutput(user, "<span class='alert'>This tile has something that blocks barricade construction!</span>")
 						return
 				if (user.resources < FLOCK_BARRICADE_COST)
@@ -1029,7 +1029,7 @@
 		boutput(user, "<span class='alert'>You do not have access to the imprisonment matrix without flockmind authorization.</span>")
 		return
 	// IMPRISON TARGET
-	if(isflock(target))
+	if(isflockmob(target))
 		boutput(user, "<span class='alert'>The imprisonment matrix doesn't work on flockdrones.</span>")
 		return
 	else if(user.resources < FLOCK_CAGE_COST)

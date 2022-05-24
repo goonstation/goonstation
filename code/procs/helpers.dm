@@ -271,7 +271,7 @@ proc/get_angle(atom/a, atom/b)
 	if (!T) return FALSE
 	if(T.density) return TRUE
 	for(var/atom/A in T)
-		if(A?.density && !isflock(A))//ignores flockdrones/flockbits
+		if(A?.density && !isflockmob(A))//ignores flockdrones/flockbits
 			return TRUE
 	return FALSE
 

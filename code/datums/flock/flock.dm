@@ -453,7 +453,7 @@
 // UNITS
 
 /datum/flock/proc/registerUnit(var/mob/living/critter/flock/D, check_name_uniqueness = FALSE)
-	if(isflock(D))
+	if(isflockmob(D))
 		if(!src.units[D.type])
 			src.units[D.type] = list()
 		src.units[D.type] |= D
@@ -464,7 +464,7 @@
 	aH.updateCompute()
 
 /datum/flock/proc/removeDrone(var/mob/living/critter/flock/D)
-	if(isflock(D))
+	if(isflockmob(D))
 		src.units[D.type] -= D
 		src.active_names -= D.real_name
 		D.GetComponent(/datum/component/flock_interest)?.RemoveComponent(/datum/component/flock_interest)

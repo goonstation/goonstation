@@ -1054,7 +1054,7 @@
 	src.AddComponent(/datum/component/flock_protection, FALSE, TRUE, TRUE)
 
 /obj/window/auto/feather/special_desc(dist, mob/user)
-	if (!isflock(user))
+	if (!isflockmob(user))
 		return
 	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
 		<br><span class='bold'>ID:</span> Fibrewoven Window
@@ -1084,7 +1084,7 @@
 	src.AddComponent(/datum/component/flock_protection)
 
 /obj/window/feather/special_desc(dist, mob/user)
-	if (!isflock(user))
+	if (!isflockmob(user))
 		return
 	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
 		<br><span class='bold'>ID:</span> Fibrewoven Window

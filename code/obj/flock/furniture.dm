@@ -26,7 +26,7 @@
 	setMaterial(getMaterial("gnesis"))
 
 /obj/table/flock/special_desc(dist, mob/user)
-	if (!isflock(user))
+	if (!isflockmob(user))
 		return
 	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
 		<br><span class='bold'>ID:</span> Storage Surface
@@ -49,7 +49,7 @@
 	setMaterial(getMaterial("gnesis"))
 
 /obj/item/furniture_parts/table/flock/special_desc(dist, mob/user)
-	if (!isflock(user))
+	if (!isflockmob(user))
 		return
 	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
 		<br><span class='bold'>ID:</span> Storage Surface, Deployable State
@@ -79,7 +79,7 @@
 	setMaterial(getMaterial("gnesis"))
 
 /obj/stool/chair/comfy/flock/special_desc(dist, mob/user)
-	if (!isflock(user))
+	if (!isflockmob(user))
 		return
 	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
 		<br><span class='bold'>ID:</span> Resting Chamber
@@ -104,7 +104,7 @@
 	setMaterial(getMaterial("gnesis"))
 
 /obj/item/furniture_parts/flock_chair/special_desc(dist, mob/user)
-	if (!isflock(user))
+	if (!isflockmob(user))
 		return
 	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
 		<br><span class='bold'>ID:</span> Resting Chamber, Deployable State
@@ -193,14 +193,14 @@
 	interact_particle(user,src)
 	add_fingerprint(user)
 
-	if(isflock(user))
+	if(isflockmob(user))
 		if (!src.toggle())
 			return src.Attackby(null, user)
 	else
 		boutput(user, "<span class='alert'>Nothing you can do can persuade this thing to either open or close. Bummer.</span>")
 
 /obj/storage/closet/flock/special_desc(dist, mob/user)
-	if (!isflock(user))
+	if (!isflockmob(user))
 		return
 	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
 		<br><span class='bold'>ID:</span> Containment Capsule
@@ -232,7 +232,7 @@
 	src.AddComponent(/datum/component/flock_protection, report_unarmed=FALSE)
 
 /obj/machinery/light/flock/attack_hand(mob/user)
-	if(isflock(user))
+	if(isflockmob(user))
 		add_fingerprint(user)
 		seton(!on)
 	else
@@ -245,7 +245,7 @@
 	qdel(src)
 
 /obj/item/furniture_parts/flock_chair/special_desc(dist, mob/user)
-	if (!isflock(user))
+	if (!isflockmob(user))
 		return
 	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
 		<br><span class='bold'>ID:</span> Light Emitter
@@ -288,7 +288,7 @@
 		qdel(src)
 
 /obj/lattice/flock/special_desc(dist, mob/user)
-	if (!isflock(user))
+	if (!isflockmob(user))
 		return
 	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
 		<br><span class='bold'>ID:</span> Structural Foundation
@@ -346,7 +346,7 @@
 
 
 /obj/grille/flock/special_desc(dist, mob/user)
-	if (!isflock(user))
+	if (!isflockmob(user))
 		return
 	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
 		<br><span class='bold'>ID:</span> Reinforced Barricade

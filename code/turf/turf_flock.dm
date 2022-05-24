@@ -38,7 +38,7 @@
 	src.AddComponent(/datum/component/flock_protection, report_unarmed=FALSE, report_thrown=FALSE, report_proj=FALSE)
 
 /turf/simulated/floor/feather/special_desc(dist, mob/user)
-	if (!isflock(user))
+	if (!isflockmob(user))
 		return
 	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
 		<br><span class='bold'>ID:</span> Conduit
@@ -294,7 +294,7 @@ turf/simulated/floor/feather/proc/bfs(turf/start)//breadth first search, made by
 	src.AddComponent(/datum/component/flock_protection)
 
 /turf/simulated/wall/auto/feather/special_desc(dist, mob/user)
-	if (!isflock(user))
+	if (!isflockmob(user))
 		return
 	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
 		<br><span class='bold'>ID:</span> Nanite Block

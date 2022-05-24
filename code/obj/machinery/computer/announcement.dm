@@ -151,7 +151,7 @@
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			message = process_accents(H, message) //Slurred announcements? YES!
-		if (isflock(user))
+		if (isflockmob(user))
 			var/mob/living/critter/flock/flock_creature = user
 			message = radioGarbleText(message, flock_creature?.flock.snoop_clarity)
 			msg_sound = "sound/misc/flockmind/flockmind_caw.ogg"

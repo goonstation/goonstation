@@ -141,7 +141,7 @@
 				return FALSE
 			if (H.reagents.has_reagent(fluid_gen_type,100)) //don't keep shooting at people who are already 1/3 flock
 				return FALSE
-		if (isflock(C))
+		if (isflockmob(C))
 			return FALSE
 
 		return TRUE
