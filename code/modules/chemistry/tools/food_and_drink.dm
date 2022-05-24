@@ -311,6 +311,14 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	afterattack(obj/target, mob/user, flag)
 		return
 
+	mouse_drop(atom/movable/over_object)
+		if (over_object != src && istype(usr, /mob/living) && in_interact_range(src, usr))
+			if (usr == over_object)
+				return src.AttackSelf(usr)
+			if (istype(over_object, /obj/item/reagent_containers/food/snacks) && in_interact_range(over_object, usr))
+				return over_object.Attackby(src, usr)
+		return ..()
+
 	get_desc(dist, mob/user)
 		if(!user.traitHolder?.hasTrait("training_chef"))
 			return
