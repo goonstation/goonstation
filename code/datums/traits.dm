@@ -421,7 +421,7 @@
 	cleanName = "Onomatopoeic"
 	desc = "You are unable to stop yourself adding sound effects to your actions."
 	id = "onomatopoeic"
-	icon_state = "onomatopoeic"
+	icon_state = "speechbubble"
 	points = 1
 	category = list("language")
 
