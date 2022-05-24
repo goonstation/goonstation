@@ -11,11 +11,6 @@
 	if (P.proj_data)  //ZeWaka: Fix for null.ks_ratio
 		damage = round((P.power*P.proj_data.ks_ratio), 1.0)
 
-		if (istype(P.proj_data, /datum/projectile/laser))
-			var/wound_num = rand(0, 4)
-			var/image/I = image(icon = 'icons/mob/human.dmi', icon_state = "laser_wound-[wound_num]", layer = MOB_EFFECT_LAYER)
-			src.UpdateOverlays(I, "laser_wound-[wound_num]")
-
 	var/armor_value_bullet = 1
 
 	if (!(client && client.hellbanned))
@@ -104,6 +99,11 @@
 				else
 					if (src.organHolder && prob(50))
 						src.organHolder.damage_organ(0, damage, 0, target_organ)
+
+				if (istype(P.proj_data, /datum/projectile/laser))
+					var/wound_num = rand(0, 4)
+					var/image/I = image(icon = 'icons/mob/human.dmi', icon_state = "laser_wound-[wound_num]", layer = MOB_EFFECT_LAYER)
+					src.UpdateOverlays(I, "laser_wound-[wound_num]")
 
 			if (D_BURNING)
 				if (armor_value_bullet > 1)
