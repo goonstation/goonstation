@@ -212,6 +212,7 @@
 		boutput(holder.owner, "<span class='notice'>[target.real_name] has no damage!</span>")
 		return TRUE
 	if (isdead(target))
+		boutput(holder.owner, "<span class='notice'>[target.real_name] is dead!</span>")
 		return TRUE
 
 	playsound(holder.owner, "sound/misc/flockmind/flockmind_cast.ogg", 80, 1)
@@ -237,6 +238,7 @@
 		boutput(F, "<span class='notice'>The drone does not respond to your command.</span>")
 		return TRUE
 	if (isdead(target))
+		boutput(F, "<span class='notice'>That drone is dead.</span>")
 		return TRUE
 	if(F.flock.getComplexDroneCount() == 1)
 		boutput(F, "<span class='alert'>That's your last complex drone. Diffracting it would be suicide.</span>")
