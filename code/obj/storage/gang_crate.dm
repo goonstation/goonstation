@@ -44,7 +44,8 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 	soundproofing = 3
 	throwforce = 50 //ouch
 	can_flip_bust = 1
-	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT  | NO_MOUSEDROP_QOL
+	event_handler_flags = USE_FLUID_ENTER | NO_MOUSEDROP_QOL
+	anchored = 1
 	var/static/obj/gangloot_master/lootMaster = new /obj/gangloot_master()
 
 	only_gimmicks
@@ -85,42 +86,32 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 
 
 	New()
+		..()
 		src.light = image('icons/obj/large_storage.dmi',"lootcratelocklight")
-	//	SPAWN(0)
-	//		update_icon()
+		SPAWN(60 SECONDS)
+			anchored = 0
+			UpdateIcon()
 
 
 	update_icon()
+		if(open)
+			icon_state = icon_opened
+		else
+			icon_state = icon_closed
 
-		if(open) icon_state = icon_opened
-		else icon_state = icon_closed
-
-		if (src.locked)
+		if (src.anchored)
 			light.color = "#FF0000"
+		else if (src.locked)
+			light.color = "#FF9900"
 		else
 			light.color = "#00FF00"
 		src.UpdateOverlays(src.light, "light")
-
-	//example_class
-	//	New()
-	//		lootMaster.set_size(4,3)		// Set the size for our container (Imagine an inventory grid)
-	//		var/contents[10] 				// Just a list to contain the groups you'll want spawns from
-	//		contents[GANG_CRATE_GEAR] = 2 	// Two of our instances should spawn items marked as GANG_CRATE_GEAR
-	//		contents[GANG_CRATE_MELEE] = 5 	// Five of our loot drops should spawn items marked as GANG_CRATE_MELEE
-	//		lootMaster.generate_loot(src,contents) //Generate the goodies inside!
 
 	only_gimmicks
 		New()
 			var/contents[10]
 			lootMaster.generate_loot(src,contents)
 			lootMaster.set_size(4,3)
-			..()
-	some_gear
-		New()
-			var/contents[10]
-			contents[GANG_CRATE_GEAR] = 3
-			lootMaster.set_size(4,3)
-			lootMaster.generate_loot(src,contents)
 			..()
 	only_gear
 		New()
@@ -144,19 +135,6 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 			lootMaster.set_size(4,3)
 			lootMaster.generate_loot(src,contents)
 			..()
-
-
-
-	Cross(atom/movable/mover)
-		if(istype(mover, /obj/projectile))
-			return 1
-		return ..()
-
-	CheckExit(atom/movable/O as mob|obj, target as turf)
-		if(istype(O, /obj/projectile))
-			return 1
-		return ..()
-
 
 /obj/item/gang_loot
 	icon = 'icons/obj/items/storage.dmi'
@@ -277,11 +255,11 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 	var/size_y=0
 	var/offset_x=0
 	var/offset_y=0
-	var/value=1
+	var/tier=1
 	var/set_layer=0
 
 /obj/gangloot_master
-	var/list/lootSpawns
+	var/list/lootInstances
 	var/max_loot_x = 4 //X grid size for loot items
 	var/max_loot_y = 3 //Y grid size for loot items
 
@@ -308,22 +286,22 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 
 	//Create an instance of all the relevant spawners,for each given size, so they can initialize
 	proc/populate()
-		spawners[1][1] = new /obj/gangloot_spawner/small()
-		spawners[2][1] = new /obj/gangloot_spawner/medium()
-		spawners[3][1] = new /obj/gangloot_spawner/long()
-		spawners[4][1] = new /obj/gangloot_spawner/xlong()
-		spawners[1][2] = new /obj/gangloot_spawner/short_tall()
-		spawners[2][2] = new /obj/gangloot_spawner/medium_tall()
-		spawners[3][2] = new /obj/gangloot_spawner/long_tall()
-		spawners[4][2] = new /obj/gangloot_spawner/xlong_tall()
+		spawners[1][1] = new /obj/randomloot_spawner/small()
+		spawners[2][1] = new /obj/randomloot_spawner/medium()
+		spawners[3][1] = new /obj/randomloot_spawner/long()
+		spawners[4][1] = new /obj/randomloot_spawner/xlong()
+		spawners[1][2] = new /obj/randomloot_spawner/short_tall()
+		spawners[2][2] = new /obj/randomloot_spawner/medium_tall()
+		spawners[3][2] = new /obj/randomloot_spawner/long_tall()
+		spawners[4][2] = new /obj/randomloot_spawner/xlong_tall()
 
 	proc/create_loot_grid()
 		lootGrid = new/list(max_loot_x,max_loot_y)
 
 	//Generates all loot, totalValue is what types of loot may be spawned
 	proc/generate_loot(var/target, var/list/totalValue)
-		var/lootSpawns = generate_loot_layout()
-		generate_loot_objects(target, lootSpawns, totalValue)
+		lootInstances = generate_loot_layout()
+		generate_loot_objects(target, lootInstances, totalValue)
 
 	//Gets the largest square space available in crate, starting from X,Y
 	proc/get_largest_space(startX,startY)
@@ -377,7 +355,7 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 		var/cursor_x = 1
 		var/cursor_y = 1
 		var/done = false
-		lootSpawns = list()
+		var/spawnedLootInstances = list()
 
 		while (!done)
 			//scan to find how wide we can make this next item
@@ -386,7 +364,7 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 			var/lootSize = choose_loot_size(maxSize[1],maxSize[2])
 
 			var/obj/gangloot_instance/loot = add_random_loot_instance(cursor_x,cursor_y,lootSize[1],lootSize[2])
-			lootSpawns += loot
+			spawnedLootInstances += loot
 			//move cursor to the next unoccupied space
 			while (!done && lootGrid[cursor_x][cursor_y] == 1)
 				cursor_x++
@@ -396,16 +374,16 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 					cursor_y++
 					if (cursor_y > max_loot_y)
 						done = true
-		return lootSpawns
+		return spawnedLootInstances
 
-	//Called by generate_loot, Chooses and spawns all gang loot created by generate_loot_layout
-	proc/generate_loot_objects(var/target, var/list/lootSpawns, var/list/lootTypes)
-		var/lootPot[] = lootSpawns.Copy(1,0)
+	//Called by generate_loot, Chooses and spawns all loot created by generate_loot_layout
+	proc/generate_loot_objects(var/target, var/list/lootInstances, var/list/lootTypes)
+		var/lootPot[] = lootInstances.Copy(1,0)
 		var/lootValues[0] //all types of loot to spawn, in descending priority
 		var/lootValue
 		var/obj/gangloot_instance/lootObject
 
-		//popualte lootValues
+		//populate lootValues
 		for (var/lootType=lootTypes.len, lootType>0, lootType--)
 			if (lootTypes[lootType] != null)
 				for (var/count=lootTypes[lootType], count>0, count--)
@@ -420,7 +398,7 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 				lootValue = 1
 
 			lootObject = pick(lootPot)
-			lootObject.value = lootValue
+			lootObject.tier = lootValue
 			lootPot -= lootObject
 			var/refund = create_loot(target,lootObject)
 			if (refund)
@@ -428,7 +406,7 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 
 	//spawns loot for a given gangloot_instance
 	proc/create_loot(var/C, var/obj/gangloot_instance/I)
-		var/obj/gangloot_spawner/lootSpawner = spawners[I.size_x][I.size_y]
+		var/obj/randomloot_spawner/lootSpawner = spawners[I.size_x][I.size_y]
 		var/refund_token = lootSpawner.create_loot(C, I)
 		//del(loot)
 		//del(src)
@@ -453,7 +431,7 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 ///scale_x/scale_y = Scale of icon
 ///
 
-// You can uncomment this tool to build item layouts for spawning.
+// You can uncomment this tool to help build item layouts for spawning.
 // Use in-hand to set the position arguments, hit an item to see what it'd look like
 // Bear in mind for each space a slot takes you'll have roughly 8x8 pixels, so a 2x1 = 16x8 pixels
 
@@ -496,11 +474,14 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 
 
 
-/obj/gangloot_spawner
+/obj/randomloot_spawner
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "gift2-r"
 	var/populated = false
-	var/list/items[20][0] //xSize, ySize, rarity,
+
+	var/list/items[20][0]
+	var/list/totalWeighting[20]
+
 	var/list/size = list(1,1)
 	var/weight = 3		//the weighting of this spawn, default 3
 	var/tier = GANG_CRATE_GIMMICK	//what tier must be selected to spawn this
@@ -517,7 +498,16 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 	proc/pick_weighted()
 
 
-	proc/pick_weighted()
+	proc/pick_weighted_option(var/chosenTier)
+		boutput(world, "selecting item of tier [chosenTier]")
+		var roll = rand(1, totalWeighting[chosenTier])
+		for (var/obj/randomloot_spawner/item in items[chosenTier])
+			boutput(world, "weight now [roll] - [item.weight]")
+			roll = roll - item.weight
+			if (roll <= 0)
+				boutput(world, "returning [item]")
+				return item
+
 
 
 	//create loot for a given instance
@@ -525,7 +515,7 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 		if (!populated)
 			populate()
 			populated = true
-		var/obj/gangloot_spawner/weightedSpawner = pick(items[I.value])
+		var/obj/randomloot_spawner/weightedSpawner = pick_weighted_option(I.tier)
 		weightedSpawner.create_loot(C,I)
 
 	//spawn a given item with the 'transform on pickup' component
@@ -544,8 +534,9 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 		var/list/childSpawners = typesof(src.type)
 		childSpawners -= src.type
 		for(var/lootSpawner in childSpawners)
-			var/obj/gangloot_spawner/spawner_instance = new lootSpawner()
+			var/obj/randomloot_spawner/spawner_instance = new lootSpawner()
 			items[spawner_instance.tier] += spawner_instance
+			totalWeighting[spawner_instance.tier] += spawner_instance.weight
 
 
 
@@ -581,6 +572,7 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 			create_loot(var/C,var/I)
 				spawn_item(C,I,/obj/item/ammo/bullets/nine_mm_NATO/mag_fifteen,-2,0)
 				spawn_item(C,I,/obj/item/ammo/bullets/nine_mm_NATO/mag_fifteen,2,0)
+
 		// MID VALUE:
 		robusttecs
 			tier = GANG_CRATE_GEAR
@@ -605,6 +597,7 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 			tier = GANG_CRATE_GEAR
 			create_loot(var/C,var/I)
 				spawn_item(C,I,/obj/item/device/radio_upgrade)
+
 
 		//LOW VALUE: Gimmicks
 		poison_loose
@@ -984,21 +977,24 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 		frags
 			tier = GANG_CRATE_GUN_WEAK
 			create_loot(var/C,var/I)
-				spawn_item(C,I,	/obj/item/old_grenade/stinger/frag,off_x=-4)
-				spawn_item(C,I,	/obj/item/old_grenade/stinger/frag,off_x=4)
-		concussions
-			tier = GANG_CRATE_GUN_WEAK
-			create_loot(var/C,var/I)
-				spawn_item(C,I,/obj/item/old_grenade/energy_concussion,off_x=-6,scale_x=0.8,scale_y=0.8)
-				spawn_item(C,I,/obj/item/old_grenade/energy_concussion,off_x=2,scale_x=0.8,scale_y=0.8)
-				spawn_item(C,I,/obj/item/old_grenade/energy_concussion,off_x=-2,rot=180,scale_x=0.8,scale_y=0.8)
-				spawn_item(C,I,/obj/item/old_grenade/energy_concussion,off_x=6,rot=180,scale_x=0.8,scale_y=0.8)
+				spawn_item(C,I,	/obj/item/old_grenade/stinger/frag,off_x=-4,off_y=5,scale_x=0.8,scale_y=0.8)
+				spawn_item(C,I,	/obj/item/old_grenade/stinger/frag,off_x=4, off_y=5,scale_x=0.8,scale_y=0.8)
+				spawn_item(C,I,	/obj/item/mine/stun,off_x=4, off_y=-5,scale_x=0.8,scale_y=0.8)
+				spawn_item(C,I,	/obj/item/mine/stun,off_x=4, off_y=-5,scale_x=0.8,scale_y=0.8)
+
 		// MID VALUE: Pistols with ammo
 		//Noslips
 		//~4 Loose Grenades
 		//Insuls
 		//NVGs
 
+		concussions
+			tier = GANG_CRATE_GEAR
+			create_loot(var/C,var/I)
+				spawn_item(C,I,/obj/item/old_grenade/energy_concussion,off_x=-6,scale_x=0.8,scale_y=0.8)
+				spawn_item(C,I,/obj/item/old_grenade/energy_concussion,off_x=2,scale_x=0.8,scale_y=0.8)
+				spawn_item(C,I,/obj/item/old_grenade/energy_concussion,off_x=-2,rot=180,scale_x=0.8,scale_y=0.8)
+				spawn_item(C,I,/obj/item/old_grenade/energy_concussion,off_x=6,rot=180,scale_x=0.8,scale_y=0.8)
 		gold
 			tier = GANG_CRATE_GEAR
 			create_loot(var/C,var/I)
