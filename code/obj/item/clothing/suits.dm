@@ -1353,7 +1353,6 @@
 	desc = "Very heavy armour for prolonged industrial activity. Protects from radiation and explosions."
 	c_flags = SPACEWEAR
 	body_parts_covered = TORSO|LEGS|ARMS
-	mats = 45 //should not be cheap to make at mechanics, increased from 15.
 
 #ifdef UNDERWATER_MAP
 	name = "industrial diving suit"
@@ -1389,6 +1388,7 @@
 		is_syndicate = TRUE
 		icon_state = "indusred"
 		item_state = "indusred"
+		mats = 45 //should not be cheap to make at mechanics, increased from 15.
 
 		New()
 			..()
