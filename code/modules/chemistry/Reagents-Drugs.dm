@@ -550,9 +550,6 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(probmult(50))
 					M.make_jittery(5)
-
-				if(src.volume > src.overdose)
-					M.take_toxin_damage(1 * mult)
 				..()
 
 			//cogwerks - improved nicotine poisoning?
@@ -562,15 +559,15 @@ datum
 					if (effect <= 2)
 						M.visible_message("<span class='alert'><b>[M.name]</b> looks nervous!</span>")
 						M.change_misstep_chance(15 * mult)
-						M.take_toxin_damage(2 * mult)
+						M.take_toxin_damage(3 * mult)
 						M.make_jittery(10)
 						M.emote("twitch")
 					else if (effect <= 4)
 						M.visible_message("<span class='alert'><b>[M.name]</b> is all sweaty!</span>")
 						M.bodytemperature += rand(15,30) * mult
-						M.take_toxin_damage(3 * mult)
-					else if (effect <= 7)
 						M.take_toxin_damage(4 * mult)
+					else if (effect <= 7)
+						M.take_toxin_damage(5 * mult)
 						M.emote("twitch_v")
 						M.make_jittery(10)
 				else if (severity == 2)
@@ -578,13 +575,13 @@ datum
 						M.emote("gasp")
 						boutput(M, "<span class='alert'><b>You can't breathe!</b></span>")
 						M.take_oxygen_deprivation(15 * mult)
-						M.take_toxin_damage(3 * mult)
+						M.take_toxin_damage(6 * mult)
 						M.setStatusMin("stunned", 1 SECOND * mult)
 					else if (effect <= 4)
 						boutput(M, "<span class='alert'><b>You feel terrible!</b></span>")
 						M.emote("drool")
 						M.make_jittery(10)
-						M.take_toxin_damage(5 * mult)
+						M.take_toxin_damage(6 * mult)
 						M.setStatusMin("weakened", 1 SECOND * mult)
 						M.change_misstep_chance(33 * mult)
 					else if (effect <= 7)
@@ -593,7 +590,7 @@ datum
 						M << sound('sound/effects/heartbeat.ogg')
 						M.setStatusMin("paralysis", 5 SECONDS * mult)
 						M.make_jittery(30)
-						M.take_toxin_damage(6 * mult)
+						M.take_toxin_damage(7 * mult)
 						M.take_oxygen_deprivation(20 * mult)
 
 		drug/nicotine/nicotine2
@@ -644,8 +641,6 @@ datum
 					boutput(M, "<span class='alert'><b>Your heart's beating really really fast!</b></span>")
 					M.playsound_local(M.loc, 'sound/effects/heartbeat.ogg', 50, 1)
 					M.take_toxin_damage(4)
-				if(src.volume > src.overdose)
-					M.take_toxin_damage(2)
 				..(M)
 
 			do_overdose(var/severity, var/mob/M, var/mult = 1)
