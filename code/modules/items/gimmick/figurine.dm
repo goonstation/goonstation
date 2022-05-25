@@ -752,6 +752,41 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		icon_state = "stinko"
 		ckey = "dataerr0r"
 
+	gabr
+		name = "\improper Jayson Rodgers"
+		icon_state = "jaysonrodgers"
+		ckey = "Gabr"
+
+	wivernshy
+		name = "\improper Fern Baker"
+		icon_state = "fernbarker"
+		ckey = "wivernshy"
+
+	kingmorshu552
+		name = "\improper David Cain"
+		icon_state = "davidcain"
+		ckey = "KingMorshu552"
+
+	Telareti
+		name = "\improper Gael Yamikurai"
+		icon_state = "gaelyamikurai"
+		ckey = "telareti"
+
+	averyquill
+		name = "\improper Miss Helper"
+		icon_state = "misshelper"
+		ckey = "AveryQuill"
+
+	slashsync
+		name = "\improper Snark"
+		icon_state = "snark"
+		ckey = "SlashSync"
+
+	zigguratx
+		name = "\improper Zoya Wagner"
+		icon_state = "zoyawagner"
+		ckey = "ZigguratX"
+
 /obj/item/item_box/figure_capsule
 	name = "capsule"
 	desc = "A little plastic ball for keeping stuff in. Woah! We're truly in the future with technology like this."
