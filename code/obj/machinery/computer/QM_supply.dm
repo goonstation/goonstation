@@ -18,9 +18,10 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 				// gonna be real here it seems more useful to have the oft-used stuff at the top.
 				//global.QM_CategoryList.Insert(1,S.category) //So Misc. is not #1, reverse ordering.
 
-/datum/cdc_contact_controller
-	var/next_crate = 0
-	var/totalcdccrates = 0
+/datum/cdc_bounty_controller
+	var/lowriskcratecooldown = null
+	var/medriskcratecooldown = null
+	var/highriskcratecooldown = null
 
 	New()
 		..()
@@ -28,8 +29,7 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 
 
 	proc/receive_pathogen_samples(obj/storage/crate/biohazard/cdc/sell_crate)
-		QM_CDC.totalcdccrates -= 1
-		for (var/R in sell_crate)
+		/*for (var/R in sell_crate)
 			var/list/patho = null
 			if (istype(R, /obj/item/reagent_containers))
 				var/obj/item/reagent_containers/RC = R
@@ -43,8 +43,8 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 			else
 				qdel(R)
 				continue
-
-			qdel(sell_crate)
+		*/
+		qdel(sell_crate)
 
 		var/datum/signal/pdaSignal = get_free_signal()
 		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="Notification: Pathogen sample crate delivered to the CDC.")
@@ -363,9 +363,9 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 	src.temp += "<B>Classified Pathogen Bounties</B><br>"
 	src.temp += "We would like your medical department to analyze unidentified pathogen strains.<br>"
-	src.temp += "<A href='[topicLink("req_biohazard_crate_tier1")]'>Tier 1</a> - Unlocking requires Pathology Access.<br><br>"
-	src.temp += "<A href='[topicLink("req_biohazard_crate_tier2")]'>Tier 2</a> - Unlocking requires the Medical Director's access.<br><br>"
-	src.temp += "<A href='[topicLink("req_biohazard_crate_tier3")]'>Tier 3</a> - Unlocking requires Captain's access.<br><br>"
+	src.temp += "<A href='[topicLink("req_biohazard_crate_tier1")]'>Tier 1</a> - Unlocking requires a Low-Risk Pathology Permit. We have set a nominal bounty of # for these samples with an upfront deposit of #. <br><br>"
+	src.temp += "<A href='[topicLink("req_biohazard_crate_tier2")]'>Tier 2</a> - Unlocking requires a Medium-Risk Pathology ermit. We have set a nominal bounty of # for these samples with an upfront deposit of #.<br><br>"
+	src.temp += "<A href='[topicLink("req_biohazard_crate_tier3")]'>Tier 3</a> - Unlocking requires a High-Risk Pathology Permit. We have set a nominal bounty of # for these samples with an upfront deposit of #.<br><br>"
 	src.temp += "<br>"
 	src.temp += "<A href='[topicLink("mainmenu")]'>Main Menu</A>"
 /obj/machinery/computer/supplycomp/proc
@@ -607,11 +607,9 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			if (signal_loss >= 75)
 				boutput(usr, "<span class='alert'>Severe signal interference is preventing contact with the CDC.</span>")
 				return
-			if(QM_CDC.totalcdccrates >= 3)
-				last_cdc_message = "<span style=\"color:red; font-style: italic\">We cannot provide you with more than three crates at one time.</span>"
+			if(QM_CDC.lowriskcratecooldown == wait)
+				last_cdc_message = "<span style=\"color:red; font-style: italic\">We cannot provide you with this crate right now. Please wait for the market to refresh.</span>"
 				return
-			if (ticker.round_elapsed_ticks < QM_CDC.next_crate)
-				last_cdc_message = "<span style=\"color:red; font-style: italic\">We are fresh out of crates right now to send you. Check back in [ceil((QM_CDC.next_crate - ticker.round_elapsed_ticks) / (1 SECOND))] seconds!</span>"
 			else
 				if (wagesystem.shipping_budget < 100)
 					last_cdc_message = "<span style=\"color:red; font-style: italic\">You're completely broke. You cannot even afford a crate.</span>"
@@ -619,18 +617,15 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 					wagesystem.shipping_budget -= 100
 					last_cdc_message = "<span style=\"color:blue; font-style: italic\">We're delivering the crate right now. It should arrive shortly.</span>"
 					shippingmarket.receive_crate(new /obj/storage/secure/crate/medical/cdctier1)
-					QM_CDC.totalcdccrates += 1
-					QM_CDC.next_crate = ticker.round_elapsed_ticks + 300
+					QM_CDC.lowriskcratecooldown = wait
 			set_cdc()
 		if ("req_biohazard_crate_tier2")
 			if (signal_loss >= 75)
 				boutput(usr, "<span class='alert'>Severe signal interference is preventing contact with the CDC.</span>")
 				return
 			if(QM_CDC.totalcdccrates >= 3)
-				last_cdc_message = "<span style=\"color:red; font-style: italic\">We cannot provide you with more than three crates at one time.</span>"
+				last_cdc_message = "<span style=\"color:red; font-style: italic\">We cannot provide you with this crate right now. Please wait for the market to refresh.</span>"
 				return
-			if (ticker.round_elapsed_ticks < QM_CDC.next_crate)
-				last_cdc_message = "<span style=\"color:red; font-style: italic\">We are fresh out of crates right now to send you. Check back in [ceil((QM_CDC.next_crate - ticker.round_elapsed_ticks) / (1 SECOND))] seconds!</span>"
 			else
 				if (wagesystem.shipping_budget < 500)
 					last_cdc_message = "<span style=\"color:red; font-style: italic\">You're completely broke. You cannot even afford a crate.</span>"
@@ -638,8 +633,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 					wagesystem.shipping_budget -= 500
 					last_cdc_message = "<span style=\"color:blue; font-style: italic\">We're delivering the crate right now. It should arrive shortly.</span>"
 					shippingmarket.receive_crate(new /obj/storage/secure/crate/medical/cdctier2)
-					QM_CDC.totalcdccrates += 1
-					QM_CDC.next_crate = ticker.round_elapsed_ticks + 1000
+					QM_CDC.medriskcratecooldown = wait
 			set_cdc()
 		if ("req_biohazard_crate_tier3")
 			if (signal_loss >= 75)
@@ -657,8 +651,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 					wagesystem.shipping_budget -= 1000
 					last_cdc_message = "<span style=\"color:blue; font-style: italic\">We're delivering the crate right now. It should arrive shortly.</span>"
 					shippingmarket.receive_crate(new /obj/storage/secure/crate/medical/cdctier3)
-					QM_CDC.totalcdccrates += 1
-					QM_CDC.next_crate = ticker.round_elapsed_ticks + 3000
+					QM_CDC.highriskcratecooldown = wait
 			set_cdc()
 		if ("trader_list")
 			if (!shippingmarket.active_traders.len)

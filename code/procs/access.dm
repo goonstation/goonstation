@@ -382,7 +382,7 @@
 	            access_tox, access_tox_storage, access_chemistry, access_carrypermit, access_contrabandpermit,
 	            access_emergency_storage, access_change_ids, access_ai_upload,
 	            access_teleporter, access_eva, access_heads, access_captain, access_all_personal_lockers, access_head_of_personnel,
-	            access_chapel_office, access_kitchen, access_medical_lockers, access_pathology, access_cdclow, access_cdcmed, access_cdchigh
+	            access_chapel_office, access_kitchen, access_medical_lockers, access_pathology, access_cdclow, access_cdcmed, access_cdchigh,
 	            access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_supply_console, access_construction, access_hydro, access_ranch, access_mail,
 	            access_engineering, access_maint_tunnels, access_external_airlocks,
 	            access_tech_storage, access_engineering_storage, access_engineering_eva,
@@ -396,7 +396,7 @@
 	            access_tox, access_tox_storage, access_chemistry, access_carrypermit,
 	            access_emergency_storage, access_change_ids, access_ai_upload,
 	            access_teleporter, access_eva, access_heads, access_captain, access_all_personal_lockers, access_head_of_personnel,
-	            access_chapel_office, access_kitchen, access_medical_lockers, access_pathology, access_cdclow, access_cdcmed, access_cdchigh
+	            access_chapel_office, access_kitchen, access_medical_lockers, access_pathology, access_cdclow, access_cdcmed, access_cdchigh,
 	            access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_supply_console, access_construction, access_hydro, access_ranch, access_mail,
 	            access_engineering, access_maint_tunnels, access_external_airlocks,
 	            access_tech_storage, access_engineering_storage, access_engineering_eva,
