@@ -36,14 +36,6 @@
 
 	return TRUE
 
-/datum/game_mode/flock/post_setup()
-	//TODO
-	return TRUE
-
-/datum/game_mode/flock/check_finished()
-	//TODO
-	. = ..()
-
 /datum/game_mode/flock/victory_msg()
 	if (src.signal_unleashed)
 		return "<b style='font-size:20px'>Flock victory!</b><br>The Flock managed to construct a relay and transmit The Signal. One step closer to its mysterious goals."
