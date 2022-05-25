@@ -2177,6 +2177,8 @@ var/list/fun_images = list()
 /client/proc/vpn_whitelist_add(vpnckey as text)
 	set name = "VPN whitelist add"
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	ADMIN_ONLY
+	DENY_TEMPMIN
 	vpnckey = ckey(vpnckey)
 	try
 		apiHandler.queryAPI("vpncheck-whitelist/add", list("ckey" = vpnckey, "akey" = src.ckey))
@@ -2186,11 +2188,14 @@ var/list/fun_images = list()
 	global.vpn_ip_checks?.Cut() // to allow them to reconnect this round
 	message_admins("Ckey [vpnckey] added to the VPN whitelist by [src.key].")
 	logTheThing("admin", src, null, "Ckey [vpnckey] added to the VPN whitelist.")
+	addPlayerNote(vpnckey, src.ckey, "Ckey [ckey] added to the VPN whitelist.")
 	return 1
 
 /client/proc/vpn_whitelist_remove(vpnckey as text)
 	set name = "VPN whitelist remove"
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	ADMIN_ONLY
+	DENY_TEMPMIN
 	vpnckey = ckey(vpnckey)
 	try
 		apiHandler.queryAPI("vpncheck-whitelist/remove", list("ckey" = vpnckey, "akey" = src.ckey))
