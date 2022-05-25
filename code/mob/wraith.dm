@@ -827,7 +827,7 @@
 	real_name = "trickster"
 	desc = "A ghost seeking to disrupt the station with lies and deception."
 	icon = 'icons/mob/mob.dmi'
-	icon_state = "wraith"
+	icon_state = "waith_trickster"
 	var/points_to_possess = 30	//How many points do we need to possess someone?
 	var/possession_points = 0	//How many do we currently have?
 	var/mutable_appearance/copied_appearance = null	//Steal someone's appearance and use it during haunt

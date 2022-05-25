@@ -5,10 +5,12 @@
 /datum/targetable/critter/spiker/hook	//Projectile is referenced in spiker.dm
 	name = "Tentacle hook"
 	desc = "Launch a tentacle at your target and drag it to you"
-	icon_state = "clown_spider_bite"
+	icon_state = "hook"
 	cooldown = 30 SECONDS
 	targeted = 1
 	target_anything = 1
+	var/border_icon = 'icons/mob/wraith_ui.dmi'
+	var/border_state = "harbinger_frame"
 
 	cast(atom/target)
 		if (..())
@@ -23,6 +25,12 @@
 		proj.targets = list(target)
 
 		proj.launch()
+		holder.owner.setStatus("slowed", 2 SECONDS)
+
+	onAttach(datum/abilityHolder/holder)
+		..()
+		var/atom/movable/screen/ability/topBar/B = src.object
+		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
 
 /datum/targetable/critter/spiker/lash	//Combo it with the tentacle throw to slap someone silly
 	name = "Lash"
@@ -30,7 +38,9 @@
 	cooldown = 50 SECONDS
 	targeted = 1
 	target_anything = 1
-	icon_state = "frenzy"
+	icon_state = "lash"
+	var/border_icon = 'icons/mob/wraith_ui.dmi'
+	var/border_state = "harbinger_frame"
 
 	var/datum/projectile/slam/proj = new
 
@@ -67,7 +77,7 @@
 			holder.owner.canmove = 0
 			holder.owner.set_loc(MT.loc)
 			while (frenz > 0 && MT && !MT.disposed)
-				MT.changeStatus("weakened", 2 SECONDS)
+				MT.setStatus("weakened", 3 SECONDS)
 				MT.canmove = 0
 				if (MT.loc && holder.owner.loc != MT.loc)
 					break
@@ -78,7 +88,7 @@
 				holder.owner.set_dir((cardinal))
 				holder.owner.pixel_x = rand(-5, 5)
 				holder.owner.pixel_y = rand(-5, 5)
-				random_brute_damage(MT, 4,1)
+				random_brute_damage(MT, 3,1)
 				take_bleeding_damage(MT, null, 12, DAMAGE_CUT, 0, get_turf(MT))
 				if(prob(33))
 					bleed(MT, 5, 5, get_step(get_turf(MT), pick(alldirs)), 1)
@@ -93,3 +103,8 @@
 			holder.owner.canmove = 1
 
 		return 0
+
+	onAttach(datum/abilityHolder/holder)
+		..()
+		var/atom/movable/screen/ability/topBar/B = src.object
+		B.UpdateOverlays(image(border_icon, border_state), "mob_type")

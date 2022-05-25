@@ -4,10 +4,12 @@
 /datum/targetable/critter/skeleton_commander/rally
 	name = "rally"
 	desc = "rally"
-	icon_state = "clown_spider_bite"
+	icon_state = "rally"
 	cooldown = 60 SECONDS
 	targeted = 0
 	//List of critters we can buff, same as the one the wraith portal has.
+	var/border_icon = 'icons/mob/wraith_ui.dmi'
+	var/border_state = "harbinger_frame"
 	var/list/critter_list = list(/obj/critter/shade,
 	/obj/critter/crunched,
 	/obj/critter/ancient_thing,
@@ -44,15 +46,21 @@
 					C.atk_brute_amt = (C.atk_brute_amt / 1.5)
 					C.atk_burn_amt = (C.atk_burn_amt / 1.5)
 
-
+	onAttach(datum/abilityHolder/holder)
+		..()
+		var/atom/movable/screen/ability/topBar/B = src.object
+		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
 
 /datum/targetable/critter/skeleton_commander/summon_lesser_skeleton
 	name = "summon lesser skeleton"
 	desc = "rally"
-	icon_state = "clown_spider_bite"
+	icon = 'icons/mob/wraith_ui.dmi'
+	icon_state = "skeleton"
 	cooldown = 30 SECONDS
 	targeted = 1
 	target_anything = 1
+	var/border_icon = 'icons/mob/wraith_ui.dmi'
+	var/border_state = "harbinger_frame"
 
 	cast(atom/target)
 		if (..())
@@ -72,3 +80,8 @@
 		else
 			boutput(holder.owner, "We cannot summon a skeleton here")
 			return 1
+
+	onAttach(datum/abilityHolder/holder)
+		..()
+		var/atom/movable/screen/ability/topBar/B = src.object
+		B.UpdateOverlays(image(border_icon, border_state), "mob_type")

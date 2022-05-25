@@ -7,7 +7,8 @@
 	can_throw = 1
 	can_grab = 1
 	can_disarm = 1
-	icon_state = "scuttlebot"
+	icon = 'icons/mob/wraith_critters.dmi'
+	icon_state = "spiker"
 	var/health_brute = 50
 	var/health_brute_vuln = 1
 	var/health_burn = 50
@@ -69,7 +70,7 @@
 				M.changeStatus("paralysis", 3 SECONDS)
 				M.visible_message("<span class='alert'>[M] gets grabbed by a tentacle and dragged!</span>")
 
-		previous_line = DrawLine(P.special_data["owner"], P, /obj/line_obj/tentacle ,'icons/obj/projectiles.dmi',"WholeTentacle",1,1,"HalfStartTentacle","HalfEndTentacle",OBJ_LAYER,1)
+		previous_line = DrawLine(P.special_data["owner"], P, /obj/line_obj/tentacle ,'icons/obj/projectiles.dmi',"mid_tentacle",1,1,"start_tentacle","end_tentacle",OBJ_LAYER,1)
 		SPAWN(7 DECI SECOND)	//Make it last a bit for impact
 			if (previous_line != null)
 				for (var/obj/O in previous_line)
@@ -95,5 +96,5 @@
 		if (previous_line != null)
 			for (var/obj/O in previous_line)
 				qdel(O)
-		previous_line = DrawLine(P.special_data["owner"], P, /obj/line_obj/tentacle ,'icons/obj/projectiles.dmi',"WholeTentacle",1,1,"HalfStartTentacle","HalfEndTentacle",OBJ_LAYER,1)
+		previous_line = DrawLine(P.special_data["owner"], P, /obj/line_obj/tentacle ,'icons/obj/projectiles.dmi',"mid_tentacle",1,1,"start_tentacle","end_tentacle",OBJ_LAYER,1)
 

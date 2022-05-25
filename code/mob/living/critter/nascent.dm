@@ -6,7 +6,8 @@
 	real_name = "???"
 	desc = "It looks unfinished"
 	density = 1
-	icon_state = "abear"
+	icon = 'icons/mob/mob.dmi'
+	icon_state = "poltergeist-corp"
 	hand_count = 0
 	var/health_brute = 50
 	var/health_brute_vuln = 1
