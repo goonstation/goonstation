@@ -51029,11 +51029,11 @@
 /turf/simulated/floor/delivery,
 /area/station/hallway/primary/central)
 "bTP" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/research,
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
 "bTQ" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/kitchen,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "bTR" = (
@@ -68614,7 +68614,7 @@
 /turf/simulated/floor/delivery,
 /area/station/medical/research)
 "kPs" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/genetics,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},

@@ -1,4 +1,74 @@
 
+(t)wed may 25 22
+(u)MomoBerry
+(p)8680
+(e)|
+(+)Adjusted the tail regrowth ability cooldown from five minutes down to two minutes.
+(t)tue may 24 22
+(u)tarmunora
+(+)burst taser has slight spread
+(t)mon may 23 22
+(u)Wisemonster
+(p)8607
+(e)🆕🗺|feature, mapping
+(+)The VR murderbox has been upgraded with an arcfiend simulation.
+(u)Flappybat
+(p)8662
+(e)⛔|removal
+(+)The noise_maker artifact has been removed, reducing incidents of exploding speakers by 57%.
+(t)sun may 22 22
+(u)Azrun
+(e)🚽🎣
+(+)Toilet Fishing
+(u)Flappybat
+(p)8671
+(e)🗺|mapping
+(*)Some layout changes have been made to Cogmap2 security, in particular the Solitary cell controls have moved north from the tables to the wall outside the cell.
+(u)Wisemonster
+(p)8693
+(e)⚖|balance
+(+)The med/hydro restock cartridges purchase from qm has been split into two separate purchases.
+(u)Blackrep
+(p)8162
+(e)📄|tgui
+(+)The mechanical dropper has been updated to a fancy new UI!
+(u)KubeRoot, Kapu1178
+(p)8056
+(e)🆕|feature
+(*)The 'say' verb and typing indicators should now be much more responsive
+(t)sat may 21 22
+(u)FlameArrow57
+(p)7498
+(e)🆕🎨|feature, sprites
+(*)Added the implanter artifact, complete with nine new alien implants!
+(u)Flappybat & Dimwhat
+(p)8582
+(e)🗺🎨⚖|mapping, sprites, balance
+(*)Due to increasing number of monkey uprisings the Valuchimp vending machines are now access restricted according to their station area.
+(u)Azrun
+(p)8560
+(e)🎨⚖|sprites, balance
+(*)Adds visual indicator of pipe gas leaks. Gas leaks more and will scale with insanity pressures.
+(t)wed may 18 22
+(u)Wisemonster
+(p)8610
+(e)|
+(+)Status display screens' now glow in the dark!
+(u)DimWhat
+(p)8628
+(e)🎨|sprites
+(+)Respriited the captain's antique lasergun
+(u)Virvatuli
+(e)🆕|feature
+(*)New addition to surplus crates and spy bounties: energy-based concussion grenades! Those who have played Pod Wars should be familiar with them. These stick grenades let loose a forceful energy wave upon detonation, similar to being hit by a pulse rifle. They work best in tight spaces where you can disarm your targets when they are flung into a wall.
+(t)tue may 17 22
+(u)Sovexe
+(p)8615
+(e)🎨|sprites
+(*)New spacebux purchasable, the Pixel Pass. Can be redeemed at the Centcom canvas to place an additional pixel. Keep it safe until you get there!
+(u)aloe
+(*)Dart and syringe projectiles (lawbringer dart, syringe gun, tranq rifle, tranq pistol, etc) now apply their reagents slowly rather than instantly, and stop applying their reagents after pulled out. As a reminder, you can pull a dart out of yourself or someone else by clicking them on help intent. Syndicate darts (nukie pistol, traitor syringe gun) are barbed and require surgery to remove.
+(*)The reagents added by darts are no longer reduced by armor.
 (t)mon may 16 22
 (u)Wisemonster
 (p)8591

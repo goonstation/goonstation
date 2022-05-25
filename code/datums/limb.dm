@@ -1346,7 +1346,8 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 	/obj/item/gun/kinetic/airzooka,\
 	/obj/machinery/computer,\
 	/obj/machinery/power/smes,
-	/obj/item/tinyhammer,
+	/obj/item/tinyhammer,\
+	/obj/machinery/manufacturer,\
 	/obj/item/device/light/zippo) //Items that ghostcritters simply cannot interact, regardless of w_class
 	. = list()
 	for (var/blocked_type in blocked_types)

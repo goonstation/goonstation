@@ -568,6 +568,7 @@
 			src.task = "chasing"
 			return
 		for (var/mob/living/C in hearers(src.seekrange,src))
+			if (isintangible(C)) continue
 			if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100)) continue
 			if (C.bioHolder && C.bioHolder.HasEffect("husk")) continue
 			if (istype(C, /mob/living/critter/spider)) continue

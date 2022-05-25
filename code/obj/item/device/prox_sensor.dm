@@ -5,7 +5,7 @@
 	var/timing = 0.0
 	var/time = null
 	flags = FPRINT | TABLEPASS| CONDUCT
-	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 	w_class = W_CLASS_SMALL
 	item_state = "electronic"
 	m_amt = 300
@@ -54,6 +54,7 @@
 			src.armed = 1
 			src.time = 0
 			src.timing = 0
+			src.event_handler_flags |= USE_PROXIMITY
 			src.UpdateIcon()
 
 
@@ -127,6 +128,10 @@
 			src.master.add_dialog(usr)
 		if (href_list["arm"])
 			src.armed = !src.armed
+			if (src.armed)
+				src.event_handler_flags |= USE_PROXIMITY
+			else
+				src.event_handler_flags = src.event_handler_flags & ~USE_PROXIMITY
 			src.UpdateIcon()
 			if(timing || armed) processing_items |= src
 

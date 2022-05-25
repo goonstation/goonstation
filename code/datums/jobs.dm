@@ -2376,9 +2376,9 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_belt = list(/obj/item/storage/fanny)
 	//more
 
-/datum/job/special/nt_tactical_op
+/datum/job/special/ntso_specialist
 	linkcolor = "#3348ff"
-	name = "Nanotrasen Tactical Operative"
+	name = "Nanotrasen Special Operative"
 	limit = 0
 	wages = PAY_IMPORTANT
 	allow_traitors = 0
@@ -2417,9 +2417,9 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 
 
 // Use this one for late respawns to dael with existing antags. they are weaker cause they dont get a laser rifle or frags
-/datum/job/special/nt_security_op
+/datum/job/special/nt_security
 	linkcolor = "#3348ff"
-	name = "Nanotrasen Security Operative"
+	name = "Nanotrasen Security Consultant"
 	limit = 1 // backup during HELL WEEK. players will probably like it
 	wages = PAY_TRADESMAN
 	requires_whitelist = 1

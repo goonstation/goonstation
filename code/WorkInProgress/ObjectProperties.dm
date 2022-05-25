@@ -45,6 +45,7 @@ var/list/globalPropList = null
 
 /obj
 	proc/setupProperties() //Should always be called by new(). This will contain all the default property initializations for objects.
+		SHOULD_CALL_PARENT(TRUE)
 		return
 
 	proc/setProperty(var/propId, var/propVal=null) //Adds or sets property.

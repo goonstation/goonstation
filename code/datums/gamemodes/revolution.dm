@@ -322,7 +322,7 @@
 				ucs += player.mind
 			else
 				var/role = player.mind.assigned_role
-				if(role in list("Captain", "Head of Security", "Security Assistant", "Head of Personnel", "Chief Engineer", "Research Director", "Medical Director", "Head of Mining", "Security Officer", "Security Assistant", "Vice Officer", "Part-time Vice Officer", "Detective", "AI", "Cyborg", "Nanotrasen Tactical Operative", "Nanotrasen Security Operative","Communications Officer"))
+				if(role in list("Captain", "Head of Security", "Security Assistant", "Head of Personnel", "Chief Engineer", "Research Director", "Medical Director", "Head of Mining", "Security Officer", "Security Assistant", "Vice Officer", "Part-time Vice Officer", "Detective", "AI", "Cyborg", "Nanotrasen Special Operative", "Nanotrasen Security Consultant","Communications Officer"))
 					ucs += player.mind
 	//for(var/mob/living/carbon/human/player in mobs)
 

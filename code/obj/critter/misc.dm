@@ -1562,7 +1562,7 @@
 
 	New()
 		..()
-		maxsteps = rand(10,20)
+		maxsteps = rand(2,12)
 
 	proc/setup_overlays()
 		var/image/overlayprimary = image('icons/misc/critter.dmi', "twitchytail_colorkey1")

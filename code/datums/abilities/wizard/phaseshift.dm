@@ -343,6 +343,7 @@
 
 
 	firepoof
+		name = "fireball"
 		icon_state = "fireball"
 		icon = 'icons/obj/wizard.dmi'
 		flags = TABLEPASS

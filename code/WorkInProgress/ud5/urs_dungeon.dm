@@ -169,6 +169,7 @@
 	color = "#550000"
 	var/target = null
 	var/doing_login = 0
+	var/turf/origin = null
 
 	New()
 		..()
@@ -184,6 +185,7 @@
 		if(!(user == usr))
 			return
 		if(istype(H) && slot == SLOT_GLASSES)
+			origin = get_turf(H)
 			SPAWN(1 SECOND)
 				enter_urs_dungeon(user)
 		return
@@ -195,7 +197,7 @@
 			doing_login = 1
 
 			H.u_equip(src)
-			src.set_loc(get_turf(H))
+			src.set_loc(origin)
 			H.unequip_all()
 
 			var/mob/living/carbon/human/V = new(get_turf(src.target),H.client.preferences.AH, H.client.preferences, TRUE)
@@ -223,15 +225,21 @@
 			H.elecgib()
 			doing_login = 0
 
+			H.u_equip(src)
+			H.drop_item(src)
+			src.set_loc(origin)
+
 /obj/item/clothing/glasses/urs_dungeon_exit
 	name = "\improper VR goggles"
 	desc = "About goddamn time."
 	icon_state = "vr"
 	item_state = "sunglasses"
 	color = "#00CCCC"
+	var/turf/origin = null
 
 	New()
 		..()
+		origin = get_turf(src)
 
 	equipped(var/mob/user, var/slot)
 		..()
@@ -244,7 +252,8 @@
 	proc/exit_urs_dungeon(var/mob/living/carbon/human/H)
 
 		H.u_equip(src)
-		src.set_loc(get_turf(H))
+		src.set_loc(origin)
+		H.drop_item(src)
 
 		var/list/L = list()
 		for (var/turf/T3 in get_area_turfs(/area/station/crew_quarters,0))
@@ -280,6 +289,10 @@
 		H.set_loc(pick(L))
 
 		H.unlock_medal("Virtual Ascension",1)
+
+		H.u_equip(src)
+		H.drop_item(src)
+		src.set_loc(origin)
 
 		return
 
