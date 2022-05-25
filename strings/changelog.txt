@@ -1,4 +1,12 @@
 
+(t)wed may 25 22
+(u)MomoBerry
+(p)8680
+(e)|
+(+)Adjusted the tail regrowth ability cooldown from five minutes down to two minutes.
+(t)tue may 24 22
+(u)tarmunora
+(+)burst taser has slight spread
 (t)mon may 23 22
 (u)Wisemonster
 (p)8607
