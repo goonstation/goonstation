@@ -217,7 +217,7 @@
 /datum/action/bar/flock_convert
 	id = "flock_convert"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	duration = 45
+	duration = 4.5 SECONDS
 	resumable = FALSE
 
 	var/turf/simulated/target
@@ -286,7 +286,7 @@
 /datum/action/bar/flock_construct
 	id = "flock_construct"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	duration = 30
+	duration = 3 SECONDS
 	resumable = FALSE
 
 	var/turf/simulated/target
@@ -348,7 +348,7 @@
 /datum/action/bar/flock_egg
 	id = "flock_egg"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	duration = 80
+	duration = 8 SECONDS
 	resumable = FALSE
 
 	New(var/duration_i)
@@ -390,7 +390,7 @@
 /datum/action/bar/flock_repair
 	id = "flock_repair"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	duration = 10
+	duration = 1 SECOND
 	resumable = FALSE
 
 	var/atom/target
@@ -415,9 +415,8 @@
 			return
 		var/mob/living/critter/flock/F = owner
 		var/mob/living/critter/flock/C
-		if(istype(target, /mob/living/critter/flock))
-			C = target
-		if(C)
+		C = target
+		if(istype(C))
 			F.tri_message("<span class='notice'>[owner] begins spraying glowing fibers onto [C].</span>",
 				F, "<span class='notice'>You begin repairing [C.real_name]. You will both need to stay still for this to work.</span>",
 				target, "<span class='notice'>[F.real_name] begins repairing you. You will both need to stay still for this to work.</span>",
@@ -475,7 +474,7 @@
 /datum/action/bar/flock_entomb
 	id = "flock_entomb"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	duration = 60
+	duration = 6 SECONDS
 	resumable = FALSE
 
 	var/atom/target
