@@ -94,7 +94,11 @@
 
 /obj/item/device/key/iridium
 	name = "iridium key"
-	desc = "A key made of a fancy, silvery material."
+	desc = "An artifact made of a fancy, silvery material. Arcs of energy repeatedly crawl up the twin shanks of the device."
+
+	icon = 'icons/obj/artifacts/keys.dmi'
+	icon_state = "iridium"
+
 
 	virtual
 		desc = "A key made of a fancy, silvery set of pixels."
@@ -127,9 +131,11 @@
 	name = "lead key"
 
 /obj/item/device/key/onyx
-	desc = "What does this go to?"
+	desc = "A menacing onyx-like scepter with angular hand guards. Shaped a bit like the teeth of a big key, weird."
 	icon_state = "key_onyx"
 	name = "onyx key"
+	icon = 'icons/obj/artifacts/keys.dmi'
+	icon_state = "onyx"
 
 /obj/item/device/key/silver
 	desc = "What does this go to?"
