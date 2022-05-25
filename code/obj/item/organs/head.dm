@@ -71,24 +71,16 @@
 	disposing()
 		if (holder)
 			holder.head = null
-		src.skull = null
-		src.brain = null
-		src.left_eye = null
-		src.right_eye = null
+		skull = null
+		brain = null
+		left_eye = null
+		right_eye = null
 
-		src.head = null
-		if (donor?.head)
-			qdel(donor.head)
-		src.ears = null
-		if (donor?.ears)
-			qdel(donor.ears)
-		src.wear_mask = null
-		if (donor?.wear_mask)
-			qdel(donor.wear_mask)
-		src.glasses = null
-		if (donor?.glasses)
-			qdel(donor.glasses)
-		src.UpdateIcon()
+		head = null
+		ears = null
+		wear_mask = null
+		glasses = null
+
 		..()
 
 	get_desc()
