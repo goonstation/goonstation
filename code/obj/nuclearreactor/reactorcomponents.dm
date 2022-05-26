@@ -73,7 +73,7 @@ ABSTRACT_TYPE(/obj/reactor_component)
 //Gas channel
 /obj/item/reactor_component/gas_channel
 	name = "gas channel"
-	desc = "A gas channel component for a nuclear reactor"
+	desc = "A gas coolant channel component for a nuclear reactor"
 	var/datum/gas_mixture/current_gas
 
 	processGas(var/datum/gas_mixture/inGas)
@@ -82,7 +82,6 @@ ABSTRACT_TYPE(/obj/reactor_component)
 			//assume A = 1m^2
 			var/deltaT = src.current_gas.temperature - src.temperature
 			//heat transfer coefficient
-
 			var/hTC = TOTAL_MOLES(src.current_gas)/src.material.getProperty("density")
 			src.current_gas.temperature += 0.1*-deltaT*hTC
 			src.temperature += 0.1*deltaT*(1/hTC)
