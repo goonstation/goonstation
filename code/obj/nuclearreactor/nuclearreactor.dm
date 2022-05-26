@@ -17,6 +17,14 @@
 	density = 1
 	dir = WEST
 	var/list/obj/item/reactor_component/component_grid[6][6]
+	var/list/list/datum/neutron/flux_grid[6][6]
+	var/radiationLevel = 0
+
+	New()
+		..()
+		for(var/x=1 to 6)
+			for(var/y=1 to 6)
+				src.flux_grid[x][y] = list()
 
 	process()
 		. = ..()
@@ -34,9 +42,23 @@
 					comp.processHeat(src.getGridNeighbors(x,y))
 
 					//calculate neutron flux
-					comp.processNeutrons()
+					src.flux_grid[x][y] = comp.processNeutrons(src.flux_grid[x][y])
+					for(var/datum/neutron/N in src.flux_grid[x][y])
+						var/xmod = 0
+						var/ymod = 0
+						xmod += ((N.dir & EAST) == EAST)
+						xmod -= ((N.dir & WEST) == WEST)
+						ymod += ((N.dir & SOUTH) == SOUTH)
+						ymod -= ((N.dir & NORTH) == NORTH)
+						if((x+xmod >= 1 & y+ymod >= 1) & (x+xmod <= 6 & y+ymod <= 6))
+							src.flux_grid[x+xmod][y+ymod]+=N
+							src.flux_grid[x][y]-=N
+						else
+							src.radiationLevel++ //neutrons hitting the casing get blasted in to the room - have fun with that engineers!
 
 
+		//spawn radioactivity then reset level
+		src.radiationLevel = 0
 		src.network1?.update = TRUE
 		src.network2?.update = TRUE
 
@@ -160,3 +182,12 @@
 		user.put_in_hand_or_drop(src.component_grid[x][y])
 		src.component_grid[x][y] = null
 		tgui_process.update_uis(src)
+
+/datum/neutron
+	var/dir = NORTH
+	var/velocity = 1
+
+	New(var/dir,var/velocity)
+		..()
+		src.dir = dir
+		src.velocity = velocity

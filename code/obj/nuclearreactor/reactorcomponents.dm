@@ -13,9 +13,16 @@ ABSTRACT_TYPE(/obj/reactor_component)
 	var/icon_state_inserted = "component_cap"
 	var/ui_image = null
 	var/temperature = T20C //room temp kelvin as default
+	var/heat_transfer_mult = 0.01
 	_max_health = 100
 
 	var/static/list/ui_image_base64_cache = list()
+
+	//this should probably be a global, but it isn't afaik
+	var/list/cardinals = list(NORTH, NORTHEAST, NORTHWEST, \
+		                    SOUTH, SOUTHEAST, SOUTHWEST, \
+		                    WEST, NORTHWEST, SOUTHWEST,  \
+		                    EAST, NORTHEAST, SOUTHEAST)
 
 	New()
 		..()
@@ -41,15 +48,31 @@ ABSTRACT_TYPE(/obj/reactor_component)
 			var/deltaT = RC.temperature - src.temperature
 			//heat transfer coefficient
 			var/hTC = RC.material.getProperty("density")/src.material.getProperty("density")
-			RC.temperature += 0.1*-deltaT*hTC
-			src.temperature += 0.1*deltaT*(1/hTC)
+			RC.temperature += heat_transfer_mult*-deltaT*hTC
+			src.temperature += heat_transfer_mult*deltaT*(1/hTC)
 
 			RC.material.triggerTemp(RC,RC.temperature)
 			src.material.triggerTemp(src,src.temperature)
 		return 0
 
-	proc/processNeutrons(var/list/inNeutrons)
-		return list()
+	proc/processNeutrons(var/list/datum/neutron/inNeutrons)
+		if(prob(src.material.getProperty("n_radioactive"))) //spontaneous emission
+			inNeutrons += new /datum/neutron(pick(cardinals), pick(1,2,3))
+			src.temperature += 100 //TODO make this less arbitrary
+		for(var/datum/neutron/N in inNeutrons)
+			if(N.velocity == 2 & prob(src.material.getProperty("n_radioactive"))) //stimulated emission
+				inNeutrons += new /datum/neutron(pick(cardinals), pick(1,2,3))
+				inNeutrons += new /datum/neutron(pick(cardinals), pick(1,2,3))
+				inNeutrons -= N
+				qdel(N)
+				src.temperature += 100 //TODO make this less arbitrary
+			else if(prob(src.material.getProperty("density")))
+				N.velocity--
+				src.temperature += 1
+				if(N.velocity < 0)
+					inNeutrons -= N
+					qdel(N)
+		return inNeutrons
 
 ////////////////////////////////////////////////////////////////
 //Fuel rod
@@ -68,12 +91,14 @@ ABSTRACT_TYPE(/obj/reactor_component)
 /obj/item/reactor_component/heat_exchanger
 	name = "heat exchanger"
 	desc = "A heat exchanger component for a nuclear reactor"
+	heat_transfer_mult = 0.2
 
 ////////////////////////////////////////////////////////////////
 //Gas channel
 /obj/item/reactor_component/gas_channel
 	name = "gas channel"
 	desc = "A gas coolant channel component for a nuclear reactor"
+	heat_transfer_mult = 0.05
 	var/datum/gas_mixture/current_gas
 
 	processGas(var/datum/gas_mixture/inGas)
@@ -83,8 +108,8 @@ ABSTRACT_TYPE(/obj/reactor_component)
 			var/deltaT = src.current_gas.temperature - src.temperature
 			//heat transfer coefficient
 			var/hTC = TOTAL_MOLES(src.current_gas)/src.material.getProperty("density")
-			src.current_gas.temperature += 0.1*-deltaT*hTC
-			src.temperature += 0.1*deltaT*(1/hTC)
+			src.current_gas.temperature += heat_transfer_mult*-deltaT*hTC
+			src.temperature += heat_transfer_mult*deltaT*(1/hTC)
 			. = src.current_gas
 		src.current_gas = inGas.remove(R_IDEAL_GAS_EQUATION * inGas.temperature)
 

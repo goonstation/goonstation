@@ -51,10 +51,10 @@
 /obj/machinery/nanofab/nuclear
 	name = "Nano-fabricator (Nuclear)"
 	color = "#094721"
-	blueprints = list(/datum/matfab_recipe/nuclear/gas_channel,
-	/datum/matfab_recipe/nuclear/heat_exchanger,
-	/datum/matfab_recipe/nuclear/control_rod,
-	/datum/matfab_recipe/nuclear/fuel_rod)
+	blueprints = list(/datum/matfab_recipe/simple/nuclear/gas_channel,
+	/datum/matfab_recipe/simple/nuclear/heat_exchanger,
+	/datum/matfab_recipe/simple/nuclear/control_rod,
+	/datum/matfab_recipe/simple/nuclear/fuel_rod)
 
 /obj/machinery/nanofab/prototype
 	name = "Nano-fabricator (Protoype)"
