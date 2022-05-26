@@ -12,11 +12,15 @@
 		if (..())
 			return 1
 
-		animate(holder.owner, alpha=50, time=3 SECONDS)
-		boutput(holder.owner, "We slip into the shadows")
-		sleep(20 SECONDS)
-		animate(holder.owner, alpha=255, time=3 SECONDS)
-		boutput(holder.owner, "We reappear")
+		if(istype(holder.owner, /mob/living/critter/voidhound))
+			var/mob/living/critter/voidhound/V = holder.owner
+			animate(V, alpha=50, time=3 SECONDS)
+			boutput(V, "<span class='notice'>We slip into the shadows</span>")
+			V.cloaked = TRUE
+			SPAWN(20 SECONDS)
+				if(V.cloaked)
+					animate(V, alpha=255, time=3 SECONDS)
+					boutput(V, "<span class='notice'>We reappear</span>")
 
 /datum/targetable/critter/voidhount/rushdown
 	name = "Rush down"
@@ -40,6 +44,12 @@
 		var/jump_tiles = max_range
 		var/pixel_move = round((8/7)*max_range)
 		var/sleep_time = 1
+
+		if (istype(holder.owner, /mob/living/critter/voidhound))
+			var/mob/living/critter/voidhound/V = holder.owner
+			if(V.cloaked)
+				animate(V, alpha=255, time=1 SECONDS)
+				boutput(V, "<span class='notice'>We leap out of the shadows</span>")
 
 		if (istype(M.loc,/turf))
 			playsound(M.loc, "sound/voice/animal/werewolf_attack2.ogg", 50, 1, 0, 1.4)

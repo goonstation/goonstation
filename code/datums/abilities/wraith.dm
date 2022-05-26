@@ -1653,24 +1653,25 @@
 	pointCost = 0
 
 	cast(atom/target)
-		if((istype(holder.owner, /mob/wraith/wraith_trickster)) && (istype(target, /mob/wraith/wraith_trickster)))
-			var/mob/wraith/wraith_trickster/W = holder.owner
-			boutput(W, "We discard our stored appearance.")
-			W.copied_appearance = null
-
 		if (..())
 			return 1
 
-		if ((istype(holder.owner, /mob/wraith/wraith_trickster)) && (istype(target, /mob/living/carbon/human/)))
+		if(istype(holder.owner, /mob/wraith/wraith_trickster))
 			var/mob/wraith/wraith_trickster/W = holder.owner
-			boutput(holder.owner, "We steal [target]'s appearance for ourselves.")
-			W.copied_appearance = target.appearance
-			W.copied_appearance.transform.Turn(target.rest_mult * -90)	//Todo, this doesnt make corpses/people lying stand up. Come back to this.
-			W.copied_desc = target.get_desc()
-			W.backup_desc = W.desc
-			return 0
-		else
-			boutput(holder.owner, "We cannot copy this appearance")
+			if ((istype(target, /mob/living/carbon/human/)))
+				boutput(holder.owner, "We steal [target]'s appearance for ourselves.")
+				W.copied_appearance = target.appearance
+				W.copied_appearance.transform.Turn(target.rest_mult * -90)	//Todo, this doesnt make corpses/people lying stand up. Come back to this.
+				W.copied_desc = target.get_desc()
+				W.backup_desc = W.desc
+				return 0
+			else if (W.copied_appearance != null)
+				W.copied_appearance = null
+				W.copied_desc = null
+				boutput(holder.owner, "We discard our disguise.")
+			else
+				boutput(holder.owner, "We cannot copy this appearance.")
+		return 1
 
 /datum/targetable/wraithAbility/harbinger_summon
 	name = "Summon void creature"

@@ -11,11 +11,12 @@
 	can_grab = 0
 	can_disarm = 1
 	icon_state = "scuttlebot"
-	var/health_brute = 30
+	var/health_brute = 40
 	var/health_brute_vuln = 0.7
-	var/health_burn = 30
+	var/health_burn = 40
 	var/health_burn_vuln = 1
 	var/mob/wraith/master = null
+	var/cloaked = FALSE
 
 	New(var/turf/T, var/mob/wraith/M = null)
 		..(T)
@@ -27,7 +28,6 @@
 			M.summons += src
 		abilityHolder.addAbility(/datum/targetable/critter/voidhound/cloak)
 		abilityHolder.addAbility(/datum/targetable/critter/voidhount/rushdown)
-		abilityHolder.addAbility(/datum/targetable/critter/slam)
 
 	setup_hands()
 		..()
@@ -41,3 +41,18 @@
 	setup_healths()
 		add_hh_flesh(src.health_brute, src.health_brute_vuln)
 		add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
+
+	attackby(obj/item/W as obj, mob/living/user as mob)
+		if(cloaked)
+			animate(src, alpha=255, time=1 SECONDS)
+			cloaked = FALSE
+			boutput(src, "<span class='alert'>We are under attack, our disguise fails.</span>")
+		..()
+
+	attack_hand(mob/user)
+		if(cloaked)
+			animate(src, alpha=255, time=1 SECONDS)
+			cloaked = FALSE
+			boutput(src, "<span class='alert'>We reappear</span>")
+		..()
+
