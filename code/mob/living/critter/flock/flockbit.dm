@@ -33,7 +33,7 @@
 		<br><span class='bold'>ID:</span> [src.real_name]
 		<br><span class='bold'>Flock:</span> [src.flock ? src.flock.name : "none"]
 		<br><span class='bold'>System Integrity:</span> [max(0, round(src.get_health_percentage() * 100))]%
-		<br><span class='bold'>Cognition:</span> [src.dormant ? "ABSENT" : "PREDEFINED"]
+		<br><span class='bold'>Cognition:</span> [src.dormant ? "ABSENT" : src.is_npc ? "PREDEFINED" : "AWARE"]
 		<br><span class='bold'>###=-</span></span>"}
 
 /mob/living/critter/flock/bit/Life(datum/controller/process/mobs/parent)
