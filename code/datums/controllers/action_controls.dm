@@ -420,8 +420,11 @@ var/datum/action_controller/actions
 
 	onStart()
 		..()
-		if(icon && icon_state && owner)
-			icon_image = image(icon, border ,icon_state, 10)
+		if (icon && owner)
+			if(icon_state)
+				icon_image = image(icon, border, icon_state, 10)
+			else
+				icon_image = image(icon, border, layer = 10)
 			icon_image.pixel_y = icon_y_off
 			icon_image.pixel_x = icon_x_off
 			icon_image.plane = icon_plane
