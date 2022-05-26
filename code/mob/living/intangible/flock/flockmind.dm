@@ -90,6 +90,7 @@
 	src.addAbility(/datum/targetable/flockmindAbility/deconstruct)
 
 /mob/living/intangible/flock/flockmind/death(gibbed, suicide = FALSE)
+	. = ..()
 	if(src.client)
 		if (!suicide)
 			boutput(src, "<span class='alert'>With no drones left in your Flock, nothing is left to compute your consciousness. You abruptly cease to exist.</span>")

@@ -92,6 +92,7 @@
 		src.death()
 
 /mob/living/intangible/flock/trace/death(gibbed, suicide = FALSE)
+	. = ..()
 	if(src.client)
 		if (suicide)
 			flock_speak(null, "Flocktrace [src.real_name] relinquishes their computational designation and reintegrates themselves back into the Flock.", src.flock)

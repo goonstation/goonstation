@@ -1276,14 +1276,13 @@
 							admessage += "<b> ([T.x],[T.y],[T.z])</b>"
 						message_admins(admessage)
 						//World announcement.
-						if(station_or_ship() == "ship")
-							command_alert("The ship's self-destruct sequence has been activated, please evacuate the ship or abort the sequence as soon as possible. Detonation in T-[src.time] seconds", "Self-Destruct Activated", alert_origin = ALERT_STATION)
+						if (src.z == Z_LEVEL_STATION)
+							command_alert("The [station_or_ship()]'s self-destruct sequence has been activated at coordinates (<b>X</b>: [src.x], <b>Y</b>: [src.y], <b>Z</b>: [src.z]), please evacuate the [station_or_ship()] or abort the sequence as soon as possible. Detonation in T-[src.time] seconds", "Self-Destruct Activated", alert_origin = ALERT_STATION)
 							playsound_global(world, "sound/machines/engine_alert2.ogg", 40)
-							return
-						if(station_or_ship() == "station")
-							command_alert("The station's self-destruct sequence has been activated, please evacuate the station or abort the sequence as soon as possible. Detonation in T-[src.time] seconds", "Self-Destruct Activated", alert_origin = ALERT_STATION)
-							playsound_global(world, "sound/machines/engine_alert2.ogg", 40)
-							return
+						else
+							command_alert("A nuclear charge at [get_area(src)] has been activated, please stay clear or abort the sequence as soon as possible. Detonation in T-[src.time] seconds", "Nuclear Charge Activated", alert_origin = ALERT_STATION)
+							playsound_global(world, "sound/misc/airraid_loop.ogg", 25)
+						return
 					if("deact")
 						if(data["auth"] != netpass_heads)
 							src.post_status(target,"command","term_message","data","command=status&status=badauth&session=[sessionid]")

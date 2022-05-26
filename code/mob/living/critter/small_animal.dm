@@ -2851,6 +2851,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				src.setMaterial(getMaterial(pick(material_varieties)))
 
 	death(var/gibbed)
+		. = ..()
 		if (!gibbed)
 			new /obj/item/toy/figure(src.loc, info)
 			ghostize()
