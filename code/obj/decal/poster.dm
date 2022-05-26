@@ -9,7 +9,7 @@
 	density = 0
 	var/imgw = 600
 	var/imgh = 400
-	var/popup_win = 1
+	var/popup_win = 0
 	layer = EFFECTS_LAYER_BASE
 	plane = PLANE_NOSHADOW_ABOVE
 

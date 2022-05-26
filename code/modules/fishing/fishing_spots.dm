@@ -65,6 +65,18 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/red_herring = 5)
 	do_not_generate = 1
 
+/datum/fishing_spot/toilet
+	fishing_atom_type = /obj/item/storage/toilet
+	fish_available = list( /obj/item/reagent_containers/food/snacks/yuck = 20, \
+	/obj/item/reagent_containers/food/snacks/yuckburn = 20, \
+	/obj/item/reagent_containers/food/snacks/shell = 20, \
+	/obj/item/reagent_containers/food/snacks/burger/moldy = 5, \
+	/obj/item/raw_material/scrap_metal = 5, \
+	/obj/item/reagent_containers/food/snacks/fish_fingers = 10)
+
+/datum/fishing_spot/toilet/random
+	fishing_atom_type = /obj/item/storage/toilet/random
+
 /datum/fishing_spot/spatial_tear
 	fishing_atom_type = /obj/forcefield/event
 	fish_available = list(/obj/item/fish/carp = 1,\

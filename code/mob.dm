@@ -1041,6 +1041,7 @@
 		. *= max(src.pushing.p_class, 1)
 
 /mob/proc/Life(datum/controller/process/mobs/parent)
+	SHOULD_CALL_PARENT(TRUE)
 	return
 
 // for mobs without organs
@@ -1070,7 +1071,7 @@
 	if(src.pulling)
 		src.remove_pulling()
 
-	if(!can_reach(src, A))
+	if(!can_reach(src, A) || src.restrained())
 		return
 
 	pulling = A
@@ -1167,10 +1168,9 @@
 #undef CLOTHING
 #undef DAMAGE
 
-/mob/proc/death(gibbed)
-	#ifdef COMSIG_MOB_DEATH
+/mob/proc/death(gibbed = FALSE)
+	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_MOB_DEATH)
-	#endif
 	//Traitor's dead! Oh no!
 	if (src.mind && src.mind.special_role && !istype(get_area(src),/area/afterlife))
 		message_admins("<span class='alert'>Antagonist [key_name(src)] ([src.mind.special_role]) died at [log_loc(src)].</span>")

@@ -672,6 +672,7 @@
 				sleep(20 SECONDS)
 				if(HS.disposed || !HS.mind || HS.mind.disposed || isdead(HS)) // we went somewhere else, or suicided, or something idk
 					return
+				HS.UnregisterSignal(src, COMSIG_PARENT_PRE_DISPOSING) // We no longer want to disappear if the body gets del'd
 				boutput(HS, "<b class = 'hint'>We released a headspider, using up some of our DNA reserves.</b>")
 				HS.set_loc(get_turf(src)) //be free!!!
 				src.visible_message("<span class='alert'><B>[src]</B>'s head detaches, sprouts legs and wanders off looking for food!</span>")
@@ -1720,14 +1721,6 @@
 			continue
 		if (M.stat > 1 && !(M in heard_a) && !istype(M, /mob/dead/target_observer) && !(M?.client?.preferences?.local_deadchat))
 			M.show_message(rendered, 2)
-
-	//mbc FUCK why doesn't this have any parent to call
-	speech_bubble.icon_state = "speech"
-	UpdateOverlays(speech_bubble, "speech_bubble")
-	var/speech_bubble_time = src.last_typing
-	SPAWN(1.5 SECONDS)
-		if(speech_bubble_time == src.last_typing)
-			UpdateOverlays(null, "speech_bubble")
 
 /mob/living/carbon/human/var/const
 	slot_back = 1

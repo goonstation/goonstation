@@ -70985,6 +70985,14 @@
 /obj/lattice,
 /turf/unsimulated/floor/void,
 /area/diner/cow)
+"gmI" = (
+/obj/table/reinforced/auto,
+/obj/traitorifier/virtual/arcfiend,
+/turf/unsimulated/floor/setpieces/gauntlet{
+	desc = "This place is going to be a fucking mess.";
+	name = "\proper the murderbox"
+	},
+/area/sim/gunsim)
 "gmY" = (
 /obj/machinery/lawrack/syndicate,
 /turf/unsimulated/floor/darkblue,
@@ -71917,9 +71925,7 @@
 	},
 /area/titlescreen)
 "jwG" = (
-/obj/stool/chair/wooden{
-	dir = 1
-	},
+/obj/item/storage/toilet/goldentoilet/azrun,
 /turf/unsimulated/floor/caution/south,
 /area/centcom/offices/azrun)
 "jxX" = (
@@ -75297,6 +75303,13 @@
 	icon_state = "floor5"
 	},
 /area/wizard_station)
+"ssh" = (
+/obj/table/reinforced/auto,
+/turf/unsimulated/floor/setpieces/gauntlet{
+	desc = "This place is going to be a fucking mess.";
+	name = "\proper the murderbox"
+	},
+/area/sim/gunsim)
 "suO" = (
 /obj/machinery/shuttle/engine/heater{
 	dir = 1;
@@ -136202,8 +136215,8 @@ cim
 cim
 cim
 cim
-cim
 dfm
+cim
 cim
 cim
 cim
@@ -136500,12 +136513,12 @@ aaa
 aaa
 aaa
 aaa
-aaa
 cim
 cix
 ciw
 ciw
 ciw
+gmI
 clQ
 clP
 cmw
@@ -136802,11 +136815,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
 cim
 ciy
 ciw
 ckD
+ciw
 ciw
 ciw
 ciw
@@ -137104,11 +137117,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
 cim
 ciM
 ciw
 ckE
+ciw
 ciw
 ciw
 ciw
@@ -137406,12 +137419,12 @@ aaa
 aaa
 aaa
 aaa
-aaa
 cim
 ciN
 ciw
 ciw
 ciw
+ssh
 sfP
 mIR
 cmG
@@ -137708,7 +137721,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cim
 cim
 cim
 cim

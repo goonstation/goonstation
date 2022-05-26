@@ -65,6 +65,7 @@
 /mob/living/critter/mechmonstrosity/suffering
 
 	Life(datum/controller/process/mobs/parent)
+		. = ..()
 		var/speech_type = rand(1,50)
 
 		switch(speech_type)
@@ -145,6 +146,7 @@
 		add_hh_robot_burn(500, 1)
 
 	death(var/gibbed)
+		. = ..()
 		src.visible_message("<b>[src]</b> collapses into broken components...")
 		if (src.loc)
 			robogibs(src.loc)

@@ -115,6 +115,7 @@ var/HasturPresent = 0
 		add_health_holder(/datum/healthHolder/toxin)
 
 	death(var/gibbed)
+		. = ..()
 		HasturPresent = 0
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
