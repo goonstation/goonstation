@@ -755,7 +755,7 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 	gabr
 		name = "\improper Jayson Rodgers"
 		icon_state = "jaysonrodgers"
-		ckey = "Gabr"
+		ckey = "gabr"
 
 	wivernshy
 		name = "\improper Fern Baker"
@@ -765,9 +765,9 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 	kingmorshu552
 		name = "\improper David Cain"
 		icon_state = "davidcain"
-		ckey = "KingMorshu552"
+		ckey = "kingmorshu552"
 
-	Telareti
+	telareti
 		name = "\improper Gael Yamikurai"
 		icon_state = "gaelyamikurai"
 		ckey = "telareti"
@@ -775,17 +775,17 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 	averyquill
 		name = "\improper Miss Helper"
 		icon_state = "misshelper"
-		ckey = "AveryQuill"
+		ckey = "averyquill"
 
 	slashsync
 		name = "\improper Snark"
 		icon_state = "snark"
-		ckey = "SlashSync"
+		ckey = "slashsync"
 
 	zigguratx
 		name = "\improper Zoya Wagner"
 		icon_state = "zoyawagner"
-		ckey = "ZigguratX"
+		ckey = "zigguratx"
 
 /obj/item/item_box/figure_capsule
 	name = "capsule"
