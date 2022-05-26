@@ -1,5 +1,5 @@
-//For the sawfly critter itself, check sawflymisc.dm in code/obj.sawflymisc
-//
+//For the sawfly critter itself, check mob/living/critter/sawfly.dm
+//For misc things, check sawflymisc.dm in code/obj.sawflymisc
 
 /datum/aiHolder/sawfly
 
@@ -128,7 +128,7 @@
 			return
 		if (C in owncritter.friends) continue
 		if (istraitor(C) || isnukeop(C) || isspythief(C)) // frens :)
-			boutput(C, "<span class='alert'>[src]'s IFF system silently flags you as an ally! </span>")
+			boutput(C, "<span class='alert'> The sawfly's IFF system silently flags you as an ally! </span>")
 			owncritter.friends += C
 			continue
 		. += C //you passed all the checks it, now you get added to the list for consideration
@@ -169,7 +169,7 @@
 		if(istype(C, /mob/living/critter/sawfly)) continue
 		if (C in owncritter.friends) continue
 		if (istraitor(C) || isnukeop(C) || isspythief(C)) // frens :)
-			boutput(C, "<span class='alert'>[src]'s IFF system silently flags you as an ally! </span>")
+			boutput(C, "<span class='alert'> The sawfly's IFF system silently flags you as an ally! </span>")
 			owncritter.friends += C
 			continue
 		. += C //you passed all the checks it, now you get added to the list for consideration
