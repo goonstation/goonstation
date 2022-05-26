@@ -643,7 +643,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	name = "Portable Welding Fuel Tank"
 	desc = "A single transportable fuel tank, for when you're on the move."
 	category = "Basic Materials"
-	contains = list(/obj/item/reagent_containers/food/drinks/fueltank )
+	contains = list(/obj/item/reagent_containers/food/drinks/fueltank)
 	cost = 1000
 	containertype = /obj/storage/crate
 	containername = "Portable Welding Tank Crate"
