@@ -20,3 +20,8 @@
 #define FLOCK_LAY_EGG_COST 100
 #define FLOCK_REPAIR_COST 10
 #define FLOCK_GHOST_DEPOSIT_AMOUNT 10
+
+// achievements
+#define FLOCK_ACHIEVEMENT_CHEAT_STRUCTURES "all_structures"
+#define FLOCK_ACHIEVEMENT_CHEAT_COMPUTE "infinite_compute"
+#define FLOCK_ACHIEVEMENT_CAGE_HUMAN "human_dissection"

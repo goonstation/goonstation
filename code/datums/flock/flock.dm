@@ -186,7 +186,7 @@
 /datum/flock/proc/total_compute()
 	. = 0
 	var/comp_provided = 0
-	if (src.hasAchieved("infinite_compute"))
+	if (src.hasAchieved(FLOCK_ACHIEVEMENT_CHEAT_COMPUTE))
 		return 1000000
 	for(var/pathkey in src.units)
 		for(var/mob/living/critter/flock/F as anything in src.units[pathkey])

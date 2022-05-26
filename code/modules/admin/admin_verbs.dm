@@ -2234,7 +2234,7 @@ var/list/fun_images = list()
 	set name = "Flock cheats"
 	set desc = "Toggle cheats on or off on a particular flock"
 
-	var/cheats = list("all_structures", "infinite_compute")
+	var/cheats = list(FLOCK_ACHIEVEMENT_CHEAT_STRUCTURES, FLOCK_ACHIEVEMENT_CHEAT_COMPUTE)
 	var/cheat = tgui_input_list(src, "Pick a cheat to enable", "Flock cheats", cheats)
 	if (!(cheat in cheats))
 		return
