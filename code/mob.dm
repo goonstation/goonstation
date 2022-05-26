@@ -195,6 +195,8 @@
 
 	var/datum/hud/render_special/render_special
 
+	var/datum/hud/parallax/parallax
+
 	// does not allow non-admins to observe them voluntarily
 	var/unobservable = 0
 
@@ -233,12 +235,14 @@
 	ailments = new
 	huds = new
 	render_special = new
+	parallax = new(src)
 	traitHolder = new(src)
 
 	if (!src.bioHolder)
 		src.bioHolder = new /datum/bioHolder(src)
 		src.initializeBioholder()
 	attach_hud(render_special)
+	attach_hud(parallax) // THE TIME IS HERE AND NOW
 
 	var/turf/T = get_turf(src)
 	var/area/AR = get_area(src)
