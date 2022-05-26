@@ -856,7 +856,7 @@ datum
 									if (T && isturf(T))
 										var/datum/effects/system/bad_smoke_spread/S = new /datum/effects/system/bad_smoke_spread/(T)
 										if (S)
-											S.set_up(5, 0, T, null, "#000000")
+											S.set_up(5, 0, T, null, "#3b3b3b")
 											S.start()
 								else
 									boutput(M, "<span class='notice'>You feel somewhat purified... but mostly just wet.</span>")

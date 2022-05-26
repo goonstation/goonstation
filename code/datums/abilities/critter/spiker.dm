@@ -77,7 +77,7 @@
 			holder.owner.canmove = 0
 			holder.owner.set_loc(MT.loc)
 			while (frenz > 0 && MT && !MT.disposed)
-				MT.setStatus("weakened", 3 SECONDS)
+				MT.setStatus("weakened", 1.5 SECONDS)
 				MT.canmove = 0
 				if (MT.loc && holder.owner.loc != MT.loc)
 					break

@@ -793,15 +793,14 @@
 		givePointsDebug()
 			src.abilityHolder.points = 99999*/
 
-
 //////////////
-// Related procs and verbs
+// Subtypes
 //////////////
 
 /mob/wraith/wraith_decay
 	name = "Plaguebringer"
 	real_name = "plaguebringer"
-	desc = "A terrifyingly bloated spirit."
+	desc = "A pestilent ghost, spreading disease wherever it goes. Just looking at it makes you queasy."
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "wraith_plague"
 
@@ -813,7 +812,7 @@
 /mob/wraith/wraith_harbinger
 	name = "Harbinger"
 	real_name = "harbinger"
-	desc = "An evil looking, regal specter."
+	desc = "An evil looking, regal specter. Usually seen commanding a horde of minions."
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "wraith_harbinger"
 
@@ -825,7 +824,7 @@
 /mob/wraith/wraith_trickster
 	name = "trickster"
 	real_name = "trickster"
-	desc = "A ghost seeking to disrupt the station with lies and deception."
+	desc = "A living shadow seeking to disrupt the station with lies and deception."
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "waith_trickster"
 	var/points_to_possess = 30	//How many points do we need to possess someone?
@@ -848,6 +847,10 @@
 			for (var/mob/living/carbon/human/H in viewers(6, src))
 				if (!H.stat && !H.bioHolder.HasEffect("revenant"))
 					possession_points ++
+
+//////////////
+// Related procs and verbs
+//////////////
 
 // i am dumb - marq
 /mob/proc/wraithize()

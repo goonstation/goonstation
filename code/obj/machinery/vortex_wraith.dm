@@ -1,7 +1,7 @@
 /obj/machinery/wraith/vortex_wraith
 	name = "Summoning portal"
 	icon = 'icons/obj/objects.dmi'
-	icon_state = "harbinger_circle-charging"
+	icon_state = "harbinger_circle_inact"
 	desc = "It hums and thrums as you stare at it. Dark shadows wieve in and out of sight within."
 	anchored = 1
 	density = 1
@@ -32,7 +32,6 @@
 			src.mob_type = mob_type_chosen
 		else	//In case we arent spawned by a wraith, or are spawned on random mode
 			src.mob_type = pick(src.default_mobs)
-		logTheThing("debug", src, null, "mob type: [src.mob_type]")
 		src.visible_message("<span class='alert'>A [src] appears into view, some shadows coalesce within!</b></span>")
 		next_growth = world.time + (30 SECONDS)
 		next_spawn = world.time + (31 SECONDS)	//Should call the first spawn check after the portal grew once.
@@ -42,7 +41,9 @@
 		if ((src.next_growth != null) && (growth < 4))	//Dont grow if we are at max level
 			if (src.next_growth < world.time)	//Growth grants us more health, spawn range, and spawn cap
 				next_growth = world.time + 15 SECONDS + (growth * 15) SECONDS	//Subsequent levels are slower
-				growth++	//Todo change sprites when the portal grows
+				if (growth == 0)
+					icon_state = "harbinger_circle"
+				growth++
 				src._health += 20
 				src.mob_value_cap += 5
 		if ((src.next_spawn != null) && (src.next_spawn < world.time))	//Spawn timer is up
@@ -69,16 +70,20 @@
 					src.visible_message("<span class='alert'><b>[src] sputters and crackles, it seems it couldnt find a spot to summon something!</b></span>")
 					return 1
 				chosen_turf = pick(eligible_turf)
-				//Todo spawn a portal effect here.
+				var/image/portalIcon = image('icons/obj/objects.dmi', chosen_turf, null, EFFECTS_LAYER_UNDER_4)
+				portalIcon.icon_state = "harbinger_portal"
+				//Todo portal doesnt appear, figure out why
+				portalIcon.alpha = 0
+				animate(portalIcon, alpha=255, time=1 SECONDS)
+				playsound(src, "sound/effects/flameswoosh.ogg" , 80, 1)
 				SPAWN(3 SECOND)
+					animate(portalIcon, alpha=0, time=1 SECONDS)
+					SPAWN(1 SECOND)
+						qdel(portalIcon)
 					if (src.random_mode)
 						src.mob_type = pick(src.default_mobs)
 					minion_value = getMobValue(src.mob_type)
-					logTheThing("debug", src, null, "mob value: [minion_value]")
-					logTheThing("debug", src, null, "mob type: [src.mob_type]")
 					if ((src.total_mob_value + minion_value) <= src.mob_value_cap)
-						logTheThing("debug", src, null, "mob type: [src.mob_type]")
-						logTheThing("debug", src, null, "chosen turf: [chosen_turf]")
 						var/obj/minion = new src.mob_type(chosen_turf)
 						src.mob_list += minion
 						minion.alpha = 0

@@ -181,7 +181,7 @@ ABSTRACT_TYPE(/mob/living/critter/plaguerat)
 	desc = "A wretched, disgusting rat."
 	icon_state = "mediumRat"
 	amount_to_grow = 8
-	flags = DOORPASS
+	flags = TABLEPASS
 	bite_transfer_amt = 2.5
 	adultpath = /mob/living/critter/plaguerat/adult
 	health_brute = 45

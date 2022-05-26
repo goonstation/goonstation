@@ -115,11 +115,6 @@
 	if(!src.is_npc)
 		message = gradientText("#3cb5a3", "#124e43", message)
 
-/mob/living/critter/exploder/Life(datum/controller/process/mobs/parent)	//most likely not needed, maybe
-	if (..(parent)) //??
-		return 1
-
-
 /mob/living/critter/exploder/strong	//Summoned by rot hulk if we find a big pile of filth
 	name = "Huge plague-ridden goliath"
 	desc = "A rotting, walking mass of flesh."
@@ -132,14 +127,15 @@
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
-		HH.limb = new /datum/limb/brullbar
+		HH.limb = new /datum/limb/claw
 		HH.icon_state = "handl"
 		HH.limb_name = "hand"
 
 		HH = hands[2]
 		HH.icon = 'icons/mob/hud_human.dmi'
-		HH.limb = new /datum/limb/brullbar
+		HH.limb = new /datum/limb/claw
 		HH.name = "right hand"
 		HH.suffix = "-R"
 		HH.icon_state = "handr"
 		HH.limb_name = "hand"
+

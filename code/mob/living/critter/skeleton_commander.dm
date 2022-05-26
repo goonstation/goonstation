@@ -25,14 +25,13 @@
 			M.summons += src
 
 		abilityHolder.addAbility(/datum/targetable/critter/skeleton_commander/rally)
-		abilityHolder.addAbility(/datum/targetable/wrestler/strike)
 		abilityHolder.addAbility(/datum/targetable/critter/skeleton_commander/summon_lesser_skeleton)
 
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))
 			return 1
 
-		src.setStatus("slowed", 5 SECONDS)
+		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/status_slowed, src.type)
 
 	setup_healths()
 		add_hh_flesh(src.health_brute, src.health_brute_vuln)
@@ -48,17 +47,17 @@
 		HH.limb_name = "left arm"
 
 		HH = hands[2]
-		HH.icon = 'icons/mob/hud_human.dmi'
-		HH.limb = new /datum/limb/hallberd
-		HH.name = "hallberd"
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.limb = new /datum/limb/halberd
+		HH.name = "halberd"
 		HH.suffix = "-R"
-		HH.icon_state = "handr"	//Todo add special icon
-		HH.limb_name = "hallberd"
+		HH.icon_state = "halberd"
+		HH.limb_name = "halberd"
 		HH.can_hold_items = 0
 		HH.can_attack = 1
 		HH.can_range_attack = 1
 
-/datum/limb/hallberd
+/datum/limb/halberd
 
 	attack_range(atom/target, var/mob/user, params)
 
@@ -91,14 +90,14 @@
 						if(ismob(A))
 							var/mob/M = A
 							M.Attackby(user, user, params, 1)
-							M.TakeDamageAccountArmor("All", rand(6,8), 0, 0, DAMAGE_BLUNT)
+							M.TakeDamageAccountArmor("All", rand(6,8), 0, 0, DAMAGE_CUT)
 							attacked += A
 							hit = 1
 
 				if (!hit)
 					playsound(user, "sound/effects/swoosh.ogg", 50, 0)
 				else
-					playsound(user, "sound/impact_sounds/Generic_Hit_3.ogg", 50, 0)
+					playsound(user, "sound/impact_sounds/Flesh_Cut_1.ogg", 50, 0)
 				return 0
 
 			if (INTENT_GRAB)
@@ -142,8 +141,8 @@
 		var/obj/item/affecting = target.get_affecting(user)
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 6, 9, rand(5,9))
 		user.attack_effects(target, affecting)
-		var/action = pick("slashe", "stab", "pierce")
-		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target] with their [src.holder]!</span></b>"
+		var/action = pick("slashes", "stabs", "pierces")
+		msgs.base_attack_message = "<b><span class='alert'>[user] [action] [target] with their [src.holder]!</span></b>"
 		msgs.played_sound = "sound/impact_sounds/Flesh_Stab_3.ogg"
 		msgs.damage_type = DAMAGE_STAB
 		msgs.flush(SUPPRESS_LOGS)

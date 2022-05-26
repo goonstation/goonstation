@@ -21,7 +21,7 @@
 	weight = 1
 	max_dist = 9
 
-/datum/aiTask/sequence/goalbased/rushdown/New(parentHolder, transTask) //????
+/datum/aiTask/sequence/goalbased/rushdown/New(parentHolder, transTask)
 	..(parentHolder, transTask)
 	add_task(holder.get_instance(/datum/aiTask/succeedable/rushdown, list(holder)))
 
@@ -55,7 +55,7 @@
 			F.emote("scream")
 			sleep(2 SECONDS)
 			return F.gib()
-		sleep(18 DECI SECONDS)
+		sleep(25 DECI SECONDS)
 	else
 		return FALSE
 
