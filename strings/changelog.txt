@@ -1,4 +1,16 @@
 
+(t)wed may 25 22
+(u)CodeJester
+(p)8554
+(e)🗺📄|mapping, tgui
+(+)Hyposprays have a new UI menu, making it easy to administer proper doses of methamphetamine.
+(u)MomoBerry
+(p)8680
+(e)|
+(+)Adjusted the tail regrowth ability cooldown from five minutes down to two minutes.
+(t)tue may 24 22
+(u)tarmunora
+(+)burst taser has slight spread
 (t)mon may 23 22
 (u)Wisemonster
 (p)8607

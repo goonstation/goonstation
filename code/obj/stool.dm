@@ -288,7 +288,7 @@
 	icon_state = "saunabench"
 
 /* ============================================== */
-/* -------------------- Beds -------------------- */
+/* -------------------- beds -------------------- */
 /* ============================================== */
 
 /obj/stool/bed
@@ -297,7 +297,7 @@
 	icon_state = "bed"
 	anchored = 1
 	var/security = 0
-	var/obj/item/clothing/suit/bedsheet/Sheet = null
+	var/obj/item/clothing/suit/bedsheet/sheet = null
 	parts_type = /obj/item/furniture_parts/bed
 	material_amt = 0.2
 
@@ -342,7 +342,7 @@
 
 	attack_hand(mob/user as mob)
 		..()
-		if (src.Sheet)
+		if (src.sheet)
 			src.untuck_sheet(user)
 		for (var/mob/M in src.loc)
 			src.unbuckle_mob(M, user)
@@ -401,25 +401,25 @@
 			src.buckled_guy = null
 			playsound(src, "sound/misc/belt_click.ogg", 50, 1)
 
-	proc/tuck_sheet(var/obj/item/clothing/suit/bedsheet/newSheet as obj, var/mob/user as mob)
-		if (!newSheet || newSheet.cape || (src.Sheet == newSheet && newSheet.loc == src.loc)) // if we weren't provided a new bedsheet, the new bedsheet we got is tied into a cape, or the new bedsheet is actually the one we already have and is still in the same place as us...
+	proc/tuck_sheet(var/obj/item/clothing/suit/bedsheet/newsheet as obj, var/mob/user as mob)
+		if (!newsheet || newsheet.cape || (src.sheet == newsheet && newsheet.loc == src.loc)) // if we weren't provided a new bedsheet, the new bedsheet we got is tied into a cape, or the new bedsheet is actually the one we already have and is still in the same place as us...
 			return // nevermind
 
-		if (src.Sheet && src.Sheet.loc != src.loc) // a safety check: do we have a sheet and is it not where we are?
-			if (src.Sheet.Bed && src.Sheet.Bed == src) // does our sheet have us listed as its bed?
-				src.Sheet.Bed = null // set its bed to null
-			src.Sheet = null // then set our sheet to null: it's not where we are!
+		if (src.sheet && src.sheet.loc != src.loc) // a safety check: do we have a sheet and is it not where we are?
+			if (src.sheet.bed && src.sheet.bed == src) // does our sheet have us listed as its bed?
+				src.sheet.bed = null // set its bed to null
+			src.sheet = null // then set our sheet to null: it's not where we are!
 
-		if (src.Sheet && src.Sheet != newSheet) // do we have a sheet, and is the new sheet we've been given not our sheet?
-			user.show_text("You try to kinda cram [newSheet] into the edges of [src], but there's not enough room with [src.Sheet] tucked in already!", "red")
+		if (src.sheet && src.sheet != newsheet) // do we have a sheet, and is the new sheet we've been given not our sheet?
+			user.show_text("You try to kinda cram [newsheet] into the edges of [src], but there's not enough room with [src.sheet] tucked in already!", "red")
 			return // they're crappy beds, okay?  there's not enough space!
 
-		if (!src.Sheet && (newSheet.loc == src.loc || user.find_in_hand(newSheet))) // finally, do we have room for the new sheet, and is the sheet where we are or in the hand of the user?
-			src.Sheet = newSheet // let's get this shit DONE!
-			newSheet.Bed = src
-			user.u_equip(newSheet)
-			newSheet.set_loc(src.loc)
-			LAZYLISTADDUNIQUE(src.attached_objs, newSheet)
+		if (!src.sheet && (newsheet.loc == src.loc || user.find_in_hand(newsheet))) // finally, do we have room for the new sheet, and is the sheet where we are or in the hand of the user?
+			src.sheet = newsheet // let's get this shit DONE!
+			newsheet.bed = src
+			user.u_equip(newsheet)
+			newsheet.set_loc(src.loc)
+			LAZYLISTADDUNIQUE(src.attached_objs, newsheet)
 
 			var/mob/somebody
 			if (src.buckled_guy)
@@ -430,16 +430,16 @@
 				user.tri_message("<span class='notice'><b>[user]</b> tucks [somebody == user ? "[him_or_her(user)]self" : "[somebody]"] into bed.</span>",\
 				user, "<span class='notice'>You tuck [somebody == user ? "yourself" : "[somebody]"] into bed.</span>",\
 				somebody, "<span class='notice'>[somebody == user ? "You tuck yourself" : "<b>[user]</b> tucks you"] into bed.</span>")
-				newSheet.layer = EFFECTS_LAYER_BASE-1
+				newsheet.layer = EFFECTS_LAYER_BASE-1
 			else
-				user.visible_message("<span class='notice'><b>[user]</b> tucks [newSheet] into [src].</span>",\
-				"<span class='notice'>You tuck [newSheet] into [src].</span>")
+				user.visible_message("<span class='notice'><b>[user]</b> tucks [newsheet] into [src].</span>",\
+				"<span class='notice'>You tuck [newsheet] into [src].</span>")
 
 	proc/untuck_sheet(var/mob/user as mob)
-		if (!src.Sheet) // vOv
+		if (!src.sheet) // vOv
 			return // there's nothing to do here, everyone go home
 
-		var/obj/item/clothing/suit/bedsheet/oldSheet = src.Sheet
+		var/obj/item/clothing/suit/bedsheet/oldsheet = src.sheet
 
 		if (user)
 			var/mob/somebody
@@ -451,24 +451,24 @@
 				user.tri_message("<span class='notice'><b>[user]</b> untucks [somebody == user ? "[him_or_her(user)]self" : "[somebody]"] from bed.</span>",\
 				user, "<span class='notice'>You untuck [somebody == user ? "yourself" : "[somebody]"] from bed.</span>",\
 				somebody, "<span class='notice'>[somebody == user ? "You untuck yourself" : "<b>[user]</b> untucks you"] from bed.</span>")
-				oldSheet.layer = initial(oldSheet.layer)
+				oldsheet.layer = initial(oldsheet.layer)
 			else
-				user.visible_message("<span class='notice'><b>[user]</b> untucks [oldSheet] from [src].</span>",\
-				"<span class='notice'>You untuck [oldSheet] from [src].</span>")
+				user.visible_message("<span class='notice'><b>[user]</b> untucks [oldsheet] from [src].</span>",\
+				"<span class='notice'>You untuck [oldsheet] from [src].</span>")
 
-		if (oldSheet.Bed == src) // just in case it's somehow not us
-			oldSheet.Bed = null
-		mutual_detach(src, oldSheet)
-		src.Sheet = null
+		if (oldsheet.bed == src) // just in case it's somehow not us
+			oldsheet.bed = null
+		mutual_detach(src, oldsheet)
+		src.sheet = null
 
 	MouseDrop_T(atom/A as mob|obj, mob/user as mob)
 		if (BOUNDS_DIST(src, user) > 0 || A.loc != src.loc || user.restrained() || !isalive(user))
 			..()
 		else if (istype(A, /obj/item/clothing/suit/bedsheet))
-			if ((!src.Sheet || (src.Sheet && src.Sheet.loc != src.loc)) && A.loc == src.loc)
+			if ((!src.sheet || (src.sheet && src.sheet.loc != src.loc)) && A.loc == src.loc)
 				src.tuck_sheet(A, user)
 				return
-			if (src.Sheet && A == src.Sheet)
+			if (src.sheet && A == src.sheet)
 				src.untuck_sheet(user)
 				return
 
@@ -490,9 +490,9 @@
 				src.buckled_guy = null
 				M.lying = 0
 				reset_anchored(M)
-		if (src.Sheet && src.Sheet.Bed == src)
-			src.Sheet.Bed = null
-			src.Sheet = null
+		if (src.sheet && src.sheet.bed == src)
+			src.sheet.bed = null
+			src.sheet = null
 		STOP_TRACKING
 		..()
 
