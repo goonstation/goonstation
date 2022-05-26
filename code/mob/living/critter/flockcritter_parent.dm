@@ -464,6 +464,8 @@
 				if (/obj/storage/closet/flock)
 					var/obj/storage/closet/flock/closet = target
 					closet.repair()
+				else
+					return
 		var/mob/living/critter/flock/F = owner
 		F.pay_resources(FLOCK_REPAIR_COST)
 
