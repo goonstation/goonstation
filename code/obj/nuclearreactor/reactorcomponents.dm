@@ -78,7 +78,14 @@ ABSTRACT_TYPE(/obj/reactor_component)
 
 	processGas(var/datum/gas_mixture/inGas)
 		if(src.current_gas)
-			src.current_gas.temperature = src.temperature //TODO temp exchange + pressure handling
+			//heat transfer equation = hA(T2-T1)
+			//assume A = 1m^2
+			var/deltaT = src.current_gas.temperature - src.temperature
+			//heat transfer coefficient
+
+			var/hTC = TOTAL_MOLES(src.current_gas)/src.material.getProperty("density")
+			src.current_gas.temperature += 0.1*-deltaT*hTC
+			src.temperature += 0.1*deltaT*(1/hTC)
 			. = src.current_gas
 		src.current_gas = inGas.remove(R_IDEAL_GAS_EQUATION * inGas.temperature)
 
