@@ -2167,6 +2167,6 @@
 	name = "Spry"
 	desc = "You have a spring in your step."
 	icon_state = "spry"
-	maxDuration = 5 MINUTES
+	maxDuration = 3 MINUTES
 	unique = TRUE
 	movement_modifier = /datum/movement_modifier/spry

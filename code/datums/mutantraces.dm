@@ -1119,7 +1119,8 @@ TYPEINFO(/datum/mutantrace)
 /obj/item/joint_wax
 	name = "joint wax"
 	desc = "Does what it says on the tube."
-	icon_state = "amp-1"
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "joint_wax"
 	w_class = W_CLASS_SMALL
 	var/amount_left = 10
 
@@ -1133,8 +1134,11 @@ TYPEINFO(/datum/mutantrace)
 						boutput(user, "<span class='alert'>The joint wax is empty!</alert>")
 					else
 						H.changeStatus("spry", 1 MINUTE)
+						playsound(H, "sound/effects/smear.ogg", 25, 1)
 						H.visible_message("<span class='notice'>[user] applies some joint wax to [H].</notice>")
 						src.amount_left--
+						if (!src.amount_left)
+							src.icon_state = "joint_wax-empty"
 					return
 		..()
 
