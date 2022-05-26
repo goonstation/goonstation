@@ -1267,7 +1267,7 @@ TRAYS
 
 /obj/item/tongs
 	name = "tongs"
-	desc = "A device that allows you to use food items as if they were in your hand, or get food items out of food boxes."
+	desc = "A device that allows you to use food items as if they were used in-hand, or get food items out of food boxes."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "tongs"
 
