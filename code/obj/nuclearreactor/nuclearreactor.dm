@@ -15,11 +15,9 @@
 	bound_y = -64
 	anchored = 1
 	density = 1
-
+	dir = WEST
 	var/list/obj/item/reactor_component/component_grid[6][6]
 
-	New()
-		..()
 
 	process()
 		. = ..()
@@ -34,6 +32,8 @@
 
 					comp.processHeat(src.getGridNeighbors(x,y))
 					comp.processNeutrons()
+		src.network1?.update = TRUE
+		src.network2?.update = TRUE
 
 	proc/getGridNeighbors(var/x,var/y)
 		. = list()
@@ -54,7 +54,28 @@
 		else
 			. += src.component_grid[x][y+1]
 
+	//override the atmos/binary connection code, because it doesn't like big icons
+	initialize()
+		if(node1 && node2) return
 
+		var/node2_connect = dir
+		var/node1_connect = turn(dir, 180)
+
+		for(var/obj/machinery/atmospherics/target in get_step(src,node1_connect))
+			boutput(world,"[src] node1 [target] init dir: [target.initialize_directions ] get_dir: [src.dir]")
+			if(target.initialize_directions & src.dir)
+				if(target != src)
+					node1 = target
+					break
+
+		for(var/obj/machinery/atmospherics/target in get_step(src,node2_connect))
+			boutput(world,"[src] node1 [target] init dir: [target.initialize_directions ] get_dir: [src.dir]")
+			if(target.initialize_directions & src.dir)
+				if(target != src)
+					node2 = target
+					break
+
+		UpdateIcon()
 
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
