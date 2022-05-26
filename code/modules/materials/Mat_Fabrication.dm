@@ -48,6 +48,14 @@
 	/datum/matfab_recipe/mining_mod_conc,
 	/datum/matfab_recipe/spacesuit)
 
+/obj/machinery/nanofab/nuclear
+	name = "Nano-fabricator (Nuclear)"
+	color = "#094721"
+	blueprints = list(/datum/matfab_recipe/nuclear/gas_channel,
+	/datum/matfab_recipe/nuclear/heat_exchanger,
+	/datum/matfab_recipe/nuclear/control_rod,
+	/datum/matfab_recipe/nuclear/fuel_rod)
+
 /obj/machinery/nanofab/prototype
 	name = "Nano-fabricator (Protoype)"
 	color = "#496ba3"

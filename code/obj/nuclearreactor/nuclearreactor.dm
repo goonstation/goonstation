@@ -18,7 +18,6 @@
 	dir = WEST
 	var/list/obj/item/reactor_component/component_grid[6][6]
 
-
 	process()
 		. = ..()
 		var/datum/gas_mixture/gas_input = air1
@@ -26,12 +25,18 @@
 		for(var/x=1 to 6)
 			for(var/y=1 to 6)
 				if(src.component_grid[x][y])
+					//flow gas through components
 					var/obj/item/reactor_component/comp = src.component_grid[x][y]
 					var/datum/gas_mixture/gas = comp.processGas(gas_input)
 					if(gas) gas_output.merge(gas)
 
+					//balance heat between components
 					comp.processHeat(src.getGridNeighbors(x,y))
+
+					//calculate neutron flux
 					comp.processNeutrons()
+
+
 		src.network1?.update = TRUE
 		src.network2?.update = TRUE
 
@@ -62,14 +67,12 @@
 		var/node1_connect = turn(dir, 180)
 
 		for(var/obj/machinery/atmospherics/target in get_step(src,node1_connect))
-			boutput(world,"[src] node1 [target] init dir: [target.initialize_directions ] get_dir: [src.dir]")
 			if(target.initialize_directions & src.dir)
 				if(target != src)
 					node1 = target
 					break
 
 		for(var/obj/machinery/atmospherics/target in get_step(src,node2_connect))
-			boutput(world,"[src] node1 [target] init dir: [target.initialize_directions ] get_dir: [src.dir]")
 			if(target.initialize_directions & src.dir)
 				if(target != src)
 					node2 = target

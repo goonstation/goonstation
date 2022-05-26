@@ -833,6 +833,10 @@
 /obj/machinery/atmospherics/binary/nuclear_reactor,
 /turf/simulated/floor/black,
 /area/space)
+"Hh" = (
+/obj/machinery/nanofab/nuclear,
+/turf/simulated/floor/black,
+/area/space)
 "HG" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe{
 	dir = 1
@@ -47596,7 +47600,7 @@ RE
 Yq
 NG
 Yq
-Yq
+Hh
 Lg
 aa
 aa
