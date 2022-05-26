@@ -300,8 +300,10 @@
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 	var/obj/item/beaker = null
 	var/list/whitelist = list()
+	var/list/injector_whitelist = list()
 	var/emagged = 0
 	var/patch_box = 1
+	var/injector_box = 1
 	var/pill_bottle = 1
 	var/output_target = null
 
@@ -309,6 +311,9 @@
 		..()
 		if (!src.emagged && islist(chem_whitelist) && length(chem_whitelist))
 			src.whitelist = chem_whitelist
+			src.injector_whitelist = chem_whitelist
+			src.injector_whitelist += list("atropine", "calomel", "heparin", "proconvertin", "filgrastim", "lexorin",\
+											"haloperidol", "strange_reagent", "water", "sugar")
 		output_target = src.loc
 
 	ex_act(severity)
@@ -528,6 +533,95 @@
 			src.updateUsrDialog()
 			return
 
+		else if (href_list["createautoinjector"])
+			var/default = R.get_master_reagent_name()
+
+			var/input_name = input(usr, "Name the auto-injector:", "Name", default) as null|text
+			if(input_name && input_name != default)
+				phrase_log.log_phrase("auto-injector", input_name, no_duplicates=TRUE)
+			var/injectorname = copytext(html_encode(input_name), 1, 32)
+
+			if (!length(injectorname) || injectorname == " " || !src.beaker || !R || BOUNDS_DIST(usr, src) > 0)
+				return
+
+			var/labellist = list("orange", "red", "blue", "green", "yellow", "purple", "black", "white")
+			var/input_design = tgui_input_list(usr, "Select label color", "Label colors", labellist )
+			if (isnull(input_design))
+				return
+
+			if(!src.check_injector_whitelist(R))
+				boutput(usr, "[src] stopped working. Seems like it doesnt want to put the chemicals into an auto-injector?")
+				return
+
+			var/obj/item/reagent_containers/emergency_injector/I
+			I = new/obj/item/reagent_containers/emergency_injector(src.output_target)
+			I.label = input_design;
+			R.trans_to(I,10)
+			I.name = "emergency auto-injector ([injectorname])"
+
+			src.updateUsrDialog()
+			logTheThing("combat",usr,null,"used the [src.name] to create a auto-injector named [injectorname] containing [log_reagents(I)] at log_loc[src].")
+			return
+
+		else if (href_list["multiautoinjector"])
+			var/default = R.get_master_reagent_name()
+
+			var/input_name = input(usr, "Name the auto-injector:", "Name", default) as null|text
+			if(input_name && input_name != default)
+				phrase_log.log_phrase("auto-injector", input_name, no_duplicates=TRUE)
+			var/injectorname = copytext(html_encode(input_name), 1, 32)
+
+			if (!src.beaker || !R || BOUNDS_DIST(usr, src) > 0 || !length(injectorname) || injectorname == " ")
+				return
+
+			var/injectorvol = input(usr, "Volume of chemical per auto-injector: (Min/Max 5/10):", "Volume", 5) as null|num
+			if (!injectorvol || !isnum_safe(injectorvol))
+				return
+			injectorvol = clamp(injectorvol, 5, 10)
+			var/injectorcount = round(R.total_volume / injectorvol)
+
+			if(!injectorcount)
+				boutput(usr, "[src] makes a weird grinding noise. That can't be good.")
+				return
+
+			var/labellist = list("orange", "red", "blue", "green", "yellow", "purple", "black", "white")
+			var/input_design = tgui_input_list(usr, "Select label color", "Label colors", labellist )
+
+			if (isnull(input_design))
+				return
+
+			if(!src.check_injector_whitelist(R))
+				boutput(usr, "[src] stopped working. Seems like it doesnt want to put the chemicals into an auto-injector?")
+				return
+
+			var/use_box = src.injector_box
+			if(injectorcount>20)
+				use_box = 1
+			logTheThing("combat",usr,null,"used the [src.name] to create [injectorcount] auto-injector named [injectorname] containing [log_reagents(R)] at log_loc[src].")
+			var/injectorloc = src.output_target
+			if(use_box)
+				var/obj/item/item_box/B = new /obj/item/item_box(src.output_target)
+				B.item_amount = 0
+				B.contained_item = /obj/item/reagent_containers/emergency_injector
+				B.name = "box of [injectorname] emergency auto-injectors"
+				injectorloc = B
+
+			for(var/iterator=injectorcount, iterator>0; iterator--)
+				var/obj/item/reagent_containers/emergency_injector/I
+				I = new/obj/item/reagent_containers/emergency_injector(injectorloc)
+				I.label = input_design;
+				R.trans_to(I,injectorvol)
+				I.name = "emergency auto-injector ([injectorname])"
+
+			src.updateUsrDialog()
+			return
+
+
+		else if (href_list["toggleinjectorbox"])
+			src.injector_box = !src.injector_box
+			src.updateUsrDialog()
+			return
+
 		else if (href_list["createampoule"])
 			var/input_name = input(usr, "Name the ampoule:", "Name", R.get_master_reagent_name()) as null|text
 			var/ampoulename = copytext(html_encode(input_name), 1, 32)
@@ -631,6 +725,8 @@
 				dat += "<A href='?src=\ref[src];createcan=1'>Create can (50 units max)</A><BR>"
 				dat += "<A href='?src=\ref[src];createpatch=1'>Create patch (30 units max)</A><BR>"
 				dat += "<A href='?src=\ref[src];multipatch=1'>Create multiple patches (5 units min)</A> Box: <A href='?src=\ref[src];togglepatchbox=1'>[src.patch_box ? "Yes" : "No"]</A><BR>"
+				dat += "<A href='?src=\ref[src];createautoinjector=1'>Create emergeny auto-injector (10 units max)</A><BR>"
+				dat += "<A href='?src=\ref[src];multiautoinjector=1'>Create multiple emergeny auto-injectors (5 units min)</A>  Box: <A href='?src=\ref[src];toggleinjectorbox=1'>[src.injector_box ? "Yes" : "No"]</A><BR>"
 				dat += "<A href='?src=\ref[src];createampoule=1'>Create ampoule (5 units max)</A>"
 		user.Browse("<TITLE>CheMaster 3000</TITLE>CheMaster menu:<BR><BR>[dat]", "window=chem_master;size=575x400;title=CheMaster 3000")
 		onclose(user, "chem_master")
@@ -650,6 +746,14 @@
 		if (user)
 			user.show_text("[src]'s safeties have been reactivated.", "blue")
 		src.emagged = 0
+		return 1
+
+	proc/check_injector_whitelist(var/datum/reagents/R)
+		if (src.emagged || !R || !src.injector_whitelist || (islist(src.injector_whitelist) && !length(src.injector_whitelist)))
+			return 1
+		for (var/reagent_id in R.reagent_list)
+			if (!src.injector_whitelist.Find(reagent_id))
+				return 0
 		return 1
 
 	proc/check_whitelist(var/datum/reagents/R)

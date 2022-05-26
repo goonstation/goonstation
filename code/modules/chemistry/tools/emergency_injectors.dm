@@ -23,6 +23,10 @@
 		..()
 		src.UpdateIcon()
 
+	New()
+		..()
+		src.UpdateIcon()
+
 	update_icon()
 		src.underlays = null
 		if (reagents.total_volume)
