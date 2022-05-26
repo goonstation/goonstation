@@ -474,6 +474,8 @@ TRAYS
 			. += "There's [(src.amount > 0) ? src.amount : "no" ] [src.contained_food_name][s_es(src.amount)] in [src]."
 
 	attackby(obj/item/W as obj, mob/user as mob)
+		if (istype(W, /obj/item/tongs))
+			return src.Attackhand(user)
 		if(src.amount >= src.max_amount)
 			boutput(user, "You can't fit anything else in [src]!")
 			return
@@ -1262,3 +1264,11 @@ TRAYS
 				else
 					sleep(0.2 SECONDS)
 			return
+
+/obj/item/tongs
+	name = "tongs"
+	desc = "A device that allows you to use food items as if they were in your hand, or get food items out of food boxes."
+	icon = 'icons/obj/kitchen.dmi'
+	icon_state = "tongs"
+
+	// used in attackby procs of /obj/item/reagent_containers/food/snacks and /obj/item/kitchen/food_box
