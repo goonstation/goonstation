@@ -1,22 +1,8 @@
 import { Window } from '../layouts';
 import { useBackend } from '../backend';
 import { Button, Section, Box, Stack } from '../components';
-
-const randInt = (a, b) => {
-  const min = b > a ? a : b;
-  const max = b > a ? b : a;
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-};
-
-const glitches = ['$', '{', ']', '%', '^', '?', '>', '¬', 'π', ';', 'и', 'ю', '/', '#', '~'];
-const glitch = (text, amount) => {
-  const chars = text.split('');
-  for (let i = 0; i < amount; i++) {
-    const charIndex = randInt(0, chars.length);
-    chars[charIndex] = glitches[randInt(0, glitches.length - 1)];
-  }
-  return chars.join('');
-};
+import { randInt } from './common/mathUtils';
+import { glitch } from './common/stringUtils';
 
 const generate_kill = (number) => {
   let out = [];
