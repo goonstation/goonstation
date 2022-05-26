@@ -1529,3 +1529,20 @@ datum
 			fluid_g = 220
 			fluid_b = 200
 			transparency = 230
+
+		medical/prion_G127 // cures kuru
+			name = "prion G127"
+			id = "prion_G127"
+			description = "A protein of prions that can cure kuru."
+			reagent_state = LIQUID
+			fluid_r = 251
+			fluid_g = 72
+			fluid_b = 196
+
+			on_mob_life(var/mob/living/M, var/mult = 1)
+				if(!M) M = holder.my_atom
+				for(var/datum/ailment_data/disease/virus in M.ailments)
+					if(probmult(10) && istype(virus.master,/datum/ailment/disease/kuru))
+						M.cure_disease(virus)
+				..()
+				return
