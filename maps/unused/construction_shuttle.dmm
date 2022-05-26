@@ -796,7 +796,7 @@
 /turf/simulated/floor/black,
 /area/space)
 "FS" = (
-/obj/machinery/nuclear_reactor,
+/obj/machinery/atmospherics/binary/nuclear_reactor,
 /turf/simulated/floor/black,
 /area/space)
 "HG" = (

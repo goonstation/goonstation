@@ -5,48 +5,6 @@ import { useLocalState } from '../backend';
 import { Divider, Flex, Stack } from '../components';
 import { capitalize, pluralize } from './common/stringUtils';
 
-const ReactorComponentEntry = (props) => {
-  const {
-    product: {
-      name,
-      cost,
-      img,
-    },
-    disabled,
-    onClick,
-  } = props;
-
-  return (
-    <>
-      <Flex direction="row" align="center">
-        <Flex.Item>
-          <img
-            src={`data:image/png;base64,${img}`}
-            style={{
-              'vertical-align': 'middle',
-              'horizontal-align': 'middle',
-            }}
-          />
-        </Flex.Item>
-        <Flex.Item grow={1}>
-          <Box bold>
-            {capitalize(name)}
-          </Box>
-          <Box>
-            {`Cost: ${cost} ${pluralize('Unit', cost)}`}
-          </Box>
-        </Flex.Item>
-        <Flex.Item>
-          <Button onClick={onClick} disabled={disabled}>
-            Create
-          </Button>
-        </Flex.Item>
-      </Flex>
-      <Divider />
-    </>
-  );
-};
-
 const ReactorRow = (shape) => {
   const {
     onClick,
@@ -73,12 +31,13 @@ const ReactorRow = (shape) => {
         }
         else
         {
-          const { x, y, name, img } = c;
+          const { x, y, name, img, temp } = c;
           return (
             <Table.Cell>
               <Button
                 key={name}
                 fluid
+                tooltip={temp}
                 onClick={() => onClick('slot', { "x": x, "y": y })}
                 height={5}
                 weidth={5}>

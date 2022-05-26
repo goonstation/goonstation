@@ -12,7 +12,7 @@ ABSTRACT_TYPE(/obj/reactor_component)
 
 	var/icon_state_inserted = "component_cap"
 	var/ui_image = null
-	var/temperature = 293 //room temp kelvin as default
+	var/temperature = T20C //room temp kelvin as default
 	_max_health = 100
 
 	var/static/list/ui_image_base64_cache = list()
@@ -29,10 +29,23 @@ ABSTRACT_TYPE(/obj/reactor_component)
 			src.ui_image = icon2base64(dummy_icon)
 			ui_image_base64_cache[src.type] = src.ui_image
 
-	proc/processGas(var/inGas)
-		return inGas //most components won't touch gas
+	proc/processGas(var/datum/gas_mixture/inGas)
+		return null //most components won't touch gas
 
-	proc/processHeat(var/list/adjacentComponents)
+	proc/processHeat(var/list/obj/item/reactor_component/adjacentComponents)
+		for(var/obj/item/reactor_component/RC in adjacentComponents)
+			if(isnull(RC))
+				continue
+			//heat transfer equation = hA(T2-T1)
+			//assume A = 1m^2
+			var/deltaT = RC.temperature - src.temperature
+			//heat transfer coefficient
+			var/hTC = RC.material.getProperty("density")/src.material.getProperty("density")
+			RC.temperature += 0.1*-deltaT*hTC
+			src.temperature += 0.1*deltaT*(1/hTC)
+
+			RC.material.triggerTemp(RC,RC.temperature)
+			src.material.triggerTemp(src,src.temperature)
 		return 0
 
 	proc/processNeutrons(var/list/inNeutrons)
@@ -61,3 +74,12 @@ ABSTRACT_TYPE(/obj/reactor_component)
 /obj/item/reactor_component/gas_channel
 	name = "gas channel"
 	desc = "A gas channel component for a nuclear reactor"
+	var/datum/gas_mixture/current_gas
+
+	processGas(var/datum/gas_mixture/inGas)
+		if(src.current_gas)
+			src.current_gas.temperature = src.temperature //TODO temp exchange + pressure handling
+			. = src.current_gas
+		src.current_gas = inGas.remove(R_IDEAL_GAS_EQUATION * inGas.temperature)
+
+

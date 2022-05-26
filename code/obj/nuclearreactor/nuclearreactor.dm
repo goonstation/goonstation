@@ -2,7 +2,7 @@
 // Defintion for the nuclear reactor engine
 /////////////////////////////////////////////////////////////////
 
-/obj/machinery/nuclear_reactor
+/obj/machinery/atmospherics/binary/nuclear_reactor
 	name = "Model NTBMK Nuclear Reactor"
 	desc = "A nuclear reactor vessel, with slots for fuel rods and other components. Hey wait, didn't one of these explode once?"
 	icon = 'icons/misc/nuclearreactor.dmi'
@@ -23,13 +23,37 @@
 
 	process()
 		. = ..()
-		for(var/i=1 to 6)
-			for(var/j=1 to 6)
-				if(src.component_grid[i][j])
-					var/obj/item/reactor_component/comp = src.component_grid[i][j]
-					comp.processGas()
-					comp.processHeat()
+		var/datum/gas_mixture/gas_input = air1
+		var/datum/gas_mixture/gas_output = air2
+		for(var/x=1 to 6)
+			for(var/y=1 to 6)
+				if(src.component_grid[x][y])
+					var/obj/item/reactor_component/comp = src.component_grid[x][y]
+					var/datum/gas_mixture/gas = comp.processGas(gas_input)
+					if(gas) gas_output.merge(gas)
+
+					comp.processHeat(src.getGridNeighbors(x,y))
 					comp.processNeutrons()
+
+	proc/getGridNeighbors(var/x,var/y)
+		. = list()
+		if(x-1 < 1)
+			. += null
+		else
+			. += src.component_grid[x-1][y]
+		if(x+1 > length(src.component_grid))
+			. += null
+		else
+			. += src.component_grid[x+1][y]
+		if(y-1 < 1)
+			. += null
+		else
+			. += src.component_grid[x][y-1]
+		if(y+1 > length(src.component_grid[1]))
+			. += null
+		else
+			. += src.component_grid[x][y+1]
+
 
 
 	ui_interact(mob/user, datum/tgui/ui)
@@ -46,15 +70,16 @@
 
 	ui_data()
 		var/comps[6][6]
-		for(var/i=1 to 6)
-			for(var/j=1 to 6)
-				if(src.component_grid[i][j])
-					var/obj/item/reactor_component/comp = src.component_grid[i][j]
-					comps[i][j]=list(
-							"x" = i,
-							"y" = j,
+		for(var/x=1 to 6)
+			for(var/y=1 to 6)
+				if(src.component_grid[x][y])
+					var/obj/item/reactor_component/comp = src.component_grid[x][y]
+					comps[x][y]=list(
+							"x" = x,
+							"y" = y,
 							"name" = comp.name,
 							"img" = comp.ui_image,
+							"temp" = comp.temperature
 						)
 
 		. = list(
@@ -68,14 +93,14 @@
 
 		switch(action)
 			if("slot")
-				var/i = params["x"]
-				var/j = params["y"]
-				if(src.component_grid[i][j])
+				var/x = params["x"]
+				var/y = params["y"]
+				if(src.component_grid[x][y])
 					if(issilicon(ui.user))
-						boutput(ui.user,"Your clunky robot hands can't grip the [src.component_grid[i][j]]!")
+						boutput(ui.user,"Your clunky robot hands can't grip the [src.component_grid[x][y]]!")
 						return
-					ui.user.visible_message("<span class='alert'>[ui.user] starts removing a [component_grid[i][j]]!</span>", "<span class='alert'>You start removing the [component_grid[i][j]]!</span>")
-					var/datum/action/bar/icon/callback/A = new(ui.user, src, 5 SECONDS, .proc/remove_comp_callback, list(i,j,ui.user), component_grid[i][j].icon, component_grid[i][j].icon_state,\
+					ui.user.visible_message("<span class='alert'>[ui.user] starts removing a [component_grid[x][y]]!</span>", "<span class='alert'>You start removing the [component_grid[x][y]]!</span>")
+					var/datum/action/bar/icon/callback/A = new(ui.user, src, 5 SECONDS, .proc/remove_comp_callback, list(x,y,ui.user), component_grid[x][y].icon, component_grid[x][y].icon_state,\
 					"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 					A.maximum_range=3
 					actions.start(A,ui.user)
@@ -90,7 +115,7 @@
 						return
 
 					ui.user.visible_message("<span class='alert'>[ui.user] starts inserting \a [equipped]!</span>", "<span class='alert'>You start inserting the [equipped]!</span>")
-					var/datum/action/bar/icon/callback/A = new(ui.user, src, 5 SECONDS, .proc/insert_comp_callback, list(i,j,ui.user,equipped), ui.user.equipped().icon, ui.user.equipped().icon_state, \
+					var/datum/action/bar/icon/callback/A = new(ui.user, src, 5 SECONDS, .proc/insert_comp_callback, list(x,y,ui.user,equipped), ui.user.equipped().icon, ui.user.equipped().icon_state, \
 					"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 					A.maximum_range=3
 					actions.start(A,ui.user)
