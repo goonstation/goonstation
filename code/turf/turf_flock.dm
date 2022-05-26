@@ -49,6 +49,9 @@
 	// do not call parent, this is not an ordinary floor
 	if(!C || !user)
 		return
+	if (istype(C, /obj/item/grab))
+		grab_smash(C, user)
+		return
 	if(ispryingtool(C) && src.broken)
 		playsound(src, "sound/items/Crowbar.ogg", 80, 1)
 		src.break_tile_to_plating()
