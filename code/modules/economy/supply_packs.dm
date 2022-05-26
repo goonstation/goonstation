@@ -294,7 +294,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/crate
 	containername = "Station Pressurization Crate"
 
-/datum/supply_packs/Disposal_Pipe_Cart
+/datum/supply_packs/disposal_pipe_cart
 	name = "Disposal Pipe Dispenser Cart"
 	desc = "Has a pesky staff assistant stolen your cart?"
 	category = "Engineering Department"
@@ -303,7 +303,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/crate
 	containername = "Replacement Disposal Cart Crate"
 
-/datum/supply_packs/Gas_Filtration
+/datum/supply_packs/gas_filtration
 	name = "Gas Filtration Machinery"
 	desc = "A two-piece set consisting of a Portable Air Pump and a Portable Air Scrubber."
 	category = "Engineering Department"
