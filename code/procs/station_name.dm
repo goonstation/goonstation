@@ -42,7 +42,7 @@ var/global/lastStationNameChange = 0 //timestamp
 		return station_or_ship
 	if (map_settings)
 		station_or_ship = map_settings.style
-	else if (ismap("DESTINY") || ismap("CLARION"))
+	else if (ismap("DESTINY") || ismap("CLARION") || ismap("HORIZON") || ismap("ATLAS"))
 		station_or_ship = "ship"
 	else
 		station_or_ship = "station"
