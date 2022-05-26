@@ -409,7 +409,7 @@ var/datum/action_controller/actions
 		..()
 
 /datum/action/bar/icon //Visible to everyone and has an icon.
-	var/icon
+	var/icon //! Icon to use above the bar. Can also be a mutable_appearance; pretty much anything that can be converted into an image
 	var/icon_state
 	var/icon_y_off = 30
 	var/icon_x_off = 0
