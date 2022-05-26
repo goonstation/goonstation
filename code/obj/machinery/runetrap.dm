@@ -63,7 +63,7 @@
 		..()
 		if(!src.armed)
 			return 1
-		if(ismob(A))
+		if(ismob(A) && !istype(A, /mob/living/critter/trickster_puppet) && !istype(A, /mob/wraith))
 			var/mob/M = A
 			if(checkRun(M))
 				if(M.reagents)
@@ -83,7 +83,7 @@
 		..()
 		if(!src.armed)
 			return 1
-		if(ismob(A))
+		if(ismob(A) && !istype(A, /mob/living/critter/trickster_puppet) && !istype(A, /mob/wraith))
 			var/mob/M = A
 			if(checkRun(M))
 				M.changeStatus("drowsy", 30 SECONDS)
@@ -102,7 +102,7 @@
 		..()
 		if(!src.armed)
 			return 1
-		if(ismob(A))
+		if(ismob(A) && !istype(A, /mob/living/critter/trickster_puppet) && !istype(A, /mob/wraith))
 			var/mob/M = A
 			if(checkRun(M))
 				flashpowder_reaction(get_turf(src), 40)
@@ -118,7 +118,7 @@
 		..()
 		if(!src.armed)
 			return 1
-		if(ismob(A))
+		if(ismob(A) && !istype(A, /mob/living/critter/trickster_puppet) && !istype(A, /mob/wraith))
 			var/mob/M = A
 			if(checkRun(M))
 				var/turf/T = get_turf(M)
@@ -137,7 +137,7 @@
 		..()
 		if(!src.armed)
 			return 1
-		if(ismob(A))
+		if(ismob(A) && !istype(A, /mob/living/critter/trickster_puppet) && !istype(A, /mob/wraith))
 			var/mob/M = A
 			if(checkRun(M))
 				for (var/mob/H in range(4, src))
@@ -153,7 +153,7 @@
 		..()
 		if(!src.armed)
 			return 1
-		if(ismob(A))
+		if(ismob(A) && !istype(A, /mob/living/critter/trickster_puppet) && !istype(A, /mob/wraith))
 			var/mob/M = A
 			if(checkRun(M))
 				fireflash(M, 1, TRUE)
@@ -168,7 +168,7 @@
 		..()
 		if(!src.armed)
 			return 1
-		if(ismob(A))
+		if(ismob(A) && !istype(A, /mob/living/critter/trickster_puppet) && !istype(A, /mob/wraith))
 			var/mob/M = A
 			if(checkRun(M))
 				var/telerange = 5
@@ -197,7 +197,7 @@
 		..()
 		if(!src.armed)
 			return 1
-		if(ismob(A))
+		if(ismob(A) && !istype(A, /mob/living/critter/trickster_puppet) && !istype(A, /mob/wraith))
 			var/mob/M = A
 			if(checkRun(M))
 				src.visible_message("<span class='alert>[M] steps on [src] and triggers it! You hear a buzzing sound!</span>")
@@ -212,7 +212,7 @@
 		..()
 		if(!src.armed)
 			return 1
-		if(ismob(A))
+		if(ismob(A) && !istype(A, /mob/living/critter/trickster_puppet) && !istype(A, /mob/wraith))
 			var/mob/M = A
 			if(checkRun(M))
 				src.visible_message("<span class='alert>[M] steps on [src] and triggers it! You can hear a slippery sound!</span>")

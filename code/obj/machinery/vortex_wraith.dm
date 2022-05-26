@@ -73,11 +73,11 @@
 				var/image/portalIcon = image('icons/obj/objects.dmi', chosen_turf, null, EFFECTS_LAYER_UNDER_4)
 				portalIcon.icon_state = "harbinger_portal"
 				//Todo portal doesnt appear, figure out why
-				portalIcon.alpha = 0
-				animate(portalIcon, alpha=255, time=1 SECONDS)
+	//			portalIcon.alpha = 0
+	//			animate(portalIcon, alpha=255, time=1 SECONDS)
 				playsound(src, "sound/effects/flameswoosh.ogg" , 80, 1)
 				SPAWN(3 SECOND)
-					animate(portalIcon, alpha=0, time=1 SECONDS)
+	//				animate(portalIcon, alpha=0, time=1 SECONDS)
 					SPAWN(1 SECOND)
 						qdel(portalIcon)
 					if (src.random_mode)

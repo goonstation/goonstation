@@ -550,6 +550,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\mob\living\critter\small_animal.dm"
 #include "code\mob\living\critter\spider.dm"
 #include "code\mob\living\critter\spiker.dm"
+#include "code\mob\living\critter\trickster_puppet.dm"
 #include "code\mob\living\critter\voidhound.dm"
 #include "code\mob\living\critter\ai\aquatic.dm"
 #include "code\mob\living\critter\ai\human.dm"

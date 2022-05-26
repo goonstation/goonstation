@@ -170,7 +170,7 @@
 				if (!H.stat && !H.bioHolder.HasEffect("revenant"))
 					src.hauntBonus += 5
 					if(istype(src, /mob/wraith/wraith_trickster))
-						src.hauntBonus += 2
+						src.hauntBonus += 1
 
 		for (var/obj/machinery/wraith/vortex_wraith/V in range(8, src))
 			if (V == linked_portal)
@@ -327,17 +327,6 @@
 			return
 		health -= burn
 		health -= brute * 3
-
-		//Enough damage breaks the trickster's disguise.
-		if ((burn + brute) >= 4 && istype(src, /mob/wraith/wraith_trickster))
-			var/mob/wraith/wraith_trickster/WT = src
-			if(WT.copied_appearance != null && WT.backup_appearance != null)
-				WT.appearance = WT.backup_appearance
-				WT.copied_appearance = null
-				WT.backup_appearance = null
-				makeCorporeal()
-				APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_SPOOKY)	//Dumb hack, but it works...
-				REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src)
 
 		health = min(max_health, health)
 		if (src.health <= 0)
@@ -826,8 +815,8 @@
 	real_name = "trickster"
 	desc = "A living shadow seeking to disrupt the station with lies and deception."
 	icon = 'icons/mob/mob.dmi'
-	icon_state = "waith_trickster"
-	var/points_to_possess = 30	//How many points do we need to possess someone?
+	icon_state = "wraith_trickster"
+	var/points_to_possess = 50	//How many points do we need to possess someone?
 	var/possession_points = 0	//How many do we currently have?
 	var/mutable_appearance/copied_appearance = null	//Steal someone's appearance and use it during haunt
 	var/mutable_appearance/backup_appearance = null

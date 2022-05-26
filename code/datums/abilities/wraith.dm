@@ -73,7 +73,7 @@
 			border_state = "plague_frame"
 		else if (istype(holder.owner, /mob/wraith/wraith_harbinger))
 			border_state = "harbinger_frame"
-		else if (istype(holder.owner, /mob/wraith/wraith_trickster))
+		else if (istype(holder.owner, /mob/wraith/wraith_trickster) || istype(holder.owner, /mob/living/critter/trickster_puppet))
 			border_state = "trickster_frame"
 
 		var/atom/movable/screen/ability/topBar/B = src.object
@@ -533,10 +533,16 @@
 	pointCost = 0
 	cooldown = 30 SECONDS
 	min_req_dist = INFINITY
+	start_on_cooldown = 1
 
 	cast()
 		if (..())
 			return 1
+
+		if(istype(holder.owner, /mob/living/critter/trickster_puppet))
+			var/mob/living/critter/trickster_puppet/P = holder.owner
+			P.demanifest()
+			return 0
 
 		var/mob/wraith/K = src.holder.owner
 		if (K.density)
@@ -558,17 +564,16 @@
 			if ((istype(W, /mob/wraith/wraith_trickster)))	//Trickster can appear as a human, living or dead.
 				var/mob/wraith/wraith_trickster/T = holder.owner
 				if (T.copied_appearance != null)
-					T.backup_appearance = new/mutable_appearance(T)
-					T.appearance = T.copied_appearance	//Appearance might make us dense already. So we cant use the W.haunt() proc
-					T.desc = T.copied_desc
-					usr.playsound_local(usr.loc, "sound/voice/wraith/wraithhaunt.ogg", 80, 0)
-					animate(T, alpha=255, time=2 SECONDS)
-					if (!T.density)
-						T.set_density(1)
-					REMOVE_ATOM_PROPERTY(T, PROP_MOB_INVISIBILITY, T)
-					T.see_invisible = INVIS_NONE
-					T.haunting = 1
-					T.flags &= !UNCRUSHABLE
+					var/mob/living/critter/trickster_puppet/puppet = new /mob/living/critter/trickster_puppet(get_turf(T), T)
+					T.mind.transfer_to(puppet)
+					puppet.appearance = T.copied_appearance
+					puppet.desc = T.copied_desc
+					puppet.traps_laid = T.traps_laid
+					puppet.playsound_local(puppet.loc, "sound/voice/wraith/wraithhaunt.ogg", 80, 0)
+					puppet.alpha = 0
+					animate(puppet, alpha=255, time=2 SECONDS)
+					puppet.flags &= !UNCRUSHABLE
+					T.set_loc(puppet)
 					return 0
 
 			//check done in case a poltergeist uses this from within their master.
@@ -1369,7 +1374,7 @@
 						has_mind = true
 					W.mind.transfer_to(H)
 					APPLY_ATOM_PROPERTY(H, PROP_MOB_NO_SELF_HARM, H)	//Subject to change.
-					sleep(70 SECONDS)
+					sleep(45 SECONDS)
 					boutput(H, "<span class='bold' style='color:red;font-size:150%'>Your control on this body is weakening, you will soon be kicked out of it.</span>")
 					sleep(20 SECONDS)
 					boutput(H, "<span class='bold' style='color:red;font-size:150%'>Your hold on this body has been broken! You return to the aether.</span>")
@@ -1431,7 +1436,7 @@
 	var/list/sound_list = list("Death gasp",
 	"Gasp",
 	"Gunshot",
-	"AK47",
+	"AK477",
 	"Csaber unsheathe",
 	"Csaber attack",
 	"Shotgun",
@@ -1453,12 +1458,12 @@
 				sound_choice = "sound/voice/death_[rand(1, 2)].ogg"
 			if("Revolver")
 				sound_choice = "sound/weapons/Gunshot.ogg"
-			if("AK47")
+			if("AK477")
 				sound_choice = "sound/weapons/ak47shot.ogg"
 				playsound(target, sound_choice, 70, 0)
-				sleep(3 DECI SECONDS)
+				sleep(2 DECI SECONDS)
 				playsound(target, sound_choice, 70, 0)
-				sleep(3 DECI SECONDS)
+				sleep(2 DECI SECONDS)
 				playsound(target, sound_choice, 70, 0)
 				boutput(holder.owner, "You use your powers to create a sound.")
 				return 0
@@ -1492,7 +1497,7 @@
 	pointCost = 50
 	targeted = 0
 	cooldown = 30 SECONDS
-	var/max_traps = 2
+	var/max_traps = 7
 	var/list/trap_types = list("Madness",
 	"Burning",
 	"Teleporting",
@@ -1505,13 +1510,19 @@
 		if (..())
 			return 1
 
-		if (!istype(holder.owner, /mob/wraith/wraith_trickster))
+		if (!istype(holder.owner, /mob/wraith/wraith_trickster) && !istype(holder.owner, /mob/living/critter/trickster_puppet))
 			boutput(holder.owner, "<span class='notice'>You cannot cast this under your current form.</span>")
 			return 1
-		var/mob/wraith/wraith_trickster/W = holder.owner
-		if (!W.haunting)
-			boutput(holder.owner, "<span class='notice'>You must be manifested to place a trap!</span>")
-			return 1
+
+		var/mob/wraith/wraith_trickster/W = null
+		var/mob/living/critter/trickster_puppet/P = null
+		if(istype(holder.owner, /mob/wraith/wraith_trickster))
+			W = holder.owner
+			if (!W.haunting)
+				boutput(holder.owner, "<span class='notice'>You must be manifested to place a trap!</span>")
+				return 1
+		else
+			P = holder.owner
 		var/trap_choice = null
 		var/turf/T = get_turf(holder.owner)
 		if (!isturf(T) || !istype(T,/turf/simulated/floor))
@@ -1520,7 +1531,7 @@
 		for (var/obj/machinery/wraith/runetrap/R in range(T, 3))
 			boutput(holder.owner, "<span class='notice'>That is too close to another trap.</span>")
 			return 1
-		if (W.traps_laid >= max_traps)
+		if ((W != null && W.traps_laid >= max_traps) || (P != null && P.traps_laid >= max_traps))
 			boutput(holder.owner, "<span class='notice'>You already have too many traps!</span>")
 			return 1
 		if (length(src.trap_types) > 1)
@@ -1543,8 +1554,13 @@
 			if("Sleepyness")
 				trap_choice = /obj/machinery/wraith/runetrap/sleepyness
 
-		new trap_choice(T, W)
-		W.traps_laid++
+		if(P != null)
+			new trap_choice(T, P.master)
+			P.master.traps_laid++
+			P.traps_laid++
+		else
+			new trap_choice(T, W)
+			W.traps_laid++
 		boutput(holder.owner, "You place a trap on the floor, it begins to charge up.")
 		return 0
 
@@ -1637,22 +1653,22 @@
 	pointCost = 0
 
 	cast(atom/target)
+		if((istype(holder.owner, /mob/wraith/wraith_trickster)) && (istype(target, /mob/wraith/wraith_trickster)))
+			var/mob/wraith/wraith_trickster/W = holder.owner
+			boutput(W, "We discard our stored appearance.")
+			W.copied_appearance = null
+
 		if (..())
 			return 1
 
 		if ((istype(holder.owner, /mob/wraith/wraith_trickster)) && (istype(target, /mob/living/carbon/human/)))
 			var/mob/wraith/wraith_trickster/W = holder.owner
 			boutput(holder.owner, "We steal [target]'s appearance for ourselves.")
-			W.copied_appearance = new/mutable_appearance(target)
-			W.copied_appearance.transform = null	//Reset the transform so people lying when copied will be standing up. Living corpses!
-			W.copied_appearance.alpha = 0
+			W.copied_appearance = target.appearance
+			W.copied_appearance.transform.Turn(target.rest_mult * -90)	//Todo, this doesnt make corpses/people lying stand up. Come back to this.
 			W.copied_desc = target.get_desc()
 			W.backup_desc = W.desc
 			return 0
-		else if((istype(holder.owner, /mob/wraith/wraith_trickster)) && (istype(target, /mob/wraith/wraith_trickster)))
-			var/mob/wraith/wraith_trickster/W = holder.owner
-			boutput(W, "We discard our stored appearance.")
-			W.copied_appearance = null
 		else
 			boutput(holder.owner, "We cannot copy this appearance")
 
