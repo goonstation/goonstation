@@ -304,6 +304,48 @@
 			item_amount = 10
 			max_item_amount = 10
 
+	autoinjector
+		name = "box of emergency auto-injectors"
+		name = "box of patches"
+		contained_item = /obj/item/reagent_containers/emergency_injector
+		item_amount = 0
+		max_item_amount = -1
+		icon_state = "autoinjector_box"
+		icon_closed = "autoinjector_box"
+		icon_open = "autoinjector_box-orange-open"
+		icon_empty = "autoinjector_box-empty"
+		icon_closed_empty = "autoinjector_box-closed-empty"
+		var/label = "orange" // colors available as of the moment: orange, red, blue, green, yellow, purple, black, white,
+		var/icon_color = "autoinjector_box-coloring"
+		var/image/box_color
+		flags = FPRINT | TABLEPASS | EXTRADELAY
+
+		proc/build_overlay(var/datum/color/average = null) //ChemMasters provide average for medical boxes
+			var/obj/item/reagent_containers/emergency_injector/temp = src.take_from()
+			if (temp)
+				if (temp.reagents.total_volume)
+					average = temp.reagents.get_average_color()
+				else
+					return
+			else if (!average)
+				return
+			if (!src.box_color)
+				src.box_color = image('icons/obj/items/storage.dmi', icon_color, -1)
+			average.a = 255;
+			src.box_color.color = average.to_rgba()
+			src.UpdateOverlays(src.box_color, "reagentcolour")
+
+		New()
+			..()
+			build_overlay()
+		big
+			icon_state = "autoinjector_box-big"
+			icon_closed = "autoinjector_box-big"
+			icon_open = "autoinjector_box-big-orange-open"
+			icon_empty = "autoinjector_box-big-empty"
+			icon_closed_empty = "autoinjector_box-big-closed-empty"
+			icon_color = "autoinjector_box-big-coloring"
+			max_item_amount = 3
 	pens
 		name = "box of pens"
 		contained_item = /obj/item/pen

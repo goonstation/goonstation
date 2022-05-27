@@ -300,7 +300,6 @@
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 	var/obj/item/beaker = null
 	var/list/whitelist = list()
-	var/list/injector_whitelist = list()
 	var/emagged = 0
 	var/patch_box = 1
 	var/injector_box = 1
@@ -311,9 +310,6 @@
 		..()
 		if (!src.emagged && islist(chem_whitelist) && length(chem_whitelist))
 			src.whitelist = chem_whitelist
-			src.injector_whitelist = chem_whitelist
-			src.injector_whitelist += list("atropine", "calomel", "heparin", "proconvertin", "filgrastim", "lexorin",\
-											"haloperidol", "strange_reagent", "water", "sugar")
 		output_target = src.loc
 
 	ex_act(severity)
@@ -549,7 +545,7 @@
 			if (isnull(input_design))
 				return
 
-			if(!src.check_injector_whitelist(R))
+			if(!src.check_whitelist(R))
 				boutput(usr, "[src] stopped working. Seems like it doesnt want to put the chemicals into an auto-injector?")
 				return
 
@@ -590,21 +586,29 @@
 			if (isnull(input_design))
 				return
 
-			if(!src.check_injector_whitelist(R))
+			if(!src.check_whitelist(R))
 				boutput(usr, "[src] stopped working. Seems like it doesnt want to put the chemicals into an auto-injector?")
 				return
 
 			var/use_box = src.injector_box
-			if(injectorcount>20)
+			if(injectorcount>20 && use_box == 0)
 				use_box = 1
 			logTheThing("combat",usr,null,"used the [src.name] to create [injectorcount] auto-injector named [injectorname] containing [log_reagents(R)] at log_loc[src].")
 			var/injectorloc = src.output_target
-			if(use_box)
-				var/obj/item/item_box/B = new /obj/item/item_box(src.output_target)
-				B.item_amount = 0
-				B.contained_item = /obj/item/reagent_containers/emergency_injector
-				B.name = "box of [injectorname] emergency auto-injectors"
+			if(use_box == 1)
+				var/obj/item/item_box/autoinjector/big/B = new /obj/item/item_box/autoinjector/big(src.output_target)
+				B.name = "big box of [injectorname] emergency auto-injectors"
+				B.icon_open = "autoinjector_box-big-[input_design]-open"
+				B.build_overlay(average = R.get_average_color())
 				injectorloc = B
+			else if(use_box == 2)
+				var/obj/item/item_box/autoinjector/B = new /obj/item/item_box/autoinjector(src.output_target)
+				B.name = "box of [injectorname] emergency auto-injectors"
+				B.icon_open = "autoinjector_box-[input_design]-open"
+				B.build_overlay(average = R.get_average_color())
+				injectorloc = B
+				if(injectorcount>3)
+					injectorcount = 3
 
 			for(var/iterator=injectorcount, iterator>0; iterator--)
 				var/obj/item/reagent_containers/emergency_injector/I
@@ -618,7 +622,9 @@
 
 
 		else if (href_list["toggleinjectorbox"])
-			src.injector_box = !src.injector_box
+			src.injector_box += 1
+			if(src.injector_box > 2)
+				src.injector_box = 0
 			src.updateUsrDialog()
 			return
 
@@ -726,7 +732,7 @@
 				dat += "<A href='?src=\ref[src];createpatch=1'>Create patch (30 units max)</A><BR>"
 				dat += "<A href='?src=\ref[src];multipatch=1'>Create multiple patches (5 units min)</A> Box: <A href='?src=\ref[src];togglepatchbox=1'>[src.patch_box ? "Yes" : "No"]</A><BR>"
 				dat += "<A href='?src=\ref[src];createautoinjector=1'>Create emergeny auto-injector (10 units max)</A><BR>"
-				dat += "<A href='?src=\ref[src];multiautoinjector=1'>Create multiple emergeny auto-injectors (5 units min)</A>  Box: <A href='?src=\ref[src];toggleinjectorbox=1'>[src.injector_box ? "Yes" : "No"]</A><BR>"
+				dat += "<A href='?src=\ref[src];multiautoinjector=1'>Create multiple emergeny auto-injectors (5 units min)</A>  Box: <A href='?src=\ref[src];toggleinjectorbox=1'>[src.injector_box==1 ? "Yes (Big)" : (src.injector_box==2 ? "Yes (Small)" : "No")]</A><BR>"
 				dat += "<A href='?src=\ref[src];createampoule=1'>Create ampoule (5 units max)</A>"
 		user.Browse("<TITLE>CheMaster 3000</TITLE>CheMaster menu:<BR><BR>[dat]", "window=chem_master;size=575x400;title=CheMaster 3000")
 		onclose(user, "chem_master")
@@ -746,14 +752,6 @@
 		if (user)
 			user.show_text("[src]'s safeties have been reactivated.", "blue")
 		src.emagged = 0
-		return 1
-
-	proc/check_injector_whitelist(var/datum/reagents/R)
-		if (src.emagged || !R || !src.injector_whitelist || (islist(src.injector_whitelist) && !length(src.injector_whitelist)))
-			return 1
-		for (var/reagent_id in R.reagent_list)
-			if (!src.injector_whitelist.Find(reagent_id))
-				return 0
 		return 1
 
 	proc/check_whitelist(var/datum/reagents/R)
