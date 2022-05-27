@@ -445,7 +445,7 @@
 	proc/unstack(var/mob/user)
 		var/obj/item/reagent_containers/food/snacks/cake/s = new /obj/item/reagent_containers/food/snacks/cake
 
-		src.reagents.trans_to(s,(src.reagents.total_volume/3))
+		src.reagents.trans_to(s,(src.reagents.total_volume/src.clayer))
 		for(var/food_effect in src.food_effects)
 			s.food_effects |= food_effect
 		s.quality = src.quality
