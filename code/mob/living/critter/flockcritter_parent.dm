@@ -59,6 +59,7 @@
 	setMaterial(getMaterial("gnesis"))
 	src.material.setProperty("reflective", 45)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT, src, 100)
+	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 	src.see_invisible = INVIS_CLOAK
 
 	// do not automatically set up a flock if one is not provided
