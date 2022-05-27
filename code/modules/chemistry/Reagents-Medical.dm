@@ -1530,10 +1530,10 @@ datum
 			fluid_b = 200
 			transparency = 230
 
-		medical/prion_G127 // cures kuru
-			name = "prion G127"
-			id = "prion_G127"
-			description = "A protein of prions that can cure kuru."
+		medical/enzyme_G127 // cures kuru
+			name = "enzyme G127"
+			id = "enzyme_G127"
+			description = "An enzyme that can cure kuru."
 			reagent_state = LIQUID
 			fluid_r = 251
 			fluid_g = 72

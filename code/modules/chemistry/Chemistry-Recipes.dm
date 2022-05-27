@@ -4112,10 +4112,10 @@ datum
 			required_reagents = list("poor_cement" = 1, "silicon_dioxide" = 5, "water" = 1)
 			result_amount = 7
 
-		prion_G127
-			name = "prion G127"
-			id = "prion_G127"
-			result = "prion_G127"
-			mix_phrase = "The proteins in the mixture mutate!"
+		enzyme_G127
+			name = "enzyme G127"
+			id = "enzyme_G127"
+			result = "enzyme_G127"
+			mix_phrase = "The enzymes in the mixture mutate!"
 			required_reagents = list("dna_mutagen" = 1, "prions" = 1, "mannitol" = 1, "epinephrine" = 1, "diethylamine" = 1)
 			result_amount = 1

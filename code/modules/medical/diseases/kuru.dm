@@ -1,7 +1,7 @@
 /datum/ailment/disease/kuru
 	name = "Space Kuru"
 	max_stages = 4
-	cure = "Prion G127"
+	cure = "Enzyme G127"
 	associated_reagent = "prions"
 	affected_species = list("Human")
 
