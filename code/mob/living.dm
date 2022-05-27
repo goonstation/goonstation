@@ -1985,12 +1985,12 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	else
 		shock_damage = 1 * prot
 
-	if (H)
-		for (var/uid in H.pathogens)
-			var/datum/pathogen/P = H.pathogens[uid]
-			shock_damage = P.onshocked(shock_damage, wattage)
-			if (!shock_damage)
-				return 0
+	//if (H)
+		//for (var/uid in H.pathogens)
+			//var/datum/pathogen/P = H.pathogens[uid]
+			//shock_damage = P.onshocked(shock_damage, wattage)
+			//if (!shock_damage)
+				//return 0
 
 	if (src.bioHolder.HasEffect("resist_electric_heal"))
 		var/healing = 0

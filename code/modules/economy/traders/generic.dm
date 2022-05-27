@@ -97,7 +97,7 @@
 	price_boundary = list(250, 1000)
 	possible_names = list("We found a few stowaway monkeys on our ship. Feel free to take them off our hands.",
 	"We seem to have a simian situation, and are selling them for a cheap price.")
-
+/*
 /datum/commodity/trader/synthmodule
 	comname = "Synth-O-Matic module"
 	comtype = /obj/item/synthmodule
@@ -145,7 +145,7 @@
 /datum/commodity/trader/synthmodule/radiation
 	comname = "Synth-O-Matic irradiation module"
 	comtype = /obj/item/synthmodule/radiation
-
+*/
 /datum/commodity/trader/speedmodule
 	comname = "Cloning upgrade system"
 	comtype = /obj/item/cloneModule/speedyclone

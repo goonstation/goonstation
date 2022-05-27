@@ -2364,6 +2364,7 @@
 */
 
 /// pathology
+/*
 /datum/commodity/synthmodule
 	comname = "Synth-O-Matic module"
 	comtype = /obj/item/synthmodule
@@ -2413,7 +2414,7 @@
 /datum/commodity/synthmodule/radiation
 	comname = "Synth-O-Matic irradiation module"
 	comtype = /obj/item/synthmodule/radiation
-
+*/
 /datum/commodity/pathogensample
 	comname = "Pathogen sample"
 	comtype = /obj/item/reagent_containers/glass/vial/prepared

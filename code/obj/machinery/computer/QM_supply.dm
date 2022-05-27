@@ -18,7 +18,7 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 				// gonna be real here it seems more useful to have the oft-used stuff at the top.
 				//global.QM_CategoryList.Insert(1,S.category) //So Misc. is not #1, reverse ordering.
 
-/datum/cdc_contact_analysis
+/*/datum/cdc_contact_analysis
 	var/uid = 0
 	var/time_factor = 0
 	var/time_done = 0
@@ -111,7 +111,7 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 
 var/global/datum/cdc_contact_controller/QM_CDC = new()
-
+*/
 /obj/machinery/computer/supplycomp
 	name = "Quartermaster's Console"
 	icon = 'icons/obj/computer.dmi'
@@ -414,7 +414,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	return "?src=\ref[src]&action=[action][subaction ? "&subaction=[subaction]" : ""]&[extra && islist(extra) ? list2params(extra) : ""]"
 
 
-/obj/machinery/computer/supplycomp/proc/set_cdc()
+/*/obj/machinery/computer/supplycomp/proc/set_cdc()
 	src.temp = "<h2>Center for Disease Control</h2>"
 	src.temp += "<I>Greetings, [station_name]; how can we help you today?</I><br><br>"
 
@@ -463,7 +463,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 		src.temp += "We have no pathogen samples from your station that we can cure, yet.<br>"
 	src.temp += "<br>"
 	src.temp += "<A href='[topicLink("mainmenu")]'>Main Menu</A>"
-
+*/
 
 /obj/machinery/computer/supplycomp/proc
 
@@ -693,7 +693,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 					</table>
 						"}
 
-		if ("contact_cdc")
+		/*if ("contact_cdc")
 			if (signal_loss >= 75)
 				boutput(usr, "<span class='alert'>Severe signal interference is preventing contact with the CDC.</span>")
 				return
@@ -789,7 +789,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 					QM_CDC.batches_left = count
 
 			set_cdc()
-
+		*/
 		if ("trader_list")
 			if (!shippingmarket.active_traders.len)
 				boutput(usr, "<span class='alert'>No traders detected in communications range.</span>")

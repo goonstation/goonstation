@@ -1,4 +1,4 @@
-/proc/generate_cold_pathogen()
+/*/proc/generate_cold_pathogen()
 	var/datum/pathogen/P = new /datum/pathogen
 	P.forced_microbody = /datum/microbody/virus
 	P.curable_by_suppression = 7
@@ -23,3 +23,4 @@
 	P.setup(2, null, 0)
 	P.add_symptom(pathogen_controller.path_to_symptom[/datum/pathogeneffects/malevolent/indigestion])
 	return P
+*/

@@ -5,7 +5,7 @@
 	desc = "A large machine that can be used to separate a pathogen sample from a blood sample."
 	anchored = 1
 	density = 1
-
+	/*
 	var/obj/item/bloodslide/source = null
 	var/datum/pathogen/isolated = null
 	var/obj/item/reagent_containers/glass/petridish/target = null
@@ -190,13 +190,13 @@
 			src.isolated = null
 			src.on = 0
 			src.icon_state = "centrifuge0"
-
+	*/
 /obj/machinery/microscope
 	name = "Microscope"
 	icon = 'icons/obj/pathology.dmi'
 	icon_state = "microscope0"
 	desc = "A device which provides a magnified view of a culture in a petri dish."
-
+	/*
 	var/obj/item/target = null
 
 	var/list/symptom_action_out = new/list()
@@ -370,7 +370,8 @@
 									src.symptom_action_out += a_out
 									SPAWN(10 SECONDS) // 100
 										src.symptom_action_out -= a_out
-
+	*/
+/*
 #define PATHOGEN_MANIPULATOR_STATE_MAIN 0
 #define PATHOGEN_MANIPULATOR_STATE_LOADER 1
 #define PATHOGEN_MANIPULATOR_STATE_MANIPULATE 2
@@ -383,7 +384,7 @@
 #define PA_SUCCESS 	1
 #define PA_UNKNOWN 	2
 #define PA_FAIL 	4
-
+*/
 
 
 /datum/pathobank
@@ -397,6 +398,7 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "pathology"
 	desc = "A bulky machine used to control the pathogen manipulator."
+	/*
 	var/obj/machinery/pathogen_manipulator/manip = null
 
 	var/datum/pathobank/db = new
@@ -1029,7 +1031,7 @@
 #undef PA_SUCCESS
 #undef PA_UNKNOWN
 #undef PA_FAIL
-
+*/
 /obj/machinery/pathogen_manipulator
 	name = "Pathogen Manipulator"
 	icon = 'icons/obj/pathology.dmi'
@@ -1037,7 +1039,7 @@
 	desc = "A large, softly humming machine."
 	density = 1
 	anchored = 1
-
+/*
 	var/machine_state = 0
 
 	var/sel_target_lptr = 1 //Starting index of selected target sequence
@@ -1126,8 +1128,8 @@
 #undef PATHOGEN_MANIPULATOR_STATE_MANIPULATE
 #undef PATHOGEN_MANIPULATOR_STATE_SPLICE
 #undef PATHOGEN_MANIPULATOR_STATE_SPLICING_SESSION
-
-/obj/item/synthmodule
+*/
+/*/obj/item/synthmodule
 	name = "Synth-O-Matic module"
 	desc = "A module that integrates with a Synth-O-Matic machine."
 	icon = 'icons/obj/pathology.dmi'
@@ -1190,7 +1192,7 @@
 	name = "Synth-O-Matic Irradiation module"
 	desc = "A module that allows the Synth-O-Matic to generate cure through irradiation, instead of chemicals."
 	id = "radiation"
-
+*/
 /obj/machinery/synthomatic
 	name = "Synth-O-Matic 6.5.535"
 	desc = "The leading technological assistant in synthesizing cure for certain pathogens."
@@ -1198,7 +1200,7 @@
 	icon_state = "synth1"
 	density = 1
 	anchored = 1
-
+/*
 	var/list/obj/item/reagent_containers/glass/vial/vials[5]
 	var/obj/item/reagent_containers/glass/beaker/antiagent = null
 	var/obj/item/reagent_containers/glass/beaker/suppressant = null
@@ -1642,7 +1644,7 @@
 		for (var/i = 1, i <= (has_module("upgrade") ? 4 : 1), i++)
 			new/obj/item/serum_injector(src.loc, P, is_cure, use_antiagent ? 0 : 1)
 
-
+*/
 /obj/machinery/autoclave
 	name = "Autoclave"
 	desc = "A bulky machine used for sanitizing pathogen growth equipment."
@@ -1650,6 +1652,7 @@
 	icon_state = "autoclave"
 	density = 1
 	anchored = 1
+/*
 	var/obj/item/reagent_containers/glass/sanitizing = null
 	var/machine_state = 0
 	var/santime = 3 // 15
@@ -1702,7 +1705,7 @@
 			machine_state = 1
 			for (var/mob/M in range(7))
 				boutput(M, "<span class='notice'>The machine steams up and begins cleaning.</span>")
-
+*/
 /obj/machinery/vending/pathology
 	name = "Path-o-Matic"
 	desc = "Pathology equipment dispenser."
@@ -1712,7 +1715,7 @@
 	icon_off = "med-off"
 	icon_broken = "med-broken"
 	icon_fallen = "med-fallen"
-
+/*
 	New()
 		..()
 		//Products
@@ -1729,7 +1732,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/beaker/biocides, 20)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/beaker/inhibitor, 20)
 		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/healthanalyzer, 4)
-
+*/
 /obj/machinery/incubator
 	name = "Incubator"
 	icon = 'icons/obj/pathology.dmi'
@@ -1738,6 +1741,7 @@
 	desc = "A machine that can automatically provide a petri dish with nutrients. It can also directly fill vials with a sample of the pathogen inside."
 	anchored = 1
 	density = 1
+/*
 	var/obj/item/reagent_containers/glass/petridish/target = null
 	var/medium = null
 
@@ -1798,3 +1802,4 @@
 		if(src.target)
 			if (src.target.reagents.has_reagent("pathogen"))
 				. += "<br>The petri dish inside contains [src.target.reagents.reagent_list["pathogen"].volume] units of pathogen."
+*/

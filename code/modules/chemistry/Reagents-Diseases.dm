@@ -480,7 +480,7 @@ datum
 			transparency = 255
 
 		// Marquesas' one stop pathology shop
-		blood/pathogen
+		/*blood/pathogen
 			name = "pathogen"
 			id = "pathogen"
 			description = "A liquid sample of one (or multiple) pathogens."
@@ -499,7 +499,7 @@ datum
 				. = ..()
 				// sure just fucking splash around in the stuff
 				// this is mainly so puddles from the sweating symptom can infect
-				for (var/uid in src.pathogens)
+				/*for (var/uid in src.pathogens)
 					var/datum/pathogen/P = src.pathogens[uid]
 					logTheThing("pathology", M, null, "is splashed with [src] containing pathogen [P].")
 					if(istype(M, /mob/living/carbon/human))
@@ -508,10 +508,11 @@ datum
 							if(H.infected(P))
 								H.show_message("<span class='alert'>Ew, some of that disgusting green stuff touched you!</span>")
 				return
-
+				*/
 			on_plant_life(var/obj/machinery/plantpot/P)
 				return
-
+				*/
+/*
 		antiviral
 			name = "Viral Serum"
 			id = "antiviral"
@@ -553,3 +554,4 @@ datum
 			description = "A solution encouraging the growth of fungi."
 			reagent_state = 2
 			pathogen_nutrition = list("water", "sugar", "sodium", "iron", "nitrogen")
+*/

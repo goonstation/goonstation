@@ -3625,8 +3625,8 @@ var/global/noir = 0
 						src.s_respawn()
 					if("randomevents")
 						random_events.event_config()
-					if("pathology")
-						pathogen_controller.cdc_main(src)
+					//if("pathology")
+						//pathogen_controller.cdc_main(src)
 					if("motives")
 						simsController.showControls(usr)
 					if("artifacts")
@@ -3697,7 +3697,7 @@ var/global/noir = 0
 			else
 				tgui_alert(usr,"You cannot perform this action. You must be of a higher administrative rank!")
 
-		if ("view_logs_pathology_strain")
+		/*if ("view_logs_pathology_strain")
 			if (src.level >= LEVEL_MOD)
 				var/gettxt
 				if (href_list["presearch"])
@@ -3707,7 +3707,7 @@ var/global/noir = 0
 
 				var/adminLogHtml = get_log_data_html("pathology", gettxt, src)
 				usr.Browse(adminLogHtml, "window=pathology_log;size=750x500")
-
+			*/
 		if ("s_rez")
 			if (src.level >= LEVEL_PA)
 				switch(href_list["type"])

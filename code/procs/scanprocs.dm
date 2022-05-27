@@ -147,11 +147,11 @@
 			var/mob/living/carbon/human/H = M
 			if (H.pathogens.len)
 				pathogen_data = "<span class='alert'>Scans indicate the presence of [H.pathogens.len > 1 ? "[H.pathogens.len] " : null]pathogenic bodies.</span>"
-				for (var/uid in H.pathogens)
-					var/datum/pathogen/P = H.pathogens[uid]
-					pathogen_data += "<br>&emsp;<span class='alert'>Strain [P.name] seems to be in stage [P.stage]. Suggested suppressant: [P.suppressant.therapy].</span>."
-					if (P.in_remission)
-						pathogen_data += "<br>&emsp;&emsp;<span class='alert'>It appears to be in remission.</span>."
+				//for (var/uid in H.pathogens)
+					//var/datum/pathogen/P = H.pathogens[uid]
+					//pathogen_data += "<br>&emsp;<span class='alert'>Strain [P.name] seems to be in stage [P.stage]. Suggested suppressant: [P.suppressant.therapy].</span>."
+					//if (P.in_remission)
+						//pathogen_data += "<br>&emsp;&emsp;<span class='alert'>It appears to be in remission.</span>."
 
 			if (H.get_organ("brain"))
 				if (H.get_brain_damage() >= 100)

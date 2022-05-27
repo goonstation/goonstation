@@ -292,20 +292,20 @@
 
 	New()
 		..()
-		#ifdef CREATE_PATHOGENS // PATHOLOGY REMOVAL
-		wrap_pathogen(reagents, generate_flu_pathogen(), 7)
-		wrap_pathogen(reagents, generate_cold_pathogen(), 8)
-		#endif
+		//#ifdef CREATE_PATHOGENS // PATHOLOGY REMOVAL
+		//wrap_pathogen(reagents, generate_flu_pathogen(), 7)
+		//wrap_pathogen(reagents, generate_cold_pathogen(), 8)
+		//#endif
 
 	heal(var/mob/M)
-		#ifdef CREATE_PATHOGENS //PATHOLOGY REMOVAL
+		//#ifdef CREATE_PATHOGENS //PATHOLOGY REMOVAL
 		..()
-		#else
+		//#else
 		boutput(M, "<span class='alert'>Oof, how old was that?.</span>")
 		if(prob(66))
 			M.reagents.add_reagent("salmonella",15)
 		..()
-		#endif
+		//#endif
 
 /obj/item/reagent_containers/food/snacks/burger/plague
 	name = "burgle"
@@ -319,17 +319,17 @@
 
 	New()
 		..()
-		if(roundstart_pathogens)
-			wrap_pathogen(reagents, generate_random_pathogen(), 15)
+		//if(roundstart_pathogens)
+			//wrap_pathogen(reagents, generate_random_pathogen(), 15)
 
 	fishstick
 		roundstart_pathogens = 0
 		pickup(mob/user)
-			if(isadmin(user) || current_state == GAME_STATE_FINISHED)
-				wrap_pathogen(reagents, generate_random_pathogen(), 15)
-			else
-				boutput(user, "<span class='notice'>You feel that it was too soon for this...</span>")
-			. = ..()
+			//if(isadmin(user) || current_state == GAME_STATE_FINISHED)
+				//wrap_pathogen(reagents, generate_random_pathogen(), 15)
+			//else
+			boutput(user, "<span class='notice'>You feel that it was too soon for this...</span>")
+			..()
 
 
 /obj/item/reagent_containers/food/snacks/burger/roburger

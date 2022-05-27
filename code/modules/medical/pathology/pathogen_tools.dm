@@ -52,11 +52,11 @@
 
 	New()
 		..()
-		for (var/nutrient in pathogen_controller.nutrients)
-			nutrition += nutrient
-			nutrition[nutrient] = 0
+		//for (var/nutrient in pathogen_controller.nutrients)
+			//nutrition += nutrient
+			//nutrition[nutrient] = 0
 
-	examine()
+	/*examine()
 		if (src.dirty || src.dirty_reason)
 			. = ..()
 			. += "<span class='alert'>The petri dish appears to be incapable of growing any pathogen, and must be cleaned.</span><br/>"
@@ -76,7 +76,8 @@
 				count++
 		if (!count)
 			. += "<span class='notice'>None.</span><br/>"
-
+*/
+/*
 	afterattack(obj/target, mob/user , flag)
 		if (istype(target, /obj/machinery/microscope))
 			return
@@ -92,7 +93,8 @@
 			src.medium = null
 			ctime = 8
 			starving = 5
-
+*/
+	/*
 	process()
 		if (dirty && (src in processing_items))
 			processing_items -= src
@@ -138,14 +140,14 @@
 						src.reagents.del_reagent("pathogen")
 					src.reagents.update_total()
 					set_dirty("The pathogen in the petri dish starved to death.")
-
+	*/
 	on_reagent_change()
 		..()
 		if (reagents.total_volume < 0.5)
 			return
 		if (dirty)
 			return
-
+/*
 		// Cultivation is already in progress in this dish. Depending on what reagent(s) were introduced, the process
 		// halts, or reverses entirely.
 		if (stage > 0)
@@ -246,7 +248,7 @@
 
 	flags = TABLEPASS | CONDUCT | FPRINT | OPENCONTAINER
 
-
+	*/
 /obj/item/reagent_containers/glass/vial
 	name = "vial"
 	desc = "A vial. Can hold up to 5 units."
@@ -285,7 +287,7 @@
 	item_state = "vial"
 	var/datum/microbody/FM = null
 
-	New()
+	/*New()
 		..()
 		SPAWN(2 SECONDS)
 			#ifdef CREATE_PATHOGENS // PATHOLOGY REMOVAL
@@ -314,7 +316,8 @@
 
 /obj/item/reagent_containers/glass/vial/prepared/fungus
 	FM = /datum/microbody/fungi
-
+*/
+/*
 /obj/item/reagent_containers/glass/beaker/parasiticmedium
 	name = "Beaker of Parasitic Medium"
 	desc = "A mix of blood and flesh; fertile ground for some microbes."
@@ -334,7 +337,7 @@
 	New()
 		..()
 		src.reagents.add_reagent("egg", 50)
-
+*/
 /obj/item/reagent_containers/glass/beaker/stablemut
 	name = "Beaker of Stable Mutagen"
 	desc = "Stable Mutagen; fertile ground for some microbes."
@@ -344,7 +347,7 @@
 	New()
 		..()
 		src.reagents.add_reagent("dna_mutagen", 50)
-
+/*
 /obj/item/reagent_containers/glass/beaker/bacterial
 	name = "Beaker of Bacterial Growth Medium"
 	desc = "Bacterial Growth Medium; fertile ground for some microbes."
@@ -384,6 +387,7 @@
 	New()
 		..()
 		src.reagents.add_reagent("biocide", 50)
+
 
 /obj/item/reagent_containers/glass/beaker/spaceacillin
 	name = "Beaker of Spaceacillin"
@@ -475,7 +479,7 @@
 				icon_state = "serum0"
 				src.name = "empty [src.name]"
 				inject(user, user)
-
+*/
 /obj/item/reagent_containers/glass/beaker
 	afterattack(obj/target, mob/user , flag)
 		if (istype(target, /obj/machinery/synthomatic))

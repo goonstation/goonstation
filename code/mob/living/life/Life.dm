@@ -307,7 +307,7 @@
 		if (prob(1) && prob(5))
 			src.handle_random_emotes()
 
-	src.handle_pathogens()
+	//src.handle_pathogens()
 
 	last_human_life_tick = TIME
 
@@ -568,7 +568,7 @@
 
 /mob/living/carbon/human
 
-	proc/handle_pathogens()
+	/*proc/handle_pathogens()
 		if (isdead(src))
 			if (src.pathogens.len)
 				for (var/uid in src.pathogens)
@@ -578,7 +578,7 @@
 		for (var/uid in src.pathogens)
 			var/datum/pathogen/P = src.pathogens[uid]
 			P.disease_act()
-
+	*/
 	get_cold_protection()
 		// calculate 0-100% insulation from cold environments
 		if (!src)

@@ -358,7 +358,7 @@ datum
 
 			return amount
 
-		proc/aggregate_pathogens()
+		/*proc/aggregate_pathogens()
 			var/list/ret = list()
 			for (var/reagent_id in pathogen_controller.pathogen_affected_reagents)
 				if (src.has_reagent(reagent_id))
@@ -370,7 +370,7 @@ datum
 							ret += uid
 							ret[uid] = B.pathogens[uid]
 			return ret
-
+		*/
 		//multiplier is used to handle realtime metabolizations over byond time
 		proc/metabolize(var/mob/target, var/multiplier = 1)
 			if (islist(src.addiction_tally) && length(src.addiction_tally)) // if we got some addictions to process

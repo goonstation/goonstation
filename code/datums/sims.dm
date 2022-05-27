@@ -234,10 +234,10 @@
 
 		onDeplete()
 			holder.owner.contract_disease(/datum/ailment/disease/space_madness, null, null, 1)
-			if (ishuman(holder.owner))
-				var/mob/living/carbon/human/H = holder.owner
-				if (!H.pathogens.len)
-					holder.owner.infected(ez_pathogen(/datum/pathogeneffects/malevolent/serious_paranoia))
+			//if (ishuman(holder.owner))
+				//var/mob/living/carbon/human/H = holder.owner
+				//if (!H.pathogens.len)
+					//holder.owner.infected(ez_pathogen(/datum/pathogeneffects/malevolent/serious_paranoia))
 
 		onLife()
 			if (value < 10 && prob((10 - value) * 10))
@@ -282,10 +282,10 @@
 			*/
 			#ifdef CREATE_PATHOGENS //PATHOLOGY_REMOVAL
 			if (value < 5 && prob(1) && prob(25))
-				var/datum/pathogen/P = new /datum/pathogen
-				P.create_weak()
-				P.spread = 0
-				holder.owner.infected(P)
+				//var/datum/pathogen/P = new /datum/pathogen
+				//P.create_weak()
+				//P.spread = 0
+				//holder.owner.infected(P)
 				showOwner("<span class='alert'>You feel really sick.</span>") // in a bad way
 			#endif
 

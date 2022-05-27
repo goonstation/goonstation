@@ -64,7 +64,7 @@
 
 /mob/proc/become_statue_rock()
 	become_statue(getMaterial("rock"), "Its not too uncommon for our employees to be stoned at work but this is just ridiculous!")
-
+/*
 /proc/generate_random_pathogen()
 	var/datum/pathogen/P = new /datum/pathogen
 	P.setup(1, null, 0)
@@ -89,3 +89,4 @@
 	P.add_symptom(pathogen_controller.path_to_symptom[stype])
 	logTheThing("pathology", null, null, "Pathogen [P.name] created by quick-pathogen-proc with symptom [stype].")
 	return P
+*/

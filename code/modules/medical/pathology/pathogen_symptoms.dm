@@ -50,7 +50,7 @@ datum/pathogeneffects
 	// creates an infective cloud
 	// this should give people better feedback about how be infected and how to avoid it
 	proc/infect_cloud(var/mob/M as mob, var/datum/pathogen/origin, var/amount = 5)
-		var/turf/T = get_turf(M)
+		/*var/turf/T = get_turf(M)
 		var/obj/decal/cleanable/pathogen_cloud/D = make_cleanable(/obj/decal/cleanable/pathogen_cloud,T)
 
 		var/datum/reagent/blood/pathogen/Q = new /datum/reagent/blood/pathogen()
@@ -62,11 +62,11 @@ datum/pathogeneffects
 		D.reagents.reagent_list["pathogen"] = Q
 		Q.holder = D.reagents
 		D.reagents.update_total()
-
+*/
 	// creates an infective puddle
 	// this should give people better feedback about how be infected and how to avoid it
 	proc/infect_puddle(var/mob/M as mob, var/datum/pathogen/origin, var/amount = 5)
-		var/turf/T = get_turf(M)
+		/*var/turf/T = get_turf(M)
 		var/obj/decal/cleanable/pathogen_sweat/D = make_cleanable(/obj/decal/cleanable/pathogen_sweat,T)
 
 		var/datum/reagent/blood/pathogen/Q = new /datum/reagent/blood/pathogen()
@@ -78,14 +78,14 @@ datum/pathogeneffects
 		D.reagents.reagent_list["pathogen"] = Q
 		Q.holder = D.reagents
 		D.reagents.update_total()
-
+*/
 	// infect_direct(mob, datum/pathogen) : void
 	// This is the proc that handles direct transmission of the pathogen from one mob to another. This should be called in particular infection scenarios. For example, a sweating person
 	// gets his bodily fluids onto another when they directly disarm, punch, or grab a person.
 	// For INFECT_TOUCH diseases this is automatically called on a successful disarm, punch or grab. When overriding any of these events, use ..() to keep this behaviour.
 	// OVERRIDE: Generally, you do not need to override this.
 	proc/infect_direct(var/mob/target as mob, var/datum/pathogen/origin, contact_type = "touch")
-		if (infect_attempt_message)
+		/*if (infect_attempt_message)
 			target.show_message("<span class='alert'><B>[infect_attempt_message]</B></span>")
 		if(istype(target, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = target
@@ -95,7 +95,7 @@ datum/pathogeneffects
 						target.show_message(infect_message)
 					logTheThing("pathology", origin.infected, target, "infects [constructTarget(target,"pathology")] with [origin.name] due to symptom [name] through direct contact ([contact_type]).")
 					return 1
-
+*/
 	proc/onadd(var/datum/pathogen/origin)
 		return
 
@@ -205,7 +205,7 @@ datum/pathogeneffects
 	// OVERRIDE: A subclass is expected to override this.
 	proc/react_to(var/R, var/zoom)
 		return null
-
+/*
 datum/pathogeneffects/malevolent
 	name = "Malevolent"
 	rarity = RARITY_ABSTRACT
@@ -2207,3 +2207,4 @@ datum/pathogeneffects/malevolent/detonation
 	react_to(var/R, var/zoom)
 		if (R == "synthflesh")
 			return "There are stray synthflesh pieces all over the dish."
+*/

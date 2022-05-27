@@ -1438,7 +1438,7 @@
 	if(holder)
 		src.holder.playeropt(M)
 
-/obj/proc/addpathogens()
+/*/obj/proc/addpathogens()
 	USR_ADMIN_ONLY
 	var/obj/A = src
 	if(!A.reagents) A.create_reagents(100)
@@ -1453,7 +1453,7 @@
 	R.pathogens[P.pathogen_uid] = P
 
 	boutput(usr, "<span class='success'>Added [amount] units of pathogen to [A.name] with pathogen [P.name].</span>")
-
+*/
 /client/proc/addreagents(var/atom/A in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Add Reagent"

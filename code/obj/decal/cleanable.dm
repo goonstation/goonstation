@@ -646,7 +646,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	sample_reagent = "ketchup"
 
 
-/obj/decal/cleanable/pathogen_sweat
+/*/obj/decal/cleanable/pathogen_sweat
 	name = "weirdly colored sweat"
 	desc = "Ew, better not step in this stuff."
 	icon = 'icons/effects/blood.dmi'
@@ -690,7 +690,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 
 		if(prob(chance))
 			src.reagents.reaction(AM, INGEST)
-
+*/
 
 /obj/decal/cleanable/paper
 	name = "paper"
