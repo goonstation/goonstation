@@ -2860,15 +2860,20 @@ datum
 			// potash purifies nitrates into saltpetre
 			required_reagents = list("ammonia" = 1, "poo" = 1, "potash" = 1, "water" = 1)
 			result_amount = 2
-			instant = 0 // Potash filtering takes some time.
+			instant = 0 // Potash filtering takes time.
 			reaction_speed = 1
-			mix_phrase = "A white crystalline substance leaches into the water."
+			mix_phrase = "A putrid odor pours from the mixture as a white crystalline substance leaches into the water."
 			mix_sound = 'sound/misc/fuse.ogg'
 
-			// water byproduct
-			// some nitrification processes create additional water.
 			on_reaction(var/datum/reagents/holder, created_volume)
+				// water byproduct
+				// some nitrification processes create additional water.
 				holder.add_reagent("water", created_volume,,holder.total_temperature)
+				
+				// fake pee and nasty poo
+				// make for a stinky stew
+				var/location = get_turf(holder.my_atom)
+				location.fluid_react_single("miasma", created_volume, airborne = 1)
 
 		jenkem // moved this down so improperly mixed nutrients yield jenkem instead
 			name = "Jenkem"
