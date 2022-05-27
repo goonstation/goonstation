@@ -22,6 +22,28 @@
 // And for all:
 // RARITY_ABSTRACT: Used strictly for categorization. ABSTRACT symptoms will never appear.
 //                  ie. if lingual is a symptom category with multiple subsymptoms (for easy mutex), it should be abstract.
+
+// --SYMPTOM THREAT--
+// All symptoms are catagorized with a threat value to describe the scope of their impact.
+// Benign symptoms are negative. Malign symptoms are positive.
+// THREAT_BENETYPE2: This symptom provides significant health benefits to infected individuals.
+// THREAT_BENETYPE1: This symptom provides marginal benefits to infected individuals.
+// THREAT_NEUTRAL: The symptom causes no impactful harm or good to infected individuals.
+// THREAT_TYPE1: This symptom causes barely noticable, nonfatal harm to infected individuals. Should not affect gameplay mechanically.
+// THREAT_TYPE2: This symptom causes noticable, but nonfatal harm to infected individuals. Should not significantly impede gameplay.
+// THREAT_TYPE3: This symptom causes significant, but nonfatal harm to infected individuals. May damage the player or impede mechanical gameplay.
+// THREAT_TYPE4: This symptom causes severe and potentially fatal harm to infected individuals. Critting from full should take at least 5 minutes unattended. Short stuns are OK.
+// THREAT_TYPE5: This symptom is extremely dangerous and will certainly cause fatal harm to infected individuals. Anything that causes incapacitation goes HERE. Critting should take at least 3 minutes. Instant death and adjacent go here.
+
+#define THREAT_BENETYPE2 = -2
+#define THREAT_BENETYPE1 = -1
+#define THREAT_NEUTRAL = 0
+#define THREAT_TYPE1 = 1
+#define THREAT_TYPE2 = 2
+#define THREAT_TYPE3 = 3
+#define THREAT_TYPE4 = 4
+#define THREAT_TYPE5 = 5
+
 #define RARITY_VERY_COMMON 1
 #define RARITY_COMMON 2
 #define RARITY_UNCOMMON 3

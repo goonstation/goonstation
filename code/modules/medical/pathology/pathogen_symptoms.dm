@@ -1,164 +1,4 @@
-
-
 datum/pathogeneffects
-	var/name
-	var/desc
-	var/infect_type = 0
-
-	var/spread = SPREAD_FACE | SPREAD_BODY | SPREAD_HANDS | SPREAD_AIR
-
-	var/rarity = RARITY_ABSTRACT
-	var/infect_message = null
-	var/infect_attempt_message = null // shown to person when an attempt to directly infect them is made
-
-	var/beneficial = 0
-
-	// This is a list of mutual exclusive symptom TYPES.
-	// If this contains any symptoms, none of these symptoms will be picked upon mutation or initial raffle.
-	// Mutexes cut the ENTIRE object tree - for example, if symptoms a/b, a/c and a/d all exist, then mutexing
-	// symptom a will also mutex b, c and d.
-	var/list/mutex = list()
-
-	// A symptom might not always infect everyone around. This is a flat probability: 0 means never infect to 1 means always infect. This is checked PER MOB, not per infect call.
-	var/infection_coefficient = 1
-
-	// disease_act(mob, datum/pathogen) : void
-	// This is the center of pathogen symptoms.
-	// On every Life() tick, this will be called for every symptom attached to the pathogen. Most pathogens should express their malevolence here, unless they are specifically tailored
-	// to only work on events like human interaction or external effects. A symptom therefore should override this proc.
-	// disease_act is also responsible for handling the symptom's ability to suppress the pathogen. Check the documentation on suppression in pathogen.dm.
-	// OVERRIDE: A subclass (direct or otherwise) is expected to override this.
-	proc/disease_act(var/mob/M as mob, var/datum/pathogen/origin)
-
-	// disease_act_dead(mob, datum/pathogen) : void
-	// This functions identically to disease_act, except it is only called when the mob is dead. (disease_act is not called if that is the case.)
-	// OVERRIDE: Only override this if if it needed for the symptom.
-	proc/disease_act_dead(var/mob/M as mob, var/datum/pathogen/origin)
-
-	// does an infectious snap
-	// makes others snap, should possibly infect you in the future if you are made to snap a certain amount of times
-	proc/infect_snap(var/mob/M as mob, var/datum/pathogen/origin, var/range = 5)
-		for (var/mob/I in view(range, M.loc))
-			if (I != M && ((isturf(I.loc) && isturf(M.loc) && can_line_airborne(get_turf(M), I, 5)) || I.loc == M.loc))
-				if(istype(M, /mob/living/carbon/human))
-					var/mob/living/carbon/human/H = I
-					if(prob(100-H.get_disease_protection()))
-						SPAWN(rand(0.5,2) SECONDS)
-							H.show_message("Pretty catchy tune...")
-							H.emote("snap") // consider yourself lucky I haven't implemented snap infection yet, human
-
-	// creates an infective cloud
-	// this should give people better feedback about how be infected and how to avoid it
-	proc/infect_cloud(var/mob/M as mob, var/datum/pathogen/origin, var/amount = 5)
-		var/turf/T = get_turf(M)
-		var/obj/decal/cleanable/pathogen_cloud/D = make_cleanable(/obj/decal/cleanable/pathogen_cloud,T)
-
-		var/datum/reagent/blood/pathogen/Q = new /datum/reagent/blood/pathogen()
-		D.reagents = new /datum/reagents(amount)
-		Q.volume = amount
-		Q.pathogens += origin.pathogen_uid
-		Q.pathogens[origin.pathogen_uid] = origin
-		D.reagents.reagent_list += "pathogen"
-		D.reagents.reagent_list["pathogen"] = Q
-		Q.holder = D.reagents
-		D.reagents.update_total()
-
-	// creates an infective puddle
-	// this should give people better feedback about how be infected and how to avoid it
-	proc/infect_puddle(var/mob/M as mob, var/datum/pathogen/origin, var/amount = 5)
-		var/turf/T = get_turf(M)
-		var/obj/decal/cleanable/pathogen_sweat/D = make_cleanable(/obj/decal/cleanable/pathogen_sweat,T)
-
-		var/datum/reagent/blood/pathogen/Q = new /datum/reagent/blood/pathogen()
-		D.reagents = new /datum/reagents(amount)
-		Q.volume = amount
-		Q.pathogens += origin.pathogen_uid
-		Q.pathogens[origin.pathogen_uid] = origin
-		D.reagents.reagent_list += "pathogen"
-		D.reagents.reagent_list["pathogen"] = Q
-		Q.holder = D.reagents
-		D.reagents.update_total()
-
-	// infect_direct(mob, datum/pathogen) : void
-	// This is the proc that handles direct transmission of the pathogen from one mob to another. This should be called in particular infection scenarios. For example, a sweating person
-	// gets his bodily fluids onto another when they directly disarm, punch, or grab a person.
-	// For INFECT_TOUCH diseases this is automatically called on a successful disarm, punch or grab. When overriding any of these events, use ..() to keep this behaviour.
-	// OVERRIDE: Generally, you do not need to override this.
-	proc/infect_direct(var/mob/target as mob, var/datum/pathogen/origin, contact_type = "touch")
-		if (infect_attempt_message)
-			target.show_message("<span class='alert'><B>[infect_attempt_message]</B></span>")
-		if(istype(target, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = target
-			if(prob(100-H.get_disease_protection()))
-				if (target.infected(origin))
-					if (infect_message)
-						target.show_message(infect_message)
-					logTheThing("pathology", origin.infected, target, "infects [constructTarget(target,"pathology")] with [origin.name] due to symptom [name] through direct contact ([contact_type]).")
-					return 1
-
-	proc/onadd(var/datum/pathogen/origin)
-		return
-
-	// ====
-	// Events from this point on. Their exact behaviour is documented in pathogen.dm. Please do not add any event definitions outside this block.
-	// ondisarm(mob, mob, boolean, datum/pathogen) : float
-	// OVERRIDE: Overriding this is situational. ..() is expected to be called.
-	proc/ondisarm(var/mob/M as mob, var/mob/V as mob, isPushDown, var/datum/pathogen/origin)
-		if (infect_type == INFECT_TOUCH && prob(origin.spread*2))
-			infect_direct(V, origin, "disarm")
-		return 1
-
-	// ongrab(mob, mob, datum/pathogen) : void
-	// TODO: Make this a veto event.
-	// OVERRIDE: Overriding this is situational. ..() is expected to be called.
-	proc/ongrab(var/mob/M as mob, var/mob/V as mob, var/datum/pathogen/origin)
-		if (infect_type == INFECT_TOUCH && prob(origin.spread*2))
-			infect_direct(V, origin, "grab")
-		return
-
-	// onpunch(mob, mob, string, datum/pathogen) : float
-	// OVERRIDE: Overriding this is situational. ..() is expected to be called.
-	proc/onpunch(var/mob/M as mob, var/mob/V as mob, zone, var/datum/pathogen/origin)
-		if (infect_type == INFECT_TOUCH && prob(origin.spread*2))
-			infect_direct(V, origin, "punching")
-		return 1
-
-	// onpunched(mob, mob, string, datum/pathogen) : float
-	// OVERRIDE: Overriding this is situational. ..() is expected to be called.
-	proc/onpunched(var/mob/M as mob, var/mob/A as mob, zone, var/datum/pathogen/origin)
-		if (infect_type == INFECT_TOUCH && prob(origin.spread*2))
-			infect_direct(A, origin, "being punched")
-		return 1
-
-	// onshocked(mob, mob, datum/shockparam, datum/pathogen) : datum/shockparam
-	// OVERRIDE: Overriding this is situational.
-	proc/onshocked(var/mob/M as mob, var/datum/shockparam/ret, var/datum/pathogen/origin)
-		return ret
-
-	// onsay(mob, string, datum/pathogen) : string
-	// OVERRIDE: Overriding this is situational.
-	proc/onsay(var/mob/M as mob, message, var/datum/pathogen/origin)
-		return message
-
-	// onemote(mob, string, number, string, datum/pathogen) : string
-	// OVERRIDE: Overriding this is situational.
-	proc/onemote(var/mob/M as mob, act, voluntary, param, var/datum/pathogen/P)
-		return 1
-
-	// ondeath(mob, datum/pathogen) : void
-	// OVERRIDE: Overriding this is situational.
-	proc/ondeath(var/mob/M as mob, var/datum/pathogen/origin)
-		return
-
-	// oncured(mob, datum/pathogen) : void
-	// OVERRIDE: Overriding this is situational.
-	proc/oncured(var/mob/M as mob, var/datum/pathogen/origin)
-		return
-
-
-	// End of events: please do not add any event definitions outside this block.
-	// ====
-
 	// may_react_to() : string | null
 	// A set of features that you can observe through a microscope and what it might suggest.
 	// This will be used to NARROW DOWN what chemicals the pathogen might react to, so that you only need to try a finite set of reagents to determine exactly what symptoms the pathogen has.
@@ -205,6 +45,511 @@ datum/pathogeneffects
 	// OVERRIDE: A subclass is expected to override this.
 	proc/react_to(var/R, var/zoom)
 		return null
+
+	//THE ICD-13: Catalog of All Pathogen Symptoms
+	//Parody of the ICD-10, the IRL disease identification manual from the World Health Organization
+
+	//Symptoms should be organized as follows:
+	//name: The name of the symptom
+	//desc: A description of the symptom
+	//threattype: Replacing RARITY, threattype describes how benign/dangerous the symptom is.
+		//Using threattype because Beepsky and the guardbots use threat
+	//value: The credit value to be summed in a CDC bounty for a pathogen containing this symptom
+	//transmissiontypes: A list(...) containing 'flags' that enable the pathogen to spread according to functions from pathogen_transmission.dm
+	//effect: Place the front-end effects here. This section may be extensive.
+
+// --SYMPTOM THREAT--
+// All symptoms are catagorized with a threat value to describe the scope of their impact.
+// Benign symptoms are negative. Malign symptoms are positive.
+// THREAT_BENETYPE2: This symptom provides significant health benefits to infected individuals.
+// THREAT_BENETYPE1: This symptom provides marginal benefits to infected individuals.
+// THREAT_NEUTRAL: The symptom causes no impactful harm or good to infected individuals.
+// THREAT_TYPE1: This symptom causes barely noticable, nonfatal harm to infected individuals. Should not affect gameplay mechanically.
+// THREAT_TYPE2: This symptom causes noticable, but nonfatal harm to infected individuals. Should not significantly impede gameplay.
+// THREAT_TYPE3: This symptom causes significant, but nonfatal harm to infected individuals. May damage the player or impede mechanical gameplay.
+// THREAT_TYPE4: This symptom causes severe and potentially fatal harm to infected individuals. Critting from full should take at least 5 minutes unattended. Short stuns are OK.
+// THREAT_TYPE5: This symptom is extremely dangerous and will certainly cause fatal harm to infected individuals. Anything that causes incapacitation goes HERE. Critting should take at least 3 minutes. Instant death and adjacent go here.
+
+//Examples for each:
+// BT2: ressurection, flesh restructuring, detox, teperone production?
+// BT1: mending, brewery, cleansing
+// NEUTRAL: oxytocin, sunglass, beesneeze, deathgasp
+// T1: hiccuping, shivering, sweating
+// T2: cough(nodamage), sneezing, aches(nodamage), indigestion(nodamage)
+// T3: violent cough, fever/chills, shakespearian, gasping, disorientation
+// T4: senility, fever2/chills2, organ damage in general
+// T5: radiation, necrotic detonation
+// T?: gibbing, Thor's Wrath, other dangerous joke symptoms
+
+datum/pathogeneffects/benevolent
+	name = "Benevolent"
+	rarity = RARITY_ABSTRACT
+	beneficial = 1
+
+datum/pathogeneffects/benevolent/mending
+	name = "Wound Mending"
+	desc = "Slow paced brute damage healing."
+	rarity = RARITY_COMMON
+
+	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+		if (!origin.symptomatic)
+			return
+		//if (prob(origin.stage * 5))
+		M.HealDamage("All", origin.stage / 2, 0)
+
+	react_to(var/R, var/zoom)
+		if (R == "synthflesh")
+			if (zoom)
+				return "Microscopic damage on the synthetic flesh appears to be mended by the pathogen."
+
+	may_react_to()
+		return "The pathogen appears to have the ability to bond with organic tissue."
+
+datum/pathogeneffects/benevolent/healing
+	name = "Burn Healing"
+	desc = "Slow paced burn damage healing."
+	rarity = RARITY_COMMON
+
+	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+		if (!origin.symptomatic)
+			return
+		//if (prob(origin.stage * 5))
+		M.HealDamage("All", 0, origin.stage / 2)
+
+	react_to(var/R, var/zoom)
+		if (R == "synthflesh")
+			if (zoom)
+				return "The pathogen does not appear to mend the synthetic flesh. Perhaps something that might cause other types of injuries might help."
+		if (R == "infernite")
+			if (zoom)
+				return "The pathogen repels the scalding hot chemical and quickly repairs any damage caused by it to organic tissue."
+
+	may_react_to()
+		return "The pathogen appears to have the ability to bond with organic tissue."
+
+datum/pathogeneffects/benevolent/fleshrestructuring
+	name = "Flesh Restructuring"
+	desc = "Fast paced general healing."
+	rarity = RARITY_RARE
+
+	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+		if (!origin.symptomatic)
+			return
+		if (prob(origin.stage * 5))
+			M.HealDamage("All", origin.stage, origin.stage)
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if(H.bleeding)
+					repair_bleeding_damage(M, 80, 2)
+			if (prob(50))
+				M.show_message("<span class='notice'>You feel your wounds closing by themselves.</span>")
+
+	react_to(var/R, var/zoom)
+		if (R == "synthflesh")
+			if (zoom)
+				return "The pathogen appears to mimic the behavior of the synthflesh."
+		if (R == "acid")
+			if (zoom)
+				return "The pathogen becomes agitated and works to repair the damage caused by the sulfuric acid."
+
+	may_react_to()
+		return "The pathogen appears to be rapidly repairing the other cells around it."
+	//podrickequus's first code, yay
+
+datum/pathogeneffects/benevolent/detoxication
+	name = "Detoxication"
+	desc = "The pathogen aids the host body in metabolizing ethanol."
+	rarity = RARITY_COMMON
+
+	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+		if (!origin.symptomatic)
+			return
+		var/times = 1
+		if (origin.stage > 3)
+			times++
+		if (origin.stage > 4)
+			times++
+		var/met = 0
+		for (var/rid in M.reagents.reagent_list)
+			var/datum/reagent/R = M.reagents.reagent_list[rid]
+			if (rid == "ethanol" || istype(R, /datum/reagent/fooddrink/alcoholic))
+				met = 1
+				for (var/i = 1, i <= times, i++)
+					if (R) //Wire: Fix for Cannot execute null.on mob life().
+						R.on_mob_life()
+					if (!R || R.disposed)
+						break
+				if (R && !R.disposed)
+					M.reagents.remove_reagent(rid, R.depletion_rate * times)
+		if (met)
+			M.reagents.update_total()
+
+	react_to(var/R, var/zoom)
+		if (R == "ethanol")
+			return "The pathogen appears to have entirely metabolized the ethanol."
+
+	may_react_to()
+		return "The pathogen appears to react with a pure intoxicant."
+
+datum/pathogeneffects/benevolent/metabolisis
+	name = "Accelerated Metabolisis"
+	desc = "The pathogen accelerates the metabolisis of all chemicals present in the host body."
+	rarity = RARITY_RARE
+
+	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+		if (!origin.symptomatic)
+			return
+		var/times = 1
+		if (origin.stage > 3)
+			times++
+		if (origin.stage > 4)
+			times++
+		var/met = 0
+		for (var/rid in M.reagents.reagent_list)
+			var/datum/reagent/R = M.reagents.reagent_list[rid]
+			met = 1
+			for (var/i = 1, i <= times, i++)
+				if (R) //Wire: Fix for Cannot execute null.on mob life().
+					R.on_mob_life()
+				if (!R || R.disposed)
+					break
+			if (R && !R.disposed)
+				M.reagents.remove_reagent(rid, R.depletion_rate * times)
+		if (met)
+			M.reagents.update_total()
+
+
+	react_to(var/R, var/zoom)
+		return "The pathogen appears to have entirely metabolized... all chemical agents in the dish."
+
+	may_react_to()
+		return "The pathogen appears to be rapidly breaking down certain materials around it."
+
+datum/pathogeneffects/benevolent/cleansing
+	name = "Cleansing"
+	desc = "The pathogen cleans the body of damage caused by toxins."
+	rarity = RARITY_UNCOMMON
+
+	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+		if (!origin.symptomatic)
+			return
+		//if (prob(origin.stage * 5) && M.get_toxin_damage())
+		if (M.get_toxin_damage())
+			M.take_toxin_damage(-origin.stage / 2)
+			if (prob(12))
+				M.show_message("<span class='notice'>You feel cleansed.</span>")
+
+	react_to(var/R, var/zoom)
+		return "The pathogen appears to have entirely metabolized... all chemical agents in the dish."
+
+	may_react_to()
+		return "The pathogen seems to be much cleaner than normal."
+
+datum/pathogeneffects/benevolent/oxygenconversion
+	name = "Oxygen Conversion"
+	desc = "The pathogen converts organic tissue into oxygen when required by the host."
+	rarity = RARITY_RARE
+
+	may_react_to()
+		return "The pathogen appears to radiate oxygen."
+
+	react_to(var/R, var/zoom)
+		if (R == "synthflesh")
+			return "The pathogen consumes the synthflesh and converts it into oxygen."
+
+	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+		if (!origin.symptomatic)
+			return
+		var/mob/living/carbon/C = M
+		if (C.get_oxygen_deprivation())
+			C.setStatus("patho_oxy_speed_bad", duration = INFINITE_STATUS, optional = origin.stage/2.5)
+
+datum/pathogeneffects/benevolent/oxygenstorage
+	name = "Oxygen Storage"
+	desc = "The pathogen stores oxygen and releases it when needed by the host."
+	rarity = RARITY_RARE
+
+	may_react_to()
+		return "The pathogen appears to have a bubble of oxygen around it."
+
+	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+		if (!origin.symptomatic)
+			return
+		if(!origin.symptom_data["oxygen_storage"]) // if not yet set, initialize
+			origin.symptom_data["oxygen_storage"] = 0
+
+		var/mob/living/carbon/C = M
+		if (C.get_oxygen_deprivation())
+			if(origin.symptom_data["oxygen_storage"] > 10)
+				C.setStatus("patho_oxy_speed", duration = INFINITE_STATUS, optional = origin.symptom_data["oxygen_storage"])
+				origin.symptom_data["oxygen_storage"] = 0
+		else
+			// faster reserve replenishment at higher stages
+			origin.symptom_data["oxygen_storage"] = min(100, origin.symptom_data["oxygen_storage"] + origin.stage*2)
+
+
+datum/pathogeneffects/benevolent/resurrection
+	name = "Necrotic Resurrection"
+	desc = "The pathogen will resurrect you if it procs while you are dead."
+	rarity = RARITY_VERY_RARE
+	var/cooldown = 20 MINUTES
+
+	may_react_to()
+		return "Some of the pathogen's dead cells seem to remain active."
+
+	disease_act_dead(var/mob/M as mob, var/datum/pathogen/origin)
+		if (!origin.symptomatic)
+			return
+		if (origin.stage < 3)
+			return
+		if(!origin.symptom_data["resurrect_cd"]) // if not yet set, initialize it so that it is off cooldown
+			origin.symptom_data["resurrect_cd"] = -cooldown
+		if(TIME-origin.symptom_data["resurrect_cd"] < cooldown)
+			return
+		// Shamelessly stolen from Strange Reagent
+		if (isdead(M) || istype(get_area(M),/area/afterlife/bar))
+			origin.symptom_data["resurrect_cd"] = TIME
+			// range from 65 to 45. This is applied to both brute and burn, so the total max damage after resurrection is 130 to 90.
+			var/cap =	95 - origin.stage * 10
+			var/brute = min(cap, M.get_brute_damage())
+			var/burn = min(cap, M.get_burn_damage())
+
+			// let's heal them before we put some of the damage back
+			// but they don't get back organs/limbs/whatever, so I don't use full_heal
+			M.HealDamage("All", 100000, 100000)
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				H.blood_volume = 500 					// let's not have people immediately suffocate from being exsanguinated
+				H.take_toxin_damage(-INFINITY)
+				H.take_oxygen_deprivation(-INFINITY)
+				H.take_brain_damage(-INFINITY)
+
+			M.TakeDamage("chest", brute, burn)
+			M.take_brain_damage(70)						// and a lot of brain damage
+			setalive(M)
+			M.changeStatus("paralysis", 15 SECONDS) 			// paralyze the person for a while, because coming back to life is hard work
+			M.change_misstep_chance(40)					// even after getting up they still have some grogginess for a while
+			M.stuttering = 15
+			if (M.ghost && M.ghost.mind && !(M.mind && M.mind.dnr)) // if they have dnr set don't bother shoving them back in their body
+				M.ghost.show_text("<span class='alert'><B>You feel yourself being dragged out of the afterlife!</B></span>")
+				M.ghost.mind.transfer_to(M)
+				qdel(M.ghost)
+			if (ishuman(M))
+				var/mob/living/carbon/human/H = M
+				H.contract_disease(/datum/ailment/disease/tissue_necrosis, null, null, 1) // this disease will make the person more and more rotten even while alive
+				H.visible_message("<span class='alert'>[H] suddenly starts moving again!</span>","<span class='alert'>You feel the pathogen weakening as you rise from the dead.</span>")
+
+	react_to(var/R, var/zoom)
+		if (R == "synthflesh")
+			return "Dead parts of the synthflesh seem to still be transferring blood."
+
+
+datum/pathogeneffects/benevolent/brewery
+	name = "Auto-Brewery"
+	desc = "The pathogen aids the host body in metabolizing chemicals into ethanol."
+	rarity = RARITY_RARE
+	beneficial = 0
+
+	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+		if (!origin.symptomatic)
+			return
+		var/times = 1
+		if (origin.stage > 3)
+			times++
+		if (origin.stage > 4)
+			times++
+		var/met = 0
+		for (var/rid in M.reagents.reagent_list)
+			var/datum/reagent/R = M.reagents.reagent_list[rid]
+			if (!(rid == "ethanol" || istype(R, /datum/reagent/fooddrink/alcoholic)))
+				met = 1
+				for (var/i = 1, i <= times, i++)
+					if (R) //Wire: Fix for Cannot execute null.on mob life().
+						R.on_mob_life()
+					if (!R || R.disposed)
+						break
+				if (R && !R.disposed)
+					var/amt = R.depletion_rate * times
+					M.reagents.remove_reagent(rid, amt)
+					M.reagents.add_reagent("ethanol", amt)
+		if (met)
+			M.reagents.update_total()
+
+	react_to(var/R, var/zoom)
+		if (!(R == "ethanol"))
+			return "The pathogen appears to have entirely metabolized all chemical agents in the dish into... ethanol."
+
+	may_react_to()
+		return "The pathogen appears to react with anything but a pure intoxicant."
+
+datum/pathogeneffects/benevolent/oxytocinproduction
+	name = "Oxytocin Production"
+	desc = "The pathogen produces Pure Love within the infected."
+	infect_type = INFECT_TOUCH
+	rarity = RARITY_COMMON
+	spread = SPREAD_BODY | SPREAD_HANDS
+	infect_message = "<span style=\"color:pink\">You can't help but feel loved.</span>"
+	infect_attempt_message = "Their touch is suspiciously soft..."
+
+	onemote(mob/M as mob, act, voluntary, param, datum/pathogen/origin)
+		if (!origin.symptomatic)
+			return
+		if (act != "hug" && act != "sidehug")  // not a hug
+			return
+		if (param == null) // weirdo is just hugging themselves
+			return
+		for (var/mob/living/carbon/human/H in view(1, M))
+			if (ckey(param) == ckey(H.name) && prob(origin.spread*2))
+				SPAWN(0.5)
+					infect_direct(H, origin, "hug")
+				return
+
+	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+		if (!origin.symptomatic)
+			return
+		var/check_amount = M.reagents.get_reagent_amount("love")
+		if (!check_amount || check_amount < 5)
+			M.reagents.add_reagent("love", origin.stage / 3)
+
+	may_react_to()
+		return "The pathogen's cells appear to be... hugging each other?"
+
+datum/pathogeneffects/benevolent/neuronrestoration
+	name = "Neuron Restoration"
+	desc = "Infection slowly repairs nerve cells in the brain."
+	rarity = RARITY_UNCOMMON
+	infect_type = INFECT_NONE
+	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+		if (!origin.symptomatic)
+			return
+		switch (origin.stage)
+			if (2)
+				if (prob(5))
+					M.take_brain_damage(-1)
+			if (3)
+				if (prob(10))
+					M.take_brain_damage(-1)
+			if (4)
+				if (prob(15))
+					M.take_brain_damage(-2)
+			if (5)
+				if (prob(20))
+					M.take_brain_damage(-2)
+
+	react_to(var/R, var/zoom)
+		if (!(R == "neurotoxin"))
+			return "The pathogen releases a chemical in an attempt to counteract the effects of the neurotoxin."
+
+	may_react_to()
+		return "The pathogen appears to have a gland that may affect neural functions."
+
+datum/pathogeneffects/benevolent/sunglass
+	name = "Sunglass Glands"
+	desc = "The infected grew sunglass glands."
+	infect_type = INFECT_NONE
+	rarity = RARITY_UNCOMMON
+
+	proc/glasses(var/mob/living/carbon/human/M as mob)
+		var/obj/item/clothing/glasses/G = M.glasses
+		var/obj/item/clothing/glasses/N = new/obj/item/clothing/glasses/sunglasses()
+		M.show_message({"<span class='notice'>[pick("You feel cooler!", "You find yourself wearing sunglasses.", "A pair of sunglasses grow onto your face.")][G?" But you were already wearing glasses!":""]</span>"})
+		if (G)
+			N.set_loc(M.loc)
+			var/turf/T = get_edge_target_turf(M, pick(alldirs))
+			N.throw_at(T,rand(0,5),1)
+		else
+			N.set_loc(M)
+			N.layer = M.layer
+			N.master = M
+			M.glasses = N
+			M.update_clothing()
+
+	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+		if (!origin.symptomatic)
+			return
+		if (ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if (!(H.glasses) || (!(istype(H.glasses, /obj/item/clothing/glasses/sunglasses)) && prob(50)))
+				switch(origin.stage)
+					if (2 to 4)
+						if (prob(15))
+							glasses(M)
+					if (5)
+						if (prob(25))
+							glasses(M)
+
+	may_react_to()
+		return "The pathogen appears to be sensitive to sudden flashes of light."
+
+	react_to(var/R, var/zoom)
+		if (R == "flashpowder")
+			if (zoom)
+				return "The individual microbodies appear to be wearing sunglasses."
+			else
+				return "The pathogen appears to have developed a resistance to the flash powder."
+
+datum/pathogeneffects/benevolent/genetictemplate
+	name = "Genetic Template"
+	desc = "Spreads a mutation from patient zero to other afflicted."
+	rarity = RARITY_VERY_RARE
+	infect_type = INFECT_NONE
+	var/list/mutationMap = list() // stores the kind of mutation with the index being the pathogen's name (which is something like "L41D9")
+
+	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+		if (!origin.symptomatic || !M.bioHolder)
+			return
+		if(mutationMap[origin.name_base] == null) // if no mutation has been picked yet, go for a random one from this person
+			var/list/filtered = new/list()
+			for(var/T in M.bioHolder.effects)
+				var/datum/bioEffect/instance = M.bioHolder.effects[T]
+				if(!instance || istype(instance, /datum/bioEffect/hidden)) continue // hopefully this catches all non-mutation bioeffects?
+				filtered.Add(instance)
+			if(!filtered.len) return // wow, this nerd has no mutations, screw this
+			mutationMap[origin.name_base] = pick(filtered)
+			boutput(M, "You somehow feel more attuned to your [mutationMap[origin.name_base]].") // So patient zero will know when the mutation has been chosen
+
+		if(origin.symptom_data["genetictemplate"] == origin.stage) // early return if we would just put the same mutation anyway
+			return
+
+		var/datum/bioEffect/BEE = mutationMap[origin.name_base] // remove old version of mutation
+		M.bioHolder.RemoveEffect(BEE.id)
+
+		var/datum/bioEffect/BE = BEE.GetCopy()
+		var/datum/dna_chromosome/chromo = new /datum/dna_chromosome/anti_mutadone() // reinforce always
+		chromo.apply(BE)
+		if (origin.stage >= 2)
+			BE.altered = 0 // this lets us apply another chromosome. yay!
+			chromo = new /datum/dna_chromosome() // stabilize after stage 2
+			chromo.apply(BE)
+		if (origin.stage >= 3)
+			BE.altered = 0
+			chromo = new /datum/dna_chromosome/safety() // synchronize starting at stage 3
+			chromo.apply(BE)
+		if (origin.stage >= 4)
+			BE.altered = 0
+			chromo = new /datum/dna_chromosome/power_enhancer() // empower starting at stage 4
+			chromo.apply(BE)
+		if (origin.stage >= 5)
+			BE.altered = 0
+			chromo = new /datum/dna_chromosome/cooldown_reducer() // reduce cooldown starting at stage 5
+			chromo.apply(BE)
+		M.bioHolder.AddEffectInstance(BE) // add updated version of mutation!
+		origin.symptom_data["genetictemplate"] = origin.stage // save the last stage that we added the mutation with
+
+	oncured(mob/M as mob, var/datum/pathogen/origin)
+		if (!origin.symptomatic)
+			return
+		var/datum/bioEffect/BE = mutationMap[origin.name_base] // cure the mutation when the pathogen is cured
+		M.bioHolder.RemoveEffect(BE.id)
+
+	react_to(var/R, var/zoom)
+		if (R == "mutadone")
+			if (zoom)
+				return "Approximately 0% of the individual microbodies appear to have returned to genetic normalcy." // it always reinforces
+
+	may_react_to()
+		return "The pathogen cells all look exactly alike."
+
 
 datum/pathogeneffects/malevolent
 	name = "Malevolent"
