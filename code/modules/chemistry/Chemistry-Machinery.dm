@@ -732,7 +732,7 @@
 				dat += "<A href='?src=\ref[src];createpatch=1'>Create patch (30 units max)</A><BR>"
 				dat += "<A href='?src=\ref[src];multipatch=1'>Create multiple patches (5 units min)</A> Box: <A href='?src=\ref[src];togglepatchbox=1'>[src.patch_box ? "Yes" : "No"]</A><BR>"
 				dat += "<A href='?src=\ref[src];createautoinjector=1'>Create emergency auto-injector (10 units max)</A><BR>"
-				dat += "<A href='?src=\ref[src];multiautoinjector=1'>Create multiple emergeny auto-injectors (5 units min)</A>  Box: <A href='?src=\ref[src];toggleinjectorbox=1'>[src.injector_box==1 ? "Yes (Big)" : (src.injector_box==2 ? "Yes (Small)" : "No")]</A><BR>"
+				dat += "<A href='?src=\ref[src];multiautoinjector=1'>Create multiple emergency auto-injectors (5 units min)</A>  Box: <A href='?src=\ref[src];toggleinjectorbox=1'>[src.injector_box==1 ? "Yes (Big)" : (src.injector_box==2 ? "Yes (Small)" : "No")]</A><BR>"
 				dat += "<A href='?src=\ref[src];createampoule=1'>Create ampoule (5 units max)</A>"
 		user.Browse("<TITLE>CheMaster 3000</TITLE>CheMaster menu:<BR><BR>[dat]", "window=chem_master;size=575x400;title=CheMaster 3000")
 		onclose(user, "chem_master")
