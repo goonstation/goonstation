@@ -2182,7 +2182,7 @@
 						src.take_brain_damage(10)
 						dab_id?.brain_damage_count += 10
 						if(src.get_brain_damage() > 60)
-							src.show_text(__red("Your head hurts!"))
+							src.show_text("<span class='alert'>Your head hurts!</span>")
 					if(locate(/obj/item/storage/bible) in src.loc)
 						if(H.limbs.l_arm)
 							src.limbs.l_arm.sever()

@@ -153,11 +153,11 @@
 		if(target == holder.owner || !ishuman(target))
 			return 1
 		if(!(BOUNDS_DIST(holder.owner, target) == 0))
-			boutput(holder.owner, __red("Target is too far away."))
+			boutput(holder.owner, "<span class='alert'>Target is too far away.</span>")
 			return 1
 		var/mob/living/carbon/human/target_human = target
 		if(!target_human?.limbs?.l_leg || !target_human?.limbs?.r_leg)
-			boutput(holder.owner, __red("[target_human] has no ankles to bite!"))
+			boutput(holder.owner, "<span class='alert'>[target_human] has no ankles to bite!</span>")
 			return 1
 
 		var/x_coeff = rand(0, 1)	// open the floor horizontally
@@ -212,7 +212,7 @@
 		if(target == holder.owner || !ishuman(target))
 			return 1
 		if(!(BOUNDS_DIST(holder.owner, target) == 0))
-			boutput(holder.owner, __red("Target is too far away."))
+			boutput(holder.owner, "<span class='alert'>Target is too far away.</span>")
 			return 1
 
 		var/mob/living/carbon/human/H = target

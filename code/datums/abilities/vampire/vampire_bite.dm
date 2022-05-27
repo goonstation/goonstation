@@ -26,29 +26,29 @@
 		return 0
 
 	if (!ishuman(target)) // Only humans use the blood system.
-		boutput(M, __red("You can't seem to find any blood vessels."))
+		boutput(M, "<span class='alert'>You can't seem to find any blood vessels.</span>")
 		return 0
 	else
 		var/mob/living/carbon/human/humantarget = target
 		if (istype(humantarget.mutantrace, /datum/mutantrace/vampiric_thrall))
-			boutput(M, __red("You cannot drink the blood of a thrall."))
+			boutput(M, "<span class='alert'>You cannot drink the blood of a thrall.</span>")
 			return 0
 
 	if (M == target)
-		boutput(M, __red("Why would you want to bite yourself?"))
+		boutput(M, "<span class='alert'>Why would you want to bite yourself?</span>")
 		return 0
 
 	if (ismobcritter(M) && !istype(H))
-		boutput(M, __red("Critter mobs currently don't have to worry about blood. Lucky you."))
+		boutput(M, "<span class='alert'>Critter mobs currently don't have to worry about blood. Lucky you.</span>")
 		return 0
 
 	if (istype(H) && H.vamp_isbiting)
 		if (vamp_isbiting != target)
-			boutput(M, __red("You are already draining someone's blood!"))
+			boutput(M, "<span class='alert'>You are already draining someone's blood!</span>")
 			return 0
 
 	if (is_pointblank && target.head && target.head.c_flags & (BLOCKCHOKE))
-		boutput(M, __red("You need to remove their headgear first."))
+		boutput(M, "<span class='alert'>You need to remove their headgear first.</span>")
 		return 0
 
 	if (check_target_immunity(target) == 1)
@@ -56,11 +56,11 @@
 		return 0
 
 	if ((target.mind && target.mind.special_role == ROLE_VAMPTHRALL) && target.is_mentally_dominated_by(M))
-		boutput(M, __red("You can't drink the blood of your own thralls!"))
+		boutput(M, "<span class='alert'>You can't drink the blood of your own thralls!</span>")
 		return 0
 
 	if (isnpcmonkey(target))
-		boutput(M, __red("Drink monkey blood?! That's disgusting!"))
+		boutput(M, "<span class='alert'>Drink monkey blood?! That's disgusting!</span>")
 		return 0
 
 	if (!holder.can_take_blood_from(target))
@@ -75,12 +75,12 @@
 
 
 	if (HH.blood_volume <= 0)
-		boutput(M, __red("This human is completely void of blood... Wow!"))
+		boutput(M, "<span class='alert'>This human is completely void of blood... Wow!</span>")
 		return 0
 
 	if (isdead(HH))
 		if (prob(20))
-			boutput(M, __red("The blood of the dead provides little sustenance..."))
+			boutput(M, "<span class='alert'>The blood of the dead provides little sustenance...</span>")
 
 		var/bitesize = 5 * mult
 		H.change_vampire_blood(bitesize, 1)
@@ -115,10 +115,10 @@
 				if (istype(H))
 					H.blood_tracking_output()
 				if (prob(50))
-					boutput(M, __red("This is the blood of a fellow vampire!"))
+					boutput(M, "<span class='alert'>This is the blood of a fellow vampire!</span>")
 			else
 				HH.change_vampire_blood(0, 0, 1)
-				boutput(M, __red("[HH] doesn't have enough blood left to drink."))
+				boutput(M, "<span class='alert'>[HH] doesn't have enough blood left to drink.</span>")
 				return 0
 		else
 			var/bitesize = 10 * mult
@@ -139,7 +139,7 @@
 				if (mult >= 1) //mult is only 1 or greater during a pointblank true suck
 					if (HH.blood_volume < 300 && prob(15))
 						if (!HH.getStatusDuration("paralysis"))
-							boutput(HH, __red("Your vision fades to blackness."))
+							boutput(HH, "<span class='alert'>Your vision fades to blackness.</span>")
 						HH.changeStatus("paralysis", 10 SECONDS)
 					else
 						if (prob(65))
@@ -185,29 +185,29 @@
 		return 0
 
 	if (!ishuman(target)) // Only humans use the blood system.
-		boutput(M, __red("You can't seem to find any blood vessels."))
+		boutput(M, "<span class='alert'>You can't seem to find any blood vessels.</span>")
 		return 0
 	else
 		var/mob/living/carbon/human/humantarget = target
 		if (istype(humantarget.mutantrace, /datum/mutantrace/vampiric_thrall))
-			boutput(M, __red("You cannot drink the blood of a thrall."))
+			boutput(M, "<span class='alert'>You cannot drink the blood of a thrall.</span>")
 			return 0
 
 	if (M == target)
-		boutput(M, __red("Why would you want to bite yourself?"))
+		boutput(M, "<span class='alert'>Why would you want to bite yourself?</span>")
 		return 0
 
 	if (ismobcritter(M) && !istype(H))
-		boutput(M, __red("Critter mobs currently don't have to worry about blood. Lucky you."))
+		boutput(M, "<span class='alert'>Critter mobs currently don't have to worry about blood. Lucky you.</span>")
 		return 0
 
 	if (istype(H) && H.vamp_isbiting)
 		if (vamp_isbiting != target)
-			boutput(M, __red("You are already draining someone's blood!"))
+			boutput(M, "<span class='alert'>You are already draining someone's blood!</span>")
 			return 0
 
 	if (is_pointblank && target.head && target.head.c_flags & (BLOCKCHOKE))
-		boutput(M, __red("You need to remove their headgear first."))
+		boutput(M, "<span class='alert'>You need to remove their headgear first.</span>")
 		return 0
 
 	if (check_target_immunity(target) == 1)
@@ -218,11 +218,11 @@
 	if(src.owner.mind && src.owner.mind.master)
 		master = ckey_to_mob(src.owner.mind.master)
 	if ((target.mind && target.mind.special_role == ROLE_VAMPTHRALL) && target.is_mentally_dominated_by(master))
-		boutput(M, __red("You can't drink the blood of your master's thralls!"))
+		boutput(M, "<span class='alert'>You can't drink the blood of your master's thralls!</span>")
 		return 0
 
 	if (isnpcmonkey(target))
-		boutput(M, __red("Drink monkey blood?! That's disgusting!"))
+		boutput(M, "<span class='alert'>Drink monkey blood?! That's disgusting!</span>")
 		return 0
 
 	if (!holder.can_take_blood_from(target))
@@ -238,12 +238,12 @@
 
 
 	if (HH.blood_volume <= 0)
-		boutput(M, __red("This human is completely void of blood... Wow!"))
+		boutput(M, "<span class='alert'>This human is completely void of blood... Wow!</span>")
 		return 0
 
 	if (isdead(HH))
 		if (prob(20))
-			boutput(M, __red("The blood of the dead provides little sustenance..."))
+			boutput(M, "<span class='alert'>The blood of the dead provides little sustenance...</span>")
 
 		var/bitesize = 5 * mult
 		M.change_vampire_blood(bitesize, 1)
@@ -274,10 +274,10 @@
 				M.change_vampire_blood(bitesize, 1)
 				H.tally_bite(HH,bitesize)
 				if (prob(50))
-					boutput(M, __red("This is the blood of a fellow vampire!"))
+					boutput(M, "<span class='alert'>This is the blood of a fellow vampire!</span>")
 			else
 				HH.change_vampire_blood(0, 0, 1)
-				boutput(M, __red("[HH] doesn't have enough blood left to drink."))
+				boutput(M, "<span class='alert'>[HH] doesn't have enough blood left to drink.</span>")
 				return 0
 		else
 			var/bitesize = 10 * mult
@@ -297,7 +297,7 @@
 				if (mult >= 1) //mult is only 1 or greater during a pointblank true suck
 					if (HH.blood_volume < 300 && prob(15))
 						if (!HH.getStatusDuration("paralysis"))
-							boutput(HH, __red("Your vision fades to blackness."))
+							boutput(HH, "<span class='alert'>Your vision fades to blackness.</span>")
 						HH.changeStatus("paralysis", 10 SECONDS)
 					else
 						if (prob(65))
@@ -338,17 +338,17 @@
 			return 1
 
 		if (get_dist(M, target) > src.max_range)
-			boutput(M, __red("[target] is too far away."))
+			boutput(M, "<span class='alert'>[target] is too far away.</span>")
 			return 1
 
 		if (actions.hasAction(M, "vamp_blood_suck_ranged"))
-			boutput(M, __red("You are already performing a Blood action and cannot start a Bite."))
+			boutput(M, "<span class='alert'>You are already performing a Blood action and cannot start a Bite.</span>")
 			return 1
 
 		var/mob/living/carbon/human/HH = target
 
 
-		boutput(M, __blue("You bite [HH] and begin to drain them of blood."))
+		boutput(M, "<span class='notice'>You bite [HH] and begin to drain them of blood.</span>")
 		HH.visible_message("<span class='alert'><B>[M] bites [HH]!</B></span>")
 
 		actions.start(new/datum/action/bar/icon/vamp_blood_suc(M,H,HH,src), M)
@@ -430,11 +430,11 @@
 	onInterrupt() //Called when the action fails / is interrupted.
 		if (state == ACTIONSTATE_RUNNING)
 			if (HH.blood_volume < 0)
-				boutput(M, __red("[HH] doesn't have enough blood left to drink."))
+				boutput(M, "<span class='alert'>[HH] doesn't have enough blood left to drink.</span>")
 			else if (!H.can_take_blood_from(H, HH))
-				boutput(M, __red("You have drank your fill [HH]'s blood. It tastes all bland and gross now."))
+				boutput(M, "<span class='alert'>You have drank your fill [HH]'s blood. It tastes all bland and gross now.</span>")
 			else
-				boutput(M, __red("Your feast was interrupted."))
+				boutput(M, "<span class='alert'>Your feast was interrupted.</span>")
 
 		src.end()
 

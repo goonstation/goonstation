@@ -23,11 +23,11 @@
 			return 1
 
 		if (M == target)
-			boutput(M, __red("Why would you want to wrestle yourself?"))
+			boutput(M, "<span class='alert'>Why would you want to wrestle yourself?</span>")
 			return 1
 
 		if (get_dist(M, target) > src.max_range)
-			boutput(M, __red("[target] is too far away."))
+			boutput(M, "<span class='alert'>[target] is too far away.</span>")
 			return 1
 
 		if(check_target_immunity( target ))

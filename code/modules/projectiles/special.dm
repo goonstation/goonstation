@@ -628,7 +628,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 			else
 				if (dropme.loc == P)
 					dropme.set_loc(get_turf(P))
-					boutput(dropme, __red("Your coffin was lost or destroyed! Oh no!!!"))
+					boutput(dropme, "<span class='alert'>Your coffin was lost or destroyed! Oh no!!!</span>")
 		..()
 
 /datum/projectile/special/homing/magicmissile

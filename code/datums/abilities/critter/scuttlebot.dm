@@ -111,7 +111,7 @@
 		if (..())
 			return 1
 		if (BOUNDS_DIST(holder.owner, target) > 0)
-			boutput(holder.owner, __red("That is too far away to flash."))
+			boutput(holder.owner, "<span class='alert'>That is too far away to flash.</span>")
 			return 1
 		if (target == holder.owner)
 			return 1
@@ -128,16 +128,16 @@
 			return 1
 		if (istype(holder.owner, /mob/living/critter/robotic/scuttlebot))
 			if(!holder.owner.mind)
-				boutput(holder.owner, __red("You dont have a mind somehow."))
+				boutput(holder.owner, "<span class='alert'>You dont have a mind somehow.</span>")
 				return 1
 
 			var/mob/living/critter/robotic/scuttlebot/E = holder.owner
 			if (!E.controller)
-				boutput(holder.owner, __red("You didn't have a body to go back to! The scuttlebot shuts down with a sad boop."))
+				boutput(holder.owner, "<span class='alert'>You didn't have a body to go back to! The scuttlebot shuts down with a sad boop.</span>")
 				holder.owner.ghostize()
 				return 1
 			E.mind.transfer_to(E.controller)
 			E.controller = null
 		else //In case this ability is put on another mob
-			boutput(holder.owner, __red("You dont have a body to go back to!"))
+			boutput(holder.owner, "<span class='alert'>You dont have a body to go back to!</span>")
 			return 1

@@ -20,7 +20,7 @@
 		var/datum/abilityHolder/vampire/V = holder
 
 		if (actions.hasAction(M, "vamp_blood_suck"))
-			boutput(M, __red("You are already performing a Bite action and cannot start a Blood Steal."))
+			boutput(M, "<span class='alert'>You are already performing a Bite action and cannot start a Blood Steal.</span>")
 			return 1
 
 		actions.start(new/datum/action/bar/private/icon/vamp_ranged_blood_suc(M,V,target, src), M)
@@ -67,7 +67,7 @@
 			return
 
 		if (get_dist(M, HH) > 7)
-			boutput(M, __red("That target is too far away!"))
+			boutput(M, "<span class='alert'>That target is too far away!</span>")
 			return
 
 		if (istype(H))
@@ -91,7 +91,7 @@
 		proj.launch()
 
 		if (prob(25))
-			boutput(HH, __red("Some blood is forced right out of your body!"))
+			boutput(HH, "<span class='alert'>Some blood is forced right out of your body!</span>")
 
 		logTheThing("combat", M, HH, "steals blood from [constructTarget(HH,"combat")] at [log_loc(M)].")
 
@@ -107,11 +107,11 @@
 	onInterrupt() //Called when the action fails / is interrupted.
 		if (state == ACTIONSTATE_RUNNING)
 			if (HH.blood_volume <= 0)
-				boutput(M, __red("[HH] doesn't have enough blood left to drink."))
+				boutput(M, "<span class='alert'>[HH] doesn't have enough blood left to drink.</span>")
 			else if (!H.can_take_blood_from(H, HH))
-				boutput(M, __red("You have drank your fill [HH]'s blood. It tastes all bland and gross now."))
+				boutput(M, "<span class='alert'>You have drank your fill [HH]'s blood. It tastes all bland and gross now.</span>")
 			else
-				boutput(M, __red("Your feast was interrupted."))
+				boutput(M, "<span class='alert'>Your feast was interrupted.</span>")
 
 		if (ability)
 			ability.doCooldown()
