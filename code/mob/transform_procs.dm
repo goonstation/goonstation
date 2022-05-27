@@ -498,6 +498,33 @@
 	dispose()
 	return O
 
+/mob/proc/become_statue(var/datum/material/M, var/newDesc = null, survive=FALSE)
+	var/obj/statue/statueperson = new /obj/statue(get_turf(src))
+	src.pixel_x = 0
+	src.pixel_y = 0
+	src.set_loc(statueperson)
+	statueperson.appearance = src.appearance
+	statueperson.real_name = "statue of [src.name]"
+	statueperson.name = statueperson.real_name
+	if(newDesc)
+		statueperson.real_desc = newDesc
+	else
+		statueperson.real_desc = src.get_desc()
+	statueperson.desc = statueperson.real_desc
+	statueperson.setMaterial(M)
+	statueperson.set_dir(src.dir)
+	if(!survive)
+		src.remove()
+	else
+		statueperson.mob_inside = src
+	return statueperson
+
+/mob/proc/become_statue_ice()
+	become_statue(getMaterial("ice"), "We here at Space Station 13 believe in the transparency of our employees. It doesn't look like a functioning human can be retrieved from this.")
+
+/mob/proc/become_statue_rock()
+	become_statue(getMaterial("rock"), "Its not too uncommon for our employees to be stoned at work but this is just ridiculous!")
+
 /mob/dead/observer/verb/enter_ghostdrone_queue()
 	set name = "Enter Ghostdrone Queue"
 	set category = "Ghost"

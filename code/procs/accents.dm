@@ -2342,3 +2342,20 @@ var/list/zalgo_mid = list(
 		modded += pick(" rhaggy!"," rir bruddy."," rhoinks!"," rharoo!")
 
 	return modded
+
+/proc/shakespearify(var/string)
+	string = replacetext(string, "your ", "[pick("thy", "thine")] ")
+	string = replacetext(string, " your", " [pick("thy", "thine")]")
+	string = replacetext(string, " is ", " be ")
+	string = replacetext(string, "you ", "thou ")
+	string = replacetext(string, " you", " thou")
+	string = replacetext(string, "are ", "art ")
+	string = replacetext(string, " are", " art")
+	string = replacetext(string, "do ", "doth ")
+	string = replacetext(string, " do", " doth")
+	string = replacetext(string, "does ", "doth ")
+	string = replacetext(string, " does", " doth")
+	string = replacetext(string, "she ", "the lady ")
+	string = replacetext(string, " she", " the lady")
+	string = replacetext(string, "i think", "methinks")
+	return string

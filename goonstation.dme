@@ -1018,7 +1018,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\medical\pathology\pathogen_ailments.dm"
 #include "code\modules\medical\pathology\pathogen_benevolent.dm"
 #include "code\modules\medical\pathology\pathogen_dna.dm"
-#include "code\modules\medical\pathology\pathogen_helpers.dm"
 #include "code\modules\medical\pathology\pathogen_machines.dm"
 #include "code\modules\medical\pathology\pathogen_microbodies.dm"
 #include "code\modules\medical\pathology\pathogen_suppressants.dm"
