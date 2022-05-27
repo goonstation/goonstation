@@ -1388,3 +1388,28 @@ proc/hex2numoc(var/num)
 // generates a random 3-sequence (rand(0, 4095) is unreliable)
 proc/rand3seq()
 	return num2hex(rand(0, 15), 1) + num2hex(rand(0, 15), 1) + num2hex(rand(0, 15), 1)
+
+/proc/generate_random_pathogen()
+	var/datum/pathogen/P = new /datum/pathogen
+	P.setup(1, null, 0)
+	return P
+
+/proc/wrap_pathogen(var/datum/reagents/reagents, var/datum/pathogen/P, var/units = 5)
+	reagents.add_reagent("pathogen", units)
+	var/datum/reagent/blood/pathogen/R = reagents.get_reagent("pathogen")
+	if (R)
+		R.pathogens[P.pathogen_uid] = P
+
+/proc/ez_pathogen(var/stype)
+	var/datum/pathogen/P = new /datum/pathogen
+	var/datum/pathogen_cdc/cdc = P.generate_name()
+	cdc.mutations += P.name
+	cdc.mutations[P.name] = P
+	P.generate_components(cdc, 0)
+	P.generate_attributes(0)
+	P.advance_speed = 25
+	P.spread = 25
+	P.suppression_threshold = max(1, P.suppression_threshold)
+	P.add_symptom(pathogen_controller.path_to_symptom[stype])
+	logTheThing("pathology", null, null, "Pathogen [P.name] created by quick-pathogen-proc with symptom [stype].")
+	return P
