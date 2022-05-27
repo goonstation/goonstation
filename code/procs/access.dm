@@ -233,7 +233,7 @@
 						access_tech_storage, access_maint_tunnels, access_heads, access_eva, access_tox,
 						access_tox_storage, access_chemistry, access_teleporter, access_ai_upload
 						#ifdef SCIENCE_PATHO_MAP
-						, access_pathology
+						, access_pathology, access_cdclow, access_cdcmed
 						#endif
 						)
 		if("Medical Director")
@@ -241,7 +241,7 @@
 						access_maint_tunnels, access_tech_storage, access_medical_lockers,
 						access_medlab, access_heads, access_eva, access_medical_director, access_ai_upload
 						#ifndef SCIENCE_PATHO_MAP
-						, access_pathology
+						, access_pathology, access_cdclow, access_cdcmed, access_cdchigh
 						#endif
 						)
 		if("Chief Engineer")
@@ -289,7 +289,7 @@
 			return list(access_medical, access_medical_lockers, access_morgue, access_medlab, access_maint_tunnels)
 		if("Pathologist")
 			#ifdef SCIENCE_PATHO_MAP
-			return list(access_tox, access_tox_storage, access_research, access_chemistry, access_pathology)
+			return list(access_tox, access_tox_storage, access_research, access_chemistry, access_pathology, access_cdclow)
 			#else
 			return list(access_medical, access_medical_lockers, access_morgue, access_pathology, access_maint_tunnels)
 			#endif
@@ -382,7 +382,7 @@
 	            access_tox, access_tox_storage, access_chemistry, access_carrypermit, access_contrabandpermit,
 	            access_emergency_storage, access_change_ids, access_ai_upload,
 	            access_teleporter, access_eva, access_heads, access_captain, access_all_personal_lockers, access_head_of_personnel,
-	            access_chapel_office, access_kitchen, access_medical_lockers, access_pathology,
+	            access_chapel_office, access_kitchen, access_medical_lockers, access_pathology, access_cdclow, access_cdcmed, access_cdchigh,
 	            access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_supply_console, access_construction, access_hydro, access_ranch, access_mail,
 	            access_engineering, access_maint_tunnels, access_external_airlocks,
 	            access_tech_storage, access_engineering_storage, access_engineering_eva,
@@ -396,7 +396,7 @@
 	            access_tox, access_tox_storage, access_chemistry, access_carrypermit,
 	            access_emergency_storage, access_change_ids, access_ai_upload,
 	            access_teleporter, access_eva, access_heads, access_captain, access_all_personal_lockers, access_head_of_personnel,
-	            access_chapel_office, access_kitchen, access_medical_lockers, access_pathology,
+	            access_chapel_office, access_kitchen, access_medical_lockers, access_pathology, access_cdclow, access_cdcmed, access_cdchigh,
 	            access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_supply_console, access_construction, access_hydro, access_ranch, access_mail,
 	            access_engineering, access_maint_tunnels, access_external_airlocks,
 	            access_tech_storage, access_engineering_storage, access_engineering_eva,
@@ -439,6 +439,12 @@ var/list/access_name_lookup //Generated at round start.
 			return "Med-Sci/Genetics"
 		if(access_pathology)
 			return "Pathology"
+		if(access_cdclow)
+			return "Low-Risk Pathogen Permit"
+		if(access_cdcmed)
+			return "Medium-Risk Pathogen Permit"
+		if(access_cdchigh)
+			return "High-Risk Pathogen Permit"
 		if(access_morgue)
 			return "Morgue"
 		if(access_tox)

@@ -105,3 +105,6 @@
 
 //pathologist job
 #define access_pathology 84
+#define access_cdclow 85
+#define access_cdcmed 86
+#define access_cdchigh 87
