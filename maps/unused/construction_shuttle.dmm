@@ -683,6 +683,14 @@
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/black,
 /area/space)
+"fP" = (
+/obj/machinery/power/apc,
+/turf/simulated/wall/r_wall,
+/area/space)
+"gM" = (
+/obj/item/tool/omnitool/syndicate,
+/turf/simulated/floor/black,
+/area/space)
 "jX" = (
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/shuttle,
@@ -708,6 +716,13 @@
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/arrival/station)
+"oy" = (
+/obj/machinery/light/small/floor,
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/black,
+/area/space)
 "pi" = (
 /obj/cable{
 	d1 = 1;
@@ -728,6 +743,16 @@
 /obj/machinery/atmospherics/pipe/simple/color_pipe,
 /turf/simulated/floor/black,
 /area/space)
+"sx" = (
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/black,
+/area/space)
 "sI" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe{
 	dir = 9
@@ -739,12 +764,18 @@
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
+"uO" = (
+/obj/machinery/atmospherics/pipe/simple/color_pipe{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/space)
 "vN" = (
 /obj/machinery/atmospherics/binary/nuclear_reactor{
 	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe{
-	dir = 4
 	},
 /turf/simulated/floor/black,
 /area/space)
@@ -808,8 +839,9 @@
 /turf/simulated/floor/black,
 /area/space)
 "Er" = (
-/obj/machinery/power/terminal,
-/obj/machinery/power/apc,
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/black,
 /area/space)
 "Ez" = (
@@ -825,14 +857,6 @@
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
-"FO" = (
-/obj/macinery/reactor_turbine,
-/turf/simulated/floor/black,
-/area/space)
-"FS" = (
-/obj/machinery/atmospherics/binary/nuclear_reactor,
-/turf/simulated/floor/black,
-/area/space)
 "Hh" = (
 /obj/machinery/nanofab/nuclear,
 /turf/simulated/floor/black,
@@ -854,6 +878,20 @@
 /obj/item/device/analyzer/atmospheric/upgraded,
 /turf/simulated/floor/black,
 /area/space)
+"IZ" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/space)
+"Kc" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/black,
+/area/space)
 "KG" = (
 /obj/cable{
 	d1 = 1;
@@ -872,6 +910,14 @@
 /area/space)
 "MI" = (
 /obj/machinery/portable_atmospherics/canister/air/large,
+/turf/simulated/floor/black,
+/area/space)
+"Nl" = (
+/obj/machinery/computer/power_monitor,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/black,
 /area/space)
 "NG" = (
@@ -905,8 +951,21 @@
 /obj/item/reactor_component/fuel_rod,
 /turf/simulated/floor/black,
 /area/space)
+"RV" = (
+/obj/machinery/power/smes,
+/turf/simulated/floor/black,
+/area/space)
 "Sh" = (
 /obj/machinery/atmospherics/portables_connector,
+/turf/simulated/floor/black,
+/area/space)
+"UH" = (
+/obj/machinery/atmospherics/binary/reactor_turbine,
+/obj/cable{
+	d2 = 2;
+	dir = null;
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/black,
 /area/space)
 "UR" = (
@@ -45783,7 +45842,7 @@ Lg
 Lg
 Lg
 Lg
-Lg
+fP
 Er
 pi
 Yq
@@ -48504,7 +48563,7 @@ Yq
 ZL
 Yq
 Yq
-Yq
+gM
 Yq
 rr
 Lg
@@ -50013,8 +50072,8 @@ Yq
 CO
 ZL
 CO
-Yq
-CO
+Kc
+oy
 Yq
 BN
 Lg
@@ -50311,12 +50370,12 @@ Yq
 Yq
 ZL
 Yq
-FO
+Yq
 Yq
 ZL
 Yq
-Yq
-Yq
+sx
+Nl
 Yq
 Cd
 Lg
@@ -50611,13 +50670,13 @@ Yq
 Yq
 Yq
 Yq
-ZL
-Yq
-Yq
-Yq
-ZL
-Yq
-Yq
+UH
+IZ
+IZ
+IZ
+uO
+IZ
+RV
 Yq
 Yq
 Ez
@@ -53336,7 +53395,7 @@ Yq
 Yq
 Yq
 Yq
-FS
+Yq
 Yq
 Yq
 Lg

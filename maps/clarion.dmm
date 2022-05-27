@@ -2888,6 +2888,10 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north)
+"agi" = (
+/obj/machinery/atmospherics/valve,
+/turf/simulated/floor/engine,
+/area/station/engine/core)
 "agj" = (
 /obj/machinery/light_switch/north{
 	pixel_y = 28
@@ -38302,18 +38306,6 @@
 	icon_state = "engine_caution_west"
 	},
 /area/station/engine/core)
-"bCx" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bCB" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
 "bCF" = (
 /obj/landmark/start{
 	name = "Engineer"
@@ -39844,16 +39836,6 @@
 	},
 /turf/space,
 /area/space)
-"bHM" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/engine/vacuum{
-	icon_state = "engine_caution_west"
-	},
-/area/station/engine/combustion_chamber)
 "bHN" = (
 /obj/machinery/nanofab/refining,
 /turf/simulated/floor/plating/airless,
@@ -42484,6 +42466,13 @@
 /area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
+"bSh" = (
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 4;
+	level = 2
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
 "bTn" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -42921,6 +42910,12 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/clown)
+"cUG" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 6
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
 "cUY" = (
 /obj/machinery/light{
 	dir = 4;
@@ -44522,6 +44517,12 @@
 	},
 /turf/simulated/pool/no_animate,
 /area/station/crew_quarters/pool)
+"hev" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
 "hge" = (
 /obj/cable{
 	d1 = 4;
@@ -47443,6 +47444,10 @@
 	icon_state = "fgreen2"
 	},
 /area/station/engine/engineering/ce/private)
+"oMg" = (
+/obj/machinery/atmospherics/binary/nuclear_reactor,
+/turf/simulated/floor/engine,
+/area/station/engine/core)
 "oOn" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -48950,6 +48955,13 @@
 	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
+"teq" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 4;
+	layer = 2.13
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
 "teK" = (
 /obj/window/reinforced/south,
 /obj/pool/perspective{
@@ -48958,6 +48970,10 @@
 	},
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
+"tkD" = (
+/obj/macinery/reactor_turbine,
+/turf/simulated/floor/engine,
+/area/station/engine/core)
 "tlS" = (
 /obj/window/reinforced/south,
 /turf/simulated/floor/blue/checker,
@@ -50476,20 +50492,6 @@
 	},
 /turf/simulated/floor/damaged2,
 /area/station/maintenance/northeast)
-"xCx" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/door/airlock/pyro/engineering/alt{
-	dir = 4;
-	name = "Combustion Chamber"
-	},
-/obj/firedoor_spawn,
-/obj/access_spawn/engineering,
-/turf/simulated/floor/engine,
-/area/station/engine/combustion_chamber)
 "xDp" = (
 /obj/machinery/light{
 	dir = 8;
@@ -77822,8 +77824,8 @@ bGh
 uQt
 lmL
 ojD
-jCk
-jCk
+bIt
+bIt
 aaH
 aay
 aaa
@@ -78076,11 +78078,11 @@ bEs
 bKd
 bKb
 jCk
-jCk
-jCk
+bIt
+bIt
 ilQ
-jCk
-jCk
+bIt
+bIt
 aaH
 aay
 aaa
@@ -78333,11 +78335,11 @@ bxP
 bxP
 bxP
 jCk
-jCk
-jCk
-xCx
-jCk
-jCk
+bIt
+bIt
+fTq
+bIt
+bIt
 aaH
 aay
 aaa
@@ -78592,7 +78594,7 @@ bFI
 bIe
 bIe
 bHh
-bHM
+bIe
 bIe
 bIw
 aaH
@@ -78843,13 +78845,13 @@ bAc
 bAc
 bAc
 bAc
-bAc
+hev
 bAc
 bFI
 fTq
 bIt
 bIt
-bIt
+fTq
 bIt
 bIx
 aaH
@@ -79100,7 +79102,7 @@ bAc
 bAc
 bAc
 bAc
-bAc
+hev
 bAc
 bFI
 fTq
@@ -79357,7 +79359,7 @@ bAc
 bAc
 bAc
 bAc
-bAc
+tkD
 bAc
 bFI
 bIh
@@ -79614,7 +79616,7 @@ bAc
 bAc
 bAc
 bAc
-bAc
+teq
 bAc
 bHo
 jCk
@@ -79870,9 +79872,9 @@ bGP
 bAc
 bAc
 bAc
-bAc
-bAc
-bAc
+cUG
+bSh
+agi
 bAc
 bxP
 bxP
@@ -80126,8 +80128,8 @@ bxS
 byV
 bAc
 bAc
-bAc
-bAc
+agi
+bAa
 bAc
 bAc
 bAc
@@ -80383,8 +80385,8 @@ bxT
 byW
 bCF
 bAc
-bCx
 bAc
+teq
 bAc
 bAc
 bAc
@@ -80641,7 +80643,7 @@ byV
 bAc
 bAc
 bAc
-bAc
+teq
 bAc
 bAc
 bAc
@@ -80898,7 +80900,7 @@ byY
 bAf
 bBs
 bAc
-bAc
+oMg
 bAc
 bAc
 bAc
@@ -81155,7 +81157,7 @@ byZ
 bAg
 bAc
 bAc
-bAc
+hev
 bAc
 bAc
 bAc
@@ -81411,8 +81413,8 @@ bxW
 bFb
 bAg
 bAc
-bCB
 bAc
+hev
 bAc
 bAc
 bAc
@@ -81669,7 +81671,7 @@ bzb
 bAg
 bAc
 bAc
-bAc
+hev
 bAc
 bAc
 bAc
