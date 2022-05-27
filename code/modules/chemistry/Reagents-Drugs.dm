@@ -576,7 +576,7 @@ datum
 						M.emote("gasp")
 						boutput(M, "<span class='alert'><b>You can't breathe!</b></span>")
 						M.take_oxygen_deprivation(15 * mult)
-						M.take_toxin_damage(5 * mult)
+						M.take_toxin_damage(3 * mult)
 						M.setStatusMin("stunned", 1 SECOND * mult)
 					else if (effect <= 4)
 						boutput(M, "<span class='alert'><b>You feel terrible!</b></span>")
