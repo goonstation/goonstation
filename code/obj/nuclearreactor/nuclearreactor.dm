@@ -13,15 +13,20 @@
 	pixel_y = -64
 	bound_x = -64
 	bound_y = -64
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
+	mat_changename = FALSE
 	dir = EAST
 	var/list/obj/item/reactor_component/component_grid[6][6]
 	var/list/list/datum/neutron/flux_grid[6][6]
 	var/radiationLevel = 0
+	var/datum/gas_mixture/current_gas = null
+	var/temperature = T20C
+
 
 	New()
 		..()
+		src.setMaterial(getMaterial("steel"))
 		for(var/x=1 to 6)
 			for(var/y=1 to 6)
 				src.flux_grid[x][y] = list()
@@ -56,11 +61,26 @@
 						else
 							src.radiationLevel++ //neutrons hitting the casing get blasted in to the room - have fun with that engineers!
 
-
+		var/datum/gas_mixture/gas = src.processCasingGas(gas_input) //the reactor has some inherent gas cooling channels
+		if(gas) gas_output.merge(gas)
 		//spawn radioactivity then reset level
 		src.radiationLevel = 0
 		src.network1?.update = TRUE
 		src.network2?.update = TRUE
+
+	proc/processCasingGas(var/datum/gas_mixture/inGas)
+		if(src.current_gas)
+			var/heat_transfer_mult = 0.01
+			//heat transfer equation = hA(T2-T1)
+			//assume A = 1m^2
+			var/deltaT = src.current_gas.temperature - src.temperature
+			//heat transfer coefficient
+			var/hTC = TOTAL_MOLES(src.current_gas)/src.material.getProperty("density")
+			src.current_gas.temperature += heat_transfer_mult*-deltaT*hTC
+			src.temperature += heat_transfer_mult*deltaT*(1/hTC)
+			. = src.current_gas
+		src.current_gas = inGas.remove(R_IDEAL_GAS_EQUATION * inGas.temperature)
+
 
 	proc/getGridNeighbors(var/x,var/y)
 		. = list()

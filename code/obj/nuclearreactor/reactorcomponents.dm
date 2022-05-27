@@ -47,13 +47,24 @@ ABSTRACT_TYPE(/obj/reactor_component)
 			//assume A = 1m^2
 			var/deltaT = RC.temperature - src.temperature
 			//heat transfer coefficient
-			var/hTC = RC.material.getProperty("density")/src.material.getProperty("density")
+			var/hTC = max(RC.material.getProperty("density"),1)/max(src.material.getProperty("density"),1)
 			RC.temperature += heat_transfer_mult*-deltaT*hTC
 			src.temperature += heat_transfer_mult*deltaT*(1/hTC)
 
 			RC.material.triggerTemp(RC,RC.temperature)
 			src.material.triggerTemp(src,src.temperature)
-		return 0
+		//heat transfer with reactor vessel
+		var/obj/machinery/atmospherics/binary/nuclear_reactor/holder = src.loc
+		if(istype(holder))
+			var/deltaT = holder.temperature - src.temperature
+			//heat transfer coefficient
+			var/hTC = max(holder.material.getProperty("density"),1)/max(src.material.getProperty("density"),1)
+			holder.temperature += heat_transfer_mult*-deltaT*hTC
+			src.temperature += heat_transfer_mult*deltaT*(1/hTC)
+
+			holder.material.triggerTemp(holder,holder.temperature)
+			src.material.triggerTemp(src,src.temperature)
+
 
 	proc/processNeutrons(var/list/datum/neutron/inNeutrons)
 		if(prob(src.material.getProperty("n_radioactive"))) //spontaneous emission
