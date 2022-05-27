@@ -63,6 +63,7 @@ var/zapLimiter = 0
 	var/wiresexposed = 0
 	var/apcwires = 15
 	var/repair_status = 0 //0: Screwdriver - Disconnect Control Unit ->  1: 4 units of cable - repair autotransformer -> 2: Wrench - Tune autotransformer -> 3: Multitool - Reset control circuitry -> 4: Screwdriver - Reconnect circuitry.
+	var/build_status = 0 //Same steps as above, but shift n to the left 1 and remove the screwdriver step, basically.
 	var/setup_networkapc = 1 //0: Local interface only, 1: Local interface and network interface, 2: network interface only.
 	var/net_id = null
 	var/host_id = null
@@ -222,6 +223,17 @@ var/zapLimiter = 0
 				. += "<br>The autotransformer is working fine and the control board has been reset! Now you just need to reconnect it with a screwdriver, to finish the repair process.</br>"
 		return
 
+	if(status & BUILDING) // blatant plagarism at its peak
+		switch(build_status)
+			if(0)
+				. += "<br>It's an empty APC frame. Looks like it needs some wiring done.</br>"
+			if(1)
+				. += "<br>The wiring is now in place. The autotransformer looks like it needs some tuning, though.. Might need to grab a wrench.</br>"
+			if(2)
+				. += "<br>The autotransformer is working fine now. However, the powernet controller has not been initialized. It might need a jolt to get going.</br>"
+			if(3)
+				. += "<br>The powernet controller is working! All that's needed now is to reconnect the APC with a screwdriver.</br>"
+
 	if(user && !user.stat)
 		. += "A control terminal for the area electrical systems."
 		if(opened)
@@ -362,6 +374,19 @@ var/zapLimiter = 0
 /obj/machinery/power/apc/attackby(obj/item/W, mob/user)
 
 	src.add_fingerprint(user)
+	if(status & BUILDING) //APC custom construction
+		if (istype(W, /obj/item/cable_coil))
+			if (src.build_status == 0)
+				var/obj/item/cable_coil/theCoil = W
+				if (theCoil.amount >= 4)
+					SETUP_GENERIC_ACTIONBAR(user, src, 10 SECONDS, /obj/machinery/power/apc/proc/fix_wiring,\
+					list(theCoil, user), W.icon, W.icon_state, null, null)
+				else
+					boutput(user,"<span class='alert'>Not enough wires! (You might need around 5 pieces.)</span>")
+			else
+				boutput(user, "<span class='alert'>The frame already has wiring in it!</span>")
+
+
 	if(status & BROKEN) //APC REPAIR
 		if (isscrewingtool(W))
 			switch (src.repair_status)
@@ -552,6 +577,17 @@ var/zapLimiter = 0
 				UpdateIcon()
 			else
 				boutput(user, "<span class='alert'>Access denied.</span>")
+
+/obj/machinery/power/apc/proc/build_wiring(obj/item/W, mob/user)
+	W.change_stack_amount(-4)
+	boutput(user, "You wire the autotransformer.")
+	playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+	src.repair_status = 1
+
+/obj/machinery/power/apc/proc/build_autotransformer(mob/user)
+	boutput(user, "You tune the autotransformer.")
+	playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+	src.repair_status = 2
 
 /obj/machinery/power/apc/proc/fix_wiring(obj/item/W, mob/user)
 	W.change_stack_amount(-4)
@@ -1399,6 +1435,14 @@ var/zapLimiter = 0
 	if (prob(power * 2.5))
 		set_broken()
 
+
+/obj/machinery/power/apc/proc/set_unbuilt()
+	status |= BUILDING
+	icon_state = "apc0"
+	ClearAllOverlays()
+
+	operating = 0
+	update()
 
 /obj/machinery/power/apc/proc/set_broken()
 	status |= BROKEN
