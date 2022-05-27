@@ -17,7 +17,7 @@
 		var/mob/living/carbon/human/H = holder.owner
 
 		if (!ishuman(H) || !(H.limbs.l_arm || H.limbs.r_arm))
-			boutput(holder.owner, __blue("We have no arms to transform!"))
+			boutput(holder.owner, "<span class='notice'>We have no arms to transform!</span>")
 			return 1
 
 		if (H.limbs.l_arm && H.limbs.r_arm) //if both arms are available, replace the active one
@@ -37,7 +37,7 @@
 
 		var/choice = input("Select a form for our arm: ", "Select Arm", null) as null|anything in choices
 		if (!choice)
-			boutput(holder.owner, __blue("We change our mind."))
+			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
 			return 1
 		var/choice_index = choices.Find(choice)
 		var/cost = (choice_index == 1) ? 4 : 6
@@ -45,7 +45,7 @@
 		if (holder.points >= cost)
 			holder.points -= cost
 		else
-			boutput(holder.owner, __blue("We do not have enough DNA!"))
+			boutput(holder.owner, "<span class='notice'>We do not have enough DNA!</span>")
 			return 1
 
 		var/new_limb = 0
@@ -66,9 +66,9 @@
 			if (target_limb == "r_arm")
 				if (C.limbs.r_arm && istype(C.limbs.r_arm,text2path(new_limb)))
 					C.limbs.replace_with(target_limb, /obj/item/parts/human_parts/arm/right, C, 0)
-					boutput(holder.owner, __blue("<B>Our right arm shrinks back to normal size.</B>"))
+					boutput(holder.owner, "<span class='notice'><B>Our right arm shrinks back to normal size.</B></span>")
 			else
 				if (C.limbs.l_arm && istype(C.limbs.l_arm,text2path(new_limb)))
 					C.limbs.replace_with(target_limb, /obj/item/parts/human_parts/arm/left, C, 0)
-					boutput(holder.owner, __blue("<B>Our left arm shrinks back to normal size.</B>"))
+					boutput(holder.owner, "<span class='notice'><B>Our left arm shrinks back to normal size.</B></span>")
 		return 0

@@ -201,7 +201,7 @@
 
 		if (!isadmin(owner)) //admins can spawn wherever
 			if (!istype(T.loc, /area/station/) && !istype(T.loc, /area/blob/))
-				boutput(owner, __red("You need to start on the [station_or_ship()]!"))
+				boutput(owner, "<span class='alert'>You need to start on the [station_or_ship()]!</span>")
 				return
 
 			if(IS_ARRIVALS(T.loc))

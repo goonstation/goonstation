@@ -1710,7 +1710,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			if(istype(W,/obj/item/stick))
 				var/obj/item/stick/S = W
 				if(S.broken)
-					boutput(user, __red("You can't use a broken stick!"))
+					boutput(user, "<span class='alert'>You can't use a broken stick!</span>")
 					return
 
 			boutput(user, "<span class='notice'>You create a corndog...</span>")

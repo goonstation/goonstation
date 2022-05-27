@@ -15,7 +15,7 @@
 
 	var/corridor_density = 0.5
 
-	generate_turf(var/turf/gen_turf)
+	generate_turf(gen_turf, flags)
 		. = ..()
 		if(prob(corridor_density))
 			new/obj/map/light/void(gen_turf)
@@ -113,7 +113,7 @@
 	var/perlin_zoom = 65
 
  ///Seeds the rust-g perlin noise with a random number.
-/datum/map_generator/void_generator/generate_terrain(var/list/turfs, var/reuse_seed)
+/datum/map_generator/void_generator/generate_terrain(list/turfs, reuse_seed, flags)
 	. = ..()
 	var/height_seed = seeds[1]
 	var/humidity_seed = seeds[2]

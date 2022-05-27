@@ -14,22 +14,26 @@
 var/list/area/blacklist_flora_gen = list(/area/shuttle, /area/mining)
 
 ///This proc handles the creation of a turf of a specific biome type
-/datum/biome/proc/generate_turf(var/turf/gen_turf)
-	gen_turf.ReplaceWith(turf_type, handle_dir=FALSE)
+/datum/biome/proc/generate_turf(var/turf/gen_turf, flags=0)
+	gen_turf.ReplaceWith(turf_type, keep_old_material=FALSE, handle_dir=FALSE)
 
-	if(length(fauna_types) && prob(fauna_density))
-		var/mob/fauna = weighted_pick(fauna_types)
-		new fauna(gen_turf)
+	if((flags & MAPGEN_IGNORE_FAUNA) == 0)
+		if(length(fauna_types) && prob(fauna_density))
+			var/mob/fauna = weighted_pick(fauna_types)
+			new fauna(gen_turf)
 
 	// Skip areas where flora generation can be problematic due to introduction of dense anchored objects
-	if(gen_turf.z == Z_LEVEL_STATION)
+	if(gen_turf.z == Z_LEVEL_STATION && ((flags & MAPGEN_IGNORE_BUILDABLE) == 0))
+		gen_turf.AddComponent(/datum/component/buildable_turf)
+
 		for(var/bad_area in blacklist_flora_gen)
 			if(istype(gen_turf.loc, bad_area))
 				return
 
-	if(length(flora_types) && prob(flora_density))
-		var/obj/structure/flora = weighted_pick(flora_types)
-		new flora(gen_turf)
+	if((flags & MAPGEN_IGNORE_FLORA) == 0)
+		if(length(flora_types) && prob(flora_density))
+			var/obj/structure/flora = weighted_pick(flora_types)
+			new flora(gen_turf)
 
 /datum/biome/mudlands
 	turf_type = /turf/unsimulated/floor/auto/dirt

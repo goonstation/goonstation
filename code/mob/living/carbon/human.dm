@@ -640,10 +640,10 @@
 			if (C.points < 10)
 				boutput(src, "You try to release a headspider but don't have enough DNA points (requires 10)!")
 			for (var/mob/living/critter/changeling/spider in C.hivemind)
-				boutput(spider, __red("Your telepathic link to your master has been destroyed!"))
+				boutput(spider, "<span class='alert'>Your telepathic link to your master has been destroyed!</span>")
 				spider.hivemind_owner = 0
 			for (var/mob/dead/target_observer/hivemind_observer/obs in C.hivemind)
-				boutput(obs, __red("Your telepathic link to your master has been destroyed!"))
+				boutput(obs, "<span class='alert'>Your telepathic link to your master has been destroyed!</span>")
 				obs.boot()
 			if (C.hivemind.len > 0)
 				boutput(src, "Contact with the hivemind has been lost.")
@@ -2615,7 +2615,7 @@
 				return
 			if (iswerewolf(src))
 				if (src.handcuffs.werewolf_cant_rip())
-					boutput(src, __red("You can't seem to rip apart these silver handcuffs. They burn!"))
+					boutput(src, "<span class='alert'>You can't seem to rip apart these silver handcuffs. They burn!</span>")
 					src.TakeDamage("l_arm", 0, 2, 0, DAMAGE_BURN)
 					src.TakeDamage("r_arm", 0, 2, 0, DAMAGE_BURN)
 					return

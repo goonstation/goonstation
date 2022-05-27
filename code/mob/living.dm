@@ -2070,3 +2070,15 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			return copytext(message, 2)
 	src.singing = 0
 	. =  message
+
+// can stumble or flip while drunk
+/mob/living/proc/can_drunk_act()
+	if (!src.canmove || !isturf(src.loc))
+		return FALSE
+	if (length(src.grabbed_by))
+		for (var/obj/item/grab/G in src.grabbed_by)
+			if (istype(G, /obj/item/grab/block))
+				continue
+			if (G.state > GRAB_PASSIVE)
+				return FALSE
+	return !src.lying && !((length(src.grabbed_by) || src.pulled_by) && src.hasStatus("handcuffed"))
