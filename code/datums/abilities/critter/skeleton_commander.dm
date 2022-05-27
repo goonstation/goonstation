@@ -7,6 +7,7 @@
 	icon_state = "rally"
 	cooldown = 60 SECONDS
 	targeted = 0
+	//Todo add unique overlay and/or sound on use.
 	//List of critters we can buff, same as the one the wraith portal has.
 	var/border_icon = 'icons/mob/wraith_ui.dmi'
 	var/border_state = "harbinger_frame"
