@@ -1,4 +1,9 @@
 
+(t)sun may 22 22
+(u)KubeRoot, Kapu1178
+(p)8056
+(e)🆕|feature
+(*)The 'say' verb and typing indicators should now be much more responsive
 (t)sat may 21 22
 (u)FlameArrow57
 (p)7498
