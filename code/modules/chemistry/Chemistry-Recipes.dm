@@ -2850,6 +2850,25 @@ datum
 			result_amount = 3
 			mix_phrase = "A white crystalline substance condenses out of the mixture."
 			mix_sound = 'sound/misc/fuse.ogg'
+		
+		slow_saltpetre 
+			name = "slow saltpetre"
+			id = "slow_saltpetre"
+			result = "saltpetre" 
+			// compost turns ammonia into nitrates
+			// nitrates are extracted from "soil" with water
+			// potash purifies nitrates into saltpetre
+			required_reagents = list("ammonia" = 1, "poo" = 1, "potash" = 1, "water" = 1)
+			result_amount = 2
+			instant = 0 // Potash filtering takes some time.
+			reaction_speed = 1
+			mix_phrase = "A white crystalline substance leaches into the water."
+			mix_sound = 'sound/misc/fuse.ogg'
+
+			// water byproduct
+			// some nitrification processes create additional water.
+			on_reaction(var/datum/reagents/holder, created_volume)
+				holder.add_reagent("water", created_volume,,holder.total_temperature)
 
 		jenkem // moved this down so improperly mixed nutrients yield jenkem instead
 			name = "Jenkem"
