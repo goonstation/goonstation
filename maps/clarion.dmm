@@ -36384,9 +36384,6 @@
 /area/station/engine/core)
 "bxY" = (
 /obj/wingrille_spawn/auto/crystal,
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 6
-	},
 /obj/machinery/door/poddoor/blast{
 	density = 0;
 	dir = 4;
@@ -36403,9 +36400,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 4
-	},
 /obj/machinery/door/airlock/pyro/engineering/alt{
 	name = "Engine Room"
 	},
@@ -36414,29 +36408,7 @@
 /turf/simulated/floor/orangeblack,
 /area/station/engine/core)
 "bya" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 4
-	},
 /obj/decal/poster/wallsign/fire,
-/turf/simulated/wall/auto/reinforced/supernorn{
-	explosion_resistance = 15;
-	name = "very reinforced wall"
-	},
-/area/station/engine/core)
-"byb" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 4
-	},
-/turf/simulated/wall/auto/reinforced/supernorn{
-	explosion_resistance = 15;
-	name = "very reinforced wall"
-	},
-/area/station/engine/core)
-"byc" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0;
-	dir = 10
-	},
 /turf/simulated/wall/auto/reinforced/supernorn{
 	explosion_resistance = 15;
 	name = "very reinforced wall"
@@ -36755,18 +36727,6 @@
 	name = "very reinforced wall"
 	},
 /area/station/engine/core)
-"byQ" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/unary/furnace_connector,
-/obj/machinery/power/furnace/thermo{
-	fuel = 100
-	},
-/turf/simulated/floor/plating/random,
-/area/station/engine/core)
 "byR" = (
 /obj/machinery/power/apc{
 	dir = 1;
@@ -36777,20 +36737,12 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/atmospherics/unary/furnace_connector,
-/obj/machinery/power/furnace/thermo{
-	fuel = 100
-	},
 /turf/simulated/floor/plating/random,
 /area/station/engine/core)
 "byS" = (
 /obj/machinery/light{
 	dir = 1;
 	pixel_y = 21
-	},
-/obj/machinery/atmospherics/unary/furnace_connector,
-/obj/machinery/power/furnace/thermo{
-	fuel = 100
 	},
 /turf/simulated/floor/plating/random,
 /area/station/engine/core)
@@ -36819,20 +36771,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/portables_connector{
-	dir = 4;
-	name = "Mixing West"
-	},
-/turf/simulated/floor/engine{
-	icon_state = "engine_caution_north"
-	},
-/area/station/engine/core)
-"byX" = (
-/obj/machinery/atmospherics/valve{
-	dir = 4;
-	name = "mixing valve"
-	},
-/obj/item/wrench,
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_north"
 	},
@@ -36848,11 +36786,6 @@
 	pixel_y = 21
 	},
 /obj/item/device/radio/intercom/engineering,
-/obj/machinery/atmospherics/portables_connector{
-	dir = 8;
-	name = "Mixing West"
-	},
-/obj/machinery/portable_atmospherics/canister/empty,
 /turf/simulated/floor/engine{
 	dir = 4;
 	icon_state = "engine_caution_corners"
@@ -36934,7 +36867,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /obj/rack,
 /obj/item/clothing/suit/fire,
 /obj/item/tank/air,
@@ -36980,13 +36912,6 @@
 /turf/simulated/floor/engine{
 	dir = 8;
 	icon_state = "engine_caution_corners"
-	},
-/area/station/engine/core)
-"bzj" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold,
-/turf/simulated/wall/auto/reinforced/supernorn{
-	explosion_resistance = 15;
-	name = "very reinforced wall"
 	},
 /area/station/engine/core)
 "bzk" = (
@@ -37343,10 +37268,6 @@
 	dir = 8;
 	pixel_x = -10
 	},
-/obj/machinery/atmospherics/pipe/manifold{
-	dir = 8;
-	level = 2
-	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "bAa" = (
@@ -37355,42 +37276,10 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
-"bAb" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
-	dir = 9
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
 "bAc" = (
 /turf/simulated/floor/engine,
 /area/station/engine/core)
-"bAd" = (
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/landmark/start{
-	name = "Engineer"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bAe" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
 "bAf" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
 /turf/simulated/floor/engine{
 	dir = 5;
 	icon_state = "engine_caution_corners2"
@@ -37407,10 +37296,6 @@
 	dir = 9;
 	icon_state = "engine_caution_corners2"
 	},
-/area/station/engine/core)
-"bAi" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold,
-/turf/simulated/floor/engine,
 /area/station/engine/core)
 "bAj" = (
 /obj/machinery/atmospherics/pipe/manifold{
@@ -37978,148 +37863,15 @@
 	dir = 8;
 	pixel_x = -10
 	},
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 5
-	},
 /turf/simulated/floor/engine{
 	dir = 10;
 	icon_state = "engine_caution_corners2"
-	},
-/area/station/engine/core)
-"bBk" = (
-/obj/machinery/atmospherics/valve{
-	dir = 4;
-	name = "furnace valve"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bBl" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 10
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bBm" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 6
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bBn" = (
-/obj/machinery/atmospherics/pipe/manifold{
-	dir = 1;
-	level = 2
-	},
-/obj/machinery/meter,
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bBo" = (
-/obj/machinery/atmospherics/binary/passive_gate{
-	dir = 4;
-	on = 1;
-	pixel_y = 1;
-	target_pressure = 1e+031
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bBp" = (
-/obj/machinery/atmospherics/valve{
-	dir = 4;
-	name = "hot loop inlet valve"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bBq" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 4
-	},
-/obj/machinery/meter,
-/turf/simulated/floor/engine{
-	dir = 6;
-	icon_state = "engine_caution_corners2"
-	},
-/area/station/engine/core)
-"bBr" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 10
-	},
-/obj/machinery/power/stats_meter{
-	name = "Hot Loop Inlet Meter";
-	tag = "Hot Loop Inlet Meter"
-	},
-/turf/simulated/floor/engine{
-	allows_vehicles = 0;
-	icon_state = "engine_caution_south"
 	},
 /area/station/engine/core)
 "bBs" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/landmark{
 	icon_state = "x3";
 	name = "peststart"
-	},
-/turf/simulated/floor/engine{
-	allows_vehicles = 0;
-	icon_state = "engine_caution_south"
-	},
-/area/station/engine/core)
-"bBt" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 6
-	},
-/obj/machinery/power/stats_meter{
-	name = "Cold Loop Inlet Meter";
-	tag = "Cold Loop Inlet Meter"
-	},
-/turf/simulated/floor/engine{
-	allows_vehicles = 0;
-	icon_state = "engine_caution_south"
-	},
-/area/station/engine/core)
-"bBu" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 4
-	},
-/obj/machinery/meter,
-/turf/simulated/floor/engine{
-	dir = 10;
-	icon_state = "engine_caution_corners2"
-	},
-/area/station/engine/core)
-"bBv" = (
-/obj/machinery/atmospherics/valve{
-	dir = 4;
-	name = "cold loop inlet valve"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bBw" = (
-/obj/machinery/atmospherics/binary/passive_gate{
-	dir = 8;
-	on = 1;
-	pixel_y = 1;
-	target_pressure = 1e+031
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bBx" = (
-/obj/machinery/atmospherics/pipe/manifold{
-	dir = 1;
-	level = 2
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bBy" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 4
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bBz" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 9
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -38550,115 +38302,21 @@
 	icon_state = "engine_caution_west"
 	},
 /area/station/engine/core)
-"bCt" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bCu" = (
-/obj/machinery/atmospherics/valve{
-	name = "combustion chamber bypass valve"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bCv" = (
-/obj/machinery/atmospherics/portables_connector{
-	dir = 4;
-	name = "Hot Loop Auxillary West"
-	},
-/turf/simulated/floor/caution/misc{
-	dir = 8
-	},
-/area/station/engine/core)
-"bCw" = (
-/obj/machinery/atmospherics/valve{
-	dir = 4;
-	name = "hot loop auxillary west valve"
-	},
-/turf/simulated/floor/caution/misc{
-	dir = 4
-	},
-/area/station/engine/core)
 "bCx" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 10
-	},
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/simulated/floor/engine{
-	allows_vehicles = 0;
-	icon_state = "engine_caution_east"
-	},
-/area/station/engine/core)
-"bCy" = (
-/obj/machinery/atmospherics/binary/circulatorTemp,
-/turf/simulated/floor/caution/misc{
-	dir = 8
-	},
-/area/station/engine/core)
-"bCz" = (
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/cable,
-/obj/machinery/power/generatorTemp,
-/obj/item/paper/engine,
-/turf/simulated/floor/caution/northsouth,
-/area/station/engine/core)
-"bCA" = (
-/obj/machinery/atmospherics/binary/circulatorTemp/right,
-/turf/simulated/floor/caution/misc{
-	dir = 4
-	},
+/turf/simulated/floor/engine,
 /area/station/engine/core)
 "bCB" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 6
-	},
 /obj/machinery/light{
 	dir = 8
-	},
-/turf/simulated/floor/engine{
-	allows_vehicles = 0;
-	icon_state = "engine_caution_west"
-	},
-/area/station/engine/core)
-"bCC" = (
-/obj/machinery/atmospherics/valve{
-	dir = 4;
-	name = "cold loop auxillary west valve"
-	},
-/turf/simulated/floor/caution/misc{
-	dir = 8
-	},
-/area/station/engine/core)
-"bCD" = (
-/obj/machinery/atmospherics/portables_connector{
-	dir = 8;
-	name = "Cod Loop Auxillary West"
-	},
-/turf/simulated/floor/caution/misc{
-	dir = 4
-	},
-/area/station/engine/core)
-"bCE" = (
-/obj/machinery/atmospherics/valve{
-	name = "cold loop bypass valve"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "bCF" = (
 /obj/landmark/start{
 	name = "Engineer"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bCG" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 6
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -38676,19 +38334,6 @@
 /turf/simulated/floor/engine{
 	allows_vehicles = 0;
 	icon_state = "engine_caution_corners"
-	},
-/area/station/engine/core)
-"bCJ" = (
-/obj/securearea{
-	desc = "A warning sign which reads 'Fire Hazard'";
-	icon_state = "fire";
-	layer = 2.5;
-	name = "FIRE HAZARD"
-	},
-/obj/machinery/atmospherics/pipe/simple/insulated/cold,
-/turf/simulated/wall/auto/reinforced/supernorn{
-	explosion_resistance = 15;
-	name = "very reinforced wall"
 	},
 /area/station/engine/core)
 "bCK" = (
@@ -39031,29 +38676,7 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/gas)
-"bDw" = (
-/obj/securearea{
-	desc = "A warning sign which reads 'Fire Hazard'";
-	icon_state = "fire";
-	layer = 2.5;
-	name = "FIRE HAZARD"
-	},
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 6
-	},
-/turf/simulated/wall/auto/reinforced/supernorn{
-	explosion_resistance = 15;
-	name = "very reinforced wall"
-	},
-/area/station/engine/core)
 "bDx" = (
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/machinery/atmospherics/valve{
-	dir = 4;
-	name = "combustion chamber outlet valve"
-	},
 /obj/machinery/light{
 	dir = 8;
 	pixel_x = -10
@@ -39063,256 +38686,11 @@
 	icon_state = "engine_caution_corners2"
 	},
 /area/station/engine/core)
-"bDy" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/manifold{
-	level = 2
-	},
-/obj/machinery/meter,
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bDz" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/manifold{
-	level = 2
-	},
-/obj/cable{
-	icon_state = "2-4"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bDA" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
-	dir = 9
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bDB" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/manifold{
-	dir = 8;
-	level = 2
-	},
-/obj/machinery/meter,
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bDC" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/binary/passive_gate{
-	dir = 8;
-	on = 1;
-	pixel_y = 1;
-	target_pressure = 1e+031
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bDD" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/valve{
-	dir = 4;
-	name = "hot loop outlet valve"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bDE" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/manifold{
-	level = 2
-	},
-/obj/machinery/meter,
-/turf/simulated/floor/engine{
-	dir = 5;
-	icon_state = "engine_caution_corners2"
-	},
-/area/station/engine/core)
-"bDF" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 9
-	},
-/obj/machinery/power/stats_meter{
-	name = "Hot Loop Outlet Meter";
-	tag = "Hot Loop Outlet Meter"
-	},
-/turf/simulated/floor/engine{
-	allows_vehicles = 0;
-	icon_state = "engine_caution_north"
-	},
-/area/station/engine/core)
-"bDH" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 5
-	},
-/obj/machinery/power/stats_meter{
-	name = "Cold Loop Outlet Meter";
-	tag = "Cold Loop Outlet Meter"
-	},
-/turf/simulated/floor/engine{
-	allows_vehicles = 0;
-	icon_state = "engine_caution_north"
-	},
-/area/station/engine/core)
-"bDI" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/manifold{
-	level = 2
-	},
-/obj/machinery/meter,
-/turf/simulated/floor/engine{
-	dir = 9;
-	icon_state = "engine_caution_corners2"
-	},
-/area/station/engine/core)
-"bDJ" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/valve{
-	dir = 4;
-	name = "cold loop outlet valve"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bDK" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/machinery/atmospherics/binary/passive_gate{
-	dir = 4;
-	on = 1;
-	pixel_y = 1;
-	target_pressure = 1e+031
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bDL" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/manifold{
-	level = 2
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bDM" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 4
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bDN" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/manifold{
-	dir = 4;
-	level = 2
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bDO" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bDP" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 6
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bDQ" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/manifold{
-	dir = 1;
-	level = 2
-	},
-/turf/simulated/floor/engine{
-	allows_vehicles = 0;
-	icon_state = "engine_caution_east"
-	},
-/area/station/engine/core)
 "bDR" = (
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 9
 	},
 /obj/machinery/door/airlock/pyro/engineering/alt{
 	dir = 4;
@@ -39541,95 +38919,7 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/gas)
-"bEt" = (
-/obj/machinery/atmospherics/pipe/simple/insulated,
-/turf/simulated/wall/auto/reinforced/supernorn{
-	explosion_resistance = 15;
-	name = "very reinforced wall"
-	},
-/area/station/engine/core)
-"bEu" = (
-/obj/machinery/atmospherics/portables_connector{
-	name = "Combustion Chamber Connector West (West)"
-	},
-/turf/simulated/floor/caution/misc{
-	dir = 1
-	},
-/area/station/engine/core)
-"bEv" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bEw" = (
-/obj/machinery/atmospherics/portables_connector{
-	name = "Combustion Chamber Connector West (East)"
-	},
-/turf/simulated/floor/caution/misc{
-	dir = 1
-	},
-/area/station/engine/core)
-"bEx" = (
-/obj/machinery/atmospherics/pipe/manifold{
-	dir = 8;
-	level = 2
-	},
-/obj/machinery/meter,
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bEy" = (
-/obj/machinery/atmospherics/valve{
-	dir = 4;
-	name = "combustion chamber inlet valve"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bEz" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 6
-	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_rathen"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bEA" = (
-/obj/machinery/atmospherics/valve{
-	dir = 4;
-	name = "cold loop bypass inlet valve"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bEB" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 4
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bEC" = (
-/obj/machinery/light,
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 4
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bED" = (
-/obj/machinery/light,
-/obj/machinery/atmospherics/valve{
-	name = "cold loop bypass outlet valve"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
 "bEE" = (
-/obj/machinery/atmospherics/valve{
-	name = "cold loop pressure release valve"
-	},
 /turf/simulated/floor/engine{
 	allows_vehicles = 0;
 	icon_state = "engine_caution_east"
@@ -39776,40 +39066,13 @@
 	},
 /area/station/engine/gas)
 "bEY" = (
-/obj/machinery/atmospherics/valve{
-	name = "combustion feed valve"
-	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 5;
 	name = "autoname  - SS13";
 	pixel_x = -10
 	},
-/obj/machinery/activation_button/ignition_switch{
-	id = "combustion_ignition";
-	pixel_x = -24
-	},
-/turf/simulated/floor/caution/westeast,
-/area/station/engine/core)
-"bEZ" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "2-4"
-	},
 /turf/simulated/floor/engine,
-/area/station/engine/core)
-"bFa" = (
-/obj/machinery/atmospherics/valve{
-	name = "combustion feed valve"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/caution/westeast,
 /area/station/engine/core)
 "bFb" = (
 /obj/cable{
@@ -39824,114 +39087,11 @@
 /obj/machinery/power/rtg,
 /turf/simulated/floor/engine/caution/northsouth,
 /area/station/engine/core)
-"bFc" = (
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/machinery/power/data_terminal,
-/obj/machinery/computer/atmosphere/pumpcontrol{
-	dir = 8
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bFd" = (
-/obj/machinery/atmospherics/portables_connector{
-	name = "Hot Loop Gas Supply (West)"
-	},
-/turf/simulated/floor/caution/misc{
-	dir = 8
-	},
-/area/station/engine/core)
-"bFe" = (
-/obj/machinery/atmospherics/portables_connector{
-	name = "Hot Loop Gas Supply (East)"
-	},
-/turf/simulated/floor/caution/misc{
-	dir = 4
-	},
-/area/station/engine/core)
-"bFf" = (
-/obj/machinery/atmospherics/portables_connector{
-	name = "Cold Loop Gas Supply (West)"
-	},
-/turf/simulated/floor/caution/misc{
-	dir = 8
-	},
-/area/station/engine/core)
-"bFg" = (
-/obj/machinery/atmospherics/portables_connector{
-	name = "Cold Loop Gas Supply (East)"
-	},
-/obj/machinery/portable_atmospherics/canister/empty,
-/turf/simulated/floor/caution/misc{
-	dir = 4
-	},
-/area/station/engine/core)
 "bFh" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/core)
-"bFi" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 6
-	},
-/obj/machinery/meter,
-/turf/simulated/wall/auto/reinforced/supernorn{
-	explosion_resistance = 15;
-	name = "very reinforced wall"
-	},
-/area/station/engine/core)
-"bFj" = (
-/obj/wingrille_spawn/auto/crystal,
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 4
-	},
-/obj/machinery/door/poddoor/blast{
-	density = 0;
-	dir = 4;
-	doordir = "left";
-	icon_state = "bdoorleft0";
-	id = "engineshield";
-	layer = 4;
-	name = "Engine Room Heat Shield";
-	opacity = 0
-	},
-/turf/simulated/floor/plating,
-/area/station/engine/core)
-"bFk" = (
-/obj/wingrille_spawn/auto/crystal,
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 4
-	},
-/obj/machinery/door/poddoor/blast{
-	density = 0;
-	dir = 4;
-	icon_state = "bdoormid0";
-	id = "engineshield";
-	layer = 4;
-	name = "Engine Room Heat Shield";
-	opacity = 0
-	},
-/turf/simulated/floor/plating,
-/area/station/engine/core)
-"bFl" = (
-/obj/wingrille_spawn/auto/crystal,
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 9
-	},
-/obj/machinery/door/poddoor/blast{
-	density = 0;
-	dir = 4;
-	icon_state = "bdoormid0";
-	id = "engineshield";
-	layer = 4;
-	name = "Engine Room Heat Shield";
-	opacity = 0
-	},
-/turf/simulated/floor/plating,
 /area/station/engine/core)
 "bFm" = (
 /obj/wingrille_spawn/auto/crystal,
@@ -39949,21 +39109,6 @@
 	opacity = 0
 	},
 /turf/simulated/floor/plating,
-/area/station/engine/core)
-"bFn" = (
-/obj/securearea{
-	desc = "A warning sign which reads 'Fire Hazard'";
-	icon_state = "fire";
-	layer = 2.5;
-	name = "FIRE HAZARD"
-	},
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 10
-	},
-/turf/simulated/wall/auto/reinforced/supernorn{
-	explosion_resistance = 15;
-	name = "very reinforced wall"
-	},
 /area/station/engine/core)
 "bFo" = (
 /turf/simulated/wall/auto/supernorn,
@@ -40103,97 +39248,10 @@
 /obj/random_item_spawner/desk_stuff,
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
-"bFH" = (
-/obj/machinery/atmospherics/binary/pump{
-	frequency = 1225;
-	icon_state = "intact_on";
-	id = "Combustion Feed Pump (West)";
-	name = "combustion feed pump (west)";
-	on = 1;
-	target_pressure = 500
-	},
-/obj/machinery/door_control{
-	id = "fireshield";
-	name = "Combustion Chamber Heat Shield";
-	pixel_x = -24;
-	pixel_y = 10
-	},
-/obj/machinery/door_control{
-	id = "combustion";
-	name = "Combustion Chamber Vent";
-	pixel_x = -24;
-	pixel_y = -8
-	},
-/turf/simulated/floor/caution/misc,
-/area/station/engine/core)
 "bFI" = (
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_south"
 	},
-/area/station/engine/core)
-"bFJ" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/engine{
-	icon_state = "engine_caution_south"
-	},
-/area/station/engine/core)
-"bFK" = (
-/obj/machinery/atmospherics/binary/pump{
-	frequency = 1225;
-	icon_state = "intact_on";
-	id = "Combustion Feed Pump (East)";
-	name = "combustion feed pump (east)";
-	on = 1;
-	target_pressure = 500
-	},
-/turf/simulated/floor/caution/misc,
-/area/station/engine/core)
-"bFM" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 10
-	},
-/obj/table/reinforced/auto,
-/obj/item/device/radio,
-/obj/item/clothing/ears/earmuffs,
-/obj/item/device/transfer_valve{
-	pixel_x = -8;
-	pixel_y = -1
-	},
-/obj/item/device/transfer_valve{
-	pixel_x = -17;
-	pixel_y = 4
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bFN" = (
-/obj/machinery/atmospherics/valve{
-	name = "hot loop gas supply valve"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bFO" = (
-/obj/machinery/atmospherics/valve{
-	name = "cold loop gas supply valve"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bFP" = (
-/obj/wingrille_spawn/auto/crystal,
-/obj/machinery/atmospherics/pipe/simple/insulated/cold,
-/obj/machinery/door/poddoor/blast{
-	density = 0;
-	dir = 1;
-	icon_state = "bdoormid0";
-	id = "engineshield";
-	layer = 4;
-	name = "Engine Room Heat Shield";
-	opacity = 0
-	},
-/turf/simulated/floor/plating,
 /area/station/engine/core)
 "bFQ" = (
 /turf/simulated/floor/plating/airless,
@@ -40209,7 +39267,6 @@
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "bFT" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /obj/machinery/meter,
 /turf/simulated/wall/auto/reinforced/supernorn{
 	explosion_resistance = 15;
@@ -40375,84 +39432,9 @@
 /obj/access_spawn/engineering,
 /turf/simulated/floor/engine,
 /area/station/engine/gas)
-"bGp" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0
-	},
-/turf/simulated/wall/auto/reinforced/supernorn{
-	explosion_resistance = 15;
-	name = "very reinforced wall"
-	},
-/area/station/engine/core)
 "bGq" = (
 /obj/machinery/light_switch/west{
 	dir = 4
-	},
-/obj/machinery/atmospherics/binary/volume_pump{
-	dir = 1;
-	on = 1;
-	transfer_rate = 1000
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bGr" = (
-/obj/machinery/atmospherics/binary/pump{
-	frequency = 1225;
-	icon_state = "intact_on";
-	id = "Hot Loop Gas Supply (West)";
-	name = "hot loop gas supply pump (west)";
-	on = 1;
-	target_pressure = 1000
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bGs" = (
-/obj/machinery/atmospherics/binary/pump{
-	frequency = 1225;
-	icon_state = "intact_on";
-	id = "Hot Loop Gas Supply (East)";
-	name = "hot loop gas supply pump (east)";
-	on = 1;
-	target_pressure = 1000
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bGt" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold,
-/obj/machinery/meter,
-/obj/landmark/start{
-	name = "Engineer"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bGu" = (
-/obj/machinery/atmospherics/binary/pump{
-	frequency = 1225;
-	icon_state = "intact_on";
-	id = "Cold Loop Gas Supply (West)";
-	name = "cold loop gas supply pump (west)";
-	on = 1;
-	target_pressure = 1000
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bGv" = (
-/obj/machinery/atmospherics/binary/pump{
-	frequency = 1225;
-	icon_state = "intact_on";
-	id = "Cold Loop Gas Supply (East)";
-	name = "cold loop gas supply pump (east)";
-	on = 1;
-	target_pressure = 1000
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bGw" = (
-/obj/machinery/light,
-/obj/machinery/atmospherics/binary/volume_pump{
-	dir = 1;
-	on = 1;
-	transfer_rate = 1000
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -40463,7 +39445,6 @@
 	icon_state = "shock";
 	name = "Danger: High Voltage"
 	},
-/obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /obj/machinery/door/poddoor/blast{
 	density = 0;
 	dir = 1;
@@ -40488,7 +39469,6 @@
 	icon_state = "shock";
 	name = "Danger: High Voltage"
 	},
-/obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /turf/simulated/wall/auto/reinforced/supernorn{
 	explosion_resistance = 15;
 	name = "very reinforced wall"
@@ -40571,49 +39551,6 @@
 /obj/item/clothing/shoes/magnetic,
 /turf/simulated/floor/plating,
 /area/station/hangar/qm)
-"bGL" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 1;
-	icon_state = "on";
-	on = 1
-	},
-/turf/simulated/floor/engine/vacuum{
-	dir = 8;
-	icon_state = "engine_caution_corners"
-	},
-/area/station/engine/combustion_chamber)
-"bGM" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 6
-	},
-/turf/simulated/floor/engine/vacuum{
-	icon_state = "engine_caution_north"
-	},
-/area/station/engine/combustion_chamber)
-"bGN" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 10
-	},
-/turf/simulated/floor/engine/vacuum{
-	icon_state = "engine_caution_north"
-	},
-/area/station/engine/combustion_chamber)
-"bGO" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 1;
-	icon_state = "on";
-	on = 1
-	},
-/turf/simulated/floor/engine/vacuum{
-	dir = 4;
-	icon_state = "engine_caution_corners"
-	},
-/area/station/engine/combustion_chamber)
 "bGP" = (
 /obj/table,
 /obj/machinery/phone,
@@ -40622,46 +39559,13 @@
 	icon_state = "engine_caution_misc"
 	},
 /area/station/engine/core)
-"bGQ" = (
-/obj/machinery/meter,
-/obj/machinery/atmospherics/pipe/manifold{
-	level = 2
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bGR" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 9
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bGS" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0;
-	dir = 5
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
 "bGT" = (
 /obj/machinery/firealarm{
 	dir = 4;
 	layer = 4;
 	pixel_x = 24
 	},
-/obj/machinery/atmospherics/pipe/manifold{
-	level = 2
-	},
-/obj/machinery/meter,
 /turf/simulated/floor/engine,
-/area/station/engine/core)
-"bGU" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 9
-	},
-/turf/simulated/wall/auto/reinforced/supernorn{
-	explosion_resistance = 15;
-	name = "very reinforced wall"
-	},
 /area/station/engine/core)
 "bGV" = (
 /obj/cable{
@@ -40696,7 +39600,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bGZ" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /turf/simulated/wall/auto/reinforced/supernorn{
 	explosion_resistance = 15;
 	name = "very reinforced wall"
@@ -40758,9 +39661,6 @@
 	dir = 8;
 	pixel_x = -10
 	},
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 6
-	},
 /turf/simulated/floor/engine/vacuum{
 	icon_state = "engine_caution_west"
 	},
@@ -40772,24 +39672,6 @@
 /obj/machinery/arc_electroplater,
 /turf/simulated/floor/plating/airless,
 /area/station/mining/magnet)
-"bHk" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 6
-	},
-/turf/simulated/floor/engine/vacuum{
-	icon_state = "engine_caution_east"
-	},
-/area/station/engine/combustion_chamber)
-"bHm" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
-	dir = 9
-	},
-/turf/simulated/wall/auto/reinforced/supernorn{
-	explosion_resistance = 15;
-	name = "very reinforced wall"
-	},
-/area/station/engine/core)
 "bHn" = (
 /obj/machinery/light/emergency,
 /obj/machinery/portable_atmospherics/scrubber,
@@ -40809,16 +39691,10 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/machinery/atmospherics/pipe/simple/insulated/cold,
-/obj/machinery/power/stats_meter{
-	name = "Cold Loop Radiator Meter";
-	tag = "Cold Loop Radiator Meter"
-	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "bHq" = (
 /obj/machinery/light/emergency,
-/obj/storage/crate/furnacefuel,
 /turf/simulated/floor/engine{
 	dir = 4;
 	icon_state = "engine_caution_misc"
@@ -40845,7 +39721,6 @@
 /area/station/engine/core)
 "bHt" = (
 /obj/wingrille_spawn/auto/crystal,
-/obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /turf/simulated/floor/plating,
 /area/station/engine/core)
 "bHu" = (
@@ -40975,9 +39850,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 1
-	},
 /turf/simulated/floor/engine/vacuum{
 	icon_state = "engine_caution_west"
 	},
@@ -41006,9 +39878,6 @@
 	layer = 30;
 	name = "Mounted Igniter";
 	pixel_x = 24
-	},
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 1
 	},
 /turf/simulated/floor/engine/vacuum{
 	icon_state = "engine_caution_east"
@@ -41077,23 +39946,6 @@
 	},
 /turf/simulated/floor/engine/caution/northsouth,
 /area/station/engine/core)
-"bHY" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 9
-	},
-/turf/simulated/floor/engine/vacuum,
-/area/station/engine/combustion_chamber)
-"bHZ" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 1
-	},
-/turf/simulated/floor/engine/vacuum,
-/area/station/engine/combustion_chamber)
 "bIa" = (
 /obj/warp_beacon{
 	name = "Clarion south beacon"
@@ -41112,26 +39964,11 @@
 /turf/space,
 /area/station/shield_zone)
 "bIe" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 9
-	},
 /turf/simulated/floor/engine/vacuum{
 	icon_state = "engine_caution_west"
 	},
 /area/station/engine/combustion_chamber)
-"bIg" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 9
-	},
-/turf/simulated/floor/engine/vacuum,
-/area/station/engine/combustion_chamber)
 "bIh" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 9
-	},
 /turf/simulated/floor/engine/vacuum{
 	icon_state = "engine_caution_east"
 	},
@@ -41259,9 +40096,6 @@
 /turf/simulated/floor/plating/airless,
 /area/station/mining/magnet)
 "bIt" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 5
-	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/combustion_chamber)
 "bIu" = (
@@ -41276,24 +40110,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "bIw" = (
-/obj/machinery/door/poddoor/blast{
-	dir = 4;
-	icon_state = "bdoorleft1";
-	id = "combustion";
-	layer = 4;
-	name = "Combustion Chamber Vent"
-	},
 /turf/simulated/floor/engine/vacuum{
 	icon_state = "engine_caution_corners"
 	},
 /area/station/engine/combustion_chamber)
 "bIx" = (
-/obj/machinery/door/poddoor/blast{
-	dir = 4;
-	id = "combustion";
-	layer = 4;
-	name = "Combustion Chamber Vent"
-	},
 /turf/simulated/floor/engine/vacuum{
 	icon_state = "engine_caution_south"
 	},
@@ -41317,21 +40138,7 @@
 /obj/lattice,
 /turf/space,
 /area/space)
-"bIB" = (
-/obj/machinery/atmospherics/pipe/vent{
-	dir = 4
-	},
-/turf/simulated/floor/plating/airless,
-/area/space)
 "bIC" = (
-/obj/machinery/door/poddoor/blast{
-	dir = 4;
-	doordir = "right";
-	icon_state = "bdoorright1";
-	id = "combustion";
-	layer = 4;
-	name = "Combustion Chamber Vent"
-	},
 /turf/simulated/floor/engine/vacuum{
 	dir = 1;
 	icon_state = "engine_caution_corners"
@@ -41600,21 +40407,6 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/ptl)
-"bJk" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/valve{
-	name = "combustion chamber inlet valve"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"bJl" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 4
-	},
-/turf/simulated/floor/engine/vacuum,
-/area/station/engine/combustion_chamber)
 "bJm" = (
 /obj/machinery/door/poddoor/blast{
 	autoclose = 1;
@@ -41739,13 +40531,6 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/ptl)
-"bJw" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 5
-	},
-/obj/machinery/shieldgenerator/energy_shield,
-/turf/simulated/floor/engine,
-/area/station/engine/core)
 "bJy" = (
 /turf/simulated/floor/yellow/side{
 	dir = 8
@@ -43182,20 +41967,6 @@
 	dir = 4
 	},
 /area/space)
-"bNj" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0;
-	dir = 9;
-	layer = 2.13
-	},
-/turf/space,
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
-/area/space)
 "bNk" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -43228,10 +41999,6 @@
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
-	},
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 5;
-	layer = 2.13
 	},
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
@@ -43286,9 +42053,6 @@
 	d2 = 4;
 	dir = 0;
 	icon_state = "0-4"
-	},
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	layer = 2.13
 	},
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
@@ -43386,28 +42150,6 @@
 	dir = 6;
 	name = "autoname  - SS13";
 	pixel_y = 21
-	},
-/turf/space,
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
-/area/space)
-"bNx" = (
-/obj/grille/catwalk,
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0;
-	dir = 9;
-	layer = 2.13
-	},
-/turf/space,
-/turf/simulated/floor/airless/plating/catwalk,
-/area/space)
-"bNy" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/obj/decal/poster/wallsign/hazard_exheat{
-	pixel_y = 32
 	},
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
@@ -44500,15 +43242,6 @@
 /area/station/medical/research{
 	name = "Genetic Research"
 	})
-"dQp" = (
-/obj/machinery/atmospherics/pipe/simple/junction{
-	dir = 8
-	},
-/turf/simulated/wall/auto/reinforced/supernorn{
-	explosion_resistance = 15;
-	name = "very reinforced wall"
-	},
-/area/station/engine/combustion_chamber)
 "dQx" = (
 /obj/submachine/chef_sink/chem_sink{
 	desc = "A water-filled unit intended for hand-washing purposes.";
@@ -45287,24 +44020,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/robotics)
-"fIl" = (
-/obj/wingrille_spawn/auto/crystal,
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/door/poddoor/blast{
-	density = 0;
-	dir = 4;
-	icon_state = "bdoormid0";
-	id = "fireshield";
-	layer = 4;
-	name = "Combustion Chamber Heat Shield";
-	opacity = 0
-	},
-/turf/simulated/floor/plating,
-/area/station/engine/combustion_chamber)
 "fJy" = (
 /obj/stool/chair/office/blue,
 /obj/cable{
@@ -45360,17 +44075,7 @@
 	},
 /area/station/turret_protected/ai)
 "fTq" = (
-/obj/wingrille_spawn/auto/crystal,
-/obj/machinery/door/poddoor/blast{
-	density = 0;
-	dir = 4;
-	icon_state = "bdoormid0";
-	id = "fireshield";
-	layer = 4;
-	name = "Combustion Chamber Heat Shield";
-	opacity = 0
-	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/engine,
 /area/station/engine/combustion_chamber)
 "fUm" = (
 /obj/cable{
@@ -45483,15 +44188,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/main)
-"gdT" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 9
-	},
-/turf/simulated/wall/auto/reinforced/supernorn{
-	explosion_resistance = 15;
-	name = "very reinforced wall"
-	},
-/area/station/engine/combustion_chamber)
 "geU" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -45573,23 +44269,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/brig)
-"gtd" = (
-/obj/machinery/networked/test_apparatus/gas_sensor{
-	setup_tag = "ENGINE"
-	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/machinery/power/data_terminal,
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 6
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/engine/vacuum,
-/area/station/engine/combustion_chamber)
 "gtp" = (
 /obj/cable{
 	d1 = 2;
@@ -46746,15 +45425,6 @@
 /area/station/hallway/secondary/entry{
 	name = "Entry Hallway"
 	})
-"jzF" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 4
-	},
-/turf/simulated/wall/auto/reinforced/supernorn{
-	explosion_resistance = 15;
-	name = "very reinforced wall"
-	},
-/area/station/engine/combustion_chamber)
 "jAP" = (
 /obj/machinery/vending/janitor,
 /obj/machinery/firealarm{
@@ -46859,30 +45529,6 @@
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/station/ai_monitored/armory)
-"jUC" = (
-/obj/machinery/light,
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 5
-	},
-/obj/table/reinforced/auto,
-/obj/item/device/analyzer/atmospheric,
-/obj/item/device/t_scanner,
-/obj/item/extinguisher,
-/obj/item/device/light/flashlight,
-/obj/item/chem_grenade/metalfoam{
-	pixel_x = -5;
-	pixel_y = 4
-	},
-/obj/item/old_grenade/oxygen{
-	pixel_x = 4;
-	pixel_y = 8
-	},
-/obj/item/old_grenade/oxygen{
-	pixel_x = 7;
-	pixel_y = 4
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
 "jVa" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -47585,7 +46231,6 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/pharmacy)
 "lmL" = (
-/obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -47820,14 +46465,6 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/security/main)
-"mct" = (
-/obj/machinery/atmospherics/pipe/simple/insulated,
-/obj/decal/poster/wallsign/fire,
-/turf/simulated/wall/auto/reinforced/supernorn{
-	explosion_resistance = 15;
-	name = "very reinforced wall"
-	},
-/area/station/engine/combustion_chamber)
 "mdJ" = (
 /obj/machinery/navbeacon/mule/QM2_north,
 /turf/simulated/floor/bot,
@@ -47863,15 +46500,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
-"mir" = (
-/obj/machinery/atmospherics/pipe/simple/junction{
-	dir = 4
-	},
-/turf/simulated/wall/auto/reinforced/supernorn{
-	explosion_resistance = 15;
-	name = "very reinforced wall"
-	},
-/area/station/engine/combustion_chamber)
 "miw" = (
 /obj/machinery/door/window/westright{
 	dir = 1;
@@ -48516,7 +47144,6 @@
 /turf/simulated/floor/green/checker,
 /area/station/medical/cdc)
 "ojD" = (
-/obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -48525,10 +47152,6 @@
 	dir = 5;
 	name = "autoname  - SS13";
 	pixel_x = -10
-	},
-/obj/machinery/power/stats_meter{
-	name = "Hot Loop Combustion Chamber Meter";
-	tag = "Hot Loop Combustion Chamber Meter"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/combustion_chamber)
@@ -49023,13 +47646,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/unary/furnace_connector,
-/obj/machinery/power/furnace/thermo{
-	fuel = 100
-	},
-/obj/item/device/radio/intercom/engineering{
-	dir = 4
-	},
 /turf/simulated/floor/plating/random,
 /area/station/engine/core)
 "pAt" = (
@@ -49190,27 +47806,6 @@
 /obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
-"qdR" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/item/device/radio/beacon,
-/obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=sec";
-	location = "engine";
-	name = "bot navigation beacon"
-	},
-/obj/landmark/gps_waypoint,
-/turf/simulated/floor/engine{
-	allows_vehicles = 0;
-	icon_state = "engine_caution_north"
-	},
-/area/station/engine/core)
 "qer" = (
 /obj/decal/tile_edge/line/green{
 	dir = 4;
@@ -50391,21 +48986,6 @@
 	icon_state = "wooden"
 	},
 /area/station/science/research_director)
-"tqd" = (
-/obj/wingrille_spawn/auto/crystal,
-/obj/machinery/atmospherics/pipe/simple/insulated,
-/obj/machinery/door/poddoor/blast{
-	density = 0;
-	dir = 4;
-	doordir = "left";
-	icon_state = "bdoorleft0";
-	id = "fireshield";
-	layer = 4;
-	name = "Combustion Chamber Heat Shield";
-	opacity = 0
-	},
-/turf/simulated/floor/plating,
-/area/station/engine/combustion_chamber)
 "twB" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -50615,13 +49195,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
-"tUJ" = (
-/obj/decal/poster/wallsign/fire,
-/turf/simulated/wall/auto/reinforced/supernorn{
-	explosion_resistance = 15;
-	name = "very reinforced wall"
-	},
-/area/station/engine/combustion_chamber)
 "tXv" = (
 /obj/machinery/light/emergency{
 	dir = 1;
@@ -50988,9 +49561,6 @@
 /turf/simulated/floor/plating,
 /area/station/science/research_director)
 "uQt" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 6
-	},
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -51034,6 +49604,12 @@
 "uTK" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crewquarters/cryotron)
+"uXW" = (
+/turf/simulated/floor/engine{
+	dir = 8;
+	icon_state = "engine_caution_misc"
+	},
+/area/station/engine/core)
 "uXZ" = (
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
@@ -51685,32 +50261,6 @@
 /obj/disposalpipe/segment/ejection,
 /turf/simulated/floor/caution/north,
 /area/station/security/main)
-"wJr" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 5
-	},
-/turf/simulated/wall/auto/reinforced/supernorn{
-	explosion_resistance = 15;
-	name = "very reinforced wall"
-	},
-/area/station/engine/combustion_chamber)
-"wJt" = (
-/obj/wingrille_spawn/auto/crystal,
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0
-	},
-/obj/machinery/door/poddoor/blast{
-	density = 0;
-	dir = 4;
-	doordir = "right";
-	icon_state = "bdoorright0";
-	id = "fireshield";
-	layer = 4;
-	name = "Combustion Chamber Heat Shield";
-	opacity = 0
-	},
-/turf/simulated/floor/plating,
-/area/station/engine/combustion_chamber)
 "wMt" = (
 /obj/cable,
 /obj/cable{
@@ -79272,7 +77822,7 @@ bGh
 uQt
 lmL
 ojD
-wJr
+jCk
 jCk
 aaH
 aay
@@ -79526,10 +78076,10 @@ bEs
 bKd
 bKb
 jCk
-jzF
+jCk
 jCk
 ilQ
-jzF
+jCk
 jCk
 aaH
 aay
@@ -79778,17 +78328,17 @@ byP
 bxP
 bBi
 bCr
-bDw
-bEt
-bEt
-bEt
-mct
-gdT
+bxP
+bxP
+bxP
+bxP
+jCk
+jCk
 jCk
 xCx
-mir
 jCk
-bNy
+jCk
+aaH
 aay
 aaa
 aaa
@@ -80036,11 +78586,11 @@ bzZ
 bBj
 bCs
 bDx
-bEu
+bAc
 bEY
-bFH
-tqd
-bGL
+bFI
+bIe
+bIe
 bHh
 bHM
 bIe
@@ -80288,18 +78838,18 @@ bur
 bvy
 bwD
 bxP
-byQ
-bAa
-bBk
-bBl
-bDy
+pwv
 bAc
-bCF
+bAc
+bAc
+bAc
+bAc
+bAc
 bFI
 fTq
-bGM
-bHY
-gtd
+bIt
+bIt
+bIt
 bIt
 bIx
 aaH
@@ -80546,18 +79096,18 @@ bvz
 bwE
 bxP
 byR
-bAa
-bBl
-bCt
-bDz
-bEv
-bEZ
-bFJ
-fIl
-bGN
-bHZ
-bIg
-bJl
+bAc
+bAc
+bAc
+bAc
+bAc
+bAc
+bFI
+fTq
+bIt
+bIt
+bIt
+bIt
 bIx
 aaH
 aay
@@ -80803,16 +79353,16 @@ acR
 bwF
 bwF
 byS
-bAb
-bBm
-bCt
-bDA
-bEw
-bFa
-bFK
-wJt
-bGO
-bHk
+bAc
+bAc
+bAc
+bAc
+bAc
+bAc
+bFI
+bIh
+bIh
+bIh
 bHP
 bIh
 bIC
@@ -81061,19 +79611,19 @@ bwG
 bxQ
 byT
 bAc
-bBn
-bCu
-bDB
-bEx
-bJk
-jUC
-tUJ
-jCk
-dQp
+bAc
+bAc
+bAc
+bAc
+bAc
+bHo
 jCk
 jCk
 jCk
-bNy
+jCk
+jCk
+jCk
+aaH
 aay
 aaa
 aaa
@@ -81318,15 +79868,15 @@ bwH
 bxR
 bGP
 bAc
-bBo
-bCv
-bDC
-bEy
-bFc
-bFM
-bGp
-bGp
-bHm
+bAc
+bAc
+bAc
+bAc
+bAc
+bAc
+bxP
+bxP
+bxP
 bxP
 aac
 abH
@@ -81575,14 +80125,14 @@ bwI
 bxS
 byV
 bAc
-bBp
-bCw
-bDD
-bBl
-bCt
-bCt
+bAc
+bAc
+bAc
+bAc
+bAc
+bAc
 bGq
-bJw
+bAc
 bHn
 bxP
 bNh
@@ -81831,15 +80381,15 @@ bvD
 bwJ
 bxT
 byW
-bAd
-bBq
-bCx
-bDE
+bCF
 bAc
-bFd
-bFN
-bGr
-bGQ
+bCx
+bAc
+bAc
+bAc
+bAc
+bAc
+bAc
 byU
 bxP
 bNi
@@ -82087,16 +80637,16 @@ buy
 bvE
 bwK
 bxU
-byX
-bAe
-bBr
-bCy
-bDF
+byV
 bAc
-bFe
-bFN
-bGs
-bGR
+bAc
+bAc
+bAc
+bAc
+bAc
+bAc
+bAc
+bAc
 bHo
 bxP
 bNi
@@ -82347,16 +80897,16 @@ bwF
 byY
 bAf
 bBs
-bCz
-qdR
-bEz
-bAi
-bAi
-bGt
-bAi
+bAc
+bAc
+bAc
+bAc
+bAc
+bAc
+bAc
 bHp
-bzj
-bNj
+bxP
+aaH
 bIz
 bIQ
 aaa
@@ -82603,15 +81153,15 @@ bwM
 bxV
 byZ
 bAg
-bBt
-bCA
-bDH
-bBy
-bFf
-bFO
-bGu
-bGS
-byT
+bAc
+bAc
+bAc
+bAc
+bAc
+bAc
+bAc
+bAc
+uXW
 bxP
 aaH
 bIA
@@ -82860,13 +81410,13 @@ bwN
 bxW
 bFb
 bAg
-bBu
+bAc
 bCB
-bDI
-bEA
-bFg
-bFO
-bGv
+bAc
+bAc
+bAc
+bAc
+bAc
 bGT
 bHq
 bxP
@@ -83117,14 +81667,14 @@ bwO
 bxW
 bzb
 bAg
-bBv
-bCC
-bDJ
-bBn
-bAi
-bAi
-bGw
-bGU
+bAc
+bAc
+bAc
+bAc
+bAc
+bAc
+bHo
+bxP
 bHr
 uYQ
 aaH
@@ -83374,12 +81924,12 @@ bwP
 bxW
 bzc
 bAh
-bBw
-bCD
-bDK
-bEB
-bFh
-bFh
+bAc
+bAc
+bAc
+bAc
+bAc
+bAc
 bFh
 bGV
 bHs
@@ -83631,16 +82181,16 @@ bwQ
 bxW
 bzd
 bAc
-bBx
-bCE
-bDL
-bEC
-bFi
-bFP
+bAc
+bAc
+bAc
+bHo
+bxP
+bHr
 bGx
-bzj
+bxP
 bHt
-bzj
+bxP
 bNm
 bIz
 bIQ
@@ -83888,11 +82438,11 @@ bwR
 bxX
 bHX
 bAc
-bBy
-bCF
-bDM
-bBy
-bFj
+bAc
+bAc
+bAc
+bAc
+bxV
 bHi
 bHv
 bHN
@@ -84144,12 +82694,12 @@ bvI
 bwS
 bxY
 bzf
-bAi
-bBz
-bCG
-bDN
-bBz
-bFk
+bAc
+bAc
+bAc
+bAc
+bAc
+bxW
 bHi
 bHi
 bHi
@@ -84404,9 +82954,9 @@ bzg
 bAc
 bAc
 bCH
-bDO
 bAc
-bFk
+bAc
+bxW
 bHi
 bHi
 bHi
@@ -84661,9 +83211,9 @@ bzh
 bAj
 bAj
 bAa
-bDP
-bED
-bFl
+bAc
+bHo
+bxW
 bHj
 bHi
 bHi
@@ -84913,12 +83463,12 @@ bts
 buC
 bvK
 bwV
-byb
+bxP
 bzi
 bAk
 bBA
 bCI
-bDQ
+bEE
 bEE
 bFm
 bHu
@@ -84927,7 +83477,7 @@ bNf
 bIs
 bJK
 bNp
-bIB
+bFQ
 aaa
 bIU
 aaa
@@ -85170,21 +83720,21 @@ bso
 buF
 bso
 bso
-byc
-bzj
-bzj
-bzj
-bCJ
+bxP
+bxP
+bxP
+bxP
+bBi
 bDR
 bEF
-bFn
+bBi
 bFT
 bGA
 bGZ
 bGZ
 bGZ
 bNq
-bNx
+abH
 abH
 bNA
 abH
