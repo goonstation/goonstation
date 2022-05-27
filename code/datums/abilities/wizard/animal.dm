@@ -54,6 +54,10 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 			boutput(holder.owner, "Your target must be human!")
 			return 1
 
+		if(!can_act(holder.owner))
+			boutput(holder.owner, "You can't cast this whilst incapacitated!")
+			return 1
+
 		var/mob/living/carbon/human/H = target
 
 		if (targetSpellImmunity(H, TRUE, 2))
@@ -64,7 +68,7 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 
 /datum/action/bar/polymorph
 	duration = 2 SECONDS
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ACTION
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "polymorph_spell"
 
 	var/datum/targetable/spell/animal/spell

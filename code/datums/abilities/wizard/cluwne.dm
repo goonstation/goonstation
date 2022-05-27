@@ -20,6 +20,10 @@
 			boutput(holder.owner, "Your target must be human!")
 			return 1
 
+		if(!can_act(holder.owner))
+			boutput(holder.owner, "You can't cast this whilst incapacitated!")
+			return 1
+
 		var/mob/living/carbon/human/H = target
 
 		if (targetSpellImmunity(H, TRUE, 2))
@@ -30,7 +34,7 @@
 
 /datum/action/bar/icon/cluwne_spell
 	duration = 1.5 SECONDS
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ACTION
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "cluwne_spell"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "cluwne"
