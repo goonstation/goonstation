@@ -18,7 +18,7 @@
 	bound_y = -32
 	var/obj/machinery/power/terminal/terminal = null
 	var/net_id = null
-	dir = WEST
+	dir = EAST
 
 	New()
 		. = ..()
@@ -34,16 +34,18 @@
 		var/node2_connect = dir
 		var/node1_connect = turn(dir, 180)
 
-		for(var/obj/machinery/atmospherics/target in get_step(src,node1_connect))
-			if(target.initialize_directions & src.dir)
+		for(var/obj/machinery/atmospherics/pipe/simple/target in get_step(src,node1_connect))
+			if(target.initialize_directions & node2_connect)
 				if(target != src)
 					node1 = target
+					target.node2 = src
 					break
 
-		for(var/obj/machinery/atmospherics/target in get_step(src,node2_connect))
-			if(target.initialize_directions & src.dir)
+		for(var/obj/machinery/atmospherics/pipe/simple/target in get_step(src,node2_connect))
+			if(target.initialize_directions & node1_connect)
 				if(target != src)
 					node2 = target
+					target.node1 = src
 					break
 
 		UpdateIcon()
@@ -53,9 +55,17 @@
 		var/input_starting_pressure = MIXTURE_PRESSURE(src.air1)
 		var/output_starting_pressure = MIXTURE_PRESSURE(src.air2)
 		if(input_starting_pressure > output_starting_pressure)
-			src.icon_state = "turbine_spinning"
+			if(src.icon_state == "turbine_main")
+				src.icon_state = "turbine_spin"
+				UpdateIcon()
 			//TODO rotation speed, stator load into energy, temp - energy
 			var/datum/gas_mixture/current_gas = src.air1.remove(R_IDEAL_GAS_EQUATION * air1.temperature)
 			current_gas.temperature = current_gas.temperature * 0.9
 			src.air2.merge(current_gas)
 			src.terminal.add_avail(100 WATTS)
+			src.network1?.update = TRUE
+			src.network2?.update = TRUE
+		else
+			if(src.icon_state == "turbine_spin")
+				src.icon_state = "turbine_main"
+				UpdateIcon()

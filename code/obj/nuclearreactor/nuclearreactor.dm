@@ -15,7 +15,7 @@
 	bound_y = -64
 	anchored = 1
 	density = 1
-	dir = WEST
+	dir = EAST
 	var/list/obj/item/reactor_component/component_grid[6][6]
 	var/list/list/datum/neutron/flux_grid[6][6]
 	var/radiationLevel = 0
@@ -88,16 +88,18 @@
 		var/node2_connect = dir
 		var/node1_connect = turn(dir, 180)
 
-		for(var/obj/machinery/atmospherics/target in get_step(src,node1_connect))
-			if(target.initialize_directions & src.dir)
+		for(var/obj/machinery/atmospherics/pipe/simple/target in get_step(src,node1_connect))
+			if(target.initialize_directions & node2_connect)
 				if(target != src)
 					node1 = target
+					target.node2 = src
 					break
 
-		for(var/obj/machinery/atmospherics/target in get_step(src,node2_connect))
-			if(target.initialize_directions & src.dir)
+		for(var/obj/machinery/atmospherics/pipe/simple/target in get_step(src,node2_connect))
+			if(target.initialize_directions & node1_connect)
 				if(target != src)
 					node2 = target
+					target.node1 = src
 					break
 
 		UpdateIcon()

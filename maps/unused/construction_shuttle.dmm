@@ -702,6 +702,12 @@
 	},
 /turf/simulated/floor/black,
 /area/space)
+"ku" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 9
+	},
+/turf/simulated/floor/black,
+/area/space)
 "kK" = (
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/shuttlebay{
@@ -735,6 +741,10 @@
 /obj/machinery/atmospherics/pipe/manifold,
 /turf/simulated/floor/black,
 /area/space)
+"qF" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold,
+/turf/simulated/floor/black,
+/area/space)
 "rr" = (
 /obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor/black,
@@ -753,34 +763,26 @@
 	},
 /turf/simulated/floor/black,
 /area/space)
-"sI" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe{
-	dir = 9
-	},
-/turf/simulated/floor/black,
-/area/space)
 "sP" = (
 /obj/landmark/start/latejoin,
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "uO" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 4
 	},
 /turf/simulated/floor/black,
 /area/space)
 "vN" = (
-/obj/machinery/atmospherics/binary/nuclear_reactor{
-	dir = 8
-	},
+/obj/machinery/atmospherics/binary/nuclear_reactor,
 /turf/simulated/floor/black,
 /area/space)
 "xD" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe{
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 5
 	},
 /turf/simulated/floor/black,
@@ -804,7 +806,7 @@
 /area/space)
 "AK" = (
 /obj/machinery/light/small/floor,
-/obj/machinery/atmospherics/pipe/simple/color_pipe{
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 4
 	},
 /turf/simulated/floor/black,
@@ -812,12 +814,6 @@
 "BN" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /obj/machinery/light/small/floor,
-/turf/simulated/floor/black,
-/area/space)
-"BR" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe{
-	dir = 8
-	},
 /turf/simulated/floor/black,
 /area/space)
 "Cd" = (
@@ -833,7 +829,7 @@
 /turf/simulated/floor/black,
 /area/space)
 "DY" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe{
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 6
 	},
 /turf/simulated/floor/black,
@@ -859,13 +855,6 @@
 /area/shuttle/arrival/station)
 "Hh" = (
 /obj/machinery/nanofab/nuclear,
-/turf/simulated/floor/black,
-/area/space)
-"HG" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe{
-	dir = 1
-	},
-/obj/machinery/light/small/floor,
 /turf/simulated/floor/black,
 /area/space)
 "HW" = (
@@ -908,8 +897,20 @@
 "Lg" = (
 /turf/simulated/wall/r_wall,
 /area/space)
+"Lx" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/space)
 "MI" = (
 /obj/machinery/portable_atmospherics/canister/air/large,
+/turf/simulated/floor/black,
+/area/space)
+"MT" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 10
+	},
 /turf/simulated/floor/black,
 /area/space)
 "Nl" = (
@@ -924,23 +925,11 @@
 /obj/item/crowbar,
 /turf/simulated/floor/black,
 /area/space)
-"Oq" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe{
-	dir = 1
-	},
-/turf/simulated/floor/black,
-/area/space)
-"OH" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe{
-	dir = 10
-	},
-/turf/simulated/floor/black,
-/area/space)
 "PO" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe{
+/obj/machinery/light/small/floor,
+/obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
 	},
-/obj/machinery/light/small/floor,
 /turf/simulated/floor/black,
 /area/space)
 "QU" = (
@@ -959,13 +948,19 @@
 /obj/machinery/atmospherics/portables_connector,
 /turf/simulated/floor/black,
 /area/space)
+"Uw" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/space)
 "UH" = (
-/obj/machinery/atmospherics/binary/reactor_turbine,
 /obj/cable{
 	d2 = 2;
 	dir = null;
 	icon_state = "0-2"
 	},
+/obj/machinery/atmospherics/binary/reactor_turbine,
 /turf/simulated/floor/black,
 /area/space)
 "UR" = (
@@ -46745,9 +46740,9 @@ Yq
 Yq
 Yq
 DY
-sj
-sj
-sj
+qF
+qF
+qF
 xD
 Yq
 Yq
@@ -47046,11 +47041,11 @@ Yq
 Yq
 Yq
 Yq
-ZL
+Lx
 Yq
 Yq
 Yq
-ZL
+Lx
 Yq
 Yq
 Yq
@@ -47352,7 +47347,7 @@ AK
 Yq
 Yq
 CO
-ZL
+Lx
 HW
 Yq
 CO
@@ -47650,11 +47645,11 @@ Yq
 Yq
 Yq
 Yq
-ZL
+Lx
 Yq
 Yq
 Yq
-ZL
+Lx
 RE
 Yq
 NG
@@ -47956,7 +47951,7 @@ vN
 Yq
 Yq
 Yq
-ZL
+Lx
 QU
 Yq
 lq
@@ -48254,11 +48249,11 @@ Yq
 CO
 Yq
 Yq
-ZL
+Uw
 Yq
 Yq
 CO
-ZL
+Lx
 yk
 Yq
 IF
@@ -48556,11 +48551,11 @@ Yq
 Yq
 Yq
 Yq
-ZL
+Uw
 Yq
 Yq
 Yq
-ZL
+Lx
 Yq
 Yq
 gM
@@ -48858,11 +48853,11 @@ Yq
 Yq
 Yq
 Yq
-ZL
+Uw
 Yq
 Yq
 Yq
-ZL
+Lx
 Yq
 Yq
 Yq
@@ -49462,7 +49457,7 @@ Yq
 Yq
 Yq
 Yq
-ZL
+Uw
 Yq
 Sh
 sj
@@ -50070,7 +50065,7 @@ PO
 Yq
 Yq
 CO
-ZL
+Lx
 CO
 Kc
 oy
@@ -50368,11 +50363,11 @@ Yq
 Yq
 Yq
 Yq
-ZL
+Uw
 Yq
 Yq
 Yq
-ZL
+Lx
 Yq
 sx
 Nl
@@ -50972,11 +50967,11 @@ Yq
 Yq
 Yq
 Yq
-ZL
+Lx
 Yq
 Yq
 Yq
-ZL
+Lx
 Yq
 Yq
 Yq
@@ -51278,7 +51273,7 @@ AK
 Yq
 Yq
 CO
-ZL
+Lx
 CO
 Yq
 CO
@@ -51576,11 +51571,11 @@ Yq
 Yq
 Yq
 Yq
-ZL
-Yq
-Yq
-Yq
-ZL
+MT
+qF
+qF
+qF
+ku
 Yq
 Yq
 Yq
@@ -51878,11 +51873,11 @@ Yq
 Yq
 Yq
 Yq
-BR
 Yq
 Yq
 Yq
-ZL
+Yq
+Yq
 Yq
 Yq
 Yq
@@ -52180,11 +52175,11 @@ Yq
 CO
 Yq
 Yq
-OH
-Oq
-Oq
-HG
-sI
+Yq
+Yq
+Yq
+CO
+Yq
 CO
 Yq
 CO
@@ -53696,7 +53691,7 @@ Yq
 Yq
 Yq
 Yq
-Yq
+ZL
 Yq
 Yq
 Yq
