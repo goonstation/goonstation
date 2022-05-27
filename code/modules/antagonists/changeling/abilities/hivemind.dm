@@ -19,12 +19,12 @@
 
 		var/datum/abilityHolder/changeling/H = holder
 		if (!istype(H))
-			boutput(holder.owner, __red("That ability is incompatible with our abilities. We should report this to a coder."))
+			boutput(holder.owner, "<span class='alert'>That ability is incompatible with our abilities. We should report this to a coder.</span>")
 			return 1
 
 		//Verify that you are not in control of your master's body.
 		if(H.master && H.owner != H.master)
-			boutput(holder.owner, __red("A slave cannot release a sub-form!."))
+			boutput(holder.owner, "<span class='alert'>A slave cannot release a sub-form!.</span>")
 			return 1
 
 		var/list/eligible = list()
@@ -33,18 +33,18 @@
 				eligible[O.real_name] = O
 
 		if (eligible.len < 1)
-			boutput(holder.owner, __red("There are no minds eligible for this ability. We need to absorb another."))
+			boutput(holder.owner, "<span class='alert'>There are no minds eligible for this ability. We need to absorb another.</span>")
 			return 1
 
 		var/use_mob_name = input("Select the mind to transfer into the handspider: ", "Select Mind", null) as null|anything in eligible
 		if (!use_mob_name)
-			boutput(holder.owner, __blue("We change our mind."))
+			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
 			return 1
 		var/mob/dead/target_observer/hivemind_observer/use_mob = eligible[use_mob_name]
 
 		var/mob/living/carbon/human/owner = holder.owner
 		if (!(owner.limbs.l_arm || owner.limbs.r_arm) || !ishuman(holder.owner))
-			boutput(holder.owner, __blue("We have no arms to detach!"))
+			boutput(holder.owner, "<span class='notice'>We have no arms to detach!</span>")
 			return 1
 
 		var/arm_type = 0
@@ -124,12 +124,12 @@
 
 		var/datum/abilityHolder/changeling/H = holder
 		if (!istype(H))
-			boutput(holder.owner, __red("That ability is incompatible with our abilities. We should report this to a coder."))
+			boutput(holder.owner, "<span class='alert'>That ability is incompatible with our abilities. We should report this to a coder.</span>")
 			return 1
 
 		//Verify that you are not in control of your master's body.
 		if(H.master && H.owner != H.master)
-			boutput(holder.owner, __red("A slave cannot release a sub-form!."))
+			boutput(holder.owner, "<span class='alert'>A slave cannot release a sub-form!.</span>")
 			return 1
 
 		var/list/eligible = list()
@@ -138,18 +138,18 @@
 				eligible[O.real_name] = O
 
 		if (eligible.len < 1)
-			boutput(holder.owner, __red("There are no minds eligible for this ability. We need to absorb another."))
+			boutput(holder.owner, "<span class='alert'>There are no minds eligible for this ability. We need to absorb another.</span>")
 			return 1
 
 		var/use_mob_name = input("Select the mind to transfer into the eyespider: ", "Select Mind", null) as null|anything in eligible
 		if (!use_mob_name)
-			boutput(holder.owner, __blue("We change our mind."))
+			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
 			return 1
 		var/mob/dead/target_observer/hivemind_observer/use_mob = eligible[use_mob_name]
 
 		var/mob/living/carbon/human/owner = holder.owner
 		if (!(owner.organHolder.left_eye || owner.organHolder.right_eye) || !ishuman(holder.owner))
-			boutput(holder.owner, __blue("We have no eyes to eject!")) // what a terrifying fate you've given yourself
+			boutput(holder.owner, "<span class='notice'>We have no eyes to eject!</span>") // what a terrifying fate you've given yourself
 			return 1
 
 		if (owner.organHolder.left_eye && owner.organHolder.right_eye) // if both eyes are available, pick one at random
@@ -220,12 +220,12 @@
 
 		var/datum/abilityHolder/changeling/H = holder
 		if (!istype(H))
-			boutput(holder.owner, __red("That ability is incompatible with our abilities. We should report this to a coder."))
+			boutput(holder.owner, "<span class='alert'>That ability is incompatible with our abilities. We should report this to a coder.</span>")
 			return 1
 
 		//Verify that you are not in control of your master's body.
 		if(H.master && H.owner != H.master)
-			boutput(holder.owner, __red("A slave cannot release a sub-form!."))
+			boutput(holder.owner, "<span class='alert'>A slave cannot release a sub-form!.</span>")
 			return 1
 
 		var/list/eligible = list()
@@ -234,18 +234,18 @@
 				eligible[O.real_name] = O
 
 		if (eligible.len < 1)
-			boutput(holder.owner, __red("There are no minds eligible for this ability. We need to absorb another."))
+			boutput(holder.owner, "<span class='alert'>There are no minds eligible for this ability. We need to absorb another.</span>")
 			return 1
 
 		var/use_mob_name = input("Select the mind to transfer into the legworm: ", "Select Mind", null) as null|anything in eligible
 		if (!use_mob_name)
-			boutput(holder.owner, __blue("We change our mind."))
+			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
 			return 1
 		var/mob/dead/target_observer/hivemind_observer/use_mob = eligible[use_mob_name]
 
 		var/mob/living/carbon/human/owner = holder.owner
 		if (!(owner.limbs.l_leg || owner.limbs.r_leg) || !ishuman(holder.owner))
-			boutput(holder.owner, __blue("We have no legs to detach!"))
+			boutput(holder.owner, "<span class='notice'>We have no legs to detach!</span>")
 			return 1
 
 		if (owner.limbs.l_leg && owner.limbs.r_leg) //remove leg opposite of active hand
@@ -315,12 +315,12 @@
 
 		var/datum/abilityHolder/changeling/H = holder
 		if (!istype(H))
-			boutput(holder.owner, __red("That ability is incompatible with our abilities. We should report this to a coder."))
+			boutput(holder.owner, "<span class='alert'>That ability is incompatible with our abilities. We should report this to a coder.</span>")
 			return 1
 
 		//Verify that you are not in control of your master's body.
 		if(H.master && H.owner != H.master)
-			boutput(holder.owner, __red("A slave cannot release a sub-form!."))
+			boutput(holder.owner, "<span class='alert'>A slave cannot release a sub-form!.</span>")
 			return 1
 
 		var/list/eligible = list()
@@ -329,18 +329,18 @@
 				eligible[O.real_name] = O
 
 		if (eligible.len < 1)
-			boutput(holder.owner, __red("There are no minds eligible for this ability. We need to absorb another."))
+			boutput(holder.owner, "<span class='alert'>There are no minds eligible for this ability. We need to absorb another.</span>")
 			return 1
 
 		var/use_mob_name = input("Select the mind to transfer into the buttspider: ", "Select Mind", null) as null|anything in eligible
 		if (!use_mob_name)
-			boutput(holder.owner, __blue("We change our mind."))
+			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
 			return 1
 		var/mob/dead/target_observer/hivemind_observer/use_mob = eligible[use_mob_name]
 
 		var/mob/living/carbon/human/owner = holder.owner
 		if (!(owner.organHolder.butt) || !ishuman(holder.owner))
-			boutput(holder.owner, __blue("We have no ass!")) // what a terrifying fate you've given yourself
+			boutput(holder.owner, "<span class='notice'>We have no ass!</span>") // what a terrifying fate you've given yourself
 			return 1
 
 		qdel(owner.drop_organ("butt"))
@@ -427,12 +427,12 @@
 		var/datum/abilityHolder/changeling/H = holder
 		//Sanity check
 		if (!istype(H))
-			boutput(holder.owner, __red("That ability is incompatible with our abilities. We should report this to a coder."))
+			boutput(holder.owner, "<span class='alert'>That ability is incompatible with our abilities. We should report this to a coder.</span>")
 			return 1
 
 		//Verify that you are not in control of your master's body.
 		if(H.master && H.owner != H.master)
-			boutput(holder.owner, __red("A slave cannot boot other members of the hivemind!."))
+			boutput(holder.owner, "<span class='alert'>A slave cannot boot other members of the hivemind!.</span>")
 			return 1
 
 		var/list/eligible = list()
@@ -440,20 +440,20 @@
 			eligible[O.real_name] = O
 
 		if (eligible.len < 1)
-			boutput(holder.owner, __red("There are no minds eligible for this ability."))
+			boutput(holder.owner, "<span class='alert'>There are no minds eligible for this ability.</span>")
 			return 1
 
 		var/use_mob_name = input("Select the mind to silence: ", "Select Mind", null) as null|anything in eligible
 		if (!use_mob_name)
-			boutput(holder.owner, __blue("We change our mind."))
+			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
 			return 1
 
 		//RIP
 		var/mob/dead/target_observer/hivemind_observer/use_mob = eligible[use_mob_name]
 		H.hivemind -= use_mob
-		boutput(use_mob, __red("You have been cut off from the hivemind by [holder.owner.real_name]!"))
+		boutput(use_mob, "<span class='alert'>You have been cut off from the hivemind by [holder.owner.real_name]!</span>")
 		use_mob.boot()
-		boutput(holder.owner, __red("You have silenced [use_mob_name]'s consciousness from your hivemind."))
+		boutput(holder.owner, "<span class='alert'>You have silenced [use_mob_name]'s consciousness from your hivemind.</span>")
 		return 0
 
 
@@ -479,12 +479,12 @@
 		var/datum/abilityHolder/changeling/H = holder
 		//Sanity check
 		if (!istype(H))
-			boutput(holder.owner, __red("That ability is incompatible with our abilities. We should report this to a coder."))
+			boutput(holder.owner, "<span class='alert'>That ability is incompatible with our abilities. We should report this to a coder.</span>")
 			return 1
 
 		//Verify that you are not in control of your master's body.
 		if(H.master && H.owner != H.master)
-			boutput(holder.owner, __red("A slave cannot relinquish control of the shared form!."))
+			boutput(holder.owner, "<span class='alert'>A slave cannot relinquish control of the shared form!.</span>")
 			return 1
 
 		var/list/eligible = list()
@@ -493,13 +493,13 @@
 				eligible += O
 
 		if (eligible.len < 1)
-			boutput(holder.owner, __red("There are no minds eligible for this ability."))
+			boutput(holder.owner, "<span class='alert'>There are no minds eligible for this ability.</span>")
 			return 1
 
 		//Get a dirty HO. HA HA HA haaaa...
 		var/mob/dead/target_observer/hivemind_observer/HO = input("Select the mind to grant control: ", "Select Mind", null) as null|mob in eligible
 		if(!HO)
-			boutput(holder.owner, __blue("We change our mind."))
+			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
 			return 1
 
 		//Do the actual control-granting here.
@@ -508,7 +508,7 @@
 		var/mob/dead/target_observer/hivemind_observer/master = H.insert_into_hivemind(H.owner)
 		master.verbs += /mob/dead/target_observer/hivemind_observer/proc/regain_control
 		H.master = master //Make it the controller of the mob
-		boutput(master, __blue("We relinquish control of our form to [HO]!"))
+		boutput(master, "<span class='notice'>We relinquish control of our form to [HO]!</span>")
 
 		//Transfer the hivemind member's mind into the body.
 		H.original_controller_name = HO.name

@@ -247,9 +247,9 @@
 		heart_ticker = max(heart_ticker--,0)
 		if(heart_ticker & prob(50))
 			if(prob(30))
-				boutput(src.owner,__red("You feel as though something moving towards your heart... That can't be good."))
+				boutput(src.owner,"<span class='alert'>You feel as though something moving towards your heart... That can't be good.</span>")
 			else
-				boutput(src.owner,__red("You feel as though something is working its way through your chest."))
+				boutput(src.owner,"<span class='alert'>You feel as though something is working its way through your chest.</span>")
 		else if(!heart_ticker)
 			var/mob/living/carbon/human/H = src.owner
 			if(istype(H))
@@ -258,11 +258,11 @@
 				src.owner.TakeDamage("All", 2, 0)
 
 			if(prob(5))
-				boutput(src.owner,__red("AAHRRRGGGG something is trying to dig your heart out from the inside?!?!"))
+				boutput(src.owner,"<span class='alert'>AAHRRRGGGG something is trying to dig your heart out from the inside?!?!</span>")
 				src.owner.emote("scream")
 				src.owner.changeStatus("stunned", 2 SECONDS)
 			else if(prob(10))
-				boutput(src.owner,__red("You feel a sharp pain in your chest."))
+				boutput(src.owner,"<span class='alert'>You feel a sharp pain in your chest.</span>")
 
 /datum/gimmick_event
 	var/interaction = 0

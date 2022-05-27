@@ -309,7 +309,7 @@
 			if(!inserted)
 				boutput(user,"<span class='alert'>There's no more space on the rack!</span>")
 			else
-				SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, .proc/insert_module_callback, list(count,user,AIM), user.equipped().icon, user.equipped().icon_state, \
+				SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, .proc/insert_module_callback, list(count,user,AIM), user.equipped().appearance, null, \
 					"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 		else if (istype(I, /obj/item/clothing/mask/moustache/))
 			for_by_tcl(M, /mob/living/silicon/ai)
@@ -320,7 +320,7 @@
 		else if (istype(I, /obj/item/peripheral/videocard))
 			var/obj/item/peripheral/videocard/V = I
 			if (GET_COOLDOWN(src, "mine_cooldown") == 0)
-				SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, .proc/insert_videocard_callback, list(user,V), user.equipped().icon, user.equipped().icon_state, \
+				SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, .proc/insert_videocard_callback, list(user,V), user.equipped().appearance, null, \
 						"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 			else
 				user.visible_message("<span class='alert'>The [src]'s graphics port isn't ready to accept [I] yet.</span>")
