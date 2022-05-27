@@ -306,7 +306,6 @@
 
 	autoinjector
 		name = "box of emergency auto-injectors"
-		name = "box of patches"
 		contained_item = /obj/item/reagent_containers/emergency_injector
 		item_amount = 0
 		max_item_amount = -1
