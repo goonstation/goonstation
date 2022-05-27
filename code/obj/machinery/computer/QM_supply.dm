@@ -1,3 +1,9 @@
+#define cdcready 1
+#define cdcwait 2
+var/lowriskcratecooldown = cdcready
+var/medriskcratecooldown = cdcready
+var/highriskcratecooldown = cdcready
+
 /datum/rockbox_globals
 	var/const/rockbox_standard_fee = 5
 	var/rockbox_client_fee_min = 1
@@ -19,38 +25,13 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 				//global.QM_CategoryList.Insert(1,S.category) //So Misc. is not #1, reverse ordering.
 
 /datum/cdc_bounty_controller
-	var/lowriskcratecooldown = null
-	var/medriskcratecooldown = null
-	var/highriskcratecooldown = null
-
-	New()
-		..()
-		processing_items.Add(src)
-
-
 	proc/receive_pathogen_samples(obj/storage/crate/biohazard/cdc/sell_crate)
-		/*for (var/R in sell_crate)
-			var/list/patho = null
-			if (istype(R, /obj/item/reagent_containers))
-				var/obj/item/reagent_containers/RC = R
-				patho = RC.reagents.aggregate_pathogens()
-				qdel(RC)
-			else if (ishuman(R)) // heh
-				var/mob/living/carbon/human/H = R
-				patho = H.reagents.aggregate_pathogens()
-				H.ghostize()
-				qdel(H)
-			else
-				qdel(R)
-				continue
-		*/
 		qdel(sell_crate)
-
 		var/datum/signal/pdaSignal = get_free_signal()
 		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="Notification: Pathogen sample crate delivered to the CDC.")
 		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 
-var/global/datum/cdc_contact_controller/QM_CDC = new()
+var/global/datum/cdc_bounty_controller/QM_CDC = new()
 
 /obj/machinery/computer/supplycomp
 	name = "Quartermaster's Console"
@@ -602,13 +583,17 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 				return
 			set_cdc()
 			last_cdc_message = null
-
+			if(shippingmarket.last_market_update != last_market_update) //Okay, the market has updated and we need a new price list
+				last_market_update = shippingmarket.last_market_update
+				lowriskcratecooldown = cdcready
+				medriskcratecooldown = cdcready
+				highriskcratecooldown = cdcready
 		if ("req_biohazard_crate_tier1")
 			if (signal_loss >= 75)
 				boutput(usr, "<span class='alert'>Severe signal interference is preventing contact with the CDC.</span>")
 				return
-			if(QM_CDC.lowriskcratecooldown == wait)
-				last_cdc_message = "<span style=\"color:red; font-style: italic\">We cannot provide you with this crate right now. Please wait for the market to refresh.</span>"
+			if(lowriskcratecooldown == cdcwait)
+				last_cdc_message = "<span style=\"color:red; font-style: italic\">We cannot provide you this crate right now. Please wait for the market to refresh.</span>"
 				return
 			else
 				if (wagesystem.shipping_budget < 100)
@@ -617,14 +602,14 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 					wagesystem.shipping_budget -= 100
 					last_cdc_message = "<span style=\"color:blue; font-style: italic\">We're delivering the crate right now. It should arrive shortly.</span>"
 					shippingmarket.receive_crate(new /obj/storage/secure/crate/medical/cdctier1)
-					QM_CDC.lowriskcratecooldown = wait
+					lowriskcratecooldown = cdcwait
 			set_cdc()
 		if ("req_biohazard_crate_tier2")
 			if (signal_loss >= 75)
 				boutput(usr, "<span class='alert'>Severe signal interference is preventing contact with the CDC.</span>")
 				return
-			if(QM_CDC.totalcdccrates >= 3)
-				last_cdc_message = "<span style=\"color:red; font-style: italic\">We cannot provide you with this crate right now. Please wait for the market to refresh.</span>"
+			if(medriskcratecooldown == cdcwait)
+				last_cdc_message = "<span style=\"color:red; font-style: italic\">We cannot provide you this crate right now. Please wait for the market to refresh.</span>"
 				return
 			else
 				if (wagesystem.shipping_budget < 500)
@@ -633,17 +618,15 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 					wagesystem.shipping_budget -= 500
 					last_cdc_message = "<span style=\"color:blue; font-style: italic\">We're delivering the crate right now. It should arrive shortly.</span>"
 					shippingmarket.receive_crate(new /obj/storage/secure/crate/medical/cdctier2)
-					QM_CDC.medriskcratecooldown = wait
+					medriskcratecooldown = cdcwait
 			set_cdc()
 		if ("req_biohazard_crate_tier3")
 			if (signal_loss >= 75)
 				boutput(usr, "<span class='alert'>Severe signal interference is preventing contact with the CDC.</span>")
 				return
-			if(QM_CDC.totalcdccrates >= 3)
-				last_cdc_message = "<span style=\"color:red; font-style: italic\">We cannot provide you with more than three crates at one time.</span>"
+			if(highriskcratecooldown == cdcwait)
+				last_cdc_message = "<span style=\"color:red; font-style: italic\">We cannot provide you this crate right now. Please wait for the market to refresh.</span>"
 				return
-			if (ticker.round_elapsed_ticks < QM_CDC.next_crate)
-				last_cdc_message = "<span style=\"color:red; font-style: italic\">We are fresh out of crates right now to send you. Check back in [ceil((QM_CDC.next_crate - ticker.round_elapsed_ticks) / (1 SECOND))] seconds!</span>"
 			else
 				if (wagesystem.shipping_budget < 1000)
 					last_cdc_message = "<span style=\"color:red; font-style: italic\">You're completely broke. You cannot even afford a crate.</span>"
@@ -651,7 +634,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 					wagesystem.shipping_budget -= 1000
 					last_cdc_message = "<span style=\"color:blue; font-style: italic\">We're delivering the crate right now. It should arrive shortly.</span>"
 					shippingmarket.receive_crate(new /obj/storage/secure/crate/medical/cdctier3)
-					QM_CDC.highriskcratecooldown = wait
+					highriskcratecooldown = cdcwait
 			set_cdc()
 		if ("trader_list")
 			if (!shippingmarket.active_traders.len)
