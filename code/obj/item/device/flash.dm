@@ -418,6 +418,7 @@
 	name = "revolutionary flash"
 	desc = "A device that emits an extremely bright light when used. Something about this device forces people to revolt, when flashed by a revolution leader."
 	icon_state = "rev_flash"
+	animation_type = "rev_flash2"
 
 	process_burnout(mob/user as mob)
 		return
