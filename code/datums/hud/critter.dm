@@ -262,7 +262,6 @@
 					else
 						to_pull = tgui_input_list(master, "Which do you want to pull? You can also Ctrl+Click on things to pull them.", "Which thing to pull?", pullable)
 					if(!isnull(to_pull) && BOUNDS_DIST(master, to_pull) == 0)
-						usr = master // gross
 						to_pull.pull(master)
 
 			if ("throw")
