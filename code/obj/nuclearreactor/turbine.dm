@@ -50,3 +50,12 @@
 
 	process()
 		. = ..()
+		var/input_starting_pressure = MIXTURE_PRESSURE(src.air1)
+		var/output_starting_pressure = MIXTURE_PRESSURE(src.air2)
+		if(input_starting_pressure > output_starting_pressure)
+			src.icon_state = "turbine_spinning"
+			//TODO rotation speed, stator load into energy, temp - energy
+			var/datum/gas_mixture/current_gas = src.air1.remove(R_IDEAL_GAS_EQUATION * air1.temperature)
+			current_gas.temperature = current_gas.temperature * 0.9
+			src.air2.merge(current_gas)
+			src.terminal.add_avail(100 WATTS)
