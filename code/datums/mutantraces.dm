@@ -1118,11 +1118,11 @@ TYPEINFO(/datum/mutantrace)
 
 /obj/item/joint_wax
 	name = "joint wax"
-	desc = "Does what it says on the tube."
+	desc = "Does what it says on the jar."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "joint_wax"
+	icon_state = "wax"
 	w_class = W_CLASS_SMALL
-	var/amount_left = 10
+	var/uses = 10
 
 	attack(mob/M as mob, mob/user as mob)
 		if (isskeleton(M))
@@ -1130,17 +1130,21 @@ TYPEINFO(/datum/mutantrace)
 			if (user.zone_sel.selecting in H.limbs.vars)
 				var/obj/item/parts/limb = H.limbs.vars[user.zone_sel.selecting]
 				if (!limb)
-					if (!src.amount_left)
+					if (!src.uses)
 						boutput(user, "<span class='alert'>The joint wax is empty!</alert>")
 					else
 						H.changeStatus("spry", 1 MINUTE)
-						playsound(H, "sound/effects/smear.ogg", 25, 1)
+						playsound(H, "sound/effects/smear.ogg", 50, 1)
 						H.visible_message("<span class='notice'>[user] applies some joint wax to [H].</notice>")
-						src.amount_left--
-						if (!src.amount_left)
-							src.icon_state = "joint_wax-empty"
+						src.uses--
+						if (!src.uses)
+							src.icon_state = "wax-empty"
 					return
 		..()
+
+	get_desc()
+		if (uses > 0)
+			. += " It looks like it has [uses] applications left."
 
 /*
 /datum/mutantrace/ape

@@ -206,7 +206,7 @@
 			if (isskeletonlimb(src) && isskeleton(H) && !H.limbs.get_limb(src.slot))
 				src.attach(H)
 				H.visible_message("<span class='alert'>[H] has been hit by [src].</span> <span class='notice'>It fuses instantly with [H]'s empty socket!</span>")
-				playsound(H, "sound/impact_sounds/Slimy_Hit_4.ogg", 30, 1)
+				playsound(H, "sound/effects/attach.ogg", 50, 1)
 			else
 				hit_atom.visible_message("<span class='alert'><b>[hit_atom]</b> gets clonked in the face with [src]!</span>")
 				playsound(hit_atom, "sound/impact_sounds/Flesh_Break_1.ogg", 30, 1)

@@ -1066,10 +1066,6 @@ ABSTRACT_TYPE(/obj/trait/job)
 	category = list("species", "cloner_stuff")
 	mutantRace = /datum/mutantrace/skeleton
 
-	onAdd(var/mob/owner)
-		..()
-		owner.put_in_hand_or_drop(new /obj/item/joint_wax)
-
 /obj/trait/roach
 	name = "Roach (-1) \[Species\]"
 	cleanName = "Roach"
@@ -1089,10 +1085,6 @@ ABSTRACT_TYPE(/obj/trait/job)
 	points = -4 //Subject to change- -3 feels too low as puritan is relatively common. Though Puritan Pug DOES make for a special sort of Hard Modes
 	category = list("species", "nopug")
 	mutantRace = /datum/mutantrace/pug
-
-	onAdd(var/mob/owner)
-		..()
-		owner.put_in_hand_or_drop(new /obj/item/reagent_containers/food/snacks/cookie/dog)
 
 /obj/trait/super_slips
 	name = "Slipping Hazard (+1)"
