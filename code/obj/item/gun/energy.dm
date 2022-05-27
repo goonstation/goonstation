@@ -691,7 +691,7 @@
 			user.show_text("Error: no working teleporters detected.", "red")
 			return
 
-		var/t1 = input(user, "Please select a teleporter to lock in on.", "Target Selection") in L
+		var/t1 = tgui_input_list(user, "Please select a teleporter to lock in on.", "Target Selection", L)
 		if ((user.equipped() != src) || user.stat || user.restrained())
 			return
 		if (t1 == "None (Cancel)")
