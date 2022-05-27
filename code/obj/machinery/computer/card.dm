@@ -66,7 +66,6 @@
 	density = 0
 	var/obj/item/cell/cell //We have limited power! Immersion!!
 	var/setup_charge_maximum = 15000
-	var/obj/item/luggable_computer/personal/case //The object that holds us when we're all closed up.
 	var/deployed = 1
 
 	New()
@@ -88,11 +87,6 @@
 		if (src.cell)
 			src.cell.dispose()
 			src.cell = null
-
-		if (case && case.loc == src)
-			case.dispose()
-			case = null
-
 		..()
 
 	attackby(obj/item/W as obj, mob/user as mob)
