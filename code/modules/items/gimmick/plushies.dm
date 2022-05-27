@@ -151,7 +151,7 @@
 	rand_pos = 1
 
 /obj/item/toy/plush/proc/say_something(mob/user as mob)
-	if(user.client) // stupid monkeys...
+	if(user.client && !isghostcritter(user)) // stupid monkeys...
 		var/message = input("What should [src] say?")
 		message = trim(copytext(sanitize(html_encode(message)), 1, MAX_MESSAGE_LEN))
 		if (!message || BOUNDS_DIST(src, user) > 0)

@@ -83,6 +83,7 @@
 	src.addAbility(/datum/targetable/flockmindAbility/createStructure)
 
 /mob/living/intangible/flock/flockmind/death(gibbed)
+	. = ..()
 	if(src.client)
 		boutput(src, "<span class='alert'>With the last of your drones dying, nothing is left to compute your consciousness. You abruptly cease to exist.</span>")
 	src.flock?.perish()

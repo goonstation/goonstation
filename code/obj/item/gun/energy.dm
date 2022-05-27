@@ -163,6 +163,10 @@
 	attack_self()
 		..()
 		UpdateIcon()
+		if(istype(src.current_projectile, /datum/projectile/energy_bolt/burst))
+			src.spread_angle = 6
+		else
+			src.spread_angle = initial(src.spread_angle)
 
 	borg
 		cell_type = /obj/item/ammo/power_cell/self_charging/disruptor

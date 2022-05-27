@@ -30,10 +30,9 @@
 
 	New()
 		..()
-		src.setMaterial(getMaterial("carbonfibre"), appearance = 0, setname = 0)
-		return .
+		src.setMaterial(getMaterial("carbonfibre"), appearance = FALSE, setname = FALSE)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/assembly/anal_ignite))
 			var/obj/item/assembly/anal_ignite/AI = W
 			if (!AI.status)
@@ -54,12 +53,10 @@
 			AI.add_fingerprint(user)
 			R.add_fingerprint(user)
 			user.put_in_hand_or_drop(R)
-			return
 		else
-			..()
-			return
+			return ..()
 
-	attack_self(mob/user as mob)
+	attack_self(mob/user)
 		user.show_text("You change the armor vest's style.")
 		if (src.icon_state == "armorvest")
 			src.icon_state = "armorvest-old"
@@ -90,12 +87,10 @@
 
 	New()
 		..()
-		SPAWN(0.5 SECONDS)
-			if (src && !src.part_vest)
-				src.part_vest = new /obj/item/clothing/suit/armor/vest(src)
-			if (src && !src.part_igniter)
-				src.part_igniter = new /obj/item/assembly/anal_ignite(src)
-		return
+		if (!src.part_vest)
+			src.part_vest = new /obj/item/clothing/suit/armor/vest(src)
+		if (!src.part_igniter)
+			src.part_igniter = new /obj/item/assembly/anal_ignite(src)
 
 	examine()
 		. = ..()
@@ -104,7 +99,7 @@
 		else
 			. += "<span class='alert'>There doesn't appear to be a payload attached.</span>"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		src.add_fingerprint(user)
 
 		if (istype(W, /obj/item/chem_grenade/))
@@ -254,8 +249,6 @@
 			src.beaker.reagents.temperature_reagents(4000, 400)
 			// Icon_state and payload don't change because the beaker isn't used up.
 
-		return
-
 /obj/item/clothing/suit/armor/makeshift
 	name = "makeshift armor"
 	desc = "A standard cyborg chest modified to function as uncomfortable, somewhat flimsy improvised armor."
@@ -276,6 +269,7 @@
 	desc = "A suit of protective formal armor made for the station's captain."
 	icon_state = "caparmor"
 	item_state = "caparmor"
+
 	setupProperties()
 		..()
 		setProperty("meleeprot", 7)
@@ -286,6 +280,7 @@
 	desc = "A luxorious formal coat made for the station's captain. It seems to be made out of some thermally resistant material."
 	icon_state = "capcoat"
 	item_state = "capcoat"
+
 	setupProperties()
 		..()
 		setProperty("coldprot", 35)

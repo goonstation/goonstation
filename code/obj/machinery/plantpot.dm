@@ -244,7 +244,7 @@
 	var/image/water_meter = null
 	var/image/plant_sprite = null
 	var/grow_level = 1 // Same as the above except for current plant growth
-	var/do_update_icon = 0 // this is now a var on the pot itself so you can actually call it outside of process()
+	var/do_update_icon = FALSE // this is now a var on the pot itself so you can actually call it outside of process()
 	var/do_update_water_icon = 1 // this handles the water overlays specifically (water and water level) It's set to 1 by default so it'll update on spawn
 	var/growth_rate = 2
 		// We have this here as a check for whether or not the plant needs to update its sprite.
@@ -325,10 +325,6 @@
 
 	process()
 		..()
-
-		if(do_update_icon)
-			UpdateIcon()
-			update_name()
 
 			// We skip every other tick. Another cpu-conserving measure.
 		if(!src.current || src.dead)
@@ -482,21 +478,21 @@
 
 		if(current_growth_level != src.grow_level)
 			src.grow_level = current_growth_level
-			do_update_icon = 1
+			src.do_update_icon = TRUE
 
 		if(!harvest_warning && HYPcheck_if_harvestable())
 			src.harvest_warning = 1
-			do_update_icon = 1
+			src.do_update_icon = TRUE
 		else if(harvest_warning && !HYPcheck_if_harvestable())
 			src.harvest_warning = 0
-			do_update_icon = 1
+			src.do_update_icon = TRUE
 
 		if(!health_warning && src.health <= growing.starthealth / 2)
 			src.health_warning = 1
-			do_update_icon = 1
+			src.do_update_icon = TRUE
 		else if(health_warning && src.health > growing.starthealth / 2)
 			src.health_warning = 0
-			do_update_icon = 1
+			src.do_update_icon = TRUE
 
 		// Have we lost all health or growth, or used up all available harvests? If so, this plant
 		// should now die. Sorry, that's just life! Didn't they teach you the curds and the peas?
@@ -504,7 +500,7 @@
 			HYPkillplant()
 			return
 
-		if(do_update_icon)
+		if(src.do_update_icon)
 			UpdateIcon()
 			update_name()
 
@@ -863,14 +859,14 @@
 				if(alert("Clear this tray?",,"Yes","No") == "Yes")
 					usr.visible_message("<b>[usr.name]</b> dumps out the tray's contents.")
 					src.reagents.clear_reagents()
-					src.do_update_icon = 1
 					logTheThing("combat", usr, null, "cleared a hydroponics tray containing [current.name] at [log_loc(src)]")
 					HYPdestroyplant()
 		else
 			if(alert("Clear this tray?",,"Yes","No") == "Yes")
 				usr.visible_message("<b>[usr.name]</b> dumps out the tray's contents.")
 				src.reagents.clear_reagents()
-				src.do_update_icon = 1
+				UpdateIcon()
+				update_name()
 		return
 
 	MouseDrop_T(atom/over_object as obj, mob/user as mob) // ty to Razage for the initial code
@@ -1580,6 +1576,7 @@
 
 		src.generation = 0
 		UpdateIcon()
+		update_name()
 		post_alert("event_cleared")
 
 	proc/HYPdamageplant(var/damage_source, var/damage_amount, var/bypass_resistance = 0)

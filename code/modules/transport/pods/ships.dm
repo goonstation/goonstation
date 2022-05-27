@@ -1414,10 +1414,12 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 
 	finish_board_pod(var/mob/boarder)
 		..()
-		if (!src.pilot) return //if they were stopped from entering by other parts of the board proc from ..()
+		if (!src.pilot)
+			return //if they were stopped from entering by other parts of the board proc from ..()
 		SPAWN(0)
 			src.escape()
 
+	#define SHUTTLE_PERCENT_FROM_STATION emergency_shuttle.timeleft() / SHUTTLETRANSITTIME // both in seconds
 	proc/escape()
 		if(!launched)
 			launched = 1
@@ -1438,18 +1440,14 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 					explosion(src, src.loc, 1, 1, 2, 3)
 					break
 				steps_moved++
-				if(prob((steps_moved-7) * 3) && !succeeding)
+				if(prob((steps_moved-7) * 4 * (1 - SHUTTLE_PERCENT_FROM_STATION)) && !succeeding) // failure becomes more likely as the shuttle gets farther
 					fail()
-				if (prob((steps_moved-7) * 4))
+				if (prob((steps_moved-7) * 6 * SHUTTLE_PERCENT_FROM_STATION))
 					succeed()
 				sleep(0.4 SECONDS)
-
-	proc/test()
-		boutput(world,"shuttle loc is [emergency_shuttle.location]")
+	#undef SHUTTLE_PERCENT_FROM_STATION
 
 	proc/succeed()
-		if (succeeding && prob(3))
-			succeeding = 0
 		if (emergency_shuttle.location == SHUTTLE_LOC_TRANSIT & !did_warp) //lol sorry hardcoded a define thing
 			succeeding = 1
 			did_warp = 1

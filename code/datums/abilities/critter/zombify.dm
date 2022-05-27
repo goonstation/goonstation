@@ -58,6 +58,7 @@
 /datum/targetable/critter/zombify
 	name = "Zombify"
 	desc = "After a short delay, instantly convert a human into a zombie."
+	icon_state = "critter_bite"
 	cooldown = 0
 	var/actual_cooldown = 200
 	targeted = 1
