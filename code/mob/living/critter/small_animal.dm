@@ -27,8 +27,6 @@
   - walruses
   - floating eye
   - pigs
-  - clownspiders
-   - cluwnespiders
   - bats
    - angry bats
    - Dr. Acula
