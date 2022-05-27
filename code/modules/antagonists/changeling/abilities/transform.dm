@@ -84,16 +84,16 @@
 
 		var/datum/abilityHolder/changeling/H = holder
 		if (!istype(H))
-			boutput(holder.owner, __red("That ability is incompatible with our abilities. We should report this to a coder."))
+			boutput(holder.owner, "<span class='alert'>That ability is incompatible with our abilities. We should report this to a coder.</span>")
 			return 1
 
 		if (H.absorbed_dna.len < 2)
-			boutput(holder.owner, __red("We need to absorb more DNA to use this ability."))
+			boutput(holder.owner, "<span class='alert'>We need to absorb more DNA to use this ability.</span>")
 			return 1
 
 		var/target_name = input("Select the target DNA: ", "Target DNA", null) as null|anything in H.absorbed_dna
 		if (!target_name)
-			boutput(holder.owner, __blue("We change our mind."))
+			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
 			return 1
 
 		holder.owner.visible_message(text("<span class='alert'><B>[holder.owner] transforms!</B></span>"))

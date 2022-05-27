@@ -825,14 +825,14 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 		if(istype(W,/obj/item/stick) || istype(W,/obj/item/rods))
 			// Fail if already an apple on a stick
 			if(istype(src,/obj/item/reagent_containers/food/snacks/plant/apple/stick))
-				boutput(user, __red("This apple already has a stick!"))
+				boutput(user, "<span class='alert'>This apple already has a stick!</span>")
 				return
 
 			// Check for broken sticks
 			if(istype(W,/obj/item/stick))
 				var/obj/item/stick/S = W
 				if(S.broken)
-					boutput(user, __red("You can't use a broken stick!"))
+					boutput(user, "<span class='alert'>You can't use a broken stick!</span>")
 					return
 
 			// Create apple on a stick

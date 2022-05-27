@@ -7556,9 +7556,6 @@
 	name = "Staff Assistant"
 	},
 /obj/machinery/light_switch/auto,
-/obj/machinery/status_display{
-	pixel_x = 32
-	},
 /turf/simulated/floor/blueblack{
 	dir = 4
 	},
@@ -8104,6 +8101,9 @@
 "ath" = (
 /obj/stool/chair/blue{
 	dir = 8
+	},
+/obj/machinery/status_display{
+	pixel_x = 32
 	},
 /turf/simulated/floor/blueblack{
 	dir = 4

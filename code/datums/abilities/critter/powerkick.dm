@@ -15,12 +15,12 @@
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, __red("Nothing to kick there."))
+				boutput(holder.owner, "<span class='alert'>Nothing to kick there.</span>")
 				return 1
 		if (target == holder.owner)
 			return 1
 		if (BOUNDS_DIST(holder.owner, target) > 0)
-			boutput(holder.owner, __red("That is too far away to kick."))
+			boutput(holder.owner, "<span class='alert'>That is too far away to kick.</span>")
 			return 1
 
 		var/mob/ow = holder.owner

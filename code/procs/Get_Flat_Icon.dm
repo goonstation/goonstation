@@ -70,8 +70,6 @@
 	if(!base_icon_dir)
 		base_icon_dir = curdir
 
-	ASSERT(!BLEND_DEFAULT)		//I might just be stupid but lets make sure this define is 0.
-
 	var/curblend = A.blend_mode || defblend
 
 	if(A.overlays.len || length(A.underlays))

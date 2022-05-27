@@ -70,6 +70,7 @@
 		src.death() // get rekt
 
 /mob/living/intangible/flock/trace/death(gibbed)
+	. = ..()
 	if(src.client)
 		boutput(src, "<span class='alert'>You cease to exist abruptly.</span>")
 	src.flock?.removeTrace(src)
