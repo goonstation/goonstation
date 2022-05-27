@@ -15,8 +15,14 @@ ABSTRACT_TYPE(/datum/unlockable_flock_structure)
 		..()
 		if(F)
 			src.my_flock = F
+		if(!src.structType)
+			stack_trace("[src.type] must specify structType")
+			return
 		var/obj/flock_structure/sT = src.structType //this is a gross hack, but needed for resolving flock_id
 		friendly_name = initial(sT.flock_id)
+		if(!name)
+			stack_trace("[src.type] has invalid structType [sT]")
+			return
 
 	proc/process()
 		if(src.check_unlocked())
