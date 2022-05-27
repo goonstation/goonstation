@@ -20,7 +20,7 @@ ABSTRACT_TYPE(/datum/unlockable_flock_structure)
 			return
 		var/obj/flock_structure/sT = src.structType //this is a gross hack, but needed for resolving flock_id
 		friendly_name = initial(sT.flock_id)
-		if(!name)
+		if(!friendly_name)
 			stack_trace("[src.type] has invalid structType [sT]")
 			return
 
