@@ -11,13 +11,13 @@ TOWELS:
 HANDKERCHIEFS:
 	* clean eyeglasses
 	* wipe people's faces
-	* wipe heads
 	* various emotes into
 	* wave
 	* tiny secret
 
 BOTH:
 	* chem gag rag
+	* wipe heads
 	* TODO: embroider
 */
 
