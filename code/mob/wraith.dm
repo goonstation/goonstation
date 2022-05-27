@@ -514,25 +514,6 @@
 				boutput(src, "You are currently muted and may not speak.")
 				return
 
-			if (istype (src, /mob/wraith/wraith_trickster))	//Todo, redo this thing. Copy appearance's speech sound. Add overhead text. Sanitize and log. Add typing indicator.
-				message = trim(message)
-
-				UpdateOverlays(speech_bubble, "speech_bubble")
-				var/speech_bubble_time = src.last_typing
-				SPAWN(1.5 SECONDS)
-					if(speech_bubble_time == src.last_typing)
-						UpdateOverlays(null, "speech_bubble")
-
-				playsound(src, sounds_speak["1"],  55, 0.01, 8)
-
-				var/rendered = "<strong>[src.name]</strong> says [message]."
-
-				var/list/listening = all_hearers(null, src)
-				listening |= src
-				//Todo, typing indicator, maybe impersonate voice/speech pattern, overhead text
-				for (var/mob/M in listening)
-					M.show_message(rendered, 2)
-
 			else
 				if (copytext(message, 1, 2) == "*")
 					src.emote(copytext(message, 2))

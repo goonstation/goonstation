@@ -195,9 +195,9 @@
 			if ("plaguerat")
 				filename = "html/traitorTips/plaguerat.html"
 			if ("trickster")
-				filename = "html/traitorTips/plaguebringer.html"
+				filename = "html/traitorTips/trickster.html"
 			if ("harbinger")
-				filename = "html/traitorTips/plaguebringer.html"
+				filename = "html/traitorTips/harbinger.html"
 			if ("football")
 				filename = "html/traitorTips/football.html"
 			if ("podwars")

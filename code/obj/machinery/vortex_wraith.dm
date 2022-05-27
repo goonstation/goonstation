@@ -2,7 +2,7 @@
 	name = "Summoning portal"
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "harbinger_circle_inact"
-	desc = "It hums and thrums as you stare at it. Dark shadows wieve in and out of sight within."
+	desc = "It hums and thrums as you stare at it. Dark shadows weave in and out of sight within."
 	anchored = 1
 	density = 1
 	_health = 40
@@ -40,7 +40,7 @@
 	process()
 		if ((src.next_growth != null) && (growth < 4))	//Dont grow if we are at max level
 			if (src.next_growth < world.time)	//Growth grants us more health, spawn range, and spawn cap
-				next_growth = world.time + 15 SECONDS + (growth * 15) SECONDS	//Subsequent levels are slower
+				next_growth = world.time + 10 SECONDS + (growth * 10) SECONDS	//Subsequent levels are slower
 				if (growth == 0)
 					icon_state = "harbinger_circle"
 				growth++
@@ -59,9 +59,10 @@
 				var/list/eligible_turf = list()
 				var/turf/chosen_turf = null
 				for (var/mob/living/carbon/human/H in range((1 + src.growth), src))	//Lets try to spawn near someone
-					for (var/turf/T in range(3, H))
-						if (isturf(T) && istype(T, /turf/simulated/floor))	//Find a non-wall, non-space turf to spawn in
-							eligible_turf += T
+					if(isalive(H))
+						for (var/turf/T in range(3, H))
+							if (isturf(T) && istype(T, /turf/simulated/floor))	//Find a non-wall, non-space turf to spawn in
+								eligible_turf += T
 				if (length(eligible_turf) <= 0)	//No spot to spawn near a human, or no human in range, lets try to find a regular turf instead
 					for (var/turf/T in range((1 + src.growth), src))
 						if (isturf(T) && istype(T, /turf/simulated/floor))	//Find a non-wall, non-space turf to spawn in
@@ -70,14 +71,14 @@
 					src.visible_message("<span class='alert'><b>[src] sputters and crackles, it seems it couldnt find a spot to summon something!</b></span>")
 					return 1
 				chosen_turf = pick(eligible_turf)
-				var/image/portalIcon = image('icons/obj/objects.dmi', chosen_turf, null, EFFECTS_LAYER_UNDER_4)
+				var/image/portalIcon = image('icons/obj/objects.dmi', chosen_turf, null)
 				portalIcon.icon_state = "harbinger_portal"
 				//Todo portal doesnt appear, figure out why
-	//			portalIcon.alpha = 0
-	//			animate(portalIcon, alpha=255, time=1 SECONDS)
-				playsound(src, "sound/effects/flameswoosh.ogg" , 80, 1)
+				portalIcon.alpha = 0
+				animate(portalIcon, alpha=255, time=1 SECONDS)
+				playsound(chosen_turf, "sound/effects/flameswoosh.ogg" , 80, 1)
 				SPAWN(3 SECOND)
-	//				animate(portalIcon, alpha=0, time=1 SECONDS)
+					animate(portalIcon, alpha=0, time=1 SECONDS)
 					SPAWN(1 SECOND)
 						qdel(portalIcon)
 					if (src.random_mode)

@@ -1,7 +1,6 @@
 //////////////////////////
 // Light revealed wraith trap
 //////////////////////////
-// Todo, play a sound on trap trigger
 /obj/machinery/wraith/runetrap
 	name = "Rune trap"
 	desc = "A strange ominous circle. You should likely tip-toe around this one."
@@ -47,6 +46,7 @@
 
 	attackby(obj/item/P, mob/living/user)
 		//Todo, play a sound here
+		playsound(src, "/sound/impact_sounds/Crystal_Shatter_1.ogg", 80)
 		src.visible_message("<span class='notice'>The trap is destroyed!</span>")
 		qdel(src)
 
@@ -72,6 +72,7 @@
 					M.reagents.add_reagent("madness_toxin", src.amount_to_inject)
 					src.visible_message("<span class='alert>[M] steps on [src] and triggers it!</span>")
 					boutput(M, "<span class='alert'>Visions of murder and blood fill your mind. Rage builds up inside of you!</span>")
+					playsound(src, "sound/voice/wraith/wraithraise3.ogg", 80)
 					elecflash(src, 1, 1)
 					qdel(src)
 
@@ -93,6 +94,7 @@
 					M.reagents.add_reagent("haloperidol", src.amount_to_inject)
 					src.visible_message("<span class='alert>[M] steps on [src] and triggers it!</span>")
 					boutput(M, "<span class='notice'>You start to feel really sleepy!</span>")
+					playsound(src, "/sound/voice/wraith/wraithraise3.ogg", 80)
 					elecflash(src, 1, 1)
 					qdel(src)
 
@@ -109,6 +111,7 @@
 				playsound(src, "sound/weapons/flashbang.ogg", 25, 1)
 				M.changeStatus("stunned", 4 SECONDS)
 				src.visible_message("<span class='alert>[M] steps on [src] and triggers it! A bright light flashes</span>")
+				playsound(src, "/sound/voice/wraith/wraithraise3.ogg", 80)
 				elecflash(src, 1, 1)
 				qdel(src)
 
@@ -128,6 +131,7 @@
 					O.emp_act()
 				playsound(src, "sound/effects/electric_shock_short.ogg", 30, 1)
 				src.visible_message("<span class='alert>[M] steps on [src] and triggers it! Your hair stands on end!</span>")
+				playsound(src, "/sound/voice/wraith/wraithraise3.ogg", 80)
 				elecflash(src, 1, 1)
 				qdel(src)
 
@@ -143,7 +147,8 @@
 				for (var/mob/H in range(4, src))
 					H.setStatus("terror", 45 SECONDS)
 
-				src.visible_message("<span class='alert>[M] steps on [src] and triggers it! Your hair stands on end!</span>")
+				src.visible_message("<span class='alert>[M] steps on [src] and triggers it! Your mind fills with terrible visions!</span>")
+				playsound(src, "/sound/voice/wraith/wraithraise3.ogg", 80)
 				elecflash(src, 1, 1)
 				qdel(src)
 
@@ -159,6 +164,7 @@
 				fireflash(M, 1, TRUE)
 				playsound(src, "sound/effects/mag_fireballlaunch.ogg", 50, 0)
 				src.visible_message("<span class='alert>[M] steps on [src] and triggers it! A flame engulfs them immediatly!</span>")
+				playsound(src, "/sound/voice/wraith/wraithraise3.ogg", 80)
 				elecflash(src, 1, 1)
 				qdel(src)
 
@@ -184,6 +190,7 @@
 				if (length(randomturfs) <= 0)
 					return 1
 				src.visible_message("<span class='alert>[M] steps on [src] and triggers it! A flame engulfs them immediatly!</span>")
+				playsound(src, "/sound/voice/wraith/wraithraise3.ogg", 80)
 				SPAWN(5 DECI SECONDS)
 					boutput(M, text("<span class='alert'>You blink, and suddenly you're somewhere else!</span>"))
 					playsound(M.loc, "sound/effects/mag_warp.ogg", 25, 1, -1)
@@ -201,6 +208,7 @@
 			var/mob/M = A
 			if(checkRun(M))
 				src.visible_message("<span class='alert>[M] steps on [src] and triggers it! You hear a buzzing sound!</span>")
+				playsound(src, "/sound/voice/wraith/wraithraise3.ogg", 80)
 				SPAWN(5 DECI SECOND)
 					explosion(src, src, -1, 1, 2, 4)
 					elecflash(src, 1, 1)
@@ -222,6 +230,7 @@
 				playsound(M, "sound/misc/slip.ogg", 50, 1, -3)
 				var/atom/target = get_edge_target_turf(M, M.dir)
 				M.throw_at(target, 12, 1, throw_type = THROW_SLIP)
+				playsound(src, "/sound/voice/wraith/wraithraise3.ogg", 80)
 				elecflash(src, 1, 1)
 
 /proc/checkRun(var/mob/M)	//If we are above walking speed, this triggers

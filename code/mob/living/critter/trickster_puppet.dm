@@ -49,6 +49,8 @@
 		for (var/mob/living/carbon/human/H in viewers(6, src))
 			if (!H.stat && !H.bioHolder.HasEffect("revenant"))
 				src.hauntBonus += 6
+				if(master != null)
+					master.possession_points++
 
 		if (master != null && master.next_area_change != null)
 			if (master.next_area_change < world.time)

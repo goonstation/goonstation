@@ -1551,7 +1551,7 @@
 				found_light = TRUE
 				continue
 		if (!found_light)	//Staying in the dark makes it worse and worse
-			duration += 5
+			duration += 6
 		if (probmult(6) && (duration <= 30 SECONDS))
 			switch (rand(1,5))
 				if (1)
@@ -1663,12 +1663,13 @@
 		get_image_group(CLIENT_IMAGE_GROUP_ILLUSSION).remove_mob(H)
 
 	onUpdate()
-		if (prob(50))
+		var/mult = 1
+		if (probmult(8))
 			switch (rand(1,3))
 				if (1) // Image based illusion
 					for (var/turf/W in range(6, H))	//Check for surrounding spots
 						wall_list += W
-					if (wall_list != null)
+					if (length(wall_list) > 0)
 						var/turf/W = pick(wall_list)
 						switch(rand(1,3))
 							if (1)
@@ -1722,7 +1723,7 @@
 				if (3) //Wall based, blood pouring out of the walls and other spooky stuff
 					for (var/turf/simulated/wall/auto/W in orange(5, H))
 						wall_list += W
-					if (wall_list != null)
+					if (length(wall_list) > 0)
 						var/turf/simulated/wall/auto/W = pick(wall_list)
 						switch(rand(1,3))
 							if (1)

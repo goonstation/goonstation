@@ -867,7 +867,7 @@
 	icon_state = "evolve"
 	desc = "Choose a form to evolve into once you have grown strong enough"
 	targeted = 0
-	pointCost = 300
+	pointCost = 150
 	tooltip_flags = TOOLTIP_LEFT
 	special_screen_loc="NORTH-1,EAST"
 
@@ -991,6 +991,7 @@
 				return 1
 			usr.playsound_local(usr.loc, "sound/voice/wraith/wraithspook[rand(1, 2)].ogg", 80, 0)
 			H.bioHolder.AddEffect("blood_curse")
+			boutput(holder.owner, "<span class='notice'>We curse this being with a blood dripping curse.</span>")
 			var/datum/targetable/ability = holder.getAbility(/datum/targetable/wraithAbility/curse/rot)
 			ability.doCooldown()
 			ability = holder.getAbility(/datum/targetable/wraithAbility/curse/blindness)
@@ -1022,6 +1023,7 @@
 				return 1
 			usr.playsound_local(usr.loc, "sound/voice/wraith/wraithspook[rand(1, 2)].ogg", 80, 0)
 			H.bioHolder.AddEffect("blind_curse")
+			boutput(holder.owner, "<span class='notice'>We curse this being with a blinding curse.</span>")
 			var/datum/targetable/ability = holder.getAbility(/datum/targetable/wraithAbility/curse/blood)
 			ability.doCooldown()
 			ability = holder.getAbility(/datum/targetable/wraithAbility/curse/enfeeble)
@@ -1053,6 +1055,7 @@
 				return 1
 			usr.playsound_local(usr.loc, "sound/voice/wraith/wraithspook[rand(1, 2)].ogg", 80, 0)
 			H.bioHolder.AddEffect("weak_curse")
+			boutput(holder.owner, "<span class='notice'>We curse this being with an enfeebling curse.</span>")
 			var/datum/targetable/ability = holder.getAbility(/datum/targetable/wraithAbility/curse/blood)
 			ability.doCooldown()
 			ability = holder.getAbility(/datum/targetable/wraithAbility/curse/blindness)
@@ -1084,6 +1087,7 @@
 				return 1
 			usr.playsound_local(usr.loc, "sound/voice/wraith/wraithspook[rand(1, 2)].ogg", 80, 0)
 			H.bioHolder.AddEffect("rot_curse")
+			boutput(holder.owner, "<span class='notice'>We curse this being with a decaying curse.</span>")
 			var/datum/targetable/ability = holder.getAbility(/datum/targetable/wraithAbility/curse/blood)
 			ability.doCooldown()
 			ability = holder.getAbility(/datum/targetable/wraithAbility/curse/blindness)
@@ -1182,6 +1186,7 @@
 					decal_count++
 					found_decal_list += C
 		if (decal_count > 15)
+			holder.owner.playsound_local(holder.owner, "sound/voice/wraith/wraithraise[pick("1","2","3")].ogg", 80)
 			var/turf/T = get_turf(holder.owner)
 			T.visible_message("<span class='alert'>All the filth and grime around begins to writhe and move!</span>")
 			for(var/obj/decal/cleanable/C in found_decal_list)
@@ -1366,6 +1371,8 @@
 					H.setStatusMin("paralysis", 8 SECONDS)
 					sleep(8 SECONDS)
 					var/mob/dead/observer/O = H.ghostize()
+					if(W.mind == null)	//Wraith died or was removed in the meantime
+						return 1
 					if (O?.mind)
 						boutput(O, "<span class='bold' style='color:red;font-size:150%'>You have been temporarily removed from your body!</span>")
 						WG = O.insert_slasher_observer(H)
@@ -1432,7 +1439,7 @@
 	pointCost = 5
 	targeted = 1
 	target_anything = 1
-	cooldown = 5 SECONDS
+	cooldown = 4 SECONDS
 	var/list/sound_list = list("Death gasp",
 	"Gasp",
 	"Gunshot",

@@ -10,7 +10,8 @@
 	can_throw = 1
 	can_grab = 0
 	can_disarm = 1
-	icon_state = "scuttlebot"
+	icon = 'icons/mob/wraith_critters.dmi'
+	icon_state = "voidhound"
 	var/health_brute = 40
 	var/health_brute_vuln = 0.7
 	var/health_burn = 40
