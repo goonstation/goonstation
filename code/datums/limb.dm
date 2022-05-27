@@ -375,7 +375,7 @@
 		if (isitem(target))
 			var/obj/item/potentially_food = target
 			if (potentially_food.edible)
-				potentially_food.Eat(user, user, 1)
+				potentially_food.attack(user, user)
 
 	help(mob/target, var/mob/user)
 		return
