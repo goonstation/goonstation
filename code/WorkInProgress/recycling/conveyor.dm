@@ -105,7 +105,7 @@
 		return
 	if(istype(A, /obj/critter) && A:flying)		//They are flying above it, ok.
 		return
-	if(HAS_ATOM_PROPERTY(A, PROP_ATOM_FLOATING))) // Don't put new checks here, apply this atom prop instead.
+	if(HAS_ATOM_PROPERTY(A, PROP_ATOM_FLOATING)) // Don't put new checks here, apply this atom prop instead.
 		return
 	var/movedir = dir	// base movement dir
 	if(divert && dir == divdir)	// update if diverter present
