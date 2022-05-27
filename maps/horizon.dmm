@@ -8304,6 +8304,9 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersB)
 "awL" = (
@@ -13792,6 +13795,9 @@
 /area/station/medical/medbay)
 "aKQ" = (
 /obj/reagent_dispensers/watertank/fountain,
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -14089,6 +14095,9 @@
 /obj/machinery/chem_dispenser/alcohol,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
 /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
 /turf/simulated/floor/purpleblack{
 	dir = 9
 	},
@@ -17465,6 +17474,9 @@
 "aTx" = (
 /obj/table/auto,
 /obj/disposalpipe/segment,
+/obj/machinery/status_display{
+	pixel_x = -32
+	},
 /turf/simulated/floor/arrival{
 	dir = 8
 	},
@@ -20401,6 +20413,9 @@
 /obj/machinery/shipalert{
 	pixel_x = -28
 	},
+/obj/machinery/status_display{
+	pixel_y = -30
+	},
 /turf/simulated/floor/darkblue,
 /area/station/bridge)
 "bae" = (
@@ -20657,6 +20672,9 @@
 "baE" = (
 /obj/stool/chair/comfy/wheelchair{
 	dir = 4
+	},
+/obj/machinery/status_display{
+	pixel_x = -32
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 8
@@ -23678,6 +23696,9 @@
 /obj/landmark/start{
 	name = "Miner"
 	},
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -24229,6 +24250,9 @@
 	},
 /obj/disposalpipe/segment/transport{
 	dir = 4
+	},
+/obj/machinery/status_display{
+	pixel_x = -32
 	},
 /turf/simulated/floor/blueblack{
 	dir = 10
@@ -32951,6 +32975,9 @@
 "bFs" = (
 /obj/table/wood/auto,
 /obj/item/paper_bin,
+/obj/machinery/status_display{
+	pixel_y = -30
+	},
 /turf/simulated/floor/yellowblack{
 	dir = 6
 	},
@@ -33490,6 +33517,9 @@
 /obj/item/device/analyzer/healthanalyzer,
 /obj/disposalpipe/segment/brig{
 	dir = 8
+	},
+/obj/machinery/status_display{
+	pixel_y = 30
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/quarters_south)
@@ -36898,6 +36928,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/bar)
 "bQi" = (
@@ -38265,6 +38298,9 @@
 /obj/disposalpipe/trunk{
 	dir = 4
 	},
+/obj/machinery/status_display{
+	pixel_x = -32
+	},
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
@@ -38543,6 +38579,9 @@
 /obj/machinery/light/emergency{
 	dir = 4;
 	pixel_x = 10
+	},
+/obj/machinery/status_display{
+	pixel_y = 30
 	},
 /turf/simulated/floor/bot,
 /area/station/engine/power{
@@ -47025,6 +47064,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/status_display{
+	pixel_x = -32
+	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "cop" = (
@@ -52820,6 +52862,13 @@
 /obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor,
 /area/station/security/main)
+"dJj" = (
+/obj/disposalpipe/segment/brig,
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
+/turf/simulated/floor/white,
+/area/station/security/brig/genpop)
 "dJp" = (
 /obj/decal/poster/wallsign/stencil/left/s{
 	pixel_x = -10
@@ -53958,6 +54007,12 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/west,
 /area/station/hallway/secondary/east)
+"gxF" = (
+/obj/machinery/status_display{
+	pixel_x = 32
+	},
+/turf/simulated/floor/wood/two,
+/area/station/chapel/sanctuary)
 "gyU" = (
 /obj/decal/poster/wallsign/space,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -60558,6 +60613,18 @@
 	},
 /turf/simulated/floor/blueblack,
 /area/station/medical/robotics)
+"vLY" = (
+/obj/machinery/plantpot{
+	anchored = 1
+	},
+/obj/decal/tile_edge/line/green{
+	icon_state = "line1"
+	},
+/obj/machinery/status_display{
+	pixel_y = -30
+	},
+/turf/simulated/floor/grass,
+/area/station/hydroponics/bay)
 "vOD" = (
 /obj/cable{
 	d1 = 4;
@@ -60781,6 +60848,14 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/main)
+"wnj" = (
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
+/turf/simulated/floor/escape{
+	dir = 1
+	},
+/area/station/hallway/secondary/exit)
 "wnm" = (
 /obj/cable{
 	d1 = 1;
@@ -96920,7 +96995,7 @@ bMD
 bPr
 bSt
 fMn
-bXn
+vLY
 bXl
 jKB
 wds
@@ -114417,7 +114492,7 @@ aMt
 byV
 aRm
 aUk
-aIB
+gxF
 bay
 bay
 wRq
@@ -127415,7 +127490,7 @@ buo
 jTy
 bzw
 pLK
-bKY
+dJj
 upy
 bYK
 tIo
@@ -133732,7 +133807,7 @@ aLp
 aLp
 aLp
 cbm
-izt
+wnj
 cPK
 rsW
 dnV
@@ -134034,7 +134109,7 @@ aLp
 aLp
 aLp
 cbm
-izt
+wnj
 kGH
 rsW
 rpA
