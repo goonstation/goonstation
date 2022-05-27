@@ -339,7 +339,7 @@ obj/machinery/atmospherics/pipe
 
 			var/pressure_difference = pressure - MIXTURE_PRESSURE(environment)
 
-			if(can_rupture && pressure_difference > fatigue_pressure)
+			if(can_rupture && !GET_COOLDOWN(src, "rupture_protection") && pressure_difference > fatigue_pressure)
 				var/rupture_prob = (pressure_difference - fatigue_pressure)/50000
 				if(prob(rupture_prob))
 					rupture(pressure_difference)
@@ -460,6 +460,7 @@ obj/machinery/atmospherics/pipe
 			src.ruptured = 0
 			desc = initial(desc)
 			UpdateIcon()
+			ON_COOLDOWN(src, "rupture_protection", 20 SECONDS + rand(10 SECONDS, 80 SECONDS))
 
 		proc/reconstruct_pipe(mob/M, obj/item/rods/R)
 			if(istype(R) && istype(M))
