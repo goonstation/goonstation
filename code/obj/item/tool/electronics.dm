@@ -980,11 +980,11 @@
 /obj/proc/was_built_from_frame(mob/user, newly_built)
 	.= 0
 
-/obj/proc/build_deconstruction_buttons()
+/obj/proc/build_deconstruction_buttons(mob/user as mob)
 	.= 0
 
 	if (deconstruct_flags & DECON_ACCESS)
-		if (src.has_access_requirements())
+		if (src.allowed(user))
 			return
 
 	if (deconstruct_flags)

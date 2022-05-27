@@ -25,6 +25,7 @@ var/zapLimiter = 0
 	plane = PLANE_NOSHADOW_ABOVE
 	req_access = list(access_engineering_power)
 	object_flags = CAN_REPROGRAM_ACCESS
+	deconstruct_flags = DECON_ACCESS | DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER| DECON_WIRECUTTERS | DECON_MULTITOOL
 	netnum = -1		// set so that APCs aren't found as powernet nodes
 	text = ""
 	var/area/area
@@ -118,6 +119,17 @@ var/zapLimiter = 0
 		noaicontrol
 			noalerts = 1
 			aidisabled = 1
+
+/obj/machinery/power/apc/was_deconstructed_to_frame()
+	equipment = autoset(equipment, 0) // Make extra sure everything is off before we remove the terminal and stuff
+	lighting = autoset(lighting, 0)
+	environ = autoset(environ, 0)
+	qdel(terminal)
+	SPAWN(0.5 SECONDS)
+		src.update()
+
+/obj/machinery/power/apc/was_built_from_frame()
+	src.New()
 
 /proc/RandomAPCWires()
 	//to make this not randomize the wires, just set index to 1 and increment it in the flag for loop (after doing everything else).
