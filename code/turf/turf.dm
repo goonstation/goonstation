@@ -103,6 +103,14 @@
 				return 0
 		return 1
 
+	proc/can_crossed_by(atom/movable/AM)
+		if(!src.Cross(AM))
+			return 0
+		for(var/atom/A in contents)
+			if(!A.Cross(AM))
+				return 0
+		return 1
+
 	proc/tilenotify(turf/notifier)
 
 	proc/selftilenotify()
