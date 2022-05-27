@@ -176,3 +176,21 @@
 		name = "Lab Monkey Crate"
 		desc = "Warning: Contains live monkeys!"
 		req_access = list(access_medical_lockers, access_tox_storage)
+
+	cdctier1
+		name = "Low-Risk CDC Pathogen Sample Crate"
+		desc = "Contains a pathogen sample with unknown properties."
+		//req access = special permits (access.dm)
+		spawn_contents = list(/obj/item/paper/cdc_pamphlet)
+
+	cdctier2
+		name = "Medium-Risk CDC Pathogen Sample Crate"
+		desc = "Contains a pathogen sample with unknown properties."
+		//req access = special permits (access.dm)
+		spawn_contents = list(/obj/item/paper/cdc_pamphlet)
+
+	cdctier3
+		name = "High-Risk CDC Pathogen Sample Crate"
+		desc = "Contains a pathogen sample with unknown properties."
+		//req access = special permits (access.dm)
+		spawn_contents = list(/obj/item/paper/cdc_pamphlet)
