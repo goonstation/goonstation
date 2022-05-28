@@ -834,27 +834,15 @@ datum/pathogen
 		return
 
 	proc/generate_name()
-		src.mutation = pick(pathogen_controller.lnums)
-		do
 			src.name_base = pick(pathogen_controller.lalph) + pick(pathogen_controller.lnums) + pick(pathogen_controller.lalph)
-		while (src.name_base in pathogen_controller.pathogen_trees)
-		src.name = name_base + mutation
-		src.mutation = text2num_safe(mutation)
-		src.base_mutation = 0
 
-		src.pathogen_uid = "p[pathogen_controller.next_uid]"
-		pathogen_controller.next_uid++
 
-		pathogen_controller.pathogen_trees += src.name_base
-		var/datum/pathogen_cdc/cdc = new /datum/pathogen_cdc(src.pathogen_uid)
-		pathogen_controller.pathogen_trees[src.name_base] = cdc
-		pathogen_controller.next_mutation[src.pathogen_uid] = mutation + 1
 
 //		if (ticker)
 //			if (current_state == GAME_STATE_PLAYING)
 //				message_admins("Pathogen tree [src.name_base] entering play.")
 
-		return cdc
+		return
 
 	proc/generate_components(var/datum/pathogen_cdc/cdc, var/strength)
 		var/supp_t = pick(pathogen_controller.path_to_suppressant)
@@ -939,14 +927,13 @@ datum/pathogen
 			src.do_prefab()
 		processing_items.Add(src)
 
-
 	proc/generate_weak_effect()
 		switch(rand(1,100))
-			if (1 to 70)
+			if (1 to 70) //71%
 				return src.add_new_symptom(pathogen_controller.l_vc)
-			if (71 to 97)
+			if (71 to 97) //27%
 				return src.add_new_symptom(pathogen_controller.l_c)
-			if (98 to 100)
+			if (98 to 100) //3%
 				return src.add_new_symptom(pathogen_controller.l_u)
 
 	proc/generate_effect()
@@ -957,10 +944,8 @@ datum/pathogen
 				return src.add_new_symptom(pathogen_controller.l_c)
 			if (86 to 94) // 8%
 				return src.add_new_symptom(pathogen_controller.l_u)
-			if (95 to 98) // 4%
+			if (95 to 100) // 6%
 				return src.add_new_symptom(pathogen_controller.l_r)
-			if (99 to 100) // 2%
-				return src.add_new_symptom(pathogen_controller.l_vr)
 
 	proc/generate_strong_effect()
 		switch(rand(1,100))
