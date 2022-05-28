@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2022
+ * @author LeahTheTech (https://github.com/TobleroneSwordfish)
+ * @license MIT
+ */
+
 import { useBackend, useLocalState, useSharedState } from "../backend";
 import { Flex, Button, Stack, Tabs, Icon, Box, Section, Dropdown } from "../components";
 import { Window } from '../layouts';
