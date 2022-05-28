@@ -746,7 +746,7 @@ datum/shockparam
 datum/pathogen
 	var/name										// The modifiable name of the disease.
 	var/name_base									// The original name of the disease.
-	var/replica = null								// Value signifying different replications of a single strain. Useful for separating infection capacity.
+	var/replica = 0								// Value signifying different replications of a single strain. Useful for separating infection capacity.
 	var/desc										// What a scientist might see when he looks at this pathogen through a microscope (eg. blue stringy viruses)
 
 	var/mob/infected								// The mob that is infected with this pathogen.
@@ -773,7 +773,7 @@ datum/pathogen
 	var/forced_microbody = null						// If not null, this pathogen will be generated with a specific microbody.
 
 
-/*
+
 	disposing()
 		clear()
 		..()
@@ -781,32 +781,33 @@ datum/pathogen
 	proc/clear()
 		name = ""
 		name_base = ""
-		pathogen_uid = null
-		mutation = null
+		replica = 0
 		desc = ""
-		stages = 1
-		carriers = list()
-		effects = list()
-		stage = 1
-		generation = 1
-		symptomatic = 1
-		advance_speed = 0
-		spread = 0
-		base_mutation = null
-		body_type = null
+
 		infected = null
-		cooldown = 3
-		suppression_threshold = 0
-		mutex = list()
-		dnasample = null
-		suppressant = null
-		suppressed = 0
-		in_remission = 0
+
+		advance_speed = 0
 		ticked = 0
+		cooldown = 3
+		stage = 1
+		stages = 1
+
+		body_type = null
+
+		cure_catagory = null
+		cure_threshold = null
+		in_remission = 0
+
 		symptom_data = list()
+		effects = list()
+		mutex = list()
+
+		transmissions = list()
+		spread = 1
+
+		suppression_threshold = 0
 
 		forced_microbody = initial(forced_microbody)
-		curable_by_suppression = initial(curable_by_suppression)
 
 	proc/clone()
 		var/datum/pathogen/P = new /datum/pathogen
@@ -1331,4 +1332,3 @@ proc/hex2numoc(var/num)
 // generates a random 3-sequence (rand(0, 4095) is unreliable)
 proc/rand3seq()
 	return num2hex(rand(0, 15), 1) + num2hex(rand(0, 15), 1) + num2hex(rand(0, 15), 1)
-*/
