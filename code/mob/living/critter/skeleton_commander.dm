@@ -78,16 +78,15 @@
 				swipe.setup(effect)
 				swipe.set_dir(direction)
 
-				var/hit = 0
+				var/hit = FALSE
 				for(var/turf/T in list(one, two, three))
 					for(var/atom/movable/A in T)
 						if(A in attacked) continue
 						if(ismob(A) && !isobserver(A))
 							var/mob/M = A
-							M.Attackby(user, user, params, 1)
 							M.TakeDamageAccountArmor("All", rand(5,7), 0, 0, DAMAGE_CUT)
 							attacked += A
-							hit = 1
+							hit = TRUE
 
 				if (!hit)
 					playsound(user, "sound/effects/swoosh.ogg", 50, 0)
@@ -110,16 +109,15 @@
 				stab.icon_state = "spear"
 				stab.setup(get_turf(user))
 				stab.set_dir(direction)
-				var/hit = 0
+				var/hit = FALSE
 				for(var/turf/T in list(one, two))
 					for(var/atom/A in T)
 						if(A in attacked) continue
 						if(ismob(A) && !isobserver(A))
 							var/mob/M = A
-							M.Attackby(user, user, params, 1)
 							M.TakeDamageAccountArmor("All", rand(6,7), 0, 0, DAMAGE_STAB)
 							attacked += A
-							hit = 1
+							hit = TRUE
 
 				if (!hit)
 					playsound(user, 'sound/effects/swoosh.ogg', 50, 0)
@@ -127,7 +125,25 @@
 					playsound(user, 'sound/impact_sounds/Flesh_Stab_3.ogg', 80)
 
 			if (INTENT_HARM)
-				return 0
+				if (!isturf(target.loc) && !isturf(target)) return
+				var/direction = get_dir_pixel(user, target, params)
+				var/turf/turf = get_step(user, direction)
+				var/hit = FALSE
+
+				var/obj/itemspecialeffect/simple/S = new /obj/itemspecialeffect/simple
+				S.setup(turf)
+
+				for(var/atom/A in turf)
+					if(ismob(A) && !isobserver(A))
+						var/mob/M = A
+						M.TakeDamageAccountArmor("All", rand(5,6), 0, 0, DAMAGE_CUT)
+						hit = TRUE
+						break
+
+				if (!hit)
+					playsound(user, 'sound/effects/swoosh.ogg', 50, 0)
+				else
+					playsound(user, 'sound/impact_sounds/Flesh_Stab_3.ogg', 80)
 
 	harm(mob/target, var/mob/living/user)
 		if(check_target_immunity( target ))
