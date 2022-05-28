@@ -2864,7 +2864,7 @@ datum
 			reaction_speed = 1
 			mix_phrase = "A putrid odor pours from the mixture as a white crystalline substance leaches into the water."
 			mix_sound = 'sound/misc/fuse.ogg'
-
+			
 			on_reaction(var/datum/reagents/holder, created_volume)
 				// water byproduct
 				// some nitrification processes create additional water.
@@ -2872,7 +2872,7 @@ datum
 				
 				// fake pee and nasty poo
 				// make for a stinky stew
-				var/location = get_turf(holder.my_atom)
+				var/turf/location = get_turf(holder.my_atom)
 				location.fluid_react_single("miasma", created_volume, airborne = 1)
 
 		jenkem // moved this down so improperly mixed nutrients yield jenkem instead
