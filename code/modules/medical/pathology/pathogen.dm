@@ -945,7 +945,6 @@ datum/pathogen
 	proc/process()
 		if (ticked)
 			ticked = 0
-			suppressed = 0
 
 	// handles pathogen advancing or receding in stage and also being cured
 	proc/progress_pathogen()
@@ -1030,9 +1029,6 @@ datum/pathogen
 		else
 			infected.cured(src)
 
-	// Carrier query. Currently unused.
-	proc/is_carried_by(var/reagent)
-		return (reagent in pathogen_controller.pathogen_affected_reagents)
 
 	proc/remission()
 		in_remission = 1
