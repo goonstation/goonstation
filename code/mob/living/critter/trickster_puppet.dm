@@ -42,7 +42,7 @@
 		src.addAbility(/datum/targetable/wraithAbility/lay_trap)
 
 	Life(parent)
-
+		..()
 		var/life_time_passed = max(life_tick_spacing, world.timeofday - last_life_update)
 
 		src.hauntBonus = 0
