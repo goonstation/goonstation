@@ -35,7 +35,7 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 /obj/storage/crate/gang_crate
 	name = "Gang Crate"
 	desc = "A small, cuboid object with a hinged top and empty interior."
-	is_short = 0
+	is_short = 1
 	var/image/light = null
 	locked = 1
 	icon_state = "lootcrime"
@@ -92,6 +92,34 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 			anchored = 0
 			UpdateIcon()
 
+	proc/attempt_open(mob/user as mob)
+		for (var/obj/ganglocker/locker in range(1,src))
+			if (locker.gang == user.mind.gang && locked == 1)
+				locked = 0
+				UpdateIcon()
+				locker.gang.add_points(500)
+				if (istype(ticker.mode, /datum/game_mode/gang))
+					var/datum/game_mode/gang/mode = ticker.mode
+					mode.broadcast_to_gang("[user.name] just opened a gang crate! Keep what's inside, and take 500 points.",locker.gang)
+				return true
+		return false
+
+	attackby(obj/item/I as obj, mob/user as mob)
+		if(src.anchored)
+			if(user.mind.gang != null)
+				user.show_text("This thing's locked into place! You better defend it for a bit.", "red")
+			else
+				user.show_text("This has weird gang signs all over it! You should probably leave it alone.", "red")
+		else if(src.locked)
+			if(user.mind.gang != null)
+				if (!attempt_open(user))
+					user.show_text("Access Denied. Bring to a gang locker to unlock it!", "red")
+					return
+			else
+				user.show_text("This has weird gang signs all over it! You should probably leave it alone.", "red")
+				return
+		..()
+
 
 	update_icon()
 		if(open)
@@ -141,8 +169,24 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 	name = "suspicious looking duffle bag"
 	icon_state = "bowling_bag"
 	item_state = "bowling"
-
+	var/hidden = 1
+	level = 1
 	var/static/obj/gangloot_master/lootMaster = new /obj/gangloot_master()
+
+
+	proc/update()
+		var/turf/T = src.loc
+		if (T && hidden) hide(T.intact && !istype(T,/turf/space))
+
+	hide(var/intact)
+		invisibility = intact ? INVIS_ALWAYS : INVIS_NONE	// hide if floor is intact
+		if (!invisibility)
+			hidden = 0
+			level = 3
+		else
+			hidden = 1
+			level = 1
+		UpdateIcon()
 
 	only_gimmicks
 		New()
@@ -468,7 +512,7 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 			object.pixel_x = off_x
 			object.pixel_y = off_y
 			object.AddComponent(/datum/component/transform_on_pickup)
-			boutput(world,"set values for [target] to offset=off_x=[off_x],off_y=[off_y],rot=[rot],scale_x=[scale_x],scale_y=[scale_y]")
+//			boutput(world,"set values for [target] to offset=off_x=[off_x],off_y=[off_y],rot=[rot],scale_x=[scale_x],scale_y=[scale_y]")
 
 
 
@@ -499,13 +543,13 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 
 
 	proc/pick_weighted_option(var/chosenTier)
-		boutput(world, "selecting item of tier [chosenTier]")
+//		boutput(world, "selecting item of tier [chosenTier]")
 		var roll = rand(1, totalWeighting[chosenTier])
 		for (var/obj/randomloot_spawner/item in items[chosenTier])
-			boutput(world, "weight now [roll] - [item.weight]")
+			//boutput(world, "weight now [roll] - [item.weight]")
 			roll = roll - item.weight
 			if (roll <= 0)
-				boutput(world, "returning [item]")
+				//boutput(world, "returning [item]")
 				return item
 
 
@@ -586,13 +630,16 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 			create_loot(var/C,var/I)
 				spawn_item(C,I,/obj/item/spray_paint,scale_x=0.7,scale_y=0.6)
 		flash
+			weight = 2
 			tier = GANG_CRATE_GEAR
 			create_loot(var/C,var/I)
 				spawn_item(C,I,/obj/item/device/flash)
 		flashbang
+			weight = 4
 			tier = GANG_CRATE_GEAR
 			create_loot(var/C,var/I)
 				spawn_item(C,I,/obj/item/chem_grenade/flashbang,scale_y=0.8)
+
 		wiretap
 			tier = GANG_CRATE_GEAR
 			create_loot(var/C,var/I)
@@ -823,6 +870,9 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 			tier = GANG_CRATE_GUN_WEAK
 			create_loot(var/C,var/I)
 				spawn_item(C,I,/obj/item/gun/kinetic/riot40mm)
+				spawn_item(C,I,/obj/item/chem_grenade/flashbang,off_x=5,off_y=-4,rot=90,scale_x=1,scale_y=1)
+				spawn_item(C,I,/obj/item/chem_grenade/flashbang,off_x=8,off_y=-4,rot=90,scale_x=1,scale_y=1)
+
 		coachgun
 			tier = GANG_CRATE_GUN_WEAK
 			create_loot(var/C,var/I)
@@ -847,11 +897,11 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 		money_big
 			tier = GANG_CRATE_GEAR
 			create_loot(var/C,var/I)
-				spawn_item(C,I,/obj/item/spacecash/thousand,off_x=-4,off_y=2)
 				spawn_item(C,I,/obj/item/spacecash/thousand,off_x=4,off_y=2)
 				spawn_item(C,I,/obj/item/spacecash/thousand,off_x=4,off_y=0)
 				spawn_item(C,I,/obj/item/spacecash/thousand,off_x=4,off_y=-2)
-				spawn_item(C,I,/obj/item/spacecash/thousand,off_y=-4,off_y=0)
+				spawn_item(C,I,/obj/item/spacecash/thousand,off_x=-4,off_y=2)
+				spawn_item(C,I,/obj/item/spacecash/thousand,off_x=-4,off_y=0)
 				spawn_item(C,I,/obj/item/spacecash/thousand,off_x=-4,off_y=-2)
 		money
 			create_loot(var/C,var/I)
@@ -910,7 +960,7 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 		phasers
 			tier = GANG_CRATE_GUN_WEAK
 			create_loot(var/C,var/I)
-				spawn_item(C,I,/obj/item/gun/energy/phaser_gun,rot=90,scale_y=0.7,scale_x=0.7)
+				spawn_item(C,I,/obj/item/gun/energy/phaser_gun,rot=90,scale_y=0.8,scale_x=0.8)
 
 /*		handguns_heavy //deagle n revolver
 			tier = GANG_CRATE_GUN_STRONG
@@ -979,7 +1029,7 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 			create_loot(var/C,var/I)
 				spawn_item(C,I,	/obj/item/old_grenade/stinger/frag,off_x=-4,off_y=5,scale_x=0.8,scale_y=0.8)
 				spawn_item(C,I,	/obj/item/old_grenade/stinger/frag,off_x=4, off_y=5,scale_x=0.8,scale_y=0.8)
-				spawn_item(C,I,	/obj/item/mine/stun,off_x=4, off_y=-5,scale_x=0.8,scale_y=0.8)
+				spawn_item(C,I,	/obj/item/mine/stun,off_x=-4, off_y=-5,scale_x=0.8,scale_y=0.8)
 				spawn_item(C,I,	/obj/item/mine/stun,off_x=4, off_y=-5,scale_x=0.8,scale_y=0.8)
 
 		// MID VALUE: Pistols with ammo

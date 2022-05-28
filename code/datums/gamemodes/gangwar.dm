@@ -32,8 +32,16 @@
 
 	var/list/potential_hot_zones = null
 	var/area/hot_zone = null
+	var/area/drop_zone = null
 	var/hot_zone_timer = 5 MINUTES
 	var/hot_zone_score = 1000
+
+	var/crate_drop_frequency = 10 MINUTES
+	var/crate_drop_timer = 5 MINUTES
+	var/crate_drop_score = 1000
+	var/loot_drop_frequency = 5 MINUTES
+	var/loot_drop_count = 3
+
 
 	var/const/kidnapping_timer = 8 MINUTES 	//Time to find and kidnap the victim.
 	var/const/delay_between_kidnappings = 5 MINUTES
@@ -92,8 +100,7 @@
 
 /datum/game_mode/gang/post_setup()
 	make_item_lists()
-	//under_list = list(/obj/item/clothing/under/gimmick/owl,/obj/item/clothing/under/suit/pinstripe,/obj/item/clothing/under/suit/purple,/obj/item/clothing/under/gimmick/chaps,/obj/item/clothing/under/misc/mail,/obj/item/clothing/under/gimmick/sweater,/obj/item/clothing/under/gimmick/princess,/obj/item/clothing/under/gimmick/merchant,/obj/item/clothing/under/gimmick/birdman,/obj/item/clothing/under/gimmick/safari,/obj/item/clothing/under/rank/det,/obj/item/clothing/under/shorts/red,/obj/item/clothing/under/shorts/blue,/obj/item/clothing/under/jersey/black,/obj/item/clothing/under/jersey,/obj/item/clothing/under/gimmick/rainbow,/obj/item/clothing/under/gimmick/johnny,/obj/item/clothing/under/misc/chaplain/rasta,/obj/item/clothing/under/misc/chaplain/atheist,/obj/item/clothing/under/misc/barber,/obj/item/clothing/under/rank/mechanic,/obj/item/clothing/under/misc/vice,/obj/item/clothing/under/gimmick,/obj/item/clothing/under/gimmick/bowling,/obj/item/clothing/under/misc/syndicate,/obj/item/clothing/under/misc/lawyer/black,/obj/item/clothing/under/misc/lawyer/red,/obj/item/clothing/under/misc/lawyer,/obj/item/clothing/under/gimmick/chav,/obj/item/clothing/under/gimmick/dawson,/obj/item/clothing/under/gimmick/sealab,/obj/item/clothing/under/gimmick/spiderman,/obj/item/clothing/under/gimmick/vault13,/obj/item/clothing/under/gimmick/duke,/obj/item/clothing/under/gimmick/psyche,/obj/item/clothing/under/misc/tourist)
-	//headwear_list = list(/obj/item/clothing/mask/owl_mask,/obj/item/clothing/mask/smile,/obj/item/clothing/mask/balaclava,/obj/item/clothing/mask/horse_mask,/obj/item/clothing/mask/melons,/obj/item/clothing/head/waldohat,/obj/item/clothing/head/that/purple,/obj/item/clothing/head/cakehat,/obj/item/clothing/head/wizard,/obj/item/clothing/head/that,/obj/item/clothing/head/wizard/red,/obj/item/clothing/head/wizard/necro,/obj/item/clothing/head/pumpkin,/obj/item/clothing/head/flatcap,/obj/item/clothing/head/mj_hat,/obj/item/clothing/head/genki,/obj/item/clothing/head/butt,/obj/item/clothing/head/mailcap,/obj/item/clothing/head/turban,/obj/item/clothing/head/helmet/bobby,/obj/item/clothing/head/helmet/viking,/obj/item/clothing/head/helmet/batman,/obj/item/clothing/head/helmet/welding,/obj/item/clothing/head/biker_cap,/obj/item/clothing/head/NTberet,/obj/item/clothing/head/rastacap,/obj/item/clothing/head/XComHair,/obj/item/clothing/head/chav,/obj/item/clothing/head/psyche,/obj/item/clothing/head/formal_turban,/obj/item/clothing/head/snake,/obj/item/clothing/head/powdered_wig,/obj/item/clothing/mask/spiderman,/obj/item/clothing/mask/gas/swat,/obj/item/clothing/mask/skull,/obj/item/clothing/mask/surgical)
+
 	for (var/datum/mind/leaderMind in leaders)
 		if (!leaderMind.current)
 			continue
@@ -117,8 +124,13 @@
 
 	find_potential_hot_zones()
 
-	SPAWN(10 MINUTES)
-		process_hot_zones()
+	SPAWN(crate_drop_frequency)
+		//process_hot_zones()
+		process_lootcrate_spawn()
+
+	SPAWN(loot_drop_frequency)
+		process_lootbag_spawn()
+
 
 	SPAWN(15 MINUTES)
 		process_kidnapping_event()
@@ -397,21 +409,127 @@
 		potential_hot_zones += A
 
 	return
+/datum/game_mode/gang/proc/process_lootcrate_spawn()
 
-/datum/game_mode/gang/proc/process_hot_zones()
-	hot_zone = pick(potential_hot_zones)
+	drop_zone = pick(potential_hot_zones)
+	var/turfList[0]
+	var/valid = 0
 
-	broadcast_to_all_gangs("The [hot_zone.name] is a high priority area. Ensure that your gang has control of it five minutes from now!")
+	for (var/turf/simulated/floor/T in drop_zone.contents)
+		if (!T.density)
+			valid = 1
+			for (var/obj/O in T.contents)
+				if (O.density)
+					valid=0
+					break
+				else
+			if (valid == 1)
+				turfList.Add(T)
 
-	SPAWN(hot_zone_timer-600)
-		if(hot_zone != null) broadcast_to_all_gangs("You have a minute left to control the [hot_zone.name]!")
+	var/turf/target = pick(turfList)
+	new/obj/storage/crate/gang_crate/guns_and_gear(target)
+	broadcast_to_all_gangs("We've dropped off some gear at the [drop_zone.name]! It's anchored in place for 5 minutes, so get fortifying!")
+
+	SPAWN(crate_drop_timer-600)
+		if(drop_zone != null) broadcast_to_all_gangs("The loot crate at the [hot_zone.name] can be moved in 1 minute!")
 		sleep(1 MINUTE)
-		if(hot_zone != null && hot_zone.gang_owners != null)
-			var/datum/gang/G = hot_zone.gang_owners
-			G.score_event += hot_zone_score
-			broadcast_to_all_gangs("[G.gang_name] has been rewarded for their control of the [hot_zone.name].")
-			sleep(10 SECONDS)
-		process_hot_zones()
+		if(drop_zone != null) broadcast_to_all_gangs("The loot crate at the [hot_zone.name] is free! Drag it to your locker!")
+		sleep(crate_drop_timer)
+		process_lootcrate_spawn()
+
+
+/datum/game_mode/gang/proc/get_random_civvie()
+	var/mindList[0]
+	for (var/datum/mind/M in ticker.minds)
+		//if (M.gang) continue
+		mindList.Add(M)
+	return pick(mindList)
+
+
+var/gangGreetings[] = list("Yo","Whassup","Hey","Sup","Hiya","Oi" )
+var/gangSalutations[] = list("Peace.","Good luck.","Enjoy!","Try not to die.","Over n out.","lol" )
+/datum/game_mode/gang/proc/process_lootbag_spawn()
+	for(var/i = 1 to loot_drop_count)
+		var/area/loot_zone = pick(potential_hot_zones)
+		var/turfList[0]
+		var/uncoveredTurfList[0]
+		var/bushList[0]
+		var/crateList[0]
+		var/disposalList[0]
+		var/valid
+
+		var message = pick(gangGreetings) +", [prob(20) ? " don't ask how I got your number - " : null]"
+		for (var/turf/simulated/floor/T in loot_zone.contents)
+			if (!T.density)
+				valid = 1
+				for (var/obj/O in T.contents)
+					if (istype(O,/obj/shrub))
+						bushList.Add(O)
+					else if (istype(O,/obj/machinery/disposal))
+						disposalList.Add(O)
+					else if (istype(O,/obj/storage))
+						var/obj/storage/crate = O
+						if (!crate.secure && !crate.locked)
+							crateList.Add(O)
+					if (O.density)
+						valid=0
+						break
+
+				if (valid == 1)
+					if (T.intact)
+						turfList.Add(T)
+					else
+						uncoveredTurfList.Add(T)
+
+		if(length(bushList))
+			var/obj/shrub/target = pick(bushList)
+			target.override_default_behaviour = 1
+			target.additional_items.Add(/obj/item/gang_loot/guns_and_gear)
+			target.max_uses = 1
+			target.last_use = 0
+			message += " we left some goods in a bush somewhere around [loot_zone]."
+
+		else if(length(crateList))
+			var/obj/storage/target = pick(crateList)
+			target.contents.Add(new/obj/item/gang_loot/guns_and_gear(target.contents))
+			message += " we left a bag in [target], somewhere around [loot_zone]. "
+
+		else if(length(disposalList))
+			var/obj/machinery/disposal/target = pick(disposalList)
+			target.contents.Add(new/obj/item/gang_loot/guns_and_gear(target.contents))
+			message += " we left a bag in [target], somewhere around [loot_zone]. "
+
+		else if(length(turfList))
+			var/turf/simulated/floor/target = pick(turfList)
+			var/obj/item/gang_loot/loot = new/obj/item/gang_loot/guns_and_gear
+			target.contents.Add(loot)
+			loot.hide(target.intact)
+			message += " we had to hide a bag in [loot_zone], under the floor tiles. "
+		else
+			var/turf/simulated/floor/target = pick(uncoveredTurfList)
+			var/obj/item/gang_loot/loot = new/obj/item/gang_loot/guns_and_gear
+			target.contents.Add(loot)
+			loot.hide(target.intact)
+			message += " we had to hide a bag in [loot_zone]. "
+
+
+		message += "You won't find it useful, but there are some guys aboard who will. "
+
+		if (prob(40))
+			message += pick(gangSalutations)
+		var/datum/mind/civvie = get_random_civvie()
+
+		var/datum/signal/newsignal = get_free_signal()
+		newsignal.source = src
+		newsignal.data["command"] = "text_message"
+		newsignal.data["sender_name"] = announcer_source.name
+		newsignal.data["message"] = "[message]"
+		newsignal.data["address_1"] = civvie.originalPDA.net_id
+		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(newsignal)
+
+
+	sleep(loot_drop_frequency)
+	process_lootbag_spawn()
 
 /datum/game_mode/gang/proc/process_kidnapping_event()
 	kidnap_success = 0
@@ -602,6 +720,9 @@
 		score += score_event
 
 		return round(score)
+
+	proc/add_points(amount)
+		spendable_points += amount
 
 	proc/can_be_joined() //basic for now but might be expanded on so I'm making it a proc of its own
 		if(members.len >= ticker.mode:current_max_gang_members)
@@ -1407,16 +1528,6 @@
 
 		return
 
-/*	proc/update_max_members()
-		for(var/datum/gang/G in ticker.mode:gangs)
-			var/dead_members = 0
-			for(var/mob/M in G.members)
-				if(isdead(M)) dead_members++
-			if(G.members.len != ticker.mode:current_max_gang_members && G.members.len != dead_members)
-				return
-
-		ticker.mode:current_max_gang_members = min(ticker.mode:absolute_max_gang_members, ticker.mode:current_max_gang_members + 3)*/
-
 /obj/item/storage/box/gang_flyers
 	name = "gang recruitment flyer case"
 	desc = "A briefcase full of flyers advertising a gang."
@@ -1655,12 +1766,6 @@ proc/get_gang_gear(var/mob/living/carbon/human/user)
 	class2 = "misc"
 	price = 20000
 	item_path = /obj/machinery/vehicle/tank/car/security
-/datum/gang_item/street/molotov_cocktail
-	name = "Molotov Cocktail"
-	desc = "It's a Molotov Cocktail."
-	class2 = "misc"
-	price = 1000
-	// item_path = /obj/item/clothing/glasses/aviators
 
 /////////////////////////////////////////////////////////////////////
 ////////////////////////////////NINJA////////////////////////////////
@@ -1818,20 +1923,6 @@ proc/get_gang_gear(var/mob/living/carbon/human/user)
 		src.imp = new /obj/item/implant/gang( src )
 		..()
 		return
-
-// /obj/item/chem_grenade/incendiary
-// 	name = "incendiary grenade"
-// 	desc = "A rather volatile grenade that creates a small fire."
-// 	icon = 'icons/obj/items/grenade.dmi'
-// 	icon_state = "incendiary"
-// 	icon_state_armed = "incendiary1"
-// 	stage = 2
-
-// 	New()
-// 		..()
-// 		var/obj/item/reagent_containers/glass/B1 = new(src)
-// 		B1.reagents.add_reagent("infernite", 20)
-// 		beakers += B1
 #undef CASH_DIVISOR
 
 

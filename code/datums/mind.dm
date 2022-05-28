@@ -39,6 +39,7 @@ datum/mind
 	var/list/spy_stolen_items = list()
 
 	var/datum/gang/gang = null //Associate a leader with their gang.
+	var/obj/item/device/pda2/originalPDA //What PDA address would an external organisation know?
 
 	var/list/intrinsic_verbs = list()
 
