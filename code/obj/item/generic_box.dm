@@ -308,7 +308,7 @@
 		name = "box of emergency auto-injectors"
 		contained_item = /obj/item/reagent_containers/emergency_injector
 		item_amount = 0
-		max_item_amount = -1
+		max_item_amount = 3
 		icon_state = "autoinjector_box"
 		icon_closed = "autoinjector_box"
 		icon_open = "autoinjector_box-orange-open"
@@ -344,7 +344,8 @@
 			icon_empty = "autoinjector_box-big-empty"
 			icon_closed_empty = "autoinjector_box-big-closed-empty"
 			icon_color = "autoinjector_box-big-coloring"
-			max_item_amount = 3
+			max_item_amount = -1
+			w_class = W_CLASS_NORMAL
 	pens
 		name = "box of pens"
 		contained_item = /obj/item/pen
