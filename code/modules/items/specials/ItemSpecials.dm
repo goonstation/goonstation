@@ -1988,6 +1988,10 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 				//was_clashed()
 				return
 
+		blob_act(power)
+			. = ..()
+			was_clashed()
+
 	poof
 		icon = 'icons/effects/64x64.dmi'
 		icon_state = "poof"
