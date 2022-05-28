@@ -26,7 +26,7 @@
 			return 1
 
 		if (BOUNDS_DIST(holder.owner, target) > 0)
-			boutput(holder.owner, __red("That is too far away to eat."))
+			boutput(holder.owner, "<span class='alert'>That is too far away to eat.</span>")
 			return 1
 
 		var/turf/T = null
@@ -36,7 +36,7 @@
 			T = get_turf(target)
 
 		if (T == null)
-			boutput(holder.owner, __red("There is nothing to eat here."))
+			boutput(holder.owner, "<span class='alert'>There is nothing to eat here.</span>")
 			return 1
 
 		var/mob/living/critter/plaguerat/P = holder.owner
@@ -51,7 +51,7 @@
 		if (length(found_decals) > 0)
 			actions.start(new/datum/action/bar/private/icon/plaguerat_eat(found_decals, src), P)
 		else
-			boutput(holder.owner, __red("You can't eat that, it doesnt satisfy your appetite."))
+			boutput(holder.owner, "<span class='alert'>You can't eat that, it doesnt satisfy your appetite.</span>")
 			return 1
 
 	onAttach(datum/abilityHolder/holder)
@@ -139,12 +139,12 @@
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, __red("Nothing to bite there."))
+				boutput(holder.owner, "<span class='alert'>Nothing to bite there.</span>")
 				return 1
 		if (target == holder.owner)
 			return 1
 		if (BOUNDS_DIST(holder.owner, target) > 0)
-			boutput(holder.owner, __red("That is too far away to bite."))
+			boutput(holder.owner, "<span class='alert'>That is too far away to bite.</span>")
 			return 1
 		var/mob/MT = target
 		var/mob/living/critter/plaguerat/P = holder.owner

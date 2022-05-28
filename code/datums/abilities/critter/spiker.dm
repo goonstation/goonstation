@@ -61,14 +61,14 @@
 		if (target == holder.owner)
 			return 1
 		if (!ismob(target))
-			boutput(holder.owner, __red("Nothing to lash at there."))
+			boutput(holder.owner, "<span class='alert'>Nothing to lash at there.</span>")
 			return 1
 		if (BOUNDS_DIST(holder.owner, target) > 0)
-			boutput(holder.owner, __red("That is too far away to lash at."))
+			boutput(holder.owner, "<span class='alert'>That is too far away to lash at.</span>")
 			return 1
 		var/mob/MT = target
 		if (!is_incapacitated(MT))
-			boutput(holder.owner, __red("That is moving around far too much to immobilize."))
+			boutput(holder.owner, "<span class='alert'>That is moving around far too much to immobilize.</span>")
 			return 1
 		playsound(holder.owner, "sound/impast_sounds/Flesh_Stab_1.ogg", 80, 1)
 		disabled = 1

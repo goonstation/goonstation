@@ -1212,7 +1212,7 @@
 				qdel(C)
 			return 0
 		else
-			boutput(holder.owner, __red("This place is much too clean to summon a rot hulk."))
+			boutput(holder.owner, "<span class='alert'>This place is much too clean to summon a rot hulk.</span>")
 			return 1
 
 
@@ -1238,7 +1238,7 @@
 			return 1
 
 		if (W == target)
-			boutput(W, __red("Why would you want to poison yourself?"))
+			boutput(W, "<span class='alert'>Why would you want to poison yourself?</span>")
 			return 1
 
 		var/obj/item/reagent_containers/RC = null
@@ -1247,7 +1247,7 @@
 		if (istype(target, /obj/item/reagent_containers/food))
 			RC = target
 		else
-			boutput(W, __red("You can't poison [target], only food items, drinks and glass containers."))
+			boutput(W, "<span class='alert'>You can't poison [target], only food items, drinks and glass containers.</span>")
 			return 1
 
 		var/poison_choice = input("Select the target poison: ", "Target Poison", null) as null|anything in the_poison
@@ -1273,11 +1273,11 @@
 			attempt_success = 0
 
 		if (attempt_success == 1)
-			boutput(W, __blue("You successfully poisoned [target]."))
+			boutput(W, "<span class='notice'>You successfully poisoned [target].</span>")
 			logTheThing("combat", W, null, "poisons [target] [log_reagents(target)] at [log_loc(W)].")
 			return 0
 		else
-			boutput(W, __red("You failed to poison [target]."))
+			boutput(W, "<span class='alert'>You failed to poison [target].</span>")
 			return 1
 
 
@@ -1358,10 +1358,10 @@
 					var/mob/dead/target_observer/slasher_ghost/WG = null
 					wraith_key = holder.owner.ckey
 					H.emote("scream")
-					boutput(H, __red("<span class='notice'>You are feeling awfully woozy.</span>"))
+					boutput(H, "<span class='alert'>You are feeling awfully woozy.</span>")
 					H.change_misstep_chance(20)
 					sleep(10 SECONDS)
-					boutput(H, __red("<span class='notice'>You hear a cacophony of otherwordly voices in your head.</span>"))
+					boutput(H, "<span class='alert'>You hear a cacophony of otherwordly voices in your head.</span>")
 					H.emote("faint")
 					H.setStatusMin("weakened", 5 SECONDS)
 					sleep(15 SECONDS)
