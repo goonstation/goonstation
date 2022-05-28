@@ -593,12 +593,6 @@
 	for(var/datum/unlockable_flock_structure/ufs as anything in src.unlockableStructures)
 		ufs.process()
 
-	var/turf/busy_turf
-	for(var/name in src.busy_tiles)
-		busy_turf = src.busy_tiles[name]
-
-	for(var/turf/T in src.priority_tiles)
-
 	for(var/atom/S in src.deconstruct_targets)
 		if(QDELETED(S))
 			src.toggleDeconstructionFlag(S)
