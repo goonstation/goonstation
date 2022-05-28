@@ -506,7 +506,11 @@
 		else if (params["ctrl"])
 			var/atom/movable/movable = target
 			if (istype(movable))
-				movable.pull()
+				if (src.pulling && src.pulling == movable)
+					unpull_particle(src,src.pulling)
+					src.set_pulling(null)
+				else
+					movable.pull()
 
 				if (mob_flags & AT_GUNPOINT)
 					for(var/obj/item/grab/gunpoint/G in grabbed_by)
