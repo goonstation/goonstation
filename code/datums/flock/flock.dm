@@ -728,8 +728,8 @@
 							if(!isnull(S.spawn_contents))
 								S.make_my_stuff()
 						// if the object has contents, move them over!!
-						for (var/obj/OO in O)
-							OO.set_loc(converted)
+						for (var/obj/stored_obj in O)
+							stored_obj.set_loc(converted)
 						for (var/mob/M in O)
 							M.set_loc(converted)
 						qdel(O)
