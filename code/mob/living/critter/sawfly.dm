@@ -14,11 +14,8 @@ This file is the critter itself, and all the custom procs it needs in order to f
 	flags = TABLEPASS
 
 	var/beeptext = " "
-	var/dead_state = "sawflydead" //not used- death sprites are handled in the death.dm folder
-	var/angertext = "flies at"
-	var/projectile_type = /datum/projectile/laser/drill/sawfly
-	var/datum/projectile/current_projectile = new/datum/projectile/laser/drill/sawfly
-	var/obj/item/droploot = null // the prox sensors they drop in death are handled in the critterdeath proc
+	//var/dead_state = "sawflydead" //not used- death sprites are handled in the death.dm folder
+//	var/obj/item/droploot = null // the prox sensors they drop in death are handled in the critterdeath proc
 	var/deathtimer = 0 // for catastrophic failure on death
 	var/isnew = TRUE // for seeing whether or not they will make a new name on redeployment
 	var/sawflynames = list("A", "B", "C", "D", "E", "F", "V", "W", "X", "Y", "Z", "Alpha", "Beta", "Gamma", "Lambda", "Delta")
@@ -28,11 +25,9 @@ This file is the critter itself, and all the custom procs it needs in order to f
 	var/friends = list()
 	misstep_chance = 30 //makes them behave more like drones
 
-	hand_count = 1 //stabby hands
-	setup_healths()
-		add_hh_robot(20, 1)
-		add_hh_robot_burn(20, 1)
+	//mob variables
 	custom_gib_handler = /proc/robogibs
+	isFlying = 1
 	blood_id = "oil"
 	use_stamina = FALSE
 	use_stunned_icon = FALSE
@@ -42,6 +37,11 @@ This file is the critter itself, and all the custom procs it needs in order to f
 	can_lie = FALSE
 	can_burn = FALSE
 	pet_text = "cuddles"
+	hand_count = 1 //stabby hands
+	setup_healths()
+		add_hh_robot(25, 1)
+		add_hh_robot_burn(25, 1)
+
 
 
 	New()
@@ -52,7 +52,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 		death_text = "[src] jutters and falls from the air, whirring to a stop."
 		beeptext = "[pick(list("beeps",  "boops", "bwoops", "bips", "bwips", "bops", "chirps", "whirrs", "pings", "purrs", "thrums"))]"
 		animate_bumble(src) // gotta get the float goin' on
-	//	src.set_a_intent(INTENT_HARM) // incredibly stupid way of ensuring they aren't passable
+		src.set_a_intent(INTENT_HARM) // incredibly stupid way of ensuring they aren't passable but it works
 		// ai setup
 		src.mob_flags |= HEAVYWEIGHT_AI_MOB
 		src.ai = new /datum/aiHolder/sawfly(src)
@@ -65,17 +65,21 @@ This file is the critter itself, and all the custom procs it needs in order to f
 
 
 	proc/foldself()
-		var/obj/item/old_grenade/sawfly/reused/N = new /obj/item/old_grenade/sawfly/reused(get_turf(src))
-		// pass our name and health
-		N.name = "Compact [name]"
-		N.tempname = src.name
-		N.temphp = (src.health)
-		qdel(src)
+		if(!isalive(src))
+			return 0
+		else
+			var/obj/item/old_grenade/sawfly/reused/N = new /obj/item/old_grenade/sawfly/reused(get_turf(src))
+			// pass our name and health
+			N.name = "Compact [name]"
+			N.tempname = src.name
+			N.tempdam = (50 - src.health )
+			qdel(src)
+
 
 	proc/communalbeep() // distributes the beepchance among the number of sawflies nearby
 		fliesnearby = 1 //that's you, little man! :)
-		for(var/mob/living/critter/sawfly/E in range(get_turf(src), 18))
-			if(isalive(src))
+		for_by_tcl(E, /mob/living/critter/sawfly)
+			if(isalive(E))
 				src.fliesnearby += 1 //that's your buddies!
 		var/beepchance = (1 / fliesnearby) * 100 //if two sawflies, give 50% chance that any one will beep
 		if(fliesnearby<3) beepchance -=20 //heavily reduce chance of beep in swarm
@@ -83,7 +87,6 @@ This file is the critter itself, and all the custom procs it needs in order to f
 			if(isalive(src))
 				playsound(src, pick(src.beeps), 40, 1)
 				src.visible_message("<b>[src] [beeptext].</b>")
-
 
 
 	emp_act() //same thing as if you emagged the controller, but much higher chance
@@ -117,21 +120,16 @@ This file is the critter itself, and all the custom procs it needs in order to f
 	death()
 		if(!isalive(src)) return//we already dead, somehow
 
-		src.set_density(0)
-		src.set_a_intent(INTENT_HELP)
 		src.force_laydown_standup()
-		src.tokenized_message(death_text)
+		src.visible_message("<span class='alert'[death_text]<span>")
+		//for whatever whacky reason tokenized_message() does 2 messages so we gotta do it the old fashioned way
 		src.is_npc = FALSE // //shut down the AI
 		src.throws_can_hit_me = FALSE  //prevent getting hit by thrown stuff- important in avoiding jank
-
-
-		animate(src) //stop no more float animation
+		animate(src) //no more float animation
 		icon_state = "sawflydead[pick("1", "2", "3", "4", "5", "6", "7", "8")]" //randomly selects death icon and displaces them
 		src.pixel_x += rand(-5, 5)
 		src.pixel_y += rand(-1, 5)
 		src.anchored = 0
-		//walk_to(src,0) //halt walking
-
 
 
 		// special checks that determine how much damage they do after death
@@ -141,38 +139,29 @@ This file is the critter itself, and all the custom procs it needs in order to f
 		if(prob(60))
 			elecflash(src, 1, 3)
 
-		if(prob(20)) // congrats, little guy! You're special! You're going to blow up!
+		if(prob(22)) // congrats, little guy! You're special! You're going to blow up!
 			if(prob(70)) //decide whether or not people get a warning
-				src.visible_message("<span class='combat'>[src] makes /a [pick("gentle", "odd", "slight", "weird", "barely audible", "concerning", "quiet")] [pick("hiss", "drone", "whir", "thump", "grinding sound", "creak", "buzz", "khunk")]...")
+				src.visible_message("<span class='combat'>[src] makes a[pick(" gentle", "n odd", " slight", " weird", " barely audible", " concerning", " quiet")] [pick("hiss", "drone", "whir", "thump", "grinding sound", "creak", "buzz", "khunk")]...<span>")
 			SPAWN(deathtimer SECONDS)
 				src.blowup()
 
 
-		/*remove_lifeprocess(/datum/lifeprocess/blood) //so apparently the reduce_lifeprocess_on_death() proc is limited to only the small animals
-		remove_lifeprocess(/datum/lifeprocess/canmove)
-		remove_lifeprocess(/datum/lifeprocess/disability)
-		remove_lifeprocess(/datum/lifeprocess/fire)
-		remove_lifeprocess(/datum/lifeprocess/hud)
-		remove_lifeprocess(/datum/lifeprocess/mutations)
-		remove_lifeprocess(/datum/lifeprocess/organs)
-		remove_lifeprocess(/datum/lifeprocess/sight)
-		remove_lifeprocess(/datum/lifeprocess/skin)
-		remove_lifeprocess(/datum/lifeprocess/statusupdate)*/
+
 
 		..()
 		// it is VITAL this goes after the parent so they don't show up as a whacky chunk of metal
 		icon_state = "sawflydead[pick("1", "2", "3", "4", "5", "6", "7", "8")]" //randomly selects death icon and displaces them
 		src.pixel_x += rand(-5, 5)
 		src.pixel_y += rand(-1, 5)
-	proc/blowup() // used in emagged controllers and has a chance to activate when they die
 
+	proc/blowup() // used in emagged controllers and has a chance to activate when they die
 		if(prob(66))
-			src.visible_message("<span class='combat'>[src]'s [pick("motor", "core", "fuel tank", "battery", "thruster")] [pick("combusts", "catches on fire", "ignites", "lights up", "bursts into flames")]!")
+			src.visible_message("<span class='combat'>[src]'s [pick("motor", "core", "fuel tank", "battery", "thruster")] [pick("combusts", "catches on fire", "ignites", "lights up", "bursts into flames")]!<span>")
 			fireflash(src,1,TRUE)
 		else
-			src.visible_message("<span class='combat'>[src]'s [pick("motor", "core", "head", "engine", "thruster")] [pick("overloads", "blows up", "catastrophically fails", "explodes")]!")
+			src.visible_message("<span class='combat'>[src]'s [pick("motor", "core", "head", "engine", "thruster")] [pick("overloads", "blows up", "catastrophically fails", "explodes")]!<span>")
 			fireflash(src,0,TRUE)
-			explosion(src, get_turf(src), 0, 1, 1.5, 3)
+			explosion(src, get_turf(src), 0, 0.75, 1.5, 3)
 			qdel(src)
 
 		if(isalive(src)) // prevents weirdness from emagged controllers causing frankenstein sawflies
@@ -197,7 +186,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 	Life()
 		..()
 		if(prob(5)) communalbeep()
-		if(!isalive(src)) src.set_density(0) //according to lizzle something in the mob life resets density so this has to be below parent
+		if(!isalive(src)) src.set_density(0) //according to lizzle something in the mob life resets density so this has to be below parent-
 
 	setup_hands()
 		..()

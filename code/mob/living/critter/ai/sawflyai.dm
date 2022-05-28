@@ -7,22 +7,6 @@
 		..()
 		default_task = get_instance(/datum/aiTask/prioritizer/sawfly, list(src))
 
-
-
-/*	was_harmed(obj/item/W, mob/M) //genuinely tired of this code just not running
-		if((istraitor(user) || isnukeop(user) || isspythief(user) || (user in src.friends))) //enemy
-
-		else if(prob(50))
-			//holder.target = M
- 			ai.interupt()
-			//src.visible_message("<span class='alert'><b>[owncritter]'s targeting subsystems identify [src.target] as a high priority threat!</b></span>")
-		//	playsound(owncritter, pick(owncritter.beeps), 55, 1) //actively do not use the communalbeep proc
-			owncritter.set_dir(get_dir(owncritter, holder.target)) // since they're probably in range, attack regardless
-			owncritter.hand_range_attack(holder.target, dummy_params)
-			SPAWN(5)
-				owncritter.set_dir(get_dir(owncritter, holder.target)) //follow up
-				owncritter.hand_range_attack(holder.target, dummy_params)*/
-
 /datum/aiTask/prioritizer/sawfly
 	name = "base thinking (should never see this)"
 
@@ -67,7 +51,6 @@
 		var/atom/T = holder.target
 		// if target is dead
 		// fetch a new one if we can
-
 		if(isliving(T))
 			var/mob/living/M = T
 			if(M.health < -50)
@@ -88,9 +71,6 @@
 				if(prob(20)) walk_rand(src,4)
 				owncritter.set_dir(get_dir(owncritter, holder.target)) //attack regardless
 				owncritter.hand_range_attack(holder.target, dummy_params)
-			else
-				//o no
-				frustration++
 			frustration++ //if frustration gets too high, the task is ended and re-evaluated
 		else
 			owncritter.set_dir(get_dir(owncritter, holder.target))

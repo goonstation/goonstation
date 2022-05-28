@@ -3,7 +3,6 @@
 -All grenades- reused, cluster and normal
 -The remote
 -The limb that shoots the blade
--
 
 -->Things it DOES NOT include that are sawfly-related, and where they can be found:
 -The pouch of sawflies for nukies at the bottom of ammo pouches.dm
@@ -25,9 +24,7 @@
 	is_dangerous = TRUE
 	is_syndicate = TRUE
 	contraband = 2
-
 	custom_suicide = 1
-
 
 	prime()
 		SPAWN(2) // super short delay to prevent fuckiness with suicide code
@@ -43,11 +40,7 @@
 			return FALSE
 		user.visible_message("<span class='alert'><b>[user] primes the [src] and swallows it!</b></span>")
 
-		if(prob(30)) //you fumble the grenade
-			user.take_oxygen_deprivation(200)
-			user.visible_message("<span class='alert'><b>[user] chokes on [src]!</b></span>")
-
-		else if(prob(50))
+		if(prob(50))
 			user.visible_message("<span class='alert'><b>[src] explodes out of [user]'s throat, holy shit!</b></span>")
 			playsound(user.loc, "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
 			blood_slash(user, 25)
@@ -72,10 +65,6 @@
 		src.prime()
 		return TRUE
 
-
-
-
-
 /obj/item/old_grenade/sawfly/withremote // for traitor menu
 
 	New()
@@ -86,7 +75,7 @@
 	name = "Compact sawfly"
 	var/tempname = "Uh oh! Call 1-800-imcoder!"
 	desc = "A self-deploying antipersonnel robot. This one has seen some use."
-	var/temphp = 0
+	var/tempdam = 0
 
 
 	prime()
@@ -95,7 +84,7 @@
 			var/mob/living/critter/sawfly/D = new /mob/living/critter/sawfly(T)
 			D.isnew = FALSE // give it characteristics of old drone
 			D.name = tempname
-			D.TakeDamage("All", (50 - temphp))
+			D.TakeDamage("All", (tempdam))
 
 		qdel(src)
 		return
@@ -129,7 +118,7 @@
 // -------------------controller---------------
 
 /obj/item/remote/sawflyremote
-	name = "Sawfly deactivator"
+	name = "Sawfly remote"
 	desc = "A small device that can be used to fold or deploy sawflies in range. It looks like you could hide it in your clothes. Or smash it into tiny bits, you guess."
 	w_class = W_CLASS_TINY
 	flags = FPRINT | TABLEPASS
@@ -140,12 +129,7 @@
 	var/emagged = FALSE
 
 	attack_self(mob/user as mob)
-		if(src.emagged || src.alreadyhit)// you broke it.
-			if(prob(10))
-				boutput(user,"<span class='alert'>The [src] suddenly falls apart!</span>")
-				qdel(src)
-				return
-		for(var/mob/living/critter/sawfly/S in range(get_turf(src), 3)) // folds active sawflies
+		for(var/mob/living/critter/sawfly/S in range(get_turf(src), 5)) // folds active sawflies
 			SPAWN(0.5 SECONDS)
 				if(src.emagged)
 					if(prob(50)) //sawfly breaks
@@ -159,9 +143,17 @@
 				else  // non-emagged activity
 					S.foldself()
 
-		for(var/obj/item/old_grenade/sawfly/S in range(get_turf(src), 3)) // unfolds passive sawflies
+		for(var/obj/item/old_grenade/sawfly/S in range(get_turf(src), 4)) // unfolds passive sawflies
 			S.visible_message("<span class='combat'>[S] suddenly springs open as its engine purrs to a start!</span>")
 			S.icon_state = "sawfly1"
+			SPAWN(S.det_time)
+				S.prime()
+		for(var/obj/item/old_grenade/spawner/sawflycluster/S in range(get_turf(src), 4))
+			S.visible_message("<span class='combat'>The [S] suddenly begins beeping as it is primed!</span>")
+			if(S.icon_state=="clusterflyA")
+				S.icon_state = "clusterflyA1"
+			else
+				S.icon_state = "clusterflyB1"
 			SPAWN(S.det_time)
 				S.prime()
 
@@ -203,6 +195,25 @@
 	cooldown = 1
 	reload_time = 1
 	reloading_str = "cooling"
+
+	attack_range(atom/target, var/mob/user, params) //overriding attack_range to make it so sawflies don't spam chatlog with messages
+		if (reloaded_at > ticker.round_elapsed_ticks && !current_shots)
+			boutput(user, "<span class='alert'>The [holder.name] is [reloading_str]!</span>")
+			return
+		else if (current_shots <= 0)
+			current_shots = shots
+		if (next_shot_at > ticker.round_elapsed_ticks)
+			return
+		if (current_shots > 0)
+			current_shots--
+			var/pox = text2num(params["icon-x"]) - 16
+			var/poy = text2num(params["icon-y"]) - 16
+			shoot_projectile_ST_pixel(user, proj, target, pox, poy)
+			next_shot_at = ticker.round_elapsed_ticks + cooldown
+			if (!current_shots)
+				reloaded_at = ticker.round_elapsed_ticks + reload_time
+		else
+			reloaded_at = ticker.round_elapsed_ticks + reload_time
 
 /datum/limb/gun/flock_stunner/attack_range(atom/target, var/mob/living/critter/flock/drone/user, params)
 	if(!target || !user)
