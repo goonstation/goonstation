@@ -869,26 +869,9 @@ datum/pathogen
 					generate_strong_effect()
 
 	proc/generate_attributes(var/strength)
-		var/adj_strength = strength - 8
-
-		src.suppression_threshold = 25 + rand(adj_strength - 8, adj_strength + 8)
-		src.advance_speed = 25 + rand(adj_strength - 8, adj_strength + 8)
-		src.spread = 25 + rand(adj_strength - 8, adj_strength + 8)
-
-		if (src.curable_by_suppression < 0 && strength < 10)
-			src.curable_by_suppression = rand(-10 + strength, 10 - strength)
-			if (src.curable_by_suppression < 0)
-				src.curable_by_suppression = 0
-		else
-			src.curable_by_suppression = 10
-
 		src.stages = src.body_type.stages
-
 		var/shape = pick("stringy", "snake", "blob", "spherical", "tetrahedral", "star shaped", "tesselated")
 		src.desc = "[src.suppressant.color] [shape] [src.body_type.plural]"
-
-		src.symptomatic = 1
-		src.generation = 1
 		src.stage = 1
 
 	proc/randomize(var/strength)
