@@ -253,7 +253,7 @@
 	disposing()
 		playsound(src, "sound/impact_sounds/Energy_Hit_2.ogg", 80, 1)
 		if (src.reagents) //spill out your contents
-			src.reagents.reaction(src.loc)
+			src.reagents.reaction(get_turf(src))
 
 		if(istype(occupant,/mob/living))
 			var/mob/living/M = occupant
