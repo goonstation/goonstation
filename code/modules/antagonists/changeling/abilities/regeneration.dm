@@ -17,16 +17,16 @@
 
 		var/datum/abilityHolder/changeling/H = holder
 		if (!istype(H))
-			boutput(holder.owner, __red("That ability is incompatible with our abilities. We should report this to a coder."))
+			boutput(holder.owner, "<span class='alert'>That ability is incompatible with our abilities. We should report this to a coder.</span>")
 			return 1
 
 		var/mob/living/carbon/human/C = holder.owner
 		if (alert("Are we sure?","Enter Regenerative Stasis?","Yes","No") != "Yes")
-			boutput(holder.owner, __blue("We change our mind."))
+			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
 			return 1
 
 		if(!H.in_fakedeath)
-			boutput(holder.owner, __blue("Repairing our wounds."))
+			boutput(holder.owner, "<span class='notice'>Repairing our wounds.</span>")
 			logTheThing("combat", holder.owner, null, "enters regenerative stasis as a changeling [log_loc(holder.owner)].")
 			var/list/implants = list()
 			for (var/obj/item/implant/I in holder.owner) //Still preserving implants
@@ -58,7 +58,7 @@
 					C.canmove = 1
 					boutput(C, "<span class='notice'>We have regenerated.</span>")
 					logTheThing("combat", C, null, "[C] finishes regenerative statis as a changeling [log_loc(C)].")
-					C.visible_message(__red("<B>[C] appears to wake from the dead, having healed all wounds.</span>"))
+					C.visible_message("<span class='alert'><B>[C] appears to wake from the dead, having healed all wounds.</span></span>")
 					for(var/obj/item/implant/I in implants)
 						if (istype(I, /obj/item/implant/projectile))
 							boutput(C, "<span class='alert'>\an [I] falls out of your abdomen.</span>")
@@ -174,9 +174,9 @@
 
 		var/mob/living/carbon/human/C = holder.owner
 		if (!istype(C))
-			boutput(holder.owner, __red("We have no idea what we are, but it's damn sure not compatible."))
+			boutput(holder.owner, "<span class='alert'>We have no idea what we are, but it's damn sure not compatible.</span>")
 			return 1
-		boutput(holder.owner, __blue("Your skin begins reforming around your skeleton."))
+		boutput(holder.owner, "<span class='notice'>Your skin begins reforming around your skeleton.</span>")
 
 		while(C.health < C.max_health || !C.limbs.l_arm || !C.limbs.r_arm || !C.limbs.l_leg || !C.limbs.r_leg)
 			if(isdead(C))

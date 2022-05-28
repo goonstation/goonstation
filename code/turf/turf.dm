@@ -103,6 +103,14 @@
 				return 0
 		return 1
 
+	proc/can_crossed_by(atom/movable/AM)
+		if(!src.Cross(AM))
+			return 0
+		for(var/atom/A in contents)
+			if(!A.Cross(AM))
+				return 0
+		return 1
+
 	proc/tilenotify(turf/notifier)
 
 	proc/selftilenotify()
@@ -592,7 +600,11 @@ proc/generate_space_color()
 			new_turf = new /turf/unsimulated/floor(src)
 		else
 			if (delay_space_conversion()) return
-			new_turf = new /turf/space(src)
+			if(station_repair.station_generator && src.z == Z_LEVEL_STATION)
+				station_repair.repair_turfs(list(src), clear=TRUE)
+				new_turf = src
+			else
+				new_turf = new /turf/space(src)
 
 	if(keep_old_material && oldmat && !istype(new_turf, /turf/space)) new_turf.setMaterial(oldmat)
 

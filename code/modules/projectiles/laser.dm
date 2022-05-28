@@ -478,7 +478,7 @@ toxic - poisons
 	shot_sound = 'sound/machines/rock_drill.ogg'
 	shot_volume = 20
 	dissipation_delay = 1
-	dissipation_rate = 35
+	dissipation_rate = 45
 	icon_turf_hit = null
 	var/damtype = DAMAGE_STAB
 
@@ -546,7 +546,7 @@ toxic - poisons
 	name = "signifer bolt"
 	icon = 'icons/obj/projectiles.dmi'
 	power = 15
-	cost = 50
+	cost = 40
 	sname = "lethal"
 	shot_sound = 'sound/weapons/SigLethal.ogg'
 	hit_ground_chance = 30

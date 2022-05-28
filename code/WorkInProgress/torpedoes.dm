@@ -118,7 +118,7 @@
 	var/turf/target = null
 	var/obj/torpedo_targeter/targeter = null
 	var/list/validTrg = list()
-	var/inUse = 0
+	var/inUse = FALSE
 
 	New()
 		movement_controller = new(src)
@@ -144,7 +144,7 @@
 			resetTargeter()
 
 		if(tube)
-			inUse = 1
+			inUse = TRUE
 			user.set_loc(src)
 			user.pixel_y = -8
 			boutput(user, "<span class='hint'><b>Press Q or E to exit targeting.</b></span>")
@@ -155,6 +155,11 @@
 				user.client.images += targeter.trgImage
 				user.client.eye = targeter
 		return
+
+	Exited(atom/movable/AM, atom/newloc)
+		..()
+		if (inUse)
+			src.exit(0)
 
 	proc/resetTargeter()
 		if(tube && targeter)
@@ -187,7 +192,7 @@
 				controller.client.images -= targeter.trgImage
 				controller.client.eye = controller
 			controller = null
-			inUse = 0
+			inUse = FALSE
 		return
 
 	proc/fire()

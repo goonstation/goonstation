@@ -34,7 +34,7 @@
 	var/perlin_zoom = 85
 
 ///Seeds the rust-g perlin noise with a random number.
-/datum/map_generator/snow_generator/generate_terrain(var/list/turfs, var/reuse_seed)
+/datum/map_generator/snow_generator/generate_terrain(list/turfs, reuse_seed, flags)
 	. = ..()
 	var/height_seed = seeds[1]
 	var/humidity_seed = seeds[2]
@@ -77,7 +77,7 @@
 		else //Over 0.85; It's a mountain
 			selected_biome = /datum/biome/mountain
 		selected_biome = biomes[selected_biome]
-		selected_biome.generate_turf(gen_turf)
+		selected_biome.generate_turf(gen_turf, flags)
 
 		gen_turf.temperature = 235 // -38C and lowest breathable temperature with standard atmos
 

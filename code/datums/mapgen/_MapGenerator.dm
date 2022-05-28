@@ -12,7 +12,7 @@ proc/initialize_biomes()
 	var/list/seeds
 
 ///This proc will be ran by areas on world/proc/init(), and provides the areas turfs as argument to allow for generation.
-/datum/map_generator/proc/generate_terrain(var/list/turfs, var/reuse_seed)
+/datum/map_generator/proc/generate_terrain(var/list/turfs, var/reuse_seed, var/flags)
 	if(!reuse_seed || !length(seeds))
 		LAZYLISTINIT(seeds)
 		seeds.len = 0

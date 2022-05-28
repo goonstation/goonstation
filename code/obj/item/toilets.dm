@@ -114,11 +114,14 @@ TOILET
 #endif
 		src.clogged = 0
 		for (var/item in src.contents)
-			qdel(item)
+			flush(item)
 			src.hud?.remove_item(item)
 
 	else if((src.clogged >= 1) || (src.contents.len >= 7) || (user.buckled != src.loc))
 		src.visible_message("<span class='notice'>The toilet is clogged!</span>")
+
+/obj/item/storage/toilet/proc/flush(atom)
+	qdel(atom)
 
 /obj/item/storage/toilet/custom_suicide = 1
 /obj/item/storage/toilet/suicide_in_hand = 0

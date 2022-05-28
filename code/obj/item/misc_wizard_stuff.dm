@@ -149,6 +149,7 @@
 		return
 
 /obj/item/staff/crystal // goes with Gannets' purple wizard robes - it looks different, and that's about it  :I  (always b fabulous)
+	name = "crystal wizard's staff"
 	desc = "A magical staff used for channeling spells. It's got a big crystal on the end."
 	icon_state = "staff_crystal"
 	item_state = "staff_crystal"

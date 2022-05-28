@@ -770,6 +770,9 @@
 	if(src.equipped_in_slot && src.cant_self_remove)
 		return 0
 
+	var/mob/living/carbon/human/target
+	if (ishuman(user))
+		target = user
 	if (!src.anchored)
 		if (!user.r_hand || !user.l_hand || (user.r_hand == src) || (user.l_hand == src))
 			if (!user.hand) //big messy ugly bad if() chunk here because we want to prefer active hand
@@ -782,9 +785,13 @@
 					user.u_equip(src)
 					. = user.put_in_hand(src, 0)
 				else if (!user.l_hand)
-					user.swap_hand(1)
-					user.u_equip(src)
-					. = user.put_in_hand(src, 1)
+					if (!target?.can_equip(src, target.slot_l_hand))
+						user.show_text("You need a free hand to do that!", "blue")
+						.= 0
+					else
+						user.swap_hand(1)
+						user.u_equip(src)
+						. = user.put_in_hand(src, 1)
 			else
 				if (user.l_hand == src)
 					.= 1
@@ -795,9 +802,13 @@
 					user.u_equip(src)
 					. = user.put_in_hand(src, 1)
 				else if (!user.r_hand)
-					user.swap_hand(0)
-					user.u_equip(src)
-					. = user.put_in_hand(src, 0)
+					if (!target?.can_equip(src, target.slot_r_hand))
+						user.show_text("You need a free hand to do that!", "blue")
+						.= 0
+					else
+						user.swap_hand(0)
+						user.u_equip(src)
+						. = user.put_in_hand(src, 0)
 
 		else
 			user.show_text("You need a free hand to do that!", "blue")

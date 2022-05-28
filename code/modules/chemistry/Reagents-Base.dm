@@ -162,7 +162,7 @@ datum
 						if (ethanol_amt >= 15)
 							if(probmult(10)) H.emote(pick("hiccup", "burp", "mumble", "grumble"))
 							H.stuttering += 1
-							if (H.canmove && isturf(H.loc) && probmult(10))
+							if (H.can_drunk_act() && probmult(10))
 								step(H, pick(cardinal))
 							if (prob(20)) H.make_dizzy(rand(3,5) * mult)
 						if (ethanol_amt >= 25)
@@ -175,7 +175,7 @@ datum
 								H.emote(pick("hiccup", "burp"))
 							if (probmult(15))
 								H.stuttering += rand(1,10)
-							if (H.canmove && isturf(H.loc) && probmult(8))
+							if (H.can_drunk_act() && probmult(8))
 								step(H, pick(cardinal))
 						if (ethanol_amt >= 55)
 							liver_damage = 0.4
@@ -184,7 +184,7 @@ datum
 							H.stuttering += 1
 							if (probmult(33))
 								H.change_eye_blurry(10 , 50)
-							if (H.canmove && isturf(H.loc) && probmult(15))
+							if (H.can_drunk_act() && probmult(15))
 								step(H, pick(cardinal))
 							if(prob(4))
 								H.change_misstep_chance(20 * mult)

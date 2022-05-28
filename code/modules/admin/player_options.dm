@@ -383,11 +383,13 @@
 				</div>
 			</div>
 			"}
-
-	var/windowHeight = "450"
-	if (src.level == LEVEL_ADMIN)
-		windowHeight = "550"
-	else if (src.level == LEVEL_CODER)
-		windowHeight = "754"	//weird number, but for chui screen, it removes the scrolling.
-
+	var/windowHeight = 450
+	if (src.level >= LEVEL_CODER)
+		windowHeight = 754	//weird number, but for chui screen, it removes the scrolling.
+	else if (src.level >= LEVEL_ADMIN)
+		windowHeight = 550
+#ifdef SECRETS_ENABLED
+	dat += restricted_playeroptions(M)
+	windowHeight += 45
+#endif
 	usr.Browse(dat.Join(), "window=adminplayeropts[M.ckey];size=600x[windowHeight]")

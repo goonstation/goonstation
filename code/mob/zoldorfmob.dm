@@ -287,6 +287,7 @@
 					src.pixel_y = 0
 
 	death(gibbed)
+		. = ..()
 		var/mob/dead/observer/o = src.ghostize()
 
 		if(o.client)

@@ -215,7 +215,7 @@
 		if("pacid","clacid","nitric_acid")
 			src.ArtifactTakeDamage(volume * 10)
 		if("george_melonium")
-			var/random_stimulus = pick("heat","force","radiate","elec")
+			var/random_stimulus = pick("heat","force","radiate","elec", "carbtouch", "silitouch")
 			var/random_strength = 0
 			switch(random_stimulus)
 				if ("heat")
@@ -226,6 +226,8 @@
 					random_strength = rand(3,30)
 				if ("radiate")
 					random_strength = rand(1,10)
+				else // carbon and silicon touch
+					random_strength = 1
 			src.ArtifactStimulus(random_stimulus,random_strength)
 	return
 

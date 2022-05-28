@@ -51,7 +51,7 @@
 	var/perlin_zoom = 65
 
  ///Seeds the rust-g perlin noise with a random number.
-/datum/map_generator/mars_generator/generate_terrain(var/list/turfs, var/reuse_seed)
+/datum/map_generator/mars_generator/generate_terrain(list/turfs, reuse_seed, flags)
 	. = ..()
 	var/height_seed = seeds[1]
 	var/humidity_seed = seeds[2]
@@ -93,7 +93,7 @@
 		else //Over 0.85; It's the abyss
 			selected_biome = /datum/biome/mars/minable
 		selected_biome = biomes[selected_biome]
-		selected_biome.generate_turf(gen_turf)
+		selected_biome.generate_turf(gen_turf, flags)
 
 		if (current_state >= GAME_STATE_PLAYING)
 			LAGCHECK(LAG_LOW)

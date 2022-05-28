@@ -288,6 +288,11 @@ datum
 			random_chem_blacklisted = 1
 			disease = /datum/ailment/disease/necrotic_degeneration
 
+			infectious
+				name = "concentrated necrovirus"
+				id = "necrovirus_infectious"
+				disease = /datum/ailment/disease/necrotic_degeneration/can_infect_more
+
 		disease/viral_curative // Panacaea
 			name = "viral curative"
 			id = "viral curative"

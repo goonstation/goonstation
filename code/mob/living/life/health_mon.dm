@@ -46,7 +46,7 @@
 					has_health = TRUE
 				else if (I.scan_category == "cloner")
 					has_cloner = TRUE
-				else if (I.scan_category == "other")
+				else if (I.scan_category == "other" || I.scan_category == "unknown")
 					has_other = TRUE
 			var/image/I
 			I = H.implant_icons["health"]

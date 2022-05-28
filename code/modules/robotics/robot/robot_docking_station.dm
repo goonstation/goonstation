@@ -420,10 +420,12 @@
 					src.cells.Add(C)
 					C.set_loc(src)
 					R.cell = null
+					R.part_chest?.cell = null
 					boutput(R, "<span class='notice'>Your power cell is being swapped...</span>")
 				src.cells.Remove(O)
 				O.set_loc(R)
 				R.cell = O
+				R.part_chest?.cell = O
 				boutput(R, "<span class='notice'>Power cell installed: [O].</span>")
 				R.hud.update_charge()
 
@@ -496,6 +498,7 @@
 			src.cells.Add(R.cell)
 			C.set_loc(src)
 			R.cell = null
+			R.part_chest?.cell = null
 			boutput(R, "<span class='alert'>Your power cell was removed!</span>")
 			logTheThing("combat", usr, R, "removes [constructTarget(R,"combat")]'s power cell at [log_loc(usr)].")
 			R.hud.update_charge()

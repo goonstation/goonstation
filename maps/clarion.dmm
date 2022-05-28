@@ -17616,7 +17616,7 @@
 /turf/simulated/floor/grass/random,
 /area/station/medical/cdc)
 "aKA" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/genetics,
 /turf/simulated/floor/grass/random,
 /area/station/medical/cdc)
 "aKB" = (
@@ -28168,7 +28168,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/research,
 /obj/item/device/radio/intercom/science,
 /turf/simulated/floor/purpleblack{
 	dir = 9
@@ -34880,7 +34880,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "bvm" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/genetics,
 /turf/simulated/floor/grass/random,
 /area/station/medical/research{
 	name = "Genetic Research"
@@ -51045,7 +51045,7 @@
 /area/station/crew_quarters/kitchen)
 "uYC" = (
 /obj/machinery/light,
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/kitchen,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "uYQ" = (

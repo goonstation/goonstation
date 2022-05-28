@@ -59,7 +59,7 @@
 			if (M && HH)
 				// These are necessary because of the sleep call.
 				if (!G || !istype(G) || G.state == GRAB_PASSIVE)
-					boutput(M, __red("You can't throw the target without a firm grab!"))
+					boutput(M, "<span class='alert'>You can't throw the target without a firm grab!</span>")
 					return 0
 
 				if (src.castcheck() != 1)
@@ -67,7 +67,7 @@
 					return 0
 
 				if (!isturf(M.loc) || !isturf(HH.loc))
-					boutput(M, __red("You can't throw [HH] from here!"))
+					boutput(M, "<span class='alert'>You can't throw [HH] from here!</span>")
 					qdel(G)
 					return 0
 
@@ -94,7 +94,7 @@
 		if (M && HH)
 			// These are necessary because of the sleep call.
 			if (!G || !istype(G) || G.state == GRAB_PASSIVE)
-				boutput(M, __red("You can't throw the target without a firm grab!"))
+				boutput(M, "<span class='alert'>You can't throw the target without a firm grab!</span>")
 				return 0
 
 			if (src.castcheck() != 1)
@@ -102,7 +102,7 @@
 				return 0
 
 			if (!isturf(M.loc) || !isturf(HH.loc))
-				boutput(M, __red("You can't throw [HH] from here!"))
+				boutput(M, "<span class='alert'>You can't throw [HH] from here!</span>")
 				qdel(G)
 				return 0
 

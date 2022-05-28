@@ -4157,7 +4157,7 @@ datum
 					M.changeStatus("weakened", 1 SECONDS)
 					M.emote("laugh")
 					M.visible_message("<span class='alert'>[M] sneezes. \His sneeze sounds like a honk!</span>")
-					playsound(M.loc, "sound/items/bikehorn.ogg", 50, 1)
+					playsound(M.loc, "sound/musical_instruments/Bikehorn_1.ogg", 50, 1)
 				if (probmult(4))
 					//Create an alphabet soup of random phrases and force the mob to say it!
 					var/message = null

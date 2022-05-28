@@ -157,6 +157,10 @@
 				else
 					container.set_loc(src.output_target) // causes Exited proc to be called
 					usr.put_in_hand_or_eject(container) // try to eject it into the users hand, if we can
+				src.beaker = null
+				src.UpdateIcon()
+				return
+
 			if("insert")
 				if (container)
 					return

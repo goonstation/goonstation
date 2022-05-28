@@ -213,6 +213,8 @@
 		return
 
 	death(gibbed)
+		. = ..()
+		//Todo: some cool-ass effects here
 
 		//Back to square one with you!
 
