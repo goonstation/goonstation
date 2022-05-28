@@ -744,62 +744,35 @@ datum/shockparam
 
 // A pathogen. How surprising.
 datum/pathogen
-	var/name										// The full 'scientific' name for the pathogen (eg. H5N1)
-	var/name_base									// The 'scientific' name without the mutation part (eg. H5N)
-	var/pathogen_uid								// The unique identifier of the pathogen family. All pathogens with the same UID are cured by the same vaccine.
-	var/mutation									// The mutation identifier of the pathogen (eg. for H5N1: 1). Unique for each mutation. Sequential.
+	var/name										// The modifiable name of the disease.
+	var/name_base									// The original name of the disease.
+	var/replica = null								// Value signifying different replications of a single strain. Useful for separating infection capacity.
 	var/desc										// What a scientist might see when he looks at this pathogen through a microscope (eg. blue stringy viruses)
-	var/stages										// How far the pathogen may advance? Higher stages allow for more malicious/benevolent effects of symptoms. (3 to 5)
-													// The amount of stages is determined by the body type. The most potent of all are viruses and parasites.
-	var/list/carriers = list()						// A list of carriers to this pathogen. Currently unused.
-	var/list/effects = list()						// A list of symptoms exhibited by those infected with this pathogen.
-	var/stage										// The current stage of the pathogen.
-	var/advance_speed								// The speed at which this pathogen advances stages. An advance speed of N means a flat N/100% chance to advance each tick.
-	var/base_mutation								// Currently unused.
-	var/datum/microbody/body_type					// The body type of the pathogen, which determines the capacity, maximum stat points, activity, and
+
 	var/mob/infected								// The mob that is infected with this pathogen.
+
+	var/advance_speed								// The speed at which this pathogen advances stages. An advance speed of N means a flat N/100% chance to advance each tick.
+	var/ticked = 0									// This handles ticks between advancement rolls.
 	var/cooldown = 3								// An internal 'cooldown' so that the pathogen doesn't instantly advance to stage 5.
-	var/suppression_threshold						// The pathogen's resistance to suppression. The higher this value, the more extreme conditions are required to suppress the pathogen.
-	var/spread								// This determines how easily the pathogen spreads. How this affects spreading symptoms is up to each symptom to determine.
-														// For instance, a symptom that makes pathogen smoke might make more smoke
-														// while a pathogen that infects when hugging might have a higher chance to infect on each hug
+	var/stage										// The current stage of the pathogen.
+	var/stages										// How far the pathogen may advance. Higher stages allow for more malicious/benevolent effects of symptoms. (3 to 5)
 
-	var/list/mutex = list()							// These symptoms are explicitly disallowed by a mutex.
-	var/symptomatic = 1 							// If 0, the pathogen is mostly dormant on the mob. Symptoms may still decide to ignore this.
-	var/generation = 1 								// Higher generation pathogens may replace lower generation pathogens on mobs.
+	var/datum/microbody/body_type					// The body type of the pathogen, providing intrinsic properties.
 
-	var/datum/pathogendna/dnasample = null			// A reference of what the pathogen's DNA looks like. This reference is passed around
-													// and copied only when coming into contact with something that directly works with
-													// the DNA itself.
-
-	var/datum/suppressant/suppressant				// The method of suppression for the pathogen. This is picked from all children of /datum/suppressant with an equal
-													// probability. I might try to work out a system for rarities once, but it's very low on the priority list. To add a suppression method,
-													// just define a child for /datum/suppressant and please make sure it's not an already existing colour.
-
-	var/suppressed = 0								// A suppression indicator. After every roll for advancement, suppression is reset to 0 and a cooldown is set. Processes of the pathogen
-													// and the symptoms both may decide to set this flag during this cooldown. The pathogen immediately fails the advance roll if it is suppressed.
-													// With this being available, symptoms may define their own resistances and vulnerabilities. Setting this to -1 will make all current symptoms'
-													// vulnerability checks immediately fail - ie. the symptoms' weaknesses will not suppress the pathogen. On the flipside, setting this to 2 will
-													// make all current symptoms' resistance check immediately fail, ie. the symptoms' resistances will not prevent suppression. It would be good
-													// practice to build all symptoms consistently with this concept.
-													// Each disease has their primary suppression method, which provides their colour. The primary suppression method is relevant only if after
-													// all the symptoms acting, suppressed does not equal -1. Primary suppression methods may suppress the pathogen further: Even if a symptom
-													// has a weakness powerful enough to force it back a stage, a primary suppression method is also such a weakness that it may be pushed back
-													// yet another stage.
-													// A pathogen that cannot be currently suppressed (ie. is strengthened somehow) may advance regardless of advance speed.
-													// Be sensible when defining suppressions for symptoms. It shouldn't cure the pathogen, and it seldom should push the pathogen back below stage 3.
-													// TL;DR
-													// -1: Cannot be suppressed. May cause a negative advance speed pathogen to advance anyway.
-													//  0: Will not be suppressed.
-													//  1: Will be suppressed.
-													//  2: Will surely be suppressed.
-
+	var/cure_catagory								// Sets the type of cure (chemical, thermal, surgical, etc.)
+	var/cure_threshold								// The value describing the cure condition. When the cure condition is met, the pathogen will dissipate within 10-30 seconds without needing further oversight/work.
 	var/in_remission = 0							// Pathogens in remission are being cured by the body. Set by the curing reagent.
-	var/forced_microbody = null						// If not null, this pathogen will be generated with a specific microbody.
-	var/curable_by_suppression = 10	// If not 0, represents a probability of becoming regressive through suppression. If negative, randomly generated.
-	var/ticked = 0
 
 	var/list/symptom_data = list()					// Symptom data container.
+	var/list/effects = list()						// A list of symptoms exhibited by those infected with this pathogen.
+	var/list/mutex = list()							// These symptoms are explicitly disallowed by a mutex.
+
+	var/transmissions = list()						// This is a list of the mediums through which a pathogen can spread.
+	var/spread										// This is a modifier that determines how easily the pathogen spreads.
+
+	var/forced_microbody = null						// If not null, this pathogen will be generated with a specific microbody.
+
+
 /*
 	disposing()
 		clear()
