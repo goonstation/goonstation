@@ -1143,7 +1143,7 @@
 	burn_point = 220
 	burn_output = 900
 	burn_possible = 1
-	health = 100
+	health = 4
 	var/can_put_up = 1
 
 	examine(mob/user)

@@ -76,7 +76,6 @@ ABSTRACT_TYPE(/obj/item/turret_deployer)
 	desc = "A Nanotrasen Automatic Riot Control System Deployer. Use it in your hand to deploy."
 	icon_state = "st_deployer"
 	w_class = W_CLASS_BULKY
-	health = 125
 	icon_tag = "nt"
 	mats = list("INS-1"=10, "CON-1"=10, "CRY-1"=3, "MET-2"=2)
 	is_syndicate = 1

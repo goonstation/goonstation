@@ -19,7 +19,7 @@ Custom Books
 	burn_point = 400
 	burn_output = 1100
 	burn_possible = 1
-	health = 30
+	health = 4
 	//
 
 	stamina_damage = 2

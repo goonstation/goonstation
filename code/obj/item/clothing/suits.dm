@@ -635,7 +635,7 @@
 	burn_output = 800
 	burn_possible = TRUE
 
-	health = 20
+	health = 4
 	rand_pos = FALSE
 	block_vision = TRUE
 
@@ -1575,7 +1575,6 @@
 	burn_possible = TRUE
 	burn_point = 450
 	burn_output = 800
-	health = 20
 
 	setupProperties()
 		..()
