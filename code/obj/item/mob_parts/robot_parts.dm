@@ -1015,7 +1015,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 				boutput(user, "<span class='alert'>You can't think of anything to do with the frame.</span>")
 				return
 
-			var/action = input("What do you want to do?", "Robot Frame") in actions
+			var/action = tgui_input_list(user, "What do you want to do?", "Robot Frame", actions)
 			if (!action)
 				return
 			if (action == "Do nothing")
