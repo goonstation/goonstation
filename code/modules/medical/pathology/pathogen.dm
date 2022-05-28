@@ -1180,7 +1180,7 @@ datum/pathogen
 		for(var/datum/pathogeneffects/E in src.effects)
 			. = max(., E.rarity)
 
-
+/*
 proc/dig2hex(num)
 	switch (num)
 		if (0 to 9)
@@ -1268,3 +1268,4 @@ proc/hex2numoc(var/num)
 // generates a random 3-sequence (rand(0, 4095) is unreliable)
 proc/rand3seq()
 	return num2hex(rand(0, 15), 1) + num2hex(rand(0, 15), 1) + num2hex(rand(0, 15), 1)
+	*/
