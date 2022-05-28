@@ -600,8 +600,6 @@
 			src.unreserveTurf(busy_turf)
 
 	for(var/turf/T in src.priority_tiles)
-		if (QDELETED(T))
-			src.togglePriorityTurf(T)
 
 	for(var/atom/S in src.deconstruct_targets)
 		if(QDELETED(S))
