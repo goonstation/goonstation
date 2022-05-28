@@ -596,8 +596,6 @@
 	var/turf/busy_turf
 	for(var/name in src.busy_tiles)
 		busy_turf = src.busy_tiles[name]
-		if (QDELETED(busy_turf))
-			src.unreserveTurf(busy_turf)
 
 	for(var/turf/T in src.priority_tiles)
 
