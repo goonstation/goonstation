@@ -1,4 +1,3 @@
-/*
 datum/pathogen_cdc
 	var/uid = null
 	var/patient_zero = null
@@ -727,7 +726,7 @@ datum/controller/pathogen
 			lalph += ascii2text(i)
 
 var/global/datum/controller/pathogen/pathogen_controller = new()
-*/
+
 // A choice assistant datum
 datum/choice
 	var/target
