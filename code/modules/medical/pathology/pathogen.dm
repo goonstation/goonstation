@@ -836,25 +836,24 @@ datum/pathogen
 	proc/generate_name()
 			src.name_base = pick(pathogen_controller.lalph) + pick(pathogen_controller.lnums) + pick(pathogen_controller.lalph)
 
-
-
 //		if (ticker)
 //			if (current_state == GAME_STATE_PLAYING)
 //				message_admins("Pathogen tree [src.name_base] entering play.")
 
 		return
 
-	proc/generate_components(var/datum/pathogen_cdc/cdc, var/strength)
-		var/supp_t = pick(pathogen_controller.path_to_suppressant)
-		suppressant = pathogen_controller.path_to_suppressant[supp_t]
-		suppressant.onadd(src)
-
+	proc/generate_microbody(var/datum/pathogen_cdc/cdc, var/strength)
 		if (!forced_microbody)
 			src.body_type = pathogen_controller.get_microbody(strength + 5)
 			cdc.microbody_type = "[src.body_type]"
 		else
 			src.body_type = pathogen_controller.path_to_microbody[forced_microbody]
 			cdc.microbody_type = "[src.body_type]"
+
+	proc/generate_cure(var/datum/pathogen_cdc/cdc, var/strength)
+		var/supp_t = pick(pathogen_controller.path_to_suppressant)
+		suppressant = pathogen_controller.path_to_suppressant[supp_t]
+		suppressant.onadd(src)
 
 	proc/generate_randomized_effects(var/strength)
 		var/adj_strength = strength - 8
