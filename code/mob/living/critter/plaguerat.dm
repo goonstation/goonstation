@@ -8,6 +8,7 @@ ABSTRACT_TYPE(/mob/living/critter/plaguerat)
 	icon_state = "smallRat"
 	density = 1
 	hand_count = 2
+	custom_gib_handler = /proc/gibs
 	add_abilities = list(/datum/targetable/critter/plague_rat/eat_filth,
 						/datum/targetable/critter/plague_rat/rat_bite)
 
@@ -42,12 +43,14 @@ ABSTRACT_TYPE(/mob/living/critter/plaguerat)
 
 	New(var/turf/T, var/mob/wraith/M = null)
 		..(T)
-		if(M != null)
-			src.master = M
+		SPAWN(0)
+			if(M != null)
+				src.master = M
 
-			if (isnull(M.summons))
-				M.summons = list()
-			M.summons += src
+				if (isnull(M.summons))
+					M.summons = list()
+				M.summons += src
+				src.bioHolder.AddEffect("nightvision", 0, 0, 0, 1)
 
 	setup_hands()
 		..()
@@ -93,6 +96,10 @@ ABSTRACT_TYPE(/mob/living/critter/plaguerat)
 				if (src.emote_check(voluntary, 50))
 					playsound(src, "sound/voice/animal/mouse_squeak.ogg", 80, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<span class='emote'><b>[src]</b> squeaks!</span>"
+			if ("fart")
+				if (src.emote_check(voluntary, 50))
+					playsound(src, 'sound/voice/farts/poo2.ogg', 40, 1, 0.1, 3, channel=VOLUME_CHANNEL_EMOTE)
+					return "<span class='emote'><b>[src]</b> toots disgustingly!</span>"
 		return null
 
 	specific_emote_type(var/act)
@@ -148,9 +155,9 @@ ABSTRACT_TYPE(/mob/living/critter/plaguerat)
 	bite_transfer_amt = 1
 	flags = TABLEPASS | DOORPASS
 	adultpath = /mob/living/critter/plaguerat/medium
-	health_brute = 30
-	health_brute_vuln = 0.8
-	health_burn = 30
+	health_brute = 15
+	health_brute_vuln = 1
+	health_burn = 15
 	health_burn_vuln = 1.2
 
 	can_help = 1
@@ -184,10 +191,10 @@ ABSTRACT_TYPE(/mob/living/critter/plaguerat)
 	flags = TABLEPASS
 	bite_transfer_amt = 2.5
 	adultpath = /mob/living/critter/plaguerat/adult
-	health_brute = 45
-	health_brute_vuln = 0.7
-	health_burn = 45
-	health_burn_vuln = 1.3
+	health_brute = 25
+	health_brute_vuln = 0.9
+	health_burn = 25
+	health_burn_vuln = 1.2
 	add_abilities = list(/datum/targetable/critter/plague_rat/eat_filth,
 						/datum/targetable/critter/plague_rat/rat_bite,
 						/datum/targetable/critter/plague_rat/spawn_warren)
@@ -220,10 +227,10 @@ ABSTRACT_TYPE(/mob/living/critter/plaguerat)
 	desc = "A horrible mass of puss and warts, that once used to look like a rat."
 	icon_state = "giantRat"
 	bite_transfer_amt = 4
-	health_brute = 70
-	health_brute_vuln = 0.6
-	health_burn = 70
-	health_burn_vuln = 1.4
+	health_brute = 40
+	health_brute_vuln = 0.8
+	health_burn = 40
+	health_burn_vuln = 1.3
 	add_abilities = list(/datum/targetable/critter/plague_rat/eat_filth,
 						/datum/targetable/critter/plague_rat/rat_bite,
 						/datum/targetable/critter/plague_rat/spawn_warren,

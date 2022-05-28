@@ -7,6 +7,7 @@
 	can_throw = 1
 	can_grab = 1
 	can_disarm = 1
+	custom_gib_handler = /proc/bonegibs
 	icon = 'icons/mob/skeleton_commander.dmi'
 	icon_state = "skeleton_commander"
 	var/health_brute = 90
@@ -26,12 +27,6 @@
 
 		abilityHolder.addAbility(/datum/targetable/critter/skeleton_commander/rally)
 		abilityHolder.addAbility(/datum/targetable/critter/skeleton_commander/summon_lesser_skeleton)
-
-	Life(datum/controller/process/mobs/parent)
-		if (..(parent))
-			return 1
-
-		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/status_slowed, src.type)
 
 	setup_healths()
 		add_hh_flesh(src.health_brute, src.health_brute_vuln)
@@ -87,10 +82,10 @@
 				for(var/turf/T in list(one, two, three))
 					for(var/atom/movable/A in T)
 						if(A in attacked) continue
-						if(ismob(A))
+						if(ismob(A) && !isobserver(A))
 							var/mob/M = A
 							M.Attackby(user, user, params, 1)
-							M.TakeDamageAccountArmor("All", rand(6,8), 0, 0, DAMAGE_CUT)
+							M.TakeDamageAccountArmor("All", rand(5,7), 0, 0, DAMAGE_CUT)
 							attacked += A
 							hit = 1
 
@@ -119,10 +114,10 @@
 				for(var/turf/T in list(one, two))
 					for(var/atom/A in T)
 						if(A in attacked) continue
-						if(ismob(A))
+						if(ismob(A) && !isobserver(A))
 							var/mob/M = A
 							M.Attackby(user, user, params, 1)
-							M.TakeDamageAccountArmor("All", rand(7,9), 0, 0, DAMAGE_STAB)
+							M.TakeDamageAccountArmor("All", rand(6,7), 0, 0, DAMAGE_STAB)
 							attacked += A
 							hit = 1
 
@@ -139,7 +134,7 @@
 			return 0
 		logTheThing("combat", user, target, "stabs [constructTarget(target,"combat")] with [src] at [log_loc(user)].")
 		var/obj/item/affecting = target.get_affecting(user)
-		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 6, 9, rand(5,9))
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 6, 9, rand(5,7))
 		user.attack_effects(target, affecting)
 		var/action = pick("slashes", "stabs", "pierces")
 		msgs.base_attack_message = "<b><span class='alert'>[user] [action] [target] with their [src.holder]!</span></b>"

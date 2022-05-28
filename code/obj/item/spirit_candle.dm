@@ -26,10 +26,12 @@
 				if (W.justmanifested <= 0)
 					SPAWN(5 DECI SECOND)	//Give them half a second to flee
 						W.makeCorporeal()
+						W.forced_manifest = TRUE
 						boutput(W, "<span class='alert'>A malignant spirit pulls you into the physical world! You begin to gather your forces to try and escape to the spirit realm...</span>")
 						SPAWN(30 SECOND)
 							W.makeIncorporeal()
 							W.justmanifested = 5	//To avoid spamming the candle
+							W.forced_manifest = FALSE
 			var/turf/T = get_turf(src)
 			playsound(src.loc, "sound/voice/chanting.ogg", 50, 0)
 			new /obj/overlay/darkness_field(T, 10 SECOND, radius = 5.5, max_alpha = 250)
@@ -55,6 +57,8 @@
 
 			else if (W.burning)
 				src.light(user, "<span class='alert'><b>[user]</b> lights [src] with [W]. Goddamn.</span>")
+		else if (burnt)
+			boutput(user, "<span class='notice'>The spirit inside has departed, you cannot use the candle again</span>")
 		else
 			return ..()
 

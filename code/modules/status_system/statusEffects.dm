@@ -1664,7 +1664,7 @@
 
 	onUpdate()
 		var/mult = 1
-		if (probmult(8))
+		if (probmult(7))
 			switch (rand(1,3))
 				if (1) // Image based illusion
 					for (var/turf/W in range(6, H))	//Check for surrounding spots

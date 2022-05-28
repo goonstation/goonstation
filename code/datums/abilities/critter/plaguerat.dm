@@ -3,7 +3,7 @@
 ////////////////////////////
 /datum/targetable/critter/plague_rat/eat_filth
 	name = "Eat filth"
-	desc = "Eat some filth"
+	desc = "Eat some filth, healing you a little bit and slowly growing."
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "eat_filth"
 	cooldown = 2 SECONDS
@@ -114,6 +114,11 @@
 		if (length(targets) > 0)
 			actions.start(new/datum/action/bar/private/icon/plaguerat_eat(targets, src), P)
 
+		if((P.health < (P.health_brute + P.health_burn)))
+			for(var/damage_type in P.healthlist)
+				var/datum/healthHolder/hh = P.healthlist[damage_type]
+				hh.HealDamage(3)
+
 	onInterrupt()
 		..()
 
@@ -122,7 +127,7 @@
 
 /datum/targetable/critter/plague_rat/rat_bite
 	name = "Bite"
-	desc = "Bite a mob, doing a little damage and injecting them with some rat poison"
+	desc = "Bite a living creature, doing a little damage and injecting them with some rat poison"
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "ratbite"
 	cooldown = 5 SECOND
@@ -162,7 +167,7 @@
 
 /datum/targetable/critter/plague_rat/spawn_warren
 	name = "spawn warren"
-	desc = "Spawn a warren"
+	desc = "Spawn your rat nest, healing you when in range and summoning some tiny diseased mice."
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "ratden"
 	cooldown = 90 SECONDS
@@ -178,13 +183,18 @@
 			if (P.linked_warren == null)
 				var/obj/machinery/wraith_warren/W = new /obj/machinery/wraith_warren(P.loc)
 				P.linked_warren = W
-				boutput (P, "You spawn a warren")
+				boutput (P, "<span class='notice'>You spawn a rat den</span>")
 			else if (!P.linked_warren.loc)
 				var/obj/machinery/wraith_warren/W = new /obj/machinery/wraith_warren(P.loc)
 				P.linked_warren = W
-				boutput (P, "You spawn a new warren")
+				boutput (P, "<span class='notice'>You spawn a new rat den</span>")
 			else
-				boutput (P, "You already have a warren")
+				qdel(P.linked_warren)
+				P.linked_warren = null
+				boutput (P, "<span class='notice'>You had an old rat den, it is now destroyed.</span>")
+				var/obj/machinery/wraith_warren/W = new /obj/machinery/wraith_warren(P.loc)
+				P.linked_warren = W
+				boutput (P, "<span class='notice'>You spawn a new rat den</span>")
 		return 0
 
 	onAttach(datum/abilityHolder/holder)

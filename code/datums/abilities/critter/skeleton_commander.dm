@@ -3,7 +3,7 @@
 ////////////////////////////////
 /datum/targetable/critter/skeleton_commander/rally
 	name = "rally"
-	desc = "rally"
+	desc = "Buff all surrounding critters to help you fight."
 	icon_state = "rally"
 	cooldown = 60 SECONDS
 	targeted = 0
@@ -54,7 +54,7 @@
 
 /datum/targetable/critter/skeleton_commander/summon_lesser_skeleton
 	name = "summon lesser skeleton"
-	desc = "rally"
+	desc = "Materialize a skeleton from the void to help you."
 	icon = 'icons/mob/wraith_ui.dmi'
 	icon_state = "skeleton"
 	cooldown = 30 SECONDS

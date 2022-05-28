@@ -11,6 +11,7 @@
 	can_disarm = 1
 	can_help = 1
 	mob_flags = HEAVYWEIGHT_AI_MOB
+	custom_gib_handler = /proc/gibs
 	// HEALTHS
 	var/health_brute = 50
 	var/health_burn = 50
@@ -129,7 +130,7 @@
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/claw
 		HH.icon_state = "handl"
-		HH.limb_name = "hand"
+		HH.limb_name = "monstrous arm"
 
 		HH = hands[2]
 		HH.icon = 'icons/mob/hud_human.dmi'
@@ -137,5 +138,5 @@
 		HH.name = "right hand"
 		HH.suffix = "-R"
 		HH.icon_state = "handr"
-		HH.limb_name = "hand"
+		HH.limb_name = "monstrous arm"
 

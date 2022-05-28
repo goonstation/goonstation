@@ -14,7 +14,7 @@
 
 /datum/aiTask/prioritizer/exploder/on_reset()
 	..()
-	walk(holder.owner, 0)
+	walk(holder?.owner, 0)
 
 /datum/aiTask/sequence/goalbased/rushdown
 	name = "rushdown"
@@ -31,7 +31,7 @@
 /datum/aiTask/sequence/goalbased/rushdown/get_targets()
 	. = list()
 	for(var/mob/living/carbon/human/T in view(max_dist, holder.owner))
-		if(isliving(T) && !is_incapacitated(T))
+		if(isliving(T) && !is_incapacitated(T) && isalive(T))
 			. += T
 	. = get_path_to(holder.owner, ., max_dist*2, 1)
 

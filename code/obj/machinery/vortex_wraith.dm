@@ -5,7 +5,7 @@
 	desc = "It hums and thrums as you stare at it. Dark shadows weave in and out of sight within."
 	anchored = 1
 	density = 1
-	_health = 40
+	_health = 25
 	var/list/mob_list = list()
 	var/mob_value_cap = 10	//Total allowed point value of all linked mobs
 	var/growth = 0
@@ -15,6 +15,7 @@
 	var/obj/mob_type = null
 	var/random_mode = true
 	var/mob/wraith/master = null
+	var/datum/light/light
 	var/list/default_mobs = list(/obj/critter/crunched,	//Useful for random mode or when we dont have a mob_type on spawn
 	/obj/critter/ancient_thing,
 	/obj/critter/ancient_repairbot/security,
@@ -35,6 +36,13 @@
 		src.visible_message("<span class='alert'>A [src] appears into view, some shadows coalesce within!</b></span>")
 		next_growth = world.time + (30 SECONDS)
 		next_spawn = world.time + (31 SECONDS)	//Should call the first spawn check after the portal grew once.
+
+		light = new /datum/light/point
+		light.set_brightness(0.1)
+		light.set_color(150, 40, 40)
+		light.attach(src)
+		light.enable()
+
 		..()
 
 	process()
@@ -44,7 +52,7 @@
 				if (growth == 0)
 					icon_state = "harbinger_circle"
 				growth++
-				src._health += 20
+				src._health += 10
 				src.mob_value_cap += 5
 		if ((src.next_spawn != null) && (src.next_spawn < world.time))	//Spawn timer is up
 			var/minion_value = 0

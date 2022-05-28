@@ -283,6 +283,10 @@
 	effectType = EFFECT_TYPE_DISABILITY
 	can_copy = 0
 	isBad = 1
+	occur_in_genepools = 0
+	acceptable_in_mutini = 0
+	probability = 0
+	curable_by_mutadone = 0
 
 	OnAdd()
 		if (ishuman(owner))
@@ -312,6 +316,10 @@
 	effectType = EFFECT_TYPE_DISABILITY
 	can_copy = 0
 	isBad = 1
+	occur_in_genepools = 0
+	acceptable_in_mutini = 0
+	probability = 0
+	curable_by_mutadone = 0
 
 	OnLife()
 		var/mult = 1
@@ -335,6 +343,10 @@
 	effectType = EFFECT_TYPE_DISABILITY
 	can_copy = 0
 	isBad = 1
+	occur_in_genepools = 0
+	acceptable_in_mutini = 0
+	probability = 0
+	curable_by_mutadone = 0
 
 	OnAdd()
 		if (ishuman(owner))
@@ -364,6 +376,10 @@
 	effectType = EFFECT_TYPE_DISABILITY
 	can_copy = 0
 	isBad = 1
+	occur_in_genepools = 0
+	acceptable_in_mutini = 0
+	probability = 0
+	curable_by_mutadone = 0
 
 	OnAdd()
 		if (ishuman(owner))

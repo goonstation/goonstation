@@ -57,6 +57,11 @@
 			if (src.min_req_dist <= P.power_well_dist)
 				boutput(holder.owner, "<span class='alert'>You must be within [min_req_dist] tiles from a well of power to perform this task.</span>")
 				return 1
+		if (istype(holder.owner, /mob/wraith))
+			var/mob/wraith/W = holder.owner
+			if (W.forced_manifest == TRUE)
+				boutput(W, "<span class='alert'>You have been forced to manifest! You can't use any abilities for now!</span>")
+			return 1
 		return 0
 
 	doCooldown()
@@ -1337,7 +1342,7 @@
 /datum/targetable/wraithAbility/possess
 	name = "Possession"
 	icon_state = "possession"
-	desc = "Channel your energy and slowly gain control over a living being"
+	desc = "Channel your energy and slowly gain control over a living being."
 	pointCost = 400
 	targeted = 1
 	cooldown = 3 MINUTES
@@ -1500,7 +1505,7 @@
 /datum/targetable/wraithAbility/lay_trap
 	name = "Place rune trap"
 	icon_state = "runetrap"
-	desc = "Create a rune trap you can then spring later"
+	desc = "Create a rune trap which stays invisible in the dark and can be sprung by people."
 	pointCost = 50
 	targeted = 0
 	cooldown = 30 SECONDS
@@ -1574,7 +1579,7 @@
 /datum/targetable/wraithAbility/create_summon_portal
 	name = "Summon void portal"
 	icon_state = "open_portal"
-	desc = "Summon a void portal from which otherworldly creatures pour out"
+	desc = "Summon a void portal from which otherworldly creatures pour out. You get increased point generation when near it."
 	pointCost = 150
 	targeted = 0
 	cooldown = 3 MINUTES
@@ -1745,6 +1750,7 @@
 		logTheThing("admin", lucky_dude.current, null, "respawned as a harbinger summon for [src.holder.owner].")
 		boutput(P, "<span class='notice'><b>You have been respawned as a harbinger summon!</b></span>")
 		boutput(P, "[W] is your master! Use your abilities to choose a path! Work with your master to spread chaos!")
+		qdel(marker)
 
 /datum/targetable/wraithAbility/make_plague_rat
 	name = "Summon Plague rat"
@@ -1753,6 +1759,7 @@
 	targeted = 0
 	pointCost = 0
 	cooldown = 300 SECONDS
+	start_on_cooldown = 1
 	var/in_use = 0
 	var/ghost_confirmation_delay  = 30 SECONDS
 	var/max_allowed_rats = 3
@@ -1824,7 +1831,7 @@
 		var/datum/mind/lucky_dude = pick(candidates)
 
 		//add plague rat to master's list is done in /mob/living/critter/plaguerat/New
-		var/mob/living/critter/plaguerat/P = new /mob/living/critter/plaguerat(T, W)
+		var/mob/living/critter/plaguerat/young/P = new /mob/living/critter/plaguerat/young(T, W)
 		lucky_dude.special_role = ROLE_PLAGUERAT
 		lucky_dude.dnr = 1
 		lucky_dude.transfer_to(P)
@@ -1839,6 +1846,7 @@
 		boutput(P, "<span class='notice'><b>You have been respawned as a plague rat!</b></span>")
 		boutput(P, "[W] is your master! Eat filth, spread disease and reproduce!")
 		boutput(P, "Obey your master's orders, avoid mouse traps and live the rat life!")
+		qdel(marker)
 
 /datum/targetable/wraithAbility/speak
 	name = "Spirit message"

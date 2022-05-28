@@ -14,7 +14,7 @@
 
 		if(istype(holder.owner, /mob/living/critter/voidhound))
 			var/mob/living/critter/voidhound/V = holder.owner
-			animate(V, alpha=50, time=3 SECONDS)
+			animate(V, alpha=45, time=3 SECONDS)
 			boutput(V, "<span class='notice'>We slip into the shadows</span>")
 			V.cloaked = TRUE
 			SPAWN(20 SECONDS)

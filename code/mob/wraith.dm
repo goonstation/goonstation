@@ -35,6 +35,7 @@
 	var/absorbcount = 0 //Keep track of how many souls we absorbed
 	var/absorbs_to_evolve = 3
 	var/obj/machinery/wraith/vortex_wraith/linked_portal = null //The portal harbinger can spawn
+	var/forced_manifest = FALSE
 
 	var/last_life_update = 0
 	var/const/life_tick_spacing = 20
@@ -434,9 +435,11 @@
 
 			//if tile contains salt, wraith becomes corporeal
 			if (salted && !src.density && !src.justdied)
+				src.forced_manifest = TRUE
 				src.makeCorporeal()
 				boutput(src, "<span class='alert'>You have passed over salt! You now interact with the mortal realm...</span>")
 				SPAWN(1 MINUTE) //one minute
+					src.forced_manifest = FALSE
 					src.makeIncorporeal()
 
 		//if ((marker && BOUNDS_DIST(src, marker) > 05) && (master && BOUNDS_DIST(P, src) > 02 ))
