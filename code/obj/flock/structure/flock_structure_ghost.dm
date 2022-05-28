@@ -44,7 +44,6 @@
 	if(blocked)
 		qdel(src)
 		flock_speak(null, "ERROR: Build area is blocked by an obstruction.", flock)
-		return
 
 /obj/flock_structure/ghost/Click(location, control, params)
 	if (("alt" in params2list(params)) || !istype(usr, /mob/living/intangible/flock/flockmind))
