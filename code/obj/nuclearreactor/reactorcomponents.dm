@@ -67,13 +67,25 @@ ABSTRACT_TYPE(/obj/reactor_component)
 
 
 	proc/processNeutrons(var/list/datum/neutron/inNeutrons)
-		if(prob(src.material.getProperty("n_radioactive"))) //spontaneous emission
-			inNeutrons += new /datum/neutron(pick(cardinals), pick(1,2,3))
+		if(prob(src.material.getProperty("n_radioactive"))) //fast spontaneous emission
+			inNeutrons += new /datum/neutron(pick(cardinals), pick(2,3)) //neutron radiation gets you fast neutrons
+			src.material.adjustProperty("n_radioactive", -0.1)
+			src.material.adjustProperty("radioactive", 0.1)
+			src.temperature += 100 //TODO make this less arbitrary
+		if(prob(src.material.getProperty("radioactive"))) //spontaneous emission
+			inNeutrons += new /datum/neutron(pick(cardinals), pick(1,2))
+			src.material.adjustProperty("radioactive", -0.1)
 			src.temperature += 100 //TODO make this less arbitrary
 		for(var/datum/neutron/N in inNeutrons)
-			if(N.velocity == 2 & prob(src.material.getProperty("n_radioactive"))) //stimulated emission
-				inNeutrons += new /datum/neutron(pick(cardinals), pick(1,2,3))
-				inNeutrons += new /datum/neutron(pick(cardinals), pick(1,2,3))
+			if(N.velocity == 2 & prob(src.material.getProperty("n_radioactive"))) //neutron stimulated emission
+				inNeutrons += new /datum/neutron(pick(cardinals), pick(2,3))
+				inNeutrons += new /datum/neutron(pick(cardinals), pick(2,3))
+				inNeutrons -= N
+				qdel(N)
+				src.temperature += 100 //TODO make this less arbitrary
+			else if(N.velocity == 2 & prob(src.material.getProperty("radioactive"))) //stimulated emission
+				inNeutrons += new /datum/neutron(pick(cardinals), pick(1,2))
+				inNeutrons += new /datum/neutron(pick(cardinals), pick(1,2))
 				inNeutrons -= N
 				qdel(N)
 				src.temperature += 100 //TODO make this less arbitrary
@@ -119,8 +131,9 @@ ABSTRACT_TYPE(/obj/reactor_component)
 			var/deltaT = src.current_gas.temperature - src.temperature
 			//heat transfer coefficient
 			var/hTC = TOTAL_MOLES(src.current_gas)/src.material.getProperty("density")
-			src.current_gas.temperature += heat_transfer_mult*-deltaT*hTC
-			src.temperature += heat_transfer_mult*deltaT*(1/hTC)
+			if(hTC>0)
+				src.current_gas.temperature += heat_transfer_mult*-deltaT*hTC
+				src.temperature += heat_transfer_mult*deltaT*(1/hTC)
 			. = src.current_gas
 		src.current_gas = inGas.remove(R_IDEAL_GAS_EQUATION * inGas.temperature)
 

@@ -76,8 +76,9 @@
 			var/deltaT = src.current_gas.temperature - src.temperature
 			//heat transfer coefficient
 			var/hTC = TOTAL_MOLES(src.current_gas)/src.material.getProperty("density")
-			src.current_gas.temperature += heat_transfer_mult*-deltaT*hTC
-			src.temperature += heat_transfer_mult*deltaT*(1/hTC)
+			if(hTC>0)
+				src.current_gas.temperature += heat_transfer_mult*-deltaT*hTC
+				src.temperature += heat_transfer_mult*deltaT*(1/hTC)
 			. = src.current_gas
 		src.current_gas = inGas.remove(R_IDEAL_GAS_EQUATION * inGas.temperature)
 
