@@ -144,7 +144,7 @@
 /mob/living/carbon/human/normal/ntsc
 	New()
 		..()
-		JobEquipSpawned("Nanotrasen Security Consultant")
+		JobEquipSpawned("Nanotrasen Security Contractor")
 
 /mob/living/carbon/human/normal/inspector
 	New()
