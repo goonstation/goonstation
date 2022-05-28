@@ -772,7 +772,7 @@ datum/pathogen
 
 	var/forced_microbody = null						// If not null, this pathogen will be generated with a specific microbody.
 
-
+// PROCS AND FUNCTIONS FOR GENERATION
 
 	disposing()
 		clear()
@@ -783,30 +783,21 @@ datum/pathogen
 		name_base = ""
 		replica = 0
 		desc = ""
-
 		infected = null
-
 		advance_speed = 0
 		ticked = 0
 		cooldown = 3
 		stage = 1
 		stages = 1
-
 		body_type = null
-
 		cure_catagory = null
 		cure_threshold = null
 		in_remission = 0
-
 		symptom_data = list()
 		effects = list()
 		mutex = list()
-
 		transmissions = list()
 		spread = 1
-
-		suppression_threshold = 0
-
 		forced_microbody = initial(forced_microbody)
 
 	proc/clone()
@@ -923,47 +914,29 @@ datum/pathogen
 
 		logTheThing("pathology", null, null, "Pathogen [name] created by randomization.")
 
-	proc/setup(status, var/datum/pathogen/origin, may_mutate, var/datum/pathogendna/sample = null)
+	proc/setup(status, var/datum/pathogen/origin, tier)
 		if (status == 0 && !origin)
 			return
 		src.in_remission = 0
 		if (origin)
-			src.mutation = origin.mutation
 			src.name = origin.name
 			src.name_base = origin.name_base
-			src.stages = origin.stages
+			src.replica = origin.replica
 			src.desc = origin.desc
-			src.carriers = list()
+			src.advance_speed = origin.advance_speed
+			src.stage = 1
+			src.stages = origin.stages
+			src.body_type = origin.body_type
+			src.cure_catagory = origin.cure_catagory
+			src.cure_threshold = origin.cure_threshold
 			src.effects = origin.effects.Copy()
 			for (var/datum/pathogeneffects/E in src.effects)
 				E.onadd(src)
-			src.pathogen_uid = origin.pathogen_uid
-			src.suppressant = new origin.suppressant.type()
-			src.suppressant.onadd(src)
-			src.stage = 1
-			src.generation = origin.generation
-			src.symptomatic = origin.symptomatic
-			src.advance_speed = origin.advance_speed
 			src.spread = origin.spread
-			src.body_type = origin.body_type
-			src.suppression_threshold = origin.suppression_threshold
-			if (sample)
-				src.dnasample = sample
-			else
-				src.dnasample = origin.dnasample
-			src.curable_by_suppression = origin.curable_by_suppression
 		else if (status == 1)
 			src.randomize(8)
-			if (sample)
-				src.dnasample = sample
-			else
-				src.dnasample = new/datum/pathogendna(src)
 		else if (!origin && status == 2)
 			src.do_prefab()
-			if (sample)
-				src.dnasample = sample
-			else
-				src.dnasample = new/datum/pathogendna(src)
 		processing_items.Add(src)
 
 
