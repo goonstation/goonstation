@@ -907,9 +907,6 @@
 			if(isflockdeconimmune(target))
 				return
 			actions.start(new /datum/action/bar/flock_decon(target), user)
-		else if(istype(target,/obj/structure/girder)) //special handling for partially deconstructed walls
-			if(target?.material.mat_id == "gnesis")
-				actions.start(new /datum/action/bar/flock_decon(target), user)
 		else
 			..()
 		return

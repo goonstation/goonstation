@@ -441,17 +441,12 @@
 /datum/targetable/flockmindAbility/deconstruct/cast(atom/target)
 	if(..())
 		return TRUE
-	var/mob/living/intangible/flock/F = holder.owner
 	if(HAS_ATOM_PROPERTY(target,PROP_ATOM_FLOCK_THING))
 		if (isflockdeconimmune(target)) // ghost structure on click opens tgui window
 			return TRUE
+		var/mob/living/intangible/flock/F = holder.owner
 		F.flock.toggleDeconstructionFlag(target)
 		return FALSE
-	else if(istype(target,/obj/structure/girder)) //special handling for partially decon'd walls - gnesis mats means its ours
-		if(target?.material.mat_id == "gnesis")
-			F.flock.toggleDeconstructionFlag(target)
-			return FALSE
-
 	return TRUE
 
 
