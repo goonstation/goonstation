@@ -837,18 +837,14 @@
 	var/difference = temp- R.total_temperature
 
 	if (difference >= 0)
-		heater_temp = R.total_temperature+ 2*min(difference,h_change_cap)
+		heater_temp = R.total_temperature+ min(ceil(difference),h_change_cap)
 	else
-		heater_temp = R.total_temperature+ 2*max(difference,-h_change_cap)
+		heater_temp = max(1,R.total_temperature+ max(round(difference),-h_change_cap))
 
-	if(heater_temp <= 0)
-		//we can't set the heater below 0, so temp lowers slower
-		if (abs(difference) <= 1)
-			heating_in_progress = 0
-	else if(abs(difference) <= h_change_cap)
+	if(abs(difference) <= h_change_cap)
 		heating_in_progress = 0
 
-	R.temperature_reagents(heater_temp, R.total_volume*100, R.composite_heat_capacity, h_change_cap)
+	R.set_reagent_temp(heater_temp, 1)
 
 	return heating_in_progress
 
