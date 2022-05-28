@@ -65,7 +65,7 @@
 		last_cast = world.time + cooldown
 		holder.updateButtons()
 		SPAWN(cooldown + 5)
-			holder.updateButtons()
+			holder?.updateButtons()
 
 	onAttach(datum/abilityHolder/holder)
 		..()
@@ -261,7 +261,7 @@
 		last_cast = world.time + cooldown
 		holder.updateButtons()
 		SPAWN(cooldown + 5)
-			holder.updateButtons()
+			holder?.updateButtons()
 
 
 /datum/targetable/wraithAbility/possessObject
