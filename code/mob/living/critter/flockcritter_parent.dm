@@ -161,8 +161,7 @@
 				F = new /obj/fire_foam
 				F.set_loc(src.loc)
 				SPAWN(10 SECONDS)
-					if (!QDELETED(F))
-						qdel(F)
+					qdel(F)
 			playsound(src, "sound/effects/spray.ogg", 50, 1, -3)
 			update_burning(-100)
 			sleep(2 SECONDS)
