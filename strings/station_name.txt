@@ -16,4 +16,4 @@ frontierLocations@=Typhon@,Plasma Star@,Fortitudo@mAntistes@,Quadriga@,Fatuus@,D
 
 militaryLetters@=Alpha@,Bravo@,Charlie@,Delta@,Echo@,Foxtrot@,Golf@,Hotel@,India@,Juliet@,Kilo@,Lima@,Mike@,November@,Oscar@,Papa@,Quebec@,Romeo@,Sierra@,Tango@,Uniform@,Victor@,Whiskey@,X-ray@,Yankee@,Zulu
 
-numbers@=One@,Two@,Three@,Four@,Five@,Six@,Seven@,Eight@,Nine@,Ten@,Eleven@,Twelve@,Thirteen@,Fourteen@,Fifteen@,Sixteen@,Seventeen@,Eighteen@,Nineteen@,Twenty@,Fourty-Two@,Sixty-Nine@,Eighty-Eight@,One-Thousand Nine-Hundred Ninety-Nine@,Two-Thousand@,Three-Thousand@,Nine-Thousand@,Fourteen-Billion
+numbers@=One@,Two@,Three@,Four@,Five@,Six@,Seven@,Eight@,Nine@,Ten@,Eleven@,Twelve@,Thirteen@,Fourteen@,Fifteen@,Sixteen@,Seventeen@,Eighteen@,Nineteen@,Twenty@,Fourty-Two@,Sixty-Nine@,One-Thousand Nine-Hundred Ninety-Nine@,Two-Thousand@,Three-Thousand@,Nine-Thousand@,Fourteen-Billion
