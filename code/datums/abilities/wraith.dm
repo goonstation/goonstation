@@ -1660,7 +1660,7 @@
 
 /datum/targetable/wraithAbility/choose_haunt_appearance
 	name = "Choose haunt appearance"
-	icon_state = "haunt"
+	icon_state = "choose_appearance"
 	targeted = 1
 	pointCost = 0
 

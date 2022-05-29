@@ -629,10 +629,10 @@
 			src.addAbility(/datum/targetable/wraithAbility/decay)
 			src.addAbility(/datum/targetable/wraithAbility/command)
 			src.addAbility(/datum/targetable/wraithAbility/animateObject)
-			src.addAbility(/datum/targetable/wraithAbility/haunt)
 			src.addAbility(/datum/targetable/wraithAbility/spook)
 			src.addAbility(/datum/targetable/wraithAbility/whisper)
 			src.addAbility(/datum/targetable/wraithAbility/blood_writing)
+			src.addAbility(/datum/targetable/wraithAbility/haunt)
 
 		addAllDecayAbilities()
 			src.addAbility(/datum/targetable/wraithAbility/curse/blood)

@@ -1530,8 +1530,7 @@
 	id = "creeping_dread"
 	name = "Creeping dread"
 	desc = "The dark is trying to get you! Stay in the light!"
-	icon_state = "mentor_mouse"
-	//Todo change icon as status progresses or regresses
+	icon_state = "dread1"
 	unique = 1
 	duration = 20 SECONDS
 	maxDuration = 3 MINUTES
@@ -1552,38 +1551,46 @@
 				continue
 		if (!found_light)	//Staying in the dark makes it worse and worse
 			duration += 6
-		if (probmult(6) && (duration <= 30 SECONDS))
-			switch (rand(1,5))
-				if (1)
-					H.emote("pale")
-				if (2)
-					H.emote("shiver")
-					boutput(H, pick("The shadows grow colder", "You feel a chill run down your spine"))
-				if (3)
-					H.emote("scream")
-					boutput(H, pick("<span class='alert'>You feel something brush against your arm!<span>", "<span class='alert'>Oh god! Did you see that?!</span>"))
-				if (4)
-					H.emote("twitch")
-					boutput(H, "You hear some clicking noises, akin to an insect.")
-				if (5)
-					H.emote("twitch_v")
-					boutput(H, pick("<span class='alert'>You feel something crawling on your back<span class='alert'>", "<span class='alert'>Something just crawled up your leg!</span>"))
-		if ((duration > 30 SECONDS) && (duration < 60 SECONDS) && probmult(9))
-			switch (rand(1,3))
-				if (1)
-					H.emote("scream")
-					boutput(H, pick("<span class='alert'>The shadows are getting thicker! YOU HAVE TO <b>RUN</b>!<span class='alert'>", "<span class='alert'>You hate it here! Find some light, NOW!"))
-				if (2)
-					H.emote("flipout")
-					boutput(H, "<span class='alert'>You can't stay in the dark! RUN!</span>")
-				if (3)
-					H.setStatus("stunned", 2 SECONDS)
-					H.visible_message("<span class='alert'>[H] flails around wildly, trying to get some invisible things off [himself_or_herself(H)].</span>", "<span class='alert'>You flail around wildly trying to defend yourself from the shadows!</span>")
+		if ((duration <= 30 SECONDS))
+			if(icon_state != "dread1")
+				icon_state = "dread1"
+			if(probmult(6))
+				switch (rand(1,5))
+					if (1)
+						H.emote("pale")
+					if (2)
+						H.emote("shiver")
+						boutput(H, pick("The shadows grow colder", "You feel a chill run down your spine"))
+					if (3)
+						H.emote("scream")
+						boutput(H, pick("<span class='alert'>You feel something brush against your arm!<span>", "<span class='alert'>Oh god! Did you see that?!</span>"))
+					if (4)
+						H.emote("twitch")
+						boutput(H, "You hear some clicking noises, akin to an insect.")
+					if (5)
+						H.emote("twitch_v")
+						boutput(H, pick("<span class='alert'>You feel something crawling on your back<span class='alert'>", "<span class='alert'>Something just crawled up your leg!</span>"))
+		if ((duration > 30 SECONDS) && (duration < 60 SECONDS))
+			if(icon_state != "dread2")
+				icon_state = "dread2"
+			if(probmult(9))
+				switch (rand(1,3))
+					if (1)
+						H.emote("scream")
+						boutput(H, pick("<span class='alert'>The shadows are getting thicker! YOU HAVE TO <b>RUN</b>!<span class='alert'>", "<span class='alert'>You hate it here! Find some light, NOW!"))
+					if (2)
+						H.emote("flipout")
+						boutput(H, "<span class='alert'>You can't stay in the dark! RUN!</span>")
+					if (3)
+						H.setStatus("stunned", 2 SECONDS)
+						H.visible_message("<span class='alert'>[H] flails around wildly, trying to get some invisible things off [himself_or_herself(H)].</span>", "<span class='alert'>You flail around wildly trying to defend yourself from the shadows!</span>")
 		if ((duration >= 60 SECONDS) && (duration < 90 SECONDS))
 			SPAWN(1 SECOND)
 				H.playsound_local(H, "sound/effects/heartbeat.ogg", 50)
 			H.make_jittery(30)
 			H.setStatus("terror", 30 SECONDS)
+			if(icon_state != "dread3")
+				icon_state = "dread3"
 			if(probmult(12))
 				switch (rand(1, 4))
 					if (1)
@@ -1605,6 +1612,8 @@
 				H.playsound_local(H, "sound/effects/heartbeat.ogg", 70)
 			H.make_jittery(30)
 			H.setStatus("terror", 30 SECONDS)
+			if(icon_state != "dread4")
+				icon_state = "dread4"
 			if(probmult(15))
 				switch (rand(1, 4))
 					if (1)
