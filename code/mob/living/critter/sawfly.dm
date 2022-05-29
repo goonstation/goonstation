@@ -7,7 +7,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 */
 /mob/living/critter/sawfly
 
-	name = "Sawfly flock code"
+	name = "Armadyne antipersonnel microdrone"
 	desc = "A folding antipersonnel drone of syndicate origin. It'd be pretty cute if it wasn't trying to kill people."
 	icon = 'icons/obj/ship.dmi'//remnants of it originally being a drone
 	icon_state = "sawfly"

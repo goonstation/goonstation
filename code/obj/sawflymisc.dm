@@ -34,37 +34,6 @@
 			qdel(src)
 		return
 
-
-	suicide(var/mob/living/carbon/human/user)
-		if (!src.user_can_suicide(user))
-			return FALSE
-		user.visible_message("<span class='alert'><b>[user] primes the [src] and swallows it!</b></span>")
-
-		if(prob(50))
-			user.visible_message("<span class='alert'><b>[src] explodes out of [user]'s throat, holy shit!</b></span>")
-			playsound(user.loc, "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
-			blood_slash(user, 25)
-			var/obj/head = user.organHolder.drop_organ("head")
-			qdel(head)
-
-		else
-			user.visible_message("<span class='alert'><b>The [src] explodes out of [user]'s chest, jesus fuck!</b></span>")
-			playsound(user.loc, "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
-			user.organHolder.drop_organ("head") //bye bye extremities
-			if(user.limbs.l_arm)
-				user.limbs.l_arm.sever()
-			if(user.limbs.r_arm)
-				user.limbs.r_arm.sever()
-			if(user.limbs.l_leg)
-				user.limbs.l_leg.sever()
-			if(user.limbs.r_leg)
-				user.limbs.r_leg.sever()
-			SPAWN(2)
-				user.gib()
-
-		src.prime()
-		return TRUE
-
 /obj/item/old_grenade/sawfly/withremote // for traitor menu
 
 	New()
@@ -119,29 +88,18 @@
 
 /obj/item/remote/sawflyremote
 	name = "Sawfly remote"
-	desc = "A small device that can be used to fold or deploy sawflies in range. It looks like you could hide it in your clothes. Or smash it into tiny bits, you guess."
+	desc = "A small device that can be used to fold or deploy sawflies in range."
 	w_class = W_CLASS_TINY
 	flags = FPRINT | TABLEPASS
 	icon = 'icons/obj/items/device.dmi'
 	inhand_image_icon = 'icons/mob/inhand/tools/omnitool.dmi'
 	icon_state = "sawflycontr"
-	var/alreadyhit = FALSE
-	var/emagged = FALSE
+
 
 	attack_self(mob/user as mob)
 		for(var/mob/living/critter/sawfly/S in range(get_turf(src), 5)) // folds active sawflies
 			SPAWN(0.5 SECONDS)
-				if(src.emagged)
-					if(prob(50)) //sawfly breaks
-						S.visible_message("<span class='combat'>[S] buzzes oddly and starts to sprial out of control!</span>")
-						walk(src, 0)
-						walk_rand(src, 1, 10)
-						SPAWN(2 SECONDS)
-							S.blowup()
-					else
-						S.foldself() //business as usual
-				else  // non-emagged activity
-					S.foldself()
+				S.foldself()
 
 		for(var/obj/item/old_grenade/sawfly/S in range(get_turf(src), 4)) // unfolds passive sawflies
 			S.visible_message("<span class='combat'>[S] suddenly springs open as its engine purrs to a start!</span>")
@@ -156,36 +114,6 @@
 				S.icon_state = "clusterflyB1"
 			SPAWN(S.det_time)
 				S.prime()
-
-	afterattack(obj/O as obj, mob/user as mob)
-		if (O.loc == user && O != src && istype(O, /obj/item/clothing))
-			boutput(user, "<span class='hint'>You hide the remote in your [O]. (Use the snap emote (ctrl+z) while wearing the clothing to retrieve it.)</span>")
-			user.u_equip(src)
-			src.set_loc(O)
-			src.dropped(user)
-			return
-		..()
-
-	emag_act(var/mob/user)
-		boutput(user, "<span class='hint'>The controller buzzes... oddly. You're unsure exactly what that did, but it did do something</span>")
-		icon_state = "sawflycontr1"
-		alreadyhit = TRUE
-		emagged = TRUE
-
-	attackby(obj/item/S as obj, mob/user as mob)
-		if(S.force < 3)
-			boutput(user, "<span class='hint'>You feel like you'd need something heftier to break the [src].</span>")
-		else
-			if(alreadyhit)
-				boutput(user,"<span class='alert'>You smash the [src] into tiny bits!</span>")
-				qdel(src)
-			else
-				icon_state = "sawflycontr1"
-				boutput(user,"<span class='alert'>You give the [src] a hefty whack.</span>")
-				alreadyhit = TRUE
-		..()
-
-
 // -------------------limbs---------------
 
 /datum/limb/gun/sawfly_blades //OP as shit for the sake of the AI- if a player ever uses this, make a weaker version
@@ -196,7 +124,7 @@
 	reload_time = 1
 	reloading_str = "cooling"
 
-	attack_range(atom/target, var/mob/user, params) //overriding attack_range to make it so sawflies don't spam chatlog with messages
+	attack_range(atom/target, var/mob/user, params) //overriding attack_range to change default fire message into something more melee-themed
 		if (reloaded_at > ticker.round_elapsed_ticks && !current_shots)
 			boutput(user, "<span class='alert'>The [holder.name] is [reloading_str]!</span>")
 			return
@@ -206,9 +134,12 @@
 			return
 		if (current_shots > 0)
 			current_shots--
+
 			var/pox = text2num(params["icon-x"]) - 16
 			var/poy = text2num(params["icon-y"]) - 16
 			shoot_projectile_ST_pixel(user, proj, target, pox, poy)
+			//since sawflies literally cannot miss their shots unless someone frame perfect dodges, I'm fine with their attack flavor text being the fire message
+			user.visible_message("<b class='alert'>[user] [pick(list("gouges", "cleaves", "lacerates", "shreds", "cuts", "tears", "hacks", "slashes",))] [target]!</b>")
 			next_shot_at = ticker.round_elapsed_ticks + cooldown
 			if (!current_shots)
 				reloaded_at = ticker.round_elapsed_ticks + reload_time
