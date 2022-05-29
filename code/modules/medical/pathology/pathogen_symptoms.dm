@@ -7,7 +7,7 @@ datum/pathogeneffects
 
 	var/spread = SPREAD_FACE | SPREAD_BODY | SPREAD_HANDS | SPREAD_AIR
 
-	var/rarity = RARITY_ABSTRACT
+	var/type = TYPE_NEUTRAL
 	var/infect_message = null
 	var/infect_attempt_message = null // shown to person when an attempt to directly infect them is made
 

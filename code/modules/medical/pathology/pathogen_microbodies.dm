@@ -17,9 +17,6 @@ datum/microbody
 	// The strength of the microbody. Used for randomization.
 	var/strength = 2
 
-	// An inverse of rarity. A value of 10 means a ten times relative chance to a value of 1.
-	var/commonness = 10
-
 	// The amount of stages a pathogen with this microbody has.
 	// Technically, this means there are less aggressive and more aggressive infections depending on the microbody.
 	// Keep this value between 3 and 5.
@@ -43,10 +40,9 @@ datum/microbody
 	// If 1, curing also immunizes to re-infection. Should always be 1.
 	var/auto_immunize = 0
 
-
 	///// MODIFIERS /////
 
-	// Final multiplier for the total natural duration of infection.
+	// Final multiplier for the total natural duration of infection. If -1, the disease is chronic.
 	var/modifier_duration = 1
 
 	// Final multiplier for the total value of a generated pathogen.

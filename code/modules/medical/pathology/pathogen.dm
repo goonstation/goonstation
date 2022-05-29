@@ -52,19 +52,7 @@ datum/controller/pathogen
 
 	proc/get_microbody(var/strength)
 		var/datum/microbody/M
-		var/finished = 0
-		var/tried = 0
-		while (!finished)
-			var/choice = rand(1, choicemax)
-			for (var/datum/choice/C in microbody_choices)
-				if (C.min <= choice && choice <= C.max)
-					M = C.target
-			if (M.strength <= strength)
-				finished = 1
-			else
-				tried++
-				if (tried > 10)
-					return M
+		M = rand(1, choicemax)
 		return M
 
 	proc/mob_infected(var/datum/pathogen/P, var/mob/living/carbon/human/H)
@@ -557,10 +545,9 @@ datum/controller/pathogen
 				if (!(nutrient in nutrients))
 					nutrients += nutrient
 
-			var/datum/choice/C = new
+			var/datum/choice/C = new			//Put all microbodies into the microbody_choices list()
 			C.target = B
 			C.min = choicemax + 1
-			choicemax += B.commonness
 			C.max = choicemax
 			microbody_choices += C
 
@@ -847,7 +834,7 @@ datum/pathogen
 
 	proc/generate_microbody(var/datum/pathogen_cdc/cdc, var/strength)
 		if (!forced_microbody)
-			src.body_type = pathogen_controller.get_microbody(strength + 5)
+			src.body_type = pathogen_controller.get_microbody(strength)
 			cdc.microbody_type = "[src.body_type]"
 		else
 			src.body_type = pathogen_controller.path_to_microbody[forced_microbody]
