@@ -1648,6 +1648,7 @@
 	unique = 1
 	duration = 40 SECONDS
 	maxDuration = 3 MINUTES
+	visible = FALSE
 	var/mob/living/carbon/human/H
 	var/list/wall_list = list()
 	var/sound_effect = null

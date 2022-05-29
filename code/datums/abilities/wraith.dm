@@ -61,7 +61,7 @@
 			var/mob/wraith/W = holder.owner
 			if (W.forced_manifest == TRUE)
 				boutput(W, "<span class='alert'>You have been forced to manifest! You can't use any abilities for now!</span>")
-			return 1
+				return 1
 		return 0
 
 	doCooldown()

@@ -16,6 +16,7 @@
 	var/random_mode = true
 	var/mob/wraith/master = null
 	var/datum/light/light
+	var/datum/light/portal_light
 	var/list/default_mobs = list(/obj/critter/crunched,	//Useful for random mode or when we dont have a mob_type on spawn
 	/obj/critter/ancient_thing,
 	/obj/critter/ancient_repairbot/security,
@@ -34,8 +35,8 @@
 		else	//In case we arent spawned by a wraith, or are spawned on random mode
 			src.mob_type = pick(src.default_mobs)
 		src.visible_message("<span class='alert'>A [src] appears into view, some shadows coalesce within!</b></span>")
-		next_growth = world.time + (30 SECONDS)
-		next_spawn = world.time + (31 SECONDS)	//Should call the first spawn check after the portal grew once.
+		next_growth = world.time + (20 SECONDS)
+		next_spawn = world.time + (21 SECONDS)	//Should call the first spawn check after the portal grew once.
 
 		light = new /datum/light/point
 		light.set_brightness(0.1)
@@ -79,16 +80,21 @@
 					src.visible_message("<span class='alert'><b>[src] sputters and crackles, it seems it couldnt find a spot to summon something!</b></span>")
 					return 1
 				chosen_turf = pick(eligible_turf)
-				var/image/portalIcon = image('icons/obj/objects.dmi', chosen_turf, null)
-				portalIcon.icon_state = "harbinger_portal"
-				//Todo portal doesnt appear, figure out why
-				portalIcon.alpha = 0
-				animate(portalIcon, alpha=255, time=1 SECONDS)
+				var/obj/decal/harbinger_portal/portal = new /obj/decal/harbinger_portal
+				portal.set_loc(chosen_turf)
+				portal.alpha = 0
+				animate(portal, alpha=255, time=1 SECONDS)
+				portal_light = new /datum/light/point
+				portal_light.set_brightness(0.1)
+				portal_light.set_color(150, 40, 40)
+				portal_light.attach(portal)
+				portal_light.enable()
 				playsound(chosen_turf, "sound/effects/flameswoosh.ogg" , 80, 1)
 				SPAWN(3 SECOND)
-					animate(portalIcon, alpha=0, time=1 SECONDS)
+					animate(portal, alpha=0, time=1 SECONDS)
 					SPAWN(1 SECOND)
-						qdel(portalIcon)
+						qdel(portal_light)
+						qdel(portal)
 					if (src.random_mode)
 						src.mob_type = pick(src.default_mobs)
 					minion_value = getMobValue(src.mob_type)
