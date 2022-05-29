@@ -35,7 +35,7 @@ datum/microbody
 	// A list of reagent IDs, each of which is required for the growth of a pathogen.
 	var/list/nutrients = list("water", "sugar", "sodium", "iron", "nitrogen")
 
-	// If 1, curing also immunizes to re-infection.
+	// If 1, curing also immunizes to re-infection. Should always be 1.
 	var/auto_immunize = 0
 
 	// The amount of nutrition of each type required per unit of pathogen to continue cultivation.
@@ -54,9 +54,9 @@ datum/microbody/virus
 	singular = "virus"
 	plural = "viruses"
 
-	stages = 4
+	stages = 3
 
-	activity = list(1, 5, 20, 30, 40)
+	activity = list(50, 40, 30, 20, 10)
 
 	// Grows in eggs.
 	growth_medium = "egg"
@@ -96,7 +96,7 @@ datum/microbody/parasite
 
 	stages = 4
 
-	activity = list(50, 40, 30, 20, 10)
+	activity = list(1, 5, 20, 30, 40)
 
 	growth_medium = "egg"
 

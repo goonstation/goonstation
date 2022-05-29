@@ -38,7 +38,8 @@
 // --SYMPTOM THREAT--
 // All symptoms are catagorized with a threat value to describe the scope of their impact.
 // Benign symptoms are negative. Malign symptoms are positive.
-// THREAT_BENETYPE2: This symptom has lifesaving properties.
+// THREAT_BENETYPE4: Benign symptoms that are powerful enough to bring people back from the dead or some equivalent.
+// THREAT_BENETYPE3: This symptom has competitive properties.
 // THREAT_BENETYPE2: This symptom provides significant health benefits to infected individuals.
 // THREAT_BENETYPE1: This symptom provides marginal benefits to infected individuals.
 // THREAT_NEUTRAL: The symptom causes no impactful harm or good to infected individuals.
@@ -50,7 +51,8 @@
 //Anything that causes incapacitation goes HERE. Critting should take at least 3 minutes. Instant death and adjacent go here.
 // Type 5 symptoms may be reserved for Emag/nukeops.
 
-#define THREAT_BENETYPE1 -3
+#define THREAT_BENETYPE4 -4
+#define THREAT_BENETYPE3 -3
 #define THREAT_BENETYPE2 -2
 #define THREAT_BENETYPE1 -1
 #define THREAT_NEUTRAL 0
