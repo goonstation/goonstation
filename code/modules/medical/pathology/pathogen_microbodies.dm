@@ -2,19 +2,10 @@
 /**
  * Microbody notes
  *
- * A pathogen microbody identifies the cause of the disease.
- * Most of the real life causes for diseases have been added already.
- * Each microbody defines a specific characteristic for a pathogen:
- * - How powerful is a disease caused by the microbody (stages).
- * - What is a fertile soil to cultivate this pathogen? (growth medium)
+ * A pathogen microbody sets intrinsic modifiers for the pathogen.
  *
  *
- * We differentiate between two types of cures:
- * - Serum. Every microbody has a serum; there is nothing that is currently incurable. Of course not adding a cure for a specific
- *   microbody will make all pathogens of that microbody incurable.
- * - Vaccine. Currently, only virii have vaccines; injecting someone with a vaccine for a pathogen will make them immune to said
- *   pathogen and all its mutations. A traitor would use this for his very deadly airbourne pathogen to avoid getting infected
- *   by it.
+ *
  */
 
 // A microscopic body, acting as a pathogen.
@@ -41,18 +32,6 @@ datum/microbody
 	// DO NOT set this to "blood" or "pathogen", only to a derivative.
 	var/growth_medium = "water"
 
-	// The base reagent for cures to this specific microbody type. Will be used by the synth-o-matic. Keep this null for an incurable microbody.
-	var/cure_base = "serum"
-
-	// Can you make a vaccine for this microbody? (Instant immunity)
-	var/vaccination = 0
-
-	// The unique ID for this microbody. Used in public DNA.
-	var/uniqueid = 0
-
-	// If specified, a special module is needed for the Synth-O-Matic to synthesize a cure for this microbody.
-	var/module_id = null
-
 	// A list of reagent IDs, each of which is required for the growth of a pathogen.
 	var/list/nutrients = list("water", "sugar", "sodium", "iron", "nitrogen")
 
@@ -61,9 +40,6 @@ datum/microbody
 
 	// The amount of nutrition of each type required per unit of pathogen to continue cultivation.
 	var/amount = 0.07
-
-	/// The amount of sequences worth of symptoms the microbody can support. -1 is unlimited
-	var/seqMax = -1
 
 	/// The maximum amount of points that can be spread over the various stats
 	var/maxStats = 100
@@ -78,21 +54,14 @@ datum/microbody/virus
 	singular = "virus"
 	plural = "viruses"
 
-	stages = 5
+	stages = 4
 
 	activity = list(1, 5, 20, 30, 40)
-
-	seqMax = 12
 
 	// Grows in eggs.
 	growth_medium = "egg"
 
-	cure_base = "antiviral"
-	vaccination = 1
 	auto_immunize = 1
-
-	uniqueid = 1
-	module_id = "virii"
 
 datum/microbody/bacteria
 	name = "Bacteria"
@@ -101,35 +70,23 @@ datum/microbody/bacteria
 
 	activity = list(30, 30, 30, 30, 30)
 
-	stages = 3
+	stages = 4
 
-	seqMax = 25
+	growth_medium = "egg"
 
-	growth_medium = "bacterialmedium"
-
-	cure_base = "spaceacillin"
-	vaccination = 1
 	auto_immunize = 1
-
-	uniqueid = 2
-	module_id = "bacteria"
 
 datum/microbody/fungi
 	name = "Fungi"
 	singular = "fungus"
 	plural = "fungi"
 
-	stages = 1
+	stages = 5
 
 	activity = list(10, 10, 10, 10, 10)
 
-	growth_medium = "fungalmedium"
+	growth_medium = "egg"
 
-	cure_base = "biocide"
-	vaccination = 1
-
-	uniqueid = 3
-	module_id = "fungi"
 	auto_immunize = 1
 
 datum/microbody/parasite
@@ -137,21 +94,15 @@ datum/microbody/parasite
 	singular = "parasite"
 	plural = "parasites"
 
-	stages = 5
+	stages = 4
 
 	activity = list(50, 40, 30, 20, 10)
 
-	seqMax = 18
+	growth_medium = "egg"
 
-	growth_medium = "parasiticmedium"
-
-	cure_base = "biocide"
-
-	uniqueid = 4
-	module_id = "parasite"
 	auto_immunize = 1
 
-datum/microbody/gmcell // TODO: I kind of removed mutations so I should really rename this, I guess
+/*datum/microbody/gmcell // TODO: I kind of removed mutations so I should really rename this, I guess
 	name = "Great Mutatis cell"
 	singular = "great mutatis cell"
 	plural = "great mutatis cells"
@@ -175,4 +126,5 @@ datum/microbody/gmcell // TODO: I kind of removed mutations so I should really r
 	nutrients = list("dna_mutagen")
 	auto_immunize = 1
 	amount = 0.35
+	*/
 
