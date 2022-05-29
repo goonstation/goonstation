@@ -1,50 +1,61 @@
 #define PARALLAX_VIEW_WIDTH (WIDE_TILE_WIDTH + 4) // stolen from pali
 #define PARALLAX_VIEW_HEIGHT (SQUARE_TILE_WIDTH + 4)
 
-/datum/parallax_object
-	name = "IMCODER"
-	icon = 'icons/misc/1024x1024.dmi'
-	icon_state = "plasma_giant"
-	var/p_coords = list("X" = 150,"Y" = 150) // coords to stay near
-	var/p_layer = 1
-	var/p_scale = 300
+/datum/parallax_object // stores all the objects for parallax that arent the background
+	var/icon = 'icons/misc/1024x1024.dmi'
+	var/icon_state = "plasma_giant"
+	var/coords = list("X" = 150,"Y" = 150) // coords to stay near
+	var/layer = 1 // layering
+	var/scale = 0.25 // this makes things like planets barely move, higher is faster
+	var/size = 1
+	var/zlevel = 1
 
 	ss14
 		icon = 'icons/obj/backgrounds.dmi'
 		icon_state = "ss14"
-		p_coords = list("X"=150,"Y" = 130)
-		p_layer = 2
-		p_scale = 120
+		coords = list("X"=150,"Y" = 130)
+		layer = 2
+		scale = 0.3
 
 	ss12
 		icon = 'icons/obj/backgrounds.dmi'
 		icon_state = "ss12-broken"
-		p_coords = list("X"=130,"Y" = 150)
-		p_layer = 2
-		p_scale = 120
+		coords = list("X"=130,"Y" = 150)
+		layer = 2
+		scale = 0.3
+
+	star
+		icon = 'icons/misc/galactic_objects_large.dmi'
+		icon_state = "star-red"
+		coords = list("X"=160,"Y" = 130)
+		scale = 0.125
+		layer = 0
+
+		blue
+			icon = 'icons/misc/galactic_objects_large.dmi'
+			icon_state = "star-blue"
+			coords = list("X"=160,"Y" = 135)
 
 	planet
 		icon = 'icons/misc/512x512.dmi'
+		size = 1
+		scale = 0.5
 		// x1-x2 dont seen to have sprites? what
 		x3
 			icon_state = "moon-green"
-			p_coords = list("X"=150,"Y" = 130)
-			p_layer = 2
-			p_scale = 300
+			coords = list("X"=20,"Y" = 260)
+			layer = 2
+			scale = 0.5
+			zlevel = 2
 		x4
 			icon = 'icons/obj/large/160x160.dmi'
 			icon_state = "bigasteroid_1"
+
 		x5
 			icon_state = "moon-chunky"
+
 		x15
 			icon_state = "moon-ice"
-		star_red
-			icon = 'icons/misc/galactic_objects_large.dmi'
-			icon_state = "star-red"
-
-		star_blue
-			icon = 'icons/misc/galactic_objects_large.dmi'
-			icon_state = "star-blue"
 
 		domus_dei
 			icon_state = "domusDei"
@@ -79,18 +90,22 @@
 		antistes
 			icon_state = "antistes"
 
+// wow there are so many different objects in space
+
 /datum/hud/parallax
 	// this is a hud that when given to a client will add parallax to their view.
-	var/list/parallax_objects = list(list())
-	var/list/scale = list(list())
-	var/list/size = list(list())
+	var/list/parallax_objects = list()
+	var/list/parallax_settings = list()
 	var/list/parallax_coords = list(list())
+	var/list/parallax_zlevel = list()
+	var/list/scale = list()
+	var/list/size = list()
+
 	var/mob/master
-	var/atom/movable/screen/hud
-		background
-		parallaxP1
-		parallaxP2
-		parallaxP3
+	var/active = TRUE
+
+	var/atom/movable/screen/hud/background
+
 	New(M)
 		..()
 		if(isnull(M))
@@ -98,91 +113,102 @@
 		master = M
 		clients += master.client
 		SPAWN(0)
-			background = create_screen("background", "Space", 'icons/effects/overlays/parallaxBackground.dmi', "background", "1,1", HUD_LAYER)
-			background.transform = matrix(master?.client.view ?2.1:1.5,0,0,0,1.5,0)
-			background.screen_loc = master?.client.view ? "4,1" : "1,1"
-			parallax_objects[1] += background
-			parallax_objects[1] += create_screen("parallaxP1", "SS14", 'icons/obj/backgrounds.dmi', "ss14", "11,8", HUD_LAYER+2)
-			parallax_objects[1] += create_screen("parallaxP2", "Planet", 'icons/misc/1024x1024.dmi', "plasma_giant", "1,1", HUD_LAYER+1)
-			parallax_objects[1] += create_screen("parallaxP3", "SS12", 'icons/obj/backgrounds.dmi', "ss12-broken", "21,8", HUD_LAYER+2)
-			scale[1][parallaxP1] = 120
-			size[1][parallaxP1] = 0.3
-			parallax_coords[1][parallaxP1] = list("X" = 150,"Y" = 170)
-			scale[1][parallaxP3] = 50
-			size[1][parallaxP3] = 0.7
-			parallax_coords[1][parallaxP3] = list("X" = 150,"Y" = 130)
-			scale[1][parallaxP2] = 300
-			size[1][parallaxP2] = 1
-			parallax_coords[1][parallaxP2] = list("X" = 130,"Y" = 100)
+			background = create_screen("background", "Space", 'icons/effects/overlays/parallaxBackground.dmi', "background", "1,1", HUD_LAYER-1)
+			background.transform = matrix(0,0,0,0,0,0)
+			background.screen_loc = master?.client?.view ? "4,1" : "1,1"
+			background.plane = PLANE_SPACE
+			background.appearance_flags += TILE_BOUND
 
-			parallax_objects[3] += background
-			parallax_objects[3] += create_screen("parallaxP1", "SS14", 'icons/obj/backgrounds.dmi', "ss14", "11,8", HUD_LAYER+2)
-			parallax_objects[3] += create_screen("parallaxP1", "SS14", 'icons/obj/backgrounds.dmi', "ss14", "11,8", HUD_LAYER+2)
-			parallax_objects[3] += create_screen("parallaxP1", "SS14", 'icons/obj/backgrounds.dmi', "ss14", "11,8", HUD_LAYER+2)
-			scale[3][parallaxP1] = 120
-			size[3][parallaxP1] = 0.3
-			parallax_coords[3][parallaxP1] = list("X" = 150,"Y" = 170)
-			scale[3][parallaxP3] = 50
-			size[3][parallaxP3] = 0.7
-			parallax_coords[3][parallaxP3] = list("X" = 150,"Y" = 130)
-			scale[3][parallaxP2] = 300
-			size[3][parallaxP2] = 1
-			parallax_coords[3][parallaxP2] = list("X" = 130,"Y" = 100)
 
-			for(var/list/A in parallax_objects)
-				for(var/atom/movable/screen/hud/P in parallax_objects[A])
-					P.plane = PLANE_SPACE
-					P.appearance_flags += TILE_BOUND
-					P.mouse_opacity = 0
+			// parallax for z1
+			parallax_settings += new /datum/parallax_object
+			parallax_settings += new /datum/parallax_object/planet/iudicium
+			parallax_settings += new /datum/parallax_object/ss14
+			parallax_settings += new /datum/parallax_object/ss12
+			parallax_settings += new /datum/parallax_object/planet/iustitia
+			parallax_settings += new /datum/parallax_object/planet/magus
+			parallax_settings += new /datum/parallax_object/planet/mundus
+			parallax_settings += new /datum/parallax_object/star/blue
+			parallax_settings += new /datum/parallax_object/star
+			parallax_settings += new /datum/parallax_object/planet/x3
 
-	proc/update()
-		var/turf/M = get_turf(master) // i hate byond i hate byond i hate byond
-		for(var/atom/movable/screen/hud/P in src.parallax_objects[M.z])
-			if(P.id == "background")
-				var/TargX = (150-M.x)/2
-				var/TargY = (150-M.y)/2
-				P.transform = matrix(master?.client.view ?2.1:1.5,0,TargX,0,1.5,TargY)
+
+			// generate parallax_objects list out of settings
+			for(var/datum/parallax_object/P as anything in parallax_settings)
+				var/centerx = round((PARALLAX_VIEW_WIDTH - 4)/2)
+				var/centery = round((PARALLAX_VIEW_HEIGHT - 4)/2)
+				var/atom/movable/screen/hud/N = create_screen(null,null, P.icon,P.icon_state, "[centerx],[centery]", HUD_LAYER)
+				N.plane = PLANE_SPACE
+				N.layer = HUD_LAYER + P.layer
+				N.appearance_flags += TILE_BOUND
+				N.mouse_opacity = 0
+
+				parallax_coords[N] = P.coords
+				scale[N] = P.scale
+				size[N] = P.size
+				parallax_zlevel[N] = P.zlevel
+
+				parallax_objects[N] = N
+				N.transform = matrix(0,0,0,0,0,0)
+
+	proc/update(var/turf/master_turf) // hopefully this is fast enough
+		if(!active) return
+
+		for(var/atom/movable/screen/hud/P as anything in parallax_objects)
+
+			if(parallax_zlevel[P] != master_turf.z)
+				P.transform = matrix(0,0,0,0,0,0)
+				continue
 			else
-				var/TargX = parallax_coords[P]["X"]
-				var/TargY = parallax_coords[P]["Y"]
-				P.transform = matrix(size[P], 0, (TargX-M.x)/scale[P]*((PARALLAX_VIEW_WIDTH - 4)/2)*32, 0, size[P], (TargY-M.y)/scale[P]*((PARALLAX_VIEW_HEIGHT - 4)/2)*32 )
+				var/matrix = matrix(size[P],0,(parallax_coords[P]["X"]-master_turf.x)*(scale[P])*32-icon(P.icon,P.icon_state).Width()/2,0, size[P],(parallax_coords[P]["Y"]-master_turf.y)*(scale[P])*32-icon(P.icon,P.icon_state).Height()/2)
+				animate(P,transform=matrix,time=round(world.icon_size/master.glide_size*world.tick_lag,world.tick_lag))
+				continue
 
+		// background scrolling
+		background.transform = matrix(master?.client.view ?2.1:1.5,0,(150-master_turf.x)/2,0,1.5,(150-master_turf.y)/2)
+
+		//animate(background,transform=matrix,time=round(world.icon_size/master.glide_size*world.tick_lag,world.tick_lag))
+
+	proc/toggle() // makes it so update() doesnt have to loop through extra stuff
+		var/setting = master?.client?.parallax
+		if(!setting)
+			for(var/atom/movable/screen/hud/P as anything in parallax_objects)
+				P.transform = matrix(0,0,0,0,0,0)
+			active = FALSE
+		else
+			active = TRUE
+
+
+// below stuff is everything that will trigger the update() proc
 /mob
 	OnMove()
 		..()
 		if(!isnull(src.client))
-			for(var/datum/hud/parallax/hud in src.huds)
-				hud.update()
+			var/turf/NewLoc = get_turf(src)
+			src.parallax.update(NewLoc)
+		for(var/mob/M as anything in src.observers)
+			if(isnull(M.client))
 				continue
-		for(var/mob/M in src.observers)
-			if(!isnull(M.client))
-				for(var/datum/hud/parallax/hud in M.huds)
-					hud.update()
-					continue
+			var/turf/NewLoc = get_turf(M)
+			M.parallax.update(NewLoc)
 /obj/machinery/vehicle
-	Move()
+	Move(var/NewLoc)
 		..()
-		for(var/mob/M in src.contents)
+		for(var/mob/M as anything in src.contents)
 			if(!isnull(M.client))
-				for(var/datum/hud/parallax/hud in M.huds)
-					hud.update()
+				M.parallax.update(NewLoc)
+			for(var/mob/Mo as anything in M.observers)
+				if(isnull(Mo.client))
 					continue
-			for(var/mob/Mo in M.observers)
-				if(!isnull(Mo.client))
-					for(var/datum/hud/parallax/hud in Mo.huds)
-						hud.update()
-						continue
+				Mo.parallax.update(NewLoc)
 /obj/vehicle
-	relaymove(mob/user, direction, delay, running)
+	Move(var/NewLoc)
 		. = ..()
-		for(var/mob/M in src.contents)
+		for(var/mob/M as anything in src.contents)
 			if(!isnull(M?.client))
-				for(var/datum/hud/parallax/hud in M.huds)
-					hud.update()
+				M.parallax.update(NewLoc)
+			for(var/mob/Mo as anything in M.observers)
+				if(isnull(Mo.client))
 					continue
-			for(var/mob/Mo in Mo.observers)
-				if(!isnull(Mo.client))
-					for(var/datum/hud/parallax/hud in Mo.huds)
-						hud.update()
-						continue
+				Mo.parallax.update(NewLoc)
 
