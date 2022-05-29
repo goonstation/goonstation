@@ -2855,10 +2855,11 @@ datum
 			name = "slow saltpetre"
 			id = "slow_saltpetre"
 			result = "saltpetre" 
-			// compost turns ammonia into nitrates
+			// fungus turns compost into ammonium
+			// compost bacteria turns ammonium into nitrates
 			// nitrates are extracted from "soil" with water
 			// potash purifies nitrates into saltpetre
-			required_reagents = list("ammonia" = 1, "poo" = 1, "potash" = 1, "water" = 1)
+			required_reagents = list("space_fungus" = 1, "poo" = 1, "potash" = 1, "water" = 1)
 			result_amount = 2
 			instant = 0 // Potash filtering takes time.
 			reaction_speed = 1
@@ -2869,9 +2870,7 @@ datum
 				// water byproduct
 				// some nitrification processes create additional water.
 				holder.add_reagent("water", created_volume,,holder.total_temperature)
-				
-				// fake pee and nasty poo
-				// make for a stinky stew
+				// disgusting
 				var/turf/location = get_turf(holder.my_atom)
 				location.fluid_react_single("miasma", created_volume, airborne = 1)
 
