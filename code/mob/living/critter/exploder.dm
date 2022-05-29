@@ -55,6 +55,11 @@
 		..(gibbed, 0)
 
 		src.visible_message("[src] explodes!")	//Shouldnt stand close to this thing
+		var/turf/U = get_turf(src)
+		if(U != null)
+			U.fluid_react_single("miasma", 120, airborne = 1)
+			U.fluid_react_single("blood", 60, airborne = 0)
+
 		for (var/mob/M in view(3, src.loc))
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
@@ -67,9 +72,6 @@
 			M.take_toxin_damage(25)
 			if (M.reagents)
 				M.reagents.add_reagent("miasma", 20, null, T0C)
-		var/turf/U = get_turf(src)
-		U.fluid_react_single("miasma", 120, airborne = 1)
-		U.fluid_react_single("blood", 60, airborne = 0)
 
 		if (!gibbed)
 			gibs(src.loc)

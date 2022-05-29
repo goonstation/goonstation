@@ -1674,7 +1674,7 @@
 
 	onUpdate()
 		var/mult = 1
-		if (probmult(7))
+		if (probmult(5))
 			switch (rand(1,3))
 				if (1) // Image based illusion
 					for (var/turf/W in range(6, H))	//Check for surrounding spots
@@ -1705,30 +1705,33 @@
 						sleep(5 SECONDS)
 						qdel(illusionIcon)
 				if (2) //sound based
-					switch(rand(1,4))
-						if (1)
-							sound_effect = "sound/machines/phones/ring_incoming.ogg"
-							volume = 60
-						if (2)
-							sound_effect = 'sound/effects/explosionfar.ogg'
-							volume = 70
-							shake_camera(H, 2, 8)
-						if (3)
-							if(!has_faked_nuke)
-								sound_effect = 'sound/machines/bomb_planted.ogg'
-								volume = 90
-								boutput(H, "<h1><span class='notice'>Frontier Authority Update</h1>")
-								boutput(H, "<h2><span class='notice'>Nuclear Weapon Detected</h2>")
-								boutput(H, "<span class='alert'>A nuclear bomb has been armed in [pick("the Bridge", "the Bar", "the security lobby", "the medical lobby")]. It will explode in 5 minutes. All personnel must report to the plant area to disarm the bomb immediatly.</span>")
-								has_faked_nuke = true
-						if (4)
-							if(!has_faked_shuttle)
-								sound_effect = 'sound/misc/shuttle_enroute.ogg'
-								volume = 80
-								boutput(H, "<h2><span class='notice'>The Emergency Shuttle Has Been Called</h2>")
-								boutput(H, "<span>No reason given.</span>")
-								boutput(H, "<span class='alert'>It will arrive in 6 minutes.</span>")
-								has_faked_shuttle = true
+					if(prob(90))
+						switch(rand(1,2))
+							if (1)
+								sound_effect = "sound/machines/phones/ring_incoming.ogg"
+								volume = 60
+							if (2)
+								sound_effect = 'sound/effects/explosionfar.ogg'
+								volume = 70
+								shake_camera(H, 2, 8)
+					else	//Fake announcements, much rarer
+						switch(rand(1,2))
+							if (1)
+								if(!has_faked_nuke)
+									sound_effect = 'sound/machines/bomb_planted.ogg'
+									volume = 90
+									boutput(H, "<h1 class='alert'>Frontier Authority Update</h1>")
+									boutput(H, "<h2 class='alert'>Nuclear Weapon Detected</h2>")
+									boutput(H, "<span class='alert'>A nuclear bomb has been armed in [pick("the Bridge", "the Bar", "the security lobby", "the medical lobby")]. It will explode in 5 minutes. All personnel must report to the plant area to disarm the bomb immediatly.</span>")
+									has_faked_nuke = true
+							if (2)
+								if(!has_faked_shuttle)
+									sound_effect = 'sound/misc/shuttle_enroute.ogg'
+									volume = 80
+									boutput(H, "<h1 class='alert'>The Emergency Shuttle Has Been Called</h1>")
+									boutput(H, "<span>No reason given.</span>")
+									boutput(H, "<span class='alert'>It will arrive in 6 minutes.</span>")
+									has_faked_shuttle = true
 					H.playsound_local(H.loc,sound_effect, volume, 1)
 				if (3) //Wall based, blood pouring out of the walls and other spooky stuff
 					for (var/turf/simulated/wall/auto/W in orange(5, H))

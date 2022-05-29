@@ -258,11 +258,3 @@ ABSTRACT_TYPE(/mob/living/critter/plaguerat)
 		HH.name = "mouth"
 		HH.limb_name = "teeth"
 		HH.can_hold_items = 0
-
-	specific_emotes(var/act, var/param = null, var/voluntary = 0)
-		switch (act)
-			if ("scream")
-				if (src.emote_check(voluntary, 50))
-					playsound(src, "sound/voice/animal/mouse_squeak.ogg", 80, 0.5, channel=VOLUME_CHANNEL_EMOTE)
-					return "<span class='emote'><b>[src]</b> squeaks!</span>"
-		return null

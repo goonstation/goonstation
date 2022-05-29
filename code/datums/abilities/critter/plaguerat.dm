@@ -178,7 +178,7 @@
 	cast(atom/target)
 		if (..())
 			return 1
-		if (istype(holder.owner, /mob/living/critter/plaguerat))
+		if (istype(holder.owner, /mob/living/critter/plaguerat) && !istype(get_turf(holder.owner), /turf/space))
 			var/mob/living/critter/plaguerat/P = holder.owner
 			if (P.linked_warren == null)
 				var/obj/machinery/wraith_warren/W = new /obj/machinery/wraith_warren(P.loc)
@@ -195,7 +195,8 @@
 				var/obj/machinery/wraith_warren/W = new /obj/machinery/wraith_warren(P.loc)
 				P.linked_warren = W
 				boutput (P, "<span class='notice'>You spawn a new rat den</span>")
-		return 0
+			return 0
+		return 1
 
 	onAttach(datum/abilityHolder/holder)
 		..()

@@ -172,10 +172,8 @@
 				for (var/mob/living/V in viewers(7, holder.owner))
 					boutput(V, "<span class='alert'><strong>[pick("A mysterious force rips [M]'s body apart!", "[M]'s corpse suddenly explodes in a cloud of miasma and guts!")]</strong></span>")
 			else
-				boutput(holder.owner, "<span class='alert'><strong>[pick("You draw the essence of death out of [M]'s corpse!", "You drain the last scraps of life out of [M]'s corpse!")]</strong></span>")
-				for (var/mob/living/V in viewers(7, holder.owner))
-					boutput(V, "<span class='alert'><strong>[pick("Black smoke rises from [M]'s corpse! Freaky!", "[M]'s corpse suddenly rots to nothing but bone in moments!")]</strong></span>")
-				holder.regenRate += 1.5
+				boutput(holder.owner, "<span class='alert'>This body is too fresh. It needs to be poisoned or rotten before we consume it.</span>")
+				return 1
 			//Make the corpse all grody and skeleton-y
 			particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#000000", 5, locate(M.x, M.y, M.z)))
 			holder.owner:onAbsorb(M)
@@ -951,9 +949,9 @@
 
 		if (ishuman(target))
 			if (istype(get_area(target), /area/station/chapel))	//Dont spam curses in the chapel.
-				boutput(holder.owner, "The holy ground this creature is standing on repels the curse immediatly.")
-				boutput(target, "You feel as though some weight was added to your soul, but the feeling immediatly dissipates.")
-				return 1
+				boutput(holder.owner, "<span class='alert'>The holy ground this creature is standing on repels the curse immediatly.</span>")
+				boutput(target, "<span class='alert'>You feel as though some weight was added to your soul, but the feeling immediatly dissipates.</span>")
+				return 0
 
 			//Lets let people know they have been cursed, might not be obvious at first glance
 			var/mob/living/carbon/H = target
@@ -973,9 +971,11 @@
 				if (2)
 					boutput(H, "<span class='notice'>You feel strangely sick.</span>")
 				if (3)
-					boutput(H, "<span class='alert'>You hear whisper in your head, pushing you towards your doom.</span>")
+					boutput(H, "<span class='alert'>You hear whispers in your head, pushing you towards your doom.</span>")
+					H.playsound_local(H.loc, "sound/voice/wraith/wraithstaminadrain.ogg", 50)
 				if (4)
-					boutput(H, "<span class='alert'>A cacophony of otherworldly voices resonates within your mind. You sense a feeling of impending doom! You should seek salvation in the chapel.</span>")
+					boutput(H, "<span class='alert'><b>A cacophony of otherworldly voices resonates within your mind. You sense a feeling of impending doom! You should seek salvation in the chapel or the purification of holy water.</b></span>")
+					H.playsound_local(H.loc, "sound/voice/wraith/wraithraise1.ogg", 70)
 
 /datum/targetable/wraithAbility/curse/blood
 	name = "Curse of blood"
@@ -1190,7 +1190,7 @@
 				if (istype(C, D))
 					decal_count++
 					found_decal_list += C
-		if (decal_count > 15)
+		if (decal_count > 10)
 			holder.owner.playsound_local(holder.owner, "sound/voice/wraith/wraithraise[pick("1","2","3")].ogg", 80)
 			var/turf/T = get_turf(holder.owner)
 			T.visible_message("<span class='alert'>All the filth and grime around begins to writhe and move!</span>")
@@ -1203,7 +1203,7 @@
 			for(var/obj/decal/cleanable/C in found_decal_list)
 				step_towards(C,T)
 			sleep(1 SECOND)
-			if (decal_count > 30)
+			if (decal_count >= 22)
 				var/mob/living/critter/exploder/strong/E = new /mob/living/critter/exploder/strong(T)
 				animate_portal_tele(E)
 				T.visible_message("<span class='alert'>A [E] slowly emerges from the gigantic pile of grime!</span>")
