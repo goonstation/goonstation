@@ -1,5 +1,8 @@
 
 (t)sun may 29 22
+(u)TTerc
+(e)|
+(*)Clicking doors with open panel via empty hand or bumping into them will now open them, as long as you have proper access. Hacking UI panel will open only if you have hacking tools/remote signaller in any hand.
 (u)Zonespace
 (p)6811
 (e)⚖|balance

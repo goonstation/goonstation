@@ -44,7 +44,7 @@
 	var/ignore_light_or_cam_opacity = 0
 
 /obj/machinery/door/Bumped(atom/AM)
-	if (src.p_open || src.operating) return
+	if (src.operating) return
 	if (src.isblocked()) return
 
 	if (ismob(AM))
@@ -378,6 +378,8 @@
 
 /obj/machinery/door/proc/bumpopen(atom/movable/AM as mob|obj)
 	if (src.operating)
+		return 0
+	if (src.p_open && !src.allowed(AM))
 		return 0
 	if(world.time-last_used <= 10)
 		return 0
