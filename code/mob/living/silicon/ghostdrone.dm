@@ -383,7 +383,7 @@
 		if (src.client && src.client.check_key(KEY_PULL))
 			var/atom/movable/movable = target
 			if (istype(movable))
-				movable.pull()
+				movable.pull(src)
 			return
 
 		var/reach = can_reach(src, target)

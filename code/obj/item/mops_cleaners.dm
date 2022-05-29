@@ -769,7 +769,7 @@ WET FLOOR SIGN
 			return
 		..()
 
-	pull(var/mob/user)
+	pull(mob/user)
 		if (!istype(user))
 			return
 		if(user.key != ownerKey && ownerKey != null)

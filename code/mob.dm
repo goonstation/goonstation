@@ -3057,7 +3057,7 @@
 		unpull_particle(src,src.pulling)
 		src.set_pulling(null)
 	else
-		A.pull()
+		A.pull(src)
 
 
 /mob/verb/examine_verb(atom/A as mob|obj|turf in view(,usr))
