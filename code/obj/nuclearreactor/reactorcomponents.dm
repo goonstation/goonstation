@@ -13,9 +13,13 @@ ABSTRACT_TYPE(/obj/reactor_component)
 	var/icon_state_inserted = "component_cap"
 	var/ui_image = null
 	var/temperature = T20C //room temp kelvin as default
-	var/heat_transfer_mult = 0.01
+	///How much does this component share heat with surrounding components? Basically surface area in contact (m2)
+	var/thermal_cross_section = 0.01
+	///How adept is this component at interacting with neutrons - fuel rods are set up to capture them, heat exchangers are set up not to
+	var/neutron_cross_section = 0.5
 	_max_health = 100
-
+	///If this component is melted, you can't take it out of the reactor and it might do some weird stuff
+	var/melted = FALSE
 	var/static/list/ui_image_base64_cache = list()
 
 	//this should probably be a global, but it isn't afaik
@@ -48,8 +52,12 @@ ABSTRACT_TYPE(/obj/reactor_component)
 			var/deltaT = RC.temperature - src.temperature
 			//heat transfer coefficient
 			var/hTC = max(RC.material.getProperty("density"),1)/max(src.material.getProperty("density"),1)
-			RC.temperature += heat_transfer_mult*-deltaT*hTC
-			src.temperature += heat_transfer_mult*deltaT*(1/hTC)
+			if(RC.material.hasProperty("thermal"))
+				hTC = hTC*(RC.material.getProperty("thermal")/100)
+			if(RC.material.hasProperty("thermal"))
+				hTC = hTC*(RC.material.getProperty("thermal")/100)
+			RC.temperature += thermal_cross_section*-deltaT*hTC
+			src.temperature += thermal_cross_section*deltaT*(1/hTC)
 
 			RC.material.triggerTemp(RC,RC.temperature)
 			src.material.triggerTemp(src,src.temperature)
@@ -59,8 +67,8 @@ ABSTRACT_TYPE(/obj/reactor_component)
 			var/deltaT = holder.temperature - src.temperature
 			//heat transfer coefficient
 			var/hTC = max(holder.material.getProperty("density"),1)/max(src.material.getProperty("density"),1)
-			holder.temperature += heat_transfer_mult*-deltaT*hTC
-			src.temperature += heat_transfer_mult*deltaT*(1/hTC)
+			holder.temperature += thermal_cross_section*-deltaT*hTC
+			src.temperature += thermal_cross_section*deltaT*(1/hTC)
 
 			holder.material.triggerTemp(holder,holder.temperature)
 			src.material.triggerTemp(src,src.temperature)
@@ -77,24 +85,28 @@ ABSTRACT_TYPE(/obj/reactor_component)
 			src.material.adjustProperty("radioactive", -0.1)
 			src.temperature += 100 //TODO make this less arbitrary
 		for(var/datum/neutron/N in inNeutrons)
-			if(N.velocity == 2 & prob(src.material.getProperty("n_radioactive"))) //neutron stimulated emission
-				inNeutrons += new /datum/neutron(pick(cardinals), pick(2,3))
-				inNeutrons += new /datum/neutron(pick(cardinals), pick(2,3))
-				inNeutrons -= N
-				qdel(N)
-				src.temperature += 100 //TODO make this less arbitrary
-			else if(N.velocity == 2 & prob(src.material.getProperty("radioactive"))) //stimulated emission
-				inNeutrons += new /datum/neutron(pick(cardinals), pick(1,2))
-				inNeutrons += new /datum/neutron(pick(cardinals), pick(1,2))
-				inNeutrons -= N
-				qdel(N)
-				src.temperature += 100 //TODO make this less arbitrary
-			else if(prob(src.material.getProperty("density")))
-				N.velocity--
-				src.temperature += 1
-				if(N.velocity < 0)
+			if(prob(src.material.getProperty("density")*src.neutron_cross_section)) //dense materials capture neutrons, configuration influences that
+				//if a neutron is captured, we either do fission or we slow it down
+				if(N.velocity == 1 & prob(src.material.getProperty("n_radioactive"))) //neutron stimulated emission
+					inNeutrons += new /datum/neutron(pick(cardinals), pick(2,3))
+					inNeutrons += new /datum/neutron(pick(cardinals), pick(2,3))
 					inNeutrons -= N
 					qdel(N)
+					src.temperature += 100 //TODO make this less arbitrary
+				else if(N.velocity == 1 & prob(src.material.getProperty("radioactive"))) //stimulated emission
+					inNeutrons += new /datum/neutron(pick(cardinals), pick(1,2))
+					inNeutrons += new /datum/neutron(pick(cardinals), pick(1,2))
+					inNeutrons -= N
+					qdel(N)
+					src.temperature += 100 //TODO make this less arbitrary
+				else
+					if(prob(src.material.getProperty("hardness"))) //reflection is based on hardness
+						N.dir = turn(N.dir,pick(180,225,135)) //either complete 180 or  180+/-45
+					N.velocity--
+					src.temperature += 1
+					if(N.velocity < 0)
+						inNeutrons -= N
+						qdel(N)
 		return inNeutrons
 
 ////////////////////////////////////////////////////////////////
@@ -102,26 +114,40 @@ ABSTRACT_TYPE(/obj/reactor_component)
 /obj/item/reactor_component/fuel_rod
 	name = "fuel rod"
 	desc = "A fuel rod for a nuclear reactor"
+	neutron_cross_section = 1.0
+	thermal_cross_section = 0.02
 
 ////////////////////////////////////////////////////////////////
 //Control rod
 /obj/item/reactor_component/control_rod
 	name = "control rod"
 	desc = "A control rod assembly for a nuclear reactor"
+	neutron_cross_section = 1.0 //essentially *actual* insertion level
+	var/configured_insertion_level = 1.0 //target insertion level
+
+	processNeutrons(list/datum/neutron/inNeutrons)
+		. = ..()
+		if((!src.melted) & (src.neutron_cross_section != src.configured_insertion_level))
+		//step towards configured insertion level
+		if(src.configured_insertion_level > src.neutron_cross_section)
+			src.neutron_cross_section -= 0.1 //TODO balance - this is 10% per tick, which is like every 3 seconds or something
+		else
+			src.neutron_cross_section += 0.1
 
 ////////////////////////////////////////////////////////////////
 //Heat exchanger
 /obj/item/reactor_component/heat_exchanger
 	name = "heat exchanger"
 	desc = "A heat exchanger component for a nuclear reactor"
-	heat_transfer_mult = 0.2
+	thermal_cross_section = 0.2
+	neutron_cross_section = 0.1
 
 ////////////////////////////////////////////////////////////////
 //Gas channel
 /obj/item/reactor_component/gas_channel
 	name = "gas channel"
 	desc = "A gas coolant channel component for a nuclear reactor"
-	heat_transfer_mult = 0.05
+	thermal_cross_section = 0.05
 	var/datum/gas_mixture/current_gas
 
 	processGas(var/datum/gas_mixture/inGas)
@@ -132,8 +158,8 @@ ABSTRACT_TYPE(/obj/reactor_component)
 			//heat transfer coefficient
 			var/hTC = TOTAL_MOLES(src.current_gas)/src.material.getProperty("density")
 			if(hTC>0)
-				src.current_gas.temperature += heat_transfer_mult*-deltaT*hTC
-				src.temperature += heat_transfer_mult*deltaT*(1/hTC)
+				src.current_gas.temperature += thermal_cross_section*-deltaT*hTC
+				src.temperature += thermal_cross_section*deltaT*(1/hTC)
 			. = src.current_gas
 		src.current_gas = inGas.remove(R_IDEAL_GAS_EQUATION * inGas.temperature)
 

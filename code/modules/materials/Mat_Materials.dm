@@ -66,6 +66,12 @@
 
 	var/owner_hasentered_added = FALSE
 
+	New()
+		. = ..()
+		//default properties for all materials - everything is a sponge unless otherwise specified
+		setProperty("density", 1)
+		setProperty("hard", 1)
+
 	proc/getProperty(var/property, var/type = VALUE_CURRENT)
 		for(var/datum/material_property/P in properties)
 			if(P.id == property)

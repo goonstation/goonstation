@@ -678,17 +678,67 @@
 	},
 /turf/space,
 /area/space)
+"cr" = (
+/obj/item/material_piece/neutronium{
+	amount = 10
+	},
+/turf/simulated/floor/black,
+/area/space)
+"cI" = (
+/obj/item/material_piece/ice{
+	amount = 10
+	},
+/turf/simulated/floor/black,
+/area/space)
+"ds" = (
+/obj/item/material_piece/organic/wood{
+	amount = 10
+	},
+/turf/simulated/floor/black,
+/area/space)
 "dx" = (
 /obj/machinery/portable_atmospherics/pressurizer,
 /obj/machinery/light/small/floor,
+/turf/simulated/floor/black,
+/area/space)
+"eW" = (
+/obj/item/material_piece/char{
+	amount = 10
+	},
 /turf/simulated/floor/black,
 /area/space)
 "fP" = (
 /obj/machinery/power/apc,
 /turf/simulated/wall/r_wall,
 /area/space)
+"gm" = (
+/obj/item/material_piece/hamburgris{
+	amount = 10
+	},
+/turf/simulated/floor/black,
+/area/space)
 "gM" = (
 /obj/item/tool/omnitool/syndicate,
+/turf/simulated/floor/black,
+/area/space)
+"hB" = (
+/obj/item/material_piece/gnesisglass{
+	amount = 10
+	},
+/turf/simulated/floor/black,
+/area/space)
+"iJ" = (
+/obj/machinery/light/small/floor,
+/obj/item/material_piece/glass{
+	amount = 10
+	},
+/turf/simulated/floor/black,
+/area/space)
+"jp" = (
+/obj/machinery/light/small/floor,
+/obj/item/material_piece/gold{
+	amount = 10
+	},
 /turf/simulated/floor/black,
 /area/space)
 "jX" = (
@@ -714,6 +764,12 @@
 	icon_state = "engine_caution_south"
 	},
 /area/shuttle/arrival/station)
+"li" = (
+/obj/item/material_piece/cloth/carbon{
+	amount = 10
+	},
+/turf/simulated/floor/black,
+/area/space)
 "lq" = (
 /obj/item/wrench,
 /turf/simulated/floor/black,
@@ -722,10 +778,28 @@
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/arrival/station)
+"nd" = (
+/obj/item/material_piece/bohrum{
+	amount = 10
+	},
+/turf/simulated/floor/black,
+/area/space)
 "oy" = (
 /obj/machinery/light/small/floor,
 /obj/cable{
 	icon_state = "1-4"
+	},
+/turf/simulated/floor/black,
+/area/space)
+"oC" = (
+/obj/item/material_piece/coral{
+	amount = 10
+	},
+/turf/simulated/floor/black,
+/area/space)
+"oV" = (
+/obj/item/material_piece/kremfuel_o{
+	amount = 10
 	},
 /turf/simulated/floor/black,
 /area/space)
@@ -768,6 +842,13 @@
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
+"ux" = (
+/obj/machinery/light/small/floor,
+/obj/item/material_piece/erebite{
+	amount = 10
+	},
+/turf/simulated/floor/black,
+/area/space)
 "uO" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -779,6 +860,16 @@
 /area/space)
 "vN" = (
 /obj/machinery/atmospherics/binary/nuclear_reactor,
+/turf/simulated/floor/black,
+/area/space)
+"vT" = (
+/obj/item/material_piece/copper{
+	amount = 10
+	},
+/turf/simulated/floor/black,
+/area/space)
+"wc" = (
+/obj/item/material_piece/iridiumalloy,
 /turf/simulated/floor/black,
 /area/space)
 "xD" = (
@@ -794,6 +885,12 @@
 	},
 /turf/simulated/floor/black,
 /area/space)
+"xU" = (
+/obj/item/material_piece/soulsteel{
+	amount = 10
+	},
+/turf/simulated/floor/black,
+/area/space)
 "yk" = (
 /obj/item/reactor_component/heat_exchanger,
 /obj/machinery/light/small/floor,
@@ -802,6 +899,12 @@
 "zQ" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/machinery/light/small/floor,
+/turf/simulated/floor/black,
+/area/space)
+"AG" = (
+/obj/item/material_piece/mauxite{
+	amount = 10
+	},
 /turf/simulated/floor/black,
 /area/space)
 "AK" = (
@@ -820,8 +923,27 @@
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/black,
 /area/space)
+"Cu" = (
+/obj/machinery/light/small/floor,
+/obj/item/material_piece/molitz{
+	amount = 0
+	},
+/turf/simulated/floor/black,
+/area/space)
 "CO" = (
 /obj/machinery/light/small/floor,
+/turf/simulated/floor/black,
+/area/space)
+"Ds" = (
+/obj/item/material_piece/spacelag{
+	amount = 10
+	},
+/turf/simulated/floor/black,
+/area/space)
+"Dt" = (
+/obj/item/material_piece/fibrilith{
+	amount = 10
+	},
 /turf/simulated/floor/black,
 /area/space)
 "Dx" = (
@@ -837,6 +959,9 @@
 "Er" = (
 /obj/cable{
 	icon_state = "0-2"
+	},
+/obj/item/material_piece/koshmarite{
+	amount = 10
 	},
 /turf/simulated/floor/black,
 /area/space)
@@ -867,9 +992,22 @@
 /obj/item/device/analyzer/atmospheric/upgraded,
 /turf/simulated/floor/black,
 /area/space)
+"IV" = (
+/obj/machinery/light/small/floor,
+/obj/item/material_piece/claretine{
+	amount = 10
+	},
+/turf/simulated/floor/black,
+/area/space)
 "IZ" = (
 /obj/cable{
 	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/space)
+"Je" = (
+/obj/item/material_piece/rubber{
+	amount = 10
 	},
 /turf/simulated/floor/black,
 /area/space)
@@ -878,6 +1016,12 @@
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
+	},
+/turf/simulated/floor/black,
+/area/space)
+"KF" = (
+/obj/item/material_piece/pharosium{
+	amount = 10
 	},
 /turf/simulated/floor/black,
 /area/space)
@@ -896,6 +1040,13 @@
 /area/space)
 "Lg" = (
 /turf/simulated/wall/r_wall,
+/area/space)
+"Lq" = (
+/obj/machinery/light/small/floor,
+/obj/item/material_piece/slag{
+	amount = 10
+	},
+/turf/simulated/floor/black,
 /area/space)
 "Lx" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
@@ -923,6 +1074,12 @@
 /area/space)
 "NG" = (
 /obj/item/crowbar,
+/turf/simulated/floor/black,
+/area/space)
+"OL" = (
+/obj/item/material_piece/gnesis{
+	amount = 10
+	},
 /turf/simulated/floor/black,
 /area/space)
 "PO" = (
@@ -954,6 +1111,13 @@
 	},
 /turf/simulated/floor/black,
 /area/space)
+"UF" = (
+/obj/machinery/light/small/floor,
+/obj/item/material_piece/p239_o{
+	amount = 10
+	},
+/turf/simulated/floor/black,
+/area/space)
 "UH" = (
 /obj/cable{
 	d2 = 2;
@@ -963,11 +1127,33 @@
 /obj/machinery/atmospherics/binary/reactor_turbine,
 /turf/simulated/floor/black,
 /area/space)
+"UL" = (
+/obj/item/material_piece/cobryl{
+	amount = 10
+	},
+/turf/simulated/floor/black,
+/area/space)
 "UR" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /turf/simulated/floor/black,
 /area/space)
+"Vf" = (
+/obj/item/material_piece/fart,
+/turf/simulated/floor/black,
+/area/space)
+"XZ" = (
+/obj/item/material_piece/cerenkite{
+	amount = 10
+	},
+/turf/simulated/floor/black,
+/area/space)
 "Yq" = (
+/turf/simulated/floor/black,
+/area/space)
+"Zo" = (
+/obj/item/material_piece/plasmastone{
+	amount = 10
+	},
 /turf/simulated/floor/black,
 /area/space)
 "ZL" = (
@@ -45840,7 +46026,7 @@ Lg
 fP
 Er
 pi
-Yq
+wc
 Lg
 Lg
 Lg
@@ -46136,15 +46322,15 @@ Yq
 Yq
 Yq
 Yq
+Je
+KF
+ds
+AG
+oV
 Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
-Yq
+Dt
+li
+eW
 Lg
 aa
 aa
@@ -46438,15 +46624,15 @@ CO
 Yq
 CO
 Yq
-CO
+Lq
+Zo
+UF
+cr
+Cu
 Yq
-CO
-Yq
-CO
-Yq
-CO
-Yq
-CO
+iJ
+UL
+IV
 Lg
 aa
 aa
@@ -46746,9 +46932,9 @@ qF
 xD
 Yq
 Yq
-Yq
-Yq
-Yq
+OL
+vT
+XZ
 Lg
 aa
 aa
@@ -47048,9 +47234,9 @@ Yq
 Lx
 Yq
 Yq
-Yq
-Yq
-Yq
+hB
+oC
+nd
 Lg
 aa
 aa
@@ -47350,9 +47536,9 @@ CO
 Lx
 HW
 Yq
-CO
-Yq
-CO
+jp
+Vf
+ux
 Lg
 aa
 aa
@@ -47653,7 +47839,7 @@ Lx
 RE
 Yq
 NG
-Yq
+xU
 Hh
 Lg
 aa
@@ -47955,8 +48141,8 @@ Lx
 QU
 Yq
 lq
-Yq
-Yq
+cI
+gm
 Lg
 aa
 aa
@@ -48257,7 +48443,7 @@ Lx
 yk
 Yq
 IF
-Yq
+Ds
 dx
 Lg
 aa
@@ -48559,7 +48745,7 @@ Lx
 Yq
 Yq
 gM
-Yq
+Je
 rr
 Lg
 aa
