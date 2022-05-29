@@ -6,6 +6,16 @@
 	category = "Nuclear"
 	result = /obj/item/reactor_component
 
+	postProcess(obj/item/reactor_component/I)
+		. = ..()
+		//default properties for all materials - everything is a sponge unless otherwise specified
+		if(!I.material.hasProperty("density"))
+			I.material.setProperty("density", 1)
+		if(!I.material.hasProperty("hard"))
+			I.material.setProperty("hard", 1)
+		if(I.material.mat_id=="ice") //ice is cold
+			I.temperature = T0C-10
+
 /datum/matfab_recipe/simple/nuclear/fuel_rod
 	name = "Nuclear Fuel Rod"
 	desc = "A fuel rod for a nuclear reactor"

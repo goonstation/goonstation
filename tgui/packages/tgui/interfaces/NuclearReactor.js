@@ -10,6 +10,7 @@ const ReactorRow = (shape) => {
     onClick,
     components,
     rowID,
+    emptySlotIcon,
   } = shape;
   return (
     <Table.Row>
@@ -21,10 +22,16 @@ const ReactorRow = (shape) => {
               <Button
                 key={name}
                 fluid
-                onClick={() => onClick('slot', { "x": rowID+1, "y": index+1 })}
-                height={5}
-                weidth={5}>
-                EMPTY
+                color="transparent"
+                m={1}
+                onClick={() => onClick('slot', { "x": rowID+1, "y": index+1 })} >
+                <img
+                  src={`data:image/png;base64,${emptySlotIcon}`}
+                  style={{
+                    'vertical-align': 'middle',
+                    'horizontal-align': 'middle',
+                  }}
+                />
               </Button>
             </Table.Cell>
           );
@@ -38,9 +45,9 @@ const ReactorRow = (shape) => {
                 key={name}
                 fluid
                 tooltip={temp}
-                onClick={() => onClick('slot', { "x": x, "y": y })}
-                height={5}
-                weidth={5}>
+                color="transparent"
+                m={1}
+                onClick={() => onClick('slot', { "x": x, "y": y })} >
                 <img
                   src={`data:image/png;base64,${img}`}
                   style={{
@@ -60,13 +67,14 @@ const ReactorGrid = (shape) => {
   const {
     onClick,
     components,
+    emptySlotIcon,
   } = shape;
   return (
     <Table>
       {components.map((r, index) => { const { comp } = r;
         return (
           <Table.Row key>
-            <ReactorRow rowID={index} components={r} onClick={onClick} />
+            <ReactorRow rowID={index} components={r} onClick={onClick} emptySlotIcon={emptySlotIcon} />
           </Table.Row>
         );
       })}
@@ -82,6 +90,7 @@ export const NuclearReactor = (props, context) => {
     components,
     gridW,
     gridH,
+    emptySlotIcon,
   } = data;
   return (
     <Window
@@ -97,6 +106,7 @@ export const NuclearReactor = (props, context) => {
               gridH={gridH}
               onClick={act}
               components={components}
+              emptySlotIcon={emptySlotIcon}
             />
           </Box>
         </Section>

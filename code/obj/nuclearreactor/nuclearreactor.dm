@@ -134,7 +134,8 @@
 	ui_static_data(mob/user)
 		. = list(
 			"gridW" = length(src.component_grid),
-			"gridH" = length(src.component_grid[1])
+			"gridH" = length(src.component_grid[1]),
+			"emptySlotIcon" = icon2base64(icon('icons/misc/reactorcomponents.dmi',"empty"))
 		)
 
 	ui_data()
