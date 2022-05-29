@@ -5,7 +5,7 @@
 	desc = "A strange shell of a person looking straight ahead with lifeless eyes."
 	density = 1
 	icon_state = "shade"
-	speechverb_say = "says"//Todo change speechverbs depending on copied mutantrace. Add monkey speech. Perhaps make it unable to clickdrag/pull
+	speechverb_say = "says"
 	speechverb_exclaim = "exclaims"
 	speechverb_ask = "asks"
 	var/health_brute = 8

@@ -1640,11 +1640,10 @@
 				if (F.on)
 					F.toggle_light()
 
-/datum/statusEffect/terror	//Todo add more illusions and hide status
+/datum/statusEffect/terror
 	id = "terror"
 	name = "Terror"
 	desc = "terrorized"
-	//icon_state = "mentor_mouse"
 	unique = 1
 	duration = 40 SECONDS
 	maxDuration = 3 MINUTES
