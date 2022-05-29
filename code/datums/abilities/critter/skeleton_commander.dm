@@ -7,7 +7,6 @@
 	icon_state = "rally"
 	cooldown = 60 SECONDS
 	targeted = 0
-	//Todo add unique overlay and/or sound on use.
 	//List of critters we can buff, same as the one the wraith portal has.
 	var/border_icon = 'icons/mob/wraith_ui.dmi'
 	var/border_state = "harbinger_frame"
@@ -29,11 +28,12 @@
 		if (..())
 			return 1
 
+		playsound(holder.owner.loc, "sound/effects/ghostbreath.ogg", 80, 0)
+		holder.owner.visible_message("<span class='alert'>[holder.owner] emits a rallying howl!</span>")
+
 		var/list/obj/critter/affected_critter = list()
 		for (var/obj/critter/C in range(6, get_turf(holder.owner)))
-			logTheThing("debug", src, null, "init spin")
 			for (var/O in critter_list)
-				logTheThing("debug", src, null, "spin")
 				if (istype(C, O))
 					logTheThing("debug", src, null, "Affected")
 					C.atk_delay = (C.atk_delay / 1.5)
