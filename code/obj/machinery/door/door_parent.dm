@@ -379,8 +379,6 @@
 /obj/machinery/door/proc/bumpopen(atom/movable/AM as mob|obj)
 	if (src.operating)
 		return 0
-	if (src.p_open && !src.allowed(AM))
-		return 0
 	if(world.time-last_used <= 10)
 		return 0
 	src.add_fingerprint(AM)
