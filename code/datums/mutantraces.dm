@@ -1104,12 +1104,14 @@ TYPEINFO(/datum/mutantrace)
 	decomposes = FALSE
 	race_mutation = /datum/bioEffect/mutantrace/skeleton
 	dna_mutagen_banned = FALSE
+	var/obj/item/organ/head/head
 
 	New(var/mob/living/carbon/human/M)
 		..()
 		if(ishuman(M))
 			M.mob_flags |= IS_BONEY
 			M.blood_id = "calcium"
+			head = M.organHolder.head
 
 	disposing()
 		if (ishuman(mob))

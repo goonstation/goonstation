@@ -473,6 +473,7 @@
 				src.head = null
 				src.organ_list["head"] = null
 				src.donor.client?.eye = myHead
+				src.donor.eye = myHead
 				src.donor.update_body()
 				src.donor.UpdateDamageIcon()
 				src.donor.update_clothing()

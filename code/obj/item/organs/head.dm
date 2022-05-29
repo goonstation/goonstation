@@ -123,6 +123,9 @@
 		if (!src.left_eye)
 			. += "<br><span class='alert'><B>[src.name]'s left eye is missing!</B></span>"
 
+		if (isalive(src.donor_original))
+			. += "<br><span class='notice'><B>[src.name] appears conscious!</B></span>"
+
 	/// This proc does a full rebuild of the head's stored data
 	/// only call it if something changes the head in a major way, like becoming a lizard
 	/// it will cause the head to be rebuilt from the mob's appearanceholder!
