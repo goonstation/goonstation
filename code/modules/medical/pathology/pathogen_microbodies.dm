@@ -63,6 +63,12 @@ datum/microbody
 	// Numeric modifier to the maximum number of infections a pathogen may make.
 	var/modifier_maxinfections = 0
 
+
+	//// TRACKING/LOGGING VARS ////
+
+	//uniqueid is used in the pathogen controller for indexing.
+	var/uniqueid = 0
+
 	disposing()
 		SHOULD_CALL_PARENT(FALSE) //Looks like these should never be deleted.
 		CRASH("ALERT MICROBODY IS BEING DELETED")
@@ -85,6 +91,8 @@ datum/microbody/virus
 	modifier_duration = 0.8 //-20% duration of max stage symptoms before natural immunity
 	modifier_spreadprob = 1.2 //+20% to the final roll for infecting other people.
 
+	uniqueid = 1
+
 datum/microbody/bacteria
 	name = "Bacteria"
 	singular = "bacterium"
@@ -101,6 +109,8 @@ datum/microbody/bacteria
 	modifier_creationcost = 0.75 //-25% creation cost!
 	modifier_bountyvalue = 0.75  //-25% bounty value!
 
+	uniqueid = 2
+
 datum/microbody/fungi
 	name = "Fungi"
 	singular = "fungus"
@@ -116,6 +126,8 @@ datum/microbody/fungi
 
 	modifier_advancerate = 0.7 // -30% on final chance to advance stages
 	modifier_creationcost = 0.85 // -15% final creation cost
+
+	uniqueid = 3
 
 datum/microbody/parasite
 	name = "Parasites"
@@ -134,6 +146,8 @@ datum/microbody/parasite
 	modifier_maxinfections = -2 //-2 total infections
 	modifier_bountyvalue = 1.1
 	modifier_creationcost = 1.1
+
+	uniqueid = 4
 
 /*datum/microbody/gmcell // TODO: I kind of removed mutations so I should really rename this, I guess
 	name = "Great Mutatis cell"

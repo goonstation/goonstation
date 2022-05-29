@@ -6,7 +6,7 @@ datum/pathogen_cdc
 	var/microbody_type = null
 
 	var/list/infections = list()
-	var/list/mutations = list()
+	var/list/replicas = list()
 
 	New(var/pathogen_uid)
 		..()
@@ -14,23 +14,19 @@ datum/pathogen_cdc
 		src.uid = pathogen_uid
 
 datum/controller/pathogen
-	var/list/next_mutation = new/list()
+	var/list/next_replica = new/list()
 	var/list/pathogen_trees = new/list()
 	var/next_uid = 1
 
 	var/list/UID_to_symptom
 	var/list/symptom_to_UID
-	var/list/UID_to_suppressant
-	var/list/suppressant_to_UID
+	var/list/UID_to_cure
+	var/list/cure_to_UID
 	var/list/microbody_to_UID
-	var/list/UID_to_carrier
-	var/list/carrier_to_UID
 
 	var/list/path_to_symptom = list()
 	var/list/path_to_microbody = list()
-	var/list/path_to_suppressant = list()
-	var/list/path_to_mutation = list()
-	var/list/disabled_mutations = list()
+	var/list/path_to_cure = list()
 
 	var/list/pathogen_affected_reagents = list("blood", "pathogen", "bloodc")
 
@@ -62,11 +58,6 @@ datum/controller/pathogen
 		if (!CDC.patient_zero)
 			CDC.patient_zero = H
 			CDC.patient_zero_kname = "[H]"
-		if (!(P.name in CDC.mutations))
-			CDC.mutations += P.name
-			var/datum/pathogen/template = new /datum/pathogen
-			template.setup(0, P, 0)
-			CDC.mutations[P.name] = template
 		if (!(H in CDC.infections))
 			CDC.infections += H
 		CDC.infections[H] = P.name
@@ -116,11 +107,6 @@ datum/controller/pathogen
 							types[MB.name] = MB
 						var/chosen = input("Which microbody?", "Microbody", types[1]) in types
 						P.body_type = types[chosen]
-						P.advance_speed = 25
-						P.suppression_threshold = 25
-						P.spread = 25
-						P.symptomatic = 1
-						P.generation = 1
 						P.stages = P.body_type.stages
 
 					if ("suppressant")
@@ -156,25 +142,19 @@ datum/controller/pathogen
 						P.suppression_threshold = text2num_safe(input("New suppression threshold?", "Suppression threshold", P.suppression_threshold) as num) || P.suppression_threshold
 					if ("spread")
 						P.spread = text2num_safe(input("New spread?", "Spread", P.spread) as num) || P.spread
-					if ("symptomatic")
-						P.symptomatic = !P.symptomatic
 					if ("stages")
 						var/value = P.stages
 						var/newval = text2num_safe(input("New stages (3-5)?", "Stages", value) as num) || value
 						if (newval >= 3 && newval <= 5)
 							P.stages = newval
 					if ("create")
-						P.dnasample = new/datum/pathogendna(P)
 						P.pathogen_uid = "p[next_uid]"
 						next_uid++
 
 						pathogen_trees += P.name_base
 						var/datum/pathogen_cdc/CDC = new /datum/pathogen_cdc(P.pathogen_uid)
 						pathogen_trees[P.name_base] = CDC
-						next_mutation[P.pathogen_uid] = P.mutation + 1
 						CDC.microbody_type = "[P.body_type]"
-						CDC.mutations += P.name
-						CDC.mutations[P.name] = P
 
 						message_admins("[key_name(usr)] created a new pathogen ([P]) via the creator.")
 						src.gen_empty(usr.ckey)
@@ -182,7 +162,6 @@ datum/controller/pathogen
 			if ("strain_data")
 				var/datum/pathogen_cdc/CDC = locate(href_list["which"])
 				var/name = href_list["name"]
-				var/datum/pathogen/reference = CDC.mutations[name]
 				switch (href_list["data"])
 					if ("advance_speed")
 						var/value = reference.advance_speed
@@ -214,16 +193,6 @@ datum/controller/pathogen
 									target.spread = newval
 						reference.spread = newval
 						message_admins("[key_name(usr)] set the spread on pathogen strain mutation [name] to [newval].")
-					if ("symptomatic")
-						var/value = reference.symptomatic
-						var/newval = !value
-						for (var/mob/living/carbon/human/H in CDC.infections)
-							if (CDC.uid in H.pathogens)
-								var/datum/pathogen/target = H.pathogens[CDC.uid]
-								if (target.name == name)
-									target.symptomatic = newval
-						reference.symptomatic = newval
-						message_admins("[key_name(usr)] set the symptomaticity for pathogen strain mutation [name] to [newval ? "Yes" : "No"].")
 					if ("stages")
 						var/value = reference.stages
 						var/newval = text2num_safe(input("New stages (3-5)?", "Stages", value) as num) || value
@@ -270,9 +239,6 @@ datum/controller/pathogen
 						if (new_stages >= 3 && new_stages <= 5)
 							MB.stages = new_stages
 							message_admins("[key_name(usr)] set the initial stage cap for pathogen microbody [MB.plural] to [new_stages].")
-					if ("vaccinable")
-						MB.vaccination = !MB.vaccination
-						message_admins("[key_name(usr)] set the vaccinability for pathogen microbody [MB.plural] to [MB.vaccination ? "On" : "Off"].")
 					if ("activity")
 						var/stage = text2num_safe(href_list["stage"])
 						var/new_act = text2num_safe(input("New activity percentage for stage [stage] of [MB] (0-100)?", "Activity", MB.activity[stage]) as num) || MB.activity[stage]
@@ -288,7 +254,7 @@ datum/controller/pathogen
 
 	var/list/cdc_creator = list()
 	var/list/cdc_state = list()
-	var/static/list/states = list("strains", "symptoms", "microbodies", "suppressants", "mutations", "pathogen creator")
+	var/static/list/states = list("strains", "symptoms", "microbodies", "suppressants", "pathogen creator")
 	proc/severity_color(var/datum/pathogeneffects/EF)
 		if (EF.rarity == RARITY_ABSTRACT)
 			return "[EF]"
@@ -526,10 +492,8 @@ datum/controller/pathogen
 		..()
 		UID_to_symptom = list()
 		symptom_to_UID = list()
-		UID_to_suppressant = list()
-		suppressant_to_UID = list()
-		UID_to_carrier = list()
-		carrier_to_UID = list()
+		UID_to_curetype = list()
+		curetype_to_UID = list()
 		microbody_to_UID = list()
 
 		for (var/T in childrentypesof(/datum/microbody))
@@ -539,8 +503,6 @@ datum/controller/pathogen
 
 			if (!(B.growth_medium in media))
 				media += B.growth_medium
-			if (!(B.cure_base in cure_bases))
-				cure_bases += B.cure_base
 			for (var/nutrient in B.nutrients)
 				if (!(nutrient in nutrients))
 					nutrients += nutrient
@@ -595,18 +557,9 @@ datum/controller/pathogen
 				r = num2hex(rand(0, 4095), 3)
 			while (r in used)
 			suppressant_to_UID[T] = r
-			UID_to_suppressant[r] = T
+			UID_to_curetype[r] = T
 			path_to_suppressant[T] = new T()
 			used += r
-
-		/*for (var/T in typesof(/datum/pathogen_carrier))
-			var/r
-			do
-				r = num2hex(rand(0, 4095), 3)
-			while (r in used)
-			carrier_to_UID[T] = r
-			UID_to_carrier[r] = new T()
-			used += r*/
 
 		// Assemble VERY_COMMON
 		for (var/T in l_vc)
@@ -732,8 +685,9 @@ datum/shockparam
 datum/pathogen
 	var/name										// The modifiable name of the disease.
 	var/name_base									// The original name of the disease.
-	var/replica = 0								// Value signifying different replications of a single strain. Useful for separating infection capacity.
+	var/replica								// Value signifying different replications of a single strain. Useful for separating infection capacity.
 	var/desc										// What a scientist might see when he looks at this pathogen through a microscope (eg. blue stringy viruses)
+	var/pathogen_uid								// Var used in logging/admintools
 
 	var/mob/infected								// The mob that is infected with this pathogen.
 
@@ -817,7 +771,7 @@ datum/pathogen
 		else
 			CDC = new /datum/pathogen_cdc(pathogen_uid)
 			pathogen_controller.pathogen_trees[name_base] = CDC
-			pathogen_controller.next_mutation[pathogen_uid] = mutation + 1
+			pathogen_controller.next_replica[pathogen_uid] = mutation + 1
 			CDC.microbody_type = body_type
 		CDC.mutations += name
 		CDC.mutations[name] = clone()
@@ -866,8 +820,6 @@ datum/pathogen
 
 	proc/randomize(var/strength)
 		var/datum/pathogen_cdc/cdc = generate_name()
-		cdc.mutations += src.name
-		cdc.mutations[src.name] = src
 		generate_randomized_effects(strength)
 		generate_components(cdc, strength)
 		generate_attributes(strength)
