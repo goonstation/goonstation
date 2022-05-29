@@ -75,23 +75,6 @@
 		else
 			owncritter.set_dir(get_dir(owncritter, holder.target))
 			owncritter.hand_range_attack(holder.target, dummy_params)
-			SPAWN(10)
-				if(dist > target_range) // double check you're still in range
-					//replaced
-					if(!src.found_path)
-						src.found_path = get_path_to(holder.owner, holder.target, 18, 0)
-					if(src.found_path)
-						holder.move_to_with_path(holder.target, src.found_path, 1)
-						if(prob(20)) walk_rand(src,4)
-						owncritter.set_dir(get_dir(owncritter, holder.target))
-						owncritter.hand_range_attack(holder.target, dummy_params)
-					else
-						frustration++
-						//o no
-				else
-					owncritter.set_dir(get_dir(owncritter, holder.target))
-					owncritter.hand_range_attack(holder.target, dummy_params)
-
 
 
 

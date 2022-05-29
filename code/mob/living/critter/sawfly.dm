@@ -14,16 +14,14 @@ This file is the critter itself, and all the custom procs it needs in order to f
 	flags = TABLEPASS
 
 	var/beeptext = " "
-	//var/dead_state = "sawflydead" //not used- death sprites are handled in the death.dm folder
-//	var/obj/item/droploot = null // the prox sensors they drop in death are handled in the critterdeath proc
 	var/deathtimer = 0 // for catastrophic failure on death
 	var/isnew = TRUE // for seeing whether or not they will make a new name on redeployment
 	var/sawflynames = list("A", "B", "C", "D", "E", "F", "V", "W", "X", "Y", "Z", "Alpha", "Beta", "Gamma", "Lambda", "Delta")
 	var/beeps = list('sound/machines/sawfly1.ogg','sound/machines/sawfly2.ogg','sound/machines/sawfly3.ogg') // custom noises so they cannot be mistaken for ghostdrones or borgs
-	health = 40
+	health = 50 //this value's pretty arbitrary, since it's overridden when they get their healtholders
 	var/fliesnearby = 0 //for rolling chance to beep
 	var/friends = list()
-	misstep_chance = 30 //makes them behave more like drones
+	misstep_chance = 40 //makes them behave more like drones, and harder to kite into a straightaway then shoot
 
 	//mob variables
 	custom_gib_handler = /proc/robogibs
