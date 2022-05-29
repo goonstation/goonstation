@@ -37,9 +37,8 @@
 
 			boutput(iced, "<span class='alert'>You are trapped within [src]!</span>")
 
-		var/datum/reagents/R = new /datum/reagents(initial_volume)
-		src.reagents = R
-		R.my_atom = src
+		src.create_reagents(initial_volume)
+
 		if(iced)
 			if(istype(iced,/mob/living))
 				var/mob/living/M = iced

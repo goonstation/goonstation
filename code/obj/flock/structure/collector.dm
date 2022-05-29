@@ -35,7 +35,6 @@
 		icon_state = "collectoron"
 	else
 		icon_state = "collector"
-	//TODO: Rebalance this when we do the proper compute strucutres and computers pass
 	src.compute = (length(connectedto) * 5) //(5 power per tile)
 
 /obj/flock_structure/collector/disposing()

@@ -12,7 +12,7 @@
 	///maximum volume of coagualted gnesis that can be stored in the tank
 	var/fluid_level_max = 250
 	///how much gnesis is generated per-tick while there is sufficient compute
-	var/fluid_gen_amt = 3
+	var/fluid_gen_amt = 5
 	///gnesis fluid ID - change this to do exciting things like having a turret that fires QGP
 	var/fluid_gen_type = "flockdrone_fluid"
 	///how much of the stored fluid should be in each shot
@@ -21,7 +21,7 @@
 	var/target = null
 	var/range = 8
 	var/spread = 1
-	var/datum/projectile/syringe/gnesis/current_projectile = null
+	var/datum/projectile/syringe/syringe_barbed/gnesis/current_projectile = null
 
 	var/powered = FALSE
 	// flockdrones can pass through this
@@ -34,7 +34,7 @@
 	New(var/atom/location, var/datum/flock/F=null)
 		..(location, F)
 		ensure_reagent_holder()
-		src.current_projectile = new /datum/projectile/syringe/gnesis(src)
+		src.current_projectile = new /datum/projectile/syringe/syringe_barbed/gnesis(src)
 		src.current_projectile.cost = src.fluid_shot_amt
 
 
@@ -93,7 +93,6 @@
 				if(src.target)
 					SPAWN(0)
 						for(var/i in 1 to src.current_projectile.shot_number) //loop animation until finished
-							//flick("gnturret_fire",src)
 							muzzle_flash_any(src, 0, "muzzle_flash")
 							sleep(src.current_projectile.shot_delay)
 					shoot_projectile_ST_pixel_spread(src, current_projectile, target, 0, 0 , spread)
@@ -147,7 +146,7 @@
 		return TRUE
 
 
-/datum/projectile/syringe/gnesis
+/datum/projectile/syringe/syringe_barbed/gnesis
 	name = "nanite spike"
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "stunbolt"
