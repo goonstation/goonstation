@@ -1966,10 +1966,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		bullet_act(var/obj/projectile/P)
 			if (!P.goes_through_mobs)
 				var/obj/projectile/Q = shoot_reflected_to_sender(P, src)
-				if (istype(Q.proj_data, /datum/projectile/bullet/foamdart))
-					qdel(P)
-				else
-					P.die()
+				P.die()
 
 				src.visible_message("<span class='alert'>[src] reflected [Q.name]!</span>")
 				playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 0.1, 0, 2.6)
