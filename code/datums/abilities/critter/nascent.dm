@@ -22,6 +22,7 @@
 		var/mob/living/critter/nascent/N = holder.owner
 		holder.owner.mind.transfer_to(S)
 		holder.owner.unequip_all()
+		animate_buff_in(S)
 		qdel(N)
 
 	onAttach(datum/abilityHolder/holder)
@@ -51,6 +52,7 @@
 		var/mob/living/critter/nascent/N = holder.owner
 		holder.owner.mind.transfer_to(S)
 		holder.owner.unequip_all()
+		animate_buff_in(S)
 		qdel(N)
 
 	onAttach(datum/abilityHolder/holder)
@@ -80,6 +82,7 @@
 		var/mob/living/critter/nascent/N = holder.owner
 		holder.owner.mind.transfer_to(S)
 		holder.owner.unequip_all()
+		animate_buff_in(S)
 		qdel(N)
 
 	onAttach(datum/abilityHolder/holder)

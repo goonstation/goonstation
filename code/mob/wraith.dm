@@ -179,7 +179,7 @@
 
 		if (src.next_area_change != null)
 			if (src.next_area_change < world.time)
-				next_area_change = world.time + 15 MINUTES
+				next_area_change = world.time + 10 MINUTES
 				get_new_booster_zones()
 
 		var/area/mob_area = get_area(src)
@@ -720,7 +720,7 @@
 				locations_copy.Remove(temp)
 				safe_area_names.Add(temp)
 				booster_locations.Add(valid_locations[temp])
-			boutput(src, "<span class='alert'>You will gather energy more rapidly if you are close to [get_battle_area_names(safe_area_names)]!</span>")
+			boutput(src, "<span class='alert'><b>You will gather energy more rapidly if you are close to [get_battle_area_names(safe_area_names)]!</b></span>")
 
 		updateButtons()
 			abilityHolder.updateButtons()
