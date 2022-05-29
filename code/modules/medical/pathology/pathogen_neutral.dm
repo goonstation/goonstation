@@ -327,3 +327,39 @@ datum/pathogeneffects/neutral/startleresponse
 
 	may_react_to()
 		return "The pathogen appears to have a gland that may affect neural functions."
+
+datum/pathogeneffects/neutral/tearyeyed
+	name = "Overactive Eye Glands"
+	desc = "The pathogen causes the host's lacrimal glands to overproduce tears."
+	rarity = THREAT_NEUTRAL
+
+	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+		if (origin.in_remission)
+			return
+		if (prob(8))
+			M:emote("blink")
+		else if (prob(5))
+			M:emote("cry")
+		else if (prob(5))
+			M:emote("sob")
+
+	may_react_to()
+		return "The pathogen appears to generate a high amount of fluids."
+
+datum/pathogeneffects/neutral/restingface
+	name = "Grumpy Cat Syndrome"
+	desc = "The pathogen causes the host's facial muscles to frown at rest."
+	rarity = THREAT_NEUTRAL
+
+	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+		if (origin.in_remission)
+			return
+		if (prob(8))
+			M:emote("frown")
+		else if (prob(5))
+			M:emote("scowl")
+		else if (prob(5))
+			M:emote("grimace")
+
+	may_react_to()
+		return "The pathogen appears to react to hydrating agents."
