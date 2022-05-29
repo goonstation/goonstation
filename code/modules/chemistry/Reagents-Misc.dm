@@ -3117,7 +3117,7 @@ datum
 
 			// fluid todo : Hey we should have a reaction_obj that applies blood overlay
 
-			/*on_mob_life(var/mob/M, var/mult = 1)
+			on_mob_life(var/mob/M, var/mult = 1)
 				// Let's assume that blood immediately mixes with the bloodstream of the mob.
 				if (!pathogens_processed) //Only process pathogens once
 					pathogens_processed = 1
@@ -3126,7 +3126,7 @@ datum
 						logTheThing("pathology", M, null, "metabolizing [src] containing pathogen [P].")
 						M.infected(P)
 				..()
-			*/
+
 /* this begs the question how bloodbags worked at all if this was a thing
 				if (holder.has_reagent("dna_mutagen")) //If there's stable mutagen in the mix and it doesn't have data we gotta give it a chance to get some
 					var/datum/reagent/SM = holder.get_reagent("dna_mutagen")
@@ -3139,7 +3139,7 @@ datum
 				var/datum/plant/growing = P.current
 				if (growing.growthmode == "carnivore") P.growth += 3
 
-			/*on_transfer(var/datum/reagents/source, var/datum/reagents/target, var/trans_amt)
+			on_transfer(var/datum/reagents/source, var/datum/reagents/target, var/trans_amt)
 				var/list/source_pathogens = source.aggregate_pathogens()
 				var/list/target_pathogens = target.aggregate_pathogens()
 				var/target_changed = 0
@@ -3156,7 +3156,7 @@ datum
 								continue
 							B.pathogens = target_pathogens
 				return
-			*/
+
 		blood/bloodc
 			id = "bloodc"
 			value = 3

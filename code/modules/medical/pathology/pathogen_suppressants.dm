@@ -1,4 +1,3 @@
-
 /**
  * Pathogen suppressants
  *
@@ -30,7 +29,7 @@
 	proc/ongrab(var/mob/target as mob, var/datum/pathogen/P)
 		return
 	proc/onpunched(var/mob/origin as mob, zone, var/datum/pathogen/P)
-	proc/onpunch(var/mob/target as mob, zone, var/datum/pathogen/P )
+	proc/onpunch(var/mob/target as mob, zone, var/datum/pathogen/P)
 	proc/ondisarm(var/mob/target as mob, isPushDown, var/datum/pathogen/P)
 	proc/onshocked(var/datum/shockparam/param, var/datum/pathogen/P)
 	proc/onsay(message, var/datum/pathogen/P)
@@ -215,8 +214,7 @@
 				better = 1
 			if (param.amt > 30 || better)
 				P.infected.show_message("<span class='notice'>You feel better.</span>")
-		//if(P.curable_by_suppression && prob(param.amt>100?100:param.amt))      // just to make this a little more likely to actually cure, or else it's too hard
-			//P.remission()
+				P.remission()
 
 	may_react_to()
 		return "Membrane patterns of the pathogen indicate it might be <b style='font-size:20px;color:red'>suppressed</b> by a reagent affecting neural activity."

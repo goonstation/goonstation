@@ -287,7 +287,7 @@
 	item_state = "vial"
 	var/datum/microbody/FM = null
 
-	/*New()
+	New()
 		..()
 		SPAWN(2 SECONDS)
 			#ifdef CREATE_PATHOGENS // PATHOLOGY REMOVAL
@@ -316,7 +316,7 @@
 
 /obj/item/reagent_containers/glass/vial/prepared/fungus
 	FM = /datum/microbody/fungi
-*/
+
 /*
 /obj/item/reagent_containers/glass/beaker/parasiticmedium
 	name = "Beaker of Parasitic Medium"

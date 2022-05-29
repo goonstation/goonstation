@@ -18,10 +18,10 @@ datum/controller/pathogen
 	var/list/pathogen_trees = new/list()
 	var/next_uid = 1
 
-	var/list/UID_to_symptom
-	var/list/symptom_to_UID
-	var/list/UID_to_suppressant
-	var/list/suppressant_to_UID
+	//var/list/UID_to_symptom
+	//var/list/symptom_to_UID
+	//var/list/UID_to_suppressant
+	//var/list/suppressant_to_UID
 	var/list/microbody_to_UID
 
 	var/list/path_to_symptom = list()
@@ -45,9 +45,12 @@ datum/controller/pathogen
 	var/list/nutrients = list()
 	var/list/media = list()
 
-	proc/get_microbody(var/strength)
-		var/datum/microbody/M
-		M = rand(1, choicemax)
+	proc/get_microbody()
+		var/list/L = list()
+		for(var/R in concrete_typesof(/datum/microbody))
+			L += R
+		L = sortList(L)
+		var/M = pick(L)
 		return M
 
 	proc/mob_infected(var/datum/pathogen/P, var/mob/living/carbon/human/H)
@@ -95,8 +98,8 @@ datum/controller/pathogen
 						H.cured(H.pathogens[CDC.uid])
 						count++
 				message_admins("[key_name(usr)] cured [count] humans from pathogen strain [strain].")
-			if ("strain_details")
-				cdc_state[key] = href_list["strain"]
+			//if ("strain_details")
+				//cdc_state[key] = href_list["strain"]
 			if ("pathogen_creator")
 				var/datum/pathogen/P = src.cdc_creator[usr.ckey]
 				switch (href_list["do"])
@@ -166,7 +169,7 @@ datum/controller/pathogen
 						message_admins("[key_name(usr)] created a new pathogen ([P]) via the creator.")
 						src.gen_empty(usr.ckey)
 
-			if ("strain_data")
+			/*if ("strain_data")
 				var/datum/pathogen_cdc/CDC = locate(href_list["which"])
 				var/name = href_list["name"]
 				var/datum/pathogen/reference = CDC.mutations[name]
@@ -229,7 +232,7 @@ datum/controller/pathogen
 						else
 							target.infected(reference)
 							message_admins("[key_name(usr)] infected [target] with [name].")
-					/*if ("spawn")
+					if ("spawn")
 						var/obj/item/reagent_containers/glass/vial/V = new /obj/item/reagent_containers/glass/vial(get_turf(usr))
 						var/datum/reagent/blood/pathogen/RE = new /datum/reagent/blood/pathogen()
 						RE.volume = 5
@@ -240,7 +243,7 @@ datum/controller/pathogen
 						V.reagents.reagent_list[RE.id] = RE
 						V.reagents.update_total()
 */
-			if ("microbody_data")
+			/*if ("microbody_data")
 				var/datum/microbody/MB = locate(href_list["which"])
 				switch (href_list["data"])
 					if ("stages")
@@ -258,7 +261,7 @@ datum/controller/pathogen
 				var/datum/pathogeneffects/EF = locate(href_list["which"])
 				switch (href_list["data"])
 					if ("info")
-						alert(usr, EF.desc)
+						alert(usr, EF.desc)*/
 		cdc_main(th)
 
 	var/list/cdc_creator = list()
@@ -492,8 +495,8 @@ datum/controller/pathogen
 
 	New()
 		..()
-		UID_to_symptom = list()
-		symptom_to_UID = list()
+		//UID_to_symptom = list()
+		//symptom_to_UID = list()
 		microbody_to_UID = list()
 
 		for (var/T in childrentypesof(/datum/microbody))
@@ -541,24 +544,12 @@ datum/controller/pathogen
 					l_vr += E
 
 		var/list/used = list()
-		/*
-		var/list/vc = list()
-		var/list/cp = list()
-		var/list/cu = list()
-		var/list/up = list()
-		var/list/uu = list()
-		var/list/rp = list()
-		var/list/ru = list()
-		var/list/vrp = list()
-		var/list/vru = list()
-*/
+
 		for (var/T in childrentypesof(/datum/suppressant))
 			var/r
 			do
 				r = num2hex(rand(0, 4095), 3)
 			while (r in used)
-			suppressant_to_UID[T] = r
-			UID_to_suppressant[r] = T
 			path_to_suppressant[T] = new T()
 			used += r
 
@@ -596,15 +587,16 @@ datum/pathogen
 
 	var/advance_speed								// The speed at which this pathogen advances stages. An advance speed of N means a flat N/100% chance to advance each tick.
 	var/ticked = 0									// This handles ticks between advancement rolls.
-	var/cooldown = 3								// An internal 'cooldown' so that the pathogen doesn't instantly advance to stage 5.
+	var/cooldown = 5								// An internal 'cooldown' so that the pathogen doesn't instantly advance to stage 5.
 	var/stage										// The current stage of the pathogen.
 	var/stages										// How far the pathogen may advance. Higher stages allow for more malicious/benevolent effects of symptoms. (3 to 5)
 	var/duration									// How long a pathogen stays in the highest stage before being naturally immunized.
 
 	var/datum/microbody/body_type					// The body type of the pathogen, providing intrinsic properties.
+	var/forced_microbody = null						// If not null, this pathogen will be generated with a specific microbody.
 
-	var/cure_catagory								// Sets the type of cure (chemical, thermal, surgical, etc.)
-	var/suppression_threshold								// The value describing the cure condition. When the cure condition is met, the pathogen will dissipate within 10-30 seconds without needing further oversight/work.
+	var/datum/suppressant/suppressant				// The specific cure(s).
+	var/suppression_threshold						// The value describing the cure condition. When the cure condition is met, the pathogen will dissipate within 10-30 seconds without needing further oversight/work.
 	var/in_remission = 0							// Pathogens in remission are being cured by the body. Set by the curing reagent or by the duration of infection.
 
 	var/list/symptom_data = list()					// Symptom data container.
@@ -615,10 +607,6 @@ datum/pathogen
 	var/spread										// This is a modifier that determines how easily the pathogen spreads.
 	var/max_infections								// The maximum number of unique infections this pathogen can make.
 
-	var/forced_microbody = null						// If not null, this pathogen will be generated with a specific microbody.
-	var/suppressed = 0
-
-	var/datum/suppressant/suppressant
 
 // PROCS AND FUNCTIONS FOR GENERATION
 
@@ -634,12 +622,12 @@ datum/pathogen
 		infected = null
 		advance_speed = 0
 		ticked = 0
-		cooldown = 3
+		cooldown = 5
 		stage = 1
 		stages = 1
 		duration = 1
 		body_type = null
-		cure_catagory = null
+		suppressant = null
 		suppression_threshold = null
 		in_remission = 0
 		symptom_data = list()
@@ -650,87 +638,85 @@ datum/pathogen
 		max_infections = 5
 		forced_microbody = initial(forced_microbody)
 
-		suppressant = null
-		suppressed = 0
+
 
 	proc/clone()
 		var/datum/pathogen/P = new /datum/pathogen
 		P.setup(0, src, 0)
 		return P
 
-	proc/do_prefab(var/strength = 0)
+	proc/do_prefab(tier)			//for ailments with defined symptoms
 		clear()
 		var/cdc = generate_name()
 		generate_cure(cdc)
-		generate_attributes(strength)
+		generate_attributes(tier)
 
 	New()
 		..()
 		setup(0, null, 0)
 
 	proc/create_weak()
-		randomize(0)
-
-	proc/cdc_announce(var/mob/M)
-		var/datum/pathogen_cdc/CDC = null
-		if (name_base in pathogen_controller.pathogen_trees)
-			CDC = pathogen_controller.pathogen_trees[name_base]
-		else
-			CDC = new /datum/pathogen_cdc(pathogen_uid)
-			pathogen_controller.pathogen_trees[name_base] = CDC
-			pathogen_controller.next_mutation[pathogen_uid] = mutation + 1
-			CDC.microbody_type = body_type
-		//CDC.strain += name
-		CDC.mutations[name] = clone()
-		return
+		randomize(1)
 
 	proc/generate_name()
 		src.name_base = pick(pathogen_controller.lalph) + pick(pathogen_controller.lnums) + pick(pathogen_controller.lalph)
-
-//		if (ticker)
-//			if (current_state == GAME_STATE_PLAYING)
-//				message_admins("Pathogen tree [src.name_base] entering play.")
-
+		if (ticker)
+			if (current_state == GAME_STATE_PLAYING)
+				message_admins("Pathogen tree [src.name_base] entering play.")
 		return
 
-	proc/generate_microbody(var/datum/pathogen_cdc/cdc, var/strength)
+	proc/generate_microbody(var/datum/pathogen_cdc/cdc)
 		if (!forced_microbody)
-			src.body_type = pathogen_controller.get_microbody(strength)
+			src.body_type = pathogen_controller.get_microbody()
 			cdc.microbody_type = "[src.body_type]"
+			return cdc.microbody_type
 		else
 			src.body_type = pathogen_controller.path_to_microbody[forced_microbody]
 			cdc.microbody_type = "[src.body_type]"
+			return cdc.microbody_type
 
-	proc/generate_cure(var/datum/pathogen_cdc/cdc, var/strength)
-		var/supp_t = pick(pathogen_controller.path_to_suppressant)
-		suppressant = pathogen_controller.path_to_suppressant[supp_t]
-		suppressant.onadd(src)
-
-	proc/generate_randomized_effects(var/strength)
-		var/adj_strength = strength - 8
-		if (strength != -1)
-			var/effcount = pick(1, prob(50); 2, prob(25); 3, prob(10); 4, prob(10); 5)
-			for (var/i = 0, i < effcount, i++)
-				var/val = rand(adj_strength, adj_strength + 8)
-				if (val < 6)
-					generate_weak_effect()
-				else if (val < 14)
-					generate_effect()
-				else
-					generate_strong_effect()
-
-	proc/generate_attributes(var/strength)
+	proc/generate_attributes()
 		src.stages = src.body_type.stages
 		var/shape = pick("stringy", "snake", "blob", "spherical", "tetrahedral", "star shaped", "tesselated")
 		src.desc = "[src.suppressant.color] [shape] [src.body_type.plural]"
 		src.stage = 1
 
-	proc/randomize(var/strength)
-		var/datum/pathogen_cdc/cdc = generate_name()
-		generate_randomized_effects(strength)
-		generate_cure(cdc, strength)
-		generate_attributes(strength)
+	proc/generate_symptoms(var/tier, var/microbody_select)
+		var/threatroll = list()
+		var/symptomcount = 3*tier + rand(4,8) //Need to playtest this distribution
+		for (var/i = 0, i < symptomcount, i++)
+			switch(tier)
+				if (1)
+					threatroll = pick(prob(50); 1, prob(25); 2, prob(10); 3)
+				if (2)
+					threatroll = pick(prob(23); 1, prob(50); 2, prob(19); 3, prob(8); 4)
+				if (3)
+					threatroll = pick(prob(33); 2, prob(50); 3, prob(13); 4, prob(4); 5)
+			if (threatroll == 1) // 40%
+				return src.add_new_symptom(pathogen_controller.l_vc)
+			if (threatroll == 2) // 30%
+				return src.add_new_symptom(pathogen_controller.l_c)
+			if (threatroll == 3) // 15%
+				return src.add_new_symptom(pathogen_controller.l_u)
+			if (threatroll == 4 || (threatroll == 5 && microbody_select != "fungi")) // 8%
+				return src.add_new_symptom(pathogen_controller.l_r)
+			if (threatroll == 5 && microbody_select == "fungi") // 7%
+				return src.add_new_symptom(pathogen_controller.l_vr)
 
+	proc/generate_cure(var/datum/pathogen_cdc/cdc)
+		var/list/L = list()
+		for(var/R in concrete_typesof(/datum/reagent/medical))
+			L += R
+		L = sortList(L)
+		suppressant = pick(L)
+		suppressant.onadd(src)
+
+	proc/randomize(var/tier)
+		var/datum/pathogen_cdc/cdc = generate_name()
+		var/microbody_select = generate_microbody()
+		generate_attributes()
+		generate_symptoms(tier, microbody_select)
+		generate_cure(cdc, tier)
 		logTheThing("pathology", null, null, "Pathogen [name] created by randomization.")
 
 	proc/setup(status, var/datum/pathogen/origin, tier)
@@ -746,50 +732,17 @@ datum/pathogen
 			src.stage = 1
 			src.stages = origin.stages
 			src.body_type = origin.body_type
-			src.cure_catagory = origin.cure_catagory
+			src.suppressant = origin.suppressant
 			src.suppression_threshold = origin.suppression_threshold
 			src.effects = origin.effects.Copy()
 			for (var/datum/pathogeneffects/E in src.effects)
 				E.onadd(src)
 			src.spread = origin.spread
 		else if (status == 1)
-			src.randomize(8)
+			src.randomize(1)
 		else if (!origin && status == 2)
-			src.do_prefab()
+			src.do_prefab(1)
 		processing_items.Add(src)
-
-	proc/generate_weak_effect()
-		switch(rand(1,100))
-			if (1 to 70) //71%
-				return src.add_new_symptom(pathogen_controller.l_vc)
-			if (71 to 97) //27%
-				return src.add_new_symptom(pathogen_controller.l_c)
-			if (98 to 100) //3%
-				return src.add_new_symptom(pathogen_controller.l_u)
-
-	proc/generate_effect()
-		switch(rand(1,100))
-			if (1 to 60) // 60%
-				return src.add_new_symptom(pathogen_controller.l_vc)
-			if (61 to 85) // 25%
-				return src.add_new_symptom(pathogen_controller.l_c)
-			if (86 to 94) // 8%
-				return src.add_new_symptom(pathogen_controller.l_u)
-			if (95 to 100) // 6%
-				return src.add_new_symptom(pathogen_controller.l_r)
-
-	proc/generate_strong_effect()
-		switch(rand(1,100))
-			if (1 to 40) // 40%
-				return src.add_new_symptom(pathogen_controller.l_vc)
-			if (41 to 70) // 30%
-				return src.add_new_symptom(pathogen_controller.l_c)
-			if (71 to 85) // 15%
-				return src.add_new_symptom(pathogen_controller.l_u)
-			if (86 to 93) // 8%
-				return src.add_new_symptom(pathogen_controller.l_r)
-			if (94 to 100) // 7%
-				return src.add_new_symptom(pathogen_controller.l_vr)
 
 	proc/process()
 		if (ticked)
@@ -797,29 +750,19 @@ datum/pathogen
 
 	// handles pathogen advancing or receding in stage and also being cured
 	proc/progress_pathogen()
-		if (!cooldown)
-			if (in_remission)
-				if (prob(advance_speed/10))
-					if (stage == 1)
-						infected.cured(src)
-					else
-						reduce()
-				return
-			if (suppressed != -1)
-				var/result = suppressant.suppress_act(src)
-				if (suppressed == 0)
-					suppressed = result
-			if (advance_speed)
-				if (prob(advance_speed/10))
-					if (suppressed < 1)
-						advance()
-					else if (stage > 3)
-						reduce()
-			if (suppressed > 0)
-				in_remission = 1
-			ticked = 1
-		else
+		if (cooldown)
 			cooldown--
+			return
+		if (in_remission && stage == 1)
+			infected.cured(src)
+		if (in_remission && stage >= 1)
+			reduce()
+		if (advance_speed && prob(advance_speed/10))
+			advance()
+		var/result = suppressant.suppress_act(src)
+		if (result)
+			in_remission = 1
+		ticked = 1
 
 	// This is the real thing, wrapped by process().
 	proc/disease_act()
@@ -876,7 +819,6 @@ datum/pathogen
 			cooldown = COOLDOWN_MULTIPLIER * 3 + 2 * stage
 		else
 			infected.cured(src)
-
 
 	proc/remission()
 		in_remission = 1

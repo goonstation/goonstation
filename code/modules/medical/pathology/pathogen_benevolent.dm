@@ -8,10 +8,10 @@ datum/pathogeneffects/benevolent
 datum/pathogeneffects/benevolent/mending
 	name = "Wound Mending"
 	desc = "Slow paced brute damage healing."
-	rarity = RARITY_COMMON
+	rarity = THREAT_BENETYPE2
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (!origin.symptomatic)
+		if (origin.in_remission)
 			return
 		//if (prob(origin.stage * 5))
 		M.HealDamage("All", origin.stage / 2, 0)
@@ -27,10 +27,10 @@ datum/pathogeneffects/benevolent/mending
 datum/pathogeneffects/benevolent/healing
 	name = "Burn Healing"
 	desc = "Slow paced burn damage healing."
-	rarity = RARITY_COMMON
+	rarity = THREAT_BENETYPE2
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (!origin.symptomatic)
+		if (origin.in_remission)
 			return
 		//if (prob(origin.stage * 5))
 		M.HealDamage("All", 0, origin.stage / 2)
@@ -49,10 +49,10 @@ datum/pathogeneffects/benevolent/healing
 datum/pathogeneffects/benevolent/fleshrestructuring
 	name = "Flesh Restructuring"
 	desc = "Fast paced general healing."
-	rarity = RARITY_RARE
+	rarity = THREAT_BENETYPE4
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (!origin.symptomatic)
+		if (origin.in_remission)
 			return
 		if (prob(origin.stage * 5))
 			M.HealDamage("All", origin.stage, origin.stage)
@@ -78,10 +78,10 @@ datum/pathogeneffects/benevolent/fleshrestructuring
 datum/pathogeneffects/benevolent/detoxication
 	name = "Detoxication"
 	desc = "The pathogen aids the host body in metabolizing ethanol."
-	rarity = RARITY_COMMON
+	rarity = THREAT_BENETYPE2
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (!origin.symptomatic)
+		if (origin.in_remission)
 			return
 		var/times = 1
 		if (origin.stage > 3)
@@ -113,10 +113,10 @@ datum/pathogeneffects/benevolent/detoxication
 datum/pathogeneffects/benevolent/metabolisis
 	name = "Accelerated Metabolisis"
 	desc = "The pathogen accelerates the metabolisis of all chemicals present in the host body."
-	rarity = RARITY_RARE
+	rarity = THREAT_BENETYPE4
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (!origin.symptomatic)
+		if (origin.in_remission)
 			return
 		var/times = 1
 		if (origin.stage > 3)
@@ -147,10 +147,10 @@ datum/pathogeneffects/benevolent/metabolisis
 datum/pathogeneffects/benevolent/cleansing
 	name = "Cleansing"
 	desc = "The pathogen cleans the body of damage caused by toxins."
-	rarity = RARITY_UNCOMMON
+	rarity = THREAT_BENETYPE3
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (!origin.symptomatic)
+		if (origin.in_remission)
 			return
 		//if (prob(origin.stage * 5) && M.get_toxin_damage())
 		if (M.get_toxin_damage())
@@ -167,7 +167,7 @@ datum/pathogeneffects/benevolent/cleansing
 datum/pathogeneffects/benevolent/oxygenconversion
 	name = "Oxygen Conversion"
 	desc = "The pathogen converts organic tissue into oxygen when required by the host."
-	rarity = RARITY_RARE
+	rarity = THREAT_BENETYPE4
 
 	may_react_to()
 		return "The pathogen appears to radiate oxygen."
@@ -177,7 +177,7 @@ datum/pathogeneffects/benevolent/oxygenconversion
 			return "The pathogen consumes the synthflesh and converts it into oxygen."
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (!origin.symptomatic)
+		if (origin.in_remission)
 			return
 		var/mob/living/carbon/C = M
 		if (C.get_oxygen_deprivation())
@@ -186,13 +186,13 @@ datum/pathogeneffects/benevolent/oxygenconversion
 datum/pathogeneffects/benevolent/oxygenstorage
 	name = "Oxygen Storage"
 	desc = "The pathogen stores oxygen and releases it when needed by the host."
-	rarity = RARITY_RARE
+	rarity = THREAT_BENETYPE4
 
 	may_react_to()
 		return "The pathogen appears to have a bubble of oxygen around it."
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (!origin.symptomatic)
+		if (origin.in_remission)
 			return
 		if(!origin.symptom_data["oxygen_storage"]) // if not yet set, initialize
 			origin.symptom_data["oxygen_storage"] = 0
@@ -210,14 +210,14 @@ datum/pathogeneffects/benevolent/oxygenstorage
 datum/pathogeneffects/benevolent/resurrection
 	name = "Necrotic Resurrection"
 	desc = "The pathogen will resurrect you if it procs while you are dead."
-	rarity = RARITY_VERY_RARE
+	rarity = THREAT_BENETYPE4
 	var/cooldown = 20 MINUTES
 
 	may_react_to()
 		return "Some of the pathogen's dead cells seem to remain active."
 
 	disease_act_dead(var/mob/M as mob, var/datum/pathogen/origin)
-		if (!origin.symptomatic)
+		if (origin.in_remission)
 			return
 		if (origin.stage < 3)
 			return
@@ -266,11 +266,11 @@ datum/pathogeneffects/benevolent/resurrection
 datum/pathogeneffects/benevolent/brewery
 	name = "Auto-Brewery"
 	desc = "The pathogen aids the host body in metabolizing chemicals into ethanol."
-	rarity = RARITY_RARE
+	rarity = THREAT_BENETYPE4
 	beneficial = 0
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (!origin.symptomatic)
+		if (origin.in_remission)
 			return
 		var/times = 1
 		if (origin.stage > 3)
@@ -305,13 +305,13 @@ datum/pathogeneffects/benevolent/oxytocinproduction
 	name = "Oxytocin Production"
 	desc = "The pathogen produces Pure Love within the infected."
 	infect_type = INFECT_TOUCH
-	rarity = RARITY_COMMON
+	rarity = THREAT_BENETYPE2
 	spread = SPREAD_BODY | SPREAD_HANDS
 	infect_message = "<span style=\"color:pink\">You can't help but feel loved.</span>"
 	infect_attempt_message = "Their touch is suspiciously soft..."
 
 	onemote(mob/M as mob, act, voluntary, param, datum/pathogen/origin)
-		if (!origin.symptomatic)
+		if (origin.in_remission)
 			return
 		if (act != "hug" && act != "sidehug")  // not a hug
 			return
@@ -324,7 +324,7 @@ datum/pathogeneffects/benevolent/oxytocinproduction
 				return
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (!origin.symptomatic)
+		if (origin.in_remission)
 			return
 		var/check_amount = M.reagents.get_reagent_amount("love")
 		if (!check_amount || check_amount < 5)
@@ -336,10 +336,10 @@ datum/pathogeneffects/benevolent/oxytocinproduction
 datum/pathogeneffects/benevolent/neuronrestoration
 	name = "Neuron Restoration"
 	desc = "Infection slowly repairs nerve cells in the brain."
-	rarity = RARITY_UNCOMMON
+	rarity = THREAT_BENETYPE3
 	infect_type = INFECT_NONE
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (!origin.symptomatic)
+		if (origin.in_remission)
 			return
 		switch (origin.stage)
 			if (2)
@@ -366,7 +366,7 @@ datum/pathogeneffects/benevolent/sunglass
 	name = "Sunglass Glands"
 	desc = "The infected grew sunglass glands."
 	infect_type = INFECT_NONE
-	rarity = RARITY_UNCOMMON
+	rarity = THREAT_BENETYPE3
 
 	proc/glasses(var/mob/living/carbon/human/M as mob)
 		var/obj/item/clothing/glasses/G = M.glasses
@@ -384,7 +384,7 @@ datum/pathogeneffects/benevolent/sunglass
 			M.update_clothing()
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (!origin.symptomatic)
+		if (origin.in_remission)
 			return
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
@@ -410,12 +410,12 @@ datum/pathogeneffects/benevolent/sunglass
 datum/pathogeneffects/benevolent/genetictemplate
 	name = "Genetic Template"
 	desc = "Spreads a mutation from patient zero to other afflicted."
-	rarity = RARITY_VERY_RARE
+	rarity = THREAT_BENETYPE4
 	infect_type = INFECT_NONE
 	var/list/mutationMap = list() // stores the kind of mutation with the index being the pathogen's name (which is something like "L41D9")
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (!origin.symptomatic || !M.bioHolder)
+		if (!!origin.in_remission || !M.bioHolder)
 			return
 		if(mutationMap[origin.name_base] == null) // if no mutation has been picked yet, go for a random one from this person
 			var/list/filtered = new/list()
@@ -456,7 +456,7 @@ datum/pathogeneffects/benevolent/genetictemplate
 		origin.symptom_data["genetictemplate"] = origin.stage // save the last stage that we added the mutation with
 
 	oncured(mob/M as mob, var/datum/pathogen/origin)
-		if (!origin.symptomatic)
+		if (origin.in_remission)
 			return
 		var/datum/bioEffect/BE = mutationMap[origin.name_base] // cure the mutation when the pathogen is cured
 		M.bioHolder.RemoveEffect(BE.id)

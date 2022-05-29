@@ -2469,9 +2469,9 @@
 		return
 	if (ischangeling(src) || isvampire(src)) // Vampires were missing here. They're immune to old-style diseases too (Convair880).
 		return 0
-	//if (P.pathogen_uid in src.immunities)
-		//return 0
-	//if (!(P.pathogen_uid in src.pathogens))
+	if (P.pathogen_uid in src.immunities)
+		return 0
+	if (!(P.pathogen_uid in src.pathogens))
 		//var/maxTierExisting = 0
 		//for (var/uid in src.pathogens)
 			//var/datum/pathogen/PA = src.pathogens[uid]
@@ -2488,14 +2488,14 @@
 			//src.cured(PA)
 
 		// and get the new one instead
-		//var/datum/pathogen/Q = new /datum/pathogen
-		//Q.setup(0, P, 1)
-		//pathogen_controller.mob_infected(Q, src)
-		//src.pathogens += Q.pathogen_uid
-		//src.pathogens[Q.pathogen_uid] = Q
-		//Q.infected = src
-		//logTheThing("pathology", src, null, "is infected by [Q].")
-		//return 1
+		var/datum/pathogen/Q = new /datum/pathogen
+		Q.setup(0, P, 1)
+		pathogen_controller.mob_infected(Q, src)
+		src.pathogens += Q.pathogen_uid
+		src.pathogens[Q.pathogen_uid] = Q
+		Q.infected = src
+		logTheThing("pathology", src, null, "is infected by [Q].")
+		return 1
 	//else
 		//var/datum/pathogen/C = src.pathogens[P.pathogen_uid]
 		//if (C.generation < P.generation)
@@ -2511,7 +2511,7 @@
 	return 0
 
 /mob/living/carbon/human/cured(var/datum/pathogen/P)
-	/*if (P.pathogen_uid in src.pathogens)
+	if (P.pathogen_uid in src.pathogens)
 		pathogen_controller.mob_cured(src.pathogens[P.pathogen_uid], src)
 		var/datum/pathogen/Q = src.pathogens[P.pathogen_uid]
 		var/pname = Q.name
@@ -2520,22 +2520,22 @@
 		if (M.auto_immunize)
 			immunity(P)
 		qdel(Q)
-		logTheThing("pathology", src, null, "is cured of [pname].")*/
+		logTheThing("pathology", src, null, "is cured of [pname].")
 
 /mob/living/carbon/human/remission(var/datum/pathogen/P)
 	if (isdead(src))
 		return
-	//if (P.pathogen_uid in src.pathogens)
-		//var/datum/pathogen/Q = src.pathogens[P.pathogen_uid]
-	//	Q.remission()
-	//	logTheThing("pathology", src, null, "'s pathogen [Q] enters remission.")
+	if (P.pathogen_uid in src.pathogens)
+		var/datum/pathogen/Q = src.pathogens[P.pathogen_uid]
+		Q.remission()
+		logTheThing("pathology", src, null, "'s pathogen [Q] enters remission.")
 
 /mob/living/carbon/human/immunity(var/datum/pathogen/P)
 	if (isdead(src))
 		return
-//	if (!(P.pathogen_uid in src.immunities))
-	//	src.immunities += P.pathogen_uid
-		//logTheThing("pathology", src, null, "gains immunity to pathogen [P].")
+	if (!(P.pathogen_uid in src.immunities))
+		src.immunities += P.pathogen_uid
+		logTheThing("pathology", src, null, "gains immunity to pathogen [P].")
 
 /mob/living/carbon/human/emag_act(mob/user, obj/item/card/emag/E)
 

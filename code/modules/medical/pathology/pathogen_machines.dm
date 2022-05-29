@@ -953,7 +953,7 @@
 					success=1
 					src.manip.loaded.move_mutation()
 					if (src.manip.loaded && !src.manip.loaded.disposed)
-						src.manip.loaded.reference.cdc_announce(usr)
+						src.manip.loaded.reference.cdc_announce(usr) ///proc deleted
 
 					var/datum/pathogendna/source = src.manip.slots[src.manip.splicesource]
 					logTheThing("pathology", usr, null, "splices pathogen [source.reference.name] into [oldname] creating [src.manip.loaded.reference.name].")

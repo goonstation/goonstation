@@ -14,9 +14,6 @@ datum/microbody
 	var/singular = "microscopic body"
 	var/plural = "microscopic bodies"
 
-	// The strength of the microbody. Used for randomization.
-	var/strength = 2
-
 	// The amount of stages a pathogen with this microbody has.
 	// Technically, this means there are less aggressive and more aggressive infections depending on the microbody.
 	// Keep this value between 3 and 5.
