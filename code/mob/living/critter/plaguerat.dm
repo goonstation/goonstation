@@ -144,6 +144,7 @@ ABSTRACT_TYPE(/mob/living/critter/plaguerat)
 			var/mob/living/critter/plaguerat/new_rat = new adultpath(get_turf(src), MA)
 			var/mob/living/critter/plaguerat/old_rat = src
 			src.mind.transfer_to(new_rat)
+			animate_buff_in(new_rat)
 			qdel(old_rat)
 
 /mob/living/critter/plaguerat/young
