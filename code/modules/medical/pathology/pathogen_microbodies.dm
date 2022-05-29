@@ -28,6 +28,8 @@ datum/microbody
 	// Activity determines the probability of symptoms manifesting in each stage for a particular microbody.
 	var/activity = list(20, 20, 20, 20, 20)
 
+	///// GROWTH VARS /////
+
 	// The growth medium is the reagent whose presence will make pathogens of this microbody grow in petri dishes.
 	// DO NOT set this to "blood" or "pathogen", only to a derivative.
 	var/growth_medium = "water"
@@ -35,14 +37,35 @@ datum/microbody
 	// A list of reagent IDs, each of which is required for the growth of a pathogen.
 	var/list/nutrients = list("water", "sugar", "sodium", "iron", "nitrogen")
 
-	// If 1, curing also immunizes to re-infection. Should always be 1.
-	var/auto_immunize = 0
-
 	// The amount of nutrition of each type required per unit of pathogen to continue cultivation.
 	var/amount = 0.07
 
-	/// The maximum amount of points that can be spread over the various stats
-	var/maxStats = 100
+	// If 1, curing also immunizes to re-infection. Should always be 1.
+	var/auto_immunize = 0
+
+
+	///// MODIFIERS /////
+
+	// Final multiplier for the total natural duration of infection.
+	var/modifier_duration = 1
+
+	// Final multiplier for the total value of a generated pathogen.
+	var/modifier_bountyvalue = 1
+
+	// Final multiplier for the cost to create an artificial pathogen.
+	var/modifier_creationcost = 1
+
+	// Final multiplier for the spread probability calculations.
+	var/modifier_spreadprob = 1
+
+	// Final multiplier for the stage advancement rate calculations.
+	var/modifier_advancerate = 1
+
+	// Final multiplier for the cure requirement of a pathogen.
+	var/modifier_curerequirement = 1
+
+	// Numeric modifier to the maximum number of infections a pathogen may make.
+	var/modifier_maxinfections = 0
 
 	disposing()
 		SHOULD_CALL_PARENT(FALSE) //Looks like these should never be deleted.
@@ -63,6 +86,9 @@ datum/microbody/virus
 
 	auto_immunize = 1
 
+	modifier_duration = 0.8 //-20% duration of max stage symptoms before natural immunity
+	modifier_spreadprob = 1.2 //+20% to the final roll for infecting other people.
+
 datum/microbody/bacteria
 	name = "Bacteria"
 	singular = "bacterium"
@@ -75,6 +101,9 @@ datum/microbody/bacteria
 	growth_medium = "egg"
 
 	auto_immunize = 1
+
+	modifier_creationcost = 0.75 //-25% creation cost!
+	modifier_bountyvalue = 0.75  //-25% bounty value!
 
 datum/microbody/fungi
 	name = "Fungi"
@@ -89,6 +118,9 @@ datum/microbody/fungi
 
 	auto_immunize = 1
 
+	modifier_advancerate = 0.7 // -30% on final chance to advance stages
+	modifier_creationcost = 0.85 // -15% final creation cost
+
 datum/microbody/parasite
 	name = "Parasites"
 	singular = "parasite"
@@ -101,6 +133,11 @@ datum/microbody/parasite
 	growth_medium = "egg"
 
 	auto_immunize = 1
+
+	modifier_curerequirement = 2 //Doubles the cure requirement!
+	modifier_maxinfections = -2 //-2 total infections
+	modifier_bountyvalue = 1.1
+	modifier_creationcost = 1.1
 
 /*datum/microbody/gmcell // TODO: I kind of removed mutations so I should really rename this, I guess
 	name = "Great Mutatis cell"

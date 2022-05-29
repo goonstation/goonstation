@@ -755,12 +755,13 @@ datum/pathogen
 	var/cooldown = 3								// An internal 'cooldown' so that the pathogen doesn't instantly advance to stage 5.
 	var/stage										// The current stage of the pathogen.
 	var/stages										// How far the pathogen may advance. Higher stages allow for more malicious/benevolent effects of symptoms. (3 to 5)
+	var/duration									// How long a pathogen stays in the highest stage before being naturally immunized.
 
 	var/datum/microbody/body_type					// The body type of the pathogen, providing intrinsic properties.
 
 	var/cure_catagory								// Sets the type of cure (chemical, thermal, surgical, etc.)
 	var/cure_threshold								// The value describing the cure condition. When the cure condition is met, the pathogen will dissipate within 10-30 seconds without needing further oversight/work.
-	var/in_remission = 0							// Pathogens in remission are being cured by the body. Set by the curing reagent.
+	var/in_remission = 0							// Pathogens in remission are being cured by the body. Set by the curing reagent or by the duration of infection.
 
 	var/list/symptom_data = list()					// Symptom data container.
 	var/list/effects = list()						// A list of symptoms exhibited by those infected with this pathogen.
@@ -768,6 +769,7 @@ datum/pathogen
 
 	var/transmissions = list()						// This is a list of the mediums through which a pathogen can spread.
 	var/spread										// This is a modifier that determines how easily the pathogen spreads.
+	var/max_infections								// The maximum number of unique infections this pathogen can make.
 
 	var/forced_microbody = null						// If not null, this pathogen will be generated with a specific microbody.
 
@@ -788,6 +790,7 @@ datum/pathogen
 		cooldown = 3
 		stage = 1
 		stages = 1
+		duration = 1
 		body_type = null
 		cure_catagory = null
 		cure_threshold = null
@@ -797,6 +800,7 @@ datum/pathogen
 		mutex = list()
 		transmissions = list()
 		spread = 1
+		max_infections = 5
 		forced_microbody = initial(forced_microbody)
 
 	proc/clone()
