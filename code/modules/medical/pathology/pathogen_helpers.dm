@@ -64,7 +64,7 @@
 
 /mob/proc/become_statue_rock()
 	become_statue(getMaterial("rock"), "Its not too uncommon for our employees to be stoned at work but this is just ridiculous!")
-/*
+
 /proc/generate_random_pathogen()
 	var/datum/pathogen/P = new /datum/pathogen
 	P.setup(1, null, 0)
@@ -81,7 +81,7 @@
 	var/datum/pathogen_cdc/cdc = P.generate_name()
 	cdc.mutations += P.name
 	cdc.mutations[P.name] = P
-	P.generate_components(cdc, 0)
+	P.generate_cure(cdc, 0)
 	P.generate_attributes(0)
 	P.advance_speed = 25
 	P.spread = 25
@@ -89,4 +89,4 @@
 	P.add_symptom(pathogen_controller.path_to_symptom[stype])
 	logTheThing("pathology", null, null, "Pathogen [P.name] created by quick-pathogen-proc with symptom [stype].")
 	return P
-*/
+

@@ -20,13 +20,13 @@ datum/controller/pathogen
 
 	var/list/UID_to_symptom
 	var/list/symptom_to_UID
-	var/list/UID_to_cure
-	var/list/cure_to_UID
+	var/list/UID_to_suppressant
+	var/list/suppressant_to_UID
 	var/list/microbody_to_UID
 
 	var/list/path_to_symptom = list()
 	var/list/path_to_microbody = list()
-	var/list/path_to_cure = list()
+	var/list/path_to_suppressant = list()
 
 	var/list/pathogen_affected_reagents = list("blood", "pathogen", "bloodc")
 
@@ -44,7 +44,6 @@ datum/controller/pathogen
 
 	var/list/nutrients = list()
 	var/list/media = list()
-	var/list/cure_bases = list()
 
 	proc/get_microbody(var/strength)
 		var/datum/microbody/M
@@ -98,7 +97,7 @@ datum/controller/pathogen
 				message_admins("[key_name(usr)] cured [count] humans from pathogen strain [strain].")
 			if ("strain_details")
 				cdc_state[key] = href_list["strain"]
-			/*if ("pathogen_creator")
+			if ("pathogen_creator")
 				var/datum/pathogen/P = src.cdc_creator[usr.ckey]
 				switch (href_list["do"])
 					if ("reset")
@@ -230,7 +229,7 @@ datum/controller/pathogen
 						else
 							target.infected(reference)
 							message_admins("[key_name(usr)] infected [target] with [name].")
-					if ("spawn")
+					/*if ("spawn")
 						var/obj/item/reagent_containers/glass/vial/V = new /obj/item/reagent_containers/glass/vial(get_turf(usr))
 						var/datum/reagent/blood/pathogen/RE = new /datum/reagent/blood/pathogen()
 						RE.volume = 5
@@ -240,7 +239,7 @@ datum/controller/pathogen
 						V.reagents.reagent_list += RE.id
 						V.reagents.reagent_list[RE.id] = RE
 						V.reagents.update_total()
-						*/
+*/
 			if ("microbody_data")
 				var/datum/microbody/MB = locate(href_list["which"])
 				switch (href_list["data"])
@@ -255,18 +254,18 @@ datum/controller/pathogen
 						if (new_act >= 0 && new_act <= 100)
 							MB.activity[stage] = new_act
 							message_admins("[key_name(usr)] set the activity for pathogen microbody [MB.plural] on stage [stage] to [new_act].")
-			/*if ("symptom_data")
+			if ("symptom_data")
 				var/datum/pathogeneffects/EF = locate(href_list["which"])
 				switch (href_list["data"])
 					if ("info")
-						alert(usr, EF.desc)*/
+						alert(usr, EF.desc)
 		cdc_main(th)
 
 	var/list/cdc_creator = list()
 	var/list/cdc_state = list()
 	var/static/list/states = list("strains", "mutations", "symptoms", "microbodies", "suppressants", "pathogen creator")
 	proc/severity_color(var/datum/pathogeneffects/EF)
-		if (EF.rarity == RARITY_ABSTRACT)
+		if (EF.rarity == THREAT_NEUTRAL)
 			return "[EF]"
 		var/color_value = round(255 / EF.rarity)
 		if (istype(EF, /datum/pathogeneffects/malevolent))
@@ -329,8 +328,6 @@ datum/controller/pathogen
 					output += "Suppression: <a href='?src=\ref[src];action=strain_data;which=\ref[CDC];name=[name];data=suppression_threshold;topic_holder=\ref[topic_holder]'>[P.suppression_threshold]</a><BR>"
 					output += "Spread: <a href='?src=\ref[src];action=strain_data;which=\ref[CDC];name=[name];data=spread;topic_holder=\ref[topic_holder]'>[P.spread]</a><BR>"
 					output += "</td>"
-
-					output += "<td><a href='?src=\ref[src];action=strain_data;which=\ref[CDC];name=[name];data=symptomatic;topic_holder=\ref[topic_holder]'>[P.symptomatic ? "Yes" : "No"]</a></td>"
 					output += "<td><a href='?src=\ref[src];action=strain_data;which=\ref[CDC];name=[name];data=stages;topic_holder=\ref[topic_holder]'>[P.stages]</a></td>"
 
 					var/infected = 0
@@ -396,7 +393,6 @@ datum/controller/pathogen
 							nutrition += "[nutrient]"
 						output += "<td>[nutrition]</td>"
 						output += "<td><a href='?src=\ref[src];action=microbody_data;which=\ref[MB];data=stages;topic_holder=\ref[topic_holder]'>[MB.stages]</a></td>"
-						output += "<td><a href='?src=\ref[src];action=microbody_data;which=\ref[MB];data=vaccinable;topic_holder=\ref[topic_holder]'>[MB.vaccination ? "Yes" : "No"]</a></td>"
 						output += "<td>"
 						for (var/stage = 1, stage <= 5, stage++)
 							if (stage != 1)
@@ -415,20 +411,18 @@ datum/controller/pathogen
 						output += "<td>[EF.infect_type]</td>"
 						output += "<td>[EF.infection_coefficient]</td>"
 						switch (EF.rarity)
-							if (RARITY_ABSTRACT)
-								output += "<td>Non-existent</td>"
-							if (RARITY_VERY_COMMON)
-								output += "<td>Very common</td>"
-							if (RARITY_COMMON)
-								output += "<td>Common</td>"
-							if (RARITY_UNCOMMON)
-								output += "<td>Uncommon</td>"
-							if (RARITY_RARE)
-								output += "<td>Rare</td>"
-							if (RARITY_VERY_RARE)
-								output += "<td>Very Rare</td>"
-						var/DNA = src.symptom_to_UID[EF.type]
-						output += "<td>[DNA]</td>"
+							if (THREAT_NEUTRAL)
+								output += "<td>Type 0</td>"
+							if (THREAT_BENETYPE1 || THREAT_TYPE1)
+								output += "<td>Type 1</td>"
+							if (THREAT_BENETYPE2 || THREAT_TYPE2)
+								output += "<td>Type 2</td>"
+							if (THREAT_BENETYPE3 || THREAT_TYPE3)
+								output += "<td>Type 3</td>"
+							if (THREAT_BENETYPE4 || THREAT_TYPE4)
+								output += "<td>Type 4</td>"
+							if (THREAT_TYPE5)
+								output += "<td>Type 5</td>"
 						output += "</tr>"
 				if ("suppressants")
 					output += "<table class='pathology-table'><thead><tr><th>Name</th><th>Suppression reagents</th></thead><tbody>"
@@ -463,7 +457,6 @@ datum/controller/pathogen
 						output += "<b>Microbody:</b> [P.body_type]<br>"
 						output += "<b>Stages:</b> <a href='?src=\ref[src];action=pathogen_creator;do=stages;topic_holder=\ref[topic_holder]'>[P.stages]</a><br>"
 						output += "<b>Advance speed:</b> <a href='?src=\ref[src];action=pathogen_creator;do=advance_speed;topic_holder=\ref[topic_holder]'>[P.advance_speed]</a><br>"
-						output += "<b>Symptomatic:</b> <a href='?src=\ref[src];action=pathogen_creator;do=symptomatic;topic_holder=\ref[topic_holder]'>[P.symptomatic ? "Yes" : "No"]</a><br>"
 						output += "<b>Suppression threshold:</b> <a href='?src=\ref[src];action=pathogen_creator;do=suppression_threshold;topic_holder=\ref[topic_holder]'>[P.suppression_threshold]</a><br>"
 						output += "<b>Spread:</b> <a href='?src=\ref[src];action=pathogen_creator;do=spread;topic_holder=\ref[topic_holder]'>[P.spread]</a><br>"
 						if (!P.suppressant)
@@ -495,15 +488,12 @@ datum/controller/pathogen
 		while (P.name_base in pathogen_trees)
 		P.name = P.name_base + P.mutation
 		P.mutation = text2num_safe(P.mutation)
-		P.base_mutation = 0
 		src.cdc_creator[key] = P
 
 	New()
 		..()
 		UID_to_symptom = list()
 		symptom_to_UID = list()
-		UID_to_curetype = list()
-		curetype_to_UID = list()
 		microbody_to_UID = list()
 
 		for (var/T in childrentypesof(/datum/microbody))
@@ -531,26 +521,27 @@ datum/controller/pathogen
 		l_vr = list()
 		for (var/E in eff)
 			var/datum/pathogeneffects/inst = new E()
-			if (inst.rarity == RARITY_ABSTRACT)
+			if (inst.rarity == THREAT_NEUTRAL)
 				continue
 			path_to_symptom[E] = inst
 			switch (inst.rarity)
-				if (RARITY_VERY_COMMON)
+				if (THREAT_BENETYPE1 || THREAT_TYPE1)
 					l_vc += E
 
-				if (RARITY_COMMON)
+				if (THREAT_BENETYPE2 || THREAT_TYPE2)
 					l_c += E
 
-				if (RARITY_UNCOMMON)
+				if (THREAT_BENETYPE3 || THREAT_TYPE3)
 					l_u += E
 
-				if (RARITY_RARE)
+				if (THREAT_BENETYPE4 || THREAT_TYPE4)
 					l_r += E
 
-				if (RARITY_VERY_RARE)
+				if (THREAT_TYPE5)
 					l_vr += E
 
 		var/list/used = list()
+		/*
 		var/list/vc = list()
 		var/list/cp = list()
 		var/list/cu = list()
@@ -560,115 +551,17 @@ datum/controller/pathogen
 		var/list/ru = list()
 		var/list/vrp = list()
 		var/list/vru = list()
-
+*/
 		for (var/T in childrentypesof(/datum/suppressant))
 			var/r
 			do
 				r = num2hex(rand(0, 4095), 3)
 			while (r in used)
 			suppressant_to_UID[T] = r
-			UID_to_curetype[r] = T
+			UID_to_suppressant[r] = T
 			path_to_suppressant[T] = new T()
 			used += r
 
-		// Assemble VERY_COMMON
-		for (var/T in l_vc)
-			var/r
-			do
-				r = num2hex(rand(0, 4095), 3)
-			while (r in used)
-			symptom_to_UID[T] = r
-			UID_to_symptom[r] = T
-			used += r
-			vc += r
-
-		// Create COMMON possibilities
-		for (var/p1 in vc)
-			for (var/p2 in vc)
-				if (!((p1 + p2) in cp))
-					cp += p1 + p2
-				if (!((p2 + p1) in cp))
-					cp += p2 + p1
-
-		// Assemble COMMON
-		for (var/T in l_c)
-			var/r
-			if (cp.len)
-				r = pick(cp)
-			else
-				do
-					r = pick(vc) + num2hex(rand(0, 4095), 3)
-				while (r in cu)
-			cp -= r
-			symptom_to_UID[T] = r
-			UID_to_symptom[r] = T
-			cu += r
-
-		// Create UNCOMMON possibilities
-		for (var/p1 in cu)
-			for (var/p2 in vc)
-				if (!((p1 + p2) in cp))
-					up += p1 + p2
-				if (!((p2 + p1) in cp))
-					up += p2 + p1
-
-		// Assemble UNCOMMON
-		for (var/T in l_u)
-			var/r
-			if (up.len)
-				r = pick(up)
-			else
-				do
-					r = pick(cu) + num2hex(rand(0, 4095), 3)
-				while (r in uu)
-			up -= r
-			symptom_to_UID[T] = r
-			UID_to_symptom[r] = T
-			uu += r
-
-		// Create RARE possibilities
-		for (var/p1 in uu)
-			for (var/p2 in vc)
-				if (!((p1 + p2) in cp))
-					rp += p1 + p2
-				if (!((p2 + p1) in cp))
-					rp += p2 + p1
-
-		// Assemble RARE
-		for (var/T in l_r)
-			var/r
-			if (rp.len)
-				r = pick(rp)
-			else
-				do
-					r = pick(uu) + num2hex(rand(0, 4095), 3)
-				while (r in ru)
-			rp -= r
-			symptom_to_UID[T] = r
-			UID_to_symptom[r] = T
-			ru += r
-
-		// Create VERY_RARE possibilities
-		for (var/p1 in ru)
-			for (var/p2 in vc)
-				if (!((p1 + p2) in cp))
-					vrp += p1 + p2
-				if (!((p2 + p1) in cp))
-					vrp += p2 + p1
-
-		// Assemble VERY_RARE
-		for (var/T in l_vr)
-			var/r
-			if (vrp.len)
-				r = pick(vrp)
-			else
-				do
-					r = pick(ru) + num2hex(rand(0, 4095), 3)
-				while (r in vru)
-			vrp -= r
-			symptom_to_UID[T] = r
-			UID_to_symptom[r] = T
-			vru += r
 
 		for (var/i = 1, i <= 99, i++)
 			lnums += "[i]"
@@ -695,7 +588,7 @@ datum/shockparam
 datum/pathogen
 	var/name										// The modifiable name of the disease.
 	var/name_base									// The original name of the disease.
-	var/replica								// Value signifying different replications of a single strain. Useful for separating infection capacity.
+	var/mutation									// Value signifying different replications of a single strain. Useful for separating infection capacity.
 	var/desc										// What a scientist might see when he looks at this pathogen through a microscope (eg. blue stringy viruses)
 	var/pathogen_uid								// Var used in logging/admintools
 
@@ -711,7 +604,7 @@ datum/pathogen
 	var/datum/microbody/body_type					// The body type of the pathogen, providing intrinsic properties.
 
 	var/cure_catagory								// Sets the type of cure (chemical, thermal, surgical, etc.)
-	var/cure_threshold								// The value describing the cure condition. When the cure condition is met, the pathogen will dissipate within 10-30 seconds without needing further oversight/work.
+	var/suppression_threshold								// The value describing the cure condition. When the cure condition is met, the pathogen will dissipate within 10-30 seconds without needing further oversight/work.
 	var/in_remission = 0							// Pathogens in remission are being cured by the body. Set by the curing reagent or by the duration of infection.
 
 	var/list/symptom_data = list()					// Symptom data container.
@@ -723,6 +616,9 @@ datum/pathogen
 	var/max_infections								// The maximum number of unique infections this pathogen can make.
 
 	var/forced_microbody = null						// If not null, this pathogen will be generated with a specific microbody.
+	var/suppressed = 0
+
+	var/datum/suppressant/suppressant
 
 // PROCS AND FUNCTIONS FOR GENERATION
 
@@ -733,7 +629,7 @@ datum/pathogen
 	proc/clear()
 		name = ""
 		name_base = ""
-		replica = 0
+		mutation = 0
 		desc = ""
 		infected = null
 		advance_speed = 0
@@ -744,7 +640,7 @@ datum/pathogen
 		duration = 1
 		body_type = null
 		cure_catagory = null
-		cure_threshold = null
+		suppression_threshold = null
 		in_remission = 0
 		symptom_data = list()
 		effects = list()
@@ -754,6 +650,9 @@ datum/pathogen
 		max_infections = 5
 		forced_microbody = initial(forced_microbody)
 
+		suppressant = null
+		suppressed = 0
+
 	proc/clone()
 		var/datum/pathogen/P = new /datum/pathogen
 		P.setup(0, src, 0)
@@ -762,7 +661,7 @@ datum/pathogen
 	proc/do_prefab(var/strength = 0)
 		clear()
 		var/cdc = generate_name()
-		generate_components(cdc)
+		generate_cure(cdc)
 		generate_attributes(strength)
 
 	New()
@@ -771,8 +670,6 @@ datum/pathogen
 
 	proc/create_weak()
 		randomize(0)
-		if (!dnasample)
-			dnasample = new/datum/pathogendna(src)
 
 	proc/cdc_announce(var/mob/M)
 		var/datum/pathogen_cdc/CDC = null
@@ -781,14 +678,14 @@ datum/pathogen
 		else
 			CDC = new /datum/pathogen_cdc(pathogen_uid)
 			pathogen_controller.pathogen_trees[name_base] = CDC
-			pathogen_controller.next_replica[pathogen_uid] = mutation + 1
+			pathogen_controller.next_mutation[pathogen_uid] = mutation + 1
 			CDC.microbody_type = body_type
-		CDC.strains += name
+		//CDC.strain += name
 		CDC.mutations[name] = clone()
 		return
 
 	proc/generate_name()
-			src.name_base = pick(pathogen_controller.lalph) + pick(pathogen_controller.lnums) + pick(pathogen_controller.lalph)
+		src.name_base = pick(pathogen_controller.lalph) + pick(pathogen_controller.lnums) + pick(pathogen_controller.lalph)
 
 //		if (ticker)
 //			if (current_state == GAME_STATE_PLAYING)
@@ -831,7 +728,7 @@ datum/pathogen
 	proc/randomize(var/strength)
 		var/datum/pathogen_cdc/cdc = generate_name()
 		generate_randomized_effects(strength)
-		generate_components(cdc, strength)
+		generate_cure(cdc, strength)
 		generate_attributes(strength)
 
 		logTheThing("pathology", null, null, "Pathogen [name] created by randomization.")
@@ -843,14 +740,14 @@ datum/pathogen
 		if (origin)
 			src.name = origin.name
 			src.name_base = origin.name_base
-			src.replica = origin.replica
+			src.mutation = origin.mutation
 			src.desc = origin.desc
 			src.advance_speed = origin.advance_speed
 			src.stage = 1
 			src.stages = origin.stages
 			src.body_type = origin.body_type
 			src.cure_catagory = origin.cure_catagory
-			src.cure_threshold = origin.cure_threshold
+			src.suppression_threshold = origin.suppression_threshold
 			src.effects = origin.effects.Copy()
 			for (var/datum/pathogeneffects/E in src.effects)
 				E.onadd(src)
@@ -919,8 +816,7 @@ datum/pathogen
 					else if (stage > 3)
 						reduce()
 			if (suppressed > 0)
-				if (curable_by_suppression && prob(curable_by_suppression))
-					in_remission = 1
+				in_remission = 1
 			ticked = 1
 		else
 			cooldown--

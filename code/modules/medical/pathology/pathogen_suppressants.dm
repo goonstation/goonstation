@@ -1,4 +1,4 @@
-/*
+
 /**
  * Pathogen suppressants
  *
@@ -215,10 +215,8 @@
 				better = 1
 			if (param.amt > 30 || better)
 				P.infected.show_message("<span class='notice'>You feel better.</span>")
-		if (P.suppressed == 0)
-			P.suppressed = 1
-		if(P.curable_by_suppression && prob(param.amt>100?100:param.amt))      // just to make this a little more likely to actually cure, or else it's too hard
-			P.remission()
+		//if(P.curable_by_suppression && prob(param.amt>100?100:param.amt))      // just to make this a little more likely to actually cure, or else it's too hard
+			//P.remission()
 
 	may_react_to()
 		return "Membrane patterns of the pathogen indicate it might be <b style='font-size:20px;color:red'>suppressed</b> by a reagent affecting neural activity."
@@ -322,4 +320,4 @@
 		if (R in cure_synthesis)
 			return "The mutagenic substance is severely damaging the inner elements of the pathogen."
 
-*/
+

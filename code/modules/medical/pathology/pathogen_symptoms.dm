@@ -7,7 +7,7 @@ datum/pathogeneffects
 
 	var/spread = SPREAD_FACE | SPREAD_BODY | SPREAD_HANDS | SPREAD_AIR
 
-	var/type = TYPE_NEUTRAL
+	var/rarity = null
 	var/infect_message = null
 	var/infect_attempt_message = null // shown to person when an attempt to directly infect them is made
 
@@ -205,13 +205,13 @@ datum/pathogeneffects
 	// OVERRIDE: A subclass is expected to override this.
 	proc/react_to(var/R, var/zoom)
 		return null
-/*
+
 datum/pathogeneffects/malevolent
 	name = "Malevolent"
 	rarity = RARITY_ABSTRACT
 
 // The following lines are the probably undocumented (well at least my part - Marq) hell of the default symptoms.
-datum/pathogeneffects/malevolent/coughing
+/*datum/pathogeneffects/malevolent/coughing
 	name = "Coughing"
 	desc = "Violent coughing occasionally plagues the infected."
 	rarity = RARITY_COMMON
