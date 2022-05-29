@@ -4,6 +4,9 @@
 (p)6811
 (e)⚖|balance
 (+)Synthrubber conductivity 20 -> 30
+(u)TTerc
+(e)⚖|balance
+(+)Cleaning gloves conductivity 10% -> 30%
 (u)MomoBerry
 (p)8697
 (e)|
