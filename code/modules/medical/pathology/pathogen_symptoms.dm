@@ -401,37 +401,6 @@ datum/pathogeneffects/malevolent/gasping
 	may_react_to()
 		return "The pathogen appears to be rather displeased."
 */
-datum/pathogeneffects/malevolent/hiccups
-	name = "Hiccups"
-	desc = "The pathogen sends involuntary signals to the infected individual's diaphragm."
-	infect_type = INFECT_NONE
-	rarity = THREAT_TYPE1
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (origin.in_remission)
-			return
-		switch (origin.stage)
-			if (1)
-				if (prob(1))
-					M:emote("hiccup")
-
-			if (2)
-				if (prob(2))
-					M:emote("hiccup")
-
-			if (3)
-				if (prob(4))
-					M:emote("hiccup")
-
-			if (4)
-				if (prob(8))
-					M:emote("hiccup")
-
-			if (5)
-				if (prob(16))
-					M:emote("hiccup")
-
-	may_react_to()
-		return "The pathogen appears to be violently... hiccuping?"
 
 datum/pathogeneffects/malevolent/shivering
 	name = "Shivering"

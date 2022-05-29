@@ -40,6 +40,38 @@ datum/pathogeneffects/neutral/brewery
 	may_react_to()
 		return "The pathogen appears to react with anything but a pure intoxicant."
 
+datum/pathogeneffects/neutral/hiccups
+	name = "Hiccups"
+	desc = "The pathogen sends involuntary signals to the infected individual's diaphragm."
+	infect_type = INFECT_NONE
+	rarity = THREAT_NEUTRAL
+	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+		if (origin.in_remission)
+			return
+		switch (origin.stage)
+			if (1)
+				if (prob(1))
+					M:emote("hiccup")
+
+			if (2)
+				if (prob(2))
+					M:emote("hiccup")
+
+			if (3)
+				if (prob(4))
+					M:emote("hiccup")
+
+			if (4)
+				if (prob(8))
+					M:emote("hiccup")
+
+			if (5)
+				if (prob(16))
+					M:emote("hiccup")
+
+	may_react_to()
+		return "The pathogen appears to be violently... hiccuping?"
+
 /*datum/pathogeneffects/benevolent/oxytocinproduction
 	name = "Oxytocin Production"
 	desc = "The pathogen produces Pure Love within the infected."
@@ -191,3 +223,107 @@ datum/pathogeneffects/neutral/shakespeare
 	may_react_to()
 		return "The culture appears to be quite dramatic."
 
+datum/pathogeneffects/neutral/hoarseness
+	name = "Hoarseness"
+	desc = "The pathogen causes dry throat, leading to hoarse speech."
+	rarity = THREAT_NEUTRAL
+
+	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+		if (origin.in_remission)
+			return
+		if (prob(10))
+			M:emote("wheeze")
+		else if (prob(5))
+			M:emote("cough")
+		else if (prob(5))
+			M:emote("grumble")
+
+	may_react_to()
+		return "The pathogen appears to be rapidly breaking down certain materials around it."
+
+datum/pathogeneffects/neutral/exclusiveimmunity
+	name = "Exclusive Immunity"
+	desc = "The pathogen occupies almost all possible routes of infection, preventing other diseases from entering."
+	rarity = THREAT_BENETYPE2
+
+	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+		if (origin.in_remission)
+			return
+		//if (other pathogens detected)
+			//grab their in_remission
+			//set their vals to 1
+
+	may_react_to()
+		return "The pathogen appears to have the ability to bond with organic tissue."
+
+datum/pathogeneffects/neutral/malaise
+	name = "Malaise"
+	desc = "The pathogen causes very mild, inconsequential fatigue to its host."
+	rarity = THREAT_NEUTRAL
+
+	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+		if (origin.in_remission)
+			return
+		if (prob(10))
+			M:emote("yawn")
+		else if (prob(5))
+			M:emote("cough")
+		else if (prob(5))
+			M:emote("stretch")
+
+	may_react_to()
+		return "The pathogen appears to have a gland that may affect neural functions."
+
+datum/pathogeneffects/neutral/hyperactive
+	name = "Psychomotor Agitation"
+	desc = "Also known as restlessness, the infected individual is prone to involuntary motions and tics."
+	rarity = THREAT_NEUTRAL
+
+	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+		if (origin.in_remission)
+			return
+		if (prob(8))
+			M:emote("gesticulate")
+		else if (prob(5))
+			M:emote("blink_r")
+		else if (prob(5))
+			M:emote("twitch")
+
+	may_react_to()
+		return "The pathogen appears to be wilder than usual, perhaps sedatives or psychoactive substances might affect its behaviour."\
+
+datum/pathogeneffects/neutral/bloodcolors
+	name = "Blood Pigmenting"
+	desc = "The pathogen attaches to the kidneys and adds a harmless pigment to the host's blood cells, causing their blood to have an unusual color."
+	rarity = THREAT_NEUTRAL
+
+	//var/bloodcolor =
+
+	//randomly select blood color
+
+	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+		if (origin.in_remission)
+			return
+		//if bleeding
+			//change blood color to bloodcolor
+
+	may_react_to()
+		return "The pathogen appears to generate a high amount of fluids."
+
+datum/pathogeneffects/neutral/startleresponse
+	name = "Exagerrated Startle Reflex"
+	desc = "The pathogen generates synaptic signals that amplify the host's startle reflex."
+	rarity = THREAT_NEUTRAL
+
+	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+		if (origin.in_remission)
+			return
+		if (prob(8))
+			M:emote("quiver")
+		else if (prob(5))
+			M:emote("flinch")
+		else if (prob(5))
+			M:emote("tremble")
+
+	may_react_to()
+		return "The pathogen appears to have a gland that may affect neural functions."
