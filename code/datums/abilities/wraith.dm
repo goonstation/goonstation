@@ -1456,7 +1456,10 @@
 	"Cluwne",
 	"Chainsaw",
 	"Stab",
-	"Bones breaking")
+	"Bones breaking",
+	"Vampire screech",
+	"Brullbar",
+	"Werewolf")
 
 	cast(atom/target)
 		if (..())
@@ -1497,6 +1500,12 @@
 				sound_choice = "sound/impact_sounds/Blade_Small_Bloody.ogg"
 			if("Bones breaking")
 				sound_choice = "sound/effects/bones_break.ogg"
+			if("Vampire screech")
+				sound_choice = "sound/effects/light_breaker.ogg"
+			if("Brullbar")
+				sound_choice = "sound/voice/animal/brullbar_scream.ogg"
+			if("Werewolf")
+				sound_choice = "sound/voice/animal/werewolf_howl.ogg"
 
 		playsound(target, sound_choice, 70, 0)
 		boutput(holder.owner, "You use your powers to create a sound.")

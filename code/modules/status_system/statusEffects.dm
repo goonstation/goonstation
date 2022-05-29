@@ -1713,6 +1713,30 @@
 								sound_effect = 'sound/effects/explosionfar.ogg'
 								volume = 70
 								shake_camera(H, 2, 8)
+							if (3)
+								sound_effect = 'sound/effects/ghostlaugh.ogg'
+								volume = 50
+							if (3)
+								sound_effect = 'sound/effects/light_breaker.ogg'
+								volume = 70
+							if (4)
+								sound_effect = 'sound/weapons/rev_flash_startup.ogg'
+								volume = 70
+							if (5)
+								sound_effect = 'sound/weapons/shotgunshot.ogg'
+								volume = 70
+							if (6)
+								sound_effect = 'sound/weapons/tranq_pistol.ogg'
+								volume = 70
+							if (7)
+								sound_effect = 'sound/voice/animal/brullbar_scream.ogg'
+								volume = 70
+							if (8)
+								sound_effect = 'sound/voice/animal/werewolf_howl.ogg'
+								volume = 70
+							if (8)
+								sound_effect = 'sound/voice/wizard/MagicMissileLoud.ogg'
+								volume = 70
 					else	//Fake announcements, much rarer
 						switch(rand(1,2))
 							if (1)
