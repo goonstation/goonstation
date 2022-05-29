@@ -45,8 +45,7 @@
 			animate(src, alpha=120, time = 1 SECONDS)
 
 	attackby(obj/item/P, mob/living/user)
-		//Todo, play a sound here
-		playsound(src, "/sound/impact_sounds/Crystal_Shatter_1.ogg", 80)
+		playsound(src, "sound/impact_sounds/Crystal_Shatter_1.ogg", 80)
 		src.visible_message("<span class='notice'>The trap is destroyed!</span>")
 		qdel(src)
 
