@@ -234,7 +234,7 @@ datum/pathogeneffects/malevolent/coughing
 					src.infect_cloud(M, origin)
 			if (3)
 				if (prob(0.14*origin.spread))
-					M.visible_message("<span class='alert'>[M] coughs violently!</span>", "<span class='alert'>You cough violently!</span>", "<span class='alert'>You hear someone cough violently!</span>")
+					M.visible_message("<span class='alert'>[M] coughs!</span>", "<span class='alert'>You cough.</span>", "<span class='alert'>You hear someone coughing.</span>")
 					src.infect_cloud(M, origin)
 			if (4)
 				if (prob(0.2*origin.spread))
@@ -253,7 +253,7 @@ datum/pathogeneffects/malevolent/coughing
 datum/pathogeneffects/malevolent/indigestion
 	name = "Indigestion"
 	desc = "A bad case of indigestion which occasionally cramps the infected."
-	rarity = THREAT_TYPE1
+	rarity = THREAT_TYPE2
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
@@ -261,12 +261,11 @@ datum/pathogeneffects/malevolent/indigestion
 		switch (origin.stage)
 			if (1 to 3)
 				if (prob(5))
-					M.take_toxin_damage(origin.stage - 2)
 					M.show_message("<span class='alert'>Your stomach hurts.</span>")
 			if (4 to 5)
 				if (prob(8))
-					M.take_toxin_damage(2)
-					M.show_message("<span class='alert'>Your stomach hurts.</span>")
+					M.take_toxin_damage(origin.stage-3)
+					M.show_message("<span class='alert'>Your stomach hurts really bad!</span>")
 
 	react_to(var/R, var/zoom)
 		if (R == "saline")
@@ -279,7 +278,7 @@ datum/pathogeneffects/malevolent/indigestion
 datum/pathogeneffects/malevolent/muscleache
 	name = "Muscle Ache"
 	desc = "The infected feels a slight, constant aching of muscles."
-	rarity = THREAT_TYPE2
+	rarity = THREAT_TYPE1
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
@@ -287,12 +286,12 @@ datum/pathogeneffects/malevolent/muscleache
 		switch (origin.stage)
 			if (1 to 3)
 				if (prob(5))
-					M.show_message("<span class='alert'>Your muscles ache.</span>")
+				M.show_message("<span class='alert'>Your muscles ache.</span>")
 			if (4 to 5)
 				if (prob(8))
-					M.show_message("<span class='alert'>Your muscles ache.</span>")
-					if (prob(15))
-						M.TakeDamage("All", origin.stage-3, 0)
+				M.show_message("<span class='alert'>Your muscles ache!</span>")
+				if (prob(15))
+					M.TakeDamage("All", origin.stage-3, 0)
 
 	react_to(var/R, var/zoom)
 		if (R == "saline")
@@ -325,11 +324,11 @@ datum/pathogeneffects/malevolent/sneezing
 					src.infect_cloud(M, origin)
 			if (4)
 				if (prob(0.2*origin.spread))
-					M.visible_message("<span class='alert'>[M] sneezes!</span>", "<span class='alert'>You sneeze.</span>", "<span class='alert'>You hear someone sneezing.</span>")
+					M.visible_message("<span class='alert'>[M] sneezes!</span>", "<span class='alert'>You sneeze!</span>", "<span class='alert'>You hear someone sneezing!</span>")
 					src.infect_cloud(M, origin)
 			if (5)
 				if (prob(0.2*origin.spread))
-					M.visible_message("<span class='alert'>[M] sneezes!</span>", "<span class='alert'>You sneeze.</span>", "<span class='alert'>You hear someone sneezing.</span>")
+					M.visible_message("<span class='alert'>[M] sneezes!</span>", "<span class='alert'>You sneeze!</span>", "<span class='alert'>You hear someone sneezing!</span>")
 					src.infect_cloud(M, origin)
 
 	may_react_to()
@@ -341,9 +340,9 @@ datum/pathogeneffects/malevolent/sneezing
 
 datum/pathogeneffects/malevolent/gasping
 	name = "Gasping"
-	desc = "The infected has trouble breathing.."
+	desc = "The infected has trouble breathing."
 	infect_type = INFECT_NONE
-	rarity = THREAT_TYPE1
+	rarity = THREAT_TYPE3 //Superceded by pulmonary oedema (4) and internal haemorrhaging (5), stronger than cough (2) and chest pain (1)
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
 			return
@@ -354,17 +353,13 @@ datum/pathogeneffects/malevolent/gasping
 			if (2)
 				if (prob(5))
 					M.emote("gasp")
-					M.take_oxygen_deprivation(1)
 			if (3)
 				if (prob(7))
 					M.emote("gasp")
-					M.take_oxygen_deprivation(1)
-
 			if (4)
 				if (prob(10))
 					M.emote("gasp")
 					M.take_oxygen_deprivation(1)
-
 			if (5)
 				if (prob(10))
 					M.emote("gasp")
@@ -405,10 +400,10 @@ datum/pathogeneffects/malevolent/gasping
 
 	may_react_to()
 		return "The pathogen appears to be rather displeased."
-
+*/
 datum/pathogeneffects/malevolent/hiccups
 	name = "Hiccups"
-	desc = "This is literally pointless."
+	desc = "The pathogen sends involuntary signals to the infected individual's diaphragm."
 	infect_type = INFECT_NONE
 	rarity = THREAT_TYPE1
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
@@ -436,13 +431,13 @@ datum/pathogeneffects/malevolent/hiccups
 					M:emote("hiccup")
 
 	may_react_to()
-		return "The pathogen appears to be violently... hiccuping?"*/
+		return "The pathogen appears to be violently... hiccuping?"
 
 datum/pathogeneffects/malevolent/shivering
 	name = "Shivering"
-	desc = "This is literally pointless."
+	desc = "The pathogen slightly raises the homeostatic set point of the infected."
 	infect_type = INFECT_NONE
-	rarity = THREAT_TYPE1
+	rarity = THREAT_TYPE2
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
 			return
@@ -470,73 +465,43 @@ datum/pathogeneffects/malevolent/shivering
 	may_react_to()
 		return "The pathogen appears to be shivering."
 
-datum/pathogeneffects/malevolent/deathgasping
-	name = "Deathgasping"
-	desc = "This is literally pointless."
-	infect_type = INFECT_NONE
-	rarity = THREAT_TYPE3
+datum/pathogeneffects/malevolent/sweating
+	name = "Sweating"
+	desc = "The infected person sweats like a pig."
+	infect_type = INFECT_TOUCH
+	rarity = THREAT_TYPE2
+	spread = SPREAD_HANDS | SPREAD_BODY
+	infect_attempt_message = "Ew, their hands feel really gross and sweaty!"
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
 			return
 		switch (origin.stage)
 			if (1)
-				if (prob(10))
-					M:emote("deathgasp")
-
-			if (2)
-				if (prob(12))
-					M:emote("deathgasp")
-
-			if (3)
-				if (prob(14))
-					M:emote("deathgasp")
-
-			if (4)
-				if (prob(16))
-					M:emote("deathgasp")
-
-			if (5)
-				if (prob(18))
-					M:emote("deathgasp")
-
-	may_react_to()
-		return "The pathogen appears to be.. sort of dead?"
-
-datum/pathogeneffects/malevolent/sweating
-	name = "Sweating"
-	desc = "The infected person sweats like a fucking pig."
-	infect_type = INFECT_TOUCH
-	rarity = THREAT_TYPE1
-	spread = SPREAD_HANDS | SPREAD_BODY
-	infect_attempt_message = "Ew, their hands feel really gross and sweaty!"
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
-		switch (origin.stage)
-			if (1)
-				if (prob(5) && !origin.in_remission)
+				if (prob(5))
 					M.show_message("<span class='alert'>You feel a bit warm.</span>")
 				if (prob(40))
 					src.infect_puddle(M, origin)
 
 			if (2)
-				if (prob(5) && !origin.in_remission)
+				if (prob(5))
 					M.show_message("<span class='alert'>You feel rather warm.</span>")
 				if (prob(40))
 					src.infect_puddle(M, origin)
 
 			if (3)
-				if (prob(5) && !origin.in_remission)
+				if (prob(5))
 					M.show_message("<span class='alert'>You're sweating heavily.</span>")
 				if (prob(40))
 					src.infect_puddle(M, origin)
 
 			if (4)
-				if (prob(5) && !origin.in_remission)
+				if (prob(5))
 					M.show_message("<span class='alert'>You're soaked in your own sweat.</span>")
 				if (prob(40))
 					src.infect_puddle(M, origin)
 
 			if (5)
-				if (prob(5) && !origin.in_remission)
+				if (prob(5))
 					M.show_message("<span class='alert'>You're soaked in your own sweat.</span>")
 				if (prob(40))
 					src.infect_puddle(M, origin)
@@ -613,10 +578,10 @@ obj/hallucinated_item
 				qdel(src)
 
 datum/pathogeneffects/malevolent/serious_paranoia
-	name = "Serious Paranoia"
-	desc = "The infected is seriously suspicious of others, to the point where they might see others do traitorous things."
+	name = "Insanity"
+	desc = "The infected has entered a psychotic state and is having trouble distinguishing between reality and fiction."
 	infect_type = INFECT_NONE
-	rarity = THREAT_TYPE4
+	rarity = THREAT_TYPE5
 	var/static/list/hallucinated_images = list(/obj/item/sword, /obj/item/card/emag, /obj/item/cloaking_device)
 	var/static/list/traitor_items = list("cyalume saber", "Electromagnetic Card", "pen", "mini rad-poison crossbow", "cloaking device", "revolver", "butcher's knife", "amplified vuvuzela", "power gloves", "signal jammer")
 
@@ -778,7 +743,7 @@ datum/pathogeneffects/malevolent/serious_paranoia/mild
 	name = "Paranoia"
 	desc = "The infected is suspicious of others, to the point where they might see others do traitorous things."
 	infect_type = INFECT_NONE
-	rarity = THREAT_TYPE3
+	rarity = THREAT_TYPE4
 
 	may_react_to()
 		return "The pathogen appears to be wilder than usual, perhaps sedatives or psychoactive substances might affect its behaviour."
@@ -954,47 +919,6 @@ datum/pathogeneffects/malevolent/gibbing
 				return "Pathogens appear to be storming the synthflesh chunks and through an extreme conversion of energy, bursting them into smaller, more processible chunks."
 		else return null
 
-datum/pathogeneffects/malevolent/shakespeare
-	name = "Shakespeare"
-	desc = "The infected has an urge to begin reciting shakespearean poetry."
-	infect_type = INFECT_NONE
-	rarity = THREAT_TYPE1
-	var/static/list/shk = list("Expectation is the root of all heartache.",
-"A fool thinks himself to be wise, but a wise man knows himself to be a fool.",
-"Love all, trust a few, do wrong to none.",
-"Hell is empty and all the devils are here.",
-"Better a witty fool than a foolish wit.",
-"The course of true love never did run smooth.",
-"Come, gentlemen, I hope we shall drink down all unkindness.",
-"Suspicion always haunts the guilty mind.",
-"No legacy is so rich as honesty.",
-"Alas, I am a woman friendless, hopeless!",
-"The empty vessel makes the loudest sound.",
-"Words without thoughts never to heaven go.",
-"This above all; to thine own self be true.",
-"An overflow of good converts to bad.",
-"It is a wise father that knows his own child.",
-"Listen to many, speak to a few.",
-"Boldness be my friend.",
-"Speak low, if you speak love.",
-"Give thy thoughts no tongue.",
-"The devil can cite Scripture for his purpose.",
-"In time we hate that which we often fear.",
-"The lady doth protest too much, methinks.")
-
-	onsay(var/mob/M as mob, message, var/datum/pathogen/origin)
-		if (!(message in shk))
-			return shakespearify(message)
-
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (origin.in_remission)
-			return
-		if (prob(origin.stage)) // 3. holy shit shut up shUT UP
-			M.say(pick(shk))
-
-	may_react_to()
-		return "The culture appears to be quite dramatic."
-
 datum/pathogeneffects/malevolent/fluent
 	name = "Fluent Speech"
 	desc = "The infection has a serious excess of saliva."
@@ -1025,7 +949,7 @@ datum/pathogeneffects/malevolent/fluent
 		if (R == "salt")
 			return "The pathogen stops generating fluids when coming in contact with salt."
 
-datum/pathogeneffects/malevolent/capacitor
+/*datum/pathogeneffects/malevolent/capacitor
 	name = "Capacitor"
 	desc = "The infected is involuntarily electrokinetic."
 	rarity = THREAT_TYPE5
@@ -1313,12 +1237,12 @@ datum/pathogeneffects/malevolent/capacitor/unlimited
 	react_to(var/R, var/zoom)
 		if (R == "voltagen")
 			return "The pathogen appears to have the ability to infinitely absorb the voltagen."
-
+*/
 datum/pathogeneffects/malevolent/liverdamage
 	name = "Hepatomegaly"
 	desc = "The infected has an inflamed liver."
 	infect_type = INFECT_NONE
-	rarity = THREAT_TYPE3
+	rarity = THREAT_TYPE5
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
 			return
@@ -1326,15 +1250,13 @@ datum/pathogeneffects/malevolent/liverdamage
 			if (1)
 				if (prob(4) && M.reagents.has_reagent("ethanol"))
 					M.show_message("<span class='alert'>You feel a slight burning in your gut.</span>")
-					M.take_toxin_damage(3)
 			if (2)
 				if (prob(6) && M.reagents.has_reagent("ethanol"))
 					M.show_message("<span class='alert'>You feel a burning sensation in your gut.</span>")
-					M.take_toxin_damage(4)
 			if (3)
 				if (prob(8) && M.reagents.has_reagent("ethanol"))
 					M.visible_message("[M] clutches their chest in pain!","<span class='alert'>You feel a searing pain in your chest!</span>")
-					M.take_toxin_damage(5)
+					M.take_toxin_damage(6)
 					M.changeStatus("stunned", 2 SECONDS)
 			if (4)
 				if (prob(10) && M.reagents.has_reagent("ethanol"))
@@ -1367,7 +1289,7 @@ datum/pathogeneffects/malevolent/fever
 	name = "Fever"
 	desc = "The body temperature of the infected individual slightly increases."
 	infect_type = INFECT_NONE
-	rarity = THREAT_TYPE2
+	rarity = THREAT_TYPE3
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
@@ -1417,7 +1339,7 @@ datum/pathogeneffects/malevolent/acutefever
 				if (prob(11))
 					M.bodytemperature += 11
 					M.TakeDamage("chest", 0, 1)
-					M.show_message("<span class='alert'>You feel hot.</span>")
+					M.show_message("<span class='alert'>You feel terribly hot!</span>")
 				if (prob(2))
 					H.update_burning(15)
 					M.show_message("<span class='alert'>You spontaneously combust!</span>")
@@ -1430,7 +1352,7 @@ datum/pathogeneffects/malevolent/acutefever
 				if (prob(15))
 					M.bodytemperature += 17
 					M.TakeDamage("chest", 0, 2)
-					M.show_message("<span class='alert'>You feel rather hot.</span>")
+					M.show_message("<span class='alert'>You feel like you're burning alive!</span>")
 				if (prob(3))
 					H.update_burning(25)
 					M.show_message("<span class='alert'>You spontaneously combust!</span>")
@@ -1478,7 +1400,7 @@ datum/pathogeneffects/malevolent/ultimatefever
 				if (prob(17))
 					M.bodytemperature += 25
 					M.TakeDamage("chest", 0, 2)
-					M.show_message("<span class='alert'>You feel rather hot.</span>")
+					M.show_message("<span class='alert'>You feel your blood boiling!</span>")
 				if (prob(5))
 					H.update_burning(35)
 					M.show_message("<span class='alert'>You spontaneously combust!</span>")
@@ -1499,10 +1421,10 @@ datum/pathogeneffects/malevolent/ultimatefever
 			return "The heat emission of the pathogen is completely unaffected by the painkillers and continues to radiate heat at an intense rate."
 
 datum/pathogeneffects/malevolent/chills
-	name = "Common Chills"
-	desc = "The infected feels the sensation of lowered body temperature."
+	name = "Chills"
+	desc = "The pathogen significantly increases the infected individual's set point, causing them to feel abnormally cold."
 	infect_type = INFECT_NONE
-	rarity = THREAT_TYPE2
+	rarity = THREAT_TYPE3
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
 			return
@@ -1541,7 +1463,7 @@ datum/pathogeneffects/malevolent/chills
 			return "The hot reagent melts the trail of ice completely."
 
 datum/pathogeneffects/malevolent/seriouschills
-	name = "Acute Chills"
+	name = "Rigors"
 	desc = "The infected feels the sensation of seriously lowered body temperature."
 	infect_type = INFECT_NONE
 	rarity = THREAT_TYPE4
@@ -1678,7 +1600,7 @@ datum/pathogeneffects/malevolent/farts
 	desc = "The infected individual occasionally farts."
 	infect_type = INFECT_AREA
 	spread = SPREAD_AIR
-	rarity = THREAT_TYPE1
+	rarity = THREAT_2
 	var/cooldown = 200 // we just use the name of the symptom to keep track of different fart effects, so their cooldowns do not interfere
 	var/doInfect = 1 // smoke farts were just too good
 
@@ -1849,13 +1771,12 @@ datum/pathogeneffects/malevolent/senility
 			if (2)
 				if (prob(5))
 					M.show_message("<span class='alert'>Your head hurts. You're not sure what's going on.</span>")
-					M.take_brain_damage(1)
 			if (3)
 				if (prob(40))
 					M.emote("drool")
 				if (prob(20))
 					M.show_message("<span class='alert'>... huh?</span>")
-					M.take_brain_damage(2)
+					M.take_brain_damage(1)
 			if (4)
 				if (prob(30))
 					M.emote("drool")
@@ -1863,12 +1784,12 @@ datum/pathogeneffects/malevolent/senility
 					M.emote("nosepick")
 				if (prob(20))
 					M.show_message("<span class='alert'>You feel... unsmart.</span>")
-					M.take_brain_damage(3)
+					M.take_brain_damage(2)
 			if (5)
 				if (prob(10))
 					M.show_message("<span class='alert'>You completely forget what you were doing.</span>")
 					M.drop_item()
-					M.take_brain_damage(4)
+					M.take_brain_damage(3)
 	may_react_to()
 		return "The pathogen appears to have a gland that may affect neural functions."
 
@@ -1876,7 +1797,6 @@ datum/pathogeneffects/malevolent/beesneeze
 	name = "Projectile Bee Egg Sneezing"
 	desc = "The infected sneezes bee eggs frequently."
 	rarity = THREAT_TYPE3
-
 	proc/sneeze(var/mob/M, var/datum/pathogen/origin)
 		if (!M || !origin)
 			return
@@ -2009,7 +1929,7 @@ datum/pathogeneffects/malevolent/radiation
 	name = "Radioactive Infection"
 	desc = "Infection irradiates the host's cells."
 	infect_type = INFECT_NONE
-	rarity = THREAT_TYPE4
+	rarity = THREAT_TYPE5
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
@@ -2051,7 +1971,7 @@ datum/pathogeneffects/malevolent/snaps
 	infect_type = INFECT_AREA
 	spread = SPREAD_FACE | SPREAD_HANDS | SPREAD_AIR | SPREAD_BODY
 	infect_message = "<span class='alert'>That's a pretty catchy groove...</span>" //you might even say it's infectious
-	rarity = THREAT_TYPE2
+	rarity = THREAT_TYPE3
 
 	proc/snap(var/mob/M, var/datum/pathogen/origin)
 		M.emote("snap")
@@ -2061,7 +1981,7 @@ datum/pathogeneffects/malevolent/snaps
 	disease_act(var/mob/M, var/datum/pathogen/origin)
 		if (origin.in_remission)
 			return
-		if (prob(origin.stage * 3))
+		if (prob(origin.stage * 2))
 			snap(M, origin)
 
 	may_react_to()

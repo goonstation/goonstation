@@ -1,20 +1,17 @@
-/*
-
 datum/pathogeneffects/benevolent
 	name = "Benevolent"
-	rarity = RARITY_ABSTRACT
-	beneficial = 1
+	rarity = THREAT_NEUTRAL
 
 datum/pathogeneffects/benevolent/mending
 	name = "Wound Mending"
 	desc = "Slow paced brute damage healing."
-	rarity = THREAT_BENETYPE2
+	rarity = THREAT_BENETYPE1
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
 			return
-		//if (prob(origin.stage * 5))
-		M.HealDamage("All", origin.stage / 2, 0)
+		if (prob(origin.stage * 10))
+			M.HealDamage("All", origin.stage / 2, 0)
 
 	react_to(var/R, var/zoom)
 		if (R == "synthflesh")
@@ -27,13 +24,13 @@ datum/pathogeneffects/benevolent/mending
 datum/pathogeneffects/benevolent/healing
 	name = "Burn Healing"
 	desc = "Slow paced burn damage healing."
-	rarity = THREAT_BENETYPE2
+	rarity = THREAT_BENETYPE1
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
 			return
-		//if (prob(origin.stage * 5))
-		M.HealDamage("All", 0, origin.stage / 2)
+		if (prob(origin.stage * 10))
+			M.HealDamage("All", 0, origin.stage / 2)
 
 	react_to(var/R, var/zoom)
 		if (R == "synthflesh")
@@ -49,12 +46,12 @@ datum/pathogeneffects/benevolent/healing
 datum/pathogeneffects/benevolent/fleshrestructuring
 	name = "Flesh Restructuring"
 	desc = "Fast paced general healing."
-	rarity = THREAT_BENETYPE4
+	rarity = THREAT_BENETYPE2
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
 			return
-		if (prob(origin.stage * 5))
+		if (prob(origin.stage * 10))
 			M.HealDamage("All", origin.stage, origin.stage)
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
@@ -78,7 +75,7 @@ datum/pathogeneffects/benevolent/fleshrestructuring
 datum/pathogeneffects/benevolent/detoxication
 	name = "Detoxication"
 	desc = "The pathogen aids the host body in metabolizing ethanol."
-	rarity = THREAT_BENETYPE2
+	rarity = THREAT_BENETYPE1
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
@@ -113,7 +110,7 @@ datum/pathogeneffects/benevolent/detoxication
 datum/pathogeneffects/benevolent/metabolisis
 	name = "Accelerated Metabolisis"
 	desc = "The pathogen accelerates the metabolisis of all chemicals present in the host body."
-	rarity = THREAT_BENETYPE4
+	rarity = THREAT_BENETYPE2
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
@@ -147,7 +144,7 @@ datum/pathogeneffects/benevolent/metabolisis
 datum/pathogeneffects/benevolent/cleansing
 	name = "Cleansing"
 	desc = "The pathogen cleans the body of damage caused by toxins."
-	rarity = THREAT_BENETYPE3
+	rarity = THREAT_BENETYPE2
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
@@ -164,7 +161,7 @@ datum/pathogeneffects/benevolent/cleansing
 	may_react_to()
 		return "The pathogen seems to be much cleaner than normal."
 
-datum/pathogeneffects/benevolent/oxygenconversion
+/*datum/pathogeneffects/benevolent/oxygenconversion
 	name = "Oxygen Conversion"
 	desc = "The pathogen converts organic tissue into oxygen when required by the host."
 	rarity = THREAT_BENETYPE4
@@ -205,7 +202,7 @@ datum/pathogeneffects/benevolent/oxygenstorage
 		else
 			// faster reserve replenishment at higher stages
 			origin.symptom_data["oxygen_storage"] = min(100, origin.symptom_data["oxygen_storage"] + origin.stage*2)
-
+*/
 
 datum/pathogeneffects/benevolent/resurrection
 	name = "Necrotic Resurrection"
@@ -262,77 +259,6 @@ datum/pathogeneffects/benevolent/resurrection
 		if (R == "synthflesh")
 			return "Dead parts of the synthflesh seem to still be transferring blood."
 
-
-datum/pathogeneffects/benevolent/brewery
-	name = "Auto-Brewery"
-	desc = "The pathogen aids the host body in metabolizing chemicals into ethanol."
-	rarity = THREAT_BENETYPE4
-	beneficial = 0
-
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (origin.in_remission)
-			return
-		var/times = 1
-		if (origin.stage > 3)
-			times++
-		if (origin.stage > 4)
-			times++
-		var/met = 0
-		for (var/rid in M.reagents.reagent_list)
-			var/datum/reagent/R = M.reagents.reagent_list[rid]
-			if (!(rid == "ethanol" || istype(R, /datum/reagent/fooddrink/alcoholic)))
-				met = 1
-				for (var/i = 1, i <= times, i++)
-					if (R) //Wire: Fix for Cannot execute null.on mob life().
-						R.on_mob_life()
-					if (!R || R.disposed)
-						break
-				if (R && !R.disposed)
-					var/amt = R.depletion_rate * times
-					M.reagents.remove_reagent(rid, amt)
-					M.reagents.add_reagent("ethanol", amt)
-		if (met)
-			M.reagents.update_total()
-
-	react_to(var/R, var/zoom)
-		if (!(R == "ethanol"))
-			return "The pathogen appears to have entirely metabolized all chemical agents in the dish into... ethanol."
-
-	may_react_to()
-		return "The pathogen appears to react with anything but a pure intoxicant."
-
-datum/pathogeneffects/benevolent/oxytocinproduction
-	name = "Oxytocin Production"
-	desc = "The pathogen produces Pure Love within the infected."
-	infect_type = INFECT_TOUCH
-	rarity = THREAT_BENETYPE2
-	spread = SPREAD_BODY | SPREAD_HANDS
-	infect_message = "<span style=\"color:pink\">You can't help but feel loved.</span>"
-	infect_attempt_message = "Their touch is suspiciously soft..."
-
-	onemote(mob/M as mob, act, voluntary, param, datum/pathogen/origin)
-		if (origin.in_remission)
-			return
-		if (act != "hug" && act != "sidehug")  // not a hug
-			return
-		if (param == null) // weirdo is just hugging themselves
-			return
-		for (var/mob/living/carbon/human/H in view(1, M))
-			if (ckey(param) == ckey(H.name) && prob(origin.spread*2))
-				SPAWN(0.5)
-					infect_direct(H, origin, "hug")
-				return
-
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (origin.in_remission)
-			return
-		var/check_amount = M.reagents.get_reagent_amount("love")
-		if (!check_amount || check_amount < 5)
-			M.reagents.add_reagent("love", origin.stage / 3)
-
-	may_react_to()
-		return "The pathogen's cells appear to be... hugging each other?"
-
 datum/pathogeneffects/benevolent/neuronrestoration
 	name = "Neuron Restoration"
 	desc = "Infection slowly repairs nerve cells in the brain."
@@ -361,51 +287,6 @@ datum/pathogeneffects/benevolent/neuronrestoration
 
 	may_react_to()
 		return "The pathogen appears to have a gland that may affect neural functions."
-
-datum/pathogeneffects/benevolent/sunglass
-	name = "Sunglass Glands"
-	desc = "The infected grew sunglass glands."
-	infect_type = INFECT_NONE
-	rarity = THREAT_BENETYPE3
-
-	proc/glasses(var/mob/living/carbon/human/M as mob)
-		var/obj/item/clothing/glasses/G = M.glasses
-		var/obj/item/clothing/glasses/N = new/obj/item/clothing/glasses/sunglasses()
-		M.show_message({"<span class='notice'>[pick("You feel cooler!", "You find yourself wearing sunglasses.", "A pair of sunglasses grow onto your face.")][G?" But you were already wearing glasses!":""]</span>"})
-		if (G)
-			N.set_loc(M.loc)
-			var/turf/T = get_edge_target_turf(M, pick(alldirs))
-			N.throw_at(T,rand(0,5),1)
-		else
-			N.set_loc(M)
-			N.layer = M.layer
-			N.master = M
-			M.glasses = N
-			M.update_clothing()
-
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (origin.in_remission)
-			return
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if (!(H.glasses) || (!(istype(H.glasses, /obj/item/clothing/glasses/sunglasses)) && prob(50)))
-				switch(origin.stage)
-					if (2 to 4)
-						if (prob(15))
-							glasses(M)
-					if (5)
-						if (prob(25))
-							glasses(M)
-
-	may_react_to()
-		return "The pathogen appears to be sensitive to sudden flashes of light."
-
-	react_to(var/R, var/zoom)
-		if (R == "flashpowder")
-			if (zoom)
-				return "The individual microbodies appear to be wearing sunglasses."
-			else
-				return "The pathogen appears to have developed a resistance to the flash powder."
 
 datum/pathogeneffects/benevolent/genetictemplate
 	name = "Genetic Template"
@@ -468,4 +349,4 @@ datum/pathogeneffects/benevolent/genetictemplate
 
 	may_react_to()
 		return "The pathogen cells all look exactly alike."
-*/
+
