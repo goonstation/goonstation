@@ -130,11 +130,11 @@ ABSTRACT_TYPE(/obj/reactor_component)
 	processNeutrons(list/datum/neutron/inNeutrons)
 		. = ..()
 		if((!src.melted) & (src.neutron_cross_section != src.configured_insertion_level))
-		//step towards configured insertion level
-		if(src.configured_insertion_level > src.neutron_cross_section)
-			src.neutron_cross_section -= 0.1 //TODO balance - this is 10% per tick, which is like every 3 seconds or something
-		else
-			src.neutron_cross_section += 0.1
+			//step towards configured insertion level
+			if(src.configured_insertion_level > src.neutron_cross_section)
+				src.neutron_cross_section -= 0.1 //TODO balance - this is 10% per tick, which is like every 3 seconds or something
+			else
+				src.neutron_cross_section += 0.1
 
 ////////////////////////////////////////////////////////////////
 //Heat exchanger
