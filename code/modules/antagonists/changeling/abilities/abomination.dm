@@ -24,7 +24,7 @@
 			return 1
 		else
 			if (holder.points < 15)
-				boutput(holder.owner, __red("We're not strong enough to maintain the form."))
+				boutput(holder.owner, "<span class='alert'>We're not strong enough to maintain the form.</span>")
 				return 1
 			if (alert("Are we sure?","Enter Horror Form?","Yes","No") != "Yes")
 				return 1
@@ -55,10 +55,10 @@
 		H.set_mutantrace(null)
 		var/datum/abilityHolder/changeling/C = H.get_ability_holder(/datum/abilityHolder/changeling)
 		if(!C || C.points < 15)
-			boutput(H, __red("You weren't strong enough to change back safely and blacked out!"))
+			boutput(H, "<span class='alert'>You weren't strong enough to change back safely and blacked out!</span>")
 			H.changeStatus("paralysis", 10 SECONDS)
 		else
-			boutput(H, __red("You revert back to your original form. It leaves you weak."))
+			boutput(H, "<span class='alert'>You revert back to your original form. It leaves you weak.</span>")
 			H.changeStatus("weakened", 5 SECONDS)
 		if (C)
 			C.points = max(C.points - 15, 0)
@@ -87,7 +87,7 @@
 	cast(atom/target)
 		if (..())
 			return 1
-		holder.owner.visible_message(__red("<B>[holder.owner] screeches loudly! The very noise fills you with dread!</B>"))
+		holder.owner.visible_message("<span class='alert'><B>[holder.owner] screeches loudly! The very noise fills you with dread!</B></span>")
 		logTheThing("combat", holder.owner, null, "screeches as a changeling in horror form [log_loc(holder.owner)].")
 		playsound(holder.owner.loc, 'sound/voice/creepyshriek.ogg', 80, 1) // cogwerks - using ISN's scary goddamn shriek here
 

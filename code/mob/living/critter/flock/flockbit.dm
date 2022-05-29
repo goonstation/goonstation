@@ -68,6 +68,7 @@
 	HH.can_range_attack = 0
 
 /mob/living/critter/flock/bit/death(var/gibbed)
+	. = ..()
 	walk(src, 0)
 	src.flock?.removeDrone(src)
 	playsound(src, "sound/impact_sounds/Glass_Shatter_3.ogg", 50, 1)

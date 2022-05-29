@@ -2772,7 +2772,7 @@ Returns:
 
 /obj/dfissure_to
 	name = "dimensional fissure"
-	desc = "a rip in time and space"
+	desc = "A rip in time and space."
 	opacity = 0
 	density = 1
 	anchored = 1
@@ -2797,7 +2797,7 @@ Returns:
 
 /obj/dfissure_from
 	name = "dimensional fissure"
-	desc = "a rip in time and space"
+	desc = "A rip in time and space."
 	opacity = 0
 	density = 1
 	anchored = 1

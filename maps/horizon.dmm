@@ -32229,8 +32229,7 @@
 	},
 /obj/machinery/door/airlock/pyro/security{
 	dir = 4;
-	name = "Law Hole";
-	opacity = 0
+	name = "Law Hole"
 	},
 /obj/access_spawn/brig,
 /obj/machinery/secscanner{
@@ -32398,12 +32397,12 @@
 	powerlevel = 1
 	},
 /obj/machinery/door/poddoor/blast{
+	autoclose = 1;
 	dir = 4;
 	doordir = "left";
 	icon_state = "bdoorleft1";
 	id = "hangar_listeningpost";
-	name = "external blast door";
-	autoclose = 1
+	name = "external blast door"
 	},
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/listeningpost/power)
@@ -48862,8 +48861,8 @@
 	name = "syndicate bedsheet"
 	},
 /obj/item/reagent_containers/food/drinks/bottle/ntbrew{
-	pixel_y = 4;
-	pixel_x = -8
+	pixel_x = -8;
+	pixel_y = 4
 	},
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost)
@@ -48878,8 +48877,8 @@
 /area/syndicate_teleporter)
 "cuE" = (
 /obj/machinery/light/small{
-	dir = 1;
-	brightness = 1.5
+	brightness = 1.5;
+	dir = 1
 	},
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
@@ -48966,8 +48965,8 @@
 /area/listeningpost)
 "cuQ" = (
 /obj/machinery/light/small{
-	dir = 1;
-	brightness = 2
+	brightness = 2;
+	dir = 1
 	},
 /turf/simulated/floor/black,
 /area/listeningpost)
@@ -49035,8 +49034,8 @@
 /obj/table/wood/auto,
 /obj/item/crowbar,
 /obj/item/reagent_containers/food/drinks/chickensoup{
-	pixel_y = 10;
-	pixel_x = -2
+	pixel_x = -2;
+	pixel_y = 10
 	},
 /turf/simulated/floor/black/grime,
 /area/listeningpost)
@@ -49126,8 +49125,8 @@
 /area/listeningpost/power)
 "cvq" = (
 /obj/machinery/light/small{
-	dir = 1;
-	brightness = 1.4
+	brightness = 1.4;
+	dir = 1
 	},
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg3"
@@ -49158,19 +49157,19 @@
 "cvv" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/mechanical{
-	pixel_y = -11;
-	pixel_x = -3
+	pixel_x = -3;
+	pixel_y = -11
 	},
 /obj/item/device/t_scanner{
-	pixel_y = 9;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = 9
 	},
 /obj/item/wrench{
 	pixel_y = 6
 	},
 /obj/item/mining_tool/power_pick{
-	pixel_y = -1;
-	pixel_x = 8
+	pixel_x = 8;
+	pixel_y = -1
 	},
 /turf/simulated/floor/black,
 /area/listeningpost)
@@ -49194,8 +49193,8 @@
 /obj/disposalpipe/trunk,
 /obj/machinery/disposal,
 /obj/machinery/light/small{
-	dir = 1;
-	brightness = 1.4
+	brightness = 1.4;
+	dir = 1
 	},
 /turf/simulated/floor/black,
 /area/listeningpost)
@@ -49401,8 +49400,8 @@
 	pixel_y = 9
 	},
 /obj/item/pen/marker/red{
-	pixel_y = 3;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = 3
 	},
 /obj/disposalpipe/segment{
 	dir = 4
@@ -49506,17 +49505,17 @@
 /obj/table/auto,
 /obj/item/sheet/glass/reinforced{
 	amount = 50;
-	pixel_y = 4;
-	pixel_x = 4
+	pixel_x = 4;
+	pixel_y = 4
 	},
 /obj/item/storage/belt/utility,
 /obj/item/chem_grenade/metalfoam{
-	pixel_y = -1;
-	pixel_x = 7
+	pixel_x = 7;
+	pixel_y = -1
 	},
 /obj/item/chem_grenade/metalfoam{
-	pixel_y = -3;
-	pixel_x = 4
+	pixel_x = 4;
+	pixel_y = -3
 	},
 /turf/simulated/floor/black,
 /area/listeningpost)
@@ -49546,8 +49545,8 @@
 	name = "antique plate"
 	},
 /obj/item/item_box/banana{
-	pixel_y = 8;
-	pixel_x = -4
+	pixel_x = -4;
+	pixel_y = 8
 	},
 /obj/machinery/power/apc/autoname_west/noaicontrol,
 /turf/simulated/floor/black/grime,
@@ -50009,8 +50008,8 @@
 "cxv" = (
 /obj/reagent_dispensers/fueltank,
 /obj/machinery/light/small{
-	dir = 1;
-	brightness = 1.4
+	brightness = 1.4;
+	dir = 1
 	},
 /turf/simulated/floor/shuttlebay,
 /area/listeningpost/power)
@@ -52781,10 +52780,10 @@
 	powerlevel = 1
 	},
 /obj/machinery/door/poddoor/blast{
+	autoclose = 1;
 	dir = 4;
 	id = "hangar_listeningpost";
-	name = "external blast door";
-	autoclose = 1
+	name = "external blast door"
 	},
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/listeningpost/power)
@@ -56852,12 +56851,12 @@
 	powerlevel = 1
 	},
 /obj/machinery/door/poddoor/blast{
+	autoclose = 1;
 	dir = 4;
 	doordir = "right";
 	icon_state = "bdoorright1";
 	id = "hangar_listeningpost";
-	name = "external blast door";
-	autoclose = 1
+	name = "external blast door"
 	},
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/listeningpost/power)

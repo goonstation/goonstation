@@ -719,6 +719,7 @@ var/global/list/soundCache = list(
  	"sound/machines/weapons-reloading.ogg" = 'sound/machines/weapons-reloading.ogg',\
  	"sound/machines/whistlealert.ogg" = 'sound/machines/whistlealert.ogg',\
  	"sound/machines/whistlebeep.ogg" = 'sound/machines/whistlebeep.ogg',\
+ 	"sound/machines/wifi.ogg" = 'sound/machines/wifi.ogg',\
  	"sound/machines/windowdoor.ogg" = 'sound/machines/windowdoor.ogg',\
  	"sound/misc/adminhelp.ogg" = 'sound/misc/adminhelp.ogg',\
  	"sound/misc/airraid_loop.ogg" = 'sound/misc/airraid_loop.ogg',\

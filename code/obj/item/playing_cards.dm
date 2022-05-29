@@ -16,7 +16,6 @@
 	burn_point = 220
 	burn_output = 900
 	burn_possible = 2
-	health = 10
 	///what style of card sprite are we using?
 	var/card_style
 	///number of cards in a full deck (used for reference when updating stack size)

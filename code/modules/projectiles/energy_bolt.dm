@@ -368,7 +368,7 @@ toxic - poisons
 	icon_state = "signifer2_tase"
 	shot_sound = 'sound/weapons/SigTase.ogg'
 	cost = 12
-	power = 10
+	power = 12
 	ks_ratio = 0.1
 
 	sname = "non-lethal"
