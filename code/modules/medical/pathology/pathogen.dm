@@ -6,7 +6,7 @@ datum/pathogen_cdc
 	var/microbody_type = null
 
 	var/list/infections = list()
-	var/list/replicas = list()
+	var/list/mutations = list()
 
 	New(var/pathogen_uid)
 		..()
@@ -14,7 +14,7 @@ datum/pathogen_cdc
 		src.uid = pathogen_uid
 
 datum/controller/pathogen
-	var/list/next_replica = new/list()
+	var/list/next_mutation = new/list()
 	var/list/pathogen_trees = new/list()
 	var/next_uid = 1
 
@@ -58,6 +58,11 @@ datum/controller/pathogen
 		if (!CDC.patient_zero)
 			CDC.patient_zero = H
 			CDC.patient_zero_kname = "[H]"
+		if (!(P.name in CDC.mutations))
+			CDC.mutations += P.name
+			var/datum/pathogen/template = new /datum/pathogen
+			template.setup(0, P, 0)
+			CDC.mutations[P.name] = template
 		if (!(H in CDC.infections))
 			CDC.infections += H
 		CDC.infections[H] = P.name
@@ -93,7 +98,7 @@ datum/controller/pathogen
 				message_admins("[key_name(usr)] cured [count] humans from pathogen strain [strain].")
 			if ("strain_details")
 				cdc_state[key] = href_list["strain"]
-			if ("pathogen_creator")
+			/*if ("pathogen_creator")
 				var/datum/pathogen/P = src.cdc_creator[usr.ckey]
 				switch (href_list["do"])
 					if ("reset")
@@ -154,7 +159,10 @@ datum/controller/pathogen
 						pathogen_trees += P.name_base
 						var/datum/pathogen_cdc/CDC = new /datum/pathogen_cdc(P.pathogen_uid)
 						pathogen_trees[P.name_base] = CDC
+						next_mutation[P.pathogen_uid] = P.mutation + 1
 						CDC.microbody_type = "[P.body_type]"
+						CDC.mutations += P.name
+						CDC.mutations[P.name] = P
 
 						message_admins("[key_name(usr)] created a new pathogen ([P]) via the creator.")
 						src.gen_empty(usr.ckey)
@@ -162,6 +170,7 @@ datum/controller/pathogen
 			if ("strain_data")
 				var/datum/pathogen_cdc/CDC = locate(href_list["which"])
 				var/name = href_list["name"]
+				var/datum/pathogen/reference = CDC.mutations[name]
 				switch (href_list["data"])
 					if ("advance_speed")
 						var/value = reference.advance_speed
@@ -231,6 +240,7 @@ datum/controller/pathogen
 						V.reagents.reagent_list += RE.id
 						V.reagents.reagent_list[RE.id] = RE
 						V.reagents.update_total()
+						*/
 			if ("microbody_data")
 				var/datum/microbody/MB = locate(href_list["which"])
 				switch (href_list["data"])
@@ -245,16 +255,16 @@ datum/controller/pathogen
 						if (new_act >= 0 && new_act <= 100)
 							MB.activity[stage] = new_act
 							message_admins("[key_name(usr)] set the activity for pathogen microbody [MB.plural] on stage [stage] to [new_act].")
-			if ("symptom_data")
+			/*if ("symptom_data")
 				var/datum/pathogeneffects/EF = locate(href_list["which"])
 				switch (href_list["data"])
 					if ("info")
-						alert(usr, EF.desc)
+						alert(usr, EF.desc)*/
 		cdc_main(th)
 
 	var/list/cdc_creator = list()
 	var/list/cdc_state = list()
-	var/static/list/states = list("strains", "symptoms", "microbodies", "suppressants", "pathogen creator")
+	var/static/list/states = list("strains", "mutations", "symptoms", "microbodies", "suppressants", "pathogen creator")
 	proc/severity_color(var/datum/pathogeneffects/EF)
 		if (EF.rarity == RARITY_ABSTRACT)
 			return "[EF]"
@@ -299,7 +309,7 @@ datum/controller/pathogen
 			output += "<h3>Details for pathogen strain [state]</h3>"
 			if (state in pathogen_trees)
 				var/datum/pathogen_cdc/CDC = pathogen_trees[state]
-				output += "<table class='pathology-table'><thead><tr><th>Mutation name</th><th>Symptoms</th><th class='small'>Primary attributes</th><th>Symptomatic</th><th>Stages</th><th>Infected</th><th>Actions</th></thead><tbody>"
+				output += "<table class='pathology-table'><thead><tr><th>Strain name</th><th>Symptoms</th><th class='small'>Primary attributes</th><th>Stages</th><th>Infected</th><th>Actions</th></thead><tbody>"
 				for (var/name in CDC.mutations)
 					output += "<tr>"
 					var/datum/pathogen/P = CDC.mutations[name]
@@ -773,7 +783,7 @@ datum/pathogen
 			pathogen_controller.pathogen_trees[name_base] = CDC
 			pathogen_controller.next_replica[pathogen_uid] = mutation + 1
 			CDC.microbody_type = body_type
-		CDC.mutations += name
+		CDC.strains += name
 		CDC.mutations[name] = clone()
 		return
 
