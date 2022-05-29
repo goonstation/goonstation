@@ -14996,6 +14996,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/pyro/external{
+	dir = 4;
 	name = "Compartment Hatch"
 	},
 /turf/simulated/floor,
@@ -15065,6 +15066,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/pyro/glass{
+	dir = 4;
 	icon_state = "door_locked";
 	locked = 1;
 	name = "Damaged Glass Airlock";
