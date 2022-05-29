@@ -889,7 +889,7 @@ About the new airlock wires panel:
 */
 /obj/machinery/door/airlock/proc/play_deny()
 	play_animation("deny")
-	playsound(src, src.sound_deny_temp, 35, 0)
+	playsound(src, src.sound_deny_temp, 35, 0, 0.8) //if this doesn't carry far enough, tweak the extrarange number, not the volume
 
 /obj/machinery/door/airlock/proc/try_pulse(var/wire_color, mob/user)
 	if (!user.find_tool_in_hand(TOOL_PULSING))
