@@ -24,6 +24,7 @@
 
 	//Load program from tape
 	proc/load_program()
+		src.readingorwriting()
 		if (!src.tape)
 			return
 		src.program = src.tape.contents
