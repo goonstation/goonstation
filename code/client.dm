@@ -1287,7 +1287,7 @@ var/global/curr_day = null
 
 /client/verb/apply_parallax()
 	set hidden = 1
-	set name ="apply-parallax"
+	set name = "apply-parallax"
 
 	parallax = !parallax // fps impact, unknown as to how much
 
