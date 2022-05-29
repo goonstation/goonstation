@@ -5,14 +5,16 @@
 /obj/machinery/atmospherics/binary/nuclear_reactor
 	name = "Model NTBMK Nuclear Reactor"
 	desc = "A nuclear reactor vessel, with slots for fuel rods and other components. Hey wait, didn't one of these explode once?"
-	icon = 'icons/misc/nuclearreactor.dmi'
+	icon = 'icons/obj/atmospherics/pipes.dmi'
+	icon_state = "circ1-off"
+/*	icon = 'icons/misc/nuclearreactor.dmi'
 	icon_state = "reactor_empty"
 	bound_width = 160
 	bound_height = 160
 	pixel_x = -64
 	pixel_y = -64
 	bound_x = -64
-	bound_y = -64
+	bound_y = -64 */
 	anchored = TRUE
 	density = TRUE
 	mat_changename = FALSE
@@ -33,8 +35,23 @@
 
 	process()
 		. = ..()
-		var/datum/gas_mixture/gas_input = air1
+		var/output_starting_pressure = MIXTURE_PRESSURE(air2)
+		var/input_starting_pressure = MIXTURE_PRESSURE(air1)
+		boutput(world,"REACTOR: input=[input_starting_pressure] output=[output_starting_pressure]")
+		if(output_starting_pressure >= min(ONE_ATMOSPHERE,input_starting_pressure-10))
+			return
+
+		//Calculate necessary moles to transfer using PV = nRT
+		if((TOTAL_MOLES(air1) <= 0) || (air1.temperature<=0))
+			return
+
+		var/pressure_delta = min(ONE_ATMOSPHERE - output_starting_pressure, (input_starting_pressure - output_starting_pressure)/2)
+		//Can not have a pressure delta that would cause output_pressure > input_pressure
+		var/transfer_moles = pressure_delta*air2.volume/(air1.temperature * R_IDEAL_GAS_EQUATION)
+
+		var/datum/gas_mixture/gas_input = air1.remove(transfer_moles)
 		var/datum/gas_mixture/gas_output = air2
+
 		for(var/x=1 to 6)
 			for(var/y=1 to 6)
 				if(src.component_grid[x][y])
@@ -113,14 +130,14 @@
 			if(target.initialize_directions & node2_connect)
 				if(target != src)
 					node1 = target
-					target.node2 = src
+					//target.node2 = src
 					break
 
 		for(var/obj/machinery/atmospherics/pipe/simple/target in get_step(src,node2_connect))
 			if(target.initialize_directions & node1_connect)
 				if(target != src)
 					node2 = target
-					target.node1 = src
+					//target.node1 = src
 					break
 
 		UpdateIcon()
