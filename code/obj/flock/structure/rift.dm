@@ -27,6 +27,8 @@
 		for(var/i in 1 to 4)
 			var/obj/flock_structure/egg/e = new(src.contents, src.flock)
 			eject += e
+		var/obj/flock_structure/egg/bit/bitegg = new(src.contents, src.flock)
+		eject += bitegg
 		var/list/candidate_turfs = list()
 		for(var/turf/simulated/floor/S in orange(src, 4))
 			candidate_turfs += S
