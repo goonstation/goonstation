@@ -14,7 +14,6 @@
 	var/scoopable = 1
 	burn_type = 1
 	var/wiggle = 6 // how much we want the sprite to be deviated fron center
-	max_stack = INFINITY
 	event_handler_flags = USE_FLUID_ENTER
 
 	New()
@@ -34,12 +33,6 @@
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if(W.type == src.type)
-			stack_item(W)
-			if(!user.is_in_hands(src))
-				user.put_in_hand(src)
-			boutput(user, "<span class='notice'>You add the ores to the stack. It now has [src.amount] ores.</span>")
-			return
 		if (istype(W, /obj/item/satchel/mining/))
 			if (W.contents.len < W:maxitems)
 				src.set_loc(W)
@@ -51,18 +44,6 @@
 			else
 				boutput(user, "<span class='alert'>[W] is full!</span>")
 		else ..()
-
-	attack_hand(mob/user as mob)
-		if(user.is_in_hands(src) && src.amount > 1)
-			var/splitnum = round(input("How many ores do you want to take from the stack?","Stack of [src.amount]",1) as num)
-			if (splitnum >= amount || splitnum < 1 || !isnum_safe(splitnum))
-				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
-				return
-			var/obj/item/raw_material/new_stack = split_stack(splitnum)
-			user.put_in_hand_or_drop(new_stack)
-			new_stack.add_fingerprint(user)
-		else
-			..(user)
 
 	Crossed(atom/movable/AM as mob|obj)
 		..()
@@ -110,59 +91,6 @@
 		if(istype(over_object, /obj/afterlife_donations))
 			return ..()
 
-		if (istype(over_object,/obj/item/raw_material)) //piece to piece, doesnt matter if in hand or not.
-			var/obj/item/targetObject = over_object
-			if(targetObject.stack_item(src))
-				usr.visible_message("<span class='notice'>[usr.name] stacks \the [src]!</span>")
-		else if(isturf(over_object)) //piece to turf. piece loc doesnt matter.
-			if(src.amount > 1) //split stack.
-				usr.visible_message("<span class='notice'>[usr.name] splits the stack of [src]!</span>")
-				var/toSplit = round(amount / 2)
-				var/atom/movable/splitStack = split_stack(toSplit)
-				if(splitStack)
-					splitStack.set_loc(over_object)
-			else
-				if(isturf(src.loc))
-					src.set_loc(over_object)
-				for(var/obj/item/I in view(1,usr))
-					if (!I || I == src)
-						continue
-					if (!src.check_valid_stack(I))
-						continue
-					src.stack_item(I)
-				usr.visible_message("<span class='notice'>[usr.name] stacks \the [src]!</span>")
-		else if(istype(over_object, /atom/movable/screen/hud))
-			var/atom/movable/screen/hud/H = over_object
-			var/mob/living/carbon/human/dude = usr
-			switch(H.id)
-				if("lhand")
-					if(dude.l_hand)
-						if(dude.l_hand == src) return
-						else if (istype(dude.l_hand, /obj/item/raw_material))
-							var/obj/item/raw_material/DP = dude.l_hand
-							DP.stack_item(src)
-							usr.visible_message("<span class='notice'>[usr.name] stacks \the [DP]!</span>")
-					else if(amount > 1)
-						var/toSplit = round(amount / 2)
-						var/atom/movable/splitStack = split_stack(toSplit)
-						if(splitStack)
-							usr.visible_message("<span class='notice'>[usr.name] splits the stack of [src]!</span>")
-							splitStack.set_loc(dude)
-							dude.put_in_hand(splitStack, 1)
-				if("rhand")
-					if(dude.r_hand)
-						if(dude.r_hand == src) return
-						else if (istype(dude.r_hand, /obj/item/raw_material))
-							var/obj/item/raw_material/DP = dude.r_hand
-							DP.stack_item(src)
-							usr.visible_message("<span class='notice'>[usr.name] stacks \the [DP]!</span>")
-					else if(amount > 1)
-						var/toSplit = round(amount / 2)
-						var/atom/movable/splitStack = split_stack(toSplit)
-						if(splitStack)
-							usr.visible_message("<span class='notice'>[usr.name] splits the stack of [src]!</span>")
-							splitStack.set_loc(dude)
-							dude.put_in_hand(splitStack, 0)
 		else
 			..()
 
