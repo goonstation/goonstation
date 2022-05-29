@@ -285,6 +285,7 @@
 			user.visible_message("<span class='alert'>[user] destroys the table!</span>")
 			if (prob(40))
 				playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
+			logTheThing("combat", user, null, "uses hulk to smash a table at [log_loc(src)].")
 			deconstruct()
 			return
 
