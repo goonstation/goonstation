@@ -844,7 +844,7 @@
 	if(abs(difference) <= h_change_cap)
 		heating_in_progress = 0
 
-	R.set_reagent_temp(heater_temp, 1)
+	R.set_reagent_temp(heater_temp, TRUE)
 
 	return heating_in_progress
 
