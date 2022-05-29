@@ -4,11 +4,6 @@
 (p)8697
 (e)|
 (+)Removed Atmospherish Crate from Cargo. Added crates for pipe dispenser, portable fuel tanks, and a two piece scrubber/airtank set.
-(t)sat may 28 22
-(u)BatElite
-(p)8769
-(e)|
-(+)The CTRL-click shortcut can now also be used to stop pulling things
 (t)thu may 26 22
 (u)tarmunora
 (+)welderspecial blocked by things that block gas. rangedstab special blocked by things that would not permit the item to pass.
