@@ -962,14 +962,6 @@
 			if (H.bioHolder.HasEffect("rot_curse"))
 				curseCount ++
 			switch(curseCount)
-				if (0)
-					var/image/icon = image('icons/mob/wraith_critters.dmi', icon_state = "voidhound", loc = target)
-					icon.blend_mode = BLEND_ADD
-					icon.plane = PLANE_ABOVE_LIGHTING
-					icon.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
-					icon.pixel_y = 32
-					icon.alpha = 122
-					get_image_group(CLIENT_IMAGE_GROUP_CURSES).add_image(icon)
 				if (1)
 					boutput(H, "<span class='notice'>You feel strangely sick.</span>")
 				if (2)
@@ -992,7 +984,7 @@
 			return 1
 
 		if (ishuman(target))
-			var/mob/living/carbon/H = target
+			var/mob/living/carbon/human/H = target
 			if(H.bioHolder.HasEffect("blood_curse"))
 				boutput(holder.owner, "That curse is already applied to this being...")
 				return 1
@@ -1007,6 +999,16 @@
 			ability.doCooldown()
 			ability = holder.getAbility(/datum/targetable/wraithAbility/curse/death)
 			ability.doCooldown()
+
+			var/image/icon = image('icons/mob/wraith_ui.dmi', icon_state = "blood_status", loc = H)
+			icon.blend_mode = BLEND_ADD
+			icon.plane = PLANE_ABOVE_LIGHTING
+			icon.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+			icon.pixel_y = 28
+			icon.alpha = 170
+			get_image_group(CLIENT_IMAGE_GROUP_CURSES).add_image(icon)
+			H.curse_icons += icon
+
 			return 0
 		else
 			return 1
@@ -1024,7 +1026,7 @@
 			return 1
 
 		if (ishuman(target))
-			var/mob/living/carbon/H = target
+			var/mob/living/carbon/human/H = target
 			if(H.bioHolder.HasEffect("blind_curse"))
 				boutput(holder.owner, "That curse is already applied to this being...")
 				return 1
@@ -1039,6 +1041,16 @@
 			ability.doCooldown()
 			ability = holder.getAbility(/datum/targetable/wraithAbility/curse/death)
 			ability.doCooldown()
+
+			var/image/icon = image('icons/mob/wraith_ui.dmi', icon_state = "blind_status", loc = H)
+			icon.blend_mode = BLEND_ADD
+			icon.plane = PLANE_ABOVE_LIGHTING
+			icon.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+			icon.pixel_y = 28
+			icon.alpha = 170
+			get_image_group(CLIENT_IMAGE_GROUP_CURSES).add_image(icon)
+			H.curse_icons += icon
+
 			return 0
 		else
 			return 1
@@ -1056,7 +1068,7 @@
 			return 1
 
 		if (ishuman(target))
-			var/mob/living/carbon/H = target
+			var/mob/living/carbon/human/H = target
 			if(H.bioHolder.HasEffect("weak_curse"))
 				boutput(holder.owner, "That curse is already applied to this being...")
 				return 1
@@ -1071,6 +1083,16 @@
 			ability.doCooldown()
 			ability = holder.getAbility(/datum/targetable/wraithAbility/curse/death)
 			ability.doCooldown()
+
+			var/image/icon = image('icons/mob/wraith_ui.dmi', icon_state = "weak_status", loc = H)
+			icon.blend_mode = BLEND_ADD
+			icon.plane = PLANE_ABOVE_LIGHTING
+			icon.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+			icon.pixel_y = 28
+			icon.alpha = 170
+			get_image_group(CLIENT_IMAGE_GROUP_CURSES).add_image(icon)
+			H.curse_icons += icon
+
 			return 0
 		else
 			return 1
@@ -1088,7 +1110,7 @@
 			return 1
 
 		if (ishuman(target))
-			var/mob/living/carbon/H = target
+			var/mob/living/carbon/human/H= target
 			if(H.bioHolder.HasEffect("rot_curse"))
 				boutput(holder.owner, "That curse is already applied to this being...")
 				return 1
@@ -1103,6 +1125,16 @@
 			ability.doCooldown()
 			ability = holder.getAbility(/datum/targetable/wraithAbility/curse/death)
 			ability.doCooldown()
+
+			var/image/icon = image('icons/mob/wraith_ui.dmi', icon_state = "rot_status", loc = H)
+			icon.blend_mode = BLEND_ADD
+			icon.plane = PLANE_ABOVE_LIGHTING
+			icon.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+			icon.pixel_y = 26
+			icon.alpha = 170
+			get_image_group(CLIENT_IMAGE_GROUP_CURSES).add_image(icon)
+			H.curse_icons += icon
+
 			return 0
 		else
 			return 1
