@@ -32,7 +32,6 @@ export const ContributorRewards = (_props, context) => {
                 open>
                 {rewardDescs[index]}
                 <Button
-                  margin-left="5px"
                   ml={1}
                   icon="check-circle"
                   content="Redeem"
