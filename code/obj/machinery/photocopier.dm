@@ -150,8 +150,10 @@
 		if (src.use_state == 2)
 			boutput(user, "<span class='alert'>\The [src] is busy right now! Try again later!</span>")
 			return
-		var/mode_sel =  input("Which do you want to do?", "Photocopier Controls") as null|anything in list("Reset Memory", "Print Copies", "Adjust Amount", "Toggle Lid")
+		var/mode_sel = tgui_input_list(user, "Which do you want to do?", "Photocopier Controls", list("Reset Memory", "Print Copies", "Adjust Amount", "Toggle Lid"))
 		if (BOUNDS_DIST(user, src) == 0)
+			if (!mode_sel)
+				return
 			switch(mode_sel)
 				if ("Reset Memory")
 					if (src.use_state == 2)
