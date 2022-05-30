@@ -1,5 +1,9 @@
 
 (t)sun may 29 22
+(u)Wisemonster
+(p)8762
+(e)🗺|mapping
+(+)Added status displays to Kondaru, Horizon, and Destiny.
 (u)DimWhat
 (p)8809
 (e)|
