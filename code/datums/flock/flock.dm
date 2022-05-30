@@ -704,6 +704,10 @@ var/flock_signal_unleashed = FALSE
 			var/obj/machinery/door/feather/door = O
 			door.heal_damage()
 			animate_flock_convert_complete(O)
+		else if (istype(O, /obj/machinery/camera))
+			var/obj/machinery/camera/cam = O
+			if (cam.camera_status)
+				cam.break_camera()
 		else
 			for(var/keyPath in flock_conversion_paths) //types are converted with priority determined by list order
 				var/obj/replacementPath = flock_conversion_paths[keyPath] //put subclasses ahead of superclasses in the flock_conversion_paths list
