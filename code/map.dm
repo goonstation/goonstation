@@ -122,6 +122,20 @@ var/global/list/mapNames = list(
 	var/job_limits_from_landmarks = FALSE /// if TRUE each job with a landmark will get as many slots as many landmarks there are (jobs without a landmark left on default)
 	var/list/job_limits_override = list() /// assoc list of the form `job_type=limit` to override other job settings, works on gimmick jobs too
 
+	/// special parallax position overrides, x y positions per zlevel
+	var/X0_coords = list(list(72,166)) /// plasma giant
+	var/mundus_coords = list(list(145,79))
+	var/fortuna_coords = list(list(245,47))
+	var/iudicium_coords = list(list(205,177))
+	var/iustitia_coords = list(list(120,222))
+	var/star_red_coords = list(list(188,95),list(0,0),list(188,95),list(0,0),list(205,110)) // god damn it the stars are on z5 and z3 AND z1
+	var/star_blue_coords = list(list(177,212),list(0,0),list(225,76),list(0,0),list(74,290))
+	var/ss14_coords = list(list(130,183))
+	var/ss12_coords = list(list(0,0)) /// not existing / 0,0 is used as "this doesnt display here, skip it"
+	var/ss10_coords = list(list(0,0))
+	var/X3_coords = list(list(0,0))
+	var/X5_coords = list(list(0,0))
+
 	proc/get_shuttle_path()
 		var/dirname = dir_to_dirname(escape_dir)
 		var/shuttle_name = src.default_shuttle || "[dirname]base"
@@ -345,6 +359,17 @@ var/global/list/mapNames = list(
 		"the mining staff room" = list(/area/station/mining/staff_room),
 		"the bridge" = list(/area/station/bridge),
 		"the central warehouse, next to the refinery" = list(/area/station/storage/warehouse))
+
+	X0_coords = list(list(240,148))
+	iudicium_coords = list(list(116,65))
+	iustitia_coords = list(list(80,127))
+	mundus_coords = list(list(42,25))
+	fortuna_coords = list(list(252,46))
+	ss14_coords = list(list(178,205))
+	star_blue_coords = list(list(106,78),list(0,0),list(225,76),list(0,0),list(74,290))
+	star_red_coords = list(list(0,0),list(0,0),list(188,95),list(0,0),list(205,110))
+	 /// this map doesnt have the red star on z1, but still has it on z3 and z5
+	iustitia_coords = list(list(80,127))
 
 /datum/map_settings/destiny
 	name = "DESTINY"
@@ -608,6 +633,10 @@ var/global/list/mapNames = list(
 		"the station's cafeteria" = list(/area/station/crew_quarters/cafeteria),
 		"the telescience lab" = list(/area/station/science/teleporter),
 		"the genetics lab" = list(/area/station/medical/research, /area/station/medical/medbay/cloner))
+
+	X5_coords = list(list(157,154))
+	X3_coords = list(list(201,192))
+
 
 /datum/map_settings/kondaru
 	name = "KONDARU"

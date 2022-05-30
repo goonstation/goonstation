@@ -682,7 +682,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	// Set parallax
 	parallax = winget( src, "menu.set_parallax", "is-checked" ) == "true"
 
-	if(mob?.parallax && !parallax)
+	if(mob.parallax && !parallax)
 		mob.parallax.toggle()
 
 /client/proc/ip_cid_conflict_check(log_it=TRUE, alert_them=TRUE, only_if_first=FALSE, message_who=null)
@@ -1291,7 +1291,7 @@ var/global/curr_day = null
 
 	parallax = !parallax // fps impact, unknown as to how much
 
-	if(mob?.parallax)
+	if(mob.parallax)
 		mob.parallax.toggle()
 
 /client/verb/apply_view_tint()
