@@ -1043,27 +1043,57 @@
 		dir = 1
 		default_material = "metal"
 
+// flock windows
 
-// Flockdrone BS goes here - cirr
+/obj/window/auto/feather
+	default_material = "gnesisglass"
+
+/obj/window/auto/feather/New()
+	connects_to += /turf/simulated/wall/auto/feather
+	..()
+	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
+	src.AddComponent(/datum/component/flock_protection, FALSE, TRUE, TRUE)
+
+/obj/window/auto/feather/special_desc(dist, mob/user)
+	if (!isflockmob(user))
+		return
+	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+		<br><span class='bold'>ID:</span> Fibrewoven Window
+		<br><span class='bold'>System Integrity:</span> [round((src.health/src.health_max)*100)]%
+		<br><span class='bold'>###=-</span></span>"}
+
+/obj/window/auto/feather/proc/repair()
+	src.health = min(src.health + 10, src.health_max)
+
+
 /obj/window/feather
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "window"
 	default_material = "gnesisglass"
 	hitsound = 'sound/impact_sounds/Crystal_Hit_1.ogg'
 	shattersound = 'sound/impact_sounds/Crystal_Shatter_1.ogg'
+	mat_appearances_to_ignore = list("gnesis")
+	mat_changename = FALSE
+	mat_changedesc = FALSE
 	health = 50 // as strong as reinforced glass, but not as strong as plasmaglass
 	health_max = 50
-	density = 1
+	density = TRUE
+
+/obj/window/feather/New()
+	..()
+	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
+	src.AddComponent(/datum/component/flock_protection)
 
 /obj/window/feather/special_desc(dist, mob/user)
-  if(isflock(user))
-    return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-    <br><span class='bold'>ID:</span> Fibrewoven Window
-    <br><span class='bold'>System Integrity:</span> [round((src.health/src.health_max)*100)]%
-    <br><span class='bold'>###=-</span></span>"}
-    // todo: damageable walls
-  else
-    return null // give the standard description
+	if (!isflockmob(user))
+		return
+	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+		<br><span class='bold'>ID:</span> Fibrewoven Window
+		<br><span class='bold'>System Integrity:</span> [round((src.health/src.health_max)*100)]%
+		<br><span class='bold'>###=-</span></span>"}
+
+/obj/window/feather/proc/repair()
+	src.health = min(src.health + 10, src.health_max)
 
 /obj/window/feather/north
 	dir = NORTH

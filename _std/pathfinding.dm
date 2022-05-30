@@ -442,13 +442,10 @@
 			if (istype(A, /obj/overlay) || istype(A, /obj/effects)) continue
 			if ((passer || id) && A.density)
 				if (O.object_flags & BOTS_DIRBLOCK) //NEW - are we a door-like-openable-thing?
-					if (O.has_access_requirements()) //are we a door w/ access?
-						if (ismob(passer) && O.allowed(passer) == 2 || id && O.check_access(id)) // do you have explicit access
-							continue
-						else
-							return FALSE
-					else //we must be a public door
+					if (ismob(passer) && O.allowed(passer) || id && O.check_access(id)) // do you have explicit access
 						continue
+					else
+						return FALSE
 				return FALSE
 		if(!A.Cross(passer))
 			return FALSE
