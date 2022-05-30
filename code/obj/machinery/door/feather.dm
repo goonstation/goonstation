@@ -144,9 +144,9 @@
 		for (var/turf/simulated/wall/auto/feather/W in orange(1))
 			W.UpdateIcon()
 
-////////////////////
+// ----------------
 // friendly variant
-////////////////////
+// ----------------
 // everyone allowed to open
 /obj/machinery/door/feather/friendly
 

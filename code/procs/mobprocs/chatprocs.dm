@@ -964,10 +964,11 @@
 //#define FLOCK_SPEAKER_FLOCKTRACE 4
 //#define FLOCK_SPEAKER_NPC 5
 
-// for speaker, pass:
-// -null to give a general system message
-// -mob to make a mob speak
-// -flock_structure for a structure message
+/// how to speak in the flock
+/// for speaker, pass:
+/// -null to give a general system message
+/// -mob to make a mob speak
+/// -flock_structure for a structure message
 /proc/flock_speak(atom/speaker, message as text, datum/flock/flock, speak_as_admin = FALSE)
 	var/mob/mob_speaking = null
 	var/obj/flock_structure/structure_speaking = null

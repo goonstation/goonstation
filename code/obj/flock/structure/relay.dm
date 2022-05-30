@@ -94,7 +94,7 @@
 	src.visible_message("<span class='flocksay bold'>[src] begins sparking wildly! The air is charged with static!</span>")
 	for(var/mob/M in mobs)
 		M.playsound_local(M, "sound/misc/flockmind/flock_broadcast_charge.ogg", 60, 0, 2)
-	sleep(final_charge_time_length * 10)
+	sleep(final_charge_time_length SECONDS)
 
 	for(var/mob/M in mobs)
 		M.playsound_local(M, "sound/misc/flockmind/flock_broadcast_kaboom.ogg", 60, 0, 2)
