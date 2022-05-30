@@ -52,6 +52,7 @@
 	var/active = TRUE
 
 	var/atom/movable/screen/hud/background
+	var/BGicon = "background"
 
 	/// generate parallax_objects list out of settings
 	proc/createPlanet(var/pCoords,var/Picon,var/Picon_state,var/Pscale,var/Psize,var/Player)
@@ -75,19 +76,15 @@
 		master = M
 		clients += master.client
 		SPAWN(0)
+
 			/// background setup, this will be "in" every zlevel, but wont necessarily be visible
-			var/backgroundicon = ""
-			#ifdef UNDERWATER_MAP
-				backgroundicon = ""
-			#else
-				backgroundicon = "background"
-			#endif
-			background = create_screen("background", "Space", 'icons/effects/overlays/parallaxBackground.dmi', backgroundicon, "1,1", HUD_LAYER-1)
+			background = create_screen("background", "Space", 'icons/effects/overlays/parallaxBackground.dmi', "background", "1,1", HUD_LAYER-1)
 			background.transform = matrix(0,0,0,0,0,0)
 			background.screen_loc = master?.client?.view ? "4,1" : "1,1"
 			background.plane = PLANE_SPACE
 			background.appearance_flags += TILE_BOUND
 			background.mouse_opacity = 0
+			background.icon_state = BGicon
 
 			/// parallax settings setup
 			PARALLAX_PLANET(PARALLAX_OBJ_1)
@@ -116,7 +113,7 @@
 	proc/update(var/turf/master_turf)
 		if(!active) return
 		#ifdef UNDERWATER_MAP
-			return
+		return
 		#endif
 		for(var/atom/movable/screen/hud/P as anything in parallax_objects)
 
