@@ -16,6 +16,7 @@
 	pixel_y = -64
 	bound_x = -64
 	bound_y = -64
+	hitTwitch = FALSE
 	layer = EFFECTS_LAYER_BASE //big spooky thing needs to render over everything
 	plane = PLANE_NOSHADOW_ABOVE
 	var/last_time_sound_played_in_seconds = 0

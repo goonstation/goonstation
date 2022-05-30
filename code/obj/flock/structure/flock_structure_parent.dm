@@ -17,6 +17,8 @@ ABSTRACT_TYPE(/obj/flock_structure)
 	var/health = 30
 	var/health_max = 30
 	var/bruteVuln = 1.2
+	///Should it twitch on being hit?
+	var/hitTwitch = TRUE
 
 	var/fireVuln = 0.2
 	var/datum/flock/flock = null
@@ -202,7 +204,13 @@ ABSTRACT_TYPE(/obj/flock_structure)
 		damtype = "fire"
 
 	takeDamage(damtype, W.force)
-	playsound(src.loc, "sound/impact_sounds/Crystal_Hit_1.ogg", 50, 1)
+	if (src.hitTwitch)
+		hit_twitch(src)
+	if (W.force < 5)
+		playsound(src.loc, "sound/impact_sounds/Crystal_Hit_1.ogg", 50, 1)
+	else
+		playsound(src.loc, "sound/impact_sounds/Glass_Shards_Hit_1.ogg", 50, 1)
+
 
 /obj/flock_structure/proc/report_attack()
 	if (!ON_COOLDOWN(src, "attack_alert", 10 SECONDS))
