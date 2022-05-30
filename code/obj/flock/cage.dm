@@ -195,6 +195,7 @@
 			else if(occupant && ishuman(occupant))
 				var/mob/living/carbon/human/H = occupant
 				getHumanPiece(H) //cut off a human part and add it to contents, set it to target
+				H?.reagents?.add_reagent(target_fluid,2) //you get a bit of juice, just to complicate life
 			else if(occupant && isrobot(occupant))
 				var/mob/living/silicon/robot/H = occupant
 				getRobotPiece(H) //cut off a robot part and add it to contents, set it to target
@@ -268,8 +269,9 @@
 	relaymove(mob/user as mob)
 		if (user.stat)
 			return
-
-		if(prob(25))
+		if(ON_COOLDOWN(src,"move_damage",1 SECOND))
+			return
+		if(prob(75))
 			takeDamage("brute",1)
 		return
 

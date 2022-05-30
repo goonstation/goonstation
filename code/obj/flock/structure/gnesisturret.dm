@@ -7,7 +7,7 @@
 	desc = "A vat of bubbling teal fluid, covered in hollow spikes."
 	icon_state = "teleblocker-off"
 	flock_id = "Gnesis turret"
-	resourcecost = 300
+	resourcecost = 150
 	health = 80
 	///maximum volume of coagualted gnesis that can be stored in the tank
 	var/fluid_level_max = 250
