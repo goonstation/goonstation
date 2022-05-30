@@ -141,7 +141,7 @@ var/list/input_window_presets =  list(
 /client/verb/fix_chatbox()
 	set name = "Fix chatbox"
 
-	var/preset = input(src, "Which chat window do you want to recreate?", "Fix chatbox") as null|anything in input_window_presets
+	var/preset = tgui_input_list(src, "Which chat window do you want to recreate?", "Fix chatbox", input_window_presets)
 
 	if(!preset)
 		return
