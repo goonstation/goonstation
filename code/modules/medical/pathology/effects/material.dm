@@ -97,9 +97,10 @@ datum/pathogeneffects/malevolent/farts/o2
 
 datum/pathogeneffect/material/organicglass
 	name = "Organic Glass"
-	desc = "The microbes produce silicate, reinforcing or repairing glass structures."
+	desc = "The microbes produce silicate, reinforcing and repairing glass structures."
 
 	turf_act(var/turf/T, var/datum/pathogen/origin)
+		var/volume = 1
 		if(istype(T, /turf/simulated))
 			var/list/covered = holder.covered_turf()
 			if(length(covered) > 9)
@@ -110,11 +111,5 @@ datum/pathogeneffect/material/organicglass
 				T.create_reagents(volume)
 			else
 				T.reagents.maximum_volume = T.reagents.maximum_volume + volume
+			T.reagents.add_reagent("silicate", volume, null)
 
-			if (!T.reagents.has_reagent("thermite"))
-				T.UpdateOverlays(image('icons/effects/effects.dmi',icon_state = "thermite"), "thermite")
-
-			T.reagents.add_reagent("thermite", volume, null)
-			if (T.active_hotspot)
-				T.reagents.temperature_reagents(T.active_hotspot.temperature, T.active_hotspot.volume, 350, 300, 1)
-		return

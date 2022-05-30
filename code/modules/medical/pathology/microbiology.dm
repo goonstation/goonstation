@@ -10,7 +10,7 @@ datum/microbe
 	var/cure										// the chemical reagent that sets duration to ~5 when 10u reagents found
 
 	var/list/effects = list()						// A list of symptoms exhibited by those infected with this pathogen.
-	var/list/mutex = list()							// These symptoms are explicitly disallowed by a mutex.
+	//var/list/mutex = list()							// These symptoms are explicitly disallowed by a mutex.
 
 // PROCS AND FUNCTIONS FOR GENERATION
 
@@ -25,11 +25,11 @@ datum/microbe
 		duration = 1
 		cure = ""
 		effects = list()
-		mutex = list()
+		//mutex = list()
 
 	proc/clone()
 		var/datum/microbe/P = new /datum/microbe
-		P.setup(0, src, 0)
+		P.setup(0, src)
 		return P
 
 	proc/do_prefab(tier)							// for ailments with defined symptoms

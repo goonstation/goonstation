@@ -2,26 +2,24 @@ datum/pathogeneffects
 	var/name
 	var/desc
 
-	var/infect_message = null
-	var/infect_attempt_message = null // shown to person when an attempt to directly infect them is made
+	//var/infect_message = null
+	//var/infect_attempt_message = null // shown to person when an attempt to directly infect them is made
 
 	// This is a list of mutual exclusive symptom TYPES.
 	// If this contains any symptoms, none of these symptoms will be picked upon mutation or initial raffle.
 	// Mutexes cut the ENTIRE object tree - for example, if symptoms a/b, a/c and a/d all exist, then mutexing
 	// symptom a will also mutex b, c and d.
-	var/list/mutex = list()
+	//var/list/mutex = list()
 
 	// A symptom might not always infect everyone around. This is a flat probability: 0 means never infect to 1 means always infect. This is checked PER MOB, not per infect call.
-	var/infection_coefficient = 1
-
+	//var/infection_coefficient = 1
 
 	//WIP
 	proc/turf_act(var/turf/T, var/datum/pathogen/origin)
 
-	proc/object_act(var/obj/item as W, var/datum/pathogen/origin)
+	proc/object_act(var/obj/O, var/datum/pathogen/origin)
 
-	proc/reagent_act(var/obj/item/reagent_containers as C, var/datum/pathogen/origin)
-
+	proc/reagent_act(var/datum/reagents/holder, var/datum/pathogen/origin)
 
 	// mob_act(mob, datum/pathogen) : void
 	// This is the center of pathogen symptoms.
@@ -38,7 +36,7 @@ datum/pathogeneffects
 
 	// does an infectious snap
 	// makes others snap, should possibly infect you in the future if you are made to snap a certain amount of times
-	proc/infect_snap(var/mob/M as mob, var/datum/pathogen/origin, var/range = 5)
+	/*proc/infect_snap(var/mob/M as mob, var/datum/pathogen/origin, var/range = 5)
 		for (var/mob/I in view(range, M.loc))
 			if (I != M && ((isturf(I.loc) && isturf(M.loc) && can_line_airborne(get_turf(M), I, 5)) || I.loc == M.loc))
 				if(istype(M, /mob/living/carbon/human))
@@ -47,11 +45,11 @@ datum/pathogeneffects
 						SPAWN(rand(0.5,2) SECONDS)
 							H.show_message("Pretty catchy tune...")
 							H.emote("snap") // consider yourself lucky I haven't implemented snap infection yet, human
-
+*/
 	// creates an infective cloud
 	// this should give people better feedback about how be infected and how to avoid it
-	proc/infect_cloud(var/mob/M as mob, var/datum/pathogen/origin, var/amount = 5)
-		return
+	//proc/infect_cloud(var/mob/M as mob, var/datum/pathogen/origin, var/amount = 5)
+	//	return
 		/*
 		var/turf/T = get_turf(M)
 		var/obj/decal/cleanable/pathogen_cloud/D = make_cleanable(/obj/decal/cleanable/pathogen_cloud,T)
@@ -68,8 +66,8 @@ datum/pathogeneffects
 	*/
 	// creates an infective puddle
 	// this should give people better feedback about how be infected and how to avoid it
-	proc/infect_puddle(var/mob/M as mob, var/datum/pathogen/origin, var/amount = 5)
-		return
+	//proc/infect_puddle(var/mob/M as mob, var/datum/pathogen/origin, var/amount = 5)
+		//return
 		/*
 		var/turf/T = get_turf(M)
 		var/obj/decal/cleanable/pathogen_sweat/D = make_cleanable(/obj/decal/cleanable/pathogen_sweat,T)
