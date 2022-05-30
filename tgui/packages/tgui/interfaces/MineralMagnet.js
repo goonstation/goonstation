@@ -5,8 +5,8 @@
  * @license ISC
  */
 
-import { useBackend } from "../backend";
-import { Box, Button, Collapsible, Dimmer, Divider, Icon, Section, TimeDisplay } from "../components";
+import { useBackend, useLocalState } from "../backend";
+import { Box, Button, Dimmer, Divider, Flex, Icon, Modal, Section, Stack, TimeDisplay } from "../components";
 import { formatTime } from "../format";
 import { Window } from '../layouts';
 
@@ -28,10 +28,12 @@ export const MineralMagnet = (_props, context) => {
 
   const onCooldown = magnetLastUsed > time;
 
+  const [viewEncounters, setViewEncounters] = useLocalState(context, 'viewEncounters', false);
+
   return (
     <Window
       width={300}
-      height={364}>
+      height={240}>
       <Window.Content>
         <Section title="Magnet Status">
           <Box>
@@ -49,80 +51,116 @@ export const MineralMagnet = (_props, context) => {
             )}
           </Box>
         </Section>
-        {isLinked ? (
-          <Section title="Magnet Controls">
+        <Section title="Magnet Controls"
+          buttons={
             <Button
               textAlign="center"
-              color="teal"
               icon="rss"
-              onClick={() => act('geoscan')}
-              fluid >
+              onClick={() => act('geoscan')}>
               Scan
             </Button>
-            <Section textAlign="center">
-              {(!!magnetActive || (onCooldown && !magnetCooldownOverride)) && (
-                <Dimmer fontSize={1.75} pb={2}>
-                  {magnetActive ? "Magnet Active" : "On Cooldown"}
-                </Dimmer>
-              )}
-              <Button
-                textAlign="center"
-                color={onCooldown && magnetCooldownOverride ? "average" : "purple"}
-                icon="magnet"
-                onClick={() => act('activatemagnet')}
-                fluid >
-                Activate Magnet
-              </Button>
-              <Collapsible title={<><Icon name="search" />Activate telescope location</>}
-                textAlign="center"
-                color={onCooldown && magnetCooldownOverride ? "average" : "purple"} >
-                <Section height={7} pl={2} scrollable fill>
+          }>
+          {(!!magnetActive || (onCooldown && !magnetCooldownOverride)) && (
+            <Dimmer fontSize={1.75} pb={2}>
+              {magnetActive ? "Magnet Active" : "On Cooldown"}
+            </Dimmer>
+          )}
+          <Button
+            textAlign="center"
+            color={onCooldown && magnetCooldownOverride && "average"}
+            icon="magnet"
+            onClick={() => act('activatemagnet')}
+            fluid>
+            Activate Magnet
+          </Button>
+          <Button
+            textAlign="center"
+            color={onCooldown && magnetCooldownOverride && "average"}
+            icon="search"
+            onClick={() => setViewEncounters(true)}
+            fluid>
+            Activate telescope location
+          </Button>
+          <Button.Checkbox checked={magnetCooldownOverride}
+            onClick={() => act('overridecooldown')}
+            style={{ 'z-index': '1' }}>
+            Override Cooldown
+          </Button.Checkbox>
+          <Button.Checkbox checked={magnetAutomaticMode}
+            onClick={() => act('automode')}
+            style={{ 'z-index': '1' }}>
+            Automatic Mode
+          </Button.Checkbox>
+        </Section>
+        {viewEncounters && (
+          <Modal full
+            ml={1} // For some reason modals only seem properly centered with this
+            width="230px"
+            height="200px">
+            <Stack vertical fill>
+              <Stack.Item grow>
+                <Section scrollable fill>
                   {miningEncounters.map(encounter => (
                     <Button key={encounter.id}
-                      onClick={() => act('activateselectable', { encounter_id: encounter.id })}
+                      onClick={() => {
+                        act('activateselectable', { encounter_id: encounter.id });
+                        setViewEncounters(false);
+                      }}
                       fluid>
                       {encounter.name}
                     </Button>
                   ))}
                 </Section>
-              </Collapsible>
-              <Button.Checkbox checked={magnetCooldownOverride}
-                onClick={() => act('overridecooldown')}
-                style={{ 'z-index': '2' }}>
-                Override Cooldown
-              </Button.Checkbox>
-              <Button.Checkbox checked={magnetAutomaticMode}
-                onClick={() => act('automode')}
-                style={{ 'z-index': '2' }}>
-                Automatic Mode
-              </Button.Checkbox>
-            </Section>
-          </Section>
-        ) : (
-          <Section title="Choose Linked Magnet">
-            {linkedMagnets.map(magnet => (
+              </Stack.Item>
+              <Stack.Item>
+                <Flex>
+                  <Flex.Item grow
+                    pt={0.5}
+                    color="label">
+                    <Icon name="search" /> Choose a location
+                  </Flex.Item>
+                  <Flex.Item>
+                    <Button
+                      color="bad"
+                      icon="times"
+                      onClick={() => setViewEncounters(false)}>
+                      Cancel
+                    </Button>
+                  </Flex.Item>
+                </Flex>
+              </Stack.Item>
+            </Stack>
+          </Modal>
+        )}
+        {!!isLinked || (
+          <Modal full
+            ml={1}
+            width="270px"
+            height="200px">
+            <Section title="Choose Linked Magnet" scrollable fill>
               <Button
-                icon={magnet.angle === undefined ? "circle" : "arrow-right"}
-                iconRotation={magnet.angle ?? 0}
                 textAlign="center"
+                icon="rss"
                 fluid
-                key={magnet.ref}
-                onClick={() => act('linkmagnet', magnet)}
+                onClick={() => act('magnetscan')}
               >
-                {`${magnet.name} at (${magnet.x}, ${magnet.y})`}
+                Scan for Magnets
               </Button>
-            ))}
-            <Divider />
-            <Button
-              textAlign="center"
-              color="teal"
-              icon="rss"
-              fluid
-              onClick={() => act('magnetscan')}
-            >
-              Scan for Magnets
-            </Button>
-          </Section>
+              <Divider />
+              {linkedMagnets.map(magnet => (
+                <Button
+                  icon={magnet.angle === undefined ? "circle" : "arrow-right"}
+                  iconRotation={magnet.angle ?? 0}
+                  textAlign="center"
+                  fluid
+                  key={magnet.ref}
+                  onClick={() => act('linkmagnet', magnet)}
+                >
+                  {`${magnet.name} at (${magnet.x}, ${magnet.y})`}
+                </Button>
+              ))}
+            </Section>
+          </Modal>
         )}
       </Window.Content>
     </Window>
