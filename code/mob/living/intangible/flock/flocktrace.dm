@@ -93,6 +93,9 @@
 
 /mob/living/intangible/flock/trace/death(gibbed, suicide = FALSE)
 	. = ..()
+	if (istype(src.loc, /mob/living/critter/flock/drone))
+		var/mob/living/critter/flock/drone/F = src.loc
+		F.release_control()
 	if(src.client)
 		if (suicide)
 			flock_speak(null, "Flocktrace [src.real_name] relinquishes their computational designation and reintegrates themselves back into the Flock.", src.flock)
