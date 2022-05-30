@@ -551,13 +551,7 @@
 		if (K.density)
 			boutput(holder.owner, "We fade back into the shadows")
 			cooldown = 0 SECONDS
-			if (istype(K, /mob/wraith/wraith_trickster))
-				var/mob/wraith/wraith_trickster/T = K
-				T.appearance = T.backup_appearance
-				T.desc = T.backup_desc
-				return T.disappear()
-			else
-				return K.disappear()
+			return K.disappear()
 		else
 			boutput(holder.owner, "We show ourselves")
 			var/mob/wraith/W = holder.owner
@@ -968,14 +962,22 @@
 			if (H.bioHolder.HasEffect("rot_curse"))
 				curseCount ++
 			switch(curseCount)
-				if (2)
+				if (0)
+					var/image/icon = image('icons/mob/wraith_critters.dmi', icon_state = "voidhound", loc = target)
+					icon.blend_mode = BLEND_ADD
+					icon.plane = PLANE_ABOVE_LIGHTING
+					icon.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+					icon.pixel_y = 32
+					icon.alpha = 122
+					get_image_group(CLIENT_IMAGE_GROUP_CURSES).add_image(icon)
+				if (1)
 					boutput(H, "<span class='notice'>You feel strangely sick.</span>")
-				if (3)
+				if (2)
 					boutput(H, "<span class='alert'>You hear whispers in your head, pushing you towards your doom.</span>")
 					H.playsound_local(H.loc, "sound/voice/wraith/wraithstaminadrain.ogg", 50)
-				if (4)
+				if (3)
 					boutput(H, "<span class='alert'><b>A cacophony of otherworldly voices resonates within your mind. You sense a feeling of impending doom! You should seek salvation in the chapel or the purification of holy water.</b></span>")
-					H.playsound_local(H.loc, "sound/voice/wraith/wraithraise1.ogg", 70)
+					H.playsound_local(H.loc, "sound/voice/wraith/wraithraise1.ogg", 80)
 
 /datum/targetable/wraithAbility/curse/blood
 	name = "Curse of blood"
@@ -1459,7 +1461,8 @@
 	"Bones breaking",
 	"Vampire screech",
 	"Brullbar",
-	"Werewolf")
+	"Werewolf",
+	"Gibs")
 
 	cast(atom/target)
 		if (..())
@@ -1506,6 +1509,8 @@
 				sound_choice = "sound/voice/animal/brullbar_scream.ogg"
 			if("Werewolf")
 				sound_choice = "sound/voice/animal/werewolf_howl.ogg"
+			if("Gibs")
+				sound_choice = "sound/impact_sounds/Flesh_Break_2.ogg"
 
 		playsound(target, sound_choice, 70, 0)
 		boutput(holder.owner, "You use your powers to create a sound.")
@@ -1684,7 +1689,6 @@
 				W.copied_appearance = target.appearance
 				W.copied_appearance.transform.Turn(target.rest_mult * -90)	//Todo, this doesnt make corpses/people lying stand up. Come back to this.
 				W.copied_desc = target.get_desc()
-				W.backup_desc = W.desc
 				return 0
 			else if (W.copied_appearance != null)
 				W.copied_appearance = null

@@ -113,6 +113,8 @@
 		src.UpdateName()
 		src.choose_name(3, "Wraith", default_name)
 
+		get_image_group(CLIENT_IMAGE_GROUP_CURSES).add_mob(src)
+
 	is_spacefaring()
 		return !density
 
@@ -805,9 +807,7 @@
 	var/points_to_possess = 50	//How many points do we need to possess someone?
 	var/possession_points = 0	//How many do we currently have?
 	var/mutable_appearance/copied_appearance = null	//Steal someone's appearance and use it during haunt
-	var/mutable_appearance/backup_appearance = null
 	var/copied_desc = null	//Steal their descriptions too
-	var/backup_desc = null
 	var/traps_laid = 0
 
 	New(var/mob/M)
