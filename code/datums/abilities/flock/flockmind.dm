@@ -175,7 +175,7 @@
 
 /datum/targetable/flockmindAbility/partitionMind
 	name = "Partition Mind"
-	desc = "Divide and conquer."
+	desc = "Create a Flocktrace, using 100 compute."
 	icon_state = "awaken_drone"
 	cooldown = 60 SECONDS
 	targeted = FALSE
