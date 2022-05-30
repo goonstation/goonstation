@@ -1145,8 +1145,7 @@ TYPEINFO(/datum/mutantrace)
 		..()
 
 	get_desc()
-		if (uses > 0)
-			. += " It looks like it has [uses] applications left."
+		. += " It looks like it has [uses ? uses : "no"] applications left."
 
 /*
 /datum/mutantrace/ape

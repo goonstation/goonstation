@@ -339,6 +339,7 @@
 		if (istype(W, /obj/item/cloth))
 			playsound(src, "sound/items/towel.ogg", 25, 1)
 			user.visible_message("<span class='notice'>[user] [pick("buffs", "shines", "cleans", "wipes", "polishes")] [src] with [W].</span>")
+			src.clean_forensic()
 			return
 
 		if (src.skull || src.brain)
