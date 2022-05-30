@@ -12,6 +12,7 @@
 	health_max = 30
 	alpha = 192
 	anchored = FALSE
+	hitTwitch = FALSE
 	var/atom/occupant = null
 	var/obj/target = null
 	var/eating_occupant = FALSE
