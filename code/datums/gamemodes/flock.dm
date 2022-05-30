@@ -7,8 +7,6 @@
 
 	//NOTE: if you need to track something, put it here
 	var/list/datum/mind/flockminds = list()
-	/// Has a relay been unleashed yet this round
-	var/signal_unleashed = FALSE
 
 /datum/game_mode/flock/announce()
 	boutput(world, "<B>The current game mode is - Flock!</B>")
@@ -37,7 +35,7 @@
 	return TRUE
 
 /datum/game_mode/flock/victory_msg()
-	if (src.signal_unleashed)
+	if (flock_signal_unleashed)
 		return "<b style='font-size:20px'>Flock victory!</b><br>The Flock managed to construct a relay and transmit The Signal. One step closer to its mysterious goals."
 	else
 		var/living_flockmind = FALSE

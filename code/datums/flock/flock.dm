@@ -4,6 +4,8 @@
 
 /// associative list of flock names to their flock
 /var/list/flocks = list()
+/// Has a flock relay been unleashed yet this round
+var/flock_signal_unleashed = FALSE
 
 /// manages and holds information for a flock
 /datum/flock

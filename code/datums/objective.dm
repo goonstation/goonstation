@@ -814,8 +814,7 @@ proc/create_fluff(datum/mind/target)
 	explanation_text = "Construct the relay and transmit The Signal."
 
 	check_completion()
-		var/datum/game_mode/flock/flockmode = ticker.mode
-		return istype(flockmode) && flockmode.signal_unleashed
+		return flock_signal_unleashed
 
 
 /datum/objective/specialist/wraith
