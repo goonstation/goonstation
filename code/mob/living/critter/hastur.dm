@@ -115,6 +115,7 @@ var/HasturPresent = 0
 		add_health_holder(/datum/healthHolder/toxin)
 
 	death(var/gibbed)
+		. = ..()
 		HasturPresent = 0
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
@@ -152,11 +153,11 @@ var/HasturPresent = 0
 			return 1
 
 		if (M == target)
-			boutput(M, __red("You can't devour yourself."))
+			boutput(M, "<span class='alert'>You can't devour yourself.</span>")
 			return 1
 
 		if (get_dist(M, target) > src.max_range)
-			boutput(M, __red("[target] is too far away."))
+			boutput(M, "<span class='alert'>[target] is too far away.</span>")
 			return 1
 
 		M.visible_message(pick("<span class='alert'><B>[M] reveals their true form for a moment and -COMPLETELY- devours [target]!</B></span>","<span class='alert'><B>Huge mouth emerges underneath [M]'s robes and DEVOURS [target]!</B></span>","<span class='alert'><B>[M] growls angrily as they reveal their true form, completely devouring [target]!</B></span>"))

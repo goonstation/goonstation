@@ -220,7 +220,6 @@
 	icon = 'icons/obj/clothing/overcoats/item_suit_hazard.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
-	var/armored = 0
 	body_parts_covered = TORSO|LEGS|ARMS
 	permeability_coefficient = 0.005
 
@@ -259,7 +258,6 @@
 	body_parts_covered = TORSO|LEGS|ARMS
 
 	protective_temperature = 3000
-	over_hair = 0
 
 	setupProperties()
 		..()
@@ -298,13 +296,11 @@
 		setProperty("meleeprot", 5)
 		setProperty("rangedprot", 1)
 
-
 	para_troop
 		icon_state = "para_sec"
 		item_state = "para_sec"
 		name = "rapid response armor"
 		desc = "A protective padded suit for emergency reponse personnel. Tailored for ground operations, not vaccuum rated. This one bears security insignia."
-		mats = 50
 
 	para_eng
 		name = "rapid response armor"
@@ -375,6 +371,7 @@
 	icon = 'icons/obj/clothing/overcoats/item_suit_armor.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_armor.dmi'
 	icon_state = "ntarmor"
+
 	setupProperties()
 		..()
 		setProperty("meleeprot", 2)
@@ -386,6 +383,7 @@
 	icon = 'icons/obj/clothing/overcoats/item_suit_armor.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_armor.dmi'
 	icon_state = "hoscoat"
+
 	setupProperties()
 		..()
 		setProperty("meleeprot", 3)
@@ -590,7 +588,7 @@
 	icon_state = "straight_jacket"
 	item_state = "straight_jacket"
 	body_parts_covered = TORSO|LEGS|ARMS
-	restrain_wearer = 1
+	restrain_wearer = TRUE
 
 	setupProperties()
 		..()
@@ -603,7 +601,7 @@
 	desc = "Style over abdominal protection."
 	icon_state = "vest"
 	item_state = "wcoat"
-	magical = 1
+	magical = TRUE
 	body_parts_covered = TORSO|ARMS
 	bloodoverlayimage = SUITBLOOD_ARMOR
 
@@ -625,20 +623,21 @@
 	throw_range = 10
 	c_flags = COVERSEYES | COVERSMOUTH
 	body_parts_covered = TORSO|ARMS
-	see_face = 0
-	over_hair = 1
+	see_face = FALSE
+	over_hair = TRUE
 	wear_layer = MOB_OVERLAY_BASE
-	var/eyeholes = 0 //Did we remember to cut eyes in the thing?
-	var/cape = 0
-	var/obj/stool/bed/Bed = null
+	var/eyeholes = FALSE //Did we remember to cut eyes in the thing?
+	var/cape = FALSE
+	var/obj/stool/bed/bed = null
 	var/bcolor = null
 	//cogwerks - burn vars
 	burn_point = 450
 	burn_output = 800
-	burn_possible = 1
-	health = 20
-	rand_pos = 0
-	block_vision = 1
+	burn_possible = TRUE
+
+	health = 4
+	rand_pos = FALSE
+	block_vision = TRUE
 
 	setupProperties()
 		..()
@@ -646,24 +645,24 @@
 
 	Move()
 		. = ..()
-		if(src.Bed)
-			src.Bed.Move(src.loc)
+		if(src.bed)
+			src.bed.Move(src.loc)
 
 	New()
 		..()
 		src.UpdateIcon()
-		src.setMaterial(getMaterial("cotton"), appearance = 0, setname = 0)
+		src.setMaterial(getMaterial("cotton"), appearance = FALSE, setname = FALSE)
 
 	attack_hand(mob/user as mob)
-		if (src.Bed)
-			src.Bed.untuck_sheet(user)
-		src.Bed = null
+		if (src.bed)
+			src.bed.untuck_sheet(user)
+		src.bed = null
 		return ..()
 
 	ex_act(severity)
 		if (severity <= 2)
-			if (src.Bed && src.Bed.Sheet == src)
-				src.Bed.Sheet = null
+			if (src.bed && src.bed.sheet == src)
+				src.bed.sheet = null
 			qdel(src)
 			return
 		return
@@ -740,45 +739,45 @@
 		if (src.cape)
 			src.icon_state = "bedcape[src.bcolor ? "-[bcolor]" : null]"
 			src.item_state = src.icon_state
-			see_face = 1
-			over_hair = 0
+			see_face = TRUE
+			over_hair = FALSE
 			wear_layer = MOB_BACK_LAYER + 0.2
 		else
 			src.icon_state = "bedsheet[src.bcolor ? "-[bcolor]" : null][src.eyeholes ? "1" : null]"
 			src.item_state = src.icon_state
-			see_face = 0
-			over_hair = 1
+			see_face = FALSE
+			over_hair = TRUE
 			wear_layer = MOB_OVERLAY_BASE
 
 	proc/cut_eyeholes()
 		if (src.cape || src.eyeholes)
 			return
-		if (src.Bed && src.Bed.loc == src.loc)
-			src.Bed.untuck_sheet()
-		src.Bed = null
-		src.eyeholes = 1
-		block_vision = 0
+		if (src.bed && src.bed.loc == src.loc)
+			src.bed.untuck_sheet()
+		src.bed = null
+		src.eyeholes = TRUE
+		block_vision = FALSE
 		src.UpdateIcon()
 		desc = "It's a bedsheet with eye holes cut in it."
 
 	proc/make_cape()
 		if (src.cape)
 			return
-		if (src.Bed && src.Bed.loc == src.loc)
-			src.Bed.untuck_sheet()
-		src.Bed = null
-		src.cape = 1
-		block_vision = 0
+		if (src.bed && src.bed.loc == src.loc)
+			src.bed.untuck_sheet()
+		src.bed = null
+		src.cape = TRUE
+		block_vision = FALSE
 		src.UpdateIcon()
 		desc = "It's a bedsheet that's been tied into a cape."
 
 	proc/cut_cape()
 		if (!src.cape)
 			return
-		if (src.Bed && src.Bed.loc == src.loc)
-			src.Bed.untuck_sheet()
-		src.Bed = null
-		src.cape = 0
+		if (src.bed && src.bed.loc == src.loc)
+			src.bed.untuck_sheet()
+		src.bed = null
+		src.cape = FALSE
 		block_vision = !src.eyeholes
 		src.UpdateIcon()
 		desc = "A linen sheet used to cover yourself while you sleep. Preferably on a bed."
@@ -1001,9 +1000,7 @@
 
 		New()
 			..()
-			SPAWN(2 SECONDS)
-				src.name = initial(src.name)
-				src.setMaterial(getMaterial("cotton"), appearance = 0, setname = 0)
+			src.setMaterial(getMaterial("cotton"), appearance = 0, setname = 0)
 
 // LONG SHIRTS
 // No they're not sweaters
@@ -1079,17 +1076,6 @@
 	setupProperties()
 		..()
 		setProperty("space_movespeed", 1.5)
-
-/obj/item/clothing/suit/space/emerg/proc/ripcheck(var/mob/user)
-	if(rip >= 36 && rip != -1 && prob(10))  //upped from rip >= 14 by Buttes
-		boutput(user, "<span class='alert'>The emergency suit tears off!</span>")
-		var/turf/T = src.loc
-		if (ismob(T))
-			T = T.loc
-		src.set_loc(T)
-		user.u_equip(src)
-		SPAWN(0.5 SECONDS)
-			qdel(src)
 
 /obj/item/clothing/suit/space/captain
 	name = "captain's space suit"
@@ -1262,17 +1248,6 @@
 		..()
 		setProperty("space_movespeed", 0)  // ntso space suits don't suffer from slowdown
 
-	unremovable
-		cant_self_remove = 1
-		cant_other_remove = 1
-
-
-	scout
-		name = "NT-SO forward reconnaissance suit"
-		desc = "A Nanotrasen special forces combat dress system, pressurized for space travel."
-		icon_state = "ntso_specialist-scout"
-		item_state = "ntso_specialist-scout"
-
 /obj/item/clothing/suit/space/engineer
 	name = "engineering space suit"
 	desc = "An overly bulky space suit designed mainly for maintenance and mining."
@@ -1335,8 +1310,6 @@
 				setProperty("meleeprot", 3)
 				setProperty("space_movespeed", 0.6)
 
-
-
 	UpdateName()
 		if (src.material && renf)
 			name = "[renf]-reinforced [src.material] bespoke space suit"
@@ -1378,8 +1351,6 @@
 	desc = "Very heavy armour for prolonged industrial activity. Protects from radiation and explosions."
 	c_flags = SPACEWEAR
 	body_parts_covered = TORSO|LEGS|ARMS
-	mats = 45 //should not be cheap to make at mechanics, increased from 15.
-
 
 #ifdef UNDERWATER_MAP
 	name = "industrial diving suit"
@@ -1412,9 +1383,10 @@
 	syndicate
 		name = "\improper Syndicate command armor"
 		desc = "An armored space suit, not for your average expendable chumps. No sir."
-		is_syndicate = 1
+		is_syndicate = TRUE
 		icon_state = "indusred"
 		item_state = "indusred"
+		mats = 45 //should not be cheap to make at mechanics, increased from 15.
 
 		New()
 			..()
@@ -1429,53 +1401,34 @@
 			STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 			..()
 
-
 		specialist
-			name = "specialist heavy operative combat armor"
-			is_syndicate = 0
-			desc = "A syndicate issue heavy combat dress system, pressurized for space travel and reinforced for greater protection in firefights."
-			icon_state = "syndie_specialist-heavy"
-			item_state = "syndie_specialist-heavy"
+		name = "specialist heavy operative combat armor"
+		desc = "A syndicate issue heavy combat dress system, pressurized for space travel and reinforced for greater protection in firefights."
+		icon_state = "syndie_specialist-heavy"
+		item_state = "syndie_specialist-heavy"
 
-/obj/item/clothing/suit/space/industrial/syndicate/ntso
+	ntso
 
-	name = "NT-SO heavy operative combat armor"
-	desc = "A Nanotrasen special forces heavy combat dress system, pressurized for space travel and reinforced for greater protection in firefights."
-	is_syndicate = 0
-	icon_state = "ntso_specialist-heavy"
-	item_state = "ntso_specialist-heavy"
-	cant_self_remove = 1
-	cant_other_remove = 1
+		name = "NT-SO heavy operative combat armor"
+		desc = "A Nanotrasen special forces heavy combat dress system, pressurized for space travel and reinforced for greater protection in firefights."
+		is_syndicate = FALSE
+		icon_state = "ntso_specialist-heavy"
+		item_state = "ntso_specialist-heavy"
 
-/obj/item/clothing/suit/space/mining_combat // for fighting z5 critters.
-	name = "mining combat armor"
-	desc = "Heavy armor designed to withstand the rigours of space combat. Less resistant against the elements than industrial armor."
-	icon_state = "mining_combat"
-	item_state = "mining_combat"
-	c_flags = SPACEWEAR
-	body_parts_covered = TORSO|LEGS|ARMS
-	mats = 60 //should be the most expensive armor.
-
-	setupProperties()
-		..()
-		setProperty("radprot", 25)
-		setProperty("coldprot", 50)
-		setProperty("heatprot", 15)
-		setProperty("exploprot", 20)
-		setProperty("meleeprot", 5)
-		setProperty("rangedprot", 2)
+		setupProperties()
+			..()
+			setProperty("meleeprot", 9)
+			setProperty("rangedprot", 2)
 
 //NT pod wars suits
 /obj/item/clothing/suit/space/nanotrasen
 	name = "Nanotrasen Heavy Armor"
-	icon_state = "ntarmor2"
-	item_state = "ntarmor2"
+	icon_state = "nanotrasen_pilot"
+	item_state = "nanotrasen_pilot"
 	desc = "Heavy armor used by certain Nanotrasen bodyguards."
 
 	pilot
 		name = "NT space suit"
-		icon_state = "nanotrasen_pilot"
-		item_state = "nanotrasen_pilot"
 		desc = "A suit that protects against low pressure environments. Issued to nanotrasen pilots."
 		team_num = TEAM_NANOTRASEN
 		#ifdef MAP_OVERRIDE_POD_WARS
@@ -1539,9 +1492,9 @@
 		setProperty("heatprot", 20)
 
 	cursed
-		cant_drop = 1
-		cant_other_remove = 1
-		cant_self_remove = 1
+		cant_drop = TRUE
+		cant_other_remove = TRUE
+		cant_self_remove = TRUE
 
 	hastur
 		name = "yellow sign cultist robe"
@@ -1578,7 +1531,7 @@
 	desc = "A traditional blue wizard's robe. It lacks all the stars and moons and stuff on it though."
 	icon_state = "wizard"
 	item_state = "wizard"
-	magical = 1
+	magical = TRUE
 	permeability_coefficient = 0.01
 	body_parts_covered = TORSO|LEGS|ARMS
 	contraband = 4
@@ -1619,10 +1572,9 @@
 	icon_state = "bathrobe"
 	item_state = "bathrobe"
 	body_parts_covered = TORSO|ARMS
-	burn_possible = 1
+	burn_possible = TRUE
 	burn_point = 450
 	burn_output = 800
-	health = 20
 
 	setupProperties()
 		..()
@@ -1753,6 +1705,10 @@
 	var/badge_owner_job = null
 
 	setupProperties()
+		..()
+		setProperty("meleeprot", 0)
+		setProperty("heatprot", 0)
+		setProperty("coldprot", 0)
 
 	get_desc()
 		. += "This one belongs to [badge_owner_name], the [badge_owner_job]."

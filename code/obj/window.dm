@@ -770,6 +770,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (..(W, user))
 			src.UpdateIcon()
+			src.update_neighbors()
 
 	proc/update_neighbors()
 		for (var/turf/simulated/wall/auto/T in orange(1,src))

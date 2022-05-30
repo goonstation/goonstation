@@ -1004,7 +1004,7 @@
 		boutput(boarder, "There is no more room!")
 		return
 
-	actions.start(new/datum/action/bar/icon/board_pod(src,boarder), boarder)
+	actions.start(new/datum/action/bar/board_pod(src,boarder), boarder)
 
 /obj/machinery/vehicle/proc/finish_board_pod(var/mob/boarder)
 	for(var/obj/item/shipcomponent/S in src.components)
@@ -1065,12 +1065,10 @@
 		O.set_loc(floor)
 
 
-/datum/action/bar/icon/board_pod
+/datum/action/bar/board_pod
 	duration = 20
 	interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_MOVE
 	id = "board_pod"
-	icon = 'icons/ui/actions.dmi'
-	//icon_state = "working"
 	var/mob/M
 	var/obj/machinery/vehicle/V
 

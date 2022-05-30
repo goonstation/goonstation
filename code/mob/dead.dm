@@ -8,6 +8,7 @@
 /mob/dead/New()
 	..()
 	src.flags |= UNCRUSHABLE
+	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 
 // No log entries for unaffected mobs (Convair880).
 /mob/dead/ex_act(severity)

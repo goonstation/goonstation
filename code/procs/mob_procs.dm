@@ -440,7 +440,7 @@
 			src.take_ear_damage(ear_tempdeaf, 1)
 
 		if (weak == 0 && stun == 0 && prob(clamp(drop_item, 0, 100)))
-			src.show_message(__red("<B>You drop what you were holding to clutch at your ears!</B>"))
+			src.show_message("<span class='alert'><B>You drop what you were holding to clutch at your ears!</B></span>")
 			src.drop_item()
 
 	return

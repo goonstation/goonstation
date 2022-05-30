@@ -889,7 +889,7 @@ About the new airlock wires panel:
 */
 /obj/machinery/door/airlock/proc/play_deny()
 	play_animation("deny")
-	playsound(src, src.sound_deny_temp, 100, 0)
+	playsound(src, src.sound_deny_temp, 35, 0, 0.8) //if this doesn't carry far enough, tweak the extrarange number, not the volume
 
 /obj/machinery/door/airlock/proc/try_pulse(var/wire_color, mob/user)
 	if (!user.find_tool_in_hand(TOOL_PULSING))
@@ -1507,6 +1507,12 @@ About the new airlock wires panel:
 		. = list(start,stop)
 
 /obj/machinery/door/airlock/attack_hand(mob/user as mob)
+	var/valid_tool_found = FALSE
+	if(length(user.equipped_list()))
+		for(var/obj/item/I in user.equipped_list())
+			if(issnippingtool(I) || ispulsingtool(I) || istype(I, /obj/item/device/radio/signaler))
+				valid_tool_found = TRUE
+
 	if (!issilicon(user))
 		if (src.isElectrified())
 			if (src.shock(user, 100))
@@ -1518,9 +1524,10 @@ About the new airlock wires panel:
 	if (ishuman(user) && src.density && src.brainloss_stumble && src.do_brainstumble(user) == 1)
 		return
 
-	if (src.p_open)
+	if (src.p_open && valid_tool_found)
 		ui_interact(user)
 		interact_particle(user,src)
+
 	//clicking with no access, door closed, and help intent, and panel closed to knock
 	else if (!src.allowed(user) && (user.a_intent == INTENT_HELP) && src.density && src.requiresID())
 		knockOnDoor(user)

@@ -100,7 +100,7 @@
 		return
 	if (src?.holder)
 		M.playsound_local(M, "sound/misc/prayerchime.ogg", 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
-		boutput(Mclient.mob, __blue("You hear a voice in your head... <i>[msg]</i>"))
+		boutput(Mclient.mob, "<span class='notice'>You hear a voice in your head... <i>[msg]</i></span>")
 
 	logTheThing("admin", src.mob, Mclient.mob, "Subtle Messaged [constructTarget(Mclient.mob,"admin")]: [msg]")
 	logTheThing("diary", src.mob, Mclient.mob, "Subtle Messaged [constructTarget(Mclient.mob,"diary")]: [msg]", "admin")
@@ -1169,7 +1169,7 @@
 	target = trim(lowertext(target))
 	if (!target) return 0
 
-	var/msg = "<span class='notice'>"
+	var/list/msg = list("<span class='notice'>")
 	var/whois = whois(target)
 	if (whois)
 		var/list/whoisR = whois
@@ -1181,7 +1181,7 @@
 		msg += "No players found for '[target]'"
 
 	msg += "</span>"
-	boutput(src, msg)
+	boutput(src, msg.Join())
 
 /client/proc/cmd_whodead()
 	set name = "Whodead"
@@ -1190,7 +1190,7 @@
 	set popup_menu = 0
 	ADMIN_ONLY
 
-	var/msg = "<span class='notice'>"
+	var/list/msg = list("<span class='notice'>")
 	var/list/whodead = whodead()
 	if (whodead.len)
 		msg += "<b>Dead player[(whodead.len == 1 ? "" : "s")] found:</b><br>"
@@ -1201,7 +1201,7 @@
 		msg += "No dead players found"
 
 	msg += "</span>"
-	boutput(src, msg)
+	boutput(src, msg.Join())
 
 /client/proc/debugreward()
 	set background = 1
