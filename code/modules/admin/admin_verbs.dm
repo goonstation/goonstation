@@ -406,7 +406,7 @@ var/list/admin_verbs = list(
 		/client/proc/toggle_numbers_station_messages,
 		// /client/proc/export_async_banlist,
 		// /client/proc/import_banlist,
-
+		/client/proc/flock_cheat,
 
 		/client/proc/ticklag,
 		/client/proc/cmd_debug_vox,
@@ -2228,3 +2228,26 @@ var/list/fun_images = list()
 				if((i++ % 5) == 0)
 					sleep(1 SECOND)
 				apc.setStatus("lightsout", dur SECONDS)
+
+/client/proc/flock_cheat()
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
+	set name = "Flock cheats"
+	set desc = "Toggle cheats on or off on a particular flock"
+
+	var/cheats = list(FLOCK_ACHIEVEMENT_CHEAT_STRUCTURES, FLOCK_ACHIEVEMENT_CHEAT_COMPUTE)
+	var/cheat = tgui_input_list(src, "Pick a cheat to enable", "Flock cheats", cheats)
+	if (!(cheat in cheats))
+		return
+	var/flockname = tgui_input_list(src, "Pick a flock", "Choose flock", flocks)
+	var/datum/flock/flock = flocks[flockname]
+	if (!flock)
+		return
+	var/toggle
+	if (!flock.hasAchieved(cheat))
+		toggle = TRUE
+		flock.achieve(cheat)
+	else
+		toggle = FALSE
+		flock.unAchieve(cheat)
+	boutput(src, "[cheat] turned [toggle ? "on" : "off"] for flock [flockname]")
+	logTheThing("admin", src, flock, "has toggled [cheat] [toggle ? "on" : "off"] for flock [flockname]")

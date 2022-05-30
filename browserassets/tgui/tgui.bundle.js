@@ -9550,6 +9550,103 @@ exports.GlassRecycler = GlassRecycler;
 
 /***/ }),
 
+/***/ "./packages/tgui/interfaces/Hypospray.js":
+/*!***********************************************!*\
+  !*** ./packages/tgui/interfaces/Hypospray.js ***!
+  \***********************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.Hypospray = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-dd2af1493c.zip/node_modules/inferno/index.esm.js");
+
+var _backend = __webpack_require__(/*! ../backend */ "./packages/tgui/backend.ts");
+
+var _components = __webpack_require__(/*! ../components */ "./packages/tgui/components/index.js");
+
+var _layouts = __webpack_require__(/*! ../layouts */ "./packages/tgui/layouts/index.js");
+
+var _ReagentInfo = __webpack_require__(/*! ./common/ReagentInfo */ "./packages/tgui/interfaces/common/ReagentInfo.tsx");
+
+var _stringUtils = __webpack_require__(/*! ./common/stringUtils */ "./packages/tgui/interfaces/common/stringUtils.ts");
+
+/**
+ * @file
+ * @copyright 2022
+ * @author CodeJester (https://github.com/codeJester27)
+ * @license ISC
+ */
+var Hypospray = function Hypospray(_props, context) {
+  var _useBackend = (0, _backend.useBackend)(context),
+      act = _useBackend.act,
+      data = _useBackend.data;
+
+  var emagged = data.emagged,
+      injectionAmount = data.injectionAmount,
+      reagentData = data.reagentData;
+  return (0, _inferno.createComponentVNode)(2, _layouts.Window, {
+    "width": 320,
+    "height": 300,
+    "theme": emagged ? "syndicate" : "nanotrasen",
+    children: (0, _inferno.createComponentVNode)(2, _layouts.Window.Content, {
+      children: [(0, _inferno.createComponentVNode)(2, _components.Section, {
+        "title": emagged ? (0, _stringUtils.glitch)("Contents", 3) : "Contents",
+        "buttons": (0, _inferno.createComponentVNode)(2, _components.Button, {
+          "icon": "times",
+          "color": "red",
+          "disabled": !reagentData.totalVolume,
+          "onClick": function () {
+            function onClick() {
+              return act('dump');
+            }
+
+            return onClick;
+          }(),
+          children: "Dump"
+        }),
+        children: [(0, _inferno.createComponentVNode)(2, _ReagentInfo.ReagentGraph, {
+          "container": reagentData
+        }), (0, _inferno.createComponentVNode)(2, _ReagentInfo.ReagentList, {
+          "container": reagentData
+        })]
+      }), (0, _inferno.createComponentVNode)(2, _components.Section, {
+        "title": "Injection Amount",
+        children: (0, _inferno.createComponentVNode)(2, _components.Slider, {
+          "value": injectionAmount,
+          "format": function () {
+            function format(value) {
+              return value + "u";
+            }
+
+            return format;
+          }(),
+          "minValue": 1,
+          "maxValue": reagentData.maxVolume,
+          "step": 1,
+          "stepPixelSize": 10,
+          "onChange": function () {
+            function onChange(e, value) {
+              return act('changeAmount', {
+                amount: value
+              });
+            }
+
+            return onChange;
+          }()
+        })
+      })]
+    })
+  });
+};
+
+exports.Hypospray = Hypospray;
+
+/***/ }),
+
 /***/ "./packages/tgui/interfaces/Laundry.js":
 /*!*********************************************!*\
   !*** ./packages/tgui/interfaces/Laundry.js ***!
@@ -16615,24 +16712,9 @@ var _backend = __webpack_require__(/*! ../backend */ "./packages/tgui/backend.ts
 
 var _components = __webpack_require__(/*! ../components */ "./packages/tgui/components/index.js");
 
-var randInt = function randInt(a, b) {
-  var min = b > a ? a : b;
-  var max = b > a ? b : a;
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-};
+var _mathUtils = __webpack_require__(/*! ./common/mathUtils */ "./packages/tgui/interfaces/common/mathUtils.ts");
 
-var glitches = ['$', '{', ']', '%', '^', '?', '>', '¬', 'π', ';', 'и', 'ю', '/', '#', '~'];
-
-var glitch = function glitch(text, amount) {
-  var chars = text.split('');
-
-  for (var i = 0; i < amount; i++) {
-    var charIndex = randInt(0, chars.length);
-    chars[charIndex] = glitches[randInt(0, glitches.length - 1)];
-  }
-
-  return chars.join('');
-};
+var _stringUtils = __webpack_require__(/*! ./common/stringUtils */ "./packages/tgui/interfaces/common/stringUtils.ts");
 
 var generate_kill = function generate_kill(number) {
   var out = [];
@@ -16649,7 +16731,7 @@ var generate_kill = function generate_kill(number) {
     return (0, _inferno.createComponentVNode)(2, _components.Box, {
       "inline": true,
       "preserveWhitespace": true,
-      "fontSize": randInt(11, 25) + "px",
+      "fontSize": (0, _mathUtils.randInt)(11, 25) + "px",
       children: kill
     }, index);
   });
@@ -16767,7 +16849,7 @@ var TurretControl = function TurretControl(props, context) {
           children: [(0, _inferno.createComponentVNode)(2, _components.Box, {
             "align": "center",
             "fontFamily": "Courier New",
-            children: glitch("ERROR: UNABLE TO READ AUTHORIZATION", 12)
+            children: (0, _stringUtils.glitch)("ERROR: UNABLE TO READ AUTHORIZATION", 12)
           }), (0, _inferno.createComponentVNode)(2, _components.Box, {
             "align": "center",
             "style": {
@@ -17542,17 +17624,39 @@ exports.ReleaseValve = ReleaseValve;
 
 /***/ }),
 
-/***/ "./packages/tgui/interfaces/common/stringUtils.ts":
-/*!********************************************************!*\
-  !*** ./packages/tgui/interfaces/common/stringUtils.ts ***!
-  \********************************************************/
+/***/ "./packages/tgui/interfaces/common/mathUtils.ts":
+/*!******************************************************!*\
+  !*** ./packages/tgui/interfaces/common/mathUtils.ts ***!
+  \******************************************************/
 /***/ (function(__unused_webpack_module, exports) {
 
 "use strict";
 
 
 exports.__esModule = true;
-exports.capitalize = exports.pluralize = void 0;
+exports.randInt = void 0;
+
+var randInt = function randInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
+exports.randInt = randInt;
+
+/***/ }),
+
+/***/ "./packages/tgui/interfaces/common/stringUtils.ts":
+/*!********************************************************!*\
+  !*** ./packages/tgui/interfaces/common/stringUtils.ts ***!
+  \********************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.glitch = exports.capitalize = exports.pluralize = void 0;
+
+var _mathUtils = __webpack_require__(/*! ./mathUtils */ "./packages/tgui/interfaces/common/mathUtils.ts");
 
 var pluralize = function pluralize(word, n) {
   return n !== 1 ? word + 's' : word;
@@ -17567,6 +17671,20 @@ var capitalize = function capitalize(word) {
 };
 
 exports.capitalize = capitalize;
+var glitches = ['$', '{', ']', '%', '^', '?', '>', '¬', 'π', ';', 'и', 'ю', '/', '#', '~'];
+
+var glitch = function glitch(text, amount) {
+  var chars = text.split('');
+
+  for (var i = 0; i < amount; i++) {
+    var charIndex = (0, _mathUtils.randInt)(0, chars.length ? chars.length - 1 : 0);
+    chars[charIndex] = glitches[(0, _mathUtils.randInt)(0, glitches.length - 1)];
+  }
+
+  return chars.join('');
+};
+
+exports.glitch = glitch;
 
 /***/ }),
 
@@ -18006,6 +18124,8 @@ var map = {
 	"./GimmickObject.js": "./packages/tgui/interfaces/GimmickObject.js",
 	"./GlassRecycler": "./packages/tgui/interfaces/GlassRecycler.js",
 	"./GlassRecycler.js": "./packages/tgui/interfaces/GlassRecycler.js",
+	"./Hypospray": "./packages/tgui/interfaces/Hypospray.js",
+	"./Hypospray.js": "./packages/tgui/interfaces/Hypospray.js",
 	"./Laundry": "./packages/tgui/interfaces/Laundry.js",
 	"./Laundry.js": "./packages/tgui/interfaces/Laundry.js",
 	"./ListInput": "./packages/tgui/interfaces/ListInput.js",
@@ -18094,6 +18214,8 @@ var map = {
 	"./common/ReagentInfo.tsx": "./packages/tgui/interfaces/common/ReagentInfo.tsx",
 	"./common/ReleaseValve": "./packages/tgui/interfaces/common/ReleaseValve.js",
 	"./common/ReleaseValve.js": "./packages/tgui/interfaces/common/ReleaseValve.js",
+	"./common/mathUtils": "./packages/tgui/interfaces/common/mathUtils.ts",
+	"./common/mathUtils.ts": "./packages/tgui/interfaces/common/mathUtils.ts",
 	"./common/stringUtils": "./packages/tgui/interfaces/common/stringUtils.ts",
 	"./common/stringUtils.ts": "./packages/tgui/interfaces/common/stringUtils.ts",
 	"./common/temperatureUtils": "./packages/tgui/interfaces/common/temperatureUtils.js",

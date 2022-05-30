@@ -1,30 +1,38 @@
 /// # Flock Structure Parent
+ABSTRACT_TYPE(/obj/flock_structure)
 /obj/flock_structure
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "egg"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	name = "uh oh"
 	desc = "CALL A CODER THIS SHOULDN'T BE SEEN"
+	flags = USEDELAY
+	mat_changename = FALSE
+	mat_changedesc = FALSE
 	var/flock_id = "ERROR"
 	/// when did we get created?
 	var/time_started = 0
 	var/build_time = 6 // in seconds
-	var/health = 30 // fragile little thing
-	var/health_max
+	var/health = 30
+	var/health_max = 30
 	var/bruteVuln = 1.2
-	/// very flame-retardant
+	///Should it twitch on being hit?
+	var/hitTwitch = TRUE
+
 	var/fireVuln = 0.2
 	var/datum/flock/flock = null
+	//base compute provided
+	var/compute = 0
+	//resource cost for building
+	var/resourcecost = 50
 	/// can flockdrones pass through this akin to a grille? need to set USE_CANPASS to make this work however
 	var/passthrough = FALSE
-	/// does this use(/how much) power? (negatives mean it makes power)
-	var/poweruse = 0
-	/// not everything needs a group so dont check for everysingle god damn structure
+
 	var/usesgroups = FALSE
 	/// what group are we connected to?
 	var/datum/flock_tile_group/group = null
-	/// the tile which its "connected to" and handles the group
+	/// the tile which its "connected to" and that handles the group
 	var/turf/simulated/floor/feather/grouptile = null
 
 /obj/flock_structure/New(var/atom/location, var/datum/flock/F=null)
@@ -32,33 +40,57 @@
 	health_max = health
 	time_started = world.timeofday
 	processing_items |= src
+	setMaterial(getMaterial("gnesis"))
+	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, "flock_structure")
+
 	if(F)
 		src.flock = F
+		src.flock.registerStructure(src)
 	if(usesgroups && istype(get_turf(src), /turf/simulated/floor/feather))
 		var/turf/simulated/floor/feather/f = get_turf(src)
 		grouptile = f
 		group = f.group
 		f.group.addstructure(src)
+	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
+	src.AddComponent(/datum/component/flock_protection)
 
 /obj/flock_structure/disposing()
 	processing_items -= src
+	if (flock)
+		flock.removeStructure(src)
 	flock = null
 	group = null
 	..()
 
+/obj/flock_structure/proc/describe_state()
+	var/list/state = list()
+	state["ref"] = "\ref[src]"
+	state["name"] = src.flock_id
+	state["health"] = src.health
+	state["compute"] = src.compute_provided()
+	var/area/myArea = get_area(src)
+	if(isarea(myArea))
+		state["area"] = myArea.name
+	else
+		state["area"] = "???"
+	return state
+
 /obj/flock_structure/special_desc(dist, mob/user)
-	if(isflock(user))
-		var/special_desc = {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+	if (!isflockmob(user))
+		return
+	var/special_desc = {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
 		<br><span class='bold'>ID:</span> [flock_id]
 		<br><span class='bold'>Flock:</span> [src.flock ? src.flock.name : "none"]
 		<br><span class='bold'>System Integrity:</span> [round((src.health/src.health_max)*100)]%"}
-		var/info = building_specific_info()
-		if(!isnull(info))
-			special_desc += "<br>[info]"
-		special_desc += "<br><span class='bold'>###=-</span></span>"
-		return special_desc
-	else
-		return null // give the standard description
+	var/info = building_specific_info()
+	if(!isnull(info))
+		special_desc += "<br>[info]"
+	special_desc += "<br><span class='bold'>###=-</span></span>"
+	return special_desc
+
+//override this if compute is conditional or something
+/obj/flock_structure/proc/compute_provided()
+	return src.compute
 
 /obj/flock_structure/proc/building_specific_info()
 	return ""
@@ -96,18 +128,27 @@
 			var/half = round(amount/2)
 			amount = half * bruteVuln + (amount - half) * fireVuln
 	health -= amount
-	checkhealth() // die if necessary
+	checkhealth()
 
 /obj/flock_structure/proc/checkhealth()
 	if(src.health <= 0)
 		src.gib()
+
+/obj/flock_structure/proc/deconstruct()
+	visible_message("<span class='alert'>[src.name] suddenly dissolves!</span>")
+	var/refund = round((src.health/src.health_max) * 0.5 * src.resourcecost)
+	if(refund >= 1)
+		var/obj/item/flockcache/cache = new(get_turf(src))
+		cache.resources = refund
+	qdel(src)
+
 
 /obj/flock_structure/proc/gib(atom/location)
 	// no parent calling, we're going to completely override this
 	if (!location)
 		location = get_turf(src)
 	visible_message("<span class='alert'>[src.name] violently breaks apart!</span>")
-	playsound(location, 'sound/impact_sounds/Glass_Shatter_2.ogg', 80, 1)
+	playsound(location, 'sound/impact_sounds/Glass_Shatter_2.ogg', 50, 1)
 	flockdronegibs(location)
 	var/num_pieces = rand(2,8)
 	var/atom/movable/B
@@ -123,17 +164,24 @@
 				B.setMaterial(getMaterial("gnesisglass"))
 		if(prob(30))
 			B.throw_at(get_edge_cheap(location, pick(alldirs)), rand(10), 3)
-	src.flock?.removeDrone(src)
 	qdel(src)
 
+/obj/flock_structure/proc/repair()
+	src.health = min(src.health + 50, src.health_max)
+
 /obj/flock_structure/attack_hand(var/mob/user)
+	attack_particle(user, src)
+	user.lastattacked = src
+
 	if(user.a_intent == INTENT_HARM)
-		if(isflock(user))
+		if(isflockmob(user))
 			boutput(user, "<span class='alert'>You find you can't bring yourself to harm [src]!</span>")
 		else
 			user.visible_message("<span class='alert'><b>[user]</b> punches [src]! It's very ineffective!</span>")
-			playsound(src.loc, "sound/impact_sounds/Crystal_Hit_1.ogg", 80, 1)
+			src.report_attack()
 			src.takeDamage("brute", 1)
+			playsound(src.loc, "sound/impact_sounds/Crystal_Hit_1.ogg", 50, 1)
+
 	else
 		var/action = ""
 		switch(user.a_intent)
@@ -147,15 +195,30 @@
 
 /obj/flock_structure/attackby(obj/item/W as obj, mob/user as mob)
 	src.visible_message("<span class='alert'><b>[user]</b> attacks [src] with [W]!</span>")
-	playsound(src.loc, "sound/impact_sounds/Crystal_Hit_1.ogg", 80, 1)
+	src.report_attack()
+	attack_particle(user, src)
+	user.lastattacked = src
 
 	var/damtype = "brute"
 	if (W.hit_type == DAMAGE_BURN)
 		damtype = "fire"
 
 	takeDamage(damtype, W.force)
+	if (src.hitTwitch)
+		hit_twitch(src)
+	if (W.force < 5)
+		playsound(src.loc, "sound/impact_sounds/Crystal_Hit_1.ogg", 50, 1)
+	else
+		playsound(src.loc, "sound/impact_sounds/Glass_Shards_Hit_1.ogg", 50, 1)
+
+
+/obj/flock_structure/proc/report_attack()
+	if (!ON_COOLDOWN(src, "attack_alert", 10 SECONDS))
+		flock_speak(src, "ALERT: Under attack", flock)
 
 /obj/flock_structure/ex_act(severity)
+	src.report_attack()
+
 	var/damage = 0
 	var/damage_mult = 1
 	switch(severity)
@@ -170,7 +233,12 @@
 			damage_mult = 2
 	src.takeDamage("mixed", damage * damage_mult)
 
-/obj/flock_structure/bullet_act(var/obj/projectile/P)
+/obj/flock_structure/bullet_act(obj/projectile/P)
+	if (istype(P.proj_data, /datum/projectile/energy_bolt/flockdrone))
+		return
+
+	src.report_attack()
+
 	var/damage = round((P.power*P.proj_data.ks_ratio), 1.0) // stuns will do nothing
 	var/damage_mult = 1
 	var/damtype = "brute"
@@ -199,11 +267,13 @@
 
 
 /obj/flock_structure/blob_act(var/power)
+	src.visible_message("<span class='alert'>[src] is hit by the blob!/span>")
+	src.report_attack()
+
 	var/modifier = power / 20
 	var/damage = rand(modifier, 12 + 8 * modifier)
 
 	takeDamage("mixed", damage)
-	src.visible_message("<span class='alert'>[src] is hit by the blob!/span>")
 
 /obj/flock_structure/Cross(atom/movable/mover)
 	. = ..()

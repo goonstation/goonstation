@@ -47,7 +47,7 @@
 
 	disposing()
 		if (host)
-			host.peripherals.Remove(src)
+			host.peripherals?.Remove(src)
 			host = null
 
 		..()

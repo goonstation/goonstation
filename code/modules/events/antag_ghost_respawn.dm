@@ -22,7 +22,7 @@
 			message_admins("Setup of previous Antagonist Spawn hasn't finished yet, aborting.")
 			return
 
-		var/type = input(usr, "Select antagonist type.", "Antagonists", "Blob") as null|anything in list("Blob", "Blob (AI)", "Hunter", "Werewolf", "Wizard", "Wraith", "Wrestler", "Wrestler_Doodle", "Vampire", "Changeling", "Headspider", "Arcfiend")
+		var/type = input(usr, "Select antagonist type.", "Antagonists", "Blob") as null|anything in list("Blob", "Blob (AI)", "Hunter", "Werewolf", "Wizard", "Wraith", "Wrestler", "Wrestler_Doodle", "Vampire", "Changeling", "Headspider", "Arcfiend", "Flockmind")
 		if (!type)
 			return
 		else
@@ -198,7 +198,7 @@
 				if (F && istype(F))
 					M3 = F
 					role = ROLE_FLOCKMIND
-					//objective_path = /datum/objective_set/blob
+					objective_path = /datum/objective/specialist/flock
 					send_to = 3
 				else
 					failed = 1

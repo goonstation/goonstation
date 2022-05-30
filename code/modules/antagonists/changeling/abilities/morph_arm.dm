@@ -35,7 +35,7 @@
 		choices += ("Claw (DNA cost : 4)")
 		choices += ("Abomination (DNA cost : 6)")
 
-		var/choice = input("Select a form for our arm: ", "Select Arm", null) as null|anything in choices
+		var/choice = tgui_input_list(holder.owner, "Select a form for our arm:", "Select Arm", choices)
 		if (!choice)
 			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
 			return 1

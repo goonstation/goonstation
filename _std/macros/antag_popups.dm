@@ -53,6 +53,10 @@
 	<a href='?src=\ref[src];action=eyespider'>Eye/Butt Spider</a> |
 	<a href='?src=\ref[src];action=legworm'>Legworm</a>
 </div>
+<div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Flock</b>
+	<a href='?src=\ref[src];action=flocktrace'>Flocktrace</a> |
+	<a href='?src=\ref[src];action=flockmind'>Flockmind</a>
+</div>
 <div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Other Antags</b>
 	<a href='?src=\ref[src];action=grinch'>Grinch</a> |
 	<a href='?src=\ref[src];action=hunter'>Hunter</a> |
@@ -166,6 +170,12 @@
 				filename = "html/mindslave/eyespider.html"
 			if ("legworm")
 				filename = "html/mindslave/legworm.html"
+
+			//flock
+			if("flocktrace")
+				filename = "html/traitorTips/flocktraceTips.html"
+			if("flockmind")
+				filename = "html/traitorTips/flockmindTips.html"
 
 			// other antags
 			if ("grinch")

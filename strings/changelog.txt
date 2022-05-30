@@ -1,5 +1,14 @@
 
+(t)mon may 30 22
+(u)Bartimeus973
+(p)8651
+(e)🎨|sprites
+(*)Detectives now have a weak scuttlebot of their own! It has taken the shape of the detgadget hat in their locker.
 (t)sun may 29 22
+(u)Wisemonster
+(p)8762
+(e)🗺|mapping
+(+)Added status displays to Kondaru, Horizon, and Destiny.
 (u)DimWhat
 (p)8809
 (e)|
