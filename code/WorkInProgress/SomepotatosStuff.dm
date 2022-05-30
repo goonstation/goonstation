@@ -110,7 +110,7 @@
 		boutput( usr, "No targets found! Try again later!" )
 		return
 
-	var/target = input("Choose a destination!") in wtfbyond|null
+	var/target = tgui_input_list(src, "Choose a destination!", "GPS Destination Pick", sortList(wtfbyond))
 	if(!target || !src.client) return
 	target = targets[target]
 	gpsToTurf(target, param = ID)
