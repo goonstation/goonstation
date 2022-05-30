@@ -14,6 +14,7 @@ export const Rockbox = (_props, context) => {
     stats,
   } = data;
   const [takeAmount, setTakeAmount] = useLocalState(context, 'takeAmount', 1);
+  const [sellAllPrice, setSellAllPrice] = useLocalState(context, 'sellAllPrice', 0);
   return (
     <Window
       title="Rockbox"
@@ -24,16 +25,33 @@ export const Rockbox = (_props, context) => {
         <Stack vertical fill>
           <Stack.Item>
             <Section fill>
-              <Box>
-                {"Amount to eject: "}
-                <NumberInput
-                  value={takeAmount}
-                  width={4}
-                  minValue={1}
-                  onDrag={(e, value) => setTakeAmount(value)}
-                  onChange={(e, value) => setTakeAmount(value)}
-                />
-              </Box>
+              <Stack>
+                <Stack.Item grow>
+                  {"Amount to eject: "}
+                  <NumberInput
+                    value={takeAmount}
+                    width={4}
+                    minValue={1}
+                    onDrag={(e, value) => setTakeAmount(value)}
+                    onChange={(e, value) => setTakeAmount(value)}
+                  />
+                </Stack.Item>
+                <Stack.Item mr={3}>
+                  <NumberInput
+                    value={sellAllPrice}
+                    width={4}
+                    minValue={0}
+                    format={value => "$" + value}
+                    onChange={(e, value) => setSellAllPrice(value)}
+                  />
+                  <Button
+                    color="average"
+                    icon="magic"
+                    onClick={() => act('sell-all-ore-at-price', { newPrice: sellAllPrice })}>
+                    Sell All
+                  </Button>
+                </Stack.Item>
+              </Stack>
             </Section>
           </Stack.Item>
           <Stack.Item grow={1}>
