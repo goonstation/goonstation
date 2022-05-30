@@ -421,7 +421,7 @@
 		else
 			boutput(user, "<span class='alert'>You put on the glasses but they show no signal. The scuttlebot is likely destroyed.</span>")
 
-	attack(mob/living/W, mob/M)
+	attack(obj/item/W, mob/M)
 		if(istype(W, /mob/living/critter/robotic/scuttlebot))
 			if (connected_scuttlebot != W)
 				boutput(M, "You try to put the goggles back into the hat but it grumps at you, not recognizing the glasses.")
