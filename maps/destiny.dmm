@@ -20976,10 +20976,10 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "dHi" = (
-/obj/wingrille_spawn/reinforced,
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/wingrille_spawn/auto,
 /obj/machinery/door/poddoor/blast{
 	dir = 1;
 	doordir = "left";
@@ -21488,7 +21488,6 @@
 	name = "Crew Quarters P02"
 	})
 "dUl" = (
-/obj/machinery/door/firedoor/border_only,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -21498,10 +21497,12 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/machinery/door/airlock/gannets/glass/chemistry{
-	name = "glass airlock-'Teleporter Pad'";
-	req_access_txt = ""
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4;
+	name = "Teleporter Pad";
+	req_access_txt = null
 	},
+/obj/firedoor_spawn,
 /obj/machinery/door/poddoor/blast{
 	dir = 1;
 	id = "scienceteleporter2";
@@ -21773,8 +21774,8 @@
 /turf/space,
 /area/station/engine/core)
 "eaG" = (
-/obj/wingrille_spawn/reinforced,
 /obj/cable,
+/obj/wingrille_spawn/auto,
 /obj/machinery/door/poddoor/blast{
 	dir = 1;
 	doordir = "right";
