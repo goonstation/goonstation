@@ -1654,7 +1654,7 @@ obj/item/whetstone
 				return
 		else ..()
 
-	pull(var/mob/user)
+	pull(mob/user)
 		if(check_target_immunity(user))
 			return ..()
 

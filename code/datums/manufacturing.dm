@@ -2751,7 +2751,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	name = "ID Briefcase"
 	item_paths = list("CON-1","CRY-1","MET-1","gold")
 	item_amounts = list(25,15,35,2)
-	item_outputs = list(/obj/item/acesscomputerunfolder)
+	item_outputs = list(/obj/machinery/computer/card/portable)
 	time = 75 SECONDS
 	create = 1
 	category = "Resource"

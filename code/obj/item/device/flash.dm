@@ -10,7 +10,7 @@
 	throw_range = 10
 	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
 	item_state = "electronic"
-	mats = 2
+	mats = list("MET-1" = 3, "CON-1" = 5, "DEN-1" = 5)
 
 	var/status = 1 // Bulb still functional?
 	var/secure = 1 // Access panel still secured?
@@ -442,7 +442,7 @@
 					user.show_text("[src] refuses to flash!", "red") //lol
 					return
 		else if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
-			playsound(src, "sound/weapons/rev_flash_startup.ogg", 60, 1 , 0, 0.6)
+			playsound(src, "sound/weapons/rev_flash_startup.ogg", 30, 1 , 0, 0.6)
 			var/convert_result = convert(M,user)
 			if (convert_result == 0.5)
 				user.show_text("Hold still to override . . . ", "red")

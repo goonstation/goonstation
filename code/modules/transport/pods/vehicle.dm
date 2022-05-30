@@ -977,6 +977,10 @@
 		boutput(boarder, "<span class='alert'>You have no idea how to work this.</span>")
 		return
 
+	if(isflockmob(boarder))
+		boutput(boarder, "<span class='alert'>You're unable to use this vehicle!</span>")
+		return
+
 	if(locked)
 		boutput(boarder, "<span class='alert'>[src] is locked!</span>")
 		return

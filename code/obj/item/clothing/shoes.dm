@@ -14,11 +14,11 @@
 	compatible_species = list("human")
 	protective_temperature = 500
 	permeability_coefficient = 0.50
-		//cogwerks - burn vars
+	//cogwerks - burn vars
 	burn_point = 400
 	burn_output = 800
 	burn_possible = 1
-	health = 25
+	health = 5
 	tooltip_flags = REBUILD_DIST
 	var/step_sound = "step_default"
 	var/step_priority = STEP_PRIORITY_NONE

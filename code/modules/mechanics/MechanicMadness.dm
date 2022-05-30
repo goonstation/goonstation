@@ -1837,7 +1837,7 @@
 		SPAWN(0)
 			if(src.noise_enabled)
 				src.noise_enabled = false
-				playsound(src, "sound/machines/modem.ogg", WIFI_NOISE_VOLUME, 0, 0)
+				playsound(src, "sound/machines/wifi.ogg", WIFI_NOISE_VOLUME, 0, 0)
 				SPAWN(WIFI_NOISE_COOLDOWN)
 					src.noise_enabled = true
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, sendsig, src.range, "main")
@@ -1863,7 +1863,7 @@
 				SPAWN(0.5 SECONDS) //Send a reply for those curious jerks
 					if(src.noise_enabled)
 						src.noise_enabled = false
-						playsound(src, "sound/machines/modem.ogg", WIFI_NOISE_VOLUME, 0, 0)
+						playsound(src, "sound/machines/wifi.ogg", WIFI_NOISE_VOLUME, 0, 0)
 						SPAWN(WIFI_NOISE_COOLDOWN)
 							src.noise_enabled = true
 					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pingsignal, src.range)

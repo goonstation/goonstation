@@ -176,8 +176,8 @@
 
 	proc/enter_prompt(var/mob/living/user as mob)
 		if (mob_can_enter_storage(user)) // check before the prompt for dead/incapped/restrained/etc users
-			if (alert(user, "Would you like to enter cryogenic storage? You will be unable to leave it again until 5 minutes have passed.", "Confirmation", "Yes", "No") == "Yes")
-				if (alert(user, "Are you absolutely sure you want to enter cryogenic storage?", "Confirmation", "Yes", "No") == "Yes")
+			if (tgui_alert(user, "Would you like to enter cryogenic storage? You will be unable to leave it again until 5 minutes have passed.", "Confirmation", list("Yes", "No")) == "Yes")
+				if (tgui_alert(user, "Are you absolutely sure you want to enter cryogenic storage?", "Confirmation", list("Yes", "No")) == "Yes")
 					if (mob_can_enter_storage(user)) // check again in case they left the prompt up and moved away/died/whatever
 						add_person_to_storage(user)
 					return 1

@@ -52,8 +52,10 @@
 			for (var/reagent in botreagents)
 				available_chems += reagents_cache[reagent]
 		var/holder = src.loc
-		var/datum/reagent/pick = input(user, "Inject which chemical?", "Cybernetic Hypospray", null) in available_chems
+		var/datum/reagent/pick = tgui_input_list(user, "Inject which chemical?", "Cybernetic Hypospray", available_chems)
 		if (src.loc != holder)
+			return
+		if (!pick)
 			return
 		currentreagent = pick.id
 		propername = pick.name

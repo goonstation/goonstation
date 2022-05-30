@@ -294,6 +294,24 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/crate
 	containername = "Station Pressurization Crate"
 
+/datum/supply_packs/disposal_pipe_cart
+	name = "Disposal Pipe Dispenser Cart"
+	desc = "Has a pesky staff assistant stolen your cart?"
+	category = "Engineering Department"
+	contains = list(/obj/machinery/disposal_pipedispenser/mobile)
+	cost = 4000
+	containertype = /obj/storage/crate
+	containername = "Replacement Disposal Cart Crate"
+
+/datum/supply_packs/gas_filtration
+	name = "Gas Filtration Machinery"
+	desc = "A two-piece set consisting of a Portable Air Pump and a Portable Air Scrubber."
+	category = "Engineering Department"
+	contains = list(/obj/machinery/portable_atmospherics/scrubber, /obj/machinery/portable_atmospherics/pump)
+	cost = 5000
+	containertype = /obj/storage/crate
+	containername = "Filtration Machinery Crate"
+
 /datum/supply_packs/generator
 	name = "Experimental Local Generator"
 	desc = "x1 Experimental Local Generator"
@@ -621,6 +639,15 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/crate
 	containername = "Assorted Glowsticks Crate - 4 pack"
 
+/datum/supply_packs/portable_fueltank
+	name = "Portable Welding Fuel Tank"
+	desc = "A single transportable fuel tank, for when you're on the move."
+	category = "Basic Materials"
+	contains = list(/obj/item/reagent_containers/food/drinks/fueltank)
+	cost = 1000
+	containertype = /obj/storage/crate
+	containername = "Portable Welding Tank Crate"
+f
 /datum/supply_packs/fueltank
 	name = "Welding Fuel Tank"
 	desc = "1x Welding Fuel Tank"
@@ -1619,18 +1646,6 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	containertype = /obj/storage/secure/crate
 	containername = "Field Generator Crate (Cardlocked \[Engineering])"
 	access = access_engineering
-
-/datum/supply_packs/complex/atmos
-	name = "Atmospherics Supplies"
-	desc = "For when you need to be breathing."
-	category = "Basic Materials"
-	contains = list(/obj/item/tank/air,
-					/obj/item/tank/oxygen,
-					/obj/item/clothing/under/misc/atmospheric_technician)
-	frames = list(/obj/machinery/portable_atmospherics/scrubber = 2)
-	cost = 8000
-	containertype = /obj/storage/crate/wooden
-	containername = "Atmospherics Supplies"
 
 /datum/supply_packs/complex/winter
 	name = "Cold Weather Gear"

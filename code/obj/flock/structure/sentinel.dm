@@ -6,11 +6,12 @@
 #define CHARGING 1 //! The sentinel is gaining charge
 #define CHARGED 2 //! The sentinel is charged
 /obj/flock_structure/sentinel
-	name = "Glowing pylon"
+	name = "glowing pylon"
 	desc = "A glowing pylon of sorts, faint sparks are jumping inside of it."
 	icon_state = "sentinel"
 	flock_id = "Sentinel"
 	health = 80
+	resourcecost = 150
 	var/charge_status = NOT_CHARGED
 	/// 0-100 charge percent
 	var/charge = 0
@@ -21,9 +22,8 @@
 	passthrough = TRUE
 
 	usesgroups = TRUE
-
-	// debug amount scale up if needed.
-	poweruse = 20
+	var/online_compute_cost = 20
+	compute = 0 //targetting consumes compute
 
 	var/obj/effect/flock_sentinelrays/rays = null
 
@@ -46,10 +46,13 @@
 
 	if(!src.group)//if it dont exist it off
 		powered = FALSE
-	else if(src.group.powerbalance >= 0)//if it has atleast 0 or more free power, the poweruse is already calculated in the group
+		src.compute = 0
+	else if(src.flock.can_afford_compute(online_compute_cost))//if it has atleast 0 or more free compute, the poweruse is already calculated in the group
 		powered = TRUE
+		src.compute = -online_compute_cost
 	else//if there isnt enough juice
 		powered = FALSE
+		src.compute = 0
 
 	if(powered == 1)
 		switch(charge_status)
@@ -64,8 +67,8 @@
 				var/mob/loopmob = null
 				var/list/hit = list()
 				var/mob/mobtohit = null
-				for(loopmob in mobs)
-					if(IN_RANGE(loopmob, src, 5) && !isflock(loopmob) && src.flock?.isEnemy(loopmob) && isturf(loopmob.loc))
+				for(loopmob in range(5,src.loc))
+					if(!isflockmob(loopmob) && src.flock?.isEnemy(loopmob) && isturf(loopmob.loc) && isalive(loopmob) && !isintangible(loopmob))
 						mobtohit = loopmob
 						break//found target
 				if(!mobtohit) return//if no target stop
@@ -73,13 +76,13 @@
 				hit += mobtohit
 				for(var/i in 1 to rand(5,6))//this facilitates chaining. legally distinct from the loop above
 					for(var/mob/nearbymob in range(2, mobtohit))//todo: optimize(?) this.
-						if(nearbymob != mobtohit && !isflock(nearbymob) && !(nearbymob in hit) && isturf(nearbymob.loc) && src.flock?.isEnemy(nearbymob))
+						if(nearbymob != mobtohit && !isflockmob(nearbymob) && !(nearbymob in hit) && isturf(nearbymob.loc) && src.flock?.isEnemy(nearbymob) && isalive(loopmob) && !isintangible(loopmob))
 							arcFlash(mobtohit, nearbymob, 10000)
 							hit += nearbymob
 							mobtohit = nearbymob
 				hit.len = 0//clean up
 				charge = 1
-				var/filter = src.get_filter("flock_sentinel_rays")
+				var/filter = src.rays.get_filter("flock_sentinel_rays")
 				animate(filter, size=((-(cos(180*(3/100))-1)/2)*32), time=1 SECONDS, flags = ANIMATION_PARALLEL)
 				charge_status = CHARGING
 				return

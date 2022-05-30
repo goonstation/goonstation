@@ -42,6 +42,7 @@
 	if (user.is_hulk())
 		user.visible_message("<span class='alert'>[user] destroys the table.</span>")
 		src.set_density(0)
+		logTheThing("combat", user, null, "uses hulk to smash an operating table at [log_loc(src)].")
 		qdel(src)
 	return
 

@@ -1961,6 +1961,7 @@ obj/item/clothing/gloves/concussive
 		for (var/supertype in allowed_supertypes)
 			for (var/subtype in typesof(supertype))
 				allowed_types[subtype] = 1
+		allowed_types -= /obj/storage/closet/flock
 
 		var/cell = new cell_type
 		AddComponent(/datum/component/cell_holder, cell, swappable = FALSE)

@@ -54,6 +54,10 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 			boutput(holder.owner, "Your target must be human!")
 			return 1
 
+		if(!can_act(holder.owner))
+			boutput(holder.owner, "You can't cast this whilst incapacitated!")
+			return 1
+
 		var/mob/living/carbon/human/H = target
 
 		if (targetSpellImmunity(H, TRUE, 2))
