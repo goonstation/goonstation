@@ -124,7 +124,7 @@ datum/pathogeneffects/malevolent/capacitor
 				discharge(M, origin)
 		return 1
 
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
 			return
 		var/load = origin.symptom_data["capacitor"]

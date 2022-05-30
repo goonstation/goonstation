@@ -5,7 +5,7 @@ datum/pathogeneffects/benevolent/detoxication
 	name = "Detoxication"
 	desc = "The pathogen aids the host body in metabolizing ethanol."
 
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
 		var/times = 1
 		var/met = 0
 		for (var/rid in M.reagents.reagent_list)
@@ -33,7 +33,7 @@ datum/pathogeneffects/benevolent/metabolisis
 	name = "Accelerated Metabolisis"
 	desc = "The pathogen accelerates the metabolisis of all chemicals present in the host body."
 
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
 		var/times = 1
 		var/met = 0
 		for (var/rid in M.reagents.reagent_list)

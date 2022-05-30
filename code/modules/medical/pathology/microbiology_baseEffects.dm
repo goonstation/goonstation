@@ -20,18 +20,18 @@ datum/pathogeneffects
 	// A symptom might not always infect everyone around. This is a flat probability: 0 means never infect to 1 means always infect. This is checked PER MOB, not per infect call.
 	var/infection_coefficient = 1
 
-	// disease_act(mob, datum/pathogen) : void
+	// mob_act(mob, datum/pathogen) : void
 	// This is the center of pathogen symptoms.
 	// On every Life() tick, this will be called for every symptom attached to the pathogen. Most pathogens should express their malevolence here, unless they are specifically tailored
 	// to only work on events like human interaction or external effects. A symptom therefore should override this proc.
-	// disease_act is also responsible for handling the symptom's ability to suppress the pathogen. Check the documentation on suppression in pathogen.dm.
+	// mob_act is also responsible for handling the symptom's ability to suppress the pathogen. Check the documentation on suppression in pathogen.dm.
 	// OVERRIDE: A subclass (direct or otherwise) is expected to override this.
-	proc/disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+	proc/mob_act(var/mob/M as mob, var/datum/pathogen/origin)
 
-	// disease_act_dead(mob, datum/pathogen) : void
-	// This functions identically to disease_act, except it is only called when the mob is dead. (disease_act is not called if that is the case.)
+	// mob_act_dead(mob, datum/pathogen) : void
+	// This functions identically to mob_act, except it is only called when the mob is dead. (mob_act is not called if that is the case.)
 	// OVERRIDE: Only override this if if it needed for the symptom.
-	proc/disease_act_dead(var/mob/M as mob, var/datum/pathogen/origin)
+	proc/mob_act_dead(var/mob/M as mob, var/datum/pathogen/origin)
 
 	// does an infectious snap
 	// makes others snap, should possibly infect you in the future if you are made to snap a certain amount of times

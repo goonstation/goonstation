@@ -9,7 +9,7 @@ datum/pathogeneffects/malevolent/coughing
 	desc = "Violent coughing occasionally plagues the infected."
 	rarity = THREAT_TYPE2
 
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
 			return
 		switch (origin.stage)
@@ -44,7 +44,7 @@ datum/pathogeneffects/malevolent/indigestion
 	desc = "A bad case of indigestion which occasionally cramps the infected."
 	rarity = THREAT_TYPE2
 
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
 			return
 		switch (origin.stage)
@@ -69,7 +69,7 @@ datum/pathogeneffects/malevolent/muscleache
 	desc = "The infected feels a slight, constant aching of muscles."
 	rarity = THREAT_TYPE1
 
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
 			return
 		switch (origin.stage)
@@ -96,7 +96,7 @@ datum/pathogeneffects/malevolent/sneezing
 	desc = "The infected sneezes frequently."
 	rarity = THREAT_TYPE2
 
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
 			return
 		switch (origin.stage)
@@ -133,7 +133,7 @@ datum/pathogeneffects/malevolent/gasping
 	desc = "The infected has trouble breathing."
 	infect_type = INFECT_NONE
 	rarity = THREAT_TYPE3 //Superceded by pulmonary oedema (4) and internal haemorrhaging (5), stronger than cough (2) and chest pain (1)
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
 			return
 		switch (origin.stage)
@@ -164,7 +164,7 @@ datum/pathogeneffects/malevolent/gasping
 	desc = "This is literally pointless."
 	infect_type = INFECT_NONE
 	rarity = THREAT_TYPE1
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
 			return
 		switch (origin.stage)
@@ -197,7 +197,7 @@ datum/pathogeneffects/malevolent/shivering
 	desc = "The pathogen slightly raises the homeostatic set point of the infected."
 	infect_type = INFECT_NONE
 	rarity = THREAT_TYPE2
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
 			return
 		switch (origin.stage)
@@ -231,7 +231,7 @@ datum/pathogeneffects/malevolent/sweating
 	rarity = THREAT_TYPE2
 	spread = SPREAD_HANDS | SPREAD_BODY
 	infect_attempt_message = "Ew, their hands feel really gross and sweaty!"
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
 			return
 		switch (origin.stage)
@@ -277,7 +277,7 @@ datum/pathogeneffects/malevolent/disorientation
 	desc = "The infected occasionally gets disoriented."
 	infect_type = INFECT_NONE
 	rarity = THREAT_TYPE3
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
 			return
 		switch (origin.stage)
@@ -398,7 +398,7 @@ datum/pathogeneffects/malevolent/serious_paranoia
 		if (R == "LSD")
 			return "The pathogen appears to be strangely unaffected by the LSD."
 
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
 			return
 		switch (origin.stage)
@@ -514,7 +514,7 @@ datum/pathogeneffects/malevolent/serious_paranoia/mild
 		if (R == "LSD")
 			return "The pathogen appears to be barely affected by the LSD."
 
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
 			return
 		switch (origin.stage)
@@ -581,7 +581,7 @@ datum/pathogeneffects/malevolent/teleportation
 	desc = "The infected exists in a twisted spacetime."
 	infect_type = INFECT_NONE
 	rarity = THREAT_TYPE4
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
 			return
 		if (origin.stage >= 3)
@@ -630,7 +630,7 @@ datum/pathogeneffects/malevolent/gibbing
 	desc = "The infected person may spontaneously gib."
 	rarity = THREAT_TYPE5
 	spread = SPREAD_FACE | SPREAD_HANDS | SPREAD_AIR | SPREAD_BODY
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
 			return
 		switch (origin.stage)
@@ -685,7 +685,7 @@ datum/pathogeneffects/malevolent/fluent
 	spread = SPREAD_FACE
 	infect_message = "<span class='alert'>A drop of saliva lands on your face.</span>"
 	rarity = THREAT_TYPE3
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
 		return
 
 	onsay(var/mob/M as mob, message, var/datum/pathogen/origin)
@@ -713,7 +713,7 @@ datum/pathogeneffects/malevolent/liverdamage
 	desc = "The infected has an inflamed liver."
 	infect_type = INFECT_NONE
 	rarity = THREAT_TYPE5
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
 			return
 		switch (origin.stage)
@@ -761,7 +761,7 @@ datum/pathogeneffects/malevolent/fever
 	infect_type = INFECT_NONE
 	rarity = THREAT_TYPE3
 
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
 			return
 		switch (origin.stage)
@@ -796,7 +796,7 @@ datum/pathogeneffects/malevolent/acutefever
 	infect_type = INFECT_NONE
 	rarity = THREAT_TYPE4
 
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
 			return
 		var/mob/living/carbon/human/H = M
@@ -844,7 +844,7 @@ datum/pathogeneffects/malevolent/ultimatefever
 	infect_type = INFECT_NONE
 	rarity = THREAT_TYPE5
 
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
 			return
 		var/mob/living/carbon/human/H = M
@@ -895,7 +895,7 @@ datum/pathogeneffects/malevolent/chills
 	desc = "The pathogen significantly increases the infected individual's set point, causing them to feel abnormally cold."
 	infect_type = INFECT_NONE
 	rarity = THREAT_TYPE3
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
 			return
 		switch (origin.stage)
@@ -944,7 +944,7 @@ datum/pathogeneffects/malevolent/seriouschills
 		SPAWN(30 SECONDS)
 			qdel(I)
 
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
 			return
 		switch (origin.stage)
@@ -1010,7 +1010,7 @@ datum/pathogeneffects/malevolent/seriouschills/ultimate
 	infect_type = INFECT_NONE
 	rarity = THREAT_TYPE5
 
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
 			return
 		switch (origin.stage)
@@ -1070,7 +1070,7 @@ datum/pathogeneffects/malevolent/leprosy
 	desc = "The infected individual is losing limbs."
 	rarity = THREAT_TYPE5
 
-	disease_act(var/mob/living/carbon/human/M, var/datum/pathogen/origin)
+	mob_act(var/mob/living/carbon/human/M, var/datum/pathogen/origin)
 		if (origin.stage < 3 || !!origin.in_remission)
 			return
 		switch (origin.stage)
@@ -1096,7 +1096,7 @@ datum/pathogeneffects/malevolent/senility
 	desc = "Infection damages nerve cells in the host's brain."
 	rarity = THREAT_TYPE4
 	infect_type = INFECT_NONE
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
 			return
 		switch (origin.stage)
@@ -1153,7 +1153,7 @@ datum/pathogeneffects/malevolent/beesneeze
 		toThrow.throw_at(target, 6, 1)
 		src.infect_cloud(M, origin, origin.spread) // TODO: at some point I want the bees to spread this instead
 
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
 			return
 		switch (origin.stage)
@@ -1186,7 +1186,7 @@ datum/pathogeneffects/malevolent/mutation
 	infect_type = INFECT_NONE
 	rarity = THREAT_TYPE5
 
-	//multiply origin.stage by this number to get the percent probability of a mutation occurring per disease_act
+	//multiply origin.stage by this number to get the percent probability of a mutation occurring per mob_act
 	//please keep it between 1 and 20, inclusive, if possible.
 	var/mut_prob_mult = 4
 
@@ -1211,7 +1211,7 @@ datum/pathogeneffects/malevolent/mutation
 			else
 				M.bioHolder.RandomEffect(mutation_type, respect_probability)
 
-	disease_act(var/mob/M, var/datum/pathogen/origin)
+	mob_act(var/mob/M, var/datum/pathogen/origin)
 		if (origin.in_remission)
 			return
 		if (prob(origin.stage * mut_prob_mult))
@@ -1266,7 +1266,7 @@ datum/pathogeneffects/malevolent/radiation
 	infect_type = INFECT_NONE
 	rarity = THREAT_TYPE5
 
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
 			return
 		switch (origin.stage)
@@ -1313,7 +1313,7 @@ datum/pathogeneffects/malevolent/snaps
 		if(prob(20))  // an infectious sou- wait fuck someone made that joke already 5 lines above
 			src.infect_snap(M, origin)
 
-	disease_act(var/mob/M, var/datum/pathogen/origin)
+	mob_act(var/mob/M, var/datum/pathogen/origin)
 		if (origin.in_remission)
 			return
 		if (prob(origin.stage * 2))
@@ -1370,7 +1370,7 @@ datum/pathogeneffects/malevolent/snaps/jazz
 				sax.play_note(rand(1,sax.sounds_instrument.len), user = H)
 
 
-	disease_act(var/mob/M, var/datum/pathogen/origin)
+	mob_act(var/mob/M, var/datum/pathogen/origin)
 		if (origin.in_remission)
 			return
 		if(prob(origin.stage*5))
@@ -1433,7 +1433,7 @@ datum/pathogeneffects/malevolent/snaps/wild
 			playsound(M.loc, 'sound/effects/fingersnap_echo.ogg', 150, 1, 2000)
 			src.infect_snap(M, origin, 9)
 
-	disease_act(var/mob/M, var/datum/pathogen/origin)
+	mob_act(var/mob/M, var/datum/pathogen/origin)
 		if (origin.in_remission)
 			return
 		if (prob((origin.stage * origin.stage)+5))

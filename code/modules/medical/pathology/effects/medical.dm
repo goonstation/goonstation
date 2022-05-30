@@ -6,7 +6,7 @@ datum/pathogeneffects/benevolent/mending
 	name = "Wound Mending"
 	desc = "Slow paced brute damage healing."
 
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (prob(origin.stage * 10))
 			M.HealDamage("All", origin.stage / 2, 0)
 
@@ -22,7 +22,7 @@ datum/pathogeneffects/benevolent/healing
 	name = "Burn Healing"
 	desc = "Slow paced burn damage healing."
 
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (prob(origin.stage * 10))
 			M.HealDamage("All", 0, origin.stage / 2)
 
@@ -41,7 +41,7 @@ datum/pathogeneffects/benevolent/fleshrestructuring
 	name = "Flesh Restructuring"
 	desc = "Fast paced general healing."
 
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (prob(origin.stage * 10))
 			M.HealDamage("All", origin.stage, origin.stage)
 			if(ishuman(M))
@@ -67,7 +67,7 @@ datum/pathogeneffects/benevolent/cleansing
 	name = "Cleansing"
 	desc = "The pathogen cleans the body of damage caused by toxins."
 
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
 		//if (prob(origin.stage * 5) && M.get_toxin_damage())
 		if (M.get_toxin_damage())
 			M.take_toxin_damage(-origin.stage / 2)
@@ -91,7 +91,7 @@ datum/pathogeneffects/benevolent/oxygenconversion
 		if (R == "synthflesh")
 			return "The pathogen consumes the synthflesh and converts it into oxygen."
 
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
 		var/mob/living/carbon/C = M
 		if (C.get_oxygen_deprivation())
 			C.setStatus("patho_oxy_speed_bad", duration = INFINITE_STATUS, optional = origin.stage/2.5)
@@ -103,7 +103,7 @@ datum/pathogeneffects/benevolent/oxygenstorage
 	may_react_to()
 		return "The pathogen appears to have a bubble of oxygen around it."
 
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if(!origin.symptom_data["oxygen_storage"]) // if not yet set, initialize
 			origin.symptom_data["oxygen_storage"] = 0
 
@@ -124,7 +124,7 @@ datum/pathogeneffects/benevolent/resurrection
 	may_react_to()
 		return "Some of the pathogen's dead cells seem to remain active."
 
-	disease_act_dead(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act_dead(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
 			return
 		if (origin.stage < 3)
@@ -174,7 +174,7 @@ datum/pathogeneffects/benevolent/neuronrestoration
 	name = "Neuron Restoration"
 	desc = "Infection slowly repairs nerve cells in the brain."
 
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
 			return
 		switch (origin.stage)
@@ -204,7 +204,7 @@ datum/pathogeneffects/benevolent/genetictemplate
 
 	var/list/mutationMap = list() // stores the kind of mutation with the index being the pathogen's name (which is something like "L41D9")
 
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!!origin.in_remission || !M.bioHolder)
 			return
 		if(mutationMap[origin.name_base] == null) // if no mutation has been picked yet, go for a random one from this person
@@ -263,7 +263,7 @@ datum/pathogeneffects/benevolent/exclusiveimmunity
 	name = "Exclusive Immunity"
 	desc = "The pathogen occupies almost all possible routes of infection, preventing other diseases from entering."
 
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
 		//if (other pathogens detected)
 			//grab their in_remission
 			//set their vals to 1

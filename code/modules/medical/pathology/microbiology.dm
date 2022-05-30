@@ -96,8 +96,17 @@ datum/microbe
 			infected.cured(src)
 
 //Generalize for objects and turfs WIP
+
+	proc/structure_act()
+
+
+	proc/object_act()
+
+
+	proc/reagent_act()
+
 	// This is the real thing, wrapped by process().
-	proc/disease_act()
+	proc/mob_act()
 		var/list/acted = list()
 		var/order = pick(0,1)
 		if (order)
@@ -106,7 +115,7 @@ datum/microbe
 					continue
 				acted += effect.type
 				if (prob(body_type.activity[stage]))
-					effect:disease_act(infected, src)
+					effect:mob_act(infected, src)
 		else
 			for (var/i = src.effects.len, i > 0, i--)
 				var/datum/effect = src.effects[i]
@@ -114,11 +123,11 @@ datum/microbe
 					continue
 				acted += effect.type
 				if (prob(body_type.activity[stage]))
-					effect:disease_act(infected, src)
+					effect:mob_act(infected, src)
 		progress_pathogen()
 
-	// it's like disease_act, but for dead people!
-	proc/disease_act_dead()
+	// it's like mob_act, but for dead people!
+	proc/mob_act_dead()
 		var/list/acted = list()
 		var/order = pick(0,1)
 		if (order)
@@ -127,7 +136,7 @@ datum/microbe
 					continue
 				acted += effect.type
 				if (prob(body_type.activity[stage]))
-					effect:disease_act_dead(infected, src)
+					effect:mob_act_dead(infected, src)
 		else
 			for (var/i = src.effects.len, i > 0, i--)
 				var/datum/effect = src.effects[i]
@@ -135,7 +144,7 @@ datum/microbe
 					continue
 				acted += effect.type
 				if (prob(body_type.activity[stage]))
-					effect:disease_act_dead(infected, src)
+					effect:mob_act_dead(infected, src)
 		progress_pathogen()
 
 	//=============================================================================

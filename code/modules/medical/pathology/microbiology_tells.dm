@@ -7,7 +7,7 @@ datum/pathogeneffects/neutral/hiccups
 	name = "Hiccups"
 	desc = "The pathogen sends involuntary signals to the infected individual's diaphragm."
 
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
 			return
 		switch (origin.stage)
@@ -56,7 +56,7 @@ datum/pathogeneffects/neutral/hiccups
 					infect_direct(H, origin, "hug")
 				return
 
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
 			return
 		var/check_amount = M.reagents.get_reagent_amount("love")
@@ -88,7 +88,7 @@ datum/pathogeneffects/neutral/sunglass
 			M.glasses = N
 			M.update_clothing()
 
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
 			return
 		if (ishuman(M))
@@ -117,7 +117,7 @@ datum/pathogeneffects/neutral/deathgasping
 	desc = "The pathogen causes the user's brain to believe the body is dying."
 	infect_type = INFECT_NONE
 	rarity = THREAT_NEUTRAL
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
 			return
 		switch (origin.stage)
@@ -176,7 +176,7 @@ datum/pathogeneffects/neutral/shakespeare
 		if (!(message in shk))
 			return shakespearify(message)
 
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
 			return
 		if (prob(origin.stage)) // 3. holy shit shut up shUT UP
@@ -189,7 +189,7 @@ datum/pathogeneffects/neutral/hoarseness
 	name = "Hoarseness"
 	desc = "The pathogen causes dry throat, leading to hoarse speech."
 
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
 			return
 		if (prob(10))
@@ -207,7 +207,7 @@ datum/pathogeneffects/neutral/malaise
 	name = "Malaise"
 	desc = "The pathogen causes very mild, inconsequential fatigue to its host."
 
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
 			return
 		if (prob(10))
@@ -224,7 +224,7 @@ datum/pathogeneffects/neutral/hyperactive
 	name = "Psychomotor Agitation"
 	desc = "Also known as restlessness, the infected individual is prone to involuntary motions and tics."
 
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
 			return
 		if (prob(8))
@@ -245,7 +245,7 @@ datum/pathogeneffects/neutral/bloodcolors
 
 	//randomly select blood color
 
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
 			return
 		//if bleeding
@@ -259,7 +259,7 @@ datum/pathogeneffects/neutral/startleresponse
 	desc = "The pathogen generates synaptic signals that amplify the host's startle reflex."
 	rarity = THREAT_NEUTRAL
 
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
 			return
 		if (prob(8))
@@ -276,7 +276,7 @@ datum/pathogeneffects/neutral/tearyeyed
 	name = "Overactive Eye Glands"
 	desc = "The pathogen causes the host's lacrimal glands to overproduce tears."
 
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
 			return
 		if (prob(8))
@@ -293,7 +293,7 @@ datum/pathogeneffects/neutral/restingface
 	name = "Grumpy Cat Syndrome"
 	desc = "The pathogen causes the host's facial muscles to frown at rest."
 
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
 			return
 		if (prob(8))
@@ -305,3 +305,34 @@ datum/pathogeneffects/neutral/restingface
 
 	may_react_to()
 		return "The pathogen appears to react to hydrating agents."
+
+datum/pathogeneffects/malevolent/farts
+	name = "Farts"
+	desc = "The infected individual occasionally farts."
+	infect_type = INFECT_AREA
+	spread = SPREAD_AIR
+	rarity = THREAT_TYPE2
+	var/cooldown = 200 // we just use the name of the symptom to keep track of different fart effects, so their cooldowns do not interfere
+	var/doInfect = 1 // smoke farts were just too good
+
+	proc/fart(var/mob/M, var/datum/pathogen/origin, var/voluntary)
+		if(doInfect)
+			src.infect_cloud(M, origin, origin.spread/5)
+		if(voluntary)
+			origin.symptom_data[name] = TIME
+
+	onemote(mob/M as mob, act, voluntary, param, datum/pathogen/P)
+		// involuntary farts are free, but the others use the cooldown
+		if(voluntary && TIME-P.symptom_data[name] < cooldown)
+			return
+		if(act == "fart")
+			fart(M, P, voluntary)
+
+	mob_act(var/mob/M, var/datum/pathogen/origin)
+		if (origin.in_remission)
+			return
+		if (prob(origin.stage))
+			M.emote("fart")
+
+	may_react_to()
+		return "The pathogen appears to produce a large volume of gas."

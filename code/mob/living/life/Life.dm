@@ -573,11 +573,11 @@
 			if (src.pathogens.len)
 				for (var/uid in src.pathogens)
 					var/datum/pathogen/P = src.pathogens[uid]
-					P.disease_act_dead()
+					P.mob_act_dead()
 			return
 		for (var/uid in src.pathogens)
 			var/datum/pathogen/P = src.pathogens[uid]
-			P.disease_act()
+			P.mob_act()
 
 	get_cold_protection()
 		// calculate 0-100% insulation from cold environments
