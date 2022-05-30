@@ -810,6 +810,13 @@ proc/create_fluff(datum/mind/target)
 		if (O.blobs.len >= blobtiletarget)
 			return 1
 
+/datum/objective/specialist/flock
+	explanation_text = "Construct the relay and transmit The Signal."
+
+	check_completion()
+		return flock_signal_unleashed
+
+
 /datum/objective/specialist/wraith
 	explanation_text = "Be dastardly as heck!"
 

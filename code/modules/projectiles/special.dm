@@ -582,54 +582,6 @@ ABSTRACT_TYPE(/datum/projectile/special)
 /datum/projectile/special/homing/slow
 	max_speed = 1
 
-/datum/projectile/special/homing/vamp_blood
-	name = "blood glob"
-	icon_state = "bloodproj"
-	start_speed = 9
-	goes_through_walls = 1
-	//goes_through_mobs = 1
-	auto_find_targets = 0
-	silentshot = 1
-	pierces = -1
-	max_range = 10
-	shot_sound = "sound/impact_sounds/Flesh_Tear_1.ogg"
-
-	on_launch(var/obj/projectile/P)
-		if (!("victim" in P.special_data))
-			P.die()
-			return
-
-		if (!("vamp" in P.special_data))
-			P.die()
-			return
-		P.layer = EFFECTS_LAYER_BASE
-		flick("bloodproj",P)
-		..()
-
-	on_hit(atom/hit, direction, var/obj/projectile/P)
-		if (("vamp" in P.special_data))
-			var/datum/abilityHolder/vampire/vampire = P.special_data["vamp"]
-			if (vampire.owner == hit && !P.special_data["returned"])
-				P.travelled = 0
-				P.max_range = 4
-				P.special_data["returned"] = TRUE
-			..()
-
-	on_end(var/obj/projectile/P)
-		if (("vamp" in P.special_data) && ("victim" in P.special_data) && P.special_data["returned"])
-			var/datum/abilityHolder/vampire/vampire = P.special_data["vamp"]
-			var/mob/living/victim = P.special_data["victim"]
-
-			if (vampire && victim)
-				if (vampire.can_bite(victim,is_pointblank = 0))
-					vampire.do_bite(victim, mult = 0.3333)
-
-				if(istype(vampire.owner))
-					vampire.owner?.add_stamina(20)
-				victim.remove_stamina(4)
-
-		..()
-
 
 //vamp bail out travel
 /datum/projectile/special/homing/travel
@@ -676,7 +628,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 			else
 				if (dropme.loc == P)
 					dropme.set_loc(get_turf(P))
-					boutput(dropme, __red("Your coffin was lost or destroyed! Oh no!!!"))
+					boutput(dropme, "<span class='alert'>Your coffin was lost or destroyed! Oh no!!!</span>")
 		..()
 
 /datum/projectile/special/homing/magicmissile

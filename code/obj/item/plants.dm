@@ -399,7 +399,7 @@
 				A:lastattackertime = world.time
 			A:weakened += 15
 
-	pull(var/mob/user)
+	pull(mob/user)
 		if (!istype(user))
 			return
 		if (!iswerewolf(user))

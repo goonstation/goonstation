@@ -23,11 +23,11 @@
 			return 1
 
 		if (M == target)
-			boutput(M, __red("Why would you want to enslave yourself?"))
+			boutput(M, "<span class='alert'>Why would you want to enslave yourself?</span>")
 			return 1
 
 		if (get_dist(M, target) > src.max_range)
-			boutput(M, __red("[target] is too far away."))
+			boutput(M, "<span class='alert'>[target] is too far away.</span>")
 			return 1
 
 		if (!ishuman(target))
@@ -98,14 +98,14 @@
 			return
 
 		if (!isdead(target) && !istype(target.mutantrace, /datum/mutantrace/vampiric_thrall))
-			boutput(M, __red("[target] needs to be dead first."))
+			boutput(M, "<span class='alert'>[target] needs to be dead first.</span>")
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 		if(istype(M))
 			M.visible_message("<span class='alert'><B>[M] stabs [target] with their sharp fingers!</B></span>")
-			boutput(M, __blue("You begin to pump your [pick("polluted","spooky","bad","gross","icky","evil","necrotic")] blood into [target]'s chest."))
-			boutput(target, __red("You feel cold . . ."))
+			boutput(M, "<span class='notice'>You begin to pump your [pick("polluted","spooky","bad","gross","icky","evil","necrotic")] blood into [target]'s chest.</span>")
+			boutput(target, "<span class='alert'>You feel cold . . .</span>")
 
 	onUpdate()
 		..()
@@ -138,11 +138,11 @@
 
 			H.deductPoints(100)
 
-			boutput(M, __blue("You donate 200 blood points to [target]."))
-			boutput(target, __blue("[M] has donated you 200 blood points. Your health is temporarily increased."))
+			boutput(M, "<span class='notice'>You donate 200 blood points to [target].</span>")
+			boutput(target, "<span class='notice'>[M] has donated you 200 blood points. Your health is temporarily increased.</span>")
 		else
-			boutput(M, __blue("You were not able to enthrall [target] - their ghost has departed."))
+			boutput(M, "<span class='notice'>You were not able to enthrall [target] - their ghost has departed.</span>")
 
 	onInterrupt()
 		..()
-		boutput(owner, __red("Your attempt to enthrall the target was interrupted!"))
+		boutput(owner, "<span class='alert'>Your attempt to enthrall the target was interrupted!</span>")

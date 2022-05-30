@@ -57,7 +57,7 @@
 	var/perlin_zoom = 65
 
 ///Seeds the rust-g perlin noise with a random number.
-/datum/map_generator/icemoon_generator/generate_terrain(var/list/turfs, var/reuse_seed)
+/datum/map_generator/icemoon_generator/generate_terrain(list/turfs, reuse_seed, flags)
 	. = ..()
 	var/height_seed = seeds[1]
 	var/humidity_seed = seeds[2]
@@ -99,7 +99,10 @@
 		else //Over 0.85; It's the abyss
 			selected_biome = /datum/biome/icemoon/abyss
 		selected_biome = biomes[selected_biome]
-		selected_biome.generate_turf(gen_turf)
+		var/tmp_flags = flags
+		if(istype(selected_biome, /datum/biome/icemoon/abyss))
+			tmp_flags |= MAPGEN_IGNORE_BUILDABLE
+		selected_biome.generate_turf(gen_turf, tmp_flags)
 
 		if (current_state >= GAME_STATE_PLAYING)
 			LAGCHECK(LAG_LOW)

@@ -375,7 +375,7 @@
 		if (isitem(target))
 			var/obj/item/potentially_food = target
 			if (potentially_food.edible)
-				potentially_food.Eat(user, user, 1)
+				potentially_food.attack(user, user)
 
 	help(mob/target, var/mob/user)
 		return
@@ -428,7 +428,7 @@
 		if (holder?.remove_object && istype(holder.remove_object))
 			target.Attackby(holder.remove_object, user, params, location, control)
 			if (target)
-				holder.remove_object.AfterAttack(target, src, reach)
+				holder.remove_object.AfterAttack(target, user, reach)
 
 /datum/limb/bear
 	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control)

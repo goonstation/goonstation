@@ -158,8 +158,8 @@
 
 	if(world.time >= can_exit_hivemind_time && hivemind_owner && hivemind_owner.master != src)
 		hivemind_owner.hivemind -= src
-		boutput(src, __red("You have parted with the hivemind."))
+		boutput(src, "<span class='alert'>You have parted with the hivemind.</span>")
 		src.boot()
 	else
-		boutput(src, __red("You are not able to part from the hivemind at this time. You will be able to leave in [(can_exit_hivemind_time/10 - world.time/10)] seconds."))
+		boutput(src, "<span class='alert'>You are not able to part from the hivemind at this time. You will be able to leave in [(can_exit_hivemind_time/10 - world.time/10)] seconds.</span>")
 

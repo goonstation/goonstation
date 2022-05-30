@@ -403,7 +403,7 @@
 	health_gain_from_food = 6
 	angertext = "snips at"
 	butcherable = 1
-	flags = NOSPLASH | OPENCONTAINER | TABLEPASS
+	flags = TABLEPASS
 	flying = 0
 	maxhealth = 60
 
@@ -1478,7 +1478,7 @@
 	brutevuln = 1
 	angertext = "hisses at"
 	butcherable = 1
-	flags = NOSPLASH | OPENCONTAINER | TABLEPASS
+	flags = TABLEPASS
 	flying = 0
 
 	CritterDeath()

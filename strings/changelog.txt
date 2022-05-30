@@ -1,5 +1,35 @@
 
+(t)mon may 30 22
+(u)Bartimeus973
+(p)8651
+(e)🎨|sprites
+(*)Detectives now have a weak scuttlebot of their own! It has taken the shape of the detgadget hat in their locker.
+(t)sun may 29 22
+(u)Wisemonster
+(p)8762
+(e)🗺|mapping
+(+)Added status displays to Kondaru, Horizon, and Destiny.
+(u)DimWhat
+(p)8809
+(e)|
+(+)Increased the material cost of flashes
+(u)TTerc
+(e)|
+(*)Clicking doors with open panel via empty hand or bumping into them will now open them, as long as you have proper access. Hacking UI panel will open only if you have hacking tools/remote signaller in any hand.
+(u)Zonespace
+(p)6811
+(e)⚖|balance
+(+)Synthrubber conductivity 20 -> 30
+(u)TTerc
+(e)⚖|balance
+(+)Cleaning gloves conductivity 10% -> 30%
+(u)MomoBerry
+(p)8697
+(e)|
+(+)Removed Atmospherish Crate from Cargo. Added crates for pipe dispenser, portable fuel tanks, and a two piece scrubber/airtank set.
 (t)thu may 26 22
+(u)tarmunora
+(+)welderspecial blocked by things that block gas. rangedstab special blocked by things that would not permit the item to pass.
 (u)Azrun
 (p)8735
 (e)🆕|feature

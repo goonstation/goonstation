@@ -1114,6 +1114,7 @@ TYPEINFO(/datum/mutantrace)
 	disposing()
 		if (ishuman(mob))
 			mob.mob_flags &= ~IS_BONEY
+			mob.blood_id = initial(mob.blood_id)
 		. = ..()
 
 
@@ -1680,6 +1681,7 @@ TYPEINFO(/datum/mutantrace)
 	disposing()
 		if(ishuman(mob))
 			mob.mob_flags &= ~SHOULD_HAVE_A_TAIL
+			mob.blood_id = initial(mob.blood_id)
 		if(mob)
 			REMOVE_ATOM_PROPERTY(mob, PROP_MOB_RADPROT, src)
 		. = ..()

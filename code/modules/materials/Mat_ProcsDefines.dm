@@ -183,7 +183,16 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 			src.desc = "[initial(src.desc)] It is made of [mat1.name].[length(traitDesc) ? " " + traitDesc : ""]"
 		if (mat1.mat_id == "gold") //marks material gold as not a good choice to sell for people who dont already know
 			src.desc += " It's probably not very valuable to a reputable buyer."
+	if(appearance)
+		src.setMaterialAppearance(mat1)
 
+	src.material = mat1
+	mat1.owner = src
+	mat1.triggerOnAdd(src)
+	src.onMaterialChanged()
+
+/// sets the *appearance* of a material, but does not trigger any tiggerOnAdd or onMaterialChanged behaviour
+/atom/proc/setMaterialAppearance(var/datum/material/mat1)
 	var/set_color_alpha = TRUE
 	src.alpha = 255
 	src.color = null
@@ -191,16 +200,11 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 	if (islist(src.mat_appearances_to_ignore) && length(src.mat_appearances_to_ignore))
 		if (mat1.name in src.mat_appearances_to_ignore)
 			set_color_alpha = FALSE
-	if (set_color_alpha && src.mat_changeappearance && appearance && mat1.applyColor)
+	if (set_color_alpha && src.mat_changeappearance && mat1.applyColor)
 		if (mat1.texture)
 			src.setTexture(mat1.texture, mat1.texture_blend, "material")
 		src.alpha = mat1.alpha
 		src.color = mat1.color
-
-	src.material = mat1
-	mat1.owner = src
-	mat1.triggerOnAdd(src)
-	src.onMaterialChanged()
 
 /proc/getProcessedMaterialForm(var/datum/material/MAT)
 	if (!istype(MAT))

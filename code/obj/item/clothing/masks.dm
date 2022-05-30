@@ -368,7 +368,7 @@
 				src.cant_other_remove = 1.0
 				src.cant_self_remove = 0.0
 			else
-				boutput (user, __red("[src] latches onto your face! It burns!"))
+				boutput (user, "<span class='alert'>[src] latches onto your face! It burns!</span>")
 				src.victim = H
 				src.cant_other_remove = 0.0
 				src.cant_self_remove = 1.0
@@ -390,7 +390,7 @@
 			if ( src.victim.health <= 0 )
 				return
 			if (prob(45))
-				boutput (src.victim, __red("[src] burns your face!"))
+				boutput (src.victim, "<span class='alert'>[src] burns your face!</span>")
 				if (prob(25))
 					src.victim.emote("scream")
 				src.victim.TakeDamage("head",0,3,0,DAMAGE_BURN)
@@ -408,7 +408,7 @@
 			var/mob/living/carbon/human/U = user
 			var/mob/living/carbon/human/T = target
 			if ( U.a_intent != INTENT_HELP && U.zone_sel.selecting == "head" && T.can_equip(src,T.slot_wear_mask) )
-				U.visible_message(__red("[src] latches onto [T]'s face!"),__red("You slap [src] onto [T]'s face!'"))
+				U.visible_message("<span class='alert'>[src] latches onto [T]'s face!</span>","<span class='alert'>You slap [src] onto [T]'s face!'</span>")
 				logTheThing("combat",user,target,"forces [T] to wear [src] (cursed clown mask) at [log_loc(T)].")
 				U.u_equip(src)
 
@@ -536,7 +536,6 @@
 	burn_point = 220
 	burn_output = 900
 	burn_possible = 1
-	health = 10
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/pen))

@@ -22,41 +22,41 @@
 			return 1
 
 		if (M == target)
-			boutput(M, __red("Why would you want to take your own skull?"))
+			boutput(M, "<span class='alert'>Why would you want to take your own skull?</span>")
 			return 1
 
 		if (get_dist(M, target) > src.max_range)
-			boutput(M, __red("[target] is too far away."))
+			boutput(M, "<span class='alert'>[target] is too far away.</span>")
 			return 1
 
 		if (!istype(target, /obj/item/organ/head))
 			if (!ishuman(target)) // Only human mobs and severed human heads have a skull.
 				if (issilicon(target))
-					boutput(M, __red("Mechanical trophies are of no interest to you."))
+					boutput(M, "<span class='alert'>Mechanical trophies are of no interest to you.</span>")
 					return 1
 
 				else if (istype(target, /mob/living/carbon/wall))
-					boutput(M, __red("This prey is so weak you daren't sully your claws on it!"))
+					boutput(M, "<span class='alert'>This prey is so weak you daren't sully your claws on it!</span>")
 					return 1
 
 				else
-					boutput(M, __red("There's no trophy to be found here."))
+					boutput(M, "<span class='alert'>There's no trophy to be found here.</span>")
 					return 1
 
 			else
 				var/mob/living/carbon/human/HH = target
 				if (isnpcmonkey(HH)) // Lesser form doesn't count.
-					boutput(M, __red("This pitiful creature isn't worth your time."))
+					boutput(M, "<span class='alert'>This pitiful creature isn't worth your time.</span>")
 					return 1
 
 				if (!isdead(HH))
-					boutput(M, __red("It would be dishonorable to do that to something you haven't killed yet!"))
+					boutput(M, "<span class='alert'>It would be dishonorable to do that to something you haven't killed yet!</span>")
 					return 1
 
 		else
 			var/obj/item/organ/head/SH = target
 			if (!(SH.skull && istype(SH.skull, /obj/item/skull/)))
-				boutput(M, __red("The skull appears to be missing."))
+				boutput(M, "<span class='alert'>The skull appears to be missing.</span>")
 				return 1
 
 		actions.start(new/datum/action/bar/private/icon/hunter_taketrophy(target, src), M)
@@ -159,16 +159,16 @@
 
 		switch (no_of_skulls)
 			if (0)
-				boutput(M, __red("<b>Their skull was missing. No trophy for you.</b>"))
+				boutput(M, "<span class='alert'><b>Their skull was missing. No trophy for you.</b></span>")
 			if (1)
 				if (tvalue <= 0)
-					boutput(M, __red("<b>This trophy is completely worthless!</b>"))
+					boutput(M, "<span class='alert'><b>This trophy is completely worthless!</b></span>")
 				if (tvalue == 1)
-					boutput(M, __blue("<b>This trophy has a value of [tvalue].</b>"))
+					boutput(M, "<span class='notice'><b>This trophy has a value of [tvalue].</b></span>")
 				if (tvalue > 1)
-					boutput(M, __blue("<b>You have slain a powerful opponent!<br>This trophy has a value of [tvalue].</b>"))
+					boutput(M, "<span class='notice'><b>You have slain a powerful opponent!<br>This trophy has a value of [tvalue].</b></span>")
 			else
-				boutput(M, __blue("<b>You found mulitple trophies. They have a combined value of [tvalue].</b>"))
+				boutput(M, "<span class='notice'><b>You found mulitple trophies. They have a combined value of [tvalue].</b></span>")
 
 	onInterrupt()
 		..()
@@ -177,4 +177,4 @@
 		var/datum/abilityHolder/A = trophy.holder
 
 		A.locked = 0
-		boutput(M, __red("Your attempt to take the trophy was interrupted!"))
+		boutput(M, "<span class='alert'>Your attempt to take the trophy was interrupted!</span>")

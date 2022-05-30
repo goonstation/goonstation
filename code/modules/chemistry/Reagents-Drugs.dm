@@ -550,14 +550,12 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(probmult(50))
 					M.make_jittery(5)
-
-				if(src.volume > src.overdose)
-					M.take_toxin_damage(1 * mult)
 				..()
 
 			//cogwerks - improved nicotine poisoning?
 			do_overdose(var/severity, var/mob/M, var/mult = 1)
 				var/effect = ..(severity, M)
+				M.take_toxin_damage(1 * mult)
 				if (severity == 1)
 					if (effect <= 2)
 						M.visible_message("<span class='alert'><b>[M.name]</b> looks nervous!</span>")
@@ -644,8 +642,6 @@ datum
 					boutput(M, "<span class='alert'><b>Your heart's beating really really fast!</b></span>")
 					M.playsound_local(M.loc, 'sound/effects/heartbeat.ogg', 50, 1)
 					M.take_toxin_damage(4)
-				if(src.volume > src.overdose)
-					M.take_toxin_damage(2)
 				..(M)
 
 			do_overdose(var/severity, var/mob/M, var/mult = 1)
