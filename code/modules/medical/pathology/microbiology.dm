@@ -46,11 +46,6 @@ datum/microbe
 		src.name = "CustomCulture"
 		return
 
-	proc/generate_attributes() //WIP
-		var/shape = pick("stringy", "snake", "blob", "spherical", "tetrahedral", "star shaped", "tesselated")
-		src.desc = "[red] [shape] [microbes]" //color determined by average of cure reagent and assigned-effect colors
-		return
-
 	proc/generate_effects() //WIP
 		//Work on effects first.
 		return
@@ -64,7 +59,12 @@ datum/microbe
 		cure.onadd(src)
 		return
 
-	proc/randomize(var/tier)
+	proc/generate_attributes() //WIP
+		var/shape = pick("stringy", "snake", "blob", "spherical", "tetrahedral", "star shaped", "tesselated")
+		src.desc = "[red] [shape] [microbes]" //color determined by average of cure reagent and assigned-effect colors
+		return
+
+	proc/randomize()
 		generate_name()
 		generate_effects()
 		generate_cure()
@@ -83,7 +83,7 @@ datum/microbe
 			for (var/datum/pathogeneffects/E in src.effects)
 				E.onadd(src)
 		else if (status == 1)
-			src.randomize(1)
+			src.randomize()
 		else if (!origin && status == 2)
 			src.do_prefab(1)
 		processing_items.Add(src)
@@ -98,53 +98,29 @@ datum/microbe
 //Generalize for objects and turfs WIP
 
 	proc/structure_act()
-
+		for (var/datum/effect in src.effects)
+			effect:structure_act(target, src)
+		progress_pathogen()
 
 	proc/object_act()
-
+		for (var/datum/effect in src.effects)
+			effect:object_act(target, src)
+		progress_pathogen()
 
 	proc/reagent_act()
+		for (var/datum/effect in src.effects)
+			effect:reagent_act(target, src)
+		progress_pathogen()
 
-	// This is the real thing, wrapped by process().
 	proc/mob_act()
-		var/list/acted = list()
-		var/order = pick(0,1)
-		if (order)
-			for (var/datum/effect in src.effects)
-				if (effect.type in acted)
-					continue
-				acted += effect.type
-				if (prob(body_type.activity[stage]))
-					effect:mob_act(infected, src)
-		else
-			for (var/i = src.effects.len, i > 0, i--)
-				var/datum/effect = src.effects[i]
-				if (effect.type in acted)
-					continue
-				acted += effect.type
-				if (prob(body_type.activity[stage]))
-					effect:mob_act(infected, src)
+		for (var/datum/effect in src.effects)
+			effect:mob_act(infected,src)
 		progress_pathogen()
 
 	// it's like mob_act, but for dead people!
 	proc/mob_act_dead()
-		var/list/acted = list()
-		var/order = pick(0,1)
-		if (order)
-			for (var/datum/effect in src.effects)
-				if (effect.type in acted)
-					continue
-				acted += effect.type
-				if (prob(body_type.activity[stage]))
-					effect:mob_act_dead(infected, src)
-		else
-			for (var/i = src.effects.len, i > 0, i--)
-				var/datum/effect = src.effects[i]
-				if (effect.type in acted)
-					continue
-				acted += effect.type
-				if (prob(body_type.activity[stage]))
-					effect:mob_act_dead(infected, src)
+		for (var/datum/effect in src.effects)
+			effect:mob_act_dead(infected,src)
 		progress_pathogen()
 
 	//=============================================================================
