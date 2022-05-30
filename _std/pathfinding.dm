@@ -687,26 +687,6 @@ var/static/obj/item/card/id/ALL_ACCESS_CARD = new /obj/item/card/id/captains_spa
 				else if (!exiting_this_tile) //dont bother checking if we are EXITING this tile
 					return 0
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /turf/proc
 	AdjacentTurfs()
 		. = list()
