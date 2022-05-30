@@ -104,6 +104,14 @@
 	animate(transform = M, time = 3,easing = BOUNCE_EASING)
 	return
 
+/proc/animate_smush(var/atom/A, var/y_scale = 0.9)
+	if (!istype(A))
+		return
+	var/matrix/M = matrix(A.transform)
+	animate(A, transform = A.transform.Scale(1, y_scale), time = 2, easing = BOUNCE_EASING, flags=ANIMATION_PARALLEL)
+	animate(transform = M, time = 2, easing = BOUNCE_EASING)
+	return
+
 /proc/animate_flockdrone_item_absorb(var/atom/A)
 	if(!istype(A))
 		return
@@ -865,7 +873,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	return
 
 /proc/animate_rainbow_glow(var/atom/A)
-	if (!istype(A))
+	if (!istype(A) && !isclient(A))
 		return
 	animate(A, color = "#FF0000", time = rand(5,10), loop = -1, easing = LINEAR_EASING)
 	animate(color = "#FFFF00", time = rand(5,10), loop = -1, easing = LINEAR_EASING)
@@ -1511,7 +1519,7 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 	animate(slide, transform=tr, time=time)
 	if(!had_fullbright && T.fullbright) // eww
 		T.fullbright = 0
-		T.overlays -= /image/fullbright
+		T.UpdateOverlays(null, "fullbright")
 		T.RL_Init() // turning off fullbright
 		var/obj/full_light = new/obj/overlay/tile_effect/fake_fullbright(T)
 		full_light.color = T.color
@@ -1537,7 +1545,7 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 		qdel(slide)
 	if(initial(T.fullbright))
 		T.fullbright = 1
-		T.overlays += /image/fullbright
+		T.UpdateOverlays(new /image/fullbright, "fullbright")
 		T.RL_Init()
 
 /proc/animate_open_from_floor(atom/A, time=1 SECOND, self_contained=1)

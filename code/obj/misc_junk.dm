@@ -130,7 +130,7 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(issnippingtool(W))
-			boutput(user, __blue("You cut [src] horizontally across and flatten it out."))
+			boutput(user, "<span class='notice'>You cut [src] horizontally across and flatten it out.</span>")
 			new /obj/item/c_sheet(get_turf(src))
 			qdel(src)
 
@@ -156,7 +156,7 @@
 	stamina_cost = 0
 
 	attack_self(mob/user as mob)
-		boutput(user, __blue("You deftly fold [src] into a party hat!."))
+		boutput(user, "<span class='notice'>You deftly fold [src] into a party hat!.</span>")
 		user.put_in_hand_or_drop(new /obj/item/clothing/head/party)
 		qdel(src)
 

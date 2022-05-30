@@ -109,13 +109,15 @@
 						src.organHolder.damage_organ(0, damage, 0, target_organ)
 
 			if (D_TOXIC)
-				if (P.proj_data.reagent_payload)
+				if (P.reagents)
 					if (P.implanted)
 						if (istext(P.implanted))
 							P.implanted = text2path(P.implanted)
 							if (!P.implanted)
 								return
 						var/obj/item/implant/projectile/implanted = new P.implanted
+						implanted.create_reagents(P.reagents.maximum_volume)
+						P.reagents.trans_to(implanted, P.reagents.maximum_volume)
 						implanted.set_loc(src)
 						if (istype(implanted))
 							implanted.owner = src

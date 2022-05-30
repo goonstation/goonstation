@@ -230,7 +230,7 @@
 			msg += "<br>"
 		msg += "[src] has a power charge of [bicon(src.cell)] [src.cell.charge]/[src.cell.maxcharge]</span>"
 
-		. += msg.Join("")
+		. += msg.Join()
 
 		if (src.health < src.max_health)
 			if (src.health < (src.max_health / 2))
@@ -383,7 +383,7 @@
 		if (src.client && src.client.check_key(KEY_PULL))
 			var/atom/movable/movable = target
 			if (istype(movable))
-				movable.pull()
+				movable.pull(src)
 			return
 
 		var/reach = can_reach(src, target)
@@ -1026,12 +1026,6 @@
 		if (dd_hasprefix(message, "*"))
 			return src.emote(copytext(message, 2),1)
 
-		UpdateOverlays(speech_bubble, "speech_bubble")
-		var/speech_bubble_time = src.last_typing
-		SPAWN(1.5 SECONDS)
-			if(speech_bubble_time == src.last_typing)
-				UpdateOverlays(null, "speech_bubble")
-
 		return src.drone_broadcast(message)
 		// Removing normal dronesay stuff and changing :d to just ;
 		// Not much of a reason for drones to have local say imo.
@@ -1220,6 +1214,9 @@
 			var/obj/item/MTI = MT.holding
 			if (MTI && (MTI.tool_flags & tool_flag))
 				return MT.holding
+		I = locate(/obj/item/tool/omnitool) in src.tools //Try the omnitool if all else fails
+		if (I && (I.tool_flags & tool_flag))
+			return I
 		return null
 
 	hotkey(name)

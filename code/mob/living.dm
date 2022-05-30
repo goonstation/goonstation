@@ -35,9 +35,9 @@
 	var/is_npc = 0
 
 	var/move_laying = null
-	var/last_typing = null
-	var/static/image/speech_bubble = image('icons/mob/mob.dmi', "speech")
-	var/static/image/sleep_bubble = image('icons/mob/mob.dmi', "sleep")
+	var/has_typing_indicator = FALSE
+	var/static/mutable_appearance/speech_bubble = living_speech_bubble
+	var/static/mutable_appearance/sleep_bubble = mutable_appearance('icons/mob/mob.dmi', "sleep")
 	var/image/static_image = null
 	var/static_type_override = null
 	var/icon/default_static_icon = null // set to an icon and that's what the static will generate from
@@ -400,18 +400,19 @@
 			W.onMouseUp(object,location,control,params)
 
 /mob/living/MouseDrop_T(atom/dropped, mob/dropping_user)
-	if (istype(dropped, /obj/item/organ/) || istype(dropped, /obj/item/clothing/head/butt/) || istype(dropped, /obj/item/skull/))
-		// because butts are clothing you're born with, and skull primarily exist to reenact hamlet... for some insane reason
-		var/obj/item/organ/dropping_organ = dropped
-		var/success = dropping_organ.attach_organ(src, dropping_user)
-		if (success)
-			return
-	else if (istype(dropped, /obj/item/parts/human_parts/))
-		var/obj/item/parts/dropping_limb = dropped
-		dropping_limb.attach(src, dropping_user)
-	else if (istype(dropped, /obj/item/parts/robot_parts/arm/) || istype(dropped, /obj/item/parts/robot_parts/leg/))
-		var/obj/item/parts/robot_parts/dropping_limb = dropped
-		dropping_limb.attack(src, dropping_user) // Attaching robot parts to humans is a bit complicated so we're going to be lazy and re-use attack.
+	if(in_interact_range(src, dropping_user) && in_interact_range(dropped, dropping_user))
+		if (istype(dropped, /obj/item/organ/) || istype(dropped, /obj/item/clothing/head/butt/) || istype(dropped, /obj/item/skull/))
+			// because butts are clothing you're born with, and skull primarily exist to reenact hamlet... for some insane reason
+			var/obj/item/organ/dropping_organ = dropped
+			var/success = dropping_organ.attach_organ(src, dropping_user)
+			if (success)
+				return
+		else if (istype(dropped, /obj/item/parts/human_parts/))
+			var/obj/item/parts/dropping_limb = dropped
+			dropping_limb.attach(src, dropping_user)
+		else if (istype(dropped, /obj/item/parts/robot_parts/arm/) || istype(dropped, /obj/item/parts/robot_parts/leg/))
+			var/obj/item/parts/robot_parts/dropping_limb = dropped
+			dropping_limb.attack(src, dropping_user) // Attaching robot parts to humans is a bit complicated so we're going to be lazy and re-use attack.
 	return ..()
 
 /mob/living/hotkey(name)
@@ -505,7 +506,7 @@
 		else if (params["ctrl"])
 			var/atom/movable/movable = target
 			if (istype(movable))
-				movable.pull()
+				movable.pull(src)
 
 				if (mob_flags & AT_GUNPOINT)
 					for(var/obj/item/grab/gunpoint/G in grabbed_by)
@@ -522,7 +523,7 @@
 					src.next_click = world.time + (equipped ? equipped.click_delay : src.click_delay)
 
 				if (src.invisibility > INVIS_NONE && (isturf(target) || (target != src && isturf(target.loc)))) // dont want to check for a cloaker every click if we're not invisible
-					SEND_SIGNAL(src, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
+					SEND_SIGNAL(src, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 
 				if (equipped)
 					weapon_attack(target, equipped, reach, params)
@@ -938,12 +939,6 @@
 				message = "[message][stutter(pick("!", "!!", "!!!"))]"
 			if(!src.stuttering && prob(8))
 				message = stutter(message)
-
-	UpdateOverlays(speech_bubble, "speech_bubble")
-	var/speech_bubble_time = src.last_typing
-	SPAWN(1.5 SECONDS)
-		if(speech_bubble_time == src.last_typing)
-			UpdateOverlays(null, "speech_bubble")
 
 	//Blobchat handling
 	if (src.mob_flags & SPEECH_BLOB)
@@ -1929,12 +1924,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 					src.remove_stamina(min(round(stun/rangedprot) * 30, 125)) //thanks to the odd scaling i have to cap this.
 					src.stamina_stun()
 
-				if (P.proj_data.reagent_payload)
-					src.TakeDamage("chest", (damage/rangedprot), 0, 0, P.proj_data.hit_type)
-					if (isalive(src))
-						lastgasp()
-					src.reagents.add_reagent(P.proj_data.reagent_payload, 15/rangedprot)
-				else
+				if (!P.reagents)
 					src.take_toxin_damage(damage)
 				if(rangedprot > 1)
 					armor_msg = ", but your armor softens the hit!"
@@ -1967,6 +1957,8 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 /mob/living/shock(var/atom/origin, var/wattage, var/zone = "chest", var/stun_multiplier = 1, var/ignore_gloves = 0)
 	if (!wattage)
+		return 0
+	if (check_target_immunity(src))
 		return 0
 	var/prot = 1
 
@@ -2080,3 +2072,15 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			return copytext(message, 2)
 	src.singing = 0
 	. =  message
+
+// can stumble or flip while drunk
+/mob/living/proc/can_drunk_act()
+	if (!src.canmove || !isturf(src.loc))
+		return FALSE
+	if (length(src.grabbed_by))
+		for (var/obj/item/grab/G in src.grabbed_by)
+			if (istype(G, /obj/item/grab/block))
+				continue
+			if (G.state > GRAB_PASSIVE)
+				return FALSE
+	return !src.lying && !((length(src.grabbed_by) || src.pulled_by) && src.hasStatus("handcuffed"))

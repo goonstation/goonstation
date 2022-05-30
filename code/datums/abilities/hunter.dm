@@ -68,7 +68,7 @@
 		M.set_body_icon_dirty()
 		M.update_clothing()
 
-		boutput(M, __blue("<h3>You have received your equipment. Let the hunt begin!</h3>"))
+		boutput(M, "<span class='notice'><h3>You have received your equipment. Let the hunt begin!</h3></span>")
 		logTheThing("combat", M, null, "transformed into a hunter at [log_loc(M)].")
 		return 1
 
@@ -331,23 +331,23 @@
 			return 0
 
 		if (!ishuman(M)) // Only humans use mutantrace datums.
-			boutput(M, __red("You cannot use any powers in your current form."))
+			boutput(M, "<span class='alert'>You cannot use any powers in your current form.</span>")
 			return 0
 
 		if (M.transforming)
-			boutput(M, __red("You can't use any powers right now."))
+			boutput(M, "<span class='alert'>You can't use any powers right now.</span>")
 			return 0
 
 		if (hunter_only == 1 && !ishunter(M))
-			boutput(M, __red("You're not quite sure how to go about doing that in your current form."))
+			boutput(M, "<span class='alert'>You're not quite sure how to go about doing that in your current form.</span>")
 			return 0
 
 		if (incapacitation_check(src.when_stunned) != 1)
-			boutput(M, __red("You can't use this ability while incapacitated!"))
+			boutput(M, "<span class='alert'>You can't use this ability while incapacitated!</span>")
 			return 0
 
 		if (src.not_when_handcuffed == 1 && M.restrained())
-			boutput(M, __red("You can't use this ability when restrained!"))
+			boutput(M, "<span class='alert'>You can't use this ability when restrained!</span>")
 			return 0
 
 		return 1

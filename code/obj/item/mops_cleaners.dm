@@ -640,6 +640,8 @@ WET FLOOR SIGN
 				JOB_XP(user, "Janitor", 3)
 				if (target.reagents)
 					target.reagents.trans_to(src, 5)
+				playsound(src, 'sound/items/sponge.ogg', 20, 1)
+				animate_smush(target)
 				return
 
 			if ("Wring out")
@@ -767,7 +769,7 @@ WET FLOOR SIGN
 			return
 		..()
 
-	pull(var/mob/user)
+	pull(mob/user)
 		if (!istype(user))
 			return
 		if(user.key != ownerKey && ownerKey != null)

@@ -22,10 +22,13 @@
 	var/listening = TRUE
 	var/list/datum/component/packet_connected/radio/secure_connections = null
 	var/speaker_range = 2
-	var/static/image/speech_bubble = image('icons/mob/mob.dmi', "speech")
+	var/static/mutable_appearance/speech_bubble = living_speech_bubble //typing_indicator.dm
 	///This is for being able to run through signal jammers (just solar flares for now). acceptable values = 0 and 1.
 	var/hardened = 1
-
+	///Set to make it not work, used by flock victory screech
+	var/bricked = FALSE
+	///Message shown when you attempt to use the radio while bricked
+	var/bricked_msg = "The radio is utterly dead and silent."
 	/// Set to TRUE for your radio obj to have unconditional flying text. Override showMapText() to conditionalize it.
 	var/doesMapText = FALSE
 	// probably not too resource intensive but I'd be careful using this just in case
@@ -103,6 +106,9 @@ var/list/headset_channel_lookup
 	return
 
 /obj/item/device/radio/ui_interact(mob/user, datum/tgui/ui)
+	if (src.bricked)
+		user.show_text(src.bricked_msg, "red")
+		return
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "Radio")
@@ -147,7 +153,8 @@ var/list/headset_channel_lookup
 	. = ..()
 	if (.)
 		return
-
+	if (src.bricked)
+		return
 	switch(action)
 		if ("set-frequency")
 			if (src.locked_frequency)
@@ -249,6 +256,9 @@ var/list/headset_channel_lookup
 		return
 //	if (last_transmission && world.time < (last_transmission + TRANSMISSION_DELAY))
 //		return
+	if (src.bricked)
+		M.show_text(src.bricked_msg, "red")
+		return
 
 	var/ai_sender = 0
 	var/eqjobname
@@ -289,7 +299,8 @@ var/list/headset_channel_lookup
 	for (var/obj/item/I as anything in connection.network?.analog_devices)
 		if (istype(I, /obj/item/device/radio))
 			var/obj/item/device/radio/R = I
-
+			if (R.bricked)
+				continue
 			if (length(by_cat[TR_CAT_RADIO_JAMMERS]) && check_for_radio_jammers(R))
 				continue
 			//if we have signal_loss (solar flare), and the radio isn't hardened don't send message, then block general frequencies.
@@ -351,18 +362,15 @@ var/list/headset_channel_lookup
 			if(z.client)
 				receive += z
 
-	// hi it's me cirr here to shoehorn in another thing
 	// flockdrones and flockmind should hear all channels, but with terrible corruption
-		if(length(flocks))
-			for(var/F in flocks)
-				var/datum/flock/flock = flocks[F]
-				if(flock)
-					if(flock.flockmind)
-						heard_flock |= flock.flockmind
-					if(flock.units && flock.units.len > 0)
-						for(var/mob/living/D in flock.units)
-							if(D)
-								heard_flock |= D
+		for(var/F in flocks)
+			var/datum/flock/flock = flocks[F]
+			if(flock)
+				if(flock.flockmind)
+					heard_flock |= flock.flockmind
+				for(var/mob/living/D in flock.units)
+					if(D)
+						heard_flock |= D
 
 	for (var/client/C)
 		if (!C.mob) continue
@@ -388,7 +396,7 @@ var/list/headset_channel_lookup
 				heard_masked += R
 			else if (isghostdrone(R))
 				heard_voice += R
-			else if(!isflock(R)) // a special exemption for flockdrones/flockminds who never get to hear normal radio
+			else if(!isflockmob(R)) // a special exemption for flockdrones/flockminds who never get to hear normal radio
 				heard_normal += R
 		else
 			if (M.voice_message)
@@ -962,17 +970,17 @@ obj/item/device/radio/signaler/attackby(obj/item/W as obj, mob/user as mob)
 		if (src.master && istype(src.master, /obj/item/device/transfer_valve))
 			logTheThing("bombing", usr, null, "signalled a radio on a transfer valve at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"].")
 			message_admins("[key_name(usr)] signalled a radio on a transfer valve at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"].")
-			SEND_SIGNAL(src.master, COMSIG_BOMB_SIGNAL_START)
+			SEND_SIGNAL(src.master, COMSIG_ITEM_BOMB_SIGNAL_START)
 
 		else if (src.master && istype(src.master, /obj/item/assembly/rad_ignite)) //Radio-detonated beaker assemblies
 			var/obj/item/assembly/rad_ignite/RI = src.master
 			logTheThing("bombing", usr, null, "signalled a radio on a radio-igniter assembly at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"]. Contents: [log_reagents(RI.part3)]")
-			SEND_SIGNAL(src.master, COMSIG_BOMB_SIGNAL_START)
+			SEND_SIGNAL(src.master, COMSIG_ITEM_BOMB_SIGNAL_START)
 
 		else if(src.master && istype(src.master, /obj/item/assembly/radio_bomb))	//Radio-detonated single-tank bombs
 			logTheThing("bombing", usr, null, "signalled a radio on a single-tank bomb at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"].")
 			message_admins("[key_name(usr)] signalled a radio on a single-tank bomb at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"].")
-			SEND_SIGNAL(src.master, COMSIG_BOMB_SIGNAL_START)
+			SEND_SIGNAL(src.master, COMSIG_ITEM_BOMB_SIGNAL_START)
 		SPAWN(0)
 			src.master.receive_signal(signal)
 	for(var/mob/O in hearers(1, src.loc))

@@ -92,6 +92,8 @@
 			else if (traitor.special_role == ROLE_VAMPTHRALL)
 				stuff_to_output += "<B>[traitor_name]</B> was a vampire's thrall!"
 				continue // Ditto.
+			else if (traitor.special_role == ROLE_FLOCKTRACE)
+				continue // Flocktraces are listed under their respective flockmind
 			else
 				if (traitor.late_special_role)
 					stuff_to_output += "<B>[traitor_name]</B> was a late-joining [traitor.special_role]!"
@@ -189,6 +191,16 @@
 						rewarded_detail = copytext(rewarded_detail, 1, -2)
 						stuff_to_output += stolen_detail
 						stuff_to_output += rewarded_detail
+
+				if (traitor.special_role == ROLE_FLOCKMIND)
+					for (var/flockname in flocks)
+						var/datum/flock/flock = flocks[flockname]
+						if (flock.flockmind_mind == traitor && length(flock.trace_minds))
+							stuff_to_output += "Flocktraces:"
+							for (var/trace_name in flock.trace_minds)
+								var/datum/mind/trace_mind = flock.trace_minds[trace_name]
+								//the first character in this string is an invisible brail character, because otherwise DM eats my indentation
+								stuff_to_output += "<b>⠀   [trace_name] (played by [trace_mind.displayed_key])<b>"
 
 				for (var/datum/objective/objective in traitor.objectives)
 	#ifdef CREW_OBJECTIVES
@@ -398,12 +410,8 @@
 			objective_set_path = /datum/objective_set/werewolf
 			antag.current.make_werewolf()
 
-		if (ROLE_ARCFIEND) // TODO: EV objectives
-		#ifdef RP_MODE
-			objective_set_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
-		#else
-			objective_set_path = pick(typesof(/datum/objective_set/traitor))
-		#endif
+		if (ROLE_ARCFIEND)
+			objective_set_path = /datum/objective_set/arcfiend
 			antag.current.make_arcfiend()
 
 	if (!isnull(objective_set_path)) // Cannot create objects of type null. [wraiths use a special proc]

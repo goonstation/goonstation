@@ -31,7 +31,7 @@
 		logTheThing("say", M, M.name, "[message]")
 
 		if (!H.master)
-			boutput(M, __red("Your link to your master has been severed!"))
+			boutput(M, "<span class='alert'>Your link to your master has been severed!</span>")
 			return 1
 
 		.= H.msg_to_master(message)

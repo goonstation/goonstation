@@ -28,6 +28,7 @@
 	var/use_glowstick = 1
 	var/obj/item/device/light/glowstick/loaded_glowstick = null
 	var/bladecolor = "invalid"
+	var/robusted = 0
 	var/list/valid_colors = list("R","O","Y","G","C","B","P","Pi","W")
 	hit_type = DAMAGE_BLUNT
 	force = 1
@@ -347,15 +348,24 @@
 	. = ..()
 	var/datum/component/loctargeting/simple_light/light_c = src.GetComponent(/datum/component/loctargeting/simple_light)
 	if (src.active)
+		if(robusted)
+			src.icon_state = "iaxe1"
+			src.item_state = "iaxe1"
+		else
+			src.icon_state = "[state_name]1-[src.bladecolor]"
+			src.item_state = "[state_name]1-[src.bladecolor]"
+			flick("sword_extend-[src.bladecolor]", src)
 		light_c.update(TRUE)
-		src.icon_state = "[state_name]1-[src.bladecolor]"
-		src.item_state = "[state_name]1-[src.bladecolor]"
-		flick("sword_extend-[src.bladecolor]", src)
 	else
+		if(robusted)
+			src.icon_state = "iaxe0"
+			src.item_state = "iaxe0"
+		else
+
+			src.icon_state = "[state_name]0"
+			src.item_state = "[state_name]0"
+			flick("sword_retract-[src.bladecolor]", src)
 		light_c.update(FALSE)
-		src.icon_state = "[state_name]0"
-		src.item_state = "[state_name]0"
-		flick("sword_retract-[src.bladecolor]", src)
 
 /obj/item/sword/red
 	bladecolor = "R"
@@ -1644,7 +1654,7 @@ obj/item/whetstone
 				return
 		else ..()
 
-	pull(var/mob/user)
+	pull(mob/user)
 		if(check_target_immunity(user))
 			return ..()
 

@@ -196,7 +196,19 @@
 				affecting.heal_damage(4, 0)
 			owner.UpdateDamageIcon()
 
-		qdel(the_object)
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if (istype(the_object, /obj/item/organ))
+				var/obj/item/organ/O = the_object
+				if (O.donor)
+					H.organHolder.drop_organ(the_object)
+				qdel(the_object)
+			else if (istype(the_object, /obj/item/parts))
+				var/obj/item/parts/part = the_object
+				part.delete()
+				H.hud.update_hands()
+		else
+			qdel(the_object)
 
 		using = FALSE
 

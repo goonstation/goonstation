@@ -44,7 +44,7 @@
 	var/ignore_light_or_cam_opacity = 0
 
 /obj/machinery/door/Bumped(atom/AM)
-	if (src.p_open || src.operating) return
+	if (src.operating) return
 	if (src.isblocked()) return
 
 	if (ismob(AM))

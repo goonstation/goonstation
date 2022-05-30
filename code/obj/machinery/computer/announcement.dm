@@ -147,11 +147,16 @@
 		logTheThing("say", user, null, "as [ID.registered] ([ID.assignment]) created a command report: [message]")
 		logTheThing("diary", user, null, "as [ID.registered] ([ID.assignment]) created a command report: [message]", "say")
 
+		var/msg_sound = src.sound_to_play
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			message = process_accents(H, message) //Slurred announcements? YES!
+		if (isflockmob(user))
+			var/mob/living/critter/flock/flock_creature = user
+			message = radioGarbleText(message, flock_creature?.flock.snoop_clarity)
+			msg_sound = "sound/misc/flockmind/flockmind_caw.ogg"
 
-		command_announcement(message, "[A.name] Announcement by [ID.registered] ([ID.assignment])", sound_to_play)
+		command_announcement(message, "[A.name] Announcement by [ID.registered] ([ID.assignment])", msg_sound)
 		last_announcement = world.timeofday
 		message = ""
 

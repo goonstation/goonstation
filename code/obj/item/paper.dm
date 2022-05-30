@@ -1161,7 +1161,6 @@ as it may become compromised.
 	burn_point = 600
 	burn_output = 800
 	burn_possible = 1
-	health = 100
 
 
 /obj/item/paper_bin/proc/update()

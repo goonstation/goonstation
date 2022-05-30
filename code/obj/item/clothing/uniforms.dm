@@ -739,8 +739,8 @@
 	#endif
 
 /obj/item/clothing/under/misc/turds
-	name = "NT-SO Jumpsuit"
-	desc = "A Nanotrasen Special Operations jumpsuit."
+	name = "NT combat uniform"
+	desc = "A Nanotrasen paramilitary jumpsuit."
 	icon_state = "turdsuit"
 	item_state = "turdsuit"
 	team_num = TEAM_NANOTRASEN
@@ -1209,7 +1209,6 @@
 	burn_point = 450
 	burn_output = 800
 	burn_possible = 1
-	health = 20
 	rand_pos = 0
 
 	setupProperties()

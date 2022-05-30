@@ -27,6 +27,9 @@
 					human_owner.sight |= SEE_MOBS
 					human_owner.see_invisible = INVIS_CLOAK
 
+			if (istype(owner, /mob/living/critter/flock))
+				owner.see_invisible = INVIS_CLOAK
+
 ////Dead sight
 		var/turf/T = owner.eye ? get_turf(owner.eye) : get_turf(owner) //They might be in a closet or something idk
 		if ((isdead(owner) || HAS_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION) || HAS_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION_WEAK)) && (T && !isrestrictedz(T.z)))

@@ -82,6 +82,7 @@
 
 			"Manage Bioeffects",\
 			"Manage Abilities",\
+			"Manage Traits",\
 			"Add Reagents",\
 			"Check Reagents",\
 			"View Variables",\

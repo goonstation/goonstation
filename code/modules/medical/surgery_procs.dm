@@ -636,21 +636,36 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 						if(surgeon == patient) continue
 						remove_mindslave_status(patient, "otherslave", "surgery")
 
-				patient.tri_message("<span class='alert'><b>[surgeon]</b> cuts out an implant from [patient == surgeon ? "[him_or_her(patient)]self" : "[patient]"] with [src]!</span>",\
-				surgeon, "<span class='alert'>You cut out an implant from [surgeon == patient ? "yourself" : "[patient]"] with [src]!</span>",\
-				patient, "<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] out an implant from you with [src]!</span>")
+				if (!istype(I, /obj/item/implant/artifact))
+					patient.tri_message("<span class='alert'><b>[surgeon]</b> cuts out an implant from [patient == surgeon ? "[him_or_her(patient)]self" : "[patient]"] with [src]!</span>",\
+					surgeon, "<span class='alert'>You cut out an implant from [surgeon == patient ? "yourself" : "[patient]"] with [src]!</span>",\
+					patient, "<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] out an implant from you with [src]!</span>")
 
-				var/obj/item/implantcase/newcase = new /obj/item/implantcase(patient.loc, usedimplant = I)
-				newcase.pixel_x = rand(-2, 5)
-				newcase.pixel_y = rand(-6, 1)
-				I.on_remove(patient)
-				patient.implant.Remove(I)
-				var/image/wadblood = image('icons/obj/surgery.dmi', icon_state = "implantpaper-blood")
-				wadblood.color = patient.blood_color
-				newcase.UpdateOverlays(wadblood, "blood")
-				newcase.blood_DNA = patient.bioHolder.Uid
-				newcase.blood_type = patient.bioHolder.bloodType
-
+					var/obj/item/implantcase/newcase = new /obj/item/implantcase(patient.loc, usedimplant = I)
+					newcase.pixel_x = rand(-2, 5)
+					newcase.pixel_y = rand(-6, 1)
+					I.on_remove(patient)
+					patient.implant.Remove(I)
+					var/image/wadblood = image('icons/obj/surgery.dmi', icon_state = "implantpaper-blood")
+					wadblood.color = patient.blood_color
+					newcase.UpdateOverlays(wadblood, "blood")
+					newcase.blood_DNA = patient.bioHolder.Uid
+					newcase.blood_type = patient.bioHolder.bloodType
+				else
+					var/obj/item/implant/artifact/imp = I
+					if (imp.cant_take_out)
+						patient.tri_message("<span class='alert'><b>[surgeon]</b> tries to cut out something from [patient == surgeon ? "[him_or_her(patient)]self" : "[patient]"] with [src]!</span>",\
+						surgeon, "<span class='alert'>Whatever you try to cut out from [surgeon == patient ? "yourself" : "[patient]"] won't come out!</span>",\
+						patient, "<span class='alert'>[patient == surgeon ? "You try to cut" : "<b>[surgeon]</b> tries to cut"] out something from you with [src]!</span>")
+					else
+						patient.tri_message("<span class='alert'><b>[surgeon]</b> cuts out something alien from [patient == surgeon ? "[him_or_her(patient)]self" : "[patient]"] with [src]!</span>",\
+						surgeon, "<span class='alert'>You cut out something alien from [surgeon == patient ? "yourself" : "[patient]"] with [src]!</span>",\
+						patient, "<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] out something alien from you with [src]!</span>")
+						imp.pixel_x = rand(-2, 5)
+						imp.pixel_y = rand(-6, 1)
+						imp.set_loc(get_turf(patient))
+						imp.on_remove(patient)
+						patient.implant.Remove(imp)
 				return 1
 
 		/* chest op_stage description

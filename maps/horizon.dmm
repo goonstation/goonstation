@@ -5843,7 +5843,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/research,
 /turf/simulated/floor/purpleblack{
 	dir = 6
 	},
@@ -7225,7 +7225,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/genetics,
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
@@ -8303,6 +8303,9 @@
 	},
 /obj/disposalpipe/segment{
 	dir = 4
+	},
+/obj/machinery/status_display{
+	pixel_y = 30
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersB)
@@ -10787,7 +10790,7 @@
 	name = "Artifact Lounge"
 	})
 "aDt" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/research,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
@@ -13792,6 +13795,9 @@
 /area/station/medical/medbay)
 "aKQ" = (
 /obj/reagent_dispensers/watertank/fountain,
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -14089,6 +14095,9 @@
 /obj/machinery/chem_dispenser/alcohol,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
 /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
 /turf/simulated/floor/purpleblack{
 	dir = 9
 	},
@@ -17465,6 +17474,9 @@
 "aTx" = (
 /obj/table/auto,
 /obj/disposalpipe/segment,
+/obj/machinery/status_display{
+	pixel_x = -32
+	},
 /turf/simulated/floor/arrival{
 	dir = 8
 	},
@@ -20401,6 +20413,9 @@
 /obj/machinery/shipalert{
 	pixel_x = -28
 	},
+/obj/machinery/status_display{
+	pixel_y = -30
+	},
 /turf/simulated/floor/darkblue,
 /area/station/bridge)
 "bae" = (
@@ -20657,6 +20672,9 @@
 "baE" = (
 /obj/stool/chair/comfy/wheelchair{
 	dir = 4
+	},
+/obj/machinery/status_display{
+	pixel_x = -32
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 8
@@ -23678,6 +23696,9 @@
 /obj/landmark/start{
 	name = "Miner"
 	},
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -24229,6 +24250,9 @@
 	},
 /obj/disposalpipe/segment/transport{
 	dir = 4
+	},
+/obj/machinery/status_display{
+	pixel_x = -32
 	},
 /turf/simulated/floor/blueblack{
 	dir = 10
@@ -32229,8 +32253,7 @@
 	},
 /obj/machinery/door/airlock/pyro/security{
 	dir = 4;
-	name = "Law Hole";
-	opacity = 0
+	name = "Law Hole"
 	},
 /obj/access_spawn/brig,
 /obj/machinery/secscanner{
@@ -32398,12 +32421,12 @@
 	powerlevel = 1
 	},
 /obj/machinery/door/poddoor/blast{
+	autoclose = 1;
 	dir = 4;
 	doordir = "left";
 	icon_state = "bdoorleft1";
 	id = "hangar_listeningpost";
-	name = "external blast door";
-	autoclose = 1
+	name = "external blast door"
 	},
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/listeningpost/power)
@@ -32952,6 +32975,9 @@
 "bFs" = (
 /obj/table/wood/auto,
 /obj/item/paper_bin,
+/obj/machinery/status_display{
+	pixel_y = -30
+	},
 /turf/simulated/floor/yellowblack{
 	dir = 6
 	},
@@ -33491,6 +33517,9 @@
 /obj/item/device/analyzer/healthanalyzer,
 /obj/disposalpipe/segment/brig{
 	dir = 8
+	},
+/obj/machinery/status_display{
+	pixel_y = 30
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/quarters_south)
@@ -34679,7 +34708,7 @@
 	},
 /area/station/crew_quarters/kitchen)
 "bKa" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/kitchen,
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
@@ -36899,6 +36928,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/bar)
 "bQi" = (
@@ -38266,6 +38298,9 @@
 /obj/disposalpipe/trunk{
 	dir = 4
 	},
+/obj/machinery/status_display{
+	pixel_x = -32
+	},
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
@@ -38544,6 +38579,9 @@
 /obj/machinery/light/emergency{
 	dir = 4;
 	pixel_x = 10
+	},
+/obj/machinery/status_display{
+	pixel_y = 30
 	},
 /turf/simulated/floor/bot,
 /area/station/engine/power{
@@ -47026,6 +47064,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/status_display{
+	pixel_x = -32
+	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "cop" = (
@@ -48862,8 +48903,8 @@
 	name = "syndicate bedsheet"
 	},
 /obj/item/reagent_containers/food/drinks/bottle/ntbrew{
-	pixel_y = 4;
-	pixel_x = -8
+	pixel_x = -8;
+	pixel_y = 4
 	},
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost)
@@ -48878,8 +48919,8 @@
 /area/syndicate_teleporter)
 "cuE" = (
 /obj/machinery/light/small{
-	dir = 1;
-	brightness = 1.5
+	brightness = 1.5;
+	dir = 1
 	},
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
@@ -48966,8 +49007,8 @@
 /area/listeningpost)
 "cuQ" = (
 /obj/machinery/light/small{
-	dir = 1;
-	brightness = 2
+	brightness = 2;
+	dir = 1
 	},
 /turf/simulated/floor/black,
 /area/listeningpost)
@@ -49035,8 +49076,8 @@
 /obj/table/wood/auto,
 /obj/item/crowbar,
 /obj/item/reagent_containers/food/drinks/chickensoup{
-	pixel_y = 10;
-	pixel_x = -2
+	pixel_x = -2;
+	pixel_y = 10
 	},
 /turf/simulated/floor/black/grime,
 /area/listeningpost)
@@ -49126,8 +49167,8 @@
 /area/listeningpost/power)
 "cvq" = (
 /obj/machinery/light/small{
-	dir = 1;
-	brightness = 1.4
+	brightness = 1.4;
+	dir = 1
 	},
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg3"
@@ -49158,19 +49199,19 @@
 "cvv" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/mechanical{
-	pixel_y = -11;
-	pixel_x = -3
+	pixel_x = -3;
+	pixel_y = -11
 	},
 /obj/item/device/t_scanner{
-	pixel_y = 9;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = 9
 	},
 /obj/item/wrench{
 	pixel_y = 6
 	},
 /obj/item/mining_tool/power_pick{
-	pixel_y = -1;
-	pixel_x = 8
+	pixel_x = 8;
+	pixel_y = -1
 	},
 /turf/simulated/floor/black,
 /area/listeningpost)
@@ -49194,8 +49235,8 @@
 /obj/disposalpipe/trunk,
 /obj/machinery/disposal,
 /obj/machinery/light/small{
-	dir = 1;
-	brightness = 1.4
+	brightness = 1.4;
+	dir = 1
 	},
 /turf/simulated/floor/black,
 /area/listeningpost)
@@ -49401,8 +49442,8 @@
 	pixel_y = 9
 	},
 /obj/item/pen/marker/red{
-	pixel_y = 3;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = 3
 	},
 /obj/disposalpipe/segment{
 	dir = 4
@@ -49506,17 +49547,17 @@
 /obj/table/auto,
 /obj/item/sheet/glass/reinforced{
 	amount = 50;
-	pixel_y = 4;
-	pixel_x = 4
+	pixel_x = 4;
+	pixel_y = 4
 	},
 /obj/item/storage/belt/utility,
 /obj/item/chem_grenade/metalfoam{
-	pixel_y = -1;
-	pixel_x = 7
+	pixel_x = 7;
+	pixel_y = -1
 	},
 /obj/item/chem_grenade/metalfoam{
-	pixel_y = -3;
-	pixel_x = 4
+	pixel_x = 4;
+	pixel_y = -3
 	},
 /turf/simulated/floor/black,
 /area/listeningpost)
@@ -49546,8 +49587,8 @@
 	name = "antique plate"
 	},
 /obj/item/item_box/banana{
-	pixel_y = 8;
-	pixel_x = -4
+	pixel_x = -4;
+	pixel_y = 8
 	},
 /obj/machinery/power/apc/autoname_west/noaicontrol,
 /turf/simulated/floor/black/grime,
@@ -50009,8 +50050,8 @@
 "cxv" = (
 /obj/reagent_dispensers/fueltank,
 /obj/machinery/light/small{
-	dir = 1;
-	brightness = 1.4
+	brightness = 1.4;
+	dir = 1
 	},
 /turf/simulated/floor/shuttlebay,
 /area/listeningpost/power)
@@ -52781,10 +52822,10 @@
 	powerlevel = 1
 	},
 /obj/machinery/door/poddoor/blast{
+	autoclose = 1;
 	dir = 4;
 	id = "hangar_listeningpost";
-	name = "external blast door";
-	autoclose = 1
+	name = "external blast door"
 	},
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/listeningpost/power)
@@ -52821,6 +52862,13 @@
 /obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor,
 /area/station/security/main)
+"dJj" = (
+/obj/disposalpipe/segment/brig,
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
+/turf/simulated/floor/white,
+/area/station/security/brig/genpop)
 "dJp" = (
 /obj/decal/poster/wallsign/stencil/left/s{
 	pixel_x = -10
@@ -53959,6 +54007,12 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/west,
 /area/station/hallway/secondary/east)
+"gxF" = (
+/obj/machinery/status_display{
+	pixel_x = 32
+	},
+/turf/simulated/floor/wood/two,
+/area/station/chapel/sanctuary)
 "gyU" = (
 /obj/decal/poster/wallsign/space,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -56852,12 +56906,12 @@
 	powerlevel = 1
 	},
 /obj/machinery/door/poddoor/blast{
+	autoclose = 1;
 	dir = 4;
 	doordir = "right";
 	icon_state = "bdoorright1";
 	id = "hangar_listeningpost";
-	name = "external blast door";
-	autoclose = 1
+	name = "external blast door"
 	},
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/listeningpost/power)
@@ -60559,6 +60613,18 @@
 	},
 /turf/simulated/floor/blueblack,
 /area/station/medical/robotics)
+"vLY" = (
+/obj/machinery/plantpot{
+	anchored = 1
+	},
+/obj/decal/tile_edge/line/green{
+	icon_state = "line1"
+	},
+/obj/machinery/status_display{
+	pixel_y = -30
+	},
+/turf/simulated/floor/grass,
+/area/station/hydroponics/bay)
 "vOD" = (
 /obj/cable{
 	d1 = 4;
@@ -60782,6 +60848,14 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/main)
+"wnj" = (
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
+/turf/simulated/floor/escape{
+	dir = 1
+	},
+/area/station/hallway/secondary/exit)
 "wnm" = (
 /obj/cable{
 	d1 = 1;
@@ -96921,7 +96995,7 @@ bMD
 bPr
 bSt
 fMn
-bXn
+vLY
 bXl
 jKB
 wds
@@ -114418,7 +114492,7 @@ aMt
 byV
 aRm
 aUk
-aIB
+gxF
 bay
 bay
 wRq
@@ -127416,7 +127490,7 @@ buo
 jTy
 bzw
 pLK
-bKY
+dJj
 upy
 bYK
 tIo
@@ -133733,7 +133807,7 @@ aLp
 aLp
 aLp
 cbm
-izt
+wnj
 cPK
 rsW
 dnV
@@ -134035,7 +134109,7 @@ aLp
 aLp
 aLp
 cbm
-izt
+wnj
 kGH
 rsW
 rpA

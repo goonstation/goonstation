@@ -89,14 +89,14 @@
 	proc/turnOff(reason)
 		if (!src.occupant || src.occupant.newDrone) return 0
 
-		var/msg = "<span class='notice'>"
+		var/list/msg = list("<span class='notice'>")
 		if (reason == "nopower")
 			msg += "The [src] spits you out seconds before running out of power."
 		else if (reason == "fullcharge")
 			msg += "The [src] beeps happily and disengages. You are full."
 		else
 			msg += "The [src] disengages, allowing you to float [pick("serenely", "hurriedly", "briskly", "lazily")] away."
-		out(src.occupant, "[msg]</span>")
+		boutput(src.occupant, "[msg.Join()]</span>")
 
 		src.occupant.charging = 0
 		src.occupant.setFace(src.occupant.faceType, src.occupant.faceColor)

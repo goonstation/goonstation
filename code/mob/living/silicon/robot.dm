@@ -75,6 +75,7 @@
 	var/sound_automaton_ratchet = 'sound/misc/automaton_ratchet.ogg'
 	var/sound_automaton_tickhum = 'sound/misc/automaton_tickhum.ogg'
 	var/sound_sad_robot = 'sound/voice/Sad_Robot.ogg'
+	var/vocal_pitch = 1.0 // set default vocal pitch
 
 	var/image/i_critdmg
 	var/image/i_panel
@@ -297,6 +298,7 @@
 		var/maptext_out = 0
 		var/custom = 0
 
+
 		switch(lowertext(act))
 
 			if ("help")
@@ -502,7 +504,7 @@
 
 			if ("birdwell", "burp")
 				if (src.emote_check(voluntary, 50))
-					playsound(src.loc, 'sound/vox/birdwell.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src.loc, 'sound/vox/birdwell.ogg', 50, 1, 0, vocal_pitch, channel=VOLUME_CHANNEL_EMOTE) // vocal pitch added
 					message = "<b>[src]</b> birdwells."
 
 			if ("scream")
@@ -510,7 +512,7 @@
 					if (narrator_mode)
 						playsound(src.loc, 'sound/vox/scream.ogg', 50, 1, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 					else
-						playsound(src, src.sound_scream, 80, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+						playsound(src, src.sound_scream, 80, 0, 0, vocal_pitch, channel=VOLUME_CHANNEL_EMOTE) // vocal pitch added
 					message = "<b>[src]</b> screams!"
 
 			if ("johnny")
@@ -733,7 +735,7 @@
 					src.show_text("Your name cannot be blank. Please choose a different name.", "red")
 					continue
 				else
-					if (alert(src, "Use the name [newname]?", newname, "Yes", "No") == "Yes")
+					if (tgui_alert(src, "Use the name [newname]?", newname, list("Yes", "No")) == "Yes")
 						src.real_name = newname
 						break
 					else
@@ -848,6 +850,7 @@
 			SPAWN(1 DECI SECOND)
 				qdel (src.cell)
 				src.cell = null
+				src.part_chest?.cell = null
 
 		update_bodypart()
 
@@ -879,7 +882,7 @@
 		if (damage < 1)
 			return
 
-		if(P.proj_data.ks_ratio == 0)
+		if(P.proj_data.ks_ratio <= 0.1)
 			src.do_disorient(clamp(P.power*4, P.proj_data.power*2, P.power+80), weakened = P.power*2, stunned = P.power*2, disorient = min(P.power, 80), remove_stamina_below_zero = 0) //bad hack, but it'll do
 			src.emote("twitch_v")// for the above, flooring stam based off the power of the datum is intentional
 		for (var/obj/item/roboupgrade/R in src.contents)
@@ -997,6 +1000,7 @@
 					SPAWN(1 DECI SECOND)
 						qdel(src.cell)
 						src.cell = null
+						src.part_chest?.cell = null
 			src.update_bodypart()
 
 	temperature_expose(null, temp, volume)
@@ -1019,6 +1023,7 @@
 				SPAWN(1 DECI SECOND)
 					qdel (src.cell)
 					src.cell = null
+					src.part_chest?.cell = null
 
 	bump(atom/movable/AM as mob|obj)
 		if ( src.now_pushing)
@@ -1154,6 +1159,7 @@
 				user.drop_item()
 				W.set_loc(src)
 				cell = W
+				src.part_chest?.cell = W
 				boutput(user, "You insert [W].")
 				src.update_appearance()
 
@@ -1558,6 +1564,7 @@
 					logTheThing("combat", user, src, "removes [constructTarget(src,"combat")]'s power cell at [log_loc(src)].") // Renders them mute and helpless (Convair880).
 					cell.add_fingerprint(user)
 					cell.UpdateIcon()
+					src.part_chest.cell = null
 					src.cell = null
 
 			update_appearance()
@@ -2143,7 +2150,7 @@
 	verb/cmd_state_laws()
 		set category = "Robot Commands"
 		set name = "State Laws"
-		if (alert(src, "Are you sure you want to reveal ALL your laws? You will be breaking the rules if a law forces you to keep it secret.","State Laws","State Laws","Cancel") != "State Laws")
+		if (tgui_alert(src, "Are you sure you want to reveal ALL your laws? You will be breaking the rules if a law forces you to keep it secret.","State Laws",list("State Laws","Cancel")) != "State Laws")
 			return
 
 		var/laws = null
@@ -2196,9 +2203,9 @@
 			boutput(src, "<span class='alert'>You're not equipped with a suitable head to use this command!</span>")
 			return 0
 
-		var/newFace = input(usr, "Select your faceplate", "Face settings", targethead.face) as null|anything in targethead.expressions
+		var/newFace = tgui_input_list(usr, "Select your faceplate", "Face settings", sortList(targethead.expressions))
 		if (!newFace) return 0
-		var/newMode = input(usr, "Select a display mode", "Face settings", targethead.mode) as null|anything in list("light-on-dark", "dark-on-light")
+		var/newMode = tgui_input_list(usr, "Select a display mode", "Face settings", list("light-on-dark", "dark-on-light"))
 		if (!newMode) return 0
 		newFace = (newFace ? lowertext(newFace) : targethead.face)
 		newMode = (newMode == "light-on-dark" ? "lod" : "dol")
@@ -2218,15 +2225,33 @@
 		else
 			boutput(usr, "<span class='alert'><b>Internal PDA not found!</span>")
 
+	verb/change_voice_pitch()
+		set category = "Robot Commands"
+		set name = "Change vocal pitch"
+
+		var/list/vocal_pitches = list("Low", "Medium", "High")
+		var/vocal_pitch_choice = tgui_input_list(src, "Select a vocal pitch:", "Robot Voice", vocal_pitches)
+		switch(vocal_pitch_choice)
+			if("Low")
+				vocal_pitch = 0.9
+			if("Medium")
+				vocal_pitch = 1.0
+			if("High")
+				vocal_pitch = 1.25
+
+	// hacky, but this is used for says etc.
+	get_age_pitch_for_talk()
+		return vocal_pitch
+
 	proc/pick_module()
 		if(src.module) return
 		if(!src.freemodule) return
 		boutput(src, "<span class='notice'>You may choose a starter module.</span>")
-		var/list/starter_modules = list("Civilian", "Engineering", "Mining", "Medical", "Chemistry", "Brobocop")
+		var/list/starter_modules = list("Brobocop", "Chemistry", "Civilian", "Engineering", "Medical", "Mining")
 		if (ticker?.mode)
 			if (istype(ticker.mode, /datum/game_mode/construction))
 				starter_modules += "Construction Worker"
-		var/mod = input("Please, select a module!", "Robot", null, null) in starter_modules
+		var/mod = tgui_input_list(src, "Please, select a module!", "Robot", starter_modules)
 		if (!mod || !freemodule)
 			return
 

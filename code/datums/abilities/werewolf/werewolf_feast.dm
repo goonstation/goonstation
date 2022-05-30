@@ -22,19 +22,19 @@
 			return 1
 
 		if (M == target)
-			boutput(M, __red("Why would you want to maul yourself?"))
+			boutput(M, "<span class='alert'>Why would you want to maul yourself?</span>")
 			return 1
 
 		if (get_dist(M, target) > src.max_range)
-			boutput(M, __red("[target] is too far away."))
+			boutput(M, "<span class='alert'>[target] is too far away.</span>")
 			return 1
 
 		if (!ishuman(target)) // Critter mobs include robots and combat drones. There's not a lot of meat on them.
-			boutput(M, __red("[target] probably wouldn't taste very good."))
+			boutput(M, "<span class='alert'>[target] probably wouldn't taste very good.</span>")
 			return 1
 
 		if (!target.lying)
-			boutput(M, __red("[target] needs to be lying on the ground first."))
+			boutput(M, "<span class='alert'>[target] needs to be lying on the ground first.</span>")
 			return 1
 
 		logTheThing("combat", M, target, "starts to maul [constructTarget(target,"combat")] at [log_loc(M)].")
@@ -71,13 +71,13 @@
 		if (target.stat == 2)
 			if (target.reagents)
 				if (target.reagents.has_reagent("formaldehyde", 15))
-					boutput(M, __red("Urgh, this cadaver tastes horrible. Better find some chemical free meat."))
+					boutput(M, "<span class='alert'>Urgh, this cadaver tastes horrible. Better find some chemical free meat.</span>")
 					return
 
 			var/mob/living/carbon/human/H = target
 			//If they are at the decay or greater decomp stage, no eat
 			if (istype(H) && H.decomp_stage >= 2)
-				boutput(M, __red("Urgh, this cadaver tastes horrible. Better find some fresh meat."))
+				boutput(M, "<span class='alert'>Urgh, this cadaver tastes horrible. Better find some fresh meat.</span>")
 				return
 
 		A.locked = 1
@@ -125,17 +125,17 @@
 							M.max_health += 10
 							health_update_queue |= M
 							W.lower_cooldowns(0.10)
-							boutput(M, __blue("You finish chewing on [HH], but what a feast it was!"))
+							boutput(M, "<span class='notice'>You finish chewing on [HH], but what a feast it was!</span>")
 						else
-							boutput(M, __red("You've mauled [HH] before and didn't like the aftertaste. Better find a different prey."))
+							boutput(M, "<span class='alert'>You've mauled [HH] before and didn't like the aftertaste. Better find a different prey.</span>")
 					else
-						boutput(M, __red("What a meagre meal. You're still hungry..."))
+						boutput(M, "<span class='alert'>What a meagre meal. You're still hungry...</span>")
 				else
-					boutput(M, __red("What a meagre meal. You're still hungry..."))
+					boutput(M, "<span class='alert'>What a meagre meal. You're still hungry...</span>")
 			else
-				boutput(M, __red("You finish chewing on [HH]."))
+				boutput(M, "<span class='alert'>You finish chewing on [HH].</span>")
 		else
-			boutput(M, __red("You finish chewing on [HH]."))
+			boutput(M, "<span class='alert'>You finish chewing on [HH].</span>")
 
 		if (A && istype(A))
 			A.locked = 0
@@ -160,17 +160,17 @@
 							M.max_health += 10
 							health_update_queue |= M
 							W.lower_cooldowns(0.10)
-							boutput(M, __blue("Your feast was interrupted, but it satisfied your hunger for the time being."))
+							boutput(M, "<span class='notice'>Your feast was interrupted, but it satisfied your hunger for the time being.</span>")
 						else
-							boutput(M, __red("You've mauled [HH] before and didn't like the aftertaste. Better find a different prey."))
+							boutput(M, "<span class='alert'>You've mauled [HH] before and didn't like the aftertaste. Better find a different prey.</span>")
 					else
-						boutput(M, __red("Your feast was interrupted and you're still hungry..."))
+						boutput(M, "<span class='alert'>Your feast was interrupted and you're still hungry...</span>")
 				else
-					boutput(M, __red("Your feast was interrupted and you're still hungry..."))
+					boutput(M, "<span class='alert'>Your feast was interrupted and you're still hungry...</span>")
 			else
-				boutput(M, __red("Your feast was interrupted."))
+				boutput(M, "<span class='alert'>Your feast was interrupted.</span>")
 		else
-			boutput(M, __red("Your feast was interrupted."))
+			boutput(M, "<span class='alert'>Your feast was interrupted.</span>")
 
 		if (A && istype(A))
 			A.locked = 0

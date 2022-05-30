@@ -644,6 +644,11 @@ CONTAINS:
 	mats = 25
 	var/obj/item/robodefibrillator/mounted/defib = null
 
+	New()
+		..()
+		if (!defib)
+			src.defib = new /obj/item/robodefibrillator/mounted(src)
+
 	emag_act()
 		..()
 		return defib?.emag_act()
@@ -671,8 +676,11 @@ CONTAINS:
 		if (isAI(user) || isintangible(user) || isobserver(user)) return
 		user.lastattacked = src
 		..()
-		if (!defib)
-			src.defib = new /obj/item/robodefibrillator/mounted(src)
+		if(!defib || QDELETED(defib))
+			defib = null // ditch the ref, just in case we're QDEL'd but defib is still holding on
+			return //maybe a bird ate it
+		if(defib.loc != src)
+			return //if someone else has it, don't put it in user's hand
 		user.put_in_hand_or_drop(src.defib)
 		src.defib.parent = src
 		playsound(src, "sound/items/pickup_defib.ogg", 65, vary=0.2)
