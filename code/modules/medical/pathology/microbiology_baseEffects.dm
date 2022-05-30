@@ -1,13 +1,7 @@
-
-
 datum/pathogeneffects
 	var/name
 	var/desc
-	var/infect_type = 0
 
-	var/spread = SPREAD_FACE | SPREAD_BODY | SPREAD_HANDS | SPREAD_AIR
-
-	var/rarity = null
 	var/infect_message = null
 	var/infect_attempt_message = null // shown to person when an attempt to directly infect them is made
 
@@ -19,6 +13,15 @@ datum/pathogeneffects
 
 	// A symptom might not always infect everyone around. This is a flat probability: 0 means never infect to 1 means always infect. This is checked PER MOB, not per infect call.
 	var/infection_coefficient = 1
+
+
+	//WIP
+	proc/turf_act(var/turf/T, var/datum/pathogen/origin)
+
+	proc/object_act(var/obj/item as W, var/datum/pathogen/origin)
+
+	proc/reagent_act(var/obj/item/reagent_containers as C, var/datum/pathogen/origin)
+
 
 	// mob_act(mob, datum/pathogen) : void
 	// This is the center of pathogen symptoms.

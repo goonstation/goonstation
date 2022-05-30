@@ -1,7 +1,7 @@
 // Effects related to materials and gas production go here.
 datum/pathogeneffects/material
 	name = "Material Effects"
-
+/*
 /*datum/pathogeneffects/material/smokegas
 	name = "Smoke Farts"
 	desc = "The infected individual occasionally farts reagent smoke."
@@ -93,3 +93,28 @@ datum/pathogeneffects/malevolent/farts/o2
 	react_to(var/R, var/zoom)
 		if (R == "infernite" || R == "phlogiston")
 			return "The flame of the hot reagents is oxidized by the gas."
+*/
+
+datum/pathogeneffect/material/organicglass
+	name = "Organic Glass"
+	desc = "The microbes produce silicate, reinforcing or repairing glass structures."
+
+	turf_act(var/turf/T, var/datum/pathogen/origin)
+		if(istype(T, /turf/simulated))
+			var/list/covered = holder.covered_turf()
+			if(length(covered) > 9)
+				volume = volume/length(covered)
+			if (volume < 3)
+				return
+			if(!T.reagents)
+				T.create_reagents(volume)
+			else
+				T.reagents.maximum_volume = T.reagents.maximum_volume + volume
+
+			if (!T.reagents.has_reagent("thermite"))
+				T.UpdateOverlays(image('icons/effects/effects.dmi',icon_state = "thermite"), "thermite")
+
+			T.reagents.add_reagent("thermite", volume, null)
+			if (T.active_hotspot)
+				T.reagents.temperature_reagents(T.active_hotspot.temperature, T.active_hotspot.volume, 350, 300, 1)
+		return

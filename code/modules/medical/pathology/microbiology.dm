@@ -62,6 +62,7 @@ datum/microbe
 	proc/generate_attributes() //WIP
 		var/shape = pick("stringy", "snake", "blob", "spherical", "tetrahedral", "star shaped", "tesselated")
 		src.desc = "[red] [shape] [microbes]" //color determined by average of cure reagent and assigned-effect colors
+		src.duration = 100
 		return
 
 	proc/randomize()
@@ -97,9 +98,9 @@ datum/microbe
 
 //Generalize for objects and turfs WIP
 
-	proc/structure_act()
+	proc/turf_act()
 		for (var/datum/effect in src.effects)
-			effect:structure_act(target, src)
+			effect:turf_act(target, src)
 		progress_pathogen()
 
 	proc/object_act()
@@ -123,7 +124,7 @@ datum/microbe
 			effect:mob_act_dead(infected,src)
 		progress_pathogen()
 
-	//=============================================================================
+	/*//=============================================================================
 	//	Events
 	//=============================================================================
 	// In the following chapter you will encounter the definition for event handlers.
@@ -269,3 +270,4 @@ datum/microbe
 		. = 0
 		for(var/datum/pathogeneffects/E in src.effects)
 			. = max(., E.rarity)
+*/
