@@ -1968,9 +1968,9 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		var/obj/item/clothing/gloves/G = H.gloves
 		if (G && !ignore_gloves)
 			prot = (G.hasProperty("conductivity") ? G.getProperty("conductivity") : 1)
-		if (H.limbs.l_arm)
+		if (H.limbs.l_arm && !ignore_gloves)
 			prot = min(prot,H.limbs.l_arm.siemens_coefficient)
-		if (H.limbs.r_arm)
+		if (H.limbs.r_arm && !ignore_gloves)
 			prot = min(prot,H.limbs.r_arm.siemens_coefficient)
 		if (prot <= 0.29)
 			return 0
