@@ -85,7 +85,7 @@
 	P.generate_attributes(0)
 	P.advance_speed = 25
 	P.spread = 25
-	P.suppression_threshold = max(1, P.suppression_threshold)
+	P.suppression_threshold = 10
 	P.add_symptom(pathogen_controller.path_to_symptom[stype])
 	logTheThing("pathology", null, null, "Pathogen [P.name] created by quick-pathogen-proc with symptom [stype].")
 	return P

@@ -11,8 +11,6 @@ datum/pathogeneffects
 	var/infect_message = null
 	var/infect_attempt_message = null // shown to person when an attempt to directly infect them is made
 
-	var/beneficial = 0
-
 	// This is a list of mutual exclusive symptom TYPES.
 	// If this contains any symptoms, none of these symptoms will be picked upon mutation or initial raffle.
 	// Mutexes cut the ENTIRE object tree - for example, if symptoms a/b, a/c and a/d all exist, then mutexing
@@ -286,11 +284,12 @@ datum/pathogeneffects/malevolent/muscleache
 		switch (origin.stage)
 			if (1 to 3)
 				if (prob(5))
-				M.show_message("<span class='alert'>Your muscles ache.</span>")
+					M.show_message("<span class='alert'>Your muscles ache.</span>")
 			if (4 to 5)
 				if (prob(8))
-				M.show_message("<span class='alert'>Your muscles ache!</span>")
+					M.show_message("<span class='alert'>Your muscles ache!</span>")
 				if (prob(15))
+					M.show_message("<span class='alert'>Your muscles ache!</span>")
 					M.TakeDamage("All", origin.stage-3, 0)
 
 	react_to(var/R, var/zoom)
@@ -1569,7 +1568,7 @@ datum/pathogeneffects/malevolent/farts
 	desc = "The infected individual occasionally farts."
 	infect_type = INFECT_AREA
 	spread = SPREAD_AIR
-	rarity = THREAT_2
+	rarity = THREAT_TYPE2
 	var/cooldown = 200 // we just use the name of the symptom to keep track of different fart effects, so their cooldowns do not interfere
 	var/doInfect = 1 // smoke farts were just too good
 
@@ -1679,7 +1678,6 @@ datum/pathogeneffects/malevolent/farts/o2
 	name = "O2 Farts"
 	desc = "The infected individual occasionally farts. Pure oxygen."
 	rarity = THREAT_TYPE2
-	beneficial = 1
 	cooldown = 50
 	// ahahahah this is so stupid
 	// i have no idea what these numbers mean but i hope it's funny
@@ -1885,7 +1883,7 @@ datum/pathogeneffects/malevolent/mutation/beneficial
 	mutation_type = "good"
 	chrom_prob = 100 //guranteed chromosome application
 	chrom_types = list(/datum/dna_chromosome) //stabilizer, no instability caused
-	beneficial = 1
+	//beneficial = 1
 
 	react_to(var/R, var/zoom)
 		if (R == "mutadone")

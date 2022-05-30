@@ -78,7 +78,7 @@ datum/microbody/virus
 
 	stages = 3
 
-	activity = list(50, 40, 30, 20, 10)
+	activity = list(50, 60, 50, 30, 10)
 
 	// Grows in eggs.
 	growth_medium = "egg"

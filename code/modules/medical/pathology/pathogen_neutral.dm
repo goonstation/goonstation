@@ -6,7 +6,6 @@ datum/pathogeneffects/neutral/brewery
 	name = "Auto-Brewery"
 	desc = "The pathogen aids the host body in metabolizing chemicals into ethanol."
 	rarity = THREAT_NEUTRAL
-	beneficial = 0
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
@@ -290,7 +289,7 @@ datum/pathogeneffects/neutral/hyperactive
 			M:emote("twitch")
 
 	may_react_to()
-		return "The pathogen appears to be wilder than usual, perhaps sedatives or psychoactive substances might affect its behaviour."\
+		return "The pathogen appears to be wilder than usual, perhaps sedatives or psychoactive substances might affect its behaviour."
 
 datum/pathogeneffects/neutral/bloodcolors
 	name = "Blood Pigmenting"
