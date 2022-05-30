@@ -1,4 +1,4 @@
-datum/pathogen_cdc
+/*datum/pathogen_cdc
 	var/uid = null
 	var/patient_zero = null
 	var/patient_zero_kname = ""
@@ -587,38 +587,38 @@ datum/shockparam
 	var/amt
 	var/wattage
 	var/skipsupp
-
+*/
 // A pathogen. How surprising.
 datum/pathogen
 	var/name										// The modifiable name of the disease.
-	var/name_base									// The original name of the disease.
-	var/mutation									// Value signifying different replications of a single strain. Useful for separating infection capacity.
+	//var/name_base									// The original name of the disease.
+	//var/mutation									// Value signifying different replications of a single strain. Useful for separating infection capacity.
 	var/desc										// What a scientist might see when he looks at this pathogen through a microscope (eg. blue stringy viruses)
-	var/pathogen_uid								// Var used in logging/admintools
+	//var/pathogen_uid								// Var used in logging/admintools
 
 	var/mob/infected								// The mob that is infected with this pathogen.
 
-	var/advance_speed								// The speed at which this pathogen advances stages. An advance speed of N means a flat N/100% chance to advance each tick.
-	var/ticked = 0									// This handles ticks between advancement rolls.
-	var/cooldown = 5								// An internal 'cooldown' so that the pathogen doesn't instantly advance to stage 5.
-	var/stage										// The current stage of the pathogen.
-	var/stages										// How far the pathogen may advance. Higher stages allow for more malicious/benevolent effects of symptoms. (3 to 5)
+	//var/advance_speed								// The speed at which this pathogen advances stages. An advance speed of N means a flat N/100% chance to advance each tick.
+	//var/ticked = 0									// This handles ticks between advancement rolls.
+	//var/cooldown = 5								// An internal 'cooldown' so that the pathogen doesn't instantly advance to stage 5.
+	//var/stage										// The current stage of the pathogen.
+	//var/stages										// How far the pathogen may advance. Higher stages allow for more malicious/benevolent effects of symptoms. (3 to 5)
 	var/duration									// How long a pathogen stays in the highest stage before being naturally immunized.
 
-	var/datum/microbody/body_type					// The body type of the pathogen, providing intrinsic properties.
-	var/forced_microbody = null						// If not null, this pathogen will be generated with a specific microbody.
+	//var/datum/microbody/body_type					// The body type of the pathogen, providing intrinsic properties.
+	//var/forced_microbody = null						// If not null, this pathogen will be generated with a specific microbody.
 
-	var/datum/suppressant/suppressant				// The specific cure(s).
-	var/suppression_threshold						// The value describing the cure condition. When the cure condition is met, the pathogen will dissipate within 10-30 seconds without needing further oversight/work.
-	var/in_remission = 0							// Pathogens in remission are being cured by the body. Set by the curing reagent or by the duration of infection.
+	//var/datum/suppressant/suppressant				// The specific cure(s).
+	//var/suppression_threshold						// The value describing the cure condition. When the cure condition is met, the pathogen will dissipate within 10-30 seconds without needing further oversight/work.
+	//var/in_remission = 0							// Pathogens in remission are being cured by the body. Set by the curing reagent or by the duration of infection.
 
-	var/list/symptom_data = list()					// Symptom data container.
+	//var/list/symptom_data = list()					// Symptom data container.
 	var/list/effects = list()						// A list of symptoms exhibited by those infected with this pathogen.
 	var/list/mutex = list()							// These symptoms are explicitly disallowed by a mutex.
 
-	var/transmissions = list()						// This is a list of the mediums through which a pathogen can spread.
-	var/spread										// This is a modifier that determines how easily the pathogen spreads.
-	var/max_infections								// The maximum number of unique infections this pathogen can make.
+	//var/transmissions = list()						// This is a list of the mediums through which a pathogen can spread.
+	//var/spread										// This is a modifier that determines how easily the pathogen spreads.
+	//var/max_infections								// The maximum number of unique infections this pathogen can make.
 
 
 // PROCS AND FUNCTIONS FOR GENERATION
@@ -629,27 +629,27 @@ datum/pathogen
 
 	proc/clear()
 		name = ""
-		name_base = ""
-		mutation = ""
+		//name_base = ""
+		//mutation = ""
 		desc = ""
 		infected = null
-		advance_speed = 0
-		ticked = 0
-		cooldown = 5
-		stage = 1
-		stages = 1
+		//advance_speed = 0
+		//ticked = 0
+		//cooldown = 5
+		//stage = 1
+		//stages = 1
 		duration = 1
-		body_type = ""
-		suppressant = null
-		suppression_threshold = 10
+		//body_type = ""
+		//suppressant = null
+		//suppression_threshold = 10
 		in_remission = 0
-		symptom_data = list()
+		//symptom_data = list()
 		effects = list()
 		mutex = list()
-		transmissions = list()
-		spread = 1
-		max_infections = 5
-		forced_microbody = initial(forced_microbody)
+		//transmissions = list()
+		//spread = 1
+		//max_infections = 5
+		//forced_microbody = initial(forced_microbody)
 
 
 
@@ -678,8 +678,9 @@ datum/pathogen
 		randomize(3)
 
 	proc/generate_name()
-		src.name_base = pick(pathogen_controller.lalph) + pick(pathogen_controller.lnums) + pick(pathogen_controller.lalph)
-		src.mutation = pick(pathogen_controller.lnums)
+		src.name = "CustomCulture"
+		//src.name_base = pick(pathogen_controller.lalph) + pick(pathogen_controller.lnums) + pick(pathogen_controller.lalph)
+		//src.mutation = pick(pathogen_controller.lnums)
 		//if (ticker)
 			//if (current_state == GAME_STATE_PLAYING)
 				//message_admins("Pathogen tree [src.name_base] entering play.")

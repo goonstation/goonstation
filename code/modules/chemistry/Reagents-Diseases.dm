@@ -478,7 +478,7 @@ datum
 			fluid_g = 185
 			fluid_b = 120
 			transparency = 255
-
+/*
 		// Marquesas' one stop pathology shop
 		blood/pathogen
 			name = "pathogen"
@@ -511,7 +511,7 @@ datum
 
 			on_plant_life(var/obj/machinery/plantpot/P)
 				return
-
+*/
 /*
 		antiviral
 			name = "Viral Serum"

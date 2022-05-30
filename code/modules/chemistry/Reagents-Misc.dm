@@ -679,7 +679,7 @@ datum
 			value = 3 // 1 1 1
 			viscosity = 0.4
 
-			reaction_obj(var/obj/O, var/volume)
+			reaction_obj(var/obj/O, var/volume) //Mark for use
 				if (istype(O,/obj/window))
 					var/obj/window/W = O
 
