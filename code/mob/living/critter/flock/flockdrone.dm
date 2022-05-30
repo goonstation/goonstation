@@ -172,7 +172,7 @@
 		controller = null
 		src.update_health_icon()
 
-/mob/living/critter/flock/drone/proc/release_control_abrupt()
+/mob/living/critter/flock/drone/proc/release_control_abrupt(give_alert = TRUE)
 	src.flock?.hideAnnotations(src)
 	src.is_npc = TRUE
 	if(src.client && !controller)
@@ -196,7 +196,8 @@
 		controller.mind.key = key
 		controller.mind.current = controller
 		ticker.minds += controller.mind
-	boutput(controller, "<span class='flocksay'><b>\[SYSTEM: Control of drone [src.real_name] ended abruptly.\]</b></span>")
+	if (give_alert)
+		boutput(controller, "<span class='flocksay'><b>\[SYSTEM: Control of drone [src.real_name] ended abruptly.\]</b></span>")
 	if (istype(controller, /mob/living/intangible/flock/flockmind))
 		flock.removeAnnotation(src, FLOCK_ANNOTATION_FLOCKMIND_CONTROL)
 	else

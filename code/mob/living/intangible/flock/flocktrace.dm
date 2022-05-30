@@ -95,7 +95,9 @@
 	. = ..()
 	if (istype(src.loc, /mob/living/critter/flock/drone))
 		var/mob/living/critter/flock/drone/F = src.loc
-		F.release_control()
+		F.release_control_abrupt(FALSE)
+		if (F.z == Z_LEVEL_STATION)
+			flock_speak(null, "Control of drone [F.real_name] surrended.", src.flock)
 	if(src.client)
 		if (suicide)
 			flock_speak(null, "Flocktrace [src.real_name] relinquishes their computational designation and reintegrates themselves back into the Flock.", src.flock)
