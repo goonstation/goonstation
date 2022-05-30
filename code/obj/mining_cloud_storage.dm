@@ -261,8 +261,9 @@
 	proc/sell_all_ore_at_price(var/new_price)
 		for(var/material_name in ores)
 			var/datum/ore_cloud_data/OCD = ores[material_name]
-			OCD.for_sale = TRUE
-			OCD.price = max(0,new_price)
+			if(!OCD.for_sale)
+				OCD.for_sale = TRUE
+				OCD.price = max(0,new_price)
 		return
 
 	proc/update_ore_for_sale(var/material_name,var/new_for_sale)
