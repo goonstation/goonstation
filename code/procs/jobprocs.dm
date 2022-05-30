@@ -682,6 +682,7 @@
 						qdel(src.limbs.r_arm.remove(0))
 				boutput(src, "<b>Your singular arm makes you feel responsible for crimes you couldn't possibly have committed.</b>" )
 
+	// Special mutantrace items
 	if (src.traitHolder && src.traitHolder.hasTrait("pug"))
 		src.put_in_hand_or_drop(new /obj/item/reagent_containers/food/snacks/cookie/dog)
 	else if (src.traitHolder && src.traitHolder.hasTrait("skeleton"))
