@@ -4,7 +4,7 @@
 /datum/targetable/critter/nascent/become_commander
 	name = "Become commander"
 	desc = "Become a commander"
-	icon_state = "clown_spider_bite"
+	icon_state = "choose_skeleton"
 	cooldown = 0
 	targeted = 0
 	var/border_icon = 'icons/mob/wraith_ui.dmi'

@@ -4,9 +4,11 @@
 /datum/targetable/critter/voidhound/cloak
 	name = "Cloak"
 	desc = "Slip into the void and make yourself hard to discern for a short time"
-	icon_state = "clown_spider_bite"
+	icon_state = "cloak"
 	cooldown = 40 SECONDS
 	targeted = 0
+	var/border_icon = 'icons/mob/wraith_ui.dmi'
+	var/border_state = "harbinger_frame"
 
 	cast()
 		if (..())
@@ -22,13 +24,20 @@
 					animate(V, alpha=255, time=3 SECONDS)
 					boutput(V, "<span class='notice'>We reappear</span>")
 
+	onAttach(datum/abilityHolder/holder)
+		..()
+		var/atom/movable/screen/ability/topBar/B = src.object
+		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
+
 /datum/targetable/critter/voidhount/rushdown
 	name = "Rush down"
 	desc = "Leap forward and knock down those in your way"
-	icon_state = "clown_spider_bite"
+	icon_state = "pounce"
 	cooldown = 40 SECONDS
 	targeted = 0
 	max_range = 5
+	var/border_icon = 'icons/mob/wraith_ui.dmi'
+	var/border_state = "harbinger_frame"
 
 	cast()
 
@@ -98,3 +107,8 @@
 					if (C.can_flip_bust == 1)
 						boutput(src, "<span class='alert'>[C] [pick("busts","bends","cracks")] open.</span>")
 						C.bust_out()
+
+	onAttach(datum/abilityHolder/holder)
+		..()
+		var/atom/movable/screen/ability/topBar/B = src.object
+		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
