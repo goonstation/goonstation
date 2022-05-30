@@ -4,6 +4,8 @@
 (p)8651
 (e)🎨|sprites
 (*)Detectives now have a weak scuttlebot of their own! It has taken the shape of the detgadget hat in their locker.
+(u)tarmunora
+(*)sec token crate now gets sec assistant token instead and made cheaper
 (t)sun may 29 22
 (u)Wisemonster
 (p)8762
