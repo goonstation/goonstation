@@ -84,8 +84,9 @@
 
 	for (var/mob/living/C in view(owncritter,target_range))
 		if(C == owncritter) continue
+
 		if(istype(C, /mob/living/critter/sawfly)) continue
-		if (C.health < -50) continue
+		if (C.health < -50 || !isalive(C)) continue
 		if (C.job == "Security Officer" || C.job == "Head of Security")
 			. = list(C) //found a secoff, just return that
 			return
@@ -125,7 +126,7 @@
 	var/mob/living/critter/sawfly/owncritter = holder.owner
 	for (var/mob/living/C in view(owncritter,max_dist))
 		if(C == owncritter) continue
-		if (C.health < -50) continue
+		if (C.health < -50 || !isalive(C)) continue
 		if (C.job == "Security Officer" || C.job == "Head of Security")
 			. = list(C) //found a secoff, just return that
 			return
