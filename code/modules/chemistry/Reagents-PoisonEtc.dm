@@ -1843,6 +1843,7 @@ datum
 			fluid_g = 244
 			fluid_b = 244
 			transparency = 255
+			flushing_multiplier = 0.25
 			depletion_rate = 0.2
 			var/ticks = 0
 			var/stage = 0
