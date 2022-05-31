@@ -5,6 +5,10 @@
 (e)🎨|sprites
 (*)Detectives now have a weak scuttlebot of their own! It has taken the shape of the detgadget hat in their locker.
 (u)tarmunora
+(+)chlorine, acetaldehyde, fluorine splash multipler reduced to 0.33, formaldehyde splash multiplier reduced to 0.5, skin penetration removed from nitrogen dioxide
+(+)chorine, acetaldehyde depletion rates 0.4 -> 0.6
+(+)fluorine damage burn/tox damage reduced 1 -> 0.75
+(u)tarmunora
 (*)sec token crate now gets sec assistant token instead and made cheaper
 (t)sun may 29 22
 (u)Wisemonster
