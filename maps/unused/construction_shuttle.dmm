@@ -779,6 +779,11 @@
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/arrival/station)
+"mF" = (
+/obj/machinery/computer/power_monitor/smes,
+/obj/cable,
+/turf/simulated/floor/black,
+/area/space)
 "mK" = (
 /obj/machinery/atmospherics/valve{
 	dir = 1
@@ -830,6 +835,15 @@
 /obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor/black,
 /area/space)
+"rF" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/black,
+/area/space)
 "sj" = (
 /obj/machinery/atmospherics/binary/pump{
 	dir = 2;
@@ -840,15 +854,18 @@
 	tag = "icon-intact_on (NORTH)";
 	target_pressure = 2000
 	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/black,
 /area/space)
 "sx" = (
-/obj/machinery/power/terminal{
-	dir = 4
-	},
 /obj/cable{
+	d1 = 4;
 	d2 = 8;
-	icon_state = "0-8"
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
 /area/space)
@@ -857,6 +874,15 @@
 	dir = 8
 	},
 /turf/space,
+/area/space)
+"sO" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/power/nuclear/reactor_control,
+/turf/simulated/floor/black,
 /area/space)
 "sP" = (
 /obj/landmark/start/latejoin,
@@ -877,10 +903,18 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 4
 	},
+/obj/cable{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/black,
 /area/space)
 "vN" = (
 /obj/machinery/atmospherics/binary/nuclear_reactor,
+/obj/cable{
+	d2 = 2;
+	dir = null;
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/black,
 /area/space)
 "vT" = (
@@ -916,6 +950,13 @@
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/black,
 /area/space)
+"zD" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/power/nuclear/turbine_control,
+/turf/simulated/floor/black,
+/area/space)
 "zQ" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/machinery/light/small/floor,
@@ -924,6 +965,15 @@
 "zR" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /turf/simulated/wall/r_wall,
+/area/space)
+"Al" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/black,
 /area/space)
 "AG" = (
 /obj/item/material_piece/mauxite{
@@ -1076,6 +1126,11 @@
 	},
 /turf/simulated/floor/black,
 /area/space)
+"Kt" = (
+/obj/cable,
+/obj/machinery/power/terminal,
+/turf/simulated/floor/black,
+/area/space)
 "KF" = (
 /obj/item/material_piece/pharosium{
 	amount = 10
@@ -1093,6 +1148,15 @@
 /area/shuttle/arrival/station)
 "Lc" = (
 /obj/machinery/portable_atmospherics/scrubber,
+/turf/simulated/floor/black,
+/area/space)
+"Ld" = (
+/obj/machinery/light/small/floor,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/black,
 /area/space)
 "Lg" = (
@@ -1113,6 +1177,14 @@
 /area/space)
 "MI" = (
 /obj/machinery/portable_atmospherics/canister/air/large,
+/turf/simulated/floor/black,
+/area/space)
+"MS" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/black,
 /area/space)
 "MT" = (
@@ -1162,6 +1234,10 @@
 /area/space)
 "RV" = (
 /obj/machinery/power/smes,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/black,
 /area/space)
 "Sh" = (
@@ -48204,9 +48280,9 @@ Yq
 Yq
 Yq
 vN
-Yq
-Yq
-Yq
+IZ
+IZ
+MS
 Lx
 QU
 Yq
@@ -48508,7 +48584,7 @@ Yq
 Yq
 Yq
 Yq
-CO
+Ld
 Lx
 yk
 Yq
@@ -48810,7 +48886,7 @@ Yq
 Yq
 Yq
 Yq
-Yq
+sO
 Lx
 Yq
 Yq
@@ -49112,7 +49188,7 @@ Yq
 Uw
 Yq
 Yq
-Yq
+sx
 Lx
 Yq
 Yq
@@ -50018,7 +50094,7 @@ Yq
 Uw
 Yq
 Yq
-Yq
+sx
 jY
 mK
 qF
@@ -50320,7 +50396,7 @@ Yq
 PO
 Yq
 Yq
-CO
+Ld
 Lx
 CO
 Kc
@@ -50622,7 +50698,7 @@ Yq
 Yq
 Yq
 Yq
-Yq
+sx
 Og
 Yq
 sx
@@ -50923,10 +50999,10 @@ Yq
 Yq
 UH
 IZ
-IZ
-IZ
+zD
+rF
 uO
-IZ
+Kt
 RV
 Yq
 Yq
@@ -51227,10 +51303,10 @@ Yq
 Yq
 Yq
 Yq
-Lx
-Yq
-Yq
-Yq
+Al
+IZ
+IZ
+mF
 Yq
 Dx
 Lg

@@ -27,9 +27,16 @@
 	var/datum/gas_mixture/current_gas = null
 	var/temperature = T20C
 
+	var/obj/machinery/power/terminal/terminal = null
+	var/net_id = null
 
 	New()
-		..()
+		. = ..()
+		terminal = new /obj/machinery/power/terminal/netlink(src.loc)
+		src.net_id = generate_net_id(src)
+		terminal.set_dir(turn(src.dir,-90))
+		terminal.master = src
+
 		src.setMaterial(getMaterial("steel"))
 		for(var/x=1 to REACTOR_GRID_WIDTH)
 			for(var/y=1 to REACTOR_GRID_HEIGHT)
