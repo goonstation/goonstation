@@ -713,6 +713,15 @@
 	},
 /turf/simulated/floor/black,
 /area/space)
+"gD" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/space)
 "gJ" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 10
@@ -881,7 +890,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/power/nuclear/reactor_control,
+/obj/cable{
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/black,
 /area/space)
 "sP" = (
@@ -952,9 +963,15 @@
 /area/space)
 "zD" = (
 /obj/cable{
-	icon_state = "1-2"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/obj/machinery/power/nuclear/turbine_control,
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/black,
 /area/space)
 "zQ" = (
@@ -1285,6 +1302,16 @@
 /area/space)
 "Vf" = (
 /obj/item/material_piece/fart,
+/turf/simulated/floor/black,
+/area/space)
+"VG" = (
+/obj/machinery/power/nuclear/turbine_control,
+/obj/cable,
+/turf/simulated/floor/black,
+/area/space)
+"Xf" = (
+/obj/machinery/power/nuclear/reactor_control,
+/obj/cable,
 /turf/simulated/floor/black,
 /area/space)
 "XZ" = (
@@ -48887,8 +48914,8 @@ Yq
 Yq
 Yq
 sO
-Lx
-Yq
+gD
+Xf
 Yq
 gM
 Je
@@ -49188,9 +49215,9 @@ Yq
 Uw
 Yq
 Yq
-sx
-Lx
-Yq
+zD
+gD
+VG
 Yq
 Yq
 Yq
@@ -50999,7 +51026,7 @@ Yq
 Yq
 UH
 IZ
-zD
+IZ
 rF
 uO
 Kt

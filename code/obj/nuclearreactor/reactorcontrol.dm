@@ -11,6 +11,7 @@
 	var/obj/machinery/atmospherics/binary/reactor_turbine/turbine_handle = null
 
 	process()
+		. = ..()
 		if(!turbine_handle)
 			var/datum/powernet/powernet = src.get_direct_powernet()
 			if(!powernet) return
@@ -30,6 +31,7 @@
 	var/obj/machinery/atmospherics/binary/nuclear_reactor/reactor_handle = null
 
 	process()
+		. = ..()
 		if(!reactor_handle)
 			var/datum/powernet/powernet = src.get_direct_powernet()
 			if(!powernet) return
@@ -77,3 +79,6 @@
 			if("slot")
 				var/x = params["x"]
 				var/y = params["y"]
+				if(istype(src.reactor_handle.component_grid[x][y],/obj/item/reactor_component/control_rod))
+					var/obj/item/reactor_component/control_rod/CR = src.reactor_handle.component_grid[x][y]
+					CR.configured_insertion_level = !CR.configured_insertion_level //TODO better

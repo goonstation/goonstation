@@ -70,7 +70,7 @@
 
 		var/output_starting_pressure = MIXTURE_PRESSURE(air2)
 		var/input_starting_pressure = MIXTURE_PRESSURE(air1)
-		boutput(world,"TURBINE: input=[input_starting_pressure] output=[output_starting_pressure]")
+		boutput(world,"TURBINE: input=[input_starting_pressure] [air1.temperature]K output=[output_starting_pressure] [air2.temperature]K")
 
 		var/transfer_moles = input_starting_pressure ? input_starting_pressure*air2.volume/(air1.temperature * R_IDEAL_GAS_EQUATION) : 0
 		//RPM - generate ideal power at 600RPM
