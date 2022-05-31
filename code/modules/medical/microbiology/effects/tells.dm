@@ -3,10 +3,10 @@
 // Tells must not inherently cause harm to the infected player.
 // Tells are permitted to roll probabilities to transmit, within good reason.
 ABSTRACT_TYPE(/datum/microbioeffects/tells)
-datum/microbioeffects/tells
+/datum/microbioeffects/tells
 	name = "Tells"
 
-datum/microbioeffects/tells/hiccups
+/datum/microbioeffects/tells/hiccups
 	name = "Hiccups"
 	desc = "The microbes send involuntary signals to the infected individual's diaphragm."
 
@@ -53,7 +53,7 @@ datum/microbioeffects/tells/hiccups
 		return "The pathogen's cells appear to be... hugging each other?"
 */
 
-datum/microbioeffects/tells/sunglass
+/datum/microbioeffects/tells/sunglass
 	name = "Sunglass Glands"
 	desc = "The infected grew sunglass glands."
 
@@ -93,7 +93,7 @@ datum/microbioeffects/tells/sunglass
 			else
 				return "The pathogen appears to have developed a resistance to the flash powder."
 
-datum/microbioeffects/tells/deathgasping
+/datum/microbioeffects/tells/deathgasping
 	name = "Deathgasping"
 	desc = "The pathogen causes the user's brain to believe the body is dying."
 	onadd(var/datum/microbe/origin)
@@ -106,7 +106,7 @@ datum/microbioeffects/tells/deathgasping
 	may_react_to()
 		return "The pathogen appears to be.. sort of dead?"
 
-datum/microbioeffects/tells/shakespeare
+/datum/microbioeffects/tells/shakespeare
 	name = "Shakespeare"
 	desc = "The infected has an urge to begin reciting shakespearean poetry."
 
@@ -148,7 +148,7 @@ datum/microbioeffects/tells/shakespeare
 		return "The culture appears to be quite dramatic."
 
 
-datum/microbioeffects/tells/hoarseness
+/datum/microbioeffects/tells/hoarseness
 	name = "Hoarseness"
 	desc = "The pathogen causes dry throat, leading to hoarse speech."
 
@@ -166,7 +166,7 @@ datum/microbioeffects/tells/hoarseness
 	may_react_to()
 		return "The pathogen appears to be rapidly breaking down certain materials around it."
 
-datum/microbioeffects/tells/malaise
+/datum/microbioeffects/tells/malaise
 	name = "Malaise"
 	desc = "The pathogen causes very mild, inconsequential fatigue to its host."
 
@@ -184,7 +184,7 @@ datum/microbioeffects/tells/malaise
 	may_react_to()
 		return "The pathogen appears to have a gland that may affect neural functions."
 
-datum/microbioeffects/tells/hyperactive
+/datum/microbioeffects/tells/hyperactive
 	name = "Psychomotor Agitation"
 	desc = "Also known as restlessness, the infected individual is prone to involuntary motions and tics."
 
@@ -216,7 +216,7 @@ datum/microbioeffects/tells/bloodcolors
 	may_react_to()
 		return "The pathogen appears to generate a high amount of fluids."
 */
-datum/microbioeffects/tells/startleresponse
+/datum/microbioeffects/tells/startleresponse
 	name = "Exagerrated Startle Reflex"
 	desc = "The pathogen generates synaptic signals that amplify the host's startle reflex."
 
@@ -230,7 +230,7 @@ datum/microbioeffects/tells/startleresponse
 	may_react_to()
 		return "The pathogen appears to have a gland that may affect neural functions."
 
-datum/microbioeffects/tells/tearyeyed
+/datum/microbioeffects/tells/tearyeyed
 	name = "Overactive Eye Glands"
 	desc = "The pathogen causes the host's lacrimal glands to overproduce tears."
 
@@ -248,7 +248,7 @@ datum/microbioeffects/tells/tearyeyed
 	may_react_to()
 		return "The pathogen appears to generate a high amount of fluids."
 
-datum/microbioeffects/tells/restingface
+/datum/microbioeffects/tells/restingface
 	name = "Grumpy Cat Syndrome"
 	desc = "The pathogen causes the host's facial muscles to frown at rest."
 
@@ -266,7 +266,7 @@ datum/microbioeffects/tells/restingface
 	may_react_to()
 		return "The pathogen appears to react to hydrating agents."
 /*
-datum/microbioeffects/tells/farts
+/datum/microbioeffects/tells/farts
 	name = "Farts"
 	desc = "The infected individual occasionally farts."
 
