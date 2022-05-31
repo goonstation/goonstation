@@ -1066,7 +1066,6 @@
 			temp.setMaterialAppearance(temp.material)
 	..()
 
-
 ABSTRACT_TYPE(/datum/lifeprocess/flock)
 /datum/lifeprocess/flock/absorbtion
 	process()
