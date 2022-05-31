@@ -356,7 +356,7 @@
 				return
 		if(istype(W, /obj/item/clothing/glasses/eyepatch))
 			var/turf/T = user.loc
-			boutput("<span class='notice'>You tie the [W] to the [src].")
+			boutput(user, "<span class='notice'>You tie the [W] to the [src].")
 			new/obj/item/clothing/glasses/twopatch(T)
 			qdel(W)
 			qdel(src)
