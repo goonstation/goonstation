@@ -6,7 +6,7 @@
  */
 
 import { useBackend } from '../backend';
-import { Box, Chart, LabeledList, Section, Divider } from '../components';
+import { Box, Chart, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
 
 /**
@@ -32,7 +32,7 @@ const processStatsData = statsData => {
     for (let keyIndex = 0; keyIndex < keys.length; keyIndex++) {
       const key = keys[keyIndex];
       // will insert 'undefined' if not present, if you want different handling here then I guess do it?
-      resolvedData[key].push(tegDatum[key]);
+      resolvedData[key].push(tegDatum[key] ?? 0);
     }
   }
   return resolvedData;
@@ -44,12 +44,12 @@ export const ReactorStats = (props, context) => {
     turnedOn,
     tegData,
     chamberData,
-    meterData,
+    // meterData,
   } = data;
 
   const tegStats = processStatsData(tegData);
   const chamberStats = processStatsData(chamberData);
-  const meterStats = processStatsData(meterData);
+  // const meterStats = processStatsData(meterData);
 
   return (
     <Window

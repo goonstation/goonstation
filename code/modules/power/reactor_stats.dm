@@ -16,7 +16,7 @@
 	var/obj/machinery/atmospherics/binary/circulatorTemp/right/teg_cold = null
 
 	var/list/chamber_data[][] = list()
-	var/list/meter_data[] = list()
+	//var/list/meter_data[][] = list()
 	var/list/teg_data[][] = list()
 
 	var/hold = 1
@@ -65,16 +65,19 @@
 
 	/* process combustion chamber samples */
 	chamber_data = sample_chamber(chamber_raw_data)
+	if (length(src.chamber_data) > src.history_max)
+		src.chamber_data.Cut(1, 2) //drop the oldest entry
 
 	/* get meter data */
-	for(var/obj/machinery/power/stats_meter/M in meters)
-		if (!M.target || !M.tag)
-			continue
+	// for(var/obj/machinery/power/stats_meter/M in meters)
+	// 	if (!M.target || !M.tag)
+	// 		continue
 
-		var/list/sample = sample_air(M.target.return_air(), TRUE)
-		M.set_bars(sample["Thermal Energy"])
-		sample["tag"] = M.tag
-		meter_data += sample
+	// 	var/list/sample = sample_air(M.target.return_air(), TRUE)
+	// 	M.set_bars(sample["Thermal Energy"])
+	// 	sample["tag"] = M.tag
+	// 	meter_data += list(sample)
+
 
 /obj/machinery/power/reactor_stats/proc/sample_chamber(list/L)
 	. = list()
@@ -226,7 +229,7 @@
 		"turnedOn" = power,
 		"tegData" = teg_data,
 		"chamberData" = chamber_data,
-		"meterData" = meter_data,
+		// "meterData" = meter_data,
 	)
 
 /obj/machinery/power/reactor_stats/ui_act(action, params)
