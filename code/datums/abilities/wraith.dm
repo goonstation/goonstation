@@ -1719,7 +1719,7 @@
 			if ((istype(target, /mob/living/carbon/human/)))
 				boutput(holder.owner, "We steal [target]'s appearance for ourselves.")
 				W.copied_appearance = target.appearance
-				W.copied_appearance.transform.Turn(target.rest_mult * -90)	//Todo, this doesnt make corpses/people lying stand up. Come back to this.
+				W.copied_appearance.transform.Turn(target.rest_mult * -90)	//Find a way to make transform rotate.
 				W.copied_desc = target.get_desc()
 				return 0
 			else if (W.copied_appearance != null)
@@ -1733,7 +1733,7 @@
 /datum/targetable/wraithAbility/harbinger_summon
 	name = "Summon void creature"
 	desc = "Attempt to breach the veil between worlds to allow a lesser void creature to enter this realm."
-	icon_state = "make_poltergeist"
+	icon_state = "summon_creature"
 	targeted = 0
 	pointCost = 400
 	cooldown = 150 SECONDS

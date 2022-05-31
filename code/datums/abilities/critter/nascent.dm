@@ -3,7 +3,7 @@
 ///////////////////////////////////
 /datum/targetable/critter/nascent/become_commander
 	name = "Become commander"
-	desc = "Become a commander"
+	desc = "Become a hallberd-wielding skeleton and summon more bone rattlers."
 	icon_state = "choose_skeleton"
 	cooldown = 0
 	targeted = 0
@@ -33,8 +33,8 @@
 
 /datum/targetable/critter/nascent/become_voidhound
 	name = "Become voidhound"
-	desc = "Become a commander"
-	icon_state = "clown_spider_bite"
+	desc = "Become a stealthy void hound and prey on people from the shadows"
+	icon_state = "choose_hound"
 	cooldown = 0
 	targeted = 0
 	var/border_icon = 'icons/mob/wraith_ui.dmi'
@@ -63,7 +63,7 @@
 
 /datum/targetable/critter/nascent/become_spiker
 	name = "Become ranged"
-	desc = "Become a commander"
+	desc = "Become a long range battler able to hold victims down for your friends."
 	icon_state = "choose_spiker"
 	cooldown = 0
 	targeted = 0
