@@ -354,6 +354,12 @@
 				if (!pinhole)
 					desc = "[desc] Unfortunately, its not so cool anymore since there's a tiny pinhole in it."
 				return
+		if(istype(W, /obj/item/clothing/glasses/eyepatch))
+			var/turf/T = user.loc
+			boutput("<span class='notice'>You tie the [W] to the [src].")
+			new/obj/item/clothing/glasses/twopatch(T)
+			qdel(W)
+			qdel(src)
 		return ..()
 	attack_self(mob/user)
 
@@ -365,6 +371,13 @@
 		boutput(user, "You flip [src] around.")
 		if (pinhole)
 			block_eye = null
+
+/obj/item/clothing/glasses/twopatch //this is so stupid I love it
+	name = "double eyepatches"
+	desc = "Double the eyepatches, double the coolness."
+	icon_state = "twopatch"
+	item_state = "radio"
+	block_vision = 1
 
 /obj/item/clothing/glasses/vr
 	name = "\improper VR goggles"
