@@ -24,7 +24,7 @@
 			return 1
 
 		if (M.wear_mask && istype(M.wear_mask, /obj/item/clothing/mask/muzzle))
-			boutput(M, __red("How do you expect this to work? You're muzzled!"))
+			boutput(M, "<span class='alert'>How do you expect this to work? You're muzzled!</span>")
 			M.visible_message("<span class='alert'><b>[M]</b> makes a loud noise.</span>")
 			if (istype(H)) H.blood_tracking_output(src.pointCost)
 			return 0 // Cooldown because spam is bad.
@@ -67,10 +67,10 @@
 					if (M && istype(M) && radio_controller && istype(radio_controller) && (M in by_cat[TR_CAT_RADIO_JAMMERS]))
 						OTHER_STOP_TRACKING_CAT(M, TR_CAT_RADIO_JAMMERS)
 			if (isvampire(HH) && HH.check_vampire_power(3) == 1)
-				boutput(HH, __blue("You are immune to [M]'s screech!"))
+				boutput(HH, "<span class='notice'>You are immune to [M]'s screech!</span>")
 				continue
 			if (HH.bioHolder && HH.traitHolder.hasTrait("training_chaplain"))
-				boutput(HH, __blue("[M]'s scream only strengthens your resolve!"))
+				boutput(HH, "<span class='notice'>[M]'s scream only strengthens your resolve!</span>")
 				JOB_XP(HH, "Chaplain", 2)
 				continue
 

@@ -17,7 +17,6 @@
 	burn_point = 400
 	burn_possible = 2
 	burn_output = 750
-	health = 10
 	amount = 1
 	max_stack = 1000000
 	stack_type = /obj/item/spacecash // so all cash types can stack iwth each other
@@ -242,7 +241,6 @@
 	throw_range = 8
 	w_class = W_CLASS_TINY
 	burn_possible = 0
-	health = 1000
 	amount = 1
 	max_stack = 1000000
 	stack_type = /obj/item/spacebux

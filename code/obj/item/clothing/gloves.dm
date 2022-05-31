@@ -208,7 +208,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	material_prints = "synthetic silicone rubber fibers"
 	setupProperties()
 		..()
-		setProperty("conductivity", 0.1)
+		setProperty("conductivity", 0.3)
 		setProperty("heatprot", 5)
 
 /obj/item/clothing/gloves/fingerless

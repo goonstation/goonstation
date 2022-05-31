@@ -71,11 +71,11 @@
 		var/datum/abilityHolder/vampire/V = holder
 
 		if (istype(target,/turf/space) || isrestrictedz(target.z))
-			boutput(M, __red("You cannot place your coffin there."))
+			boutput(M, "<span class='alert'>You cannot place your coffin there.</span>")
 			return 1
 
 		V.coffin_turf = target
-		boutput(M, __blue("You plant your coffin on [target]."))
+		boutput(M, "<span class='notice'>You plant your coffin on [target].</span>")
 
 		logTheThing("combat", M, target, "marks coffin on tile on [constructTarget(target,"combat")] at [log_loc(M)].")
 		return 0
@@ -109,7 +109,7 @@
 			spawnturf = get_turf(M)
 
 		if (spawnturf.z != M.z)
-			boutput(M, __red("You cannot escape to a different Z-level."))
+			boutput(M, "<span class='alert'>You cannot escape to a different Z-level.</span>")
 			return 1
 
 

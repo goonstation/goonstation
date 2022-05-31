@@ -506,7 +506,7 @@
 		else if (params["ctrl"])
 			var/atom/movable/movable = target
 			if (istype(movable))
-				movable.pull()
+				movable.pull(src)
 
 				if (mob_flags & AT_GUNPOINT)
 					for(var/obj/item/grab/gunpoint/G in grabbed_by)
@@ -1958,6 +1958,8 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 /mob/living/shock(var/atom/origin, var/wattage, var/zone = "chest", var/stun_multiplier = 1, var/ignore_gloves = 0)
 	if (!wattage)
 		return 0
+	if (check_target_immunity(src))
+		return 0
 	var/prot = 1
 
 	var/mob/living/carbon/human/H = null //ughhh sort this out with proper inheritance later
@@ -1966,9 +1968,9 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		var/obj/item/clothing/gloves/G = H.gloves
 		if (G && !ignore_gloves)
 			prot = (G.hasProperty("conductivity") ? G.getProperty("conductivity") : 1)
-		if (H.limbs.l_arm)
+		if (H.limbs.l_arm && !ignore_gloves)
 			prot = min(prot,H.limbs.l_arm.siemens_coefficient)
-		if (H.limbs.r_arm)
+		if (H.limbs.r_arm && !ignore_gloves)
 			prot = min(prot,H.limbs.r_arm.siemens_coefficient)
 		if (prot <= 0.29)
 			return 0
@@ -2070,3 +2072,15 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			return copytext(message, 2)
 	src.singing = 0
 	. =  message
+
+// can stumble or flip while drunk
+/mob/living/proc/can_drunk_act()
+	if (!src.canmove || !isturf(src.loc))
+		return FALSE
+	if (length(src.grabbed_by))
+		for (var/obj/item/grab/G in src.grabbed_by)
+			if (istype(G, /obj/item/grab/block))
+				continue
+			if (G.state > GRAB_PASSIVE)
+				return FALSE
+	return !src.lying && !((length(src.grabbed_by) || src.pulled_by) && src.hasStatus("handcuffed"))

@@ -1,4 +1,74 @@
 
+(t)tue may 31 22
+(u)aloe
+(e)⚖|balance
+(*)The swooshy cloaking device effect is now only visible to the user, not people with thermals and the AI and whatever else. You can still see the person with thermal vision, you just can't immediately tell they're using a cloaker.
+(t)mon may 30 22
+(u)Bartimeus973
+(p)8651
+(e)🎨|sprites
+(*)Detectives now have a weak scuttlebot of their own! It has taken the shape of the detgadget hat in their locker.
+(u)tarmunora
+(+)chlorine, acetaldehyde, fluorine splash multipler reduced to 0.33, formaldehyde splash multiplier reduced to 0.5, skin penetration removed from nitrogen dioxide
+(+)chorine, acetaldehyde depletion rates 0.4 -> 0.6
+(+)fluorine damage burn/tox damage reduced 1 -> 0.75
+(u)tarmunora
+(*)sec token crate now gets sec assistant token instead and made cheaper
+(t)sun may 29 22
+(u)Wisemonster
+(p)8762
+(e)🗺|mapping
+(+)Added status displays to Kondaru, Horizon, and Destiny.
+(u)DimWhat
+(p)8809
+(e)|
+(+)Increased the material cost of flashes
+(u)TTerc
+(e)|
+(*)Clicking doors with open panel via empty hand or bumping into them will now open them, as long as you have proper access. Hacking UI panel will open only if you have hacking tools/remote signaller in any hand.
+(u)Zonespace
+(p)6811
+(e)⚖|balance
+(+)Synthrubber conductivity 20 -> 30
+(u)TTerc
+(e)⚖|balance
+(+)Cleaning gloves conductivity 10% -> 30%
+(u)MomoBerry
+(p)8697
+(e)|
+(+)Removed Atmospherish Crate from Cargo. Added crates for pipe dispenser, portable fuel tanks, and a two piece scrubber/airtank set.
+(t)thu may 26 22
+(u)tarmunora
+(+)welderspecial blocked by things that block gas. rangedstab special blocked by things that would not permit the item to pass.
+(u)Azrun
+(p)8735
+(e)🆕|feature
+(+)Atmos pipes will take some time to rupture after being repaired.
+(t)wed may 25 22
+(u)C.Clover
+(p)8739
+(e)|
+(+)Added option to print Freezer Crate from Crate manufacturer
+(u)CodeJester
+(p)8554
+(e)🗺📄|mapping, tgui
+(+)Hyposprays have a new UI menu, making it easy to administer proper doses of methamphetamine.
+(u)MomoBerry
+(p)8680
+(e)|
+(+)Adjusted the tail regrowth ability cooldown from five minutes down to two minutes.
+(t)tue may 24 22
+(u)tarmunora
+(+)burst taser has slight spread
+(t)mon may 23 22
+(u)Wisemonster
+(p)8607
+(e)🆕🗺|feature, mapping
+(+)The VR murderbox has been upgraded with an arcfiend simulation.
+(u)Flappybat
+(p)8662
+(e)⛔|removal
+(+)The noise_maker artifact has been removed, reducing incidents of exploding speakers by 57%.
 (t)sun may 22 22
 (u)Azrun
 (e)🚽🎣

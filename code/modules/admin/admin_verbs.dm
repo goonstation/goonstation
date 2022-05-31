@@ -406,7 +406,7 @@ var/list/admin_verbs = list(
 		/client/proc/toggle_numbers_station_messages,
 		// /client/proc/export_async_banlist,
 		// /client/proc/import_banlist,
-
+		/client/proc/flock_cheat,
 
 		/client/proc/ticklag,
 		/client/proc/cmd_debug_vox,
@@ -1973,6 +1973,7 @@ var/list/fun_images = list()
 	set desc = "Manually assign values to the nuke ops win/loss scoreboard."
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	ADMIN_ONLY
+	DENY_TEMPMIN
 
 	var/win_value = input("Enter new win value.") as num
 	world.save_intra_round_value("nukie_win", win_value)
@@ -1992,6 +1993,7 @@ var/list/fun_images = list()
 	set desc = "Manually assign values to the Pod Wars Nanotrasen/Syndicate wins scoreboard."
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	ADMIN_ONLY
+	DENY_TEMPMIN
 
 	var/nt_win_value = input("Enter new Nanotrasen win value.") as num
 	world.save_intra_round_value("nt_win", nt_win_value)
@@ -2011,6 +2013,7 @@ var/list/fun_images = list()
 	set desc = "Manually assign values to the Pod Wars Nanotrasen/Syndicate deaths scoreboard."
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	ADMIN_ONLY
+	DENY_TEMPMIN
 
 	var/nt_death_value = input("Enter new Nanotrasen death value.") as num
 	world.save_intra_round_value("nt_death", nt_death_value)
@@ -2030,6 +2033,7 @@ var/list/fun_images = list()
 	set desc = "Wipe the intra-round stats of the nukeop commander's uplink purchases"
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	ADMIN_ONLY
+	DENY_TEMPMIN
 
 	var/confirm = input(usr, "Are you SURE you want to clear the stats?") in list("Yes", "No")
 	if(!(confirm == "Yes"))
@@ -2177,6 +2181,8 @@ var/list/fun_images = list()
 /client/proc/vpn_whitelist_add(vpnckey as text)
 	set name = "VPN whitelist add"
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	ADMIN_ONLY
+	DENY_TEMPMIN
 	vpnckey = ckey(vpnckey)
 	try
 		apiHandler.queryAPI("vpncheck-whitelist/add", list("ckey" = vpnckey, "akey" = src.ckey))
@@ -2186,11 +2192,14 @@ var/list/fun_images = list()
 	global.vpn_ip_checks?.Cut() // to allow them to reconnect this round
 	message_admins("Ckey [vpnckey] added to the VPN whitelist by [src.key].")
 	logTheThing("admin", src, null, "Ckey [vpnckey] added to the VPN whitelist.")
+	addPlayerNote(vpnckey, src.ckey, "Ckey [ckey] added to the VPN whitelist.")
 	return 1
 
 /client/proc/vpn_whitelist_remove(vpnckey as text)
 	set name = "VPN whitelist remove"
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	ADMIN_ONLY
+	DENY_TEMPMIN
 	vpnckey = ckey(vpnckey)
 	try
 		apiHandler.queryAPI("vpncheck-whitelist/remove", list("ckey" = vpnckey, "akey" = src.ckey))
@@ -2219,3 +2228,26 @@ var/list/fun_images = list()
 				if((i++ % 5) == 0)
 					sleep(1 SECOND)
 				apc.setStatus("lightsout", dur SECONDS)
+
+/client/proc/flock_cheat()
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
+	set name = "Flock cheats"
+	set desc = "Toggle cheats on or off on a particular flock"
+
+	var/cheats = list(FLOCK_ACHIEVEMENT_CHEAT_STRUCTURES, FLOCK_ACHIEVEMENT_CHEAT_COMPUTE)
+	var/cheat = tgui_input_list(src, "Pick a cheat to enable", "Flock cheats", cheats)
+	if (!(cheat in cheats))
+		return
+	var/flockname = tgui_input_list(src, "Pick a flock", "Choose flock", flocks)
+	var/datum/flock/flock = flocks[flockname]
+	if (!flock)
+		return
+	var/toggle
+	if (!flock.hasAchieved(cheat))
+		toggle = TRUE
+		flock.achieve(cheat)
+	else
+		toggle = FALSE
+		flock.unAchieve(cheat)
+	boutput(src, "[cheat] turned [toggle ? "on" : "off"] for flock [flockname]")
+	logTheThing("admin", src, flock, "has toggled [cheat] [toggle ? "on" : "off"] for flock [flockname]")

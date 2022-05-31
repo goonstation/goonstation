@@ -163,7 +163,7 @@
 	return
 
 /obj/item/shipcomponent/secondary_system/cargo/activate()
-	var/loadmode = input(usr, "Unload/Load", "Unload/Load")  as null|anything in list("Load", "Unload")
+	var/loadmode = tgui_input_list(usr, "Unload/Load", "Unload/Load", list("Load", "Unload"))
 	switch(loadmode)
 		if("Load")
 			var/atom/movable/AM = null

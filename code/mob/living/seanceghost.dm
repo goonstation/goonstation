@@ -127,6 +127,7 @@
 			src.visible_message("<span><b>[src.name]</b> [message]</span>")
 
 	death(gibbed)
+		. = ..()
 		if(originalmob)
 			if (src.client)
 				src.removeOverlaysClient(src.client)

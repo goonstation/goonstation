@@ -1649,10 +1649,6 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	name = "glass case - 'Microbomb'"
 	implant_type = "/obj/item/implant/revenge/microbomb"
 
-/obj/item/implantcase/microbomb/macrobomb
-	name = "glass case - 'Macrobomb'"
-	implant_type = "/obj/item/implant/revenge/microbomb/macrobomb"
-
 /obj/item/implantcase/robotalk
 	name = "glass case - 'Machine Translator'"
 	implant_type = "/obj/item/implant/robotalk"

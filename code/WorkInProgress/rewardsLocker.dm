@@ -1537,9 +1537,9 @@ datum/achievementReward/ai_dwaine
 			src.verbs += /client/verb/claimreward
 			return
 
-		var/selection = input(usr,"Please select your reward", "VIP Rewards","CANCEL") in (eligible + "CANCEL")
+		var/selection = tgui_input_list(usr,"Please select your reward", "VIP Rewards", (eligible + "CANCEL"))
 
-		if(selection == "CANCEL")
+		if(!selection || selection == "CANCEL")
 			src.verbs += /client/verb/claimreward
 			return
 

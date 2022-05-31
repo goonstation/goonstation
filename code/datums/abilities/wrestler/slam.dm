@@ -65,7 +65,7 @@
 
 				// These are necessary because of the sleep call.
 				if (!G || !istype(G) || G.state == GRAB_PASSIVE)
-					boutput(M, __red("You can't slam the target without a firm grab!"))
+					boutput(M, "<span class='alert'>You can't slam the target without a firm grab!</span>")
 					M.pixel_x = 0
 					M.pixel_y = 0
 					HH.pixel_x = 0
@@ -81,7 +81,7 @@
 					return 0
 
 				if (BOUNDS_DIST(M, HH) > 0)
-					boutput(M, __red("[target] is too far away!"))
+					boutput(M, "<span class='alert'>[target] is too far away!</span>")
 					qdel(G)
 					M.pixel_x = 0
 					M.pixel_y = 0
@@ -90,7 +90,7 @@
 					return 0
 
 				if (!isturf(M.loc) || !isturf(HH.loc))
-					boutput(M, __red("You can't slam [target] here!"))
+					boutput(M, "<span class='alert'>You can't slam [target] here!</span>")
 					qdel(G)
 					M.pixel_x = 0
 					M.pixel_y = 0
@@ -116,7 +116,7 @@
 
 			// These are necessary because of the sleep call.
 			if (!G || !istype(G) || G.state == GRAB_PASSIVE)
-				boutput(M, __red("You can't slam the target without a firm grab!"))
+				boutput(M, "<span class='alert'>You can't slam the target without a firm grab!</span>")
 				return 0
 
 			if (src.castcheck() != 1)
@@ -124,12 +124,12 @@
 				return 0
 
 			if (BOUNDS_DIST(M, HH) > 0)
-				boutput(M, __red("[HH] is too far away!"))
+				boutput(M, "<span class='alert'>[HH] is too far away!</span>")
 				qdel(G)
 				return 0
 
 			if (!isturf(M.loc) || !isturf(HH.loc))
-				boutput(M, __red("You can't slam [HH] here!"))
+				boutput(M, "<span class='alert'>You can't slam [HH] here!</span>")
 				qdel(G)
 				return 0
 

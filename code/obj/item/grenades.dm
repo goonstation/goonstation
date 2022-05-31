@@ -1352,7 +1352,13 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				if (distance < 2)
 					var/turf/simulated/floor/F = null
 
-					if (istype(T, /turf/simulated/wall))
+					if (istype(T, /turf/simulated/wall/auto/feather))
+						var/turf/simulated/wall/auto/feather/flockwall = T
+						flockwall.takeDamage("fire", 1)
+						O.icon_state = "2"
+						if (flockwall.health <= 0)
+							flockwall.destroy()
+					else if (istype(T, /turf/simulated/wall))
 						var/turf/simulated/wall/W = T
 						F = W.ReplaceWithFloor()
 					else if (istype(T, /turf/simulated/floor/))

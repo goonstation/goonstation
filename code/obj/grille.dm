@@ -130,6 +130,44 @@
 			twosides
 				icon_state = "catwalk_jen_2sides"
 
+		dubious
+			name = "rusty catwalk"
+			desc = "This one looks even less safe than usual."
+			var/collapsing = 0
+			event_handler_flags = USE_FLUID_ENTER
+
+			New()
+				health = rand(5, 10)
+				..()
+				UpdateIcon()
+
+			Crossed(atom/movable/A)
+				..()
+				if (ismob(A))
+					src.collapsing++
+					SPAWN(1 SECOND)
+						collapse_timer()
+						if (src.collapsing)
+							playsound(src.loc, 'sound/effects/creaking_metal1.ogg', 25, 1)
+
+			proc/collapse_timer()
+				var/still_collapsing = 0
+				for (var/mob/M in src.loc)
+					src.collapsing++
+					still_collapsing = 1
+				if (!still_collapsing)
+					src.collapsing--
+
+				if (src.collapsing >= 5)
+					playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)
+					for(var/mob/M in AIviewers(src, null))
+						boutput(M, "[src] collapses!")
+					qdel(src)
+
+				if (src.collapsing)
+					SPAWN(1 SECOND)
+						src.collapse_timer()
+
 	onMaterialChanged()
 		..()
 		if (istype(src.material))

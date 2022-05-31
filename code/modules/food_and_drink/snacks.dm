@@ -1366,7 +1366,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	var/style_step = 1
 
 	heal(var/mob/M)
-		if(ishuman(M) && (M.job in list("Security Officer", "Head of Security", "Detective", "Nanotrasen Security Operative", "Security Assistant", "Part-time Vice Officer")))
+		if(ishuman(M) && (M.job in list("Security Officer", "Head of Security", "Detective", "Nanotrasen Security Consultant", "Security Assistant", "Part-time Vice Officer")))
 			src.heal_amt *= 2
 			..()
 			src.heal_amt /= 2
@@ -1710,7 +1710,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			if(istype(W,/obj/item/stick))
 				var/obj/item/stick/S = W
 				if(S.broken)
-					boutput(user, __red("You can't use a broken stick!"))
+					boutput(user, "<span class='alert'>You can't use a broken stick!</span>")
 					return
 
 			boutput(user, "<span class='notice'>You create a corndog...</span>")

@@ -41,11 +41,11 @@
 				playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
 		else if (istype(W, /obj/item/grab))
 			playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
-			user.visible_message(__blue("[user] dunks [W:affecting]'s head in the sink!"))
+			user.visible_message("<span class='notice'>[user] dunks [W:affecting]'s head in the sink!</span>")
 		else if (W.burning)
 			W.combust_ended()
 		else
-			user.visible_message(__blue("[user] cleans [W]."))
+			user.visible_message("<span class='notice'>[user] cleans [W].</span>")
 			W.clean_forensic() // There's a global proc for this stuff now (Convair880).
 			if (istype(W, /obj/item/device/key/skull))
 				W.icon_state = "skull"

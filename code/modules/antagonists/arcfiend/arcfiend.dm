@@ -61,10 +61,10 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 	castcheck(atom/target)
 		var/mob/living/M = holder.owner
 		if (!container_safety_bypass && !isturf(M.loc))
-			boutput(holder.owner, __red("Interference from [M.loc] is preventing use of this ability!"))
+			boutput(holder.owner, "<span class='alert'>Interference from [M.loc] is preventing use of this ability!</span>")
 			return 0
 		if (!can_act(M) && target != holder.owner) // we can self cast while incapacitated
-			boutput(holder.owner, __red("Not while incapacitated."))
+			boutput(holder.owner, "<span class='alert'>Not while incapacitated.</span>")
 			return 0
 		return 1
 
@@ -91,7 +91,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 	castcheck()
 		. = ..()
 		if (holder.owner.restrained())
-			boutput(holder.owner, __red("You need an active working hand to use [src]!"))
+			boutput(holder.owner, "<span class='alert'>You need an active working hand to use [src]!</span>")
 			return 0
 /**
  * Sap Power
@@ -479,13 +479,13 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 		else
 			var/turf/T = get_turf(holder.owner)
 			if (!T.z || isrestrictedz(T.z))
-				boutput(holder.owner, __red("You are forbidden from using that here!"))
+				boutput(holder.owner, "<span class='alert'>You are forbidden from using that here!</span>")
 				return TRUE
 			if (T != holder.owner.loc) // See: no escaping port-a-brig
-				boutput(holder.owner, __red("You cannot use this ability while inside [holder.owner.loc]!"))
+				boutput(holder.owner, "<span class='alert'>You cannot use this ability while inside [holder.owner.loc]!</span>")
 				return TRUE
 			if (!(locate(/obj/cable) in T))
-				boutput(holder.owner, __red("You must use this ability on top of a cable!"))
+				boutput(holder.owner, "<span class='alert'>You must use this ability on top of a cable!</span>")
 				return TRUE
 			playsound(holder.owner, "sound/machines/ArtifactBee2.ogg", 30, 1, -2)
 			actions.start(new/datum/action/bar/private/voltron(src), holder.owner)
@@ -526,7 +526,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 			deactivate()
 
 	proc/deactivate()
-		boutput(holder.owner, __red("You are ejected from the cable!"))
+		boutput(holder.owner, "<span class='alert'>You are ejected from the cable!</span>")
 		active = FALSE
 		var/atom/movable/screen/ability/topBar/B = src.object
 		pointCost = initial(pointCost)

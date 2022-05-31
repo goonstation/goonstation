@@ -365,7 +365,7 @@
 			return
 		if(beaker)
 			beaker.reagents.trans_to(occupant, 0.1, 10)
-			beaker.reagents.reaction(occupant, TOUCH, 5) //1/10th of small beaker - matches old rate for default beakers, give or take
+			beaker.reagents.reaction(occupant, TOUCH, 5, paramslist = list("nopenetrate")) //1/10th of small beaker - matches old rate for default beakers, give or take
 
 	proc/heat_gas_contents()
 		if(TOTAL_MOLES(air_contents) < 1)

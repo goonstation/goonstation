@@ -36,9 +36,9 @@
 			M.visible_message("<span class='alert'><B>[M] contorts their body and judders upright!</B></span>")
 			playsound(M.loc, 'sound/effects/bones_break.ogg', 60, 1)
 		else if (message_type == 2)
-			boutput(M, __blue("You feel your flesh knitting itself back together."))
+			boutput(M, "<span class='notice'>You feel your flesh knitting itself back together.</span>")
 		else
-			boutput(M, __blue("You feel refreshed and ready to get back into the fight."))
+			boutput(M, "<span class='notice'>You feel refreshed and ready to get back into the fight.</span>")
 
 		M.delStatus("resting")
 		if (ishuman(M))
@@ -66,7 +66,7 @@
 		M.TakeDamage("All", greatest_stun, 0)
 		M.take_oxygen_deprivation(-5)
 		M.losebreath = min(usr.losebreath - 3)
-		boutput(M, __blue("You cancel your stuns and take [greatest_stun] damage in return."))
+		boutput(M, "<span class='notice'>You cancel your stuns and take [greatest_stun] damage in return.</span>")
 
 		src.remove_stuns(3)
 		return 0
