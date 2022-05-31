@@ -1110,8 +1110,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 					if(G.affecting == M)
 						return
 				src.visible_message("<span class='alert'><B>[src] snatches up [M] in \his huge claws!</B></span>")
-				var/obj/item/grab/G = new(src, src, M)
-				SEND_SIGNAL(M, COMSIG_MOB_GRABBED, G)
+				var/obj/item/grab/G = new /obj/item/grab(src, src, M)
 				usr.put_in_hand_or_drop(G)
 				M.changeStatus("stunned", 1 SECOND)
 				G.state = GRAB_AGGRESSIVE
