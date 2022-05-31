@@ -1789,6 +1789,9 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			if (!hit)
 				if (istype(turf,/turf/simulated/floor))
 					var/turf/simulated/floor/F = turf
+					if (istype(F, /turf/simulated/floor/feather))
+						boutput(user, "<span class='alert'><b>The tile stays stuck to the floor!</b></span>")
+						return
 					var/obj/item/tile = F.pry_tile(master, user, params)
 					if (tile)
 						hit = 1
@@ -1946,7 +1949,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		density = 1
 		del_self = 0
 		clash_time = -1
-	
+
 
 		//mouse_opacity = 1
 		var/bump_count = 0

@@ -1,5 +1,24 @@
 
+(t)mon may 30 22
+(u)Bartimeus973
+(p)8651
+(e)🎨|sprites
+(*)Detectives now have a weak scuttlebot of their own! It has taken the shape of the detgadget hat in their locker.
+(u)tarmunora
+(+)chlorine, acetaldehyde, fluorine splash multipler reduced to 0.33, formaldehyde splash multiplier reduced to 0.5, skin penetration removed from nitrogen dioxide
+(+)chorine, acetaldehyde depletion rates 0.4 -> 0.6
+(+)fluorine damage burn/tox damage reduced 1 -> 0.75
+(u)tarmunora
+(*)sec token crate now gets sec assistant token instead and made cheaper
 (t)sun may 29 22
+(u)Wisemonster
+(p)8762
+(e)🗺|mapping
+(+)Added status displays to Kondaru, Horizon, and Destiny.
+(u)DimWhat
+(p)8809
+(e)|
+(+)Increased the material cost of flashes
 (u)TTerc
 (e)|
 (*)Clicking doors with open panel via empty hand or bumping into them will now open them, as long as you have proper access. Hacking UI panel will open only if you have hacking tools/remote signaller in any hand.

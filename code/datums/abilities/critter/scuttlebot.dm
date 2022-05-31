@@ -141,3 +141,21 @@
 		else //In case this ability is put on another mob
 			boutput(holder.owner, "<span class='alert'>You dont have a body to go back to!</span>")
 			return 1
+
+/datum/targetable/critter/scuttle_scan
+	name = "Robotic scan"
+	desc = "Use your robotic vision to gather forensics"
+	icon_state = "scuttlescan"
+	cooldown = 3 SECONDS
+	targeted = 1
+	target_anything = 1
+
+	cast(atom/target)
+		if (..())
+			return 1
+
+		if (BOUNDS_DIST(target, holder.owner) > 0 || istype(target, /obj/ability_button))
+			return
+
+		holder.owner.visible_message("<span class='alert'><b>[holder.owner]</b> has scanned [target].</span>")
+		boutput(holder.owner, scan_forensic(target, visible = 1))

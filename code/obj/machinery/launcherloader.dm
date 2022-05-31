@@ -48,7 +48,7 @@
 		playsound(src, "sound/effects/pump.ogg",50, 1)
 		SPAWN(0.3 SECONDS)
 			for(var/atom/movable/AM in src.loc)
-				if(AM.anchored || AM == src || isobserver(AM) || isintangible(AM)) continue
+				if(AM.anchored || AM == src || isobserver(AM) || isintangible(AM) || isflockmob(AM)) continue
 				if(trash && AM.delivery_destination != "Disposals")
 					AM.delivery_destination = "Disposals"
 				step(AM,src.dir)
@@ -82,14 +82,14 @@
 		if(!operating && !driver_operating)
 			var/drive = 0
 			for(var/atom/movable/M in src.loc)
-				if(M == src || M.anchored || isobserver(M) || isintangible(M)) continue
+				if(M == src || M.anchored || isobserver(M) || isintangible(M) || isflockmob(M)) continue
 				drive = 1
 				break
 			if(drive) activate()
 
 	Crossed(atom/movable/A)
 		..()
-		if (istype(A, /mob/dead) || isintangible(A) || iswraith(A)) return
+		if (istype(A, /mob/dead) || isintangible(A) || iswraith(A) || isflockmob(A)) return
 		return_if_overlay_or_effect(A)
 		activate()
 
@@ -128,7 +128,7 @@
 
 	proc/get_next_dir()
 		for(var/atom/movable/AM in src.loc)
-			if(AM.anchored || AM == src || isobserver(AM) || isintangible(AM)) continue
+			if(AM.anchored || AM == src || isobserver(AM) || isintangible(AM) || isflockmob(AM)) continue
 			if(AM.delivery_destination)
 				if(destinations.Find(AM.delivery_destination))
 					return destinations[AM.delivery_destination]
@@ -153,7 +153,7 @@
 
 		SPAWN(0.3 SECONDS)
 			for(var/atom/movable/AM2 in src.loc)
-				if(AM2.anchored || AM2 == src || isobserver(AM2) || isintangible(AM2)) continue
+				if(AM2.anchored || AM2 == src || isobserver(AM2) || isintangible(AM2) || isflockmob(AM2)) continue
 				step(AM2,src.dir)
 
 			driver = (locate(/obj/machinery/mass_driver) in get_step(src,src.dir))
@@ -177,14 +177,14 @@
 		if(!operating && !driver_operating)
 			var/drive = 0
 			for(var/atom/movable/M in src.loc)
-				if(M == src || M.anchored || isobserver(M) || isintangible(M)) continue
+				if(M == src || M.anchored || isobserver(M) || isintangible(M) || isflockmob(M)) continue
 				drive = 1
 				break
 			if(drive) activate()
 
 	Crossed(atom/movable/A)
 		..()
-		if (istype(A, /mob/dead) || isintangible(A) || iswraith(A)) return
+		if (istype(A, /mob/dead) || isintangible(A) || iswraith(A) || isflockmob(A)) return
 
 		if (!trigger_when_no_match)
 			var/atom/movable/AM = A

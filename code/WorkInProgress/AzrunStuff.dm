@@ -441,3 +441,235 @@
 		if("active_step")
 			active_stage = id
 			. = TRUE
+
+/obj/item/golf_club
+	name = "golf club"
+	desc = "A metal rod, a curved face, and a grippy synthrubber grip.  Probably good at getting objects to go someplace else."
+	icon = 'icons/obj/items/weapons.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	icon_state = "club"
+	item_state = "rods"
+	flags = FPRINT | TABLEPASS| CONDUCT
+	w_class = W_CLASS_NORMAL
+	force = 9.0
+	throwforce = 15.0
+	throw_speed = 5
+	throw_range = 20
+	max_stack = 50
+	stamina_damage = 20
+	stamina_cost = 16
+	stamina_crit_chance = 30
+	rand_pos = 1
+	var/obj/item/golf_ball/ball
+	var/obj/ability_button/swing = new /obj/ability_button/golf_swing
+
+	random
+		New(turf/newLoc)
+			..()
+			color = pick("#f44","#942", "#4f4","#296", "#44f","#429")
+
+	test
+		New(turf/newLoc)
+			..()
+			new /obj/item/golf_ball(newLoc)
+			new /obj/item/storage/golf_goal(newLoc)
+
+	afterattack(obj/O as obj, mob/user as mob)
+		var/obj/item/golf_ball/B = O
+		if(istype(B))
+			step(user, get_dir(user, O))
+			animate(user, pixel_x=O.pixel_x, pixel_y=O.pixel_y, 2 SECONDS, easing=CUBIC_EASING | EASE_OUT)
+			SPAWN(1 SECONDS)
+				if(GET_DIST(O, user) == 0)
+					ball = O
+					swing.the_mob = user
+					swing.the_item = src
+					user.targeting_ability = swing
+					user.update_cursor()
+
+/obj/ability_button/golf_swing
+	name = "Swing"
+	icon_state = "shieldceoff"
+	targeted = 1 //does activating this ability let you click on something to target it?
+	target_anything = 1 //can you target any atom, not just people?
+	var/datum/projectile/ballshot = new /datum/projectile/special/golfball
+
+	execute_ability(atom/target, params)
+		var/obj/item/golf_club/C = the_item
+		if(GET_DIST(C,C.ball) > 0 || GET_DIST(C,the_mob) > 0 )
+			return
+
+		if(istype(C) && C.ball)
+			C.ball.set_loc(C)
+		else
+			return
+
+		var/debug = istype(C, /obj/item/golf_club/test)
+
+		var/pox = text2num(params["icon-x"]) - 16
+		var/poy = text2num(params["icon-y"]) - 16
+		var/swing_strength = sqrt(((target.x - the_mob.x) * 32 + pox)**2 + ((target.y - the_mob.y) * 32 + poy)**2)
+		swing_strength /= 32
+
+		var/mod_x = (rand()-0.5)* 5 * swing_strength
+		var/mod_y = (rand()-0.5)* 5 * swing_strength
+
+		if(debug)
+			boutput(the_mob, "Swing Strength:[swing_strength] RNG [mod_x]x[mod_y]")
+
+		ballshot.max_range = swing_strength + ((rand()-0.5) * 3)
+
+		var/obj/projectile/P = shoot_projectile_ST_pixel(the_mob, ballshot, target, pox+mod_x, poy+mod_y)
+		if (P)
+			P.targets = list(target)
+			P.mob_shooter = the_mob
+			P.shooter = the_mob
+			if(debug)
+				P.color = the_item.color
+			else
+				P.color = C.ball.color
+
+			P.special_data["ball"] = C.ball
+			P.special_data["debug"] = debug
+			P.proj_data.RegisterSignal(P, list(COMSIG_MOVABLE_MOVED), /datum/projectile/special/golfball/proc/check_newloc)
+
+		animate(the_mob, pixel_x=0, pixel_y=0, 1 SECONDS, easing=CUBIC_EASING)
+
+/datum/projectile/special/golfball
+	name = "golf ball"
+	sname = "golf ball"
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "golf_ball"
+	shot_sound = null
+	power = 0
+	cost = 1
+	power = 0
+	ks_ratio = 0
+	damage_type = D_SPECIAL
+	hit_type = DAMAGE_BLUNT
+	dissipation_delay = 0
+	dissipation_rate = 0
+	ks_ratio = 1
+	projectile_speed = 20
+	hit_ground_chance = 100
+	goes_through_walls = 0 // It'll stop homing when it hits something, then go bouncy
+	var/max_bounce_count = 25 // putting the I in ICEE BEEYEM
+	var/weaken_length = 4 SECONDS
+	var/slam_text = "The golf ball SLAMS into you!"
+	var/hit_sound = 'sound/effects/mag_magmisimpact_bounce.ogg'
+	var/last_sound_time = 0
+
+	proc/check_newloc(obj/projectile/O, atom/NewLoc)
+	// set_loc(atom/newloc)
+		var/obj/item/storage/golf_goal = locate() in NewLoc
+		if(golf_goal)
+			O.collide(golf_goal)
+		for(var/atom/A in NewLoc.contents)
+			if (isobj(A) && !A.density)
+				if (istype(A, /obj/overlay) || istype(A, /obj/effects)) continue
+				if (HAS_ATOM_PROPERTY(A, PROP_ATOM_NEVER_DENSE)) continue
+				if(A.invisibility > INVIS_NONE) continue
+				if(A.mouse_opacity)
+					O.collide(A)
+
+	on_pre_hit(var/atom/hit, var/angle, var/obj/projectile/O)
+		if(ismob(hit) || iscritter(hit))
+			O.visible_message("[O] bounces off of [hit].  Oops...")
+
+		if(!hit.density)
+			var/obj/item/I = hit
+			if(istype(I))
+				if(prob(I.w_class * 10))
+					. = TRUE
+				else
+					O.visible_message("[O] bounces off of [hit].")
+					hit_twitch(hit)
+
+	on_hit(atom/A, direction, var/obj/projectile/projectile)
+		. = ..()
+		if(projectile.reflectcount < src.max_bounce_count)
+			var/obj/projectile/Q = shoot_reflected_bounce(projectile, A, src.max_bounce_count, PROJ_RAPID_HEADON_BOUNCE)
+
+			Q.color = projectile.color
+			Q.special_data["ball"] = projectile.special_data["ball"]
+			Q.travelled = projectile.travelled
+			var/turf/T = get_turf(A)
+			if(TIME >= last_sound_time + 1 DECI SECOND)
+				last_sound_time = TIME
+				playsound(T, src.hit_sound, 60, 1)
+		else
+			playsound(A, 'sound/effects/mag_magmisimpact.ogg', 15, 1, -1)
+
+	on_end(var/obj/projectile/O)
+		if(O.special_data["debug"])
+			var/turf/T = get_turf(O)
+
+			var/atom/A = new /obj/item/golf_ball(T)
+			A.pixel_x = O.pixel_x
+			A.pixel_y = O.pixel_y
+			A.color = O.color
+			A.alpha = 150
+			A.mouse_opacity = 0
+			animate(A, alpha=0, time=10 SECONDS)
+			SPAWN(5 SECONDS)
+				qdel(A)
+
+	on_max_range_die(var/obj/projectile/O)
+		var/turf/T = get_turf(O)
+
+		var/obj/item/golf_ball/ball = O.special_data["ball"]
+		if(!ball)
+			ball = new /obj/item/golf_ball(T)
+			ball.color = O.special_data["color"]
+		else
+			ball.set_loc(T)
+
+		ball.pixel_x = O.pixel_x
+		ball.pixel_y = O.pixel_y
+		return
+
+/obj/item/golf_ball
+	name = "golf ball"
+	desc = "A small dimpled ball intended for recreation."
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "golf_ball"
+	w_class = W_CLASS_TINY
+
+	digital
+		can_pickup(user)
+			. = FALSE
+	random
+		New(turf/newLoc)
+			..()
+			color = pick("#f44","#942", "#4f4","#296", "#44f","#429")
+
+
+/obj/item/storage/golf_goal
+	name = "Golf Goal"
+	desc = "This appears to simply be a coffee mug but it has a little hole in the bottom."
+	icon = 'icons/obj/foodNdrink/drinks.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
+	icon_state = "mug"
+	item_state = "mug"
+	rand_pos = TRUE
+	can_hold = list(/obj/item/golf_ball)
+	slots = 1
+	max_wclass = W_CLASS_TINY
+
+	New()
+		..()
+		src.transform = turn(src.transform, -90)
+
+	bullet_act(var/obj/projectile/P)
+		if(istype(P.proj_data,/datum/projectile/special/golfball))
+			var/obj/item/golf_ball/ball = P.special_data["ball"]
+			if(istype(ball))
+				if( ((P.max_range * 32) - P.travelled) < 64) // 32?
+					if(length(contents))
+						visible_message("[P] knocks into [src]. There must already be a ball in there!")
+					else
+						P.alpha = 0
+						P.die()
+						visible_message("[P] makes it into [src]. Nice shot!")
+						ball.set_loc(src)
+						hit_twitch(src)

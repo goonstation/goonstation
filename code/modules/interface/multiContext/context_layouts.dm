@@ -43,6 +43,9 @@ var/list/datum/contextAction/globalContextActions = null
 	else if (ishivebot(target))
 		var/mob/living/silicon/hivebot/hivebot = target
 		hivebot.hud.add_screen(C)
+	else if (istype(target, /mob/living/intangible/flock))
+		var/mob/living/intangible/flock/flock_entity = target
+		flock_entity.render_special.add_screen(C)
 
 
 /datum/contextLayout/flexdefault
