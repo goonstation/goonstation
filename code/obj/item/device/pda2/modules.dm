@@ -292,15 +292,15 @@
 		if(..())
 			return
 		if(href_list["toggle"])
-			src.send_alert()
+			src.send_alert(usr)
 		return
 
-	proc/send_alert()
+	proc/send_alert(mob/user)
 		if (!src.host)
-			boutput(usr, "<span class='alert'>No PDA detected.")
+			boutput(user, "<span class='alert'>No PDA detected.")
 			return
 		if (ON_COOLDOWN(src, "send_alert", 5 MINUTES))
-			boutput(usr, "<span class='alert'>[src] is still on cooldown mode!</span>")
+			boutput(user, "<span class='alert'>[src] is still on cooldown mode!</span>")
 			return
 		var/datum/signal/signal = get_free_signal()
 		signal.source = src.host
@@ -311,12 +311,13 @@
 		var/area/A = get_area(src.host)
 		signal.data["message"]  = "<b><span class='alert'>***SECURITY BACKUP REQUESTED*** Location: [A ? A.name : "nowhere"]!"
 		src.host.post_signal(signal)
-		playsound(src, "sound/items/security_alert.ogg", 90, 1, 3)
-		var/map_text = null
-		map_text = make_chat_maptext(usr, "Emergency alert sent. Please assist this officer.", "color: #bbbbbb; font-size: 7px;", alpha = 180)
-		for (var/mob/O in hearers(usr))
-			O.show_message(assoc_maptext = map_text)
-		boutput(usr, "<span class='notice'>Alert sent.</span>")
+		if(isliving(user))
+			playsound(src, "sound/items/security_alert.ogg", 90, 1, 3)
+			var/map_text = null
+			map_text = make_chat_maptext(usr, "Emergency alert sent. Please assist this officer.", "font-family: 'Helvetica'; color: #8B0000; font-size: 7px;", alpha = 215)
+			for (var/mob/O in hearers(usr))
+				O.show_message(assoc_maptext = map_text)
+			boutput(usr, "<span class='notice'>Alert sent.</span>")
 
 /obj/ability_button/pda_security_alert
 	name = "Send Security Alert"
@@ -325,4 +326,4 @@
 	execute_ability()
 		var/obj/item/device/pda_module/alert/J = the_item
 		if (J.host)
-			J.send_alert()
+			J.send_alert(src.the_mob)
