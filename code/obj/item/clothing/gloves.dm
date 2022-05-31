@@ -218,6 +218,10 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	item_state = "finger-"
 	hide_prints = 0
 
+	setupProperties()
+		..()
+		setProperty("conductivity", 1)
+
 /obj/item/clothing/gloves/black
 	desc = "These gloves are fire-resistant."
 	name = "Black Gloves"
@@ -270,7 +274,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	scramble_prints = 1
 	setupProperties()
 		..()
-		setProperty("conductivity", 0.3)
+		setProperty("conductivity", 0.7)
 
 /obj/item/clothing/gloves/latex/blue
 	color = "#91d5e9"
@@ -431,7 +435,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	setupProperties()
 		..()
 		setProperty("coldprot", 7)
-		setProperty("conductivity", 0.3)
+		setProperty("conductivity", 0.4)
 
 	afterattack(atom/target, mob/user, reach, params)
 		..()
@@ -577,6 +581,10 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	icon_state = "water_wings"
 	item_state = "water_wings"
 	hide_prints = 0
+
+	setupProperties()
+		..()
+		setProperty("conductivity", 1)
 
 
 //Fun isn't something one considers when coding in ss13, but this did put a smile on my face

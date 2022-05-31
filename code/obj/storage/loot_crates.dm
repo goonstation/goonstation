@@ -647,6 +647,9 @@
 	var/primary = TRUE
 	var/image/gemstone = null
 	var/obj/item/clothing/gloves/psylink_bracelet/twin
+	setupProperties()
+		..()
+		setProperty("conductivity", 1)
 
 	New()
 		..()
