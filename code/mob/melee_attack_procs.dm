@@ -284,15 +284,18 @@
 			var/datum/pathogen/P = H.pathogens[uid]
 			P.ongrab(target)
 
+	var/obj/item/grab/new_grab
 	if (!grab_item)
-		var/obj/item/grab/G = new /obj/item/grab(src, src, target)
-		src.put_in_hand(G, src.hand)
+		new_grab = new /obj/item/grab(src, src, target)
+		src.put_in_hand(new_grab, src.hand)
 	else// special. return it too
 		if (!grab_item.special_grab)
 			return
-		var/obj/item/grab/G = new grab_item.special_grab(grab_item, src, target)
-		G.loc = grab_item
-		.= G
+		new_grab = new grab_item.special_grab(grab_item, src, target)
+		new_grab.loc = grab_item
+		.= new_grab
+
+	SEND_SIGNAL(target, COMSIG_MOB_GRABBED, new_grab)
 
 	for (var/obj/item/grab/block/G in target.equipped_list(check_for_magtractor = 0)) //being grabbed breaks a block
 		qdel(G)
