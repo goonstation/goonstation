@@ -590,11 +590,6 @@
 				if (S.active)
 					shielded = 1
 					break
-			if (istype(A,/obj/item/cloaking_device))
-				var/obj/item/cloaking_device/S = A
-				if (S.active)
-					shielded = 2
-					break
 
 	if (shielded)
 		UpdateOverlays(shield_image, "shield")
