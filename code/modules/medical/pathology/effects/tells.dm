@@ -53,11 +53,12 @@ datum/microbioeffects/tells/hiccups
 		return "The pathogen's cells appear to be... hugging each other?"
 */
 
-/*datum/pathogeneffects/neutral/sunglass
+datum/pathogeneffects/neutral/sunglass
 	name = "Sunglass Glands"
 	desc = "The infected grew sunglass glands."
-	infect_type = INFECT_NONE
-	rarity = THREAT_NEUTRAL
+
+	onadd(var/datum/microbe/origin)
+		origin.effectdata += "sunglass"
 
 	proc/glasses(var/mob/living/carbon/human/M as mob)
 		var/obj/item/clothing/glasses/G = M.glasses
@@ -75,18 +76,12 @@ datum/microbioeffects/tells/hiccups
 			M.update_clothing()
 
 	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (origin.in_remission)
+		if (!ishuman(M))
 			return
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if (!(H.glasses) || (!(istype(H.glasses, /obj/item/clothing/glasses/sunglasses)) && prob(50)))
-				switch(origin.stage)
-					if (2 to 4)
-						if (prob(15))
-							glasses(M)
-					if (5)
-						if (prob(25))
-							glasses(M)
+
+		var/mob/living/carbon/human/H = M
+		if ((!(H.glasses) &&prob (2)) || (!(istype(H.glasses, /obj/item/clothing/glasses/sunglasses)) && prob(1)))
+			glasses(M)
 
 	may_react_to()
 		return "The pathogen appears to be sensitive to sudden flashes of light."
@@ -101,31 +96,12 @@ datum/microbioeffects/tells/hiccups
 datum/pathogeneffects/neutral/deathgasping
 	name = "Deathgasping"
 	desc = "The pathogen causes the user's brain to believe the body is dying."
-	infect_type = INFECT_NONE
-	rarity = THREAT_NEUTRAL
+	onadd(var/datum/microbe/origin)
+		origin.effectdata += "deathgasp"
+
 	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (origin.in_remission)
-			return
-		switch (origin.stage)
-			if (1)
-				if (prob(10))
-					M:emote("deathgasp")
-
-			if (2)
-				if (prob(12))
-					M:emote("deathgasp")
-
-			if (3)
-				if (prob(14))
-					M:emote("deathgasp")
-
-			if (4)
-				if (prob(16))
-					M:emote("deathgasp")
-
-			if (5)
-				if (prob(18))
-					M:emote("deathgasp")
+		if (prob(1))
+			M:emote("deathgasp")
 
 	may_react_to()
 		return "The pathogen appears to be.. sort of dead?"
@@ -133,8 +109,10 @@ datum/pathogeneffects/neutral/deathgasping
 datum/pathogeneffects/neutral/shakespeare
 	name = "Shakespeare"
 	desc = "The infected has an urge to begin reciting shakespearean poetry."
-	infect_type = INFECT_NONE
-	rarity = THREAT_NEUTRAL
+
+	onadd(var/datum/microbe/origin)
+		origin.effectdata += "shakespeare"
+
 	var/static/list/shk = list("Expectation is the root of all heartache.",
 "A fool thinks himself to be wise, but a wise man knows himself to be a fool.",
 "Love all, trust a few, do wrong to none.",
@@ -163,14 +141,12 @@ datum/pathogeneffects/neutral/shakespeare
 			return shakespearify(message)
 
 	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (origin.in_remission)
-			return
-		if (prob(origin.stage)) // 3. holy shit shut up shUT UP
+		if (prob(0.5)) // 3. holy shit shut up shUT UP
 			M.say(pick(shk))
 
 	may_react_to()
 		return "The culture appears to be quite dramatic."
-*/
+
 
 datum/microbioeffects/tells/hoarseness
 	name = "Hoarseness"
