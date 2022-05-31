@@ -75,18 +75,16 @@
 	var/datum/reagent/blood/pathogen/R = reagents.get_reagent("pathogen")
 	if (R)
 		R.microbes[P.microbio_uid] = P
-/*
-/proc/ez_pathogen(var/stype)
-	var/datum/pathogen/P = new /datum/pathogen
-	var/datum/pathogen_cdc/cdc = P.generate_name()
-	cdc.mutations += P.name
-	cdc.mutations[P.name] = P
-	P.generate_cure(cdc, 0)
-	P.generate_attributes(0)
-	P.advance_speed = 25
-	P.spread = 25
-	P.suppression_threshold = 10
-	P.add_symptom(pathogen_controller.path_to_symptom[stype])
-	logTheThing("pathology", null, null, "Pathogen [P.name] created by quick-pathogen-proc with symptom [stype].")
+
+
+// ez_pathogen
+// Use this proc when you have already defined
+/proc/ez_pathogen(var/EP)											//EP for Effect Path
+	var/datum/microbe/P = new /datum/microbe
+	//var/datum/pathogen_cdc/cdc = P.generate_name()
+	P.generate_name()
+	P.add_symptom(microbe_controller.path_to_effect[EP])
+	P.generate_cure(P)
+	P.generate_attributes()
+	logTheThing("pathology", null, null, "Microbe culture [P.name] created by quick-pathogen-proc with symptom [EP].")
 	return P
-*/

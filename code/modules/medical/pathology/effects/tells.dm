@@ -172,7 +172,7 @@ datum/pathogeneffects/neutral/shakespeare
 		return "The culture appears to be quite dramatic."
 */
 
-datum/pathogeneffects/neutral/hoarseness
+datum/microbioeffects/tells/hoarseness
 	name = "Hoarseness"
 	desc = "The pathogen causes dry throat, leading to hoarse speech."
 
@@ -188,7 +188,7 @@ datum/pathogeneffects/neutral/hoarseness
 		return "The pathogen appears to be rapidly breaking down certain materials around it."
 
 
-datum/pathogeneffects/neutral/malaise
+datum/microbioeffects/tells/malaise
 	name = "Malaise"
 	desc = "The pathogen causes very mild, inconsequential fatigue to its host."
 

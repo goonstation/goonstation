@@ -28,6 +28,13 @@ datum/controller/microbe
 
 var/global/datum/controller/microbe/microbe_controller = new()
 
+// todo: remove this, port. (To where?)
+// A wrapper record returned by the onshocked event of a pathogen symptom.
+datum/shockparam
+	var/amt
+	var/wattage
+	var/skipsupp
+
 // A microbe. How surprising.
 datum/microbe
 	var/name										// The name of the microbial culture.
@@ -58,7 +65,7 @@ datum/microbe
 		name = ""
 		desc = ""
 		infected = null
-		duration = 1
+		duration = null
 		suppressant = null
 		effects = list()
 		microbio_uid = null
@@ -81,7 +88,9 @@ datum/microbe
 		setup(0, null)
 
 	proc/generate_name()
-		src.name = "CustomCulture"
+		src.microbio_uid = "[microbe_controller.next_uid]"
+		microbe_controller.next_uid++
+		src.name = "Custom Culture UID [src.microbio_uid]"
 		return
 
 	proc/generate_effects() //WIP
@@ -97,9 +106,8 @@ datum/microbe
 	proc/generate_attributes() //WIP
 		var/shape = pick("stringy", "snake", "blob", "spherical", "tetrahedral", "star shaped", "tesselated")
 		src.desc = "[suppressant.color] [shape] microbes" //color determined by average of cure reagent and assigned-effect colors
-		src.microbio_uid = "[microbe_controller.next_uid]"
-		microbe_controller.next_uid++
-
+		src.durationtotal = rand(50,150)
+		src.duration = src.durationtotal
 
 	proc/randomize()
 		generate_name()
@@ -121,6 +129,7 @@ datum/microbe
 			for (var/datum/microbioeffects/E in src.effects)
 				E.onadd(src)
 			src.suppressant = origin.suppressant
+			src.microbio_uid = origin.microbio_uid
 		else if (status == 1)
 			randomize()
 		else if (!origin && status == 2)
@@ -134,11 +143,14 @@ datum/microbe
 	// handles pathogen duration and natural immunization
 	proc/progress_pathogen()
 		var/iscured = src.suppressant.suppress_act(src)
-		if (!duration || iscured)
+		if (iscured)
+			duration = ceil(duration/2) - 1
+			return
+		if (!duration)
 			infected.cured(src)
 			return
-		else duration--
-		ticked = 1 							//  Wrap into process
+		else
+			duration--							//  Wrap into process
 
 //Generalize for objects and turfs WIP
 
@@ -233,7 +245,7 @@ datum/microbe
 	// Act when shocked. Returns the amount of damage the shocked mob should actually take (which leaves place for both amplification and suppression)
 	// The return system here is more complex than for most other events. The symptoms' onshocked may not only modify the amount of shock damage, but
 	// also decide that the presence of the symptom makes the a muscle-event vulnerable pathogen resistant to suppression through shocking.
-/*	proc/onshocked(var/amt, var/wattage)
+	proc/onshocked(var/amt, var/wattage)
 		var/datum/shockparam/ret = new
 		ret.amt = amt
 		ret.wattage = wattage
@@ -242,7 +254,6 @@ datum/microbe
 			ret = effect:onshocked(infected, ret, src)
 		suppressant.onshocked(ret, src)
 		return ret.amt
-*/
 	// Act when saying something. Returns the message that should be said after the diseases make the appropriate modifications.
 	proc/onsay(message)
 		for (var/effect in src.effects)

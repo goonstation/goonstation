@@ -512,9 +512,9 @@ CONTAINS:
 
 			if (ishuman(patient)) //remove later when we give nonhumans pathogen / organ response?
 				var/mob/living/carbon/human/H = patient
-				//for (var/uid in H.microbes)
-					//var/datum/pathogen/P = H.microbes[uid]
-					//P.onshocked(35, 500)
+				for (var/uid in H.microbes)
+					var/datum/microbe/P = H.microbes[uid]
+					P.onshocked(35, 500)
 
 				var/sumdamage = patient.get_brute_damage() + patient.get_burn_damage() + patient.get_toxin_damage()
 				if (suiciding)

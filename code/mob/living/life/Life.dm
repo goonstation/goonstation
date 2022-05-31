@@ -573,11 +573,11 @@
 			if (src.microbes.len)
 				for (var/uid in src.microbes)
 					var/datum/microbe/P = src.microbes[uid]
-					P.mob_act_dead()
+					P.mob_act_dead(src, P)
 			return
 		for (var/uid in src.microbes)
 			var/datum/microbe/P = src.microbes[uid]
-			P.mob_act()
+			P.mob_act(src, P)
 
 	get_cold_protection()
 		// calculate 0-100% insulation from cold environments

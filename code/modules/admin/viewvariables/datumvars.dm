@@ -636,7 +636,7 @@
 		else
 			audit(AUDIT_ACCESS_DENIED, "tried to view references.")
 		return
-	/*if (href_list["AddPathogen"])
+	if (href_list["AddPathogen"])
 		USR_ADMIN_ONLY
 		if(holder && src.holder.level >= LEVEL_PA)
 			var/obj/O = locate(href_list["AddPathogen"])
@@ -644,7 +644,6 @@
 		else
 			audit(AUDIT_ACCESS_DENIED, "tried to add random pathogens all rude-like.")
 		return
-		*/
 	if (href_list["KillCritter"])
 		USR_ADMIN_ONLY
 		if(holder && src.holder.level >= LEVEL_PA)

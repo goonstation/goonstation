@@ -279,10 +279,10 @@
 				target.remove_stamina(STAMINA_DEFAULT_BLOCK_COST)
 				return
 
-	//if (istype(H))
-		//for (var/uid in H.microbes)
-			//var/datum/pathogen/P = H.microbes[uid]
-			//P.ongrab(target)
+	if (istype(H))
+		for (var/uid in H.microbes)
+			var/datum/microbe/P = H.microbes[uid]
+			P.ongrab(target)
 
 	if (!grab_item)
 		var/obj/item/grab/G = new /obj/item/grab(src, src, target)
@@ -403,14 +403,14 @@
 			msgs.disarm_RNG_result |= "shoved"
 
 	if (prob((stampart + 5) * mult))
-		//if (ishuman(src))
-			//var/mob/living/carbon/human/H = src
-			//for (var/uid in H.microbes)
-				//var/datum/pathogen/P = H.microbes[uid]
-				//var/ret = P.ondisarm(target, 1)
-				//if (!ret)
-					//msgs.base_attack_message = "<span class='alert'><B>[src] shoves [target][DISARM_WITH_ITEM_TEXT]!</B></span>"
-					//return msgs
+		if (ishuman(src))
+			var/mob/living/carbon/human/H = src
+			for (var/uid in H.microbes)
+				var/datum/microbe/P = H.microbes[uid]
+				var/ret = P.ondisarm(target, 1)
+				if (!ret)
+					msgs.base_attack_message = "<span class='alert'><B>[src] shoves [target][DISARM_WITH_ITEM_TEXT]!</B></span>"
+					return msgs
 		msgs.base_attack_message = "<span class='alert'><B>[src] shoves [target] to the ground[DISARM_WITH_ITEM_TEXT]!</B></span>"
 		msgs.played_sound = 'sound/impact_sounds/Generic_Shove_1.ogg'
 		msgs.disarm_RNG_result |= "shoved_down"
@@ -637,11 +637,11 @@
 		msgs.affecting = def_zone
 
 	var/punchmult = get_base_damage_multiplier(def_zone)
-	//if(ishuman(src))
-		//var/mob/living/carbon/human/LM = src
-		//for (var/uid in LM.microbes)
-			//var/datum/pathogen/P = LM.microbes[uid]
-			//punchmult *= P.onpunch(target, def_zone)
+	if(ishuman(src))
+		var/mob/living/carbon/human/LM = src
+		for (var/uid in LM.microbes)
+			var/datum/microbe/P = LM.microbes[uid]
+			punchmult *= P.onpunch(target, def_zone)
 
 	var/punchedmult = target.get_taken_base_damage_multiplier(src, def_zone)
 
@@ -1149,13 +1149,13 @@
 	return 1
 
 /mob/living/carbon/human/get_taken_base_damage_multiplier(var/mob/attacker, var/def_zone)
-	//var/punchedmult = 1
+	var/punchedmult = 1
 
-	//for (var/uid in src.microbes)
-		//var/datum/pathogen/P = src.microbes[uid]
-		//punchedmult *= P.onpunched(attacker, def_zone)
+	for (var/uid in src.microbes)
+		var/datum/microbe/P = src.microbes[uid]
+		punchedmult *= P.onpunched(attacker, def_zone)
 
-	//return punchedmult
+	return punchedmult
 
 /mob/proc/calculate_bonus_damage(var/datum/attackResults/msgs)
 	return 0

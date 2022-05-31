@@ -234,11 +234,11 @@
 
 		onDeplete()
 			holder.owner.contract_disease(/datum/ailment/disease/space_madness, null, null, 1)
-			//if (ishuman(holder.owner))
-				//var/mob/living/carbon/human/H = holder.owner
-				//if (!H.microbes.len)
-					//holder.owner.infected(ez_pathogen(/datum/pathogeneffects/malevolent/serious_paranoia))
-
+			/*if (ishuman(holder.owner))
+				var/mob/living/carbon/human/H = holder.owner
+				if (!H.microbes.len)
+					holder.owner.infected(ez_pathogen(/datum/microbioeffects/malevolent/serious_paranoia))
+			*/
 		onLife()
 			if (value < 10 && prob((10 - value) * 10))
 				onDeplete()

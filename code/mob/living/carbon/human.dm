@@ -598,9 +598,9 @@
 	for (var/obj/item/implant/H in src.implant)
 		H.on_death()
 
-	//for (var/uid in src.microbes)
-		//var/datum/pathogen/P = src.microbes[uid]
-		//P.ondeath()
+	for (var/uid in src.microbes)
+		var/datum/microbe/P = src.microbes[uid]
+		P.ondeath()
 
 #ifdef DATALOGGER
 	game_stats.Increment("deaths")
@@ -1493,11 +1493,11 @@
 
 	message = process_accents(src,message)
 
-	//for (var/uid in src.microbes)
-		//var/datum/pathogen/P = src.microbes[uid]
-		//message = P.onsay(message)
+	for (var/uid in src.microbes)
+		var/datum/microbe/P = src.microbes[uid]
+		message = P.onsay(message)
 
-	//..(message)
+	..(message)
 
 	src.say_language = original_language
 
@@ -2492,6 +2492,7 @@
 		immunity(P)
 		qdel(Q)
 		logTheThing("pathology", src, null, "is cured of [pname].")
+		return
 /*
 /mob/living/carbon/human/remission(var/datum/microbe/P)
 	if (isdead(src))
@@ -2507,6 +2508,7 @@
 	if (!(P.microbio_uid in src.immunities))
 		src.immunities += P.microbio_uid
 		logTheThing("pathology", src, null, "gains immunity to pathogen [P].")
+		return
 
 /mob/living/carbon/human/emag_act(mob/user, obj/item/card/emag/E)
 

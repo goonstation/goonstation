@@ -72,15 +72,15 @@ ABSTRACT_TYPE(/datum/microbioeffects/benevolent)
 	may_react_to()
 		return "The pathogen appears to be rapidly repairing the other cells around it."
 	//podrickequus's first code, yay
-/*
-datum/pathogeneffects/benevolent/cleansing
+
+datum/microbioeffects/benevolent/cleansing
 	name = "Cleansing"
 	desc = "The pathogen cleans the body of damage caused by toxins."
 
-	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act(var/mob/M as mob, var/datum/microbe/origin)
 		//if (prob(origin.stage * 5) && M.get_toxin_damage())
 		if (M.get_toxin_damage())
-			M.take_toxin_damage(-origin.stage / 2)
+			M.take_toxin_damage(-1)
 			if (prob(12))
 				M.show_message("<span class='notice'>You feel cleansed.</span>")
 
@@ -89,7 +89,7 @@ datum/pathogeneffects/benevolent/cleansing
 
 	may_react_to()
 		return "The pathogen seems to be much cleaner than normal."
-
+/*
 datum/pathogeneffects/benevolent/oxygenconversion
 	name = "Oxygen Conversion"
 	desc = "The pathogen converts organic tissue into oxygen when required by the host."
@@ -179,27 +179,15 @@ datum/pathogeneffects/benevolent/resurrection
 	react_to(var/R, var/zoom)
 		if (R == "synthflesh")
 			return "Dead parts of the synthflesh seem to still be transferring blood."
+*/
 
-datum/pathogeneffects/benevolent/neuronrestoration
+datum/microbioeffects/benevolent/neuronrestoration
 	name = "Neuron Restoration"
 	desc = "Infection slowly repairs nerve cells in the brain."
 
-	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (origin.in_remission)
-			return
-		switch (origin.stage)
-			if (2)
-				if (prob(5))
-					M.take_brain_damage(-1)
-			if (3)
-				if (prob(10))
-					M.take_brain_damage(-1)
-			if (4)
-				if (prob(15))
-					M.take_brain_damage(-2)
-			if (5)
-				if (prob(20))
-					M.take_brain_damage(-2)
+	mob_act(var/mob/M as mob, var/datum/microbe/origin)
+		if (prob(5))
+			M.take_brain_damage(-1)
 
 	react_to(var/R, var/zoom)
 		if (!(R == "neurotoxin"))
@@ -207,7 +195,7 @@ datum/pathogeneffects/benevolent/neuronrestoration
 
 	may_react_to()
 		return "The pathogen appears to have a gland that may affect neural functions."
-
+/*
 datum/pathogeneffects/benevolent/genetictemplate
 	name = "Genetic Template"
 	desc = "Spreads a mutation from patient zero to other afflicted."

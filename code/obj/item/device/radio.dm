@@ -809,11 +809,11 @@ var/list/headset_channel_lookup
 #else
 			M.changeStatus("weakened", 10 SECONDS)
 #endif
-			//if(istype(M, /mob/living/carbon/human))
-				//var/mob/living/carbon/human/H = M
-				//for (var/uid in H.microbes)
-					//var/datum/pathogen/P = H.microbes[uid]
-					//P.onshocked(35, 500)
+			if(istype(M, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = M
+				for (var/uid in H.microbes)
+					var/datum/microbe/P = H.microbes[uid]
+					P.onshocked(35, 500)
 
 	if ((src.master && src.wires & WIRE_SIGNAL))
 		src.master.receive_signal()

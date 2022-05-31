@@ -1691,7 +1691,7 @@
 		L.take_toxin_damage(tox * mult)
 		if(weighted_average > 4)
 			weighted_average = 0
-			//#ifdef CREATE_PATHOGENS
+			//#ifdef CREATE_PATHOGENS				//Should corpses produce bad microbes?
 			//if(!isdead(L))
 				//var/datum/pathogen/P = new /datum/pathogen
 				//P.create_weak()

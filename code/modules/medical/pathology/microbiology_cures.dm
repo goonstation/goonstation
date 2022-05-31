@@ -53,10 +53,10 @@ ABSTRACT_TYPE(/datum/suppressant)
 	desc = "The pathogen is suppressed by a high body temperature."
 	therapy = "thermal"
 
-	cure_synthesis = list("phlogiston", "infernite")
+	cure_synthesis = MB_HOT_REAGENTS
 
 	suppress_act(var/datum/microbe/P)
-		if (!(P.infected.bodytemperature > 310))
+		if (!(P.infected.bodytemperature > 320 + P.duration))	//Base temp is 273 + 37 = 310. Add 10 to avoid natural variance.
 			return 0
 		else
 			P.infected.show_message("<span class='notice'>You feel better.</span>")
@@ -70,10 +70,10 @@ ABSTRACT_TYPE(/datum/suppressant)
 		return "A peculiar gland on the pathogen suggests it may be <b style='font-size:20px;color:red'>suppressed</b> by affecting its temperature."
 
 	react_to(var/R)
-		if (R == "phlogiston" || R == "infernite")
-			return "The pathogens are attemping to escape from the area affected by the [R]."
+		if (R in MB_HOT_REAGENTS)
+			return MICROBIO_INSPECT_DISLIKES + "[R]."
 		else if (R in cure_synthesis)
-			return "The pathogens are moving towards the area affected by the [R]"
+			return MICROBIO_INSPECT_LIKES + "[R]."
 		else return null
 
 /datum/suppressant/cold
@@ -85,7 +85,7 @@ ABSTRACT_TYPE(/datum/suppressant)
 	cure_synthesis = list("cryostylane", "cryoxadone")
 
 	suppress_act(var/datum/microbe/P)
-		if (!(P.infected.bodytemperature < 250))
+		if (!(P.infected.bodytemperature < 300 - P.duration)) // Same idea as for heat, but inverse.
 			return 0
 		else
 			P.infected.show_message("<span class='notice'>You feel better.</span>")
@@ -141,7 +141,7 @@ ABSTRACT_TYPE(/datum/suppressant)
 	desc = "The pathogen is suppressed by brute medicine."
 	therapy = "medical"
 
-	suppress_act(var/datum/pathogen/P)
+	suppress_act(var/datum/microbe/P)
 		if (!(P.infected.reagents.has_reagent("styptic_powder", REAGENT_CURE_THRESHOLD) || P.infected.reagents.has_reagent("synthflesh", REAGENT_CURE_THRESHOLD)))
 			return 0
 		else
@@ -164,7 +164,7 @@ ABSTRACT_TYPE(/datum/suppressant)
 	desc = "The pathogen is suppressed by burn medicine."
 	therapy = "medical"
 
-	suppress_act(var/datum/pathogen/P)
+	suppress_act(var/datum/microbe/P)
 		if (!(P.infected.reagents.has_reagent("silver_sulfadiazine", REAGENT_CURE_THRESHOLD) || P.infected.reagents.has_reagent("synthflesh", REAGENT_CURE_THRESHOLD)))
 			return 0
 		else
