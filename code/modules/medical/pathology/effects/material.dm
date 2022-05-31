@@ -1,5 +1,5 @@
 // Effects related to materials and gas production go here.
-datum/pathogeneffects/material
+/datum/microbioeffects/material
 	name = "Material Effects"
 /*
 /*datum/pathogeneffects/material/smokegas
@@ -95,21 +95,14 @@ datum/pathogeneffects/malevolent/farts/o2
 			return "The flame of the hot reagents is oxidized by the gas."
 */
 
-datum/pathogeneffect/material/organicglass
+/datum/microbioeffects/material/organicglass
 	name = "Organic Glass"
 	desc = "The microbes produce silicate, reinforcing and repairing glass structures."
 
-	turf_act(var/turf/T, var/datum/pathogen/origin)
+	object_act(var/obj/O, var/datum/microbe/origin)
 		var/volume = 1
-		if(istype(T, /turf/simulated))
-			var/list/covered = holder.covered_turf()
-			if(length(covered) > 9)
-				volume = volume/length(covered)
-			if (volume < 3)
-				return
-			if(!T.reagents)
-				T.create_reagents(volume)
-			else
-				T.reagents.maximum_volume = T.reagents.maximum_volume + volume
-			T.reagents.add_reagent("silicate", volume, null)
+		if(istype(O,/obj/window))
+			O.reagents.add_reagent("silicate", volume, null)
 
+	onadd(var/datum/microbe/origin)
+		origin.effectdata += "organicglass"

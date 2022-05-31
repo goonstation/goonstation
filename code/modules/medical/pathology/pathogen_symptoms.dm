@@ -1,4 +1,4 @@
-
+/*
 
 datum/pathogeneffects
 	var/name
@@ -97,10 +97,10 @@ datum/pathogeneffects
 						target.show_message(infect_message)
 					logTheThing("pathology", origin.infected, target, "infects [constructTarget(target,"pathology")] with [origin.name] due to symptom [name] through direct contact ([contact_type]).")
 					return 1
-
-	proc/onadd(var/datum/pathogen/origin)
-		return
-
+*/
+	//proc/onadd(var/datum/pathogen/origin)
+		//return
+/*
 	// ====
 	// Events from this point on. Their exact behaviour is documented in pathogen.dm. Please do not add any event definitions outside this block.
 	// ondisarm(mob, mob, boolean, datum/pathogen) : float
@@ -2098,3 +2098,4 @@ datum/pathogeneffects/malevolent/detonation
 	react_to(var/R, var/zoom)
 		if (R == "synthflesh")
 			return "There are stray synthflesh pieces all over the dish."
+*/

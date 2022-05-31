@@ -1,3 +1,4 @@
+/*
 datum/pathogeneffects/neutral
 	name = "Neutral"
 	rarity = THREAT_NEUTRAL
@@ -362,3 +363,4 @@ datum/pathogeneffects/neutral/restingface
 
 	may_react_to()
 		return "The pathogen appears to react to hydrating agents."
+*/

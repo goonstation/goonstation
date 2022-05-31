@@ -1,3 +1,4 @@
+/*
 /**
  * Pathogen suppressants
  *
@@ -319,3 +320,4 @@
 			return "The mutagenic substance is severely damaging the inner elements of the pathogen."
 
 
+*/

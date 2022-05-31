@@ -86,16 +86,15 @@
 			H.take_toxin_damage(1 * mult)
 
 //stolen from the admin button because I know fuck all about pathogens - Kyle
-/*proc/add_pathogens(var/mob/living/A, var/amount)
+proc/add_pathogens(var/mob/living/A, var/amount)
 	if (!A || !A.reagents)
 		return 0
 
 	A.reagents.add_reagent("pathogen", amount)
 	var/datum/reagent/blood/pathogen/R = A.reagents.get_reagent("pathogen")
-	var/datum/pathogen/P = new /datum/pathogen
+	var/datum/microbe/P = new /datum/microbe
 	P.setup(1)
-	R.pathogens += P.pathogen_uid
-	R.pathogens[P.pathogen_uid] = P
-
+	R.pathogens += P.microbio_uid
+	R.pathogens[P.microbio_uid] = P
 	return 1
-*/
+

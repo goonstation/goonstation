@@ -1447,10 +1447,10 @@
 
 	A.reagents.add_reagent("pathogen", amount)
 	var/datum/reagent/blood/pathogen/R = A.reagents.get_reagent("pathogen")
-	var/datum/pathogen/P = new /datum/pathogen
+	var/datum/microbe/P = new /datum/microbe
 	P.setup(1)
-	R.pathogens += P.pathogen_uid
-	R.pathogens[P.pathogen_uid] = P
+	R.pathogens += P.microbio_uid
+	R.pathogens[P.microbio_uid] = P
 
 	boutput(usr, "<span class='success'>Added [amount] units of pathogen to [A.name] with pathogen [P.name].</span>")
 

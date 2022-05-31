@@ -16,27 +16,24 @@
 	var/color = "transparent"
 	var/desc = "The pathogen is not suppressed by any external effects."
 	var/therapy = "unknown"
-
+	ABSTRACT_TYPE(/datum/suppressant)
 	// A list of reagent IDs which may be used for cure synthesis with this suppressant.
 	var/list/cure_synthesis = list()
 
 	// Override this to define when your suppression method should act.
 	// Returns the new value for suppressed which is ONLY considered if suppressed is 0.
 	// Is not called if suppressed is -1. A secondary resistance may overpower a primary weakness.
-	proc/suppress_act(var/datum/pathogen/P)
-		return
-
-	proc/ongrab(var/mob/target as mob, var/datum/pathogen/P)
-		return
-	proc/onpunched(var/mob/origin as mob, zone, var/datum/pathogen/P)
-	proc/onpunch(var/mob/target as mob, zone, var/datum/pathogen/P)
-	proc/ondisarm(var/mob/target as mob, isPushDown, var/datum/pathogen/P)
-	proc/onshocked(var/datum/shockparam/param, var/datum/pathogen/P)
-	proc/onsay(message, var/datum/pathogen/P)
-	proc/onadd(var/datum/pathogen/P)
-	proc/onemote(var/mob/M as mob, message, voluntary, param, var/datum/pathogen/P)
-	proc/ondeath(var/datum/pathogen/P)
-	proc/oncured(var/datum/pathogen/P)
+	proc/suppress_act(var/datum/microbe/P)
+	proc/ongrab(var/mob/target as mob, var/datum/microbe/P)
+	proc/onpunched(var/mob/origin as mob, zone, var/datum/microbe/P)
+	proc/onpunch(var/mob/target as mob, zone, var/datum/microbe/P)
+	proc/ondisarm(var/mob/target as mob, isPushDown, var/datum/microbe/P)
+	proc/onshocked(var/datum/shockparam/param, var/datum/microbe/P)
+	proc/onsay(message, var/datum/microbe/P)
+	proc/onadd(var/datum/microbe/P)
+	proc/onemote(var/mob/M as mob, message, voluntary, param, var/datum/microbe/P)
+	proc/ondeath(var/datum/microbe/P)
+	proc/oncured(var/datum/microbe/P)
 
 	// While doing pathogen research, the suppression method may define how the pathogen reacts to certain reagents.
 	// Returns null if the pathogen does not react to the reagent.
@@ -56,13 +53,15 @@
 
 	cure_synthesis = list("phlogiston", "infernite")
 
-	suppress_act(var/datum/pathogen/P)
-		if (P.infected.bodytemperature > 310 + P.suppression_threshold)
-			if (P.stage > 3 && prob(P.advance_speed * 2))
-				P.infected.show_message("<span class='notice'>You feel better.</span>")
-				P.stage--
+	suppress_act(var/datum/microbe/P)
+		if (P.infected.bodytemperature > 310)
+			P.infected.show_message("<span class='notice'>You feel better.</span>")
 			return 1
-		return 0
+		else return 0
+
+	onadd(var/datum/microbe/P)
+		P.suppressant = "Heat"
+		return
 
 	may_react_to()
 		return "A peculiar gland on the pathogen suggests it may be <b style='font-size:20px;color:red'>suppressed</b> by affecting its temperature."
@@ -73,7 +72,7 @@
 		else if (R in cure_synthesis)
 			return "The pathogens are moving towards the area affected by the [R]"
 		else return null
-
+/*
 /datum/suppressant/cold
 	color = "red"
 	name = "Cold"
@@ -319,3 +318,4 @@
 			return "The mutagenic substance is severely damaging the inner elements of the pathogen."
 
 
+*/

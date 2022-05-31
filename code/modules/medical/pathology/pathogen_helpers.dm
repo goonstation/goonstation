@@ -66,16 +66,16 @@
 	become_statue(getMaterial("rock"), "Its not too uncommon for our employees to be stoned at work but this is just ridiculous!")
 
 /proc/generate_random_pathogen()
-	var/datum/pathogen/P = new /datum/pathogen
-	P.setup(1, null, 0)
+	var/datum/microbe/P = new /datum/microbe
+	P.setup(1, null)
 	return P
 
-/proc/wrap_pathogen(var/datum/reagents/reagents, var/datum/pathogen/P, var/units = 5)
+/proc/wrap_pathogen(var/datum/reagents/reagents, var/datum/microbe/P, var/units = 5)
 	reagents.add_reagent("pathogen", units)
 	var/datum/reagent/blood/pathogen/R = reagents.get_reagent("pathogen")
 	if (R)
-		R.pathogens[P.pathogen_uid] = P
-
+		R.pathogens[P.microbio_uid] = P
+/*
 /proc/ez_pathogen(var/stype)
 	var/datum/pathogen/P = new /datum/pathogen
 	var/datum/pathogen_cdc/cdc = P.generate_name()
@@ -89,4 +89,4 @@
 	P.add_symptom(pathogen_controller.path_to_symptom[stype])
 	logTheThing("pathology", null, null, "Pathogen [P.name] created by quick-pathogen-proc with symptom [stype].")
 	return P
-
+*/

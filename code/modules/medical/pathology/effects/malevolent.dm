@@ -1,45 +1,23 @@
 // Effects for nuclear bio-operator diseases and natural illnesses go here
-datum/pathogeneffects/malevolent
+/datum/microbioeffects/malevolent
 	name = "Malevolent"
-	rarity = RARITY_ABSTRACT
 
 // The following lines are the probably undocumented (well at least my part - Marq) hell of the default symptoms.
-datum/pathogeneffects/malevolent/coughing
+/datum/microbioeffects/malevolent/coughing
 	name = "Coughing"
 	desc = "Violent coughing occasionally plagues the infected."
-	rarity = THREAT_TYPE2
 
-	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (origin.in_remission)
-			return
-		switch (origin.stage)
-			if (1)
-				if (prob(0.06*origin.spread))
-					M.show_message("<span class='alert'>You cough.</span>")
-					src.infect_cloud(M, origin)
-			if (2)
-				if (prob(0.1*origin.spread))
-					M.visible_message("<span class='alert'>[M] coughs!</span>", "<span class='alert'>You cough.</span>", "<span class='alert'>You hear someone coughing.</span>")
-					src.infect_cloud(M, origin)
-			if (3)
-				if (prob(0.14*origin.spread))
-					M.visible_message("<span class='alert'>[M] coughs!</span>", "<span class='alert'>You cough.</span>", "<span class='alert'>You hear someone coughing.</span>")
-					src.infect_cloud(M, origin)
-			if (4)
-				if (prob(0.2*origin.spread))
-					M.visible_message("<span class='alert'>[M] coughs violently!</span>", "<span class='alert'>You cough violently!</span>", "<span class='alert'>You hear someone cough violently!</span>")
-					M.TakeDamage("chest", 1, 0)
-					src.infect_cloud(M, origin)
-			if (5)
-				if (prob(0.2*origin.spread))
-					M.visible_message("<span class='alert'>[M] coughs very violently!</span>", "<span class='alert'>You cough very violently!</span>", "<span class='alert'>You hear someone cough very violently!</span>")
-					M.TakeDamage("chest", 2, 0)
-					src.infect_cloud(M, origin)
+	mob_act(var/mob/M as mob, var/datum/microbe/origin)
+		if (prob(0.06))
+			M.show_message("<span class='alert'>You cough.</span>")
+
+	onadd(var/datum/microbe/origin)
+		origin.effectdata += "cough"
 
 	may_react_to()
 		return "The pathogen appears to generate a high amount of fluids."
 
-datum/pathogeneffects/malevolent/indigestion
+/*datum/pathogeneffects/malevolent/indigestion
 	name = "Indigestion"
 	desc = "A bad case of indigestion which occasionally cramps the infected."
 	rarity = THREAT_TYPE2
@@ -1466,3 +1444,4 @@ datum/pathogeneffects/malevolent/detonation
 	react_to(var/R, var/zoom)
 		if (R == "synthflesh")
 			return "There are stray synthflesh pieces all over the dish."
+*/

@@ -1,7 +1,7 @@
-datum/pathogeneffects
+/datum/microbioeffects
 	var/name
 	var/desc
-
+	ABSTRACT_TYPE(/datum/microbioeffects)
 	//var/infect_message = null
 	//var/infect_attempt_message = null // shown to person when an attempt to directly infect them is made
 
@@ -15,11 +15,11 @@ datum/pathogeneffects
 	//var/infection_coefficient = 1
 
 	//WIP
-	proc/turf_act(var/turf/T, var/datum/pathogen/origin)
+	proc/turf_act(var/turf/T, var/datum/microbe/origin)
 
-	proc/object_act(var/obj/O, var/datum/pathogen/origin)
+	proc/object_act(var/obj/O, var/datum/microbe/origin)
 
-	proc/reagent_act(var/datum/reagents/holder, var/datum/pathogen/origin)
+	proc/reagent_act(var/obj/item/reagent_containers/glass/B, var/datum/microbe/origin)
 
 	// mob_act(mob, datum/pathogen) : void
 	// This is the center of pathogen symptoms.
@@ -27,12 +27,12 @@ datum/pathogeneffects
 	// to only work on events like human interaction or external effects. A symptom therefore should override this proc.
 	// mob_act is also responsible for handling the symptom's ability to suppress the pathogen. Check the documentation on suppression in pathogen.dm.
 	// OVERRIDE: A subclass (direct or otherwise) is expected to override this.
-	proc/mob_act(var/mob/M as mob, var/datum/pathogen/origin)
+	proc/mob_act(var/mob/M as mob, var/datum/microbe/origin)
 
 	// mob_act_dead(mob, datum/pathogen) : void
 	// This functions identically to mob_act, except it is only called when the mob is dead. (mob_act is not called if that is the case.)
 	// OVERRIDE: Only override this if if it needed for the symptom.
-	proc/mob_act_dead(var/mob/M as mob, var/datum/pathogen/origin)
+	proc/mob_act_dead(var/mob/M as mob, var/datum/microbe/origin)
 
 	// does an infectious snap
 	// makes others snap, should possibly infect you in the future if you are made to snap a certain amount of times
@@ -87,7 +87,7 @@ datum/pathogeneffects
 	// gets his bodily fluids onto another when they directly disarm, punch, or grab a person.
 	// For INFECT_TOUCH diseases this is automatically called on a successful disarm, punch or grab. When overriding any of these events, use ..() to keep this behaviour.
 	// OVERRIDE: Generally, you do not need to override this.
-	proc/infect_direct(var/mob/target as mob, var/datum/pathogen/origin, contact_type = "touch")
+	/*proc/infect_direct(var/mob/target as mob, var/datum/pathogen/origin, contact_type = "touch")
 		if (infect_attempt_message)
 			target.show_message("<span class='alert'><B>[infect_attempt_message]</B></span>")
 		if(istype(target, /mob/living/carbon/human))
@@ -97,9 +97,9 @@ datum/pathogeneffects
 					if (infect_message)
 						target.show_message(infect_message)
 					logTheThing("pathology", origin.infected, target, "infects [constructTarget(target,"pathology")] with [origin.name] due to symptom [name] through direct contact ([contact_type]).")
-					return 1
+					return 1*/
 
-	proc/onadd(var/datum/pathogen/origin)
+	proc/onadd(var/datum/microbe/P)
 		return
 
 	// ====
@@ -107,36 +107,36 @@ datum/pathogeneffects
 	// ondisarm(mob, mob, boolean, datum/pathogen) : float
 	// OVERRIDE: Overriding this is situational. ..() is expected to be called.
 	proc/ondisarm(var/mob/M as mob, var/mob/V as mob, isPushDown, var/datum/pathogen/origin)
-		if (infect_type == INFECT_TOUCH && prob(origin.spread*2))
-			infect_direct(V, origin, "disarm")
+		//if (infect_type == INFECT_TOUCH && prob(origin.spread*2))
+			//infect_direct(V, origin, "disarm")
 		return 1
 
 	// ongrab(mob, mob, datum/pathogen) : void
 	// TODO: Make this a veto event.
 	// OVERRIDE: Overriding this is situational. ..() is expected to be called.
 	proc/ongrab(var/mob/M as mob, var/mob/V as mob, var/datum/pathogen/origin)
-		if (infect_type == INFECT_TOUCH && prob(origin.spread*2))
-			infect_direct(V, origin, "grab")
+		//if (infect_type == INFECT_TOUCH && prob(origin.spread*2))
+			//infect_direct(V, origin, "grab")
 		return
 
 	// onpunch(mob, mob, string, datum/pathogen) : float
 	// OVERRIDE: Overriding this is situational. ..() is expected to be called.
 	proc/onpunch(var/mob/M as mob, var/mob/V as mob, zone, var/datum/pathogen/origin)
-		if (infect_type == INFECT_TOUCH && prob(origin.spread*2))
-			infect_direct(V, origin, "punching")
+		//if (infect_type == INFECT_TOUCH && prob(origin.spread*2))
+			//infect_direct(V, origin, "punching")
 		return 1
 
 	// onpunched(mob, mob, string, datum/pathogen) : float
 	// OVERRIDE: Overriding this is situational. ..() is expected to be called.
 	proc/onpunched(var/mob/M as mob, var/mob/A as mob, zone, var/datum/pathogen/origin)
-		if (infect_type == INFECT_TOUCH && prob(origin.spread*2))
-			infect_direct(A, origin, "being punched")
+		//if (infect_type == INFECT_TOUCH && prob(origin.spread*2))
+			//infect_direct(A, origin, "being punched")
 		return 1
 
 	// onshocked(mob, mob, datum/shockparam, datum/pathogen) : datum/shockparam
 	// OVERRIDE: Overriding this is situational.
 	proc/onshocked(var/mob/M as mob, var/datum/shockparam/ret, var/datum/pathogen/origin)
-		return ret
+		return //ret
 
 	// onsay(mob, string, datum/pathogen) : string
 	// OVERRIDE: Overriding this is situational.
@@ -155,7 +155,7 @@ datum/pathogeneffects
 
 	// oncured(mob, datum/pathogen) : void
 	// OVERRIDE: Overriding this is situational.
-	proc/oncured(var/mob/M as mob, var/datum/pathogen/origin)
+	proc/oncured(var/mob/M as mob, var/datum/microbe/origin)
 		return
 
 

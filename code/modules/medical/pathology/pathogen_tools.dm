@@ -291,20 +291,17 @@
 		..()
 		SPAWN(2 SECONDS)
 			#ifdef CREATE_PATHOGENS // PATHOLOGY REMOVAL
-			var/datum/pathogen/P = new /datum/pathogen
-			if(FM)
-				P.forced_microbody = FM
-			P.create_weak()
+			var/datum/microbe/P = new /datum/microbe
 			P.setup(1)
 			var/datum/reagents/RE = src.reagents
 			RE.add_reagent("pathogen", 5)
 			var/datum/reagent/blood/pathogen/R = RE.get_reagent("pathogen")
-			R.pathogens[P.pathogen_uid] = P
+			R.pathogens[P.microbio_uid] = P
 			#else
 			var/datum/reagents/RE = src.reagents
 			RE.add_reagent("water", 5)
 			#endif
-
+/*
 /obj/item/reagent_containers/glass/vial/prepared/virus
 	FM = /datum/microbody/virus
 
@@ -316,7 +313,7 @@
 
 /obj/item/reagent_containers/glass/vial/prepared/fungus
 	FM = /datum/microbody/fungi
-
+*/
 /*
 /obj/item/reagent_containers/glass/beaker/parasiticmedium
 	name = "Beaker of Parasitic Medium"

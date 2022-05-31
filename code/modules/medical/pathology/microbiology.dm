@@ -1,3 +1,32 @@
+datum/controller/microbe
+
+	var/list/path_to_effect = list()
+	var/list/path_to_suppressant = list()
+
+	var/list/pathogen_affected_reagents = list("blood", "pathogen", "bloodc")
+
+	var/list/used = list() 							//list to ensure nomenclature uniquenes
+
+	var/uid = null
+	var/creation_time = null
+
+	New(var/microbio_uid)
+		..()
+		creation_time = world.time / 600
+		src.uid = microbio_uid
+
+	New()
+		..()
+
+		for (var/T in concrete_typesof(/datum/microbioeffects))
+			path_to_effect[T] = new T()
+
+		//Define all paths to suppressants
+		for (var/T in childrentypesof(/datum/suppressant))
+			path_to_suppressant[T] = new T()
+
+var/global/datum/controller/microbe/microbe_controller = new()
+
 // A microbe. How surprising.
 datum/microbe
 	var/name										// The name of the microbial culture.
@@ -7,11 +36,14 @@ datum/microbe
 
 	var/duration									// How long a pathogen stays in an infected mob before being naturally immunized.
 
-	var/cure										// the chemical reagent that sets duration to ~5 when 10u reagents found
+	var/datum/suppressant/suppressant				// Handles curing
 
 	var/list/effects = list()						// A list of symptoms exhibited by those infected with this pathogen.
-	//var/list/mutex = list()							// These symptoms are explicitly disallowed by a mutex.
+	var/list/effectdata = list()					// used by onadd()
+	//var/list/mutex = list()						// These symptoms are explicitly disallowed by a mutex.
 
+	var/microbio_uid							// UID for a microbe.
+	var/ticked										// Stops runtimes.
 // PROCS AND FUNCTIONS FOR GENERATION
 
 	disposing()
@@ -23,9 +55,11 @@ datum/microbe
 		desc = ""
 		infected = null
 		duration = 1
-		cure = ""
+		suppressant = ""
 		effects = list()
+		microbio_uid = 0
 		//mutex = list()
+		ticked = 0
 
 	proc/clone()
 		var/datum/microbe/P = new /datum/microbe
@@ -47,22 +81,19 @@ datum/microbe
 		return
 
 	proc/generate_effects() //WIP
-		//Work on effects first.
+		for (var/i = 0, i <= 3, i++)
+			add_symptom(microbe_controller.path_to_effect)
 		return
 
-	proc/generate_cure() //WIP
-		var/list/L = list()
-		for(var/R in concrete_typesof(/datum/reagent/medical))
-			L += R
-		L = sortList(L)
-		cure = pick(L)
-		cure.onadd(src)
+	proc/generate_cure(var/datum/microbe/P) //WIP
+		var/S = pick(microbe_controller.path_to_suppressant)
+		P.suppressant = microbe_controller.path_to_suppressant[S]
 		return
 
 	proc/generate_attributes() //WIP
 		var/shape = pick("stringy", "snake", "blob", "spherical", "tetrahedral", "star shaped", "tesselated")
-		src.desc = "[red] [shape] [microbes]" //color determined by average of cure reagent and assigned-effect colors
-		src.duration = 100
+		src.desc = "red [shape] microbes" //color determined by average of cure reagent and assigned-effect colors
+		src.microbio_uid++
 		return
 
 	proc/randomize()
@@ -81,36 +112,41 @@ datum/microbe
 			src.desc = origin.desc
 			src.duration = 100
 			src.effects = origin.effects.Copy()
-			for (var/datum/pathogeneffects/E in src.effects)
-				E.onadd(src)
+			src.suppressant = origin.suppressant
 		else if (status == 1)
-			src.randomize()
+			randomize()
 		else if (!origin && status == 2)
 			src.do_prefab(1)
 		processing_items.Add(src)
 
+	proc/process()
+		if (ticked)
+			ticked = 0
+
 	// handles pathogen duration and natural immunization
 	proc/progress_pathogen()
-		if (duration)
-			duration--
-		if (!duration)
+		var/iscured = src.suppressant.suppress_act(src)
+		if (!duration || iscured)
 			infected.cured(src)
+			return
+		else duration--
+		ticked = 1 							//  Wrap into process
 
 //Generalize for objects and turfs WIP
 
 	proc/turf_act()
 		for (var/datum/effect in src.effects)
-			effect:turf_act(target, src)
+			effect:turf_act(null, src)
 		progress_pathogen()
 
 	proc/object_act()
 		for (var/datum/effect in src.effects)
-			effect:object_act(target, src)
+			effect:object_act(null, src)
 		progress_pathogen()
 
 	proc/reagent_act()
 		for (var/datum/effect in src.effects)
-			effect:reagent_act(target, src)
+			effect:reagent_act(null, src)
 		progress_pathogen()
 
 	proc/mob_act()
@@ -225,26 +261,26 @@ datum/microbe
 			effect:oncured(infected, src)
 		suppressant.oncured(src)
 		return
-
+*/
 	proc/add_new_symptom(var/list/allowed, var/allow_duplicates = 0)
 		var/T = pick(allowed)
-		var/datum/pathogeneffects/E = pathogen_controller.path_to_symptom[T]
+		var/datum/microbioeffects/E = microbe_controller.path_to_effect[T]
 		if (add_symptom(E, allow_duplicates))
 			return 1
 		else
 			return 0
 
-	proc/add_symptom(var/datum/pathogeneffects/E, var/allow_duplicates = 0)
+	proc/add_symptom(var/datum/microbioeffects/E, var/allow_duplicates = 0)
 		if (allow_duplicates || !(E in effects))
-			for (var/mutex in E.mutex)
+			/*for (var/mutex in E.mutex)
 				for (var/T in typesof(mutex))
 					if (!(T in mutex))
-						mutex += T
+						mutex += T*/
 			effects += E
 			E.onadd(src)
 			return 1
-		return 0
-
+		else return 0
+/*
 	proc/remove_symptom(var/datum/pathogeneffects/E, var/all = 0)
 		if (all)
 			var/rem = 0

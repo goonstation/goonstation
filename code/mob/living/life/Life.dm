@@ -307,7 +307,7 @@
 		if (prob(1) && prob(5))
 			src.handle_random_emotes()
 
-	//src.handle_pathogens()
+	src.handle_pathogens()
 
 	last_human_life_tick = TIME
 
@@ -572,11 +572,11 @@
 		if (isdead(src))
 			if (src.pathogens.len)
 				for (var/uid in src.pathogens)
-					var/datum/pathogen/P = src.pathogens[uid]
+					var/datum/microbe/P = src.pathogens[uid]
 					P.mob_act_dead()
 			return
 		for (var/uid in src.pathogens)
-			var/datum/pathogen/P = src.pathogens[uid]
+			var/datum/microbe/P = src.pathogens[uid]
 			P.mob_act()
 
 	get_cold_protection()

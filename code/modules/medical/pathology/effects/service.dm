@@ -1,11 +1,11 @@
 // Effects related to Botany, Cooking, Distilling go Here
 
 
-datum/pathogeneffects/benevolent/detoxication
+/datum/microbioeffects/benevolent/detoxication
 	name = "Detoxication"
 	desc = "The pathogen aids the host body in metabolizing ethanol."
 
-	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act(var/mob/M as mob, var/datum/microbe/origin)
 		var/times = 1
 		var/met = 0
 		for (var/rid in M.reagents.reagent_list)
@@ -22,6 +22,9 @@ datum/pathogeneffects/benevolent/detoxication
 		if (met)
 			M.reagents.update_total()
 
+	onadd(var/datum/microbe/origin)
+		origin.effectdata += "detox"
+
 	react_to(var/R, var/zoom)
 		if (R == "ethanol")
 			return "The pathogen appears to have entirely metabolized the ethanol."
@@ -29,7 +32,7 @@ datum/pathogeneffects/benevolent/detoxication
 	may_react_to()
 		return "The pathogen appears to react with a pure intoxicant."
 
-datum/pathogeneffects/benevolent/metabolisis
+/*datum/pathogeneffects/benevolent/metabolisis
 	name = "Accelerated Metabolisis"
 	desc = "The pathogen accelerates the metabolisis of all chemicals present in the host body."
 
@@ -55,3 +58,4 @@ datum/pathogeneffects/benevolent/metabolisis
 
 	may_react_to()
 		return "The pathogen appears to be rapidly breaking down certain materials around it."
+*/

@@ -1,4 +1,5 @@
 
+/*
 /**
  * Microbody notes
  *
@@ -172,3 +173,4 @@ datum/microbody/parasite
 	amount = 0.35
 	*/
 
+*/

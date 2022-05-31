@@ -1,4 +1,4 @@
-datum/pathogeneffects/benevolent
+/*datum/pathogeneffects/benevolent
 	name = "Benevolent"
 	rarity = THREAT_NEUTRAL
 
@@ -350,3 +350,4 @@ datum/pathogeneffects/benevolent/genetictemplate
 	may_react_to()
 		return "The pathogen cells all look exactly alike."
 
+*/

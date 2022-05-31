@@ -1,3 +1,4 @@
+/*
 /*datum/pathogen_cdc
 	var/uid = null
 	var/patient_zero = null
@@ -1095,3 +1096,4 @@ proc/hex2numoc(var/num)
 proc/rand3seq()
 	return num2hex(rand(0, 15), 1) + num2hex(rand(0, 15), 1) + num2hex(rand(0, 15), 1)
 	*/
+*/

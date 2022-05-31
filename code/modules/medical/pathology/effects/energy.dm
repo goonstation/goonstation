@@ -1,5 +1,5 @@
 // Effects related to energy and electricity go here
-datum/pathogeneffects/malevolent/capacitor
+/*datum/pathogeneffects/malevolent/capacitor
 	name = "Capacitor"
 	desc = "The infected is involuntarily electrokinetic."
 	rarity = THREAT_TYPE5
@@ -287,3 +287,4 @@ datum/pathogeneffects/malevolent/capacitor/unlimited
 	react_to(var/R, var/zoom)
 		if (R == "voltagen")
 			return "The pathogen appears to have the ability to infinitely absorb the voltagen."
+*/

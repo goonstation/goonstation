@@ -1,35 +1,20 @@
 // Anything that is used specifically as a 'tell' for when someone is infected goes here
 
-datum/pathogeneffects/neutral
-	name = "Neutral"
+datum/microbioeffects/tells
+	name = "Tells"
+	ABSTRACT_TYPE(/datum/microbioeffects/tells)
 
-datum/pathogeneffects/neutral/hiccups
+
+datum/microbioeffects/tells/hiccups
 	name = "Hiccups"
-	desc = "The pathogen sends involuntary signals to the infected individual's diaphragm."
+	desc = "The microbes send involuntary signals to the infected individual's diaphragm."
 
-	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (origin.in_remission)
-			return
-		switch (origin.stage)
-			if (1)
-				if (prob(1))
-					M:emote("hiccup")
+	mob_act(var/mob/M as mob, var/datum/microbe/origin)
+		if (prob(4))
+			M:emote("hiccup")
 
-			if (2)
-				if (prob(2))
-					M:emote("hiccup")
-
-			if (3)
-				if (prob(4))
-					M:emote("hiccup")
-
-			if (4)
-				if (prob(8))
-					M:emote("hiccup")
-
-			if (5)
-				if (prob(16))
-					M:emote("hiccup")
+	onadd(var/datum/microbe/origin)
+		origin.effectdata += "hiccups"
 
 	may_react_to()
 		return "The pathogen appears to be violently... hiccuping?"
@@ -67,7 +52,7 @@ datum/pathogeneffects/neutral/hiccups
 		return "The pathogen's cells appear to be... hugging each other?"
 */
 
-datum/pathogeneffects/neutral/sunglass
+/*datum/pathogeneffects/neutral/sunglass
 	name = "Sunglass Glands"
 	desc = "The infected grew sunglass glands."
 	infect_type = INFECT_NONE
@@ -336,3 +321,4 @@ datum/pathogeneffects/malevolent/farts
 
 	may_react_to()
 		return "The pathogen appears to produce a large volume of gas."
+*/

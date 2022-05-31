@@ -1,14 +1,17 @@
 // Effects related to medical healing go here
-datum/pathogeneffects/benevolent
+/datum/microbioeffects/benevolent
 	name = "Medical Probiotics"
 
-datum/pathogeneffects/benevolent/mending
+/datum/microbioeffects/benevolent/mending
 	name = "Wound Mending"
 	desc = "Slow paced brute damage healing."
 
-	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (prob(origin.stage * 10))
-			M.HealDamage("All", origin.stage / 2, 0)
+	mob_act(var/mob/M as mob, var/datum/microbe/origin)
+		if (prob(10))
+			M.HealDamage("All", 2, 0)
+
+	onadd(var/datum/microbe/origin)
+		origin.effectdata += "woundmend"
 
 	react_to(var/R, var/zoom)
 		if (R == "synthflesh")
@@ -18,13 +21,16 @@ datum/pathogeneffects/benevolent/mending
 	may_react_to()
 		return "The pathogen appears to have the ability to bond with organic tissue."
 
-datum/pathogeneffects/benevolent/healing
+/datum/microbioeffects/benevolent/healing
 	name = "Burn Healing"
 	desc = "Slow paced burn damage healing."
 
-	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (prob(origin.stage * 10))
-			M.HealDamage("All", 0, origin.stage / 2)
+	mob_act(var/mob/M as mob, var/datum/microbe/origin)
+		if (prob(10))
+			M.HealDamage("All", 0, 2)
+
+	onadd(var/datum/microbe/origin)
+		origin.effectdata += "burnheal"
 
 	react_to(var/R, var/zoom)
 		if (R == "synthflesh")
@@ -37,19 +43,22 @@ datum/pathogeneffects/benevolent/healing
 	may_react_to()
 		return "The pathogen appears to have the ability to bond with organic tissue."
 
-datum/pathogeneffects/benevolent/fleshrestructuring
+/datum/microbioeffects/benevolent/fleshrestructuring
 	name = "Flesh Restructuring"
 	desc = "Fast paced general healing."
 
 	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (prob(origin.stage * 10))
-			M.HealDamage("All", origin.stage, origin.stage)
-			if(ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if(H.bleeding)
-					repair_bleeding_damage(M, 80, 2)
-			if (prob(50))
-				M.show_message("<span class='notice'>You feel your wounds closing by themselves.</span>")
+		if (prob(10))
+			M.HealDamage("All", 2, 2)
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(H.bleeding)
+				repair_bleeding_damage(M, 80, 2)
+				if (prob(50))
+					M.show_message("<span class='notice'>You feel your wounds closing by themselves.</span>")
+
+	onadd(var/datum/microbe/origin)
+		origin.effectdata += "fleshrest"
 
 	react_to(var/R, var/zoom)
 		if (R == "synthflesh")
@@ -62,7 +71,7 @@ datum/pathogeneffects/benevolent/fleshrestructuring
 	may_react_to()
 		return "The pathogen appears to be rapidly repairing the other cells around it."
 	//podrickequus's first code, yay
-
+/*
 datum/pathogeneffects/benevolent/cleansing
 	name = "Cleansing"
 	desc = "The pathogen cleans the body of damage caused by toxins."
@@ -271,3 +280,4 @@ datum/pathogeneffects/benevolent/exclusiveimmunity
 	may_react_to()
 		return "The pathogen appears to have the ability to bond with organic tissue."
 
+*/
