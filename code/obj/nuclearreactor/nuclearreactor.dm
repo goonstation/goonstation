@@ -5,16 +5,16 @@
 /obj/machinery/atmospherics/binary/nuclear_reactor
 	name = "Model NTBMK Nuclear Reactor"
 	desc = "A nuclear reactor vessel, with slots for fuel rods and other components. Hey wait, didn't one of these explode once?"
-	icon = 'icons/obj/atmospherics/pipes.dmi'
-	icon_state = "circ1-off"
-/*	icon = 'icons/misc/nuclearreactor.dmi'
+//	icon = 'icons/obj/atmospherics/pipes.dmi'
+//	icon_state = "circ1-off"
+	icon = 'icons/misc/nuclearreactor.dmi'
 	icon_state = "reactor_empty"
 	bound_width = 160
 	bound_height = 160
 	pixel_x = -64
 	pixel_y = -64
 	bound_x = -64
-	bound_y = -64 */
+	bound_y = -64
 	anchored = TRUE
 	density = TRUE
 	mat_changename = FALSE
@@ -126,14 +126,14 @@
 		var/node2_connect = dir
 		var/node1_connect = turn(dir, 180)
 
-		for(var/obj/machinery/atmospherics/pipe/simple/target in get_step(src,node1_connect))
+		for(var/obj/machinery/atmospherics/pipe/simple/target in get_steps(src,node1_connect,3))
 			if(target.initialize_directions & node2_connect)
 				if(target != src)
 					node1 = target
 					//target.node2 = src
 					break
 
-		for(var/obj/machinery/atmospherics/pipe/simple/target in get_step(src,node2_connect))
+		for(var/obj/machinery/atmospherics/pipe/simple/target in get_steps(src,node2_connect,3))
 			if(target.initialize_directions & node1_connect)
 				if(target != src)
 					node2 = target

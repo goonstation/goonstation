@@ -6,9 +6,9 @@
 /obj/machinery/atmospherics/binary/reactor_turbine
 	name = "Gas Turbine"
 	desc = "A large turbine used for generating power using hot gas."
-	icon = 'icons/obj/atmospherics/pipes.dmi'
-	icon_state = "circ1-off"
-/*	icon = 'icons/obj/large/96x160.dmi'
+//	icon = 'icons/obj/atmospherics/pipes.dmi'
+//	icon_state = "circ1-off"
+	icon = 'icons/obj/large/96x160.dmi'
 	icon_state = "turbine_main" //TODO make rotated states of this
 	anchored = 1
 	density = 1
@@ -17,7 +17,7 @@
 	pixel_x = -32
 	pixel_y = -32
 	bound_x = -32
-	bound_y = -32 */
+	bound_y = -32
 	var/obj/machinery/power/terminal/terminal = null
 	var/net_id = null
 	dir = EAST
@@ -40,14 +40,14 @@
 		var/node2_connect = dir
 		var/node1_connect = turn(dir, 180)
 
-		for(var/obj/machinery/atmospherics/pipe/simple/target in get_step(src,node1_connect))
+		for(var/obj/machinery/atmospherics/pipe/simple/target in get_steps(src,node1_connect,2))
 			if(target.initialize_directions & node2_connect)
 				if(target != src)
 					node1 = target
 					//target.node2 = src
 					break
 
-		for(var/obj/machinery/atmospherics/pipe/simple/target in get_step(src,node2_connect))
+		for(var/obj/machinery/atmospherics/pipe/simple/target in get_steps(src,node2_connect,2))
 			if(target.initialize_directions & node1_connect)
 				if(target != src)
 					node2 = target
