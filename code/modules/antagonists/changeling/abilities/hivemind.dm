@@ -36,7 +36,7 @@
 			boutput(holder.owner, "<span class='alert'>There are no minds eligible for this ability. We need to absorb another.</span>")
 			return 1
 
-		var/use_mob_name = input("Select the mind to transfer into the handspider: ", "Select Mind", null) as null|anything in eligible
+		var/use_mob_name = tgui_input_list(holder.owner, "Select the mind to transfer into the handspider:", "Select Mind", sortList(eligible))
 		if (!use_mob_name)
 			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
 			return 1
@@ -141,7 +141,7 @@
 			boutput(holder.owner, "<span class='alert'>There are no minds eligible for this ability. We need to absorb another.</span>")
 			return 1
 
-		var/use_mob_name = input("Select the mind to transfer into the eyespider: ", "Select Mind", null) as null|anything in eligible
+		var/use_mob_name = tgui_input_list(holder.owner, "Select the mind to transfer into the eyespider:", "Select Mind", sortList(eligible))
 		if (!use_mob_name)
 			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
 			return 1
@@ -237,7 +237,7 @@
 			boutput(holder.owner, "<span class='alert'>There are no minds eligible for this ability. We need to absorb another.</span>")
 			return 1
 
-		var/use_mob_name = input("Select the mind to transfer into the legworm: ", "Select Mind", null) as null|anything in eligible
+		var/use_mob_name = tgui_input_list("Select the mind to transfer into the legworm:", "Select Mind", sortList(eligible))
 		if (!use_mob_name)
 			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
 			return 1
@@ -332,7 +332,7 @@
 			boutput(holder.owner, "<span class='alert'>There are no minds eligible for this ability. We need to absorb another.</span>")
 			return 1
 
-		var/use_mob_name = input("Select the mind to transfer into the buttspider: ", "Select Mind", null) as null|anything in eligible
+		var/use_mob_name = tgui_input_list(holder.owner, "Select the mind to transfer into the buttspider:", "Select Mind", sortList(eligible))
 		if (!use_mob_name)
 			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
 			return 1
@@ -443,7 +443,7 @@
 			boutput(holder.owner, "<span class='alert'>There are no minds eligible for this ability.</span>")
 			return 1
 
-		var/use_mob_name = input("Select the mind to silence: ", "Select Mind", null) as null|anything in eligible
+		var/use_mob_name = tgui_input_list("Select the mind to silence:", "Select Mind", sortList(eligible))
 		if (!use_mob_name)
 			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
 			return 1
@@ -496,11 +496,11 @@
 			boutput(holder.owner, "<span class='alert'>There are no minds eligible for this ability.</span>")
 			return 1
 
-		//Get a dirty HO. HA HA HA haaaa...
-		var/mob/dead/target_observer/hivemind_observer/HO = input("Select the mind to grant control: ", "Select Mind", null) as null|mob in eligible
-		if(!HO)
+		var/use_mob_name = tgui_input_list(holder.owner, "Select the mind to grant control:", "Select Mind", sortList(eligible))
+		if(!use_mob_name)
 			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
 			return 1
+		var/mob/dead/target_observer/hivemind_observer/HO = eligible[use_mob_name]
 
 		//Do the actual control-granting here.
 		logTheThing("combat", holder.owner, HO, "granted control of their body to [constructTarget(HO,"combat")] as a changeling!")

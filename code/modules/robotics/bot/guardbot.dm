@@ -364,7 +364,7 @@
 	mail
 		name = "Mailbuddy"
 		desc = "The PR-6PS Mailbuddy is a postal delivery ace.  This may seem like an extremely specialized robot application, but that's just because it is exactly that."
-		icon = 'icons/obj/mailbud.dmi'
+		icon = 'icons/obj/bots/mailbud.dmi'
 
 		New()
 			..()
@@ -1986,10 +1986,6 @@
 			boutput(task.arrest_target, "<span class='alert'>[master] gently handcuffs you!  It's like the cuffs are hugging your wrists.</span>")
 			task.arrest_target:set_clothing_icon_dirty()
 
-		task.mode = 0
-		task.drop_arrest_target()
-		master.set_emotion("smug")
-
 		if (length(task.arrested_messages))
 			var/arrest_message = pick(task.arrested_messages)
 			master.speak(arrest_message)
@@ -1999,6 +1995,11 @@
 		var/turf/LT_loc = get_turf(last_target)
 		if(!LT_loc)
 			LT_loc = get_turf(master)
+
+		task.mode = 0
+		task.drop_arrest_target()
+		master.set_emotion("smug")
+
 		//////PDA NOTIFY/////
 		var/datum/signal/pdaSignal = get_free_signal()
 		var/message2send

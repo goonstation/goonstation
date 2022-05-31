@@ -42,6 +42,7 @@
 
 	..()
 	abilityHolder = new /datum/abilityHolder/critter/flockdrone(src)
+	add_lifeprocess(/datum/lifeprocess/flock/absorbtion)
 
 	SPAWN(3 SECONDS)
 		//this is terrible, but diffracting a drone immediately causes a runtime
@@ -172,7 +173,7 @@
 		controller = null
 		src.update_health_icon()
 
-/mob/living/critter/flock/drone/proc/release_control_abrupt()
+/mob/living/critter/flock/drone/proc/release_control_abrupt(give_alert = TRUE)
 	src.flock?.hideAnnotations(src)
 	src.is_npc = TRUE
 	if(src.client && !controller)
@@ -196,7 +197,8 @@
 		controller.mind.key = key
 		controller.mind.current = controller
 		ticker.minds += controller.mind
-	boutput(controller, "<span class='flocksay'><b>\[SYSTEM: Control of drone [src.real_name] ended abruptly.\]</b></span>")
+	if (give_alert)
+		boutput(controller, "<span class='flocksay'><b>\[SYSTEM: Control of drone [src.real_name] ended abruptly.\]</b></span>")
 	if (istype(controller, /mob/living/intangible/flock/flockmind))
 		flock.removeAnnotation(src, FLOCK_ANNOTATION_FLOCKMIND_CONTROL)
 	else
@@ -407,62 +409,6 @@
 				L.shock(src, 5000)
 				qdel(G) //in case they don't fall over from our shock
 			src.antigrab_counter = 0
-
-	var/obj/item/I = absorber.item
-
-	if (!I)
-		return
-
-	var/health_absorbed = min(src.health_absorb_rate, I.health)
-	if (absorber.instant_absorb && !absorber.ignore_amount)
-		boutput(src, "<span class='alert'>[I] is weak enough that it breaks apart instantly!</span>")
-		src.resources += round(src.resources_per_health * health_absorbed * I.amount)
-	else
-		I.health -= health_absorbed
-		src.resources += round(src.resources_per_health * health_absorbed)
-		if (I.health > 0 || (I.health == 0 && I.amount > 1 && !absorber.ignore_amount))
-			playsound(src, "sound/effects/sparks[rand(1, 6)].ogg", 50, 1)
-		if (I.health > 0)
-			return
-		if (I.amount > 1 && !absorber.ignore_amount)
-			if (initial(I.health))
-				I.health = initial(I.health)
-			else
-				I.set_health()
-			I.change_stack_amount(-1)
-			return
-
-	playsound(src, "sound/impact_sounds/Energy_Hit_1.ogg", 50, 1)
-
-	if(length(I.contents))
-		var/anything_tumbled = FALSE
-		for(var/obj/O in I.contents)
-			if(istype(O, /obj/item))
-				O.set_loc(src.loc)
-				anything_tumbled = TRUE
-			else
-				qdel(O)
-		if(anything_tumbled)
-			src.visible_message("<span class='alert'>The contents of [I] tumble out of [src].</span>",
-				"<span class='alert'>The contents of [I] tumble out of you.</span>",
-				"<span class='alert'>You hear things fall onto the floor.</span")
-
-	if (istype(I, /obj/item/flockcache))
-		var/obj/item/flockcache/C = I
-		src.resources += C.resources
-		boutput(src, "<span class='notice'>You break down the resource cache, adding <span class='bold'>[C.resources]</span> resource[C.resources > 1 ? "s" : null] to your own. </span>")
-	else if(istype(I, /obj/item/organ/heart/flock))
-		var/obj/item/organ/heart/flock/F = I
-		if (F.resources == 0)
-			boutput(src, "<span class='notice'>[F]'s resource cache is assimilated, but contains no resources.</span>")
-		else
-			src.resources += F.resources
-			boutput(src, "<span class='notice'>You assimilate [F]'s resource cache, adding <span class='bold'>[F.resources]</span> resource[F.resources > 1 ? "s" : null] to your own.</span>")
-	else
-		boutput(src, "<span class='notice'>You finish converting [I] into resources.</span>")
-	qdel(I)
-	absorber.item = null
-
 
 /mob/living/critter/flock/drone/process_move(keys)
 	if(keys & KEY_RUN && src.resources >= 1)
@@ -689,6 +635,7 @@
 	remove_lifeprocess(/datum/lifeprocess/sight)
 	remove_lifeprocess(/datum/lifeprocess/skin)
 	remove_lifeprocess(/datum/lifeprocess/statusupdate)
+	remove_lifeprocess(/datum/lifeprocess/flock/absorbtion)
 
 /mob/living/critter/flock/drone/death(var/gibbed)
 	if(src.controller)
@@ -1118,3 +1065,62 @@
 		if(temp.material)
 			temp.setMaterialAppearance(temp.material)
 	..()
+
+ABSTRACT_TYPE(/datum/lifeprocess/flock)
+/datum/lifeprocess/flock/absorbtion
+	process()
+		var/mob/living/critter/flock/drone/flock_owner = owner
+		if (!istype(flock_owner)) return
+		var/obj/item/I = flock_owner.absorber.item
+		if (!I)
+			return
+		var/mult = get_multiplier()
+		var/health_absorbed = min((flock_owner.health_absorb_rate * mult), I.health)
+		if (flock_owner.absorber.instant_absorb && !flock_owner.absorber.ignore_amount)
+			boutput(flock_owner, "<span class='alert'>[I] is weak enough that it breaks apart instantly!</span>")
+			flock_owner.resources += round(flock_owner.resources_per_health * health_absorbed * I.amount)
+		else
+			I.health -= health_absorbed
+			flock_owner.resources += round(flock_owner.resources_per_health * health_absorbed)
+			if (I.health > 0 || (I.health == 0 && I.amount > 1 && !flock_owner.absorber.ignore_amount))
+				playsound(flock_owner, "sound/effects/sparks[rand(1, 6)].ogg", 50, 1)
+			if (I.health > 0)
+				return
+			if (I.amount > 1 && !flock_owner.absorber.ignore_amount)
+				if (initial(I.health))
+					I.health = initial(I.health)
+				else
+					I.set_health()
+				I.change_stack_amount(-1)
+				return
+
+		playsound(flock_owner, "sound/impact_sounds/Energy_Hit_1.ogg", 50, 1)
+
+		if(length(I.contents))
+			var/anything_tumbled = FALSE
+			for(var/obj/O in I.contents)
+				if(istype(O, /obj/item))
+					O.set_loc(flock_owner.loc)
+					anything_tumbled = TRUE
+				else
+					qdel(O)
+			if(anything_tumbled)
+				flock_owner.visible_message("<span class='alert'>The contents of [I] tumble out of [flock_owner].</span>",
+					"<span class='alert'>The contents of [I] tumble out of you.</span>",
+					"<span class='alert'>You hear things fall onto the floor.</span")
+
+		if (istype(I, /obj/item/flockcache))
+			var/obj/item/flockcache/C = I
+			flock_owner.resources += C.resources
+			boutput(flock_owner, "<span class='notice'>You break down the resource cache, adding <span class='bold'>[C.resources]</span> resource[C.resources > 1 ? "s" : null] to your own. </span>")
+		else if(istype(I, /obj/item/organ/heart/flock))
+			var/obj/item/organ/heart/flock/F = I
+			if (F.resources == 0)
+				boutput(flock_owner, "<span class='notice'>[F]'s resource cache is assimilated, but contains no resources.</span>")
+			else
+				flock_owner.resources += F.resources
+				boutput(flock_owner, "<span class='notice'>You assimilate [F]'s resource cache, adding <span class='bold'>[F.resources]</span> resource[F.resources > 1 ? "s" : null] to your own.</span>")
+		else
+			boutput(flock_owner, "<span class='notice'>You finish converting [I] into resources.</span>")
+		qdel(I)
+		flock_owner.absorber.item = null

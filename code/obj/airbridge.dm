@@ -122,6 +122,7 @@
 
 		if(linked.working || working) return
 		if(linked.maintaining_bridge || maintaining_bridge) return
+		if((linked.x != src.x && linked.y != src.y) || linked.z != src.z) return
 
 		working = 1
 		maintaining_bridge = 1

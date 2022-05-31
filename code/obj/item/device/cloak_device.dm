@@ -18,49 +18,57 @@
 	stamina_cost = 0
 	stamina_crit_chance = 15
 	contraband = 6
+	var/image/cloak_overlay
 
 	New()
 		..()
 		src.icon_state = base_icon_state + "0"
+		src.cloak_overlay = image('icons/mob/mob.dmi', "icon_state" = "shield")
 
-	attack_self(mob/user as mob)
+	attack_self(mob/user)
 		src.add_fingerprint(user)
 		if (src.active)
 			user.show_text("The [src.name] is now inactive.", "blue")
 			src.deactivate(user)
 		else
-			switch (src.activate(user))
-				if (0)
-					user.show_text("You can't have more than one active [src.name] on your person.", "red")
-				if (1)
-					user.show_text("The [src.name] is now active.", "blue")
-		return
+			if (src.activate(user))
+				user.show_text("You can't have more than one active [src.name] on your person.", "red")
+			else
+				user.show_text("The [src.name] is now active.", "blue")
 
-	proc/activate(mob/user as mob)
+	update_icon()
+		if (src.active)
+			src.icon_state = base_icon_state + "1"
+		else
+			src.icon_state = base_icon_state + "0"
+
+
+	proc/activate(mob/user)
 		// Multiple active devices can lead to weird effects, okay (Convair880).
 		var/list/number_of_devices = list()
 		for (var/obj/item/cloaking_device/C in user)
 			if (C.active)
 				number_of_devices += C
 		if (number_of_devices.len > 0)
-			return 0
-		RegisterSignal(user, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE, .proc/deactivate)
-		src.active = 1
-		src.icon_state = base_icon_state + "1"
-		if (user && ismob(user))
-			user.update_inhands()
-			user.update_clothing()
-		return 1
+			return FALSE
 
-	proc/deactivate(mob/user as mob)
+		RegisterSignal(user, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE, .proc/deactivate)
+		APPLY_ATOM_PROPERTY(user, PROP_MOB_INVISIBILITY, "cloak", INVIS_CLOAK)
+		cloak_overlay.loc = user
+		user.client?.images += cloak_overlay
+		src.active = TRUE
+		src.UpdateIcon()
+		return TRUE
+
+	proc/deactivate(mob/user)
 		UnregisterSignal(user, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
+		REMOVE_ATOM_PROPERTY(user, PROP_MOB_INVISIBILITY, "cloak")
+		cloak_overlay.loc = null
+		user.client?.images -= cloak_overlay
 		if(src.active && istype(user))
 			user.visible_message("<span class='notice'><b>[user]'s cloak is disrupted!</b></span>")
-		src.active = 0
-		src.icon_state = base_icon_state + "0"
-		if (user && ismob(user))
-			user.update_inhands()
-			user.update_clothing()
+		src.active = FALSE
+		src.UpdateIcon()
 
 	// Fix for the backpack exploit. Spawn call is necessary for some reason (Convair880).
 	dropped(var/mob/user)
@@ -87,9 +95,8 @@
 			return
 
 	emp_act()
-		usr.visible_message("<span class='notice'><b>[usr]'s cloak is disrupted!</b></span>")
-		src.deactivate(usr)
-		return
+		if (src.active && ismob(src.loc))
+			src.deactivate(src.loc)
 
 	limited
 		name = "limited-use cloaking device"
