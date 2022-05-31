@@ -1,4 +1,8 @@
 
+(t)tue may 31 22
+(u)aloe
+(e)⚖|balance
+(*)The swooshy cloaking device effect is now only visible to the user, not people with thermals and the AI and whatever else. You can still see the person with thermal vision, you just can't immediately tell they're using a cloaker.
 (t)mon may 30 22
 (u)Bartimeus973
 (p)8651
