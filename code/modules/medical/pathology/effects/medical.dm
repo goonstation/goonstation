@@ -55,7 +55,7 @@ ABSTRACT_TYPE(/datum/microbioeffects/benevolent)
 			var/mob/living/carbon/human/H = M
 			if(H.bleeding)
 				repair_bleeding_damage(M, 80, 2)
-				if (prob(50))
+				if (prob(20))
 					M.show_message("<span class='notice'>You feel your wounds closing by themselves.</span>")
 
 	onadd(var/datum/microbe/origin)
@@ -81,7 +81,7 @@ datum/microbioeffects/benevolent/cleansing
 		//if (prob(origin.stage * 5) && M.get_toxin_damage())
 		if (M.get_toxin_damage())
 			M.take_toxin_damage(-1)
-			if (prob(12))
+			if (prob(2))
 				M.show_message("<span class='notice'>You feel cleansed.</span>")
 
 	react_to(var/R, var/zoom)
@@ -186,7 +186,7 @@ datum/microbioeffects/benevolent/neuronrestoration
 	desc = "Infection slowly repairs nerve cells in the brain."
 
 	mob_act(var/mob/M as mob, var/datum/microbe/origin)
-		if (prob(5))
+		if (prob(2))
 			M.take_brain_damage(-1)
 
 	react_to(var/R, var/zoom)

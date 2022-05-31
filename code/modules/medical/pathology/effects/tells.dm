@@ -14,7 +14,7 @@ datum/microbioeffects/tells/hiccups
 		origin.effectdata += "hiccups"
 
 	mob_act(var/mob/M as mob, var/datum/microbe/origin)
-		if (prob(15))
+		if (prob(2))
 			M:emote("hiccup")
 
 	may_react_to()
@@ -180,7 +180,7 @@ datum/microbioeffects/tells/hoarseness
 		origin.effectdata += "Hoarseness"
 
 	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (prob(5))
+		if (prob(2))
 			M:emote("wheeze")
 		else if (prob(2))
 			M:emote("cough")
@@ -198,11 +198,11 @@ datum/microbioeffects/tells/malaise
 		origin.effectdata += "malaise"
 
 	mob_act(var/mob/M as mob, var/datum/microbe/origin)
-		if (prob(5))
+		if (prob(2))
 			M:emote("yawn")
-		else if (prob(2))
+		else if (prob(3))
 			M:emote("cough")
-		else if (prob(2))
+		else if (prob(4))
 			M:emote("stretch")
 
 	may_react_to()
@@ -213,7 +213,7 @@ datum/microbioeffects/tells/hyperactive
 	desc = "Also known as restlessness, the infected individual is prone to involuntary motions and tics."
 
 	mob_act(var/mob/M as mob, var/datum/microbe/origin)
-		if (prob(3))
+		if (prob(2))
 			M:emote("gesticulate")
 		else if (prob(2))
 			M:emote("blink_r")
@@ -248,7 +248,7 @@ datum/microbioeffects/tells/startleresponse
 		origin.effectdata += "Startled"
 
 	mob_act(var/mob/M as mob, var/datum/microbe/origin)
-		if (prob(5))
+		if (prob(2))
 			M:emote("flinch")
 
 	may_react_to()
@@ -262,9 +262,9 @@ datum/microbioeffects/tells/tearyeyed
 		origin.effectdata += "Teary"
 
 	mob_act(var/mob/M as mob, var/datum/microbe/origin)
-		if (prob(5))
+		if (prob(2))
 			M:emote("blink")
-		else if (prob(3))
+		else if (prob(2))
 			M:emote("blink_r")
 		else if (prob(2))
 			M:emote("cry")
@@ -280,7 +280,7 @@ datum/microbioeffects/tells/restingface
 		origin.effectdata += "Frowny"
 
 	mob_act(var/mob/M as mob, var/datum/microbe/origin)
-		if (prob(3))
+		if (prob(2))
 			M:emote("frown")
 		else if (prob(2))
 			M:emote("scowl")
