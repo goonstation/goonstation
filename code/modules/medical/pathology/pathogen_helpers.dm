@@ -74,7 +74,7 @@
 	reagents.add_reagent("pathogen", units)
 	var/datum/reagent/blood/pathogen/R = reagents.get_reagent("pathogen")
 	if (R)
-		R.pathogens[P.microbio_uid] = P
+		R.microbes[P.microbio_uid] = P
 /*
 /proc/ez_pathogen(var/stype)
 	var/datum/pathogen/P = new /datum/pathogen

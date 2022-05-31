@@ -1,4 +1,5 @@
 // Effects related to materials and gas production go here.
+ABSTRACT_TYPE(/datum/microbioeffects/material)
 /datum/microbioeffects/material
 	name = "Material Effects"
 /*

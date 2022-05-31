@@ -1,5 +1,5 @@
 // Effects related to reagent production go here
-
+ABSTRACT_TYPE(/datum/microbioeffects/chemistry)
 /datum/microbioeffects/chemistry
 	name = "Chemical Effects"
 

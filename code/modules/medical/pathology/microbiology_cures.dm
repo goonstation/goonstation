@@ -10,20 +10,21 @@
  * Suppressants also play a large role in the synthesis of cure for all default microbodies - each suppressant indicates a
  * list of reagents which may be used for cure synthesis. Curing therefore requires at least some analysis of the pathogen.
  */
-
+ABSTRACT_TYPE(/datum/suppressant)
 /datum/suppressant
 	var/name = "Suppressant"
 	var/color = "transparent"
 	var/desc = "The pathogen is not suppressed by any external effects."
 	var/therapy = "unknown"
 	ABSTRACT_TYPE(/datum/suppressant)
-	// A list of reagent IDs which may be used for cure synthesis with this suppressant.
+	// A list of reagent IDs which can be designated as the suppressant.
 	var/list/cure_synthesis = list()
 
 	// Override this to define when your suppression method should act.
 	// Returns the new value for suppressed which is ONLY considered if suppressed is 0.
 	// Is not called if suppressed is -1. A secondary resistance may overpower a primary weakness.
 	proc/suppress_act(var/datum/microbe/P)
+		return
 	proc/ongrab(var/mob/target as mob, var/datum/microbe/P)
 	proc/onpunched(var/mob/origin as mob, zone, var/datum/microbe/P)
 	proc/onpunch(var/mob/target as mob, zone, var/datum/microbe/P)
@@ -31,6 +32,7 @@
 	proc/onshocked(var/datum/shockparam/param, var/datum/microbe/P)
 	proc/onsay(message, var/datum/microbe/P)
 	proc/onadd(var/datum/microbe/P)
+		return
 	proc/onemote(var/mob/M as mob, message, voluntary, param, var/datum/microbe/P)
 	proc/ondeath(var/datum/microbe/P)
 	proc/oncured(var/datum/microbe/P)
@@ -54,10 +56,11 @@
 	cure_synthesis = list("phlogiston", "infernite")
 
 	suppress_act(var/datum/microbe/P)
-		if (P.infected.bodytemperature > 310)
+		if (!(P.infected.bodytemperature > 310))
+			return 0
+		else
 			P.infected.show_message("<span class='notice'>You feel better.</span>")
 			return 1
-		else return 0
 
 	onadd(var/datum/microbe/P)
 		P.suppressant = "Heat"
@@ -72,7 +75,7 @@
 		else if (R in cure_synthesis)
 			return "The pathogens are moving towards the area affected by the [R]"
 		else return null
-/*
+
 /datum/suppressant/cold
 	color = "red"
 	name = "Cold"
@@ -81,13 +84,12 @@
 
 	cure_synthesis = list("cryostylane", "cryoxadone")
 
-	suppress_act(var/datum/pathogen/P)
-		if (P.infected.bodytemperature < 300 - P.suppression_threshold)
-			if (P.stage > 3 && prob(P.advance_speed * 2))
-				P.infected.show_message("<span class='notice'>You feel better.</span>")
-				P.stage--
+	suppress_act(var/datum/microbe/P)
+		if (!(P.infected.bodytemperature < 250))
+			return 0
+		else
+			P.infected.show_message("<span class='notice'>You feel better.</span>")
 			return 1
-		return 0
 
 	may_react_to()
 		return "A peculiar gland on the pathogen suggests it may be <b style='font-size:20px;color:red'>suppressed</b> by affecting its temperature."
@@ -98,7 +100,7 @@
 		else if (R in cure_synthesis)
 			return "The pathogens are attemping to escape from the area affected by the [R]."
 		else return null
-
+/*
 /datum/suppressant/sleeping
 	color = "green"
 	name = "Sedative"
@@ -131,6 +133,7 @@
 		if (R in cure_synthesis)
 			return "The pathogens near the sedative appear to be in stasis."
 		else return null
+*/
 
 /datum/suppressant/brutemeds
 	color = "black"
@@ -139,14 +142,13 @@
 	therapy = "medical"
 
 	suppress_act(var/datum/pathogen/P)
-		if (P.infected.reagents.has_reagent("styptic_powder", P.suppression_threshold) || P.infected.reagents.has_reagent("synthflesh", P.suppression_threshold))
-			if (P.stage > 3 && prob(P.advance_speed * 2))
-				P.infected.show_message("<span class='notice'>You feel better.</span>")
-				P.stage--
+		if (!(P.infected.reagents.has_reagent("styptic_powder", REAGENT_CURE_THRESHOLD) || P.infected.reagents.has_reagent("synthflesh", REAGENT_CURE_THRESHOLD)))
+			return 0
+		else
+			P.infected.show_message("<span class='notice'>You feel better.</span>")
 			return 1
-		return 0
 
-	cure_synthesis = list("styptic_powder", "synthflesh")
+	cure_synthesis = list("styptic_powder", "synthflesh")	//Make a define for BRUTE_MEDS
 
 	may_react_to()
 		return "The DNA repair processes of the pathogen indicate that it might be <b style='font-size:20px;color:red'>suppressed</b> by certain kinds of medicine."
@@ -163,14 +165,13 @@
 	therapy = "medical"
 
 	suppress_act(var/datum/pathogen/P)
-		if (P.infected.reagents.has_reagent("silver_sulfadiazine", P.suppression_threshold) || P.infected.reagents.has_reagent("synthflesh", P.suppression_threshold))
-			if (P.stage > 3 && prob(P.advance_speed * 2))
-				P.infected.show_message("<span class='notice'>You feel better.</span>")
-				P.stage--
+		if (!(P.infected.reagents.has_reagent("silver_sulfadiazine", REAGENT_CURE_THRESHOLD) || P.infected.reagents.has_reagent("synthflesh", REAGENT_CURE_THRESHOLD)))
+			return 0
+		else
+			P.infected.show_message("<span class='notice'>You feel better.</span>")
 			return 1
-		return 0
 
-	cure_synthesis = list("silver_sulfadiazine", "synthflesh")
+	cure_synthesis = list("silver_sulfadiazine", "synthflesh") //Make a define for BURN_MEDS
 
 	may_react_to()
 		return "The DNA repair processes of the pathogen indicate that it might be <b style='font-size:20px;color:red'>suppressed</b> by certain kinds of medicine."
@@ -180,7 +181,7 @@
 			return "The pathogens near the [R] appear to be weakened by the burn medicine's presence."
 		else return null
 
-/datum/suppressant/muscle
+/*/datum/suppressant/muscle
 	color = "white"
 	name = "Muscle"
 	desc = "The pathogen is suppressed by disrupting muscle function."
@@ -224,12 +225,13 @@
 		if (R == "neurotoxin")
 			return "The pathogens near the [R] appear to be confused."
 		else return null
-
+*/
+/*
 /datum/suppressant/fat
 	color = "orange"
 	name = "Fat"
 	desc = "The pathogen is suppressed by fats."
-	cure_synthesis = list("badgrease", "grease", "porktonium", "cholesterol")
+	cure_synthesis = list("badgrease", "grease", "porktonium", "cholesterol")	// Definitely make a define with a bigger list
 	therapy = "gastronomical"
 
 	suppress_act(var/datum/pathogen/P)
@@ -270,14 +272,15 @@
 	react_to(var/datum/reagent/R)
 		if (R == "chickensoup")
 			return "The pathogens near the chicken soup appear to be having a great meal and are ignorant of their surroundings."
-
+*/
+/*
 /datum/suppressant/radiation
 	color = "viridian"
 	name = "Radiation"
 	desc = "The pathogen is suppressed by radiation."
 	therapy = "radioactive"
 
-	cure_synthesis = list("radium", "mutagen", "uranium", "polonium")
+	cure_synthesis = list("radium", "mutagen", "uranium", "polonium")	//I don't know about this one...
 
 	suppress_act(var/datum/pathogen/P)
 		if ((P.infected.getStatusDuration("radiation")/10) > P.suppression_threshold * 0.1 || (P.infected.getStatusDuration("n_radiation")/10) > P.suppression_threshold * 0.05)
@@ -293,7 +296,8 @@
 	react_to(var/datum/reagent/R)
 		if (R in cure_synthesis)
 			return "The radiation emitted by the [R] is severely damaging the inner elements of the pathogen."
-
+*/
+/*
 /datum/suppressant/mutagen
 	color = "olive drab"
 	name = "Mutagen"
@@ -316,6 +320,4 @@
 	react_to(var/datum/reagent/R)
 		if (R in cure_synthesis)
 			return "The mutagenic substance is severely damaging the inner elements of the pathogen."
-
-
 */

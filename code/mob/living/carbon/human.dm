@@ -144,7 +144,7 @@
 	var/list/sound_list_laugh = null
 	var/list/sound_list_flap = null
 
-	var/list/pathogens = list()
+	var/list/microbes = list()
 	var/list/immunities = list()
 
 	var/datum/simsHolder/sims = null
@@ -598,8 +598,8 @@
 	for (var/obj/item/implant/H in src.implant)
 		H.on_death()
 
-	//for (var/uid in src.pathogens)
-		//var/datum/pathogen/P = src.pathogens[uid]
+	//for (var/uid in src.microbes)
+		//var/datum/pathogen/P = src.microbes[uid]
 		//P.ondeath()
 
 #ifdef DATALOGGER
@@ -1493,8 +1493,8 @@
 
 	message = process_accents(src,message)
 
-	//for (var/uid in src.pathogens)
-		//var/datum/pathogen/P = src.pathogens[uid]
+	//for (var/uid in src.microbes)
+		//var/datum/pathogen/P = src.microbes[uid]
 		//message = P.onsay(message)
 
 	//..(message)
@@ -2471,23 +2471,24 @@
 		return 0
 	if (P.microbio_uid in src.immunities)
 		return 0
-	if (!(P.microbio_uid in src.pathogens))
+	if (!(P.microbio_uid in src.microbes))
 		var/datum/microbe/Q = new /datum/microbe
-		Q.setup(0, P, 1)
+		Q.setup(0, P)
 		//microbe_controller.mob_infected(Q, src)
-		src.pathogens += Q.microbio_uid
-		src.pathogens[Q.microbio_uid] = Q
+		src.microbes += Q.microbio_uid
+		src.microbes[Q.microbio_uid] = Q
 		Q.infected = src
 		logTheThing("pathology", src, null, "is infected by [Q].")
 		return 1
-	else return 0
+	else
+		return 0
 
 /mob/living/carbon/human/cured(var/datum/microbe/P)
-	if (P.microbio_uid in src.pathogens)
-		//microbe_controller.mob_cured(src.pathogens[P.microbio_uid], src)
-		var/datum/microbe/Q = src.pathogens[P.microbio_uid]
+	if (P.microbio_uid in src.microbes)
+		//microbe_controller.mob_cured(src.microbes[P.microbio_uid], src)
+		var/datum/microbe/Q = src.microbes[P.microbio_uid]
 		var/pname = Q.name
-		src.pathogens -= P.microbio_uid
+		src.microbes -= P.microbio_uid
 		immunity(P)
 		qdel(Q)
 		logTheThing("pathology", src, null, "is cured of [pname].")
@@ -2495,8 +2496,8 @@
 /mob/living/carbon/human/remission(var/datum/microbe/P)
 	if (isdead(src))
 		return
-	if (P.microbio_uid in src.pathogens)
-		var/datum/microbe/Q = src.pathogens[P.microbio_uid]
+	if (P.microbio_uid in src.microbes)
+		var/datum/microbe/Q = src.microbes[P.microbio_uid]
 		Q.remission()
 		logTheThing("pathology", src, null, "'s pathogen [Q] enters remission.")
 */

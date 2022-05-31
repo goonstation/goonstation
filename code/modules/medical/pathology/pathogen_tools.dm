@@ -285,18 +285,17 @@
 	icon = 'icons/obj/pathology.dmi'
 	icon_state = "vial0"
 	item_state = "vial"
-	var/datum/microbody/FM = null
 
 	New()
 		..()
 		SPAWN(2 SECONDS)
 			#ifdef CREATE_PATHOGENS // PATHOLOGY REMOVAL
 			var/datum/microbe/P = new /datum/microbe
-			P.setup(1)
+			P.setup(1, null)
 			var/datum/reagents/RE = src.reagents
 			RE.add_reagent("pathogen", 5)
 			var/datum/reagent/blood/pathogen/R = RE.get_reagent("pathogen")
-			R.pathogens[P.microbio_uid] = P
+			R.microbes[P.microbio_uid] = P
 			#else
 			var/datum/reagents/RE = src.reagents
 			RE.add_reagent("water", 5)

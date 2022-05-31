@@ -1,4 +1,5 @@
 // Effects related to medical healing go here
+ABSTRACT_TYPE(/datum/microbioeffects/benevolent)
 /datum/microbioeffects/benevolent
 	name = "Medical Probiotics"
 

@@ -10,6 +10,9 @@
 #define INFECT_TOUCH 1
 #define INFECT_AREA 3
 
+#define REAGENT_CURE_THRESHOLD 10
+
+
 // --SYMPTOM RARITIES--
 // All symptom contains a rarity value. Use these constants to describe their rarity.
 // For malevolent symptoms:

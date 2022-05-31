@@ -3063,7 +3063,7 @@ datum
 			fluid_g = 0
 			transparency = 255
 			value = 2
-			var/list/pathogens = list()
+			var/list/microbes = list()
 			var/pathogens_processed = 0
 			hygiene_value = -2
 			hunger_value = 0.068
@@ -3121,8 +3121,8 @@ datum
 				// Let's assume that blood immediately mixes with the bloodstream of the mob.
 				if (!pathogens_processed) //Only process pathogens once
 					pathogens_processed = 1
-					for (var/uid in src.pathogens)
-						var/datum/microbe/P = src.pathogens[uid]
+					for (var/uid in src.microbes)
+						var/datum/microbe/P = src.microbes[uid]
 						logTheThing("pathology", M, null, "metabolizing [src] containing pathogen [P].")
 						M.infected(P)
 				..()
@@ -3154,7 +3154,7 @@ datum
 							var/datum/reagent/blood/B = target.get_reagent(reagent_id)
 							if (!istype(B))
 								continue
-							B.pathogens = target_pathogens
+							B.microbes = target_pathogens
 				return
 
 		blood/bloodc

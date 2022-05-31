@@ -365,10 +365,10 @@ datum
 					var/datum/reagent/blood/B = src.get_reagent(reagent_id)
 					if (!istype(B))
 						continue
-					for (var/uid in B.pathogens)
+					for (var/uid in B.microbes)
 						if (!(uid in ret))
 							ret += uid
-							ret[uid] = B.pathogens[uid]
+							ret[uid] = B.microbes[uid]
 			return ret
 
 		//multiplier is used to handle realtime metabolizations over byond time

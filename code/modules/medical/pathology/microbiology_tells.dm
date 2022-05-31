@@ -1,16 +1,17 @@
 // Anything that is used specifically as a 'tell' for when someone is infected goes here
-
+// A tell is a conspicuous effect that allows the player to quickly determine if they are infected with something.
+// Tells must not inherently cause harm to the infected player.
+// Tells are permitted to roll probabilities to transmit, within good reason.
+ABSTRACT_TYPE(/datum/microbioeffects/tells)
 datum/microbioeffects/tells
 	name = "Tells"
-	ABSTRACT_TYPE(/datum/microbioeffects/tells)
-
 
 datum/microbioeffects/tells/hiccups
 	name = "Hiccups"
 	desc = "The microbes send involuntary signals to the infected individual's diaphragm."
 
 	mob_act(var/mob/M as mob, var/datum/microbe/origin)
-		if (prob(4))
+		if (prob(15))
 			M:emote("hiccup")
 
 	onadd(var/datum/microbe/origin)
@@ -169,14 +170,13 @@ datum/pathogeneffects/neutral/shakespeare
 
 	may_react_to()
 		return "The culture appears to be quite dramatic."
+*/
 
 datum/pathogeneffects/neutral/hoarseness
 	name = "Hoarseness"
 	desc = "The pathogen causes dry throat, leading to hoarse speech."
 
 	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (origin.in_remission)
-			return
 		if (prob(10))
 			M:emote("wheeze")
 		else if (prob(5))
@@ -193,8 +193,6 @@ datum/pathogeneffects/neutral/malaise
 	desc = "The pathogen causes very mild, inconsequential fatigue to its host."
 
 	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (origin.in_remission)
-			return
 		if (prob(10))
 			M:emote("yawn")
 		else if (prob(5))
@@ -204,7 +202,7 @@ datum/pathogeneffects/neutral/malaise
 
 	may_react_to()
 		return "The pathogen appears to have a gland that may affect neural functions."
-
+/*
 datum/pathogeneffects/neutral/hyperactive
 	name = "Psychomotor Agitation"
 	desc = "Also known as restlessness, the infected individual is prone to involuntary motions and tics."

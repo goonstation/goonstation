@@ -9,6 +9,7 @@ datum/controller/microbe
 
 	var/uid = null
 	var/creation_time = null
+	var/next_uid = 1
 
 	New(var/microbio_uid)
 		..()
@@ -18,8 +19,8 @@ datum/controller/microbe
 	New()
 		..()
 
-		for (var/T in concrete_typesof(/datum/microbioeffects))
-			path_to_effect[T] = new T()
+		for (var/E in concrete_typesof(/datum/microbioeffects))
+			path_to_effect[E] = new E()
 
 		//Define all paths to suppressants
 		for (var/T in childrentypesof(/datum/suppressant))
@@ -34,7 +35,8 @@ datum/microbe
 
 	var/mob/infected								// The mob that is infected with this pathogen.
 
-	var/duration									// How long a pathogen stays in an infected mob before being naturally immunized.
+	var/duration									// Counter for durationtotal
+	var/durationtotal								// How long a pathogen stays in an infected mob before being naturally immunized.
 
 	var/datum/suppressant/suppressant				// Handles curing
 
@@ -42,8 +44,10 @@ datum/microbe
 	var/list/effectdata = list()					// used by onadd()
 	//var/list/mutex = list()						// These symptoms are explicitly disallowed by a mutex.
 
-	var/microbio_uid							// UID for a microbe.
+	var/microbio_uid								// UID for a microbe.
 	var/ticked										// Stops runtimes.
+
+
 // PROCS AND FUNCTIONS FOR GENERATION
 
 	disposing()
@@ -55,9 +59,9 @@ datum/microbe
 		desc = ""
 		infected = null
 		duration = 1
-		suppressant = ""
+		suppressant = null
 		effects = list()
-		microbio_uid = 0
+		microbio_uid = null
 		//mutex = list()
 		ticked = 0
 
@@ -68,9 +72,9 @@ datum/microbe
 
 	proc/do_prefab(tier)							// for ailments with defined symptoms
 		clear()
-		var/cdc = generate_name()
-		generate_cure(cdc)
-		generate_attributes(tier)
+		generate_name()
+		generate_cure(src)
+		generate_attributes()
 
 	New()
 		..()
@@ -82,24 +86,25 @@ datum/microbe
 
 	proc/generate_effects() //WIP
 		for (var/i = 0, i <= 3, i++)
-			add_symptom(microbe_controller.path_to_effect)
-		return
+			add_new_symptom(microbe_controller.path_to_effect)
+
 
 	proc/generate_cure(var/datum/microbe/P) //WIP
 		var/S = pick(microbe_controller.path_to_suppressant)
 		P.suppressant = microbe_controller.path_to_suppressant[S]
-		return
+
 
 	proc/generate_attributes() //WIP
 		var/shape = pick("stringy", "snake", "blob", "spherical", "tetrahedral", "star shaped", "tesselated")
-		src.desc = "red [shape] microbes" //color determined by average of cure reagent and assigned-effect colors
-		src.microbio_uid++
-		return
+		src.desc = "[suppressant.color] [shape] microbes" //color determined by average of cure reagent and assigned-effect colors
+		src.microbio_uid = "[microbe_controller.next_uid]"
+		microbe_controller.next_uid++
+
 
 	proc/randomize()
 		generate_name()
 		generate_effects()
-		generate_cure()
+		generate_cure(src)
 		generate_attributes()
 		logTheThing("pathology", null, null, "Microbe culture [name] created by randomization.")
 		return
@@ -110,8 +115,11 @@ datum/microbe
 		if (origin)
 			src.name = origin.name
 			src.desc = origin.desc
-			src.duration = 100
+			src.durationtotal = origin.durationtotal
+			src.duration = origin.durationtotal						// Start from the top for new infections/generation
 			src.effects = origin.effects.Copy()
+			for (var/datum/microbioeffects/E in src.effects)
+				E.onadd(src)
 			src.suppressant = origin.suppressant
 		else if (status == 1)
 			randomize()
@@ -160,7 +168,7 @@ datum/microbe
 			effect:mob_act_dead(infected,src)
 		progress_pathogen()
 
-	/*//=============================================================================
+	//=============================================================================
 	//	Events
 	//=============================================================================
 	// In the following chapter you will encounter the definition for event handlers.
@@ -225,7 +233,7 @@ datum/microbe
 	// Act when shocked. Returns the amount of damage the shocked mob should actually take (which leaves place for both amplification and suppression)
 	// The return system here is more complex than for most other events. The symptoms' onshocked may not only modify the amount of shock damage, but
 	// also decide that the presence of the symptom makes the a muscle-event vulnerable pathogen resistant to suppression through shocking.
-	proc/onshocked(var/amt, var/wattage)
+/*	proc/onshocked(var/amt, var/wattage)
 		var/datum/shockparam/ret = new
 		ret.amt = amt
 		ret.wattage = wattage
@@ -234,7 +242,7 @@ datum/microbe
 			ret = effect:onshocked(infected, ret, src)
 		suppressant.onshocked(ret, src)
 		return ret.amt
-
+*/
 	// Act when saying something. Returns the message that should be said after the diseases make the appropriate modifications.
 	proc/onsay(message)
 		for (var/effect in src.effects)
@@ -261,7 +269,7 @@ datum/microbe
 			effect:oncured(infected, src)
 		suppressant.oncured(src)
 		return
-*/
+
 	proc/add_new_symptom(var/list/allowed, var/allow_duplicates = 0)
 		var/T = pick(allowed)
 		var/datum/microbioeffects/E = microbe_controller.path_to_effect[T]
@@ -281,7 +289,7 @@ datum/microbe
 			return 1
 		else return 0
 /*
-	proc/remove_symptom(var/datum/pathogeneffects/E, var/all = 0)
+	proc/remove_symptom(var/datum/microbioeffects/E, var/all = 0)
 		if (all)
 			var/rem = 0
 			while (E in src.effects)
@@ -293,7 +301,8 @@ datum/microbe
 			if (E in src.effects)
 				src.effects -= E
 				rebuild_mutex()
-
+				*/
+/*
 	proc/rebuild_mutex()
 		src.mutex = list()
 		for (var/datum/pathogeneffects/E in src.effects)

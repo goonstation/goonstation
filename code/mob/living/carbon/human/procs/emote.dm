@@ -22,8 +22,8 @@
 			param = copytext(act, t1 + 1, length(act) + 1)
 			act = copytext(act, 1, t1)
 
-	//for (var/uid in src.pathogens)
-		//var/datum/pathogen/P = src.pathogens[uid]
+	//for (var/uid in src.microbes)
+		//var/datum/pathogen/P = src.microbes[uid]
 		//if (P.onemote(act, voluntary, param))
 			//return
 

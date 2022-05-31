@@ -1,4 +1,5 @@
 // Effects for nuclear bio-operator diseases and natural illnesses go here
+ABSTRACT_TYPE(/datum/microbioeffects/malevolent)
 /datum/microbioeffects/malevolent
 	name = "Malevolent"
 

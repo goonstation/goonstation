@@ -1,9 +1,9 @@
+ABSTRACT_TYPE(/datum/microbioeffects)
 /datum/microbioeffects
 	var/name
 	var/desc
-	ABSTRACT_TYPE(/datum/microbioeffects)
-	//var/infect_message = null
-	//var/infect_attempt_message = null // shown to person when an attempt to directly infect them is made
+	var/infect_message = null
+	var/infect_attempt_message = null // shown to person when an attempt to directly infect them is made
 
 	// This is a list of mutual exclusive symptom TYPES.
 	// If this contains any symptoms, none of these symptoms will be picked upon mutation or initial raffle.
@@ -87,7 +87,7 @@
 	// gets his bodily fluids onto another when they directly disarm, punch, or grab a person.
 	// For INFECT_TOUCH diseases this is automatically called on a successful disarm, punch or grab. When overriding any of these events, use ..() to keep this behaviour.
 	// OVERRIDE: Generally, you do not need to override this.
-	/*proc/infect_direct(var/mob/target as mob, var/datum/pathogen/origin, contact_type = "touch")
+	proc/infect_direct(var/mob/target as mob, var/datum/mircobe/origin, contact_type = "touch")
 		if (infect_attempt_message)
 			target.show_message("<span class='alert'><B>[infect_attempt_message]</B></span>")
 		if(istype(target, /mob/living/carbon/human))
@@ -97,7 +97,7 @@
 					if (infect_message)
 						target.show_message(infect_message)
 					logTheThing("pathology", origin.infected, target, "infects [constructTarget(target,"pathology")] with [origin.name] due to symptom [name] through direct contact ([contact_type]).")
-					return 1*/
+					return 1
 
 	proc/onadd(var/datum/microbe/P)
 		return

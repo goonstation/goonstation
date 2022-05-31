@@ -570,13 +570,13 @@
 
 	proc/handle_pathogens()
 		if (isdead(src))
-			if (src.pathogens.len)
-				for (var/uid in src.pathogens)
-					var/datum/microbe/P = src.pathogens[uid]
+			if (src.microbes.len)
+				for (var/uid in src.microbes)
+					var/datum/microbe/P = src.microbes[uid]
 					P.mob_act_dead()
 			return
-		for (var/uid in src.pathogens)
-			var/datum/microbe/P = src.pathogens[uid]
+		for (var/uid in src.microbes)
+			var/datum/microbe/P = src.microbes[uid]
 			P.mob_act()
 
 	get_cold_protection()

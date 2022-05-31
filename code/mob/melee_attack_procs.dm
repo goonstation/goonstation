@@ -280,8 +280,8 @@
 				return
 
 	//if (istype(H))
-		//for (var/uid in H.pathogens)
-			//var/datum/pathogen/P = H.pathogens[uid]
+		//for (var/uid in H.microbes)
+			//var/datum/pathogen/P = H.microbes[uid]
 			//P.ongrab(target)
 
 	if (!grab_item)
@@ -405,8 +405,8 @@
 	if (prob((stampart + 5) * mult))
 		//if (ishuman(src))
 			//var/mob/living/carbon/human/H = src
-			//for (var/uid in H.pathogens)
-				//var/datum/pathogen/P = H.pathogens[uid]
+			//for (var/uid in H.microbes)
+				//var/datum/pathogen/P = H.microbes[uid]
 				//var/ret = P.ondisarm(target, 1)
 				//if (!ret)
 					//msgs.base_attack_message = "<span class='alert'><B>[src] shoves [target][DISARM_WITH_ITEM_TEXT]!</B></span>"
@@ -429,8 +429,8 @@
 	var/list/obj/item/fixed_in_place = list()
 	//if (ishuman(src))
 		//var/mob/living/carbon/human/H2 = src
-		//for (var/uid in H2.pathogens)
-			//var/datum/pathogen/P = H2.pathogens[uid]
+		//for (var/uid in H2.microbes)
+			//var/datum/pathogen/P = H2.microbes[uid]
 			//var/ret = P.ondisarm(target, 1)
 			//if (!ret)
 				//disarm_success = 0
@@ -639,8 +639,8 @@
 	var/punchmult = get_base_damage_multiplier(def_zone)
 	//if(ishuman(src))
 		//var/mob/living/carbon/human/LM = src
-		//for (var/uid in LM.pathogens)
-			//var/datum/pathogen/P = LM.pathogens[uid]
+		//for (var/uid in LM.microbes)
+			//var/datum/pathogen/P = LM.microbes[uid]
 			//punchmult *= P.onpunch(target, def_zone)
 
 	var/punchedmult = target.get_taken_base_damage_multiplier(src, def_zone)
@@ -1151,8 +1151,8 @@
 /mob/living/carbon/human/get_taken_base_damage_multiplier(var/mob/attacker, var/def_zone)
 	//var/punchedmult = 1
 
-	//for (var/uid in src.pathogens)
-		//var/datum/pathogen/P = src.pathogens[uid]
+	//for (var/uid in src.microbes)
+		//var/datum/pathogen/P = src.microbes[uid]
 		//punchedmult *= P.onpunched(attacker, def_zone)
 
 	//return punchedmult
