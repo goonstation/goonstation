@@ -53,7 +53,7 @@ datum/microbioeffects/tells/hiccups
 		return "The pathogen's cells appear to be... hugging each other?"
 */
 
-datum/pathogeneffects/neutral/sunglass
+datum/microbioeffects/tells/sunglass
 	name = "Sunglass Glands"
 	desc = "The infected grew sunglass glands."
 
@@ -93,7 +93,7 @@ datum/pathogeneffects/neutral/sunglass
 			else
 				return "The pathogen appears to have developed a resistance to the flash powder."
 
-datum/pathogeneffects/neutral/deathgasping
+datum/microbioeffects/tells/deathgasping
 	name = "Deathgasping"
 	desc = "The pathogen causes the user's brain to believe the body is dying."
 	onadd(var/datum/microbe/origin)
@@ -106,7 +106,7 @@ datum/pathogeneffects/neutral/deathgasping
 	may_react_to()
 		return "The pathogen appears to be.. sort of dead?"
 
-datum/pathogeneffects/neutral/shakespeare
+datum/microbioeffects/tells/shakespeare
 	name = "Shakespeare"
 	desc = "The infected has an urge to begin reciting shakespearean poetry."
 

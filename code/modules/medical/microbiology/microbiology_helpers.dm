@@ -78,7 +78,7 @@
 
 
 // ez_pathogen
-// Use this proc when you have already defined
+// Currently used twice: for the low sanity motive, and for small_animal armadillo
 /proc/ez_pathogen(var/EP)											//EP for Effect Path
 	var/datum/microbe/P = new /datum/microbe
 	//var/datum/pathogen_cdc/cdc = P.generate_name()
