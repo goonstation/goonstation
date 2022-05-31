@@ -153,6 +153,7 @@ ABSTRACT_TYPE(/obj/reactor_component)
 	desc = "A gas coolant channel component for a nuclear reactor"
 	icon_state_inserted = "gas"
 	thermal_cross_section = 0.05
+	var/gas_thermal_cross_section = 0.5
 	var/datum/gas_mixture/current_gas
 
 	processGas(var/datum/gas_mixture/inGas)
@@ -163,8 +164,8 @@ ABSTRACT_TYPE(/obj/reactor_component)
 			//heat transfer coefficient
 			var/hTC = TOTAL_MOLES(src.current_gas)/src.material.getProperty("density")
 			if(hTC>0)
-				src.current_gas.temperature += thermal_cross_section*-deltaT*hTC
-				src.temperature += thermal_cross_section*deltaT*(1/hTC)
+				src.current_gas.temperature += gas_thermal_cross_section*-deltaT*hTC
+				src.temperature += gas_thermal_cross_section*deltaT*(1/hTC)
 			. = src.current_gas
 		if(inGas)
 			src.current_gas = inGas.remove(R_IDEAL_GAS_EQUATION * inGas.temperature)
