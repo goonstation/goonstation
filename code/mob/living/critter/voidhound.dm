@@ -13,6 +13,7 @@
 	custom_gib_handler = /proc/gibs
 	icon = 'icons/mob/wraith_critters.dmi'
 	icon_state = "voidhound"
+	icon_state_dead = "dead_voidhound"
 	var/health_brute = 40
 	var/health_brute_vuln = 0.7
 	var/health_burn = 40

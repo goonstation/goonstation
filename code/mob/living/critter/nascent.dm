@@ -14,6 +14,7 @@
 	var/health_burn = 50
 	var/health_burn_vuln = 0.8
 	var/mob/wraith/master = null
+	var/deathsound = "sound/voice/wraith/revleave.ogg"
 
 	New(var/turf/T, var/mob/wraith/M = null)
 		..(T)
@@ -33,3 +34,10 @@
 	setup_healths()
 		add_hh_flesh(src.health_brute, src.health_brute_vuln)
 		add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
+
+
+	death(var/gibbed)
+		if (!gibbed)
+			playsound(src, src.deathsound, 50, 0)
+			qdel(src)
+		return ..()

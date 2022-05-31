@@ -8,6 +8,7 @@
 	can_grab = 1
 	can_disarm = 1
 	icon = 'icons/mob/wraith_critters.dmi'
+	icon_state_dead = "dead_spiker"
 	icon_state = "spiker"
 	custom_gib_handler = /proc/gibs
 	var/health_brute = 50

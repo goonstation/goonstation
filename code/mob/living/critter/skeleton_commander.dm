@@ -15,6 +15,7 @@
 	var/health_burn = 90
 	var/health_burn_vuln = 0.3
 	var/mob/wraith/master = null
+	var/deathsound = "sound/impact_sounds/plate_break.ogg"
 
 	New(var/turf/T, var/mob/wraith/M = null)
 		..(T)
@@ -31,6 +32,15 @@
 	setup_healths()
 		add_hh_flesh(src.health_brute, src.health_brute_vuln)
 		add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
+
+	death(var/gibbed)
+		if (!gibbed)
+			src.unequip_all()
+			playsound(src, src.deathsound, 50, 0)
+			visible_message("[src] shatters in bits of bones!")
+			src.gib()
+		return ..()
+
 
 	setup_hands()
 		..()

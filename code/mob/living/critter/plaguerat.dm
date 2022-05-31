@@ -112,7 +112,7 @@ ABSTRACT_TYPE(/mob/living/critter/plaguerat)
 		if (!gibbed)
 			src.unequip_all()
 			playsound(src, src.deathsound, 50, 0)
-			src.reagents.add_reagent(venom, 50, null)
+			src.gib()
 		return ..()
 
 	proc/venom_bite(mob/M)
@@ -125,9 +125,9 @@ ABSTRACT_TYPE(/mob/living/critter/plaguerat)
 				M.TakeDamageAccountArmor("All", rand(1,3), 0, 0, DAMAGE_STAB)
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
-				//if(istype(H.wear_suit, /obj/item/clothing/suit/bio_suit))	//Protective wear will stop it
+
 				if(H.clothing_protects_from_chems())
-					boutput(H, "The bite hurt alot, but it didn't manage to pierce your protective suit.")
+					boutput(H, "The bite hurts alot, but it didn't manage to pierce your protective suit.")
 					return 1
 			M.reagents.add_reagent(src.venom, bite_transfer_amt)
 
