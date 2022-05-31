@@ -377,7 +377,7 @@
 	desc = "Double the eyepatches, double the coolness."
 	icon_state = "twopatch"
 	item_state = "radio"
-	block_vision = 1
+	block_vision = TRUE
 
 /obj/item/clothing/glasses/vr
 	name = "\improper VR goggles"
