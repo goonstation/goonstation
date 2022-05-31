@@ -600,6 +600,10 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	abilities = list()
 	ability_buttons = list()
 
+	setupProperties()
+		..()
+		setProperty("conductivity", 1) //it is made of pure metal afterall
+
 	attackby(obj/item/power_stones/W, mob/user)
 		if (istype(W, /obj/item/power_stones))
 			if(!istype(user, /mob/living/carbon/human)) return //This ain't a critter gauntlet
