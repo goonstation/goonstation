@@ -58,7 +58,8 @@ ABSTRACT_TYPE(/obj/reactor_component)
 				hTC = hTC*(RC.material.getProperty("thermal")/100)
 			RC.temperature += thermal_cross_section*-deltaT*hTC
 			src.temperature += thermal_cross_section*deltaT*(1/hTC)
-
+			if(RC.temperature < 0 || src.temperature < 0)
+				CRASH("TEMP WENT NEGATIVE")
 			RC.material.triggerTemp(RC,RC.temperature)
 			src.material.triggerTemp(src,src.temperature)
 		//heat transfer with reactor vessel
@@ -165,6 +166,7 @@ ABSTRACT_TYPE(/obj/reactor_component)
 				src.current_gas.temperature += thermal_cross_section*-deltaT*hTC
 				src.temperature += thermal_cross_section*deltaT*(1/hTC)
 			. = src.current_gas
-		src.current_gas = inGas.remove(R_IDEAL_GAS_EQUATION * inGas.temperature)
+		if(inGas)
+			src.current_gas = inGas.remove(R_IDEAL_GAS_EQUATION * inGas.temperature)
 
 

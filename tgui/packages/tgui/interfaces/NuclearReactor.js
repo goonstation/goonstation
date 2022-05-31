@@ -4,6 +4,7 @@ import { Window } from '../layouts';
 import { useLocalState } from '../backend';
 import { Divider, Flex, Stack } from '../components';
 import { capitalize, pluralize } from './common/stringUtils';
+import { freezeTemperature, getTemperatureColor, getTemperatureIcon, getTemperatureChangeName } from './common/temperatureUtils';
 
 const ReactorRow = (shape) => {
   const {
@@ -29,6 +30,9 @@ const ReactorRow = (shape) => {
                   src={`data:image/png;base64,${emptySlotIcon}`}
                   style={{
                     'vertical-align': 'middle',
+                    'border-color': '#AAAAAA',
+                    'border-style': 'solid',
+                    'border-radius': '4px',
                     'horizontal-align': 'middle',
                   }}
                 />
@@ -40,7 +44,9 @@ const ReactorRow = (shape) => {
         {
           const { x, y, name, img, temp } = c;
           return (
-            <Table.Cell>
+            <Table.Cell
+              // backgroundColor={getTemperatureColor(temp)}
+            >
               <Button
                 key={name}
                 fluid
@@ -51,7 +57,11 @@ const ReactorRow = (shape) => {
                 <img
                   src={`data:image/png;base64,${img}`}
                   style={{
+                    'box-shadow': `0px 0px 20px ${getTemperatureColor(temp)}`,
                     'vertical-align': 'middle',
+                    'border-color': `${getTemperatureColor(temp)}`,
+                    'border-style': 'solid',
+                    'border-radius': '4px',
                     'horizontal-align': 'middle',
                   }}
                 />

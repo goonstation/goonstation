@@ -72,18 +72,7 @@
 		var/input_starting_pressure = MIXTURE_PRESSURE(air1)
 		boutput(world,"TURBINE: input=[input_starting_pressure] output=[output_starting_pressure]")
 
-		if(output_starting_pressure >= min(ONE_ATMOSPHERE,input_starting_pressure-10))
-			//Need at least 10 KPa difference to overcome friction in the mechanism
-			return
-
-		//Calculate necessary moles to transfer using PV = nRT
-		if((TOTAL_MOLES(air1) <= 0) || (air1.temperature<=0))
-			return
-
-		var/pressure_delta = min(ONE_ATMOSPHERE - output_starting_pressure, (input_starting_pressure - output_starting_pressure)/2)
-		//Can not have a pressure delta that would cause output_pressure > input_pressure
-		var/transfer_moles = pressure_delta*air2.volume/(air1.temperature * R_IDEAL_GAS_EQUATION)
-
+		var/transfer_moles = input_starting_pressure ? input_starting_pressure*air2.volume/(air1.temperature * R_IDEAL_GAS_EQUATION) : 0
 		//RPM - generate ideal power at 600RPM
 		//Stator load - how much are we trying to slow the RPM
 		//Energy generated = stator load * RPM

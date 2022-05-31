@@ -1,6 +1,8 @@
 /////////////////////////////////////////////////////////////////
 // Defintion for the nuclear reactor engine
 /////////////////////////////////////////////////////////////////
+#define REACTOR_GRID_WIDTH 6
+#define REACTOR_GRID_HEIGHT 6
 
 /obj/machinery/atmospherics/binary/nuclear_reactor
 	name = "Model NTBMK Nuclear Reactor"
@@ -19,8 +21,8 @@
 	density = TRUE
 	mat_changename = FALSE
 	dir = EAST
-	var/list/obj/item/reactor_component/component_grid[6][6]
-	var/list/list/datum/neutron/flux_grid[6][6]
+	var/list/obj/item/reactor_component/component_grid[REACTOR_GRID_WIDTH][REACTOR_GRID_HEIGHT]
+	var/list/list/datum/neutron/flux_grid[REACTOR_GRID_WIDTH][REACTOR_GRID_HEIGHT]
 	var/radiationLevel = 0
 	var/datum/gas_mixture/current_gas = null
 	var/temperature = T20C
@@ -29,8 +31,8 @@
 	New()
 		..()
 		src.setMaterial(getMaterial("steel"))
-		for(var/x=1 to 6)
-			for(var/y=1 to 6)
+		for(var/x=1 to REACTOR_GRID_WIDTH)
+			for(var/y=1 to REACTOR_GRID_HEIGHT)
 				src.flux_grid[x][y] = list()
 
 	process()
@@ -38,22 +40,14 @@
 		var/output_starting_pressure = MIXTURE_PRESSURE(air2)
 		var/input_starting_pressure = MIXTURE_PRESSURE(air1)
 		boutput(world,"REACTOR: input=[input_starting_pressure] output=[output_starting_pressure]")
-		if(output_starting_pressure >= min(ONE_ATMOSPHERE,input_starting_pressure-10))
-			return
 
-		//Calculate necessary moles to transfer using PV = nRT
-		if((TOTAL_MOLES(air1) <= 0) || (air1.temperature<=0))
-			return
-
-		var/pressure_delta = min(ONE_ATMOSPHERE - output_starting_pressure, (input_starting_pressure - output_starting_pressure)/2)
-		//Can not have a pressure delta that would cause output_pressure > input_pressure
-		var/transfer_moles = pressure_delta*air2.volume/(air1.temperature * R_IDEAL_GAS_EQUATION)
+		var/transfer_moles = input_starting_pressure ? input_starting_pressure*air2.volume/(air1.temperature * R_IDEAL_GAS_EQUATION) : 0
 
 		var/datum/gas_mixture/gas_input = air1.remove(transfer_moles)
 		var/datum/gas_mixture/gas_output = air2
 
-		for(var/x=1 to 6)
-			for(var/y=1 to 6)
+		for(var/x=1 to REACTOR_GRID_WIDTH)
+			for(var/y=1 to REACTOR_GRID_HEIGHT)
 				if(src.component_grid[x][y])
 					//flow gas through components
 					var/obj/item/reactor_component/comp = src.component_grid[x][y]
@@ -72,7 +66,7 @@
 						xmod -= ((N.dir & WEST) == WEST)
 						ymod += ((N.dir & SOUTH) == SOUTH)
 						ymod -= ((N.dir & NORTH) == NORTH)
-						if((x+xmod >= 1 & y+ymod >= 1) & (x+xmod <= 6 & y+ymod <= 6))
+						if((x+xmod >= 1 & y+ymod >= 1) & (x+xmod <= REACTOR_GRID_WIDTH & y+ymod <= REACTOR_GRID_HEIGHT))
 							src.flux_grid[x+xmod][y+ymod]+=N
 							src.flux_grid[x][y]-=N
 						else
@@ -97,7 +91,8 @@
 				src.current_gas.temperature += heat_transfer_mult*-deltaT*hTC
 				src.temperature += heat_transfer_mult*deltaT*(1/hTC)
 			. = src.current_gas
-		src.current_gas = inGas.remove(R_IDEAL_GAS_EQUATION * inGas.temperature)
+		if(inGas)
+			src.current_gas = inGas.remove(R_IDEAL_GAS_EQUATION * inGas.temperature)
 
 
 	proc/getGridNeighbors(var/x,var/y)
@@ -106,7 +101,7 @@
 			. += null
 		else
 			. += src.component_grid[x-1][y]
-		if(x+1 > length(src.component_grid))
+		if(x+1 > REACTOR_GRID_WIDTH)
 			. += null
 		else
 			. += src.component_grid[x+1][y]
@@ -114,7 +109,7 @@
 			. += null
 		else
 			. += src.component_grid[x][y-1]
-		if(y+1 > length(src.component_grid[1]))
+		if(y+1 > REACTOR_GRID_HEIGHT)
 			. += null
 		else
 			. += src.component_grid[x][y+1]
@@ -150,15 +145,15 @@
 
 	ui_static_data(mob/user)
 		. = list(
-			"gridW" = length(src.component_grid),
-			"gridH" = length(src.component_grid[1]),
+			"gridW" = REACTOR_GRID_WIDTH,
+			"gridH" = REACTOR_GRID_HEIGHT,
 			"emptySlotIcon" = icon2base64(icon('icons/misc/reactorcomponents.dmi',"empty"))
 		)
 
 	ui_data()
-		var/comps[6][6]
-		for(var/x=1 to 6)
-			for(var/y=1 to 6)
+		var/comps[REACTOR_GRID_WIDTH][REACTOR_GRID_HEIGHT]
+		for(var/x=1 to REACTOR_GRID_WIDTH)
+			for(var/y=1 to REACTOR_GRID_HEIGHT)
 				if(src.component_grid[x][y])
 					var/obj/item/reactor_component/comp = src.component_grid[x][y]
 					comps[x][y]=list(
@@ -232,3 +227,6 @@
 		..()
 		src.dir = dir
 		src.velocity = velocity
+
+#undef REACTOR_GRID_WIDTH
+#undef REACTOR_GRID_HEIGHT

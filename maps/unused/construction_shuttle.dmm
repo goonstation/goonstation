@@ -707,15 +707,17 @@
 	},
 /turf/simulated/floor/black,
 /area/space)
-"fP" = (
-/obj/machinery/power/apc,
-/turf/simulated/wall/r_wall,
-/area/space)
 "gm" = (
 /obj/item/material_piece/hamburgris{
 	amount = 10
 	},
 /turf/simulated/floor/black,
+/area/space)
+"gJ" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 10
+	},
+/turf/space,
 /area/space)
 "gM" = (
 /obj/item/tool/omnitool/syndicate,
@@ -746,9 +748,8 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "jY" = (
-/obj/machinery/atmospherics/binary/passive_gate{
-	dir = 8;
-	on = 1
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 1
 	},
 /turf/simulated/floor/black,
 /area/space)
@@ -778,6 +779,12 @@
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/arrival/station)
+"mK" = (
+/obj/machinery/atmospherics/valve{
+	dir = 1
+	},
+/turf/simulated/floor/black,
+/area/space)
 "nd" = (
 /obj/item/material_piece/bohrum{
 	amount = 10
@@ -837,6 +844,12 @@
 	},
 /turf/simulated/floor/black,
 /area/space)
+"sF" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 8
+	},
+/turf/space,
+/area/space)
 "sP" = (
 /obj/landmark/start/latejoin,
 /obj/machinery/light/small/floor,
@@ -879,11 +892,10 @@
 /turf/simulated/floor/black,
 /area/space)
 "xH" = (
-/obj/machinery/atmospherics/binary/passive_gate{
-	dir = 4;
-	on = 1
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 1
 	},
-/turf/simulated/floor/black,
+/turf/space,
 /area/space)
 "xU" = (
 /obj/item/material_piece/soulsteel{
@@ -900,6 +912,10 @@
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/black,
+/area/space)
+"zR" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold,
+/turf/simulated/wall/r_wall,
 /area/space)
 "AG" = (
 /obj/item/material_piece/mauxite{
@@ -950,6 +966,12 @@
 /obj/machinery/portable_atmospherics/canister/toxins,
 /turf/simulated/floor/black,
 /area/space)
+"DB" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 5
+	},
+/turf/space,
+/area/space)
 "DY" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 6
@@ -962,6 +984,11 @@
 	},
 /obj/item/material_piece/koshmarite{
 	amount = 10
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "N APC";
+	pixel_y = 24
 	},
 /turf/simulated/floor/black,
 /area/space)
@@ -978,13 +1005,28 @@
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
+"GD" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 6
+	},
+/turf/space,
+/area/space)
 "Hh" = (
 /obj/machinery/nanofab/nuclear,
 /turf/simulated/floor/black,
 /area/space)
+"HV" = (
+/obj/machinery/atmospherics/pipe/simple/junction,
+/turf/space,
+/area/space)
 "HW" = (
 /obj/item/reactor_component/control_rod,
 /obj/machinery/light/small/floor,
+/turf/simulated/floor/black,
+/area/space)
+"Ir" = (
+/obj/machinery/light/small/floor,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /turf/simulated/floor/black,
 /area/space)
 "IF" = (
@@ -1008,6 +1050,13 @@
 "Je" = (
 /obj/item/material_piece/rubber{
 	amount = 10
+	},
+/turf/simulated/floor/black,
+/area/space)
+"Ju" = (
+/obj/machinery/light/small/floor,
+/obj/machinery/atmospherics/valve{
+	dir = 1
 	},
 /turf/simulated/floor/black,
 /area/space)
@@ -1076,6 +1125,12 @@
 /obj/item/crowbar,
 /turf/simulated/floor/black,
 /area/space)
+"Og" = (
+/obj/machinery/atmospherics/valve{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/space)
 "OL" = (
 /obj/item/material_piece/gnesis{
 	amount = 10
@@ -1104,6 +1159,12 @@
 "Sh" = (
 /obj/machinery/atmospherics/portables_connector,
 /turf/simulated/floor/black,
+/area/space)
+"Up" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 9
+	},
+/turf/space,
 /area/space)
 "Uw" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
@@ -1135,6 +1196,7 @@
 /area/space)
 "UR" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /turf/simulated/floor/black,
 /area/space)
 "Vf" = (
@@ -46023,7 +46085,7 @@ Lg
 Lg
 Lg
 Lg
-fP
+Lg
 Er
 pi
 wc
@@ -49945,20 +50007,20 @@ Yq
 Yq
 Yq
 Yq
-xH
+Uw
 Yq
 Yq
 Yq
 jY
-Yq
-Yq
-Yq
-Yq
+mK
+qF
+qF
+qF
 UR
-Lg
-aa
-aa
-aa
+zR
+HV
+xH
+DB
 aa
 aa
 aa
@@ -50258,9 +50320,9 @@ oy
 Yq
 BN
 Lg
-aa
-aa
-aa
+GD
+xH
+Up
 aa
 aa
 aa
@@ -50553,16 +50615,16 @@ Yq
 Yq
 Yq
 Yq
-Lx
+Og
 Yq
 sx
 Nl
 Yq
 Cd
 Lg
-aa
-aa
-aa
+gJ
+xH
+DB
 aa
 aa
 aa
@@ -50862,9 +50924,9 @@ Yq
 Yq
 Ez
 Lg
-aa
-aa
-aa
+GD
+xH
+Up
 aa
 aa
 aa
@@ -51164,9 +51226,9 @@ Yq
 Yq
 Dx
 Lg
-aa
-aa
-aa
+gJ
+xH
+DB
 aa
 aa
 aa
@@ -51459,16 +51521,16 @@ AK
 Yq
 Yq
 CO
-Lx
-CO
-Yq
-CO
-Yq
-CO
-Lg
-aa
-aa
-aa
+jY
+Ju
+qF
+Ir
+qF
+Ir
+zR
+HV
+DB
+sF
 aa
 aa
 aa
@@ -51769,8 +51831,8 @@ Yq
 Yq
 Lg
 aa
-aa
-aa
+gJ
+Up
 aa
 aa
 aa
