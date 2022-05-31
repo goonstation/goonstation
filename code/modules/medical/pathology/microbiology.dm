@@ -48,7 +48,7 @@ datum/microbe
 	var/datum/suppressant/suppressant				// Handles curing
 
 	var/list/effects = list()						// A list of symptoms exhibited by those infected with this pathogen.
-	var/list/effectdata = list()					// used by onadd()
+	var/list/effectdata = list()					// used for custom var calls
 	//var/list/mutex = list()						// These symptoms are explicitly disallowed by a mutex.
 
 	var/microbio_uid								// UID for a microbe.

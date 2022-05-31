@@ -277,11 +277,11 @@ datum/microbioeffects/tells/farts
 		if(doInfect)
 			src.infect_cloud(M, origin, origin.spread/5)
 		if(voluntary)
-			origin.symptom_data[name] = TIME
+			origin.effectdata[name] = TIME
 
 	onemote(mob/M as mob, act, voluntary, param, datum/pathogen/P)
 		// involuntary farts are free, but the others use the cooldown
-		if(voluntary && TIME-P.symptom_data[name] < cooldown)
+		if(voluntary && TIME-P.effectdata[name] < cooldown)
 			return
 		if(act == "fart")
 			fart(M, P, voluntary)

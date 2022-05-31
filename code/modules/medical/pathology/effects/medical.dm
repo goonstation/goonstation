@@ -89,10 +89,18 @@ datum/microbioeffects/benevolent/cleansing
 
 	may_react_to()
 		return "The pathogen seems to be much cleaner than normal."
-/*
-datum/pathogeneffects/benevolent/oxygenconversion
+
+datum/microbioeffects/benevolent/oxygenconversion
 	name = "Oxygen Conversion"
 	desc = "The pathogen converts organic tissue into oxygen when required by the host."
+
+	onadd(var/datum/microbe/origin)
+		origin.effectdata += "Oxy Conversion"
+
+	mob_act(var/mob/M as mob, var/datum/microbe/origin)
+		var/mob/living/carbon/C = M
+		if (C.get_oxygen_deprivation())
+			C.setStatus("patho_oxy_speed_bad", duration = INFINITE_STATUS, optional = 1)
 
 	may_react_to()
 		return "The pathogen appears to radiate oxygen."
@@ -101,55 +109,48 @@ datum/pathogeneffects/benevolent/oxygenconversion
 		if (R == "synthflesh")
 			return "The pathogen consumes the synthflesh and converts it into oxygen."
 
-	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
-		var/mob/living/carbon/C = M
-		if (C.get_oxygen_deprivation())
-			C.setStatus("patho_oxy_speed_bad", duration = INFINITE_STATUS, optional = origin.stage/2.5)
-
-datum/pathogeneffects/benevolent/oxygenstorage
+datum/microbioeffects/benevolent/oxygenstorage
 	name = "Oxygen Storage"
 	desc = "The pathogen stores oxygen and releases it when needed by the host."
+
+	onadd(var/datum/microbe/origin)
+		origin.effectdata += "Oxy Storage"
+
+	mob_act(var/mob/M as mob, var/datum/microbe/origin)
+		if(!origin.effectdata["oxygen_storage"]) // if not yet set, initialize
+			origin.effectdata["oxygen_storage"] = 0
+
+		var/mob/living/carbon/C = M
+		if (C.get_oxygen_deprivation())
+			if(origin.effectdata["oxygen_storage"] > 10)
+				C.setStatus("patho_oxy_speed", duration = INFINITE_STATUS, optional = origin.effectdata["oxygen_storage"])
+				origin.effectdata["oxygen_storage"] = 0
+		else
+			// faster reserve replenishment at higher stages
+			origin.effectdata["oxygen_storage"] = min(100, origin.effectdata["oxygen_storage"] + 2)
 
 	may_react_to()
 		return "The pathogen appears to have a bubble of oxygen around it."
 
-	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if(!origin.symptom_data["oxygen_storage"]) // if not yet set, initialize
-			origin.symptom_data["oxygen_storage"] = 0
-
-		var/mob/living/carbon/C = M
-		if (C.get_oxygen_deprivation())
-			if(origin.symptom_data["oxygen_storage"] > 10)
-				C.setStatus("patho_oxy_speed", duration = INFINITE_STATUS, optional = origin.symptom_data["oxygen_storage"])
-				origin.symptom_data["oxygen_storage"] = 0
-		else
-			// faster reserve replenishment at higher stages
-			origin.symptom_data["oxygen_storage"] = min(100, origin.symptom_data["oxygen_storage"] + origin.stage*2)
-
-datum/pathogeneffects/benevolent/resurrection
+datum/microbioeffects/benevolent/resurrection
 	name = "Necrotic Resurrection"
 	desc = "The pathogen will resurrect you if it procs while you are dead."
-	var/cooldown = 5 MINUTES
+	var/cooldown = 1 MINUTES			// Make this competitive?
 
-	may_react_to()
-		return "Some of the pathogen's dead cells seem to remain active."
+	onadd(var/datum/microbe/origin)
+		origin.effectdata += "Ressurection"
 
-	mob_act_dead(var/mob/M as mob, var/datum/pathogen/origin)
-		if (origin.in_remission)
-			return
-		if (origin.stage < 3)
-			return
-		if(!origin.symptom_data["resurrect_cd"]) // if not yet set, initialize it so that it is off cooldown
-			origin.symptom_data["resurrect_cd"] = -cooldown
-		if(TIME-origin.symptom_data["resurrect_cd"] < cooldown)
+	mob_act_dead(var/mob/M as mob, var/datum/microbe/origin)
+		if(!origin.effectdata["resurrect_cd"]) // if not yet set, initialize it so that it is off cooldown
+			origin.effectdata["resurrect_cd"] = -cooldown
+		if(TIME-origin.effectdata["resurrect_cd"] < cooldown)
 			return
 		// Shamelessly stolen from Strange Reagent
 		if (isdead(M) || istype(get_area(M),/area/afterlife/bar))
-			origin.symptom_data["resurrect_cd"] = TIME
+			origin.effectdata["resurrect_cd"] = TIME
 			// range from 65 to 45. This is applied to both brute and burn, so the total max damage after resurrection is 130 to 90.
-			var/cap =	95 - origin.stage * 10
-			var/brute = min(cap, M.get_brute_damage())
-			var/burn = min(cap, M.get_burn_damage())
+			var/brute = min(rand(45,65), M.get_brute_damage())
+			var/burn = min(rand(45,65), M.get_burn_damage())
 
 			// let's heal them before we put some of the damage back
 			// but they don't get back organs/limbs/whatever, so I don't use full_heal
@@ -176,10 +177,13 @@ datum/pathogeneffects/benevolent/resurrection
 				H.contract_disease(/datum/ailment/disease/tissue_necrosis, null, null, 1) // this disease will make the person more and more rotten even while alive
 				H.visible_message("<span class='alert'>[H] suddenly starts moving again!</span>","<span class='alert'>You feel the pathogen weakening as you rise from the dead.</span>")
 
+	may_react_to()
+		return "Some of the pathogen's dead cells seem to remain active."
+
 	react_to(var/R, var/zoom)
 		if (R == "synthflesh")
 			return "Dead parts of the synthflesh seem to still be transferring blood."
-*/
+
 
 datum/microbioeffects/benevolent/neuronrestoration
 	name = "Neuron Restoration"
@@ -202,20 +206,20 @@ datum/pathogeneffects/benevolent/genetictemplate
 
 	var/list/mutationMap = list() // stores the kind of mutation with the index being the pathogen's name (which is something like "L41D9")
 
-	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (!!origin.in_remission || !M.bioHolder)
+	mob_act(var/mob/M as mob, var/datum/microbe/origin)
+		if (!M.bioHolder)
 			return
-		if(mutationMap[origin.name_base] == null) // if no mutation has been picked yet, go for a random one from this person
+		if(mutationMap[origin.name] == null) // if no mutation has been picked yet, go for a random one from this person
 			var/list/filtered = new/list()
 			for(var/T in M.bioHolder.effects)
 				var/datum/bioEffect/instance = M.bioHolder.effects[T]
 				if(!instance || istype(instance, /datum/bioEffect/hidden)) continue // hopefully this catches all non-mutation bioeffects?
 				filtered.Add(instance)
 			if(!filtered.len) return // wow, this nerd has no mutations, screw this
-			mutationMap[origin.name_base] = pick(filtered)
-			boutput(M, "You somehow feel more attuned to your [mutationMap[origin.name_base]].") // So patient zero will know when the mutation has been chosen
+			mutationMap[origin.name] = pick(filtered)
+			boutput(M, "You somehow feel more attuned to your [mutationMap[origin.name]].") // So patient zero will know when the mutation has been chosen
 
-		if(origin.symptom_data["genetictemplate"] == origin.stage) // early return if we would just put the same mutation anyway
+		if(origin.effectdata["genetictemplate"] == origin.stage) // early return if we would just put the same mutation anyway
 			return
 
 		var/datum/bioEffect/BEE = mutationMap[origin.name_base] // remove old version of mutation
@@ -241,7 +245,7 @@ datum/pathogeneffects/benevolent/genetictemplate
 			chromo = new /datum/dna_chromosome/cooldown_reducer() // reduce cooldown starting at stage 5
 			chromo.apply(BE)
 		M.bioHolder.AddEffectInstance(BE) // add updated version of mutation!
-		origin.symptom_data["genetictemplate"] = origin.stage // save the last stage that we added the mutation with
+		origin.effectdata["genetictemplate"] = origin.stage // save the last stage that we added the mutation with
 
 	oncured(mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
@@ -256,17 +260,17 @@ datum/pathogeneffects/benevolent/genetictemplate
 
 	may_react_to()
 		return "The pathogen cells all look exactly alike."
-
+*/
+/*
 datum/pathogeneffects/benevolent/exclusiveimmunity
 	name = "Exclusive Immunity"
 	desc = "The pathogen occupies almost all possible routes of infection, preventing other diseases from entering."
 
-	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act(var/mob/M as mob, var/datum/microbe/origin)
 		//if (other pathogens detected)
 			//grab their in_remission
 			//set their vals to 1
 
 	may_react_to()
 		return "The pathogen appears to have the ability to bond with organic tissue."
-
 */

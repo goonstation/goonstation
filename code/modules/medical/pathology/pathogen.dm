@@ -259,7 +259,7 @@ datum/controller/pathogen
 						if (new_act >= 0 && new_act <= 100)
 							MB.activity[stage] = new_act
 							message_admins("[key_name(usr)] set the activity for pathogen microbody [MB.plural] on stage [stage] to [new_act].")
-			if ("symptom_data")
+			if ("effectdata")
 				var/datum/pathogeneffects/EF = locate(href_list["which"])
 				switch (href_list["data"])
 					if ("info")
@@ -412,7 +412,7 @@ datum/controller/pathogen
 						var/datum/pathogeneffects/EF = src.path_to_symptom[sym_path]
 						output += "<tr>"
 						output += "<td>[EF]</td>"
-						output += "<td><a href='?src=\ref[src];action=symptom_data;which=\ref[EF];data=info;topic_holder=\ref[topic_holder]'>Show information</a></td>"
+						output += "<td><a href='?src=\ref[src];action=effectdata;which=\ref[EF];data=info;topic_holder=\ref[topic_holder]'>Show information</a></td>"
 						output += "<td>[EF.infect_type]</td>"
 						output += "<td>[EF.infection_coefficient]</td>"
 						switch (EF.rarity)
@@ -613,7 +613,7 @@ datum/pathogen
 	//var/suppression_threshold						// The value describing the cure condition. When the cure condition is met, the pathogen will dissipate within 10-30 seconds without needing further oversight/work.
 	//var/in_remission = 0							// Pathogens in remission are being cured by the body. Set by the curing reagent or by the duration of infection.
 
-	//var/list/symptom_data = list()					// Symptom data container.
+	//var/list/effectdata = list()					// Symptom data container.
 	var/list/effects = list()						// A list of symptoms exhibited by those infected with this pathogen.
 	var/list/mutex = list()							// These symptoms are explicitly disallowed by a mutex.
 
@@ -644,7 +644,7 @@ datum/pathogen
 		//suppressant = null
 		//suppression_threshold = 10
 		in_remission = 0
-		//symptom_data = list()
+		//effectdata = list()
 		effects = list()
 		mutex = list()
 		//transmissions = list()

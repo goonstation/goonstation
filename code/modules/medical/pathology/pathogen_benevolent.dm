@@ -191,17 +191,17 @@ datum/pathogeneffects/benevolent/oxygenstorage
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
 			return
-		if(!origin.symptom_data["oxygen_storage"]) // if not yet set, initialize
-			origin.symptom_data["oxygen_storage"] = 0
+		if(!origin.effectdata["oxygen_storage"]) // if not yet set, initialize
+			origin.effectdata["oxygen_storage"] = 0
 
 		var/mob/living/carbon/C = M
 		if (C.get_oxygen_deprivation())
-			if(origin.symptom_data["oxygen_storage"] > 10)
-				C.setStatus("patho_oxy_speed", duration = INFINITE_STATUS, optional = origin.symptom_data["oxygen_storage"])
-				origin.symptom_data["oxygen_storage"] = 0
+			if(origin.effectdata["oxygen_storage"] > 10)
+				C.setStatus("patho_oxy_speed", duration = INFINITE_STATUS, optional = origin.effectdata["oxygen_storage"])
+				origin.effectdata["oxygen_storage"] = 0
 		else
 			// faster reserve replenishment at higher stages
-			origin.symptom_data["oxygen_storage"] = min(100, origin.symptom_data["oxygen_storage"] + origin.stage*2)
+			origin.effectdata["oxygen_storage"] = min(100, origin.effectdata["oxygen_storage"] + origin.stage*2)
 */
 
 datum/pathogeneffects/benevolent/resurrection
@@ -218,13 +218,13 @@ datum/pathogeneffects/benevolent/resurrection
 			return
 		if (origin.stage < 3)
 			return
-		if(!origin.symptom_data["resurrect_cd"]) // if not yet set, initialize it so that it is off cooldown
-			origin.symptom_data["resurrect_cd"] = -cooldown
-		if(TIME-origin.symptom_data["resurrect_cd"] < cooldown)
+		if(!origin.effectdata["resurrect_cd"]) // if not yet set, initialize it so that it is off cooldown
+			origin.effectdata["resurrect_cd"] = -cooldown
+		if(TIME-origin.effectdata["resurrect_cd"] < cooldown)
 			return
 		// Shamelessly stolen from Strange Reagent
 		if (isdead(M) || istype(get_area(M),/area/afterlife/bar))
-			origin.symptom_data["resurrect_cd"] = TIME
+			origin.effectdata["resurrect_cd"] = TIME
 			// range from 65 to 45. This is applied to both brute and burn, so the total max damage after resurrection is 130 to 90.
 			var/cap =	95 - origin.stage * 10
 			var/brute = min(cap, M.get_brute_damage())
@@ -308,7 +308,7 @@ datum/pathogeneffects/benevolent/genetictemplate
 			mutationMap[origin.name_base] = pick(filtered)
 			boutput(M, "You somehow feel more attuned to your [mutationMap[origin.name_base]].") // So patient zero will know when the mutation has been chosen
 
-		if(origin.symptom_data["genetictemplate"] == origin.stage) // early return if we would just put the same mutation anyway
+		if(origin.effectdata["genetictemplate"] == origin.stage) // early return if we would just put the same mutation anyway
 			return
 
 		var/datum/bioEffect/BEE = mutationMap[origin.name_base] // remove old version of mutation
@@ -334,7 +334,7 @@ datum/pathogeneffects/benevolent/genetictemplate
 			chromo = new /datum/dna_chromosome/cooldown_reducer() // reduce cooldown starting at stage 5
 			chromo.apply(BE)
 		M.bioHolder.AddEffectInstance(BE) // add updated version of mutation!
-		origin.symptom_data["genetictemplate"] = origin.stage // save the last stage that we added the mutation with
+		origin.effectdata["genetictemplate"] = origin.stage // save the last stage that we added the mutation with
 
 	oncured(mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)

@@ -928,7 +928,7 @@ datum/pathogeneffects/malevolent/fluent
 		elecflash(V,power = 2)
 
 	proc/discharge(var/mob/M as mob, var/datum/pathogen/origin)
-		var/load = origin.symptom_data["capacitor"]
+		var/load = origin.effectdata["capacitor"]
 		if (load == 0)
 			return
 		elecflash(M,power = 2)
@@ -963,10 +963,10 @@ datum/pathogeneffects/malevolent/fluent
 				electrocute(V, load / 10)
 		else if (load > 0)
 			M.show_message("<span class='notice'>You feel discharged.</span>")
-		origin.symptom_data["capacitor"] = 0
+		origin.effectdata["capacitor"] = 0
 
 	proc/load_check(var/mob/M as mob, var/datum/pathogen/origin)
-		var/load = origin.symptom_data["capacitor"]
+		var/load = origin.effectdata["capacitor"]
 		if (load > capacity)
 			M.show_message("<span class='alert'>You burst into several, shocking pieces.</span>")
 			src.infect_cloud(M, origin, origin.spread)
@@ -977,13 +977,13 @@ datum/pathogeneffects/malevolent/fluent
 			M.show_message("<span class='alert'>You are beginning to feel overcharged.</span>")
 
 	onadd(var/datum/pathogen/origin)
-		origin.symptom_data["capacitor"] = 0
+		origin.effectdata["capacitor"] = 0
 
 	onshocked(var/mob/M as mob, var/datum/shockparam/ret, var/datum/pathogen/origin)
 		var/amt = ret.amt
 		var/wattage = ret.wattage
 		if (wattage > 45000)
-			origin.symptom_data["capacitor"] += wattage
+			origin.effectdata["capacitor"] += wattage
 			amt /= 2
 			ret.skipsupp = 1
 			M.show_message("<span class='notice'>You absorb a portion of the electric shock!</span>")
@@ -995,7 +995,7 @@ datum/pathogeneffects/malevolent/fluent
 		return ret
 
 	ondisarm(var/mob/M as mob, var/mob/V as mob, isPushDown, var/datum/pathogen/origin)
-		var/load = origin.symptom_data["capacitor"]
+		var/load = origin.effectdata["capacitor"]
 		if (load > 1e6 && isPushDown)
 			if (prob(25))
 				M.visible_message("<span class='alert'>[M]'s hands are glowing in a blue color.</span>", "<span class='notice'>You discharge yourself onto your opponent with your hands!</span>", "<span class='alert'>You hear someone getting defibrillated.</span>")
@@ -1003,11 +1003,11 @@ datum/pathogeneffects/malevolent/fluent
 				if (prob(50))
 					M.show_message("<span class='alert'>Your shock jumps back onto you!</span>")
 					electrocute(M, load / 10)
-				origin.symptom_data["capacitor"] = 0
+				origin.effectdata["capacitor"] = 0
 		return 1
 
 	onpunch(var/mob/M as mob, var/mob/V as mob, zone, var/datum/pathogen/origin)
-		var/load = origin.symptom_data["capacitor"]
+		var/load = origin.effectdata["capacitor"]
 		if (load > 2e6)
 			if (prob(25))
 				M.visible_message("<span class='alert'>[M]'s fists are covered in electric arcs.</span>", "<span class='notice'>You supercharge your punch.</span>", "<span class='alert'>You hear a huge electric crackle.</span>")
@@ -1015,7 +1015,7 @@ datum/pathogeneffects/malevolent/fluent
 				if (prob(50))
 					M.show_message("<span class='alert'>Your shock jumps back onto you!</span>")
 					electrocute(M, load / 10)
-				origin.symptom_data["capacitor"] /= 2
+				origin.effectdata["capacitor"] /= 2
 		else if (load > 500000)
 			if (prob(20))
 				M.visible_message("<span class='alert'>[M]'s fists spark electric arcs.</span>", "<span class='notice'>You overcharge your punch.</span>", "<span class='alert'>You hear a large electric crackle.</span>")
@@ -1023,7 +1023,7 @@ datum/pathogeneffects/malevolent/fluent
 				if (prob(50))
 					M.show_message("<span class='alert'>Your shock jumps back onto you!</span>")
 					electrocute(M, load / 10)
-				origin.symptom_data["capacitor"] /= 2
+				origin.effectdata["capacitor"] /= 2
 		else if (load > 200000)
 			if (prob(15))
 				M.visible_message("<span class='alert'>[M]'s fists throw sparks.</span>", "<span class='notice'>You charge your punch.</span>", "<span class='alert'>You hear an electric crackle.</span>")
@@ -1031,11 +1031,11 @@ datum/pathogeneffects/malevolent/fluent
 				if (prob(50))
 					M.show_message("<span class='alert'>Your shock jumps back onto you!</span>")
 					electrocute(M, load / 10)
-				origin.symptom_data["capacitor"] /= 2
+				origin.effectdata["capacitor"] /= 2
 		return 1
 
 	onpunched(var/mob/M as mob, var/mob/A as mob, zone, var/datum/pathogen/origin)
-		var/load = origin.symptom_data["capacitor"]
+		var/load = origin.effectdata["capacitor"]
 		if (load > 5000)
 			if (prob(25))
 				M.visible_message("<span class='alert'>[M] loses control and discharges his energy!</span>", "<span class='alert'>You flinch and discharge.</span>", "<span class='alert'>You hear someone getting shocked.</span>")
@@ -1045,7 +1045,7 @@ datum/pathogeneffects/malevolent/fluent
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (origin.in_remission)
 			return
-		var/load = origin.symptom_data["capacitor"]
+		var/load = origin.effectdata["capacitor"]
 		switch (origin.stage)
 			if (1)
 				if (prob(9))
@@ -1068,7 +1068,7 @@ datum/pathogeneffects/malevolent/fluent
 						M.visible_message("<span class='alert'>A spark jumps from the power cable at [M].</span>", "<span class='alert'>A spark jumps at you from a nearby cable.</span>", "<span class='alert'>You hear something spark.</span>")
 						var/amt = max(250000, PN.avail)
 						PN.newload -= amt
-						origin.symptom_data["capacitor"] += amt
+						origin.effectdata["capacitor"] += amt
 						if (amt > 2500 && load > 5000)
 							M.show_message("<span class='notice'>You feel energized.</span>")
 						load_check(M, origin)
@@ -1088,7 +1088,7 @@ datum/pathogeneffects/malevolent/fluent
 						M.TakeDamage("chest", 0, 3)
 						var/amt = max(1e6, PN.avail)
 						PN.newload -= amt
-						origin.symptom_data["capacitor"] += amt
+						origin.effectdata["capacitor"] += amt
 						if (amt > 5000 && load > 5000)
 							M.show_message("<span class='notice'>You feel energized.</span>")
 						load_check(M, origin)
@@ -1105,7 +1105,7 @@ datum/pathogeneffects/malevolent/fluent
 						M.TakeDamage("chest", 0, 15)
 						var/amt = S.charge
 						S.charge -= amt
-						origin.symptom_data["capacitor"] += amt
+						origin.effectdata["capacitor"] += amt
 						if (amt > 5000 && load > 5000)
 							M.show_message("<span class='notice'>You feel energized.</span>")
 						load_check(M, origin)
@@ -1117,7 +1117,7 @@ datum/pathogeneffects/malevolent/fluent
 							M.TakeDamage("chest", 0, 5)
 							var/amt  = A.cell.charge / 6
 							A.cell.charge -= amt
-							origin.symptom_data["capacitor"] += amt * 50
+							origin.effectdata["capacitor"] += amt * 50
 							if (amt > 5000 && load > 5000)
 								M.show_message("<span class='notice'>You feel energized.</span>")
 							load_check(M, origin, origin)
@@ -1132,7 +1132,7 @@ datum/pathogeneffects/malevolent/fluent
 								M.TakeDamage("chest", 0, 5)
 								var/amt = max(3e6, PN.avail)
 								PN.newload -= amt
-								origin.symptom_data["capacitor"] += amt * 2
+								origin.effectdata["capacitor"] += amt * 2
 								if (amt > 5000 && load > 5000)
 									M.show_message("<span class='notice'>You feel energized.</span>")
 								load_check(M, origin)
@@ -1148,7 +1148,7 @@ datum/pathogeneffects/malevolent/fluent
 						M.TakeDamage("chest", 0, 15)
 						var/amt = S.charge
 						S.charge -= amt
-						origin.symptom_data["capacitor"] += amt
+						origin.effectdata["capacitor"] += amt
 						if (amt > 5000 && load > 5000)
 							M.show_message("<span class='notice'>You feel energized.</span>")
 						load_check(M, origin)
@@ -1160,7 +1160,7 @@ datum/pathogeneffects/malevolent/fluent
 							M.TakeDamage("chest", 0, 5)
 							var/amt = A.cell.charge / 5 // apcs have a weirdly low capacity.
 							A.cell.charge -= amt
-							origin.symptom_data["capacitor"] += amt * 50
+							origin.effectdata["capacitor"] += amt * 50
 							if (amt > 5000 && load > 5000)
 								M.show_message("<span class='notice'>You feel energized.</span>")
 							load_check(M, origin)
@@ -1175,7 +1175,7 @@ datum/pathogeneffects/malevolent/fluent
 								M.TakeDamage("chest", 0, 5)
 								var/amt = PN.avail
 								PN.newload += amt
-								origin.symptom_data["capacitor"] += amt * 3
+								origin.effectdata["capacitor"] += amt * 3
 								if (amt > 5000 && load > 5000)
 									M.show_message("<span class='notice'>You feel energized.</span>")
 								load_check(M, origin)
@@ -1576,11 +1576,11 @@ datum/pathogeneffects/malevolent/farts
 		if(doInfect)
 			src.infect_cloud(M, origin, origin.spread/5)
 		if(voluntary)
-			origin.symptom_data[name] = TIME
+			origin.effectdata[name] = TIME
 
 	onemote(mob/M as mob, act, voluntary, param, datum/pathogen/P)
 		// involuntary farts are free, but the others use the cooldown
-		if(voluntary && TIME-P.symptom_data[name] < cooldown)
+		if(voluntary && TIME-P.effectdata[name] < cooldown)
 			return
 		if(act == "fart")
 			fart(M, P, voluntary)

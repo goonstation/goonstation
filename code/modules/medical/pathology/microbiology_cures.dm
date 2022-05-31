@@ -109,22 +109,22 @@ ABSTRACT_TYPE(/datum/suppressant)
 
 	suppress_act(var/datum/pathogen/P)
 		if (P.infected.sleeping)
-			P.symptom_data["suppressant"]++
-			var/slept = P.symptom_data["suppressant"]
+			P.effectdata["suppressant"]++
+			var/slept = P.effectdata["suppressant"]
 			if (slept > P.suppression_threshold)
 				if (P.stage > 3 && prob(P.advance_speed * 4))
 					P.infected.show_message("<span class='notice'>You feel better.</span>")
 					P.stage--
-					P.symptom_data["suppressant"] = 0
+					P.effectdata["suppressant"] = 0
 			return 1
 		else
-			P.symptom_data["suppressant"] = 0
+			P.effectdata["suppressant"] = 0
 		return 0
 
 	cure_synthesis = list("morphine", "ketamine")
 
 	onadd(var/datum/pathogen/P)
-		P.symptom_data["suppressant"] = 0
+		P.effectdata["suppressant"] = 0
 
 	may_react_to()
 		return "Membrane patterns of the pathogen indicate it might be <b style='font-size:20px;color:red'>suppressed</b> by a reagent affecting neural activity."
