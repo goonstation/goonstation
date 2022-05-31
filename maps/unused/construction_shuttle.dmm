@@ -748,7 +748,7 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "jY" = (
-/obj/machinery/atmospherics/pipe/manifold{
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
 	dir = 1
 	},
 /turf/simulated/floor/black,
@@ -819,7 +819,7 @@
 /turf/simulated/floor/black,
 /area/space)
 "qr" = (
-/obj/machinery/atmospherics/pipe/manifold,
+/obj/machinery/atmospherics/pipe/manifold/overfloor,
 /turf/simulated/floor/black,
 /area/space)
 "qF" = (
@@ -831,7 +831,15 @@
 /turf/simulated/floor/black,
 /area/space)
 "sj" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe,
+/obj/machinery/atmospherics/binary/pump{
+	dir = 2;
+	frequency = 1225;
+	icon_state = "intact_on";
+	id = "Cold Loop Purge Pump";
+	on = 1;
+	tag = "icon-intact_on (NORTH)";
+	target_pressure = 2000
+	},
 /turf/simulated/floor/black,
 /area/space)
 "sx" = (

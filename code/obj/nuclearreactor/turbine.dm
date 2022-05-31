@@ -23,7 +23,7 @@
 	dir = EAST
 
 	var/stator_load = 100
-	var/RPM = 1
+	var/RPM = 0
 	var/turbine_mass = 1000
 
 	New()
@@ -84,11 +84,11 @@
 			var/output_starting_energy = THERMAL_ENERGY(current_gas)
 			var/energy_generated = src.stator_load*src.RPM
 			var/delta_E = input_starting_energy - output_starting_energy
-
-			src.RPM += (delta_E/turbine_mass)
+			//sqrt(2k/m) = a + v
+			src.RPM = sqrt(2*(max(delta_E - energy_generated,0))/turbine_mass)
 			boutput(world,"RPM: [src.RPM]")
-			if(src.RPM < 1)
-				src.RPM = 1
+			if(src.RPM < 0)
+				src.RPM = 0
 			src.air2.merge(current_gas)
 			src.terminal.add_avail(energy_generated)
 
