@@ -31,6 +31,7 @@ ABSTRACT_TYPE(/datum/microbioeffects/chemistry)
 	may_react_to()
 		return "The pathogen appears to react with anything but a pure intoxicant."
 */
+/*
 /datum/microbioeffects/chemistry/doubler
 	name = "Chemical Production"
 	desc = "The microbes appear to generate ethanol."
@@ -49,3 +50,4 @@ ABSTRACT_TYPE(/datum/microbioeffects/chemistry)
 	may_react_to()
 		return "The pathogen appears to react with anything but a pure intoxicant."
 
+*/

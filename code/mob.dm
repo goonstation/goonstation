@@ -2429,9 +2429,6 @@
 /mob/proc/infected(var/datum/microbe/P)
 	return
 
-/mob/proc/remission(var/datum/microbe/P)
-	return
-
 /mob/proc/immunity(var/datum/microbe/P)
 	return
 

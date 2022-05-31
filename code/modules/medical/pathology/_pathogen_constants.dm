@@ -26,3 +26,5 @@
 #define MICROBIO_INSPECT_LIKES "The pathogens are moving towards the area affected by the " // + "[R]."
 
 #define MICROBIO_INSPECT_DISLIKES "The pathogens are attemping to escape from the area affected by the " // + "[R]."
+
+#define MICROBIO_INSPECT_DISLIKES_GENERIC "One of the glands of the pathogen seems to shut down in the presence of the solution."

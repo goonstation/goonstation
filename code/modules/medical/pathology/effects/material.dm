@@ -100,10 +100,19 @@ datum/pathogeneffects/malevolent/farts/o2
 	name = "Organic Glass"
 	desc = "The microbes produce silicate, reinforcing and repairing glass structures."
 
-	object_act(var/obj/O, var/datum/microbe/origin)
-		var/volume = 1
-		if(istype(O,/obj/window))
-			O.reagents.add_reagent("silicate", volume, null)
-
 	onadd(var/datum/microbe/origin)
 		origin.effectdata += "organicglass"
+
+	object_act(var/obj/O, var/datum/microbe/origin)
+		var/volume = ceil(origin.duration/1000) 				//integers good
+		if(istype(O,/obj/window))
+			var/turf/T = get_turf(O)
+			T.reagents.add_reagent("silicate", volume)
+			T.reagents.update_total()
+
+	may_react_to()
+		return "The pathogen appears to produce a large volume of solids."
+
+	react_to(var/R, var/zoom)
+		if (R == "infernite" || R == "phlogiston")
+			return "The flame of the hot reagents is oxidized by the gas."

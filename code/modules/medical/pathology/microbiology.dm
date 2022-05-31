@@ -144,7 +144,7 @@ datum/microbe
 	proc/progress_pathogen()
 		var/iscured = src.suppressant.suppress_act(src)
 		if (iscured)
-			duration = ceil(duration/2) - 1
+			duration = ceil(duration/2)
 			return
 		if (!duration)
 			infected.cured(src)

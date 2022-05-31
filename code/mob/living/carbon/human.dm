@@ -2493,15 +2493,6 @@
 		qdel(Q)
 		logTheThing("pathology", src, null, "is cured of [pname].")
 		return
-/*
-/mob/living/carbon/human/remission(var/datum/microbe/P)
-	if (isdead(src))
-		return
-	if (P.microbio_uid in src.microbes)
-		var/datum/microbe/Q = src.microbes[P.microbio_uid]
-		Q.remission()
-		logTheThing("pathology", src, null, "'s pathogen [Q] enters remission.")
-*/
 /mob/living/carbon/human/immunity(var/datum/microbe/P)
 	if (isdead(src))
 		return

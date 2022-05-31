@@ -8,97 +8,63 @@ ABSTRACT_TYPE(/datum/microbioeffects/malevolent)
 	name = "Coughing"
 	desc = "Violent coughing occasionally plagues the infected."
 
-	mob_act(var/mob/M as mob, var/datum/microbe/origin)
-		if (prob(0.06))
-			M.show_message("<span class='alert'>You cough.</span>")
-
 	onadd(var/datum/microbe/origin)
 		origin.effectdata += "cough"
+
+	mob_act(var/mob/M as mob, var/datum/microbe/origin)
+		if (prob(5))
+			M.show_message("<span class='alert'>You cough.</span>")
 
 	may_react_to()
 		return "The pathogen appears to generate a high amount of fluids."
 
-/*datum/pathogeneffects/malevolent/indigestion
+datum/microbioeffects/malevolent/indigestion
 	name = "Indigestion"
 	desc = "A bad case of indigestion which occasionally cramps the infected."
-	rarity = THREAT_TYPE2
 
-	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (origin.in_remission)
-			return
-		switch (origin.stage)
-			if (1 to 3)
-				if (prob(5))
-					M.show_message("<span class='alert'>Your stomach hurts.</span>")
-			if (4 to 5)
-				if (prob(8))
-					M.take_toxin_damage(origin.stage-3)
-					M.show_message("<span class='alert'>Your stomach hurts really bad!</span>")
+	onadd(var/datum/microbe/origin)
+		origin.effectdata += "indigestion"
+
+	mob_act(var/mob/M as mob, var/datum/microbe/origin)
+		if (prob(5))
+			M.show_message("<span class='alert'>Your stomach hurts.</span>")
 
 	react_to(var/R, var/zoom)
-		if (R == "saline")
-			if (zoom)
-				return "One of the glands of the pathogen seems to shut down in the presence of the solution."
+		if (R == "saline" && zoom)
+			return MICROBIO_INSPECT_DISLIKES_GENERIC
 
 	may_react_to()
 		return "The pathogen appears to react to hydrating agents."
 
-datum/pathogeneffects/malevolent/muscleache
+datum/microbioeffects/malevolent/muscleache
 	name = "Muscle Ache"
 	desc = "The infected feels a slight, constant aching of muscles."
-	rarity = THREAT_TYPE1
+
+	onadd(var/datum/microbe/origin)
+		origin.effectdata += "muscle ache"
 
 	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (origin.in_remission)
-			return
-		switch (origin.stage)
-			if (1 to 3)
-				if (prob(5))
-					M.show_message("<span class='alert'>Your muscles ache.</span>")
-			if (4 to 5)
-				if (prob(8))
-					M.show_message("<span class='alert'>Your muscles ache!</span>")
-				if (prob(15))
-					M.show_message("<span class='alert'>Your muscles ache!</span>")
-					M.TakeDamage("All", origin.stage-3, 0)
+		if (prob(5))
+			M.show_message("<span class='alert'>Your muscles ache.</span>")
 
 	react_to(var/R, var/zoom)
-		if (R == "saline")
-			if (zoom)
-				return "One of the glands of the pathogen seems to shut down in the presence of the solution."
+		if (R == "saline" && zoom)
+			return MICROBIO_INSPECT_DISLIKES_GENERIC
 
 	may_react_to()
 		return "The pathogen appears to react to hydrating agents."
 
-datum/pathogeneffects/malevolent/sneezing
+datum/microbioeffects/malevolent/sneezing
 	name = "Sneezing"
 	desc = "The infected sneezes frequently."
-	rarity = THREAT_TYPE2
 
-	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (origin.in_remission)
-			return
-		switch (origin.stage)
-			if (1)
-				if (prob(0.08*origin.spread))
-					M.visible_message("<span class='alert'>[M] sneezes!</span>", "<span class='alert'>You sneeze.</span>", "<span class='alert'>You hear someone sneezing.</span>")
-					src.infect_cloud(M, origin)
-			if (2)
-				if (prob(0.1*origin.spread))
-					M.visible_message("<span class='alert'>[M] sneezes!</span>", "<span class='alert'>You sneeze.</span>", "<span class='alert'>You hear someone sneezing.</span>")
-					src.infect_cloud(M, origin)
-			if (3)
-				if (prob(0.15*origin.spread))
-					M.visible_message("<span class='alert'>[M] sneezes!</span>", "<span class='alert'>You sneeze.</span>", "<span class='alert'>You hear someone sneezing.</span>")
-					src.infect_cloud(M, origin)
-			if (4)
-				if (prob(0.2*origin.spread))
-					M.visible_message("<span class='alert'>[M] sneezes!</span>", "<span class='alert'>You sneeze!</span>", "<span class='alert'>You hear someone sneezing!</span>")
-					src.infect_cloud(M, origin)
-			if (5)
-				if (prob(0.2*origin.spread))
-					M.visible_message("<span class='alert'>[M] sneezes!</span>", "<span class='alert'>You sneeze!</span>", "<span class='alert'>You hear someone sneezing!</span>")
-					src.infect_cloud(M, origin)
+	onadd(var/datum/microbe/origin)
+		origin.effectdata += "sneezing"
+
+	mob_act(var/mob/M as mob, var/datum/microbe/origin)
+		if (prob(5))
+			M.visible_message("<span class='alert'>[M] sneezes!</span>", "<span class='alert'>You sneeze.</span>", "<span class='alert'>You hear someone sneezing.</span>")
+			//src.infect_cloud(M, origin)
 
 	may_react_to()
 		return "The pathogen appears to generate a high amount of fluids."
@@ -107,6 +73,7 @@ datum/pathogeneffects/malevolent/sneezing
 		if (R == "pepper")
 			return "The pathogen violently discharges fluids when coming in contact with pepper."
 
+/*
 datum/pathogeneffects/malevolent/gasping
 	name = "Gasping"
 	desc = "The infected has trouble breathing."

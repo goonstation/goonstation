@@ -10,12 +10,12 @@ datum/microbioeffects/tells/hiccups
 	name = "Hiccups"
 	desc = "The microbes send involuntary signals to the infected individual's diaphragm."
 
+	onadd(var/datum/microbe/origin)
+		origin.effectdata += "hiccups"
+
 	mob_act(var/mob/M as mob, var/datum/microbe/origin)
 		if (prob(15))
 			M:emote("hiccup")
-
-	onadd(var/datum/microbe/origin)
-		origin.effectdata += "hiccups"
 
 	may_react_to()
 		return "The pathogen appears to be violently... hiccuping?"
@@ -176,51 +176,54 @@ datum/microbioeffects/tells/hoarseness
 	name = "Hoarseness"
 	desc = "The pathogen causes dry throat, leading to hoarse speech."
 
+	onadd(var/datum/microbe/origin)
+		origin.effectdata += "Hoarseness"
+
 	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (prob(10))
+		if (prob(5))
 			M:emote("wheeze")
-		else if (prob(5))
+		else if (prob(2))
 			M:emote("cough")
-		else if (prob(5))
+		else if (prob(2))
 			M:emote("grumble")
 
 	may_react_to()
 		return "The pathogen appears to be rapidly breaking down certain materials around it."
 
-
 datum/microbioeffects/tells/malaise
 	name = "Malaise"
 	desc = "The pathogen causes very mild, inconsequential fatigue to its host."
 
-	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (prob(10))
+	onadd(var/datum/microbe/origin)
+		origin.effectdata += "malaise"
+
+	mob_act(var/mob/M as mob, var/datum/microbe/origin)
+		if (prob(5))
 			M:emote("yawn")
-		else if (prob(5))
+		else if (prob(2))
 			M:emote("cough")
-		else if (prob(5))
+		else if (prob(2))
 			M:emote("stretch")
 
 	may_react_to()
 		return "The pathogen appears to have a gland that may affect neural functions."
-/*
-datum/pathogeneffects/neutral/hyperactive
+
+datum/microbioeffects/tells/hyperactive
 	name = "Psychomotor Agitation"
 	desc = "Also known as restlessness, the infected individual is prone to involuntary motions and tics."
 
-	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (origin.in_remission)
-			return
-		if (prob(8))
+	mob_act(var/mob/M as mob, var/datum/microbe/origin)
+		if (prob(3))
 			M:emote("gesticulate")
-		else if (prob(5))
+		else if (prob(2))
 			M:emote("blink_r")
-		else if (prob(5))
+		else if (prob(2))
 			M:emote("twitch")
 
 	may_react_to()
 		return "The pathogen appears to be wilder than usual, perhaps sedatives or psychoactive substances might affect its behaviour."
-
-datum/pathogeneffects/neutral/bloodcolors
+/*
+datum/microbioeffects/tells/bloodcolors
 	name = "Blood Pigmenting"
 	desc = "The pathogen attaches to the kidneys and adds a harmless pigment to the host's blood cells, causing their blood to have an unusual color."
 
@@ -236,65 +239,61 @@ datum/pathogeneffects/neutral/bloodcolors
 
 	may_react_to()
 		return "The pathogen appears to generate a high amount of fluids."
-
-datum/pathogeneffects/neutral/startleresponse
+*/
+datum/microbioeffects/tells/startleresponse
 	name = "Exagerrated Startle Reflex"
 	desc = "The pathogen generates synaptic signals that amplify the host's startle reflex."
-	rarity = THREAT_NEUTRAL
 
-	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (origin.in_remission)
-			return
-		if (prob(8))
-			M:emote("quiver")
-		else if (prob(5))
+	onadd(var/datum/microbe/origin)
+		origin.effectdata += "Startled"
+
+	mob_act(var/mob/M as mob, var/datum/microbe/origin)
+		if (prob(5))
 			M:emote("flinch")
-		else if (prob(5))
-			M:emote("tremble")
 
 	may_react_to()
 		return "The pathogen appears to have a gland that may affect neural functions."
 
-datum/pathogeneffects/neutral/tearyeyed
+datum/microbioeffects/tells/tearyeyed
 	name = "Overactive Eye Glands"
 	desc = "The pathogen causes the host's lacrimal glands to overproduce tears."
 
-	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (origin.in_remission)
-			return
-		if (prob(8))
+	onadd(var/datum/microbe/origin)
+		origin.effectdata += "Teary"
+
+	mob_act(var/mob/M as mob, var/datum/microbe/origin)
+		if (prob(5))
 			M:emote("blink")
-		else if (prob(5))
+		else if (prob(3))
+			M:emote("blink_r")
+		else if (prob(2))
 			M:emote("cry")
-		else if (prob(5))
-			M:emote("sob")
 
 	may_react_to()
 		return "The pathogen appears to generate a high amount of fluids."
 
-datum/pathogeneffects/neutral/restingface
+datum/microbioeffects/tells/restingface
 	name = "Grumpy Cat Syndrome"
 	desc = "The pathogen causes the host's facial muscles to frown at rest."
 
-	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (origin.in_remission)
-			return
-		if (prob(8))
+	onadd(var/datum/microbe/origin)
+		origin.effectdata += "Frowny"
+
+	mob_act(var/mob/M as mob, var/datum/microbe/origin)
+		if (prob(3))
 			M:emote("frown")
-		else if (prob(5))
+		else if (prob(2))
 			M:emote("scowl")
-		else if (prob(5))
+		else if (prob(2))
 			M:emote("grimace")
 
 	may_react_to()
 		return "The pathogen appears to react to hydrating agents."
-
-datum/pathogeneffects/malevolent/farts
+/*
+datum/microbioeffects/tells/farts
 	name = "Farts"
 	desc = "The infected individual occasionally farts."
-	infect_type = INFECT_AREA
-	spread = SPREAD_AIR
-	rarity = THREAT_TYPE2
+
 	var/cooldown = 200 // we just use the name of the symptom to keep track of different fart effects, so their cooldowns do not interfere
 	var/doInfect = 1 // smoke farts were just too good
 
@@ -319,4 +318,5 @@ datum/pathogeneffects/malevolent/farts
 
 	may_react_to()
 		return "The pathogen appears to produce a large volume of gas."
+
 */
