@@ -273,7 +273,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 
 			attacher.remove_item(src)
 
-			playsound(attachee, "sound/effects/attach.ogg", 50, 1)
+			playsound(attachee, 'sound/effects/attach.ogg', 50, 1)
 			attacher.visible_message("<span class='alert'>[attacher] attaches [src] to [attacher == attachee ? his_or_her(attacher) : "[attachee]'s"] stump. It [src.easy_attach ? "fuses instantly" : "doesn't look very secure"]!</span>")
 
 		attachee.limbs.vars[src.slot] = src

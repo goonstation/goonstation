@@ -337,7 +337,7 @@
 				boutput(user, "<span class='alert'>[src.name] is already wearing [src.glasses.name]!</span>")
 			return
 		if (istype(W, /obj/item/cloth))
-			playsound(src, "sound/items/towel.ogg", 25, 1)
+			playsound(src, 'sound/items/towel.ogg', 25, 1)
 			user.visible_message("<span class='notice'>[user] [pick("buffs", "shines", "cleans", "wipes", "polishes")] [src] with [W].</span>")
 			src.clean_forensic()
 			return
@@ -446,7 +446,7 @@
 			H.tri_message("<span class='alert'><b>[user]</b> [fluff][(fluff == "smoosh" || fluff == "squish" || fluff == "attach") ? "es" : "s"] [src] onto [H == user ? "[his_or_her(H)]" : "[H]'s"] neck stump!</span>",\
 			user, "<span class='alert'>You [fluff] [src] onto [user == H ? "your" : "[H]'s"] neck stump!</span>",\
 			H, "<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][(fluff == "smoosh" || fluff == "squish" || fluff == "attach") ? "es" : "s"] [src] onto your neck stump!</span>")
-			playsound(H, "sound/effects/attach.ogg", 50, 1)
+			playsound(H, 'sound/effects/attach.ogg', 50, 1)
 
 			if (user.find_in_hand(src))
 				user.u_equip(src)
