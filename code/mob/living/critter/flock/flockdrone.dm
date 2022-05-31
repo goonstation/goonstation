@@ -300,6 +300,9 @@
 /mob/living/critter/flock/drone/Cross(atom/movable/mover)
 	if(isflockmob(mover))
 		return TRUE
+	else if (istype(mover, /obj/flock_structure/cage))
+		animate_flock_passthrough(src)
+		return TRUE
 	else
 		return !src.density
 
