@@ -5358,7 +5358,10 @@
 "aoQ" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/west,
-/obj/machinery/light_switch/east,
+/obj/machinery/light_switch/east{
+	pixel_x = 10;
+	pixel_y = 27
+	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/crematorium)
 "aoS" = (
@@ -28580,17 +28583,6 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
-"bJN" = (
-/obj/stool/chair{
-	dir = 4
-	},
-/obj/disposalpipe/segment/vertical,
-/obj/machinery/light/emergency{
-	dir = 8;
-	pixel_x = -10
-	},
-/turf/simulated/floor/wood/two,
-/area/station/crew_quarters/courtroom)
 "bJP" = (
 /obj/stool/chair{
 	dir = 4
@@ -44119,8 +44111,7 @@
 /area/station/crew_quarters/cafeteria)
 "gVX" = (
 /obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
+	dir = 8
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/barber_shop)
@@ -46957,6 +46948,10 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "kdf" = (
@@ -47902,10 +47897,6 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
-	},
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
@@ -54951,6 +54942,10 @@
 /obj/stool/chair{
 	dir = 4
 	},
+/obj/machinery/light/emergency{
+	dir = 8;
+	pixel_x = -10
+	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/courtroom)
 "sbT" = (
@@ -55672,10 +55667,6 @@
 /area/station/bridge)
 "sQH" = (
 /obj/storage/secure/closet/medical/medkit,
-/obj/machinery/alarm{
-	dir = 4;
-	pixel_x = -20
-	},
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -57747,6 +57738,10 @@
 	},
 /obj/item/bandage{
 	pixel_x = -2
+	},
+/obj/machinery/alarm{
+	dir = 4;
+	pixel_x = -20
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 10
@@ -117814,7 +117809,7 @@ bDA
 bEv
 bFO
 sbP
-bJN
+nhF
 bJP
 nhF
 dSc
