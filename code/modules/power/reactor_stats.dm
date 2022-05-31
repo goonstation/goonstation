@@ -54,14 +54,14 @@
 	chamber_turfs = get_chamber_turfs()
 
 	/* get generator data */
-	src.teg_data += sample_teg()
+	src.teg_data += list(sample_teg())
 	if (length(src.teg_data) > src.history_max)
 		src.teg_data.Cut(1, 2) //drop the oldest entry
 
 	/* get combustion chamber gasses */
 	var/list/chamber_raw_data = list()
 	for(var/turf/simulated/S in chamber_turfs)
-		chamber_raw_data += sample_air(S.air, FALSE)
+		chamber_raw_data += list(sample_air(S.air, FALSE))
 
 	/* process combustion chamber samples */
 	chamber_data = sample_chamber(chamber_raw_data)
@@ -80,20 +80,22 @@
 	. = list()
 
 	for (var/sample in L)
-		.["Oxygen"] += sample["Oxygen"]
-		.["Plasma"] += sample["Plasma"]
-		.["Carbon Dioxide"] += sample["Carbon Dioxide"]
-		.["Nitrogen"] += sample["Nitrogen"]
-		.["Pressure"] += sample["Pressure"]
-		.["Temperature"] += sample["Temperature"]
-		.["Fuel Burnt"] += sample["Fuel Burnt"]
-		.["Heat Capacity"] += sample["Heat Capacity"]
-		.["Thermal Energy"] += sample["Thermal Energy"]
-		.["Molarity"] += sample["Molarity"]
-		.["Nitrous Oxide"] += sample["Nitrous Oxide"]
-		.["Oxygen Agent B"] += sample["Oxygen Agent B"]
-		.["Volatile Fuel"] += sample["Volatile Fuel"]
-		.["Other Gasses"] += sample["Other Gasses"]
+		var/list/to_add = list()
+		to_add["Oxygen"] += sample["Oxygen"]
+		to_add["Plasma"] += sample["Plasma"]
+		to_add["Carbon Dioxide"] += sample["Carbon Dioxide"]
+		to_add["Nitrogen"] += sample["Nitrogen"]
+		to_add["Pressure"] += sample["Pressure"]
+		to_add["Temperature"] += sample["Temperature"]
+		to_add["Fuel Burnt"] += sample["Fuel Burnt"]
+		to_add["Heat Capacity"] += sample["Heat Capacity"]
+		to_add["Thermal Energy"] += sample["Thermal Energy"]
+		to_add["Molarity"] += sample["Molarity"]
+		to_add["Nitrous Oxide"] += sample["Nitrous Oxide"]
+		to_add["Oxygen Agent B"] += sample["Oxygen Agent B"]
+		to_add["Volatile Fuel"] += sample["Volatile Fuel"]
+		to_add["Other Gasses"] += sample["Other Gasses"]
+		. += list(to_add)
 
 /obj/machinery/power/reactor_stats/proc/sample_air(var/datum/gas_mixture/G, var/not_archived)
 	. = list()
@@ -221,6 +223,7 @@
 
 /obj/machinery/power/reactor_stats/ui_data(mob/user)
 	. = list(
+		"turnedOn" = power,
 		"tegData" = teg_data,
 		"chamberData" = chamber_data,
 		"meterData" = meter_data,
