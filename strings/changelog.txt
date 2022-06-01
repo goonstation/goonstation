@@ -1,4 +1,10 @@
 
+(t)wed jun 01 22
+(u)Flappybat
+(p)8627
+(e)🎨⚖|sprites, balance
+(*)Portable flashers no longer flash anyone with security access and disable their checks for 1.5 seconds. The flasher colors will dull when on cooldown to indicate it is safe to run pass.
+(*)Portable flashers now flash for bigger critters. Be careful of sprinting your antag critter respawn into security.
 (t)tue may 31 22
 (u)aloe
 (e)⚖|balance
