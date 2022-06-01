@@ -99,7 +99,7 @@ export const Sleeper = (props, context) => {
                   }} />
               </LabeledList.Item>
               <LabeledList.Item label="Damage Breakdown">
-                <HealthStat inline align="center" type="oxy" width={5}>
+                <HealthStat inline align="center" type="oxy" width={6}>
                   {damageNum(oxyDamage)}
                 </HealthStat>
                 /
