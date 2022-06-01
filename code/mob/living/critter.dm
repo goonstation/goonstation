@@ -84,6 +84,9 @@ ABSTRACT_TYPE(/mob/living/critter)
 
 	var/pull_w_class = W_CLASS_SMALL
 
+	///Always call limb intent procs
+	var/intent_override = FALSE
+
 	blood_id = "blood"
 
 	New()
@@ -605,7 +608,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 						if (HH.can_attack)
 							L.harm(target, src)
 					if (INTENT_GRAB)
-						if (HH.can_hold_items && can_grab)
+						if ((HH.can_hold_items && can_grab) || intent_override)
 							L.grab(target, src)
 			else
 				L.attack_hand(target, src)

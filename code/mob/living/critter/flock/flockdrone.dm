@@ -17,6 +17,8 @@
 	var/datum/equipmentHolder/flockAbsorption/absorber
 	health_brute = 30
 	health_burn = 30
+	intent_override = TRUE
+
 	///Custom contextActions list so we can handle opening them ourselves
 	var/list/datum/contextAction/contexts = list()
 	contextLayout = new /datum/contextLayout/experimentalcircle
@@ -844,9 +846,9 @@
 	if (!istype(user))
 		return
 
-	if(istype(target,/obj/critter)) //gods how I hate /obj/critter
-		if(user.a_intent == INTENT_DISARM)
-			src.disarm(target,user)
+	if(ismob(target) || iscritter(target)) //gods how I hate /obj/critter
+		if (!isflockmob(target))
+			src.try_cage(target, user)
 			return
 
 	if(user.a_intent == INTENT_HARM)
@@ -854,9 +856,6 @@
 			if(isflockdeconimmune(target))
 				return
 			actions.start(new /datum/action/bar/flock_decon(target), user)
-		else
-			..()
-		return
 
 	// CONVERT TURF
 	if(!isturf(target) && (!HAS_ATOM_PROPERTY(target,PROP_ATOM_FLOCK_THING) || istype(target, /obj/lattice/flock)) && !istype(target, /obj/structure/girder))
@@ -960,9 +959,16 @@
 		else
 			actions.start(new/datum/action/bar/flock_repair(F), user)
 	else
-		..()
+		src.attack_hand(target, user)
 
+//why doesn't attack_hand trigger on mobs aaa
 /datum/limb/flock_converter/disarm(atom/target, var/mob/living/critter/flock/drone/user)
+	src.attack_hand(target, user)
+
+/datum/limb/flock_converter/grab(atom/target, var/mob/living/critter/flock/drone/user)
+	src.attack_hand(target, user)
+
+/datum/limb/flock_converter/proc/try_cage(atom/target, var/mob/living/critter/flock/drone/user)
 	if(!target || !user)
 		return
 	if(!(isliving(target) || iscritter(target)))
@@ -982,6 +988,7 @@
 		boutput(user, "<span class='alert'>They're already imprisoned, you can't double-imprison them!</span>")
 	else
 		actions.start(new/datum/action/bar/flock_entomb(target), user)
+		return TRUE
 
 /datum/limb/flock_converter/harm(atom/target, var/mob/living/critter/flock/drone/user)
 	if(!target || !user)
@@ -993,7 +1000,7 @@
 		else
 			boutput(user, "<span class='alert'>You can't butcher a living flockdrone!</span>")
 	else
-		..()
+		src.attack_hand(target, user)
 
 /////////////////////////////////////////////////////////////////////////////////
 
@@ -1009,6 +1016,12 @@
 	if(!target || !user)
 		return
 	return ..()
+
+/datum/limb/gun/flock_stunner/help(mob/living/target, mob/living/user)
+	src.point_blank(target, user)
+
+/datum/limb/gun/flock_stunner/grab(mob/living/target, mob/living/user)
+	src.point_blank(target, user)
 
 /datum/projectile/energy_bolt/flockdrone
 	name = "incapacitor bolt"
