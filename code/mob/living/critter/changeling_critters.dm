@@ -12,8 +12,11 @@
 	can_disarm = 1
 	blood_id = "bloodc"
 	table_hide = 0
+	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/changeling
 	var/datum/abilityHolder/changeling/hivemind_owner = 0
 	var/icon_prefix = ""
+	/// Part this limb critter is based off of- i.e. a cow making a legworm would be a cow leg. Could also be an eye or butt, hence loose type
+	var/obj/item/original_bodypart
 
 	// IMPORTANT gimmick features
 	var/obj/item/clothing/head/hat = null
@@ -21,6 +24,12 @@
 	var/hat_icon = 'icons/obj/bots/aibots.dmi' //yeah just use the buddy hats whatever close enough
 	var/hat_x_offset = -4
 	var/hat_y_offset = -2
+
+	New(loc, obj/item/bodypart)
+		..()
+		if (bodypart)
+			bodypart.name = "[src]'s [initial(bodypart.name)]"
+		src.original_bodyprt = bodypart
 
 	say(message, involuntary = 0)
 		if (hivemind_owner)
@@ -93,8 +102,19 @@
 		death_effect()
 		..()
 
+	butcher()
+		src.original_bodypart.set_loc(src.loc)
+		src.original_bodypart = null
+		return ..()
+
+	disposing()
+		..()
+		qdel(src.original_bodypart)
+		src.original_bodypart = null
+
 	// functionality here greatly differs between the changeling critters, but they still need it
 	proc/return_to_master()
+		return
 
 /mob/living/critter/changeling/proc/death_effect()
 	if (hivemind_owner)
