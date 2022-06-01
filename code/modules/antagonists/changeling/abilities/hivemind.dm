@@ -496,11 +496,14 @@
 			boutput(holder.owner, "<span class='alert'>There are no minds eligible for this ability.</span>")
 			return 1
 
-		var/use_mob_name = tgui_input_list(holder.owner, "Select the mind to grant control:", "Select Mind", sortList(eligible))
+		var/mob/dead/target_observer/hivemind_observer/HO = tgui_input_list(holder.owner, "Select the mind to grant control:", "Select Mind", sortList(eligible))
 		if(!use_mob_name)
 			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
-			return 1
-		var/mob/dead/target_observer/hivemind_observer/HO = eligible[use_mob_name]
+			return TRUE
+		if (!(HO in eligible)) // something fucked up
+			boutput(holder.owner, "<span class='alert'>Something fucked up, ahelp about this. Mind transfer aborted.</span>")
+			stack_trace("[holder.owner] tried to grant control of a changeling body to [user_mob_name], but that name wasn't in the list of eligible mobs. List of mobs: [json_encode(eligible)]")
+			return TRUE
 
 		//Do the actual control-granting here.
 		logTheThing("combat", holder.owner, HO, "granted control of their body to [constructTarget(HO,"combat")] as a changeling!")
