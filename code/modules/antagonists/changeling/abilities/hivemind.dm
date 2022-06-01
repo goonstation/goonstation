@@ -496,12 +496,12 @@
 			return 1
 
 		var/mob/dead/target_observer/hivemind_observer/HO = tgui_input_list(holder.owner, "Select the mind to grant control:", "Select Mind", sortList(eligible))
-		if(!use_mob_name)
+		if(!HO)
 			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
 			return TRUE
 		if (!(HO in eligible))
 			boutput(holder.owner, "<span class='alert'>Something fucked up, ahelp about this. Mind transfer aborted.</span>")
-			stack_trace("[holder.owner] tried to grant control of a changeling body to [user_mob_name], but that name wasn't in the list of eligible mobs. List of mobs: [json_encode(eligible)]")
+			stack_trace("[holder.owner] tried to grant control of a changeling body to [HO], but that name wasn't in the list of eligible mobs. List of mobs: [json_encode(eligible)]")
 			return TRUE
 
 		//Do the actual control-granting here.

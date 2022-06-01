@@ -85,7 +85,7 @@
 	food_color = "#228822"
 	initial_reagents = list("synthflesh"=2)
 
-/// Meat which is butchered from changeling critters
+/// Meat which is butchered from changeling critters (and gibbered changelings)
 /obj/item/reagent_containers/food/snacks/ingredient/meat/changeling
 	 name = "mutagenic meat"
 	 desc = "Are those eyes?"

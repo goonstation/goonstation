@@ -29,7 +29,7 @@
 		..()
 		if (bodypart)
 			bodypart.name = "[src]'s [initial(bodypart.name)]"
-		src.original_bodyprt = bodypart
+		src.original_bodypart = bodypart
 
 	say(message, involuntary = 0)
 		if (hivemind_owner)
