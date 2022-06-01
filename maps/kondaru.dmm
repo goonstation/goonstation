@@ -44111,7 +44111,8 @@
 /area/station/crew_quarters/cafeteria)
 "gVX" = (
 /obj/machinery/light/small{
-	dir = 8
+	dir = 8;
+	pixel_x = -12
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/barber_shop)
@@ -48090,13 +48091,6 @@
 	icon_state = "platingdmg3"
 	},
 /area/station/maintenance/southeast)
-"lkO" = (
-/obj/decal/tile_edge/stripe,
-/obj/machinery/status_display{
-	pixel_x = 32
-	},
-/turf/simulated/floor/wood/two,
-/area/station/crew_quarters/cafeteria)
 "lkQ" = (
 /obj/cable{
 	d1 = 4;
@@ -56495,6 +56489,9 @@
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
+	},
+/obj/machinery/status_display{
+	pixel_x = 32
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
@@ -123825,7 +123822,7 @@ bcx
 bcx
 bUn
 lhD
-lkO
+etk
 bjq
 tCN
 noK
