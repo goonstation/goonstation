@@ -122,9 +122,22 @@
 	return ..()
 */
 
-/datum/limb/mouth/sawfly_blades
+/datum/limb/sawfly_blades
 
+	help(mob/target, var/mob/user)
+		//ALL ROADS
+		sawflywhack(target, user)
+	disarm(mob/target, var/mob/user)
+		//LEAD
+		sawflywhack(target, user)
+	grab(mob/target, var/mob/user)
+		//TO THE
+		sawflywhack(target, user)
 	harm(mob/target, var/mob/user)
+		//WHACK!
+		sawflywhack(target, user)
+
+	proc/sawflywhack(mob/target, var/mob/user)
 		if (istraitor(target) || isnukeop(target) || isspythief(target)) // uh oh! we just hit a friend
 			target.visible_message("<span class='alert'>[user]'s IFF system engages last second and barely avoids hitting you!")
 			return
@@ -136,5 +149,8 @@
 			take_bleeding_damage(target, null, 17, DAMAGE_STAB)
 			random_brute_damage(target, 14, FALSE)
 
+	attack_hand(atom/target, var/mob/user, var/reach)
+		if (ismob(target))
+			..()
 
 
