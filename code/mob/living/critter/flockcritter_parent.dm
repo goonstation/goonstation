@@ -62,6 +62,7 @@
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT, src, 100)
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_AI_UNTRACKABLE, src)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION, src)
 
 	// do not automatically set up a flock if one is not provided
 	// flockless drones act differently
