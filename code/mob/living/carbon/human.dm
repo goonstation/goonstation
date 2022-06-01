@@ -598,9 +598,9 @@
 	for (var/obj/item/implant/H in src.implant)
 		H.on_death()
 
-	for (var/uid in src.microbes)
-		var/datum/microbe/P = src.microbes[uid]
-		P.ondeath()
+	//for (var/uid in src.microbes)
+		//var/datum/pathogen/P = src.microbes[uid]
+		//P.ondeath()
 
 #ifdef DATALOGGER
 	game_stats.Increment("deaths")
@@ -1493,11 +1493,11 @@
 
 	message = process_accents(src,message)
 
-	for (var/uid in src.microbes)
-		var/datum/microbe/P = src.microbes[uid]
-		message = P.onsay(message)
+	//for (var/uid in src.microbes)
+		//var/datum/pathogen/P = src.microbes[uid]
+		//message = P.onsay(message)
 
-	..(message)
+	//..(message)
 
 	src.say_language = original_language
 
@@ -2465,6 +2465,8 @@
 		return null
 
 /mob/living/carbon/human/infected(var/datum/microbe/P)
+	if(!(P.infectioncount)) //If the microbe has already infected to capacity, return
+		return 0
 	if (isdead(src))
 		return
 	if (ischangeling(src) || isvampire(src)) // Vampires were missing here. They're immune to old-style diseases too (Convair880).
@@ -2473,7 +2475,8 @@
 		return 0
 	if (!(P.microbio_uid in src.microbes))
 		var/datum/microbe/Q = new /datum/microbe
-		Q.setup(0, P)
+		P.infectioncount--
+		Q.clone(P)
 		//microbe_controller.mob_infected(Q, src)
 		src.microbes += Q.microbio_uid
 		src.microbes[Q.microbio_uid] = Q
@@ -2492,14 +2495,13 @@
 		immunity(P)
 		qdel(Q)
 		logTheThing("pathology", src, null, "is cured of [pname].")
-		return
+
 /mob/living/carbon/human/immunity(var/datum/microbe/P)
 	if (isdead(src))
 		return
 	if (!(P.microbio_uid in src.immunities))
 		src.immunities += P.microbio_uid
 		logTheThing("pathology", src, null, "gains immunity to pathogen [P].")
-		return
 
 /mob/living/carbon/human/emag_act(mob/user, obj/item/card/emag/E)
 

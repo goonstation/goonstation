@@ -53,7 +53,7 @@ datum/microbe
 
 	var/microbio_uid								// UID for a microbe.
 	var/ticked										// Stops runtimes.
-
+	var/probability									// Used in the effect probability function.
 
 // PROCS AND FUNCTIONS FOR GENERATION
 
@@ -66,11 +66,13 @@ datum/microbe
 		desc = ""
 		infected = null
 		duration = null
+		durationtotal = null
 		suppressant = null
 		effects = list()
 		microbio_uid = null
 		//mutex = list()
 		ticked = 0
+		probability = null
 
 	proc/clone()
 		var/datum/microbe/P = new /datum/microbe
@@ -108,6 +110,7 @@ datum/microbe
 		src.desc = "[suppressant.color] [shape] microbes" //color determined by average of cure reagent and assigned-effect colors
 		src.durationtotal = rand(50,150)
 		src.duration = src.durationtotal
+		src.probability = 0
 
 	proc/randomize()
 		generate_name()
@@ -130,6 +133,7 @@ datum/microbe
 				E.onadd(src)
 			src.suppressant = origin.suppressant
 			src.microbio_uid = origin.microbio_uid
+			src.probability = 0
 		else if (status == 1)
 			randomize()
 		else if (!origin && status == 2)
@@ -142,6 +146,7 @@ datum/microbe
 
 	// handles pathogen duration and natural immunization
 	proc/progress_pathogen()
+		src.probability = MB_PROBABILITY_FACTOR*src.duration*(src.durationtotal-src.duration)
 		var/iscured = src.suppressant.suppress_act(src)
 		if (iscured)
 			duration = ceil(duration/2)
