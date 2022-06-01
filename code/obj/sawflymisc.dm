@@ -29,7 +29,7 @@
 		SPAWN(2) // super short delay to prevent fuckiness with suicide code
 			var/turf/T =  get_turf(src)
 			if (T)
-				new /mob/living/critter/sawfly(T)// this is probably a shitty way of doing it but it works
+				new /mob/living/critter/robotic/sawfly(T)// this is probably a shitty way of doing it but it works
 			qdel(src)
 		return
 
@@ -49,7 +49,7 @@
 	prime()
 		var/turf/T =  get_turf(src)
 		if (T)
-			var/mob/living/critter/sawfly/D = new /mob/living/critter/sawfly(T)
+			var/mob/living/critter/robotic/sawfly/D = new /mob/living/critter/robotic/sawfly(T)
 			D.isnew = FALSE // give it characteristics of old drone
 			D.name = tempname
 			D.TakeDamage("All", (tempdam))
@@ -70,7 +70,7 @@
 	sound_armed = 'sound/machines/sawflyrev.ogg'
 	icon_state = "clusterflyA"
 	icon_state_armed = "clusterflyA1"
-	payload = /mob/living/critter/sawfly
+	payload = /mob/living/critter/robotic/sawfly
 	is_dangerous = TRUE
 	is_syndicate = TRUE
 	contraband = 5
@@ -96,8 +96,8 @@
 
 
 	attack_self(mob/user as mob)
-		for(var/mob/living/critter/sawfly/S in range(get_turf(src), 5)) // folds active sawflies
-			SPAWN(0.5 SECONDS)
+		for(var/mob/living/critter/robotic/sawfly/S in range(get_turf(src), 5)) // folds active sawflies
+			SPAWN(0.1 SECONDS)
 				S.foldself()
 
 		for(var/obj/item/old_grenade/sawfly/S in range(get_turf(src), 4)) // unfolds passive sawflies
@@ -113,35 +113,16 @@
 				S.icon_state = "clusterflyB1"
 			SPAWN(S.det_time)
 				S.prime()
-// -------------------limbs---------------
 
-
-/*/datum/limb/gun/flock_stunner/attack_range(atom/target, var/mob/living/critter/flock/drone/user, params)
-	if(!target || !user)
-		return
-	return ..()
-*/
-
+// ---------------limb---------------
 /datum/limb/sawfly_blades
 
-	help(mob/target, var/mob/user)
-		//ALL ROADS
-		sawflywhack(target, user)
-	disarm(mob/target, var/mob/user)
-		//LEAD
-		sawflywhack(target, user)
-	grab(mob/target, var/mob/user)
-		//TO THE
-		sawflywhack(target, user)
+	//due to not having intent hotkeys and also being AI controlled we only need the one proc
 	harm(mob/target, var/mob/user)
-		//WHACK!
-		sawflywhack(target, user)
-
-	proc/sawflywhack(mob/target, var/mob/user)
 		if (istraitor(target) || isnukeop(target) || isspythief(target)) // uh oh! we just hit a friend
 			target.visible_message("<span class='alert'>[user]'s IFF system engages last second and barely avoids hitting you!")
 			return
-		else if (istype(target, /mob/living/critter/sawfly)) //can't hit each other
+		else if (istype(target, /mob/living/critter/robotic/sawfly)) //can't hit each other
 			return
 		else //COMMENCE THE PAIN
 			user.visible_message("<b class='alert'>[user] [pick(list("gouges", "cleaves", "lacerates", "shreds", "cuts", "tears", "saws", "mutilates", "hacks", "slashes",))] [target]!</b>")

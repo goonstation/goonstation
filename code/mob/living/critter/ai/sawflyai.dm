@@ -42,7 +42,7 @@
 	return weight * score_target(get_best_target(get_targets()))
 
 /datum/aiTask/timed/targeted/sawfly_attack/on_tick()
-	var/mob/living/critter/sawfly/owncritter = holder.owner
+	var/mob/living/critter/robotic/sawfly/owncritter = holder.owner
 	if(prob(5)) owncritter.communalbeep()
 	walk(owncritter, 0)
 	if(!holder.target)
@@ -55,7 +55,7 @@
 			var/mob/living/M = T
 			if(M.health < -50)
 				holder.target = get_best_target(get_targets())
-			if(istype(T, /mob/living/critter/sawfly))
+			if(istype(T, /mob/living/critter/robotic/sawfly))
 				holder.target = get_best_target(get_targets())
 		if(!holder.target) //we lost target, re-evaluate tasks
 			holder.interrupt()
@@ -80,12 +80,12 @@
 
 /datum/aiTask/timed/targeted/sawfly_attack/get_targets()
 	. = list()
-	var/mob/living/critter/sawfly/owncritter = holder.owner
+	var/mob/living/critter/robotic/sawfly/owncritter = holder.owner
 
 	for (var/mob/living/C in view(owncritter,target_range))
 		if(C == owncritter) continue
 
-		if(istype(C, /mob/living/critter/sawfly)) continue
+		if(istype(C, /mob/living/critter/robotic/sawfly)) continue
 		if (C.health < -50 || !isalive(C)) continue
 		if (C.job == "Security Officer" || C.job == "Head of Security")
 			. = list(C) //found a secoff, just return that
@@ -123,14 +123,14 @@
 
 /datum/aiTask/sequence/goalbased/sawfly_chase_n_stab/get_targets()
 	. = list()
-	var/mob/living/critter/sawfly/owncritter = holder.owner
+	var/mob/living/critter/robotic/sawfly/owncritter = holder.owner
 	for (var/mob/living/C in view(owncritter,max_dist))
 		if(C == owncritter) continue
 		if (C.health < -50 || !isalive(C)) continue
 		if (C.job == "Security Officer" || C.job == "Head of Security")
 			. = list(C) //found a secoff, just return that
 			return
-		if(istype(C, /mob/living/critter/sawfly)) continue
+		if(istype(C, /mob/living/critter/robotic/sawfly)) continue
 		if (C in owncritter.friends) continue
 		if (istraitor(C) || isnukeop(C) || isspythief(C)) // frens :)
 			boutput(C, "<span class='alert'> THE [owncritter] IFF system silently flags you as an ally! </span>")
@@ -148,7 +148,7 @@
 	var/list/dummy_params = list("icon-x" = 16, "icon-y" = 16)
 
 /datum/aiTask/succeedable/sawfly_stab/failed()
-	var/mob/living/critter/sawfly/F = holder.owner
+	var/mob/living/critter/robotic/sawfly/F = holder.owner
 	if(!F)
 		return TRUE
 	if(!holder.target)
@@ -162,7 +162,7 @@
 /datum/aiTask/succeedable/sawfly_stab/on_tick()
 	if(!has_started && !failed() && !succeeded())
 		if(holder.target)
-			var/mob/living/critter/sawfly/owncritter = holder.owner
+			var/mob/living/critter/robotic/sawfly/owncritter = holder.owner
 			owncritter.set_dir(get_dir(owncritter, holder.target))
 			owncritter.hand_attack(holder.target, dummy_params)
 			has_started = TRUE

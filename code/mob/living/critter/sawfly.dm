@@ -5,9 +5,9 @@ This file is the critter itself, and all the custom procs it needs in order to f
 -For the AI, check the critter/AI folder, it should be in sawflyai.dm
 -For the grenade and controller, check code/obj/sawflymisc.dm
 */
-/mob/living/critter/sawfly
+/mob/living/critter/robotic/sawfly
 
-	name = "Raniodyne antipersonnel microdrone"
+	name = "Ranodyne antipersonnel microdrone"
 	desc = "A folding antipersonnel drone of syndicate origin. It'd be pretty cute if it wasn't trying to kill people."
 	icon = 'icons/obj/ship.dmi'//remnants of it originally being a drone
 	icon_state = "sawfly"
@@ -26,7 +26,9 @@ This file is the critter itself, and all the custom procs it needs in order to f
 	//mob variables
 	custom_gib_handler = /proc/robogibs
 	isFlying = 1
-
+	can_grab = FALSE
+	can_help = FALSE
+	can_disarm = FALSE
 	use_stamina = FALSE
 	use_stunned_icon = FALSE
 	butcherable = FALSE
@@ -76,7 +78,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 
 	proc/communalbeep() // distributes the beepchance among the number of sawflies nearby
 		fliesnearby = 1 //that's you, little man! :)
-		for_by_tcl(E, /mob/living/critter/sawfly)
+		for_by_tcl(E, /mob/living/critter/robotic/sawfly)
 			if(isalive(E))
 				src.fliesnearby += 1 //that's your buddies!
 		var/beepchance = (1 / fliesnearby) * 100 //if two sawflies, give 50% chance that any one will beep
@@ -184,7 +186,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
-		HH.limb = new/datum/limb/mouth/sawfly_blades
+		HH.limb = new/datum/limb/sawfly_blades
 		HH.name = "sawfly blades"
 		HH.limb_name = HH.name
 		HH.can_hold_items = FALSE

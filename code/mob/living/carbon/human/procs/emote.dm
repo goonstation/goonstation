@@ -1375,14 +1375,6 @@
 								playsound(src.loc, 'sound/vox/deeoo.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 							else
 								playsound(src.loc, src.sound_fingersnap, 50, 1, channel=VOLUME_CHANNEL_EMOTE)
-
-							for (var/obj/item/C as anything in src.get_equipped_items())
-								if ((locate(/obj/item/remote/sawflyremote) in C) != null)
-									var/obj/item/remote/sawflyremote/O = (locate(/obj/item/remote/sawflyremote) in C)
-									src.put_in_hand_or_drop(O)
-									src.visible_message("<span class='alert'><B>[src] pulls a funny-looking remote out of \the [C]!</B></span>")
-									playsound(src.loc, "rustle", 20, 1)
-									break
 			if ("airquote","airquotes")
 				if (param)
 					param = strip_html(param, 200)
