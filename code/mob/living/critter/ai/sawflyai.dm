@@ -70,11 +70,11 @@
 				holder.move_to_with_path(holder.target, src.found_path, 1)
 				if(prob(20)) walk_rand(src,4)
 				owncritter.set_dir(get_dir(owncritter, holder.target)) //attack regardless
-				owncritter.hand_range_attack(holder.target, dummy_params)
+				owncritter.hand_attack(holder.target, dummy_params)
 			frustration++ //if frustration gets too high, the task is ended and re-evaluated
 		else
 			owncritter.set_dir(get_dir(owncritter, holder.target))
-			owncritter.hand_range_attack(holder.target, dummy_params)
+			owncritter.hand_attack(holder.target, dummy_params)
 
 
 
@@ -133,7 +133,7 @@
 		if(istype(C, /mob/living/critter/sawfly)) continue
 		if (C in owncritter.friends) continue
 		if (istraitor(C) || isnukeop(C) || isspythief(C)) // frens :)
-			boutput(C, "<span class='alert'> The sawfly's IFF system silently flags you as an ally! </span>")
+			boutput(C, "<span class='alert'> THE [owncritter] IFF system silently flags you as an ally! </span>")
 			owncritter.friends += C
 			continue
 		. += C //you passed all the checks it, now you get added to the list for consideration
@@ -164,7 +164,7 @@
 		if(holder.target)
 			var/mob/living/critter/sawfly/owncritter = holder.owner
 			owncritter.set_dir(get_dir(owncritter, holder.target))
-			owncritter.hand_range_attack(holder.target, dummy_params)
+			owncritter.hand_attack(holder.target, dummy_params)
 			has_started = TRUE
 		else
 			holder.interrupt() //somehow lost target, go do something else

@@ -2,11 +2,10 @@
  -->Includes:
 -All grenades- reused, cluster and normal
 -The remote
--The limb that shoots the blade
+-The limb that does the damage
 
 -->Things it DOES NOT include that are sawfly-related, and where they can be found:
 -The pouch of sawflies for nukies at the bottom of ammo pouches.dm
--The projectile they use is midway through laser.dm, with the other melee drone projectiles.
 -Their AI, which can be found in mob/living/critter/ai/sawflyai.dm
 -The critter itself, which is in mob/living/critter/sawfly.dm
 */
@@ -116,37 +115,26 @@
 				S.prime()
 // -------------------limbs---------------
 
-/datum/limb/gun/sawfly_blades //OP as shit for the sake of the AI- if a player ever uses this, make a weaker version
-	proj = new/datum/projectile/laser/drill/sawfly
-	shots = 1
-	current_shots = 1
-	cooldown = 1
-	reload_time = 1
-	reloading_str = "cooling"
 
-	attack_range(atom/target, var/mob/user, params) //overriding attack_range to change default fire message into something more melee-themed
-		if (reloaded_at > ticker.round_elapsed_ticks && !current_shots)
-			boutput(user, "<span class='alert'>The [holder.name] is [reloading_str]!</span>")
-			return
-		else if (current_shots <= 0)
-			current_shots = shots
-		if (next_shot_at > ticker.round_elapsed_ticks)
-			return
-		if (current_shots > 0)
-			current_shots--
-
-			var/pox = text2num(params["icon-x"]) - 16
-			var/poy = text2num(params["icon-y"]) - 16
-			shoot_projectile_ST_pixel(user, proj, target, pox, poy)
-			//since sawflies literally cannot miss their shots unless someone frame perfect dodges, I'm fine with their attack flavor text being the fire message
-			user.visible_message("<b class='alert'>[user] [pick(list("gouges", "cleaves", "lacerates", "shreds", "cuts", "tears", "hacks", "slashes",))] [target]!</b>")
-			next_shot_at = ticker.round_elapsed_ticks + cooldown
-			if (!current_shots)
-				reloaded_at = ticker.round_elapsed_ticks + reload_time
-		else
-			reloaded_at = ticker.round_elapsed_ticks + reload_time
-
-/datum/limb/gun/flock_stunner/attack_range(atom/target, var/mob/living/critter/flock/drone/user, params)
+/*/datum/limb/gun/flock_stunner/attack_range(atom/target, var/mob/living/critter/flock/drone/user, params)
 	if(!target || !user)
 		return
 	return ..()
+*/
+
+/datum/limb/mouth/sawfly_blades
+
+	harm(mob/target, var/mob/user)
+		if (istraitor(target) || isnukeop(target) || isspythief(target)) // uh oh! we just hit a friend
+			target.visible_message("<span class='alert'>[user]'s IFF system engages last second and barely avoids hitting you!")
+			return
+		else if (istype(target, /mob/living/critter/sawfly)) //can't hit each other
+			return
+		else //COMMENCE THE PAIN
+			user.visible_message("<b class='alert'>[user] [pick(list("gouges", "cleaves", "lacerates", "shreds", "cuts", "tears", "saws", "mutilates", "hacks", "slashes",))] [target]!</b>")
+			playsound(user, "sound/machines/chainsaw_green.ogg", 50, 1)
+			take_bleeding_damage(target, null, 17, DAMAGE_STAB)
+			random_brute_damage(target, 14, FALSE)
+
+
+

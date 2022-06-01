@@ -7,7 +7,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 */
 /mob/living/critter/sawfly
 
-	name = "Armadyne antipersonnel microdrone"
+	name = "Raniodyne antipersonnel microdrone"
 	desc = "A folding antipersonnel drone of syndicate origin. It'd be pretty cute if it wasn't trying to kill people."
 	icon = 'icons/obj/ship.dmi'//remnants of it originally being a drone
 	icon_state = "sawfly"
@@ -26,7 +26,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 	//mob variables
 	custom_gib_handler = /proc/robogibs
 	isFlying = 1
-	blood_id = "oil"
+
 	use_stamina = FALSE
 	use_stunned_icon = FALSE
 	butcherable = FALSE
@@ -115,36 +115,31 @@ This file is the critter itself, and all the custom procs it needs in order to f
 
 		..()
 
-	death()
+	death(var/gibbed)
 		if(!isalive(src)) return//we already dead, somehow
 
 		src.force_laydown_standup()
-		src.visible_message("<span class='alert'[death_text]<span>")
+
 		//for whatever whacky reason tokenized_message() does 2 messages so we gotta do it the old fashioned way
 		src.is_npc = FALSE // //shut down the AI
 		src.throws_can_hit_me = FALSE  //prevent getting hit by thrown stuff- important in avoiding jank
-		animate(src) //no more float animation
-		icon_state = "sawflydead[pick("1", "2", "3", "4", "5", "6", "7", "8")]" //randomly selects death icon and displaces them
-		src.pixel_x += rand(-5, 5)
-		src.pixel_y += rand(-1, 5)
-		src.anchored = 0
 
+		if(!gibbed)
+			animate(src) //no more float animation
+			src.visible_message("<span class='alert'[death_text]<span>") //this has to be done here, and without tokenized message, otherwise it duplicates. Idunno why.
+			src.anchored = 0
+		// checks that determine rolled behavior on death
+			if (prob(20))
+				new /obj/item/device/prox_sensor(src.loc)
+				return
+			if(prob(60))
+				elecflash(src, 1, 3)
 
-		// special checks that determine how much damage they do after death
-		if (prob(20))
-			new /obj/item/device/prox_sensor(src.loc)
-			return
-		if(prob(60))
-			elecflash(src, 1, 3)
-
-		if(prob(22)) // congrats, little guy! You're special! You're going to blow up!
-			if(prob(70)) //decide whether or not people get a warning
-				src.visible_message("<span class='combat'>[src] makes a[pick(" gentle", "n odd", " slight", " weird", " barely audible", " concerning", " quiet")] [pick("hiss", "drone", "whir", "thump", "grinding sound", "creak", "buzz", "khunk")]...<span>")
-			SPAWN(deathtimer SECONDS)
-				src.blowup()
-
-
-
+			if(prob(22)) // congrats, little guy! You're special! You're going to blow up!
+				if(prob(70)) //decide whether or not people get a warning
+					src.visible_message("<span class='combat'>[src] makes a[pick(" gentle", "n odd", " slight", " weird", " barely audible", " concerning", " quiet")] [pick("hiss", "drone", "whir", "thump", "grinding sound", "creak", "buzz", "khunk")]...<span>")
+				SPAWN(deathtimer SECONDS)
+					src.blowup()
 
 		..()
 		// it is VITAL this goes after the parent so they don't show up as a whacky chunk of metal
@@ -189,7 +184,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
-		HH.limb = new /datum/limb/gun/sawfly_blades
+		HH.limb = new/datum/limb/mouth/sawfly_blades
 		HH.name = "sawfly blades"
 		HH.limb_name = HH.name
 		HH.can_hold_items = FALSE
