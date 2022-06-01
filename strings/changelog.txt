@@ -1,5 +1,9 @@
 
 (t)wed jun 01 22
+(u)TDHooligan
+(p)6952
+(e)⚖|balance
+(+)The gods of the Lava Moon's Shield of Souls demand a toll for their power.
 (u)Flappybat
 (p)8627
 (e)🎨⚖|sprites, balance
