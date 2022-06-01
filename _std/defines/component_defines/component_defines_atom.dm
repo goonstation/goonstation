@@ -167,6 +167,8 @@
 	#define COMSIG_MOB_SHOCKED_DEFIB "mob_shocked"
 	/// Sent to mob when client lifts the mouse button
 	#define COMSIG_MOB_MOUSEUP "mob_mouseup"
+	/// Sent when something is outputted to the mob using boutput (args)
+	#define COMSIG_MOB_BOUTPUT "mob_boutput"
 
 	// ---- cloaking device signal ----
 

@@ -41,7 +41,9 @@
 	src.ai = new /datum/aiHolder/flock/drone(src)
 
 	..()
-	abilityHolder = new /datum/abilityHolder/critter/flockdrone(src)
+	var/datum/abilityHolder/composite/composite = new(src)
+	abilityHolder = composite
+	composite.addHolder(/datum/abilityHolder/critter/flockdrone)
 	add_lifeprocess(/datum/lifeprocess/flock/absorbtion)
 
 	SPAWN(3 SECONDS)
@@ -90,13 +92,15 @@
 		state["controller_ref"] = "\ref[controller]"
 	. = state
 
-
 /mob/living/critter/flock/drone/Login()
 	..()
 	src.client?.color = null
 	if(isnull(controller))
 		controller = new/mob/living/intangible/flock/trace(src, src.flock)
 		src.is_npc = FALSE
+
+/mob/living/critter/flock/drone/proc/relay_boutput(target, message, group, forceScroll)
+	boutput(src, message, group, forceScroll)
 
 /mob/living/critter/flock/drone/proc/take_control(mob/living/intangible/flock/pilot, give_alert = TRUE)
 	if(!pilot)
@@ -127,6 +131,9 @@
 	controller = pilot
 	src.client?.color = null
 	src.hud?.update_intent()
+	var/datum/abilityHolder/composite/composite = src.abilityHolder
+	composite.addHolderInstance(pilot.abilityHolder, TRUE)
+	src.RegisterSignal(controller, COMSIG_MOB_BOUTPUT, .proc/relay_boutput)
 	if (istype(pilot, /mob/living/intangible/flock/flockmind))
 		flock.addAnnotation(src, FLOCK_ANNOTATION_FLOCKMIND_CONTROL)
 	else
@@ -163,6 +170,9 @@
 				controller.mind.key = key
 				controller.mind.current = controller
 				ticker.minds += controller.mind
+		var/datum/abilityHolder/composite/composite = src.abilityHolder
+		composite.removeHolder(/datum/abilityHolder/flockmind)
+		src.UnregisterSignal(controller, COMSIG_MOB_BOUTPUT)
 		if (istype(controller, /mob/living/intangible/flock/flockmind))
 			flock.removeAnnotation(src, FLOCK_ANNOTATION_FLOCKMIND_CONTROL)
 		else

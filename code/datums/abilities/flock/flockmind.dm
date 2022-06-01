@@ -260,7 +260,7 @@
 	if(..())
 		return 1
 	var/list/targets = list()
-	for(var/obj/machinery/door/airlock/A in range(10, holder.owner))
+	for(var/obj/machinery/door/airlock/A in range(10, get_turf(holder.owner)))
 		if(A.canAIControl())
 			targets += A
 	if(length(targets))
@@ -372,7 +372,7 @@
 	if(..())
 		return TRUE
 	var/mob/living/intangible/flock/flockmind/F = holder.owner
-	F.flock.ui_interact(F, F.flock.flockpanel)
+	F.flock.ui_interact(holder.get_controlling_mob(), F.flock.flockpanel)
 
 ////////////////////////////////
 
@@ -404,7 +404,7 @@
 
 	//todo: replace with FANCY tgui/chui window with WHEELS and ICONS and stuff!
 
-	var/structurewanted = tgui_input_list(holder.owner, "Select which structure you would like to create", "Tealprint selection", friendlyNames)
+	var/structurewanted = tgui_input_list(holder.get_controlling_mob(), "Select which structure you would like to create", "Tealprint selection", friendlyNames)
 
 	if (!structurewanted)
 		return TRUE
