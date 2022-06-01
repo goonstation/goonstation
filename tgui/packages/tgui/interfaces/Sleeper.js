@@ -103,7 +103,7 @@ export const Sleeper = (props, context) => {
                   {damageNum(oxyDamage)}
                 </HealthStat>
                 /
-                <HealthStat inline align="center" type="toxin" width={8}>
+                <HealthStat inline align="center" type="toxin" width={5}>
                   {damageNum(toxDamage)}
                 </HealthStat>
                 /
