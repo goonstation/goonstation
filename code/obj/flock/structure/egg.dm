@@ -42,6 +42,7 @@
 
 /obj/flock_structure/egg/bit
 	flock_id = "Secondary Second-Stage Assembler"
+	flock_desc = "Will soon become flockbits."
 
 /obj/flock_structure/egg/bit/spawn_contents()
 	for (var/i in 1 to 3)

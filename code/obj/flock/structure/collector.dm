@@ -4,7 +4,7 @@
 /obj/flock_structure/collector
 	name = "weird lookin' pulsing thing"
 	desc = "Seems to be pulsing."
-	flock_desc = "Produces compute power based on the number of feathertiles it is connected to."
+	flock_desc = "Provides compute power based on the number of feathertiles it is connected to."
 	flock_id = "Collector"
 	health = 60
 	resourcecost = 200
