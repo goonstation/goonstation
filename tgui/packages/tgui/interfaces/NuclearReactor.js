@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { BlockQuote, Button, Collapsible, Box, Section, Table } from '../components';
+import { BlockQuote, Button, Knob, Box, Section, Table, RoundGauge } from '../components';
 import { Window } from '../layouts';
 import { useLocalState } from '../backend';
 import { Divider, Flex, Stack } from '../components';
@@ -97,10 +97,13 @@ const ReactorGrid = (shape) => {
 export const NuclearReactor = (props, context) => {
   const { act, data } = useBackend(context);
   const {
-    components,
     gridW,
     gridH,
     emptySlotIcon,
+    components,
+    reactorTemp,
+    reactorRads,
+    controlRodLevel,
   } = data;
   return (
     <Window
@@ -117,6 +120,49 @@ export const NuclearReactor = (props, context) => {
               onClick={act}
               components={components}
               emptySlotIcon={emptySlotIcon}
+            />
+          </Box>
+        </Section>
+        <Section>
+          <Box>
+            <Stack fill>
+              <Stack.Item width="50%">
+                <RoundGauge
+                  minValue={0}
+                  maxValue={2500}
+                  size={5}
+                  value={reactorTemp}
+                  format={value => value + " K"}
+                  alertAfter={2000}
+                  ranges={{
+                    "good": [0, 1000],
+                    "average": [1000, 1750],
+                    "bad": [2000, 2500],
+                  }} />
+              </Stack.Item>
+              <Stack.Item width="50%">
+                <RoundGauge
+                  minValue={0}
+                  maxValue={2500}
+                  size={5}
+                  value={reactorRads}
+                  format={value => value + " rads"}
+                  alertAfter={2000}
+                  ranges={{
+                    "good": [0, 1000],
+                    "average": [1000, 1750],
+                    "bad": [2000, 2500],
+                  }} />
+              </Stack.Item>
+            </Stack>
+            <Knob
+              animated
+              size={2}
+              value={controlRodLevel}
+              minValue={0}
+              maxValue={100}
+              format={value => value + " %"}
+              onDrag={(e, value) => act('adjustCR', { crvalue: value })}
             />
           </Box>
         </Section>

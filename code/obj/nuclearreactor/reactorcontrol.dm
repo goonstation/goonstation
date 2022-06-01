@@ -59,6 +59,16 @@
 			"power" = turbine_handle.lastgen,
 			"history" = src.history,
 		)
+
+	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+		. = ..()
+		if(.)
+			return
+
+		switch(action)
+			if("loadChange")
+				var/x = params["newVal"]
+				src.turbine_handle.stator_load = x
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -92,11 +102,17 @@
 		)
 
 	ui_data()
+		var/control_rod_level = 0
+		var/control_rod_count = 0
 		var/comps[length(reactor_handle.component_grid)][length(src.reactor_handle.component_grid[1])]
 		for(var/x=1 to length(src.reactor_handle.component_grid))
 			for(var/y=1 to length(src.reactor_handle.component_grid[1]))
 				if(src.reactor_handle.component_grid[x][y])
 					var/obj/item/reactor_component/comp = src.reactor_handle.component_grid[x][y]
+					if(istype(comp,/obj/item/reactor_component/control_rod))
+						var/obj/item/reactor_component/control_rod/CR = comp
+						control_rod_count++
+						control_rod_level+=CR.configured_insertion_level
 					comps[x][y]=list(
 							"x" = x,
 							"y" = y,
@@ -107,6 +123,9 @@
 
 		. = list(
 			"components" = comps,
+			"reactorTemp" = src.reactor_handle.temperature,
+			"reactorRads" = src.reactor_handle.radiationLevel,
+			"controlRodLevel" = (control_rod_level/max(1,control_rod_count))*100
 		)
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)

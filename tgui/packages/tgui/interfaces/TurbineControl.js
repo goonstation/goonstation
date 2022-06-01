@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Chart, LabeledList, Stack, Table } from '../components';
+import { Chart, LabeledList, Stack, Slider, Box } from '../components';
 import { formatPower } from '../format';
 import { Window } from '../layouts';
 
@@ -25,8 +25,8 @@ export const TurbineControl = (_props, context) => {
   return (
     <Window>
       <Window.Content>
-        <Stack fill>
-          <Stack.Item width="50%">
+        <Stack vertical fill>
+          <Stack.Item>
             <LabeledList>
               <LabeledList.Item label="Turbine Output">{formatPower(power)}</LabeledList.Item>
             </LabeledList>
@@ -40,7 +40,7 @@ export const TurbineControl = (_props, context) => {
               fillColor="rgba(1, 184, 170, 0.25)"
             />
           </Stack.Item>
-          <Stack.Item width="50%">
+          <Stack.Item>
             <LabeledList>
               <LabeledList.Item label="Turbine Speed">{rpm} RPM</LabeledList.Item>
             </LabeledList>
@@ -53,6 +53,30 @@ export const TurbineControl = (_props, context) => {
               strokeColor="rgba(1, 184, 170, 1)"
               fillColor="rgba(1, 184, 170, 0.25)"
             />
+          </Stack.Item>
+          <Stack.Item>
+            <LabeledList>
+              <LabeledList.Item label="Turbine Load">{load} Watts/Revolution</LabeledList.Item>
+            </LabeledList>
+            <Chart.Line
+              mt="5px"
+              height="5em"
+              data={loadHistoryData}
+              rangeX={[0, loadHistoryData.length - 1]}
+              rangeY={[0, max]}
+              strokeColor="rgba(1, 184, 170, 1)"
+              fillColor="rgba(1, 184, 170, 0.25)"
+            />
+          </Stack.Item>
+          <Stack.Item>
+            <Box>
+              <Slider
+                minValue={1}
+                maxValue={load*2}
+                value={load}
+                format={value => value + " Watts/Revolution"}
+                onChange={(e, value) => act("loadChange", { newVal: value })} />
+            </Box>
           </Stack.Item>
         </Stack>
       </Window.Content>

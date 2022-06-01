@@ -46,6 +46,7 @@
 		. = ..()
 		var/output_starting_pressure = MIXTURE_PRESSURE(air2)
 		var/input_starting_pressure = MIXTURE_PRESSURE(air1)
+		var/tmpRads = 0
 		boutput(world,"REACTOR: input=[input_starting_pressure] [air1.temperature]K output=[output_starting_pressure] [air2.temperature]K")
 
 		var/transfer_moles = input_starting_pressure ? input_starting_pressure*air2.volume/(air1.temperature * R_IDEAL_GAS_EQUATION) : 0
@@ -66,23 +67,24 @@
 
 					//calculate neutron flux
 					src.flux_grid[x][y] = comp.processNeutrons(src.flux_grid[x][y])
-					for(var/datum/neutron/N in src.flux_grid[x][y])
-						var/xmod = 0
-						var/ymod = 0
-						xmod += ((N.dir & EAST) == EAST)
-						xmod -= ((N.dir & WEST) == WEST)
-						ymod += ((N.dir & SOUTH) == SOUTH)
-						ymod -= ((N.dir & NORTH) == NORTH)
-						if((x+xmod >= 1 & y+ymod >= 1) & (x+xmod <= REACTOR_GRID_WIDTH & y+ymod <= REACTOR_GRID_HEIGHT))
-							src.flux_grid[x+xmod][y+ymod]+=N
-							src.flux_grid[x][y]-=N
-						else
-							src.radiationLevel++ //neutrons hitting the casing get blasted in to the room - have fun with that engineers!
+				for(var/datum/neutron/N in src.flux_grid[x][y])
+					var/xmod = 0
+					var/ymod = 0
+					xmod += ((N.dir & EAST) == EAST)
+					xmod -= ((N.dir & WEST) == WEST)
+					ymod += ((N.dir & SOUTH) == SOUTH)
+					ymod -= ((N.dir & NORTH) == NORTH)
+					if((x+xmod >= 1 & y+ymod >= 1) & (x+xmod <= REACTOR_GRID_WIDTH & y+ymod <= REACTOR_GRID_HEIGHT))
+						src.flux_grid[x+xmod][y+ymod]+=N
+						src.flux_grid[x][y]-=N
+					else
+						src.flux_grid[x][y]-=N
+						tmpRads++ //neutrons hitting the casing get blasted in to the room - have fun with that engineers!
 
 		var/datum/gas_mixture/gas = src.processCasingGas(gas_input) //the reactor has some inherent gas cooling channels
 		if(gas) gas_output.merge(gas)
 		//spawn radioactivity then reset level
-		src.radiationLevel = 0
+		src.radiationLevel = tmpRads
 		src.network1?.update = TRUE
 		src.network2?.update = TRUE
 
@@ -159,10 +161,16 @@
 
 	ui_data()
 		var/comps[REACTOR_GRID_WIDTH][REACTOR_GRID_HEIGHT]
+		var/control_rod_level = 0
+		var/control_rod_count = 0
 		for(var/x=1 to REACTOR_GRID_WIDTH)
 			for(var/y=1 to REACTOR_GRID_HEIGHT)
 				if(src.component_grid[x][y])
 					var/obj/item/reactor_component/comp = src.component_grid[x][y]
+					if(istype(comp,/obj/item/reactor_component/control_rod))
+						var/obj/item/reactor_component/control_rod/CR = comp
+						control_rod_count++
+						control_rod_level+=CR.configured_insertion_level
 					comps[x][y]=list(
 							"x" = x,
 							"y" = y,
@@ -173,6 +181,9 @@
 
 		. = list(
 			"components" = comps,
+			"reactorTemp" = src.temperature,
+			"reactorRads" = src.radiationLevel,
+			"controlRodLevel" = (control_rod_level/max(1,control_rod_count))*100
 		)
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -181,6 +192,13 @@
 			return
 
 		switch(action)
+			if("adjustCR")
+				for(var/x=1 to REACTOR_GRID_WIDTH)
+					for(var/y=1 to REACTOR_GRID_HEIGHT)
+						if(src.component_grid[x][y])
+							if(istype(src.component_grid[x][y],/obj/item/reactor_component/control_rod))
+								var/obj/item/reactor_component/control_rod/CR = src.component_grid[x][y]
+								CR.configured_insertion_level = params["crvalue"]/100
 			if("slot")
 				var/x = params["x"]
 				var/y = params["y"]
