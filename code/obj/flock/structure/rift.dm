@@ -7,6 +7,7 @@
 	density = FALSE
 	name = "glowing portal thingymabob"
 	desc = "Oh god is that a fucking light grenade?!"
+	flock_desc = "The rift through which your Flock will enter this world."
 	flock_id = "Entry Rift"
 	build_time = 10
 	health = 200

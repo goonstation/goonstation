@@ -1,6 +1,7 @@
 /obj/flock_structure/compute
 	name = "weird lookin' thinking thing"
 	desc = "It almost looks like a terminal of some kind."
+	flock_desc = "Provides compute power."
 	flock_id = "Compute node"
 	health = 60
 	icon_state = "compute"

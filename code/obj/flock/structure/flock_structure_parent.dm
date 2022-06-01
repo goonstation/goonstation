@@ -7,6 +7,8 @@ ABSTRACT_TYPE(/obj/flock_structure)
 	density = TRUE
 	name = "uh oh"
 	desc = "CALL A CODER THIS SHOULDN'T BE SEEN"
+	///Shown on the TGUI tooltip for the structure
+	var/flock_desc = "THIS ALSO SHOULDN'T BE SEEN AAAA"
 	flags = USEDELAY
 	mat_changename = FALSE
 	mat_changedesc = FALSE
@@ -68,6 +70,7 @@ ABSTRACT_TYPE(/obj/flock_structure)
 	state["name"] = src.flock_id
 	state["health"] = src.health
 	state["compute"] = src.compute_provided()
+	state["desc"] = src.flock_desc
 	var/area/myArea = get_area(src)
 	if(isarea(myArea))
 		state["area"] = myArea.name

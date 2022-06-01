@@ -8,6 +8,7 @@
 	density = FALSE
 	name = "glowing doodad"
 	desc = "Oh god is that a fucking light grenade?!"
+	flock_desc = "Will soon become a Flockdrone."
 	flock_id = "Second-Stage Assembler"
 	build_time = 6
 	health = 30
