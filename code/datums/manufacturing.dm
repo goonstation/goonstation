@@ -1329,7 +1329,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/flash
 	name = "Flash"
-	item_paths = list("MET-1","CON-1""CRY-1")
+	item_paths = list("MET-1","CON-1","CRY-1")
 	item_amounts = list(3,5,5)
 	item_outputs = list(/obj/item/device/flash)
 	time = 15 SECONDS
