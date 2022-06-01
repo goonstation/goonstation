@@ -44,13 +44,13 @@ ABSTRACT_TYPE(/mob/living/critter/plaguerat)
 	New(var/turf/T, var/mob/wraith/M = null)
 		..(T)
 		SPAWN(0)
+			src.bioHolder.AddEffect("nightvision", 0, 0, 0, 1)
 			if(M != null)
 				src.master = M
 
 				if (isnull(M.summons))
 					M.summons = list()
 				M.summons += src
-				src.bioHolder.AddEffect("nightvision", 0, 0, 0, 1)
 
 	setup_hands()
 		..()
