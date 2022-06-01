@@ -10,9 +10,6 @@ ABSTRACT_TYPE(/datum/microbioeffects/tells)
 	name = "Hiccups"
 	desc = "The microbes send involuntary signals to the infected individual's diaphragm."
 
-	onadd(var/datum/microbe/origin)
-		origin.effectdata += "hiccups"
-
 	mob_act(var/mob/M as mob, var/datum/microbe/origin)
 		if (prob(2))
 			M:emote("hiccup")
@@ -57,9 +54,6 @@ ABSTRACT_TYPE(/datum/microbioeffects/tells)
 	name = "Sunglass Glands"
 	desc = "The infected grew sunglass glands."
 
-	onadd(var/datum/microbe/origin)
-		origin.effectdata += "sunglass"
-
 	proc/glasses(var/mob/living/carbon/human/M as mob)
 		var/obj/item/clothing/glasses/G = M.glasses
 		var/obj/item/clothing/glasses/N = new/obj/item/clothing/glasses/sunglasses()
@@ -96,8 +90,6 @@ ABSTRACT_TYPE(/datum/microbioeffects/tells)
 /datum/microbioeffects/tells/deathgasping
 	name = "Deathgasping"
 	desc = "The pathogen causes the user's brain to believe the body is dying."
-	onadd(var/datum/microbe/origin)
-		origin.effectdata += "deathgasp"
 
 	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (prob(1))
@@ -109,9 +101,6 @@ ABSTRACT_TYPE(/datum/microbioeffects/tells)
 /datum/microbioeffects/tells/shakespeare
 	name = "Shakespeare"
 	desc = "The infected has an urge to begin reciting shakespearean poetry."
-
-	onadd(var/datum/microbe/origin)
-		origin.effectdata += "shakespeare"
 
 	var/static/list/shk = list("Expectation is the root of all heartache.",
 "A fool thinks himself to be wise, but a wise man knows himself to be a fool.",
@@ -152,9 +141,6 @@ ABSTRACT_TYPE(/datum/microbioeffects/tells)
 	name = "Hoarseness"
 	desc = "The pathogen causes dry throat, leading to hoarse speech."
 
-	onadd(var/datum/microbe/origin)
-		origin.effectdata += "Hoarseness"
-
 	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (prob(2))
 			M:emote("wheeze")
@@ -169,9 +155,6 @@ ABSTRACT_TYPE(/datum/microbioeffects/tells)
 /datum/microbioeffects/tells/malaise
 	name = "Malaise"
 	desc = "The pathogen causes very mild, inconsequential fatigue to its host."
-
-	onadd(var/datum/microbe/origin)
-		origin.effectdata += "malaise"
 
 	mob_act(var/mob/M as mob, var/datum/microbe/origin)
 		if (prob(2))
@@ -220,9 +203,6 @@ datum/microbioeffects/tells/bloodcolors
 	name = "Exagerrated Startle Reflex"
 	desc = "The pathogen generates synaptic signals that amplify the host's startle reflex."
 
-	onadd(var/datum/microbe/origin)
-		origin.effectdata += "Startled"
-
 	mob_act(var/mob/M as mob, var/datum/microbe/origin)
 		if (prob(2))
 			M:emote("flinch")
@@ -233,9 +213,6 @@ datum/microbioeffects/tells/bloodcolors
 /datum/microbioeffects/tells/tearyeyed
 	name = "Overactive Eye Glands"
 	desc = "The pathogen causes the host's lacrimal glands to overproduce tears."
-
-	onadd(var/datum/microbe/origin)
-		origin.effectdata += "Teary"
 
 	mob_act(var/mob/M as mob, var/datum/microbe/origin)
 		if (prob(2))
@@ -251,9 +228,6 @@ datum/microbioeffects/tells/bloodcolors
 /datum/microbioeffects/tells/restingface
 	name = "Grumpy Cat Syndrome"
 	desc = "The pathogen causes the host's facial muscles to frown at rest."
-
-	onadd(var/datum/microbe/origin)
-		origin.effectdata += "Frowny"
 
 	mob_act(var/mob/M as mob, var/datum/microbe/origin)
 		if (prob(2))

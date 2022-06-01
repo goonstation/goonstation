@@ -11,9 +11,6 @@ ABSTRACT_TYPE(/datum/microbioeffects/benevolent)
 		if (prob(10))
 			M.HealDamage("All", 2, 0)
 
-	onadd(var/datum/microbe/origin)
-		origin.effectdata += "woundmend"
-
 	react_to(var/R, var/zoom)
 		if (R == "synthflesh")
 			if (zoom)
@@ -29,9 +26,6 @@ ABSTRACT_TYPE(/datum/microbioeffects/benevolent)
 	mob_act(var/mob/M as mob, var/datum/microbe/origin)
 		if (prob(10))
 			M.HealDamage("All", 0, 2)
-
-	onadd(var/datum/microbe/origin)
-		origin.effectdata += "burnheal"
 
 	react_to(var/R, var/zoom)
 		if (R == "synthflesh")
@@ -57,9 +51,6 @@ ABSTRACT_TYPE(/datum/microbioeffects/benevolent)
 				repair_bleeding_damage(M, 80, 2)
 				if (prob(20))
 					M.show_message("<span class='notice'>You feel your wounds closing by themselves.</span>")
-
-	onadd(var/datum/microbe/origin)
-		origin.effectdata += "fleshrest"
 
 	react_to(var/R, var/zoom)
 		if (R == "synthflesh")

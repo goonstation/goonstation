@@ -5,9 +5,6 @@ ABSTRACT_TYPE(/datum/microbioeffects/service)
 	name = "Detoxication"
 	desc = "The pathogen aids the host body in metabolizing ethanol."
 
-	onadd(var/datum/microbe/origin)
-		origin.effectdata += "detox"
-
 	mob_act(var/mob/M as mob, var/datum/microbe/origin)
 		var/times = 1
 		var/met = 0

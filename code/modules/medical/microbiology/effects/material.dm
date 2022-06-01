@@ -3,15 +3,15 @@ ABSTRACT_TYPE(/datum/microbioeffects/material)
 /datum/microbioeffects/material
 	name = "Material Effects"
 /*
-/*datum/pathogeneffects/material/smokegas
+/datum/microbioeffects/material/smokegas
 	name = "Smoke Farts"
 	desc = "The infected individual occasionally farts reagent smoke."
 	cooldown = 600
 	doInfect = 0 // the whole point is to not instantly infect a huge area, that's what got us into this mess >.>
 
-	fart(var/mob/M, var/datum/pathogen/origin, var/voluntary)
+	fart(var/mob/M, var/datum/microbe/origin, var/voluntary)
 		if (M.reagents.total_volume)
-			smoke_reaction(M.reagents, origin.stage, get_turf(M))
+			smoke_reaction(M.reagents, 1, get_turf(M))
 			..()			// only trigger if we actually have chems, else no infection or cooldown
 
 	may_react_to()
@@ -21,18 +21,18 @@ ABSTRACT_TYPE(/datum/microbioeffects/material)
 		var/datum/reagents/H = new /datum/reagents(5)
 		H.add_reagent(R, 5)
 		var/datum/reagent/RE = H.get_reagent(R)
-		return "The [RE.name] violently explodes into a puff of smoke when coming into contact with the pathogen."*/
+		return "The [RE.name] violently explodes into a puff of smoke when coming into contact with the pathogen."
 
-datum/pathogeneffects/material/plasmagas
+/datum/pathogeneffects/material/plasmagas
 	name = "Plasma Generator"
 	desc = "The germ appears to generate gaseous plasma."
 	cooldown = 600
 
-	mob_act(var/mob/M, var/datum/pathogen/origin)
+	mob_act(var/mob/M, var/datum/microbe/origin)
 		var/turf/T = get_turf(M)
 		var/datum/gas_mixture/gas = new /datum/gas_mixture
 		gas.zero()
-		gas.toxins = origin.stage * (voluntary ? 0.6 : 3) // only a fifth for voluntary farts
+		gas.toxins = 3			//origin.stage * (voluntary ? 0.6 : 3) // only a fifth for voluntary farts
 		gas.temperature = T20C
 		gas.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
 		if (T)
@@ -42,13 +42,12 @@ datum/pathogeneffects/material/plasmagas
 		if (R == "infernite" || R == "phlogiston")
 			return "The gas lights up in a puff of flame."
 
-datum/pathogeneffects/malevolent/farts/co2
+datum/microbioeffects/material/co2gas
 	name = "CO2 Farts"
 	desc = "The infected individual occasionally farts. Carbon dioxide."
-	rarity = THREAT_TYPE4
 	cooldown = 600
 
-	fart(var/mob/M, var/datum/pathogen/origin, var/voluntary)
+	fart(var/mob/M, var/datum/microbe/origin, var/voluntary)
 		..()
 		var/turf/T = get_turf(M)
 		var/datum/gas_mixture/gas = new /datum/gas_mixture
@@ -72,10 +71,9 @@ datum/pathogeneffects/malevolent/farts/co2
 			return "The flame of the hot reagents is snuffed by the gas."
 
 
-datum/pathogeneffects/malevolent/farts/o2
+datum/microbioeffects/malevolent/o2
 	name = "O2 Farts"
 	desc = "The infected individual occasionally farts. Pure oxygen."
-	rarity = THREAT_TYPE2
 	cooldown = 50
 	// ahahahah this is so stupid
 	// i have no idea what these numbers mean but i hope it's funny
@@ -99,9 +97,6 @@ datum/pathogeneffects/malevolent/farts/o2
 /datum/microbioeffects/material/organicglass
 	name = "Organic Glass"
 	desc = "The microbes produce silicate, reinforcing and repairing glass structures."
-
-	onadd(var/datum/microbe/origin)
-		origin.effectdata += "organicglass"
 
 	object_act(var/obj/O, var/datum/microbe/origin)
 		var/volume = ceil(origin.duration/1000) 				//integers good

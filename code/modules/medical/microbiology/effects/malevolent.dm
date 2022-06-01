@@ -4,29 +4,24 @@ ABSTRACT_TYPE(/datum/microbioeffects/malevolent)
 	name = "Malevolent"
 
 // The following lines are the probably undocumented (well at least my part - Marq) hell of the default symptoms.
-/datum/microbioeffects/malevolent/coughing
+/*/datum/microbioeffects/malevolent/coughing
 	name = "Coughing"
 	desc = "Violent coughing occasionally plagues the infected."
 
-	onadd(var/datum/microbe/origin)
-		origin.effectdata += "cough"
-
 	mob_act(var/mob/M as mob, var/datum/microbe/origin)
-		if (prob(5))
+		if (prob(2))
 			M.show_message("<span class='alert'>You cough.</span>")
+
 
 	may_react_to()
 		return "The pathogen appears to generate a high amount of fluids."
-
+*/
 datum/microbioeffects/malevolent/indigestion
 	name = "Indigestion"
 	desc = "A bad case of indigestion which occasionally cramps the infected."
 
-	onadd(var/datum/microbe/origin)
-		origin.effectdata += "indigestion"
-
 	mob_act(var/mob/M as mob, var/datum/microbe/origin)
-		if (prob(5))
+		if (prob(3))
 			M.show_message("<span class='alert'>Your stomach hurts.</span>")
 
 	react_to(var/R, var/zoom)
@@ -40,11 +35,8 @@ datum/microbioeffects/malevolent/muscleache
 	name = "Muscle Ache"
 	desc = "The infected feels a slight, constant aching of muscles."
 
-	onadd(var/datum/microbe/origin)
-		origin.effectdata += "muscle ache"
-
 	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (prob(5))
+		if (prob(3))
 			M.show_message("<span class='alert'>Your muscles ache.</span>")
 
 	react_to(var/R, var/zoom)
@@ -58,13 +50,10 @@ datum/microbioeffects/malevolent/sneezing
 	name = "Sneezing"
 	desc = "The infected sneezes frequently."
 
-	onadd(var/datum/microbe/origin)
-		origin.effectdata += "sneezing"
-
 	mob_act(var/mob/M as mob, var/datum/microbe/origin)
-		if (prob(5))
+		if (prob(3))
 			M.visible_message("<span class='alert'>[M] sneezes!</span>", "<span class='alert'>You sneeze.</span>", "<span class='alert'>You hear someone sneezing.</span>")
-			//src.infect_cloud(M, origin)
+			src.infect_cloud(M, origin)
 
 	may_react_to()
 		return "The pathogen appears to generate a high amount of fluids."
@@ -137,79 +126,29 @@ datum/pathogeneffects/malevolent/gasping
 	may_react_to()
 		return "The pathogen appears to be rather displeased."
 */
-
-datum/pathogeneffects/malevolent/shivering
+*/
+datum/microbioeffects/malevolent/shivering
 	name = "Shivering"
 	desc = "The pathogen slightly raises the homeostatic set point of the infected."
-	infect_type = INFECT_NONE
-	rarity = THREAT_TYPE2
-	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (origin.in_remission)
-			return
-		switch (origin.stage)
-			if (1)
-				if (prob(10))
-					M:emote("shiver")
 
-			if (2)
-				if (prob(12))
-					M:emote("shiver")
-
-			if (3)
-				if (prob(14))
-					M:emote("shiver")
-
-			if (4)
-				if (prob(16))
-					M:emote("shiver")
-
-			if (5)
-				if (prob(18))
-					M:emote("shiver")
+	mob_act(var/mob/M as mob, var/datum/microbe/origin)
+		if (prob(2))
+			M:emote("shiver")
 
 	may_react_to()
 		return "The pathogen appears to be shivering."
 
-datum/pathogeneffects/malevolent/sweating
+datum/microbioeffects/malevolent/sweating
 	name = "Sweating"
 	desc = "The infected person sweats like a pig."
-	infect_type = INFECT_TOUCH
-	rarity = THREAT_TYPE2
-	spread = SPREAD_HANDS | SPREAD_BODY
 	infect_attempt_message = "Ew, their hands feel really gross and sweaty!"
-	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (origin.in_remission)
-			return
-		switch (origin.stage)
-			if (1)
-				if (prob(5))
-					M.show_message("<span class='alert'>You feel a bit warm.</span>")
-				if (prob(40))
-					src.infect_puddle(M, origin)
+	var/choices = list("You're sweating heavily.", "You're soaked in your own sweat.")
 
-			if (2)
-				if (prob(5))
-					M.show_message("<span class='alert'>You feel rather warm.</span>")
-				if (prob(40))
-					src.infect_puddle(M, origin)
-
-			if (3)
-				if (prob(5))
-					M.show_message("<span class='alert'>You're sweating heavily.</span>")
-				if (prob(40))
-					src.infect_puddle(M, origin)
-
-			if (4)
-				if (prob(5))
-					M.show_message("<span class='alert'>You're soaked in your own sweat.</span>")
-				if (prob(40))
-					src.infect_puddle(M, origin)
-
-			if (5)
-				if (prob(5))
-					M.show_message("<span class='alert'>You're soaked in your own sweat.</span>")
-				if (prob(40))
-					src.infect_puddle(M, origin)
+	mob_act(var/mob/M as mob, var/datum/microbe/origin)
+		if (prob(3))
+			M.show_message("<span class='alert'> [pick(choices)] </span>")
+		if (prob(1))
+			src.infect_puddle(M, origin)
 
 	may_react_to()
 		return "The pathogen appears to generate a high amount of fluids."
@@ -217,7 +156,7 @@ datum/pathogeneffects/malevolent/sweating
 	react_to(var/R, zoom)
 		if (R == "cryostylane")
 			return "The cold substance appears to affect the fluid generation of the pathogen."
-
+/*
 datum/pathogeneffects/malevolent/disorientation
 	name = "Disorientation"
 	desc = "The infected occasionally gets disoriented."
