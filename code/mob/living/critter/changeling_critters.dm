@@ -12,7 +12,8 @@
 	can_disarm = 1
 	blood_id = "bloodc"
 	table_hide = 0
-	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/changeling
+	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/changeling
+	butcherable = TRUE
 	var/datum/abilityHolder/changeling/hivemind_owner = 0
 	var/icon_prefix = ""
 	/// Part this limb critter is based off of- i.e. a cow making a legworm would be a cow leg. Could also be an eye or butt, hence loose type
@@ -28,7 +29,7 @@
 	New(loc, obj/item/bodypart)
 		..()
 		if (bodypart)
-			bodypart.name = "[src]'s [initial(bodypart.name)]"
+			bodypart.name = "changeling's [initial(bodypart.name)]"
 		src.original_bodypart = bodypart
 
 	say(message, involuntary = 0)
@@ -102,10 +103,10 @@
 		death_effect()
 		..()
 
-	butcher()
+	butcher(mob/user)
 		src.original_bodypart.set_loc(src.loc)
 		src.original_bodypart = null
-		return ..()
+		return ..(user, FALSE)
 
 	disposing()
 		..()

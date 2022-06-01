@@ -167,7 +167,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	output = /obj/item/reagent_containers/food/snacks/burger/butterburger
 
 /datum/cookingrecipe/aburgination
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meat/changeling
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/changeling
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/dough
 	cookbonus = 6 // still mostly raw, since we don't kill it
 	output = /obj/item/reagent_containers/food/snacks/burger/aburgination
@@ -1118,7 +1118,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	output = /obj/item/reagent_containers/food/snacks/steak_s
 
 /datum/cookingrecipe/steak_ling
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meat/changeling
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/changeling
 	cookbonus = 12 // tough meat
 	output = /obj/item/reagent_containers/food/snacks/steak_ling
 

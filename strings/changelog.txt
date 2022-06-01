@@ -1,4 +1,8 @@
 
+(t) wed jun 1 22
+(u)fwll & aloe
+(+)You can now obtain changeling meat by either butchering changeling critters (buttcrabs, legworms, etc) or tossing a changeling in the gibber. This meat can either be cooked into a steak, or cooked with dough for an aburgination, which is very unsafe to eat. Otherwise, it's like mystery meat.
+(+)Sprites and ideas by fwll, code by aloe
 (t)tue may 31 22
 (u)aloe
 (+)Changeling control transfers should be fixed (usually wouldn't put this in the changelog but it seems important)

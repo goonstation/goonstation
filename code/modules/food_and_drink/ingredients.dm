@@ -85,14 +85,6 @@
 	food_color = "#228822"
 	initial_reagents = list("synthflesh"=2)
 
-/// Meat which is butchered from changeling critters (and gibbered changelings)
-/obj/item/reagent_containers/food/snacks/ingredient/meat/changeling
-	 name = "mutagenic meat"
-	 desc = "Are those eyes?"
-	 icon_state = "meat-changeling"
-	 initial_volume = 20
-	 initial_reagents = list("neurotoxin" = 5, "bloodc" = 15)
-
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat
 	name = "mystery meat"
 	desc = "What the fuck is this??"
@@ -108,6 +100,14 @@
 				..()
 			else
 				return..()
+
+/// Meat which is butchered from changeling critters (and gibbered changelings)
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/changeling
+	 name = "mutagenic meat"
+	 desc = "Are those eyes?"
+	 icon_state = "meat-changeling"
+	 initial_volume = 30
+	 initial_reagents = list("neurotoxin" = 20, "bloodc" = 10)
 
 /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon
 	name = "bacon"

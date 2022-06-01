@@ -205,7 +205,7 @@
 /obj/machinery/gibber/proc/generate_meat(var/mob/meat_source, var/decomposed_level, var/spawn_location)
 	var/obj/item/reagent_containers/food/snacks/ingredient/meat/generated_meat
 	if (ischangeling(meat_source))
-		generated_meat = new /obj/item/reagent_containers/food/snacks/ingredient/meat/changeling(spawn_location)
+		generated_meat = new /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/changeling(spawn_location)
 	else
 		if(decomposed_level < 3) // fresh or fresh enough
 			generated_meat = new /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat(spawn_location,meat_source)
