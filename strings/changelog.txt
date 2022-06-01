@@ -1,6 +1,8 @@
 
 (t)tue may 31 22
 (u)aloe
+(+)Cyborgs now have text for determining if they're connected on examine; the 3 states are operational (has a player connected), hibernating (has a brain but player is disconnected), and dormant (no brain or inactive SICC)
+(u)aloe
 (e)⚖|balance
 (*)The swooshy cloaking device effect is now only visible to the user, not people with thermals and the AI and whatever else. You can still see the person with thermal vision, you just can't immediately tell they're using a cloaker.
 (t)mon may 30 22
