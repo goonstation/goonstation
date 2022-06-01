@@ -16754,6 +16754,11 @@
 	dir = 8;
 	pixel_x = -12
 	},
+/obj/machinery/computer/announcement{
+	dir = 4;
+	name = "Security Announcement Computer";
+	req_access_txt = "19"
+	},
 /turf/simulated/floor/black,
 /area/station/security/hos)
 "eHU" = (
@@ -26253,6 +26258,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/disposalpipe/segment/bent/south,
 /turf/simulated/floor/carpet/red/fancy/edge/sw,
 /area/station/security/hos)
 "hgB" = (
@@ -31826,11 +31832,6 @@
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
-"iGQ" = (
-/obj/machinery/disposal,
-/obj/disposalpipe/trunk/north,
-/turf/simulated/floor/redblack,
-/area/station/security/hos)
 "iHa" = (
 /obj/machinery/door/poddoor/pyro{
 	dir = 4;
@@ -32712,10 +32713,10 @@
 	name = "Engineering Status Room"
 	})
 "iTR" = (
-/obj/disposalpipe/segment/bent/south,
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/black,
 /area/station/security/hos)
 "iTV" = (
@@ -87411,6 +87412,11 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
+"wFJ" = (
+/obj/disposalpipe/trunk/north,
+/obj/machinery/disposal,
+/turf/simulated/floor/redblack,
+/area/station/security/hos)
 "wFW" = (
 /obj/lattice{
 	dir = 1;
@@ -142491,7 +142497,7 @@ nyN
 evK
 eHS
 iTR
-iGQ
+tXP
 uUI
 yfc
 tOl
@@ -142793,7 +142799,7 @@ mUf
 mUf
 mUf
 hgz
-tXP
+wFJ
 fEv
 rZF
 tSP
