@@ -1058,7 +1058,7 @@
 	src.holder.changeStatus("flock_absorbing", item.health/F.health_absorb_rate SECONDS)
 
 /datum/equipmentHolder/flockAbsorption/on_unequip()
-	src.holder.setStatus("flock_absorbing", 0)
+	src.holder.delStatus("flock_absorbing")
 	if(item)
 		animate(item)
 		if(item.material)
