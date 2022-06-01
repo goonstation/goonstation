@@ -95,11 +95,6 @@
 						src.emote("fart") //We can still fart if we're muzzled.
 
 			if ("fart")
-				new /mob/living/critter/changeling/buttcrab(src.loc, new /obj/item/clothing/head/butt)
-				new /mob/living/critter/changeling/eyespider(src.loc, new /obj/item/organ/eye/cow)
-				new /mob/living/critter/changeling/legworm(src.loc, new /obj/item/parts/human_parts/leg/left)
-				new /mob/living/critter/changeling/handspider(src.loc, new /obj/item/parts/human_parts/arm/right)
-
 				var/oxyplasmafart = 0
 				if (src.emote_check(voluntary) && farting_allowed && (!src.reagents || !src.reagents.has_reagent("anti_fart")))
 					if (!src.get_organ("butt"))
