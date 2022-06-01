@@ -66,6 +66,7 @@
 	for (var/type as anything in childrentypesof(/datum/contextAction/flockdrone))
 		src.contexts += new type
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
+	src.see_invisible = INVIS_FLOCK
 	src.AddComponent(/datum/component/flock_protection, FALSE, FALSE, FALSE, FALSE)
 
 /mob/living/critter/flock/drone/disposing()
