@@ -57,9 +57,9 @@ const ReactorRow = (shape) => {
                 <img
                   src={`data:image/png;base64,${img}`}
                   style={{
-                    'box-shadow': `0px 0px 20px ${getTemperatureColor(temp)}`,
+                    'box-shadow': `0px 0px 20px ${getTemperatureColor(temp, 2000)}`,
                     'vertical-align': 'middle',
-                    'border-color': `${getTemperatureColor(temp)}`,
+                    'border-color': `${getTemperatureColor(temp, 2000)}`,
                     'border-style': 'solid',
                     'border-radius': '4px',
                     'horizontal-align': 'middle',
@@ -106,7 +106,7 @@ export const NuclearReactor = (props, context) => {
     <Window
       resizable
       title="Nuclear Reactor"
-      width={600}
+      width={(gridW+1)*64}
       height={600}>
       <Window.Content>
         <Section>

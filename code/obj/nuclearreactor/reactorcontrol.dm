@@ -9,17 +9,56 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "engine"
 	var/obj/machinery/atmospherics/binary/reactor_turbine/turbine_handle = null
+	var/list/history
+	var/const/history_max = 50
+
+	New()
+		..()
+		src.history = list()
 
 	process()
 		. = ..()
+		use_power(250)
+
 		if(!turbine_handle)
 			var/datum/powernet/powernet = src.get_direct_powernet()
 			if(!powernet) return
 			for(var/obj/machinery/power/terminal/N in powernet.nodes)
 				if(istype(N.master,/obj/machinery/atmospherics/binary/reactor_turbine))
 					src.turbine_handle = N.master
+					return
+
+		if (status & (NOPOWER|BROKEN))
+			return
+
+		if (length(src.history) > src.history_max)
+			src.history.Cut(1, 2) //drop the oldest entry
+		history += list(
+					list(
+						turbine_handle.RPM,
+						turbine_handle.stator_load,
+						turbine_handle.lastgen
+						)
+					)
 
 
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if (!ui)
+			ui = new(user, src, "TurbineControl", src.name)
+			ui.open()
+
+	ui_static_data(mob/user)
+		. = list(
+		)
+
+	ui_data(mob/user)
+		. = list(
+			"rpm" = turbine_handle.RPM,
+			"load" = turbine_handle.stator_load,
+			"power" = turbine_handle.lastgen,
+			"history" = src.history,
+		)
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 

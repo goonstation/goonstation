@@ -20,6 +20,7 @@
 	bound_y = -32
 	var/obj/machinery/power/terminal/terminal = null
 	var/net_id = null
+	var/lastgen = 0
 	dir = EAST
 
 	var/stator_load = 100
@@ -77,11 +78,13 @@
 		//Stator load - how much are we trying to slow the RPM
 		//Energy generated = stator load * RPM
 		var/datum/gas_mixture/current_gas = src.air1.remove(transfer_moles)
+		src.lastgen = 0
 		if(current_gas)
 			var/input_starting_energy = THERMAL_ENERGY(current_gas)
 			current_gas.temperature = max(0.66 * current_gas.temperature,T20C)
 			var/output_starting_energy = THERMAL_ENERGY(current_gas)
 			var/energy_generated = src.stator_load*src.RPM
+			src.lastgen = energy_generated
 			var/delta_E = input_starting_energy - output_starting_energy
 			//sqrt(2k/m) = a + v
 			src.RPM = sqrt(2*(max(delta_E - energy_generated,0))/turbine_mass)
@@ -93,4 +96,5 @@
 
 			src.network1?.update = TRUE
 			src.network2?.update = TRUE
+
 
