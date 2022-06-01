@@ -5,6 +5,7 @@ import { useLocalState } from '../backend';
 import { Divider, Flex, Stack } from '../components';
 import { capitalize, pluralize } from './common/stringUtils';
 import { freezeTemperature, getTemperatureColor, getTemperatureIcon, getTemperatureChangeName } from './common/temperatureUtils';
+import { clamp, round, toFixed } from 'common/math';
 
 const ReactorRow = (shape) => {
   const {
@@ -132,7 +133,7 @@ export const NuclearReactor = (props, context) => {
                   maxValue={2500}
                   size={5}
                   value={reactorTemp}
-                  format={value => value + " K"}
+                  format={value => round(value, 2) + " K"}
                   alertAfter={2000}
                   ranges={{
                     "good": [0, 1000],
@@ -143,15 +144,15 @@ export const NuclearReactor = (props, context) => {
               <Stack.Item width="50%">
                 <RoundGauge
                   minValue={0}
-                  maxValue={2500}
+                  maxValue={200}
                   size={5}
                   value={reactorRads}
-                  format={value => value + " rads"}
-                  alertAfter={2000}
+                  format={value => round(value, 1) + " rads"}
+                  alertAfter={50}
                   ranges={{
-                    "good": [0, 1000],
-                    "average": [1000, 1750],
-                    "bad": [2000, 2500],
+                    "good": [0, 10],
+                    "average": [10, 75],
+                    "bad": [75, 200],
                   }} />
               </Stack.Item>
             </Stack>

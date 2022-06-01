@@ -20,7 +20,9 @@ export const TurbineControl = (_props, context) => {
   const powerHistory = history.map((v) => v[2]);
   const powerHistoryData = powerHistory.map((v, i) => [i, v]);
 
-  const max = Math.max(...powerHistory, ...loadHistory);
+  const powermax = Math.max(...powerHistory);
+  const rpmmax = Math.max(...rpmHistory);
+  const loadmax = Math.max(...loadHistory);
 
   return (
     <Window>
@@ -35,7 +37,7 @@ export const TurbineControl = (_props, context) => {
               height="5em"
               data={powerHistoryData}
               rangeX={[0, powerHistoryData.length - 1]}
-              rangeY={[0, max]}
+              rangeY={[0, powermax]}
               strokeColor="rgba(1, 184, 170, 1)"
               fillColor="rgba(1, 184, 170, 0.25)"
             />
@@ -49,7 +51,7 @@ export const TurbineControl = (_props, context) => {
               height="5em"
               data={rpmHistoryData}
               rangeX={[0, rpmHistoryData.length - 1]}
-              rangeY={[0, max]}
+              rangeY={[0, rpmmax]}
               strokeColor="rgba(1, 184, 170, 1)"
               fillColor="rgba(1, 184, 170, 0.25)"
             />
@@ -63,7 +65,7 @@ export const TurbineControl = (_props, context) => {
               height="5em"
               data={loadHistoryData}
               rangeX={[0, loadHistoryData.length - 1]}
-              rangeY={[0, max]}
+              rangeY={[0, loadmax]}
               strokeColor="rgba(1, 184, 170, 1)"
               fillColor="rgba(1, 184, 170, 0.25)"
             />
