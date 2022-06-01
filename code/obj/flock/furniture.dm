@@ -25,7 +25,7 @@
 	..()
 	setMaterial(getMaterial("gnesis"))
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
-	src.AddComponent(/datum/component/flock_protection)
+	src.AddComponent(/datum/component/flock_protection, report_attack=FALSE)
 
 /obj/table/flock/special_desc(dist, mob/user)
 	if (!isflockmob(user))
