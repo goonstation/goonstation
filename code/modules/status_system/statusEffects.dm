@@ -1550,7 +1550,7 @@
 				found_light = TRUE
 				continue
 		if (!found_light)	//Staying in the dark makes it worse and worse
-			duration += 6
+			duration += timePassed * 2
 		if ((duration <= 30 SECONDS))
 			if(icon_state != "dread1")
 				icon_state = "dread1"

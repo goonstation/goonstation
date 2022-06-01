@@ -73,7 +73,7 @@
 		playsound(holder.owner, "sound/impact_sounds/Flesh_Stab_1.ogg", 80, 1)
 		disabled = 1
 		SPAWN(0)
-			var/frenz = 8
+			var/frenz = 5
 			holder.owner.canmove = 0
 			holder.owner.set_loc(MT.loc)
 			while (frenz > 0 && MT && !MT.disposed)
@@ -88,8 +88,8 @@
 				holder.owner.set_dir((cardinal))
 				holder.owner.pixel_x = rand(-5, 5)
 				holder.owner.pixel_y = rand(-5, 5)
-				random_brute_damage(MT, 3,1)
-				take_bleeding_damage(MT, null, 12, DAMAGE_CUT, 0, get_turf(MT))
+				random_brute_damage(MT, 5,1)
+				take_bleeding_damage(MT, null, 15, DAMAGE_CUT, 0, get_turf(MT))
 				if(prob(33))
 					bleed(MT, 5, 5, get_step(get_turf(MT), pick(alldirs)), 1)
 				sleep(0.8 SECONDS)
