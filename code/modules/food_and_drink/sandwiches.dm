@@ -512,7 +512,8 @@
 				"<span class='alert'>You tries to take a bite of [src], but [src] takes a bite of you instead!</span>",
 				"<span class='alert'>You hear something bite down.</span>")
 			playsound(get_turf(feeder), pick('sound/impact_sounds/Flesh_Tear_1.ogg', 'sound/impact_sounds/Flesh_Tear_2.ogg'), 50, 1, -1)
-			take_bleeding_damage(feeder, null, rand(5, 15), DAMAGE_BLUNT)
+			random_brute_damage(consumer, rand(5, 15), FALSE)
+			take_bleeding_damage(consumer, null, rand(5, 15), DAMAGE_BLUNT)
 			hit_twitch(consumer)
 		else
 			return ..()
