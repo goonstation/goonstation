@@ -15892,7 +15892,7 @@ var Sleeper = function Sleeper(props, context) {
               "inline": true,
               "align": "center",
               "type": "toxin",
-              "width": 5,
+              "width": 6,
               children: damageNum(toxDamage)
             }), "/", (0, _inferno.createComponentVNode)(2, _HealthStat.HealthStat, {
               "inline": true,
