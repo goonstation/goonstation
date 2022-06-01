@@ -494,6 +494,14 @@
 	food_effects = list("food_hp_up_big", "food_sweaty_big", "food_bad_breath", "food_warm")
 	meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
+/obj/item/reagent_containers/food/snacks/burger/aburgination
+	name = "aburgination"
+	desc = "You probably shouldn't eat it. You probably will."
+	icon_state = "aburgination"
+	initial_reagents = list("cholesterol" = 5, "neurotoxin" = 10, "bloodc" = 10)
+	food_effects = list("food_hp_up_big", "food_sweaty_big")
+	meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
+
 /obj/item/reagent_containers/food/snacks/burger/vr
 	icon = 'icons/effects/VR.dmi'
 
