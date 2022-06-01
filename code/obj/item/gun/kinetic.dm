@@ -1534,6 +1534,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	max_ammo_capacity = 20
 	ammo_cats = list(AMMO_PISTOL_22)
 	default_magazine = /obj/item/ammo/bullets/bullet_22/smartgun
+	ammobag_magazines = list(/obj/item/ammo/bullets/bullet_22/smartgun)
 
 	New()
 		..()

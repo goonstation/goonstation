@@ -47,31 +47,26 @@
 			boutput(holder.owner, "<span class='notice'>We have no arms to detach!</span>")
 			return 1
 
-		var/arm_type = 0
+		var/obj/item/parts/original_arm = null
 
 		if (owner.limbs.l_arm && owner.limbs.r_arm) //if both arms are available, remove the inactive one
 			if (owner.hand)
-				arm_type = owner.limbs.r_arm.type
-				owner.limbs.r_arm.delete()
+				original_arm = owner.limbs.r_arm.remove(FALSE)
 				owner.changeStatus("c_regrow-r_arm", 75 SECONDS)
 			else
-				arm_type = owner.limbs.l_arm.type
-				owner.limbs.l_arm.delete()
+				original_arm = owner.limbs.l_arm.remove(FALSE)
 				owner.changeStatus("c_regrow-l_arm", 75 SECONDS)
 		else if (owner.limbs.l_arm)
-			arm_type = owner.limbs.l_arm.type
-			owner.limbs.l_arm.delete()
+			original_arm = owner.limbs.l_arm.remove(FALSE)
 			owner.changeStatus("c_regrow-l_arm", 75 SECONDS)
 		else
-			arm_type = owner.limbs.r_arm.type
-			owner.limbs.r_arm.delete()
+			original_arm = owner.limbs.r_arm.remove(FALSE)
 			owner.changeStatus("c_regrow-r_arm", 75 SECONDS)
 
 		holder.owner.visible_message(text("<span class='alert'><B>[holder.owner]'s arm falls off and starts moving!</B></span>"))
 		logTheThing("combat", holder.owner, use_mob, "drops a handspider [use_mob] as a changeling [log_loc(holder.owner)].")
 
-		var/mob/living/critter/changeling/handspider/spider = new /mob/living/critter/changeling/handspider(get_turf(owner.loc))
-
+		var/mob/living/critter/changeling/handspider/spider = new /mob/living/critter/changeling/handspider(get_turf(owner.loc), original_arm)
 		if (use_mob.mind)
 			use_mob.mind.transfer_to(spider)
 		else if (use_mob.client)
@@ -80,7 +75,7 @@
 		H.hivemind += spider
 		spider.hivemind_owner = H
 
-		if (arm_type && istype(arm_type, /obj/item/parts/robot_parts))
+		if (original_arm && istype(original_arm, /obj/item/parts/robot_parts))
 			spider.icon_prefix = "robo"
 			spider.UpdateIcon()
 
@@ -152,24 +147,26 @@
 			boutput(holder.owner, "<span class='notice'>We have no eyes to eject!</span>") // what a terrifying fate you've given yourself
 			return 1
 
+		var/original_eye = null
+
 		if (owner.organHolder.left_eye && owner.organHolder.right_eye) // if both eyes are available, pick one at random
 			if (prob(50))
-				qdel(owner.drop_organ("left_eye"))
+				original_eye = owner.drop_organ("left_eye")
 				owner.changeStatus("c_regrow-l_eye", 40 SECONDS)
 			else
-				qdel(owner.drop_organ("right_eye"))
+				original_eye = owner.drop_organ("right_eye")
 				owner.changeStatus("c_regrow-r_eye", 40 SECONDS)
 		else if (owner.organHolder.left_eye)
-			qdel(owner.drop_organ("left_eye"))
+			original_eye = owner.drop_organ("left_eye")
 			owner.changeStatus("c_regrow-l_eye", 40 SECONDS)
 		else
-			qdel(owner.drop_organ("right_eye"))
+			original_eye = owner.drop_organ("right_eye")
 			owner.changeStatus("c_regrow-r_eye", 40 SECONDS)
 
 		holder.owner.visible_message(text("<span class='alert'><B>[holder.owner]'s eye shoots out and starts moving!</B></span>"))
 		logTheThing("combat", holder.owner, use_mob, "drops an eyespider [use_mob] as a changeling [log_loc(holder.owner)].")
 
-		var/mob/living/critter/changeling/eyespider/spider = new /mob/living/critter/changeling/eyespider(get_turf(owner.loc))
+		var/mob/living/critter/changeling/eyespider/spider = new /mob/living/critter/changeling/eyespider(get_turf(owner.loc), original_eye)
 
 		if (use_mob.mind)
 			use_mob.mind.transfer_to(spider)
@@ -248,25 +245,27 @@
 			boutput(holder.owner, "<span class='notice'>We have no legs to detach!</span>")
 			return 1
 
+
+		var/obj/item/parts/original_leg = null
+
 		if (owner.limbs.l_leg && owner.limbs.r_leg) //remove leg opposite of active hand
 			if (owner.hand)
-				owner.limbs.r_leg.delete()
+				original_leg = owner.limbs.r_leg.remove()
 				owner.changeStatus("c_regrow-r_leg", 75 SECONDS)
 			else
-				owner.limbs.l_leg.delete()
+				original_leg = owner.limbs.l_leg.remove()
 				owner.changeStatus("c_regrow-l_leg", 75 SECONDS)
 		else if (owner.limbs.l_leg)
-			owner.limbs.l_leg.delete()
+			original_leg = owner.limbs.l_leg.remove()
 			owner.changeStatus("c_regrow-l_leg", 75 SECONDS)
 		else
-			owner.limbs.r_leg.delete()
+			original_leg = owner.limbs.r_leg.remove()
 			owner.changeStatus("c_regrow-r_leg", 75 SECONDS)
 
 		holder.owner.visible_message(text("<span class='alert'><B>[holder.owner]'s leg falls off and starts moving!</B></span>"))
 		logTheThing("combat", holder.owner, use_mob, "drops a legworm [use_mob] as a changeling [log_loc(holder.owner)].")
 
-		var/mob/living/critter/changeling/legworm/spider = new /mob/living/critter/changeling/legworm(get_turf(owner.loc))
-
+		var/mob/living/critter/changeling/legworm/spider = new /mob/living/critter/changeling/legworm(get_turf(owner.loc), original_leg)
 		if (use_mob.mind)
 			use_mob.mind.transfer_to(spider)
 		else if (use_mob.client)
@@ -343,13 +342,13 @@
 			boutput(holder.owner, "<span class='notice'>We have no ass!</span>") // what a terrifying fate you've given yourself
 			return 1
 
-		qdel(owner.drop_organ("butt"))
+		var/obj/item/clothing/head/butt/original_butt = owner.drop_organ("butt")
 		owner.changeStatus("c_regrow-butt", 40 SECONDS)
 
 		holder.owner.visible_message(text("<span class='alert'><B>[holder.owner]'s butt falls off and starts moving!</B></span>"))
 		logTheThing("combat", holder.owner, use_mob, "drops a buttcrab [use_mob] as a changeling [log_loc(holder.owner)].")
 
-		var/mob/living/critter/changeling/buttcrab/crab = new /mob/living/critter/changeling/buttcrab(get_turf(owner.loc))
+		var/mob/living/critter/changeling/buttcrab/crab = new /mob/living/critter/changeling/buttcrab(get_turf(owner.loc), original_butt)
 
 		if (use_mob.mind)
 			use_mob.mind.transfer_to(crab)
@@ -496,11 +495,14 @@
 			boutput(holder.owner, "<span class='alert'>There are no minds eligible for this ability.</span>")
 			return 1
 
-		var/use_mob_name = tgui_input_list(holder.owner, "Select the mind to grant control:", "Select Mind", sortList(eligible))
-		if(!use_mob_name)
+		var/mob/dead/target_observer/hivemind_observer/HO = tgui_input_list(holder.owner, "Select the mind to grant control:", "Select Mind", sortList(eligible))
+		if(!HO)
 			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
-			return 1
-		var/mob/dead/target_observer/hivemind_observer/HO = eligible[use_mob_name]
+			return TRUE
+		if (!(HO in eligible))
+			boutput(holder.owner, "<span class='alert'>Something fucked up, ahelp about this. Mind transfer aborted.</span>")
+			stack_trace("[holder.owner] tried to grant control of a changeling body to [HO], but that name wasn't in the list of eligible mobs. List of mobs: [json_encode(eligible)]")
+			return TRUE
 
 		//Do the actual control-granting here.
 		logTheThing("combat", holder.owner, HO, "granted control of their body to [constructTarget(HO,"combat")] as a changeling!")
