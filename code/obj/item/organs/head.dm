@@ -67,14 +67,16 @@
 					src.UpdateIcon(/*makeshitup*/ 0)
 				else //The heck?
 					src.UpdateIcon(/*makeshitup*/ 1)
+				if (src.donor.eye != null)
+					src.donor.set_eye(null)
 			else
 				src.UpdateIcon(/*makeshitup*/ 1)
 
 	disposing()
 		if (holder)
 			holder.head = null
-		if (donor_original.client?.eye != donor_original)
-			donor_original.client?.eye = donor_original
+		if (donor_original.eye == src)
+			donor_original.set_eye(null)
 			boutput(donor_original, "<span class='alert'>You feel your vision forcibly punted back to your body!</span>")
 		skull = null
 		brain = null
