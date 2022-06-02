@@ -40,7 +40,7 @@
 
 /datum/aiTask/succeedable/rushdown/failed()
 	var/mob/living/carbon/human/human_target = holder.target
-	if(!human_target || BOUNDS_DIST(holder.owner, human_target) > 0 || fails >= max_fails)
+	if(!human_target || BOUNDS_DIST(holder.owner, human_target) > 0 || fails >= max_fails || !isalive(human_target))
 		. = TRUE
 
 /datum/aiTask/succeedable/rushdown/succeeded()
@@ -60,5 +60,5 @@
 		return FALSE
 
 /datum/aiTask/succeedable/rushdown/on_reset()
-
-	..()
+	if (holder.owner != null)
+		..()
