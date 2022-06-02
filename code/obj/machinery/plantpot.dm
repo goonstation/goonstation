@@ -150,7 +150,7 @@
 		else
 			..()
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 
 		if(isAI(user) || isobserver(user)) return // naughty AIs used to be able to harvest plants
 		src.add_fingerprint(user)
@@ -764,7 +764,7 @@
 	attack_ai(mob/user as mob)
 		if(isrobot(user) && BOUNDS_DIST(src, user) == 0) return src.Attackhand(user)
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if(isAI(user) || isobserver(user)) return // naughty AIs used to be able to harvest plants
 		src.add_fingerprint(user)
 		if(src.current)
@@ -1924,7 +1924,7 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 						P.growth += 4
 			use_power(power_usage)
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		src.add_fingerprint(user)
 		src.active = !src.active
 		user.visible_message("<b>[user]</b> switches [src.name] [src.active ? "on" : "off"].")
@@ -1999,7 +1999,7 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 				if(!W.reagents.total_volume) boutput(user, "<span class='alert'><b>[W] is now empty.</b></span>")
 
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		src.add_fingerprint(user)
 		if(!src.active)
 			src.active = 1

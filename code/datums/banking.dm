@@ -298,7 +298,7 @@
 	attack_ai(var/mob/user as mob)
 		return
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if(..())
 			return
 
@@ -486,7 +486,7 @@
 		else
 			..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..())
 			return
 		var/list/dat = list()
@@ -821,7 +821,7 @@
 	attack_ai(var/mob/user as mob)
 		return
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if(broken)
 			boutput(user, "<span class='alert'>With its money removed and circuitry destroyed, it's unlikely this ATM will be able to do anything of use.</span>")
 			return

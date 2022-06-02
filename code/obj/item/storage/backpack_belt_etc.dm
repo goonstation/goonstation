@@ -474,7 +474,7 @@
 		return ..()
 
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.loc == user && !can_use())
 			boutput(user, "<span class='alert'>You need to wear [src] for that.</span>")
 			return

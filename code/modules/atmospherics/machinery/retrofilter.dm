@@ -122,7 +122,7 @@ obj/machinery/atmospherics/retrofilter
 
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..())
 			user.Browse(null, "window=pipefilter")
 			src.remove_dialog(user)

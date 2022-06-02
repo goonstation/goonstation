@@ -340,7 +340,7 @@
 		else
 			return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		..()
 		if (src.sheet)
 			src.untuck_sheet(user)
@@ -613,7 +613,7 @@
 		else
 			return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!isliving(user)) return
 		var/mob/living/L = user
 		var/mob/living/carbon/human/chair_chump = null
@@ -1088,7 +1088,7 @@
 		src.p_class = initial(src.p_class) + src.lying // 2 while standing, 3 while lying
 		src.scoot_sounds = list("sound/misc/chair/normal/scoot1.ogg", "sound/misc/chair/normal/scoot2.ogg", "sound/misc/chair/normal/scoot3.ogg", "sound/misc/chair/normal/scoot4.ogg", "sound/misc/chair/normal/scoot5.ogg")
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.lying)
 			user.visible_message("[user] sets [src] back on its wheels.",\
 			"You set [src] back on its wheels.")
@@ -1252,7 +1252,7 @@
 			damaged += 1
 			overlays += image('icons/obj/objects.dmi', "couch-rip")
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!user) return
 		if (damaged || buckled_guy) return ..()
 

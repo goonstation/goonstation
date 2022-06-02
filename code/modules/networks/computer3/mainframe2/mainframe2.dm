@@ -127,7 +127,7 @@
 	attack_ai(mob/user as mob)
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (user.stat || user.restrained())
 			return
 

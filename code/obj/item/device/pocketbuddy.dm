@@ -111,7 +111,7 @@
     ..()
 
 
-/obj/item/device/pocketbuddy/attack_hand(mob/user as mob)
+/obj/item/device/pocketbuddy/attack_hand(mob/user)
   if(..())
     return
 

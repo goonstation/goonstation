@@ -258,7 +258,7 @@
 			src.UpdateOverlays(circuit_image,"module_slot_[i]")
 			src.UpdateOverlays(color_overlay,"module_slot_[i]_overlay")
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!src.law_circuits)
 			// YOU BETRAYED THE LAW!!!!!!
 			boutput(user, "<span class='alert'>Oh dear, this really shouldn't happen. Call an admin.</span>")

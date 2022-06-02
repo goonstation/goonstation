@@ -493,7 +493,7 @@ TRAYS
 			if(!user.put_in_hand(src))
 				return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if((!istype(src.loc, /turf) && !user.is_in_hands(src)) || src.amount == 0)
 			..()
 			return
@@ -775,7 +775,7 @@ TRAYS
 			playsound(src, src.hit_sound, 30, 1)
 			logTheThing("combat", user, M, "taps [constructTarget(M,"combat")] over the head with [src].")
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		..()
 		src.ClearAllOverlays()
 		src.UpdateIcon()
@@ -1019,7 +1019,7 @@ TRAYS
 		else
 			..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(src.seaweed && src.rice)
 			if(!src.toppings) //dependent on having toppings (empty sushi caused a lot of problems)
 				..()
@@ -1160,7 +1160,7 @@ TRAYS
 				user.u_equip(p)
 				qdel(p)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(src in user.contents)
 			platenum--
 			src.UpdateIcon(user)

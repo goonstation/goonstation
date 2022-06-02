@@ -106,7 +106,7 @@
 					. += "<span class='alert'><b>It seems to be on the verge of falling apart!</b></span>"
 
 	// Nuke round development was abandoned for 4 whole months, so I went out of my way to implement some user feedback from that 11 pages long forum thread (Convair880).
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.debugmode)
 			open_wire_panel(user)
 			return

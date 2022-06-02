@@ -271,7 +271,7 @@
 		else
 			return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.IV && !isrobot(user))
 			var/obj/item/reagent_containers/iv_drip/oldIV = src.IV
 			user.visible_message("<span class='notice'>[user] takes [oldIV] down from [src].</span>",\

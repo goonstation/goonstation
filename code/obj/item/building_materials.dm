@@ -117,7 +117,7 @@ MATERIAL
 
 
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
 			var/splitnum = round(input("How many sheets do you want to take from the stack?","Stack of [src.amount]",1) as num)
 			if(!in_interact_range(src, user) || !isnum_safe(splitnum))
@@ -723,7 +723,7 @@ MATERIAL
 		. = ..()
 		. += "There are [src.amount] rod\s on this stack."
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
 			var/splitnum = round(input("How many rods do you want to take from the stack?","Stack of [src.amount]",1) as num)
 
@@ -860,7 +860,7 @@ MATERIAL
 		SPAWN(0) //wait for the head to be added
 			update()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(length(heads))
 			var/obj/item/organ/head/head = heads[length(heads)]
 
@@ -1068,7 +1068,7 @@ MATERIAL
 		if (dist <= 3)
 			. += "<br>There are [src.amount] tile[s_es(src.amount)] left on the stack."
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 
 		if ((user.r_hand == src || user.l_hand == src))
 			src.add_fingerprint(user)

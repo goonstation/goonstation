@@ -122,7 +122,7 @@ var/list/genetek_hair_styles = list()
 
 		move_mob_inside(usr)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		..()
 		eject_occupant(user)
 

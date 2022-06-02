@@ -543,7 +543,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 			src.icon_state = "[base_icon_state]-spin-left"
 		. = ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		..()
 		if(user)
 			src.icon_state = base_icon_state

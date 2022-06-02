@@ -422,7 +422,7 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 			..()
 
 
-	attack_hand(mob/user as mob) //interface stuff
+	attack_hand(mob/user) //interface stuff
 		if(!(user in src.openwindows))
 			src.openwindows.Add(user)
 		uisetup()

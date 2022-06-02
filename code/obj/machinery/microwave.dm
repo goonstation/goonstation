@@ -196,7 +196,7 @@ obj/machinery/microwave/attackby(var/obj/item/O, var/mob/user)
 	*  Microwave Menu
 	*/
 
-/obj/machinery/microwave/attack_hand(mob/user as mob)
+/obj/machinery/microwave/attack_hand(mob/user)
 	if (isghostdrone(user))
 		boutput(user, "<span class='alert'>\The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
 		return

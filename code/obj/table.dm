@@ -506,7 +506,7 @@
 	icon = 'icons/obj/furniture/table_folding.dmi'
 	parts_type = /obj/item/furniture_parts/table/folding
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (user.is_hulk())
 			user.visible_message("<span class='alert'>[user] collapses the [src] in one slam!</span>")
 			playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
@@ -788,7 +788,7 @@
 		else
 			return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.glass_broken)
 			return ..()
 		..()

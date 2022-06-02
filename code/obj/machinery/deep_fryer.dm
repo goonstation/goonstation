@@ -100,7 +100,7 @@
 		else
 			src.icon_state = "fryer0"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (isghostdrone(user))
 			boutput(user, "<span class='alert'>The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
 			return

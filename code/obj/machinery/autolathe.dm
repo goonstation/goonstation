@@ -74,7 +74,7 @@
 	else
 		boutput(user, "This object does not contain significant amounts of metal or glass, or cannot be accepted by the autolathe due to size or hazardous materials.")
 
-/obj/machinery/autolathe/attack_hand(user as mob)
+/obj/machinery/autolathe/attack_hand(user)
 	var/dat
 	if(..())
 		return

@@ -50,7 +50,7 @@
 					return
 	return
 
-/obj/item/fcardholder/attack_hand(mob/user as mob)
+/obj/item/fcardholder/attack_hand(mob/user)
 	if (user.contents.Find(src))
 		SPAWN( 0 )
 			src.attack_self(user)
@@ -135,7 +135,7 @@
 		return "<B>There are no fingerprints on this card.</B>"
 	return
 
-/obj/item/f_card/attack_hand(mob/user as mob)
+/obj/item/f_card/attack_hand(mob/user)
 
 	if ((user.r_hand == src || user.l_hand == src))
 		src.add_fingerprint(user)

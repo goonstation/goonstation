@@ -354,7 +354,7 @@
 		..()
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		user.lastattacked = src
 		attack_particle(user,src)
 		if (user.a_intent == "harm")
@@ -803,7 +803,7 @@
 		if(actuallysmash)
 			return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(!ON_COOLDOWN(user, "glass_tap", 5 SECONDS))
 			src.visible_message("<span class='alert'><b>[user]</b> knocks on [src].</span>")
 			playsound(src.loc, src.hitsound, 100, 1)

@@ -779,7 +779,7 @@ var/global/datum/simsControl/simsController = new()
 		if (owner)
 			owner.Attackby(W, user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (owner)
 			owner.Attackhand(user)
 

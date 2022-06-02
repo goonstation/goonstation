@@ -464,7 +464,7 @@
 	deconstruct_flags = DECON_WRENCH
 	var/last_ring = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(last_ring + 20 >= world.time)
 			return
 		else
@@ -597,7 +597,7 @@
 		else
 			..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(src.icon_state == "sarc_key")
 			src.icon_state = "opening"
 			animate(src, time = 2.3 SECONDS)

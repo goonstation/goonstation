@@ -1012,7 +1012,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 	pixel_x = -8
 	var/somebody_fucked_up = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!user)
 			return
 
@@ -2094,7 +2094,7 @@ obj/machinery/embedded_controller/radio/maintpanel/mnx
 				src.id_tag = src.tag
 
 /obj/item/kitchen/everyflavor_box/wax
-	attack_hand(mob/user as mob, unused, flag)
+	attack_hand(mob/user, unused, flag)
 		if (flag)
 			return ..()
 		if(user.r_hand == src || user.l_hand == src)

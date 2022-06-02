@@ -283,7 +283,7 @@
 					if (!isnull(crew_record))
 						crew_record["p_stat"] = "Active"
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if(isgrab(user.l_hand))
 			src.Attackby(user.l_hand, user)
 		else if(isgrab(user.r_hand))

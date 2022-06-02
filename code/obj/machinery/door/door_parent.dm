@@ -207,7 +207,7 @@
 /obj/machinery/door/attack_ai(mob/user as mob)
 	return src.Attackhand(user)
 
-/obj/machinery/door/attack_hand(mob/user as mob)
+/obj/machinery/door/attack_hand(mob/user)
 	interact_particle(user,src)
 	return src.Attackby(null, user)
 
@@ -666,7 +666,7 @@
 /obj/machinery/door/unpowered/attack_ai(mob/user as mob)
 	return src.Attackhand(user)
 
-/obj/machinery/door/unpowered/attack_hand(mob/user as mob)
+/obj/machinery/door/unpowered/attack_hand(mob/user)
 	return src.Attackby(null, user)
 
 /obj/machinery/door/unpowered/attackby(obj/item/I, mob/user)

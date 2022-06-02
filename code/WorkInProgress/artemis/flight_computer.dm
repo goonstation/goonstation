@@ -74,7 +74,7 @@
 
 	*/
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		return
 
 	go_out(var/do_set_loc = 1)

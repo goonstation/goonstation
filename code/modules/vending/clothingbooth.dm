@@ -173,7 +173,7 @@ var/list/clothingbooth_items = list()
 				AM.set_loc(T)
 
 
-/obj/machinery/clothingbooth/attack_hand(mob/user as mob)
+/obj/machinery/clothingbooth/attack_hand(mob/user)
 	if (!ishuman(user))
 		boutput(user,"<span style=\"color:red\">Human clothes don't fit you!</span>")
 		return

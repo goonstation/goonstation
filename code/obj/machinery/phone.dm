@@ -90,7 +90,7 @@
 		..()
 
 	// Attempt to pick up the handset
-	attack_hand(mob/living/user as mob)
+	attack_hand(mob/living/user)
 		..(user)
 		if(src.answered == 1)
 			return
@@ -343,7 +343,7 @@
 				I.talk_into(M, text, null, M.real_name, lang_id)
 
 	// Attempt to pick up the handset
-	attack_hand(mob/living/user as mob)
+	attack_hand(mob/living/user)
 		..(user)
 		holder = user
 

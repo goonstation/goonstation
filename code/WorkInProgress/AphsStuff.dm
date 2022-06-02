@@ -69,7 +69,7 @@
 				break
 			if(!ai) qdel(src)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(!ai) return
 		if(!ai.on) return
 		if(!ai.ready_for_tapes) return

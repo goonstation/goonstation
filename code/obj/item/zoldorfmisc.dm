@@ -123,7 +123,7 @@
 					AM.set_loc(get_turf(src))
 				qdel(src)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(src.loc != user)
 			..()
 			return

@@ -200,7 +200,7 @@
 /obj/machinery/bot/medbot/attack_ai(mob/user as mob)
 	return toggle_power()
 
-/obj/machinery/bot/medbot/attack_hand(mob/user as mob, params)
+/obj/machinery/bot/medbot/attack_hand(mob/user, params)
 	if (src.terrifying)
 		return
 

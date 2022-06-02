@@ -899,7 +899,7 @@
 		src.updateSelfDialog()
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!user.equipped() && (user.l_hand == src || user.r_hand == src))
 			var/obj/item/paper/P = locate() in src
 			if (P)

@@ -33,7 +33,7 @@
 			return 1
 		return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		boutput(user, "<span class='notice'>You push the [src.name] but nothing happens!</span>")
 		playsound(src.loc, "sound/impact_sounds/Flesh_Crush_1.ogg", 40, 1)
 		src.add_fingerprint(user)

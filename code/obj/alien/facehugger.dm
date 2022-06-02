@@ -60,7 +60,7 @@
 			. += "<span class='alert'><B>the alien looks pretty beat up</B></span>"
 
 
-	attack_hand(user as mob)
+	attack_hand(user)
 		return
 
 	attackby(obj/item/W, mob/user)

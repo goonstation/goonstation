@@ -127,7 +127,7 @@
 	affect_fun = 15 // a little higher, why not?
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.add_fingerprint(user)
 		src.play(user)
 

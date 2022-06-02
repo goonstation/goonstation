@@ -82,7 +82,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	damage_slashing()
 	damage_blunt()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		var/diff = world.timeofday - lastuse
 		if(diff < 0) diff += 864000 //Wrapping protection.
 
@@ -394,7 +394,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		STOP_TRACKING
 		return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (isAI(user))
 			boutput(user, "<span class='alert'>You'd touch the door, if only you had hands.</span>")
 			return
@@ -639,7 +639,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	attack_ai(mob/user as mob)
 		return attack_hand(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(busy) return
 		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		src.add_dialog(user)
@@ -1450,7 +1450,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 
 
-/obj/machinery/handscanner/attack_hand(mob/user as mob)
+/obj/machinery/handscanner/attack_hand(mob/user)
 	src.add_fingerprint(user)
 	playsound(src.loc, "sound/effects/handscan.ogg", 50, 1)
 	if (used == 0)

@@ -82,7 +82,7 @@
 		else
 			..(I, user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if ((user.l_hand == src || user.r_hand == src) && user.equipped() != src)
 			var/amt = round(input("How much cash do you want to take from the stack?") as null|num)
 			if (isnum_safe(amt) && src.loc == user && !user.equipped())
@@ -186,7 +186,7 @@
 
 		src.UpdateName()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if ((user.l_hand == src || user.r_hand == src) && user.equipped() != src)
 			var/amt = round(input("How much cash do you want to take from the stack?") as null|num)
 			if (isnum_safe(amt))
@@ -330,7 +330,7 @@
 				return 0
 		return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if ((user.l_hand == src || user.r_hand == src) && user.equipped() != src)
 			var/amt = round(input("How much spacebux do you want to split from the token?") as null|num)
 			if (isnum_safe(amt) && src.loc == user && !user.equipped())

@@ -37,7 +37,7 @@ MATERIAL
 		. = ..()
 		. += "There are [amount] rod\s in this stack."
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
 			var/splitnum = round(input("How many rods do you want to take from the stack?","Stack of [src.amount]",1) as num)
 			var/diff = src.amount - splitnum
@@ -172,7 +172,7 @@ MATERIAL
 		. = ..()
 		. += "There are [src.amount] metal sheet\s on the stack."
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
 			var/splitnum = round(input("How many sheets do you want to take from the stack?","Stack of [src.amount]",1) as num)
 			var/diff = src.amount - splitnum
@@ -432,7 +432,7 @@ MATERIAL
 		onclose(user, "met_sheet")
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
 			var/splitnum = round(input("How many sheets do you want to take from the stack?","Stack of [src.amount]",1) as num)
 			var/diff = src.amount - splitnum

@@ -1589,7 +1589,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 /turf/simulated/floor/blob_act(var/power)
 	return
 
-/turf/simulated/attack_hand(mob/user as mob)
+/turf/simulated/attack_hand(mob/user)
 	if (src.density == 1)
 		return
 	if (!user.canmove || user.restrained())

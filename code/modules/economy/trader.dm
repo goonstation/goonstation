@@ -113,7 +113,7 @@
 				boutput(user, "<span class='alert'>No bank account associated with this ID found.</span>")
 				src.scan = null
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if(..())
 			return
 		if(dialogue != null)

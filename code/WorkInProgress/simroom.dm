@@ -159,7 +159,7 @@
 	src.add_fingerprint(user)
 	return
 
-/obj/machinery/sim/chair/attack_hand(mob/user as mob)
+/obj/machinery/sim/chair/attack_hand(mob/user)
 	if (src.con_user)
 		var/mob/living/M = src.con_user
 		if (M != user)
@@ -315,7 +315,7 @@
 /obj/machinery/sim/vr_bed/remove_air(amount)
 	return src.loc.remove_air(amount)
 
-/obj/machinery/sim/vr_bed/attack_hand(var/mob/user as mob)
+/obj/machinery/sim/vr_bed/attack_hand(var/mob/user)
 	if(..())
 		return
 	var/dat = "<HTML><BODY><TT><B>VR pod timer</B>"

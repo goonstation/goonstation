@@ -1107,7 +1107,7 @@
 	if (usr?.bioHolder?.HasEffect("clumsy") && prob(50)) t = "funny-looking"
 	return "It is \an [t] item."
 
-/obj/item/attack_hand(mob/user as mob)
+/obj/item/attack_hand(mob/user)
 	var/checkloc = src.loc
 	while(checkloc && !istype(checkloc,/turf))
 		if (isliving(checkloc) && checkloc != user)

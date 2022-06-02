@@ -135,7 +135,7 @@
 
 	power_change()
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 

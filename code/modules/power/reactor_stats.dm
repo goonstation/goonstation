@@ -1486,7 +1486,7 @@
 			luser << output(params,"reactorstats.browser:[funcName]")
 
 
-/obj/machinery/power/reactor_stats/attack_hand(mob/user as mob)
+/obj/machinery/power/reactor_stats/attack_hand(mob/user)
 	var/datum/tag/page/html = new
 	var/datum/tag/title/title = new
 	var/datum/tag/css/kstyle = new

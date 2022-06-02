@@ -125,7 +125,7 @@
 	spawn_contents = list(/obj/item/device/light/sparkler,/obj/item/device/light/sparkler,/obj/item/device/light/sparkler,/obj/item/device/light/sparkler,/obj/item/device/light/sparkler)
 	var/open = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.loc == user && (!does_not_open_in_pocket || src == user.l_hand || src == user.r_hand))
 			if(src.open)
 				..()

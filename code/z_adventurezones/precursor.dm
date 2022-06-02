@@ -315,7 +315,7 @@
 
 		src.tag = "orb_stand_[id]"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (user.stat || user.getStatusDuration("weakened") || BOUNDS_DIST(user, src) > 0)
 			return
 
@@ -655,7 +655,7 @@
 							return // oh good you set it up wrong IDIOT
 
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(src.active)	return
 		src.active = 1
 
@@ -982,7 +982,7 @@
 	icon_state = "portrait"
 	desc = "A portrait of a man wearing a ridiculous merchant hat. That must be Discount Dan."
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		boutput(user, "<span class='notice'><b>You try to straighten [src], but it won't quite budge.</b></span>")
 		..()
 		return
@@ -1014,7 +1014,7 @@
 	generic = 0
 
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (user.a_intent == "help")
 			return
 

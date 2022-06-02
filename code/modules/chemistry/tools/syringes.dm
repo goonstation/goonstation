@@ -73,7 +73,7 @@
 		user.show_text("You switch [src] to [src.mode ? "inject" : "draw"].")
 		UpdateIcon()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		..()
 		UpdateIcon()
 

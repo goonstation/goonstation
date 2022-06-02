@@ -1562,7 +1562,7 @@ Returns:
 		setMaterial(getMaterial("slag"))
 		name = "Statue of Dr.Floorpills"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		boutput(user, "[src] feels oddly warm ...")
 		user.changeStatus("radiation", 5 SECONDS)
 		return
@@ -2413,7 +2413,7 @@ Returns:
 	icon_state = "fireworksbox"
 	var/fireworking = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(fireworking) return
 		fireworking = 1
 		boutput(user, "<span class='alert'>The fireworks go off as soon as you touch the box. This is some high quality stuff.</span>")
@@ -3271,7 +3271,7 @@ Returns:
 		if (BOUNDS_DIST(user, src) == 0 && target == user)
 			src.Attackhand(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(in_use)
 			boutput(user, "<span class='alert'>Its already in use - wait a bit.</span>")
 			return
@@ -3767,7 +3767,7 @@ var/list/lag_list = new/list()
 	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		switch(alert("Travel back to ss13?",,"Yes","No"))
 			if("Yes")
 				user.set_loc(pick_landmark(LANDMARK_LATEJOIN))

@@ -33,7 +33,7 @@
 	contextLayout = new /datum/contextLayout/instrumental(16)
 	var/list/datum/contextAction/cardActions
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		..()
 		set_dir(NORTH) //makes sure cards are always upright in the inventory (unless tapped or reversed - see later)
 
@@ -375,7 +375,7 @@
 	var/list/datum/contextAction/cardActions
 	var/list/stored_cards = list()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(!is_hand && (isturf(src.loc) || src.loc == user)) //handling the player interacting with a deck of cards with an empty hand
 			update_card_actions(user, "empty")
 			user.showContextActions(cardActions, src)
@@ -1041,7 +1041,7 @@
 		else
 			icon_state = "[box_style]-box"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if((loc == user) && (icon_state == "[box_style]-box-open"))
 			user.put_in_hand_or_drop(stored_deck)
 			icon_state = "[box_style]-box-empty"
@@ -1188,7 +1188,7 @@
 		if(icon_state == "stg-booster")
 			icon_state = "stg-booster-open"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(icon_state == "stg-booster-open")
 			icon_state = "stg-booster-empty"
 			user.put_in_hand_or_drop(stored_deck)

@@ -182,7 +182,7 @@ var/list/telescope_computers = list()
 	attack_ai(mob/user as mob)
 		return attack_hand(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(status & (BROKEN|NOPOWER))
 			return
 

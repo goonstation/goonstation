@@ -210,7 +210,7 @@
 	icon = 'icons/obj/gambling.dmi'
 	icon_state = "slots-off"
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		src.add_dialog(user)
 		if (src.working)
 			var/dat = {"<B>Slot Machine</B><BR>
@@ -301,7 +301,7 @@
 			I.amount = 0
 			qdel(I)
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		src.add_dialog(user)
 		if (src.working)
 			var/dat = {"<B>Slot Machine</B><BR>

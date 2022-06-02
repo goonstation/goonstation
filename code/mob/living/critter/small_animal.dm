@@ -1858,7 +1858,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if(prob(50))
 				src.ball_up(emote=FALSE)
 
-	attack_hand(mob/living/M as mob, params, location, control)
+	attack_hand(mob/living/M, params, location, control)
 		if (M.a_intent == INTENT_HARM || M.a_intent == INTENT_GRAB)
 			if (!src.is_balled())
 				if(prob(70))

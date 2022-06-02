@@ -44,7 +44,7 @@
 
 	use_power(1000)
 
-/obj/machinery/robotic_fabricator/attack_hand(user as mob)
+/obj/machinery/robotic_fabricator/attack_hand(user)
 	var/dat
 	if (..())
 		return

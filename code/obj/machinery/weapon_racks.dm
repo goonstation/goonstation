@@ -182,7 +182,7 @@
 */
 
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.panelopen || isAI(user))
 			var/list/rackwires = list(
 			"Puce" = 1,

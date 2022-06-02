@@ -110,7 +110,7 @@
 			else if (oldval && !newval)
 				UnsubscribeProcess()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (isghostdrone(user))
 			boutput(user, "<span class='alert'>The [src] refuses to interface with you!</span>")
 			return

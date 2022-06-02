@@ -192,7 +192,7 @@
 		src.oldtarget_name = user.name
 		src.task = "chasing"
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		user.lastattacked = src
 		if (!src.alive)
 			..()

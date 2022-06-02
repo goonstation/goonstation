@@ -76,7 +76,7 @@
 		clear_armer()
 		. = ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.armed)
 			if ((user.get_brain_damage() >= 60 || user.bioHolder.HasEffect("clumsy")) && prob(50))
 				var/which_hand = "l_arm"
@@ -435,7 +435,7 @@
 			..()
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.armed)
 			return
 

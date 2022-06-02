@@ -818,7 +818,7 @@
 
 		. += "The screen displays \"Total Score: [gang.gang_score()] and Spendable Points: [gang.spendable_points]\""
 
-	attack_hand(var/mob/living/carbon/human/user as mob)
+	attack_hand(var/mob/living/carbon/human/user)
 		if(!isalive(user))
 			boutput(user, "<span class='alert'>Not when you're incapacitated.</span>")
 			return
@@ -1180,7 +1180,7 @@
 		else
 			return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!src.anchored)
 			return ..()
 

@@ -185,7 +185,7 @@
 		else
 			. += "It seems to be missing a usable battery."
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(src.coveropen && src.PCEL)
 			src.PCEL.set_loc(src.loc)
 			src.PCEL = null

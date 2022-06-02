@@ -146,7 +146,7 @@
 
 		..()
 
-	attack_hand(var/mob/user as mob) //handles choosing amount, printing, scanning
+	attack_hand(var/mob/user) //handles choosing amount, printing, scanning
 		if (src.use_state == 2)
 			boutput(user, "<span class='alert'>\The [src] is busy right now! Try again later!</span>")
 			return

@@ -70,7 +70,7 @@
 						src.remove_random_item(H)
 			src.calc_w_class(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!user.find_in_hand(src))
 			return ..()
 		if (!src.contents.len)

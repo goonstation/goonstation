@@ -116,7 +116,7 @@ obj/item/engivac/attackby(obj/item/I, mob/user)
 	..()
 
 
-obj/item/engivac/attack_hand(mob/living/user as mob)
+obj/item/engivac/attack_hand(mob/living/user)
 	if (user.find_in_hand(src) && held_toolbox)
 		if (user.put_in_hand(held_toolbox))
 			held_toolbox = null

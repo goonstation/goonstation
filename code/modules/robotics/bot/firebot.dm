@@ -77,7 +77,7 @@
 			"content" = dat,
 		))
 
-/obj/machinery/bot/firebot/attack_hand(mob/user as mob, params)
+/obj/machinery/bot/firebot/attack_hand(mob/user, params)
 	var/dat
 	dat += "<TT><B>Automatic Fire-Fighting Unit v1.0</B></TT><BR><BR>"
 	dat += "Status: <A href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A><BR>"

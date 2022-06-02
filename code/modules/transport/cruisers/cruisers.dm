@@ -279,7 +279,7 @@
 		upper_area = null
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		return MouseDrop_T(user, user)
 
 	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
@@ -1122,7 +1122,7 @@
 		set_density(0)
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(!ready) return
 		if(open)
 			if(broken)
@@ -1243,7 +1243,7 @@
 	ex_act(var/severity)
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		var/area/cruiser/interior = get_area(src)
 		if(interior.ship)
 			interior.ship.leaveShip(user)
@@ -1270,7 +1270,7 @@
 	density = 1
 	anchored = 1
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		/*
 		if(1) return//todo remove
 		if(istype(user.abilityHolder, /datum/abilityHolder/composite))
@@ -1348,7 +1348,7 @@
 		for(var/T in abilities)
 			AbHolder.addAbility(T)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(broken)
 			boutput(user, "<span class='alert'>This pod is broken and must be repaired before it can be used again.</span>")
 			return

@@ -35,7 +35,7 @@ TILES
 		. = ..()
 		. += "There are [src.amount] tile\s left on the stack."
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 
 		if ((user.r_hand == src || user.l_hand == src))
 			src.add_fingerprint(user)

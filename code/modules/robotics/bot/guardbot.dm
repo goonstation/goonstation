@@ -1272,7 +1272,7 @@
 	attack_ai(mob/user as mob)
 		src.interacted(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..())
 			return
 		if(user.a_intent == "help" && !user.using_dialog_of(src) && (BOUNDS_DIST(user, src) == 0))
@@ -4358,7 +4358,7 @@
 		return
 
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..() || status & NOPOWER)
 			return
 
@@ -4820,7 +4820,7 @@
 		SPAWN(0.8 SECONDS)
 			linked_bot = locate() in orange(1, src)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (..() || (status & (NOPOWER|BROKEN)))
 			return
 

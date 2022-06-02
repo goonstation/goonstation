@@ -215,7 +215,7 @@
 
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..() && !(status & NOPOWER)) //Allow them to remove tapes even if the power's out.
 			return
 
@@ -735,7 +735,7 @@
 			..()
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(status & (NOPOWER|BROKEN))
 			return
 
@@ -1054,7 +1054,7 @@
 					src.link = test_link
 					src.link.master = src
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..() || status & NOPOWER)
 			return
 
@@ -1384,7 +1384,7 @@
 	proc/add_frequency(newFreq)
 		frequencies["[newFreq]"] = MAKE_DEFAULT_RADIO_PACKET_COMPONENT("f[newFreq]", newFreq)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..() || (status & (NOPOWER|BROKEN)))
 			return
 
@@ -1774,7 +1774,7 @@
 		playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 50, 1)
 		. = ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..() || (status & (NOPOWER|BROKEN)))
 			return
 
@@ -2166,7 +2166,7 @@
 		if (!dd_hasprefix(uppertext(src.bank_id),"SC-"))
 			src.bank_id = "SC-[bank_id]"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(status & (NOPOWER|BROKEN))
 			return
 
@@ -2434,7 +2434,7 @@
 
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..() || (status & (NOPOWER|BROKEN)))
 			return
 
@@ -2909,7 +2909,7 @@
 			..()
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..() || (status & (NOPOWER|BROKEN)))
 			return
 
@@ -3421,7 +3421,7 @@
 			..()
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..() || (status & (NOPOWER|BROKEN)))
 			return
 

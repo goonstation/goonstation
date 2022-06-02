@@ -697,7 +697,7 @@
 
 		src.tag = "cave[id][src.icon_state == "cave_entrance" ? 0 : 1]"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (user.stat || user.getStatusDuration("weakened") || BOUNDS_DIST(user, src) > 0)
 			return
 
@@ -958,7 +958,7 @@
 			boutput(user, "<span class='notice'>You put a pair of handcuffs in the [src]. [amount] left in the dispenser.</span>")
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		add_fingerprint(user)
 		if (src.amount >= 1)
 			src.amount--
@@ -980,7 +980,7 @@
 	bound_width = 96
 	layer = EFFECTS_LAYER_BASE
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (can_reach(user,src))
 			boutput(user, "<span class='alert'>You attempt to open the container but its doors are sealed tight. It doesn't look like you'll be able to open it.</span>")
 			playsound(src.loc, "sound/machines/door_locked.ogg", 50, 1, -2)

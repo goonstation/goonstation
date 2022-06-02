@@ -23,7 +23,7 @@
 					S.visible_message("<span class='alert'>[S] lets out a horrible [pick("shriek", "squeal", "noise", "squawk", "screech", "whine", "squeak")]!</span>")
 					playsound(S.loc, 'sound/items/mic_feedback.ogg', 30, 1)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (user.find_in_hand(src) && src.on)
 			playsound(user, 'sound/misc/miccheck.ogg', 30, 1)
 			user.visible_message("<span class='emote'>[user] taps [src] with [his_or_her(user)] hand.</span>")
@@ -79,7 +79,7 @@
 				myMic = new(src)
 		return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!myMic)
 			return ..()
 		user.put_in_hand_or_drop(myMic)

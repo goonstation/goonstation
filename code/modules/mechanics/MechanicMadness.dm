@@ -93,7 +93,7 @@
 		if(!(user in src.users) && istype(user))
 			src.users+=user
 		return ..()
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(!(user in src.users) && istype(user))
 			src.users+=user
 		return ..()
@@ -230,7 +230,7 @@
 		anchored=false
 		icon_state="housing_cabinet"
 		flags = FPRINT | EXTRADELAY | CONDUCT
-		attack_hand(mob/user as mob)
+		attack_hand(mob/user)
 			if(src.loc==user)
 				src.set_loc(get_turf(src))
 				user.drop_item()
@@ -307,7 +307,7 @@
 		if(..()) return 1
 		return 1 //attack_hand(user) // was causing issues
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		..()
 		if (!istype(src.loc,/obj/item/storage/mechanics/housing_handheld))
 			qdel(src) //if outside the gun, delet
@@ -410,7 +410,7 @@
 
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(level == 1) return
 		if(issilicon(user) || isAI(user)) return
 		else return ..(user)
@@ -910,7 +910,7 @@
 		boutput(user, "[send_name ? "Now sending user NAME":"Now sending user FINGERPRINT"]")
 		return 1
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(level != 2 && !ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time))
 			if(ishuman(user) && user.bioHolder)
 				LIGHT_UP_HOUSING
@@ -2608,7 +2608,7 @@
 		if(ispulsingtool(W)) return // Don't press the button with a multitool, it brings up the config menu instead
 		return attack_hand(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(level == 1)
 			flick(icon_down, src)
 			LIGHT_UP_HOUSING
@@ -2715,7 +2715,7 @@
 
 
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (level == 1)
 			if (length(src.active_buttons))
 				var/selected_button = input(user, "Press a button", "Button Panel") in src.active_buttons + "*CANCEL*"

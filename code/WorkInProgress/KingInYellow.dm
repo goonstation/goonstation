@@ -67,7 +67,7 @@
 	attackby(obj/item/W, mob/user)
 		vanish()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		vanish()
 
 	proc/update()

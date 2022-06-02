@@ -1142,7 +1142,7 @@ SYNDICATE DRONE FACTORY AREAS
 	var/obj/item/alchemy/symbol = null
 	var/requiredType = null
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(symbol != null)
 			symbol.set_loc(src.loc)
 			symbol = null

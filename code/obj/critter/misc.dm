@@ -452,7 +452,7 @@
 		else
 			..()
 
-	attack_hand(mob/M as mob)
+	attack_hand(mob/M)
 		if ((M.a_intent != INTENT_HARM) && (M in src.friends))
 			if(M.a_intent == INTENT_HELP && src.aggressive)
 				src.visible_message("<span class='notice'>[M] pats [src] on the head in a soothing way. It won't attack anyone now.</span>")
@@ -1025,7 +1025,7 @@
 	blob_act(power)
 		return
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (src.alive)
 			boutput(user, "<span class='combat'><b>Your hand passes right through! It's so cold...</b></span>")
 		return
@@ -1128,7 +1128,7 @@
 		..()
 		src.boredom_countdown = rand(5,10)
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		..()
 		src.boredom_countdown = rand(5,10)
 
@@ -1178,7 +1178,7 @@
 	aggressive = 1
 	generic = 0
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (user.a_intent == "help")
 			return
 

@@ -50,7 +50,7 @@
 			src.gib(src.loc)
 			qdel(src)
 
-	attack_hand(mob/living/user as mob,var/cellmode)
+	attack_hand(mob/living/user,var/cellmode)
 		..(user,1)
 		if(src.answered == 1)
 			return

@@ -23,7 +23,7 @@ var/global/soundGeneralQuarters = sound('sound/machines/siren_generalquarters_qu
 		..()
 		UnsubscribeProcess()
 
-/obj/machinery/shipalert/attack_hand(mob/user as mob)
+/obj/machinery/shipalert/attack_hand(mob/user)
 	if (user.stat || isghostdrone(user) || !isliving(user) || isintangible(user))
 		return
 

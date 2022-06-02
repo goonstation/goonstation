@@ -259,7 +259,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 	icon_state = "beans"
 	name = "bag of Farty Snott's Every Flavour Beans"
 
-/obj/item/kitchen/everyflavor_box/attack_hand(mob/user as mob, unused, flag)
+/obj/item/kitchen/everyflavor_box/attack_hand(mob/user, unused, flag)
 	if (flag)
 		return ..()
 	if (user.r_hand == src || user.l_hand == src)
@@ -368,7 +368,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 	name = "bag of peach rings"
 	desc = "A bag of gummy peach rings. A Delectable Dan's favorite."
 
-	attack_hand(mob/user as mob, unused, flag)
+	attack_hand(mob/user, unused, flag)
 		if (flag)
 			return ..()
 		if (user.r_hand == src || user.l_hand == src)
@@ -405,7 +405,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 	name = "bag of gummy worms"
 	desc = "A bag of sour gummy worms. Still a little wriggly."
 
-	attack_hand(mob/user as mob, unused, flag)
+	attack_hand(mob/user, unused, flag)
 		if (flag)
 			return ..()
 		if (user.r_hand == src || user.l_hand == src)

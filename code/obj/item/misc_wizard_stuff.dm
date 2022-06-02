@@ -171,7 +171,7 @@
 		. = ..()
 		STOP_TRACKING
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (user.mind)
 			if (iswizard(user) || check_target_immunity(user))
 				if (user.mind.key != src.wizard_key && !check_target_immunity(user))
@@ -258,7 +258,7 @@
 		flick("[icon_state]_fire", src)
 		..()
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (user.mind)
 			if (iswizard(user) || check_target_immunity(user))
 				if (user.mind.key != src.wizard_key && !check_target_immunity(user))

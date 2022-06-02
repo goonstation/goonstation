@@ -77,7 +77,7 @@
 			return
 
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(on == 0)
 			on = 1
 			boutput(user, "<span class='notice'>You flip the switch on the FogMachine-3000 to the On position.</span>")
@@ -188,7 +188,7 @@
 			src.UpdateOverlays(null, "fluid_overlay")
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.turn_tap(user)
 
 	proc/enter_bathtub(mob/living/carbon/human/target)

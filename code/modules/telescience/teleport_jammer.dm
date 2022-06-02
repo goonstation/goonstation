@@ -87,7 +87,7 @@
 				src.turn_off()
 				return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.coveropen && src.PCEL)
 			src.PCEL.set_loc(src.loc)
 			src.PCEL = null

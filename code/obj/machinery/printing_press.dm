@@ -223,7 +223,7 @@
 		else
 			..()
 
-	attack_hand(var/mob/user as mob) //all of our mode controls and setters here, these control what the books are/look like/have as contents
+	attack_hand(var/mob/user) //all of our mode controls and setters here, these control what the books are/look like/have as contents
 		if (is_running)
 			boutput(user, "\The [src] is busy.") //machine is running
 			return

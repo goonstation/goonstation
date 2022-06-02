@@ -1794,7 +1794,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		src.icon_state = "implantpad-0"
 	return
 
-/obj/item/implantpad/attack_hand(mob/user as mob)
+/obj/item/implantpad/attack_hand(mob/user)
 
 	if ((src.case && (user.l_hand == src || user.r_hand == src)))
 		user.put_in_hand_or_drop(src.case)
@@ -2123,7 +2123,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 			src.set_loc(M)
 			src.implanted(M)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.pixel_x = 0
 		src.pixel_y = 0
 		..()

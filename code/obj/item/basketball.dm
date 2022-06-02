@@ -16,7 +16,7 @@
 	stamina_crit_chance = 5
 	custom_suicide = 1
 
-/obj/item/basketball/attack_hand(mob/user as mob)
+/obj/item/basketball/attack_hand(mob/user)
 	..()
 	if(user)
 		src.icon_state = "bball"
@@ -72,7 +72,7 @@
 	..(W, user)
 	return
 
-/obj/item/basketball/attack_hand(mob/user as mob)
+/obj/item/basketball/attack_hand(mob/user)
 	..()
 	var/mob/living/carbon/human/H = user
 	if(istype(H) && payload && istype(payload))
@@ -124,7 +124,7 @@
 					src.visible_message("<span class='alert'>[user] whiffs the dunk.</span>")
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (mounted)
 			return
 		else
@@ -226,7 +226,7 @@
 	proc/unplutonize(var/usrverbs)
 		usrverbs -= /mob/proc/chaos_dunk
 
-/obj/item/plutonium_core/attack_hand(mob/user as mob)
+/obj/item/plutonium_core/attack_hand(mob/user)
 	..()
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -254,7 +254,7 @@
 	throwforce = 2
 	throw_spin = 0
 
-/obj/item/bloodbowlball/attack_hand(mob/user as mob)
+/obj/item/bloodbowlball/attack_hand(mob/user)
 	..()
 	if(user)
 		src.icon_state = "bloodbowlball"

@@ -163,7 +163,7 @@
 				attacker.show_text("<b>You knock the [I] right out of [defender]'s hands!</b>","green")
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(src.loc != user)
 			change_guard(user,user.a_intent)
 		..()
@@ -220,7 +220,7 @@
 		open = !open
 		update_sprite(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(src.loc == user)
 			if(open)
 				draw_shinai(user)

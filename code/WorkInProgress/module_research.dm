@@ -834,7 +834,7 @@ var/global/datum/module_research_controller/module_control = new
 		else
 			remove_viewer(usr)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		add_viewer(user)
 		show_interface(user)
 

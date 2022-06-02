@@ -896,7 +896,7 @@
 							return award_text
 
 
-			attack_hand(mob/user as mob)
+			attack_hand(mob/user)
 				if (user.stat || isghostdrone(user) || !isliving(user))
 					return
 

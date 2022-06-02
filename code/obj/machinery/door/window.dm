@@ -32,7 +32,7 @@
 	xmasify()
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (issilicon(user) && src.hardened == 1)
 			user.show_text("You cannot control this door.", "red")
 			return

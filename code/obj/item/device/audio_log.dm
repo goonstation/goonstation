@@ -160,7 +160,7 @@
 		desc = "A wall-mounted audio log device."
 		max_lines = 30
 
-		attack_hand(mob/user as mob)
+		attack_hand(mob/user)
 			return attack_self(user)
 
 		updateSelfDialog()

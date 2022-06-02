@@ -653,7 +653,7 @@
 		src.UpdateIcon()
 		src.setMaterial(getMaterial("cotton"), appearance = FALSE, setname = FALSE)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.bed)
 			src.bed.untuck_sheet(user)
 		src.bed = null

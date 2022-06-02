@@ -290,7 +290,7 @@
 		else
 			return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (length(src.crayons) && src.loc == user)
 			if (!user.bioHolder.HasEffect("clumsy"))
 				boutput(user, "<span class='alert'>You aren't funny enough to do that. Wait, did the shoes just laugh at you?</span>")

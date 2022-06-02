@@ -111,7 +111,7 @@
 				turrets += T
 				T.control = src
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (!in_interact_range(src,user))
 			boutput(user, text("Too far away."))
 			src.remove_dialog(user)

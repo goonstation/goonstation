@@ -64,7 +64,7 @@
 			return
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(building)
 			boutput(user, "<span class='alert'>The machine is currently constructing something. Best not touch it until it's done.</span>")
 			return

@@ -18,7 +18,7 @@
 			SPAWN(5 DECI SECONDS)
 				icon_state = "filecabinet"
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		icon_state = "filecabinet-open"
 		show_window(user)
 

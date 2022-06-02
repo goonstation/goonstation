@@ -14,7 +14,7 @@
 		dialogue = new/datum/dialogueMaster/syndicatecorpse1(src)
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
@@ -58,7 +58,7 @@
 		dialogue = new/datum/dialogueMaster/syndicatecorpse2(src)
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
@@ -93,7 +93,7 @@
 		dialogue = new/datum/dialogueMaster/syndicatecorpse7(src)
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
@@ -137,7 +137,7 @@
 		dialogue = new/datum/dialogueMaster/syndicatecorpse8(src)
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
@@ -200,7 +200,7 @@
 		dialogue = new/datum/dialogueMaster/syndicatecorpse11(src)
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
@@ -245,7 +245,7 @@
 		dialogue = new/datum/dialogueMaster/syndicatecorpse5(src)
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
@@ -289,7 +289,7 @@
 		dialogue = new/datum/dialogueMaster/syndicatecorpse10(src)
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
@@ -340,7 +340,7 @@
 		dialogue = new/datum/dialogueMaster/securitycorpse1(src)
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
@@ -384,7 +384,7 @@
 		dialogue = new/datum/dialogueMaster/securitycorpse2(src)
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
@@ -428,7 +428,7 @@
 		dialogue = new/datum/dialogueMaster/securitycorpse6(src)
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
@@ -473,7 +473,7 @@
 		dialogue = new/datum/dialogueMaster/securitycorpse3(src)
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
@@ -518,7 +518,7 @@
 		dialogue = new/datum/dialogueMaster/securitycorpse7(src)
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
@@ -564,7 +564,7 @@
 		dialogue = new/datum/dialogueMaster/sergeantscomputer(src)
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
@@ -681,7 +681,7 @@
 		dialogue = new/datum/dialogueMaster/plantoflosthope(src)
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
@@ -736,7 +736,7 @@
 		dialogue = new/datum/dialogueMaster/bustedmantapc(src)
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
@@ -788,7 +788,7 @@
 		dialogue = new/datum/dialogueMaster/engineeringcomputer(src)
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
@@ -889,7 +889,7 @@
 		dialogue = new/datum/dialogueMaster/engineerscorpse(src)
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
@@ -957,7 +957,7 @@
 		dialogue = new/datum/dialogueMaster/polariscrate(src)
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return

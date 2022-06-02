@@ -280,7 +280,7 @@
 					if ((BOUNDS_DIST(src, src.target) == 0))
 						src.baton_attack(src.target, 1)
 
-	attack_hand(mob/user as mob, params)
+	attack_hand(mob/user, params)
 		var/dat
 
 		dat += {"

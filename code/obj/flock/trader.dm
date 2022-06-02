@@ -363,7 +363,7 @@
 	anchored = 1
 	var/obj/npc/trader/flock/trader
 
-/obj/flock_reclaimer/attack_hand(mob/user as mob)
+/obj/flock_reclaimer/attack_hand(mob/user)
 	if(!user)
 		return
 	if(!trader)

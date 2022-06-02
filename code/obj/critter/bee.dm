@@ -151,7 +151,7 @@
 		else
 			return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.alive)
 			if (src.sleeping)
 				sleeping = 0
@@ -909,7 +909,7 @@
 				masked = 2
 				src.name = "Heistenbee"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.alive)
 			if (user.a_intent == INTENT_HELP)
 				src.visible_message("<span class='notice'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>", group="beehug")
@@ -1023,7 +1023,7 @@
 		SPAWN(3.5 SECONDS)
 			src.attacking = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.alive && user.a_intent == INTENT_GRAB)
 			src.visible_message("<span class='alert'><b>[user]</b> attempts to wrangle [src], but [src] is far, FAR too sassy!</span>")
 			return
@@ -1186,7 +1186,7 @@
 	generic = 0
 	var/hug_count = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.alive)
 			if (user.a_intent == INTENT_HARM)
 				return ..()
@@ -1257,7 +1257,7 @@
 	sleeping_icon_state = "traumabee-sleep"
 	generic = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.alive && user.a_intent == "help")
 
 			src.visible_message("<span class='notice'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>", group="beehug")
@@ -1379,7 +1379,7 @@
 	angertext = "beeps aggressively at"
 	honey_color = rgb(0, 255, 0)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(src.alive && user.a_intent=="help")
 			src.visible_message("<span class='emote'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>", group="beehug")
 			if(prob(15))
@@ -1667,7 +1667,7 @@
 		if (prob(25) && !larva_type)
 			larva_type = /obj/critter/domestic_bee_larva/bonnet
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.anchored)
 			return
 		else
@@ -1883,7 +1883,7 @@
 		else
 			return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.loc == user && src.ourEgg && src.open)
 			user.put_in_hand_or_drop(src.ourEgg)
 			boutput(user, "You take [src.ourEgg] out of [src].")
@@ -1971,7 +1971,7 @@
 
 		return CritterAttack(M)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.alive)
 			if (user.a_intent == INTENT_HARM)
 				return ..()

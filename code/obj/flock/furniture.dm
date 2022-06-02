@@ -186,7 +186,7 @@
 	src.dump_contents()
 	qdel(src)
 
-/obj/storage/closet/flock/attack_hand(mob/user as mob)
+/obj/storage/closet/flock/attack_hand(mob/user)
 	if (BOUNDS_DIST(user, src) > 0)
 		return
 

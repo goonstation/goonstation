@@ -35,7 +35,7 @@
 
 
 
-/obj/machinery/bot/goosebot/attack_hand(mob/user as mob, params)
+/obj/machinery/bot/goosebot/attack_hand(mob/user, params)
 	var/dat
 	dat += "<TT><I>YOU CHOICE</I></TT><BR>"
 	dat += "<TT><B>THE GOOSE</B></TT><BR>"

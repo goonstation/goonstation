@@ -52,7 +52,7 @@
 				boutput(user, "<span class='alert'>[W] is full!</span>")
 		else ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(user.is_in_hands(src) && src.amount > 1)
 			var/splitnum = round(input("How many ores do you want to take from the stack?","Stack of [src.amount]",1) as num)
 			if (splitnum >= amount || splitnum < 1 || !isnum_safe(splitnum))
@@ -770,7 +770,7 @@
 	var/atom/output_location = null
 	var/list/atom/leftovers = null
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (active)
 			boutput(user, "<span class='alert'>It's already working! Give it a moment!</span>")
 			return

@@ -364,7 +364,7 @@
 			..()
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(istype(lock) && locked)
 			var/success_state = lock.attempt_to_open(user)
 			if (success_state == 1) // Succeeded

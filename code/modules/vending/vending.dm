@@ -503,7 +503,7 @@
 /obj/machinery/vending/attack_ai(mob/user as mob)
 	return attack_hand(user)
 
-/obj/machinery/vending/attack_hand(mob/user as mob)
+/obj/machinery/vending/attack_hand(mob/user)
 	if (status & (BROKEN|NOPOWER))
 		return
 	src.add_dialog(user)
@@ -2783,7 +2783,7 @@
 		else
 			..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (status & (BROKEN|NOPOWER))
 			return
 		if (user.stat || user.restrained())

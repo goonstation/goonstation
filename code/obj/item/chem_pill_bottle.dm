@@ -106,7 +106,7 @@
 			boutput(user, "<span class='alert'>It's empty.</span>")
 			return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(user.r_hand == src || user.l_hand == src)
 			var/obj/item/reagent_containers/pill/P = src.create_pill()
 			if(istype(P))

@@ -874,7 +874,7 @@
 		SPAWN(0)
 			src.connection_scan()
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if(..())
 			return
 		if (istype(linked_magnet))
@@ -1160,7 +1160,7 @@
 				if (src.event)
 					. += "<br><span class='alert'>There's something not quite right here...</span>"
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if (istype(H.gloves, /obj/item/clothing/gloves/concussive))
@@ -2206,7 +2206,7 @@ obj/item/clothing/gloves/concussive
 		src.cell = P
 		..()
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (!src.cell) boutput(user, "<span class='alert'>It won't work without a power cell!</span>")
 		else
 			var/action = tgui_input_list(user, "What do you want to do?", "Mineral Accumulator", list("Flip the power switch","Change the destination","Remove the power cell"))
@@ -2401,7 +2401,7 @@ var/global/datum/cargo_pad_manager/cargo_pad_manager
 		SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_CARGO_PAD_ENABLED, src)
 		..()
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (src.active == 1)
 			boutput(user, "<span class='notice'>You switch the receiver off.</span>")
 			UpdateOverlays(null, "lights")

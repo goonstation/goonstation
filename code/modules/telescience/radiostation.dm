@@ -289,7 +289,7 @@
 	else
 		..()
 
-/obj/submachine/record_player/attack_hand(mob/user as mob)
+/obj/submachine/record_player/attack_hand(mob/user)
 	if(has_record)
 		if(!is_playing)
 			boutput(user, "You remove the record from the record player. It looks worse for the wear.")
@@ -814,7 +814,7 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 			sleep(6000)
 			is_playing = 0
 
-/obj/submachine/tape_deck/attack_hand(mob/user as mob)
+/obj/submachine/tape_deck/attack_hand(mob/user)
 	if(has_tape)
 		if(!is_playing)
 			if(istype(src.tape_inside,/obj/item/radio_tape/advertisement))

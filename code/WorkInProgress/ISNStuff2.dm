@@ -178,7 +178,7 @@
 	var/being_pressed = 0
 	var/has_been_pressed = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (being_pressed)
 			boutput(user, "<span class='alert'>You can't press it while someone else is about to press it!</span>")
 			return

@@ -152,7 +152,7 @@
 	..()
 	return
 
-/obj/displaycase/attack_hand(mob/user as mob)
+/obj/displaycase/attack_hand(mob/user)
 	if (user.a_intent == INTENT_HARM)
 		user.visible_message("<span class='alert'>[user] kicks the display case.</span>")
 		user.lastattacked = src

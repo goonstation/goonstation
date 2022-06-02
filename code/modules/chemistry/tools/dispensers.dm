@@ -274,7 +274,7 @@
 						return
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.cup_amount <= 0)
 			user.show_text("\The [src] doesn't have any cups left, damnit.", "red")
 			return

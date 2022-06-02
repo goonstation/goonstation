@@ -123,7 +123,7 @@
 			return src.Attackby(W, user)
 		return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(src.on)
 			boutput(user,"<span class='alert'><b>Cooking soup takes time, be patient!</b></span>")
 			return

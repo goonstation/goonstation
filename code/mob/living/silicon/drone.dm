@@ -361,7 +361,7 @@
 			if(6)
 				. += "It looks almost finished, all that's left to add is extra optional components.\nWrench it together to activate it, or remove all parts and the power cell to deconstruct it."
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		switch(construct_stage)
 			if(3)
 				user.put_in_hand_or_drop(cable_type)

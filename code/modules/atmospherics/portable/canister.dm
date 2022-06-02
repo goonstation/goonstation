@@ -494,7 +494,7 @@
 				src.det_wires_interact(tool, index+1, user)
 				. = TRUE
 
-/obj/machinery/portable_atmospherics/canister/attack_hand(var/mob/user as mob)
+/obj/machinery/portable_atmospherics/canister/attack_hand(var/mob/user)
 	if (src.destroyed)
 		return
 

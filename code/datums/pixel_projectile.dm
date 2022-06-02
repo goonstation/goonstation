@@ -438,7 +438,7 @@ turf/proc/collide_here(var/obj/pixel_projectile/p)
 		else
 			..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if ((user.r_hand == src || user.l_hand == src) && src.contents && length(src.contents))
 			if (src.cell&&!src.rechargeable)
 				user.put_in_hand_or_drop(src.cell)

@@ -34,7 +34,7 @@
 				secured = 1
 				playsound(src, "sound/items/Ratchet.ogg", 60, 1)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(secured)
 			boutput(user, "<span class='alert'>Its secured to the ground.</span>")
 			return

@@ -290,7 +290,7 @@
 			src.amount++
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		add_fingerprint(user)
 		if (src.amount >= 1)
 			src.amount--
@@ -317,7 +317,7 @@
 			src.amount++
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		add_fingerprint(user)
 		if (src.amount >= 1)
 			src.amount--

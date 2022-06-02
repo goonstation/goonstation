@@ -57,7 +57,7 @@
 	src.go_out()
 	return
 
-/obj/machinery/gibber/attack_hand(mob/user as mob)
+/obj/machinery/gibber/attack_hand(mob/user)
 	if(operating)
 		boutput(user, "<span class='alert'>It's locked and running</span>")
 		return

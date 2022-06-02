@@ -140,7 +140,7 @@
 		src.go_out()
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.add_dialog(user)
 		var/temp_text = ""
 		if(air_contents.temperature > T0C)

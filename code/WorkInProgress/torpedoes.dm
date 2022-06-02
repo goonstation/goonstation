@@ -128,7 +128,7 @@
 	get_movement_controller()
 		return movement_controller
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(src.controller && src.controller.loc != src)
 			src.exit(0)
 
@@ -262,7 +262,7 @@
 		rebuildOverlays()
 		return .
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(tray_obj) close()
 		else open()
 		return
@@ -366,7 +366,7 @@
 	layer = 2.1
 	var/obj/machinery/torpedo_tube/parent = null
 
-	attack_hand(mob/living/carbon/human/M as mob)
+	attack_hand(mob/living/carbon/human/M)
 		parent?.close()
 		return
 

@@ -338,7 +338,7 @@
 
 	return
 
-/obj/machinery/computer3/attack_hand(mob/user as mob)
+/obj/machinery/computer3/attack_hand(mob/user)
 	if(..() && !istype(user, /mob/dead/target_observer/mentor_mouse_observer))
 		return
 

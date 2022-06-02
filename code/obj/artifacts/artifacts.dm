@@ -28,7 +28,7 @@
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		user.lastattacked = src
 		src.ArtifactTouched(user)
 		return
@@ -152,7 +152,7 @@
 		if (A.activated)
 			A.effect_process(src)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.ArtifactTouched(user)
 		return
 

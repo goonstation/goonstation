@@ -79,7 +79,7 @@ CONTENTS:
 	blob_act(var/power)
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		return
 
 	attackby(obj/item/W, mob/user)
@@ -104,7 +104,7 @@ CONTENTS:
 	blob_act(var/power)
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		return
 
 	attackby(obj/item/W, mob/user)

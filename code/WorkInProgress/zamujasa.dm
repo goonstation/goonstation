@@ -153,7 +153,7 @@
 	var/facing = NW_SE
 	var/list/affecting = list()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		boutput(user, "rotating mirror...")
 		facing = 1 - facing
 		for (var/obj/machinery/power/pt_laser/PTL in affecting)
@@ -405,7 +405,7 @@
 		SPAWN(0.5 SECONDS)
 			gunsim = locate() in world
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (active)
 			boutput(user, "It just did some cleaning give it a minute!!!")
 			return
@@ -453,7 +453,7 @@
 	var/active = 0
 	alpha = 255
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (active)
 			boutput(user, "did you already kill the dummy? either way wait a bit!")
 			return
@@ -1423,7 +1423,7 @@ Other Goonstation servers:[serverList]</span>"})
 	icon_state = "cowbrush"
 	desc = "A huge rotary brush attached to a wall. Supposedly, cows love it."
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		..()
 		src.icon_state = "cowbrush[src.on ? "_on" : ""]"
 

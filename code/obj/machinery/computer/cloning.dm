@@ -519,7 +519,7 @@ proc/find_ghost_by_key(var/find_key)
 
 		playsound(src.loc, "sound/machines/sleeper_close.ogg", 50, 1)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		..()
 		eject_occupant(user)
 

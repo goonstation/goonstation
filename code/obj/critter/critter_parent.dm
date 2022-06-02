@@ -363,7 +363,7 @@
 			return 1 // so things can do if (..())
 		return
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		..()
 		if (!src.alive)
 			..()
@@ -1008,7 +1008,7 @@
 		if (src.reagents && src.critter_reagent)
 			src.reagents.add_reagent(src.critter_reagent, 10)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.anchored)
 			return
 		else

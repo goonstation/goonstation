@@ -908,7 +908,7 @@
 		else
 			return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		var/datum/projectile/bullet/grenade_shell/AMMO = src.ammo_type
 		if(!user)
 			return

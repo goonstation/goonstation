@@ -27,7 +27,7 @@
 	boutput(user, "<span class='alert'>AI Interfacing with this computer has been disabled.</span>")
 	return
 
-/obj/machinery/computer/ordercomp/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/ordercomp/attack_hand(var/mob/user)
 	if(..())
 		return
 

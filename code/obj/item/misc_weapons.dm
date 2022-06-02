@@ -334,7 +334,7 @@
 	else
 		return ..()
 
-/obj/item/sword/attack_hand(mob/user as mob)
+/obj/item/sword/attack_hand(mob/user)
 	if (src.open && src.loc == user)
 		if (src.loaded_glowstick && src.use_glowstick)
 			user.put_in_hand(loaded_glowstick)
@@ -913,7 +913,7 @@
 					set_values()
 		..()
 
-	attack_hand(var/mob/user as mob) // todo: maybe make the base/twohand delays into vars. maybe.
+	attack_hand(var/mob/user) // todo: maybe make the base/twohand delays into vars. maybe.
 		src.two_handed = 0
 		set_values()
 		return ..()
@@ -1250,7 +1250,7 @@
 		K.set_loc(src)
 		BLOCK_SETUP(BLOCK_ROD)
 
-	attack_hand(mob/living/carbon/human/user as mob)
+	attack_hand(mob/living/carbon/human/user)
 		if(src.sword_inside && (user.r_hand == src || user.l_hand == src || user.belt == src))
 			draw_sword(user)
 		else
@@ -1640,7 +1640,7 @@ obj/item/whetstone
 		. = ..()
 		STOP_TRACKING
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (user.mind)
 			if (isslasher(user) || check_target_immunity(user))
 				if (user.mind.key != src.slasher_key && !check_target_immunity(user))

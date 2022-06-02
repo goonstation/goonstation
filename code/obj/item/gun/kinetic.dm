@@ -144,7 +144,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	//attack_self(mob/user as mob)
 	//	return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 	// Added this to make manual reloads possible (Convair880).
 
 		if ((src.loc == user) && user.find_in_hand(src)) // Make sure it's not on the belt or in a backpack.
@@ -690,7 +690,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		set_current_projectile(new/datum/projectile/bullet/nine_mm_NATO/burst)
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(!user.find_in_hand(src))
 			..() //this works, dont touch it
 		else if(open)
@@ -1205,7 +1205,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		else
 			return 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if ((src.loc == user) && user.find_in_hand(src))
 			return // Not unloading like that.
 		..()
@@ -1923,7 +1923,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		M.keys_changed(0,0xFFFF) //This is necessary for the designator to work
 		M.removeOverlayComposition(/datum/overlayComposition/sniper_scope)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (..() && ishuman(user))
 			user:special_sprint |= SPRINT_SNIPER
 			var/mob/living/L = user

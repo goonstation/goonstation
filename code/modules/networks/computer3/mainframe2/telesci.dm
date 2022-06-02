@@ -96,7 +96,7 @@ proc/is_teleportation_allowed(var/turf/T)
 		if (!src.host_id)
 			. += "<span class='alert'>The [src.name]'s \"disconnected from host\" light is flashing.</span>"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..())
 			return
 
@@ -937,7 +937,7 @@ proc/is_teleportation_allowed(var/turf/T)
 
 		return
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (..(user))
 			return
 

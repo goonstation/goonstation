@@ -35,7 +35,7 @@
 				src.update()
 				return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (can_reach(user,src))
 			src.add_fingerprint(user)
 			if (src.cupinside == 1) //freaking spacing errors made me waste hours on this
@@ -175,7 +175,7 @@
 				src.update()
 				return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (can_reach(user,src))
 			src.add_fingerprint(user)
 			if (src.my_carafe) //freaking spacing errors made me waste hours on this
@@ -280,7 +280,7 @@ ABSTRACT_TYPE(/obj/drink_rack)
 			src.UpdateIcon()
 		else return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.add_fingerprint(user)
 		if (src.amount_on_rack <= 0)
 			user.show_text("\The [src] doesn't have any [src.contained_name]s left, doofus!", "red")

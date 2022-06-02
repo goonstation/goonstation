@@ -347,7 +347,7 @@
 		light.set_brightness(0.5)
 		light.set_color(0.4, 0.8, 1)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		var/html = ""
 		html += "<div style=\"margin: auto;text-align:center\">[first_part ? "<a href='?src=\ref[src];remove=\ref[first_part]'>[first_part.name]</a>" : "EMPTY"] <i class=\"icon-plus\"></i> [second_part ? "<a href='?src=\ref[src];remove=\ref[second_part]'>[second_part.name]</a>" : "EMPTY"]   <i class=\"icon-double-angle-right\"></i> [resultName]</div><br>"
 		html += "<div style=\"margin: auto;text-align:center\"><a href='?src=\ref[src];activate=1'><i class=\"icon-check-sign icon-large\"></i></a></div><br><br>"
@@ -564,7 +564,7 @@
 		components.Cut()
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(output)
 			var/datum/material_recipe/R = matchesMaterialRecipe(output)
 			if(R)

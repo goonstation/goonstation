@@ -234,7 +234,7 @@
 
 	attack_hand(usr)
 
-/obj/machinery/bot/buttbot/attack_hand(mob/user as mob)
+/obj/machinery/bot/buttbot/attack_hand(mob/user)
 	var/dat
 	var/butt_engine = "Bio-Reactive Organic Ketone Engine"
 	switch(src.butt_fluff)

@@ -1173,7 +1173,7 @@ as it may become compromised.
 		if (!user.put_in_hand(src))
 			return ..()
 
-/obj/item/paper_bin/attack_hand(mob/user as mob)
+/obj/item/paper_bin/attack_hand(mob/user)
 	src.add_fingerprint(user)
 	var/obj/item/paper = locate(/obj/item/paper) in src
 	if (paper)

@@ -57,7 +57,7 @@
 			return src.Attackby(W, user)
 		return ..()
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		src.add_fingerprint(user)
 		user.lastattacked = src
 		if (ishuman(user))
@@ -91,7 +91,7 @@
 	var/obj/item/reagent_containers/food/snacks/ice_cream_cone/cone = null
 	var/doing_a_thing = 0
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		src.add_dialog(user)
 		var/dat = "<b>Ice Cream-O-Mat 9900</b><br>"
 		if(src.cone)
@@ -265,7 +265,7 @@ var/list/oven_recipes = list()
 		else
 			return 0
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (isghostdrone(user))
 			boutput(user, "<span class='alert'>\The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
 			return
@@ -848,7 +848,7 @@ table#cooktime a#start {
 	var/working = 0
 	var/allowed = list(/obj/item/reagent_containers/food/, /obj/item/plant/, /obj/item/organ/brain, /obj/item/clothing/head/butt)
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (src.contents.len < 1)
 			boutput(user, "<span class='alert'>There is nothing in the processor!</span>")
 			return
@@ -1152,7 +1152,7 @@ var/list/mixer_recipes = list()
 		W.set_loc(src)
 		W.dropped(user)
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (!src.working)
 			src.add_dialog(user)
 			var/dat = {"<B>KitchenHelper Mixer</B><BR>

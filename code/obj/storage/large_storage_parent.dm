@@ -224,7 +224,7 @@
 		src.open(user=user)
 		src.visible_message("<span class='alert'><b>[user]</b> kicks [src] open!</span>")
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(world.time == src.last_attackhand) // prevent double-attackhand when entering
 			return
 		if (!in_interact_range(src, user))

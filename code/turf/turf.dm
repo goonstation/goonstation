@@ -967,7 +967,7 @@ proc/generate_space_color()
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "vrwall"
 
-/turf/unsimulated/attack_hand(var/mob/user as mob)
+/turf/unsimulated/attack_hand(var/mob/user)
 	if (src.density == 1)
 		return
 	if ((!( user.canmove ) || user.restrained() || !( user.pulling )))
@@ -994,7 +994,7 @@ proc/generate_space_color()
 
 // imported from space.dm
 
-/turf/space/attack_hand(mob/user as mob)
+/turf/space/attack_hand(mob/user)
 	if ((user.restrained() || !( user.pulling )))
 		return
 	if (user.pulling.anchored)

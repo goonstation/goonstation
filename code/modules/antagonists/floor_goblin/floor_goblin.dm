@@ -51,7 +51,7 @@
 		playsound(src.loc, "rustle", 50, 1, -5)
 		boutput(user, "You stuff [W] into [src].")
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!user.find_in_hand(src))
 			return ..()
 		if (!src.contents.len)

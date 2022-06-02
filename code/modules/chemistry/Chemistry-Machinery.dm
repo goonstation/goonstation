@@ -607,7 +607,7 @@
 	attack_ai(mob/user as mob)
 		return src.Attackhand(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (status & BROKEN)
 			return
 		src.add_dialog(user)
@@ -755,7 +755,7 @@ datum/chemicompiler_core/stationaryCore
 	attack_ai(mob/user as mob)
 		return src.Attackhand(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (status & BROKEN || !powered())
 			boutput( user, "<span class='alert'>You can't seem to power it on!</span>" )
 			return

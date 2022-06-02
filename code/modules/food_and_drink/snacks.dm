@@ -2689,7 +2689,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			B.open = 1
 			fortune = 1
 
-	attack_hand(mob/user as mob, unused, flag)
+	attack_hand(mob/user, unused, flag)
 		if (fortune)
 			desc = "Half of a fortune cookie."
 			icon_state = "fortune-bottom"

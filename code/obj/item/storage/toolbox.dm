@@ -166,7 +166,7 @@
 			return
 		return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.loc == user)
 			if(!ishuman(user) || !user:find_ailment_by_type(/datum/ailment/disability/memetic_madness))
 				boutput(user, "<span class='alert'>You can't seem to find the latch. Maybe you need to examine it more thoroughly?</span>")

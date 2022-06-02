@@ -13,7 +13,7 @@
 			return
 		. = ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!isvampire(user))
 			if (user.a_intent == INTENT_HELP)
 				user.show_text("It won't budge!", "red")

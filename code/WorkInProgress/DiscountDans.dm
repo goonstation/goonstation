@@ -159,7 +159,7 @@
 			src.Attackhand(user)
 		return
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if(..())
 			return
 

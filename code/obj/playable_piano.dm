@@ -154,7 +154,7 @@
 		else
 			..()
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (is_busy)
 			src.visible_message("<span class='alert'>\The [src] emits an angry beep!</span>")
 			return

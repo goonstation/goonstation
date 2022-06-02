@@ -145,7 +145,7 @@
 		on = !on
 	attack_hand(usr)
 
-/obj/machinery/bot/duckbot/attack_hand(mob/user as mob)
+/obj/machinery/bot/duckbot/attack_hand(mob/user)
 	var/dat
 	dat += "<TT><B>AMUSING DUCK</B></TT><BR>"
 	dat += "<B>toy series with strong sense for playing</B><BR><BR>"

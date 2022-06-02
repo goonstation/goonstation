@@ -60,7 +60,7 @@
 		deployed_fields = list()
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(!src.allowed(user))
 			boutput(user, "<span class='alert'>Engineering clearance is required to operate the interdictor's locks.</span>")
 			return
@@ -330,7 +330,7 @@
 	var/obj/intcap = null
 	var/obj/introd = null
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(state == 4) //permit removal of cell before you install wires
 			src.state = 3
 			src.icon_state = "interframe-3"

@@ -32,7 +32,7 @@ they're trapped
 		src.add_fingerprint(user)
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(health <= 0)
 			for(var/mob/M in src.loc)
 				if (M.buckled)

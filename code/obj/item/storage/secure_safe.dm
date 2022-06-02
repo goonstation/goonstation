@@ -83,7 +83,7 @@
 
 	return ..()
 
-/obj/item/storage/secure/attack_hand(mob/user as mob)
+/obj/item/storage/secure/attack_hand(mob/user)
 	if (src.loc == user && src.locked == 1)
 		boutput(user, "<span class='alert'>[src] is locked and cannot be opened!</span>")
 		return
@@ -458,7 +458,7 @@
 	desc = "A extremely tough secure safe."
 	mechanics_type_override = /obj/item/storage/secure/ssafe
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		return attack_self(user)
 
 /obj/item/storage/secure/ssafe/loot

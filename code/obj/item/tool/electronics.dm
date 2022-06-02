@@ -759,7 +759,7 @@
 	else
 		..()
 
-/obj/machinery/rkit/attack_hand(mob/user as mob)
+/obj/machinery/rkit/attack_hand(mob/user)
 	src.add_fingerprint(user)
 	var/dat
 	var/hide_allowed = src.allowed(user)

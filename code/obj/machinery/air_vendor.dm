@@ -105,7 +105,7 @@ obj/machinery/air_vendor
 			src.scan = null
 		src.updateUsrDialog()
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		src.add_dialog(user)
 		var/html = ""
 		html += "<TT><b>Welcome!</b><br>"

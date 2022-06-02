@@ -80,7 +80,7 @@
 		src.floorname = Floor_Name
 		return 1
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.add_fingerprint(user)
 		var/known = (user in known_by)
 		if (src.density)

@@ -87,7 +87,7 @@ TOILET
 	src.add_fingerprint(user)
 	return
 
-/obj/item/storage/toilet/attack_hand(mob/user as mob)
+/obj/item/storage/toilet/attack_hand(mob/user)
 
 	for(var/mob/M in src.loc)
 		if (M.buckled)

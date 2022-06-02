@@ -11,7 +11,7 @@
 /obj/machinery/igniter/attack_ai(mob/user as mob)
 	return src.Attackhand(user)
 
-/obj/machinery/igniter/attack_hand(mob/user as mob)
+/obj/machinery/igniter/attack_hand(mob/user)
 	if(..())
 		return
 	add_fingerprint(user)

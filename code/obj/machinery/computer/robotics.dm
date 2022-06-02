@@ -34,7 +34,7 @@
 	return
 
 
-/obj/machinery/computer/robotics/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/robotics/attack_hand(var/mob/user)
 	if(..())
 		return
 	src.add_dialog(user)

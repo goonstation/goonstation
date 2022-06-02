@@ -572,7 +572,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 		eject_rider(0, 1)
 	return
 
-/obj/vehicle/segway/attack_hand(mob/living/carbon/human/M as mob)
+/obj/vehicle/segway/attack_hand(mob/living/carbon/human/M)
 	if(!M || !rider)
 		..()
 		return
@@ -884,7 +884,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 		eject_rider(0, 1)
 	return
 
-/obj/vehicle/floorbuffer/attack_hand(mob/living/carbon/human/M as mob)
+/obj/vehicle/floorbuffer/attack_hand(mob/living/carbon/human/M)
 	if(!M || !rider)
 		..()
 		return
@@ -992,7 +992,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 		eject_rider(0, 1, 0)
 	return
 
-/obj/vehicle/clowncar/attack_hand(mob/living/carbon/human/M as mob)
+/obj/vehicle/clowncar/attack_hand(mob/living/carbon/human/M)
 	if(!M)
 		..()
 		return
@@ -1515,7 +1515,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		eject_rider(0, 1)
 	return
 
-/obj/vehicle/cat/attack_hand(mob/living/carbon/human/M as mob)
+/obj/vehicle/cat/attack_hand(mob/living/carbon/human/M)
 	if(!M || !rider)
 		..()
 		return
@@ -1690,7 +1690,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		eject_rider(0, 1, 0)
 	return
 
-/obj/vehicle/adminbus/attack_hand(mob/living/carbon/human/M as mob)
+/obj/vehicle/adminbus/attack_hand(mob/living/carbon/human/M)
 	if(!M || !(M.client && M.client.holder))
 		..()
 		return
@@ -2351,7 +2351,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		src.update_overlays()
 		return
 
-/obj/vehicle/forklift/attack_hand(mob/living/carbon/human/M as mob)
+/obj/vehicle/forklift/attack_hand(mob/living/carbon/human/M)
 	if(!M || !rider)
 		..()
 		return

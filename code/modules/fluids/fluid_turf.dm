@@ -514,7 +514,7 @@
 	var/active = 0
 	var/location = 1 // 0 for bottom, 1 for top
 
-/obj/machinery/computer/sea_elevator/attack_hand(mob/user as mob)
+/obj/machinery/computer/sea_elevator/attack_hand(mob/user)
 	if(..())
 		return
 	var/dat = "<a href='byond://?src=\ref[src];close=1'>Close</a><BR><BR>"

@@ -26,7 +26,7 @@
 	attack_ai(mob/user as mob)
 		return src.Attackhand(user)
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		src.add_dialog(user)
 		if (!src.working)
 			var/dat = {"<B>Virus Manipulator</B><BR>

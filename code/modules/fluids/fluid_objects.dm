@@ -326,7 +326,7 @@
 			return
 		return
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		src.add_dialog(user)
 		var/offtext
 		var/intext
@@ -499,7 +499,7 @@
 			src.blowthefuckup(boom_str)
 
 
-	attack_hand(var/mob/living/carbon/human/user as mob)
+	attack_hand(var/mob/living/carbon/human/user)
 		src.add_fingerprint(user)
 
 		active = !active

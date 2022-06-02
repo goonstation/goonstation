@@ -17,7 +17,7 @@
 	var/obj/item/bloodslide/process_source
 	var/counter = 15
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		var/output_text = "<B>Centrifuge</B><BR><BR>"
 		if (src.on)
 			output_text = "The centrifuge is currently working.<br><a href='?src=\ref[src];shutdown=1'>Emergency shutdown</a>"
@@ -216,7 +216,7 @@
 		else
 			return null
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.target)
 			var/action = input("What would you like to do with the microscope?", "Microscope", "View [target]") in list("View [target]", "[src.zoom ? "Zoom Out" : "Zoom In"]", "Remove [target]", "Cancel")
 			if (BOUNDS_DIST(user.loc, src.loc) == 0)
@@ -416,7 +416,7 @@
 			P.comp = src
 			break
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if(status & (BROKEN|NOPOWER))
 			return
 		..()
@@ -1241,7 +1241,7 @@
 		src.add_module(new /obj/item/synthmodule/radiation())
 
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if(status & (BROKEN|NOPOWER))
 			return
 		..()
@@ -1693,7 +1693,7 @@
 				sanitizing = null
 				icon_state = "autoclave"
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (machine_state || (status & (BROKEN|NOPOWER)))
 			return
 		if (sanitizing)
@@ -1750,7 +1750,7 @@
 		if (src.target)
 			src.overlays += src.icon_beaker
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(isnull(user.equipped()))
 			if (src.target)
 				src.target.set_loc(src.loc)

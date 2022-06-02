@@ -217,7 +217,7 @@
 			else
 				return ..(target, user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!user) return
 		var/can_blow_smoke = (user.wear_mask == src && src.on && src.reagents.total_volume > 0 && src.puff_ready)
 		var/success = ( ..() )
@@ -592,7 +592,7 @@
 		src.overlays += "cig[length(src.contents)]"
 	return
 
-/obj/item/cigpacket/attack_hand(mob/user as mob)
+/obj/item/cigpacket/attack_hand(mob/user)
 	if (user.find_in_hand(src))//r_hand == src || user.l_hand == src)
 		if (length(src.contents) == 0)
 			user.show_text("You're out of cigs, shit! How you gonna get through the rest of the day?", "red")
@@ -681,7 +681,7 @@
 		src.overlays += "cigar[src.cigcount]"
 	return
 
-/obj/item/cigarbox/attack_hand(mob/user as mob)
+/obj/item/cigarbox/attack_hand(mob/user)
 	if (user.find_in_hand(src))//r_hand == src || user.l_hand == src)
 		if (src.cigcount == 0)
 			user.show_text("You're out of cigars! How you gonna get through the rest of the day?", "red")
@@ -742,7 +742,7 @@
 		src.overlays += "goldcigar[src.cigcount]"
 	return
 
-/obj/item/cigarbox/gold/attack_hand(mob/user as mob)
+/obj/item/cigarbox/gold/attack_hand(mob/user)
 	if (user.find_in_hand(src))//r_hand == src || user.l_hand == src)
 		if (src.cigcount == 0)
 			user.show_text("You're out of cigars! How you gonna get through the rest of the day?", "red")
@@ -827,7 +827,7 @@
 		else
 			. += "It's empty."
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (user.find_in_hand(src))
 			if (src.match_amt == 0)
 				user.show_text("Looks like there's no matches left.", "red")

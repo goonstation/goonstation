@@ -65,7 +65,7 @@
 			mainaccount["current_money"] += amount
 			user.visible_message("<b>[src]</b> beeps, \"[mainaccount["name"]] now holds [mainaccount["current_money"]] credits. Thank you for your service!\"")
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!mainaccount)
 			boutput(user, "<span class='alert'>You press the reset button, but nothing happens.</span>")
 			return

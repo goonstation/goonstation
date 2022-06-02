@@ -296,7 +296,7 @@
 		else
 			. += AE.description
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		var/datum/gimmick_event/AE = get_active_event()
 
 		if(!AE)

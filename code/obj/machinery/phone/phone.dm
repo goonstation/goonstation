@@ -79,7 +79,7 @@
 		..()
 
 	// Attempt to pick up the handset
-	attack_hand(mob/living/user as mob,var/cellmode = 0)
+	attack_hand(mob/living/user,var/cellmode = 0)
 		..(user)
 		if(cellmode)
 			return

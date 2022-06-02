@@ -29,7 +29,7 @@
 	butcherable = 1
 	flags = FPRINT | CONDUCT | USEDELAY | TABLEPASS | FLUID_SUBMERGE | FLUID_SUBMERGE
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.alive && (user.a_intent != INTENT_HARM))
 			src.visible_message("<span class='combat'><b>[user]</b> pets [src]!</span>")
 			return
@@ -277,7 +277,7 @@
 			M.changeStatus("stunned", 2 SECONDS)
 			M.changeStatus("weakened", 2 SECONDS)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.alive && (user.a_intent != INTENT_HARM))
 			src.visible_message("<span class='combat'><b>[user]</b> pets [src]!</span>")
 			if(prob(3) && ispug(user))
@@ -475,7 +475,7 @@ ABSTRACT_TYPE(/obj/critter/dream_creature)
 			M.changeStatus("stunned", 2 SECONDS)
 			M.changeStatus("weakened", 2 SECONDS)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.alive && (user.a_intent != INTENT_HARM))
 			src.visible_message("<span class='combat'><b>[user]</b> pets [src]!</span>")
 			if(prob(30))
@@ -511,7 +511,7 @@ ABSTRACT_TYPE(/obj/critter/dream_creature)
 	doggy = "pug"
 	is_pet = 2
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (prob(5) && src.alive && ispug(user))
 			src.visible_message("<span class='combat'><b>[src]</b> pets [user]!</span>")
 			return
@@ -1134,7 +1134,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 		else
 			return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.alive)
 			if (user.a_intent == INTENT_HARM)
 				..()
@@ -1812,7 +1812,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			M.changeStatus("stunned", 2 SECONDS)
 			M.changeStatus("weakened", 2 SECONDS)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.alive && (user.a_intent != INTENT_HARM))
 			src.visible_message("<span class='combat'><b>[user]</b> pets [src]!</span>")
 			if(prob(10)) do_a_little_dance()
@@ -1921,7 +1921,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	CritterAttack(mob/M)
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.alive && (user.a_intent == INTENT_HARM)) // ferrets are quick so you might miss!!
 			if (prob(80))
 				..()
@@ -2024,7 +2024,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 		..()
 		AddComponent(/datum/component/floor_slime, "badgrease", slime_chance, 10)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.alive && (user.a_intent != INTENT_HARM))
 			src.visible_message("<span class='combat'><b>[user]</b> pets [src]!</span>")
 			return

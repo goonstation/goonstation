@@ -721,7 +721,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 			src.state = 1
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.state == 0)
 			..()
 		else

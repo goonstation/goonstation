@@ -43,7 +43,7 @@ obj/structure/ex_act(severity)
 			return
 	return
 
-/obj/structure/girder/attack_hand(mob/user as mob)
+/obj/structure/girder/attack_hand(mob/user)
 	if (user.is_hulk())
 		if (prob(50))
 			playsound(user.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
@@ -243,7 +243,7 @@ obj/structure/ex_act(severity)
 				qdel(the_girder)
 		owner.visible_message("<span class='notice'>[owner] [verbens] [the_girder].</span>")
 
-/obj/structure/girder/displaced/attack_hand(mob/user as mob)
+/obj/structure/girder/displaced/attack_hand(mob/user)
 	if (user.is_hulk())
 		if (prob(70))
 			playsound(user.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
@@ -353,7 +353,7 @@ obj/structure/ex_act(severity)
 		else
 			icon_state = "woodwall"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (ishuman(user) && !user.is_zombie)
 			var/mob/living/carbon/human/H = user
 			if (src.anti_z && H.a_intent != INTENT_HARM && isfloor(get_turf(src)))

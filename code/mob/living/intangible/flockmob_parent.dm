@@ -82,7 +82,7 @@
 		return 0
 	..()
 
-/mob/living/intangible/flock/attack_hand(mob/user as mob)
+/mob/living/intangible/flock/attack_hand(mob/user)
 	switch(user.a_intent)
 		if(INTENT_HELP)
 			user.visible_message("<span class='notice'>[user] waves at [src.name].</span>", "<span class='notice'>You wave at [src.name].</span>")

@@ -51,5 +51,5 @@
 				pod1.Attackby(W,user)
 				src.add_fingerprint(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		return computer.Attackhand(user)

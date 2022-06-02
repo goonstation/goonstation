@@ -198,7 +198,7 @@
 	density = 1
 	var/has_beeped = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(has_beeped)
 			return ..()
 		else
@@ -382,7 +382,7 @@
 	attackby(obj/item/W, mob/living/user)
 		if(active) ..()
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if(active) ..()
 
 	CritterDeath()
@@ -566,7 +566,7 @@
 		eject_rider(0, 1)
 	return
 
-/obj/vehicle/marsrover/attack_hand(mob/living/carbon/human/M as mob)
+/obj/vehicle/marsrover/attack_hand(mob/living/carbon/human/M)
 	if(!M || !rider)
 		..()
 		return
@@ -768,7 +768,7 @@
 	pixel_y = 8
 	var/triggered = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (..() || (status & (NOPOWER|BROKEN)))
 			return
 

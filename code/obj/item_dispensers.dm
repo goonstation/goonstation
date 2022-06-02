@@ -40,7 +40,7 @@
 			boutput(user, "<span class='notice'>You put \the [W] into \the [src]. [display_amount ? "There's [src.amount] left.": null ]</span>")
 			qdel(W)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		add_fingerprint(user)
 		user.lastattacked = src //prevents spam
 		if (src.cant_withdraw)
@@ -125,7 +125,7 @@
 	withdraw_type = /obj/item/card/id
 	amount = 7
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!src.cant_withdraw && src.amount >= 1)
 			playsound(src.loc, "sound/machines/printer_dotmatrix.ogg", 25, 1)
 		..()

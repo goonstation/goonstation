@@ -130,7 +130,7 @@
 		light.disable()
 		status |= BROKEN
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.status & BROKEN)
 			boutput(user, "<span class='notice'>The [src.name] is busted! You'll need at least two sheets of glass to fix it.</span>")
 			return

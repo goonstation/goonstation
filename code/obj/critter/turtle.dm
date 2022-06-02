@@ -278,7 +278,7 @@
 		else
 			..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!src.alive)
 			take_beret(user)
 			return

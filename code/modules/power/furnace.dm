@@ -64,7 +64,7 @@
 	was_deconstructed_to_frame(mob/user)
 		src.active = 0
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (!src.fuel) boutput(user, "<span class='alert'>There is no fuel in the furnace!</span>")
 		else
 			src.active = !src.active

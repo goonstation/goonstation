@@ -104,7 +104,7 @@ obj/machinery/recharger
 	else
 		boutput(user, "<span class='alert'>That [G.name] won't fit in \the [src]!</span>")
 
-/obj/machinery/recharger/attack_hand(mob/user as mob)
+/obj/machinery/recharger/attack_hand(mob/user)
 	src.add_fingerprint(user)
 	remove_charging()
 

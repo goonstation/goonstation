@@ -1182,5 +1182,5 @@ obj/item/device/radio/signaler/attackby(obj/item/W, mob/user)
 /obj/item/device/radio/intercom/loudspeaker/attack_self(mob/user as mob)
 	return
 
-/obj/item/device/radio/intercom/loudspeaker/speaker/attack_hand(mob/user as mob)
+/obj/item/device/radio/intercom/loudspeaker/speaker/attack_hand(mob/user)
 	return

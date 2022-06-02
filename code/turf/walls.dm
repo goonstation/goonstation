@@ -289,7 +289,7 @@
 	if(prob(power))
 		dismantle_wall(1)
 
-/turf/simulated/wall/attack_hand(mob/user as mob)
+/turf/simulated/wall/attack_hand(mob/user)
 	if (user.is_hulk())
 		if(isrwall(src))
 			boutput(user, text("<span class='notice'>You punch the [src.name], but can't seem to make a dent!</span>"))

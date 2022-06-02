@@ -135,7 +135,7 @@
 		return
 	return src.Attackhand(user)
 
-/obj/machinery/portable_atmospherics/scrubber/attack_hand(var/mob/user as mob)
+/obj/machinery/portable_atmospherics/scrubber/attack_hand(var/mob/user)
 
 	src.add_dialog(user)
 	var/holding_text

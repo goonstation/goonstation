@@ -160,7 +160,7 @@
 /obj/machinery/attack_ai(mob/user as mob)
 	return src.Attackhand(user)
 
-/obj/machinery/attack_hand(mob/user as mob)
+/obj/machinery/attack_hand(mob/user)
 	. = ..()
 	if(status & (NOPOWER|BROKEN))
 		return 1

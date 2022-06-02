@@ -49,7 +49,7 @@
 			tooltip_rebuild = 1
 		else ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		// There's a hilarious bug in here - if you're searching through the container
 		// and then throw it, after you finish searching the container will just.
 		// warp back to your hands.
@@ -251,7 +251,7 @@
 			..()
 			src.open_it_up(0)
 
-		attack_hand(mob/user as mob)
+		attack_hand(mob/user)
 			if (get_dist(user, src) <= 0 && src.contents.len && (user.l_hand == src || user.r_hand == src))
 				src.open_it_up(1)
 			..()

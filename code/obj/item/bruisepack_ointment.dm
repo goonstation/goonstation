@@ -16,7 +16,7 @@
 		. = ..()
 		. += "[bicon(src)] <span class='notice'>There [src.amount == 1 ? "is" : "are"] [src.amount] [src.name]\s left on the stack!</span>"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (user.r_hand == src || user.l_hand == src)
 			src.add_fingerprint(user)
 			var/obj/item/medical/split = new src.type(user)

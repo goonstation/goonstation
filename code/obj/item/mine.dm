@@ -33,7 +33,7 @@
 		if (!src.suppress_flavourtext)
 			. += "It appears to be [src.armed ? "armed" : "disarmed"]."
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.add_fingerprint(user)
 
 		if (prob(50) && src.armed && !src.used_up)
