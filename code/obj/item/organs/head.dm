@@ -12,6 +12,8 @@
 	var/scalp_op_stage = 0.0 // Needed to track a scalp gash (brain and skull removal) separately from op_stage (head removal)
 	icon = 'icons/mob/human_head.dmi'
 	icon_state = "invis" // we'll overlay some shit on here
+	inhand_image_icon = 'icons/mob/inhand/hand_skulls.dmi'
+	item_state = ""
 	edible = 0
 	rand_pos = 0 // we wanna override it below
 	made_from = "bone"
@@ -63,6 +65,8 @@
 				if (src.donor?.bioHolder?.mobAppearance)
 					src.donor_appearance = src.donor.bioHolder.mobAppearance
 					src.UpdateIcon(/*makeshitup*/ 0)
+				if (isskeleton(src.donor))
+					src.item_state = "skull"
 				else //The heck?
 					src.UpdateIcon(/*makeshitup*/ 1)
 			else
