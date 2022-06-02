@@ -57,6 +57,7 @@
 			"rpm" = turbine_handle.RPM,
 			"load" = turbine_handle.stator_load,
 			"power" = turbine_handle.lastgen,
+			"volume" = turbine_handle.flow_rate,
 			"history" = src.history,
 		)
 
@@ -69,6 +70,9 @@
 			if("loadChange")
 				var/x = params["newVal"]
 				src.turbine_handle.stator_load = x
+			if("volChange")
+				var/x = params["newVal"]
+				src.turbine_handle.flow_rate = x
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 

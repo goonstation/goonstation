@@ -21,6 +21,7 @@ ABSTRACT_TYPE(/obj/reactor_component)
 	///If this component is melted, you can't take it out of the reactor and it might do some weird stuff
 	var/melted = FALSE
 	var/static/list/ui_image_base64_cache = list()
+	var/gas_volume = 0
 
 	//this should probably be a global, but it isn't afaik
 	var/list/cardinals = list(NORTH, NORTHEAST, NORTHWEST, \
@@ -51,13 +52,13 @@ ABSTRACT_TYPE(/obj/reactor_component)
 			//assume A = 1m^2
 			var/deltaT = RC.temperature - src.temperature
 			//heat transfer coefficient
-			var/hTC = max(RC.material.getProperty("density"),1)/max(src.material.getProperty("density"),1)
+			var/hTC = (max(RC.material.getProperty("density"),1)/100)*(max(src.material.getProperty("density"),1)/100)
 			if(RC.material.hasProperty("thermal"))
-				hTC = hTC*(RC.material.getProperty("thermal")/100)
+				hTC = hTC*(1-(RC.material.getProperty("thermal")/100))
 			if(RC.material.hasProperty("thermal"))
-				hTC = hTC*(RC.material.getProperty("thermal")/100)
+				hTC = hTC*(1-(RC.material.getProperty("thermal")/100))
 			RC.temperature += thermal_cross_section*-deltaT*hTC
-			src.temperature += thermal_cross_section*deltaT*(1/hTC)
+			src.temperature += thermal_cross_section*deltaT*hTC
 			if(RC.temperature < 0 || src.temperature < 0)
 				CRASH("TEMP WENT NEGATIVE")
 			RC.material.triggerTemp(RC,RC.temperature)
@@ -67,9 +68,17 @@ ABSTRACT_TYPE(/obj/reactor_component)
 		if(istype(holder))
 			var/deltaT = holder.temperature - src.temperature
 			//heat transfer coefficient
-			var/hTC = max(holder.material.getProperty("density"),1)/max(src.material.getProperty("density"),1)
+			var/hTC = (max(holder.material.getProperty("density"),1)/100)*(max(src.material.getProperty("density"),1)/100)
+			if(holder.material.hasProperty("thermal"))
+				hTC = hTC*(1-(RC.material.getProperty("thermal")/100))
+			if(RC.material.hasProperty("thermal"))
+				hTC = hTC*(1-(RC.material.getProperty("thermal")/100))
 			holder.temperature += thermal_cross_section*-deltaT*hTC
-			src.temperature += thermal_cross_section*deltaT*(1/hTC)
+			src.temperature += thermal_cross_section*deltaT*hTC
+			if(holder.temperature < 0 || src.temperature < 0)
+				CRASH("TEMP WENT NEGATIVE")
+			holder.material.triggerTemp(RC,RC.temperature)
+			src.material.triggerTemp(src,src.temperature)
 
 			holder.material.triggerTemp(holder,holder.temperature)
 			src.material.triggerTemp(src,src.temperature)
@@ -155,6 +164,7 @@ ABSTRACT_TYPE(/obj/reactor_component)
 	thermal_cross_section = 0.05
 	var/gas_thermal_cross_section = 0.5
 	var/datum/gas_mixture/current_gas
+	gas_volume = 100
 
 	processGas(var/datum/gas_mixture/inGas)
 		if(src.current_gas)
@@ -165,9 +175,11 @@ ABSTRACT_TYPE(/obj/reactor_component)
 			var/hTC = TOTAL_MOLES(src.current_gas)/src.material.getProperty("density")
 			if(hTC>0)
 				src.current_gas.temperature += gas_thermal_cross_section*-deltaT*hTC
-				src.temperature += gas_thermal_cross_section*deltaT*(1/hTC)
+				src.temperature += gas_thermal_cross_section*deltaT*hTC
+				if(src.current_gas.temperature < 0 || src.temperature < 0)
+					CRASH("TEMP WENT NEGATIVE")
 			. = src.current_gas
 		if(inGas)
-			src.current_gas = inGas.remove(R_IDEAL_GAS_EQUATION * inGas.temperature)
+			src.current_gas = inGas.remove(src.gas_volume)
 
 

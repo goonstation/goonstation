@@ -26,6 +26,9 @@
 	var/stator_load = 100
 	var/RPM = 0
 	var/turbine_mass = 1000
+	var/flow_rate = 200
+
+	var/sound_stall = 'sound/machines/tractor_running.ogg'
 
 	New()
 		. = ..()
@@ -73,11 +76,11 @@
 		var/input_starting_pressure = MIXTURE_PRESSURE(air1)
 		boutput(world,"TURBINE: input=[input_starting_pressure] [air1.temperature]K output=[output_starting_pressure] [air2.temperature]K")
 
-		var/transfer_moles = input_starting_pressure ? input_starting_pressure*air2.volume/(air1.temperature * R_IDEAL_GAS_EQUATION) : 0
+
 		//RPM - generate ideal power at 600RPM
 		//Stator load - how much are we trying to slow the RPM
 		//Energy generated = stator load * RPM
-		var/datum/gas_mixture/current_gas = src.air1.remove(transfer_moles)
+		var/datum/gas_mixture/current_gas = src.air1.remove(air1.volume)
 		src.lastgen = 0
 		if(current_gas)
 			var/input_starting_energy = THERMAL_ENERGY(current_gas)
@@ -88,12 +91,17 @@
 			var/delta_E = input_starting_energy - output_starting_energy
 			//sqrt(2k/m) = a + v
 			src.RPM = sqrt(2*(max(delta_E - energy_generated,0))/turbine_mass)
-			boutput(world,"RPM: [src.RPM]")
-			if(src.RPM < 0)
+			var/nextRPM = sqrt(2*(max(delta_E-(src.stator_load*src.RPM),0))/turbine_mass)
+			if((nextRPM == 0) && (delta_E > 0))
 				src.RPM = 0
+				//stator load is too high to start spinning
+				playsound(src.loc, sound_stall, 60, 0)
+
 			src.air2.merge(current_gas)
 			src.terminal.add_avail(energy_generated)
 
+			src.air1.volume = src.flow_rate
+			src.air2.volume = src.flow_rate
 			src.network1?.update = TRUE
 			src.network2?.update = TRUE
 

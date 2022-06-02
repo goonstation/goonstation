@@ -9,6 +9,7 @@ export const TurbineControl = (_props, context) => {
     rpm,
     load,
     power,
+    volume,
     history,
   } = data;
   const rpmHistory = history.map((v) => v[0]);
@@ -58,7 +59,7 @@ export const TurbineControl = (_props, context) => {
           </Stack.Item>
           <Stack.Item>
             <LabeledList>
-              <LabeledList.Item label="Turbine Load">{load} Watts/Revolution</LabeledList.Item>
+              <LabeledList.Item label="Turbine Load">{load} Watts/RPM</LabeledList.Item>
             </LabeledList>
             <Chart.Line
               mt="5px"
@@ -76,8 +77,14 @@ export const TurbineControl = (_props, context) => {
                 minValue={1}
                 maxValue={load*2}
                 value={load}
-                format={value => value + " Watts/Revolution"}
+                format={value => value + " Watts/RPM"}
                 onChange={(e, value) => act("loadChange", { newVal: value })} />
+              <Slider
+                minValue={1}
+                maxValue={volume*2}
+                value={volume}
+                format={value => value + " M^3"}
+                onChange={(e, value) => act("volChange", { newVal: value })} />
             </Box>
           </Stack.Item>
         </Stack>

@@ -1,8 +1,8 @@
 /////////////////////////////////////////////////////////////////
 // Defintion for the nuclear reactor engine
 /////////////////////////////////////////////////////////////////
-#define REACTOR_GRID_WIDTH 6
-#define REACTOR_GRID_HEIGHT 6
+#define REACTOR_GRID_WIDTH 7
+#define REACTOR_GRID_HEIGHT 7
 
 /obj/machinery/atmospherics/binary/nuclear_reactor
 	name = "Model NTBMK Nuclear Reactor"
@@ -27,6 +27,7 @@
 	var/datum/gas_mixture/current_gas = null
 	var/temperature = T20C
 
+	var/reactor_vessel_gas_volume=200
 	var/obj/machinery/power/terminal/terminal = null
 	var/net_id = null
 
@@ -49,16 +50,16 @@
 		var/tmpRads = 0
 		boutput(world,"REACTOR: input=[input_starting_pressure] [air1.temperature]K output=[output_starting_pressure] [air2.temperature]K")
 
-		var/transfer_moles = input_starting_pressure ? input_starting_pressure*air2.volume/(air1.temperature * R_IDEAL_GAS_EQUATION) : 0
-
-		var/datum/gas_mixture/gas_input = air1.remove(transfer_moles)
+		var/datum/gas_mixture/gas_input = air1.remove(air1.volume)
 		var/datum/gas_mixture/gas_output = air2
+		var/total_gas_volume = 0
 
 		for(var/x=1 to REACTOR_GRID_WIDTH)
 			for(var/y=1 to REACTOR_GRID_HEIGHT)
 				if(src.component_grid[x][y])
 					//flow gas through components
 					var/obj/item/reactor_component/comp = src.component_grid[x][y]
+					total_gas_volume += comp.gas_volume
 					var/datum/gas_mixture/gas = comp.processGas(gas_input)
 					if(gas) gas_output.merge(gas)
 
@@ -85,6 +86,9 @@
 		if(gas) gas_output.merge(gas)
 		//spawn radioactivity then reset level
 		src.radiationLevel = tmpRads
+		total_gas_volume += src.reactor_vessel_gas_volume
+		src.air1.volume = total_gas_volume
+		src.air2.volume = total_gas_volume
 		src.network1?.update = TRUE
 		src.network2?.update = TRUE
 
@@ -98,10 +102,10 @@
 			var/hTC = TOTAL_MOLES(src.current_gas)/src.material.getProperty("density")
 			if(hTC>0)
 				src.current_gas.temperature += heat_transfer_mult*-deltaT*hTC
-				src.temperature += heat_transfer_mult*deltaT*(1/hTC)
+				src.temperature += heat_transfer_mult*deltaT*hTC
 			. = src.current_gas
 		if(inGas)
-			src.current_gas = inGas.remove(R_IDEAL_GAS_EQUATION * inGas.temperature)
+			src.current_gas = inGas.remove(src.reactor_vessel_gas_volume)
 
 
 	proc/getGridNeighbors(var/x,var/y)
@@ -252,6 +256,25 @@
 		..()
 		src.dir = dir
 		src.velocity = velocity
+
+/obj/machinery/atmospherics/binary/nuclear_reactor/prefilled
+	New()
+		..()
+		src.component_grid[3][2] = new /obj/item/reactor_component/gas_channel
+		src.component_grid[2][3] = new /obj/item/reactor_component/gas_channel
+		src.component_grid[3][6] = new /obj/item/reactor_component/gas_channel
+		src.component_grid[2][5] = new /obj/item/reactor_component/gas_channel
+		src.component_grid[5][2] = new /obj/item/reactor_component/gas_channel
+		src.component_grid[6][3] = new /obj/item/reactor_component/gas_channel
+		src.component_grid[6][5] = new /obj/item/reactor_component/gas_channel
+		src.component_grid[5][6] = new /obj/item/reactor_component/gas_channel
+
+		src.component_grid[3][3] = new /obj/item/reactor_component/heat_exchanger
+		src.component_grid[3][4] = new /obj/item/reactor_component/heat_exchanger
+		src.component_grid[3][5] = new /obj/item/reactor_component/heat_exchanger
+		src.component_grid[5][3] = new /obj/item/reactor_component/heat_exchanger
+		src.component_grid[5][4] = new /obj/item/reactor_component/heat_exchanger
+		src.component_grid[5][5] = new /obj/item/reactor_component/heat_exchanger
 
 #undef REACTOR_GRID_WIDTH
 #undef REACTOR_GRID_HEIGHT

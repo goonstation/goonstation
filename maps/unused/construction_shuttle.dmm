@@ -920,12 +920,12 @@
 /turf/simulated/floor/black,
 /area/space)
 "vN" = (
-/obj/machinery/atmospherics/binary/nuclear_reactor,
 /obj/cable{
 	d2 = 2;
 	dir = null;
 	icon_state = "0-2"
 	},
+/obj/machinery/atmospherics/binary/nuclear_reactor/prefilled,
 /turf/simulated/floor/black,
 /area/space)
 "vT" = (
