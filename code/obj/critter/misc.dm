@@ -332,7 +332,7 @@
 /obj/critter/wasp
 	name = "space wasp"
 	desc = "A wasp in space."
-	icon_state = "spacebee"
+	icon_state = "wasp"
 	critter_family = BUG
 	density = 1
 	health = 10
