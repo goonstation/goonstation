@@ -466,14 +466,15 @@
 						H.u_equip(W)
 						W.set_loc(myHead)
 						myHead.wear_mask = W
+					if (isskeleton(src.donor) && myHead.organ_name == "bony head") // must be skeleton AND have skeleton head
+						src.donor.set_eye(myHead)
+
 				myHead.set_loc(location)
 				myHead.update_head_image()
 				myHead.on_removal()
 				myHead.holder = null
 				src.head = null
 				src.organ_list["head"] = null
-				src.donor.client?.eye = myHead
-				src.donor.eye = myHead
 				src.donor.update_body()
 				src.donor.UpdateDamageIcon()
 				src.donor.update_clothing()
@@ -829,9 +830,11 @@
 							H.head_tracker.linked_human = null
 						newHead.is_skeleton = TRUE
 						newHead.linked_human = H
-						S.head = newHead
 						H.eye = H
 						H.head_tracker = newHead
+						S.head = newHead
+						S.set_head(newHead)
+					H.set_eye(null)
 					H.client?.eye = H
 				src.donor.update_body()
 				src.donor.UpdateDamageIcon()
