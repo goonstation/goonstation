@@ -853,9 +853,9 @@
 
 	if(user.a_intent == INTENT_HARM)
 		if(HAS_ATOM_PROPERTY(target,PROP_ATOM_FLOCK_THING))
-			if(isflockdeconimmune(target))
-				return
-			actions.start(new /datum/action/bar/flock_decon(target), user)
+			if(!isflockdeconimmune(target))
+				actions.start(new /datum/action/bar/flock_decon(target), user)
+			return
 
 	// CONVERT TURF
 	if(!isturf(target) && (!HAS_ATOM_PROPERTY(target,PROP_ATOM_FLOCK_THING) || istype(target, /obj/lattice/flock)) && !istype(target, /obj/structure/girder))
