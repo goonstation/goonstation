@@ -226,7 +226,7 @@
 	anchored = 0
 	base_state = "pflash"
 	density = 1
-	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 	var/cooldown_scan = 1.5 SECONDS
 	var/cooldown_end = 0
 
@@ -284,6 +284,7 @@
 			UpdateIcon()
 			user.show_message(text("<span class='alert'>[src] can now be moved.</span>"))
 			src.UpdateOverlays(null, "anchor")
+			remove_use_proximity()
 
 		else if (src.anchored)
 			if (powered())
@@ -291,3 +292,4 @@
 			UpdateIcon()
 			user.show_message(text("<span class='alert'>[src] is now secured.</span>"))
 			src.UpdateOverlays(image(src.icon, "[base_state]-s"), "anchor")
+			setup_use_proximity()
