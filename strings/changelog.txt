@@ -1,5 +1,9 @@
 
 (t)thu jun 02 22
+(u)DimWhat
+(p)8839
+(e)⚖|balance
+(+)Changed a few miscellaneous glove conductivity values; gloves that barely cover your hands (rings, fingerless gloves) don't offer electrical protection, and some random gloves have higher conductivity.
 (u)glowbold
 (p)8856
 (e)|
