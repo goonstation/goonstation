@@ -1,5 +1,10 @@
 
 (t)wed jun 01 22
+(u)Azrun
+(p)8841
+(e)⚖|balance
+(*)Power gloves when augmented to stun can now be charged from wires and APCs! Now holds additional charges and will augment lightning with some additional damage based on charges.
+(+)Power gloves no longer have any effect when used on dead wires.
 (u)TDHooligan
 (p)6952
 (e)⚖|balance
