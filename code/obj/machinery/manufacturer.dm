@@ -1857,7 +1857,6 @@
 	proc/take_damage(damage_amount = 0)
 		if (!damage_amount)
 			return
-		src.health -= damage_amount
 		src.health = clamp(src.health - damage_amount, 0, 100)
 		if (damage_amount > 0)
 			playsound(src.loc, src.sound_damaged, 50, 2)
