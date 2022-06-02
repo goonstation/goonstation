@@ -874,7 +874,7 @@
 						can_see.Add(I)
 				if (ROLE_VAMPTHRALL)
 					var/datum/abilityHolder/vampiric_thrall/VT2 = M.current.get_ability_holder(/datum/abilityHolder/vampiric_thrall)
-					if (see_everything || (M.current in V?.thralls) || (VT?.master == VT2.master)) // they're your thrall or they have the same vamp master
+					if (see_everything || (M.current in V?.thralls) || (VT?.master == VT2?.master)) // they're your thrall or they have the same vamp master
 						var/I = image(antag_vampthrall, loc = M.current)
 						can_see.Add(I)
 				if (ROLE_WRAITH)
