@@ -32,7 +32,7 @@
 		return 1
 	if (ismob(eye))
 		var/mob/M = eye
-		if (M.is_near_colosseum())
+		if (M != src && M.is_near_colosseum())
 			return 1
 	else if (istype(eye, /obj/observable/colosseum))
 		return 1

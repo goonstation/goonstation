@@ -637,10 +637,18 @@
 		if ("headset")
 			if (src.ears)
 				src.ears.talk_into(src, messages, param, src.real_name, lang_id)
+			else if (ishuman(src))
+				var/mob/living/carbon/human/H = src
+				if(isskeleton(H) && !H.organHolder.head && H.head_tracker != null)
+					H.head_tracker.ears.talk_into(src, messages, param, src.real_name, lang_id)
 
 		if ("secure headset")
 			if (src.ears)
 				src.ears.talk_into(src, messages, param, src.real_name, lang_id)
+			else if (ishuman(src))
+				var/mob/living/carbon/human/H = src
+				if(isskeleton(H) && !H.organHolder.head && H.head_tracker != null)
+					H.head_tracker.ears.talk_into(src, messages, param, src.real_name, lang_id)
 
 		if ("right hand")
 			if (src.r_hand)
