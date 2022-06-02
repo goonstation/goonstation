@@ -69,6 +69,8 @@ datum
 			fluid_b = 160
 			transparency = 60
 			penetrates_skin = 1
+			depletion_rate = 0.6
+			touch_modifier = 0.33
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
@@ -111,11 +113,12 @@ datum
 			fluid_b = 160
 			transparency = 60
 			penetrates_skin = 1
+			touch_modifier = 0.33
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				M.take_toxin_damage(1*mult) // buffin this because fluorine is horrible - adding a burn effect
-				M.TakeDamage("chest", 0, 1*mult, 0, DAMAGE_BURN)
+				M.take_toxin_damage(0.75 * mult) // buffin this because fluorine is horrible - adding a burn effect
+				M.TakeDamage("chest", 0, 0.75 * mult, 0, DAMAGE_BURN)
 				..()
 				return
 

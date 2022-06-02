@@ -41810,7 +41810,7 @@
 /turf/unsimulated/grass,
 /area/crater/biodome/north)
 "bGB" = (
-/obj/critter/spacebee,
+/obj/critter/wasp,
 /obj/spacevine{
 	icon_state = "vine-light2"
 	},
@@ -42054,7 +42054,7 @@
 /turf/unsimulated/grass,
 /area/crater/biodome/north)
 "bHh" = (
-/obj/critter/spacebee,
+/obj/critter/wasp,
 /obj/spacevine{
 	icon_state = "vine-light3"
 	},
@@ -42285,7 +42285,7 @@
 	density = 1;
 	icon_state = "vine-med2"
 	},
-/obj/critter/spacebee,
+/obj/critter/wasp,
 /turf/unsimulated/floor/green/side{
 	dir = 1
 	},
@@ -42309,7 +42309,7 @@
 	},
 /area/crater/biodome/north)
 "bHQ" = (
-/obj/critter/spacebee,
+/obj/critter/wasp,
 /obj/spacevine{
 	icon_state = "vine-light2"
 	},
@@ -42341,7 +42341,7 @@
 /obj/spacevine{
 	icon_state = "vine-light3"
 	},
-/obj/critter/spacebee,
+/obj/critter/wasp,
 /turf/unsimulated/floor/green/side{
 	dir = 1
 	},
@@ -42748,7 +42748,7 @@
 	d2 = 8
 	},
 /obj/spacevine,
-/obj/critter/spacebee,
+/obj/critter/wasp,
 /turf/unsimulated/floor/green/side,
 /area/crater/biodome/north)
 "bIQ" = (

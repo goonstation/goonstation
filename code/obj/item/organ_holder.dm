@@ -436,7 +436,7 @@
 				if (!src.head)
 					return 0
 				var/obj/item/organ/head/myHead = src.head
-				if (src.brain)
+				if (src.brain && !isskeleton(src.donor)) // skeletons move their brain elsewhere so they can detach their head without dying
 					myHead.brain = src.drop_organ("brain", myHead)
 				if (src.skull)
 					myHead.skull = src.drop_organ("skull", myHead)
@@ -472,6 +472,8 @@
 				myHead.holder = null
 				src.head = null
 				src.organ_list["head"] = null
+				src.donor.client?.eye = myHead
+				src.donor.eye = myHead
 				src.donor.update_body()
 				src.donor.UpdateDamageIcon()
 				src.donor.update_clothing()
@@ -518,7 +520,8 @@
 				myBrain.holder = null
 				src.brain = null
 				src.organ_list["brain"] = null
-				src.head?.brain = null
+				if (src.head?.brain == myBrain)
+					src.head.brain = null
 				return myBrain
 
 			if ("left_eye")
@@ -765,12 +768,11 @@
 					if (force)
 						qdel(src.head)
 					else
-						return 0
+						return FALSE
+				if (src.brain)
+					boutput(usr, "<span class='alert'>[src.donor] already has a brain! You should remove the brain from [I] first before transplanting it.</span>")
+					return FALSE
 				var/obj/item/organ/head/newHead = I
-				if (src.donor.client)
-					src.donor.client.mob = new /mob/dead/observer(src.donor)
-				if (newHead.brain && newHead.brain.owner)
-					newHead.brain.owner.transfer_to(src.donor)
 				newHead.op_stage = op_stage
 				src.head = newHead
 				newHead.set_loc(src.donor)
@@ -821,7 +823,11 @@
 						H.wear_mask = newHead.wear_mask
 						newHead.wear_mask.set_loc(H)
 						newHead.wear_mask = null
-
+					if (isskeleton(H))
+						var/datum/mutantrace/skeleton/S = H.mutantrace
+						S.head = newHead
+						H.client?.eye = H
+						H.eye = H
 				src.donor.update_body()
 				src.donor.UpdateDamageIcon()
 				src.donor.update_clothing()
@@ -854,8 +860,8 @@
 				if (!src.skull)
 					return 0
 				var/obj/item/organ/brain/newBrain = I
-				if (src.donor.client)
-					src.donor.client.mob = new /mob/dead/observer(src.donor)
+				boutput(src.donor, "<span class='alert'>You feel yourself forcibly ejected from your corporeal form!</span>")
+				src.donor.ghostize()
 				if (newBrain.owner)
 					newBrain.owner.transfer_to(src.donor)
 				newBrain.op_stage = op_stage

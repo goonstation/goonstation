@@ -494,6 +494,30 @@
 	food_effects = list("food_hp_up_big", "food_sweaty_big", "food_bad_breath", "food_warm")
 	meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
+/obj/item/reagent_containers/food/snacks/burger/aburgination
+	name = "aburgination"
+	desc = "You probably shouldn't eat it. You probably will."
+	icon_state = "aburgination"
+	initial_reagents = list("cholesterol" = 5, "neurotoxin" = 20, "bloodc" = 10)
+	food_effects = list("food_hp_up_big", "food_sweaty_big")
+	meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
+
+	New()
+		..()
+		playsound(get_turf(src), 'sound/voice/creepyshriek.ogg', 50, vary = FALSE, pitch = 4) // alvling and the lingmunks //shoot me
+
+	take_a_bite(mob/consumer, mob/feeder)
+		if (prob(50))
+			consumer.visible_message("<span class='alert'>[consumer] tries to take a bite of [src], but [src] takes a bite of [consumer] instead!</span>",
+				"<span class='alert'>You tries to take a bite of [src], but [src] takes a bite of you instead!</span>",
+				"<span class='alert'>You hear something bite down.</span>")
+			playsound(get_turf(feeder), pick('sound/impact_sounds/Flesh_Tear_1.ogg', 'sound/impact_sounds/Flesh_Tear_2.ogg'), 50, 1, -1)
+			random_brute_damage(consumer, rand(5, 15), FALSE)
+			take_bleeding_damage(consumer, null, rand(5, 15), DAMAGE_BLUNT)
+			hit_twitch(consumer)
+		else
+			return ..()
+
 /obj/item/reagent_containers/food/snacks/burger/vr
 	icon = 'icons/effects/VR.dmi'
 

@@ -1991,11 +1991,8 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 /* ================================ */
 
 /obj/item/proc/pry_surgery(var/mob/living/carbon/human/patient as mob, var/mob/living/surgeon as mob)
-	if (!surgeryCheck(patient, surgeon))
-		return 0
-
-	if (!patient.organHolder)
-		return 0
+	if (!patient.organHolder || surgeon.a_intent == INTENT_HARM || !isskeleton(patient))
+		return FALSE
 
 	if (surgeon.bioHolder.HasEffect("clumsy") && prob(50))
 		surgeon.visible_message("<span class='alert'><b>[surgeon]</b> fumbles and clubs [him_or_her(surgeon)]self upside the head with [src]!</span>", \
@@ -2005,7 +2002,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		JOB_XP(surgeon, "Clown", 1)
 		var/damage = rand(5, 15)
 		random_brute_damage(surgeon, damage)
-		return 1
+		return FALSE
 
 	src.add_fingerprint(surgeon)
 
@@ -2021,21 +2018,72 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 	DEBUG_MESSAGE("<b>[patient]'s surgery (performed by [surgeon])</b>")
 
-
-/* ---------- crowbar - chest ---------- */
 	if (surgeon.zone_sel.selecting == "chest")
-		if (patient.mob_flags & IS_BONEY)
-			playsound(patient, "sound/items/Crowbar.ogg", 50, 1)	// Dont really need much surgery to remove a bone from a skeleton
+		playsound(patient, 'sound/items/Crowbar.ogg', 50, 1)	// Dont really need much surgery to remove a bone from a skeleton
+		patient.tri_message("<span class='alert'><b>[surgeon]</b> jams one end of the [src] just below [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] sacrum and pries [his_or_her(patient)] tail off!</span>",\
+		surgeon, "<span class='alert'>You jam one end of the [src] just below [surgeon == patient ? "your" : "[patient]'s"] sacrum and pries [his_or_her(patient)] tail off!</span>",\
+		patient, "<span class='alert'>[patient == surgeon ? "You jam" : "<b>[surgeon]</b> jams"] one end of the [src] just below your sacrum and [patient == surgeon ? "pry" : "pries"] your tail off!</span>")
+		if (patient.organHolder.tail)
+			logTheThing("combat", surgeon, patient, "removed [constructTarget(patient,"combat")]'s skeleton tail with [src].")
+		patient.organHolder.drop_organ("tail")
+		return TRUE
 
-			patient.tri_message("<span class='alert'><b>[surgeon]</b> jams one end of the [src] just below [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] sacrum and pries [his_or_her(patient)] tail off!</span>",\
-			surgeon, "<span class='alert'>You jam one end of the [src] just below [surgeon == patient ? "your" : "[patient]'s"] sacrum and pries [his_or_her(patient)] tail off!</span>",\
-			patient, "<span class='alert'>[patient == surgeon ? "You jam" : "<b>[surgeon]</b> jams"] one end of the [src] just below your sacrum and [patient == surgeon ? "pry" : "pries"] your tail off!</span>")
+	else if (surgeon.zone_sel.selecting == "head" && patient.organHolder.head)
+		var/obj/item/organ/head/H = patient.organHolder.head
+		if (H.op_stage != 1)
+			return FALSE
+		H.op_stage = 2
+		surgeon.visible_message("<span class='alert'><b>[surgeon]</b> pries [H] loose with [src].</span>")
+		playsound(patient, 'sound/items/Crowbar.ogg', 50, 1)
+		return TRUE
 
-			if (patient.organHolder.tail)
-				logTheThing("combat", surgeon, patient, "removed [constructTarget(patient,"combat")]'s skeleton tail with [src].")
-			patient.organHolder.drop_organ("tail")
-			return 1
+	else if (surgeon.zone_sel.selecting in patient.limbs.vars)
+		var/obj/item/parts/limb = patient.limbs.vars[surgeon.zone_sel.selecting]
+		if (!isskeletonlimb(limb) || limb.remove_stage != 1)
+			return FALSE
+		limb.remove_stage = 2
+		surgeon.visible_message("<span class='alert'><b>[surgeon]</b> pries [limb] loose with [src].</span>")
+		playsound(patient, 'sound/items/Crowbar.ogg', 50, 1)
+		return TRUE
 
-	else
-		return 0
+////////////////////////////////////////////////////////////////////
+
+/* ================================ */
+/* ------------- WRENCH ------------ */
+/* ================================ */
+
+/obj/item/wrench/proc/wrench_surgery(var/mob/living/carbon/human/patient as mob, var/mob/living/surgeon as mob)
+	if (!patient.organHolder || surgeon.a_intent == INTENT_HARM || !isskeleton(patient))
+		return FALSE
+
+	src.add_fingerprint(surgeon)
+
+	if (surgeon.zone_sel.selecting == "head" && patient.organHolder.head)
+		var/obj/item/organ/head/H = patient.organHolder.head
+		if (H.op_stage == 0)
+			H.op_stage = 1
+			surgeon.visible_message("<span class='alert'><b>[surgeon]</b> loosens [H] with [src].</span>")
+			playsound(patient, 'sound/items/Screwdriver.ogg', 50, 1)
+			return TRUE
+		else if (H.op_stage == 2)
+			patient.organHolder.drop_organ("head", get_turf(patient))
+			surgeon.visible_message("<span class='alert'><b>[surgeon]</b> twists [H] off with [src].</span>")
+			playsound(patient, 'sound/items/Ratchet.ogg', 50, 1)
+			return TRUE
+
+	else if (surgeon.zone_sel.selecting in patient.limbs.vars)
+		var/obj/item/parts/limb = patient.limbs.vars[surgeon.zone_sel.selecting]
+		if (!istype(limb) || !isskeletonlimb(limb))
+			return FALSE
+		if (limb.remove_stage == 0)
+			limb.remove_stage = 1
+			surgeon.visible_message("<span class='alert'><b>[surgeon]</b> loosens [limb] with [src].</span>")
+			playsound(patient, 'sound/items/Screwdriver.ogg', 50, 1)
+			return TRUE
+		else if (limb.remove_stage == 2)
+			limb.remove(FALSE)
+			surgeon.visible_message("<span class='alert'><b>[surgeon]</b> twists [limb] off with [src].</span>")
+			playsound(patient, 'sound/items/Ratchet.ogg', 50, 1)
+			return TRUE
+
 #undef CREATE_BLOOD_SPLOOSH

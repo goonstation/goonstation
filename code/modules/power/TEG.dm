@@ -291,7 +291,7 @@
 				reaction_temp -= 200
 				if(prob(5))
 					src.visible_message("<span class='alert'>A thin layer of frost momentarily forms around [src].</span>")
-			if(src.reagents.has_active_reaction("thalmerite_heat"))
+			if(src.reagents.has_active_reaction("pyrosium_heat"))
 				reaction_temp += 200
 				if(prob(5))
 					src.visible_message("<span class='alert'>The [src] looks kind of hazey for a moment.</span>")
