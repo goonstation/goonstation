@@ -143,6 +143,12 @@
 		boutput(src, "<span class='flocksay'>Partition failure: unable to coalesce sentience.</span>")
 		return TRUE
 
+	if (!src.abilityHolder.pointCheck(FLOCKTRACE_COMPUTE_COST))
+		message_admins("A Flocktrace offer from [src.real_name] was sent but failed due to lack of compute.")
+		logTheThing("admin", null, null, "Flocktrace offer from [src.real_name] failed due to lack of compute.")
+		boutput(src, "<span class='flocksay'>Partition failure: Compute required unavailable.</span>")
+		return TRUE
+
 	var/mob/picked = pick(candidates)
 
 	message_admins("[picked.key] respawned as a Flocktrace under [src.real_name].")
