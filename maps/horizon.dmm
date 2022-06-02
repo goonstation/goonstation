@@ -20870,8 +20870,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/pharmacy)
 "baZ" = (
-/obj/machinery/chem_dispenser,
-/obj/item/reagent_containers/glass/beaker/large,
+/obj/storage/secure/closet/medical/medicine,
 /turf/simulated/floor/redwhite{
 	dir = 4
 	},
@@ -22029,25 +22028,19 @@
 	},
 /area/station/medical/medbay/pharmacy)
 "bdM" = (
-/obj/machinery/drainage,
 /obj/decal/tile_edge/stripe{
 	dir = 4;
 	icon_state = "delivery";
 	tag = ""
 	},
+/obj/machinery/drainage,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/pharmacy)
 "bdN" = (
-/obj/stool/chair/office{
-	dir = 1
+/obj/submachine/chem_extractor{
+	dir = 8
 	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
+/obj/item/device/reagentscanner,
 /turf/simulated/floor/redwhite{
 	dir = 4
 	},
@@ -24760,25 +24753,28 @@
 	layer = 3.5;
 	pixel_y = -24
 	},
-/obj/storage/secure/closet/medical/medkit,
+/obj/machinery/chem_dispenser,
+/obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/redwhite,
 /area/station/medical/medbay/pharmacy)
 "bjX" = (
-/obj/storage/secure/closet/medical/medicine,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/chem_dispenser,
+/obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/redwhite,
 /area/station/medical/medbay/pharmacy)
 "bjY" = (
-/obj/storage/secure/closet/medical/medkit,
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/machinery/glass_recycler/chemistry,
+/obj/table/reinforced/auto,
 /turf/simulated/floor/redwhite{
 	dir = 6
 	},
@@ -39845,8 +39841,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "bXw" = (
-/obj/submachine/chem_extractor,
-/obj/item/device/reagentscanner,
+/obj/storage/secure/closet/medical/medkit,
 /turf/simulated/floor/redwhite{
 	dir = 8
 	},
@@ -55391,6 +55386,10 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/southeast)
+"jSZ" = (
+/obj/stool/chair/office,
+/turf/simulated/floor/white,
+/area/station/medical/medbay/pharmacy)
 "jTy" = (
 /obj/disposalpipe/junction/right/west,
 /turf/simulated/floor,
@@ -125896,7 +125895,7 @@ aUS
 mlA
 baY
 bdM
-aXE
+jSZ
 bjW
 bmu
 bpw
@@ -126198,7 +126197,7 @@ aUT
 aXE
 aXE
 aXE
-aXE
+jSZ
 bjX
 bmv
 bpx
