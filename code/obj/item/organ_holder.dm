@@ -826,8 +826,7 @@
 					if (isskeleton(H))
 						var/datum/mutantrace/skeleton/S = H.mutantrace
 						S.head = newHead
-						H.client?.eye = H
-						H.eye = H
+					H.client?.eye = H
 				src.donor.update_body()
 				src.donor.UpdateDamageIcon()
 				src.donor.update_clothing()
