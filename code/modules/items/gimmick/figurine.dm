@@ -758,7 +758,7 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		ckey = "gabr"
 
 	wivernshy
-		name = "\improper Fern Baker"
+		name = "\improper Fern Barker"
 		icon_state = "fernbarker"
 		ckey = "wivernshy"
 
