@@ -123,6 +123,9 @@
 		if (!src.left_eye)
 			. += "<br><span class='alert'><B>[src.name]'s left eye is missing!</B></span>"
 
+		if (isalive(src.donor_original))
+			. += "<br><span class='notice'><B>[src.name] appears conscious!</B></span>"
+
 	/// This proc does a full rebuild of the head's stored data
 	/// only call it if something changes the head in a major way, like becoming a lizard
 	/// it will cause the head to be rebuilt from the mob's appearanceholder!
@@ -333,7 +336,11 @@
 			else
 				boutput(user, "<span class='alert'>[src.name] is already wearing [src.glasses.name]!</span>")
 			return
-
+		if (istype(W, /obj/item/cloth))
+			playsound(src, 'sound/items/towel.ogg', 25, 1)
+			user.visible_message("<span class='notice'>[user] [pick("buffs", "shines", "cleans", "wipes", "polishes")] [src] with [W].</span>")
+			src.clean_forensic()
+			return
 
 		if (src.skull || src.brain)
 
@@ -430,7 +437,7 @@
 	attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
 		/* Overrides parent function to handle special case for attaching heads. */
 		var/mob/living/carbon/human/H = M
-		if (!src.can_attach_organ(H, user))
+		if (!isskeleton(M) && !src.can_attach_organ(H, user))
 			return 0
 
 		var/fluff = pick("attach", "shove", "place", "drop", "smoosh", "squish")
@@ -439,17 +446,17 @@
 			H.tri_message("<span class='alert'><b>[user]</b> [fluff][(fluff == "smoosh" || fluff == "squish" || fluff == "attach") ? "es" : "s"] [src] onto [H == user ? "[his_or_her(H)]" : "[H]'s"] neck stump!</span>",\
 			user, "<span class='alert'>You [fluff] [src] onto [user == H ? "your" : "[H]'s"] neck stump!</span>",\
 			H, "<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][(fluff == "smoosh" || fluff == "squish" || fluff == "attach") ? "es" : "s"] [src] onto your neck stump!</span>")
+			playsound(H, 'sound/effects/attach.ogg', 50, 1)
 
 			if (user.find_in_hand(src))
 				user.u_equip(src)
-			H.organHolder.receive_organ(src, "head", 3.0)
+			H.organHolder.receive_organ(src, "head", isskeleton(M) ? 0 : 3.0)
 
 			SPAWN(rand(50,500))
-				if (H?.organHolder?.head && H.organHolder.head == src) // aaaaaa
-					if (src.op_stage != 0.0)
-						H.visible_message("<span class='alert'><b>[H]'s head comes loose and tumbles off of [his_or_her(H)] neck!</b></span>",\
-						"<span class='alert'><b>Your head comes loose and tumbles off of your neck!</b></span>")
-						H.organHolder.drop_organ("head") // :I
+				if (H?.organHolder?.head == src && src.op_stage != 0.0) // head has not been secured
+					H.visible_message("<span class='alert'><b>[H]'s head comes loose and tumbles off of [his_or_her(H)] neck!</b></span>",\
+					"<span class='alert'><b>Your head comes loose and tumbles off of your neck!</b></span>")
+					H.organHolder.drop_organ("head") // :I
 
 			return 1
 		else
