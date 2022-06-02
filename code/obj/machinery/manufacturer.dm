@@ -32,7 +32,7 @@
 	var/electrified = 0 //! This is a timer and not a true/false; it's decremented every process() tick
 	var/output_target = null
 	var/list/nearby_turfs = list()
-	var/wires = 15 //! This is a bitflag, for hacking and such
+	var/wires = 15 //! This is a bitflag used to track wire states, for hacking and such. Replace it with something cleaner if an option exists when you're reading this :p
 	var/temp = null //! Used as a cache when outputting messages to users
 	var/frequency = FREQ_PDA
 	var/net_id = null
@@ -77,7 +77,7 @@
 	'sound/machines/glitch1.ogg','sound/machines/glitch2.ogg','sound/machines/glitch3.ogg','sound/impact_sounds/Metal_Clang_1.ogg','sound/impact_sounds/Metal_Hit_Heavy_1.ogg','sound/machines/romhack1.ogg','sound/machines/romhack3.ogg')
 	var/static/list/text_flipout_adjective = list("an awful","a terrible","a loud","a horrible","a nasty","a horrendous")
 	var/static/list/text_flipout_noun = list("noise","racket","ruckus","clatter","commotion","din")
-	var/list/text_bad_output_adjective = list("janky","crooked","warped","shoddy","shabby","lousy","crappy","shitty")
+	var/static/list/text_bad_output_adjective = list("janky","crooked","warped","shoddy","shabby","lousy","crappy","shitty")
 	var/datum/action/action_bar = null
 
 	New()
@@ -250,7 +250,7 @@
 					status |= NOPOWER
 					src.build_icon()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (free_resource_amt > 0) // We do this here instead of on New() as a tiny optimization to keep some overhead off of map load
 			claim_free_resources()
 		if(src.electrified)
@@ -560,7 +560,7 @@
 				if (src.shock(usr, 10))
 					return
 
-		if ((usr.contents.Find(src) || ((BOUNDS_DIST(src, usr) == 0 || isAI(usr)) && istype(src.loc, /turf))))
+		if (((BOUNDS_DIST(src, usr) == 0 || isAI(usr)) && istype(src.loc, /turf)))
 			src.add_dialog(usr)
 
 			if (src.malfunction && prob(10))
@@ -607,9 +607,8 @@
 				else if (given_speed >= 1 && given_speed <= upperbound)
 					src.speed = given_speed
 				else
-					var/newset = input(usr,"Enter from 1 to [upperbound]. Higher settings consume more power.","Manufacturing Speed") as num
-					newset = clamp(newset, 1, upperbound)
-					src.speed = newset
+					var/newset = input(usr, "Enter from 1 to [upperbound]. Higher settings consume more power.", "Manufacturing Speed") as num
+					src.speed = clamp(newset, 1, upperbound)
 
 			if (href_list["clearQ"])
 				var/Qcounter = 1
@@ -634,7 +633,7 @@
 					last_queue_op = world.time
 
 				src.queue -= src.queue[operation]
-				begin_work(1)//pesky exploits
+				begin_work()//pesky exploits
 
 			if (href_list["repeat"])
 				src.repeat = !src.repeat
@@ -741,9 +740,9 @@
 					boutput(usr, "You need a snipping tool!")
 					return
 				else if (src.isWireColorCut(twire))
-					src.mend(twire)
+					src.mend(usr, twire)
 				else
-					src.cut(twire)
+					src.cut(usr, twire)
 				src.build_icon()
 
 			if ((href_list["pulsewire"]) && (src.panel_open || isAI(usr)))
@@ -755,7 +754,7 @@
 					boutput(usr, "You can't pulse a cut wire.")
 					return
 				else
-					src.pulse(twire)
+					src.pulse(usr, twire)
 				src.build_icon()
 
 			if (href_list["card"])
@@ -1145,7 +1144,7 @@
 			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
 		return
 
-	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
+	MouseDrop_T(atom/movable/O as mob|obj, mob/user)
 		if (!O || !user)
 			return
 
@@ -1227,7 +1226,7 @@
 		var/wireFlag = APCIndexToFlag[wireIndex]
 		return ((src.wires & wireFlag) == 0)
 
-	proc/cut(wireColor)
+	proc/cut(mob/user, wireColor)
 		var/wireFlag = APCWireColorToFlag[wireColor]
 		var/wireIndex = APCWireColorToIndex[wireColor]
 		src.wires &= ~wireFlag
@@ -1240,10 +1239,10 @@
 				src.malfunction = TRUE
 			if(WIRE_POWER)
 				if(!(src.status & BROKEN || src.status & NOPOWER))
-					src.shock(usr,100)
+					src.shock(user, 100)
 					src.status |= NOPOWER
 
-	proc/mend(wireColor)
+	proc/mend(mob/user, wireColor)
 		var/wireFlag = APCWireColorToFlag[wireColor]
 		var/wireIndex = APCWireColorToIndex[wireColor] //not used in this function
 		src.wires |= wireFlag
@@ -1254,10 +1253,10 @@
 				src.malfunction = FALSE
 			if(WIRE_POWER)
 				if (!(src.status & BROKEN) && (src.status & NOPOWER))
-					src.shock(usr,100)
+					src.shock(user, 100)
 					src.status &= ~NOPOWER
 
-	proc/pulse(wireColor)
+	proc/pulse(mob/user, wireColor)
 		var/wireIndex = APCWireColorToIndex[wireColor]
 		switch(wireIndex)
 			if(WIRE_EXTEND)
@@ -1268,7 +1267,7 @@
 				src.malfunction = !src.malfunction
 			if (WIRE_POWER)
 				if(!(src.status & BROKEN || src.status & NOPOWER))
-					src.shock(usr,100)
+					src.shock(user, 100)
 
 	proc/shock(mob/user, prb)
 		if(src.status & (BROKEN|NOPOWER))
@@ -1291,7 +1290,7 @@
 		else
 			return FALSE
 
-	proc/add_schematic(schematic_path,add_to_list = "available")
+	proc/add_schematic(schematic_path, add_to_list = "available")
 		if (!ispath(schematic_path))
 			return
 
@@ -1786,8 +1785,6 @@
 			var/remove_link = ""
 			var/pause_link = ""
 			if (queue_num == 1)
-				// if (istype(A,/datum/manufacture/) && src.speed != 0 && time_left != 0)
-				// 	time_number = round(src.time_left / src.speed)
 				pause_link = (src.mode == "working" ? "<a href='?src=\ref[src];pause=1' class='buttonlink'>&#9208; Pause</a>" : "<a href='?src=\ref[src];continue=1' class='buttonlink'>&#57914; Resume</a>") + "<br>"
 			else
 				pause_link = ""
@@ -1834,7 +1831,7 @@
 		user.put_in_hand_or_drop(manudrive)
 		src.manudrive = null
 
-	proc/load_item(obj/item/O,mob/living/user)
+	proc/load_item(obj/item/O, mob/living/user)
 		if (!O)
 			return
 
@@ -2331,7 +2328,6 @@
 		/datum/manufacture/towel,
 		/datum/manufacture/tricolor,
 		/datum/manufacture/hat_ltophat)
-		///datum/manufacture/hermes) //all hail the shoe lord - needs adjusting for the new movement system which I cba to do right now
 
 /// cogwerks - a gas extractor for the engine
 
@@ -2605,7 +2601,7 @@
 	throw_speed = 3
 	throw_range = 10
 
-	attack_self(mob/user as mob)
+	attack_self(mob/user)
 		boutput(user, "<span class='alert'>The folder disintegrates in your hands, and papers scatter out. Shit!</span>")
 		new /obj/item/paper/manufacturer_blueprint/clonepod(get_turf(src))
 		new /obj/item/paper/manufacturer_blueprint/clonegrinder(get_turf(src))

@@ -81,7 +81,6 @@ ABSTRACT_TYPE(/datum/manufacture/mechanics/blob)
 	supplemental_desc = "This one is for producing blobs. What?"
 	icon_state = "fab-hangar"
 	icon_base = "hangar"
-	free_resource_amt = 0
 	available = list(
 		/datum/manufacture/mechanics/blob/base,
 		/datum/manufacture/mechanics/blob/wall,
