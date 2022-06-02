@@ -1633,6 +1633,10 @@ obj/item/clothing/gloves/concussive
 	material_prints = "industrial-grade mineral fibers"
 	var/obj/item/mining_tool/tool = null
 
+	setupProperties()
+		..()
+		setProperty("conductivity", 0.6)
+
 	New()
 		..()
 		var/obj/item/mining_tool/T = new /obj/item/mining_tool(src)
