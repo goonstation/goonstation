@@ -2246,7 +2246,7 @@
 	comname = "Jester Costume Set."
 	comtype = /obj/item/storage/box/costume/jester
 	desc = "Travel back in time and become the medieval version of a clown. (does not provide time travel)"
-	price = 300 //standard price for most other costumes
+	price = 300 //gotta work for it a little
 	baseprice = 100
 	upperfluc = 150
 	lowerfluc = -100
