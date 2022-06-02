@@ -20869,12 +20869,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/pharmacy)
-"baZ" = (
-/obj/storage/secure/closet/medical/medicine,
-/turf/simulated/floor/redwhite{
-	dir = 4
-	},
-/area/station/medical/medbay/pharmacy)
 "bba" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
@@ -22037,10 +22031,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/pharmacy)
 "bdN" = (
-/obj/submachine/chem_extractor{
-	dir = 8
-	},
-/obj/item/device/reagentscanner,
+/obj/storage/secure/closet/medical/medkit,
 /turf/simulated/floor/redwhite{
 	dir = 4
 	},
@@ -23416,9 +23407,8 @@
 	},
 /area/station/medical/medbay/pharmacy)
 "bhb" = (
-/obj/machinery/chem_master{
-	dir = 8
-	},
+/obj/machinery/chem_dispenser,
+/obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/redwhite{
 	dir = 4
 	},
@@ -24753,8 +24743,7 @@
 	layer = 3.5;
 	pixel_y = -24
 	},
-/obj/machinery/chem_dispenser,
-/obj/item/reagent_containers/glass/beaker/large,
+/obj/machinery/chem_master,
 /turf/simulated/floor/redwhite,
 /area/station/medical/medbay/pharmacy)
 "bjX" = (
@@ -24763,8 +24752,8 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/chem_dispenser,
-/obj/item/reagent_containers/glass/beaker/large,
+/obj/submachine/chem_extractor,
+/obj/item/device/reagentscanner,
 /turf/simulated/floor/redwhite,
 /area/station/medical/medbay/pharmacy)
 "bjY" = (
@@ -39841,7 +39830,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "bXw" = (
-/obj/storage/secure/closet/medical/medkit,
+/obj/storage/secure/closet/medical/medicine,
 /turf/simulated/floor/redwhite{
 	dir = 8
 	},
@@ -55387,7 +55376,9 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/southeast)
 "jSZ" = (
-/obj/stool/chair/office,
+/obj/stool/chair/office{
+	dir = 4
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/pharmacy)
 "jTy" = (
@@ -125895,7 +125886,7 @@ aUS
 mlA
 baY
 bdM
-jSZ
+aXE
 bjW
 bmu
 bpw
@@ -126497,7 +126488,7 @@ aPh
 aRO
 aUQ
 aXF
-baZ
+bdN
 bdN
 bhb
 bjY
