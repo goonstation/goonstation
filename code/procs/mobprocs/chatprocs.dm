@@ -92,21 +92,15 @@
 			src.say_verb(token + " " + text)
 
 	else
-		var/has_headset = FALSE
-		var/mob/living/carbon/human/H = null
+		var/obj/item/device/radio/R = null
 		if ((src.ears && istype(src.ears, /obj/item/device/radio)))
-			has_headset = TRUE
+			R = src.ears
 		else if (ishuman(src))	//Check if the decapitated skeleton head has a headset
-			H = src
-			if (isskeleton(H) && !H.organHolder.head && H.head_tracker.ears && istype(H.head_tracker.ears, /obj/item/device/radio))
-				has_headset = TRUE
-		if (has_headset)
-			var/obj/item/device/radio/R = null
-			if (H != null)
-				if (H.head_tracker != null && H.head_tracker.ears != null)
-					R = H.head_tracker.ears
-			else
-				R = src.ears
+			var/mob/living/carbon/human/H = src
+			var/datum/mutantrace/skeleton/S = H.mutantrace
+			if (isskeleton(H) && !H.organHolder.head && S.head_tracker.ears && istype(S.head_tracker.ears, /obj/item/device/radio))
+				R = S.head_tracker.ears
+		if (R)
 			if (R.bricked)
 				usr.show_text(R.bricked_msg, "red")
 				return

@@ -116,7 +116,6 @@
 
 	//dismemberment stuff
 	var/datum/human_limbs/limbs = null
-	var/obj/item/organ/head/head_tracker = null //Tracks our head in case we are a skeleton
 
 	var/static/image/human_image = image('icons/mob/human.dmi')
 	var/static/image/human_head_image = image('icons/mob/human_head.dmi')

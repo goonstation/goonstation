@@ -639,16 +639,20 @@
 				src.ears.talk_into(src, messages, param, src.real_name, lang_id)
 			else if (ishuman(src))
 				var/mob/living/carbon/human/H = src
-				if(isskeleton(H) && !H.organHolder.head && H.head_tracker != null)
-					H.head_tracker.ears.talk_into(src, messages, param, src.real_name, lang_id)
+				if(isskeleton(H) && !H.organHolder.head)
+					var/datum/mutantrace/skeleton/S = H.mutantrace
+					if(S.head_tracker != null)
+						S.head_tracker.ears.talk_into(src, messages, param, src.real_name, lang_id)
 
 		if ("secure headset")
 			if (src.ears)
 				src.ears.talk_into(src, messages, param, src.real_name, lang_id)
 			else if (ishuman(src))
 				var/mob/living/carbon/human/H = src
-				if(isskeleton(H) && !H.organHolder.head && H.head_tracker != null)
-					H.head_tracker.ears.talk_into(src, messages, param, src.real_name, lang_id)
+				if(isskeleton(H) && !H.organHolder.head)
+					var/datum/mutantrace/skeleton/S = H.mutantrace
+					if(S.head_tracker != null)
+						S.head_tracker.ears.talk_into(src, messages, param, src.real_name, lang_id)
 
 		if ("right hand")
 			if (src.r_hand)
@@ -1058,8 +1062,9 @@
 	var/thickness = 0
 	if (ishuman(src) && isskeleton(src) && !src.organHolder.head)	//Decapitated skeletons speak from their heads
 		var/mob/living/carbon/human/H = src
-		if (H.head_tracker)
-			say_location = H.head_tracker
+		var/datum/mutantrace/skeleton/S = H.mutantrace
+		if (S.head_tracker)
+			say_location = S.head_tracker
 	if (isturf(say_location.loc))
 		listening = all_hearers(message_range, say_location)
 	else
@@ -1655,7 +1660,6 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		health_deficiency = ((src.max_health-src.health)/src.max_health)*100 + health_deficiency_adjustment // cogwerks // let's treat this like pain
 	else
 		health_deficiency = (src.max_health-src.health) + health_deficiency_adjustment
-
 
 	if (health_deficiency >= 30)
 		. += (health_deficiency / 35)
