@@ -107,30 +107,30 @@ ABSTRACT_TYPE(/datum/microbioeffects)
 	// ondisarm(mob, mob, boolean, datum/pathogen) : float
 	// OVERRIDE: Overriding this is situational. ..() is expected to be called.
 	proc/ondisarm(var/mob/M as mob, var/mob/V as mob, isPushDown, var/datum/microbe/origin)
-		//if (infect_type == INFECT_TOUCH && prob(origin.spread*2))
-			//infect_direct(V, origin, "disarm")
+		if (prob(origin.probability))
+			infect_direct(V, origin, "disarm")
 		return 1
 
 	// ongrab(mob, mob, datum/pathogen) : void
 	// TODO: Make this a veto event.
 	// OVERRIDE: Overriding this is situational. ..() is expected to be called.
 	proc/ongrab(var/mob/M as mob, var/mob/V as mob, var/datum/microbe/origin)
-		//if (infect_type == INFECT_TOUCH && prob(origin.spread*2))
-			//infect_direct(V, origin, "grab")
+		if (prob(origin.probability))
+			infect_direct(V, origin, "grab")
 		return
 
 	// onpunch(mob, mob, string, datum/pathogen) : float
 	// OVERRIDE: Overriding this is situational. ..() is expected to be called.
 	proc/onpunch(var/mob/M as mob, var/mob/V as mob, zone, var/datum/microbe/origin)
-		//if (infect_type == INFECT_TOUCH && prob(origin.spread*2))
-			//infect_direct(V, origin, "punching")
+		if (prob(origin.probability))
+			infect_direct(V, origin, "punching")
 		return 1
 
 	// onpunched(mob, mob, string, datum/pathogen) : float
 	// OVERRIDE: Overriding this is situational. ..() is expected to be called.
 	proc/onpunched(var/mob/M as mob, var/mob/A as mob, zone, var/datum/microbe/origin)
-		//if (infect_type == INFECT_TOUCH && prob(origin.spread*2))
-			//infect_direct(A, origin, "being punched")
+		if (prob(origin.probability))
+			infect_direct(A, origin, "being punched")
 		return 1
 
 	// onshocked(mob, mob, datum/shockparam, datum/pathogen) : datum/shockparam

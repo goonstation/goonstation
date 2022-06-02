@@ -8,7 +8,7 @@ ABSTRACT_TYPE(/datum/microbioeffects/benevolent)
 	desc = "Slow paced brute damage healing."
 
 	mob_act(var/mob/M as mob, var/datum/microbe/origin)
-		if (prob(10))
+		if (prob(origin.probability*2))
 			M.HealDamage("All", 2, 0)
 
 	react_to(var/R, var/zoom)
@@ -24,7 +24,7 @@ ABSTRACT_TYPE(/datum/microbioeffects/benevolent)
 	desc = "Slow paced burn damage healing."
 
 	mob_act(var/mob/M as mob, var/datum/microbe/origin)
-		if (prob(10))
+		if (prob(origin.probability*2))
 			M.HealDamage("All", 0, 2)
 
 	react_to(var/R, var/zoom)
@@ -42,8 +42,8 @@ ABSTRACT_TYPE(/datum/microbioeffects/benevolent)
 	name = "Flesh Restructuring"
 	desc = "Fast paced general healing."
 
-	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (prob(10))
+	mob_act(var/mob/M as mob, var/datum/microbe/origin)
+		if (prob(origin.probability*2))
 			M.HealDamage("All", 2, 2)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
@@ -181,7 +181,7 @@ datum/microbioeffects/benevolent/neuronrestoration
 	desc = "Infection slowly repairs nerve cells in the brain."
 
 	mob_act(var/mob/M as mob, var/datum/microbe/origin)
-		if (prob(2))
+		if (prob(origin.probability))
 			M.take_brain_damage(-1)
 
 	react_to(var/R, var/zoom)

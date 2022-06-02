@@ -14,12 +14,16 @@
 
 // Reagent Catagories
 
-#define MB_BRUTE_MEDS_CATAGORY list("styptic_powder", "synthflesh", )
-#define MB_BURN_MEDS_CATAGORY list()
-
+#define MB_BRUTE_MEDS_CATAGORY list("styptic_powder", "synthflesh", "analgesic")
+#define MB_BURN_MEDS_CATAGORY list("silver_sulfadiazine", "synthflesh", "menthol")
+#define MB_TOX_MEDS_CATAGORY list("anti_rad", "penteticacid", "charcoal", "antihol")
+#define MB_OXY_MEDS_CATAGORY list("iron", "salbutamol", "epinephrine", "atropine", "perfluorodecalin")
+#define MB_SEDATIVES_CATAGORY list("haloperidol", "morphine", "neurotoxin", "ethanol", "lithium", "ether", "ketamine")
+#define MB_STIMULANTS_CATAGORY list("smelling_salt", "epinephrine", "sugar", "ephedrine", "synaptizine", "methamphetamine")
+#define MB_FATS_CATAGORY list("badgrease", "grease", "porktonium", "cholesterol")
 
 #define MB_HOT_REAGENTS list("phlogiston", "infernite")
-
+#define MB_COLD_REAGENTS list("cryostylane", "cryoxadone")
 
 // Inspection Responses
 

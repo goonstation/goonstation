@@ -1,27 +1,26 @@
 // Effects for nuclear bio-operator diseases and natural illnesses go here
 ABSTRACT_TYPE(/datum/microbioeffects/malevolent)
 /datum/microbioeffects/malevolent
-	name = "Malevolent"
+	name = "Malevolent Effects"
 
 // The following lines are the probably undocumented (well at least my part - Marq) hell of the default symptoms.
-/*/datum/microbioeffects/malevolent/coughing
+/datum/microbioeffects/malevolent/coughing
 	name = "Coughing"
 	desc = "Violent coughing occasionally plagues the infected."
 
 	mob_act(var/mob/M as mob, var/datum/microbe/origin)
-		if (prob(2))
+		if (prob(origin.probability))
 			M.show_message("<span class='alert'>You cough.</span>")
-
 
 	may_react_to()
 		return "The pathogen appears to generate a high amount of fluids."
-*/
+
 datum/microbioeffects/malevolent/indigestion
 	name = "Indigestion"
 	desc = "A bad case of indigestion which occasionally cramps the infected."
 
 	mob_act(var/mob/M as mob, var/datum/microbe/origin)
-		if (prob(3))
+		if (prob(origin.probability))
 			M.show_message("<span class='alert'>Your stomach hurts.</span>")
 
 	react_to(var/R, var/zoom)
@@ -35,8 +34,8 @@ datum/microbioeffects/malevolent/muscleache
 	name = "Muscle Ache"
 	desc = "The infected feels a slight, constant aching of muscles."
 
-	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (prob(3))
+	mob_act(var/mob/M as mob, var/datum/microbe/origin)
+		if (prob(origin.probability))
 			M.show_message("<span class='alert'>Your muscles ache.</span>")
 
 	react_to(var/R, var/zoom)
@@ -51,9 +50,9 @@ datum/microbioeffects/malevolent/sneezing
 	desc = "The infected sneezes frequently."
 
 	mob_act(var/mob/M as mob, var/datum/microbe/origin)
-		if (prob(3))
+		if (prob(origin.probability))
 			M.visible_message("<span class='alert'>[M] sneezes!</span>", "<span class='alert'>You sneeze.</span>", "<span class='alert'>You hear someone sneezing.</span>")
-			src.infect_cloud(M, origin)
+			//src.infect_cloud(M, origin)
 
 	may_react_to()
 		return "The pathogen appears to generate a high amount of fluids."
@@ -132,7 +131,7 @@ datum/microbioeffects/malevolent/shivering
 	desc = "The pathogen slightly raises the homeostatic set point of the infected."
 
 	mob_act(var/mob/M as mob, var/datum/microbe/origin)
-		if (prob(2))
+		if (prob(origin.probability))
 			M:emote("shiver")
 
 	may_react_to()
@@ -145,10 +144,10 @@ datum/microbioeffects/malevolent/sweating
 	var/choices = list("You're sweating heavily.", "You're soaked in your own sweat.")
 
 	mob_act(var/mob/M as mob, var/datum/microbe/origin)
-		if (prob(3))
+		if (prob(origin.probability))
 			M.show_message("<span class='alert'> [pick(choices)] </span>")
-		if (prob(1))
-			src.infect_puddle(M, origin)
+		//if (prob(1))
+			//src.infect_puddle(M, origin)
 
 	may_react_to()
 		return "The pathogen appears to generate a high amount of fluids."

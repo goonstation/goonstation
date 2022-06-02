@@ -10,11 +10,44 @@ datum/controller/microbe
 	var/uid = null
 	var/creation_time = null
 	var/next_uid = 1
+	var/next_puid = 1
 
 	New(var/microbio_uid)
 		..()
 		creation_time = world.time / 600
 		src.uid = microbio_uid
+
+	//The functions below might be refactored from patho:
+
+	//Mark who got infected on the CDC panel
+	//Mark Patient Zero on the CDC panel
+	//Mark who is cured on the CDC panel
+
+	//TOPIC: ADMIN ONLY
+		//Cure one person
+		//Cure every microbe infection
+		//Microbe Creator
+			//Reset
+			//Name
+			//Infection Count
+			//Total Duration
+			//Suppressant/Cure
+			//Add effect
+			//Remove effect
+			//Create
+		//Microbe Data (Manipulate existing microbes)
+			//Name ("Rename to?")
+			//Infection Count ("")
+			//"Cure all who have this specific microbial culture"
+			//"Infect a selected player with this culture"
+			//"Spawn a vial containing this microbial culture"
+		//Effect Data
+			//Input to locate effect, output effect.desc
+		////////////////////////////////////
+		//Ckey checking procs to handle stratae of admins and patho panel access
+		////
+		//CDC HTML Infrastructure
+			//All of it will be TGUI
 
 	New()
 		..()
@@ -26,7 +59,7 @@ datum/controller/microbe
 		for (var/T in childrentypesof(/datum/suppressant))
 			path_to_suppressant[T] = new T()
 
-var/global/datum/controller/microbe/microbe_controller = new()
+var/global/datum/controller/microbe/microbe_controller = new()	//Callable everywhere.
 
 // todo: remove this, port. (To where?)
 // A wrapper record returned by the onshocked event of a pathogen symptom.
@@ -41,6 +74,7 @@ datum/microbe
 	var/desc										// What a scientist might see when he looks at this pathogen through a microscope (eg. blue stringy viruses)
 
 	var/mob/infected								// The mob that is infected with this pathogen.
+	var/infectioncount								// Int variable, used to limit transmissible spread for singular cultures
 
 	var/duration									// Counter for durationtotal
 	var/durationtotal								// How long a pathogen stays in an infected mob before being naturally immunized.
@@ -52,6 +86,7 @@ datum/microbe
 	//var/list/mutex = list()						// These symptoms are explicitly disallowed by a mutex.
 
 	var/microbio_uid								// UID for a microbe.
+	var/microbio_playerid							// sub-UID for multiple players with different infection times
 	var/ticked										// Stops runtimes.
 	var/probability									// Used in the effect probability function.
 
@@ -65,19 +100,16 @@ datum/microbe
 		name = ""
 		desc = ""
 		infected = null
-		duration = null
-		durationtotal = null
+		infectioncount = null
+		duration = 1
+		durationtotal = 1
 		suppressant = null
 		effects = list()
-		microbio_uid = null
+		microbio_uid = 0
+		microbio_playerid = 0
 		//mutex = list()
 		ticked = 0
-		probability = null
-
-	proc/clone()
-		var/datum/microbe/P = new /datum/microbe
-		P.setup(0, src)
-		return P
+		probability = 0
 
 	proc/do_prefab(tier)							// for ailments with defined symptoms
 		clear()
@@ -92,11 +124,14 @@ datum/microbe
 	proc/generate_name()
 		src.microbio_uid = "[microbe_controller.next_uid]"
 		microbe_controller.next_uid++
+		src.microbio_playerid = "[microbe_controller.next_puid]"
+		microbe_controller.next_puid++
 		src.name = "Custom Culture UID [src.microbio_uid]"
 		return
 
 	proc/generate_effects() //WIP
-		for (var/i = 0, i <= 3, i++)
+		var/random = rand(2,5)
+		for (var/i = 0, i <= random, i++)
 			add_new_symptom(microbe_controller.path_to_effect)
 
 
@@ -108,9 +143,39 @@ datum/microbe
 	proc/generate_attributes() //WIP
 		var/shape = pick("stringy", "snake", "blob", "spherical", "tetrahedral", "star shaped", "tesselated")
 		src.desc = "[suppressant.color] [shape] microbes" //color determined by average of cure reagent and assigned-effect colors
-		src.durationtotal = rand(50,150)
-		src.duration = src.durationtotal
+		src.durationtotal = 2*rand(60,120)					//4 to 8 minute lifespan
+		src.duration = src.durationtotal - 1
 		src.probability = 0
+		src.infectioncount = 3								// See below for explanation.
+
+		//Infection count should be dependent on active player count, balanced at ~5-10% of living serverpop
+		//For Goon1 at high pop (90-110), ~10 people per microbial culture
+		//INFECTIONCOUNT IS CURRENTLY NOT A GLOBAL COUNT! IT IS A BRANCHING COUNTER!
+		///////////////////////////////////////////////////////////////
+		/** An infection count of 4 creates a propogation tree, because the count decreases on transmission and is not global.
+		 * 4
+		 * | \
+		 * 3   3
+		 * | \ | \
+		 * 2 2 2 2
+		 * |\|\|\|\
+		 * 111111111
+		 * ................
+		 * 0000000000000000
+		 *
+		 * At the end, 16 different people could have been infected, assuming all potential transmissions occured.
+		 *
+		 * The maximum number of infections for a given infectioncount var is 2^(infectioncount).
+		 *
+		 * I am starting with (3), or 8 maximum infections, because I believe that 8 is a
+		 * reasonable value for both highpop and lowpop (20-40) servers.
+		 *
+		 * I have no idea if this is an adequate implementation in the dev/admin/mentor's opinions.
+		*/
+		//Taken from the podwars code...
+		//for (var/datum/mind/m in pw_team.members)
+			//if (m.current?.ckey)
+				//active_players ++
 
 	proc/randomize()
 		generate_name()
@@ -126,13 +191,16 @@ datum/microbe
 		if (origin)
 			src.name = origin.name
 			src.desc = origin.desc
+			src.infectioncount = origin.infectioncount
 			src.durationtotal = origin.durationtotal
-			src.duration = origin.durationtotal						// Start from the top for new infections/generation
+			src.duration = origin.duration						// Start from the top for new infections/generation
 			src.effects = origin.effects.Copy()
 			for (var/datum/microbioeffects/E in src.effects)
 				E.onadd(src)
 			src.suppressant = origin.suppressant
 			src.microbio_uid = origin.microbio_uid
+			src.microbio_playerid = origin.microbio_playerid			// REMEMBER TO INCREMENT THE PUID EVERY INFECTION!
+			src.ticked = 0
 			src.probability = 0
 		else if (status == 1)
 			randomize()
@@ -144,46 +212,62 @@ datum/microbe
 		if (ticked)
 			ticked = 0
 
-	// handles pathogen duration and natural immunization
-	proc/progress_pathogen()
-		src.probability = MB_PROBABILITY_FACTOR*src.duration*(src.durationtotal-src.duration)
-		var/iscured = src.suppressant.suppress_act(src)
-		if (iscured)
-			duration = ceil(duration/2)
-			return
-		if (!duration)
+	// Handles pathogen duration and natural immunization.
+	// It is critical that microbial infections are inherently transient (non-chronic).
+	// All old pathology diseases were practically chronic (permanent), which isn't true for
+	// most human-contagious diseases at all.
+	// Pathology also used stages to divide effect severity, which caused code bloating.
+	/////////////////////////////////////////////////////////////////////////////////
+	// progress_pathogen uses a continuous downward parabola function to determine the
+	// probability for effects to act. The functionn zeroed at the
+	// initial time of infection and at natural immunization.
+	// The probability factors manipulate the function to move the apex of the parabola to (5),
+	// representing a 5% base effect chance.
+	// ceil() wraps the entire function to round probability to the higher integer.
+	/////////////////////////////////////////////////////////////////////////////////
+	// P(t) = -a*t^2 + b*t
+	// Where a = 20/durationtotal**2 and b = 20/durationtotal
+	proc/progress_pathogen(var/datum/microbe/P)
+		if (P.duration <= 0)
 			infected.cured(src)
 			return
+		var/B = 20/P.durationtotal
+		var/A = B/P.durationtotal
+		src.probability = ceil(-A*P.duration**2+B*P.duration)
+		var/iscured = P.suppressant.suppress_act(src)
+		if (iscured)
+			P.duration = ceil(P.duration/2) - 1
+			return
 		else
-			duration--							//  Wrap into process
+			P.duration--							//  Wrap into process
 
 //Generalize for objects and turfs WIP
 
-	proc/turf_act()
+	proc/turf_act(var/datum/microbe/P)
 		for (var/datum/effect in src.effects)
 			effect:turf_act(null, src)
-		progress_pathogen()
+		progress_pathogen(P)
 
-	proc/object_act()
+	proc/object_act(var/datum/microbe/P)
 		for (var/datum/effect in src.effects)
 			effect:object_act(null, src)
-		progress_pathogen()
+		progress_pathogen(P)
 
-	proc/reagent_act()
+	proc/reagent_act(var/datum/microbe/P)
 		for (var/datum/effect in src.effects)
 			effect:reagent_act(null, src)
-		progress_pathogen()
+		progress_pathogen(P)
 
-	proc/mob_act()
+	proc/mob_act(var/mob/M as mob, var/datum/microbe/P)
 		for (var/datum/effect in src.effects)
 			effect:mob_act(infected,src)
-		progress_pathogen()
+		progress_pathogen(P)
 
 	// it's like mob_act, but for dead people!
-	proc/mob_act_dead()
+	proc/mob_act_dead(var/mob/M as mob, var/datum/microbe/P)
 		for (var/datum/effect in src.effects)
 			effect:mob_act_dead(infected,src)
-		progress_pathogen()
+		progress_pathogen(P)
 
 	//=============================================================================
 	//	Events

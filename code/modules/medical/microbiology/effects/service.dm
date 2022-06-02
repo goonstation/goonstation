@@ -1,5 +1,4 @@
 // Effects related to Botany, Cooking, Distilling go Here
-
 ABSTRACT_TYPE(/datum/microbioeffects/service)
 /datum/microbioeffects/service/detoxication
 	name = "Detoxication"
@@ -29,6 +28,29 @@ ABSTRACT_TYPE(/datum/microbioeffects/service)
 	may_react_to()
 		return "The pathogen appears to react with a pure intoxicant."
 
+
+//datum/microbioeffects/service/antimiasma
+	//On turf (floor):
+		//Define a 'durability' var
+		//If miasma cloud is on the turf, remove it and reduce durability
+
+//datum/microbioeffects/service/autodry
+	//On turf (floor):
+		//Define a durability var
+		//Basically port over the water drain code and add a durability
+
+//datum/microbioeffects/service/drycleaning
+	//On object:
+		//Define a durability var
+		//If the object gets bloody (clothing), clean it and reduce durability
+
+//datum/microbioeffects/service/breadmoonrising
+	//On object:
+		//Check if it is bread
+		//
+
+
+//This is just calomel, keeping for reference
 /*datum/pathogeneffects/benevolent/metabolisis
 	name = "Accelerated Metabolisis"
 	desc = "The pathogen accelerates the metabolisis of all chemicals present in the host body."

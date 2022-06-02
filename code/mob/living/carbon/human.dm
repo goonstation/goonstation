@@ -2476,7 +2476,10 @@
 	if (!(P.microbio_uid in src.microbes))
 		var/datum/microbe/Q = new /datum/microbe
 		P.infectioncount--
-		Q.clone(P)
+		Q.setup(0,P)
+		Q.microbio_playerid++
+		microbe_controller.next_puid++
+		microbe_controller.next_puid++
 		//microbe_controller.mob_infected(Q, src)
 		src.microbes += Q.microbio_uid
 		src.microbes[Q.microbio_uid] = Q

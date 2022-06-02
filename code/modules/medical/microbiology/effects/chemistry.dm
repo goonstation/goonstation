@@ -3,6 +3,33 @@ ABSTRACT_TYPE(/datum/microbioeffects/chemistry)
 /datum/microbioeffects/chemistry
 	name = "Chemical Effects"
 
+
+
+//The following subdatum would allow limited chemical production for specific chems:
+/**
+ * Space cleaner
+ * Luminol
+ * Styptic
+ * Silver Sulfadizine
+ * Charcoal
+ * Epinephrine
+ * Mutadone
+ */
+//datum/microbioeffects/chemistry/...
+
+	//On Object:
+		//Check if its a reagent container
+		//If yes..
+		//Check its reagents
+		//If it has the specific chem...
+		//Produce more of it using prob(probability)
+		//Stops when duration hits 0.
+
+
+
+
+
+
 /*datum/pathogeneffects/chemistry/ethanol
 	name = "Auto-Brewery"
 	desc = "The pathogen aids the host body in metabolizing chemicals into ethanol."
