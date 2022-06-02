@@ -17,6 +17,7 @@
 	var/can_hold_items = 1						// self-explanatory
 	var/can_attack = 1							// also
 	var/can_range_attack = 0					// does this limb have a special thing for attacking at a distance
+	var/intent_override = FALSE                 // always call limb intent procs
 	var/image/obscurer
 	var/cooldown_overlay = 0
 	var/mob/holder = null

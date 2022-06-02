@@ -17,7 +17,6 @@
 	var/datum/equipmentHolder/flockAbsorption/absorber
 	health_brute = 30
 	health_burn = 30
-	intent_override = TRUE
 
 	///Custom contextActions list so we can handle opening them ourselves
 	var/list/datum/contextAction/contexts = list()
@@ -346,6 +345,7 @@
 	HH.icon_state = "converter"
 	HH.limb_name = HH.name
 	HH.can_hold_items = FALSE
+	HH.intent_override = TRUE
 
 	HH = hands[3]
 	HH.limb = new /datum/limb/gun/flock_stunner
