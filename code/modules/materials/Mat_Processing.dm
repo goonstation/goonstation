@@ -137,7 +137,7 @@
 			S.UpdateIcon()
 			return
 
-		if (W.cant_drop) //For borg held items
+		else if (W.cant_drop) //For borg held items
 			boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
 			return ..()
 
