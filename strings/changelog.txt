@@ -1,5 +1,9 @@
 
 (t)thu jun 02 22
+(u)glowbold
+(p)8856
+(e)|
+(+)Cyborgs can now dump the contents of their ore scoop and satchels into material processors and the Rockbox
 (u)CodeJester
 (p)8869
 (e)🆕|feature
