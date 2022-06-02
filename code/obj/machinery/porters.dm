@@ -737,7 +737,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 	allow_drop()
 		return 0
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (src.open && iswrenchingtool(W))
 			return
 		else

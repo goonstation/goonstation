@@ -369,7 +369,7 @@ proc/filter_trait_hats(var/type)
 				M.show_text("Requested object missing or nonexistant!", "red")
 				return
 
-	attackby(obj/item/W as obj, mob/M as mob)
+	attackby(obj/item/W, mob/M)
 		var/success = 0
 		for (var/name in items)
 			var/type = items[name]
@@ -749,7 +749,7 @@ proc/filter_trait_hats(var/type)
 	see_face = 1
 	body_parts_covered = HEAD
 
-/obj/item/paper_hat/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/paper_hat/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/pen))
 		var/obj/item/pen/P = W
 		if (P.font_color)
@@ -1375,7 +1375,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/headband)
 	w_class = W_CLASS_TINY
 	throwforce = 0
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		..()
 		if(istype(W,/obj/item/device/radio/headset))
 			user.show_message("You stuff the headset on the headband and tape it in place. [istype(src, /obj/item/clothing/head/headband/nyan) ? "Meow" : "Now"] you should be able to hear the radio using these!")

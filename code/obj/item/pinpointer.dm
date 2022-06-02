@@ -272,7 +272,7 @@
 			..()
 
 /obj/item/pinpointer/idtracker/spy
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		..(user)
 		if (!user.mind || user.mind.special_role != ROLE_SPY_THIEF)
 			boutput(user, "<span class='alert'>The target locator emits a sorrowful ping!</span>")

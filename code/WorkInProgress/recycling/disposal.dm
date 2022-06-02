@@ -1412,7 +1412,7 @@
 
 		update()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(..(W, user)) return
 		else if(ispulsingtool(W))
 			. = alert(user, "What should trigger the sensor?","Disposal Sensor", "Creatures", "Anything", "A mail tag")

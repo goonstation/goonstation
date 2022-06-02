@@ -65,7 +65,7 @@
 			boutput(user, "You have successfully created \a [N]!")
 		return
 
-/obj/item/reagent_containers/food/snacks/plant/attackby(obj/item/W as obj, mob/user as mob) //first phase of fruithat construction
+/obj/item/reagent_containers/food/snacks/plant/attackby(obj/item/W, mob/user) //first phase of fruithat construction
 	if (istype(W, /obj/item/cable_coil))
 		var/obj/item/cable_coil/C = W
 		if (src.validforhat == 1) //is it a fruit and not a filthy vegetable?

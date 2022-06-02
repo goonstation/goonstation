@@ -64,13 +64,13 @@
 	was_deconstructed_to_frame(mob/user)
 		src.active = 0
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (!src.fuel) boutput(user, "<span class='alert'>There is no fuel in the furnace!</span>")
 		else
 			src.active = !src.active
 			boutput(user, "You switch [src.active ? "on" : "off"] the furnace.")
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/grab))
 			if (!src.active)
 				boutput(user, "<span class='alert'>It'd probably be easier to dispose of them while the furnace is active...</span>")

@@ -373,7 +373,7 @@
 	attack_ai(mob/user as mob)
 		return src.Attackhand(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(status & BROKEN)
 			return
 		src.add_dialog(user)

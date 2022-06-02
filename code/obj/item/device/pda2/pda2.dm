@@ -564,7 +564,7 @@
 		src.updateSelfDialog()
 		return
 
-/obj/item/device/pda2/attackby(obj/item/C as obj, mob/user as mob)
+/obj/item/device/pda2/attackby(obj/item/C, mob/user)
 	if (istype(uplink,/obj/item/uplink/integrated/pda/spy))
 		var/obj/item/uplink/integrated/pda/spy/U = uplink
 		if (U.try_deliver(C, user))

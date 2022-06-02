@@ -231,7 +231,7 @@
 			src.ArtifactStimulus(random_stimulus,random_strength)
 	return
 
-/obj/proc/Artifact_attackby(obj/item/W as obj, mob/user as mob)
+/obj/proc/Artifact_attackby(obj/item/W, mob/user)
 	if (isrobot(user))
 		src.ArtifactStimulus("silitouch", 1)
 

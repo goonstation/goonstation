@@ -99,7 +99,7 @@
 			src.UpdateIcon()
 			return 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return
 
 	attack_self(mob/user as mob)
@@ -526,7 +526,7 @@
 			src.attack(user,user) //do self operation
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/mender_refill_cartridge))
 			var/obj/item/reagent_containers/mender_refill_cartridge/refill = W
 			refill.do_refill(src, user)

@@ -45,7 +45,7 @@
 		<br><span class='bold'>System Integrity:</span> [round((src.health/50)*100)]%
 		<br><span class='bold'>###=-</span></span>"}
 
-/turf/simulated/floor/feather/attackby(obj/item/C as obj, mob/user as mob, params)
+/turf/simulated/floor/feather/attackby(obj/item/C, mob/user, params)
 	// do not call parent, this is not an ordinary floor
 	if(!C || !user)
 		return
@@ -317,7 +317,7 @@ turf/simulated/floor/feather/proc/bfs(turf/start)//breadth first search, made by
 			user.lastattacked = src
 			attack_particle(user, src)
 
-/turf/simulated/wall/auto/feather/attackby(obj/item/C as obj, mob/user as mob)
+/turf/simulated/wall/auto/feather/attackby(obj/item/C, mob/user)
 	if(!C || !user)
 		return
 	if(ispryingtool(C) && src.broken)

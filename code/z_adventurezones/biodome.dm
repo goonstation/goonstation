@@ -1142,7 +1142,7 @@ SYNDICATE DRONE FACTORY AREAS
 	var/obj/item/alchemy/symbol = null
 	var/requiredType = null
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(symbol != null)
 			symbol.set_loc(src.loc)
 			symbol = null
@@ -1150,7 +1150,7 @@ SYNDICATE DRONE FACTORY AREAS
 			boutput(user, "<span class='notice'>You remove the Symbol.</span>")
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/alchemy/symbol) && symbol == null)
 			user.drop_item()
 			symbol = W
@@ -1217,7 +1217,7 @@ SYNDICATE DRONE FACTORY AREAS
 		else
 			boutput(usr, "<span class='alert'>The Circle remains silent ...</span>")
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(activated) return
 
 

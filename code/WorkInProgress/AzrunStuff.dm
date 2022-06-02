@@ -296,7 +296,7 @@
 		else
 			. += AE.description
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		var/datum/gimmick_event/AE = get_active_event()
 
 		if(!AE)
@@ -306,7 +306,7 @@
 		else
 			..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 
 		var/attempt = FALSE
 		var/datum/gimmick_event/AE = get_active_event()
@@ -704,7 +704,7 @@
 		if(!ball_projectile)
 			ball_projectile = new
 
-	attackby(obj/item/W as obj, mob/user as mob, params)
+	attackby(obj/item/W, mob/user, params)
 		if(istype(W, /obj/item/golf_club))
 			return //We haven't hit been hit yet...
 		else

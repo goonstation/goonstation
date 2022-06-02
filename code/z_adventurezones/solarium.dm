@@ -51,7 +51,7 @@ var/global/the_sun = null
 			the_sun = null
 		..()
 
-	attackby(obj/item/O as obj, mob/user as mob)
+	attackby(obj/item/O, mob/user)
 		if (istype(O, /obj/item/clothing/mask/cigarette))
 			if (!O:on)
 				O:light(user, "<span class='alert'><b>[user]</b> lights [O] on [src] and casually takes a drag from it. Wow.</span>")
@@ -87,7 +87,7 @@ var/global/derelict_mode = 0
 		if (world.name)
 			name = world.name
 
-	attackby(obj/item/O as obj, mob/user as mob)
+	attackby(obj/item/O, mob/user)
 		..()
 		if (server_kicked_over && istype(O, /obj/item/clothing/mask/cigarette))
 			if (!O:on)

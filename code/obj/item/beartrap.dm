@@ -22,7 +22,7 @@
 		if (src.armed)
 			. += "<span class='alert'>It looks like it's armed.</span>"
 
-	attack_hand(mob/M as mob)
+	attack_hand(mob/M)
 		if (src.armed)
 			if ((M.get_brain_damage() >= 60 || M.bioHolder.HasEffect("clumsy")) && prob(30))
 				src.triggered(M)

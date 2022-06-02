@@ -38,7 +38,7 @@ obj/item/coin/bombini
 		else
 			interesting = pick("This device is loaded with noxious chemicals","This showerhead is armed","This showerhead is waiting to go off")
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		boutput(user, "<span class='notice'><B>The [src] beeps [src.stage] times softly</B></span>")
 		if (id == next_choice)
 			if (a)

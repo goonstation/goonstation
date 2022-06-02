@@ -78,7 +78,7 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 			if (reinforcement == 1)
 				A.set_reinforcement(M)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (iswrenchingtool(W))
 			src.deconstruct(src.reinforced ? 1 : null)
 			qdel(src)
@@ -296,7 +296,7 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 	material_amt = 0.1
 
 //bookshelf part construction
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/plank))
 			user.visible_message("[user] starts to reinforce \the [src] with wood.", "You start to reinforce \the [src] with wood.")
 			if (!do_after(user, 2 SECONDS))

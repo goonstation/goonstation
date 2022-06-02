@@ -44,7 +44,7 @@
 	. = "<br><span class='notice'>[reagents.get_description(user,rc_flags)]</span>"
 	return
 
-/obj/mopbucket/attackby(obj/item/W as obj, mob/user as mob)
+/obj/mopbucket/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/mop))
 		if (src.reagents.total_volume >= 3)
 			if (W.reagents)

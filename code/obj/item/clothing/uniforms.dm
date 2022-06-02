@@ -1251,7 +1251,7 @@
 					qdel(src)
 					return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (issnippingtool(W))
 			boutput(user, "You begin cutting up [src].")
 			if (!do_after(user, 3 SECONDS))
@@ -1456,7 +1456,7 @@
     icon_state = "bandshirt"
     item_state = "bandshirt"
 
-/obj/item/clothing/under/misc/bandshirt/attack_hand(mob/user as mob)
+/obj/item/clothing/under/misc/bandshirt/attack_hand(mob/user)
 	if  ( ..() && !disturbed )
 		new /obj/item/clothing/mask/cigarette/dryjoint(get_turf(user))
 		boutput(user, "Something falls out of the shirt as you pick it up!")

@@ -304,7 +304,7 @@
 		update_head_image()
 
 
-	attackby(obj/item/W as obj, mob/user as mob) // this is real ugly
+	attackby(obj/item/W, mob/user) // this is real ugly
 		if (!user)
 			return
 		//Putting stuff on heads

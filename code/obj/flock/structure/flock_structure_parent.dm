@@ -193,7 +193,7 @@ ABSTRACT_TYPE(/obj/flock_structure)
 				action = "squeezes"
 		src.visible_message("<span class='alert'><b>[user]</b> [action] [src], but nothing happens.</span>")
 
-/obj/flock_structure/attackby(obj/item/W as obj, mob/user as mob)
+/obj/flock_structure/attackby(obj/item/W, mob/user)
 	src.visible_message("<span class='alert'><b>[user]</b> attacks [src] with [W]!</span>")
 	src.report_attack()
 	attack_particle(user, src)

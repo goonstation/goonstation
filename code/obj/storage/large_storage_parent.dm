@@ -224,7 +224,7 @@
 		src.open(user=user)
 		src.visible_message("<span class='alert'><b>[user]</b> kicks [src] open!</span>")
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(world.time == src.last_attackhand) // prevent double-attackhand when entering
 			return
 		if (!in_interact_range(src, user))
@@ -239,7 +239,7 @@
 		else if (!src.toggle(user))
 			return src.Attackby(null, user)
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		if (istype(I, /obj/item/satchel/))
 			if(src.secure && src.locked)
 				user.show_text("Access Denied", "red")

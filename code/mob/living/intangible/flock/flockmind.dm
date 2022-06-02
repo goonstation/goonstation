@@ -72,7 +72,6 @@
 	else
 		boutput(src, "<span class='alert'>You don't have a flock, it's not going to listen to you! Also call a coder, this should be impossible!</span>")
 		return
-	src.started = TRUE
 	src.removeAbility(/datum/targetable/flockmindAbility/spawnEgg)
 	src.addAllAbilities()
 
@@ -141,6 +140,12 @@
 		message_admins("No ghosts responded to a Flocktrace offer from [src.real_name]")
 		logTheThing("admin", null, null, "No ghosts responded to Flocktrace offer from [src.real_name]")
 		boutput(src, "<span class='flocksay'>Partition failure: unable to coalesce sentience.</span>")
+		return TRUE
+
+	if (!src.abilityHolder.pointCheck(FLOCKTRACE_COMPUTE_COST))
+		message_admins("A Flocktrace offer from [src.real_name] was sent but failed due to lack of compute.")
+		logTheThing("admin", null, null, "Flocktrace offer from [src.real_name] failed due to lack of compute.")
+		boutput(src, "<span class='flocksay'>Partition failure: Compute required unavailable.</span>")
 		return TRUE
 
 	var/mob/picked = pick(candidates)

@@ -188,7 +188,7 @@
 		src.UpdateIcon()
 		return
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (isdead(src))
 			return ..()
 		if (issnippingtool(W))
@@ -619,7 +619,7 @@
 	honey_color = rgb(0, 255, 255)
 	// halloween stuff can come a little later seeing as we just now finished halloween
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (src.stat)
 			return ..()
 
@@ -871,7 +871,7 @@
 		src.visible_message("<b>[src]</b> wills a blob of honey into existence![prob(10) ? " Weird!" : null]")
 		playsound(src.loc, "sound/effects/mag_forcewall.ogg", 50, 1)
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (src.stat)
 			return ..()
 

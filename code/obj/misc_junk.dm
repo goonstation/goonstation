@@ -128,7 +128,7 @@
 		src.setItemSpecial(/datum/item_special/swipe)
 		BLOCK_SETUP(BLOCK_ROD)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(issnippingtool(W))
 			boutput(user, "<span class='notice'>You cut [src] horizontally across and flatten it out.</span>")
 			new /obj/item/c_sheet(get_turf(src))
@@ -464,7 +464,7 @@
 	deconstruct_flags = DECON_WRENCH
 	var/last_ring = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(last_ring + 20 >= world.time)
 			return
 		else
@@ -580,7 +580,7 @@
 	density = 1
 	var/gnome = 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/scpgnome_lid) && ((src.icon_state == "sarc_2")||(src.icon_state == "sarc_3")))
 			user.u_equip(W)
 			qdel(W)
@@ -597,7 +597,7 @@
 		else
 			..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(src.icon_state == "sarc_key")
 			src.icon_state = "opening"
 			animate(src, time = 2.3 SECONDS)

@@ -166,13 +166,13 @@
 				O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[src.auth_need - src.authorized.len] authorizations needed until Armory is opened.\"</span></span>", 2)
 
 
-/obj/machinery/computer/riotgear/attack_hand(mob/user as mob)
+/obj/machinery/computer/riotgear/attack_hand(mob/user)
 	if (ishuman(user))
 		return src.Attackby(user:wear_id, user)
 	..()
 
 //kinda copy paste from shuttle auth :)
-/obj/machinery/computer/riotgear/attackby(var/obj/item/W as obj, var/mob/user as mob)
+/obj/machinery/computer/riotgear/attackby(var/obj/item/W, var/mob/user)
 	interact_particle(user,src)
 	if(status & (BROKEN|NOPOWER))
 		return

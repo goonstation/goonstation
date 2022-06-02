@@ -258,7 +258,7 @@
 			src.UpdateOverlays(circuit_image,"module_slot_[i]")
 			src.UpdateOverlays(color_overlay,"module_slot_[i]_overlay")
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!src.law_circuits)
 			// YOU BETRAYED THE LAW!!!!!!
 			boutput(user, "<span class='alert'>Oh dear, this really shouldn't happen. Call an admin.</span>")
@@ -282,7 +282,7 @@
 		return ..()
 
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		if(isweldingtool(I))
 			if(I:try_weld(user,1))
 				if(src._health < src._max_health)

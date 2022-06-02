@@ -237,7 +237,7 @@
 		..()
 
 	//mostly same as kudzu
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!W) return
 		if (!user) return
 		var/dmg = 1
