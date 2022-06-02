@@ -69,7 +69,7 @@
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, __red("Nothing to gib there."))
+				boutput(holder.owner, "<span class='alert'>Nothing to gib there.</span>")
 				return 1
 		actions.start(new/datum/action/bar/icon/gibstareAbility(target, src), holder.owner)
 		return 0

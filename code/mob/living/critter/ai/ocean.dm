@@ -100,7 +100,7 @@
 		for (var/atom in by_cat[TR_CAT_PODS_AND_CRUISERS])
 			var/atom/A = atom
 			if (IN_RANGE(holder.owner, A, 6))
-				holder.current_task = src.escape
+				holder.switch_to(src.escape)
 				src.escape.reset()
 
 		for(var/mob/living/M in view(target_range, holder.owner))
@@ -159,7 +159,7 @@
 	default_task = get_instance(/datum/aiTask/timed/targeted/flee_and_shoot, list(src))
 
 /datum/aiHolder/spike/was_harmed(obj/item/W, mob/M)
-	current_task = get_instance(/datum/aiTask/timed/targeted/flee_and_shoot, list(src))
+	switch_to(get_instance(/datum/aiTask/timed/targeted/flee_and_shoot, list(src)))
 	current_task.reset()
 
 /datum/aiTask/timed/targeted/flee_and_shoot

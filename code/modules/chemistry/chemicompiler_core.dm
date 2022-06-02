@@ -830,23 +830,21 @@
 	var/obj/item/reagent_containers/holder = reservoirs[rid]
 	var/datum/reagents/R = holder.reagents
 	var/heating_in_progress = 1
-	//while(R.total_volume && heating_in_progress)
 
 	//heater settings
-	var/h_exposed_volume = 10
-	var/h_divisor = 10
 	var/h_change_cap = 25
+	var/heater_temp
+	var/difference = temp- R.total_temperature
 
-	var/element_temp = R.total_temperature < temp ? 9000 : 0												//Sidewinder7: Smart heating system. Allows the CC to heat at full power for more of the duration, and prevents reheating of reacted elements.
-	var/max_temp_change = abs(R.total_temperature - temp)
-	var/next_temp_change = clamp((abs(R.total_temperature - element_temp) / h_divisor), 1, h_change_cap)	// Formula used by temperature_reagents() to determine how much to change the temp
-	if(next_temp_change >= max_temp_change)																	// Check if this tick will cause the temperature to overshoot if heated/cooled at full power. Use >= to prevent reheating in the case the values line up perfectly
-		element_temp = (((R.total_temperature - (R.total_temperature-temp)*h_divisor) * (R.total_volume+h_exposed_volume)) - (R.total_temperature*R.total_volume))/h_exposed_volume
+	if (difference >= 0)
+		heater_temp = R.total_temperature+ min(ceil(difference),h_change_cap)
+	else
+		heater_temp = max(1,R.total_temperature+ max(round(difference),-h_change_cap))
+
+	if(abs(difference) <= h_change_cap)
 		heating_in_progress = 0
 
-	h_divisor = 35/h_divisor*100 // quick hack because idk wtf is going on here - Emily
-
-	R.temperature_reagents(element_temp, h_exposed_volume, h_divisor, h_change_cap)
+	R.set_reagent_temp(heater_temp, TRUE)
 
 	return heating_in_progress
 

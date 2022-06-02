@@ -306,7 +306,7 @@
 						[iswraith(M) ? "<em>Is Wraith</em>" : "<a href='[playeropt_link(M, "makewraith")]'>Wraith</a>"] &bull;
 						[isblob(M) ? "<em>Is Blob</em>" : "<a href='[playeropt_link(M, "makeblob")]'>Blob</a>"] &bull;
 						[istype(M, /mob/living/carbon/human/machoman) ? "<em>Is Macho Man</em>" : "<a href='[playeropt_link(M, "makemacho")]'>Macho Man</a>"] &bull;
-						[isflock(M) ? "<em>Is Flock</em>" : "<a href='[playeropt_link(M, "makeflock")]'>Flock</a>"] &bull;
+						[isflockmob(M) ? "<em>Is Flock</em>" : "<a href='[playeropt_link(M, "makeflock")]'>Flock</a>"] &bull;
 						[isfloorgoblin(M) ? "<em>Is Floor Goblin</em>" : "<a href='[playeropt_link(M, "makefloorgoblin")]'>Floor Goblin</a>"] &bull;
 						[istype(M, /mob/living/carbon/human/slasher) ? "<em>Is Slasher</em>" : "<a href='[playeropt_link(M, "makeslasher")]'>Slasher</a>"]
 					</div>
@@ -383,11 +383,13 @@
 				</div>
 			</div>
 			"}
-
-	var/windowHeight = "450"
-	if (src.level == LEVEL_ADMIN)
-		windowHeight = "550"
-	else if (src.level == LEVEL_CODER)
-		windowHeight = "754"	//weird number, but for chui screen, it removes the scrolling.
-
+	var/windowHeight = 450
+	if (src.level >= LEVEL_CODER)
+		windowHeight = 754	//weird number, but for chui screen, it removes the scrolling.
+	else if (src.level >= LEVEL_ADMIN)
+		windowHeight = 550
+#ifdef SECRETS_ENABLED
+	dat += restricted_playeroptions(M)
+	windowHeight += 45
+#endif
 	usr.Browse(dat.Join(), "window=adminplayeropts[M.ckey];size=600x[windowHeight]")

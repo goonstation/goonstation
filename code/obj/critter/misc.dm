@@ -329,10 +329,10 @@
 
 		return 1
 
-/obj/critter/spacebee
+/obj/critter/wasp
 	name = "space wasp"
 	desc = "A wasp in space."
-	icon_state = "spacebee"
+	icon_state = "wasp"
 	critter_family = BUG
 	density = 1
 	health = 10
@@ -403,7 +403,7 @@
 	health_gain_from_food = 6
 	angertext = "snips at"
 	butcherable = 1
-	flags = NOSPLASH | OPENCONTAINER | TABLEPASS
+	flags = TABLEPASS
 	flying = 0
 	maxhealth = 60
 
@@ -490,7 +490,7 @@
 
 
 
-/obj/critter/spacebee/angry
+/obj/critter/wasp/angry
 	name = "angry space wasp"
 	desc = "An angry wasp in space."
 	angertext = "buzzes furiously at"
@@ -500,10 +500,10 @@
 
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/wasp
 	name = "space wasp egg"
-	critter_type = /obj/critter/spacebee
+	critter_type = /obj/critter/wasp
 
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/wasp/angry
-	critter_type = /obj/critter/spacebee/angry
+	critter_type = /obj/critter/wasp/angry
 
 /obj/critter/magiczombie
 	name = "skeleton"
@@ -1478,7 +1478,7 @@
 	brutevuln = 1
 	angertext = "hisses at"
 	butcherable = 1
-	flags = NOSPLASH | OPENCONTAINER | TABLEPASS
+	flags = TABLEPASS
 	flying = 0
 
 	CritterDeath()
@@ -1562,7 +1562,7 @@
 
 	New()
 		..()
-		maxsteps = rand(10,20)
+		maxsteps = rand(2,12)
 
 	proc/setup_overlays()
 		var/image/overlayprimary = image('icons/misc/critter.dmi', "twitchytail_colorkey1")

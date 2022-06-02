@@ -59,6 +59,8 @@ ABSTRACT_TYPE(/mob/living/critter)
 	// moved up from critter/small_animal
 	var/butcherable = 0
 	var/butcher_time = 1.2 SECONDS
+	/// The mob who is butchering this critter
+	var/mob/butcherer = null
 	var/meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat
 	var/name_the_meat = 0
 	var/skinresult = /obj/item/material_piece/cloth/leather //YEP
@@ -332,7 +334,6 @@ ABSTRACT_TYPE(/mob/living/critter)
 
 		src.ghostize()
 		qdel (src)
-		return
 
 	// The throw code is a direct copy-paste from humans
 	// pending better solution.
@@ -681,6 +682,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 			update_inhands()
 		for (var/datum/equipmentHolder/EH in equipment)
 			if (EH.item == I)
+				EH.on_unequip()
 				EH.item = null
 				hud.remove_object(I)
 				clothing = 1
@@ -1281,7 +1283,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 		..(message)
 		return
 
-	if (src.robot_talk_understand && !src.stat)
+	if (src.robot_talk_understand && !src.stat && !ghost_spawned)
 		if (length(message) >= 2)
 			if (copytext(lowertext(message), 1, 3) == ":s")
 				message = copytext(message, 3)

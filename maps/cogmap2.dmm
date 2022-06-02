@@ -24138,7 +24138,7 @@
 /area/station/catwalk/north)
 "bez" = (
 /obj/machinery/atmospherics/pipe/tank/air_repressurization/east,
-/turf/simulated/wall/auto/reinforced/supernorn,
+/turf/simulated/floor/plating/damaged3,
 /turf/simulated/floor/plating/damaged2,
 /area/station/engine/substation/west)
 "beA" = (
@@ -26673,6 +26673,11 @@
 /obj/disposalpipe/segment/transport,
 /obj/item/device/radio/intercom/brig,
 /obj/machinery/phone,
+/obj/blind_switch/area{
+	dir = 4;
+	pixel_x = -22;
+	pixel_y = 4
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
 "bkI" = (
@@ -27146,7 +27151,9 @@
 /turf/simulated/floor/caution/westeast,
 /area/station/hangar/sec)
 "blS" = (
-/obj/machinery/light_switch/east,
+/obj/machinery/light_switch/east{
+	dir = 4
+	},
 /turf/simulated/floor/engine,
 /area/station/hangar/sec)
 "blT" = (
@@ -28555,22 +28562,18 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/horizontal,
-/obj/machinery/door_control{
-	id = "lockdown_cell1";
-	name = "Cell 1 Lockdown";
-	pixel_x = -7;
-	pixel_y = 27
-	},
-/obj/machinery/door_control{
-	id = "lockdown_cell2";
-	name = "Cell 2 Lockdown";
-	pixel_x = 7;
-	pixel_y = 27
-	},
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
 	pixel_y = 21
+	},
+/obj/machinery/door_timer/solitary2{
+	pixel_x = 8;
+	pixel_y = 24
+	},
+/obj/machinery/door_timer/solitary{
+	pixel_x = -8;
+	pixel_y = 24
 	},
 /turf/simulated/floor/red/side{
 	dir = 1
@@ -28590,7 +28593,18 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/light_switch/north,
+/obj/machinery/door_control{
+	id = "lockdown_cell1";
+	name = "Cell 1 Lockdown";
+	pixel_x = -7;
+	pixel_y = 27
+	},
+/obj/machinery/door_control{
+	id = "lockdown_cell2";
+	name = "Cell 2 Lockdown";
+	pixel_x = 7;
+	pixel_y = 27
+	},
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -30321,9 +30335,6 @@
 /area/station/security/hos)
 "bsJ" = (
 /obj/storage/secure/closet/command/hos,
-/obj/blind_switch/area{
-	pixel_x = 24
-	},
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "N APC";
@@ -30331,6 +30342,9 @@
 	},
 /obj/cable{
 	icon_state = "0-2"
+	},
+/obj/item/device/radio/intercom/security{
+	dir = 8
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
@@ -30976,7 +30990,9 @@
 /area/station/routing/security)
 "buh" = (
 /obj/disposalpipe/segment/mail/vertical,
-/obj/machinery/light_switch/east,
+/obj/machinery/light_switch/east{
+	dir = 8
+	},
 /turf/simulated/floor/caution/south,
 /area/station/routing/security)
 "bui" = (
@@ -31156,9 +31172,6 @@
 	},
 /area/station/security/hos)
 "buA" = (
-/obj/item/device/radio/intercom/security{
-	dir = 8
-	},
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
@@ -31858,9 +31871,6 @@
 /area/station/security/main)
 "bwa" = (
 /obj/table/reinforced/auto,
-/obj/machinery/door_timer/solitary2{
-	pixel_x = 5
-	},
 /obj/item/storage/box/revimp_kit{
 	pixel_x = -3
 	},
@@ -31894,6 +31904,11 @@
 /obj/item/clothing/suit/straight_jacket,
 /obj/item/reagent_containers/syringe/haloperidol,
 /obj/random_item_spawner/desk_stuff,
+/obj/machinery/light_switch/north{
+	dir = 4;
+	pixel_x = 22;
+	pixel_y = 0
+	},
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
@@ -31954,7 +31969,10 @@
 /obj/landmark/start{
 	name = "Head of Security"
 	},
-/obj/machinery/light_switch/east,
+/obj/machinery/light_switch/east{
+	dir = 8;
+	pixel_x = 22
+	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
@@ -33536,9 +33554,6 @@
 "bzq" = (
 /obj/table/reinforced/auto,
 /obj/item/paper/book/from_file/space_law,
-/obj/machinery/door_timer/solitary{
-	pixel_x = -5
-	},
 /obj/item/storage/box/trackimp_kit2{
 	pixel_x = 8;
 	pixel_y = 3
@@ -33684,7 +33699,8 @@
 /area/station/security/main)
 "bzL" = (
 /obj/drink_rack/mug{
-	pixel_y = -26
+	pixel_x = -22;
+	pixel_y = 4
 	},
 /obj/table/reinforced/auto,
 /obj/machinery/coffeemaker/security,
@@ -36645,6 +36661,11 @@
 	},
 /obj/machinery/computer3/generic/secure_data,
 /obj/machinery/power/data_terminal,
+/obj/machinery/light_switch/east{
+	dir = 4;
+	pixel_x = 22;
+	pixel_y = -8
+	},
 /turf/simulated/floor/blueblack,
 /area/station/security/checkpoint/sec_foyer)
 "bFs" = (
@@ -37655,10 +37676,6 @@
 	},
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
-	},
-/obj/noticeboard/persistent{
-	name = "Security Foyer persistent notice board";
-	persistent_id = "security foyer"
 	},
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/sec_foyer)
@@ -43965,10 +43982,6 @@
 /area/station/security/main)
 "bST" = (
 /obj/item/device/radio/intercom/security,
-/obj/blind_switch/area{
-	pixel_x = 13;
-	pixel_y = 28
-	},
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk{
 	dir = 4
@@ -45891,7 +45904,9 @@
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},
-/obj/machinery/light_switch/west,
+/obj/machinery/light_switch/west{
+	dir = 4
+	},
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fred2"
@@ -46206,8 +46221,12 @@
 /turf/space,
 /area/space)
 "bXS" = (
-/obj/machinery/light_switch/east,
 /obj/machinery/flasher/portable,
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
 /turf/simulated/floor/blueblack,
 /area/station/security/checkpoint/sec_foyer)
 "bXT" = (
@@ -77312,6 +77331,13 @@
 	icon_state = "blue1"
 	},
 /area/station/crew_quarters/arcade/dungeon)
+"hnS" = (
+/obj/noticeboard/persistent{
+	name = "Security Foyer persistent notice board";
+	persistent_id = "security foyer"
+	},
+/turf/simulated/floor/black,
+/area/station/hallway/primary/east)
 "hoU" = (
 /obj/cable{
 	d1 = 1;
@@ -139651,7 +139677,7 @@ buw
 bwf
 byl
 bqU
-bBw
+hnS
 bDo
 bFt
 bHl

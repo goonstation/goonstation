@@ -1152,7 +1152,8 @@ var/zapLimiter = 0
 		if(!area.requires_power)
 			return
 	else
-		CRASH("Broken-ass APC @[x],[y],[z] on [map_settings ? map_settings.name : "UNKNOWN"]")
+		qdel(src)
+		CRASH("Broken-ass APC @[x],[y],[z] on [map_settings ? map_settings.name : "UNKNOWN"] (ref: \ref[src]")
 
 
 	/*

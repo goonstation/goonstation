@@ -1086,10 +1086,6 @@ ABSTRACT_TYPE(/obj/trait/job)
 	category = list("species", "nopug")
 	mutantRace = /datum/mutantrace/pug
 
-	onAdd(var/mob/owner)
-		..()
-		owner.put_in_hand_or_drop(new /obj/item/reagent_containers/food/snacks/cookie/dog)
-
 /obj/trait/super_slips
 	name = "Slipping Hazard (+1)"
 	id = "super_slips"

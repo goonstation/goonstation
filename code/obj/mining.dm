@@ -953,7 +953,7 @@
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 	connect_overlay = 0
 	connect_diagonal = 1
-	connects_to = list(/turf/simulated/wall/auto/asteroid, /turf/simulated/wall/false_wall, /obj/structure/woodwall)
+	connects_to = list(/turf/simulated/wall/auto/asteroid, /turf/simulated/wall/false_wall, /obj/structure/woodwall, /obj/machinery/door/poddoor/blast/asteroid)
 
 #ifdef UNDERWATER_MAP
 	name = "cavern wall"
@@ -1633,6 +1633,10 @@ obj/item/clothing/gloves/concussive
 	material_prints = "industrial-grade mineral fibers"
 	var/obj/item/mining_tool/tool = null
 
+	setupProperties()
+		..()
+		setProperty("conductivity", 0.6)
+
 	New()
 		..()
 		var/obj/item/mining_tool/T = new /obj/item/mining_tool(src)
@@ -1961,6 +1965,7 @@ obj/item/clothing/gloves/concussive
 		for (var/supertype in allowed_supertypes)
 			for (var/subtype in typesof(supertype))
 				allowed_types[subtype] = 1
+		allowed_types -= /obj/storage/closet/flock
 
 		var/cell = new cell_type
 		AddComponent(/datum/component/cell_holder, cell, swappable = FALSE)

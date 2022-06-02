@@ -1366,7 +1366,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	var/style_step = 1
 
 	heal(var/mob/M)
-		if(ishuman(M) && (M.job in list("Security Officer", "Head of Security", "Detective", "Nanotrasen Security Operative", "Security Assistant", "Part-time Vice Officer")))
+		if(ishuman(M) && (M.job in list("Security Officer", "Head of Security", "Detective", "Nanotrasen Security Consultant", "Security Assistant", "Part-time Vice Officer")))
 			src.heal_amt *= 2
 			..()
 			src.heal_amt /= 2
@@ -1710,7 +1710,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			if(istype(W,/obj/item/stick))
 				var/obj/item/stick/S = W
 				if(S.broken)
-					boutput(user, __red("You can't use a broken stick!"))
+					boutput(user, "<span class='alert'>You can't use a broken stick!</span>")
 					return
 
 			boutput(user, "<span class='notice'>You create a corndog...</span>")
@@ -2011,6 +2011,18 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	initial_reagents = list("cholesterol"=2)
 	food_effects = list("food_hp_up", "food_brute")
 	meal_time_flags = MEAL_TIME_DINNER
+
+/obj/item/reagent_containers/food/snacks/steak_ling
+	name = "mutagenic steak"
+	desc  = "It stopped moving. Thank god."
+	icon_state = "meat-changeling-grilled"
+	bites_left = 2
+	heal_amt = 4
+	food_color = "#999966"
+	initial_volume = 50
+	initial_reagents = list("cholesterol" = 3, "neurotoxin" = 10) // changeling blood boiled off
+	food_effects = list("food_hp_up_big", "food_brute") //helpful enzymes or something idk
+	meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
 /obj/item/reagent_containers/food/snacks/fish_fingers
 	name = "fish fingers"

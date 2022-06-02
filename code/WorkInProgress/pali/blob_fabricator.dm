@@ -77,13 +77,10 @@ ABSTRACT_TYPE(/datum/manufacture/mechanics/blob)
 	frame_path = /mob/living/intangible/blob_overmind/ai/start_here
 
 /obj/machinery/manufacturer/blob
-	name = "Blob Fabricator"
-	desc = "A 3D printer-like machine that can construct a variety of items. This one is for producing blobs. What?."
+	name = "blob fabricator"
+	supplemental_desc = "This one is for producing blobs. What?"
 	icon_state = "fab-hangar"
 	icon_base = "hangar"
-	accept_blueprints = TRUE
-	free_resource_amt = 0
-	free_resources = list()
 	available = list(
 		/datum/manufacture/mechanics/blob/base,
 		/datum/manufacture/mechanics/blob/wall,

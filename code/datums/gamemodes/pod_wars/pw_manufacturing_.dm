@@ -1,5 +1,5 @@
 /obj/machinery/manufacturer/pod_wars
-	name = "Ship Component Fabricator"
+	name = "ship component fabricator"
 	desc = "A manufacturing unit calibrated to produce parts for ships."
 	icon_state = "fab-hangar"
 	icon_base = "hangar"
@@ -62,7 +62,7 @@
 		..()
 
 /obj/machinery/manufacturer/pod_wars/nanotrasen
-	name = "NanoTrasen Ship Component Fabricator"
+	name = "\improper NanoTrasen ship component fabricator"
 	team_num = TEAM_NANOTRASEN
 	available = list(
 		/datum/manufacture/pod_wars/lock,
@@ -97,7 +97,7 @@
 	)
 
 /obj/machinery/manufacturer/pod_wars/syndicate
-	name = "Syndicate Ship Component Fabricator"
+	name = "\improper Syndicate ship component fabricator"
 	team_num = TEAM_SYNDICATE
 	available = list(
 		/datum/manufacture/pod_wars/lock,

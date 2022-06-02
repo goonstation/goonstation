@@ -32,7 +32,6 @@ datum
 				fluid_g = 32
 				fluid_b = 32
 				transparency = 120
-				penetrates_skin = 1
 
 		harmful/simple_damage_burn
 			name = "irritant precursor"
@@ -400,6 +399,8 @@ datum
 			fluid_g = 75
 			transparency = 20
 			penetrates_skin = 1
+			touch_modifier = 0.5
+
 			value = 4 // 1 1 1 heat
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -424,6 +425,8 @@ datum
 			transparency = 20
 			penetrates_skin = 1
 			value = 4
+			depletion_rate = 0.6
+			touch_modifier = 0.33
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom

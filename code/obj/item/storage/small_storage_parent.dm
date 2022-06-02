@@ -115,7 +115,7 @@
 				if(O in user.equipped_list())
 					src.Attackby(O, user, O.loc)
 			else
-				boutput(user, __blue("Your hands are full!"))
+				boutput(user, "<span class='notice'>Your hands are full!</span>")
 			user.swap_hand()
 
 	//failure returns 0 or lower for diff messages - sorry

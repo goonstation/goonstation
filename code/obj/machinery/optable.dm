@@ -12,6 +12,7 @@
 
 	var/obj/machinery/computer/operating/computer = null
 	var/id = 0.0
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR
 
 /obj/machinery/optable/New()
 	..()
@@ -42,6 +43,7 @@
 	if (user.is_hulk())
 		user.visible_message("<span class='alert'>[user] destroys the table.</span>")
 		src.set_density(0)
+		logTheThing("combat", user, null, "uses hulk to smash an operating table at [log_loc(src)].")
 		qdel(src)
 	return
 
@@ -70,6 +72,7 @@
 /obj/machinery/optable/attackby(obj/item/W as obj, mob/user as mob)
 	if (issilicon(user)) return
 	if (istype(W, /obj/item/electronics/scanner)) return // hack
+	if (istype(W, /obj/item/deconstructor)) return //deconstruct_flags
 	if (istype(W, /obj/item/grab))
 		if(ismob(W:affecting))
 			var/mob/M = W:affecting

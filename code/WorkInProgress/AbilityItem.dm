@@ -194,6 +194,7 @@
 		if(R.uses < 0)
 			the_item.name = "Empty Rocket Shoes"
 			boutput(the_mob, "<span class='alert'>Your rocket shoes are empty.</span>")
+			the_item.hide_buttons()
 			R.abilities.Cut()
 			qdel(src)
 			return

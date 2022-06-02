@@ -1122,8 +1122,7 @@ var/datum/flock/testflock
 	if(isnull(testflock))
 		testflock = new()
 
-	var/chui/window/flockpanel/panel = testflock.panel
-	panel.Subscribe(usr.client)
+	testflock.ui_interact(usr, testflock.flockpanel)
 
 /client/proc/clear_string_cache()
 	set name = "Clear String Cache"

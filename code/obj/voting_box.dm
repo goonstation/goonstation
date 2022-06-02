@@ -31,7 +31,7 @@
 				map_vote_holder.special_vote(C,map)
 				var/adv = pick("", "proudly", "confidently", "cautiously", "dismissively", "carelessly", "idly")
 				var/adj = pick("", "questionable", "decisive", "worthless", "important", "curious", "bizarre", "regrettable")
-				visible_message(__blue("<strong>[user]</strong> [adv] [hadVoted ? "changes their" : "casts a"] [adj] vote [hadVoted ? "to" : "for"] <strong>[map]</strong>."))
+				visible_message("<span class='notice'><strong>[user]</strong> [adv] [hadVoted ? "changes their" : "casts a"] [adj] vote [hadVoted ? "to" : "for"] <strong>[map]</strong>.</span>")
 				playsound(src.loc, "sound/machines/ping.ogg", 35)
 
 				if (user.real_name == bribeJerk)
@@ -41,9 +41,9 @@
 					var/obj/item/sticker = new /obj/item/sticker/ribbon/voter(get_turf(user))
 					sticker.layer = src.layer += 0.1
 					user.put_in_hand_or_eject(sticker)
-					boutput(user, __blue("\The [src] dispenses \an [sticker] as a reward for doing your civic duty."))
+					boutput(user, "<span class='notice'>\The [src] dispenses \an [sticker] as a reward for doing your civic duty.</span>")
 		else
-			boutput(user, __blue("There's no vote going on right now."))
+			boutput(user, "<span class='notice'>There's no vote going on right now.</span>")
 
 
 	attackby(obj/item/S as obj, mob/user as mob)
@@ -51,7 +51,7 @@
 
 		if (istype(S, /obj/item/spacecash))
 			if (!mapSwitcher.playersVoting)
-				boutput(user, __red("There's no point in buying a vote when there's no vote going on."))
+				boutput(user, "<span class='alert'>There's no point in buying a vote when there's no vote going on.</span>")
 				return
 
 			var/client/C = user.client
@@ -60,7 +60,7 @@
 
 			if (S.amount <= bribeAmount && user.real_name != bribeJerk)
 				// Someone already gave us a better bribe
-				boutput(user, __red("If you want this machine to vote for your map, you need to pay more than [bribeJerk]'s [bribeAmount] credits."))
+				boutput(user, "<span class='alert'>If you want this machine to vote for your map, you need to pay more than [bribeJerk]'s [bribeAmount] credits.</span>")
 				return
 
 			if ((S.amount > bribeAmount) || (user.real_name == bribeJerk))
@@ -75,12 +75,12 @@
 						else
 							// time to switch our vote.
 							visible_message("<strong>[user] has paid [S.amount] credits to swing the map vote in their favor!</strong>")
-							boutput(user, __blue("You've puchased a vote for [chosen]."))
+							boutput(user, "<span class='notice'>You've puchased a vote for [chosen].</span>")
 							bribeAmount = S.amount
 							bribeJerk = user.real_name
 							map_vote_holder.voting_box(src,chosen)
 				else
-					boutput(user, __red("You can't buy a vote when you haven't voted, doofus."))
+					boutput(user, "<span class='alert'>You can't buy a vote when you haven't voted, doofus.</span>")
 					return
 
 			S.amount = 0

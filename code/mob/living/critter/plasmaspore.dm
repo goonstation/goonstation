@@ -10,6 +10,7 @@
 	blood_id = "plasma"
 
 	death(var/gibbed)
+		. = ..()
 		src.visible_message("<b>[src]</b> ruptures and explodes!")
 		var/turf/T = get_turf(src.loc)
 		if(T)

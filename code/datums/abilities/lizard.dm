@@ -75,7 +75,7 @@
 /datum/targetable/lizardAbility/regrow_tail
 	name = "Regrow Tail"
 	desc = "Regrow your tail... (If cast while you have a tail, shoot off your tail and regrow a new one)"
-	cooldown = 5 MINUTES
+	cooldown = 2 MINUTES
 	targeted = 0
 	pointCost = 2
 

@@ -1,4 +1,142 @@
 
+(t)thu jun 02 22
+(u)DimWhat
+(p)8839
+(e)⚖|balance
+(+)Changed a few miscellaneous glove conductivity values; gloves that barely cover your hands (rings, fingerless gloves) don't offer electrical protection, and some random gloves have higher conductivity.
+(u)glowbold
+(p)8856
+(e)|
+(+)Cyborgs can now dump the contents of their ore scoop and satchels into material processors and the Rockbox
+(u)CodeJester
+(p)8869
+(e)🆕|feature
+(+)Pointing is now animated. Throw arrows at people today!
+(t)wed jun 01 22
+(u)Flourish
+(p)8761
+(e)🆕🎨|feature, sprites
+(*)Skeletons can now detach their head and limbs by targeting the respective part and using a wrench, crowbar, and wrench again. Once their head is detached, the skeleton's "eye" remains centered on their head object. Once a limb is detached, it can be used as a boomerang that automatically re-attaches upon catching.
+(*)Skeletons now also spawn with a jar of "joint wax" which can be applied to empty joint sockets for a small status buff. Check out the <a href="https://github.com/goonstation/goonstation/pull/8761" target="_blank">PR page</a> to learn more. Special thanks to Virva, DimWhat, and Flaborized for the sfx and sprites that made this possible!
+(u)Momoberry
+(p)8763
+(e)|
+(+)Added a Mimicry crate to cargo. It comes with a standard issue baguette, full mime attire, a pack of cigarettes and a Zippo.
+(u)Azrun
+(p)8873
+(e)⚖|balance
+(+)Limits how quickly other pipes in the same pipeline can rupture.
+(u)Azrun
+(p)8841
+(e)⚖|balance
+(*)Power gloves when augmented to stun can now be charged from wires and APCs! Now holds additional charges and will augment lightning with some additional damage based on charges.
+(+)Power gloves no longer have any effect when used on dead wires.
+(u)TDHooligan
+(p)6952
+(e)⚖|balance
+(+)The gods of the Lava Moon's Shield of Souls demand a toll for their power.
+(u)Flappybat
+(p)8627
+(e)🎨⚖|sprites, balance
+(*)Portable flashers no longer flash anyone with security access and disable their checks for 1.5 seconds. The flasher colors will dull when on cooldown to indicate it is safe to run pass.
+(*)Portable flashers now flash for bigger critters. Be careful of sprinting your antag critter respawn into security.
+(u)fwll & aloe
+(+)You can now obtain changeling meat by either butchering changeling critters (buttcrabs, legworms, etc) or tossing a changeling in the gibber. This meat can either be cooked into a steak, or cooked with dough for an aburgination, which is very unsafe to eat. Otherwise, it's like mystery meat.
+(+)Sprites and ideas by fwll, code by aloe
+(t)tue may 31 22
+(u)aloe
+(+)Changeling control transfers should be fixed (usually wouldn't put this in the changelog but it seems important)
+(u)aloe
+(+)Cyborgs now have text for determining if they're connected on examine; the 3 states are operational (has a player connected), hibernating (has a brain but player is disconnected), and dormant (no brain or inactive SICC)
+(u)aloe
+(e)⚖|balance
+(*)The swooshy cloaking device effect is now only visible to the user, not people with thermals and the AI and whatever else. You can still see the person with thermal vision, you just can't immediately tell they're using a cloaker.
+(t)mon may 30 22
+(u)Bartimeus973
+(p)8651
+(e)🎨|sprites
+(*)Detectives now have a weak scuttlebot of their own! It has taken the shape of the detgadget hat in their locker.
+(u)tarmunora
+(+)chlorine, acetaldehyde, fluorine splash multipler reduced to 0.33, formaldehyde splash multiplier reduced to 0.5, skin penetration removed from nitrogen dioxide
+(+)chorine, acetaldehyde depletion rates 0.4 -> 0.6
+(+)fluorine damage burn/tox damage reduced 1 -> 0.75
+(u)tarmunora
+(*)sec token crate now gets sec assistant token instead and made cheaper
+(t)sun may 29 22
+(u)Wisemonster
+(p)8762
+(e)🗺|mapping
+(+)Added status displays to Kondaru, Horizon, and Destiny.
+(u)DimWhat
+(p)8809
+(e)|
+(+)Increased the material cost of flashes
+(u)TTerc
+(e)|
+(*)Clicking doors with open panel via empty hand or bumping into them will now open them, as long as you have proper access. Hacking UI panel will open only if you have hacking tools/remote signaller in any hand.
+(u)Zonespace
+(p)6811
+(e)⚖|balance
+(+)Synthrubber conductivity 20 -> 30
+(u)TTerc
+(e)⚖|balance
+(+)Cleaning gloves conductivity 10% -> 30%
+(u)MomoBerry
+(p)8697
+(e)|
+(+)Removed Atmospherish Crate from Cargo. Added crates for pipe dispenser, portable fuel tanks, and a two piece scrubber/airtank set.
+(t)thu may 26 22
+(u)tarmunora
+(+)welderspecial blocked by things that block gas. rangedstab special blocked by things that would not permit the item to pass.
+(u)Azrun
+(p)8735
+(e)🆕|feature
+(+)Atmos pipes will take some time to rupture after being repaired.
+(t)wed may 25 22
+(u)C.Clover
+(p)8739
+(e)|
+(+)Added option to print Freezer Crate from Crate manufacturer
+(u)CodeJester
+(p)8554
+(e)🗺📄|mapping, tgui
+(+)Hyposprays have a new UI menu, making it easy to administer proper doses of methamphetamine.
+(u)MomoBerry
+(p)8680
+(e)|
+(+)Adjusted the tail regrowth ability cooldown from five minutes down to two minutes.
+(t)tue may 24 22
+(u)tarmunora
+(+)burst taser has slight spread
+(t)mon may 23 22
+(u)Wisemonster
+(p)8607
+(e)🆕🗺|feature, mapping
+(+)The VR murderbox has been upgraded with an arcfiend simulation.
+(u)Flappybat
+(p)8662
+(e)⛔|removal
+(+)The noise_maker artifact has been removed, reducing incidents of exploding speakers by 57%.
+(t)sun may 22 22
+(u)Azrun
+(e)🚽🎣
+(+)Toilet Fishing
+(u)Flappybat
+(p)8671
+(e)🗺|mapping
+(*)Some layout changes have been made to Cogmap2 security, in particular the Solitary cell controls have moved north from the tables to the wall outside the cell.
+(u)Wisemonster
+(p)8693
+(e)⚖|balance
+(+)The med/hydro restock cartridges purchase from qm has been split into two separate purchases.
+(u)Blackrep
+(p)8162
+(e)📄|tgui
+(+)The mechanical dropper has been updated to a fancy new UI!
+(u)KubeRoot, Kapu1178
+(p)8056
+(e)🆕|feature
+(*)The 'say' verb and typing indicators should now be much more responsive
 (t)sat may 21 22
 (u)FlameArrow57
 (p)7498

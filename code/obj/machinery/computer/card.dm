@@ -57,26 +57,8 @@
 		..(loc)
 		src.set_loc(loc)
 		src.name = "foldable portable identification computer"
-		src.desc = "A briefcase with a identification computer inside. A breakthrough in briefcase technology!"
+		src.desc = "A briefcase with an identification computer inside. A breakthrough in briefcase technology!"
 		BLOCK_SETUP(BLOCK_BOOK)
-
-	attack_self(mob/user)
-		deploy(user)
-
-	verb/unfold()
-		set src in view(1)
-		set category = "Local"
-		set name = "Unfold"
-		deploy(usr)
-
-	proc/deploy(var/mob/user)
-
-		if(src.loc == user)
-			user.drop_from_slot(src)
-		user.visible_message("<span class='alert'>[user] unfolds the foldable portable idendification computer from a briefcase!</span>")
-		var/obj/machinery/computer/card/portable/T = new/obj/machinery/computer/card/portable()
-		T.set_loc(get_turf(src))
-		qdel(src)
 
 /obj/machinery/computer/card/portable
 	name = "portable identification computer"
@@ -84,7 +66,6 @@
 	density = 0
 	var/obj/item/cell/cell //We have limited power! Immersion!!
 	var/setup_charge_maximum = 15000
-	var/obj/item/luggable_computer/personal/case //The object that holds us when we're all closed up.
 	var/deployed = 1
 
 	New()
@@ -94,40 +75,22 @@
 		src.cell.maxcharge = setup_charge_maximum
 		src.cell.charge = src.cell.maxcharge
 
+		var/datum/component/foldable/fold_component = src.GetComponent(/datum/component/foldable) //Fold up into a briefcase the first spawn
+		if(!fold_component?.the_briefcase)
+			return
+		var/obj/item/objBriefcase/briefcase = fold_component.the_briefcase
+		if (briefcase)
+			briefcase.set_loc(get_turf(src))
+			src.set_loc(briefcase)
+
 	disposing()
 		if (src.cell)
 			src.cell.dispose()
 			src.cell = null
-
-		if (case && case.loc == src)
-			case.dispose()
-			case = null
-
 		..()
-
-	verb/fold_up()
-		set src in view(1)
-
-		if(usr.stat)
-			return
-
-		src.visible_message("<span class='alert'>[usr] folds [src] back up!</span>")
-		src.undeploy()
-		return
-
-	proc/undeploy()
-		if(!src.case)
-			src.case = new /obj/item/luggable_computer(src)
-			src.case.luggable = src
-
-		src.case.set_loc(get_turf(src))
-		src.set_loc(src.case)
-		src.deployed = 0
-		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/disk/data/floppy)) //IDK i just dont want to screw this up
-
 			return
 
 		else if (ispryingtool(W))

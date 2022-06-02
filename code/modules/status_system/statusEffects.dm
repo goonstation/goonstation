@@ -2161,3 +2161,12 @@
 		if(ismob(owner))
 			var/mob/M = owner
 			M.bioHolder.RemoveEffect("sims_stinky")
+
+/datum/statusEffect/spry
+	id = "spry"
+	name = "Spry"
+	desc = "You have a spring in your step."
+	icon_state = "spry"
+	maxDuration = 3 MINUTES
+	unique = TRUE
+	movement_modifier = /datum/movement_modifier/spry
