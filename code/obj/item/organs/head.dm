@@ -451,6 +451,7 @@
 			if (user.find_in_hand(src))
 				user.u_equip(src)
 			H.organHolder.receive_organ(src, "head", isskeleton(M) ? 0 : 3.0)
+			H.update_equipment_screen_loc()
 
 			SPAWN(rand(50,500))
 				if (H?.organHolder?.head == src && src.op_stage != 0.0) // head has not been secured

@@ -201,7 +201,7 @@
 					src.limb_is_transplanted = FALSE
 
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
-		if (hit_atom == thr.user)
+		if (hit_atom == thr.return_target)
 			var/mob/living/carbon/human/H = hit_atom
 			if (isskeletonlimb(src) && isskeleton(H) && !H.limbs.get_limb(src.slot))
 				src.attach(H)

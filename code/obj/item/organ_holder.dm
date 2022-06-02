@@ -520,7 +520,8 @@
 				myBrain.holder = null
 				src.brain = null
 				src.organ_list["brain"] = null
-				src.head?.brain = null
+				if (src.head?.brain == myBrain)
+					src.head.brain = null
 				return myBrain
 
 			if ("left_eye")
@@ -769,8 +770,6 @@
 					else
 						return 0
 				var/obj/item/organ/head/newHead = I
-				if (newHead.brain && newHead.brain.owner)
-					newHead.brain.owner.transfer_to(src.donor)
 				newHead.op_stage = op_stage
 				src.head = newHead
 				newHead.set_loc(src.donor)
@@ -854,8 +853,9 @@
 				if (!src.skull)
 					return 0
 				var/obj/item/organ/brain/newBrain = I
-				if (src.donor.client)
-					src.donor.client.mob = new /mob/dead/observer(src.donor)
+				if (src.donor.mind)
+					boutput(src.donor, "<span class='alert'>You feel yourself forcibly ejected from your corporeal form!</span>")
+					src.donor.ghostize()
 				if (newBrain.owner)
 					newBrain.owner.transfer_to(src.donor)
 				newBrain.op_stage = op_stage
