@@ -444,7 +444,7 @@
 			return 0
 
 		var/fluff = pick("attach", "shove", "place", "drop", "smoosh", "squish")
-		if (!H.get_organ("head"))
+		if (!H.get_organ("head") && H.organHolder.receive_organ(src, "head", isskeleton(M) ? 0 : 3))
 
 			H.tri_message("<span class='alert'><b>[user]</b> [fluff][(fluff == "smoosh" || fluff == "squish" || fluff == "attach") ? "es" : "s"] [src] onto [H == user ? "[his_or_her(H)]" : "[H]'s"] neck stump!</span>",\
 			user, "<span class='alert'>You [fluff] [src] onto [user == H ? "your" : "[H]'s"] neck stump!</span>",\
@@ -453,7 +453,6 @@
 
 			if (user.find_in_hand(src))
 				user.u_equip(src)
-			H.organHolder.receive_organ(src, "head", isskeleton(M) ? 0 : 3.0)
 			H.update_equipment_screen_loc()
 
 			SPAWN(rand(50,500))
