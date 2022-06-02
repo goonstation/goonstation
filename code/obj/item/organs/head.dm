@@ -12,6 +12,8 @@
 	var/scalp_op_stage = 0.0 // Needed to track a scalp gash (brain and skull removal) separately from op_stage (head removal)
 	icon = 'icons/mob/human_head.dmi'
 	icon_state = "invis" // we'll overlay some shit on here
+	inhand_image_icon = 'icons/mob/inhand/hand_skulls.dmi'
+	item_state = ""
 	edible = 0
 	rand_pos = 0 // we wanna override it below
 	made_from = "bone"
@@ -73,7 +75,7 @@
 	disposing()
 		if (holder)
 			holder.head = null
-		if (donor_original?.client?.eye != donor_original)
+		if (donor_original.client?.eye != donor_original)
 			donor_original.client?.eye = donor_original
 			boutput(donor_original, "<span class='alert'>You feel your vision forcibly punted back to your body!</span>")
 		skull = null
@@ -525,6 +527,7 @@
 				if(HEAD_SKELETON)
 					src.organ_name = "bony head"
 					src.desc = "...does that skull have another skull inside it?"
+					src.item_state = "skull"
 
 				if(HEAD_SEAMONKEY)
 					src.organ_name = "seamonkey head"
