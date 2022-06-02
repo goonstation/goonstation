@@ -532,7 +532,7 @@ var/list/special_pa_observing_verbs = list(
 	src.holder.rank = rank
 
 	if(!src.holder.state)
-		var/state = tgui_alert(usr, "Which state do you want the admin to begin in?", "Admin-state", "Play", "Observe", "Neither")
+		var/state = tgui_alert(usr, "Which state do you want the admin to begin in?", "Admin-state", list("Play", "Observe", "Neither"))
 		if(state == "Play")
 			src.holder.state = 1
 			src.admin_play()
