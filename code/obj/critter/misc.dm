@@ -329,7 +329,7 @@
 
 		return 1
 
-/obj/critter/spacebee
+/obj/critter/wasp
 	name = "space wasp"
 	desc = "A wasp in space."
 	icon_state = "spacebee"
@@ -490,7 +490,7 @@
 
 
 
-/obj/critter/spacebee/angry
+/obj/critter/wasp/angry
 	name = "angry space wasp"
 	desc = "An angry wasp in space."
 	angertext = "buzzes furiously at"
@@ -500,10 +500,10 @@
 
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/wasp
 	name = "space wasp egg"
-	critter_type = /obj/critter/spacebee
+	critter_type = /obj/critter/wasp
 
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/wasp/angry
-	critter_type = /obj/critter/spacebee/angry
+	critter_type = /obj/critter/wasp/angry
 
 /obj/critter/magiczombie
 	name = "skeleton"

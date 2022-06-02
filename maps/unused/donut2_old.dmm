@@ -51133,7 +51133,7 @@
 	sd_lighting = 1
 	})
 "ceL" = (
-/obj/critter/spacebee,
+/obj/critter/wasp,
 /turf/unsimulated/grass,
 /area/forest{
 	icon_state = "yellow";
