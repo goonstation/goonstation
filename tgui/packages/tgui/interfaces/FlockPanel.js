@@ -205,7 +205,7 @@ const FlockStructures = (props, context) => {
                   <Section position="relative">
                     <Stack vertical align="center">
                       <Stack.Item >{structure.name}</Stack.Item>
-                      <Stack.Item >{structure.health}<Icon name="heart" /></Stack.Item>
+                      <Stack.Item >{structure.health} <Icon name="heart" /></Stack.Item>
                     </Stack>
                   </Section>
                 </Tooltip>
