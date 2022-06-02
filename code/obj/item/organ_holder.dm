@@ -468,6 +468,8 @@
 						myHead.wear_mask = W
 					if (isskeleton(src.donor) && myHead.organ_name == "bony head") // must be skeleton AND have skeleton head
 						src.donor.set_eye(myHead)
+						var/datum/mutantrace/skeleton/S = H.mutantrace
+						S.set_head(myHead)
 
 				myHead.set_loc(location)
 				myHead.update_head_image()
@@ -824,9 +826,6 @@
 						H.wear_mask = newHead.wear_mask
 						newHead.wear_mask.set_loc(H)
 						newHead.wear_mask = null
-					if (isskeleton(H))
-						var/datum/mutantrace/skeleton/S = H.mutantrace
-						S.set_head(newHead)
 					H.set_eye(null)
 				src.donor.update_body()
 				src.donor.UpdateDamageIcon()
