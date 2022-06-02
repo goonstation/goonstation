@@ -8,7 +8,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 /mob/living/critter/robotic/sawfly
 
 	name = "Ranodyne antipersonnel microdrone"
-	desc = "A folding antipersonnel drone of syndicate origin. It'd be pretty cute if it wasn't trying to kill people."
+	desc = "A folding antipersonnel drone, made by Ranodyne LLC. It'd be pretty cute if it wasn't trying to kill people."
 	icon = 'icons/obj/ship.dmi'//remnants of it originally being a drone
 	icon_state = "sawfly"
 	flags = TABLEPASS
@@ -22,6 +22,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 	var/fliesnearby = 0 //for rolling chance to beep
 	var/friends = list()
 	misstep_chance = 40 //makes them behave more like drones, and harder to kite into a straightaway then shoot
+	var/list/dummy_params = list("icon-x" = 16, "icon-y" = 16) //for the manual attack_hand retaliation
 
 	//mob variables
 	custom_gib_handler = /proc/robogibs
@@ -58,6 +59,15 @@ This file is the critter itself, and all the custom procs it needs in order to f
 		src.ai = new /datum/aiHolder/sawfly(src)
 		src.is_npc = TRUE
 		START_TRACKING
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new/datum/limb/sawfly_blades
+		HH.name = "sawfly blades"
+		HH.limb_name = HH.name
+		HH.can_hold_items = FALSE
+		HH.can_range_attack = TRUE
 
 	disposing()
 		. = ..()
@@ -105,15 +115,24 @@ This file is the critter itself, and all the custom procs it needs in order to f
 		return ..()
 
 //note: due to the AIholder's timed nature, they can still priority attack you if you're already targeted, but it's incredibly rare. Frankly I think it adds to the challenge.
+//doublenote: the absolute agony that was trying to get this to function in any way that wasn't incredibly obtuse and hacky without going back to the projectile.
 	attackby(obj/item/W as obj, mob/living/user as mob)
-		if(!(istraitor(user) || isnukeop(user) || isspythief(user) || (user in src.friends)))//are you an eligible target?
-			if(prob(50) && isalive(src))//can we attack?
-				if((ai.target != user)) //are we already attacking?
-					ai.interrupt()//stop what you're doing!
+		if(!(istraitor(user) || isnukeop(user) || isspythief(user) || (user in src.friends)) || (user.health < 40))//are you an eligible target: nonantag or healthy enough?
+			if(prob(50) && isalive(src))//now that you're eligible, are WE eligible?
+				if((ai.target != user))
+					ai.interrupt()//even though the AI doing this is nigh impossible, we'll still want to tell the AI that something's happening
 					src.visible_message("<span class='alert'><b>[src]'s targeting subsystems identify [user] as a high priority threat!</b></span>")
-					Shoot(get_turf(user), src.loc, src) //getting this to work in the AIholder was a pain in the butt so I'm moving it here
-					SPAWN(5)
-						Shoot(get_turf(user), src.loc, src)
+					//first attack is with the hand, so the sawfly can't triple attack if it was just now harming somone
+					src.set_dir(get_dir(src, user))
+					src.hand_attack(user, dummy_params)
+					//second attack is hardcoded, since the limb has a cooldown of 1 seconds between attacks that interferes otherwise
+					if(isalive(src) && (get_dist(src, user) > 1)) //account for SPAWN() jank
+						SPAWN(5)
+							src.visible_message("<b class='alert'>[src] [pick(list("gouges", "cleaves", "lacerates", "shreds", "cuts", "tears", "saws", "mutilates", "hacks", "slashes",))] [user]!</b>")
+							playsound(src, "sound/machines/chainsaw_green.ogg", 50, 1)
+							take_bleeding_damage(user, null, 17, DAMAGE_STAB)
+							random_brute_damage(user, 14, FALSE)
+
 
 		..()
 
@@ -180,24 +199,8 @@ This file is the critter itself, and all the custom procs it needs in order to f
 
 	Life()
 		..()
-		if(prob(5)) communalbeep()
+		if(prob(8)) communalbeep()
 		if(!isalive(src)) src.set_density(0) //according to lizzle something in the mob life resets density so this has to be below parent-
 
-	setup_hands()
-		..()
-		var/datum/handHolder/HH = hands[1]
-		HH.limb = new/datum/limb/sawfly_blades
-		HH.name = "sawfly blades"
-		HH.limb_name = HH.name
-		HH.can_hold_items = FALSE
-		HH.can_range_attack = TRUE
 
-	proc/Shoot(var/target, var/start, var/user, var/bullet = 0)
-		if(prob(5)) communalbeep()
-		if(target == start)
-			return
-		if (!isturf(target))
-			return
 
-		shoot_projectile_ST(src,  new/datum/projectile/laser/drill/sawfly(), target)
-		return

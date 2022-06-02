@@ -63,7 +63,6 @@
 
 		var/dist = get_dist(owncritter, holder.target)
 		if(dist > target_range)
-			//replaced
 			if(!src.found_path)
 				src.found_path = get_path_to(holder.owner, holder.target, 18, 0)
 			if(src.found_path)
@@ -133,7 +132,7 @@
 		if(istype(C, /mob/living/critter/robotic/sawfly)) continue
 		if (C in owncritter.friends) continue
 		if (istraitor(C) || isnukeop(C) || isspythief(C)) // frens :)
-			boutput(C, "<span class='alert'> THE [owncritter] IFF system silently flags you as an ally! </span>")
+			boutput(C, "<span class='alert'> The [owncritter]'s IFF system silently flags you as an ally! </span>")
 			owncritter.friends += C
 			continue
 		. += C //you passed all the checks it, now you get added to the list for consideration
