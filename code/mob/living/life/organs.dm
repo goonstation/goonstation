@@ -52,7 +52,7 @@
 		"<span class='alert'>Your head collapses into a useless pile of skin mush with no skull to keep it in its proper shape!</span>")
 
 	//Wire note: Fix for Cannot read null.loc
-	else if (oH.skull.loc != src)
+	else if (oH.skull?.loc != src)
 		oH.skull = null
 
 	if (!oH.brain)
