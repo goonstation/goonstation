@@ -71,6 +71,9 @@
 	disposing()
 		if (holder)
 			holder.head = null
+		if (donor_original?.client?.eye != donor_original)
+			donor_original.client?.eye = donor_original
+			boutput(donor_original, "<span class='alert'>You feel your vision forcibly punted back to your body!</span>")
 		skull = null
 		brain = null
 		left_eye = null

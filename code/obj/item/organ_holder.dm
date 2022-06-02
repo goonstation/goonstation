@@ -853,9 +853,8 @@
 				if (!src.skull)
 					return 0
 				var/obj/item/organ/brain/newBrain = I
-				if (src.donor.mind)
-					boutput(src.donor, "<span class='alert'>You feel yourself forcibly ejected from your corporeal form!</span>")
-					src.donor.ghostize()
+				boutput(src.donor, "<span class='alert'>You feel yourself forcibly ejected from your corporeal form!</span>")
+				src.donor.ghostize()
 				if (newBrain.owner)
 					newBrain.owner.transfer_to(src.donor)
 				newBrain.op_stage = op_stage
