@@ -100,7 +100,7 @@
 				boutput(user, "<span class='notice'>The wall slides shut.</span>")
 		return
 
-	attackby(obj/item/S as obj, mob/user as mob)
+	attackby(obj/item/S, mob/user)
 		src.add_fingerprint(user)
 		var/known = (user in known_by)
 		if (isscrewingtool(S))

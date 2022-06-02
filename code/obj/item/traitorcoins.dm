@@ -5,7 +5,7 @@
 	icon_state = "telecrystal_pure"
 	max_stack = INFINITY
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(W.type == src.type)
 			stack_item(W)
 			if(!user.is_in_hands(src))

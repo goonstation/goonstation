@@ -39,7 +39,7 @@
 		else
 			return src.Attackby(null, user)
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		if (user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat || user.restrained())
 			return
 		if (src.isblocked() == 1)

@@ -1642,7 +1642,7 @@
 	user << browse(A_test_html_out, "window=reactorstats;size=1400x750;can_resize=1;can_minimize=1;allow-html=1;show-url=1;statusbar=1;enable-http-images=1;can-scroll=1")
 	onclose(user, "reactorstats")
 
-/obj/machinery/power/reactor_stats/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/power/reactor_stats/attackby(obj/item/W, mob/user)
 	src.Attackhand(user)
 
 /obj/machinery/power/reactor_stats/attack_ai(mob/user as mob)

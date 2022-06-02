@@ -358,7 +358,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 					user.reagents.add_reagent("hugs", 10)
 				playsound(src.loc, "sound/voice/babynoise.ogg", 50, 10,10)
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		..()
 		if(!alive) return
 		if (istype(W, /obj/item/reagent_containers/food/snacks))

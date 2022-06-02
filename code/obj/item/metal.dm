@@ -54,7 +54,7 @@ MATERIAL
 		else
 			..(user)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isweldingtool(W))
 			if(src.amount < 2)
 				boutput(user, "<span class='alert'>You need at least two rods to make a metal sheet.</span>")
@@ -189,7 +189,7 @@ MATERIAL
 		else
 			..(user)
 
-	attackby(obj/item/sheet/metal/W as obj, mob/user as mob)
+	attackby(obj/item/sheet/metal/W, mob/user)
 		if (!( istype(W, /obj/item/sheet/metal) ))
 			return
 		if (W.material && src.material && !isSameMaterial(W.material, src.material))
@@ -449,7 +449,7 @@ MATERIAL
 		else
 			..(user)
 
-	attackby(obj/item/sheet/r_metal/W as obj, mob/user as mob)
+	attackby(obj/item/sheet/r_metal/W, mob/user)
 		if (!( istype(W, /obj/item/sheet/r_metal) ))
 			return
 		if (W.material && src.material && !isSameMaterial(W.material, src.material))

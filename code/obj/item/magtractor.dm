@@ -53,7 +53,7 @@
 		src.holder = null
 		src.verbs -= /obj/item/magtractor/proc/toggleHighPower
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!W) return 0
 
 		if (BOUNDS_DIST(get_turf(src), get_turf(W)) > 0)

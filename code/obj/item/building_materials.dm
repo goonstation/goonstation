@@ -740,7 +740,7 @@ MATERIAL
 		else
 			..(user)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isweldingtool(W))
 			if(src.amount < 2)
 				boutput(user, "<span class='alert'>You need at least two rods to make a material sheet.</span>")
@@ -881,7 +881,7 @@ MATERIAL
 		else
 			..(user)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isweldingtool(W))
 			if(!src.anchored && !istype(src.loc,/turf/simulated/floor) && !istype(src.loc,/turf/unsimulated/floor))
 				boutput(user, "<span class='alert'>There's nothing to weld that to.</span>")
@@ -1108,7 +1108,7 @@ MATERIAL
 		src.add_fingerprint(user)
 		return
 
-	attackby(obj/item/tile/W as obj, mob/user as mob)
+	attackby(obj/item/tile/W, mob/user)
 
 		if (!( istype(W, /obj/item/tile) ))
 			return

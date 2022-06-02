@@ -55,7 +55,7 @@
 	canRideMailchutes()
 		return 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/clothing/head))
 			if(src.hat)
 				boutput(user, "<span class='alert'>[src] is already wearing a hat!</span>")

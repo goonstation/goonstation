@@ -170,7 +170,7 @@
 
 		#undef NUKE_AREA_CHECK
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		src.add_fingerprint(user)
 		user.lastattacked = src
 
@@ -446,7 +446,7 @@
 			decal.icon_state = "balloon_green_pop"
 			qdel(src)
 
-	attackby(var/obj/item/W as obj, mob/user as mob)
+	attackby(var/obj/item/W, mob/user)
 		..()
 		user.lastattacked = src
 		playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_1.ogg', 100, 1)

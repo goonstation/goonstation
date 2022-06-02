@@ -45,7 +45,7 @@
 
 		return 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/paint_can))
 			boutput(user, "<span class='notice'>You refill the paint can.</span>")
 			W:uses = 15
@@ -82,7 +82,7 @@
 		add_fingerprint(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!W || !user)
 			return
 

@@ -1567,7 +1567,7 @@ Returns:
 		user.changeStatus("radiation", 5 SECONDS)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(prob(8) && (!broken))
 			for(var/i=0, i<5, i++)
 				new/obj/item/material_piece/slag(src.loc)
@@ -1947,7 +1947,7 @@ Returns:
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "pen"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/device/key))
 			boutput(user, "[W] disappears suddenly as you bring it close to the inscription ... huh")
 			del(W)
@@ -1984,7 +1984,7 @@ Returns:
 		light = null
 		..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/clothing/mask/cigarette))
 			var/obj/item/clothing/mask/cigarette/C = W
 			if(!C.on)
@@ -3264,7 +3264,7 @@ Returns:
 	var/suiciding = 0
 	var/deadly = 0
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 	MouseDrop_T(atom/target, mob/user)
@@ -3764,7 +3764,7 @@ var/list/lag_list = new/list()
 	anchored = 1
 	density = 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 	attack_hand(mob/user as mob)

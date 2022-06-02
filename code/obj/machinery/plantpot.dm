@@ -71,7 +71,7 @@
 	icon_state = "kudzutray"
 	power_usage = 0
 
-	attackby(var/obj/item/W as obj, var/mob/user as mob)
+	attackby(var/obj/item/W, var/mob/user)
 		//Can only attempt to destroy the plant pot if the plant in it is dead or empty.
 		if(!src.current || src.dead)
 			if (destroys_kudzu_object(src, W, user))
@@ -141,7 +141,7 @@
 				if(!src.current)
 					qdel(src)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		// Filter out the following item interactions
 		if(istool(W, TOOL_SCREWING | TOOL_WRENCHING))
 			boutput(user, "<span class='alert'>[W] does not seem like the right tool for the job.</span>")
@@ -507,7 +507,7 @@
 		if(!HAS_FLAG(status, NOPOWER))
 			use_power(power_usage)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(src.current)
 			// Inside this if block we'll handle reactions for specific kinds of plant.
 			// General reactions from the plantpot itself come after these.
@@ -1942,7 +1942,7 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 			light.enable()
 
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(isscrewingtool(W) || iswrenchingtool(W))
 			if(!src.anchored)
 				user.visible_message("<b>[user]</b> secures the [src] to the floor!")
@@ -1986,7 +1986,7 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 				src.active = 0
 				src.mode = 0
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/reagent_containers/glass/))
 			// Not just watering cans - any kind of glass can be used to pour stuff in.
 			if(!W.reagents.total_volume)

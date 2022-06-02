@@ -151,7 +151,7 @@
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection, report_unarmed=FALSE, report_attack=FALSE)
 
-/obj/storage/closet/flock/attackby(obj/item/W as obj, mob/user as mob)
+/obj/storage/closet/flock/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/grab))
 		return ..()
 
@@ -273,7 +273,7 @@
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection, report_attack=FALSE)
 
-/obj/lattice/flock/attackby(obj/item/C as obj, mob/user as mob)
+/obj/lattice/flock/attackby(obj/item/C, mob/user)
 	if (istype(C, /obj/item/tile))
 		var/obj/item/tile/T = C
 		if (T.amount >= 1)

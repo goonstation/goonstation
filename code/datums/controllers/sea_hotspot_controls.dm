@@ -577,7 +577,7 @@
 				SPAWN(1.5 SECONDS)
 					UpdateOverlays(null, "speech_bubble")
 
-	attackby(var/obj/item/I as obj, var/mob/M as mob)
+	attackby(var/obj/item/I, var/mob/M)
 		if (ispryingtool(I))
 			if (deployed)
 				src.undeploy()

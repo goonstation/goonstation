@@ -52,7 +52,7 @@
 	STOP_TRACKING
 	..()
 
-/obj/machinery/computer/genetics/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/computer/genetics/attackby(obj/item/W, mob/user)
 	if (istype(W,/obj/item/genetics_injector/dna_activator))
 		var/obj/item/genetics_injector/dna_activator/DNA = W
 		if (DNA.expended_properly)

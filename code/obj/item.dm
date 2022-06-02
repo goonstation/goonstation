@@ -827,7 +827,7 @@
 			//S.hud.remove_item(src)
 			S.hud.objects -= src // prevents invisible object from failed transfer (item doesn't fit in pockets from backpack for example)
 
-/obj/item/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/item/attackby(obj/item/W, mob/user, params)
 	if(src.material)
 		src.material.triggerTemp(src ,1500)
 	if (W.firesource)

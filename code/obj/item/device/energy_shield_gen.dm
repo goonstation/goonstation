@@ -23,7 +23,7 @@
 		..()
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (iswrenchingtool(W) && isturf(loc) && !istype(loc, /turf/space))
 			if(secured)
 				boutput(user, "<span class='alert'>You unsecure the generator.</span>")

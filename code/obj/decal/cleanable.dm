@@ -804,7 +804,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		pixel_y += rand(-12,12)
 		pixel_x += rand(-12,12)
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (istype(W, /obj/item/stamp))
 
 			var/obj/item/stamp/S = W

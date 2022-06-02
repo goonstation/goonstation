@@ -19,7 +19,7 @@
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/syndicatecorpse1
@@ -63,7 +63,7 @@
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/syndicatecorpse2
@@ -98,7 +98,7 @@
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/syndicatecorpse7
@@ -142,7 +142,7 @@
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/syndicatecorpse8
@@ -205,7 +205,7 @@
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/syndicatecorpse11
@@ -250,7 +250,7 @@
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/syndicatecorpse5
@@ -294,7 +294,7 @@
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/syndicatecorpse10
@@ -345,7 +345,7 @@
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/securitycorpse1
@@ -389,7 +389,7 @@
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/securitycorpse2
@@ -433,7 +433,7 @@
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/securitycorpse6
@@ -478,7 +478,7 @@
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/securitycorpse3
@@ -523,7 +523,7 @@
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/securitycorpse7
@@ -569,7 +569,7 @@
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/sergeantscomputer
@@ -686,7 +686,7 @@
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/plantoflosthope
@@ -741,7 +741,7 @@
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/bustedmantapc
@@ -793,7 +793,7 @@
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/engineeringcomputer
@@ -894,7 +894,7 @@
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/engineerscorpse
@@ -962,7 +962,7 @@
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/polariscrate

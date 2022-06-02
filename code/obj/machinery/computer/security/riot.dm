@@ -172,7 +172,7 @@
 	..()
 
 //kinda copy paste from shuttle auth :)
-/obj/machinery/computer/riotgear/attackby(var/obj/item/W as obj, var/mob/user as mob)
+/obj/machinery/computer/riotgear/attackby(var/obj/item/W, var/mob/user)
 	interact_particle(user,src)
 	if(status & (BROKEN|NOPOWER))
 		return

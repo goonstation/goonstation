@@ -1370,7 +1370,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			return
 		src.climb(user)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (src.broken) return
 		if (istype(W, /obj/item/grab))
 			if (!W:affecting) return

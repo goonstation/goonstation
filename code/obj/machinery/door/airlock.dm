@@ -1537,7 +1537,7 @@ About the new airlock wires panel:
 		..(user)
 	return
 
-/obj/machinery/door/airlock/attackby(obj/item/C as obj, mob/user as mob)
+/obj/machinery/door/airlock/attackby(obj/item/C, mob/user)
 	//boutput(world, text("airlock attackby src [] obj [] mob []", src, C, user))
 
 	src.add_fingerprint(user)

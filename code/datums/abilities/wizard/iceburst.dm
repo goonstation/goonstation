@@ -183,7 +183,7 @@
 			if(D_ENERGY)
 				takeDamage(damage/4)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		takeDamage(W.force)
 
 	mob_flip_inside(var/mob/user)

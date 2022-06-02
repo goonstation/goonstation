@@ -17,7 +17,7 @@
 	var/correct_bad_vision = 0
 	compatible_species = list("human", "cow", "werewolf", "flubber")
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/cloth/handkerchief))
 			user.visible_message("<span class='notice'>[user] [pick("polishes", "shines", "cleans", "wipes")] [src] with [src].</span>")
 			return
@@ -333,7 +333,7 @@
 			equipper = user//todo: this is prooobably redundant
 		return ..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if ((isscrewingtool(W) || istype(W, /obj/item/pen)) && !pinhole)
 			if( equipper && equipper.glasses == src )
 				var/obj/item/organ/eye/theEye = equipper.drop_organ((src.icon_state == "eyepatch-L") ? "left_eye" : "right_eye")
@@ -495,7 +495,7 @@
 			get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_mob(user)
 		..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/analyzer/healthanalyzer_upgrade))
 			if (src.scan_upgrade)
 				boutput(user, "<span class='alert'>[src] already has a health scan upgrade!</span>")

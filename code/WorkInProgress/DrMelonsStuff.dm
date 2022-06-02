@@ -37,7 +37,7 @@
 
 
 
-	attackby(var/obj/item/reagent_containers/C as obj, var/mob/user as mob)
+	attackby(var/obj/item/reagent_containers/C, var/mob/user)
 		if(!istype(C, /obj/item/reagent_containers))
 			return
 		if(istype(C, /obj/item/reagent_containers/glass))

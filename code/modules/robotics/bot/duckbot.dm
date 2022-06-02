@@ -264,7 +264,7 @@
 			src.access_lookup = initial(src.access_lookup)
 			src.botcard.access = get_access(src.access_lookup)
 
-/obj/machinery/bot/duckbot/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/bot/duckbot/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/card/emag))
 		emag_act(user, W)
 	else

@@ -320,7 +320,7 @@ GAUNTLET CARDS
 	else
 		..()
 
-/obj/item/card/id/syndicate/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/card/id/syndicate/attackby(obj/item/W, mob/user)
 	var/obj/item/card/id/sourceCard = W
 	if (istype(sourceCard))
 		boutput(user, "You copy [sourceCard]'s accesses to [src].")

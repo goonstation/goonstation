@@ -327,7 +327,7 @@
 	interact_particle(user,src)
 	return
 
-/turf/simulated/wall/attackby(obj/item/W as obj, mob/user as mob, params)
+/turf/simulated/wall/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/spray_paint) || istype(W, /obj/item/gang_flyer))
 		return
 
@@ -411,7 +411,7 @@
 				health /= 2
 		return
 
-/turf/simulated/wall/r_wall/attackby(obj/item/W as obj, mob/user as mob, params)
+/turf/simulated/wall/r_wall/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/spray_paint) || istype(W, /obj/item/gang_flyer))
 		return
 

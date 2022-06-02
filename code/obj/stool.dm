@@ -73,7 +73,7 @@
 				I.setMaterial(M)
 			qdel(src)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (iswrenchingtool(W) && src.deconstructable)
 			actions.start(new /datum/action/bar/icon/furniture_deconstruct(src, W, 30), user)
 			return
@@ -330,7 +330,7 @@
 			C.Move(src.loc)
 			C.buckled = src
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/clothing/suit/bedsheet))
 			src.tuck_sheet(W, user)
 			return
@@ -582,7 +582,7 @@
 		src.p_class = src.anchored ? initial(src.p_class) : 2
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (ispryingtool(W) && has_butt)
 			user.put_in_hand_or_drop(has_butt)
 			boutput(user, "<span class='notice'>You pry [has_butt.name] from [name].</span>")
@@ -1379,7 +1379,7 @@
 				src.UpdateIcon()
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (iswrenchingtool(W))
 			var/obj/stool/chair/C = new /obj/stool/chair(get_turf(src))
 			if (src.material)

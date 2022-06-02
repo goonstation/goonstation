@@ -45,7 +45,7 @@
 			else
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
 			src.gib(1)
 		else

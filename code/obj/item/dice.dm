@@ -730,7 +730,7 @@ var/list/rollList = list()
 		else
 			..()
 
-	attackby(obj/item/dice/W as obj, mob/living/user as mob)
+	attackby(obj/item/dice/W, mob/living/user)
 		if(src.icon_state != "dicebox")
 			addDice(W,"diceboxt",user)
 
@@ -775,7 +775,7 @@ var/list/rollList = list()
 		else
 			..()
 
-	attackby(obj/item/dice/W as obj, mob/living/user as mob)
+	attackby(obj/item/dice/W, mob/living/user)
 		if(src.icon_state == "dicecup")
 			addDice(W,"dicecup",user)
 

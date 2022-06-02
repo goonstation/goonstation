@@ -60,7 +60,7 @@
 		return ..()
 	return
 
-/obj/item/fcardholder/attackby(obj/item/P as obj, mob/user as mob)
+/obj/item/fcardholder/attackby(obj/item/P, mob/user)
 	if (istype(P, /obj/item/f_card))
 		if (src.contents.len < 30)
 			user.drop_item()
@@ -152,7 +152,7 @@
 		..()
 	return
 
-/obj/item/f_card/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/f_card/attackby(obj/item/W, mob/user)
 
 	if (istype(W, /obj/item/f_card))
 		if ((src.fingerprints || W.fingerprints))

@@ -120,7 +120,7 @@
 	attack_ai(mob/user as mob)
 		return
 
-	attackby(obj/item/P as obj, mob/living/user as mob)
+	attackby(obj/item/P, mob/living/user)
 		if(istype(P, /obj/item/phone_handset))
 			var/obj/item/phone_handset/PH = P
 			if(PH.parent == src)

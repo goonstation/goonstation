@@ -255,7 +255,7 @@
 					I.alpha = 255
 			H.health_mon?.alpha = 255
 
-	attackby(var/obj/item/W as obj, mob/user as mob)
+	attackby(var/obj/item/W, mob/user)
 		user.lastattacked = src
 		hit_twitch(src)
 		attack_particle(user,src)
@@ -324,7 +324,7 @@
 			if (M.mind && M.mind.assigned_role == "Captain")
 				boutput(M, "<span class='alert'>You suddenly feel hollow. Something very dear to you has been lost.</span>")
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!W) return
 		if (!user) return
 		if (inafterlife(user))
@@ -381,7 +381,7 @@
 				boutput(M, "<span class='alert'>You suddenly feel hollow. Something very dear to you has been lost.</span>")
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!W) return
 		if (!user) return
 		if (inafterlife(user))
@@ -919,7 +919,7 @@ obj/decoration/ceilingfan
 			src.icon_state = src.icon_off
 			light.disable()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!src.lit)
 			if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
 				boutput(user, "<span class='alert'><b>[user]</b> casually lights [src] with [W], what a badass.</span>")
@@ -1302,7 +1302,7 @@ obj/decoration/gibberBroken
 			src.icon_state = src.icon_off
 			light.disable()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!src.lit)
 			if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
 				boutput(user, "<span class='alert'><b>[user]</b> casually lights [src] with [W], what a badass.</span>")
@@ -1342,7 +1342,7 @@ obj/decoration/gibberBroken
 			user.visible_message("<b>[user]</b> [fluff]s out the [src].",\
 			"You [fluff] out the [src].")
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (iswrenchingtool(W) && src.deconstructable)
 			actions.start(new /datum/action/bar/icon/furniture_deconstruct(src, W, 30), user)
 			return

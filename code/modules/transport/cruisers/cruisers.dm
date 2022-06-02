@@ -984,7 +984,7 @@
 	ex_act(var/severity)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (rebooting) return
 		if (istype(W, tool_type) && (broken || health < health_max))
 			playsound(src.loc, "sound/machines/repairing.ogg", 85, 1)
@@ -1062,7 +1062,7 @@
 		if(open) icon_state = icon_state_open
 		else icon_state = icon_state_closed
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(!..())
 			if(open)
 				user.drop_item()
@@ -1248,7 +1248,7 @@
 		if(interior.ship)
 			interior.ship.leaveShip(user)
 
-	attackby(var/obj/item/grab/G as obj, mob/user as mob)
+	attackby(var/obj/item/grab/G, mob/user)
 		if ((!( istype(G, /obj/item/grab) ) || !( ismob(G.affecting) )))
 			return
 		if (G.state == GRAB_PASSIVE)

@@ -44,7 +44,7 @@
 
 		..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (prob(50) && src.armed && !src.used_up)
 			if (!src.suppress_flavourtext)
 				src.visible_message("<font color='red'><b>[user] fumbles with the [src.name], accidentally setting it off!</b></span>")

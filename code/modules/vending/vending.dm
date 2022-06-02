@@ -405,7 +405,7 @@
 	html_parts += "</small></td></tr></tbody></table></TT><br>"
 	src.wire_HTML = jointext(html_parts, "")
 
-/obj/machinery/vending/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/vending/attackby(obj/item/W, mob/user)
 	if (istype(W,/obj/item/electronics/scanner) || istype(W,/obj/item/deconstructor)) // So people don't end up making the vending machines fall on them when they try to scan/deconstruct it
 		return
 	if (istype(W, /obj/item/spacecash))
@@ -1444,7 +1444,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/triplaser, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/wificomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/wifisplit, 30)
-/obj/machinery/vending/mechanics/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/vending/mechanics/attackby(obj/item/W, mob/user)
 	if(!istype(W,/obj/item/mechanics))
 		..()
 		return
@@ -2477,7 +2477,7 @@
 		speak("Ha ha ha ha ha!")
 		return
 
-	attackby(obj/item/weapon as obj, mob/user as mob) //pretty much just player zoldorf stuffs :)
+	attackby(obj/item/weapon, mob/user) //pretty much just player zoldorf stuffs :)
 		if((istype(weapon, /obj/item/zolscroll)) && istype(user,/mob/living/carbon/human) && (src.z == 1))
 			var/obj/item/zolscroll/scroll = weapon
 			var/mob/living/carbon/human/h = user
@@ -2768,7 +2768,7 @@
 
 		holding.air_contents.copy_from(gas_prototype)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/tank))
 			if (!src.holding)
 				boutput(user, "You insert the [W] into the the [src].</span>")

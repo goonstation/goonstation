@@ -33,7 +33,7 @@
 			name = "[amount] [initial(src.name)][amount > 1 ? "s":""]"
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(W.type == src.type)
 			stack_item(W)
 			if(!user.is_in_hands(src))
@@ -884,7 +884,7 @@
 			W.dropped(user)
 			. = TRUE
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 
 		if (istype(W, /obj/item/ore_scoop))
 			var/obj/item/ore_scoop/scoop = W

@@ -21,7 +21,7 @@
 	mats = 20
 
 
-/obj/machinery/autolathe/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/machinery/autolathe/attackby(var/obj/item/O, var/mob/user)
 	if (isscrewingtool(O))
 		if (!opened)
 			src.opened = 1

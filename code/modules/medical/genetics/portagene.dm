@@ -136,7 +136,7 @@
 			return
 		. = ..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/sheet) && (src.status & BROKEN))
 			var/obj/item/sheet/S = W
 			if (S.material && S.material.material_flags & MATERIAL_CRYSTAL)

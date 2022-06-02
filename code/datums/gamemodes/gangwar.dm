@@ -1038,7 +1038,7 @@
 		take_damage(250-50*severity)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isweldingtool(W))
 			user.lastattacked = src
 

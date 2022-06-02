@@ -232,7 +232,7 @@
 		else
 			..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/shinai) && open && shinai + length(src.contents) < 2)
 			user.u_equip(W)
 			W.set_loc(src)

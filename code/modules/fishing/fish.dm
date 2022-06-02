@@ -24,7 +24,7 @@
 			playsound(src.loc, pick('sound/impact_sounds/Slimy_Hit_1.ogg', 'sound/impact_sounds/Slimy_Hit_2.ogg'), 50, 1, -1)
 			user.visible_message("<span class='alert'><b>[user] slaps [M] with \the [src]!</b>.</span>")
 
-	attackby(var/obj/item/W as obj, var/mob/user as mob)
+	attackby(var/obj/item/W, var/mob/user)
 		if(istype(W, /obj/item/kitchen/utensil/knife))
 			if(fillet_type)
 				var/obj/fillet = new fillet_type(src.loc)

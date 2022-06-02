@@ -153,7 +153,7 @@
 			src.visible_message("<span class='alert'>The [src] ignites!</span>", group = "cig_ignite")
 			src.light()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (src.on == 0)
 			if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
 				src.light(user, "<span class='alert'><b>[user]</b> casually lights [src] with [W], what a badass.</span>")
@@ -444,7 +444,7 @@
 	buttdesc = "Tarry, smelly."
 	buttname = "cigarillo roach"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if((W.tool_flags & TOOL_CUTTING) || (W.hit_type & DAMAGE_CUT) || (W.hit_type & DAMAGE_STAB))
 			var/obj/item/bluntwrap/B = new(user.loc)
 			if(src.flavor)
@@ -621,7 +621,7 @@
 
 	src.UpdateIcon()
 
-/obj/item/cigpacket/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/cigpacket/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/clothing/mask/cigarette))
 		var/obj/item/clothing/mask/cigarette/cig = W
 		if (cig.on)

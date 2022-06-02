@@ -484,7 +484,7 @@
 		..(newloc)
 		changeIcon()
 
-	attackby(var/obj/item/I as obj, var/mob/user as mob)
+	attackby(var/obj/item/I, var/mob/user)
 		if(loaded) return loaded.Attackby(I, user)
 		else return ..()
 
@@ -628,7 +628,7 @@
 		dmg_threshold = rand(20,60)
 		..()
 
-	attackby(var/obj/item/I as obj, var/mob/user as mob)
+	attackby(var/obj/item/I, var/mob/user)
 		..()
 		logTheThing("combat", user, null, " hits [src] with [I] at [log_loc(user)]")
 		logTheThing("diary", user, null, " hits [src] with [I] at [log_loc(user)]", "combat")

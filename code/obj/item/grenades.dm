@@ -79,7 +79,7 @@ PIPE BOMBS + CONSTRUCTION
 			src.throw_at(get_turf(target), 10, 3)
 			src.add_fingerprint(user)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W))
 			if (src.det_time == src.org_det_time)
 				src.det_time = src.alt_det_time
@@ -768,7 +768,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 						user.set_loc(locate(40,19,2))
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return
 
 ////////////////////////// Gimmick bombs /////////////////////////////////
@@ -1076,7 +1076,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 					boom(user)
 					return
 
-	attackby(obj/A as obj, mob/user as mob) // adapted from iv_drips.dm
+	attackby(obj/A, mob/user) // adapted from iv_drips.dm
 		if (iscuttingtool(A) && !(src.slashed) && !(src.primed))
 			boutput(user, "You carefully cut [src] open and dump out the contents.")
 			src.slashed = TRUE
@@ -1133,7 +1133,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 
 		..()
 
-	attackby(obj/A as obj, mob/user as mob) // adapted from iv_drips.dm
+	attackby(obj/A, mob/user) // adapted from iv_drips.dm
 		if (iscuttingtool(A) && !(src.slashed) && (src.bootleg_level > 0))
 			boutput(user, "You try to cut [src] open, but the contents spontaneously ignite!")
 			boom(user)

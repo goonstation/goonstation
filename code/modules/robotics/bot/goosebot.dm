@@ -58,7 +58,7 @@
 
 	return
 
-/obj/machinery/bot/goosebot/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/bot/goosebot/attackby(obj/item/W, mob/user)
 	src.visible_message("<span class='combat'>[user] hits [src] with [W]!</span>")
 	src.health -= W.force * 0.5
 	if (src.health <= 0)

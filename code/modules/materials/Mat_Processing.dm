@@ -114,7 +114,7 @@
 				playsound(src.loc, "sound/machines/buzz-two.ogg", 40, 1)
 		return
 
-	attackby(var/obj/item/W as obj, mob/user as mob)
+	attackby(var/obj/item/W, mob/user)
 		//Wire: Fix for: undefined proc or verb /turf/simulated/floor/set loc()
 		//		like somehow a dude tried to load a turf? how the fuck? whatever just kill me
 		if (!istype(W))
@@ -664,7 +664,7 @@
 		components += dummyItem
 		user.ghostize()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/slag_shovel))
 			if(slag_level)
 				src.visible_message("<span class='notice'>[user] removes slag from the [src]</span>")

@@ -139,7 +139,7 @@
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 
 
 /obj/machinery/drone_recharger/factory

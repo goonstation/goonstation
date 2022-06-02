@@ -221,7 +221,7 @@
 
 	proc/on_grump()
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		..()
 		if (!src.alive)
 			if (src.skinresult && max_skins)
@@ -1014,7 +1014,7 @@
 		else
 			..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/pen))
 			var/t = input(user, "Enter new name", src.name, src.critter_name) as null|text
 			logTheThing("debug", user, null, "names a critter egg \"[t]\"")

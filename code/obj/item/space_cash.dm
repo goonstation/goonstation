@@ -71,7 +71,7 @@
 	failed_stack(atom/movable/O as obj, mob/user as mob, var/added)
 		boutput(user, "<span class='alert'>You need another stack!</span>")
 
-	attackby(var/obj/item/I as obj, mob/user as mob)
+	attackby(var/obj/item/I, mob/user)
 		if (istype(I, /obj/item/spacecash) && src.amount < src.max_stack)
 			if (istype(I, /obj/item/spacecash/buttcoin))
 				boutput(user, "Your transaction will complete anywhere within 10 to 10e27 minutes from now.")
@@ -198,7 +198,7 @@
 		else
 			..()
 
-	attackby(var/obj/item/I as obj, mob/user as mob)
+	attackby(var/obj/item/I, mob/user)
 		if (istype(I, /obj/item/spacecash) && src.amount < src.max_stack)
 			boutput(user, "Your transaction will complete anywhere within 10 to 10e27 minutes from now.")
 		else
@@ -315,7 +315,7 @@
 	failed_stack(atom/movable/O as obj, mob/user as mob, var/added)
 		boutput(user, "<span class='alert'>You need another stack!</span>")
 
-	attackby(var/obj/item/I as obj, mob/user as mob)
+	attackby(var/obj/item/I, mob/user)
 		if (istype(I, /obj/item/spacebux) && src.spent == 0)
 			user.visible_message("<span class='notice'>[user] stacks some spacebux.</span>")
 			stack_item(I)

@@ -13,7 +13,7 @@
 		..()
 		UnsubscribeProcess()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/pda2) && W:ID_card)
 			W = W:ID_card
 		if(istool(W, TOOL_SCREWING | TOOL_WRENCHING))

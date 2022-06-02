@@ -562,7 +562,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	failed_stack(atom/movable/O as obj, mob/user as mob, var/added)
 		boutput(user, "<span class='alert'>You need another stack!</span>")
 
-	attackby(var/obj/item/I as obj, mob/user as mob)
+	attackby(var/obj/item/I, mob/user)
 		if (istype(I, /obj/item/dice/coin/poker_chip) && src.amount < src.max_stack)
 			user.visible_message("<span class='notice'>[user] stacks some [src.real_name]s.</span>")
 			src.stack_item(I)
@@ -1362,7 +1362,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	shoot_point_blank(atom/target, mob/user, second_shot)
 		shoot(get_turf(target), get_turf(user), user, 0, 0)
 
-	attackby(var/obj/item/spacecash/C as obj, mob/user as mob)
+	attackby(var/obj/item/spacecash/C, mob/user)
 		if (!istype(C))
 			return ..()
 		if (C.amount <= 0) // how??

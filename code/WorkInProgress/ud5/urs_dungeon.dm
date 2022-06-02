@@ -521,7 +521,7 @@
 	attack_hand(mob/user as mob)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/shovel))
 			user.visible_message("<span class='notice'>[user] digs in [src] with [W]!</span>")
 			src.open()

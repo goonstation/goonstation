@@ -257,7 +257,7 @@
 			user.suiciding = 0
 	return 1
 
-/obj/item/sword/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/item/sword/attackby(obj/item/W, mob/user, params)
 	if (!use_glowstick)
 		return ..()
 
@@ -1262,7 +1262,7 @@
 		else
 			return ..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!istype(W, sword_path))
 			boutput(user, "<span class='alert'>The [W] can't fit into [src].</span>")
 			return
@@ -1306,7 +1306,7 @@
 	ih_sheath_state = "sheath_reverse0"
 	sword_path = /obj/item/katana/reverse
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (W.type == /obj/item/katana)
 			boutput(user, "<span class='alert'>The [W] can't fit into [src].</span>")
 			return
@@ -1325,7 +1325,7 @@
 	sword_path = /obj/item/katana/captain
 	tooltip_flags = REBUILD_USER
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!istype(W, /obj/item/katana/captain))
 			boutput(user, "<span class='alert'>The [W] can't fit into [src].</span>")
 			return
@@ -1369,7 +1369,7 @@
 	ih_sheath_state = "scabbard-syndie0"
 	sword_path = /obj/item/katana/nukeop
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!istype(W, sword_path))
 			boutput(user, "<span class='alert'>The [W] can't fit into [src].</span>")
 			return
@@ -1462,7 +1462,7 @@ obj/item/fragile_sword
 					take_bleeding_damage(C, user, 5, DAMAGE_STAB)
 		..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/whetstone))
 			if(force <= maximum_force)
 				force += 5

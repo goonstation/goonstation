@@ -129,7 +129,7 @@
 					counter = 25
 		src.Attackhand(usr)
 
-	attackby(var/obj/item/O as obj, var/mob/user as mob)
+	attackby(var/obj/item/O, var/mob/user)
 		if (istype(O, /obj/item/bloodslide))
 			if (src.source)
 				boutput(user, "<span class='alert'>There is already a blood slide in the machine.</span>")
@@ -323,7 +323,7 @@
 					src.contents -= src.target
 					src.target = null
 
-	attackby(var/obj/item/O as obj, var/mob/user as mob)
+	attackby(var/obj/item/O, var/mob/user)
 		if (istype(O, /obj/item/reagent_containers/glass/petridish) || istype(O, /obj/item/bloodslide))
 			if (src.target)
 				boutput(user, "<span class='alert'>There is already a [target] on the microscope.</span>")
@@ -1067,7 +1067,7 @@
 		..()
 		flags |= NOSPLASH
 
-	attackby(var/obj/item/O as obj, var/mob/user as mob)
+	attackby(var/obj/item/O, var/mob/user)
 		var/firstFreeSlot = -1 // -1 means no free slot, -2 means the active slot is free
 		if(!loaded)
 			firstFreeSlot = -2
@@ -1262,7 +1262,7 @@
 			return 1
 		return 0
 
-	attackby(var/obj/item/O as obj, var/mob/user as mob)
+	attackby(var/obj/item/O, var/mob/user)
 		if(status & (BROKEN|NOPOWER))
 			boutput(user,  "<span class='alert'>You can't insert things while the machine is out of power!</span>")
 			return
@@ -1654,7 +1654,7 @@
 	var/machine_state = 0
 	var/santime = 3 // 15
 
-	attackby(var/obj/item/O as obj, var/mob/user as mob)
+	attackby(var/obj/item/O, var/mob/user)
 		if (istype(O, /obj/item/reagent_containers/glass))
 			if (!sanitizing)
 				boutput(user, "<span class='notice'>You place the [O] inside the machine.</span>")
@@ -1759,7 +1759,7 @@
 				src.UpdateIcon()
 		return
 
-	attackby(var/obj/item/O as obj, var/mob/user as mob)
+	attackby(var/obj/item/O, var/mob/user)
 		if (istype(O, /obj/item/reagent_containers/glass/petridish))
 			if (src.target)
 				boutput(user, "<span class='alert'>There is already a petri dish in the machine.</span>")

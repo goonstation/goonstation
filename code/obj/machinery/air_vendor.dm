@@ -61,7 +61,7 @@ obj/machinery/air_vendor
 
 		holding.air_contents.copy_from(gas_prototype)
 
-	attackby(var/obj/item/W as obj, var/mob/user as mob)
+	attackby(var/obj/item/W, var/mob/user)
 		if (istype(W, /obj/item/spacecash))
 			src.credits += W.amount
 			W.amount = 0

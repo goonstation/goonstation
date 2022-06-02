@@ -29,7 +29,7 @@
 		src.overlays += image('icons/mob/ai.dmi', "topopen")
 		src.overlays += image('icons/mob/ai.dmi', "batterymode")
 
-	attackby(var/obj/item/I as obj, user as mob)
+	attackby(var/obj/item/I, user)
 		if (istype(I, /obj/item/organ/brain) && !processing)
 			processing = 1
 			var/valid = 0
@@ -548,7 +548,7 @@
 		color = rgb(0, 255, 0)
 		icon_state = initial_state
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/room_planner))
 			qdel(src)
 			return
@@ -748,7 +748,7 @@
 			else
 				boutput(usr, "<span class='alert'>Insufficient materials -- requires 2 metal and [borders] glass.</span>")
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/material_shaper))
 			handle_shaper(W)
 		else

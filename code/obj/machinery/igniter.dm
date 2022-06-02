@@ -70,7 +70,7 @@
 		icon_state = "[base_state]-p"
 		light.disable()
 
-/obj/machinery/sparker/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/sparker/attackby(obj/item/W, mob/user)
 	if (isscrewingtool(W))
 		add_fingerprint(user)
 		src.disable = !src.disable

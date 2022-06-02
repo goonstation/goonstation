@@ -329,7 +329,7 @@
 	return
 
 
-/obj/item/device/flash/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/device/flash/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/cell) && !src.secure)
 		boutput(user, "<span class='notice'>You combine [W] and [src]...</span>")
 		var/obj/item/device/flash/turbo/T = new /obj/item/device/flash/turbo(user.loc)
@@ -392,7 +392,7 @@
 				src.cell.charge = src.cell.maxcharge
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!W)
 			return
 		if (iswrenchingtool(W) && !(src.secure))
@@ -426,7 +426,7 @@
 	emp_act()
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return
 
 	attack(mob/living/M as mob, mob/user as mob)

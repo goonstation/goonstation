@@ -398,7 +398,7 @@
 				if (occupant == user && !(started>1))
 					src.eject_occupant(0,0, direction)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		user.lastattacked = src
 		letgo_hp -= W.force
 		attack_particle(user,src)

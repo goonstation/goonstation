@@ -128,7 +128,7 @@
 		src.setItemSpecial(/datum/item_special/swipe)
 		BLOCK_SETUP(BLOCK_ROD)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(issnippingtool(W))
 			boutput(user, "<span class='notice'>You cut [src] horizontally across and flatten it out.</span>")
 			new /obj/item/c_sheet(get_turf(src))
@@ -580,7 +580,7 @@
 	density = 1
 	var/gnome = 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/scpgnome_lid) && ((src.icon_state == "sarc_2")||(src.icon_state == "sarc_3")))
 			user.u_equip(W)
 			qdel(W)

@@ -667,7 +667,7 @@ function lineEnter (ev)
 			if(glow_in_dark_screen)
 				src.ClearSpecificOverlays("screen_image")
 
-/obj/machinery/computer3/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/computer3/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/disk/data/floppy)) //INSERT SOME DISKETTES
 		if ((!src.diskette) && src.setup_has_internal_disk)
 			user.drop_item()
@@ -1075,7 +1075,7 @@ function lineEnter (ev)
 		src.deployed = 0
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/disk/data/floppy)) //INSERT SOME DISKETTES
 			if ((!src.diskette) && src.setup_has_internal_disk)
 				user.drop_item()

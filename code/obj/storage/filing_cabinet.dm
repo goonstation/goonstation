@@ -6,7 +6,7 @@
 	anchored = 1
 	density = 1
 
-	attackby(var/obj/item/W as obj, var/mob/user as mob)
+	attackby(var/obj/item/W, var/mob/user)
 		if (istype(W, /obj/item/paper) || istype(W, /obj/item/folder))
 			icon_state = "filecabinet-open"
 			if (istype(W, /obj/item/paper)) //couldnt get this to work nicely with [w] so you get this instead god

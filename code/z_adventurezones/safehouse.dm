@@ -381,7 +381,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	anchored = 1
 	density = 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/record))
 			src.visible_message("<span class='notice'><b>[user] attempts to place the 12 inch record on the 7 inch turntable, but it obviously doesn't fit. How embarassing!</b></span>")
 		return

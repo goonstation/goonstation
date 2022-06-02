@@ -73,7 +73,7 @@ TILES
 		src.add_fingerprint(user)
 		return
 
-	attackby(obj/item/tile/W as obj, mob/user as mob)
+	attackby(obj/item/tile/W, mob/user)
 
 		if (!( istype(W, /obj/item/tile) ))
 			return

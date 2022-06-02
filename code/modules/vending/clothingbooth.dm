@@ -110,7 +110,7 @@ var/list/clothingbooth_items = list()
 				return
 		..()
 
-/obj/machinery/clothingbooth/attackby(obj/item/weapon as obj, mob/user as mob)
+/obj/machinery/clothingbooth/attackby(obj/item/weapon, mob/user)
 	if(istype(weapon, /obj/item/spacecash))
 		if(!(locate(/mob) in src))
 			src.money += weapon.amount

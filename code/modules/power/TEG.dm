@@ -121,7 +121,7 @@
 			. += "<br><span class='notice'>[reagents.get_description(user,RC_SCALE)]</span>"
 
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		var/open = is_open_container()
 
 		// Weld > Crowbar > Rods > Weld
@@ -896,7 +896,7 @@ datum/pump_ui/circulator_ui
 
 		return efficiency_scale * 0.01
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		// Weld > Crowbar > Rods > Weld
 		switch(semiconductor_state)
 			if(TEG_SEMI_STATE_INSTALLED)

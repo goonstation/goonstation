@@ -304,7 +304,7 @@
 	src.UpdateIcon()
 	return 1
 
-/obj/machinery/bot/medbot/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/bot/medbot/attackby(obj/item/W, mob/user)
 	//if (istype(W, /obj/item/card/emag)) // this gets to stay here because it is a good story
 		/*
 		I caught a fish once, real little feller, it was.
@@ -863,7 +863,7 @@
 		qdel(S)
 		qdel(src)
 
-/obj/item/firstaid_arm_assembly/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/firstaid_arm_assembly/attackby(obj/item/W, mob/user)
 	if ((istype(W, /obj/item/device/analyzer/healthanalyzer)) && (!src.build_step))
 		src.build_step++
 		boutput(user, "You add the health sensor to [src]!")

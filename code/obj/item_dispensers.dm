@@ -29,7 +29,7 @@
 		if(display_amount)
 			. += "There's [src.amount] left."
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (src.cant_deposit)
 			..()
 			return
@@ -142,7 +142,7 @@
 	pixel_y = 0
 	flags = FPRINT | NOSPLASH
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/glass) || istype(W, /obj/item/reagent_containers/food/drinks))
 			if (W.reagents.total_volume <= (W.reagents.maximum_volume - 10))
 				W.reagents.add_reagent("ice", 10, null, (T0C - 50))

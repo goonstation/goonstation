@@ -50,7 +50,7 @@
 		user.show_text("You repair the lock on [src].", "blue")
 	return 1
 
-/obj/item/storage/secure/attackby(obj/item/W as obj, mob/user as mob, obj/item/storage/T)
+/obj/item/storage/secure/attackby(obj/item/W, mob/user, obj/item/storage/T)
 	if ((W.w_class > W_CLASS_NORMAL || istype(W, /obj/item/storage/secure)))
 		return
 	//Waluigi hates this

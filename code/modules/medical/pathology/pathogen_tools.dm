@@ -14,7 +14,7 @@
 		var/datum/reagents/R = new /datum/reagents(5)
 		src.reagents = R
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		return
 
 	on_reagent_change()

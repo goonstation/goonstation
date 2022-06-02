@@ -40,7 +40,7 @@
 			src.icon_state = src.base_state
 			src.item_state = src.base_state
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(W.w_class > W_CLASS_NORMAL)
 			boutput(user, "<span class='alert'>\The [W] is too big to fit inside [src]!</span>")
 			return

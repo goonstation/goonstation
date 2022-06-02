@@ -118,7 +118,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	attack_ai(mob/user as mob)
 		return attack_hand(user)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/pda2) && W:ID_card)
 			W = W:ID_card
 		if(istype(W, /obj/item/card/id))
@@ -215,7 +215,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 //REPAIRING:  wrench > screwdriver > crowbar > wires > welder > wrench > screwdriver > sheet > welder
 
-	attackby(var/obj/item/I as obj, var/mob/user as mob)
+	attackby(var/obj/item/I, var/mob/user)
 		switch(repairstate)
 			if (0)
 				if (important == 1)
@@ -409,7 +409,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			UpdateIcon()
 			user.show_text("<span class='notice'><b>You close junction box's outer door.</b></span>")
 
-	attackby(var/obj/item/I as obj, var/mob/user as mob)
+	attackby(var/obj/item/I, var/mob/user)
 		if (broken == 1 && open == 1)
 			user.shock(src, rand(5000, 15000), "chest", 1)
 		switch(repairstate)
@@ -520,7 +520,7 @@ var/obj/manta_speed_lever/mantaLever = null
 				change_health(-35)
 				return
 
-	attackby(var/obj/item/I as obj, var/mob/user as mob)
+	attackby(var/obj/item/I, var/mob/user)
 		user.lastattacked = src
 		..()
 		if (broken == 0)
@@ -565,7 +565,7 @@ var/obj/manta_speed_lever/mantaLever = null
 				change_health(-35)
 				return
 
-	attackby(var/obj/item/I as obj, var/mob/user as mob)
+	attackby(var/obj/item/I, var/mob/user)
 		user.lastattacked = src
 		..()
 		if (broken == 0)

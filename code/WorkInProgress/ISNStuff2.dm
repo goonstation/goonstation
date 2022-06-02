@@ -267,7 +267,7 @@
 				make_cleanable( /obj/decal/cleanable/urine ,get_turf(G))
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (iswrenchingtool(W) && steps_until_pressable == 18)
 			boutput(user, "<span class='notice'>You remove the metal bolts.</span>")
 			steps_until_pressable--

@@ -379,7 +379,7 @@
 			boutput(O, "<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"")
 		return
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if(active) ..()
 
 	attack_hand(var/mob/user as mob)
@@ -404,7 +404,7 @@
 	var/glass = 0
 	var/motherboard = 0
 
-	attackby(obj/item/P as obj, mob/user as mob)
+	attackby(obj/item/P, mob/user)
 		if (istype(P, /obj/item/mars_roverpart))
 			if ((istype(P, /obj/item/mars_roverpart/wheel))&&(!wheel))
 				boutput(user, "<span class='notice'>You attach the wheel to the rover's chassis.</span>")

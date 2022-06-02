@@ -17,7 +17,7 @@
 		..()
 		src.UpdateIcon()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		var/proceed = 0
 		for(var/check_path in src.allowed)
 			if(istype(W, check_path) && W.w_class < W_CLASS_BULKY)
@@ -241,7 +241,7 @@
 			return
 
 		// ITS GONNA BE CLICKY AND OPEN OK   SHUT UP
-		attackby(obj/item/W as obj, mob/user as mob)
+		attackby(obj/item/W, mob/user)
 			src.open_it_up(1)
 			..()
 			src.open_it_up(0)

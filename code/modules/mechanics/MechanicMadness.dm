@@ -98,7 +98,7 @@
 			src.users+=user
 		return ..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W))
 			if(src.welded)
 				boutput(user,"<span class='alert'>The [src] is welded shut.</span>")
@@ -301,7 +301,7 @@
 	New()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(iswrenchingtool(W)) // prevent unanchoring
 			return 0
 		if(..()) return 1
@@ -423,7 +423,7 @@
 	proc/rotate()
 		src.set_dir(turn(src.dir, -90))
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (ispryingtool(W))
 			if (can_rotate)
 				if (!anchored)
@@ -589,7 +589,7 @@
 				return 0
 		ejectmoney()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(..(W, user)) return 1
 		if (istype(W, /obj/item/spacecash) && !ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time))
 			LIGHT_UP_HOUSING
@@ -649,7 +649,7 @@
 		trunk = null
 		..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(..(W, user))
 			if(src.level == 1) //wrenched down
 				trunk = locate() in src.loc
@@ -778,7 +778,7 @@
 		boutput(user, "[thermal_only ? "Now accepting only thermal paper":"Now accepting any paper"]")
 		return 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(..(W, user)) return 1
 		else if (istype(W, /obj/item/paper) && !ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time))
 			if(thermal_only && !istype(W, /obj/item/paper/thermal))
@@ -2603,7 +2603,7 @@
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(..(W, user)) return 1
 		if(ispulsingtool(W)) return // Don't press the button with a multitool, it brings up the config menu instead
 		return attack_hand(user)
@@ -2769,7 +2769,7 @@
 		boutput(user, "<span class='alert'>There is no gun inside this component.</span>")
 		return 0
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(..(W, user)) return 1
 		var/gun_fits = 0
 		for(var/I in src.compatible_guns)
@@ -2922,7 +2922,7 @@
 			boutput(user, "<span class='alert'>There is no instrument inside this component.</span>")
 		return 0
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (..(W, user)) return 1
 		else if (instrument) // Already got one, chief!
 			boutput(user, "There is already \a [instrument] inside the [src].")

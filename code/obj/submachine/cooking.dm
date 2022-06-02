@@ -9,7 +9,7 @@
 	deconstruct_flags = DECON_WRENCH | DECON_WELDER
 	flags = NOSPLASH
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/flour))
 			user.show_text("You add water to the flour to make dough!", "blue")
 			if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/flour/semolina))
@@ -187,7 +187,7 @@
 			src.updateUsrDialog()
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (W.cant_drop) // For borg held items
 			boutput(user, "<span class='alert'>You can't put that in \the [src] when it's attached to you!</span>")
 			return
@@ -783,7 +783,7 @@ table#cooktime a#start {
 				user.suiciding = 0
 		return 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isghostdrone(user))
 			boutput(user, "<span class='alert'>\The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
 			return
@@ -1013,7 +1013,7 @@ table#cooktime a#start {
 	attack_ai(var/mob/user as mob)
 		return attack_hand(user)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/satchel/))
 			var/obj/item/satchel/S = W
 			if (S.contents.len < 1) boutput(user, "<span class='alert'>There's nothing in the satchel!</span>")
@@ -1134,7 +1134,7 @@ var/list/mixer_recipes = list()
 		src.UpdateIcon()
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		var/amount = length(src.contents)
 		if (amount >= 4)
 			boutput(user, "<span class='alert'>The mixer is full.</span>")

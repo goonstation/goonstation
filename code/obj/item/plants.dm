@@ -28,7 +28,7 @@
 	item_function_flags = COLD_BURN
 	crop_suffix	= " leaf"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!src.reagents)
 			src.make_reagents()
 
@@ -450,7 +450,7 @@
 		else
 			..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/wirecutters/) && src.thorned)
 			boutput(user, "<span class='notice'>You snip off [src]'s thorns.</span>")
 			src.thorned = 0

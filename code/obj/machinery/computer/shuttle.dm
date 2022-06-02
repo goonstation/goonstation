@@ -181,7 +181,7 @@
 		return 1
 	return 0
 
-/obj/machinery/computer/shuttle/attackby(var/obj/item/W as obj, var/mob/user as mob)
+/obj/machinery/computer/shuttle/attackby(var/obj/item/W, var/mob/user)
 	if(status & (BROKEN|NOPOWER))
 		return
 	if (istype(W, /obj/item/device/pda2) && W:ID_card)

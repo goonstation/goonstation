@@ -433,7 +433,7 @@
 			else
 				continue
 
-	attackby(obj/item/W as obj, mob/M as mob)
+	attackby(obj/item/W, mob/M)
 		if(istype(W, /obj/item/reagent_containers/food/snacks) && !(M in src.friends))
 			if(prob(20))
 				src.visible_message("<span class='notice'>[src] chitters happily at the [W], and seems a little friendlier with [M]!</span>")
@@ -536,7 +536,7 @@
 		playsound(src.loc, "sound/impact_sounds/Crystal_Hit_1.ogg", 50, 0)
 		. = ..()
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		..()
 		if (!src.alive) return
 		if (istype(W, /obj/item/clothing/head))
@@ -939,7 +939,7 @@
 			attacking = 0
 
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (!src.alive)
 			return
 		else
@@ -1030,7 +1030,7 @@
 			boutput(user, "<span class='combat'><b>Your hand passes right through! It's so cold...</b></span>")
 		return
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (!src.alive)
 			return
 		else
@@ -1124,7 +1124,7 @@
 			src.appear()
 			break
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		..()
 		src.boredom_countdown = rand(5,10)
 

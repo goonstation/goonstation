@@ -642,7 +642,7 @@
 		else
 			src.updateUsrDialog()
 
-	attackby(var/obj/item/W as obj, var/mob/user as mob)
+	attackby(var/obj/item/W, var/mob/user)
 		if(istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/))
 			if(src.inserted)
 				boutput(user, "<span class='alert'>A container is already loaded into the machine.</span>")
@@ -928,7 +928,7 @@
 					. = TRUE
 		src.UpdateIcon()
 
-	attackby(var/obj/item/W as obj, var/mob/user as mob)
+	attackby(var/obj/item/W, var/mob/user)
 		if(istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/))
 			tryInsert(W, user)
 
@@ -1168,7 +1168,7 @@
 				boutput(user, "The [src] is already unlocked!")
 			return 0
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W))
 			if (!src.panelopen)
 				src.overlays += image('icons/obj/vending.dmi', "grife-panel")
@@ -1253,7 +1253,7 @@
 			boutput(user, "<span class='notice'>You stare at the bit that looks most like a screen, but you can't make heads or tails of what it's saying.!</span>")
 
 	//only kudzumen can understand it.
-	attackby(var/obj/item/W as obj, var/mob/user as mob)
+	attackby(var/obj/item/W, var/mob/user)
 		if (!W) return
 		if (!user) return
 

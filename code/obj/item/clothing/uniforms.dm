@@ -1251,7 +1251,7 @@
 					qdel(src)
 					return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (issnippingtool(W))
 			boutput(user, "You begin cutting up [src].")
 			if (!do_after(user, 3 SECONDS))

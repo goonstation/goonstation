@@ -57,7 +57,7 @@
 	src.icon_state = "bball_spin"
 	. = ..()
 
-/obj/item/basketball/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/basketball/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/plutonium_core))
 		boutput(user, "<span class='notice'>You insert the [W.name] into the [src.name].</span>")
 		user.u_equip(W)
@@ -103,7 +103,7 @@
 		..()
 		BLOCK_SETUP(BLOCK_ALL)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (iswrenchingtool(W) && mounted)
 			src.visible_message("<span class='notice'><b>[user] removes [src].</b></span>")
 			src.pixel_y = 0

@@ -87,7 +87,7 @@
 		src.UpdateIcon()
 		return ..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/microphone))
 			if (myMic)
 				user.show_text("There's already a microphone on [src]!", "red")

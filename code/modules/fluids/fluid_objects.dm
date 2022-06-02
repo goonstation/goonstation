@@ -67,7 +67,7 @@
 
 
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		if (isweldingtool(I))
 			if(!I:try_weld(user, 2))
 				return

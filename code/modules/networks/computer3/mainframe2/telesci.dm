@@ -985,7 +985,7 @@ proc/is_teleportation_allowed(var/turf/T)
 		onclose(user, "t_computer")
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W))
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 			src.panel_open = !src.panel_open

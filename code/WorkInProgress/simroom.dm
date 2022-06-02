@@ -211,7 +211,7 @@
 	ENSURE_IMAGE(src.image_lid, src.icon, "lid[!isnull(occupant)]")
 	src.UpdateOverlays(src.image_lid, "lid")
 
-/obj/machinery/sim/vr_bed/attackby(obj/item/O as obj, mob/user as mob)
+/obj/machinery/sim/vr_bed/attackby(obj/item/O, mob/user)
 	if(istype(O,/obj/item/grab))
 		var/obj/item/grab/G = O
 		if (!ismob(G.affecting))

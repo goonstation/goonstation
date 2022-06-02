@@ -379,7 +379,7 @@
 		else
 			return ..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (ispulsingtool(W) && locked)
 			if (istype(lock))
 				lock.read_device(user)

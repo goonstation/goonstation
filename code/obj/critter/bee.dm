@@ -357,7 +357,7 @@
 				E.set_loc(get_turf(src))
 		return
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (!alive)
 			return ..()
 		if (issnippingtool(W))
@@ -582,7 +582,7 @@
 
 		return honey
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (istype(W, /obj/item/clothing/head))
 			if (src.cant_take_hat)
 				boutput(user, "<span class='alert'>[src] declines, but appreciates the offer.[prob(30) ? " You can tell, because of the bumbling. Appreciative bumbling, definitely." : null]</span>")
@@ -940,7 +940,7 @@
 
 #endif
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (!src.alive)
 			return ..()
 
@@ -1031,7 +1031,7 @@
 		else
 			return ..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/glass/bottle/bubblebath) && src.alive && !cleaned && src.task != "attacking")
 			if (!W.reagents || !W.reagents.has_reagent("fluorosurfactant"))
 				boutput(user, "<span class='alert'>How do you expect this to work without bubble bath in the bubble bath bottle?</span>")
@@ -1154,7 +1154,7 @@
 
 			src.attacking = 0
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if(!alive)
 			return ..()
 
@@ -1585,7 +1585,7 @@
 	ChaseAttack(mob/M)
 		return
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if(!alive)
 			return
 		if (istype(W, /obj/item/reagent_containers/food/snacks))
@@ -1673,7 +1673,7 @@
 		else
 			..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/pen))
 			if (!bee_name)
 				bee_name = pick_string("bee_names.txt", "beename")
@@ -1863,7 +1863,7 @@
 		src.UpdateIcon()
 		return
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/egg/bee))
 			if (!src.open)
 				boutput(user, "<span class='alert'>For <i>some reason</i>, you are unable to place the egg into a closed carton.</span>")
@@ -1990,7 +1990,7 @@
 		else
 			..()
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if(!alive)
 			return
 		if (istype(W, /obj/item/reagent_containers/food/snacks))

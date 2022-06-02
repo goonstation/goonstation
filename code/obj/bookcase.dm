@@ -45,7 +45,7 @@
 	I.set_loc(get_turf(src))
 	src.UpdateIcon()
 
-/obj/bookshelf/attackby(obj/item/W as obj, mob/user as mob)
+/obj/bookshelf/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/storage/bible))
 		boutput(user, "\The [W] is too holy to be put on a shelf with non-holy books.")
 		return

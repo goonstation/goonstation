@@ -47,7 +47,7 @@
 			boutput(user, "<span class='combat'><b>Your hand passes right through! It's so cold...</b></span>")
 		return
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (src.stat == 2)
 			return
 		else

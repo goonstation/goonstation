@@ -20,7 +20,7 @@
 	var/haswiretap
 	hardened = 0
 
-	attackby(obj/item/R as obj, mob/user as mob)
+	attackby(obj/item/R, mob/user)
 		if (istype(R, /obj/item/device/radio_upgrade))
 			if (haswiretap)
 				boutput(user, "<span class='alert'>This [src] already has a Wiretap Upgrade installed! What good could possibly come from having two?! </span>")

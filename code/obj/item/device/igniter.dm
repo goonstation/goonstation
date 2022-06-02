@@ -25,7 +25,7 @@
 		else return ..()
 	else return ..()
 
-/obj/item/device/igniter/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/device/igniter/attackby(obj/item/W, mob/user)
 	if ((istype(W, /obj/item/device/radio/signaler) && !( src.status )))
 		var/obj/item/device/radio/signaler/S = W
 		if (!( S.b_stat ))

@@ -194,7 +194,7 @@
 
 		return
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		if (istype(I, /obj/item/audio_tape))
 			if (src.tape)
 				boutput(user, "There is already a tape loaded.")

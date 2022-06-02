@@ -543,7 +543,7 @@
 		return 1
 
 	//Let's unlock this early I guess.
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/pda2) && W:ID_card)
 			W = W:ID_card
 		if (istype(W, /obj/item/card/id))
@@ -1032,7 +1032,7 @@
 		src.UpdateIcon(1)
 		SubscribeToProcess()
 
-	attackby(obj/item/grab/G as obj, mob/user as mob)
+	attackby(obj/item/grab/G, mob/user)
 		if (istype(G, /obj/item/grinder_upgrade))
 			if (src.upgraded)
 				boutput(user, "<span class='alert'>There is already an upgrade card installed.</span>")

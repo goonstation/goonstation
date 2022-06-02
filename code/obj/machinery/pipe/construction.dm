@@ -101,7 +101,7 @@ Buildable meters
 
 	return 0
 
-/obj/item/weapon/pipe/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+/obj/item/weapon/pipe/attackby(var/obj/item/weapon/W, var/mob/user)
 	if(ispryingtool(W))
 		if(!anchored)
 			switch(pipe_type)
@@ -401,7 +401,7 @@ Buildable meters
 	flags = TABLEPASS|FPRINT
 	w_class = W_CLASS_BULKY
 
-/obj/item/weapon/pipe_meter/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+/obj/item/weapon/pipe_meter/attackby(var/obj/item/weapon/W, var/mob/user)
 	if (iswrenchingtool(W))
 		if(locate(/obj/machinery/pipes, src.loc))
 			new/obj/machinery/meter( src.loc )

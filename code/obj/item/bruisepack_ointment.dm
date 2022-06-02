@@ -31,7 +31,7 @@
 			..()
 			return
 
-	attackby(obj/item/medical/W as obj, mob/user as mob)
+	attackby(obj/item/medical/W, mob/user)
 		if (!istype(W, src.type))
 			return
 

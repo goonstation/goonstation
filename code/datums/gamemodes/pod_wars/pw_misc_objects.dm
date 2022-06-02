@@ -657,7 +657,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 		return
 	meteorhit(var/obj/O as obj)
 		return
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return
 
 	//These are basically the same as "normal" pod_wars beacons, but they won't have a capture point so they should never get an owner team

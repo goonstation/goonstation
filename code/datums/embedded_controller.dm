@@ -652,7 +652,7 @@ obj/machinery/embedded_controller/radio/department_controller
 
 		UpdateIcon()
 
-	attackby(var/obj/item/I as obj, mob/user as mob)
+	attackby(var/obj/item/I, mob/user)
 		if (istype(I, /obj/item/device/pda2) && I:ID_card)
 			I = I:ID_card
 		if(istype(I, /obj/item/card/id))

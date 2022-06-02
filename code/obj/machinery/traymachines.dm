@@ -87,7 +87,7 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 	attack_hand(user) //finally silicons can open and close the fucking morgues
 
 //Fun fact you can label these things
-/obj/machinery/traymachine/attackby(P as obj, mob/user as mob)
+/obj/machinery/traymachine/attackby(P, mob/user)
 	src.add_fingerprint(user)
 	if (istype(P, /obj/item/pen))
 		var/t = input(user, "What would you like the label to be?", src.name, null) as null|text
@@ -561,7 +561,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 		src.trayoverlay = null
 		. = ..()
 
-	attackby(var/obj/item/P as obj, mob/user as mob)
+	attackby(var/obj/item/P, mob/user)
 
 		if (istype(P, /obj/item/light/tube) && !length(src.contents))
 			var/obj/item/light/tube/G = P

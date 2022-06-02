@@ -16,7 +16,7 @@
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/keypanel

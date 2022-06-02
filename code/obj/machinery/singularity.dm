@@ -313,7 +313,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	return src.loc
 
 
-/obj/machinery/the_singularity/attackby(var/obj/item/I as obj, var/mob/user as mob)
+/obj/machinery/the_singularity/attackby(var/obj/item/I, var/mob/user)
 	if (istype(I, /obj/item/clothing/mask/cigarette))
 		var/obj/item/clothing/mask/cigarette/C = I
 		if (!C.on)

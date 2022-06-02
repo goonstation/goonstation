@@ -324,7 +324,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 			if (!src.poster_HTML)
 				src.generate_poster()
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (istype(W, /obj/item/photo))
 			var/obj/item/photo/new_p = W
 			if (src.photo)
@@ -410,7 +410,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 			show_window(user.client)
 			onclose(user, "wp_station")
 
-	attackby(var/obj/item/W as obj, var/mob/user as mob)
+	attackby(var/obj/item/W, var/mob/user)
 		src.add_fingerprint(user)
 		if (istype(W, /obj/item/paper))
 			user.visible_message("[user] loads [W] into [src].",\

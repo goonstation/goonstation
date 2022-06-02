@@ -41,7 +41,7 @@
 	attack_self(mob/user as mob)
 		flip() //uno reverse O.O
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/playing_card)) //if a card is hit by a card, open the context menu for the player to decide what happens.
 			if(loc != user)
 				update_card_actions(TRUE)
@@ -393,7 +393,7 @@
 				riffle_shuffle(stored_cards)
 			user.visible_message("<b>[user.name]</b> shuffles the [src.name].")
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/playing_card)) //adding a card to a hand will automatically place it in the hand, while adding a card to a deck will allow the player to decide where it goes
 			if(is_hand)
 				var/obj/item/playing_card/card = W
@@ -1049,7 +1049,7 @@
 		else
 			..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(!stored_deck && istype(W,/obj/item/card_group))
 			user.u_equip(W)
 			W.set_loc(src)
@@ -1120,7 +1120,7 @@
 		if(icon_state == "stg-box")
 			user.show_text("You try to tear the packaging, but it's too strong! You'll need something to cut it...","red")
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if((icon_state == "stg-box") && (istool(W,TOOL_CUTTING) || istool(W,TOOL_SNIPPING)))
 			if(loc != user)
 				user.show_text("You need to hold the box if you want enough leverage to rip it to pieces!","red")

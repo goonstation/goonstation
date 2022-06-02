@@ -90,7 +90,7 @@
 		..()
 		return
 
-	attackby(obj/item/C as obj, mob/user as mob)
+	attackby(obj/item/C, mob/user)
 		if (istype(C, /obj/item/chem_grenade) && !src.grenade && !src.grenade_old && !src.pipebomb && !src.arm && !src.signaler && !src.butt && !src.buttbomb)
 			var/obj/item/chem_grenade/CG = C
 			if (CG.stage == 2 && !CG.state)
@@ -413,7 +413,7 @@
 
 		return
 
-	attackby(obj/item/C as obj, mob/user as mob)
+	attackby(obj/item/C, mob/user)
 		if (iswrenchingtool(C))
 			if (!isturf(src.loc))
 				user.show_text("Place the [src.name] on the ground first.", "red")

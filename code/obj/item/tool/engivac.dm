@@ -98,7 +98,7 @@ obj/item/engivac/afterattack(atom/target)
 	find_crud_on_turf(isturf(target) ? target : get_turf(target))
 
 
-obj/item/engivac/attackby(obj/item/I as obj, mob/user as mob)
+obj/item/engivac/attackby(obj/item/I, mob/user)
 	if (istype(I, /obj/item/storage/toolbox) && !held_toolbox)
 		if (!toolbox_contents_check(I))
 			if(!ON_COOLDOWN(src, "rejectsound", 2 SECONDS))

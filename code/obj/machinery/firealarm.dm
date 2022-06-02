@@ -102,7 +102,7 @@
 		src.alarm()
 	return
 
-/obj/machinery/firealarm/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/firealarm/attackby(obj/item/W, mob/user)
 	if (issnippingtool(W))
 		src.detecting = !( src.detecting )
 		if (src.detecting)

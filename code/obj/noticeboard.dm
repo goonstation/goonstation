@@ -15,7 +15,7 @@
 	qdel(src)
 
 
-/obj/noticeboard/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/noticeboard/attackby(var/obj/item/O, var/mob/user)
 	if (istype(O, /obj/item/paper) || istype(O, /obj/item/canvas))
 		if (src.notices < 15)
 			O.add_fingerprint(user)

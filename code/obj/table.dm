@@ -203,7 +203,7 @@
 	meteorhit()
 		deconstruct()
 
-	attackby(obj/item/W as obj, mob/user as mob, params)
+	attackby(obj/item/W, mob/user, params)
 		if (istype(W, /obj/item/grab))
 			var/obj/item/grab/G = W
 			if (!G.affecting || G.affecting.buckled)
@@ -577,7 +577,7 @@
 	auto
 		auto = 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isweldingtool(W) && W:try_weld(user,1))
 			if (src.status == 2)
 				actions.start(new /datum/action/bar/icon/table_tool_interact(src, W, TABLE_WEAKEN), user)
@@ -809,7 +809,7 @@
 		if (prob(smashprob))
 			src.smash()
 
-	attackby(obj/item/W as obj, mob/user as mob, params)
+	attackby(obj/item/W, mob/user, params)
 		if (src.glass_broken == GLASS_BROKEN)
 			if (istype(W, /obj/item/sheet))
 				var/obj/item/sheet/S = W

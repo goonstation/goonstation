@@ -150,7 +150,7 @@ var/list/genetek_hair_styles = list()
 		src.go_out()
 		add_fingerprint(user)
 
-	attackby(var/obj/item/grab/G as obj, user as mob)
+	attackby(var/obj/item/grab/G, user)
 		if (!istype(G))
 			return
 

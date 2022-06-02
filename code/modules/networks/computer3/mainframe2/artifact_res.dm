@@ -1335,7 +1335,7 @@
 		onclose(user, "art_computer")
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		/*
 		if (isscrewingtool(W))
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)

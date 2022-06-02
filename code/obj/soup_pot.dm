@@ -65,7 +65,7 @@
 	var/on = 0
 	flags = NOSPLASH
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/soup_pot))
 			if(src.pot)
 				boutput(user,"<span class='alert'><b>There's already a pot on the stove, dummy!</span>")
@@ -361,7 +361,7 @@
 		else
 			src.UpdateOverlays(null, "fluid")
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W) && !istype(W,/obj/item/ladle))
 			if (W.cant_drop) // For borg held items
 				if (!(W.flags & OPENCONTAINER)) // don't warn about a bucket or whatever

@@ -54,7 +54,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 	return_air()
 		return src.loc.return_air()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(src.rider && src.rider_visible && W.force)
 			W.attack(src.rider, user)
 			user.lastattacked = src
@@ -748,7 +748,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 
 			qdel(D)
 
-/obj/vehicle/floorbuffer/attackby(obj/item/W as obj, mob/user as mob)
+/obj/vehicle/floorbuffer/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/reagent_containers) && W.is_open_container() && W.reagents)
 		if(!W.reagents.total_volume)
 			boutput(user, "<span class='alert'>[W] is empty.</span>")

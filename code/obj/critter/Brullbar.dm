@@ -92,7 +92,7 @@
 		. += "-dead"
 		icon_state = .
 
-	attackby(obj/item/W as obj, mob/living/user as mob) //ARRRRGH WHY
+	attackby(obj/item/W, mob/living/user) //ARRRRGH WHY
 		user.lastattacked = src
 		if (!src.alive)
 			// TODO: tie this into surgery()

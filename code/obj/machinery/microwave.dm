@@ -94,7 +94,7 @@
 	*  Item Adding
 	*/
 
-obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
+obj/machinery/microwave/attackby(var/obj/item/O, var/mob/user)
 	if(src.operating)
 		return
 	if(src.microwave_state > 0)

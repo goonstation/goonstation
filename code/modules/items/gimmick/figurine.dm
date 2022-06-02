@@ -93,7 +93,7 @@
 		qdel(src)
 		return 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/toy/figure))
 			if(user:a_intent == INTENT_HELP)
 				playsound(src, "sound/items/toys/figure-kiss.ogg", 15, 1)

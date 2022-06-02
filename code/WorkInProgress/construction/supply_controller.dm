@@ -532,7 +532,7 @@
 		else
 			. += "<span class='alert'>The pad's telecrystal socket is empty!</span>"
 
-	attackby(var/obj/item/I as obj, user as mob)
+	attackby(var/obj/item/I, user)
 		if (istype(I, /obj/item/raw_material/telecrystal))
 			qdel(I)
 			has_crystal++

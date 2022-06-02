@@ -473,7 +473,7 @@ TRAYS
 		if(dist <= 1)
 			. += "There's [(src.amount > 0) ? src.amount : "no" ] [src.contained_food_name][s_es(src.amount)] in [src]."
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(src.amount >= src.max_amount)
 			boutput(user, "You can't fit anything else in [src]!")
 			return
@@ -645,7 +645,7 @@ TRAYS
 			return "<span style=\"color:orange\">There's a positively <i>indescribable</i> amount of food on \the [src]!</span>"
 		return "[food_desc]"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/plate) && !istype(W, /obj/item/plate/tray) && W.type == src.type)
 			if(length(src.contents) || length(W.contents))
 				user.visible_message("<b>[user]</b> tries to stack plates but there's food on them.","You try to stack plates but there's food on them.")
@@ -958,7 +958,7 @@ TRAYS
 		..()
 		BLOCK_SETUP(BLOCK_BOOK)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 
 		if(!(locate(/obj/item/reagent_containers/food/snacks/sushi_roll/custom) in src))
 			var/obj/item/reagent_containers/food/snacks/sushi_roll/custom/roll_internal = new /obj/item/reagent_containers/food/snacks/sushi_roll/custom(src)

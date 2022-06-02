@@ -29,7 +29,7 @@
 		else
 			..()
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		user.lastattacked = src
 		_health -= I.force
 		attack_particle(user,src)

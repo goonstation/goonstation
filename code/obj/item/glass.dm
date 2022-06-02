@@ -263,7 +263,7 @@ SHARDS
 		else
 	return
 
-/obj/item/shard/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/shard/attackby(obj/item/W, mob/user)
 	..()
 	if (!(isweldingtool(W) && try_weld(user,0,-1,1,0)))
 		return
@@ -314,7 +314,7 @@ SHARDS
 				src.pixel_y = rand(1, 5)
 			else
 		return
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!(isweldingtool(W) && W:try_weld(user,0,-1,1,0)))
 			return
 		var/atom/A = new /obj/item/sheet/glass/crystal( user.loc )

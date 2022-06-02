@@ -204,7 +204,7 @@
 				src.updateUsrDialog()
 			src.updateUsrDialog()
 
-	attackby(var/obj/item/W as obj, var/mob/user as mob)
+	attackby(var/obj/item/W, var/mob/user)
 		if (src.working)
 			boutput(user, "<span class='alert'>The manipulator is busy!</span>")
 			return

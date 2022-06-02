@@ -145,7 +145,7 @@ Contains:
 		//src.first = null
 	return
 
-/obj/item/device/infra/attackby(obj/item/device/radio/signaler/S as obj, mob/user as mob)
+/obj/item/device/infra/attackby(obj/item/device/radio/signaler/S, mob/user)
 	if ((!( istype(S, /obj/item/device/radio/signaler) ) || !( S.b_stat )))
 		return
 	var/obj/item/assembly/rad_infra/R = new /obj/item/assembly/rad_infra( user )
@@ -254,7 +254,7 @@ Contains:
 	..()
 	return
 
-/obj/item/assembly/rad_infra/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/assembly/rad_infra/attackby(obj/item/W, mob/user)
 	if (!W)
 		return
 	if (iswrenchingtool(W) && !(src.status))

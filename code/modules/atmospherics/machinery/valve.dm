@@ -207,7 +207,7 @@ obj/machinery/atmospherics/valve
 			src.open()
 			if(high_risk) message_admins("[key_name(user)] has opened the valve: [src] at [log_loc(src)]")
 
-	attackby(var/obj/item/G as obj, var/mob/user as mob)
+	attackby(var/obj/item/G, var/mob/user)
 		if (iswrenchingtool(G))
 			UpdateIcon(1)
 			sleep(1 SECOND)

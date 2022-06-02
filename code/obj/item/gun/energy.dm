@@ -411,7 +411,7 @@
 		UpdateIcon()
 		M.update_inhands()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/electronics/scanner))
 			nojobreward = 1
 		..()
@@ -1205,7 +1205,7 @@
 		else
 			return ..()
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		if (I.cant_drop) return
 		if (heldItem)
 			boutput(user, "The gun is already holding [heldItem.name].")

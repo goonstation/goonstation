@@ -109,7 +109,7 @@
 	///////Attack Code									////
 	////////////////////////////////////////////////////////
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		user.lastattacked = src
 		if (health < maxhealth && isweldingtool(W))
 			if(!W:try_weld(user, 1))

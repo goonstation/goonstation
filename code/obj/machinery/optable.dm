@@ -69,7 +69,7 @@
 /obj/machinery/optable/process()
 	check_victim()
 
-/obj/machinery/optable/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/optable/attackby(obj/item/W, mob/user)
 	if (issilicon(user)) return
 	if (istype(W, /obj/item/electronics/scanner)) return // hack
 	if (istype(W, /obj/item/deconstructor)) return //deconstruct_flags

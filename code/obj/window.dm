@@ -378,7 +378,7 @@
 					playsound(src.loc, src.hitsound, 100, 1)
 				return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		user.lastattacked = src
 
 		if (isscrewingtool(W))
@@ -767,7 +767,7 @@
 		else
 			src.UpdateOverlays(null, "connect")
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (..(W, user))
 			src.UpdateIcon()
 			src.update_neighbors()
@@ -1023,7 +1023,7 @@
 		if(health <= 0)
 			qdel(src)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W))
 			src.anchored = !( src.anchored )
 			src.stops_space_move = !(src.stops_space_move)

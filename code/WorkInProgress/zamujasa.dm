@@ -8,7 +8,7 @@
 	layer = CABLE_LAYER
 	color = "#037ffc"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (issnippingtool(W))
 			logTheThing("station", user, null, "cut the don't-cut-this wire and got ghosted/disconnected as a result.")
 			//boutput(user, "<span class='alert'>You snip the ca</span>")
@@ -161,7 +161,7 @@
 			boutput(user, "[PTL] would be notified")
 
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (iswrenchingtool(W))
 			boutput(user, "this would deconstruct it.")
 			return
@@ -277,7 +277,7 @@
 		tracker.maptext = "<span class='c vt ps2p sh'>TOTAL [add_lspace(round(total_score), 7)]\nROUND [add_lspace(round(round_score), 7)]</span>"
 
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		var/score = get_item_value(W)
 		if (score == -1)
 			return ..()

@@ -922,7 +922,7 @@
 							src.add_fingerprint(user)
 							src.usage_state = 2
 
-			attackby(obj/item/W as obj, mob/user as mob)
+			attackby(obj/item/W, mob/user)
 				if (user.stat)
 					return
 
@@ -960,7 +960,7 @@
 			icon_empty = "frame"
 			icon_state = "medal"
 
-			attackby(obj/item/W as obj, mob/user as mob)
+			attackby(obj/item/W, mob/user)
 				if (user.stat)
 					return
 

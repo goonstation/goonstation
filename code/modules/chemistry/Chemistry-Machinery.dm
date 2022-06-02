@@ -32,7 +32,7 @@
 		..()
 		output_target = src.loc
 
-	attackby(var/obj/item/reagent_containers/glass/B as obj, var/mob/user as mob)
+	attackby(var/obj/item/reagent_containers/glass/B, var/mob/user)
 
 		if(istype(B, /obj/item/reagent_containers/glass))
 			tryInsert(B, user)
@@ -333,7 +333,7 @@
 		if (event == "reagent_holder_update")
 			src.updateUsrDialog()
 
-	attackby(var/obj/item/reagent_containers/glass/B as obj, var/mob/user as mob)
+	attackby(var/obj/item/reagent_containers/glass/B, var/mob/user)
 		if (!istype(B, /obj/item/reagent_containers/glass))
 			return
 
@@ -764,7 +764,7 @@ datum/chemicompiler_core/stationaryCore
 		onclose(user, "chemicompiler")
 		return
 
-	attackby(var/obj/item/reagent_containers/glass/B as obj, var/mob/user as mob)
+	attackby(var/obj/item/reagent_containers/glass/B, var/mob/user)
 		if (!istype(B, /obj/item/reagent_containers/glass))
 			return
 		if (isrobot(user)) return attack_ai(user)
@@ -955,7 +955,7 @@ datum/chemicompiler_core/stationaryCore
 			count++
 		output_target = src.loc
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/glass/))
 			var/obj/item/reagent_containers/glass/B = W
 

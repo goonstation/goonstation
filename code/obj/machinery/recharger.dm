@@ -85,7 +85,7 @@ obj/machinery/recharger
 						break
 				T = null
 
-/obj/machinery/recharger/attackby(obj/item/G as obj, mob/user as mob)
+/obj/machinery/recharger/attackby(obj/item/G, mob/user)
 	if (isrobot(user)) return
 	if (src.charging)
 		return

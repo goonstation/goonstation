@@ -75,7 +75,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 		return
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		return
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		if (reagents)
 			reagents.physical_shock(I.force)
 		return
@@ -292,7 +292,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 				can_mousedrop = 1
 			return
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		/*if (istype(I, /obj/item/reagent_containers/pill))
 
 			if (!I.reagents || !I.reagents.total_volume)

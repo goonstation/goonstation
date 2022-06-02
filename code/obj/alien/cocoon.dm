@@ -43,7 +43,7 @@ they're trapped
 					src.add_fingerprint(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (src.health <= 0)
 			src.visible_message("<span class='alert'><B>[user] has destroyed the cocoon.</B></span>")
 			src.death()

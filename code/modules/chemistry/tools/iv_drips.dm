@@ -114,7 +114,7 @@
 			SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /obj/item/reagent_containers/iv_drip/proc/insert_needle, list(H, user), src.icon, src.icon_state, null, null)
 			return
 
-	attackby(obj/A as obj, mob/user as mob)
+	attackby(obj/A, mob/user)
 		if (iscuttingtool(A) && !(src.slashed))
 			src.slashed = 1
 			src.desc = "[src.desc] It has been sliced open with a scalpel."

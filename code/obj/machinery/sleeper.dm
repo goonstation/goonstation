@@ -344,7 +344,7 @@
 	allow_drop()
 		return 0
 
-	attackby(obj/item/grab/G as obj, mob/user as mob)
+	attackby(obj/item/grab/G, mob/user)
 		src.add_fingerprint(user)
 
 		if (!istype(G) || !ishuman(G.affecting))

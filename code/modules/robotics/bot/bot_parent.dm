@@ -109,7 +109,7 @@
 			cam = null
 		..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		user.lastattacked = src
 		attack_particle(user,src)
 		hit_twitch(src)

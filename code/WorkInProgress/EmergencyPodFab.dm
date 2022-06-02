@@ -11,7 +11,7 @@
 	var/steps_moved = 0
 	var/failing = 0
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (istype(W, /obj/item/crowbar))
 			boutput(user, "There's no maintenance panel to open.")
 			return

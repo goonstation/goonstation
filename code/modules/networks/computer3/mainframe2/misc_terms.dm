@@ -331,7 +331,7 @@
 		src.add_fingerprint(usr)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, src.setup_tape_type) && setup_accept_tapes) //INSERT SOME TAPES
 			if (src.tape)
 				boutput(user, "<span class='alert'>There is already a [src.setup_tape_tag] in the drive.</span>")
@@ -722,7 +722,7 @@
 
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/tank))
 			return attack_hand(user)
 		else if (isscrewingtool(W))
@@ -1170,7 +1170,7 @@
 
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W))
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 			boutput(user, "You [src.panel_open ? "secure" : "unscrew"] the maintenance panel.")
@@ -1426,7 +1426,7 @@
 		onclose(user,"net_radio")
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W))
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 			boutput(user, "You [src.panel_open ? "secure" : "unscrew"] the maintenance panel.")
@@ -1714,7 +1714,7 @@
 		..()
 
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/paper)) //Load up the printer!
 			if (sheets_remaining >= MAX_SHEETS)
 				boutput(user, "<span class='alert'>The tray is full!</span>")
@@ -2203,7 +2203,7 @@
 		onclose(user,"scanner")
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/paper) || istype(W, /obj/item/photo))
 			if (scanned_thing)
 				boutput(user, "<span class='alert'>There is already something in the scanner!</span>")
@@ -2896,7 +2896,7 @@
 		src.telecrystals.len = 0
 		..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/raw_material/telecrystal))
 			return attack_hand(user)
 		else if (isscrewingtool(W))
@@ -3407,7 +3407,7 @@
 			src.UpdateIcon()
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/raw_material/telecrystal))
 			return attack_hand(user)
 

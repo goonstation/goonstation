@@ -100,7 +100,7 @@
 			user.visible_message("<span class='alert'>[user] tries to smack [src.name], but the blow connects with nothing!</span>",
 				"<span class='alert'>You try to smack [src.name] but they're intangible! Nothing can be achieved this way!</span>")
 
-/mob/living/intangible/flock/attackby(obj/item/W as obj, mob/user as mob)
+/mob/living/intangible/flock/attackby(obj/item/W, mob/user)
 	switch(user.a_intent)
 		if(INTENT_HARM)
 			user.visible_message("<span class='alert'>[user] tries to hit [src.name] with [W], pointlessly.</span>", "<span class='notice'>You try to hit [src.name] with [W] but it just passes through.</span>")

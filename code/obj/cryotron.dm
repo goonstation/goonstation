@@ -298,7 +298,7 @@
 		if (!enter_prompt(user))
 			return ..()
 
-	attackby(var/obj/item/W as obj, var/mob/user as mob)
+	attackby(var/obj/item/W, var/mob/user)
 		if (istype(W, /obj/item/grab))
 			var/obj/item/grab/G = W
 			if (ismob(G.affecting) && insert_prompt(G.affecting, user))

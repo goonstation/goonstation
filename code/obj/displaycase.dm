@@ -93,7 +93,7 @@
 	return
 
 
-/obj/displaycase/attackby(obj/item/W as obj, mob/user as mob)
+/obj/displaycase/attackby(obj/item/W, mob/user)
 	if (isscrewingtool(W)) // To bolt to the floor
 		if (src.anchored == 0)
 			src.anchored = 1
@@ -238,7 +238,7 @@
 	6 Power cell
 	7 Screwdriver
 	*/
-	attackby(obj/item/O as obj, mob/user as mob)
+	attackby(obj/item/O, mob/user)
 		if (isscrewingtool(O))
 			if (src.repair_stage == 0)
 				user.show_text("You open the maintenance panel.", "blue")

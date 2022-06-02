@@ -239,7 +239,7 @@
 		else if (!src.toggle(user))
 			return src.Attackby(null, user)
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		if (istype(I, /obj/item/satchel/))
 			if(src.secure && src.locked)
 				user.show_text("Access Denied", "red")

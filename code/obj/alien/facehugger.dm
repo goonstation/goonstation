@@ -63,7 +63,7 @@
 	attack_hand(user as mob)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		switch(W.damtype)
 			if("fire")
 				src.health -= W.force * 0.75

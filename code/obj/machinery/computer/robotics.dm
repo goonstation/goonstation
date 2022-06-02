@@ -15,7 +15,7 @@
 	light_b = 1
 
 
-/obj/machinery/computer/robotics/attackby(obj/item/I as obj, user as mob)
+/obj/machinery/computer/robotics/attackby(obj/item/I, user)
 	if (perma && isscrewingtool(I))
 		boutput(user, "<span class='alert'>The screws are all weird safety-bit types! You can't turn them!</span>")
 		return

@@ -15,7 +15,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy)
 		reagents.add_reagent("sugar", sugar_content)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/razor_blade))
 			boutput(user, "You add the razor blade to [src]")
 			qdel(W)

@@ -143,7 +143,7 @@
 			payload = null
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/genetics_injector/dna_injector/))
 			if (payload)
 				boutput(user, "<span class='alert'>The injector is already loaded.</span>")

@@ -136,7 +136,7 @@
 		store_type = null
 		..()
 
-/obj/item/electronics/frame/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/electronics/frame/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/electronics/))
 		var/obj/item/electronics/E = W
 		if(!(istype(E,/obj/item/electronics/disk)||istype(E,/obj/item/electronics/scanner)||istype(E,/obj/item/electronics/soldering)||istype(E,/obj/item/electronics/frame)))
@@ -723,7 +723,7 @@
 			if (targetitem == O.name)
 				upload_blueprint(O, target)
 
-/obj/machinery/rkit/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/rkit/attackby(obj/item/W, mob/user)
 	if(status & (NOPOWER|BROKEN))
 		return
 

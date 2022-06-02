@@ -1193,7 +1193,7 @@ as it may become compromised.
 	..()
 	src.Attackhand(user)
 
-/obj/item/paper_bin/attackby(obj/item/paper/P as obj, mob/user as mob) // finally you can write on all the paper AND put it back in the bin to mess with whoever shows up after you ha ha
+/obj/item/paper_bin/attackby(obj/item/paper/P, mob/user) // finally you can write on all the paper AND put it back in the bin to mess with whoever shows up after you ha ha
 	if (istype(P))
 		user.drop_item()
 		P.set_loc(src)
@@ -1263,7 +1263,7 @@ as it may become compromised.
 		src.assignment = null
 		src.desc = "A rubber stamp for stamping important documents."
 		return
-/obj/item/stamp/attackby(obj/item/C as obj, mob/user as mob)// assignment with ID
+/obj/item/stamp/attackby(obj/item/C, mob/user)// assignment with ID
 	if (istype(C, /obj/item/card/id))
 		var/obj/item/card/id/ID = C
 		if (!src.is_reassignable)
