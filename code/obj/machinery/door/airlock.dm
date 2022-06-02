@@ -1004,6 +1004,7 @@ About the new airlock wires panel:
 	R.airlock_wire = wire_color
 	src.signalers[wire_color] = R
 	tgui_process.update_uis(src)
+	logTheThing("station", user, null, "attaches a remote signaller on frequency [R.frequency] to [src] at [log_loc(src)].")
 	return TRUE
 
 /obj/machinery/door/airlock/proc/detach_signaler(var/wire_color, mob/user)

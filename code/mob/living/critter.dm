@@ -334,7 +334,6 @@ ABSTRACT_TYPE(/mob/living/critter)
 
 		src.ghostize()
 		qdel (src)
-		return
 
 	// The throw code is a direct copy-paste from humans
 	// pending better solution.

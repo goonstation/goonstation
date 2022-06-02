@@ -101,6 +101,14 @@
 			else
 				return..()
 
+/// Meat which is butchered from changeling critters (and gibbered changelings)
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/changeling
+	 name = "mutagenic meat"
+	 desc = "Are those eyes?"
+	 icon_state = "meat-changeling"
+	 initial_volume = 30
+	 initial_reagents = list("neurotoxin" = 20, "bloodc" = 10)
+
 /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon
 	name = "bacon"
 	desc = "A strip of salty cured pork. Many disgusting nerds have a bizarre fascination with this meat, going so far as to construct tiny houses out of it."

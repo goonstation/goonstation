@@ -1042,7 +1042,7 @@
 				src.force = 9
 				src.throwforce = 9
 				src.throw_range = 6
-				src.reagents.add_reagent("thalmerite",25)
+				src.reagents.add_reagent("pyrosium",25)
 
 			if (5)
 				src.name = "fissile loaf"

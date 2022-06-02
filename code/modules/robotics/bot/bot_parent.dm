@@ -235,13 +235,7 @@
 	if(!T) return
 	if(announce_it)
 		visible_message("<b>[src]</b> points at [target]!")
-	var/obj/decal/point/P = new(T)
-	P.pixel_x = target.pixel_x
-	P.pixel_y = target.pixel_y
-	P.color = src.bot_speech_color
-	SPAWN(2 SECONDS)
-		P.invisibility = INVIS_ALWAYS
-		qdel(P)
+	make_point(T, pixel_x=target.pixel_x, pixel_y=target.pixel_y, color=src.bot_speech_color, pointer=src)
 
 /obj/machinery/bot/emp_act()
 	src.emag_act()
