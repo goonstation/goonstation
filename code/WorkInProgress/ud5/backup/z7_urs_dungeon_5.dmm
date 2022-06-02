@@ -1212,7 +1212,7 @@
 /turf/unsimulated/floor/specialroom/medbay,
 /area/adventure/urs_dungeon)
 "cu" = (
-/obj/critter/spacebee,
+/obj/critter/wasp,
 /turf/unsimulated/floor/grass,
 /area/adventure/urs_dungeon)
 "cv" = (

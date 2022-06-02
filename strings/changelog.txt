@@ -1,4 +1,9 @@
 
+(t)thu jun 02 22
+(u)CodeJester
+(p)8869
+(e)🆕|feature
+(+)Pointing is now animated. Throw arrows at people today!
 (t)wed jun 01 22
 (u)Flourish
 (p)8761
