@@ -531,7 +531,7 @@
 /datum/targetable/wraithAbility/haunt
 	name = "Haunt"
 	icon_state = "haunt"
-	desc = "Become corporeal for 30 seconds. During this time, you gain additional biopoints, depending on the amount of humans in your vicinity. You cannot use this ability while already corporeal."
+	desc = "Become corporeal for 30 seconds. During this time, you gain additional biopoints, depending on the amount of humans in your vicinity. Use this ability again while corporeal to fade back into the aether."
 	targeted = 0
 	pointCost = 0
 	cooldown = 30 SECONDS
