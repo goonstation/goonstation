@@ -65,8 +65,6 @@
 				if (src.donor?.bioHolder?.mobAppearance)
 					src.donor_appearance = src.donor.bioHolder.mobAppearance
 					src.UpdateIcon(/*makeshitup*/ 0)
-				if (isskeleton(src.donor))
-					src.item_state = "skull"
 				else //The heck?
 					src.UpdateIcon(/*makeshitup*/ 1)
 			else
@@ -524,6 +522,7 @@
 				if(HEAD_SKELETON)
 					src.organ_name = "bony head"
 					src.desc = "...does that skull have another skull inside it?"
+					src.item_state = "skull"
 
 				if(HEAD_SEAMONKEY)
 					src.organ_name = "seamonkey head"
