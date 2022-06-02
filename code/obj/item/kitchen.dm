@@ -328,7 +328,7 @@ TRAYS
 			user.put_in_hand_or_drop(new /obj/item/kitchen/utensil/fork/chopsticks)
 			qdel(src)
 
-	attackby(obj/item/weapon as obj,mob/user as mob)
+	attackby(obj/item/weapon, mob/user)
 		if(istype(weapon,/obj/item/paper))
 			if(src.icon_state == "chop_stowed")
 				user.u_equip(weapon)
@@ -1127,7 +1127,7 @@ TRAYS
 		src.item_state = "platestack[src.platenum]"
 		user.update_inhands()
 
-	attackby(obj/item/weapon as obj,mob/user as mob)
+	attackby(obj/item/weapon, mob/user)
 		if(istype(weapon,/obj/item/plate) && !(istype(weapon,/obj/item/plate/tray)))
 			var/obj/item/plate/p = weapon
 			if(!p.ordered_contents.len)

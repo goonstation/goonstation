@@ -14,7 +14,7 @@
 			src.icon_state = "scrollopen"
 			src.desc = "This is one WEIRD burrito..."
 
-	attackby(obj/item/weapon as obj,mob/user as mob)
+	attackby(obj/item/weapon, mob/user)
 		if(istype(weapon, /obj/item/pen) && src.icon_state=="scrollopen")
 			user.visible_message("<span class='alert'><b>[user.name] stabs themself with the [weapon] and starts signing the contract in blood!</b></span>","<span class='alert'><b>You stab yourself with the [weapon] and start signing the contract in blood!</b></span>")
 			playsound(user, "sound/impact_sounds/Flesh_Stab_1.ogg", 60, 1)

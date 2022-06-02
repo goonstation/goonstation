@@ -15,7 +15,7 @@
 			src.openwindows.Add(user)
 		uisetup()
 
-	attackby(obj/item/weapon as obj,mob/user as mob)
+	attackby(obj/item/weapon, mob/user)
 		if(istype(weapon,/obj/item/gostone/b) || istype(weapon,/obj/item/gostone/w))
 			if(!(user in src.openwindows) && istype(user,/mob/living/carbon/human) && !(src in user.contents))
 				src.openwindows.Add(user)
@@ -131,7 +131,7 @@
 			if(2)
 				user.put_in_hand_or_drop(new /obj/item/gostone/w)
 
-	attackby(obj/item/weapon as obj,mob/user as mob)
+	attackby(obj/item/weapon, mob/user)
 		var/piece_affinity
 		if(istype(weapon, /obj/item/gostone/b))
 			piece_affinity = 1
