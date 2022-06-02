@@ -168,11 +168,11 @@
 
 		src.activated = 1
 		if (reagents)
-			reagents.add_reagent("thalmerite",2)
+			reagents.add_reagent("pyrosium",2)
 			reagents.add_reagent("oxygen", 2)
 			reagents.handle_reactions()
 			SPAWN(10 SECONDS)
-				reagents.del_reagent("thalmerite")
+				reagents.del_reagent("pyrosium")
 		boutput(user, "The cup emits a soft clack as the heater triggers.")
 		return
 
@@ -284,7 +284,7 @@
 
 		src.activated = 1
 		if (reagents)
-			reagents.add_reagent("thalmerite",2)
+			reagents.add_reagent("pyrosium",2)
 			reagents.add_reagent("oxygen", 2)
 			reagents.handle_reactions()
 		boutput(user, "You crack the burrito like a glow stick, activating the heater mechanism.")
@@ -552,7 +552,7 @@
 
 		src.activated = 1
 		if (reagents)
-			reagents.add_reagent("thalmerite",2)
+			reagents.add_reagent("pyrosium",2)
 			reagents.add_reagent("oxygen", 2)
 			reagents.add_reagent("radium", 1) //Self Microwaving?!
 			reagents.handle_reactions()

@@ -134,7 +134,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 				src.overridespecial = 1
 				C.UpdateIcon()
 				user.update_clothing() // Required to update the worn sprite (Convair880).
-				user.visible_message("<span class='alert'><b>[user]</b> charges [his_or_her(user)] stun gloves.</span>", "<span class='notice'>The stun gloves now hold [src.uses]/[src.max_uses] charges!</span>")
+				user.visible_message("<span class='alert'><b>[user]</b> charges [his_or_her(user)] [src].</span>", "<span class='notice'>\The [src] now hold [src.uses]/[src.max_uses] charges!</span>")
 			else
 				user.visible_message("<span class='alert'><b>[user]</b> shocks themselves while fumbling around with [C]!</span>", "<span class='alert'>You shock yourself while fumbling around with [C]!</span>")
 				C.zap(user)
@@ -189,14 +189,14 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		return S
 
 
-	equipment_click(atom/user, atom/target, params, location, control, origParams, slot)
-		if(target == user || user:a_intent == INTENT_HELP || user:a_intent == INTENT_GRAB) return 0
+	equipment_click(atom/source, atom/target, params, location, control, origParams, slot)
+		var/mob/user = source
+		if(target == user || !istype(user) || user.a_intent == INTENT_HELP || user.a_intent == INTENT_GRAB) return 0
 		if(slot != SLOT_GLOVES || !overridespecial) return 0
-		if(ismob(user))
-			var/mob/M = user
-			specialoverride.pixelaction(target,params,M)
-			M.next_click = world.time+M.combat_click_delay
-			return 1
+
+		specialoverride.pixelaction(target,params,user)
+		user.next_click = world.time + user.combat_click_delay
+		return 1
 
 
 /obj/item/clothing/gloves/long // adhara stuff
@@ -477,7 +477,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	item_state = "ygloves"
 	material_prints = "insulative fibers and nanomachines"
 	can_be_charged = 1 // Quite pointless, but could be useful as a last resort away from powered wires? Hell, it's a traitor item and can get the buff (Convair880).
-	max_uses = 4
+	max_uses = 10
 	flags = HAS_EQUIP_CLICK
 
 	var/spam_flag = 0
@@ -493,26 +493,30 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 			return
 		A.use_power(amount, ENVIRON)
 
-	equipment_click(atom/user, atom/target, params, location, control, origParams, slot)
-		if(target == user || spam_flag || user:a_intent == INTENT_HELP || user:a_intent == INTENT_GRAB) return 0
+	equipment_click(atom/source, atom/target, params, location, control, origParams, slot)
+		var/mob/user = source
+		if(target == user || !istype(user) || GET_COOLDOWN(src,"spam_flag") || user.a_intent == INTENT_HELP || user.a_intent == INTENT_GRAB) return 0
 		if(slot != SLOT_GLOVES) return 0
 
+		var/datum/powernet/PN
 		var/netnum = 0
 		if(src.overridespecial)
 			..()
 		for(var/turf/T in range(1, user))
 			for(var/obj/cable/C in T.contents) //Needed because cables have invisibility 101. Making them disappear from most LISTS.
-				netnum = C.netnum
+				PN = C.get_powernet()
+				if(PN.avail)
+					netnum = C.netnum
 				break
+			if(netnum) break
 
-		if(BOUNDS_DIST(user, target) > 0 && !user:equipped())
+		if(BOUNDS_DIST(user, target) > 0 && !user.equipped())
 
 			if(!netnum)
 				boutput(user, "<span class='alert'>The gloves find no cable to draw power from.</span>")
 				return
 
-			spam_flag = 1
-			SPAWN(4 SECONDS) spam_flag = 0
+			ON_COOLDOWN(src,"spam_flag", 4 SECONDS)
 
 			use_power(50000)
 
@@ -531,12 +535,15 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 			var/turf/currTurf = get_turf(target_r)
 			currTurf.hotspot_expose(2000, 400)
 
+			var/charges_used = FALSE
+
 			for(var/count=0, count<4, count++)
 
 				var/list/affected = DrawLine(last, target_r, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
-				for(var/obj/O in affected)
-					SPAWN(0.6 SECONDS) qdel(O)
+				SPAWN(0.6 SECONDS)
+					for(var/obj/O in affected)
+						qdel(O)
 
 				if(istype(target_r, /obj/machinery/power/generatorTemp))
 					var/obj/machinery/power/generatorTemp/gen = target_r
@@ -546,10 +553,15 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 						gen.efficiency_controller -= 5
 
 				else if(isliving(target_r)) //Probably unsafe.
+					var/mob/living/victim = target_r
 					logTheThing("combat", user, target_r, "zaps [constructTarget(target_r,"combat")] with power gloves")
-					switch(user:a_intent)
+					switch(user.a_intent)
 						if("harm")
-							src.electrocute(target_r, 100, netnum)
+							src.electrocute(victim, 100, netnum)
+							if(uses)
+								victim.shock(src, 1000 * uses, victim.hand == 1 ? "l_arm": "r_arm", 1)
+								uses--
+								charges_used = TRUE
 							break
 						if("disarm")
 							target.changeStatus("weakened", 3 SECONDS)
@@ -569,7 +581,49 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 			for(var/d in dummies)
 				qdel(d)
 
+			if(charges_used)
+				if (src.uses < 1)
+					src.icon_state = "yellow"
+					src.item_state = "ygloves"
+					user.update_clothing() // Was missing (Convair880).
+					user.show_text("The gloves are no longer electrically charged.", "red")
+					src.overridespecial = 0
+				else
+					user.show_text("The gloves have [src.uses]/[src.max_uses] charges left!", "red")
+
 		return 1
+
+	afterattack(atom/target, mob/user, reach, params)
+		if(istype(target, /obj/cable/) || istype(target, /obj/machinery/power/apc))
+			if(istype(target, /obj/cable/))
+				var/obj/cable/C = target
+				var/datum/powernet/PN = C.get_powernet()
+				if(!PN.avail)
+					user.show_text("The [C] has no power!", "red")
+					return
+
+			if (!src.can_be_charged)
+				user.show_text("The [src.name] cannot be electrically charged.", "red")
+				return
+			if (!src.stunready)
+				user.show_text("You don't see a way to connect [src.name] to [target].  Maybe some additional wires would help?", "red")
+				return
+
+			if (src.uses == src.max_uses)
+				user.show_text("The gloves are already fully charged.", "red")
+				return
+			if (src.uses < 0)
+				src.uses = 0
+			src.uses = min(src.uses + 1, src.max_uses)
+
+			use_power(1000)
+			src.icon_state = "stun"
+			src.item_state = "stun"
+			src.overridespecial = 1
+			user.update_clothing() // Required to update the worn sprite (Convair880).
+			user.visible_message("<span class='alert'><b>[user]</b> charges [his_or_her(user)] [src].</span>", "<span class='notice'>\The [src] now hold [src.uses]/[src.max_uses] charges!</span>")
+		. = ..()
+
 
 /obj/item/clothing/gloves/water_wings
 	name = "water wings"

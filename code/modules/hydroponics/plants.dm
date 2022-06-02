@@ -165,7 +165,7 @@ ABSTRACT_TYPE(/datum/plant)
 		damage_prob = clamp(damage_prob, 0, 100)
 		var/damage_amt = 0
 		switch (reagent)
-			if ("phlogiston","infernite","thalmerite","sorium")
+			if ("phlogiston","infernite","pyrosium","sorium")
 				damage_amt = rand(80,100)
 			if ("pacid")
 				damage_amt = rand(75,80)

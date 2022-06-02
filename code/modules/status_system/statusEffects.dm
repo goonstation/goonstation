@@ -2181,3 +2181,11 @@
 			duration = 0
 			return
 		drone.absorber.tick(timePassed/10)
+/datum/statusEffect/spry
+	id = "spry"
+	name = "Spry"
+	desc = "You have a spring in your step."
+	icon_state = "spry"
+	maxDuration = 3 MINUTES
+	unique = TRUE
+	movement_modifier = /datum/movement_modifier/spry
