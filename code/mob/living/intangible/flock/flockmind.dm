@@ -72,7 +72,6 @@
 	else
 		boutput(src, "<span class='alert'>You don't have a flock, it's not going to listen to you! Also call a coder, this should be impossible!</span>")
 		return
-	src.started = TRUE
 	src.removeAbility(/datum/targetable/flockmindAbility/spawnEgg)
 	src.addAllAbilities()
 

@@ -45,6 +45,7 @@
 					candidate_turfs -= S
 					break
 		flockdronegibs(src.loc, null, eject) //ejectables ejected here
+		src.flock.flockmind.started = TRUE
 		qdel(src)
 	else
 		var/severity = round(((build_time - elapsed)/build_time) * 5)
