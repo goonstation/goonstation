@@ -50,7 +50,13 @@
 		var/tmpRads = 0
 		boutput(world,"REACTOR: input=[input_starting_pressure] [air1.temperature]K output=[output_starting_pressure] [air2.temperature]K")
 
-		var/datum/gas_mixture/gas_input = air1.remove(air1.volume)
+		//PV=nRT
+		//We're using volume because that makes sense
+		//but we need to express that in moles so,  1/n = RT/PV .. n = PV/RT
+		var/transfer_moles = 0
+		if(input_starting_pressure)
+			transfer_moles = (air1.volume*input_starting_pressure)/(R_IDEAL_GAS_EQUATION*air1.temperature)
+		var/datum/gas_mixture/gas_input = air1.remove(transfer_moles)
 		var/datum/gas_mixture/gas_output = air2
 		var/total_gas_volume = 0
 
@@ -83,8 +89,12 @@
 						tmpRads++ //neutrons hitting the casing get blasted in to the room - have fun with that engineers!
 
 		var/datum/gas_mixture/gas = src.processCasingGas(gas_input) //the reactor has some inherent gas cooling channels
-		if(gas) gas_output.merge(gas)
-		//spawn radioactivity then reset level
+		if(gas)
+			gas_output.merge(gas)
+
+		//if we somehow ended up with input gas still
+		gas_output.merge(gas_input)
+		//TODO spawn radioactivity then reset level
 		src.radiationLevel = tmpRads
 		total_gas_volume += src.reactor_vessel_gas_volume
 		src.air1.volume = total_gas_volume
@@ -105,7 +115,7 @@
 				src.temperature += heat_transfer_mult*deltaT*hTC
 			. = src.current_gas
 		if(inGas)
-			src.current_gas = inGas.remove(src.reactor_vessel_gas_volume)
+			src.current_gas = inGas.remove((src.reactor_vessel_gas_volume*MIXTURE_PRESSURE(inGas))/(R_IDEAL_GAS_EQUATION*inGas.temperature))
 
 
 	proc/getGridNeighbors(var/x,var/y)

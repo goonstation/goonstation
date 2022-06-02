@@ -70,15 +70,13 @@ ABSTRACT_TYPE(/obj/reactor_component)
 			//heat transfer coefficient
 			var/hTC = (max(holder.material.getProperty("density"),1)/100)*(max(src.material.getProperty("density"),1)/100)
 			if(holder.material.hasProperty("thermal"))
-				hTC = hTC*(1-(RC.material.getProperty("thermal")/100))
-			if(RC.material.hasProperty("thermal"))
-				hTC = hTC*(1-(RC.material.getProperty("thermal")/100))
+				hTC = hTC*(1-(holder.material.getProperty("thermal")/100))
+			if(holder.material.hasProperty("thermal"))
+				hTC = hTC*(1-(holder.material.getProperty("thermal")/100))
 			holder.temperature += thermal_cross_section*-deltaT*hTC
 			src.temperature += thermal_cross_section*deltaT*hTC
 			if(holder.temperature < 0 || src.temperature < 0)
 				CRASH("TEMP WENT NEGATIVE")
-			holder.material.triggerTemp(RC,RC.temperature)
-			src.material.triggerTemp(src,src.temperature)
 
 			holder.material.triggerTemp(holder,holder.temperature)
 			src.material.triggerTemp(src,src.temperature)
@@ -180,6 +178,6 @@ ABSTRACT_TYPE(/obj/reactor_component)
 					CRASH("TEMP WENT NEGATIVE")
 			. = src.current_gas
 		if(inGas)
-			src.current_gas = inGas.remove(src.gas_volume)
+			src.current_gas = inGas.remove((src.gas_volume*MIXTURE_PRESSURE(inGas))/(R_IDEAL_GAS_EQUATION*inGas.temperature))
 
 

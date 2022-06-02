@@ -80,7 +80,10 @@
 		//RPM - generate ideal power at 600RPM
 		//Stator load - how much are we trying to slow the RPM
 		//Energy generated = stator load * RPM
-		var/datum/gas_mixture/current_gas = src.air1.remove(air1.volume)
+		var/transfer_moles = 0
+		if(input_starting_pressure)
+			transfer_moles = (air1.volume*input_starting_pressure)/(R_IDEAL_GAS_EQUATION*air1.temperature)
+		var/datum/gas_mixture/current_gas =  air1.remove(transfer_moles)
 		src.lastgen = 0
 		if(current_gas)
 			var/input_starting_energy = THERMAL_ENERGY(current_gas)
