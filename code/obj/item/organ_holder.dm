@@ -769,10 +769,10 @@
 						qdel(src.head)
 					else
 						return FALSE
-				if (src.brain)
+				var/obj/item/organ/head/newHead = I
+				if (src.brain && (!isskeleton(src.donor) || newHead.brain))
 					boutput(usr, "<span class='alert'>[src.donor] already has a brain! You should remove the brain from [I] first before transplanting it.</span>")
 					return FALSE
-				var/obj/item/organ/head/newHead = I
 				newHead.op_stage = op_stage
 				src.head = newHead
 				newHead.set_loc(src.donor)
@@ -825,9 +825,14 @@
 						newHead.wear_mask = null
 					if (isskeleton(H))
 						var/datum/mutantrace/skeleton/S = H.mutantrace
+						if (H.head_tracker != null)
+							H.head_tracker.linked_human = null
+						newHead.is_skeleton = TRUE
+						newHead.linked_human = H
 						S.head = newHead
 						H.client?.eye = H
 						H.eye = H
+						H.head_tracker = newHead
 				src.donor.update_body()
 				src.donor.UpdateDamageIcon()
 				src.donor.update_clothing()

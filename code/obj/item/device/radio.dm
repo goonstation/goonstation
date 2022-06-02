@@ -314,6 +314,19 @@ var/list/headset_channel_lookup
 				else
 					R.speech_bubble()
 				if (secure)
+
+					if (istype(R.loc, /obj/item/organ/head))
+						var/obj/item/organ/head/O = R.loc
+						if (O.linked_human != null)
+							var/mob/rmob = O.linked_human
+							if (!(O.linked_human in receive))
+								receive.Add(O.linked_human)
+								if (ai_sender)
+									rmob.playsound_local(R, 'sound/misc/talk/radio_ai.ogg', 30, 1, 0, pitch = 1, ignore_flag = SOUND_SPEECH)
+								else
+									rmob.playsound_local(R, 'sound/misc/talk/radio2.ogg', 30, 1, 0, pitch = 1, ignore_flag = SOUND_SPEECH)
+
+							associateRadioToMob(rmob, R, receive, messages, secure, real_name, lang_id)
 					for (var/i in R.send_hear())
 						var/mob/rmob = i
 						if (!(i in receive))
@@ -329,6 +342,20 @@ var/list/headset_channel_lookup
 
 
 				else
+					if (istype(R.loc, /obj/item/organ/head))
+						var/obj/item/organ/head/O = R.loc
+						if (O.linked_human != null)
+							if (signal_loss && !R.hardened && R.frequency >= R_FREQ_MINIMUM && R.frequency <= R_FREQ_MAXIMUM)
+								continue
+
+							var/mob/rmob = O.linked_human
+							if (!(O.linked_human in receive))
+								receive.Add(O.linked_human)
+								if (ai_sender)
+									rmob.playsound_local(R, 'sound/misc/talk/radio_ai.ogg', 30, 1, 0, pitch = 1, ignore_flag = SOUND_SPEECH)
+
+							associateRadioToMob(rmob, R, receive, messages, secure, real_name, lang_id)
+
 					for (var/i in R.send_hear())
 						if (signal_loss && !R.hardened && R.frequency >= R_FREQ_MINIMUM && R.frequency <= R_FREQ_MAXIMUM)
 							continue

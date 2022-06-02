@@ -1046,9 +1046,14 @@
 
 	var/list/listening = list()
 	var/list/olocs = list()
+	var/atom/say_location = src
 	var/thickness = 0
-	if (isturf(loc))
-		listening = all_hearers(message_range, src)
+	if (ishuman(src) && isskeleton(src) && !src.organHolder.head)	//Decapitated skeletons speak from their heads
+		var/mob/living/carbon/human/H = src
+		if (H.head_tracker)
+			say_location = H.head_tracker
+	if (isturf(say_location.loc))
+		listening = all_hearers(message_range, say_location)
 	else
 		olocs = obj_loc_chain(src)
 		if(olocs.len > 0) // fix runtime list index out of bounds when loc is null (IT CAN HAPPEN, APPARENTLY)
@@ -1081,7 +1086,7 @@
 			src.last_chat_color = hsv2rgb(num % 360, (num / 360) % 10 + 18, num / 360 / 10 % 15 + 85)
 			src.last_heard_name = src.get_heard_name()
 
-		var/turf/T = get_turf(src)
+		var/turf/T = get_turf(say_location)
 		for(var/i = 0; i < 2; i++) T = get_step(T, WEST)
 		for(var/i = 0; i < 5; i++)
 			for(var/mob/living/L in T)
@@ -1099,7 +1104,7 @@
 				maptext_color ="#D8BFD8"
 		else
 			maptext_color = src.last_chat_color
-		chat_text = make_chat_maptext(src, messages[1], "color: [maptext_color];" + src.speechpopupstyle + singing_italics)
+		chat_text = make_chat_maptext(say_location, messages[1], "color: [maptext_color];" + src.speechpopupstyle + singing_italics)
 		if(chat_text)
 			chat_text.measure(src.client)
 			for(var/image/chat_maptext/I in src.chat_text.lines)
@@ -1124,7 +1129,7 @@
 		rendered = "<span style='-ms-transform: rotate(180deg)'>[rendered]</span>"
 
 	var/viewrange = 0
-	var/list/hearers = hearers(src)
+	var/list/hearers = hearers(say_location)
 	for (var/client/C)
 		var/mob/M = C.mob
 
@@ -1138,7 +1143,7 @@
 			(istype(M, /mob/zoldorf)) || \
 			(isintangible(M) && (M in hearers)) || \
 			( \
-				(!isturf(src.loc) && src.loc == M.loc) && \
+				(!isturf(say_location.loc) && say_location.loc == M.loc) && \
 				!(M in heard_a) && \
 				!istype(M, /mob/dead/target_observer) && \
 				M != src \
@@ -1153,17 +1158,17 @@
 				viewrange = (((istext(C.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH) - 1) / 2)
 				if (M.client.preferences.local_deadchat || iswraith(M)) //only listening locally (or a wraith)? w/e man dont bold dat
 					//if (M in range(M.client.view, src))
-					if (get_dist(M,src) <= viewrange)
+					if (get_dist(M,say_location) <= viewrange)
 						M.show_message(thisR, 2, assoc_maptext = chat_text)
 				else
 					//if (M in range(M.client.view, src)) //you're not just listening locally and the message is nearby? sweet! bold that sucka brosef
-					if (get_dist(M,src) <= viewrange) //you're not just listening locally and the message is nearby? sweet! bold that sucka brosef
+					if (get_dist(M,say_location) <= viewrange) //you're not just listening locally and the message is nearby? sweet! bold that sucka brosef
 						M.show_message("<span class='bold'>[thisR]</span>", 2, assoc_maptext = chat_text) //awwwww yeeeeeah lookat dat bold
 					else
 						M.show_message(thisR, 2, assoc_maptext = chat_text)
 			else if(istype(M, /mob/zoldorf))
 				viewrange = (((istext(C.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH) - 1) / 2)
-				if (get_dist(M,src) <= viewrange)
+				if (get_dist(M,say_location) <= viewrange)
 					if((!istype(M.loc,/obj/machinery/playerzoldorf))&&(!istype(M.loc,/mob))&&(M.invisibility == INVIS_GHOST))
 						M.show_message(thisR, 2, assoc_maptext = chat_text)
 				else
@@ -1641,8 +1646,8 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	if (src.max_health > 0)
 		health_deficiency = ((src.max_health-src.health)/src.max_health)*100 + health_deficiency_adjustment // cogwerks // let's treat this like pain
 	else
-		health_deficiency = (src.max_health-src.health) + health_deficiency_adjustment 
-		
+		health_deficiency = (src.max_health-src.health) + health_deficiency_adjustment
+
 
 	if (health_deficiency >= 30)
 		. += (health_deficiency / 35)

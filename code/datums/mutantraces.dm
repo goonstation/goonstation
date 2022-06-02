@@ -1111,7 +1111,10 @@ TYPEINFO(/datum/mutantrace)
 		if(ishuman(M))
 			M.mob_flags |= IS_BONEY
 			M.blood_id = "calcium"
+			M.head_tracker = M.organHolder.head
 			head = M.organHolder.head
+			head.is_skeleton = TRUE
+			head.linked_human = M
 
 	disposing()
 		if (ishuman(mob))
