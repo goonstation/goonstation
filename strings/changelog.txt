@@ -1,5 +1,22 @@
 
+(t)wed jun 01 22
+(u)TDHooligan
+(p)6952
+(e)⚖|balance
+(+)The gods of the Lava Moon's Shield of Souls demand a toll for their power.
+(u)Flappybat
+(p)8627
+(e)🎨⚖|sprites, balance
+(*)Portable flashers no longer flash anyone with security access and disable their checks for 1.5 seconds. The flasher colors will dull when on cooldown to indicate it is safe to run pass.
+(*)Portable flashers now flash for bigger critters. Be careful of sprinting your antag critter respawn into security.
+(u)fwll & aloe
+(+)You can now obtain changeling meat by either butchering changeling critters (buttcrabs, legworms, etc) or tossing a changeling in the gibber. This meat can either be cooked into a steak, or cooked with dough for an aburgination, which is very unsafe to eat. Otherwise, it's like mystery meat.
+(+)Sprites and ideas by fwll, code by aloe
 (t)tue may 31 22
+(u)aloe
+(+)Changeling control transfers should be fixed (usually wouldn't put this in the changelog but it seems important)
+(u)aloe
+(+)Cyborgs now have text for determining if they're connected on examine; the 3 states are operational (has a player connected), hibernating (has a brain but player is disconnected), and dormant (no brain or inactive SICC)
 (u)aloe
 (e)⚖|balance
 (*)The swooshy cloaking device effect is now only visible to the user, not people with thermals and the AI and whatever else. You can still see the person with thermal vision, you just can't immediately tell they're using a cloaker.
