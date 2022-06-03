@@ -1111,9 +1111,8 @@ TYPEINFO(/datum/mutantrace)
 		if(ishuman(M))
 			M.mob_flags |= IS_BONEY
 			M.blood_id = "calcium"
-			head_tracker = M.organHolder.head
-			head_tracker.linked_human = M
 			set_head(M.organHolder.head)
+			head_tracker.linked_human = M
 
 	disposing()
 		if (ishuman(mob))
@@ -1122,6 +1121,8 @@ TYPEINFO(/datum/mutantrace)
 		. = ..()
 
 	proc/set_head(var/head)
+		if (src.head_tracker != null)
+			src.head_tracker.linked_human = null
 		src.head_tracker = head
 
 /obj/item/joint_wax

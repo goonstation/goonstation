@@ -828,12 +828,9 @@
 						newHead.wear_mask = null
 					if (isskeleton(H))
 						var/datum/mutantrace/skeleton/S = H.mutantrace
-						if (S.head_tracker != null)
-							S.head_tracker.linked_human = null
-						newHead.head_type = HEAD_SKELETON
 						newHead.linked_human = H
-						H.eye = H
-						S.set_head(newHead)
+						if (newHead.head_type == HEAD_SKELETON)
+							S.set_head(newHead)
 					H.set_eye(null)
 				src.donor.update_body()
 				src.donor.UpdateDamageIcon()

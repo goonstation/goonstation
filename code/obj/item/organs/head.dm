@@ -74,6 +74,11 @@
 				src.UpdateIcon(/*makeshitup*/ 1)
 
 	disposing()
+		if (src.donor && ishuman(src.donor))
+			var/mob/living/carbon/human/H = src.donor
+			if (isskeleton(H))
+				var/datum/mutantrace/skeleton/S = H.mutantrace
+				S.head_tracker = null
 		if (holder)
 			holder.head = null
 		if (donor_original.eye == src)
@@ -88,6 +93,7 @@
 		ears = null
 		wear_mask = null
 		glasses = null
+		linked_human = null
 
 		..()
 
