@@ -1124,6 +1124,7 @@ TYPEINFO(/datum/mutantrace)
 		if (src.head_tracker != null)
 			src.head_tracker.linked_human = null
 		src.head_tracker = head
+		src.head_tracker.linked_human = mob
 
 /obj/item/joint_wax
 	name = "joint wax"

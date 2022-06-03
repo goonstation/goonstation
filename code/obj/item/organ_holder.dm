@@ -828,7 +828,6 @@
 						newHead.wear_mask = null
 					if (isskeleton(H))
 						var/datum/mutantrace/skeleton/S = H.mutantrace
-						newHead.linked_human = H
 						if (newHead.head_type == HEAD_SKELETON)
 							S.set_head(newHead)
 					H.set_eye(null)

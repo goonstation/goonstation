@@ -322,17 +322,18 @@ var/list/headset_channel_lookup
 							temp_mob = O.linked_human
 
 					for (var/i in R.send_hear() + temp_mob)
-						var/mob/rmob = i
-						if (!(i in receive))
-							receive.Add(rmob)
-							if (ai_sender)
-								rmob.playsound_local(R, 'sound/misc/talk/radio_ai.ogg', 30, 1, 0, pitch = 1, ignore_flag = SOUND_SPEECH)
-							else
-								rmob.playsound_local(R, 'sound/misc/talk/radio2.ogg', 30, 1, 0, pitch = 1, ignore_flag = SOUND_SPEECH)
-							//mbc : i dont like doing this here but its the easiest place to fit it in since this is a point where we have access to both the receiving mob and the radio they are receiving through
-							//nex : now we have a list of all the radios someone is hearing through so now we can do this elsewhere, poggers. anyways still gonna leave this here :^)
+						if (i)
+							var/mob/rmob = i
+							if (!(i in receive))
+								receive.Add(rmob)
+								if (ai_sender)
+									rmob.playsound_local(R, 'sound/misc/talk/radio_ai.ogg', 30, 1, 0, pitch = 1, ignore_flag = SOUND_SPEECH)
+								else
+									rmob.playsound_local(R, 'sound/misc/talk/radio2.ogg', 30, 1, 0, pitch = 1, ignore_flag = SOUND_SPEECH)
+								//mbc : i dont like doing this here but its the easiest place to fit it in since this is a point where we have access to both the receiving mob and the radio they are receiving through
+								//nex : now we have a list of all the radios someone is hearing through so now we can do this elsewhere, poggers. anyways still gonna leave this here :^)
 
-						associateRadioToMob(rmob, R, receive, messages, secure, real_name, lang_id)
+							associateRadioToMob(rmob, R, receive, messages, secure, real_name, lang_id)
 
 
 				else
@@ -343,17 +344,17 @@ var/list/headset_channel_lookup
 							temp_mob = O.linked_human
 
 					for (var/i in R.send_hear() + temp_mob)
-						if (signal_loss && !R.hardened && R.frequency >= R_FREQ_MINIMUM && R.frequency <= R_FREQ_MAXIMUM)
-							continue
+						if (i)
+							if (signal_loss && !R.hardened && R.frequency >= R_FREQ_MINIMUM && R.frequency <= R_FREQ_MAXIMUM)
+								continue
 
-						var/mob/rmob = i
-						if (!(i in receive))
-							receive.Add(i)
-							if (ai_sender)
-								rmob.playsound_local(R, 'sound/misc/talk/radio_ai.ogg', 30, 1, 0, pitch = 1, ignore_flag = SOUND_SPEECH)
+							var/mob/rmob = i
+							if (!(i in receive))
+								receive.Add(i)
+								if (ai_sender)
+									rmob.playsound_local(R, 'sound/misc/talk/radio_ai.ogg', 30, 1, 0, pitch = 1, ignore_flag = SOUND_SPEECH)
 
-						associateRadioToMob(rmob, R, receive, messages, secure, real_name, lang_id)
-
+							associateRadioToMob(rmob, R, receive, messages, secure, real_name, lang_id)
 
 		else if (istype(I, /obj/item/mechanics/radioscanner)) //MechComp radio scanner
 			var/obj/item/mechanics/radioscanner/R = I
