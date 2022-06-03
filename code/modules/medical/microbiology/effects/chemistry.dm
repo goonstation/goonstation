@@ -28,13 +28,11 @@ ABSTRACT_TYPE(/datum/microbioeffects/chemistry)
 	name = "Space Cleaner Production"
 	desc = "The microbial culture produces space cleaner."
 
-	object_act(var/obj/O, var/datum/microbe/origin)
-		if (!(istype(O, /obj/item/reagent_containers)))
-			return
-		if (O.reagents.is_full())
+	reagent_act(var/obj/item/reagent_containers/glass/B, var/datum/microbe/origin)
+		if (B.reagents.is_full())
 			return
 		else
-			O.reagents.add_reagent("cleaner", origin.probability)
+			B.reagents.add_reagent("cleaner", origin.probability)
 			return
 
 	react_to(var/R, var/zoom)
@@ -48,13 +46,11 @@ ABSTRACT_TYPE(/datum/microbioeffects/chemistry)
 	name = "Styptic Powder Production"
 	desc = "The microbial culture produces stypic powder."
 
-	object_act(var/obj/O, var/datum/microbe/origin)
-		if (!(istype(O, /obj/item/reagent_containers)))
-			return
-		if (O.reagents.is_full())
+	reagent_act(var/obj/item/reagent_containers/glass/B, var/datum/microbe/origin)
+		if (B.reagents.is_full())
 			return
 		else
-			O.reagents.add_reagent("styptic_powder", origin.probability)
+			B.reagents.add_reagent("styptic_powder", origin.probability)
 			return
 
 	react_to(var/R, var/zoom)
@@ -68,13 +64,11 @@ ABSTRACT_TYPE(/datum/microbioeffects/chemistry)
 	name = "Silver Sulfadizine Production"
 	desc = "The microbial culture produces silver sulfadizine."
 
-	object_act(var/obj/O, var/datum/microbe/origin)
-		if (!(istype(O, /obj/item/reagent_containers)))
-			return
-		if (O.reagents.is_full())
+	reagent_act(var/obj/item/reagent_containers/glass/B, var/datum/microbe/origin)
+		if (B.reagents.is_full())
 			return
 		else
-			O.reagents.add_reagent("silver_sulfadizine", origin.probability)
+			B.reagents.add_reagent("silver_sulfadizine", origin.probability)
 			return
 
 	react_to(var/R, var/zoom)
@@ -88,13 +82,11 @@ ABSTRACT_TYPE(/datum/microbioeffects/chemistry)
 	name = "Charcoal Production"
 	desc = "The microbial culture produces charcoal."
 
-	object_act(var/obj/O, var/datum/microbe/origin)
-		if (!(istype(O, /obj/item/reagent_containers)))
-			return
-		if (O.reagents.is_full())
+	reagent_act(var/obj/item/reagent_containers/glass/B, var/datum/microbe/origin)
+		if (B.reagents.is_full())
 			return
 		else
-			O.reagents.add_reagent("charcoal", origin.probability)
+			B.reagents.add_reagent("charcoal", origin.probability)
 			return
 
 	react_to(var/R, var/zoom)
@@ -108,13 +100,11 @@ ABSTRACT_TYPE(/datum/microbioeffects/chemistry)
 	name = "Epinepherine Production"
 	desc = "The microbial culture produces epinepherine."
 
-	object_act(var/obj/O, var/datum/microbe/origin)
-		if (!(istype(O, /obj/item/reagent_containers)))
-			return
-		if (O.reagents.is_full())
+	reagent_act(var/obj/item/reagent_containers/glass/B, var/datum/microbe/origin)
+		if (B.reagents.is_full())
 			return
 		else
-			O.reagents.add_reagent("epinepherine", origin.probability)
+			B.reagents.add_reagent("epinepherine", origin.probability)
 			return
 
 	react_to(var/R, var/zoom)
@@ -128,13 +118,11 @@ ABSTRACT_TYPE(/datum/microbioeffects/chemistry)
 	name = "Mutadone Production"
 	desc = "The microbial culture produces mutadone."
 
-	object_act(var/obj/O, var/datum/microbe/origin)
-		if (!(istype(O, /obj/item/reagent_containers)))
-			return
-		if (O.reagents.is_full())
+	reagent_act(var/obj/item/reagent_containers/glass/B, var/datum/microbe/origin)
+		if (B.reagents.is_full())
 			return
 		else
-			O.reagents.add_reagent("mutadone", origin.probability)
+			B.reagents.add_reagent("mutadone", origin.probability)
 			return
 
 	react_to(var/R, var/zoom)

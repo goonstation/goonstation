@@ -4,7 +4,7 @@ datum/microbiology_cdc
 	var/patient_zero_kname = ""
 	var/creation_time = null
 
-	var/list/infections = list()
+	//var/list/infections = list()
 
 	New(var/microbio_uid)
 		..()
@@ -13,7 +13,7 @@ datum/microbiology_cdc
 
 datum/controller/microbe
 
-	var/list/microbe_trees = new/list()				//stores info on a single microbe across different infected players
+	//var/list/microbe_trees = new/list()				//stores info on a single microbe across different infected players
 
 	var/list/path_to_effect = list()
 	var/list/path_to_suppressant = list()
@@ -24,7 +24,7 @@ datum/controller/microbe
 
 	var/next_uid = 1
 	var/next_puid = 1
-
+/*
 	//Mark who got infected on the CDC panel
 	proc/mob_infected(var/datum/microbe/P, var/mob/living/carbon/human/H)
 		var/datum/microbiology_cdc/CDC = src.microbe_trees[P.name]
@@ -335,7 +335,7 @@ datum/controller/microbe
 		if (!(key in src.cdc_creator))
 			src.cdc_creator += key
 		src.cdc_creator[key] = P		//The key belonging to [this user] made [the microbe] with [this uid].
-
+*/
 	New()
 		..()
 
@@ -414,7 +414,6 @@ datum/microbe
 		src.microbio_playerid = "[microbe_controller.next_puid]"
 		microbe_controller.next_puid++
 		src.name = "Custom Culture UID [src.microbio_uid]"
-		var/datum/microbiology_cdc/CDC =
 		return
 
 	proc/generate_effects() //WIP

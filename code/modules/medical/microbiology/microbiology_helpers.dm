@@ -82,11 +82,9 @@
 /proc/ez_pathogen(var/EP)											//EP for Effect Path
 	var/datum/microbe/P = new /datum/microbe
 	P.generate_name()
-	var/datum/microbiology_cdc/CDC = P.name
+	//var/datum/microbiology_cdc/CDC = P.name
 	P.add_symptom(microbe_controller.path_to_effect[EP])
 	P.generate_cure(P)
 	P.generate_attributes()
-	CDC.infections += P.name
-	CDC.infections[P.name] = P
 	logTheThing("pathology", null, null, "Microbe culture [P.name] created by quick-pathogen-proc with symptom [EP].")
 	return P

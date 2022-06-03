@@ -3626,7 +3626,7 @@ var/global/noir = 0
 					if("randomevents")
 						random_events.event_config()
 					if("pathology")
-						microbe_controller.cdc_main(src)
+						//microbe_controller.cdc_main(src)
 					if("motives")
 						simsController.showControls(usr)
 					if("artifacts")
@@ -3702,8 +3702,8 @@ var/global/noir = 0
 				var/gettxt
 				if (href_list["presearch"])
 					gettxt = href_list["presearch"]
-				else
-					gettxt = input("Which pathogen tree?", "Pathogen tree") in microbe_controller.microbe_trees
+				//else
+					//gettxt = input("Which pathogen tree?", "Pathogen tree") in microbe_controller.microbe_trees
 
 				var/adminLogHtml = get_log_data_html("pathology", gettxt, src)
 				usr.Browse(adminLogHtml, "window=pathology_log;size=750x500")

@@ -2483,7 +2483,7 @@
 		src.microbes += Q.microbio_uid
 		src.microbes[Q.microbio_uid] = Q
 		Q.infected = src
-		microbe_controller.mob_infected(Q, src)
+		//microbe_controller.mob_infected(Q, src)
 		logTheThing("pathology", src, null, "is infected by [Q].")
 		return 1
 	else
@@ -2491,7 +2491,7 @@
 
 /mob/living/carbon/human/cured(var/datum/microbe/P)
 	if (P.microbio_uid in src.microbes)
-		microbe_controller.mob_cured(src.microbes[P.microbio_uid], src)
+		//microbe_controller.mob_cured(src.microbes[P.microbio_uid], src)
 		var/datum/microbe/Q = src.microbes[P.microbio_uid]
 		var/pname = Q.name
 		src.microbes -= P.microbio_uid

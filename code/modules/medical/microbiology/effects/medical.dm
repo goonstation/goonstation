@@ -11,8 +11,7 @@ ABSTRACT_TYPE(/datum/microbioeffects/benevolent)
 		if (!(istype(mob, /mob/living/carbon/human)))
 			return
 		var/mob/living/carbon/human/H = mob
-		for (var/datum/mircobe/P in microbe_controller.microbes)
-
+		set disease prot to 100?
 
 	may_react_to()
 		return "The pathogen appears to have the ability to bond with organic tissue."
