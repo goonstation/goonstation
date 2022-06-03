@@ -1,4 +1,11 @@
 
+(t)fri jun 03 22
+(u)CodeJester
+(p)8727
+(e)🆕🎨|feature, sprites
+(+)Cyborgs can now click-drag food items onto each other to use them on each other. Try dragging sugar on dough to make sweet dough!
+(+)Civilian cyborgs have a new "tongs" tool that can use a food item as if it were used in-hand. Try using tongs on a dough strip to make a dough circle!
+(+)The "tongs" tool can also get food items out of containers, like egg cartons or boxes.
 (t)thu jun 02 22
 (u)Munien
 (p)8821
