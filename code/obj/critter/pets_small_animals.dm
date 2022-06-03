@@ -87,13 +87,13 @@
 	atk_disease_prob = 35
 	atkcarbon = 1
 
-/obj/critter/mouse/mad/warren
-	var/obj/machinery/wraith_warren/linked_warren = null
+/obj/critter/mouse/mad/ratden
+	var/obj/machinery/wraith/rat_den/linked_den = null
 
 	CritterDeath()
 		..()
-		if(linked_warren.linked_critters > 0)
-			linked_warren.linked_critters --
+		if(linked_den.linked_critters > 0)
+			linked_den.linked_critters --
 
 /obj/critter/mouse/remy
 	name = "Remy"

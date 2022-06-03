@@ -126,12 +126,12 @@
 
 		if ((istype(holder.owner, /mob/wraith/wraith_decay)))
 			//Find a suitable corpse
-			var/error = 0
+			var/error = FALSE
 			var/mob/living/carbon/human/M
 			if (isturf(T))
 				for (var/mob/living/carbon/human/target in T.contents)
 					if (isdead(target))
-						error = 1
+						error = TRUE
 						M = target
 						break
 			else if (ishuman(T))
@@ -186,12 +186,12 @@
 
 		else
 			//Find a suitable corpse
-			var/error = 0
+			var/error = FALSE
 			var/mob/living/carbon/human/M
 			if (isturf(T))
 				for (var/mob/living/carbon/human/target in T.contents)
 					if (isdead(target))
-						error = 1
+						error = TRUE
 						if (target:decomp_stage != 4)
 							M = target
 							break
@@ -570,7 +570,7 @@
 					puppet.playsound_local(puppet.loc, "sound/voice/wraith/wraithhaunt.ogg", 80, 0)
 					puppet.alpha = 0
 					animate(puppet, alpha=255, time=2 SECONDS)
-					puppet.flags &= !UNCRUSHABLE
+					puppet.flags &= UNCRUSHABLE
 					T.set_loc(puppet)
 					return 0
 
@@ -867,11 +867,9 @@
 	targeted = 0
 	pointCost = 150
 	tooltip_flags = TOOLTIP_LEFT
-	special_screen_loc="NORTH-1,EAST"
-
-	var/status = 0
-	var/static/list/effects = list("Rot" = 1, "Summoner" = 2, "Trickster" = 3)
-	var/list/effects_buttons = list()
+	special_screen_loc = "NORTH-1,EAST"
+	var/static/list/paths = list("Rot" = 1, "Summoner" = 2, "Trickster" = 3)
+	var/list/paths_buttons = list()
 
 
 	New()
@@ -1157,13 +1155,13 @@
 			var/mob/wraith/W = holder.owner
 			if (H?.bioHolder.HasEffect("rot_curse") && H?.bioHolder.HasEffect("weak_curse") && H?.bioHolder.HasEffect("blind_curse") && H?.bioHolder.HasEffect("blood_curse"))
 				W.playsound_local(W.loc, "sound/voice/wraith/wraithhaunt.ogg", 80, 0)
-				boutput(holder.owner, "<span class='alert'>That soul is OURS</span>")
-				boutput(H, "<span class='alert'>The voices in your heads are reaching a crescendo</span>")
+				boutput(holder.owner, "<span class='alert'>That soul is OURS!!</span>")
+				boutput(H, "<span class='alert'>The voices in your heads are reaching a crescendo!</span>")
 				H.make_jittery(300)
 				sleep(4 SECOND)
 				H.changeStatus("stunned", 2 SECONDS)
 				H.emote("scream")
-				boutput(H, "<span class='alert'>You feel netherworldly hands grasping you.</span>")
+				boutput(H, "<span class='alert'>You feel netherworldly hands grasping you!</span>")
 				sleep(3 SECOND)
 				random_brute_damage(H, 10)
 				playsound(H.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 70, 1)
@@ -1433,7 +1431,6 @@
 						return
 					H.mind.transfer_to(W)
 					if (has_mind)
-						sleep(5 DECI SECONDS)
 						WG.mind.dnr = FALSE
 						WG.verbs += list(/mob/verb/setdnr)
 						WG.mind.transfer_to(H)
@@ -1826,14 +1823,14 @@
 			if (istype(M, /mob/living/critter/plaguerat))
 				total_plague_rats++
 		if(total_plague_rats < (max_allowed_rats + (player_count / 30)))	//Population scaling
-			if (istype(holder.owner, /mob/living/critter/plaguerat))	//plaguerats must be near their warren
-				var/near_warren = false
+			if (istype(holder.owner, /mob/living/critter/plaguerat))	//plaguerats must be near their den
+				var/near_den = false
 				var/turf/T = get_turf(holder.owner)
 				for (var/obj/O in T.contents)
-					if(istype(O, /obj/machinery/wraith_warren))
-						near_warren = true
-				if(!near_warren)
-					boutput(holder.owner, "We arent close enough to a warren to do this.")
+					if(istype(O, /obj/machinery/wraith/rat_den))
+						near_den = true
+				if(!near_den)
+					boutput(holder.owner, "We arent close enough to a rat den to do this.")
 					return 1
 			var/turf/T = get_turf(holder.owner)
 			if (isturf(T) && !istype(T, /turf/space))

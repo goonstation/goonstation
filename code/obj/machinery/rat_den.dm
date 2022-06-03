@@ -1,5 +1,5 @@
-/obj/machinery/wraith_warren
-	name = "rat warren"
+/obj/machinery/wraith/rat_den
+	name = "rat den"
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "rat_den"
 	desc = "A pile of garbage vaguely ressembling a nest."
@@ -32,8 +32,8 @@
 			if (src.next_spawn_check < world.time)
 				next_spawn_check = world.time + rand(20 SECONDS, 25 SECONDS)
 				if (linked_critters < max_critters)
-					var/obj/critter/mouse/mad/warren/M = new /obj/critter/mouse/mad/warren(src.loc)
-					M.linked_warren = src
+					var/obj/critter/mouse/mad/ratden/M = new /obj/critter/mouse/mad/ratden(src.loc)
+					M.linked_den = src
 					linked_critters ++
 
 		//Plague rats in range heal up slowly
@@ -42,4 +42,4 @@
 				for(var/damage_type in P.healthlist)
 					var/datum/healthHolder/hh = P.healthlist[damage_type]
 					hh.HealDamage(3)
-				boutput(P, "The proximity of the warren fills you with renewed malevolence.")
+				boutput(P, "The proximity of the rat den fills you with renewed malevolence.")

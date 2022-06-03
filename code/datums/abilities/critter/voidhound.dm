@@ -1,6 +1,3 @@
-///////////////////////
-// Voidhound Abilities
-///////////////////////
 /datum/targetable/critter/voidhound/cloak
 	name = "Cloak"
 	desc = "Slip into the void and make yourself hard to discern for a short time"

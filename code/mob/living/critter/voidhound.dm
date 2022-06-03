@@ -2,7 +2,7 @@
 //Take the heat off of the wraith by attracting attention
 
 /mob/living/critter/voidhound
-	name = "Voidhound"
+	name = "voidhound"
 	desc = "You probably shouldn't be staring at this thing."
 	density = 1
 	hand_count = 1

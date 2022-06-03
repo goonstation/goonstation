@@ -55,7 +55,7 @@
 			F.emote("scream")
 			sleep(2 SECONDS)
 			return F.gib()
-		sleep(25 DECI SECONDS)
+		sleep(2.5 SECONDS)
 	else
 		return FALSE
 

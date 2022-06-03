@@ -1,7 +1,3 @@
-///////////////////////
-// Spiker abilities
-///////////////////////
-
 /datum/targetable/critter/spiker/hook	//Projectile is referenced in spiker.dm
 	name = "Tentacle hook"
 	desc = "Launch a tentacle at your target and drag it to you"

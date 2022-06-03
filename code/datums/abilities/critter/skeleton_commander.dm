@@ -1,6 +1,3 @@
-////////////////////////////////
-// Skeleton commander abilities
-////////////////////////////////
 /datum/targetable/critter/skeleton_commander/rally
 	name = "rally"
 	desc = "Buff all surrounding critters to help you fight."

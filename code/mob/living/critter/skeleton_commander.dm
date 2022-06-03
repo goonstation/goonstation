@@ -63,9 +63,7 @@
 		HH.can_range_attack = 1
 
 /datum/limb/halberd
-
 	attack_range(atom/target, var/mob/user, params)
-
 		switch (user.a_intent)
 			if (INTENT_HELP)
 				return 0
@@ -103,9 +101,7 @@
 				else
 					playsound(user, "sound/impact_sounds/Flesh_Cut_1.ogg", 50, 0)
 				return 0
-
 			if (INTENT_GRAB)
-
 				if(!isturf(target.loc) && !isturf(target)) return
 				var/direction = get_dir_pixel(user, target, params)
 				var/list/attacked = list()

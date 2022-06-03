@@ -60,7 +60,7 @@
 			U.fluid_react_single("miasma", 120, airborne = 1)
 			U.fluid_react_single("blood", 60, airborne = 0)
 
-		for (var/mob/M in view(3, src.loc))
+		for (var/mob/M in range(3, src.loc))
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if(H.clothing_protects_from_chems())

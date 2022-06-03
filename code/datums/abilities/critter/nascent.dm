@@ -1,6 +1,3 @@
-///////////////////////////////////
-//	Nascent abilities, morph into other critters
-///////////////////////////////////
 /datum/targetable/critter/nascent/become_commander
 	name = "Become commander"
 	desc = "Become a hallberd-wielding skeleton and summon more bone rattlers."

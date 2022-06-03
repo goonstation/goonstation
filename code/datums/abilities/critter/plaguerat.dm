@@ -1,6 +1,3 @@
-////////////////////////////
-//	Plague rat abilities
-////////////////////////////
 /datum/targetable/critter/plague_rat/eat_filth
 	name = "Eat filth"
 	desc = "Eat some filth, healing you a little bit and slowly growing."
@@ -165,8 +162,8 @@
 		var/atom/movable/screen/ability/topBar/B = src.object
 		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
 
-/datum/targetable/critter/plague_rat/spawn_warren
-	name = "spawn warren"
+/datum/targetable/critter/plague_rat/spawn_rat_den
+	name = "spawn rat den"
 	desc = "Spawn your rat nest, healing you when in range and summoning some tiny diseased mice."
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "ratden"
@@ -180,20 +177,20 @@
 			return 1
 		if (istype(holder.owner, /mob/living/critter/plaguerat) && !istype(get_turf(holder.owner), /turf/space))
 			var/mob/living/critter/plaguerat/P = holder.owner
-			if (P.linked_warren == null)
-				var/obj/machinery/wraith_warren/W = new /obj/machinery/wraith_warren(P.loc)
-				P.linked_warren = W
+			if (P.linked_den == null)
+				var/obj/machinery/wraith/rat_den/W = new /obj/machinery/wraith/rat_den(P.loc)
+				P.linked_den = W
 				boutput (P, "<span class='notice'>You spawn a rat den</span>")
-			else if (!P.linked_warren.loc)
-				var/obj/machinery/wraith_warren/W = new /obj/machinery/wraith_warren(P.loc)
-				P.linked_warren = W
+			else if (!P.linked_den.loc)
+				var/obj/machinery/wraith/rat_den/W = new /obj/machinery/wraith/rat_den(P.loc)
+				P.linked_den = W
 				boutput (P, "<span class='notice'>You spawn a new rat den</span>")
 			else
-				qdel(P.linked_warren)
-				P.linked_warren = null
+				qdel(P.linked_den)
+				P.linked_den = null
 				boutput (P, "<span class='notice'>You had an old rat den, it is now destroyed.</span>")
-				var/obj/machinery/wraith_warren/W = new /obj/machinery/wraith_warren(P.loc)
-				P.linked_warren = W
+				var/obj/machinery/wraith/rat_den/W = new /obj/machinery/wraith/rat_den(P.loc)
+				P.linked_den = W
 				boutput (P, "<span class='notice'>You spawn a new rat den</span>")
 			return 0
 		return 1

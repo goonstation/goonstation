@@ -18,16 +18,16 @@
 	var/datum/light/light
 	var/datum/light/portal_light
 	var/list/default_mobs = list(/obj/critter/crunched,	//Useful for random mode or when we dont have a mob_type on spawn
-	/obj/critter/ancient_thing,
-	/obj/critter/ancient_repairbot/security,
-	/obj/critter/mechmonstrositycrawler,
-	/obj/critter/shade,
-	/obj/critter/bat/buff,
-	/obj/critter/lion,
-	/obj/critter/wraithskeleton,
-	/obj/critter/bear,
-	/obj/critter/brullbar,
-	/obj/critter/gunbot/heavy)
+								/obj/critter/ancient_thing,
+								/obj/critter/ancient_repairbot/security,
+								/obj/critter/mechmonstrositycrawler,
+								/obj/critter/shade,
+								/obj/critter/bat/buff,
+								/obj/critter/lion,
+								/obj/critter/wraithskeleton,
+								/obj/critter/bear,
+								/obj/critter/brullbar,
+								/obj/critter/gunbot/heavy)
 
 	New(var/mob_type_chosen = null)
 		if(mob_type_chosen != null)

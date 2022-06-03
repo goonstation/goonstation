@@ -55,7 +55,6 @@
 			master.traps_laid--
 
 /obj/machinery/wraith/runetrap/madness
-
 	var/amount_to_inject = 8
 
 	Crossed(atom/movable/A)
@@ -76,7 +75,6 @@
 					qdel(src)
 
 /obj/machinery/wraith/runetrap/sleepyness
-
 	var/amount_to_inject = 15
 
 	Crossed(atom/movable/A)
@@ -98,7 +96,6 @@
 					qdel(src)
 
 /obj/machinery/wraith/runetrap/stunning
-
 	Crossed(atom/movable/A)
 		..()
 		if(!src.armed)
@@ -115,7 +112,6 @@
 				qdel(src)
 
 /obj/machinery/wraith/runetrap/emp
-
 	Crossed(atom/movable/A)
 		..()
 		if(!src.armed)
@@ -135,7 +131,6 @@
 				qdel(src)
 
 /obj/machinery/wraith/runetrap/terror
-
 	Crossed(atom/movable/A)
 		..()
 		if(!src.armed)
@@ -152,7 +147,6 @@
 				qdel(src)
 
 /obj/machinery/wraith/runetrap/fire
-
 	Crossed(atom/movable/A)
 		..()
 		if(!src.armed)
@@ -168,7 +162,6 @@
 				qdel(src)
 
 /obj/machinery/wraith/runetrap/teleport
-
 	Crossed(atom/movable/A)
 		..()
 		if(!src.armed)
@@ -198,7 +191,6 @@
 					qdel(src)
 
 /obj/machinery/wraith/runetrap/explosive
-
 	Crossed(atom/movable/A)
 		..()
 		if(!src.armed)
@@ -214,7 +206,6 @@
 					qdel(src)
 
 /obj/machinery/wraith/runetrap/slipping
-
 	Crossed(atom/movable/A)
 		..()
 		if(!src.armed)

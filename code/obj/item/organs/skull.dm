@@ -128,7 +128,6 @@
 			user.put_in_hand_or_drop(C)
 			qdel(W)
 			qdel(src)
-
 		else
 			return ..()
 

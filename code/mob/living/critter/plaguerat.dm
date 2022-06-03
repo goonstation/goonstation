@@ -9,9 +9,6 @@ ABSTRACT_TYPE(/mob/living/critter/plaguerat)
 	density = 1
 	hand_count = 2
 	custom_gib_handler = /proc/gibs
-	add_abilities = list(/datum/targetable/critter/plague_rat/eat_filth,
-						/datum/targetable/critter/plague_rat/rat_bite)
-
 	var/eaten_amount = 0	//How much filth did we eat
 	var/amount_to_grow = 0	//How much is needed to grow
 	var/venom = "rat_spit"	//What are we injecting on bite
@@ -20,12 +17,14 @@ ABSTRACT_TYPE(/mob/living/critter/plaguerat)
 	var/deathsound = "sound/impact_sounds/Generic_Snap_1.ogg"
 	death_text = "%src% falls on its back!"
 	pet_text = list("pets","hugs","snuggles","cuddles")
+	add_abilities = list(/datum/targetable/critter/plague_rat/eat_filth,
+						/datum/targetable/critter/plague_rat/rat_bite)
 
 	var/health_brute = 50
 	var/health_brute_vuln = 0.45
 	var/health_burn = 50
 	var/health_burn_vuln = 0.65
-	var/obj/machinery/wraith_warren/linked_warren = null
+	var/obj/machinery/wraith/rat_den/linked_den = null
 	reagent_capacity = 100
 	var/master = null
 
@@ -148,7 +147,7 @@ ABSTRACT_TYPE(/mob/living/critter/plaguerat)
 			qdel(old_rat)
 
 /mob/living/critter/plaguerat/young
-	name = "Diseased rat"
+	name = "diseased rat"
 	real_name = "diseased rat"
 	desc = "A diseased looking rat."
 	icon_state = "smallRat"
@@ -184,7 +183,7 @@ ABSTRACT_TYPE(/mob/living/critter/plaguerat)
 		HH.can_hold_items = 0
 
 /mob/living/critter/plaguerat/medium
-	name = "Plague-ridden rat"
+	name = "plague-ridden rat"
 	real_name = "plague ridden rat"
 	desc = "A wretched, disgusting rat."
 	icon_state = "mediumRat"
@@ -196,14 +195,13 @@ ABSTRACT_TYPE(/mob/living/critter/plaguerat)
 	health_brute_vuln = 0.9
 	health_burn = 25
 	health_burn_vuln = 1.2
-	add_abilities = list(/datum/targetable/critter/plague_rat/eat_filth,
-						/datum/targetable/critter/plague_rat/rat_bite,
-						/datum/targetable/critter/plague_rat/spawn_warren)
-
 	can_help = 1
 	can_throw = 0
 	can_grab = 0
 	can_disarm = 1
+	add_abilities = list(/datum/targetable/critter/plague_rat/eat_filth,
+						/datum/targetable/critter/plague_rat/rat_bite,
+						/datum/targetable/critter/plague_rat/spawn_rat_den)
 
 	setup_hands()
 		..()
@@ -223,7 +221,7 @@ ABSTRACT_TYPE(/mob/living/critter/plaguerat)
 		HH.can_hold_items = 0
 
 /mob/living/critter/plaguerat/adult
-	name = "Bloated rat mass"
+	name = "bloated rat mass"
 	real_name = "bloated rat mass"
 	desc = "A horrible mass of puss and warts, that once used to look like a rat."
 	icon_state = "giantRat"
@@ -232,16 +230,15 @@ ABSTRACT_TYPE(/mob/living/critter/plaguerat)
 	health_brute_vuln = 0.8
 	health_burn = 40
 	health_burn_vuln = 1.3
-	add_abilities = list(/datum/targetable/critter/plague_rat/eat_filth,
-						/datum/targetable/critter/plague_rat/rat_bite,
-						/datum/targetable/critter/plague_rat/spawn_warren,
-						/datum/targetable/critter/slam/rat,
-						/datum/targetable/wraithAbility/make_plague_rat)
-
 	can_help = 1
 	can_throw = 1
 	can_grab = 1
 	can_disarm = 1
+	add_abilities = list(/datum/targetable/critter/plague_rat/eat_filth,
+						/datum/targetable/critter/plague_rat/rat_bite,
+						/datum/targetable/critter/plague_rat/spawn_rat_den,
+						/datum/targetable/critter/slam/rat,
+						/datum/targetable/wraithAbility/make_plague_rat)
 
 	setup_hands()
 		..()
