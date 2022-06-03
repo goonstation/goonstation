@@ -8307,10 +8307,7 @@
 	dir = 10
 	},
 /obj/decal/cleanable/dirt/jen,
-/obj/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
+/obj/disposalpipe/junction/middle/north,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "cfg" = (
@@ -10760,10 +10757,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/obj/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
+/obj/disposalpipe/junction/left/east,
 /turf/simulated/floor/white,
 /area/station/crewquarters/fuq3)
 "cSv" = (
@@ -13182,6 +13176,9 @@
 /obj/item/storage/wall/clothingrack/clothes4{
 	dir = 4
 	},
+/obj/disposalpipe/segment{
+	dir = 8
+	},
 /turf/simulated/floor/white,
 /area/station/crewquarters/fuq3)
 "dDy" = (
@@ -15000,6 +14997,12 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/hangar/qm)
+"eda" = (
+/obj/disposalpipe/segment{
+	dir = 8
+	},
+/turf/simulated/wall/auto/jen,
+/area/station/crewquarters/fuq3)
 "edf" = (
 /obj/machinery/door/airlock/pyro/medical/alt{
 	dir = 4
@@ -56562,7 +56565,7 @@
 	dir = 1;
 	pixel_y = 16
 	},
-/obj/disposalpipe/junction/right/west,
+/obj/disposalpipe/junction/left/east,
 /turf/simulated/floor/greenwhite/other{
 	dir = 1
 	},
@@ -138489,7 +138492,7 @@ svU
 svU
 svU
 svU
-svU
+eda
 svU
 svU
 svU
