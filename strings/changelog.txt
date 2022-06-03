@@ -1,5 +1,9 @@
 
 (t)fri jun 03 22
+(u)aloe
+(+)Plates now just act like. Plates. You can grab food off of them without a menu, they don't make food all weird and small, and you can still use a utensil to eat off them.
+(+)Click dragging a food item on a plate to you will pick up the plate (in case you filled it with too much food)
+(+)Because I am a developer and I have a pathological need to remove features, plate stacks have been removed for being musty and generally bad.
 (u)CodeJester
 (p)8727
 (e)🆕🎨|feature, sprites

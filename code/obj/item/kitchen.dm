@@ -546,7 +546,6 @@ TRAYS
 	force = 2
 	rand_pos = 0
 	pickup_sfx = "sound/items/pickup_plate.ogg"
-	var/list/ordered_contents = list()
 	var/food_desc = null
 	var/max_food = 2
 	var/list/throw_targets = list()
@@ -558,30 +557,48 @@ TRAYS
 		..()
 		BLOCK_SETUP(BLOCK_BOOK)
 
-	/// Adds a piece of food to the plate
-	proc/add_contents(var/obj/item/food, click_params)
+	/// Attempts to add an item to the plate, if there's space. Returns TRUE if food is successfully added.
+	proc/add_contents(obj/item/food, mob/user, click_params)
+		. = FALSE
+		if (length(src.contents) == max_food)
+			boutput(user, "<span class='alert'>There's no more space on \the [src]!</span>")
+			return
+		if (!food.edible)
+			boutput(user, "<span class='alert'>That's not food, it doesn't belong on \the [src]!</span>")
+			return
+		if(food.w_class > W_CLASS_NORMAL)
+			boutput(user, "You try to think of a way to put [food] on \the [src] but it's not possible! It's too large!")
+			return
+
+		src.place_on(food, user, click_params) // this handles pixel positioning
 		food.set_loc(src)
 		src.vis_contents += food
 		food.appearance_flags |= RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 		food.vis_flags |= VIS_INHERIT_PLANE | VIS_INHERIT_LAYER
-		food.flags |= NO_MOUSEDROP_QOL
+		food.event_handler_flags |= NO_MOUSEDROP_QOL
 		RegisterSignal(food, COMSIG_ATOM_MOUSEDROP, .proc/indirect_pickup)
 		RegisterSignal(food, COMSIG_MOVABLE_MOVED, .proc/remove_contents)
+		RegisterSignal(food, COMSIG_ATTACKHAND, .proc/remove_contents)
+		src.UpdateIcon()
+		boutput(user, "You put [food] on \the [src].")
+		return TRUE
 
-	/// Removes a piece of food from the plate
-	proc/remove_contents(var/obj/item/food)
+	/// Removes a piece of food from the plate.
+	proc/remove_contents(obj/item/food)
 		if (food in src)
 			food.set_loc(get_turf(src))
 		src.vis_contents -= food
 		food.appearance_flags = initial(food.appearance_flags)
 		food.vis_flags = initial(food.vis_flags)
-		food.flags = initial(food.flags)
+		food.event_handler_flags = initial(food.event_handler_flags)
 		UnregisterSignal(food, COMSIG_ATOM_MOUSEDROP)
 		UnregisterSignal(food, COMSIG_MOVABLE_MOVED)
+		UnregisterSignal(food, COMSIG_ATTACKHAND)
+		src.UpdateIcon()
 
 	/// Used to pick the plate up by click dragging some food to you, in case the plate is covered by big foods
-	proc/indirect_pickup(mob/user, atom/over_object)
-		if (user == over_object && GET_DIST(user, src) <= 1)
+	proc/indirect_pickup(var/food, mob/user, atom/over_object)
+		if (user == over_object && in_interact_range(src, user) && can_act(user))
 			src.Attackhand(user)
 
 	/// Called when you throw or smash the plate, throwing the contents everywhere
@@ -618,100 +635,21 @@ TRAYS
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
-		if(ordered_contents.len > 0)
-			src.shit_goes_everywhere()
+		src.shit_goes_everywhere()
 
-	attackby(obj/item/W, mob/user)
-		if(istype(W, /obj/item/plate) && !istype(W, /obj/item/plate/tray) && W.type == src.type)
-			if(length(src.contents) || length(W.contents))
-				user.visible_message("<b>[user]</b> tries to stack plates but there's food on them.","You try to stack plates but there's food on them.")
-				return
-			qdel(W)
-			src.set_loc(user)
-			user.put_in_hand_or_drop(new /obj/item/platestack)
-			user.visible_message("<b>[user]</b> adds a plate to the stack.","You add a plate to the stack.")
-			qdel(src)
-			return
-		else if(istype(W, /obj/item/platestack))
-			var/obj/item/platestack/stack = W
-			if(stack.platenum >= stack.platemax)
-				boutput(user,"<span class='alert'><b>The plates are piled too high!</b></span>")
-				return
-			src.set_loc(user)
-			stack.platenum++
-			stack.UpdateIcon(user)
-			user.visible_message("<b>[user]</b> adds a plate to the stack.","You add a plate to the stack.")
-			qdel(src)
-			return
-		if(!W.edible)
-			if(istype(W, /obj/item/kitchen/utensil/fork) || istype(W, /obj/item/kitchen/utensil/spoon))
-				var/obj/item/reagent_containers/food/sel_food = null
-				if(length(ordered_contents) > 1)
-					sel_food = input(user, "Which food do you want to eat?", "[src] Contents") as null|anything in ordered_contents
-				else if(length(ordered_contents) == 1)
-					sel_food = ordered_contents[1]
-				else
-					user.visible_message("<b>[user]</b> stares glumly at the empty plate.","You stare glumly at the empty plate.")
-				if(!sel_food)
-					return
-				sel_food.Eat(user,user)
-				user.visible_message("[user] takes a bite from \the [sel_food].")
-				if(sel_food in src.contents)
-					return
-				src.remove_contents(sel_food)
-				src.UpdateIcon()
-				return
-			boutput(user, "[W] isn't food, That doesn't belong on \the [src]!")
-			return
-		if(ordered_contents.len == max_food)
-			boutput(user, "That won't fit, \the [src] is too full!")
-			return
-		if(W.w_class > W_CLASS_NORMAL)
-			boutput(user, "You try to think of a way to put [W] on \the [src] but it's not possible! It's too large!")
-			return
-		user.drop_item()
-		W.set_loc(src)
-		src.add_contents(W)
-		src.ClearAllOverlays()
-		src.UpdateIcon()
-		boutput(user, "You put [W] on \the [src]")
-
-	mouse_drop(atom/over_object, src_location, over_location)
-		if(over_object == usr && BOUNDS_DIST(src, usr) == 0 && isliving(usr) && !usr.stat && !usr.restrained())
-			var/mob/M = over_object
-			if(ordered_contents.len == 0)
-				boutput(M, "There's no food to take off of \the [src]!")
-				return
-			var/obj/item/food_sel = null
-			if(length(ordered_contents) == 1)
-				food_sel = ordered_contents[1]
-			else
-				food_sel = input(M, "Which food do you want to take off of \the [src]?", "[src]'s contents") as null|anything in ordered_contents
-			if(!food_sel)
-				return
-
-			M.put_in_hand_or_drop(food_sel)
-			src.remove_contents(food_sel)
-			src.UpdateIcon()
-			boutput(M, "You take \the [food_sel] off of \the [src].")
-		else
+	attackby(obj/item/W, mob/user, params)
+		if (!src.add_contents(W, user, params))
 			..()
 
-	attack_self(mob/user as mob)
-		if(ordered_contents.len == 0)
-			boutput(user, "There's no food to take off of \the [src]!")
-			return
-		var/obj/item/food_sel = null
-		if(length(ordered_contents) == 1)
-			food_sel = ordered_contents[1]
-		else
-			food_sel = input(user, "Which food do you want to take off of \the [src]?", "[src]'s contents") as null|anything in ordered_contents
-		if(!food_sel)
-			return
-		user.put_in_hand_or_drop(food_sel)
-		src.remove_contents(food_sel)
-		src.UpdateIcon()
-		boutput(user, "You take \the [food_sel] off of \the [src].")
+	MouseDrop_T(atom/movable/a, mob/user)
+		. = ..()
+		//jesus christ
+		if (isitem(a) && in_interact_range(src, user) && in_interact_range(a, user) && can_reach(user, src) && can_reach(user, a))
+			src.add_contents(a, user)
+
+	attack_self(mob/user) // in case you only have one arm or you stacked too many MONSTERSsomething just dump a random piece of food
+		. = ..()
+		src.remove_contents(pick(src.contents))
 
 	attack(mob/M, mob/user)
 		if(user.a_intent == INTENT_HARM)
@@ -720,8 +658,7 @@ TRAYS
 			else
 				M.visible_message("<span class='alert'><B>[user] smashes [src] over [M]'s head!</B></span>")
 				logTheThing("combat", user, M, "smashes [src] over [constructTarget(M,"combat")]'s head! ")
-			if(length(ordered_contents))
-				src.shit_goes_everywhere()
+			src.shit_goes_everywhere()
 
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
@@ -756,39 +693,14 @@ TRAYS
 		src.ClearAllOverlays()
 		src.UpdateIcon()
 
-	dropped(mob/user as mob) //shit_goes_everwhere doesnt work
+	dropped(mob/user)
 		..()
 		if(user.lying)
 			user.visible_message("<span class='alert'>[user] drops \the [src]!</span>")
-			if(ordered_contents.len == 0)
-				return
 			src.shit_goes_everywhere()
-		if(user?.bioHolder.HasEffect("clumsy") && prob(25))
+		else if(user?.bioHolder.HasEffect("clumsy") && prob(25))
 			user.visible_message("<span class='alert'>[user] clumsily drops \the [src]!</span>")
-			if(ordered_contents.len == 0)
-				return
 			src.shit_goes_everywhere()
-
-	MouseDrop_T(atom/movable/a as mob|obj, mob/user as mob)
-		if(istype(a, /obj/item/plate) && (!istype(a, /obj/item/plate/tray)))
-			var/obj/item/platestack/p = new /obj/item/platestack
-			var/gate = 0
-			for (var/obj/item/plate/P in range(1, user))
-				if(P == src)
-					continue
-				if(P in user.contents)
-					continue
-				gate = 1
-			if(gate == 0)
-				return
-			var/plateloc = get_turf(src)
-			p.set_loc(plateloc)
-			if(src in user.contents)
-				user.u_equip(src)
-			src.set_loc(p)
-			p.MouseDropRelay(src,user)
-		else
-			return ..()
 
 /obj/item/plate/tray //this is the big boy!
 	name = "serving tray"
@@ -802,9 +714,9 @@ TRAYS
 	throw_range = 4
 	force = 10
 	w_class = W_CLASS_BULKY //no trays of loaves in a backpack for you
-	max_food = 30
+	max_food = 30 // will look like an absolute shitshow but sure
 	throw_dist = 5
-	two_handed = 1 //decomment this line when porting over please
+	two_handed = TRUE
 	var/health_desc = null
 	var/y_counter = 0
 	var/y_mod = 0
@@ -816,77 +728,39 @@ TRAYS
 		BLOCK_SETUP(BLOCK_ALL)
 
 	proc/update_inhand_icon()
-		var/weighted_num = round(ordered_contents.len / 5) //6 inhand sprites, 30 possible foods on the tray
-		if(ordered_contents.len == 0)
+		var/weighted_num = round(length(contents) / 5) //6 inhand sprites, 30 possible foods on the tray
+		if(!length(src.contents))
 			src.item_state = "tray"
 			return
 
 		switch (weighted_num)
-			if(1)
+			if (0)
+				src.item_state = "tray_1"
+			if (1)
 				src.item_state = "tray_2"
-			if(2)
+			if (2)
 				src.item_state = "tray_3"
-			if(3)
+			if (3)
 				src.item_state = "tray_4"
-			if(4)
+			if (4)
 				src.item_state = "tray_5"
-			if(5)
+			if (5)
 				src.item_state = "tray_6"
-			else  //overflow from 25 to 30, underflow from 0 to 5
-				if(ordered_contents.len < 5)
-					src.item_state = "tray_1"
-					return
-				src.item_state = "tray_6"
-
-	update_icon() //this is what builds the overlays, it looks at the ordered list of food in the tray and does magic
-
-		for (var/i = 1, i <= ordered_contents.len, i++)
-			var/obj/item/F = ordered_contents[i]
-			var/image/I = SafeGetOverlayImage("food_[i]", F.icon, F.icon_state)
-			I.transform *= 0.75
-			if(i % 2) //i feel clever for this haha
-				I.pixel_x = -8
 			else
-				I.pixel_x = 8
-			y_counter++
-			if(y_counter == 3)
-				y_mod++
-				y_counter = 1
-			I.pixel_y = y_mod * 3 //food layers are 3px above eachother
-			I.layer = src.layer + 0.1
-			src.UpdateOverlays(I, "food_[i]", 0, 1)
-		for (var/i = ordered_contents.len + 1, i <= src.overlays.len, i++) //this is to clear up any funky ghost overlays
-			src.ClearSpecificOverlays("food_[i]")
-		y_counter = 0
-		y_mod = 0
-		src.update_inhand_icon() //update inhand sprite to match
-		return
+				src.item_state = "tray_6"
 
-	get_desc(dist)
-		if(dist > 5)
-			return
+	update_icon()
+		..()
+		src.update_inhand_icon()
+
+	get_desc()
+		. = ..()
 		if((5 >= tray_health) && (tray_health > 3)) //im using hardcoded values im so garbage
-			health_desc = "\The [src] seems nice and sturdy!"
+			. += "\The [src] seems nice and sturdy!"
 		else if((3 >= tray_health) && (tray_health > 1)) //im a trash human
-			health_desc = "\The [src] is getting pretty warped and flimsy."
+			. += "\The [src] is getting pretty warped and flimsy."
 		else if((1 >= tray_health) && (tray_health >=0))  //im a bad coder
-			health_desc = "\The [src] is about to break, be careful!"
-		if(ordered_contents.len == 0)
-			food_desc = "\The [src] has no food on it!"
-		else
-			food_desc = "\The [src] has "
-			for (var/i = 1, i <= ordered_contents.len, i++)
-				var/obj/item/F = ordered_contents[i]
-				if(i == ordered_contents.len && i == 1)
-					food_desc += "\an [F] on it."
-					return "[health_desc] [food_desc]"
-				if(i == ordered_contents.len)
-					food_desc += "and \an [F] on it."
-				else //just a normal food then ok
-					food_desc += "\an [F], "
-		if(length("[health_desc] [food_desc]") > MAX_MESSAGE_LEN)
-			return "<span style=\"color:orange\">There's a positively <i>indescribable</i> amount of food on \the [src]!</span>"
-		return "[health_desc] [food_desc]" //heres yr desc you *bastard*
+			. += "\The [src] is about to break, be careful!"
 
 	unique_attack_garbage_fuck(mob/M as mob, mob/user as mob)
 		M.TakeDamageAccountArmor("head", src.force, 0, 0, DAMAGE_BLUNT)
@@ -901,12 +775,6 @@ TRAYS
 			qdel(src)
 			return
 		tray_health--
-
-		src.visible_message("\The [src] looks less sturdy now.")
-
-	MouseDrop_T(atom/movable/a as mob|obj, mob/user as mob)
-		if(!istype(a, /obj/item/plate)) //plate stacking is banned for trays
-			return ..()
 
 //sushiiiiiii
 /obj/item/kitchen/sushi_roller
@@ -1082,161 +950,6 @@ TRAYS
 			var/fish = pick(/obj/item/fish/salmon,/obj/item/fish/carp,/obj/item/fish/bass)
 			new fish(get_turf(src))
 			qdel(src)
-
-
-/obj/item/platestack
-	name = "Stack of Plates"
-	desc = "It's a stack of plates"
-	icon = 'icons/obj/foodNdrink/platestack.dmi'
-	inhand_image_icon = 'icons/obj/foodNdrink/platestackinhand.dmi'
-	icon_state = "platestack1"
-	item_state = "platestack1"
-	w_class = W_CLASS_BULKY // why the fuck would you put a stack of plates in your backpack, also prevents shenanigans
-	var/platenum = 1 // used for targeting icon_states
-
-	var/platemax = 8
-
-
-	update_icon(mob/user as mob)
-		src.icon_state = "platestack[src.platenum]"
-		src.item_state = "platestack[src.platenum]"
-		user.update_inhands()
-
-	attackby(obj/item/weapon, mob/user)
-		if(istype(weapon,/obj/item/plate) && !(istype(weapon,/obj/item/plate/tray)))
-			var/obj/item/plate/p = weapon
-			if(!p.ordered_contents.len)
-				if(!(platenum >= platemax))
-					src.platenum++
-					src.UpdateIcon(user)
-					user.u_equip(p)
-					qdel(p)
-				else
-					boutput(user,"<span class='alert'><b>The plates are piled too high!</b></span>")
-					return
-			else
-				boutput(user,"<span class='alert'><b>You can't stack a plate with food on it, silly!</b></span>")
-		else if(istype(weapon,/obj/item/platestack))
-			var/obj/item/platestack/p = weapon
-			var/keeptrigger = 0
-			if(((src.platenum + (p.platenum+1)) > platemax) && (src.platenum != platemax))
-				keeptrigger = 1
-				p.platenum = (p.platenum - (platemax - src.platenum))
-				p.UpdateIcon(user)
-				src.platenum = platemax
-				src.UpdateIcon(user)
-			else if(src.platenum == platemax)
-				boutput(user,"<span class='alert'><b>The plates are piled too high!</b></span>")
-				return
-			else
-				src.platenum += (p.platenum+1)
-				src.UpdateIcon(user)
-			if(keeptrigger != 1)
-				user.u_equip(p)
-				qdel(p)
-
-	attack_hand(mob/user)
-		if(src in user.contents)
-			platenum--
-			src.UpdateIcon(user)
-			user.put_in_hand_or_drop(new /obj/item/plate)
-			if(platenum <= 0)
-				user.u_equip(src)
-				user.put_in_hand_or_drop(new /obj/item/plate)
-				qdel(src)
-		else
-			..()
-
-	throw_impact(atom/A, datum/thrown_thing/thr)
-		..()
-		var/list/throw_targets = list()
-		if(platenum == 0)
-			return
-		for(var/i=1,i<=platenum,i++)
-			throw_targets += get_offset_target_turf(src.loc, rand(3)-rand(3), rand(3)-rand(3))
-		platenum++
-		while(platenum > 0)
-			platenum--
-			var/obj/item/plate/p = new /obj/item/plate
-			p.set_loc(get_turf(src))
-			p.throw_at(pick(throw_targets), 5, 1)
-			p.pixel_y = rand(-8,8)
-			p.pixel_x = rand(-8,8)
-		qdel(src)
-
-	attack_self(mob/user as mob)
-		if(src.platenum > 1)
-			src.platenum--
-			src.UpdateIcon(user)
-			user.put_in_hand_or_drop(new /obj/item/plate)
-		else if(src.platenum <= 1)
-			user.u_equip(src)
-			user.put_in_hand_or_drop(new /obj/item/plate)
-			user.put_in_hand_or_drop(new /obj/item/plate)
-			qdel(src)
-
-	MouseDrop_T(atom/movable/a as mob|obj, mob/user as mob)
-		if(istype(a, /obj/item/plate))
-			if(src.platenum >= platemax)
-				boutput(user,"<span class='alert'><b>The plates are piled too high!</b></span>")
-				return
-			SPAWN(0.2 SECONDS)
-				var/message = 1
-				for (var/obj/item/plate/p in range(1, user))
-					if(p == src)
-						continue
-					if(istype(p,/obj/item/plate/tray))
-						continue
-					if(p in user.contents)
-						continue
-					if(message == 1)
-						user.visible_message("<b>[user]</b> stacks some plates.",\
-						"You stack some plates.")
-						message = 0
-					qdel(p)
-					src.platenum++
-					src.UpdateIcon(user)
-					if(src.platenum == platemax)
-						break
-					else
-						sleep(0.2 SECONDS)
-				return
-		else
-			return ..()
-
-	proc/MouseDropRelay(var/obj/item/a,mob/user as mob)
-		if(src.platenum >= platemax)
-			boutput(user,"<span class='alert'><b>The plates are piled too high!</b></span>")
-			return
-		SPAWN(0.2 SECONDS)
-			var/message = 1
-			var/first = 1
-			for (var/obj/item/plate/p in range(1, user))
-				if(p == src)
-					continue
-				if(istype(p,/obj/item/plate/tray))
-					continue
-				if(p in user.contents)
-					continue
-				if(p.ordered_contents.len)
-					continue
-				if(message == 1)
-					user.visible_message("<b>[user]</b> stacks some plates.",\
-					"You stack some plates.")
-					message = 0
-				qdel(p)
-				if(src.contents.len)
-					src.contents -= a
-				if(first)
-					first = 0
-					continue
-				src.platenum++
-				src.UpdateIcon()
-				if(src.platenum == platemax)
-					break
-				else
-					sleep(0.2 SECONDS)
-			return
 
 /obj/item/tongs
 	name = "tongs"
