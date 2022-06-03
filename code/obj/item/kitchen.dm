@@ -644,7 +644,7 @@ TRAYS
 	MouseDrop_T(atom/movable/a, mob/user)
 		. = ..()
 		//jesus christ
-		if (isitem(a) && in_interact_range(src, user) && in_interact_range(a, user) && can_reach(user, src) && can_reach(user, a))
+		if (isitem(a) && can_reach(user, src) && can_reach(user, a))
 			src.add_contents(a, user)
 
 	attack_self(mob/user) // in case you only have one arm or you stacked too many MONSTERSsomething just dump a random piece of food
