@@ -80,7 +80,7 @@
 	..()
 	setMaterial(getMaterial("gnesis"))
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
-	src.AddComponent(/datum/component/flock_protection, report_unarmed=FALSE)
+	src.AddComponent(/datum/component/flock_protection, report_unarmed=FALSE, report_attack=FALSE)
 
 /obj/stool/chair/comfy/flock/special_desc(dist, mob/user)
 	if (!isflockmob(user))
@@ -313,6 +313,9 @@
 	mat_appearances_to_ignore = list("steel","gnesis")
 	mat_changename = FALSE
 	mat_changedesc = FALSE
+	can_be_snipped = FALSE
+	can_be_unscrewed = FALSE
+	can_build_window = FALSE
 
 	update_icon(special_icon_state, override_parent = TRUE) //fix for perspective grilles fucking these up
 		if (ruined)
@@ -361,45 +364,6 @@
 	if (user.a_intent != INTENT_HARM)
 		return
 	..()
-
-/obj/grille/flock/attackby(obj/item/W, mob/user) //override totally to prevent wirecutter snipping etc
-	//copy & paste from grille parent, removing the bits we don't want (window construction, snipping)
-	if (ispulsingtool(W) || istype(W, /obj/item/device/t_scanner))
-		var/net = get_connection()
-		if(!net)
-			boutput(user, "<span class='notice'>No electrical current detected.</span>")
-		else
-			boutput(user, "<span class='alert'>CAUTION: Dangerous electrical current detected.</span>")
-		return
-
-	if (istype(W, /obj/item/gun))
-		var/obj/item/gun/G = W
-		G.shoot_point_blank(src, user)
-		return
-
-	// electrocution check
-	var/OSHA_is_crying = 1
-	var/dmg_mod = 0
-	if ((src.material && src.material.hasProperty("electrical") && src.material.getProperty("electrical") < 30))
-		OSHA_is_crying = 0
-
-	if ((src.material && src.material.hasProperty("electrical") && src.material.getProperty("electrical") > 30))
-		dmg_mod = 60 - src.material.getProperty("electrical")
-
-	if (OSHA_is_crying && (BOUNDS_DIST(src, user) == 0) && shock(user, 100 - dmg_mod))
-		return
-
-	// Things that will electrocute you
-	user.lastattacked = src
-	attack_particle(user,src)
-	src.visible_message("<span class='alert'><b>[usr]</b> attacks [src] with [W].</span>")
-	playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 80, 1)
-	switch(W.hit_type)
-		if(DAMAGE_BURN)
-			damage_heat(W.force)
-		else
-			damage_blunt(W.force * 0.5)
-	return
 
 /obj/grille/flock/bullet_act(obj/projectile/P)
 	if (istype(P.proj_data, /datum/projectile/energy_bolt/flockdrone))
