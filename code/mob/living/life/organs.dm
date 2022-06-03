@@ -46,14 +46,13 @@
 	oH.handle_organs(mult)
 
 
-	if (!oH.skull) // look okay it's close enough to an organ and there's no other place for it right now shut up
-		if (!src.nodamage && oH.head)
-			src.death()
-			src.visible_message("<span class='alert'><b>[src]</b>'s head collapses into a useless pile of skin mush with no skull to keep it in its proper shape!</span>",\
-			"<span class='alert'>Your head collapses into a useless pile of skin mush with no skull to keep it in its proper shape!</span>")
+	if (!oH.skull && oH.head && !isskeleton(src) && !src.nodamage) // skeletons can also survive without their skull because reasons
+		src.death()
+		src.visible_message("<span class='alert'><b>[src]</b>'s head collapses into a useless pile of skin mush with no skull to keep it in its proper shape!</span>",\
+		"<span class='alert'>Your head collapses into a useless pile of skin mush with no skull to keep it in its proper shape!</span>")
 
 	//Wire note: Fix for Cannot read null.loc
-	else if (oH.skull.loc != src)
+	else if (oH.skull?.loc != src)
 		oH.skull = null
 
 	if (!oH.brain)

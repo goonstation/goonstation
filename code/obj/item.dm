@@ -827,7 +827,7 @@
 			//S.hud.remove_item(src)
 			S.hud.objects -= src // prevents invisible object from failed transfer (item doesn't fit in pockets from backpack for example)
 
-/obj/item/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/item/attackby(obj/item/W, mob/user, params)
 	if(src.material)
 		src.material.triggerTemp(src ,1500)
 	if (W.firesource)
@@ -1107,7 +1107,7 @@
 	if (usr?.bioHolder?.HasEffect("clumsy") && prob(50)) t = "funny-looking"
 	return "It is \an [t] item."
 
-/obj/item/attack_hand(mob/user as mob)
+/obj/item/attack_hand(mob/user)
 	var/checkloc = src.loc
 	while(checkloc && !istype(checkloc,/turf))
 		if (isliving(checkloc) && checkloc != user)
@@ -1178,7 +1178,7 @@
 
 
 //MBC : I had to move some ItemSpecial number changes here to avoid race conditions. is_special flag passed as an arg; If true we take a look at src.special
-/obj/item/proc/attack(mob/M as mob, mob/user as mob, def_zone, is_special = 0)
+/obj/item/proc/attack(mob/M, mob/user, def_zone, is_special = 0)
 	if (!M || !user) // not sure if this is the right thing...
 		return
 

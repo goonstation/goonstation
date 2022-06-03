@@ -25,7 +25,7 @@
 		if(prob(15))
 			spiderflail(src.target)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.alive)
 			if (user.a_intent == INTENT_HARM)
 				return ..()
@@ -464,7 +464,7 @@
 		..()
 		src.parent = parent
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.alive && (user.a_intent != INTENT_HARM))
 			src.visible_message("<span class='combat'><b>[user]</b> [src.pet_text] [src]!</span>")
 			return

@@ -257,7 +257,7 @@
 			user.suiciding = 0
 	return 1
 
-/obj/item/sword/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/item/sword/attackby(obj/item/W, mob/user, params)
 	if (!use_glowstick)
 		return ..()
 
@@ -334,7 +334,7 @@
 	else
 		return ..()
 
-/obj/item/sword/attack_hand(mob/user as mob)
+/obj/item/sword/attack_hand(mob/user)
 	if (src.open && src.loc == user)
 		if (src.loaded_glowstick && src.use_glowstick)
 			user.put_in_hand(loaded_glowstick)
@@ -496,7 +496,7 @@
 		take_bleeding_damage(A, null, 5, DAMAGE_CUT)
 		playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, 1)
 
-/obj/item/dagger/attack(target as mob, mob/user as mob)
+/obj/item/dagger/attack(target, mob/user)
 	playsound(target, "sound/impact_sounds/Flesh_Stab_1.ogg", 60, 1)
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
@@ -510,7 +510,7 @@
 	throw_range = 10
 	throwforce = 10.0
 
-/obj/item/dagger/smile/attack(mob/living/target as mob, mob/user as mob)
+/obj/item/dagger/smile/attack(mob/living/target, mob/user)
 	if(prob(10))
 		var/say = pick("Why won't you smile?","Smile!","Why aren't you smiling?","Why is nobody smiling?","Smile like you mean it!","That is not a smile!","Smile, [target.name]!","I will make you smile, [target.name].","[target.name] didn't smile!")
 		user.say(say)
@@ -724,7 +724,7 @@
 	else
 		..()
 
-/obj/item/knife/butcher/attack(target as mob, mob/user as mob)
+/obj/item/knife/butcher/attack(target, mob/user)
 	if (!istype(src,/obj/item/knife/butcher/hunterspear) && ishuman(target) && ishuman(user))
 		if (scalpel_surgery(target,user))
 			return
@@ -820,7 +820,7 @@
 
 
 // vvv what the heck why?? vvv
-//obj/item/axe/attack(target as mob, mob/user as mob)
+//obj/item/axe/attack(target, mob/user)
 //	..()
 
 /obj/item/axe/attack_self(mob/user as mob)
@@ -913,7 +913,7 @@
 					set_values()
 		..()
 
-	attack_hand(var/mob/user as mob) // todo: maybe make the base/twohand delays into vars. maybe.
+	attack_hand(var/mob/user) // todo: maybe make the base/twohand delays into vars. maybe.
 		src.two_handed = 0
 		set_values()
 		return ..()
@@ -974,7 +974,7 @@
 		src.setItemSpecial(/datum/item_special/swipe)
 		BLOCK_SETUP(BLOCK_ROD)
 
-	attack(var/atom/A as mob|obj|turf, var/mob/user as mob)
+	attack(var/atom/A, var/mob/user)
 		if (prob(50))
 			hit_type = DAMAGE_BLUNT
 			hitsound = "sound/impact_sounds/Generic_Hit_1.ogg"
@@ -1046,7 +1046,7 @@
 		src.setItemSpecial(/datum/item_special/katana_dash)
 		BLOCK_SETUP(BLOCK_SWORD)
 
-/obj/item/katana/attack(mob/target as mob, mob/user as mob, def_zone, is_special = 0)
+/obj/item/katana/attack(mob/target, mob/user, def_zone, is_special = 0)
 	if(!ishuman(target)) //only humans can currently be dismembered
 		return ..()
 	if (target.nodamage)
@@ -1250,7 +1250,7 @@
 		K.set_loc(src)
 		BLOCK_SETUP(BLOCK_ROD)
 
-	attack_hand(mob/living/carbon/human/user as mob)
+	attack_hand(mob/living/carbon/human/user)
 		if(src.sword_inside && (user.r_hand == src || user.l_hand == src || user.belt == src))
 			draw_sword(user)
 		else
@@ -1262,7 +1262,7 @@
 		else
 			return ..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!istype(W, sword_path))
 			boutput(user, "<span class='alert'>The [W] can't fit into [src].</span>")
 			return
@@ -1306,7 +1306,7 @@
 	ih_sheath_state = "sheath_reverse0"
 	sword_path = /obj/item/katana/reverse
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (W.type == /obj/item/katana)
 			boutput(user, "<span class='alert'>The [W] can't fit into [src].</span>")
 			return
@@ -1325,7 +1325,7 @@
 	sword_path = /obj/item/katana/captain
 	tooltip_flags = REBUILD_USER
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!istype(W, /obj/item/katana/captain))
 			boutput(user, "<span class='alert'>The [W] can't fit into [src].</span>")
 			return
@@ -1369,7 +1369,7 @@
 	ih_sheath_state = "scabbard-syndie0"
 	sword_path = /obj/item/katana/nukeop
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!istype(W, sword_path))
 			boutput(user, "<span class='alert'>The [W] can't fit into [src].</span>")
 			return
@@ -1410,7 +1410,7 @@
 		BLOCK_SETUP(BLOCK_SWORD)
 
 
-/obj/item/bloodthirsty_blade/attack(target as mob, mob/user as mob)
+/obj/item/bloodthirsty_blade/attack(target, mob/user)
 	playsound(target, "sound/impact_sounds/Blade_Small_Bloody.ogg", 60, 1)
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
@@ -1451,7 +1451,7 @@ obj/item/fragile_sword
 		..()
 		BLOCK_SETUP(BLOCK_SWORD)
 
-	attack(target as mob, mob/user as mob)
+	attack(target, mob/user)
 		playsound(target, "sound/impact_sounds/Blade_Small_Bloody.ogg", 60, 1)
 		if(iscarbon(target))
 			var/mob/living/carbon/C = target
@@ -1462,7 +1462,7 @@ obj/item/fragile_sword
 					take_bleeding_damage(C, user, 5, DAMAGE_STAB)
 		..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/whetstone))
 			if(force <= maximum_force)
 				force += 5
@@ -1543,7 +1543,7 @@ obj/item/whetstone
 	else if (istype(stab))
 		stab.stab_color = src.stab_color
 
-/obj/item/heavy_power_sword/attack(mob/M as mob, mob/user as mob, def_zone)
+/obj/item/heavy_power_sword/attack(mob/M, mob/user, def_zone)
 
 	var/turf/t = get_turf(user) // no farming in the safety of the Cairngorm
 	if (t.loc:sanctuary)
@@ -1640,7 +1640,7 @@ obj/item/whetstone
 		. = ..()
 		STOP_TRACKING
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (user.mind)
 			if (isslasher(user) || check_target_immunity(user))
 				if (user.mind.key != src.slasher_key && !check_target_immunity(user))

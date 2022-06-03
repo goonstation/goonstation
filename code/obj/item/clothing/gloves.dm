@@ -68,7 +68,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		if (length(newID))
 			return newID
 
-	attack(var/atom/target as mob, var/atom/challenger as mob)
+	attack(var/atom/target, var/atom/challenger)
 		// you, sir, have offended my honour!
 		if (!isliving(target))
 			return ..()
@@ -218,6 +218,10 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	item_state = "finger-"
 	hide_prints = 0
 
+	setupProperties()
+		..()
+		setProperty("conductivity", 1)
+
 /obj/item/clothing/gloves/black
 	desc = "These gloves are fire-resistant."
 	name = "Black Gloves"
@@ -270,7 +274,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	scramble_prints = 1
 	setupProperties()
 		..()
-		setProperty("conductivity", 0.3)
+		setProperty("conductivity", 0.7)
 
 /obj/item/clothing/gloves/latex/blue
 	color = "#91d5e9"
@@ -431,7 +435,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	setupProperties()
 		..()
 		setProperty("coldprot", 7)
-		setProperty("conductivity", 0.3)
+		setProperty("conductivity", 0.4)
 
 	afterattack(atom/target, mob/user, reach, params)
 		..()
@@ -632,6 +636,10 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	item_state = "water_wings"
 	hide_prints = 0
 
+	setupProperties()
+		..()
+		setProperty("conductivity", 1)
+
 
 //Fun isn't something one considers when coding in ss13, but this did put a smile on my face
 /obj/item/clothing/gloves/brass_gauntlet
@@ -645,6 +653,10 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	cant_other_remove = 1
 	abilities = list()
 	ability_buttons = list()
+
+	setupProperties()
+		..()
+		setProperty("conductivity", 1) //it is made of pure metal afterall
 
 	attackby(obj/item/power_stones/W, mob/user)
 		if (istype(W, /obj/item/power_stones))

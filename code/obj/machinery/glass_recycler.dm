@@ -57,7 +57,7 @@
 		src.get_products()
 		UnsubscribeProcess()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W.loc, /obj/item/storage))
 			var/obj/item/storage/storage = W.loc
 			storage.hud.remove_object(W)
@@ -104,11 +104,6 @@
 		else if (istype(W, /obj/item/plate))
 			success = TRUE
 			glass_amt += PLATE_COST
-		else if (istype(W, /obj/item/platestack))
-			success = TRUE
-			var/obj/item/platestack/PS = W
-			var/plateCount = PS.platenum + 1
-			glass_amt += plateCount * PLATE_COST
 		else if (istype(W, /obj/item/storage/box))
 			var/obj/item/storage/S = W
 			for (var/obj/item/I in S.get_contents())

@@ -12,7 +12,7 @@
 					src.my_ship = A
 					return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		var/link_html = "<br>"
 		var/found = 0
 

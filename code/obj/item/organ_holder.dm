@@ -466,14 +466,17 @@
 						H.u_equip(W)
 						W.set_loc(myHead)
 						myHead.wear_mask = W
+					if (isskeleton(src.donor) && myHead.head_type & HEAD_SKELETON) // must be skeleton AND have skeleton head
+						src.donor.set_eye(myHead)
+						var/datum/mutantrace/skeleton/S = H.mutantrace
+						S.set_head(myHead)
+
 				myHead.set_loc(location)
 				myHead.update_head_image()
 				myHead.on_removal()
 				myHead.holder = null
 				src.head = null
 				src.organ_list["head"] = null
-				src.donor.client?.eye = myHead
-				src.donor.eye = myHead
 				src.donor.update_body()
 				src.donor.UpdateDamageIcon()
 				src.donor.update_clothing()
@@ -768,8 +771,11 @@
 					if (force)
 						qdel(src.head)
 					else
-						return 0
+						return FALSE
 				var/obj/item/organ/head/newHead = I
+				if (src.brain && newHead.brain)
+					boutput(usr, "<span class='alert'>[src.donor] already has a brain! You should remove the brain from [newHead] first before transplanting it.</span>")
+					return FALSE
 				newHead.op_stage = op_stage
 				src.head = newHead
 				newHead.set_loc(src.donor)
@@ -820,7 +826,7 @@
 						H.wear_mask = newHead.wear_mask
 						newHead.wear_mask.set_loc(H)
 						newHead.wear_mask = null
-
+					H.set_eye(null)
 				src.donor.update_body()
 				src.donor.UpdateDamageIcon()
 				src.donor.update_clothing()
@@ -853,9 +859,8 @@
 				if (!src.skull)
 					return 0
 				var/obj/item/organ/brain/newBrain = I
-				if (src.donor.mind)
-					boutput(src.donor, "<span class='alert'>You feel yourself forcibly ejected from your corporeal form!</span>")
-					src.donor.ghostize()
+				boutput(src.donor, "<span class='alert'>You feel yourself forcibly ejected from your corporeal form!</span>")
+				src.donor.ghostize()
 				if (newBrain.owner)
 					newBrain.owner.transfer_to(src.donor)
 				newBrain.op_stage = op_stage

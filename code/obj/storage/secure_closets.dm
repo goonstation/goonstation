@@ -25,7 +25,7 @@
 	get_desc(dist)
 		. += "[reinforced ? "It's reinforced, only stronger firearms and explosives could break into this. " : ""] [bolted ? "It's bolted to the floor." : ""]"
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		if (src.open || !src.locked)
 			..()
 		else if (!I)

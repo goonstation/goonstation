@@ -617,7 +617,8 @@
 	else
 		src.visible_message("<span style='font-weight:bold;color:#f00;font-size:120%;'>[src] points \the [G] at [target]!</span>")
 
-	make_point(get_turf(target), pixel_x=target.pixel_x, pixel_y=target.pixel_y, color=src.bioHolder.mobAppearance.customization_first_color)
+	if (!ON_COOLDOWN(src, "point", 1 SECOND))
+		make_point(get_turf(target), pixel_x=target.pixel_x, pixel_y=target.pixel_y, color=src.bioHolder.mobAppearance.customization_first_color, pointer=src)
 
 
 /mob/living/proc/set_burning(var/new_value)
@@ -1448,7 +1449,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	animate_rest(src, !lying)
 
 
-/mob/living/attack_hand(mob/living/M as mob, params, location, control)
+/mob/living/attack_hand(mob/living/M, params, location, control)
 	if (!M || !src) //Apparently M could be a meatcube and this causes HELLA runtimes.
 		return
 
@@ -1641,8 +1642,8 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	if (src.max_health > 0)
 		health_deficiency = ((src.max_health-src.health)/src.max_health)*100 + health_deficiency_adjustment // cogwerks // let's treat this like pain
 	else
-		health_deficiency = (src.max_health-src.health) + health_deficiency_adjustment 
-		
+		health_deficiency = (src.max_health-src.health) + health_deficiency_adjustment
+
 
 	if (health_deficiency >= 30)
 		. += (health_deficiency / 35)

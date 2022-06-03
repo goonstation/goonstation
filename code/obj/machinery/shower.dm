@@ -25,7 +25,7 @@
 	attack_ai(mob/user as mob)
 		. = attack_hand(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.on = !src.on
 		if (src.on)
 			SubscribeToProcess()

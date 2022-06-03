@@ -212,6 +212,8 @@ TYPEINFO(/datum/mutantrace)
 	/// this is list("Bottom Detail", "Mid Detail", "Top Detail").
 	var/list/color_channel_names = list()
 
+	var/self_click_fluff //used when clicking self on help intent
+
 	proc/say_filter(var/message)
 		return message
 
@@ -827,6 +829,7 @@ TYPEINFO(/datum/mutantrace)
 	clothing_icon_override = 'icons/mob/lizard_clothes.dmi'
 	color_channel_names = list("Episcutus", "Ventral Aberration", "Sagittal Crest")
 	dna_mutagen_banned = FALSE
+	self_click_fluff = "scales"
 
 	New(var/mob/living/carbon/human/H)
 		..()
@@ -847,7 +850,9 @@ TYPEINFO(/datum/mutantrace)
 		mob.see_invisible = INVIS_INFRA
 
 	say_filter(var/message)
-		return replacetext(message, "s", stutter("ss"))
+		var/replace_lowercase = replacetextEx(message, "s", stutter("ss"))
+		var/replace_uppercase = replacetextEx(replace_lowercase, "S", stutter("SS"))
+		return replace_uppercase
 
 	disposing()
 		if(ishuman(mob))
@@ -1104,6 +1109,7 @@ TYPEINFO(/datum/mutantrace)
 	decomposes = FALSE
 	race_mutation = /datum/bioEffect/mutantrace/skeleton
 	dna_mutagen_banned = FALSE
+	self_click_fluff = list("ribcage", "funny bone", "femur", "scapula")
 	var/obj/item/organ/head/head
 
 	New(var/mob/living/carbon/human/M)
@@ -1111,13 +1117,16 @@ TYPEINFO(/datum/mutantrace)
 		if(ishuman(M))
 			M.mob_flags |= IS_BONEY
 			M.blood_id = "calcium"
-			head = M.organHolder.head
+			set_head(M.organHolder.head)
 
 	disposing()
 		if (ishuman(mob))
 			mob.mob_flags &= ~IS_BONEY
 			mob.blood_id = initial(mob.blood_id)
 		. = ..()
+
+	proc/set_head(var/head)
+		src.head = head
 
 /obj/item/joint_wax
 	name = "joint wax"
@@ -1127,7 +1136,7 @@ TYPEINFO(/datum/mutantrace)
 	w_class = W_CLASS_SMALL
 	var/uses = 10
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (isskeleton(M))
 			var/mob/living/carbon/human/H = M
 			if (user.zone_sel.selecting in H.limbs.vars)
@@ -1176,6 +1185,7 @@ TYPEINFO(/datum/mutantrace)
 	ignore_missing_limbs = 1 //OVERRIDE_ARM_L | OVERRIDE_ARM_R
 	anchor_to_floor = 1
 	movement_modifier = /datum/movement_modifier/abomination
+	self_click_fluff = "disgusting writhing appendages"
 
 	var/last_drain = 0
 	var/drains_dna_on_life = 1
@@ -1276,6 +1286,7 @@ TYPEINFO(/datum/mutantrace)
 	clothing_icon_override = 'icons/mob/werewolf_clothes.dmi'
 	special_head = HEAD_WEREWOLF
 	mutant_organs = list("tail" = /obj/item/organ/tail/wolf)
+	self_click_fluff = "fur"
 
 	head_offset = 5
 	hand_offset = 3
@@ -1427,6 +1438,7 @@ TYPEINFO(/datum/mutantrace)
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/ithillid/left
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HAS_SPECIAL_HAIR | HEAD_HAS_OWN_COLORS | WEARS_UNDERPANTS)
 	dna_mutagen_banned = FALSE
+	self_click_fluff = "gills"
 
 	say_verb()
 		return "glubs"
@@ -1461,6 +1473,7 @@ TYPEINFO(/datum/mutantrace)
 	var/sound_monkeyscream = 'sound/voice/screams/monkey_scream.ogg'
 	mutant_organs = list("tail" = /obj/item/organ/tail/monkey)
 	dna_mutagen_banned = FALSE
+	self_click_fluff = "fur"
 
 	New(var/mob/living/carbon/human/M)
 		. = ..()
@@ -1690,6 +1703,7 @@ TYPEINFO(/datum/mutantrace)
 	eye_state = "eyes_roach"
 	typevulns = list("blunt" = 1.5, "crush" = 1.5)
 	dna_mutagen_banned = FALSE
+	self_click_fluff = list("thorax", "exoskeleton", "antenna")
 
 	New(mob/living/carbon/human/M)
 		. = ..()
@@ -2011,6 +2025,7 @@ TYPEINFO(/datum/mutantrace)
 	color_channel_names = list("Horn Detail", "Hoof Detail")
 	eye_state = "eyes-cow"
 	dna_mutagen_banned = FALSE
+	self_click_fluff = list("fur", "hooves", "horns")
 
 	New(var/mob/living/carbon/human/H)
 		..()
@@ -2039,7 +2054,9 @@ TYPEINFO(/datum/mutantrace)
 
 	say_filter(var/message)
 		.= replacetext(message, "cow", "human")
-		.= replacetext(., "m", stutter("mm"))
+		var/replace_lowercase = replacetextEx(., "m", stutter("mm"))
+		var/replace_uppercase = replacetextEx(replace_lowercase, "M", stutter("MM"))
+		return replace_uppercase
 
 	emote(var/act, var/voluntary)
 		switch(act)
@@ -2115,6 +2132,7 @@ TYPEINFO(/datum/mutantrace/pug)
 	eye_state = "eyes-pug"
 	dna_mutagen_banned = FALSE
 	var/static/image/snore_bubble = image('icons/mob/mob.dmi', "bubble")
+	self_click_fluff = "fur"
 
 	New(var/mob/living/carbon/human/H)
 		if (prob(1)) // need to modify flags before calling parent

@@ -51,7 +51,7 @@
 	SPAWN(0)
 		attack_self(user)
 
-/obj/item/device/radio/intercom/attack_hand(mob/user as mob)
+/obj/item/device/radio/intercom/attack_hand(mob/user)
 	src.add_fingerprint(user)
 	SPAWN(0)
 		attack_self(user)

@@ -480,7 +480,7 @@
 				CheckSafety(src.budgun, 1, user)
 		return 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/pda2) && W:ID_card)
 			W = W:ID_card
 		if (istype(W, /obj/item/card/id))
@@ -1272,7 +1272,7 @@
 	attack_ai(mob/user as mob)
 		src.interacted(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..())
 			return
 		if(user.a_intent == "help" && !user.using_dialog_of(src) && (BOUNDS_DIST(user, src) == 0))
@@ -4210,7 +4210,7 @@
 	var/created_name = "Guardbuddy" //Name of resulting guardbot
 	var/buddy_model = 6 //What type of guardbot does this belong to (Default is PR-6, but Murray and Marty are PR-4s)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/pen))
 			if (created_name != initial(created_name))
 				boutput(user, "<span class='alert'>This robot has already been named!</span>")
@@ -4255,7 +4255,7 @@
 
 
 	//Frame -> Add cell -> Add core -> Add arm -> Done. Then add tool. Or gun.
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if ((istype(W, /obj/item/guardbot_core)))
 			if(W:buddy_model != src.buddy_model)
 				boutput(user, "<span class='alert'>That core board is for a different model of robot!</span>")
@@ -4358,7 +4358,7 @@
 		return
 
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..() || status & NOPOWER)
 			return
 
@@ -4700,7 +4700,7 @@
 
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W))
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 			boutput(user, "You [src.panel_open ? "secure" : "unscrew"] the maintenance panel.")
@@ -4820,7 +4820,7 @@
 		SPAWN(0.8 SECONDS)
 			linked_bot = locate() in orange(1, src)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (..() || (status & (NOPOWER|BROKEN)))
 			return
 
@@ -5009,7 +5009,7 @@
 				src.created_cell.charge = 0.9 * src.created_cell.maxcharge
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if ((istype(W, /obj/item/guardbot_core)))
 			if(W:buddy_model != src.buddy_model)
 				boutput(user, "<span class='alert'>That core board is for a different model of robot!</span>")
@@ -5126,7 +5126,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "holo_console0"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/token/hug_token))
 			user.visible_message("<span class='alert'><b>[user]</b> inserts a [W] into the [src].</span>", "<span class='alert'>You insert a [W] into the [src].</span>")
 			qdel(W)

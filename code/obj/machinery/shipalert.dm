@@ -23,7 +23,7 @@ var/global/soundGeneralQuarters = sound('sound/machines/siren_generalquarters_qu
 		..()
 		UnsubscribeProcess()
 
-/obj/machinery/shipalert/attack_hand(mob/user as mob)
+/obj/machinery/shipalert/attack_hand(mob/user)
 	if (user.stat || isghostdrone(user) || !isliving(user) || isintangible(user))
 		return
 
@@ -47,7 +47,7 @@ var/global/soundGeneralQuarters = sound('sound/machines/siren_generalquarters_qu
 			playsound(src.loc, "sound/machines/click.ogg", 50, 1)
 			src.toggleActivate(user)
 
-/obj/machinery/shipalert/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/shipalert/attackby(obj/item/W, mob/user)
 	if (user.stat)
 		return
 

@@ -2073,7 +2073,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 	else if (surgeon.zone_sel.selecting in patient.limbs.vars)
 		var/obj/item/parts/limb = patient.limbs.vars[surgeon.zone_sel.selecting]
-		if (!isskeletonlimb(limb))
+		if (!istype(limb) || !isskeletonlimb(limb))
 			return FALSE
 		if (limb.remove_stage == 0)
 			limb.remove_stage = 1

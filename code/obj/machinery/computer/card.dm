@@ -89,7 +89,7 @@
 			src.cell = null
 		..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/disk/data/floppy)) //IDK i just dont want to screw this up
 			return
 
@@ -139,7 +139,7 @@
 		src.power_change()
 		return
 
-/obj/machinery/computer/card/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/card/attack_hand(var/mob/user)
 	if(..())
 		return
 
@@ -505,7 +505,7 @@
 	src.updateUsrDialog()
 	return
 
-/obj/machinery/computer/card/attackby(obj/item/I as obj, mob/user as mob)
+/obj/machinery/computer/card/attackby(obj/item/I, mob/user)
 	//grab the ID card from an access implant if this is one
 	var/modify_only = 0
 	if (!istype(I,/obj/item/card/id))

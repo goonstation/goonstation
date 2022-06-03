@@ -60,10 +60,10 @@
 			. += "<span class='alert'><B>the alien looks pretty beat up</B></span>"
 
 
-	attack_hand(user as mob)
+	attack_hand(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		switch(W.damtype)
 			if("fire")
 				src.health -= W.force * 0.75

@@ -223,7 +223,7 @@
 		src.icon_state = "revimplanter[min(4, round((src.charges/initial(src.charges)), 0.25) * 4)]"
 		return
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (!iscarbon(M))
 			return
 

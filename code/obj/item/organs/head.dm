@@ -12,6 +12,8 @@
 	var/scalp_op_stage = 0.0 // Needed to track a scalp gash (brain and skull removal) separately from op_stage (head removal)
 	icon = 'icons/mob/human_head.dmi'
 	icon_state = "invis" // we'll overlay some shit on here
+	inhand_image_icon = 'icons/mob/inhand/hand_skulls.dmi'
+	item_state = ""
 	edible = 0
 	rand_pos = 0 // we wanna override it below
 	made_from = "bone"
@@ -65,12 +67,17 @@
 					src.UpdateIcon(/*makeshitup*/ 0)
 				else //The heck?
 					src.UpdateIcon(/*makeshitup*/ 1)
+				if (src.donor.eye != null)
+					src.donor.set_eye(null)
 			else
 				src.UpdateIcon(/*makeshitup*/ 1)
 
 	disposing()
 		if (holder)
 			holder.head = null
+		if (donor_original.eye == src)
+			donor_original.set_eye(null)
+			boutput(donor_original, "<span class='alert'>You feel your vision forcibly punted back to your body!</span>")
 		skull = null
 		brain = null
 		left_eye = null
@@ -296,7 +303,7 @@
 		update_head_image()
 
 
-	attackby(obj/item/W as obj, mob/user as mob) // this is real ugly
+	attackby(obj/item/W, mob/user) // this is real ugly
 		if (!user)
 			return
 		//Putting stuff on heads
@@ -441,7 +448,7 @@
 			return 0
 
 		var/fluff = pick("attach", "shove", "place", "drop", "smoosh", "squish")
-		if (!H.get_organ("head"))
+		if (!H.get_organ("head") && H.organHolder.receive_organ(src, "head", isskeleton(M) ? 0 : 3))
 
 			H.tri_message("<span class='alert'><b>[user]</b> [fluff][(fluff == "smoosh" || fluff == "squish" || fluff == "attach") ? "es" : "s"] [src] onto [H == user ? "[his_or_her(H)]" : "[H]'s"] neck stump!</span>",\
 			user, "<span class='alert'>You [fluff] [src] onto [user == H ? "your" : "[H]'s"] neck stump!</span>",\
@@ -450,7 +457,6 @@
 
 			if (user.find_in_hand(src))
 				user.u_equip(src)
-			H.organHolder.receive_organ(src, "head", isskeleton(M) ? 0 : 3.0)
 			H.update_equipment_screen_loc()
 
 			SPAWN(rand(50,500))
@@ -518,6 +524,7 @@
 				if(HEAD_SKELETON)
 					src.organ_name = "bony head"
 					src.desc = "...does that skull have another skull inside it?"
+					src.item_state = "skull"
 
 				if(HEAD_SEAMONKEY)
 					src.organ_name = "seamonkey head"

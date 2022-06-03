@@ -127,14 +127,14 @@
 	affect_fun = 15 // a little higher, why not?
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.add_fingerprint(user)
 		src.play(user)
 
 	show_play_message(mob/user as mob)
 		if (user) return src.visible_message("<B>[user]</B> [islist(src.desc_verb) ? pick(src.desc_verb) : src.desc_verb] \a [islist(src.desc_sound) ? pick(src.desc_sound) : src.desc_sound] [islist(src.desc_music) ? pick(src.desc_music) : src.desc_music] on [src]!")
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istool(W, TOOL_SCREWING | TOOL_WRENCHING))
 			user.visible_message("<b>[user]</b> [src.anchored ? "loosens" : "tightens"] the castors of [src].")
 			playsound(src, "sound/items/Screwdriver.ogg", 100, 1)
@@ -231,7 +231,7 @@
 		..()
 		BLOCK_SETUP(BLOCK_ROD)
 
-/obj/item/instrument/saxophone/attack(mob/M as mob, mob/user as mob)
+/obj/item/instrument/saxophone/attack(mob/M, mob/user)
 	if(ismob(M))
 		playsound(src, pick(sounds_punch), 50, 1, -1)
 		playsound(src, pick('sound/musical_instruments/saxbonk.ogg', 'sound/musical_instruments/saxbonk2.ogg', 'sound/musical_instruments/saxbonk3.ogg'), 50, 1, -1)
@@ -276,7 +276,7 @@
 				sounds_instrument += "sound/musical_instruments/guitar/guitar_[i].ogg"
 		..()
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if(ismob(M))
 			playsound(src, pick('sound/musical_instruments/Guitar_bonk1.ogg', 'sound/musical_instruments/Guitar_bonk2.ogg', 'sound/musical_instruments/Guitar_bonk3.ogg'), 50, 1, -1)
 		..()
@@ -301,12 +301,12 @@
 	show_play_message(mob/user as mob)
 		return
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if(ismob(M))
 			playsound(src, pick('sound/musical_instruments/Bikehorn_bonk1.ogg', 'sound/musical_instruments/Bikehorn_bonk2.ogg', 'sound/musical_instruments/Bikehorn_bonk3.ogg'), 50, 1, -1)
 		..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!istype(W, /obj/item/parts/robot_parts/arm))
 			..()
 			return
@@ -359,7 +359,7 @@
 	note_time = 30
 	mats = 2
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!istype(W, /obj/item/parts/robot_parts/arm))
 			..()
 			return
@@ -591,7 +591,7 @@
 	var/charge = 0 //A certain level of UNHOLY ENERGY is required to knock out a soul, ok.
 	var/charge_required = 10
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		src.add_fingerprint(user)
 		playsound(src, "swing_hit", 50, 1, -1)
 		..()
