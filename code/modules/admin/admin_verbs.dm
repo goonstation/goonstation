@@ -1600,7 +1600,7 @@ var/list/fun_images = list()
 	ADMIN_ONLY
 
 	var/new_grenade = tgui_alert(usr, "Use the new thing throwing grenade?", "Cool new grenade?", list("Yes", "No"))
-	if(new_grenade == "No") //why wasn't this here before?
+	if(new_grenade == "No")
 		return
 	var/obj_input = input("Enter path of the object you want the grenade to have or enter a part of the path to search", "Enter Path") as null|text
 	if (!obj_input)
