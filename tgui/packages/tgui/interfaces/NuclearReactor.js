@@ -45,13 +45,11 @@ const ReactorRow = (shape) => {
         {
           const { x, y, name, img, temp } = c;
           return (
-            <Table.Cell
-              // backgroundColor={getTemperatureColor(temp)}
-            >
+            <Table.Cell>
               <Button
                 key={name}
                 fluid
-                tooltip={`${name}<br>${temp} K`}
+                tooltip={<>{capitalize(name)}<br />{temp} K</>}
                 color="transparent"
                 m={1}
                 onClick={() => onClick('slot', { "x": x, "y": y })} >
@@ -128,7 +126,7 @@ export const NuclearReactor = (props, context) => {
           <Box>
             <Stack fill>
               <Stack.Item width="50%">
-                Reactor Tempertaure:
+                Reactor Temperature:
                 <RoundGauge
                   minValue={0}
                   maxValue={2500}
@@ -149,7 +147,7 @@ export const NuclearReactor = (props, context) => {
                   maxValue={200}
                   size={5}
                   value={reactorRads}
-                  format={value => round(value, 1) + " rads"}
+                  format={value => round(value, 1) + " clicks"}
                   alertAfter={50}
                   ranges={{
                     "good": [0, 10],
