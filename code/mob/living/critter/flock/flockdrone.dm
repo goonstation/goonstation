@@ -126,6 +126,9 @@
 	pilot.set_loc(src)
 	controller = pilot
 	src.client?.color = null
+	//hack to make night vision apply instantly
+	var/datum/lifeprocess/sight/sight_process = src.lifeprocesses[/datum/lifeprocess/sight]
+	sight_process?.Process()
 	src.hud?.update_intent()
 	if (istype(pilot, /mob/living/intangible/flock/flockmind))
 		flock.addAnnotation(src, FLOCK_ANNOTATION_FLOCKMIND_CONTROL)
