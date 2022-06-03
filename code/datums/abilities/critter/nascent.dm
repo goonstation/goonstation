@@ -11,12 +11,12 @@
 		if (..())
 			return 1
 		var/mob/wraith/W = null
-		if(istype(holder.owner, /mob/living/critter/nascent))
-			var/mob/living/critter/nascent/N = holder.owner
+		if(istype(holder.owner, /mob/living/critter/wraith/nascent))
+			var/mob/living/critter/wraith/nascent/N = holder.owner
 			if(N.master != null)
 				W = N.master
-		var/mob/living/critter/skeleton_commander/S = new /mob/living/critter/skeleton_commander(get_turf(holder.owner), W)
-		var/mob/living/critter/nascent/N = holder.owner
+		var/mob/living/critter/wraith/skeleton_commander/S = new /mob/living/critter/wraith/skeleton_commander(get_turf(holder.owner), W)
+		var/mob/living/critter/wraith/nascent/N = holder.owner
 		holder.owner.mind.transfer_to(S)
 		holder.owner.unequip_all()
 		animate_buff_in(S)
@@ -41,12 +41,12 @@
 		if (..())
 			return 1
 		var/mob/wraith/W = null
-		if(istype(holder.owner, /mob/living/critter/nascent))
-			var/mob/living/critter/nascent/N = holder.owner
+		if(istype(holder.owner, /mob/living/critter/wraith/nascent))
+			var/mob/living/critter/wraith/nascent/N = holder.owner
 			if(N.master != null)
 				W = N.master
-		var/mob/living/critter/voidhound/S = new /mob/living/critter/voidhound(get_turf(holder.owner), W)
-		var/mob/living/critter/nascent/N = holder.owner
+		var/mob/living/critter/wraith/voidhound/S = new /mob/living/critter/wraith/voidhound(get_turf(holder.owner), W)
+		var/mob/living/critter/wraith/nascent/N = holder.owner
 		holder.owner.mind.transfer_to(S)
 		holder.owner.unequip_all()
 		animate_buff_in(S)
@@ -71,12 +71,12 @@
 		if (..())
 			return 1
 		var/mob/wraith/W = null
-		if(istype(holder.owner, /mob/living/critter/nascent))
-			var/mob/living/critter/nascent/N = holder.owner
+		if(istype(holder.owner, /mob/living/critter/wraith/nascent))
+			var/mob/living/critter/wraith/nascent/N = holder.owner
 			if(N.master != null)
 				W = N.master
-		var/mob/living/critter/spiker/S = new /mob/living/critter/spiker(get_turf(holder.owner), W)
-		var/mob/living/critter/nascent/N = holder.owner
+		var/mob/living/critter/wraith/spiker/S = new /mob/living/critter/wraith/spiker(get_turf(holder.owner), W)
+		var/mob/living/critter/wraith/nascent/N = holder.owner
 		holder.owner.mind.transfer_to(S)
 		holder.owner.unequip_all()
 		animate_buff_in(S)

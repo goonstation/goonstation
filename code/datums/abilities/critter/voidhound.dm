@@ -11,8 +11,8 @@
 		if (..())
 			return 1
 
-		if(istype(holder.owner, /mob/living/critter/voidhound))
-			var/mob/living/critter/voidhound/V = holder.owner
+		if(istype(holder.owner, /mob/living/critter/wraith/voidhound))
+			var/mob/living/critter/wraith/voidhound/V = holder.owner
 			animate(V, alpha=45, time=3 SECONDS)
 			boutput(V, "<span class='notice'>We slip into the shadows</span>")
 			V.cloaked = TRUE
@@ -51,8 +51,8 @@
 		var/pixel_move = round((8/7)*max_range)
 		var/sleep_time = 1
 
-		if (istype(holder.owner, /mob/living/critter/voidhound))
-			var/mob/living/critter/voidhound/V = holder.owner
+		if (istype(holder.owner, /mob/living/critter/wraith/voidhound))
+			var/mob/living/critter/wraith/voidhound/V = holder.owner
 			if(V.cloaked)
 				animate(V, alpha=255, time=1 SECONDS)
 				boutput(V, "<span class='notice'>We leap out of the shadows</span>")

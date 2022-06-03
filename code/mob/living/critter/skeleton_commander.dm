@@ -1,4 +1,4 @@
-/mob/living/critter/skeleton_commander
+/mob/living/critter/wraith/skeleton_commander
 	name = "skeleton commander"
 	desc = "A bulky skeleton here to encourage his friends."
 	density = 1

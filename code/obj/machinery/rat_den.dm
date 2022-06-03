@@ -37,7 +37,7 @@
 					linked_critters ++
 
 		//Plague rats in range heal up slowly
-		for (var/mob/living/critter/plaguerat/P in range(5, src))
+		for (var/mob/living/critter/wraith/plaguerat/P in range(5, src))
 			if((P.health < (P.health_brute + P.health_burn)))
 				for(var/damage_type in P.healthlist)
 					var/datum/healthHolder/hh = P.healthlist[damage_type]

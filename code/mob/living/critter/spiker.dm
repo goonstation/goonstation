@@ -1,4 +1,4 @@
-/mob/living/critter/spiker
+/mob/living/critter/wraith/spiker
 	name = "tentacle fiend"
 	desc = "Standing still is probably not a good idea."
 	density = 1

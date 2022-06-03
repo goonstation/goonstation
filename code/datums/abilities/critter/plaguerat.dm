@@ -36,7 +36,7 @@
 			boutput(holder.owner, "<span class='alert'>There is nothing to eat here.</span>")
 			return 1
 
-		var/mob/living/critter/plaguerat/P = holder.owner
+		var/mob/living/critter/wraith/plaguerat/P = holder.owner
 
 		for (var/obj/decal/cleanable/C in T)
 			for (var/D in decal_list)
@@ -97,7 +97,7 @@
 	onEnd()
 		..()
 
-		var/mob/living/critter/plaguerat/P = owner
+		var/mob/living/critter/wraith/plaguerat/P = owner
 		P.visible_message("<span class='combat'><b>[P] eats [current_target]!</b></span>",\
 					"<span class='combat'><b>You finish eating [current_target]!</b></span>")
 		targets -= targets[1]
@@ -149,7 +149,7 @@
 			boutput(holder.owner, "<span class='alert'>That is too far away to bite.</span>")
 			return 1
 		var/mob/MT = target
-		var/mob/living/critter/plaguerat/P = holder.owner
+		var/mob/living/critter/wraith/plaguerat/P = holder.owner
 		MT.TakeDamageAccountArmor("All", rand(1,3), 0, 0, DAMAGE_BLUNT)
 		MT.changeStatus("slowed", 2 SECONDS)
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner] bites [MT]!</b></span>",\
@@ -175,8 +175,8 @@
 	cast(atom/target)
 		if (..())
 			return 1
-		if (istype(holder.owner, /mob/living/critter/plaguerat) && !istype(get_turf(holder.owner), /turf/space))
-			var/mob/living/critter/plaguerat/P = holder.owner
+		if (istype(holder.owner, /mob/living/critter/wraith/plaguerat) && !istype(get_turf(holder.owner), /turf/space))
+			var/mob/living/critter/wraith/plaguerat/P = holder.owner
 			if (P.linked_den == null)
 				var/obj/machinery/wraith/rat_den/W = new /obj/machinery/wraith/rat_den(P.loc)
 				P.linked_den = W

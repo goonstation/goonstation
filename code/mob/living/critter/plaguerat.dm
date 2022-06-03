@@ -1,6 +1,6 @@
 //Add death
-ABSTRACT_TYPE(/mob/living/critter/plaguerat)
-/mob/living/critter/plaguerat
+ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
+/mob/living/critter/wraith/plaguerat
 	name = "plague rat"
 	real_name = "plague rat"
 	desc = "Shouldnt be seeing this."
@@ -140,13 +140,13 @@ ABSTRACT_TYPE(/mob/living/critter/plaguerat)
 			var/MA = null	//Do we have a master? Lets transfer it to the new rat.
 			if(src.master != null)
 				MA = master
-			var/mob/living/critter/plaguerat/new_rat = new adultpath(get_turf(src), MA)
-			var/mob/living/critter/plaguerat/old_rat = src
+			var/mob/living/critter/wraith/plaguerat/new_rat = new adultpath(get_turf(src), MA)
+			var/mob/living/critter/wraith/plaguerat/old_rat = src
 			src.mind.transfer_to(new_rat)
 			animate_buff_in(new_rat)
 			qdel(old_rat)
 
-/mob/living/critter/plaguerat/young
+/mob/living/critter/wraith/plaguerat/young
 	name = "diseased rat"
 	real_name = "diseased rat"
 	desc = "A diseased looking rat."
@@ -154,7 +154,7 @@ ABSTRACT_TYPE(/mob/living/critter/plaguerat)
 	amount_to_grow = 4
 	bite_transfer_amt = 1
 	flags = TABLEPASS | DOORPASS
-	adultpath = /mob/living/critter/plaguerat/medium
+	adultpath = /mob/living/critter/wraith/plaguerat/medium
 	health_brute = 15
 	health_brute_vuln = 1
 	health_burn = 15
@@ -182,7 +182,7 @@ ABSTRACT_TYPE(/mob/living/critter/plaguerat)
 		HH.limb_name = "teeth"
 		HH.can_hold_items = 0
 
-/mob/living/critter/plaguerat/medium
+/mob/living/critter/wraith/plaguerat/medium
 	name = "plague-ridden rat"
 	real_name = "plague ridden rat"
 	desc = "A wretched, disgusting rat."
@@ -190,7 +190,7 @@ ABSTRACT_TYPE(/mob/living/critter/plaguerat)
 	amount_to_grow = 8
 	flags = TABLEPASS
 	bite_transfer_amt = 2.5
-	adultpath = /mob/living/critter/plaguerat/adult
+	adultpath = /mob/living/critter/wraith/plaguerat/adult
 	health_brute = 25
 	health_brute_vuln = 0.9
 	health_burn = 25
@@ -220,7 +220,7 @@ ABSTRACT_TYPE(/mob/living/critter/plaguerat)
 		HH.limb_name = "teeth"
 		HH.can_hold_items = 0
 
-/mob/living/critter/plaguerat/adult
+/mob/living/critter/wraith/plaguerat/adult
 	name = "bloated rat mass"
 	real_name = "bloated rat mass"
 	desc = "A horrible mass of puss and warts, that once used to look like a rat."

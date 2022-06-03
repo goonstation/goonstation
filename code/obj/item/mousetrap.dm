@@ -259,8 +259,8 @@
 				H.visible_message("<span class='alert'><B>[H] accidentally steps on the mousetrap.</B></span>",\
 				"<span class='alert'><B>You accidentally step on the mousetrap!</B></span>")
 
-		else if (istype(AM, /mob/living/critter/plaguerat/adult) && src.armed)
-			var/mob/living/critter/plaguerat/P = AM
+		else if (istype(AM, /mob/living/critter/wraith/plaguerat/adult) && src.armed)
+			var/mob/living/critter/wraith/plaguerat/P = AM
 			playsound(src.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
 			icon_state = "mousetrap"
 			src.armed = 0
@@ -269,8 +269,8 @@
 			P.setStatus("stunned", 3 SECONDS)
 			random_brute_damage(P, 20)
 
-		else if (istype(AM, /mob/living/critter/plaguerat) && src.armed)
-			var/mob/living/critter/plaguerat/P = AM
+		else if (istype(AM, /mob/living/critter/wraith/plaguerat) && src.armed)
+			var/mob/living/critter/wraith/plaguerat/P = AM
 			playsound(src.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
 			icon_state = "mousetrap"
 			src.armed = 0

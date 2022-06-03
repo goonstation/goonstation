@@ -74,7 +74,7 @@
 
 	onAttach(datum/abilityHolder/holder)
 		..()
-		if (istype(holder.owner, /mob/wraith/wraith_decay) || istype(holder.owner, /mob/living/critter/plaguerat))
+		if (istype(holder.owner, /mob/wraith/wraith_decay) || istype(holder.owner, /mob/living/critter/wraith/plaguerat))
 			border_state = "plague_frame"
 		else if (istype(holder.owner, /mob/wraith/wraith_harbinger))
 			border_state = "harbinger_frame"
@@ -1218,11 +1218,11 @@
 
 		var/decal_count = 0
 		var/list/found_decal_list = list()
-		for (var/obj/decal/cleanable/C in range(3, get_turf(holder.owner)))
-			for (var/D in decal_list)
-				if (istype(C, D))
+		for (var/obj/decal/cleanable/found_cleanable in range(3, get_turf(holder.owner)))
+			for (var/decal_type in decal_list)
+				if (istype(found_cleanable, decal_type))
 					decal_count++
-					found_decal_list += C
+					found_decal_list += found_cleanable
 		if (decal_count > 10)
 			holder.owner.playsound_local(holder.owner, "sound/voice/wraith/wraithraise[pick("1","2","3")].ogg", 80)
 			var/turf/T = get_turf(holder.owner)
@@ -1781,7 +1781,7 @@
 		var/datum/mind/lucky_dude = pick(candidates)
 
 		//add poltergeist to master's list is done in /mob/wraith/potergeist/New
-		var/mob/living/critter/nascent/P = new /mob/living/critter/nascent(T, W)
+		var/mob/living/critter/wraith/nascent/P = new /mob/living/critter/wraith/nascent(T, W)
 		lucky_dude.special_role = ROLE_HARBINGERSUMMON
 		lucky_dude.dnr = 1
 		lucky_dude.transfer_to(P)
@@ -1820,10 +1820,10 @@
 				continue
 			player_count++
 			var/mob/M = C.mob
-			if (istype(M, /mob/living/critter/plaguerat))
+			if (istype(M, /mob/living/critter/wraith/plaguerat))
 				total_plague_rats++
 		if(total_plague_rats < (max_allowed_rats + (player_count / 30)))	//Population scaling
-			if (istype(holder.owner, /mob/living/critter/plaguerat))	//plaguerats must be near their den
+			if (istype(holder.owner, /mob/living/critter/wraith/plaguerat))	//plaguerats must be near their den
 				var/near_den = false
 				var/turf/T = get_turf(holder.owner)
 				for (var/obj/O in T.contents)
@@ -1844,7 +1844,7 @@
 			return 1
 
 	proc/make_plague_rat(var/mob/W, var/turf/T, var/tries = 0)
-		if (!istype(W, /mob/wraith/wraith_decay) && !istype(W, /mob/living/critter/plaguerat))
+		if (!istype(W, /mob/wraith/wraith_decay) && !istype(W, /mob/living/critter/wraith/plaguerat))
 			boutput(W, "something went terribly wrong, call 1-800-CODER")
 			return
 
@@ -1873,8 +1873,8 @@
 			return
 		var/datum/mind/lucky_dude = pick(candidates)
 
-		//add plague rat to master's list is done in /mob/living/critter/plaguerat/New
-		var/mob/living/critter/plaguerat/young/P = new /mob/living/critter/plaguerat/young(T, W)
+		//add plague rat to master's list is done in /mob/living/critter/wraith/plaguerat/New
+		var/mob/living/critter/wraith/plaguerat/young/P = new /mob/living/critter/wraith/plaguerat/young(T, W)
 		lucky_dude.special_role = ROLE_PLAGUERAT
 		lucky_dude.dnr = 1
 		lucky_dude.transfer_to(P)

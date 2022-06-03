@@ -338,7 +338,7 @@
 	slice_amount = 4
 
 	heal(var/mob/M)
-		if (istype(M, /mob/living/critter/plaguerat))
+		if (istype(M, /mob/living/critter/wraith/plaguerat))
 			boutput(M, "<span class='notice'>The delicious taste of cheese sends your mouth to heaven!</span>")
 			M.reagents.add_reagent("saline", 4)
 			M.reagents.add_reagent("methamphetamine", 7)
@@ -360,7 +360,7 @@
 	slice_amount = 4
 
 	heal(var/mob/M)
-		if (istype(M, /mob/living/critter/plaguerat))
+		if (istype(M, /mob/living/critter/wraith/plaguerat))
 			boutput(M, "<span class='notice'>This is by far the best thing you ever tasted! You feel buff!</span>")
 			M.reagents.add_reagent("Omnizine", 7)
 			M.reagents.add_reagent("methamphetamine", 12)
@@ -969,7 +969,7 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 	initial_reagents = list("cheese"=1)
 
 	heal(var/mob/M)
-		if (istype(M, /mob/living/critter/plaguerat))
+		if (istype(M, /mob/living/critter/wraith/plaguerat))
 			boutput(M, "<span class='notice'>This doesnt satisfy your craving for cheese, but its a start.</span>")
 			M.reagents.add_reagent("saline", 4)
 			M.reagents.add_reagent("methamphetamine", 2.5)
@@ -987,7 +987,7 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 	food_effects = list("food_sweaty","food_bad_breath")
 
 	heal(var/mob/M)
-		if (istype(M, /mob/living/critter/plaguerat))
+		if (istype(M, /mob/living/critter/wraith/plaguerat))
 			boutput(M, "<span class='notice'>This is incredible, but there isnt enough! MORE!</span>")
 			M.reagents.add_reagent("Omnizine", 3)
 			M.reagents.add_reagent("methamphetamine", 3)

@@ -1,7 +1,7 @@
 //Quick, stealthy, squishy assassin
 //Take the heat off of the wraith by attracting attention
 
-/mob/living/critter/voidhound
+/mob/living/critter/wraith/voidhound
 	name = "voidhound"
 	desc = "You probably shouldn't be staring at this thing."
 	density = 1

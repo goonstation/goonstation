@@ -12,7 +12,7 @@
 		if (..())
 			return 1
 
-		var/mob/living/critter/spiker/S = holder.owner
+		var/mob/living/critter/wraith/spiker/S = holder.owner
 		var/obj/projectile/proj = initialize_projectile_ST(S, new/datum/projectile/special/tentacle, get_turf(target))
 		while (!proj || proj.disposed)
 			proj = initialize_projectile_ST(S, new/datum/projectile/special/tentacle, get_turf(target))
