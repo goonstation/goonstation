@@ -320,7 +320,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 //sound.dm
 
 
-/mob/living/silicon/ai/attackby(obj/item/W as obj, mob/user as mob)
+/mob/living/silicon/ai/attackby(obj/item/W, mob/user)
 	if (istype(W,/obj/item/device/borg_linker) && !isghostdrone(user))
 		var/obj/item/device/borg_linker/linker = W
 		if(src.dismantle_stage<2)
@@ -2496,7 +2496,7 @@ proc/get_mobs_trackable_by_AI()
 			if(build_step == 2)
 				UpdateOverlays(image_wire_overlay, "wires")
 
-/obj/ai_core_frame/attackby(obj/item/W as obj, mob/user as mob)
+/obj/ai_core_frame/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/sheet))
 		if (W.material.material_flags & MATERIAL_METAL) // metal sheets
 			if (src.build_step < 1)

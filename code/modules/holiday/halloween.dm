@@ -79,7 +79,7 @@
 			boutput(user, "This jukebox is too old to be controlled remotely.")
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		//This dude is no Fonz
 		if (user.a_intent == "harm")
 			user.visible_message("<span class='combat'><b>[user]</b> punches the [src]!</span>","You punch the [src].  Your hand hurts.")
@@ -336,7 +336,7 @@
 	anchored = 1
 	density = 1
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		boutput(user, "<span class='combat'>The knobs are fixed in place.  Might as well sit back and watch, I guess?</span>")
 
 	examine(mob/user)

@@ -20,7 +20,7 @@
 	src.updateUsrDialog()
 	return
 
-/obj/machinery/computer/door_control/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/door_control/attack_hand(var/mob/user)
 	if(..())
 		return
 	var/dat = "<HTML><BODY><TT><B>Brig Computer</B><br><br>"

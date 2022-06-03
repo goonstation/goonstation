@@ -118,7 +118,7 @@
 	plane = PLANE_HUD
 	anchored = 1
 
-proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time=2 SECONDS, invisibility=INVIS_NONE)
+proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time=2 SECONDS, invisibility=INVIS_NONE, atom/movable/pointer)
 	// note that `target` can also be a turf, but byond sux and I can't declare the var as atom because areas don't have vis_contents
 	var/obj/decal/point/point = new
 	point.pixel_x = pixel_x
@@ -126,6 +126,11 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 	point.color = color
 	point.invisibility = invisibility
 	target.vis_contents += point
+	if(pointer && GET_DIST(pointer, target) <= 10) // check so that you can't shoot points across the station
+		var/matrix/M = matrix()
+		M.Translate((pointer.x - target.x)*32 - pixel_x, (pointer.y - target.y)*32 - pixel_y)
+		point.transform = M
+		animate(point, transform=null, time=2)
 	SPAWN(time)
 		if(target)
 			target.vis_contents -= point

@@ -163,6 +163,10 @@
 	attack_self()
 		..()
 		UpdateIcon()
+		if(istype(src.current_projectile, /datum/projectile/energy_bolt/burst))
+			src.spread_angle = 6
+		else
+			src.spread_angle = initial(src.spread_angle)
 
 	borg
 		cell_type = /obj/item/ammo/power_cell/self_charging/disruptor
@@ -407,7 +411,7 @@
 		UpdateIcon()
 		M.update_inhands()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/electronics/scanner))
 			nojobreward = 1
 		..()
@@ -687,7 +691,7 @@
 			user.show_text("Error: no working teleporters detected.", "red")
 			return
 
-		var/t1 = input(user, "Please select a teleporter to lock in on.", "Target Selection") in L
+		var/t1 = tgui_input_list(user, "Please select a teleporter to lock in on.", "Target Selection", L)
 		if ((user.equipped() != src) || user.stat || user.restrained())
 			return
 		if (t1 == "None (Cancel)")
@@ -1189,7 +1193,7 @@
 			else
 				. += "It's not holding anything."
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.loc == user && (src == user.l_hand || src == user.r_hand))
 			if (heldItem)
 				boutput(user, "You remove \the [heldItem.name] from the gun.")
@@ -1201,7 +1205,7 @@
 		else
 			return ..()
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		if (I.cant_drop) return
 		if (heldItem)
 			boutput(user, "The gun is already holding [heldItem.name].")
@@ -1325,7 +1329,7 @@
 		indicator_display = null
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!owner_prints)
 			boutput(user, "<span class='alert'>[src] has accepted your fingerprint ID. You are its owner!</span>")
 			assign_name(user)

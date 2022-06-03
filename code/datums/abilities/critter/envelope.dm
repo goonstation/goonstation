@@ -80,13 +80,13 @@
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, __red("Nothing to envelop there."))
+				boutput(holder.owner, "<span class='alert'>Nothing to envelop there.</span>")
 				return 1
 		if (!istype(target, /mob/living))
-			boutput(holder.owner, __red("Invalid target."))
+			boutput(holder.owner, "<span class='alert'>Invalid target.</span>")
 			return 1
 		if (BOUNDS_DIST(holder.owner, target) > 0)
-			boutput(holder.owner, __red("That is too far away to envelop."))
+			boutput(holder.owner, "<span class='alert'>That is too far away to envelop.</span>")
 			return 1
 		actions.start(new/datum/action/bar/icon/envelopAbility(target, src), holder.owner)
 		return 0

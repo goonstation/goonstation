@@ -33,6 +33,7 @@
 // gimmicks
 #define ROLE_BATTLER "battler"
 #define ROLE_FLOCKMIND "flockmind"
+#define ROLE_FLOCKTRACE "flocktrace"
 #define ROLE_OMNITRAITOR "omnitraitor"
 #define ROLE_GRINCH "grinch"
 #define ROLE_FLOOR_GOBLIN "floor_goblin"

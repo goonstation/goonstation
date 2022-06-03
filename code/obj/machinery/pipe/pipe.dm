@@ -390,7 +390,7 @@ var/linenums = 0
 	..()
 
 
-/obj/machinery/pipes/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/pipes/attackby(obj/item/W, mob/user)
 
 	if (isweldingtool(W))
 		if(!(status & BROKEN))

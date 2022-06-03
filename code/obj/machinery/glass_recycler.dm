@@ -57,7 +57,7 @@
 		src.get_products()
 		UnsubscribeProcess()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W.loc, /obj/item/storage))
 			var/obj/item/storage/storage = W.loc
 			storage.hud.remove_object(W)

@@ -672,7 +672,7 @@ CONTAINS:
 					put_back_defib(src.defib.loc)
 		..()
 
-	attack_hand(mob/living/user as mob)
+	attack_hand(mob/living/user)
 		if (isAI(user) || isintangible(user) || isobserver(user)) return
 		user.lastattacked = src
 		..()
@@ -696,7 +696,7 @@ CONTAINS:
 			else
 				user.move_laying = list(src.defib)
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		user.lastattacked = src
 		if (W == src.defib)
 			src.defib.move_callback(user,get_turf(user),get_turf(src))
@@ -1161,7 +1161,7 @@ CONTAINS:
 		else
 			return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		add_fingerprint(user)
 		if (src.icon_state == "bodybag" && src.w_class == W_CLASS_TINY)
 			return ..()
@@ -1600,7 +1600,7 @@ keeping this here because I want to make something else with it eventually
 				falling?.throw_at(target, 1, 1)
 
 
-	attackby(obj/item/W as obj, mob/user as mob, params)
+	attackby(obj/item/W, mob/user, params)
 		if (iswrenchingtool(W))
 			actions.start(new /datum/action/bar/icon/furniture_deconstruct(src, W, 30), user)
 			return
@@ -1647,7 +1647,7 @@ keeping this here because I want to make something else with it eventually
 		src.attached_objs.Remove(I)
 		UnregisterSignal(I, list(COMSIG_ITEM_PICKUP, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_PRE_DISPOSING))
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!anchored)
 			boutput(user, "You apply \the [name]'s brake.")
 		else

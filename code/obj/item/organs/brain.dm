@@ -162,9 +162,8 @@
 			boutput(M, "<span class='flocksay italics'><i>... [pick_string("flockmind.txt", "brain")] ...</i></span>")
 
 /obj/item/organ/brain/flockdrone/special_desc(dist, mob/user)
-	if(isflock(user))
-		return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+	if (!isflockmob(user))
+		return
+	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
 		<br><span class='bold'>ID:</span> Computational core
 		<br><span class='bold'>###=-</span></span>"}
-	else
-		return null // give the standard description

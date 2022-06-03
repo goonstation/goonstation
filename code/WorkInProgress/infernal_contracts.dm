@@ -445,7 +445,7 @@ END GUIDE
 		else
 			return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/pen))
 			if (isdiabolical(user))
 				boutput(user, "<span class='notice'>You can't sell your soul to yourself!</span>")

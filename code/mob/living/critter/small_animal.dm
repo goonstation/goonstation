@@ -27,8 +27,6 @@
   - walruses
   - floating eye
   - pigs
-  - clownspiders
-   - cluwnespiders
   - bats
    - angry bats
    - Dr. Acula
@@ -304,7 +302,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 		HH.limb_name = "teeth"					// name for the dummy holder
 		HH.can_hold_items = 0
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (!isdead(src) && istype(W, /obj/item/plant/herb/catnip))
 			user.visible_message("<b>[user]</b> gives [src] \the [W]!",\
 			"You give [src] \the [W].")
@@ -422,7 +420,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 			src.show_text("[user] swipes the card down your back in a petting motion...")
 		return 1
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (istype(W, /obj/item/card/emag))
 			emag_act(user, W)
 		else
@@ -1022,7 +1020,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	bird_call_msg = list("hoots", "hoos")
 	bird_call_sound = "sound/voice/animal/hoot.ogg"
 
-	attackby(obj/item/W as obj, mob/M as mob)
+	attackby(obj/item/W, mob/M)
 		if(istype(W, /obj/item/plutonium_core/hootonium_core)) //Owls interestingly are capable of absorbing hootonium into their bodies harmlessly. This is the only safe method of removing it.
 			playsound(M.loc, "sound/items/eatfood.ogg", 100, 1)
 			boutput(M, "<span class='alert'><B>You feed the [src] the [W]. It looks [pick("confused", "annoyed", "worried", "satisfied", "upset", "a tad miffed", "at you and winks")].</B></span>")
@@ -1057,7 +1055,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 30
 	good_grip = 0.5
 
-	attackby(obj/item/W as obj, mob/M as mob)
+	attackby(obj/item/W, mob/M)
 		if(istype(W, /obj/item/plutonium_core/hootonium_core)) //Owls interestingly are capable of absorbing hootonium into their bodies harmlessly. This is the only safe method of removing it.
 			playsound(M.loc, "sound/items/eatfood.ogg", 100, 1)
 			boutput(M, "<span class='alert'><B>You feed the [src] the [W]. It looks [pick("confused", "annoyed", "worried", "satisfied", "upset", "a tad miffed", "at you and winks")].</B></span>")
@@ -1860,7 +1858,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if(prob(50))
 				src.ball_up(emote=FALSE)
 
-	attack_hand(mob/living/M as mob, params, location, control)
+	attack_hand(mob/living/M, params, location, control)
 		if (M.a_intent == INTENT_HARM || M.a_intent == INTENT_GRAB)
 			if (!src.is_balled())
 				if(prob(70))
@@ -2199,8 +2197,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	name = "space wasp"
 	real_name = "space wasp"
 	desc = "A wasp in space."
-	icon_state = "spacebee"
-	icon_state_dead = "spacebee-dead"
+	icon_state = "wasp"
+	icon_state_dead = "wasp-dead"
 	speechverb_say = "buzzes"
 	speechverb_exclaim = "screeches"
 	speechverb_ask = "hums"
@@ -2851,6 +2849,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				src.setMaterial(getMaterial(pick(material_varieties)))
 
 	death(var/gibbed)
+		. = ..()
 		if (!gibbed)
 			new /obj/item/toy/figure(src.loc, info)
 			ghostize()

@@ -106,7 +106,7 @@
 		if (on_death)
 			on_death.tick()
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		..()
 		if (W.force || istype(W, /obj/item/artifact/melee_weapon))
 			for (var/datum/critterEvent/E in events)

@@ -99,6 +99,7 @@ datum
 			src.total_temperature = new_temp
 			if (react)
 				temperature_react()
+				handle_reactions()
 
 		proc/temperature_react() //Calls the temperature reaction procs without changing the temp.
 			for(var/reagent_id in reagent_list)

@@ -1476,7 +1476,7 @@ proc/get_colosseum_message(var/name, var/message)
 
 			qdel(src)
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (isweldingtool(W))
 			if (health >= max_health)
 				boutput(user, "<span class='alert'>That putt is already at full health!</span>")

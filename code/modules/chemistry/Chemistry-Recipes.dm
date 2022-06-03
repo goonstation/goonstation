@@ -203,11 +203,11 @@ datum
 			name = "no pyrosium foam"
 			id = "no_pyrosium_foam"
 			instant = 1
-			required_reagents = list("thalmerite" = 1, "fluorosurfactant" = 1, "water" = 1)
+			required_reagents = list("pyrosium" = 1, "fluorosurfactant" = 1, "water" = 1)
 			mix_phrase = "The mixture burns away into nothing!"
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				if (holder)
-					holder.del_reagent("thalmerite")
+					holder.del_reagent("pyrosium")
 					holder.del_reagent("fluorosurfactant")
 					holder.del_reagent("water")
 				return
@@ -385,10 +385,10 @@ datum
 				return*/
 
 
-		thalmerite
+		pyrosium
 			name = "Pyrosium"
-			id = "thalmerite"
-			result = "thalmerite"
+			id = "pyrosium"
+			result = "pyrosium"
 			required_reagents = list("plasma" = 1, "radium" = 1, "phosphorus" = 1)
 			result_amount = 3
 			mix_phrase = "The resultant gel begins to emit significant heat."
@@ -1264,7 +1264,7 @@ datum
 			name = "Dragon's Breath"
 			id = "dbreath"
 			result = "dbreath"
-			required_reagents = list("bourbon" = 1, "phlogiston" = 1, "thalmerite" = 1, "fuel" = 1, "ghostchilijuice"= 1)
+			required_reagents = list("bourbon" = 1, "phlogiston" = 1, "pyrosium" = 1, "fuel" = 1, "ghostchilijuice"= 1)
 			result_amount = 1
 			mix_phrase = "A tiny mushroom cloud erupts from the container. That's not worrying at all!"
 			mix_sound = 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg'
@@ -3609,7 +3609,7 @@ datum
 					if(1 to 70)
 						new /mob/living/carbon/cube/meat(location)
 					if(71 to 94)
-						var/critter = pick(/obj/critter/roach,/obj/critter/pig,/obj/critter/cat,/obj/critter/mouse,/obj/critter/spacebee,/obj/critter/owl,/obj/critter/goose,/obj/critter/goose/swan,/obj/critter/domestic_bee,/obj/critter/walrus,/obj/critter/sealpup)
+						var/critter = pick(/obj/critter/roach,/obj/critter/pig,/obj/critter/cat,/obj/critter/mouse,/obj/critter/wasp,/obj/critter/owl,/obj/critter/goose,/obj/critter/goose/swan,/obj/critter/domestic_bee,/obj/critter/walrus,/obj/critter/sealpup)
 						new critter(location)
 					if(95 to 97)
 						if (location.density)
@@ -3885,10 +3885,10 @@ datum
 			result_amount = 2
 			mix_phrase = "The ants arachnify. What?"
 
-		thalmerite_heat
-			name = "thalmerite heating"
-			id = "thalmerite_heat"
-			required_reagents = list("thalmerite" = 1, "oxygen" = 1)
+		pyrosium_heat
+			name = "pyrosium heating"
+			id = "pyrosium_heat"
+			required_reagents = list("pyrosium" = 1, "oxygen" = 1)
 			result_amount = 1
 			reaction_speed = 1
 			reaction_temp_divider = 25

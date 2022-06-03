@@ -1562,12 +1562,12 @@ Returns:
 		setMaterial(getMaterial("slag"))
 		name = "Statue of Dr.Floorpills"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		boutput(user, "[src] feels oddly warm ...")
 		user.changeStatus("radiation", 5 SECONDS)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(prob(8) && (!broken))
 			for(var/i=0, i<5, i++)
 				new/obj/item/material_piece/slag(src.loc)
@@ -1947,7 +1947,7 @@ Returns:
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "pen"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/device/key))
 			boutput(user, "[W] disappears suddenly as you bring it close to the inscription ... huh")
 			del(W)
@@ -1984,7 +1984,7 @@ Returns:
 		light = null
 		..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/clothing/mask/cigarette))
 			var/obj/item/clothing/mask/cigarette/C = W
 			if(!C.on)
@@ -2413,7 +2413,7 @@ Returns:
 	icon_state = "fireworksbox"
 	var/fireworking = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(fireworking) return
 		fireworking = 1
 		boutput(user, "<span class='alert'>The fireworks go off as soon as you touch the box. This is some high quality stuff.</span>")
@@ -2772,7 +2772,7 @@ Returns:
 
 /obj/dfissure_to
 	name = "dimensional fissure"
-	desc = "a rip in time and space"
+	desc = "A rip in time and space."
 	opacity = 0
 	density = 1
 	anchored = 1
@@ -2797,7 +2797,7 @@ Returns:
 
 /obj/dfissure_from
 	name = "dimensional fissure"
-	desc = "a rip in time and space"
+	desc = "A rip in time and space."
 	opacity = 0
 	density = 1
 	anchored = 1
@@ -3264,14 +3264,14 @@ Returns:
 	var/suiciding = 0
 	var/deadly = 0
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 	MouseDrop_T(atom/target, mob/user)
 		if (BOUNDS_DIST(user, src) == 0 && target == user)
 			src.Attackhand(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(in_use)
 			boutput(user, "<span class='alert'>Its already in use - wait a bit.</span>")
 			return
@@ -3764,10 +3764,10 @@ var/list/lag_list = new/list()
 	anchored = 1
 	density = 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		switch(alert("Travel back to ss13?",,"Yes","No"))
 			if("Yes")
 				user.set_loc(pick_landmark(LANDMARK_LATEJOIN))

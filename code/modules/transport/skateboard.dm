@@ -303,7 +303,7 @@
 		eject_rider(0, 1)
 	return
 
-/obj/vehicle/skateboard/attack_hand(mob/living/carbon/human/M as mob)
+/obj/vehicle/skateboard/attack_hand(mob/living/carbon/human/M)
 	if(!M || !rider)
 		..()
 		return

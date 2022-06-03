@@ -130,13 +130,13 @@
 		light.disable()
 		status |= BROKEN
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.status & BROKEN)
 			boutput(user, "<span class='notice'>The [src.name] is busted! You'll need at least two sheets of glass to fix it.</span>")
 			return
 		. = ..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/sheet) && (src.status & BROKEN))
 			var/obj/item/sheet/S = W
 			if (S.material && S.material.material_flags & MATERIAL_CRYSTAL)

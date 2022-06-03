@@ -178,7 +178,7 @@
 	var/being_pressed = 0
 	var/has_been_pressed = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (being_pressed)
 			boutput(user, "<span class='alert'>You can't press it while someone else is about to press it!</span>")
 			return
@@ -267,7 +267,7 @@
 				make_cleanable( /obj/decal/cleanable/urine ,get_turf(G))
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (iswrenchingtool(W) && steps_until_pressable == 18)
 			boutput(user, "<span class='notice'>You remove the metal bolts.</span>")
 			steps_until_pressable--

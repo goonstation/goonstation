@@ -307,7 +307,7 @@ that cannot be itched
 			UpdateOverlays(scanner_status, "status")
 			boutput(user, "<span class='notice'>Organ scanner [src.organ_scan ? "enabled" : "disabled"].</span>")
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		addUpgrade(src, W, user, src.reagent_upgrade)
 		..()
 
@@ -476,7 +476,7 @@ that cannot be itched
 		boutput(user, scan_atmospheric(location, visible = 1)) // Moved to scanprocs.dm to cut down on code duplication (Convair880).
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		addUpgrade(src, W, user, src.analyzer_upgrade)
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)

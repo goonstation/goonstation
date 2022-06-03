@@ -330,7 +330,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 				SPAWN(0.7 SECONDS)
 				W.aggressive = 0
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (!src.alive)
 			return
 		if (user.a_intent == "harm")
@@ -358,7 +358,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 					user.reagents.add_reagent("hugs", 10)
 				playsound(src.loc, "sound/voice/babynoise.ogg", 50, 10,10)
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		..()
 		if(!alive) return
 		if (istype(W, /obj/item/reagent_containers/food/snacks))
@@ -463,7 +463,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		src.fire_image = null
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		extinguish()
 		..()
 
@@ -632,7 +632,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		qdel(src.light)
 		src.light = null
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		change_light_pattern()
 		..()
 
@@ -1205,7 +1205,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		if (prob(50))
 			icon_state = "stocking_green"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (..())
 			return
 		if (!islist(src.gift_paths) || !length(src.gift_paths))

@@ -515,7 +515,7 @@ WET FLOOR SIGN
 	SPAWN(1 SECOND)
 	spam_flag = 0
 
-/obj/item/sponge/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/sponge/attackby(obj/item/W, mob/user)
 	if (istool(W, TOOL_CUTTING | TOOL_SNIPPING))
 		user.visible_message("<span class='notice'>[user] cuts [src] into the shape of... cheese?</span>")
 		if(src.loc == user)
@@ -769,7 +769,7 @@ WET FLOOR SIGN
 			return
 		..()
 
-	pull(var/mob/user)
+	pull(mob/user)
 		if (!istype(user))
 			return
 		if(user.key != ownerKey && ownerKey != null)

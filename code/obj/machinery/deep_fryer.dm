@@ -22,7 +22,7 @@
 		reagents.add_reagent("grease", 25)
 		reagents.set_reagent_temp(src.frytemp)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isghostdrone(user) || isAI(user))
 			boutput(user, "<span class='alert'>The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
 			return
@@ -100,7 +100,7 @@
 		else
 			src.icon_state = "fryer0"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (isghostdrone(user))
 			boutput(user, "<span class='alert'>The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
 			return

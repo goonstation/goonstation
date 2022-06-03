@@ -35,7 +35,7 @@ For hairball DynAssemblies see: jonescity.dm
 	var/product = 0 //When secured, what do you want it to produce? Set in switch statement in createproduct().
 	var/secure_duration = 50 //How long it takes to secure / unsecure
 
-	attackby(obj/item/W as obj, mob/user as mob) //This is adding parts after the first run, creating is done on base objs attackby
+	attackby(obj/item/W, mob/user) //This is adding parts after the first run, creating is done on base objs attackby
 		if (!W)
 			return
 		if ((validate && (W.type in validparts)) || (validate && (W.parent_type in validparts)) || (!validate && !isscrewingtool(W)))
@@ -316,7 +316,7 @@ For hairball DynAssemblies see: jonescity.dm
 			src.color = src.material.color
 			src.alpha = src.material.alpha
 
-/obj/item/musicpart/attackby(obj/item/W as obj, mob/user as mob) //init the assembly
+/obj/item/musicpart/attackby(obj/item/W, mob/user) //init the assembly
 	if (istype(W, /obj/item/musicpart))
 		var/obj/item/musicpart/P = W
 		boutput(user, "<span class='notice'>You begin adding \the [P.name] to \the [src.name].</span>")

@@ -1104,18 +1104,52 @@ TYPEINFO(/datum/mutantrace)
 	decomposes = FALSE
 	race_mutation = /datum/bioEffect/mutantrace/skeleton
 	dna_mutagen_banned = FALSE
+	var/obj/item/organ/head/head
 
 	New(var/mob/living/carbon/human/M)
 		..()
 		if(ishuman(M))
 			M.mob_flags |= IS_BONEY
 			M.blood_id = "calcium"
+			set_head(M.organHolder.head)
 
 	disposing()
 		if (ishuman(mob))
 			mob.mob_flags &= ~IS_BONEY
+			mob.blood_id = initial(mob.blood_id)
 		. = ..()
 
+	proc/set_head(var/head)
+		src.head = head
+
+/obj/item/joint_wax
+	name = "joint wax"
+	desc = "Does what it says on the jar."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "wax"
+	w_class = W_CLASS_SMALL
+	var/uses = 10
+
+	attack(mob/M as mob, mob/user as mob)
+		if (isskeleton(M))
+			var/mob/living/carbon/human/H = M
+			if (user.zone_sel.selecting in H.limbs.vars)
+				var/obj/item/parts/limb = H.limbs.vars[user.zone_sel.selecting]
+				if (!limb)
+					if (!src.uses)
+						boutput(user, "<span class='alert'>The joint wax is empty!</alert>")
+					else
+						H.changeStatus("spry", 1 MINUTE)
+						playsound(H, 'sound/effects/smear.ogg', 50, 1)
+						H.visible_message("<span class='notice'>[user] applies some joint wax to [H].</notice>")
+						src.uses--
+						if (!src.uses)
+							src.icon_state = "wax-empty"
+					return
+		..()
+
+	get_desc()
+		. += " It looks like it has [uses ? uses : "no"] applications left."
 
 /*
 /datum/mutantrace/ape
@@ -1680,6 +1714,7 @@ TYPEINFO(/datum/mutantrace)
 	disposing()
 		if(ishuman(mob))
 			mob.mob_flags &= ~SHOULD_HAVE_A_TAIL
+			mob.blood_id = initial(mob.blood_id)
 		if(mob)
 			REMOVE_ATOM_PROPERTY(mob, PROP_MOB_RADPROT, src)
 		. = ..()

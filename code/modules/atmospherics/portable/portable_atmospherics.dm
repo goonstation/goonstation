@@ -103,7 +103,7 @@
 		UpdateIcon()
 	return
 
-/obj/machinery/portable_atmospherics/attackby(var/obj/item/W as obj, var/mob/user as mob)
+/obj/machinery/portable_atmospherics/attackby(var/obj/item/W, var/mob/user)
 	if(istype(W, /obj/item/tank))
 		if(!src.holding)
 			boutput(user, "<span class='notice'>You attach the [W.name] to the the [src.name]</span>")

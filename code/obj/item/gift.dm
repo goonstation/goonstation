@@ -27,7 +27,7 @@
 		src.style = pick("r", "rs", "g", "gs")
 		src.icon_state = "wrap_paper-[src.style]"
 
-/obj/item/wrapping_paper/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/wrapping_paper/attackby(obj/item/W, mob/user)
 	if(W.cant_drop || W.cant_self_remove)
 		return
 	if (!( locate(/obj/table, src.loc) ))
@@ -224,7 +224,7 @@
 		return
 	boutput(user, "<span class='notice'>You can't move.</span>")
 
-/obj/spresent/attackby(obj/item/W as obj, mob/user as mob)
+/obj/spresent/attackby(obj/item/W, mob/user)
 
 	if (!issnippingtool(W))
 		boutput(user, "<span class='notice'>I need a snipping tool for that.</span>")
