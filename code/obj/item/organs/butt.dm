@@ -55,7 +55,7 @@
 				if (src.s_tone)
 					src.color = src.s_tone
 
-	attack(var/mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	attack(var/mob/living/carbon/M, mob/living/carbon/user)
 		if (!ismob(M))
 			return
 

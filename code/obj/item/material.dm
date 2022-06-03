@@ -431,7 +431,7 @@
 		src.setMaterial(getMaterial("telecrystal"), appearance = 0, setname = 0)
 		return ..()
 
-	attack(mob/M as mob, mob/user as mob, def_zone)//spyguy apologizes in advance -- not somepotato i promise
+	attack(mob/M, mob/user, def_zone)//spyguy apologizes in advance -- not somepotato i promise
 		if(M == user)
 			boutput(M, "<b class='alert'>You eat the [html_encode(src)]!</b>")
 			boutput(M, "Nothing happens, though.")
@@ -591,7 +591,7 @@
 		icon_state += "[rand(1,3)]"
 		src.setItemSpecial(/datum/item_special/double)
 
-	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	attack(mob/living/carbon/M, mob/living/carbon/user)
 		if(!scalpel_surgery(M,user)) return ..()
 		else return
 

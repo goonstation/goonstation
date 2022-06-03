@@ -348,7 +348,7 @@
 		robot
 			desc = "Don't shove it up your nose, no matter how good of an idea that may seem to you. Wait, do you even have a nose? Maybe something else will happen if you try to stick it there."
 
-			attack(mob/M as mob, mob/user as mob, def_zone)
+			attack(mob/M, mob/user, def_zone)
 				if (M == user)
 					src.color = random_color()
 					src.font_color = src.color
@@ -602,7 +602,7 @@
 		src.chalk_health--
 		src.adjust_icon()
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		if (user == M && ishuman(M) && istype(M:mutantrace, /datum/mutantrace/lizard))
 			user.visible_message("[user] shoves \the [src] into [his_or_her(user)] mouth and takes a bite out of it! [pick("That's sick!", "That's metal!", "That's punk as fuck!", "That's hot!")]")
 			playsound(user.loc, "sound/items/eatfoodshort.ogg", rand(30, 60), 1)
@@ -690,7 +690,7 @@
 		else
 			. += "<br>Its label is set to \"[src.label]\"."
 
-	attack(mob/M, mob/user as mob)
+	attack(mob/M, mob/user)
 		/* lol vvv
 		if (!ismob(M)) // do this via afterattack()
 			return

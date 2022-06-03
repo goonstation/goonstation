@@ -74,7 +74,7 @@
 	///if the organ is currently acting as an organ in a body
 	var/in_body = FALSE
 
-	attack(var/mob/living/carbon/M as mob, var/mob/user as mob)
+	attack(var/mob/living/carbon/M, var/mob/user)
 		if (!ismob(M))
 			return
 

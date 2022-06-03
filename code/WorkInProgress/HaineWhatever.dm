@@ -211,7 +211,7 @@
 	burn_possible = 1
 	rand_pos = 1
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		src.add_fingerprint(user)
 		if (user.zone_sel.selecting == "head")
 			M.emote("sneeze")
@@ -1271,7 +1271,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 		..()
 		BLOCK_SETUP(BLOCK_KNIFE)
 
-	attack(mob/living/carbon/M as mob, mob/user as mob)
+	attack(mob/living/carbon/M, mob/user)
 		if (!ismob(M) || !length(M.contents))
 			return ..()
 		var/atom/movable/AM = pick(M.contents)
@@ -1428,7 +1428,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 		src.open = !src.open
 		src.UpdateIcon()
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if (H.makeup == 2) // it's messed up
@@ -1594,7 +1594,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	stamina_crit_chance = 5
 	rand_pos = 1
 
-	attack(mob/M as mob, mob/user as mob) // big ol hackery here
+	attack(mob/M, mob/user) // big ol hackery here
 		if (M && isvampire(M))
 			src.force = (src.force * 2)
 			src.stamina_damage = (src.stamina_damage * 2)

@@ -375,7 +375,7 @@
 			M.visible_message("<span class='alert'>The [M] steps too close to [src] and falls down!</span>")
 			return
 		..()
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		//if a wolf attacks with this, which they shouldn't be able to, they'll just drop it
 		if (iswerewolf(user))
 			user.u_equip(src)

@@ -23,7 +23,7 @@
 		..()
 		BLOCK_SETUP(BLOCK_ROD)
 
-	attack(mob/living/carbon/M as mob, mob/user as mob)
+	attack(mob/living/carbon/M, mob/user)
 		if (!wrench_surgery(M, user))
 			return ..()
 

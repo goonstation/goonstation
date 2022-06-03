@@ -668,7 +668,7 @@
 	if (src.pen)
 		. += "[pen] is sticking out of the pen slot."
 
-/obj/item/device/pda2/attack(mob/M as mob, mob/user as mob)
+/obj/item/device/pda2/attack(mob/M, mob/user)
 	if(src.scan_program)
 		return
 	else

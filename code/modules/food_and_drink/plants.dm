@@ -35,7 +35,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	proc/make_reagents()
 		made_reagents = 1
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		if (src.edible == 0)
 			if (user == M)
 				boutput(user, "<span class='alert'>You can't just cram that in your mouth, you greedy beast!</span>")

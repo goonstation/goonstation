@@ -185,7 +185,7 @@
 		else
 			return ..() // CALL your GODDAMN PARENTS
 
-	attack(atom/target, mob/user as mob)
+	attack(atom/target, mob/user)
 		if (isliving(target))
 			var/mob/living/M = target
 
@@ -1061,7 +1061,7 @@
 					playsound(user.loc, 'sound/items/matchstick_hit.ogg', 50, 1)
 					return
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (ishuman(M))
 			if (src.on > 0)
 				var/mob/living/carbon/human/fella = M
@@ -1169,7 +1169,7 @@
 			playsound(user, 'sound/items/zippo_close.ogg', 30, 1)
 			user.update_inhands()
 
-	attack(mob/target, mob/user as mob)
+	attack(mob/target, mob/user)
 		if (ishuman(target))
 			var/mob/living/carbon/human/fella = target
 

@@ -47,7 +47,7 @@
 		if (ishunter(usr))
 			. += "[src.preddesc]\nThis trophy has a value of [src.value]."
 
-	attack(var/mob/living/carbon/M as mob, var/mob/user as mob)
+	attack(var/mob/living/carbon/M, var/mob/user)
 		/* Override so we can check to see if we want to reinsert a skull into a corpse/body */
 		if (!ismob(M))
 			return ..()

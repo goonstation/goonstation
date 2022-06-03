@@ -5,7 +5,7 @@
 	var/bites = 8
 	var/list/youarebad = list("You're a liar.", "You're a cheat.","You're a fraud.") // h e h
 
-	attack(mob/M as mob, mob/user as mob) //edible hats? why not
+	attack(mob/M, mob/user) //edible hats? why not
 		if (M == user)
 			if (!src.bites)
 				boutput(user, "<span class='alert'>No more bites of \the [src] left, oh no!</span>")

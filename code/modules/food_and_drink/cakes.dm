@@ -529,7 +529,7 @@
 			return
 
 
-	attack(mob/M as mob, mob/user as mob, def_zone) //nom nom nom
+	attack(mob/M, mob/user, def_zone) //nom nom nom
 		if(!src.sliced)
 			if(user == M)
 				user.show_text("You can't just cram that in your mouth, you greedy beast!","red")
@@ -665,7 +665,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	icon_state = "cake1-base_cream"
 
-/obj/item/cake_item/attack(target as mob, mob/user as mob)
+/obj/item/cake_item/attack(target, mob/user)
 	var/iteminside = length(src.contents)
 	if(!iteminside)
 		user.show_text("The cake crumbles away!","red")

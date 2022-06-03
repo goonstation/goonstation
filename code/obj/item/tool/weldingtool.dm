@@ -42,7 +42,7 @@
 		. = ..()
 		. += "It has [get_fuel()] units of fuel left!"
 
-	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	attack(mob/living/carbon/M, mob/living/carbon/user)
 		if (!src.welding)
 			if (!src.cautery_surgery(M, user, 0, src.welding))
 				return ..()

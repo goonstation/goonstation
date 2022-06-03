@@ -294,7 +294,7 @@
 	src.icon_state = "bloodbowlball_air"
 	. = ..()
 
-/obj/item/bloodbowlball/attack(target as mob, mob/user as mob)
+/obj/item/bloodbowlball/attack(target, mob/user)
 	playsound(target, "sound/impact_sounds/Flesh_Stab_1.ogg", 60, 1)
 	if(iscarbon(target))
 		var/mob/living/carbon/targMob = target

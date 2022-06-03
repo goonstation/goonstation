@@ -402,7 +402,7 @@
 	/obj/item/pen)
 
 /*
-/obj/item/storage/secure/sbriefcase/attack(mob/M as mob, mob/user as mob)
+/obj/item/storage/secure/sbriefcase/attack(mob/M, mob/user)
 	if (usr.bioHolder.HasEffect("clumsy") && prob(50))
 		user.visible_message("<span class='alert'><b>[usr]</b> swings [src] too hard and nails \himself in the face.</span>")
 		random_brute_damage(usr, 10)

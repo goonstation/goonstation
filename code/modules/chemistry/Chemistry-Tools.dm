@@ -73,7 +73,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 
 	attack_self(mob/user as mob)
 		return
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		return
 	attackby(obj/item/I, mob/user)
 		if (reagents)

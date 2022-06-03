@@ -17,7 +17,7 @@
 	//its still a bit stronger than non-inventory interactions, why not
 	var/last_ignite = 0
 
-/obj/item/device/igniter/attack(mob/M as mob, mob/user as mob)
+/obj/item/device/igniter/attack(mob/M, mob/user)
 	if (ishuman(M))
 		if (M:bleeding || (M:butt_op_stage == 4 && user.zone_sel.selecting == "chest"))
 			if (!src.cautery_surgery(M, user, 15))

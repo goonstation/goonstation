@@ -34,7 +34,7 @@
 		process_burnout(mob/user)
 			return
 
-		attack(mob/living/M as mob, mob/user as mob)
+		attack(mob/living/M, mob/user)
 			..()
 			var/mob/living/silicon/robot/R = user
 			if (istype(R))
@@ -84,7 +84,7 @@
 					. += "\nThe bulb is in terrible condition"
 
 //I split attack and flash_mob into seperate procs so the rev_flash code is cleaner
-/obj/item/device/flash/attack(mob/living/M as mob, mob/user as mob)
+/obj/item/device/flash/attack(mob/living/M, mob/user)
 	if(isghostcritter(user)) return
 	src.flash_mob(M, user)
 
@@ -429,7 +429,7 @@
 	attackby(obj/item/W, mob/user)
 		return
 
-	attack(mob/living/M as mob, mob/user as mob)
+	attack(mob/living/M, mob/user)
 		flash_mob(M, user, 0)
 		flash_mob(M, user, 1)
 

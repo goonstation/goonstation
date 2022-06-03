@@ -237,7 +237,7 @@
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "emeter"
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		if (ismob(M))
 			user.visible_message("<b>[user]</b> takes a reading with the [src].",\
 			"[M]'s Thetan Level: [user == M ? 0 : rand(1,10)]")
@@ -282,7 +282,7 @@
 		..()
 		BLOCK_SETUP(BLOCK_ALL)
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		src.add_fingerprint(user)
 
 		playsound(M, "sound/musical_instruments/Bikehorn_1.ogg", 50, 1, -1)

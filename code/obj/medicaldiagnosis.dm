@@ -12,7 +12,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "stethoscope"
 	icon_state = "stethoscope"
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(user.a_intent == "help")

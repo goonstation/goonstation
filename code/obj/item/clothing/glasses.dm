@@ -46,7 +46,7 @@
 	desc = "A strip of cloth painstakingly designed to wear around your eyes so you cannot see."
 	block_vision = 1
 
-	attack(mob/M as mob, mob/user as mob, def_zone) //this is for equipping blindfolds on head attack.
+	attack(mob/M, mob/user, def_zone) //this is for equipping blindfolds on head attack.
 		if (user.zone_sel.selecting == "head" && ishuman(M)) //ishuman() works on monkeys too apparently.
 			if(user == M) //Accidentally blindfolding yourself might be annoying so I'm leaving that out.
 				boutput(user, "<span class='alert'>Put it on your eyes, dingus!</span>")
@@ -421,26 +421,26 @@
 		else
 			boutput(user, "<span class='alert'>You put on the glasses but they show no signal. The scuttlebot is likely destroyed.</span>")
 
-	attack(obj/item/W, mob/M)
-		if(istype(W, /mob/living/critter/robotic/scuttlebot))
+	attack(mob/W, mob/M)
+		if (istype(W, /mob/living/critter/robotic/scuttlebot))
 			var/mob/living/critter/robotic/scuttlebot/S = W
-			if (connected_scuttlebot != W)
+			if (connected_scuttlebot != S)
 				boutput(M, "You try to put the goggles back into the hat but it grumps at you, not recognizing the glasses.")
 				return 1
 
-			if (istype(S, /mob/living/critter/robotic/scuttlebot/weak))
+			if (istype(W, /mob/living/critter/robotic/scuttlebot/weak))
 				var/mob/living/critter/robotic/scuttlebot/weak/O = S
 				if (O.linked_hat != null)
 					O.linked_hat.set_loc(get_turf(O))
 				else
-					new /obj/item/clothing/head/det_hat/gadget(get_turf(src))
+					new /obj/item/clothing/head/det_hat/gadget(get_turf(O))
 				boutput(M, "You stuff the goggles back into the detgadget hat. It powers down with a low whirr.")
 				qdel(O)
 				qdel(src)
 			else
-				new /obj/item/clothing/head/det_hat/folded_scuttlebot(get_turf(src))
+				new /obj/item/clothing/head/det_hat/folded_scuttlebot(get_turf(S))
 				boutput(M, "You stuff the goggles back into the hat. It powers down with a low whirr.")
-				qdel(W)
+				qdel(S)
 				qdel(src)
 		else
 			..()

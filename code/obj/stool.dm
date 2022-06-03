@@ -907,7 +907,7 @@
 	qdel(src)
 	return
 
-/obj/item/chair/folded/attack(atom/target, mob/user as mob)
+/obj/item/chair/folded/attack(atom/target as mob, mob/user as mob, params)
 	var/oldcrit = src.stamina_crit_chance
 	if(iswrestler(user))
 		src.stamina_crit_chance = 100

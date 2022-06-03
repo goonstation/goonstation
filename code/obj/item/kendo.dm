@@ -144,7 +144,7 @@
 		if(guard != user.a_intent)
 			change_guard(user,user.a_intent)
 
-	attack(mob/living/carbon/human/defender as mob, mob/living/carbon/human/attacker as mob)
+	attack(mob/living/carbon/human/defender, mob/living/carbon/human/attacker)
 		if(ishuman(defender))
 			if(defender.equipped() && istype(defender.equipped(),/obj/item/shinai))
 				var/obj/item/shinai/S = defender.equipped()

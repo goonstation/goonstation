@@ -448,7 +448,7 @@
 		src.pathogen = null
 		used = 1
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		if (used)
 			boutput(user, "<span class='alert'>The [src.name] is empty.</span>")
 			return

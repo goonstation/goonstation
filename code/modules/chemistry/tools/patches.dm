@@ -127,7 +127,7 @@
 				apply_to(M,usr)
 				attach_sticker_manual(M)
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (src.in_use)
 			//DEBUG_MESSAGE("[src] in use")
 			return
@@ -533,7 +533,7 @@
 			return
 		..()
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (src.borg == 1 && !issilicon(user))
 			user.show_text("This item is not designed with organic users in mind.", "red")
 			return

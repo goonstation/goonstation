@@ -262,7 +262,7 @@
 			..()
 			build_overlay()
 
-		attack(mob/M as mob, mob/user as mob)
+		attack(mob/M, mob/user)
 			if (src.open)
 				src.add_fingerprint(user)
 				var/obj/item/I = src.take_from()

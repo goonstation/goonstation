@@ -377,7 +377,7 @@
 			src.last_use = world.time
 			return
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		src.vend_this = null
 		user.show_text("Selection cleared.", "red")
 		return
@@ -508,7 +508,7 @@ ported and crapped up by: haine
 		src.tanks += new_tank
 		src.hydro_reagent_names += new_tank.label_name // the name list is so we don't have to call reagent_id_to_name() each time we wanna know the names of our reagents
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		return // Don't attack people with the hoses, god you people!
 
 	proc/regenerate_reagents()

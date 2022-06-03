@@ -52,7 +52,7 @@ CONTAINS:
 		BLOCK_SETUP(BLOCK_KNIFE)
 
 
-	attack(mob/living/carbon/M as mob, mob/user as mob)
+	attack(mob/living/carbon/M, mob/user)
 		if (src.reagents && src.reagents.total_volume)
 			logTheThing("combat", user, M, "used [src] on [constructTarget(M,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
 		else
@@ -122,7 +122,7 @@ CONTAINS:
 		AddComponent(/datum/component/transfer_on_attack)
 		BLOCK_SETUP(BLOCK_LARGE)
 
-	attack(mob/living/carbon/M as mob, mob/user as mob)
+	attack(mob/living/carbon/M, mob/user)
 		if (src.reagents && src.reagents.total_volume)
 			logTheThing("combat", user, M, "used [src] on [constructTarget(M,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
 		else
@@ -188,7 +188,7 @@ CONTAINS:
 		setProperty("piercing", 80)
 
 
-	attack(mob/living/carbon/M as mob, mob/user as mob)
+	attack(mob/living/carbon/M, mob/user)
 		if (src.reagents && src.reagents.total_volume)
 			logTheThing("combat", user, M, "used [src] on [constructTarget(M,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
 		else
@@ -244,7 +244,7 @@ CONTAINS:
 		. = ..()
 		. += "There are [src.ammo] staples left."
 
-	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	attack(mob/living/carbon/M, mob/living/carbon/user)
 		if (!ismob(M))
 			return
 
@@ -389,7 +389,7 @@ CONTAINS:
 		src.emagged = 0
 		return 1
 
-	attack(mob/living/M as mob, mob/user as mob)
+	attack(mob/living/M, mob/user)
 		if (!isliving(M) || issilicon(M))
 			return ..()
 		if (src.defibrillate(M, user, src.emagged, src.makeshift, src.cell))
@@ -741,7 +741,7 @@ CONTAINS:
 	var/in_use = 0
 	hide_attack = 2
 
-	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	attack(mob/living/carbon/M, mob/living/carbon/user)
 		if (!suture_surgery(M,user))
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
@@ -815,7 +815,7 @@ CONTAINS:
 				if (6 to INFINITY)
 					. += "None of it has been used."
 
-	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	attack(mob/living/carbon/M, mob/living/carbon/user)
 		if (!src.uses || src.icon_state == "bandage-item-0")
 			user.show_text("There's nothing left of [src]!", "red")
 			return
@@ -1010,7 +1010,7 @@ CONTAINS:
 				if (100 to INFINITY)
 					. += "<span class='notice'>It's full.</span>"
 
-	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	attack(mob/living/carbon/M, mob/living/carbon/user)
 		if (volume <= 0)
 			user.show_text("There's nothing left in [src]!", "red")
 			return
@@ -1252,7 +1252,7 @@ CONTAINS:
 	stamina_crit_chance = 15
 	hide_attack = 2
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (!ishuman(M))
 			if (user.a_intent == INTENT_HELP)
 				return
@@ -1289,7 +1289,7 @@ CONTAINS:
 /* -------------------- Reflex Hammer -------------------- */
 /* ======================================================= */
 /*
-/obj/item/tinyhammer/attack(mob/M as mob, mob/user as mob, def_zone) // the rest of this is defined in shipalert.dm
+/obj/item/tinyhammer/attack(mob/M, mob/user, def_zone) // the rest of this is defined in shipalert.dm
 	// todo: give people's limbs the ol' tappa tappa
 	// also make sure intent, force and armor matter
 	if (!def_zone)
@@ -1391,7 +1391,7 @@ CONTAINS:
 	brightness = 2
 	var/anim_duration = 10 // testing var so I can adjust in-game to see what looks nice
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		// todo: check zone, make sure people are shining the light 1) at a human 2) in the eyes, clauses for whatever else
 		if (!def_zone && user?.zone_sel?.selecting)
 			def_zone = user.zone_sel.selecting

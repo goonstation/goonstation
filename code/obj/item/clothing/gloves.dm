@@ -68,7 +68,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		if (length(newID))
 			return newID
 
-	attack(var/atom/target as mob, var/atom/challenger as mob)
+	attack(var/atom/target, var/atom/challenger)
 		// you, sir, have offended my honour!
 		if (!isliving(target))
 			return ..()
