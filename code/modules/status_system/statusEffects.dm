@@ -2178,7 +2178,7 @@
 	onUpdate(timePassed)
 		var/mob/living/critter/flock/drone/drone = owner
 		if (!istype(drone) || !drone.absorber.item)
-			duration = 0
+			owner.delStatus(src.id)
 			return
 		drone.absorber.tick(timePassed/10)
 /datum/statusEffect/spry
