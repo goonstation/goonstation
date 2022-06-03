@@ -344,7 +344,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 		var/datum/targetable/macho/macho_heartpunch/macho_heartpunch = usr.abilityHolder.getAbility(/datum/targetable/macho/macho_heartpunch)
 		if (macho_heartpunch)
 			var/mob/M = usr
-			M.targeting_ability = macho_grasp
+			M.targeting_ability = macho_heartpunch
 			M.update_cursor()
 
 /*
