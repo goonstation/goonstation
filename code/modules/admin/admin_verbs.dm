@@ -1178,14 +1178,14 @@ var/list/fun_images = list()
 	else
 		delay = inputDelay
 
-	var/confirm2 = tgui_alert(usr, "Make everyone invisible? (Literally every mob)", "Invisible Mobs?", list("No", "Yes"))
+	var/confirm2 = tgui_alert(usr, "Make everyone invisible? (Literally every mob)", "Invisible Mobs?", list("Yes", "No"))
 	if (confirm2 == "Yes")
 		//Make everyone invisible so they don't get in the way of screenshots
 		for (var/mob/M in mobs)
 			if (M.ckey)
 				M.alpha = 0
 
-	var/confirm3 = tgui_alert(usr, "Max out all power devices? (Prevents lights from going out mid-mapping)", "Max Power?", list("No", "Yes"))
+	var/confirm3 = tgui_alert(usr, "Max out all power devices? (Prevents lights from going out mid-mapping)", "Max Power?", list("Yes", "No"))
 	if (confirm3 == "Yes")
 		//Max out all power (to avoid lights dying mid mapping)
 		for(var/obj/machinery/power/apc/C in machine_registry[MACHINES_POWER])
@@ -1200,7 +1200,7 @@ var/list/fun_images = list()
 			S.UpdateIcon()
 			S.power_change()
 
-	var/confirm4 = tgui_alert(usr, "Turn space bright pink? (For post processing/optimizations)", "Pink Background?", list("No", "Yes"))
+	var/confirm4 = tgui_alert(usr, "Turn space bright pink? (For post processing/optimizations)", "Pink Background?", list("Yes", "No"))
 	if (confirm4 == "Yes")
 		//Make every space tile bright pink (for further processing via local image manipulation)
 		for (var/turf/space/S in world)
@@ -1210,13 +1210,13 @@ var/list/fun_images = list()
 				S.icon_state = "etc"
 				S.color = transparentColor
 
-	var/confirm5 = tgui_alert(usr, "Make everything full bright?", "Fullbright?", list("No", "Yes"))
+	var/confirm5 = tgui_alert(usr, "Make everything full bright?", "Fullbright?", list("Yes", "No"))
 	if (confirm5 == "Yes")
 		var/atom/plane = src.get_plane(PLANE_LIGHTING)
 		if (plane)
 			plane.alpha = 0
 
-	var/confirm6 = tgui_alert(usr, "Disable drop shadowing?", "Dropshadows?", list("No", "Yes"))
+	var/confirm6 = tgui_alert(usr, "Disable drop shadowing?", "Dropshadows?", list("Yes", "No"))
 	if (confirm6 == "Yes")
 		winset(src, "menu.set_shadow", "is-checked=false")
 		src.apply_depth_filter()
