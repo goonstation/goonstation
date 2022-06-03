@@ -1331,7 +1331,7 @@
 
 	attack_hand(mob/user)
 		if (!owner_prints)
-			boutput(user, "<span class='alert'>[src] has accepted your fingerprint ID. You are its owner!</span>")
+			boutput(user, "<span class='alert'>[src] has accepted your DNA string. You are its owner!</span>")
 			assign_name(user)
 		..()
 
@@ -1341,7 +1341,7 @@
 	attack_self(mob/user as mob)
 		src.add_fingerprint(user)
 		if (!owner_prints)
-			boutput(user, "<span class='alert'>[src] has accepted your fingerprint ID. You are its owner!</span>")
+			boutput(user, "<span class='alert'>[src] has accepted your DNA string. You are its owner!</span>")
 			assign_name(user)
 		else
 			boutput(user, "<span class='notice'>There don't seem to be any buttons on [src] to press.</span>")
