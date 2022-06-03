@@ -378,6 +378,43 @@
 	icon_state = "twopatch"
 	item_state = "radio"
 	block_vision = TRUE
+	var/pinhole = FALSE
+	var/mob/living/carbon/human/equipper
+
+	equipped(var/mob/user, var/slot)
+		var/mob/living/carbon/human/H = user
+		if(istype(H) && slot == SLOT_GLASSES)
+			equipper = user//todo: this is prooobably redundant
+		return ..()
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if ((issnippingtool(W)) && !pinhole)
+			if( equipper && equipper.glasses == src )
+				var/obj/item/organ/eye/theEye1 = equipper.drop_organ("left_eye")
+				var/obj/item/organ/eye/theEye2 = equipper.drop_organ("right_eye")
+				pinhole = TRUE
+				block_vision = null
+				appearance_flags |= RESET_COLOR
+				if(!theEye1)
+					user.show_message("<span class='alert'>Um. Wow. That's kinda grode.<span>")
+					return ..()
+				theEye1.appearance_flags |= RESET_COLOR
+				theEye2.appearance_flags |= RESET_COLOR
+				user.show_message("<span class='alert'>You stab a pair of holes in [src].  Unfortunately, you also stab holes into your eyes and when you pull [W] away your eyes come with it!!</span>")
+				if (!pinhole)
+					desc = "[desc] Unfortunately, its not so cool anymore since there's a pair of tiny pinholes in it."
+				return
+			else
+				pinhole = TRUE
+				block_vision = null
+				appearance_flags |= RESET_COLOR
+				user.show_message("<span class='notice'>You poke a pair of tiny pinholes into [src]!</span>")
+				if (!pinhole)
+					desc = "[desc] Unfortunately, its not so cool anymore since there's a pair of tiny pinholes in it."
+		if ((isscrewingtool(W) || istype(W, /obj/item/pen)) && !pinhole) //to give people a hint
+			user.show_message("<span class='notice'> You try to pierce [src] with [W], but it just isn't cool enough. You'd need something with double blades to match the coolness.")
+		if (pinhole)
+			block_vision = null
 
 /obj/item/clothing/glasses/vr
 	name = "\improper VR goggles"
