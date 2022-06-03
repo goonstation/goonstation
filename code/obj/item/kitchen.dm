@@ -604,7 +604,7 @@ TRAYS
 	/// Called when you throw or smash the plate, throwing the contents everywhere
 	proc/shit_goes_everywhere()
 		src.visible_message("<span class='alert'>Everything on \the [src] goes flying!</span>")
-		for (var/obj/item/food in src)
+		for (var/atom/movable/food in src)
 			src.remove_contents(food)
 			food.throw_at(get_offset_target_turf(src.loc, rand(throw_dist)-rand(throw_dist), rand(throw_dist)-rand(throw_dist)), 5, 1)
 
