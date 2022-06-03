@@ -150,6 +150,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				return
 
 			src.Eat(user,user)
+		else if (istype(W, /obj/item/tongs))
+			if (istype(src.loc, /obj/item/storage))
+				boutput(user, "You take [src] out of [src.loc].")
+				user.put_in_hand_or_drop(src)
+			else
+				src.AttackSelf(user)
 		else
 			..()
 
@@ -310,6 +316,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 	afterattack(obj/target, mob/user, flag)
 		return
+
+	MouseDrop_T(obj/item/reagent_containers/food/snacks/O, mob/living/user)
+		if (istype(O) && istype(user) && in_interact_range(O, user) && in_interact_range(src, user))
+			return src.Attackby(O, user)
+		return ..()
 
 	get_desc(dist, mob/user)
 		if(!user.traitHolder?.hasTrait("training_chef"))
