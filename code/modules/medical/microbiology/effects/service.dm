@@ -47,7 +47,9 @@ ABSTRACT_TYPE(/datum/microbioeffects/service)
 //datum/microbioeffects/service/breadmoonrising
 	//On object:
 		//Check if it is bread
-		//
+		//???
+		//Make bread
+		//Make more bread
 
 
 //This is just calomel, keeping for reference

@@ -7,15 +7,17 @@ ABSTRACT_TYPE(/datum/microbioeffects/malevolent)
 /datum/microbioeffects/malevolent/coughing
 	name = "Coughing"
 	desc = "Violent coughing occasionally plagues the infected."
+	infect_message = "<span class='alert'>A drop of saliva lands on your face.</span>"
 
 	mob_act(var/mob/M as mob, var/datum/microbe/origin)
 		if (prob(origin.probability))
 			M.show_message("<span class='alert'>You cough.</span>")
+			src.infect_direct(M, origin)
 
 	may_react_to()
 		return "The pathogen appears to generate a high amount of fluids."
 
-datum/microbioeffects/malevolent/indigestion
+/datum/microbioeffects/malevolent/indigestion
 	name = "Indigestion"
 	desc = "A bad case of indigestion which occasionally cramps the infected."
 
@@ -30,7 +32,7 @@ datum/microbioeffects/malevolent/indigestion
 	may_react_to()
 		return "The pathogen appears to react to hydrating agents."
 
-datum/microbioeffects/malevolent/muscleache
+/datum/microbioeffects/malevolent/muscleache
 	name = "Muscle Ache"
 	desc = "The infected feels a slight, constant aching of muscles."
 
@@ -45,14 +47,15 @@ datum/microbioeffects/malevolent/muscleache
 	may_react_to()
 		return "The pathogen appears to react to hydrating agents."
 
-datum/microbioeffects/malevolent/sneezing
+/datum/microbioeffects/malevolent/sneezing
 	name = "Sneezing"
 	desc = "The infected sneezes frequently."
+	infect_message = "<span class='alert'>You feel mucus landing on your face.</span>"
 
 	mob_act(var/mob/M as mob, var/datum/microbe/origin)
 		if (prob(origin.probability))
 			M.visible_message("<span class='alert'>[M] sneezes!</span>", "<span class='alert'>You sneeze.</span>", "<span class='alert'>You hear someone sneezing.</span>")
-			//src.infect_cloud(M, origin)
+			src.infect_direct(M, origin)
 
 	may_react_to()
 		return "The pathogen appears to generate a high amount of fluids."
@@ -61,34 +64,41 @@ datum/microbioeffects/malevolent/sneezing
 		if (R == "pepper")
 			return "The pathogen violently discharges fluids when coming in contact with pepper."
 
-/*
-datum/pathogeneffects/malevolent/gasping
+/datum/microbioeffects/malevolent/leprosy
+	name = "Leprosy"
+	desc = "The infected individual is losing limbs."
+
+	mob_act(var/mob/living/carbon/human/M, var/datum/microbe/origin)
+		if (!(prob(origin.probability)))
+			return
+		M.show_message(pick("<span class='alert'>You feel a bit loose...</span>", "<span class='alert'>You feel like you're falling apart.</span>"))
+		/*if (prob(origin.probability/2))
+			var/limb_name = pick("l_arm","r_arm","l_leg","r_leg")
+			var/obj/item/parts/limb = M.limbs.vars[limb_name]
+				if (!istype((M.limbs.vars[limb_name])))		//Check to see if the chosen limb is there or not. Return if there is no limb.
+					return
+				if (!(limb.remove_stage < 2))
+					return
+				limb.remove_stage = 2
+				M.show_message("<span class='alert'>Your [limb] comes loose!</span>")
+				SPAWN(rand(150, 200))
+					if (limb.remove_stage == 2)
+						limb.remove(0)*/
+	may_react_to()
+		return "The pathogen appears to be rapidly breaking down certain materials around it."
+
+
+/datum/microbioeffects/malevolent/gasping
 	name = "Gasping"
 	desc = "The infected has trouble breathing."
-	infect_type = INFECT_NONE
-	rarity = THREAT_TYPE3 //Superceded by pulmonary oedema (4) and internal haemorrhaging (5), stronger than cough (2) and chest pain (1)
-	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (origin.in_remission)
+
+	mob_act(var/mob/M as mob, var/datum/microbe/origin)
+		if (!(prob(origin.probability)))
 			return
-		switch (origin.stage)
-			if (1)
-				if (prob(3))
-					M.emote("gasp")
-			if (2)
-				if (prob(5))
-					M.emote("gasp")
-			if (3)
-				if (prob(7))
-					M.emote("gasp")
-			if (4)
-				if (prob(10))
-					M.emote("gasp")
-					M.take_oxygen_deprivation(1)
-			if (5)
-				if (prob(10))
-					M.emote("gasp")
-					M.take_oxygen_deprivation(1)
-					M.losebreath += 1
+		M.emote("gasp")
+		if(prob(origin.probability*2) && origin.probability > 3)
+			M.take_oxygen_deprivation(1)
+			M.losebreath += 1
 
 	may_react_to()
 		return "The pathogen appears to create bubbles of vacuum around its affected area."
@@ -125,19 +135,33 @@ datum/pathogeneffects/malevolent/gasping
 	may_react_to()
 		return "The pathogen appears to be rather displeased."
 */
-*/
-datum/microbioeffects/malevolent/shivering
-	name = "Shivering"
-	desc = "The pathogen slightly raises the homeostatic set point of the infected."
+
+/datum/microbioeffects/malevolent/chilly
+	name = "Chills"
+	desc = "The pathogen lowers the homeostatic set point of the infected."
 
 	mob_act(var/mob/M as mob, var/datum/microbe/origin)
-		if (prob(origin.probability))
+		if (prob(origin.probability*2))
 			M:emote("shiver")
+			M.show_message("<span class='alert'> You feel unusually hot. </span>")
+			M.bodytemperature -= origin.probability
 
 	may_react_to()
-		return "The pathogen appears to be shivering."
+		return "The microbes appear to be thermally active."
 
-datum/microbioeffects/malevolent/sweating
+/datum/microbioeffects/malevolent/fever
+	name = "Fever"
+	desc = "The pathogen raises the homeostatic set point of the infected."
+
+	mob_act(var/mob/M as mob, var/datum/microbe/origin)
+		if (prob(origin.probability*2))
+			M.show_message("<span class='alert'> You feel unusually cold. </span>")
+			M.bodytemperature += origin.probability
+
+	may_react_to()
+		return "The microbes appear to be thermally active."
+
+/datum/microbioeffects/malevolent/sweating
 	name = "Sweating"
 	desc = "The infected person sweats like a pig."
 	infect_attempt_message = "Ew, their hands feel really gross and sweaty!"
@@ -146,8 +170,7 @@ datum/microbioeffects/malevolent/sweating
 	mob_act(var/mob/M as mob, var/datum/microbe/origin)
 		if (prob(origin.probability))
 			M.show_message("<span class='alert'> [pick(choices)] </span>")
-		//if (prob(1))
-			//src.infect_puddle(M, origin)
+			src.infect_direct(M, origin)
 
 	may_react_to()
 		return "The pathogen appears to generate a high amount of fluids."
@@ -155,6 +178,42 @@ datum/microbioeffects/malevolent/sweating
 	react_to(var/R, zoom)
 		if (R == "cryostylane")
 			return "The cold substance appears to affect the fluid generation of the pathogen."
+
+/datum/microbioeffects/malevolent/beesneeze
+	name = "Projectile Bee Egg Sneezing"
+	desc = "The infected sneezes bee eggs frequently."
+	proc/sneeze(var/mob/M, var/datum/microbe/origin)
+		if (!M || !origin)
+			return
+		var/turf/T = get_turf(M)
+		var/flyroll = rand(10)
+		var/turf/target = locate(M.x,M.y,M.z)
+		var/chosen_phrase = pick("<B><span class='alert'>W</span><span class='notice'>H</span>A<span class='alert'>T</span><span class='notice'>.</span></B>","<span class='alert'><B>What the [pick("hell","fuck","christ","shit")]?!</B></span>","<span class='alert'><B>Uhhhh. Uhhhhhhhhhhhhhhhhhhhh.</B></span>","<span class='alert'><B>Oh [pick("no","dear","god","dear god","sweet merciful [pick("neptune","poseidon")]")]!</B></span>")
+		switch (M.dir)
+			if (NORTH)
+				target = locate(M.x, M.y+flyroll, M.z)
+			if (SOUTH)
+				target = locate(M.x, M.y-flyroll, M.z)
+			if (EAST)
+				target = locate(M.x+flyroll, M.y, M.z)
+			if (WEST)
+				target = locate(M.x-flyroll, M.y, M.z)
+		var/obj/item/reagent_containers/food/snacks/ingredient/egg/bee/toThrow = new /obj/item/reagent_containers/food/snacks/ingredient/egg/bee(T)
+		M.visible_message("<span class='alert'>[M] sneezes out a space bee egg!</span> [chosen_phrase]", "<span class='alert'>You sneeze out a bee egg!</span> [chosen_phrase]", "<span class='alert'>You hear someone sneezing.</span>")
+		toThrow.throw_at(target, 6, 1)
+		//src.infect_cloud(M, origin, origin.spread) // TODO: at some point I want the bees to spread this instead
+
+	mob_act(var/mob/M as mob, var/datum/microbe/origin)
+		if (prob(origin.probability*2) && origin.probability > 3)
+			sneeze(M, origin)
+
+	may_react_to()
+		return "The pathogen appears to generate a high amount of fluids. Honey, to be more specific."
+
+	react_to(var/R, var/zoom)
+		if (R == "pepper")
+			return "The pathogen violently discharges honey when coming in contact with pepper."
+
 /*
 datum/pathogeneffects/malevolent/disorientation
 	name = "Disorientation"
@@ -949,32 +1008,6 @@ datum/pathogeneffects/malevolent/seriouschills/ultimate
 		if (R == "phlogiston" || R == "infernite")
 			return "The hot reagent doesn't affect the trail of ice at all!"
 
-datum/pathogeneffects/malevolent/leprosy
-	name = "Leprosy"
-	desc = "The infected individual is losing limbs."
-	rarity = THREAT_TYPE5
-
-	mob_act(var/mob/living/carbon/human/M, var/datum/pathogen/origin)
-		if (origin.stage < 3 || !!origin.in_remission)
-			return
-		switch (origin.stage)
-			if (3)
-				if (prob(15))
-					M.show_message(pick("<span class='alert'>You feel a bit loose...</span>", "<span class='alert'>You feel like you're falling apart.</span>"))
-			if (4 to 5)
-				if (prob(2 + origin.stage))
-					var/limb_name = pick("l_arm","r_arm","l_leg","r_leg")
-					var/obj/item/parts/limb = M.limbs.vars[limb_name]
-					if (istype(limb))
-						if (limb.remove_stage < 2)
-							limb.remove_stage = 2
-							M.show_message("<span class='alert'>Your [limb] comes loose!</span>")
-							SPAWN(rand(150, 200))
-								if (limb.remove_stage == 2)
-									limb.remove(0)
-	may_react_to()
-		return "The pathogen appears to be rapidly breaking down certain materials around it."
-
 datum/pathogeneffects/malevolent/senility
 	name = "Senility"
 	desc = "Infection damages nerve cells in the host's brain."
@@ -1011,58 +1044,6 @@ datum/pathogeneffects/malevolent/senility
 					M.take_brain_damage(3)
 	may_react_to()
 		return "The pathogen appears to have a gland that may affect neural functions."
-
-datum/pathogeneffects/malevolent/beesneeze
-	name = "Projectile Bee Egg Sneezing"
-	desc = "The infected sneezes bee eggs frequently."
-	rarity = THREAT_TYPE3
-	proc/sneeze(var/mob/M, var/datum/pathogen/origin)
-		if (!M || !origin)
-			return
-		var/turf/T = get_turf(M)
-		var/flyroll = rand(10)
-		var/turf/target = locate(M.x,M.y,M.z)
-		var/chosen_phrase = pick("<B><span class='alert'>W</span><span class='notice'>H</span>A<span class='alert'>T</span><span class='notice'>.</span></B>","<span class='alert'><B>What the [pick("hell","fuck","christ","shit")]?!</B></span>","<span class='alert'><B>Uhhhh. Uhhhhhhhhhhhhhhhhhhhh.</B></span>","<span class='alert'><B>Oh [pick("no","dear","god","dear god","sweet merciful [pick("neptune","poseidon")]")]!</B></span>")
-		switch (M.dir)
-			if (NORTH)
-				target = locate(M.x, M.y+flyroll, M.z)
-			if (SOUTH)
-				target = locate(M.x, M.y-flyroll, M.z)
-			if (EAST)
-				target = locate(M.x+flyroll, M.y, M.z)
-			if (WEST)
-				target = locate(M.x-flyroll, M.y, M.z)
-		var/obj/item/reagent_containers/food/snacks/ingredient/egg/bee/toThrow = new /obj/item/reagent_containers/food/snacks/ingredient/egg/bee(T)
-		M.visible_message("<span class='alert'>[M] sneezes out a space bee egg!</span> [chosen_phrase]", "<span class='alert'>You sneeze out a bee egg!</span> [chosen_phrase]", "<span class='alert'>You hear someone sneezing.</span>")
-		toThrow.throw_at(target, 6, 1)
-		src.infect_cloud(M, origin, origin.spread) // TODO: at some point I want the bees to spread this instead
-
-	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (origin.in_remission)
-			return
-		switch (origin.stage)
-			if (1)
-				if (prob(4))
-					sneeze(M, origin)
-			if (2)
-				if (prob(6))
-					sneeze(M, origin)
-			if (3)
-				if (prob(8))
-					sneeze(M, origin)
-			if (4)
-				if (prob(10))
-					sneeze(M, origin)
-			if (5)
-				if (prob(12))
-					sneeze(M, origin)
-
-	may_react_to()
-		return "The pathogen appears to generate a high amount of fluids. Honey, to be more specific."
-
-	react_to(var/R, var/zoom)
-		if (R == "pepper")
-			return "The pathogen violently discharges honey when coming in contact with pepper."
 
 datum/pathogeneffects/malevolent/mutation
 	name = "Random Mutations"

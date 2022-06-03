@@ -69,7 +69,7 @@ ABSTRACT_TYPE(/datum/microbioeffects/tells)
 			M.glasses = N
 			M.update_clothing()
 
-	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act(var/mob/M as mob, var/datum/microbe/origin)
 		if (!ishuman(M))
 			return
 

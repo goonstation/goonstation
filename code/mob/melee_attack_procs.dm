@@ -427,14 +427,14 @@
 	var/list/obj/item/limbs = list()
 	var/list/obj/item/loose = list()
 	var/list/obj/item/fixed_in_place = list()
-	//if (ishuman(src))
-		//var/mob/living/carbon/human/H2 = src
-		//for (var/uid in H2.microbes)
-			//var/datum/pathogen/P = H2.microbes[uid]
-			//var/ret = P.ondisarm(target, 1)
-			//if (!ret)
-				//disarm_success = 0
-				//break
+	if (ishuman(src))
+		var/mob/living/carbon/human/H2 = src
+		for (var/uid in H2.microbes)
+			var/datum/microbe/P = H2.microbes[uid]
+			var/ret = P.ondisarm(target, 1)
+			if (!ret)
+				disarm_success = 0
+				break
 	if(length(items))
 		var/multi = length(items) > 1
 		for(var/obj/item/I in items)

@@ -7,12 +7,20 @@ ABSTRACT_TYPE(/datum/microbioeffects/material)
 	name = "Organic Glass"
 	desc = "The microbes produce silicate, reinforcing and repairing glass structures."
 
-	object_act(var/obj/O, var/datum/microbe/origin)
-		var/volume = origin.probability 				//integers good
-		if(istype(O,/obj/window))
-			var/turf/T = get_turf(O)
-			T.reagents.add_reagent("silicate", volume)
-			T.reagents.update_total()
+	object_act(var/obj/O, var/datum/microbe/origin)				//integers good
+		var/max_reinforce = 500
+		if(istype(O,/obj/window))						//Convair880's silicate code used here
+			var/obj/window/W = O
+			if (W.health >= max_reinforce)
+				return
+			var/do_reinforce = W.health + origin.probability
+			if ((W.health + do_reinforce) > max_reinforce)
+				do_reinforce = max(0, (max_reinforce - W.health))
+			W.health += do_reinforce
+			W.health_max = W.health
+			var/icon/I = icon(W.icon)
+			I.ColorTone(rgb(165,242,243))
+			W.icon = I
 
 	may_react_to()
 		return "The pathogen appears to produce a large volume of solids."

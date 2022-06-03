@@ -149,7 +149,7 @@
 				pathogen_data = "<span class='alert'>Scans indicate the presence of [H.microbes.len > 1 ? "[H.microbes.len] " : null]pathogenic bodies.</span>"
 				for (var/uid in H.microbes)
 					var/datum/microbe/P = H.microbes[uid]
-					pathogen_data += "<br>&emsp;<span class='alert'>Strain: [P.name]. Suggested suppressant: [P.suppressant.therapy].</span>."
+					pathogen_data += "<br>&emsp;<span class='alert'>Strain: [P.name]. Suggested suppressant: [P.suppressant.therapy].</span>"
 
 			if (H.get_organ("brain"))
 				if (H.get_brain_damage() >= 100)

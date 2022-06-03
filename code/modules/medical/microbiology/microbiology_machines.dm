@@ -394,7 +394,7 @@
 	var/list/transient_sequences = list()
 
 /obj/machinery/computer/pathology
-	name = "Pathology Research"
+	name = "Microbiology Research"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "pathology"
 	desc = "A bulky machine used to control the pathogen manipulator."
@@ -1708,7 +1708,7 @@
 */
 /obj/machinery/vending/pathology
 	name = "Path-o-Matic"
-	desc = "Pathology equipment dispenser."
+	desc = "Microbiology equipment dispenser."
 	icon_state = "path"
 	icon_panel = "standard-panel"
 	icon_deny = "path-deny"

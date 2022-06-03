@@ -8,10 +8,9 @@ ABSTRACT_TYPE(/datum/microbioeffects/chemistry)
 //The following subdatum would allow limited chemical production for specific chems:
 /**
  * Space cleaner
- * Luminol
  * Styptic
  * Silver Sulfadizine
- * Charcoal
+ * Charcoal		//Hopefully this one is blessed
  * Epinephrine
  * Mutadone
  */
@@ -25,10 +24,125 @@ ABSTRACT_TYPE(/datum/microbioeffects/chemistry)
 		//Produce more of it using prob(probability)
 		//Stops when duration hits 0.
 
+/datum/microbioeffects/chemistry/spacecleaner
+	name = "Space Cleaner Production"
+	desc = "The microbial culture produces space cleaner."
 
+	object_act(var/obj/O, var/datum/microbe/origin)
+		if (!(istype(O, /obj/item/reagent_containers)))
+			return
+		if (O.reagents.is_full())
+			return
+		else
+			O.reagents.add_reagent("cleaner", origin.probability)
+			return
 
+	react_to(var/R, var/zoom)
+		if (!(R == "water"))
+			return "The microbes rapidly consume the water and excrete space cleaner."
 
+	may_react_to()
+		return "The microbes appear to produce some kind of chemical."
 
+/datum/microbioeffects/chemistry/styptic
+	name = "Styptic Powder Production"
+	desc = "The microbial culture produces stypic powder."
+
+	object_act(var/obj/O, var/datum/microbe/origin)
+		if (!(istype(O, /obj/item/reagent_containers)))
+			return
+		if (O.reagents.is_full())
+			return
+		else
+			O.reagents.add_reagent("styptic_powder", origin.probability)
+			return
+
+	react_to(var/R, var/zoom)
+		if (!(R == "carbon"))
+			return "The microbes rapidly consume the carbon sample and excrete styptic powder."
+
+	may_react_to()
+		return "The microbes appear to produce some kind of chemical."
+
+/datum/microbioeffects/chemistry/sulfadizine
+	name = "Silver Sulfadizine Production"
+	desc = "The microbial culture produces silver sulfadizine."
+
+	object_act(var/obj/O, var/datum/microbe/origin)
+		if (!(istype(O, /obj/item/reagent_containers)))
+			return
+		if (O.reagents.is_full())
+			return
+		else
+			O.reagents.add_reagent("silver_sulfadizine", origin.probability)
+			return
+
+	react_to(var/R, var/zoom)
+		if (!(R == "carbon"))
+			return "The microbes rapidly consume the carbon sample and excrete silver sulfadizine."
+
+	may_react_to()
+		return "The microbes appear to produce some kind of chemical."
+
+/datum/microbioeffects/chemistry/charcoal
+	name = "Charcoal Production"
+	desc = "The microbial culture produces charcoal."
+
+	object_act(var/obj/O, var/datum/microbe/origin)
+		if (!(istype(O, /obj/item/reagent_containers)))
+			return
+		if (O.reagents.is_full())
+			return
+		else
+			O.reagents.add_reagent("charcoal", origin.probability)
+			return
+
+	react_to(var/R, var/zoom)
+		if (!(R == "carbon"))
+			return "The microbes attach to the carbon sample and form spires of charcoal."
+
+	may_react_to()
+		return "The microbes appear to produce some kind of chemical."
+
+/datum/microbioeffects/chemistry/epinephrine
+	name = "Epinepherine Production"
+	desc = "The microbial culture produces epinepherine."
+
+	object_act(var/obj/O, var/datum/microbe/origin)
+		if (!(istype(O, /obj/item/reagent_containers)))
+			return
+		if (O.reagents.is_full())
+			return
+		else
+			O.reagents.add_reagent("epinepherine", origin.probability)
+			return
+
+	react_to(var/R, var/zoom)
+		if (!(R == "sugar"))
+			return "The microbes rapidly consume the sample and excrete epinepherine."
+
+	may_react_to()
+		return "The microbes appear to produce some kind of chemical."
+
+/datum/microbioeffects/chemistry/mutadone
+	name = "Mutadone Production"
+	desc = "The microbial culture produces mutadone."
+
+	object_act(var/obj/O, var/datum/microbe/origin)
+		if (!(istype(O, /obj/item/reagent_containers)))
+			return
+		if (O.reagents.is_full())
+			return
+		else
+			O.reagents.add_reagent("mutadone", origin.probability)
+			return
+
+	react_to(var/R, var/zoom)
+		if (!(R == "carbon"))
+			return "The microbes rapidly consume the carbon sample and excrete mutadone."
+
+	may_react_to()
+		return "The microbes appear to produce some kind of chemical."
 
 /*datum/pathogeneffects/chemistry/ethanol
 	name = "Auto-Brewery"

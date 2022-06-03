@@ -930,8 +930,8 @@
 	#ifdef CREATE_PATHOGENS
 	spawn_contents = list(/obj/item/reagent_containers/glass/vial/prepared = 10,
 	/obj/item/reagent_containers/syringe/antiviral = 3)
-	//#else
-	//spawn_contents = list(/obj/item/reagent_containers/syringe/antiviral = 3)
+	#else
+	spawn_contents = list(/obj/item/reagent_containers/syringe/antiviral = 3)
 	#endif
 
 /* ================ */

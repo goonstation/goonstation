@@ -497,8 +497,8 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
 				. = ..()
-				 //sure just fucking splash around in the stuff
-				 //this is mainly so puddles from the sweating symptom can infect
+				 // sure just fucking splash around in the stuff
+				 // this is mainly so puddles from the sweating symptom can infect
 				for (var/uid in src.microbes)
 					var/datum/microbe/P = src.microbes[uid]
 					logTheThing("pathology", M, null, "is splashed with [src] containing pathogen [P].")

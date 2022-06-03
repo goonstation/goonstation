@@ -3,6 +3,21 @@ ABSTRACT_TYPE(/datum/microbioeffects/benevolent)
 /datum/microbioeffects/benevolent
 	name = "Medical Probiotics"
 
+/*datum/microbioeffects/benevolent/exclusiveimmunity
+	name = "Exclusive Immunity"
+	desc = "The microbial culture occupies almost all possible routes of infection, preventing other diseases from entering."
+
+	mob_act(var/mob/M as mob, var/datum/microbe/origin)
+		if (!(istype(mob, /mob/living/carbon/human)))
+			return
+		var/mob/living/carbon/human/H = mob
+		for (var/datum/mircobe/P in microbe_controller.microbes)
+
+
+	may_react_to()
+		return "The pathogen appears to have the ability to bond with organic tissue."
+*/
+
 /datum/microbioeffects/benevolent/mending
 	name = "Wound Mending"
 	desc = "Slow paced brute damage healing."
@@ -251,17 +266,4 @@ datum/pathogeneffects/benevolent/genetictemplate
 
 	may_react_to()
 		return "The pathogen cells all look exactly alike."
-*/
-/*
-datum/pathogeneffects/benevolent/exclusiveimmunity
-	name = "Exclusive Immunity"
-	desc = "The pathogen occupies almost all possible routes of infection, preventing other diseases from entering."
-
-	mob_act(var/mob/M as mob, var/datum/microbe/origin)
-		//if (other pathogens detected)
-			//grab their in_remission
-			//set their vals to 1
-
-	may_react_to()
-		return "The pathogen appears to have the ability to bond with organic tissue."
 */

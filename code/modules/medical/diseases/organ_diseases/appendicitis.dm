@@ -78,9 +78,9 @@
 
 					if (prob(20))
 						H.reagents.add_reagent("toxin", 20)
-					//#ifdef CREATE_PATHOGENS
-					//add_pathogens(H, 30) //Implement sepsis
-					//#endif
+					#ifdef CREATE_PATHOGENS
+					add_pathogens(H, 30) //Implement sepsis
+					#endif
 					boutput(H, "<span class='alert'>Your appendix has burst! Seek medical help!</span>")
 
 			H.take_toxin_damage(1 * mult)
@@ -97,4 +97,3 @@ proc/add_pathogens(var/mob/living/A, var/amount)
 	R.microbes += P.microbio_uid
 	R.microbes[P.microbio_uid] = P
 	return 1
-
