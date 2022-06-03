@@ -2123,6 +2123,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	New()
 		..()
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 		if (prob(1))
 			src.name = replacetext(src.name, "bat", "bart")
 			if (src.name != initial(src.name))
