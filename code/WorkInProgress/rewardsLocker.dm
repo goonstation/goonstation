@@ -1026,6 +1026,15 @@
 					H.set_clothing_icon_dirty()
 					succ = TRUE
 
+				else if (istype(M, /obj/item/clothing/head/helmet/captain))
+					var/prev = M.name
+					M.name = "commander's helmet"
+					M.desc = "Somewhat protects an important person's head from being bashed in. Comes in a stylish shade of red befitting of a executive (Base Item: [prev])"
+					M.icon_state = "helmet-captain-blue"
+					M.item_state = "helmet-captain-blue"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
 			if (H.belt)
 				var/obj/item/M = H.belt
 				if (istype(M, /obj/item/katana_sheath/captain))
@@ -1151,6 +1160,15 @@
 					M.desc = "Helps protect against vacuum. Comes in a fasionable red befitting an execuitive. (Base Item: [prev])"
 					M.icon_state = "space-captain-red"
 					M.item_state = "space-captain-red"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
+				else if (istype(M, /obj/item/clothing/head/helmet/captain))
+					var/prev = M.name
+					M.name = "\improper CentCom helmet"
+					M.desc = "Somewhat protects an important person's head from being bashed in. Comes in a stylish shade of red befitting an executive (Base Item: [prev])"
+					M.icon_state = "helmet-captain-red"
+					M.item_state = "helmet-captain-red"
 					H.set_clothing_icon_dirty()
 					succ = TRUE
 
