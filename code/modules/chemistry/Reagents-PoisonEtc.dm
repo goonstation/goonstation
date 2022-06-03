@@ -1145,11 +1145,11 @@ datum
 					M.changeStatus("stimulants", -10 SECONDS * mult)
 
 				switch(counter+= (1 * mult))
-					if (1 to 10)
+					if (1 to 11)
 						if (probmult(7)) M.emote("yawn")
-					if (10 to 20)
+					if (11 to 21)
 						M.setStatus("drowsy", 40 SECONDS)
-					if (20 to INFINITY)
+					if (21 to INFINITY)
 						if(!fainted)
 							M.emote("faint")
 							fainted = TRUE
