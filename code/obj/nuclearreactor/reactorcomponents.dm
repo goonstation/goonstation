@@ -52,11 +52,7 @@ ABSTRACT_TYPE(/obj/reactor_component)
 			//assume A = 1m^2
 			var/deltaT = RC.temperature - src.temperature
 			//heat transfer coefficient
-			var/hTC = (max(RC.material.getProperty("density"),1)/100)*(max(src.material.getProperty("density"),1)/100)
-			if(RC.material.hasProperty("thermal"))
-				hTC = hTC*(1-(RC.material.getProperty("thermal")/100))
-			if(RC.material.hasProperty("thermal"))
-				hTC = hTC*(1-(RC.material.getProperty("thermal")/100))
+			var/hTC = calculateHeatTransferCoefficient(RC.material,src.material)
 			RC.temperature += thermal_cross_section*-deltaT*hTC
 			src.temperature += thermal_cross_section*deltaT*hTC
 			if(RC.temperature < 0 || src.temperature < 0)
@@ -67,12 +63,8 @@ ABSTRACT_TYPE(/obj/reactor_component)
 		var/obj/machinery/atmospherics/binary/nuclear_reactor/holder = src.loc
 		if(istype(holder))
 			var/deltaT = holder.temperature - src.temperature
-			//heat transfer coefficient
-			var/hTC = (max(holder.material.getProperty("density"),1)/100)*(max(src.material.getProperty("density"),1)/100)
-			if(holder.material.hasProperty("thermal"))
-				hTC = hTC*(1-(holder.material.getProperty("thermal")/100))
-			if(holder.material.hasProperty("thermal"))
-				hTC = hTC*(1-(holder.material.getProperty("thermal")/100))
+			var/hTC = calculateHeatTransferCoefficient(holder.material,src.material)
+
 			holder.temperature += thermal_cross_section*-deltaT*hTC
 			src.temperature += thermal_cross_section*deltaT*hTC
 			if(holder.temperature < 0 || src.temperature < 0)
@@ -116,6 +108,8 @@ ABSTRACT_TYPE(/obj/reactor_component)
 						inNeutrons -= N
 						qdel(N)
 		return inNeutrons
+
+
 
 ////////////////////////////////////////////////////////////////
 //Fuel rod
@@ -170,7 +164,7 @@ ABSTRACT_TYPE(/obj/reactor_component)
 			//assume A = 1m^2
 			var/deltaT = src.current_gas.temperature - src.temperature
 			//heat transfer coefficient
-			var/hTC = TOTAL_MOLES(src.current_gas)/src.material.getProperty("density")
+			var/hTC = calculateHeatTransferCoefficient(null, src.material)
 			if(hTC>0)
 				src.current_gas.temperature += gas_thermal_cross_section*-deltaT*hTC
 				src.temperature += gas_thermal_cross_section*deltaT*hTC

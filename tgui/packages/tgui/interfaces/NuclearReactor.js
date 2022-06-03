@@ -137,7 +137,7 @@ export const NuclearReactor = (props, context) => {
                   alertAfter={2000}
                   ranges={{
                     "good": [0, 1000],
-                    "average": [1000, 1750],
+                    "average": [1000, 2000],
                     "bad": [2000, 2500],
                   }} />
               </Stack.Item>

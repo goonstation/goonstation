@@ -109,7 +109,7 @@
 			//assume A = 1m^2
 			var/deltaT = src.current_gas.temperature - src.temperature
 			//heat transfer coefficient
-			var/hTC = TOTAL_MOLES(src.current_gas)/src.material.getProperty("density")
+			var/hTC = calculateHeatTransferCoefficient(null, src.material)
 			if(hTC>0)
 				src.current_gas.temperature += heat_transfer_mult*-deltaT*hTC
 				src.temperature += heat_transfer_mult*deltaT*hTC

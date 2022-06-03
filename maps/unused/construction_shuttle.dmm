@@ -788,6 +788,12 @@
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/arrival/station)
+"lZ" = (
+/obj/item/material_piece/steel{
+	amount = 100
+	},
+/turf/simulated/floor/black,
+/area/space)
 "mF" = (
 /obj/machinery/computer/power_monitor/smes,
 /obj/cable,
@@ -1123,9 +1129,7 @@
 /turf/simulated/floor/black,
 /area/space)
 "Je" = (
-/obj/item/material_piece/rubber{
-	amount = 10
-	},
+/obj/item/device/matanalyzer,
 /turf/simulated/floor/black,
 /area/space)
 "Ju" = (
@@ -1259,6 +1263,7 @@
 /area/space)
 "Sh" = (
 /obj/machinery/atmospherics/portables_connector,
+/obj/machinery/portable_atmospherics/canister/toxins,
 /turf/simulated/floor/black,
 /area/space)
 "Up" = (
@@ -46495,7 +46500,7 @@ Yq
 Yq
 Yq
 Yq
-Je
+Yq
 KF
 ds
 AG
@@ -47405,7 +47410,7 @@ Yq
 Yq
 Yq
 Lx
-Yq
+lZ
 Yq
 hB
 oC
@@ -48918,7 +48923,7 @@ gD
 Xf
 Yq
 gM
-Je
+Yq
 rr
 Lg
 aa
@@ -49219,7 +49224,7 @@ zD
 gD
 VG
 Yq
-Yq
+Je
 Yq
 Lc
 Lg

@@ -8,6 +8,8 @@
 	desc = "A computer for configuring and monitoring the turbine of a nuclear reactor."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "engine"
+	density = TRUE
+	anchored = TRUE
 	var/obj/machinery/atmospherics/binary/reactor_turbine/turbine_handle = null
 	var/list/history
 	var/const/history_max = 50
@@ -81,6 +83,8 @@
 	desc = "A computer for configuring and monitoring the a nuclear reactor."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "reactor_stats"
+	density = TRUE
+	anchored = TRUE
 	var/obj/machinery/atmospherics/binary/nuclear_reactor/reactor_handle = null
 
 	process()
