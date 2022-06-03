@@ -23,7 +23,7 @@
 		if(M != null)
 			src.master = M
 
-		last_life_update = world.timeofday
+		last_life_update = TIME
 
 		src.abilityHolder = new /datum/abilityHolder/wraith(src)
 		src.abilityHolder.points = master.abilityHolder.points
@@ -43,7 +43,7 @@
 
 	Life(parent)
 		..()
-		var/life_time_passed = max(life_tick_spacing, world.timeofday - last_life_update)
+		var/life_time_passed = max(life_tick_spacing, TIME - last_life_update)
 
 		src.hauntBonus = 0
 		for (var/mob/living/carbon/human/H in viewers(6, src))
@@ -64,7 +64,7 @@
 		src.abilityHolder.generatePoints(mult = (life_time_passed / life_tick_spacing))
 		src.abilityHolder.updateText()
 
-		last_life_update = world.timeofday
+		last_life_update = TIME
 
 	setup_healths()
 		add_hh_flesh(src.health_brute, src.health_brute_vuln)
