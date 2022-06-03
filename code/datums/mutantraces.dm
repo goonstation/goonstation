@@ -2044,7 +2044,7 @@ TYPEINFO(/datum/mutantrace)
 
 	say_filter(var/message)
 		.= replacetext(message, "cow", "human")
-		var/replace_lowercase = replacetextEx(message, "m", stutter("mm"))
+		var/replace_lowercase = replacetextEx(., "m", stutter("mm"))
 		var/replace_uppercase = replacetextEx(replace_lowercase, "M", stutter("MM"))
 		return replace_uppercase
 
