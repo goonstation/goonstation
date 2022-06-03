@@ -1,5 +1,9 @@
 
 (t)fri jun 03 22
+(u)FlameArrow57
+(p)8593
+(e)🆕🎨⚖|feature, sprites, balance
+(+)Most harmful projectiles now leave a wound on your body.
 (u)aloe
 (+)Plates now just act like. Plates. You can grab food off of them without a menu, they don't make food all weird and small, and you can still use a utensil to eat off them.
 (+)Click dragging a food item on a plate to you will pick up the plate (in case you filled it with too much food)
