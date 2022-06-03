@@ -313,7 +313,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	return src.loc
 
 
-/obj/machinery/the_singularity/attackby(var/obj/item/I as obj, var/mob/user as mob)
+/obj/machinery/the_singularity/attackby(var/obj/item/I, var/mob/user)
 	if (istype(I, /obj/item/clothing/mask/cigarette))
 		var/obj/item/clothing/mask/cigarette/C = I
 		if (!C.on)
@@ -445,7 +445,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			else
 				event_handler_flags &= ~IMMUNE_SINGULARITY
 
-/obj/machinery/field_generator/attack_hand(mob/user as mob)
+/obj/machinery/field_generator/attack_hand(mob/user)
 	if(state == WELDED)
 		if(!src.locked)
 			if(src.active >= 1)
@@ -814,7 +814,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 /obj/machinery/containment_field/ex_act(severity)
 	return
 
-/obj/machinery/containment_field/attack_hand(mob/user as mob)
+/obj/machinery/containment_field/attack_hand(mob/user)
 	return
 
 /obj/machinery/containment_field/process()
@@ -959,7 +959,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	return
 
-/obj/machinery/emitter/attack_hand(mob/user as mob)
+/obj/machinery/emitter/attack_hand(mob/user)
 	if(state == WELDED)
 		if(!src.locked)
 			if(src.active==1)
@@ -1249,7 +1249,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			UpdateIcon()
 		..()
 
-/obj/machinery/power/collector_array/attack_hand(mob/user as mob)
+/obj/machinery/power/collector_array/attack_hand(mob/user)
 	if(src.active==1)
 		src.active = 0
 		icon_state = "ca_deactive"
@@ -1474,7 +1474,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		add_avail(power_a)
 		..()
 
-/obj/machinery/power/collector_control/attack_hand(mob/user as mob)
+/obj/machinery/power/collector_control/attack_hand(mob/user)
 	if(src.active==1)
 		src.active = 0
 		boutput(user, "You turn off the collector control.")
@@ -1675,7 +1675,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 /obj/machinery/the_singularitybomb/attack_ai(mob/user as mob)
 	return
 
-/obj/machinery/the_singularitybomb/attack_hand(mob/user as mob)
+/obj/machinery/the_singularitybomb/attack_hand(mob/user)
 	..()
 	if(src.state != 3)
 		boutput(user, "The bomb needs to be firmly secured to the floor first.")

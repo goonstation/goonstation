@@ -410,16 +410,6 @@ menu "menu"
 		command = "mentorhelp"
 		category = "&Help"
 		saved-params = "is-checked"
-	elem
-		name = "&Hotkeys"
-		command = "hotkeys"
-		category = "&Help"
-		saved-params = "is-checked"
-	elem
-		name = "&Overview"
-		command = "Help"
-		category = "&Help"
-		saved-params = "is-checked"
 
 
 window "blank-map"

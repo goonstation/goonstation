@@ -577,7 +577,7 @@
 				SPAWN(1.5 SECONDS)
 					UpdateOverlays(null, "speech_bubble")
 
-	attackby(var/obj/item/I as obj, var/mob/M as mob)
+	attackby(var/obj/item/I, var/mob/M)
 		if (ispryingtool(I))
 			if (deployed)
 				src.undeploy()
@@ -587,7 +587,7 @@
 				src.deploy()
 		..()
 
-	attack_hand(var/mob/living/carbon/human/user as mob)
+	attack_hand(var/mob/living/carbon/human/user)
 		src.undeploy()
 		..()
 
@@ -886,7 +886,7 @@
 	update_icon()
 		icon_state = "stomper[on]"
 
-	attack_hand(var/mob/living/carbon/human/user as mob)
+	attack_hand(var/mob/living/carbon/human/user)
 		src.add_fingerprint(user)
 
 		if(open)
@@ -1143,7 +1143,7 @@
 	burn_point = 220
 	burn_output = 900
 	burn_possible = 1
-	health = 100
+	health = 4
 	var/can_put_up = 1
 
 	examine(mob/user)
@@ -1157,7 +1157,7 @@
 		. = ..()
 		src.examine(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!src.anchored)
 			return ..()
 		if (user.a_intent != INTENT_HARM)

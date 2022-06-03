@@ -45,7 +45,7 @@
 	setupProperties()
 		..()
 		setProperty("coldprot", 7)
-		setProperty("conductivity", 0.3)
+		setProperty("conductivity", 0.4)
 
 //======
 //Shinai
@@ -163,7 +163,7 @@
 				attacker.show_text("<b>You knock the [I] right out of [defender]'s hands!</b>","green")
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(src.loc != user)
 			change_guard(user,user.a_intent)
 		..()
@@ -220,7 +220,7 @@
 		open = !open
 		update_sprite(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(src.loc == user)
 			if(open)
 				draw_shinai(user)
@@ -232,7 +232,7 @@
 		else
 			..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/shinai) && open && shinai + length(src.contents) < 2)
 			user.u_equip(W)
 			W.set_loc(src)

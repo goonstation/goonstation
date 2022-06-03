@@ -9,7 +9,7 @@
 	var/attachedObjective = "For the free market!"
 	var/uses = -1 // -1 for infinite uses
 
-	attack_hand(mob/M as mob)
+	attack_hand(mob/M)
 		if (issilicon(M))
 			boutput(M, "Silly robot.")
 			return
@@ -162,7 +162,7 @@
 	meteorhit(obj/meteor)
 		return
 
-	attack_hand(mob/M as mob)
+	attack_hand(mob/M)
 
 		if (!istype(M, /mob/living/carbon/human))
 			boutput(M, "You aren't a human so you can't use these.")

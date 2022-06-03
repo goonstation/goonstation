@@ -294,6 +294,24 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/crate
 	containername = "Station Pressurization Crate"
 
+/datum/supply_packs/disposal_pipe_cart
+	name = "Disposal Pipe Dispenser Cart"
+	desc = "Has a pesky staff assistant stolen your cart?"
+	category = "Engineering Department"
+	contains = list(/obj/machinery/disposal_pipedispenser/mobile)
+	cost = 4000
+	containertype = /obj/storage/crate
+	containername = "Replacement Disposal Cart Crate"
+
+/datum/supply_packs/gas_filtration
+	name = "Gas Filtration Machinery"
+	desc = "A two-piece set consisting of a Portable Air Pump and a Portable Air Scrubber."
+	category = "Engineering Department"
+	contains = list(/obj/machinery/portable_atmospherics/scrubber, /obj/machinery/portable_atmospherics/pump)
+	cost = 5000
+	containertype = /obj/storage/crate
+	containername = "Filtration Machinery Crate"
+
 /datum/supply_packs/generator
 	name = "Experimental Local Generator"
 	desc = "x1 Experimental Local Generator"
@@ -443,14 +461,14 @@ ABSTRACT_TYPE(/datum/supply_packs)
 
 // Added security resupply crate (Convair880).
 /datum/supply_packs/security_resupply
-	name = "Weapons Crate - Security Equipment (Cardlocked \[Security Equipment])"
-	desc = "x1 Security Requisition Token, 1x Armoured Vest, 1x Helmet, x1 Handcuff Kit"
+	name = "Weapons Crate - Security Assistant Equipment (Cardlocked \[Security Equipment])"
+	desc = "x1 Security Assistant Requisition Token, 1x Armoured Vest, 1x Helmet, x1 Handcuff Kit"
 	category = "Security Department"
 	contains = list(/obj/item/clothing/suit/armor/vest,
 					/obj/item/clothing/head/helmet/hardhat/security,
-					/obj/item/requisition_token/security,
+					/obj/item/requisition_token/security/assistant,
 					/obj/item/storage/box/handcuff_kit)
-	cost = 10000
+	cost = 6900 //nice
 	containertype = /obj/storage/secure/crate/weapon
 	containername = "Weapons Crate - Security Equipment (Cardlocked \[Security Equipment])"
 	access = access_securitylockers
@@ -621,6 +639,15 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/crate
 	containername = "Assorted Glowsticks Crate - 4 pack"
 
+/datum/supply_packs/portable_fueltank
+	name = "Portable Welding Fuel Tank"
+	desc = "A single transportable fuel tank, for when you're on the move."
+	category = "Basic Materials"
+	contains = list(/obj/item/reagent_containers/food/drinks/fueltank)
+	cost = 1000
+	containertype = /obj/storage/crate
+	containername = "Portable Welding Tank Crate"
+f
 /datum/supply_packs/fueltank
 	name = "Welding Fuel Tank"
 	desc = "1x Welding Fuel Tank"
@@ -717,17 +744,27 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/crate/pizza
 	containername = "Soft Soft Pizza Delivery"
 
+/datum/supply_packs/mimicry
+	name = "Mimicry Equipment"
+	desc = "Entertainers burn bright, only to fade away in silence."
+	category = "Civilian Department"
+	contains = list(/obj/item/storage/box/costume/mime/alt,
+		/obj/item/baguette,
+		/obj/item/cigpacket,
+		/obj/item/device/light/zippo)
+	cost = 500
+	containertype = /obj/storage/crate/packing
+	containername = "Mimicry Equipment"
+
 /datum/supply_packs/clown
 	name = "Comedy Equipment"
 	desc = "Entertainers burn bright but die young, outfit a new one with this crate!"
 	category = "Civilian Department"
-	contains = list(
-		/obj/item/storage/box/costume/clown/recycled,
+	contains = list(/obj/item/storage/box/costume/clown/recycled,
 		/obj/item/instrument/bikehorn,
 		/obj/item/bananapeel,
 		/obj/item/reagent_containers/food/snacks/pie/cream,
-		/obj/item/storage/box/balloonbox,
-	)
+		/obj/item/storage/box/balloonbox)
 	cost = 500
 	containertype = /obj/storage/crate/packing
 	containername = "Comedy Equipment"
@@ -1619,18 +1656,6 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	containertype = /obj/storage/secure/crate
 	containername = "Field Generator Crate (Cardlocked \[Engineering])"
 	access = access_engineering
-
-/datum/supply_packs/complex/atmos
-	name = "Atmospherics Supplies"
-	desc = "For when you need to be breathing."
-	category = "Basic Materials"
-	contains = list(/obj/item/tank/air,
-					/obj/item/tank/oxygen,
-					/obj/item/clothing/under/misc/atmospheric_technician)
-	frames = list(/obj/machinery/portable_atmospherics/scrubber = 2)
-	cost = 8000
-	containertype = /obj/storage/crate/wooden
-	containername = "Atmospherics Supplies"
 
 /datum/supply_packs/complex/winter
 	name = "Cold Weather Gear"

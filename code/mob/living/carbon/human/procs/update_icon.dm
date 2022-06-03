@@ -590,17 +590,6 @@
 				if (S.active)
 					shielded = 1
 					break
-			if (istype(A,/obj/item/cloaking_device))
-				var/obj/item/cloaking_device/S = A
-				if (S.active)
-					shielded = 2
-					break
-
-	// TODO: move to cloaker activation / deactivation
-	if (shielded == 2)
-		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "cloak", INVIS_CLOAK)
-	else
-		REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "cloak")
 
 	if (shielded)
 		UpdateOverlays(shield_image, "shield")

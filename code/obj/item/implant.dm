@@ -151,7 +151,7 @@ THROWING DARTS
 
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal)
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		if (!istype(src, /obj/item/implant/projectile))
 			if (istype(I, /obj/item/pen))
 				var/t = input(user, "What would you like the label to be?", null, "[src.name]") as null|text
@@ -1649,10 +1649,6 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	name = "glass case - 'Microbomb'"
 	implant_type = "/obj/item/implant/revenge/microbomb"
 
-/obj/item/implantcase/microbomb/macrobomb
-	name = "glass case - 'Macrobomb'"
-	implant_type = "/obj/item/implant/revenge/microbomb/macrobomb"
-
 /obj/item/implantcase/robotalk
 	name = "glass case - 'Machine Translator'"
 	implant_type = "/obj/item/implant/robotalk"
@@ -1724,7 +1720,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		src.icon_state = "implantcase-0"
 	return
 
-/obj/item/implantcase/attackby(obj/item/I as obj, mob/user as mob)
+/obj/item/implantcase/attackby(obj/item/I, mob/user)
 	if (istype(I, /obj/item/pen))
 		var/t = input(user, "What would you like the label to be?", null, "[src.name]") as null|text
 		if (user.equipped() != I)
@@ -1798,7 +1794,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		src.icon_state = "implantpad-0"
 	return
 
-/obj/item/implantpad/attack_hand(mob/user as mob)
+/obj/item/implantpad/attack_hand(mob/user)
 
 	if ((src.case && (user.l_hand == src || user.r_hand == src)))
 		user.put_in_hand_or_drop(src.case)
@@ -1814,7 +1810,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			return ..()
 	return
 
-/obj/item/implantpad/attackby(obj/item/implantcase/C as obj, mob/user as mob)
+/obj/item/implantpad/attackby(obj/item/implantcase/C, mob/user)
 
 	if (istype(C, /obj/item/implantcase))
 		if (!( src.case ))
@@ -1994,7 +1990,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 	get_desc()
 		. += "There is [my_implant ? "\a [my_implant]" : "currently no implant"] loaded into it."
 
-	attackby(var/obj/item/W as obj, var/mob/user as mob)
+	attackby(var/obj/item/W, var/mob/user)
 		var/obj/item/implant/I = null
 		if (istype(W, /obj/item/implant))
 			I = W
@@ -2127,7 +2123,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 			src.set_loc(M)
 			src.implanted(M)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.pixel_x = 0
 		src.pixel_y = 0
 		..()

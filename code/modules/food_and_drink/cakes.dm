@@ -445,7 +445,7 @@
 	proc/unstack(var/mob/user)
 		var/obj/item/reagent_containers/food/snacks/cake/s = new /obj/item/reagent_containers/food/snacks/cake
 
-		src.reagents.trans_to(s,(src.reagents.total_volume/3))
+		src.reagents.trans_to(s,(src.reagents.total_volume/src.clayer))
 		for(var/food_effect in src.food_effects)
 			s.food_effects |= food_effect
 		s.quality = src.quality
@@ -473,7 +473,7 @@
 			src.put_out()
 			user.visible_message("<b>[user.name]</b> blows out the candle!")
 
-	attackby(obj/item/W as obj, mob/user as mob) //ok this proc is entirely a mess, but its *hopfully* better on the server than the alternatives
+	attackby(obj/item/W, mob/user) //ok this proc is entirely a mess, but its *hopfully* better on the server than the alternatives
 		if(istool(W, TOOL_CUTTING | TOOL_SAWING))
 			if(!src.sliced)
 				slice_cake(W,user)
@@ -516,7 +516,7 @@
 						src.ignite()
 				qdel(W)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(length(cakeActions))
 			user.showContextActions(cakeActions, src)
 		else

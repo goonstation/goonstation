@@ -409,7 +409,7 @@ var/datum/action_controller/actions
 		..()
 
 /datum/action/bar/icon //Visible to everyone and has an icon.
-	var/icon
+	var/icon //! Icon to use above the bar. Can also be a mutable_appearance; pretty much anything that can be converted into an image
 	var/icon_state
 	var/icon_y_off = 30
 	var/icon_x_off = 0
@@ -420,8 +420,11 @@ var/datum/action_controller/actions
 
 	onStart()
 		..()
-		if(icon && icon_state && owner)
-			icon_image = image(icon, border ,icon_state, 10)
+		if (icon && owner)
+			if(icon_state)
+				icon_image = image(icon, border, icon_state, 10)
+			else
+				icon_image = image(icon, border, layer = 10)
 			icon_image.pixel_y = icon_y_off
 			icon_image.pixel_x = icon_x_off
 			icon_image.plane = icon_plane
@@ -1544,16 +1547,23 @@ var/datum/action_controller/actions
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
+	onInterrupt()
+		..()
+		if (target?.butcherer == owner)
+			target.butcherer = null
+
 	onStart()
 		..()
-		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || target.butcherer)
 			interrupt(INTERRUPT_ALWAYS)
 			return
+		target.butcherer = owner
 		for(var/mob/O in AIviewers(owner))
 			O.show_message("<span class='alert'><B>[owner] begins to butcher [target].</B></span>", 1)
 
 	onEnd()
 		..()
+		target?.butcherer = null
 		if(owner && target)
 			target.butcher(owner)
 			for(var/mob/O in AIviewers(owner))

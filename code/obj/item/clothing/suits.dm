@@ -635,7 +635,7 @@
 	burn_output = 800
 	burn_possible = TRUE
 
-	health = 20
+	health = 4
 	rand_pos = FALSE
 	block_vision = TRUE
 
@@ -653,7 +653,7 @@
 		src.UpdateIcon()
 		src.setMaterial(getMaterial("cotton"), appearance = FALSE, setname = FALSE)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.bed)
 			src.bed.untuck_sheet(user)
 		src.bed = null
@@ -691,7 +691,7 @@
 					qdel(src)
 					return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/cable_coil))
 			if (src.cape)
 				return ..()
@@ -1575,7 +1575,6 @@
 	burn_possible = TRUE
 	burn_point = 450
 	burn_output = 800
-	health = 20
 
 	setupProperties()
 		..()

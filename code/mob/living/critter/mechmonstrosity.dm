@@ -65,6 +65,7 @@
 /mob/living/critter/mechmonstrosity/suffering
 
 	Life(datum/controller/process/mobs/parent)
+		. = ..()
 		var/speech_type = rand(1,50)
 
 		switch(speech_type)
@@ -145,6 +146,7 @@
 		add_hh_robot_burn(500, 1)
 
 	death(var/gibbed)
+		. = ..()
 		src.visible_message("<b>[src]</b> collapses into broken components...")
 		if (src.loc)
 			robogibs(src.loc)
@@ -185,21 +187,21 @@
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, __red("Nothing to inject there."))
+				boutput(holder.owner, "<span class='alert'>Nothing to inject there.</span>")
 				return 1
 		if (target == holder.owner)
 			return 1
 		if (BOUNDS_DIST(holder.owner, target) > 0)
-			boutput(holder.owner, __red("That is too far away to inject."))
+			boutput(holder.owner, "<span class='alert'>That is too far away to inject.</span>")
 			return 1
 		var/mob/MT = target
 		if (!MT.reagents)
-			boutput(holder.owner, __red("That does not hold reagents, apparently."))
+			boutput(holder.owner, "<span class='alert'>That does not hold reagents, apparently.</span>")
 		if (!stealthy)
 			playsound(holder.owner.loc, 'sound/items/hypo.ogg', 70,1)
-			holder.owner.visible_message(__red("<b>[holder.owner] injects [target]!</b>"))
+			holder.owner.visible_message("<span class='alert'><b>[holder.owner] injects [target]!</b></span>")
 		else
-			holder.owner.show_message(__blue("You stealthily inject [target]."))
+			holder.owner.show_message("<span class='notice'>You stealthily inject [target].</span>")
 		MT.reagents.add_reagent(venom_id, inject_amount)
 
 
@@ -222,15 +224,15 @@
 			return 1
 
 		if (M == target)
-			boutput(M, __red("Why would you want to stun yourself?"))
+			boutput(M, "<span class='alert'>Why would you want to stun yourself?</span>")
 			return 1
 
 		if (get_dist(M, target) > src.max_range)
-			boutput(M, __red("[target] is too far away."))
+			boutput(M, "<span class='alert'>[target] is too far away.</span>")
 			return 1
 
 		if (target.stat == 2)
-			boutput(M, __red("It would be a waste of time to stun the dead."))
+			boutput(M, "<span class='alert'>It would be a waste of time to stun the dead.</span>")
 			return 1
 
 		M.visible_message("<span class='alert'><B>[M] glares angrily at [target]!</B></span>")
@@ -314,11 +316,11 @@
 			return 1
 
 		if (M == target)
-			boutput(M, __red("You can't do that to yourself."))
+			boutput(M, "<span class='alert'>You can't do that to yourself.</span>")
 			return 1
 
 		if (get_dist(M, target) > src.max_range)
-			boutput(M, __red("[target] is too far away."))
+			boutput(M, "<span class='alert'>[target] is too far away.</span>")
 			return 1
 		holder.owner.say("Transformation protocol engaged. Please stand clear of the recipient.")
 		actions.start(new/datum/action/bar/icon/mechanimateAbility(target, src), holder.owner)
@@ -344,11 +346,11 @@
 			return 1
 
 		if (M == target)
-			boutput(M, __red("Why would you want to dissect yourself?"))
+			boutput(M, "<span class='alert'>Why would you want to dissect yourself?</span>")
 			return 1
 
 		if (get_dist(M, target) > src.max_range)
-			boutput(M, __red("[target] is too far away."))
+			boutput(M, "<span class='alert'>[target] is too far away.</span>")
 			return 1
 
 		M.visible_message("<span class='alert'><B>With their double saw whirling, [M] swiftly severs all [target]'s limbs!</B></span>")

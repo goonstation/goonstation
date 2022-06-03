@@ -11,9 +11,6 @@
 # Aloe
 /code/mob/dead/ @frawhst
 
-# Emily
-/maps/manta.dmm @UrsulaMejor
-
 # Flourish
 /code/obj/item/toys.dm @flrsh
 /maps/oshan.dmm @flrsh

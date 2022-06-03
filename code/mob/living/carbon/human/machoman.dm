@@ -1277,7 +1277,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 		if (prob(10))
 			playsound(src.loc, pick(snd_macho_idle), 50, 1, 0, 1.75)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.alive && (user.a_intent != INTENT_HARM))
 			src.visible_message("<span class='alert'><b>[user]</b> pets [src]!</span>")
 			return

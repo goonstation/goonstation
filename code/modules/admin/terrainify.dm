@@ -19,10 +19,21 @@ var/datum/station_zlevel_repair/station_repair = new
 	var/image/weather_img
 	var/obj/effects/weather_effect
 	var/overlay_delay
+	var/datum/gas_mixture/default_air
 
-	proc/repair_turfs(turf/turfs)
+	New()
+		..()
+		default_air = new
+		default_air.oxygen = MOLES_O2STANDARD
+		default_air.nitrogen = MOLES_N2STANDARD
+		default_air.temperature = T20C
+
+	proc/repair_turfs(turf/turfs, clear=FALSE)
 		if(src.station_generator)
-			src.station_generator.generate_terrain(turfs,reuse_seed=TRUE)
+			src.station_generator.generate_terrain(turfs, reuse_seed=TRUE, flags=MAPGEN_IGNORE_FLORA|MAPGEN_IGNORE_FAUNA)
+
+			if(clear)
+				clear_out_turfs(turfs)
 
 		SPAWN(overlay_delay)
 			for(var/turf/T as anything in turfs)
@@ -39,6 +50,7 @@ var/datum/station_zlevel_repair/station_repair = new
 		mass_driver_fixup()
 		shipping_market_fixup()
 		land_vehicle_fixup(replace_with_cars, add_sub)
+		copy_gas_to_airless()
 
 	proc/land_vehicle_fixup(replace_with_cars, add_sub)
 		if(replace_with_cars)
@@ -94,6 +106,18 @@ var/datum/station_zlevel_repair/station_repair = new
 				if(A.density)
 					qdel(A)
 
+			LAGCHECK(LAG_MED)
+
+	proc/copy_gas_to_airless()
+		var/list/zlevel_station_turfs = block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION))
+		. = list()
+		for(var/turf/T in zlevel_station_turfs)
+			if(istype(T, /turf/simulated/floor/airless) || istype(T, /turf/simulated/floor/plating/airless))
+				. |= T
+		for(var/turf/simulated/ST in .)
+			var/datum/gas_mixture/TG = ST.return_air()
+			TG.copy_from(src.default_air)
+			ST.update_nearby_tiles(need_rebuild=TRUE)
 			LAGCHECK(LAG_MED)
 
 ABSTRACT_TYPE(/datum/terrainify)
@@ -158,6 +182,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 			station_repair.station_generator = new/datum/map_generator/desert_generator
 			station_repair.ambient_light = new /image/ambient
 			station_repair.ambient_light.color = ambient_light
+			station_repair.default_air.temperature = 330
 
 			var/list/space = list()
 			for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
@@ -216,6 +241,11 @@ ABSTRACT_TYPE(/datum/terrainify)
 					station_repair.weather_img.plane = PLANE_NOSHADOW_ABOVE
 				else
 					station_repair.weather_effect = /obj/effects/precipitation/snow/grey/tile
+
+			station_repair.default_air.carbon_dioxide = 100
+			station_repair.default_air.nitrogen = 0
+			station_repair.default_air.oxygen = 0
+			station_repair.default_air.temperature = 100
 
 			if(!params["Pitch Black"])
 				station_repair.ambient_light = new /image/ambient
@@ -310,6 +340,11 @@ ABSTRACT_TYPE(/datum/terrainify)
 			station_repair.overlay_delay = 3.5 SECONDS // Delay to let rocks cull
 			station_repair.weather_img = image(icon = 'icons/turf/areas.dmi', icon_state = "dustverlay", layer = EFFECTS_LAYER_BASE)
 			station_repair.ambient_light = new /image/ambient
+
+			station_repair.default_air.carbon_dioxide = 500
+			station_repair.default_air.nitrogen = 0
+			station_repair.default_air.oxygen = 0
+			station_repair.default_air.temperature = 100
 
 			var/list/space = list()
 			for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
@@ -434,6 +469,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 
 			station_repair.ambient_light = new /image/ambient
 			station_repair.ambient_light.color = ambient_light
+			station_repair.default_air.temperature = 235
 
 			var/snow = params["Weather"]
 			snow = (snow == "None") ? null : snow

@@ -73,11 +73,11 @@
 		user.show_text("You switch [src] to [src.mode ? "inject" : "draw"].")
 		UpdateIcon()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		..()
 		UpdateIcon()
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		return
 
 	afterattack(var/atom/target, mob/user, flag)

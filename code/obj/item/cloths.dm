@@ -17,6 +17,7 @@ HANDKERCHIEFS:
 
 BOTH:
 	* chem gag rag
+	* wipe heads
 	* TODO: embroider
 */
 

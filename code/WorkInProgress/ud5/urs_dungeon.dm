@@ -518,10 +518,10 @@
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/shovel))
 			user.visible_message("<span class='notice'>[user] digs in [src] with [W]!</span>")
 			src.open()

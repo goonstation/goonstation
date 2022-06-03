@@ -1811,7 +1811,7 @@
 										continue
 									if (M in combatflipped)
 										continue
-									if (src.reagents && src.reagents.get_reagent_amount("ethanol") > 10)
+									if (src.reagents?.get_reagent_amount("ethanol") > 10 && src.can_drunk_act())
 										if (!iswrestler(src) && src.traitHolder && !src.traitHolder.hasTrait("glasscannon"))
 											src.remove_stamina(STAMINA_FLIP_COST)
 											src.stamina_stun()
@@ -1825,7 +1825,7 @@
 										playsound(src.loc, pick(sounds_punch), 100, 1)
 										var/turf/newloc = M.loc
 										src.set_loc(newloc)
-									else
+									else if (!(src.reagents?.get_reagent_amount("ethanol") > 30))
 										message = "<B>[src]</B> flips in [M]'s general direction."
 									break
 					if(length(combatflipped))
@@ -2182,7 +2182,7 @@
 						src.take_brain_damage(10)
 						dab_id?.brain_damage_count += 10
 						if(src.get_brain_damage() > 60)
-							src.show_text(__red("Your head hurts!"))
+							src.show_text("<span class='alert'>Your head hurts!</span>")
 					if(locate(/obj/item/storage/bible) in src.loc)
 						if(H.limbs.l_arm)
 							src.limbs.l_arm.sever()

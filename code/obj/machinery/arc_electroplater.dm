@@ -39,7 +39,7 @@
 		SubscribeToProcess()
 		return 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isghostdrone(user) || isAI(user))
 			boutput(user, "<span class='alert'>[src] refuses to interface with you!</span>")
 			return
@@ -110,7 +110,7 @@
 			else if (oldval && !newval)
 				UnsubscribeProcess()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (isghostdrone(user))
 			boutput(user, "<span class='alert'>The [src] refuses to interface with you!</span>")
 			return

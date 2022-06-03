@@ -84,7 +84,7 @@
 
 		return 0
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		if (!I)
 			return
 		if (I.is_open_container() && I.reagents)

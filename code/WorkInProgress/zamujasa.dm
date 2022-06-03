@@ -8,7 +8,7 @@
 	layer = CABLE_LAYER
 	color = "#037ffc"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (issnippingtool(W))
 			logTheThing("station", user, null, "cut the don't-cut-this wire and got ghosted/disconnected as a result.")
 			//boutput(user, "<span class='alert'>You snip the ca</span>")
@@ -153,7 +153,7 @@
 	var/facing = NW_SE
 	var/list/affecting = list()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		boutput(user, "rotating mirror...")
 		facing = 1 - facing
 		for (var/obj/machinery/power/pt_laser/PTL in affecting)
@@ -161,7 +161,7 @@
 			boutput(user, "[PTL] would be notified")
 
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (iswrenchingtool(W))
 			boutput(user, "this would deconstruct it.")
 			return
@@ -277,7 +277,7 @@
 		tracker.maptext = "<span class='c vt ps2p sh'>TOTAL [add_lspace(round(total_score), 7)]\nROUND [add_lspace(round(round_score), 7)]</span>"
 
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		var/score = get_item_value(W)
 		if (score == -1)
 			return ..()
@@ -405,7 +405,7 @@
 		SPAWN(0.5 SECONDS)
 			gunsim = locate() in world
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (active)
 			boutput(user, "It just did some cleaning give it a minute!!!")
 			return
@@ -453,7 +453,7 @@
 	var/active = 0
 	alpha = 255
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (active)
 			boutput(user, "did you already kill the dummy? either way wait a bit!")
 			return
@@ -1423,7 +1423,7 @@ Other Goonstation servers:[serverList]</span>"})
 	icon_state = "cowbrush"
 	desc = "A huge rotary brush attached to a wall. Supposedly, cows love it."
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		..()
 		src.icon_state = "cowbrush[src.on ? "_on" : ""]"
 

@@ -74,7 +74,7 @@
 		. = ..()
 		pop_open_a_browser_box(user)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!W || !user)
 			return
 

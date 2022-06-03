@@ -42,7 +42,7 @@
 	..()
 	src.tetris = new /datum/game/tetris(src)
 
-/obj/machinery/computer/tetris/attack_hand(mob/user as mob)
+/obj/machinery/computer/tetris/attack_hand(mob/user)
 	if(..())
 		return
 	src.add_dialog(user)

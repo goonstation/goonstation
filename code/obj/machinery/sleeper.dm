@@ -344,7 +344,7 @@
 	allow_drop()
 		return 0
 
-	attackby(obj/item/grab/G as obj, mob/user as mob)
+	attackby(obj/item/grab/G, mob/user)
 		src.add_fingerprint(user)
 
 		if (!istype(G) || !ishuman(G.affecting))
@@ -591,7 +591,7 @@
 		playsound(src.loc, "sound/machines/sleeper_close.ogg", 50, 1)
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		..()
 		eject_occupant(user)
 
@@ -695,7 +695,7 @@
 		..()
 		animate_bumble(src, Y1 = 1, Y2 = -1, slightly_random = 0)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (our_console)
 			our_console.Attackhand(user)
 			interact_particle(user,src)
@@ -779,7 +779,7 @@
 		if (islist(portable_machinery))
 			portable_machinery.Remove(src)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (our_console)
 			our_console.Attackhand(user)
 			interact_particle(user,src)

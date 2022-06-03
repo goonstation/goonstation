@@ -32,7 +32,7 @@
 	/obj/item/toy/plush/small/singuloose)
 	var/has_plushies = TRUE
 
-/obj/submachine/claw_machine/attack_hand(var/mob/user as mob)
+/obj/submachine/claw_machine/attack_hand(var/mob/user)
 	src.add_dialog(user)
 	if(src.busy)
 		boutput(user, "<span class='alert'>Someone else is currently playing [src]. Be patient!</span>")
