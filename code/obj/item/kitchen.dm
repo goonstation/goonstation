@@ -556,46 +556,41 @@ TRAYS
 		..()
 		BLOCK_SETUP(BLOCK_BOOK)
 
-	proc/add_contents(var/obj/item/W)
-		ordered_contents += W
-		tooltip_rebuild = 1
+	/// Adds a piece of food to the plate
+	proc/add_contents(var/obj/item/food, click_params)
+		food.set_loc(src)
+		src.vis_contents += food
+		food.appearance_flags |= RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+		food.vis_flags |= VIS_INHERIT_PLANE | VIS_INHERIT_LAYER
+		food.flags |= NO_MOUSEDROP_QOL
+		RegisterSignal(food, COMSIG_ATOM_MOUSEDROP, .proc/indirect_pickup)
+		RegisterSignal(food, COMSIG_MOVABLE_MOVED, .proc/remove_contents)
 
-	proc/remove_contents(var/obj/item/W)
-		ordered_contents -= W
-		tooltip_rebuild = 1
+	/// Removes a piece of food from the plate
+	proc/remove_contents(var/obj/item/food)
+		if (food in src)
+			food.set_loc(get_turf(src))
+		src.vis_contents -= food
+		food.appearance_flags = initial(food.appearance_flags)
+		food.vis_flags = initial(food.vis_flags)
+		food.flags = initial(food.flags)
+		UnregisterSignal(food, COMSIG_ATOM_MOUSEDROP)
+		UnregisterSignal(food, COMSIG_MOVABLE_MOVED)
 
-	update_icon()
+	/// Used to pick the plate up by click dragging some food to you, in case the plate is covered by big foods
+	proc/indirect_pickup(mob/user, atom/over_object)
+		if (user == over_object && GET_DIST(user, src) <= 1)
+			src.Attackhand(user)
 
-		for (var/i = 1, i <= ordered_contents.len, i++)
-			var/obj/item/F = ordered_contents[i]
-			var/image/I = SafeGetOverlayImage("food_[i]", F.icon, F.icon_state)
-			if(ordered_contents.len == 1)
-				I.transform *= 0.75
-			else
-				I.transform *= 0.5
-				if(i % 2)
-					I.pixel_x = -4
-				else
-					I.pixel_x = 4
-			I.layer = src.layer + 0.1
-			src.UpdateOverlays(I, "food_[i]", 0, 1)
-		for (var/i = ordered_contents.len + 1, i <= src.overlays.len, i++)
-			src.ClearSpecificOverlays("food_[i]")
-		return
-
+	/// Called when you throw or smash the plate, throwing the contents everywhere
 	proc/shit_goes_everywhere()
 		src.visible_message("<span class='alert'>Everything on \the [src] goes flying!</span>")
-		for (var/i = 1, i <= ordered_contents.len, i++)
-			throw_targets += get_offset_target_turf(src.loc, rand(throw_dist)-rand(throw_dist), rand(throw_dist)-rand(throw_dist))
+		for (var/obj/item/food in src)
+			src.remove_contents(food)
+			food.throw_at(get_offset_target_turf(src.loc, rand(throw_dist)-rand(throw_dist), rand(throw_dist)-rand(throw_dist)), 5, 1)
 
-		while (ordered_contents.len > 0)
-			var/obj/item/F = ordered_contents[1]
-			src.remove_contents(F)
-			src.UpdateIcon()
-			F.set_loc(get_turf(src))
-			F.throw_at(pick(throw_targets), 5, 1)
-
-	proc/unique_attack_garbage_fuck(mob/M as mob, mob/user as mob)
+	/// Used to smash the plate over someone's head
+	proc/unique_attack_garbage_fuck(mob/M, mob/user)
 		attack_particle(user,M)
 		M.TakeDamageAccountArmor("head", force, 0, 0, DAMAGE_BLUNT)
 		playsound(src, "sound/impact_sounds/plate_break.ogg", 50, 1)
@@ -621,29 +616,8 @@ TRAYS
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
-		if(ordered_contents.len == 0)
-			return
-		src.shit_goes_everywhere()
-
-	get_desc(dist)
-		if(dist > 5)
-			return
-		if(ordered_contents.len == 0)
-			food_desc = "\The [src] has no food on it!"
-		else
-			food_desc = "\The [src] has "
-			for (var/i = 1, i <= ordered_contents.len, i++)
-				var/obj/item/F = ordered_contents[i]
-				if(i == ordered_contents.len && i == 1)
-					food_desc += "\an [F] on it."
-					return "[food_desc]"
-				if(i == ordered_contents.len)
-					food_desc += "and \an [F] on it."
-				else
-					food_desc += "\an [F], "
-		if(length("[food_desc]") > MAX_MESSAGE_LEN)
-			return "<span style=\"color:orange\">There's a positively <i>indescribable</i> amount of food on \the [src]!</span>"
-		return "[food_desc]"
+		if(ordered_contents.len > 0)
+			src.shit_goes_everywhere()
 
 	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/plate) && !istype(W, /obj/item/plate/tray) && W.type == src.type)
@@ -925,7 +899,6 @@ TRAYS
 			qdel(src)
 			return
 		tray_health--
-		tooltip_rebuild = 1
 
 		src.visible_message("\The [src] looks less sturdy now.")
 
