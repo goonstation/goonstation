@@ -40,6 +40,8 @@
 		src.affecting = affecting
 		src.affecting.grabbed_by += src
 		RegisterSignal(src.assailant, COMSIG_ATOM_HITBY_PROJ, .proc/check_hostage)
+		if (assailant != affecting)
+			SEND_SIGNAL(affecting, COMSIG_MOB_GRABBED, src)
 
 	proc/post_item_setup()//after grab is done being made with item
 		return
