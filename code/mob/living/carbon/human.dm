@@ -3256,6 +3256,9 @@
 
 	if (head)
 		worn += head.name
+
+	else if (mutantrace?.self_click_fluff)
+		worn += mutantrace.self_click_fluff
 	else
 		worn += "hair"
 
