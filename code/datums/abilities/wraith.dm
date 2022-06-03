@@ -484,6 +484,7 @@
 				var/obj/critter/wraithskeleton/S = new /obj/critter/wraithskeleton(C)
 				S.name = "Locker skeleton"
 				S.health = 20
+				S.icon = 'icons/misc/critter.dmi'
 				S.icon_state = "skeleton"
 				usr.playsound_local(usr.loc, "sound/voice/wraith/wraithraise[rand(1, 3)].ogg", 80, 0)
 				return 0
