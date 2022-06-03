@@ -150,6 +150,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				return
 
 			src.Eat(user,user)
+		else if (istype(W, /obj/item/tongs))
+			if (istype(src.loc, /obj/item/storage))
+				boutput(user, "You take [src] out of [src.loc].")
+				user.put_in_hand_or_drop(src)
+			else
+				src.AttackSelf(user)
 		else
 			..()
 
@@ -157,7 +163,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		if (!src.Eat(user, user))
 			return ..()
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		if(isghostcritter(user)) return
 		if (!src.Eat(M, user))
 			return ..()
@@ -310,6 +316,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 	afterattack(obj/target, mob/user, flag)
 		return
+
+	MouseDrop_T(obj/item/reagent_containers/food/snacks/O, mob/living/user)
+		if (istype(O) && istype(user) && in_interact_range(O, user) && in_interact_range(src, user))
+			return src.Attackby(O, user)
+		return ..()
 
 	get_desc(dist, mob/user)
 		if(!user.traitHolder?.hasTrait("training_chef"))
@@ -508,7 +519,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			src.splash_all_contents = 1
 		return
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		// in this case m is the consumer and user is the one holding it
 		if (istype(src, /obj/item/reagent_containers/food/drinks/bottle/soda))
 			var/obj/item/reagent_containers/food/drinks/bottle/W = src
@@ -894,7 +905,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			..()
 			return
 
-	attack(target as mob, mob/user as mob)
+	attack(target, mob/user)
 		if (src.broken && !src.unbreakable)
 			force = 5.0
 			throwforce = 10.0
@@ -1750,7 +1761,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		..()
 		src.smash(T)
 
-/obj/item/reagent_containers/food/drinks/carafe/attack(mob/M as mob, mob/user as mob)
+/obj/item/reagent_containers/food/drinks/carafe/attack(mob/M, mob/user)
 	if (user.a_intent == INTENT_HARM)
 		if (M == user)
 			boutput(user, "<span class='alert'><B>You smash the [src] over your own head!</b></span>")

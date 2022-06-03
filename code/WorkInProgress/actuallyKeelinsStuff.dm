@@ -1726,7 +1726,7 @@ Returns:
 		src.setMaterial(head.material, appearance = 0, setname = 0)
 		return
 
-	attack(mob/M as mob, mob/user as mob) //TBI
+	attack(mob/M, mob/user) //TBI
 		return ..(M,user)
 
 /obj/item/craftedmelee
@@ -1761,7 +1761,7 @@ Returns:
 		desc = "Someone taped together \a [item1.name] and \a [item2.name]. Great."
 		return
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		if(!item1 || !item2)
 			src.fall_apart()
 			return
@@ -3091,7 +3091,7 @@ Returns:
 	amount = 1
 	heal_amt = 5
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		if(ishuman(M))
 			if(M == user)
 				M.nutrition += src.heal_amt * 10

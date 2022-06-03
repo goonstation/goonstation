@@ -18910,7 +18910,6 @@
 "wsu" = (
 /obj/table/auto,
 /obj/item/plate/tray,
-/obj/item/platestack,
 /turf/unsimulated/floor/wood,
 /area/swampzone/interiors/bonktek/waffletek)
 "wsQ" = (

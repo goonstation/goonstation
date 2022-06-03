@@ -322,7 +322,7 @@
 	if (record_name)
 		src.desc = "A fairly large record. There's a sticker on it that says \"[record_name]\"."
 
-/obj/item/record/attack(mob/M as mob, mob/user as mob) // copied plate code
+/obj/item/record/attack(mob/M, mob/user) // copied plate code
 	if (user.a_intent == INTENT_HARM)
 		if (M == user)
 			boutput(user, "<span class='alert'><B>You smash the record over your own head!</b></span>")

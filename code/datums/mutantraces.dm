@@ -847,7 +847,9 @@ TYPEINFO(/datum/mutantrace)
 		mob.see_invisible = INVIS_INFRA
 
 	say_filter(var/message)
-		return replacetext(message, "s", stutter("ss"))
+		var/replace_lowercase = replacetextEx(message, "s", stutter("ss"))
+		var/replace_uppercase = replacetextEx(replace_lowercase, "S", stutter("SS"))
+		return replace_uppercase
 
 	disposing()
 		if(ishuman(mob))
@@ -1130,7 +1132,7 @@ TYPEINFO(/datum/mutantrace)
 	w_class = W_CLASS_SMALL
 	var/uses = 10
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (isskeleton(M))
 			var/mob/living/carbon/human/H = M
 			if (user.zone_sel.selecting in H.limbs.vars)
@@ -2042,7 +2044,9 @@ TYPEINFO(/datum/mutantrace)
 
 	say_filter(var/message)
 		.= replacetext(message, "cow", "human")
-		.= replacetext(., "m", stutter("mm"))
+		var/replace_lowercase = replacetextEx(., "m", stutter("mm"))
+		var/replace_uppercase = replacetextEx(replace_lowercase, "M", stutter("MM"))
+		return replace_uppercase
 
 	emote(var/act, var/voluntary)
 		switch(act)

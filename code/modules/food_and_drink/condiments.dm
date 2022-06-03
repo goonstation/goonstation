@@ -160,7 +160,7 @@
 		else
 			return ..()
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (src.shakes >= 15)
 			user.show_text("[src] is empty!", "red")
 			return

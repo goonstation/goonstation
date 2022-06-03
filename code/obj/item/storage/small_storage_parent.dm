@@ -97,7 +97,7 @@
 		total_amt = null
 		return 1
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (surgeryCheck(M, user))
 			insertChestItem(M, user)
 			return

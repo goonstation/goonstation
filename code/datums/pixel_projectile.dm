@@ -261,7 +261,7 @@ turf/proc/collide_here(var/obj/pixel_projectile/p)
 	New()
 		return
 
-/obj/item/pixel_gun/attack(mob/M as mob, mob/user as mob)
+/obj/item/pixel_gun/attack(mob/M, mob/user)
 
 	user.lastattacked = M
 	M.lastattacker = user

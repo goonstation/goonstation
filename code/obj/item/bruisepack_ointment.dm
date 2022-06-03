@@ -46,7 +46,7 @@
 			qdel(src)
 		return
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (issilicon(M))
 			if (prob(5))
 				user.show_text("I'm a doctor, not a mechanic.", "red")

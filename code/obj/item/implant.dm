@@ -1460,7 +1460,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		src.imp = null
 		src.update()
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (!ishuman(M) && !ismobcritter(M))
 			return ..()
 

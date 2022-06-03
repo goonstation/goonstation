@@ -311,7 +311,7 @@ that cannot be itched
 		addUpgrade(src, W, user, src.reagent_upgrade)
 		..()
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if ((user.bioHolder.HasEffect("clumsy") || user.get_brain_damage() >= 60) && prob(50))
 			user.visible_message("<span class='alert'><b>[user]</b> slips and drops [src]'s sensors on the floor!</span>")
 			user.show_message("Analyzing Results for <span class='notice'>The floor:<br>&emsp; Overall Status: Healthy</span>", 1)
@@ -402,7 +402,7 @@ that cannot be itched
 	hide_attack = 2
 	tooltip_flags = REBUILD_DIST
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		return
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
@@ -579,7 +579,7 @@ that cannot be itched
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT | EXTRADELAY
 	mats = 3
 
-	attack(mob/living/carbon/human/M as mob, mob/user as mob)
+	attack(mob/living/carbon/human/M, mob/user)
 		if (!istype(M))
 			boutput(user, "<span class='alert'>The device displays an error about an \"incompatible target\".</span>")
 			return
@@ -753,7 +753,7 @@ that cannot be itched
 	icon_state = "fs"
 	item_state = "electronic"
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		return
 
 	// attack_self

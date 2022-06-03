@@ -73,7 +73,7 @@
 		user.show_text("You switch [src] to [src.mode ? "inject" : "draw"].")
 		src.UpdateIcon()
 
-	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	attack(mob/living/carbon/M, mob/living/carbon/user)
 		if (!ishuman(M))
 			return ..()
 		var/mob/living/carbon/human/H = M
