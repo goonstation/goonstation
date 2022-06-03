@@ -172,7 +172,7 @@
 		desc = "A weave of some kind."
 		var/in_use = 0
 
-		attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+		attack(mob/living/carbon/M, mob/living/carbon/user)
 			if (user.a_intent == INTENT_GRAB)
 				return ..()
 			if (src.in_use)

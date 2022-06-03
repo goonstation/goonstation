@@ -616,7 +616,7 @@
 	qdel(src)
 	return
 /*
-/obj/item/ursium/attack(mob/M as mob, mob/user as mob)
+/obj/item/ursium/attack(mob/M, mob/user)
 	if (user != M)
 		user.visible_message("<span class='alert'>[user] is trying to force [M] to eat the [src.content]!</span>")
 		if (do_mob(user, M, 40))

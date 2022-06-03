@@ -133,7 +133,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy)
 	real_name = "Hetz's Cup"
 	var/unwrapped = 0
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		if (user == M)
 			boutput(user, "<span class='alert'>You need to unwrap them first, you greedy beast!</span>")
 			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
@@ -476,7 +476,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 		for (var/F in flavors)
 			R.add_reagent(F, 10)
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		if (user == M)
 			boutput(user, "<span class='alert'>You need to unwrap this first!</span>")
 			user.visible_message("<span class='emote'><b>[user]</b> stares at [src] in a confused manner.</span>")

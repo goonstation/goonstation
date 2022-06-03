@@ -46,7 +46,7 @@
 	desc = "A strip of cloth painstakingly designed to wear around your eyes so you cannot see."
 	block_vision = 1
 
-	attack(mob/M as mob, mob/user as mob, def_zone) //this is for equipping blindfolds on head attack.
+	attack(mob/M, mob/user, def_zone) //this is for equipping blindfolds on head attack.
 		if (user.zone_sel.selecting == "head" && ishuman(M)) //ishuman() works on monkeys too apparently.
 			if(user == M) //Accidentally blindfolding yourself might be annoying so I'm leaving that out.
 				boutput(user, "<span class='alert'>Put it on your eyes, dingus!</span>")

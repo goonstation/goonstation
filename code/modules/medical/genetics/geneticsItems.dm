@@ -10,7 +10,7 @@
 	w_class = W_CLASS_SMALL
 	var/uses = 1
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if(!M || !user)
 			return
 
@@ -163,7 +163,7 @@
 			..()
 		return
 
-	attack(mob/M, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (!iscarbon(M))
 			return
 		if (payload)

@@ -488,7 +488,7 @@ Broken RCD + Effects
 
 /* flesh wall creation code
 // holy jesus christ
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		if (ishuman(M) && matter >= 3)
 			var/mob/living/carbon/human/H = M
 			if(!isdead(H) && H.health > 0)

@@ -928,7 +928,7 @@
 			return
 
  // here be extra surgery penalties
-	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	attack(mob/living/carbon/M, mob/living/carbon/user)
 
 		if(!surgeryCheck(M, user)) // if it ain't surgery compatible, do whatever!
 			return ..()

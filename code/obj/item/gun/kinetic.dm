@@ -195,7 +195,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 		return ..()
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 	// Finished Cogwerks' former WIP system (Convair880).
 		if (src.canshoot() && user.a_intent != "help" && user.a_intent != "grab")
 			if (src.auto_eject)

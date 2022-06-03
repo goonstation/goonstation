@@ -1370,7 +1370,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 	item_state = "chefhat" // lol
 	w_class = W_CLASS_TINY
 
-	attack(mob/target as mob)
+	attack(mob/target)
 		if (istype(target, /mob/living/carbon/human/machoman))
 			target.visible_message("<span class='alert'>[target] shoves \his face deep into [src] and breathes deeply!</span>")
 			playsound(target.loc, "sound/voice/macho/macho_breathing02.ogg", 50, 1)
