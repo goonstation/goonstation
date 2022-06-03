@@ -4,7 +4,7 @@
 /////////////////////////////////////////////////////////////////
 
 //not sure where best to put this
-#define sech(x) 2/min((eulers**x)+(eulers**-x),0.00001)
+#define sech(x) 2/((eulers**x)+(eulers**-x)+0.000001)
 
 /obj/machinery/atmospherics/binary/reactor_turbine
 	name = "Gas Turbine"
@@ -97,11 +97,8 @@
 			var/output_starting_energy = THERMAL_ENERGY(current_gas)
 			var/energy_generated = src.stator_load*(src.RPM/60)
 			boutput(world,"TURBINE ENERGY: input=[input_starting_energy] output=[output_starting_energy] gen=[energy_generated]")
-			//var/debug = eulers**src.RPM
-			//var/debug2 = eulers**(src.RPM-src.best_RPM)
-			//var/debug3 = sech(0.01*(src.RPM-src.best_RPM))
 
-			src.lastgen = energy_generated// * sech(0.01*(src.RPM-src.best_RPM))
+			src.lastgen = energy_generated * sech((0.01*(src.RPM-src.best_RPM)))
 			var/delta_E = (input_starting_energy - output_starting_energy)
 			//|a + v| = sqrt(2k/m)
 			var/newRPM = 0

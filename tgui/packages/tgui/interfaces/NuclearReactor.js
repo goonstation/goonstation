@@ -51,7 +51,7 @@ const ReactorRow = (shape) => {
               <Button
                 key={name}
                 fluid
-                tooltip="{name}<br>{temp} K"
+                tooltip={`${name}<br>${temp} K`}
                 color="transparent"
                 m={1}
                 onClick={() => onClick('slot', { "x": x, "y": y })} >
