@@ -2071,25 +2071,25 @@ var/list/fun_images = list()
 		for(var/atom/thing as anything in clicked_turf)
 			atoms += thing
 		if (atoms.len)
-			A = tgui_input_list(src.mob, "Which item to admin-interact with?", "Admin interact", atoms)
+			A = tgui_input_list(src, "Which item to admin-interact with?", "Admin interact", atoms)
 			if (isnull(A)) return
 
 	var/choice = 0
 
 	if (!client.holder.animtoggle)
 		if (ismob(A))
-			choice = tgui_input_list(src.mob, "What do? (Atom verbs are ON)", "[A]", (client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["mob"]))
+			choice = tgui_input_list(src, "What do? (Atom verbs are ON)", "[A]", (client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["mob"]))
 		else if (isturf(A))
-			choice = tgui_input_list(src.mob, "What do? (Atom verbs are ON)", "[A]", (client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["turf"]))
+			choice = tgui_input_list(src, "What do? (Atom verbs are ON)", "[A]", (client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["turf"]))
 		else
-			choice = tgui_input_list(src.mob, "What do? (Atom verbs are ON)", "[A]", (client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["obj"]))
+			choice = tgui_input_list(src, "What do? (Atom verbs are ON)", "[A]", (client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["obj"]))
 	else
 		if (ismob(A))
-			choice = tgui_input_list(src.mob, "What do?", "[A]", client.holder.admin_interact_verbs["mob"])
+			choice = tgui_input_list(src, "What do?", "[A]", client.holder.admin_interact_verbs["mob"])
 		else if (isturf(A))
-			choice = tgui_input_list(src.mob, "What do?", "[A]", client.holder.admin_interact_verbs["turf"])
+			choice = tgui_input_list(src, "What do?", "[A]", client.holder.admin_interact_verbs["turf"])
 		else
-			choice = tgui_input_list(src.mob, "What do?", "[A]", client.holder.admin_interact_verbs["obj"])
+			choice = tgui_input_list(src, "What do?", "[A]", client.holder.admin_interact_verbs["obj"])
 
 	var/client/C = src.client
 	switch(choice)
