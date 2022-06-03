@@ -3,6 +3,9 @@
 // This is where the power comes from
 /////////////////////////////////////////////////////////////////
 
+//not sure where best to put this
+#define sech(x) 2/min((eulers**x)+(eulers**-x),0.00001)
+
 /obj/machinery/atmospherics/binary/reactor_turbine
 	name = "Gas Turbine"
 	desc = "A large turbine used for generating power using hot gas."
@@ -23,12 +26,16 @@
 	var/lastgen = 0
 	dir = EAST
 
-	var/stator_load = 100
+	var/stator_load = 10000
 	var/RPM = 0
 	var/turbine_mass = 1000
+	var/best_RPM = 600 //most efficient power generation at this value, overspeed at 1.2*this
 	var/flow_rate = 200
 
 	var/sound_stall = 'sound/machines/tractor_running.ogg'
+
+	var/stalling = FALSE
+	var/overspeed = FALSE
 
 	New()
 		. = ..()
@@ -62,7 +69,6 @@
 
 	process()
 		. = ..()
-
 		if(RPM > 1)
 			if(src.icon_state == "turbine_main")
 				src.icon_state = "turbine_spin"
@@ -87,21 +93,36 @@
 		src.lastgen = 0
 		if(current_gas)
 			var/input_starting_energy = THERMAL_ENERGY(current_gas)
-			current_gas.temperature = max(0.66 * current_gas.temperature,T20C)
+			current_gas.temperature = max((input_starting_energy*0.8)/HEAT_CAPACITY(current_gas), T20C)
 			var/output_starting_energy = THERMAL_ENERGY(current_gas)
-			var/energy_generated = src.stator_load*src.RPM
-			src.lastgen = energy_generated
-			var/delta_E = input_starting_energy - output_starting_energy
-			//sqrt(2k/m) = a + v
-			src.RPM = sqrt(2*(max(delta_E - energy_generated,0))/turbine_mass)
-			var/nextRPM = sqrt(2*(max(delta_E-(src.stator_load*src.RPM),0))/turbine_mass)
-			if((nextRPM == 0) && (delta_E > 0))
+			var/energy_generated = src.stator_load*(src.RPM/60)
+			boutput(world,"TURBINE ENERGY: input=[input_starting_energy] output=[output_starting_energy] gen=[energy_generated]")
+			//var/debug = eulers**src.RPM
+			//var/debug2 = eulers**(src.RPM-src.best_RPM)
+			//var/debug3 = sech(0.01*(src.RPM-src.best_RPM))
+
+			src.lastgen = energy_generated// * sech(0.01*(src.RPM-src.best_RPM))
+			var/delta_E = (input_starting_energy - output_starting_energy)
+			//|a + v| = sqrt(2k/m)
+			var/newRPM = 0
+			if((delta_E - energy_generated) > 0)
+				newRPM = src.RPM + sqrt(2*(max(delta_E - energy_generated,0))/turbine_mass)
+			else
+				newRPM = src.RPM - sqrt(2*(max(energy_generated - delta_E,0))/turbine_mass)
+
+			if(newRPM < 0)
+				//stator load is too high
+				src.stalling = TRUE
 				src.RPM = 0
-				//stator load is too high to start spinning
 				playsound(src.loc, sound_stall, 60, 0)
+			else
+				src.stalling = FALSE
+				src.RPM = newRPM
+
+			src.overspeed = (src.RPM > src.best_RPM*1.2)
 
 			src.air2.merge(current_gas)
-			src.terminal.add_avail(energy_generated)
+			src.terminal.add_avail(src.lastgen)
 
 			src.air1.volume = src.flow_rate
 			src.air2.volume = src.flow_rate

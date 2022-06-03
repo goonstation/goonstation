@@ -51,7 +51,7 @@ const ReactorRow = (shape) => {
               <Button
                 key={name}
                 fluid
-                tooltip={temp}
+                tooltip="{name}<br>{temp} K"
                 color="transparent"
                 m={1}
                 onClick={() => onClick('slot', { "x": x, "y": y })} >
@@ -111,10 +111,10 @@ export const NuclearReactor = (props, context) => {
       resizable
       title="Nuclear Reactor"
       width={(gridW+1)*64}
-      height={600}>
+      height={650}>
       <Window.Content>
         <Section>
-          <Box >
+          <Box>
             <ReactorGrid
               gridW={gridW}
               gridH={gridH}
@@ -128,6 +128,7 @@ export const NuclearReactor = (props, context) => {
           <Box>
             <Stack fill>
               <Stack.Item width="50%">
+                Reactor Tempertaure:
                 <RoundGauge
                   minValue={0}
                   maxValue={2500}
@@ -142,6 +143,7 @@ export const NuclearReactor = (props, context) => {
                   }} />
               </Stack.Item>
               <Stack.Item width="50%">
+                Radiation Level:
                 <RoundGauge
                   minValue={0}
                   maxValue={200}
@@ -156,13 +158,14 @@ export const NuclearReactor = (props, context) => {
                   }} />
               </Stack.Item>
             </Stack>
+            Control Rod Insertion: {controlRodLevel}%
             <Knob
               animated
               size={2}
               value={controlRodLevel}
               minValue={0}
               maxValue={100}
-              format={value => value + " %"}
+              format={value => value + "%"}
               onDrag={(e, value) => act('adjustCR', { crvalue: value })}
             />
           </Box>

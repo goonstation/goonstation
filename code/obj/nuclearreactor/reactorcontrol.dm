@@ -28,10 +28,22 @@
 			for(var/obj/machinery/power/terminal/N in powernet.nodes)
 				if(istype(N.master,/obj/machinery/atmospherics/binary/reactor_turbine))
 					src.turbine_handle = N.master
-					return
+					break
+			return
+
 
 		if (status & (NOPOWER|BROKEN))
 			return
+
+		if(turbine_handle.overspeed & src.icon_state != "engine1")
+			src.icon_state = "engine1"
+			src.UpdateIcon()
+		else if(turbine_handle.stalling & src.icon_state != "engine2")
+			src.icon_state = "engine2"
+			src.UpdateIcon()
+		else if(src.icon_state != "engine")
+			src.icon_state = "engine"
+			src.UpdateIcon()
 
 		if (length(src.history) > src.history_max)
 			src.history.Cut(1, 2) //drop the oldest entry
@@ -95,6 +107,7 @@
 			for(var/obj/machinery/power/terminal/netlink/N in powernet.nodes)
 				if(istype(N.master,/obj/machinery/atmospherics/binary/nuclear_reactor))
 					src.reactor_handle = N.master
+
 
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)

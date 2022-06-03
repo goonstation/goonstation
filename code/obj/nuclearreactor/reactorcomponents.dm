@@ -144,7 +144,7 @@ ABSTRACT_TYPE(/obj/reactor_component)
 	name = "heat exchanger"
 	desc = "A heat exchanger component for a nuclear reactor"
 	icon_state_inserted = "heat"
-	thermal_cross_section = 0.2
+	thermal_cross_section = 0.4
 	neutron_cross_section = 0.1
 
 ////////////////////////////////////////////////////////////////

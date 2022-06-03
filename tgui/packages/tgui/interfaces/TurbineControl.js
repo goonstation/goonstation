@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Chart, LabeledList, Stack, Slider, Box } from '../components';
+import { Chart, LabeledList, Stack, Slider, Box, NumberInput } from '../components';
 import { formatPower } from '../format';
 import { Window } from '../layouts';
 
@@ -59,7 +59,7 @@ export const TurbineControl = (_props, context) => {
           </Stack.Item>
           <Stack.Item>
             <LabeledList>
-              <LabeledList.Item label="Turbine Load">{load} Watts/RPM</LabeledList.Item>
+              <LabeledList.Item label="Turbine Load">{load} Joules/Revolution</LabeledList.Item>
             </LabeledList>
             <Chart.Line
               mt="5px"
@@ -72,20 +72,20 @@ export const TurbineControl = (_props, context) => {
             />
           </Stack.Item>
           <Stack.Item>
-            <Box>
-              <Slider
-                minValue={1}
-                maxValue={load*2}
-                value={load}
-                format={value => value + " Watts/RPM"}
-                onChange={(e, value) => act("loadChange", { newVal: value })} />
-              <Slider
-                minValue={1}
-                maxValue={volume*2}
-                value={volume}
-                format={value => value + " M^3"}
-                onChange={(e, value) => act("volChange", { newVal: value })} />
-            </Box>
+            Stator Load:
+            <NumberInput
+              minValue={1}
+              value={load}
+              format={value => value + " Joules/Revolution"}
+              onChange={(e, value) => act("loadChange", { newVal: value })} />
+          </Stack.Item>
+          <Stack.Item>
+            Coolant Volume:
+            <NumberInput
+              minValue={1}
+              value={volume}
+              format={value => value + " M^3"}
+              onChange={(e, value) => act("volChange", { newVal: value })} />
           </Stack.Item>
         </Stack>
       </Window.Content>
