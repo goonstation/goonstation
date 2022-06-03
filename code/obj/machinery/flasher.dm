@@ -192,7 +192,7 @@
 
 //Let the AI trigger them directly.
 /obj/machinery/flasher/attack_ai()
-	if (src.anchored)
+	if (src.anchored && !ON_COOLDOWN(src, "flash", cooldown_flash))
 		return src.flash()
 	else
 		return
