@@ -22,7 +22,7 @@
 		src.cell.give(7500) // Charge it up
 		return
 
-	attackby(obj/item/P as obj, mob/living/user as mob)
+	attackby(obj/item/P, mob/living/user)
 		if(istype(P,/obj/item/card/id))
 			if(src.activated)
 				if(alert("Do you want to un-register this phone?","yes","no") == "yes")
@@ -50,7 +50,7 @@
 			src.gib(src.loc)
 			qdel(src)
 
-	attack_hand(mob/living/user as mob,var/cellmode)
+	attack_hand(mob/living/user,var/cellmode)
 		..(user,1)
 		if(src.answered == 1)
 			return

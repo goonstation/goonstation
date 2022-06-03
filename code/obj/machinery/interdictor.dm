@@ -60,7 +60,7 @@
 		deployed_fields = list()
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(!src.allowed(user))
 			boutput(user, "<span class='alert'>Engineering clearance is required to operate the interdictor's locks.</span>")
 			return
@@ -86,7 +86,7 @@
 		else
 			boutput(user, "<span class='alert'>The interdictor's magnetic locks were just toggled and can't yet be toggled again.</span>")
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(ispulsingtool(W))
 			boutput(user, "<span class='notice'>The interdictor's internal capacitor is currently at [src.intcap.charge] of [src.intcap.maxcharge] units.</span>")
 			return
@@ -330,7 +330,7 @@
 	var/obj/intcap = null
 	var/obj/introd = null
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(state == 4) //permit removal of cell before you install wires
 			src.state = 3
 			src.icon_state = "interframe-3"
@@ -343,7 +343,7 @@
 			return
 		..()
 
-	attackby(var/obj/item/I as obj, var/mob/user as mob)
+	attackby(var/obj/item/I, var/mob/user)
 		switch(state)
 			if(0)
 				if (iswrenchingtool(I))

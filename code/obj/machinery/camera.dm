@@ -62,7 +62,7 @@
 	density = 1
 	var/securedstate = 2
 
-/obj/machinery/camera/television/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/camera/television/attackby(obj/item/W, mob/user)
 	..()
 	if (isscrewingtool(W)) //to move them
 		if (securedstate && src.securedstate >= 1)
@@ -256,26 +256,35 @@
 				O.set_eye(null)
 				boutput(O, "The screen bursts into static.")
 
-/obj/machinery/camera/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/camera/proc/break_camera(mob/user)
+	src.camera_status = FALSE
+	playsound(src.loc, "sound/items/Wirecutter.ogg", 100, 1)
+	src.icon_state = "camera1"
+	updateCoverage()
+	if (user)
+		user.visible_message("<span class='alert'>[user] has deactivated [src]!</span>", "<span class='alert'>You have deactivated [src].</span>")
+		logTheThing("station", null, null, "[key_name(user)] deactivated a security camera ([log_loc(src.loc)])")
+		add_fingerprint(user)
+
+/obj/machinery/camera/proc/repair_camera(mob/user)
+	src.camera_status = TRUE
+	playsound(src.loc, "sound/items/Wirecutter.ogg", 100, 1)
+	src.icon_state = "camera"
+	updateCoverage()
+	if (user)
+		user.visible_message("<span class='alert'>[user] has reactivated [src]!</span>", "<span class='alert'>You have reactivated [src].</span>")
+		add_fingerprint(user)
+
+/obj/machinery/camera/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/parts/human_parts)) //dumb easter egg incoming
 		user.visible_message("<span class='alert'>[user] wipes [src] with the bloody end of [W.name]. What the fuck?</span>", "<span class='alert'>You wipe [src] with the bloody end of [W.name]. What the fuck?</span>")
 		return
 
 	if (issnippingtool(W))
-		src.camera_status = !( src.camera_status )
-		if (!( src.camera_status ))
-			user.visible_message("<span class='alert'>[user] has deactivated [src]!</span>", "<span class='alert'>You have deactivated [src].</span>")
-			logTheThing("station", null, null, "[key_name(user)] deactivated a security camera ([log_loc(src.loc)])")
-			playsound(src.loc, "sound/items/Wirecutter.ogg", 100, 1)
-			src.icon_state = "camera1"
-			add_fingerprint(user)
-			updateCoverage()
+		if (src.camera_status)
+			src.break_camera(user)
 		else
-			user.visible_message("<span class='alert'>[user] has reactivated [src]!</span>", "<span class='alert'>You have reactivated [src].</span>")
-			playsound(src.loc, "sound/items/Wirecutter.ogg", 100, 1)
-			src.icon_state = "camera"
-			add_fingerprint(user)
-			updateCoverage()
+			src.repair_camera(user)
 		// now disconnect anyone using the camera
 		src.disconnect_viewers()
 		return
@@ -356,7 +365,7 @@
 	detectTime = -1
 	return 1
 
-/obj/machinery/camera/motion/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/camera/motion/attackby(obj/item/W, mob/user)
 	if (issnippingtool(W) && locked == 1) return
 	if (isscrewingtool(W))
 		var/turf/T = user.loc

@@ -950,7 +950,7 @@
 				icon_state = "bdoorsingle1"
 				doordir = "single"
 
-/obj/machinery/door/poddoor/attackby(obj/item/C as obj, mob/user as mob)
+/obj/machinery/door/poddoor/attackby(obj/item/C, mob/user)
 	src.add_fingerprint(user)
 	if (C && !ispryingtool(C))
 		if (src.density && !src.operating)
@@ -1063,7 +1063,7 @@
 	if(icon_state == "[icon_base]single1")
 		doordir = "single"
 
-/obj/machinery/door/poddoor/blast/attackby(obj/item/C as obj, mob/user as mob)
+/obj/machinery/door/poddoor/blast/attackby(obj/item/C, mob/user)
 	src.add_fingerprint(user)
 	if (!ispryingtool(C))
 		return

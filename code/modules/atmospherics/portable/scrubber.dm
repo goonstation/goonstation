@@ -105,7 +105,7 @@
 /obj/machinery/portable_atmospherics/scrubber/return_air()
 	return air_contents
 
-/obj/machinery/portable_atmospherics/scrubber/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/portable_atmospherics/scrubber/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/atmosporter))
 		var/obj/item/atmosporter/porter = W
 		if (porter.contents.len >= porter.capacity) boutput(user, "<span class='alert'>Your [W] is full!</span>")
@@ -135,7 +135,7 @@
 		return
 	return src.Attackhand(user)
 
-/obj/machinery/portable_atmospherics/scrubber/attack_hand(var/mob/user as mob)
+/obj/machinery/portable_atmospherics/scrubber/attack_hand(var/mob/user)
 
 	src.add_dialog(user)
 	var/holding_text

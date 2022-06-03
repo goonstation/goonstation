@@ -45,7 +45,7 @@
 		src.icon_state = "bowling_ball_spin"
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		..()
 		if(user)
 			src.icon_state = "bowling_ball"
@@ -84,7 +84,7 @@
 		src.icon = initial(src.icon)
 		src.icon_state = "armadillo_spin"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		..()
 		if(user)
 			src.icon = initial(src.icon)

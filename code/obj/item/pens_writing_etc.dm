@@ -348,7 +348,7 @@
 		robot
 			desc = "Don't shove it up your nose, no matter how good of an idea that may seem to you. Wait, do you even have a nose? Maybe something else will happen if you try to stick it there."
 
-			attack(mob/M as mob, mob/user as mob, def_zone)
+			attack(mob/M, mob/user, def_zone)
 				if (M == user)
 					src.color = random_color()
 					src.font_color = src.color
@@ -602,7 +602,7 @@
 		src.chalk_health--
 		src.adjust_icon()
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		if (user == M && ishuman(M) && istype(M:mutantrace, /datum/mutantrace/lizard))
 			user.visible_message("[user] shoves \the [src] into [his_or_her(user)] mouth and takes a bite out of it! [pick("That's sick!", "That's metal!", "That's punk as fuck!", "That's hot!")]")
 			playsound(user.loc, "sound/items/eatfoodshort.ogg", rand(30, 60), 1)
@@ -690,7 +690,7 @@
 		else
 			. += "<br>Its label is set to \"[src.label]\"."
 
-	attack(mob/M, mob/user as mob)
+	attack(mob/M, mob/user)
 		/* lol vvv
 		if (!ismob(M)) // do this via afterattack()
 			return
@@ -899,7 +899,7 @@
 		src.updateSelfDialog()
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!user.equipped() && (user.l_hand == src || user.r_hand == src))
 			var/obj/item/paper/P = locate() in src
 			if (P)
@@ -909,7 +909,7 @@
 		else
 			return ..()
 
-	attackby(obj/item/P as obj, mob/user as mob)
+	attackby(obj/item/P, mob/user)
 
 		if (istype(P, /obj/item/paper) || istype(P, /obj/item/photo))
 			if (src.contents.len < 15)
@@ -984,7 +984,7 @@
 	throw_range = 10
 	tooltip_flags = REBUILD_DIST
 
-	attackby(var/obj/item/W as obj, var/mob/user as mob)
+	attackby(var/obj/item/W, var/mob/user)
 		if (istype(W, /obj/item/paper))
 			if (src.contents.len < 10)
 				boutput(user, "You cram the paper into the folder.")
@@ -1134,7 +1134,7 @@
 			if ("last_page")
 				src.display_booklet_contents(usr,pages.len)
 
-	attackby(var/obj/item/P as obj, mob/user as mob)
+	attackby(var/obj/item/P, mob/user)
 		if (istype(P, /obj/item/paper))
 			var/obj/item/staple_gun/S = user.find_type_in_hand(/obj/item/staple_gun)
 			if (S?.ammo)

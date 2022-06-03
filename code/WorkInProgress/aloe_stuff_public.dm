@@ -64,10 +64,28 @@
 	health_brute = 30
 	health_burn = 30
 
-/obj/item/clothing/mask/gas/swat
+/obj/item/clothing/mask/gas/swat/blue
 	name = "SWAT Mask?"
 	color = list(0.157562,0.163186,0.844535,0.390637,0.414067,-0.58031,-0.0243897,-0.0534431,0.259584)
 	desc = "Looks kinda familiar."
+
+/obj/item/clothing/mask/gas/swat/rainbow
+	name = "SWAG Mask"
+	color_r = 1
+	color_g = 1
+	color_b = 1
+
+	New()
+		..()
+		animate_rainbow_glow(src)
+
+	equipped(mob/user, slot)
+		. = ..()
+		animate_rainbow_glow(user.client)
+
+	unequipped(mob/user)
+		. = ..()
+		animate(user.client, color=null)
 
 /obj/machinery/recharge_station/cat
 

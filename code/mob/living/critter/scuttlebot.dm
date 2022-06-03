@@ -14,6 +14,10 @@
 	speechverb_say = "beeps"
 	speechverb_exclaim = "boops"
 	speechverb_ask = "beeps curiously"
+	add_abilities = list(/datum/targetable/critter/takepicture,
+						/datum/targetable/critter/flash,
+						/datum/targetable/critter/scuttle_scan,
+						/datum/targetable/critter/control_owner)
 	var/health_brute = 25
 	var/health_brute_vuln = 1
 	var/health_burn = 25
@@ -25,10 +29,6 @@
 		//Comes with the goggles
 		var/obj/item/clothing/glasses/scuttlebot_vr/R = new /obj/item/clothing/glasses/scuttlebot_vr(src.loc)
 		R.connected_scuttlebot = src
-
-		abilityHolder.addAbility(/datum/targetable/critter/takepicture)
-		abilityHolder.addAbility(/datum/targetable/critter/flash)
-		abilityHolder.addAbility(/datum/targetable/critter/control_owner)
 
 	setup_hands()
 		..()
@@ -53,8 +53,13 @@
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, "sound/voice/screams/robot_scream.ogg" , 60, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, "sound/voice/screams/robot_scream.ogg" , 60, 1, pitch=1.3, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b>[src]</b> screams!"
+
+			if ("fart")
+				if (src.emote_check(voluntary, 50))
+					playsound(src, "sound/voice/farts/poo2_robot.ogg", 50, 1, pitch=1.4, channel=VOLUME_CHANNEL_EMOTE)
+					return pick("[src] unleashes the tiniest robotic toot.", "[src] sends out a ridiculously pitched fart.")
 		return null
 
 	death(var/gibbed)
@@ -77,15 +82,6 @@
 			playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
 			make_cleanable(/obj/decal/cleanable/oil,src.loc)
 
-	attackby(obj/item/W, mob/M)
-		if(istype(W, /obj/item/clothing/glasses/scuttlebot_vr))
-			new /obj/item/clothing/head/det_hat/folded_scuttlebot(get_turf(src))
-			boutput(M, "You stuff the goggles back into the hat. It powers down with a low whirr.")
-			qdel(W)
-			qdel(src)
-		else
-			..()
-
 	proc/return_to_owner()
 		if (controller != null)
 			if(!controller.loc)
@@ -95,3 +91,13 @@
 			else
 				src.mind.transfer_to(controller)
 			controller = null
+
+/mob/living/critter/robotic/scuttlebot/weak
+
+	add_abilities = list(/datum/targetable/critter/takepicture,
+						/datum/targetable/critter/scuttle_scan,
+						/datum/targetable/critter/control_owner)
+
+	var/obj/item/clothing/head/det_hat/gadget/linked_hat = null
+
+	setup_hands()

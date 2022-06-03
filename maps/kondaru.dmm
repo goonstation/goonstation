@@ -5358,7 +5358,10 @@
 "aoQ" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/west,
-/obj/machinery/light_switch/east,
+/obj/machinery/light_switch/east{
+	pixel_x = 10;
+	pixel_y = 27
+	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/crematorium)
 "aoS" = (
@@ -8784,6 +8787,9 @@
 /obj/item/device/analyzer/atmospheric,
 /obj/item/device/analyzer/atmosanalyzer_upgrade,
 /obj/machinery/light/emergency,
+/obj/machinery/status_display{
+	pixel_x = 32
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 6
 	},
@@ -9380,6 +9386,9 @@
 	},
 /obj/item/device/radio/intercom/AI{
 	dir = 8
+	},
+/obj/machinery/status_display{
+	pixel_x = -32
 	},
 /turf/simulated/floor/stairs/dark,
 /area/station/turret_protected/ai)
@@ -15018,13 +15027,15 @@
 "aRk" = (
 /obj/machinery/light{
 	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
+	layer = 9.1
 	},
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/machinery/status_display{
+	pixel_x = 32
 	},
 /turf/simulated/floor/neutral/side{
 	dir = 4
@@ -15822,7 +15833,7 @@
 	},
 /area/station/medical/cdc)
 "aTy" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/genetics,
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
 "aTz" = (
@@ -17333,6 +17344,9 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/machinery/status_display{
+	pixel_y = -30
+	},
 /turf/unsimulated/floor/sanitary,
 /area/station/crewquarters/cryotron)
 "aYd" = (
@@ -17538,6 +17552,9 @@
 	},
 /obj/cable,
 /obj/machinery/power/data_terminal,
+/obj/machinery/status_display{
+	pixel_y = -30
+	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
 "aYJ" = (
@@ -21008,8 +21025,10 @@
 	},
 /obj/machinery/light{
 	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
+	layer = 9.1
+	},
+/obj/machinery/status_display{
+	pixel_x = 32
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 4
@@ -27120,6 +27139,9 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/machinery/status_display{
+	pixel_y = -30
+	},
 /turf/simulated/floor/orangeblack/side,
 /area/station/hallway/primary/south)
 "bFw" = (
@@ -28004,6 +28026,9 @@
 	icon_state = "pipe-c"
 	},
 /obj/fitness/stacklifter,
+/obj/machinery/status_display{
+	pixel_x = 32
+	},
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "bIv" = (
@@ -28558,17 +28583,6 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
-"bJN" = (
-/obj/stool/chair{
-	dir = 4
-	},
-/obj/disposalpipe/segment/vertical,
-/obj/machinery/light/emergency{
-	dir = 8;
-	pixel_x = -10
-	},
-/turf/simulated/floor/wood/two,
-/area/station/crew_quarters/courtroom)
 "bJP" = (
 /obj/stool/chair{
 	dir = 4
@@ -31170,8 +31184,7 @@
 "bQZ" = (
 /obj/machinery/light{
 	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
+	layer = 9.1
 	},
 /turf/simulated/floor/stairs/medical/wide{
 	dir = 1
@@ -34302,6 +34315,9 @@
 	},
 /area/station/crew_quarters/market)
 "ccy" = (
+/obj/machinery/status_display{
+	pixel_x = 32
+	},
 /turf/simulated/floor/stairs/wide{
 	dir = 1
 	},
@@ -35958,7 +35974,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/research,
 /turf/simulated/floor/shuttlebay{
 	name = "test chamber plating"
 	},
@@ -40316,8 +40332,10 @@
 /obj/item/device/light/zippo,
 /obj/machinery/light{
 	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
+	layer = 9.1
+	},
+/obj/machinery/status_display{
+	pixel_x = 32
 	},
 /turf/simulated/floor/black/side{
 	dir = 10
@@ -44030,7 +44048,7 @@
 /area/station/engine/core)
 "gTc" = (
 /obj/disposalpipe/segment/mail/horizontal,
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/kitchen,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "gTx" = (
@@ -45352,6 +45370,9 @@
 /area/station/ranch)
 "iut" = (
 /obj/machinery/light,
+/obj/machinery/status_display{
+	pixel_y = -30
+	},
 /turf/simulated/floor/grey,
 /area/station/hallway/secondary/exit)
 "iuB" = (
@@ -46299,6 +46320,18 @@
 /obj/item/device/light/flashlight,
 /turf/simulated/floor,
 /area/station/hangar/sec)
+"jpN" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/obj/disposalpipe/segment/horizontal,
+/obj/machinery/status_display{
+	pixel_y = -30
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/station/mining/magnet)
 "jpX" = (
 /obj/machinery/light{
 	dir = 8;
@@ -46915,6 +46948,10 @@
 "kcl" = (
 /obj/cable{
 	icon_state = "2-4"
+	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
@@ -47862,10 +47899,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "led" = (
@@ -48288,6 +48321,9 @@
 /obj/item/storage/toolbox/emergency,
 /obj/item/device/light/glowstick,
 /obj/item/device/light/glowstick,
+/obj/machinery/status_display{
+	pixel_y = -30
+	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "luE" = (
@@ -51187,6 +51223,9 @@
 "oqs" = (
 /obj/table/round/auto,
 /obj/item/gobowl/b,
+/obj/machinery/status_display{
+	pixel_x = -32
+	},
 /turf/simulated/floor/neutral/side{
 	dir = 8
 	},
@@ -54102,6 +54141,13 @@
 /obj/machinery/microwave,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/quarters_east)
+"rhJ" = (
+/obj/machinery/plantpot,
+/obj/machinery/status_display{
+	pixel_x = 32
+	},
+/turf/simulated/floor/grass,
+/area/station/hydroponics/bay)
 "riw" = (
 /obj/grille/catwalk{
 	dir = 6
@@ -54890,6 +54936,10 @@
 /obj/stool/chair{
 	dir = 4
 	},
+/obj/machinery/light/emergency{
+	dir = 8;
+	pixel_x = -10
+	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/courtroom)
 "sbT" = (
@@ -55611,10 +55661,6 @@
 /area/station/bridge)
 "sQH" = (
 /obj/storage/secure/closet/medical/medkit,
-/obj/machinery/alarm{
-	dir = 4;
-	pixel_x = -20
-	},
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -56443,6 +56489,9 @@
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
+	},
+/obj/machinery/status_display{
+	pixel_x = 32
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
@@ -57583,7 +57632,7 @@
 /obj/machinery/door_control{
 	id = "kitchen";
 	name = "Kitchen Shutter Control";
-	pixel_x = 24;
+	pixel_x = 10;
 	pixel_y = 24
 	},
 /obj/machinery/deep_fryer,
@@ -57686,6 +57735,10 @@
 	},
 /obj/item/bandage{
 	pixel_x = -2
+	},
+/obj/machinery/alarm{
+	dir = 4;
+	pixel_x = -20
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 10
@@ -57840,6 +57893,9 @@
 "uRG" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/east,
+/obj/machinery/status_display{
+	pixel_x = -32
+	},
 /turf/simulated/floor/wood/two,
 /area/station/chapel/sanctuary)
 "uRH" = (
@@ -58197,6 +58253,9 @@
 "vlr" = (
 /obj/machinery/weapon_stand/taser_rack/recharger/empty,
 /obj/machinery/light,
+/obj/machinery/status_display{
+	pixel_y = -30
+	},
 /turf/simulated/floor/red/side{
 	dir = 10
 	},
@@ -60129,6 +60188,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"xhB" = (
+/obj/stool/chair/office,
+/obj/landmark/start{
+	name = "Scientist"
+	},
+/obj/machinery/status_display{
+	pixel_x = 32
+	},
+/turf/simulated/floor/purple,
+/area/station/science/lobby)
 "xhN" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2{
@@ -97208,7 +97277,7 @@ bLJ
 bMH
 bOl
 bPC
-bQY
+xhB
 bSy
 bTR
 bQY
@@ -107750,7 +107819,7 @@ abo
 qoc
 mLb
 juf
-edL
+jpN
 umn
 umn
 wVb
@@ -117737,7 +117806,7 @@ bDA
 bEv
 bFO
 sbP
-bJN
+nhF
 bJP
 nhF
 dSc
@@ -119236,7 +119305,7 @@ bqU
 sxG
 btK
 jsY
-rOU
+rhJ
 rOU
 udD
 rOU

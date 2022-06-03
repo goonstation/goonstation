@@ -27,8 +27,6 @@
   - walruses
   - floating eye
   - pigs
-  - clownspiders
-   - cluwnespiders
   - bats
    - angry bats
    - Dr. Acula
@@ -304,7 +302,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 		HH.limb_name = "teeth"					// name for the dummy holder
 		HH.can_hold_items = 0
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (!isdead(src) && istype(W, /obj/item/plant/herb/catnip))
 			user.visible_message("<b>[user]</b> gives [src] \the [W]!",\
 			"You give [src] \the [W].")
@@ -422,7 +420,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 			src.show_text("[user] swipes the card down your back in a petting motion...")
 		return 1
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (istype(W, /obj/item/card/emag))
 			emag_act(user, W)
 		else
@@ -1022,7 +1020,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	bird_call_msg = list("hoots", "hoos")
 	bird_call_sound = "sound/voice/animal/hoot.ogg"
 
-	attackby(obj/item/W as obj, mob/M as mob)
+	attackby(obj/item/W, mob/M)
 		if(istype(W, /obj/item/plutonium_core/hootonium_core)) //Owls interestingly are capable of absorbing hootonium into their bodies harmlessly. This is the only safe method of removing it.
 			playsound(M.loc, "sound/items/eatfood.ogg", 100, 1)
 			boutput(M, "<span class='alert'><B>You feed the [src] the [W]. It looks [pick("confused", "annoyed", "worried", "satisfied", "upset", "a tad miffed", "at you and winks")].</B></span>")
@@ -1057,7 +1055,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 30
 	good_grip = 0.5
 
-	attackby(obj/item/W as obj, mob/M as mob)
+	attackby(obj/item/W, mob/M)
 		if(istype(W, /obj/item/plutonium_core/hootonium_core)) //Owls interestingly are capable of absorbing hootonium into their bodies harmlessly. This is the only safe method of removing it.
 			playsound(M.loc, "sound/items/eatfood.ogg", 100, 1)
 			boutput(M, "<span class='alert'><B>You feed the [src] the [W]. It looks [pick("confused", "annoyed", "worried", "satisfied", "upset", "a tad miffed", "at you and winks")].</B></span>")
@@ -1860,7 +1858,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if(prob(50))
 				src.ball_up(emote=FALSE)
 
-	attack_hand(mob/living/M as mob, params, location, control)
+	attack_hand(mob/living/M, params, location, control)
 		if (M.a_intent == INTENT_HARM || M.a_intent == INTENT_GRAB)
 			if (!src.is_balled())
 				if(prob(70))
@@ -2199,8 +2197,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	name = "space wasp"
 	real_name = "space wasp"
 	desc = "A wasp in space."
-	icon_state = "spacebee"
-	icon_state_dead = "spacebee-dead"
+	icon_state = "wasp"
+	icon_state_dead = "wasp-dead"
 	speechverb_say = "buzzes"
 	speechverb_exclaim = "screeches"
 	speechverb_ask = "hums"
@@ -2676,7 +2674,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
 			if ("scream")
-				if (src.emote_check(voluntary, 50))
+				if (src.emote_check(voluntary, 50) && !ON_COOLDOWN(src, "playsound", 5 SECONDS))
 					playsound(src, 'sound/voice/screams/Robot_Scream_2.ogg', 50, 1, 0.1, 2.6, channel=VOLUME_CHANNEL_EMOTE)
 					return "<span class='emote'><b>[src]</b> squeaks!</span>"
 			if ("dance")
@@ -2688,34 +2686,36 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					var/msg = pick("beeps and boops","does a little dance","gets down tonight","is feeling funky","is out of control","gets up to get down","busts a groove","begins clicking and whirring","emits an excited bloop","can't contain itself","can dance if it wants to")
 					return "<span class='emote'><b>[src]</b> [msg]!</span>"
 			if ("birdwell", "burp")
-				if (src.emote_check(voluntary, 50))
+				if (src.emote_check(voluntary, 50) && !ON_COOLDOWN(src, "playsound", 5 SECONDS))
 					playsound(src, 'sound/vox/birdwell.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<span class='emote'><b>[src]</b> birdwells.</span>"
 			if ("flip")
-				var/mode = pick("honk", "fart", "burp", "squeak", "cat", "harmonica", "vuvuzela", "bang", "buzz", "gunshot", "siren", "coo", "rimshot", "trombone")
-				switch(mode)
-					if ("honk") playsound(src.loc, "sound/musical_instruments/Bikehorn_1.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
-					if ("fart")
-						if (farting_allowed)
-							playsound(src.loc, "sound/voice/farts/poo2_robot.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
-					if ("burp") playsound(src.loc, "sound/voice/burp_alien.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
-					if ("squeak") playsound(src.loc, "sound/misc/clownstep1.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
-					if ("cat") playsound(src.loc, "sound/voice/animal/cat.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
-					if ("harmonica")
-						var/which = rand(1,3)
-						switch(which)
-							if(1) playsound(src.loc, "sound/musical_instruments/Harmonica_1.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
-							if(2) playsound(src.loc, "sound/musical_instruments/Harmonica_2.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
-							if(3) playsound(src.loc, "sound/musical_instruments/Harmonica_3.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
-					if ("vuvuzela") playsound(src.loc, "sound/musical_instruments/Vuvuzela_1.ogg", 45, 1, channel=VOLUME_CHANNEL_EMOTE)
-					if ("bang") playsound(src.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 40, 1, channel=VOLUME_CHANNEL_EMOTE)
-					if ("buzz") playsound(src.loc, "sound/machines/warning-buzzer.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
-					if ("gunshot") playsound(src.loc, "sound/weapons/Gunshot.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
-					if ("siren") playsound(src.loc, "sound/machines/siren_police.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
-					if ("coo") playsound(src.loc, "sound/voice/babynoise.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
-					if ("rimshot") playsound(src.loc, "sound/misc/rimshot.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
-					if ("trombone") playsound(src.loc, "sound/musical_instruments/Trombone_Failiure.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
-					else playsound(src.loc, "sound/machines/buzz-two.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+				if (!ON_COOLDOWN(src, "playsound", 5 SECONDS))
+					var/mode = pick("honk", "fart", "burp", "squeak", "cat", "harmonica", "vuvuzela", "bang", "buzz", "gunshot", "siren", "coo", "rimshot", "trombone")
+					switch(mode)
+						if ("honk") playsound(src.loc, "sound/musical_instruments/Bikehorn_1.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+						if ("fart")
+							if (farting_allowed)
+								playsound(src.loc, "sound/voice/farts/poo2_robot.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+						if ("burp") playsound(src.loc, "sound/voice/burp_alien.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+						if ("squeak") playsound(src.loc, "sound/misc/clownstep1.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+						if ("cat") playsound(src.loc, "sound/voice/animal/cat.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+						if ("harmonica")
+							var/which = rand(1,3)
+							switch(which)
+								if(1) playsound(src.loc, "sound/musical_instruments/Harmonica_1.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+								if(2) playsound(src.loc, "sound/musical_instruments/Harmonica_2.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+								if(3) playsound(src.loc, "sound/musical_instruments/Harmonica_3.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+						if ("vuvuzela") playsound(src.loc, "sound/musical_instruments/Vuvuzela_1.ogg", 45, 1, channel=VOLUME_CHANNEL_EMOTE)
+						if ("bang") playsound(src.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 40, 1, channel=VOLUME_CHANNEL_EMOTE)
+						if ("buzz") playsound(src.loc, "sound/machines/warning-buzzer.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+						if ("gunshot") playsound(src.loc, "sound/weapons/Gunshot.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+						if ("siren") playsound(src.loc, "sound/machines/siren_police.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+						if ("coo") playsound(src.loc, "sound/voice/babynoise.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+						if ("rimshot") playsound(src.loc, "sound/misc/rimshot.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+						if ("trombone") playsound(src.loc, "sound/musical_instruments/Trombone_Failiure.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+						else playsound(src.loc, "sound/machines/buzz-two.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+					return
 
 		return null
 
@@ -2849,6 +2849,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				src.setMaterial(getMaterial(pick(material_varieties)))
 
 	death(var/gibbed)
+		. = ..()
 		if (!gibbed)
 			new /obj/item/toy/figure(src.loc, info)
 			ghostize()

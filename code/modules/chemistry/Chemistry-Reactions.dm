@@ -224,7 +224,7 @@
 
 /// Deletes any reagents that are banned in smoke clouds.
 /proc/purge_smoke_blacklist(datum/reagents/FG)
-	FG.del_reagent("thalmerite")
+	FG.del_reagent("pyrosium")
 	FG.del_reagent("big_bang")
 	FG.del_reagent("big_bang_precursor")
 	FG.del_reagent("poor_concrete")

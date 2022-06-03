@@ -16,7 +16,7 @@
 		..()
 		src.setItemSpecial(/datum/item_special/elecflash)
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		if (ismobcritter(M))
 			var/mob/living/critter/MC = M
 			if (istype(MC, /mob/living/critter/small_animal/fly) || istype(MC, /mob/living/critter/small_animal/butterfly) || istype(MC, /mob/living/critter/small_animal/cockroach) || istype(MC, /mob/living/critter/small_animal/wasp))

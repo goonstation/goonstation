@@ -25,7 +25,7 @@ TOILET
 	STOP_TRACKING
 	..()
 
-/obj/item/storage/toilet/attackby(obj/item/W as obj, mob/user as mob, obj/item/storage/T)
+/obj/item/storage/toilet/attackby(obj/item/W, mob/user, obj/item/storage/T)
 	if (src.contents.len >= 7)
 		boutput(user, "The toilet is clogged!")
 		user.unlock_medal("Try jiggling the handle",1) //new method to get this medal since the old one (fat person in disposal pipe) is gone
@@ -87,7 +87,7 @@ TOILET
 	src.add_fingerprint(user)
 	return
 
-/obj/item/storage/toilet/attack_hand(mob/user as mob)
+/obj/item/storage/toilet/attack_hand(mob/user)
 
 	for(var/mob/M in src.loc)
 		if (M.buckled)
@@ -114,11 +114,14 @@ TOILET
 #endif
 		src.clogged = 0
 		for (var/item in src.contents)
-			qdel(item)
+			flush(item)
 			src.hud?.remove_item(item)
 
 	else if((src.clogged >= 1) || (src.contents.len >= 7) || (user.buckled != src.loc))
 		src.visible_message("<span class='notice'>The toilet is clogged!</span>")
+
+/obj/item/storage/toilet/proc/flush(atom)
+	qdel(atom)
 
 /obj/item/storage/toilet/custom_suicide = 1
 /obj/item/storage/toilet/suicide_in_hand = 0

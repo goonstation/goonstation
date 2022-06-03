@@ -850,7 +850,9 @@ TYPEINFO(/datum/mutantrace)
 		mob.see_invisible = INVIS_INFRA
 
 	say_filter(var/message)
-		return replacetext(message, "s", stutter("ss"))
+		var/replace_lowercase = replacetextEx(message, "s", stutter("ss"))
+		var/replace_uppercase = replacetextEx(replace_lowercase, "S", stutter("SS"))
+		return replace_uppercase
 
 	disposing()
 		if(ishuman(mob))
@@ -1108,18 +1110,52 @@ TYPEINFO(/datum/mutantrace)
 	race_mutation = /datum/bioEffect/mutantrace/skeleton
 	dna_mutagen_banned = FALSE
 	self_click_fluff = list("ribcage", "funny bone", "femur", "scapula")
+	var/obj/item/organ/head/head
 
 	New(var/mob/living/carbon/human/M)
 		..()
 		if(ishuman(M))
 			M.mob_flags |= IS_BONEY
 			M.blood_id = "calcium"
+			set_head(M.organHolder.head)
 
 	disposing()
 		if (ishuman(mob))
 			mob.mob_flags &= ~IS_BONEY
+			mob.blood_id = initial(mob.blood_id)
 		. = ..()
 
+	proc/set_head(var/head)
+		src.head = head
+
+/obj/item/joint_wax
+	name = "joint wax"
+	desc = "Does what it says on the jar."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "wax"
+	w_class = W_CLASS_SMALL
+	var/uses = 10
+
+	attack(mob/M, mob/user)
+		if (isskeleton(M))
+			var/mob/living/carbon/human/H = M
+			if (user.zone_sel.selecting in H.limbs.vars)
+				var/obj/item/parts/limb = H.limbs.vars[user.zone_sel.selecting]
+				if (!limb)
+					if (!src.uses)
+						boutput(user, "<span class='alert'>The joint wax is empty!</alert>")
+					else
+						H.changeStatus("spry", 1 MINUTE)
+						playsound(H, 'sound/effects/smear.ogg', 50, 1)
+						H.visible_message("<span class='notice'>[user] applies some joint wax to [H].</notice>")
+						src.uses--
+						if (!src.uses)
+							src.icon_state = "wax-empty"
+					return
+		..()
+
+	get_desc()
+		. += " It looks like it has [uses ? uses : "no"] applications left."
 
 /*
 /datum/mutantrace/ape
@@ -1689,6 +1725,7 @@ TYPEINFO(/datum/mutantrace)
 	disposing()
 		if(ishuman(mob))
 			mob.mob_flags &= ~SHOULD_HAVE_A_TAIL
+			mob.blood_id = initial(mob.blood_id)
 		if(mob)
 			REMOVE_ATOM_PROPERTY(mob, PROP_MOB_RADPROT, src)
 		. = ..()
@@ -2017,7 +2054,9 @@ TYPEINFO(/datum/mutantrace)
 
 	say_filter(var/message)
 		.= replacetext(message, "cow", "human")
-		.= replacetext(., "m", stutter("mm"))
+		var/replace_lowercase = replacetextEx(., "m", stutter("mm"))
+		var/replace_uppercase = replacetextEx(replace_lowercase, "M", stutter("MM"))
+		return replace_uppercase
 
 	emote(var/act, var/voluntary)
 		switch(act)

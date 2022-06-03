@@ -80,7 +80,7 @@ ENGINE
 		add_avail(power)
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(status & (BROKEN | NOPOWER))
 			boutput(user, "The engine won't turn on.")
 			return
@@ -320,7 +320,7 @@ REACTOR
 				return
 		src.active = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		return
 
 	attackby(obj/item/W, mob/user)

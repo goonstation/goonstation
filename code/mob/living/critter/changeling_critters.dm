@@ -12,8 +12,12 @@
 	can_disarm = 1
 	blood_id = "bloodc"
 	table_hide = 0
+	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/changeling
+	butcherable = TRUE
 	var/datum/abilityHolder/changeling/hivemind_owner = 0
 	var/icon_prefix = ""
+	/// Part this limb critter is based off of- i.e. a cow making a legworm would be a cow leg. Could also be an eye or butt, hence loose type
+	var/obj/item/original_bodypart
 
 	// IMPORTANT gimmick features
 	var/obj/item/clothing/head/hat = null
@@ -21,6 +25,12 @@
 	var/hat_icon = 'icons/obj/bots/aibots.dmi' //yeah just use the buddy hats whatever close enough
 	var/hat_x_offset = -4
 	var/hat_y_offset = -2
+
+	New(loc, obj/item/bodypart)
+		..()
+		if (bodypart)
+			bodypart.name = "changeling's [initial(bodypart.name)]"
+		src.original_bodypart = bodypart
 
 	say(message, involuntary = 0)
 		if (hivemind_owner)
@@ -45,7 +55,7 @@
 	canRideMailchutes()
 		return 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/clothing/head))
 			if(src.hat)
 				boutput(user, "<span class='alert'>[src] is already wearing a hat!</span>")
@@ -93,8 +103,19 @@
 		death_effect()
 		..()
 
+	butcher(mob/user)
+		src.original_bodypart.set_loc(src.loc)
+		src.original_bodypart = null
+		return ..(user, FALSE)
+
+	disposing()
+		..()
+		qdel(src.original_bodypart)
+		src.original_bodypart = null
+
 	// functionality here greatly differs between the changeling critters, but they still need it
 	proc/return_to_master()
+		return
 
 /mob/living/critter/changeling/proc/death_effect()
 	if (hivemind_owner)
@@ -271,7 +292,7 @@
 		if (isdead(src))	//if the handspider is dead, the changeling can only gain half of what they collected
 			dna_gain = dna_gain / 2
 		dna_gain += 4
-		boutput(hivemind_owner.owner, __blue("A handspider has returned to your body! You gain <B>[dna_gain]</B> DNA points from the spider!"))
+		boutput(hivemind_owner.owner, "<span class='notice'>A handspider has returned to your body! You gain <B>[dna_gain]</B> DNA points from the spider!</span>")
 		hivemind_owner.points += (dna_gain)
 		hivemind_owner.insert_into_hivemind(src)
 		qdel(src)
@@ -361,7 +382,7 @@
 			else
 				dna_gain = 2 // bad_ideas.txt
 
-		boutput(hivemind_owner.owner, __blue("An eyespider has returned to your body![dna_gain > 0 ? " You gain <B>[dna_gain]</B> DNA points from the spider!" : ""]"))
+		boutput(hivemind_owner.owner, "<span class='notice'>An eyespider has returned to your body![dna_gain > 0 ? " You gain <B>[dna_gain]</B> DNA points from the spider!" : ""]</span>")
 		hivemind_owner.points += dna_gain
 		hivemind_owner.insert_into_hivemind(src)
 		qdel(src)
@@ -476,7 +497,7 @@
 					hivemind_owner.owner.visible_message(text("<span class='alert'><B>[src] climbs on to [hivemind_owner.owner] and attaches itself to their leg stump!</B></span>"))
 
 		var/dna_gain = 6 //spend dna
-		boutput(hivemind_owner.owner, __blue("A legworm has returned to your body! You gain <B>[dna_gain]</B> DNA points from the leg!"))
+		boutput(hivemind_owner.owner, "<span class='notice'>A legworm has returned to your body! You gain <B>[dna_gain]</B> DNA points from the leg!</span>")
 		hivemind_owner.points += (dna_gain)
 		hivemind_owner.insert_into_hivemind(src)
 		qdel(src)
@@ -541,7 +562,7 @@
 					hivemind_owner.owner.visible_message(text("<span class='alert'><B>[src] climbs on to [hivemind_owner.owner] and... oh. Oh my. You really wish you hadnt seen that.</B></span>"))
 
 		var/dna_gain = 1 //spend dna
-		boutput(hivemind_owner.owner, __blue("A buttcrab has returned to your body! You gain <B>[dna_gain]</B> DNA points from the butt!"))
+		boutput(hivemind_owner.owner, "<span class='notice'>A buttcrab has returned to your body! You gain <B>[dna_gain]</B> DNA points from the butt!</span>")
 		hivemind_owner.points += (dna_gain)
 		hivemind_owner.insert_into_hivemind(src)
 		qdel(src)
@@ -644,9 +665,9 @@
 /mob/living/critter/changeling/headspider/death_effect()
 	if (changeling) // don't do this if we're an empty headspider (already took control of a body)
 		for (var/mob/living/critter/changeling/spider in changeling.hivemind)
-			boutput(spider, __red("Your telepathic link to your master has been destroyed!"))
+			boutput(spider, "<span class='alert'>Your telepathic link to your master has been destroyed!</span>")
 			spider.hivemind_owner = 0
 		for (var/mob/dead/target_observer/hivemind_observer/obs in changeling.hivemind)
-			boutput(obs, __red("Your telepathic link to your master has been destroyed!"))
+			boutput(obs, "<span class='alert'>Your telepathic link to your master has been destroyed!</span>")
 			obs.boot()
 		changeling.hivemind.Cut()

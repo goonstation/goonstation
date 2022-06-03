@@ -33,7 +33,7 @@
 			return 1
 		return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		boutput(user, "<span class='notice'>You push the [src.name] but nothing happens!</span>")
 		playsound(src.loc, "sound/impact_sounds/Flesh_Crush_1.ogg", 40, 1)
 		src.add_fingerprint(user)
@@ -155,7 +155,7 @@
 				for (var/mob/O in A.contents)
 					O.show_message(message, m_type)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
 			pop()
 		else
@@ -206,7 +206,7 @@
 
 			// people were somehow being shit even as a meatcube, so i'm removing the small mercy they had with being unpoppable - cirr
 
-			// attackby(obj/item/W as obj, mob/user as mob)
+			// attackby(obj/item/W, mob/user)
 			// 	user.visible_message("<span class='combat'><B>[user] pokes [src] with \the [W]!</B></span>") //No weldergibs. Krampus is truly a fiend.
 
 			telekinetic //this one has the wraith click-drag to throw item ability
@@ -240,7 +240,7 @@
 			src.visible_message("<span class='alert'><b>The metal cube violently falls apart!</b></span>")
 			..()
 
-		attackby(obj/item/W as obj, mob/user as mob)
+		attackby(obj/item/W, mob/user)
 			if (iswrenchingtool(W))
 				pop()
 			else

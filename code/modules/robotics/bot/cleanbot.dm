@@ -155,7 +155,7 @@
 
 		return
 
-	attack_hand(mob/user as mob, params)
+	attack_hand(mob/user, params)
 		src.add_fingerprint(user)
 		var/dat = ""
 

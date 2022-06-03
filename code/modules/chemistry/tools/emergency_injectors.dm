@@ -36,7 +36,7 @@
 			icon_state = "emerg_inj-[label]0"
 		item_state = "emerg_inj-[label]"
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (iscarbon(M) || ismobcritter(M))
 			if (src.empty || !src.reagents)
 				boutput(user, "<span class='alert'>There's nothing to inject, [src] has already been expended!</span>")

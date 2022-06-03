@@ -50,7 +50,7 @@
 // SHUTTLE THRUSTER DAMAGE STARTS HERE
 //////////////////////////////////////////
 
-/obj/machinery/shuttle/engine/propulsion/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/shuttle/engine/propulsion/attackby(obj/item/W, mob/user)
 	if (isscrewingtool(W))
 		if (src.stat1 == 0)
 			boutput(user, "<span class='notice'>Resecuring outer frame.</span>")

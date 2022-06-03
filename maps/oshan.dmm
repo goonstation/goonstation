@@ -4486,7 +4486,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/dome)
 "akD" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/genetics,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 0;
@@ -6975,7 +6975,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/science/storage)
 "aqt" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/research,
 /turf/simulated/floor/plating/random,
 /area/station/science/storage)
 "aqu" = (
@@ -7556,9 +7556,6 @@
 	name = "Staff Assistant"
 	},
 /obj/machinery/light_switch/auto,
-/obj/machinery/status_display{
-	pixel_x = 32
-	},
 /turf/simulated/floor/blueblack{
 	dir = 4
 	},
@@ -7945,7 +7942,7 @@
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "asN" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/research,
 /turf/simulated/floor/engine,
 /area/research_outpost/chamber)
 "asO" = (
@@ -8104,6 +8101,9 @@
 "ath" = (
 /obj/stool/chair/blue{
 	dir = 8
+	},
+/obj/machinery/status_display{
+	pixel_x = 32
 	},
 /turf/simulated/floor/blueblack{
 	dir = 4
@@ -23498,7 +23498,7 @@
 	name = "Catering Hangar"
 	})
 "biT" = (
-/obj/machinery/vending/monkey{
+/obj/machinery/vending/monkey/kitchen{
 	pixel_y = 8
 	},
 /turf/simulated/floor/white,
@@ -44463,6 +44463,12 @@
 /obj/machinery/synthomatic,
 /turf/simulated/floor/green,
 /area/research_outpost/pathology)
+"cwj" = (
+/obj/item/storage/secure/ssafe/diner_arcade{
+	pixel_x = -30
+	},
+/turf/simulated/floor/black,
+/area/diner/dining)
 "cxr" = (
 /obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
 /turf/simulated/floor/plating/random,
@@ -122083,7 +122089,7 @@ aqn
 aPB
 cab
 cai
-cao
+cwj
 aPB
 caG
 caJ

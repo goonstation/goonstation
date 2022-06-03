@@ -48523,7 +48523,7 @@
 	sd_lighting = 1
 	})
 "bUm" = (
-/obj/critter/spacebee,
+/obj/critter/wasp,
 /turf/unsimulated/grass,
 /area/forest{
 	icon_state = "yellow";

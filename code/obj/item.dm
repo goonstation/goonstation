@@ -300,13 +300,17 @@
 		if (src.amount != 1)
 			// this is a gross hack to make things not just show "1" by default
 			src.inventory_counter.update_number(src.amount)
-	if (isnull(src.health))
+
+	src.set_health()
+	..()
+
+/obj/item/proc/set_health()
+	if (isnull(initial(src.health))) // if not overridden
 		switch (src.w_class)
 			if (W_CLASS_TINY to W_CLASS_NORMAL)
 				src.health = src.w_class + 1
 			else
 				src.health = src.w_class + 2
-	..()
 
 /obj/item/set_loc(var/newloc as turf|mob|obj in world)
 	if (src.temp_flags & IS_LIMB_ITEM)
@@ -770,6 +774,9 @@
 	if(src.equipped_in_slot && src.cant_self_remove)
 		return 0
 
+	var/mob/living/carbon/human/target
+	if (ishuman(user))
+		target = user
 	if (!src.anchored)
 		if (!user.r_hand || !user.l_hand || (user.r_hand == src) || (user.l_hand == src))
 			if (!user.hand) //big messy ugly bad if() chunk here because we want to prefer active hand
@@ -782,9 +789,13 @@
 					user.u_equip(src)
 					. = user.put_in_hand(src, 0)
 				else if (!user.l_hand)
-					user.swap_hand(1)
-					user.u_equip(src)
-					. = user.put_in_hand(src, 1)
+					if (!target?.can_equip(src, target.slot_l_hand))
+						user.show_text("You need a free hand to do that!", "blue")
+						.= 0
+					else
+						user.swap_hand(1)
+						user.u_equip(src)
+						. = user.put_in_hand(src, 1)
 			else
 				if (user.l_hand == src)
 					.= 1
@@ -795,9 +806,13 @@
 					user.u_equip(src)
 					. = user.put_in_hand(src, 1)
 				else if (!user.r_hand)
-					user.swap_hand(0)
-					user.u_equip(src)
-					. = user.put_in_hand(src, 0)
+					if (!target?.can_equip(src, target.slot_r_hand))
+						user.show_text("You need a free hand to do that!", "blue")
+						.= 0
+					else
+						user.swap_hand(0)
+						user.u_equip(src)
+						. = user.put_in_hand(src, 0)
 
 		else
 			user.show_text("You need a free hand to do that!", "blue")
@@ -812,7 +827,7 @@
 			//S.hud.remove_item(src)
 			S.hud.objects -= src // prevents invisible object from failed transfer (item doesn't fit in pockets from backpack for example)
 
-/obj/item/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/item/attackby(obj/item/W, mob/user, params)
 	if(src.material)
 		src.material.triggerTemp(src ,1500)
 	if (W.firesource)
@@ -1092,7 +1107,7 @@
 	if (usr?.bioHolder?.HasEffect("clumsy") && prob(50)) t = "funny-looking"
 	return "It is \an [t] item."
 
-/obj/item/attack_hand(mob/user as mob)
+/obj/item/attack_hand(mob/user)
 	var/checkloc = src.loc
 	while(checkloc && !istype(checkloc,/turf))
 		if (isliving(checkloc) && checkloc != user)
@@ -1163,7 +1178,7 @@
 
 
 //MBC : I had to move some ItemSpecial number changes here to avoid race conditions. is_special flag passed as an arg; If true we take a look at src.special
-/obj/item/proc/attack(mob/M as mob, mob/user as mob, def_zone, is_special = 0)
+/obj/item/proc/attack(mob/M, mob/user, def_zone, is_special = 0)
 	if (!M || !user) // not sure if this is the right thing...
 		return
 

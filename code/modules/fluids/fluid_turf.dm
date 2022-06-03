@@ -260,7 +260,7 @@
 			react_volume = min(react_volume, abs(M.reagents.maximum_volume - M.reagents.total_volume)) //don't push out other reagents if we are full
 			M.reagents.add_reagent(ocean_reagent_id, react_volume) //todo : maybe add temp var here too
 
-	attackby(obj/item/C as obj, mob/user as mob, params) //i'm sorry
+	attackby(obj/item/C, mob/user, params) //i'm sorry
 		if(istype(C, /obj/item/cable_coil))
 			var/obj/item/cable_coil/coil = C
 			coil.turf_place(src, get_turf(user), user)
@@ -514,7 +514,7 @@
 	var/active = 0
 	var/location = 1 // 0 for bottom, 1 for top
 
-/obj/machinery/computer/sea_elevator/attack_hand(mob/user as mob)
+/obj/machinery/computer/sea_elevator/attack_hand(mob/user)
 	if(..())
 		return
 	var/dat = "<a href='byond://?src=\ref[src];close=1'>Close</a><BR><BR>"

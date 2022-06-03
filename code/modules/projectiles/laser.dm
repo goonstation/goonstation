@@ -134,6 +134,29 @@ toxic - poisons
 	color_green = 0
 	color_blue = 0
 
+	tiny
+		name = "mini phaser bolt"
+		icon_state = "bolt"
+		sname = "mini phaser bolt"
+		power = 10
+		cost = 25
+		shot_sound = 'sound/weapons/energy/phaser_tiny.ogg'
+		color_red = 0
+		color_green = 1
+		color_blue = 0.2
+
+	huge // yes laser/light/huge is pretty dumb
+		name = "macro phaser blast"
+		icon_state = "crescent"
+		sname = "macro phaser blast"
+		power = 55
+		cost = 100
+		shot_sound = 'sound/weapons/energy/phaser_huge.ogg'
+		color_red = 0
+		color_green = 0.1
+		color_blue = 0.4
+
+
 	mining
 		name = "mining phaser bolt"
 		power = 3
@@ -455,7 +478,7 @@ toxic - poisons
 	shot_sound = 'sound/machines/rock_drill.ogg'
 	shot_volume = 20
 	dissipation_delay = 1
-	dissipation_rate = 35
+	dissipation_rate = 45
 	icon_turf_hit = null
 	var/damtype = DAMAGE_STAB
 
@@ -523,7 +546,7 @@ toxic - poisons
 	name = "signifer bolt"
 	icon = 'icons/obj/projectiles.dmi'
 	power = 15
-	cost = 50
+	cost = 40
 	sname = "lethal"
 	shot_sound = 'sound/weapons/SigLethal.ogg'
 	hit_ground_chance = 30

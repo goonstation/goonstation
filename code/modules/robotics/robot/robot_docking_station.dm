@@ -420,10 +420,12 @@
 					src.cells.Add(C)
 					C.set_loc(src)
 					R.cell = null
+					R.part_chest?.cell = null
 					boutput(R, "<span class='notice'>Your power cell is being swapped...</span>")
 				src.cells.Remove(O)
 				O.set_loc(R)
 				R.cell = O
+				R.part_chest?.cell = O
 				boutput(R, "<span class='notice'>Power cell installed: [O].</span>")
 				R.hud.update_charge()
 
@@ -496,6 +498,7 @@
 			src.cells.Add(R.cell)
 			C.set_loc(src)
 			R.cell = null
+			R.part_chest?.cell = null
 			boutput(R, "<span class='alert'>Your power cell was removed!</span>")
 			logTheThing("combat", usr, R, "removes [constructTarget(R,"combat")]'s power cell at [log_loc(usr)].")
 			R.hud.update_charge()
@@ -592,7 +595,7 @@
 
 	src.updateUsrDialog()
 
-/obj/machinery/recharge_station/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/recharge_station/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/clothing) && src.allow_clothes)
 		if (!istype(W, /obj/item/clothing/mask) && !istype(W, /obj/item/clothing/head) && !istype(W, /obj/item/clothing/under) && !istype(W, /obj/item/clothing/suit))
 			boutput(user, "<span class='alert'>This type of is not compatible.</span>")
@@ -879,7 +882,7 @@
 	anchored = 0
 	p_class = 1.5
 
-/obj/machinery/recharge_station/syndicate/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/recharge_station/syndicate/attackby(obj/item/W, mob/user)
 	if (iswrenchingtool(W))
 		src.anchored = !src.anchored
 		if (!anchored)

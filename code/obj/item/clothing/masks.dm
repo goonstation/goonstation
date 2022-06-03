@@ -27,7 +27,7 @@
 		setProperty("heatprot", 5)
 		setProperty("meleeprot_head", 2)
 
-/obj/item/clothing/mask/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/clothing/mask/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/voice_changer))
 		if (src.see_face)
 			user.show_text("You can't find a way to attach [W] where it isn't really, really obvious. That'd kinda defeat the purpose of putting [W] in there, wouldn't it?", "red")
@@ -262,7 +262,7 @@
 	permeability_coefficient = 0.50
 
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/tank))
 			src.auto_setup(W,user)
 		else
@@ -368,7 +368,7 @@
 				src.cant_other_remove = 1.0
 				src.cant_self_remove = 0.0
 			else
-				boutput (user, __red("[src] latches onto your face! It burns!"))
+				boutput (user, "<span class='alert'>[src] latches onto your face! It burns!</span>")
 				src.victim = H
 				src.cant_other_remove = 0.0
 				src.cant_self_remove = 1.0
@@ -390,7 +390,7 @@
 			if ( src.victim.health <= 0 )
 				return
 			if (prob(45))
-				boutput (src.victim, __red("[src] burns your face!"))
+				boutput (src.victim, "<span class='alert'>[src] burns your face!</span>")
 				if (prob(25))
 					src.victim.emote("scream")
 				src.victim.TakeDamage("head",0,3,0,DAMAGE_BURN)
@@ -408,7 +408,7 @@
 			var/mob/living/carbon/human/U = user
 			var/mob/living/carbon/human/T = target
 			if ( U.a_intent != INTENT_HELP && U.zone_sel.selecting == "head" && T.can_equip(src,T.slot_wear_mask) )
-				U.visible_message(__red("[src] latches onto [T]'s face!"),__red("You slap [src] onto [T]'s face!'"))
+				U.visible_message("<span class='alert'>[src] latches onto [T]'s face!</span>","<span class='alert'>You slap [src] onto [T]'s face!'</span>")
 				logTheThing("combat",user,target,"forces [T] to wear [src] (cursed clown mask) at [log_loc(T)].")
 				U.u_equip(src)
 
@@ -509,7 +509,7 @@
 	burn_possible = 1
 	health = 3
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/pen))
 			var/obj/item/pen/P = W
 			if (P.font_color)
@@ -536,9 +536,8 @@
 	burn_point = 220
 	burn_output = 900
 	burn_possible = 1
-	health = 10
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/pen))
 			var/obj/item/pen/P = W
 			if (P.font_color)

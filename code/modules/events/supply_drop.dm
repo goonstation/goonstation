@@ -118,7 +118,7 @@
 		obj_path = obj_path_arg
 		return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(used) return
 		used = 1
 		set_density(0)

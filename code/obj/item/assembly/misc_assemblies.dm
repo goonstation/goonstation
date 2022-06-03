@@ -92,7 +92,7 @@ Contains:
 			qdel(src)
 	return
 
-/obj/item/assembly/time_ignite/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/assembly/time_ignite/attackby(obj/item/W, mob/user)
 	if (!W)
 		return
 	if (iswrenchingtool(W) && !(src.status))
@@ -308,7 +308,7 @@ Contains:
 		src.name = "Proximity/Igniter/Beaker Assembly"
 	return
 
-/obj/item/assembly/prox_ignite/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/assembly/prox_ignite/attackby(obj/item/W, mob/user)
 	if (!W)
 		return
 	if (iswrenchingtool(W) && !(src.status))
@@ -483,7 +483,7 @@ Contains:
 	part5 = null
 	..()
 
-/obj/item/assembly/rad_ignite/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/assembly/rad_ignite/attackby(obj/item/W, mob/user)
 	if (!W)
 		return
 	if (iswrenchingtool(W) && !(src.status))
@@ -669,7 +669,7 @@ Contains:
 			src.part2.master = src
 	return
 
-/obj/item/assembly/anal_ignite/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/assembly/anal_ignite/attackby(obj/item/W, mob/user)
 	if (!W)
 		return
 	if (iswrenchingtool(W) && !(src.status))
@@ -752,7 +752,7 @@ obj/item/assembly/radio_horn/receive_signal()
 	..()
 	return
 
-/obj/item/assembly/rad_time/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/assembly/rad_time/attackby(obj/item/W, mob/user)
 	if (!W)
 		return
 	if (iswrenchingtool(W) && !(src.status))
@@ -821,7 +821,7 @@ obj/item/assembly/radio_horn/receive_signal()
 		src.part2.sense()
 	return
 
-/obj/item/assembly/rad_prox/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/assembly/rad_prox/attackby(obj/item/W, mob/user)
 	if (!W)
 		return
 	if (iswrenchingtool(W) && !(src.status))

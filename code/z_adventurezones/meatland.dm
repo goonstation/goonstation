@@ -182,7 +182,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 		light.set_brightness(src.brightness / 5)
 		light.enable()
 
-	attackby(obj/item/O as obj, mob/user as mob)
+	attackby(obj/item/O, mob/user)
 		if (src.alive && O.force)
 			src.health -= O.force / 4
 			src.visible_message("<span class='alert'><b>[user] bops [src] with [O]!</b></span>")
@@ -233,7 +233,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 			if (src.loc)
 				src.loc.invisibility = INVIS_ALWAYS_ISH //Hide the floor below us so people don't just right click and see two floors.
 
-		attackby(obj/item/O as obj, mob/user as mob)
+		attackby(obj/item/O, mob/user)
 			if (src.alive && ispryingtool(O))
 				user.visible_message("<span class='alert'><b>[user] jabs [src] with [O]!</b></span>", "<span class='alert'>You jab [src] with [O] and begin to pull!  Hold on!</span>")
 				if (do_after(user, 2 SECONDS))
@@ -249,7 +249,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 			else
 				return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.alive)
 			if (!attacking)
 				return ai_think()
@@ -436,7 +436,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 
 			return
 
-	attackby(obj/item/O as obj, mob/user as mob)
+	attackby(obj/item/O, mob/user)
 		if (istype(O, /obj/item/clothing/head))
 			user.visible_message("[user] tosses [O] onto [src]!", "You toss [O] onto [src].")
 
@@ -1328,7 +1328,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 	density = 1
 	var/opened = 0
 
-	attackby(obj/item/O as obj, mob/user as mob)
+	attackby(obj/item/O, mob/user)
 		if (istype(O, /obj/item/device/key))
 			if (opened)
 				boutput(user, "<span class='alert'>It's already been used, ok.</span>")
@@ -1392,7 +1392,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 		if (isrobot(user))
 			return attack_hand(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (user.stat || user.getStatusDuration("weakened") || BOUNDS_DIST(user, src) > 0 || !user.can_use_hands())
 			return
 

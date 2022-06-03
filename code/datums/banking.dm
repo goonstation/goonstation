@@ -222,7 +222,7 @@
 
 
 	var/pin = null
-	attackby(var/obj/item/I as obj, mob/user as mob)
+	attackby(var/obj/item/I, mob/user)
 		if (istype(I, /obj/item/device/pda2) && I:ID_card)
 			I = I:ID_card
 		if(istype(I, /obj/item/card/id))
@@ -298,7 +298,7 @@
 	attack_ai(var/mob/user as mob)
 		return
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if(..())
 			return
 
@@ -473,7 +473,7 @@
 	attack_ai(mob/user as mob)
 		return src.Attackhand(user)
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		if (istype(I, /obj/item/card/id))
 			if (!src.scan)
 				boutput(user, "<span class='notice'>You insert [I] into the authentication card slot.</span>")
@@ -486,7 +486,7 @@
 		else
 			..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..())
 			return
 		var/list/dat = list()
@@ -758,7 +758,7 @@
 		STATE_LOGGEDOFF = 1
 		STATE_LOGGEDIN = 2
 
-	attackby(var/obj/item/I as obj, mob/user as mob)
+	attackby(var/obj/item/I, mob/user)
 		if(broken)
 			boutput(user, "<span class='alert'>With its money removed and circuitry destroyed, it's unlikely this ATM will be able to do anything of use.</span>")
 			return
@@ -821,7 +821,7 @@
 	attack_ai(var/mob/user as mob)
 		return
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if(broken)
 			boutput(user, "<span class='alert'>With its money removed and circuitry destroyed, it's unlikely this ATM will be able to do anything of use.</span>")
 			return

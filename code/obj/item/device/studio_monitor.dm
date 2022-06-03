@@ -306,7 +306,7 @@
 					if (HH.get_stamina() < 0) // Tasers etc.
 						HH.set_stamina(1)
 
-					boutput(HH, __blue("You feel refreshed and ready to get back into the fight."))
+					boutput(HH, "<span class='notice'>You feel refreshed and ready to get back into the fight.</span>")
 
 			logTheThing("combat", src.the_mob, null, "uses cancel stuns at [log_loc(src.the_mob)].")
 			..()

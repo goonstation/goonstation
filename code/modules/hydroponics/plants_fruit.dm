@@ -23,7 +23,7 @@ ABSTRACT_TYPE(/datum/plant/fruit)
 		var/datum/plantgenes/DNA = S.plantgenes
 		if (!DNA) return
 		switch(reagent)
-			if("phlogiston","infernite","thalmerite","sorium")
+			if("phlogiston","infernite","pyrosium","sorium")
 				if (prob(33))
 					DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/tomato/incendiary)
 			if("strange_reagent")

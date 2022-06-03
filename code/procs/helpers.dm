@@ -266,6 +266,15 @@ proc/get_angle(atom/a, atom/b)
 			return 1
 	return 0
 
+//is_blocked_turf for flock
+/proc/flock_is_blocked_turf(var/turf/T)
+	if (!T) return FALSE
+	if(T.density) return TRUE
+	for(var/atom/A in T)
+		if(A?.density && !isflockmob(A))//ignores flockdrones/flockbits
+			return TRUE
+	return FALSE
+
 /proc/get_edge_cheap(var/atom/A, var/direction)
 	. = A.loc
 	switch(direction)
@@ -2645,3 +2654,18 @@ proc/connectdirs_to_byonddirs(var/connectdir_bitflag)
 	if(32 & connectdir_bitflag) .|= SOUTHEAST
 	if(64 & connectdir_bitflag) .|= SOUTHWEST
 	if(128 & connectdir_bitflag) .|= NORTHWEST
+
+/proc/get_random_station_turf()
+	var/list/areas = get_areas(/area/station)
+	if (!areas.len)
+		return
+	var/area/A = pick(areas)
+	if (!A)
+		return
+	var/list/turfs = get_area_turfs(A, 1)
+	if (!turfs.len)
+		return
+	var/turf/T = pick(turfs)
+	if (!T)
+		return
+	return T

@@ -41,7 +41,7 @@
 				user.suiciding = 0
 		return 1
 
-	attackby(obj/item/W as obj, mob/user as mob, obj/item/storage/T)
+	attackby(obj/item/W, mob/user, obj/item/storage/T)
 		if (istype(W, /obj/item/storage/toolbox) || istype(W, /obj/item/storage/box) || istype(W, /obj/item/storage/belt))
 			var/obj/item/storage/S = W
 			for (var/obj/item/I in S.get_contents())
@@ -166,14 +166,14 @@
 			return
 		return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.loc == user)
 			if(!ishuman(user) || !user:find_ailment_by_type(/datum/ailment/disability/memetic_madness))
 				boutput(user, "<span class='alert'>You can't seem to find the latch. Maybe you need to examine it more thoroughly?</span>")
 				return
 		return ..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(!ishuman(user) || !user:find_ailment_by_type(/datum/ailment/disability/memetic_madness))
 			boutput(user, "<span class='alert'>You can't seem to find the latch to open this. Maybe you need to examine it more thoroughly?</span>")
 			return

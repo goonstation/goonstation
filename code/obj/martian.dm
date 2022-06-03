@@ -14,7 +14,7 @@
 	var/used = 0
 	var/id = null
 
-/obj/crevice/attack_hand(var/mob/user as mob)
+/obj/crevice/attack_hand(var/mob/user)
 	if(..())
 		return
 	if(used)

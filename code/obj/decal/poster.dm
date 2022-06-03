@@ -9,7 +9,7 @@
 	density = 0
 	var/imgw = 600
 	var/imgh = 400
-	var/popup_win = 1
+	var/popup_win = 0
 	layer = EFFECTS_LAYER_BASE
 	plane = PLANE_NOSHADOW_ABOVE
 
@@ -896,7 +896,7 @@
 							return award_text
 
 
-			attack_hand(mob/user as mob)
+			attack_hand(mob/user)
 				if (user.stat || isghostdrone(user) || !isliving(user))
 					return
 
@@ -922,7 +922,7 @@
 							src.add_fingerprint(user)
 							src.usage_state = 2
 
-			attackby(obj/item/W as obj, mob/user as mob)
+			attackby(obj/item/W, mob/user)
 				if (user.stat)
 					return
 
@@ -960,7 +960,7 @@
 			icon_empty = "frame"
 			icon_state = "medal"
 
-			attackby(obj/item/W as obj, mob/user as mob)
+			attackby(obj/item/W, mob/user)
 				if (user.stat)
 					return
 

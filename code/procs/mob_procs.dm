@@ -208,7 +208,7 @@
 		if (G.block_vision)
 			return 0
 
-	if ((src.bioHolder && src.bioHolder.HasEffect("blind")) || src.blinded || src.get_eye_damage(1) || (src.organHolder && !src.organHolder.left_eye && !src.organHolder.right_eye))
+	if ((src.bioHolder && src.bioHolder.HasEffect("blind")) || src.blinded || src.get_eye_damage(1) || (src.organHolder && !src.organHolder.left_eye && !src.organHolder.right_eye && !isskeleton(src)))
 		return 0
 
 	return 1
@@ -440,7 +440,7 @@
 			src.take_ear_damage(ear_tempdeaf, 1)
 
 		if (weak == 0 && stun == 0 && prob(clamp(drop_item, 0, 100)))
-			src.show_message(__red("<B>You drop what you were holding to clutch at your ears!</B>"))
+			src.show_message("<span class='alert'><B>You drop what you were holding to clutch at your ears!</B></span>")
 			src.drop_item()
 
 	return
@@ -874,7 +874,7 @@
 						can_see.Add(I)
 				if (ROLE_VAMPTHRALL)
 					var/datum/abilityHolder/vampiric_thrall/VT2 = M.current.get_ability_holder(/datum/abilityHolder/vampiric_thrall)
-					if (see_everything || (M.current in V?.thralls) || (VT?.master == VT2.master)) // they're your thrall or they have the same vamp master
+					if (see_everything || (M.current in V?.thralls) || (VT?.master == VT2?.master)) // they're your thrall or they have the same vamp master
 						var/I = image(antag_vampthrall, loc = M.current)
 						can_see.Add(I)
 				if (ROLE_WRAITH)

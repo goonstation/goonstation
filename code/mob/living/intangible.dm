@@ -12,6 +12,7 @@
 	New()
 		. = ..()
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_GHOST)
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 		src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 		src.see_invisible = INVIS_GHOST
 		src.see_in_dark = SEE_DARK_FULL

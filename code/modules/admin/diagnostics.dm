@@ -252,6 +252,15 @@ proc/debug_map_apc_count(delim,zlim)
 			else
 				img.app.color = "#f00"
 
+	proximity
+		name = "proximity turfs"
+		help = "Green tiles are turfs with checkinghasproximity, red tiles have neighcheckinghasproximity."
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			if(theTurf:checkinghasproximity)
+				img.app.color = "#0f0"
+			else if(theTurf:neighcheckinghasproximity)
+				img.app.color = "#f00"
+
 	areas
 		name = "areas"
 		help = "Differentiates between different areas. Also gives you area names because thats cool and stuff."

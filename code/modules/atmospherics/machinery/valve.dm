@@ -197,7 +197,7 @@ obj/machinery/atmospherics/valve
 		boutput(user, "This valve is manually controlled.")
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		UpdateIcon(1)
 		sleep(1 SECOND)
 		logTheThing("station", user, null, "has [src.open ? "closed" : "opened"] the valve: [src] at [log_loc(src)]")
@@ -207,7 +207,7 @@ obj/machinery/atmospherics/valve
 			src.open()
 			if(high_risk) message_admins("[key_name(user)] has opened the valve: [src] at [log_loc(src)]")
 
-	attackby(var/obj/item/G as obj, var/mob/user as mob)
+	attackby(var/obj/item/G, var/mob/user)
 		if (iswrenchingtool(G))
 			UpdateIcon(1)
 			sleep(1 SECOND)
@@ -473,7 +473,7 @@ obj/machinery/atmospherics/manifold_valve
 
 		return 1
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		..()
 
 

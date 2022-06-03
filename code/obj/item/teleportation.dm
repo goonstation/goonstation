@@ -228,7 +228,7 @@ Frequency:
 		users += user // We're about to show the UI
 		var/t1
 		if(user.client)
-			t1 = input(user, "Please select a teleporter to lock in on.", "Target Selection") in L
+			t1 = tgui_input_list(user, "Please select a teleporter to lock in on.", "Target Selection", L)
 		else
 			t1 = pick(L)
 		users -= user // We're done showing the UI
