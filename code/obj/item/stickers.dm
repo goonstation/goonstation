@@ -114,6 +114,7 @@
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "postit"
 	dont_make_an_overlay = 1
+	vis_flags = VIS_INHERIT_PLANE | VIS_INHERIT_LAYER
 	var/words = ""
 	var/max_message = 128
 
