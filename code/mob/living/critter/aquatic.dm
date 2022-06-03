@@ -19,10 +19,10 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 
 	is_npc = 1
 
-	var/health_brute = 10
-	var/health_brute_vuln = 1
-	var/health_burn = 10
-	var/health_burn_vuln = 2
+	health_brute = 10
+	health_brute_vuln = 1
+	health_burn = 10
+	health_burn_vuln = 2
 
 	var/out_of_water_debuff = 1 // debuff amount for being out of water
 	var/in_water_buff = 1 // buff amount for being in water

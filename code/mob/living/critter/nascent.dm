@@ -9,10 +9,10 @@
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "poltergeist-corp"
 	hand_count = 0
-	var/health_brute = 50
-	var/health_brute_vuln = 1
-	var/health_burn = 50
-	var/health_burn_vuln = 0.8
+	health_brute = 50
+	health_brute_vuln = 1
+	health_burn = 50
+	health_burn_vuln = 0.8
 	var/mob/wraith/master = null
 	var/deathsound = "sound/voice/wraith/revleave.ogg"
 

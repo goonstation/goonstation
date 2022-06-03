@@ -11,10 +11,10 @@
 	icon_state_dead = "dead_spiker"
 	icon_state = "spiker"
 	custom_gib_handler = /proc/gibs
-	var/health_brute = 50
-	var/health_brute_vuln = 1
-	var/health_burn = 50
-	var/health_burn_vuln = 1
+	health_brute = 50
+	health_brute_vuln = 1
+	health_burn = 50
+	health_burn_vuln = 1
 	var/mob/wraith/master = null
 
 	New(var/turf/T, var/mob/wraith/M = null)

@@ -13,10 +13,10 @@
 	mob_flags = HEAVYWEIGHT_AI_MOB
 	custom_gib_handler = /proc/gibs
 	// HEALTHS
-	var/health_brute = 50
-	var/health_burn = 50
-	var/health_brute_vuln = 1
-	var/health_burn_vuln = 1.5
+	health_brute = 50
+	health_burn = 50
+	health_brute_vuln = 1
+	health_burn_vuln = 1.5
 	is_npc = 1
 
 	use_stamina = 0

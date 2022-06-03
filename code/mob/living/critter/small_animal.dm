@@ -57,10 +57,10 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	butcherable = 1
 	name_the_meat = 1
 	max_skins = 1
-	var/health_brute = 20 // moved up from birds since more than just they can use this, really
-	var/health_brute_vuln = 1
-	var/health_burn = 20
-	var/health_burn_vuln = 1
+	health_brute = 20 // moved up from birds since more than just they can use this, really
+	health_brute_vuln = 1
+	health_burn = 20
+	health_burn_vuln = 1
 
 	var/fur_color = 0
 	var/eye_color = 0

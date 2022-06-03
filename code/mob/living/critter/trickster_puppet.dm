@@ -8,11 +8,11 @@
 	speechverb_say = "says"
 	speechverb_exclaim = "exclaims"
 	speechverb_ask = "asks"
-	var/health_brute = 8
 	var/const/life_tick_spacing = 20
-	var/health_brute_vuln = 1
-	var/health_burn = 8
-	var/health_burn_vuln = 1
+	health_brute = 8
+	health_brute_vuln = 1
+	health_burn = 8
+	health_burn_vuln = 1
 	var/mob/wraith/wraith_trickster/master = null
 	var/hauntBonus = 0
 	var/last_life_update = 0

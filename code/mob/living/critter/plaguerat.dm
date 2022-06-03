@@ -20,10 +20,10 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 	add_abilities = list(/datum/targetable/critter/plague_rat/eat_filth,
 						/datum/targetable/critter/plague_rat/rat_bite)
 
-	var/health_brute = 50
-	var/health_brute_vuln = 0.45
-	var/health_burn = 50
-	var/health_burn_vuln = 0.65
+	health_brute = 50
+	health_brute_vuln = 0.45
+	health_burn = 50
+	health_burn_vuln = 0.65
 	var/obj/machinery/wraith/rat_den/linked_den = null
 	reagent_capacity = 100
 	var/master = null
