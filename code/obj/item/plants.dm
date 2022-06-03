@@ -28,7 +28,7 @@
 	item_function_flags = COLD_BURN
 	crop_suffix	= " leaf"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!src.reagents)
 			src.make_reagents()
 
@@ -358,7 +358,7 @@
 	icon_state = "aconite"
 	event_handler_flags = USE_FLUID_ENTER
 	// module_research_type = /obj/item/plant/herb/cannabis
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (iswerewolf(user))
 			user.changeStatus("weakened", 3 SECONDS)
 			user.TakeDamage("All", 0, 5, 0, DAMAGE_BURN)
@@ -429,7 +429,7 @@
 		..()
 		desc = desc + pick(names) + "."
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		var/mob/living/carbon/human/H = user
 		if(src.thorned)
 			if (H.hand)//gets active arm - left arm is 1, right arm is 0
@@ -450,7 +450,7 @@
 		else
 			..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/wirecutters/) && src.thorned)
 			boutput(user, "<span class='notice'>You snip off [src]'s thorns.</span>")
 			src.thorned = 0

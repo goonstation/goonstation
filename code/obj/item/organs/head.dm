@@ -65,18 +65,18 @@
 				if (src.donor?.bioHolder?.mobAppearance)
 					src.donor_appearance = src.donor.bioHolder.mobAppearance
 					src.UpdateIcon(/*makeshitup*/ 0)
-				if (isskeleton(src.donor))
-					src.item_state = "skull"
 				else //The heck?
 					src.UpdateIcon(/*makeshitup*/ 1)
+				if (src.donor.eye != null)
+					src.donor.set_eye(null)
 			else
 				src.UpdateIcon(/*makeshitup*/ 1)
 
 	disposing()
 		if (holder)
 			holder.head = null
-		if (donor_original.client?.eye != donor_original)
-			donor_original.client?.eye = donor_original
+		if (donor_original.eye == src)
+			donor_original.set_eye(null)
 			boutput(donor_original, "<span class='alert'>You feel your vision forcibly punted back to your body!</span>")
 		skull = null
 		brain = null
@@ -303,7 +303,7 @@
 		update_head_image()
 
 
-	attackby(obj/item/W as obj, mob/user as mob) // this is real ugly
+	attackby(obj/item/W, mob/user) // this is real ugly
 		if (!user)
 			return
 		//Putting stuff on heads
@@ -524,6 +524,7 @@
 				if(HEAD_SKELETON)
 					src.organ_name = "bony head"
 					src.desc = "...does that skull have another skull inside it?"
+					src.item_state = "skull"
 
 				if(HEAD_SEAMONKEY)
 					src.organ_name = "seamonkey head"

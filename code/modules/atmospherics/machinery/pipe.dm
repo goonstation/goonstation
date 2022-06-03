@@ -386,7 +386,7 @@ obj/machinery/atmospherics/pipe
 			return
 
 
-		attackby(var/obj/item/W as obj, var/mob/user as mob)
+		attackby(var/obj/item/W, var/mob/user)
 			if(isweldingtool(W))
 
 				if(!ruptured)

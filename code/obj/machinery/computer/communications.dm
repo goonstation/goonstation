@@ -189,7 +189,7 @@
 				AL.open()
 				AL.lockdownbyai = 0
 
-/obj/machinery/computer/communications/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/communications/attack_hand(var/mob/user)
 	if(..())
 		return
 

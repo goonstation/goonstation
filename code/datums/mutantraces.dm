@@ -1111,13 +1111,16 @@ TYPEINFO(/datum/mutantrace)
 		if(ishuman(M))
 			M.mob_flags |= IS_BONEY
 			M.blood_id = "calcium"
-			head = M.organHolder.head
+			set_head(M.organHolder.head)
 
 	disposing()
 		if (ishuman(mob))
 			mob.mob_flags &= ~IS_BONEY
 			mob.blood_id = initial(mob.blood_id)
 		. = ..()
+
+	proc/set_head(var/head)
+		src.head = head
 
 /obj/item/joint_wax
 	name = "joint wax"

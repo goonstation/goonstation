@@ -466,14 +466,17 @@
 						H.u_equip(W)
 						W.set_loc(myHead)
 						myHead.wear_mask = W
+					if (isskeleton(src.donor) && myHead.head_type & HEAD_SKELETON) // must be skeleton AND have skeleton head
+						src.donor.set_eye(myHead)
+						var/datum/mutantrace/skeleton/S = H.mutantrace
+						S.set_head(myHead)
+
 				myHead.set_loc(location)
 				myHead.update_head_image()
 				myHead.on_removal()
 				myHead.holder = null
 				src.head = null
 				src.organ_list["head"] = null
-				src.donor.client?.eye = myHead
-				src.donor.eye = myHead
 				src.donor.update_body()
 				src.donor.UpdateDamageIcon()
 				src.donor.update_clothing()
@@ -823,10 +826,7 @@
 						H.wear_mask = newHead.wear_mask
 						newHead.wear_mask.set_loc(H)
 						newHead.wear_mask = null
-					if (isskeleton(H))
-						var/datum/mutantrace/skeleton/S = H.mutantrace
-						S.head = newHead
-					H.client?.eye = H
+					H.set_eye(null)
 				src.donor.update_body()
 				src.donor.UpdateDamageIcon()
 				src.donor.update_clothing()

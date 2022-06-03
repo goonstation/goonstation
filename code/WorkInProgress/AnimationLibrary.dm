@@ -214,7 +214,7 @@
 
 
 
-///obj/attackby(var/obj/item/I as obj, mob/user as mob)
+///obj/attackby(var/obj/item/I, mob/user)
 //	attack_particle(user,src)
 //	..()
 /proc/attack_particle(var/mob/M, var/atom/target)

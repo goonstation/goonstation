@@ -8,7 +8,7 @@
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "flocktrace"
 
-	compute = -100 //it is expensive to run more threads
+	compute = -FLOCKTRACE_COMPUTE_COST //it is expensive to run more threads
 
 /mob/living/intangible/flock/trace/New(atom/loc, datum/flock/F)
 	..()

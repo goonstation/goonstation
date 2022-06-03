@@ -257,7 +257,7 @@
 			user.suiciding = 0
 	return 1
 
-/obj/item/sword/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/item/sword/attackby(obj/item/W, mob/user, params)
 	if (!use_glowstick)
 		return ..()
 
@@ -334,7 +334,7 @@
 	else
 		return ..()
 
-/obj/item/sword/attack_hand(mob/user as mob)
+/obj/item/sword/attack_hand(mob/user)
 	if (src.open && src.loc == user)
 		if (src.loaded_glowstick && src.use_glowstick)
 			user.put_in_hand(loaded_glowstick)
@@ -913,7 +913,7 @@
 					set_values()
 		..()
 
-	attack_hand(var/mob/user as mob) // todo: maybe make the base/twohand delays into vars. maybe.
+	attack_hand(var/mob/user) // todo: maybe make the base/twohand delays into vars. maybe.
 		src.two_handed = 0
 		set_values()
 		return ..()
@@ -1250,7 +1250,7 @@
 		K.set_loc(src)
 		BLOCK_SETUP(BLOCK_ROD)
 
-	attack_hand(mob/living/carbon/human/user as mob)
+	attack_hand(mob/living/carbon/human/user)
 		if(src.sword_inside && (user.r_hand == src || user.l_hand == src || user.belt == src))
 			draw_sword(user)
 		else
@@ -1262,7 +1262,7 @@
 		else
 			return ..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!istype(W, sword_path))
 			boutput(user, "<span class='alert'>The [W] can't fit into [src].</span>")
 			return
@@ -1306,7 +1306,7 @@
 	ih_sheath_state = "sheath_reverse0"
 	sword_path = /obj/item/katana/reverse
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (W.type == /obj/item/katana)
 			boutput(user, "<span class='alert'>The [W] can't fit into [src].</span>")
 			return
@@ -1325,7 +1325,7 @@
 	sword_path = /obj/item/katana/captain
 	tooltip_flags = REBUILD_USER
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!istype(W, /obj/item/katana/captain))
 			boutput(user, "<span class='alert'>The [W] can't fit into [src].</span>")
 			return
@@ -1369,7 +1369,7 @@
 	ih_sheath_state = "scabbard-syndie0"
 	sword_path = /obj/item/katana/nukeop
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!istype(W, sword_path))
 			boutput(user, "<span class='alert'>The [W] can't fit into [src].</span>")
 			return
@@ -1462,7 +1462,7 @@ obj/item/fragile_sword
 					take_bleeding_damage(C, user, 5, DAMAGE_STAB)
 		..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/whetstone))
 			if(force <= maximum_force)
 				force += 5
@@ -1640,7 +1640,7 @@ obj/item/whetstone
 		. = ..()
 		STOP_TRACKING
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (user.mind)
 			if (isslasher(user) || check_target_immunity(user))
 				if (user.mind.key != src.slasher_key && !check_target_immunity(user))

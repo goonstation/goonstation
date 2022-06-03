@@ -77,7 +77,7 @@
 	src.payload = null
 	..()
 
-/obj/item/assembly/chem_bomb/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/assembly/chem_bomb/attackby(obj/item/W, mob/user)
 	if (iswrenchingtool(W))
 		var/obj/item/assembly/R = null
 		switch(src.triggering_device.type)

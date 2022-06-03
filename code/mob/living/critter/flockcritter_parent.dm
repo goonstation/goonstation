@@ -16,6 +16,7 @@
 	mat_appearances_to_ignore = list("gnesis")
 	mat_changename = FALSE
 	mat_changedesc = FALSE
+	see_invisible = INVIS_FLOCK
 	// HEALTHS
 	var/health_brute = 1
 	var/health_burn = 1
@@ -61,7 +62,7 @@
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT, src, 100)
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_AI_UNTRACKABLE, src)
-	src.see_invisible = INVIS_CLOAK
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION, src)
 
 	// do not automatically set up a flock if one is not provided
 	// flockless drones act differently

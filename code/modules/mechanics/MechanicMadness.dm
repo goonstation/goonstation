@@ -93,12 +93,12 @@
 		if(!(user in src.users) && istype(user))
 			src.users+=user
 		return ..()
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(!(user in src.users) && istype(user))
 			src.users+=user
 		return ..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W))
 			if(src.welded)
 				boutput(user,"<span class='alert'>The [src] is welded shut.</span>")
@@ -230,7 +230,7 @@
 		anchored=false
 		icon_state="housing_cabinet"
 		flags = FPRINT | EXTRADELAY | CONDUCT
-		attack_hand(mob/user as mob)
+		attack_hand(mob/user)
 			if(src.loc==user)
 				src.set_loc(get_turf(src))
 				user.drop_item()
@@ -301,13 +301,13 @@
 	New()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(iswrenchingtool(W)) // prevent unanchoring
 			return 0
 		if(..()) return 1
 		return 1 //attack_hand(user) // was causing issues
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		..()
 		if (!istype(src.loc,/obj/item/storage/mechanics/housing_handheld))
 			qdel(src) //if outside the gun, delet
@@ -410,7 +410,7 @@
 
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(level == 1) return
 		if(issilicon(user) || isAI(user)) return
 		else return ..(user)
@@ -423,7 +423,7 @@
 	proc/rotate()
 		src.set_dir(turn(src.dir, -90))
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (ispryingtool(W))
 			if (can_rotate)
 				if (!anchored)
@@ -589,7 +589,7 @@
 				return 0
 		ejectmoney()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(..(W, user)) return 1
 		if (istype(W, /obj/item/spacecash) && !ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time))
 			LIGHT_UP_HOUSING
@@ -649,7 +649,7 @@
 		trunk = null
 		..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(..(W, user))
 			if(src.level == 1) //wrenched down
 				trunk = locate() in src.loc
@@ -778,7 +778,7 @@
 		boutput(user, "[thermal_only ? "Now accepting only thermal paper":"Now accepting any paper"]")
 		return 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(..(W, user)) return 1
 		else if (istype(W, /obj/item/paper) && !ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time))
 			if(thermal_only && !istype(W, /obj/item/paper/thermal))
@@ -910,7 +910,7 @@
 		boutput(user, "[send_name ? "Now sending user NAME":"Now sending user FINGERPRINT"]")
 		return 1
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(level != 2 && !ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time))
 			if(ishuman(user) && user.bioHolder)
 				LIGHT_UP_HOUSING
@@ -2603,12 +2603,12 @@
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(..(W, user)) return 1
 		if(ispulsingtool(W)) return // Don't press the button with a multitool, it brings up the config menu instead
 		return attack_hand(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(level == 1)
 			flick(icon_down, src)
 			LIGHT_UP_HOUSING
@@ -2715,7 +2715,7 @@
 
 
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (level == 1)
 			if (length(src.active_buttons))
 				var/selected_button = input(user, "Press a button", "Button Panel") in src.active_buttons + "*CANCEL*"
@@ -2769,7 +2769,7 @@
 		boutput(user, "<span class='alert'>There is no gun inside this component.</span>")
 		return 0
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(..(W, user)) return 1
 		var/gun_fits = 0
 		for(var/I in src.compatible_guns)
@@ -2922,7 +2922,7 @@
 			boutput(user, "<span class='alert'>There is no instrument inside this component.</span>")
 		return 0
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (..(W, user)) return 1
 		else if (instrument) // Already got one, chief!
 			boutput(user, "There is already \a [instrument] inside the [src].")

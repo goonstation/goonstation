@@ -181,7 +181,7 @@
 		return 1
 	return 0
 
-/obj/machinery/computer/shuttle/attackby(var/obj/item/W as obj, var/mob/user as mob)
+/obj/machinery/computer/shuttle/attackby(var/obj/item/W, var/mob/user)
 	if(status & (BROKEN|NOPOWER))
 		return
 	if (istype(W, /obj/item/device/pda2) && W:ID_card)
@@ -231,7 +231,7 @@
 				src.authorized = list(  )
 	return
 
-/obj/machinery/computer/mining_shuttle/attack_hand(mob/user as mob)
+/obj/machinery/computer/mining_shuttle/attack_hand(mob/user)
 	if(..())
 		return
 #ifdef TWITCH_BOT_ALLOWED
@@ -309,7 +309,7 @@
 
 	return
 
-/obj/machinery/computer/prison_shuttle/attack_hand(mob/user as mob)
+/obj/machinery/computer/prison_shuttle/attack_hand(mob/user)
 	if(..())
 		return
 	var/dat = "<a href='byond://?src=\ref[src];close=1'>Close</a><BR><BR>"
@@ -414,7 +414,7 @@
 				src.link = test_link
 				src.link.master = src
 
-/obj/machinery/computer/research_shuttle/attack_hand(mob/user as mob)
+/obj/machinery/computer/research_shuttle/attack_hand(mob/user)
 	if(..())
 		return
 	var/dat = "<a href='byond://?src=\ref[src];close=1'>Close</a><BR><BR>"
@@ -496,7 +496,7 @@
 
 	return
 
-/obj/machinery/computer/asylum_shuttle/attack_hand(mob/user as mob)
+/obj/machinery/computer/asylum_shuttle/attack_hand(mob/user)
 	if(..())
 		return
 
@@ -604,7 +604,7 @@
 			return
 
 
-/obj/machinery/computer/icebase_elevator/attack_hand(mob/user as mob)
+/obj/machinery/computer/icebase_elevator/attack_hand(mob/user)
 	if(..())
 		return
 	var/dat = "<a href='byond://?src=\ref[src];close=1'>Close</a><BR><BR>"
@@ -672,7 +672,7 @@
 
 	return
 
-/obj/machinery/computer/biodome_elevator/attack_hand(mob/user as mob)
+/obj/machinery/computer/biodome_elevator/attack_hand(mob/user)
 	if(..())
 		return
 	var/dat = "<a href='byond://?src=\ref[src];close=1'>Close</a><BR><BR>"
@@ -755,7 +755,7 @@
 	get_desc()
 		return "It says \"[bioele_shifts_since_accident] shifts since the last elevator accident. ([bioele_accidents] accidents in total.)\"."
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		boutput(user, "The sign says \"[bioele_shifts_since_accident] shifts since the last elevator accident. ([bioele_accidents] accidents in total.)\".")
 
 proc/bioele_load_stats()
@@ -823,7 +823,7 @@ var/bombini_saved = 0
 
 
 
-/obj/machinery/computer/shuttle_bus/attack_hand(mob/user as mob)
+/obj/machinery/computer/shuttle_bus/attack_hand(mob/user)
 	if(..())
 		return
 	var/dat = "<a href='byond://?src=\ref[src];close=1'>Close</a><BR><BR>"

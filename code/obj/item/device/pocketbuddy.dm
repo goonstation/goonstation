@@ -99,7 +99,7 @@
   // TODO: subscribe to global event system/child system thereof for pocketbuddies?
   src.prev_area = get_area(src)
 
-/obj/item/device/pocketbuddy/attackby(obj/item/I as obj, mob/user as mob)
+/obj/item/device/pocketbuddy/attackby(obj/item/I, mob/user)
   if(istype(I, /obj/item/device/pda2))
     var/obj/item/device/pda2/pda = I
     if(pda.ID_card)
@@ -111,7 +111,7 @@
     ..()
 
 
-/obj/item/device/pocketbuddy/attack_hand(mob/user as mob)
+/obj/item/device/pocketbuddy/attack_hand(mob/user)
   if(..())
     return
 

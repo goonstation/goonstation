@@ -140,7 +140,7 @@
 		src.go_out()
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.add_dialog(user)
 		var/temp_text = ""
 		if(air_contents.temperature > T0C)
@@ -213,7 +213,7 @@
 			src.add_fingerprint(usr)
 			return
 
-	attackby(var/obj/item/G as obj, var/mob/user as mob)
+	attackby(var/obj/item/G, var/mob/user)
 		if(istype(G, /obj/item/reagent_containers/glass))
 			if (G.cant_drop)
 				boutput(user, "<span class='alert'>You can't put that in \the [src] while it's attached to you!")

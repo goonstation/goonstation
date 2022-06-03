@@ -433,7 +433,7 @@
 			else
 				continue
 
-	attackby(obj/item/W as obj, mob/M as mob)
+	attackby(obj/item/W, mob/M)
 		if(istype(W, /obj/item/reagent_containers/food/snacks) && !(M in src.friends))
 			if(prob(20))
 				src.visible_message("<span class='notice'>[src] chitters happily at the [W], and seems a little friendlier with [M]!</span>")
@@ -452,7 +452,7 @@
 		else
 			..()
 
-	attack_hand(mob/M as mob)
+	attack_hand(mob/M)
 		if ((M.a_intent != INTENT_HARM) && (M in src.friends))
 			if(M.a_intent == INTENT_HELP && src.aggressive)
 				src.visible_message("<span class='notice'>[M] pats [src] on the head in a soothing way. It won't attack anyone now.</span>")
@@ -536,7 +536,7 @@
 		playsound(src.loc, "sound/impact_sounds/Crystal_Hit_1.ogg", 50, 0)
 		. = ..()
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		..()
 		if (!src.alive) return
 		if (istype(W, /obj/item/clothing/head))
@@ -939,7 +939,7 @@
 			attacking = 0
 
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (!src.alive)
 			return
 		else
@@ -1025,12 +1025,12 @@
 	blob_act(power)
 		return
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (src.alive)
 			boutput(user, "<span class='combat'><b>Your hand passes right through! It's so cold...</b></span>")
 		return
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (!src.alive)
 			return
 		else
@@ -1124,11 +1124,11 @@
 			src.appear()
 			break
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		..()
 		src.boredom_countdown = rand(5,10)
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		..()
 		src.boredom_countdown = rand(5,10)
 
@@ -1178,7 +1178,7 @@
 	aggressive = 1
 	generic = 0
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (user.a_intent == "help")
 			return
 

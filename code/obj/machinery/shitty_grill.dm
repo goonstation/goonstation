@@ -30,7 +30,7 @@
 		light.set_color(0.5, 0.3, 0)
 
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(movable && istool(W, TOOL_SCREWING | TOOL_WRENCHING))
 			user.visible_message("<b>[user]</b> [anchored ? "unbolts the [src] from" : "secures the [src] to"] the floor.")
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 80, 1)
@@ -142,7 +142,7 @@
 	/*		else if (oldval && !newval)
 				UnsubscribeProcess() */
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (isghostdrone(user))
 			boutput(user, "<span class='alert'>The [src] refuses to interface with you, as you are not a bus driver!</span>")
 			return

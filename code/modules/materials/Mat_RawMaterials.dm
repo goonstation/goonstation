@@ -50,7 +50,7 @@
 		P.change_stack_amount(toRemove - P.amount)
 		return P
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(user.is_in_hands(src) && src.amount > 1)
 			var/splitnum = round(input("How many material pieces do you want to take from the stack?","Stack of [src.amount]",1) as num)
 			if (!isnum_safe(splitnum) || splitnum >= amount || splitnum < 1)
@@ -294,7 +294,7 @@
 	setup_material()
 		src.setMaterial(getMaterial("wood"), appearance = 0, setname = 0)
 		..()
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if ((istool(W, TOOL_CUTTING | TOOL_SAWING)))
 			user.visible_message("[user] cuts a plank from the [src].", "You cut a plank from the [src].")
 			var/obj/item/plankobj = new /obj/item/plank(user.loc)
@@ -313,7 +313,7 @@
 	setup_material()
 		src.setMaterial(getMaterial("bamboo"), appearance = 0, setname = 0)
 		..()
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if ((istool(W, TOOL_CUTTING | TOOL_SAWING)))
 			user.visible_message("[user] carefully extracts a shoot from [src].", "You carefully cut a shoot from [src].")
 			new /obj/item/reagent_containers/food/snacks/plant/bamboo/(user.loc)

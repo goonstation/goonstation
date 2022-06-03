@@ -27,7 +27,7 @@
 	boutput(user, "<span class='alert'>AI Interfacing with this computer has been disabled.</span>")
 	return
 
-/obj/machinery/computer/ordercomp/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/ordercomp/attack_hand(var/mob/user)
 	if(..())
 		return
 
@@ -56,7 +56,7 @@
 	onclose(user, "computer_[src]")
 	return
 
-/obj/machinery/computer/ordercomp/attackby(var/obj/item/I as obj, mob/user as mob)
+/obj/machinery/computer/ordercomp/attackby(var/obj/item/I, mob/user)
 	if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
 		if (istype(I, /obj/item/device/pda2) && I:ID_card) I = I:ID_card
 		boutput(user, "<span class='notice'>You swipe the ID card.</span>")

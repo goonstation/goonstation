@@ -95,7 +95,7 @@
 		onclose(user, windowName)
 		return
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
 			if (istype(I, /obj/item/device/pda2) && I:ID_card) I = I:ID_card
 			boutput(user, "<span class='notice'>You swipe the ID card in the card reader.</span>")
@@ -113,7 +113,7 @@
 				boutput(user, "<span class='alert'>No bank account associated with this ID found.</span>")
 				src.scan = null
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if(..())
 			return
 		if(dialogue != null)
@@ -1036,7 +1036,7 @@
 
 	// OKAY we're tryin to do something here with the medal for the rescue allright?
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (istype(W, /obj/item/coin/bombini))
 			for(var/mob/M in AIviewers(src))
 				boutput(M, "<B>[src.name]</B> buzzes excitedly! \"BZZ?? BZZ!!\"")
@@ -1133,7 +1133,7 @@
 
 		pickupdialoguefailure = "You need to BUY things before you pick them up!"
 
-/obj/npc/trader/exclown/attackby(obj/item/W as obj, mob/living/user as mob)
+/obj/npc/trader/exclown/attackby(obj/item/W, mob/living/user)
 	if (!src.honk && user.mind && user.mind.assigned_role == "Clown" && istype(W, /obj/item/toy/diploma))
 		src.visible_message("<span class='alert'><B>[user]</B> pokes [src] with [W]. [src] nods knowingly.</span>")
 		src.spawncrate(/obj/item/storage/box/banana_grenade_kit)

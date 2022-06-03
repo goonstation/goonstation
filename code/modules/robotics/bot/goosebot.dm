@@ -35,7 +35,7 @@
 
 
 
-/obj/machinery/bot/goosebot/attack_hand(mob/user as mob, params)
+/obj/machinery/bot/goosebot/attack_hand(mob/user, params)
 	var/dat
 	dat += "<TT><I>YOU CHOICE</I></TT><BR>"
 	dat += "<TT><B>THE GOOSE</B></TT><BR>"
@@ -58,7 +58,7 @@
 
 	return
 
-/obj/machinery/bot/goosebot/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/bot/goosebot/attackby(obj/item/W, mob/user)
 	src.visible_message("<span class='combat'>[user] hits [src] with [W]!</span>")
 	src.health -= W.force * 0.5
 	if (src.health <= 0)

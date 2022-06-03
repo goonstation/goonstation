@@ -827,7 +827,7 @@
 			//S.hud.remove_item(src)
 			S.hud.objects -= src // prevents invisible object from failed transfer (item doesn't fit in pockets from backpack for example)
 
-/obj/item/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/item/attackby(obj/item/W, mob/user, params)
 	if(src.material)
 		src.material.triggerTemp(src ,1500)
 	if (W.firesource)
@@ -1107,7 +1107,7 @@
 	if (usr?.bioHolder?.HasEffect("clumsy") && prob(50)) t = "funny-looking"
 	return "It is \an [t] item."
 
-/obj/item/attack_hand(mob/user as mob)
+/obj/item/attack_hand(mob/user)
 	var/checkloc = src.loc
 	while(checkloc && !istype(checkloc,/turf))
 		if (isliving(checkloc) && checkloc != user)

@@ -66,7 +66,7 @@
     for(var/mob/living/M in victims)
       M.set_loc(location)
 
-/obj/martianBiotech/biomassPool/attackby(obj/item/W as obj, mob/user as mob)
+/obj/martianBiotech/biomassPool/attackby(obj/item/W, mob/user)
   var/obj/item/grab/G = W
   var/meatValue = 0
   var/atom/movable/meat = null

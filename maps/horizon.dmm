@@ -24212,7 +24212,6 @@
 	icon_state = "1-10"
 	},
 /obj/table/wood/auto,
-/obj/machinery/light_switch/east,
 /obj/item/paper_bin{
 	pixel_y = 6
 	},
@@ -25481,6 +25480,7 @@
 	name = "Damaged Terminal";
 	setup_os_string = "ZETA_MAINFRAME"
 	},
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/info{
 	name = "Net Cafe"

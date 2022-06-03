@@ -28,7 +28,7 @@ Fibre wire
 			M.show_text("<B><I>It burns...!</I></B>", "red")
 			if(ishuman(M)) evil_act(M)
 /* oops didn't quite think this through
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/parts/robot_parts/leg))
 			var/obj/machinery/bot/skullbot/B = new /obj/machinery/bot/skullbot
 			B.icon = icon('icons/obj/bots/aibots.dmi', "skullbot-ominous")

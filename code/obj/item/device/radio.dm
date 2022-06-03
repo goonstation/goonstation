@@ -612,7 +612,7 @@ var/list/headset_channel_lookup
 		for (var/sayToken in src.secure_frequencies) //Most convoluted string of the year award 2013
 			. += "[ headset_channel_lookup["[src.secure_frequencies["[sayToken]"]]"] ? headset_channel_lookup["[src.secure_frequencies["[sayToken]"]]"] : "???" ]: \[[format_frequency(src.secure_frequencies["[sayToken]"])]] (Activator: <b>[sayToken]</b>)"
 
-/obj/item/device/radio/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/device/radio/attackby(obj/item/W, mob/user)
 	src.add_dialog(user)
 	if (!isscrewingtool(W))
 		return
@@ -675,7 +675,7 @@ var/list/headset_channel_lookup
 			return
 		..()
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		if (isscrewingtool(I))
 			if (src.anchored)
 				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
@@ -736,7 +736,7 @@ var/list/headset_channel_lookup
 			boutput(usr, "<span class='notice'>The electric pads are exposed!</span>")
 	return*/
 
-/obj/item/device/radio/electropack/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/device/radio/electropack/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/clothing/head/helmet))
 		var/obj/item/assembly/shock_kit/A = new /obj/item/assembly/shock_kit( user )
 		W.set_loc(A)
@@ -914,7 +914,7 @@ Code:
 	onclose(user, "radio")
 	return
 
-obj/item/device/radio/signaler/attackby(obj/item/W as obj, mob/user as mob)
+obj/item/device/radio/signaler/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/instrument/bikehorn))
 		var/obj/item/assembly/radio_horn/A = new /obj/item/assembly/radio_horn( user )
 		W.set_loc(A)
@@ -1182,5 +1182,5 @@ obj/item/device/radio/signaler/attackby(obj/item/W as obj, mob/user as mob)
 /obj/item/device/radio/intercom/loudspeaker/attack_self(mob/user as mob)
 	return
 
-/obj/item/device/radio/intercom/loudspeaker/speaker/attack_hand(mob/user as mob)
+/obj/item/device/radio/intercom/loudspeaker/speaker/attack_hand(mob/user)
 	return

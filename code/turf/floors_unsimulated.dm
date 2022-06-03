@@ -12,7 +12,7 @@
 	heat_capacity = 225000
 
 
-/turf/unsimulated/floor/attackby(obj/item/C as obj, mob/user as mob, params)
+/turf/unsimulated/floor/attackby(obj/item/C, mob/user, params)
 
 	if (!C || !user)
 		return 0

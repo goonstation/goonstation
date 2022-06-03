@@ -57,14 +57,14 @@
 	src.go_out()
 	return
 
-/obj/machinery/gibber/attack_hand(mob/user as mob)
+/obj/machinery/gibber/attack_hand(mob/user)
 	if(operating)
 		boutput(user, "<span class='alert'>It's locked and running</span>")
 		return
 	else
 		src.startgibbing(user)
 
-/obj/machinery/gibber/attackby(obj/item/grab/G as obj, mob/user as mob)
+/obj/machinery/gibber/attackby(obj/item/grab/G, mob/user)
 	if(src.occupant)
 		boutput(user, "<span class='alert'>The gibber is full, empty it first!</span>")
 		return
