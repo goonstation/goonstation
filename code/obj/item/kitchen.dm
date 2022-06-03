@@ -717,9 +717,6 @@ TRAYS
 	max_food = 30 // will look like an absolute shitshow but sure
 	throw_dist = 5
 	two_handed = TRUE
-	var/health_desc = null
-	var/y_counter = 0
-	var/y_mod = 0
 	var/tray_health = 5 //number of times u can smash with a tray + 1, get_desc values are hardcoded so please adjust them (i know im a bad coder)
 	hit_sound = "step_lattice"
 
