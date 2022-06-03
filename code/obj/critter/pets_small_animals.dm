@@ -93,7 +93,7 @@
 	CritterDeath()
 		..()
 		if(linked_den.linked_critters > 0)
-			linked_den.linked_critters --
+			linked_den.linked_critters--
 
 /obj/critter/mouse/remy
 	name = "Remy"
