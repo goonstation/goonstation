@@ -22056,9 +22056,6 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/pharmacy)
 "bdN" = (
-/obj/stool/chair/office{
-	dir = 1
-	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
@@ -22066,6 +22063,7 @@
 	pixel_x = 10;
 	tag = ""
 	},
+/obj/storage/secure/closet/medical/medkit,
 /turf/simulated/floor/redwhite{
 	dir = 4
 	},
@@ -23441,9 +23439,7 @@
 	},
 /area/station/medical/medbay/pharmacy)
 "bhb" = (
-/obj/machinery/chem_master{
-	dir = 8
-	},
+/obj/storage/secure/closet/medical/medkit,
 /turf/simulated/floor/redwhite{
 	dir = 4
 	},
@@ -24783,25 +24779,27 @@
 	layer = 3.5;
 	pixel_y = -24
 	},
-/obj/storage/secure/closet/medical/medkit,
+/obj/machinery/chem_master,
 /turf/simulated/floor/redwhite,
 /area/station/medical/medbay/pharmacy)
 "bjX" = (
-/obj/storage/secure/closet/medical/medicine,
+/obj/submachine/chem_extractor,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/item/device/reagentscanner,
 /turf/simulated/floor/redwhite,
 /area/station/medical/medbay/pharmacy)
 "bjY" = (
-/obj/storage/secure/closet/medical/medkit,
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/table/reinforced/auto,
+/obj/machinery/glass_recycler/chemistry,
 /turf/simulated/floor/redwhite{
 	dir = 6
 	},
@@ -39884,8 +39882,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "bXw" = (
-/obj/submachine/chem_extractor,
-/obj/item/device/reagentscanner,
+/obj/storage/secure/closet/medical/medicine,
 /turf/simulated/floor/redwhite{
 	dir = 8
 	},
@@ -57666,6 +57663,12 @@
 /obj/decal/poster/wallsign/security_left,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/secondary/exit)
+"oSw" = (
+/obj/stool/chair/office{
+	dir = 4
+	},
+/turf/simulated/floor/white,
+/area/station/medical/medbay/pharmacy)
 "oVa" = (
 /obj/item/wrench,
 /turf/simulated/floor/grey/blackgrime,
@@ -126273,7 +126276,7 @@ aUT
 aXE
 aXE
 aXE
-aXE
+oSw
 bjX
 bmv
 bpx
@@ -126573,9 +126576,9 @@ aPh
 aRO
 aUQ
 aXF
-baZ
-bdN
 bhb
+bdN
+baZ
 bjY
 bmv
 bpy
