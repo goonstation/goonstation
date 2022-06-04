@@ -18,8 +18,8 @@
 					var/obj/item/organ/eye/right_eye = null
 					if (isskeleton(src.human_owner) && !src.human_owner.get_organ("head")) // get organs from the head, wherever it may be
 						var/datum/mutantrace/skeleton/skele = src.human_owner.mutantrace
-						left_eye = skele.head?.left_eye
-						right_eye = skele.head?.right_eye
+						left_eye = skele.head_tracker?.left_eye
+						right_eye = skele.head_tracker?.right_eye
 					else // get organs normally
 						left_eye = human_owner.get_organ("left_eye")
 						right_eye = human_owner.get_organ("right_eye")

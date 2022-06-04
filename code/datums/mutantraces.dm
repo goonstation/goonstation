@@ -1109,8 +1109,8 @@ TYPEINFO(/datum/mutantrace)
 	decomposes = FALSE
 	race_mutation = /datum/bioEffect/mutantrace/skeleton
 	dna_mutagen_banned = FALSE
+	var/obj/item/organ/head/head_tracker
 	self_click_fluff = list("ribcage", "funny bone", "femur", "scapula")
-	var/obj/item/organ/head/head
 
 	New(var/mob/living/carbon/human/M)
 		..()
@@ -1118,6 +1118,7 @@ TYPEINFO(/datum/mutantrace)
 			M.mob_flags |= IS_BONEY
 			M.blood_id = "calcium"
 			set_head(M.organHolder.head)
+			
 
 	disposing()
 		if (ishuman(mob))
@@ -1126,7 +1127,8 @@ TYPEINFO(/datum/mutantrace)
 		. = ..()
 
 	proc/set_head(var/head)
-		src.head = head
+		src.head_tracker = head
+		src.head_tracker.linked_human = mob
 
 /obj/item/joint_wax
 	name = "joint wax"

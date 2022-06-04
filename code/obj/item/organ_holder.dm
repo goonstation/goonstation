@@ -826,6 +826,9 @@
 						H.wear_mask = newHead.wear_mask
 						newHead.wear_mask.set_loc(H)
 						newHead.wear_mask = null
+					if (isskeleton(H) && newHead.head_type == HEAD_SKELETON)
+						var/datum/mutantrace/skeleton/S = H.mutantrace
+						S.set_head(newHead)	
 					H.set_eye(null)
 				src.donor.update_body()
 				src.donor.UpdateDamageIcon()

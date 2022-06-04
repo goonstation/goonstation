@@ -31,6 +31,7 @@
 	/// Defines what kind of head this is, for things like lizards being able to colorchange a transplanted lizardhead
 	/// Since we can't easily swap out one head for a different type
 	var/head_type = HEAD_HUMAN
+	var/linked_human = null
 
 	var/image/head_image = null
 	var/head_icon = null
@@ -73,6 +74,11 @@
 				src.UpdateIcon(/*makeshitup*/ 1)
 
 	disposing()
+		if (src.donor && ishuman(src.donor))
+			var/mob/living/carbon/human/H = src.donor
+			if (isskeleton(H))
+				var/datum/mutantrace/skeleton/S = H.mutantrace
+				S.head_tracker = null
 		if (holder)
 			holder.head = null
 		if (donor_original.eye == src)
@@ -87,6 +93,7 @@
 		ears = null
 		wear_mask = null
 		glasses = null
+		linked_human = null
 
 		..()
 
@@ -347,6 +354,9 @@
 			playsound(src, 'sound/items/towel.ogg', 25, 1)
 			user.visible_message("<span class='notice'>[user] [pick("buffs", "shines", "cleans", "wipes", "polishes")] [src] with [W].</span>")
 			src.clean_forensic()
+			return
+		if (istype(W, /obj/item/reagent_containers/food) && head_type == HEAD_SKELETON)
+			user.visible_message("<span class='notice'>[user] tries to feed [W] to [src] but it cannot swallow!</span>")
 			return
 
 		if (src.skull || src.brain)
