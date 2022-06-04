@@ -67,7 +67,7 @@
 	last_cast = world.time + cooldown
 	holder.updateButtons()
 	SPAWN(cooldown + 5)
-		holder.updateButtons()
+		holder?.updateButtons()
 
 /////////////////////////////////////////
 
