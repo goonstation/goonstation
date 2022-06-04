@@ -124,7 +124,7 @@
 								"Staring at a bee for over an hour.",\
 								"Not showering before entering pool.",\
 								"Rampant idiocy.",\
-								"Never tipping the cattering staff.",\
+								"Never tipping the catering staff.",\
 								"Disregarding previous tickets.",\
 								"Fashion crimes.",\
 								"Gambling.",\
