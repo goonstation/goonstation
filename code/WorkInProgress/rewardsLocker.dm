@@ -1029,7 +1029,7 @@
 				else if (istype(M, /obj/item/clothing/head/helmet/captain))
 					var/prev = M.name
 					M.name = "commander's helmet"
-					M.desc = "Somewhat protects an important person's head from being bashed in. Comes in a stylish shade of red befitting of a executive (Base Item: [prev])"
+					M.desc = "Somewhat protects an important person's head from being bashed in. Comes in a stylish shade of blue befitting of a commander. (Base Item: [prev])"
 					M.icon_state = "helmet-captain-blue"
 					M.item_state = "helmet-captain-blue"
 					H.set_clothing_icon_dirty()
