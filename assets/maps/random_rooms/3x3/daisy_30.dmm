@@ -52,7 +52,8 @@
 	},
 /obj/machinery/networked/printer{
 	pixel_x = -2;
-	pixel_y = 11
+	pixel_y = 11;
+	density = 0
 	},
 /obj/item/paper/spaceodyssey{
 	pixel_y = -1
