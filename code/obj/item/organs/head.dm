@@ -83,7 +83,7 @@
 			holder.head = null
 		if (donor_original.eye == src)
 			donor_original.set_eye(null)
-			boutput(donor_original, "<span class='alert'>You feel your vision forcibly punted back to your body!</span>")
+			boutput(donor_original, "<span class='alert'><b>You feel your vision forcibly punted back to your body!</b></span>")
 		skull = null
 		brain = null
 		left_eye = null
@@ -256,7 +256,10 @@
 		if (src.ears && src.ears.wear_image_icon)
 			src.overlays += image(src.ears.wear_image_icon, src.ears.icon_state, layer = MOB_EARS_LAYER)
 
-		if (src.head && src.head.wear_image_icon)
+		if (src.head && src.head.wear_image)
+			src.overlays += src.head.wear_image
+
+		else if (src.head && src.head.wear_image_icon)
 			src.overlays += image(src.head.wear_image_icon, src.head.icon_state, layer = MOB_HEAD_LAYER2)
 
 		if(!(src.head && src.head.seal_hair))

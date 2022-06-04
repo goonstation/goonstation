@@ -1118,7 +1118,6 @@ TYPEINFO(/datum/mutantrace)
 			M.mob_flags |= IS_BONEY
 			M.blood_id = "calcium"
 			set_head(M.organHolder.head)
-			
 
 	disposing()
 		if (ishuman(mob))
@@ -1126,9 +1125,16 @@ TYPEINFO(/datum/mutantrace)
 			mob.blood_id = initial(mob.blood_id)
 		. = ..()
 
-	proc/set_head(var/head)
-		src.head_tracker = head
-		src.head_tracker.linked_human = mob
+	proc/set_head(var/obj/item/organ/head/head)
+		if (isskeleton(head.linked_human) && head.linked_human != mob)
+			var/mob/living/carbon/human/H = head.linked_human
+			var/datum/mutantrace/skeleton/S = H.mutantrace
+			if (H.eye == head)
+				H.set_eye(null)
+			S.head_tracker = null
+			boutput(H, "<span class='alert'><b>You feel as if your head has been repossessed by another!</b></span>")
+		head_tracker = head
+		head_tracker.linked_human = mob
 
 /obj/item/joint_wax
 	name = "joint wax"
