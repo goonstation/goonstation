@@ -182,8 +182,8 @@
 	var/waiting = FALSE
 
 /datum/targetable/flockmindAbility/partitionMind/New()
-	..()
 	src.desc = "Create a Flocktrace, using [FLOCKTRACE_COMPUTE_COST] compute."
+	..()
 
 /datum/targetable/flockmindAbility/partitionMind/cast(atom/target)
 	if(waiting || ..())
