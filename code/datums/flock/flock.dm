@@ -460,6 +460,8 @@ var/flock_signal_unleashed = FALSE
 		aH.updateCompute()
 
 /datum/flock/proc/getComplexDroneCount()
+	if (!src.units)
+		return 0
 	return length(src.units[/mob/living/critter/flock/drone/])
 
 /datum/flock/proc/toggleDeconstructionFlag(var/atom/target)
