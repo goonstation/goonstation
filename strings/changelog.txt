@@ -1,6 +1,10 @@
 
 (t)sat jun 04 22
 (u)DimWhat
+(p)8938
+(e)🎨|sprites
+(+)Replaced the SWAT helmet in the captain's locker with a more fitting captain helmet.
+(u)DimWhat
 (p)8948
 (e)🗺|mapping
 (+)QM is now functional on destiny when the shields are on.
