@@ -49,6 +49,13 @@ var/global/datum/bomb_monitor/bomb_monitor = new
 		for(var/obj/item/device/transfer_valve/TV in TVs)
 			if(!filter_active_only || (TV.tank_one || TV.tank_two))
 				var/turf/T = get_turf(TV)
+				var/device_name = TV.attached_device?.name
+				if(istype(TV.attached_device, /obj/item/device/radio/signaler))
+					var/obj/item/device/radio/signaler/remotesignaler = TV.attached_device
+					device_name += ", frequency: [remotesignaler.frequency]"
+					if(remotesignaler.frequency == FREQ_SIGNALER)
+						device_name += " (DEFAULT)"
+
 				if (!T || !isturf(T)) continue
 				var/ref_a = "<a href='?src=\ref[src];airmon=\ref[TV.tank_one]'>[TV.tank_one]</a>"
 				var/ref_b = "<a href='?src=\ref[src];airmon=\ref[TV.tank_two]'>[TV.tank_two]</a>"
@@ -69,7 +76,7 @@ var/global/datum/bomb_monitor/bomb_monitor = new
 								[TV.tank_two ? ref_b : "Nothing"]
 							</td>
 							<td>
-								[TV.attached_device ? TV.attached_device : "Nothing"]
+								[TV.attached_device ? device_name : "Nothing"]
 							</td>
 							<td>
 								[TV.fingerprintslast ? TV.fingerprintslast : "N/A"]

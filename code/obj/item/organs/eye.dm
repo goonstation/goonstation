@@ -16,8 +16,8 @@
 
 	New()
 		..()
-		SPAWN_DBG(0)
-			src.update_icon()
+		SPAWN(0)
+			src.UpdateIcon()
 
 	disposing()
 		if (holder)
@@ -27,7 +27,7 @@
 				holder.right_eye = null
 		..()
 
-	proc/update_icon()
+	update_icon()
 		if (!src.change_iris)
 			return
 		var/image/iris_image = image(src.icon, src, "[icon_state]-iris")
@@ -140,12 +140,12 @@
 
 	on_transplant(mob/M)
 		. = ..()
-		APPLY_MOB_PROPERTY(M, PROP_DISORIENT_RESIST_EYE, src, 100)
-		APPLY_MOB_PROPERTY(M, PROP_DISORIENT_RESIST_EYE_MAX, src, 100)
+		APPLY_ATOM_PROPERTY(M, PROP_MOB_DISORIENT_RESIST_EYE, src, 100)
+		APPLY_ATOM_PROPERTY(M, PROP_MOB_DISORIENT_RESIST_EYE_MAX, src, 100)
 
 	on_removal()
-		REMOVE_MOB_PROPERTY(donor, PROP_DISORIENT_RESIST_EYE, src)
-		REMOVE_MOB_PROPERTY(donor, PROP_DISORIENT_RESIST_EYE_MAX, src)
+		REMOVE_ATOM_PROPERTY(donor, PROP_MOB_DISORIENT_RESIST_EYE, src)
+		REMOVE_ATOM_PROPERTY(donor, PROP_MOB_DISORIENT_RESIST_EYE_MAX, src)
 		. = ..()
 
 /obj/item/organ/eye/cyber/sechud
@@ -173,9 +173,9 @@
 		get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).add_mob(donor)
 
 	on_removal()
-		..()
 		processing_items.Remove(src)
 		get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_mob(donor)
+		..()
 
 /obj/item/organ/eye/cyber/thermal
 	name = "thermal imager cybereye"
@@ -191,10 +191,10 @@
 
 	on_transplant(mob/M)
 		. = ..()
-		APPLY_MOB_PROPERTY(M, PROP_THERMALVISION, src)
+		APPLY_ATOM_PROPERTY(M, PROP_MOB_THERMALVISION, src)
 
 	on_removal()
-		REMOVE_MOB_PROPERTY(donor, PROP_THERMALVISION, src)
+		REMOVE_ATOM_PROPERTY(donor, PROP_MOB_THERMALVISION, src)
 		. = ..()
 
 /obj/item/organ/eye/cyber/meson
@@ -220,25 +220,25 @@
 			src.assigned = M
 			if (src.on)
 				src.assigned.vision.set_scan(1)
-				APPLY_MOB_PROPERTY(M, PROP_MESONVISION, src)
+				APPLY_ATOM_PROPERTY(M, PROP_MOB_MESONVISION, src)
 
 	on_removal()
-		..()
-		REMOVE_MOB_PROPERTY(donor, PROP_MESONVISION, src)
+		REMOVE_ATOM_PROPERTY(donor, PROP_MOB_MESONVISION, src)
 		if (istype(assigned.glasses, /obj/item/clothing/glasses/visor))
 			return
 		else
 			src.assigned.vision.set_scan(0)
+		..()
 
 	proc/toggle()
 		src.on = !src.on
 		playsound(assigned, "sound/items/mesonactivate.ogg", 30, 1)
 		if (src.on)
 			assigned.vision.set_scan(1)
-			APPLY_MOB_PROPERTY(donor, PROP_MESONVISION, src)
+			APPLY_ATOM_PROPERTY(donor, PROP_MOB_MESONVISION, src)
 		else
 			assigned.vision.set_scan(0)
-			REMOVE_MOB_PROPERTY(donor, PROP_MESONVISION, src)
+			REMOVE_ATOM_PROPERTY(donor, PROP_MOB_MESONVISION, src)
 
 /obj/item/organ/eye/cyber/spectro
 	name = "spectroscopic imager cybereye"
@@ -254,10 +254,10 @@
 
 	on_transplant(mob/M)
 		. = ..()
-		APPLY_MOB_PROPERTY(M, PROP_SPECTRO, src)
+		APPLY_ATOM_PROPERTY(M, PROP_MOB_SPECTRO, src)
 
 	on_removal()
-		REMOVE_MOB_PROPERTY(donor, PROP_SPECTRO, src)
+		REMOVE_ATOM_PROPERTY(donor, PROP_MOB_SPECTRO, src)
 		. = ..()
 
 /obj/item/organ/eye/cyber/prodoc
@@ -287,9 +287,9 @@
 		return
 
 	on_removal()
-		..()
 		processing_items.Remove(src)
 		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_mob(donor)
+		..()
 		return
 
 /obj/item/organ/eye/cyber/ecto
@@ -306,10 +306,10 @@
 
 	on_transplant(mob/M)
 		. = ..()
-		APPLY_MOB_PROPERTY(M, PROP_GHOSTVISION, src)
+		APPLY_ATOM_PROPERTY(M, PROP_MOB_GHOSTVISION, src)
 
 	on_removal()
-		REMOVE_MOB_PROPERTY(donor, PROP_GHOSTVISION, src)
+		REMOVE_ATOM_PROPERTY(donor, PROP_MOB_GHOSTVISION, src)
 		. = ..()
 
 /obj/item/organ/eye/cyber/camera
@@ -349,10 +349,10 @@
 
 	on_transplant(mob/M)
 		. = ..()
-		APPLY_MOB_PROPERTY(M, PROP_NIGHTVISION, src)
+		APPLY_ATOM_PROPERTY(M, PROP_MOB_NIGHTVISION, src)
 
 	on_removal()
-		REMOVE_MOB_PROPERTY(donor, PROP_NIGHTVISION, src)
+		REMOVE_ATOM_PROPERTY(donor, PROP_MOB_NIGHTVISION, src)
 		. = ..()
 
 /obj/item/organ/eye/cyber/laser
@@ -432,3 +432,7 @@ obj/item/organ/eye/skeleton
 	desc = "This takes 'hitting the bullseye' to another level."
 	icon_state = "eye-cow"
 	blood_reagent = "milk"
+
+/obj/item/organ/eye/pug
+	name = "pug eye"
+	desc = "Poor guy."

@@ -45,7 +45,7 @@
 			src.visible_message("<span class='alert'><b>[src]</b> hungrily eats [src.target]!</span>")
 			playsound(src.loc, "sound/items/eatfood.ogg", 30, 1, -2)
 			src.eaten += material.amount
-			pool(src.target)
+			qdel(src.target)
 			src.target = null
 			src.task = "thinking"
 
@@ -67,9 +67,9 @@
 			var/pickgem = rand(1,3)
 			var/obj/item/created = null
 			switch(pickgem)
-				if(1) created = unpool(/obj/item/raw_material/gemstone)
-				if(2) created = unpool(/obj/item/raw_material/uqill)
-				if(3) created = unpool(/obj/item/raw_material/fibrilith)
+				if(1) created = new /obj/item/raw_material/gemstone
+				if(2) created = new /obj/item/raw_material/uqill
+				if(3) created = new /obj/item/raw_material/fibrilith
 			created.set_loc(src.loc)
 			src.eaten -= rocks_per_gem
 

@@ -31,9 +31,9 @@
 				speaker.anchored = speaker_anchored
 				speaker.message = message
 				if (speaker_type == "invisible")
-					speaker.invisibility = 20
+					speaker.invisibility = INVIS_ADVENTURE
 				else
-					SPAWN_DBG(1 SECOND)
+					SPAWN(1 SECOND)
 						speaker.color = color_rgb
 		else if ("right" in pa)
 			if (istype(object, /obj/adventurepuzzle/triggerable/speaker))
@@ -77,4 +77,4 @@
 		F["[path].message"] >> message
 		F["[path].speaker_type"] >> speaker_type
 		if (speaker_type == "invisible")
-			src.invisibility = 20
+			src.invisibility = INVIS_ADVENTURE

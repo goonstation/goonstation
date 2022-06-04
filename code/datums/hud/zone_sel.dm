@@ -21,7 +21,7 @@
 		master = M
 		if (sloc)
 			slocation = sloc
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (istype(I))
 				icon_hud = I
 			else

@@ -740,14 +740,14 @@
 				O.air_contents.toxins = (O.maximum_pressure*O.filled)*O.air_contents.volume/(R_IDEAL_GAS_EQUATION*O.air_contents.temperature)
 				O.pressure_resistance = FLOAT_HIGH
 				O.temperature_resistance = FLOAT_HIGH
-				O.update_icon()
+				O.UpdateIcon()
 
 			for(var/obj/machinery/portable_atmospherics/canister/oxygen/O in area_contents)
 				O.air_contents.volume = 1000000
 				O.air_contents.oxygen = (O.maximum_pressure*O.filled)*O.air_contents.volume/(R_IDEAL_GAS_EQUATION*O.air_contents.temperature)
 				O.pressure_resistance = FLOAT_HIGH
 				O.temperature_resistance = FLOAT_HIGH
-				O.update_icon()
+				O.UpdateIcon()
 
 			#endif
 
@@ -1486,7 +1486,7 @@
 			luser << output(params,"reactorstats.browser:[funcName]")
 
 
-/obj/machinery/power/reactor_stats/attack_hand(mob/user as mob)
+/obj/machinery/power/reactor_stats/attack_hand(mob/user)
 	var/datum/tag/page/html = new
 	var/datum/tag/title/title = new
 	var/datum/tag/css/kstyle = new
@@ -1642,7 +1642,7 @@
 	user << browse(A_test_html_out, "window=reactorstats;size=1400x750;can_resize=1;can_minimize=1;allow-html=1;show-url=1;statusbar=1;enable-http-images=1;can-scroll=1")
 	onclose(user, "reactorstats")
 
-/obj/machinery/power/reactor_stats/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/power/reactor_stats/attackby(obj/item/W, mob/user)
 	src.Attackhand(user)
 
 /obj/machinery/power/reactor_stats/attack_ai(mob/user as mob)
@@ -1650,7 +1650,7 @@
 
 /obj/machinery/power/reactor_stats/Topic(href, href_list)
 	if(href_list["nav_h"])
-		src.curpage = text2num(href_list["nav_h"])
+		src.curpage = text2num_safe(href_list["nav_h"])
 	else if(href_list["avg_reset"])
 		avg_reset()
 	else if(href_list["refresh_toggle"])

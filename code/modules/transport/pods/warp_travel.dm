@@ -69,7 +69,7 @@
 	deployed
 		packable = 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/wrench))
 			if (!packable)
 				boutput(user,"This beacon's retraction hardware is locked into place and can't be altered.")
@@ -109,23 +109,22 @@
 	density = 0
 	var/obj/target = null
 	anchored = 1.0
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
 /obj/warp_portal/Bumped(mob/M as mob|obj)
-	SPAWN_DBG(0)
+	SPAWN(0)
 		src.teleport(M)
 		return
 	return
 
-/obj/warp_portal/HasEntered(AM as mob|obj)
-	SPAWN_DBG(0)
+/obj/warp_portal/Crossed(atom/movable/AM as mob|obj)
+	..()
+	SPAWN(0)
 		src.teleport(AM)
-		return
-	return
 
 /obj/warp_portal/New()
 	..()
-	SPAWN_DBG(0)
+	SPAWN(0)
 		// animate_portal_appear(src)
 		playsound(src.loc, "warp", 50, 1, 0.1, 0.7)
 		sleep(30 SECONDS)
@@ -136,7 +135,7 @@
 		return
 	if (M.anchored && (!istype(M,/obj/machinery/vehicle)))
 		return
-	if (istype(M, /mob/dead/aieye))
+	if (isAIeye(M))
 		return
 	if (!( src.target ))
 		animate(src, time=0.2 SECONDS, transform=matrix(1.25, 0, 0, 0, 1.25, 0), alpha=100, easing=SINE_EASING)
@@ -167,7 +166,7 @@
 /obj/warp_beacon/proc/startpack()
 	src.packable = 0
 	src.icon_state = "beaconpack"
-	SPAWN_DBG(14) //wait until packing is complete
+	SPAWN(14) //wait until packing is complete
 		var/obj/beacon_deployer/packitup = new /obj/beacon_deployer(src.loc)
 		playsound(src, "sound/machines/heater_off.ogg", 20, 1)
 		if(src.beaconid)
@@ -191,7 +190,7 @@
 		src.name = "warp buoy unit [beaconid]"
 		..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/wrench) && !src.deploying)
 			for (var/turf/T in range(2,src))
 				if (!T.allows_vehicles)
@@ -222,7 +221,7 @@
 /obj/beacon_deployer/proc/deploybeacon()
 	src.icon_state = "beacondeploy"
 	src.anchored = 1
-	SPAWN_DBG(16) //wait until unpacking is complete
+	SPAWN(16) //wait until unpacking is complete
 		var/obj/warp_beacon/depbeac = new /obj/warp_beacon/deployed(src.loc)
 		playsound(src, "sound/machines/heater_off.ogg", 20, 1)
 		depbeac.name = "Buoy [src.beaconid]"
@@ -245,7 +244,7 @@
 	density = 1
 	var/state = 1
 
-	attackby(var/obj/item/I as obj, var/mob/user as mob)
+	attackby(var/obj/item/I, var/mob/user)
 		switch(state)
 			if(1)
 				if (istype(I, /obj/item/rods))
@@ -287,7 +286,7 @@
 
 	onUpdate()
 		..()
-		if (beacon == null || the_tool == null || owner == null || get_dist(owner, beacon) > 1)
+		if (beacon == null || the_tool == null || owner == null || BOUNDS_DIST(owner, beacon) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner

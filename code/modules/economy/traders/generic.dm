@@ -62,7 +62,7 @@
 /datum/commodity/trader/generic/fabric
 	comname = "Cloth Fabric"
 	comtype = /obj/item/material_piece/cloth/cottonfabric
-	price_boundary = list(5,7)
+	price_boundary = list(60,70)
 	possible_names = list("We have lots of cloth for sale. Good for making clothes with.",
 	"We have a great deal of cloth we need to shift soon, so please buy it!")
 
@@ -216,7 +216,7 @@
 /datum/commodity/trader/generic/jumpsuits
 	comname = "Jumpsuits"
 	comtype = /obj/item/clothing/under/
-	price_boundary = list(75,150)
+	price_boundary = list(135,210)
 	possible_names = list("We're drafting in some new staff soon, and need new jumpsuits.",
 	"We need any jumpsuits you can spare. Don't ask.")
 

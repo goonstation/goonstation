@@ -27,7 +27,7 @@
 		src.style = pick("r", "rs", "g", "gs")
 		src.icon_state = "wrap_paper-[src.style]"
 
-/obj/item/wrapping_paper/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/wrapping_paper/attackby(obj/item/W, mob/user)
 	if(W.cant_drop || W.cant_self_remove)
 		return
 	if (!( locate(/obj/table, src.loc) ))
@@ -96,7 +96,7 @@
 		return
 	. += "There is about [src.amount] square units of paper left!"
 
-/obj/item/wrapping_paper/attack(mob/target as mob, mob/user as mob)
+/obj/item/wrapping_paper/attack(mob/target, mob/user)
 	if (!ishuman(target))
 		return
 	if (isdead(target))
@@ -224,7 +224,7 @@
 		return
 	boutput(user, "<span class='notice'>You can't move.</span>")
 
-/obj/spresent/attackby(obj/item/W as obj, mob/user as mob)
+/obj/spresent/attackby(obj/item/W, mob/user)
 
 	if (!issnippingtool(W))
 		boutput(user, "<span class='notice'>I need a snipping tool for that.</span>")
@@ -241,9 +241,9 @@ var/global/list/generic_gift_paths = list(/obj/item/basketball,
 	/obj/item/football,
 	/obj/item/clothing/head/cakehat,
 	/obj/item/clothing/mask/melons,
-	/obj/item/old_grenade/banana,
-	/obj/item/old_grenade/banana/cheese_sandwich,
-	/obj/item/old_grenade/banana/banana_corndog,
+	/obj/item/old_grenade/spawner/banana,
+	/obj/item/old_grenade/spawner/cheese_sandwich,
+	/obj/item/old_grenade/spawner/banana_corndog,
 	/obj/item/gimmickbomb/butt,
 	/obj/item/instrument/bikehorn,
 	/obj/item/instrument/bikehorn/dramatic,

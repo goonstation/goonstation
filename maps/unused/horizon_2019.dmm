@@ -3,7 +3,7 @@
 /turf/space,
 /area/space)
 "aab" = (
-/turf/simulated/wall/asteroid/lighted,
+/turf/simulated/wall/auto/asteroid/lighted,
 /area/space)
 "aac" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -858,7 +858,7 @@
 	name = "NanoTrasen Labor Camp Shuttle"
 	})
 "abW" = (
-/turf/simulated/wall/asteroid/lighted,
+/turf/simulated/wall/auto/asteroid/lighted,
 /area/station/solar/east)
 "abX" = (
 /obj/storage/closet/wardrobe/green,
@@ -2089,7 +2089,7 @@
 /turf/simulated/floor/escape,
 /area/station/hallway/primary/central)
 "aeM" = (
-/turf/simulated/wall/asteroid/lighted,
+/turf/simulated/wall/auto/asteroid/lighted,
 /area/station/science/testchamber)
 "aeN" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/northeast,
@@ -2623,7 +2623,7 @@
 /turf/simulated/floor/grass,
 /area/station/garden/owlery)
 "agf" = (
-/turf/simulated/wall/asteroid/lighted,
+/turf/simulated/wall/auto/asteroid/lighted,
 /area/station/science/gen_storage)
 "agg" = (
 /obj/table/auto,
@@ -3551,7 +3551,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/dome)
 "aip" = (
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "honk";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "clowncorpse";
@@ -4371,7 +4371,7 @@
 	},
 /area/station/solar/north)
 "ajT" = (
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /turf/simulated/floor,
 /area/station/crew_quarters/lounge)
 "ajU" = (
@@ -5702,7 +5702,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/wall/asteroid/lighted,
+/turf/simulated/wall/auto/asteroid/lighted,
 /area/station/solar/small_backup3)
 "ang" = (
 /obj/decal/tile_edge/line/purple{
@@ -5744,7 +5744,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/cdc)
 "anl" = (
-/turf/simulated/wall/asteroid/lighted,
+/turf/simulated/wall/auto/asteroid/lighted,
 /area/station/science/laser{
 	name = "Testing Asteroid"
 	})
@@ -6198,7 +6198,7 @@
 /area/shuttle/arrival/station)
 "aoA" = (
 /obj/item/clothing/shoes/moon,
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "This is very important.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "clowncorpse";
@@ -6395,7 +6395,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/wall/asteroid/lighted,
+/turf/simulated/wall/auto/asteroid/lighted,
 /area/station/solar/small_backup3)
 "aoZ" = (
 /obj/table/reinforced/chemistry/auto,
@@ -6435,7 +6435,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/turf/simulated/wall/asteroid/lighted,
+/turf/simulated/wall/auto/asteroid/lighted,
 /area/station/solar/small_backup3)
 "ape" = (
 /obj/machinery/power/apc/autoname_north,
@@ -6502,12 +6502,12 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "apm" = (
-/turf/simulated/wall/asteroid/lighted,
+/turf/simulated/wall/auto/asteroid/lighted,
 /area/station/storage/emergency2{
 	name = "Hilarious Storage B"
 	})
 "apn" = (
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "this is not right. this is NOT right.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "clowncorpse";
@@ -6803,7 +6803,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/wall/asteroid/lighted,
+/turf/simulated/wall/auto/asteroid/lighted,
 /area/station/solar/small_backup3)
 "aqc" = (
 /obj/table/auto,
@@ -7338,7 +7338,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/wall/asteroid/lighted,
+/turf/simulated/wall/auto/asteroid/lighted,
 /area/station/engine/substation/pylon)
 "aro" = (
 /obj/disposalpipe/segment/morgue{
@@ -7518,7 +7518,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/turf/simulated/wall/asteroid/lighted,
+/turf/simulated/wall/auto/asteroid/lighted,
 /area/station/engine/substation/pylon)
 "arK" = (
 /turf/simulated/floor/carpet/blue/fancy/edge,
@@ -9429,7 +9429,7 @@
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/station/solar/small_backup3)
 "awu" = (
-/turf/simulated/wall/asteroid/lighted,
+/turf/simulated/wall/auto/asteroid/lighted,
 /area/station/solar/small_backup3)
 "awv" = (
 /obj/disposalpipe/segment/vertical,
@@ -9738,7 +9738,7 @@
 /turf/simulated/wall/auto/gannets,
 /area/station/crew_quarters/lounge)
 "axn" = (
-/turf/simulated/wall/asteroid/lighted,
+/turf/simulated/wall/auto/asteroid/lighted,
 /area/station/engine/substation/pylon)
 "axo" = (
 /obj/grille/steel,
@@ -9883,9 +9883,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/engine/substation/pylon)
 "axK" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "axL" = (
 /turf/simulated/floor/engine/vacuum{
@@ -11640,12 +11638,12 @@
 	})
 "aCw" = (
 /obj/decal/cleanable/fungus,
-/turf/simulated/wall/asteroid/lighted,
+/turf/simulated/wall/auto/asteroid/lighted,
 /area/station/storage/emergency{
 	name = "Hilarious Storage A"
 	})
 "aCx" = (
-/turf/simulated/wall/asteroid/lighted,
+/turf/simulated/wall/auto/asteroid/lighted,
 /area/station/storage/emergency{
 	name = "Hilarious Storage A"
 	})
@@ -11726,7 +11724,7 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "not much of a chef";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "clowncorpse";
@@ -12063,7 +12061,7 @@
 	})
 "aDv" = (
 /obj/machinery/atmospherics/pipe/simple/overfloor/vertical,
-/turf/simulated/wall/asteroid/lighted,
+/turf/simulated/wall/auto/asteroid/lighted,
 /area/station/science/laser{
 	name = "Testing Asteroid"
 	})
@@ -12200,7 +12198,7 @@
 /turf/simulated/floor/grey/whitegrime,
 /area/station/science/gen_storage)
 "aDO" = (
-/turf/simulated/wall/asteroid/lighted,
+/turf/simulated/wall/auto/asteroid/lighted,
 /area/station/science/construction)
 "aDP" = (
 /obj/cable{
@@ -12386,7 +12384,7 @@
 	})
 "aEk" = (
 /obj/item/clothing/head/emerg,
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "still has his... uh... bedsheet?";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "clowncorpse";
@@ -12747,7 +12745,7 @@
 /turf/simulated/floor/grey/blackgrime,
 /area/station/science/restroom)
 "aFc" = (
-/turf/simulated/wall/asteroid/lighted,
+/turf/simulated/wall/auto/asteroid/lighted,
 /area/station/science/restroom)
 "aFd" = (
 /obj/machinery/atmospherics/valve/purge/vertical{
@@ -12818,7 +12816,7 @@
 /area/space)
 "aFm" = (
 /obj/machinery/atmospherics/pipe/simple/overfloor/vertical,
-/turf/simulated/wall/asteroid/lighted,
+/turf/simulated/wall/auto/asteroid/lighted,
 /area/station/science/construction)
 "aFn" = (
 /obj/stool/chair/wooden{
@@ -23948,20 +23946,6 @@
 /area/station/crew_quarters/info{
 	name = "Net Cafe"
 	})
-"bcR" = (
-/obj/machinery/light_switch/west,
-/obj/machinery/computer/aiupload{
-	dir = 4
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/blueblack{
-	dir = 8
-	},
-/area/station/turret_protected/Zeta)
 "bcS" = (
 /obj/item/device/radio/intercom/AI,
 /obj/cable{
@@ -23983,15 +23967,6 @@
 /area/station/turret_protected/Zeta)
 "bcU" = (
 /turf/simulated/floor/black,
-/area/station/turret_protected/Zeta)
-"bcV" = (
-/obj/table/auto,
-/obj/item/aiModule/freeform,
-/obj/item/aiModule/rename,
-/obj/item/aiModule/reset,
-/turf/simulated/floor/blueblack{
-	dir = 4
-	},
 /area/station/turret_protected/Zeta)
 "bcW" = (
 /obj/grille/steel,
@@ -25117,7 +25092,7 @@
 "bfA" = (
 /obj/decal/cleanable/dirt,
 /obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
+	desc = "A big metal box that you can put things into. It smells kinda bad and seems to have an odd stain on it.";
 	icon = 'icons/misc/halloween.dmi';
 	name = "dented crate"
 	},
@@ -27124,20 +27099,6 @@
 "bjj" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/primary/central)
-"bjk" = (
-/obj/item/cable_coil/cut,
-/obj/item/parts/robot_parts/robot_frame,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
-/obj/item/parts/robot_parts/chest,
-/obj/item/parts/robot_parts/head,
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
-/obj/storage/crate,
-/obj/item/storage/box/cablesbox,
-/obj/disposalpipe/segment/vertical,
-/turf/simulated/floor/carpet/grime,
-/area/station/medical/robotics)
 "bjl" = (
 /obj/reagent_dispensers/fueltank,
 /obj/item/storage/belt/medical,
@@ -27602,7 +27563,7 @@
 /area/station/mining/magnet)
 "bkj" = (
 /obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
+	desc = "A big metal box that you can put things into. It smells kinda bad and seems to have an odd stain on it.";
 	icon = 'icons/misc/halloween.dmi';
 	name = "dented crate"
 	},
@@ -30048,7 +30009,7 @@
 "bpA" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
+	desc = "A big metal box that you can put things into. It smells kinda bad and seems to have an odd stain on it.";
 	icon = 'icons/misc/halloween.dmi';
 	name = "dented crate"
 	},
@@ -31577,7 +31538,7 @@
 /area/station/hallway/primary/west)
 "bsW" = (
 /obj/decal/cleanable/dirt,
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "The remains of an engineer. not very handsome.";
 	interesting = "Something isn't right here... This guy wasn't alive when he was shot";
 	name = "engineer's skeleton"
@@ -35314,11 +35275,11 @@
 /area/station/security/checkpoint/sec_foyer)
 "bBg" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bBh" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/vertical,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bBi" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/brig)
@@ -35483,7 +35444,7 @@
 	dir = 1
 	},
 /obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
+	desc = "A big metal box that you can put things into. It smells kinda bad and seems to have an odd stain on it.";
 	icon = 'icons/misc/halloween.dmi';
 	name = "dented crate"
 	},
@@ -37776,13 +37737,13 @@
 	},
 /obj/item/device/radio/intercom/security,
 /obj/storage/secure/crate/gear/armory/grenades,
-/obj/item/old_grenade/banana,
-/obj/item/old_grenade/banana,
-/obj/item/old_grenade/banana,
+/obj/item/old_grenade/spawner/banana,
+/obj/item/old_grenade/spawner/banana,
+/obj/item/old_grenade/spawner/banana,
 /turf/simulated/floor/redblack{
 	dir = 5
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bGE" = (
 /obj/stool/bed/brig,
 /obj/item/clothing/glasses/vr{
@@ -39029,7 +38990,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/horizontal,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bJv" = (
 /obj/storage/closet/emergency,
 /turf/simulated/floor/shuttle,
@@ -39040,14 +39001,14 @@
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bJx" = (
 /obj/disposalpipe/segment/bent/east,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor/vertical,
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bJy" = (
 /obj/disposalpipe/segment/brig{
 	dir = 4
@@ -39059,7 +39020,7 @@
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bJz" = (
 /obj/disposalpipe/segment/brig{
 	dir = 4
@@ -40608,7 +40569,7 @@
 /obj/access_spawn/hos,
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/red,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bMH" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -40623,7 +40584,7 @@
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bMI" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -40636,7 +40597,7 @@
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bMJ" = (
 /obj/cable{
 	d2 = 8;
@@ -40657,7 +40618,7 @@
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bMK" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -41089,7 +41050,7 @@
 /turf/simulated/floor/redblack{
 	dir = 9
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bNP" = (
 /obj/landmark{
 	icon_state = "x3";
@@ -41475,7 +41436,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bOG" = (
 /obj/disposalpipe/segment/food{
 	dir = 4
@@ -41591,7 +41552,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bOQ" = (
 /obj/landmark{
 	name = "JoinLate"
@@ -41835,14 +41796,14 @@
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bPs" = (
 /obj/disposalpipe/segment/bent/north,
 /obj/machinery/atmospherics/pipe/manifold/overfloor/south,
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bPt" = (
 /obj/disposalpipe/segment/brig,
 /obj/disposalpipe/segment/food{
@@ -41852,7 +41813,7 @@
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bPu" = (
 /obj/disposalpipe/segment/food{
 	dir = 4
@@ -41867,7 +41828,7 @@
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bPv" = (
 /obj/disposalpipe/segment/food{
 	dir = 4
@@ -42762,7 +42723,7 @@
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bRs" = (
 /obj/disposalpipe/segment/brig{
 	dir = 4
@@ -43153,14 +43114,14 @@
 /turf/simulated/floor/redblack{
 	dir = 10
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bSj" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
 /obj/storage/secure/crate/weapon/armory/shotgun,
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bSk" = (
 /obj/disposalpipe/segment/brig,
 /obj/table/auto,
@@ -43182,7 +43143,7 @@
 /turf/simulated/floor/redblack{
 	dir = 6
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bSm" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -43996,7 +43957,7 @@
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bUa" = (
 /obj/disposalpipe/segment/bent/north,
 /obj/cable{
@@ -44247,7 +44208,7 @@
 "bUH" = (
 /obj/disposalpipe/segment/brig,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bUI" = (
 /obj/disposalpipe/segment/transport,
 /obj/stool/chair/red{
@@ -47027,7 +46988,7 @@
 	},
 /obj/machinery/espresso_machine,
 /obj/item/reagent_containers/food/drinks/espressocup,
-/obj/cup_rack{
+/obj/drink_rack/cup{
 	pixel_y = -24
 	},
 /turf/simulated/floor/black,
@@ -47252,7 +47213,7 @@
 /obj/storage/secure/crate/weapon/armory/pod_weapons,
 /obj/item/shipcomponent/mainweapon/disruptor,
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "cax" = (
 /obj/disposalpipe/segment/ejection{
 	dir = 4
@@ -48732,7 +48693,7 @@
 /area/station/security/main)
 "cdR" = (
 /turf/space,
-/area/shuttle/escape/station/cogmap2)
+/area/shuttle/escape/station)
 "cdS" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -51669,7 +51630,7 @@
 	pixel_y = 32
 	},
 /obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
+	desc = "A big metal box that you can put things into. It smells kinda bad and seems to have an odd stain on it.";
 	icon = 'icons/misc/halloween.dmi';
 	name = "dented crate"
 	},
@@ -54227,7 +54188,7 @@
 /turf/simulated/floor/plating/airless/random,
 /area/ghostdrone_factory)
 "cqB" = (
-/obj/decal/sink{
+/obj/decal/fakeobjects/sink{
 	name = "Rusty Sink"
 	},
 /turf/simulated/floor/plating/random,
@@ -54909,7 +54870,7 @@
 /turf/simulated/floor/grey/blackgrime,
 /area/listeningpost)
 "csG" = (
-/obj/decal/sink,
+/obj/decal/fakeobjects/sink,
 /turf/simulated/floor/grey/blackgrime,
 /area/listeningpost)
 "csH" = (
@@ -55718,7 +55679,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/wall/asteroid/lighted,
+/turf/simulated/wall/auto/asteroid/lighted,
 /area/space)
 "cuM" = (
 /obj/decal/fakeobjects{
@@ -55810,7 +55771,7 @@
 	},
 /area/space)
 "cuU" = (
-/obj/decal/sink{
+/obj/decal/fakeobjects/sink{
 	name = "Rusty Sink";
 	pixel_y = 12
 	},
@@ -56082,7 +56043,7 @@
 /turf/simulated/floor/airless,
 /area/space)
 "cvB" = (
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "Ironic, really";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "burntnerd";
@@ -56201,7 +56162,7 @@
 	},
 /area/listeningpost/power)
 "cvO" = (
-/turf/simulated/wall/asteroid/lighted,
+/turf/simulated/wall/auto/asteroid/lighted,
 /area/listeningpost/power)
 "cvP" = (
 /obj/cable{
@@ -57061,7 +57022,7 @@
 /obj/item/clipboard/with_pen,
 /obj/decal/cleanable/writing{
 	sample_reagent = "blood";
-	words = "racist greg was here"
+	words = "smelly greg was here"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/barber_shop)
@@ -57526,6 +57487,20 @@
 /obj/item/paper/book/from_file/medical_surgery_guide,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay/surgery)
+"efL" = (
+/obj/item/cable_coil/cut,
+/obj/item/parts/robot_parts/robot_frame,
+/obj/item/parts/robot_parts/leg/left,
+/obj/item/parts/robot_parts/leg/right,
+/obj/item/parts/robot_parts/chest/light,
+/obj/item/parts/robot_parts/head,
+/obj/item/parts/robot_parts/arm/left,
+/obj/item/parts/robot_parts/arm/right,
+/obj/storage/crate,
+/obj/item/storage/box/cablesbox,
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/floor/carpet/grime,
+/area/station/medical/robotics)
 "flY" = (
 /obj/decal/cleanable/dirt,
 /obj/item/paper/book/from_file/the_trial,
@@ -57582,7 +57557,7 @@
 	dir = 4
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "iuM" = (
 /obj/table/wood/round/auto,
 /obj/item/paper/book/from_file/critter_compendium,
@@ -57686,6 +57661,13 @@
 /obj/item/spacecash/hundred,
 /turf/simulated/floor/carpet/red/fancy/edge/north,
 /area/listeningpost/power)
+"qbs" = (
+/obj/table/auto,
+/obj/item/aiModule/freeform,
+/turf/simulated/floor/blueblack{
+	dir = 4
+	},
+/area/station/turret_protected/Zeta)
 "qYq" = (
 /obj/table/reinforced/auto,
 /obj/item/stg_booster,
@@ -57775,6 +57757,20 @@
 /obj/decal/cleanable/cobweb,
 /turf/simulated/floor/grey/blackgrime,
 /area/tech_outpost)
+"udQ" = (
+/obj/machinery/light_switch/west,
+/obj/machinery/lawrack{
+	dir = 4
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/blueblack{
+	dir = 8
+	},
+/area/station/turret_protected/Zeta)
 "uSE" = (
 /obj/table/reinforced/auto,
 /obj/shrub{
@@ -99972,7 +99968,7 @@ aRc
 aTS
 aWL
 aZZ
-bcR
+udQ
 bfO
 biF
 aOU
@@ -101180,7 +101176,7 @@ aRg
 aTW
 aWP
 bad
-bcV
+qbs
 bfS
 bmz
 blv
@@ -111148,7 +111144,7 @@ aXi
 bby
 bbB
 bdr
-bjk
+efL
 bkg
 bpO
 bWk

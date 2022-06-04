@@ -19,7 +19,7 @@
 	proc/changeValue(var/datum/material/M, var/newValue)
 		for(var/X in M.properties)
 			if(X == src)
-				M.properties[X] = min(max(newValue, min_value), max_value)
+				M.properties[X] = clamp(newValue, min_value, max_value)
 				onValueChanged(M, M.properties[X])
 				return
 		return

@@ -52,13 +52,6 @@
 		..()
 
 
-	onMaterialChanged()
-		..()
-		if(istype(src.material))
-			protective_temperature = (material.getProperty("flammable") - 50) * (-1)
-			setProperty("meleeprot", material.hasProperty("hard") ? round(min(max((material.getProperty("hard") - 50) / 15.25, 0), 3)) : getProperty("meleeprot"))
-		return
-
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.get_stains()][src.real_name ? src.real_name : initial(src.name)][name_suffix(null, 1)]"
 
@@ -82,6 +75,7 @@
 			src.stains = list()
 			src.UpdateName()
 
+
 /obj/item/clothing/under
 	equipped(var/mob/user, var/slot)
 		..()
@@ -90,7 +84,7 @@
 /*
 /obj/item/clothing/fire_burn(obj/fire/raging_fire, datum/air_group/environment)
 	if(raging_fire.internal_temperature > src.s_fire)
-		SPAWN_DBG( 0 )
+		SPAWN( 0 )
 			var/t = src.icon_state
 			src.icon_state = ""
 			src.icon = 'b_items.dmi'

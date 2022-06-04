@@ -9,7 +9,7 @@
 
 /obj/item/assembly/shock_kit/New()
 	..()
-	SPAWN_DBG(2 SECONDS)
+	SPAWN(2 SECONDS)
 		if (src)
 			if (!(src.part1 && istype(src.part1)))
 				src.part1 = new /obj/item/clothing/head/helmet(src)
@@ -27,7 +27,7 @@
 		src.part2 = null
 	..()
 
-/obj/item/assembly/shock_kit/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/assembly/shock_kit/attackby(obj/item/W, mob/user)
 	src.add_fingerprint(user)
 
 	if (iswrenchingtool(W))

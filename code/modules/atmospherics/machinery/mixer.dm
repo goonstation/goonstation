@@ -37,7 +37,6 @@ obj/machinery/atmospherics/mixer
 	var/node2_concentration = 0.5
 
 	var/frequency
-	var/datum/radio_frequency/radio_connection
 
 	update_icon()
 		if(node_in1&&node_in2&&node_out)
@@ -86,20 +85,13 @@ obj/machinery/atmospherics/mixer
 				else
 					initialize_directions = WEST|NORTH|EAST
 
-		air_in1 = unpool(/datum/gas_mixture)
-		air_in2 = unpool(/datum/gas_mixture)
-		air_out = unpool(/datum/gas_mixture)
+		air_in1 = new /datum/gas_mixture
+		air_in2 = new /datum/gas_mixture
+		air_out = new /datum/gas_mixture
 
 		air_in1.volume = 200
 		air_in2.volume = 200
 		air_out.volume = 300
-
-		if(radio_controller)
-			set_frequency(frequency)
-
-	disposing()
-		radio_controller.remove_object(src, "[frequency]")
-		..()
 
 	disposing()
 
@@ -134,21 +126,16 @@ obj/machinery/atmospherics/mixer
 		network_out = null
 
 		if(air_in1)
-			pool(air_in1)
+			qdel(air_in1)
 		if(air_in2)
-			pool(air_in2)
+			qdel(air_in2)
 		if(air_out)
-			pool(air_out)
+			qdel(air_out)
 
 		air_in1 = null
 		air_in2 = null
 		air_out = null
 		..()
-	proc
-		set_frequency(new_frequency)
-			radio_controller.remove_object(src, "[frequency]")
-			frequency = new_frequency
-			radio_connection = radio_controller.add_object(src, "[frequency]")
 
 	proc/report_status() // Report the status of this mixer over the radio.
 		if (!(status & (NOPOWER | BROKEN)))
@@ -211,8 +198,9 @@ obj/machinery/atmospherics/mixer
 				RESET_SIGNAL_MIXTURE(out)
 				signal.data["outtg"] = 0
 
-			//boutput(world, "[id_tag] posted a signal for [master_id]!")
-			radio_connection.post_signal(src, signal)
+			signal.data["address_tag"] = "mixercontrol"
+
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
 	process()
 		..()
@@ -290,7 +278,7 @@ obj/machinery/atmospherics/mixer
 			if ("set_ratio")
 				var/number = text2num(signal.data["parameter"])
 				if (number && isnum(number))
-					number = min(max(number, 0), 100)
+					number = clamp(number, 0, 100)
 					node1_concentration = number/100
 					node2_concentration = (100-number)/100
 
@@ -302,10 +290,10 @@ obj/machinery/atmospherics/mixer
 					target_pressure = 0
 
 		if (signal.data["tag"])
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				if (src) src.report_status()
 
-		src.update_icon()
+		src.UpdateIcon()
 		return
 
 // Housekeeping and pipe network stuff below
@@ -350,8 +338,8 @@ obj/machinery/atmospherics/mixer
 				node_out = target
 				break
 
-		update_icon()
-		set_frequency(frequency)
+		UpdateIcon()
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
 
 	build_network()
 		if(!network_in1 && node_in1)

@@ -1,4 +1,3 @@
-var/global/list/hellbans = null
 
 /client
 	var
@@ -8,8 +7,6 @@ var/global/list/hellbans = null
 		spiking = 0
 
 	New()
-		if (!hellbans)
-			hellbans = dd_file2list("strings/hellbans.txt")
 		if (hellbans && (src.ckey in hellbans))
 			hellbanned = 1
 		..()
@@ -24,7 +21,7 @@ var/global/list/hellbans = null
 			click_drops = min(click_drops + rand(30, 80), 100)
 
 			spiking = 1
-			SPAWN_DBG(duration)
+			SPAWN(duration)
 				move_drops = initial(move_drops)
 				click_drops = initial(click_drops)
 				spiking = 0

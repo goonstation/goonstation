@@ -136,6 +136,14 @@ ABSTRACT_TYPE(/datum/plant/herb)
 	/datum/plantmutation/cannabis/white,/datum/plantmutation/cannabis/ultimate)
 	commuts = list(/datum/plant_gene_strain/resistance_drought,/datum/plant_gene_strain/yield/stunted)
 
+	New()
+		. = ..()
+		START_TRACKING_CAT(TR_CAT_CANNABIS_OBJ_ITEMS)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_CANNABIS_OBJ_ITEMS)
+		. = ..()
+
 /datum/plant/herb/catnip
 	name = "Nepeta Cataria"
 	seedcolor = "#00CA70"
@@ -212,7 +220,7 @@ ABSTRACT_TYPE(/datum/plant/herb)
 	harvests = 1
 	endurance = 1
 	isgrass = 1
-	genome = 2 //no idea if this was set to the right thing aaa
+	genome = 11
 	nectarlevel = 5
 	assoc_reagents = list("nicotine")
 	mutations = list(/datum/plantmutation/tobacco/twobacco)

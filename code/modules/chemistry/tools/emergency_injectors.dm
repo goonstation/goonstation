@@ -20,9 +20,10 @@
 	hide_attack = 2
 
 	on_reagent_change()
-		src.update_icon()
+		..()
+		src.UpdateIcon()
 
-	proc/update_icon()
+	update_icon()
 		src.underlays = null
 		if (reagents.total_volume)
 			icon_state = "emerg_inj-[label]"
@@ -35,7 +36,7 @@
 			icon_state = "emerg_inj-[label]0"
 		item_state = "emerg_inj-[label]"
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (iscarbon(M) || ismobcritter(M))
 			if (src.empty || !src.reagents)
 				boutput(user, "<span class='alert'>There's nothing to inject, [src] has already been expended!</span>")
@@ -250,18 +251,21 @@
 
 /obj/item/reagent_containers/emergency_injector/high_capacity/cardiac
 	name = "cardiac combi-injector"
+	desc = "A combination medical injector containing saline and epinephrine."
 	initial_reagents = list("saline" = 25, "epinephrine" = 25)
-	label = "blue"
+	label = "yellow"
 
 /obj/item/reagent_containers/emergency_injector/high_capacity/bloodloss
 	name = "bloodloss combi-injector"
+	desc = "A combination medical injector containing filgrastim and proconvertin."
 	initial_reagents = list("filgrastim" = 25, "proconvertin" = 25)
 	label = "red"
 
 /obj/item/reagent_containers/emergency_injector/high_capacity/lifesupport
 	name = "lifesupport combi-injector"
+	desc = "A combination medical injector containing salbutamol and mannitol."
 	initial_reagents = list("salbutamol" = 25, "mannitol" = 25)
-	label = "yellow"
+	label = "blue"
 
 /obj/item/reagent_containers/emergency_injector/high_capacity/juggernaut
 	name = "Juggernaut injector"
@@ -274,7 +278,7 @@
 /obj/item/reagent_containers/emergency_injector/high_capacity/donk_injector
 	name = "Donk injector"
 	desc = "A large syringe-like thing that automatically injects its contents into someone. This one contains a cocktail of chemicals intended to mimic the effect of eating a warm donk pocket."
-	initial_reagents = list("omnizine" = 15, "teporone" = 15, "synaptizine" = 15, "saline" = 15, "salbutamol" = 15, "methamphetamine" = 15)
+	initial_reagents = list("omnizine" = 15, "teporone" = 15, "synaptizine" = 15, "saline" = 15, "salbutamol" = 15, "synd_methamphetamine" = 15)
 	label = "bigblue"
 	initial_volume = 90
 	amount_per_transfer_from_this = 15

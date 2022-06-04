@@ -9,6 +9,7 @@
 	var/list/adminghosts = list()
 
 	var/nextpopcheck = 0
+	var/schedule_override = null
 
 	setup()
 		name = "Mob"
@@ -35,12 +36,21 @@
 			if (clients_num >= SLOWEST_LIFE_PLAYERCOUNT)
 				schedule_interval = 8 SECONDS
 				footstep_extrarange = -10
+				max_sound_range = MAX_SOUND_RANGE_OVERLOADED
 			else if (clients_num >= SLOW_LIFE_PLAYERCOUNT)  //hacky lag saving measure
 				schedule_interval = 6.5 SECONDS
 				footstep_extrarange = 0
+				max_sound_range = MAX_SOUND_RANGE_NORMAL
+			else if (clients_num <= FAST_LIFE_PLAYERCOUNT)
+				schedule_interval = 2 SECONDS
+				footstep_extrarange = 0
+				max_sound_range = MAX_SOUND_RANGE_NORMAL
 			else
 				schedule_interval = 4 SECONDS
 				footstep_extrarange = 0
+				max_sound_range = MAX_SOUND_RANGE_NORMAL
+			if(isnum_safe(schedule_override))
+				schedule_interval = schedule_override
 
 		for(var/X in src.mobs)
 			last_object = X

@@ -262,7 +262,7 @@
 
 					else
 						if (cmptext(copytext(., 1, 3), "sd"))
-							. = text2num(copytext(., 3))
+							. = text2num_safe(copytext(., 3))
 							if (!isnum(.))
 								return null
 
@@ -338,7 +338,7 @@
 
 					else
 						if (cmptext(copytext(., 1, 3), "sd"))
-							. = text2num(copytext(., 3))
+							. = text2num_safe(copytext(., 3))
 							if (!isnum(.))
 								return null
 

@@ -52,7 +52,7 @@
 		return null
 
 	on_tick()
-		if (HAS_MOB_PROPERTY(holder.ownhuman, PROP_CANTMOVE) || !isalive(holder.ownhuman))
+		if (HAS_ATOM_PROPERTY(holder.ownhuman, PROP_MOB_CANTMOVE) || !isalive(holder.ownhuman))
 			return
 
 		if(!holder.target)
@@ -90,7 +90,7 @@
 			. = 1
 
 	on_tick()
-		if (HAS_MOB_PROPERTY(holder.ownhuman, PROP_CANTMOVE) || !isalive(holder.ownhuman))
+		if (HAS_ATOM_PROPERTY(holder.ownhuman, PROP_MOB_CANTMOVE) || !isalive(holder.ownhuman))
 			return
 
 		if(!holder.target)
@@ -103,7 +103,7 @@
 		if(holder.target && holder.target.z == holder.ownhuman.z)
 			var/dist = get_dist(holder.ownhuman, holder.target)
 			if(dist <= 1)
-				holder.ownhuman.a_intent = INTENT_DISARM
+				holder.ownhuman.set_a_intent(INTENT_DISARM)
 				holder.ownhuman.set_dir(get_dir(holder.ownhuman, holder.target))
 				var/list/params = list()
 				params["left"] = 1
@@ -144,7 +144,7 @@
 			. = 1
 
 	on_tick()
-		if (HAS_MOB_PROPERTY(holder.ownhuman, PROP_CANTMOVE) || !isalive(holder.ownhuman))
+		if (HAS_ATOM_PROPERTY(holder.ownhuman, PROP_MOB_CANTMOVE) || !isalive(holder.ownhuman))
 			return
 
 		if(!holder.target)
@@ -157,7 +157,7 @@
 		if(holder.target && holder.target.z == holder.ownhuman.z)
 			var/dist = get_dist(holder.ownhuman, holder.target)
 			if(dist <= 1)
-				holder.ownhuman.a_intent = INTENT_DISARM
+				holder.ownhuman.set_a_intent(INTENT_DISARM)
 				holder.ownhuman.set_dir(get_dir(holder.ownhuman, holder.target))
 				var/list/params = list()
 				params["left"] = 1
@@ -180,7 +180,7 @@
 	var/last_seek = 0
 
 	on_tick()
-		if (HAS_MOB_PROPERTY(holder.ownhuman, PROP_CANTMOVE) || !isalive(holder.ownhuman))
+		if (HAS_ATOM_PROPERTY(holder.ownhuman, PROP_MOB_CANTMOVE) || !isalive(holder.ownhuman))
 			return
 
 		if(!holder.target)
@@ -212,7 +212,7 @@
 					holder.ownhuman.set_dir(get_dir(holder.ownhuman, M))
 					holder.ownhuman.throw_item(holder.target,params)
 				if (dist <= 1)
-					holder.ownhuman.a_intent = INTENT_HARM
+					holder.ownhuman.set_a_intent(INTENT_HARM)
 					holder.ownhuman.set_dir(get_dir(holder.ownhuman, M))
 
 					holder.ownhuman.hand_attack(M, params)
@@ -231,7 +231,7 @@
 
 	on_tick()
 
-		if (HAS_MOB_PROPERTY(holder.ownhuman, PROP_CANTMOVE) || !isalive(holder.ownhuman))
+		if (HAS_ATOM_PROPERTY(holder.ownhuman, PROP_MOB_CANTMOVE) || !isalive(holder.ownhuman))
 			return
 
 		if(!holder.target)
@@ -258,7 +258,7 @@
 					if(!holder.target)
 						return ..() // try again next tick
 				if (dist <= 1)
-					holder.ownhuman.a_intent = INTENT_GRAB
+					holder.ownhuman.set_a_intent(INTENT_GRAB)
 
 					holder.ownhuman.set_dir(get_dir(holder.ownhuman, M))
 
@@ -274,7 +274,7 @@
 								holder.ownhuman.drop_item()
 
 							if (G.state <= GRAB_PASSIVE)
-								G.attack_self(holder.ownhuman)
+								G.AttackSelf(holder.ownhuman)
 							else
 								holder.ownhuman.emote("flip")
 								holder.move_away(holder.target,1)
@@ -294,7 +294,7 @@
 	var/last_seek = 0
 
 	on_tick()
-		if (HAS_MOB_PROPERTY(holder.ownhuman, PROP_CANTMOVE) || !isalive(holder.ownhuman))
+		if (HAS_ATOM_PROPERTY(holder.ownhuman, PROP_MOB_CANTMOVE) || !isalive(holder.ownhuman))
 			return
 
 		if(!holder.target)
@@ -305,7 +305,7 @@
 					holder.target = pick(possible)
 		if(holder.target && holder.target.z == holder.ownhuman.z)
 			var/dist = get_dist(holder.ownhuman, holder.target)
-			holder.ownhuman.a_intent = INTENT_GRAB
+			holder.ownhuman.set_a_intent(INTENT_GRAB)
 			if (dist >= 1)
 				if (prob(80))
 					holder.move_to(holder.target,0)

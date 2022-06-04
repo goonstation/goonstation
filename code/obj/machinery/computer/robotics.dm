@@ -15,7 +15,7 @@
 	light_b = 1
 
 
-/obj/machinery/computer/robotics/attackby(obj/item/I as obj, user as mob)
+/obj/machinery/computer/robotics/attackby(obj/item/I, user)
 	if (perma && isscrewingtool(I))
 		boutput(user, "<span class='alert'>The screws are all weird safety-bit types! You can't turn them!</span>")
 		return
@@ -34,7 +34,7 @@
 	return
 
 
-/obj/machinery/computer/robotics/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/robotics/attack_hand(var/mob/user)
 	if(..())
 		return
 	src.add_dialog(user)
@@ -70,7 +70,7 @@
 			dat += "[R.name] |"
 			if(R.disposed)
 				dat += " Missing |"
-			else if(isnull(R.brain))
+			else if(isnull(R.part_head?.brain))
 				dat += " Intelligence Cortex Missing |"
 			else if(R.stat)
 				dat += " Not Responding |"
@@ -102,12 +102,24 @@
 					dat += "<A href='?src=\ref[src];gib=2;bot=\ref[R]'>Cancel</A><BR>"
 			dat += "*----------*<BR>"
 
+	var/found_drones = FALSE
+	for_by_tcl(drone, /mob/living/silicon/ghostdrone)
+		if(!drone.last_ckey || isdead(drone))
+			continue
+		if(!found_drones)
+			dat += "*----------*<BR><BR>"
+			dat += "Ghostdrones:<BR>"
+			found_drones = TRUE
+		dat += "[drone] <A href='?src=\ref[src];gib=drone;bot=\ref[drone]'>Kill Switch *Swipe ID*</A><BR>"
+
 	user.Browse(dat, "window=computer;size=400x500")
 	onclose(user, "computer")
 	return
 
 /obj/machinery/computer/robotics/Topic(href, href_list)
 	if(..())
+		return
+	if(isghostdrone(usr))
 		return
 	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 		src.add_dialog(usr)
@@ -117,6 +129,19 @@
 
 	if (href_list["gib"])
 		switch(href_list["gib"])
+			if("drone")
+				var/obj/item/card/id/I = usr.equipped()
+				var/mob/living/silicon/ghostdrone/drone = locate(href_list["bot"])
+				if (istype(drone))
+					if(src.check_access(I))
+						message_admins("<span class='alert'>[key_name(usr)] killswitched drone [key_name(drone)].</span>")
+						logTheThing("combat", usr, drone, "killswitched drone [constructTarget(drone,"combat")]")
+						if(drone.client)
+							boutput(drone, "<span class='alert'><b>Killswitch activated.</b></span>")
+						drone.gib()
+					else
+						boutput(usr, "<span class='alert'>Access Denied.</span>")
+
 			if("1")
 				var/obj/item/card/id/I = usr.equipped()
 				if (istype(I))

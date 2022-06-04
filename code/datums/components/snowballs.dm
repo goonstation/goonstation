@@ -1,6 +1,9 @@
 /datum/component/snowballs
 	var/turf/source_turf
 
+TYPEINFO(/datum/component/snowballs)
+	initialization_args = list()
+
 /datum/component/snowballs/Initialize()
 	if(!isturf(parent))
 		return COMPONENT_INCOMPATIBLE

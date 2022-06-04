@@ -21,7 +21,7 @@
 		if (!M || !HH)
 			return 1
 		if (M == target)
-			boutput(M, __red("You can't throw yourself."))
+			boutput(M, "<span class='alert'>You can't throw yourself.</span>")
 			return 1
 		HH.set_loc(M.loc)
 		HH.set_dir(get_dir(HH, M))
@@ -39,10 +39,10 @@
 					delay = 3
 			if (M && HH)
 				if (get_dist(M, HH) > max_range)
-					boutput(M, __red("[HH] is too far away!"))
+					boutput(M, "<span class='alert'>[HH] is too far away!</span>")
 					return 0
 				if (!isturf(M.loc) || !isturf(HH.loc))
-					boutput(M, __red("You can't throw [HH] from here!"))
+					boutput(M, "<span class='alert'>You can't throw [HH] from here!</span>")
 					return 0
 				M.set_dir(turn(M.dir, 90))
 				var/turf/T = get_step(M, M.dir)
@@ -55,10 +55,10 @@
 			sleep (delay)
 		if (M && HH)
 			if (get_dist(M, HH) > max_range)
-				boutput(M, __red("[HH] is too far away!"))
+				boutput(M, "<span class='alert'>[HH] is too far away!</span>")
 				return 0
 			if (!isturf(M.loc) || !isturf(HH.loc))
-				boutput(M, __red("You can't throw [HH] from here!"))
+				boutput(M, "<span class='alert'>You can't throw [HH] from here!</span>")
 				return 0
 			HH.set_loc(M.loc) // Maybe this will help with the wallthrowing bug.
 			M.visible_message("<span class='alert'><B>[M] throws [HH]!</B></span>")

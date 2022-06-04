@@ -29,7 +29,7 @@
 		else
 			on_inactive()
 
-		update_icon()
+		UpdateIcon()
 
 	proc/on_burn()
 		add_avail(src.genrate)
@@ -37,7 +37,7 @@
 	proc/on_inactive()
 		return
 
-	proc/update_icon()
+	update_icon()
 		if(active != last_active)
 			last_active = active
 			if(src.active)
@@ -64,13 +64,13 @@
 	was_deconstructed_to_frame(mob/user)
 		src.active = 0
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (!src.fuel) boutput(user, "<span class='alert'>There is no fuel in the furnace!</span>")
 		else
 			src.active = !src.active
 			boutput(user, "You switch [src.active ? "on" : "off"] the furnace.")
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/grab))
 			if (!src.active)
 				boutput(user, "<span class='alert'>It'd probably be easier to dispose of them while the furnace is active...</span>")
@@ -78,6 +78,9 @@
 			else
 				var/obj/item/grab/grab = W
 				var/mob/target = grab.affecting
+				if (!isdead(grab.affecting))
+					boutput(user, "<span class='alert'>[grab.affecting.name] needs to be dead first!</span>")
+					return
 				if(target?.buckled || target?.anchored)
 					user.visible_message("<span class='alert'>[target] is stuck to something and can't be shoved into the furnace!</span>")
 					return
@@ -91,7 +94,7 @@
 					user.visible_message("<span class='alert'>[user] stuffs [M] into the furnace!</span>")
 					logTheThing("combat", user, M, "forced [constructTarget(M,"combat")] into a furnace at [log_loc(src)].")
 					message_admins("[key_name(user)] forced [key_name(M)] into a furnace at [log_loc(src)].")
-					M.death(1)
+					M.death(TRUE)
 					if (M.mind)
 						M.ghostize()
 					src.stoked += round(M.reagents?.get_reagent_amount("THC") / 5)
@@ -108,11 +111,11 @@
 			return
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-		if (get_dist(src,user) > 1)
+		if (BOUNDS_DIST(src, user) > 0)
 			boutput(user, "<span class='alert'>You are too far away to do that.</span>")
 			return
 
-		if (get_dist(src,O) > 1)
+		if (BOUNDS_DIST(src, O) > 0)
 			boutput(user, "<span class='alert'>[O] is too far away to do that.</span>")
 			return
 
@@ -127,9 +130,9 @@
 			var/amtload = 0
 			for (var/obj/item/raw_material/M in O.contents)
 				if (istype(M,/obj/item/raw_material/char))
-					amtload += load_fuel_and_pool(M, 60)
+					amtload += load_fuel_and_qdel(M, 60)
 				else if (istype(M,/obj/item/raw_material/plasmastone))
-					amtload += load_fuel_and_pool(M, 800)
+					amtload += load_fuel_and_qdel(M, 800)
 				if (src.fuel >= src.maxfuel)
 					src.fuel = src.maxfuel
 					boutput(user, "<span class='notice'>The furnace is now full!</span>")
@@ -144,7 +147,7 @@
 			user.visible_message("<span class='notice'>[user] begins quickly stuffing ore into [src]!</span>")
 			var/staystill = user.loc
 			for(var/obj/item/raw_material/char/M in view(1,user))
-				load_fuel_and_pool(M, 60)
+				load_fuel_and_qdel(M, 60)
 				if (src.fuel >= src.maxfuel)
 					src.fuel = src.maxfuel
 					boutput(user, "<span class='notice'>The furnace is now full!</span>")
@@ -160,7 +163,7 @@
 			user.visible_message("<span class='notice'>[user] begins quickly stuffing weed into [src]!</span>") // four fuckin twenty all day
 			var/staystill = user.loc
 			for(var/obj/item/plant/herb/cannabis/M in view(1,user))
-				load_fuel_and_pool(M, 30, 5)
+				load_fuel_and_qdel(M, 30, 5)
 				if (src.fuel >= src.maxfuel)
 					src.fuel = src.maxfuel
 					boutput(user, "<span class='notice'>The furnace is now full!</span>")
@@ -176,7 +179,7 @@
 			user.visible_message("<span class='notice'>[user] begins quickly stuffing ore into [src]!</span>")
 			var/staystill = user.loc
 			for(var/obj/item/raw_material/plasmastone/M in view(1,user))
-				load_fuel_and_pool(M, 800)
+				load_fuel_and_qdel(M, 800)
 				if (src.fuel >= src.maxfuel)
 					src.fuel = src.maxfuel
 					boutput(user, "<span class='notice'>The furnace is now full!</span>")
@@ -203,7 +206,7 @@
 
 	// Loads items into furnace with provided fuel and stoked values
 	// Returns number of items loaded
-	proc/load_fuel_and_pool(obj/item/F, fuel_value, stoked_value=0)
+	proc/load_fuel_and_qdel(obj/item/F, fuel_value, stoked_value=0)
 		var/amtload = 0
 		stoked_value += round(F.reagents?.get_reagent_amount("THC") / 5)
 		if (istype(F))
@@ -212,7 +215,7 @@
 			src.stoked += stoked_value * amtload
 			F.amount -= amtload
 			if (F.amount <= 0)
-				pool(F)
+				qdel(F)
 			else
 				if(amtload && F.inventory_counter)
 					F.inventory_counter.update_number(F.amount)
@@ -224,7 +227,7 @@
 		if (!src.user_can_suicide(user))
 			return 0
 		user.visible_message("<span class='alert'><b>[user] climbs into the furnace!</b></span>")
-		user.death(1)
+		user.death(TRUE)
 		if (user.mind)
 			user.ghostize()
 			qdel(user)
@@ -244,16 +247,16 @@
 		var/started_full = fuel == maxfuel
 		var/fuel_name = initial(W.name)
 		if (istype(W, /obj/item/raw_material/char))
-			load_fuel_and_pool(W, 60)
+			load_fuel_and_qdel(W, 60)
 			pooled_type = TRUE
 		else if (istype(W, /obj/item/raw_material/plasmastone))
-			load_fuel_and_pool(W, 800)
+			load_fuel_and_qdel(W, 800)
 			pooled_type = TRUE
 		else if (istype(W, /obj/item/paper/))
-			load_fuel_and_pool(W, 6)
+			load_fuel_and_qdel(W, 6)
 			pooled_type = TRUE
 		else if (istype(W, /obj/item/spacecash/))
-			if( load_fuel_and_pool(W, 2) > 1)
+			if( load_fuel_and_qdel(W, 2) > 1)
 				fuel_name = "credits"
 			else
 				fuel_name = "a credit"
@@ -273,7 +276,7 @@
 			for(var/atom/movable/fried_content in W)
 				if(ismob(fried_content))
 					var/mob/M = fried_content
-					M.death(1)
+					M.death(TRUE)
 					if (M.mind)
 						M.ghostize()
 					fuel += 400
@@ -284,7 +287,7 @@
 					var/obj/item/O = fried_content
 					load_into_furnace(O, 0)
 		else if (istype(W, /obj/item/plant/herb/cannabis))
-			load_fuel_and_pool(W, 30, 5)
+			load_fuel_and_qdel(W, 30, 5)
 			pooled_type = TRUE
 		else
 			return 0
@@ -297,7 +300,7 @@
 			if(!pooled_type)
 				fuel_name = W.name
 				user.u_equip(W)
-				W.dropped()
+				W.dropped(user)
 			boutput(user, "<span class='notice'>You load [fuel_name] into [src]!</span>")
 
 			if(src.fuel > src.maxfuel)

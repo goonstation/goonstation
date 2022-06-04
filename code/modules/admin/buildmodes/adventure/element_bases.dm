@@ -50,10 +50,6 @@ var/global/list/adventure_elements_by_id = list()
 	opacity = 0
 	anchored = 1
 
-	unpooled()
-		icon_state = "select_generic"
-		..()
-
 	disposing()
 		icon_state = null
 		..()
@@ -108,7 +104,7 @@ var/global/list/adventure_elements_by_id = list()
 	proc/post_trigger()
 		for (var/obj/adventurepuzzle/triggerable/T in src.triggered)
 			var/act = src.triggered[T]
-			SPAWN_DBG(0)
+			SPAWN(0)
 				T.trigger(act)
 
 	proc/special_triggers_required()
@@ -167,7 +163,7 @@ var/global/list/adventure_elements_by_id = list()
 	proc/post_trigger()
 		for (var/obj/adventurepuzzle/triggerable/T in src.triggered)
 			var/act = src.triggered[T]
-			SPAWN_DBG(0)
+			SPAWN(0)
 				T.trigger(act)
 
 	proc/special_triggers_required()
@@ -244,7 +240,7 @@ var/global/list/adventure_elements_by_id = list()
 	proc/post_trigger()
 		for (var/obj/adventurepuzzle/triggerable/T in src.triggered)
 			var/act = src.triggered[T]
-			SPAWN_DBG(0)
+			SPAWN(0)
 				T.trigger(act)
 
 	proc/special_triggers_required()
@@ -305,7 +301,7 @@ var/global/list/adventure_elements_by_id = list()
 	proc/post_untrigger()
 		for (var/obj/adventurepuzzle/triggerable/T in src.triggered_unpress)
 			var/act = src.triggered_unpress[T]
-			SPAWN_DBG(0)
+			SPAWN(0)
 				T.trigger(act)
 
 	special_triggers_required()
@@ -375,7 +371,7 @@ var/global/list/adventure_elements_by_id = list()
 
 /obj/adventurepuzzle/invisible
 	name = "target marker"
-	invisibility = 100
+	invisibility = INVIS_ALWAYS_ISH
 	density = 0
 	opacity = 0
 	anchored = 1

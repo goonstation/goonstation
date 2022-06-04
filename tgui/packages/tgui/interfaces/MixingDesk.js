@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2021
+ * @author pali (https://github.com/pali6)
+ * @license MIT
+ */
+
 import { useBackend, useSharedState } from '../backend';
 import { Box, Button, Divider, Icon, Input, LabeledList, Modal, Section, Stack, Tooltip } from '../components';
 import { Window } from '../layouts';

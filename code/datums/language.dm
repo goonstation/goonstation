@@ -12,7 +12,7 @@ var/global/datum/languages/languages = new()
 /datum/language
 	var/id = ""
 	proc/get_messages(var/O)
-		return list(html_encode(heard_understood(O)), html_encode(heard_not_understood(O)))
+		return list(heard_understood(O), heard_not_understood(O))
 
 	proc/heard_not_understood(var/orig_message)
 		return orig_message

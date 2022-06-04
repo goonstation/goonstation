@@ -63,7 +63,7 @@
 
 		return desc_string
 
-	attackby(var/obj/item/w as obj, var/mob/user as mob) //handles reloading with paper, scanning paper, scanning photos, scanning paper photos
+	attackby(var/obj/item/w, var/mob/user) //handles reloading with paper, scanning paper, scanning photos, scanning paper photos
 		if (src.use_state == 2) //photocopier is busy?
 			boutput(user, "<span class='alert'>/The [src] is busy! Try again later!</span>")
 			return
@@ -146,12 +146,14 @@
 
 		..()
 
-	attack_hand(var/mob/user as mob) //handles choosing amount, printing, scanning
+	attack_hand(var/mob/user) //handles choosing amount, printing, scanning
 		if (src.use_state == 2)
 			boutput(user, "<span class='alert'>\The [src] is busy right now! Try again later!</span>")
 			return
-		var/mode_sel =  input("Which do you want to do?", "Photocopier Controls") as null|anything in list("Reset Memory", "Print Copies", "Adjust Amount", "Toggle Lid")
-		if (get_dist(user, src) <= 1)
+		var/mode_sel = tgui_input_list(user, "Which do you want to do?", "Photocopier Controls", list("Reset Memory", "Print Copies", "Adjust Amount", "Toggle Lid"))
+		if (BOUNDS_DIST(user, src) == 0)
+			if (!mode_sel)
+				return
 			switch(mode_sel)
 				if ("Reset Memory")
 					if (src.use_state == 2)
@@ -191,7 +193,7 @@
 						boutput(user, "\The [src] is busy right now! Try again later!")
 						return
 					var/num_sel = input("How many copies do you want to make?", "Photocopier Controls") as num
-					if (num_sel && get_dist(user, src) <= 1)
+					if (isnum_safe(num_sel) && num_sel && BOUNDS_DIST(user, src) == 0)
 						if (num_sel <= src.paper_amount)
 							src.make_amount = num_sel
 							playsound(src.loc, "sound/machines/ping.ogg", 50, 1)

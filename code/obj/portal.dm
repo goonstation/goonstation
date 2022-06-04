@@ -8,7 +8,7 @@
 	anchored = 1.0
 	var/portal_lums = 2
 	var/datum/light/light
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
 /obj/portal/New()
 	..()
@@ -17,48 +17,27 @@
 	light.set_brightness(portal_lums / 6)
 	light.attach(src)
 	light.enable()
-	SPAWN_DBG(0)
+	SPAWN(0)
 		animate_portal_appear(src)
 		playsound(src.loc, "warp", 50, 1, 0.1, 0.7)
 
 /obj/portal/Bumped(mob/M as mob|obj)
-	SPAWN_DBG(0)
+	SPAWN(0)
 		src.teleport(M)
 		return
 	return
 
-/obj/portal/HasEntered(AM as mob|obj)
-	SPAWN_DBG(0)
+/obj/portal/Crossed(atom/movable/AM as mob|obj)
+	..()
+	SPAWN(0)
 		src.teleport(AM)
-		return
-	return
 
-/obj/portal/attack_hand(mob/M as mob)
-	SPAWN_DBG(0)
+/obj/portal/attack_hand(mob/M)
+	SPAWN(0)
 		src.teleport(M)
-		return
-	return
 
 /obj/portal/disposing()
 	target = null
-	..()
-
-/obj/portal/pooled(var/poolname)
-	..()
-	name = initial(name)
-	icon = initial(icon)
-	icon_state = initial(icon_state)
-	density = initial(density)
-	failchance = initial(failchance)
-	anchored = initial(anchored)
-
-/obj/portal/unpooled(var/poolname)
-	portal_lums = initial(portal_lums)
-	light.set_brightness(portal_lums / 3)
-	light.enable()
-	SPAWN_DBG(0)
-		animate_portal_appear(src)
-		playsound(src.loc, "warp", 50, 1, 0.1, 0.7)
 	..()
 
 /obj/portal/proc/teleport(atom/movable/M as mob|obj)
@@ -70,7 +49,7 @@
 		return
 	if (!src.target)
 		return
-	if (istype(M, /mob/dead/aieye))
+	if (isAIeye(M))
 		return
 	if (istype(M, /atom/movable))
 		animate_portal_tele(src)
@@ -120,29 +99,22 @@
 /obj/portal/afterlife
 	desc = "Enter this to return to your ghostly form"
 
-	New()
-		..()
-		unpooled()
-
 	Bumped(mob/M as mob|obj)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			M.ghostize()
 			qdel(src)
 			return
 		return
 
-	HasEntered(AM as mob|obj)
-		SPAWN_DBG(0)
+	Crossed(atom/movable/AM as mob|obj)
+		..()
+		SPAWN(0)
 			if(istype(AM,/mob))
 				var/mob/M = AM
 				M.ghostize()
 			qdel(src)
-			return
-		return
 
-	attack_hand(mob/M as mob)
-		SPAWN_DBG(0)
+	attack_hand(mob/M)
+		SPAWN(0)
 			M.ghostize()
 			qdel(src)
-			return
-		return

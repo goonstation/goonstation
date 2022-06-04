@@ -31,7 +31,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 	var/delay = 2 //speed, lower is faster, minimum of MINIMUM_EFFECTIVE_DELAY
 	var/booster_upgrade = 0 //do we go through space?
 	var/booster_image = null //what overlay icon do we use for the booster upgrade? (we have to initialize this in new)
-
+	var/emagged = FALSE
 
 	New()
 		. = ..()
@@ -54,7 +54,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 	return_air()
 		return src.loc.return_air()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(src.rider && src.rider_visible && W.force)
 			W.attack(src.rider, user)
 			user.lastattacked = src
@@ -102,6 +102,14 @@ ABSTRACT_TYPE(/obj/vehicle)
 		. = ..()
 		if(thing == src.rider)
 			src.eject_rider(0, 1, 0)
+
+	Click(location,control,params)
+		if(istype(usr, /mob/dead/observer) && usr.client && !usr.client.keys_modifier && !usr:in_point_mode)
+			var/mob/dead/observer/O = usr
+			if(src.rider)
+				O.insert_observer(src.rider)
+		else
+			. = ..()
 
 	proc/eject_other_stuff() // override if there's some stuff integral to the vehicle that should not be ejected
 		for(var/atom/movable/AM in src)
@@ -256,7 +264,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 		return
 
 	weeoo_in_progress = 10
-	SPAWN_DBG(0)
+	SPAWN(0)
 		playsound(src.loc, "sound/machines/siren_police.ogg", 50, 1)
 		light.enable()
 		src.icon_state = "[src.icon_base][src.icon_weeoo_state]"
@@ -301,12 +309,12 @@ ABSTRACT_TYPE(/obj/vehicle)
 		src.UpdateOverlays(null, "rider")
 		src.underlays = null
 
-/obj/vehicle/segway/Bump(atom/AM as mob|obj|turf)
+/obj/vehicle/segway/bump(atom/AM as mob|obj|turf)
 	if(in_bump)
 		return
 	if(AM == rider || !rider)
 		return
-	if(world.timeofday - AM.last_bumped <= 100)
+	if(ON_COOLDOWN(AM, "vehicle_bump", 10 SECONDS))
 		return
 	walk(src, 0)
 	update()
@@ -333,7 +341,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 		// i guess a borg got on a segway? maybe someone was riding one with nanites
 		if (ishuman(M))
 			if(!istype(M:shoes, /obj/item/clothing/shoes/sandal))
-				M.changeStatus("stunned", 8 SECONDS)
+				M.changeStatus("stunned", 5 SECONDS)
 				M.changeStatus("weakened", 5 SECONDS)
 				M.force_laydown_standup()
 				src.log_me(src.rider, M, "impact")
@@ -346,13 +354,17 @@ ABSTRACT_TYPE(/obj/vehicle)
 						continue
 					C.show_message("<span class='alert'><B>[M] is kept upright by magical sandals!</B></span>", 1)
 		else
-			M.changeStatus("stunned", 8 SECONDS)
+			M.changeStatus("stunned", 5 SECONDS)
 			M.changeStatus("weakened", 5 SECONDS)
 			src.log_me(src.rider, M, "impact")
 		if(prob(10))
 			M.visible_message("<span class='alert'><b>[src]</b> beeps out an automated injury report of [M]'s vitals.</span>")
 			M.visible_message(scan_health(M, visible = 1))
-		eject_rider(2)
+		if (!emagged)
+			eject_rider(2)
+		else
+			playsound(src, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
+			src.weeoo()
 		in_bump = 0
 
 	if(isitem(AM))
@@ -523,7 +535,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 			. += S
 
 /obj/vehicle/segway/MouseDrop_T(mob/living/target, mob/user)
-	if (rider || !istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user) || isAI(user))
+	if (rider || !istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, target) > 0 || is_incapacitated(user) || isAI(user))
 		return
 
 	var/msg
@@ -560,7 +572,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 		eject_rider(0, 1)
 	return
 
-/obj/vehicle/segway/attack_hand(mob/living/carbon/human/M as mob)
+/obj/vehicle/segway/attack_hand(mob/living/carbon/human/M)
 	if(!M || !rider)
 		..()
 		return
@@ -601,6 +613,14 @@ ABSTRACT_TYPE(/obj/vehicle)
 				logTheThing("vehicle", other_dude, rider, "shoves [constructTarget(rider,"vehicle")] off of a [src] at [log_loc(src)].")
 
 	return
+
+/obj/vehicle/segway/emag_act(mob/user, obj/item/card/emag/E)
+	if (!src.emagged)
+		src.emagged = TRUE
+		src.weeoo()
+		src.desc = src.desc + " It looks like the safety circuits have been shorted out."
+		src.visible_message("<span class='alert'><b>[src] beeps ominously.</b></span>")
+		return 1
 
 ////////////////////////////////////////////////////// Floor buffer /////////////////////////////////////
 
@@ -673,13 +693,13 @@ ABSTRACT_TYPE(/obj/vehicle)
 	if(. && rider)
 		pixel_x = rand(-1, 1)
 		pixel_y = rand(-1, 1)
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			pixel_x = rand(-1, 1)
 			pixel_y = rand(-1, 1)
 		if (!src.sprayer_active)
 			var/turf/T = get_turf(src)
 			if (istype(T) && T.active_liquid)
-				if (T.active_liquid.group && T.active_liquid.group.members.len > 20) //Drain() is faster. use this if the group is large.
+				if (T.active_liquid.group && length(T.active_liquid.group.members) > 20) //Drain() is faster. use this if the group is large.
 					if (prob(20))
 						playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
 
@@ -693,7 +713,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 				else
 					T.active_liquid.removed(1)
 			return
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (src.reagents.total_volume < 1)
 				return
 
@@ -714,7 +734,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 			var/obj/decal/D = new/obj/decal(get_turf(src))
 			D.name = null
 			D.icon = null
-			D.invisibility = 101
+			D.invisibility = INVIS_ALWAYS
 			D.create_reagents(5)
 			src.reagents.trans_to(D, 5)
 
@@ -728,7 +748,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 
 			qdel(D)
 
-/obj/vehicle/floorbuffer/attackby(obj/item/W as obj, mob/user as mob)
+/obj/vehicle/floorbuffer/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/reagent_containers) && W.is_open_container() && W.reagents)
 		if(!W.reagents.total_volume)
 			boutput(user, "<span class='alert'>[W] is empty.</span>")
@@ -747,12 +767,12 @@ ABSTRACT_TYPE(/obj/vehicle)
 /obj/vehicle/floorbuffer/is_open_container()
 	return 2
 
-/obj/vehicle/floorbuffer/Bump(atom/AM as mob|obj|turf)
+/obj/vehicle/floorbuffer/bump(atom/AM as mob|obj|turf)
 	if(in_bump)
 		return
 	if(AM == rider || !rider)
 		return
-	if(world.timeofday - AM.last_bumped <= 100)
+	if(ON_COOLDOWN(AM, "vehicle_bump", 10 SECONDS))
 		return
 	walk(src, 0)
 	update()
@@ -824,7 +844,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 	return
 
 /obj/vehicle/floorbuffer/MouseDrop_T(mob/living/target, mob/user)
-	if (rider || !istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user) || isAI(user))
+	if (rider || !istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, target) > 0 || is_incapacitated(user) || isAI(user))
 		return
 
 	var/msg
@@ -864,7 +884,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 		eject_rider(0, 1)
 	return
 
-/obj/vehicle/floorbuffer/attack_hand(mob/living/carbon/human/M as mob)
+/obj/vehicle/floorbuffer/attack_hand(mob/living/carbon/human/M)
 	if(!M || !rider)
 		..()
 		return
@@ -972,7 +992,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 		eject_rider(0, 1, 0)
 	return
 
-/obj/vehicle/clowncar/attack_hand(mob/living/carbon/human/M as mob)
+/obj/vehicle/clowncar/attack_hand(mob/living/carbon/human/M)
 	if(!M)
 		..()
 		return
@@ -1049,7 +1069,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 	return
 
 /obj/vehicle/clowncar/MouseDrop_T(mob/living/carbon/human/target, mob/user)
-	if (!istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user) || isAI(user) || isghostcritter(user))
+	if (!istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, target) > 0 || is_incapacitated(user) || isAI(user) || isghostcritter(user))
 		return
 
 	var/msg
@@ -1062,7 +1082,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 			clown_tally += 1
 		if(istype(user:wear_mask, /obj/item/clothing/mask/clown_hat))
 			clown_tally += 1
-	if(clown_tally < 2)
+	if(clown_tally < 2 && !IS_LIVING_OBJECT_USING_SELF(user))
 		boutput(user, "<span class='notice'>You don't feel funny enough to use the [src].</span>")
 		return
 
@@ -1088,12 +1108,12 @@ ABSTRACT_TYPE(/obj/vehicle)
 		C.show_message(msg, 3)
 	return
 
-/obj/vehicle/clowncar/Bump(atom/AM as mob|obj|turf)
+/obj/vehicle/clowncar/bump(atom/AM as mob|obj|turf)
 	if(in_bump)
 		return
 	if(AM == rider || !rider)
 		return
-	if(world.timeofday - AM.last_bumped <= 100)
+	if(ON_COOLDOWN(AM, "vehicle_bump", 10 SECONDS))
 		return
 	walk(src, 0)
 	moving = 0
@@ -1277,7 +1297,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 			eject_rider(1)
 		pixel_x = rand(-6, 6)
 		pixel_y = rand(-2, 2)
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			pixel_x = rand(-6, 6)
 			pixel_y = rand(-2, 2)
 		return TRUE
@@ -1293,14 +1313,14 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	pixel_x = 0
 	pixel_y = 0
 
-/obj/vehicle/clowncar/cluwne/Bump(atom/AM as mob|obj|turf)
+/obj/vehicle/clowncar/cluwne/bump(atom/AM as mob|obj|turf)
 	..(AM)
 	icon_state = "cluwnecar"
 	pixel_x = 0
 	pixel_y = 0
 
 /obj/vehicle/clowncar/cluwne/MouseDrop_T(mob/living/carbon/human/target, mob/user)
-	if (!istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user) || isAI(user))
+	if (!istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, target) > 0 || is_incapacitated(user) || isAI(user))
 		return
 
 	var/msg
@@ -1358,12 +1378,12 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	desc = "Arf arf arf!"
 	icon_state = "odie"
 
-/obj/vehicle/cat/Bump(atom/AM as mob|obj|turf)
+/obj/vehicle/cat/bump(atom/AM as mob|obj|turf)
 	if(in_bump)
 		return
 	if(AM == rider || !rider)
 		return
-	if(world.timeofday - AM.last_bumped <= 100)
+	if(ON_COOLDOWN(AM, "vehicle_bump", 10 SECONDS))
 		return
 	walk(src, 0)
 	..()
@@ -1459,7 +1479,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	return
 
 /obj/vehicle/cat/MouseDrop_T(mob/living/carbon/human/target, mob/user)
-	if (rider || !istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.hasStatus(list("weakened", "paralysis", "stunned")) || user.stat || isAI(user))
+	if (rider || !istype(target) || target.buckled || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, target) > 0 || user.hasStatus(list("weakened", "paralysis", "stunned")) || user.stat || isAI(user))
 		return
 
 	var/msg
@@ -1495,7 +1515,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		eject_rider(0, 1)
 	return
 
-/obj/vehicle/cat/attack_hand(mob/living/carbon/human/M as mob)
+/obj/vehicle/cat/attack_hand(mob/living/carbon/human/M)
 	if(!M || !rider)
 		..()
 		return
@@ -1575,7 +1595,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 			playsound(my_mob.loc, src.mysound, src.myvolume, 1)
 		playsound(the_turf, src.mysound, src.myvolume, 1)
 
-		SPAWN_DBG(src.mydelay)
+		SPAWN(src.mydelay)
 			active = 0
 
 /obj/ability_button/loudhorn/clowncar
@@ -1605,7 +1625,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		var/obj/vehicle/v = my_mob.loc
 		v.stop()
 
-		SPAWN_DBG(src.mydelay)
+		SPAWN(src.mydelay)
 			active = 0
 
 	clowncar
@@ -1644,7 +1664,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 
 // the adminbus has a pressurized cabin!
 /obj/vehicle/adminbus/handle_internal_lifeform(mob/lifeform_inside_me, breath_request)
-	var/datum/gas_mixture/GM = unpool(/datum/gas_mixture)
+	var/datum/gas_mixture/GM = new /datum/gas_mixture
 
 	var/oxygen = MOLES_O2STANDARD
 	var/nitrogen = MOLES_N2STANDARD
@@ -1670,7 +1690,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		eject_rider(0, 1, 0)
 	return
 
-/obj/vehicle/adminbus/attack_hand(mob/living/carbon/human/M as mob)
+/obj/vehicle/adminbus/attack_hand(mob/living/carbon/human/M)
 	if(!M || !(M.client && M.client.holder))
 		..()
 		return
@@ -1732,7 +1752,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	return
 
 /obj/vehicle/adminbus/MouseDrop_T(mob/living/carbon/human/target, mob/user)
-	if (!istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user) || isAI(user))
+	if (!istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, target) > 0 || is_incapacitated(user) || isAI(user))
 		return
 
 	var/msg
@@ -1765,14 +1785,14 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		C.show_message(msg, 3)
 	return
 
-/obj/vehicle/adminbus/Bump(atom/AM as mob|obj|turf)
+/obj/vehicle/adminbus/bump(atom/AM as mob|obj|turf)
 	if(in_bump)
 		return
 	if(AM == rider || !rider)
 		return
-	if(!is_badmin_bus && world.timeofday - AM.last_bumped <= 100)
+	if(!is_badmin_bus && ON_COOLDOWN(AM, "vehicle_bump", 10 SECONDS))
 		return
-	if(is_badmin_bus && world.timeofday - AM.last_bumped <= 50)
+	if(is_badmin_bus && ON_COOLDOWN(AM, "vehicle_bump", 5 SECONDS))
 		return
 	walk(src, 0)
 	icon_state = nonmoving_state
@@ -2305,7 +2325,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		return
 
 	//pick up crates with forklift
-	if((istype(A, /obj/storage/crate) || istype(A, /obj/storage/cart) || istype(A, /obj/storage/secure/crate)) && get_dist(A, src) <= 1 && src.rider == user && helditems.len != helditems_maximum && !broken)
+	if((istype(A, /obj/storage/crate) || istype(A, /obj/storage/cart) || istype(A, /obj/storage/secure/crate)) && BOUNDS_DIST(A, src) == 0 && src.rider == user && helditems.len != helditems_maximum && !broken)
 		A.set_loc(src)
 		helditems.Add(A)
 		update_overlays()
@@ -2321,7 +2341,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		boutput(user, "You don't think [src] has enough utensil strength to pick this up.")
 		return
 
-	if(ishuman(A) && get_dist(user, src) <= 1  && get_dist(A, user) <= 1 && !rider)
+	if(ishuman(A) && BOUNDS_DIST(user, src) == 0  && BOUNDS_DIST(A, user) == 0 && !rider)
 		if (A == user)
 			boutput(user, "You get into [src].")
 		else
@@ -2331,7 +2351,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		src.update_overlays()
 		return
 
-/obj/vehicle/forklift/attack_hand(mob/living/carbon/human/M as mob)
+/obj/vehicle/forklift/attack_hand(mob/living/carbon/human/M)
 	if(!M || !rider)
 		..()
 		return

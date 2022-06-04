@@ -6,7 +6,7 @@
 
 	src.fakeloss += amount
 
-	SPAWN_DBG(seconds * 10)
+	SPAWN(seconds * 10)
 		src.fakeloss -= amount
 
 /mob/proc/false_death(var/seconds)
@@ -17,7 +17,7 @@
 	boutput(src, "<B>[src]</B> seizes up and falls limp, [his_or_her(src)] eyes dead and lifeless...")
 	src.changeStatus("weakened", 5 SECONDS)
 
-	SPAWN_DBG(seconds * 10)
+	SPAWN(seconds * 10)
 		src.fakedead = 0
 		src.delStatus("weakened")
 
@@ -99,7 +99,7 @@
 /mob/proc/is_heat_resistant()
 	if (!src)
 		return 0
-	if(src.bioHolder && src.bioHolder.HasOneOfTheseEffects("fire_resist") || src.bioHolder?.HasEffect("thermal_resist") > 1)
+	if(src.bioHolder && src.bioHolder.HasOneOfTheseEffects("fire_resist") || src.bioHolder.HasEffect("thermal_resist") > 1)
 		return 1
 	if(src.nodamage)
 		return 1
@@ -178,7 +178,7 @@
 	var/being_pressed = 0
 	var/has_been_pressed = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (being_pressed)
 			boutput(user, "<span class='alert'>You can't press it while someone else is about to press it!</span>")
 			return
@@ -231,7 +231,7 @@
 				boutput(user, "<span class='alert'>You can't press it when you're incapacitated.</span>")
 				being_pressed = 0
 				return
-			if (get_dist(user,src) > 1)
+			if (BOUNDS_DIST(user, src) > 0)
 				boutput(user, "<span class='alert'>You can't press it from over there.</span>")
 				being_pressed = 0
 				return
@@ -248,7 +248,7 @@
 			world << siren
 			for(var/area/A in world)
 				A.eject = 1
-				A.updateicon()
+				A.UpdateIcon()
 				LAGCHECK(LAG_LOW)
 
 			sleep(30 SECONDS)
@@ -260,14 +260,14 @@
 			for(var/area/A in world)
 				LAGCHECK(LAG_LOW)
 				A.eject = 0
-				A.updateicon()
+				A.UpdateIcon()
 
 			for_by_tcl(G, /obj/critter/dog/george)
 				G.visible_message("<span class='alert'><b>[G]</b> pees on the floor. Bad dog!</span>")
 				make_cleanable( /obj/decal/cleanable/urine ,get_turf(G))
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (iswrenchingtool(W) && steps_until_pressable == 18)
 			boutput(user, "<span class='notice'>You remove the metal bolts.</span>")
 			steps_until_pressable--

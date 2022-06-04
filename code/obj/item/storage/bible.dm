@@ -55,7 +55,7 @@ var/global/list/bible_contents = list()
 		else
 			..()
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		var/chaplain = 0
 		if (user.traitHolder && user.traitHolder.hasTrait("training_chaplain"))
 			chaplain = 1
@@ -116,7 +116,7 @@ var/global/list/bible_contents = list()
 				playsound(src.loc, "punch", 25, 1, -1)
 		return
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (isvampire(user) || user.bioHolder.HasEffect("revenant"))
 			user.visible_message("<span class='alert'><B>[user] tries to take the [src], but their hand bursts into flames!</B></span>", "<span class='alert'><b>Your hand bursts into flames as you try to take the [src]! It burns!</b></span>")
 			user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 0, 25)
@@ -159,28 +159,36 @@ var/global/list/bible_contents = list()
 		src.set_loc(user.loc)
 		return farty_heresy(user)
 
+	///Called when someone farts on a bible. Return TRUE if we killed them, FALSE otherwise.
 	proc/farty_heresy(mob/user)
 		if(!user || user.loc != src.loc)
-			return 0
+			return FALSE
 
 		if (farty_party)
 			user.visible_message("<span class='alert'>[user] farts on the bible.<br><b>The gods seem to approve.</b></span>")
-			return 0
+			return FALSE
 
 		if (user.traitHolder?.hasTrait("atheist"))
 			user.visible_message("<span class='alert'>[user] farts on the bible with particular vindication.<br><b>Against all odds, [user] remains unharmed!</b></span>")
-			return 0
+			return FALSE
+		else if (ishuman(user) && user:unkillable)
+			user.visible_message("<span class='alert'>[user] farts on the bible.</span>")
+			user:unkillable = 0
+			user.UpdateOverlays(image('icons/misc/32x64.dmi',"halo"), "halo")
+			heavenly_spawn(user)
+			user?.gib()
+			return TRUE
 		else
 			user.visible_message("<span class='alert'>[user] farts on the bible.<br><b>A mysterious force smites [user]!</b></span>")
 			logTheThing("combat", user, null, "farted on [src] at [log_loc(src)] last touched by <b>[src.fingerprintslast ? src.fingerprintslast : "unknown"]</b>.")
 			user.gib()
-			return 0
+			return TRUE
 
 /obj/item/storage/bible/evil
 	name = "frayed bible"
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER | IS_FARTABLE
+	event_handler_flags = USE_FLUID_ENTER | IS_FARTABLE
 
-	HasEntered(atom/movable/AM as mob)
+	Crossed(atom/movable/AM as mob)
 		..()
 		if(ishuman(AM))
 			var/mob/living/carbon/human/H = AM
@@ -196,11 +204,15 @@ var/global/list/bible_contents = list()
 
 	farty_heresy(mob/user) //fuk u always die
 		if(!user || user.loc != src.loc)
-			return 0
+			return FALSE
+
+		if(..())
+			return TRUE
+
 		user.visible_message("<span class='alert'>[user] farts on the bible.<br><b>A mysterious force smites [user]!</b></span>")
 		logTheThing("combat", user, null, "farted on [src] at [log_loc(src)] last touched by <b>[src.fingerprintslast ? src.fingerprintslast : "unknown"]</b>.")
 		user.gib()
-		return 0
+		return TRUE
 
 /obj/item/storage/bible/hungry
 	name = "hungry bible"
@@ -221,7 +233,7 @@ var/global/list/bible_contents = list()
 		src.layer = initial(src.layer)
 		src.set_loc(user.loc)
 		var/list/gibz = user.gib(0, 1)
-		SPAWN_DBG(3 SECONDS)//this code is awful lol.
+		SPAWN(3 SECONDS)//this code is awful lol.
 			for( var/i = 1, i <= 500, i++ )
 				for( var/obj/gib in gibz )
 					if(!gib.loc) continue
@@ -241,7 +253,7 @@ var/global/list/bible_contents = list()
 		src.layer = initial(src.layer)
 		src.set_loc(user.loc)
 		var/list/gibz = user.gib(0, 1)
-		SPAWN_DBG(3 SECONDS)//this code is awful lol.
+		SPAWN(3 SECONDS)//this code is awful lol.
 			for( var/i = 1, i <= 50, i++ )
 				for( var/obj/gib in gibz )
 					step_to( gib, src )
@@ -264,7 +276,7 @@ var/global/list/bible_contents = list()
 		if(src.contents.len > 0)
 			. += " It feels a bit heavier than it should."
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (user.traitHolder && user.traitHolder.hasTrait("training_chaplain") && user.is_in_hands(src))
 			var/obj/item/gun/kinetic/faith/F = locate() in src.contents
 			if(F)

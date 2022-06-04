@@ -8,6 +8,7 @@
 
 var/global/list/material_cache = list()
 /atom/var/datum/material/material = null
+/atom/var/material_amt = 1
 
 /proc/isExploitableObject(var/atom/A)
 	if(istype(A, /obj/item/tile) || istype(A, /obj/item/rods) || istype(A, /obj/item/sheet) || istype(A, /obj/item/cable_coil) || istype(A, /obj/item/raw_material/shard)) return 1
@@ -52,17 +53,16 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 		var/datum/material/M = new base.type ()
 		M.properties = mergeProperties(base.properties)
 		for(var/X in base.vars)
-			if(X == "type" || X == "parent_type" || X == "tag" || X == "vars" || X == "properties") continue
+			if(X == "type" || X == "parent_type" || X == "tag" || X == "vars" || X == "properties" || X == "datum_components" || X == "comp_lookup" || X == "signal_procs" || X == "signal_enabled") continue
 
 			if(X in triggerVars)
 				M.vars[X] = getFusedTriggers(base.vars[X], list(), M) //Pass in an empty list to basically copy the first one.
 			else
-				if(X in M.vars)
-					if(istype(base.vars[X],/list))
-						var/list/oldList = base.vars[X]
-						M.vars[X] = oldList.Copy()
-					else
-						M.vars[X] = base.vars[X]
+				if(istype(base.vars[X],/list))
+					var/list/oldList = base.vars[X]
+					M.vars[X] = oldList.Copy()
+				else
+					M.vars[X] = base.vars[X]
 		return M
 
 /proc/isSameMaterial(var/datum/material/M1, var/datum/material/M2) //Compares two materials to determine if stacking should be allowed.
@@ -96,11 +96,13 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 		explosion_resistance = material.hasProperty("density") ? round(material.getProperty("density") / 33) : explosion_resistance
 		explosion_protection = material.hasProperty("density") ? round(material.getProperty("density") / 33) : explosion_protection
 		if( !(flags & CONDUCT) && (src.material.getProperty("electrical") >= 50)) flags |= CONDUCT
-	return
 
 
 /// Simply removes a material from an object.
 /atom/proc/removeMaterial()
+	if(src.material)
+		src.material.UnregisterSignal(src, COMSIG_ATOM_CROSSED)
+
 	if(src.mat_changename)
 		src.remove_prefixes(99)
 		src.remove_suffixes(99)
@@ -113,16 +115,9 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 	src.alpha = initial(src.alpha)
 	src.color = initial(src.color)
 
-	if(src.material?.owner_hasentered_added)
-		if (isturf(src.loc))
-			var/turf/T = src.loc
-			T.checkinghasentered = max(T.checkinghasentered-1, 0)
-		src.event_handler_flags &= ~USE_HASENTERED
-
 	src.UpdateOverlays(null, "material")
 
 	src.material = null
-	return
 
 //Time for some super verbose proc names.
 /proc/get_material_trait_desc(var/datum/material/mat1)
@@ -152,12 +147,18 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 			continue
 
 /// Sets the material of an object. PLEASE USE THIS TO SET MATERIALS UNLESS YOU KNOW WHAT YOU'RE DOING.
-/atom/proc/setMaterial(var/datum/material/mat1, var/appearance = 1, var/setname = 1, var/copy = 1, var/use_descriptors = 0)
+/atom/proc/setMaterial(var/datum/material/mat1, var/appearance = TRUE, var/setname = TRUE, var/copy = TRUE, var/use_descriptors = FALSE)
 	if(!mat1 ||!istype(mat1, /datum/material)) return
 	if(copy) mat1 = copyMaterial(mat1)
 	var/traitDesc = get_material_trait_desc(mat1)
 	var/strPrefix = jointext(mat1.prefixes, " ")
 	var/strSuffix = jointext(mat1.suffixes, " ")
+
+	if(src.material)
+		src.material.UnregisterSignal(src, COMSIG_ATOM_CROSSED)
+
+	if(length(mat1?.triggersOnEntered))
+		mat1.RegisterSignal(src, COMSIG_ATOM_CROSSED, /datum/material/proc/triggerOnEntered)
 
 	for(var/X in getMaterialPrefixList(mat1))
 		strPrefix += " [X]"
@@ -182,24 +183,28 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 			src.desc = "[initial(src.desc)] It is made of [mat1.name].[length(traitDesc) ? " " + traitDesc : ""]"
 		if (mat1.mat_id == "gold") //marks material gold as not a good choice to sell for people who dont already know
 			src.desc += " It's probably not very valuable to a reputable buyer."
-
-	var/set_color_alpha = 1
-	src.alpha = 255
-	src.color = null
-	src.UpdateOverlays(null, "material")
-	if (islist(src.mat_appearances_to_ignore) && length(src.mat_appearances_to_ignore))
-		if (mat1.name in src.mat_appearances_to_ignore)
-			set_color_alpha = 0
-	if (set_color_alpha && src.mat_changeappearance && appearance && mat1.applyColor)
-		if (mat1.texture)
-			src.setTexture(mat1.texture, mat1.texture_blend, "material")
-		src.alpha = mat1.alpha
-		src.color = mat1.color
+	if(appearance)
+		src.setMaterialAppearance(mat1)
 
 	src.material = mat1
 	mat1.owner = src
 	mat1.triggerOnAdd(src)
 	src.onMaterialChanged()
+
+/// sets the *appearance* of a material, but does not trigger any tiggerOnAdd or onMaterialChanged behaviour
+/atom/proc/setMaterialAppearance(var/datum/material/mat1)
+	var/set_color_alpha = TRUE
+	src.alpha = 255
+	src.color = null
+	src.UpdateOverlays(null, "material")
+	if (islist(src.mat_appearances_to_ignore) && length(src.mat_appearances_to_ignore))
+		if (mat1.name in src.mat_appearances_to_ignore)
+			set_color_alpha = FALSE
+	if (set_color_alpha && src.mat_changeappearance && mat1.applyColor)
+		if (mat1.texture)
+			src.setTexture(mat1.texture, mat1.texture_blend, "material")
+		src.alpha = mat1.alpha
+		src.color = mat1.color
 
 /proc/getProcessedMaterialForm(var/datum/material/MAT)
 	if (!istype(MAT))
@@ -278,14 +283,21 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 	newMat.name = getInterpolatedName(mat1.name, mat2.name, 0.5)
 	newMat.mat_id = "([mat1.mat_id]+[mat2.mat_id])"
 	newMat.alpha = round(mat1.alpha * ot + mat2.alpha * t)
-	newMat.color = rgb(round(GetRedPart(mat1.color) * ot + GetRedPart(mat2.color) * t), round(GetGreenPart(mat1.color) * ot + GetGreenPart(mat2.color) * t), round(GetBluePart(mat1.color) * ot + GetBluePart(mat2.color) * t))
+	if(islist(mat1.color) || islist(mat2.color))
+		var/list/colA = normalize_color_to_matrix(mat1.color)
+		var/list/colB = normalize_color_to_matrix(mat2.color)
+		newMat.color = list()
+		for(var/i in 1 to length(colA))
+			newMat.color += colA[i] * ot + colB[i] * t
+	else
+		newMat.color = rgb(round(GetRedPart(mat1.color) * ot + GetRedPart(mat2.color) * t), round(GetGreenPart(mat1.color) * ot + GetGreenPart(mat2.color) * t), round(GetBluePart(mat1.color) * ot + GetBluePart(mat2.color) * t))
 	newMat.properties = mergeProperties(mat1.properties, mat2.properties, t)
 
 	newMat.edible_exact = round(mat1.edible_exact * ot + mat2.edible_exact * t)
-	if(newMat.edible_exact >= 0.5) newMat.edible = 1
-	else newMat.edible = 0
+	if(newMat.edible_exact >= 0.5) newMat.edible = TRUE
+	else newMat.edible = FALSE
 
-	newMat.mixOnly = 0
+	newMat.mixOnly = FALSE
 
 	//--
 	newMat.triggersFail = getFusedTriggers(mat1.triggersFail, mat2.triggersFail, newMat)

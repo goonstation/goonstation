@@ -20,7 +20,7 @@
 		if (forceartiorigin)
 			A.validtypes = list("[forceartiorigin]")
 		src.artifact = A
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.ArtifactSetup()
 			A.react_elec[2] = src.max_charge
 
@@ -37,7 +37,7 @@
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (src.Artifact_attackby(W,user))
 			..()
 
@@ -63,6 +63,7 @@
 /datum/artifact/energyammo
 	associated_object = /obj/item/ammo/power_cell/self_charging/artifact
 	type_name = "Small power cell"
+	type_size = ARTIFACT_SIZE_TINY
 	rarity_weight = 0
 	validtypes = list("ancient","eldritch","precursor")
 	automatic_activation = 1

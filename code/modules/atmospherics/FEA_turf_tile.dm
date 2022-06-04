@@ -17,7 +17,7 @@ atom/movable/proc/experience_pressure_difference(pressure_difference, direction)
 	else if(!anchored)
 		if(pressure_difference > pressure_resistance)
 			last_forced_movement = air_master.current_cycle
-			SPAWN_DBG(0)
+			SPAWN(0)
 				step(src, direction) // ZEWAKA-ATMOS: HIGH PRESSURE DIFFERENTIAL HERE
 		return 1
 
@@ -30,7 +30,7 @@ turf/return_air()
 	//  This is used in a lot of places and thrown away, so it should be pooled,
 	//  But there is no way to tell here if it will be retained or discarded, so
 	//  we can't pool the object returned by return_air. Bad news, man.
-	var/datum/gas_mixture/GM = unpool(/datum/gas_mixture)
+	var/datum/gas_mixture/GM = new /datum/gas_mixture
 
 	#define _TRANSFER_GAS_TO_GM(GAS, ...) GM.GAS = GAS;
 	APPLY_TO_GASES(_TRANSFER_GAS_TO_GM)
@@ -41,7 +41,7 @@ turf/return_air()
 	return GM
 
 turf/remove_air(amount as num)//, remove_water = 0)
-	var/datum/gas_mixture/GM = unpool(/datum/gas_mixture)
+	var/datum/gas_mixture/GM = new /datum/gas_mixture
 	var/sum = BASE_GASES_TOTAL_MOLES(src)
 	if(sum>0)
 		#define _TRANSFER_AMOUNT_TO_GM(GAS, ...) GM.GAS = (GAS / sum) * amount;
@@ -157,7 +157,7 @@ turf
 				if (model.graphic)
 					if (model.graphic != visuals_state)
 						if(!gas_icon_overlay)
-							gas_icon_overlay = unpool(/obj/overlay/tile_gas_effect)
+							gas_icon_overlay = new /obj/overlay/tile_gas_effect
 							gas_icon_overlay.set_loc(src)
 						else
 							gas_icon_overlay.overlays.len = 0
@@ -169,13 +169,13 @@ turf
 						gas_icon_overlay.dir = pick(cardinal)
 				else
 					if (gas_icon_overlay)
-						pool(gas_icon_overlay)
+						qdel(gas_icon_overlay)
 						gas_icon_overlay = null
 		New()
 			..()
 
-			if(!blocks_air)
-				air = unpool(/datum/gas_mixture)
+			if(!gas_impermeable)
+				air = new /datum/gas_mixture
 
 				#define _TRANSFER_GAS_TO_AIR(GAS, ...) air.GAS = GAS;
 				APPLY_TO_GASES(_TRANSFER_GAS_TO_AIR)
@@ -205,18 +205,18 @@ turf
 			if(active_hotspot)
 				active_hotspot.dispose() // have to call this now to force the lighting cleanup
 				if (active_hotspot)
-					pool(active_hotspot)
+					qdel(active_hotspot)
 					active_hotspot = null
 			if(being_superconductive)
 				air_master.active_super_conductivity.Remove(src)
-			if(blocks_air)
+			if(gas_impermeable)
 				for(var/direction in cardinal)
 					var/turf/simulated/tile = get_step(src,direction)
-					if(air_master && istype(tile) && !tile.blocks_air)
+					if(air_master && istype(tile) && !tile.gas_impermeable)
 						air_master.tiles_to_update |= tile
-			pool(air)
+			qdel(air)
 			if (gas_icon_overlay)
-				pool(gas_icon_overlay)
+				qdel(gas_icon_overlay)
 				gas_icon_overlay = null
 			air = null
 			parent = null
@@ -289,7 +289,7 @@ turf
 
 			for(var/direction in cardinal)
 				LAGCHECK(LAG_REALTIME)
-				if(CanPass(null, get_step(src,direction), 0, 0))
+				if(gas_cross(get_step(src,direction)))
 					air_check_directions |= direction
 
 			if(parent)
@@ -413,7 +413,7 @@ turf
 
 		super_conduct()
 			var/conductivity_directions = 0
-			if(blocks_air)
+			if(gas_impermeable)
 				//Does not participate in air exchange, so will conduct heat across all four borders at this time
 				conductivity_directions = NORTH|SOUTH|EAST|WEST
 

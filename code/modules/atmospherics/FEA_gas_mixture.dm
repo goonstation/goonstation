@@ -58,27 +58,6 @@ What are the archived variables for?
 	..()
 	total_gas_mixtures++
 
-
-/datum/gas_mixture/unpooled()
-	volume = initial(volume)
-	temperature = initial(temperature)
-	group_multiplier = initial(group_multiplier)
-	graphic = initial(graphic)
-#ifdef ATMOS_ARCHIVING
-	ARCHIVED(temperature) = initial(ARCHIVED(temperature))
-#endif
-	graphic_archived = initial(graphic_archived)
-	fuel_burnt = initial(fuel_burnt)
-	trace_gases = initial(trace_gases)
-	trace_gas_refs = initial(trace_gas_refs)
-	#define _UNPOOL_GAS(GAS, ...) GAS = initial(GAS);
-	APPLY_TO_GASES(_UNPOOL_GAS)
-#ifdef ATMOS_ARCHIVING
-	APPLY_TO_ARCHIVED_GASES(_UNPOOL_GAS)
-#endif
-	#undef _UNPOOL_GAS
-	..()
-
 // Mutator procs
 // For specific events
 /datum/gas_mixture/proc/zero()
@@ -301,7 +280,7 @@ What are the archived variables for?
 			var/datum/gas/corresponding = src.get_or_add_trace_gas_by_type(trace_gas.type)
 			corresponding.moles += trace_gas.moles*giver.group_multiplier/group_multiplier
 
-	pool(giver)
+	giver.dispose() // skip the qdel overhead
 	return 1
 
 //Proportionally removes amount of gas from the gas_mixture
@@ -312,7 +291,7 @@ What are the archived variables for?
 	if(amount <= 0)
 		return null
 
-	var/datum/gas_mixture/removed = unpool(/datum/gas_mixture)
+	var/datum/gas_mixture/removed = new /datum/gas_mixture
 
 	#define _REMOVE_GAS(GAS, ...) \
 		removed.GAS = min(QUANTIZE((GAS/sum)*amount), GAS); \
@@ -339,7 +318,7 @@ What are the archived variables for?
 
 	ratio = min(ratio, 1)
 
-	var/datum/gas_mixture/removed = unpool(/datum/gas_mixture)
+	var/datum/gas_mixture/removed = new /datum/gas_mixture
 
 	#define _REMOVE_GAS_RATIO(GAS, ...) \
 		removed.GAS = min(QUANTIZE(GAS*ratio), GAS); \
@@ -847,6 +826,12 @@ What are the archived variables for?
 				else
 					return 0
 	return 1
+
+/datum/gas_mixture/proc/check_if_dangerous()
+	if(TOTAL_MOLES(src) && (temperature > T100C || temperature < T0C || trace_gases || toxins || farts || carbon_dioxide || (nitrogen && !oxygen)))
+		return TRUE
+	else
+		return FALSE
 
 // Dead prototypes (or never implemented?)
 // /datum/gas_mixture/proc/check_me_then_share(datum/gas_mixture/sharer)

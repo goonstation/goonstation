@@ -84,7 +84,7 @@
 	if (timeout)
 		src.timeout = timeout
 		src.start_time = TIME
-		SPAWN_DBG(timeout)
+		SPAWN(timeout)
 			qdel(src)
 	. = ..()
 

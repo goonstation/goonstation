@@ -2,7 +2,7 @@
 	name = "cardboard box"
 	desc = "A pretty large box, made of cardboard. Looks a bit worn out."
 	icon = 'icons/obj/clothing/overcoats/item_suit_cardboard.dmi'
-	wear_image_icon = 'icons/mob/overcoats/worn_suit_cardboard.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_cardboard.dmi'
 	icon_state = "c_box"
 	item_state = "c_box"
 	density = 1
@@ -16,6 +16,7 @@
 	var/accessory = FALSE
 	var/face = null
 	block_vision = 1
+	material_amt = 0.2
 
 	New()
 		..()
@@ -30,7 +31,7 @@
 		setProperty("heatprot", 33)
 		setProperty("meleeprot", 1)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (user.a_intent == INTENT_HARM)
 			user.visible_message("<span class='notice'>[user] taps [src].</span>",\
 			"<span class='notice'>You tap [src].</span>")
@@ -91,9 +92,14 @@
 
 	New()
 		..()
+		START_TRACKING_CAT(TR_CAT_HEAD_SURGEON)
 		if (prob(50))
 			new /obj/machinery/bot/medbot/head_surgeon(src.loc)
 			qdel(src)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_HEAD_SURGEON)
+		. = ..()
 
 	proc/speak(var/message)
 		if (!message)
@@ -124,3 +130,8 @@
 	name = "cardboard box - 'Clown'"
 	desc = "Much like a real clown car, it's more spacious on the inside. Must be, to fit the clown."
 	face = "clown"
+
+/obj/item/clothing/suit/cardboard_box/ai
+	name = "cardboard box - 'AI'"
+	desc = "It can probably still open doors!"
+	face = "ai"

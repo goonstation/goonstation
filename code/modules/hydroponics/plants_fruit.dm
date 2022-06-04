@@ -23,15 +23,12 @@ ABSTRACT_TYPE(/datum/plant/fruit)
 		var/datum/plantgenes/DNA = S.plantgenes
 		if (!DNA) return
 		switch(reagent)
-			if("phlogiston","infernite","thalmerite","sorium")
+			if("phlogiston","infernite","pyrosium","sorium")
 				if (prob(33))
 					DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/tomato/incendiary)
 			if("strange_reagent")
 				if (prob(50))
 					DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/tomato/killer)
-			if("nicotine")
-				if (prob(80))
-					DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/tomato/tomacco)
 
 /datum/plant/fruit/grape
 	name = "Grape"
@@ -271,6 +268,21 @@ ABSTRACT_TYPE(/datum/plant/fruit)
 	genome = 18
 	nectarlevel = 10
 	assoc_reagents = list("juice_blueberry")
+
+/datum/plant/fruit/raspberry
+	name = "Raspberry"
+	seedcolor = "#a30325"
+	crop = /obj/item/reagent_containers/food/snacks/plant/raspberry
+	starthealth = 10
+	growtime = 60
+	harvtime = 120
+	cropsize = 2
+	harvests = 3
+	endurance = 1
+	genome = 7
+	nectarlevel = 10
+	mutations = list(/datum/plantmutation/raspberry/blackberry, /datum/plantmutation/raspberry/blueraspberry)
+	assoc_reagents = list("juice_raspberry")
 
 /datum/plant/fruit/coconut
 	name = "Coconut"

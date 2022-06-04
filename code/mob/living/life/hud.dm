@@ -16,7 +16,7 @@
 
 		if (hivebot_owner)
 			if (ticker?.mode && istype(ticker.mode, /datum/game_mode/construction))
-				hivebot_owner.see_invisible = 9
+				hivebot_owner.see_invisible = INVIS_CONSTRUCTION
 
 		if (critter_owner)
 			critter_owner.hud.update_health()

@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2021
+ * @author Luxizzle (https://github.com/Luxizzle)
+ * @license MIT
+ */
+
 import { decodeHtmlEntities } from 'common/string';
 import { useBackend } from '../../backend';
 import { BlockQuote, Box, Button, ColorButton, LabeledList, Section } from '../../components';
@@ -25,6 +32,9 @@ export const GeneralTab = (_props, context) => {
           </LabeledList.Item>
           <LabeledList.Item label="Gender">
             <Button onClick={() => act('update-gender')}>{data.gender}</Button>
+          </LabeledList.Item>
+          <LabeledList.Item label="Pronouns">
+            <Button onClick={() => act('update-pronouns')}>{data.pronouns}</Button>
           </LabeledList.Item>
           <LabeledList.Item label="Age">
             <Button onClick={() => act('update-age')}>{data.age}</Button>

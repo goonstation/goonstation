@@ -23,15 +23,15 @@
 		else
 			boutput(holder.owner, "<span class='alert'>Your spell only works at point blank without a staff to focus it!</span>")
 		for(var/obj/machinery/door/G in oview(SPrange, holder.owner))
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				G.open()
 		for(var/obj/storage/F in oview(SPrange, holder.owner))
 			if (F.locked)
 				F.locked = 0
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				F.open()
 		for(var/mob/living/silicon/robot/E in oview(SPrange, holder.owner))
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				E.spellopen()
 		for(var/obj/machinery/bot/B in oview(SPrange, holder.owner))
 			B.locked = 0

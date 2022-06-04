@@ -44,11 +44,12 @@
 #define TGUI_INTERACTIVE		 (1<<19)
 /// Has a click delay for attack_self()
 #define ATTACK_SELF_DELAY		 (1<<20)
-/// Is currently scaled by bubsium
-#define IS_BUBSIUM_SCALED		 (1<<21)
+/// Counts as dense for purposes of fluids. *scream.
+#define FLUID_DENSE		 (1<<21)
 /// If click delay should be applied even if atom is in user's contents (e.g.: postit notes)
 #define CLICK_DELAY_IN_CONTENTS  (1<<22)
-
+/// If an item cannot be crushed by the crusher
+#define UNCRUSHABLE              (1<<23)
 
 //Item function flags
 
@@ -141,8 +142,8 @@
 #define LIMB_STONE    (1<<12)
 /// Limb typically belongs to a vicious bear
 #define LIMB_BEAR     (1<<13)
-/// Limb typically belongs to a wendigo
-#define LIMB_WENDIGO  (1<<14)
+/// Limb typically belongs to a brullbar
+#define LIMB_BRULLBAR  (1<<14)
 /// Limb typically belongs to a large angry dog
 #define LIMB_WOLF     (1<<15)
 /// Limb is kinda boney
@@ -163,13 +164,13 @@
 #define isitemlimb(x)     HAS_FLAG(x:kind_of_limb, LIMB_ITEM)
 #define isstonelimb(x)    HAS_FLAG(x:kind_of_limb, LIMB_STONE)
 #define isbearlimb(x)     HAS_FLAG(x:kind_of_limb, LIMB_BEAR)
-#define iswendigolimb(x)  HAS_FLAG(x:kind_of_limb, LIMB_WENDIGO)
+#define isbrullbarlimb(x)  HAS_FLAG(x:kind_of_limb, LIMB_BRULLBAR)
 #define iswolflimb(x)     HAS_FLAG(x:kind_of_limb, LIMB_WOLF)
 #define isskeletonlimb(x) HAS_FLAG(x:kind_of_limb, LIMB_SKELLY)
 #define ismonsterlimb(x) (HAS_FLAG(x:kind_of_limb, LIMB_ZOMBIE) |\
                           HAS_FLAG(x:kind_of_limb, LIMB_HUNTER) |\
                           HAS_FLAG(x:kind_of_limb, LIMB_BEAR) |\
-                          HAS_FLAG(x:kind_of_limb, LIMB_WENDIGO) |\
+                          HAS_FLAG(x:kind_of_limb, LIMB_BRULLBAR) |\
                           HAS_FLAG(x:kind_of_limb, LIMB_ABOM) |\
                           HAS_FLAG(x:kind_of_limb, LIMB_WOLF))
 #define isrobolimb(x) (HAS_FLAG(x:kind_of_limb, LIMB_ROBOT) |\
@@ -185,3 +186,9 @@
 #define W_CLASS_HUGE 5
 #define W_CLASS_GIGANTIC 6
 #define W_CLASS_BUBSIAN 10
+
+// for firesource logging
+/// Firesource is capable of starting fires on its own when dropped
+#define FIRESOURCE_OPEN_FLAME 1
+/// Firesource can not cause fires on its own when dropped
+#define FIRESOURCE_IGNITER 2

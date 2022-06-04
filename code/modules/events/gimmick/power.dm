@@ -2,6 +2,7 @@
 	name = "Power Outage"
 	centcom_headline = "Critical Power Failure"
 	centcom_message = "Abnormal activity has been detected in the station power grid. As a precautionary measure, the station's power will be shut off for an indeterminate duration."
+	centcom_origin = ALERT_STATION
 
 	event_effect()
 		..()
@@ -14,13 +15,14 @@
 			S.charge = 0
 			S.output = 0
 			S.online = 0
-			S.updateicon()
+			S.UpdateIcon()
 			S.power_change()
 
 /datum/random_event/special/power_up
 	name = "Power Grid Recharge"
 	centcom_headline = "Power Systems Nominal"
 	centcom_message = "Power has been restored to the station's power grid. We apologize for the inconvenience."
+	centcom_origin = ALERT_STATION
 
 	event_effect()
 		..()
@@ -33,5 +35,5 @@
 			S.charge = S.capacity
 			S.output = 200000
 			S.online = 1
-			S.updateicon()
+			S.UpdateIcon()
 			S.power_change()

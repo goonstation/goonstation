@@ -5,3 +5,9 @@
 // for calculating human eye funkery
 #define EYEBLIND_L 1
 #define EYEBLIND_R 2
+
+#define CLIENT_IMAGE_GROUP_ARREST_ICONS "arrest_icons"
+#define CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS "health_mon_icons"
+#define CLIENT_IMAGE_GROUP_PACKETVISION "packetvision"
+
+#define CAM_RANGE 7

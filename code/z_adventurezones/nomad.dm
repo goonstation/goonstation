@@ -35,7 +35,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			process()
 
 	proc/process()
@@ -291,7 +291,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(3 SECONDS)
+		SPAWN(3 SECONDS)
 			set_broken()
 
 

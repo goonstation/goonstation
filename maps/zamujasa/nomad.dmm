@@ -694,7 +694,7 @@
 /area/nomad/outside)
 "bN" = (
 /obj/stool/bed,
-/obj/decal/skeleton/decomposed_corpse{
+/obj/decal/fakeobjects/skeleton/decomposed_corpse{
 	desc = "It's a dead body. You recognize the ID card as being a standard NT-issue card, but the name is unreadable.";
 	icon_state = "body3";
 	interesting = "Approximate time since death: 2 hours<br>No external injuries. Cause of death unknown.";
