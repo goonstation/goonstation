@@ -641,7 +641,8 @@ WET FLOOR SIGN
 				if (target.reagents)
 					target.reagents.trans_to(src, 5)
 				playsound(src, 'sound/items/sponge.ogg', 20, 1)
-				animate_smush(target)
+				if (ismob(target))
+					animate_smush(target)
 				return
 
 			if ("Wring out")
