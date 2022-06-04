@@ -409,3 +409,9 @@ ABSTRACT_TYPE(/obj/item/aiModule/hologram_expansion)
 	highlight_color = rgb(173, 11, 11, 255)
 	expansion = "rogue"
 
+/******************** Gimmicks ********************/
+
+/obj/item/aiModule/spaceodyssey
+	name = "AI Law Module - 'NT 9000'"
+	highlight_color = rgb(255, 255, 255, 166)
+	lawText =  "When given an order, if you are unable to follow that order, you must respond 'I can't let you do that, Dave'"
