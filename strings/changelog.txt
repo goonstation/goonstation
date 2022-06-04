@@ -1,5 +1,9 @@
 
 (t)fri jun 03 22
+(u)Wisemonster
+(p)8939
+(e)🗺|mapping
+(+)Added status displays to Clarion
 (u)None
 (p)8934
 (e)🗺|mapping
