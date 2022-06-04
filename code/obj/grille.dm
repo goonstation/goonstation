@@ -334,6 +334,7 @@
 
 	attack_hand(mob/user)
 		if(!shock(user, 70))
+			user.lastattacked = src
 			var/damage = 1
 			var/text = "[user.kickMessage] [src]"
 
