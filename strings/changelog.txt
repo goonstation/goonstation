@@ -23,10 +23,7 @@
 (p)8939
 (e)🗺|mapping
 (+)Added status displays to Clarion
-(u)None
-(p)8934
-(e)🗺|mapping
-(u)None
+(u)CrystalClover
 (p)8934
 (e)🗺|mapping
 (+)Rearranged Horizon's pharmacy's layout and added a glass recycler
