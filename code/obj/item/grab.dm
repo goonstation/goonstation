@@ -289,7 +289,7 @@
 		logTheThing("combat", src.assailant, src.affecting, "pins [constructTarget(src.affecting,"combat")]")
 
 		for (var/mob/O in AIviewers(src.assailant, null))
-			O.show_message("<span class='alert'>[src.assailant] has pinned [src.affecting] to [T]!</span>", 1)
+			O.show_message("<span class='alert'>[src.assailant] has pinned [src.affecting] to [get_turf(T)]!</span>", 1)
 
 		src.state = GRAB_PIN
 
@@ -602,6 +602,41 @@
 	actions.start(new/datum/action/bar/icon/pin_target(G.affecting, G, src), G.assailant)
 	attack_particle(user,src)
 
+/obj/fluid/grab_smash(obj/item/grab/G as obj, mob/user as mob)
+	var/mob/M = G.affecting
+
+	if  (!(ismob(G.affecting)))
+		return 0
+
+	if (BOUNDS_DIST(src, M) > 0)
+		return 0
+
+	if (!G.can_pin)
+		return 0
+
+	if (isliving(G.affecting))
+		G.affecting:was_harmed(G.assailant)
+
+	actions.start(new/datum/action/bar/icon/pin_target(G.affecting, G, src), G.assailant)
+	attack_particle(user,src)
+
+/obj/decal/cleanable/grab_smash(obj/item/grab/G as obj, mob/user as mob)
+	var/mob/M = G.affecting
+
+	if  (!(ismob(G.affecting)))
+		return 0
+
+	if (BOUNDS_DIST(src, M) > 0)
+		return 0
+
+	if (!G.can_pin)
+		return 0
+
+	if (isliving(G.affecting))
+		G.affecting:was_harmed(G.assailant)
+
+	actions.start(new/datum/action/bar/icon/pin_target(G.affecting, G, src), G.assailant)
+	attack_particle(user,src)
 
 ///////////////////////
 //SPECIAL GRABS BELOW//
