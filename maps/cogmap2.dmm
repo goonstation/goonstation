@@ -6977,6 +6977,9 @@
 	pixel_x = -10;
 	tag = ""
 	},
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
 "aqr" = (
@@ -6997,9 +7000,6 @@
 /area/station/chapel/sanctuary)
 "aqt" = (
 /obj/disposalpipe/segment/mail/bent/south,
-/obj/machinery/status_display{
-	pixel_y = 30
-	},
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fpurple2"
