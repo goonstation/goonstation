@@ -1969,6 +1969,9 @@
 /obj/stool/chair/couch{
 	dir = 4
 	},
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fblue2"
@@ -12481,6 +12484,9 @@
 	dir = 8;
 	pixel_x = 5
 	},
+/obj/machinery/status_display{
+	pixel_y = -30
+	},
 /turf/simulated/floor/green/side{
 	dir = 6
 	},
@@ -13606,6 +13612,9 @@
 	})
 "aBc" = (
 /obj/stool/chair/wooden,
+/obj/machinery/status_display{
+	pixel_x = -32
+	},
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -17382,6 +17391,9 @@
 /area/station/crew_quarters/bar)
 "aJQ" = (
 /obj/submachine/ice_cream_dispenser,
+/obj/machinery/status_display{
+	pixel_x = 32
+	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "aJR" = (
@@ -23410,6 +23422,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/status_display{
+	pixel_x = -32
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "aWr" = (
@@ -27298,6 +27313,9 @@
 /obj/table/reinforced/auto,
 /obj/item/device/infra_sensor,
 /obj/item/clothing/glasses/meson,
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
@@ -28122,6 +28140,9 @@
 /area/station/teleporter)
 "bhG" = (
 /obj/disposalpipe/segment,
+/obj/machinery/status_display{
+	pixel_x = -32
+	},
 /turf/simulated/floor/blueblack/corner{
 	dir = 1
 	},
@@ -36765,6 +36786,9 @@
 /obj/machinery/power/furnace/thermo{
 	fuel = 100
 	},
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
 /turf/simulated/floor/plating/random,
 /area/station/engine/core)
 "byR" = (
@@ -44408,6 +44432,15 @@
 	icon_state = "fgreen2"
 	},
 /area/station/engine/engineering/ce/private)
+"dFQ" = (
+/obj/disposalpipe/segment/mail,
+/obj/machinery/status_display{
+	pixel_x = -32
+	},
+/turf/simulated/floor/black,
+/area/station/hallway/secondary/entry{
+	name = "Entry Hallway"
+	})
 "dII" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -44579,6 +44612,19 @@
 	icon_state = "wooden"
 	},
 /area/station/science/research_director)
+"edf" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/line/red{
+	dir = 8;
+	icon_state = "line1"
+	},
+/obj/machinery/status_display{
+	pixel_x = -32
+	},
+/turf/simulated/floor/white,
+/area/station/medical/medbay)
 "edW" = (
 /obj/machinery/computer3/generic/secure_data{
 	dir = 4
@@ -49266,6 +49312,9 @@
 	dir = 0;
 	icon_state = "0-4"
 	},
+/obj/machinery/status_display{
+	pixel_x = -32
+	},
 /turf/simulated/floor/black,
 /area/station/bridge)
 "qmr" = (
@@ -49466,6 +49515,14 @@
 	},
 /turf/simulated/floor,
 /area/station/crewquarters/cryotron)
+"qNC" = (
+/obj/machinery/status_display{
+	pixel_y = -30
+	},
+/turf/simulated/floor/red/side{
+	dir = 10
+	},
+/area/station/security/main)
 "qRT" = (
 /obj/machinery/light/emergency{
 	dir = 4;
@@ -49949,6 +50006,12 @@
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
+"skt" = (
+/obj/machinery/status_display{
+	pixel_x = 32
+	},
+/turf/simulated/floor/black,
+/area/station/hallway/primary/north)
 "slU" = (
 /obj/machinery/light{
 	dir = 8;
@@ -50056,6 +50119,17 @@
 /obj/disposalpipe/trunk/brig,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
+"suk" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/status_display{
+	pixel_x = 32
+	},
+/turf/simulated/floor/purple/side{
+	dir = 4
+	},
+/area/station/science/lobby)
 "svM" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -50175,6 +50249,9 @@
 /obj/stool/bed,
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
+	},
+/obj/machinery/status_display{
+	pixel_y = 30
 	},
 /turf/simulated/floor/grime,
 /area/station/security/brig)
@@ -51298,6 +51375,18 @@
 	dir = 1
 	},
 /area/station/security/hos)
+"vEw" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
+/turf/space,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/space)
 "vFC" = (
 /obj/machinery/light{
 	dir = 4;
@@ -76161,7 +76250,7 @@ bcz
 bdR
 beR
 hcl
-bdR
+edf
 uZC
 bjF
 bkM
@@ -82328,7 +82417,7 @@ aZf
 nXC
 oaj
 etG
-tAi
+qNC
 bhl
 pms
 wMt
@@ -84076,8 +84165,8 @@ aeZ
 acQ
 ady
 acQ
-acQ
 agP
+skt
 amo
 amL
 ans
@@ -86725,7 +86814,7 @@ bGF
 bHb
 bHB
 bHT
-aaH
+vEw
 aaa
 aaa
 bIU
@@ -87150,7 +87239,7 @@ abZ
 afI
 ada
 act
-abZ
+dFQ
 abZ
 ahP
 abZ
@@ -92349,7 +92438,7 @@ aZI
 aXe
 bcd
 aXe
-aXe
+suk
 bfM
 aXe
 aZI
