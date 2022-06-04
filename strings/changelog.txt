@@ -1,4 +1,9 @@
 
+(t)sat jun 04 22
+(u)Ikea
+(p)8909
+(e)|
+(*)The bounty refresh interval for spies has been decreased from 25 minutes to 15 minutes on classic. For roleplay the refresh interval remains at 25 minutes.
 (t)fri jun 03 22
 (u)Bartimeus973
 (p)8913
