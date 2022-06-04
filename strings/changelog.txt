@@ -1,5 +1,9 @@
 
 (t)sat jun 04 22
+(u)DimWhat
+(p)8948
+(e)🗺|mapping
+(+)QM is now functional on destiny when the shields are on.
 (u)Ikea
 (p)8909
 (e)|
