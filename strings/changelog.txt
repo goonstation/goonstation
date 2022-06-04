@@ -1,5 +1,12 @@
 
 (t)fri jun 03 22
+(u)None
+(p)8934
+(e)🗺|mapping
+(u)None
+(p)8934
+(e)🗺|mapping
+(+)Rearranged Horizon's pharmacy's layout and added a glass recycler
 (u)FlameArrow57
 (p)8593
 (e)🆕🎨⚖|feature, sprites, balance
