@@ -1,5 +1,9 @@
 
 (t)fri jun 03 22
+(u)Bartimeus973
+(p)8913
+(e)|
+(+)Decapitated skeletons now speak from their heads, use the radio and listen in on conversations!
 (u)Wisemonster
 (p)8939
 (e)🗺|mapping
