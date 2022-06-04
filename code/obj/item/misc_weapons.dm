@@ -1496,7 +1496,7 @@ obj/item/whetstone
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	icon_state = "hadar_sword2"
 	item_state = "hadar_sword2"
-	flags = ONBACK
+	flags = ONBACK | FPRINT | TABLEPASS
 	hit_type = DAMAGE_CUT | DAMAGE_STAB
 	tool_flags = TOOL_CUTTING | TOOL_CHOPPING
 	contraband = 5
