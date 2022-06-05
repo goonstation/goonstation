@@ -19350,7 +19350,7 @@
 /turf/simulated/floor/grime,
 /area/iss)
 "aVr" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/grime,
 /area/iss)
 "aVs" = (
@@ -20601,6 +20601,7 @@
 /area/evilreaver/chapel)
 "aZJ" = (
 /obj/decal/cleanable/dirt,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/red/side{
 	dir = 9
 	},
@@ -20608,6 +20609,7 @@
 "aZK" = (
 /obj/decal/cleanable/oil,
 /obj/decal/cleanable/dirt,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -27960,6 +27962,10 @@
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
+"bun" = (
+/obj/landmark/spawner/loot,
+/turf/simulated/floor/grime,
+/area/diner/hallway)
 "buo" = (
 /obj/table/wood/round/auto,
 /obj/item/device/radio/intercom/bridge{
@@ -30510,7 +30516,7 @@
 	name = "Supply Lobby"
 	})
 "bAB" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
@@ -31011,7 +31017,7 @@
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "bBD" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/red,
 /area/space)
 "bBE" = (
@@ -31225,7 +31231,7 @@
 /turf/space/fluid,
 /area/space)
 "bCi" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /obj/machinery/light/small/floor/cool,
 /turf/simulated/floor/grime,
 /area/iss)
@@ -31615,7 +31621,7 @@
 	})
 "bDl" = (
 /obj/decal/cleanable/robot_debris,
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/airless/plating/damaged1,
 /area/space)
 "bDm" = (
@@ -31911,7 +31917,7 @@
 	},
 /area/station/crew_quarters/info)
 "bDQ" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/airless/plating/damaged1,
 /area/space)
 "bDR" = (
@@ -32891,12 +32897,12 @@
 	},
 /area/station/hallway/primary/south)
 "bGn" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "bGo" = (
-/obj/storage/crate/loot,
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "bGp" = (
@@ -34741,6 +34747,7 @@
 /area/station/crew_quarters/fitness)
 "bKP" = (
 /obj/shrub,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/grass,
 /area/space)
 "bKR" = (
@@ -38729,7 +38736,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/security/beepsky)
 "bUV" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/grime,
 /area/skeleton_trader)
 "bUW" = (
@@ -38779,7 +38786,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/hos)
 "bVd" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/damaged2,
 /area/skeleton_trader)
 "bVe" = (
@@ -44981,6 +44988,10 @@
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
+"fbS" = (
+/obj/landmark/spawner/loot,
+/turf/simulated/floor/grime,
+/area/space)
 "fcK" = (
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
@@ -45188,6 +45199,13 @@
 /obj/machinery/navbeacon/mule/chapel_north/south,
 /turf/simulated/floor/bot,
 /area/station/chapel/sanctuary)
+"gfK" = (
+/obj/shrub{
+	dir = 6
+	},
+/obj/landmark/spawner/loot,
+/turf/simulated/floor/grass,
+/area/space)
 "ggG" = (
 /obj/table/auto,
 /obj/machinery/cell_charger,
@@ -46083,6 +46101,10 @@
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
+"ljx" = (
+/obj/landmark/spawner/loot,
+/turf/space/fluid,
+/area/space)
 "ljO" = (
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/green,
@@ -46727,6 +46749,10 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
+"oYh" = (
+/obj/landmark/spawner/loot,
+/turf/simulated/floor/damaged2,
+/area/space)
 "pdH" = (
 /obj/loudspeaker{
 	layer = 4;
@@ -72855,7 +72881,7 @@ aqn
 aqn
 aqn
 aTs
-aqn
+ljx
 aqn
 aqn
 aqn
@@ -75300,7 +75326,7 @@ aqn
 aqn
 aTs
 aTs
-aqn
+ljx
 aTs
 aqn
 aqn
@@ -87987,7 +88013,7 @@ aqn
 aqn
 aqn
 aqn
-aqn
+ljx
 aTs
 aTs
 aTs
@@ -110715,7 +110741,7 @@ aqn
 aqn
 aqn
 aUZ
-bOo
+oYh
 bPE
 bPD
 bOo
@@ -112759,7 +112785,7 @@ aqn
 aqn
 aad
 aad
-aqn
+ljx
 aqn
 aad
 aad
@@ -113136,7 +113162,7 @@ bQc
 bQz
 aUZ
 bPD
-bPD
+fbS
 aUZ
 aUZ
 aqn
@@ -113668,7 +113694,7 @@ aqn
 aqn
 aqn
 aqn
-aqn
+ljx
 aad
 aqn
 aad
@@ -126933,7 +126959,7 @@ cbK
 cbV
 cce
 ccr
-caO
+bun
 caA
 caA
 caA
@@ -131489,7 +131515,7 @@ aVl
 aVl
 aVl
 aVl
-bKK
+gfK
 buR
 buR
 buR

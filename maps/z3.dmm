@@ -55,10 +55,6 @@
 "aal" = (
 /turf/unsimulated/wall/auto/adventure/bee/exterior,
 /area/space_hive)
-"aam" = (
-/obj/storage/crate/loot,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
 "aan" = (
 /obj/lattice,
 /turf/space,
@@ -1942,7 +1938,6 @@
 /area/mining/magnet_control)
 "afL" = (
 /obj/table/auto,
-/obj/item/magnet_parts/construction,
 /turf/simulated/floor/grime,
 /area/mining/magnet_control)
 "afM" = (
@@ -2290,6 +2285,7 @@
 	dir = 1;
 	pixel_x = -1
 	},
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
@@ -4114,6 +4110,7 @@
 /turf/simulated/floor/airless/damaged3,
 /area/space)
 "alL" = (
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/airless/black,
 /area/space)
 "alM" = (
@@ -4656,10 +4653,10 @@
 /turf/simulated/floor/industrial,
 /area/space)
 "ane" = (
-/obj/storage/crate/loot,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/industrial,
 /area/space)
 "anf" = (
@@ -4684,11 +4681,11 @@
 /turf/simulated/floor/industrial,
 /area/space)
 "anh" = (
-/obj/storage/crate/loot,
 /obj/machinery/light/emergency{
 	dir = 8;
 	pixel_x = -16
 	},
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/industrial,
 /area/space)
 "ani" = (
@@ -4711,10 +4708,10 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/storage/crate/loot,
 /obj/decal/fakeobjects/lightbulb_broken{
 	dir = 4
 	},
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/industrial,
 /area/space)
 "anm" = (
@@ -4789,7 +4786,7 @@
 /turf/space,
 /area/space)
 "anw" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/industrial,
 /area/space)
 "anx" = (
@@ -8765,7 +8762,7 @@
 /area/tech_outpost)
 "ayE" = (
 /obj/item/device/radio,
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /obj/item/device/radio,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating/damaged3,
@@ -8828,7 +8825,7 @@
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
 "azb" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/space,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/space)
@@ -9985,7 +9982,7 @@
 "aHt" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/dirt,
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/airless/plating/damaged1,
 /area/abandonedmedicalship)
 "aHu" = (
@@ -10135,6 +10132,7 @@
 	dir = 8;
 	icon_state = "lattice-dir"
 	},
+/obj/landmark/spawner/loot,
 /turf/space,
 /area/abandonedship)
 "aHR" = (
@@ -10151,7 +10149,7 @@
 /area/abandonedship)
 "aHT" = (
 /obj/decal/cleanable/dirt,
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/airless/plating/damaged3,
 /area/abandonedship)
 "aHU" = (
@@ -10939,13 +10937,13 @@
 	name = "GLOMAR Salvager"
 	})
 "aKe" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/damaged2,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
 "aKf" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
@@ -11400,7 +11398,7 @@
 "aLh" = (
 /obj/decal/cleanable/oil,
 /obj/decal/cleanable/robot_debris,
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/space,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/space)
@@ -11636,7 +11634,7 @@
 /area/abandonedship)
 "aLR" = (
 /obj/decal/cleanable/dirt,
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/airless/plating/scorched,
 /area/abandonedship)
 "aLS" = (
@@ -14192,6 +14190,7 @@
 	dir = 4;
 	icon_state = "floattiles4"
 	},
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/airless/damaged3,
 /area/abandonedship)
 "aSM" = (
@@ -15632,6 +15631,7 @@
 /turf/simulated/floor/white/grime,
 /area/abandonedmedicalship/robot_trader)
 "aWm" = (
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/airless,
 /area/h7)
 "aWn" = (
@@ -16913,7 +16913,7 @@
 /turf/space,
 /area/space)
 "bao" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/grime,
 /area/iss)
 "bap" = (
@@ -17475,7 +17475,7 @@
 /area/abandonedship)
 "bbY" = (
 /obj/machinery/light/small,
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/grime,
 /area/iss)
 "bbZ" = (
@@ -18027,7 +18027,6 @@
 /area/helldrone)
 "bdN" = (
 /obj/decal/cleanable/robot_debris,
-/obj/storage/crate/loot,
 /turf/simulated/floor/airless/plating/damaged1,
 /area/abandonedship)
 "bdO" = (
@@ -18101,7 +18100,7 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/helldrone/core)
 "beg" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/airless/scorched,
 /area/abandonedship)
 "beh" = (
@@ -19690,10 +19689,10 @@
 /turf/simulated/floor/plating,
 /area/space)
 "biX" = (
-/obj/storage/crate/loot,
 /obj/item/fish/red_herring,
 /obj/item/reagent_containers/food/snacks/burger,
 /obj/decal/cleanable/dirt,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating,
 /area/spyshack)
 "biY" = (
@@ -19717,7 +19716,6 @@
 /turf/simulated/floor/sanitary,
 /area/radiostation/bedroom)
 "bjb" = (
-/obj/storage/crate/loot,
 /obj/item/storage/pill_bottle/cyberpunk{
 	layer = 2.4
 	},
@@ -19730,6 +19728,7 @@
 	name = "dirty bag of swedish fisk";
 	open = 1
 	},
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/damaged2,
 /area/spyshack)
 "bjd" = (
@@ -19792,11 +19791,11 @@
 /turf/simulated/floor/grime,
 /area/skeleton_trader)
 "bjt" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/grime,
 /area/skeleton_trader)
 "bju" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/damaged2,
 /area/skeleton_trader)
 "bjv" = (
@@ -19981,7 +19980,7 @@
 	},
 /area/salyut)
 "bkc" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless,
 /area/salyut)
 "bkg" = (
@@ -20618,7 +20617,7 @@
 /turf/simulated/floor/airless/plating/damaged3,
 /area/abandonedmedicalship)
 "blZ" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/airless/plating/damaged1,
 /area/abandonedmedicalship)
 "bmb" = (
@@ -20677,6 +20676,7 @@
 /obj/decal/floatingtiles{
 	dir = 8
 	},
+/obj/landmark/spawner/loot,
 /turf/space,
 /area/space)
 "bmA" = (
@@ -21138,6 +21138,10 @@
 	},
 /turf/simulated/floor/grime,
 /area/derelict_ai_sat)
+"cCA" = (
+/obj/landmark/spawner/loot,
+/turf/simulated/floor/plating,
+/area/derelict_ai_sat)
 "cLO" = (
 /obj/map/light/cyan,
 /obj/stool/chair/office{
@@ -21161,6 +21165,10 @@
 /turf/space,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/mining/hangar)
+"daz" = (
+/obj/landmark/spawner/loot,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "daM" = (
 /obj/decal/fakeobjects/shuttleengine{
 	dir = 8
@@ -21311,6 +21319,12 @@
 "fWR" = (
 /obj/machinery/space_heater,
 /turf/simulated/floor/airless/caution/northsouth,
+/area/space)
+"fXo" = (
+/obj/landmark/spawner/loot,
+/turf/simulated/floor/plating/airless/asteroid{
+	stone_color = "#575A5E"
+	},
 /area/space)
 "gaf" = (
 /turf/unsimulated/wall/auto/adventure/bee,
@@ -21510,6 +21524,10 @@
 /obj/map/light/cyan,
 /turf/unsimulated/floor/black,
 /area/timewarp/ship)
+"isy" = (
+/obj/landmark/spawner/loot,
+/turf/unsimulated/floor/plating/scorched,
+/area/space_hive)
 "ivG" = (
 /obj/noticeboard{
 	pixel_x = 10
@@ -21522,6 +21540,10 @@
 /obj/item/device/audio_log/timewarp_01,
 /turf/unsimulated/floor/black,
 /area/timewarp/ship)
+"iHz" = (
+/obj/landmark/spawner/loot,
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
 "iIc" = (
 /obj/critter/gunbot/drone/heavydrone,
 /turf/simulated/floor/plating/airless/asteroid,
@@ -21597,6 +21619,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating,
 /area/derelict_ai_sat)
 "jGV" = (
@@ -21696,6 +21719,11 @@
 	name = "space"
 	},
 /area/abandonedship)
+"kXV" = (
+/obj/lattice,
+/obj/landmark/spawner/loot,
+/turf/space,
+/area/space)
 "laI" = (
 /obj/grille/catwalk{
 	dir = 5
@@ -22117,6 +22145,10 @@
 /obj/stool/chair,
 /turf/simulated/floor/airless/scorched,
 /area/abandonedmedicalship)
+"nNc" = (
+/obj/landmark/spawner/loot,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/fermid_hive)
 "nOd" = (
 /obj/decal/timeplug{
 	dir = 8
@@ -22142,6 +22174,10 @@
 	icon_state = "fred2"
 	},
 /area/timewarp/ship)
+"nVu" = (
+/obj/landmark/spawner/loot,
+/turf/simulated/floor/plating,
+/area/buddyfactory)
 "nYg" = (
 /turf/unsimulated/wall/auto/adventure/shuttle,
 /area/salyut)
@@ -22300,6 +22336,10 @@
 	name = "mistreated engine part"
 	},
 /turf/simulated/floor/plating,
+/area/helldrone)
+"pfT" = (
+/obj/landmark/spawner/loot,
+/turf/simulated/floor/shuttlebay,
 /area/helldrone)
 "plh" = (
 /obj/indestructible/shuttle_corner{
@@ -22635,6 +22675,10 @@
 	icon_state = "corner_east"
 	},
 /area/timewarp/ship)
+"sDV" = (
+/obj/landmark/spawner/loot,
+/turf/simulated/floor/shuttlebay,
+/area/buddyfactory)
 "sFV" = (
 /obj/machinery/computer/pathology{
 	dir = 4
@@ -23172,6 +23216,10 @@
 	name = "space"
 	},
 /area/space)
+"yiN" = (
+/obj/landmark/spawner/loot,
+/turf/simulated/floor,
+/area/h7/crew)
 
 (1,1,1) = {"
 aaa
@@ -25977,7 +26025,7 @@ ajC
 auP
 auP
 avo
-auP
+sDV
 avW
 aaa
 aaa
@@ -26260,7 +26308,7 @@ ajC
 ajC
 ajC
 aqB
-aqn
+nVu
 aki
 arg
 arg
@@ -28786,9 +28834,9 @@ aaa
 aaa
 aar
 aar
-aab
-aab
-aab
+aac
+aac
+aac
 aab
 aab
 aau
@@ -29088,9 +29136,9 @@ aaa
 aar
 aar
 aab
+daz
 aab
-aab
-aab
+aac
 aab
 aab
 aab
@@ -29391,7 +29439,7 @@ aar
 aaH
 aaH
 aau
-aac
+aau
 aac
 aac
 aac
@@ -29940,7 +29988,7 @@ aVF
 aTK
 aTK
 aTK
-aTK
+yiN
 aXd
 aTe
 aaa
@@ -31817,7 +31865,7 @@ aaa
 aaa
 aaa
 aHU
-aan
+kXV
 bgx
 wnW
 aHU
@@ -39147,8 +39195,8 @@ bgu
 bgu
 nCy
 pQp
-bcg
-bcg
+pfT
+pfT
 bgc
 aFo
 bgu
@@ -39220,7 +39268,7 @@ aaq
 aaq
 aed
 aaf
-aed
+isy
 aed
 afp
 aaf
@@ -40002,7 +40050,7 @@ aaa
 aaa
 aaz
 aaz
-aac
+daz
 aac
 aaa
 aaa
@@ -48203,7 +48251,7 @@ aHr
 aHr
 aHr
 aHr
-rzX
+fXo
 aaa
 aaa
 aaa
@@ -49992,7 +50040,7 @@ aaa
 aaa
 aac
 aac
-aac
+daz
 aaz
 aaa
 aaa
@@ -53520,7 +53568,7 @@ aac
 aab
 aAn
 aab
-aac
+daz
 aab
 aab
 aab
@@ -54029,7 +54077,7 @@ acS
 acS
 acR
 acR
-acR
+iHz
 acS
 acS
 acS
@@ -54531,7 +54579,7 @@ aaa
 aar
 aar
 aab
-aac
+daz
 aab
 aAl
 aab
@@ -57253,7 +57301,7 @@ abf
 aaz
 aac
 aac
-aac
+daz
 aHU
 bbv
 bbV
@@ -57441,7 +57489,7 @@ aac
 aac
 aac
 aab
-aac
+daz
 aab
 aab
 aab
@@ -59736,7 +59784,7 @@ aab
 aab
 aab
 aab
-aac
+daz
 aab
 aab
 aab
@@ -60640,7 +60688,7 @@ aab
 aab
 aab
 aab
-aac
+daz
 aab
 aab
 aac
@@ -64004,7 +64052,7 @@ acS
 acS
 acS
 acR
-acR
+iHz
 acS
 acS
 acS
@@ -65978,7 +66026,7 @@ aMJ
 amR
 amR
 jGA
-aUc
+cCA
 amR
 aeH
 aaa
@@ -79263,7 +79311,7 @@ aSG
 aSb
 aSb
 aSG
-aSG
+nNc
 aSb
 aSb
 aaa
@@ -79499,8 +79547,8 @@ aaa
 aab
 aab
 aab
-aam
-aam
+daz
+daz
 aaA
 aab
 aac
@@ -79800,7 +79848,7 @@ aaa
 aaa
 aab
 aab
-aam
+daz
 aac
 aac
 aac
@@ -80102,7 +80150,7 @@ aaa
 aaa
 aab
 aab
-aam
+daz
 aap
 aav
 aap
@@ -80707,8 +80755,8 @@ aaa
 aaa
 aab
 aab
-aam
-aam
+daz
+daz
 aac
 aac
 aab
@@ -87095,7 +87143,7 @@ aac
 aac
 aac
 aIL
-aac
+daz
 aIL
 aIL
 aac
@@ -89215,7 +89263,7 @@ aIL
 aIL
 aIL
 aIL
-aac
+daz
 aac
 aIL
 aaa
@@ -95868,7 +95916,7 @@ aab
 aab
 aab
 aab
-aac
+daz
 aab
 bmI
 aKY
@@ -96773,7 +96821,7 @@ aab
 aab
 aab
 aab
-aac
+daz
 aab
 aab
 aab
@@ -100379,7 +100427,7 @@ abf
 aab
 aab
 aab
-aac
+daz
 aab
 aaa
 aaa
@@ -102789,7 +102837,7 @@ aaa
 aaa
 aaa
 aas
-aac
+daz
 bgX
 atj
 bgX
