@@ -342,7 +342,7 @@
 			var/obj/O = new structurepath(target)
 			animate_flock_convert_complete(O)
 			playsound(target, "sound/misc/flockmind/flockdrone_build_complete.ogg", 40, 1)
-
+			O.AddComponent(/datum/component/flock_interest, F?.flock)
 /////////////////////////////////////////////////////////////////////////////////
 // EGG ACTION
 /////////////////////////////////////////////////////////////////////////////////
