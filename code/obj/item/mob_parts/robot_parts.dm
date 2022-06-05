@@ -506,7 +506,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
 
 		var/mob/living/carbon/human/H = M
 
-		if(H.limbs.vars.Find(src.slot) && H.limbs.vars[src.slot])
+		if(H.limbs.get_limb(user.zone_sel.selecting))
 			boutput(user, "<span class='alert'>[H.name] already has one of those!</span>")
 			return
 
@@ -721,11 +721,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg)
 
 		var/mob/living/carbon/human/H = M
 
-		if(!(src.slot in H.limbs.vars))
-			boutput(user, "<span class='alert'>You can't find a way to fit that on.</span>")
-			return
-
-		if(H.limbs.vars[src.slot])
+		if(H.limbs.get_limb(user.zone_sel.selecting))
 			boutput(user, "<span class='alert'>[H.name] already has one of those!</span>")
 			return
 
