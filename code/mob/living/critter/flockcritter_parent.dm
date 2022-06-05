@@ -104,6 +104,11 @@
 	src.flock.removeDrone(src)
 	src.flock = null
 
+/mob/living/critter/flock/projCanHit(var/datum/projectile/P)
+	if(istype(P, /datum/projectile/energy_bolt/flockdrone))
+		return FALSE
+	return ..()
+
 /mob/living/critter/flock/bullet_act(var/obj/projectile/P)
 	if(istype(P.proj_data, /datum/projectile/energy_bolt/flockdrone))
 		src.visible_message("<span class='notice'>[src] harmlessly absorbs [P].</span>")
