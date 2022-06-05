@@ -134,7 +134,7 @@
 								"Refusing to wash their hands.",\
 								"Maintenance lurking.",\
 								"Dumpster diving.",\
-								"Not putting their hands in front of their mouth when sneezing.",\
+								"Not covering their mouth when sneezing.",\
 								"Open mouth chewing.",\
 								"Riding pods without a license.",\
 								"Breathing loudly.",\
