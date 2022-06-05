@@ -267,6 +267,8 @@
 		setProperty("heatprot", 25)
 		setProperty("meleeprot", 3)
 		setProperty("rangedprot", 0.9)
+		delProperty("movespeed")
+		delProperty("disorient_resist")
 
 /obj/item/clothing/suit/bio_suit/armored
 	name = "armored bio suit"
