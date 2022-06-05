@@ -26,11 +26,10 @@
 	custom_suicide = 1
 
 	prime()
-		SPAWN(2) // super short delay to prevent fuckiness with suicide code
-			var/turf/T =  get_turf(src)
-			if (T)
-				new /mob/living/critter/robotic/sawfly(T)// this is probably a shitty way of doing it but it works
-			qdel(src)
+		var/turf/T =  get_turf(src)
+		if (T)
+			new /mob/living/critter/robotic/sawfly(T)// this is probably a shitty way of doing it but it works
+		qdel(src)
 		return
 
 /obj/item/old_grenade/sawfly/withremote // for traitor menu
@@ -121,8 +120,6 @@
 	harm(mob/target, var/mob/user)
 		if (istraitor(target) || isnukeop(target) || isspythief(target)) // uh oh! we just hit a friend
 			target.visible_message("<span class='alert'>[user]'s IFF system engages last second and barely avoids hitting you!")
-			return
-		else if (istype(target, /mob/living/critter/robotic/sawfly)) //can't hit each other
 			return
 		else //COMMENCE THE PAIN
 			user.visible_message("<b class='alert'>[user] [pick(list("gouges", "cleaves", "lacerates", "shreds", "cuts", "tears", "saws", "mutilates", "hacks", "slashes",))] [target]!</b>")

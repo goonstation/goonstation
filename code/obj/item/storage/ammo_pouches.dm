@@ -252,7 +252,7 @@
 
 /obj/item/storage/pouch/highcap
 	name = "tactical pouch"
-	desc = "A large pouch for carrying multiple miscellaneous  things at once."
+	desc = "A large pouch for carrying multiple miscellaneous things at once."
 	icon_state = "ammopouch-quad"
 	w_class = W_CLASS_SMALL
 	slots = 6

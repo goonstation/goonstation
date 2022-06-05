@@ -44,7 +44,7 @@
 /datum/aiTask/timed/targeted/sawfly_attack/on_tick()
 	var/mob/living/critter/robotic/sawfly/owncritter = holder.owner
 	if(prob(5)) owncritter.communalbeep()
-	walk(owncritter, 0)
+	holder.stop_move()
 	if(!holder.target)
 		holder.target = get_best_target(get_targets())
 	if(holder.target)
@@ -66,8 +66,10 @@
 			if(!src.found_path)
 				src.found_path = get_path_to(holder.owner, holder.target, 18, 0)
 			if(src.found_path)
+				if(prob(20))
+					walk_rand(src,4)
+					owncritter.visible_message("The sawfly does the thing. Did this break anything yet?")
 				holder.move_to_with_path(holder.target, src.found_path, 1)
-				if(prob(20)) walk_rand(src,4)
 				owncritter.set_dir(get_dir(owncritter, holder.target)) //attack regardless
 				owncritter.hand_attack(holder.target, dummy_params)
 			frustration++ //if frustration gets too high, the task is ended and re-evaluated
@@ -108,9 +110,6 @@
 	..(parentHolder, transTask)
 	add_task(holder.get_instance(/datum/aiTask/succeedable/sawfly_stab, list(holder)))
 
-/datum/aiTask/sequence/goalbased/sawfly_chase_n_stab/precondition()
-	return TRUE //put stuff here if you want them to not chase under some conditions
-
 /datum/aiTask/sequence/goalbased/sawfly_chase_n_stab/evaluate()
 	. = precondition() * weight * score_target(get_best_target(get_targets()))
 
@@ -141,7 +140,7 @@
 	//	holder.owner.communalbeep()
 
 /datum/aiTask/succeedable/sawfly_stab
-	name = "capture subtask"
+	name = "stab subtask"
 	var/found_path = null
 	var/has_started = FALSE
 	var/list/dummy_params = list("icon-x" = 16, "icon-y" = 16)
