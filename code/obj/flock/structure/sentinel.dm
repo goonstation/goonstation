@@ -15,6 +15,10 @@
 	var/charge_status = NOT_CHARGED
 	/// 0-100 charge percent
 	var/charge = 0
+	/// charge gained per tick
+	var/charge_per_tick = 20
+	/// Turret range in tiles
+	var/range = 5
 	var/powered = FALSE
 
 
@@ -62,12 +66,12 @@
 				charge_status = CHARGING//if its losing charge and suddenly theres energy available begin charging
 			if(CHARGING)
 				if(icon_state != "sentinelon") icon_state = "sentinelon"//forgive me
-				src.charge(5)
+				src.charge(charge_per_tick)
 			if(CHARGED)
 				var/mob/loopmob = null
 				var/list/hit = list()
 				var/mob/mobtohit = null
-				for(loopmob in range(5,src.loc))
+				for(loopmob in range(src.range,src.loc))
 					if(!isflockmob(loopmob) && src.flock?.isEnemy(loopmob) && isturf(loopmob.loc) && isalive(loopmob) && !isintangible(loopmob))
 						mobtohit = loopmob
 						break//found target
