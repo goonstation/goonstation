@@ -936,12 +936,12 @@
 	title = "(Skin set) NT-SO Commander Uniform"
 	desc = "Will change the skin of captain hats, captain armor/spacesuits, cap backpacks, sabres and captain uniforms."
 	required_medal = "Icarus"
-	once_per_round = 0
+	once_per_round = FALSE
 
 	rewardActivate(var/mob/activator)
 		if (ishuman(activator))
 			var/mob/living/carbon/human/H = activator
-			var/succ = 0
+			var/succ = FALSE
 			if (H.w_uniform)
 				var/obj/item/clothing/M = H.w_uniform
 				if (istype(M, /obj/item/clothing/under/rank/captain))
@@ -1076,12 +1076,12 @@
 	title = "(Skin Set) CENTCOM Executive Uniform"
 	desc = "Will change the skin of captain hats, captain armor/spacesuits, cap backpacks, sabres and captain uniforms."
 	required_medal = "Brown Pants" //Red shirt, brown pants.
-	once_per_round = 0
+	once_per_round = FALSE
 
 	rewardActivate(var/mob/activator)
 		if (ishuman(activator))
 			var/mob/living/carbon/human/H = activator
-			var/succ = 0
+			var/succ = FALSE
 			if (H.w_uniform)
 				var/obj/item/clothing/M = H.w_uniform
 				if (istype(M, /obj/item/clothing/under/rank/captain))
@@ -1157,7 +1157,7 @@
 				else if (istype(M, /obj/item/clothing/head/helmet/space/captain))
 					var/prev = M.name
 					M.name = "\improper CentCom space helmet"
-					M.desc = "Helps protect against vacuum. Comes in a fasionable red befitting an execuitive. (Base Item: [prev])"
+					M.desc = "Helps protect against vacuum. Comes in a fasionable red befitting an executive. (Base Item: [prev])"
 					M.icon_state = "space-captain-red"
 					M.item_state = "space-captain-red"
 					H.set_clothing_icon_dirty()
@@ -1166,7 +1166,7 @@
 				else if (istype(M, /obj/item/clothing/head/helmet/captain))
 					var/prev = M.name
 					M.name = "\improper CentCom helmet"
-					M.desc = "Somewhat protects an important person's head from being bashed in. Comes in a stylish shade of red befitting an executive (Base Item: [prev])"
+					M.desc = "Somewhat protects an important person's head from being bashed in. Comes in a stylish shade of red befitting an executive. (Base Item: [prev])"
 					M.icon_state = "helmet-captain-red"
 					M.item_state = "helmet-captain-red"
 					H.set_clothing_icon_dirty()
