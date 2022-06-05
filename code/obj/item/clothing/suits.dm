@@ -230,6 +230,8 @@
 		setProperty("viralprot", 50)
 		setProperty("meleeprot", 2)
 		setProperty("rangedprot", 0.5)
+		setProperty("movespeed", 0.45)
+		setProperty("disorient_resist", 15)
 
 /obj/item/clothing/suit/bio_suit/attackby(obj/item/W, mob/user)
 	var/turf/T = user.loc
