@@ -6,14 +6,14 @@
  */
 
 import { useBackend } from '../backend';
-import { Box, Chart, LabeledList, Section } from '../components';
+import { Box, Chart, Divider, LabeledList, Collapsible, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 /**
  * Helper function to transform the data into something displayable
- * Lovingly made by Mordent
- * @param {*} statsData - [ { foo: 1, bar: 2 }, { foo: 3, bar: 4 } ]
- * @returns - { foo: [1, 3], bar: [2, 4] }
+ * Lovingly made by Mordent and adapted
+ * @param {*} statsData - [ { foo: v, bar: v2 }, { foo: v3, bar: v4 } ]
+ * @returns - { foo: [[i, v], [i+1, v2], ...], bar: [[i, v3], [i+1, v4], ...] }
  */
 const processStatsData = statsData => {
   if ((statsData ?? []).length === 0) {
@@ -31,11 +31,53 @@ const processStatsData = statsData => {
     const tegDatum = statsData[statsDataIndex];
     for (let keyIndex = 0; keyIndex < keys.length; keyIndex++) {
       const key = keys[keyIndex];
+      const scientificIfOverMil = v =>
+        `${ v >= 1000000 ? v.toExponential(3) : v}`; // string !!!!
       // x,y coords for graph (y defaults to 0)
-      resolvedData[key].push([statsDataIndex, tegDatum[key] ?? 0]);
+      resolvedData[key].push([statsDataIndex, scientificIfOverMil(tegDatum[key]) ?? "None"]);
     }
   }
   return resolvedData;
+};
+
+
+/**
+ * Helper function to get the maximum value of our stats information for display
+ * @param {*} stats - { [i, value], [i+1, value2], ...}
+ * @returns float maximum value
+ */
+const getStatsMax = stats => {
+  let found_maximum = 0; // Chart always starts at 0
+  for (const index in stats) {
+    const stat = stats[index][1]; // get the value
+    if (stat > found_maximum) {
+      found_maximum = stat;
+    }
+  }
+  return found_maximum;
+};
+
+/**
+ * Generates stack items of labeled charts for display
+ * @param {*} stats - { foo: [[i, v], [i+1, v2], ...], bar: [[i, v3], [i+1, v4], ...] }
+ * @returns JSX of stack items
+ */
+const generateChartsFromStats = stats => {
+  return Object.entries(stats).map(([key, chart_data], index) => (
+    <Stack.Item key={key} mt={0.5} ml={index === 0 ? 1 : undefined} >
+      <Box>
+        {key}: {chart_data[chart_data.length - 1][1]}
+      </Box>
+      <Chart.Line
+        height="3em"
+        width="20em"
+        data={chart_data}
+        rangeX={[0, chart_data.length - 1]}
+        rangeY={[0, getStatsMax(chart_data)]}
+        strokeColor="	rgba(55,170,25, 1)"
+        fillColor="rgba(55,170,25, 0.25)" />
+    </Stack.Item>
+  ));
 };
 
 export const ReactorStats = (props, context) => {
@@ -51,48 +93,36 @@ export const ReactorStats = (props, context) => {
   const chamberStats = processStatsData(chamberData);
   // const meterStats = processStatsData(meterData);
 
-  // eslint-disable-next-line max-len
-  const boob = [[0, 66780.8], [1, 66680.6], [2, 66590.5], [3, 66510.1], [4, 66417.1], [5, 66256.9], [6, 66068.4], [7, 65906.3], [8, 65754], [9, 65621.8], [10, 65514.2], [11, 65423.9], [12, 65357.2], [13, 65305.9], [14, 65279.7], [15, 65264.6], [16, 65262.4], [17, 65266.3], [18, 65286.2], [19, 65310], [20, 65339.6], [21, 65382.2], [22, 65428.8], [23, 65483.6], [24, 65546.8], [25, 65620.4], [26, 65700.7], [27, 65788.1], [28, 65888.1], [29, 65999.2], [30, 66116.2], [31, 66243.8], [32, 66380.6], [33, 66526.5], [34, 66679.1], [35, 66683.2], [36, 66375.9], [37, 66078.3], [38, 65795.6], [39, 65521.4], [40, 65263.5], [41, 65013.9], [42, 64771.6], [43, 64545.1], [44, 64323.9], [45, 64115.5], [46, 63912.4], [47, 63717], [48, 63525.9], [49, 63374.7]];
-
-  const tegCharts = Object.entries(tegStats).map(([key, chart_data], _index) => (
-    <Box key={key}>
-      <LabeledList>
-        <LabeledList.Item label={key}>
-          {chart_data[chart_data.length -1]}
-        </LabeledList.Item>
-      </LabeledList>
-      <Chart.Line
-        height="5em"
-        data={chart_data}
-        rangeX={[0, data.length - 1]}
-        rangeY={[0, Math.max(...data)]}
-        strokeColor="rgba(1, 184, 170, 1)"
-        fillColor="rgba(1, 184, 170, 0.25)" />
-    </Box>
-  ));
-
-  const historyData = boob.map((value, i) => [i, value]);
-  const historyMax = Math.max(...boob);
-
   return (
     <Window
-      height="520"
-      width="600"
-      scrollable>
+      height="550"
+      width="760"
+      theme="retro-dark"
+    >
       <Window.Content>
         {!turnedOn
           ? (<Box> Unpowered </Box>)
           :(
-            <Section title="TEG Data">
-              <Chart.Line
-                height="5em"
-                data={historyData}
-                rangeX={[0, historyData.length - 1]}
-                rangeY={[0, historyMax]}
-                strokeColor="rgba(1, 184, 170, 1)"
-                fillColor="rgba(1, 184, 170, 0.25)" />
-              { tegCharts }
-            </Section>
+            <Box>
+              <Section title="TEG Data">
+                <Stack
+                  wrap="wrap"
+                  justify="space-around"
+                  ml={-1}
+                >
+                  { generateChartsFromStats(tegStats) }
+                </Stack>
+              </Section>
+              <Section title="Chamber Data">
+                <Stack
+                  wrap="wrap"
+                  justify="space-around"
+                  ml={-1}
+                >
+                  { generateChartsFromStats(chamberStats) }
+                </Stack>
+              </Section>
+            </Box>
           )}
       </Window.Content>
     </Window>
