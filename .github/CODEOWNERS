@@ -46,7 +46,7 @@
 /sound/ @virvatuli-gh
 
 # Walpvrgis
-icons/misc/critter.dmi @WALPVRGIS
+/icons/misc/critter.dmi @WALPVRGIS
 
 # ZeWaka
 *.md @ZeWaka
