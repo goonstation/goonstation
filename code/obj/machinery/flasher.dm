@@ -8,11 +8,12 @@
 	var/id = null
 	var/range = 2 //this is roughly the size of brig cell
 	var/disable = 0
-	var/last_flash = 0 //Don't want it getting spammed like regular flashes
 	var/strength = 10 //How weakened targets are when flashed.
 	var/base_state = "mflash"
 	var/datum/light/light
+	var/cooldown_flash = 15 SECONDS
 	anchored = 1
+	req_access = list(access_security)
 
 	// Please keep synchronizied with these lists for easy map changes:
 	// /obj/storage/secure/closet/brig/automatic (secure_closets.dm)
@@ -163,16 +164,6 @@
 		if (prob(30 + power))
 			qdel(src)
 
-/obj/machinery/flasher/portable //Portable version of the flasher. Only flashes when anchored
-	name = "portable flasher"
-	desc = "A portable flashing device. Wrench to activate and deactivate. Cannot detect slow movements."
-	icon_state = "pflash1"
-	strength = 8
-	anchored = 0
-	base_state = "pflash"
-	density = 1
-	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
-
 /obj/machinery/flasher/New()
 	..()
 	light = new /datum/light/point
@@ -190,7 +181,7 @@
 		light.disable()
 
 //Don't want to render prison breaks impossible
-/obj/machinery/flasher/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/flasher/attackby(obj/item/W, mob/user)
 	if (issnippingtool(W))
 		add_fingerprint(user)
 		src.disable = !src.disable
@@ -201,21 +192,21 @@
 
 //Let the AI trigger them directly.
 /obj/machinery/flasher/attack_ai()
-	if (src.anchored)
+	if (src.anchored && !ON_COOLDOWN(src, "flash", cooldown_flash))
 		return src.flash()
 	else
 		return
 
 /obj/machinery/flasher/proc/flash()
-	if (!(powered()))
+	if (!powered())
 		return
 
-	if ((src.disable) || (src.last_flash && world.time < src.last_flash + 150))
+	if (src.disable)
 		return
 
 	playsound(src.loc, "sound/weapons/flash.ogg", 100, 1)
 	flick("[base_state]_flash", src)
-	src.last_flash = world.time
+	ON_COOLDOWN(src, "flash", cooldown_flash)
 	use_power(1000)
 
 	for (var/mob/O in viewers(src, null))
@@ -227,27 +218,76 @@
 
 	return
 
+/obj/machinery/flasher/portable //Portable version of the flasher. Only flashes when anchored
+	name = "portable flasher"
+	desc = "A portable flashing device. Wrench to activate and deactivate. Cannot detect slow movements."
+	icon_state = "pflash1-c"
+	strength = 8
+	anchored = 0
+	base_state = "pflash"
+	density = 1
+	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
+	var/cooldown_scan = 1.5 SECONDS
+	var/cooldown_end = 0
+
+/obj/machinery/flasher/portable/power_change()
+	..()
+	UpdateIcon()
+
+/obj/machinery/flasher/portable/update_icon()
+	if (powered())
+		if (!src.anchored)
+			icon_state = "[base_state]1-c"
+		else
+			if (GET_COOLDOWN(src, "flash"))
+				icon_state = "[base_state]1-c"
+			else
+				icon_state = "[base_state]1"
+	else
+		icon_state = "[base_state]1-p"
+
 /obj/machinery/flasher/portable/HasProximity(atom/movable/AM as mob|obj)
-	if ((src.disable) || (src.last_flash && world.time < src.last_flash + 150))
+	if (!src.anchored || src.disable)
 		return
 
-	if(iscarbon(AM))
-		var/mob/living/carbon/M = AM
-		if ((M.m_intent != "walk") && (src.anchored))
-			src.flash()
+	if (GET_COOLDOWN(src, "flash"))
+		return
 
-/obj/machinery/flasher/portable/attackby(obj/item/W as obj, mob/user as mob)
+	if (!powered())
+		return
+
+	if (isliving(AM))
+		var/mob/M = AM
+		if (isghostcritter(M) || (issmallanimal(M)) || (isghostdrone(M)) || (isintangible(M)))
+			return
+		if (M.m_intent != "walk")
+			if (src.allowed(M))
+				ON_COOLDOWN(src, "flash", cooldown_scan)
+				SPAWN(cooldown_scan + 0.1 SECONDS)
+					if (src)
+						UpdateIcon()
+			else
+				ON_COOLDOWN(src, "flash", cooldown_flash)
+				src.flash()
+				SPAWN(cooldown_flash + 0.1 SECONDS)
+					if (src)
+						UpdateIcon()
+			UpdateIcon()
+
+/obj/machinery/flasher/portable/attackby(obj/item/W, mob/user)
 	if (iswrenchingtool(W))
 		add_fingerprint(user)
 		src.anchored = !src.anchored
 
 		if (!src.anchored)
 			light.disable()
+			UpdateIcon()
 			user.show_message(text("<span class='alert'>[src] can now be moved.</span>"))
 			src.UpdateOverlays(null, "anchor")
 
 		else if (src.anchored)
-			if ( powered() )
+			if (powered())
 				light.enable()
+			UpdateIcon()
 			user.show_message(text("<span class='alert'>[src] is now secured.</span>"))
 			src.UpdateOverlays(image(src.icon, "[base_state]-s"), "anchor")

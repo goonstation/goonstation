@@ -296,7 +296,7 @@
 		else
 			. += AE.description
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		var/datum/gimmick_event/AE = get_active_event()
 
 		if(!AE)
@@ -306,7 +306,7 @@
 		else
 			..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 
 		var/attempt = FALSE
 		var/datum/gimmick_event/AE = get_active_event()
@@ -455,13 +455,13 @@
 	throwforce = 15.0
 	throw_speed = 5
 	throw_range = 20
-	max_stack = 50
 	stamina_damage = 20
 	stamina_cost = 16
 	stamina_crit_chance = 30
 	rand_pos = 1
 	var/obj/item/golf_ball/ball
 	var/obj/ability_button/swing = new /obj/ability_button/golf_swing
+	var/putting = TRUE
 
 	random
 		New(turf/newLoc)
@@ -487,37 +487,63 @@
 					user.targeting_ability = swing
 					user.update_cursor()
 
+	attack_self(mob/user as mob)
+		if (src.putting)
+			boutput(user, "<span class='notice'>You tighten your grip on the [src].  Ready for a big swing!</span>")
+			src.putting = FALSE
+		else
+			boutput(user, "<span class='notice'>You loosen your grip on the [src]. Perfect for a nice gentle putt.</span>")
+			src.putting = TRUE
+		return
+
+	pickup(user)
+		..()
+		putting = TRUE
+
 /obj/ability_button/golf_swing
 	name = "Swing"
 	icon_state = "shieldceoff"
 	targeted = 1 //does activating this ability let you click on something to target it?
 	target_anything = 1 //can you target any atom, not just people?
-	var/datum/projectile/ballshot = new /datum/projectile/special/golfball
 
 	execute_ability(atom/target, params)
 		var/obj/item/golf_club/C = the_item
 		if(GET_DIST(C,C.ball) > 0 || GET_DIST(C,the_mob) > 0 )
 			return
 
-		if(istype(C) && C.ball)
-			C.ball.set_loc(C)
-		else
+		if (the_mob.bioHolder.HasEffect("clumsy") && prob(50))
+			the_mob.visible_message("<span class='alert'>[the_mob] swings the [C] wildly and falls on [his_or_her(the_mob)] face.</span>",\
+			"<span class='alert'>You swing so hard you lose your balance and fall!</span>")
+			the_mob.changeStatus("weakened", 2 SECONDS)
+			JOB_XP(the_mob, "Clown", 4)
 			return
 
-		var/debug = istype(C, /obj/item/golf_club/test)
+		var/datum/projectile/ballshot = C.ball.ball_projectile
 
+		var/debug = istype(C, /obj/item/golf_club/test)
 		var/pox = text2num(params["icon-x"]) - 16
 		var/poy = text2num(params["icon-y"]) - 16
+
 		var/swing_strength = sqrt(((target.x - the_mob.x) * 32 + pox)**2 + ((target.y - the_mob.y) * 32 + poy)**2)
 		swing_strength /= 32
+		swing_strength *= get_swing_strength_mod(the_mob, C)
 
-		var/mod_x = (rand()-0.5)* 5 * swing_strength
-		var/mod_y = (rand()-0.5)* 5 * swing_strength
+		C.ball.strike(C, the_mob, swing_strength)
+
+		if(QDELETED(C.ball))
+			return
+
+		if(!istype(C) || !C.ball || !ballshot)
+			return
+
+		var/golfyness = calculate_golfer(the_mob) // used to add RNG to shots, low is good
+		var/mod_x = (rand()-0.5) * 5 * swing_strength * golfyness
+		var/mod_y = (rand()-0.5) * 5 * swing_strength * golfyness
 
 		if(debug)
-			boutput(the_mob, "Swing Strength:[swing_strength] RNG [mod_x]x[mod_y]")
+			boutput(the_mob, "Swing Strength:[swing_strength] RNG [mod_x]x[mod_y] @ [golfyness]")
 
-		ballshot.max_range = swing_strength + ((rand()-0.5) * 3)
+		ballshot.max_range = swing_strength + ( ((rand()-0.5) * 3) * golfyness )
 
 		var/obj/projectile/P = shoot_projectile_ST_pixel(the_mob, ballshot, target, pox+mod_x, poy+mod_y)
 		if (P)
@@ -529,11 +555,41 @@
 			else
 				P.color = C.ball.color
 
+			C.ball.set_loc(P)
 			P.special_data["ball"] = C.ball
 			P.special_data["debug"] = debug
+
 			P.proj_data.RegisterSignal(P, list(COMSIG_MOVABLE_MOVED), /datum/projectile/special/golfball/proc/check_newloc)
 
 		animate(the_mob, pixel_x=0, pixel_y=0, 1 SECONDS, easing=CUBIC_EASING)
+
+	proc/get_swing_strength_mod(mob/user, obj/item/golf_club/C)
+		. = 1
+		if(user.is_hulk() || user.bioHolder.HasEffect("strong"))
+			. *= (0.5 + (rand()*3))
+		if(user.bioHolder.HasEffect("fitness_debuff"))
+			. *= 0.75
+		if(!C.putting)
+			. *= 1.75
+
+	proc/calculate_golfer(mob/user)
+		. = 1
+
+		if (user.hasStatus("drunk"))
+			. *= 0.7
+		if (user.reagents?.has_reagent("halfandhalf"))
+			. *= 0.8
+
+		if( the_mob.bioHolder.HasEffect("clumsy") )
+			. *= 2
+		if( the_mob.bioHolder.HasEffect("funky_limb") )
+			if(prob(20))
+				. *= 2
+			else if(prob(5))
+				. *= 0.5
+		if( the_mob.bioHolder.HasEffect("sneeze") )
+			if(prob(10))
+				. *= 1.5
 
 /datum/projectile/special/golfball
 	name = "golf ball"
@@ -543,24 +599,20 @@
 	shot_sound = null
 	power = 0
 	cost = 1
-	power = 0
+	power = 10
 	ks_ratio = 0
 	damage_type = D_SPECIAL
 	hit_type = DAMAGE_BLUNT
 	dissipation_delay = 0
 	dissipation_rate = 0
-	ks_ratio = 1
 	projectile_speed = 20
 	hit_ground_chance = 100
-	goes_through_walls = 0 // It'll stop homing when it hits something, then go bouncy
-	var/max_bounce_count = 25 // putting the I in ICEE BEEYEM
-	var/weaken_length = 4 SECONDS
+	var/max_bounce_count = 25
 	var/slam_text = "The golf ball SLAMS into you!"
 	var/hit_sound = 'sound/effects/mag_magmisimpact_bounce.ogg'
 	var/last_sound_time = 0
 
 	proc/check_newloc(obj/projectile/O, atom/NewLoc)
-	// set_loc(atom/newloc)
 		var/obj/item/storage/golf_goal = locate() in NewLoc
 		if(golf_goal)
 			O.collide(golf_goal)
@@ -587,18 +639,28 @@
 
 	on_hit(atom/A, direction, var/obj/projectile/projectile)
 		. = ..()
+		var/obj/item/golf_ball/ball = projectile.special_data["ball"]
 		if(projectile.reflectcount < src.max_bounce_count)
-			var/obj/projectile/Q = shoot_reflected_bounce(projectile, A, src.max_bounce_count, PROJ_RAPID_HEADON_BOUNCE)
+			var/reflect_power = max(0, projectile.max_range*(1-(projectile.travelled/(projectile.max_range*32))))
+			ball.strike(A, projectile.mob_shooter, reflect_power, TRUE)
+			if(QDELETED(ball))
+				return
 
-			Q.color = projectile.color
-			Q.special_data["ball"] = projectile.special_data["ball"]
-			Q.travelled = projectile.travelled
+			var/obj/projectile/Q = shoot_reflected_bounce(projectile, A, src.max_bounce_count, PROJ_RAPID_HEADON_BOUNCE)
+			if(Q)
+				ball.set_loc(Q)
+				Q.color = projectile.color
+				Q.special_data["ball"] = ball
+				Q.travelled = projectile.travelled
+			else
+				ball.set_loc(get_turf(A))
+
 			var/turf/T = get_turf(A)
 			if(TIME >= last_sound_time + 1 DECI SECOND)
 				last_sound_time = TIME
 				playsound(T, src.hit_sound, 60, 1)
 		else
-			playsound(A, 'sound/effects/mag_magmisimpact.ogg', 15, 1, -1)
+			ball.set_loc(get_turf(A))
 
 	on_end(var/obj/projectile/O)
 		if(O.special_data["debug"])
@@ -635,14 +697,28 @@
 	icon_state = "golf_ball"
 	w_class = W_CLASS_TINY
 
-	digital
-		can_pickup(user)
-			. = FALSE
+	var/datum/projectile/special/golfball/ball_projectile
+
+	New()
+		..()
+		if(!ball_projectile)
+			ball_projectile = new
+
+	attackby(obj/item/W, mob/user, params)
+		if(istype(W, /obj/item/golf_club))
+			return //We haven't hit been hit yet...
+		else
+			. = ..()
+
+	proc/strike(atom/A, mob/user, power, reflect=FALSE)
+		if(!reflect)
+			src.Attackby(A, user)
+		return
+
 	random
 		New(turf/newLoc)
 			..()
 			color = pick("#f44","#942", "#4f4","#296", "#44f","#429")
-
 
 /obj/item/storage/golf_goal
 	name = "Golf Goal"
@@ -668,8 +744,37 @@
 					if(length(contents))
 						visible_message("[P] knocks into [src]. There must already be a ball in there!")
 					else
+						ball.set_loc(src)
 						P.alpha = 0
 						P.die()
 						visible_message("[P] makes it into [src]. Nice shot!")
-						ball.set_loc(src)
 						hit_twitch(src)
+
+	automatic_return
+		var/return_range = 5
+
+		bullet_act(var/obj/projectile/P)
+			..()
+			var/obj/item/golf_ball/ball = locate() in src
+			if(ball)
+				var/list/nearby_turfs = list()
+				for (var/turf/T in view(2, src))
+					nearby_turfs += T
+
+				SPAWN(rand(2 SECONDS, 5 SECONDS))
+					animate_spin(src,looping=3)
+					sleep(0.2 SECOND)
+
+					ball.set_loc(get_turf(src))
+					ball.layer = src.layer
+
+					ball.ball_projectile.max_range = lerp(return_range, rand()*return_range, 0.3)
+					var/target = pick(nearby_turfs)
+					var/obj/projectile/Q = shoot_projectile_ST_pixel(src, ball.ball_projectile, target, (rand()-0.5)*32, (rand()-0.5)*32)
+					if (Q)
+						Q.targets = list(target)
+						Q.mob_shooter = null
+						Q.shooter = src
+						Q.color = ball
+						ball.set_loc(Q)
+						Q.special_data["ball"] = ball

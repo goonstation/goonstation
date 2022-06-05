@@ -91,48 +91,56 @@
 
 			src.say_verb(token + " " + text)
 
-	else if (src.ears && istype(src.ears, /obj/item/device/radio))
-		var/obj/item/device/radio/R = src.ears
-		if (R.bricked)
-			usr.show_text(R.bricked_msg, "red")
-			return
-		var/token = ""
-		var/list/choices = list()
-		choices += "[ headset_channel_lookup["[R.frequency]"] ? headset_channel_lookup["[R.frequency]"] : "???" ]: \[[format_frequency(R.frequency)]]"
-
-		if (istype(R.secure_frequencies) && length(R.secure_frequencies))
-			for (var/sayToken in R.secure_frequencies)
-				choices += "[ headset_channel_lookup["[R.secure_frequencies["[sayToken]"]]"] ? headset_channel_lookup["[R.secure_frequencies["[sayToken]"]]"] : "???" ]: \[[format_frequency(R.secure_frequencies["[sayToken]"])]]"
-
-		if (src.robot_talk_understand)
-			choices += "Robot Talk: \[***]"
-
-
-		var/choice = 0
-		if (choices.len == 1)
-			choice = choices[1]
-		else
-			choice = input("", "Select Radio Channel", null) as null|anything in choices
-		if (!choice)
-			return
-
-		var/choice_index = choices.Find(choice)
-		if (choice_index == 1)
-			token = ";"
-		else if (choice == "Robot Talk: \[***]")
-			token = ":s"
-		else
-			token = ":" + R.secure_frequencies[choice_index - 1]
-
-		var/text = input("", "Speaking to [choice] frequency") as null|text
-		if (src.capitalize_speech())
-			var/i = 1
-			while (copytext(text, i, i+1) == " ")
-				i++
-			text = capitalize(copytext(text, i))
-		src.say_verb(token + " " + text)
 	else
-		boutput(src, "<span class='notice'>You must put a headset on your ear slot to speak on the radio.</span>")
+		var/obj/item/device/radio/R = null
+		if ((src.ears && istype(src.ears, /obj/item/device/radio)))
+			R = src.ears
+		else if (ishuman(src))	//Check if the decapitated skeleton head has a headset
+			var/mob/living/carbon/human/H = src
+			var/datum/mutantrace/skeleton/S = H.mutantrace
+			if (isskeleton(H) && !H.organHolder.head && S.head_tracker.ears && istype(S.head_tracker.ears, /obj/item/device/radio))
+				R = S.head_tracker.ears
+		if (R)
+			if (R.bricked)
+				usr.show_text(R.bricked_msg, "red")
+				return
+			var/token = ""
+			var/list/choices = list()
+			choices += "[ headset_channel_lookup["[R.frequency]"] ? headset_channel_lookup["[R.frequency]"] : "???" ]: \[[format_frequency(R.frequency)]]"
+
+			if (istype(R.secure_frequencies) && length(R.secure_frequencies))
+				for (var/sayToken in R.secure_frequencies)
+					choices += "[ headset_channel_lookup["[R.secure_frequencies["[sayToken]"]]"] ? headset_channel_lookup["[R.secure_frequencies["[sayToken]"]]"] : "???" ]: \[[format_frequency(R.secure_frequencies["[sayToken]"])]]"
+
+			if (src.robot_talk_understand)
+				choices += "Robot Talk: \[***]"
+
+
+			var/choice = 0
+			if (choices.len == 1)
+				choice = choices[1]
+			else
+				choice = input("", "Select Radio Channel", null) as null|anything in choices
+			if (!choice)
+				return
+
+			var/choice_index = choices.Find(choice)
+			if (choice_index == 1)
+				token = ";"
+			else if (choice == "Robot Talk: \[***]")
+				token = ":s"
+			else
+				token = ":" + R.secure_frequencies[choice_index - 1]
+
+			var/text = input("", "Speaking to [choice] frequency") as null|text
+			if (src.capitalize_speech())
+				var/i = 1
+				while (copytext(text, i, i+1) == " ")
+					i++
+				text = capitalize(copytext(text, i))
+			src.say_verb(token + " " + text)
+		else
+			boutput(src, "<span class='notice'>You must put a headset on your ear slot to speak on the radio.</span>")
 
 // ghosts now can emote now too so vOv
 /*	if (isliving(src))

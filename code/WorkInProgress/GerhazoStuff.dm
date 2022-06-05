@@ -699,7 +699,7 @@
 	var/envelop_message // envelops [user] in [envelop_message]
 	var/leaving_message // before [leaving_message]!
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		return
 
 	attack_self(mob/user as mob)
@@ -768,7 +768,7 @@
 	color = "#ff8902"
 	hide_attack = 2
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		return
 
 	afterattack(var/atom/target, mob/user, flag)
@@ -832,7 +832,7 @@
 	var/suffix_to_set = ""
 	var/color_to_set
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		return
 
 	afterattack(var/atom/target, mob/user, flag)

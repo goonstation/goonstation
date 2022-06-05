@@ -49939,8 +49939,12 @@
 	dir = 1;
 	name = "autoname - SS13"
 	},
+/obj/machinery/power/apc/autoname_north,
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/north)
@@ -58207,16 +58211,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
-"xaM" = (
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/apc/autoname_north,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/north)
 "xaP" = (
 /obj/cable,
 /obj/machinery/power/data_terminal,
@@ -107707,7 +107701,7 @@ hzJ
 azn
 azz
 alU
-xaM
+kEz
 tNB
 dBD
 nqL
@@ -119590,8 +119584,8 @@ gzN
 xQd
 vwV
 oiF
-aaa
-aaa
+aag
+aag
 aag
 aaa
 aaa
@@ -119893,8 +119887,8 @@ dRu
 jCC
 hsb
 aaa
-aag
-aag
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -120194,8 +120188,8 @@ vSs
 ltk
 oiF
 oiF
-aaa
 aag
+aaa
 aaa
 aaa
 aaa
@@ -120495,9 +120489,9 @@ gVT
 hax
 oiF
 oiF
-aaa
-aaa
 aag
+aag
+aaa
 aaa
 aaa
 aaa
@@ -120799,7 +120793,7 @@ qOX
 vwH
 aaa
 aaa
-aag
+aaa
 aaa
 aaa
 aaa
@@ -121098,10 +121092,10 @@ wSq
 jGF
 ppd
 qXK
-aaa
-aaa
 aag
 aag
+aag
+aaa
 aaa
 aaa
 aaa

@@ -724,13 +724,13 @@ var/list/rollList = list()
 				src.UpdateOverlays(null,"[i]",0,1)
 			src.icon_state = "dicebox"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if((src in user.contents) && (src.icon_state != "dicebox"))
 			removeDie(user)
 		else
 			..()
 
-	attackby(obj/item/dice/W as obj, mob/living/user as mob)
+	attackby(obj/item/dice/W, mob/living/user)
 		if(src.icon_state != "dicebox")
 			addDice(W,"diceboxt",user)
 
@@ -757,7 +757,7 @@ var/list/rollList = list()
 				user.visible_message("<span class='notice'>[user] shakes the dice cup!</span>","<span class='notice'>You shake the dice cup!</span>")
 				hiddenroll()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if((src in user.contents) && (src.icon_state == "dicecup"))
 			removeDie(user)
 		else if(src.icon_state == "dicecupf")
@@ -775,7 +775,7 @@ var/list/rollList = list()
 		else
 			..()
 
-	attackby(obj/item/dice/W as obj, mob/living/user as mob)
+	attackby(obj/item/dice/W, mob/living/user)
 		if(src.icon_state == "dicecup")
 			addDice(W,"dicecup",user)
 

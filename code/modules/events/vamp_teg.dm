@@ -345,7 +345,7 @@ datum/teg_transformation/vampire
 			on_revert()
 
 	// Implement attackby to handle objects and attacks to Generator and Circulators
-	proc/attackby(obj/T, obj/item/I as obj, mob/user as mob)
+	proc/attackby(obj/T, obj/item/I, mob/user)
 		var/force = I.force
 		if(istype(I,/obj/item/storage/bible) && user.traitHolder.hasTrait("training_chaplain"))
 			force = 60

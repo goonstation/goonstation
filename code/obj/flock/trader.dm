@@ -363,7 +363,7 @@
 	anchored = 1
 	var/obj/npc/trader/flock/trader
 
-/obj/flock_reclaimer/attack_hand(mob/user as mob)
+/obj/flock_reclaimer/attack_hand(mob/user)
 	if(!user)
 		return
 	if(!trader)
@@ -372,7 +372,7 @@
 	src.visible_message("<span class='notice'>[user.name] waves their hand over [src.name].</span>")
 	trader.greet(user)
 
-/obj/flock_reclaimer/attackby(obj/item/W as obj, mob/user as mob)
+/obj/flock_reclaimer/attackby(obj/item/W, mob/user)
 	if(!W || !user || W.cant_drop)
 		return
 	if(istype(W, /obj/item/grab))

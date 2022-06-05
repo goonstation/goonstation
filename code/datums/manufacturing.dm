@@ -1329,8 +1329,8 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/flash
 	name = "Flash"
-	item_paths = list("CRY-1","CON-1")
-	item_amounts = list(2,2)
+	item_paths = list("MET-1","CON-1","CRY-1")
+	item_amounts = list(3,5,5)
 	item_outputs = list(/obj/item/device/flash)
 	time = 15 SECONDS
 	create = 1
@@ -1610,7 +1610,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	category = "Resource"
 
 /datum/manufacture/thrusters
-	name = "Alastor Pattern Thrusters "
+	name = "Alastor Pattern Thrusters"
 	item_paths = list("MET-2")
 	item_amounts = list(50)
 	item_outputs = list(/obj/item/parts/robot_parts/leg/right/thruster,/obj/item/parts/robot_parts/leg/left/thruster)
@@ -2841,7 +2841,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 /******************** GUNS *******************/
 
 /datum/manufacture/alastor
-	name = "Alastor pattern laser rifle"
+	name = "Alastor Pattern Laser Rifle"
 	item_paths = list("DEN-1","MET-3","CON-1","CRY-1")
 	item_amounts = list(1,10,20,20)
 	item_outputs = list(/obj/item/gun/energy/alastor)

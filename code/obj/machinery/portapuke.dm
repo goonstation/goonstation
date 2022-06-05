@@ -128,7 +128,7 @@
 		boutput(user, "<span class='alert'>You're trapped inside!</span>")
 
 
-	attackby(var/obj/item/I as obj, var/mob/user as mob)
+	attackby(var/obj/item/I, var/mob/user)
 		if (!isliving(user))
 			boutput(user, "<span class='alert'>You're dead! Quit that!</span>")
 			return

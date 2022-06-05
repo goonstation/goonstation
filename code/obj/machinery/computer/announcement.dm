@@ -59,7 +59,7 @@
 		user.Browse(dat, "window=announcementcomputer")
 		onclose(user, "announcementcomputer")
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/card/id))
 			if (src.ID)
 				src.ID.set_loc(src.loc)

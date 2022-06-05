@@ -54237,12 +54237,6 @@
 /area/station/engine/core)
 "fRs" = (
 /obj/table/auto,
-/obj/item/platestack{
-	icon_state = "platestack4";
-	pixel_x = -3;
-	pixel_y = 8;
-	platenum = 5
-	},
 /obj/decal/cleanable/generic,
 /obj/item/storage/box/beer{
 	pixel_x = 14;

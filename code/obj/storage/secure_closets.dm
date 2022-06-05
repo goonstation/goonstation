@@ -25,7 +25,7 @@
 	get_desc(dist)
 		. += "[reinforced ? "It's reinforced, only stronger firearms and explosives could break into this. " : ""] [bolted ? "It's bolted to the floor." : ""]"
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		if (src.open || !src.locked)
 			..()
 		else if (!I)
@@ -197,7 +197,7 @@
 	/obj/item/clothing/suit/armor/capcoat,
 	/obj/item/clothing/shoes/brown,
 	/obj/item/clothing/suit/armor/vest,
-	/obj/item/clothing/head/helmet/swat,
+	/obj/item/clothing/head/helmet/captain,
 	/obj/item/clothing/glasses/sunglasses,
 	/obj/item/stamp/cap,
 	/obj/item/device/radio/headset/command/captain)
@@ -243,7 +243,8 @@
 	/obj/item/clothing/suit/armor/vest,
 	/obj/item/stamp/hop,
 	/obj/item/device/radio/headset/command/hop,
-	/obj/item/device/accessgun)
+	/obj/item/device/accessgun,
+	/obj/item/clipboard)
 
 /obj/storage/secure/closet/command/research_director
 	name = "\improper Research Director's locker"

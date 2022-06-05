@@ -936,12 +936,12 @@
 	title = "(Skin set) NT-SO Commander Uniform"
 	desc = "Will change the skin of captain hats, captain armor/spacesuits, cap backpacks, sabres and captain uniforms."
 	required_medal = "Icarus"
-	once_per_round = 0
+	once_per_round = FALSE
 
 	rewardActivate(var/mob/activator)
 		if (ishuman(activator))
 			var/mob/living/carbon/human/H = activator
-			var/succ = 0
+			var/succ = FALSE
 			if (H.w_uniform)
 				var/obj/item/clothing/M = H.w_uniform
 				if (istype(M, /obj/item/clothing/under/rank/captain))
@@ -1026,6 +1026,15 @@
 					H.set_clothing_icon_dirty()
 					succ = TRUE
 
+				else if (istype(M, /obj/item/clothing/head/helmet/captain))
+					var/prev = M.name
+					M.name = "commander's helmet"
+					M.desc = "Somewhat protects an important person's head from being bashed in. Comes in a stylish shade of blue befitting of a commander. (Base Item: [prev])"
+					M.icon_state = "helmet-captain-blue"
+					M.item_state = "helmet-captain-blue"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
 			if (H.belt)
 				var/obj/item/M = H.belt
 				if (istype(M, /obj/item/katana_sheath/captain))
@@ -1067,12 +1076,12 @@
 	title = "(Skin Set) CENTCOM Executive Uniform"
 	desc = "Will change the skin of captain hats, captain armor/spacesuits, cap backpacks, sabres and captain uniforms."
 	required_medal = "Brown Pants" //Red shirt, brown pants.
-	once_per_round = 0
+	once_per_round = FALSE
 
 	rewardActivate(var/mob/activator)
 		if (ishuman(activator))
 			var/mob/living/carbon/human/H = activator
-			var/succ = 0
+			var/succ = FALSE
 			if (H.w_uniform)
 				var/obj/item/clothing/M = H.w_uniform
 				if (istype(M, /obj/item/clothing/under/rank/captain))
@@ -1148,9 +1157,18 @@
 				else if (istype(M, /obj/item/clothing/head/helmet/space/captain))
 					var/prev = M.name
 					M.name = "\improper CentCom space helmet"
-					M.desc = "Helps protect against vacuum. Comes in a fasionable red befitting an execuitive. (Base Item: [prev])"
+					M.desc = "Helps protect against vacuum. Comes in a fasionable red befitting an executive. (Base Item: [prev])"
 					M.icon_state = "space-captain-red"
 					M.item_state = "space-captain-red"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
+				else if (istype(M, /obj/item/clothing/head/helmet/captain))
+					var/prev = M.name
+					M.name = "\improper CentCom helmet"
+					M.desc = "Somewhat protects an important person's head from being bashed in. Comes in a stylish shade of red befitting an executive. (Base Item: [prev])"
+					M.icon_state = "helmet-captain-red"
+					M.item_state = "helmet-captain-red"
 					H.set_clothing_icon_dirty()
 					succ = TRUE
 
@@ -1456,41 +1474,9 @@ datum/achievementReward/ai_dwaine
 			playsound(T, 'sound/voice/farts/diarrhea.ogg', 50, 1)
 		activator.gib()
 		return 1
-		/* This is dumb we just gibbed the mob
-		SPAWN(20 SECONDS)
-			if(activator && !isdead(activator))
-				activator.suiciding = 0*/
-/*                                  / Management stuff below. /              */
-/chui/window/contributorrewards
-	name = "Contributor Rewards"
 
-	New()
-		..()
 
-	var/rewardses = list("sillyscream" = "Silly Screams")
-
-	GetBody()
-		var/ret = "<b>Howdy, contributor! These rewards don't revert until you respawn somehow.</b><br/>"
-		for(var/choice in rewardses)
-			ret += "[theme.generateButton( choice, rewardses[choice] )]<br/>"
-		return ret
-
-	OnClick( var/client/who, var/id )
-		if( rewardses[id] )
-			if(call( src, id )(who))
-				Unsubscribe( src )
-		else
-			boutput( who, "<h1>Don't get ahead of yourself, [who.key]</h1>" )//I almost want to log who does this because I know Erik will be one of them
-
-	proc/sillyscream(var/client/c)
-		var/mob/living/living = c.mob
-		if(istype( living ))
-			living.sound_scream = pick('sound/voice/screams/sillyscream1.ogg','sound/voice/screams/sillyscream2.ogg')
-			c << sound( living.sound_scream )
-			return 1
-		else
-			boutput( usr, "<span class='alert'>Hmm.. I can't set the scream sound of that!</span>" )
-			return 0
+// Reward management stuff
 
 /datum/achievementReward/contributor
 	title = "Contributor Rewards"
@@ -1499,18 +1485,57 @@ datum/achievementReward/ai_dwaine
 	once_per_round = 0
 	mobonly = 0
 
-	var/chui/window/contributorrewards/contributorRewardMenu
-	New()
-		..()
+	rewardActivate(mob/user)
+		ui_interact(user)
+		return 1
 
-	rewardActivate(var/mob/activator)
-		if( !contributorRewardMenu )
-			contributorRewardMenu = new
-		contributorRewardMenu.Subscribe( activator.client )
-		return 1 // i guess. who cares.
+	/// [name, desc, callback]
+	var/contrib_rewards = list(
+		list("Silly Screams", "Crazy silly screams for your character!", .proc/sillyscream),
+	)
 
+	ui_state(mob/user)
+		. = tgui_always_state
 
-/datum/player/var/list/claimed_rewards = list() //Keeps track of once-per-round rewards
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "ContributorRewards")
+			ui.open()
+
+	ui_static_data(mob/user)
+		var/titles = list()
+		var/descs = list()
+		for (var/reward in contrib_rewards)
+			titles += reward[1]
+			descs += reward[2]
+		. = list(
+			"rewardTitles" = titles,
+			"rewardDescs" = descs,
+		)
+
+	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+		. = ..()
+		if (.)
+			return
+
+		switch(action)
+			if("redeem")
+				var/reward_idx = text2num(params["reward_idx"])
+				INVOKE_ASYNC(src, contrib_rewards[reward_idx][3], ui.user)
+
+	proc/sillyscream(mob/M)
+		var/mob/living/living = M
+		if(istype( living ))
+			living.sound_scream = pick('sound/voice/screams/sillyscream1.ogg','sound/voice/screams/sillyscream2.ogg')
+			M.client << sound( living.sound_scream )
+			return 1
+		else
+			boutput( usr, "<span class='alert'>Hmm.. I can't set the scream sound of that!</span>" )
+			return 0
+
+/// Keeps track of once-per-round rewards
+/datum/player/var/list/claimed_rewards = list()
 
 /client/verb/claimreward()
 	set background = 1

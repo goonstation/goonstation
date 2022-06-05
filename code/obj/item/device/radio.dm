@@ -314,33 +314,47 @@ var/list/headset_channel_lookup
 				else
 					R.speech_bubble()
 				if (secure)
-					for (var/i in R.send_hear())
-						var/mob/rmob = i
-						if (!(i in receive))
-							receive.Add(rmob)
-							if (ai_sender)
-								rmob.playsound_local(R, 'sound/misc/talk/radio_ai.ogg', 30, 1, 0, pitch = 1, ignore_flag = SOUND_SPEECH)
-							else
-								rmob.playsound_local(R, 'sound/misc/talk/radio2.ogg', 30, 1, 0, pitch = 1, ignore_flag = SOUND_SPEECH)
-							//mbc : i dont like doing this here but its the easiest place to fit it in since this is a point where we have access to both the receiving mob and the radio they are receiving through
-							//nex : now we have a list of all the radios someone is hearing through so now we can do this elsewhere, poggers. anyways still gonna leave this here :^)
 
-						associateRadioToMob(rmob, R, receive, messages, secure, real_name, lang_id)
+					var/mob/temp_mob = null
+					if (istype(R.loc, /obj/item/organ/head))
+						var/obj/item/organ/head/O = R.loc
+						if (O.linked_human != null)
+							temp_mob = O.linked_human
+
+					for (var/i in R.send_hear() + temp_mob)
+						if (i)
+							var/mob/rmob = i
+							if (!(i in receive))
+								receive.Add(rmob)
+								if (ai_sender)
+									rmob.playsound_local(R, 'sound/misc/talk/radio_ai.ogg', 30, 1, 0, pitch = 1, ignore_flag = SOUND_SPEECH)
+								else
+									rmob.playsound_local(R, 'sound/misc/talk/radio2.ogg', 30, 1, 0, pitch = 1, ignore_flag = SOUND_SPEECH)
+								//mbc : i dont like doing this here but its the easiest place to fit it in since this is a point where we have access to both the receiving mob and the radio they are receiving through
+								//nex : now we have a list of all the radios someone is hearing through so now we can do this elsewhere, poggers. anyways still gonna leave this here :^)
+
+							associateRadioToMob(rmob, R, receive, messages, secure, real_name, lang_id)
 
 
 				else
-					for (var/i in R.send_hear())
-						if (signal_loss && !R.hardened && R.frequency >= R_FREQ_MINIMUM && R.frequency <= R_FREQ_MAXIMUM)
-							continue
+					var/mob/temp_mob = null
+					if (istype(R.loc, /obj/item/organ/head))
+						var/obj/item/organ/head/O = R.loc
+						if (O.linked_human != null)
+							temp_mob = O.linked_human
 
-						var/mob/rmob = i
-						if (!(i in receive))
-							receive.Add(i)
-							if (ai_sender)
-								rmob.playsound_local(R, 'sound/misc/talk/radio_ai.ogg', 30, 1, 0, pitch = 1, ignore_flag = SOUND_SPEECH)
+					for (var/i in R.send_hear() + temp_mob)
+						if (i)
+							if (signal_loss && !R.hardened && R.frequency >= R_FREQ_MINIMUM && R.frequency <= R_FREQ_MAXIMUM)
+								continue
 
-						associateRadioToMob(rmob, R, receive, messages, secure, real_name, lang_id)
+							var/mob/rmob = i
+							if (!(i in receive))
+								receive.Add(i)
+								if (ai_sender)
+									rmob.playsound_local(R, 'sound/misc/talk/radio_ai.ogg', 30, 1, 0, pitch = 1, ignore_flag = SOUND_SPEECH)
 
+							associateRadioToMob(rmob, R, receive, messages, secure, real_name, lang_id)
 
 		else if (istype(I, /obj/item/mechanics/radioscanner)) //MechComp radio scanner
 			var/obj/item/mechanics/radioscanner/R = I
@@ -612,7 +626,7 @@ var/list/headset_channel_lookup
 		for (var/sayToken in src.secure_frequencies) //Most convoluted string of the year award 2013
 			. += "[ headset_channel_lookup["[src.secure_frequencies["[sayToken]"]]"] ? headset_channel_lookup["[src.secure_frequencies["[sayToken]"]]"] : "???" ]: \[[format_frequency(src.secure_frequencies["[sayToken]"])]] (Activator: <b>[sayToken]</b>)"
 
-/obj/item/device/radio/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/device/radio/attackby(obj/item/W, mob/user)
 	src.add_dialog(user)
 	if (!isscrewingtool(W))
 		return
@@ -675,7 +689,7 @@ var/list/headset_channel_lookup
 			return
 		..()
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		if (isscrewingtool(I))
 			if (src.anchored)
 				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
@@ -736,7 +750,7 @@ var/list/headset_channel_lookup
 			boutput(usr, "<span class='notice'>The electric pads are exposed!</span>")
 	return*/
 
-/obj/item/device/radio/electropack/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/device/radio/electropack/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/clothing/head/helmet))
 		var/obj/item/assembly/shock_kit/A = new /obj/item/assembly/shock_kit( user )
 		W.set_loc(A)
@@ -914,7 +928,7 @@ Code:
 	onclose(user, "radio")
 	return
 
-obj/item/device/radio/signaler/attackby(obj/item/W as obj, mob/user as mob)
+obj/item/device/radio/signaler/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/instrument/bikehorn))
 		var/obj/item/assembly/radio_horn/A = new /obj/item/assembly/radio_horn( user )
 		W.set_loc(A)
@@ -1182,5 +1196,5 @@ obj/item/device/radio/signaler/attackby(obj/item/W as obj, mob/user as mob)
 /obj/item/device/radio/intercom/loudspeaker/attack_self(mob/user as mob)
 	return
 
-/obj/item/device/radio/intercom/loudspeaker/speaker/attack_hand(mob/user as mob)
+/obj/item/device/radio/intercom/loudspeaker/speaker/attack_hand(mob/user)
 	return

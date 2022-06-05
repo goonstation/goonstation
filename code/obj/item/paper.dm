@@ -1173,7 +1173,7 @@ as it may become compromised.
 		if (!user.put_in_hand(src))
 			return ..()
 
-/obj/item/paper_bin/attack_hand(mob/user as mob)
+/obj/item/paper_bin/attack_hand(mob/user)
 	src.add_fingerprint(user)
 	var/obj/item/paper = locate(/obj/item/paper) in src
 	if (paper)
@@ -1193,7 +1193,7 @@ as it may become compromised.
 	..()
 	src.Attackhand(user)
 
-/obj/item/paper_bin/attackby(obj/item/paper/P as obj, mob/user as mob) // finally you can write on all the paper AND put it back in the bin to mess with whoever shows up after you ha ha
+/obj/item/paper_bin/attackby(obj/item/paper/P, mob/user) // finally you can write on all the paper AND put it back in the bin to mess with whoever shows up after you ha ha
 	if (istype(P))
 		user.drop_item()
 		P.set_loc(src)
@@ -1263,7 +1263,7 @@ as it may become compromised.
 		src.assignment = null
 		src.desc = "A rubber stamp for stamping important documents."
 		return
-/obj/item/stamp/attackby(obj/item/C as obj, mob/user as mob)// assignment with ID
+/obj/item/stamp/attackby(obj/item/C, mob/user)// assignment with ID
 	if (istype(C, /obj/item/card/id))
 		var/obj/item/card/id/ID = C
 		if (!src.is_reassignable)
@@ -1457,7 +1457,7 @@ as it may become compromised.
 	desc = "It's really fun pelting your coworkers with these."
 	icon_state = "paperball"
 
-/obj/item/paper/folded/ball/attack(mob/M as mob, mob/user as mob)
+/obj/item/paper/folded/ball/attack(mob/M, mob/user)
 	if (iscarbon(M) && M == user && src.sealed)
 		M.visible_message("<span class='notice'>[M] stuffs [src] into [his_or_her(M)] mouth and eats it.</span>")
 		playsound(M,"sound/misc/gulp.ogg", 30, 1)

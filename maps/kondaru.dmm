@@ -5358,7 +5358,10 @@
 "aoQ" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/west,
-/obj/machinery/light_switch/east,
+/obj/machinery/light_switch/east{
+	pixel_x = 10;
+	pixel_y = 27
+	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/crematorium)
 "aoS" = (
@@ -28580,17 +28583,6 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
-"bJN" = (
-/obj/stool/chair{
-	dir = 4
-	},
-/obj/disposalpipe/segment/vertical,
-/obj/machinery/light/emergency{
-	dir = 8;
-	pixel_x = -10
-	},
-/turf/simulated/floor/wood/two,
-/area/station/crew_quarters/courtroom)
 "bJP" = (
 /obj/stool/chair{
 	dir = 4
@@ -46957,6 +46949,10 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "kdf" = (
@@ -47903,10 +47899,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "led" = (
@@ -48099,13 +48091,6 @@
 	icon_state = "platingdmg3"
 	},
 /area/station/maintenance/southeast)
-"lkO" = (
-/obj/decal/tile_edge/stripe,
-/obj/machinery/status_display{
-	pixel_x = 32
-	},
-/turf/simulated/floor/wood/two,
-/area/station/crew_quarters/cafeteria)
 "lkQ" = (
 /obj/cable{
 	d1 = 4;
@@ -54951,6 +54936,10 @@
 /obj/stool/chair{
 	dir = 4
 	},
+/obj/machinery/light/emergency{
+	dir = 8;
+	pixel_x = -10
+	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/courtroom)
 "sbT" = (
@@ -55672,10 +55661,6 @@
 /area/station/bridge)
 "sQH" = (
 /obj/storage/secure/closet/medical/medkit,
-/obj/machinery/alarm{
-	dir = 4;
-	pixel_x = -20
-	},
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -56504,6 +56489,9 @@
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
+	},
+/obj/machinery/status_display{
+	pixel_x = 32
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
@@ -57644,7 +57632,7 @@
 /obj/machinery/door_control{
 	id = "kitchen";
 	name = "Kitchen Shutter Control";
-	pixel_x = 24;
+	pixel_x = 10;
 	pixel_y = 24
 	},
 /obj/machinery/deep_fryer,
@@ -57747,6 +57735,10 @@
 	},
 /obj/item/bandage{
 	pixel_x = -2
+	},
+/obj/machinery/alarm{
+	dir = 4;
+	pixel_x = -20
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 10
@@ -117814,7 +117806,7 @@ bDA
 bEv
 bFO
 sbP
-bJN
+nhF
 bJP
 nhF
 dSc
@@ -123830,7 +123822,7 @@ bcx
 bcx
 bUn
 lhD
-lkO
+etk
 bjq
 tCN
 noK

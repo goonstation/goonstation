@@ -191,7 +191,7 @@
 			. += O
 			O.overlays += ("red_overlay")
 
-/obj/machinery/power/reactor_stats/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/power/reactor_stats/attackby(obj/item/W, mob/user)
 	src.Attackhand(user)
 
 /obj/machinery/power/reactor_stats/attack_ai(mob/user as mob)

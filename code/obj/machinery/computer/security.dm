@@ -127,7 +127,7 @@
 	power_change()
 		return
 
-/obj/machinery/computer/security/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/security/attack_hand(var/mob/user)
 	if (status & (NOPOWER|BROKEN) || !user.client)
 		return
 

@@ -17,6 +17,7 @@ HANDKERCHIEFS:
 
 BOTH:
 	* chem gag rag
+	* wipe heads
 	* TODO: embroider
 */
 
@@ -34,7 +35,7 @@ ABSTRACT_TYPE(/obj/item/cloth)
 	event_handler_flags = USE_GRAB_CHOKE | USE_FLUID_ENTER
 	special_grab = /obj/item/grab/rag_muffle
 
-/obj/item/cloth/attack(mob/living/M as mob, mob/user as mob)
+/obj/item/cloth/attack(mob/living/M, mob/user)
 	if (user.a_intent != INTENT_HELP)
 		return ..()
 	return TRUE
@@ -63,7 +64,7 @@ ABSTRACT_TYPE(/obj/item/cloth/towel)
 	desc = "About the most massively useful thing a spacefaring traveler can have."
 	w_class = W_CLASS_SMALL
 
-/obj/item/cloth/towel/attack(mob/living/M as mob, mob/user as mob)
+/obj/item/cloth/towel/attack(mob/living/M, mob/user)
 	if (!..())
 		return
 	user.visible_message("<span class='notice'>[user] wipes [M] down with [src].</span>")
@@ -147,7 +148,7 @@ ABSTRACT_TYPE(/obj/item/cloth/handkerchief)
 	desc = "Probably bought from an upscale boutique somewhere."
 	w_class = W_CLASS_TINY
 
-/obj/item/cloth/handkerchief/attack(mob/living/M as mob, mob/user as mob)
+/obj/item/cloth/handkerchief/attack(mob/living/M, mob/user)
 	if (!..())
 		return
 	user.visible_message("<span class='notice'>[user] [pick("dabs at", "blots at", "wipes")] [M == user ? his_or_her(user) : "[M]'s"] face with [src].</span>")

@@ -674,6 +674,19 @@
 
 		var/brute = get_brute_damage()
 		var/burn = get_burn_damage()
+
+		// If we have no brain or an inactive spont core, we're dormant.
+		// If we have a brain but no client, we're in hiberation mode.
+		// Otherwise, fully operational.
+		if (src.part_head.brain && !(istype(src.part_head.brain, /obj/item/organ/brain/latejoin) && src.part_head.brain:activated))
+			if (src.client)
+				. += "<span class='success'>[src.name] is fully operational.<span><br>"
+			else
+				. += "<span class='hint'>[src.name] is in temporary hibernation.<span><br>"
+		else
+			. += "<span class='alert'>[src.name] is completely dormant.<span><br>"
+
+
 		if (brute)
 			if (brute < 75)
 				. += "<span class='alert'>[src.name] looks slightly dented</span><br>"
@@ -1078,7 +1091,7 @@
 			if (src.viewalerts) src.robot_alerts()
 		return !cleared
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/device/borg_linker) && !isghostdrone(user))
 			var/obj/item/device/borg_linker/linker = W
 			if(!opened)

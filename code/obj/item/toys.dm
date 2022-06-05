@@ -29,7 +29,7 @@
 		src.setItemSpecial(/datum/item_special/swipe)
 		BLOCK_SETUP(BLOCK_SWORD)
 
-	attack(target as mob, mob/user as mob)
+	attack(target, mob/user)
 		..()
 		if (ishuman(user))
 			var/mob/living/carbon/human/U = user
@@ -109,7 +109,7 @@
 	..()
 	src.desc = "This is Clown College diploma, a Bachelor of Farts Degree for the study of [pick("slipology", "jugglemancy", "pie science", "bicycle horn accoustics", "comic sans calligraphy", "gelotology", "flatology", "nuclear physics", "goonstation coder")]. It appears to be written in crayon."
 
-/obj/item/toy/diploma/attack(mob/M as mob, mob/user as mob)
+/obj/item/toy/diploma/attack(mob/M, mob/user)
 	if (isliving(user))
 		var/mob/living/L = user
 		if (L.mind && L.mind.assigned_role == "Clown")

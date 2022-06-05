@@ -32,9 +32,9 @@ const processStatsData = statsData => {
     for (let keyIndex = 0; keyIndex < keys.length; keyIndex++) {
       const key = keys[keyIndex];
       const scientificIfOverMil = v =>
-        `${ v >= 1000000 ? v.toExponential(3) : v}`; // string !!!!
+        `${ v >= 1000000 ? v.toExponential(3) : v}`; // string !!!! to exponent do later
       // x,y coords for graph (y defaults to 0)
-      resolvedData[key].push([statsDataIndex, scientificIfOverMil(tegDatum[key]) ?? "None"]);
+      resolvedData[key].push([statsDataIndex, scientificIfOverMil(tegDatum[key]) ?? 0]); // 0 but none later
     }
   }
   return resolvedData;

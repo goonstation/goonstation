@@ -5,7 +5,7 @@
 	var/bites = 8
 	var/list/youarebad = list("You're a liar.", "You're a cheat.","You're a fraud.") // h e h
 
-	attack(mob/M as mob, mob/user as mob) //edible hats? why not
+	attack(mob/M, mob/user) //edible hats? why not
 		if (M == user)
 			if (!src.bites)
 				boutput(user, "<span class='alert'>No more bites of \the [src] left, oh no!</span>")
@@ -65,7 +65,7 @@
 			boutput(user, "You have successfully created \a [N]!")
 		return
 
-/obj/item/reagent_containers/food/snacks/plant/attackby(obj/item/W as obj, mob/user as mob) //first phase of fruithat construction
+/obj/item/reagent_containers/food/snacks/plant/attackby(obj/item/W, mob/user) //first phase of fruithat construction
 	if (istype(W, /obj/item/cable_coil))
 		var/obj/item/cable_coil/C = W
 		if (src.validforhat == 1) //is it a fruit and not a filthy vegetable?

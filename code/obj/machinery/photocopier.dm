@@ -63,7 +63,7 @@
 
 		return desc_string
 
-	attackby(var/obj/item/w as obj, var/mob/user as mob) //handles reloading with paper, scanning paper, scanning photos, scanning paper photos
+	attackby(var/obj/item/w, var/mob/user) //handles reloading with paper, scanning paper, scanning photos, scanning paper photos
 		if (src.use_state == 2) //photocopier is busy?
 			boutput(user, "<span class='alert'>/The [src] is busy! Try again later!</span>")
 			return
@@ -146,7 +146,7 @@
 
 		..()
 
-	attack_hand(var/mob/user as mob) //handles choosing amount, printing, scanning
+	attack_hand(var/mob/user) //handles choosing amount, printing, scanning
 		if (src.use_state == 2)
 			boutput(user, "<span class='alert'>\The [src] is busy right now! Try again later!</span>")
 			return

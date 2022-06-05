@@ -13,7 +13,7 @@
 			return
 		. = ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!isvampire(user))
 			if (user.a_intent == INTENT_HELP)
 				user.show_text("It won't budge!", "red")
@@ -29,7 +29,7 @@
 		else
 			..()
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		user.lastattacked = src
 		_health -= I.force
 		attack_particle(user,src)

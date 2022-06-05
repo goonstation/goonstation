@@ -242,7 +242,7 @@
 
 		return
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		src.add_fingerprint(user)
 
 		if(check_target_immunity( M ))

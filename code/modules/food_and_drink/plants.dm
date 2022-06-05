@@ -35,7 +35,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	proc/make_reagents()
 		made_reagents = 1
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		if (src.edible == 0)
 			if (user == M)
 				boutput(user, "<span class='alert'>You can't just cram that in your mouth, you greedy beast!</span>")
@@ -250,7 +250,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	validforhat = 1
 	food_effects = list("food_cold", "food_refreshed")
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat))
 			boutput(user, "<span class='notice'>You combine the [src] and [W] to create a Synthorange!</span>")
 			var/obj/item/reagent_containers/food/snacks/plant/orange/synth/P = new(W.loc)
@@ -357,7 +357,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	food_color = "#FF9F87"
 	brew_result = "juice_grapefruit"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (iscuttingtool(W))
 			if (istype (src, /obj/item/reagent_containers/food/snacks/plant/grapefruit/wedge))
 				boutput(user, "<span class='alert'>You can't cut wedges into wedges! What kind of insanity is that!?</span>")
@@ -411,7 +411,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	food_color = "#7FFF00"
 	validforhat = 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (iscuttingtool(W))
 			var/turf/T = get_turf(src)
 			user.visible_message("[user] cuts [src] into slices.", "You cut [src] into slices.")
@@ -462,7 +462,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 		..()
 		reagents.add_reagent("george_melonium",50)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (iscuttingtool(W))
 			var/turf/T = get_turf(src)
 			user.visible_message("[user] cuts [src] into slices.", "You cut [src] into slices.")
@@ -543,7 +543,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 			src.icon_state = "[base_icon_state]-spin-left"
 		. = ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		..()
 		if(user)
 			src.icon_state = base_icon_state
@@ -820,7 +820,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 		M.take_oxygen_deprivation(0 - src.heal_amt)
 		M.take_brain_damage(0 - src.heal_amt)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		// Apple on a stick
 		if(istype(W,/obj/item/stick) || istype(W,/obj/item/rods))
 			// Fail if already an apple on a stick
@@ -957,7 +957,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	food_color = "#CC6600"
 	validforhat = 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (iscuttingtool(W))
 			user.visible_message("[user] carefully and creatively carves [src].", "You carefully and creatively carve [src]. Spooky!")
 			var/obj/item/clothing/head/pumpkin/P = new /obj/item/clothing/head/pumpkin(user.loc)
@@ -977,7 +977,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	see_face = 0.0
 	item_state = "pumpkin"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/light/flashlight))
 			user.visible_message("[user] adds [W] to [src].", "You add [W] to [src].")
 			W.name = copytext(src.name, 8) + " lantern"	// "carved "
@@ -1001,7 +1001,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	validforhat = 1
 	food_effects = list("food_cold", "food_refreshed")
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (iscuttingtool(W))
 			if (istype (src, /obj/item/reagent_containers/food/snacks/plant/lime/wedge))
 				boutput(user, "<span class='alert'>You can't cut wedges into wedges! What kind of insanity is that!?</span>")
@@ -1046,7 +1046,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	validforhat = 1
 	food_effects = list("food_cold", "food_refreshed")
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (iscuttingtool(W))
 			if (istype (src, /obj/item/reagent_containers/food/snacks/plant/lemon/wedge))
 				boutput(user, "<span class='alert'>You can't cut wedges into wedges! What kind of insanity is that!?</span>")
@@ -1115,7 +1115,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	food_effects = list("food_energized", "food_brute")
 
 	/* drsingh todo: peanut shells and requiring roasting shelling
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/kitchen/utensil/knife) || istype(W,/obj/item/knife/butcher))
 			if (src.icon_state == "potato")
 				user.visible_message("[user] peels [src].", "You peel [src].")
@@ -1139,7 +1139,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	brewable = 1
 	brew_result = "vodka"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/kitchen/utensil/knife) || istype(W,/obj/item/knife/butcher))
 			if (src.icon_state == "potato")
 				user.visible_message("[user] peels [src].", "You peel [src].")
@@ -1179,7 +1179,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	food_color = "#FF9933"
 	food_effects = list("food_bad_breath")
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/kitchen/utensil/knife) || istype(W,/obj/item/knife/butcher))
 			user.visible_message("[user] chops up [src].", "You chop up [src].")
 			for (var/mob/living/carbon/M in range(user, 2))
@@ -1256,7 +1256,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 		..()
 		reagents.add_reagent("coconut_milk",30)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (iscuttingtool(W))
 			user.visible_message("[user] cuts [src] into slices.", "You cut [src] into slices.")
 			src.split()
@@ -1327,7 +1327,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 		..()
 		reagents.add_reagent("juice_pineapple")
 
-	attackby(obj/item/W as obj, mob/user as mob) //make pineapple slices
+	attackby(obj/item/W, mob/user) //make pineapple slices
 		if (iscuttingtool(W))
 			var/turf/T = get_turf(src)
 			user.visible_message("[user] cuts [src] into slices.", "You cut [src] into slices.")
