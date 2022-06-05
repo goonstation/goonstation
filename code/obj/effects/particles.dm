@@ -148,3 +148,20 @@ particles/spark
 	friction = generator("num", 0.1, 0.3, NORMAL_RAND)
 	drift = generator("box", list(0.1,0.05,0), list(-0.1,0,0), UNIFORM_RAND)
 	rotation = generator("num", -45, 45, UNIFORM_RAND)
+
+/particles/nanite_aura
+	icon = 'icons/effects/particles.dmi'
+	icon_state = list("8x8circle")
+	color = generator("color", "#383f49", "#6b7179", UNIFORM_RAND)
+	spawning = 0.5
+	count = 40
+	lifespan = 15
+	fade = 6
+	fadein = 2
+	position = generator("circle", 8, 10, NORMAL_RAND)
+	scale = list(1.2, 1.2)
+	grow = list(-0.05, -0.05)
+	gravity = list(0, 2, 0)
+	color_change = 0
+	friction = 0.5
+	drift = generator("vector", list(0.25,0,0), list(-0.25,0,0), UNIFORM_RAND)
