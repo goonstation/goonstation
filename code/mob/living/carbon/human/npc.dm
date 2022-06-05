@@ -26,7 +26,7 @@
 		SPAWN(0)
 			src.mind = new(src)
 			if (src.name == "human")
-				randomize_look(src, 1, 1, 1, 1, 1, 0) // change gender/bloodtype/age/name/underwear, keep bioeffects
+				randomize_look(src, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, FALSE) // change gender/bloodtype/age/name/underwear, keep bioeffects
 				src.organHolder.head.UpdateIcon()
 		SPAWN(1 SECOND)
 			set_clothing_icon_dirty()

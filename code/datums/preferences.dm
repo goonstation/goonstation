@@ -945,7 +945,7 @@ datum/preferences
 		if (!AH)
 			logTheThing("debug", usr ? usr : null, null, "a preference datum's appearence holder is null!")
 			return
-		randomize_look(AH, 0, 0, 0, 0, 0, 0) // keep gender/bloodtype/age/name/underwear/bioeffects
+		randomize_look(AH, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE) // keep gender/mutant/bloodtype/age/name/underwear/bioeffects
 		if (prob(1))
 			blType = "Zesty Ranch"
 
@@ -1828,7 +1828,7 @@ var/global/list/masculine_ustyles = list("No Underwear" = "none",\
 var/global/list/male_screams = list("male", "malescream4", "malescream5", "malescream6", "malescream7")
 var/global/list/female_screams = list("female", "femalescream1", "femalescream2", "femalescream3", "femalescream4")
 
-/proc/randomize_look(to_randomize, change_gender = 1, change_blood = 1, change_age = 1, change_name = 1, change_underwear = 1, remove_effects = 1, optional_donor)
+/proc/randomize_look(to_randomize, change_gender = TRUE, change_mutant = TRUE, change_blood = TRUE, change_age = TRUE, change_name = TRUE, change_underwear = TRUE, remove_effects = TRUE, optional_donor)
 	if (!to_randomize)
 		return
 
@@ -1994,6 +1994,8 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 
 	SPAWN(1 DECI SECOND)
 		H?.update_colorful_parts()
+		if (H && change_mutant && prob(40))
+			H.bioHolder.AddEffect(pick("lizard","cow","roach","skeleton","pug"))
 
 // Generates a real crap checkbox for html toggle links.
 // it sucks but it's a bit more readable i guess.

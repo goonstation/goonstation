@@ -88,7 +88,7 @@ ABSTRACT_TYPE(/datum/req_contract/special/surgery)
 	pack_crate()
 		//Make Mob
 		src.target = new /mob/living/carbon/human/npc/assistant
-		randomize_look(target, 1, 1, 1, 1, 1, 0)
+		randomize_look(target, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, FALSE)
 		//Let people have time to figure out what is going on before he starts fucking shit up
 		src.target.reagents.add_reagent("capulettium_plus", rand(15,30) ) // 5 minutes to 8.3 minutes (AI will disrupt it before then but creates the illusion)
 		src.target.reagents.add_reagent("ether", rand(25, 60) ) //

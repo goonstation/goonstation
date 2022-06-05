@@ -126,7 +126,7 @@
 				AH.customization_second_color = fix_colors(AH.customization_second_color)
 				AH.customization_third_color = fix_colors(AH.customization_third_color)
 			src.real_name = user.real_name
-			randomize_look(user, 0, 0, 0, 1, 0, 0) // randomize: gender 0, blood type 0, age 0, name 1, underwear 0, remove effects 0
+			randomize_look(user, FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE) // randomize: gender 0, blood type 0, age 0, name 1, underwear 0, remove effects 0
 			user.update_colorful_parts()
 
 		// Restore original appearance.

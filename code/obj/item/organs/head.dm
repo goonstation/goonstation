@@ -148,7 +148,6 @@
 
 		if(!src.donor_appearance || makeshitup || !src.donor)
 			AHead = new/datum/appearanceHolder()
-			randomize_look(AHead, 0, 0, 0, 0, 0, 0, src.donor)
 			src.donor_appearance = AHead
 			src.transplanted = FALSE // just in case
 		else
