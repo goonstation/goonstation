@@ -12394,7 +12394,7 @@
 /turf/unsimulated/floor/grass/leafy,
 /area/crater/biodome/north)
 "aMM" = (
-/obj/critter/spacebee,
+/obj/critter/wasp,
 /obj/spacevine{
 	icon_state = "vine-light2"
 	},
@@ -12615,7 +12615,7 @@
 /turf/unsimulated/floor/airless,
 /area/space)
 "aNu" = (
-/obj/critter/spacebee,
+/obj/critter/wasp,
 /obj/spacevine{
 	icon_state = "vine-light3"
 	},
@@ -12792,7 +12792,7 @@
 	density = 1;
 	icon_state = "vine-med2"
 	},
-/obj/critter/spacebee,
+/obj/critter/wasp,
 /turf/unsimulated/floor/green/side{
 	dir = 1
 	},
@@ -12816,7 +12816,7 @@
 	},
 /area/crater/biodome/north)
 "aOd" = (
-/obj/critter/spacebee,
+/obj/critter/wasp,
 /obj/spacevine{
 	icon_state = "vine-light2"
 	},
@@ -12842,7 +12842,7 @@
 /obj/spacevine{
 	icon_state = "vine-light3"
 	},
-/obj/critter/spacebee,
+/obj/critter/wasp,
 /turf/unsimulated/floor/green/side{
 	dir = 1
 	},
@@ -13221,7 +13221,7 @@
 	icon_state = "4-8"
 	},
 /obj/spacevine,
-/obj/critter/spacebee,
+/obj/critter/wasp,
 /turf/unsimulated/floor/green/side,
 /area/crater/biodome/north)
 "aPd" = (

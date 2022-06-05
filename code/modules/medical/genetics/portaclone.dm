@@ -37,7 +37,7 @@
 				computer.show_message("System ready.", "success")
 				return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (W)
 			if (istype(W, /obj/item/disk/data/floppy) || isscrewingtool(W) || istype(W, /obj/item/cloner_upgrade))
 				computer.Attackby(W,user)
@@ -51,5 +51,5 @@
 				pod1.Attackby(W,user)
 				src.add_fingerprint(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		return computer.Attackhand(user)

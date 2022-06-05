@@ -1,5 +1,91 @@
 
+(t)sun jun 05 22
+(u)Bartimeus973
+(p)8960
+(e)|
+(+)Jailbirds are now wanted for a bunch of new crimes!
+(t)sat jun 04 22
+(u)TTerc
+(+)You can now pin people by clicking fluids, smoke clouds and cleanable decals.
+(u)DimWhat
+(p)8938
+(e)🎨|sprites
+(+)Replaced the SWAT helmet in the captain's locker with a more fitting captain helmet.
+(u)DimWhat
+(p)8948
+(e)🗺|mapping
+(+)QM is now functional on destiny when the shields are on.
+(u)Ikea
+(p)8909
+(e)|
+(*)The bounty refresh interval for spies has been decreased from 25 minutes to 15 minutes on classic. For roleplay the refresh interval remains at 25 minutes.
+(t)fri jun 03 22
+(u)Bartimeus973
+(p)8913
+(e)|
+(+)Decapitated skeletons now speak from their heads, use the radio and listen in on conversations!
+(u)Wisemonster
+(p)8939
+(e)🗺|mapping
+(+)Added status displays to Clarion
+(u)CrystalClover
+(p)8934
+(e)🗺|mapping
+(+)Rearranged Horizon's pharmacy's layout and added a glass recycler
+(u)FlameArrow57
+(p)8593
+(e)🆕🎨⚖|feature, sprites, balance
+(+)Most harmful projectiles now leave a wound on your body.
+(u)aloe
+(+)Plates now just act like. Plates. You can grab food off of them without a menu, they don't make food all weird and small, and you can still use a utensil to eat off them.
+(+)Click dragging a food item on a plate to you will pick up the plate (in case you filled it with too much food)
+(+)Because I am a developer and I have a pathological need to remove features, plate stacks have been removed for being musty and generally bad.
+(u)CodeJester
+(p)8727
+(e)🆕🎨|feature, sprites
+(+)Cyborgs can now click-drag food items onto each other to use them on each other. Try dragging sugar on dough to make sweet dough!
+(+)Civilian cyborgs have a new "tongs" tool that can use a food item as if it were used in-hand. Try using tongs on a dough strip to make a dough circle!
+(+)The "tongs" tool can also get food items out of containers, like egg cartons or boxes.
+(t)thu jun 02 22
+(u)Munien
+(p)8821
+(e)|
+(+)Operating tables are now deconstructable.
+(u)DimWhat
+(p)8839
+(e)⚖|balance
+(+)Changed a few miscellaneous glove conductivity values; gloves that barely cover your hands (rings, fingerless gloves) don't offer electrical protection, and some random gloves have higher conductivity.
+(u)glowbold
+(p)8856
+(e)|
+(+)Cyborgs can now dump the contents of their ore scoop and satchels into material processors and the Rockbox
+(u)CodeJester
+(p)8869
+(e)🆕|feature
+(+)Pointing is now animated. Throw arrows at people today!
 (t)wed jun 01 22
+(u)Flourish
+(p)8761
+(e)🆕🎨|feature, sprites
+(*)Skeletons can now detach their head and limbs by targeting the respective part and using a wrench, crowbar, and wrench again. Once their head is detached, the skeleton's "eye" remains centered on their head object. Once a limb is detached, it can be used as a boomerang that automatically re-attaches upon catching.
+(*)Skeletons now also spawn with a jar of "joint wax" which can be applied to empty joint sockets for a small status buff. Check out the <a href="https://github.com/goonstation/goonstation/pull/8761" target="_blank">PR page</a> to learn more. Special thanks to Virva, DimWhat, and Flaborized for the sfx and sprites that made this possible!
+(u)Momoberry
+(p)8763
+(e)|
+(+)Added a Mimicry crate to cargo. It comes with a standard issue baguette, full mime attire, a pack of cigarettes and a Zippo.
+(u)Azrun
+(p)8873
+(e)⚖|balance
+(+)Limits how quickly other pipes in the same pipeline can rupture.
+(u)Azrun
+(p)8841
+(e)⚖|balance
+(*)Power gloves when augmented to stun can now be charged from wires and APCs! Now holds additional charges and will augment lightning with some additional damage based on charges.
+(+)Power gloves no longer have any effect when used on dead wires.
+(u)TDHooligan
+(p)6952
+(e)⚖|balance
+(+)The gods of the Lava Moon's Shield of Souls demand a toll for their power.
 (u)Flappybat
 (p)8627
 (e)🎨⚖|sprites, balance

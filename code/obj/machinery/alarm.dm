@@ -132,7 +132,7 @@
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, alert_signal, null, "alarm")
 
-/obj/machinery/alarm/attackby(var/obj/item/W as obj, user as mob)
+/obj/machinery/alarm/attackby(var/obj/item/W, user)
 	if (issnippingtool(W))
 		status ^= BROKEN
 		src.add_fingerprint(user)

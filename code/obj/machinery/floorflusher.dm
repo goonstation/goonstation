@@ -194,7 +194,7 @@
 		boutput(user, "<span class='alert'>You cannot interface with this device.</span>")
 
 	// human interact with machine
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.add_fingerprint(user)
 		if (open != 1)
 			return

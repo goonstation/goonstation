@@ -116,7 +116,7 @@ Shield and graivty well generators
 				qdel(src)
 	return
 
-/obj/shieldgen/attack_hand(mob/user as mob)
+/obj/shieldgen/attack_hand(mob/user)
 	if (active)
 		src.visible_message("<font color='blue'>[bicon(src)] [user] deactivated the shield generator.</font>")
 
@@ -201,7 +201,7 @@ Shield and graivty well generators
 					qdel(src)
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (active)
 			src.visible_message("<font color='blue'>[bicon(src)] [user] deactivated the gravity well.</font>")
 

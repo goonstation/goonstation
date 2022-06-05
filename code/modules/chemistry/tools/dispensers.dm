@@ -92,7 +92,7 @@
 	get_desc(dist, mob/user)
 		return null
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		..(W, user)
 		SPAWN(1 SECOND)
 			if (src?.reagents)
@@ -123,7 +123,7 @@
 	get_desc(dist, mob/user)
 		return null
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		..(W, user)
 		SPAWN(1 SECOND)
 			if (src?.reagents)
@@ -162,7 +162,7 @@
 	anchored = 0
 	amount_per_transfer_from_this = 25
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istool(W, TOOL_SCREWING | TOOL_WRENCHING))
 			if(!src.anchored)
 				user.visible_message("<b>[user]</b> secures the [src] to the floor!")
@@ -232,7 +232,7 @@
 		if (dist <= 2 && reagents)
 			. += "<br><span class='notice'>[reagents.get_description(user,RC_SCALE)]</span>"
 
-	attackby(obj/W as obj, mob/user as mob)
+	attackby(obj/W, mob/user)
 		if (has_tank)
 			if (iswrenchingtool(W))
 				user.show_text("You disconnect the bottle from [src].", "blue")
@@ -274,7 +274,7 @@
 						return
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.cup_amount <= 0)
 			user.show_text("\The [src] doesn't have any cups left, damnit.", "red")
 			return
@@ -398,7 +398,7 @@
 		. = "<br><span class='notice'>[reagents.get_description(user,RC_FULLNESS)]</span>"
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istool(W, TOOL_SCREWING | TOOL_WRENCHING))
 			if(!src.anchored)
 				user.visible_message("<b>[user]</b> secures the [src] to the floor!")
@@ -493,7 +493,7 @@
 		src.visible_message("<span class='notice'>[src] brews up [W]!</span>")
 		return 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/reagent_containers/food) || istype(W, /obj/item/plant))
 			var/load = 0
 			if (src.brew(W))

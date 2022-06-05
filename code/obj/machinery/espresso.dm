@@ -22,7 +22,7 @@
 		UnsubscribeProcess()
 		src.update()
 
-	attackby(var/obj/item/W as obj, var/mob/user as mob)
+	attackby(var/obj/item/W, var/mob/user)
 		if (istype(W, /obj/item/reagent_containers/food/drinks/espressocup))
 			if (src.cupinside == 1)
 				user.show_text("The [src] can't hold any more [src.cup_name]s, doofus!")
@@ -35,7 +35,7 @@
 				src.update()
 				return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (can_reach(user,src))
 			src.add_fingerprint(user)
 			if (src.cupinside == 1) //freaking spacing errors made me waste hours on this
@@ -162,7 +162,7 @@
 			src.my_carafe = new src.default_carafe (src)
 		src.update()
 
-	attackby(var/obj/item/W as obj, var/mob/user as mob)
+	attackby(var/obj/item/W, var/mob/user)
 		if (istype(W, /obj/item/reagent_containers/food/drinks/carafe))
 			if (src.my_carafe)
 				user.show_text("The [src] can't hold any more [src.carafe_name]s, doofus!")
@@ -175,7 +175,7 @@
 				src.update()
 				return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (can_reach(user,src))
 			src.add_fingerprint(user)
 			if (src.my_carafe) //freaking spacing errors made me waste hours on this
@@ -267,7 +267,7 @@ ABSTRACT_TYPE(/obj/drink_rack)
 		if (dist <= 2)
 			. += "There's [(src.amount_on_rack > 0) ? src.amount_on_rack : "no" ] [src.contained_name][s_es(src.amount_on_rack)] on \the [src]."
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, src.contained) & src.amount_on_rack < max_amount)
 			if (W.reagents.total_volume > 0)
 				var/turf/T = get_turf(src)
@@ -280,7 +280,7 @@ ABSTRACT_TYPE(/obj/drink_rack)
 			src.UpdateIcon()
 		else return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.add_fingerprint(user)
 		if (src.amount_on_rack <= 0)
 			user.show_text("\The [src] doesn't have any [src.contained_name]s left, doofus!", "red")

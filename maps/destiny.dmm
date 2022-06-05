@@ -38433,6 +38433,10 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random,
 /area/station/hallway/secondary/exit)
+"mFz" = (
+/obj/machinery/status_display,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/crewquarters/cryotron)
 "mFK" = (
 /obj/machinery/firealarm{
 	layer = 3.5;
@@ -56821,9 +56825,6 @@
 	},
 /obj/table/round/auto,
 /obj/machinery/computer/tour_console,
-/obj/machinery/status_display{
-	pixel_x = 32
-	},
 /turf/simulated/floor/darkblue/checker,
 /area/station/crew_quarters/fitness)
 "wsM" = (
@@ -108080,7 +108081,7 @@ xUg
 xUg
 xUg
 faU
-vMh
+mFz
 qyS
 lBQ
 lBQ
@@ -119584,8 +119585,8 @@ gzN
 xQd
 vwV
 oiF
-aaa
-aaa
+aag
+aag
 aag
 aaa
 aaa
@@ -119887,8 +119888,8 @@ dRu
 jCC
 hsb
 aaa
-aag
-aag
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -120188,8 +120189,8 @@ vSs
 ltk
 oiF
 oiF
-aaa
 aag
+aaa
 aaa
 aaa
 aaa
@@ -120489,9 +120490,9 @@ gVT
 hax
 oiF
 oiF
-aaa
-aaa
 aag
+aag
+aaa
 aaa
 aaa
 aaa
@@ -120793,7 +120794,7 @@ qOX
 vwH
 aaa
 aaa
-aag
+aaa
 aaa
 aaa
 aaa
@@ -121092,10 +121093,10 @@ wSq
 jGF
 ppd
 qXK
-aaa
-aaa
 aag
 aag
+aag
+aaa
 aaa
 aaa
 aaa

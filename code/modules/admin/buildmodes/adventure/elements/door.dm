@@ -113,7 +113,7 @@
 			src.icon_state = "door_[door_type]_open"
 			src.opening = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.density)
 			user.show_message("<span class='alert'>[src] won't open. Perhaps you need a key?</span>")
 		flick("door_[door_type]_deny", src)

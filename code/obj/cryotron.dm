@@ -283,7 +283,7 @@
 					if (!isnull(crew_record))
 						crew_record["p_stat"] = "Active"
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if(isgrab(user.l_hand))
 			src.Attackby(user.l_hand, user)
 		else if(isgrab(user.r_hand))
@@ -298,7 +298,7 @@
 		if (!enter_prompt(user))
 			return ..()
 
-	attackby(var/obj/item/W as obj, var/mob/user as mob)
+	attackby(var/obj/item/W, var/mob/user)
 		if (istype(W, /obj/item/grab))
 			var/obj/item/grab/G = W
 			if (ismob(G.affecting) && insert_prompt(G.affecting, user))

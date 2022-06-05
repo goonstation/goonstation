@@ -185,7 +185,7 @@
 		else
 			. += "It seems to be missing a usable battery."
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(src.coveropen && src.PCEL)
 			src.PCEL.set_loc(src.loc)
 			src.PCEL = null
@@ -209,7 +209,7 @@
 						boutput(user, "The [src.name]'s battery light flickers briefly.")
 		build_icon()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(ispryingtool(W))
 			if(!anchored)
 				src.set_dir(turn(src.dir, 90))

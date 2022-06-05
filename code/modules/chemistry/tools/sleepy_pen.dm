@@ -20,7 +20,7 @@
 		reagents.add_reagent("ketamine", 100)
 		return
 
-	attack(mob/M, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (!ismob(M))
 			return
 		if (src.reagents.total_volume)
@@ -61,7 +61,7 @@
 				src.reagents.add_reagent(pick("radium", "porktonium", "bathsalts", "gvomit"), 2)
 		return
 
-	attack(mob/M, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (!ismob(M))
 			return
 		if (src.reagents.total_volume)

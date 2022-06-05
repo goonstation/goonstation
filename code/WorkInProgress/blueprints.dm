@@ -46,7 +46,7 @@
 		boutput(user, "<span class='alert'>This machine is not linked to your network.</span>")
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/blueprint))
 			if(currentBp)
 				boutput(user, "<span class='alert'>Theres already a blueprint in the machine.</span>")
@@ -64,7 +64,7 @@
 			return
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(building)
 			boutput(user, "<span class='alert'>The machine is currently constructing something. Best not touch it until it's done.</span>")
 			return

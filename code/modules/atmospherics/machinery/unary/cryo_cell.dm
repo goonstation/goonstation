@@ -3,19 +3,19 @@
 	desc = "A glass tube full of a strange fluid that uses supercooled oxygen and cryoxadone to rapidly heal patients."
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "celltop-P"
-	density = 1
+	density = TRUE
 	anchored = 1.0
 	layer = EFFECTS_LAYER_BASE//MOB_EFFECT_LAYER
 	flags = NOSPLASH
-	var/on = 0
+	var/on = FALSE //! Whether the cell is turned on or not
 	var/datum/light/light
 	var/ARCHIVED(temperature)
-	var/mob/occupant = null
-	var/obj/item/beaker = null
-	var/show_beaker_contents = 0
+	var/mob/occupant = null //! Mob inside the tube being healed
+	var/obj/item/beaker = null //! The beaker containing chems which are applied to the occupant. May or may not be present.
+	var/show_beaker_contents = FALSE
 
 	var/current_heat_capacity = 50
-	var/pipe_direction = 1
+	var/pipe_direction //! Direction of the pipe leading into this, set in New() based on dir
 
 	var/reagent_scan_enabled = 0
 	var/reagent_scan_active = 0
@@ -140,7 +140,7 @@
 		src.go_out()
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.add_dialog(user)
 		var/temp_text = ""
 		if(air_contents.temperature > T0C)
@@ -213,36 +213,38 @@
 			src.add_fingerprint(usr)
 			return
 
-	attackby(var/obj/item/G as obj, var/mob/user as mob)
-		if(istype(G, /obj/item/reagent_containers/glass))
-			if (G.cant_drop)
+	attackby(var/obj/item/I, var/mob/user)
+		if(istype(I, /obj/item/reagent_containers/glass))
+			if (I.cant_drop)
 				boutput(user, "<span class='alert'>You can't put that in \the [src] while it's attached to you!")
 			if(src.beaker)
 				user.show_text("A beaker is already loaded into the machine.", "red")
 				return
 
-			src.beaker = G
+			src.beaker = I
 			user.drop_item()
-			G.set_loc(src)
+			I.set_loc(src)
 			user.visible_message("[user] adds a beaker to \the [src]!", "You add a beaker to the [src]!")
-			logTheThing("combat", user, null, "adds a beaker [log_reagents(G)] to [src] at [log_loc(src)].") // Rigging cryo is advertised in the 'Tip of the Day' list (Convair880).
+			logTheThing("combat", user, null, "adds a beaker [log_reagents(I)] to [src] at [log_loc(src)].")
 			src.add_fingerprint(user)
-		else if(istype(G, /obj/item/grab))
-			push_in(G, user)
-		else if (istype(G, /obj/item/reagent_containers/syringe))
+		else if(istype(I, /obj/item/grab))
+			var/obj/item/grab/G = I
+			if (try_push_in(G.affecting, user))
+				qdel(G)
+		else if (istype(I, /obj/item/reagent_containers/syringe))
 			//this is in syringe.dm
-			logTheThing("combat", user, null, "injects [log_reagents(G)] to [src] at [log_loc(src)].")
-			if (src.beaker == null)
+			logTheThing("combat", user, null, "injects [log_reagents(I)] to [src] at [log_loc(src)].")
+			if (!src.beaker)
 				boutput(user, "<span class='alert'>There is no beaker in [src] for you to inject reagents.</span>")
 				return
 			if (src.beaker.reagents.total_volume == src.beaker.reagents.maximum_volume)
 				boutput(user, "<span class='alert'>The beaker in [src] is full.</span>")
 				return
-			var/transferred = G.reagents.trans_to(src.beaker, 5)
-			src.visible_message("<span class='alert'><B>[user] injects [transferred] into [src]!</B></span>")
-			src.beaker:on_reagent_change()
+			var/transferred = I.reagents.trans_to(src.beaker, 5)
+			src.visible_message("<span class='alert'><B>[user] injects [transferred] into [src].</B></span>")
+			src.beaker.on_reagent_change()
 			return
-		else if (istype(G, /obj/item/device/analyzer/healthanalyzer_upgrade))
+		else if (istype(I, /obj/item/device/analyzer/healthanalyzer_upgrade))
 			if (reagent_scan_enabled)
 				boutput(user, "<span class='alert'>This Cryo Cell already has a reagent scan upgrade!</span>")
 				return
@@ -250,59 +252,36 @@
 				reagent_scan_enabled = 1
 				boutput(user, "<span class='notice'>Reagent scan upgrade installed.</span>")
 				playsound(src.loc ,"sound/items/Deconstruct.ogg", 80, 0)
-				user.u_equip(G)
-				qdel(G)
+				user.u_equip(I)
+				qdel(I)
 				return
-		else if (istype(G, /obj/item/robodefibrillator))
+		else if (istype(I, /obj/item/robodefibrillator))
 			if (src.defib)
 				boutput(user, "<span class='alert'>[src] already has a Defibrillator installed.</span>")
 			else
-				var/obj/item/robodefibrillator/D = G
-				src.defib = D
+				src.defib = I
 				boutput(user, "<span class='notice'>Defibrillator installed into [src].</span>")
-				playsound(src.loc ,"sound/items/Deconstruct.ogg", 80, 0)
-				user.u_equip(G)
-				G.set_loc(src)
-				build_icon()
-		else if (istype(G, /obj/item/wrench))
+				playsound(src.loc, "sound/items/Deconstruct.ogg", 80, 0)
+				user.u_equip(I)
+				I.set_loc(src)
+				src.UpdateIcon()
+		else if (istype(I, /obj/item/wrench))
 			if (!src.defib)
 				boutput(user, "<span class='alert'>[src] does not have a Defibrillator installed.</span>")
 			else
 				src.defib.set_loc(src.loc)
 				src.defib = null
-				build_icon()
+				src.UpdateIcon()
 				src.visible_message("<span class='alert'>[user] removes the Defibrillator from [src].</span>")
 				playsound(src.loc ,"sound/items/Ratchet.ogg", 50, 1)
-		else if (istype(G, /obj/item/device/analyzer/healthanalyzer))
+		else if (istype(I, /obj/item/device/analyzer/healthanalyzer))
 			if (!occupant)
 				boutput(user, "<span class='notice'>This Cryo Cell is empty!</span>")
 				return
 			else
-				boutput(user, "<span class='notice'>You scan the occupant of the cell!</span>")
-				G.attack(src.occupant, user)
-
-				return
+				I.attack(src.occupant, user)
 
 		src.updateUsrDialog()
-		return
-
-	proc/push_in(var/obj/item/grab/G, var/mob/user as mob)
-		if(!ismob(G.affecting))
-			return
-		if (src.occupant)
-			user.show_text("The cryo tube is already occupied.", "red")
-			return
-		logTheThing("combat", user, G.affecting, "shoves [constructTarget(G.affecting,"combat")] into [src] at [log_loc(src)].") // Ditto (Convair880).
-		var/mob/M = G.affecting
-		M.set_loc(src)
-		src.occupant = M
-		for (var/obj/O in src)
-			if (O == src.beaker || O == src.defib)
-				continue
-			O.set_loc(get_turf(src))
-		src.add_fingerprint(user)
-		build_icon()
-		qdel(G)
 
 	proc/shock_icon()
 		var/fake_overlay = new /obj/shock_overlay(src.loc)
@@ -323,10 +302,7 @@
 	proc/build_icon()
 		if(on)
 			light.enable()
-			if(src.occupant)
-				icon_state = "celltop_1"
-			else
-				icon_state = "celltop"
+			icon_state = "celltop"
 		else
 			light.disable()
 			icon_state = "celltop-p"
@@ -385,22 +361,11 @@
 		expel_gas.temperature = T20C // Lets expel hot gas and see if that helps people not die as they are removed
 		loc.assume_air(expel_gas)
 
-	proc/go_out()
-		if(!( src.occupant ))
-			return
-		for (var/obj/O in src)
-			if (!ishuman(O))
-				continue
-			O.set_loc(get_turf(src))
-		if (src.occupant.loc == src)
-			src.occupant.set_loc(src.loc)
-		src.occupant = null
-		build_icon()
-
 	verb/move_eject()
 		set src in oview(1)
 		set category = "Local"
-		if (!isalive(usr))
+
+		if (!can_act(usr))
 			return
 		src.go_out()
 		add_fingerprint(usr)
@@ -408,27 +373,62 @@
 	verb/move_inside()
 		set src in oview(1)
 		set category = "Local"
-		if (!isalive(usr) || status & (NOPOWER|BROKEN))
+
+		src.try_push_in(usr, usr)
+
+	/// Proc for entering a cryo tube. If a mob is shoving another mob in, `user` and `target` are different. If a mob is entering on its own, `user` and `target` are the same.
+	proc/try_push_in(mob/target, mob/user)
+		. = FALSE
+		if (src.status & (NOPOWER|BROKEN))
+			boutput(user, "<span class='alert'>\the [src] is broken.</span>")
 			return
-		if (!ishuman(usr))
-			boutput(usr, "<span class='alert'>You can't seem to fit into \the [src].</span>")
+		if (!(can_act(target) && can_reach(user, src) && can_reach(user, target)))
+			return
+		if (!ishuman(target))
+			boutput(user, "<span class='alert'>You can't seem to fit [target == user ? "yourself" : "[target]"] into \the [src].</span>")
 			return
 		if (src.occupant)
-			boutput(usr, "<span class='notice'><B>The cell is already occupied!</B></span>")
-			return
-		if(!src.node)
-			boutput(usr, "The cell is not corrrectly connected to its pipe network!")
+			user.show_text("The cryo tube is already occupied.", "red")
 			return
 
-		usr.remove_pulling()
-		usr.set_loc(src)
-		src.occupant = usr
+		logTheThing("combat", user, target, "shoves [user == target ? "themselves" : constructTarget(target,"combat")] into [src] containing [log_reagents(src.beaker)] at [log_loc(src)].")
+		target.remove_pulling()
+		src.occupant = target
+		src.occupant.set_loc(src)
 		for (var/obj/O in src)
-			if (O == src.beaker)
+			if (O == src.beaker || O == src.defib)
 				continue
 			O.set_loc(get_turf(src))
-		src.add_fingerprint(usr)
-		build_icon()
+		src.add_fingerprint(user)
+
+		// Visual stuff
+		src.vis_contents += target
+		src.occupant.vis_flags |= VIS_INHERIT_ID | VIS_INHERIT_LAYER | VIS_INHERIT_PLANE
+		src.occupant.add_filter("cryo alpha mask", 20, alpha_mask_filter(icon = icon('icons/effects/64x64.dmi', "60-alpha-mask")))
+		src.occupant.add_filter("cryo blur", 1, gauss_blur_filter(size = 0.8))
+		src.occupant.pixel_y = -8 // top of the tube is 32px offset upwards
+		animate(src.occupant, pixel_y = -16, time = 3 SECONDS, loop = -1, easing = SINE_EASING)
+		animate(pixel_y = -8, time = 3 SECONDS, loop = -1, easing = SINE_EASING)
+		src.occupant.force_laydown_standup()
+		src.UpdateIcon()
+		return TRUE
+
+	/// Proc to exit the cryo cell.
+	proc/go_out()
+		if (src.occupant)
+			src.vis_contents -= occupant
+			src.occupant.vis_flags &= ~(VIS_INHERIT_ID | VIS_INHERIT_LAYER | VIS_INHERIT_PLANE)
+			src.occupant.remove_filter("cryo alpha mask")
+			src.occupant.remove_filter("cryo blur")
+			src.occupant.pixel_y = 0
+			animate(src.occupant)
+		for (var/atom/movable/AM as anything in src)
+			if (AM == src.beaker || AM == src.defib)
+				continue
+			AM.set_loc(get_turf(src))
+		src.occupant.force_laydown_standup()
+		src.occupant = null
+		src.UpdateIcon()
 
 /obj/shock_overlay
 	icon = 'icons/obj/Cryogenic2.dmi'

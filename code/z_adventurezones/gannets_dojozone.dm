@@ -190,7 +190,7 @@ Contents:
 	New()
 		..()
 
-	attackby(obj/item/H as obj, mob/user as mob)
+	attackby(obj/item/H, mob/user)
 		if (istype(H, /obj/item/dojohammer))
 			var/obj/table/anvil/A = locate() in get_turf(src)
 			if(A)
@@ -500,7 +500,7 @@ Contents:
 	parts_type = null
 	hulk_immune = TRUE
 
-	attackby(obj/item/W as obj, mob/user as mob, params)
+	attackby(obj/item/W, mob/user, params)
 		if (istype(W) && src.place_on(W, user, params))
 			return
 		else

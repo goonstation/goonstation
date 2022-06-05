@@ -81,7 +81,7 @@
 			src.UpdateIcon()
 			return 0
 
-	attackby(obj/b as obj, mob/user as mob)
+	attackby(obj/b, mob/user)
 		if(istype(b, /obj/item/gun/kinetic) && b:allowReverseReload)
 			b.Attackby(src, user)
 		else if(b.type == src.type)
@@ -886,7 +886,7 @@
 	rigil
 		max_amount = 4
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		var/datum/projectile/bullet/grenade_shell/AMMO = src.ammo_type
 		if(!W || !user)
 			return
@@ -908,7 +908,7 @@
 		else
 			return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		var/datum/projectile/bullet/grenade_shell/AMMO = src.ammo_type
 		if(!user)
 			return

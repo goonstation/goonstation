@@ -280,7 +280,7 @@
 					if ((BOUNDS_DIST(src, src.target) == 0))
 						src.baton_attack(src.target, 1)
 
-	attack_hand(mob/user as mob, params)
+	attack_hand(mob/user, params)
 		var/dat
 
 		dat += {"
@@ -439,7 +439,7 @@
 			src.explode()
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/pda2) && W:ID_card)
 			W = W:ID_card
 		if (istype(W, /obj/item/card/id))
@@ -1409,7 +1409,7 @@
 		qdel(src)
 
 
-/obj/item/secbot_assembly/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/secbot_assembly/attackby(obj/item/W, mob/user)
 	if ((isweldingtool(W)) && (!src.build_step))
 		if(W:try_weld(user, 1))
 			src.build_step++

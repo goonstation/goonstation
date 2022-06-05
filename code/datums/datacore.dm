@@ -123,7 +123,27 @@
 								"Illegal haircutting.",\
 								"Staring at a bee for over an hour.",\
 								"Not showering before entering pool.",\
-								"Rampant idiocy.")
+								"Rampant idiocy.",\
+								"Never tipping the catering staff.",\
+								"Disregarding previous tickets.",\
+								"Fashion crimes.",\
+								"Gambling.",\
+								"Bribery.",\
+								"Sleeping on the job.",\
+								"Unauthorized stamp collecting.",\
+								"Refusing to wash their hands.",\
+								"Maintenance lurking.",\
+								"Dumpster diving.",\
+								"Not covering their mouth when sneezing.",\
+								"Open mouth chewing.",\
+								"Riding pods without a license.",\
+								"Breathing loudly.",\
+								"Riding a segway directly into the captain.",\
+								"Wearing their shirt backwards.",\
+								"Excessive swearing",\
+								"Cutting in line.",\
+								"Tying the captain's shoelaces together.",\
+								"Forgetting the captain's birthday.")
 		S["mi_crim_d"] = "No details provided."
 		S["ma_crim"] = pick(\
 								"Grand theft apidae.",\
@@ -141,7 +161,16 @@
 								"Dismemberment and decapitation.",\
 								"Running around with a chainsaw.",\
 								"Throwing explosive tomatoes at people.",\
-								"Caused multiple seemingly unrelated accidents.")
+								"Caused multiple seemingly unrelated accidents.",\
+								"Dabbing.",\
+								"Assembling explosives.",\
+								"Being in the wrong place at the wrong time.",\
+								"Assault.",\
+								"Tossing someone in space.",\
+								"Over-escalation.",\
+								"Manslaughter",\
+								"Refusing to share their meth.",\
+								"Grand larceny.")
 		S["ma_crim_d"] = "No details provided."
 
 

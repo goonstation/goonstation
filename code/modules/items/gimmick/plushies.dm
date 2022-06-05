@@ -32,7 +32,7 @@
 	/obj/item/toy/plush/small/singuloose)
 	var/has_plushies = TRUE
 
-/obj/submachine/claw_machine/attack_hand(var/mob/user as mob)
+/obj/submachine/claw_machine/attack_hand(var/mob/user)
 	src.add_dialog(user)
 	if(src.busy)
 		boutput(user, "<span class='alert'>Someone else is currently playing [src]. Be patient!</span>")
@@ -166,7 +166,7 @@
 /obj/item/toy/plush/attack_self(mob/user as mob)
 	src.say_something(user)
 
-/obj/item/toy/plush/attack(mob/M as mob, mob/user as mob)
+/obj/item/toy/plush/attack(mob/M, mob/user)
 	if (user.a_intent == INTENT_HELP)
 		M.visible_message("<span class='emote'>[src] gives [M] a hug!</span>", "<span class='emote'>[src] gives you a hug!</span>")
 	else

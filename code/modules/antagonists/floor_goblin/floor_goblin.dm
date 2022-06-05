@@ -42,7 +42,7 @@
 	item_state = "moneybag"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(!istype(W, /obj/item/clothing/shoes))
 			boutput(user, "<span class='alert'>\The [W] doesn't seem to fit in the bag. Weird!</span>")
 			return
@@ -51,7 +51,7 @@
 		playsound(src.loc, "rustle", 50, 1, -5)
 		boutput(user, "You stuff [W] into [src].")
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!user.find_in_hand(src))
 			return ..()
 		if (!src.contents.len)

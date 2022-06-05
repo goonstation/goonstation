@@ -59,7 +59,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 		src.standImage = image('icons/mob/human.dmi', "[src.icon_state_base]-[appearanceString]")
 		return standImage
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(isweldingtool(W))
 			if(!W:try_weld(user, 1))
 				return
@@ -182,7 +182,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 		else
 			. += "<span class='alert'>This head unit is empty.</span>"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!W)
 			return
 		if (istype(W,/obj/item/organ/brain))
@@ -249,7 +249,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 /obj/item/parts/robot_parts/head/standard
 	name = "standard cyborg head"
 	max_health = 175
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
 			if (M.amount >= 2)
@@ -282,7 +282,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 	weight = 0.2
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVY) // shush
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
 			if (!M.reinforcement)
@@ -337,7 +337,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 	weight = 0.4
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVIER)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isweldingtool(W))
 			if(!W:try_weld(user, 1))
 				return
@@ -408,7 +408,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/chest)
 		else
 			. += "<span class='alert'>This chest unit has not yet been wired up.</span>"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/cell))
 			if(src.cell)
 				boutput(user, "<span class='alert'>You have already inserted a cell!</span>")
@@ -463,7 +463,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/chest)
 	desc = "The centerpiece of any cyborg. It wouldn't get very far without it."
 	max_health = 250
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isweldingtool(W))
 			var/obj/item/weldingtool/welder = W
 			if (welder.try_weld(user, 3, 3))
@@ -492,7 +492,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
 	can_hold_items = 1
 	accepts_normal_human_overlays = 1
 
-	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	attack(mob/living/carbon/M, mob/living/carbon/user)
 		if(!ismob(M))
 			return
 
@@ -518,7 +518,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
 
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		//gonna hack this in with appearanceString
 		if ((appearanceString == "sturdy" || appearanceString == "heavy") && isweldingtool(W))
 			if(!W:try_weld(user, 1))
@@ -562,7 +562,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 
 /obj/item/parts/robot_parts/arm/left/standard
 	name = "standard cyborg left arm"
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
 			if (M.amount >= 2)
@@ -587,7 +587,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 	weight = 0.2
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVY)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
 			if (!M.reinforcement)
@@ -636,7 +636,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 
 /obj/item/parts/robot_parts/arm/right/standard
 	name = "standard cyborg right arm"
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
 			if (M.amount >= 2)
@@ -661,7 +661,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 	weight = 0.2
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVY)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
 			if (!M.reinforcement)
@@ -707,7 +707,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg)
 	var/step_sound = "step_robo"
 	var/step_priority = STEP_PRIORITY_LOW
 
-	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	attack(mob/living/carbon/M, mob/living/carbon/user)
 		if(!ismob(M))
 			return
 
@@ -737,7 +737,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg)
 
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/skull))
 			var/obj/item/skull/Skull = W
 			var/obj/machinery/bot/skullbot/B
@@ -916,7 +916,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 		emagged = 0
 		return 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/parts/robot_parts/))
 			var/obj/item/parts/robot_parts/P = W
 			switch (P.slot)

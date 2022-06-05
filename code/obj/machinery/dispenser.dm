@@ -77,7 +77,7 @@
 /obj/machinery/dispenser/attack_ai(mob/user as mob)
 	return src.Attackhand(user)
 
-/obj/machinery/dispenser/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/dispenser/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/tank/oxygen))
 		if (TOTAL_O2_TANKS < initial(src.o2tanks))
 			inserted_o2 += W

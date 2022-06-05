@@ -215,7 +215,7 @@
 
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..() && !(status & NOPOWER)) //Allow them to remove tapes even if the power's out.
 			return
 
@@ -331,7 +331,7 @@
 		src.add_fingerprint(usr)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, src.setup_tape_type) && setup_accept_tapes) //INSERT SOME TAPES
 			if (src.tape)
 				boutput(user, "<span class='alert'>There is already a [src.setup_tape_tag] in the drive.</span>")
@@ -722,7 +722,7 @@
 
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/tank))
 			return attack_hand(user)
 		else if (isscrewingtool(W))
@@ -735,7 +735,7 @@
 			..()
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(status & (NOPOWER|BROKEN))
 			return
 
@@ -1054,7 +1054,7 @@
 					src.link = test_link
 					src.link.master = src
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..() || status & NOPOWER)
 			return
 
@@ -1170,7 +1170,7 @@
 
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W))
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 			boutput(user, "You [src.panel_open ? "secure" : "unscrew"] the maintenance panel.")
@@ -1384,7 +1384,7 @@
 	proc/add_frequency(newFreq)
 		frequencies["[newFreq]"] = MAKE_DEFAULT_RADIO_PACKET_COMPONENT("f[newFreq]", newFreq)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..() || (status & (NOPOWER|BROKEN)))
 			return
 
@@ -1426,7 +1426,7 @@
 		onclose(user,"net_radio")
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W))
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 			boutput(user, "You [src.panel_open ? "secure" : "unscrew"] the maintenance panel.")
@@ -1714,7 +1714,7 @@
 		..()
 
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/paper)) //Load up the printer!
 			if (sheets_remaining >= MAX_SHEETS)
 				boutput(user, "<span class='alert'>The tray is full!</span>")
@@ -1774,7 +1774,7 @@
 		playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 50, 1)
 		. = ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..() || (status & (NOPOWER|BROKEN)))
 			return
 
@@ -2166,7 +2166,7 @@
 		if (!dd_hasprefix(uppertext(src.bank_id),"SC-"))
 			src.bank_id = "SC-[bank_id]"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(status & (NOPOWER|BROKEN))
 			return
 
@@ -2203,7 +2203,7 @@
 		onclose(user,"scanner")
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/paper) || istype(W, /obj/item/photo))
 			if (scanned_thing)
 				boutput(user, "<span class='alert'>There is already something in the scanner!</span>")
@@ -2434,7 +2434,7 @@
 
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..() || (status & (NOPOWER|BROKEN)))
 			return
 
@@ -2896,7 +2896,7 @@
 		src.telecrystals.len = 0
 		..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/raw_material/telecrystal))
 			return attack_hand(user)
 		else if (isscrewingtool(W))
@@ -2909,7 +2909,7 @@
 			..()
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..() || (status & (NOPOWER|BROKEN)))
 			return
 
@@ -3407,7 +3407,7 @@
 			src.UpdateIcon()
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/raw_material/telecrystal))
 			return attack_hand(user)
 
@@ -3421,7 +3421,7 @@
 			..()
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..() || (status & (NOPOWER|BROKEN)))
 			return
 

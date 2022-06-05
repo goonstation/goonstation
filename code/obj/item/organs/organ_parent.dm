@@ -74,7 +74,7 @@
 	///if the organ is currently acting as an organ in a body
 	var/in_body = FALSE
 
-	attack(var/mob/living/carbon/M as mob, var/mob/user as mob)
+	attack(var/mob/living/carbon/M, var/mob/user)
 		if (!ismob(M))
 			return
 
@@ -88,7 +88,7 @@
 		else // failure and attack them with the organ
 			return ..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/analyzer/healthanalyzer))
 			var/obj/item/device/analyzer/healthanalyzer/HA = W
 

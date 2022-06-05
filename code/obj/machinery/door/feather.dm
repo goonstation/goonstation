@@ -113,7 +113,7 @@
 	boutput(user, "<span class='alert'>No response. It doesn't seem compatible with your systems.</span>")
 	return
 
-/obj/machinery/door/feather/attack_hand(mob/user as mob)
+/obj/machinery/door/feather/attack_hand(mob/user)
 	return src.Attackby(null, user)
 
 /obj/machinery/door/feather/bullet_act(obj/projectile/P)

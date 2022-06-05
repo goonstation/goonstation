@@ -38,7 +38,7 @@
 	is_open_container()
 		return src.detonating
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/grenade_fuse) && !stage)
 			boutput(user, "<span class='notice'>You add [W] to the metal casing.</span>")
 			playsound(src, "sound/items/Screwdriver2.ogg", 25, -3)
