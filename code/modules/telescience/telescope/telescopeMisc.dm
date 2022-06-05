@@ -223,6 +223,12 @@ var/list/magnet_locations = list()
 	droploot = null
 	smashes_shit = 1
 
+	New()
+		..()
+		name = "Nanite Swarm Cluster NN-[rand(1,999)]"
+		UpdateParticles(new/particles/nanite_aura, "naniteaura")
+		return
+
 	ChaseAttack(atom/M)
 		if(target && !attacking)
 			attacking = 1
@@ -244,11 +250,6 @@ var/list/magnet_locations = list()
 			Shoot(tturf, src.loc, src)
 			SPAWN(attack_cooldown)
 				attacking = 0
-		return
-
-	New()
-		..()
-		name = "Nanite Swarm Cluster NN-[rand(1,999)]"
 		return
 
 	CritterDeath()
