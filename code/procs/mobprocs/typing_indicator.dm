@@ -67,12 +67,22 @@ Both the say/me wrappers and cancel_typing remove the typing indicator.
 // -- Human Typing Indicators -- //
 /mob/living/create_typing_indicator()
 	if(!src.has_typing_indicator && isalive(src)) //Prevents sticky overlays and typing while in any state besides conscious
-		src.UpdateOverlays(living_typing_bubble, TYPING_OVERLAY_KEY)
+		if (ishuman(src) && isskeleton(src) && !src.organHolder.head)	//Decapitated skeletons speak from their heads
+			var/mob/living/carbon/human/H = src
+			var/datum/mutantrace/skeleton/S = H.mutantrace
+			(S.head_tracker ? S.head_tracker : src).UpdateOverlays(living_typing_bubble, TYPING_OVERLAY_KEY)
+		else
+			src.UpdateOverlays(living_typing_bubble, TYPING_OVERLAY_KEY)
 		src.has_typing_indicator = TRUE
 
 /mob/living/remove_typing_indicator()
 	if(src.has_typing_indicator)
-		src.UpdateOverlays(null, TYPING_OVERLAY_KEY)
+		if (ishuman(src) && isskeleton(src) && !src.organHolder.head)	//Decapitated skeletons speak from their heads
+			var/mob/living/carbon/human/H = src
+			var/datum/mutantrace/skeleton/S = H.mutantrace
+			(S.head_tracker ? S.head_tracker : src).UpdateOverlays(null, TYPING_OVERLAY_KEY)
+		else
+			src.UpdateOverlays(null, TYPING_OVERLAY_KEY)
 		src.has_typing_indicator = FALSE
 
 #undef TYPING_OVERLAY_KEY
