@@ -946,7 +946,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 	initializeBioholder()
 		. = ..()
 		SPAWN(0) // ok, this crap actually needs to be spawned (for now!) because of organHolders being initialized at weird times
-			randomize_look(src, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, FALSE)
+			randomize_look(src, 1, 1, 1, 1, 1, 0)
 			real_name = spacer_name(pick("spacer","juicer"))
 			gender = pick(MALE,FEMALE)
 

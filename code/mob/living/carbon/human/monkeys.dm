@@ -25,7 +25,7 @@
 				src.real_name = src.name
 
 	initializeBioholder()
-		randomize_look(src, TRUE, FALSE, TRUE, TRUE, FALSE, TRUE, FALSE)
+		randomize_look(src, 1, 1, 1, 0, 1, 0)
 		. = ..()
 
 // special monkeys.
@@ -217,7 +217,7 @@
 
 	initializeBioholder()
 		if (src.name == "monkey" || !src.name)
-			randomize_look(src, TRUE, FALSE, TRUE, TRUE, FALSE, TRUE, FALSE)
+			randomize_look(src, 1, 1, 1, 0, 1, 0)
 			src.gender = src.bioHolder?.mobAppearance.gender
 		. = ..()
 
