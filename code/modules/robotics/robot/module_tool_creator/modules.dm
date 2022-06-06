@@ -69,6 +69,7 @@
 		/obj/item/lamp_manufacturer,
 		/obj/item/device/camera_viewer,
 		// TODO: some sort of nutrient dispenser?
+		/obj/item/tongs,
 		/obj/item/kitchen/utensil/knife/bread,
 		/obj/item/ladle,
 		/obj/item/kitchen/rollingpin/light,

@@ -896,12 +896,12 @@ ABSTRACT_TYPE(/obj/trait/job)
 	points = -1
 
 /obj/trait/jailbird
-	name = "Jailbird (0)"
+	name = "Jailbird (-1)"
 	cleanName = "Jailbird"
 	desc = "You have a criminal record and are currently on the run!"
 	id = "jailbird"
 	icon_state = "jail"
-	points = 0
+	points = -1
 
 /obj/trait/clericalerror
 	name = "Clerical Error (0)"
@@ -1085,10 +1085,6 @@ ABSTRACT_TYPE(/obj/trait/job)
 	points = -4 //Subject to change- -3 feels too low as puritan is relatively common. Though Puritan Pug DOES make for a special sort of Hard Modes
 	category = list("species", "nopug")
 	mutantRace = /datum/mutantrace/pug
-
-	onAdd(var/mob/owner)
-		..()
-		owner.put_in_hand_or_drop(new /obj/item/reagent_containers/food/snacks/cookie/dog)
 
 /obj/trait/super_slips
 	name = "Slipping Hazard (+1)"

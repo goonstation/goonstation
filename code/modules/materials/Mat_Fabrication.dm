@@ -100,7 +100,7 @@
 			recipes.Add(new R())
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		user.Browse(buildHtml(), "window=nfab;size=550x650;title=Nano-fabricator;fade_in=0;can_resize=0", 1)
 		return
 

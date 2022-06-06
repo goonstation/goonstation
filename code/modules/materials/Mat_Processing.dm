@@ -114,7 +114,7 @@
 				playsound(src.loc, "sound/machines/buzz-two.ogg", 40, 1)
 		return
 
-	attackby(var/obj/item/W as obj, mob/user as mob)
+	attackby(var/obj/item/W, mob/user)
 		//Wire: Fix for: undefined proc or verb /turf/simulated/floor/set loc()
 		//		like somehow a dude tried to load a turf? how the fuck? whatever just kill me
 		if (!istype(W))
@@ -137,7 +137,7 @@
 			S.UpdateIcon()
 			return
 
-		if (W.cant_drop) //For borg held items
+		else if (W.cant_drop) //For borg held items
 			boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
 			return ..()
 
@@ -347,7 +347,7 @@
 		light.set_brightness(0.5)
 		light.set_color(0.4, 0.8, 1)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		var/html = ""
 		html += "<div style=\"margin: auto;text-align:center\">[first_part ? "<a href='?src=\ref[src];remove=\ref[first_part]'>[first_part.name]</a>" : "EMPTY"] <i class=\"icon-plus\"></i> [second_part ? "<a href='?src=\ref[src];remove=\ref[second_part]'>[second_part.name]</a>" : "EMPTY"]   <i class=\"icon-double-angle-right\"></i> [resultName]</div><br>"
 		html += "<div style=\"margin: auto;text-align:center\"><a href='?src=\ref[src];activate=1'><i class=\"icon-check-sign icon-large\"></i></a></div><br><br>"
@@ -564,7 +564,7 @@
 		components.Cut()
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(output)
 			var/datum/material_recipe/R = matchesMaterialRecipe(output)
 			if(R)
@@ -664,7 +664,7 @@
 		components += dummyItem
 		user.ghostize()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/slag_shovel))
 			if(slag_level)
 				src.visible_message("<span class='notice'>[user] removes slag from the [src]</span>")

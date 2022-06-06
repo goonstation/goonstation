@@ -841,6 +841,8 @@
 
 	if (!antag_removal && src.unkillable) // Doesn't work properly for half the antagonist types anyway (Convair880).
 		newbody.unkillable = 1
+		newbody.setStatus("maxhealth-", null, -90)
+		newbody.setStatus("paralysis", 10 SECONDS)
 
 	if (src.bioHolder)
 		newbody.bioHolder.CopyOther(src.bioHolder)
@@ -3055,7 +3057,7 @@
 	if (!src.hud) // uh?
 		return src.show_text("<b>Somehow you have no HUD! Please alert a coder!</b>", "red")
 
-	var/selection = input(usr, "What style HUD style would you like?", "Selection") as null|anything in hud_style_selection
+	var/selection = tgui_input_list(usr, "What style HUD style would you like?", "Selection", hud_style_selection)
 	if (!selection)
 		return
 
@@ -3224,6 +3226,9 @@
 
 	if (head)
 		worn += head.name
+
+	else if (mutantrace?.self_click_fluff)
+		worn += mutantrace.self_click_fluff
 	else
 		worn += "hair"
 

@@ -31,7 +31,7 @@
 		setProperty("heatprot", 33)
 		setProperty("meleeprot", 1)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (user.a_intent == INTENT_HARM)
 			user.visible_message("<span class='notice'>[user] taps [src].</span>",\
 			"<span class='notice'>You tap [src].</span>")

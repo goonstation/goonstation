@@ -240,11 +240,14 @@ To remove:
 #define PROP_MOB_CANTTHROW(x) x("cantthrow", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 
 //-------------------- OBJ PROPS ------------------------
+#define PROP_OBJ_GOLFABLE(x) x("golfable", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
+
 //------------------- MOVABLE PROPS ---------------------
 //-------------------- TURF PROPS -----------------------
 //-------------------- ATOM PROPS -----------------------
 #define PROP_ATOM_NEVER_DENSE(x) x("neverdense", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_ATOM_NO_ICON_UPDATES(x) x("no_icon_updates", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
+#define PROP_ATOM_FLOCK_THING(x) x("flock_thing", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_ATOM_FLOATING(x) x("floating", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 
 

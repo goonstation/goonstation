@@ -11,7 +11,7 @@
 	var/protective_temperature = 0
 	speaker_range = 0
 	desc = "A standard-issue device that can be worn on a crewmember's ear to allow hands-free communication with the rest of the crew."
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
 	icon_override = "civ"
 	icon_tooltip = "Civilian"
 	wear_layer = MOB_EARS_LAYER
@@ -20,7 +20,7 @@
 	var/haswiretap
 	hardened = 0
 
-	attackby(obj/item/R as obj, mob/user as mob)
+	attackby(obj/item/R, mob/user)
 		if (istype(R, /obj/item/device/radio_upgrade))
 			if (haswiretap)
 				boutput(user, "<span class='alert'>This [src] already has a Wiretap Upgrade installed! What good could possibly come from having two?! </span>")

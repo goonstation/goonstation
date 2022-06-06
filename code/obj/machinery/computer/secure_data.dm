@@ -31,7 +31,7 @@
 	icon_state = "messyfiles"
 	req_access = list(access_forensics_lockers)
 
-/obj/machinery/computer/secure_data/attack_hand(mob/user as mob)
+/obj/machinery/computer/secure_data/attack_hand(mob/user)
 	if (..())
 		return
 	var/dat

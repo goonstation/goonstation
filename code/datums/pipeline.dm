@@ -5,6 +5,7 @@ datum/pipeline
 	var/list/obj/machinery/atmospherics/pipe/edges //Used for building networks
 
 	var/datum/pipe_network/network
+	var/list/cooldowns
 
 	var/alert_pressure = 0
 

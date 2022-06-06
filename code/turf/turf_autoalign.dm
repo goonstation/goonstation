@@ -98,7 +98,7 @@
 				. += "<br>Almost! Just need to <b>pry</b> off the outer sheath. Which you've somehow been working around this whole time. <em>Somehow</em>."
 
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/light_parts))
 			src.attach_light_fixture_parts(user, W) // Made this a proc to avoid duplicate code (Convair880).
 			return

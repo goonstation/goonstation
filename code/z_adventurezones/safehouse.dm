@@ -157,7 +157,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 				else
 					M.close()
 
-/obj/machinery/bio_handscanner/attack_hand(mob/user as mob)
+/obj/machinery/bio_handscanner/attack_hand(mob/user)
 	src.add_fingerprint(user)
 	if(ON_COOLDOWN(src, "bio_handscanner_attackhand", cooldown)) // To reduce chat spam in case of multi-click
 		return
@@ -212,7 +212,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 			sleep(5 SECONDS) //Jean's just here to set up the puzzle, we don't want him sticking around.
 			qdel(M)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		boutput(user, "An advanced cloning pod, designed to be operated automatically through packets. What a great idea!<br>Currently idle.<br><span class='alert'>Alert: Biomatter reserves are low (5% full).</span>")
 		playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1)
 		src.add_fingerprint(user)
@@ -349,7 +349,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	pixel_x = 0;
 	pixel_y = 26
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		boutput(user, "<span class='notice'>You check behind the [src.name] for a hidden safe, but don't find anything.</span>")
 		src.add_fingerprint(user)
 		return
@@ -362,7 +362,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	pixel_x = 0;
 	pixel_y = 10
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		boutput(user, "<span class='notice'>You rub the sculpture's bald head for luck.</span>")
 		src.add_fingerprint(user)
 		return
@@ -381,12 +381,12 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	anchored = 1
 	density = 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/record))
 			src.visible_message("<span class='notice'><b>[user] attempts to place the 12 inch record on the 7 inch turntable, but it obviously doesn't fit. How embarassing!</b></span>")
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		boutput(user, "<span class='notice'>You fiddle with the [src.name] but you can't seem to get it working.</span>")
 		src.add_fingerprint(user)
 		return
@@ -400,7 +400,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	density = 1
 	layer = 3.1 //I mess with layers here & below to help me set-up the clone room. Quite a bit was var-edited in StrongDMM as well.
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		boutput(user, "<span class='notice'>You try to activate the [src.name] but nothing happens! Looks like it's jammed</span>")
 		src.add_fingerprint(user)
 		return

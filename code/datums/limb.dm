@@ -375,7 +375,7 @@
 		if (isitem(target))
 			var/obj/item/potentially_food = target
 			if (potentially_food.edible)
-				potentially_food.Eat(user, user, 1)
+				potentially_food.attack(user, user)
 
 	help(mob/target, var/mob/user)
 		return
@@ -1348,7 +1348,8 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 	/obj/machinery/power/smes,
 	/obj/item/tinyhammer,\
 	/obj/machinery/manufacturer,\
-	/obj/item/device/light/zippo) //Items that ghostcritters simply cannot interact, regardless of w_class
+	/obj/item/device/light/zippo, \
+	/obj/machinery/door_control) //Items that ghostcritters simply cannot interact, regardless of w_class
 	. = list()
 	for (var/blocked_type in blocked_types)
 		for (var/subtype in typesof(blocked_type))

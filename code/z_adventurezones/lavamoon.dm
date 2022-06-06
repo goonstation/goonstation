@@ -772,6 +772,7 @@ var/sound/iomoon_alarm_sound = null
 			elecflash(user,radius = 2, power = 6)
 
 			H.unkillable = 1
+			H.setStatus("maxhealth-", null, -90)
 			H.gib(1)
 			qdel(src)
 
@@ -893,7 +894,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		layer = OBJ_LAYER
 		var/active = 0
 
-		attack_hand(mob/user as mob)
+		attack_hand(mob/user)
 			if (user.stat || user.getStatusDuration("weakened") || BOUNDS_DIST(user, src) > 0 || !user.can_use_hands())
 				return
 
@@ -1050,7 +1051,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 					rotors.icon_state = "powercore_rotors_fast"
 
 
-		attack_hand(var/mob/user as mob)
+		attack_hand(var/mob/user)
 			if (src.active != 1)
 				return
 
@@ -1363,13 +1364,13 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		RETURN_TYPE(/atom)
 		. = locate("ladder_[id][src.icon_state == "ladder"]")
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.broken) return
 		if (user.stat || user.getStatusDuration("weakened") || BOUNDS_DIST(user, src) > 0)
 			return
 		src.climb(user)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (src.broken) return
 		if (istype(W, /obj/item/grab))
 			if (!W:affecting) return
@@ -1819,7 +1820,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		if (findtext(id, ";"))
 			id = params2list(id)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (user.stat || user.getStatusDuration("weakened") || BOUNDS_DIST(user, src) > 0 || !user.can_use_hands() || !ishuman(user))
 			return
 

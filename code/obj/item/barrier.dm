@@ -87,7 +87,7 @@
 
 		..()
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		..()
 		playsound(src, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 0.1, 0, 2)
 

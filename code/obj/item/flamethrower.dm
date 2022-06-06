@@ -417,7 +417,7 @@ A Flamethrower in various states of assembly
 
 
 
-/obj/item/assembly/weld_rod/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/assembly/weld_rod/attackby(obj/item/W, mob/user)
 	if (iswrenchingtool(W))
 		var/turf/T = src.loc
 		if (ismob(T))
@@ -464,7 +464,7 @@ A Flamethrower in various states of assembly
 	src.add_fingerprint(user)
 	return
 
-/obj/item/assembly/w_r_ignite/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/assembly/w_r_ignite/attackby(obj/item/W, mob/user)
 	if (!W)
 		return
 	if (iswrenchingtool(W) && !(src.status))

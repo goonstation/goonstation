@@ -1685,6 +1685,8 @@
 	newMind.is_target = M.mind.is_target
 	if (M.mind.former_antagonist_roles.len)
 		newMind.former_antagonist_roles.Add(M.mind.former_antagonist_roles)
+	if (M.mind in ticker.mode.Agimmicks)
+		ticker.mode.Agimmicks -= M.mind
 	qdel(M.mind)
 	if (!(newMind in ticker.minds))
 		ticker.minds.Add(newMind)

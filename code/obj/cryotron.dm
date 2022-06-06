@@ -176,8 +176,8 @@
 
 	proc/enter_prompt(var/mob/living/user as mob)
 		if (mob_can_enter_storage(user)) // check before the prompt for dead/incapped/restrained/etc users
-			if (alert(user, "Would you like to enter cryogenic storage? You will be unable to leave it again until 5 minutes have passed.", "Confirmation", "Yes", "No") == "Yes")
-				if (alert(user, "Are you absolutely sure you want to enter cryogenic storage?", "Confirmation", "Yes", "No") == "Yes")
+			if (tgui_alert(user, "Would you like to enter cryogenic storage? You will be unable to leave it again until 5 minutes have passed.", "Confirmation", list("Yes", "No")) == "Yes")
+				if (tgui_alert(user, "Are you absolutely sure you want to enter cryogenic storage?", "Confirmation", list("Yes", "No")) == "Yes")
 					if (mob_can_enter_storage(user)) // check again in case they left the prompt up and moved away/died/whatever
 						add_person_to_storage(user)
 					return 1
@@ -283,7 +283,7 @@
 					if (!isnull(crew_record))
 						crew_record["p_stat"] = "Active"
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if(isgrab(user.l_hand))
 			src.Attackby(user.l_hand, user)
 		else if(isgrab(user.r_hand))
@@ -298,7 +298,7 @@
 		if (!enter_prompt(user))
 			return ..()
 
-	attackby(var/obj/item/W as obj, var/mob/user as mob)
+	attackby(var/obj/item/W, var/mob/user)
 		if (istype(W, /obj/item/grab))
 			var/obj/item/grab/G = W
 			if (ismob(G.affecting) && insert_prompt(G.affecting, user))

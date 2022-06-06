@@ -58,7 +58,6 @@
 	var/datum/geneboothproduct/selected_product = null
 	var/list/offered_genes = list()
 
-	var/spam_time = 0
 	var/started = 0
 	mats = 40
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
@@ -133,6 +132,11 @@
 		if (occupant)
 			user.show_text("[src] is currently occupied. Wait until it's done.", "blue")
 			return
+
+		if (status & (NOPOWER | BROKEN))
+			boutput(user, "<span class='alert'>The gene booth is currently nonfunctional.</span>")
+			return
+
 
 		if (length(offered_genes))
 			var/list/names = list()
@@ -357,6 +361,10 @@
 	Cross(var/mob/M)
 		.= ..()
 		if (M && M.y == src.y)
+			if (src.status & (NOPOWER | BROKEN))
+				if (!ON_COOLDOWN(M, "genebooth_message_antispam", 3 SECONDS))
+					boutput(M, "<span class='alert'>The gene booth is currently nonfunctional.</span>")
+				return
 			if (!occupant && selected_product && ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if (H.bioHolder && !H.bioHolder.HasEffect(selected_product.id))
@@ -367,17 +375,15 @@
 					entry_time = world.timeofday
 					started = 0
 
-					if (world.time > spam_time + 3 SECONDS)
+					if (!ON_COOLDOWN(M, "genebooth_message_antispam", 3 SECONDS))
 						playsound(src.loc, "sound/machines/heater_on.ogg", 90, 1, pitch = 0.78)
 						M.show_text("[src] is warming up. Please hold still.", "blue")
-						spam_time = world.time
 
 					UpdateIcon()
 					.= 1
 				else
-					if (world.time > spam_time + 3 SECONDS)
+					if (!ON_COOLDOWN(M, "genebooth_message_antispam", 3 SECONDS))
 						M.show_text("You already have the offered mutation!", "blue")
-						spam_time = world.time
 
 
 	mob_flip_inside(var/mob/user)
@@ -392,7 +398,7 @@
 				if (occupant == user && !(started>1))
 					src.eject_occupant(0,0, direction)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		user.lastattacked = src
 		letgo_hp -= W.force
 		attack_particle(user,src)

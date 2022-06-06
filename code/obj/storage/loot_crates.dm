@@ -364,7 +364,7 @@
 			..()
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(istype(lock) && locked)
 			var/success_state = lock.attempt_to_open(user)
 			if (success_state == 1) // Succeeded
@@ -379,7 +379,7 @@
 		else
 			return ..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (ispulsingtool(W) && locked)
 			if (istype(lock))
 				lock.read_device(user)
@@ -647,6 +647,9 @@
 	var/primary = TRUE
 	var/image/gemstone = null
 	var/obj/item/clothing/gloves/psylink_bracelet/twin
+	setupProperties()
+		..()
+		setProperty("conductivity", 1)
 
 	New()
 		..()

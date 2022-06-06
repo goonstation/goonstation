@@ -64,7 +64,7 @@ TYPEINFO(/mob/living/critter/small_animal/firefly)
 
 		hotkey("walk")
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		// Move to TYPEINFO if more containers are whitelisted, k thx
 		if(istype(W, /obj/item/reagent_containers/glass/jar) || istype(W, /obj/item/reagent_containers/glass/beaker/large))
 			W.AddComponent(/datum/component/bug_capture, W, src, user)
@@ -314,7 +314,7 @@ TYPEINFO(/mob/living/critter/small_animal/dragonfly)
 		. = ..()
 		animate(src, time=5 SECONDS, pixel_x=rand(-4,4), pixel_y=rand(-8,8))
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if(istype(W, /obj/item/reagent_containers/glass/jar) || istype(W, /obj/item/reagent_containers/glass/beaker/large))
 			W.AddComponent(/datum/component/bug_capture, W, src, user)
 		else

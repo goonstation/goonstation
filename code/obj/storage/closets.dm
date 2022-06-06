@@ -477,7 +477,7 @@
 		SEND_SIGNAL(src, COMSIG_OBJ_STORAGE_CLOSED)
 		return 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/cargotele))
 			return
 
@@ -605,7 +605,7 @@
 					/obj/item/clothing/suit/nursedress = 3,
 					/obj/item/clothing/suit/wintercoat/medical = 3,
 					/obj/item/clothing/head/headmirror = 3,
-					/obj/item/clothing/suit/labcoat/medical = 3)
+					/obj/item/clothing/suit/labcoat = 2)
 
 /obj/storage/closet/command/ruined //replacements for azones and mining level flavor
 	name = "Dented command locker"

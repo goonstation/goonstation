@@ -221,7 +221,7 @@
 
 	proc/on_grump()
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		..()
 		if (!src.alive)
 			if (src.skinresult && max_skins)
@@ -363,7 +363,7 @@
 			return 1 // so things can do if (..())
 		return
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		..()
 		if (!src.alive)
 			..()
@@ -1008,13 +1008,13 @@
 		if (src.reagents && src.critter_reagent)
 			src.reagents.add_reagent(src.critter_reagent, 10)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.anchored)
 			return
 		else
 			..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/pen))
 			var/t = input(user, "Enter new name", src.name, src.critter_name) as null|text
 			logTheThing("debug", user, null, "names a critter egg \"[t]\"")

@@ -122,6 +122,7 @@
 
 		if(linked.working || working) return
 		if(linked.maintaining_bridge || maintaining_bridge) return
+		if((linked.x != src.x && linked.y != src.y) || linked.z != src.z) return
 
 		working = 1
 		maintaining_bridge = 1
@@ -349,7 +350,7 @@
 		icon_state = "airbr[working]"
 		state_str = C.get_state_string()
 
-	attack_hand(var/mob/user as mob, params)
+	attack_hand(var/mob/user, params)
 		if (..(user, params))
 			return
 
@@ -480,7 +481,7 @@
 	var/state = 0
 	anchored = 1.0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		for(var/obj/airbridge_controller/C in range(3, src))
 			boutput(user, "<span class='notice'>[C.toggle_bridge()]</span>")
 			break

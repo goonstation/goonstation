@@ -53,7 +53,7 @@
 	initial_reagents = "soysauce"
 
 	heal(var/mob/M)
-		. = ..()	
+		. = ..()
 		boutput(M, "<span class='alert'>FUCK, SALTY!</span>")
 		M.emote("scream")
 
@@ -160,7 +160,7 @@
 		else
 			return ..()
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (src.shakes >= 15)
 			user.show_text("[src] is empty!", "red")
 			return
@@ -209,7 +209,7 @@
 		else
 			return ..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/))
 			if (W.reagents.has_reagent("[src.stuff]") && W.reagents.get_reagent_amount("[src.stuff]") >= 15)
 				user.show_text("You refill [src].", "blue")

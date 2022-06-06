@@ -775,11 +775,11 @@ var/global/datum/simsControl/simsController = new()
 		add_simple_light("plumbob", list(255, 255, 255, 100))
 
 	// relay procs
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (owner)
 			owner.Attackby(W, user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (owner)
 			owner.Attackhand(user)
 

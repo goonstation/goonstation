@@ -819,7 +819,7 @@ this is already used where it needs to be used, you can probably ignore it.
 			if ("BURN")
 				src.damage_type = DAMAGE_BURN
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		user.visible_message("<span class='combat'><b>[user]</b> attacks [M] with [src], set to <b>[dam_num2name(src.damage_type)]</b>!</span>",\
 		"<span class='combat'>You attack [M] with [src], set to <b>[dam_num2name(src.damage_type)]</b>!</span>")
 		switch(src.damage_type)
@@ -859,7 +859,7 @@ this is already used where it needs to be used, you can probably ignore it.
 			playsound(A, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, 1)
 			take_bleeding_damage(A, null, rand(2,3), DAMAGE_STAB)
 
-	attack(target as mob, mob/user as mob)
+	attack(target, mob/user)
 		..()
 		playsound(target, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, 1)
 		take_bleeding_damage(target, user, rand(2,3), DAMAGE_STAB)

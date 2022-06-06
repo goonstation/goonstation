@@ -52,8 +52,10 @@
 			for (var/reagent in botreagents)
 				available_chems += reagents_cache[reagent]
 		var/holder = src.loc
-		var/datum/reagent/pick = input(user, "Inject which chemical?", "Cybernetic Hypospray", null) in available_chems
+		var/datum/reagent/pick = tgui_input_list(user, "Inject which chemical?", "Cybernetic Hypospray", available_chems)
 		if (src.loc != holder)
+			return
+		if (!pick)
 			return
 		currentreagent = pick.id
 		propername = pick.name
@@ -66,7 +68,7 @@
 		. += "It is injecting [propername]. There are [botreagents[currentreagent]] units left."
 		return
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		if(ON_COOLDOWN(src, "injection_cooldown", 0.5 SECONDS))
 			user.show_text("[src] is still recharging, give it a moment! ", "red")
 

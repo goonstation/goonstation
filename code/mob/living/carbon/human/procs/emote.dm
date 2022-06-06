@@ -175,7 +175,7 @@
 
 						if (!fart_on_other)
 							switch(rand(1, 42))
-								if (1) message = "<B>[src]</B> lets out a girly little 'toot' from [his_or_her(src)] butt."
+								if (1) message = "<B>[src]</B> lets out a little 'toot' from [his_or_her(src)] butt."
 								if (2) message = "<B>[src]</B> farts loudly!"
 								if (3) message = "<B>[src]</B> lets one rip!"
 								if (4) message = "<B>[src]</B> farts! It sounds wet and smells like rotten eggs."

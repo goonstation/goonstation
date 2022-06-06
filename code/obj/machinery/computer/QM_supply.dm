@@ -157,12 +157,12 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	src.hacked = 0
 	return 1
 
-/obj/machinery/computer/supplycomp/attackby(I as obj, mob/user as mob)
+/obj/machinery/computer/supplycomp/attackby(I, mob/user)
 	if(!istype(I,/obj/item/card/emag))
 		//I guess you'll wanna put the emag away now instead of getting a massive popup
 		..()
 
-/obj/machinery/computer/supplycomp/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/supplycomp/attack_hand(var/mob/user)
 	if(!src.allowed(user))
 		boutput(user, "<span class='alert'>Access Denied.</span>")
 		return
