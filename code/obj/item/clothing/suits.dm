@@ -551,6 +551,11 @@
 		item_state = "MDlabcoat-alt"
 		coat_style = "MDlabcoat-alt"
 
+/obj/item/clothing/suit/labcoat/medical_director
+	name = "director's labcoat"
+	desc = "The Medical Directors personal labcoat, its creation was commisioned by the director themself."
+	icon_state = "labcoat-MDlong"
+
 /obj/item/clothing/suit/labcoat/pathology
 	name = "pathologist's labcoat"
 	desc = "A protective laboratory coat with the orange markings of a Pathologist."
