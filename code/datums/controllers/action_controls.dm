@@ -1770,6 +1770,7 @@ var/datum/action_controller/actions
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
 	var/mob/mob_owner
 	var/mob/target
+	var/syringe_mode
 	var/obj/item/reagent_containers/syringe/S
 
 	New(var/mob/target, var/item, var/icon, var/icon_state)
@@ -1789,6 +1790,7 @@ var/datum/action_controller/actions
 			return
 
 		src.mob_owner = owner
+		syringe_mode = S.mode
 
 		if(BOUNDS_DIST(owner, target) > 0 || !target || !owner || mob_owner.equipped() != S)
 			interrupt(INTERRUPT_ALWAYS)
@@ -1797,16 +1799,16 @@ var/datum/action_controller/actions
 
 	onUpdate()
 		..()
-		if(BOUNDS_DIST(owner, target) > 0 || !target || !owner || mob_owner.equipped() != S)
+		if(BOUNDS_DIST(owner, target) > 0 || !target || !owner || mob_owner.equipped() != S || syringe_mode != S.mode)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
-		if(BOUNDS_DIST(owner, target) > 0 || !target || !owner || mob_owner.equipped() != S)
+		if(BOUNDS_DIST(owner, target) > 0 || !target || !owner || mob_owner.equipped() != S || syringe_mode != S.mode)
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		if (!isnull(S))
+		if (!isnull(S) && syringe_mode == S.mode)
 			S.syringe_action(owner, target)
 
 /datum/action/bar/private/spy_steal //Used when a spy tries to steal a large object
