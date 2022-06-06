@@ -118,10 +118,6 @@
 
 	//due to not having intent hotkeys and also being AI controlled we only need the one proc
 	harm(mob/target, var/mob/user)
-		/*if (istraitor(target) || isnukeop(target) || isspythief(target)) // uh oh! we just hit a friend
-			target.visible_message("<span class='alert'>[user]'s IFF system engages last second and barely avoids hitting you!")
-			return
-		else *///COMMENCE THE PAIN
 		user.visible_message("<b class='alert'>[user] [pick(list("gouges", "cleaves", "lacerates", "shreds", "cuts", "tears", "saws", "mutilates", "hacks", "slashes",))] [target]!</b>")
 		playsound(user, "sound/machines/chainsaw_green.ogg", 50, 1)
 		take_bleeding_damage(target, null, 17, DAMAGE_STAB)

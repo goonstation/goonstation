@@ -66,9 +66,7 @@
 			if(!src.found_path)
 				src.found_path = get_path_to(holder.owner, holder.target, 18, 0)
 			if(src.found_path)
-				if(prob(20))
-					walk_rand(src,4)
-					owncritter.visible_message("The sawfly does the thing. Did this break anything yet?")
+				walk_rand(src,4)
 				holder.move_to_with_path(holder.target, src.found_path, 1)
 				owncritter.set_dir(get_dir(owncritter, holder.target)) //attack regardless
 				owncritter.hand_attack(holder.target, dummy_params)
