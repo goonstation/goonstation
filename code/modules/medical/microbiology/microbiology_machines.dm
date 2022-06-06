@@ -15,7 +15,7 @@
 
 	var/datum/microbe/process_pathogen
 	var/obj/item/bloodslide/process_source
-	var/counter = 15
+	var/counter = 8
 
 	attack_hand(mob/user)
 		var/output_text = "<B>Centrifuge</B><BR><BR>"
@@ -86,7 +86,7 @@
 				qdel(src.source)
 				src.source = null
 				src.isolated = null
-				counter = 15
+				counter = 8
 				processing_items.Remove(src)
 		else if (href_list["isolate"])
 			if (!src.on)
@@ -126,7 +126,7 @@
 					processing_items |= src
 					src.process_pathogen = P
 					src.process_source = S
-					counter = 25
+					counter = 12
 		src.Attackhand(usr)
 
 	attackby(var/obj/item/O, var/mob/user)
@@ -196,7 +196,7 @@
 	icon = 'icons/obj/pathology.dmi'
 	icon_state = "microscope0"
 	desc = "A device which provides a magnified view of a culture in a petri dish."
-	/*
+
 	var/obj/item/target = null
 
 	var/list/symptom_action_out = new/list()
@@ -232,7 +232,7 @@
 						var/pcount = length(path_list)
 						if (pcount > 0)
 							var/uid
-							var/datum/pathogen/P
+							var/datum/microbe/P
 							if (pcount > 1)
 								var/list/names = new/list()
 								for (uid in path_list)
@@ -251,14 +251,12 @@
 								P = path_list[uid]
 							user.show_message("<span class='notice'>Apparent features of the pathogen:</span>")
 							var/lines = 1
-							var/DNA = ""
 							user.show_message(P.suppressant.may_react_to())
-							for (var/datum/pathogeneffects/E in P.effects)
+							for (var/datum/microbioeffects/E in P.effects)
 								var/res = E.may_react_to()
 								if (res)
 									lines++
-									DNA = pathogen_controller.symptom_to_UID[E.type]
-									user.show_message("([DNA]) [res]")
+									user.show_message("[res]")
 							if (!lines)
 								user.show_message("You cannot see anything out of the ordinary.")
 							if (src.symptom_action_in.len)
@@ -277,7 +275,7 @@
 						var/pcount = length(path_list)
 						if (pcount > 0)
 							var/uid
-							var/datum/pathogen/P
+							var/datum/microbe/P
 							if (pcount > 1)
 								var/list/names = new/list()
 								for (uid in path_list)
@@ -294,7 +292,7 @@
 							else
 								uid = path_list[1]
 								P = path_list[uid]
-							user.show_message("<span class='notice'>The pathogen appears to be consistent with the strain [P.name_base]</span>")
+							user.show_message("<span class='notice'>The pathogen appears to be consistent with the strain [P.name]</span>")
 							user.show_message("The pathogen appears to be composed of [P.desc].")
 							if (src.symptom_action_out.len)
 								user.show_message("<span class='notice'>You can observe in the [target]:</span>")
@@ -349,17 +347,15 @@
 						if (R.volume < 1)
 							continue
 						for (var/uid in path_list)
-							var/datum/pathogen/P = path_list[uid]
+							var/datum/microbe/P = path_list[uid]
 							var/act = P.suppressant.react_to(R.id)
 							if (act != null)
 								if (!(P.name in src.supp_action))
 									src.supp_action += P.name
-								if (P.curable_by_suppression)
-									act += "<br>The culture appears to be severely damaged by the suppressing agent."
 								src.supp_action[P.name] = act
 								SPAWN(10 SECONDS) // 100
 									src.supp_action -= P.name
-							for (var/datum/pathogeneffects/E in P.effects)
+							for (var/datum/microbioeffects/E in P.effects)
 								var/a_in = "[P.name]: " + E.react_to(R.id, 1)
 								var/a_out = "[P.name]: " + E.react_to(R.id, 0)
 								if (a_in && !(a_in in src.symptom_action_in))
@@ -370,7 +366,7 @@
 									src.symptom_action_out += a_out
 									SPAWN(10 SECONDS) // 100
 										src.symptom_action_out -= a_out
-	*/
+
 /*
 #define PATHOGEN_MANIPULATOR_STATE_MAIN 0
 #define PATHOGEN_MANIPULATOR_STATE_LOADER 1
@@ -1715,24 +1711,18 @@
 	icon_off = "med-off"
 	icon_broken = "med-broken"
 	icon_fallen = "med-fallen"
-/*
+
 	New()
 		..()
 		//Products
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe, 12)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe, 15)
 		product_list += new/datum/data/vending_product(/obj/item/bloodslide, 50)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/vial, 25)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/petridish, 8)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/beaker/parasiticmedium, 20)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/beaker/fungal, 20)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/beaker/bacterial, 20)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/petridish, 10)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/beaker/egg, 20)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/beaker/spaceacillin, 20)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/beaker/antiviral, 20)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/beaker/biocides, 20)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/beaker/inhibitor, 20)
 		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/healthanalyzer, 4)
-*/
+
 /obj/machinery/incubator
 	name = "Incubator"
 	icon = 'icons/obj/pathology.dmi'

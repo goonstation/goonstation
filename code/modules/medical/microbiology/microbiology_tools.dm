@@ -50,13 +50,7 @@
 	var/starving = 5
 	rc_flags = 0
 
-	New()
-		..()
-		//for (var/nutrient in pathogen_controller.nutrients)
-			//nutrition += nutrient
-			//nutrition[nutrient] = 0
-
-	/*examine()
+	examine()
 		if (src.dirty || src.dirty_reason)
 			. = ..()
 			. += "<span class='alert'>The petri dish appears to be incapable of growing any pathogen, and must be cleaned.</span><br/>"
@@ -66,18 +60,7 @@
 		if (src.reagents.reagent_list["pathogen"])
 			var/datum/reagent/blood/pathogen/P = src.reagents.reagent_list["pathogen"]
 			. += "<span class='notice'>It contains [P.volume] unit\s of harvestable pathogen.</span><br/>"
-		if (src.medium)
-			. += "<span class='notice'>The petri dish is coated with [src.medium.name].</span><br/>"
-		. += "Nutrients in the dish:<br/>"
-		var/count = 0
-		for (var/N in nutrition)
-			if (nutrition[N])
-				. += "<span class='notice'>[nutrition[N]] unit\s of [N]</span><br/>"
-				count++
-		if (!count)
-			. += "<span class='notice'>None.</span><br/>"
-*/
-/*
+
 	afterattack(obj/target, mob/user , flag)
 		if (istype(target, /obj/machinery/microscope))
 			return
@@ -88,59 +71,14 @@
 			for (var/N in nutrition)
 				nutrition[N] = 0
 			reagents.clear_reagents()
-			if (src.medium)
-				del src.medium
-			src.medium = null
-			ctime = 8
-			starving = 5
-*/
-	/*
+
 	process()
 		if (dirty && (src in processing_items))
 			processing_items -= src
 		ctime--
 		if (!src.reagents || !src.reagents.reagent_list["pathogen"] )
 			set_dirty("All viable pathogen has been harvested from the petri dish.")
-		else
-			var/datum/reagent/blood/pathogen/P = src.reagents.reagent_list["pathogen"]
-			var/uid = P.pathogens[1]
-			var/datum/pathogen/PT = P.pathogens[uid]
-			if (medium && medium.id != PT.body_type.growth_medium)
-				set_dirty("The pathogen is unable to cultivate on the growth medium.")
-		if (ctime <= 0)
-			ctime = 8
-			var/datum/reagent/blood/pathogen/P = src.reagents.reagent_list["pathogen"]
-			var/uid = P.pathogens[1]
-			var/datum/pathogen/PT = P.pathogens[uid]
-			// Integration notes etc. stablemutagen reagent ID
-			var/starvation = 0
-			for (var/N in PT.body_type.nutrients)
-				if (src.nutrition[N] < PT.body_type.amount * P.volume)
-					starvation = 1
-					src.nutrition[N] = 0
-				else
-					starving = 5
-					src.nutrition[N] -= PT.body_type.amount * P.volume
-			if (starvation && starving > 0)
-				starving--
-			if (starving == 5)
-				if (stage < 4)
-					stage++
-					update_dish_icon()
-				else
-					P.volume = min(P.volume + 5, 30)
-					src.reagents.update_total()
-			else if (starving == 0)
-				if (stage > 1)
-					stage--
-					update_dish_icon()
-				else
-					P.volume = max(P.volume - 5, 0)
-					if (P.volume == 0)
-						src.reagents.del_reagent("pathogen")
-					src.reagents.update_total()
-					set_dirty("The pathogen in the petri dish starved to death.")
-	*/
+
 	on_reagent_change()
 		..()
 		if (reagents.total_volume < 0.5)
@@ -158,22 +96,18 @@
 				// Multiple types of reagents will immediately make the dish dirty.
 				if (R == "pathogen")
 					var/datum/reagent/blood/pathogen/P = src.reagents.reagent_list["pathogen"]
-					if (P.pathogens.len > 1)
+					if (P.microbes.len > 1)
 						// Too many pathogens. This culture is dead.
 						set_dirty("The presence of multiple pathogens makes them unable to grow.")
-				else if (R in pathogen_controller.media)
-					if (R == medium?.id)
-						if (RE.pathogen_nutrition)
-							for (var/N in RE.pathogen_nutrition)
-								if (N in nutrition)
-									nutrition[N] += RE.volume / length(RE.pathogen_nutrition)
-								else
-									nutrition[N] = RE.volume / length(RE.pathogen_nutrition)
-						src.reagents.reagent_list -= R
-						src.reagents.update_total()
-					else
-						// Malnutrition, a medium that normally rejects the grown pathogen type has been introduced.
-						set_dirty("A growth medium incompatible with the pathogen is killing the culture.")
+				else if (R == "egg")
+					if (RE.pathogen_nutrition)
+						for (var/N in RE.pathogen_nutrition)
+							if (N in nutrition)
+								nutrition[N] += RE.volume / length(RE.pathogen_nutrition)
+							else
+								nutrition[N] = RE.volume / length(RE.pathogen_nutrition)
+					src.reagents.reagent_list -= R
+					src.reagents.update_total()
 				else if (RE.pathogen_nutrition)
 					for (var/N in RE.pathogen_nutrition)
 						if (N in nutrition)
@@ -227,7 +161,7 @@
 					src.reagents.update_total()
 				else
 					set_dirty("Foreign chemicals in the petri dish.")
-
+*/
 	proc/update_dish_icon()
 		if (stage == 0)
 			if (src.reagents && src.reagents.total_volume > 0)
@@ -241,14 +175,11 @@
 		processing_items.Remove(src)
 		dirty = 1
 		stage = 0
-		ctime = 8
-		starving = 5
 		dirty_reason = reason
 		update_dish_icon()
 
 	flags = TABLEPASS | CONDUCT | FPRINT | OPENCONTAINER
 
-	*/
 /obj/item/reagent_containers/glass/vial
 	name = "vial"
 	desc = "A vial. Can hold up to 5 units."
@@ -300,29 +231,6 @@
 			var/datum/reagents/RE = src.reagents
 			RE.add_reagent("water", 5)
 			#endif
-/*
-/obj/item/reagent_containers/glass/vial/prepared/virus
-	FM = /datum/microbody/virus
-
-/obj/item/reagent_containers/glass/vial/prepared/parasite
-	FM = /datum/microbody/parasite
-
-/obj/item/reagent_containers/glass/vial/prepared/bacterium
-	FM = /datum/microbody/bacteria
-
-/obj/item/reagent_containers/glass/vial/prepared/fungus
-	FM = /datum/microbody/fungi
-*/
-/*
-/obj/item/reagent_containers/glass/beaker/parasiticmedium
-	name = "Beaker of Parasitic Medium"
-	desc = "A mix of blood and flesh; fertile ground for some microbes."
-
-	icon_state = "beaker"
-
-	New()
-		..()
-		src.reagents.add_reagent("parasiticmedium", 50)
 
 /obj/item/reagent_containers/glass/beaker/egg
 	name = "Beaker of Eggs"
@@ -333,7 +241,7 @@
 	New()
 		..()
 		src.reagents.add_reagent("egg", 50)
-*/
+
 /obj/item/reagent_containers/glass/beaker/stablemut
 	name = "Beaker of Stable Mutagen"
 	desc = "Stable Mutagen; fertile ground for some microbes."
@@ -343,47 +251,6 @@
 	New()
 		..()
 		src.reagents.add_reagent("dna_mutagen", 50)
-/*
-/obj/item/reagent_containers/glass/beaker/bacterial
-	name = "Beaker of Bacterial Growth Medium"
-	desc = "Bacterial Growth Medium; fertile ground for some microbes."
-
-	icon_state = "beaker"
-
-	New()
-		..()
-		src.reagents.add_reagent("bacterialmedium", 50)
-
-/obj/item/reagent_containers/glass/beaker/fungal
-	name = "Beaker of Fungal Growth Medium"
-	desc = "Fungal Growth Medium; fertile ground for some microbes."
-
-	icon_state = "beaker"
-
-	New()
-		..()
-		src.reagents.add_reagent("fungalmedium", 50)
-
-/obj/item/reagent_containers/glass/beaker/antiviral
-	name = "Beaker of Antiviral Agent"
-	desc = "A beaker of a weak anti-viral agent."
-
-	icon_state = "beaker"
-
-	New()
-		..()
-		src.reagents.add_reagent("antiviral", 50)
-
-/obj/item/reagent_containers/glass/beaker/biocides
-	name = "Beaker of Biocides"
-	desc = "A beaker of biocides. The label says 'do not feed to worms or mushrooms'. Curious."
-
-	icon_state = "beaker"
-
-	New()
-		..()
-		src.reagents.add_reagent("biocide", 50)
-
 
 /obj/item/reagent_containers/glass/beaker/spaceacillin
 	name = "Beaker of Spaceacillin"
@@ -394,17 +261,7 @@
 	New()
 		..()
 		src.reagents.add_reagent("spaceacillin", 50)
-
-/obj/item/reagent_containers/glass/beaker/inhibitor
-	name = "Beaker of Inhibition Agent"
-	desc = "It's green, that's for sure."
-
-	icon_state = "beaker"
-
-	New()
-		..()
-		src.reagents.add_reagent("inhibitor", 50)
-
+/*
 /obj/item/serum_injector
 	name = "Pathological Injector"
 	desc = "A specialized injector for injecting patients with serums and vaccines."
