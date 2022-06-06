@@ -45,7 +45,7 @@ shooting
 
 capture
 	-weight 15
-	-precondition: can_afford(FLOCK_CAGE_COST) and enemies exist
+	-enemies exist
 
 butcher
 	-weight 3
@@ -792,7 +792,7 @@ stare
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // FLOCKDRONE-SPECIFIC CAPTURE TASK
 // look through valid targets that are in the flock targets AND are stunned
-// precondition: can_afford(FLOCK_CAGE_COST) and enemies exist
+// precondition: enemies exist
 /datum/aiTask/sequence/goalbased/flockdrone_capture
 	name = "capturing"
 	weight = 15
@@ -805,7 +805,7 @@ stare
 
 /datum/aiTask/sequence/goalbased/flockdrone_capture/precondition()
 	var/mob/living/critter/flock/F = holder.owner
-	return F?.can_afford(FLOCK_CAGE_COST) && (length(F.flock?.enemies))
+	return (length(F.flock?.enemies))
 
 /datum/aiTask/sequence/goalbased/flockdrone_capture/evaluate()
 	. = precondition() * weight * score_target(get_best_target(get_targets()))
@@ -844,8 +844,6 @@ stare
 /datum/aiTask/succeedable/capture/failed()
 	var/mob/living/critter/flock/F = holder.owner
 	if(!F)
-		return TRUE
-	if(!F.can_afford(FLOCK_CAGE_COST))
 		return TRUE
 	if(get_dist(F, holder.target) > 1)
 		return TRUE

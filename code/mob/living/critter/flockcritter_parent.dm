@@ -477,8 +477,8 @@
 
 /datum/action/bar/flock_entomb
 	id = "flock_entomb"
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	duration = 6 SECONDS
+	interrupt_flags = INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	duration = 4 SECONDS
 	resumable = FALSE
 
 	var/atom/target
@@ -494,7 +494,7 @@
 	onUpdate()
 		..()
 		var/mob/living/critter/flock/F = owner
-		if (target == null || owner == null || !in_interact_range(owner, target) || !F.can_afford(FLOCK_CAGE_COST))
+		if (target == null || owner == null || !in_interact_range(owner, target))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -504,7 +504,7 @@
 			var/mob/living/critter/flock/F = owner
 			if(F)
 				F.tri_message("<span class='notice'>[owner] begins forming a cuboid structure around [target].</span>",
-					F, "<span class='notice'>You begin imprisoning [target]. You will both need to stay still for this to work.</span>",
+					F, "<span class='notice'>You begin imprisoning [target]. You will need to stay within a tile for this to work.</span>",
 					target, "<span class='alert'>[F] is forming a structure around you!</span>",
 					"You hear strange building noises.")
 				if(istype(target,/mob/living))
@@ -530,7 +530,6 @@
 		if(F && target && in_interact_range(owner, target))
 			var/obj/flock_structure/cage/cage = new /obj/flock_structure/cage(target.loc, target, F.flock)
 			cage.visible_message("<span class='alert'>[cage] forms around [target], entombing them completely!</span>")
-			F.pay_resources(FLOCK_CAGE_COST)
 			playsound(target, "sound/misc/flockmind/flockdrone_build_complete.ogg", 70, 1)
 
 ///
