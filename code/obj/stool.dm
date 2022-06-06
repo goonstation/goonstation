@@ -1216,7 +1216,6 @@
 	var/spawn_chance = 0 // How likely is this couch to spawn something?
 	var/last_use = 0 // To prevent spam.
 	var/time_between_uses = 400 // The default time between uses.
-	deconstruct_flags = DECON_WRENCH
 	var/list/items = list (/obj/item/device/light/zippo,
 	/obj/item/wrench,
 	/obj/item/device/multitool,
