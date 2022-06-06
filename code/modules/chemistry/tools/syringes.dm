@@ -204,6 +204,8 @@
 		return
 
 	proc/syringe_action(mob/user, mob/target)
+		if(!in_interact_range(user, target))
+			return
 		switch(src.mode)
 			if(S_DRAW)
 				transfer_blood(target, src, src.amount_per_transfer_from_this)
