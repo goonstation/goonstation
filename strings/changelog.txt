@@ -1,5 +1,7 @@
 
 (t)mon jun 06 22
+(u)TTerc
+(*)Injecting/drawing blood from mobs with a syringe now has actionbars. Injecting containers is now instant.
 (u)Ikea, Flaborized
 (p)8652
 (e)🎨|sprites
