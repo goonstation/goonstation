@@ -1,4 +1,9 @@
 
+(t)mon jun 06 22
+(u)Ikea, Flaborized
+(p)8652
+(e)🎨|sprites
+(*)Medical doctors and directors now spawn with medical labcoats. Regular labcoats can now be found in medical clothing lockers and the Patchwork medal reward now grants a <i>cool</i> medical labcoat (sprite by Flaborized!).
 (t)sun jun 05 22
 (u)Bartimeus973
 (p)8960

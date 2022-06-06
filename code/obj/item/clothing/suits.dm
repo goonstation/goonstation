@@ -551,6 +551,10 @@
 		item_state = "MDlabcoat-alt"
 		coat_style = "MDlabcoat-alt"
 
+	cool
+		icon_state = "MDlabcoat-cool"
+		coat_style = "MDlabcoat-cool"
+
 /obj/item/clothing/suit/labcoat/medical_director
 	name = "director's labcoat"
 	desc = "The Medical Directors personal labcoat, its creation was commisioned by the director themself."
