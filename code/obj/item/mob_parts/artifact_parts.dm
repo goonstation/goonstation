@@ -18,21 +18,34 @@
 
 	New(atom/new_holder)
 		..()
-		src.set_limb_name()
-
 		switch (src.artifact_type)
 			if ("eldritch")
+				if (src.slot == "l_arm" || src.slot == "r_arm")
+					src.name = pick("vile", "threatening", "intimidating") + " [src.side]" + " claw"
+				else
+					src.name = pick("vile", "threatening", "scary") + " [src.side]" + " leg"
+
 				cut_messages = list("slowly cuts through", "slowly cut through")
-				saw_messages = list("somehow saws through", "somehow saw through")
-				limb_material = "flesh" // better material name?
+				saw_messages = list("gradually saws through", "gradually saw through")
+				limb_material = "flesh"
 			if ("martian")
+				if (src.slot == "l_arm" || src.slot == "r_arm")
+					src.name = pick("entwined", "jittery", "soft") + " [src.side]" + " tentacles"
+				else
+					src.name = pick("entwined", "jittery", "pulsing") + " [src.side]" + " leg"
+
 				cut_messages = list("swiftly cuts through", "swiftly cut through")
 				saw_messages = list("easily saws through", "easily saw through")
 				limb_material = "tentacles"
 			if ("precursor")
+				if (src.slot == "l_arm" || src.slot == "r_arm")
+					src.name = pick("ancient", "old", "humming") + " [src.side]" + " device"
+				else
+					src.name =  pick("ancient", "old", "clunky") + " [src.side]" + " leg"
+
 				cut_messages = list("roughly cuts through", "roughly cut through")
-				saw_messages = list("breaks through", "break through")
-				limb_material = "brittle material" // better material name
+				saw_messages = list("messily saws through", "messily saw through")
+				limb_material = "metal"
 
 		if (ishuman(new_holder))
 			SPAWN(0.1 SECONDS) // required for abilities to be applied
@@ -128,26 +141,6 @@
 
 	proc/on_remove()
 		return ishuman(src.holder)
-
-	proc/set_limb_name() // more names
-		/*
-		switch(src.artifact_type)
-			if ("eldritch")
-				if (src.slot == "l_arm" || src.slot == "r_arm")
-					src.name = pick("vile", "threatening", "pointed") + " [src.side]" + " claw"
-				else
-					src.name = pick("awful", "creepy")
-			if ("martian")
-				if (src.slot == "l_arm" || src.slot == "r_arm")
-					src.name = pick("entwined", "soft", "jittery") + " [src.side]" + " idk"
-				else
-					src.name = pick("awful", "creepy")
-			if ("precursor")
-				if (src.slot == "l_arm" || src.slot == "r_arm")
-					src.name = pick("ancient", "pulsing", "pointed") + " [src.side]" + " device"
-				else
-					src.name = pick("awful", "creepy")
-		*/
 
 /obj/item/parts/artifact_parts/arm
 	can_hold_items = TRUE
