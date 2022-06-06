@@ -493,7 +493,6 @@
 
 	onUpdate()
 		..()
-		var/mob/living/critter/flock/F = owner
 		if (target == null || owner == null || !in_interact_range(owner, target))
 			interrupt(INTERRUPT_ALWAYS)
 			return
