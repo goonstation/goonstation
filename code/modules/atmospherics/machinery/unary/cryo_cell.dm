@@ -94,51 +94,21 @@
 		if (!istype(target) || isAI(user))
 			return
 
-		if (!can_reach(user, target) || !can_reach(target, src) || !can_reach(user, src))
+		if (!can_reach(user, target) || !can_reach(user, src) || !can_act(user))
 			return
 
-		if (target == user)
-			move_inside()
-		else if (can_operate(user,target))
-			var/previous_user_intent = user.a_intent
-			user.set_a_intent(INTENT_GRAB)
-			user.drop_item()
-			target.Attackhand(user)
-			user.set_a_intent(previous_user_intent)
-			SPAWN(user.combat_click_delay + 2)
-				if (can_operate(user,target))
-					if (istype(user.equipped(), /obj/item/grab))
-						src.Attackby(user.equipped(), user)
+		src.try_push_in(target, user)
+
 
 	Exited(atom/movable/AM, atom/newloc)
 		..()
-		if (AM == occupant && newloc != src)
+		if (AM == occupant && newloc != src && newloc != get_turf(src)) // Don't need to do this if they exited normally
 			src.go_out()
 
-	proc/can_operate(var/mob/M, var/mob/living/target)
-		if (!isalive(M))
-			return 0
-		if (BOUNDS_DIST(src, M) > 0)
-			return 0
-		if (M.getStatusDuration("paralysis") || M.getStatusDuration("stunned") || M.getStatusDuration("weakened"))
-			return 0
-		if (src.occupant)
-			boutput(M, "<span class='notice'><B>The scanner is already occupied!</B></span>")
-			return 0
-		if(ismobcritter(target))
-			boutput(M, "<span class='alert'><B>The scanner doesn't support this body type.</B></span>")
-			return 0
-		if(!iscarbon(target) )
-			boutput(M, "<span class='alert'><B>The scanner supports only carbon based lifeforms.</B></span>")
-			return 0
-
-		.= 1
-
-	relaymove(mob/user as mob)
-		if(user.stat)
+	relaymove(mob/user)
+		if(!can_act(user, include_cuffs = FALSE))
 			return
 		src.go_out()
-		return
 
 	attack_hand(mob/user)
 		src.add_dialog(user)
@@ -415,18 +385,19 @@
 
 	/// Proc to exit the cryo cell.
 	proc/go_out()
-		if (src.occupant)
-			src.vis_contents -= occupant
-			src.occupant.vis_flags &= ~(VIS_INHERIT_ID | VIS_INHERIT_LAYER | VIS_INHERIT_PLANE)
-			src.occupant.remove_filter("cryo alpha mask")
-			src.occupant.remove_filter("cryo blur")
-			src.occupant.pixel_y = 0
-			animate(src.occupant)
+		var/mob/living/exiter = src.occupant
+		if (exiter)
+			src.vis_contents -= exiter
+			exiter.vis_flags &= ~(VIS_INHERIT_ID | VIS_INHERIT_LAYER | VIS_INHERIT_PLANE)
+			exiter.remove_filter("cryo alpha mask")
+			exiter.remove_filter("cryo blur")
+			exiter.pixel_y = 0
+			animate(exiter)
 		for (var/atom/movable/AM as anything in src)
 			if (AM == src.beaker || AM == src.defib)
 				continue
 			AM.set_loc(get_turf(src))
-		src.occupant.force_laydown_standup()
+		exiter.force_laydown_standup()
 		src.occupant = null
 		src.UpdateIcon()
 
