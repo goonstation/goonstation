@@ -294,7 +294,7 @@
 
 /obj/item/storage/box/costume/jester
 	name = "jester costume"
-	desc = "a box that contains a jesters outfit"
+	desc = "A box that contains a jester's outfit"
 	spawn_contents = list(
 		/obj/item/clothing/head/jester,
 		/obj/item/clothing/mask/jester,
