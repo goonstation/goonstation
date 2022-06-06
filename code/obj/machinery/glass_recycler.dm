@@ -68,6 +68,9 @@
 			boutput(user, "<span class='alert'>You need to empty [W] first!</span>")
 			return
 
+		if(W.reagents.total_volume > 0) // Ask if they really want to lose the contents of the beaker
+			if (tgui_alert(user,"The [W] has reagents in it, are you sure you want to recycle it?","Recycler alert!",list("Yes","No")) != "Yes")
+				return
 
 		var/success = FALSE //did we successfully recycle a thing?
 		if(istype(W, /obj/item/reagent_containers/glass))
