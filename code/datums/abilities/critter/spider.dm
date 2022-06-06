@@ -19,12 +19,12 @@
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, __red("Nothing to bite there."))
+				boutput(holder.owner, "<span class='alert'>Nothing to bite there.</span>")
 				return 1
 		if (target == holder.owner)
 			return 1
 		if (BOUNDS_DIST(holder.owner, target) > 0)
-			boutput(holder.owner, __red("That is too far away to bite."))
+			boutput(holder.owner, "<span class='alert'>That is too far away to bite.</span>")
 			return 1
 		var/mob/MT = target
 		var/mob/living/critter/spider/S = holder.owner
@@ -75,12 +75,12 @@
 					target = M
 					break
 			if (!ismob(target))
-				boutput(holder.owner, __red("Nothing to flail at there."))
+				boutput(holder.owner, "<span class='alert'>Nothing to flail at there.</span>")
 				return 1
 		if (target == holder.owner)
 			return 1
 		if (BOUNDS_DIST(holder.owner, target) > 0)
-			boutput(holder.owner, __red("That is too far away to flail at."))
+			boutput(holder.owner, "<span class='alert'>That is too far away to flail at.</span>")
 			return 1
 		var/mob/MT = target
 		var/mob/living/critter/spider/S = holder.owner
@@ -157,12 +157,12 @@
 					target = H
 					break
 			if (!ishuman(target))
-				boutput(holder.owner, __red("Nothing to drain there."))
+				boutput(holder.owner, "<span class='alert'>Nothing to drain there.</span>")
 				return 1
 		if (target == holder.owner)
 			return 1
 		if (BOUNDS_DIST(holder.owner, target) > 0)
-			boutput(holder.owner, __red("That is too far away to drain."))
+			boutput(holder.owner, "<span class='alert'>That is too far away to drain.</span>")
 			return 1
 		var/mob/living/carbon/human/H = target
 		if(!istype(H) || !isdead(H))
@@ -256,12 +256,12 @@
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, __red("Nothing to kick there."))
+				boutput(holder.owner, "<span class='alert'>Nothing to kick there.</span>")
 				return 1
 		if (target == holder.owner)
 			return 1
 		if (BOUNDS_DIST(holder.owner, target) > 0)
-			boutput(holder.owner, __red("That is too far away to kick."))
+			boutput(holder.owner, "<span class='alert'>That is too far away to kick.</span>")
 			return 1
 		var/mob/MT = target
 		MT.TakeDamageAccountArmor("All", rand(1,5), 0, 0, DAMAGE_BLUNT)
@@ -306,12 +306,12 @@
 					target = M
 					break
 			if (!ismob(target))
-				boutput(holder.owner, __red("Nothing to trample there."))
+				boutput(holder.owner, "<span class='alert'>Nothing to trample there.</span>")
 				return 1
 		if (target == holder.owner)
 			return 1
 		if (BOUNDS_DIST(holder.owner, target) > 0)
-			boutput(holder.owner, __red("That is too far away to trample."))
+			boutput(holder.owner, "<span class='alert'>That is too far away to trample.</span>")
 			return 1
 		var/mob/MT = target
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner] pounces on top of [MT]!</b></span>",\

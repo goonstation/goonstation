@@ -68,6 +68,10 @@
 			boutput(member, "<span class='game hivesay'><span class='prefix'>HIVEMIND: </span><b>[src]</b> points to [target].</span>")
 			member.client.images += point
 			viewers += member.client
+		var/matrix/M = matrix()
+		M.Translate((hivemind_owner.owner.x - target.x)*32, (hivemind_owner.owner.y - target.y)*32)
+		point.transform = M
+		animate(point, transform=null, time=2)
 		SPAWN(time)
 			for (var/client/viewer in viewers)
 				viewer.images -= point
@@ -158,8 +162,8 @@
 
 	if(world.time >= can_exit_hivemind_time && hivemind_owner && hivemind_owner.master != src)
 		hivemind_owner.hivemind -= src
-		boutput(src, __red("You have parted with the hivemind."))
+		boutput(src, "<span class='alert'>You have parted with the hivemind.</span>")
 		src.boot()
 	else
-		boutput(src, __red("You are not able to part from the hivemind at this time. You will be able to leave in [(can_exit_hivemind_time/10 - world.time/10)] seconds."))
+		boutput(src, "<span class='alert'>You are not able to part from the hivemind at this time. You will be able to leave in [(can_exit_hivemind_time/10 - world.time/10)] seconds.</span>")
 

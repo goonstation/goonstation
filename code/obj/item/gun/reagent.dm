@@ -104,7 +104,7 @@
 		else
 			boutput(usr, "<span class='alert'>There's nothing loaded to drain!</span>")
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		if (istype(I, /obj/item/reagent_containers/glass))
 			return
 
@@ -141,6 +141,12 @@
 				. += "<br><span class='notice'>&emsp; [current_reagent.volume] units of [current_reagent.name]</span>"
 		else
 			. += "<br><span class='notice'>&emsp; Nothing</span>"
+
+	shoot(target, start, mob/user, POX, POY, is_dual_wield)
+		var/obj/projectile/P = ..()
+		if (istype(P)) //we actually shot something
+			P.create_reagents()
+
 
 /obj/item/gun/reagent/syringe/NT
 	name = "NT syringe gun"
@@ -215,7 +221,7 @@ obj/item/gun/reagent/syringe/love/plus // Sometimes you just need more love in y
 			src.icon_state = "ecto[ratio]"
 			return
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		if (istype(I, /obj/item/reagent_containers/food/snacks/ectoplasm) && !src.reagents.is_full())
 			I.reagents.trans_to(src, I.reagents.total_volume)
 			user.visible_message("<span style=\"color:red\">[user] smooshes a glob of ectoplasm into [src].</span>")

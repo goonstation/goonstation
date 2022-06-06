@@ -457,6 +457,9 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		purchase_flags = UPLINK_TRAITOR
 
 	nukeop
+		name = "syndicate operative uplink"
+		desc = "An uplink terminal that allows you to order weapons and items."
+		icon_state = "uplink"
 		purchase_flags = UPLINK_NUKE_OP
 
 	rev

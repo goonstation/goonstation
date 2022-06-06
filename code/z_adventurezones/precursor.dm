@@ -257,7 +257,7 @@
 	ex_act(severity)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 	/*	if (istype(W,/obj/item/skull)) // placeholder
 			playsound(src.loc, "sound/machines/ArtifactPre1.ogg", 50, 1)
 			src.visible_message("<span class='notice'><b>Something activates inside [src]!</b></span>")
@@ -315,7 +315,7 @@
 
 		src.tag = "orb_stand_[id]"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (user.stat || user.getStatusDuration("weakened") || BOUNDS_DIST(user, src) > 0)
 			return
 
@@ -345,7 +345,7 @@
 			sleep(5 SECONDS)
 			src.ready = 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(src.ready || src.assembled)
 			..()
 			return
@@ -404,7 +404,7 @@
 			active = 0
 			pitch = rand(0,12)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/hell_sax) && !src.opened)
 			..()
 			user.visible_message("<span class='notice'><B>[src] [pick("rings", "dings", "chimes","vibrates","oscillates")] [pick("faintly", "softly", "loudly", "weirdly", "scarily", "eerily")].</B></span>")
@@ -655,7 +655,7 @@
 							return // oh good you set it up wrong IDIOT
 
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(src.active)	return
 		src.active = 1
 
@@ -982,12 +982,12 @@
 	icon_state = "portrait"
 	desc = "A portrait of a man wearing a ridiculous merchant hat. That must be Discount Dan."
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		boutput(user, "<span class='notice'><b>You try to straighten [src], but it won't quite budge.</b></span>")
 		..()
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (ispryingtool(W))
 			playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
 			boutput(user, "<span class='notice'><b>You pry [src] off the wall, destroying it! You jerk!</b></span>")
@@ -1014,7 +1014,7 @@
 	generic = 0
 
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (user.a_intent == "help")
 			return
 
@@ -1390,7 +1390,7 @@
 	pixel_y = 32
 	var/activated = FALSE
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/dongle))
 			if (activated)
 				boutput(user, "<span class='alert'>There's already one plugged in!</span>")

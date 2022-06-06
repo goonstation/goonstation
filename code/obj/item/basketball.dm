@@ -16,7 +16,7 @@
 	stamina_crit_chance = 5
 	custom_suicide = 1
 
-/obj/item/basketball/attack_hand(mob/user as mob)
+/obj/item/basketball/attack_hand(mob/user)
 	..()
 	if(user)
 		src.icon_state = "bball"
@@ -57,7 +57,7 @@
 	src.icon_state = "bball_spin"
 	. = ..()
 
-/obj/item/basketball/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/basketball/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/plutonium_core))
 		boutput(user, "<span class='notice'>You insert the [W.name] into the [src.name].</span>")
 		user.u_equip(W)
@@ -72,7 +72,7 @@
 	..(W, user)
 	return
 
-/obj/item/basketball/attack_hand(mob/user as mob)
+/obj/item/basketball/attack_hand(mob/user)
 	..()
 	var/mob/living/carbon/human/H = user
 	if(istype(H) && payload && istype(payload))
@@ -103,7 +103,7 @@
 		..()
 		BLOCK_SETUP(BLOCK_ALL)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (iswrenchingtool(W) && mounted)
 			src.visible_message("<span class='notice'><b>[user] removes [src].</b></span>")
 			src.pixel_y = 0
@@ -124,7 +124,7 @@
 					src.visible_message("<span class='alert'>[user] whiffs the dunk.</span>")
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (mounted)
 			return
 		else
@@ -226,7 +226,7 @@
 	proc/unplutonize(var/usrverbs)
 		usrverbs -= /mob/proc/chaos_dunk
 
-/obj/item/plutonium_core/attack_hand(mob/user as mob)
+/obj/item/plutonium_core/attack_hand(mob/user)
 	..()
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -254,7 +254,7 @@
 	throwforce = 2
 	throw_spin = 0
 
-/obj/item/bloodbowlball/attack_hand(mob/user as mob)
+/obj/item/bloodbowlball/attack_hand(mob/user)
 	..()
 	if(user)
 		src.icon_state = "bloodbowlball"
@@ -294,7 +294,7 @@
 	src.icon_state = "bloodbowlball_air"
 	. = ..()
 
-/obj/item/bloodbowlball/attack(target as mob, mob/user as mob)
+/obj/item/bloodbowlball/attack(target, mob/user)
 	playsound(target, "sound/impact_sounds/Flesh_Stab_1.ogg", 60, 1)
 	if(iscarbon(target))
 		var/mob/living/carbon/targMob = target

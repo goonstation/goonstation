@@ -76,7 +76,7 @@
   HH.limb_name = "gravitational pull"
   HH.can_range_attack = 1
 
-/mob/living/critter/singularity/attackby(var/obj/item/I as obj, var/mob/user as mob)
+/mob/living/critter/singularity/attackby(var/obj/item/I, var/mob/user)
   if (istype(I, /obj/item/clothing/mask/cigarette))
     var/obj/item/clothing/mask/cigarette/C = I
     if (!C.on)

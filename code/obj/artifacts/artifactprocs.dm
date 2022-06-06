@@ -198,7 +198,7 @@
 		if("dna_mutagen","mutagen","omega_mutagen")
 			if (A.artitype.name == "martian")
 				ArtifactDevelopFault(80)
-		if("phlogiston","el_diablo","thermite","thalmerite","argine")
+		if("phlogiston","el_diablo","thermite","pyrosium","argine")
 			src.ArtifactStimulus("heat", 310 + (volume * 5))
 		if("napalm_goo","kerosene","ghostchilijuice")
 			src.ArtifactStimulus("heat", 310 + (volume * 10))
@@ -215,7 +215,7 @@
 		if("pacid","clacid","nitric_acid")
 			src.ArtifactTakeDamage(volume * 10)
 		if("george_melonium")
-			var/random_stimulus = pick("heat","force","radiate","elec")
+			var/random_stimulus = pick("heat","force","radiate","elec", "carbtouch", "silitouch")
 			var/random_strength = 0
 			switch(random_stimulus)
 				if ("heat")
@@ -226,10 +226,12 @@
 					random_strength = rand(3,30)
 				if ("radiate")
 					random_strength = rand(1,10)
+				else // carbon and silicon touch
+					random_strength = 1
 			src.ArtifactStimulus(random_stimulus,random_strength)
 	return
 
-/obj/proc/Artifact_attackby(obj/item/W as obj, mob/user as mob)
+/obj/proc/Artifact_attackby(obj/item/W, mob/user)
 	if (isrobot(user))
 		src.ArtifactStimulus("silitouch", 1)
 

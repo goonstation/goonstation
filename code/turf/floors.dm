@@ -1463,7 +1463,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 /turf/simulated/floor/blob
 	name = "blob floor"
 	desc = "Blob floors to lob blobs over."
-	icon = 'icons/mob/blob.dmi'
+	icon = 'icons/mob/blob_organs.dmi'
 	icon_state = "bridge"
 	default_melt_cap = 80
 	allows_vehicles = 1
@@ -1503,7 +1503,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 /turf/simulated/floor/metalfoam/ex_act()
 	ReplaceWithSpace()
 
-/turf/simulated/floor/metalfoam/attackby(obj/item/C as obj, mob/user as mob)
+/turf/simulated/floor/metalfoam/attackby(obj/item/C, mob/user)
 
 	if(!C || !user)
 		return 0
@@ -1589,7 +1589,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 /turf/simulated/floor/blob_act(var/power)
 	return
 
-/turf/simulated/attack_hand(mob/user as mob)
+/turf/simulated/attack_hand(mob/user)
 	if (src.density == 1)
 		return
 	if (!user.canmove || user.restrained())
@@ -1745,7 +1745,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	to_plating()
 	playsound(src, "sound/items/Crowbar.ogg", 80, 1)
 
-/turf/simulated/floor/attackby(obj/item/C as obj, mob/user as mob, params)
+/turf/simulated/floor/attackby(obj/item/C, mob/user, params)
 
 	if (!C || !user)
 		return 0
@@ -2065,7 +2065,7 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 		icon_state = "bluewall_glow"
 		can_replace_with_stuff = 1
 
-		attackby(obj/item/W as obj, mob/user as mob)
+		attackby(obj/item/W, mob/user)
 			if (istype(W, /obj/item/device/key))
 				playsound(src, "sound/effects/mag_warp.ogg", 50, 1)
 				src.visible_message("<span class='notice'><b>[src] slides away!</b></span>")
@@ -2167,6 +2167,11 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 		name = "overgrown floor"
 		desc = "This floor is covered in vines."
 		icon_state = "rootfloor_1"
+
+		random
+			New()
+				. = ..()
+				icon_state = "rootfloor_[rand(1,3)]"
 
 	oldfloor
 		name = "floor"

@@ -76,6 +76,7 @@
 /datum/plantmutation/corn/clear
 	crop = /obj/item/reagent_containers/food/snacks/plant/corn/clear
 	iconmod = "CornClear"
+	name_prefix = "Clear "
 	assoc_reagents = list("ethanol")
 
 /datum/plantmutation/corn/pepper
@@ -89,12 +90,13 @@
 /datum/plantmutation/peas/ammonia
 	crop = /obj/item/reagent_containers/food/snacks/plant/peas/ammonia
 	iconmod = "GoldenPeas"
+	name_prefix = "Golden "
 	assoc_reagents = list("ammonia")
 
 // Grape Mutations
 
 /datum/plantmutation/grapes/green
-	name_prefix = "green "
+	name_prefix = "Green "
 	crop = /obj/item/reagent_containers/food/snacks/plant/grape/green
 	iconmod = "GrapeGreen"
 	assoc_reagents = list("insulin")
@@ -192,7 +194,7 @@
 
 /datum/plantmutation/beans/jelly // hehehe
 	name = "Jelly Bean"
-	name_prefix = "jelly"
+	name_prefix = "Jelly"
 	iconmod = "BeanJelly"
 	assoc_reagents = list("VHFCS")
 	crop = /obj/item/reagent_containers/food/snacks/candy/jellybean/someflavor
@@ -219,14 +221,14 @@
 
 /datum/plantmutation/chili/chilly
 	name = "Chilly"
-	name_prefix = "chilly "
+	name_prefix = "Chilly "
 	iconmod = "ChiliChilly" // IM SORRY THIS IS ALL IN THE NAME OF A VAGUELY CONSISTENT AND PREDICTABLE NAMING CONVENTION
 	crop = /obj/item/reagent_containers/food/snacks/plant/chili/chilly
 	assoc_reagents = list("cryostylane")
 
 /datum/plantmutation/chili/ghost
 	name = "Fiery Chili"
-	name_prefix = "fiery "
+	name_prefix = "Fiery "
 	iconmod = "ChiliGhost"
 	crop = /obj/item/reagent_containers/food/snacks/plant/chili/ghost_chili
 	PTrange = list(75,null)
@@ -238,7 +240,7 @@
 /datum/plantmutation/eggplant/literal
 	name = "Free-Range Eggplant"
 	dont_rename_crop = true
-	name_prefix = "free range "
+	name_prefix = "Free range "
 	iconmod = "EggplantEggs"
 	crop = /obj/item/reagent_containers/food/snacks/ingredient/egg
 
@@ -246,12 +248,12 @@
 
 /datum/plantmutation/wheat/durum
 	name = "Durum Wheat"
-	name_prefix = "durum "
+	name_prefix = "Durum "
 	crop = /obj/item/plant/wheat/durum
 
 /datum/plantmutation/wheat/steelwheat
 	name = "steel wheat"
-	name_prefix = "steel "
+	name_prefix = "Steel "
 	iconmod = "WheatSteel"
 	assoc_reagents = list("iron")
 	crop = /obj/item/plant/wheat/metal
@@ -270,7 +272,7 @@
 
 /datum/plantmutation/oat/salt
 	name = "Salted Oats"
-	name_prefix = "salted "
+	name_prefix = "Salted "
 	iconmod = "OatSalt"
 	assoc_reagents = list("salt")
 	crop = /obj/item/plant/oat/salt

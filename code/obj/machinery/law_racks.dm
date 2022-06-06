@@ -258,7 +258,7 @@
 			src.UpdateOverlays(circuit_image,"module_slot_[i]")
 			src.UpdateOverlays(color_overlay,"module_slot_[i]_overlay")
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!src.law_circuits)
 			// YOU BETRAYED THE LAW!!!!!!
 			boutput(user, "<span class='alert'>Oh dear, this really shouldn't happen. Call an admin.</span>")
@@ -282,7 +282,7 @@
 		return ..()
 
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		if(isweldingtool(I))
 			if(I:try_weld(user,1))
 				if(src._health < src._max_health)
@@ -309,7 +309,7 @@
 			if(!inserted)
 				boutput(user,"<span class='alert'>There's no more space on the rack!</span>")
 			else
-				SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, .proc/insert_module_callback, list(count,user,AIM), user.equipped().icon, user.equipped().icon_state, \
+				SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, .proc/insert_module_callback, list(count,user,AIM), user.equipped().appearance, null, \
 					"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 		else if (istype(I, /obj/item/clothing/mask/moustache/))
 			for_by_tcl(M, /mob/living/silicon/ai)
@@ -320,7 +320,7 @@
 		else if (istype(I, /obj/item/peripheral/videocard))
 			var/obj/item/peripheral/videocard/V = I
 			if (GET_COOLDOWN(src, "mine_cooldown") == 0)
-				SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, .proc/insert_videocard_callback, list(user,V), user.equipped().icon, user.equipped().icon_state, \
+				SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, .proc/insert_videocard_callback, list(user,V), user.equipped().appearance, null, \
 						"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 			else
 				user.visible_message("<span class='alert'>The [src]'s graphics port isn't ready to accept [I] yet.</span>")
@@ -493,6 +493,7 @@
 	**/
 	proc/format_for_display(var/glue = "<br>")
 		var/law_counter = 1 //make the laws always sequential regardless of where in the rack they are
+		var/removed_law_offset = 0
 		var/list/lawOut = new
 		var/list/removed_laws = new
 
@@ -501,7 +502,14 @@
 			if(!module)
 				if (last_laws[i])
 					//load the law number and text from our saved law list
-					removed_laws += "<del class=\"alert\">[last_laws[i]["number"]]: [last_laws[i]["law"]]</del>"
+					var/list/lawtext = last_laws[i]["law"]
+					if (islist(lawtext))
+						for (var/law in lawtext)
+							removed_laws += "<del class=\"alert\">[last_laws[i]["number"] + removed_law_offset]: [law]</del>"
+							if (lawtext.Find(law) != length(lawtext)) //screm
+								removed_law_offset++
+					else
+						removed_laws += "<del class=\"alert\">[last_laws[i]["number"] + removed_law_offset]: [lawtext]</del>"
 				continue
 			var/lt = module.get_law_text(TRUE)
 			var/class = "regular"
@@ -595,6 +603,8 @@
 		tgui_process.update_uis(src)
 
 	proc/insert_module_callback(var/slotNum,var/mob/user,var/obj/item/aiModule/equipped)
+		if(src.law_circuits[slotNum])
+			return FALSE
 		src.law_circuits[slotNum]=equipped
 		user.u_equip(equipped)
 		equipped.set_loc(src)

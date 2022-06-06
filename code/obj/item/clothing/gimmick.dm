@@ -420,6 +420,10 @@
 	cant_other_remove = 1
 	material_prints = "greasy polymer fibers"
 
+	setupProperties()
+		..()
+		setProperty("conductivity", 1) //i mean it's for cluwnes
+
 // blue clown thing
 // it was called the blessed clown for the like half week it existed before
 
@@ -1101,7 +1105,11 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 	hide_prints = 0
 	rand_pos = 1
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	setupProperties()
+		..()
+		setProperty("conductivity", 1)
+
+	attack(mob/M, mob/user, def_zone)
 		if ((user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(40)) || prob(1)) // honk
 			user.visible_message("<span class='alert'><b>[user] fumbles and drops [src]!</b></span>",\
 			"<span class='alert'><b>You fumble and drop [src]!</b></span>")
@@ -1634,6 +1642,10 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 	icon_state = "handcomp"
 	item_state = "handcomp"
 	hide_prints = 0
+
+	setupProperties()
+		..()
+		setProperty("conductivity", 0.8)
 
 /obj/item/clothing/glasses/ftscanplate
 	name = "FTX-480 Scanner Plate"

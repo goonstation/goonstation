@@ -200,7 +200,7 @@
 		if (..())
 			return 1
 		if (get_dist(usr, T) > src.max_range)
-			boutput(usr, __red("[T] is too far away."))
+			boutput(usr, "<span class='alert'>[T] is too far away.</span>")
 			return 1
 		if (!iscarbon(T))
 			boutput(usr, "<span class='alert'>That's not exactly what this power was meant to work on.</span>")
@@ -346,7 +346,7 @@
 			return 1
 
 		if (get_dist(usr, T) > src.max_range)
-			boutput(usr, __red("[T] is too far away."))
+			boutput(usr, "<span class='alert'>[T] is too far away.</span>")
 			return 1
 
 		if (!istype(T, /obj/machinery/power/generatorTemp))

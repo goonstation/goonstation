@@ -214,7 +214,7 @@
 
 
 
-///obj/attackby(var/obj/item/I as obj, mob/user as mob)
+///obj/attackby(var/obj/item/I, mob/user)
 //	attack_particle(user,src)
 //	..()
 /proc/attack_particle(var/mob/M, var/atom/target)
@@ -873,7 +873,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	return
 
 /proc/animate_rainbow_glow(var/atom/A)
-	if (!istype(A))
+	if (!istype(A) && !isclient(A))
 		return
 	animate(A, color = "#FF0000", time = rand(5,10), loop = -1, easing = LINEAR_EASING)
 	animate(color = "#FFFF00", time = rand(5,10), loop = -1, easing = LINEAR_EASING)
@@ -1519,7 +1519,7 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 	animate(slide, transform=tr, time=time)
 	if(!had_fullbright && T.fullbright) // eww
 		T.fullbright = 0
-		T.overlays -= /image/fullbright
+		T.UpdateOverlays(null, "fullbright")
 		T.RL_Init() // turning off fullbright
 		var/obj/full_light = new/obj/overlay/tile_effect/fake_fullbright(T)
 		full_light.color = T.color
@@ -1545,7 +1545,7 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 		qdel(slide)
 	if(initial(T.fullbright))
 		T.fullbright = 1
-		T.overlays += /image/fullbright
+		T.UpdateOverlays(new /image/fullbright, "fullbright")
 		T.RL_Init()
 
 /proc/animate_open_from_floor(atom/A, time=1 SECOND, self_contained=1)

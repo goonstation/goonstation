@@ -335,7 +335,7 @@
 	healthcheck()
 	return
 
-/obj/machinery/portable_atmospherics/canister/attackby(var/obj/item/W as obj, var/mob/user as mob)
+/obj/machinery/portable_atmospherics/canister/attackby(var/obj/item/W, var/mob/user)
 	if (istype(W, /obj/item/assembly/detonator)) //Wire: canister bomb stuff
 		if (holding)
 			user.show_message("<span class='alert'>You must remove the currently inserted tank from the slot first.</span>")
@@ -494,7 +494,7 @@
 				src.det_wires_interact(tool, index+1, user)
 				. = TRUE
 
-/obj/machinery/portable_atmospherics/canister/attack_hand(var/mob/user as mob)
+/obj/machinery/portable_atmospherics/canister/attack_hand(var/mob/user)
 	if (src.destroyed)
 		return
 

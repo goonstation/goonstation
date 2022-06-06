@@ -299,7 +299,7 @@
 			src.visible_message("<span class='notice'><B>[src]</B> crumbles away into dust!</span>")
 			qdel (src)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		..()
 		src.health -= W.force
 		if (src.active && src.timeleft > 10)

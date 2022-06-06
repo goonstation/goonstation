@@ -163,6 +163,10 @@
 	attack_self()
 		..()
 		UpdateIcon()
+		if(istype(src.current_projectile, /datum/projectile/energy_bolt/burst))
+			src.spread_angle = 6
+		else
+			src.spread_angle = initial(src.spread_angle)
 
 	borg
 		cell_type = /obj/item/ammo/power_cell/self_charging/disruptor
@@ -248,12 +252,12 @@
 
 //////////////////////////////////////// Phaser
 /obj/item/gun/energy/phaser_gun
-	name = "phaser gun"
+	name = "RP-4 phaser gun"
 	icon_state = "phaser-new"
 	uses_multiple_icon_states = 1
 	item_state = "phaser"
 	force = 7.0
-	desc = "A gun that produces a harmful phaser bolt, causing substantial damage."
+	desc = "An energy weapon designed by Radnor Photonics. Popular among frontier adventurers and explorers."
 	muzzle_flash = "muzzle_flash_phaser"
 	cell_type = /obj/item/ammo/power_cell/med_power
 
@@ -270,6 +274,63 @@
 			ratio = round(ratio, 0.25) * 100
 			src.icon_state = "phaser-new[ratio]"
 			return
+
+
+/obj/item/gun/energy/phaser_small
+	name = "RP-3 micro phaser"
+	icon_state = "phaser-tiny"
+	uses_multiple_icon_states = 1
+	item_state = "phaser"
+	force = 4.0
+	desc = "A diminutive sidearm produced by Radnor Photonics. It's not much, but it might just save your life."
+	muzzle_flash = "muzzle_flash_phaser"
+	cell_type = /obj/item/ammo/power_cell/med_power
+
+	New()
+		set_current_projectile(new/datum/projectile/laser/light/tiny)
+		projectiles = list(current_projectile)
+		..()
+
+	update_icon()
+		..()
+		var/list/ret = list()
+		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+			var/ratio = min(1, ret["charge"] / ret["max_charge"])
+			ratio = round(ratio, 0.25) * 100
+			src.icon_state = "phaser-tiny[ratio]"
+			return
+
+
+
+/obj/item/gun/energy/phaser_huge
+	name = "RP-5 macro phaser"
+	icon_state = "phaser-xl"
+	uses_multiple_icon_states = 1
+	item_state = "phaser"
+	force = 10.0
+	desc = "The largest phaser from Radnor Photonics. A big gun for big problems."
+	muzzle_flash = "muzzle_flash_phaser"
+	cell_type = /obj/item/ammo/power_cell/higherish_power
+	shoot_delay = 20
+
+	New()
+		set_current_projectile(new/datum/projectile/laser/light/huge) // light/huge - whatev!!!! this should probably be refactored
+		projectiles = list(current_projectile)
+		..()
+
+	update_icon()
+		..()
+		var/list/ret = list()
+		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+			var/ratio = min(1, ret["charge"] / ret["max_charge"])
+			ratio = round(ratio, 0.25) * 100
+			src.icon_state = "phaser-xl[ratio]"
+			return
+
+
+
+
+
 
 ///////////////////////////////////////Rad Crossbow
 /obj/item/gun/energy/crossbow
@@ -350,7 +411,7 @@
 		UpdateIcon()
 		M.update_inhands()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/electronics/scanner))
 			nojobreward = 1
 		..()
@@ -630,7 +691,7 @@
 			user.show_text("Error: no working teleporters detected.", "red")
 			return
 
-		var/t1 = input(user, "Please select a teleporter to lock in on.", "Target Selection") in L
+		var/t1 = tgui_input_list(user, "Please select a teleporter to lock in on.", "Target Selection", L)
 		if ((user.equipped() != src) || user.stat || user.restrained())
 			return
 		if (t1 == "None (Cancel)")
@@ -663,7 +724,7 @@
 			user.show_text("Error: couldn't establish connection to selected teleporter.", "red")
 			return
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (!src.our_target)
 			user.show_text("Error: no target set. Please select a teleporter first.", "red")
 			return
@@ -1132,7 +1193,7 @@
 			else
 				. += "It's not holding anything."
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.loc == user && (src == user.l_hand || src == user.r_hand))
 			if (heldItem)
 				boutput(user, "You remove \the [heldItem.name] from the gun.")
@@ -1144,7 +1205,7 @@
 		else
 			return ..()
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		if (I.cant_drop) return
 		if (heldItem)
 			boutput(user, "The gun is already holding [heldItem.name].")
@@ -1156,7 +1217,7 @@
 			tooltip_rebuild = 1
 		return ..()
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (istype(current_projectile, /datum/projectile/pickpocket/steal) && heldItem)
 			boutput(user, "Cannot steal while gun is holding something!")
 			return
@@ -1268,7 +1329,7 @@
 		indicator_display = null
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!owner_prints)
 			boutput(user, "<span class='alert'>[src] has accepted your fingerprint ID. You are its owner!</span>")
 			assign_name(user)
@@ -1641,6 +1702,48 @@
 	shoot_point_blank(atom/target, mob/user, second_shot)
 		shotcount = 0
 		. = ..()
+
+/obj/item/gun/energy/cornicen3
+	name = "\improper Cornicen III"
+	desc = "It's a shotgun? Or an assault rifle? You can't tell."
+	icon = 'icons/obj/large/48x32.dmi'
+	muzzle_flash = "muzzle_flash_bluezap"
+	icon_state = "cornicen_close"
+	item_state = "ntgun2"
+	w_class = W_CLASS_NORMAL		//for clarity
+	two_handed = TRUE
+	force = 9
+	cell_type = /obj/item/ammo/power_cell/self_charging/big
+	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/mediumbig
+	can_swap_cell = 0
+	rechargeable = 0
+	shoot_delay = 8 DECI SECONDS
+	spread_angle = 3
+	var/extended = FALSE
+
+	New()
+		set_current_projectile(new/datum/projectile/special/spreader/plasma_spreader)
+		projectiles = list(current_projectile,new/datum/projectile/laser/plasma/burst)
+		..()
+
+	update_icon()
+		..()
+		if(!src.extended)
+			src.icon_state = "cornicen_close"
+			src.item_state = "cornicen"
+			w_class = W_CLASS_NORMAL
+		else
+			src.icon_state = "cornicen_ext"
+			src.item_state = "cornicen_ext"
+			w_class = W_CLASS_BULKY
+
+	attack_self(var/mob/M)
+		..()
+		src.extended = !src.extended
+		UpdateIcon()
+		if(src.extended)
+			flick("cornicen_open", src)
+		M.update_inhands()
 
 /obj/item/gun/energy/tasersmg
 	name = "taser SMG"

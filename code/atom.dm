@@ -558,38 +558,37 @@
 /atom/movable/proc/OnMove(source = null)
 
 /// Base pull proc, returns 1 if the various checks for pulling fail, so that it can be overriden to add extra functionality without rewriting all the conditions.
-/atom/movable/proc/pull()
-	if (!( usr ))
+/atom/movable/proc/pull(mob/user)
+	if (!(user))
 		return 1
 
-	if(src.loc == usr)
+	if(src.loc == user)
 		return 1
 
-	if (!isliving(usr))
+	if (!isliving(user))
 		return 1
 
-	if (isintangible(usr)) //can't pull shit if you can't touch shit
+	if (isintangible(user)) //can't pull shit if you can't touch shit
 		return 1
 
 	// no pulling other mobs for ghostdrones (but they can pull other ghostdrones)
-	else if (isghostdrone(usr) && ismob(src) && !isghostdrone(src))
+	else if (isghostdrone(user) && ismob(src) && !isghostdrone(src))
 		return 1
 
-	if (isghostcritter(usr))
-		var/mob/living/critter/C = usr
+	if (isghostcritter(user))
+		var/mob/living/critter/C = user
 		if (!C.can_pull(src))
-			boutput(usr,"<span class='alert'><b>[src] is too heavy for you pull in your half-spectral state!</b></span>")
+			boutput(user,"<span class='alert'><b>[src] is too heavy for you pull in your half-spectral state!</b></span>")
 			return 1
 
-	if (iscarbon(usr) || issilicon(usr))
-		add_fingerprint(usr)
+	if (iscarbon(user) || issilicon(user))
+		add_fingerprint(user)
 
 	if (istype(src,/obj/item/old_grenade/light_gimmick))
-		boutput(usr, "<span class='notice'>You feel your hand reach out and clasp the grenade.</span>")
-		src.Attackhand(usr)
+		boutput(user, "<span class='notice'>You feel your hand reach out and clasp the grenade.</span>")
+		src.Attackhand(user)
 		return 1
 	if (!( src.anchored ))
-		var/mob/user = usr
 		user.set_pulling(src)
 
 		if (user.mob_flags & AT_GUNPOINT)
@@ -688,7 +687,7 @@
 		return
 	src.attack_hand(user)
 
-/atom/proc/attack_hand(mob/user as mob)
+/atom/proc/attack_hand(mob/user)
 	PROTECTED_PROC(TRUE)
 	if (flags & TGUI_INTERACTIVE)
 		return ui_interact(user)
@@ -698,7 +697,7 @@
 	return
 
 ///wrapper proc for /atom/proc/attackby so that signals are always sent. Call this, but do not override it.
-/atom/proc/Attackby(obj/item/W as obj, mob/user as mob, params, is_special = 0)
+/atom/proc/Attackby(obj/item/W, mob/user, params, is_special = 0)
 	SHOULD_NOT_OVERRIDE(1)
 	if(SEND_SIGNAL(src,COMSIG_ATTACKBY,W,user, params, is_special))
 		return
@@ -706,7 +705,7 @@
 
 //mbc : sorry, i added a 'is_special' arg to this proc to avoid race conditions.
 ///internal proc for when an atom is attacked by an item. Override this, but do not call it,
-/atom/proc/attackby(obj/item/W as obj, mob/user as mob, params, is_special = 0)
+/atom/proc/attackby(obj/item/W, mob/user, params, is_special = 0)
 	PROTECTED_PROC(TRUE)
 	src.material?.triggerOnHit(src, W, user, 1)
 	if (user && W && !(W.flags & SUPPRESSATTACK))

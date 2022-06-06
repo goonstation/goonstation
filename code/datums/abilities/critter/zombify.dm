@@ -58,6 +58,7 @@
 /datum/targetable/critter/zombify
 	name = "Zombify"
 	desc = "After a short delay, instantly convert a human into a zombie."
+	icon_state = "critter_bite"
 	cooldown = 0
 	var/actual_cooldown = 200
 	targeted = 1
@@ -76,17 +77,17 @@
 		if (isturf(target))
 			target = locate(/mob/living/) in target
 			if (!target)
-				boutput(holder.owner, __red("Nothing to zombify there."))
+				boutput(holder.owner, "<span class='alert'>Nothing to zombify there.</span>")
 				return 1
 		if (!ishuman(target))
-			boutput(holder.owner, __red("Invalid target."))
+			boutput(holder.owner, "<span class='alert'>Invalid target.</span>")
 			return 1
 		if (BOUNDS_DIST(holder.owner, target) > 0)
-			boutput(holder.owner, __red("That is too far away to zombify."))
+			boutput(holder.owner, "<span class='alert'>That is too far away to zombify.</span>")
 			return 1
 		var/mob/living/carbon/human/H = target
 		if (istype(H.mutantrace, /datum/mutantrace/zombie))
-			boutput(holder.owner, __red("You can't infect another zombie!"))
+			boutput(holder.owner, "<span class='alert'>You can't infect another zombie!</span>")
 			return 1
 		actions.start(new/datum/action/bar/icon/zombifyAbility(target, src), holder.owner)
 		return 0

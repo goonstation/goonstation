@@ -17,7 +17,7 @@
 			src.clothing_choices += P
 		return
 
-	attackby(obj/item/clothing/under/U as obj, mob/user as mob)
+	attackby(obj/item/clothing/under/U, mob/user)
 		if(istype(U, /obj/item/clothing/under/chameleon))
 			boutput(user, "<span class='alert'>No!!! That's a terrible idea! You'll cause a horrible jumpsuit chain reaction!</span>")
 			SPAWN(1 SECOND)
@@ -313,7 +313,7 @@
 			src.clothing_choices += P
 		return
 
-	attackby(obj/item/clothing/head/U as obj, mob/user as mob)
+	attackby(obj/item/clothing/head/U, mob/user)
 		if(istype(U, /obj/item/clothing/head/chameleon))
 			boutput(user, "<span class='alert'>No!!! That's a terrible idea! You'll cause a cataclysmic hat infinite loop!</span>")
 			SPAWN(1 SECOND)
@@ -547,7 +547,7 @@
 			src.clothing_choices += P
 		return
 
-	attackby(obj/item/clothing/suit/U as obj, mob/user as mob)
+	attackby(obj/item/clothing/suit/U, mob/user)
 		if(istype(U, /obj/item/clothing/suit/chameleon))
 			boutput(user, "<span class='alert'>No!!! That's a terrible idea! You'll cause a horrible outer suit meltdown death loop!</span>")
 			SPAWN(1 SECOND)
@@ -854,7 +854,7 @@
 			src.clothing_choices += P
 		return
 
-	attackby(obj/item/clothing/glasses/U as obj, mob/user as mob)
+	attackby(obj/item/clothing/glasses/U, mob/user)
 		if(istype(U, /obj/item/clothing/glasses/chameleon))
 			boutput(user, "<span class='alert'>No!!! That's a horrible idea! You'll cause a horrible eyewear cascade!</span>")
 			SPAWN(1 SECOND)
@@ -981,7 +981,7 @@
 			src.clothing_choices += P
 		return
 
-	attackby(obj/item/clothing/shoes/U as obj, mob/user as mob)
+	attackby(obj/item/clothing/shoes/U, mob/user)
 		if(istype(U, /obj/item/clothing/shoes/chameleon))
 			boutput(user, "<span class='alert'>No!!! That's a terrible idea! You'll cause a bad shoe feedback cycle!</span>")
 			SPAWN(1 SECOND)
@@ -1162,7 +1162,7 @@
 			src.clothing_choices += P
 		return
 
-	attackby(obj/item/clothing/gloves/U as obj, mob/user as mob)
+	attackby(obj/item/clothing/gloves/U, mob/user)
 		if(istype(U, /obj/item/clothing/gloves/chameleon))
 			boutput(user, "<span class='alert'>No!!! That's a terrible idea! You'll cause an awful glove fractal!</span>")
 			SPAWN(1 SECOND)
@@ -1309,7 +1309,7 @@
 			src.clothing_choices += P
 		return
 
-	attackby(obj/item/storage/belt/U as obj, mob/user as mob)
+	attackby(obj/item/storage/belt/U, mob/user)
 		..()
 		if(istype(U, /obj/item/storage/belt/chameleon))
 			boutput(user, "<span class='alert'>No!!! That's a terrible idea! You'll cause a putrid belt spiral!</span>")
@@ -1452,7 +1452,7 @@
 			var/datum/chameleon_backpack_pattern/P = new U
 			src.clothing_choices += P
 
-	attackby(obj/item/storage/backpack/U as obj, mob/user as mob)
+	attackby(obj/item/storage/backpack/U, mob/user)
 		..()
 		if(istype(U, /obj/item/storage/backpack/chameleon))
 			boutput(user, "<span class='alert'>No!!! That's a terrible idea! You'll cause a stinky backpack self-cloning freak accident!</span>")

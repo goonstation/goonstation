@@ -57,14 +57,14 @@
 	src.go_out()
 	return
 
-/obj/machinery/gibber/attack_hand(mob/user as mob)
+/obj/machinery/gibber/attack_hand(mob/user)
 	if(operating)
 		boutput(user, "<span class='alert'>It's locked and running</span>")
 		return
 	else
 		src.startgibbing(user)
 
-/obj/machinery/gibber/attackby(obj/item/grab/G as obj, mob/user as mob)
+/obj/machinery/gibber/attackby(obj/item/grab/G, mob/user)
 	if(src.occupant)
 		boutput(user, "<span class='alert'>The gibber is full, empty it first!</span>")
 		return
@@ -203,11 +203,14 @@
 		src.operating = 0
 
 /obj/machinery/gibber/proc/generate_meat(var/mob/meat_source, var/decomposed_level, var/spawn_location)
-	if(decomposed_level < 3) // fresh or fresh enough
-		var/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/generated_meat = new /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat(spawn_location,meat_source)
+	var/obj/item/reagent_containers/food/snacks/ingredient/meat/generated_meat
+	if (ischangeling(meat_source))
+		generated_meat = new /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/changeling(spawn_location)
+	else
+		if(decomposed_level < 3) // fresh or fresh enough
+			generated_meat = new /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat(spawn_location,meat_source)
+		else // rotten yucky mess
+			generated_meat = new /obj/item/reagent_containers/food/snacks/yuck(spawn_location)
+			generated_meat.name = meat_source.real_name + " meat-related substance"
 
-		return generated_meat
-	else // rotten yucky mess
-		var/obj/item/reagent_containers/food/snacks/yuck/generated_yuck = new /obj/item/reagent_containers/food/snacks/yuck(spawn_location)
-		generated_yuck.name = meat_source.real_name + " meat-related substance"
-		return generated_yuck
+	return generated_meat

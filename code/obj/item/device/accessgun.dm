@@ -73,7 +73,7 @@
 
 		src.eject_id_card(user)
 
-	attackby(obj/item/C as obj, mob/user as mob)
+	attackby(obj/item/C, mob/user)
 		if (istype(C, /obj/item/card/id))
 			var/obj/item/card/id/ID = C
 			if (src.ID_card)
@@ -221,7 +221,7 @@
 			O.set_access_list(scanned_access)
 		playsound(src, "sound/machines/reprog.ogg", 70, 1)
 
-	attackby(obj/item/C as obj, mob/user as mob)
+	attackby(obj/item/C, mob/user)
 		if (istype(C, /obj/item/card/id))
 			return
 		. = ..()

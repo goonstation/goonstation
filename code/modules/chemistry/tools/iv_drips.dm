@@ -73,7 +73,7 @@
 		user.show_text("You switch [src] to [src.mode ? "inject" : "draw"].")
 		src.UpdateIcon()
 
-	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	attack(mob/living/carbon/M, mob/living/carbon/user)
 		if (!ishuman(M))
 			return ..()
 		var/mob/living/carbon/human/H = M
@@ -114,7 +114,7 @@
 			SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /obj/item/reagent_containers/iv_drip/proc/insert_needle, list(H, user), src.icon, src.icon_state, null, null)
 			return
 
-	attackby(obj/A as obj, mob/user as mob)
+	attackby(obj/A, mob/user)
 		if (iscuttingtool(A) && !(src.slashed))
 			src.slashed = 1
 			src.desc = "[src.desc] It has been sliced open with a scalpel."
@@ -271,7 +271,7 @@
 		else
 			return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.IV && !isrobot(user))
 			var/obj/item/reagent_containers/iv_drip/oldIV = src.IV
 			user.visible_message("<span class='notice'>[user] takes [oldIV] down from [src].</span>",\

@@ -36,6 +36,10 @@
 	// obviously a specific goal will have specific requirements for targets
 	. = list()
 
+///Is the target VALID?
+/datum/aiTask/sequence/goalbased/proc/valid_target(var/atom/target)
+	return FALSE
+
 /datum/aiTask/sequence/goalbased/proc/score_target(var/atom/target)
 	. = 0
 	if(target)
@@ -71,9 +75,6 @@
 						return
 			M.move_target = target_turf
 
-/datum/aiTask/sequence/goalbased/on_reset()
-	holder.target = null
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // WANDER TASK
 // spend a few ticks wandering aimlessly
@@ -90,9 +91,6 @@
 	// thanks byond forums for letting me know that the byond native implentation FUCKING SUCKS
 	holder.owner.move_dir = pick(alldirs)
 	holder.owner.process_move()
-
-/datum/aiTask/timed/wander/on_tick()
-	. = ..()
 	holder.stop_move()
 	holder.owner.move_dir = null // clear out direction so it doesn't get latched when client is attached
 
@@ -129,7 +127,8 @@
 // target: holder target assigned by a sequence task
 /datum/aiTask/succeedable/move
 	name = "moving"
-	max_fails = 5
+	max_fails = 2
+	var/max_path_dist = 50 //keeping this low by default, but you can override it - see /datum/aiTask/sequence/goalbased/rally for details
 	var/list/found_path = null
 	var/atom/move_target = null
 
@@ -138,7 +137,7 @@
 	if(!move_target)
 		fails++
 		return
-	src.found_path = get_path_to(holder.owner, move_target, 60, 0)
+	src.found_path = get_path_to(holder.owner, move_target, src.max_path_dist, 0)
 	if(!src.found_path) // no path :C
 		fails++
 
@@ -150,7 +149,7 @@
 	if(!src.move_target)
 		fails++
 		return
-	if(!src.found_path)
+	if(!length(src.found_path))
 		get_path()
 	if(length(src.found_path))
 		holder.move_to_with_path(move_target,src.found_path,0)
@@ -159,6 +158,11 @@
 	if(move_target)
 		. = (get_dist(holder.owner, src.move_target) == 0)
 		return
+
+/datum/aiTask/succeedable/move/failed()
+	if(!move_target || !src.found_path)
+		fails++
+	return fails >= max_fails
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // WAIT TASK

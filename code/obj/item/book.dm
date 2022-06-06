@@ -19,7 +19,7 @@ Custom Books
 	burn_point = 400
 	burn_output = 1100
 	burn_possible = 1
-	health = 30
+	health = 4
 	//
 
 	stamina_damage = 2
@@ -389,7 +389,7 @@ Custom Books
 	icon_state = "bookadps"
 	file_path = "strings/books/deep_blue_sea.txt"
 
-	attackby(obj/item/P as obj, mob/user as mob)
+	attackby(obj/item/P, mob/user)
 		..()
 		if (istype(P, /obj/item/magnifying_glass))
 			boutput(user, "<span class='notice'>You pore over the book with the magnifying glass.</span>")

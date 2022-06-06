@@ -384,7 +384,7 @@ obj/item/gnomechompski/elf
 		reload_gun(user)
 
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		fire_gun(user)
 
 	proc/fire_gun(mob/user as mob)
@@ -747,7 +747,7 @@ obj/item/gnomechompski/elf
 					if (prob(flash_prob))
 						src.flash()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (iswrenchingtool(W))
 			add_fingerprint(user)
 			src.anchored = !src.anchored
@@ -1066,7 +1066,7 @@ obj/critter/madnessowl/switchblade
 			break
 
 
-	attackby(obj/item/W as obj, mob/living/user as mob) //ARRRRGH WHY
+	attackby(obj/item/W, mob/living/user) //ARRRRGH WHY
 		user.lastattacked = src
 
 		var/attack_force = 0
@@ -1122,7 +1122,7 @@ obj/critter/madnessowl/switchblade
 		src.oldtarget_name = user.name
 		src.task = "chasing"
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		user.lastattacked = src
 		if (!src.alive)
 			..()
@@ -1387,14 +1387,14 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 	if(istype(equipped_thing, /obj/item/basketball))
 		var/obj/item/basketball/BB = equipped_thing
 		if(!BB.payload)
-			boutput(M, __red("This b-ball doesn't have the right heft to it!"))
+			boutput(M, "<span class='alert'>This b-ball doesn't have the right heft to it!</span>")
 			return
 		else //Safety thing to ensure the hootonium core is only good for one dunk
 			var/pl = BB.payload
 			BB.payload = null
 			qdel(pl)
 	else
-		boutput(M, __red("You can't slam without a b-ball, yo!"))
+		boutput(M, "<span class='alert'>You can't slam without a b-ball, yo!</span>")
 		return
 
 	M.verbs -= /proc/owl_slam

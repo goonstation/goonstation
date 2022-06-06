@@ -405,7 +405,7 @@
 	html_parts += "</small></td></tr></tbody></table></TT><br>"
 	src.wire_HTML = jointext(html_parts, "")
 
-/obj/machinery/vending/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/vending/attackby(obj/item/W, mob/user)
 	if (istype(W,/obj/item/electronics/scanner) || istype(W,/obj/item/deconstructor)) // So people don't end up making the vending machines fall on them when they try to scan/deconstruct it
 		return
 	if (istype(W, /obj/item/spacecash))
@@ -503,7 +503,7 @@
 /obj/machinery/vending/attack_ai(mob/user as mob)
 	return attack_hand(user)
 
-/obj/machinery/vending/attack_hand(mob/user as mob)
+/obj/machinery/vending/attack_hand(mob/user)
 	if (status & (BROKEN|NOPOWER))
 		return
 	src.add_dialog(user)
@@ -1444,7 +1444,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/triplaser, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/wificomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/wifisplit, 30)
-/obj/machinery/vending/mechanics/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/vending/mechanics/attackby(obj/item/W, mob/user)
 	if(!istype(W,/obj/item/mechanics))
 		..()
 		return
@@ -2228,6 +2228,26 @@
 		product_list += new/datum/data/vending_product(/obj/item/clothing/mask/monkey_translator, rand(1,2), hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/plant/banana, rand(1,20), hidden=1)
 
+/obj/machinery/vending/monkey/kitchen
+	icon_state = "monkey-k"
+	req_access = list(access_kitchen, access_heads)
+
+	get_desc()
+		. += "This vendor is restricted to kitchen access."
+
+/obj/machinery/vending/monkey/genetics
+	icon_state = "monkey-g"
+	req_access = list(access_medical_lockers, access_heads)
+
+	get_desc()
+		. += "This vendor is restricted to medical access."
+
+/obj/machinery/vending/monkey/research
+	icon_state = "monkey-r"
+	req_access = list(access_research, access_heads)
+
+	get_desc()
+		. += "This vendor is restricted to research access."
 
 /obj/machinery/vending/magivend
 	name = "MagiVend"
@@ -2243,21 +2263,20 @@
 
 	create_products()
 		..()
-		product_list += new/datum/data/vending_product(/obj/item/clothing/head/wizard, 1)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wizrobe, 1)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/sandal, 1)
-		product_list += new/datum/data/vending_product(/obj/item/staff, 2)
-
-		product_list += new/datum/data/vending_product(/obj/item/clothing/head/wizard/red, 1, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wizrobe/red, 1, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/head/wizard/purple, 1, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wizrobe/purple, 1, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/head/wizard/green, 1, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wizrobe/green, 1, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/head/wizard/witch, 1, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/head/wizard/necro, 1, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wizrobe/necro, 1, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/staff/crystal, 1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/wizard, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wizrobe, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/wizard/red, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wizrobe/red, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/wizard/purple, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wizrobe/purple, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/wizard/green, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wizrobe/green, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/wizard/witch, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/wizard/necro, 2, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wizrobe/necro, 2, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/sandal, 8)
+		product_list += new/datum/data/vending_product(/obj/item/staff, 4)
+		product_list += new/datum/data/vending_product(/obj/item/staff/crystal, 4, hidden=1)
 
 /obj/machinery/vending/standard
 	desc = "A vending machine full of various useful tools and devices that definitely cannot be used to make bombs"
@@ -2458,7 +2477,7 @@
 		speak("Ha ha ha ha ha!")
 		return
 
-	attackby(obj/item/weapon as obj, mob/user as mob) //pretty much just player zoldorf stuffs :)
+	attackby(obj/item/weapon, mob/user) //pretty much just player zoldorf stuffs :)
 		if((istype(weapon, /obj/item/zolscroll)) && istype(user,/mob/living/carbon/human) && (src.z == 1))
 			var/obj/item/zolscroll/scroll = weapon
 			var/mob/living/carbon/human/h = user
@@ -2749,7 +2768,7 @@
 
 		holding.air_contents.copy_from(gas_prototype)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/tank))
 			if (!src.holding)
 				boutput(user, "You insert the [W] into the the [src].</span>")
@@ -2764,7 +2783,7 @@
 		else
 			..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (status & (BROKEN|NOPOWER))
 			return
 		if (user.stat || user.restrained())

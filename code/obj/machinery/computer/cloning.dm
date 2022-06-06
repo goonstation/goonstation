@@ -140,7 +140,7 @@
 		logTheThing("station", usr, null, "disassembles [src] [log_loc(src)]")
 
 
-/obj/machinery/computer/cloning/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/computer/cloning/attackby(obj/item/W, mob/user)
 	if (wagesystem.clones_for_cash && istype(W, /obj/item/spacecash))
 		var/obj/item/spacecash/cash = W
 		src.held_credit += cash.amount
@@ -519,7 +519,7 @@ proc/find_ghost_by_key(var/find_key)
 
 		playsound(src.loc, "sound/machines/sleeper_close.ogg", 50, 1)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		..()
 		eject_occupant(user)
 
@@ -542,7 +542,7 @@ proc/find_ghost_by_key(var/find_key)
 		src.go_out()
 		add_fingerprint(user)
 
-	attackby(var/obj/item/grab/G as obj, user as mob)
+	attackby(var/obj/item/grab/G, user)
 		if ((!( istype(G, /obj/item/grab) ) || !( ismob(G.affecting) )))
 			return
 

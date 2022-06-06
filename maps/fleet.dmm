@@ -9560,7 +9560,7 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "tv" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/genetics,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "tw" = (

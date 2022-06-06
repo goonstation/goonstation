@@ -9,7 +9,7 @@
 	var/attachedObjective = "For the free market!"
 	var/uses = -1 // -1 for infinite uses
 
-	attack_hand(mob/M as mob)
+	attack_hand(mob/M)
 		if (issilicon(M))
 			boutput(M, "Silly robot.")
 			return
@@ -162,7 +162,7 @@
 	meteorhit(obj/meteor)
 		return
 
-	attack_hand(mob/M as mob)
+	attack_hand(mob/M)
 
 		if (!istype(M, /mob/living/carbon/human))
 			boutput(M, "You aren't a human so you can't use these.")
@@ -225,3 +225,13 @@
 			var/token = new /obj/item/requisition_token/syndicate/vr(get_turf(M))
 			M.put_in_hand_or_eject(token) // try to eject it into the users hand, if we can
 			boutput(M, "<span class='combat'>Redeem your freshly mined syndicoin in the nearby weapon vendor.</span>")
+
+	arcfiend
+		name = "ARCF13ND.EXE"
+		desc = "Turns you into an arcfiend, using a bit of the processing power of vr."
+		icon = 'icons/obj/power.dmi'
+		icon_state = "apc0"
+
+		makeAntag(mob/living/carbon/human/M as mob)
+			M.make_arcfiend()
+			boutput(M, "<span class='combat'>The simulation grants you a small portion of it's power.</span>")

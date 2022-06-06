@@ -109,7 +109,7 @@
 		return
 	return src.Attackhand(user)
 
-/obj/machinery/portable_atmospherics/pump/attack_hand(var/mob/user as mob)
+/obj/machinery/portable_atmospherics/pump/attack_hand(var/mob/user)
 
 	src.add_dialog(user)
 	var/holding_text

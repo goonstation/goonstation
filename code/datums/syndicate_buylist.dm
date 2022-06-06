@@ -210,7 +210,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	cost = 7
 	desc = "A powerful melee weapon, crafted using the latest in applied photonics! When inactive, it is small enough to fit in a pocket!"
 	not_in_crates = 1
-	br_allowed = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP
 
 	run_on_spawn(obj/item/sword/stabby, mob/living/owner, in_surplus_crate=FALSE) //Nukies get red ones
@@ -224,7 +223,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	item = /obj/item/katana_sheath
 	cost = 7
 	desc = "A Japanese sword created in the fire of a dying star. Comes with a sheath for easier storage"
-	br_allowed = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/generic/wrestling
@@ -950,11 +948,11 @@ This is basically useless for anyone but miners.
 	desc = "A roll of duct tape for makeshift handcuffs. Lets you restrain someone 10 times before being used up."
 
 /datum/syndicate_buylist/traitor/scuttlebot
-	name = "Remote controlled Scuttlebot"
+	name = "Controlled Syndicate Scuttlebot"
 	item = /obj/item/clothing/head/det_hat/folded_scuttlebot
 	cost = 2
 	vr_allowed = 0
-	desc = "A sneaky robot armed with a camera disguised as a hat, used to spy on people. Comes with it's own remote controlling glasses."
+	desc = "A sneaky robot armed with a camera disguised as a hat, used to spy on people. Comes with it's own remote controlling glasses. Can lift small items and has a disabling flash."
 	job = list("Detective")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
@@ -1021,6 +1019,13 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
 	cost = 2
 	desc = "Honk."
 	can_buy = UPLINK_TRAITOR | UPLINK_HEAD_REV | UPLINK_NUKE_OP
+
+/datum/syndicate_buylist/surplus/concussiongrenades
+	name = "Concussion Grenades"
+	item = /obj/item/storage/concussion_grenade_pouch
+	cost = 2
+	desc = "A pouch full of corpo-war surplus concussion grenades."
+	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/surplus/turboflash_box
 	name = "Flash/cell assembly box"

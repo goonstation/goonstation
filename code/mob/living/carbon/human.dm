@@ -15,7 +15,7 @@
 	var/dump_contents_chance = 20
 
 	var/image/health_mon = null
-	var/image/health_implant = null
+	var/list/implant_icons = null
 	var/image/arrestIcon = null
 
 	var/pin = null
@@ -198,8 +198,12 @@
 	health_mon = image('icons/effects/healthgoggles.dmi',src,"100",EFFECTS_LAYER_UNDER_4)
 	get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_image(health_mon)
 
-	health_implant = image('icons/effects/healthgoggles.dmi',src,"100",EFFECTS_LAYER_UNDER_4)
-	get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_image(health_implant)
+	implant_icons = list()
+	implant_icons["health"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
+	implant_icons["cloner"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
+	implant_icons["other"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
+	for (var/implant in implant_icons)
+		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_image(implant_icons[implant])
 
 	arrestIcon = image('icons/effects/sechud.dmi',src,null,EFFECTS_LAYER_UNDER_4)
 	get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).add_image(arrestIcon)
@@ -507,10 +511,12 @@
 		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_image(health_mon)
 		health_mon.dispose()
 		health_mon = null
-	if(health_implant)
-		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_image(health_implant)
-		health_implant.dispose()
-		health_implant = null
+	if(implant_icons)
+		for (var/implant in implant_icons)
+			var/image/I = implant_icons[implant]
+			get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_image(I)
+			I.dispose()
+		implant_icons = null
 	if(arrestIcon)
 		get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_image(arrestIcon)
 		arrestIcon.dispose()
@@ -634,10 +640,10 @@
 			if (C.points < 10)
 				boutput(src, "You try to release a headspider but don't have enough DNA points (requires 10)!")
 			for (var/mob/living/critter/changeling/spider in C.hivemind)
-				boutput(spider, __red("Your telepathic link to your master has been destroyed!"))
+				boutput(spider, "<span class='alert'>Your telepathic link to your master has been destroyed!</span>")
 				spider.hivemind_owner = 0
 			for (var/mob/dead/target_observer/hivemind_observer/obs in C.hivemind)
-				boutput(obs, __red("Your telepathic link to your master has been destroyed!"))
+				boutput(obs, "<span class='alert'>Your telepathic link to your master has been destroyed!</span>")
 				obs.boot()
 			if (C.hivemind.len > 0)
 				boutput(src, "Contact with the hivemind has been lost.")
@@ -666,6 +672,7 @@
 				sleep(20 SECONDS)
 				if(HS.disposed || !HS.mind || HS.mind.disposed || isdead(HS)) // we went somewhere else, or suicided, or something idk
 					return
+				HS.UnregisterSignal(src, COMSIG_PARENT_PRE_DISPOSING) // We no longer want to disappear if the body gets del'd
 				boutput(HS, "<b class = 'hint'>We released a headspider, using up some of our DNA reserves.</b>")
 				HS.set_loc(get_turf(src)) //be free!!!
 				src.visible_message("<span class='alert'><B>[src]</B>'s head detaches, sprouts legs and wanders off looking for food!</span>")
@@ -834,6 +841,8 @@
 
 	if (!antag_removal && src.unkillable) // Doesn't work properly for half the antagonist types anyway (Convair880).
 		newbody.unkillable = 1
+		newbody.setStatus("maxhealth-", null, -90)
+		newbody.setStatus("paralysis", 10 SECONDS)
 
 	if (src.bioHolder)
 		newbody.bioHolder.CopyOther(src.bioHolder)
@@ -1715,14 +1724,6 @@
 		if (M.stat > 1 && !(M in heard_a) && !istype(M, /mob/dead/target_observer) && !(M?.client?.preferences?.local_deadchat))
 			M.show_message(rendered, 2)
 
-	//mbc FUCK why doesn't this have any parent to call
-	speech_bubble.icon_state = "speech"
-	UpdateOverlays(speech_bubble, "speech_bubble")
-	var/speech_bubble_time = src.last_typing
-	SPAWN(1.5 SECONDS)
-		if(speech_bubble_time == src.last_typing)
-			UpdateOverlays(null, "speech_bubble")
-
 /mob/living/carbon/human/var/const
 	slot_back = 1
 	slot_wear_mask = 2
@@ -2207,88 +2208,124 @@
 	switch (slot)
 		if (slot_l_store, slot_r_store)
 			if (I.w_class <= W_CLASS_SMALL && src.w_uniform)
-				return 1
-		if (slot_l_hand, slot_r_hand)
-			return 1
+				return TRUE
+		if (slot_l_hand)
+			if (src.limbs.l_arm)
+				if (!istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm) && !istype(src.limbs.l_arm, /obj/item/parts/robot_parts/arm))
+					return FALSE
+				if (istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item))
+					return FALSE
+				if (I.two_handed)
+					if (src.limbs.r_arm)
+						if(src.r_hand)
+							return FALSE
+					else
+						return FALSE
+				return TRUE
+		if (slot_r_hand)
+			if (src.limbs.r_arm)
+				if (!istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm) && !istype(src.limbs.r_arm, /obj/item/parts/robot_parts/arm))
+					return FALSE
+				if (istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item))
+					return FALSE
+				if (I.two_handed)
+					if (src.limbs.l_arm)
+						if(src.l_hand)
+							return FALSE
+					else
+						return FALSE
+				return TRUE
 		if (slot_belt)
 			if ((I.flags & ONBELT) && src.w_uniform)
-				return 1
+				return TRUE
 		if (slot_wear_id)
 			if (istype(I, /obj/item/card/id) && src.w_uniform)
-				return 1
+				return TRUE
 			if (istype(I, /obj/item/device/pda2) && src.w_uniform) // removed the check for the ID card in here because tbh it was silly that you could only equip it to the ID slot when it had a card  :I
-				return 1
+				return TRUE
 		if (slot_back)
 			if (I.flags & ONBACK)
-				return 1
+				return TRUE
 		if (slot_wear_mask) // It's not pretty, but the mutantrace check will do for the time being (Convair880).
+			if (!src.organHolder.head)
+				return FALSE
 			if (istype(I, /obj/item/clothing/mask))
 				var/obj/item/clothing/M = I
 				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !M.compatible_species.Find(src.mutantrace.name)))
 					//DEBUG_MESSAGE("[src] can't wear [I].")
-					return 0
+					return FALSE
 				else
-					return 1
+					return TRUE
 		if (slot_ears)
+			if (!src.organHolder.head)
+				return FALSE
 			if (istype(I, /obj/item/clothing/ears) || istype(I,/obj/item/device/radio/headset))
-				return 1
+				return TRUE
 		if (slot_glasses)
+			if (!src.organHolder.head)
+				return FALSE
 			if (istype(I, /obj/item/clothing/glasses))
-				return 1
+				return TRUE
 		if (slot_gloves)
+			if ((!src.limbs.l_arm) && (!src.limbs.r_arm))
+				return FALSE
 			if (istype(I, /obj/item/clothing/gloves))
-				return 1
+				return TRUE
 		if (slot_head)
+			if (!src.organHolder.head)
+				return FALSE
 			if (istype(I, /obj/item/clothing/head))
 				var/obj/item/clothing/H = I
 				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !(src.mutantrace.name in H.compatible_species)))
 					//DEBUG_MESSAGE("[src] can't wear [I].")
-					return 0
+					return FALSE
 				else
-					return 1
+					return TRUE
 		if (slot_shoes)
+			if ((!src.limbs.l_leg) && (!src.limbs.r_leg))
+				return FALSE
 			if (istype(I, /obj/item/clothing/shoes))
 				var/obj/item/clothing/SH = I
 				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !(src.mutantrace.name in SH.compatible_species)))
 					//DEBUG_MESSAGE("[src] can't wear [I].")
-					return 0
+					return FALSE
 				else
-					return 1
+					return TRUE
 		if (slot_wear_suit)
 			if (istype(I, /obj/item/clothing/suit))
 				var/obj/item/clothing/SU = I
 				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !(src.mutantrace.name in SU.compatible_species)))
 					//DEBUG_MESSAGE("[src] can't wear [I].")
-					return 0
+					return FALSE
 				else
-					return 1
+					return TRUE
 		if (slot_w_uniform)
 			if (istype(I, /obj/item/clothing/under))
 				var/obj/item/clothing/U = I
 				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !(src.mutantrace.name in U.compatible_species)))
 					//DEBUG_MESSAGE("[src] can't wear [I].")
-					return 0
+					return FALSE
 				else
-					return 1
+					return TRUE
 		if (slot_in_backpack) // this slot is stupid
 			if (src.back && istype(src.back, /obj/item/storage))
 				var/obj/item/storage/S = src.back
 				if (S.contents.len < 7 && I.w_class <= W_CLASS_NORMAL)
-					return 1
+					return TRUE
 		if (slot_in_belt) // this slot is also stupid
 			if (src.belt && istype(src.belt, /obj/item/storage))
 				var/obj/item/storage/S = src.belt
 				if (S.contents.len < 7 && I.w_class <= W_CLASS_NORMAL)
-					return 1
-	return 0
+					return TRUE
+	return FALSE
 
 /mob/living/carbon/human/proc/equip_new_if_possible(path, slot)
 	var/obj/item/I = new path(src)
 	src.equip_if_possible(I, slot)
 	if(slot != slot_in_backpack && slot != slot_in_belt && src.get_slot(slot) != I)
 		qdel(I)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /mob/living/carbon/human/proc/equip_if_possible(obj/item/I, slot)
 	if (can_equip(I, slot))
@@ -2580,7 +2617,7 @@
 				return
 			if (iswerewolf(src))
 				if (src.handcuffs.werewolf_cant_rip())
-					boutput(src, __red("You can't seem to rip apart these silver handcuffs. They burn!"))
+					boutput(src, "<span class='alert'>You can't seem to rip apart these silver handcuffs. They burn!</span>")
 					src.TakeDamage("l_arm", 0, 2, 0, DAMAGE_BURN)
 					src.TakeDamage("r_arm", 0, 2, 0, DAMAGE_BURN)
 					return
@@ -3050,7 +3087,7 @@
 	if (!src.hud) // uh?
 		return src.show_text("<b>Somehow you have no HUD! Please alert a coder!</b>", "red")
 
-	var/selection = input(usr, "What style HUD style would you like?", "Selection") as null|anything in hud_style_selection
+	var/selection = tgui_input_list(usr, "What style HUD style would you like?", "Selection", hud_style_selection)
 	if (!selection)
 		return
 
@@ -3219,6 +3256,9 @@
 
 	if (head)
 		worn += head.name
+
+	else if (mutantrace?.self_click_fluff)
+		worn += mutantrace.self_click_fluff
 	else
 		worn += "hair"
 

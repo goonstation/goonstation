@@ -739,8 +739,8 @@
 	#endif
 
 /obj/item/clothing/under/misc/turds
-	name = "NT-SO Jumpsuit"
-	desc = "A Nanotrasen Special Operations jumpsuit."
+	name = "NT combat uniform"
+	desc = "A Nanotrasen paramilitary jumpsuit."
 	icon_state = "turdsuit"
 	item_state = "turdsuit"
 	team_num = TEAM_NANOTRASEN
@@ -1209,7 +1209,6 @@
 	burn_point = 450
 	burn_output = 800
 	burn_possible = 1
-	health = 20
 	rand_pos = 0
 
 	setupProperties()
@@ -1252,7 +1251,7 @@
 					qdel(src)
 					return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (issnippingtool(W))
 			boutput(user, "You begin cutting up [src].")
 			if (!do_after(user, 3 SECONDS))
@@ -1269,7 +1268,7 @@
 		else
 			return ..()
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		src.add_fingerprint(user)
 		if (user.a_intent != "harm")
 			M.visible_message("[user] towels [M == user ? "[him_or_her(user)]self" : M] dry.")
@@ -1457,7 +1456,7 @@
     icon_state = "bandshirt"
     item_state = "bandshirt"
 
-/obj/item/clothing/under/misc/bandshirt/attack_hand(mob/user as mob)
+/obj/item/clothing/under/misc/bandshirt/attack_hand(mob/user)
 	if  ( ..() && !disturbed )
 		new /obj/item/clothing/mask/cigarette/dryjoint(get_turf(user))
 		boutput(user, "Something falls out of the shirt as you pick it up!")

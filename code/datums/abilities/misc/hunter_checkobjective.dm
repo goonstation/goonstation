@@ -24,8 +24,8 @@
 		var/count = M.get_skull_value()
 
 		if (count <= 0)
-			boutput(M, __red("<b>Combined trophy value: 0</b>"))
+			boutput(M, "<span class='alert'><b>Combined trophy value: 0</b></span>")
 		else
-			boutput(M, __blue("<b>Combined trophy value: [count]</b>"))
+			boutput(M, "<span class='notice'><b>Combined trophy value: [count]</b></span>")
 
 		return 0

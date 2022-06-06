@@ -45,7 +45,7 @@
 	I.set_loc(get_turf(src))
 	src.UpdateIcon()
 
-/obj/bookshelf/attackby(obj/item/W as obj, mob/user as mob)
+/obj/bookshelf/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/storage/bible))
 		boutput(user, "\The [W] is too holy to be put on a shelf with non-holy books.")
 		return
@@ -74,7 +74,7 @@
 		boutput(user, "You can't shelf that!")
 		return
 
-/obj/bookshelf/attack_hand(mob/user as mob)
+/obj/bookshelf/attack_hand(mob/user)
 	if (length(src.bookshelf_contents) > 0)
 		var/book_sel = input("What book would you like to take off \the [src]?", "[src]") as null|anything in src.bookshelf_contents
 		if (!book_sel)

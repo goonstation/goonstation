@@ -3759,7 +3759,7 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "ali" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/kitchen,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "alk" = (
@@ -48579,7 +48579,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/testchamber)
 "ctV" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/research,
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
 "ctW" = (
@@ -54237,12 +54237,6 @@
 /area/station/engine/core)
 "fRs" = (
 /obj/table/auto,
-/obj/item/platestack{
-	icon_state = "platestack4";
-	pixel_x = -3;
-	pixel_y = 8;
-	platenum = 5
-	},
 /obj/decal/cleanable/generic,
 /obj/item/storage/box/beer{
 	pixel_x = 14;
@@ -60285,7 +60279,7 @@
 	name = "Tool Storage"
 	})
 "qBE" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/genetics,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
