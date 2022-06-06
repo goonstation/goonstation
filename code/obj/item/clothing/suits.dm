@@ -553,7 +553,6 @@
 
 	cool
 		icon_state = "MDlabcoat-cool"
-		item_state = "MDlabcoat-cool"
 		coat_style = "MDlabcoat-cool"
 
 /obj/item/clothing/suit/labcoat/pathology
