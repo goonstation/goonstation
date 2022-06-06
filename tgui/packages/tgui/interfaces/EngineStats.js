@@ -6,7 +6,7 @@
  */
 
 import { useBackend } from '../backend';
-import { Box, Chart, Modal, Blink, Icon, Section, Stack, Button } from '../components';
+import { Box, Chart, Modal, Section, Stack, Button } from '../components';
 import { Window } from '../layouts';
 
 /**
@@ -37,7 +37,6 @@ const processStatsData = rawData => {
   }
   return resolvedData;
 };
-
 
 /**
  * Helper function to get the maximum value of our stats information for display
@@ -86,6 +85,7 @@ const generateChartsFromStats = stats => {
  * @returns A string containing the number in exponential format or the original input w/ thousand seperators
  */
 const formatExponentialMil = value => `${value >= 1000000 ? value.toExponential(3) : value.toLocaleString()}`;
+
 
 export const ReactorStats = (props, context) => {
   const { act, data } = useBackend(context);
