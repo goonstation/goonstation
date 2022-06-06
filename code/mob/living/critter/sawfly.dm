@@ -10,6 +10,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 	name = "Ranodyne antipersonnel microdrone"
 	desc = "A folding antipersonnel drone, made by Ranodyne LLC. It'd be pretty cute if it wasn't trying to kill people."
 	icon = 'icons/obj/ship.dmi'//remnants of it originally being a drone
+	death_text = "%src% jutters and falls from the air, whirring to a stop."
 	icon_state = "sawfly"
 	flags = TABLEPASS
 
@@ -50,7 +51,6 @@ This file is the critter itself, and all the custom procs it needs in order to f
 		if(isnew)
 			name = "Sawfly [pick(sawflynames)]-[rand(1,999)]"
 		deathtimer = rand(1, 5)
-		death_text = "[src] jutters and falls from the air, whirring to a stop."
 		beeptext = "[pick(list("beeps",  "boops", "bwoops", "bips", "bwips", "bops", "chirps", "whirrs", "pings", "purrs", "thrums"))]"
 		animate_bumble(src) // gotta get the float goin' on
 		src.set_a_intent(INTENT_HARM) // incredibly stupid way of ensuring they aren't passable but it works

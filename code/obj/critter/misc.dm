@@ -136,6 +136,7 @@
 	seekrange = 1
 	angertext = "suddenly comes to life and lunges at"
 	death_text = "%src% crumbles to pieces!"
+
 	ai_think()
 		..()
 		if (src.alive)
@@ -149,9 +150,11 @@
 				if("attacking")
 					src.icon_state = "mimic2"
 					src.name = "mimic"
+
 	ChaseAttack(mob/M)
 		src.visible_message("<span class='combat'><B>[src]</B> hurls itself at [M]!</span>")
 		if (prob(33)) M.weakened += rand(3,6)
+
 	CritterAttack(mob/M)
 		src.attacking = 1
 		src.visible_message("<span class='combat'><B>[src]</B> bites [src.target]!</span>")

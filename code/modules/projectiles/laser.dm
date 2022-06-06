@@ -521,8 +521,6 @@ toxic - poisons
 				V.health -= power * 1.8
 				V.checkhealth()
 
-
-
 /datum/projectile/laser/alastor
 	name = "laser"
 	icon = 'icons/obj/projectiles.dmi'

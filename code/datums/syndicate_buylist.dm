@@ -305,8 +305,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	br_allowed = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
-
-
 /datum/syndicate_buylist/traitor/champrojector
 	name = "Chameleon Projector"
 	item = /obj/item/device/chameleon
