@@ -64,7 +64,9 @@ const generateChartsFromStats = stats => {
   return Object.entries(stats).map(([key, chart_data], index) => (
     <Stack.Item key={key} mt={0.5} ml={index === 0 ? 1 : undefined} >
       <Box>
-        {key}: {chart_data[chart_data.length - 1][1] || "No Data"}
+        {key}: { chart_data[chart_data.length - 1][1] === 0 ? ("No Data") : (
+          formatExponentialMil(chart_data[chart_data.length - 1][1])
+        )}
       </Box>
       <Chart.Line
         height="3.5em"
@@ -77,6 +79,13 @@ const generateChartsFromStats = stats => {
     </Stack.Item>
   ));
 };
+
+/**
+ * Converts a number to exponential format if over a million, for display purposes
+ * @param {number} value
+ * @returns A string containing the number in exponential format or the original input w/ thousand seperators
+ */
+const formatExponentialMil = value => `${value >= 1000000 ? value.toExponential(2) : value.toLocaleString()}`;
 
 export const ReactorStats = (props, context) => {
   const { act, data } = useBackend(context);
