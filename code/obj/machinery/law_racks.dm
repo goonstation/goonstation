@@ -565,7 +565,7 @@
 			if (isghostdrone(R))
 				continue
 			if(R.law_rack_connection == src || (R.dependent && R?.mainframe?.law_rack_connection == src))
-				if(R.dependent && R.mainframe?.law_rack_connection != src)
+				if(R.dependent && R?.mainframe?.law_rack_connection != src)
 					R.law_rack_connection = R?.mainframe?.law_rack_connection //goddamn shells
 					continue
 				R.playsound_local(R, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
