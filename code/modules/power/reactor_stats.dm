@@ -1,11 +1,10 @@
 /* reactor statistics computer for nerds. by kremlin */
-
 /obj/machinery/power/reactor_stats
-	name = "Reactor Statistics Computer"
+	name = "Engine Statistics Computer"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "reactor_stats"
 	desc = "A powerful supercomputer used to model the generator and provide corresponding statistical analysis"
-	density = 1
+	density = TRUE
 	anchored = 1.0
 	flags = TGUI_INTERACTIVE
 
@@ -69,6 +68,9 @@
 		src.chamber_data.Cut(1, 2) //drop the oldest entry
 
 	/* get meter data */
+	// Too much of a pain to format this data for the graphs.
+	// Feel free to do it yourself.
+
 	// for(var/obj/machinery/power/stats_meter/M in meters)
 	// 	if (!M.target || !M.tag)
 	// 		continue
@@ -221,7 +223,7 @@
 /obj/machinery/power/reactor_stats/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "ReactorStats")
+		ui = new(user, src, "EngineStats")
 		ui.open()
 
 /obj/machinery/power/reactor_stats/ui_data(mob/user)
@@ -238,6 +240,16 @@
 		return
 
 	switch(action)
+		if("toggle-power")
+			power = !power
+			if(power)
+				for(var/obj/machinery/power/stats_meter/M in meters)
+					M.overlays -= ("red_overlay")
+					M.overlays += ("green_overlay")
 
-		if("set-file")
-			boutput(world, "cat")
+			else
+				for(var/obj/machinery/power/stats_meter/M in meters)
+					M.overlays -= ("green_overlay")
+					M.overlays += ("red_overlay")
+			return TRUE
+

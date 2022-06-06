@@ -6,35 +6,33 @@
  */
 
 import { useBackend } from '../backend';
-import { Box, Chart, Divider, LabeledList, Collapsible, Section, Stack } from '../components';
+import { Box, Chart, Modal, Blink, Icon, Section, Stack, Button } from '../components';
 import { Window } from '../layouts';
 
 /**
  * Helper function to transform the data into something displayable
  * Lovingly made by Mordent and adapted
- * @param {*} statsData - [ { foo: v, bar: v2 }, { foo: v3, bar: v4 } ]
+ * @param {*} rawData - [ { foo: v, bar: v2, ... }, { foo: v3, bar: v4, ... }, ... ]
  * @returns - { foo: [[i, v], [i+1, v2], ...], bar: [[i, v3], [i+1, v4], ...] }
  */
-const processStatsData = statsData => {
-  if ((statsData ?? []).length === 0) {
-    return null; // or if you know the keys in advance, can return a constant with them having empty arrays as values
+const processStatsData = rawData => {
+  if ((rawData ?? []).length === 0) {
+    return null;
   }
   // intialize our data structure
-  const keys = Object.keys(statsData[0]);
+  const keys = Object.keys(rawData[0]);
 
   const resolvedData = keys.reduce((acc, curr) => {
     acc[curr] = [];
     return acc;
   }, {});
 
-  for (let statsDataIndex = 0; statsDataIndex < statsData.length; statsDataIndex++) {
-    const tegDatum = statsData[statsDataIndex];
+  for (let statsDataIndex = 0; statsDataIndex < rawData.length; statsDataIndex++) {
+    const tegValues = rawData[statsDataIndex];
     for (let keyIndex = 0; keyIndex < keys.length; keyIndex++) {
       const key = keys[keyIndex];
-      const scientificIfOverMil = v =>
-        `${ v >= 1000000 ? v.toExponential(3) : v}`; // string !!!! to exponent do later
-      // x,y coords for graph (y defaults to 0)
-      resolvedData[key].push([statsDataIndex, scientificIfOverMil(tegDatum[key]) ?? 0]); // 0 but none later
+      // x, y coords for graph (y defaults to 0)
+      resolvedData[key].push([statsDataIndex, tegValues[key] ?? 0]); // 0 but "None" later
     }
   }
   return resolvedData;
@@ -66,10 +64,10 @@ const generateChartsFromStats = stats => {
   return Object.entries(stats).map(([key, chart_data], index) => (
     <Stack.Item key={key} mt={0.5} ml={index === 0 ? 1 : undefined} >
       <Box>
-        {key}: {chart_data[chart_data.length - 1][1]}
+        {key}: {chart_data[chart_data.length - 1][1] || "No Data"}
       </Box>
       <Chart.Line
-        height="3em"
+        height="3.5em"
         width="20em"
         data={chart_data}
         rangeX={[0, chart_data.length - 1]}
@@ -95,16 +93,47 @@ export const ReactorStats = (props, context) => {
 
   return (
     <Window
-      height="550"
+      height="620"
       width="760"
       theme="retro-dark"
+      title="Engine Statistics"
     >
       <Window.Content>
-        {!turnedOn
-          ? (<Box> Unpowered </Box>)
+        {!turnedOn || !tegStats || !chamberStats // Need stats or window will freak out
+          ? (
+            // Turned off screen
+            <Modal
+              textAlign="center"
+              width={20}
+              height={5}
+              fontSize={2}
+              fontFamily="Courier">
+              POWER ON
+              <Button
+                tooltip="Power"
+                icon="power-off"
+                color="caution"
+                ml={3}
+                onClick={() => act('toggle-power')}
+              />
+            </Modal>
+          )
           :(
             <Box>
-              <Section title="TEG Data">
+              <Section title={
+                <Box>
+                  TEG Data
+                  <Button
+                    tooltip="Power"
+                    icon="power-off"
+                    color="caution"
+                    position="absolute"
+                    right={0.25}
+                    top={0.25}
+                    onClick={() => act('toggle-power')}
+                  />
+                </Box>
+              }>
                 <Stack
                   wrap="wrap"
                   justify="space-around"
@@ -113,7 +142,7 @@ export const ReactorStats = (props, context) => {
                   { generateChartsFromStats(tegStats) }
                 </Stack>
               </Section>
-              <Section title="Chamber Data">
+              <Section title="Combustion Chamber Data">
                 <Stack
                   wrap="wrap"
                   justify="space-around"
