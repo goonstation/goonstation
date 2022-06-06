@@ -34,6 +34,10 @@ ABSTRACT_TYPE(/mob/living/critter)
 	var/can_throw = 0
 	var/can_choke = 0
 	var/in_throw_mode = 0
+	var/health_brute = null
+	var/health_burn = null
+	var/health_brute_vuln = null
+	var/health_burn_vuln = null
 
 	var/can_help = 0
 	var/can_grab = 0

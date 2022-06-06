@@ -17,8 +17,8 @@
 	mat_changename = FALSE
 	mat_changedesc = FALSE
 	// HEALTHS
-	var/health_brute = 1
-	var/health_burn = 1
+	health_brute = 1
+	health_burn = 1
 
 	metabolizes = FALSE // under assumption drones dont metabolize chemicals due to gnesis internals
 	//base compute provided

@@ -10,10 +10,10 @@
 	custom_gib_handler = /proc/bonegibs
 	icon = 'icons/mob/skeleton_commander.dmi'
 	icon_state = "skeleton_commander"
-	var/health_brute = 90
-	var/health_brute_vuln = 0.7
-	var/health_burn = 90
-	var/health_burn_vuln = 0.3
+	health_brute = 90
+	health_brute_vuln = 0.7
+	health_burn = 90
+	health_burn_vuln = 0.3
 	var/mob/wraith/master = null
 	var/deathsound = "sound/impact_sounds/plate_break.ogg"
 

@@ -8,11 +8,11 @@
 	speechverb_say = "says"
 	speechverb_exclaim = "exclaims"
 	speechverb_ask = "asks"
-	var/health_brute = 8
 	var/const/life_tick_spacing = 20
-	var/health_brute_vuln = 1
-	var/health_burn = 8
-	var/health_burn_vuln = 1
+	health_brute = 8
+	health_brute_vuln = 1
+	health_burn = 8
+	health_burn_vuln = 1
 	var/mob/wraith/wraith_trickster/master = null
 	var/hauntBonus = 0
 	var/last_life_update = 0
@@ -23,7 +23,7 @@
 		if(M != null)
 			src.master = M
 
-		last_life_update = world.timeofday
+		last_life_update = TIME
 
 		src.abilityHolder = new /datum/abilityHolder/wraith(src)
 		src.abilityHolder.points = master.abilityHolder.points
@@ -43,7 +43,7 @@
 
 	Life(parent)
 		..()
-		var/life_time_passed = max(life_tick_spacing, world.timeofday - last_life_update)
+		var/life_time_passed = max(life_tick_spacing, TIME - last_life_update)
 
 		src.hauntBonus = 0
 		for (var/mob/living/carbon/human/H in viewers(6, src))
@@ -64,7 +64,7 @@
 		src.abilityHolder.generatePoints(mult = (life_time_passed / life_tick_spacing))
 		src.abilityHolder.updateText()
 
-		last_life_update = world.timeofday
+		last_life_update = TIME
 
 	setup_healths()
 		add_hh_flesh(src.health_brute, src.health_brute_vuln)

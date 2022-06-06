@@ -14,10 +14,10 @@
 	icon = 'icons/mob/wraith_critters.dmi'
 	icon_state = "voidhound"
 	icon_state_dead = "dead_voidhound"
-	var/health_brute = 40
-	var/health_brute_vuln = 0.7
-	var/health_burn = 40
-	var/health_burn_vuln = 1
+	health_brute = 40
+	health_brute_vuln = 0.7
+	health_burn = 40
+	health_burn_vuln = 1
 	var/mob/wraith/master = null
 	var/cloaked = FALSE
 

@@ -99,7 +99,7 @@
 		if (!istype(src, /mob/wraith/wraith_trickster) && !istype(src, /mob/wraith/wraith_decay) && !istype(src, /mob/wraith/wraith_harbinger))
 			src.addAbility(/datum/targetable/wraithAbility/specialize)
 		src.addAllBasicAbilities()
-		last_life_update = world.timeofday
+		last_life_update = TIME
 		src.hud = new hud_path (src)
 		src.attach_hud(hud)
 		src.flags |= UNCRUSHABLE
@@ -159,7 +159,7 @@
 		if (!src.abilityHolder)
 			src.abilityHolder = new /datum/abilityHolder/wraith(src)
 
-		var/life_time_passed = max(life_tick_spacing, world.timeofday - last_life_update)
+		var/life_time_passed = max(life_tick_spacing, TIME - last_life_update)
 
 		if (src.forcedVisible && !src.density && !src.haunting)
 			if (src.visibleTimer > 0)
@@ -206,7 +206,7 @@
 			return
 		else if (src.health < src.max_health)
 			HealDamage("chest", 1 * (life_time_passed / life_tick_spacing), 0)
-		last_life_update = world.timeofday
+		last_life_update = TIME
 
 		if(justmanifested > 0)
 			justmanifested--
