@@ -701,6 +701,35 @@
 		boutput(activator, "<span class='alert'>Unable to redeem... Only humans can redeem this.</span>")
 		return
 
+/datum/achievementReward/med_labcoat
+	title = "(Skin) Cool Medical Labcoat"
+	desc = "Requires that you wear a medical labcoat in your suit slot."
+	required_medal = "Patchwork"
+	once_per_round = 0
+
+	rewardActivate(var/mob/activator)
+		if (ishuman(activator))
+			var/mob/living/carbon/human/H = activator
+			if (H.wear_suit)
+				var/obj/item/clothing/suit/labcoat/medical/M = H.wear_suit
+				if (istype(M))
+					//change the icon if you've bought the alt jumpsuit thing (so the coat matches the alt medical jumpsuit)
+					if (activator.mind && istype(activator.mind.purchased_bank_item, /datum/bank_purchaseable/altjumpsuit))
+						M.icon_state = findtext(M.icon_state, "_o") ? "MDlabcoat-coolalt_o" : "MDlabcoat-coolalt"
+						M.coat_style = "MDlabcoat-coolalt"
+					else
+						M.icon_state = findtext(M.icon_state, "_o") ? "MDlabcoat-cool_o" : "MDlabcoat-cool"
+						M.coat_style = "MDlabcoat-cool"
+
+					H.set_clothing_icon_dirty()
+					return 1
+
+			boutput(activator, "<span class='alert'>Unable to redeem... you need to be wearing a medical labcoat.</span>")
+			return
+
+		boutput(activator, "<span class='alert'>Unable to redeem... Only humans can redeem this.</span>")
+		return
+
 /datum/achievementReward/sci_labcoat
 	title = "(Skin) Science Labcoat"
 	desc = "Requires that you wear a labcoat in your suit slot."
