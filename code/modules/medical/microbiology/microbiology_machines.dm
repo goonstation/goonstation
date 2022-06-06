@@ -5,15 +5,15 @@
 	desc = "A large machine that can be used to separate a pathogen sample from a blood sample."
 	anchored = 1
 	density = 1
-	/*
+
 	var/obj/item/bloodslide/source = null
-	var/datum/pathogen/isolated = null
+	var/datum/microbe/isolated = null
 	var/obj/item/reagent_containers/glass/petridish/target = null
 	var/obj/item/reagent_containers/glass/beaker/beaker = null
 
 	var/on = 0
 
-	var/datum/pathogen/process_pathogen
+	var/datum/microbe/process_pathogen
 	var/obj/item/bloodslide/process_source
 	var/counter = 15
 
@@ -33,18 +33,18 @@
 						output_text += "The [src.source] contains no viable sample.<BR><BR>"
 					else
 						var/datum/reagent/blood/B = src.source.reagents.reagent_list["blood"]
-						if (B.volume && length(B.pathogens))
-							if (B.pathogens.len > 1)
+						if (B.volume && length(B.microbes))
+							if (B.microbes.len > 1)
 								output_text += "The centrifuge is calibrated to isolate a sample of [src.isolated ? src.isolated.name : "all pathogens"].<br><br>"
 								output_text += "The blood in the [src.source] contains multiple pathogens. Calibrate to isolate a sample of:<br>"
 								output_text += "<a href='?src=\ref[src];all=1'>All</a><BR>"
-								for (var/uid in B.pathogens)
-									var/datum/pathogen/P = B.pathogens[uid]
+								for (var/uid in B.microbes)
+									var/datum/microbe/P = B.microbes[uid]
 									output_text += "<a href='?src=\ref[src];isolate=\ref[P]'>[P.name]</a><br>"
 								output_text += "<BR>"
 							else
-								var/uid = B.pathogens[1]
-								var/datum/pathogen/P = B.pathogens[uid]
+								var/uid = B.microbes[1]
+								var/datum/microbe/P = B.microbes[uid]
 								output_text += "The centrifuge will isolate the single sample of [P].<br><br>"
 						else
 							output_text += "The [src.source] contains no viable sample.<BR><BR>"
@@ -105,7 +105,7 @@
 					maybegin = 0
 				else
 					var/datum/reagent/blood/B = src.source.reagents.reagent_list["blood"]
-					if (!B.pathogens.len)
+					if (!B.microbes.len)
 						boutput(usr, "<span class='alert'>The inserted blood sample is clean, there is nothing to isolate.</span>")
 						maybegin = 0
 					else if (!src.target)
@@ -119,9 +119,9 @@
 					var/datum/reagent/blood/pathogen/P = new
 					var/datum/reagent/blood/B = src.source.reagents.reagent_list["blood"]
 					if (src.isolated)
-						P.pathogens = list(src.isolated.pathogen_uid = src.isolated)
+						P.microbes = list(src.isolated.microbio_uid = src.isolated)
 					else
-						P.pathogens = B.pathogens.Copy()
+						P.microbes = B.microbes.Copy()
 					P.volume = 5
 					processing_items |= src
 					src.process_pathogen = P
@@ -144,9 +144,9 @@
 					user.client.screen -= O
 				user.u_equip(O)
 				boutput(user, "You insert the blood slide into the machine.")
-				if (src.source.blood && src.source.blood.pathogens.len == 1)
-					var/uid = src.source.blood.pathogens[1]
-					src.isolated = src.source.blood.pathogens[uid]
+				if (src.source.blood && src.source.blood.microbes.len == 1)
+					var/uid = src.source.blood.microbes[1]
+					src.isolated = src.source.blood.microbes[uid]
 				else
 					src.isolated = null
 		else if (istype(O, /obj/item/reagent_containers/glass/petridish))
@@ -174,10 +174,10 @@
 			src.visible_message("<span class='notice'>The centrifuge beeps and discards the disfigured bloodslide.</span>", "<span class='notice'>You hear a machine powering down.</span>")
 			if (src.target.reagents.has_reagent("pathogen"))
 				var/datum/reagent/blood/pathogen/Q = src.target.reagents.reagent_list["pathogen"]
-				for (var/uid in P.pathogens)
-					var/datum/pathogen/PT = P.pathogens[uid]
-					Q.pathogens += uid
-					Q.pathogens[uid] = PT
+				for (var/uid in P.microbes)
+					var/datum/microbe/PT = P.microbes[uid]
+					Q.microbes += uid
+					Q.microbes[uid] = PT
 			else
 				src.target.reagents.reagent_list += "pathogen"
 				src.target.reagents.reagent_list["pathogen"] = P
@@ -190,7 +190,7 @@
 			src.isolated = null
 			src.on = 0
 			src.icon_state = "centrifuge0"
-	*/
+
 /obj/machinery/microscope
 	name = "Microscope"
 	icon = 'icons/obj/pathology.dmi'

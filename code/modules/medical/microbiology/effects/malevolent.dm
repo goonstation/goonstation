@@ -144,7 +144,7 @@ ABSTRACT_TYPE(/datum/microbioeffects/malevolent)
 		if (prob(origin.probability*2))
 			M:emote("shiver")
 			M.show_message("<span class='alert'> You feel unusually hot. </span>")
-			M.bodytemperature -= origin.probability
+			M.bodytemperature -= 2*origin.probability
 
 	may_react_to()
 		return "The microbes appear to be thermally active."
@@ -154,9 +154,9 @@ ABSTRACT_TYPE(/datum/microbioeffects/malevolent)
 	desc = "The pathogen raises the homeostatic set point of the infected."
 
 	mob_act(var/mob/M as mob, var/datum/microbe/origin)
-		if (prob(origin.probability*2))
+		if (prob(origin.probability))
 			M.show_message("<span class='alert'> You feel unusually cold. </span>")
-			M.bodytemperature += origin.probability
+			M.bodytemperature += 2*origin.probability
 
 	may_react_to()
 		return "The microbes appear to be thermally active."
@@ -204,7 +204,7 @@ ABSTRACT_TYPE(/datum/microbioeffects/malevolent)
 		//src.infect_cloud(M, origin, origin.spread) // TODO: at some point I want the bees to spread this instead
 
 	mob_act(var/mob/M as mob, var/datum/microbe/origin)
-		if (prob(origin.probability*2) && origin.probability > 3)
+		if (prob(origin.probability) && origin.probability > 3)
 			sneeze(M, origin)
 
 	may_react_to()
