@@ -27,7 +27,7 @@
 "l" = (
 /obj/neon_lining{
 	dir = 1;
-	lining_color = s
+	lining_color = "yellow"
 	},
 /turf/simulated/floor/marble/black,
 /area/dmm_suite/clear_area)
