@@ -81,7 +81,7 @@
 			boutput(user, "<span class='alert'>That wouldn't possibly fit!</span>")
 			return
 
-		if (W.w_class > src.max_wclass || istype(W, /obj/item/storage/secure)) //can't do plates because of material duping with breaking them over your head
+		if (W.w_class > src.max_wclass || istype(W, /obj/item/storage/secure))
 			boutput(user, "<span class='alert'>There is no way that could fit!</span>")
 			return
 
