@@ -112,8 +112,7 @@
 							return
 
 					if(target != user)
-						SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /obj/item/reagent_containers/syringe/proc/syringe_action,\
-						list(user, target), src.icon, src.icon_state, null, null)
+						actions.start(new/datum/action/bar/icon/syringe(target, src, src.icon, src.icon_state), user)
 					else
 						transfer_blood(target, src, src.amount_per_transfer_from_this)
 						boutput(user, "<span class='notice'>You fill [src] with [src.amount_per_transfer_from_this] units of [target]'s blood.</span>")
@@ -169,8 +168,7 @@
 						return
 					if (target != user)
 						logTheThing("combat", user, target, "tries to inject [constructTarget(target,"combat")] with a [src] [log_reagents(src)] at [log_loc(user)].")
-						SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /obj/item/reagent_containers/syringe/proc/syringe_action,\
-						list(user, target), src.icon, src.icon_state, null, null)
+						actions.start(new/datum/action/bar/icon/syringe(target, src, src.icon, src.icon_state), user)
 						user.update_inhands()
 						return
 					else
@@ -204,8 +202,6 @@
 		return
 
 	proc/syringe_action(mob/user, mob/target)
-		if(!in_interact_range(user, target))
-			return
 		switch(src.mode)
 			if(S_DRAW)
 				transfer_blood(target, src, src.amount_per_transfer_from_this)
