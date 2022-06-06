@@ -52,7 +52,7 @@
 			src.UpdateIcon()
 			src.overlays = null
 			src.overlays += "ashtray-smoke"
-			SPAWN_DBG(80 SECONDS)
+			SPAWN(80 SECONDS)
 				src.overlays -= "ashtray-smoke"
 		else
 			return ..()

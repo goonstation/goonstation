@@ -6,6 +6,7 @@
 	flags = FPRINT | USEDELAY
 	anchored = 1.0
 	stops_space_move = 1
+	status = REQ_PHYSICAL_ACCESS
 	var/datum/effects/system/ion_trail_follow/ion_trail = null
 	var/mob/pilot = null //The mob which actually flys the ship
 	var/capacity = 3 //How many passengers the ship can hold
@@ -96,11 +97,19 @@
 		else
 			return null
 
+	Click(location,control,params)
+		if(istype(usr, /mob/dead/observer) && usr.client && !usr.client.keys_modifier && !usr:in_point_mode)
+			var/mob/dead/observer/O = usr
+			if(src.pilot)
+				O.insert_observer(src.pilot)
+		else
+			. = ..()
+
 	/////////////////////////////////////////////////////////
 	///////Attack Code									////
 	////////////////////////////////////////////////////////
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		user.lastattacked = src
 		if (health < maxhealth && isweldingtool(W))
 			if(!W:try_weld(user, 1))
@@ -184,7 +193,7 @@
 
 	updateDialog()
 		for(var/client/C)
-			if (C.mob && C.mob.using_dialog_of(src) && get_dist(C.mob,src) <= 1)
+			if (C.mob && C.mob.using_dialog_of(src) && BOUNDS_DIST(C.mob, src) == 0)
 				src.open_parts_panel(C.mob)
 
 	Topic(href, href_list)
@@ -577,7 +586,7 @@
 
 			if (ismob(target) && target != hitmob)
 				hitmob = target
-				SPAWN_DBG(0.5 SECONDS)
+				SPAWN(0.5 SECONDS)
 					hitmob = 0
 				var/mob/M = target
 				var/vehicular_manslaughter
@@ -590,7 +599,7 @@
 				var/turf/throw_at = get_edge_target_turf(src, src.dir)
 				M.throw_at(throw_at, movement_controller:velocity_magnitude, 2)
 				logTheThing("combat", src, target, "(piloted by [constructTarget(src.pilot,"combat")]) crashes into [constructTarget(target,"combat")] [log_loc(src)].")
-				SPAWN_DBG(2.5 SECONDS)
+				SPAWN(2.5 SECONDS)
 					if(M.health > 0)
 						vehicular_manslaughter = 0 //we now check if person was sent into crit after hit, if they did we get the achievement
 					if(vehicular_manslaughter && ishuman(M))
@@ -610,7 +619,7 @@
 				if (power > 20)
 					if (istype(O, /obj/machinery/door) && O.density)
 						var/obj/machinery/door/D = O
-						SPAWN_DBG(0)
+						SPAWN(0)
 							D.try_force_open(src)
 					if (istype(O, /obj/structure/girder) || istype(O, /obj/foamedmetal))
 						qdel(O)
@@ -643,7 +652,7 @@
 			if (sec_system.type == /obj/item/shipcomponent/secondary_system/crash)
 				if (sec_system:crashable)
 					sec_system:crashtime2(target)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			..()
 			return
 		return
@@ -833,7 +842,7 @@
 	if(exploding)
 		return
 	exploding = 1
-	SPAWN_DBG(1 DECI SECOND)
+	SPAWN(1 DECI SECOND)
 		src.visible_message("<b>[src] is breaking apart!</b>")
 		new /obj/effects/explosion (src.loc)
 		playsound(src.loc, "explosion", 50, 1)
@@ -968,6 +977,10 @@
 		boutput(boarder, "<span class='alert'>You have no idea how to work this.</span>")
 		return
 
+	if(isflockmob(boarder))
+		boutput(boarder, "<span class='alert'>You're unable to use this vehicle!</span>")
+		return
+
 	if(locked)
 		boutput(boarder, "<span class='alert'>[src] is locked!</span>")
 		return
@@ -995,7 +1008,7 @@
 		boutput(boarder, "There is no more room!")
 		return
 
-	actions.start(new/datum/action/bar/icon/board_pod(src,boarder), boarder)
+	actions.start(new/datum/action/bar/board_pod(src,boarder), boarder)
 
 /obj/machinery/vehicle/proc/finish_board_pod(var/mob/boarder)
 	for(var/obj/item/shipcomponent/S in src.components)
@@ -1056,12 +1069,10 @@
 		O.set_loc(floor)
 
 
-/datum/action/bar/icon/board_pod
+/datum/action/bar/board_pod
 	duration = 20
 	interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_MOVE
 	id = "board_pod"
-	icon = 'icons/ui/actions.dmi'
-	//icon_state = "working"
 	var/mob/M
 	var/obj/machinery/vehicle/V
 
@@ -1181,15 +1192,8 @@
 		logTheThing("vehicle", M, src.name, "is ejected from pod: <b>[constructTarget(src.name,"vehicle")]</b> when it blew up!")
 
 		src.leave_pod(M)
-		//var/atom/target = get_edge_target_turf(M,pick(alldirs))
-		//SPAWN_DBG(0)
-		//M.throw_at(target, 10, 2)
-		SPAWN_DBG(0)
-		step_rand(M, 0)
-		step_rand(M, 0)
-		step_rand(M, 0)
-		step_rand(M, 0)
-		step_rand(M, 0)
+		var/atom/target = get_edge_cheap(M, src.dir)
+		M.throw_at(target, 10, 2)
 
 
 /////////////////////////////////////////////////////////////////////
@@ -1459,7 +1463,7 @@
 ////////////////////////////////////////////////////////////////////////
 
 /obj/machinery/vehicle/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-	if (!user.client || !isliving(user))
+	if (!user.client || !isliving(user) || isintangible(usr))
 		return
 	if (is_incapacitated(user))
 		user.show_text("Not when you're incapacitated.", "red")
@@ -1485,8 +1489,8 @@
 	SS.Clickdrag_ObjectToPod(user,O)
 	return
 
-/obj/machinery/vehicle/MouseDrop(over_object, src_location, over_location)
-	if (!usr.client || !isliving(usr))
+/obj/machinery/vehicle/mouse_drop(over_object, src_location, over_location)
+	if (!usr.client || !isliving(usr) || isintangible(usr))
 		return
 	if (is_incapacitated(usr))
 		usr.show_text("Not when you're incapacitated.", "red")
@@ -1804,12 +1808,17 @@
 
 	New()
 		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		name = "syndicate minisub"
 		src.lock = new /obj/item/shipcomponent/secondary_system/lock(src)
 		src.lock.ship = src
 		src.components += src.lock
 		myhud.update_systems()
 		myhud.update_states()
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 /obj/machinery/vehicle/tank/minisub/mining
 	body_type = "minisub"
@@ -1901,7 +1910,7 @@
 	finish_board_pod(var/mob/boarder)
 		..()
 		if (!src.pilot) return //if they were stopped from entering by other parts of the board proc from ..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.escape()
 
 	proc/escape()
@@ -1993,7 +2002,7 @@
 					var/mob/living/carbon/human/H = pilot
 					for(var/effect in list("sever_left_leg","sever_right_leg","sever_left_arm","sever_right_arm"))
 						if(prob(40))
-							SPAWN_DBG(rand(0,5))
+							SPAWN(rand(0,5))
 								H.bioHolder.AddEffect(effect)
 				src.leave_pod(pilot)
 				src.icon_state = "escape_nowindow"

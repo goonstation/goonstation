@@ -3,7 +3,7 @@
 	set name = "Ticklag"
 	set desc = "Ticklag"
 	set hidden = 1
-	admin_only
+	ADMIN_ONLY
 
 	if (src.holder.level < LEVEL_CODER)
 		alert("You must be at least a Coder to modify ticklag.")

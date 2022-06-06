@@ -13,7 +13,7 @@
 
 	New()
 		nturbine = src
-		SPAWN_DBG(5 DECI SECONDS)
+		SPAWN(5 DECI SECONDS)
 			var/obj/fluid_pipe/sink/temp_i = locate(/obj/fluid_pipe/sink) in get_step(src,SOUTH)
 			var/obj/fluid_pipe/source/temp_o = locate(/obj/fluid_pipe/source) in get_step(src,NORTH)
 			//n_input = temp_i.network
@@ -22,7 +22,7 @@
 			n_output = temp_o
 			..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		displayHtml = buildHtml()
 		user << browse(displayHtml,  "window=fissionchamber;size=550x700;can_resize=1;can_minimize=1;allow-html=1;show-url=1;statusbar=1;enable-http-images=1;can-scroll=1")
 		return

@@ -28,18 +28,18 @@
 			else
 				return ..(target, start, user)
 
-	shoot_point_blank(mob/M, mob/user)
+	shoot_point_blank(atom/target, mob/user)
 		if (canshoot())
 			if (team_num)
 				if (team_num == get_pod_wars_team_num(user))
-					return ..(M, user)
+					return ..(target, user)
 				else
 					boutput(user, "<span class='alert'>You don't have to right DNA to fire this weapon!</span><br>")
 					playsound(get_turf(user), "sound/machines/buzz-sigh.ogg", 20, 1)
 
 					return
 			else
-				return ..(M, user)
+				return ..(target, user)
 
 	disposing()
 		indicator_display = null
@@ -190,7 +190,7 @@
 				L.emote("twitch_v")
 			else
 				shoot_projectile_ST(get_turf(src), PJ, get_step(src, NORTH))
-			SPAWN_DBG(0.1 SECONDS)
+			SPAWN(0.1 SECONDS)
 				qdel(src)
 		else
 			qdel(src)
@@ -244,7 +244,7 @@
 					if (target)
 						A.throw_at(target, 10 - get_dist(src, A)*2, 1)		//throw things farther if they are closer to the epicenter.
 
-			SPAWN_DBG(0.1 SECONDS)
+			SPAWN(0.1 SECONDS)
 				qdel(O)
 				qdel(src)
 		else

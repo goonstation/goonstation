@@ -48,13 +48,14 @@ MATERIAL
 	stamina_damage = 42
 	stamina_cost = 23
 	stamina_crit_chance = 10
+	material_amt = 0.1
 	var/datum/material/reinforcement = null
 	rand_pos = 1
 	inventory_counter_enabled = 1
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			update_appearance()
 		create_inventory_counter()
 		BLOCK_SETUP(BLOCK_ALL)
@@ -116,7 +117,7 @@ MATERIAL
 
 
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
 			var/splitnum = round(input("How many sheets do you want to take from the stack?","Stack of [src.amount]",1) as num)
 			if(!in_interact_range(src, user) || !isnum_safe(splitnum))
@@ -133,6 +134,13 @@ MATERIAL
 			boutput(user, "<span class='notice'>You take [splitnum] sheets from the stack, leaving [src.amount] sheets behind.</span>")
 		else
 			..(user)
+
+	split_stack(toRemove)
+		. = ..()
+		if(src.reinforcement)
+			var/obj/item/sheet/S = .
+			S.set_reinforcement(src.reinforcement)
+			. = S
 
 	attackby(obj/item/W, mob/user as mob)
 		if (istype(W, /obj/item/sheet))
@@ -671,10 +679,11 @@ MATERIAL
 	stamina_crit_chance = 30
 	rand_pos = 1
 	inventory_counter_enabled = 1
+	material_amt = 0.05
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			update_stack_appearance()
 		BLOCK_SETUP(BLOCK_ROD)
 
@@ -714,7 +723,7 @@ MATERIAL
 		. = ..()
 		. += "There are [src.amount] rod\s on this stack."
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
 			var/splitnum = round(input("How many rods do you want to take from the stack?","Stack of [src.amount]",1) as num)
 
@@ -731,7 +740,7 @@ MATERIAL
 		else
 			..(user)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isweldingtool(W))
 			if(src.amount < 2)
 				boutput(user, "<span class='alert'>You need at least two rods to make a material sheet.</span>")
@@ -826,7 +835,7 @@ MATERIAL
 				return
 			user.visible_message("<span class='notice'><b>[user]</b> begins building a grille.</span>")
 			var/turf/T = user.loc
-			SPAWN_DBG(1.5 SECONDS)
+			SPAWN(1.5 SECONDS)
 				if (T == user.loc && !user.getStatusDuration("weakened") && !user.getStatusDuration("stunned") && src.amount >= 2)
 					var/atom/G = new /obj/grille(user.loc)
 					G.setMaterial(src.material)
@@ -848,10 +857,10 @@ MATERIAL
 
 	New()
 		..()
-		SPAWN_DBG(0) //wait for the head to be added
+		SPAWN(0) //wait for the head to be added
 			update()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(length(heads))
 			var/obj/item/organ/head/head = heads[length(heads)]
 
@@ -872,7 +881,7 @@ MATERIAL
 		else
 			..(user)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isweldingtool(W))
 			if(!src.anchored && !istype(src.loc,/turf/simulated/floor) && !istype(src.loc,/turf/unsimulated/floor))
 				boutput(user, "<span class='alert'>There's nothing to weld that to.</span>")
@@ -971,7 +980,7 @@ MATERIAL
 		playsound(src.loc, "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1)
 		if(prob(40)) user.emote("scream")
 
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			user.visible_message("<span class='alert'><b>[user] tears [his_or_her(user)] body away from the spike, leaving [his_or_her(user)] head behind!</b></span>")
 			var/obj/head = user.organHolder.drop_organ("head")
 			head.set_loc(src)
@@ -980,7 +989,7 @@ MATERIAL
 			make_cleanable( /obj/decal/cleanable/blood,user.loc)
 			playsound(src.loc, "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
 
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 
@@ -1003,6 +1012,7 @@ MATERIAL
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "tile_5"
 	item_state = "tile"
+	health = 2
 	w_class = W_CLASS_NORMAL
 	m_amt = 937.5
 	throw_speed = 3
@@ -1015,12 +1025,13 @@ MATERIAL
 	stamina_crit_chance = 15
 	tooltip_flags = REBUILD_DIST
 	inventory_counter_enabled = 1
+	material_amt = 0.025
 
 	New(make_amount = 0)
 		..()
 		src.pixel_x = rand(0, 14)
 		src.pixel_y = rand(0, 14)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			update_stack_appearance()
 			src.inventory_counter?.update_number(amount)
 		return
@@ -1057,7 +1068,7 @@ MATERIAL
 		if (dist <= 3)
 			. += "<br>There are [src.amount] tile[s_es(src.amount)] left on the stack."
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 
 		if ((user.r_hand == src || user.l_hand == src))
 			src.add_fingerprint(user)
@@ -1097,7 +1108,7 @@ MATERIAL
 		src.add_fingerprint(user)
 		return
 
-	attackby(obj/item/tile/W as obj, mob/user as mob)
+	attackby(obj/item/tile/W, mob/user)
 
 		if (!( istype(W, /obj/item/tile) ))
 			return
@@ -1156,6 +1167,14 @@ MATERIAL
 		var/datum/material/M = getMaterial("steel")
 		src.setMaterial(M)
 
+/obj/item/tile/cardboard // for drones
+	desc = "They keep the floor in a good and walkable condition. At least, they would if they were actually made of steel."
+	New()
+		..()
+		var/datum/material/M = getMaterial("cardboard")
+
+		src.setMaterial(M)
+
 /obj/item/sheet/electrum
 	New()
 		..()
@@ -1185,3 +1204,5 @@ MATERIAL
 	amount = 50
 /obj/item/tile/steel/fullstack
 	amount = 80
+/obj/item/tile/cardboard/fullstack
+	amount = 100

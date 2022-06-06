@@ -113,7 +113,7 @@
 /area/jones/radiation)
 "aq" = (
 /obj/map/light/green,
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "Apparently, these suits are only rated for some types of radiation.";
 	icon = 'icons/misc/jonescity.dmi';
 	icon_state = "deadrad";
@@ -497,7 +497,7 @@
 "bh" = (
 /obj/map/light/green,
 /obj/decal/cleanable/molten_item,
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "Apparently, these suits are only rated for some types of radiation.";
 	icon = 'icons/misc/jonescity.dmi';
 	icon_state = "deadrad";
@@ -753,7 +753,7 @@
 /area/jones/ruins)
 "bP" = (
 /obj/map/light/green,
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "Apparently, these suits are only rated for some types of radiation.";
 	icon = 'icons/misc/jonescity.dmi';
 	icon_state = "deadrad";
@@ -1003,7 +1003,7 @@
 	},
 /area/jones/radiation)
 "cy" = (
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "Apparently, these suits are only rated for some types of radiation.";
 	icon = 'icons/misc/jonescity.dmi';
 	icon_state = "deadrad";
@@ -1394,7 +1394,7 @@
 /area/jones/ruins)
 "dr" = (
 /obj/map/light/green,
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "Apparently, these suits are only rated for some types of radiation.";
 	icon = 'icons/misc/jonescity.dmi';
 	icon_state = "deadrad";
@@ -2716,7 +2716,7 @@
 /area/jones)
 "gx" = (
 /obj/decal/cleanable/dirt,
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "Apparently, these suits are only rated for some types of radiation.";
 	icon = 'icons/misc/jonescity.dmi';
 	icon_state = "deadrad";
@@ -3757,7 +3757,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "The burnt remains of some poor sod.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body4";
@@ -4021,7 +4021,7 @@
 	icon_state = "vent";
 	name = "rusted vent"
 	},
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "Apparently, there is a limit to the electrical protection offered by environment suits.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "burntnerd";

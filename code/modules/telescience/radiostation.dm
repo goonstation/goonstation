@@ -178,12 +178,13 @@
 		if("add_voice")
 			if(length(src.voices) >= src.max_voices)
 				return FALSE
-			var/name = input("Enter voice name:", "Voice name")
+			var/name = strip_html(input("Enter voice name:", "Voice name"))
 			if(!name)
 				return FALSE
 			phrase_log.log_phrase("voice-radiostation", name, no_duplicates=TRUE)
 			if(length(name) > FULLNAME_MAX)
 				name = copytext(name, 1, FULLNAME_MAX)
+			name = strip_html(name)
 			var/accent = input("Pick an accent:", "Accent") as null|anything in list("none") + src.accents
 			if(accent == "none")
 				accent = null
@@ -216,7 +217,7 @@
 			. = TRUE
 		if("say")
 			src.say_popup = FALSE
-			var/message = html_encode(params["message"])
+			var/message = strip_html(params["message"])
 			if(src.selected_voice <= 0 || src.selected_voice > length(voices))
 				usr.say(message)
 				return TRUE
@@ -248,7 +249,7 @@
 		..()
 		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
 
-/obj/submachine/record_player/attackby(obj/item/W as obj, mob/user as mob)
+/obj/submachine/record_player/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/record))
 		if(has_record)
 			boutput(user, "The record player already has a record inside!")
@@ -260,7 +261,7 @@
 			W.set_loc(src)
 			src.record_inside = W
 			src.has_record = 1
-			var/R = html_encode(input("What is the name of this record?","Record Name") as null|text)
+			var/R = html_encode(input("What is the name of this record?","Record Name", src.record_inside.record_name) as null|text)
 			if(!in_interact_range(src, user))
 				boutput(user, "You're out of range of the [src.name]!")
 				return
@@ -288,7 +289,7 @@
 	else
 		..()
 
-/obj/submachine/record_player/attack_hand(mob/user as mob)
+/obj/submachine/record_player/attack_hand(mob/user)
 	if(has_record)
 		if(!is_playing)
 			boutput(user, "You remove the record from the record player. It looks worse for the wear.")
@@ -321,7 +322,7 @@
 	if (record_name)
 		src.desc = "A fairly large record. There's a sticker on it that says \"[record_name]\"."
 
-/obj/item/record/attack(mob/M as mob, mob/user as mob) // copied plate code
+/obj/item/record/attack(mob/M, mob/user) // copied plate code
 	if (user.a_intent == INTENT_HARM)
 		if (M == user)
 			boutput(user, "<span class='alert'><B>You smash the record over your own head!</b></span>")
@@ -407,51 +408,51 @@ ABSTRACT_TYPE(/obj/item/record/random)
 	record_name = "chill track #4"
 	song = "sound/radio_station/music/chill_4.ogg"
 
-/obj/item/record/january
+/obj/item/record/random/january
 	record_name = "january"
 	song = "sound/radio_station/music/january.xm"
 
-/obj/item/record/february
+/obj/item/record/random/february
 	record_name = "february"
 	song = "sound/radio_station/music/february.xm"
 
-/obj/item/record/march
+/obj/item/record/random/march
 	record_name = "march"
 	song = "sound/radio_station/music/march.xm"
 
-/obj/item/record/april
+/obj/item/record/random/april
 	record_name = "april"
 	song = "sound/radio_station/music/april.xm"
 
-/obj/item/record/may
+/obj/item/record/random/may
 	record_name = "may"
 	song = "sound/radio_station/music/may.xm"
 
-/obj/item/record/june
+/obj/item/record/random/june
 	record_name = "june"
 	song = "sound/radio_station/music/june.xm"
 
-/obj/item/record/july
+/obj/item/record/random/july
 	record_name = "july"
 	song = "sound/radio_station/music/july.xm"
 
-/obj/item/record/august
+/obj/item/record/random/august
 	record_name = "august"
 	song = "sound/radio_station/music/august.xm"
 
-/obj/item/record/september
+/obj/item/record/random/september
 	record_name = "september"
 	song = "sound/radio_station/music/september.xm"
 
-/obj/item/record/october
+/obj/item/record/random/october
 	record_name = "october"
 	song = "sound/radio_station/music/october.xm"
 
-/obj/item/record/november
+/obj/item/record/random/november
 	record_name = "november"
 	song = "sound/radio_station/music/november.xm"
 
-/obj/item/record/december
+/obj/item/record/random/december
 	record_name = "december"
 	song = "sound/radio_station/music/december.xm"
 
@@ -535,6 +536,20 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 	New()
 		..()
 		src.UpdateOverlays(new /image(src.icon, "record_6"), "recordlabel") //it should always be green because I'm so funny.
+
+// nukie record
+/obj/item/record/second_reality
+	name = "record - \"Second Reality\""
+	record_name = "Second Reality"
+	song = "sound/radio_station/music/second_reality.s3m"
+	add_overlay = FALSE
+
+	New()
+		..()
+		var/image/overlay = new /image(src.icon, "record_3")
+		overlay.color = list(1.5, 0, 0, 0, 0, 0, 0, 0, 0) // very red
+		src.UpdateOverlays(overlay, "recordlabel")
+		src.desc = "A fairly large record. You imagine there are probably some rad songs on this. Rad, get it? Because the station is gonna be irradiated once the nuke detonates. Song by Purple Motion."
 
 ABSTRACT_TYPE(/obj/item/record/random/metal)
 /obj/item/record/random/metal
@@ -620,7 +635,7 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	icon_state = "record_blue"
 	song = "sound/radio_station/music/poo.ogg"
 
-/obj/item/record/poo/attackby(obj/item/P as obj, mob/user as mob)
+/obj/item/record/poo/attackby(obj/item/P, mob/user)
 	if (istype(P, /obj/item/magnifying_glass))
 		boutput(user, "<span class='notice'>You examine the record with the magnifying glass.</span>")
 		sleep(2 SECONDS)
@@ -698,20 +713,20 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	icon_state = "sleeve_[rand(4,36)]"
 
 /obj/item/storage/box/record/radio/one
-	spawn_contents = list(/obj/item/record/january,
-	/obj/item/record/february,
-	/obj/item/record/march,
-	/obj/item/record/april,
-	/obj/item/record/may,
-	/obj/item/record/june)
+	spawn_contents = list(/obj/item/record/random/january,
+	/obj/item/record/random/february,
+	/obj/item/record/random/march,
+	/obj/item/record/random/april,
+	/obj/item/record/random/may,
+	/obj/item/record/random/june)
 
 /obj/item/storage/box/record/radio/two
-	spawn_contents = list(/obj/item/record/july,
-	/obj/item/record/august,
-	/obj/item/record/september,
-	/obj/item/record/october,
-	/obj/item/record/november,
-	/obj/item/record/december)
+	spawn_contents = list(/obj/item/record/random/july,
+	/obj/item/record/random/august,
+	/obj/item/record/random/september,
+	/obj/item/record/random/october,
+	/obj/item/record/random/november,
+	/obj/item/record/random/december)
 
 /obj/item/storage/box/record/radio/nostalgic
 	name = "\improper Nostalgic Dance record sleeve"
@@ -778,7 +793,7 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	var/is_playing = 0
 	var/obj/item/radio_tape/tape_inside = null
 
-/obj/submachine/tape_deck/attackby(obj/item/W as obj, mob/user as mob)
+/obj/submachine/tape_deck/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/radio_tape))
 		if(has_tape)
 			boutput(user, "The tape deck already has a tape inserted!")
@@ -799,7 +814,7 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 			sleep(6000)
 			is_playing = 0
 
-/obj/submachine/tape_deck/attack_hand(mob/user as mob)
+/obj/submachine/tape_deck/attack_hand(mob/user)
 	if(has_tape)
 		if(!is_playing)
 			if(istype(src.tape_inside,/obj/item/radio_tape/advertisement))

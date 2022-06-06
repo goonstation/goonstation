@@ -1,3 +1,5 @@
+macro "input_box_macro"
+
 macro "base_macro"
 	elem
 		name = "Tab"
@@ -10,7 +12,7 @@ macro "base_macro"
 		command = "dsay"
 	elem "startsay"
 		name = "T"
-		command = ".starttyping\nsay"
+		command = ".winset \"command=\".start_typing say\";command=.init_say;saywindow.is-visible=true;saywindow.say-input.focus=true\""
 	elem "radiosay"
 		name = ";"
 		command = "say_main_radio"
@@ -225,7 +227,7 @@ menu "menu"
 		is-checked = true
 	elem "hide_menu"
 		name = "&Hide menu"
-		command = ".winset \"hide_menu.is-checked=true?mainwindow.menu='';menub.is-visible = true\""
+		command = "disable_menu"
 		category = "&Window"
 		can-check = true
 		saved-params = "is-checked"
@@ -406,16 +408,6 @@ menu "menu"
 	elem
 		name = "&Mentor Help\tF3"
 		command = "mentorhelp"
-		category = "&Help"
-		saved-params = "is-checked"
-	elem
-		name = "&Hotkeys"
-		command = "hotkeys"
-		category = "&Help"
-		saved-params = "is-checked"
-	elem
-		name = "&Overview"
-		command = "Help"
 		category = "&Help"
 		saved-params = "is-checked"
 
@@ -1445,14 +1437,14 @@ window "rpane"
 		button-type = pushbox
 	elem "menub"
 		type = BUTTON
-		pos = 135,5
+		pos = 250,5
 		size = 60x20
-		anchor1 = none
+		anchor1 = 100,0
 		anchor2 = none
 		is-visible = false
 		saved-params = "is-checked"
 		text = "Menu"
-		command = ".winset \"mainwindow.menu='menu'; hide_menu.is-checked=false; menub.is-visible = false\""
+		command = "enable_menu"
 	elem "mapb"
 		type = BUTTON
 		pos = 315,5
@@ -1710,3 +1702,50 @@ window "winJobRewards"
 		cells = 1x1
 		current-cell = 1,1
 		highlight-color = #80ffff
+
+window "input_box"
+	elem "input_box"
+		type = MAIN
+		pos = 759,487
+		size = 302x86
+		anchor1 = 50,50
+		anchor2 = 50,50
+		background-color = none
+		is-visible = false
+		saved-params = ""
+		statusbar = false
+		can-minimize = false
+		can-resize = false
+		outer-size = 308x114
+		inner-size = 302x86
+	elem "say-input"
+		type = INPUT
+		pos = 11,17
+		size = 281x23
+		anchor1 = 4,20
+		anchor2 = 96,47
+		font-size = 7
+		border = sunken
+		saved-params = ""
+	elem "accept"
+		type = BUTTON
+		pos = 52,52
+		size = 75x23
+		anchor1 = 17,60
+		anchor2 = 42,87
+		font-size = 7
+		background-color = none
+		saved-params = ""
+		text = "OK"
+		command = ""
+	elem "cancel"
+		type = BUTTON
+		pos = 179,52
+		size = 75x23
+		anchor1 = 59,60
+		anchor2 = 84,87
+		font-size = 7
+		background-color = none
+		saved-params = ""
+		text = "Cancel"
+		command = ""

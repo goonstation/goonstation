@@ -178,7 +178,7 @@
 					next_use = world.timeofday + use_delay
 					var/obj/item/sticker/stikur = take_from()
 					if(!stikur) return
-					var/ret = stikur.afterattack(A, user, reach, params)
+					var/ret = stikur.AfterAttack(A, user, reach, params)
 					if(!ret)
 						qdel(stikur)
 					return
@@ -262,7 +262,7 @@
 			..()
 			build_overlay()
 
-		attack(mob/M as mob, mob/user as mob)
+		attack(mob/M, mob/user)
 			if (src.open)
 				src.add_fingerprint(user)
 				var/obj/item/I = src.take_from()
@@ -329,7 +329,7 @@
 			src.set_contained_items()
 			src.inventory_counter.update_number(src.item_amount)
 		else
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				if (QDELETED(src)) return
 				if (!ispath(src.contained_item))
 					logTheThing("debug", src, null, "has a non-path contained_item, \"[src.contained_item]\", and is being disposed of to prevent errors")
@@ -359,11 +359,11 @@
 		src.UpdateIcon()
 		return
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (!src.add_to(W, user))
 			return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.add_fingerprint(user)
 		if (user.is_in_hands(src))
 			if (!src.open)
@@ -382,7 +382,7 @@
 		else
 			return ..()
 
-	MouseDrop(atom/over_object, src_location, over_location)
+	mouse_drop(atom/over_object, src_location, over_location)
 		..()
 		if (usr?.is_in_hands(src))
 			if (!src.open)

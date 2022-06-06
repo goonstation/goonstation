@@ -7,7 +7,7 @@
 	throwforce = 5.0
 	throw_range = 15
 	throw_speed = 3
-	desc = "You can use this on airlocks or APCs to try to hack them without cutting wires."
+	desc = "An electrical multitool. It can generate small electrical pulses and read the wattage of power cables. It is most commonly used when interfacing with airlock and APC systems on the station."
 	m_amt = 50
 	g_amt = 20
 	mats = list("CRY-1", "CON-2")

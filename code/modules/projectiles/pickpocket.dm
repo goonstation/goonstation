@@ -50,6 +50,9 @@
 				if ("l_leg")
 					stolenItem = M.l_store ? M.l_store : M.r_store ? M.r_store : null
 			if (stolenItem) // Found a thing to steal, hurrah
+				if (stolenItem.cant_other_remove)
+					M.throw_at(linkedGun, 3, 0.5)
+					return
 				logTheThing("combat", linkedGun, null, " successfully steals \a [stolenItem]")
 				M.u_equip(stolenItem)
 				linkedGun.heldItem = stolenItem
@@ -98,10 +101,10 @@
 			else
 				var/turf/T = get_turf(hit)
 				if(isrestrictedz(T.z) || istype(T, /turf/unsimulated))
-					message_admins("[key_name(src.firer)] is a nerd and tried to fire a pickpocket gun on an unsimulated turf at [showCoords(T.x, T.y, T.z)].")
+					message_admins("[key_name(src.firer)] is a nerd and tried to fire a pickpocket gun on an unsimulated turf at [log_loc(T)].")
 					T.visible_message("The [linkedGun.name] jams!")
 					return
-				logTheThing("combat", linkedGun, null, " plants [linkedGun.heldItem] at [showCoords(hit.x, hit.y, hit.z)]")
+				logTheThing("combat", linkedGun, null, " plants [linkedGun.heldItem] at [log_loc(hit)]")
 				linkedGun.heldItem.set_loc(get_turf(hit))
 			linkedGun.heldItem = null // One wayor another it's somewhere else now
 

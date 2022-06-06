@@ -8,7 +8,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			src.find_partners(src.find_in_range)
 		START_TRACKING
 
@@ -16,7 +16,7 @@
 		. = ..()
 		STOP_TRACKING
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (ispulsingtool(W))
 			var/new_id = input(user, "Please enter new ID", src.name, src.id) as null|text
 			if (!new_id || new_id == src.id)

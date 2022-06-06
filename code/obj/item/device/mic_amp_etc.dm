@@ -23,7 +23,7 @@
 					S.visible_message("<span class='alert'>[S] lets out a horrible [pick("shriek", "squeal", "noise", "squawk", "screech", "whine", "squeak")]!</span>")
 					playsound(S.loc, 'sound/items/mic_feedback.ogg', 30, 1)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (user.find_in_hand(src) && src.on)
 			playsound(user, 'sound/misc/miccheck.ogg', 30, 1)
 			user.visible_message("<span class='emote'>[user] taps [src] with [his_or_her(user)] hand.</span>")
@@ -74,12 +74,12 @@
 	var/obj/item/device/microphone/myMic = null
 
 	New()
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			if (!myMic)
 				myMic = new(src)
 		return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!myMic)
 			return ..()
 		user.put_in_hand_or_drop(myMic)
@@ -87,7 +87,7 @@
 		src.UpdateIcon()
 		return ..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/microphone))
 			if (myMic)
 				user.show_text("There's already a microphone on [src]!", "red")

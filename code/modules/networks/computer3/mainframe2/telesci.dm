@@ -64,6 +64,7 @@ proc/is_teleportation_allowed(var/turf/T)
 	var/obj/perm_portal/start_portal
 	var/obj/perm_portal/end_portal
 	var/image/disconnectedImage
+	deconstruct_flags = DECON_CROWBAR | DECON_MULTITOOL | DECON_WELDER | DECON_WIRECUTTERS | DECON_WRENCH | DECON_DESTRUCT
 
 	New()
 		..()
@@ -77,7 +78,7 @@ proc/is_teleportation_allowed(var/turf/T)
 
 		disconnectedImage = image('icons/obj/stationobjs.dmi', "pad-noconnect")
 
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			src.net_id = generate_net_id(src)
 
 			if(!src.link)
@@ -95,7 +96,7 @@ proc/is_teleportation_allowed(var/turf/T)
 		if (!src.host_id)
 			. += "<span class='alert'>The [src.name]'s \"disconnected from host\" light is flashing.</span>"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..())
 			return
 
@@ -141,7 +142,7 @@ proc/is_teleportation_allowed(var/turf/T)
 			src.host_id = null
 			//src.old_host_id = null
 			src.post_status(rem_host, "command","term_disconnect")
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				src.post_status(rem_host, "command","term_connect","device",src.device_tag)
 
 			src.updateUsrDialog()
@@ -171,7 +172,7 @@ proc/is_teleportation_allowed(var/turf/T)
 
 		if(signal.data["address_1"] != src.net_id)
 			if((signal.data["address_1"] == "ping") && ((signal.data["net"] == null) || ("[signal.data["net"]]" == "[src.net_number]")) && signal.data["sender"])
-				SPAWN_DBG(0.5 SECONDS)
+				SPAWN(0.5 SECONDS)
 					src.post_status(target, "command", "ping_reply", "device", src.device_tag, "netid", src.net_id, "net", "[net_number]")
 
 			return
@@ -185,7 +186,7 @@ proc/is_teleportation_allowed(var/turf/T)
 				if(target == src.host_id)
 					src.host_id = null
 					src.updateUsrDialog()
-					SPAWN_DBG(0.3 SECONDS)
+					SPAWN(0.3 SECONDS)
 						src.post_status(target, "command","term_disconnect")
 					return
 
@@ -199,7 +200,7 @@ proc/is_teleportation_allowed(var/turf/T)
 				if(signal.data["data"] != "noreply")
 					src.post_status(target, "command","term_connect","data","noreply","device",src.device_tag)
 				src.updateUsrDialog()
-				SPAWN_DBG(0.2 SECONDS) //Sign up with the driver (if a mainframe contacted us)
+				SPAWN(0.2 SECONDS) //Sign up with the driver (if a mainframe contacted us)
 					src.post_status(target,"command","term_message","data","command=register")
 				return
 
@@ -232,7 +233,7 @@ proc/is_teleportation_allowed(var/turf/T)
 
 						src.icon_state = "pad1"
 						recharging = 1
-						SPAWN_DBG(0)
+						SPAWN(0)
 
 							var/turf/turfcheck = doturfcheck(1)
 							if(!istype(turfcheck))
@@ -261,7 +262,7 @@ proc/is_teleportation_allowed(var/turf/T)
 
 						src.icon_state = "pad1"
 						recharging = 1
-						SPAWN_DBG(0)
+						SPAWN(0)
 
 							var/turf/turfcheck = doturfcheck(1)
 							if(!istype(turfcheck))
@@ -313,7 +314,7 @@ proc/is_teleportation_allowed(var/turf/T)
 						if (istype(sourceturf) && istype(endturf))
 							if (coords.can_cheat || (is_teleportation_allowed(endturf) && is_teleportation_allowed(sourceturf)))
 								src.receive(sourceturf)
-								SPAWN_DBG(0)
+								SPAWN(0)
 									sleep(1 SECOND)
 									recharging = 0
 									sleep(4 SECONDS)
@@ -350,7 +351,7 @@ proc/is_teleportation_allowed(var/turf/T)
 
 						src.icon_state = "pad1"
 						recharging = 1
-						SPAWN_DBG(0)
+						SPAWN(0)
 
 							var/turf/turfcheck = doturfcheck(1)
 							if(!istype(turfcheck))
@@ -488,10 +489,10 @@ proc/is_teleportation_allowed(var/turf/T)
 		if (stuff.len)
 			var/atom/movable/which = pick(stuff)
 			if(ismob(which))
-				logTheThing("station", usr, which, "sent [constructTarget(which,"station")] to [showCoords(target.x, target.y, target.z)] from [showCoords(src.x, src.y, src.z)] with a telepad")
+				logTheThing("station", usr, which, "sent [constructTarget(which,"station")] to [log_loc(target)] from [log_loc(src)] with a telepad")
 			which.set_loc(target)
 
-		showswirl(src.loc)
+		showswirl_out(src.loc)
 		leaveresidual(src.loc)
 		showswirl(target)
 		leaveresidual(target)
@@ -501,7 +502,7 @@ proc/is_teleportation_allowed(var/turf/T)
 			XSUBTRACT = rand(0,100)
 			YSUBTRACT = rand(0,100)
 			ZSUBTRACT = rand(0,world.maxz)
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				processbadeffect(pick("flash","buzz","scatter","ignite","chill"))
 
 		return 0
@@ -518,11 +519,11 @@ proc/is_teleportation_allowed(var/turf/T)
 		if (stuff.len)
 			var/atom/movable/which = pick(stuff)
 			if(ismob(which))
-				logTheThing("station", usr, which, "received [constructTarget(which,"station")] from [showCoords(which.x, which.y, which.z)] to [showCoords(src.x, src.y, src.z)] with a telepad")
+				logTheThing("station", usr, which, "received [constructTarget(which,"station")] from [log_loc(which)] to [log_loc(src)] with a telepad")
 			which.set_loc(src.loc)
 		showswirl(src.loc)
 		leaveresidual(src.loc)
-		showswirl(receiveturf)
+		showswirl_out(receiveturf)
 		leaveresidual(receiveturf)
 		use_power(1500)
 		if(prob(2) && prob(2))
@@ -530,7 +531,7 @@ proc/is_teleportation_allowed(var/turf/T)
 			XSUBTRACT = rand(0,100)
 			YSUBTRACT = rand(0,100)
 			ZSUBTRACT = rand(0,world.maxz)
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				processbadeffect(pick("flash","buzz","minorsummon","tinyfire","chill"))
 
 		return 0
@@ -550,11 +551,11 @@ proc/is_teleportation_allowed(var/turf/T)
 		for(var/atom/movable/O in send)
 			O.set_loc(target)
 			if(ismob(O))
-				logTheThing("station", usr, O, "sent [constructTarget(O,"station")] to [showCoords(target.x, target.y, target.z)] from [showCoords(src.x, src.y, src.z)] with a telepad")
+				logTheThing("station", usr, O, "sent [constructTarget(O,"station")] to [log_loc(target)] from [log_loc(src)] with a telepad")
 
 		for(var/atom/movable/O in receive)
 			if(ismob(O))
-				logTheThing("station", usr, O, "received [constructTarget(O,"station")] from [showCoords(O.x, O.y, O.z)] to [showCoords(src.x, src.y, src.z)] with a telepad")
+				logTheThing("station", usr, O, "received [constructTarget(O,"station")] from [log_loc(O)] to [log_loc(src)] with a telepad")
 			O.set_loc(src.loc)
 		showswirl(src.loc)
 		showswirl(target)
@@ -564,7 +565,7 @@ proc/is_teleportation_allowed(var/turf/T)
 			XSUBTRACT = rand(0,100)
 			YSUBTRACT = rand(0,100)
 			ZSUBTRACT = rand(0,world.maxz)
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				processbadeffect(pick("flash","buzz","scatter","ignite","chill"))
 		if(prob(5) && !locate(/obj/dfissure_to) in get_step(src, EAST))
 			new/obj/dfissure_to(get_step(src, EAST))
@@ -580,7 +581,7 @@ proc/is_teleportation_allowed(var/turf/T)
 		return P
 
 	proc/badsend()
-		showswirl(src.loc)
+		showswirl_error(src.loc)
 
 		var/effect = ""
 		if(prob(90)) //MINOR EFFECTS
@@ -593,7 +594,7 @@ proc/is_teleportation_allowed(var/turf/T)
 		processbadeffect(effect)
 
 	proc/badreceive()
-		showswirl(src.loc)
+		showswirl_error(src.loc)
 
 		var/effect = ""
 		if(prob(80)) //MINOR EFFECTS
@@ -700,6 +701,7 @@ proc/is_teleportation_allowed(var/turf/T)
 				return
 			if("gib")
 				for(var/mob/living/M in src.loc)
+					logTheThing("combat", M, null, "was gibbed by a telescience fault at [log_loc(M)].")
 					M.gib()
 				return
 			if("majormutate")
@@ -755,7 +757,7 @@ proc/is_teleportation_allowed(var/turf/T)
 					O.show_message("<span class='alert'>The area surrounding the [src] bursts into flame!</span>", 1)
 				return
 			if("mediumsummon")
-				var/summon = pick(/obj/critter/maneater,/obj/critter/killertomato,/obj/critter/spacebee,/obj/critter/golem,/obj/critter/magiczombie,/obj/critter/mimic)
+				var/summon = pick(/obj/critter/maneater,/obj/critter/killertomato,/obj/critter/wasp,/obj/critter/golem,/obj/critter/magiczombie,/obj/critter/mimic)
 				new summon(src.loc)
 				return
 			if("getrandom")
@@ -821,10 +823,12 @@ proc/is_teleportation_allowed(var/turf/T)
 	var/datum/computer/file/record/user_data
 	var/padNum = 1
 
+	deconstruct_flags = DECON_CROWBAR | DECON_MULTITOOL | DECON_WIRECUTTERS | DECON_WRENCH | DECON_DESTRUCT
+
 	New()
 		..()
 		START_TRACKING
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			src.net_id = generate_net_id(src)
 
 			if(!src.link)
@@ -852,7 +856,7 @@ proc/is_teleportation_allowed(var/turf/T)
 
 		if(signal.data["address_1"] != src.net_id)
 			if((signal.data["address_1"] == "ping") && ((signal.data["net"] == null) || ("[signal.data["net"]]" == "[src.net_number]")) && signal.data["sender"])
-				SPAWN_DBG(0.5 SECONDS)
+				SPAWN(0.5 SECONDS)
 					src.post_status(target, "command", "ping_reply", "device", src.device_tag, "netid", src.net_id, "net", "[net_number]")
 
 			return
@@ -866,7 +870,7 @@ proc/is_teleportation_allowed(var/turf/T)
 				if(target == src.host_id)
 					src.host_id = null
 					src.updateUsrDialog()
-					SPAWN_DBG(0.3 SECONDS)
+					SPAWN(0.3 SECONDS)
 						src.post_status(target, "command","term_disconnect")
 					return
 
@@ -900,7 +904,7 @@ proc/is_teleportation_allowed(var/turf/T)
 					src.link.post_signal(src, newsignal)
 
 				src.updateUsrDialog(1)
-				//SPAWN_DBG(0.2 SECONDS) //Sign up with the driver (if a mainframe contacted us)
+				//SPAWN(0.2 SECONDS) //Sign up with the driver (if a mainframe contacted us)
 				//	src.post_status(target,"command","term_message","data","command=register")
 				return
 
@@ -933,7 +937,7 @@ proc/is_teleportation_allowed(var/turf/T)
 
 		return
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (..(user))
 			return
 
@@ -981,7 +985,7 @@ proc/is_teleportation_allowed(var/turf/T)
 		onclose(user, "t_computer")
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W))
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 			src.panel_open = !src.panel_open
@@ -1051,7 +1055,7 @@ proc/is_teleportation_allowed(var/turf/T)
 			newsignal.data["sender"] = src.net_id
 
 			src.link.post_signal(src, newsignal)
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				if (!old_host_id)
 					old_host_id = old
 
@@ -1230,9 +1234,10 @@ proc/is_teleportation_allowed(var/turf/T)
 		if (!src.host_id || !message)
 			return
 
+		if (ON_COOLDOWN(src, "hostmsg", 0.5 SECONDS))
+			return
+
 		if (file)
 			src.post_file(src.host_id,"data",message, file)
 		else
 			src.post_status(src.host_id,"command","term_message","data",message)
-
-		return

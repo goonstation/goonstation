@@ -25,8 +25,6 @@
 
 	disposing()
 		particleMaster.active_particles -= src
-		for(var/turf/T in src.vis_locs)
-			T.vis_contents -= src
 		..()
 
 // --------------------------------------------------------------------------------------------------------------------------------------
@@ -96,7 +94,7 @@ var/datum/particleMaster/particleMaster = new
 	// Called by the particle process loop in the game controller
 	// Runs every effect that's ready to go and cleans up anything that's finished or in an invalid location
 	proc/Tick()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/count = 1
 			for (var/datum/particleSystem/system in particleSystems)
 				if (!(count++ % allowed_particles_per_tick))
@@ -1446,7 +1444,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 /datum/particleSystem/chemSmoke
 	var/datum/reagents/copied
 	var/list/affected
-	var/list/banned_reagents = list("smokepowder", "propellant", "thalmerite", "fluorosurfactant", "salt", "poor_concrete", "okay_concrete", "good_concrete", "perfect_concrete")
+	var/list/banned_reagents = list("smokepowder", "propellant", "pyrosium", "fluorosurfactant", "salt", "poor_concrete", "okay_concrete", "good_concrete", "perfect_concrete")
 	var/smoke_size = 3
 
 	New(var/atom/location = null, var/datum/reagents/source, var/duration = 20, var/size = 3)

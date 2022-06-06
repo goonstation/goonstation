@@ -17,7 +17,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if (src.donor)
 				if(!src.bones)
 					src.bones = new /datum/bone(src)

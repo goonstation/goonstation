@@ -1489,7 +1489,7 @@
 							message_device("command=upload&overwrite=1&newmodel=[model]", locatedTask)
 
 							src.contents_mirror -= locatedTask
-							SPAWN_DBG(0.5 SECONDS)
+							SPAWN(0.5 SECONDS)
 								//qdel(locatedTask)
 								if (locatedTask)
 									locatedTask.dispose()

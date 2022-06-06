@@ -875,6 +875,10 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/frenchberet)
 		name = "Strawberry Beret"
 		path = /obj/item/clothing/head/frenchberet/strawberry
 
+	blueberry
+		name = "Blueberry Beret"
+		path = /obj/item/clothing/head/frenchberet/blueberry
+
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/basecap)
 /datum/clothingbooth_item/head/basecap
 	name = "Baseball Cap"
@@ -1095,17 +1099,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/costume)
 /datum/clothingbooth_item/costume/columbianmob
 	name = "Columbian Mobster Suit"
 	path = /obj/item/clothing/under/misc/colmob
-
-/datum/clothingbooth_item/costume/mobilesuit
-	name = "Mobile Robot Suit"
-	path = /obj/item/clothing/suit/gimmick/mobile_suit
-	cost = PAY_EXECUTIVE
-
-/datum/clothingbooth_item/costume/mobilesuithelmet
-	name = "Mobile Robot Helmet"
-	path = /obj/item/clothing/head/mobile_suit
-	slot = SLOT_HEAD
-	cost = PAY_EXECUTIVE/2
 
 /datum/clothingbooth_item/costume/dinerdress_mint
 	name = "Mint Diner Waitress's Dress"

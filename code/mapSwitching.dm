@@ -43,9 +43,11 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 				if (mapNames[map]["MinPlayersAllowed"])
 					if (total_clients() < mapNames[map]["MinPlayersAllowed"])
 						continue
+				#ifndef UPSCALED_MAP
 				if (mapNames[map]["MaxPlayersAllowed"])
 					if (total_clients() > mapNames[map]["MaxPlayersAllowed"])
 						continue
+				#endif
 
 				src.playerPickable[map] += mapNames[map]
 
@@ -135,7 +137,7 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 		//if the vote was triggered with a duration, wait that long and end it
 		if (duration)
 			var/currentVoteIndex = src.voteIndex
-			SPAWN_DBG(duration)
+			SPAWN(duration)
 				//it's possible that a vote was started, cancelled, and then another started again. we don't want this spawn to prematurely end the new one
 				if (currentVoteIndex != src.voteIndex)
 					return

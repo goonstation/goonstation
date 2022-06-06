@@ -57,13 +57,17 @@
 		src.get_products()
 		UnsubscribeProcess()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W.loc, /obj/item/storage))
 			var/obj/item/storage/storage = W.loc
 			storage.hud.remove_object(W)
 		if(W.cant_drop)
 			boutput(user, "<span class='alert'>You cannot put [W] into [src]!</span>")
 			return
+		if(istype(W, /obj/item/reagent_containers/glass/jar) && length(W.contents))
+			boutput(user, "<span class='alert'>You need to empty [W] first!</span>")
+			return
+
 
 		var/success = FALSE //did we successfully recycle a thing?
 		if(istype(W, /obj/item/reagent_containers/glass))
@@ -100,11 +104,6 @@
 		else if (istype(W, /obj/item/plate))
 			success = TRUE
 			glass_amt += PLATE_COST
-		else if (istype(W, /obj/item/platestack))
-			success = TRUE
-			var/obj/item/platestack/PS = W
-			var/plateCount = PS.platenum + 1
-			glass_amt += plateCount * PLATE_COST
 		else if (istype(W, /obj/item/storage/box))
 			var/obj/item/storage/S = W
 			for (var/obj/item/I in S.get_contents())
@@ -135,6 +134,7 @@
 		product_list += new /datum/glass_product("rectangularbottle", /obj/item/reagent_containers/food/drinks/bottle/empty/rectangular, 2)
 		product_list += new /datum/glass_product("squarebottle", /obj/item/reagent_containers/food/drinks/bottle/empty/square, 2)
 		product_list += new /datum/glass_product("masculinebottle", /obj/item/reagent_containers/food/drinks/bottle/empty/masculine, 2)
+		product_list += new /datum/glass_product("mug", /obj/item/reagent_containers/food/drinks/mug/random_color, 1)
 		product_list += new /datum/glass_product("plate", /obj/item/plate, PLATE_COST)
 		product_list += new /datum/glass_product("bowl", /obj/item/reagent_containers/food/drinks/bowl, 1)
 		product_list += new /datum/glass_product("drinking", /obj/item/reagent_containers/food/drinks/drinkingglass, 1)

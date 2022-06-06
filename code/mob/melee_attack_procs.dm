@@ -73,6 +73,19 @@
 
 	playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
 	if (src == target)
+		var/mob/living/M = src
+
+		var/obj/item/implant/projectile/body_visible/P = locate(/obj/item/implant/projectile/body_visible) in M.implant
+
+		if (P)
+			if (P.barbed == FALSE)
+				SETUP_GENERIC_ACTIONBAR(src, target, 1 SECOND, /mob/living/proc/pull_out_implant, list(target, P), P.icon, P.icon_state, \
+					src.visible_message("<span class='alert'><B>[src] pulls a [P.pull_out_name] out of themselves!</B></span>"), \
+					INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
+			else
+				src.visible_message("<span class='alert'><B>[src] tries to pull a [P.pull_out_name] out of themselves, but it's stuck in!</B></span>")
+			return
+
 		var/obj/stool/S = (locate(/obj/stool) in src.loc)
 		if (S)
 			S.buckle_in(src,src)
@@ -93,6 +106,19 @@
 				src.visible_message("<span class='notice'>[src] pats themselves on the back. Feel better, [src].</span>")
 
 	else
+		var/mob/living/M = target
+
+		var/obj/item/implant/projectile/body_visible/P = locate(/obj/item/implant/projectile/body_visible) in M.implant
+
+		if (P)
+			if (P.barbed == FALSE)
+				SETUP_GENERIC_ACTIONBAR(src, target, 1 SECOND, /mob/living/proc/pull_out_implant, list(src, P), P.icon, P.icon_state, \
+					src.visible_message("<span class='alert'><B>[src] pulls a [P.pull_out_name] out of [target]!</B></span>"), \
+					INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
+			else
+				src.visible_message("<span class='alert'><B>[src] tries to pull a [P.pull_out_name] out of [target], but it's stuck in!</B></span>")
+			return
+
 		if (target.lying)
 			src.visible_message("<span class='notice'>[src] shakes [target], trying to wake them up!</span>")
 		else if(target.hasStatus("shivering"))
@@ -134,6 +160,10 @@
 				src.visible_message("<span class='notice'>[src] shakes [target], trying to grab their attention!</span>")
 	hit_twitch(target)
 
+/mob/living/proc/pull_out_implant(var/mob/living/user, var/obj/item/implant/dart)
+	dart.on_remove(src)
+	src.implant.Remove(dart)
+	user.put_in_hand_or_drop(dart)
 
 /mob/proc/administer_CPR(var/mob/living/carbon/human/target)
 	boutput(src, "<span class='alert'>You have no idea how to perform CPR.</span>")
@@ -145,6 +175,9 @@
 
 	if (src == target) // :I
 		boutput(src, "<span class='alert'>You desperately try to think of a way to do CPR on yourself, but it's just not logically possible!</span>")
+		return
+	if(actions.hasAction(src, "cpr"))
+		boutput(src, "<span class='alert'>You're already doing CPR!</span>")
 		return
 
 	src.lastattacked = target
@@ -161,11 +194,14 @@
 /mob/living/grab_self()
 	if(!..())
 		return
+	var/block_it_up = TRUE
+	if (!src.lying && !src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis"))
+		for(var/obj/stool/stool_candidate in src.loc)
+			if (stool_candidate.buckle_in(src, src, 1))
+				block_it_up = FALSE
+				break //found one, no need to continue
 
-	var/obj/stool/S = (locate(/obj/stool) in src.loc)
-	if (S && !src.lying && !src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis"))
-		S.buckle_in(src,src,1)
-	else
+	if (block_it_up)
 		var/obj/item/grab/block/G = new /obj/item/grab/block(src, src, src)
 		src.put_in_hand(G, src.hand)
 
@@ -175,11 +211,6 @@
 		src.setStatus("blocking", duration = INFINITE_STATUS)
 		block_begin(src)
 		src.next_click = world.time + (COMBAT_CLICK_DELAY)
-		/*
-		RIP
-		else
-			src.visible_message("<span class='alert'><B>[src] tweaks [his_or_her(src)] own nipples! That's [pick_string("tweak_yo_self.txt", "tweakadj")] [pick_string("tweak_yo_self.txt", "tweak")]!</B></span>")
-		*/
 
 /mob/living/proc/grab_block() //this is sorta an ugly but fuck it!!!!
 	if (src.grabbed_by && src.grabbed_by.len > 0)
@@ -347,7 +378,7 @@
 			if (istext(attack_resistance))
 				msgs.show_message_target(attack_resistance)
 		msgs.damage = max(damage, 0)
-	else if ( !(HAS_MOB_PROPERTY(target, PROP_CANTMOVE)) )
+	else if ( !(HAS_ATOM_PROPERTY(target, PROP_MOB_CANTMOVE)) )
 		var/armor_mod = 0
 		armor_mod = target.get_melee_protection(def_zone)
 		if(target_stamina >= 0)
@@ -390,7 +421,7 @@
 
 	if (is_shove) return msgs
 	var/disarm_success = prob(40 * lerp(clamp(200 - target_stamina, 0, 100)/100, 1, 0.5) * mult)
-	if (disarm_success && target.check_block() && !(HAS_MOB_PROPERTY(target, PROP_CANTMOVE)))
+	if (disarm_success && target.check_block() && !(HAS_ATOM_PROPERTY(target, PROP_MOB_CANTMOVE)))
 		disarm_success = 0
 		msgs.stamina_target -= STAMINA_DEFAULT_BLOCK_COST * 2
 	var/list/obj/item/limbs = list()
@@ -955,7 +986,7 @@
 							target.zone_sel.selecting = old_zone_sel
 
 						if (prob(20))
-							I.attack_self(target)
+							I.AttackSelf(target)
 
 
 				if ("shoved_down" in src.disarm_RNG_result)
@@ -1206,7 +1237,7 @@
 
 /mob/living/carbon/human/attack_effects(var/mob/target, var/obj/item/affecting)
 	if (src.is_hulk())
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (prob(20))
 				target.changeStatus("stunned", 1 SECOND)
 				step_away(target,src,15)
@@ -1233,12 +1264,12 @@
 		if(prob(50))
 			T.changeStatus("weakened", 2 SECONDS)
 			T.force_laydown_standup()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			step_rand(T, 15)
 	else
 		T.changeStatus("weakened", 2 SECONDS)
 		T.force_laydown_standup()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			step_away(T, H, 15)
 
 	return
@@ -1274,7 +1305,7 @@
 	.= 0
 	if (prob(60) && M && src.stance == "defensive" && iswerewolf(src) && src.stat)
 		src.set_dir(get_dir(src, M))
-		playsound(src.loc, "sound/weapons/punchmiss.ogg", 50, 1)
+		playsound(src.loc, "sound/impact_sounds/Generic_Swing_1.ogg", 50, 1)
 		//dodge more likely, we're more agile than macho
 		if (prob(60))
 			src.visible_message("<span class='alert'><B>[src] dodges the blow by [M]!</B></span>")

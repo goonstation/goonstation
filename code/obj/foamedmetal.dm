@@ -21,7 +21,7 @@
 			loc:ReplaceWithMetalFoam(metal)
 
 		update_nearby_tiles(1)
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			RL_SetOpacity(1)
 
 	disposing()

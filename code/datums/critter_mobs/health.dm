@@ -46,7 +46,7 @@
 		return value < maximum_value
 
 	proc/on_deplete()
-		holder.death(0)
+		holder.death(FALSE)
 
 	proc/Life()
 		if (value != last_value)

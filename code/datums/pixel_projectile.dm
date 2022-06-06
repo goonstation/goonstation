@@ -125,7 +125,7 @@ atom/movable/proc/set_pos_px(px, py)
 		//that's it
 
 		//begin!
-		SPAWN_DBG(0) src.update()
+		SPAWN(0) src.update()
 
 	Cross(atom/movable/a)
 		//if something happens to cross this tile while we're sitting in it before moving to next tile
@@ -136,7 +136,7 @@ atom/movable/proc/set_pos_px(px, py)
 	proc/die()
 		var/self = src
 		src = null
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (self) qdel(self)
 
 	proc/update()
@@ -181,7 +181,7 @@ atom/movable/proc/set_pos_px(px, py)
 			if(istype(a,/turf))
 				for(var/obj/O in a)
 					O.bullet_act(projectile)
-		SPAWN_DBG(get_speed_delay(velocity) - 1)
+		SPAWN(get_speed_delay(velocity) - 1)
 			die()
 
 	proc/can_collide(atom/a)
@@ -199,7 +199,7 @@ atom/disposing()
 
 turf/New()
 	..()
-	SPAWN_DBG(1 DECI SECOND)
+	SPAWN(1 DECI SECOND)
 		for(var/A in contents)
 			collidable_change(A, 1)
 
@@ -261,7 +261,7 @@ turf/proc/collide_here(var/obj/pixel_projectile/p)
 	New()
 		return
 
-/obj/item/pixel_gun/attack(mob/M as mob, mob/user as mob)
+/obj/item/pixel_gun/attack(mob/M, mob/user)
 
 	user.lastattacked = M
 	M.lastattacker = user
@@ -425,7 +425,7 @@ turf/proc/collide_here(var/obj/pixel_projectile/p)
 			boutput(user, "<span class='alert'>*click* *click*</span>")
 			return 0
 
-	attackby(obj/item/b as obj, mob/user as mob)
+	attackby(obj/item/b, mob/user)
 		if(istype(b, /obj/item/ammo/power_cell) && !rechargeable)
 			if(src.cell)
 				if(b:swap(src))
@@ -438,7 +438,7 @@ turf/proc/collide_here(var/obj/pixel_projectile/p)
 		else
 			..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if ((user.r_hand == src || user.l_hand == src) && src.contents && length(src.contents))
 			if (src.cell&&!src.rechargeable)
 				user.put_in_hand_or_drop(src.cell)

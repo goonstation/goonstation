@@ -13,7 +13,7 @@
 		if (forceartiorigin)
 			AS.validtypes = list("[forceartiorigin]")
 		src.artifact = AS
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.ArtifactSetup()
 
 		var/capacity = rand(5,20)
@@ -149,7 +149,7 @@
 		reagents.add_reagent("saltpetre", max((capacity-usedCapacity) / 2, 0))
 		//reagents.add_reagent("water", max((capacity-usedCapacity) / 2, 0)) // Was diluting the fliptonium, can't have that
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (src.Artifact_attackby(W,user))
 			..()
 
@@ -162,6 +162,7 @@
 /datum/artifact/watercan
 	associated_object = /obj/item/reagent_containers/glass/wateringcan/artifact
 	type_name = "Beaker"
+	type_size = ARTIFACT_SIZE_MEDIUM
 	rarity_weight = 350
 	validtypes = list("martian","wizard","precursor")
 	min_triggers = 0

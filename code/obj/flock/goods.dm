@@ -44,7 +44,7 @@
 	name = "flocknugget"
 	desc = "Well, it isn't any more artificial than your normal chicken nugget. Probably a lot crunchier, too."
 	icon_state = "flocknugget0"
-	amount = 2
+	bites_left = 2
 	initial_volume = 20
 
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/flock/heal(var/mob/M)
@@ -74,18 +74,17 @@
 	..()
 
 /obj/item/gun/energy/flock/special_desc(dist, mob/user)
-	if(isflock(user))
-		var/list/ret = list()
-		if(!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST))
-			ret["charge"] = "?"
-			ret["max_charge"] = "?"
-		return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+	if (!isflockmob(user))
+		return
+	var/list/ret = list()
+	if(!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST))
+		ret["charge"] = "?"
+		ret["max_charge"] = "?"
+	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
 		<br><span class='bold'>ID:</span> Incapacitor
 		<br><span class='bold'>Energy:</span> [ret["charge"]]
 		<br><span class='bold'>Max Energy:</span> [ret["max_charge"]]
 		<br><span class='bold'>###=-</span></span><br>"}
-	else
-		return null // give the standard description
 
 ////////////
 // FLOCKCACHE
@@ -98,10 +97,9 @@
 	var/resources = 10
 
 /obj/item/flockcache/special_desc(dist, mob/user)
-	if(isflock(user))
-		return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed. data packet received.
+	if (!isflockmob(user))
+		return
+	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed. data packet received.
 		<br><span class='bold'>ID:</span> Resource Cache
 		<br><span class='bold'>Resources:</span> [resources]
 		<br><span class='bold'>###=-</span></span>"}
-	else
-		return null

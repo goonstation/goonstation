@@ -61,13 +61,13 @@ obj/machinery/air_vendor
 
 		holding.air_contents.copy_from(gas_prototype)
 
-	attackby(var/obj/item/W as obj, var/mob/user as mob)
+	attackby(var/obj/item/W, var/mob/user)
 		if (istype(W, /obj/item/spacecash))
 			src.credits += W.amount
 			W.amount = 0
 			boutput(user, "<span class='notice'>You insert [W].</span>")
 			user.u_equip(W)
-			W.dropped()
+			W.dropped(user)
 			qdel(W)
 			src.updateUsrDialog()
 		else if (istype(W, /obj/item/tank))
@@ -105,7 +105,7 @@ obj/machinery/air_vendor
 			src.scan = null
 		src.updateUsrDialog()
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		src.add_dialog(user)
 		var/html = ""
 		html += "<TT><b>Welcome!</b><br>"

@@ -77,7 +77,7 @@
 
 	Entered(mob/living/carbon/M as mob )
 		..()
-		SPAWN_DBG(0.8)
+		SPAWN(0.8)
 			if(ishuman(M))
 				var/image/F = image('icons/misc/mars_outpost.dmi', icon_state = "footprint", dir = M.dir)
 				src.overlays += F
@@ -198,7 +198,7 @@
 	density = 1
 	var/has_beeped = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(has_beeped)
 			return ..()
 		else
@@ -365,7 +365,7 @@
 		src.attacking = 1
 		src.visible_message("<span class='combat'>The <B>[src]</B> slams itself against [src.target]!</span>")
 		random_brute_damage(src.target, rand(7,17), 1)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.attacking = 0
 
 
@@ -379,10 +379,10 @@
 			boutput(O, "<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"")
 		return
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if(active) ..()
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if(active) ..()
 
 	CritterDeath()
@@ -404,7 +404,7 @@
 	var/glass = 0
 	var/motherboard = 0
 
-	attackby(obj/item/P as obj, mob/user as mob)
+	attackby(obj/item/P, mob/user)
 		if (istype(P, /obj/item/mars_roverpart))
 			if ((istype(P, /obj/item/mars_roverpart/wheel))&&(!wheel))
 				boutput(user, "<span class='notice'>You attach the wheel to the rover's chassis.</span>")
@@ -526,7 +526,7 @@
 	icon_state = "marsrover2"
 
 /obj/vehicle/marsrover/MouseDrop_T(mob/living/carbon/human/target, mob/user)
-	if (rider || !istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || is_incapacitated(user) || isAI(user))
+	if (rider || !istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || BOUNDS_DIST(user, src) > 0 || is_incapacitated(user) || isAI(user))
 		return
 
 	var/msg
@@ -566,7 +566,7 @@
 		eject_rider(0, 1)
 	return
 
-/obj/vehicle/marsrover/attack_hand(mob/living/carbon/human/M as mob)
+/obj/vehicle/marsrover/attack_hand(mob/living/carbon/human/M)
 	if(!M || !rider)
 		..()
 		return
@@ -606,7 +606,7 @@
 		S.volume = 60
 		S.priority = 255
 		S.status = SOUND_UPDATE
-		SPAWN_DBG(1 SECOND) process()
+		SPAWN(1 SECOND) process()
 
 	Entered(atom/movable/Obj,atom/OldLoc)
 		..()
@@ -641,7 +641,7 @@
 						mysound.status = SOUND_UPDATE
 						H << mysound
 						if(S)
-							SPAWN_DBG(sound_delay)
+							SPAWN(sound_delay)
 								playsound(H, S, 70, channel = VOLUME_CHANNEL_AMBIENT)
 
 /area/marsoutpost/duststorm
@@ -738,7 +738,7 @@
 
 					playsound(src.loc, 'sound/weapons/ak47shot.ogg', 50, 1)
 					var/tturf = get_turf(target)
-					SPAWN_DBG(0.2 SECONDS)
+					SPAWN(0.2 SECONDS)
 						Shoot(tturf, src.loc, src)
 						src.pixel_x += rand(-3,3)
 						src.pixel_y += rand(-3,3)
@@ -747,7 +747,7 @@
 						var/glitchsound = pick('sound/machines/romhack1.ogg', 'sound/machines/romhack2.ogg', 'sound/machines/romhack3.ogg','sound/machines/glitch1.ogg','sound/machines/glitch2.ogg','sound/machines/glitch3.ogg','sound/machines/glitch4.ogg','sound/machines/glitch5.ogg')
 						playsound(src.loc, glitchsound, 50, 1)
 					if(prob(75))
-						SPAWN_DBG(0) step_to(src,target)
+						SPAWN(0) step_to(src,target)
 					src.attack = 0
 					return
 				else continue
@@ -768,7 +768,7 @@
 	pixel_y = 8
 	var/triggered = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (..() || (status & (NOPOWER|BROKEN)))
 			return
 
@@ -799,7 +799,7 @@
 					LAGCHECK(LAG_LOW)
 				for_by_tcl(P, /obj/machinery/door/poddoor)
 					if (P.id == "mars_vault")
-						SPAWN_DBG(0)
+						SPAWN(0)
 							P.open()
 				for_by_tcl(M, /obj/item/storage/secure/ssafe/marsvault)
 					M.disabled = 0

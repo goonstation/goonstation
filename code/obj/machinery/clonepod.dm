@@ -131,7 +131,7 @@
 
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "pda")
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		interact_particle(user, src)
 		src.examine(user)
 
@@ -184,7 +184,7 @@
 
 		//Get the clone body ready. They start out with a bunch of damage right off.
 		// changing this to takedamage which should hopefully apply it right away
-		// SPAWN_DBG(0.5 SECONDS) //Organs may not exist yet if we call this right away.
+		// SPAWN(0.5 SECONDS) //Organs may not exist yet if we call this right away.
 		// 	random_brute_damage(src.occupant, 90, 1)
 		src.occupant.TakeDamage("chest", 90, 0, 0, DAMAGE_BLUNT)
 
@@ -198,6 +198,8 @@
 		src.operating = 1
 		src.locked = 1
 		src.gen_bonus = src.healing_multiplier()
+
+		src.use_power(5000)
 
 		return 1
 
@@ -341,12 +343,12 @@
 						ticker.mode.Agimmicks += src.occupant.mind
 					src.occupant.mind.master = implant_master.ckey
 				boutput(src.occupant, "<h2><span class='alert'>You feel an unwavering loyalty to [implant_master.real_name]! You feel you must obey \his every order! Do not tell anyone about this unless your master tells you to!</span></h2>")
-				SHOW_MINDSLAVE_TIPS(src.occupant)
+				src.occupant.show_antag_popup("mindslave")
 		// Someone is having their brain zapped. 75% chance of them being de-antagged if they were one
 		//MBC todo : logging. This shouldn't be an issue thoug because the mindwipe doesn't even appear ingame (yet?)
 		if(src.connected?.mindwipe)
 			if(prob(75))
-				SHOW_MINDWIPE_TIPS(src.occupant)
+				src.occupant.show_antag_popup("mindwipe")
 				boutput(src.occupant, "<h2><span class='alert'>You have awakened with a new outlook on life!</span></h2>")
 				src.occupant.mind.memory = "You cannot seem to remember much from before you were cloned. Weird!<BR>"
 			else
@@ -518,11 +520,14 @@
 				src.UpdateIcon()
 			power_usage = 200
 
+
+			#ifndef CLONING_IS_A_SIN
 			if (!src.operating && src.auto_mode)
 				// Attempt to start a new clone (if possible)
 				src.auto_delay -= mult
 				if (src.auto_delay < 0)
 					src.start_clone()
+			#endif
 
 			return ..()
 
@@ -538,7 +543,7 @@
 		return 1
 
 	//Let's unlock this early I guess.
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/pda2) && W:ID_card)
 			W = W:ID_card
 		if (istype(W, /obj/item/card/id))
@@ -623,6 +628,7 @@
 			..()
 
 	on_reagent_change()
+		..()
 		for(var/reagent_id in src.reagents.reagent_list)
 			if (reagent_id in clonepod_accepted_reagents)
 				var/datum/reagent/theReagent = src.reagents.reagent_list[reagent_id]
@@ -643,7 +649,7 @@
 		src.connected.currentStatusMessage["text"] = message
 		src.connected.currentStatusMessage["status"] = status
 		tgui_process.update_uis(src)
-		SPAWN_DBG(5 SECONDS)
+		SPAWN(5 SECONDS)
 			if(src.connected.currentStatusMessage == message)
 				src.connected.currentStatusMessage["text"] = ""
 				src.connected.currentStatusMessage["status"] = ""
@@ -732,7 +738,7 @@
 			src.failed_tick_counter = 0
 			src.UpdateIcon()
 			src.occupant.ghostize()
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				qdel(src.occupant)
 		return
 
@@ -825,7 +831,7 @@
 		UnsubscribeProcess()
 		src.create_reagents(100)
 		src.UpdateIcon(1)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.find_pods()
 
 	disposing()
@@ -901,6 +907,7 @@
 		return
 
 	on_reagent_change()
+		..()
 		src.UpdateIcon(0)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
@@ -923,7 +930,7 @@
 			boutput(user, "<span class='notice'>You repair the reclaimer's safety mechanism.</span>")
 		return 1
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		interact_particle(user,src)
 
 		if (src.process_timer > 0)
@@ -954,7 +961,7 @@
 		var/process_total = 0
 
 		if (istype(src.occupant))
-			src.occupant.death(1)
+			src.occupant.death(TRUE)
 			var/humanOccupant = (ishuman(src.occupant) && !ismonkey(src.occupant))
 			var/decomp = ishuman(src.occupant) ? src.occupant:decomp_stage : 0 // changed from only checking humanOccupant to running ishuman again so monkeys' decomp will be considered
 			if (src.occupant.mind)
@@ -1025,7 +1032,7 @@
 		src.UpdateIcon(1)
 		SubscribeToProcess()
 
-	attackby(obj/item/grab/G as obj, mob/user as mob)
+	attackby(obj/item/grab/G, mob/user)
 		if (istype(G, /obj/item/grinder_upgrade))
 			if (src.upgraded)
 				boutput(user, "<span class='alert'>There is already an upgrade card installed.</span>")
@@ -1129,7 +1136,7 @@
 
 		src.start_cycle()
 
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user)) // how????????? ?
 				user.suiciding = 0 // just in case I guess
 		return 1
@@ -1158,7 +1165,7 @@
 
 	onUpdate()
 		..()
-		if (grab == null || target == null || grinder == null || owner == null || get_dist(owner, grinder) > 1 || get_dist(owner, target) > 1 || get_dist(target, grinder) > 1)
+		if (grab == null || target == null || grinder == null || owner == null || BOUNDS_DIST(owner, grinder) > 0 || BOUNDS_DIST(owner, target) > 0 || BOUNDS_DIST(target, grinder) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner
@@ -1176,14 +1183,25 @@
 		if (!isdead(target))
 			message_admins("[key_name(owner)] forced [key_name(target, 1)] ([target == 2 ? "dead" : "alive"]) into \an [grinder] at [log_loc(grinder)].")
 		if (grinder.auto_strip && !grinder.emagged)
+			if(target.hasStatus("handcuffed"))
+				target.handcuffs.drop_handcuffs(target) //handcuffs have special handling for zipties and such, remove them properly first
 			target.unequip_all()
+			if(istype(target.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item))
+				var/obj/item/parts/human_parts/arm/right/item/right_arm = target.limbs.r_arm
+				right_arm.remove()
+			if(istype(target.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item))
+				var/obj/item/parts/human_parts/arm/left/item/left_arm = target.limbs.l_arm
+				left_arm.remove()
 			if (length(target.implant))
 				for (var/obj/item/implant/I in target.implant)
 					if (istype(I,/obj/item/implant/projectile))
 						continue
-					var/obj/item/implantcase/newcase = new /obj/item/implantcase(target.loc, usedimplant = I)
 					I.on_remove(target)
 					target.implant.Remove(I)
+					if (istype(I,/obj/item/implant/cloner))
+						qdel(I)
+						continue
+					var/obj/item/implantcase/newcase = new /obj/item/implantcase(target.loc, usedimplant = I)
 					var/image/wadblood = image('icons/obj/surgery.dmi', icon_state = "implantpaper-blood")
 					wadblood.color = target.blood_color
 					newcase.UpdateOverlays(wadblood, "blood")

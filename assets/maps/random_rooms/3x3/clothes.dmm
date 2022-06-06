@@ -1,0 +1,84 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/storage/crate/packing,
+/obj/random_item_spawner/hat/some,
+/turf/simulated/floor/grey/side{
+	dir = 10
+	},
+/area/dmm_suite/clear_area)
+"c" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/grey/side{
+	dir = 5
+	},
+/area/dmm_suite/clear_area)
+"g" = (
+/obj/storage/crate/packing,
+/obj/critter/roach,
+/obj/critter/roach,
+/obj/critter/roach,
+/obj/critter/roach,
+/obj/critter/roach,
+/obj/critter/roach,
+/obj/critter/roach,
+/obj/critter/roach,
+/obj/critter/roach,
+/obj/critter/roach,
+/obj/critter/roach,
+/turf/simulated/floor,
+/area/dmm_suite/clear_area)
+"p" = (
+/turf/simulated/floor/grey/side{
+	dir = 6
+	},
+/area/dmm_suite/clear_area)
+"E" = (
+/obj/storage/crate/packing,
+/obj/random_item_spawner/shoe/some,
+/turf/simulated/floor/grey/side{
+	dir = 4
+	},
+/area/dmm_suite/clear_area)
+"O" = (
+/obj/storage/crate/packing,
+/obj/random_item_spawner/junk/few,
+/turf/simulated/floor/grey/side{
+	dir = 1
+	},
+/area/dmm_suite/clear_area)
+"P" = (
+/obj/item/crowbar{
+	pixel_x = -1;
+	pixel_y = -7
+	},
+/turf/simulated/floor/grey/side{
+	dir = 9
+	},
+/area/dmm_suite/clear_area)
+"S" = (
+/obj/storage/crate/packing,
+/obj/random_item_spawner/dressup/some,
+/turf/simulated/floor/grey/side,
+/area/dmm_suite/clear_area)
+"Y" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/grey/side{
+	dir = 8
+	},
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+P
+Y
+a
+"}
+(2,1,1) = {"
+O
+g
+S
+"}
+(3,1,1) = {"
+c
+E
+p
+"}

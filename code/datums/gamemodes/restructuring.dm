@@ -13,7 +13,7 @@
 	while (mobs.len == 0)
 		sleep 30
 		mobs = get_mob_list()
-	SPAWN_DBG(12 SECONDS)
+	SPAWN(12 SECONDS)
 		pick_target()
 
 /datum/game_mode/restructuring/proc/pick_target(who)

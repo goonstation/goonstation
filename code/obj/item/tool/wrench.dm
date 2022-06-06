@@ -7,6 +7,7 @@
 
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	tool_flags = TOOL_WRENCHING
+	health = 5
 	w_class = W_CLASS_SMALL
 
 	force = 5.0
@@ -21,6 +22,10 @@
 	New()
 		..()
 		BLOCK_SETUP(BLOCK_ROD)
+
+	attack(mob/living/carbon/M, mob/user)
+		if (!wrench_surgery(M, user))
+			return ..()
 
 /obj/item/wrench/gold
 	name = "golden wrench"

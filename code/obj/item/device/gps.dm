@@ -1,6 +1,6 @@
 /obj/item/device/gps
 	name = "space GPS"
-	desc = "Tells you your coordinates based on the nearest coordinate beacon."
+	desc = "A navigation device that can tell you your position, and the position of other GPS devices. Uses coordinate beacons."
 	icon_state = "gps-off"
 	item_state = "electronic"
 	var/allowtrack = 1 // defaults to on so people know where you are (sort of!)
@@ -138,7 +138,7 @@
 		onclose(user, "gps")
 
 	attack_self(mob/user as mob)
-		if ((user.contents.Find(src) || user.contents.Find(src.master) || get_dist(src, user) <= 1))
+		if ((user.contents.Find(src) || user.contents.Find(src.master) || BOUNDS_DIST(src, user) == 0))
 			src.show_HTML(user)
 		else
 			user.Browse(null, "window=gps_[src]")
@@ -173,6 +173,7 @@
 				if(!t)
 					return
 				src.identifier = t
+				logTheThing("station", usr, null, "sets a GPS identification name to [t].")
 			if(href_list["help"])
 				if(!distress)
 					boutput(usr, "<span class='alert'>Sending distress signal.</span>")
@@ -275,7 +276,7 @@
 		else
 			icon_state = "gps"
 
-		SPAWN_DBG(0.5 SECONDS) .()
+		SPAWN(0.5 SECONDS) .()
 
 	disposing()
 		STOP_TRACKING

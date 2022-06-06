@@ -10,7 +10,7 @@
 	affected_species = list("Human","Monkey")
 	stage_prob = 6
 
-/datum/ailment/disease/shock/stage_act(var/mob/living/affected_mob,var/datum/ailment_data/D)
+/datum/ailment/disease/shock/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)
 	if (..())
 		return
 	if(affected_mob.health >= 25)

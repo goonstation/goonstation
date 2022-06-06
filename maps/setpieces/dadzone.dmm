@@ -781,7 +781,7 @@
 /area/meat_derelict/guts)
 "bM" = (
 /obj/stool/chair,
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "Human remains in the fittings of a Head of Personnel.  Judging by the missing skull chunks, they didn't win.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body8"
@@ -967,7 +967,7 @@
 	icon_state = "chair";
 	dir = 8
 	},
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "The remains of the captain of this, uh, part of station. Not sure if all of the station parts are from the same place.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body7"
@@ -2411,7 +2411,7 @@
 /area/meat_derelict/guts)
 "eX" = (
 /obj/stomachacid,
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /obj/decal/glow{
 	brightness = 4;
 	invisibility = 101;
@@ -4763,7 +4763,7 @@
 	desc = "It has little wheels underneath! How does the plumbing still work? Who the hell knows.";
 	name = "mobile bathtub"
 	},
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body6";
@@ -5943,7 +5943,7 @@
 	tag = "icon-bedsheet-red";
 	icon_state = "bedsheet-red"
 	},
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body6";

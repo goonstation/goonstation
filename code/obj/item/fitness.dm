@@ -7,7 +7,7 @@
 	deconstruct_flags = DECON_SIMPLE
 	layer = MOB_LAYER_BASE+1 // TODO LAYER
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		user.lastattacked = src
 		flick("[icon_state]2", src)
 		playsound(src.loc, pick(sounds_punch + sounds_hit), 25, 1, -1)
@@ -34,7 +34,7 @@
 		desc = "A bop bag in the shape of a goofy clown."
 		icon_state = "bopbag"
 
-		attack_hand(mob/user as mob)
+		attack_hand(mob/user)
 			user.lastattacked = src
 			flick("[icon_state]2", src)
 			if (narrator_mode)
@@ -55,14 +55,14 @@
 	deconstruct_flags = DECON_WRENCH
 	var/in_use = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(in_use)
 			boutput(user, "<span class='alert'>Its already in use - wait a bit.</span>")
 			return
 		else
 			in_use = 1
 			icon_state = "fitnesslifter2"
-			APPLY_MOB_PROPERTY(user, PROP_CANTMOVE, "fitness_machine")
+			APPLY_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE, "fitness_machine")
 			user.transforming = 1
 			user.set_dir(SOUTH)
 			user.set_loc(src.loc)
@@ -82,7 +82,7 @@
 			playsound(user, 'sound/machines/click.ogg', 60, 1)
 			in_use = 0
 			user.transforming = 0
-			REMOVE_MOB_PROPERTY(user, PROP_CANTMOVE, "fitness_machine")
+			REMOVE_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE, "fitness_machine")
 			user.pixel_y = 0
 			if (ishuman(user))
 				var/mob/living/carbon/human/H = user
@@ -103,17 +103,17 @@
 	deconstruct_flags = DECON_WRENCH
 	var/in_use = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(in_use)
 			boutput(user, "<span class='alert'>Its already in use - wait a bit.</span>")
 			return
-		else if(HAS_MOB_PROPERTY(user, PROP_CANTMOVE))
+		else if(HAS_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE))
 			return
 		else
 			in_use = 1
 			icon_state = "fitnessweight-c"
 			user.transforming = 1
-			APPLY_MOB_PROPERTY(user, PROP_CANTMOVE, "fitness_machine")
+			APPLY_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE, "fitness_machine")
 			user.set_dir(SOUTH)
 			user.set_loc(src.loc)
 			var/obj/decal/W = new /obj/decal/
@@ -142,7 +142,7 @@
 			playsound(user, 'sound/machines/click.ogg', 60, 1)
 			in_use = 0
 			user.transforming = 0
-			REMOVE_MOB_PROPERTY(user, PROP_CANTMOVE, "fitness_machine")
+			REMOVE_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE, "fitness_machine")
 			user.pixel_y = 0
 			if (ishuman(user))
 				var/mob/living/carbon/human/H = user

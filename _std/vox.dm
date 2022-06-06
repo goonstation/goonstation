@@ -238,7 +238,7 @@ proc/vox_play(var/input, var/user, var/pitch = 1)
 	for (var/client/C in clients)
 		if (C.ignore_sound_flags & (SOUND_VOX | SOUND_ALL))
 			continue
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for (var/datum/VOXsound/vxx in soundQueue)
 				vxx.play(C)
 				sleep(0.1 SECONDS)
@@ -2472,7 +2472,7 @@ proc/init_vox()
 "welcome" = new/datum/VOXsound("welcome", "sound/vox/welcome.ogg", NOUN|VERB|ADJECTIVE),
 "welcomes" = new/datum/VOXsound("welcomes", "sound/vox/welcomes.ogg", VERB),
 "well" = new/datum/VOXsound("well", "sound/vox/well.ogg", VERB | ADVERB | NOUN),
-"wendigo" = new/datum/VOXsound("wendigo", "sound/vox/wendigo.ogg", NOUN),
+"brullbar" = new/datum/VOXsound("brullbar", "sound/vox/brullbar.ogg", NOUN),
 "wepon" = new/datum/VOXsound("wepon", "sound/vox/wepon.ogg", NOUN),
 "werewolf" = new/datum/VOXsound("werewolf", "sound/vox/werewolf.ogg", NOUN),
 "west" = new/datum/VOXsound("west", "sound/vox/west.ogg", NOUN),
@@ -2582,7 +2582,7 @@ proc/init_vox()
 "zulu" = new/datum/VOXsound("zulu", "sound/vox/zulu.ogg", LETTER | NOUN)
 )
 
-	SPAWN_DBG(0.1 SECONDS)
+	SPAWN(0.1 SECONDS)
 		for(var/id in voxsounds)
 			var/datum/VOXsound/vox = voxsounds[id]
 			vox.ogg = file(vox.ogg)

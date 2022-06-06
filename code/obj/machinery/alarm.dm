@@ -132,7 +132,7 @@
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, alert_signal, null, "alarm")
 
-/obj/machinery/alarm/attackby(var/obj/item/W as obj, user as mob)
+/obj/machinery/alarm/attackby(var/obj/item/W, user)
 	if (issnippingtool(W))
 		status ^= BROKEN
 		src.add_fingerprint(user)
@@ -160,7 +160,7 @@
 	onclose(user, "atmos")
 
 /obj/machinery/alarm/proc/return_text(mob/user)
-	if ( (get_dist(src, user) > 1 ))
+	if ( (BOUNDS_DIST(src, user) > 0 ))
 		if (!issilicon(user))
 			src.remove_dialog(user)
 			user.Browse(null, "window=atmos")

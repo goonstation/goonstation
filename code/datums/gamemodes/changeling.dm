@@ -71,7 +71,7 @@
 				boutput(changeling.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 				obj_count++
 
-	SPAWN_DBG (rand(waittime_l, waittime_h))
+	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
 
 /datum/game_mode/changeling/send_intercept()

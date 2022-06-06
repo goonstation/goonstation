@@ -10,7 +10,7 @@ GAUNTLET CARDS
 	name = "card"
 	icon = 'icons/obj/items/card.dmi'
 	icon_state = "id"
-	wear_image_icon = 'icons/mob/mob.dmi'
+	wear_image_icon = 'icons/mob/clothing/card.dmi'
 	w_class = W_CLASS_TINY
 	burn_type = 1
 	stamina_damage = 0
@@ -45,10 +45,10 @@ GAUNTLET CARDS
 
 /obj/item/card/emag/fake
 //delicious fake emag
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		boutput(user, "<span class='combat'>Turns out that card was actually a kind of [pick("deadly chameleon","spiny anteater","Discount Dan's latest product prototype","Syndicate Top Trumps Card","bag of neckbeard shavings")] in disguise! It stabs you!</span>")
 		user.changeStatus("paralysis", 10 SECONDS)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			var/obj/storage/closet/C = new/obj/storage/closet(get_turf(user))
 			user.set_loc(C)
 			C.layer = OBJ_LAYER
@@ -248,7 +248,8 @@ GAUNTLET CARDS
 		O.pixel_y = -96
 		O.icon = 'icons/effects/214x246.dmi'
 		O.icon_state = "explosion"
-		SPAWN_DBG(3.5 SECONDS) qdel(O)
+		SPAWN(3.5 SECONDS) qdel(O)
+		logTheThing("combat", user, null, "was gibbed by the explosive Captain's Spare at [log_loc(user)].")
 		user.gib()
 
 /obj/item/card/id/attack_self(mob/user as mob)
@@ -261,7 +262,7 @@ GAUNTLET CARDS
 	if (src.emagged)
 		if (user && E)
 			user.show_text("You run [E] over [src], but nothing seems to happen.", "red")
-		return
+		return FALSE
 	src.access = list() // clear what used to be there
 	var/list/all_accesses = get_all_accesses()
 	for (var/i = rand(2,25), i > 0, i--)
@@ -272,6 +273,7 @@ GAUNTLET CARDS
 			src.access += access_syndicate_shuttle
 		DEBUG_MESSAGE("[get_access_desc(new_access)] added to [src]")
 	src.emagged = 1
+	return TRUE
 
 /*
 /obj/item/card/id/verb/read()
@@ -318,7 +320,7 @@ GAUNTLET CARDS
 	else
 		..()
 
-/obj/item/card/id/syndicate/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/card/id/syndicate/attackby(obj/item/W, mob/user)
 	var/obj/item/card/id/sourceCard = W
 	if (istype(sourceCard))
 		boutput(user, "You copy [sourceCard]'s accesses to [src].")
@@ -352,7 +354,7 @@ GAUNTLET CARDS
 
 /obj/item/card/id/temporary/New()
 	..()
-	SPAWN_DBG(0) //to give time for duration and starting access to be set
+	SPAWN(0) //to give time for duration and starting access to be set
 		starting_access = access
 		end_time = ticker.round_elapsed_ticks + duration*10
 		sleep(duration * 10)

@@ -63,7 +63,7 @@
 			if(new_port.loc != loc)
 				return 0
 
-			//logTheThing("combat", usr, null, "attaches [src] to [new_port] at [showCoords(new_port.x, new_port.y, new_port.z)].")
+			//logTheThing("combat", usr, null, "attaches [src] to [new_port] at [log_loc(new_port)].")
 
 			add_fingerprint(usr)
 
@@ -103,7 +103,7 @@
 		UpdateIcon()
 	return
 
-/obj/machinery/portable_atmospherics/attackby(var/obj/item/W as obj, var/mob/user as mob)
+/obj/machinery/portable_atmospherics/attackby(var/obj/item/W, var/mob/user)
 	if(istype(W, /obj/item/tank))
 		if(!src.holding)
 			boutput(user, "<span class='notice'>You attach the [W.name] to the the [src.name]</span>")

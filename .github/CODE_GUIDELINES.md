@@ -10,11 +10,12 @@
 * Don't use `goto`. Bad.
 * Don't use the `:` operator to override type safety checks. Instead, cast the variable to the proper type.
 
-## Procs To Use
+## Stuff To Use
 
-* Use `SPAWN_DBG()` instead of `spawn()`
+* Use `SPAWN()` instead of `spawn()`
 * Use `TIME` instead of `world.timeofday`
 * Bitflags (`&`) - Write as `bitfield & bitflag`
+* Use `'foo.ogg'` instead of `"foo.ogg"` for resources unless you need to build a string (e.g. `"foo_[rand(2)].ogg"`).
 
 # Syntax
 
@@ -80,6 +81,13 @@ obj/test/proc/coolstuff()
 See: `if(x)` vs `if (x)`
 
 Nobody cares about this. This is heavily frowned upon for changing with little to no reason.
+
+## `foo.len` vs. `length(foo)`
+
+Our codebase uses the latter, the `length(foo)` syntax.
+
+The `.len` syntax runtimes on a null `foo`, whereas the `length()` syntax will not.
+It's also faster (~6%), for internal bytecode reasons (which don't really matter).
 
 ## Abstract types and typesof
 

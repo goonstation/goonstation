@@ -225,15 +225,15 @@
 	json += "}"
 	windowCall("setUIState", json)
 
-/datum/chemicompiler_core/proc/parseCBF(var/string, var/button)
+/datum/chemicompiler_core/proc/parseCBF(string, button)
 	var/list/tokens = list(">", "<", "+", "-", ".",",", "\[", "]", "{", "}", "(", ")", "^", "'", "$", "@","#")
 	var/l = length(string)
 	var/list/inst = new
 	var/token
 
-	for(var/i = 1, i <= l, i++)
+	for(var/i in 1 to l)
 		token = copytext(string, i, i+1)
-		if(tokens.Find(token))
+		if(token in tokens)
 			inst.Add(token)
 
 		// ~ means don't allow reading the source code
@@ -274,7 +274,7 @@
 	if(running)
 		var/loopUsed
 		for (loopUsed = 0, loopUsed < 30, loopUsed++)
-			if(ip > currentProg.len)
+			if(ip > length(currentProg))
 				running = 0
 				break
 			//LAGCHECK(LAG_MED)
@@ -306,7 +306,7 @@
 				if("\[") //start loop
 					if(data[dp + 1] == 0)
 						count = 1
-						while(ip <= currentProg.len && count > 0)
+						while(ip <= length(currentProg) && count > 0)
 							if(currentProg[ip] == "\[")
 								count++
 							if(currentProg[ip] == "]")
@@ -342,7 +342,7 @@
 					var/heatTo = (273 - tx) + ax
 					heatReagents(sx, heatTo)
 				if("@") //transfer
-					loopUsed = 30
+					loopUsed = tx > 10 ? 45 : 30 //output is more expensive
 					transferReagents(sx, tx, ax)
 				/*if("?") //compare *ptr to sx, using operation tx, store result in ax
 					switch(tx)
@@ -361,11 +361,11 @@
 						else
 							ax = 0*/
 				if("#") //move individual reagent from container
-					loopUsed = 30
+					loopUsed = tx > 10 ? 45 : 30 //output is more expensive
 					isolateReagent(sx, tx, ax, data[dp+1])
 				else
 
-			if(data.len < dp + 1)
+			if(length(data) < dp + 1)
 				data.len = dp + 1
 			if(length(textBuffer) > 80)
 				output += "[textBuffer]<br>"
@@ -373,7 +373,7 @@
 				updatePanel()
 
 			/*if(exec % 100 == 0) //NO RECURSION. NO.
-				SPAWN_DBG(0)
+				SPAWN(0)
 					resumeCBF()
 				break
 			*/
@@ -751,7 +751,7 @@
 	if(!reservoirCheck(source) && index > 0)
 		return
 	var/obj/item/reagent_containers/holder = reservoirs[source]
-	if(index < 0 || holder.reagents.reagent_list.len < index)
+	if(index < 0 || length(holder.reagents.reagent_list) < index)
 		return
 	return 1
 
@@ -799,7 +799,7 @@
 	if (target == 12)
 		// Generate vial
 		if(RS.total_volume >= 1)
-			var/obj/item/reagent_containers/glass/vial/V = new(get_turf(src.holder))
+			var/obj/item/reagent_containers/glass/vial/plastic/V = new(get_turf(src.holder))
 			RS.trans_to(V, amount, index = index)
 			showMessage("[src.holder] ejects a vial of some unknown substance.")
 		else
@@ -830,23 +830,21 @@
 	var/obj/item/reagent_containers/holder = reservoirs[rid]
 	var/datum/reagents/R = holder.reagents
 	var/heating_in_progress = 1
-	//while(R.total_volume && heating_in_progress)
 
 	//heater settings
-	var/h_exposed_volume = 10
-	var/h_divisor = 10
 	var/h_change_cap = 25
+	var/heater_temp
+	var/difference = temp- R.total_temperature
 
-	var/element_temp = R.total_temperature < temp ? 9000 : 0												//Sidewinder7: Smart heating system. Allows the CC to heat at full power for more of the duration, and prevents reheating of reacted elements.
-	var/max_temp_change = abs(R.total_temperature - temp)
-	var/next_temp_change = clamp((abs(R.total_temperature - element_temp) / h_divisor), 1, h_change_cap)	// Formula used by temperature_reagents() to determine how much to change the temp
-	if(next_temp_change >= max_temp_change)																	// Check if this tick will cause the temperature to overshoot if heated/cooled at full power. Use >= to prevent reheating in the case the values line up perfectly
-		element_temp = (((R.total_temperature - (R.total_temperature-temp)*h_divisor) * (R.total_volume+h_exposed_volume)) - (R.total_temperature*R.total_volume))/h_exposed_volume
+	if (difference >= 0)
+		heater_temp = R.total_temperature+ min(ceil(difference),h_change_cap)
+	else
+		heater_temp = max(1,R.total_temperature+ max(round(difference),-h_change_cap))
+
+	if(abs(difference) <= h_change_cap)
 		heating_in_progress = 0
 
-	h_divisor = 35/h_divisor*100 // quick hack because idk wtf is going on here - Emily
-
-	R.temperature_reagents(element_temp, h_exposed_volume, h_divisor, h_change_cap)
+	R.set_reagent_temp(heater_temp, TRUE)
 
 	return heating_in_progress
 

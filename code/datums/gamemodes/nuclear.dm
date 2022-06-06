@@ -193,6 +193,7 @@
 			synd_mind.current.real_name = "[syndicate_name()] [leader_title]"
 			equip_syndicate(synd_mind.current, 1)
 			new /obj/item/device/audio_log/nuke_briefing(synd_mind.current.loc, target_location_name)
+			synd_mind.current.show_antag_popup("nukeop-commander")
 		else
 			synd_mind.current.set_loc(pick_landmark(LANDMARK_SYNDICATE))
 			var/callsign = pick(callsign_list)
@@ -201,10 +202,10 @@
 			equip_syndicate(synd_mind.current, 0)
 			var/obj/item/device/radio/headset/syndicate/headset = synd_mind.current.ears
 			headset.icon_override = "syndie_letters/[copytext(callsign, 1, 2)]"
+			synd_mind.current.show_antag_popup("nukeop")
 		boutput(synd_mind.current, "<span class='alert'>Your headset allows you to communicate on the syndicate radio channel by prefacing messages with :h, as (say \":h Agent reporting in!\").</span>")
 
 		synd_mind.current.antagonist_overlay_refresh(1, 0)
-		SHOW_NUKEOP_TIPS(synd_mind.current)
 
 	the_bomb = new /obj/machinery/nuclearbomb(pick_landmark(LANDMARK_NUCLEAR_BOMB))
 	new /obj/storage/closet/syndicate/nuclear(pick_landmark(LANDMARK_NUCLEAR_CLOSET))
@@ -217,7 +218,7 @@
 		for(var/i = 1 to 5)
 			new /obj/item/breaching_charge/thermite(T)
 
-	SPAWN_DBG (rand(waittime_l, waittime_h))
+	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
 
 	return
@@ -272,43 +273,40 @@
 
 	return 0
 
-/datum/game_mode/nuclear/declare_completion()
+/datum/game_mode/nuclear/victory_msg()
 	switch(finished)
 		if(-2) // Major Synd Victory - nuke successfully detonated
-			boutput(world, "<FONT size = 3><B>Total Syndicate Victory</B></FONT>")
-			boutput(world, "The operatives have destroyed [station_name(1)]!")
-#ifdef DATALOGGER
-			game_stats.Increment("traitorwin")
-#endif
+			return "<FONT size = 3><B>Total Syndicate Victory</B></FONT><br>\
+					The operatives have destroyed [station_name(1)]!"
 		if(-1) // Minor Synd Victory - station abandoned while nuke armed
-			boutput(world, "<FONT size = 3><B>Syndicate Victory</B></FONT>")
-			boutput(world, "The crew of [station_name(1)] abandoned the [station_or_ship()] while the bomb was armed! The [station_or_ship()] will surely be destroyed!")
-#ifdef DATALOGGER
-			game_stats.Increment("traitorwin")
-#endif
+			return "<FONT size = 3><B>Syndicate Victory</B></FONT><br>\
+					The crew of [station_name(1)] abandoned the [station_or_ship()] while the bomb was armed! The [station_or_ship()] will surely be destroyed!"
 		if(0) // Uhhhhhh
-			boutput(world, "<FONT size = 3><B>Stalemate</B></FONT>")
-			boutput(world, "Everybody loses!")
+			return "<FONT size = 3><B>Stalemate</B></FONT><br>\
+					Everybody loses!"
 		if(1) // Minor Crew Victory - station evacuated, bombing averted, operatives survived
-			boutput(world, "<FONT size = 3><B>Crew Victory</B></FONT>")
-			boutput(world, "The crew of [station_name(1)] averted the bombing! However, some of the operatives survived.")
-#ifdef DATALOGGER
-			game_stats.Increment("traitorloss")
-#endif
+			return "<FONT size = 3><B>Crew Victory</B></FONT><br>\
+					The crew of [station_name(1)] averted the bombing! However, some of the operatives survived."
 		if(2) // Major Crew Victory - bombing averted, all ops dead/captured
-			boutput(world, "<FONT size = 3><B>Total Crew Victory</B></FONT>")
-			boutput(world, "The crew of [station_name(1)] averted the bombing and eliminated all Syndicate operatives!")
-#ifdef DATALOGGER
-			game_stats.Increment("traitorloss")
-#endif
+			return "<FONT size = 3><B>Total Crew Victory</B></FONT><br>\
+					The crew of [station_name(1)] averted the bombing and eliminated all Syndicate operatives!"
+
+/datum/game_mode/nuclear/declare_completion()
+	boutput(world, src.victory_msg())
 
 	if(finished > 0)
 		var/value = world.load_intra_round_value("nukie_loss")
+#ifdef DATALOGGER
+		game_stats.Increment("traitorloss")
+#endif
 		if(isnull(value))
 			value = 0
 		world.save_intra_round_value("nukie_loss", value + 1)
 	else if(finished < 0)
 		var/value = world.load_intra_round_value("nukie_win")
+#ifdef DATALOGGER
+		game_stats.Increment("traitorwin")
+#endif
 		if(isnull(value))
 			value = 0
 		world.save_intra_round_value("nukie_win", value + 1)
@@ -453,7 +451,7 @@ var/syndicate_name = null
 			last_reset_text = "<h4>(memorial reset [days_passed] days ago)</h4>"
 		src.desc = "<center><h2><b>Battlecruiser Cairngorm Mission Memorial</b></h2><br> <h3>Successful missions: [wins]<br>\nUnsuccessful missions: [losses]</h3><br>[last_reset_text]</center>"
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (..(user))
 			return
 

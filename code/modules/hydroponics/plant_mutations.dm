@@ -76,6 +76,7 @@
 /datum/plantmutation/corn/clear
 	crop = /obj/item/reagent_containers/food/snacks/plant/corn/clear
 	iconmod = "CornClear"
+	name_prefix = "Clear "
 	assoc_reagents = list("ethanol")
 
 /datum/plantmutation/corn/pepper
@@ -89,12 +90,13 @@
 /datum/plantmutation/peas/ammonia
 	crop = /obj/item/reagent_containers/food/snacks/plant/peas/ammonia
 	iconmod = "GoldenPeas"
+	name_prefix = "Golden "
 	assoc_reagents = list("ammonia")
 
 // Grape Mutations
 
 /datum/plantmutation/grapes/green
-	name_prefix = "green "
+	name_prefix = "Green "
 	crop = /obj/item/reagent_containers/food/snacks/plant/grape/green
 	iconmod = "GrapeGreen"
 	assoc_reagents = list("insulin")
@@ -192,23 +194,41 @@
 
 /datum/plantmutation/beans/jelly // hehehe
 	name = "Jelly Bean"
-	name_prefix = "jelly"
+	name_prefix = "Jelly"
 	iconmod = "BeanJelly"
 	assoc_reagents = list("VHFCS")
 	crop = /obj/item/reagent_containers/food/snacks/candy/jellybean/someflavor
+
+// Coffee Mutations
+
+/datum/plantmutation/coffee/mocha
+	name = "Mocha Coffee"
+	name_prefix = "Mocha"
+	iconmod = "CoffeeMocha"
+	crop = /obj/item/reagent_containers/food/snacks/plant/coffeeberry/mocha
+	PTrange = list(20,null)
+	assoc_reagents = list("chocolate")
+
+/datum/plantmutation/coffee/latte
+	name = "Latte Coffee"
+	name_prefix = "Latte"
+	iconmod = "CoffeeLatte"
+	crop = /obj/item/reagent_containers/food/snacks/plant/coffeeberry/latte
+	ENrange = list(10,null)
+	assoc_reagents = list("milk")
 
 // Chili Mutations
 
 /datum/plantmutation/chili/chilly
 	name = "Chilly"
-	name_prefix = "chilly "
+	name_prefix = "Chilly "
 	iconmod = "ChiliChilly" // IM SORRY THIS IS ALL IN THE NAME OF A VAGUELY CONSISTENT AND PREDICTABLE NAMING CONVENTION
 	crop = /obj/item/reagent_containers/food/snacks/plant/chili/chilly
 	assoc_reagents = list("cryostylane")
 
 /datum/plantmutation/chili/ghost
 	name = "Fiery Chili"
-	name_prefix = "fiery "
+	name_prefix = "Fiery "
 	iconmod = "ChiliGhost"
 	crop = /obj/item/reagent_containers/food/snacks/plant/chili/ghost_chili
 	PTrange = list(75,null)
@@ -220,7 +240,7 @@
 /datum/plantmutation/eggplant/literal
 	name = "Free-Range Eggplant"
 	dont_rename_crop = true
-	name_prefix = "free range "
+	name_prefix = "Free range "
 	iconmod = "EggplantEggs"
 	crop = /obj/item/reagent_containers/food/snacks/ingredient/egg
 
@@ -228,21 +248,31 @@
 
 /datum/plantmutation/wheat/durum
 	name = "Durum Wheat"
-	name_prefix = "durum "
+	name_prefix = "Durum "
 	crop = /obj/item/plant/wheat/durum
 
 /datum/plantmutation/wheat/steelwheat
 	name = "steel wheat"
-	name_prefix = "steel "
+	name_prefix = "Steel "
 	iconmod = "WheatSteel"
 	assoc_reagents = list("iron")
 	crop = /obj/item/plant/wheat/metal
+
+// Rice Mutations
+
+/datum/plantmutation/rice/ricein
+	name = "ricein"
+	name_prefix = "Ricin "
+	iconmod = "Rice"
+	assoc_reagents = list("ricin")
+	PTrange = list(60,null)
+	crop = /obj/item/reagent_containers/food/snacks/ingredient/rice_sprig
 
 // Oat Mutations
 
 /datum/plantmutation/oat/salt
 	name = "Salted Oats"
-	name_prefix = "salted "
+	name_prefix = "Salted "
 	iconmod = "OatSalt"
 	assoc_reagents = list("salt")
 	crop = /obj/item/plant/oat/salt
@@ -444,7 +474,7 @@
 	name_prefix = "Sunrise "
 	iconmod = "VenneCurative"
 	crop = /obj/item/plant/herb/venne/curative
-	assoc_reagents = list("oculine","mannitol","mutadone")
+	assoc_reagents = list("mannitol","mutadone")
 	chance = 5
 
 // Houttuynia Cordata Mutations
@@ -466,7 +496,7 @@
 			// I know that this seems weird, but consider how many plants clutter botany at any given time. Looping through mobs and checking distance is
 			// less of a pain than looping through potentially hundreds of random seeds and crap in view(1) to see if they're mobs.
 			for (var/mob/living/L in mobs)
-				if (get_dist(L.loc,get_turf(POT)) <= 1)
+				if (BOUNDS_DIST(L.loc, get_turf(POT)) == 0)
 					nerds += L
 				else
 					continue
@@ -578,7 +608,7 @@
 			B.anchored = 1
 			B.set_density(0)
 			B.layer = 5 // TODO what layer should this be on?
-			SPAWN_DBG(2 SECONDS)
+			SPAWN(2 SECONDS)
 				qdel(B)
 				B=null
 			var/radrange = 1

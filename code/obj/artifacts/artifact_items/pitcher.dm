@@ -12,7 +12,7 @@
 		if (forceartiorigin)
 			AS.validtypes = list("[forceartiorigin]")
 		src.artifact = AS
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.ArtifactSetup()
 
 		gulp_size = rand(2, 10) * 5 //How fast will you drink from this? Who knows!
@@ -128,7 +128,7 @@
 		for(var/i in 1 to fillerAmt)
 			reagents.add_reagent(pick(fillerDrinks), 50)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (src.Artifact_attackby(W,user))
 			..()
 
@@ -182,6 +182,7 @@
 /datum/artifact/pitcher
 	associated_object = /obj/item/reagent_containers/food/drinks/drinkingglass/artifact
 	type_name = "Pitcher"
+	type_size = ARTIFACT_SIZE_MEDIUM
 	rarity_weight = 350
 	validtypes = list("martian","wizard","eldritch")
 	min_triggers = 0

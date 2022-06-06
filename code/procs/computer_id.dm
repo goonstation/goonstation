@@ -87,7 +87,7 @@ proc/check_compid_list(var/client/C)
 						cid_test[C.ckey] = C.computer_id
 						cid_tested += C.ckey
 						msg += " Executing automatic test."
-						SPAWN_DBG(1 SECOND)
+						SPAWN(1 SECOND)
 							del(C) //RIP
 					message_admins("[key_name(C)][msg]")
 					logTheThing("admin", C, null, msg)
@@ -99,7 +99,7 @@ proc/check_compid_list(var/client/C)
 					logTheThing("diary", C, null, "[key_name(C)][msg]", "admin")
 
 				ircmsg["msg"] = "(IP: [C.address]) [msg]"
-				ircbot.export("admin", ircmsg)
+				ircbot.export_async("admin", ircmsg)
 
 
 		//Done with the analysis
@@ -128,7 +128,7 @@ proc/do_computerid_test(var/client/C)
 	ircmsg["key"] =  C.key
 	ircmsg["name"] = stripTextMacros(C.mob.real_name)
 	ircmsg["msg"] = " [msg]"
-	ircbot.export("admin", ircmsg)
+	ircbot.export_async("admin", ircmsg)
 	message_admins("[key_name(C)][msg]")
 	logTheThing("admin", C, null, msg)
 	logTheThing("diary", C, null, msg, "admin")

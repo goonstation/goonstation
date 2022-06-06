@@ -170,7 +170,7 @@
 					if (ploc != loc)
 						boutput(user, "<span class='alert'>As you try to weld the pipe to a completely different floor than it was originally placed on it breaks!</span>")
 						ploc = loc
-						SPAWN_DBG(0)
+						SPAWN(0)
 							robogibs(ploc)
 							//if (isrestrictedz(ploc.z))
 								//explosion_new(src, ploc, 3) // okay yes we don't need to explode people for this
@@ -185,6 +185,7 @@
 					P.mail_tag = mail_tag
 					P.UpdateIcon()
 					boutput(user, "You weld [P] in place.")
+					logTheThing("station", user, null, "welded the disposal pipe in place at [log_loc(P)]")
 
 					qdel(src)
 				else

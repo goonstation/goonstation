@@ -2,8 +2,6 @@
 //TODO: refactor types of fish. add fish "qualities" which influence sell values?? but who do you sell fish to?? idk.
 
 /obj/item/fish
-	throwforce = 3
-	force = 5
 	icon = 'icons/obj/foodNdrink/food_fish.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	item_state = "fish"
@@ -16,7 +14,7 @@
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if(user?.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message("<span class='alert'><b>[user]</b> swings \the [src] and hits [himself_or_herself(user)] in the face!.</span>")
 			user.changeStatus("weakened", 2 * src.force SECONDS)
@@ -26,7 +24,7 @@
 			playsound(src.loc, pick('sound/impact_sounds/Slimy_Hit_1.ogg', 'sound/impact_sounds/Slimy_Hit_2.ogg'), 50, 1, -1)
 			user.visible_message("<span class='alert'><b>[user] slaps [M] with \the [src]!</b>.</span>")
 
-	attackby(var/obj/item/W as obj, var/mob/user as mob)
+	attackby(var/obj/item/W, var/mob/user)
 		if(istype(W, /obj/item/kitchen/utensil/knife))
 			if(fillet_type)
 				var/obj/fillet = new fillet_type(src.loc)

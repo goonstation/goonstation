@@ -9,7 +9,7 @@
 	blinded = 0
 	anchored = 1
 	alpha = 180
-	event_handler_flags = IMMUNE_MANTA_PUSH
+	event_handler_flags = IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY
 	var/obj/machinery/playerzoldorf/homebooth
 	var/mob/originalmob
 
@@ -127,6 +127,7 @@
 			src.visible_message("<span><b>[src.name]</b> [message]</span>")
 
 	death(gibbed)
+		. = ..()
 		if(originalmob)
 			if (src.client)
 				src.removeOverlaysClient(src.client)

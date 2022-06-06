@@ -229,7 +229,7 @@
 
 	proc/initialize()
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 // grabsmash
 		if (istype(I, /obj/item/grab/))
 			var/obj/item/grab/G = I
@@ -284,13 +284,13 @@
 	var/amount = 23.0
 	anchored = 1.0
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/clothing/suit/bedsheet))
 			qdel(W)
 			src.amount++
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		add_fingerprint(user)
 		if (src.amount >= 1)
 			src.amount--
@@ -311,13 +311,13 @@
 	var/amount = 23.0
 	anchored = 1.0
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/clothing/under/towel))
 			qdel(W)
 			src.amount++
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		add_fingerprint(user)
 		if (src.amount >= 1)
 			src.amount--
@@ -332,7 +332,7 @@
 
 
 /obj/lattice
-	desc = "A lightweight support lattice."
+	desc = "Intersecting metal rods, used as a structural skeleton for space stations and to facilitate movement in a vacuum."
 	name = "lattice"
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "lattice"
@@ -362,7 +362,7 @@
 				return
 			else
 
-	attackby(obj/item/C as obj, mob/user as mob)
+	attackby(obj/item/C, mob/user)
 
 		if (istype(C, /obj/item/tile))
 			var/obj/item/tile/T = C
@@ -400,7 +400,7 @@
 			qdel(src)
 			return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isweldingtool(W))
 			if(W:try_weld(user,1))
 				boutput(user, "<span class='notice'>You disassemble the barricade.</span>")
@@ -480,7 +480,7 @@
 	New(newloc, deleteTimer)
 		..()
 		if (deleteTimer)
-			SPAWN_DBG(deleteTimer)
+			SPAWN(deleteTimer)
 				qdel(src)
 
 /obj/projection
@@ -505,8 +505,8 @@
 /obj/proc/replace_with_explosive()
 	var/obj/O = src
 	if (alert("Are you sure? This will irreversibly replace this object with a copy that gibs the first person trying to touch it!", "Replace with explosive", "Yes", "No") == "Yes")
-		message_admins("[key_name(usr)] replaced [O] ([showCoords(O.x, O.y, O.z)]) with an explosive replica.")
-		logTheThing("admin", usr, null, "replaced [O] ([showCoords(O.x, O.y, O.z)]) with an explosive replica.")
+		message_admins("[key_name(usr)] replaced [O] ([log_loc(O)]) with an explosive replica.")
+		logTheThing("admin", usr, null, "replaced [O] ([log_loc(O)]) with an explosive replica.")
 		var/obj/replica = new /obj/item/card/id/captains_spare/explosive(O.loc)
 		replica.icon = O.icon
 		replica.icon_state = O.icon_state

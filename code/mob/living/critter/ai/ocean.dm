@@ -56,7 +56,7 @@
 
 /datum/aiTask/timed/targeted/trilobite/on_tick()
 	var/mob/living/critter/owncritter = holder.owner
-	if (HAS_MOB_PROPERTY(owncritter, PROP_CANTMOVE))
+	if (HAS_ATOM_PROPERTY(owncritter, PROP_MOB_CANTMOVE))
 		return
 
 	if(!holder.target)
@@ -100,7 +100,7 @@
 		for (var/atom in by_cat[TR_CAT_PODS_AND_CRUISERS])
 			var/atom/A = atom
 			if (IN_RANGE(holder.owner, A, 6))
-				holder.current_task = src.escape
+				holder.switch_to(src.escape)
 				src.escape.reset()
 
 		for(var/mob/living/M in view(target_range, holder.owner))
@@ -127,7 +127,7 @@
 		. = 1
 
 /datum/aiTask/timed/targeted/escape_vehicles/on_tick()
-	if (HAS_MOB_PROPERTY(holder.owner, PROP_CANTMOVE))
+	if (HAS_ATOM_PROPERTY(holder.owner, PROP_MOB_CANTMOVE))
 		return
 
 	if(!holder.target)
@@ -159,7 +159,7 @@
 	default_task = get_instance(/datum/aiTask/timed/targeted/flee_and_shoot, list(src))
 
 /datum/aiHolder/spike/was_harmed(obj/item/W, mob/M)
-	current_task = get_instance(/datum/aiTask/timed/targeted/flee_and_shoot, list(src))
+	switch_to(get_instance(/datum/aiTask/timed/targeted/flee_and_shoot, list(src)))
 	current_task.reset()
 
 /datum/aiTask/timed/targeted/flee_and_shoot
@@ -184,7 +184,7 @@
 
 /datum/aiTask/timed/targeted/flee_and_shoot/on_tick()
 	var/mob/living/critter/owncritter = holder.owner
-	if (HAS_MOB_PROPERTY(owncritter, PROP_CANTMOVE))
+	if (HAS_ATOM_PROPERTY(owncritter, PROP_MOB_CANTMOVE))
 		return
 
 	if(!holder.target && world.time > last_seek + 5 SECONDS)
@@ -291,7 +291,7 @@
 
 /datum/aiTask/timed/targeted/pikaia/on_tick()
 	var/mob/living/critter/owncritter = holder.owner
-	if (HAS_MOB_PROPERTY(owncritter, PROP_CANTMOVE) || !isalive(owncritter))
+	if (HAS_ATOM_PROPERTY(owncritter, PROP_MOB_CANTMOVE) || !isalive(owncritter))
 		return
 
 	if(!holder.target)
@@ -334,7 +334,7 @@
 							owncritter.drop_item()
 
 						if (G.state <= GRAB_PASSIVE)
-							G.attack_self(owncritter)
+							G.AttackSelf(owncritter)
 						else
 							owncritter.emote("flip")
 							holder.move_away(holder.target,1)

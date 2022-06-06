@@ -122,7 +122,7 @@ obj/machinery/atmospherics/retrofilter
 
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..())
 			user.Browse(null, "window=pipefilter")
 			src.remove_dialog(user)
@@ -314,7 +314,7 @@ obj/machinery/atmospherics/retrofilter
 		src.update_overlays()
 		return 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/pda2) && W:ID_card)
 			W = W:ID_card
 		if (istype(W, /obj/item/card/id))
@@ -377,7 +377,7 @@ obj/machinery/atmospherics/retrofilter
 		if( powered(ENVIRON) )
 			status &= ~NOPOWER
 		else
-			SPAWN_DBG(rand(0, 15))
+			SPAWN(rand(0, 15))
 				status |= NOPOWER
 
 		src.update_overlays()

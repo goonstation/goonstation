@@ -18,7 +18,7 @@
 		if (forceartiorigin)
 			AS.validtypes = list("[forceartiorigin]")
 		src.artifact = AS
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.ArtifactSetup()
 		..()
 
@@ -33,7 +33,7 @@
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (src.Artifact_attackby(W,user))
 			..()
 
@@ -80,6 +80,7 @@
 /datum/artifact/powercell
 	associated_object = /obj/item/cell/artifact
 	type_name = "Large power cell"
+	type_size = ARTIFACT_SIZE_TINY
 	rarity_weight = 350
 	validtypes = list("ancient","martian","wizard","precursor")
 	automatic_activation = 1

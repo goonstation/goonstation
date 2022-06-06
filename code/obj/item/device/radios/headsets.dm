@@ -11,14 +11,16 @@
 	var/protective_temperature = 0
 	speaker_range = 0
 	desc = "A standard-issue device that can be worn on a crewmember's ear to allow hands-free communication with the rest of the crew."
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
 	icon_override = "civ"
 	icon_tooltip = "Civilian"
 	wear_layer = MOB_EARS_LAYER
+	duration_remove = 1.5 SECONDS
+	duration_put = 1.5 SECONDS
 	var/haswiretap
 	hardened = 0
 
-	attackby(obj/item/R as obj, mob/user as mob)
+	attackby(obj/item/R, mob/user)
 		if (istype(R, /obj/item/device/radio_upgrade))
 			if (haswiretap)
 				boutput(user, "<span class='alert'>This [src] already has a Wiretap Upgrade installed! What good could possibly come from having two?! </span>")
@@ -31,6 +33,7 @@
 				"r" = R_FREQ_RESEARCH,
 				"m" = R_FREQ_MEDICAL,
 				"c" = R_FREQ_CIVILIAN,
+				"z" = R_FREQ_SYNDICATE,
 				)
 			src.secure_classes = list(
 				"h" = RADIOCL_COMMAND,
@@ -39,6 +42,7 @@
 				"r" = RADIOCL_RESEARCH,
 				"m" = RADIOCL_MEDICAL,
 				"c" = RADIOCL_CIVILIAN,
+				"z" = RADIOCL_SYNDICATE,
 				)
 			boutput(user, "<span class='notice'>Wiretap Radio Upgrade successfully installed in the [src].</span>")
 			playsound(src.loc ,"sound/items/Deconstruct.ogg", 80, 0)
@@ -115,7 +119,7 @@
 	icon_tooltip = "Captain"
 
 /obj/item/device/radio/headset/command/radio_show_host
-	name = "Radio show host's Headset"
+	name = "Radio Show Host's Headset"
 	icon_state = "radio"
 	secure_frequencies = list(
 		"h" = R_FREQ_COMMAND,
@@ -133,8 +137,29 @@
 		"m" = RADIOCL_MEDICAL,
 		"c" = RADIOCL_CIVILIAN,
 		)
-	icon_override = "civ"
-	icon_tooltip = "Civilian"
+	icon_override = "rh"
+	icon_tooltip = "Radio Show Host"
+
+/obj/item/device/radio/headset/command/comm_officer
+	name = "Communications Officer's Headset"
+	secure_frequencies = list(
+		"h" = R_FREQ_COMMAND,
+		"g" = R_FREQ_SECURITY,
+		"e" = R_FREQ_ENGINEERING,
+		"r" = R_FREQ_RESEARCH,
+		"m" = R_FREQ_MEDICAL,
+		"c" = R_FREQ_CIVILIAN,
+		)
+	secure_classes = list(
+		"h" = RADIOCL_COMMAND,
+		"g" = RADIOCL_SECURITY,
+		"e" = RADIOCL_ENGINEERING,
+		"r" = RADIOCL_RESEARCH,
+		"m" = RADIOCL_MEDICAL,
+		"c" = RADIOCL_CIVILIAN,
+		)
+	icon_override = "co"
+	icon_tooltip = "Communications Officer"
 
 /obj/item/device/radio/headset/command/hos
 	name = "Head of Security's Headset"
@@ -295,6 +320,18 @@
 	icon_override = "qm"
 	icon_tooltip = "Quartermaster"
 
+/obj/item/device/radio/headset/miner
+	name = "Mining Headset"
+	desc = "A radio headset that is also capable of communicating over the Engineering channel."
+	icon_state = "shipping headset"
+	secure_frequencies = list(
+	"e" = R_FREQ_ENGINEERING)
+	secure_classes = list(
+		"e" = RADIOCL_ENGINEERING,
+		)
+	icon_override = "Min"
+	icon_tooltip = "Miner"
+
 /obj/item/device/radio/headset/mail
 	name = "Mailman's Headset"
 	desc = "A radio headset that is also capable of communicating over the Engineering and Command channels."
@@ -322,9 +359,18 @@
 	chat_class = RADIOCL_SYNDICATE
 	secure_frequencies = list("z" = R_FREQ_SYNDICATE)
 	secure_classes = list(RADIOCL_SYNDICATE)
-	protected_radio = 1
+	protected_radio = 1 // Ops can spawn with the deaf trait.
 	icon_override = "syndie"
 	icon_tooltip = "Syndicate Operative"
+
+	New()
+		..()
+		SPAWN(1 SECOND)
+			var/the_frequency = R_FREQ_SYNDICATE
+			if (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
+				var/datum/game_mode/nuclear/N = ticker.mode
+				the_frequency = N.agent_radiofreq
+			src.frequency = the_frequency // let's see if this stops rounds from being ruined every fucking time
 
 	leader
 		icon_override = "syndieboss"
@@ -347,7 +393,7 @@
 
 		pickup(mob/user)
 			if(isvirtual(user))
-				SPAWN_DBG(0)
+				SPAWN(0)
 					var/obj/item/clothing/ears/plugs = new /obj/item/clothing/ears/earmuffs/earplugs(src.loc)
 					plugs.name = src.name
 					plugs.desc = src.desc
@@ -443,7 +489,7 @@ Secure Frequency:
 
 /obj/item/device/radio_upgrade //traitor radio upgrader
 	name = "Wiretap Radio Upgrade"
-	desc = "An illegal device capable of picking up and sending all secure station radio signals. Can be installed in a radio headset. Does not actually work by wiretapping."
+	desc = "An illegal device capable of picking up and sending all secure station radio signals, along with a secure Syndicate frequency. Can be installed in a radio headset. Does not actually work by wiretapping."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "syndie_upgr"
 	w_class = W_CLASS_TINY

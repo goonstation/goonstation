@@ -29,7 +29,7 @@
 	if (owner)
 		fartowner = owner
 	amount = rand(3,8)
-	SPAWN_DBG(0)
+	SPAWN(0)
 		src.Life()
 	return
 

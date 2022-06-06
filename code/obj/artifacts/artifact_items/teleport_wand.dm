@@ -27,6 +27,7 @@
 /datum/artifact/telewand
 	associated_object = /obj/item/artifact/teleport_wand
 	type_name = "Teleportation Wand"
+	type_size = ARTIFACT_SIZE_MEDIUM
 	rarity_weight = 200
 	validtypes = list("wizard","eldritch","precursor")
 	react_xray = list(10,75,90,11,"ANOMALOUS")
@@ -58,7 +59,7 @@
 			return
 
 		on_cooldown = 1
-		SPAWN_DBG(cooldown_delay)
+		SPAWN(cooldown_delay)
 			if (O.loc == user)
 				boutput(user, "<b>[O]</b> [recharge_phrase]")
 			on_cooldown = 0

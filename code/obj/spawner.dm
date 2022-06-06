@@ -218,7 +218,7 @@
 		if(!isturf(src.loc))
 			dispose()
 			return
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 			explode()
 
 	Bumped(atom/A)
@@ -287,7 +287,7 @@
 			if (!isnull(O)) O.ex_act(rand(1,2))
 		playsound(src.loc, "explosion", 100, 1)
 		playsound(src.loc, "sound/effects/explosionfar.ogg", 100, 1, 14)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			animation.dispose()
 			for(var/atom/movable/overlay/A in (boom + boom_tips))
 				A.dispose()

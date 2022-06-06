@@ -234,7 +234,7 @@ datum/preferences
 					sound_file = sound(src.AH.screamsounds[src.AH.screamsound])
 
 				if (params["chatsound"])
-					sound_file = sounds_speak[AH.voicetype]
+					sound_file = sounds_speak["[AH.voicetype]"]
 
 				if (sound_file)
 					preview_sound(sound_file)
@@ -268,7 +268,7 @@ datum/preferences
 					return
 
 				if (!isnull(index) && isnum(index))
-					src.savefile_save(client, index)
+					src.savefile_save(client.key, index)
 					src.profile_number = index
 					boutput(usr, "<span class='notice'><b>Character saved to Slot [index].</b></span>")
 					return TRUE
@@ -1309,23 +1309,30 @@ datum/preferences
 			HTML += "</td>"
 
 		HTML += "<td valign='top' class='antagprefs'>"
+		if (user?.client?.player.get_rounds_participated() < TEAM_BASED_ROUND_REQUIREMENT)
+			HTML += "You need to play at least [TEAM_BASED_ROUND_REQUIREMENT] rounds to play group-based antagonists."
+			src.be_syndicate = FALSE
+			src.be_syndicate_commander = FALSE
+			src.be_gangleader = FALSE
+			src.be_revhead = FALSE
+			src.be_conspirator = FALSE
 		if (jobban_isbanned(user, "Syndicate"))
 			HTML += "You are banned from playing antagonist roles."
-			src.be_traitor = 0
-			src.be_syndicate = 0
-			src.be_syndicate_commander = 0
-			src.be_spy = 0
-			src.be_gangleader = 0
-			src.be_revhead = 0
-			src.be_changeling = 0
-			src.be_wizard = 0
-			src.be_werewolf = 0
-			src.be_vampire = 0
-			src.be_arcfiend = 0
-			src.be_wraith = 0
-			src.be_blob = 0
-			src.be_conspirator = 0
-			src.be_flock = 0
+			src.be_traitor = FALSE
+			src.be_syndicate = FALSE
+			src.be_syndicate_commander = FALSE
+			src.be_spy = FALSE
+			src.be_gangleader = FALSE
+			src.be_revhead = FALSE
+			src.be_changeling = FALSE
+			src.be_wizard = FALSE
+			src.be_werewolf = FALSE
+			src.be_vampire = FALSE
+			src.be_arcfiend = FALSE
+			src.be_wraith = FALSE
+			src.be_blob = FALSE
+			src.be_conspirator = FALSE
+			src.be_flock = FALSE
 		else
 
 			HTML += {"
@@ -1632,7 +1639,7 @@ datum/preferences
 				else
 					character.bioHolder.bloodType = blType
 
-			SPAWN_DBG(0) // avoid blocking
+			SPAWN(0) // avoid blocking
 				if(jobban_isbanned(user, "Custom Names"))
 					randomize_name()
 					randomizeLook()
@@ -1985,7 +1992,7 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 	if (H?.organHolder?.head?.donor_appearance) // aaaa
 		H.organHolder.head.donor_appearance.CopyOther(AH)
 
-	SPAWN_DBG(1 DECI SECOND)
+	SPAWN(1 DECI SECOND)
 		H?.update_colorful_parts()
 
 // Generates a real crap checkbox for html toggle links.

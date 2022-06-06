@@ -38,7 +38,7 @@
 			if (holder.owner.wizard_spellpower(src)) forcefield4 =  new /obj/forcefield(locate(holder.owner.x,holder.owner.y + 2,holder.owner.z))
 			if (holder.owner.wizard_spellpower(src)) forcefield5 =  new /obj/forcefield(locate(holder.owner.x,holder.owner.y - 2,holder.owner.z))
 
-		SPAWN_DBG(30 SECONDS)
+		SPAWN(30 SECONDS)
 			qdel(forcefield1)
 			qdel(forcefield2)
 			qdel(forcefield3)
@@ -58,6 +58,41 @@
 	density = 1
 	luminosity = 3
 	flags = USEDELAY
+	var/valid = TRUE
+
+	New()
+		..()
+		notify_neighbours()
+		UpdateIcon()
+		set_color()
+
+	disposing()
+		valid = FALSE
+		notify_neighbours()
+		. = ..()
+
+	proc/set_color()
+		return
+
+	proc/notify_neighbours()
+		for(var/d in cardinal)
+			var/turf/T = get_step(src, d)
+			var/obj/forcefield/field = locate(src.type) in T
+			if(field)
+				field.UpdateIcon()
+
+	update_icon()
+		. = ..()
+		var/neighbours = 0
+		for(var/d in cardinal)
+			var/turf/T = get_step(src, d)
+			var/obj/forcefield/field = locate(src.type) in T
+			if(field?.valid && !(neighbours & turn(d, 180)))
+				neighbours |= d
+		if(neighbours in cardinal)
+			src.dir = turn(neighbours, 90)
+		else
+			src.dir = (NORTH | SOUTH | EAST | WEST) ^ neighbours // more than 2 neighbours not supported, deal with it
 
 	attackby(obj/item/I, mob/user)
 		. = ..()

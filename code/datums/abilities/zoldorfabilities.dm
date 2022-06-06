@@ -316,7 +316,7 @@
 			else
 				f.icon = 'icons/obj/zoldorf.dmi'
 				f.icon_state = "branded"
-				SPAWN_DBG(3.2 SECONDS)
+				SPAWN(3.2 SECONDS)
 					f.icon_state = "fortunepaper"
 				f.branded = 1
 				f.referencedorf = pz
@@ -450,7 +450,7 @@
 					sg.set_loc(mobloc)
 					var/obj/ectoplasm = new /obj/item/reagent_containers/food/snacks/ectoplasm
 					ectoplasm.set_loc(mobloc)
-					SPAWN_DBG(600)
+					SPAWN(600)
 						if(sg?.mind)
 							if(istype(the_mob,/mob/zoldorf))
 								sg.mind.transfer_to(the_mob)

@@ -25,6 +25,7 @@
 	rc_flags = RC_VISIBLE | RC_SPECTRO
 
 	on_reagent_change()
+		..()
 		UpdateIcon()
 
 	update_icon()
@@ -71,6 +72,7 @@
 	icon_state = "vendbag"
 
 	on_reagent_change()
+		..()
 		UpdateIcon()
 
 	update_icon()
@@ -116,7 +118,7 @@
 /obj/item/reagent_containers/vending/bag/random
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (src.reagents)
 				var/chem = null
 				if (islist(all_functional_reagent_ids) && length(all_functional_reagent_ids))
@@ -128,7 +130,7 @@
 /obj/item/reagent_containers/vending/vial/random
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (src.reagents)
 				var/chem = null
 				if (islist(all_functional_reagent_ids) && length(all_functional_reagent_ids))

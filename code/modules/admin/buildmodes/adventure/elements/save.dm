@@ -60,7 +60,7 @@
 					sandbox.context["max_y"] = max(AS.y, B.y)
 					sandbox.context["min_y"] = min(AS.y, B.y)
 					sandbox.context["z"] = AS.z
-					SPAWN_DBG(0)
+					SPAWN(0)
 						user.client.Export()
 						var/savefile/F = new /savefile(fname)
 						// fuck you

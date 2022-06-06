@@ -157,12 +157,12 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	src.hacked = 0
 	return 1
 
-/obj/machinery/computer/supplycomp/attackby(I as obj, mob/user as mob)
+/obj/machinery/computer/supplycomp/attackby(I, mob/user)
 	if(!istype(I,/obj/item/card/emag))
 		//I guess you'll wanna put the emag away now instead of getting a massive popup
 		..()
 
-/obj/machinery/computer/supplycomp/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/supplycomp/attack_hand(var/mob/user)
 	if(!src.allowed(user))
 		boutput(user, "<span class='alert'>Access Denied.</span>")
 		return
@@ -1068,7 +1068,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 		src.temp += "Requisition Code: [RC.req_code]<br><br>"
 		if(RC.flavor_desc) src.temp += "[RC.flavor_desc]<br><br>"
 		src.temp += "[RC.requis_desc]"
-		if(RC.req_class == AID_CONTRACT)
+		if(RC.req_class == AID_CONTRACT && !RC.pinned) // Cannot ordinarily be pinned. Unpin support included for contract testing.
 			src.temp += "URGENT - Cannot Be Reserved<br>"
 		else
 			src.temp += "<A href='[topicLink("pin_contract","\ref[RC]")]'>[RC.pinned ? "Unpin Contract" : "Pin Contract"]</A><br>"
@@ -1077,7 +1077,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 /obj/machinery/computer/supplycomp/proc/print_requisition(var/datum/req_contract/contract)
 	src.printing = 1
 	playsound(src.loc, "sound/machines/printer_thermal.ogg", 60, 0)
-	SPAWN_DBG(2 SECONDS)
+	SPAWN(2 SECONDS)
 		var/obj/item/paper/thermal/P = new(src.loc)
 		P.info = "<font face='System' size='2'><center>REQUISITION CONTRACT MANIFEST<br>"
 		P.info += "FOR SUPPLIER REFERENCE ONLY<br><br>"

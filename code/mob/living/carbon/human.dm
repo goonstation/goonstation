@@ -15,7 +15,7 @@
 	var/dump_contents_chance = 20
 
 	var/image/health_mon = null
-	var/image/health_implant = null
+	var/list/implant_icons = null
 	var/image/arrestIcon = null
 
 	var/pin = null
@@ -73,7 +73,7 @@
 	var/ignore_organs = 0 // set to 1 to basically skip the handle_organs() proc
 	var/last_eyes_blinded = 0 // used in handle_blindness_overlays() to determine if a change is needed!
 
-	var/obj/on_chair = 0
+	var/obj/on_chair = null
 	var/simple_examine = 0
 
 	var/last_cluwne_noise = 0 // used in /proc/process_accents() to keep cluwnes from making constant fucking noise
@@ -195,13 +195,17 @@
 		sims = new /datum/simsHolder/human(src)
 #endif
 
-	health_mon = image('icons/effects/healthgoggles.dmi',src,"100",10)
+	health_mon = image('icons/effects/healthgoggles.dmi',src,"100",EFFECTS_LAYER_UNDER_4)
 	get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_image(health_mon)
 
-	health_implant = image('icons/effects/healthgoggles.dmi',src,"100",10)
-	get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_image(health_implant)
+	implant_icons = list()
+	implant_icons["health"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
+	implant_icons["cloner"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
+	implant_icons["other"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
+	for (var/implant in implant_icons)
+		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_image(implant_icons[implant])
 
-	arrestIcon = image('icons/effects/sechud.dmi',src,null,10)
+	arrestIcon = image('icons/effects/sechud.dmi',src,null,EFFECTS_LAYER_UNDER_4)
 	get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).add_image(arrestIcon)
 
 	src.organHolder = new(src)
@@ -234,11 +238,11 @@
 	// for pope
 	if (microbombs_4_everyone)
 		if (isnum(microbombs_4_everyone))
-			var/obj/item/implant/microbomb/MB = new (src)
-			MB.explosionPower = microbombs_4_everyone
-			MB.implanted = 1
+			var/obj/item/implant/revenge/microbomb/MB = new (src)
+			MB.power = microbombs_4_everyone
+			MB.implanted = TRUE
 			src.implant.Add(MB)
-			INVOKE_ASYNC(MB, /obj/item/implant/microbomb.proc/implanted, src)
+			INVOKE_ASYNC(MB, /obj/item/implant/revenge/microbomb.proc/implanted, src)
 
 	src.text = "<font color=#[random_hex(3)]>@"
 	src.update_colorful_parts()
@@ -284,16 +288,6 @@
 		if (!r_arm) r_arm = new /obj/item/parts/human_parts/arm/right(holder, AHolLimb)
 		if (!l_leg) l_leg = new /obj/item/parts/human_parts/leg/left(holder, AHolLimb)
 		if (!r_leg) r_leg = new /obj/item/parts/human_parts/leg/right(holder, AHolLimb)
-		SPAWN_DBG(5 SECONDS)
-			if (holder && (!l_arm || !r_arm || !l_leg || !r_leg))
-				logTheThing("debug", holder, null, "<B>SpyGuy/Limbs:</B> [src] is missing limbs after creation for some reason - recreating.")
-				create(AHolLimb)
-				if (holder)
-					// fix for "Cannot execute null.update body()".when mob is deleted too quickly after creation
-					holder.update_body()
-					if (holder.client)
-						holder.next_move = world.time + 7
-						//Fix for not being able to move after you got new limbs.
 
 	proc/mend(var/howmany = 4)
 		if (!holder)
@@ -517,10 +511,12 @@
 		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_image(health_mon)
 		health_mon.dispose()
 		health_mon = null
-	if(health_implant)
-		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_image(health_implant)
-		health_implant.dispose()
-		health_implant = null
+	if(implant_icons)
+		for (var/implant in implant_icons)
+			var/image/I = implant_icons[implant]
+			get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_image(I)
+			I.dispose()
+		implant_icons = null
 	if(arrestIcon)
 		get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_image(arrestIcon)
 		arrestIcon.dispose()
@@ -644,10 +640,10 @@
 			if (C.points < 10)
 				boutput(src, "You try to release a headspider but don't have enough DNA points (requires 10)!")
 			for (var/mob/living/critter/changeling/spider in C.hivemind)
-				boutput(spider, __red("Your telepathic link to your master has been destroyed!"))
+				boutput(spider, "<span class='alert'>Your telepathic link to your master has been destroyed!</span>")
 				spider.hivemind_owner = 0
 			for (var/mob/dead/target_observer/hivemind_observer/obs in C.hivemind)
-				boutput(obs, __red("Your telepathic link to your master has been destroyed!"))
+				boutput(obs, "<span class='alert'>Your telepathic link to your master has been destroyed!</span>")
 				obs.boot()
 			if (C.hivemind.len > 0)
 				boutput(src, "Contact with the hivemind has been lost.")
@@ -657,23 +653,30 @@
 
 		else
 		//Changelings' heads pop off and crawl away - but only if they're not gibbed and have some spare DNA points. Oy vey!
-			SPAWN_DBG(0)
+			SPAWN(0)
 				emote("deathgasp")
 				src.visible_message("<span class='alert'><B>[src]</B> head starts to shift around!</span>")
 				src.show_text("<b>We begin to grow a headspider...</b>", "blue")
-				sleep(20 SECONDS)
-				var/datum/mind/M = src.mind
-				if(!M || M.disposed)
-					return
-				if (M?.current)
-					M.current.show_text("<b>We released a headspider, using up some of our DNA reserves.</b>", "blue")
-				src.visible_message("<span class='alert'><B>[src]</B> head detaches, sprouts legs and wanders off looking for food!</span>")
-				//make a headspider, have it crawl to find a host, give the host the disease, hand control to the player again afterwards
-				var/mob/living/critter/changeling/headspider/HS = new /mob/living/critter/changeling/headspider(get_turf(src))
+				var/mob/living/critter/changeling/headspider/HS = new /mob/living/critter/changeling/headspider(src) //we spawn the headspider inside this dude immediately.
+				HS.RegisterSignal(src, COMSIG_PARENT_PRE_DISPOSING, .proc/remove) //if this dude gets grindered or cremated or whatever, we go with it
+				src.mind?.transfer_to(HS) //ok we're a headspider now
 				C.points = max(0, C.points - 10) // This stuff isn't free, you know.
-				M.transfer_to(HS)
-				HS.owner = M //In case we ghosted ourselves then the body won't hold the mind. Bad times.
 				HS.changeling = C
+				// alright everything to do with headspiders is a blasted hellscape but here's what goes on here
+				// we don't want to actually give the headspider access to the changeling abilityholder, because that would let it use all the abilities
+				// which leads to bugs and is generally bad. So we remove the HUD from corpsey over here, tell the abilityholder (C) that the headspider owns it,
+				// but we do NOT tell the headspider it has access to the abilities.
+				src.detach_hud(C.hud)
+				C.owner = HS
+				C.reassign_hivemind_target_mob()
+				sleep(20 SECONDS)
+				if(HS.disposed || !HS.mind || HS.mind.disposed || isdead(HS)) // we went somewhere else, or suicided, or something idk
+					return
+				HS.UnregisterSignal(src, COMSIG_PARENT_PRE_DISPOSING) // We no longer want to disappear if the body gets del'd
+				boutput(HS, "<b class = 'hint'>We released a headspider, using up some of our DNA reserves.</b>")
+				HS.set_loc(get_turf(src)) //be free!!!
+				src.visible_message("<span class='alert'><B>[src]</B>'s head detaches, sprouts legs and wanders off looking for food!</span>")
+				//make a headspider, have it crawl to find a host, give the host the disease, hand control to the player again afterwards
 				remove_ability_holder(/datum/abilityHolder/changeling/)
 
 				if(src.client)
@@ -682,10 +685,6 @@
 
 				logTheThing("combat", src, null, "became a headspider at [log_loc(src)].")
 
-
-				HS.changeling.transferOwnership(HS)
-				HS.changeling.owner = HS
-				HS.changeling.reassign_hivemind_target_mob()
 				if(src.wear_mask)
 					var/obj/item/dropped_mask = src.wear_mask
 					src.u_equip(dropped_mask)
@@ -704,10 +703,6 @@
 					dropped_earwear.set_loc(src.loc)
 				var/obj/item/organ/head/organ_head = src.organHolder.drop_organ("head")
 				qdel(organ_head)
-
-				//HS.process() //A little kickstart to get you out into the big world (and some chump), li'l guy! O7
-
-				return
 	/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 			NORMAL BUSINESS
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -743,7 +738,9 @@
 		else if (src.mind.master)
 			remove_mindslave_status(src, "otherslave", "death")
 #ifdef DATALOGGER
-		game_stats.Increment("playerdeaths")
+		if (src.mind.ckey)
+			// game_stats.Increment("playerdeaths")
+			game_stats.AddDeath(src.name, src.ckey, src.loc, log_health(src))
 #endif
 
 	logTheThing("combat", src, null, "dies [log_health(src)] at [log_loc(src)].")
@@ -783,7 +780,7 @@
 			break
 
 	if (!cancel && !abandon_allowed)
-		SPAWN_DBG(5 SECONDS)
+		SPAWN(5 SECONDS)
 			cancel = 0
 			for (var/client/C)
 				if (!C.mob) continue
@@ -794,7 +791,7 @@
 			if (!cancel && !abandon_allowed)
 				boutput(world, "<B>Everyone is dead! Resetting in 30 seconds!</B>")
 
-				SPAWN_DBG(30 SECONDS)
+				SPAWN(30 SECONDS)
 					logTheThing("diary", null, null, "Rebooting because of no live players", "game")
 					Reboot_server()
 #endif
@@ -844,6 +841,8 @@
 
 	if (!antag_removal && src.unkillable) // Doesn't work properly for half the antagonist types anyway (Convair880).
 		newbody.unkillable = 1
+		newbody.setStatus("maxhealth-", null, -90)
+		newbody.setStatus("paralysis", 10 SECONDS)
 
 	if (src.bioHolder)
 		newbody.bioHolder.CopyOther(src.bioHolder)
@@ -880,14 +879,14 @@
 		src.unkillable = 0 //Don't want this lying around to repeatedly die or whatever.
 		src.spell_soulguard = 0 // clear this as well
 		src = null //Detach this, what if we get deleted before the animation ends??
-		SPAWN_DBG(0.7 SECONDS) //Length of animation.
+		SPAWN(0.7 SECONDS) //Length of animation.
 			newbody.set_loc(animation.loc)
 			qdel(animation)
 	else
 		src.unkillable = 0
 		src.spell_soulguard = 0
-		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
-		SPAWN_DBG(2.2 SECONDS) // Has to at least match the organ/limb replacement stuff (Convair880).
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
+		SPAWN(2.2 SECONDS) // Has to at least match the organ/limb replacement stuff (Convair880).
 			if (src) qdel(src)
 
 	return
@@ -1014,7 +1013,7 @@
 	..()
 	var/turf/thrown_from = get_turf(src)
 	src.throw_mode_off()
-	if (HAS_MOB_PROPERTY(src, PROP_CANTTHROW))
+	if (HAS_ATOM_PROPERTY(src, PROP_MOB_CANTTHROW))
 		return
 	if (src.stat)
 		return
@@ -1131,7 +1130,7 @@
 				return
 		else
 			if (src.client.check_key(KEY_THROW) || src.in_throw_mode)
-				SEND_SIGNAL(src, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
+				SEND_SIGNAL(src, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 				src.throw_item(target, params)
 				return
 
@@ -1198,16 +1197,18 @@
 			S.move_trigger(src, ev)
 
 
-/mob/living/carbon/human/UpdateName()
-	var/see_face = 1
+/mob/living/carbon/human/proc/face_visible()
+	. = TRUE
 	if (istype(src.wear_mask) && !src.wear_mask.see_face)
-		see_face = 0
+		. = FALSE
 	else if (istype(src.head) && !src.head.see_face)
-		see_face = 0
+		. = FALSE
 	else if (istype(src.wear_suit) && !src.wear_suit.see_face)
-		see_face = 0
+		. = FALSE
+
+/mob/living/carbon/human/UpdateName()
 	var/id_name = src.wear_id?:registered
-	if (!see_face)
+	if (!face_visible())
 		if (id_name)
 			src.name = "[src.name_prefix(null, 1)][id_name][src.name_suffix(null, 1)]"
 			src.update_name_tag(id_name)
@@ -1354,11 +1355,11 @@
 	return
 	//	<BR><A href='?src=\ref[src];item=pockets'>Empty Pockets</A>
 
-/mob/living/carbon/human/MouseDrop(mob/M as mob)
+/mob/living/carbon/human/mouse_drop(mob/M as mob)
 	..()
 	if (M != usr) return
 	if (usr == src) return
-	if (get_dist(usr,src) > 1) return
+	if (BOUNDS_DIST(usr, src) > 0) return
 	if (!M.can_strip(src)) return
 	if (LinkBlocked(usr.loc,src.loc)) return
 	if (isAI(usr) || isAI(src)) return
@@ -1408,7 +1409,7 @@
 
 	/*
 	if (src.ckey == "wonkmin") //If you mention this i will shank you.
-		SPAWN_DBG(15 SECONDS)
+		SPAWN(15 SECONDS)
 			src.make_critter(/mob/living/critter/small_animal/bird/owl/large/hooter)
 	*/
 	return
@@ -1722,14 +1723,6 @@
 			continue
 		if (M.stat > 1 && !(M in heard_a) && !istype(M, /mob/dead/target_observer) && !(M?.client?.preferences?.local_deadchat))
 			M.show_message(rendered, 2)
-
-	//mbc FUCK why doesn't this have any parent to call
-	speech_bubble.icon_state = "speech"
-	UpdateOverlays(speech_bubble, "speech_bubble")
-	var/speech_bubble_time = src.last_typing
-	SPAWN_DBG(1.5 SECONDS)
-		if(speech_bubble_time == src.last_typing)
-			UpdateOverlays(null, "speech_bubble")
 
 /mob/living/carbon/human/var/const
 	slot_back = 1
@@ -2215,88 +2208,124 @@
 	switch (slot)
 		if (slot_l_store, slot_r_store)
 			if (I.w_class <= W_CLASS_SMALL && src.w_uniform)
-				return 1
-		if (slot_l_hand, slot_r_hand)
-			return 1
+				return TRUE
+		if (slot_l_hand)
+			if (src.limbs.l_arm)
+				if (!istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm) && !istype(src.limbs.l_arm, /obj/item/parts/robot_parts/arm))
+					return FALSE
+				if (istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item))
+					return FALSE
+				if (I.two_handed)
+					if (src.limbs.r_arm)
+						if(src.r_hand)
+							return FALSE
+					else
+						return FALSE
+				return TRUE
+		if (slot_r_hand)
+			if (src.limbs.r_arm)
+				if (!istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm) && !istype(src.limbs.r_arm, /obj/item/parts/robot_parts/arm))
+					return FALSE
+				if (istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item))
+					return FALSE
+				if (I.two_handed)
+					if (src.limbs.l_arm)
+						if(src.l_hand)
+							return FALSE
+					else
+						return FALSE
+				return TRUE
 		if (slot_belt)
 			if ((I.flags & ONBELT) && src.w_uniform)
-				return 1
+				return TRUE
 		if (slot_wear_id)
 			if (istype(I, /obj/item/card/id) && src.w_uniform)
-				return 1
+				return TRUE
 			if (istype(I, /obj/item/device/pda2) && src.w_uniform) // removed the check for the ID card in here because tbh it was silly that you could only equip it to the ID slot when it had a card  :I
-				return 1
+				return TRUE
 		if (slot_back)
 			if (I.flags & ONBACK)
-				return 1
+				return TRUE
 		if (slot_wear_mask) // It's not pretty, but the mutantrace check will do for the time being (Convair880).
+			if (!src.organHolder.head)
+				return FALSE
 			if (istype(I, /obj/item/clothing/mask))
 				var/obj/item/clothing/M = I
 				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !M.compatible_species.Find(src.mutantrace.name)))
 					//DEBUG_MESSAGE("[src] can't wear [I].")
-					return 0
+					return FALSE
 				else
-					return 1
+					return TRUE
 		if (slot_ears)
+			if (!src.organHolder.head)
+				return FALSE
 			if (istype(I, /obj/item/clothing/ears) || istype(I,/obj/item/device/radio/headset))
-				return 1
+				return TRUE
 		if (slot_glasses)
+			if (!src.organHolder.head)
+				return FALSE
 			if (istype(I, /obj/item/clothing/glasses))
-				return 1
+				return TRUE
 		if (slot_gloves)
+			if ((!src.limbs.l_arm) && (!src.limbs.r_arm))
+				return FALSE
 			if (istype(I, /obj/item/clothing/gloves))
-				return 1
+				return TRUE
 		if (slot_head)
+			if (!src.organHolder.head)
+				return FALSE
 			if (istype(I, /obj/item/clothing/head))
 				var/obj/item/clothing/H = I
 				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !(src.mutantrace.name in H.compatible_species)))
 					//DEBUG_MESSAGE("[src] can't wear [I].")
-					return 0
+					return FALSE
 				else
-					return 1
+					return TRUE
 		if (slot_shoes)
+			if ((!src.limbs.l_leg) && (!src.limbs.r_leg))
+				return FALSE
 			if (istype(I, /obj/item/clothing/shoes))
 				var/obj/item/clothing/SH = I
 				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !(src.mutantrace.name in SH.compatible_species)))
 					//DEBUG_MESSAGE("[src] can't wear [I].")
-					return 0
+					return FALSE
 				else
-					return 1
+					return TRUE
 		if (slot_wear_suit)
 			if (istype(I, /obj/item/clothing/suit))
 				var/obj/item/clothing/SU = I
 				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !(src.mutantrace.name in SU.compatible_species)))
 					//DEBUG_MESSAGE("[src] can't wear [I].")
-					return 0
+					return FALSE
 				else
-					return 1
+					return TRUE
 		if (slot_w_uniform)
 			if (istype(I, /obj/item/clothing/under))
 				var/obj/item/clothing/U = I
 				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !(src.mutantrace.name in U.compatible_species)))
 					//DEBUG_MESSAGE("[src] can't wear [I].")
-					return 0
+					return FALSE
 				else
-					return 1
+					return TRUE
 		if (slot_in_backpack) // this slot is stupid
 			if (src.back && istype(src.back, /obj/item/storage))
 				var/obj/item/storage/S = src.back
 				if (S.contents.len < 7 && I.w_class <= W_CLASS_NORMAL)
-					return 1
+					return TRUE
 		if (slot_in_belt) // this slot is also stupid
 			if (src.belt && istype(src.belt, /obj/item/storage))
 				var/obj/item/storage/S = src.belt
 				if (S.contents.len < 7 && I.w_class <= W_CLASS_NORMAL)
-					return 1
-	return 0
+					return TRUE
+	return FALSE
 
 /mob/living/carbon/human/proc/equip_new_if_possible(path, slot)
 	var/obj/item/I = new path(src)
 	src.equip_if_possible(I, slot)
 	if(slot != slot_in_backpack && slot != slot_in_belt && src.get_slot(slot) != I)
 		qdel(I)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /mob/living/carbon/human/proc/equip_if_possible(obj/item/I, slot)
 	if (can_equip(I, slot))
@@ -2352,7 +2381,7 @@
 
 		var/loc = usr.loc
 
-		SPAWN_DBG(5 SECONDS)
+		SPAWN(5 SECONDS)
 			if (usr.loc != loc || H.loc != loc)
 				boutput(usr, "<span class='alert'>Your consumption of [H] was interrupted!</span>")
 				return
@@ -2361,7 +2390,7 @@
 
 			if (prob(10) && !H.mutantrace)
 				usr.reagents.add_reagent("prions", 10)
-				SPAWN_DBG(rand(20,50)) boutput(usr, "<span class='alert'>You don't feel so good.</span>")
+				SPAWN(rand(20,50)) boutput(usr, "<span class='alert'>You don't feel so good.</span>")
 
 			H.TakeDamageAccountArmor("chest", rand(30,50), 0, 0, DAMAGE_STAB)
 			if (!isdead(H) && prob(50))
@@ -2588,7 +2617,7 @@
 				return
 			if (iswerewolf(src))
 				if (src.handcuffs.werewolf_cant_rip())
-					boutput(src, __red("You can't seem to rip apart these silver handcuffs. They burn!"))
+					boutput(src, "<span class='alert'>You can't seem to rip apart these silver handcuffs. They burn!</span>")
 					src.TakeDamage("l_arm", 0, 2, 0, DAMAGE_BURN)
 					src.TakeDamage("r_arm", 0, 2, 0, DAMAGE_BURN)
 					return
@@ -2639,12 +2668,12 @@
 	game_stats.Increment("violence")
 #endif
 
-	src.death(1)
+	src.death(TRUE)
 	var/atom/movable/overlay/gibs/animation = null
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 	if (ishuman(src))
 		animation = new(src.loc)
@@ -2654,7 +2683,7 @@
 		flick("spidergib", animation)
 		src.visible_message("<span class='alert'><font size=4><B>A swarm of spiders erupts from [src]'s mouth and devours them! OH GOD!</B></font></span>", "<span class='alert'><font size=4><B>A swarm of spiders erupts from your mouth! OH GOD!</B></font></span>", "<span class='alert'>You hear a vile chittering sound.</span>")
 		playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 100, 1)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			make_cleanable(/obj/decal/cleanable/vomit/spiders,src.loc)
 			for (var/i in 1 to 4)
 				new /obj/critter/spider/baby(src.loc)
@@ -2665,7 +2694,7 @@
 	if (animation)
 		animation.delaydispose()
 
-	SPAWN_DBG(1.5 SECONDS)
+	SPAWN(1.5 SECONDS)
 		qdel(src)
 
 /mob/living/carbon/human/get_equipped_items()
@@ -2807,43 +2836,17 @@
 	if (!src.bioHolder || !src.bioHolder.mobAppearance)
 		return null
 	var/obj/item/clothing/head/wig/W = new(src)
-	var/actuallyHasHair = 0
 	W.name = "[real_name]'s hair"
 	W.real_name = "[real_name]'s hair" // The clothing parent setting real_name is probably good for other stuff so I'll just do this
 	W.icon = 'icons/mob/human_hair.dmi'
 	W.icon_state = "bald" // Let's give the actual hair a chance to shine
-/* commenting this out and making it an overlay to fix issues with colors stacking
-	W.icon = 'icons/mob/human_hair.dmi'
-	W.icon_state = H.bioHolder.mobAppearance.customization_first.id
-	W.color = src.bioHolder.mobAppearance.customization_first_color
-	W.wear_image_icon = 'icons/mob/human_hair.dmi'
-	W.wear_image = image(W.wear_image_icon, W.icon_state)
-	W.wear_image.color = src.bioHolder.mobAppearance.customization_first_color*/
 
-	if (!istype(src.bioHolder.mobAppearance.customization_first,/datum/customization_style/none))
-		var/image/h_image = image('icons/mob/human_hair.dmi', src.bioHolder.mobAppearance.customization_first.id)
-		h_image.color = src.bioHolder.mobAppearance.customization_first_color
-		W.overlays += h_image
-		W.wear_image.overlays += h_image
-		actuallyHasHair = 1
+	var/hair_list = list()
+	hair_list[src.bioHolder.mobAppearance.customization_first.id] = src.bioHolder.mobAppearance.customization_first_color
+	hair_list[src.bioHolder.mobAppearance.customization_second.id] = src.bioHolder.mobAppearance.customization_second_color
+	hair_list[src.bioHolder.mobAppearance.customization_third.id] = src.bioHolder.mobAppearance.customization_third_color
 
-	if (!istype(src.bioHolder.mobAppearance.customization_second,/datum/customization_style/none))
-		var/image/f_image = image('icons/mob/human_hair.dmi', src.bioHolder.mobAppearance.customization_second.id)
-		f_image.color = src.bioHolder.mobAppearance.customization_second_color
-		W.overlays += f_image
-		W.wear_image.overlays += f_image
-		actuallyHasHair = 1
-
-
-	if (!istype(src.bioHolder.mobAppearance.customization_third,/datum/customization_style/none))
-		var/image/d_image = image('icons/mob/human_hair.dmi', src.bioHolder.mobAppearance.customization_third.id)
-		d_image.color = src.bioHolder.mobAppearance.customization_third_color
-		W.overlays += d_image
-		W.wear_image.overlays += d_image
-		actuallyHasHair = 1
-
-	if(!actuallyHasHair) // Guess they didnt have any, ah well
-		W.icon_state = "short"
+	W.setup_wig(hair_list)
 
 	return W
 
@@ -2896,13 +2899,13 @@
 			return
 
 	if (mutantrace?.override_attack)
-		mutantrace.custom_attack(target)
-	else
-		var/obj/item/parts/arm = null
-		if (limbs) //Wire: fix for null.r_arm and null.l_arm
-			arm = hand ? limbs.l_arm : limbs.r_arm // I'm so sorry I couldent kill all this shitcode at once
-		if (arm)
-			arm.limb_data.attack_hand(target, src, can_reach(src, target), params, location, control)
+		if(mutantrace.custom_attack(target))
+			return
+	var/obj/item/parts/arm = null
+	if (limbs) //Wire: fix for null.r_arm and null.l_arm
+		arm = hand ? limbs.l_arm : limbs.r_arm // I'm so sorry I couldent kill all this shitcode at once
+	if (arm)
+		arm.limb_data.attack_hand(target, src, can_reach(src, target), params, location, control)
 
 /mob/living/carbon/human/hand_range_attack(atom/target, params, location, control, origParams)
 	//This looks bad but it really isn't anymore. <3
@@ -2940,7 +2943,7 @@
 /mob/living/carbon/human/attack_hand(mob/M)
 	if(ishuman(M) && M == src && M.a_intent == "harm")
 		var/mob/living/carbon/human/H = M
-		if(HAS_MOB_PROPERTY(H, PROP_NO_SELF_HARM))
+		if(HAS_ATOM_PROPERTY(H, PROP_MOB_NO_SELF_HARM))
 			boutput(H, "You can't bring yourself to attack yourself!")
 			return
 	..()
@@ -2953,7 +2956,7 @@
 		return
 	if(ishuman(M) && M == src && (W.force > 0))
 		var/mob/living/carbon/human/H = M
-		if(HAS_MOB_PROPERTY(H, PROP_NO_SELF_HARM))
+		if(HAS_ATOM_PROPERTY(H, PROP_MOB_NO_SELF_HARM))
 			boutput(H, "You can't bring yourself to attack yourself!")
 			return
 	..()
@@ -2968,6 +2971,10 @@
 			. = 1
 		else if (langname in mutantrace.understood_languages)
 			. = 1
+		else if (istype(src.wear_mask, /obj/item/clothing/mask/monkey_translator))
+			var/obj/item/clothing/mask/monkey_translator/translator = src.wear_mask
+			if (langname == translator.new_language)
+				. = 1
 		else
 			. = 0
 	else
@@ -3080,7 +3087,7 @@
 	if (!src.hud) // uh?
 		return src.show_text("<b>Somehow you have no HUD! Please alert a coder!</b>", "red")
 
-	var/selection = input(usr, "What style HUD style would you like?", "Selection") as null|anything in hud_style_selection
+	var/selection = tgui_input_list(usr, "What style HUD style would you like?", "Selection", hud_style_selection)
 	if (!selection)
 		return
 
@@ -3117,8 +3124,8 @@
 	// If attacker is targeting the chest and a chest item exists, activate it.
 	if (M && M.zone_sel && M.zone_sel.selecting == "chest" && src.chest_item != null && (src.chest_item in src.contents))
 		logTheThing("combat", M, src, "activates [src.chest_item] embedded in [src]'s chest cavity at [log_loc(src)]")
-		SPAWN_DBG(0) //might sleep/input/etc, and we don't want to hold anything up
-			src.chest_item.attack_self(src)
+		SPAWN(0) //might sleep/input/etc, and we don't want to hold anything up
+			src.chest_item.AttackSelf(src)
 	return
 
 /mob/living/carbon/human/proc/chest_item_dump_reagents_on_flip()
@@ -3189,10 +3196,17 @@
 		// Make copy of item on ground
 		var/obj/item/outChestItem = src.chest_item
 		outChestItem.set_loc(get_turf(src))
-		src.chest_item.attack_self(src)
+		src.chest_item.AttackSelf(src)
 		src.chest_item = null
 		return
-	src.chest_item.attack_self(src)
+	src.chest_item.AttackSelf(src)
+
+///Clear chest item if it escapes/gets disposed
+/mob/living/carbon/human/Exited(atom/movable/thing)
+	..()
+	if (thing == chest_item)
+		chest_item = null
+		chest_item_sewn = 0
 
 /mob/living/carbon/human/attackby(obj/item/W, mob/M)
 	if (src.parry_or_dodge(M))
@@ -3242,6 +3256,9 @@
 
 	if (head)
 		worn += head.name
+
+	else if (mutantrace?.self_click_fluff)
+		worn += mutantrace.self_click_fluff
 	else
 		worn += "hair"
 

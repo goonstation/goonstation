@@ -51,7 +51,7 @@
 				livesparks[sparks] = direction << 4 | distance
 			else
 				// Kill the spark in 20 ticks
-				SPAWN_DBG(2 SECONDS)//ugly fuckin spawn todo fix
+				SPAWN(2 SECONDS)//ugly fuckin spawn todo fix
 					if (sparks && !sparks.disposed)
 						livesparks -= sparks
 						qdel(sparks)
@@ -61,7 +61,7 @@
 /datum/effects/system/spark_spread/proc/start()
 	if(istype(holder, /atom/movable))
 		location = get_turf(holder)
-	SPAWN_DBG(0)
+	SPAWN(0)
 		if(istype(src.location, /turf))
 			src.location.hotspot_expose(1000, 100)
 		// Create sparks

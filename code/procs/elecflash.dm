@@ -94,7 +94,7 @@ var/global/mutable_appearance/elecflash_ma = null
 
 	playsound(center_turf, sound, 50, 1)
 
-	SPAWN_DBG(3 SECONDS)
+	SPAWN(3 SECONDS)
 		for(var/atom in elecs)
 			var/atom/A = atom
 			qdel(A)
@@ -107,6 +107,8 @@ var/global/mutable_appearance/elecflash_ma = null
 /atom/proc/electric_expose(var/power = 1)
 
 /mob/living/electric_expose(var/power = 1)
+	if (check_target_immunity(src))
+		return
 	if (power > 1) // pretty light damage and stam damage :)
 		if (src.bioHolder.HasEffect("resist_electric"))
 			boutput(src, "<span class='notice'>You feel electricity spark across you harmlessly!</span>")

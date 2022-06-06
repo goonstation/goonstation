@@ -61,6 +61,10 @@
 		return 1
 	return 0
 
+///An optional message to indicate who won the round
+/datum/game_mode/proc/victory_msg()
+	return ""
+
 // Did some streamlining here (Convair880).
 /datum/game_mode/proc/declare_completion()
 	var/list/datum/mind/antags = list()
@@ -88,6 +92,8 @@
 			else if (traitor.special_role == ROLE_VAMPTHRALL)
 				stuff_to_output += "<B>[traitor_name]</B> was a vampire's thrall!"
 				continue // Ditto.
+			else if (traitor.special_role == ROLE_FLOCKTRACE)
+				continue // Flocktraces are listed under their respective flockmind
 			else
 				if (traitor.late_special_role)
 					stuff_to_output += "<B>[traitor_name]</B> was a late-joining [traitor.special_role]!"
@@ -98,12 +104,18 @@
 
 				if (traitor.special_role == ROLE_CHANGELING && traitor.current)
 					var/dna_absorbed = 0
+					var/absorbed_identities = null
 					var/datum/abilityHolder/changeling/C = traitor.current.get_ability_holder(/datum/abilityHolder/changeling)
 					if (C && istype(C))
+						absorbed_identities = list()
 						dna_absorbed = max(0, C.absorbtions)
+						for (var/DNA in C.absorbed_dna)
+							absorbed_identities += DNA
 					else
 						dna_absorbed = "N/A (body destroyed)"
+
 					stuff_to_output += "<B>Absorbed DNA:</b> [dna_absorbed]"
+					stuff_to_output += "<B>Absorbed Identities: [isnull(absorbed_identities) ? "N/A (body destroyed)" : english_list(absorbed_identities)]"
 
 				if (traitor.special_role == ROLE_VAMPIRE && traitor.current)
 					var/blood_acquired = 0
@@ -118,6 +130,17 @@
 					for (var/datum/objective/specialist/werewolf/feed/O in traitor.objectives)
 						if (O && istype(O, /datum/objective/specialist/werewolf/feed/))
 							stuff_to_output += "<B>No. of victims:</b> [O.mobs_fed_on.len]"
+
+				if (traitor.special_role == ROLE_SLASHER)
+					var/foundmachete = FALSE
+					for_by_tcl(M, /obj/item/slasher_machete)
+						if(M.slasher_key == traitor.current.ckey)
+							foundmachete = TRUE
+							var/outputval = round((M.force - 15) / 2.5)
+							stuff_to_output += "<B>Souls Stolen:</b> [outputval]"
+							break
+					if(!foundmachete)
+						stuff_to_output += "<B>Souls Stolen:</b> They did not finish with a machete!"
 
 				if (traitor.special_role == ROLE_HUNTER)
 					// Same reasoning here, really.
@@ -168,6 +191,16 @@
 						rewarded_detail = copytext(rewarded_detail, 1, -2)
 						stuff_to_output += stolen_detail
 						stuff_to_output += rewarded_detail
+
+				if (traitor.special_role == ROLE_FLOCKMIND)
+					for (var/flockname in flocks)
+						var/datum/flock/flock = flocks[flockname]
+						if (flock.flockmind_mind == traitor && length(flock.trace_minds))
+							stuff_to_output += "Flocktraces:"
+							for (var/trace_name in flock.trace_minds)
+								var/datum/mind/trace_mind = flock.trace_minds[trace_name]
+								//the first character in this string is an invisible brail character, because otherwise DM eats my indentation
+								stuff_to_output += "<b>⠀   [trace_name] (played by [trace_mind.displayed_key])<b>"
 
 				for (var/datum/objective/objective in traitor.objectives)
 	#ifdef CREW_OBJECTIVES
@@ -279,6 +312,115 @@
 	else
 		return candidates
 
+/// Set up an antag with default equipment, objectives etc as they would be in mixed
+/datum/game_mode/proc/equip_antag(var/datum/mind/antag)
+	var/objective_set_path = null
+
+	if (antag.assigned_role == "Chaplain" && antag.special_role == ROLE_VAMPIRE)
+		// vamp will burn in the chapel before he can react
+		if (prob(50))
+			antag.special_role = ROLE_TRAITOR
+		else
+			antag.special_role = ROLE_CHANGELING
+
+	switch (antag.special_role)
+		if (ROLE_TRAITOR)
+		#ifdef RP_MODE
+			objective_set_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
+		#else
+			objective_set_path = pick(typesof(/datum/objective_set/traitor))
+		#endif
+			equip_traitor(antag.current)
+
+		if (ROLE_CHANGELING)
+			objective_set_path = /datum/objective_set/changeling
+			antag.current.make_changeling()
+
+		if (ROLE_WIZARD)
+			objective_set_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
+			antag.current.unequip_all(1)
+
+			if (!job_start_locations["wizard"])
+				boutput(antag.current, "<B><span class='alert'>A starting location for you could not be found, please report this bug!</span></B>")
+			else
+				antag.current.set_loc(pick(job_start_locations["wizard"]))
+
+			equip_wizard(antag.current)
+
+			var/randomname
+			if (antag.current.gender == "female")
+				randomname = pick_string_autokey("names/wizard_female.txt")
+			else
+				randomname = pick_string_autokey("names/wizard_male.txt")
+
+			SPAWN(0)
+				var/newname = input(antag.current,"You are a Wizard. Would you like to change your name to something else?", "Name change",randomname)
+				if(newname && newname != randomname)
+					phrase_log.log_phrase("name-wizard", randomname, no_duplicates=TRUE)
+				if (length(ckey(newname)) == 0)
+					newname = randomname
+
+				if (newname)
+					if (length(newname) >= 26) newname = copytext(newname, 1, 26)
+					newname = strip_html(newname)
+					antag.current.real_name = newname
+					antag.current.UpdateName()
+
+		if (ROLE_WRAITH)
+			generate_wraith_objectives(antag)
+
+		if (ROLE_VAMPIRE)
+			objective_set_path = /datum/objective_set/vampire
+			antag.current.make_vampire()
+
+		if (ROLE_HUNTER)
+			objective_set_path = /datum/objective_set/hunter
+			antag.current.show_text("<h2><font color=red><B>You are a hunter!</B></font></h2>", "red")
+			antag.current.make_hunter()
+
+		if (ROLE_GRINCH)
+			objective_set_path = /datum/objective_set/grinch
+			boutput(antag.current, "<h2><font color=red><B>You are a grinch!</B></font></h2>")
+			antag.current.make_grinch()
+
+		if (ROLE_BLOB)
+			objective_set_path = /datum/objective_set/blob
+			SPAWN(0)
+				var/newname = input(antag.current, "You are a Blob. Please choose a name for yourself, it will show in the form: <name> the Blob", "Name change") as text
+
+				if (newname)
+					phrase_log.log_phrase("name-blob", newname, no_duplicates=TRUE)
+					if (length(newname) >= 26) newname = copytext(newname, 1, 26)
+					newname = strip_html(newname) + " the Blob"
+					antag.current.real_name = newname
+					antag.current.name = newname
+
+		if (ROLE_SPY_THIEF)
+			objective_set_path = /datum/objective_set/spy_theft
+			SPAWN(1 SECOND) //dumb delay to avoid race condition where spy assignment bugs
+				equip_spy_theft(antag.current)
+
+			if (!src.spy_market)
+				src.spy_market = new /datum/game_mode/spy_theft
+				sleep(5 SECONDS) //Some possible bounty items (like organs) need some time to get set up properly and be assigned names
+				src.spy_market.build_bounty_list()
+				src.spy_market.update_bounty_readouts()
+
+		if (ROLE_WEREWOLF)
+			objective_set_path = /datum/objective_set/werewolf
+			antag.current.make_werewolf()
+
+		if (ROLE_ARCFIEND)
+			objective_set_path = /datum/objective_set/arcfiend
+			antag.current.make_arcfiend()
+
+	if (!isnull(objective_set_path)) // Cannot create objects of type null. [wraiths use a special proc]
+		new objective_set_path(antag)
+	var/obj_count = 1
+	for (var/datum/objective/objective in antag.objectives)
+		boutput(antag.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
+		obj_count++
+
 /datum/game_mode/proc/check_win()
 
 /datum/game_mode/proc/send_intercept()
@@ -294,10 +436,7 @@
 	if (!istype(traitor) || !ispath(objective_path))
 		return null
 
-	var/datum/objective/O = new objective_path
-	O.owner = traitor
-	O.set_up()
-	traitor.objectives += O
+	var/datum/objective/O = new objective_path(null, traitor)
 
 	return O
 
@@ -321,9 +460,6 @@
 		if(4)
 			objective_path = /datum/objective/escape/hijack
 
-	var/datum/objective/O = new objective_path
-	O.owner = traitor
-	O.set_up()
-	traitor.objectives += O
+	var/datum/objective/O = new objective_path(null, traitor)
 
 	return O
