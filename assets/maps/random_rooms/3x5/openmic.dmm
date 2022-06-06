@@ -1,0 +1,23 @@
+"a" = (/obj/storage/crate,/obj/item/reagent_containers/food/snacks/plant/tomato,/obj/item/reagent_containers/food/snacks/plant/tomato,/obj/item/reagent_containers/food/snacks/plant/tomato,/obj/item/reagent_containers/food/snacks/plant/tomato,/obj/item/reagent_containers/food/snacks/plant/tomato,/obj/item/reagent_containers/food/snacks/plant/tomato,/obj/item/kitchen/food_box/egg_box,/turf/simulated/floor/damaged2,/area/space)
+"d" = (/obj/decal/cleanable/rust/jen,/obj/stool/chair{dir = 1},/turf/simulated/floor/grime,/area/space)
+"n" = (/obj/decal/cleanable/dirt/jen,/obj/machinery/light/incandescent/warm{dir = 1},/turf/simulated/floor/wood/two,/area/space)
+"o" = (/obj/stool/chair{dir = 1},/turf/simulated/floor/grime,/area/space)
+"p" = (/obj/decal/cleanable/cobweb2,/turf/simulated/floor/wood/two,/area/space)
+"q" = (/obj/decal/cleanable/rust/jen,/obj/stool/chair{dir = 1},/turf/simulated/floor/black/grime,/area/space)
+"v" = (/obj/railing,/obj/decal/cleanable/paper,/obj/decal/cleanable/paper{dir = 8},/obj/decal/cleanable/dirt/jen,/turf/simulated/floor/wood/two,/area/space)
+"x" = (/obj/decal/cleanable/dirt/dirt2,/turf/simulated/floor/stairs/dark,/area/space)
+"y" = (/obj/stool/chair{dir = 1},/turf/simulated/floor/black/grime,/area/space)
+"C" = (/obj/decal/stage_edge,/turf/simulated/floor/black/grime,/area/space)
+"E" = (/obj/decal/stage_edge,/obj/decal/stage_edge,/obj/decal/cleanable/eggsplat,/obj/decal/cleanable/dirt/jen,/turf/simulated/floor/grime,/area/space)
+"G" = (/obj/decal/cleanable/tomatosplat,/obj/decal/cleanable/dirt/jen,/turf/simulated/floor/wood/two,/area/space)
+"J" = (/obj/railing,/obj/railing{dir = 8},/obj/mic_stand{dir = 4; pixel_y = 6},/obj/decal/cleanable/tomatosplat,/obj/decal/cleanable/dirt/jen,/turf/simulated/floor/wood/two,/area/space)
+"M" = (/obj/decal/cleanable/rust/jen,/obj/stool/chair{dir = 1},/obj/machinery/light/incandescent/warm,/turf/simulated/floor/black/grime,/area/space)
+"T" = (/obj/decal/cleanable/dirt/dirt3,/turf/simulated/floor/grime,/area/space)
+
+(1,1,1) = {"
+Gnp
+xJv
+TCE
+qoy
+dMa
+"}
