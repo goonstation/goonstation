@@ -345,7 +345,6 @@
 	HH.icon_state = "converter"
 	HH.limb_name = HH.name
 	HH.can_hold_items = FALSE
-	HH.intent_override = TRUE
 
 	HH = hands[3]
 	HH.limb = new /datum/limb/gun/flock_stunner

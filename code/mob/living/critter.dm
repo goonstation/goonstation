@@ -605,7 +605,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 						if (HH.can_attack)
 							L.harm(target, src)
 					if (INTENT_GRAB)
-						if ((HH.can_hold_items && can_grab) || HH.intent_override)
+						if (HH.can_hold_items && can_grab)
 							L.grab(target, src)
 			else
 				L.attack_hand(target, src)
