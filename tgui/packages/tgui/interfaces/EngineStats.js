@@ -85,7 +85,7 @@ const generateChartsFromStats = stats => {
  * @param {number} value
  * @returns A string containing the number in exponential format or the original input w/ thousand seperators
  */
-const formatExponentialMil = value => `${value >= 1000000 ? value.toExponential(2) : value.toLocaleString()}`;
+const formatExponentialMil = value => `${value >= 1000000 ? value.toExponential(3) : value.toLocaleString()}`;
 
 export const ReactorStats = (props, context) => {
   const { act, data } = useBackend(context);
