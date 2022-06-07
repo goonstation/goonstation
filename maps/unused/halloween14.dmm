@@ -39500,7 +39500,7 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/refinery)
 "bBd" = (
-/obj/machinery/smelter,
+/obj/machinery/neosmelter,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
