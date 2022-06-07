@@ -15,6 +15,7 @@ datum/controller/microbe
 
 	//var/list/microbe_trees = new/list()				//stores info on a single microbe across different infected players
 
+	var/list/path_to_evil = list()
 	var/list/path_to_effect = list()
 	var/list/path_to_suppressant = list()
 
@@ -336,15 +337,22 @@ datum/controller/microbe
 			src.cdc_creator += key
 		src.cdc_creator[key] = P		//The key belonging to [this user] made [the microbe] with [this uid].
 */
+	//Run on startup
 	New()
 		..()
 
+		//Set a separate list for bad effects
+		for (var/E in concrete_typesof(/datum/microbioeffects/malevolent))
+			path_to_evil[E] = new E()
+
+		//Discover all effects
 		for (var/E in concrete_typesof(/datum/microbioeffects))
 			path_to_effect[E] = new E()
 
 		//Define all paths to suppressants
 		for (var/T in childrentypesof(/datum/suppressant))
 			path_to_suppressant[T] = new T()
+
 
 var/global/datum/controller/microbe/microbe_controller = new()	//Callable everywhere.
 
@@ -398,7 +406,7 @@ datum/microbe
 		ticked = 0
 		probability = 0
 
-	proc/do_prefab(tier)							// for ailments with defined symptoms
+	proc/do_prefab()							// for ailments with defined symptoms
 		clear()
 		generate_name()
 		generate_cure(src)
@@ -408,25 +416,47 @@ datum/microbe
 		..()
 		setup(0, null)
 
+	//generate_name
+	//Called on setup(1) for randomized generation and setup(2) for predefined ailments
+	//Sets a new microbe's UID, PUID, and name
+	//UID: Unique ID. Identical across different infected mobs with the same strain.
+	//PUID: Player-Unique ID. Starts at 0 for every created microbe.
 	proc/generate_name()
 		src.microbio_uid = "[microbe_controller.next_uid]"
 		microbe_controller.next_uid++
-		src.microbio_playerid = "[microbe_controller.next_puid]"
-		microbe_controller.next_puid++
+		src.microbio_playerid = 0
 		src.name = "Custom Culture UID [src.microbio_uid]"
 		return
 
+
+	//generate_effects
+	//Called only on setup(1) for random effects
+	//Sets effects.
+	//random: Currently uses a rand() to determine the for loop iterations.
+	//The for loop uses the add_new_symptom function, which uses pick() to choose an effect and returns 1 if successful.
 	proc/generate_effects() //WIP
 		var/random = rand(2,5)
 		for (var/i = 0, i <= random, i++)
-			add_new_symptom(microbe_controller.path_to_effect)
+			var/check = 0
+			do
+				check = add_new_symptom(microbe_controller.path_to_effect, 0)
+			while (!check)
 
-
+	//generate_cure
+	//Called on setup 1 and 2 for random and prefab strains.
+	//Uses pick() and sets the suppressant path on the microbe datum.
 	proc/generate_cure(var/datum/microbe/P) //WIP
 		var/S = pick(microbe_controller.path_to_suppressant)
 		P.suppressant = microbe_controller.path_to_suppressant[S]
 
-
+	//generate_attributes
+	//Called on setup 1 and 2.
+	//MUST BE CALLED AFTER GENERATE_CURE.
+	//Sets the description, durations, initial probability, and infection count.
+	//durationtotal and duration are values of lifeticks.
+	//for 2*rand(60,120), microbes have a lifespan of 4 to 8 minutes.
+	//Probability must start at 0.
+	//Infection count is explained below.
 	proc/generate_attributes() //WIP
 		var/shape = pick("stringy", "snake", "blob", "spherical", "tetrahedral", "star shaped", "tesselated")
 		src.desc = "[suppressant.color] [shape] microbes" //color determined by average of cure reagent and assigned-effect colors
@@ -472,6 +502,14 @@ datum/microbe
 		logTheThing("pathology", null, null, "Microbe culture [name] created by randomization.")
 		return
 
+	//setup
+	//Inputs:
+		//Status: effectively a switch case value.
+		//0 + no ref. microbe -> early return. Only used by the New() in initialization.
+		//0 + ref. microbe -> create a clone of the microbe with reset duration counters.
+		//1 -> make a random strain.
+		//2 -> prefab a strain. Effects are manually added using add_symptom after the function call.
+		//microbe/origin: used only for status = 0.
 	proc/setup(status, var/datum/microbe/origin)
 		if (status == 0 && !origin)
 			return
@@ -492,7 +530,7 @@ datum/microbe
 		else if (status == 1)
 			randomize()
 		else if (!origin && status == 2)
-			src.do_prefab(1)
+			src.do_prefab()
 		processing_items.Add(src)
 
 	proc/process()
@@ -528,7 +566,7 @@ datum/microbe
 		else
 			P.duration--							//  Wrap into process
 
-//Generalize for objects and turfs WIP
+//Generalize for objects and turfs [WIP]
 
 	proc/turf_act(var/datum/microbe/P)
 		for (var/datum/effect in src.effects)
@@ -657,16 +695,21 @@ datum/microbe
 		suppressant.oncured(src)
 		return
 
-	proc/add_new_symptom(var/list/allowed, var/allow_duplicates = 0)
+	proc/add_new_symptom(var/list/allowed, var/allow_evil)
 		var/T = pick(allowed)
 		var/datum/microbioeffects/E = microbe_controller.path_to_effect[T]
-		if (add_symptom(E, allow_duplicates))
+		if (add_symptom(E, allow_evil))
 			return 1
 		else
 			return 0
 
-	proc/add_symptom(var/datum/microbioeffects/E, var/allow_duplicates = 0)
-		if (allow_duplicates || !(E in effects))
+	proc/add_symptom(var/datum/microbioeffects/E, var/allow_evil)
+		if (istype(E,/datum/microbioeffects/malevolent) && allow_evil && !(E in effects))
+			effects += E
+			E.onadd(src)
+			logTheThing("pathology", null, null, "Malevolent effect added to [src.name].")
+			return 1
+		else if ((!istype(E,/datum/microbioeffects/malevolent)) && !(E in effects))
 			/*for (var/mutex in E.mutex)
 				for (var/T in typesof(mutex))
 					if (!(T in mutex))
@@ -689,6 +732,9 @@ datum/microbe
 				src.effects -= E
 				rebuild_mutex()
 				*/
+
+//Mutex: Mutual exclusivity
+
 /*
 	proc/rebuild_mutex()
 		src.mutex = list()
@@ -697,9 +743,4 @@ datum/microbe
 				for (var/T in typesof(mutex))
 					if (!(T in mutex))
 						mutex += T
-
-	proc/getHighestTier()
-		. = 0
-		for(var/datum/pathogeneffects/E in src.effects)
-			. = max(., E.rarity)
 */

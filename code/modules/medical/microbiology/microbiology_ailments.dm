@@ -1,6 +1,6 @@
 /proc/generate_cold_pathogen()
 	var/datum/microbe/P = new /datum/microbe
-	P.setup(2, null, 0)
+	P.setup(2, null)
 	P.add_symptom(microbe_controller.path_to_effect[/datum/microbioeffects/malevolent/coughing])
 	P.add_symptom(microbe_controller.path_to_effect[/datum/microbioeffects/malevolent/indigestion])
 	return P

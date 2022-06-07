@@ -295,6 +295,31 @@ ABSTRACT_TYPE(/datum/suppressant)
 			return "The pathogens near the [R] appear to move at a faster pace."
 		else return null
 
+/datum/suppressant/spaceacillin
+	color = "red"
+	name = "Spaceacillin"
+	desc = "The pathogen is suppressed by spaceacillin."
+	therapy = "spaceacillin"
+
+	cure_synthesis = "spaceacillin"
+
+	suppress_act(var/datum/microbe/P)
+		for (var/R in cure_synthesis)
+			if (!(P.infected.reagents.has_reagent(R, REAGENT_CURE_THRESHOLD)))
+				continue
+			if (prob(5))
+				P.infected.show_message("<span class='notice'>You feel better.</span>")
+			return 1
+		return 0
+
+	may_react_to()
+		return "Membrane patterns of the pathogen indicate it might be <b style='font-size:20px;color:red'>suppressed</b> by spaceacillin."
+
+	react_to(var/R)
+		if (R in cure_synthesis)
+			return "The pathogens near the [R] appear to move at a slower pace."
+		else return null
+/*
 /datum/suppressant/chickensoup
 	color = "pink"
 	name = "Chicken Soup"
@@ -318,7 +343,8 @@ ABSTRACT_TYPE(/datum/suppressant)
 	react_to(var/datum/reagent/R)
 		if (R == "chickensoup")
 			return "The pathogens near the chicken soup appear to be having a great meal and are ignorant of their surroundings."
-
+*/
+/*
 /datum/suppressant/fat
 	color = "orange"
 	name = "Fat"
@@ -343,7 +369,7 @@ ABSTRACT_TYPE(/datum/suppressant)
 		if (R in cure_synthesis)
 			return "The pathogens near the fatty substance appear to be significantly heavier and slower than their unaffected counterparts."
 		else return null
-
+*/
 
 // Below are old Pathology suppressants. I hesitate to use these because they strictly rely on harmful cure substances.
 /*
