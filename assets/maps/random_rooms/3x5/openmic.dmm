@@ -8,13 +8,11 @@
 /obj/item/reagent_containers/food/snacks/plant/tomato,
 /obj/item/reagent_containers/food/snacks/plant/tomato,
 /obj/item/kitchen/food_box/egg_box,
+/obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/airless/damaged2,
 /area/dmm_suite/clear_area)
 "c" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/machinery/light/incandescent/warm{
-	dir = 1
-	},
 /turf/simulated/floor/wood/two,
 /area/dmm_suite/clear_area)
 "k" = (
@@ -88,17 +86,12 @@
 	},
 /turf/simulated/floor/grime,
 /area/dmm_suite/clear_area)
-"T" = (
-/obj/decal/cleanable/rust/jen,
-/obj/stool/chair{
-	dir = 1
-	},
-/obj/machinery/light/incandescent/warm,
-/turf/simulated/floor/black/grime,
-/area/dmm_suite/clear_area)
 "Y" = (
 /obj/decal/cleanable/tomatosplat,
 /obj/decal/cleanable/dirt/jen,
+/obj/machinery/light/incandescent/warm{
+	dir = 1
+	},
 /turf/simulated/floor/wood/two,
 /area/dmm_suite/clear_area)
 
@@ -114,7 +107,7 @@ c
 q
 k
 P
-T
+p
 "}
 (3,1,1) = {"
 x
