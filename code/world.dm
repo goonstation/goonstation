@@ -547,6 +547,7 @@ var/f_color_selector_handler/F_Color_Selector
 	UPDATE_TITLE_STATUS("Building random station rooms")
 	Z_LOG_DEBUG("World/Init", "Setting up random rooms...")
 	buildRandomRooms()
+	makepowernets()
 
 	UPDATE_TITLE_STATUS("Generating terrain")
 	Z_LOG_DEBUG("World/Init", "Setting perlin noise terrain...")

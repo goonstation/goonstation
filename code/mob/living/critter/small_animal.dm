@@ -1240,6 +1240,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if (src.name != initial(src.name))
 				src.real_name = src.name
 
+/mob/living/critter/small_animal/bird/crow/strong
+	health_brute = 30
+	health_burn = 30
+
 /* -------------------- Goose -------------------- */
 
 /mob/living/critter/small_animal/bird/goose

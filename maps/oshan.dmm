@@ -18478,7 +18478,6 @@
 /area/station/mining/staff_room)
 "aSR" = (
 /obj/storage/crate/bin,
-/obj/item/radio_tape/advertisement/dans_tickets,
 /obj/item/radio_tape/advertisement/grones{
 	pixel_x = 6;
 	pixel_y = 4
@@ -18510,10 +18509,6 @@
 	pixel_y = 6
 	},
 /obj/item/gnomechompski,
-/obj/item/radio_tape/advertisement/pope_crunch{
-	pixel_x = 8;
-	pixel_y = -2
-	},
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/crew_quarters/radio/lab)
 "aSS" = (

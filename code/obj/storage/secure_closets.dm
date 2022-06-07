@@ -197,7 +197,7 @@
 	/obj/item/clothing/suit/armor/capcoat,
 	/obj/item/clothing/shoes/brown,
 	/obj/item/clothing/suit/armor/vest,
-	/obj/item/clothing/head/helmet/swat,
+	/obj/item/clothing/head/helmet/captain,
 	/obj/item/clothing/glasses/sunglasses,
 	/obj/item/stamp/cap,
 	/obj/item/device/radio/headset/command/captain)

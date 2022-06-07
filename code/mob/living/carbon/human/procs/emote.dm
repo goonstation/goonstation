@@ -175,7 +175,7 @@
 
 						if (!fart_on_other)
 							switch(rand(1, 42))
-								if (1) message = "<B>[src]</B> lets out a girly little 'toot' from [his_or_her(src)] butt."
+								if (1) message = "<B>[src]</B> lets out a little 'toot' from [his_or_her(src)] butt."
 								if (2) message = "<B>[src]</B> farts loudly!"
 								if (3) message = "<B>[src]</B> lets one rip!"
 								if (4) message = "<B>[src]</B> farts! It sounds wet and smells like rotten eggs."
@@ -846,7 +846,7 @@
 					if (act == "gasp")
 						if (src.health <= 0)
 							var/dying_gasp_sfx = "sound/voice/gasps/[src.gender]_gasp_[pick(1,5)].ogg"
-							playsound(src, dying_gasp_sfx, 100, 0, 0, src.get_age_pitch())
+							playsound(src, dying_gasp_sfx, 40, 0, 0, src.get_age_pitch())
 						else
 							playsound(src, src.sound_gasp, 15, 0, 0, src.get_age_pitch())
 
