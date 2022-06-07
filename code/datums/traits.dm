@@ -958,6 +958,18 @@ ABSTRACT_TYPE(/obj/trait/job)
 		..()
 		OTHER_STOP_TRACKING_CAT(owner, TR_CAT_NERVOUS_MOBS)
 
+/obj/trait/plasmatoidTest
+	name = "Plasmatoid (+2)"
+	cleanName = "Plasmatoid"
+	desc = "You can only inhale plasma! Better figure this out..."
+	id = "plasmatoid"
+	points = 2
+
+	onLife(var/mob/owner, var/mult)
+		if(isliving(owner))
+			var/mob/living/L = owner
+			L.contract_disease(/datum/ailment/disease/plasmatoid, null, null, 1, 4)
+
 /obj/trait/burning
 	name = "Human Torch (+2)"
 	cleanName = "Human Torch"

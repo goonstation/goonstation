@@ -640,6 +640,8 @@
 			trinket = new/obj/item/reagent_containers/food/snacks/ingredient/egg/bee(src)
 	else if (src.traitHolder && src.traitHolder.hasTrait("smoker"))
 		trinket = new/obj/item/device/light/zippo(src)
+	else if (src.traitHolder && src.traitHolder.hasTrait("plasmatoid"))
+		trinket = new/obj/item/tank/emergency_plasma(src)
 	else if (src.traitHolder && src.traitHolder.hasTrait("lunchbox"))
 		var/random_lunchbox_path = pick(childrentypesof(/obj/item/storage/lunchbox))
 		trinket = new random_lunchbox_path(src)

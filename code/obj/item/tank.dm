@@ -444,6 +444,31 @@ Contains:
 
 ////////////////////////////////////////////////////////////
 
+/obj/item/tank/emergency_plasma
+	name = "emergency toxintank"
+	icon_state = "em_plsma"
+	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
+	health = 5
+	w_class = W_CLASS_SMALL
+	force = 3.0
+	stamina_damage = 30
+	stamina_cost = 16
+	desc = "A small tank that is labelled to contain plasma. In emergencies, wear a mask that can be used to transfer plasma. These are only issued for those with plasmatoidism so don't loose it!"
+	wear_image_icon = 'icons/mob/clothing/belt.dmi'
+	distribute_pressure = 17 // setting these things to start at the minimum pressure needed to breathe - Haine
+
+	New()
+		..()
+		src.air_contents.volume = 6 // Change to 3 once atmos is fixed
+							//this will give them more time to look for a souce of plasma
+		src.air_contents.toxins = (ONE_ATMOSPHERE / 4.5)*100/(R_IDEAL_GAS_EQUATION*T20C) // cogwerks: drastically reduced capacity of emerg tanks
+		return
+
+/obj/item/tank/emergency_plasma/abilities = list(/obj/ability_button/tank_valve_toggle)
+
+////////////////////////////////////////////////////////////
+
+
 /obj/item/tank/air
 	name = "Gas Tank (Air Mix)"
 	icon_state = "airmix"
