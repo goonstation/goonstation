@@ -854,7 +854,7 @@
 		if(HAS_ATOM_PROPERTY(target,PROP_ATOM_FLOCK_THING))
 			if(!isflockdeconimmune(target))
 				actions.start(new /datum/action/bar/flock_decon(target), user)
-			return
+				return
 
 	// CONVERT TURF
 	if(!isturf(target) && (!HAS_ATOM_PROPERTY(target,PROP_ATOM_FLOCK_THING) || istype(target, /obj/lattice/flock)) && !istype(target, /obj/structure/girder))
@@ -890,14 +890,15 @@
 			else
 				actions.start(new/datum/action/bar/flock_convert(target), user)
 
+	//depositing
+	if (istype(target, /obj/flock_structure/ghost))
+		if (user.resources <= 0)
+			boutput(user, "<span class='alert'>No resources available for construction.</span>")
+		else
+			actions.start(new /datum/action/bar/flock_deposit(target), user)
+		return
 //help intent actions
 	if(user.a_intent == INTENT_HELP)
-		if (istype(target, /obj/flock_structure/ghost))
-			if (user.resources <= 0)
-				boutput(user, "<span class='alert'>No resources available for construction.</span>")
-			else
-				actions.start(new /datum/action/bar/flock_deposit(target), user)
-			return
 		if (!HAS_ATOM_PROPERTY(target, PROP_ATOM_FLOCK_THING) && !istype(target, /turf/simulated/floor/feather))
 			return
 		var/found_target = FALSE
