@@ -33933,7 +33933,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/space,
+/turf/simulated/floor/plating,
 /area/station/security/checkpoint/podbay)
 "bAj" = (
 /obj/machinery/light{
