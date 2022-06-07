@@ -69,14 +69,14 @@
 		if(istype(W, /obj/item/reagent_containers/glass/jar) && length(W.contents))
 			boutput(user, "<span class='alert'>You need to empty [W] first!</span>")
 			return
+		if(W.reagents.total_volume) // Ask if they really want to lose the contents of the beaker
+			if (tgui_alert(user,"The [W] has reagents in it, are you sure you want to recycle it?","Recycler alert!",list("Yes","No")) != "Yes")
+				return 0 //they said no, do nothing
 
 
 
 		var/success = FALSE //did we successfully recycle a thing?
 		if(istype(W, /obj/item/reagent_containers/glass))
-			if(W.reagents.total_volume) // Ask if they really want to lose the contents of the beaker
-				if (tgui_alert(user,"The [W] has reagents in it, are you sure you want to recycle it?","Recycler alert!",list("Yes","No")) != "Yes")
-					return 0 //they said no, do nothing
 
 			if (istype(W, /obj/item/reagent_containers/glass/beaker))
 				success = TRUE
