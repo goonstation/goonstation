@@ -1713,7 +1713,7 @@ var/list/fun_images = list()
 	if (mapSwitcher.next)
 		info += "\nNext round's map will be: [mapSwitcher.next]"
 
-	var/map = input(info, "Switch Map", mapSwitcher.next ? mapSwitcher.next : mapSwitcher.current, mapNames)
+	var/map = input(info, "Switch Map", mapSwitcher.next ? mapSwitcher.next : mapSwitcher.current) as null|anything in mapNames
 	if (!map) return
 
 	if (map == mapSwitcher.current && !mapSwitcher.next)

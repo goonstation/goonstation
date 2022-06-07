@@ -993,7 +993,7 @@
 	if(istype(target, /mob/living/critter/flock/drone))
 		var/mob/living/critter/flock/drone/f = target
 		if(isdead(f))
-			actions.start(new/datum/action/bar/icon/butcher_living_critter(f), user)
+			actions.start(new/datum/action/bar/icon/butcher_living_critter(f,f.butcher_time), user)
 		else
 			boutput(user, "<span class='alert'>You can't butcher a living flockdrone!</span>")
 	else
