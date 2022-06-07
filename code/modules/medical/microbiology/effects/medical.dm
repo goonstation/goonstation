@@ -16,7 +16,7 @@ ABSTRACT_TYPE(/datum/microbioeffects/benevolent)
 	may_react_to()
 		return "The pathogen appears to have the ability to bond with organic tissue."
 */
-
+/*
 /datum/microbioeffects/benevolent/mending
 	name = "Wound Mending"
 	desc = "Slow paced brute damage healing."
@@ -136,7 +136,7 @@ datum/microbioeffects/benevolent/oxygenstorage
 
 	may_react_to()
 		return "The pathogen appears to have a bubble of oxygen around it."
-
+*/
 datum/microbioeffects/benevolent/resurrection
 	name = "Necrotic Resurrection"
 	desc = "The pathogen will resurrect you if it procs while you are dead."

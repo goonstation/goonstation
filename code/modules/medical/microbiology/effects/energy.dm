@@ -3,7 +3,7 @@ ABSTRACT_TYPE(/datum/microbioeffects/energy)
 /datum/microbioeffects/energy
 	name = "Energy Effects"
 
-//datum/microbioeffects/toolcharger
+//datum/microbioeffects/energy/toolcharger
 	//On object:
 		//Check if its an energy object (e-guns, tasers, batong, miner tools, antique gun, etc.)
 		//If so...
@@ -12,132 +12,18 @@ ABSTRACT_TYPE(/datum/microbioeffects/energy)
 //I'm moving the gas producing effect here: I want to add these as machines like gas drills on other codebases
 //for engineering to have a unique way to replenish gas canisters!
 
-/*
-/datum/microbioeffects/tells/farts
-	name = "Farts"
-	desc = "The infected individual occasionally farts."
 
-	var/cooldown = 200 // we just use the name of the symptom to keep track of different fart effects, so their cooldowns do not interfere
-	var/doInfect = 1 // smoke farts were just too good
+//datum/microbioeffects/energy/smesupgrade
 
-	proc/fart(var/mob/M, var/datum/pathogen/origin, var/voluntary)
-		if(doInfect)
-			src.infect_cloud(M, origin, origin.spread/5)
-		if(voluntary)
-			origin.effectdata[name] = TIME
+//datum/microbioeffects/energy/rechargerupgrade
 
-	onemote(mob/M as mob, act, voluntary, param, datum/pathogen/P)
-		// involuntary farts are free, but the others use the cooldown
-		if(voluntary && TIME-P.effectdata[name] < cooldown)
-			return
-		if(act == "fart")
-			fart(M, P, voluntary)
+//datum/microbioeffects/energy/taserrechargerupgrade
 
-	mob_act(var/mob/M, var/datum/pathogen/origin)
-		if (origin.in_remission)
-			return
-		if (prob(origin.stage))
-			M.emote("fart")
+//datum/microbioeffects/energy/defibupgrade
 
-	may_react_to()
-		return "The pathogen appears to produce a large volume of gas."
+//datum/microbioeffects/energy/apcupgrade
 
-*/
-/*
-/datum/microbioeffects/material/smokegas
-	name = "Smoke Farts"
-	desc = "The infected individual occasionally farts reagent smoke."
-	cooldown = 600
-	doInfect = 0 // the whole point is to not instantly infect a huge area, that's what got us into this mess >.>
-
-	fart(var/mob/M, var/datum/microbe/origin, var/voluntary)
-		if (M.reagents.total_volume)
-			smoke_reaction(M.reagents, 1, get_turf(M))
-			..()			// only trigger if we actually have chems, else no infection or cooldown
-
-	may_react_to()
-		return "The pathogen appears to produce a large volume of gas."
-
-	react_to(var/R, var/zoom)
-		var/datum/reagents/H = new /datum/reagents(5)
-		H.add_reagent(R, 5)
-		var/datum/reagent/RE = H.get_reagent(R)
-		return "The [RE.name] violently explodes into a puff of smoke when coming into contact with the pathogen."
-
-/datum/pathogeneffects/material/plasmagas
-	name = "Plasma Generator"
-	desc = "The germ appears to generate gaseous plasma."
-	cooldown = 600
-
-	mob_act(var/mob/M, var/datum/microbe/origin)
-		var/turf/T = get_turf(M)
-		var/datum/gas_mixture/gas = new /datum/gas_mixture
-		gas.zero()
-		gas.toxins = 3			//origin.stage * (voluntary ? 0.6 : 3) // only a fifth for voluntary farts
-		gas.temperature = T20C
-		gas.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
-		if (T)
-			T.assume_air(gas)
-
-	react_to(var/R, var/zoom)
-		if (R == "infernite" || R == "phlogiston")
-			return "The gas lights up in a puff of flame."
-
-datum/microbioeffects/material/co2gas
-	name = "CO2 Farts"
-	desc = "The infected individual occasionally farts. Carbon dioxide."
-	cooldown = 600
-
-	fart(var/mob/M, var/datum/microbe/origin, var/voluntary)
-		..()
-		var/turf/T = get_turf(M)
-		var/datum/gas_mixture/gas = new /datum/gas_mixture
-		gas.zero()
-		gas.carbon_dioxide = origin.stage * (voluntary ? 1.4 : 7) // only a fifth for voluntary farts
-		gas.temperature = T20C
-		gas.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
-		if (T)
-			T.assume_air(gas)
-
-	mob_act(var/mob/M, var/datum/pathogen/origin)
-		if (origin.in_remission)
-			return
-		..()
-		if (origin.stage > 2 && prob(origin.stage * 3))
-			M.take_toxin_damage(1)
-			M.take_oxygen_deprivation(4)
-
-	react_to(var/R, var/zoom)
-		if (R == "infernite" || R == "phlogiston")
-			return "The flame of the hot reagents is snuffed by the gas."
-
-
-datum/microbioeffects/malevolent/o2
-	name = "O2 Farts"
-	desc = "The infected individual occasionally farts. Pure oxygen."
-	cooldown = 50
-	// ahahahah this is so stupid
-	// i have no idea what these numbers mean but i hope it's funny
-
-	fart(var/mob/M, var/datum/pathogen/origin, var/voluntary)
-		..()
-		var/turf/T = get_turf(M)
-		var/datum/gas_mixture/gas = new /datum/gas_mixture
-		gas.zero()
-		gas.oxygen = origin.stage * (voluntary ? 20 : 2) // ten times as much for voluntary farts
-		gas.temperature = T20C
-		gas.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
-		if (T)
-			T.assume_air(gas)
-
-	react_to(var/R, var/zoom)
-		if (R == "infernite" || R == "phlogiston")
-			return "The flame of the hot reagents is oxidized by the gas."
-*/
-
-
-
-
+//datum/microbioeffects/energy/borgchargerupgrade
 
 //The capacitor effects must be reevaluated now that arcfiends exist.
 
