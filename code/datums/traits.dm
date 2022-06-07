@@ -958,7 +958,7 @@ ABSTRACT_TYPE(/obj/trait/job)
 		..()
 		OTHER_STOP_TRACKING_CAT(owner, TR_CAT_NERVOUS_MOBS)
 
-/obj/trait/plasmatoidTest
+/obj/trait/plasmatoid
 	name = "Plasmatoid (+2)"
 	cleanName = "Plasmatoid"
 	desc = "You can only inhale plasma! Better figure this out..."
