@@ -104,7 +104,7 @@
 	src.flock.removeDrone(src)
 	src.flock = null
 
-/mob/living/critter/flock/projCanHit(var/datum/projectile/P)
+/mob/living/critter/flock/projCanHit(datum/projectile/P)
 	if(istype(P, /datum/projectile/energy_bolt/flockdrone))
 		return FALSE
 	return ..()
