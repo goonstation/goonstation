@@ -495,7 +495,7 @@ var/global/list/mapNames = list(
 	)
 
 /datum/map_settings/horizon/crash
-	name = "HORIZON (Crashed)"
+	name = "CRASH"
 	display_name = "The Fall of NSS Horizon"
 
 /datum/map_settings/manta
