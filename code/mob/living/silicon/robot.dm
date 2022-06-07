@@ -1839,8 +1839,9 @@
 		else
 			who = src
 			boutput(who, "<b>Obey these laws:</b>")
-
-		if(src.law_rack_connection)
+		if(src.dependent && src?.mainframe?.law_rack_connection)
+			src.mainframe.law_rack_connection.show_laws(who)
+		else if(src.law_rack_connection)
 			src.law_rack_connection.show_laws(who)
 		else
 			boutput(src,"You have no laws!")
