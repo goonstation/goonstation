@@ -21,7 +21,6 @@
 	var/brightness = 0.5
 	var/on = FALSE
 	var/connected = FALSE //used for collector
-	var/datum/flock_tile_group/group = null //the group its connected to
 
 
 /turf/simulated/floor/feather/New()

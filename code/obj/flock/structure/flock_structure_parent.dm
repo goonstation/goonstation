@@ -28,9 +28,6 @@ ABSTRACT_TYPE(/obj/flock_structure)
 	var/resourcecost = 50
 	/// can flockdrones pass through this akin to a grille? need to set USE_CANPASS to make this work however
 	var/passthrough = FALSE
-
-	/// what group are we connected to?
-	var/datum/flock_tile_group/group = null
 	/// the tile which its "connected to" and that handles the group
 	var/turf/simulated/floor/feather/grouptile = null
 
