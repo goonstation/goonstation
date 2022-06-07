@@ -494,6 +494,10 @@ var/global/list/mapNames = list(
 		/datum/job/special/atmospheric_technician = 1
 	)
 
+/datum/map_settings/horizon/crash
+	name = "HORIZON (Crashed)"
+	display_name = "The Fall of NSS Horizon"
+
 /datum/map_settings/manta
 	name = "MANTA"
 	display_name = "NSS Manta"
