@@ -1,8 +1,9 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /obj/surgery_tray,
-/obj/random_item_spawner/med_tool/few,
 /obj/decal/cleanable/dirt/dirt2,
+/obj/random_item_spawner/med_tool/two,
+/obj/item/reagent_containers/food/snacks/ingredient/meatpaste,
 /turf/simulated/floor,
 /area/dmm_suite/clear_area)
 "e" = (
@@ -20,7 +21,7 @@
 /obj/storage/crate/bloody,
 /obj/random_item_spawner/organs/bloody/one_to_three,
 /obj/item/clothing/suit/monkey,
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor,
 /area/dmm_suite/clear_area)
 "m" = (
 /obj/machinery/computer3/generic/med_data,
@@ -32,7 +33,7 @@
 "s" = (
 /obj/surgery_tray,
 /obj/random_item_spawner/med_kit,
-/obj/random_item_spawner/medicine/few,
+/obj/random_item_spawner/medicine,
 /turf/simulated/floor,
 /area/dmm_suite/clear_area)
 "u" = (
@@ -66,7 +67,6 @@
 /obj/machinery/optable,
 /obj/item/toy/plush/small/monkey,
 /obj/decal/cleanable/blood/gibs/body,
-/obj/fluid_spawner/polluted_filth/blood,
 /turf/simulated/floor/scorched2,
 /area/dmm_suite/clear_area)
 "W" = (
