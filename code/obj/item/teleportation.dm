@@ -136,7 +136,7 @@ Frequency:
 	New()
 		..()
 		START_TRACKING
-		AddComponent(/datum/component/cell_holder, new/obj/item/ammo/power_cell, TRUE, INFINITY, FALSE)
+		AddComponent(/datum/component/cell_holder, new/obj/item/ammo/power_cell, TRUE, 100, TRUE)
 
 	disposing()
 		STOP_TRACKING
