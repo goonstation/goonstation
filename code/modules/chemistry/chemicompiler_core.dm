@@ -113,6 +113,9 @@
 
 		if("abortCode")
 			running = 0
+			updatePanel()
+			statusChange(CC_STATUS_IDLE)
+			throwError(CC_ERROR_MANUAL_ABORT)
 
 		if("reportError")
 			var/errorMessage = href_list["message"]
@@ -618,6 +621,8 @@
 					return "Error: instruction limit reached."
 				if(CC_ERROR_INDEX_INVALID)
 					return "Error: invalid isolation index for source reservoir."
+				if(CC_ERROR_MANUAL_ABORT)
+					return "Error: aborted by user."
 				if(CC_NOTIFICATION_COMPLETE)
 					return "Notification: program complete."
 				if(CC_NOTIFICATION_SAVED)
@@ -682,6 +687,8 @@
 			beepCode(5, 1)
 		if(CC_ERROR_INSTRUCTION_LIMIT)
 			beepCode(2, 1)
+		if(CC_ERROR_MANUAL_ABORT)
+			beepCode(6, 1)
 		if(CC_NOTIFICATION_COMPLETE)
 			beepCode(1)
 		if(CC_NOTIFICATION_SAVED)
@@ -737,6 +744,7 @@
  *  3: No container loaded at source or target
  *  4: Invalid temperature value
  *  5: Code is protected, cannot load
+ * 	6: User aborted code
  * soft:
  *  1: done executing
  *  2: code saved
