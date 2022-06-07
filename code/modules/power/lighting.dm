@@ -339,7 +339,7 @@
 	light_type = /obj/item/light/bulb/emergency
 	allowed_type = /obj/item/light/bulb/emergency
 	on = 0
-	removable_bulb = 0
+	removable_bulb = 1
 
 	exitsign
 		name = "illuminated exit sign"
