@@ -2,22 +2,24 @@
 "a" = (
 /obj/surgery_tray,
 /obj/random_item_spawner/med_tool/few,
-/turf/simulated/floor/plating/random,
+/obj/decal/cleanable/dirt/dirt2,
+/turf/simulated/floor,
 /area/dmm_suite/clear_area)
 "e" = (
 /obj/machinery/drainage,
 /obj/item/parts/human_parts/arm/left,
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor/damaged2,
 /area/dmm_suite/clear_area)
 "i" = (
 /obj/decal/cleanable/blood/gibs/body,
 /obj/decal/cleanable/blood/splatter,
 /obj/item/parts/human_parts/leg/left,
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor,
 /area/dmm_suite/clear_area)
 "l" = (
 /obj/storage/crate/bloody,
 /obj/random_item_spawner/organs/bloody/one_to_three,
+/obj/item/clothing/suit/monkey,
 /turf/simulated/floor/plating/random,
 /area/dmm_suite/clear_area)
 "m" = (
@@ -25,50 +27,56 @@
 /obj/machinery/light/incandescent/harsh{
 	dir = 1
 	},
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor/damaged2,
 /area/dmm_suite/clear_area)
 "s" = (
 /obj/surgery_tray,
 /obj/random_item_spawner/med_kit,
 /obj/random_item_spawner/medicine/few,
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor,
 /area/dmm_suite/clear_area)
 "u" = (
 /obj/decal/cleanable/blood,
-/obj/machinery/light/incandescent/harsh,
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor,
 /area/dmm_suite/clear_area)
 "w" = (
 /obj/iv_stand,
 /obj/item/reagent_containers/iv_drip/blood,
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor,
 /area/dmm_suite/clear_area)
 "x" = (
-/turf/simulated/floor/plating/random,
+/obj/decal/cleanable/dirt/dirt3,
+/turf/simulated/floor,
 /area/dmm_suite/clear_area)
 "A" = (
 /obj/item/parts/human_parts/leg/right,
-/turf/simulated/floor/plating/random,
+/obj/decal/cleanable/dirt/dirt2,
+/obj/machinery/light/incandescent/harsh,
+/turf/simulated/floor,
 /area/dmm_suite/clear_area)
 "O" = (
 /obj/decal/cleanable/blood/tracks,
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor,
 /area/dmm_suite/clear_area)
 "Q" = (
 /obj/decal/cleanable/blood/drip/high,
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor,
 /area/dmm_suite/clear_area)
 "S" = (
 /obj/machinery/optable,
 /obj/item/toy/plush/small/monkey,
 /obj/decal/cleanable/blood/gibs/body,
 /obj/fluid_spawner/polluted_filth/blood,
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor/scorched2,
+/area/dmm_suite/clear_area)
+"W" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor,
 /area/dmm_suite/clear_area)
 "Y" = (
 /obj/machinery/drainage,
 /obj/item/parts/human_parts/arm/right,
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor,
 /area/dmm_suite/clear_area)
 
 (1,1,1) = {"
@@ -83,7 +91,7 @@ O
 w
 S
 i
-x
+W
 "}
 (3,1,1) = {"
 l
