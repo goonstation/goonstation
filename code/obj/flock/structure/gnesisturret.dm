@@ -26,7 +26,7 @@
 	var/powered = FALSE
 	// flockdrones can pass through this
 	passthrough = TRUE
-	usesgroups = TRUE
+
 	var/fluid_gen_cost = 30 //generating gnesis consumes compute
 	var/base_compute = 20
 	compute = 0
@@ -60,7 +60,7 @@
 	<br><span class='bold'>Gnesis Tank Level:</span> [src.reagents.total_volume]/[fluid_level_max]."}
 
 	process()
-		if(!src.group)//if it dont exist it off
+		if(!src.flock)//if it dont exist it off
 			powered = FALSE
 			src.compute = 0
 			src.icon_state = "teleblocker-off"
