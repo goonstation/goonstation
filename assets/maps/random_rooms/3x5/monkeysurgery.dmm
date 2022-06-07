@@ -8,13 +8,21 @@
 /area/dmm_suite/clear_area)
 "e" = (
 /obj/machinery/drainage,
-/obj/item/parts/human_parts/arm/left,
+/obj/item/parts/human_parts/arm/left{
+	pixel_y = -2;
+	pixel_x = -17
+	},
 /turf/simulated/floor/damaged2,
 /area/dmm_suite/clear_area)
 "i" = (
 /obj/decal/cleanable/blood/gibs/body,
 /obj/decal/cleanable/blood/splatter,
 /obj/item/parts/human_parts/leg/left,
+/obj/item/parts/human_parts/leg/right{
+	dir = 8;
+	pixel_y = 3;
+	pixel_x = -5
+	},
 /turf/simulated/floor,
 /area/dmm_suite/clear_area)
 "l" = (
@@ -32,8 +40,8 @@
 /area/dmm_suite/clear_area)
 "s" = (
 /obj/surgery_tray,
-/obj/random_item_spawner/med_kit,
-/obj/random_item_spawner/medicine,
+/obj/random_item_spawner/medicine/one,
+/obj/random_item_spawner/med_kit/one,
 /turf/simulated/floor,
 /area/dmm_suite/clear_area)
 "u" = (
@@ -50,7 +58,6 @@
 /turf/simulated/floor,
 /area/dmm_suite/clear_area)
 "A" = (
-/obj/item/parts/human_parts/leg/right,
 /obj/decal/cleanable/dirt/dirt2,
 /obj/machinery/light/incandescent/harsh,
 /turf/simulated/floor,
@@ -75,7 +82,10 @@
 /area/dmm_suite/clear_area)
 "Y" = (
 /obj/machinery/drainage,
-/obj/item/parts/human_parts/arm/right,
+/obj/item/parts/human_parts/arm/right{
+	pixel_y = -2;
+	pixel_x = 16
+	},
 /turf/simulated/floor,
 /area/dmm_suite/clear_area)
 
