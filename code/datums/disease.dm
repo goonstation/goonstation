@@ -333,7 +333,9 @@
 /// @param ailment_name Name of the ailment to add. This is not cosmetic; the ailment type is retrieved via this name.
 /// @param strain Instance of the ailment to add. Used to transfer an existing ailment to a person (such as in the case of a diseased organ transplant)
 /// @param bypass_resistance If disease resistance should be bypassed while adding a disease.
-/mob/living/proc/contract_disease(var/ailment_path, var/ailment_name, var/datum/ailment_data/disease/strain, bypass_resistance = FALSE)
+/// @param startingStage the stage to start the disease at :)
+
+/mob/living/proc/contract_disease(var/ailment_path, var/ailment_name, var/datum/ailment_data/disease/strain, bypass_resistance = FALSE, startingStage = 1)
 	if (!src)
 		return null
 	if (!ailment_path && !ailment_name && !(istype(strain,/datum/ailment_data/disease) || istype(strain,/datum/ailment_data/malady))) // maladies use strain to transfer specific instances of their selves via organ transplant/etc
@@ -398,8 +400,11 @@
 			AD.info = D.info
 			AD.resistance_prob = D.resistance_prob
 			AD.temperature_cure = D.temperature_cure
-
 		src.ailments += AD
+
+		if (startingStage != 1) 
+			AD.stage = startingStage
+
 		AD.master = A
 		AD.affected_mob = src
 		AD.on_infection()
@@ -438,6 +443,10 @@
 			AD.resistance_prob = M.resistance_prob
 			AD.temperature_cure = M.temperature_cure
 		src.ailments += AD
+
+		if (startingStage != 1) 
+			AD.stage = startingStage
+
 		AD.master = A
 		AD.affected_mob = src
 		AD.on_infection()
@@ -451,10 +460,12 @@
 		AD.reagentcure = A.reagentcure
 		AD.recureprob = A.recureprob
 		AD.master = A
-
 		AD.master = A
 		AD.affected_mob = src
 		src.ailments += AD
+
+		if (startingStage != 1) 
+			AD.stage = startingStage
 
 		return AD
 
@@ -465,8 +476,8 @@
 		AD.cure = A.cure
 		AD.reagentcure = A.reagentcure
 		AD.recureprob = A.recureprob
-		AD.master = A
 
+		AD.master = A
 		AD.master = A
 		AD.affected_mob = src
 		src.ailments += AD

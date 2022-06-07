@@ -957,7 +957,17 @@ ABSTRACT_TYPE(/obj/trait/job)
 	onRemove(var/mob/owner)
 		..()
 		OTHER_STOP_TRACKING_CAT(owner, TR_CAT_NERVOUS_MOBS)
-
+/obj/trait/plasmatoid
+	name = "Plasmatoid (+2)"
+	cleanName = "Plasmatoid"
+	desc = "You can only inhale plasma! Better figure this out..."
+	id = "plasmatoid"
+	id = "burning"
+	points = 2
+	onLife(/var/mob/owner)
+		var/mob/living/L = owner 
+		L.contract_disease(/datum/ailment/disease/plasmatoid, null, null, 4)
+		
 /obj/trait/burning
 	name = "Human Torch (+2)"
 	cleanName = "Human Torch"
