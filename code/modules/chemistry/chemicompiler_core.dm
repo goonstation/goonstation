@@ -111,6 +111,9 @@
 			if(islist(cbf[buttId]))
 				runCBF(cbf[buttId])
 
+		if("abortCode")
+			running = 0
+
 		if("reportError")
 			var/errorMessage = href_list["message"]
 			CRASH("Error reported from chemicompiler frontend: [errorMessage]")
@@ -534,9 +537,16 @@
 	sx.setAttribute("onfocus", "$(this).blur()")
 	tx.setAttribute("onfocus", "$(this).blur()")
 	ax.setAttribute("onfocus", "$(this).blur()")
+
+	var/datum/tag/button/butt_abort = new
+	butt_abort.setText("abort")
+	butt_abort.setId("butt-abort")
+	butt_abort.addClass("btn btn-danger abort-button")
+
 	row.addChildElement(sxLabel)
 	row.addChildElement(txLabel)
 	row.addChildElement(axLabel)
+	row.addChildElement(butt_abort)
 
 	var/datum/tag/cssinclude/bootstrap = new
 	bootstrap.setHref(resource("css/bootstrap.min.css"))
