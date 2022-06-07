@@ -20,7 +20,7 @@
 	/// Turret range in tiles
 	var/range = 4
 	/// The wattage of the arcflash
-	var/wattage = 7000
+	var/wattage = 6000
 	var/powered = FALSE
 
 
@@ -78,12 +78,12 @@
 						mobtohit = loopmob
 						break//found target
 				if(!mobtohit) return//if no target stop
-				arcFlash(src, mobtohit, wattage, 1.5)
+				arcFlash(src, mobtohit, wattage, 1.1)
 				hit += mobtohit
 				for(var/i in 1 to rand(5,6))//this facilitates chaining. legally distinct from the loop above
 					for(var/mob/nearbymob in range(2, mobtohit))//todo: optimize(?) this.
 						if(nearbymob != mobtohit && !isflockmob(nearbymob) && !(nearbymob in hit) && isturf(nearbymob.loc) && src.flock?.isEnemy(nearbymob) && isalive(loopmob) && !isintangible(loopmob))
-							arcFlash(mobtohit, nearbymob, wattage/1.5, 1.5)
+							arcFlash(mobtohit, nearbymob, wattage/1.5, 1.1)
 							hit += nearbymob
 							mobtohit = nearbymob
 				hit.len = 0//clean up
