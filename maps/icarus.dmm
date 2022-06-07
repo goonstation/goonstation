@@ -22208,7 +22208,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hor)
 "aVp" = (
-/obj/machinery/smelter,
+/obj/machinery/neosmelter,
 /turf/simulated/floor/airless/engine,
 /area/station/mining/refinery)
 "aVq" = (

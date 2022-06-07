@@ -1147,7 +1147,7 @@
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "add" = (
-/obj/machinery/smelter,
+/obj/machinery/neosmelter,
 /turf/simulated/floor/plating,
 /area/station/mining/refinery)
 "ade" = (

@@ -72,22 +72,6 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		M?.bodytemperature = 310
 		return
 
-/datum/materialProc/fail_explosive
-	var/lastTrigger = 0
-	var/trigger_chance = 100
-
-	New(var/chance = 100)
-		trigger_chance = chance
-		..()
-
-	execute(var/atom/location)
-		if(world.time - lastTrigger < 100) return
-		lastTrigger = world.time
-		var/turf/tloc = get_turf(location)
-		explosion(location, location, tloc, 1, 2, 3, 4, 1)
-		location.visible_message("<span class='alert'>[location] explodes!</span>")
-		return
-
 /datum/materialProc/radioactive_on_enter
 	desc = "It glows faintly."
 
