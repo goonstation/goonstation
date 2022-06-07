@@ -33,6 +33,7 @@
 			W.set_loc(src)
 			src.inlet_tank = W
 			src.UpdateIcon()
+			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 
 
 		// fuel tank
@@ -50,6 +51,7 @@
 			W.set_loc(src)
 			src.fuel_tank = W
 			src.UpdateIcon()
+			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 
 		else if (iswrenchingtool(W))
 			if (src.anchored)
@@ -75,20 +77,23 @@
 			return
 
 		var/amount = ((average_volatility * src.standard_power_output) * (available_oxygen * 5))
+		// debug
 		src.visible_message("<span class='notice'>[amount] WATTS</span>")
 
 		src.add_avail(amount WATTS)
 
-		if (src.inlet_tank)
-			src.inlet_tank.air_contents.remove(src.atmos_drain_rate)
-		else
-			var/turf/simulated/T = get_turf(src) // Not sure if I should null check this
-			T.air.remove(src.atmos_drain_rate)
-
+		var/turf/simulated/T = get_turf(src)
+		if (istype(T))
 			var/datum/gas_mixture/payload = new /datum/gas_mixture
 			payload.carbon_dioxide = 10
 			payload.temperature = T20C
 			T.assume_air(payload)
+
+		if (src.inlet_tank)
+			src.inlet_tank.air_contents.remove(src.atmos_drain_rate)
+		else
+			// Not sure if I should null check this
+			T.air.remove(src.atmos_drain_rate)
 
 		src.fuel_tank.reagents.remove_any(src.fuel_drain_rate)
 
@@ -133,23 +138,31 @@
 
 	proc/start_engine(var/mob/user as mob)
 		if (!src.ready_to_start())
-			boutput(user, "<span class='notice'>You can't seem to get the [src] to start.</span>")
+			if (user)
+				boutput(user, "<span class='notice'>You can't seem to get the [src] to start.</span>")
 			return
 
 		src.active = 1
 
-	proc/stop_engine()
+		if (user)
+			src.visible_message("<span class='notice'>[user] starts the [src].</span>")
+		playsound(src.loc, "sound/machines/tractorrev.ogg", 40, pitch=2)
+
+	proc/stop_engine(var/mob/user as mob)
 		src.active = 0
+
+		if (user)
+			src.visible_message("<span class='notice'>[user] stops the [src].</span>")
+		playsound(src.loc, "sound/machines/tractorrev.ogg", 40, pitch=2)
 
 	proc/ready_to_start()
 		if (!anchored || !src.fuel_tank)
 			return
 
-		if (!src.get_average_volatility(src.fuel_tank.reagents) && !src.check_available_oxygen())
+		if (!src.get_average_volatility(src.fuel_tank.reagents) || !src.check_available_oxygen())
 			return
 
 		return 1
-
 
 	// Returns the concentration of oxygen in the available gas_mixture
 	proc/check_available_oxygen()
@@ -205,6 +218,7 @@
 		if (istype(user))
 			user.put_in_hand_or_eject(src.fuel_tank)
 
+		playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 		src.fuel_tank = null
 		src.stop_engine()
 
@@ -216,8 +230,8 @@
 		if (istype(user))
 			user.put_in_hand_or_eject(src.inlet_tank)
 
+		playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 		src.inlet_tank = null
-		src.stop_engine()
 
 	// verbs, replace cause stinky
 	verb/start_stop()
@@ -227,14 +241,9 @@
 
 		if (!src.active)
 			src.start_engine(usr)
-			src.visible_message("<span class='notice'>[usr] starts the [src].</span>")
-			playsound(src.loc, "sound/machines/tractorrev.ogg", 40, pitch=2)
 			return
 
 		src.stop_engine()
-		src.visible_message("<span class='notice'>[usr] stops the [src].</span>")
-		playsound(src.loc, "sound/machines/tractorrev.ogg", 40, pitch=2)
-
 
 	verb/eject_fuel()
 		set name = "Eject Fuel Tank"
@@ -242,7 +251,6 @@
 		set category = "Local"
 
 		src.eject_fuel_tank(usr)
-		playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 
 	verb/eject_inlet()
 		set name = "Eject Oxygen Tank"
@@ -250,5 +258,5 @@
 		set category = "Local"
 
 		src.eject_inlet_tank(usr)
-		playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+
 
