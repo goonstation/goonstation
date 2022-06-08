@@ -135,8 +135,6 @@
 		del(owner)
 		return
 
-	/// Called when the material fails due to instability.
-	var/list/triggersFail = list()
 	/// Called when exposed to temperatures.
 	var/list/triggersTemp = list()
 	/// Called when exposed to chemicals.
@@ -167,11 +165,6 @@
 	var/list/triggersOnHit = list()
 
 
-	proc/triggerOnFail(var/atom/owner)
-		for(var/datum/materialProc/X in triggersFail)
-			call(X,  "execute")(owner)
-		fail()
-		return
 
 	proc/triggerOnEntered(var/atom/owner, var/atom/entering)
 		for(var/datum/materialProc/X in triggersOnEntered)
@@ -587,7 +580,6 @@
 		setProperty("radioactive", 75)
 		setProperty("stability", 10)
 
-		addTrigger(triggersFail, new /datum/materialProc/fail_explosive(100))
 		addTrigger(triggersOnAdd, new /datum/materialProc/erebite_flash())
 		addTrigger(triggersTemp, new /datum/materialProc/erebite_temp())
 		addTrigger(triggersExp, new /datum/materialProc/erebite_exp())

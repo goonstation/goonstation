@@ -32374,7 +32374,7 @@
 /turf/space,
 /area/space)
 "nOK" = (
-/obj/machinery/smelter,
+/obj/machinery/neosmelter,
 /obj/machinery/light/small/harsh{
 	dir = 8
 	},
@@ -41857,7 +41857,7 @@
 	name = "Ringularity Core"
 	})
 "rRq" = (
-/obj/machinery/smelter,
+/obj/machinery/neosmelter,
 /turf/simulated/floor/shuttlebay,
 /area/station/storage/warehouse)
 "rRs" = (

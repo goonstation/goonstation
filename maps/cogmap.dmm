@@ -20069,13 +20069,19 @@
 /area/station/hallway/primary/central)
 "baj" = (
 /obj/table/auto,
-/obj/item/hand_tele,
 /obj/decal/cleanable/cobweb,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
 	tag = ""
+	},
+/obj/machinery/recharger{
+	pixel_y = 5
+	},
+/obj/item/hand_tele{
+	pixel_x = 3;
+	pixel_y = 6
 	},
 /turf/simulated/floor/black,
 /area/station/teleporter)
@@ -22903,7 +22909,7 @@
 /area/space)
 "bgH" = (
 /obj/displaycase{
-	displayed = new /obj/item/captaingun
+	displayed = new/obj/item/captaingun
 	},
 /obj/window/reinforced{
 	dir = 2

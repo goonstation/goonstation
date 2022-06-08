@@ -363,7 +363,7 @@ obj/machinery/atmospherics/pipe
 						new_rupture = i + 1
 						break
 			if(new_rupture > src.ruptured)
-				ON_COOLDOWN(parent, "pipeline_rupture_protection", 8 SECONDS + rand(4 SECONDS, 20 SECONDS))
+				ON_COOLDOWN(parent, "pipeline_rupture_protection", 16 SECONDS + rand(4 SECONDS, 24 SECONDS))
 			ruptured = max(src.ruptured, new_rupture, 1)
 			src.desc = "A one meter section of ruptured pipe still looks salvageable through some careful welding."
 			UpdateIcon()
@@ -396,7 +396,7 @@ obj/machinery/atmospherics/pipe
 					boutput(user, "<span class='alert'>This needs more than just a welder. We need to make a new pipe!</span>")
 					return
 
-				if(!W:try_weld(user, 1, noisy=2))
+				if(!W:try_weld(user, 0.8, noisy=2))
 					return
 
 				boutput(user, "You start to repair the [src.name].")
@@ -462,7 +462,7 @@ obj/machinery/atmospherics/pipe
 			src.ruptured = 0
 			desc = initial(desc)
 			UpdateIcon()
-			ON_COOLDOWN(src, "rupture_protection", 20 SECONDS + rand(10 SECONDS, 100 SECONDS))
+			ON_COOLDOWN(src, "rupture_protection", 20 SECONDS + rand(10 SECONDS, 220 SECONDS))
 
 		proc/reconstruct_pipe(mob/M, obj/item/rods/R)
 			if(istype(R) && istype(M))

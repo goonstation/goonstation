@@ -1,4 +1,20 @@
 
+(t)wed jun 08 22
+(u)Taylor Kellogg
+(p)9032
+(e)|
+(+)Adds an abort button to the Chemicompiler
+(t)tue jun 07 22
+(u)tarmunora, catface
+(e)⚖|balance
+(+)Hand teles have a 100PU internal cell, and use 25PU per portal. Rechargers in tele rooms ~~coming soon™~~ added to maps
+(u)Azrun
+(e)⚖🔥|balance
+(+)Pipe repairs use slightly less fuel and should stay repaired a bit longer.
+(u)Waffleloffle
+(p)9006
+(e)⚖|balance
+(+)Upped the number of morphine autoinjectors in Security's morphine autoinjector box utility purchase from 4 to 6.
 (t)mon jun 06 22
 (u)NightmareChamillian
 (p)8991

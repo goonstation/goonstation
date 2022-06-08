@@ -11527,7 +11527,9 @@
 /area/station/hallway/secondary/east)
 "aFn" = (
 /obj/grille/steel,
-/obj/structure/woodwall,
+/obj/structure/woodwall{
+	gas_impermeable = 1
+	},
 /turf/simulated/floor/plating,
 /area/station/hydroponics/bay)
 "aFo" = (
@@ -17649,7 +17651,7 @@
 "aTX" = (
 /obj/table/wood/auto,
 /obj/displaycase{
-	displayed = new /obj/item/captaingun
+	displayed = new/obj/item/captaingun
 	},
 /turf/simulated/floor/carpet/blue/fancy/innercorner/south,
 /area/station/bridge/captain)
@@ -24290,7 +24292,13 @@
 /area/station/teleporter)
 "bjf" = (
 /obj/table/reinforced/auto,
-/obj/item/hand_tele,
+/obj/machinery/recharger{
+	pixel_y = 5
+	},
+/obj/item/hand_tele{
+	pixel_y = 3;
+	pixel_x = 4
+	},
 /turf/simulated/floor/darkblue/checker,
 /area/station/teleporter)
 "bjg" = (
@@ -59993,7 +60001,7 @@
 	dir = 10
 	},
 /obj/item/reagent_containers/food/snacks/hotdog{
-	initial_reagents = list("yuck" = 10, "nicotine" = 10);
+	initial_reagents = list("yuck"=10,"nicotine"=10);
 	name = "free hotdog"
 	},
 /obj/disposalpipe/segment/mineral{

@@ -9906,7 +9906,7 @@
 /area/station/crew_quarters/captain)
 "cEO" = (
 /obj/displaycase{
-	displayed = new /obj/item/captaingun
+	displayed = new/obj/item/captaingun
 	},
 /obj/machinery/light/incandescent/greenish{
 	dir = 1
@@ -55123,8 +55123,14 @@
 /area/ghostdrone_factory)
 "pQm" = (
 /obj/table/auto,
-/obj/item/hand_tele,
 /obj/machinery/light/small,
+/obj/machinery/recharger{
+	pixel_y = 5
+	},
+/obj/item/hand_tele{
+	pixel_x = -5;
+	pixel_y = 4
+	},
 /turf/simulated/floor/black,
 /area/station/teleporter)
 "pQt" = (
