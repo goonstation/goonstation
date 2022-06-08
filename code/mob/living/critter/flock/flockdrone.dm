@@ -539,7 +539,7 @@
 	if (!M) return
 	if (isflockmob(M)) return
 	if (!isdead(src) && src.flock)
-		if (!src.controller && prob(25) && (src in oviewers(M)))
+		if (src.is_npc && prob(25) && (src in oviewers(M)))
 			var/datum/handHolder/HH = hands[3]
 			var/datum/limb/gun/flock_stunner/gun = HH.limb
 			//dummy params since we're not a real player
