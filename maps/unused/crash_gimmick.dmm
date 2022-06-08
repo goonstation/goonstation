@@ -708,6 +708,16 @@
 	name = "steel floor"
 	},
 /area/station/hangar/arrivals)
+"aqT" = (
+/obj/landmark/start{
+	name = "Scientist"
+	},
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
+/area/shuttle/arrival/station)
 "aqY" = (
 /obj/lattice,
 /turf/space,
@@ -5172,6 +5182,16 @@
 	name = "steel floor"
 	},
 /area/station/mining/staff_room)
+"bed" = (
+/obj/landmark/start{
+	name = "Quartermaster"
+	},
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
+/area/shuttle/arrival/station)
 "bee" = (
 /obj/storage/secure/closet/engineering/mining,
 /obj/item/tank/jetpack,
@@ -7547,6 +7567,16 @@
 	},
 /turf/space,
 /area/space)
+"bjE" = (
+/obj/landmark/start{
+	name = "Cyborg"
+	},
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
+/area/shuttle/arrival/station)
 "bjV" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -13981,6 +14011,16 @@
 	icon_state = "norn-R-12"
 	},
 /area/space)
+"bEd" = (
+/obj/landmark/start{
+	name = "Clown"
+	},
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
+/area/shuttle/arrival/station)
 "bEr" = (
 /turf/simulated/wall/auto/reinforced/supernorn{
 	icon_state = "norn-R-14"
@@ -22308,12 +22348,9 @@
 	},
 /area/station/crew_quarters/hor)
 "clN" = (
-/obj/table/reinforced/auto,
-/obj/machinery/recharger,
-/turf/unsimulated/floor{
-	desc = "";
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor"
+/turf/simulated/shuttle/wall{
+	dir = 8;
+	icon_state = "wall_space"
 	},
 /area/shuttle/arrival/station)
 "cmH" = (
@@ -23172,100 +23209,12 @@
 	},
 /area/station/medical/medbay)
 "cpv" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 4
-	},
-/turf/unsimulated/floor{
-	desc = "";
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor"
-	},
-/area/shuttle/arrival/station)
-"cpw" = (
-/obj/table/reinforced/auto,
-/obj/item/mining_tool/power_pick,
-/obj/item/crowbar/red,
-/obj/item/crowbar/red,
-/obj/item/crowbar/red,
-/obj/item/crowbar/red,
-/obj/item/crowbar/red,
-/turf/unsimulated/floor{
-	desc = "";
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor"
-	},
-/area/shuttle/arrival/station)
-"cpx" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/storage/closet/emergency,
-/obj/item/clothing/head/emerg,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/head/emerg,
-/obj/item/clothing/head/emerg,
-/obj/item/clothing/head/emerg,
-/obj/item/clothing/head/emerg,
-/obj/item/clothing/head/emerg,
-/obj/item/clothing/head/emerg,
-/obj/item/clothing/head/emerg,
-/obj/item/clothing/head/emerg,
-/obj/item/clothing/head/emerg,
-/obj/item/clothing/head/emerg,
-/obj/item/clothing/head/emerg,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/air,
-/obj/item/tank/air,
-/obj/item/tank/air,
-/obj/item/tank/air,
-/obj/item/tank/air,
-/obj/item/tank/air,
-/obj/item/tank/air,
-/obj/item/device/light/flashlight,
-/obj/item/device/light/flashlight,
-/obj/item/device/light/flashlight,
-/obj/item/device/light/flashlight,
-/obj/item/device/light/flashlight,
-/turf/unsimulated/floor{
-	desc = "";
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor"
-	},
-/area/shuttle/arrival/station)
-"cpz" = (
-/obj/decal/tile_edge/stripe{
-	icon_state = "bot2";
-	tag = ""
-	},
-/turf/unsimulated/floor{
-	desc = "";
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor"
-	},
+/turf/simulated/shuttle/wall,
 /area/shuttle/arrival/station)
 "cpA" = (
-/obj/stool/chair/comfy/shuttle{
-	dir = 4
-	},
-/obj/landmark/start{
-	name = "Staff Assistant"
+/obj/cryotron,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
 	},
 /turf/unsimulated/floor{
 	desc = "";
@@ -24400,25 +24349,13 @@
 	},
 /area/station/chapel/sanctuary)
 "cth" = (
-/obj/machinery/shuttle/engine/propulsion{
-	dir = 8;
-	icon_state = "alt_propulsion"
+/turf/simulated/shuttle/wall/cockpit/window{
+	dir = 1;
+	icon_state = "wall_space";
+	name = "window"
 	},
-/turf/space,
 /area/shuttle/arrival/station)
 "cti" = (
-/obj/wingrille_spawn/auto,
-/obj/machinery/shuttle/engine/heater{
-	dir = 8;
-	icon_state = "alt_heater-L"
-	},
-/turf/unsimulated/floor{
-	desc = "";
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor"
-	},
-/area/shuttle/arrival/station)
-"ctl" = (
 /obj/machinery/light{
 	dir = 1
 	},
@@ -24430,8 +24367,8 @@
 	icon_state = "floor"
 	},
 /area/shuttle/arrival/station)
-"cto" = (
-/obj/machinery/door/airlock/pyro/external,
+"ctl" = (
+/obj/table/reinforced/auto,
 /turf/unsimulated/floor{
 	desc = "";
 	icon = 'icons/turf/shuttle.dmi';
@@ -24552,12 +24489,12 @@
 	},
 /area/built_zone)
 "cub" = (
-/obj/item/storage/box/cablesbox/yellow,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/machinery/power/furnace,
+/obj/item/storage/box/cablesbox/yellow,
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
 	name = "steel plating"
@@ -24567,6 +24504,11 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
 	name = "steel plating"
@@ -24575,6 +24517,11 @@
 "cud" = (
 /obj/cable{
 	icon_state = "1-8"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
@@ -25607,15 +25554,17 @@
 	},
 /area/station/maintenance/north)
 "cwJ" = (
-/turf/simulated/shuttle/wall/escape{
-	dir = 4;
-	icon_state = "walldir"
-	},
+/turf/simulated/shuttle/wall/escape,
 /area/shuttle/arrival/station)
 "cwK" = (
-/turf/simulated/shuttle/wall/escape{
-	dir = 8;
-	icon_state = "walldir"
+/obj/machinery/door/airlock/pyro/external{
+	icon_state = "airlock_locked";
+	locked = 1
+	},
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor2"
 	},
 /area/shuttle/arrival/station)
 "cwL" = (
@@ -43761,16 +43710,6 @@
 /obj/item/clothing/mask/cigarette/dryjoint,
 /turf/space,
 /area/space)
-"dGs" = (
-/turf/simulated/shuttle/wall,
-/area/shuttle/arrival/station)
-"dGD" = (
-/turf/simulated/shuttle/wall/cockpit/window{
-	dir = 1;
-	icon_state = "wall_space";
-	name = "window"
-	},
-/area/shuttle/arrival/station)
 "dGP" = (
 /obj/cable{
 	d2 = 2;
@@ -43783,32 +43722,33 @@
 	},
 /area/built_zone)
 "dHb" = (
-/obj/table/reinforced/auto,
-/turf/unsimulated/floor{
-	desc = "";
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor"
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/random{
+	desc = " It is made of steel.";
+	name = "steel plating"
+	},
+/area/built_zone)
+"dHr" = (
+/turf/simulated/shuttle/wall/escape{
+	dir = 4;
+	icon_state = "walldir"
 	},
 /area/shuttle/arrival/station)
-"dHr" = (
+"dHu" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/shuttle{
 	desc = " It is made of steel.";
 	name = "steel shuttle floor"
 	},
 /area/shuttle/arrival/station)
-"dHu" = (
-/turf/simulated/shuttle/wall/escape,
-/area/shuttle/arrival/station)
 "dHv" = (
-/obj/machinery/door/airlock/pyro/external{
-	icon_state = "airlock_locked";
-	locked = 1
-	},
+/obj/machinery/door/airlock/pyro/external,
 /turf/unsimulated/floor{
 	desc = "";
 	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor2"
+	icon_state = "floor"
 	},
 /area/shuttle/arrival/station)
 "dHx" = (
@@ -43824,31 +43764,27 @@
 	},
 /area/built_zone)
 "dHA" = (
-/obj/wingrille_spawn/auto,
-/obj/machinery/shuttle/engine/heater{
-	dir = 8;
-	icon_state = "alt_heater-M"
+/obj/cable{
+	icon_state = "4-8"
 	},
-/turf/unsimulated/floor{
-	desc = "";
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor"
+/turf/simulated/floor/plating/random{
+	desc = " It is made of steel.";
+	name = "steel plating"
 	},
-/area/shuttle/arrival/station)
+/area/space)
 "dHP" = (
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating/random{
+	desc = " It is made of steel.";
+	name = "steel plating"
+	},
+/area/space)
+"dIo" = (
 /obj/landmark/start{
 	name = "Head of Security"
-	},
-/turf/unsimulated/floor{
-	desc = "";
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor"
-	},
-/area/shuttle/arrival/station)
-"dIo" = (
-/obj/cryotron,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 8
 	},
 /turf/unsimulated/floor{
 	desc = "";
@@ -43867,9 +43803,13 @@
 	},
 /area/shuttle/arrival/station)
 "dIW" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/table/reinforced/auto,
+/obj/item/mining_tool/power_pick,
+/obj/item/crowbar/red,
+/obj/item/crowbar/red,
+/obj/item/crowbar/red,
+/obj/item/crowbar/red,
+/obj/item/crowbar/red,
 /turf/unsimulated/floor{
 	desc = "";
 	icon = 'icons/turf/shuttle.dmi';
@@ -43877,98 +43817,9 @@
 	},
 /area/shuttle/arrival/station)
 "dJc" = (
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/shuttle{
-	desc = " It is made of steel.";
-	icon_state = "floor2";
-	name = "steel shuttle floor"
+/obj/machinery/light{
+	dir = 1
 	},
-/area/shuttle/arrival/station)
-"dJO" = (
-/obj/decal/cleanable/dirt,
-/turf/unsimulated/floor{
-	desc = "";
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor2"
-	},
-/area/shuttle/arrival/station)
-"dJR" = (
-/obj/table/reinforced/auto,
-/obj/item/storage/toolbox/emergency,
-/obj/decal/cleanable/dirt,
-/turf/unsimulated/floor{
-	desc = "";
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor2"
-	},
-/area/shuttle/arrival/station)
-"dKr" = (
-/turf/space,
-/area/shuttle/arrival/station)
-"dKt" = (
-/obj/wingrille_spawn/auto,
-/obj/machinery/shuttle/engine/heater{
-	dir = 8;
-	icon_state = "alt_heater-R"
-	},
-/turf/unsimulated/floor{
-	desc = "";
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor"
-	},
-/area/shuttle/arrival/station)
-"dKK" = (
-/obj/landmark/start{
-	name = "Janitor"
-	},
-/turf/unsimulated/floor{
-	desc = "";
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor"
-	},
-/area/shuttle/arrival/station)
-"dKN" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 10
-	},
-/obj/landmark/start{
-	name = "Mechanic"
-	},
-/turf/unsimulated/floor{
-	desc = "";
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor"
-	},
-/area/shuttle/arrival/station)
-"dLb" = (
-/obj/decal/tile_edge/stripe{
-	dir = 4;
-	icon_state = "bot2";
-	tag = ""
-	},
-/obj/landmark/start{
-	name = "Medical Director"
-	},
-/turf/unsimulated/floor{
-	desc = "";
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor"
-	},
-/area/shuttle/arrival/station)
-"dLC" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 6
-	},
-/obj/landmark/start{
-	name = "Medical Doctor"
-	},
-/turf/unsimulated/floor{
-	desc = "";
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor"
-	},
-/area/shuttle/arrival/station)
-"dLY" = (
 /obj/storage/closet/emergency,
 /obj/item/clothing/head/emerg,
 /obj/item/clothing/suit/space/emerg,
@@ -44001,7 +43852,6 @@
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
-/obj/item/clothing/mask/breath,
 /obj/item/tank/air,
 /obj/item/tank/air,
 /obj/item/tank/air,
@@ -44009,7 +43859,6 @@
 /obj/item/tank/air,
 /obj/item/tank/air,
 /obj/item/tank/air,
-/obj/item/device/light/flashlight,
 /obj/item/device/light/flashlight,
 /obj/item/device/light/flashlight,
 /obj/item/device/light/flashlight,
@@ -44019,6 +43868,63 @@
 	desc = "";
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor"
+	},
+/area/shuttle/arrival/station)
+"dJR" = (
+/obj/decal/tile_edge/stripe{
+	icon_state = "bot2";
+	tag = ""
+	},
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
+/area/shuttle/arrival/station)
+"dKt" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
+/area/shuttle/arrival/station)
+"dKK" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
+/area/shuttle/arrival/station)
+"dKN" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/shuttle{
+	desc = " It is made of steel.";
+	icon_state = "floor2";
+	name = "steel shuttle floor"
+	},
+/area/shuttle/arrival/station)
+"dLb" = (
+/obj/decal/cleanable/dirt,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor2"
+	},
+/area/shuttle/arrival/station)
+"dLC" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/toolbox/emergency,
+/obj/decal/cleanable/dirt,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor2"
 	},
 /area/shuttle/arrival/station)
 "dMt" = (
@@ -44031,30 +43937,15 @@
 	name = "Net Cafe"
 	})
 "dMH" = (
+/obj/wingrille_spawn/auto,
+/obj/machinery/shuttle/engine/heater{
+	dir = 8;
+	icon_state = "alt_heater-R"
+	},
 /turf/unsimulated/floor{
 	desc = "";
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor"
-	},
-/area/shuttle/arrival/station)
-"dMS" = (
-/obj/stool/chair/comfy/shuttle/brown{
-	dir = 4
-	},
-/obj/decal/cleanable/dirt,
-/turf/unsimulated/floor{
-	desc = "";
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor2"
-	},
-/area/shuttle/arrival/station)
-"dMV" = (
-/obj/decal/cleanable/dirt,
-/obj/machinery/recharge_station,
-/turf/unsimulated/floor{
-	desc = "";
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor2"
 	},
 /area/shuttle/arrival/station)
 "dNh" = (
@@ -44074,11 +43965,6 @@
 	icon_state = "damaged3"
 	},
 /area/station/hallway/primary/west)
-"dNi" = (
-/turf/simulated/shuttle/wall/cockpit/window{
-	name = "window"
-	},
-/area/shuttle/arrival/station)
 "dNF" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -44093,21 +43979,20 @@
 	},
 /area/shuttle/escape/station)
 "dNK" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/landmark/start{
-	name = "Geneticist"
-	},
-/turf/unsimulated/floor{
-	desc = "";
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor"
-	},
+/turf/space,
 /area/shuttle/arrival/station)
 "dOK" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating/random{
+	desc = " It is made of steel.";
+	name = "steel plating"
+	},
+/area/built_zone)
+"dOL" = (
 /obj/landmark/start{
-	name = "Head of Personnel"
+	name = "Janitor"
 	},
 /turf/unsimulated/floor{
 	desc = "";
@@ -44115,7 +44000,13 @@
 	icon_state = "floor"
 	},
 /area/shuttle/arrival/station)
-"dOL" = (
+"dOP" = (
+/turf/simulated/shuttle/wall/escape{
+	dir = 5;
+	icon_state = "walldir"
+	},
+/area/shuttle/arrival/station)
+"dPF" = (
 /obj/landmark/start{
 	name = "Miner"
 	},
@@ -44125,7 +44016,7 @@
 	icon_state = "floor"
 	},
 /area/shuttle/arrival/station)
-"dOP" = (
+"dPV" = (
 /obj/storage/closet/emergency,
 /obj/item/clothing/head/emerg,
 /obj/item/clothing/suit/space/emerg,
@@ -44177,34 +44068,19 @@
 	icon_state = "floor"
 	},
 /area/shuttle/arrival/station)
-"dPF" = (
-/obj/landmark/start{
-	name = "AI"
-	},
+"dPZ" = (
 /turf/unsimulated/floor{
 	desc = "";
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor"
 	},
 /area/shuttle/arrival/station)
-"dPV" = (
-/obj/machinery/door/airlock/pyro/command{
-	dir = 4;
-	name = "Bridge";
-	opacity = 0
-	},
-/turf/unsimulated/floor{
-	desc = "";
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor2"
-	},
-/area/shuttle/arrival/station)
-"dPZ" = (
-/turf/simulated/shuttle/wall/cockpit,
-/area/shuttle/arrival/station)
 "dQu" = (
-/obj/machinery/sleeper/compact{
-	dir = 8
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10
+	},
+/obj/landmark/start{
+	name = "Mechanic"
 	},
 /turf/unsimulated/floor{
 	desc = "";
@@ -44213,8 +44089,13 @@
 	},
 /area/shuttle/arrival/station)
 "dQC" = (
+/obj/decal/tile_edge/stripe{
+	dir = 4;
+	icon_state = "bot2";
+	tag = ""
+	},
 /obj/landmark/start{
-	name = "Cyborg"
+	name = "Medical Director"
 	},
 /turf/unsimulated/floor{
 	desc = "";
@@ -44223,8 +44104,11 @@
 	},
 /area/shuttle/arrival/station)
 "dRY" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6
+	},
 /obj/landmark/start{
-	name = "Engineer"
+	name = "Medical Doctor"
 	},
 /turf/unsimulated/floor{
 	desc = "";
@@ -44233,9 +44117,8 @@
 	},
 /area/shuttle/arrival/station)
 "dSE" = (
-/obj/landmark/start{
-	name = "Pathologist"
-	},
+/obj/table/reinforced/auto,
+/obj/machinery/recharger,
 /turf/unsimulated/floor{
 	desc = "";
 	icon = 'icons/turf/shuttle.dmi';
@@ -44243,19 +44126,52 @@
 	},
 /area/shuttle/arrival/station)
 "dSO" = (
-/obj/landmark/start{
-	name = "Research Director"
-	},
-/turf/unsimulated/floor{
-	desc = "";
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor"
-	},
-/area/shuttle/arrival/station)
-"dSX" = (
-/obj/landmark/start{
-	name = "Scientist"
-	},
+/obj/storage/closet/emergency,
+/obj/item/clothing/head/emerg,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/head/emerg,
+/obj/item/clothing/head/emerg,
+/obj/item/clothing/head/emerg,
+/obj/item/clothing/head/emerg,
+/obj/item/clothing/head/emerg,
+/obj/item/clothing/head/emerg,
+/obj/item/clothing/head/emerg,
+/obj/item/clothing/head/emerg,
+/obj/item/clothing/head/emerg,
+/obj/item/clothing/head/emerg,
+/obj/item/clothing/head/emerg,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/air,
+/obj/item/tank/air,
+/obj/item/tank/air,
+/obj/item/tank/air,
+/obj/item/tank/air,
+/obj/item/tank/air,
+/obj/item/tank/air,
+/obj/item/device/light/flashlight,
+/obj/item/device/light/flashlight,
+/obj/item/device/light/flashlight,
+/obj/item/device/light/flashlight,
+/obj/item/device/light/flashlight,
+/obj/item/device/light/flashlight,
 /turf/unsimulated/floor{
 	desc = "";
 	icon = 'icons/turf/shuttle.dmi';
@@ -44263,6 +44179,18 @@
 	},
 /area/shuttle/arrival/station)
 "dSZ" = (
+/obj/wingrille_spawn/auto,
+/obj/machinery/shuttle/engine/heater{
+	dir = 8;
+	icon_state = "alt_heater-L"
+	},
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
+/area/shuttle/arrival/station)
+"dTt" = (
 /obj/landmark/start{
 	name = "Security Officer"
 	},
@@ -44272,26 +44200,17 @@
 	icon_state = "floor"
 	},
 /area/shuttle/arrival/station)
-"dTt" = (
-/obj/stool/chair/comfy/shuttle/brown{
+"dTL" = (
+/obj/stool/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/machinery/light{
-	dir = 8;
-	tag = ""
+/obj/landmark/start{
+	name = "Staff Assistant"
 	},
-/obj/decal/cleanable/dirt,
 /turf/unsimulated/floor{
 	desc = "";
 	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor2"
-	},
-/area/shuttle/arrival/station)
-"dTL" = (
-/turf/simulated/shuttle/wall/cockpit/window{
-	dir = 4;
-	icon_state = "wall_space";
-	name = "window"
+	icon_state = "floor"
 	},
 /area/shuttle/arrival/station)
 "dUY" = (
@@ -44305,6 +44224,69 @@
 	},
 /area/shuttle_sound_spawn)
 "dVi" = (
+/obj/stool/chair/comfy/shuttle/brown{
+	dir = 4
+	},
+/obj/decal/cleanable/dirt,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor2"
+	},
+/area/shuttle/arrival/station)
+"dVl" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/recharge_station,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor2"
+	},
+/area/shuttle/arrival/station)
+"dVr" = (
+/turf/simulated/shuttle/wall/cockpit/window{
+	name = "window"
+	},
+/area/shuttle/arrival/station)
+"dVt" = (
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating/random{
+	desc = " It is made of steel.";
+	name = "steel plating"
+	},
+/area/space)
+"dVS" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/plating/random{
+	desc = " It is made of steel.";
+	name = "steel plating"
+	},
+/area/built_zone)
+"dWc" = (
+/obj/machinery/shuttle/engine/propulsion{
+	dir = 8;
+	icon_state = "alt_propulsion"
+	},
+/turf/space,
+/area/shuttle/arrival/station)
+"dWz" = (
+/obj/wingrille_spawn/auto,
+/obj/machinery/shuttle/engine/heater{
+	dir = 8;
+	icon_state = "alt_heater-M"
+	},
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
+/area/shuttle/arrival/station)
+"dXo" = (
 /obj/landmark/start{
 	name = "Chef"
 	},
@@ -44314,58 +44296,7 @@
 	icon_state = "floor"
 	},
 /area/shuttle/arrival/station)
-"dVl" = (
-/obj/landmark/start{
-	name = "Clown"
-	},
-/turf/unsimulated/floor{
-	desc = "";
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor"
-	},
-/area/shuttle/arrival/station)
-"dVr" = (
-/obj/landmark/start{
-	name = "Detective"
-	},
-/turf/unsimulated/floor{
-	desc = "";
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor"
-	},
-/area/shuttle/arrival/station)
-"dVt" = (
-/obj/landmark/start{
-	name = "Quartermaster"
-	},
-/turf/unsimulated/floor{
-	desc = "";
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor"
-	},
-/area/shuttle/arrival/station)
-"dVS" = (
-/obj/landmark/start{
-	name = "Rancher"
-	},
-/turf/unsimulated/floor{
-	desc = "";
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor"
-	},
-/area/shuttle/arrival/station)
-"dWc" = (
-/obj/landmark/start{
-	name = "Roboticist"
-	},
-/obj/machinery/light,
-/turf/unsimulated/floor{
-	desc = "";
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor"
-	},
-/area/shuttle/arrival/station)
-"dWz" = (
+"dXp" = (
 /obj/decal/tile_edge/stripe{
 	icon_state = "bot2";
 	tag = ""
@@ -44383,7 +44314,7 @@
 	icon_state = "floor"
 	},
 /area/shuttle/arrival/station)
-"dXo" = (
+"dXt" = (
 /obj/decal/tile_edge/stripe{
 	icon_state = "bot2";
 	tag = ""
@@ -44396,95 +44327,12 @@
 	icon_state = "floor"
 	},
 /area/shuttle/arrival/station)
-"dXp" = (
-/obj/table/reinforced/auto,
-/obj/item/storage/firstaid/regular,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 10;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/obj/decal/cleanable/dirt,
-/obj/item/survival_machete,
-/obj/item/survival_machete,
-/obj/item/survival_machete,
-/obj/item/survival_machete,
-/obj/item/survival_machete,
-/obj/item/survival_machete,
-/obj/item/survival_machete,
-/obj/item/survival_machete,
-/obj/item/survival_machete,
-/obj/item/survival_machete,
-/obj/item/survival_machete,
-/obj/item/survival_machete,
-/obj/item/survival_machete,
-/obj/item/survival_machete,
-/obj/item/survival_machete,
-/obj/item/survival_machete,
-/obj/item/survival_machete,
-/obj/item/survival_machete,
-/obj/item/survival_machete,
-/obj/item/survival_machete,
-/obj/item/survival_machete,
-/obj/item/survival_machete,
-/obj/item/survival_machete,
-/obj/item/survival_machete,
-/obj/item/survival_machete,
-/obj/item/survival_machete,
-/obj/item/survival_machete,
-/obj/item/survival_machete,
-/obj/item/survival_machete,
-/obj/item/survival_machete,
-/obj/item/survival_machete,
-/obj/item/survival_machete,
-/obj/item/survival_machete,
-/obj/item/survival_machete,
-/obj/item/survival_machete,
-/obj/item/survival_machete,
-/obj/item/survival_machete,
-/obj/item/survival_machete,
-/obj/item/survival_machete,
-/obj/item/survival_machete,
-/obj/item/survival_machete,
-/obj/item/survival_machete,
-/obj/item/survival_machete,
-/obj/item/survival_machete,
-/obj/item/survival_machete,
-/obj/item/survival_machete,
-/obj/item/survival_machete,
-/obj/item/survival_machete,
-/turf/unsimulated/floor{
-	desc = "";
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor2"
-	},
-/area/shuttle/arrival/station)
-"dXt" = (
-/obj/table/reinforced/auto,
-/obj/item/storage/firstaid/regular,
-/obj/decal/cleanable/dirt,
-/obj/item/device/gps,
-/obj/item/device/gps,
-/obj/item/device/gps,
-/obj/item/device/gps,
-/obj/item/device/gps,
-/obj/item/device/gps,
-/obj/item/device/gps,
-/obj/item/device/gps,
-/obj/item/device/gps,
-/obj/item/device/gps,
-/obj/item/device/gps,
-/obj/item/device/gps,
-/turf/unsimulated/floor{
-	desc = "";
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor2"
-	},
-/area/shuttle/arrival/station)
 "dXT" = (
+/obj/machinery/light{
+	dir = 8
+	},
 /obj/landmark/start{
-	name = "Chief Engineer"
+	name = "Geneticist"
 	},
 /turf/unsimulated/floor{
 	desc = "";
@@ -44493,25 +44341,31 @@
 	},
 /area/shuttle/arrival/station)
 "dYp" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall_space"
+/obj/landmark/start{
+	name = "Head of Personnel"
+	},
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
 	},
 /area/shuttle/arrival/station)
 "dZh" = (
-/turf/simulated/shuttle/wall/corner{
-	dir = 4
-	},
-/area/shuttle/arrival/station)
-"dZq" = (
 /turf/simulated/wall/auto/reinforced/supernorn{
 	icon_state = "norn-R-6"
 	},
 /area/station/hallway/secondary/entry)
-"dZT" = (
-/turf/simulated/wall/auto/reinforced/supernorn{
-	icon_state = "norn-R-10"
+"dZq" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "wall_space"
 	},
-/area/station/hallway/secondary/entry)
+/area/shuttle/arrival/station)
+"dZT" = (
+/turf/simulated/shuttle/wall/escape{
+	dir = 8;
+	icon_state = "walldir"
+	},
+/area/shuttle/arrival/station)
 "eag" = (
 /obj/cable{
 	d1 = 4;
@@ -46627,9 +46481,13 @@
 	},
 /area/station/hydroponics/bay)
 "eTf" = (
-/turf/simulated/shuttle/wall/escape{
-	dir = 5;
-	icon_state = "walldir"
+/obj/landmark/start{
+	name = "AI"
+	},
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
 	},
 /area/shuttle/arrival/station)
 "eTl" = (
@@ -46822,9 +46680,15 @@
 	},
 /area/station/hallway/secondary/exit)
 "eVG" = (
-/turf/simulated/shuttle/wall{
-	dir = 8;
-	icon_state = "wall_space"
+/obj/machinery/door/airlock/pyro/command{
+	dir = 4;
+	name = "Bridge";
+	opacity = 0
+	},
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor2"
 	},
 /area/shuttle/arrival/station)
 "eWo" = (
@@ -48588,6 +48452,9 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
 	name = "steel plating"
@@ -48981,6 +48848,13 @@
 	name = "steel floor"
 	},
 /area/station/hallway/primary/central)
+"fUq" = (
+/turf/simulated/shuttle/wall/cockpit/window{
+	dir = 4;
+	icon_state = "wall_space";
+	name = "window"
+	},
+/area/shuttle/arrival/station)
 "fUw" = (
 /obj/disposalpipe/junction/right/west,
 /turf/simulated/floor/sand{
@@ -49070,6 +48944,16 @@
 	icon_state = "damaged3"
 	},
 /area/station/hallway/primary/central)
+"fXc" = (
+/obj/landmark/start{
+	name = "Research Director"
+	},
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
+/area/shuttle/arrival/station)
 "fXj" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 8
@@ -54070,6 +53954,28 @@
 	name = "steel plating"
 	},
 /area/station/security/hos/horizon)
+"ilP" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/firstaid/regular,
+/obj/decal/cleanable/dirt,
+/obj/item/device/gps,
+/obj/item/device/gps,
+/obj/item/device/gps,
+/obj/item/device/gps,
+/obj/item/device/gps,
+/obj/item/device/gps,
+/obj/item/device/gps,
+/obj/item/device/gps,
+/obj/item/device/gps,
+/obj/item/device/gps,
+/obj/item/device/gps,
+/obj/item/device/gps,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor2"
+	},
+/area/shuttle/arrival/station)
 "ilS" = (
 /obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/carpet/blue/fancy{
@@ -55728,6 +55634,16 @@
 	name = "wood floor"
 	},
 /area/station/security/equipment)
+"iXx" = (
+/obj/landmark/start{
+	name = "Pathologist"
+	},
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
+/area/shuttle/arrival/station)
 "iXS" = (
 /obj/cable{
 	d1 = 4;
@@ -55933,6 +55849,9 @@
 	name = "steel floor"
 	},
 /area/station/security/brig/genpop)
+"jdl" = (
+/turf/simulated/shuttle/wall/cockpit,
+/area/shuttle/arrival/station)
 "jdu" = (
 /obj/cable{
 	d1 = 4;
@@ -58821,6 +58740,11 @@
 	icon_state = "norn-5"
 	},
 /area/station/crew_quarters/quarters_south)
+"kms" = (
+/turf/simulated/wall/auto/reinforced/supernorn{
+	icon_state = "norn-R-10"
+	},
+/area/station/hallway/secondary/entry)
 "kmB" = (
 /turf/simulated/wall/auto/supernorn{
 	icon_state = "norn-12"
@@ -60304,6 +60228,16 @@
 	icon_state = "norn-13"
 	},
 /area/station/crew_quarters/catering)
+"lca" = (
+/obj/landmark/start{
+	name = "Detective"
+	},
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
+/area/shuttle/arrival/station)
 "lck" = (
 /obj/machinery/atmospherics/pipe/simple/vertical,
 /turf/simulated/wall/auto/supernorn{
@@ -63125,6 +63059,14 @@
 	name = "steel vacuum floor"
 	},
 /area/station/engine/combustion_chamber)
+"mrp" = (
+/obj/machinery/light,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
+/area/shuttle/arrival/station)
 "mrQ" = (
 /turf/simulated/wall/auto/reinforced/supernorn{
 	icon_state = "norn-R-21"
@@ -66227,6 +66169,16 @@
 	name = "steel floor"
 	},
 /area/station/engine/hotloop)
+"nJB" = (
+/obj/landmark/start{
+	name = "Chief Engineer"
+	},
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
+/area/shuttle/arrival/station)
 "nLa" = (
 /obj/machinery/meter,
 /obj/cable{
@@ -74018,6 +73970,16 @@
 	name = "steel shuttle floor"
 	},
 /area/station/hallway/secondary/exit)
+"rnw" = (
+/obj/landmark/start{
+	name = "Engineer"
+	},
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
+/area/shuttle/arrival/station)
 "rnL" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
@@ -74843,6 +74805,11 @@
 	name = "steel floor"
 	},
 /area/station/engine/substation/east)
+"rHL" = (
+/turf/simulated/shuttle/wall/corner{
+	dir = 4
+	},
+/area/shuttle/arrival/station)
 "rHT" = (
 /obj/machinery/power/smes{
 	charge = 1e+006;
@@ -77564,7 +77531,9 @@
 /turf/space,
 /area/station/storage/auxillary)
 "tcn" = (
-/obj/machinery/light,
+/obj/landmark/start{
+	name = "Rancher"
+	},
 /turf/unsimulated/floor{
 	desc = "";
 	icon = 'icons/turf/shuttle.dmi';
@@ -80131,6 +80100,17 @@
 	name = "steel plating"
 	},
 /area/station/maintenance/north)
+"uph" = (
+/obj/landmark/start{
+	name = "Roboticist"
+	},
+/obj/machinery/light,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
+/area/shuttle/arrival/station)
 "upx" = (
 /obj/item/mop,
 /obj/item/clothing/shoes/clown_shoes,
@@ -81063,6 +81043,21 @@
 	name = "steel plating"
 	},
 /area/station/engine/substation/north)
+"uUI" = (
+/obj/stool/chair/comfy/shuttle/brown{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 8;
+	tag = ""
+	},
+/obj/decal/cleanable/dirt,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor2"
+	},
+/area/shuttle/arrival/station)
 "uUL" = (
 /turf/simulated/wall/auto/asteroid/lighted{
 	color = "#d1e6ff";
@@ -82627,6 +82622,16 @@
 /obj/fireworksbox,
 /turf/space,
 /area/station/science/spectral)
+"vLR" = (
+/obj/machinery/sleeper/compact{
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
+/area/shuttle/arrival/station)
 "vMn" = (
 /obj/cable{
 	d1 = 2;
@@ -83517,6 +83522,70 @@
 	icon_state = "norn-R-0"
 	},
 /area/station/crew_quarters/barber_shop)
+"wot" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/firstaid/regular,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 10;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/obj/decal/cleanable/dirt,
+/obj/item/survival_machete,
+/obj/item/survival_machete,
+/obj/item/survival_machete,
+/obj/item/survival_machete,
+/obj/item/survival_machete,
+/obj/item/survival_machete,
+/obj/item/survival_machete,
+/obj/item/survival_machete,
+/obj/item/survival_machete,
+/obj/item/survival_machete,
+/obj/item/survival_machete,
+/obj/item/survival_machete,
+/obj/item/survival_machete,
+/obj/item/survival_machete,
+/obj/item/survival_machete,
+/obj/item/survival_machete,
+/obj/item/survival_machete,
+/obj/item/survival_machete,
+/obj/item/survival_machete,
+/obj/item/survival_machete,
+/obj/item/survival_machete,
+/obj/item/survival_machete,
+/obj/item/survival_machete,
+/obj/item/survival_machete,
+/obj/item/survival_machete,
+/obj/item/survival_machete,
+/obj/item/survival_machete,
+/obj/item/survival_machete,
+/obj/item/survival_machete,
+/obj/item/survival_machete,
+/obj/item/survival_machete,
+/obj/item/survival_machete,
+/obj/item/survival_machete,
+/obj/item/survival_machete,
+/obj/item/survival_machete,
+/obj/item/survival_machete,
+/obj/item/survival_machete,
+/obj/item/survival_machete,
+/obj/item/survival_machete,
+/obj/item/survival_machete,
+/obj/item/survival_machete,
+/obj/item/survival_machete,
+/obj/item/survival_machete,
+/obj/item/survival_machete,
+/obj/item/survival_machete,
+/obj/item/survival_machete,
+/obj/item/survival_machete,
+/obj/item/survival_machete,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor2"
+	},
+/area/shuttle/arrival/station)
 "wov" = (
 /obj/machinery/conveyor{
 	dir = 1;
@@ -124168,7 +124237,7 @@ dGb
 dGb
 dGb
 dGb
-cwJ
+dGb
 dGb
 dGb
 dGb
@@ -124466,15 +124535,15 @@ dGb
 dGb
 dGb
 dGb
-eVG
-cth
-cth
-cth
-eTf
-cth
-cth
-cth
-dYp
+dGb
+dGb
+dGb
+dGb
+dGb
+dGb
+dGb
+dGb
+dGb
 dGb
 dGb
 dGb
@@ -124768,15 +124837,15 @@ dGb
 dGb
 dGb
 dGb
-cwJ
-cti
-dHA
-dKt
-eTf
-cti
-dHA
-dKt
-cwJ
+dGb
+dGb
+dGb
+dGb
+dGb
+dGb
+dGb
+dGb
+dGb
 dGb
 dGb
 dGb
@@ -125070,15 +125139,15 @@ dGb
 dGb
 dGb
 dGb
-eTf
-ctl
-dHP
-dKK
-cwK
-dQu
-dVi
-dQu
-eTf
+dGb
+dGb
+dGb
+dGb
+dGb
+dGb
+dGb
+dGb
+dGb
 dGb
 dGb
 dGb
@@ -125372,15 +125441,15 @@ dGb
 dGb
 dGb
 dGb
-cwK
-dHb
-dIo
-dKN
-dNK
-dQC
-dVl
-dXT
-cwK
+dGb
+dGb
+dGb
+dGb
+dGb
+dGb
+dGb
+dGb
+dGb
 dGb
 dGb
 dGb
@@ -125675,14 +125744,14 @@ dGb
 dGb
 dGb
 dGb
-cwJ
-dIM
-dLb
-dOK
-dRY
-dVr
-cwJ
-dZh
+dGb
+dGb
+dGb
+dGb
+dGb
+dGb
+dGb
+dGb
 dGb
 dGb
 dGb
@@ -125977,13 +126046,13 @@ dGb
 dGb
 dGb
 dGb
-cwK
-cpv
-dLC
-dOL
-dSE
-dVt
-cwK
+dGb
+dGb
+dGb
+dGb
+dGb
+dGb
+dGb
 dGb
 dGb
 dGb
@@ -126279,13 +126348,13 @@ dGb
 dGb
 dGb
 dGb
+dGb
+dGb
+dGb
 dHr
-cpw
-clN
-cpw
-dSO
-dVS
-dHr
+dGb
+dGb
+dGb
 dGb
 dGb
 dGb
@@ -126580,14 +126649,14 @@ dGb
 dGb
 dGb
 dGb
-dGb
-dGs
-cpx
-dLY
-dOP
-dSX
+clN
 dWc
-dGs
+dWc
+dWc
+dOP
+dWc
+dWc
+dWc
 dZq
 dGb
 dGb
@@ -126882,15 +126951,15 @@ dGb
 dGb
 dGb
 dGb
-dGb
-cto
-cpz
-dMH
-dMH
+dHr
 dSZ
 dWz
-cto
-cwB
+dMH
+dOP
+dSZ
+dWz
+dMH
+dHr
 dGb
 dGb
 dGb
@@ -127184,15 +127253,15 @@ dGb
 dGb
 dGb
 dGb
-dGb
-cto
-cpz
-dMH
-dMH
-dMH
+dOP
+cti
+dIo
+dOL
+dZT
+vLR
 dXo
-cto
-cwB
+vLR
+dOP
 dGb
 dGb
 dGb
@@ -127486,14 +127555,14 @@ dGb
 dGb
 dGb
 dGb
-dGb
-dGs
+dZT
+ctl
 cpA
-cpA
-dMH
-cpA
-cpA
-dGs
+dQu
+dXT
+bjE
+bEd
+nJB
 dZT
 dGb
 dGb
@@ -127790,13 +127859,13 @@ dGb
 dGb
 dGb
 dHr
-cpA
-cpA
-dMH
-cpA
-cpA
+dIM
+dQC
+dYp
+rnw
+lca
 dHr
-dGb
+rHL
 dGb
 dGb
 dGb
@@ -128091,14 +128160,14 @@ dGb
 dGb
 dGb
 dGb
-dHr
-cpA
-cpA
+dZT
+dKt
+dRY
 dPF
-cpA
-cpA
-dHr
-cth
+iXx
+bed
+dZT
+dGb
 dGb
 dGb
 dGb
@@ -128392,15 +128461,15 @@ dGb
 dGb
 dGb
 dGb
-dGs
+dGb
 dHu
 dIW
-cpA
-dMH
-cpA
+dSE
+dIW
+fXc
 tcn
 dHu
-dGs
+dGb
 dGb
 dGb
 dGb
@@ -128694,14 +128763,14 @@ dGb
 dGb
 dGb
 dGb
-dGD
-dHu
+dGb
+cpv
 dJc
-dHu
+dSO
 dPV
-dHu
-dJc
-dHu
+aqT
+uph
+cpv
 dZh
 dGb
 dGb
@@ -128998,13 +129067,13 @@ dGb
 dGb
 dGb
 dHv
-dJO
-dMS
-dJO
+dJR
+dPZ
+dPZ
 dTt
 dXp
-dGs
-dGb
+dHv
+cwB
 dGb
 dGb
 dGb
@@ -129299,14 +129368,14 @@ dGb
 dGb
 dGb
 dGb
-dGD
+dHv
 dJR
-dMV
-dMV
-dMV
+dPZ
+dPZ
+dPZ
 dXt
-dTL
-dGb
+dHv
+cwB
 dGb
 dGb
 dGb
@@ -129601,14 +129670,14 @@ dGb
 dGb
 dGb
 dGb
-dGb
-dGD
-dNi
-dNi
-dNi
+cpv
 dTL
-dGb
-dGb
+dTL
+dPZ
+dTL
+dTL
+cpv
+kms
 dGb
 dGb
 dGb
@@ -129903,13 +129972,13 @@ dGb
 dGb
 dGb
 dGb
-dGb
-dKr
-dGD
+dHu
+dTL
+dTL
 dPZ
 dTL
-dKr
-dGb
+dTL
+dHu
 dGb
 dGb
 dGb
@@ -130205,14 +130274,14 @@ dGb
 dGb
 dGb
 dGb
-dGb
-dGb
-dKr
-dKr
-dKr
-dGb
-dGb
-dGb
+dHu
+dTL
+dTL
+eTf
+dTL
+dTL
+dHu
+dWc
 dGb
 dGb
 dGb
@@ -130506,15 +130575,15 @@ dGb
 dGb
 dGb
 dGb
-dGb
-dGb
-dGb
-dGb
-dGb
-dGb
-dGb
-dGb
-dGb
+cpv
+cwJ
+dKK
+dTL
+dPZ
+dTL
+mrp
+cwJ
+cpv
 dGb
 dGb
 dGb
@@ -130808,15 +130877,15 @@ dGb
 dGb
 dGb
 dGb
-dGb
-dGb
-dGb
-dGb
-dGb
-dGb
-dGb
-dGb
-dGb
+cth
+cwJ
+dKN
+cwJ
+eVG
+cwJ
+dKN
+cwJ
+rHL
 dGb
 dGb
 dGb
@@ -131111,13 +131180,13 @@ dGb
 dGb
 dGb
 dGb
-dGb
-dGb
-dGb
-dGb
-dGb
-dGb
-dGb
+cwK
+dLb
+dVi
+dLb
+uUI
+wot
+cpv
 dGb
 dGb
 dGb
@@ -131413,13 +131482,13 @@ dGb
 dGb
 dGb
 dGb
-dGb
-dGb
-dGb
-dGb
-dGb
-dGb
-dGb
+cth
+dLC
+dVl
+dVl
+dVl
+ilP
+fUq
 dGb
 dGb
 dGb
@@ -131716,11 +131785,11 @@ dGb
 dGb
 dGb
 dGb
-dGb
-dGb
-dGb
-dGb
-dGb
+cth
+dVr
+dVr
+dVr
+fUq
 dGb
 dGb
 dGb
@@ -132018,11 +132087,11 @@ dGb
 dGb
 dGb
 dGb
-dGb
-dGb
-dGb
-dGb
-dGb
+dNK
+cth
+jdl
+fUq
+dNK
 dGb
 dGb
 dGb
@@ -132321,9 +132390,9 @@ dGb
 dGb
 dGb
 dGb
-dGb
-dGb
-dGb
+dNK
+dNK
+dNK
 dGb
 dGb
 dGb
@@ -139568,10 +139637,10 @@ dGb
 dGb
 dGb
 dGb
-wXe
-oxP
-oxP
-wXe
+dGb
+dGb
+dGb
+dGb
 dGb
 dGb
 dGb
@@ -139870,10 +139939,10 @@ dGb
 dGb
 dGb
 dGb
-wXe
-oxP
-oxP
-wXe
+dGb
+dGb
+dGb
+dGb
 dGb
 dGb
 dGb
@@ -140172,10 +140241,10 @@ dGb
 dGb
 dGb
 dGb
-wXe
-oxP
-oxP
-wXe
+dGb
+dGb
+dGb
+dGb
 dGb
 dGb
 dGb
@@ -140474,10 +140543,10 @@ dGb
 dGb
 dGb
 dGb
-wXe
-oxP
-oxP
-wXe
+dGb
+dVt
+dGb
+dGb
 dGb
 dGb
 dGb
@@ -140776,10 +140845,10 @@ dGb
 dGb
 kHC
 kHC
-wXe
-oxP
-oxP
-wXe
+dGb
+dHA
+dGb
+dGb
 dGb
 dGb
 dGb
@@ -141381,7 +141450,7 @@ cIh
 dGP
 cua
 cue
-cue
+dHb
 ciR
 cIh
 dGb
@@ -141683,7 +141752,7 @@ wVX
 cub
 dHx
 rNv
-cue
+dHb
 ciS
 wVX
 dGb
@@ -141984,8 +142053,8 @@ dGb
 cIh
 cxK
 cuc
-cue
-cue
+dOK
+dVS
 gIa
 cIh
 dGb
@@ -142587,7 +142656,7 @@ dGb
 dGb
 cIh
 cxM
-cue
+dHb
 cue
 cue
 ciV
@@ -143191,7 +143260,7 @@ dGb
 dGb
 dGl
 dGb
-dGb
+dHA
 dGb
 dGb
 dGb
@@ -143493,7 +143562,7 @@ dGb
 dGb
 dGb
 dGb
-dGb
+dHP
 dGb
 dGb
 dGb
