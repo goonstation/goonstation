@@ -25,6 +25,7 @@
 	name = "cargo belt - west";
 	operating = 1
 	},
+/obj/item/kitchen/chopsticks_package,
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "v" = (
@@ -33,6 +34,23 @@
 	name = "cargo belt - north";
 	operating = 1
 	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"z" = (
+/obj/machinery/conveyor{
+	name = "cargo belt - south";
+	operating = 1
+	},
+/obj/item/kitchen/chopsticks_package,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"A" = (
+/obj/machinery/conveyor{
+	dir = 1;
+	name = "cargo belt - north";
+	operating = 1
+	},
+/obj/item/kitchen/chopsticks_package,
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "C" = (
@@ -72,12 +90,13 @@
 	name = "cargo belt - east";
 	operating = 1
 	},
+/obj/item/kitchen/chopsticks_package,
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 D
-v
+A
 v
 "}
 (2,1,1) = {"
@@ -97,6 +116,6 @@ I
 "}
 (5,1,1) = {"
 l
-l
+z
 a
 "}
