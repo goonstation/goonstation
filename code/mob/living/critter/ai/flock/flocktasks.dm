@@ -756,8 +756,10 @@ stare
 				owncritter.set_hand(3)
 			owncritter.set_dir(get_dir(owncritter, holder.target))
 			owncritter.hand_range_attack(holder.target, dummy_params)
+			var/datum/handHolder/HH = owncritter.hands[3]
+			var/datum/limb/gun/stunner = HH?.limb
 			if(dist < run_range)
-				if(prob(20))
+				if(prob(20) || stunner.is_on_cooldown())
 					// run
 					holder.move_away(holder.target,4)
 			else if(prob(30))
@@ -784,7 +786,7 @@ stare
 			F.flock.updateEnemy(T)
 			if(isliving(T))
 				var/mob/living/M = T
-				if(is_incapacitated(M))
+				if(!isalive(M) || (is_incapacitated(M) && prob(80)))
 					continue
 			. += T
 
