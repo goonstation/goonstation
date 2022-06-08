@@ -89,7 +89,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 		var/fliesnearby = 1 //for rolling chance to beep
 		for_by_tcl(E, /mob/living/critter/robotic/sawfly)
 			if(isalive(E) && IN_RANGE(src, E, 16)) //counts all of them within more or less earshot
-				src.fliesnearby += 1 //that's your buddies!
+				fliesnearby += 1 //that's your buddies!
 		var/beepchance = (1 / fliesnearby) * 100 //if two sawflies, give 50% chance that any one will beep
 		if(fliesnearby<3) beepchance -=20 //heavily reduce chance of beep in swarm
 		if(prob(beepchance))
