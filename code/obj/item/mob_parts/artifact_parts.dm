@@ -1,8 +1,7 @@
 /obj/item/parts/artifact_parts
 	name = "artifact parts"
 	icon = 'icons/obj/artifacts/artifactLimbs.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	item_state = "buildpipe"
+	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	flags = FPRINT | ONBELT | TABLEPASS
 	skintoned = FALSE
 	decomp_affected = FALSE
@@ -25,27 +24,33 @@
 				else
 					src.name = pick("vile", "threatening", "scary") + " [src.side]" + " leg"
 
-				cut_messages = list("slowly cuts through", "slowly cut through")
-				saw_messages = list("gradually saws through", "gradually saw through")
-				limb_material = "flesh"
+				src.item_state = "eldritch-limb"
+
+				src.cut_messages = list("slowly cuts through", "slowly cut through")
+				src.saw_messages = list("gradually saws through", "gradually saw through")
+				src.limb_material = "flesh"
 			if ("martian")
 				if (src.slot == "l_arm" || src.slot == "r_arm")
 					src.name = pick("entwined", "jittery", "soft") + " [src.side]" + " tentacles"
 				else
 					src.name = pick("entwined", "jittery", "pulsing") + " [src.side]" + " leg"
 
-				cut_messages = list("swiftly cuts through", "swiftly cut through")
-				saw_messages = list("easily saws through", "easily saw through")
-				limb_material = "tentacles"
+				src.item_state = "martian-limb"
+
+				src.cut_messages = list("swiftly cuts through", "swiftly cut through")
+				src.saw_messages = list("easily saws through", "easily saw through")
+				src.limb_material = "tentacles"
 			if ("precursor")
 				if (src.slot == "l_arm" || src.slot == "r_arm")
 					src.name = pick("ancient", "old", "humming") + " [src.side]" + " device"
 				else
 					src.name =  pick("ancient", "old", "clunky") + " [src.side]" + " leg"
 
-				cut_messages = list("roughly cuts through", "roughly cut through")
-				saw_messages = list("messily saws through", "messily saw through")
-				limb_material = "metal"
+				src.item_state = "precursor-limb"
+
+				src.cut_messages = list("roughly cuts through", "roughly cut through")
+				src.saw_messages = list("messily saws through", "messily saw through")
+				src.limb_material = "metal"
 
 		if (ishuman(new_holder))
 			SPAWN(0.1 SECONDS) // required for abilities to be applied
@@ -400,7 +405,7 @@
 						continue
 				boutput(holder.owner, "<span class='alert'>You pull yourself to [T].</span>")
 				holder.owner.set_loc(get_step(T, get_dir(T, holder.owner)))
-				tentacle.icon_state = "HalfEndWhip"
+				tentacle.icon_state = "tentacle-half-end"
 				found_target = TRUE
 				continue
 
@@ -417,7 +422,7 @@
 						break
 				boutput(holder.owner, "<span class='alert'>You pull yourself to [A].</span>")
 				holder.owner.set_loc(get_step(T, get_dir(T, holder.owner)))
-				tentacle.icon_state = "HalfEndWhip"
+				tentacle.icon_state = "tentacle-half-end"
 				found_target = TRUE
 				break
 
