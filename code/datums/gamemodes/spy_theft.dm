@@ -430,17 +430,18 @@
 	station_bounties[/obj/item/clothing/glasses/healthgoggles] = 1
 
 	#ifdef UNDERWATER_MAP
-		station_bounties[/obj/item/clothing/suit/space/diving/security] = 2
-		station_bounties[/obj/item/clothing/suit/space/diving/civilian] = 1
-		station_bounties[/obj/item/clothing/suit/space/diving/command] = 2
-		station_bounties[/obj/item/clothing/suit/space/diving/engineering] = 1
+	station_bounties[/obj/item/clothing/suit/space/diving/security] = 2
+	station_bounties[/obj/item/clothing/suit/space/diving/civilian] = 1
+	station_bounties[/obj/item/clothing/suit/space/diving/command] = 2
+	station_bounties[/obj/item/clothing/suit/space/diving/engineering] = 1
 	#else
-		station_bounties[/obj/item/clothing/suit/space] = 1
-		station_bounties[/obj/item/clothing/suit/space/santa] = 1
-		station_bounties[/obj/item/clothing/suit/space/captain/blue] = 2
-		station_bounties[/obj/item/clothing/suit/space/captain/red] = 2
-		station_bounties[/obj/item/clothing/suit/space/captain] = 2
-		station_bounties[/obj/item/clothing/suit/space/engineer] = 1
+	station_bounties[/obj/item/clothing/suit/space] = 1
+	station_bounties[/obj/item/clothing/suit/space/santa] = 1
+	station_bounties[/obj/item/clothing/suit/space/captain/blue] = 2
+	station_bounties[/obj/item/clothing/suit/space/captain/red] = 2
+	station_bounties[/obj/item/clothing/suit/space/captain] = 2
+	station_bounties[/obj/item/clothing/suit/space/engineer] = 1
+	#endif
 	station_bounties[/obj/item/tank/jetpack] = 1
 
 	station_bounties[/obj/item/storage/secure/sbriefcase] = 2
@@ -476,17 +477,18 @@
 	// Big machinery (non portable) objects
 
 	#ifdef UNDERWATER_MAP
-		big_station_bounties[/obj/machinery/vehicle/tank/minisub/secsub] = 1
-		big_station_bounties[/obj/machinery/vehicle/tank/minisub/mining] = 1
-		big_station_bounties[/obj/machinery/vehicle/tank/minisub/civilian] = 1
-		big_station_bounties[/obj/machinery/vehicle/tank/minisub/engineer] = 1
-		big_station_bounties[/obj/machinery/vehicle/tank/minisub/escape_sub] = 1
-		big_station_bounties[/obj/machinery/vehicle/tank/minisub] = 1
+	big_station_bounties[/obj/machinery/vehicle/tank/minisub/secsub] = 1
+	big_station_bounties[/obj/machinery/vehicle/tank/minisub/mining] = 1
+	big_station_bounties[/obj/machinery/vehicle/tank/minisub/civilian] = 1
+	big_station_bounties[/obj/machinery/vehicle/tank/minisub/engineer] = 1
+	big_station_bounties[/obj/machinery/vehicle/tank/minisub/escape_sub] = 1
+	big_station_bounties[/obj/machinery/vehicle/tank/minisub] = 1
 	#else
-		big_station_bounties[/obj/machinery/vehicle/pod] = 1
-		big_station_bounties[/obj/machinery/vehicle/escape_pod] = 1
-		big_station_bounties[/obj/machinery/vehicle/cargo] = 1
-		big_station_bounties[/obj/machinery/vehicle/miniputt/nanoputt] = 1
+	big_station_bounties[/obj/machinery/vehicle/pod] = 1
+	big_station_bounties[/obj/machinery/vehicle/escape_pod] = 1
+	big_station_bounties[/obj/machinery/vehicle/cargo] = 1
+	big_station_bounties[/obj/machinery/vehicle/miniputt/nanoputt] = 1
+	#endif
 
 	big_station_bounties[/obj/machinery/power/reactor_stats] = 1
 	big_station_bounties[/obj/machinery/computer/supplycomp] = 1
