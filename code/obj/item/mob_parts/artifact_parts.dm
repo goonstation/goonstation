@@ -302,7 +302,7 @@
 
 		var/turf/T = get_turf(H)
 
-		var/image/I = image('icons/obj/artifacts/artifactLimbs.dmi', icon_state = "glowy-footprints-L", layer = DECAL_LAYER, dir = H.dir)
+		var/image/I = image('icons/obj/artifacts/artifactLimbs.dmi', icon_state = "footprints-L", layer = DECAL_LAYER, dir = H.dir)
 		T.UpdateOverlays(I, "precursorfootprints-L-[ref(I)]")
 		SPAWN(1 SECOND)
 			T.UpdateOverlays(null, "precursorfootprints-L-[ref(I)]")
@@ -313,7 +313,7 @@
 
 		var/turf/T = get_turf(H)
 
-		var/image/I = image('icons/obj/artifacts/artifactLimbs.dmi', icon_state = "glowy-footprints-R", layer = DECAL_LAYER, dir = H.dir)
+		var/image/I = image('icons/obj/artifacts/artifactLimbs.dmi', icon_state = "footprints-R", layer = DECAL_LAYER, dir = H.dir)
 		T.UpdateOverlays(I, "precursorfootprints-R-[ref(I)]")
 		SPAWN(1 SECOND)
 			T.UpdateOverlays(null, "precursorfootprints-R-[ref(I)]")
@@ -323,7 +323,7 @@
 		slot = "l_leg"
 		side = "left"
 		step_image_state = "footprintsL"
-		icon_state = "leg-precursorh-L"
+		icon_state = "leg-precursor-L"
 		handlistPart = "leg-precursor-L-attached"
 
 	right
