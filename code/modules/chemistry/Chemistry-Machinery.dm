@@ -801,7 +801,7 @@ datum/chemicompiler_core/stationaryCore
 			if (!(src in range(1)))
 				return 0
 			if(executor.core.running)
-				return action in list("getUIState", "reportError", "abortCode")
+				return action in list("getUIState", "reportError", "abortCode") ? 1 : 0
 			return 1
 
 		statusChange(oldStatus, newStatus)
