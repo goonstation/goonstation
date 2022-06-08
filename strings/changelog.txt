@@ -1,5 +1,12 @@
 
 (t)wed jun 08 22
+(u)NightmareChamillian and Amylizzle
+(p)8418
+(e)🆕🎨|feature, sprites
+(*)Added a new general-purpose syndicate item: the sawfly. See minor changes for details.
+(+)Sawflies cost 2 TC and come as a 1.5 second grenade that spawns a single sawfly drone on detonation
+(+)Sawfly drones have 50 HP that deal 14 damage a hit to crew. They can be returned to grenade form by traitors.
+(+)Furthermore, all sawfly purchases come with a remote, which can be used to fold and deploy all sawflies in in a 4 tile radius.
 (u)Taylor Kellogg
 (p)9032
 (e)|
