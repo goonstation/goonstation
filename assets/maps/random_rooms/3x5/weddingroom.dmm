@@ -55,6 +55,8 @@
 	},
 /obj/machinery/light/small/floor/warm,
 /obj/item/storage/bible,
+/obj/item/clothing/gloves/ring/gold,
+/obj/item/clothing/gloves/ring,
 /turf/simulated/floor/carpet/red/fancy,
 /area/dmm_suite/clear_area)
 "K" = (
