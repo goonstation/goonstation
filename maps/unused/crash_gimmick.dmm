@@ -770,7 +770,6 @@
 	},
 /area/station/hangar/arrivals)
 "ark" = (
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -1685,7 +1684,6 @@
 	},
 /area/station/crew_quarters/quartersB)
 "aKv" = (
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -2134,7 +2132,6 @@
 	name = "Crew Module Infirmary"
 	})
 "aNb" = (
-/obj/machinery/power/apc/autoname_east,
 /obj/cable,
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -3293,7 +3290,6 @@
 	},
 /obj/table/auto,
 /obj/item/device/radio,
-/obj/machinery/power/apc/autoname_east,
 /turf/simulated/floor/yellow{
 	broken = 1;
 	desc = " It is made of steel.";
@@ -3360,7 +3356,6 @@
 	},
 /area/station/engine/elect)
 "aXi" = (
-/obj/machinery/power/apc/autoname_west,
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -3568,7 +3563,6 @@
 	},
 /area/station/mining/magnet)
 "aXT" = (
-/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -4351,7 +4345,6 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/apc/autoname_east,
 /turf/simulated/floor/engine{
 	desc = " It is made of steel.";
 	name = "steel reinforced floor"
@@ -6021,7 +6014,6 @@
 	},
 /area/station/hallway/secondary/west)
 "bfB" = (
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -6335,7 +6327,6 @@
 /turf/simulated/floor/grass,
 /area/station/garden/owlery)
 "bgX" = (
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -6492,7 +6483,6 @@
 	name = "VR simulation pod";
 	network = "arcadevr"
 	},
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -7903,7 +7893,6 @@
 	},
 /area/station/security/detectives_office)
 "bkF" = (
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -8707,7 +8696,6 @@
 /area/station/crew_quarters/fitness)
 "bnq" = (
 /obj/machinery/vending/coffee,
-/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -9907,7 +9895,6 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/power/apc/autoname_east,
 /turf/simulated/floor/blue/checker{
 	desc = " It is made of steel.";
 	dir = 8;
@@ -9986,7 +9973,6 @@
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
 "brk" = (
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -10167,7 +10153,6 @@
 	message = "Delivery alert in Morgue.";
 	name = "Morgue Outlet"
 	},
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -10475,7 +10460,6 @@
 	},
 /area/station/medical/cdc)
 "bsj" = (
-/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -10579,7 +10563,6 @@
 	},
 /area/station/maintenance/solar/north)
 "bsw" = (
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -11969,7 +11952,6 @@
 /area/station/medical/medbay/treatment2)
 "bwi" = (
 /obj/machinery/disposal,
-/obj/machinery/power/apc/autoname_west,
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -12553,7 +12535,6 @@
 	},
 /area/station/storage/tools)
 "bzc" = (
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -12987,35 +12968,12 @@
 	name = "steel plating"
 	},
 /area/station/maintenance/east)
-"bAd" = (
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/table/reinforced/auto,
-/obj/decal/cleanable/dirt,
-/obj/machinery/power/apc{
-	areastring = "Tool Storage";
-	dir = 1;
-	name = "Tool Storage APC";
-	pixel_y = 24
-	},
-/turf/simulated/floor/plating/random{
-	desc = " It is made of steel.";
-	name = "steel plating"
-	},
-/area/station/maintenance/east)
 "bAh" = (
 /obj/cable{
 	icon_state = "0-2"
 	},
 /obj/table/reinforced/auto,
 /obj/decal/cleanable/dirt,
-/obj/machinery/power/apc{
-	areastring = "East Secondary Hallway";
-	dir = 1;
-	name = "East Secondary Hallway APC";
-	pixel_y = 24
-	},
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
 	name = "steel plating"
@@ -14857,7 +14815,6 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/purpleblack{
 	broken = 1;
 	desc = " It is made of steel.";
@@ -15100,12 +15057,6 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/power/apc{
-	areastring = "North Secondary Hallway";
-	dir = 1;
-	name = "North Secondary Hallway APC";
-	pixel_y = 24
-	},
 /turf/simulated/floor/plating/random{
 	broken = 1;
 	desc = " It is made of steel.";
@@ -15211,12 +15162,6 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/power/apc{
-	areastring = "Medbay";
-	dir = 1;
-	name = "Medbay APC";
-	pixel_y = 24
-	},
 /turf/simulated/floor/stairs/dark/wide{
 	broken = 1;
 	desc = " It is made of steel.";
@@ -15233,12 +15178,6 @@
 	},
 /obj/disposalpipe/segment{
 	dir = 4
-	},
-/obj/machinery/power/apc{
-	areastring = "Medbay Lobby";
-	dir = 1;
-	name = "Medbay Lobby APC";
-	pixel_y = 24
 	},
 /turf/simulated/floor/black{
 	desc = " It is made of steel.";
@@ -15355,7 +15294,6 @@
 	},
 /area/station/maintenance/northeast)
 "bKs" = (
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -15985,7 +15923,6 @@
 	},
 /area/station/chapel/sanctuary)
 "bNv" = (
-/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -16019,7 +15956,6 @@
 /obj/machinery/traymachine/morgue{
 	dir = 2
 	},
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -17069,7 +17005,6 @@
 /turf/space,
 /area/station/chapel/office)
 "bRN" = (
-/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -17691,7 +17626,6 @@
 	name = "Artifact Lounge"
 	})
 "bVg" = (
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -18857,7 +18791,6 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/greenblack{
 	broken = 1;
 	desc = " It is made of steel.";
@@ -19128,7 +19061,6 @@
 /area/station/science/chemistry)
 "cav" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -22409,7 +22341,6 @@
 	icon_state = "0-8"
 	},
 /obj/storage/secure/closet/command/research_director,
-/obj/machinery/power/apc/autoname_east,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 10;
@@ -24375,7 +24306,6 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/apc/autoname_east,
 /obj/item/handcuffs,
 /obj/item/item_box/award_ribbon/participant,
 /obj/item/pinpointer/disk,
@@ -25839,13 +25769,13 @@
 	},
 /area/built_zone)
 "cxN" = (
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/table/reinforced/auto,
 /obj/item/sheet/glass/reinforced/fullstack,
+/obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
 	name = "steel plating"
@@ -26596,7 +26526,6 @@
 	},
 /area/station/medical/medbay/surgery)
 "czf" = (
-/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -27445,7 +27374,6 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/apc/autoname_east,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/darkblue{
 	broken = 1;
@@ -27851,7 +27779,6 @@
 	},
 /area/station/medical/medbay/cloner)
 "cCH" = (
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -28242,7 +28169,6 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5
 	},
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -28493,7 +28419,6 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/apc/autoname_east,
 /obj/storage/closet/biohazard,
 /turf/simulated/floor/black{
 	broken = 1;
@@ -28609,7 +28534,6 @@
 	},
 /area/station/maintenance/northwest)
 "cEO" = (
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -29071,7 +28995,6 @@
 /obj/machinery/computer/robot_module_rewriter{
 	dir = 4
 	},
-/obj/machinery/power/apc/autoname_west,
 /turf/simulated/floor/blue{
 	broken = 1;
 	desc = " It is made of steel.";
@@ -29764,7 +29687,6 @@
 	name = "Artifact Lounge"
 	})
 "cHf" = (
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -30409,7 +30331,6 @@
 	},
 /area/station/storage/tech)
 "cIT" = (
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -30433,12 +30354,6 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/computer3/luggable,
-/obj/machinery/power/apc{
-	areastring = "Net Cafe";
-	dir = 1;
-	name = "Net Cafe APC";
-	pixel_y = 24
-	},
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
 	name = "steel plating"
@@ -30755,7 +30670,6 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/apc/autoname_east,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 9;
@@ -30908,7 +30822,6 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/apc/autoname_north,
 /obj/storage/crate,
 /obj/item/clothing/head/NTberet{
 	desc = "It's a momento, I guess. An old keepsake. And maybe a reminder of the things we've left behind.";
@@ -32866,7 +32779,6 @@
 	},
 /area/station/teleporter)
 "cNT" = (
-/obj/machinery/power/apc/autoname_west,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-4"
@@ -33233,7 +33145,6 @@
 	},
 /area/station/medical/medbay/cloner)
 "cOB" = (
-/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -33466,7 +33377,6 @@
 	},
 /area/station/medical/medbay/pharmacy)
 "cOV" = (
-/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -33636,7 +33546,6 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/apc/autoname_north,
 /obj/decal/tile_edge/stripe{
 	dir = 4;
 	icon_state = "delivery";
@@ -33994,7 +33903,6 @@
 /obj/item/spraybottle/cleaner,
 /obj/item/reagent_containers/glass/bucket,
 /obj/item/sponge,
-/obj/machinery/power/apc/autoname_west,
 /turf/simulated/floor/purple/checker{
 	burnt = 1;
 	desc = " It is made of steel.";
@@ -34189,7 +34097,6 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/shuttlebay{
 	desc = " It is made of steel.";
 	name = "steel shuttle bay plating"
@@ -34385,7 +34292,6 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/apc/autoname_west,
 /obj/machinery/turret{
 	dir = 5
 	},
@@ -35232,7 +35138,6 @@
 	},
 /area/station/hangar/qm)
 "cTi" = (
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -35423,7 +35328,6 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/apc/autoname_north,
 /obj/table/reinforced/auto,
 /obj/item/surgical_spoon,
 /obj/item/spraybottle/cleaner,
@@ -36222,7 +36126,6 @@
 /obj/disposalpipe/segment/cargo{
 	dir = 4
 	},
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -36633,7 +36536,6 @@
 /obj/disposalpipe/segment/cargo{
 	dir = 4
 	},
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -37430,7 +37332,6 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/apc/autoname_east,
 /obj/landmark/start{
 	name = "Clown"
 	},
@@ -37453,7 +37354,6 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/apc/autoname_west,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/carpet/arcade{
 	desc = " It is made of temp.";
@@ -37523,7 +37423,6 @@
 /area/station/bridge/hos)
 "cYO" = (
 /obj/cable,
-/obj/machinery/power/apc/autoname_east,
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor{
 	desc = " It is made of steel.";
@@ -39556,12 +39455,6 @@
 	},
 /obj/disposalpipe/segment/bent/north,
 /obj/storage/crate/bloody,
-/obj/machinery/power/apc{
-	areastring = "West Primary Hallway";
-	dir = 8;
-	name = "West Primary Hallway APC";
-	pixel_x = -24
-	},
 /turf/simulated/floor/plating{
 	desc = " It is made of steel.";
 	name = "steel plating"
@@ -40670,7 +40563,6 @@
 /area/station/security/checkpoint/arrivals)
 "diK" = (
 /obj/table/reinforced/auto,
-/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -42619,7 +42511,6 @@
 	d2 = 8;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/apc/autoname_north,
 /turf/space,
 /area/space)
 "dzC" = (
@@ -43444,7 +43335,6 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/apc/autoname_east,
 /turf/space,
 /area/space)
 "dEl" = (
@@ -43566,7 +43456,6 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/apc/autoname_north,
 /turf/space,
 /area/space)
 "dEQ" = (
@@ -45798,7 +45687,6 @@
 	dir = 8;
 	name = "utility sink"
 	},
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -46835,7 +46723,6 @@
 	},
 /area/station/hydroponics/lobby)
 "eVn" = (
-/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -47055,7 +46942,6 @@
 	},
 /area/station/crew_quarters/pool)
 "eZx" = (
-/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -47142,7 +47028,6 @@
 	icon_state = "chair_couch-blue";
 	name = "ratty blue couch"
 	},
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -48616,7 +48501,6 @@
 /area/station/crew_quarters/courtroom)
 "fGC" = (
 /obj/storage/secure/closet/courtroom,
-/obj/machinery/power/apc/autoname_east,
 /obj/cable,
 /obj/decal/cleanable/dirt,
 /obj/disposalpipe/segment/transport{
@@ -48649,7 +48533,6 @@
 /area/station/maintenance/southwest)
 "fHl" = (
 /obj/cable,
-/obj/machinery/power/apc/autoname_east,
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/plating/random{
 	broken = 1;
@@ -50265,7 +50148,6 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/apc/autoname_east,
 /obj/decal/tile_edge/stripe{
 	icon_state = "delivery2";
 	tag = ""
@@ -52579,7 +52461,6 @@
 	require_login = 0;
 	screen = 1
 	},
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -53794,7 +53675,6 @@
 	},
 /area/station/crew_quarters/catering)
 "ica" = (
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -53886,7 +53766,6 @@
 /area/station/crew_quarters/kitchen)
 "iex" = (
 /obj/table/auto,
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -54072,7 +53951,6 @@
 /area/station/ai_monitored/armory)
 "ijE" = (
 /obj/machinery/weapon_stand/rifle_rack/recharger,
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -54332,7 +54210,6 @@
 	},
 /area/station/security/checkpoint/sec_foyer)
 "inD" = (
-/obj/machinery/power/apc/autoname_north,
 /obj/item/shaker/salt,
 /obj/cable{
 	d2 = 2;
@@ -56038,7 +55915,6 @@
 /obj/machinery/computer/security{
 	dir = 8
 	},
-/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -58871,12 +58747,6 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/apc{
-	areastring = "Escape Shuttle Hallway";
-	dir = 1;
-	name = "Escape Shuttle Hallway APC";
-	pixel_y = 24
-	},
 /turf/simulated/floor/plating{
 	desc = " It is made of steel.";
 	name = "steel plating"
@@ -59490,7 +59360,6 @@
 	},
 /area/station/hallway/secondary/exit)
 "kCv" = (
-/obj/machinery/power/apc/autoname_north,
 /obj/machinery/weapon_stand/taser_rack/recharger/empty,
 /obj/cable{
 	d2 = 2;
@@ -60746,7 +60615,6 @@
 /area/station/crew_quarters/baroffice)
 "lkh" = (
 /obj/table/wood/auto,
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -61337,7 +61205,6 @@
 /area/station/engine/engineering)
 "ltO" = (
 /obj/table/reinforced/auto,
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -61473,7 +61340,6 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 6
 	},
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -63060,7 +62926,6 @@
 	},
 /area/station/engine/core)
 "mkZ" = (
-/obj/machinery/power/apc/autoname_west,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -63922,7 +63787,6 @@
 	},
 /area/station/maintenance/southeast)
 "mEA" = (
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -63994,7 +63858,6 @@
 	},
 /area/station/hangar/sec)
 "mEW" = (
-/obj/machinery/power/apc/autoname_north,
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
@@ -65362,7 +65225,6 @@
 /obj/submachine/chem_extractor{
 	dir = 8
 	},
-/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -65960,7 +65822,6 @@
 	d2 = 8;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/apc/autoname_west,
 /turf/space,
 /area/station/storage/auxillary)
 "nAE" = (
@@ -66591,7 +66452,6 @@
 	},
 /area/station/maintenance/south)
 "nSk" = (
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -67222,7 +67082,6 @@
 	},
 /area/station/security/main)
 "ofw" = (
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -70972,7 +70831,6 @@
 "pTS" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/emergency,
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -73262,7 +73120,6 @@
 	},
 /area/station/crew_quarters/ce)
 "qRS" = (
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -73852,7 +73709,6 @@
 /turf/space,
 /area/station/engine/substation/east)
 "rgO" = (
-/obj/machinery/power/apc/autoname_north,
 /obj/machinery/space_heater,
 /obj/cable{
 	icon_state = "0-2"
@@ -74017,7 +73873,6 @@
 	},
 /area/station/engine/coldloop)
 "rkn" = (
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -76886,7 +76741,6 @@
 	},
 /area/station/quartermaster/storage)
 "sHd" = (
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -77977,7 +77831,6 @@
 /obj/stool/chair/green{
 	dir = 8
 	},
-/obj/machinery/power/apc/autoname_east,
 /obj/cable,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
@@ -78153,7 +78006,6 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/apc/autoname_east,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
@@ -78241,7 +78093,6 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/apc/autoname_west,
 /turf/simulated/floor/shuttlebay{
 	desc = " It is made of steel.";
 	name = "steel shuttle bay plating"
@@ -79143,7 +78994,6 @@
 	},
 /area/station/maintenance/southeast)
 "tMS" = (
-/obj/machinery/power/apc/autoname_west,
 /obj/cable,
 /obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/plating/random{
@@ -79487,7 +79337,6 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/power/apc/autoname_north,
 /turf/space,
 /area/station/security/checkpoint/podbay{
 	name = "NanoTrasen Labor Camp Shuttle"
@@ -80740,7 +80589,6 @@
 	},
 /area/station/engine/substation/north)
 "uEZ" = (
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -80940,7 +80788,6 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/power/apc/autoname_north,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -81663,7 +81510,6 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/plating{
 	desc = " It is made of steel.";
 	name = "steel plating"
@@ -82449,7 +82295,6 @@
 /area/station/turret_protected/ai)
 "vAD" = (
 /obj/cable,
-/obj/machinery/power/apc/autoname_east,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
 /turf/simulated/floor/circuit{
 	desc = "An elaborate, faintly glowing matrix of isolinear circuitry. It is made of pharosium.";
@@ -83454,7 +83299,6 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/apc/autoname_north,
 /obj/decal/cleanable/cobweb,
 /turf/simulated/floor/plating{
 	desc = " It is made of steel.";
@@ -84256,7 +84100,6 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/apc/autoname_west,
 /turf/simulated/floor/plating{
 	desc = " It is made of steel.";
 	name = "steel plating"
@@ -84644,7 +84487,6 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/apc/autoname_east,
 /turf/space,
 /area/station/storage/emergency2{
 	name = "Hilarious Storage B"
@@ -164422,7 +164264,7 @@ dGb
 dGb
 dGb
 bzG
-bAd
+bAh
 bCj
 bDb
 bED
