@@ -1,4 +1,9 @@
 
+(t)wed jun 08 22
+(u)Taylor Kellogg
+(p)9032
+(e)|
+(+)Adds an abort button to the Chemicompiler
 (t)tue jun 07 22
 (u)tarmunora, catface
 (e)⚖|balance
