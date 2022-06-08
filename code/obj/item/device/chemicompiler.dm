@@ -34,7 +34,7 @@
 		if(src.loc != usr)
 			return 0
 		if(executor.core.running)
-			return action in list("getUIState", "abortCode") ? 1 : 0
+			return action in list("getUIState", "reportError", "abortCode")
 		return 1
 
 	process()
