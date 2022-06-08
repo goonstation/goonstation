@@ -1,8 +1,8 @@
 
 (t)tue jun 07 22
-(u)tarmunora
+(u)tarmunora, catface
 (e)⚖|balance
-(+)Hand teles have a 100PU internal cell, and use 25PU per portal. Rechargers in tele rooms coming soon™
+(+)Hand teles have a 100PU internal cell, and use 25PU per portal. Rechargers in tele rooms ~~coming soon™~~ added to maps
 (u)Azrun
 (e)⚖🔥|balance
 (+)Pipe repairs use slightly less fuel and should stay repaired a bit longer.
