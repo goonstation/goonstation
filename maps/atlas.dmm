@@ -984,9 +984,9 @@
 /area/station/quartermaster/office)
 "cs" = (
 /obj/machinery/door/airlock/pyro/glass{
-	name = "Cargo";
-	req_access_txt = "27"
+	name = "Cargo"
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
 "ct" = (
