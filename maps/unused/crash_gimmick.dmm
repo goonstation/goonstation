@@ -21251,9 +21251,9 @@
 	},
 /area/built_zone)
 "ciS" = (
-/obj/table/reinforced/auto,
-/obj/item/plate,
-/obj/item/reagent_containers/food/snacks/burger/moldy,
+/obj/machinery/manufacturer{
+	mats = 999
+	},
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
 	name = "steel plating"
@@ -21267,7 +21267,9 @@
 	},
 /area/built_zone)
 "ciV" = (
-/obj/machinery/manufacturer/mechanic,
+/obj/machinery/manufacturer/mechanic{
+	mats = 999
+	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 9;
