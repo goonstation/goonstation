@@ -789,11 +789,11 @@ proc/antagify(mob/H, var/traitor_role, var/agimmick)
 		for(var/i = 0, i < num_objectives, i++)
 			var/select_objective = pick(eligible_objectives)
 			new select_objective(null, H.mind)
-			H << browse(grabResource("html/traitorTips/traitorhardTips.html"),"window=antagTips;titlebar=1;size=600x400;can_minimize=0;can_resize=0")
+			H.show_antag_popup("traitorhard")
 			ticker.mode.traitors |= H.mind
 	else
 		ticker.mode.Agimmicks |= H.mind
-		H << browse(grabResource("html/traitorTips/traitorGenericTips.html"),"window=antagTips;titlebar=1;size=600x400;can_minimize=0;can_resize=0")
+		H.show_antag_popup("traitorgeneric")
 	if (traitor_role)
 		H.mind.special_role = traitor_role
 	else
