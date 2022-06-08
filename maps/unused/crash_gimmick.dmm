@@ -24552,14 +24552,12 @@
 	},
 /area/built_zone)
 "cub" = (
-/obj/machinery/power/furnace/thermo{
-	fuel = 100
-	},
 /obj/item/storage/box/cablesbox/yellow,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/machinery/power/furnace,
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
 	name = "steel plating"
@@ -43774,13 +43772,11 @@
 	},
 /area/shuttle/arrival/station)
 "dGP" = (
-/obj/machinery/power/furnace/thermo{
-	fuel = 100
-	},
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/machinery/power/furnace,
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
 	name = "steel plating"
@@ -59582,6 +59578,10 @@
 	name = "steel floor"
 	},
 /area/station/security/brig/genpop)
+"kHC" = (
+/obj/storage/crate/furnacefuel,
+/turf/space,
+/area/space)
 "kHQ" = (
 /obj/disposalpipe/junction/middle/west,
 /turf/simulated/floor/white{
@@ -140774,8 +140774,8 @@ dGb
 dGb
 dGb
 dGb
-dGb
-dGb
+kHC
+kHC
 wXe
 oxP
 oxP
