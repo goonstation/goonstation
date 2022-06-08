@@ -477,7 +477,7 @@
 
 /datum/action/bar/flock_entomb
 	id = "flock_entomb"
-	interrupt_flags = INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 4 SECONDS
 	resumable = FALSE
 
