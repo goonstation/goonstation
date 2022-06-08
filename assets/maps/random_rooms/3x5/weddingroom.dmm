@@ -50,13 +50,22 @@
 "J" = (
 /obj/table/wood/auto/desk,
 /obj/item/device/light/candle/small{
-	pixel_x = -8;
-	pixel_y = 7
+	pixel_x = -7;
+	pixel_y = 10
 	},
 /obj/machinery/light/small/floor/warm,
-/obj/item/storage/bible,
-/obj/item/clothing/gloves/ring/gold,
-/obj/item/clothing/gloves/ring,
+/obj/item/storage/bible{
+	pixel_y = 4;
+	pixel_x = 6
+	},
+/obj/item/clothing/gloves/ring/gold{
+	pixel_x = -8;
+	pixel_y = -2
+	},
+/obj/item/clothing/gloves/ring{
+	pixel_y = -3;
+	pixel_x = -4
+	},
 /turf/simulated/floor/carpet/red/fancy,
 /area/dmm_suite/clear_area)
 "K" = (
