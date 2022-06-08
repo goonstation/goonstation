@@ -14,7 +14,7 @@
 /area/dmm_suite/clear_area)
 "f" = (
 /obj/decal/poster/wallsign/newtonscrew{
-	desc = "The Beestro has a food safety rating of D-. Large quantities of the chef's vomit were present in the food.";
+	desc = "The Beestro has a food safety rating of B-. Large quantities of the chef's vomit were present in the food.";
 	pixel_y = 26;
 	name = "Beestro Food Safety Rating Plaque"
 	},
