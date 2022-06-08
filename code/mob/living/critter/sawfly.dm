@@ -19,7 +19,6 @@ This file is the critter itself, and all the custom procs it needs in order to f
 	var/isnew = TRUE // for seeing whether or not they will make a new name on redeployment
 	var/sawflynames = list("A", "B", "C", "D", "E", "F", "V", "W", "X", "Y", "Z", "Alpha", "Beta", "Gamma", "Lambda", "Delta")
 	health = 50 //this value's pretty arbitrary, since it's overridden when they get their healtholders
-	var/fliesnearby = 0 //for rolling chance to beep
 	var/beeps = list('sound/machines/sawfly1.ogg','sound/machines/sawfly2.ogg','sound/machines/sawfly3.ogg')
 	var/friends = list()
 	misstep_chance = 40 //makes them behave more like drones, and harder to kite into a straightaway then shoot
@@ -87,8 +86,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 
 
 	proc/communalbeep() // distributes the beepchance among the number of sawflies nearby
-
-		fliesnearby = 1 //that's you, little man! :)
+		var/fliesnearby = 1 //for rolling chance to beep
 		for_by_tcl(E, /mob/living/critter/robotic/sawfly)
 			if(isalive(E) && IN_RANGE(src, E, 16)) //counts all of them within more or less earshot
 				src.fliesnearby += 1 //that's your buddies!
