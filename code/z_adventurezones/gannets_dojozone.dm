@@ -138,7 +138,7 @@ Contents:
 //	slot_belt = /obj/item/katana_sheath
 	slot_jump = list(/obj/item/clothing/under/gimmick/hakama/random)
 	slot_head = list(/obj/item/clothing/head/bandana/random_color)
-	slot_foot = list(/obj/item/clothing/shoes/sandal)
+	slot_foot = list(/obj/item/clothing/shoes/sandal/wizard)
 	slot_rhan = null
 	slot_lhan = list(/obj/item/dojohammer)
 	slot_belt = list(/obj/item/katana_sheath/reverse)
