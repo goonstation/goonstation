@@ -89,7 +89,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 		var/fliesnearby = 1 //for rolling chance to beep
 		for_by_tcl(E, /mob/living/critter/robotic/sawfly)
 			if(isalive(E) && IN_RANGE(src, E, 16)) //counts all of them within more or less earshot
-				src.fliesnearby += 1 //that's your buddies!
+				fliesnearby += 1 //that's your buddies!
 		var/beepchance = (1 / fliesnearby) * 100 //if two sawflies, give 50% chance that any one will beep
 		if(fliesnearby<3) beepchance -=20 //heavily reduce chance of beep in swarm
 		if(prob(beepchance))
@@ -189,8 +189,8 @@ This file is the critter itself, and all the custom procs it needs in order to f
 					boutput(user, "You collapse [src].")
 					src.foldself()
 		else
-			if(prob(50))
-				boutput(user,"<span class='alert' In your attempt to pet the [src], you cut yourself on its blades! </span>")
+			if(prob(50)&& isalive(src))
+				visible_message(user,"<span class='alert' In their attempt to pet the [src], [user] cuts themselves! </span>")
 				random_brute_damage(user, 7)
 				take_bleeding_damage(user, null, 7, DAMAGE_CUT, 1)
 		..()
