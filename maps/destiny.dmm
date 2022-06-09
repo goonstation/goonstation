@@ -17445,7 +17445,6 @@
 /area/station/quartermaster/cargobay)
 "caP" = (
 /obj/table/auto,
-/obj/item/hand_tele,
 /obj/decal/tile_edge/line/blue{
 	dir = 4;
 	icon_state = "line1"
@@ -17455,6 +17454,10 @@
 	dir = 9;
 	name = "autoname - SS13"
 	},
+/obj/machinery/recharger{
+	pixel_y = 5
+	},
+/obj/item/hand_tele,
 /turf/simulated/floor/black,
 /area/station/teleporter)
 "caW" = (
