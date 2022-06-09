@@ -19897,7 +19897,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/door/poddoor/pyro/shutters{
-	density = density;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "lockdown";
 	name = "Bridge Lockdown Doors";

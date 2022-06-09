@@ -8939,7 +8939,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/brig/genpop)
 "vv" = (
-/obj/machinery/door/poddoor/pyro/shutters
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 6;
 	icon_state = "pdoor0";
