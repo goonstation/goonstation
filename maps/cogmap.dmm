@@ -7940,7 +7940,7 @@
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
-	id = brig_divide;
+	id = "brig_divide";
 	name = "Brig Divider Shutters";
 	opacity = 0
 	},
@@ -7955,7 +7955,7 @@
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
-	id = brig_divide;
+	id = "brig_divide";
 	name = "Brig Divider Shutters";
 	opacity = 0
 	},
@@ -46115,7 +46115,7 @@
 	density = 0;
 	dir = 4;
 	icon_state = "pdoor0";
-	id = chemistry;
+	id = "chemistry";
 	name = "Chemistry Privacy Shutters";
 	opacity = 0
 	},
@@ -46624,7 +46624,7 @@
 	density = 0;
 	dir = 4;
 	icon_state = "pdoor0";
-	id = chemistry;
+	id = "chemistry";
 	name = "Chemistry Privacy Shutters";
 	opacity = 0
 	},
@@ -47214,7 +47214,7 @@
 	density = 0;
 	dir = 4;
 	icon_state = "pdoor0";
-	id = chemistry;
+	id = "chemistry";
 	name = "Chemistry Privacy Shutters";
 	opacity = 0
 	},
@@ -48663,7 +48663,7 @@
 	density = 0;
 	dir = 4;
 	icon_state = "pdoor0";
-	id = chemistry;
+	id = "chemistry";
 	name = "Chemistry Privacy Shutters";
 	opacity = 0
 	},
@@ -58690,7 +58690,7 @@
 	density = 0;
 	dir = 4;
 	icon_state = "pdoor0";
-	id = chemistry;
+	id = "chemistry";
 	name = "Chemistry Privacy Shutters";
 	opacity = 0
 	},
@@ -60261,7 +60261,7 @@
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
-	id = test_chamber2;
+	id = "test_chamber2";
 	name = "Test Chamber Shield";
 	opacity = 0
 	},
@@ -62376,7 +62376,7 @@
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
-	id = chemistry;
+	id = "chemistry";
 	name = "Chemistry Privacy Shutters";
 	opacity = 0
 	},
@@ -62391,7 +62391,7 @@
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
-	id = chemistry;
+	id = "chemistry";
 	name = "Chemistry Privacy Shutters";
 	opacity = 0
 	},
@@ -64495,7 +64495,7 @@
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
-	id = chemistry;
+	id = "chemistry";
 	name = "Chemistry Privacy Shutters";
 	opacity = 0
 	},
