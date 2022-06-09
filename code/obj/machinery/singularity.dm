@@ -1356,7 +1356,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		CAW = locate(/obj/machinery/power/collector_array) in get_step(src,WEST)
 		S = list()
 		for_by_tcl(singu, /obj/machinery/the_singularity)//this loop checks for valid singularities
-			if(!QDELETED(singu) && get_dist(singu,loc)<SINGULARITY_MAX_DIMENSION+2 )
+			if(!QDELETED(singu) && GET_DIST(singu,loc)<SINGULARITY_MAX_DIMENSION+2 )
 				S |= singu
 
 		if(!isnull(CAN))
