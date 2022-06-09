@@ -560,6 +560,8 @@
 			P.icon_state = C.ball.icon_state
 			if(debug)
 				P.color = the_item.color
+			else
+				P.color = C.ball.color
 			C.ball.set_loc(P)
 			P.special_data["ball"] = C.ball
 			P.special_data["debug"] = debug
