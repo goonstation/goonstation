@@ -1,4 +1,9 @@
 
+(t)thu jun 09 22
+(u)LeahTheTech
+(p)9052
+(e)🐛|bug
+(+)Renamed the "Open antag popup" verb to "Special role popup"
 (t)wed jun 08 22
 (u)NightmareChamillian and Amylizzle
 (p)8418
