@@ -32875,7 +32875,7 @@
 	icon_state = "1-4"
 	},
 /obj/table/reinforced/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/main)
 "bxZ" = (
@@ -37665,7 +37665,7 @@
 /area/station/hallway/primary/east)
 "bHk" = (
 /obj/table/reinforced/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	dir = 4;
@@ -37757,7 +37757,7 @@
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	pixel_x = 1;
 	pixel_y = 10
 	},
@@ -56265,7 +56265,7 @@
 /area/station/science/lobby)
 "cvT" = (
 /obj/table/reinforced/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/carpet{
 	dir = 1;
@@ -56868,7 +56868,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
 "cxh" = (
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /obj/table/auto,
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
@@ -67448,7 +67448,7 @@
 /area/station/science/chemistry)
 "cVc" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
@@ -69357,7 +69357,7 @@
 /area/station/medical/cdc)
 "cZb" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
@@ -69406,7 +69406,7 @@
 /obj/item/storage/toolbox/emergency,
 /obj/item/hand_labeler,
 /obj/table/glass/reinforced/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /obj/item/clothing/glasses/spectro,
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/carpet{

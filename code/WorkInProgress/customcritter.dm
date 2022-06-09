@@ -1657,7 +1657,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 	var/static/list/presets = list("Alien" = "alien", "Cat" = "cat1", "Chicken" = "chicken", "Darkness" = "darkness", "Death" = "death", "Floating Eye" = "floateye", "Killer Tomato" = "ktomato" ,\
 "Ice Spider" = "icespider", "Ice Spider Baby" = "babyicespider", "Ice Spider Queen" = "gianticespider", "Lion" = "lion",\
 "Man Eater" = "maneater", "Martian" = "martian", "Martian (psychic)" = "martianP", "Martian (sapper)" = "martianSP", "Martian (soldier)" = "martianS", "Martian (warrior)" = "martianW", "Mouse" = "mouse",\
-"Mutant" = "blobman", "Plasma Spore" = "spore", "Roach" = "roach", "Spider" = "spider", "Town Guard" = "townguard", "TURD" = "TURDS", \
+"Mutant" = "blobman", "Plasma Spore" = "spore", "Roach" = "roach", "Spider" = "spider", "Town Guard" = "townguard", \
 "Weird Thing" = "ancientrobot", "Brullbar" = "brullbar",\
 "Brullbar King" = "brullbarking", "Zombie" = "zombie", "Zombie (science)" = "scizombie", "Zombie (security)" = "seczombie", "cancel" = "cancel")
 	var/static/list/ability_cache = list()
