@@ -4,6 +4,7 @@
 /obj/flock_structure/cage
 	name = "weird energy cage"
 	desc = "You can see the person inside being rapidly taken apart by fibrous mechanisms. You ought to do something about that."
+	flock_desc = "Spins living matter into Flockdrones. Painfully."
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "cage"
 	flock_id = "matter reprocessor"

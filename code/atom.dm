@@ -522,9 +522,7 @@
 		if (islist(src.tracked_blood))
 			src.track_blood()
 		actions.interrupt(src, INTERRUPT_MOVE)
-		#ifdef COMSIG_MOVABLE_MOVED
 		SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, A, direct)
-		#endif
 	//note : move is still called when we are steping into a wall. sometimes these are unnecesssary i think
 
 	if(last_turf == src.loc)

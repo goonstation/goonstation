@@ -3068,7 +3068,7 @@
 	if(ispath(mutantrace_type, /datum/mutantrace) )	//Set a new mutantrace only if passed one
 		src.mutantrace = new mutantrace_type(src)
 		src.mutantrace.MutateMutant(src, "set")
-
+		src.mutantrace.on_attach() // Mutant race initalization, to avoid issues with abstract representation in New()
 		. = 1
 
 	if(.)

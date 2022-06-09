@@ -17445,7 +17445,6 @@
 /area/station/quartermaster/cargobay)
 "caP" = (
 /obj/table/auto,
-/obj/item/hand_tele,
 /obj/decal/tile_edge/line/blue{
 	dir = 4;
 	icon_state = "line1"
@@ -17455,6 +17454,10 @@
 	dir = 9;
 	name = "autoname - SS13"
 	},
+/obj/machinery/recharger{
+	pixel_y = 5
+	},
+/obj/item/hand_tele,
 /turf/simulated/floor/black,
 /area/station/teleporter)
 "caW" = (
@@ -21567,7 +21570,7 @@
 	dir = 0;
 	name = "autoname - SS13"
 	},
-/obj/machinery/light/lamp/bright,
+/obj/machinery/light/lamp/black/bright,
 /obj/item/storage/secure/ssafe{
 	pixel_y = 28
 	},
@@ -26417,7 +26420,7 @@
 /area/station/security/beepsky)
 "gaP" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp/bright,
+/obj/machinery/light/lamp/black/bright,
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
@@ -32387,7 +32390,7 @@
 	dir = 0;
 	name = "autoname - SS13"
 	},
-/obj/machinery/light/lamp/bright,
+/obj/machinery/light/lamp/black/bright,
 /obj/item/storage/secure/ssafe{
 	pixel_y = 28
 	},
@@ -38583,7 +38586,7 @@
 	pixel_x = 20
 	},
 /obj/table/wood/round/auto,
-/obj/machinery/light/lamp/bright{
+/obj/machinery/light/lamp/black/bright{
 	pixel_y = 5
 	},
 /turf/simulated/floor/wood{
@@ -40752,7 +40755,7 @@
 /area/station/security/main)
 "nNy" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp/bright,
+/obj/machinery/light/lamp/black/bright,
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
@@ -42007,7 +42010,7 @@
 	dir = 0;
 	name = "autoname - SS13"
 	},
-/obj/machinery/light/lamp/bright,
+/obj/machinery/light/lamp/black/bright,
 /obj/item/storage/secure/ssafe{
 	pixel_y = 28
 	},
@@ -42209,7 +42212,7 @@
 	pixel_y = 28
 	},
 /obj/table/wood/auto/desk,
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	pixel_x = -5;
 	pixel_y = 10;
 	switchon = 1
@@ -49701,7 +49704,7 @@
 /area/station/bridge)
 "sLL" = (
 /obj/table/wood/auto/desk,
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	pixel_x = -5;
 	pixel_y = 10;
 	switchon = 1
@@ -54091,7 +54094,7 @@
 	dir = 0;
 	name = "autoname - SS13"
 	},
-/obj/machinery/light/lamp/bright,
+/obj/machinery/light/lamp/black/bright,
 /obj/item/storage/secure/ssafe{
 	pixel_y = 28
 	},
@@ -54417,7 +54420,7 @@
 /area/station/science/teleporter)
 "vbF" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp/bright,
+/obj/machinery/light/lamp/black/bright,
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
@@ -55116,7 +55119,7 @@
 /area/station/security/detectives_office)
 "vtX" = (
 /obj/table/wood/auto/desk,
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	pixel_x = -5;
 	pixel_y = 10;
 	switchon = 1
@@ -57417,7 +57420,7 @@
 /area/station/engine/core)
 "wDt" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp/bright,
+/obj/machinery/light/lamp/black/bright,
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
@@ -58034,7 +58037,7 @@
 /area/station/crew_quarters/observatory)
 "wTy" = (
 /obj/table/wood/auto/desk,
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	pixel_x = -5;
 	pixel_y = 10;
 	switchon = 1

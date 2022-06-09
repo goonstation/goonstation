@@ -677,7 +677,6 @@
 				if (!src.restrained() && !src.stat)
 					if (istype(src.head, /obj/item/clothing/head/mj_hat || /obj/item/clothing/head/det_hat/))
 						src.say (pick("M'lady", "M'lord", "M'liege")) //male, female and non-binary variants with alliteration
-						//maptext_out = "<I>tips their fedora</I>"
 					if (istype(src.head, /obj/item/clothing/head/fedora))
 						src.visible_message("[src] tips [his_or_her(src)] fedora and smirks.")
 						src.say ("M'lady")
@@ -714,7 +713,7 @@
 						message = "<B>[src]</B> throws [his_or_her(src)] [hat_or_beret] on the floor and stomps on it![already_stomped]\
 						<br><B>[src]</B> grumbles, \"<i>rasmn frasmn grmmn</i>.\""
 
-					maptext_out = "<I>stomps on their hat!</I>"
+					maptext_out = "<I>stomps on [his_or_her(src)] hat!</I>"
 
 					src.drop_from_slot(hat) // we're done here, drop that hat!
 					hat.pixel_x = 0
@@ -958,13 +957,13 @@
 					maptext_out = "<I>raises a hand</I>"
 				else
 					message = "<B>[src]</B> tries to move [his_or_her(src)] arm."
-					maptext_out = "<I>tries to move their arm</I>"
+					maptext_out = "<I>tries to move [his_or_her(src)] arm</I>"
 				m_type = 1
 
 			if ("crackknuckles","knuckles")
 				if (!src.restrained())
 					message = "<B>[src]</B> cracks [his_or_her(src)] knuckles."
-					maptext_out = "<I>cracks their knuckles</I>"
+					maptext_out = "<I>cracks [his_or_her(src)] knuckles</I>"
 				else
 					message = "<B>[src]</B> irritably shuffles around."
 					maptext_out = "<I>irritably shuffles around</I>"
@@ -985,7 +984,7 @@
 					maptext_out = "<I>makes a rude gesture</I>"
 				else
 					message = "<B>[src]</B> tries to move [his_or_her(src)] arm."
-					maptext_out = "<I>tries to move their arm</I>"
+					maptext_out = "<I>tries to move [his_or_her(src)] arm</I>"
 				m_type = 1
 
 			if ("cry")
@@ -1045,7 +1044,7 @@
 			if ("smug")
 				if (!src.restrained())
 					message = "<B>[src]</B> folds [his_or_her(src)] arms and smirks broadly, making a self-satisfied \"heh\"."
-					maptext_out = "<I>folds their arms and smirks broadly</I>"
+					maptext_out = "<I>folds [his_or_her(src)] arms and smirks broadly</I>"
 				else
 					message = "<B>[src]</B> shuffles a bit and smirks broadly, emitting a rather self-satisfied noise."
 					maptext_out = "<I>shuffles a bit and smirks broadly</I>"
@@ -1056,10 +1055,10 @@
 			if ("nosepick","picknose")
 				if (!src.restrained())
 					message = "<B>[src]</B> picks [his_or_her(src)] nose."
-					maptext_out = "<I>picks their nose</I>"
+					maptext_out = "<I>picks [his_or_her(src)] nose</I>"
 				else
 					message = "<B>[src]</B> sniffs and scrunches [his_or_her(src)] face up irritably."
-					maptext_out = "<I>sniffs and scrunches their face up irritably</I>"
+					maptext_out = "<I>sniffs and scrunches [his_or_her(src)] face up irritably</I>"
 				m_type = 1
 				if (src.mind)
 					src.add_karma(-1)
