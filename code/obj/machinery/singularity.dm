@@ -1418,8 +1418,10 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			overlays += image('icons/obj/singularity.dmi', "cu n error")
 		if(length(S))
 			overlays += image('icons/obj/singularity.dmi', "cu sing")
-			if(!S[1].active)
-				overlays += image('icons/obj/singularity.dmi', "cu conterr")
+			for(var/obj/machinery/the_singularity/singu in S)
+				if(!singu.active)
+					overlays += image('icons/obj/singularity.dmi', "cu conterr")
+					break
 	else
 		overlays += image('icons/obj/singularity.dmi', "cu on")
 		overlays += image('icons/obj/singularity.dmi', "cu 1 on")
