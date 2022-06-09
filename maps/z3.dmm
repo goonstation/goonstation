@@ -2023,7 +2023,7 @@
 /area/space_hive)
 "agd" = (
 /obj/table/auto,
-/obj/machinery/light/lamp/bright,
+/obj/machinery/light/lamp/black/bright,
 /turf/simulated/floor/black,
 /area/mining/quarters)
 "age" = (

@@ -11982,7 +11982,7 @@
 /obj/table/reinforced/chemistry/auto,
 /obj/item/disk/data/cartridge/botanist,
 /obj/random_item_spawner/desk_stuff,
-/obj/machinery/light/lamp/bright,
+/obj/machinery/light/lamp/black/bright,
 /obj/map/light/screen,
 /obj/decal/tile_edge/line/grey{
 	icon_state = "line-broken1"

@@ -31239,7 +31239,7 @@
 /obj/table/auto,
 /obj/deskclutter,
 /obj/decal/cleanable/dirt/jen,
-/obj/machinery/light/lamp/bright{
+/obj/machinery/light/lamp/black/bright{
 	pixel_x = -3;
 	pixel_y = 12
 	},
