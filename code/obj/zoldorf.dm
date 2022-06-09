@@ -242,7 +242,7 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 		src.souldorfs.Add(Z)
 		src.occupied = 1
 		the_zoldorf.Add(Z)
-		Z << browse(grabResource("html/traitorTips/zoldorfTips.htm"),"window=antagTips;titlebar=1;size=600x400;can_minimize=0;can_resize=0")
+		Z.show_antag_popup("zoldorf")
 		src.usurpgrace = world.time + 3000
 		src.YN = null
 		src.usurper = null
