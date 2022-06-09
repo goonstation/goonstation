@@ -27363,7 +27363,6 @@
 /area/station/teleporter)
 "bfC" = (
 /obj/table/auto,
-/obj/item/hand_tele,
 /obj/decal/tile_edge/line/blue{
 	dir = 1;
 	icon_state = "line1"
@@ -27378,6 +27377,9 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/machinery/recharger{
+	pixel_y = 5
+	},
 /turf/simulated/floor/circuit,
 /area/station/teleporter)
 "bfD" = (
@@ -27386,7 +27388,10 @@
 	icon_state = "line2"
 	},
 /obj/table/auto,
-/obj/item/hand_tele,
+/obj/item/hand_tele{
+	pixel_y = 8;
+	pixel_x = 2
+	},
 /obj/machinery/firealarm{
 	layer = 3.5;
 	pixel_x = -5;
@@ -27395,6 +27400,10 @@
 /obj/machinery/light_switch/south{
 	pixel_x = 10;
 	pixel_y = 28
+	},
+/obj/item/hand_tele{
+	pixel_y = 6;
+	pixel_x = -2
 	},
 /turf/simulated/floor/circuit,
 /area/station/teleporter)
@@ -46297,7 +46306,7 @@
 	},
 /obj/table/wood/auto,
 /obj/displaycase{
-	displayed = new /obj/item/captaingun();
+	displayed = new/obj/item/captaingun();
 	pixel_y = 8
 	},
 /turf/simulated/floor/carpet/arcade,

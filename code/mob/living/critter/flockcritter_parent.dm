@@ -96,7 +96,7 @@
 	src.dormant = TRUE
 	src.ai?.die()
 	actions.stop_all(src)
-
+	src.is_npc = FALSE
 	if (!src.flock)
 		return
 

@@ -1457,7 +1457,6 @@
 	dir = 4;
 	pixel_x = 10
 	},
-/obj/item/radio_tape/advertisement/dans_tickets,
 /obj/item/radio_tape/advertisement/grones{
 	pixel_x = 6;
 	pixel_y = 4
@@ -1471,7 +1470,6 @@
 	pixel_x = 2;
 	pixel_y = -6
 	},
-/obj/item/radio_tape/advertisement/pope_crunch,
 /obj/item/radio_tape/advertisement/security_psa{
 	pixel_x = -3;
 	pixel_y = 4

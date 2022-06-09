@@ -459,7 +459,7 @@
 	stamina_cost = 16
 	stamina_crit_chance = 30
 	rand_pos = 1
-	var/obj/item/golf_ball/ball
+	var/obj/item/ball
 	var/obj/ability_button/swing = new /obj/ability_button/golf_swing
 	var/putting = TRUE
 
@@ -475,8 +475,7 @@
 			new /obj/item/storage/golf_goal(newLoc)
 
 	afterattack(obj/O as obj, mob/user as mob)
-		var/obj/item/golf_ball/B = O
-		if(istype(B))
+		if(HAS_ATOM_PROPERTY(O, PROP_OBJ_GOLFABLE) && isturf(O.loc))
 			step(user, get_dir(user, O))
 			animate(user, pixel_x=O.pixel_x, pixel_y=O.pixel_y, 2 SECONDS, easing=CUBIC_EASING | EASE_OUT)
 			SPAWN(1 SECONDS)
@@ -518,7 +517,13 @@
 			JOB_XP(the_mob, "Clown", 4)
 			return
 
-		var/datum/projectile/ballshot = C.ball.ball_projectile
+		var/obj/item/golf_ball/GB = C.ball
+
+		var/datum/projectile/ballshot
+		if(istype(GB))
+			ballshot = GB.ball_projectile
+		else
+			ballshot = new /datum/projectile/special/golfball
 
 		var/debug = istype(C, /obj/item/golf_club/test)
 		var/pox = text2num(params["icon-x"]) - 16
@@ -528,10 +533,11 @@
 		swing_strength /= 32
 		swing_strength *= get_swing_strength_mod(the_mob, C)
 
-		C.ball.strike(C, the_mob, swing_strength)
+		if(istype(GB))
+			GB.strike(C, the_mob, swing_strength)
 
 		if(QDELETED(C.ball))
-			return
+			C.ball = null
 
 		if(!istype(C) || !C.ball || !ballshot)
 			return
@@ -550,11 +556,10 @@
 			P.targets = list(target)
 			P.mob_shooter = the_mob
 			P.shooter = the_mob
+			P.icon = C.ball.icon
+			P.icon_state = C.ball.icon_state
 			if(debug)
 				P.color = the_item.color
-			else
-				P.color = C.ball.color
-
 			C.ball.set_loc(P)
 			P.special_data["ball"] = C.ball
 			P.special_data["debug"] = debug
@@ -562,6 +567,7 @@
 			P.proj_data.RegisterSignal(P, list(COMSIG_MOVABLE_MOVED), /datum/projectile/special/golfball/proc/check_newloc)
 
 		animate(the_mob, pixel_x=0, pixel_y=0, 1 SECONDS, easing=CUBIC_EASING)
+		C.ball = null
 
 	proc/get_swing_strength_mod(mob/user, obj/item/golf_club/C)
 		. = 1
@@ -642,13 +648,16 @@
 		var/obj/item/golf_ball/ball = projectile.special_data["ball"]
 		if(projectile.reflectcount < src.max_bounce_count)
 			var/reflect_power = max(0, projectile.max_range*(1-(projectile.travelled/(projectile.max_range*32))))
-			ball.strike(A, projectile.mob_shooter, reflect_power, TRUE)
+			if(istype(ball))
+				ball.strike(A, projectile.mob_shooter, reflect_power, TRUE)
 			if(QDELETED(ball))
 				return
 
 			var/obj/projectile/Q = shoot_reflected_bounce(projectile, A, src.max_bounce_count, PROJ_RAPID_HEADON_BOUNCE)
 			if(Q)
 				ball.set_loc(Q)
+				Q.icon = projectile.icon
+				Q.icon_state = projectile.icon_state
 				Q.color = projectile.color
 				Q.special_data["ball"] = ball
 				Q.travelled = projectile.travelled
@@ -679,12 +688,13 @@
 	on_max_range_die(var/obj/projectile/O)
 		var/turf/T = get_turf(O)
 
-		var/obj/item/golf_ball/ball = O.special_data["ball"]
+		var/obj/item/ball = O.special_data["ball"]
 		if(!ball)
 			ball = new /obj/item/golf_ball(T)
 			ball.color = O.special_data["color"]
 		else
-			ball.set_loc(T)
+			if(!QDELETED(ball))
+				ball.set_loc(T)
 
 		ball.pixel_x = O.pixel_x
 		ball.pixel_y = O.pixel_y
@@ -703,6 +713,7 @@
 		..()
 		if(!ball_projectile)
 			ball_projectile = new
+		APPLY_ATOM_PROPERTY(src, PROP_OBJ_GOLFABLE, src)
 
 	attackby(obj/item/W, mob/user, params)
 		if(istype(W, /obj/item/golf_club))
@@ -744,7 +755,8 @@
 					if(length(contents))
 						visible_message("[P] knocks into [src]. There must already be a ball in there!")
 					else
-						ball.set_loc(src)
+						if(!QDELETED(ball))
+							ball.set_loc(src)
 						P.alpha = 0
 						P.die()
 						visible_message("[P] makes it into [src]. Nice shot!")
@@ -778,3 +790,19 @@
 						Q.color = ball
 						ball.set_loc(Q)
 						Q.special_data["ball"] = ball
+
+/obj/item/storage/toilet
+	bullet_act(var/obj/projectile/P)
+		if(istype(P.proj_data,/datum/projectile/special/golfball))
+			var/obj/item/ball = P.special_data["ball"]
+			if(istype(ball) && P.mob_shooter)
+				if( ((P.max_range * 32) - P.travelled) < 48 || prob(10))
+					if(!QDELETED(ball))
+						ball.set_loc(src)
+					P.alpha = 0
+					P.die()
+					visible_message("[P] makes it into [src]. Nice shot?")
+					hit_twitch(src)
+					attack_hand(P.mob_shooter)
+		else
+			..()

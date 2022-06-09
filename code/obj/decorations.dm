@@ -416,6 +416,7 @@
 	icon_state = "ppot0"
 	anchored = 1
 	density = 0
+	deconstruct_flags = DECON_SCREWDRIVER
 
 	New()
 		..()

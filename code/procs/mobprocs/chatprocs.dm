@@ -1052,7 +1052,8 @@
 		if(istype(M, /mob/living/intangible/flock/flockmind) && !(istype(mob_speaking, /mob/living/intangible/flock/flockmind)) && M:flock == flock)
 			thisR = flockmindRendered
 		if ((istype(M, /mob/dead/observer)||M.client.holder) && mob_speaking?.mind)
+			thisR = rendered
 			thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[thisR]</span>"
 
 		if(thisR != "")
-			M.show_message(thisR, 2)
+			boutput(M, thisR)

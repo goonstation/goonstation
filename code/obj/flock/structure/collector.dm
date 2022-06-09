@@ -18,7 +18,6 @@
 
 	passthrough = TRUE
 
-	usesgroups = TRUE
 	icon_state = "collector"
 
 /obj/flock_structure/collector/New(var/atom/location, var/datum/flock/F=null)

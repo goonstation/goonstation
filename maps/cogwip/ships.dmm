@@ -3404,7 +3404,6 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/item/radio_tape/advertisement/dans_tickets,
 /obj/item/radio_tape/advertisement/grones{
 	pixel_x = 6;
 	pixel_y = 4
@@ -3416,10 +3415,6 @@
 /obj/item/radio_tape/advertisement/quik_noodles{
 	pixel_x = 2;
 	pixel_y = -6
-	},
-/obj/item/radio_tape/advertisement/pope_crunch{
-	pixel_x = -3;
-	pixel_y = 4
 	},
 /turf/simulated/floor/carpet/grime,
 /area/space)

@@ -1128,22 +1128,22 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 										human_image.icon = limb.handfoot_overlay_1?.icon
 										human_image.icon_state = limb.handfoot_overlay_1?.icon_state
 										human_image.color = limb.handfoot_overlay_1?.color
-										human_image.layer = MOB_HAND_LAYER1
-										src.hands_standing.layer = MOB_HAND_LAYER1
-										src.hands_standing.overlays += human_image
+										human_image.layer = MOB_LIMB_LAYER
+										src.UpdateOverlays(human_image, "feet")
 									if (oldlayer)
 										human_image.layer = oldlayer
 								else
 									var/image/I = part_icon_s
-									I.layer = MOB_HAND_LAYER1
+									I.layer = MOB_LIMB_LAYER
 									I.color = limb_skin_tone
 									I.pixel_y = armleg_offset
-									src.body_standing.overlays += I
+									UpdateOverlays(I, "feet")
 									if(limb.handfoot_overlay_1)
 										I = limb.handfoot_overlay_1
-										I.layer = MOB_HAND_LAYER1
+										I.layer = MOB_LIMB_LAYER
 										src.hands_standing.layer = MOB_HAND_LAYER1
 										src.hands_standing.overlays += I
+										UpdateOverlays(I, "foot overlay")
 
 					else	// Handles stumps
 						var/stump = update_body_limbs[name]
