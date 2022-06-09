@@ -54,7 +54,7 @@
 			src.resource_amounts = PW.team_SY.resources
 		..()
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (get_pod_wars_team_num(user) != src.team_num)
 			boutput(user, "<span class='alert'>This machine's design makes no sense to you, you can't figure out how to use it!</span>")
 			return

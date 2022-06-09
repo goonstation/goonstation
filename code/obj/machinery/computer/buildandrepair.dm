@@ -146,7 +146,7 @@ ABSTRACT_TYPE(/obj/item/circuitboard)
 /obj/computerframe/meteorhit(obj/O as obj)
 	qdel(src)
 
-/obj/computerframe/attackby(obj/item/P as obj, mob/user as mob)
+/obj/computerframe/attackby(obj/item/P, mob/user)
 	var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, 2 SECONDS, /obj/computerframe/proc/state_actions,\
 	list(P,user), P.icon, P.icon_state, null)
 	switch(state)

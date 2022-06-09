@@ -984,9 +984,9 @@
 /area/station/quartermaster/office)
 "cs" = (
 /obj/machinery/door/airlock/pyro/glass{
-	name = "Cargo";
-	req_access_txt = "27"
+	name = "Cargo"
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
 "ct" = (
@@ -6207,7 +6207,13 @@
 /area/station/security/secwing)
 "pB" = (
 /obj/table/auto,
-/obj/item/hand_tele,
+/obj/machinery/recharger{
+	pixel_y = 5
+	},
+/obj/item/hand_tele{
+	pixel_y = 4;
+	pixel_x = 2
+	},
 /turf/simulated/floor/purpleblack{
 	dir = 10
 	},
@@ -9790,7 +9796,7 @@
 /area/space)
 "xI" = (
 /obj/displaycase{
-	displayed = new /obj/item/captaingun
+	displayed = new/obj/item/captaingun
 	},
 /turf/simulated/floor/blue,
 /area/station/bridge/captain)
@@ -10510,7 +10516,7 @@
 /area/station/bridge/united_command)
 "zt" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /obj/item/record/atlas{
 	pixel_x = 5;
 	pixel_y = -10

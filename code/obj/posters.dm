@@ -262,7 +262,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 		return
 	ex_act(var/severity)
 		qdel(src)
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!src.anchored)
 			return ..()
 		if (user.a_intent != INTENT_HARM)
@@ -290,7 +290,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 		else
 			return ..()
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (src.popup_win && (src.no_spam + 25) <= ticker.round_elapsed_ticks)
 			user.tri_message("<span class='alert'><b>[user]</b> shoves [src] in [user == M ? "[his_or_her(user)] own" : "[M]'s"] face!</span>",\
 			user, "<span class='alert'>You shove [src] in [user == M ? "your own" : "[M]'s"] face!</span>",\
@@ -324,7 +324,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 			if (!src.poster_HTML)
 				src.generate_poster()
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (istype(W, /obj/item/photo))
 			var/obj/item/photo/new_p = W
 			if (src.photo)
@@ -346,7 +346,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 		else
 			return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.photo)
 			if (src.anchored && user.a_intent == INTENT_HARM)
 				return ..()
@@ -403,14 +403,14 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 	attack_ai(mob/user as mob)
 		return attack_hand(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.add_fingerprint(user)
 		if (user.client)
 			src.add_dialog(user)
 			show_window(user.client)
 			onclose(user, "wp_station")
 
-	attackby(var/obj/item/W as obj, var/mob/user as mob)
+	attackby(var/obj/item/W, var/mob/user)
 		src.add_fingerprint(user)
 		if (istype(W, /obj/item/paper))
 			user.visible_message("[user] loads [W] into [src].",\

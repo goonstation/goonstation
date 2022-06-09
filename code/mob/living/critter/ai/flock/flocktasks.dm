@@ -709,6 +709,7 @@ stare
 	target_range = 12
 	var/shoot_range = 6
 	var/run_range = 3
+	ai_turbo = TRUE
 	var/list/dummy_params = list("icon-x" = 16, "icon-y" = 16)
 
 /datum/aiTask/timed/targeted/flockdrone_shoot/proc/precondition()
@@ -798,6 +799,7 @@ stare
 	weight = 15
 	max_dist = 12
 	can_be_adjacent_to_target = TRUE
+	ai_turbo = TRUE
 
 /datum/aiTask/sequence/goalbased/flockdrone_capture/New(parentHolder, transTask)
 	..(parentHolder, transTask)

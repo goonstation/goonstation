@@ -311,7 +311,9 @@
 	desc = "The largest phaser from Radnor Photonics. A big gun for big problems."
 	muzzle_flash = "muzzle_flash_phaser"
 	cell_type = /obj/item/ammo/power_cell/higherish_power
-	shoot_delay = 20
+	shoot_delay = 10
+	charge_up = 5
+	can_dual_wield = FALSE
 
 	New()
 		set_current_projectile(new/datum/projectile/laser/light/huge) // light/huge - whatev!!!! this should probably be refactored
@@ -411,7 +413,7 @@
 		UpdateIcon()
 		M.update_inhands()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/electronics/scanner))
 			nojobreward = 1
 		..()
@@ -724,7 +726,7 @@
 			user.show_text("Error: couldn't establish connection to selected teleporter.", "red")
 			return
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (!src.our_target)
 			user.show_text("Error: no target set. Please select a teleporter first.", "red")
 			return
@@ -1193,7 +1195,7 @@
 			else
 				. += "It's not holding anything."
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.loc == user && (src == user.l_hand || src == user.r_hand))
 			if (heldItem)
 				boutput(user, "You remove \the [heldItem.name] from the gun.")
@@ -1205,7 +1207,7 @@
 		else
 			return ..()
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		if (I.cant_drop) return
 		if (heldItem)
 			boutput(user, "The gun is already holding [heldItem.name].")
@@ -1217,7 +1219,7 @@
 			tooltip_rebuild = 1
 		return ..()
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (istype(current_projectile, /datum/projectile/pickpocket/steal) && heldItem)
 			boutput(user, "Cannot steal while gun is holding something!")
 			return
@@ -1329,7 +1331,7 @@
 		indicator_display = null
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!owner_prints)
 			boutput(user, "<span class='alert'>[src] has accepted your fingerprint ID. You are its owner!</span>")
 			assign_name(user)

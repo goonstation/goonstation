@@ -522,9 +522,7 @@
 		if (islist(src.tracked_blood))
 			src.track_blood()
 		actions.interrupt(src, INTERRUPT_MOVE)
-		#ifdef COMSIG_MOVABLE_MOVED
 		SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, A, direct)
-		#endif
 	//note : move is still called when we are steping into a wall. sometimes these are unnecesssary i think
 
 	if(last_turf == src.loc)
@@ -687,7 +685,7 @@
 		return
 	src.attack_hand(user)
 
-/atom/proc/attack_hand(mob/user as mob)
+/atom/proc/attack_hand(mob/user)
 	PROTECTED_PROC(TRUE)
 	if (flags & TGUI_INTERACTIVE)
 		return ui_interact(user)
@@ -697,7 +695,7 @@
 	return
 
 ///wrapper proc for /atom/proc/attackby so that signals are always sent. Call this, but do not override it.
-/atom/proc/Attackby(obj/item/W as obj, mob/user as mob, params, is_special = 0)
+/atom/proc/Attackby(obj/item/W, mob/user, params, is_special = 0)
 	SHOULD_NOT_OVERRIDE(1)
 	if(SEND_SIGNAL(src,COMSIG_ATTACKBY,W,user, params, is_special))
 		return
@@ -705,7 +703,7 @@
 
 //mbc : sorry, i added a 'is_special' arg to this proc to avoid race conditions.
 ///internal proc for when an atom is attacked by an item. Override this, but do not call it,
-/atom/proc/attackby(obj/item/W as obj, mob/user as mob, params, is_special = 0)
+/atom/proc/attackby(obj/item/W, mob/user, params, is_special = 0)
 	PROTECTED_PROC(TRUE)
 	src.material?.triggerOnHit(src, W, user, 1)
 	if (user && W && !(W.flags & SUPPRESSATTACK))

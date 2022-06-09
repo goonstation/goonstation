@@ -27,7 +27,7 @@
 		setProperty("heatprot", 5)
 		setProperty("meleeprot_head", 2)
 
-/obj/item/clothing/mask/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/clothing/mask/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/voice_changer))
 		if (src.see_face)
 			user.show_text("You can't find a way to attach [W] where it isn't really, really obvious. That'd kinda defeat the purpose of putting [W] in there, wouldn't it?", "red")
@@ -262,7 +262,7 @@
 	permeability_coefficient = 0.50
 
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/tank))
 			src.auto_setup(W,user)
 		else
@@ -509,7 +509,7 @@
 	burn_possible = 1
 	health = 3
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/pen))
 			var/obj/item/pen/P = W
 			if (P.font_color)
@@ -537,7 +537,7 @@
 	burn_output = 900
 	burn_possible = 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/pen))
 			var/obj/item/pen/P = W
 			if (P.font_color)

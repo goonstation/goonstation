@@ -32,14 +32,14 @@
 	xmasify()
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (issilicon(user) && src.hardened == 1)
 			user.show_text("You cannot control this door.", "red")
 			return
 		else
 			return src.Attackby(null, user)
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		if (user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat || user.restrained())
 			return
 		if (src.isblocked() == 1)

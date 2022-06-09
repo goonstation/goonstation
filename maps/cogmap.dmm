@@ -4005,7 +4005,7 @@
 /area/station/hallway/secondary/entry)
 "ama" = (
 /obj/table/reinforced/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -10120,7 +10120,7 @@
 	pixel_x = 10;
 	pixel_y = 7
 	},
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	pixel_y = 1
 	},
 /turf/simulated/floor/black,
@@ -20069,13 +20069,19 @@
 /area/station/hallway/primary/central)
 "baj" = (
 /obj/table/auto,
-/obj/item/hand_tele,
 /obj/decal/cleanable/cobweb,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
 	tag = ""
+	},
+/obj/machinery/recharger{
+	pixel_y = 5
+	},
+/obj/item/hand_tele{
+	pixel_x = 3;
+	pixel_y = 6
 	},
 /turf/simulated/floor/black,
 /area/station/teleporter)
@@ -21672,7 +21678,7 @@
 	icon_state = "4-8"
 	},
 /obj/table/reinforced/auto,
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	pixel_x = 7;
 	pixel_y = 12
 	},
@@ -21720,7 +21726,7 @@
 /area/station/crew_quarters/heads)
 "bdX" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	switchon = 1
 	},
 /turf/simulated/floor/carpet{
@@ -22151,7 +22157,7 @@
 /area/station/security/checkpoint)
 "beV" = (
 /obj/table/reinforced/auto,
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	pixel_x = 6;
 	pixel_y = 5
 	},
@@ -22903,7 +22909,7 @@
 /area/space)
 "bgH" = (
 /obj/displaycase{
-	displayed = new /obj/item/captaingun
+	displayed = new/obj/item/captaingun
 	},
 /obj/window/reinforced{
 	dir = 2
@@ -54237,12 +54243,6 @@
 /area/station/engine/core)
 "fRs" = (
 /obj/table/auto,
-/obj/item/platestack{
-	icon_state = "platestack4";
-	pixel_x = -3;
-	pixel_y = 8;
-	platenum = 5
-	},
 /obj/decal/cleanable/generic,
 /obj/item/storage/box/beer{
 	pixel_x = 14;

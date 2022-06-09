@@ -242,7 +242,7 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 		src.souldorfs.Add(Z)
 		src.occupied = 1
 		the_zoldorf.Add(Z)
-		Z << browse(grabResource("html/traitorTips/zoldorfTips.htm"),"window=antagTips;titlebar=1;size=600x400;can_minimize=0;can_resize=0")
+		Z.show_antag_popup("zoldorf")
 		src.usurpgrace = world.time + 3000
 		src.YN = null
 		src.usurper = null
@@ -386,7 +386,7 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 			src.messagethrottle = 0
 			return 1
 
-	attackby(obj/item/weapon as obj, mob/user as mob)
+	attackby(obj/item/weapon, mob/user)
 		if(istype(weapon, /obj/item/spacecash)) //adding money to the vending machine
 			src.credits += weapon.amount
 			if(winget(user,"Zoldorf","is-visible") == "true")
@@ -422,7 +422,7 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 			..()
 
 
-	attack_hand(mob/user as mob) //interface stuff
+	attack_hand(mob/user) //interface stuff
 		if(!(user in src.openwindows))
 			src.openwindows.Add(user)
 		uisetup()

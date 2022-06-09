@@ -258,7 +258,7 @@
 			src.UpdateOverlays(circuit_image,"module_slot_[i]")
 			src.UpdateOverlays(color_overlay,"module_slot_[i]_overlay")
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!src.law_circuits)
 			// YOU BETRAYED THE LAW!!!!!!
 			boutput(user, "<span class='alert'>Oh dear, this really shouldn't happen. Call an admin.</span>")
@@ -282,7 +282,7 @@
 		return ..()
 
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		if(isweldingtool(I))
 			if(I:try_weld(user,1))
 				if(src._health < src._max_health)
@@ -564,7 +564,10 @@
 		for (var/mob/living/silicon/R in mobs)
 			if (isghostdrone(R))
 				continue
-			if(R.law_rack_connection == src)
+			if(R.law_rack_connection == src || (R.dependent && R?.mainframe?.law_rack_connection == src))
+				if(R.dependent && R?.mainframe?.law_rack_connection != src)
+					R.law_rack_connection = R?.mainframe?.law_rack_connection //goddamn shells
+					continue
 				R.playsound_local(R, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
 				R.show_text(notification_text, "red")
 				src.show_laws(R)

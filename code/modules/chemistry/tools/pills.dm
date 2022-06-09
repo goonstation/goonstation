@@ -45,7 +45,7 @@
 			qdel(src)
 		return
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		if (!src.reagents || !src.reagents.total_volume)
 			user.show_text("[src] doesn't contain any reagents.", "red")
 			return
@@ -84,7 +84,7 @@
 
 		return 0
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		if (!I)
 			return
 		if (I.is_open_container() && I.reagents)

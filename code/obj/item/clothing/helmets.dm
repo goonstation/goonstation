@@ -942,3 +942,26 @@
 		setProperty("heatprot", 15)
 		setProperty("disorient_resist_eye", 8)
 		setProperty("disorient_resist_ear", 8)
+
+/obj/item/clothing/head/helmet/captain
+	name = "captain's helmet"
+	desc = "Somewhat protects an important person's head from being bashed in. Comes in a intriqueing shade of green befitting of a captain"
+	c_flags = COVERSEYES | BLOCKCHOKE
+	icon_state = "helmet-captain"
+	item_state = "helmet-captain"
+
+	setupProperties()
+		..()
+		setProperty("meleeprot_head", 7)
+
+	blue
+		name = "commander's helmet"
+		desc = "Somewhat protects an important person's head from being bashed in. Comes in a stylish shade of blue befitting of a commander"
+		icon_state = "helmet-captain-blue"
+		item_state = "helmet-captain-blue"
+
+	red
+		name = "\improper CentCom helmet"
+		desc = "Somewhat protects an important person's head from being bashed in. Comes in a stylish shade of red befitting of an executive"
+		icon_state = "helmet-captain-red"
+		item_state = "helmet-captain-red"

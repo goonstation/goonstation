@@ -143,7 +143,7 @@
 "aat" = (
 /obj/machinery/cargo_router{
 	default_direction = 2;
-	destinations = list("Arrivals" = 4)
+	destinations = list("Arrivals"=4)
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
@@ -346,14 +346,14 @@
 /area/space)
 "aaQ" = (
 /obj/machinery/cargo_router{
-	destinations = list("Catering" = 8)
+	destinations = list("Catering"=8)
 	},
 /turf/simulated/floor/plating,
 /area/space)
 "aaR" = (
 /obj/machinery/cargo_router{
 	default_direction = 2;
-	destinations = list("Catering" = 8)
+	destinations = list("Catering"=8)
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
@@ -6977,6 +6977,9 @@
 	pixel_x = -10;
 	tag = ""
 	},
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
 "aqr" = (
@@ -6997,9 +7000,6 @@
 /area/station/chapel/sanctuary)
 "aqt" = (
 /obj/disposalpipe/segment/mail/bent/south,
-/obj/machinery/status_display{
-	pixel_y = 30
-	},
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fpurple2"
@@ -30916,7 +30916,7 @@
 "btX" = (
 /obj/machinery/cargo_router{
 	default_direction = 8;
-	destinations = list("Arrivals" = 1, "Catering" = 1, "Disposals" = 4, "Engine" = 4, "Escape" = 4, "Export" = 4, "MedSci" = 4, "Security" = 4, "Trader" = 4, "QM" = 4)
+	destinations = list("Arrivals"=1,"Catering"=1,"Disposals"=4,"Engine"=4,"Escape"=4,"Export"=4,"MedSci"=4,"Security"=4,"Trader"=4,"QM"=4)
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
@@ -30931,7 +30931,7 @@
 "btZ" = (
 /obj/machinery/cargo_router{
 	default_direction = 2;
-	destinations = list("Security" = 4)
+	destinations = list("Security"=4)
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
@@ -32875,7 +32875,7 @@
 	icon_state = "1-4"
 	},
 /obj/table/reinforced/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/main)
 "bxZ" = (
@@ -33933,7 +33933,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/space,
+/turf/simulated/floor/plating,
 /area/station/security/checkpoint/podbay)
 "bAj" = (
 /obj/machinery/light{
@@ -37665,7 +37665,7 @@
 /area/station/hallway/primary/east)
 "bHk" = (
 /obj/table/reinforced/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	dir = 4;
@@ -37757,7 +37757,7 @@
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	pixel_x = 1;
 	pixel_y = 10
 	},
@@ -43259,7 +43259,11 @@
 /turf/space,
 /area/space)
 "bRC" = (
-/obj/machinery/r_door_control/podbay/security,
+/obj/machinery/r_door_control/podbay/security/new_walls/south{
+	name = "pod bay door control";
+	pixel_y = 0;
+	id = "hangar_sec2"
+	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/checkpoint/podbay)
 "bRD" = (
@@ -44048,17 +44052,22 @@
 /area/station/teleporter)
 "bTb" = (
 /obj/table/auto,
-/obj/item/hand_tele,
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
 	pixel_y = 21
 	},
+/obj/machinery/recharger{
+	pixel_y = 5
+	},
 /turf/simulated/floor/purple,
 /area/station/teleporter)
 "bTc" = (
 /obj/table/auto,
-/obj/item/hand_tele,
+/obj/item/hand_tele{
+	pixel_x = -4;
+	pixel_y = 6
+	},
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -44069,6 +44078,10 @@
 	pixel_y = 24
 	},
 /obj/disposalpipe/segment/ejection,
+/obj/item/hand_tele{
+	pixel_x = 3;
+	pixel_y = 4
+	},
 /turf/simulated/floor/purple,
 /area/station/teleporter)
 "bTd" = (
@@ -45263,20 +45276,20 @@
 "bVG" = (
 /obj/machinery/cargo_router{
 	default_direction = 2;
-	destinations = list("Engine" = 8, "Disposals" = 2)
+	destinations = list("Engine"=8,"Disposals"=2)
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "bVH" = (
 /obj/machinery/cargo_router{
-	destinations = list("Engine" = 8, "Disposals" = 8)
+	destinations = list("Engine"=8,"Disposals"=8)
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "bVI" = (
 /obj/machinery/cargo_router{
 	default_direction = 8;
-	destinations = list("QM" = 2, "Export" = 2, "Trader" = 2, "MedSci" = 2, "Escape" = 2)
+	destinations = list("QM"=2,"Export"=2,"Trader"=2,"MedSci"=2,"Escape"=2)
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
@@ -46131,7 +46144,7 @@
 "bXI" = (
 /obj/table/wood/auto,
 /obj/displaycase{
-	displayed = new /obj/item/captaingun;
+	displayed = new/obj/item/captaingun;
 	pixel_y = 6
 	},
 /obj/cable{
@@ -56252,7 +56265,7 @@
 /area/station/science/lobby)
 "cvT" = (
 /obj/table/reinforced/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/carpet{
 	dir = 1;
@@ -56855,7 +56868,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
 "cxh" = (
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /obj/table/auto,
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
@@ -67084,7 +67097,7 @@
 "cUn" = (
 /obj/machinery/cargo_router{
 	default_direction = 4;
-	destinations = list("QM" = 2, "Export" = 2, "MedSci" = 2, "Escape" = 2)
+	destinations = list("QM"=2,"Export"=2,"MedSci"=2,"Escape"=2)
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
@@ -67435,7 +67448,7 @@
 /area/station/science/chemistry)
 "cVc" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
@@ -68377,7 +68390,7 @@
 /area/station/maintenance/southeast)
 "cXa" = (
 /obj/machinery/cargo_router{
-	destinations = list("QM" = 8, "Export" = 8)
+	destinations = list("QM"=8,"Export"=8)
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
@@ -68437,7 +68450,7 @@
 "cXe" = (
 /obj/machinery/cargo_router{
 	default_direction = 8;
-	destinations = list("MedSci" = 2, "Escape" = 2)
+	destinations = list("MedSci"=2,"Escape"=2)
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
@@ -68987,7 +69000,7 @@
 /area/station/hangar/qm)
 "cYn" = (
 /obj/machinery/cargo_router{
-	destinations = list("Trader" = 4, "Arrivals" = 4, "Medsci" = 4, "Catering" = 4, "Security" = 4, "Disposals" = 4, "Engine" = 4, "Escape" = 4, "Export" = 4)
+	destinations = list("Trader"=4,"Arrivals"=4,"Medsci"=4,"Catering"=4,"Security"=4,"Disposals"=4,"Engine"=4,"Escape"=4,"Export"=4)
 	},
 /turf/simulated/floor/plating,
 /area/station/hangar/qm)
@@ -69010,7 +69023,7 @@
 "cYq" = (
 /obj/machinery/cargo_router{
 	default_direction = 2;
-	destinations = list("Arrivals" = 4, "Catering" = 4, "Disposals" = 4, "Engine" = 4, "Escape" = 4, "MedSci" = 4, "Security" = 4, "QM" = 2)
+	destinations = list("Arrivals"=4,"Catering"=4,"Disposals"=4,"Engine"=4,"Escape"=4,"MedSci"=4,"Security"=4,"QM"=2)
 	},
 /turf/simulated/floor/plating,
 /area/station/hangar/qm)
@@ -69344,7 +69357,7 @@
 /area/station/medical/cdc)
 "cZb" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
@@ -69393,7 +69406,7 @@
 /obj/item/storage/toolbox/emergency,
 /obj/item/hand_labeler,
 /obj/table/glass/reinforced/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /obj/item/clothing/glasses/spectro,
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/carpet{
@@ -69969,7 +69982,7 @@
 "dan" = (
 /obj/machinery/cargo_router{
 	default_direction = 2;
-	destinations = list("QM" = 8)
+	destinations = list("QM"=8)
 	},
 /turf/simulated/floor/plating,
 /area/station/hangar/qm)
@@ -72907,7 +72920,7 @@
 "dhe" = (
 /obj/machinery/cargo_router{
 	default_direction = 2;
-	destinations = list("Escape" = 4)
+	destinations = list("Escape"=4)
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
@@ -73077,7 +73090,7 @@
 /area/space)
 "dhw" = (
 /obj/machinery/cargo_router{
-	destinations = list("MedSci" = 2)
+	destinations = list("MedSci"=2)
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)

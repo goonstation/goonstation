@@ -34,7 +34,7 @@
 	attack_ai(mob/user as mob)
 		src.Attackhand(user)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (can_reconnect)
 			if (ispulsingtool(W) && !(status & (BROKEN|NOPOWER)))
 				boutput(user, "<span class='notice'>You pulse the [name] to re-scan for equipment.</span>")

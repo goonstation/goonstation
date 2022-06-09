@@ -181,7 +181,7 @@
 		light.disable()
 
 //Don't want to render prison breaks impossible
-/obj/machinery/flasher/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/flasher/attackby(obj/item/W, mob/user)
 	if (issnippingtool(W))
 		add_fingerprint(user)
 		src.disable = !src.disable
@@ -192,7 +192,7 @@
 
 //Let the AI trigger them directly.
 /obj/machinery/flasher/attack_ai()
-	if (src.anchored)
+	if (src.anchored && !ON_COOLDOWN(src, "flash", cooldown_flash))
 		return src.flash()
 	else
 		return
@@ -274,7 +274,7 @@
 						UpdateIcon()
 			UpdateIcon()
 
-/obj/machinery/flasher/portable/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/flasher/portable/attackby(obj/item/W, mob/user)
 	if (iswrenchingtool(W))
 		add_fingerprint(user)
 		src.anchored = !src.anchored

@@ -551,6 +551,10 @@
 		item_state = "MDlabcoat-alt"
 		coat_style = "MDlabcoat-alt"
 
+	cool
+		icon_state = "MDlabcoat-cool"
+		coat_style = "MDlabcoat-cool"
+
 /obj/item/clothing/suit/labcoat/pathology
 	name = "pathologist's labcoat"
 	desc = "A protective laboratory coat with the orange markings of a Pathologist."
@@ -653,7 +657,7 @@
 		src.UpdateIcon()
 		src.setMaterial(getMaterial("cotton"), appearance = FALSE, setname = FALSE)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.bed)
 			src.bed.untuck_sheet(user)
 		src.bed = null
@@ -691,7 +695,7 @@
 					qdel(src)
 					return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/cable_coil))
 			if (src.cape)
 				return ..()

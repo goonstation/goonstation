@@ -151,7 +151,7 @@ THROWING DARTS
 
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal)
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		if (!istype(src, /obj/item/implant/projectile))
 			if (istype(I, /obj/item/pen))
 				var/t = input(user, "What would you like the label to be?", null, "[src.name]") as null|text
@@ -799,6 +799,11 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	var/bleed_time = 60
 	var/bleed_timer = 0
 	var/forensic_ID = null // match a bullet to a gun holy heckkkkk
+	var/leaves_wound = TRUE
+
+	New()
+		..()
+		implant_overlay = image(icon = 'icons/mob/human.dmi', icon_state = "bullet_wound-[rand(0, 4)]", layer = MOB_EFFECT_LAYER)
 
 	bullet_357
 		name = ".357 round"
@@ -829,6 +834,11 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		name = "9mm Plastic round"
 		icon_state = "bulletplastic"
 		desc = "A small, sublethal plastic projectile."
+		leaves_wound = FALSE
+
+		New()
+			..()
+			implant_overlay = null
 
 	bullet_308
 		name = "Rifle Round" // this is used by basically every rifle in the game, ignore the "308" path
@@ -854,10 +864,18 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		icon_state = "buckshot"
 		desc = "A collection of buckshot rounds, a very commonly used load for shotguns."
 
+		New()
+			..()
+			implant_overlay = image(icon = 'icons/mob/human.dmi', icon_state = "buckshot_wound-[rand(0, 1)]", layer = MOB_EFFECT_LAYER)
 	staple
 		name = "staple"
 		icon_state = "staple"
 		desc = "Well that's not very nice."
+		leaves_wound = FALSE
+
+		New()
+			..()
+			implant_overlay = null
 
 	stinger_ball
 		name = "rubber ball"
@@ -874,9 +892,15 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		icon = 'icons/obj/scrap.dmi'
 		desc = "A bunch of jagged shards of metal."
 		icon_state = "2metal2"
+		leaves_wound = FALSE
+
+		New()
+			..()
+			implant_overlay = null
 
 	body_visible
 		bleed_time = 0
+		leaves_wound = FALSE
 		var/barbed = FALSE
 		var/pull_out_name = ""
 
@@ -941,6 +965,11 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		name = "blowdart"
 		desc = "a sharp little dart with a little poison reservoir."
 		icon_state = "blowdart"
+		leaves_wound = FALSE
+
+		New()
+			..()
+			implant_overlay = null
 
 	flintlock
 		name= "flintlock round"
@@ -966,6 +995,9 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		return
 
 	if (implant_overlay)
+		if (ishuman(C) && leaves_wound)
+			var/datum/reagent/contained_blood = reagents_cache[C.blood_id]
+			implant_overlay.color = rgb(contained_blood.fluid_r, contained_blood.fluid_g, contained_blood.fluid_b, contained_blood.transparency)
 		C.update_clothing()
 
 	if (!src.bleed_time)
@@ -1460,7 +1492,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		src.imp = null
 		src.update()
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (!ishuman(M) && !ismobcritter(M))
 			return ..()
 
@@ -1720,7 +1752,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		src.icon_state = "implantcase-0"
 	return
 
-/obj/item/implantcase/attackby(obj/item/I as obj, mob/user as mob)
+/obj/item/implantcase/attackby(obj/item/I, mob/user)
 	if (istype(I, /obj/item/pen))
 		var/t = input(user, "What would you like the label to be?", null, "[src.name]") as null|text
 		if (user.equipped() != I)
@@ -1794,7 +1826,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		src.icon_state = "implantpad-0"
 	return
 
-/obj/item/implantpad/attack_hand(mob/user as mob)
+/obj/item/implantpad/attack_hand(mob/user)
 
 	if ((src.case && (user.l_hand == src || user.r_hand == src)))
 		user.put_in_hand_or_drop(src.case)
@@ -1810,7 +1842,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			return ..()
 	return
 
-/obj/item/implantpad/attackby(obj/item/implantcase/C as obj, mob/user as mob)
+/obj/item/implantpad/attackby(obj/item/implantcase/C, mob/user)
 
 	if (istype(C, /obj/item/implantcase))
 		if (!( src.case ))
@@ -1990,7 +2022,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 	get_desc()
 		. += "There is [my_implant ? "\a [my_implant]" : "currently no implant"] loaded into it."
 
-	attackby(var/obj/item/W as obj, var/mob/user as mob)
+	attackby(var/obj/item/W, var/mob/user)
 		var/obj/item/implant/I = null
 		if (istype(W, /obj/item/implant))
 			I = W
@@ -2123,7 +2155,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 			src.set_loc(M)
 			src.implanted(M)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.pixel_x = 0
 		src.pixel_y = 0
 		..()

@@ -75,7 +75,7 @@
 		src.sense()
 	return
 
-/obj/item/device/prox_sensor/attackby(obj/item/device/radio/signaler/S as obj, mob/user as mob)
+/obj/item/device/prox_sensor/attackby(obj/item/device/radio/signaler/S, mob/user)
 	if ((!( istype(S, /obj/item/device/radio/signaler) ) || !( S.b_stat )))
 		return
 	var/obj/item/assembly/rad_prox/R = new /obj/item/assembly/rad_prox( user )

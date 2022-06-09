@@ -171,7 +171,7 @@
 		. = ..()
 		STOP_TRACKING
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (user.mind)
 			if (iswizard(user) || check_target_immunity(user))
 				if (user.mind.key != src.wizard_key && !check_target_immunity(user))
@@ -183,7 +183,7 @@
 				return
 		else ..()
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (iswizard(user) && !iswizard(M) && !isdead(M) && !check_target_immunity(M))
 			if (M?.traitHolder?.hasTrait("training_chaplain"))
 				M.visible_message("<spab class='alert'>A divine light shields [M] from harm!</span>")
@@ -258,7 +258,7 @@
 		flick("[icon_state]_fire", src)
 		..()
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (user.mind)
 			if (iswizard(user) || check_target_immunity(user))
 				if (user.mind.key != src.wizard_key && !check_target_immunity(user))

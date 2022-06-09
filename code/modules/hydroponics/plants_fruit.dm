@@ -308,6 +308,7 @@ ABSTRACT_TYPE(/datum/plant/fruit)
 	harvests = 4
 	endurance = 10
 	genome = 21
+	assoc_reagents = list("juice_pineapple")
 
 /datum/plant/fruit/pear
 	name = "Pear"

@@ -27,8 +27,8 @@
 /obj/item/storage/box/morphineinjectors
 	name = "morphine autoinjector box"
 	icon_state = "box"
-	desc = "Contains four morphine autoinjectors, for security use"
-	spawn_contents = list(/obj/item/reagent_containers/emergency_injector/morphine = 4)
+	desc = "Contains six morphine autoinjectors, for security use"
+	spawn_contents = list(/obj/item/reagent_containers/emergency_injector/morphine = 6)
 
 /obj/item/storage/lunchbox/robustdonuts
 	name = "robust donuts lunchbox"
@@ -277,7 +277,7 @@
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(src.cloaked == 1)
 			..()
 		else
