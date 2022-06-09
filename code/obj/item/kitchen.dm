@@ -571,6 +571,7 @@ TRAYS
 			return
 		if (food in src.vis_contents)
 			boutput(user, "That's already on the plate!")
+			return
 
 		src.place_on(food, user, click_params) // this handles pixel positioning
 		food.set_loc(src)
@@ -579,7 +580,7 @@ TRAYS
 		food.vis_flags |= VIS_INHERIT_PLANE | VIS_INHERIT_LAYER
 		food.event_handler_flags |= NO_MOUSEDROP_QOL
 		RegisterSignal(food, COMSIG_ATOM_MOUSEDROP, .proc/indirect_pickup)
-		RegisterSignal(food, COMSIG_MOVABLE_MOVED, .proc/remove_contents)
+		RegisterSignal(food, COMSIG_MOVABLE_SET_LOC, .proc/remove_contents)
 		RegisterSignal(food, COMSIG_ATTACKHAND, .proc/remove_contents)
 		src.UpdateIcon()
 		boutput(user, "You put [food] on \the [src].")
@@ -594,7 +595,7 @@ TRAYS
 		food.vis_flags = initial(food.vis_flags)
 		food.event_handler_flags = initial(food.event_handler_flags)
 		UnregisterSignal(food, COMSIG_ATOM_MOUSEDROP)
-		UnregisterSignal(food, COMSIG_MOVABLE_MOVED)
+		UnregisterSignal(food, COMSIG_MOVABLE_SET_LOC)
 		UnregisterSignal(food, COMSIG_ATTACKHAND)
 		src.UpdateIcon()
 
