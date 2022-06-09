@@ -76,97 +76,100 @@
 	// 		continue
 
 	// 	var/list/sample = sample_air(M.target.return_air(), TRUE)
-	// 	M.set_bars(sample["Thermal Energy"])
+	// 	M.set_bars(sample["Thermal Energy|J"])
 	// 	sample["tag"] = M.tag
 	// 	meter_data += list(sample)
 
+
+// I apologise for the terrible crimes i have comitted in this file by appending the SI units to the literal stats string
+// It'd've been extremely messy otherwise on the UI end.
 
 /obj/machinery/power/reactor_stats/proc/sample_chamber(list/L)
 	. = list()
 
 	for (var/sample in L)
 		var/list/to_add = list()
-		to_add["Oxygen"] += sample["Oxygen"]
-		to_add["Plasma"] += sample["Plasma"]
-		to_add["Carbon Dioxide"] += sample["Carbon Dioxide"]
-		to_add["Nitrogen"] += sample["Nitrogen"]
-		to_add["Pressure"] += sample["Pressure"]
-		to_add["Temperature"] += sample["Temperature"]
-		to_add["Fuel Burnt"] += sample["Fuel Burnt"]
-		to_add["Heat Capacity"] += sample["Heat Capacity"]
-		to_add["Thermal Energy"] += sample["Thermal Energy"]
-		to_add["Molarity"] += sample["Molarity"]
-		to_add["Nitrous Oxide"] += sample["Nitrous Oxide"]
-		to_add["Oxygen Agent B"] += sample["Oxygen Agent B"]
-		to_add["Volatile Fuel"] += sample["Volatile Fuel"]
-		to_add["Other Gasses"] += sample["Other Gasses"]
+		to_add["Oxygen|mols"] += sample["Oxygen|mols"]
+		to_add["Plasma|mols"] += sample["Plasma|mols"]
+		to_add["Carbon Dioxide|mols"] += sample["Carbon Dioxide|mols"]
+		to_add["Nitrogen|mols"] += sample["Nitrogen|mols"]
+		to_add["Pressure|Pa"] += sample["Pressure|Pa"]
+		to_add["Temperature|K"] += sample["Temperature|K"]
+		to_add["Fuel Burnt|units"] += sample["Fuel Burnt|units"]
+		to_add["Heat Capacity|J/K"] += sample["Heat Capacity|J/K"]
+		to_add["Thermal Energy|J"] += sample["Thermal Energy|J"]
+		to_add["Total Moles|moles"] += sample["Total Moles|moles"]
+		to_add["Nitrous Oxide|mols"] += sample["Nitrous Oxide|mols"]
+		to_add["Oxygen Agent B|mols"] += sample["Oxygen Agent B|mols"]
+		to_add["Volatile Fuel|mols"] += sample["Volatile Fuel|mols"]
+		to_add["Other Gasses|mols"] += sample["Other Gasses|mols"]
 		. += list(to_add)
 
 /obj/machinery/power/reactor_stats/proc/sample_air(var/datum/gas_mixture/G, var/not_archived)
 	. = list()
 
 	if(not_archived)
-		if(G.oxygen) .["Oxygen"] = G.oxygen
-		if(G.toxins) .["Plasma"] = G.toxins
-		if(G.carbon_dioxide) .["Carbon Dioxide"] = G.carbon_dioxide
-		if(G.nitrogen) .["Nitrogen"] = G.nitrogen
+		if(G.oxygen) .["Oxygen|mols"] = G.oxygen
+		if(G.toxins) .["Plasma|mols"] = G.toxins
+		if(G.carbon_dioxide) .["Carbon Dioxide|mols"] = G.carbon_dioxide
+		if(G.nitrogen) .["Nitrogen|mols"] = G.nitrogen
 
-		.["Pressure"] = MIXTURE_PRESSURE(G)
-		.["Temperature"] = G.temperature
-		.["Fuel Burnt"] = G.fuel_burnt
-		.["Heat Capacity"] = HEAT_CAPACITY(G)
-		.["Thermal Energy"] = THERMAL_ENERGY(G)
-		.["Molarity"] = TOTAL_MOLES(G)
+		.["Pressure|Pa"] = MIXTURE_PRESSURE(G)
+		.["Temperature|K"] = G.temperature
+		.["Fuel Burnt|units"] = G.fuel_burnt
+		.["Heat Capacity|J/K"] = HEAT_CAPACITY(G)
+		.["Thermal Energy|J"] = THERMAL_ENERGY(G)
+		.["Total Moles|moles"] = TOTAL_MOLES(G)
 
 		if(length(G.trace_gases))
 			for(var/datum/gas/T as anything in G.trace_gases)
 				if(istype(T, /datum/gas/sleeping_agent))
-					.["Nitrous Oxide"] = T.moles
+					.["Nitrous Oxide|mols"] = T.moles
 				else if(istype(T, /datum/gas/oxygen_agent_b))
-					.["Oxygen Agent B"] = T.moles
+					.["Oxygen Agent B|mols"] = T.moles
 				else if(istype(T, /datum/gas/volatile_fuel))
-					.["Volatile Fuel"] = T.moles
+					.["Volatile Fuel|mols"] = T.moles
 				else
-					.["Other Gasses"] = T.moles
+					.["Other Gasses|mols"] = T.moles
 
 	else
-		if(G?.ARCHIVED(oxygen)) .["Oxygen"] = G.ARCHIVED(oxygen)
-		if(G?.ARCHIVED(toxins)) .["Plasma"] = G.ARCHIVED(toxins)
-		if(G?.ARCHIVED(carbon_dioxide)) .["Carbon Dioxide"] = G.ARCHIVED(carbon_dioxide)
-		if(G?.ARCHIVED(nitrogen)) .["Nitrogen"] = G.ARCHIVED(nitrogen)
+		if(G?.ARCHIVED(oxygen)) .["Oxygen|mols"] = G.ARCHIVED(oxygen)
+		if(G?.ARCHIVED(toxins)) .["Plasma|mols"] = G.ARCHIVED(toxins)
+		if(G?.ARCHIVED(carbon_dioxide)) .["Carbon Dioxide|mols"] = G.ARCHIVED(carbon_dioxide)
+		if(G?.ARCHIVED(nitrogen)) .["Nitrogen|mols"] = G.ARCHIVED(nitrogen)
 
 		if (G) //sorry, this was still somehow causing runtimes????
-			.["Pressure"] = MIXTURE_PRESSURE(G)
-			.["Temperature"] = G.ARCHIVED(temperature)
-			.["Fuel Burnt"] = G.fuel_burnt
-			.["Heat Capacity"] = HEAT_CAPACITY_ARCHIVED(G)
-			.["Thermal Energy"] = THERMAL_ENERGY(G)
-			.["Molarity"] = TOTAL_MOLES(G)
+			.["Pressure|Pa"] = MIXTURE_PRESSURE(G)
+			.["Temperature|K"] = G.ARCHIVED(temperature)
+			.["Fuel Burnt|units"] = G.fuel_burnt
+			.["Heat Capacity|J/K"] = HEAT_CAPACITY_ARCHIVED(G)
+			.["Thermal Energy|J"] = THERMAL_ENERGY(G)
+			.["Total Moles|moles"] = TOTAL_MOLES(G)
 
 		if(G && length(G.trace_gases))
 			for(var/datum/gas/T as anything in G.trace_gases)
 				if(istype(T, /datum/gas/sleeping_agent))
-					.["Nitrous Oxide"] = T.ARCHIVED(moles)
+					.["Nitrous Oxide|mols"] = T.ARCHIVED(moles)
 				else if(istype(T, /datum/gas/oxygen_agent_b))
-					.["Oxygen Agent B"] = T.ARCHIVED(moles)
+					.["Oxygen Agent B|mols"] = T.ARCHIVED(moles)
 				else if(istype(T, /datum/gas/volatile_fuel))
-					.["Volatile Fuel"] = T.ARCHIVED(moles)
+					.["Volatile Fuel|mols"] = T.ARCHIVED(moles)
 				else
-					.["Other Gasses"] = T.ARCHIVED(moles)
+					.["Other Gasses|mols"] = T.ARCHIVED(moles)
 
 
 /obj/machinery/power/reactor_stats/proc/sample_teg()
 	. = list()
 
-	.["Output"] = teg.lastgen
-	.["Temperature In (Hot)"] = teg_hot.air1?.temperature
-	.["Temperature Out (Hot)"] = teg_hot.air2?.temperature
-	.["Pressure In (Hot)"] = teg_hot.air1 ? MIXTURE_PRESSURE(teg_hot.air1) : 0
-	.["Pressure Out (Hot)"] = teg_hot.air2 ? MIXTURE_PRESSURE(teg_hot.air2) : 0
-	.["Temperature In (Cold)"] = teg_cold.air1?.temperature
-	.["Temperature Out (Cold)"] = teg_cold.air2?.temperature
-	.["Pressure In (Cold)"] = teg_cold.air1 ? MIXTURE_PRESSURE(teg_cold.air1) : 0
-	.["Pressure Out (Cold)"] = teg_cold.air2 ? MIXTURE_PRESSURE(teg_cold.air2) : 0
+	.["Output|W"] = teg.lastgen
+	.["Temperature In (Hot)|K"] = teg_hot.air1?.temperature
+	.["Temperature Out (Hot)|K"] = teg_hot.air2?.temperature
+	.["Pressure In (Hot)|Pa"] = teg_hot.air1 ? MIXTURE_PRESSURE(teg_hot.air1) : 0
+	.["Pressure Out (Hot)|Pa"] = teg_hot.air2 ? MIXTURE_PRESSURE(teg_hot.air2) : 0
+	.["Temperature In (Cold)|K"] = teg_cold.air1?.temperature
+	.["Temperature Out (Cold)|K"] = teg_cold.air2?.temperature
+	.["Pressure In (Cold)|Pa"] = teg_cold.air1 ? MIXTURE_PRESSURE(teg_cold.air1) : 0
+	.["Pressure Out (Cold)|Pa"] = teg_cold.air2 ? MIXTURE_PRESSURE(teg_cold.air2) : 0
 
 /obj/machinery/power/reactor_stats/proc/get_chamber_turfs()
 	. = list()

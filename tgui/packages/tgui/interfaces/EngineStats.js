@@ -8,6 +8,7 @@
 import { useBackend } from '../backend';
 import { Box, Chart, Modal, Section, Stack, Button } from '../components';
 import { Window } from '../layouts';
+import { formatSiUnit } from '../format';
 
 /**
  * Helper function to transform the data into something displayable
@@ -63,9 +64,13 @@ const generateChartsFromStats = stats => {
   return Object.entries(stats).map(([key, chart_data], index) => (
     <Stack.Item key={key} mt={0.5} ml={index === 0 ? 1 : undefined} >
       <Box>
-        {key}: { chart_data[chart_data.length - 1][1] === 0 ? ("No Data") : (
-          formatExponentialMil(chart_data[chart_data.length - 1][1])
-        )}
+        { key.split("|")[0] }
+        :&nbsp;
+        {
+          chart_data[chart_data.length - 1][1] === 0
+            ? ("No Data")
+            : (formatSiUnit(chart_data[chart_data.length - 1][1], 0, key.split("|")[1]))
+        }
       </Box>
       <Chart.Line
         height="3.5em"
@@ -79,6 +84,8 @@ const generateChartsFromStats = stats => {
   ));
 };
 
+
+
 /**
  * Converts a number to exponential format if over a million, for display purposes
  * @param {number} value
@@ -87,7 +94,7 @@ const generateChartsFromStats = stats => {
 const formatExponentialMil = value => `${value >= 1000000 ? value.toExponential(3) : value.toLocaleString()}`;
 
 
-export const ReactorStats = (props, context) => {
+export const EngineStats = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     turnedOn,
@@ -121,6 +128,7 @@ export const ReactorStats = (props, context) => {
               <Button
                 tooltip="Power"
                 icon="power-off"
+                selected={turnedOn}
                 color="caution"
                 ml={3}
                 onClick={() => act('toggle-power')}
