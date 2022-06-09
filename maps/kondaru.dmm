@@ -809,7 +809,7 @@
 /turf/simulated/floor/caution/east,
 /area/station/engine/ptl)
 "acq" = (
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	dir = 4;
 	id = "PTLDOOR";
 	name = "Laser Confinement Door"
@@ -1643,7 +1643,7 @@
 	id = "kondaru_funeral";
 	name = "funerary driver"
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	id = "kondaru_funeral";
 	name = "Funerary Driver Door"
 	},
@@ -2264,7 +2264,7 @@
 	name = "Clowntainment"
 	})
 "agr" = (
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	id = "clowntainment";
 	name = "Containment Causeway Lock"
 	},
@@ -2550,7 +2550,7 @@
 	name = "Clowntainment"
 	})
 "ahj" = (
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 4;
 	icon_state = "pdoor0";
@@ -10503,7 +10503,7 @@
 	drive_range = 50;
 	id = "trashgun"
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	dir = 4;
 	id = "trashgun";
 	name = "Waste Processing Hatch"
@@ -11903,7 +11903,7 @@
 /turf/simulated/floor/darkblue/checker,
 /area/station/crew_quarters/radio/news_office)
 "aHd" = (
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	autoclose = 1;
 	id = "crusher";
 	layer = 4;
@@ -12053,7 +12053,7 @@
 /area/station/engine/core)
 "aHv" = (
 /obj/wingrille_spawn/auto/crystal,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "fireshield";
@@ -13149,7 +13149,7 @@
 /area/station/engine/hotloop)
 "aKy" = (
 /obj/wingrille_spawn/auto/crystal,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 4;
 	icon_state = "pdoor0";
@@ -13161,7 +13161,7 @@
 /area/station/engine/hotloop)
 "aKz" = (
 /obj/wingrille_spawn/auto/crystal,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 4;
 	icon_state = "pdoor0";
@@ -13752,7 +13752,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/core)
 "aML" = (
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	id = "combustion";
 	name = "Combustion Chamber Vent"
 	},
@@ -23773,7 +23773,7 @@
 /area/station/mining/refinery)
 "buF" = (
 /obj/wingrille_spawn/auto,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 4;
 	icon_state = "pdoor0";
@@ -23888,7 +23888,7 @@
 /area/station/crew_quarters/sauna)
 "buT" = (
 /obj/wingrille_spawn/auto,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 4;
 	icon_state = "pdoor0";
@@ -25030,7 +25030,7 @@
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg,
 /obj/access_spawn/janitor,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	dir = 4;
 	id = "washdesk";
 	layer = 3.2;
@@ -25335,7 +25335,7 @@
 /obj/item/sponge,
 /obj/item/spraybottle,
 /obj/access_spawn/janitor,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	dir = 4;
 	id = "washdesk";
 	layer = 3.2;
@@ -27274,7 +27274,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "kgenpopwindow";
@@ -27740,7 +27740,7 @@
 /area/station/storage/warehouse)
 "bHE" = (
 /obj/wingrille_spawn/auto,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 4;
 	icon_state = "pdoor0";
@@ -28300,7 +28300,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 4;
 	icon_state = "pdoor0";
@@ -29311,7 +29311,7 @@
 /area/station/science/teleporter)
 "bLM" = (
 /obj/wingrille_spawn/auto,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	id = "scienceteleporter";
 	name = "Pad Shutters";
 	p_open = 1
@@ -29327,7 +29327,7 @@
 	id = "scienceteleporter2";
 	name = "Teleporter Pad"
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	id = "scienceteleporter";
 	name = "Pad Shutters";
 	p_open = 1
@@ -29387,7 +29387,7 @@
 	},
 /area/station/storage/warehouse)
 "bLU" = (
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	autoclose = 1;
 	id = "cargo_swapabout";
 	layer = 3.2;
@@ -29471,7 +29471,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 4;
 	icon_state = "pdoor0";
@@ -29721,7 +29721,7 @@
 /area/station/science/teleporter)
 "bMM" = (
 /obj/wingrille_spawn/auto,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	id = "scienceteleporter";
 	name = "Pad Shutters";
 	p_open = 1
@@ -29745,7 +29745,7 @@
 /area/station/science/teleporter)
 "bMO" = (
 /obj/wingrille_spawn/auto,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	dir = 4;
 	id = "scienceteleporter";
 	name = "Pad Shutters";
@@ -30394,7 +30394,7 @@
 	name = "Teleporter Pad";
 	req_access_txt = "24"
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	dir = 4;
 	id = "scienceteleporter";
 	name = "Pad Shutters";
@@ -33377,7 +33377,7 @@
 /area/station/science/lab)
 "bZB" = (
 /obj/wingrille_spawn/auto,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	dir = 4;
 	id = "scienceteleporter";
 	name = "Pad Shutters";
@@ -33736,7 +33736,7 @@
 /turf/space,
 /area/space)
 "cbe" = (
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	dir = 4;
 	id = "tox_vent";
 	layer = 8;
@@ -34358,7 +34358,7 @@
 /area/station/science/lab)
 "ccU" = (
 /obj/wingrille_spawn/auto/crystal,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	dir = 4;
 	id = "oh_boy_fire";
 	name = "Burn Chamber Heat Shield"
@@ -34688,7 +34688,7 @@
 /area/station/science/lab)
 "cdI" = (
 /obj/wingrille_spawn/auto/crystal,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	id = "oh_boy_fire";
 	name = "Burn Chamber Heat Shield"
 	},
@@ -34696,7 +34696,7 @@
 /area/station/science/lab)
 "cdJ" = (
 /obj/wingrille_spawn/auto/crystal,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	dir = 6;
 	id = "oh_boy_fire";
 	name = "Burn Chamber Heat Shield"
@@ -35883,7 +35883,7 @@
 /area/station/crew_quarters/catering)
 "chm" = (
 /obj/wingrille_spawn/auto/crystal,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	dir = 9;
 	id = "boomroom";
 	name = "Test Chamber Shutters"
@@ -35921,7 +35921,7 @@
 /area/station/medical/robotics)
 "chw" = (
 /obj/wingrille_spawn/auto/crystal,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	id = "boomroom";
 	name = "Test Chamber Shutters"
 	},
@@ -35932,7 +35932,7 @@
 /area/station/science/testchamber)
 "chz" = (
 /obj/wingrille_spawn/auto/crystal,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	dir = 6;
 	id = "boomroom";
 	name = "Test Chamber Shutters"
@@ -35981,7 +35981,7 @@
 /area/station/science/testchamber)
 "chH" = (
 /obj/wingrille_spawn/auto/crystal,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	dir = 8;
 	id = "boomroom";
 	name = "Test Chamber Shutters"
@@ -36527,7 +36527,7 @@
 /area/research_outpost/indigo_rye)
 "cjr" = (
 /obj/wingrille_spawn/auto/crystal,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	id = "test_chamber2";
 	name = "Test Chamber Shield"
 	},
@@ -38530,7 +38530,7 @@
 /area/station/security/main)
 "cos" = (
 /obj/table/reinforced/auto,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 4;
 	icon_state = "pdoor0";
@@ -39035,7 +39035,7 @@
 /area/station/medical/medbay/pharmacy)
 "cqo" = (
 /obj/wingrille_spawn/auto,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 4;
 	icon_state = "pdoor0";
@@ -39051,7 +39051,7 @@
 /area/station/storage/eva)
 "cqu" = (
 /obj/wingrille_spawn/auto,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 4;
 	icon_state = "pdoor0";
@@ -39077,7 +39077,7 @@
 /area/station/storage/eva)
 "cqw" = (
 /obj/wingrille_spawn/auto,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 4;
 	icon_state = "pdoor0";
@@ -40146,7 +40146,7 @@
 /area/station/routing/security)
 "dmF" = (
 /obj/wingrille_spawn/auto/crystal,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	dir = 5;
 	id = "boomroom";
 	name = "Test Chamber Shutters"
@@ -40285,7 +40285,7 @@
 	d2 = 8;
 	icon_state = "0-4"
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 4;
 	icon_state = "pdoor0";
@@ -41514,7 +41514,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 4;
 	icon_state = "pdoor0";
@@ -42961,7 +42961,7 @@
 /area/station/hallway/primary/south)
 "fTm" = (
 /obj/wingrille_spawn/auto,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 4;
 	icon_state = "pdoor0";
@@ -42990,7 +42990,7 @@
 /area/station/routing/security)
 "fVI" = (
 /obj/grille/steel,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	dir = 4;
 	id = "tox_accessvent";
 	layer = 8;
@@ -43106,7 +43106,7 @@
 /area/station/bridge)
 "gbt" = (
 /obj/wingrille_spawn/auto/crystal,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	dir = 8;
 	id = "boomroom";
 	name = "Test Chamber Shutters"
@@ -43488,7 +43488,7 @@
 "gpY" = (
 /obj/wingrille_spawn/auto,
 /obj/cable,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 4;
 	icon_state = "pdoor0";
@@ -47545,7 +47545,7 @@
 /obj/plasticflaps{
 	layer = 3
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	id = "kondaru_qmfetch";
 	name = "Cargo Retrieval Door"
 	},
@@ -48038,7 +48038,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	dir = 8;
 	id = "boomroom";
 	name = "Test Chamber Shutters"
@@ -49941,7 +49941,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 4;
 	icon_state = "pdoor0";
@@ -49997,7 +49997,7 @@
 /obj/plasticflaps{
 	layer = 3
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	id = "kondaru_qmfetch";
 	name = "Cargo Retrieval Door"
 	},
@@ -50301,7 +50301,7 @@
 /area/station/hallway/primary/south)
 "nAw" = (
 /obj/wingrille_spawn/auto/crystal,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	dir = 10;
 	id = "boomroom";
 	name = "Test Chamber Shutters"
@@ -51811,7 +51811,7 @@
 /area/station/quartermaster/cargobay)
 "oXw" = (
 /obj/table/reinforced/auto,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 4;
 	icon_state = "pdoor0";
@@ -58102,7 +58102,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "kgenpopwindow";
@@ -58113,7 +58113,7 @@
 /area/station/security/brig)
 "vej" = (
 /obj/wingrille_spawn/auto,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 4;
 	icon_state = "pdoor0";
@@ -58599,7 +58599,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "kgenpopwindow";
@@ -59655,7 +59655,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/brig)
 "wIv" = (
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	id = "dwaine_core";
 	name = "DWAINE Core Shield"
 	},
@@ -61025,7 +61025,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "kgenpopwindow";
@@ -61129,7 +61129,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "kgenpopwindow";

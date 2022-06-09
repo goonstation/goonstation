@@ -8297,7 +8297,7 @@
 	drive_range = 5;
 	id = "fortuna"
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	dir = 4;
 	id = "fortuna";
 	name = "JUNK SHOOTY DOOR"

@@ -4221,7 +4221,7 @@
 	icon_state = "0-4"
 	},
 /obj/cable,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 10;
 	icon_state = "pdoor0";
@@ -4470,7 +4470,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 1;
 	icon_state = "pdoor0";
@@ -4650,7 +4650,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 6;
 	icon_state = "pdoor0";
@@ -6053,7 +6053,7 @@
 /obj/table/reinforced/auto,
 /obj/item/paper/book/from_file/pharmacopia,
 /obj/machinery/phone,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 8;
 	icon_state = "pdoor0";
@@ -8580,7 +8580,7 @@
 "aJw" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 8;
 	icon_state = "pdoor0";
@@ -11893,7 +11893,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 1;
 	icon_state = "pdoor0";
@@ -12264,7 +12264,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 1;
 	icon_state = "pdoor0";
@@ -12284,7 +12284,7 @@
 	icon_state = "0-8"
 	},
 /obj/disposalpipe/segment,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 1;
 	icon_state = "pdoor0";
@@ -12303,7 +12303,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 1;
 	icon_state = "pdoor0";
@@ -23593,7 +23593,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 1;
 	icon_state = "pdoor0";
@@ -29744,7 +29744,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	id = "interrogation";
 	name = "Interrogation Room";
@@ -33951,7 +33951,7 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/medbay/surgery/storage)
 "kkC" = (
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "pharm_shutters";
@@ -39439,7 +39439,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 9;
 	icon_state = "pdoor0";
@@ -41575,7 +41575,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 5;
 	icon_state = "pdoor0";
@@ -41739,7 +41739,7 @@
 	dir = 4;
 	name = "crematorium pipe"
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "pharm_shutters";
@@ -45727,7 +45727,7 @@
 /turf/simulated/floor/black,
 /area/station/teleporter)
 "qEd" = (
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 8;
 	icon_state = "pdoor0";
@@ -55067,7 +55067,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 8;
 	icon_state = "pdoor0";
