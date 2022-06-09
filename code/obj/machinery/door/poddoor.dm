@@ -360,7 +360,7 @@
 			vertical
 				dir = EAST
 
-	// meant for use inside station (not space type door)
+	// meant for use inside station, or if connected to space, not a door
 	shutters
 
 /obj/machinery/door/poddoor/blast/pyro
