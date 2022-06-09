@@ -42063,7 +42063,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/east)
 "bOT" = (
-/obj/machinery/door/poddoor/pyro/shutters{
+/obj/machinery/door/poddoor/pyro{
 	dir = 4;
 	id = "bridgetube1";
 	name = "Podbay Door"
@@ -44100,7 +44100,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/east)
 "bTf" = (
-/obj/machinery/door/poddoor/pyro/shutters{
+/obj/machinery/door/poddoor/pyro{
 	dir = 4;
 	id = "bridgetube2";
 	name = "Podbay Door"
@@ -74557,7 +74557,7 @@
 	},
 /area/research_outpost/chamber)
 "dkF" = (
-/obj/machinery/door/poddoor/pyro/shutters{
+/obj/machinery/door/poddoor/pyro{
 	dir = 4;
 	id = "research_outpost"
 	},

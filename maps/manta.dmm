@@ -19783,14 +19783,14 @@
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
 "bdY" = (
-/obj/forcefield/energyshield/perma/doorlink,
 /obj/machinery/conveyor/north{
 	id = "north"
 	},
-/obj/machinery/door/poddoor/pyro/shutters{
+/obj/machinery/door/poddoor/pyro{
 	id = "qm_dock";
 	name = "Cargo Bay In"
 	},
+/obj/forcefield/energyshield/perma/doorlink,
 /turf/simulated/floor/caution/westeast,
 /area/station/maintenance/lowerport)
 "bdZ" = (
@@ -29323,11 +29323,11 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
 "bCG" = (
-/obj/forcefield/energyshield/perma/doorlink,
-/obj/machinery/door/poddoor/pyro/shutters{
+/obj/machinery/door/poddoor/pyro{
 	id = "cargobay_out";
 	name = "Cargo Bay Out"
 	},
+/obj/forcefield/energyshield/perma/doorlink,
 /turf/simulated/floor/caution/westeast,
 /area/station/maintenance/lowerport)
 "bCH" = (
@@ -30937,7 +30937,7 @@
 	id = 3
 	},
 /obj/forcefield/energyshield/perma/doorlink,
-/obj/machinery/door/poddoor/pyro/shutters{
+/obj/machinery/door/poddoor/pyro{
 	id = "crusher2";
 	layer = 4;
 	name = "Waste Disposal"

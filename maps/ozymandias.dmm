@@ -14175,7 +14175,7 @@
 	name = "Catering Router"
 	})
 "dWf" = (
-/obj/machinery/door/poddoor/pyro/shutters{
+/obj/machinery/door/poddoor/pyro{
 	id = "funerary_driver";
 	name = "Funerary Driver Door"
 	},
@@ -49938,7 +49938,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/poddoor/pyro/shutters{
+/obj/machinery/door/poddoor/pyro{
 	id = "ozygasbelt";
 	name = "Gas Transit Door"
 	},
@@ -50404,7 +50404,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/arcade/dungeon)
 "nxJ" = (
-/obj/machinery/door/poddoor/pyro/shutters{
+/obj/machinery/door/poddoor/pyro{
 	id = "backup_plan";
 	name = "hatch"
 	},
@@ -53970,7 +53970,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/poddoor/pyro/shutters{
+/obj/machinery/door/poddoor/pyro{
 	id = "ozygasbelt";
 	name = "Gas Transit Door"
 	},

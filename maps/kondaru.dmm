@@ -1643,7 +1643,7 @@
 	id = "kondaru_funeral";
 	name = "funerary driver"
 	},
-/obj/machinery/door/poddoor/pyro/shutters{
+/obj/machinery/door/poddoor/pyro{
 	id = "kondaru_funeral";
 	name = "Funerary Driver Door"
 	},
@@ -10503,7 +10503,7 @@
 	drive_range = 50;
 	id = "trashgun"
 	},
-/obj/machinery/door/poddoor/pyro/shutters{
+/obj/machinery/door/poddoor/pyro{
 	dir = 4;
 	id = "trashgun";
 	name = "Waste Processing Hatch"

@@ -11623,7 +11623,7 @@
 	id = "coffin";
 	name = "coffin driver"
 	},
-/obj/machinery/door/poddoor/pyro/shutters{
+/obj/machinery/door/poddoor/pyro{
 	id = "coffin";
 	name = "Funeral Door"
 	},
@@ -35819,7 +35819,7 @@
 	operating = 1
 	},
 /obj/forcefield/energyshield/perma,
-/obj/machinery/door/poddoor/pyro/shutters{
+/obj/machinery/door/poddoor/pyro{
 	id = "crusher";
 	layer = 4;
 	name = "Crusher Door"
@@ -45282,7 +45282,7 @@
 	operating = 1
 	},
 /obj/forcefield/energyshield/perma,
-/obj/machinery/door/poddoor/pyro/shutters{
+/obj/machinery/door/poddoor/pyro{
 	id = "crusher";
 	layer = 4;
 	name = "Crusher Door"

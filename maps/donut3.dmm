@@ -68730,7 +68730,7 @@
 	drive_range = 75;
 	id = "crusher2"
 	},
-/obj/machinery/door/poddoor/pyro/shutters{
+/obj/machinery/door/poddoor/pyro{
 	dir = 8;
 	id = "crusher2";
 	layer = 4;

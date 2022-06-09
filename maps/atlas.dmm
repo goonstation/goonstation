@@ -15194,7 +15194,7 @@
 	id = "ghostsat";
 	name = "cargo driver"
 	},
-/obj/machinery/door/poddoor/pyro/shutters{
+/obj/machinery/door/poddoor/pyro{
 	id = "ghostsat";
 	name = "Cargo Door"
 	},
