@@ -189,8 +189,8 @@ This file is the critter itself, and all the custom procs it needs in order to f
 					boutput(user, "You collapse [src].")
 					src.foldself()
 		else
-			if(prob(50))
-				boutput(user,"<span class='alert' In your attempt to pet the [src], you cut yourself on its blades! </span>")
+			if(prob(50)&& isalive(src))
+				visible_message(user,"<span class='alert' In their attempt to pet the [src], [user] cuts themselves! </span>")
 				random_brute_damage(user, 7)
 				take_bleeding_damage(user, null, 7, DAMAGE_CUT, 1)
 		..()

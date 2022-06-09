@@ -6,6 +6,7 @@
 	icon_state = "structure-relay"
 	name = "titanic polyhedron"
 	desc = "The sight of the towering geodesic sphere fills you with dread. A thousand voices whisper to you."
+	flock_desc = "Your goal and purpose. Defend it until it can broadcast the Signal."
 	flock_id = "Signal Relay Broadcast Amplifier"
 	build_time = 30
 	health = 5000
