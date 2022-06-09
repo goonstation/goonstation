@@ -8321,10 +8321,13 @@
 /area/station/maintenance/west)
 "axM" = (
 /obj/table/auto,
-/obj/item/hand_tele,
 /obj/machinery/light/small,
 /obj/cable,
 /obj/machinery/power/apc/autoname_west,
+/obj/machinery/recharger{
+	pixel_y = 5
+	},
+/obj/item/hand_tele,
 /turf/simulated/floor/purpleblack,
 /area/station/teleporter)
 "axN" = (
