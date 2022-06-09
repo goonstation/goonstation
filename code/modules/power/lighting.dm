@@ -443,6 +443,7 @@ ABSTRACT_TYPE(/obj/machinery/light/lamp)
 	light_type = /obj/item/light/bulb
 	allowed_type = /obj/item/light/bulb
 	deconstruct_flags = DECON_SIMPLE
+	layer = ABOVE_OBJ_LAYER
 	plane = PLANE_DEFAULT
 	var/switchon = FALSE		// independent switching for lamps - not controlled by area lightswitch
 
@@ -478,7 +479,7 @@ ABSTRACT_TYPE(/obj/machinery/light/lamp)
 
 	New()
 		..()
-		src.UpdateOverlays(image('icons/obj/lighting.dmi', "lamp_base", layer = 2.99), "lamp base") // Just needs to be under the head of the lamp
+		src.UpdateOverlays(image('icons/obj/lighting.dmi', "lamp-base", layer = 2.99), "lamp base") // Just needs to be under the head of the lamp
 
 	bright
 		brightness = 1.8
