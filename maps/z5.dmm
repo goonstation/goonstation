@@ -518,7 +518,7 @@
 /area/diner/motel)
 "bT" = (
 /obj/table/wood/round/auto,
-/obj/machinery/light/lamp/bright,
+/obj/machinery/light/lamp/black/bright,
 /turf/simulated/floor/carpet/grime,
 /area/diner/motel)
 "bU" = (
@@ -1053,7 +1053,7 @@
 /area/diner/motel)
 "dw" = (
 /obj/table/wood/round/auto,
-/obj/machinery/light/lamp/bright,
+/obj/machinery/light/lamp/black/bright,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/carpet/grime,
 /area/diner/motel)
