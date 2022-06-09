@@ -1763,13 +1763,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				src.icon_state = icon_state_dead ? icon_state_dead : "[icon_state]-dead" // so we gotta show the message + change icon + etc
 				src.visible_message("<span class='alert'><b>[src]</b> dies!</span>",\
 				"<span class='alert'><b>You play dead!</b></span>")
-				src.set_density(0)
 			src.playing_dead = clamp((src.playing_dead + addtime), 0, 100)
 		if (src.playing_dead <= 0)
 			return
 		if (src.playing_dead == 1)
 			src.playing_dead = 0
-			src.set_density(1)
 			src.full_heal()
 			src.visible_message("<span class='notice'><b>[src]</b> stops playing dead and gets back up!</span>")
 			boutput(src, "<span class='notice'><b>You stop playing dead and get back up!</b></span>") // visible_message doesn't go through when this triggers
