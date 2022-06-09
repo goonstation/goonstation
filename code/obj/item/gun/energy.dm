@@ -311,7 +311,9 @@
 	desc = "The largest phaser from Radnor Photonics. A big gun for big problems."
 	muzzle_flash = "muzzle_flash_phaser"
 	cell_type = /obj/item/ammo/power_cell/higherish_power
-	shoot_delay = 20
+	shoot_delay = 10
+	charge_up = 5
+	can_dual_wield = FALSE
 
 	New()
 		set_current_projectile(new/datum/projectile/laser/light/huge) // light/huge - whatev!!!! this should probably be refactored
