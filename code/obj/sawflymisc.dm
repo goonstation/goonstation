@@ -122,6 +122,7 @@
 		playsound(user, "sound/machines/chainsaw_green.ogg", 50, 1)
 		take_bleeding_damage(target, null, 17, DAMAGE_STAB)
 		random_brute_damage(target, 14, FALSE)
+		user.lastattacked = target
 
 	attack_hand(atom/target, var/mob/user, var/reach)
 		if (ismob(target))
