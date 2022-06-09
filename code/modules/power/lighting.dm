@@ -433,13 +433,12 @@
 		current_lamp.breakprob = 6.25
 
 // the desk lamp
-ABSTRACT_TYPE(/obj/machinery/light/lamp)
 /obj/machinery/light/lamp
-	name = "desk lamp"
+	name = "desk lamp you shouldn't have created"
 	brightness = 1
 	wallmounted = FALSE
 	fitting = "bulb"
-	desc = "A desk lamp."
+	desc = "A desk lamp. a really fucked up desk lamp"
 	light_type = /obj/item/light/bulb
 	allowed_type = /obj/item/light/bulb
 	deconstruct_flags = DECON_SIMPLE
