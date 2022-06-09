@@ -126,7 +126,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 					src.hand_attack(user, dummy_params)
 					//second attack is hardcoded, since the limb has a cooldown of 1 seconds between attacks that interferes otherwise
 					SPAWN(5)
-					if(isalive(src) && IN_RANGE(src, user, 1)) //account for SPAWN() jank
+						if(isalive(src) && IN_RANGE(src, user, 1)) //account for SPAWN() jank
 							src.visible_message("<b class='alert'>[src] [pick(list("gouges", "cleaves", "lacerates", "shreds", "cuts", "tears", "saws", "mutilates", "hacks", "slashes"))] [user]!</b>")
 							playsound(src, "sound/machines/chainsaw_green.ogg", 50, 1)
 							take_bleeding_damage(user, null, 17, DAMAGE_STAB)
