@@ -62,6 +62,7 @@ const getStatsMax = stats => {
  */
 const generateChartsFromStats = stats => {
   return Object.entries(stats).map(([key, chart_data], index) => (
+    // margin fuckery is to remove the extra left margin on the first stack item for alignment reasons
     <Stack.Item key={key} mt={0.5} ml={index === 0 ? 1 : undefined} >
       <Box>
         { key.split("|")[0] }
@@ -126,7 +127,7 @@ export const EngineStats = (props, context) => {
               />
             </Modal>
           )
-          :(
+          : (
             <Box>
               <Section title={
                 <Box>

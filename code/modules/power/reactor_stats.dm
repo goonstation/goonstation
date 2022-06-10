@@ -196,32 +196,8 @@
 			. += O
 			O.overlays += ("red_overlay")
 
-/obj/machinery/power/reactor_stats/attackby(obj/item/W, mob/user)
-	src.Attackhand(user)
-
 /obj/machinery/power/reactor_stats/attack_ai(mob/user as mob)
 	return attack_hand(user)
-
-/obj/machinery/power/reactor_stats/Topic(href, href_list)
-	if(href_list["refresh_toggle"])
-		if(refresh)
-			refresh = 0
-		else
-			refresh = 1
-	else if(href_list["power_toggle"])
-		if(power)
-			power = 0
-			for(var/obj/machinery/power/stats_meter/M in meters)
-				M.overlays -= ("green_overlay")
-				M.overlays += ("red_overlay")
-		else
-			power = 1
-			for(var/obj/machinery/power/stats_meter/M in meters)
-				M.overlays -= ("red_overlay")
-				M.overlays += ("green_overlay")
-
-	src.updateUsrDialog()
-
 
 /obj/machinery/power/reactor_stats/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
@@ -255,4 +231,3 @@
 					M.overlays -= ("green_overlay")
 					M.overlays += ("red_overlay")
 			return TRUE
-
