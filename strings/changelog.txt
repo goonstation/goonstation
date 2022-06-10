@@ -1,5 +1,12 @@
 
 (t)fri jun 10 22
+(u)Flappybat
+(e)⚖| balance
+(*)Nerfed medbay floor scanner to give basic health scan. Pester a doctor today!
+(u)ZeWaka
+(p)8843
+(e)🆕⚖🔄📄|feature, balance, rework, tgui
+(*)Reworked the Engine Statistics computer on Cog1 to be TGUI, graph-based, and much more intuitive.
 (u)FlameArrow57
 (p)9054
 (e)|
@@ -12,7 +19,7 @@
 (u)Cogwerks
 (e)🎨|sprites
 (*)Made a new sprite and name for the heavy ion blaster
-(*)Occasionally testing a micro-phaser, macro-phaser, and egun Jr. in rounds 
+(*)Occasionally testing a micro-phaser, macro-phaser, and egun Jr. in rounds
 (u)LeahTheTech
 (p)9052
 (e)🐛|bug

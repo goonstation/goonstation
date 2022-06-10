@@ -479,35 +479,6 @@
 	icon = 'icons/obj/junk.dmi'
 	icon_state = "trophy"
 
-/obj/item/battlepass
-	icon = 'icons/obj/items/card.dmi'
-	icon_state = "id"
-	name = "Battle Pass"
-	desc = "Lets you know in advance where supply drops are happening. Also allows you to use 3 10 second long shields by clicking it in you hand"
-	var/uses = 3
-
-	attack_self(mob/user as mob)
-		if(uses <= 0)
-			boutput(user, "<span class='alert'>Your pass has no more uses!</span>")
-			return
-		if(user.spellshield == 1)
-			boutput(user, "<span class='alert'>You already have a shield up, nerd.</span>")
-			return
-		uses--
-		var/shield_overlay = image('icons/effects/effects.dmi', user, "enshield", MOB_LAYER+1)
-		user.underlays += shield_overlay
-		playsound(user,"sound/effects/MagShieldUp.ogg",50,1)
-		boutput(user, "<span class='notice'><b>You are surrounded by a BATTLE BARRIER!</b></span>")
-		user.visible_message("<span class='alert'>[user] is encased in a protective shield.</span>")
-		user.spellshield = 1
-		SPAWN(10 SECONDS)
-			user.spellshield = 0
-			boutput(user, "<span class='notice'><b>Your magical barrier fades away!</b></span>")
-			user.visible_message("<span class='alert'>The shield protecting [user] fades away.</span>")
-			user.underlays -= shield_overlay
-			shield_overlay = null
-			playsound(user,"sound/effects/MagShieldDown.ogg", 50, 1)
-
 /obj/item/ass_day_artifact
 	name = "Ass Day Artifact"
 	desc = "Gives the power of new life, but only on the most holy of days"
