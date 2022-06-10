@@ -827,10 +827,6 @@ f
 	containertype = /obj/storage/crate/wooden
 	containername = "RCD Replacement"
 
-	cost = 3000
-	containertype = /obj/storage/crate/packing
-	containername = "Cold Weather Gear"
-
 /datum/supply_packs/buddy
 	name = "Thinktronic Build Your Own Buddy Kit"
 	desc = "Assemble your very own working Robuddy, one part per week."
