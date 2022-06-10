@@ -13043,7 +13043,7 @@
 /turf/simulated/floor/plating,
 /area/research_outpost/protest)
 "fsx" = (
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	id = "chapelgun";
 	name = "Chapel Mass Driver"
 	},
@@ -19090,7 +19090,7 @@
 	id = "disposals";
 	operating = 1
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	dir = 4;
 	id = "speedboost_crusher"
 	},
@@ -21263,7 +21263,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quarters_south)
 "iRR" = (
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "market";
@@ -25080,7 +25080,7 @@
 /area/station/engine/monitoring)
 "kBq" = (
 /obj/wingrille_spawn/auto/crystal,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	dir = 9;
 	id = "boomroom";
 	name = "Test Chamber Shutters"
@@ -25621,7 +25621,7 @@
 /area/station/crew_quarters/jazz)
 "kNR" = (
 /obj/wingrille_spawn/auto/crystal,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	id = "boomroom";
 	name = "Test Chamber Shutters"
 	},
@@ -28270,7 +28270,7 @@
 	})
 "lUT" = (
 /obj/wingrille_spawn/auto/crystal,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	dir = 8;
 	id = "boomroom";
 	name = "Test Chamber Shutters"
@@ -42159,7 +42159,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	dir = 8;
 	id = "boomroom";
 	name = "Test Chamber Shutters"
@@ -44621,7 +44621,7 @@
 	})
 "tar" = (
 /obj/wingrille_spawn/auto/crystal,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	dir = 10;
 	id = "boomroom";
 	name = "Test Chamber Shutters"

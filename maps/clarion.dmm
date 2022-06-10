@@ -2113,7 +2113,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/market)
 "aeB" = (
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "market_2";
