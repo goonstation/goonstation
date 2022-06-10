@@ -6,6 +6,7 @@
 	density = 0
 	opacity = 0
 	anchored = 0
+	health = 5
 	w_class = W_CLASS_SMALL
 	pressure_resistance = 2*ONE_ATMOSPHERE
 	var/list/tiles = new/list()
@@ -22,7 +23,7 @@
 		..()
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (iswrenchingtool(W) && isturf(loc) && !istype(loc, /turf/space))
 			if(secured)
 				boutput(user, "<span class='alert'>You unsecure the generator.</span>")
@@ -33,7 +34,7 @@
 				secured = 1
 				playsound(src, "sound/items/Ratchet.ogg", 60, 1)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(secured)
 			boutput(user, "<span class='alert'>Its secured to the ground.</span>")
 			return
@@ -146,7 +147,7 @@
 	opacity = 0
 	anchored = 1
 	layer=12
-	event_handler_flags = USE_FLUID_ENTER 
+	event_handler_flags = USE_FLUID_ENTER
 	var/health_max = 10
 	var/health = 10
 	var/broken = 0

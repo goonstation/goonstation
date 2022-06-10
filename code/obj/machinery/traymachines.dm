@@ -54,6 +54,9 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 	my_tray.set_dir(src.dir)
 	my_tray.my_machine = src
 	my_tray.layer = OBJ_LAYER - 0.02
+	my_tray.bound_width = src.bound_width
+	my_tray.bound_height = src.bound_height
+	my_tray.transform = src.transform
 
 	..()
 
@@ -73,7 +76,7 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 	if (!(status & NOPOWER)) //oh my *fucking* god there's no checks all the way between use_power and the channel info on APCs
 		use_power(power_usage, EQUIP)
 
-/obj/machinery/traymachine/attack_hand(mob/user as mob)
+/obj/machinery/traymachine/attack_hand(mob/user)
 	src.add_fingerprint(user)
 	if (my_tray && my_tray.loc != src)
 		collect_tray()
@@ -84,7 +87,7 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 	attack_hand(user) //finally silicons can open and close the fucking morgues
 
 //Fun fact you can label these things
-/obj/machinery/traymachine/attackby(P as obj, mob/user as mob)
+/obj/machinery/traymachine/attackby(P, mob/user)
 	src.add_fingerprint(user)
 	if (istype(P, /obj/item/pen))
 		var/t = input(user, "What would you like the label to be?", src.name, null) as null|text
@@ -131,7 +134,9 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 	playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 
 	var/turf/T_src = get_turf(src)
-	var/turf/T = get_step(src, src.dir)
+	var/turf/T = T_src
+	for(var/i in 1 to src.bound_width / world.icon_size)
+		T = get_step(T, src.dir)
 
 	//handle animation and ejection of contents
 	for(var/atom/movable/AM as anything in src)
@@ -186,7 +191,7 @@ ABSTRACT_TYPE(/obj/machinery/traymachine/locking)
 	var/powerdraw_use = TRAYMACHINE_DEFAULT_DRAW  //same as power_usage by default
 	//crematoria/tanning beds also had a variable called cremating but from what I saw that and locked were always set together so
 
-/obj/machinery/traymachine/locking/attack_hand(mob/user as mob)
+/obj/machinery/traymachine/locking/attack_hand(mob/user)
 	if (locked)
 		boutput(user, "<span class='alert'>It's locked.</span>")
 		src.add_fingerprint(user) //because we're not reaching the parent call
@@ -236,7 +241,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 	else
 		return ..()
 
-/obj/machine_tray/attack_hand(mob/user as mob)
+/obj/machine_tray/attack_hand(mob/user)
 	if (my_machine && my_machine != src.loc)
 		my_machine?.collect_tray()
 
@@ -244,7 +249,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 	attack_hand(user)
 
 /obj/machine_tray/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-	if (!(isobj(O) || ismob(O)) || O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(O))
+	if (!(isobj(O) || ismob(O)) || O.anchored || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, O) > 0 || user.contents.Find(O))
 		return
 	if (istype(O, /atom/movable/screen) || istype(O, /obj/effects) || istype(O, /obj/ability_button) || istype(O, /obj/item/grab))
 		return
@@ -386,7 +391,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 	..()
 	UnsubscribeProcess()
 
-/obj/machinery/crema_switch/attack_hand(mob/user as mob)
+/obj/machinery/crema_switch/attack_hand(mob/user)
 	if (src.allowed(user))
 		if (!islist(src.crematoriums))
 			src.crematoriums = list()
@@ -556,7 +561,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 		src.trayoverlay = null
 		. = ..()
 
-	attackby(var/obj/item/P as obj, mob/user as mob)
+	attackby(var/obj/item/P, mob/user)
 
 		if (istype(P, /obj/item/light/tube) && !length(src.contents))
 			var/obj/item/light/tube/G = P
@@ -627,7 +632,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 
 		return "Unknown Error Encountered."
 
-	attack_hand(var/mob/user as mob, params)
+	attack_hand(var/mob/user, params)
 		if (..(user))
 			return
 

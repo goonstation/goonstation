@@ -51,7 +51,7 @@ var/global/the_sun = null
 			the_sun = null
 		..()
 
-	attackby(obj/item/O as obj, mob/user as mob)
+	attackby(obj/item/O, mob/user)
 		if (istype(O, /obj/item/clothing/mask/cigarette))
 			if (!O:on)
 				O:light(user, "<span class='alert'><b>[user]</b> lights [O] on [src] and casually takes a drag from it. Wow.</span>")
@@ -59,6 +59,7 @@ var/global/the_sun = null
 					SPAWN(1 SECOND)
 						user.visible_message("<span class='alert'><b>[user]</b> burns away into ash! It's almost as though being that close to a star wasn't a great idea!</span>",\
 						"<span class='alert'><b>You burn away into ash! It's almost as though being that close to a star wasn't a great idea!</b></span>")
+						logTheThing("combat", user, null, "was firegibbed by [src] ([src.type]) at [log_loc(user)].")
 						user.firegib()
 				else
 					user.unlock_medal("Helios", 1)
@@ -86,7 +87,7 @@ var/global/derelict_mode = 0
 		if (world.name)
 			name = world.name
 
-	attackby(obj/item/O as obj, mob/user as mob)
+	attackby(obj/item/O, mob/user)
 		..()
 		if (server_kicked_over && istype(O, /obj/item/clothing/mask/cigarette))
 			if (!O:on)

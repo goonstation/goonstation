@@ -22,6 +22,15 @@
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	layer = GRILLE_LAYER
 	event_handler_flags = USE_FLUID_ENTER
+	///can you use wirecutters to dismantle it?
+	var/can_be_snipped = TRUE
+	///can you use a screwdriver to unanchor it?
+	var/can_be_unscrewed = TRUE
+	///can you use a multitool to check for current?
+	var/can_be_probed = TRUE
+	///can you use this as a base for a new window?
+	var/can_build_window = TRUE
+
 
 	New()
 		..()
@@ -130,6 +139,44 @@
 			twosides
 				icon_state = "catwalk_jen_2sides"
 
+		dubious
+			name = "rusty catwalk"
+			desc = "This one looks even less safe than usual."
+			var/collapsing = 0
+			event_handler_flags = USE_FLUID_ENTER
+
+			New()
+				health = rand(5, 10)
+				..()
+				UpdateIcon()
+
+			Crossed(atom/movable/A)
+				..()
+				if (ismob(A))
+					src.collapsing++
+					SPAWN(1 SECOND)
+						collapse_timer()
+						if (src.collapsing)
+							playsound(src.loc, 'sound/effects/creaking_metal1.ogg', 25, 1)
+
+			proc/collapse_timer()
+				var/still_collapsing = 0
+				for (var/mob/M in src.loc)
+					src.collapsing++
+					still_collapsing = 1
+				if (!still_collapsing)
+					src.collapsing--
+
+				if (src.collapsing >= 5)
+					playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)
+					for(var/mob/M in AIviewers(src, null))
+						boutput(M, "[src] collapses!")
+					qdel(src)
+
+				if (src.collapsing)
+					SPAWN(1 SECOND)
+						src.collapse_timer()
+
 	onMaterialChanged()
 		..()
 		if (istype(src.material))
@@ -150,19 +197,6 @@
 			if (amount >= health_max / 2)
 				qdel(src)
 			return
-
-		var/armor = 0
-
-		if (src.material)
-			armor = blunt_resist
-
-			if (src.material.quality >= 25)
-				armor += src.material.quality * 0.25
-			else if (src.quality < 10)
-				armor = 0
-				//amount += rand(1,3)
-
-			amount -= armor
 
 		src.health = clamp(src.health - amount, 0, src.health_max)
 		if (src.health == 0)
@@ -304,33 +338,28 @@
 		else if (isobj(AM))
 			var/obj/O = AM
 			if (O.throwforce)
-				damage_blunt(blunt_resist ? max(0.5, O.throwforce / blunt_resist) : 0.5) // we don't want people screaming right through these and you can still get through them by kicking/cutting/etc
+				damage_blunt((max(1, O.throwforce * (1 - (blunt_resist / 100)))) / 2) // we don't want people screaming right through these and you can still get through them by kicking/cutting/etc
 		return
 
 	attack_hand(mob/user)
-		if (!islist(user)) //mbc : what the fuck. who is passing a list as an arg here. WHY. WHY i cant find it
-			user.lastattacked = src
 		if(!shock(user, 70))
+			user.lastattacked = src
 			var/damage = 1
-			var/dam_type = "blunt"
 			var/text = "[user.kickMessage] [src]"
 
-			if (user.is_hulk() && damage < 5)
+			if (user.is_hulk())
 				damage = 10
 				text = "smashes [src] with incredible strength"
 
 			src.visible_message("<span class='alert'><b>[user]</b> [text]!</span>")
 			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 80, 1)
 
-			if (dam_type == "slashing")
-				damage_slashing(damage)
-			else
-				damage_blunt(damage)
+			damage_blunt(damage)
 
 	attackby(obj/item/W, mob/user)
 		// Things that won't electrocute you
 
-		if (ispulsingtool(W) || istype(W, /obj/item/device/t_scanner))
+		if (can_be_probed && (ispulsingtool(W) || istype(W, /obj/item/device/t_scanner)))
 			var/net = get_connection()
 			if(!net)
 				boutput(user, "<span class='notice'>No electrical current detected.</span>")
@@ -338,30 +367,13 @@
 				boutput(user, "<span class='alert'>CAUTION: Dangerous electrical current detected.</span>")
 			return
 
-		else if(istype(W, /obj/item/sheet/))
+		else if(can_build_window && istype(W, /obj/item/sheet/))
 			var/obj/item/sheet/S = W
 			if (S.material && S.material.material_flags & MATERIAL_CRYSTAL && S.amount_check(2))
 				var/obj/window/WI
 				var/win_thin = 0
 				var/win_dir = 2
-//				var/turf/UT = get_turf(user)
 				var/turf/ST = get_turf(src)
-
-/*
-				if (UT && isturf(UT) && ST && isturf(ST))
-					// We're inside the grill.
-					if (UT == ST)
-						win_dir = usr.dir
-						win_thin = 1
-					// We're trying to install a window while standing on an adjacent tile, so make it face the mob.
-					else
-						win_dir = turn(usr.dir, 180)
-						if (win_dir in list(NORTH, EAST, SOUTH, WEST))
-							win_thin = 1
-
-				win_thin = 0 //mbc : nah this is annoying. you can just make a thindow using the popup menu and push it into place anyway.
-							 singh : if you're gonna disable it like this why not just comment out the entire thing and save the pointless checks
-*/
 
 				if (ST && isturf(ST))
 					if (S.reinforcement)
@@ -401,6 +413,7 @@
 		else if (istype(W, /obj/item/gun))
 			var/obj/item/gun/G = W
 			G.shoot_point_blank(src, user)
+			return
 		// electrocution check
 
 		var/OSHA_is_crying = 1
@@ -411,17 +424,17 @@
 		if ((src.material && src.material.hasProperty("electrical") && src.material.getProperty("electrical") > 30))
 			dmg_mod = 60 - src.material.getProperty("electrical")
 
-		if (OSHA_is_crying && IN_RANGE(src, user, 1) && shock(user, 100 - dmg_mod))
+		if (OSHA_is_crying && (BOUNDS_DIST(src, user) == 0) && shock(user, 100 - dmg_mod))
 			return
 
 		// Things that will electrocute you
 
-		if (issnippingtool(W))
+		if (can_be_snipped && issnippingtool(W))
 			damage_slashing(src.health_max)
 			src.visible_message("<span class='alert'><b>[usr]</b> cuts apart the [src] with [W].</span>")
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 
-		else if (isscrewingtool(W) && (istype(src.loc, /turf/simulated) || src.anchored))
+		else if (can_be_unscrewed && (isscrewingtool(W) && (istype(src.loc, /turf/simulated) || src.anchored)))
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 			src.anchored = !( src.anchored )
 			src.stops_space_move = !(src.stops_space_move)

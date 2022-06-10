@@ -15,6 +15,7 @@
 	item_state = "brain"
 	flags = TABLEPASS
 	force = 1.0
+	health = 4
 	w_class = W_CLASS_TINY
 	throwforce = 1.0
 	throw_speed = 3
@@ -22,6 +23,7 @@
 	stamina_damage = 5
 	stamina_cost = 5
 	edible = 1	// currently overridden by material settings
+	material_amt = 0.3
 	var/mob/living/carbon/human/donor = null // if I can't use "owner" I can at least use this
 	/// Whoever had this organ first, the original owner
 	var/mob/living/carbon/human/donor_original = null // So people'll know if a lizard's wearing someone else's tail
@@ -72,7 +74,7 @@
 	///if the organ is currently acting as an organ in a body
 	var/in_body = FALSE
 
-	attack(var/mob/living/carbon/M as mob, var/mob/user as mob)
+	attack(var/mob/living/carbon/M, var/mob/user)
 		if (!ismob(M))
 			return
 
@@ -86,7 +88,7 @@
 		else // failure and attack them with the organ
 			return ..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/analyzer/healthanalyzer))
 			var/obj/item/device/analyzer/healthanalyzer/HA = W
 

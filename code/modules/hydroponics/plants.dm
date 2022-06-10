@@ -165,7 +165,7 @@ ABSTRACT_TYPE(/datum/plant)
 		damage_prob = clamp(damage_prob, 0, 100)
 		var/damage_amt = 0
 		switch (reagent)
-			if ("phlogiston","infernite","thalmerite","sorium")
+			if ("phlogiston","infernite","pyrosium","sorium")
 				damage_amt = rand(80,100)
 			if ("pacid")
 				damage_amt = rand(75,80)
@@ -293,7 +293,7 @@ ABSTRACT_TYPE(/datum/plant)
 		..()
 
 	onUpdate()
-		if(plant_pot == null || source == null || (get_dist(source, plant_pot) > 1))
+		if(plant_pot == null || source == null || (BOUNDS_DIST(source, plant_pot) > 0))
 			interrupt(INTERRUPT_ALWAYS)
 			plant_pot.actionpassed = POT_ACTIONFAILED
 			reset()

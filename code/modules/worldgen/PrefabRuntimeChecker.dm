@@ -16,17 +16,17 @@
 	* prefabs appropriately, depending on the type of map.
 	*
 	* Prefabs are found by looking for concrete types of
-	* `/datum/generatorPrefab`. To add a new prefab to be checked, simply
+	* `/datum/mapPrefab/mining`. To add a new prefab to be checked, simply
 	* create a type for it.
   */
 /proc/placeAllPrefabs()
 #if defined(RUNTIME_CHECKING)
 	var/startTime = world.timeofday
 	boutput(world, "<span class='alert'>Generating prefabs...</span>")
-	var/list/prefab_types = filtered_concrete_typesof(/datum/generatorPrefab, /proc/filter_underwater_prefab)
+	var/list/prefab_types = filtered_concrete_typesof(/datum/mapPrefab/mining, /proc/filter_underwater_prefab)
 	boutput(world, "<span class='alert'>Found [length(prefab_types)] prefabs...</span>")
 	for (var/prefab_type in prefab_types)
-		var/datum/generatorPrefab/M = new prefab_type()
+		var/datum/mapPrefab/mining/M = new prefab_type()
 		var/turf/T = locate(1+AST_MAPBORDER, 1+AST_MAPBORDER, Z_LEVEL_STATION)
 		var/loaded = file2text(M.prefabPath)
 		var/dmm_suite/D = new/dmm_suite()
@@ -48,7 +48,7 @@
 #endif
 
 /proc/filter_underwater_prefab(var/prefab_type)
-	var/datum/generatorPrefab/M = prefab_type
+	var/datum/mapPrefab/mining/M = prefab_type
 	.= initial(M?.underwater)
 #ifndef UNDERWATER_MAP
 	.=!.

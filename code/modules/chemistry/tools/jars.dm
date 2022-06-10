@@ -27,7 +27,7 @@
 		STOP_TRACKING
 		..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/toy) || istype(W, /obj/item/reagent_containers/glass) || istype(W, /obj/item/reagent_containers/food/drinks))
 			return ..()
 
@@ -181,7 +181,7 @@ proc/generate_backup_jars()
 		else
 			tries_left--
 	tries_left = 50
-	while(length(by_type[/obj/item/reagent_containers/glass/jar]) < DEFAULT_JAR_COUNT)
+	while(length(by_type[/obj/item/reagent_containers/glass/jar]) < DEFAULT_JAR_COUNT && tries_left > 0)
 		var/turf/simulated/floor/T = locate(rand(1, world.maxx), rand(1, world.maxy), Z_LEVEL_STATION)
 		if(istype(T))
 			new/obj/item/reagent_containers/glass/jar(T)

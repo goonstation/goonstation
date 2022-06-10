@@ -175,7 +175,7 @@
 				qdel(src)
 			else
 				src.take_damage(45)
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!user) return
 		if (destroyed) return ..()
 
@@ -233,7 +233,11 @@
 		if(ishuman(AM))
 			var/mob/living/carbon/human/H = AM
 			H.arrestIcon?.alpha = 0
-			H.health_implant?.alpha = 0
+			if (H.implant_icons)
+				var/image/I
+				for (var/implant in H.implant_icons)
+					I = H.implant_icons[implant]
+					I.alpha = 0
 			H.health_mon?.alpha = 0
 
 	Uncrossed(atom/movable/AM)
@@ -244,10 +248,14 @@
 		if(ishuman(AM))
 			var/mob/living/carbon/human/H = AM
 			H.arrestIcon?.alpha = 255
-			H.health_implant?.alpha = 255
+			if (H.implant_icons)
+				var/image/I
+				for (var/implant in H.implant_icons)
+					I = H.implant_icons[implant]
+					I.alpha = 255
 			H.health_mon?.alpha = 255
 
-	attackby(var/obj/item/W as obj, mob/user as mob)
+	attackby(var/obj/item/W, mob/user)
 		user.lastattacked = src
 		hit_twitch(src)
 		attack_particle(user,src)
@@ -304,17 +312,19 @@
 		src.set_density(0)
 		src.desc = "The scattered remains of a once-beautiful bonsai tree."
 		playsound(src.loc, "sound/impact_sounds/Slimy_Hit_3.ogg", 100, 0)
-		// The bonsai tree goes to the deadbar because of course it does
-		var/obj/shrub/captainshrub/C = new /obj/shrub/captainshrub
-		C.overlays += image('icons/misc/32x64.dmi',"halo")
-		C.set_loc(pick(get_area_turfs(/area/afterlife/bar)))
-		C.anchored = 0
-		C.set_density(0)
+		// The bonsai tree goes to the deadbar because of course it does, except when there is no deadbar of course
+		var/list/afterlife_turfs = get_area_turfs(/area/afterlife/bar)
+		if(length(afterlife_turfs))
+			var/obj/shrub/captainshrub/C = new /obj/shrub/captainshrub
+			C.overlays += image('icons/misc/32x64.dmi',"halo")
+			C.set_loc(pick(afterlife_turfs))
+			C.anchored = 0
+			C.set_density(0)
 		for (var/mob/living/M in mobs)
 			if (M.mind && M.mind.assigned_role == "Captain")
 				boutput(M, "<span class='alert'>You suddenly feel hollow. Something very dear to you has been lost.</span>")
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!W) return
 		if (!user) return
 		if (inafterlife(user))
@@ -371,7 +381,7 @@
 				boutput(M, "<span class='alert'>You suddenly feel hollow. Something very dear to you has been lost.</span>")
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!W) return
 		if (!user) return
 		if (inafterlife(user))
@@ -406,6 +416,7 @@
 	icon_state = "ppot0"
 	anchored = 1
 	density = 0
+	deconstruct_flags = DECON_SCREWDRIVER
 
 	New()
 		..()
@@ -462,7 +473,7 @@
 			else
 				if(prob(50))
 					qdel(src)
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.toggle()
 		src.toggle_group()
 
@@ -566,7 +577,7 @@
 		for (var/obj/window_blinds/blind in myBlinds)
 			blind.toggle(src.on)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.toggle()
 
 	attack_ai(mob/user as mob)
@@ -637,7 +648,7 @@
 		light.set_height(2.4)
 		light.attach(src)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.toggle_on()
 
 	proc/toggle_on()
@@ -710,14 +721,81 @@
 	star_red
 		icon = 'icons/misc/galactic_objects_large.dmi'
 		icon_state = "star-red"
-		name = "Fugg"
+		name = "Shidd"
 		desc = "A dying red subgiant star shrouded in cast-off shells of gas."
 
 	star_blue
 		icon = 'icons/misc/galactic_objects_large.dmi'
 		icon_state = "star-blue"
-		name = "Shidd"
+		name = "Fugg"
 		desc = "A blazing young blue star."
+
+
+	domus_dei
+		icon_state = "domusDei"
+		name = "Domus Dei"
+		pixel_x = -256
+		pixel_y = -256
+
+	quadriga
+		icon_state = "quadriga"
+		name = "Quadriga"
+		pixel_x = -256
+		pixel_y = -256
+
+	mundus
+		icon_state = "mundus"
+		name = "Mundus"
+		pixel_x = -256
+		pixel_y = -256
+
+	iustitia
+		icon_state = "iustitia"
+		name = "Iustitia"
+		pixel_x = -256
+		pixel_y = -256
+
+	iudicium
+		icon_state = "iudicium"
+		name = "Iudicium"
+		pixel_x = -256
+		pixel_y = -256
+
+	fortuna
+		icon_state = "fortuna"
+		name = "Fortuna"
+		pixel_x = -256
+		pixel_y = -256
+
+	fatuus
+		icon_state = "fatuus"
+		name = "Fatuus"
+		pixel_x = -256
+		pixel_y = -256
+
+	magus
+		icon_state = "magus"
+		name = "Magus"
+		pixel_x = -256
+		pixel_y = -256
+
+	regis
+		icon_state ="regis"
+		name = "Regis"
+		pixel_x = -256
+		pixel_y = -256
+
+	amantes
+		icon_state = "amantes"
+		name = "Amantes"
+		pixel_x = -256
+		pixel_y = -256
+
+	antistes
+		icon_state = "antistes"
+		name = "Antistes"
+		pixel_x = -256
+		pixel_y = -256
 
 	station
 		name = "Space Station 14"
@@ -842,7 +920,7 @@ obj/decoration/ceilingfan
 			src.icon_state = src.icon_off
 			light.disable()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!src.lit)
 			if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
 				boutput(user, "<span class='alert'><b>[user]</b> casually lights [src] with [W], what a badass.</span>")
@@ -874,7 +952,7 @@ obj/decoration/ceilingfan
 				src.lit = 1
 				UpdateIcon ()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.lit)
 			var/fluff = pick("snuff", "blow")
 			src.lit = 0
@@ -887,6 +965,12 @@ obj/decoration/ceilingfan
 		if (light)
 			light.dispose()
 		..()
+
+	prelit
+		New()
+			. = ..()
+			src.lit = TRUE
+			UpdateIcon()
 
 /obj/decoration/rustykrab
 	name = "rusty krab sign"
@@ -922,6 +1006,15 @@ obj/decoration/ceilingfan
 	anchored = 2
 	density = 0
 	layer = DECAL_LAYER
+
+obj/decoration/gibberBroken
+	name = "rusty old gibber"
+	desc = "This thing is completely broken and rusted. There's also a shredded armored jacket and some crunched up bloody bones inside. Huh."
+	icon = 'icons/obj/decoration.dmi'
+	icon_state = "gibberBroken"
+	anchored = 1
+	density = 1
+	deconstruct_flags = DECON_WRENCH | DECON_WELDER | DECON_CROWBAR
 
 /obj/decoration/syndiepc
 	name = "syndicate computer"
@@ -1106,7 +1199,7 @@ obj/decoration/ceilingfan
 	stamina_crit_chance = 0
 	throwforce = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if ((user.r_hand == src || user.l_hand == src) && src.contents && length(src.contents))
 			user.visible_message("The cell on this is corroded. Good luck getting this thing to fire ever again!")
 			src.add_fingerprint(user)
@@ -1210,7 +1303,7 @@ obj/decoration/ceilingfan
 			src.icon_state = src.icon_off
 			light.disable()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!src.lit)
 			if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
 				boutput(user, "<span class='alert'><b>[user]</b> casually lights [src] with [W], what a badass.</span>")
@@ -1242,7 +1335,7 @@ obj/decoration/ceilingfan
 				src.lit = 1
 				UpdateIcon ()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.lit)
 			var/fluff = pick("snuff", "blow")
 			src.lit = 0
@@ -1250,7 +1343,7 @@ obj/decoration/ceilingfan
 			user.visible_message("<b>[user]</b> [fluff]s out the [src].",\
 			"You [fluff] out the [src].")
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (iswrenchingtool(W) && src.deconstructable)
 			actions.start(new /datum/action/bar/icon/furniture_deconstruct(src, W, 30), user)
 			return

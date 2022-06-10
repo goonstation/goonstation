@@ -128,29 +128,29 @@
 			return 0
 
 		if (!ishuman(M))
-			boutput(M, __red("You cannot use any powers in your current form."))
+			boutput(M, "<span class='alert'>You cannot use any powers in your current form.</span>")
 			return 0
 
 		if (M.transforming)
-			boutput(M, __red("You can't use any powers right now."))
+			boutput(M, "<span class='alert'>You can't use any powers right now.</span>")
 			return 0
 
 		if (incapacitation_check(src.when_stunned) != 1)
-			boutput(M, __red("You can't use this ability while incapacitated!"))
+			boutput(M, "<span class='alert'>You can't use this ability while incapacitated!</span>")
 			return 0
 
 		if (src.not_when_handcuffed == 1 && M.restrained())
-			boutput(M, __red("You can't use this ability when restrained!"))
+			boutput(M, "<span class='alert'>You can't use this ability when restrained!</span>")
 			return 0
 
 		if (!(isdiabolical(M)))
-			boutput(M, __red("You aren't evil enough to use this power!"))
-			boutput(M, __red("Also, you should probably contact a coder because something has gone horribly wrong."))
+			boutput(M, "<span class='alert'>You aren't evil enough to use this power!</span>")
+			boutput(M, "<span class='alert'>Also, you should probably contact a coder because something has gone horribly wrong.</span>")
 			return 0
 
 		if (!(total_souls_value >= CONTRACT_COST))
-			boutput(M, __red("You don't have enough souls in your satanic bank account to buy another contract!"))
-			boutput(M, __red("You need [CONTRACT_COST - total_souls_value] more to afford a contract!"))
+			boutput(M, "<span class='alert'>You don't have enough souls in your satanic bank account to buy another contract!</span>")
+			boutput(M, "<span class='alert'>You need [CONTRACT_COST - total_souls_value] more to afford a contract!</span>")
 			return 0
 
 		return 1
@@ -185,15 +185,15 @@
 		if (!M)
 			return 1
 		if (!(total_souls_value >= CONTRACT_COST))
-			boutput(M, __red("You don't have enough souls in your satanic bank account to buy another contract!"))
-			boutput(M, __red("You need [CONTRACT_COST - total_souls_value] more to afford a contract!"))
+			boutput(M, "<span class='alert'>You don't have enough souls in your satanic bank account to buy another contract!</span>")
+			boutput(M, "<span class='alert'>You need [CONTRACT_COST - total_souls_value] more to afford a contract!</span>")
 			return 1
 		if (!isdiabolical(M))
-			boutput(M, __red("You aren't evil enough to use this power!"))
-			boutput(M, __red("Also, you should probably contact a coder because something has gone horribly wrong."))
+			boutput(M, "<span class='alert'>You aren't evil enough to use this power!</span>")
+			boutput(M, "<span class='alert'>Also, you should probably contact a coder because something has gone horribly wrong.</span>")
 			return 1
 		souladjust(-CONTRACT_COST)
-		boutput(M, __red("You spend [CONTRACT_COST] souls and summon a brand new contract along with a pen! However, losing the power of those souls has weakened your weapons."))
+		boutput(M, "<span class='alert'>You spend [CONTRACT_COST] souls and summon a brand new contract along with a pen! However, losing the power of those souls has weakened your weapons.</span>")
 		spawncontract(M, 1, 1) //strong contract + pen
 		soulcheck(M)
 		return 0
@@ -330,7 +330,7 @@
 			usr.flags &= ~(NODRIFT | DOORPASS | TABLEPASS)
 			APPLY_ATOM_PROPERTY(usr, PROP_MOB_CANTMOVE, "floorswitching")
 			REMOVE_ATOM_PROPERTY(usr, PROP_MOB_NO_MOVEMENT_PUFFS, "floorswitching")
-			REMOVE_ATOM_PROPERTY(usr, PROP_MOB_NEVER_DENSE, "floorswitching")
+			REMOVE_ATOM_PROPERTY(usr, PROP_ATOM_NEVER_DENSE, "floorswitching")
 			usr.set_density(initial(usr.density))
 			animate_slide(floorturf, x_coeff * -slide_amount, y_coeff * -slide_amount, 4)
 			SPAWN(0.4 SECONDS)
@@ -348,7 +348,7 @@
 				if(usr)
 					REMOVE_ATOM_PROPERTY(usr, PROP_MOB_CANTMOVE, "floorswitching")
 					APPLY_ATOM_PROPERTY(usr, PROP_MOB_NO_MOVEMENT_PUFFS, "floorswitching")
-					APPLY_ATOM_PROPERTY(usr, PROP_MOB_NEVER_DENSE, "floorswitching")
+					APPLY_ATOM_PROPERTY(usr, PROP_ATOM_NEVER_DENSE, "floorswitching")
 					usr.flags |= NODRIFT | DOORPASS | TABLEPASS
 					usr.set_density(0)
 					usr.layer = 4

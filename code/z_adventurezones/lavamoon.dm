@@ -772,6 +772,7 @@ var/sound/iomoon_alarm_sound = null
 			elecflash(user,radius = 2, power = 6)
 
 			H.unkillable = 1
+			H.setStatus("maxhealth-", null, -90)
 			H.gib(1)
 			qdel(src)
 
@@ -893,8 +894,8 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		layer = OBJ_LAYER
 		var/active = 0
 
-		attack_hand(mob/user as mob)
-			if (user.stat || user.getStatusDuration("weakened") || get_dist(user, src) > 1 || !user.can_use_hands())
+		attack_hand(mob/user)
+			if (user.stat || user.getStatusDuration("weakened") || BOUNDS_DIST(user, src) > 0 || !user.can_use_hands())
 				return
 
 			user.visible_message("<span class='alert'>[user] presses [src].</span>", "<span class='alert'>You press [src].</span>")
@@ -1050,7 +1051,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 					rotors.icon_state = "powercore_rotors_fast"
 
 
-		attack_hand(var/mob/user as mob)
+		attack_hand(var/mob/user)
 			if (src.active != 1)
 				return
 
@@ -1352,15 +1353,24 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		if (!id)
 			id = "generic"
 
+		src.update_id()
+
+	proc/update_id(new_id)
+		if(new_id)
+			src.id = new_id
 		src.tag = "ladder_[id][src.icon_state == "ladder" ? 0 : 1]"
 
-	attack_hand(mob/user as mob)
+	proc/get_other_ladder()
+		RETURN_TYPE(/atom)
+		. = locate("ladder_[id][src.icon_state == "ladder"]")
+
+	attack_hand(mob/user)
 		if (src.broken) return
-		if (user.stat || user.getStatusDuration("weakened") || get_dist(user, src) > 1)
+		if (user.stat || user.getStatusDuration("weakened") || BOUNDS_DIST(user, src) > 0)
 			return
 		src.climb(user)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (src.broken) return
 		if (istype(W, /obj/item/grab))
 			if (!W:affecting) return
@@ -1369,7 +1379,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			return attack_hand(W:affecting)
 
 	proc/climb(mob/user as mob)
-		var/obj/ladder/otherLadder = locate("ladder_[id][src.icon_state == "ladder"]")
+		var/obj/ladder/otherLadder = src.get_other_ladder()
 		if (!istype(otherLadder))
 			boutput(user, "You try to climb [src.icon_state == "ladder" ? "down" : "up"] the ladder, but seriously fail! Perhaps there's nowhere to go?")
 			return
@@ -1545,6 +1555,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		playsound(src.loc, "sound/effects/mag_iceburstimpact.ogg", 25, 1)
 
 		for(var/mob/living/L in get_turf(src))
+			logTheThing("combat", L, null, "was gibbed by [src] ([src.type]) at [log_loc(L)].")
 			L.gib()
 
 		set_density(1)
@@ -1809,8 +1820,8 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		if (findtext(id, ";"))
 			id = params2list(id)
 
-	attack_hand(mob/user as mob)
-		if (user.stat || user.getStatusDuration("weakened") || get_dist(user, src) > 1 || !user.can_use_hands() || !ishuman(user))
+	attack_hand(mob/user)
+		if (user.stat || user.getStatusDuration("weakened") || BOUNDS_DIST(user, src) > 0 || !user.can_use_hands() || !ishuman(user))
 			return
 
 		user.visible_message("<span class='alert'>[user] presses [src].</span>", "<span class='alert'>You press [src].</span>")

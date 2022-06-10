@@ -143,7 +143,7 @@
 
 /obj/ability_button/magboot_toggle
 	name = "(De)Activate Magboots"
-	icon_state = "shieldceon"
+	icon_state = "magbootson"
 
 	execute_ability()
 		var/obj/item/clothing/shoes/magnetic/W = the_item
@@ -194,6 +194,7 @@
 		if(R.uses < 0)
 			the_item.name = "Empty Rocket Shoes"
 			boutput(the_mob, "<span class='alert'>Your rocket shoes are empty.</span>")
+			the_item.hide_buttons()
 			R.abilities.Cut()
 			qdel(src)
 			return
@@ -229,6 +230,7 @@
 						the_mob:update_burning(1)
 						sleep(0.3 SECONDS)
 				the_mob.unlock_medal( "Too Fast Too Furious", 1 )
+				logTheThing("combat", the_mob, null, "was gibbed by rocket shoes at [log_loc(the_mob)].")
 				the_mob.gib()
 
 			return
@@ -308,12 +310,12 @@
 
 /obj/ability_button/flashlight_toggle
 	name = "Toggle Flashlight"
-	icon_state = "on"
+	icon_state = "lightoff"
 
 	execute_ability()
 		var/obj/item/device/light/flashlight/J = the_item
 		J.toggle()
-		src.icon_state = J.on ? "off" : "on"
+		src.icon_state = J.on ? "lighton" : "lightoff"
 		..()
 
 ////////////////////////////////////////////////////////////
@@ -375,40 +377,40 @@
 
 /obj/ability_button/flashlight_engiehelm
 	name = "Toggle Helmet Light"
-	icon_state = "on"
+	icon_state = "lightoff"
 
 	execute_ability()
 		var/obj/item/clothing/head/helmet/space/engineer/J = the_item
 
 		J.flashlight_toggle(the_mob)
-		if (J.on) src.icon_state = "off"
-		else  src.icon_state = "on"
+		if (J.on) src.icon_state = "lighton"
+		else  src.icon_state = "lightoff"
 		..()
 
 ////////////////////////////////////////////////////////////
 
 /obj/ability_button/flashlight_hardhat
 	name = "Toggle Hardhat Light"
-	icon_state = "on"
+	icon_state = "lightoff"
 
 	execute_ability()
 		var/obj/item/clothing/head/helmet/hardhat/J = the_item
 
 		J.flashlight_toggle(the_mob)
-		src.icon_state = J.on ? "off" : "on"
+		src.icon_state = J.on ? "lighton" : "lightoff"
 		..()
 
 ////////////////////////////////////////////////////////////
 
 /obj/ability_button/tscanner_toggle
 	name = "Toggle T-Scanner"
-	icon_state = "on"
+	icon_state = "lightoff" //TODO: make bespoke sprites for this I guess
 
 	execute_ability()
 		var/obj/item/device/t_scanner/J = the_item
 		J.AttackSelf(the_mob)
-		if(J.on) icon_state = "off"
-		else  icon_state = "on"
+		if(J.on) icon_state = "lighton"
+		else  icon_state = "lightoff"
 		..()
 
 ////////////////////////////////////////////////////////////

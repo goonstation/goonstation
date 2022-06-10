@@ -211,7 +211,7 @@
 	burn_possible = 1
 	rand_pos = 1
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		src.add_fingerprint(user)
 		if (user.zone_sel.selecting == "head")
 			M.emote("sneeze")
@@ -562,14 +562,14 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	failed_stack(atom/movable/O as obj, mob/user as mob, var/added)
 		boutput(user, "<span class='alert'>You need another stack!</span>")
 
-	attackby(var/obj/item/I as obj, mob/user as mob)
+	attackby(var/obj/item/I, mob/user)
 		if (istype(I, /obj/item/dice/coin/poker_chip) && src.amount < src.max_stack)
 			user.visible_message("<span class='notice'>[user] stacks some [src.real_name]s.</span>")
 			src.stack_item(I)
 		else
 			..(I, user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if ((user.l_hand == src || user.r_hand == src) && user.equipped() != src)
 			var/amt = src.amount == 2 ? 1 : round(input("How many [src.real_name]s do you want to take from the stack?") as null|num)
 			if (amt && src.loc == user && !user.equipped())
@@ -1017,22 +1017,13 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			var/obj/item/grab/G = H.find_type_in_hand(/obj/item/grab)
 			if (!G)
 				return 0
-/*
-			if (G.affecting in npc_protected_mobs)
-				if (G.state == 1)
-					src.im_mad += 5
-				else if (G.state == 2)
-					src.im_mad += 20
-				else if (G.state == 3)
-					src.im_mad += 50
-				return 1
-*/
+
 			if (G.affecting == src) // we won't put up with shit being done to us nearly as much as we'll put up with it for others
-				if (G.state == 1)
+				if (G.state == GRAB_STRONG)
 					src.im_mad += 20
-				else if (G.state == 2)
+				else if (G.state == GRAB_AGGRESSIVE)
 					src.im_mad += 60
-				else if (G.state == 3)
+				else if (G.state == GRAB_CHOKE)
 					src.im_mad += 100
 				return 1
 
@@ -1280,7 +1271,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 		..()
 		BLOCK_SETUP(BLOCK_KNIFE)
 
-	attack(mob/living/carbon/M as mob, mob/user as mob)
+	attack(mob/living/carbon/M, mob/user)
 		if (!ismob(M) || !length(M.contents))
 			return ..()
 		var/atom/movable/AM = pick(M.contents)
@@ -1368,10 +1359,10 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			playsound(T, "sound/effects/bamf.ogg", 40, 1)
 			user.visible_message("<span class='success'><b>[user]</b> blasts some bling at [target]!</span>")
 
-	shoot_point_blank(mob/M, mob/user, second_shot)
-		shoot(get_turf(M), get_turf(user), user, 0, 0)
+	shoot_point_blank(atom/target, mob/user, second_shot)
+		shoot(get_turf(target), get_turf(user), user, 0, 0)
 
-	attackby(var/obj/item/spacecash/C as obj, mob/user as mob)
+	attackby(var/obj/item/spacecash/C, mob/user)
 		if (!istype(C))
 			return ..()
 		if (C.amount <= 0) // how??
@@ -1437,7 +1428,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 		src.open = !src.open
 		src.UpdateIcon()
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if (H.makeup == 2) // it's messed up
@@ -1465,7 +1456,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 
 	onUpdate()
 		..()
-		if (get_dist(owner, target) > 1 || target == null || owner == null || makeup == null)
+		if (BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || makeup == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/ownerMob = owner
@@ -1475,7 +1466,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 
 	onStart()
 		..()
-		if (get_dist(owner, target) > 1 || target == null || owner == null || makeup == null)
+		if (BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || makeup == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/ownerMob = owner
@@ -1498,7 +1489,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
-		if (owner && ownerMob && target && makeup && makeup == ownerMob.equipped() && get_dist(owner, target) <= 1)
+		if (owner && ownerMob && target && makeup && makeup == ownerMob.equipped() && BOUNDS_DIST(owner, target) == 0)
 			target.makeup = 1
 			target.makeup_color = makeup.font_color
 			target.update_body()
@@ -1603,7 +1594,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	stamina_crit_chance = 5
 	rand_pos = 1
 
-	attack(mob/M as mob, mob/user as mob) // big ol hackery here
+	attack(mob/M, mob/user) // big ol hackery here
 		if (M && isvampire(M))
 			src.force = (src.force * 2)
 			src.stamina_damage = (src.stamina_damage * 2)
@@ -1669,7 +1660,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			return
 		src.icon_state = "[switch_select]-throw"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.change_icon()
 		return
 
@@ -1693,7 +1684,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			return
 		src.icon_state = "[board_select]"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.change_icon()
 		return
 

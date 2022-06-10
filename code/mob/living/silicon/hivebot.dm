@@ -494,7 +494,7 @@
 			step(AM, t)
 		src.now_pushing = null
 
-/mob/living/silicon/hivebot/attackby(obj/item/W as obj, mob/user as mob)
+/mob/living/silicon/hivebot/attackby(obj/item/W, mob/user)
 	if (isweldingtool(W))
 		if (src.get_brute_damage() < 1)
 			boutput(user, "<span class='alert'>[src] has no dents to repair.</span>")
@@ -1026,7 +1026,7 @@ Frequency:
 		if (istype(aiMainframe))
 			aiMainframe.show_laws(0, src)
 		else
-			ticker.centralized_ai_laws.show_laws(src)
+			boutput(src, "<span class='alert'>You lack a dedicated mainframe! This is a bug, report to an admin!</span>")
 
 		return
 
@@ -1035,6 +1035,12 @@ Frequency:
 			src.mainframe.return_to(src)
 		else
 			return ..()
+
+	disposing()
+		available_ai_shells -= src
+		..()
+
+
 
 /*-----Shell-Creation---------------------------------------*/
 
@@ -1060,7 +1066,7 @@ Frequency:
 	var/has_radio = 0
 	var/has_interface = 0
 
-/obj/item/shell_frame/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/shell_frame/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/sheet))
 		if (src.build_step < 1)
 			var/obj/item/sheet/M = W

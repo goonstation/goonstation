@@ -136,12 +136,13 @@ Contents:
 	limit = 0
 	wages = 0
 //	slot_belt = /obj/item/katana_sheath
-	slot_jump = /obj/item/clothing/under/gimmick/hakama/random
-	slot_head = /obj/item/clothing/head/bandana/random_color
-	slot_foot = /obj/item/clothing/shoes/sandal
-	slot_rhan = /obj/item/katana/self_destructing
-	slot_lhan = /obj/item/dojohammer
-	slot_back = null
+	slot_jump = list(/obj/item/clothing/under/gimmick/hakama/random)
+	slot_head = list(/obj/item/clothing/head/bandana/random_color)
+	slot_foot = list(/obj/item/clothing/shoes/sandal/wizard)
+	slot_rhan = null
+	slot_lhan = list(/obj/item/dojohammer)
+	slot_belt = list(/obj/item/katana_sheath/reverse)
+	slot_back = list(/obj/item/storage/backpack/randoseru)
 	slot_card = null
 	slot_ears = null
 
@@ -190,7 +191,7 @@ Contents:
 	New()
 		..()
 
-	attackby(obj/item/H as obj, mob/user as mob)
+	attackby(obj/item/H, mob/user)
 		if (istype(H, /obj/item/dojohammer))
 			var/obj/table/anvil/A = locate() in get_turf(src)
 			if(A)
@@ -281,7 +282,7 @@ Contents:
 
 	onUpdate()
 		..()
-		if(get_dist(user, target) > 1 || get_dist(A, target) > 0 || user == null || target == null)
+		if(BOUNDS_DIST(user, target) > 0 || get_dist(A, target) > 0 || user == null || target == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		target.temperature -= 5
@@ -313,14 +314,14 @@ Contents:
 			outline:color = target.color
 		icon_image.color =  target.color
 		border.UpdateOverlays(icon_image, "action_icon")
-		if(get_dist(user, target) > 1 || user == null || target == null)
+		if(BOUNDS_DIST(user, target) > 0 || user == null || target == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		src.loopStart()
 		return
 
 	onEnd()
-		if(get_dist(user, target) > 1 || user == null || target == null || !user.find_in_hand(H))
+		if(BOUNDS_DIST(user, target) > 0 || user == null || target == null || !user.find_in_hand(H))
 			..()
 			interrupt(INTERRUPT_ALWAYS)
 			return
@@ -500,7 +501,7 @@ Contents:
 	parts_type = null
 	hulk_immune = TRUE
 
-	attackby(obj/item/W as obj, mob/user as mob, params)
+	attackby(obj/item/W, mob/user, params)
 		if (istype(W) && src.place_on(W, user, params))
 			return
 		else

@@ -80,7 +80,7 @@ ENGINE
 		add_avail(power)
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(status & (BROKEN | NOPOWER))
 			boutput(user, "The engine won't turn on.")
 			return
@@ -320,7 +320,7 @@ REACTOR
 				return
 		src.active = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		return
 
 	attackby(obj/item/W, mob/user)
@@ -332,7 +332,7 @@ REACTOR
 					// Unequipping
 					user.u_equip(W)
 					W.set_loc(src)
-					W.dropped()
+					W.dropped(user)
 					// Letting everyone around know
 					boutput(user, "<span class='alert'>You insert the [W] into the [src].</span>")
 					for(var/mob/M in AIviewers(src))
@@ -348,7 +348,7 @@ REACTOR
 					controlRods[i] = W
 					user.u_equip(W)
 					W.set_loc(src)
-					W.dropped()
+					W.dropped(user)
 					boutput(user, "<span class='alert'>You insert the [W] into the [src].</span>")
 					for(var/mob/M in AIviewers(src))
 						if(M == user)	continue

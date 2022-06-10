@@ -27,7 +27,7 @@
 		..()
 		src.autojump_updateworldicon()
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		..()
 		src.autojump_updateworldicon()
 

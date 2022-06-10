@@ -27,7 +27,7 @@
 			return 1
 		return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		boutput(user, "<span class='notice'>You push the [src.name] but nothing happens!</span>")
 		playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1)
 		src.add_fingerprint(user)
@@ -45,7 +45,7 @@
 			else
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
 			src.gib(1)
 		else

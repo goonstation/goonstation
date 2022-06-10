@@ -84,6 +84,7 @@
 	light_mod = "wall-"
 	connect_overlay = 1
 	connects_to = list(/turf/simulated/wall/auto/shuttle, /turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window)
+	connects_to_exceptions = list()
 	connects_with_overlay = list(/turf/simulated/wall/false_wall/reinforced, /obj/machinery/door, /obj/window)
 	connect_across_areas = FALSE
 /*

@@ -335,11 +335,6 @@
 	src.mainframe_check()
 
 	if (!isdead(src)) //Alive.
-		// AI-controlled cyborgs always use the global lawset, so none of this applies to them (Convair880).
-		if ((src.emagged || src.syndicate) && src.mind && !src.dependent)
-			if (!src.mind.special_role)
-				src.handle_robot_antagonist_status()
-
 		if (src.health < 0)
 			death()
 
@@ -366,10 +361,6 @@
 			// sure keep trying to use power i guess.
 			use_power()
 
-	// Assign antag status if we don't have any yet (Convair880).
-	if (src.mind && (src.emagged || src.syndicate))
-		if (!src.mind.special_role)
-			src.handle_robot_antagonist_status()
 
 	hud.update()
 	process_killswitch()
@@ -417,27 +408,6 @@
 /mob/living/object/Life(datum/controller/process/mobs/parent)
 	if (..(parent))
 		return 1
-
-	if (!src.item)
-		src.death(FALSE)
-
-	if (src.item && src.item.loc != src) //ZeWaka: Fix for null.loc
-		if (isturf(src.item.loc))
-			src.item.set_loc(src)
-		else
-			src.death(FALSE)
-
-	for (var/atom/A as obj|mob in src)
-		if (A != src.item && A != src.dummy && A != src.owner && !istype(A, /atom/movable/screen))
-			if (isobj(A) || ismob(A)) // what the heck else would this be?
-				A:set_loc(src.loc)
-
-	src.set_density(src.item ? src.item.density : 0)
-	src.item.set_dir(src.dir)
-	src.icon = src.item.icon
-	src.icon_state = src.item.icon_state
-	src.color = src.item.color
-	src.overlays = src.item.overlays
 
 /mob/living/carbon/cube
 	Life(datum/controller/process/mobs/parent)
@@ -568,7 +538,7 @@
 
 	handle_stamina_updates()
 		if (stamina == STAMINA_NEG_CAP)
-			setStatus("paralysis", max(getStatusDuration("paralysis"), STAMINA_NEG_CAP_STUN_TIME))
+			setStatusMin("paralysis", STAMINA_NEG_CAP_STUN_TIME)
 
 		//Modify stamina.
 		var/stam_time_passed = max(tick_spacing, TIME - last_stam_change)
@@ -708,7 +678,7 @@
 			//protection from clothing
 		if(a_zone == "All")
 			protection = (5 * GET_ATOM_PROPERTY(src, PROP_MOB_MELEEPROT_BODY) + GET_ATOM_PROPERTY(src, PROP_MOB_MELEEPROT_HEAD))/6
-		if (a_zone == "chest")
+		else if (a_zone == "chest")
 			protection = GET_ATOM_PROPERTY(src, PROP_MOB_MELEEPROT_BODY)
 		else //can only be head
 			protection = GET_ATOM_PROPERTY(src, PROP_MOB_MELEEPROT_HEAD)

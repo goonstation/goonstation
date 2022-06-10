@@ -98,7 +98,7 @@
 	var/image/damaged = null
 	var/busted = 0
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (istype(W, /obj/item/pod/paintjob))
 			src.paint_pod(W, user)
 		else return ..(W, user)
@@ -540,7 +540,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 /* Construction                */
 /*-----------------------------*/
 
-/obj/structure/vehicleframe/attackby(obj/item/W as obj, mob/living/user as mob)
+/obj/structure/vehicleframe/attackby(obj/item/W, mob/living/user)
 	switch(stage)
 		if(0)
 			if (iswrenchingtool(W))
@@ -633,7 +633,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 				else
 					boutput(user, "<span class='alert'>These sheets aren't the right kind of material. You need metal!</span>")
 			else
-				boutput(user, "You shouldn't just leave all those circuits exposed! That's dangerous! You'll need three sheets of metal to cover it all up.")
+				boutput(user, "You shouldn't just leave all those circuits exposed! That's dangerous! You'll need [src.metal_amt] sheets of metal to cover it all up.")
 
 		if(6)
 			if(istype(W, src.engine_type))
@@ -729,7 +729,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 				qdel(src)
 
 			else
-				boutput(user, "You weren't thinking of heading out without a reinforced cockpit, were you? Put some reinforced glass on it! Three [src.glass_amt] will do.")
+				boutput(user, "You weren't thinking of heading out without a reinforced cockpit, were you? Put some reinforced glass on it! Just [src.glass_amt] sheets will do.")
 
 /*-----------------------------*/
 /*                             */
@@ -823,7 +823,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 			src.speed = clamp((src.material.getProperty("electrical")) / 30, 0.75, 1.5)
 		return
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (istype(W, /obj/item/pod/paintjob))
 			src.paint_pod(W, user)
 		else return ..(W, user)
@@ -1414,10 +1414,12 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 
 	finish_board_pod(var/mob/boarder)
 		..()
-		if (!src.pilot) return //if they were stopped from entering by other parts of the board proc from ..()
+		if (!src.pilot)
+			return //if they were stopped from entering by other parts of the board proc from ..()
 		SPAWN(0)
 			src.escape()
 
+	#define SHUTTLE_PERCENT_FROM_STATION emergency_shuttle.timeleft() / SHUTTLETRANSITTIME // both in seconds
 	proc/escape()
 		if(!launched)
 			launched = 1
@@ -1438,18 +1440,14 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 					explosion(src, src.loc, 1, 1, 2, 3)
 					break
 				steps_moved++
-				if(prob((steps_moved-7) * 3) && !succeeding)
+				if(prob((steps_moved-7) * 4 * (1 - SHUTTLE_PERCENT_FROM_STATION)) && !succeeding) // failure becomes more likely as the shuttle gets farther
 					fail()
-				if (prob((steps_moved-7) * 4))
+				if (prob((steps_moved-7) * 6 * SHUTTLE_PERCENT_FROM_STATION))
 					succeed()
 				sleep(0.4 SECONDS)
-
-	proc/test()
-		boutput(world,"shuttle loc is [emergency_shuttle.location]")
+	#undef SHUTTLE_PERCENT_FROM_STATION
 
 	proc/succeed()
-		if (succeeding && prob(3))
-			succeeding = 0
 		if (emergency_shuttle.location == SHUTTLE_LOC_TRANSIT & !did_warp) //lol sorry hardcoded a define thing
 			succeeding = 1
 			did_warp = 1

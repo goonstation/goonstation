@@ -138,7 +138,7 @@
 		onclose(user, "gps")
 
 	attack_self(mob/user as mob)
-		if ((user.contents.Find(src) || user.contents.Find(src.master) || get_dist(src, user) <= 1))
+		if ((user.contents.Find(src) || user.contents.Find(src.master) || BOUNDS_DIST(src, user) == 0))
 			src.show_HTML(user)
 		else
 			user.Browse(null, "window=gps_[src]")
@@ -173,6 +173,7 @@
 				if(!t)
 					return
 				src.identifier = t
+				logTheThing("station", usr, null, "sets a GPS identification name to [t].")
 			if(href_list["help"])
 				if(!distress)
 					boutput(usr, "<span class='alert'>Sending distress signal.</span>")

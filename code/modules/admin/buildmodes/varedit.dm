@@ -7,7 +7,6 @@ Right Mouse Button                     = Reset variable to initial value<br>
 Hold down CTRL, ALT or SHIFT to modify, call or reset variable bound to those keys.<br>
 ***********************************************************"}
 	icon_state = "buildmode3"
-	var/is_refpicking = 0
 
 	// no modifier key held down
 	var/varname_n = null
@@ -30,113 +29,45 @@ Hold down CTRL, ALT or SHIFT to modify, call or reset variable bound to those ke
 	var/tmp/newinst_s = 0
 
 	click_mode_right(var/ctrl, var/alt, var/shift)
-		var/newvn = input("Enter variable name[ctrl ? " (CTRL)" : alt ? " (ALT)" : shift ? " (SHIFT)" : null]:", "Variable Name[ctrl ? " (CTRL)" : alt ? " (ALT)" : shift ? " (SHIFT)" : null]", ctrl ? varname_c : alt ? varname_a : shift ? varname_s : varname_n) as text|null
+		var/newvn = input("Enter variable name[ctrl ? " (CTRL)" : alt ? " (ALT)" : shift ? " (SHIFT)" : null]:", "Variable Name[ctrl ? " (CTRL)" : alt ? " (ALT)" : shift ? " (SHIFT)" : null]", \
+						ctrl ? varname_c : alt ? varname_a : shift ? varname_s : varname_n) as text|null
 		if (!newvn)
 			return
 
-		var/vartype = input("Choose variable type[ctrl ? " (CTRL)" : alt ? " (ALT)" : shift ? " (SHIFT)" : null]:","Variable Type[ctrl ? " (CTRL)" : alt ? " (ALT)" : shift ? " (SHIFT)" : null]") as null|anything in list("text", "num", "type", "reference", "mob reference", "turf by coordinates", "reference picker", "new instance of a type", "icon", "file", "color", "json", "ref")
-		is_refpicking = 0
-		var/newvalue = null
-		var/is_newinst = 0
-		switch (vartype)
-			if ("text")
-				newvalue = input("Enter new text:","Text") as null|text
+		var/datum/data_input_result/result = src.holder.owner.input_data(list(DATA_INPUT_TEXT, DATA_INPUT_NUM, DATA_INPUT_TYPE, DATA_INPUT_MOB_REFERENCE, DATA_INPUT_TURF_BY_COORDS, DATA_INPUT_REFPICKER, \
+									DATA_INPUT_NEW_INSTANCE, DATA_INPUT_ICON, DATA_INPUT_FILE, DATA_INPUT_COLOR, DATA_INPUT_JSON, DATA_INPUT_REF, DATA_INPUT_MATRIX), \
+									custom_type_title = "Variable Type[ctrl ? " (CTRL)" : alt ? " (ALT)" : shift ? " (SHIFT)" : null]", \
+									custom_type_message = "Choose variable type[ctrl ? " (CTRL)" : alt ? " (ALT)" : shift ? " (SHIFT)" : null]:")
+		var/is_newinst = FALSE
 
-			if ("num")
-				newvalue = input("Enter new number:","Num") as null|num
+		switch (result.output_type)
+			if (null)
+				return
 
-			if ("type")
-				newvalue = input("Enter type:","Type") in typesof(/obj,/mob,/area,/turf)
+			if (DATA_INPUT_NEW_INSTANCE)
+				is_newinst = TRUE
 
-			if ("reference")
-				newvalue = input("Select reference:","Reference") as null|mob|obj|turf|area in world
-
-			if ("mob reference")
-				newvalue = input("Select reference:","Reference") as null|mob in world
-
-			if ("file")
-				newvalue = input("Pick file:","File") as null|file
-
-			if ("icon")
-				newvalue = input("Pick icon:","Icon") as null|icon
-
-			if ("color")
-				newvalue = input("Pick color:","Color") as null|color
-
-			if ("json")
-				newvalue = json_decode(input("Enter json:") as text|null)
-
-			if ("ref")
-				var/inp = input("Enter ref:","Ref") as null|text
-				newvalue = locate(inp)
-				if(isnull(newvalue))
-					newvalue = locate("\[inp\]")
-
-			if ("turf by coordinates")
-				var/x = input("X coordinate", "Set to turf at \[_, ?, ?\]", 1) as num
-				var/y = input("Y coordinate", "Set to turf at \[[x], _, ?\]", 1) as num
-				var/z = input("Z coordinate", "Set to turf at \[[x], [y], _\]", 1) as num
-				var/turf/T = locate(x, y, z)
-				if (istype(T))
-					newvalue = T
-				else
-					boutput(usr, "<span class='alert'>Invalid coordinates!</span>")
-					return
-
-			if ("reference picker")
-				boutput(usr, "<span class='notice'>Click the mob, object or turf to use as a reference.</span>")
-				is_refpicking = 1
-
-			if ("new instance of a type")
-				boutput(usr, "<span class='notice'>Type part of the path of type of thing to instantiate.</span>")
-				var/typename = input("Part of type path.", "Part of type path.", "/obj") as null|text
-				if (typename)
-					var/basetype = /obj
-					if (holder.owner.holder.rank in list("Host", "Coder", "Administrator"))
-						basetype = /datum
-					var/match = get_one_match(typename, basetype, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
-					if (match)
-						newvalue = match
-						is_newinst = 1
 		if (ctrl)
 			varname_c = newvn
 			newinst_c = is_newinst
-			if (!isnull(newvalue))
-				varvalue_c = newvalue
+			varvalue_c = result.output
 		else if (alt)
 			varname_a = newvn
 			newinst_a = is_newinst
-			if (!isnull(newvalue))
-				varvalue_a = newvalue
+			varvalue_a = result.output
 		else if (shift)
 			varname_s = newvn
 			newinst_s = is_newinst
-			if (!isnull(newvalue))
-				varvalue_s = newvalue
+			varvalue_s = result.output
 		else
 			varname_n = newvn
 			newinst_n = is_newinst
-			if (!isnull(newvalue))
-				varvalue_n = newvalue
+			varvalue_n = result.output
 
 	click_left(atom/object, var/ctrl, var/alt, var/shift)
-		if (is_refpicking)
-			boutput(usr, "<span class='notice'>Reference grabbed from [object].</span>")
-			var/newvalue = object
-			if (ctrl)
-				varname_c = newvalue
-			else if (alt)
-				varname_a = newvalue
-			else if (shift)
-				varname_s = newvalue
-			else
-				varname_n = newvalue
-			is_refpicking = 0
-			return
-
 		var/varn2use = null
 		var/varv2use = null
-		var/is_newinst = 0
+		var/is_newinst = FALSE
 		if (ctrl && varname_c)
 			varn2use = varname_c
 			varv2use = varvalue_c
@@ -167,9 +98,6 @@ Hold down CTRL, ALT or SHIFT to modify, call or reset variable bound to those ke
 			boutput(usr, "<span class='alert'>[object] has no var named [varn2use].</span>")
 
 	click_right(atom/object, var/ctrl, var/alt, var/shift)
-		if (is_refpicking)
-			return
-
 		var/varn2use = null
 		if (ctrl && varname_c)
 			varn2use = varname_c

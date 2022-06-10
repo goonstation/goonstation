@@ -8,7 +8,7 @@
 	layer = CABLE_LAYER
 	color = "#037ffc"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (issnippingtool(W))
 			logTheThing("station", user, null, "cut the don't-cut-this wire and got ghosted/disconnected as a result.")
 			//boutput(user, "<span class='alert'>You snip the ca</span>")
@@ -147,13 +147,13 @@
 	anchored = 1
 	density = 1
 	opacity = 0
-	icon = 'icons/obj/glass.dmi'
-	icon_state = "sheet"
+	icon = 'icons/obj/metal.dmi'
+	icon_state = "sheet-g_1"
 
 	var/facing = NW_SE
 	var/list/affecting = list()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		boutput(user, "rotating mirror...")
 		facing = 1 - facing
 		for (var/obj/machinery/power/pt_laser/PTL in affecting)
@@ -161,7 +161,7 @@
 			boutput(user, "[PTL] would be notified")
 
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (iswrenchingtool(W))
 			boutput(user, "this would deconstruct it.")
 			return
@@ -277,14 +277,14 @@
 		tracker.maptext = "<span class='c vt ps2p sh'>TOTAL [add_lspace(round(total_score), 7)]\nROUND [add_lspace(round(round_score), 7)]</span>"
 
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		var/score = get_item_value(W)
 		if (score == -1)
 			return ..()
 
 		boutput(user, "<span class='notice'>[src] mulches up [W].</span>")
 		user.u_equip(W)
-		W.dropped()
+		W.dropped(user)
 		mulch_item(W, score)
 		var/MT = start_scoring()
 		update_score(MT, score)
@@ -364,10 +364,10 @@
 		if (!isliving(user))
 			boutput(user, "<span class='alert'>Excuse me you are dead, get your gross dead hands off that!</span>")
 			return
-		if (get_dist(user,src) > 1)
+		if (BOUNDS_DIST(user, src) > 0)
 			boutput(user, "<span class='alert'>You need to move closer to [src] to do that.</span>")
 			return
-		if (get_dist(O,src) > 1 || get_dist(O,user) > 1)
+		if (BOUNDS_DIST(O, src) > 0 || BOUNDS_DIST(O, user) > 0)
 			boutput(user, "<span class='alert'>[O] is too far away to load into [src]!</span>")
 			return
 
@@ -405,7 +405,7 @@
 		SPAWN(0.5 SECONDS)
 			gunsim = locate() in world
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (active)
 			boutput(user, "It just did some cleaning give it a minute!!!")
 			return
@@ -453,7 +453,7 @@
 	var/active = 0
 	alpha = 255
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (active)
 			boutput(user, "did you already kill the dummy? either way wait a bit!")
 			return
@@ -918,7 +918,7 @@
 				// no! how did you even get here. jesus
 				return
 
-			return call(src.effective_callee, src.monitored_proc)(src.monitored_args)
+			return call(src.effective_callee, src.monitored_proc)(arglist(src.monitored_args))
 
 
 		emergency_shuttle
@@ -1423,7 +1423,7 @@ Other Goonstation servers:[serverList]</span>"})
 	icon_state = "cowbrush"
 	desc = "A huge rotary brush attached to a wall. Supposedly, cows love it."
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		..()
 		src.icon_state = "cowbrush[src.on ? "_on" : ""]"
 

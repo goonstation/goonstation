@@ -18,6 +18,11 @@ Contains:
 #define WRENCHED 1
 #define WELDED 2
 
+#ifdef UPSCALED_MAP
+#undef SINGULARITY_MAX_DIMENSION
+#define SINGULARITY_MAX_DIMENSION 22
+#endif
+
 // I'm sorry
 //////////////////////////////////////////////////// Singularity generator /////////////////////
 
@@ -308,7 +313,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	return src.loc
 
 
-/obj/machinery/the_singularity/attackby(var/obj/item/I as obj, var/mob/user as mob)
+/obj/machinery/the_singularity/attackby(var/obj/item/I, var/mob/user)
 	if (istype(I, /obj/item/clothing/mask/cigarette))
 		var/obj/item/clothing/mask/cigarette/C = I
 		if (!C.on)
@@ -440,7 +445,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			else
 				event_handler_flags &= ~IMMUNE_SINGULARITY
 
-/obj/machinery/field_generator/attack_hand(mob/user as mob)
+/obj/machinery/field_generator/attack_hand(mob/user)
 	if(state == WELDED)
 		if(!src.locked)
 			if(src.active >= 1)
@@ -548,7 +553,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		T = get_step(T2, NSEW)
 		T2 = T
 		steps += 1
-		if(locate(/obj/machinery/field_generator) in T)
+		G = (locate(/obj/machinery/field_generator) in T)
+		if(G && G != src)
 			G = (locate(/obj/machinery/field_generator) in T)
 			steps -= 1
 			if(shortestlink==0)
@@ -783,7 +789,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "Contain_F"
 	anchored = 1
-	density = 0
+	density = 1
 	event_handler_flags = USE_FLUID_ENTER | IMMUNE_SINGULARITY
 	var/active = 1
 	var/power = 10
@@ -805,7 +811,10 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	..()
 
-/obj/machinery/containment_field/attack_hand(mob/user as mob)
+/obj/machinery/containment_field/ex_act(severity)
+	return
+
+/obj/machinery/containment_field/attack_hand(mob/user)
 	return
 
 /obj/machinery/containment_field/process()
@@ -870,12 +879,12 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	if(user.get_burn_damage() >= 500) //This person has way too much BURN, they've probably been shocked a lot! Let's destroy them!
 		user.visible_message("<span style=\"color:red;font-weight:bold;\">[user.name] was disintegrated by the [src.name]!</span>")
+		logTheThing("user", user, null, "was elecgibbed by [src] ([src.type]) at [log_loc(user)].")
 		user.elecgib()
 		return
 	else
 		var/throwdir = get_dir(src, get_step_away(user, src))
-		if (prob(20))
-			user.set_loc(get_turf(src))
+		if (get_turf(user) == get_turf(src))
 			if (prob(50))
 				throwdir = turn(throwdir,90)
 			else
@@ -890,11 +899,20 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	src.gen_secondary.power -= 3
 	return
 
-/obj/machinery/containment_field/Cross(atom/movable/O as mob|obj)
-	if(iscarbon(O) && prob(80))
+/obj/machinery/containment_field/Bumped(atom/O)
+	. = ..()
+	if(iscarbon(O))
 		shock(O)
-	..()
 
+/obj/machinery/containment_field/Cross(atom/movable/mover)
+	. = ..()
+	if(prob(10))
+		. = TRUE
+
+/obj/machinery/containment_field/Crossed(atom/movable/AM)
+	. = ..()
+	if(iscarbon(AM))
+		shock(AM)
 
 /////////////////////////////////////////// Emitter ///////////////////////////////
 /obj/machinery/emitter
@@ -941,7 +959,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	return
 
-/obj/machinery/emitter/attack_hand(mob/user as mob)
+/obj/machinery/emitter/attack_hand(mob/user)
 	if(state == WELDED)
 		if(!src.locked)
 			if(src.active==1)
@@ -1231,7 +1249,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			UpdateIcon()
 		..()
 
-/obj/machinery/power/collector_array/attack_hand(mob/user as mob)
+/obj/machinery/power/collector_array/attack_hand(mob/user)
 	if(src.active==1)
 		src.active = 0
 		icon_state = "ca_deactive"
@@ -1456,7 +1474,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		add_avail(power_a)
 		..()
 
-/obj/machinery/power/collector_control/attack_hand(mob/user as mob)
+/obj/machinery/power/collector_control/attack_hand(mob/user)
 	if(src.active==1)
 		src.active = 0
 		boutput(user, "You turn off the collector control.")
@@ -1657,14 +1675,14 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 /obj/machinery/the_singularitybomb/attack_ai(mob/user as mob)
 	return
 
-/obj/machinery/the_singularitybomb/attack_hand(mob/user as mob)
+/obj/machinery/the_singularitybomb/attack_hand(mob/user)
 	..()
 	if(src.state != 3)
 		boutput(user, "The bomb needs to be firmly secured to the floor first.")
 		return
 	if (user.stat || user.restrained() || user.lying)
 		return
-	if ((get_dist(src, user) <= 1 && istype(src.loc, /turf)))
+	if ((BOUNDS_DIST(src, user) == 0 && istype(src.loc, /turf)))
 		src.add_dialog(user)
 		/*
 		var/dat = text("<TT><B>Timing Unit</B><br>[] []:[]<br><A href='?src=\ref[];tp=-30'>-</A> <A href='?src=\ref[];tp=-1'>-</A> <A href='?src=\ref[];tp=1'>+</A> <A href='?src=\ref[];tp=30'>+</A><br></TT>", (src.timing ? text("<A href='?src=\ref[];time=0'>Timing</A>", src) : text("<A href='?src=\ref[];time=1'>Not Timing</A>", src)), minute, second, src, src, src, src)

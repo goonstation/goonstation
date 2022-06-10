@@ -1,0 +1,67 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/floor/dojo/sand/vertical,
+/area/dmm_suite/clear_area)
+"m" = (
+/obj/decal/fakeobjects/moonrock{
+	desc = "A calming slab of rock. Nice to look at.";
+	dir = 8;
+	name = "rock"
+	},
+/obj/lantern{
+	dir = 4;
+	pixel_x = -27;
+	pixel_y = 1
+	},
+/turf/simulated/floor/dojo/sand/circle,
+/area/dmm_suite/clear_area)
+"s" = (
+/obj/stone,
+/obj/lantern{
+	dir = 4;
+	pixel_x = -27;
+	pixel_y = 1
+	},
+/turf/simulated/floor/dojo/sand/circle,
+/area/dmm_suite/clear_area)
+"G" = (
+/turf/simulated/floor/dojo/sand/circle,
+/area/dmm_suite/clear_area)
+"P" = (
+/obj/stone,
+/obj/lantern{
+	dir = 8;
+	pixel_x = 27;
+	pixel_y = 1
+	},
+/turf/simulated/floor/dojo/sand/circle,
+/area/dmm_suite/clear_area)
+"S" = (
+/obj/decal/fakeobjects/moonrock{
+	desc = "A calming slab of rock. Nice to look at.";
+	dir = 8;
+	name = "rock"
+	},
+/obj/lantern{
+	dir = 8;
+	pixel_x = 27;
+	pixel_y = 1
+	},
+/turf/simulated/floor/dojo/sand/circle,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+m
+G
+s
+"}
+(2,1,1) = {"
+a
+G
+a
+"}
+(3,1,1) = {"
+S
+G
+P
+"}

@@ -15,7 +15,7 @@
 	light_b = 1
 
 
-/obj/machinery/computer/robotics/attackby(obj/item/I as obj, user as mob)
+/obj/machinery/computer/robotics/attackby(obj/item/I, user)
 	if (perma && isscrewingtool(I))
 		boutput(user, "<span class='alert'>The screws are all weird safety-bit types! You can't turn them!</span>")
 		return
@@ -34,7 +34,7 @@
 	return
 
 
-/obj/machinery/computer/robotics/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/robotics/attack_hand(var/mob/user)
 	if(..())
 		return
 	src.add_dialog(user)
@@ -70,7 +70,7 @@
 			dat += "[R.name] |"
 			if(R.disposed)
 				dat += " Missing |"
-			else if(isnull(R.brain))
+			else if(isnull(R.part_head?.brain))
 				dat += " Intelligence Cortex Missing |"
 			else if(R.stat)
 				dat += " Not Responding |"

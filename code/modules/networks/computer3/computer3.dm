@@ -338,7 +338,7 @@
 
 	return
 
-/obj/machinery/computer3/attack_hand(mob/user as mob)
+/obj/machinery/computer3/attack_hand(mob/user)
 	if(..() && !istype(user, /mob/dead/target_observer/mentor_mouse_observer))
 		return
 
@@ -588,7 +588,7 @@ function lineEnter (ev)
 	else if(href_list["disk"])
 		if (src.diskette)
 			//Ai/cyborgs cannot press a physical button from a room away.
-			if((issilicon(usr) || isAI(usr)) && get_dist(src, usr) > 1)
+			if((issilicon(usr) || isAI(usr)) && BOUNDS_DIST(src, usr) > 0)
 				boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
 				return
 
@@ -667,7 +667,7 @@ function lineEnter (ev)
 			if(glow_in_dark_screen)
 				src.ClearSpecificOverlays("screen_image")
 
-/obj/machinery/computer3/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/computer3/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/disk/data/floppy)) //INSERT SOME DISKETTES
 		if ((!src.diskette) && src.setup_has_internal_disk)
 			user.drop_item()
@@ -1075,7 +1075,7 @@ function lineEnter (ev)
 		src.deployed = 0
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/disk/data/floppy)) //INSERT SOME DISKETTES
 			if ((!src.diskette) && src.setup_has_internal_disk)
 				user.drop_item()

@@ -1157,7 +1157,7 @@ Returns:
 
 	onEnd()
 		..()
-		if(get_dist(user, target) > 1 || target == null || user == null)
+		if(BOUNDS_DIST(user, target) > 0 || target == null || user == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -1167,7 +1167,7 @@ Returns:
 				return
 
 	onUpdate()
-		if(get_dist(user, target) > 1 || target == null || user == null)
+		if(BOUNDS_DIST(user, target) > 0 || target == null || user == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -1562,12 +1562,12 @@ Returns:
 		setMaterial(getMaterial("slag"))
 		name = "Statue of Dr.Floorpills"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		boutput(user, "[src] feels oddly warm ...")
 		user.changeStatus("radiation", 5 SECONDS)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(prob(8) && (!broken))
 			for(var/i=0, i<5, i++)
 				new/obj/item/material_piece/slag(src.loc)
@@ -1726,7 +1726,7 @@ Returns:
 		src.setMaterial(head.material, appearance = 0, setname = 0)
 		return
 
-	attack(mob/M as mob, mob/user as mob) //TBI
+	attack(mob/M, mob/user) //TBI
 		return ..(M,user)
 
 /obj/item/craftedmelee
@@ -1761,7 +1761,7 @@ Returns:
 		desc = "Someone taped together \a [item1.name] and \a [item2.name]. Great."
 		return
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		if(!item1 || !item2)
 			src.fall_apart()
 			return
@@ -1947,7 +1947,7 @@ Returns:
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "pen"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/device/key))
 			boutput(user, "[W] disappears suddenly as you bring it close to the inscription ... huh")
 			del(W)
@@ -1984,7 +1984,7 @@ Returns:
 		light = null
 		..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/clothing/mask/cigarette))
 			var/obj/item/clothing/mask/cigarette/C = W
 			if(!C.on)
@@ -2282,13 +2282,13 @@ Returns:
 			var/list/modList = list()
 
 			for(var/x in procArgs)
-				if(x == "***trigger***")
+				if(x == "*triggering object*")
 					modList += O
 				else
 					modList += x
 
 			if (procTarget)
-				if(procTarget == "***trigger***")
+				if(procTarget == "*triggering object*")
 					if(hascall(O, procName))
 						call(O,procName)(arglist(modList))
 				else
@@ -2299,61 +2299,21 @@ Returns:
 		return
 
 	Click()
-		if(!usr.client.holder) return //basic admin check
+		USR_ADMIN_ONLY
 		var/target = null
 
 		switch(alert("Proc owned by obj?",,"Yes","No"))
 			if("Yes")
 				switch(alert("Proc owned by triggering object?",,"Yes","No"))
 					if("Yes")
-						target = "***trigger***"
+						target = "*triggering object*"
 					if("No")
 						target = input("Select target:","Target",null) as obj|mob|area|turf in world
 			if("No")
 				target = null
 
 		var/procname = input("Procpath","path:", null) as text
-		var/argnum = input("Number of arguments:","Number", 0) as num
-		var/list/listargs = list()
-
-		for(var/i=0, i<argnum, i++)
-			var/class = input("Type of Argument #[i]","Variable Type", null) in list("text","num","type","json","ref","reference","mob reference", "icon","file", "*triggering object*","cancel")
-			switch(class)
-				if("-cancel-")
-					return
-
-				if("*triggering object*")
-					listargs += "***trigger***"
-
-				if("text")
-					listargs += input("Enter new text:","Text",null) as text
-
-				if("num")
-					listargs += input("Enter new number:","Num", 0) as num
-
-				if("type")
-					listargs += input("Enter type:","Type", null) in typesof(/obj,/mob,/area,/turf)
-
-				if("json")
-					listargs += list(json_decode(input("Enter json:") as null|text))
-
-				if ("ref")
-					var/input = input("Enter ref:") as null|text
-					var/ref_target = locate(input)
-					if (!ref_target) ref_target = locate("\[[input]\]")
-					listargs += ref_target
-
-				if("reference")
-					listargs += input("Select reference:","Reference", null) as mob|obj|turf|area in world
-
-				if("mob reference")
-					listargs += input("Select reference:","Reference", null) as mob in world
-
-				if("file")
-					listargs += input("Pick file:","File", null) as file
-
-				if("icon")
-					listargs += input("Pick icon:","Icon", null) as icon
+		var/list/listargs = usr.client.get_proccall_arglist(custom_options = list("*triggering object*"))
 
 		procArgs = listargs
 		procName = procname
@@ -2453,7 +2413,7 @@ Returns:
 	icon_state = "fireworksbox"
 	var/fireworking = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(fireworking) return
 		fireworking = 1
 		boutput(user, "<span class='alert'>The fireworks go off as soon as you touch the box. This is some high quality stuff.</span>")
@@ -2755,7 +2715,7 @@ Returns:
 			if(T.movable_area_prev_type != null)
 				new T.movable_area_prev_type (T)
 			else
-				new/turf/space(T)
+				T.ReplaceWithSpaceForce()
 
 		for(var/atom/movable/A in objects_to_move)
 			A.animate_movement = 0
@@ -2812,7 +2772,7 @@ Returns:
 
 /obj/dfissure_to
 	name = "dimensional fissure"
-	desc = "a rip in time and space"
+	desc = "A rip in time and space."
 	opacity = 0
 	density = 1
 	anchored = 1
@@ -2837,7 +2797,7 @@ Returns:
 
 /obj/dfissure_from
 	name = "dimensional fissure"
-	desc = "a rip in time and space"
+	desc = "A rip in time and space."
 	opacity = 0
 	density = 1
 	anchored = 1
@@ -2934,9 +2894,9 @@ Returns:
 
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		icon_state = "boomerang"
-		if(hit_atom == usr)
+		var/mob/user = thr.user
+		if(hit_atom == user)
 			if(prob(prob_clonk))
-				var/mob/living/carbon/human/user = usr
 				user.visible_message("<span class='alert'><B>[user] fumbles the catch and is clonked on the head!</B></span>")
 				playsound(user.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 				user.changeStatus("stunned", 5 SECONDS)
@@ -2944,14 +2904,13 @@ Returns:
 				user.changeStatus("paralysis", 2 SECONDS)
 				user.force_laydown_standup()
 			else
-				src.Attackhand(usr)
+				src.Attackhand(user)
 			return
 		else
 			if(ishuman(hit_atom))
-				var/mob/living/carbon/human/user = usr
-				var/safari = (istype(user.w_uniform, /obj/item/clothing/under/gimmick/safari) && istype(user.head, /obj/item/clothing/head/safari))
+				var/mob/living/carbon/human/H = hit_atom
+				var/safari = (istype(H.w_uniform, /obj/item/clothing/under/gimmick/safari) && istype(H.head, /obj/item/clothing/head/safari))
 				if(safari)
-					var/mob/living/carbon/human/H = hit_atom
 					H.changeStatus("stunned", 4 SECONDS)
 					H.changeStatus("weakened", 2 SECONDS)
 					H.force_laydown_standup()
@@ -3132,7 +3091,7 @@ Returns:
 	amount = 1
 	heal_amt = 5
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		if(ishuman(M))
 			if(M == user)
 				M.nutrition += src.heal_amt * 10
@@ -3272,6 +3231,7 @@ Returns:
 
 
 	Cross(atom/movable/mover)
+		ENSURE_TYPE(mover)
 		if (mover?.throwing)
 			return 1
 		return ..()
@@ -3304,14 +3264,14 @@ Returns:
 	var/suiciding = 0
 	var/deadly = 0
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 	MouseDrop_T(atom/target, mob/user)
-		if (get_dist(user,src) < 1 && target == user)
+		if (BOUNDS_DIST(user, src) == 0 && target == user)
 			src.Attackhand(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(in_use)
 			boutput(user, "<span class='alert'>Its already in use - wait a bit.</span>")
 			return
@@ -3741,7 +3701,7 @@ var/list/lag_list = new/list()
 		if(ckey_lock && user.ckey != ckey_lock)
 			boutput(user, "<span class='alert'>You are not authorized to use this item.</span>")
 			return
-		if(get_dist(target,user) > 1)
+		if(BOUNDS_DIST(target, user) > 0)
 			boutput(user, "<span class='alert'>You are too far away.</span>")
 			return
 		if(target == loc) return
@@ -3779,7 +3739,7 @@ var/list/lag_list = new/list()
 				if(!active_mode.saved_var || isnull(active_mode.saved_var)) active_mode = null
 
 			if(istype(active_mode,/datum/engibox_mode/transmute)) //You only have yourself to blame for this. This shitty code is the fault of whoever changed this!!!
-				active_mode:mat_id = input(usr,"Select material","material","gold") in list("gold", "steel", "mauxite", "pharosium","cobryl","bohrum","cerenkite","syreline","glass","molitz","claretine","erebite","plasmastone","plasmaglass","quartz","uqill","telecrystal","miraclium","starstone","flesh","char","koshmarite","viscerite","beeswax","latex","synthrubber","synthblubber","wendigohide","cotton","fibrilith")
+				active_mode:mat_id = input(usr,"Select material","material","gold") in list("gold", "steel", "mauxite", "pharosium","cobryl","bohrum","cerenkite","syreline","glass","molitz","claretine","erebite","plasmastone","plasmaglass","quartz","uqill","telecrystal","miraclium","starstone","flesh","char","koshmarite","viscerite","beeswax","latex","synthrubber","synthblubber","brullbarhide","cotton","fibrilith")
 
 			if(istype(active_mode,/datum/engibox_mode/replicate))
 				active_mode:obj_path = null
@@ -3804,10 +3764,10 @@ var/list/lag_list = new/list()
 	anchored = 1
 	density = 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		switch(alert("Travel back to ss13?",,"Yes","No"))
 			if("Yes")
 				user.set_loc(pick_landmark(LANDMARK_LATEJOIN))

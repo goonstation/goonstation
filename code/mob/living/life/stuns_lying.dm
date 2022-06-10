@@ -5,7 +5,7 @@
 	process()
 		//proc/handle_stuns_lying(datum/controller/process/mobs/parent)
 		var/lying_old = owner.lying
-		var/cant_lie = robot_owner || hivebot_owner || (human_owner && (human_owner.limbs && (istype(human_owner.limbs.l_leg, /obj/item/parts/robot_parts/leg/left/treads) || istype(human_owner.limbs.r_leg, /obj/item/parts/robot_parts/leg/right/treads)) && !locate(/obj/table, human_owner.loc) && !locate(/obj/machinery/optable, human_owner.loc)))
+		var/cant_lie = robot_owner || hivebot_owner || istype(owner.loc, /obj/machinery/atmospherics/unary/cryo_cell)|| (human_owner && (human_owner.limbs && (istype(human_owner.limbs.l_leg, /obj/item/parts/robot_parts/leg/left/treads) || istype(human_owner.limbs.r_leg, /obj/item/parts/robot_parts/leg/right/treads)) && !locate(/obj/table, human_owner.loc) && !locate(/obj/machinery/optable, human_owner.loc)))
 
 		var/list/statusList = owner.getStatusList()
 

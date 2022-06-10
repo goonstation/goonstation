@@ -131,7 +131,7 @@
 
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "pda")
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		interact_particle(user, src)
 		src.examine(user)
 
@@ -343,12 +343,12 @@
 						ticker.mode.Agimmicks += src.occupant.mind
 					src.occupant.mind.master = implant_master.ckey
 				boutput(src.occupant, "<h2><span class='alert'>You feel an unwavering loyalty to [implant_master.real_name]! You feel you must obey \his every order! Do not tell anyone about this unless your master tells you to!</span></h2>")
-				SHOW_MINDSLAVE_TIPS(src.occupant)
+				src.occupant.show_antag_popup("mindslave")
 		// Someone is having their brain zapped. 75% chance of them being de-antagged if they were one
 		//MBC todo : logging. This shouldn't be an issue thoug because the mindwipe doesn't even appear ingame (yet?)
 		if(src.connected?.mindwipe)
 			if(prob(75))
-				SHOW_MINDWIPE_TIPS(src.occupant)
+				src.occupant.show_antag_popup("mindwipe")
 				boutput(src.occupant, "<h2><span class='alert'>You have awakened with a new outlook on life!</span></h2>")
 				src.occupant.mind.memory = "You cannot seem to remember much from before you were cloned. Weird!<BR>"
 			else
@@ -520,11 +520,14 @@
 				src.UpdateIcon()
 			power_usage = 200
 
+
+			#ifndef CLONING_IS_A_SIN
 			if (!src.operating && src.auto_mode)
 				// Attempt to start a new clone (if possible)
 				src.auto_delay -= mult
 				if (src.auto_delay < 0)
 					src.start_clone()
+			#endif
 
 			return ..()
 
@@ -540,7 +543,7 @@
 		return 1
 
 	//Let's unlock this early I guess.
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/pda2) && W:ID_card)
 			W = W:ID_card
 		if (istype(W, /obj/item/card/id))
@@ -927,7 +930,7 @@
 			boutput(user, "<span class='notice'>You repair the reclaimer's safety mechanism.</span>")
 		return 1
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		interact_particle(user,src)
 
 		if (src.process_timer > 0)
@@ -1029,7 +1032,7 @@
 		src.UpdateIcon(1)
 		SubscribeToProcess()
 
-	attackby(obj/item/grab/G as obj, mob/user as mob)
+	attackby(obj/item/grab/G, mob/user)
 		if (istype(G, /obj/item/grinder_upgrade))
 			if (src.upgraded)
 				boutput(user, "<span class='alert'>There is already an upgrade card installed.</span>")
@@ -1162,7 +1165,7 @@
 
 	onUpdate()
 		..()
-		if (grab == null || target == null || grinder == null || owner == null || get_dist(owner, grinder) > 1 || get_dist(owner, target) > 1 || get_dist(target, grinder) > 1)
+		if (grab == null || target == null || grinder == null || owner == null || BOUNDS_DIST(owner, grinder) > 0 || BOUNDS_DIST(owner, target) > 0 || BOUNDS_DIST(target, grinder) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner

@@ -14,6 +14,8 @@
 	var/path_prot = 1 // protection from airborne pathogens, multiplier for chance to be infected
 	var/team_num
 	var/blocked_from_petasusaphilic = FALSE //Replacing the global blacklist
+	duration_remove = 1.5 SECONDS
+	duration_put = 1.5 SECONDS
 
 	setupProperties()
 		..()
@@ -49,6 +51,11 @@ proc/filter_trait_hats(var/type)
 	desc = "A knit cap in orange."
 	icon_state = "orange"
 	item_state = "ogloves"
+
+/obj/item/clothing/head/purple
+	desc = "A knit cap in orange."
+	icon_state = "purple"
+	item_state = "jgloves"
 
 /obj/item/clothing/head/dolan
 	name = "Dolan's hat"
@@ -270,6 +277,19 @@ proc/filter_trait_hats(var/type)
 		..()
 		setProperty("meleeprot_head", 3)
 
+//A robot in disguise, ready to go and spy on everyone for you
+/obj/item/clothing/head/det_hat/folded_scuttlebot
+	blocked_from_petasusaphilic = TRUE
+	desc = "Someone who wears this will look very smart. It looks a bit heavier than it should."
+
+	attack_self(mob/user)
+		boutput(user, "You reach inside the hat and pull out a pair of goggles. The scuttlebot wakes up! Use the goggles on the bot to make it dormant again.")
+		new /mob/living/critter/robotic/scuttlebot(get_turf(src))
+		qdel(src)
+	setupProperties()
+		..()
+		setProperty("meleeprot_head", 5)
+
 //THE ONE AND ONLY.... GO GO GADGET DETECTIVE HAT!!!
 /obj/item/clothing/head/det_hat/gadget
 	name = "DetGadget hat"
@@ -349,7 +369,7 @@ proc/filter_trait_hats(var/type)
 				M.show_text("Requested object missing or nonexistant!", "red")
 				return
 
-	attackby(obj/item/W as obj, mob/M as mob)
+	attackby(obj/item/W, mob/M)
 		var/success = 0
 		for (var/name in items)
 			var/type = items[name]
@@ -385,6 +405,15 @@ proc/filter_trait_hats(var/type)
 			return
 
 		return ..()
+
+	attack_self (mob/user as mob)
+		user.visible_message("<span class='combat'><b>[user] turns [his_or_her(user)] detgadget hat into a spiffy scuttlebot!</b></span>")
+		var/mob/living/critter/robotic/scuttlebot/weak/S = new /mob/living/critter/robotic/scuttlebot/weak(get_turf(src))
+		S.linked_hat = src
+		user.drop_item()
+		src.set_loc(S)
+		user.update_inhands()
+		return
 
 	verb/set_phrase()
 		set name = "Set Activation Phrase"
@@ -466,6 +495,12 @@ proc/filter_trait_hats(var/type)
 	name = "Sous-Chef's hat"
 	icon_state = "souschef"
 	item_state = "chefhat" //TODO: unique inhand sprite?
+
+/obj/item/clothing/head/itamaehat
+	name = "Itamae hat"
+	desc = "A hat commonly worn by Japanese Chefs. Itamae translates literally to \"In front of the board\"."
+	icon_state = "itamae"
+	item_state = "itamae"
 
 /obj/item/clothing/head/dramachefhat
 	name = "Dramatic Chef's Hat"
@@ -661,17 +696,12 @@ proc/filter_trait_hats(var/type)
 	item_state = "wizard"
 	magical = 1
 	item_function_flags = IMMUNE_TO_ACID
+	duration_remove = 10 SECONDS
 
 	setupProperties()
 		..()
 		setProperty("disorient_resist_eye", 15)
 		setProperty("disorient_resist_ear", 15)
-
-	handle_other_remove(var/mob/source, var/mob/living/carbon/human/target)
-		. = ..()
-		if (prob(75))
-			source.show_message(text("<span class='alert'>\The [src] writhes in your hands as though it is alive! It just barely wriggles out of your grip!</span>"), 1)
-			. = 0
 
 /obj/item/clothing/head/wizard/red
 	name = "red wizard hat"
@@ -719,7 +749,7 @@ proc/filter_trait_hats(var/type)
 	see_face = 1
 	body_parts_covered = HEAD
 
-/obj/item/paper_hat/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/paper_hat/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/pen))
 		var/obj/item/pen/P = W
 		if (P.font_color)
@@ -1152,6 +1182,13 @@ proc/filter_trait_hats(var/type)
 	icon_state = "nursehat"
 	item_state = "nursehat"
 
+/obj/item/clothing/head/traditionalnursehat
+	name = "Traditional Nurse Hat"
+	desc = "A nurse hat from the past."
+	icon_state = "traditionalnursehat"
+	item_state = "traditionalnursehat"
+	seal_hair = 1
+
 /obj/item/clothing/head/chemhood
 	name = "chemical protection hood"
 	desc = "A thick rubber hood which protects you from almost any harmful chemical substance."
@@ -1338,7 +1375,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/headband)
 	w_class = W_CLASS_TINY
 	throwforce = 0
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		..()
 		if(istype(W,/obj/item/device/radio/headset))
 			user.show_message("You stuff the headset on the headband and tape it in place. [istype(src, /obj/item/clothing/head/headband/nyan) ? "Meow" : "Now"] you should be able to hear the radio using these!")
@@ -1641,6 +1678,11 @@ ABSTRACT_TYPE(/obj/item/clothing/head/frenchberet)
 		name = "strawberry beret"
 		icon_state = "beret_strawb"
 		item_state = "beret_strawb"
+
+	blueberry
+		name = "blueberry beret"
+		icon_state = "beret_blueb"
+		item_state = "beret_blueb"
 
 // Costume goggles
 

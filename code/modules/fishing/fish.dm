@@ -6,7 +6,9 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	item_state = "fish"
 	w_class = W_CLASS_NORMAL
+	hitsound = null // handled in attack() below
 	flags = ONBELT
+	attack_verbs = "slaps"
 	/// what type of item do we get when butchering the fish
 	var/fillet_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish
 
@@ -14,17 +16,16 @@
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if(user?.bioHolder.HasEffect("clumsy") && prob(50))
-			user.visible_message("<span class='alert'><b>[user]</b> swings \the [src] and hits [himself_or_herself(user)] in the face!.</span>")
 			user.changeStatus("weakened", 2 * src.force SECONDS)
 			JOB_XP(user, "Clown", 1)
-			return
+			..(user, user) // bonk
 		else
-			playsound(src.loc, pick('sound/impact_sounds/Slimy_Hit_1.ogg', 'sound/impact_sounds/Slimy_Hit_2.ogg'), 50, 1, -1)
-			user.visible_message("<span class='alert'><b>[user] slaps [M] with \the [src]!</b>.</span>")
+			..()
+		playsound(src.loc, pick('sound/impact_sounds/Slimy_Hit_1.ogg', 'sound/impact_sounds/Slimy_Hit_2.ogg'), 50, 1, -1)
 
-	attackby(var/obj/item/W as obj, var/mob/user as mob)
+	attackby(var/obj/item/W, var/mob/user)
 		if(istype(W, /obj/item/kitchen/utensil/knife))
 			if(fillet_type)
 				var/obj/fillet = new fillet_type(src.loc)
@@ -33,7 +34,6 @@
 				qdel(src)
 				return
 		..()
-		return
 
 /obj/item/fish/salmon
 	name = "salmon"

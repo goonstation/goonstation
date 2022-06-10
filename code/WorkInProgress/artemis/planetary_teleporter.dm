@@ -12,7 +12,7 @@
 					src.my_ship = A
 					return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		var/link_html = "<br>"
 		var/found = 0
 
@@ -45,7 +45,7 @@
 
 	Topic(href, href_list)
 		if(busy) return
-		if(get_dist(usr, src) > 1 || usr.z != src.z) return
+		if(BOUNDS_DIST(usr, src) > 0 || usr.z != src.z) return
 
 		if(href_list["send"])
 			var/obj/landmark/destination_landmark/L = locate(href_list["send"])

@@ -37,7 +37,7 @@
 		return 1
 	if (ismob(eye))
 		var/mob/M = eye
-		if (M.is_near_gauntlet())
+		if (M != src && M.is_near_gauntlet())
 			return 1
 	else if (istype(eye, /obj/observable/gauntlet))
 		return 1
@@ -282,7 +282,7 @@
 		if (current_level > 50)
 			var/command_report = "A Critter Gauntlet match has concluded at level [current_level]. Congratulations to: [moblist_names]."
 			for_by_tcl(C, /obj/machinery/communications_dish)
-				C.add_centcom_report("[command_name()] Update", command_report)
+				C.add_centcom_report(ALERT_GENERAL, command_report)
 
 			command_alert(command_report, "Critter Gauntlet match finished")
 		statlog_gauntlet(moblist_names, score, current_level)
@@ -1175,17 +1175,17 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		count = 7
 		types = list(/obj/critter/spider,/obj/critter/spider/baby,/obj/critter/spider/ice,/obj/critter/spider/ice/baby)
 
-	wendigo
-		name = "Wendigo"
+	brullbar
+		name = "Brullbar"
 		point_cost = 4
 		count = 2
-		types = list(/obj/critter/wendigo)
+		types = list(/obj/critter/brullbar)
 
-	wendigoking
-		name = "Wendigo King"
+	brullbarking
+		name = "Brullbar King"
 		point_cost = 6
 		count = 0.05
-		types = list(/obj/critter/wendigo/king)
+		types = list(/obj/critter/brullbar/king)
 
 	badbot
 		name = "Security Zapbot"

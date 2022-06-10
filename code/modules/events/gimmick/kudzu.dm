@@ -39,6 +39,7 @@
 	name = "Kudzu Outbreak"
 	centcom_headline = "Plant Outbreak"
 	centcom_message = "Rapidly expanding plant organism detected aboard the station. All personnel must contain the outbreak."
+	centcom_origin = ALERT_STATION
 	message_delay = 2 MINUTES
 	wont_occur_past_this_time = 40 MINUTES
 	customization_available = 1
@@ -168,7 +169,7 @@
 			D.locked = 0
 		..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!W) return
 		if (!user) return
 		var/dmg = 1
@@ -443,7 +444,7 @@
 						H.abilityHolder = null
 					H.set_mutantrace(/datum/mutantrace/kudzu)
 					natural_opening = 1
-					SHOW_KUDZU_TIPS(H)
+					H.show_antag_popup("kudzu")
 					qdel(src)
 		else
 			qdel(src)
@@ -469,7 +470,7 @@
 	pixel_x = -16
 	layer = MOB_LAYER - 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (iscuttingtool(W))
 			src.visible_message("<span class='alert'>[user] cuts [src] to bits!</span>")
 			qdel(src)

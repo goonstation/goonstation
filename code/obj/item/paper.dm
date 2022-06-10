@@ -44,7 +44,6 @@
 	burn_point = 220
 	burn_output = 900
 	burn_possible = 2
-	health = 10
 	var/list/form_startpoints
 	var/list/form_endpoints
 	var/font_css_crap = null
@@ -321,6 +320,17 @@
 		user.put_in_hand_or_drop(M)
 		user.u_equip(src)
 		qdel(src)
+	else if (istype(P, /obj/item/paper))
+		var/obj/item/staple_gun/S = user.find_type_in_hand(/obj/item/staple_gun)
+		if (S?.ammo)
+			var/obj/item/paper_booklet/booklet = new(src.loc)
+			user.drop_item()
+			booklet.pages += src
+			src.set_loc(booklet)
+			booklet.Attackby(P, user, params)
+			return
+		else
+			boutput(user, "<span class='alert'>You need a loaded stapler in hand to staple the sheets into a booklet.</span>")
 	else
 		// cut paper?  the sky is the limit!
 		ui_interact(user)	// The other ui will be created with just read mode outside of this
@@ -913,6 +923,18 @@ as it may become compromised.
 	unable to close his trash-pod he arrived in. Now we gotta deal with some mutant mice problem!</i>
 	"}
 
+/obj/item/paper/cruiser_bought
+	name = "My very own space cruiser"
+	icon_state = "paper"
+	desc = "The first entry in a collection of never to be finished memoirs."
+	info = {"<center><h2>Finally, my own ship!</h2></center>
+	<hr>
+	<i>This is the begining of my log, I figured since I made it rich after all this time, I ought to recount my thoughts now in a log of sorts.
+	Years of working in a damm cubicle, my only worthwile cash comming from transfering dead crew members credits to my own account.
+	But it has all paid off, I got a beautiful ship, my dog, a whole damm vault, and plenty of room for guests!
+	I even got this bottle of blue label! I was going to save it for my first cruise with others, but I suppose it wont hurt to dip into a bit of it.</i>
+	"}
+
 /obj/item/paper/fortune
 	name = "fortune"
 	info = {"<center>YOUR FORTUNE</center>"}
@@ -1139,7 +1161,6 @@ as it may become compromised.
 	burn_point = 600
 	burn_output = 800
 	burn_possible = 1
-	health = 100
 
 
 /obj/item/paper_bin/proc/update()
@@ -1152,7 +1173,7 @@ as it may become compromised.
 		if (!user.put_in_hand(src))
 			return ..()
 
-/obj/item/paper_bin/attack_hand(mob/user as mob)
+/obj/item/paper_bin/attack_hand(mob/user)
 	src.add_fingerprint(user)
 	var/obj/item/paper = locate(/obj/item/paper) in src
 	if (paper)
@@ -1172,7 +1193,7 @@ as it may become compromised.
 	..()
 	src.Attackhand(user)
 
-/obj/item/paper_bin/attackby(obj/item/paper/P as obj, mob/user as mob) // finally you can write on all the paper AND put it back in the bin to mess with whoever shows up after you ha ha
+/obj/item/paper_bin/attackby(obj/item/paper/P, mob/user) // finally you can write on all the paper AND put it back in the bin to mess with whoever shows up after you ha ha
 	if (istype(P))
 		user.drop_item()
 		P.set_loc(src)
@@ -1242,7 +1263,7 @@ as it may become compromised.
 		src.assignment = null
 		src.desc = "A rubber stamp for stamping important documents."
 		return
-/obj/item/stamp/attackby(obj/item/C as obj, mob/user as mob)// assignment with ID
+/obj/item/stamp/attackby(obj/item/C, mob/user)// assignment with ID
 	if (istype(C, /obj/item/card/id))
 		var/obj/item/card/id/ID = C
 		if (!src.is_reassignable)
@@ -1436,7 +1457,7 @@ as it may become compromised.
 	desc = "It's really fun pelting your coworkers with these."
 	icon_state = "paperball"
 
-/obj/item/paper/folded/ball/attack(mob/M as mob, mob/user as mob)
+/obj/item/paper/folded/ball/attack(mob/M, mob/user)
 	if (iscarbon(M) && M == user && src.sealed)
 		M.visible_message("<span class='notice'>[M] stuffs [src] into [his_or_her(M)] mouth and eats it.</span>")
 		playsound(M,"sound/misc/gulp.ogg", 30, 1)

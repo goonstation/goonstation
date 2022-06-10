@@ -18,7 +18,6 @@
 	plane = PLANE_FLOOR //They're supposed to be embedded in the floor.
 	name = "drain"
 	desc = "A drainage pipe embedded in the floor to prevent flooding. Where does the drain go? Nobody knows."
-	var/turf/my_turf
 	var/clogged = 0 //temporary block
 	var/welded = 0 //permanent block
 	var/drain_min = 2
@@ -35,7 +34,6 @@
 		drain_max = 14
 
 	New()
-		my_turf = get_turf(src)
 		START_TRACKING
 		..()
 
@@ -44,20 +42,20 @@
 		STOP_TRACKING
 
 	process()
-		if (!my_turf)
-			my_turf = get_turf(src)
-			if (!my_turf) return
-		if (my_turf.active_liquid)
+		var/turf/T = get_turf(src)
+		if (!T)
+			return
+		if (T.active_liquid)
 			if (clogged)
 				clogged--
 				return
 			if (welded)
 				return
 
-			var/obj/fluid/F = my_turf.active_liquid
+			var/obj/fluid/F = T.active_liquid
 			if (F.group)
 				F.group.queued_drains += rand(drain_min,drain_max)
-				F.group.last_drain = my_turf
+				F.group.last_drain = T
 				if (!F.group.draining)
 					F.group.add_drain_process()
 
@@ -69,7 +67,7 @@
 
 
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		if (isweldingtool(I))
 			if(!I:try_weld(user, 2))
 				return
@@ -303,7 +301,7 @@
 	Topic(href, href_list)
 		if (usr.stat || usr.restrained())
 			return
-		if (get_dist(src, usr) <= 1)
+		if (BOUNDS_DIST(src, usr) == 0)
 			src.add_dialog(usr)
 
 			if (href_list["slurp"])
@@ -328,7 +326,7 @@
 			return
 		return
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		src.add_dialog(user)
 		var/offtext
 		var/intext
@@ -501,7 +499,7 @@
 			src.blowthefuckup(boom_str)
 
 
-	attack_hand(var/mob/living/carbon/human/user as mob)
+	attack_hand(var/mob/living/carbon/human/user)
 		src.add_fingerprint(user)
 
 		active = !active

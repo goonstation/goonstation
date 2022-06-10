@@ -68,6 +68,13 @@ ABSTRACT_TYPE(/datum/plant/crop)
 	genome = 8
 	commuts = list(/datum/plant_gene_strain/yield,/datum/plant_gene_strain/health_poor)
 
+	HYPinfusionP(var/obj/item/seed/S,var/reagent)
+		..()
+		var/datum/plantgenes/DNA = S.plantgenes
+		if (!DNA) return
+		if (reagent == "insulin")
+			DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/rice/ricein)
+
 /datum/plant/crop/beans
 	name = "Bean"
 	seedcolor = "#AA7777"

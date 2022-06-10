@@ -44,11 +44,13 @@
 
 /obj/item/clothing/shoes/cleats
 	name = "cleats"
-	desc = "Sharp cleats made for playing football at a professional level. They must be expensive!"
+	desc = "Sharp cleats made for playing football at a professional level. The cleats provide excellent grip. They must be expensive!"
 	icon_state = "cleats"
 	item_state = "bl_shoes"
-	kick_bonus = 4
+	c_flags = NOSLIP
+	kick_bonus = 6
 	step_sound = "step_plating"
+	compatible_species = list("cow", "human")
 	step_priority = STEP_PRIORITY_LOW
 	item_function_flags = IMMUNE_TO_ACID
 
@@ -66,7 +68,7 @@
 
 /mob/living/carbon/human/proc/rush()
 	if (!wearing_football_gear())
-		boutput(src, __red("You need to wear more football gear first! It just wouldn't be safe."))
+		boutput(src, "<span class='alert'>You need to wear more football gear first! It just wouldn't be safe.</span>")
 		return
 
 	var/obj/item/clothing/suit/armor/football/S = src.wear_suit
@@ -95,18 +97,18 @@
 	S.in_rush = 0
 
 	if(check_target_immunity(target))
-		boutput(src, __red("[target] braces themselves to stop your tackle effortlessly!"))
+		boutput(src, "<span class='alert'>[target] braces themselves to stop your tackle effortlessly!</span>")
 		return
 
 	if (src.hasStatus("handcuffed"))
-		boutput(src, __red("With your hands tied behind your back, you slam into [target] face first!"))
+		boutput(src, "<span class='alert'>With your hands tied behind your back, you slam into [target] face first!</span>")
 		src.changeStatus("weakened", 3 SECONDS)
 		src.force_laydown_standup()
 
 	src.remove_stamina(40)
 
 	if (!src.head || !istype(src.head,/obj/item/clothing/head/helmet/football))
-		boutput(src, __red("Ouch! Feels like a properly designed helmet would come in handy."))
+		boutput(src, "<span class='alert'>Ouch! Feels like a properly designed helmet would come in handy.</span>")
 		src.take_brain_damage(1 + power * 0.1)
 
 	for (var/mob/C in viewers(src))
@@ -272,7 +274,7 @@
 						if (check_target_immunity(hitMob))
 							hitMob.visible_message("<span class='alert'>The [src] bounces off of [hit_atom]!</span>")
 						else if (user.wearing_football_gear())
-							//boutput(hitMob, __red("Oof! The [src.name] knocks the wind right out of you!"))
+							//boutput(hitMob, "<span class='alert'>Oof! The [src.name] knocks the wind right out of you!</span>")
 							hitMob.visible_message("<span class='alert'><b>[src] hits [hit_atom] in the gut and knocks the wind right out of them!</b></span>")
 							hitMob.changeStatus("stunned", 2 SECONDS)
 							hitMob.changeStatus("weakened", 2 SECONDS)

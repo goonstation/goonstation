@@ -273,7 +273,7 @@
 
 	SPAWN(5 SECONDS)
 		if (src.on)
-			if (get_dist(src,target) <= 1)
+			if (BOUNDS_DIST(src, target) == 0)
 				src.flash_blink(1, 5)
 				if (src.camera) // take the picture
 					var/obj/item/photo/P = src.camera.create_photo(target, src.emagged)
@@ -312,7 +312,7 @@
 	var/build_step = 0
 	var/created_name = "Cambot"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/prox_sensor))
 			var/obj/machinery/bot/cambot/B = new /obj/machinery/bot/cambot(get_turf(src))
 			B.name = src.created_name

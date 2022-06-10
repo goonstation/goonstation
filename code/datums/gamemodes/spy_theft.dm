@@ -13,7 +13,11 @@
 	var/const/waittime_l = 600	// Minimum after round start to send threat information to printer
 	var/const/waittime_h = 1800	// Maximum after round start to send threat information to printer
 
+#ifdef RP_MODE
 	var/const/bounty_refresh_interval = 25 MINUTES
+#else
+	var/const/bounty_refresh_interval = 15 MINUTES
+#endif
 	var/last_refresh_time = 0
 
 	var/const/spies_possible = 7
@@ -70,7 +74,7 @@
 	// Adjust reward based off target job to estimate risk level
 		if (job == "Head of Security" || job == "Captain")
 			return 3
-		else if (job == "Medical Director" || job == "Head of Personnel" || job == "Chief Engineer" || job == "Research Director" || job == "Nanotrasen Special Operative" || job == "Security Officer" || job == "Detective")
+		else if (job == "Medical Director" || job == "Head of Personnel" || job == "Chief Engineer" || job == "Research Director" || job == "Nanotrasen Security Consultant" || job == "Security Officer" || job == "Detective")
 			return 2
 		else
 			return 1
@@ -96,23 +100,15 @@
 		//Find a suitable reward
 		var/list/possible_items = list()
 		for (var/datum/syndicate_buylist/S in syndi_buylist_cache)
-			var/blocked = 0
-			if (ticker?.mode && S.blockedmode && islist(S.blockedmode) && length(S.blockedmode))
-				if (/datum/game_mode/spy_theft in S.blockedmode) //Spies can show up in modes outside spy_theft, so just check if the item would be blocked
-					blocked = 1
-					continue
+			if(!(S.can_buy & UPLINK_SPY_THIEF))
+				continue
 
-			if (ticker?.mode && S.exclusivemode && islist(S.exclusivemode) && length(S.exclusivemode))
-				if (!(/datum/game_mode/spy_theft in S.exclusivemode))
-					blocked = 1
-					continue
-
-			if (blocked == 0 && S.cost <= value_high && S.cost >= value_low)
+			if (S.cost <= value_high && S.cost >= value_low)
 				possible_items += S
 
 		reward = pick(possible_items)
 
-	proc/spawn_reward(var/mob/user,var/obj/item/hostpda)
+	proc/spawn_reward(var/mob/user,var/obj/item/device/pda2/hostpda)
 		if (reward_was_spawned) return
 
 		var/turf/pda_turf = get_turf(hostpda)
@@ -124,8 +120,9 @@
 
 		if (reward.item)
 			var/obj/item = new reward.item(pda_turf)
+			logTheThing("debug", user, null, "spy thief reward spawned: [item] at [log_loc(user)]")
 			user.show_text("Your PDA accepts the bounty and spits out [reward] in exchange.", "red")
-			reward.run_on_spawn(item, user)
+			reward.run_on_spawn(item, user, FALSE, hostpda.uplink)
 			user.put_in_hand_or_drop(item)
 			//if (src.is_VR_uplink == 0)
 			//	statlog_traitor_item(user, reward.name, reward.cost)
@@ -338,7 +335,7 @@
 	station_bounties[/obj/item/disk/data/floppy/read_only/communications] = 2
 	station_bounties[/obj/item/disk/data/floppy/read_only/authentication] = 3
 	station_bounties[/obj/item/aiModule/freeform] = 3
-	station_bounties[/obj/item/aiModule/reset] = 3
+
 
 	station_bounties[/obj/item/cell] = 1
 	station_bounties[/obj/item/device/multitool] = 1
@@ -457,6 +454,7 @@
 	station_bounties[/obj/item/device/radio/headset/mail] = 1
 	station_bounties[/obj/item/device/radio/headset/clown] = 1
 	station_bounties[/obj/item/device/radio/headset/deaf] = 1
+	station_bounties[/obj/item/device/radio/headset/miner] = 1
 	station_bounties[/obj/item/device/radio/headset/security] = 2
 	station_bounties[/obj/item/device/radio/headset/command/radio_show_host] = 2
 	station_bounties[/obj/item/device/radio/headset/command/hop] = 2
@@ -489,7 +487,7 @@
 	big_station_bounties[/obj/machinery/computer/card] = 2
 	big_station_bounties[/obj/machinery/computer/genetics] = 2
 	big_station_bounties[/obj/machinery/computer/robotics] = 2
-	big_station_bounties[/obj/machinery/computer/aiupload] = 3
+	big_station_bounties[/obj/machinery/lawrack] = 3
 
 	big_station_bounties[/obj/machinery/vending/medical] = 1
 	big_station_bounties[/obj/machinery/vending/port_a_nanomed] = 1

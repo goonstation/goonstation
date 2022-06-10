@@ -203,7 +203,7 @@
 	},
 /obj/machinery/computer/riotgear,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "av" = (
 /obj/machinery/light/runway_light,
 /obj/lattice{
@@ -976,7 +976,7 @@
 	operating = 1
 	},
 /obj/plasticflaps,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	id = "cargo_outbound";
 	name = "Cargo Door"
 	},
@@ -984,9 +984,9 @@
 /area/station/quartermaster/office)
 "cs" = (
 /obj/machinery/door/airlock/pyro/glass{
-	name = "Cargo";
-	req_access_txt = "27"
+	name = "Cargo"
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
 "ct" = (
@@ -1333,6 +1333,13 @@
 "dn" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/surgery)
+"do" = (
+/obj/storage/secure/closet/command/medical_director,
+/obj/item/device/analyzer/healthanalyzer/upgraded,
+/obj/item/remote/porter/port_a_nanomed,
+/obj/item/stamp/md,
+/turf/simulated/floor/white,
+/area/station/bridge/united_command)
 "dp" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
@@ -1798,7 +1805,7 @@
 /area/station/maintenance/northwest)
 "ez" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "eA" = (
 /turf/simulated/floor/bot,
 /area/station/mining/staff_room)
@@ -1899,12 +1906,6 @@
 	dir = 4
 	},
 /area/station/quartermaster/office)
-"eQ" = (
-/obj/table/auto,
-/obj/random_item_spawner/ai_experimental,
-/obj/item/aiModule/reset,
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/Zeta)
 "eR" = (
 /obj/stool/chair/blue{
 	dir = 1
@@ -2085,6 +2086,12 @@
 /obj/item/storage/box/ic_cones,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/catering)
+"ft" = (
+/obj/machinery/status_display{
+	pixel_y = -30
+	},
+/turf/simulated/floor/purplewhite,
+/area/station/science/teleporter)
 "fu" = (
 /obj/machinery/light{
 	dir = 1;
@@ -2129,7 +2136,7 @@
 	},
 /obj/storage/secure/crate/weapon/armory/pod_weapons,
 /turf/simulated/floor/caution/south,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "fy" = (
 /obj/machinery/gibber,
 /turf/simulated/floor/specialroom/freezer,
@@ -2146,7 +2153,7 @@
 /obj/item/chem_grenade/pepper,
 /obj/item/chem_grenade/pepper,
 /turf/simulated/floor/caution/south,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "fA" = (
 /obj/reagent_dispensers/beerkeg,
 /turf/simulated/floor/black,
@@ -2178,7 +2185,7 @@
 	},
 /obj/storage/secure/closet/security/armory,
 /turf/simulated/floor/caution/south,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "fF" = (
 /obj/lattice{
 	dir = 6;
@@ -2406,10 +2413,10 @@
 /obj/item/clothing/glasses/nightvision,
 /obj/item/clothing/glasses/nightvision,
 /turf/simulated/floor/caution/east,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "gr" = (
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "gs" = (
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
@@ -2457,7 +2464,7 @@
 /turf/simulated/floor/black,
 /area/station/storage/tools)
 "gA" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/kitchen,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "gB" = (
@@ -2506,7 +2513,7 @@
 "gM" = (
 /obj/decal/poster/wallsign/cdnp,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "gN" = (
 /obj/machinery/power/data_terminal,
 /obj/cable,
@@ -2568,7 +2575,7 @@
 	req_access_txt = "37"
 	},
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "gX" = (
 /turf/simulated/floor/yellow/side{
 	dir = 9
@@ -2818,6 +2825,9 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/machinery/status_display{
+	pixel_x = 32
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 5
@@ -3342,7 +3352,7 @@
 /area/station/crew_quarters/kitchen)
 "iM" = (
 /obj/table/reinforced/auto,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	dir = 8;
 	id = "kitchen_shutter";
 	layer = 3;
@@ -3541,7 +3551,7 @@
 	operating = 1
 	},
 /obj/plasticflaps,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	dir = 4;
 	id = "cargo_shutter";
 	name = "Safety Shutters"
@@ -3677,6 +3687,9 @@
 /area/station/crew_quarters/cafeteria)
 "jE" = (
 /obj/machinery/vending/medical_public,
+/obj/machinery/status_display{
+	pixel_x = -32
+	},
 /turf/unsimulated/floor/caution/north,
 /area/station/crewquarters/cryotron)
 "jF" = (
@@ -4180,7 +4193,7 @@
 "kR" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	id = "kitchen_shutter";
 	layer = 3;
 	name = "Kitchen Shutter"
@@ -4433,7 +4446,17 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "lu" = (
-/turf/simulated/wall/auto/supernorn,
+/obj/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 8;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	layer = 4;
+	name = "Bridge Lockdown Doors";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
 /area/station/bridge/captain)
 "lv" = (
 /obj/table/auto,
@@ -5083,6 +5106,9 @@
 /area/station/security/main)
 "mW" = (
 /obj/vehicle/segway,
+/obj/machinery/status_display{
+	pixel_x = 32
+	},
 /turf/simulated/floor/bot,
 /area/station/security/main)
 "mX" = (
@@ -5660,12 +5686,15 @@
 /obj/item/device/radio,
 /obj/item/clothing/ears/earmuffs,
 /obj/machinery/cell_charger,
+/obj/machinery/status_display{
+	pixel_x = -32
+	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/engineering)
 "ol" = (
 /obj/table/reinforced/auto,
 /obj/item/plate,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	id = "kitchen_shutter";
 	layer = 3;
 	name = "Kitchen Shutter"
@@ -6178,7 +6207,13 @@
 /area/station/security/secwing)
 "pB" = (
 /obj/table/auto,
-/obj/item/hand_tele,
+/obj/machinery/recharger{
+	pixel_y = 5
+	},
+/obj/item/hand_tele{
+	pixel_y = 4;
+	pixel_x = 2
+	},
 /turf/simulated/floor/purpleblack{
 	dir = 10
 	},
@@ -6482,15 +6517,6 @@
 	dir = 4
 	},
 /area/station/hallway/primary/north)
-"ql" = (
-/obj/machinery/computer/aiupload,
-/obj/machinery/light{
-	dir = 1;
-	light_type = /obj/item/light/tube/blueish;
-	pixel_y = 21
-	},
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/Zeta)
 "qm" = (
 /obj/table/auto,
 /obj/item/aiModule/notHuman,
@@ -6749,7 +6775,7 @@
 "qU" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "qV" = (
 /obj/stool/chair/office/yellow{
 	dir = 8
@@ -6845,7 +6871,7 @@
 /area/station/bridge/captain)
 "rf" = (
 /obj/disposalpipe/segment,
-/turf/simulated/wall/auto/supernorn,
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/bridge/captain)
 "rg" = (
 /obj/machinery/light{
@@ -6923,6 +6949,9 @@
 /obj/item/plantanalyzer,
 /obj/item/pen/pencil{
 	pixel_x = -6
+	},
+/obj/machinery/status_display{
+	pixel_x = -32
 	},
 /turf/simulated/floor/green,
 /area/station/hydroponics/bay)
@@ -7090,7 +7119,7 @@
 	},
 /obj/access_spawn/heads,
 /obj/firedoor_spawn,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 4;
 	icon_state = "pdoor0";
@@ -7134,6 +7163,12 @@
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
+	},
+/obj/machinery/door_control{
+	id = "lockdown";
+	name = "Bridge Lockdown";
+	pixel_x = -24;
+	pixel_y = -8
 	},
 /turf/simulated/floor/carpet{
 	dir = 9;
@@ -7400,14 +7435,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/poddoor/pyro{
-	density = 0;
-	dir = 4;
-	icon_state = "pdoor0";
-	id = "lockdown";
-	name = "Bridge Lockdown Doors";
-	opacity = 0
-	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fblue2"
@@ -7415,7 +7443,7 @@
 /area/station/bridge/customs)
 "sq" = (
 /obj/wingrille_spawn/auto,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 4;
 	icon_state = "pdoor0";
@@ -7475,7 +7503,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "sw" = (
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 9;
 	icon_state = "pdoor0";
@@ -7667,7 +7695,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "sV" = (
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "ai_core";
@@ -7736,7 +7764,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "tc" = (
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 5;
 	icon_state = "pdoor0";
@@ -7972,14 +8000,6 @@
 	icon_state = "1-2"
 	},
 /obj/access_spawn/heads,
-/obj/machinery/door/poddoor/pyro{
-	density = 0;
-	dir = 1;
-	icon_state = "pdoor0";
-	id = "lockdown";
-	name = "Bridge Lockdown Doors";
-	opacity = 0
-	},
 /turf/simulated/floor/black,
 /area/station/teleporter)
 "tz" = (
@@ -8061,14 +8081,7 @@
 "tH" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg,
-/obj/machinery/door/poddoor/pyro{
-	density = 0;
-	dir = 4;
-	icon_state = "pdoor0";
-	id = "lockdown";
-	name = "Bridge Lockdown Doors";
-	opacity = 0
-	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fblue2"
@@ -8168,7 +8181,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 4;
 	icon_state = "pdoor0";
@@ -8371,7 +8384,7 @@
 	icon_state = "4-8"
 	},
 /obj/access_spawn/heads,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 4;
 	icon_state = "pdoor0";
@@ -8384,17 +8397,10 @@
 "uo" = (
 /obj/table/reinforced/auto,
 /obj/item/paper_bin,
-/obj/machinery/door/poddoor/pyro{
-	density = 0;
-	dir = 4;
-	icon_state = "pdoor0";
-	id = "lockdown";
-	name = "Bridge Lockdown Doors";
-	opacity = 0
-	},
 /obj/item/bell/hop{
 	pixel_y = 15
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/carpet{
 	dir = 10;
 	icon_state = "fblue2"
@@ -8612,6 +8618,9 @@
 /area/station/bridge)
 "uL" = (
 /obj/decal/tile_edge/stripe/extra_big,
+/obj/machinery/status_display{
+	pixel_x = -32
+	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "uM" = (
@@ -8637,7 +8646,7 @@
 	},
 /area/station/hallway/primary/north)
 "uP" = (
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 4;
 	icon_state = "pdoor0";
@@ -8755,6 +8764,9 @@
 	pixel_y = 5;
 	print_id = "Bridge"
 	},
+/obj/machinery/status_display{
+	pixel_y = -30
+	},
 /turf/simulated/floor/carpet{
 	dir = 10;
 	icon_state = "fblue2"
@@ -8774,17 +8786,13 @@
 	},
 /obj/access_spawn/heads,
 /obj/firedoor_spawn,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 4;
 	icon_state = "pdoor0";
 	id = "lockdown";
 	name = "Bridge Lockdown Doors";
 	opacity = 0
-	},
-/obj/machinery/secscanner{
-	dir = 4;
-	pixel_x = -20
 	},
 /turf/simulated/floor/blue,
 /area/station/bridge/customs)
@@ -8915,7 +8923,7 @@
 /turf/space,
 /area/space)
 "vt" = (
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 10;
 	icon_state = "pdoor0";
@@ -8931,7 +8939,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/brig/genpop)
 "vv" = (
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 6;
 	icon_state = "pdoor0";
@@ -9009,14 +9017,6 @@
 /obj/machinery/manufacturer/uniform,
 /turf/simulated/floor/bot,
 /area/station/crew_quarters/lounge)
-"vG" = (
-/obj/machinery/light{
-	light_type = /obj/item/light/tube/blueish
-	},
-/obj/table/auto,
-/obj/item/aiModule/rename,
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/Zeta)
 "vH" = (
 /obj/table/auto,
 /obj/item/aiModule/freeform,
@@ -9692,6 +9692,15 @@
 /area/station/hallway/primary/south)
 "xu" = (
 /obj/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 10;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	layer = 4;
+	name = "Bridge Lockdown Doors";
+	opacity = 0
+	},
 /turf/simulated/floor/plating,
 /area/station/bridge/captain)
 "xv" = (
@@ -9727,6 +9736,9 @@
 /area/station/bridge/captain)
 "xy" = (
 /obj/machinery/ore_cloud_storage_container,
+/obj/machinery/status_display{
+	pixel_y = -30
+	},
 /turf/simulated/floor/yellow/side,
 /area/station/mining/staff_room)
 "xz" = (
@@ -9784,7 +9796,7 @@
 /area/space)
 "xI" = (
 /obj/displaycase{
-	displayed = new /obj/item/captaingun
+	displayed = new/obj/item/captaingun
 	},
 /turf/simulated/floor/blue,
 /area/station/bridge/captain)
@@ -9828,6 +9840,15 @@
 /area/station/bridge/customs)
 "xN" = (
 /obj/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 6;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	layer = 4;
+	name = "Bridge Lockdown Doors";
+	opacity = 0
+	},
 /turf/simulated/floor/plating,
 /area/station/bridge)
 "xO" = (
@@ -9880,6 +9901,15 @@
 	icon_state = "4-8"
 	},
 /obj/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 8;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	layer = 4;
+	name = "Bridge Lockdown Doors";
+	opacity = 0
+	},
 /turf/simulated/floor/plating,
 /area/station/bridge)
 "xT" = (
@@ -9969,11 +9999,6 @@
 	},
 /area/station/bridge/customs)
 "yd" = (
-/obj/machinery/door_control{
-	id = "lockdown";
-	name = "Bridge Lockdown Control";
-	pixel_x = 25
-	},
 /turf/simulated/floor/blue,
 /area/station/bridge/customs)
 "ye" = (
@@ -10021,7 +10046,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "yl" = (
 /obj/machinery/nanofab/mining,
 /turf/simulated/floor/yellow/side{
@@ -10063,7 +10088,17 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
 "yr" = (
-/turf/simulated/wall/auto/supernorn,
+/obj/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 6;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	layer = 4;
+	name = "Bridge Lockdown Doors";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
 /area/station/crew_quarters/heads)
 "ys" = (
 /obj/machinery/door/airlock/pyro/command/alt{
@@ -10075,14 +10110,6 @@
 /obj/access_spawn/heads,
 /obj/firedoor_spawn,
 /obj/disposalpipe/segment,
-/obj/machinery/door/poddoor/pyro{
-	density = 0;
-	dir = 1;
-	icon_state = "pdoor0";
-	id = "lockdown";
-	name = "Bridge Lockdown Doors";
-	opacity = 0
-	},
 /turf/simulated/floor/black,
 /area/station/bridge/united_command)
 "yt" = (
@@ -10489,7 +10516,7 @@
 /area/station/bridge/united_command)
 "zt" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /obj/item/record/atlas{
 	pixel_x = 5;
 	pixel_y = -10
@@ -11090,6 +11117,19 @@
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/east)
+"AT" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 10;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	layer = 4;
+	name = "Bridge Lockdown Doors";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/station/bridge)
 "AU" = (
 /obj/machinery/door/airlock/pyro/alt{
 	dir = 4;
@@ -11152,12 +11192,21 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
+"Bc" = (
+/obj/machinery/lawrack,
+/obj/machinery/light{
+	dir = 1;
+	light_type = /obj/item/light/tube/blueish;
+	pixel_y = 21
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/Zeta)
 "Bd" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/southeast)
 "Be" = (
 /obj/wingrille_spawn/auto,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	dir = 8;
 	id = "tele";
 	name = "Teleporter Lockdown Shutter"
@@ -11342,7 +11391,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/genetics,
 /turf/simulated/floor/white/checker2{
 	dir = 5
 	},
@@ -11386,6 +11435,9 @@
 /area/station/storage/tech)
 "BI" = (
 /obj/submachine/laundry_machine,
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
 /turf/simulated/floor/bot,
 /area/station/crew_quarters/lounge)
 "BJ" = (
@@ -11830,6 +11882,14 @@
 /area/station/quartermaster/office)
 "CU" = (
 /obj/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	layer = 4;
+	name = "Bridge Lockdown Doors";
+	opacity = 0
+	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/heads)
 "CV" = (
@@ -11863,7 +11923,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Teleporter Pad"
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	id = "tele";
 	name = "Teleporter Lockdown Shutter"
 	},
@@ -12044,13 +12104,6 @@
 	},
 /turf/simulated/floor/red,
 /area/station/bridge/united_command)
-"Dx" = (
-/obj/storage/secure/closet/command/medical_director,
-/obj/item/device/analyzer/healthanalyzer/borg,
-/obj/item/remote/porter/port_a_nanomed,
-/obj/item/stamp/md,
-/turf/simulated/floor/white,
-/area/station/bridge/united_command)
 "Dz" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/mining/refinery)
@@ -12089,7 +12142,7 @@
 	},
 /area/station/science/teleporter)
 "DK" = (
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	dir = 4;
 	id = "tele";
 	name = "Teleporter Lockdown Shutter";
@@ -12249,6 +12302,9 @@
 /obj/stool/chair/comfy/wheelchair{
 	dir = 8
 	},
+/obj/machinery/status_display{
+	pixel_x = 32
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 6
 	},
@@ -12407,7 +12463,7 @@
 /area/station/science/teleporter)
 "EA" = (
 /obj/wingrille_spawn/auto,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	dir = 8;
 	id = "tele";
 	name = "Teleporter Lockdown Shutter"
@@ -12993,7 +13049,7 @@
 	operating = 1
 	},
 /obj/plasticflaps,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	dir = 4;
 	id = "crusher";
 	name = "Crusher Door"
@@ -14313,6 +14369,19 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/substation/east)
+"IW" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 5;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	layer = 4;
+	name = "Bridge Lockdown Doors";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/station/bridge/captain)
 "IX" = (
 /obj/cable{
 	d1 = 1;
@@ -14940,7 +15009,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/lab)
 "KL" = (
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	id = "chamber_1";
 	name = "Cargo Door"
 	},
@@ -16214,10 +16283,10 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/machinery/power/apc/autoname_north/noaicontrol,
 /turf/simulated/floor/circuit/red,
 /area/syndicate_teleporter)
 "Od" = (
@@ -16534,11 +16603,11 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/machinery/power/apc/autoname_north/noaicontrol,
 /turf/simulated/floor/black,
 /area/listeningpost/power)
 "ON" = (
@@ -16652,7 +16721,7 @@
 /turf/space,
 /area/space)
 "Pa" = (
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 4;
 	icon_state = "pdoor0";
@@ -17146,7 +17215,7 @@
 	},
 /area/station/science/lab)
 "Qe" = (
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	id = "chamber_2";
 	name = "Cargo Door"
 	},
@@ -17206,7 +17275,7 @@
 	operating = 1
 	},
 /obj/plasticflaps,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	id = "cargo_inbound";
 	name = "Cargo Door"
 	},
@@ -17785,7 +17854,7 @@
 	pixel_y = 20
 	},
 /turf/simulated/floor/caution/south,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "RP" = (
 /obj/rack,
 /obj/item/device/radio,
@@ -17803,6 +17872,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
+"RT" = (
+/obj/machinery/status_display{
+	pixel_x = 32
+	},
+/turf/simulated/floor/white/checker,
+/area/station/hallway/secondary/exit)
 "RU" = (
 /obj/machinery/light{
 	dir = 4;
@@ -18028,7 +18103,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "Sy" = (
 /obj/machinery/networked/test_apparatus/xraymachine,
 /obj/decal/tile_edge/stripe/big{
@@ -18087,6 +18162,19 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/clown)
+"SK" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 9;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	layer = 4;
+	name = "Bridge Lockdown Doors";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/station/bridge)
 "SL" = (
 /obj/decal/tile_edge/stripe/big,
 /turf/simulated/floor/white,
@@ -18197,6 +18285,19 @@
 	icon_state = "fgreen2"
 	},
 /area/station/crew_quarters/heads)
+"Tc" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 5;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	layer = 4;
+	name = "Bridge Lockdown Doors";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/station/bridge)
 "Td" = (
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
@@ -18469,6 +18570,19 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/hangar/main)
+"TJ" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 8;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	layer = 4;
+	name = "Bridge Lockdown Doors";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/station/bridge)
 "TK" = (
 /obj/stool/chair{
 	dir = 8
@@ -18713,6 +18827,14 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"Uy" = (
+/obj/machinery/status_display{
+	pixel_x = 32
+	},
+/turf/simulated/floor/specialroom/chapel{
+	dir = 4
+	},
+/area/station/chapel/sanctuary)
 "Uz" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/camera{
@@ -18787,7 +18909,7 @@
 	pixel_y = 26
 	},
 /turf/simulated/floor/caution/south,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "UM" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -18878,7 +19000,7 @@
 	pixel_y = 1
 	},
 /turf/simulated/floor/caution/east,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "Vb" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4
@@ -18949,6 +19071,18 @@
 /obj/landmark/gps_waypoint,
 /turf/unsimulated/floor/blue,
 /area/station/crewquarters/cryotron)
+"Vi" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	layer = 4;
+	name = "Bridge Lockdown Doors";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/station/bridge/captain)
 "Vj" = (
 /obj/machinery/atmospherics/portables_connector/south,
 /obj/machinery/disposal/small{
@@ -19059,6 +19193,12 @@
 	icon_state = "fred2"
 	},
 /area/station/crew_quarters/lounge)
+"Vz" = (
+/obj/machinery/status_display{
+	pixel_x = 32
+	},
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/cafeteria)
 "VB" = (
 /obj/reagent_dispensers/heliumtank,
 /turf/simulated/floor/grime,
@@ -19145,9 +19285,16 @@
 /obj/machinery/light/small/blueish,
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
+"VN" = (
+/obj/machinery/light{
+	light_type = /obj/item/light/tube/blueish
+	},
+/obj/table/auto,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/Zeta)
 "VO" = (
 /obj/table/reinforced/auto,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	id = "kitchen_shutter";
 	layer = 3;
 	name = "Kitchen Shutter"
@@ -19228,7 +19375,7 @@
 /area/station/mining/staff_room)
 "VY" = (
 /obj/disposalpipe/segment,
-/turf/simulated/wall/auto/supernorn,
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/heads)
 "VZ" = (
 /obj/stool/chair{
@@ -19452,7 +19599,7 @@
 /area/station/medical/medbay)
 "WI" = (
 /obj/wingrille_spawn/auto,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	id = "tele";
 	name = "Teleporter Lockdown Shutter"
 	},
@@ -19582,6 +19729,19 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/combustion_chamber)
+"WW" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 9;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	layer = 4;
+	name = "Bridge Lockdown Doors";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/heads)
 "WZ" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
@@ -19759,6 +19919,11 @@
 	dir = 1
 	},
 /area/station/hallway/primary/east)
+"Xy" = (
+/obj/table/auto,
+/obj/random_item_spawner/ai_experimental,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/Zeta)
 "Xz" = (
 /obj/table/round/auto,
 /obj/machinery/computer/tour_console,
@@ -20134,7 +20299,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Teleporter Pad"
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	id = "tele";
 	name = "Teleporter Lockdown Shutter"
 	},
@@ -20538,10 +20703,26 @@
 	dir = 1
 	},
 /area/station/bridge/customs)
+"ZC" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 8;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	layer = 4;
+	name = "Bridge Lockdown Doors";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/heads)
 "ZD" = (
 /obj/stool/bed,
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
+	},
+/obj/machinery/status_display{
+	pixel_x = -32
 	},
 /turf/simulated/floor/red,
 /area/station/security/brig/genpop)
@@ -62495,7 +62676,7 @@ rg
 sr
 tD
 uL
-vG
+VN
 qD
 TA
 VZ
@@ -63114,7 +63295,7 @@ EE
 Fk
 Gd
 GH
-UE
+ft
 GG
 Cs
 IT
@@ -63698,7 +63879,7 @@ kl
 Rt
 kl
 qD
-eQ
+Xy
 rk
 sw
 Pa
@@ -64000,7 +64181,7 @@ kl
 UF
 kl
 qD
-ql
+Bc
 rk
 sV
 tI
@@ -71244,7 +71425,7 @@ ju
 WZ
 Uz
 Qf
-nJ
+Vz
 oy
 oz
 qG
@@ -76063,7 +76244,7 @@ bc
 bs
 cf
 cf
-cf
+RT
 ek
 ew
 ew
@@ -77906,7 +78087,7 @@ AY
 WR
 Cq
 Th
-Dx
+do
 zf
 EY
 Rd
@@ -78187,7 +78368,7 @@ hQ
 jR
 iG
 jN
-kI
+Uy
 ct
 mk
 ct
@@ -78491,23 +78672,23 @@ iJ
 iJ
 hf
 mu
-lu
-lu
-lu
-lu
-lu
-lu
+mu
+mu
+mu
+mu
+mu
+mu
 xM
 xQ
 xY
 yd
 ZA
-FO
-FO
-FO
-FO
-FO
-FO
+zf
+zf
+zf
+zf
+zf
+zf
 zf
 UB
 UB
@@ -78792,19 +78973,19 @@ hf
 aa
 aa
 aa
-xu
+Vi
 Sl
 nf
 oc
 oS
 pI
-lu
+mu
 sq
 tS
 un
 sq
 sq
-yr
+BK
 Xv
 ZL
 Sk
@@ -79094,7 +79275,7 @@ hf
 aa
 aa
 aa
-xu
+Vi
 mY
 nX
 oe
@@ -79396,7 +79577,7 @@ hf
 aa
 aa
 aa
-xu
+Vi
 xx
 ob
 oQ
@@ -79704,13 +79885,13 @@ mu
 ms
 pF
 ms
-lu
+mu
 rM
 wi
 ue
 sN
 rM
-yr
+BK
 UM
 TV
 UM
@@ -80002,17 +80183,17 @@ PS
 aa
 cl
 Ps
-xu
+Vi
 oR
 pG
 pG
-lu
+mu
 rN
 sQ
 uf
 ut
 vd
-yr
+BK
 YD
 YD
 Xn
@@ -80304,17 +80485,17 @@ PS
 PS
 PS
 xG
-xu
+Vi
 xC
 pG
 pG
-lu
+mu
 Rm
 sW
 ug
 uK
 vi
-yr
+BK
 YD
 YD
 YQ
@@ -80606,21 +80787,21 @@ aa
 aa
 PS
 xG
-xu
+IW
 xu
 xE
 xI
-lu
+mu
 rR
 sX
 sX
 sX
 vj
-yr
+BK
 Vv
 TT
-CU
-CU
+WW
+yr
 mf
 PS
 aa
@@ -80909,19 +81090,19 @@ aa
 PS
 ax
 aa
-xu
-xu
+IW
+lu
 mu
 mu
-xN
+AT
 xR
 xZ
 ye
-xN
+SK
 BK
 BK
-CU
-CU
+ZC
+yr
 aa
 ax
 PS
@@ -81215,9 +81396,9 @@ aa
 aa
 aa
 aa
-xN
+Tc
 xS
-xN
+TJ
 xS
 xN
 aa

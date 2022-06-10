@@ -16,10 +16,10 @@
 	burn_point = 400
 	burn_output = 800
 	burn_possible = 1
-	health = 50
+	health = 10
 	var/team_num
 
-	duration_remove = 6.5 SECONDS
+	duration_remove = 7.5 SECONDS
 
 	setupProperties()
 		..()
@@ -691,6 +691,12 @@
 	icon_state = "souschef"
 	item_state = "souschef"
 
+/obj/item/clothing/under/misc/itamae
+	name = "itamae uniform"
+	desc = "A coat and apron worn commonly worn by Japanese Chefs, waiting to be ruined with the blood you'll inevitably cover it in."
+	icon_state = "itamae"
+	item_state = "itamae"
+
 /obj/item/clothing/under/misc/lawyer
 	name = "lawyer's suit"
 	desc = "A rather objectionable piece of clothing."
@@ -733,8 +739,8 @@
 	#endif
 
 /obj/item/clothing/under/misc/turds
-	name = "NT-SO Jumpsuit"
-	desc = "A Nanotrasen Special Operations jumpsuit."
+	name = "NT combat uniform"
+	desc = "A Nanotrasen paramilitary jumpsuit."
 	icon_state = "turdsuit"
 	item_state = "turdsuit"
 	team_num = TEAM_NANOTRASEN
@@ -1203,7 +1209,6 @@
 	burn_point = 450
 	burn_output = 800
 	burn_possible = 1
-	health = 20
 	rand_pos = 0
 
 	setupProperties()
@@ -1246,7 +1251,7 @@
 					qdel(src)
 					return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (issnippingtool(W))
 			boutput(user, "You begin cutting up [src].")
 			if (!do_after(user, 3 SECONDS))
@@ -1263,7 +1268,7 @@
 		else
 			return ..()
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		src.add_fingerprint(user)
 		if (user.a_intent != "harm")
 			M.visible_message("[user] towels [M == user ? "[him_or_her(user)]self" : M] dry.")
@@ -1451,7 +1456,7 @@
     icon_state = "bandshirt"
     item_state = "bandshirt"
 
-/obj/item/clothing/under/misc/bandshirt/attack_hand(mob/user as mob)
+/obj/item/clothing/under/misc/bandshirt/attack_hand(mob/user)
 	if  ( ..() && !disturbed )
 		new /obj/item/clothing/mask/cigarette/dryjoint(get_turf(user))
 		boutput(user, "Something falls out of the shirt as you pick it up!")

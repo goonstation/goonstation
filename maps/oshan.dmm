@@ -218,7 +218,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
 "aaC" = (
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	dir = 1;
 	id = "research";
 	name = "Research Mass Driver"
@@ -557,7 +557,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "abt" = (
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	dir = 1;
 	id = "chapelgun";
 	name = "Chapel Mass Driver"
@@ -949,6 +949,9 @@
 	},
 /obj/cable,
 /obj/machinery/power/data_terminal,
+/obj/machinery/status_display{
+	pixel_y = -30
+	},
 /turf/simulated/floor/green/side,
 /area/station/turret_protected/Zeta)
 "acb" = (
@@ -1665,7 +1668,7 @@
 /area/station/ai_monitored/storage/eva)
 "adx" = (
 /obj/wingrille_spawn/auto,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "lockdown";
@@ -2054,12 +2057,6 @@
 	},
 /turf/simulated/floor/bluegreen,
 /area/station/medical/medbay/treatment2)
-"aeo" = (
-/obj/table/reinforced,
-/obj/item/aiModule/reset,
-/obj/item/disk/data/floppy/read_only/communications,
-/turf/simulated/floor/circuit/green,
-/area/station/turret_protected/Zeta)
 "aep" = (
 /obj/disposalpipe/segment/mail,
 /obj/cable{
@@ -2572,27 +2569,6 @@
 /obj/machinery/manufacturer/robotics,
 /turf/simulated/floor/caution/west,
 /area/station/medical/robotics)
-"afD" = (
-/obj/rack,
-/obj/item/clothing/suit/fire,
-/obj/item/clothing/suit/fire,
-/obj/item/clothing/head/helmet/firefighter,
-/obj/item/tank/air,
-/obj/item/tank/air,
-/obj/item/clothing/mask/gas,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/northeast)
-"afE" = (
-/obj/rack,
-/obj/item/clothing/suit/fire,
-/obj/item/clothing/suit/fire,
-/obj/item/tank/air,
-/obj/item/tank/air,
-/obj/item/clothing/head/helmet/firefighter,
-/obj/item/clothing/mask/gas,
-/obj/item/clothing/mask/gas,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/northeast)
 "afF" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -2724,14 +2700,10 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/north)
 "afY" = (
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /obj/item/clothing/suit/labcoat/genetics,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/north)
-"afZ" = (
-/obj/item/wrench,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/northeast)
 "agb" = (
 /turf/simulated/floor/plating/random,
 /area/station/medical/robotics)
@@ -2869,15 +2841,6 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/research_outpost/toxins)
-"ago" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname  - SS13";
-	pixel_y = 20
-	},
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/northeast)
 "agp" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random,
@@ -2917,15 +2880,6 @@
 /area/research_outpost/toxins)
 "agu" = (
 /obj/item/crowbar,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/northeast)
-"agv" = (
-/obj/rack,
-/obj/item/reagent_containers/patch/mini/burn,
-/obj/item/reagent_containers/patch/mini/burn,
-/obj/item/extinguisher,
-/obj/item/extinguisher,
-/obj/machinery/light/incandescent/harsh/very,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
 "agw" = (
@@ -3108,13 +3062,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
-"agV" = (
-/obj/rack,
-/obj/item/weldingtool,
-/obj/item/chem_grenade/firefighting,
-/obj/item/chem_grenade/firefighting,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/northeast)
 "agW" = (
 /obj/item/device/multitool,
 /turf/simulated/floor/plating/random,
@@ -3781,6 +3728,9 @@
 /area/station/chapel/sanctuary)
 "aiI" = (
 /obj/item/instrument/large/organ,
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
 "aiJ" = (
@@ -4478,6 +4428,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/north)
 "akv" = (
+/obj/decal/cleanable/dirt,
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon8,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/north)
@@ -4535,7 +4486,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/dome)
 "akD" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/genetics,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 0;
@@ -4969,7 +4920,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 9;
 	icon_state = "pdoor0";
@@ -5099,7 +5050,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 5;
 	icon_state = "pdoor0";
@@ -5166,7 +5117,7 @@
 	icon_state = "0-2"
 	},
 /obj/cable,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 4;
 	icon_state = "pdoor0";
@@ -5865,7 +5816,7 @@
 	icon_state = "0-4"
 	},
 /obj/cable,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 10;
 	icon_state = "pdoor0";
@@ -6043,7 +5994,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "ai_core";
@@ -6123,7 +6074,7 @@
 	icon_state = "0-8"
 	},
 /obj/cable,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 6;
 	icon_state = "pdoor0";
@@ -6419,27 +6370,6 @@
 	icon_state = "fblue2"
 	},
 /area/station/medical/head)
-"aoZ" = (
-/obj/machinery/networked/printer{
-	name = "Printer - MD";
-	pixel_y = 5;
-	print_id = "MD"
-	},
-/obj/item/device/analyzer/healthanalyzer/borg,
-/obj/item/clothing/glasses/healthgoggles/upgraded,
-/obj/table/wood/round/auto,
-/obj/machinery/light/incandescent/warm,
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/blind_switch/area/north,
-/turf/simulated/floor/carpet{
-	dir = 1;
-	icon_state = "fblue2"
-	},
-/area/station/medical/head)
 "apa" = (
 /obj/cable{
 	d1 = 1;
@@ -6642,6 +6572,9 @@
 	dir = 1;
 	name = "autoname - SS13";
 	tag = ""
+	},
+/obj/machinery/status_display{
+	pixel_x = -32
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
@@ -7042,7 +6975,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/science/storage)
 "aqt" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/research,
 /turf/simulated/floor/plating/random,
 /area/station/science/storage)
 "aqu" = (
@@ -7117,16 +7050,6 @@
 "aqD" = (
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/quartersA)
-"aqE" = (
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 26;
-	pixel_y = 1
-	},
-/turf/simulated/floor/greenblack{
-	dir = 4
-	},
 /area/station/crew_quarters/quartersA)
 "aqF" = (
 /obj/machinery/light/incandescent/warm,
@@ -7549,11 +7472,6 @@
 	},
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
-"arG" = (
-/obj/table/reinforced,
-/obj/item/circuitboard/aiupload,
-/turf/simulated/floor/circuit/green,
-/area/station/turret_protected/Zeta)
 "arH" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -7863,16 +7781,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
-"ass" = (
-/obj/disposalpipe/segment,
-/obj/decal/tile_edge/line/blue{
-	dir = 5;
-	icon_state = "line1"
-	},
-/turf/simulated/floor/bluewhite/corner{
-	dir = 4
-	},
-/area/station/medical/medbay)
 "ast" = (
 /obj/disposalpipe/segment/mail,
 /obj/cable{
@@ -8034,7 +7942,7 @@
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "asN" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/research,
 /turf/simulated/floor/engine,
 /area/research_outpost/chamber)
 "asO" = (
@@ -8193,6 +8101,9 @@
 "ath" = (
 /obj/stool/chair/blue{
 	dir = 8
+	},
+/obj/machinery/status_display{
+	pixel_x = 32
 	},
 /turf/simulated/floor/blueblack{
 	dir = 4
@@ -8395,18 +8306,6 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
-"atI" = (
-/obj/disposalpipe/segment,
-/obj/machinery/door_control{
-	id = "medbay_front";
-	name = "Medbay Door Control";
-	pixel_x = -23;
-	pixel_y = 8
-	},
-/turf/simulated/floor/bluewhite{
-	dir = 8
-	},
-/area/station/medical/medbay)
 "atJ" = (
 /obj/disposalpipe/segment/mail,
 /obj/cable{
@@ -8440,6 +8339,9 @@
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/status_display{
+	pixel_x = 32
+	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "atO" = (
@@ -8857,7 +8759,7 @@
 /area/station/hallway/primary/east)
 "auN" = (
 /obj/wingrille_spawn/auto/crystal,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "test_chamber";
@@ -10151,13 +10053,6 @@
 /obj/decal/tile_edge/line/purple{
 	dir = 10;
 	icon_state = "line2"
-	},
-/turf/simulated/floor/purpleblack,
-/area/station/science/lobby)
-"axM" = (
-/obj/machinery/light/incandescent/cool,
-/obj/decal/tile_edge/line/purple{
-	icon_state = "line1"
 	},
 /turf/simulated/floor/purpleblack,
 /area/station/science/lobby)
@@ -11901,7 +11796,7 @@
 	id = "qm_dock_out"
 	},
 /obj/forcefield/energyshield/perma/doorlink,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	dir = 4;
 	id = "cargo_outbound";
 	name = "Cargo Routing Door"
@@ -12463,7 +12358,7 @@
 	},
 /area/station/science/teleporter)
 "aDv" = (
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "scienceteleporter";
@@ -13894,7 +13789,7 @@
 /area/station/science/lobby)
 "aGV" = (
 /obj/wingrille_spawn/auto/crystal,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "chemistry";
@@ -13918,7 +13813,7 @@
 /area/station/science/chemistry)
 "aGY" = (
 /obj/wingrille_spawn/auto/crystal,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "chemistry";
@@ -15118,7 +15013,7 @@
 	id = "inbound"
 	},
 /obj/forcefield/energyshield/perma/doorlink,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	dir = 4;
 	id = "cargo_inbound";
 	name = "Cargo Routing Door"
@@ -16888,7 +16783,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/apc/autoname_west,
+/obj/machinery/power/apc/autoname_west/noaicontrol,
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
@@ -18583,7 +18478,6 @@
 /area/station/mining/staff_room)
 "aSR" = (
 /obj/storage/crate/bin,
-/obj/item/radio_tape/advertisement/dans_tickets,
 /obj/item/radio_tape/advertisement/grones{
 	pixel_x = 6;
 	pixel_y = 4
@@ -18615,10 +18509,6 @@
 	pixel_y = 6
 	},
 /obj/item/gnomechompski,
-/obj/item/radio_tape/advertisement/pope_crunch{
-	pixel_x = 8;
-	pixel_y = -2
-	},
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/crew_quarters/radio/lab)
 "aSS" = (
@@ -19035,7 +18925,7 @@
 /turf/space/fluid,
 /area/space)
 "aTV" = (
-/obj/decal/oven,
+/obj/decal/fakeobjects/oven,
 /turf/space/fluid,
 /area/space)
 "aTW" = (
@@ -19110,7 +19000,7 @@
 /area/space)
 "aUj" = (
 /obj/stool/bed,
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /turf/space/fluid,
 /area/space)
 "aUk" = (
@@ -19858,7 +19748,7 @@
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/genetics)
 "aWN" = (
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /obj/decal/cleanable/blood,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/genetics)
@@ -19934,7 +19824,7 @@
 /area/evilreaver/genetics)
 "aXd" = (
 /obj/wingrille_spawn/auto/crystal,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 4;
 	icon_state = "pdoor0";
@@ -20023,7 +19913,7 @@
 /turf/simulated/floor/white,
 /area/evilreaver/genetics)
 "aXn" = (
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /obj/decal/cleanable/blood/splatter,
 /turf/simulated/floor/plating,
 /area/evilreaver/genetics)
@@ -20231,6 +20121,11 @@
 	},
 /turf/simulated/martian/floor,
 /area/evilreaver/storage/tools)
+"aXZ" = (
+/turf/simulated/shuttle/wall/flock{
+	dir = 5
+	},
+/area/space)
 "aYa" = (
 /obj/decal/fakeobjects/flock/antenna/broken{
 	dir = 1;
@@ -21193,7 +21088,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "test_chamber";
@@ -21396,7 +21291,7 @@
 /area/research_outpost)
 "bbN" = (
 /obj/wingrille_spawn/auto/crystal,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "test_chamber";
@@ -21522,12 +21417,6 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost/toxins)
-"bcq" = (
-/obj/decal/fakeobjects/flock/antenna{
-	dir = 8
-	},
-/turf/simulated/shuttle/wall/flock,
-/area/flock_trader)
 "bcr" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
@@ -21557,18 +21446,6 @@
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor,
 /area/research_outpost/toxins)
-"bcx" = (
-/obj/decal/fakeobjects/flock/antenna/end{
-	dir = 4
-	},
-/turf/simulated/shuttle/wall/flock,
-/area/flock_trader)
-"bcB" = (
-/turf/simulated/shuttle/wall/cockpit/flock{
-	dir = 8
-	},
-/turf/space/fluid,
-/area/space)
 "bcC" = (
 /obj/machinery/computer3/terminal/zeta{
 	dir = 4;
@@ -21822,15 +21699,6 @@
 /turf/simulated/floor/shuttlebay/flock{
 	dir = 6
 	},
-/area/flock_trader)
-"bdH" = (
-/obj/decal/fakeobjects/flock/antenna{
-	dir = 8
-	},
-/obj/decal/fakeobjects/flock/antenna{
-	dir = 8
-	},
-/turf/simulated/shuttle/wall/flock,
 /area/flock_trader)
 "bdI" = (
 /obj/machinery/optable,
@@ -22208,10 +22076,6 @@
 	},
 /turf/simulated/floor/darkpurple,
 /area/station/crew_quarters/data)
-"beF" = (
-/obj/lattice/flock,
-/turf/space/fluid,
-/area/flock_trader)
 "beG" = (
 /obj/table/glass/reinforced/auto,
 /obj/item/paper/blueprint/sealab,
@@ -22265,16 +22129,6 @@
 "beP" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/gas)
-"beQ" = (
-/obj/decal/fakeobjects/flock/antenna/broken{
-	dir = 4;
-	icon_state = "antenna-broken-2"
-	},
-/obj/decal/fakeobjects/flock/antenna{
-	dir = 8
-	},
-/turf/simulated/shuttle/wall/flock,
-/area/flock_trader)
 "beR" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
 /obj/machinery/firealarm{
@@ -22404,13 +22258,6 @@
 	dir = 8
 	},
 /area/station/hallway/primary/west)
-"bfp" = (
-/turf/space/fluid,
-/area/flock_trader)
-"bfq" = (
-/obj/lattice/flock,
-/turf/simulated/shuttle/wall/flock,
-/area/flock_trader)
 "bfr" = (
 /obj/disposalpipe/segment/mail{
 	dir = 1;
@@ -22477,14 +22324,6 @@
 	},
 /turf/space/fluid,
 /area/space)
-"bfz" = (
-/obj/decal/fakeobjects/flock/antenna,
-/turf/simulated/shuttle/wall/flock,
-/area/flock_trader)
-"bfA" = (
-/obj/decal/fakeobjects/flock/antenna/end,
-/turf/simulated/shuttle/wall/flock,
-/area/flock_trader)
 "bfB" = (
 /obj/machinery/hydro_mister,
 /turf/simulated/floor/black,
@@ -22792,7 +22631,7 @@
 /turf/simulated/floor/green,
 /area/station/hydroponics/bay)
 "bgs" = (
-/obj/decal/oven{
+/obj/decal/fakeobjects/oven{
 	name = "broken oven"
 	},
 /turf/simulated/floor/plating/damaged3,
@@ -23266,27 +23105,6 @@
 	dir = 10
 	},
 /area/station/crew_quarters/bar)
-"bhJ" = (
-/obj/machinery/light/incandescent/warm,
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/turf/simulated/floor/darkblue{
-	dir = 10
-	},
-/area/station/crew_quarters/bar)
-"bhK" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/decal/tile_edge/line/black{
-	dir = 4;
-	icon_state = "line1"
-	},
-/turf/simulated/floor/darkblue{
-	dir = 10
-	},
-/area/station/crew_quarters/bar)
 "bhM" = (
 /obj/machinery/vending/fortune,
 /obj/machinery/light/incandescent/warm,
@@ -23675,7 +23493,7 @@
 	name = "Catering Hangar"
 	})
 "biT" = (
-/obj/machinery/vending/monkey{
+/obj/machinery/vending/monkey/kitchen{
 	pixel_y = 8
 	},
 /turf/simulated/floor/white,
@@ -23736,17 +23554,6 @@
 	pixel_y = 6
 	},
 /turf/simulated/floor/carpet/blue/fancy/narrow/T_north,
-/area/station/crew_quarters/bar)
-"bjc" = (
-/obj/table/reinforced/bar/auto,
-/obj/item/implant/projectile/bardart{
-	pixel_x = -3
-	},
-/obj/item/implant/projectile/bardart,
-/obj/item/implant/projectile/bardart{
-	pixel_x = 3
-	},
-/turf/simulated/floor/carpet/blue/fancy/narrow/ne,
 /area/station/crew_quarters/bar)
 "bjd" = (
 /obj/stool/bar,
@@ -24869,6 +24676,9 @@
 	pixel_y = 8
 	},
 /obj/machinery/light/incandescent/netural,
+/obj/machinery/status_display{
+	pixel_x = -32
+	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "blW" = (
@@ -25129,7 +24939,9 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "bmF" = (
-/obj/machinery/light_switch/auto,
+/obj/machinery/status_display{
+	pixel_y = -32
+	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "bmG" = (
@@ -25137,6 +24949,7 @@
 	dir = 5;
 	icon_state = "line1"
 	},
+/obj/machinery/light_switch/auto,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "bmH" = (
@@ -25701,9 +25514,6 @@
 	dir = 4
 	},
 /area/station/hallway/primary/east)
-"boc" = (
-/turf/simulated/wall/asteroid,
-/area/space)
 "bod" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -25749,14 +25559,9 @@
 	},
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/catering)
-"bom" = (
-/turf/simulated/wall/asteroid{
-	dir = 9
-	},
-/area/space)
 "bon" = (
 /obj/item/reagent_containers/food/snacks/hardtack,
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "boo" = (
@@ -25802,11 +25607,6 @@
 /obj/item/reagent_containers/food/drinks/milk,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
-"bos" = (
-/turf/simulated/wall/asteroid{
-	dir = 1
-	},
-/area/space)
 "bot" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/fitness)
@@ -26002,7 +25802,7 @@
 	},
 /area/station/crew_quarters/kitchen)
 "boS" = (
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /obj/item/raw_material/pharosium,
 /obj/item/raw_material/bohrum,
 /obj/item/raw_material/bohrum,
@@ -26297,11 +26097,6 @@
 /obj/fitness/speedbag/wizard,
 /turf/simulated/floor/caution/east,
 /area/station/crew_quarters/fitness)
-"bpJ" = (
-/turf/simulated/wall/asteroid{
-	dir = 4
-	},
-/area/space)
 "bpK" = (
 /obj/machinery/light/incandescent/netural,
 /obj/machinery/power/apc/autoname_east,
@@ -26843,11 +26638,6 @@
 /obj/machinery/light_switch/auto,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
-"bqV" = (
-/turf/simulated/wall/asteroid{
-	dir = 5
-	},
-/area/space)
 "bqW" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -26972,7 +26762,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "brg" = (
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /obj/item/mining_tool/powerhammer,
 /obj/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
@@ -27050,13 +26840,6 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/bot,
-/area/station/hangar/main)
-"brt" = (
-/obj/cable{
-	icon_state = "2-8"
-	},
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor,
 /area/station/hangar/main)
 "bru" = (
 /obj/machinery/disposal,
@@ -27343,17 +27126,6 @@
 "bse" = (
 /turf/simulated/floor,
 /area/station/hangar/main)
-"bsf" = (
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 26;
-	pixel_y = 1
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor,
-/area/station/hangar/main)
 "bsg" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hangar/main)
@@ -27398,7 +27170,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/engine/storage)
 "bso" = (
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /obj/item/oreprospector,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
@@ -27626,19 +27398,6 @@
 	dir = 4
 	},
 /turf/simulated/wall/auto/supernorn,
-/area/station/engine/storage)
-"bsW" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "2-4"
-	},
-/obj/machinery/light_switch/auto,
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/turf/simulated/floor,
 /area/station/engine/storage)
 "bsX" = (
 /obj/item/raw_material/uqill,
@@ -27937,15 +27696,6 @@
 	icon_state = "4-8"
 	},
 /obj/access_spawn/engineering,
-/turf/simulated/floor,
-/area/station/engine/storage)
-"btE" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
 /turf/simulated/floor,
 /area/station/engine/storage)
 "btF" = (
@@ -28421,9 +28171,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/mining/staff_room)
 "buR" = (
-/turf/simulated/wall/asteroid{
-	dir = 10
-	},
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "buS" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -28737,7 +28485,7 @@
 	},
 /area/station/bridge)
 "bvD" = (
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /obj/item/raw_material/cobryl,
 /obj/item/raw_material/cobryl,
 /turf/simulated/floor/plating/airless/asteroid,
@@ -29206,7 +28954,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 4;
 	icon_state = "pdoor0";
@@ -30394,15 +30142,6 @@
 	icon_state = "blue2"
 	},
 /area/station/bridge)
-"bzI" = (
-/obj/table/wood/round/auto,
-/obj/item/aiModule/reset,
-/obj/item/disk/data/floppy/read_only/communications,
-/turf/simulated/floor/carpet{
-	dir = 6;
-	icon_state = "blue2"
-	},
-/area/station/bridge)
 "bzJ" = (
 /obj/machinery/light/incandescent/cool,
 /obj/cable{
@@ -30870,6 +30609,9 @@
 "bAM" = (
 /obj/machinery/disposal/ore,
 /obj/disposalpipe/trunk/mineral,
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -30905,10 +30647,6 @@
 	},
 /obj/item/aiModule/emergency,
 /obj/item/aiModule/removeCrew,
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai_upload)
-"bAR" = (
-/obj/machinery/computer/aiupload,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "bAS" = (
@@ -30967,21 +30705,29 @@
 /turf/simulated/floor/black,
 /area/station/teleporter)
 "bAY" = (
-/obj/table/glass/reinforced/auto,
+/obj/table/reinforced/auto,
 /obj/machinery/light/incandescent/harsh/very,
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/item/device/gps,
-/obj/item/hand_tele,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
+	},
+/obj/machinery/recharger{
+	pixel_y = 5
+	},
+/obj/item/device/gps{
+	pixel_y = 4
+	},
+/obj/item/hand_tele{
+	pixel_x = 5;
+	pixel_y = 3
 	},
 /turf/simulated/floor/black,
 /area/station/teleporter)
@@ -31444,14 +31190,6 @@
 /area/station/crew_quarters/info{
 	name = "Net Cafe"
 	})
-"bCa" = (
-/obj/table/reinforced/auto,
-/obj/item/aiModule/rename,
-/obj/item/device/radio/intercom/AI{
-	dir = 4
-	},
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai_upload)
 "bCb" = (
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
@@ -32730,6 +32468,9 @@
 	pixel_x = 10;
 	tag = ""
 	},
+/obj/machinery/status_display{
+	pixel_y = -32
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 6
 	},
@@ -32850,6 +32591,9 @@
 /obj/machinery/computer/stockexchange{
 	dir = 8
 	},
+/obj/machinery/status_display{
+	pixel_x = 32
+	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/info{
 	name = "Net Cafe"
@@ -32921,16 +32665,6 @@
 	},
 /turf/simulated/floor/carpet{
 	dir = 10;
-	icon_state = "fblue2"
-	},
-/area/station/bridge)
-"bFG" = (
-/obj/machinery/light/small/floor{
-	pixel_x = -16;
-	pixel_y = 16
-	},
-/turf/simulated/floor/carpet{
-	dir = 6;
 	icon_state = "fblue2"
 	},
 /area/station/bridge)
@@ -33195,7 +32929,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "lockdown";
@@ -33213,7 +32947,7 @@
 	},
 /obj/access_spawn/heads,
 /obj/firedoor_spawn,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "lockdown";
@@ -33771,7 +33505,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "market";
@@ -34570,7 +34304,7 @@
 /area/space)
 "bJC" = (
 /obj/plasticflaps,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "qm";
@@ -35468,7 +35202,7 @@
 /area/station/security/brig)
 "bMg" = (
 /obj/submachine/GTM,
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "bMh" = (
 /obj/item/reagent_containers/food/snacks/snack_cake/golden,
@@ -35893,6 +35627,9 @@
 /obj/item/clothing/suit/bedsheet/orange,
 /obj/item/instrument/harmonica,
 /obj/item/clothing/glasses/vr/arcade,
+/obj/machinery/status_display{
+	pixel_x = -32
+	},
 /turf/simulated/floor,
 /area/station/security/brig)
 "bNq" = (
@@ -36785,7 +36522,7 @@
 /turf/simulated/floor/grime,
 /area/space)
 "bPK" = (
-/obj/decal/oven,
+/obj/decal/fakeobjects/oven,
 /turf/simulated/floor/grime,
 /area/space)
 "bPL" = (
@@ -36863,6 +36600,9 @@
 /obj/item/reagent_containers/food/snacks/cookie/oatmeal{
 	pixel_x = 6;
 	pixel_y = 14
+	},
+/obj/machinery/status_display{
+	pixel_y = 30
 	},
 /turf/simulated/floor/darkpurple/side{
 	dir = 1
@@ -36945,6 +36685,9 @@
 	pixel_x = -7;
 	pixel_y = 14
 	},
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
 /turf/simulated/floor/darkpurple/side{
 	dir = 1
 	},
@@ -37021,10 +36764,6 @@
 	name = "Cargo Outbound Door Control";
 	pixel_x = -24
 	},
-/turf/simulated/floor/orangeblack,
-/area/station/quartermaster/office)
-"bQh" = (
-/obj/machinery/light/incandescent/harsh,
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
 "bQi" = (
@@ -37141,20 +36880,6 @@
 /area/station/security/beepsky)
 "bQx" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/processing)
-"bQy" = (
-/obj/machinery/light/incandescent/cool,
-/obj/machinery/power/apc{
-	areastring = "Brig";
-	dir = 8;
-	name = "Brig APC";
-	pixel_x = -24
-	},
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/turf/simulated/floor,
 /area/station/security/processing)
 "bQz" = (
 /obj/table/wood,
@@ -37607,24 +37332,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/processing)
-"bRC" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/cable{
-	icon_state = "2-4"
-	},
-/turf/simulated/floor,
-/area/station/security/processing)
 "bRD" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -37991,7 +37698,7 @@
 /area/station/crew_quarters/lounge/port)
 "bSt" = (
 /obj/table/wood,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /turf/simulated/floor/grime,
 /area/space)
 "bSu" = (
@@ -38015,7 +37722,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/disposal)
 "bSy" = (
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	id = "crusher";
 	layer = 4;
 	name = "Crusher Door"
@@ -38250,6 +37957,9 @@
 /turf/simulated/floor/grass,
 /area/space)
 "bTa" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 4
+	},
 /turf/simulated/floor/plating/random,
 /area/station/science/teleporter)
 "bTb" = (
@@ -38301,19 +38011,6 @@
 	pixel_y = -6
 	},
 /obj/table/wood/auto,
-/turf/simulated/floor/darkblue/checker/other,
-/area/station/crew_quarters/radio/lab)
-"bTj" = (
-/obj/loudspeaker{
-	layer = 4;
-	pixel_y = -6
-	},
-/obj/table/wood/auto,
-/obj/item/storage/box/record/radio/two{
-	pixel_x = -4;
-	pixel_y = 6
-	},
-/obj/item/storage/box/record/radio/one,
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/crew_quarters/radio/lab)
 "bTk" = (
@@ -38530,7 +38227,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
 "bTH" = (
-/turf/simulated/wall/asteroid/geode,
+/turf/simulated/wall/auto/asteroid/geode,
 /area/space)
 "bTI" = (
 /obj/disposalpipe/segment,
@@ -41228,7 +40925,7 @@
 /area/diner/backroom)
 "cbC" = (
 /obj/decal/cleanable/dirt,
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /turf/simulated/floor/plating,
 /area/diner/backroom)
 "cbD" = (
@@ -42175,6 +41872,9 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/status_display{
+	pixel_y = -32
+	},
 /turf/simulated/floor/stairs/wide/other{
 	dir = 4
 	},
@@ -43065,12 +42765,6 @@
 	dir = 6
 	},
 /area/station/hallway/primary/east)
-"cgP" = (
-/obj/table/wood/auto{
-	pixel_w = -1
-	},
-/turf/simulated/floor/darkblue/checker/other,
-/area/station/crew_quarters/radio/lab)
 "cgQ" = (
 /obj/machinery/door/airlock/pyro/alt,
 /obj/cable{
@@ -43453,6 +43147,7 @@
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
 "cie" = (
@@ -43467,29 +43162,10 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
-"cig" = (
-/obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/snacks/cereal_box/roach,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/southwest)
-"cih" = (
-/obj/machinery/light/incandescent/warm/very,
-/obj/item/sheet/steel,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/southwest)
-"cii" = (
-/obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/snacks/chips,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/southwest)
 "cij" = (
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/food/snacks/cookie/chocolate_chip,
 /obj/item/reagent_containers/food/snacks/cookie/oatmeal,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/southwest)
-"cik" = (
-/obj/machinery/light/incandescent/warm/very,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
 "cil" = (
@@ -43516,10 +43192,6 @@
 /obj/item/card_group/plain,
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/clown)
-"cip" = (
-/obj/table/reinforced/auto,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/southwest)
 "ciq" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	req_access = null
@@ -44765,6 +44437,9 @@
 /obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
+"crW" = (
+/turf/simulated/floor/delivery,
+/area/station/bridge)
 "csr" = (
 /obj/machinery/light/incandescent/netural,
 /obj/storage/closet/welding_supply,
@@ -44791,6 +44466,12 @@
 /obj/machinery/synthomatic,
 /turf/simulated/floor/green,
 /area/research_outpost/pathology)
+"cwj" = (
+/obj/item/storage/secure/ssafe/diner_arcade{
+	pixel_x = -30
+	},
+/turf/simulated/floor/black,
+/area/diner/dining)
 "cxr" = (
 /obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
 /turf/simulated/floor/plating/random,
@@ -44835,6 +44516,17 @@
 "cHP" = (
 /turf/simulated/floor/caution/south,
 /area/research_outpost/hangar)
+"cId" = (
+/obj/table/reinforced/auto,
+/obj/item/reagent_containers/food/snacks/chips,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname  - SS13";
+	pixel_y = 20
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/southwest)
 "cIx" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor,
@@ -44854,6 +44546,9 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
+"cLH" = (
+/turf/simulated/floor/delivery,
+/area/station/hallway/secondary/exit)
 "cSE" = (
 /obj/machinery/door/airlock/pyro/security/alt{
 	req_access_txt = "1"
@@ -44890,6 +44585,10 @@
 	dir = 8
 	},
 /area/station/hallway/secondary/exit)
+"cXG" = (
+/obj/landmark/random_room/size3x3,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/north)
 "dbi" = (
 /obj/machinery/door/airlock/pyro/alt{
 	dir = 4;
@@ -44908,6 +44607,23 @@
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
+"diY" = (
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
+/turf/simulated/floor/escape{
+	dir = 5
+	},
+/area/station/hallway/secondary/exit)
+"dkm" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/navbeacon/mule/catering_north/east,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/baroffice)
 "dlH" = (
 /obj/submachine/chef_oven{
 	dir = 4
@@ -44977,6 +44693,23 @@
 /obj/item/clothing/under/misc/mime/alt,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
+"dBW" = (
+/obj/machinery/light/small/floor{
+	pixel_x = -16;
+	pixel_y = 16
+	},
+/obj/machinery/navbeacon/mule/bridge_north/east,
+/turf/simulated/floor/carpet{
+	dir = 6;
+	icon_state = "fblue2"
+	},
+/area/station/bridge)
+"dCj" = (
+/obj/decal/fakeobjects/flock/antenna/end{
+	dir = 4
+	},
+/turf/simulated/shuttle/wall/flock,
+/area/space)
 "dCo" = (
 /obj/cable/reinforced{
 	icon_state = "4-8-thick"
@@ -45050,6 +44783,16 @@
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/sec)
+"dZQ" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/navbeacon/mule/engineering_north,
+/turf/simulated/floor/bot,
+/area/station/engine/storage)
 "edf" = (
 /obj/machinery/vending/pizza,
 /turf/simulated/floor/plating/random,
@@ -45057,6 +44800,10 @@
 "edL" = (
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/arcade)
+"efE" = (
+/obj/landmark/random_room/size5x3,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/northeast)
 "ehi" = (
 /obj/stool/chair/couch{
 	dir = 4
@@ -45080,6 +44827,28 @@
 /obj/item/paper/telecrystal_update,
 /turf/simulated/floor/black,
 /area/listeningpost)
+"enj" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/implant/projectile/body_visible/dart/bardart{
+	pixel_x = -3
+	},
+/obj/item/implant/projectile/body_visible/dart/bardart,
+/obj/item/implant/projectile/body_visible/dart/bardart{
+	pixel_x = 3
+	},
+/turf/simulated/floor/carpet/blue/fancy/narrow/ne,
+/area/station/crew_quarters/bar)
+"erh" = (
+/obj/disposalpipe/segment,
+/obj/machinery/door_control{
+	id = "medbay_front";
+	name = "Medbay Door Control";
+	pixel_x = -23;
+	pixel_y = 8
+	},
+/obj/machinery/navbeacon/mule/medbay_north,
+/turf/simulated/floor/bot/white,
+/area/station/medical/medbay)
 "euS" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -45147,19 +44916,10 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
-"eIq" = (
-/obj/landmark/gps_waypoint,
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment/horizontal,
-/turf/simulated/floor/grasstodirt{
-	icon_state = "dirt";
-	name = "not grass"
-	},
-/area/station/ranch)
+"eGO" = (
+/obj/decal/fakeobjects/flock/antenna,
+/turf/simulated/shuttle/wall/flock,
+/area/space)
 "eJX" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -45190,6 +44950,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quartersA)
+"eUL" = (
+/obj/machinery/r_door_control/podbay/security/new_walls/east{
+	pixel_x = 24
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/sec)
 "eXS" = (
 /obj/cable{
 	d1 = 1;
@@ -45231,6 +44997,10 @@
 	dir = 5
 	},
 /area/station/medical/medbay/cloner)
+"fdL" = (
+/obj/machinery/lawrack,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
 "fhb" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -45417,6 +45187,10 @@
 /obj/computer3frame,
 /turf/simulated/floor/plating/random,
 /area/research_outpost/maint)
+"ges" = (
+/obj/machinery/navbeacon/mule/chapel_north/south,
+/turf/simulated/floor/bot,
+/area/station/chapel/sanctuary)
 "ggG" = (
 /obj/table/auto,
 /obj/machinery/cell_charger,
@@ -45496,6 +45270,18 @@
 /obj/machinery/light_switch/auto,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
+"gqz" = (
+/obj/decal/tile_edge/line/purple{
+	dir = 8;
+	icon_state = "line1"
+	},
+/obj/machinery/status_display{
+	pixel_x = -32
+	},
+/turf/simulated/floor/purpleblack{
+	dir = 8
+	},
+/area/station/science/lobby)
 "gtx" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -45509,6 +45295,17 @@
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
+"gxB" = (
+/obj/table/wood/round/auto,
+/obj/item/disk/data/floppy/read_only/communications,
+/obj/machinery/status_display{
+	pixel_x = 32
+	},
+/turf/simulated/floor/carpet{
+	dir = 6;
+	icon_state = "blue2"
+	},
+/area/station/bridge)
 "gyC" = (
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/shuttlebay,
@@ -45534,6 +45331,15 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/storage/eeva)
+"gGH" = (
+/obj/decal/fakeobjects/flock/antenna{
+	dir = 8
+	},
+/obj/decal/fakeobjects/flock/antenna{
+	dir = 8
+	},
+/turf/simulated/shuttle/wall/flock,
+/area/space)
 "gGI" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0
@@ -45586,6 +45392,31 @@
 	},
 /turf/simulated/floor,
 /area/shuttle/sea_elevator_room)
+"gST" = (
+/obj/landmark/random_room/size3x3,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/southwest)
+"gUq" = (
+/obj/machinery/networked/printer{
+	name = "Printer - MD";
+	pixel_y = 5;
+	print_id = "MD"
+	},
+/obj/item/device/analyzer/healthanalyzer/upgraded,
+/obj/item/clothing/glasses/healthgoggles/upgraded,
+/obj/table/wood/round/auto,
+/obj/machinery/light/incandescent/warm,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/blind_switch/area/north,
+/turf/simulated/floor/carpet{
+	dir = 1;
+	icon_state = "fblue2"
+	},
+/area/station/medical/head)
 "gUK" = (
 /obj/storage/crate/freezer{
 	name = "Freezer"
@@ -45631,6 +45462,13 @@
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/plating,
 /area/research_outpost/maint)
+"hkk" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/delivery,
+/area/station/hangar/main)
 "hlJ" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -45689,6 +45527,10 @@
 	dir = 0
 	},
 /area/station/crew_quarters/info)
+"hNG" = (
+/obj/machinery/navbeacon/mule/hallway_escape_north,
+/turf/simulated/floor/bot,
+/area/station/hallway/secondary/exit)
 "hXh" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
 /obj/cable{
@@ -45717,6 +45559,14 @@
 	},
 /turf/space/fluid,
 /area/space)
+"isQ" = (
+/obj/disposalpipe/segment,
+/obj/decal/tile_edge/line/blue{
+	dir = 5;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/delivery/white,
+/area/station/medical/medbay)
 "ivJ" = (
 /obj/disposalpipe/segment/ejection{
 	dir = 4
@@ -45746,7 +45596,7 @@
 	pixel_x = -4;
 	pixel_y = 30;
 	random_code = 1;
-	spawn_contents = list(/obj/item/ammo/bullets/rifle_3006, /obj/item/reagent_containers/food/snacks/pizza/mushroom, /obj/item/reagent_containers/food/snacks/pizza/pepperoni)
+	spawn_contents = list(/obj/item/ammo/bullets/rifle_3006,/obj/item/reagent_containers/food/snacks/pizza/mushroom,/obj/item/reagent_containers/food/snacks/pizza/pepperoni)
 	},
 /turf/simulated/martian/floor,
 /area/evilreaver/bridge)
@@ -45838,16 +45688,37 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/caution/west,
 /area/station/maintenance/south)
+"iUm" = (
+/obj/machinery/status_display{
+	pixel_x = 32
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "iUC" = (
 /obj/item/pen/crayon/pink,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
+"iYt" = (
+/obj/table/reinforced/auto,
+/obj/item/reagent_containers/food/snacks/cereal_box/roach,
+/obj/machinery/light/incandescent/warm/very{
+	dir = 1
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/southwest)
 "jdK" = (
 /obj/machinery/light_switch/auto,
 /turf/simulated/floor,
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
+"jdV" = (
+/obj/machinery/light/incandescent/warm,
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/turf/simulated/floor/delivery,
+/area/station/crew_quarters/bar)
 "jeC" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -45883,7 +45754,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 4;
 	icon_state = "pdoor0";
@@ -45898,6 +45769,13 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
+"joZ" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/navbeacon/mule/crewA_north/east,
+/turf/simulated/floor/bot,
+/area/station/crew_quarters/quartersA)
 "jsw" = (
 /obj/cable{
 	d1 = 4;
@@ -45969,6 +45847,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/observatory)
+"jGP" = (
+/obj/decal/tile_edge/line/purple{
+	icon_state = "line1"
+	},
+/turf/simulated/floor/delivery,
+/area/station/science/lobby)
 "jJN" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -46033,6 +45917,20 @@
 	dir = 8
 	},
 /area/station/medical/staff)
+"jVW" = (
+/obj/landmark/gps_waypoint,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/horizontal,
+/obj/machinery/navbeacon/mule/ranch_north/east,
+/turf/simulated/floor/grasstodirt{
+	icon_state = "dirt";
+	name = "not grass"
+	},
+/area/station/ranch)
 "keq" = (
 /obj/disposalpipe/segment/morgue,
 /obj/cable{
@@ -46080,6 +45978,17 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost)
+"koq" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/status_display{
+	pixel_y = -30
+	},
+/turf/simulated/floor/blue/checker{
+	dir = 4
+	},
+/area/station/medical/medbay/lobby)
 "ksg" = (
 /turf/simulated/floor/black,
 /area/research_outpost)
@@ -46110,6 +46019,19 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
+"kLk" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/machinery/light_switch/auto,
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/turf/simulated/floor/delivery,
+/area/station/engine/storage)
 "kSM" = (
 /obj/table/wood/round/auto,
 /obj/item/storage/photo_album{
@@ -46182,6 +46104,10 @@
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
+"lpD" = (
+/obj/machinery/navbeacon/mule/hydroponics_north,
+/turf/simulated/floor/grass,
+/area/station/hydroponics/bay)
 "luP" = (
 /obj/machinery/centrifuge,
 /turf/simulated/floor/green,
@@ -46233,6 +46159,14 @@
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"lXd" = (
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 26;
+	pixel_y = 1
+	},
+/turf/simulated/floor/delivery,
+/area/station/crew_quarters/quartersA)
 "lZa" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 8
@@ -46489,6 +46423,20 @@
 	dir = 8
 	},
 /area/station/hallway/secondary/exit)
+"nhz" = (
+/obj/machinery/light/incandescent/cool,
+/obj/machinery/power/apc{
+	areastring = "Brig";
+	dir = 8;
+	name = "Brig APC";
+	pixel_x = -24
+	},
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/delivery,
+/area/station/security/processing)
 "nhW" = (
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
@@ -46510,6 +46458,10 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost/hangar)
+"nzW" = (
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/delivery,
+/area/station/chapel/sanctuary)
 "nAo" = (
 /obj/storage/crate/freezer,
 /obj/item/reagent_containers/food/snacks/yoghurt/frozen,
@@ -46600,6 +46552,10 @@
 /obj/machinery/light/incandescent/greenish,
 /turf/simulated/floor,
 /area/station/hangar/sec)
+"nLp" = (
+/obj/lattice/flock,
+/turf/space/fluid,
+/area/space)
 "nMJ" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -46664,6 +46620,25 @@
 /obj/item/spacecash/random/small,
 /turf/simulated/floor/grime,
 /area/station/maintenance/inner/central)
+"oxg" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/machinery/navbeacon/mule/security_north,
+/turf/simulated/floor/bot,
+/area/station/security/processing)
 "oDh" = (
 /obj/machinery/power/apc/autoname_south,
 /obj/cable{
@@ -46698,6 +46673,18 @@
 /obj/item/furniture_parts/bench/wooden,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
+"oPP" = (
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 26;
+	pixel_y = 1
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/navbeacon/mule/podbay_north,
+/turf/simulated/floor/bot,
+/area/station/hangar/main)
 "oUx" = (
 /obj/grille/steel,
 /turf/space/fluid,
@@ -46714,10 +46701,15 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost)
+"oVp" = (
+/obj/item/rods/steel/fullstack,
+/obj/machinery/light/incandescent/warm/very,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/southwest)
 "oVS" = (
 /obj/table/wood/round/auto,
 /obj/displaycase{
-	displayed = new /obj/item/captaingun;
+	displayed = new/obj/item/captaingun;
 	pixel_y = 8
 	},
 /turf/simulated/floor/carpet/purple/standard/narrow/T_south,
@@ -46738,6 +46730,19 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
+"pdH" = (
+/obj/loudspeaker{
+	layer = 4;
+	pixel_y = -6
+	},
+/obj/table/wood/auto,
+/obj/item/storage/box/record/radio/host{
+	pixel_x = -4;
+	pixel_y = 6
+	},
+/obj/item/storage/box/record/radio/host,
+/turf/simulated/floor/darkblue/checker/other,
+/area/station/crew_quarters/radio/lab)
 "peW" = (
 /obj/cable{
 	d1 = 4;
@@ -46812,6 +46817,11 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/research_outpost/maint)
+"puB" = (
+/turf/simulated/shuttle/wall/cockpit/flock{
+	dir = 8
+	},
+/area/space)
 "pvB" = (
 /obj/cable/reinforced{
 	icon_state = "4-8-thick"
@@ -46956,7 +46966,7 @@
 	icon_state = "0-8"
 	},
 /obj/cable,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "ai_core";
@@ -47019,11 +47029,14 @@
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
-"qBd" = (
-/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
-	id = "secure_dock"
+"qvl" = (
+/turf/simulated/shuttle/wall/flock{
+	dir = 9
 	},
+/area/space)
+"qBd" = (
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/security_horizontal,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "qEN" = (
@@ -47042,6 +47055,10 @@
 /obj/storage/secure/closet/fridge/blood,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
+"qLc" = (
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon19,
+/turf/simulated/floor/wood,
+/area/station/bridge/customs)
 "qLn" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -47068,6 +47085,10 @@
 /obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/darkpurple,
 /area/station/ai_monitored/storage/eva)
+"qOV" = (
+/obj/table/reinforced,
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
 "qPg" = (
 /turf/simulated/floor,
 /area/station/hangar/sec)
@@ -47087,6 +47108,10 @@
 /obj/machinery/vending/janitor,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
+"qTO" = (
+/obj/decal/fakeobjects/flock/antenna/end,
+/turf/simulated/shuttle/wall/flock,
+/area/space)
 "qWD" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor,
@@ -47294,6 +47319,12 @@
 "smn" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/detectives_office)
+"snO" = (
+/obj/decal/fakeobjects/flock/antenna{
+	dir = 8
+	},
+/turf/simulated/shuttle/wall/flock,
+/area/space)
 "sso" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -47322,10 +47353,19 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/research_outpost/maint)
+"sEn" = (
+/obj/machinery/light/incandescent/harsh,
+/turf/simulated/floor/delivery/caution,
+/area/station/quartermaster/office)
 "sGx" = (
 /obj/machinery/computer/tetris,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
+"sNM" = (
+/turf/simulated/shuttle/wall/flock{
+	dir = 10
+	},
+/area/space)
 "sRT" = (
 /obj/item/device/radio/intercom/science,
 /turf/simulated/floor/engine,
@@ -47344,6 +47384,11 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost)
+"tap" = (
+/obj/table/reinforced,
+/obj/item/disk/data/floppy/read_only/communications,
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
 "tbh" = (
 /obj/machinery/door/airlock/pyro/alt{
 	name = "Catering Storage"
@@ -47365,12 +47410,28 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
+"teZ" = (
+/obj/decal/fakeobjects/flock/antenna/broken{
+	dir = 4;
+	icon_state = "antenna-broken-2"
+	},
+/obj/decal/fakeobjects/flock/antenna{
+	dir = 8
+	},
+/turf/simulated/shuttle/wall/flock,
+/area/space)
 "toE" = (
 /obj/cable{
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
+"tsX" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/bot/mulebot/QM1,
+/obj/machinery/navbeacon/mule/QM1_north/west,
+/turf/simulated/floor/bot,
+/area/station/quartermaster/office)
 "tAS" = (
 /obj/machinery/firealarm{
 	pixel_x = 1;
@@ -47566,7 +47627,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/baroffice)
 "uBc" = (
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /obj/decal/cleanable/blood/splatter,
 /turf/simulated/floor/plating,
 /area/diner/backroom)
@@ -47615,6 +47676,14 @@
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
+"vbq" = (
+/obj/machinery/light/incandescent/cool,
+/obj/decal/tile_edge/line/purple{
+	icon_state = "line1"
+	},
+/obj/machinery/navbeacon/mule/research_north/west,
+/turf/simulated/floor/bot,
+/area/station/science/lobby)
 "vcb" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -47643,6 +47712,22 @@
 "vfw" = (
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
+"vif" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/machinery/navbeacon/mule/cafeteria_north/west,
+/turf/simulated/floor/bot,
+/area/station/crew_quarters/bar)
+"vig" = (
+/turf/simulated/shuttle/wall/flock{
+	dir = 6
+	},
+/area/space)
 "vqP" = (
 /turf/simulated/floor/escape/corner,
 /area/station/hallway/secondary/exit)
@@ -47772,6 +47857,13 @@
 /obj/item/clothing/ears/earmuffs,
 /turf/simulated/floor,
 /area/station/storage/eeva)
+"wdN" = (
+/turf/simulated/shuttle/wall/flock,
+/area/space)
+"wdO" = (
+/obj/machinery/navbeacon/mule/QM2_north/west,
+/turf/simulated/floor/bot,
+/area/station/quartermaster/office)
 "wfi" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -47871,6 +47963,13 @@
 	dir = 9
 	},
 /area/station/medical/staff)
+"wWU" = (
+/obj/table/reinforced/auto,
+/obj/item/device/radio/intercom/AI{
+	dir = 4
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
 "wXx" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b"
@@ -47911,11 +48010,7 @@
 /area/station/crew_quarters/arcade)
 "xmS" = (
 /obj/machinery/light/incandescent/greenish,
-/obj/machinery/door_control{
-	id = "secure_dock";
-	name = "Secure Dock Blast Door Control";
-	pixel_x = 24
-	},
+/obj/machinery/door_control/podbay/security/new_walls/east,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "xsB" = (
@@ -47995,6 +48090,10 @@
 	dir = 1
 	},
 /area/station/ai_monitored/armory)
+"xXw" = (
+/obj/wingrille_spawn/flock,
+/turf/simulated/floor/shuttle/flock,
+/area/space)
 "ydh" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -48003,6 +48102,10 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
+"yel" = (
+/obj/landmark/random_room/size3x3,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/inner/central)
 "yfC" = (
 /obj/table/reinforced/auto,
 /obj/item/shipcomponent/mainweapon/taser,
@@ -49105,11 +49208,11 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -49406,13 +49509,13 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -49704,20 +49807,20 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
 boe
 boe
 boe
 boe
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -50005,10 +50108,10 @@ aqn
 aqn
 aqn
 byC
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
 boe
 boe
 boe
@@ -50020,8 +50123,8 @@ boe
 boe
 boe
 boe
-boc
-boc
+buR
+buR
 aqn
 aqn
 aqn
@@ -50307,24 +50410,24 @@ aqn
 aqn
 aqn
 aqn
-boc
+buR
 boe
 boe
 boe
 boe
 boe
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
 boe
 boe
 boe
 boe
-boc
-boc
+buR
+buR
 aqn
 aqn
 aqn
@@ -50608,27 +50711,27 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
+buR
+buR
 boe
 boe
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
 byc
 bBD
 byc
 byc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
 boe
 boe
-boc
-boc
-boc
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -50910,27 +51013,27 @@ aqn
 aqn
 aqn
 aqn
-boc
+buR
 boe
 boe
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
 byc
-boc
-boc
+buR
+buR
 boe
 boe
 boe
 boe
-boc
+buR
 aqn
 aqn
 aqn
@@ -51211,28 +51314,28 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
+buR
+buR
 boe
 boe
-boc
-boc
-boc
+buR
+buR
+buR
 byD
 byD
 byD
 byD
 byD
 byD
-boc
+buR
 byc
 byc
-boc
-boc
+buR
+buR
 boe
 boe
 boe
-boc
+buR
 byC
 aqn
 aqn
@@ -51513,28 +51616,28 @@ aqn
 aqn
 aqn
 aqn
-boc
+buR
 boe
 boe
-boc
-boc
+buR
+buR
 byc
-boc
+buR
 byD
 bzD
 bzD
 bzD
 bzD
 byD
-boc
+buR
 byc
 byc
 byc
-boc
-boc
+buR
+buR
 boe
 boe
-boc
+buR
 aqn
 aqn
 aqn
@@ -51814,29 +51917,29 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
+buR
+buR
 boe
 boe
-boc
-boc
+buR
+buR
 byc
-boc
+buR
 byD
 bTw
 bAB
 bAB
 bWe
 byD
-boc
+buR
 byc
 bBX
 byc
-boc
-boc
+buR
+buR
 boe
-boc
-boc
+buR
+buR
 aqn
 aqn
 aqn
@@ -52116,28 +52219,28 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
+buR
+buR
 boe
 boe
-boc
+buR
 byc
 byc
-boc
+buR
 byD
 bAL
 bAJ
 bBU
 bAL
 byD
-boc
+buR
 byc
 byc
 byc
-boc
+buR
 boe
 boe
-boc
+buR
 aqn
 aqn
 aqn
@@ -52418,28 +52521,28 @@ aqn
 aqn
 aqn
 aqn
-boc
+buR
 boe
 boe
-boc
-boc
+buR
+buR
 byc
 bBW
-boc
+buR
 byD
 bzD
 bAB
 bAB
 bzD
 byD
-boc
+buR
 byc
 byc
-boc
-boc
+buR
+buR
 boe
-boc
-boc
+buR
+buR
 aqn
 aqn
 aqn
@@ -52720,28 +52823,28 @@ aqn
 aqn
 aqn
 aqn
-boc
+buR
 boe
 boe
-boc
-boc
+buR
+buR
 byc
 byc
-boc
+buR
 byD
 bzD
 bzD
 bzD
 bzD
 byD
-boc
+buR
 byc
-boc
-boc
+buR
+buR
 boe
 boe
-boc
-boc
+buR
+buR
 aqn
 aqn
 aqn
@@ -53022,28 +53125,28 @@ aqn
 aqn
 aqn
 aqn
-boc
+buR
 boe
 boe
-boc
-boc
+buR
+buR
 byc
 byc
-boc
+buR
 byD
 byD
 byD
 byD
 byD
 byD
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
 boe
-boc
-boc
-boc
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -53324,27 +53427,27 @@ aqn
 aqn
 aqn
 aqn
-boc
+buR
 boe
 boe
-boc
-boc
-boc
+buR
+buR
+buR
 byc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
 boe
 boe
-boc
-boc
+buR
+buR
 aqn
 aqn
 aqn
@@ -53623,30 +53726,30 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
 boe
 boe
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
 byc
 byc
 bBD
 byc
-boc
-boc
-boc
+buR
+buR
+buR
 boe
 boe
-boc
-boc
-boc
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -53924,31 +54027,31 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
 boe
 boe
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
 boe
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -54225,31 +54328,31 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
 boe
 boe
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
 boe
 boe
-boc
-boc
-boc
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -54527,12 +54630,12 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
 boe
 boe
 boe
@@ -54541,17 +54644,17 @@ boe
 boe
 boe
 boe
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
 boe
 boe
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -54828,12 +54931,12 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
 boe
 boe
 boe
@@ -54849,11 +54952,11 @@ boe
 boe
 boe
 boe
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -55129,14 +55232,12 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
 boe
-boc
-boe
-boe
+buR
 boe
 boe
 boe
@@ -55150,12 +55251,14 @@ boe
 boe
 boe
 boe
-boc
-boc
-boc
-boc
-boc
-boc
+boe
+boe
+buR
+buR
+buR
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -55431,9 +55534,9 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
+buR
+buR
+buR
 boe
 boe
 boe
@@ -55441,8 +55544,8 @@ boe
 boe
 boe
 boe
-boc
-boc
+buR
+buR
 boe
 boe
 boe
@@ -55451,13 +55554,13 @@ boe
 boe
 boe
 boe
-boc
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -55732,34 +55835,34 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
 boe
 boe
 boe
 bxZ
 boe
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
 boe
 boe
 boe
 boe
 boe
 boe
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -55840,10 +55943,10 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -56034,33 +56137,33 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
 boe
 boe
 boe
 boe
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
 boe
 boe
 boe
 boe
 boe
 boe
-boc
-boc
+buR
+buR
 aqn
 aqn
 aqn
@@ -56141,11 +56244,11 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
 bTH
 bTH
 aqn
@@ -56335,34 +56438,34 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
 boe
 boe
 boe
 boe
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
 boe
 boe
 boe
 boe
 boe
-boc
+buR
 aqn
 aqn
 aqn
@@ -56443,7 +56546,7 @@ aqn
 aqn
 aqn
 aqn
-boc
+buR
 bTH
 bTH
 bVs
@@ -56637,35 +56740,35 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
 boe
 boe
 boe
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
 boe
 boe
 boe
 boe
 boe
-boc
-boc
+buR
+buR
 aqn
 aqn
 aqn
@@ -56744,15 +56847,15 @@ aqn
 aqn
 aqn
 aqn
-boc
+buR
 bTH
 bTH
-boc
-boc
+buR
+buR
 bVs
 bTH
-boc
-boc
+buR
+buR
 bTH
 aqn
 aqn
@@ -56939,34 +57042,34 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
 boe
 boe
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
 boe
 boe
 boe
 boe
-boc
+buR
 aqn
 aqn
 aqn
@@ -57046,16 +57149,16 @@ aqn
 aqn
 aqn
 aqn
-boc
+buR
 bTH
 bTH
 bVf
 boe
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -57240,36 +57343,36 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
 boe
 boe
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
 bqf
 brF
-boc
-boc
-bom
-boc
-boc
+buR
+buR
+buR
+buR
+buR
 boe
 boe
 boe
 boe
-boc
+buR
 aqn
 aqn
 aqn
@@ -57348,7 +57451,7 @@ aqn
 aqn
 aqn
 aqn
-boc
+buR
 bTH
 boe
 boe
@@ -57357,8 +57460,8 @@ boe
 boe
 boe
 boe
-boc
-boc
+buR
+buR
 aqn
 aqn
 aqn
@@ -57542,36 +57645,36 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
 boe
 boe
-boc
-boc
-boc
-bom
+buR
+buR
+buR
+buR
 boQ
 bpn
-boc
-boc
-boc
+buR
+buR
+buR
 boe
 brg
 boe
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
 boe
 boe
 boe
-boc
+buR
 aqn
 aqn
 aqn
@@ -57651,7 +57754,7 @@ aqn
 aqn
 bTH
 bTH
-boc
+buR
 boe
 bTS
 bTS
@@ -57660,7 +57763,7 @@ bTS
 bTS
 boe
 bTH
-boc
+buR
 aqn
 aqn
 aqn
@@ -57844,37 +57947,37 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
 boe
 boe
 boe
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
 boS
 bpr
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
 boe
 boe
 boe
 bqf
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
 bxZ
 boe
-boc
-boc
+buR
+buR
 aqn
 aqn
 aqn
@@ -57953,7 +58056,7 @@ aqn
 aqn
 bTH
 bTH
-boc
+buR
 bTS
 bTS
 bUc
@@ -58146,37 +58249,37 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
 boe
 boe
 boe
 boe
-boc
-boc
-boc
+buR
+buR
+buR
 bpk
 bpC
 bpO
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
 boe
 boe
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
 boe
 boe
-boc
-boc
+buR
+buR
 aqn
 aqn
 aqn
@@ -58254,8 +58357,8 @@ aqn
 aqn
 aqn
 bTH
-boc
-boc
+buR
+buR
 bTS
 bTY
 bUc
@@ -58264,7 +58367,7 @@ bUz
 bTS
 bTH
 bTH
-boc
+buR
 aqn
 aqn
 aqn
@@ -58448,37 +58551,37 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
 boe
 boe
 boe
 boe
 boe
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
 boe
 boe
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
 boe
-boc
-boc
+buR
+buR
 boe
 boe
-boc
-boc
-boc
+buR
+buR
+buR
 boe
-boc
-boc
+buR
+buR
 aqn
 aqn
 aqn
@@ -58556,8 +58659,8 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
+buR
+buR
 bTS
 bTZ
 bUc
@@ -58566,7 +58669,7 @@ bUV
 bTS
 boe
 bTH
-boc
+buR
 aqn
 aqn
 aqn
@@ -58750,38 +58853,38 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
 boe
 boe
 boe
 boe
-boc
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
+buR
 boe
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
 boe
-boc
+buR
 bqf
 boe
-boc
-boc
+buR
+buR
 buR
 buR
 boe
-boc
-boc
-boc
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -58858,7 +58961,7 @@ aqn
 aqn
 aqn
 aqn
-boc
+buR
 bTH
 bTS
 bTS
@@ -58867,8 +58970,8 @@ bUc
 bVd
 bTS
 bVA
-boc
-boc
+buR
+buR
 aqn
 aqn
 aqn
@@ -59052,18 +59155,18 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
 boe
 boe
 boe
 boe
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
 boe
 boe
 bqf
@@ -59075,15 +59178,15 @@ boe
 brZ
 boe
 boe
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
 boe
 boe
-boc
-boc
+buR
+buR
 aqn
 aqn
 aqn
@@ -59159,8 +59262,8 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
+buR
+buR
 bTH
 boe
 bTS
@@ -59169,8 +59272,8 @@ bUi
 bTS
 bTS
 boe
-boc
-boc
+buR
+buR
 aqn
 aqn
 aqn
@@ -59354,38 +59457,38 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
 boe
 boe
 boe
 boe
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
 boe
-boc
-boc
+buR
+buR
 boe
 boe
 bqI
-boc
-boc
+buR
+buR
 boe
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
 bso
 buW
 buR
-boc
+buR
 boe
-boc
-boc
+buR
+buR
 aqn
 aqn
 aqn
@@ -59461,8 +59564,8 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
+buR
+buR
 bTH
 boe
 boe
@@ -59470,9 +59573,9 @@ boe
 boe
 boe
 boe
-boc
-boc
-boc
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -59658,24 +59761,24 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
+buR
+buR
 boe
 boe
 boe
 boe
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
 bpl
-boc
-boc
+buR
+buR
 bqy
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
 boe
 boe
 boe
@@ -59684,10 +59787,10 @@ bqf
 bsL
 bvy
 buW
-boc
+buR
 boe
-boc
-boc
+buR
+buR
 aqn
 aqn
 aqn
@@ -59765,15 +59868,15 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
+buR
+buR
+buR
 boe
 boe
 boe
-boc
-boc
-boc
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -59960,36 +60063,36 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
+buR
+buR
+buR
 boe
 boe
 boe
 boe
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
 bqy
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
 boe
-boc
-boc
-boc
+buR
+buR
+buR
 bqI
 bsX
 bvD
 bwf
-boc
+buR
 boe
-boc
-boc
+buR
+buR
 aqn
 aqn
 aqn
@@ -60067,14 +60170,14 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -60263,35 +60366,35 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
+buR
+buR
 boe
 boe
 boe
 boe
 boe
-boc
-bos
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
 boe
 boe
 boe
 bqf
-boc
+buR
 boe
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
 buB
 bvR
-boc
-boc
+buR
+buR
 boe
-boc
-boc
+buR
+buR
 aqn
 aqn
 aqn
@@ -60370,11 +60473,11 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
 bTH
 aqn
 aqn
@@ -60566,34 +60669,34 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
+buR
+buR
 boe
 boe
 boe
 boe
 boe
 boe
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
 boe
 boe
 bqf
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
 boe
-boc
-boc
+buR
+buR
 aqn
 aqn
 aqn
@@ -60868,34 +60971,34 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
 boe
 boe
 boe
 boe
-boc
-bpJ
-bpJ
-bpJ
-bpJ
-bqV
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
 boe
 boe
 boe
-boc
-boc
+buR
+buR
 aqn
 aqn
 aqn
@@ -61170,34 +61273,34 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
 boe
 boe
 boe
 boe
 boe
-boc
-boc
-boc
-boc
-boc
-bpJ
-bpJ
-bqV
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
 boe
 boe
 boe
 boe
 boe
-boc
-boc
-boc
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -61473,32 +61576,32 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
 boe
 boe
 boe
 boe
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
 boe
 boe
 boe
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -61775,32 +61878,32 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
 boe
 boe
 boe
 boe
 boe
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
 boe
 boe
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -62077,30 +62180,30 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
 boe
 boe
 boe
 boe
 boe
 boe
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
 boe
 boe
 boe
 boe
 boe
-boc
-boc
-boc
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -62380,13 +62483,13 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
+buR
 boe
 boe
 boe
@@ -62399,8 +62502,8 @@ boe
 boe
 boe
 boe
-boc
-boc
+buR
+buR
 aqn
 aqn
 aqn
@@ -62682,26 +62785,26 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
 boe
 boe
 boe
 boe
 boe
 boe
-boc
+buR
 boe
 boe
 boe
-boc
-boc
+buR
+buR
 aqn
 aqn
 aqn
@@ -62985,12 +63088,12 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
 boe
 boe
 boe
@@ -62999,10 +63102,10 @@ boe
 boe
 boe
 boe
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -63291,18 +63394,18 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -63594,16 +63697,16 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -63900,7 +64003,7 @@ aqn
 aqn
 aqn
 aqn
-boc
+buR
 aqn
 aqn
 aqn
@@ -70723,7 +70826,7 @@ aqn
 aqn
 aqn
 aqn
-bcB
+aqn
 aqn
 aqn
 aqn
@@ -71025,7 +71128,7 @@ aqn
 aqn
 aqn
 aqn
-bfp
+puB
 aqn
 aqn
 aqn
@@ -71325,11 +71428,11 @@ aqn
 aqn
 aqn
 aqn
-aXK
-aXK
-aXK
-aXK
-aXK
+qvl
+wdN
+wdN
+wdN
+sNM
 aqn
 aqn
 aqn
@@ -71626,13 +71729,13 @@ aqn
 aqn
 aqn
 baF
-aXK
-aXK
+qvl
+wdN
 baP
 baP
 baP
-aXK
-aXK
+wdN
+sNM
 aqn
 aqn
 bfy
@@ -71928,13 +72031,13 @@ aqn
 aqn
 aqn
 aqn
-aXK
+wdN
 baH
 baQ
 aXI
 aXI
 bdK
-aXK
+wdN
 aqn
 aqn
 aqn
@@ -72230,13 +72333,13 @@ aqn
 aqn
 aqn
 aqn
-aXK
+wdN
 baI
 baR
 aXI
 bdu
 bdR
-aXK
+wdN
 aqn
 aqn
 aqn
@@ -72532,13 +72635,13 @@ aqn
 aqn
 aqn
 aqn
-aXK
+wdN
 baJ
 baQ
 aXI
 aXI
 bdR
-aXK
+wdN
 beJ
 aqn
 aqn
@@ -72833,15 +72936,15 @@ aqn
 aqn
 aqn
 aYQ
-aXK
-aXK
+qvl
+wdN
 baH
 baT
 aXI
 bdy
 bdW
-aXK
-aXK
+wdN
+sNM
 aqn
 aqn
 bfV
@@ -73135,7 +73238,7 @@ aqn
 aqn
 aqn
 aqn
-aXK
+wdN
 aXK
 aXK
 aXK
@@ -73143,7 +73246,7 @@ bcI
 aXK
 aXK
 aXK
-aXK
+wdN
 aqn
 aqn
 aqn
@@ -73437,7 +73540,7 @@ aqn
 aqn
 aqn
 aqn
-aXK
+wdN
 aXK
 baH
 baU
@@ -73445,7 +73548,7 @@ aXI
 bdz
 bea
 aXK
-aXK
+wdN
 aqn
 aqn
 aqn
@@ -73738,8 +73841,8 @@ aqn
 aqn
 aqn
 aYQ
-aXK
-aXK
+qvl
+wdN
 baB
 baM
 baV
@@ -73747,8 +73850,8 @@ aXI
 aXI
 bdR
 aXK
-aXK
-aXK
+wdN
+sNM
 aqn
 aqn
 bfy
@@ -74040,8 +74143,8 @@ aqn
 aqn
 aqn
 aqn
-aXK
-aXK
+wdN
+wdN
 aXK
 baM
 aXI
@@ -74049,8 +74152,8 @@ aXI
 aXI
 bdR
 aXK
-aXK
-aXK
+wdN
+wdN
 aqn
 aqn
 aqn
@@ -74352,7 +74455,7 @@ bbe
 bea
 aXK
 aXK
-aXK
+wdN
 aqn
 aqn
 aqn
@@ -74654,8 +74757,8 @@ aXI
 bdR
 aXK
 aXK
-aXK
-beF
+wdN
+nLp
 aqn
 aqn
 aqn
@@ -74956,9 +75059,9 @@ aXI
 bdR
 aXK
 beq
-aXK
-beF
-beF
+wdN
+nLp
+nLp
 aqn
 aqn
 aqn
@@ -75258,10 +75361,10 @@ aXI
 bek
 aXK
 aYi
-aXK
-bfq
-bfz
-bfA
+wdN
+wdN
+eGO
+qTO
 aqn
 aqn
 aqn
@@ -75862,10 +75965,10 @@ aXI
 bek
 aXK
 aYi
-aXK
-bfq
-bfz
-bfA
+wdN
+wdN
+eGO
+qTO
 aqn
 aqn
 aqn
@@ -75979,7 +76082,7 @@ aOS
 aOS
 aPZ
 aPU
-aQC
+dkm
 bfC
 bgg
 bha
@@ -76164,9 +76267,9 @@ aXI
 bek
 aXK
 beD
-aXK
-beF
-beF
+wdN
+nLp
+nLp
 aqn
 aqn
 aqn
@@ -76311,13 +76414,13 @@ aqn
 aqn
 aqn
 buE
-cic
-cic
 buE
 buE
 buE
-cic
-cic
+buE
+buE
+buE
+buE
 buE
 aqn
 aqn
@@ -76466,8 +76569,8 @@ bcQ
 aYi
 aXK
 aXK
-aXK
-beF
+wdN
+nLp
 aqn
 aqn
 aqn
@@ -76611,17 +76714,17 @@ brI
 brH
 aqn
 buE
-buE
+cic
 buE
 cie
-cig
-cie
-cii
+chZ
+btZ
+btZ
+gST
+chZ
 cir
-cij
-cil
 buE
-buE
+cic
 buE
 aqn
 aqn
@@ -76768,7 +76871,7 @@ aXI
 baV
 baD
 aYL
-aXK
+wdN
 aqn
 aqn
 aqn
@@ -76913,17 +77016,17 @@ buE
 buE
 buE
 buE
-btZ
+iYt
 cib
 cif
-cia
-cif
+bvr
 btZ
-cif
 btZ
-cia
+btZ
+bvr
+cif
 cim
-cin
+oVp
 buE
 buE
 aqn
@@ -77070,7 +77173,7 @@ aXI
 baO
 aXK
 aYi
-aYi
+xXw
 aqn
 aqn
 aqn
@@ -77213,20 +77316,20 @@ boW
 btX
 buF
 buE
+chZ
 bxx
-btZ
 cib
-btZ
-btZ
-cih
-btZ
-btZ
 cia
-cik
+cil
+chZ
 btZ
+btZ
+btZ
+chZ
+cId
 cin
 btZ
-cip
+cij
 buE
 aqn
 bJw
@@ -77361,8 +77464,8 @@ aqn
 aqn
 aqn
 aqn
-aXK
-aXK
+qvl
+wdN
 aYi
 aXK
 aXK
@@ -77372,8 +77475,8 @@ aYi
 aXK
 aXK
 aYi
-aXK
-aXK
+wdN
+sNM
 aqn
 aqn
 aqn
@@ -77662,9 +77765,9 @@ aqn
 aqn
 aqn
 aqn
-aXK
-aXK
-aXK
+qvl
+wdN
+wdN
 aYi
 aYi
 aXK
@@ -77674,9 +77777,9 @@ bdE
 aXK
 aYi
 aYi
-aXK
-aXK
-aXK
+wdN
+wdN
+sNM
 aqn
 aqn
 aqn
@@ -77966,8 +78069,8 @@ aqn
 aqn
 aqn
 aYn
-aXK
-aXK
+aXZ
+wdN
 baG
 aXK
 bbH
@@ -77976,7 +78079,7 @@ bdG
 aXK
 baG
 aXK
-aXK
+vig
 aqn
 aqn
 bfZ
@@ -78269,15 +78372,15 @@ aqn
 aqn
 aqn
 aqn
-aXK
-aXK
-aXK
-aXK
+aXZ
+wdN
+wdN
+wdN
 bdc
-aXK
-aXK
-aXK
-aXK
+wdN
+wdN
+wdN
+vig
 aqn
 aqn
 aqn
@@ -78574,9 +78677,9 @@ aqn
 aqn
 baK
 baK
-bcq
+snO
 bda
-bdH
+gGH
 baK
 baK
 aqn
@@ -78743,7 +78846,7 @@ bxC
 bMR
 bOb
 bMR
-bQh
+sEn
 bJA
 bSm
 bTl
@@ -78876,9 +78979,9 @@ aqn
 aqn
 baL
 baS
-bcq
+snO
 bda
-beQ
+teZ
 baK
 baL
 aqn
@@ -79045,7 +79148,7 @@ bQi
 bKj
 bKj
 bPh
-bQi
+tsX
 bJA
 bSn
 bTm
@@ -79178,9 +79281,9 @@ aqn
 aqn
 aqn
 aqn
-bcq
+snO
 bda
-bcq
+snO
 baS
 aqn
 aqn
@@ -79347,7 +79450,7 @@ bLL
 bMS
 bKj
 bMS
-bKj
+bMR
 bJA
 bSo
 cfT
@@ -79480,9 +79583,9 @@ aqn
 aqn
 aqn
 aqn
-bcx
+dCj
 bdc
-bcx
+dCj
 aqn
 aqn
 aqn
@@ -79649,7 +79752,7 @@ bLM
 bMS
 bKj
 bMS
-bPh
+wdO
 bJA
 aNT
 bTo
@@ -79901,7 +80004,7 @@ aKE
 ubH
 bgj
 aMf
-aMf
+lpD
 aNJ
 aeW
 bhw
@@ -80174,7 +80277,7 @@ amD
 amD
 aot
 apn
-amC
+joZ
 eSt
 atf
 auv
@@ -80476,7 +80579,7 @@ amE
 anD
 aou
 apo
-aqE
+lXd
 arR
 ath
 auw
@@ -80815,7 +80918,7 @@ bfh
 bfJ
 bgr
 aLL
-bhJ
+jdV
 bit
 bja
 bjQ
@@ -81117,7 +81220,7 @@ bfi
 bfK
 aeU
 aLL
-bhK
+vif
 biu
 bjb
 bjR
@@ -81421,7 +81524,7 @@ bgt
 aLL
 mlT
 biv
-bjc
+enj
 bjS
 bkU
 bkU
@@ -81800,11 +81903,11 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -82098,19 +82201,19 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
 boe
 boe
 boe
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -82399,24 +82502,24 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
+buR
+buR
 boe
 boe
 boe
 boe
 boe
-boc
+buR
 boe
 boe
 boe
 boe
 boe
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -82701,26 +82804,26 @@ aqn
 aqn
 aqn
 aqn
-boc
+buR
 boe
 boe
-boc
-boc
-boc
+buR
+buR
+buR
 boe
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -83002,28 +83105,28 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
+buR
+buR
 boe
-boc
-boc
-boe
-boe
+buR
+buR
 boe
 boe
 boe
 boe
-boc
+boe
+boe
+buR
 bGn
 boe
 boe
 boe
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -83303,31 +83406,31 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
 boe
 boe
-boc
-boc
-boc
+buR
+buR
+buR
 boe
 boe
-boc
+buR
 bGn
 boe
 boe
 boe
 boe
-boc
+buR
 boe
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -83605,32 +83708,32 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
 boe
 boe
-boc
-boc
-boe
-boe
-boe
-boe
-boc
-boc
-boc
-boc
+buR
+buR
 boe
 boe
 boe
 boe
+buR
+buR
+buR
+buR
 boe
 boe
-boc
-boc
-boc
-boc
+boe
+boe
+boe
+boe
+buR
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -83830,7 +83933,7 @@ ciQ
 aMX
 aOn
 aPy
-eIq
+jVW
 bhi
 bfS
 bgB
@@ -83907,32 +84010,32 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
+buR
+buR
+buR
 boe
 boe
-boc
-boc
+buR
+buR
 boe
 boe
 boe
 boe
 boe
-boc
+buR
 boe
-boc
-boc
-boc
+buR
+buR
+buR
 boe
-boc
-boc
-boc
+buR
+buR
+buR
 boe
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -84209,12 +84312,12 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
+buR
+buR
 boe
 boe
-boc
-boc
+buR
+buR
 bGn
 boe
 boe
@@ -84225,17 +84328,17 @@ boe
 boe
 boe
 boe
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
 boe
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -84510,35 +84613,35 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
+buR
+buR
+buR
 boe
-boc
-boc
-boc
+buR
+buR
+buR
 bGo
 boe
 boe
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
 boe
 boe
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
 boe
 boe
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -84812,35 +84915,35 @@ aqn
 aqn
 aqn
 aqn
-boc
+buR
 boe
 boe
 boe
-boc
-boc
+buR
+buR
 boe
 boe
 boe
-boc
-boc
+buR
+buR
 bGj
-boc
-boc
+buR
+buR
 boe
 boe
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
 boe
 boe
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -85114,23 +85217,21 @@ aqn
 aqn
 aqn
 aqn
-boc
+buR
 boe
-boc
-boe
-boe
-boc
+buR
 boe
 boe
-boc
-boc
+buR
+boe
+boe
+buR
+buR
 boe
 boe
 boe
-boc
-boc
-boe
-boe
+buR
+buR
 boe
 boe
 boe
@@ -85139,10 +85240,12 @@ boe
 boe
 boe
 boe
-boc
-boc
-boc
-boc
+boe
+boe
+buR
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -85416,21 +85519,21 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
+buR
+buR
+buR
 boe
 boe
 boe
 boe
 boe
-boc
+buR
 boe
 boe
 bxZ
 boe
 boe
-boc
+buR
 boe
 boe
 boe
@@ -85441,9 +85544,9 @@ boe
 bHN
 boe
 boe
-boc
-boc
-boc
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -85613,8 +85716,8 @@ amR
 aqN
 asa
 amX
-anO
-aoB
+ges
+nzW
 ahY
 ayd
 azt
@@ -85718,34 +85821,34 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
+buR
+buR
 boe
 boe
 boe
 boe
 boe
 boe
-boc
-boc
+buR
+buR
 boe
 boe
 boe
-boc
-boc
+buR
+buR
 boe
 boe
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
 boe
 boe
 bIA
 boe
-boc
-boc
-boc
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -86021,33 +86124,33 @@ aqn
 aqn
 aqn
 aqn
-boc
+buR
 boe
-boc
-boe
-boe
-boe
-boe
-boe
-boc
-boc
-boc
+buR
 boe
 boe
 boe
 boe
-boc
-boc
-boc
-boc
-boc
+boe
+buR
+buR
+buR
 boe
 boe
 boe
-boc
-boc
-boc
-boc
+boe
+buR
+buR
+buR
+buR
+buR
+boe
+boe
+boe
+buR
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -86323,12 +86426,10 @@ aqn
 aqn
 aqn
 aqn
-boc
+buR
 boe
-boc
-boc
-boe
-boe
+buR
+buR
 boe
 boe
 boe
@@ -86337,19 +86438,21 @@ boe
 boe
 boe
 boe
-boc
-boc
-boc
-boc
-boc
-boc
-boc
 boe
-boc
-boc
-boc
-boc
-boc
+boe
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+boe
+buR
+buR
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -86625,33 +86728,33 @@ aqn
 aqn
 aqn
 aqn
-boc
+buR
 boe
 boe
-boc
+buR
 boe
-boc
-boc
-boe
-boe
-boe
+buR
+buR
 boe
 boe
 boe
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
 boe
-boc
-boc
-boc
-boc
-boc
+boe
+boe
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+boe
+buR
+buR
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -86927,33 +87030,33 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
+buR
+buR
 boe
-boc
+buR
 boe
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
 boe
-boc
+buR
 boe
 boe
 boe
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
 boe
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -87108,7 +87211,7 @@ aqn
 aqn
 aqn
 aqn
-aqn
+afA
 afA
 afA
 aiM
@@ -87230,17 +87333,17 @@ aqn
 aqn
 aqn
 aqn
-boc
+buR
 boe
-boc
+buR
 boe
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
 boe
-boc
+buR
 boe
 boe
 boe
@@ -87251,11 +87354,11 @@ bGp
 boe
 boe
 boe
-boc
+buR
 bHk
 bHG
-boc
-boc
+buR
+buR
 aqn
 aqn
 aqn
@@ -87410,9 +87513,9 @@ aqn
 aqn
 aqn
 aqn
-aqn
 afA
-aqc
+agW
+afq
 afq
 afq
 afq
@@ -87532,31 +87635,31 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
+buR
+buR
+buR
 boe
 boe
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
 boe
-boc
-boc
-boc
-boe
-boe
-boe
+buR
+buR
+buR
 boe
 boe
 boe
-boc
-boc
-boc
+boe
+boe
+boe
+buR
+buR
+buR
 bHq
 bHJ
-boc
+buR
 aqn
 aqn
 aqn
@@ -87712,15 +87815,15 @@ aqn
 aqn
 aqn
 aqn
-aqn
 afA
-agw
-aiN
 afq
-afq
-afq
-afq
-afq
+aiU
+axA
+axA
+aiM
+axA
+axA
+ali
 afq
 axA
 axA
@@ -87835,13 +87938,13 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
+buR
+buR
+buR
 boe
 boe
 boe
-boc
+buR
 boe
 boe
 boe
@@ -87849,16 +87952,16 @@ boe
 boe
 boe
 boe
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
 bGr
 bHw
 bGp
-boc
+buR
 aqn
 aqn
 aqn
@@ -88014,16 +88117,16 @@ aqn
 aqn
 aqn
 aqn
-aqn
 afA
+aqc
+afq
+axA
 afq
 afq
-afq
-afq
+cXG
 axA
 ajF
 akr
-ali
 atu
 ayw
 ayw
@@ -88137,30 +88240,30 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
 boe
 boe
 boe
-boc
-boc
-boc
+buR
+buR
+buR
 boe
-boc
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
+buR
 boe
 bGp
 boe
 boe
-boc
+buR
 aqn
 aqn
 aqn
@@ -88316,14 +88419,14 @@ aqn
 aqn
 aqn
 aqn
-aqn
 afA
-aib
-afq
-afq
-aiU
+agw
+aiN
 axA
-akr
+afq
+afq
+afq
+axA
 akv
 afq
 atv
@@ -88441,28 +88544,28 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
 boe
-boc
-boc
-boc
-boc
-boe
-boe
+buR
+buR
+buR
+buR
 boe
 boe
-boc
-boc
-boc
-boc
+boe
+boe
+buR
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -88618,16 +88721,16 @@ aqn
 aqn
 aqn
 aqn
-aqn
 afA
+aib
 afq
-agW
+axA
+afq
 afq
 afq
 axA
 aku
 agE
-afq
 asc
 asc
 asc
@@ -88695,7 +88798,7 @@ cki
 aqn
 bzx
 bAP
-bCa
+wWU
 bDp
 aTo
 bzx
@@ -88749,22 +88852,22 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
+buR
+buR
+buR
 boe
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
 boe
-boc
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -88919,11 +89022,11 @@ aqn
 afp
 afp
 afp
-afp
-afp
+afA
 afA
 agx
-agE
+afq
+axA
 axA
 axA
 axA
@@ -89053,15 +89156,15 @@ aqn
 aqn
 aqn
 aqn
-boc
+buR
 boe
-boc
-boc
-boc
+buR
+buR
+buR
 boe
 boe
-boc
-boc
+buR
+buR
 aqn
 aqn
 aqn
@@ -89225,7 +89328,7 @@ afq
 afq
 afq
 afq
-afq
+agE
 apD
 aen
 amd
@@ -89298,7 +89401,7 @@ cjV
 cki
 aqn
 bzx
-bAR
+fdL
 bCb
 bDq
 bCb
@@ -89355,14 +89458,14 @@ aqn
 aqn
 aqn
 aqn
-boc
+buR
 boe
 bGp
 boe
 bGp
 boe
-boc
-boc
+buR
+buR
 aqn
 aqn
 aqn
@@ -89657,14 +89760,14 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -89917,8 +90020,8 @@ bMd
 bNq
 bKG
 acZ
-bQy
-bRC
+nhz
+oxg
 bSG
 bTM
 adf
@@ -89959,14 +90062,14 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -93470,7 +93573,7 @@ awg
 axo
 ayA
 azA
-aAO
+koq
 atw
 aCz
 aAT
@@ -94738,7 +94841,7 @@ btK
 bCo
 bDE
 bEM
-bFG
+dBW
 bGt
 bHv
 cfH
@@ -95040,7 +95143,7 @@ bBb
 bCp
 bDE
 bts
-bFE
+crW
 buV
 bHs
 bHU
@@ -95577,8 +95680,8 @@ aJs
 aaY
 apS
 ari
-ass
-atI
+isQ
+erh
 ava
 awk
 atx
@@ -95941,7 +96044,7 @@ bwp
 bwX
 bxU
 byM
-bzI
+gxB
 btK
 buV
 buV
@@ -96275,7 +96378,7 @@ oox
 qPg
 vIJ
 xVc
-nhW
+eUL
 qBd
 aqn
 aqn
@@ -97756,7 +97859,7 @@ bvL
 bzM
 bBg
 bBi
-bBi
+qLc
 bBi
 bBi
 bGy
@@ -98292,7 +98395,7 @@ alC
 ajS
 anv
 aog
-aoZ
+gUq
 aqa
 arr
 asB
@@ -98310,9 +98413,9 @@ chd
 aig
 ckO
 aDr
-ckP
+aDr
 aCD
-aqn
+aCD
 aqn
 aqn
 aqn
@@ -98611,10 +98714,10 @@ aJU
 chd
 cfQ
 chd
+aDr
+ckP
+aDr
 aCD
-aCD
-aCD
-aqn
 aqn
 aqn
 aqn
@@ -98913,10 +99016,10 @@ aDr
 aDr
 aig
 chd
-aqn
-aqn
-aqn
-aqn
+aCD
+aCD
+aCD
+aCD
 aqn
 aqn
 aqn
@@ -99214,11 +99317,11 @@ axY
 aDr
 aDr
 aig
-aEV
-aqn
-aqn
-aqn
-aqn
+chd
+aDr
+aDr
+yel
+aCD
 aqn
 aqn
 aqn
@@ -99516,11 +99619,11 @@ axY
 aDr
 aDr
 aig
-aEV
-aqn
-aqn
-aqn
-aqn
+chd
+aDr
+aDr
+aDr
+aCD
 aqn
 aqn
 aqn
@@ -99818,11 +99921,11 @@ axY
 aDr
 aKk
 aig
-aEV
-aqn
-aqn
-aqn
-aqn
+chd
+aDr
+aDr
+aDr
+aCD
 aqn
 aqn
 aqn
@@ -100120,11 +100223,11 @@ aBn
 aDr
 aDr
 aig
-aEV
-aEV
-aEV
-aEV
-aqn
+chd
+chd
+aOq
+chd
+aCD
 aqn
 aqn
 aqn
@@ -100395,9 +100498,9 @@ aqn
 aqn
 aqn
 anx
+anx
 aOO
 afL
-aOO
 aOO
 aOO
 cit
@@ -100424,9 +100527,9 @@ aDr
 ckx
 bjl
 bjl
+bjl
 cjN
-aEV
-aEV
+aCD
 aEV
 aEV
 aEV
@@ -100696,11 +100799,11 @@ aqn
 aqn
 aqn
 aqn
+aqn
 anx
-afD
-afZ
 aoj
-aLY
+aoj
+efE
 aOO
 afL
 aOO
@@ -100726,8 +100829,8 @@ aDr
 aDr
 aDr
 aDr
+aDr
 ckx
-bjl
 bjl
 bjl
 bjl
@@ -100998,10 +101101,10 @@ aqn
 aqn
 aqn
 aqn
+aqn
 anx
-afE
 aoj
-agu
+aoj
 aoj
 aOO
 aoj
@@ -101300,8 +101403,8 @@ aqn
 aqn
 aqn
 aqn
+aqn
 anx
-aJd
 aoj
 aoj
 aoj
@@ -101602,11 +101705,11 @@ aqn
 aqn
 aqn
 aqn
+aqn
 anx
-aOO
-ago
-agv
-agV
+aoj
+aoj
+aoj
 aOO
 aoj
 aoj
@@ -101906,10 +102009,10 @@ aqn
 aqn
 aqn
 anx
-anx
-anx
-anx
-anx
+aoj
+aoj
+aoj
+aOO
 aoj
 axy
 aOO
@@ -102207,11 +102310,11 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-aqn
-any
+anx
+anx
+anx
+anx
+anx
 aoj
 aLJ
 aOO
@@ -103730,7 +103833,7 @@ aoj
 aoj
 apb
 apb
-aeo
+tap
 asM
 atV
 avw
@@ -104385,8 +104488,8 @@ bnV
 aeC
 bnV
 blB
-brt
-bsf
+hkk
+oPP
 bsO
 btw
 btN
@@ -104938,7 +105041,7 @@ aoj
 aoj
 apb
 apb
-arG
+qOV
 asP
 atV
 aIR
@@ -105849,7 +105952,7 @@ asS
 aua
 acu
 awH
-axK
+jGP
 ayO
 azX
 aBb
@@ -106151,7 +106254,7 @@ asT
 aub
 avC
 awJ
-axM
+vbq
 ayO
 azY
 aBc
@@ -107666,7 +107769,7 @@ ayT
 aAc
 aBg
 aAc
-aAc
+gqz
 aDI
 bZG
 aJe
@@ -107709,8 +107812,8 @@ bpW
 abF
 brA
 bsl
-bsW
-btE
+kLk
+dZQ
 btS
 bsl
 bvm
@@ -108041,7 +108144,7 @@ bRa
 bSi
 bUu
 bUu
-cgP
+bUu
 cfu
 bKe
 aqn
@@ -108945,7 +109048,7 @@ bMK
 bQf
 bRa
 bRa
-bTj
+pdH
 bWq
 bVx
 bRa
@@ -109106,16 +109209,16 @@ aqn
 aqn
 aqn
 aqn
-aUZ
-aUZ
-aUZ
-aUZ
 aqn
-aUZ
-aUZ
-aUZ
-aUZ
-aUZ
+aqn
+aqn
+aqn
+aqn
+aqn
+aqn
+aqn
+aqn
+aqn
 aqn
 aqn
 aqn
@@ -109409,15 +109512,15 @@ aqn
 aqn
 aUZ
 aUZ
-aaA
-bOL
+aUZ
+aUZ
+aqn
 aUZ
 aUZ
 aUZ
-bPF
-bPE
-bOo
 aUZ
+aUZ
+aqn
 aqn
 aqn
 aqn
@@ -109534,11 +109637,11 @@ byZ
 bAl
 bBH
 byY
-byY
+iUm
 byY
 byZ
-byY
-byY
+cLH
+hNG
 bIy
 bJv
 bKe
@@ -109708,18 +109811,18 @@ aqn
 aqn
 aqn
 aqn
+aUZ
+aUZ
+aaA
+bOL
+aUZ
+aUZ
+aUZ
+bPF
+bPE
+bOo
+aUZ
 aqn
-aUZ
-bOo
-bOo
-bPD
-bOo
-bPx
-aUZ
-bOo
-aaD
-aaG
-aUZ
 aqn
 aqn
 aqn
@@ -110010,18 +110113,18 @@ aqn
 aqn
 aqn
 aqn
-aqn
 aUZ
-bNJ
 bOo
-bSe
+bOo
 bPD
-bOZ
-bNY
-bOI
-aaE
-bPE
+bOo
+bPx
 aUZ
+bOo
+aaD
+aaG
+aUZ
+aqn
 aqn
 aqn
 aqn
@@ -110312,18 +110415,18 @@ aqn
 aqn
 aqn
 aqn
-aqn
 aUZ
+bNJ
 bOo
-bPE
+bSe
 bPD
-bOo
-bPx
-bPc
-bOo
-bPz
-bPF
+bOZ
+bNY
+bOI
+aaE
+bPE
 aUZ
+aqn
 aqn
 aqn
 aqn
@@ -110614,18 +110717,18 @@ aqn
 aqn
 aqn
 aqn
+aUZ
+bOo
+bPE
+bPD
+bOo
+bPx
+bPc
+bOo
+bPz
+bPF
+aUZ
 aqn
-aUZ
-aUZ
-bRL
-aUZ
-aUZ
-aUZ
-aUZ
-aUZ
-aUZ
-aUZ
-aUZ
 aqn
 aqn
 aqn
@@ -110918,15 +111021,15 @@ aqn
 aqn
 aUZ
 aUZ
-bPD
-bPD
-bOo
+bRL
 aUZ
 aUZ
-bQX
-bQP
 aUZ
-aqn
+aUZ
+aUZ
+aUZ
+aUZ
+aUZ
 aqn
 aqn
 aqn
@@ -111215,23 +111318,23 @@ aqn
 aqn
 aqn
 aqn
+aqn
+aqn
 aUZ
 aUZ
-aUZ
-aUZ
-bPK
-bPD
-bPE
 bPD
 bPD
-bPE
-bPD
-bPD
+bOo
 aUZ
 aUZ
+bQX
+bQP
 aUZ
-aUZ
-aUZ
+aqn
+aqn
+aqn
+aqn
+aqn
 aqn
 aqn
 aqn
@@ -111516,24 +111619,24 @@ aqn
 aqn
 aqn
 aqn
+aUZ
+aUZ
+aUZ
+aUZ
+bPK
+bPD
+bPE
+bPD
+bPD
+bPE
+bPD
+bPD
+aUZ
+aUZ
+aUZ
+aUZ
+aUZ
 aqn
-bPe
-bPE
-bPe
-bPD
-bOo
-bPD
-bPD
-bPD
-bRQ
-bRQ
-bPD
-bPD
-bPD
-bOo
-bPe
-bPE
-bPe
 aqn
 aqn
 aqn
@@ -111818,24 +111921,24 @@ aqn
 aqn
 aqn
 aqn
+bPe
+bPE
+bPe
+bPD
+bOo
+bPD
+bPD
+bPD
+bRQ
+bRQ
+bPD
+bPD
+bPD
+bOo
+bPe
+bPE
+bPe
 aqn
-aUZ
-aUZ
-aUZ
-bPE
-bPy
-bPD
-bPD
-bPD
-bRV
-bSt
-bPD
-bPD
-bTp
-bPE
-aUZ
-aUZ
-aUZ
 aqn
 aqn
 aqn
@@ -112120,24 +112223,24 @@ aqn
 aqn
 aqn
 aqn
+aUZ
+aUZ
+aUZ
+bPE
+bPy
+bPD
+bPD
+bPD
+bRV
+bSt
+bPD
+bPD
+bTp
+bPE
+aUZ
+aUZ
+aUZ
 aqn
-bPe
-bPE
-bPJ
-bPE
-bPD
-bPD
-bPD
-bPE
-bRW
-bSp
-bPD
-bPD
-bPD
-bPD
-bPJ
-bPD
-bPe
 aqn
 aqn
 aqn
@@ -112422,24 +112525,24 @@ aqn
 aqn
 aqn
 aqn
+bPe
+bPE
+bPJ
+bPE
+bPD
+bPD
+bPD
+bPE
+bRW
+bSp
+bPD
+bPD
+bPD
+bPD
+bPJ
+bPD
+bPe
 aqn
-aUZ
-aUZ
-aUZ
-aUZ
-bPD
-bPD
-bPD
-bPD
-bPD
-bPD
-bPD
-bRp
-aUZ
-aUZ
-aUZ
-aUZ
-aUZ
 aqn
 aqn
 aqn
@@ -112724,23 +112827,23 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-aqn
 aUZ
 aUZ
-bNw
-bQc
-bQz
+aUZ
 aUZ
 bPD
 bPD
+bPD
+bPD
+bPD
+bPD
+bPD
+bRp
 aUZ
 aUZ
-aqn
-aqn
-aqn
+aUZ
+aUZ
+aUZ
 aqn
 aqn
 aqn
@@ -113029,14 +113132,14 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
 aUZ
 aUZ
+bNw
+bQc
+bQz
 aUZ
-aUZ
-aUZ
-bRL
+bPD
+bPD
 aUZ
 aUZ
 aqn
@@ -113332,13 +113435,13 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-aqn
-bRP
-bRO
-bPD
+aUZ
+aUZ
+aUZ
+aUZ
+aUZ
+bRL
+aUZ
 aUZ
 aqn
 aqn
@@ -113637,11 +113740,11 @@ aqn
 aqn
 aqn
 aqn
+bRP
+bRO
+bPD
+aUZ
 aqn
-aUZ
-aUZ
-aUZ
-aUZ
 aqn
 aqn
 aqn
@@ -113758,7 +113861,7 @@ aqn
 aqn
 aqn
 byq
-bzl
+diY
 bAp
 bAp
 bCR
@@ -113939,10 +114042,10 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-aqn
+aUZ
+aUZ
+aUZ
+aUZ
 aqn
 aqn
 aqn
@@ -121989,7 +122092,7 @@ aqn
 aPB
 cab
 cai
-cao
+cwj
 aPB
 caG
 caJ
@@ -128363,12 +128466,12 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -128663,16 +128766,16 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -128965,16 +129068,16 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -129266,18 +129369,18 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
 bMk
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -129568,8 +129671,8 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
+buR
+buR
 aVl
 aVl
 aVl
@@ -129578,8 +129681,8 @@ aVl
 bMk
 bLb
 bLb
-boc
-boc
+buR
+buR
 aqn
 aqn
 aqn
@@ -129870,7 +129973,7 @@ aqn
 aqn
 aqn
 aqn
-boc
+buR
 aVl
 bKN
 bMh
@@ -129880,9 +129983,9 @@ aVl
 aVl
 aVl
 bLQ
-boc
-boc
-boc
+buR
+buR
+buR
 aqn
 aqn
 cgq
@@ -130172,19 +130275,19 @@ aqn
 aqn
 aqn
 aqn
-boc
+buR
 bKp
 bSZ
-boc
+buR
 bNI
 bNt
 aVl
-boc
+buR
 bLc
 aVl
 bMk
-boc
-boc
+buR
+buR
 aqn
 aqn
 cgq
@@ -130474,20 +130577,20 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
 aVl
 aVl
 bMh
-boc
-boc
-boc
+buR
+buR
+buR
 aVl
-boc
-boc
-boc
+buR
+buR
+buR
 aqn
 cgq
 cgq
@@ -130776,20 +130879,20 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
 bMg
 aVl
 aVl
-boc
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
+buR
 aqn
 cgq
 cgq
@@ -131077,9 +131180,9 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
+buR
+buR
+buR
 aVl
 aVl
 aVl
@@ -131087,11 +131190,11 @@ bNv
 aVl
 aVl
 aVl
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
 aqn
 cgq
 cgq
@@ -131379,8 +131482,8 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
+buR
+buR
 aVl
 bMl
 bKT
@@ -131390,10 +131493,10 @@ aVl
 aVl
 aVl
 bKK
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
 aqn
 cgq
 cgq
@@ -131681,8 +131784,8 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
+buR
+buR
 bKK
 aVl
 aVl
@@ -131692,10 +131795,10 @@ bJB
 aVl
 aVN
 aVl
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
 aqn
 cgq
 cgq
@@ -131983,8 +132086,8 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
+buR
+buR
 aVl
 aVl
 aVl
@@ -131995,8 +132098,8 @@ aVl
 aVl
 aVl
 aVl
-boc
-boc
+buR
+buR
 aqn
 aqn
 cgq
@@ -132285,8 +132388,8 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
+buR
+buR
 aVl
 aVl
 aVl
@@ -132297,8 +132400,8 @@ bKW
 aVl
 bMl
 aVl
-boc
-boc
+buR
+buR
 aqn
 aqn
 cgq
@@ -132587,8 +132690,8 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
+buR
+buR
 aVl
 aVl
 bNb
@@ -132599,8 +132702,8 @@ aVl
 aVl
 aVl
 aVl
-boc
-boc
+buR
+buR
 aqn
 aqn
 cgq
@@ -132889,8 +132992,8 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
+buR
+buR
 aVl
 aVl
 aVl
@@ -132901,8 +133004,8 @@ bMl
 aVl
 bKT
 aVl
-boc
-boc
+buR
+buR
 aqn
 aqn
 cgq
@@ -133191,9 +133294,9 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
+buR
+buR
+buR
 bKP
 aVl
 aVl
@@ -133203,8 +133306,8 @@ aVl
 aVl
 aVl
 aVl
-boc
-boc
+buR
+buR
 aqn
 aqn
 aqn
@@ -133493,10 +133596,10 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
 aVl
 aVl
 aVl
@@ -133505,8 +133608,8 @@ bLa
 aVl
 aVl
 aVl
-boc
-boc
+buR
+buR
 aqn
 aqn
 aqn
@@ -133795,20 +133898,20 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
 aVl
 aVl
 aVl
 aVl
 aVl
 aVl
-boc
-boc
-boc
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -134098,18 +134201,18 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -134401,17 +134504,17 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
+buR
 aqn
 aqn
 aqn
@@ -134705,13 +134808,13 @@ aqn
 aqn
 aqn
 aqn
-boc
-boc
-boc
-boc
-boc
-boc
-boc
+buR
+buR
+buR
+buR
+buR
+buR
+buR
 aqn
 aqn
 aqn

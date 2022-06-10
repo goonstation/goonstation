@@ -81,6 +81,10 @@
 			var/mob/living/silicon/hivebot/hivebot = src
 			hivebot.hud.remove_screen(C)
 
+		else if (istype(src, /mob/living/intangible/flock))
+			var/mob/living/intangible/flock/flock_entity = src
+			flock_entity.render_special.remove_screen(C)
+
 		contextButtons.Remove(C)
 		if(C.overlays)
 			C.overlays = list()

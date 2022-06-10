@@ -28,8 +28,8 @@
 
 	New()
 		..()
-		RegisterSignal(src, COMSIG_BOMB_SIGNAL_START, .proc/signal_start)
-		RegisterSignal(src, COMSIG_BOMB_SIGNAL_CANCEL, .proc/signal_cancel)
+		RegisterSignal(src, COMSIG_ITEM_BOMB_SIGNAL_START, .proc/signal_start)
+		RegisterSignal(src, COMSIG_ITEM_BOMB_SIGNAL_CANCEL, .proc/signal_cancel)
 		processing_items |= src
 
 	disposing()
@@ -426,7 +426,7 @@
 	var/updates_before_halt = 10 //So we don't keep updating on a dud bomb forever.
 	var/update_counter = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		return
 
 	disposing()

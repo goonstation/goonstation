@@ -64,13 +64,13 @@
 	was_deconstructed_to_frame(mob/user)
 		src.active = 0
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (!src.fuel) boutput(user, "<span class='alert'>There is no fuel in the furnace!</span>")
 		else
 			src.active = !src.active
 			boutput(user, "You switch [src.active ? "on" : "off"] the furnace.")
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/grab))
 			if (!src.active)
 				boutput(user, "<span class='alert'>It'd probably be easier to dispose of them while the furnace is active...</span>")
@@ -111,11 +111,11 @@
 			return
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-		if (get_dist(src,user) > 1)
+		if (BOUNDS_DIST(src, user) > 0)
 			boutput(user, "<span class='alert'>You are too far away to do that.</span>")
 			return
 
-		if (get_dist(src,O) > 1)
+		if (BOUNDS_DIST(src, O) > 0)
 			boutput(user, "<span class='alert'>[O] is too far away to do that.</span>")
 			return
 
@@ -300,7 +300,7 @@
 			if(!pooled_type)
 				fuel_name = W.name
 				user.u_equip(W)
-				W.dropped()
+				W.dropped(user)
 			boutput(user, "<span class='notice'>You load [fuel_name] into [src]!</span>")
 
 			if(src.fuel > src.maxfuel)

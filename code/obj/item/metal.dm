@@ -15,6 +15,7 @@ MATERIAL
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "rods"
 	flags = FPRINT | TABLEPASS| CONDUCT
+	health = 3
 	w_class = W_CLASS_NORMAL
 	force = 9.0
 	throwforce = 15.0
@@ -36,7 +37,7 @@ MATERIAL
 		. = ..()
 		. += "There are [amount] rod\s in this stack."
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
 			var/splitnum = round(input("How many rods do you want to take from the stack?","Stack of [src.amount]",1) as num)
 			var/diff = src.amount - splitnum
@@ -53,7 +54,7 @@ MATERIAL
 		else
 			..(user)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isweldingtool(W))
 			if(src.amount < 2)
 				boutput(user, "<span class='alert'>You need at least two rods to make a metal sheet.</span>")
@@ -171,7 +172,7 @@ MATERIAL
 		. = ..()
 		. += "There are [src.amount] metal sheet\s on the stack."
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
 			var/splitnum = round(input("How many sheets do you want to take from the stack?","Stack of [src.amount]",1) as num)
 			var/diff = src.amount - splitnum
@@ -188,7 +189,7 @@ MATERIAL
 		else
 			..(user)
 
-	attackby(obj/item/sheet/metal/W as obj, mob/user as mob)
+	attackby(obj/item/sheet/metal/W, mob/user)
 		if (!( istype(W, /obj/item/sheet/metal) ))
 			return
 		if (W.material && src.material && !isSameMaterial(W.material, src.material))
@@ -431,7 +432,7 @@ MATERIAL
 		onclose(user, "met_sheet")
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
 			var/splitnum = round(input("How many sheets do you want to take from the stack?","Stack of [src.amount]",1) as num)
 			var/diff = src.amount - splitnum
@@ -448,7 +449,7 @@ MATERIAL
 		else
 			..(user)
 
-	attackby(obj/item/sheet/r_metal/W as obj, mob/user as mob)
+	attackby(obj/item/sheet/r_metal/W, mob/user)
 		if (!( istype(W, /obj/item/sheet/r_metal) ))
 			return
 		if (W.material && src.material && !isSameMaterial(W.material, src.material))

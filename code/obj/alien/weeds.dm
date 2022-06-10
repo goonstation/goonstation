@@ -13,7 +13,7 @@
 			qdel(src)
 			return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!W) return
 		if (!user) return
 		if (istool(W, TOOL_CUTTING | TOOL_SAWING | TOOL_SCREWING | TOOL_SNIPPING | TOOL_WELDING)) qdel(src)

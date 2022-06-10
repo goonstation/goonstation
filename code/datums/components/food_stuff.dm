@@ -15,7 +15,7 @@ TYPEINFO(/datum/component/consume)
 
 TYPEINFO(/datum/component/consume/can_eat_inedible_organs)
 	initialization_args = list(
-		ARG_INFO("can_eat_heads", "num", "If heads are also valid food (bool)", FALSE)
+		ARG_INFO("can_eat_heads", DATA_INPUT_BOOL, "If heads are also valid food", FALSE)
 	)
 /datum/component/consume/can_eat_inedible_organs/Initialize(var/can_eat_heads)
 	..()
@@ -38,7 +38,7 @@ TYPEINFO(/datum/component/consume/can_eat_inedible_organs)
 
 TYPEINFO(/datum/component/consume/organpoints)
 	initialization_args = list(
-		ARG_INFO("target_abilityholder", "ref", "Abilityholder to handle points for")
+		ARG_INFO("target_abilityholder", DATA_INPUT_REF, "Abilityholder to handle points for")
 	)
 /datum/component/consume/organpoints/Initialize(var/target_abilityholder)
 	..()
@@ -156,7 +156,7 @@ TYPEINFO(/datum/component/consume/organpoints)
 
 TYPEINFO(/datum/component/consume/organheal)
 	initialization_args = list(
-		ARG_INFO("mod_mult", "num", "healing multiplier", 1)
+		ARG_INFO("mod_mult", DATA_INPUT_NUM, "healing multiplier", 1)
 	)
 /datum/component/consume/organheal/Initialize(var/mod_mult)
 	..()
@@ -265,7 +265,7 @@ TYPEINFO(/datum/component/consume/organheal)
 
 TYPEINFO(/datum/component/consume/food_effects)
 	initialization_args = list(
-		ARG_INFO("status_effects", "list", "List of status effects to apply when eaten")
+		ARG_INFO("status_effects", DATA_INPUT_LIST_BUILD, "List of status effects to apply when eaten")
 	)
 /datum/component/consume/food_effects/Initialize(var/list/_status_effects)
 	..()

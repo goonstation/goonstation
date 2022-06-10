@@ -75,7 +75,7 @@
 		return
 
 	// Fixed a couple of bugs and cleaned code up a little bit (Convair880).
-	attack(mob/target as mob, mob/user as mob)
+	attack(mob/target, mob/user)
 		if (!istype(target))
 			return
 
@@ -172,7 +172,7 @@
 		else
 			playsound(src, "sound/machines/chainsaw_red_stop.ogg", 90, 0)
 
-	attack(mob/target as mob, mob/user as mob)
+	attack(mob/target, mob/user)
 		if(!active)
 			return ..()
 		if (iscarbon(target))
@@ -187,12 +187,18 @@
 				else
 					qdel(C)
 				return
-			else
-				C.changeStatus("weakened", 3 SECONDS)
 
 		if (!ishuman(target))
+			target.changeStatus("weakened", 3 SECONDS)
 			return ..()
 
+		if (target.nodamage)
+			return ..()
+
+		if (target.spellshield)
+			return ..()
+
+		target.changeStatus("weakened", 3 SECONDS)
 		var/mob/living/carbon/human/H = target
 		if(prob(35))
 			gibs(target.loc, blood_DNA=H.bioHolder.Uid, blood_type=H.bioHolder.bloodType, headbits=FALSE, source=H)
@@ -359,7 +365,7 @@
 	stamina_cost = 40
 	stamina_crit_chance = 50
 
-	attack(mob/target as mob, mob/user as mob)
+	attack(mob/target, mob/user)
 		if (ishuman(target))
 			var/mob/living/carbon/human/H = target
 			var/list/limbs = list("l_arm","r_arm","l_leg","r_leg")
@@ -390,7 +396,7 @@
 	mats = 4
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
-		if (get_dist(A, user) > 1)
+		if (BOUNDS_DIST(A, user) > 0)
 			return
 
 		boutput(user, scan_plant(A, user, visible = 1)) // Replaced with global proc (Convair880).

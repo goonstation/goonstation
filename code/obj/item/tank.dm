@@ -224,7 +224,7 @@ Contains:
 			return ..()
 
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/clothing/mask/breath))
 			var/obj/item/clothing/mask/breath/B = W
 			B.auto_setup(src,user)
@@ -425,6 +425,7 @@ Contains:
 	name = "emergency oxygentank"
 	icon_state = "em_oxtank"
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
+	health = 5
 	w_class = W_CLASS_SMALL
 	force = 3.0
 	stamina_damage = 30
@@ -523,7 +524,7 @@ Contains:
 		if(src.master) qdel(src.master)
 		qdel(src)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		..()
 		if (istype(W, /obj/item/assembly/rad_ignite))
 			var/obj/item/assembly/rad_ignite/S = W

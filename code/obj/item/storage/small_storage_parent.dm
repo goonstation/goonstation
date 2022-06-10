@@ -8,13 +8,22 @@
 	icon_state = "box_blank"
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	item_state = "box"
+	/// Types that will be accepted
 	var/list/can_hold = null//new/list()
-	var/in_list_or_max = 0 // sorry for the dumb var name - if can_hold has stuff in it, if this is set, something will fit if it's at or below max_wclass OR if it's in can_hold, otherwise only things in can_hold will fit
+	/// Exact types that will be accepted, in addition to can_hold
+	var/list/can_hold_exact = null
+	/// If can_hold has stuff in it, if this is set, something will fit if it's at or below max_wclass OR if it's in can_hold, otherwise only things in can_hold will fit
+	var/in_list_or_max = 0
 	var/datum/hud/storage/hud
-	var/sneaky = 0 //Don't print a visible message on use.
+	/// Don't print a visible message on use.
+	var/sneaky = 0
+	/// Prevent accessing storage when clicked in pocket
 	var/does_not_open_in_pocket = 1
+	/// Maximum  w_class that can be held
 	var/max_wclass = 2
-	var/slots = 7 // seems that even numbers are what breaks the on-ground hud layout
+	/// Number of storage slots, even numbers overlap the close button for the on-ground hud layout
+	var/slots = 7
+	/// Initial contents when created
 	var/list/spawn_contents = list()
 	move_triggered = 1
 	flags = FPRINT | TABLEPASS | NOSPLASH
@@ -88,7 +97,7 @@
 		total_amt = null
 		return 1
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (surgeryCheck(M, user))
 			insertChestItem(M, user)
 			return
@@ -106,7 +115,7 @@
 				if(O in user.equipped_list())
 					src.Attackby(O, user, O.loc)
 			else
-				boutput(user, __blue("Your hands are full!"))
+				boutput(user, "<span class='notice'>Your hands are full!</span>")
 			user.swap_hand()
 
 	//failure returns 0 or lower for diff messages - sorry
@@ -124,6 +133,10 @@
 				for (var/A in src.can_hold)
 					if (ispath(A) && istype(W, A))
 						ok = 1
+				if (!ok)
+					for (var/A in src.can_hold_exact)
+						if (ispath(A) && W.type == A)
+							ok = 1
 			if (!ok)
 				return 0
 
@@ -150,7 +163,7 @@
 						return
 				var/obj/item/storage/S = W
 				for (var/obj/item/I in S.get_contents())
-					if(src.check_can_hold(I) > 0)
+					if(src.check_can_hold(I) > 0 && !I.anchored)
 						src.Attackby(I, user, S)
 				return
 			if(!does_not_open_in_pocket)
@@ -231,7 +244,7 @@
 							usr.u_equip(src)
 							usr.put_in_hand_or_drop(src, 1)
 				return
-		if (over_object == usr && in_interact_range(src, usr) && isliving(usr) && !usr.stat)
+		if (over_object == usr && in_interact_range(src, usr) && isliving(usr) && !usr.stat && !isintangible(usr))
 			if (usr.s_active)
 				usr.detach_hud(usr.s_active)
 				usr.s_active = null
@@ -268,10 +281,10 @@
 								M.triggered(usr)
 						hud.remove_item(I)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!src.sneaky)
 			playsound(src.loc, "rustle", 50, 1, -2)
-		if (src.loc == user && (!does_not_open_in_pocket || src == user.l_hand || src == user.r_hand))
+		if (src.loc == user && (!does_not_open_in_pocket || src == user.l_hand || src == user.r_hand || IS_LIVING_OBJECT_USING_SELF(user)))
 			if (ishuman(user))
 				var/mob/living/carbon/human/H = user
 				if (H.limbs) // this check is probably dumb. BUT YOU NEVER KNOW
@@ -321,7 +334,7 @@
 	desc = "A box that can hold a number of small items."
 	max_wclass = 2
 
-	attackby(obj/item/W as obj, mob/user as mob, obj/item/storage/T)
+	attackby(obj/item/W, mob/user, obj/item/storage/T)
 		if (istype(W, /obj/item/storage/toolbox) || istype(W, /obj/item/storage/box) || istype(W, /obj/item/storage/belt))
 			var/obj/item/storage/S = W
 			for (var/obj/item/I in S.get_contents())
@@ -401,7 +414,7 @@
 	var/locked = 0
 	var/id = null
 
-	attackby(obj/item/W as obj, mob/user as mob, obj/item/storage/T)
+	attackby(obj/item/W, mob/user, obj/item/storage/T)
 		if (istype(W, /obj/item/device/key/filing_cabinet))
 			var/obj/item/device/key/K = W
 			if (src.id && K.id == src.id)
@@ -429,6 +442,7 @@
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = W_CLASS_BULKY
 	max_wclass = 3
+	var/fire_delay = 0.4 SECONDS
 
 	New()
 		..()
@@ -439,12 +453,14 @@
 			return
 		if (!src.contents.len)
 			return
+		if (ON_COOLDOWN(src, "rockit_firerate", src.fire_delay))
+			return
 		var/obj/item/I = pick(src.contents)
 		if (!I)
 			return
 
 		I.set_loc(get_turf(src.loc))
-		I.dropped()
+		I.dropped(user)
 		src.hud.remove_item(I) //fix the funky UI stuff
 		I.layer = initial(I.layer)
 		I.throw_at(target, 8, 2, bonus_throwforce=8)

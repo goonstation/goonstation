@@ -7,7 +7,7 @@
 		L.blood_id = "bloodc"
 
 	if (src.mind && !src.mind.is_changeling && (src.mind.special_role != ROLE_OMNITRAITOR))
-		src.Browse(grabResource("html/traitorTips/changelingTips.html"),"window=antagTips;size=600x400;title=Antagonist Tips")
+		src.show_antag_popup("changeling")
 
 	var/datum/abilityHolder/changeling/C = src.add_ability_holder(/datum/abilityHolder/changeling)
 	C.addAbility(/datum/targetable/changeling/abomination)
@@ -266,7 +266,7 @@
 			src.owner.mind.transfer_to(temp_controller)
 			//src.insert_into_hivemind(src.owner, 1)
 			temp_controller = null
-			boutput(master, __blue("We retake control of our form!"))
+			boutput(master, "<span class='notice'>We retake control of our form!</span>")
 			master.mind.transfer_to(owner)
 			master = null
 			return 1
@@ -276,6 +276,13 @@
 		if(src.owner)
 			for (var/mob/dead/target_observer/hivemind_observer/O in src.hivemind)
 				O.set_observe_target(src.owner)
+
+	/// Get all hivemind members (including the changeling) who are still present
+	proc/get_current_hivemind()
+		. = list()
+		for (var/mob/member in (hivemind + owner))
+			if (isdead(member) || istype(member, /mob/living/critter/changeling) || (member == owner))
+				. += member
 
 	onAbilityStat()
 		..()
@@ -340,7 +347,7 @@
 
 	castcheck()
 		if (incapacitationCheck())
-			boutput(holder.owner, __red("We cannot use our abilities while incapacitated."))
+			boutput(holder.owner, "<span class='alert'>We cannot use our abilities while incapacitated.</span>")
 			return 0
 		if (!human_only && !abomination_only)
 			return 1

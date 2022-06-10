@@ -5,6 +5,7 @@
 /datum/artifact/warper
 	associated_object = /obj/machinery/artifact/warper
 	type_name = "Warper"
+	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 365
 	validtypes = list("ancient","martian","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch,/datum/artifact_trigger/heat)
@@ -41,6 +42,7 @@
 			var/loc = (wormholer ? pick(wormholeturfs) : get_offset_target_turf(T, rand(-teleport_range, teleport_range), rand(-teleport_range, teleport_range)) )
 			playsound(O.loc, "warp", 50)
 			for (var/mob/living/M in orange(grab_range,O))
+				if (isintangible(M)) continue
 				M.set_loc(get_offset_target_turf(loc, rand(-grab_range, grab_range), rand(-grab_range, grab_range)))
 			O.set_loc(loc)
 			teleports++

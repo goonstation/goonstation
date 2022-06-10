@@ -182,7 +182,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 		light.set_brightness(src.brightness / 5)
 		light.enable()
 
-	attackby(obj/item/O as obj, mob/user as mob)
+	attackby(obj/item/O, mob/user)
 		if (src.alive && O.force)
 			src.health -= O.force / 4
 			src.visible_message("<span class='alert'><b>[user] bops [src] with [O]!</b></span>")
@@ -233,7 +233,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 			if (src.loc)
 				src.loc.invisibility = INVIS_ALWAYS_ISH //Hide the floor below us so people don't just right click and see two floors.
 
-		attackby(obj/item/O as obj, mob/user as mob)
+		attackby(obj/item/O, mob/user)
 			if (src.alive && ispryingtool(O))
 				user.visible_message("<span class='alert'><b>[user] jabs [src] with [O]!</b></span>", "<span class='alert'>You jab [src] with [O] and begin to pull!  Hold on!</span>")
 				if (do_after(user, 2 SECONDS))
@@ -249,7 +249,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 			else
 				return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.alive)
 			if (!attacking)
 				return ai_think()
@@ -436,7 +436,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 
 			return
 
-	attackby(obj/item/O as obj, mob/user as mob)
+	attackby(obj/item/O, mob/user)
 		if (istype(O, /obj/item/clothing/head))
 			user.visible_message("[user] tosses [O] onto [src]!", "You toss [O] onto [src].")
 
@@ -1118,7 +1118,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 
 	Topic(href, href_list)
 		..()
-		if ((usr.stat || usr.restrained()) || (get_dist(src, usr) > 1))
+		if ((usr.stat || usr.restrained()) || (BOUNDS_DIST(src, usr) > 0))
 			return
 
 		if ("enter" in href_list)
@@ -1233,7 +1233,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 		if(..())
 			return
 
-		if(get_dist(host, usr) > 1)
+		if(BOUNDS_DIST(host, usr) > 0)
 			return
 
 		src.host?.add_dialog(usr)
@@ -1265,7 +1265,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 		if(..())
 			return
 
-		if(get_dist(host, usr) > 1)
+		if(BOUNDS_DIST(host, usr) > 0)
 			return
 
 		src.host?.add_dialog(usr)
@@ -1328,7 +1328,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 	density = 1
 	var/opened = 0
 
-	attackby(obj/item/O as obj, mob/user as mob)
+	attackby(obj/item/O, mob/user)
 		if (istype(O, /obj/item/device/key))
 			if (opened)
 				boutput(user, "<span class='alert'>It's already been used, ok.</span>")
@@ -1392,8 +1392,8 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 		if (isrobot(user))
 			return attack_hand(user)
 
-	attack_hand(mob/user as mob)
-		if (user.stat || user.getStatusDuration("weakened") || get_dist(user, src) > 1 || !user.can_use_hands())
+	attack_hand(mob/user)
+		if (user.stat || user.getStatusDuration("weakened") || BOUNDS_DIST(user, src) > 0 || !user.can_use_hands())
 			return
 
 		user.visible_message("<span class='alert'>[user] presses against [src].</span>", "<span class='alert'>You press against [src].  Ew.</span>")
@@ -1529,6 +1529,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 			else
 				L.visible_message("<span class='alert'><b>[L] is gored by [src]!</b></span>", "<span class='alert'><b>OH SHIT</b></span>")
 				playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)
+				logTheThing("combat", L, null, "was gibbed by [src] ([src.type]) at [log_loc(L)].")
 				L.gib()
 
 		src.icon_state = "fangdoor1"

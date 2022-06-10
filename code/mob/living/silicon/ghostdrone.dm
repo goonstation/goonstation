@@ -69,19 +69,27 @@
 
 		//Attach shit to tools
 		src.tools = list(
+			new /obj/item/device/light/flashlight(src),
 			new /obj/item/magtractor(src),
 			new /obj/item/tool/omnitool/silicon(src),
 			new /obj/item/rcd/material/cardboard(src),
 			new /obj/item/lamp_manufacturer(src),
+			new /obj/item/spraybottle/cleaner/robot/drone(src),
+			new /obj/item/sponge/ghostdronesafe(src),
 			new /obj/item/device/analyzer/atmospheric(src),
 			new /obj/item/device/t_scanner(src),
 			new /obj/item/electronics/soldering(src),
 			new /obj/item/electronics/scanner(src),
 			new /obj/item/deconstructor/borg(src),
 			new /obj/item/weldingtool(src),
-			new /obj/item/device/light/flashlight(src)
+
+
+
 		)
 
+		var/obj/item/tile/cardboard/T  =new /obj/item/tile/cardboard/(src)
+		T.amount = 600
+		src.tools += T
 		var/obj/item/cable_coil/W = new /obj/item/cable_coil(src)
 		W.amount = 1000
 		src.tools += W
@@ -206,6 +214,7 @@
 	examine()
 		. = ..()
 
+		. += "\n It's a cute little maintenance drone. There seems to be a glowing source inside it." // I hereby that declare the ghost part of ghostdrone is what makes them glow
 		. += "*---------*"
 
 		if (isdead(src))
@@ -221,7 +230,7 @@
 			msg += "<br>"
 		msg += "[src] has a power charge of [bicon(src.cell)] [src.cell.charge]/[src.cell.maxcharge]</span>"
 
-		. += msg.Join("")
+		. += msg.Join()
 
 		if (src.health < src.max_health)
 			if (src.health < (src.max_health / 2))
@@ -278,7 +287,7 @@
 		return 1
 
 	proc/setFaceDialog()
-		var/newFace = input(usr, "Select your faceplate", "Drone", src.faceType) as null|anything in list("Happy", "Sad", "Mad")
+		var/newFace = input(usr, "Select your faceplate", "Drone", src.faceType) as null|anything in list("Happy", "Sad", "Mad", "Heart", "Sleepy", "Exclaim", "Question", "Lopsy", "Kitty", "Eye")
 		if (!newFace) return 0
 		var/newColor = input(usr, "Select your faceplate color", "Drone", src.faceColor) as null|color
 		if (!newFace && !newColor) return 0
@@ -374,7 +383,7 @@
 		if (src.client && src.client.check_key(KEY_PULL))
 			var/atom/movable/movable = target
 			if (istype(movable))
-				movable.pull()
+				movable.pull(src)
 			return
 
 		var/reach = can_reach(src, target)
@@ -420,7 +429,7 @@
 		W.set_loc(src)
 		var/image/hatImage = image(icon = W.icon, icon_state = W.icon_state, layer = src.layer+0.1)
 		hatImage.pixel_y = 5
-		hatImage.transform *= 0.85
+		hatImage.transform *= 0.90
 		UpdateOverlays(hatImage, "hat")
 		return 1
 
@@ -461,7 +470,7 @@
 			src.icon_state = "drone-dead"
 		return 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(isweldingtool(W))
 			if (user.a_intent == INTENT_HARM)
 				if (W:try_weld(user,0,-1,0,0))
@@ -722,6 +731,16 @@
 					message = "<B>[src]</B> claps."
 					m_type = 2
 
+			if ("nod")  // we want it so ghostdrones can answer yes/no wuestions
+				if (!src.restrained())
+					message = "<B>[src]</B> nods its head."
+					m_type = 2
+
+			if ("snap")
+				if (!src.restrained())
+					message = "<B>[src]</B> shakes its head."
+					m_type = 2
+
 			if ("flap")
 				if (!src.restrained())
 					message = "<B>[src]</B> flaps its wings."
@@ -767,7 +786,7 @@
 				message = "<b>[src]</b> [param]"
 				m_type = 1
 
-			if ("smile","grin","smirk","frown","scowl","grimace","sulk","pout","blink","nod","shrug","think","ponder","contemplate")
+			if ("smile","grin","smirk","frown","scowl","grimace","sulk","pout","blink","shrug","think","ponder","contemplate")
 				// basic visible single-word emotes
 				message = "<B>[src]</B> [act]s."
 				m_type = 1
@@ -807,14 +826,14 @@
 			if ("birdwell", "burp")
 				if (src.emote_check(voluntary, 50))
 					message = "<B>[src]</B> birdwells."
-					playsound(src, 'sound/vox/birdwell.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/vox/birdwell.ogg', 50, 1, 0, 1.5, channel=VOLUME_CHANNEL_EMOTE)
 
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
 					if (narrator_mode)
 						playsound(src, 'sound/vox/scream.ogg', 50, 1, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 					else
-						playsound(src, src.sound_scream, 80, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+						playsound(src, src.sound_scream, 80, 0, 0, 1.5, channel=VOLUME_CHANNEL_EMOTE)
 					message = "<b>[src]</b> screams!"
 
 			if ("johnny")
@@ -1007,12 +1026,6 @@
 		if (dd_hasprefix(message, "*"))
 			return src.emote(copytext(message, 2),1)
 
-		UpdateOverlays(speech_bubble, "speech_bubble")
-		var/speech_bubble_time = src.last_typing
-		SPAWN(1.5 SECONDS)
-			if(speech_bubble_time == src.last_typing)
-				UpdateOverlays(null, "speech_bubble")
-
 		return src.drone_broadcast(message)
 		// Removing normal dronesay stuff and changing :d to just ;
 		// Not much of a reason for drones to have local say imo.
@@ -1023,7 +1036,6 @@
 			if (dd_hasprefix(message, ";"))
 				message = trim(copytext(message, 2, MAX_MESSAGE_LEN))
 				broadcast = 1
-
 		if (broadcast)
 			return src.drone_broadcast(message)
 		else
@@ -1102,7 +1114,7 @@
 		return 0
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
-		setFace(pick("happy", "sad", "mad"), random_color())
+		setFace(pick("happy", "sad", "mad", "heart", "sleepy", "exclaim", "question", "lopsy", "kitty", "eye"), random_color())
 
 		if (limiter.canISpawn(/obj/effects/sparks))
 			var/obj/sparks = new /obj/effects/sparks
@@ -1202,6 +1214,9 @@
 			var/obj/item/MTI = MT.holding
 			if (MTI && (MTI.tool_flags & tool_flag))
 				return MT.holding
+		I = locate(/obj/item/tool/omnitool) in src.tools //Try the omnitool if all else fails
+		if (I && (I.tool_flags & tool_flag))
+			return I
 		return null
 
 	hotkey(name)
@@ -1297,7 +1312,7 @@
 
 	boutput(G, "<span class='bold' style='color:red;font-size:150%'>You have become a Ghostdrone!</span><br><b>Humans, Cyborgs, and other living beings will appear only as static silhouettes, and you should avoid interacting with them.</b><br><br>You can speak to your fellow Ghostdrones by talking normally (default: push T). You can talk over deadchat with other ghosts by starting your message with ';'.")
 	if (G.mind)
-		G.Browse(grabResource("html/ghostdrone.html"),"window=ghostdrone;size=600x440;title=Ghostdrone Help")
+		G.show_antag_popup("ghostdrone")
 
 	SPAWN(1 SECOND)
 		G.show_laws_drone()

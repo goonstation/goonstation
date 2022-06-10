@@ -30,7 +30,7 @@
 		light.set_color(0.5, 0.3, 0)
 
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(movable && istool(W, TOOL_SCREWING | TOOL_WRENCHING))
 			user.visible_message("<b>[user]</b> [anchored ? "unbolts the [src] from" : "secures the [src] to"] the floor.")
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 80, 1)
@@ -38,6 +38,9 @@
 			return
 		if (isghostdrone(user) || isAI(user))
 			boutput(user, "<span class='alert'>The [src] refuses to interface with you, as you are not a bus driver!</span>")
+			return
+		if (W.cant_drop) //For borg held items
+			boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
 			return
 		if (src.grillitem)
 			boutput(user, "<span class='alert'>There is already something on the grill!</span>")
@@ -56,7 +59,7 @@
 					M.HealDamage("All", 100, 100)
 				user.u_equip(W)
 				W.set_loc(src)
-				W.dropped()
+				W.dropped(user)
 				src.cooktime = 0
 				src.grillitem = W
 				src.on = 1
@@ -66,6 +69,7 @@
 				return
 			else
 				boutput(user, "<span class='alert'>Your hubris will not be tolerated.</span>")
+				logTheThing("user", user, null, "was gibbed by [src] ([src.type]) at [log_loc(user)].")
 				user.gib()
 				qdel(W)
 				return
@@ -117,7 +121,7 @@
 		src.visible_message("<span class='notice'>[user] slaps [W] onto the [src].</span>")
 		user.u_equip(W)
 		W.set_loc(src)
-		W.dropped()
+		W.dropped(user)
 		src.cooktime = 0
 		src.grillitem = W
 		src.on = 1
@@ -138,7 +142,7 @@
 	/*		else if (oldval && !newval)
 				UnsubscribeProcess() */
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (isghostdrone(user))
 			boutput(user, "<span class='alert'>The [src] refuses to interface with you, as you are not a bus driver!</span>")
 			return
@@ -296,21 +300,25 @@
 		shittysteak.overlays = grillitem.overlays
 		shittysteak.set_loc(get_turf(src))
 		if (ismob(grillitem))
-			shittysteak.amount = 5
+			shittysteak.bites_left = 5
 		else
-			shittysteak.amount = src.grillitem.w_class
+			shittysteak.bites_left = src.grillitem.w_class
 		shittysteak.reagents = src.grillitem.reagents
 		shittysteak.reagents.my_atom = shittysteak
 
 		src.grillitem.set_loc(shittysteak)
-
-		src.grillitem = null
-		src.icon_state = "shittygrill_on"
-		for (var/obj/item/I in src) //Things can get dropped somehow sometimes ok
-			I.set_loc(src.loc)
-		src.cooktime = 0
 	//	UnsubscribeProcess()
 		return
+
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.grillitem)
+			src.grillitem = null
+			src.UpdateIcon()
+			for (var/obj/item/I in src) //Things can get dropped somehow sometimes ok
+				I.set_loc(src.loc)
+			src.cooktime = 0
+			src.icon_state = "shittygrill_on"
 
 	verb/drain()
 		set src in oview(1)

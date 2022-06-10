@@ -19,7 +19,7 @@ TYPEINFO(/datum/mutantrace)
 	var/override_beard = 1
 	var/override_detail = 1
 	var/override_skintone = 1
-	var/override_attack = 1		 // set to 1 to override the limb attack actions. Mutantraces may use the limb action within custom_attack(),
+	var/override_attack = FALSE		 // set to 1 to override the limb attack actions. Mutantraces may use the limb action within custom_attack(),
 								// but they must explicitly specify if they're overriding via this var
 	var/override_language = null // set to a language ID to replace the language of the human
 	var/understood_languages = list() // additional understood languages (in addition to override_language if set, or english if not)
@@ -212,6 +212,8 @@ TYPEINFO(/datum/mutantrace)
 	/// this is list("Bottom Detail", "Mid Detail", "Top Detail").
 	var/list/color_channel_names = list()
 
+	var/self_click_fluff //used when clicking self on help intent
+
 	proc/say_filter(var/message)
 		return message
 
@@ -222,9 +224,10 @@ TYPEINFO(/datum/mutantrace)
 		return null
 
 	// custom attacks, should return attack_hand by default or bad things will happen!!
+	// if you did something, return TRUE, else return FALSE and the normal hand stuff will be done
 	// ^--- Outdated, please use limb datums instead if possible.
 	proc/custom_attack(atom/target)
-		return target.Attackhand(mob)
+		return FALSE
 
 	// vision modifier (see_mobs, etc i guess)
 	proc/sight_modifier()
@@ -235,6 +238,10 @@ TYPEINFO(/datum/mutantrace)
 
 	/// Called when our mob dies.  Returning a true value will short circuit the normal death proc right before deathgasp/headspider/etc
 	proc/onDeath(gibbed)
+		return
+
+	/// For calling of procs when a mob is given a mutant race, to avoid issues with abstract representation in New()
+	proc/on_attach()
 		return
 
 	New(var/mob/living/carbon/human/M)
@@ -826,6 +833,7 @@ TYPEINFO(/datum/mutantrace)
 	clothing_icon_override = 'icons/mob/lizard_clothes.dmi'
 	color_channel_names = list("Episcutus", "Ventral Aberration", "Sagittal Crest")
 	dna_mutagen_banned = FALSE
+	self_click_fluff = "scales"
 
 	New(var/mob/living/carbon/human/H)
 		..()
@@ -846,7 +854,9 @@ TYPEINFO(/datum/mutantrace)
 		mob.see_invisible = INVIS_INFRA
 
 	say_filter(var/message)
-		return replacetext(message, "s", stutter("ss"))
+		var/replace_lowercase = replacetextEx(message, "s", stutter("ss"))
+		var/replace_uppercase = replacetextEx(replace_lowercase, "S", stutter("SS"))
+		return replace_uppercase
 
 	disposing()
 		if(ishuman(mob))
@@ -919,7 +929,16 @@ TYPEINFO(/datum/mutantrace)
 
 			SPAWN(rand(4, 30))
 				M.emote("scream")
-			SHOW_ZOMBIE_TIPS(M)
+			if (M.mind && ticker.mode)
+				if (!M.mind.special_role)
+					M.mind.special_role = ROLE_ZOMBIE
+				if (!(M.mind in ticker.mode.Agimmicks))
+					ticker.mode.Agimmicks += M.mind
+			M.show_antag_popup("zombie")
+
+	on_attach()
+		if(ishuman(mob))
+			mob.antagonist_overlay_refresh(1)
 
 	proc/make_bubs(var/mob/living/carbon/human/M)
 		M.bioHolder.AddEffect("strong")
@@ -985,48 +1004,7 @@ TYPEINFO(/datum/mutantrace)
 				if (!mob.organHolder.brain || !mob.organHolder.skull || !mob.organHolder.head)
 					mob.show_message("<span class='notice'>You fail to rise, your brain has been destroyed.</span>")
 				else
-					// ha ha nope. Instead we copy paste a bunch of shit from full_heal but leave out select bits such as : limb regeneration, reagent clearing
-					//mob.full_heal()
-
-					mob.HealDamage("All", 100000, 100000)
-					mob.delStatus("drowsy")
-					mob.stuttering = 0
-					mob.losebreath = 0
-					mob.delStatus("paralysis")
-					mob.delStatus("stunned")
-					mob.delStatus("weakened")
-					mob.delStatus("slowed")
-					mob.delStatus("radiation")
-					mob.change_eye_blurry(-INFINITY)
-					mob.take_eye_damage(-INFINITY)
-					mob.take_eye_damage(-INFINITY, 1)
-					mob.take_ear_damage(-INFINITY)
-					mob.take_ear_damage(-INFINITY, 1)
-					mob?.organHolder?.brain?.unbreakme()
-					mob.take_brain_damage(-120)
-					mob.health = mob.max_health
-					if (mob.stat > 1)
-						setalive(mob)
-
-					mob.remove_ailments()
-					mob.take_toxin_damage(-INFINITY)
-					mob.take_oxygen_deprivation(-INFINITY)
-					mob.change_misstep_chance(-INFINITY)
-
-					mob.blinded = 0
-					mob.bleeding = 0
-					mob.blood_volume = 500
-
-					if (!mob.organHolder)
-						mob.organHolder = new(mob)
-					mob.organHolder.create_organs()
-
-					if (mob.get_stamina() != (STAMINA_MAX + mob.get_stam_mod_max()))
-						mob.set_stamina(STAMINA_MAX + mob.get_stam_mod_max())
-
-					mob.update_body()
-					mob.update_face()
-
+					mob.full_heal()
 
 					mob.emote("scream")
 					mob.visible_message("<span class='alert'><B>[mob]</B> rises from the dead!</span>")
@@ -1144,18 +1122,61 @@ TYPEINFO(/datum/mutantrace)
 	decomposes = FALSE
 	race_mutation = /datum/bioEffect/mutantrace/skeleton
 	dna_mutagen_banned = FALSE
+	var/obj/item/organ/head/head_tracker
+	self_click_fluff = list("ribcage", "funny bone", "femur", "scapula")
 
 	New(var/mob/living/carbon/human/M)
 		..()
 		if(ishuman(M))
-			M.mob_flags |= IS_BONER
+			M.mob_flags |= IS_BONEY
 			M.blood_id = "calcium"
+			set_head(M.organHolder.head)
 
 	disposing()
 		if (ishuman(mob))
-			mob.mob_flags &= ~IS_BONER
+			mob.mob_flags &= ~IS_BONEY
+			mob.blood_id = initial(mob.blood_id)
 		. = ..()
 
+	proc/set_head(var/obj/item/organ/head/head)
+		if (isskeleton(head.linked_human) && head.linked_human != mob)
+			var/mob/living/carbon/human/H = head.linked_human
+			var/datum/mutantrace/skeleton/S = H.mutantrace
+			if (H.eye == head)
+				H.set_eye(null)
+			S.head_tracker = null
+			boutput(H, "<span class='alert'><b>You feel as if your head has been repossessed by another!</b></span>")
+		head_tracker = head
+		head_tracker.linked_human = mob
+
+/obj/item/joint_wax
+	name = "joint wax"
+	desc = "Does what it says on the jar."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "wax"
+	w_class = W_CLASS_SMALL
+	var/uses = 10
+
+	attack(mob/M, mob/user)
+		if (isskeleton(M))
+			var/mob/living/carbon/human/H = M
+			if (user.zone_sel.selecting in H.limbs.vars)
+				var/obj/item/parts/limb = H.limbs.vars[user.zone_sel.selecting]
+				if (!limb)
+					if (!src.uses)
+						boutput(user, "<span class='alert'>The joint wax is empty!</alert>")
+					else
+						H.changeStatus("spry", 1 MINUTE)
+						playsound(H, 'sound/effects/smear.ogg', 50, 1)
+						H.visible_message("<span class='notice'>[user] applies some joint wax to [H].</notice>")
+						src.uses--
+						if (!src.uses)
+							src.icon_state = "wax-empty"
+					return
+		..()
+
+	get_desc()
+		. += " It looks like it has [uses ? uses : "no"] applications left."
 
 /*
 /datum/mutantrace/ape
@@ -1185,6 +1206,7 @@ TYPEINFO(/datum/mutantrace)
 	ignore_missing_limbs = 1 //OVERRIDE_ARM_L | OVERRIDE_ARM_R
 	anchor_to_floor = 1
 	movement_modifier = /datum/movement_modifier/abomination
+	self_click_fluff = "disgusting writhing appendages"
 
 	var/last_drain = 0
 	var/drains_dna_on_life = 1
@@ -1285,6 +1307,7 @@ TYPEINFO(/datum/mutantrace)
 	clothing_icon_override = 'icons/mob/werewolf_clothes.dmi'
 	special_head = HEAD_WEREWOLF
 	mutant_organs = list("tail" = /obj/item/organ/tail/wolf)
+	self_click_fluff = "fur"
 
 	head_offset = 5
 	hand_offset = 3
@@ -1436,6 +1459,7 @@ TYPEINFO(/datum/mutantrace)
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/ithillid/left
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HAS_SPECIAL_HAIR | HEAD_HAS_OWN_COLORS | WEARS_UNDERPANTS)
 	dna_mutagen_banned = FALSE
+	self_click_fluff = "gills"
 
 	say_verb()
 		return "glubs"
@@ -1458,6 +1482,7 @@ TYPEINFO(/datum/mutantrace)
 	voice_message = "chimpers"
 	voice_name = "monkey"
 	override_language = "monkey"
+	override_attack = FALSE
 	understood_languages = list("english")
 	clothing_icon_override = 'icons/mob/monkey_clothes.dmi'
 	race_mutation = /datum/bioEffect/mutantrace/monkey
@@ -1467,10 +1492,9 @@ TYPEINFO(/datum/mutantrace)
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/monkey/left
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
 	var/sound_monkeyscream = 'sound/voice/screams/monkey_scream.ogg'
-	var/had_tablepass = 0
-	var/table_hide = 0
 	mutant_organs = list("tail" = /obj/item/organ/tail/monkey)
 	dna_mutagen_banned = FALSE
+	self_click_fluff = "fur"
 
 	New(var/mob/living/carbon/human/M)
 		. = ..()
@@ -1486,26 +1510,6 @@ TYPEINFO(/datum/mutantrace)
 
 	say_verb()
 		return "chimpers"
-
-	custom_attack(atom/target) // Fixed: monkeys can click-hide under every table now, not just the parent type. Also added beds (Convair880).
-		if(istype(target, /obj/machinery/optable/))
-			do_table_hide(target)
-		if(istype(target, /obj/stool/bed/))
-			do_table_hide(target)
-		return target.Attackhand(mob)
-
-	proc
-		do_table_hide(obj/target)
-			step(mob, get_dir(mob, target))
-			if (mob.loc == target.loc)
-				if (table_hide)
-					table_hide = 0
-					mob.layer = MOB_LAYER
-					mob.visible_message("[mob] crawls on top of [target]!")
-				else
-					table_hide = 1
-					mob.layer = target.layer - 0.01
-					mob.visible_message("[mob] hides under [target]!")
 
 	emote(var/act, var/voluntary)
 		. = null
@@ -1720,12 +1724,17 @@ TYPEINFO(/datum/mutantrace)
 	eye_state = "eyes_roach"
 	typevulns = list("blunt" = 1.5, "crush" = 1.5)
 	dna_mutagen_banned = FALSE
+	self_click_fluff = list("thorax", "exoskeleton", "antenna")
 
 	New(mob/living/carbon/human/M)
 		. = ..()
 		if(ishuman(M))
+			M.blood_id = "hemolymph"
+			//H.blood_color = "#009E81"
 			M.mob_flags |= SHOULD_HAVE_A_TAIL
 		APPLY_ATOM_PROPERTY(M, PROP_MOB_RADPROT, src, 100)
+
+
 
 	say_verb()
 		return "clicks"
@@ -1737,6 +1746,7 @@ TYPEINFO(/datum/mutantrace)
 	disposing()
 		if(ishuman(mob))
 			mob.mob_flags &= ~SHOULD_HAVE_A_TAIL
+			mob.blood_id = initial(mob.blood_id)
 		if(mob)
 			REMOVE_ATOM_PROPERTY(mob, PROP_MOB_RADPROT, src)
 		. = ..()
@@ -1925,8 +1935,8 @@ TYPEINFO(/datum/mutantrace)
 	custom_attack(atom/target)
 		if(ishuman(target))
 			mob.visible_message("<span class='alert'><B>[mob]</B> waves its limbs at [target] threateningly!</span>")
-		else
-			return target.Attackhand(mob)
+			return TRUE
+		return FALSE
 
 	say_verb()
 		return "rasps"
@@ -2036,6 +2046,7 @@ TYPEINFO(/datum/mutantrace)
 	color_channel_names = list("Horn Detail", "Hoof Detail")
 	eye_state = "eyes-cow"
 	dna_mutagen_banned = FALSE
+	self_click_fluff = list("fur", "hooves", "horns")
 
 	New(var/mob/living/carbon/human/H)
 		..()
@@ -2064,7 +2075,9 @@ TYPEINFO(/datum/mutantrace)
 
 	say_filter(var/message)
 		.= replacetext(message, "cow", "human")
-		.= replacetext(., "m", stutter("mm"))
+		var/replace_lowercase = replacetextEx(., "m", stutter("mm"))
+		var/replace_uppercase = replacetextEx(replace_lowercase, "M", stutter("MM"))
+		return replace_uppercase
 
 	emote(var/act, var/voluntary)
 		switch(act)
@@ -2140,6 +2153,7 @@ TYPEINFO(/datum/mutantrace/pug)
 	eye_state = "eyes-pug"
 	dna_mutagen_banned = FALSE
 	var/static/image/snore_bubble = image('icons/mob/mob.dmi', "bubble")
+	self_click_fluff = "fur"
 
 	New(var/mob/living/carbon/human/H)
 		if (prob(1)) // need to modify flags before calling parent
