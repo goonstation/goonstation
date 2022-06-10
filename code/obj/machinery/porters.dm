@@ -850,6 +850,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		portable_machinery.Add(src)
 
 		animate_bumble(src, Y1 = 1, Y2 = -1, slightly_random = 0)
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 		src.homeloc = src.loc
 		//Products
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/patch/bruise, 20)

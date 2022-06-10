@@ -678,13 +678,13 @@
 		// If we have no brain or an inactive spont core, we're dormant.
 		// If we have a brain but no client, we're in hiberation mode.
 		// Otherwise, fully operational.
-		if (src.part_head.brain && !(!istype(src.part_head.brain, /obj/item/organ/brain/latejoin) && src.part_head.brain:activated))
+		if (src.part_head.brain && !(istype(src.part_head.brain, /obj/item/organ/brain/latejoin) && !src.part_head.brain:activated))
 			if (src.client)
-				. += "<span class='success'>[src.name] is fully operational.<span><br>"
+				. += "<span class='success'>[src.name] is fully operational.</span><br>"
 			else
-				. += "<span class='hint'>[src.name] is in temporary hibernation.<span><br>"
+				. += "<span class='hint'>[src.name] is in temporary hibernation.</span><br>"
 		else
-			. += "<span class='alert'>[src.name] is completely dormant.<span><br>"
+			. += "<span class='alert'>[src.name] is completely dormant.</span><br>"
 
 
 		if (brute)
@@ -1839,8 +1839,9 @@
 		else
 			who = src
 			boutput(who, "<b>Obey these laws:</b>")
-
-		if(src.law_rack_connection)
+		if(src.dependent && src?.mainframe?.law_rack_connection)
+			src.mainframe.law_rack_connection.show_laws(who)
+		else if(!src.dependent && src.law_rack_connection)
 			src.law_rack_connection.show_laws(who)
 		else
 			boutput(src,"You have no laws!")

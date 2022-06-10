@@ -110,11 +110,12 @@
 
 
 /obj/item/gun/energy/heavyion
-	name = "heavy ion blaster"
+	name = "\improper Tianfei-48 heavy ion blaster"
+	icon = 'icons/obj/large/48x32.dmi'
 	icon_state = "heavyion"
 	item_state = "rifle"
 	force = 1.0
-	desc = "..."
+	desc = "The 天妃-2048 ion disruptor from Xiang-Geisel. A radio-isotopic laser-induced ionic generator, feared by rogue cyborgs across the Frontier."
 	charge_up = 15
 	can_dual_wield = 0
 	two_handed = 1
@@ -311,7 +312,9 @@
 	desc = "The largest phaser from Radnor Photonics. A big gun for big problems."
 	muzzle_flash = "muzzle_flash_phaser"
 	cell_type = /obj/item/ammo/power_cell/higherish_power
-	shoot_delay = 20
+	shoot_delay = 10
+	charge_up = 5
+	can_dual_wield = FALSE
 
 	New()
 		set_current_projectile(new/datum/projectile/laser/light/huge) // light/huge - whatev!!!! this should probably be refactored

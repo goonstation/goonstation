@@ -8,6 +8,7 @@
 /obj/flock_structure/sentinel
 	name = "glowing pylon"
 	desc = "A glowing pylon of sorts, faint sparks are jumping inside of it."
+	flock_desc = "A charged pylon, capable of sending disorienting arcs of electricity at enemies."
 	icon_state = "sentinel"
 	flock_id = "Sentinel"
 	health = 80
@@ -21,7 +22,6 @@
 	// flockdrones can pass through this
 	passthrough = TRUE
 
-	usesgroups = TRUE
 	var/online_compute_cost = 20
 	compute = 0 //targetting consumes compute
 
@@ -44,7 +44,7 @@
 /obj/flock_structure/sentinel/process()
 	updatefilter()
 
-	if(!src.group)//if it dont exist it off
+	if(!src.flock)//if it dont exist it off
 		powered = FALSE
 		src.compute = 0
 	else if(src.flock.can_afford_compute(online_compute_cost))//if it has atleast 0 or more free compute, the poweruse is already calculated in the group

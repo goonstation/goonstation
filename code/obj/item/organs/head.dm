@@ -31,6 +31,7 @@
 	/// Defines what kind of head this is, for things like lizards being able to colorchange a transplanted lizardhead
 	/// Since we can't easily swap out one head for a different type
 	var/head_type = HEAD_HUMAN
+	var/linked_human = null
 
 	var/image/head_image = null
 	var/head_icon = null
@@ -73,11 +74,16 @@
 				src.UpdateIcon(/*makeshitup*/ 1)
 
 	disposing()
+		if (src.donor && ishuman(src.donor))
+			var/mob/living/carbon/human/H = src.donor
+			if (isskeleton(H))
+				var/datum/mutantrace/skeleton/S = H.mutantrace
+				S.head_tracker = null
 		if (holder)
 			holder.head = null
 		if (donor_original.eye == src)
 			donor_original.set_eye(null)
-			boutput(donor_original, "<span class='alert'>You feel your vision forcibly punted back to your body!</span>")
+			boutput(donor_original, "<span class='alert'><b>You feel your vision forcibly punted back to your body!</b></span>")
 		skull = null
 		brain = null
 		left_eye = null
@@ -87,6 +93,7 @@
 		ears = null
 		wear_mask = null
 		glasses = null
+		linked_human = null
 
 		..()
 
@@ -249,7 +256,10 @@
 		if (src.ears && src.ears.wear_image_icon)
 			src.overlays += image(src.ears.wear_image_icon, src.ears.icon_state, layer = MOB_EARS_LAYER)
 
-		if (src.head && src.head.wear_image_icon)
+		if (src.head && src.head.wear_image)
+			src.overlays += src.head.wear_image
+
+		else if (src.head && src.head.wear_image_icon)
 			src.overlays += image(src.head.wear_image_icon, src.head.icon_state, layer = MOB_HEAD_LAYER2)
 
 		if(!(src.head && src.head.seal_hair))
@@ -347,6 +357,9 @@
 			playsound(src, 'sound/items/towel.ogg', 25, 1)
 			user.visible_message("<span class='notice'>[user] [pick("buffs", "shines", "cleans", "wipes", "polishes")] [src] with [W].</span>")
 			src.clean_forensic()
+			return
+		if (istype(W, /obj/item/reagent_containers/food) && head_type == HEAD_SKELETON)
+			user.visible_message("<span class='notice'>[user] tries to feed [W] to [src] but it cannot swallow!</span>")
 			return
 
 		if (src.skull || src.brain)

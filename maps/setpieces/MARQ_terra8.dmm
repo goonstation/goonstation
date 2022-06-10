@@ -5697,7 +5697,7 @@
 /area/bunker/lv0)
 "mo" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /obj/window/cubicle{
 	icon_state = "cubicle";
 	dir = 8
@@ -6491,7 +6491,7 @@
 	mouse_opacity = 0
 	},
 /obj/table/reinforced/chemistry/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /turf/unsimulated/floor/concrete,
 /area/bunker/lv00)
 "nD" = (
@@ -7573,7 +7573,7 @@
 /area/bunker/lv0)
 "ps" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /obj/window/cubicle{
 	dir = 4
 	},
@@ -11982,7 +11982,7 @@
 /obj/table/reinforced/chemistry/auto,
 /obj/item/disk/data/cartridge/botanist,
 /obj/random_item_spawner/desk_stuff,
-/obj/machinery/light/lamp/bright,
+/obj/machinery/light/lamp/black/bright,
 /obj/map/light/screen,
 /obj/decal/tile_edge/line/grey{
 	icon_state = "line-broken1"

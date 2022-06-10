@@ -89,7 +89,7 @@
 	if(prob(20))
 		point_invisibility = INVIS_NONE
 #endif
-	if (!ON_COOLDOWN(src, "point", 1 SECOND))
+	if (!ON_COOLDOWN(src, "point", 0.5 SECONDS))
 		make_point(get_turf(target), pixel_x=target.pixel_x, pixel_y=target.pixel_y, color="#5c00e6", invisibility=point_invisibility, pointer=src)
 
 

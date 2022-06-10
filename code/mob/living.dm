@@ -617,7 +617,7 @@
 	else
 		src.visible_message("<span style='font-weight:bold;color:#f00;font-size:120%;'>[src] points \the [G] at [target]!</span>")
 
-	if (!ON_COOLDOWN(src, "point", 1 SECOND))
+	if (!ON_COOLDOWN(src, "point", 0.5 SECONDS))
 		make_point(get_turf(target), pixel_x=target.pixel_x, pixel_y=target.pixel_y, color=src.bioHolder.mobAppearance.customization_first_color, pointer=src)
 
 
@@ -638,19 +638,31 @@
 		if ("headset")
 			if (src.ears)
 				src.ears.talk_into(src, messages, param, src.real_name, lang_id)
+			else if (ishuman(src))
+				var/mob/living/carbon/human/H = src
+				if(isskeleton(H) && !H.organHolder.head)
+					var/datum/mutantrace/skeleton/S = H.mutantrace
+					if(S.head_tracker != null)
+						S.head_tracker.ears?.talk_into(src, messages, param, src.real_name, lang_id)
 
 		if ("secure headset")
 			if (src.ears)
 				src.ears.talk_into(src, messages, param, src.real_name, lang_id)
+			else if (ishuman(src))
+				var/mob/living/carbon/human/H = src
+				if(isskeleton(H) && !H.organHolder.head)
+					var/datum/mutantrace/skeleton/S = H.mutantrace
+					if(S.head_tracker != null)
+						S.head_tracker.ears?.talk_into(src, messages, param, src.real_name, lang_id)
 
 		if ("right hand")
-			if (src.r_hand)
+			if (src.r_hand && src.organHolder.head)
 				src.r_hand.talk_into(src, messages, param, src.real_name, lang_id)
 			else
 				src.emote("handpuppet")
 
 		if ("left hand")
-			if (src.l_hand)
+			if (src.l_hand && src.organHolder.head)
 				src.l_hand.talk_into(src, messages, param, src.real_name, lang_id)
 			else
 				src.emote("handpuppet")
@@ -1042,14 +1054,22 @@
 
 	var/heardname = src.real_name
 
-	if (!skip_open_mics_in_range)
+	var/is_decapitated_skeleton = ishuman(src) && isskeleton(src) && !src.organHolder.head
+
+	if (!skip_open_mics_in_range && !is_decapitated_skeleton)
 		src.send_hear_talks(message_range, messages, heardname, lang_id)
 
 	var/list/listening = list()
 	var/list/olocs = list()
+	var/atom/say_location = src
 	var/thickness = 0
-	if (isturf(loc))
-		listening = all_hearers(message_range, src)
+	if (is_decapitated_skeleton)	//Decapitated skeletons speak from their heads
+		var/mob/living/carbon/human/H = src
+		var/datum/mutantrace/skeleton/S = H.mutantrace
+		if (S.head_tracker)
+			say_location = S.head_tracker
+	if (isturf(say_location.loc))
+		listening = all_hearers(message_range, say_location)
 	else
 		olocs = obj_loc_chain(src)
 		if(olocs.len > 0) // fix runtime list index out of bounds when loc is null (IT CAN HAPPEN, APPARENTLY)
@@ -1082,7 +1102,7 @@
 			src.last_chat_color = hsv2rgb(num % 360, (num / 360) % 10 + 18, num / 360 / 10 % 15 + 85)
 			src.last_heard_name = src.get_heard_name()
 
-		var/turf/T = get_turf(src)
+		var/turf/T = get_turf(say_location)
 		for(var/i = 0; i < 2; i++) T = get_step(T, WEST)
 		for(var/i = 0; i < 5; i++)
 			for(var/mob/living/L in T)
@@ -1100,7 +1120,7 @@
 				maptext_color ="#D8BFD8"
 		else
 			maptext_color = src.last_chat_color
-		chat_text = make_chat_maptext(src, messages[1], "color: [maptext_color];" + src.speechpopupstyle + singing_italics)
+		chat_text = make_chat_maptext(say_location, messages[1], "color: [maptext_color];" + src.speechpopupstyle + singing_italics)
 		if(chat_text)
 			chat_text.measure(src.client)
 			for(var/image/chat_maptext/I in src.chat_text.lines)
@@ -1125,7 +1145,7 @@
 		rendered = "<span style='-ms-transform: rotate(180deg)'>[rendered]</span>"
 
 	var/viewrange = 0
-	var/list/hearers = hearers(src)
+	var/list/hearers = hearers(say_location)
 	for (var/client/C)
 		var/mob/M = C.mob
 
@@ -1139,7 +1159,7 @@
 			(istype(M, /mob/zoldorf)) || \
 			(isintangible(M) && (M in hearers)) || \
 			( \
-				(!isturf(src.loc) && src.loc == M.loc) && \
+				(!isturf(say_location.loc) && say_location.loc == M.loc) && \
 				!(M in heard_a) && \
 				!istype(M, /mob/dead/target_observer) && \
 				M != src \
@@ -1154,17 +1174,17 @@
 				viewrange = (((istext(C.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH) - 1) / 2)
 				if (M.client.preferences.local_deadchat || iswraith(M)) //only listening locally (or a wraith)? w/e man dont bold dat
 					//if (M in range(M.client.view, src))
-					if (get_dist(M,src) <= viewrange)
+					if (get_dist(M,say_location) <= viewrange)
 						M.show_message(thisR, 2, assoc_maptext = chat_text)
 				else
 					//if (M in range(M.client.view, src)) //you're not just listening locally and the message is nearby? sweet! bold that sucka brosef
-					if (get_dist(M,src) <= viewrange) //you're not just listening locally and the message is nearby? sweet! bold that sucka brosef
+					if (get_dist(M,say_location) <= viewrange) //you're not just listening locally and the message is nearby? sweet! bold that sucka brosef
 						M.show_message("<span class='bold'>[thisR]</span>", 2, assoc_maptext = chat_text) //awwwww yeeeeeah lookat dat bold
 					else
 						M.show_message(thisR, 2, assoc_maptext = chat_text)
 			else if(istype(M, /mob/zoldorf))
 				viewrange = (((istext(C.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH) - 1) / 2)
-				if (get_dist(M,src) <= viewrange)
+				if (get_dist(M,say_location) <= viewrange)
 					if((!istype(M.loc,/obj/machinery/playerzoldorf))&&(!istype(M.loc,/mob))&&(M.invisibility == INVIS_GHOST))
 						M.show_message(thisR, 2, assoc_maptext = chat_text)
 				else
@@ -1644,7 +1664,6 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	else
 		health_deficiency = (src.max_health-src.health) + health_deficiency_adjustment
 
-
 	if (health_deficiency >= 30)
 		. += (health_deficiency / 35)
 
@@ -1951,14 +1970,13 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	var/oldbloss = get_brute_damage()
 	var/oldfloss = get_burn_damage()
 	..()
-	SPAWN(0.1 SECONDS) //fix race condition
-		var/newbloss = get_brute_damage()
-		var/damage = ((newbloss - oldbloss) + (get_burn_damage() - oldfloss))
-		if (reagents)
-			reagents.physical_shock((newbloss - oldbloss) * 0.15)
+	var/newbloss = get_brute_damage()
+	var/damage = ((newbloss - oldbloss) + (get_burn_damage() - oldfloss))
+	if (reagents)
+		reagents.physical_shock((newbloss - oldbloss) * 0.15)
 
-		if ((damage > 0) || W.force)
-			src.was_harmed(M, W)
+	if ((damage > 0) || W.force)
+		src.was_harmed(M, W)
 
 
 /mob/living/shock(var/atom/origin, var/wattage, var/zone = "chest", var/stun_multiplier = 1, var/ignore_gloves = 0)

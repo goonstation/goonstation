@@ -891,7 +891,7 @@
 	},
 /area/station/mining/refinery)
 "cF" = (
-/obj/machinery/smelter,
+/obj/machinery/neosmelter,
 /turf/simulated/floor/engine/caution/corner2{
 	dir = 9;
 	icon_state = "engine_caution_corners2"

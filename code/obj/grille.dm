@@ -22,6 +22,15 @@
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	layer = GRILLE_LAYER
 	event_handler_flags = USE_FLUID_ENTER
+	///can you use wirecutters to dismantle it?
+	var/can_be_snipped = TRUE
+	///can you use a screwdriver to unanchor it?
+	var/can_be_unscrewed = TRUE
+	///can you use a multitool to check for current?
+	var/can_be_probed = TRUE
+	///can you use this as a base for a new window?
+	var/can_build_window = TRUE
+
 
 	New()
 		..()
@@ -334,6 +343,7 @@
 
 	attack_hand(mob/user)
 		if(!shock(user, 70))
+			user.lastattacked = src
 			var/damage = 1
 			var/text = "[user.kickMessage] [src]"
 
@@ -349,7 +359,7 @@
 	attackby(obj/item/W, mob/user)
 		// Things that won't electrocute you
 
-		if (ispulsingtool(W) || istype(W, /obj/item/device/t_scanner))
+		if (can_be_probed && (ispulsingtool(W) || istype(W, /obj/item/device/t_scanner)))
 			var/net = get_connection()
 			if(!net)
 				boutput(user, "<span class='notice'>No electrical current detected.</span>")
@@ -357,7 +367,7 @@
 				boutput(user, "<span class='alert'>CAUTION: Dangerous electrical current detected.</span>")
 			return
 
-		else if(istype(W, /obj/item/sheet/))
+		else if(can_build_window && istype(W, /obj/item/sheet/))
 			var/obj/item/sheet/S = W
 			if (S.material && S.material.material_flags & MATERIAL_CRYSTAL && S.amount_check(2))
 				var/obj/window/WI
@@ -419,12 +429,12 @@
 
 		// Things that will electrocute you
 
-		if (issnippingtool(W))
+		if (can_be_snipped && issnippingtool(W))
 			damage_slashing(src.health_max)
 			src.visible_message("<span class='alert'><b>[usr]</b> cuts apart the [src] with [W].</span>")
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 
-		else if (isscrewingtool(W) && (istype(src.loc, /turf/simulated) || src.anchored))
+		else if (can_be_unscrewed && (isscrewingtool(W) && (istype(src.loc, /turf/simulated) || src.anchored)))
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 			src.anchored = !( src.anchored )
 			src.stops_space_move = !(src.stops_space_move)

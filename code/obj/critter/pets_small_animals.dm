@@ -99,7 +99,7 @@
 	name = "space opossum"
 	desc = "A possum that came from space. Or maybe went to space. Who knows how it got here?"
 	icon_state = "possum"
-	density = 1
+	density = FALSE
 	health = 15
 	aggressive = 1
 	defensive = 1
@@ -126,21 +126,18 @@
 
 	on_revive()
 		..()
+		src.alive = TRUE
 		src.visible_message("<span class='notice'><b>[src]</b> stops playing dead and gets back up!</span>")
-		src.alive = 1
-		src.set_density(1)
 		src.health = initial(src.health)
 		src.icon_state = src.living_state ? src.living_state : initial(src.icon_state)
 		src.target = null
 		src.task = "wandering"
-		return
 
 	CritterDeath()
 		..()
-		SPAWN(rand(200,800))
+		SPAWN(rand(20 SECONDS, 80 SECONDS))
 			if (src && !src.alive)
 				src.on_revive()
-		return
 
 	attackby(obj/item/W, mob/living/user)
 		if (!src.alive)
@@ -1083,7 +1080,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			animate( src )
 			animate( src, pixel_y = 10, easing = SINE_EASING, time = ((towhat.y-y)>0)?3:1 )
 			animate( pixel_y = opy, easing = SINE_EASING, time = 3 )
-			playsound( get_turf(src), "sound/misc/boing/[rand(1,6)].ogg", 20, 1 )
+			playsound( get_turf(src), "sound/misc/boing/[rand(1,6)].ogg", 10, 1 )
 
 	CritterAttack(mob/M as mob)
 		src.attacking = 1

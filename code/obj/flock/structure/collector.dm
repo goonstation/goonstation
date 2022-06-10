@@ -4,6 +4,7 @@
 /obj/flock_structure/collector
 	name = "weird lookin' pulsing thing"
 	desc = "Seems to be pulsing."
+	flock_desc = "Provides compute power based on the number of Flock floor tiles it is connected to."
 	flock_id = "Collector"
 	health = 60
 	resourcecost = 200
@@ -18,7 +19,6 @@
 
 	passthrough = TRUE
 
-	usesgroups = TRUE
 	icon_state = "collector"
 
 /obj/flock_structure/collector/New(var/atom/location, var/datum/flock/F=null)

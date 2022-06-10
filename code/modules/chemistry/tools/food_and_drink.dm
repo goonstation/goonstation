@@ -78,10 +78,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 		if (src.sliceable && istool(W, TOOL_CUTTING | TOOL_SAWING))
 			var/turf/T = get_turf(src)
 			user.visible_message("[user] cuts [src] into [src.slice_amount] slices.", "You cut [src] into [src.slice_amount] slices.")
-			var/amount_to_transfer = src.reagents.total_volume / src.slice_amount
+			var/amount_to_transfer = round(src.reagents.total_volume / src.slice_amount)
 			for (var/i in 1 to src.slice_amount)
 				var/obj/item/reagent_containers/food/slice = new src.slice_product(T)
+				slice.transform = src.transform // for botany crops
 				slice.reagents.clear_reagents() // dont need initial_reagents when you're inheriting reagents of another obj (no cheese duping >:[ )
+				slice.reagents.maximum_volume = amount_to_transfer
 				src.reagents.trans_to(slice, amount_to_transfer)
 			qdel (src)
 		else
@@ -226,6 +228,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 						M.visible_message("<span class='notice'>[M] tries to take a bite of [src], but can't swallow!</span>",\
 						"<span class='notice'>You try to take a bite of [src], but can't swallow!</span>")
 						return 0
+					if (!H.organHolder.head)
+						M.visible_message("<span class='notice'>[M] tries to take a bite of [src], but they have no head!</span>",\
+						"<span class='notice'>You try to take a bite of [src], but you have no head to chew with!</span>")
+						return 0
 
 				src.take_a_bite(M, user)
 				return 1
@@ -251,6 +257,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 						user.tri_message("<span class='alert'><b>[user]</b>tries to feed [M] [src], but can't make [him_or_her(M)] swallow!</span>",\
 						user, "<span class='alert'>You try to feed [M] [src], but can't make [him_or_her(M)] swallow!</span>",\
 						M, "<span class='alert'><b>[user]</b> tries to feed you [src], but you can't swallow!!</span>")
+						return 0
+					if (!H.organHolder.head)
+						user.tri_message("<span class='alert'><b>[user]</b>tries to feed [M] [src], but [he_or_she(M)] has no head!!</span>",\
+						user, "<span class='alert'>You try to feed [M] [src], but [he_or_she(M)] has no head!</span>",\
+						M, "<span class='alert'><b>[user]</b> tries to feed you [src], but you don't have a head!</span>")
 						return 0
 
 				actions.start(new/datum/action/bar/icon/forcefeed(M, src, src.icon, src.icon_state), user)

@@ -68,6 +68,8 @@ var/list/ai_move_scheduled = list()
 
 	proc/switch_to(var/datum/aiTask/task)
 		current_task = task
+		if(task?.ai_turbo)
+			owner.mob_flags |= HEAVYWEIGHT_AI_MOB
 		task?.switched_to()
 
 	proc/tick()
@@ -84,6 +86,8 @@ var/list/ai_move_scheduled = list()
 
 			var/datum/aiTask/T = current_task.next_task()
 			if (T)
+				if(current_task.ai_turbo)
+					owner.mob_flags &= ~HEAVYWEIGHT_AI_MOB
 				switch_to(T)
 				T.reset()
 
@@ -197,6 +201,8 @@ var/list/ai_move_scheduled = list()
 	var/name = "task"
 	var/datum/aiHolder/holder = null
 	var/atom/target = null
+	/// if this is set, temporarily give this mob the HEAVYWEIGHT_AI mob flag for the duration of this task
+	var/ai_turbo = FALSE
 
 	New(parentHolder)
 		..()

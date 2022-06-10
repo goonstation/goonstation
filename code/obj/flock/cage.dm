@@ -4,6 +4,7 @@
 /obj/flock_structure/cage
 	name = "weird energy cage"
 	desc = "You can see the person inside being rapidly taken apart by fibrous mechanisms. You ought to do something about that."
+	flock_desc = "Spins living matter into Flockdrones. Painfully."
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "cage"
 	flock_id = "matter reprocessor"
@@ -13,6 +14,7 @@
 	alpha = 192
 	anchored = FALSE
 	hitTwitch = FALSE
+	passthrough = TRUE
 	var/atom/occupant = null
 	var/obj/target = null
 	var/eating_occupant = FALSE
@@ -45,16 +47,6 @@
 				var/mob/living/M = iced
 				M.addOverlayComposition(/datum/overlayComposition/flockmindcircuit)
 			occupant = iced
-
-		UpdateIcon()
-
-	update_icon()
-		. = ..()
-		src.underlays = list()
-		for(var/atom/O in src.contents)
-			src.underlays += O.appearance
-		UpdateOverlays(image(src.icon,src.icon_state,layer = EFFECTS_LAYER_UNDER_1),"icecube_layer")
-
 
 	proc/getHumanPiece(var/mob/living/carbon/human/H)
 		// prefer inventory items before limbs, and limbs before organs
@@ -163,10 +155,6 @@
 			src.visible_message("<span class='alert bold'>[src] rips what's left of its occupant to shreds!</span>")
 			flock.achieve(FLOCK_ACHIEVEMENT_CAGE_HUMAN)
 
-	Enter(atom/movable/O)
-		. = ..()
-		UpdateIcon()
-
 	proc/spawnEgg()
 		src.visible_message("<span class='notice'>[src] spits out a device!</span>")
 		var/obj/flock_structure/egg/egg = new(get_turf(src), src.flock)
@@ -237,8 +225,6 @@
 				reagents.add_reagent(target_fluid, 10)
 				qdel(target)
 				target = null
-
-		UpdateIcon()
 
 		if(occupant)
 			if(eating_occupant && prob(20))

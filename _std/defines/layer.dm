@@ -16,7 +16,10 @@
 #define TURF_EFFECTS_LAYER 	(TURF_LAYER+0.8)
 #define GRILLE_LAYER 		(TURF_LAYER+0.9)
 #define COG2_WINDOW_LAYER 	(TURF_LAYER+0.95)
-#define STORAGE_LAYER		(TURF_LAYER+0.99) // Keep lockers etc below items
+
+// More specific obj layers
+#define STORAGE_LAYER		(OBJ_LAYER - 0.01) // Keep lockers etc below items
+#define ABOVE_OBJ_LAYER 	(OBJ_LAYER + 0.01) // For objects that should generally layer above other objects
 
 // Mob clothing and effect layers
 #define MOB_LAYER_BASE 		4

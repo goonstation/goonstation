@@ -719,8 +719,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_DINNER
 
 /obj/item/reagent_containers/food/snacks/cereal_box
-	name = "cereal box -'Pope Crunch'"
-	desc = "A sugary breakfast cereal with a papal mascot. Each 1/8 cup serving is an important part of a balanced breakfast!"
+	name = "cereal box -'Cookie Cereal'"
+	desc = "A breakfast cereal made up of tiny cookies. Now with 10% less salmonella!"
 	icon_state = "cereal_box"
 	bites_left = 11
 	real_name = "cereal"
@@ -740,6 +740,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 
 		//Hello, here is a dumb hack to get around "you take a bite of cerealbox-'Pope Crunch'!"
 		// apparently there was a runtime error here, i'm guessing someone edited a cereal box's name?
+		//Pope Crunch is now Cookie Cereal
 		var/name_len = length(src.name)
 		if (name_len > 14)
 			var/tempname = src.name
