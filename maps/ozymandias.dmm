@@ -29737,7 +29737,7 @@
 /area/listeningpost)
 "ibi" = (
 /obj/table/wood/round/auto,
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	pixel_x = 1;
 	pixel_y = 10
 	},
@@ -31183,7 +31183,7 @@
 /obj/table/reinforced/bar/auto{
 	name = "wooden table"
 	},
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/juryroom{
 	name = "Jury Sequestration"
@@ -36211,7 +36211,7 @@
 /area/shuttle/arrival/station)
 "jOb" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
 	icon_state = "0-4"
@@ -62846,7 +62846,7 @@
 /area/station/crew_quarters/quartersA)
 "qJP" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /obj/machinery/light/emergency{
 	dir = 8;
 	pixel_x = -10
@@ -64320,7 +64320,7 @@
 /area/station/hallway/secondary/west)
 "rbG" = (
 /obj/table/reinforced/bar/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
@@ -71387,7 +71387,7 @@
 /area/station/security/detectives_office)
 "sOB" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /obj/machinery/light_switch/east,
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)

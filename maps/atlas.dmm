@@ -10516,7 +10516,7 @@
 /area/station/bridge/united_command)
 "zt" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /obj/item/record/atlas{
 	pixel_x = 5;
 	pixel_y = -10

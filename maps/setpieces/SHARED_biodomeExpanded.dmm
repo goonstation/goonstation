@@ -4569,7 +4569,7 @@
 	dir = 4
 	},
 /obj/table/wood/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /turf/unsimulated/floor/carpet/grime,
 /area/space)
 "fsM" = (
@@ -5219,7 +5219,7 @@
 /area/swampzone/interiors/quarry)
 "gdO" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /obj/item/clothing/glasses/regular,
 /turf/unsimulated/floor/carpet/grime,
 /area/crypt/sigma/rd)
@@ -5694,7 +5694,7 @@
 /area/crater/cave/lower)
 "gJD" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /turf/unsimulated/floor/carpet/grime,
 /area/crypt/sigma/crew)
 "gKm" = (
@@ -9751,7 +9751,7 @@
 /turf/unsimulated/floor/black,
 /area/syndicate_station)
 "lBk" = (
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /obj/table/wood/auto,
 /obj/window/cubicle{
 	dir = 4
@@ -13051,7 +13051,7 @@
 	},
 /obj/table/wood/auto,
 /obj/deskclutter,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /obj/window/cubicle{
 	dir = 2
 	},
@@ -13819,7 +13819,7 @@
 /area/swampzone/ground)
 "qBZ" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /turf/unsimulated/floor/wood/eight{
 	dir = 8
 	},
@@ -16604,7 +16604,7 @@
 	dir = 1
 	},
 /obj/table/wood/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /turf/unsimulated/floor/carpet/grime,
 /area/crater/biodome/research)
 "tOH" = (
@@ -17615,7 +17615,7 @@
 	dir = 8
 	},
 /obj/table/wood/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /obj/window/cubicle{
 	dir = 2
 	},
@@ -19855,7 +19855,7 @@
 	},
 /obj/table/wood/auto,
 /obj/deskclutter,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /turf/unsimulated/floor/carpet/grime,
 /area/crater/biodome/research)
 "xCd" = (

@@ -4005,7 +4005,7 @@
 /area/station/hallway/secondary/entry)
 "ama" = (
 /obj/table/reinforced/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -10120,7 +10120,7 @@
 	pixel_x = 10;
 	pixel_y = 7
 	},
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	pixel_y = 1
 	},
 /turf/simulated/floor/black,
@@ -21680,7 +21680,7 @@
 	icon_state = "4-8"
 	},
 /obj/table/reinforced/auto,
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	pixel_x = 7;
 	pixel_y = 12
 	},
@@ -21729,7 +21729,7 @@
 /area/station/crew_quarters/heads)
 "bdX" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	switchon = 1
 	},
 /turf/simulated/floor/carpet{
@@ -22160,7 +22160,7 @@
 /area/station/security/checkpoint)
 "beV" = (
 /obj/table/reinforced/auto,
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	pixel_x = 6;
 	pixel_y = 5
 	},

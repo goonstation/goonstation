@@ -37698,7 +37698,7 @@
 /area/station/crew_quarters/lounge/port)
 "bSt" = (
 /obj/table/wood,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /turf/simulated/floor/grime,
 /area/space)
 "bSu" = (

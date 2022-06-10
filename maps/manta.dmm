@@ -5719,7 +5719,7 @@
 /turf/space/fluid/manta,
 /area/supply/spawn_point/manta)
 "arn" = (
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	pixel_x = 4;
 	pixel_y = 3;
 	switchon = 1
@@ -27401,7 +27401,7 @@
 	},
 /area/station/science/chemistry)
 "bxD" = (
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /obj/table/wood/round/auto,
 /obj/item/paper{
 	desc = "";
@@ -31363,7 +31363,7 @@
 /area/station/science/restroom)
 "bJL" = (
 /obj/table/reinforced/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -35282,7 +35282,7 @@
 /area/station/security/checkpoint/sec_foyer)
 "gvx" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /obj/cable{
 	icon_state = "0-2"
 	},

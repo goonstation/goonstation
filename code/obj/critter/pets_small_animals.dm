@@ -126,6 +126,7 @@
 
 	on_revive()
 		..()
+		src.alive = TRUE
 		src.visible_message("<span class='notice'><b>[src]</b> stops playing dead and gets back up!</span>")
 		src.health = initial(src.health)
 		src.icon_state = src.living_state ? src.living_state : initial(src.icon_state)
@@ -134,7 +135,7 @@
 
 	CritterDeath()
 		..()
-		SPAWN(rand(200,800))
+		SPAWN(rand(20 SECONDS, 80 SECONDS))
 			if (src && !src.alive)
 				src.on_revive()
 

@@ -366,8 +366,7 @@
 	attack_hand(var/mob/user)
 		..()
 		if (!src.alive)
-			..()
-			return
+			return ..()
 
 		if (src.sleeping)
 			sleeping = 0

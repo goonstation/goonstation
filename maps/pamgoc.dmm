@@ -13546,7 +13546,7 @@
 	icon_state = "4-8"
 	},
 /obj/table/reinforced/auto,
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	pixel_x = -7;
 	pixel_y = 12
 	},
@@ -33666,7 +33666,7 @@
 	pixel_x = -10;
 	pixel_y = 7
 	},
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	pixel_y = 1
 	},
 /turf/simulated/floor/black,
@@ -61921,7 +61921,7 @@
 /area/station/security/checkpoint)
 "cmn" = (
 /obj/table/reinforced/auto,
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	pixel_x = -6;
 	pixel_y = 5
 	},
@@ -61930,7 +61930,7 @@
 /area/station/security/checkpoint)
 "cmp" = (
 /obj/table/reinforced/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /obj/cable{
 	d1 = 1;
 	d2 = 8;
@@ -63270,7 +63270,7 @@
 /area/station/security/detectives_office)
 "coh" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	switchon = 1
 	},
 /turf/simulated/floor/carpet{

@@ -675,7 +675,7 @@
 /area/space)
 "abJ" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	icon_state = "lamp-burned"
 	},
 /turf/simulated/floor/plating/airless{
@@ -1018,7 +1018,7 @@
 /area/station/crew_quarters/quarters_east)
 "acz" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	icon_state = "lamp-burned"
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/east,
@@ -2823,7 +2823,7 @@
 /area/station/crew_quarters/lounge)
 "ahd" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /turf/simulated/floor/carpet/blue/fancy/narrow/T_west,
 /area/station/crew_quarters/quarters_east)
 "ahe" = (
@@ -2851,7 +2851,7 @@
 /area/station/crew_quarters/quarters_east)
 "ahh" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /turf/simulated/floor/carpet/blue/fancy/narrow/T_east,
 /area/station/crew_quarters/quarters_east)
 "ahi" = (
