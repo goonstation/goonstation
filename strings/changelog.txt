@@ -1,4 +1,9 @@
 
+(t)fri jun 10 22
+(u)Blahowsky
+(p)9014
+(e)🎨|sprites
+(*)Added two new hairstyles and one fade; Loose Long Braid (with Loose Long Braid: Twin Color to customise) and Loose Long Braid Over Shoulder.
 (t)thu jun 09 22
 (u)Cogwerks
 (e)🎨|sprites
