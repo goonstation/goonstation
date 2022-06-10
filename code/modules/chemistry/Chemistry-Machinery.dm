@@ -800,9 +800,8 @@ datum/chemicompiler_core/stationaryCore
 		topicPermissionCheck(action)
 			if (!(src in range(1)))
 				return 0
-			if (executor.core.running)
-				if(!(action in list("getUIState", "reportError")))
-					return 0
+			if(executor.core.running)
+				return action in list("getUIState", "reportError", "abortCode")
 			return 1
 
 		statusChange(oldStatus, newStatus)

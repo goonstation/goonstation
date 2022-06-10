@@ -251,10 +251,24 @@
 	spawn_contents = list(/obj/item/beartrap = 4)
 
 /obj/item/storage/pouch/highcap
-	name = "actical pouch"
-	desc = "A large pouch for carrying multiple miscallenous things at once."
+	name = "tactical pouch"
+	desc = "A large pouch for carrying multiple miscellaneous things at once."
 	icon_state = "ammopouch-quad"
 	w_class = W_CLASS_SMALL
 	slots = 6
 	does_not_open_in_pocket = 0
 	can_hold = list(/obj/item/ammo, /obj/item/old_grenade, /obj/item/chem_grenade, /obj/item/reagent_containers, /obj/item/deployer/barricade, /obj/item/tool, /obj/item/breaching_charge, /obj/item/pinpointer, /obj/item/mine, /obj/item/remote, )
+
+/obj/item/storage/sawfly_pouch
+	name = "sawfly pouch"
+	desc = "A pouch for carrying four compact sawflies that comes with a remote."
+	icon_state = "ammopouch-sawflies"
+	health = 6
+	w_class = W_CLASS_SMALL
+	slots = 4
+	does_not_open_in_pocket = 0
+	spawn_contents = list(/obj/item/old_grenade/sawfly = 4)
+
+	New()
+		new /obj/item/remote/sawflyremote(src.loc)
+		..()

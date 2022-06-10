@@ -1850,12 +1850,12 @@
 		src.update_clothing()
 
 	if (W && W == src.r_hand)
-		src.r_hand = null
 		W.dropped(src)
+		src.r_hand = null
 		src.update_inhands()
 	if (W && W == src.l_hand)
-		src.l_hand = null
 		W.dropped(src)
+		src.l_hand = null
 		src.update_inhands()
 
 /mob/living/carbon/human/update_equipped_modifiers() // A bruteforce approach, for things like the garrote that like to change their modifier while equipped
@@ -3068,7 +3068,7 @@
 	if(ispath(mutantrace_type, /datum/mutantrace) )	//Set a new mutantrace only if passed one
 		src.mutantrace = new mutantrace_type(src)
 		src.mutantrace.MutateMutant(src, "set")
-
+		src.mutantrace.on_attach() // Mutant race initalization, to avoid issues with abstract representation in New()
 		. = 1
 
 	if(.)

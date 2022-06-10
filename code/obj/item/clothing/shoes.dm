@@ -370,6 +370,10 @@
 	step_priority = STEP_PRIORITY_LOW
 	duration_remove = 10 SECONDS
 
+	/// Subtype that wizards spawn with, and is in their vendor. Cows can wear them, unlike regular sandals (might also be useful in the future)
+	wizard
+		compatible_species = list("human", "cow")
+
 /obj/item/clothing/shoes/tourist
 	name = "flip-flops"
 	desc = "These cheap sandals don't look very comfortable."
@@ -423,6 +427,7 @@
 	name = "hi-grip assault boots"
 	desc = "Specialist combat boots designed to provide enhanced grip and ankle stability."
 	icon_state = "swatheavy"
+	compatible_species = list("cow", "human")
 	c_flags = NOSLIP
 
 /obj/item/clothing/shoes/swat/heavy
@@ -446,6 +451,7 @@
 	icon_state = "swatheavy"
 	magnetic = 1
 	c_flags = NOSLIP
+	compatible_species = list("cow", "human")
 
 /obj/item/clothing/shoes/fuzzy //not boolean slippers
 	name = "fuzzy slippers"

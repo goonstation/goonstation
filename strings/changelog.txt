@@ -1,4 +1,34 @@
 
+(t)fri jun 10 22
+(u)FlameArrow57
+(p)9054
+(e)|
+(+)Added new medals for changeling, blob, head rev, and werewolf antagonists!
+(u)Blahowsky
+(p)9014
+(e)🎨|sprites
+(*)Added two new hairstyles and one fade; Loose Long Braid (with Loose Long Braid: Twin Color to customise) and Loose Long Braid Over Shoulder.
+(t)thu jun 09 22
+(u)Cogwerks
+(e)🎨|sprites
+(*)Made a new sprite and name for the heavy ion blaster
+(*)Occasionally testing a micro-phaser, macro-phaser, and egun Jr. in rounds 
+(u)LeahTheTech
+(p)9052
+(e)🐛|bug
+(+)Renamed the "Open antag popup" verb to "Special role popup"
+(t)wed jun 08 22
+(u)NightmareChamillian and Amylizzle
+(p)8418
+(e)🆕🎨|feature, sprites
+(*)Added a new general-purpose syndicate item: the sawfly. See minor changes for details.
+(+)Sawflies cost 2 TC and come as a 1.5 second grenade that spawns a single sawfly drone on detonation
+(+)Sawfly drones have 50 HP that deal 14 damage a hit to crew. They can be returned to grenade form by traitors.
+(+)Furthermore, all sawfly purchases come with a remote, which can be used to fold and deploy all sawflies in in a 4 tile radius.
+(u)Taylor Kellogg
+(p)9032
+(e)|
+(+)Adds an abort button to the Chemicompiler
 (t)tue jun 07 22
 (u)tarmunora, catface
 (e)⚖|balance

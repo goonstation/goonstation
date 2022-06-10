@@ -1131,7 +1131,7 @@
 /area/radiostation/studio)
 "adu" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	on = 1
 	},
 /turf/simulated/floor/wood/two,
@@ -2023,7 +2023,7 @@
 /area/space_hive)
 "agd" = (
 /obj/table/auto,
-/obj/machinery/light/lamp/bright,
+/obj/machinery/light/lamp/black/bright,
 /turf/simulated/floor/black,
 /area/mining/quarters)
 "age" = (
@@ -12238,7 +12238,7 @@
 /area/derelict_ai_sat)
 "aNt" = (
 /obj/table/reinforced/auto,
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	pixel_y = 6
 	},
 /turf/simulated/floor/orangeblack/side{

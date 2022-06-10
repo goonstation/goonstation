@@ -2439,7 +2439,7 @@ proc/get_mobs_trackable_by_AI()
 				src.show_text("Your name cannot be blank. Please choose a different name.", "red")
 				continue
 			else
-				if (tgui_alert(renaming_mob, "Use the name [newname]?", newname, list("Yes", "No")) == "Yes")
+				if (tgui_alert(renaming_mob || src, "Use the name [newname]?", newname, list("Yes", "No")) == "Yes")
 					src.real_name = newname
 					if (src.deployed_to_eyecam)
 						src.eyecam.real_name = newname

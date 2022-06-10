@@ -7,6 +7,8 @@ ABSTRACT_TYPE(/obj/flock_structure)
 	density = TRUE
 	name = "uh oh"
 	desc = "CALL A CODER THIS SHOULDN'T BE SEEN"
+	///Shown on the TGUI tooltip for the structure
+	var/flock_desc = "THIS ALSO SHOULDN'T BE SEEN AAAA"
 	flags = USEDELAY
 	mat_changename = FALSE
 	mat_changedesc = FALSE
@@ -29,12 +31,6 @@ ABSTRACT_TYPE(/obj/flock_structure)
 	/// can flockdrones pass through this akin to a grille? need to set USE_CANPASS to make this work however
 	var/passthrough = FALSE
 
-	var/usesgroups = FALSE
-	/// what group are we connected to?
-	var/datum/flock_tile_group/group = null
-	/// the tile which its "connected to" and that handles the group
-	var/turf/simulated/floor/feather/grouptile = null
-
 /obj/flock_structure/New(var/atom/location, var/datum/flock/F=null)
 	..()
 	health_max = health
@@ -46,11 +42,7 @@ ABSTRACT_TYPE(/obj/flock_structure)
 	if(F)
 		src.flock = F
 		src.flock.registerStructure(src)
-	if(usesgroups && istype(get_turf(src), /turf/simulated/floor/feather))
-		var/turf/simulated/floor/feather/f = get_turf(src)
-		grouptile = f
-		group = f.group
-		f.group.addstructure(src)
+
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection)
 
@@ -59,7 +51,7 @@ ABSTRACT_TYPE(/obj/flock_structure)
 	if (flock)
 		flock.removeStructure(src)
 	flock = null
-	group = null
+
 	..()
 
 /obj/flock_structure/proc/describe_state()
@@ -68,6 +60,7 @@ ABSTRACT_TYPE(/obj/flock_structure)
 	state["name"] = src.flock_id
 	state["health"] = src.health
 	state["compute"] = src.compute_provided()
+	state["desc"] = src.flock_desc
 	var/area/myArea = get_area(src)
 	if(isarea(myArea))
 		state["area"] = myArea.name
@@ -97,23 +90,6 @@ ABSTRACT_TYPE(/obj/flock_structure)
 
 /obj/flock_structure/proc/process()
 	// override
-
-/obj/flock_structure/proc/groupcheck() //rechecks if the tile under's group matches its own
-	if(!usesgroups) return
-	if(istype(get_turf(src), /turf/simulated/floor/feather))
-		var/turf/simulated/floor/feather/undertile = get_turf(src)
-		if(src.grouptile == undertile && grouptile.group == src.group) return//no changes its all good
-		else if(src.grouptile != undertile && undertile.group == src.group)//if the grouptile is different but the groups the same
-			src.grouptile = undertile//just move the connected tile, this should really rarely happen if the structure is moved somehow
-		else if(src.grouptile != undertile && undertile.group != src.group)//if both stuff is different.
-			src.grouptile = undertile
-			src.group?.removestructure(src)
-			src.group = undertile.group
-			src.group.addstructure(src)
-		else if(src.grouptile == undertile && grouptile.group != src.group)//if just the tile's group is different
-			src.group?.removestructure(src)
-			src.group = grouptile.group
-			src.group.addstructure(src)
 
 
 /obj/flock_structure/proc/takeDamage(var/damageType, var/amount)

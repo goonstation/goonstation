@@ -55,6 +55,8 @@
 	var/obj/item/grab/chokehold = null
 	var/obj/item/grab/special_grab = null
 
+	var/attack_verbs = "attacks" //! Verb used when you attack someone with this, as in [attacker] [attack_verbs] [victim]. Can be a list or single entry
+
 	/*_________*/
 	/*Inventory*/
 	/*‾‾‾‾‾‾‾‾‾*/
@@ -1591,7 +1593,7 @@
 		#ifdef COMSIG_MOB_DROPPED
 		SEND_SIGNAL(user, COMSIG_MOB_DROPPED, src)
 		#endif
-	if (src.c_flags & EQUIPPED_WHILE_HELD)
+	if (src.c_flags & EQUIPPED_WHILE_HELD && src == user.equipped())
 		src.unequipped(user)
 	#ifdef COMSIG_ITEM_DROPPED
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user)

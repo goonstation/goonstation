@@ -240,6 +240,10 @@ TYPEINFO(/datum/mutantrace)
 	proc/onDeath(gibbed)
 		return
 
+	/// For calling of procs when a mob is given a mutant race, to avoid issues with abstract representation in New()
+	proc/on_attach()
+		return
+
 	New(var/mob/living/carbon/human/M)
 		..() // Cant trust not-humans with a mutantrace, they just runtime all over the place
 		if(ishuman(M) && M?.bioHolder?.mobAppearance)
@@ -925,7 +929,16 @@ TYPEINFO(/datum/mutantrace)
 
 			SPAWN(rand(4, 30))
 				M.emote("scream")
+			if (M.mind && ticker.mode)
+				if (!M.mind.special_role)
+					M.mind.special_role = ROLE_ZOMBIE
+				if (!(M.mind in ticker.mode.Agimmicks))
+					ticker.mode.Agimmicks += M.mind
 			M.show_antag_popup("zombie")
+
+	on_attach()
+		if(ishuman(mob))
+			mob.antagonist_overlay_refresh(1)
 
 	proc/make_bubs(var/mob/living/carbon/human/M)
 		M.bioHolder.AddEffect("strong")
@@ -1717,7 +1730,7 @@ TYPEINFO(/datum/mutantrace)
 		. = ..()
 		if(ishuman(M))
 			M.blood_id = "hemolymph"
-			//H.blood_color = "009E81"
+			//H.blood_color = "#009E81"
 			M.mob_flags |= SHOULD_HAVE_A_TAIL
 		APPLY_ATOM_PROPERTY(M, PROP_MOB_RADPROT, src, 100)
 
