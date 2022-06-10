@@ -1,5 +1,9 @@
 
 (t)fri jun 10 22
+(u)FlameArrow57
+(p)9054
+(e)|
+(+)Added new medals for changeling, blob, head rev, and werewolf antagonists!
 (u)Blahowsky
 (p)9014
 (e)🎨|sprites
