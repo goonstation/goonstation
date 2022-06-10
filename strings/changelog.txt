@@ -1,5 +1,9 @@
 
 (t)thu jun 09 22
+(u)Cogwerks
+(e)🎨|sprites
+(*)Made a new sprite and name for the heavy ion blaster
+(*)Occasionally testing a micro-phaser, macro-phaser, and egun Jr. in rounds 
 (u)LeahTheTech
 (p)9052
 (e)🐛|bug
