@@ -1,5 +1,9 @@
 
 (t)fri jun 10 22
+(u)ZeWaka
+(p)8843
+(e)🆕⚖🔄📄|feature, balance, rework, tgui
+(*)Reworked the Engine Statistics computer on Cog1 to be TGUI, graph-based, and much more intuitive.
 (u)FlameArrow57
 (p)9054
 (e)|
