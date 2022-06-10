@@ -87,9 +87,9 @@
 		return 1
 
 	attack_self(mob/user)
-		src.toggle(user)
+		src.toggle(user, TRUE)
 
-	proc/toggle(var/mob/user)
+	proc/toggle(var/mob/user, activated_inhand = FALSE)
 		if (src.broken)
 			name = "broken flashlight"
 			return
@@ -112,11 +112,16 @@
 				icon_state = icon_broken
 				name = "broken [name]"
 				src.broken = 1
+				return
 			else
 				light_dir.update(1)
 		else
 			set_icon_state(src.icon_off)
 			light_dir.update(0)
+
+		if (activated_inhand)
+			var/obj/ability_button/flashlight_toggle/flashlight_button = locate(/obj/ability_button/flashlight_toggle) in src.ability_buttons
+			flashlight_button.icon_state = src.on ? "lighton" : "lightoff"
 
 /obj/item/device/light/flashlight/abilities = list(/obj/ability_button/flashlight_toggle)
 
@@ -155,7 +160,7 @@
 		light_c.update(1)
 
 	//Can be heated. Has chance to explode when heated. After heating, can explode when thrown or fussed with!
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if ((isweldingtool(W) && W:try_weld(user,0,-1,0,0)) || istype(W, /obj/item/device/igniter) || ((istype(W, /obj/item/device/light/zippo) || istype(W, /obj/item/match) || istype(W, /obj/item/device/light/candle) || istype(W, /obj/item/clothing/mask/cigarette)) && W:on) || W.burning)
 			user.visible_message("<span class='alert'><b>[user]</b> heats [src] with [W].</span>")
 			src.heated += 1
@@ -307,7 +312,7 @@
 			"You [fluff] out [src].")
 			src.put_out(user)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!src.on)
 			if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
 				src.light(user, "<span class='alert'><b>[user]</b> casually lights [src] with [W], what a badass.</span>")

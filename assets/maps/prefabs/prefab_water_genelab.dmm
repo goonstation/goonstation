@@ -1,33 +1,271 @@
-"a" = (/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/brindle)
-"b" = (/turf/variableTurf/clear,/area/space)
-"c" = (/obj/lattice{icon_state = "lattice-dir"; dir = 8},/obj/machinery/door/airlock/pyro,/turf/simulated/floor/sanitary/blue,/area/prefab/brindle)
-"d" = (/turf/simulated/floor/sanitary/blue,/area/prefab/brindle)
-"e" = (/obj/lattice{icon_state = "lattice-dir"; dir = 8},/obj/structure/girder/reinforced,/turf/variableTurf/clear,/area/prefab/brindle)
-"f" = (/obj/table/glass/reinforced/auto,/obj/item/cloner_upgrade,/turf/simulated/floor/sanitary/blue,/area/prefab/brindle)
-"g" = (/obj/table/glass/reinforced/auto,/obj/item/reagent_containers/vending/bag/random,/turf/simulated/floor/sanitary/blue,/area/prefab/brindle)
-"h" = (/obj/table/glass/reinforced/auto,/obj/item/paper_bin,/obj/item/pen,/obj/machinery/light/incandescent/cool,/turf/simulated/floor/sanitary/blue,/area/prefab/brindle)
-"i" = (/obj/table/glass/reinforced/auto,/obj/item/reagent_containers/vending/vial/random{pixel_x = -3},/obj/item/reagent_containers/vending/vial/random{pixel_x = 3},/obj/item/reagent_containers/vending/vial/random,/turf/simulated/floor/sanitary/blue,/area/prefab/brindle)
-"j" = (/obj/table/glass/reinforced/auto,/obj/item/grinder_upgrade,/turf/simulated/floor/sanitary/blue,/area/prefab/brindle)
-"k" = (/obj/stool/chair/office/purple{icon_state = "office_chair_purple"; dir = 4},/turf/simulated/floor/sanitary/blue,/area/prefab/brindle)
-"l" = (/obj/table/glass/reinforced/auto,/obj/item/paper{icon_state = "paper"; info = "Hi Lydia!<br>How have you been doing? I heard that you transferred to another station! That must be pretty exciting, right? All these new people to impress and befriend, haha.<br>I'm doing pretty great myself! I miss station life a little bit, of course, but my lab is amazing and I love all of them. I still can't really believe it. Tara Brindle, head researcher! It's surreal. There's a big conference coming up, and the energy really is palpable. We've been working on some really really cool research - I wish I could disclose more! - and it's shaping up to be one hell of a finding. When we publish them, I'm sure you'll be just as stunned as everyone else.<br>Anyways, yeah, I probably should get back to work. Have I told you how nice and spacious my office is? It really lets me get some alone time when things get super hectic. My one complaint is that it has no windows, but, eh. You can't get <i>everything</i>. At least not all at once!<br>Love,<br>Tara"},/turf/simulated/floor/sanitary/blue,/area/prefab/brindle)
-"m" = (/obj/machinery/light/incandescent/cool,/turf/simulated/floor/sanitary/blue,/area/prefab/brindle)
-"n" = (/obj/lattice{icon_state = "lattice-dir"; dir = 1},/obj/structure/girder/displaced,/turf/variableTurf/clear,/area/prefab/brindle)
-"o" = (/obj/table/glass/reinforced/auto,/obj/item/storage/box/diskbox,/turf/simulated/floor/sanitary/blue,/area/prefab/brindle)
-"p" = (/obj/table/glass/reinforced/auto,/turf/simulated/floor/sanitary/blue,/area/prefab/brindle)
-"q" = (/obj/lattice{icon_state = "lattice-dir"; dir = 10},/obj/structure/girder/reinforced,/turf/variableTurf/clear,/area/prefab/brindle)
-"r" = (/obj/lattice{icon_state = "lattice-dir-b"; dir = 5},/obj/structure/girder/reinforced,/turf/variableTurf/clear,/area/prefab/brindle)
-"w" = (/turf/variableTurf/clear,/area/noGenerate)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/brindle)
+"b" = (
+/turf/variableTurf/clear,
+/area/space)
+"c" = (
+/obj/lattice{
+	icon_state = "lattice-dir";
+	dir = 8
+	},
+/obj/machinery/door/airlock/pyro,
+/turf/simulated/floor/sanitary/blue,
+/area/prefab/brindle)
+"d" = (
+/turf/simulated/floor/sanitary/blue,
+/area/prefab/brindle)
+"e" = (
+/obj/lattice{
+	icon_state = "lattice-dir";
+	dir = 8
+	},
+/obj/structure/girder/reinforced,
+/turf/variableTurf/clear,
+/area/prefab/brindle)
+"f" = (
+/obj/table/glass/reinforced/auto,
+/obj/item/cloner_upgrade,
+/turf/simulated/floor/sanitary/blue,
+/area/prefab/brindle)
+"g" = (
+/obj/table/glass/reinforced/auto,
+/obj/item/reagent_containers/vending/bag/random,
+/turf/simulated/floor/sanitary/blue,
+/area/prefab/brindle)
+"h" = (
+/obj/table/glass/reinforced/auto,
+/obj/item/paper_bin,
+/obj/item/pen,
+/obj/machinery/light/incandescent/cool,
+/turf/simulated/floor/sanitary/blue,
+/area/prefab/brindle)
+"i" = (
+/obj/table/glass/reinforced/auto,
+/obj/item/reagent_containers/vending/vial/random{
+	pixel_x = -3
+	},
+/obj/item/reagent_containers/vending/vial/random{
+	pixel_x = 3
+	},
+/obj/item/reagent_containers/vending/vial/random,
+/turf/simulated/floor/sanitary/blue,
+/area/prefab/brindle)
+"j" = (
+/obj/table/glass/reinforced/auto,
+/obj/item/grinder_upgrade,
+/turf/simulated/floor/sanitary/blue,
+/area/prefab/brindle)
+"k" = (
+/obj/stool/chair/office/purple{
+	icon_state = "office_chair_purple";
+	dir = 4
+	},
+/turf/simulated/floor/sanitary/blue,
+/area/prefab/brindle)
+"l" = (
+/obj/table/glass/reinforced/auto,
+/obj/item/paper{
+	icon_state = "paper";
+	info = "Hi Lydia!<br>How have you been doing? I heard that you transferred to another station! That must be pretty exciting, right? All these new people to impress and befriend, haha.<br>I'm doing pretty great myself! I miss station life a little bit, of course, but my lab is amazing and I love all of them. I still can't really believe it. Tara Brindle, head researcher! It's surreal. There's a big conference coming up, and the energy really is palpable. We've been working on some really really cool research - I wish I could disclose more! - and it's shaping up to be one hell of a finding. When we publish them, I'm sure you'll be just as stunned as everyone else.<br>Anyways, yeah, I probably should get back to work. Have I told you how nice and spacious my office is? It really lets me get some alone time when things get super hectic. My one complaint is that it has no windows, but, eh. You can't get <i>everything</i>. At least not all at once!<br>Love,<br>Tara"
+	},
+/turf/simulated/floor/sanitary/blue,
+/area/prefab/brindle)
+"m" = (
+/obj/machinery/light/incandescent/cool,
+/turf/simulated/floor/sanitary/blue,
+/area/prefab/brindle)
+"n" = (
+/obj/lattice{
+	icon_state = "lattice-dir";
+	dir = 1
+	},
+/obj/structure/girder/displaced,
+/turf/variableTurf/clear,
+/area/prefab/brindle)
+"o" = (
+/obj/table/glass/reinforced/auto,
+/obj/item/storage/box/diskbox,
+/turf/simulated/floor/sanitary/blue,
+/area/prefab/brindle)
+"p" = (
+/obj/table/glass/reinforced/auto,
+/turf/simulated/floor/sanitary/blue,
+/area/prefab/brindle)
+"q" = (
+/obj/lattice{
+	icon_state = "lattice-dir";
+	dir = 10
+	},
+/obj/structure/girder/reinforced,
+/turf/variableTurf/clear,
+/area/prefab/brindle)
+"r" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b";
+	dir = 5
+	},
+/obj/structure/girder/reinforced,
+/turf/variableTurf/clear,
+/area/prefab/brindle)
+"w" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
 
 (1,1,1) = {"
-bbbbbbwwwbbb
-bbbbbbacabbb
-bbbbbaadaabb
-bbbaeadddaab
-bbaafgdddhab
-baaijdddklab
-baddddddaaab
-baamddddnbbb
-bbaaopaqrbbb
-bbbaaaabbbbb
-bbbbbbbbbbbb
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+"}
+(2,1,1) = {"
+b
+b
+b
+b
+b
+a
+a
+a
+b
+b
+b
+"}
+(3,1,1) = {"
+b
+b
+b
+b
+a
+a
+d
+a
+a
+b
+b
+"}
+(4,1,1) = {"
+b
+b
+b
+a
+a
+i
+d
+m
+a
+a
+b
+"}
+(5,1,1) = {"
+b
+b
+b
+e
+f
+j
+d
+d
+o
+a
+b
+"}
+(6,1,1) = {"
+b
+b
+a
+a
+g
+d
+d
+d
+p
+a
+b
+"}
+(7,1,1) = {"
+w
+a
+a
+d
+d
+d
+d
+d
+a
+a
+b
+"}
+(8,1,1) = {"
+w
+c
+d
+d
+d
+d
+d
+d
+q
+b
+b
+"}
+(9,1,1) = {"
+w
+a
+a
+d
+d
+k
+a
+n
+r
+b
+b
+"}
+(10,1,1) = {"
+b
+b
+a
+a
+h
+l
+a
+b
+b
+b
+b
+"}
+(11,1,1) = {"
+b
+b
+b
+a
+a
+a
+a
+b
+b
+b
+b
+"}
+(12,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
 "}

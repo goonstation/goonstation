@@ -14,7 +14,7 @@
 			src.icon_state = "scrollopen"
 			src.desc = "This is one WEIRD burrito..."
 
-	attackby(obj/item/weapon as obj,mob/user as mob)
+	attackby(obj/item/weapon, mob/user)
 		if(istype(weapon, /obj/item/pen) && src.icon_state=="scrollopen")
 			user.visible_message("<span class='alert'><b>[user.name] stabs themself with the [weapon] and starts signing the contract in blood!</b></span>","<span class='alert'><b>You stab yourself with the [weapon] and start signing the contract in blood!</b></span>")
 			playsound(user, "sound/impact_sounds/Flesh_Stab_1.ogg", 60, 1)
@@ -28,7 +28,7 @@
 			else
 				src.icon_state = "scrollopen"
 
-	attack(mob/user as mob,mob/target as mob)
+	attack(mob/user, mob/target)
 		if((user == target)&&(src.icon_state == "scrollclosed"))
 			user.visible_message("<span class='alert'><b>[user.name] bites into the [src]. They didn't seem to enjoy it.</b></span>","<span class='alert'><b>Blegh! This doesn't taste like a burrito!</b></span>")
 
@@ -123,7 +123,7 @@
 					AM.set_loc(get_turf(src))
 				qdel(src)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(src.loc != user)
 			..()
 			return
@@ -280,7 +280,7 @@
 				redraw = 0
 				reference = src
 			if("Traitor")
-				var/list/buylist = typesof(/datum/syndicate_buylist)
+				var/list/buylist = concrete_typesof(/datum/syndicate_buylist)
 				var/datum/syndicate_buylist/thing = pick(buylist)
 				var/datum/syndicate_buylist/thing2 = new thing
 				if(thing2.item != null)
@@ -294,6 +294,7 @@
 				deck.inuse = 0
 				user.u_equip(deck)
 				deck.set_loc(get_turf(user))
+				logTheThing("combat", user, null, "was gibbed by Zoldorf's crusher card at [log_loc(user)].")
 				user.gib(1)
 			if("Geneticist")
 				var/list/effectpool = list("xray","hulk","breathless","thermal_resist","regenerator","detox")
@@ -426,6 +427,7 @@
 					return
 				if(isrestrictedz(user.z))
 					boutput(user, "<span class='alert'>You are suddenly zapped apart!</span>")
+					logTheThing("user", user, null, "was gibbed for trying to use Zoldorf's presto scroll at [log_loc(user)].")
 					user.gib()
 
 				var/list/randomturfs = new/list()

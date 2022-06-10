@@ -58,7 +58,7 @@
 
 	onStart()
 		..()
-		if (!IN_RANGE(src.user, src.rod, 1) || !IN_RANGE(src.user, src.target, 1) || !src.user || !src.target || !src.rod || !src.fishing_spot)
+		if (!(BOUNDS_DIST(src.user, src.rod) == 0) || !(BOUNDS_DIST(src.user, src.target) == 0) || !src.user || !src.target || !src.rod || !src.fishing_spot)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -71,7 +71,7 @@
 
 	onUpdate()
 		..()
-		if (!IN_RANGE(src.user, src.rod, 1) || !IN_RANGE(src.user, src.target, 1) || !src.user || !src.target || !src.rod || !src.fishing_spot)
+		if (!(BOUNDS_DIST(src.user, src.rod) == 0) || !(BOUNDS_DIST(src.user, src.target) == 0) || !src.user || !src.target || !src.rod || !src.fishing_spot)
 			interrupt(INTERRUPT_ALWAYS)
 			src.rod.is_fishing = false
 			src.rod.UpdateIcon()
@@ -79,7 +79,7 @@
 			return
 
 	onEnd()
-		if (!IN_RANGE(src.user, src.rod, 1) || !IN_RANGE(src.user, src.target, 1) || !src.user || !src.target || !src.rod || !src.fishing_spot)
+		if (!(BOUNDS_DIST(src.user, src.rod) == 0) || !(BOUNDS_DIST(src.user, src.target) == 0) || !src.user || !src.target || !src.rod || !src.fishing_spot)
 			..()
 			interrupt(INTERRUPT_ALWAYS)
 			src.rod.is_fishing = false
@@ -119,7 +119,7 @@
 	icon = 'icons/obj/items/fishing_gear.dmi'
 	icon_state = "fish_portal-active"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		new /obj/item/fish_portal(get_turf(src))
 		playsound(src.loc, 'sound/items/miningtool_off.ogg', 40)
 		user.visible_message("[user] flips off the [src].", "You turn off the [src].")

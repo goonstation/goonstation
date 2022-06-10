@@ -68,40 +68,6 @@
 		add_filter("motion blur", 1, motion_blur_filter(x=0, y=3))
 		..()
 
-/obj/decal/skeleton
-	name = "skeleton"
-	desc = "The remains of a human."
-	opacity = 0
-	density = 0
-	anchored = 1
-	icon = 'icons/obj/adventurezones/void.dmi'
-	icon_state = "skeleton_l"
-	plane = PLANE_DEFAULT
-
-	decomposed_corpse
-		name = "decomposed corpse"
-		desc = "Eugh, the stench is horrible!"
-		icon = 'icons/misc/hstation.dmi'
-		icon_state = "body1"
-
-	unanchored
-		anchored = 0
-
-		summon
-			New()
-				flick("skeleton_summon", src)
-				..()
-
-
-	cap
-		name = "remains of the captain"
-		desc = "The remains of the captain of this station ..."
-		opacity = 0
-		density = 0
-		anchored = 1
-		icon = 'icons/obj/adventurezones/void.dmi'
-		icon_state = "skeleton_l"
-
 /obj/decal/floatingtiles
 	name = "floating tiles"
 	desc = "These tiles are just floating around in the void."
@@ -152,7 +118,7 @@
 	plane = PLANE_HUD
 	anchored = 1
 
-proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time=2 SECONDS, invisibility=INVIS_NONE)
+proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time=2 SECONDS, invisibility=INVIS_NONE, atom/movable/pointer)
 	// note that `target` can also be a turf, but byond sux and I can't declare the var as atom because areas don't have vis_contents
 	var/obj/decal/point/point = new
 	point.pixel_x = pixel_x
@@ -160,6 +126,11 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 	point.color = color
 	point.invisibility = invisibility
 	target.vis_contents += point
+	if(pointer && GET_DIST(pointer, target) <= 10) // check so that you can't shoot points across the station
+		var/matrix/M = matrix()
+		M.Translate((pointer.x - target.x)*32 - pixel_x, (pointer.y - target.y)*32 - pixel_y)
+		point.transform = M
+		animate(point, transform=null, time=2)
 	SPAWN(time)
 		if(target)
 			target.vis_contents -= point
@@ -177,36 +148,6 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 	density = 1
 */
 
-/obj/decal/pole
-	name = "Barber Pole"
-	icon = 'icons/obj/decoration.dmi'
-	icon_state = "pole"
-	anchored = 1
-	density = 0
-	desc = "Barber poles historically were signage used to convey that the barber would perform services such as blood letting and other medical procedures, with the red representing blood, and the white representing the bandaging. In America, long after the time when blood-letting was offered, a third colour was added to bring it in line with the colours of their national flag. This one is in space."
-	layer = OBJ_LAYER
-	plane = PLANE_DEFAULT
-
-/obj/decal/oven
-	name = "Oven"
-	desc = "An old oven."
-	icon = 'icons/obj/kitchen.dmi'
-	icon_state = "oven_off"
-	anchored = 1
-	density = 1
-	layer = OBJ_LAYER
-	plane = PLANE_DEFAULT
-
-/obj/decal/sink
-	name = "Sink"
-	icon = 'icons/obj/kitchen.dmi'
-	icon_state = "sink"
-	desc = "The sink doesn't appear to be connected to a waterline."
-	anchored = 1
-	density = 1
-	layer = OBJ_LAYER
-	plane = PLANE_DEFAULT
-
 obj/decal/fakeobjects
 	layer = OBJ_LAYER
 	plane = PLANE_DEFAULT
@@ -218,6 +159,70 @@ obj/decal/fakeobjects
 
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.true_name][name_suffix(null, 1)]"
+
+/obj/decal/fakeobjects/skeleton
+	name = "skeleton"
+	desc = "The remains of a human."
+	opacity = 0
+	density = 0
+	anchored = 1
+	icon = 'icons/obj/adventurezones/void.dmi'
+	icon_state = "skeleton_l"
+	plane = PLANE_DEFAULT
+
+	decomposed_corpse
+		name = "decomposed corpse"
+		desc = "Eugh, the stench is horrible!"
+		icon = 'icons/misc/hstation.dmi'
+		icon_state = "body1"
+
+	unanchored
+		anchored = 0
+
+		summon
+			New()
+				flick("skeleton_summon", src)
+				..()
+
+
+	cap
+		name = "remains of the captain"
+		desc = "The remains of the captain of this station ..."
+		opacity = 0
+		density = 0
+		anchored = 1
+		icon = 'icons/obj/adventurezones/void.dmi'
+		icon_state = "skeleton_l"
+
+/obj/decal/fakeobjects/pole
+	name = "Barber Pole"
+	icon = 'icons/obj/decoration.dmi'
+	icon_state = "pole"
+	anchored = 1
+	density = 0
+	desc = "Barber poles historically were signage used to convey that the barber would perform services such as blood letting and other medical procedures, with the red representing blood, and the white representing the bandaging. In America, long after the time when blood-letting was offered, a third colour was added to bring it in line with the colours of their national flag. This one is in space."
+	layer = OBJ_LAYER
+	plane = PLANE_DEFAULT
+
+/obj/decal/fakeobjects/oven
+	name = "Oven"
+	desc = "An old oven."
+	icon = 'icons/obj/kitchen.dmi'
+	icon_state = "oven_off"
+	anchored = 1
+	density = 1
+	layer = OBJ_LAYER
+	plane = PLANE_DEFAULT
+
+/obj/decal/fakeobjects/sink
+	name = "Sink"
+	icon = 'icons/obj/kitchen.dmi'
+	icon_state = "sink"
+	desc = "The sink doesn't appear to be connected to a waterline."
+	anchored = 1
+	density = 1
+	layer = OBJ_LAYER
+	plane = PLANE_DEFAULT
 
 /obj/decal/fakeobjects/console_lever
 	name = "lever console"
@@ -417,7 +422,7 @@ obj/decal/fakeobjects/teleport_pad
 	icon_state = "ringrope"
 	plane = PLANE_DEFAULT
 	layer = OBJ_LAYER
-	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT
+	event_handler_flags = USE_FLUID_ENTER
 
 	Cross(atom/movable/mover) // stolen from window.dm
 		if (mover && mover.throwing & THROW_CHAIRFLIP)
@@ -430,12 +435,14 @@ obj/decal/fakeobjects/teleport_pad
 		else
 			return 1
 
-	CheckExit(atom/movable/O as mob|obj, target as turf)
+	Uncross(atom/movable/O, do_bump = TRUE)
 		if (!src.density)
-			return 1
-		if (get_dir(O.loc, target) & src.dir)
-			return 0
-		return 1
+			. = 1
+		else if (get_dir(O.loc, O.movement_newloc) & src.dir)
+			. = 0
+		else
+			. = 1
+		UNCROSS_BUMP_CHECK(O)
 
 /obj/stool/chair/boxingrope_corner
 	name = "Boxing Ropes"
@@ -445,7 +452,7 @@ obj/decal/fakeobjects/teleport_pad
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "ringrope"
 	layer = OBJ_LAYER
-	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT
+	event_handler_flags = USE_FLUID_ENTER
 
 	rotatable = 0
 	foldable = 0
@@ -456,7 +463,7 @@ obj/decal/fakeobjects/teleport_pad
 	can_buckle(var/mob/M as mob, var/mob/user as mob)
 		if (M != user)
 			return 0
-		if ((!( iscarbon(M) ) || get_dist(src, user) > 1 || user.restrained() || user.stat || !user.canmove))
+		if ((!( iscarbon(M) ) || BOUNDS_DIST(src, user) > 0 || user.restrained() || user.stat || !user.canmove))
 			return 0
 		return 1
 
@@ -477,12 +484,14 @@ obj/decal/fakeobjects/teleport_pad
 		else
 			return 1
 
-	CheckExit(atom/movable/O as mob|obj, target as turf)
+	Uncross(atom/movable/O, do_bump = TRUE)
 		if (!src.density)
-			return 1
-		if (get_dir(O.loc, target) & src.dir)
-			return 0
-		return 1
+			. = 1
+		else if (get_dir(O.loc, O.movement_newloc) & src.dir)
+			. = 0
+		else
+			. = 1
+		UNCROSS_BUMP_CHECK(O)
 
 /obj/decal/boxingropeenter
 	name = "Ring entrance"

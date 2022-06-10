@@ -426,7 +426,7 @@
 			var/datum/material/fusedmaterial = getFusedMaterial(head_material,shaft_material)//uses a fused material to get the effects of both the shaft and head material as an implant as the lifeloop only accepts one material per implant
 			if (ishuman(target))
 				var/mob/living/carbon/human/H = target
-				var/obj/item/implant/projectile/arrow/A = new
+				var/obj/item/implant/projectile/body_visible/arrow/A = new
 				A.material = fusedmaterial
 				A.setMaterial(fusedmaterial, appearance = 0, setname = 0)
 				A.arrow = src
@@ -464,8 +464,9 @@
 		. = ..()
 		. += "There [amount == 1 ? "is" : "are"] [amount] arrowhead[amount != 1 ? "s" : null] in the stack."
 
-/obj/item/implant/projectile/arrow
+/obj/item/implant/projectile/body_visible/arrow
 	name = "arrow"
+	pull_out_name = "arrow"
 	icon = null
 	icon_state = null
 	desc = "An arrow."
@@ -517,7 +518,7 @@
 				return contents[1]
 			else return null
 
-	proc/updateApperance()
+	proc/updateAppearance()
 		if (contents.len)
 			maptext = "[contents.len]"
 		else
@@ -530,7 +531,7 @@
 			var/obj/item/arrow/I = getArrow(user)
 			if(I)
 				user.put_in_hand(I, user.hand)
-				updateApperance()
+				updateAppearance()
 			return
 		..()
 
@@ -588,7 +589,7 @@
 	on_hit(var/atom/A, angle, var/obj/projectile/P)
 		if (ismob(A))
 			playsound(A, 'sound/impact_sounds/Flesh_Stab_1.ogg', 75, 1)
-			var/obj/item/implant/projectile/arrow/B = P.implanted
+			var/obj/item/implant/projectile/body_visible/arrow/B = P.implanted
 			if (istype(B))
 				if (B.material)
 					B.material.triggerOnAttack(B, null, A)
@@ -625,7 +626,7 @@
 					loaded = I
 					I.set_loc(src)
 					overlays += I
-					Q.updateApperance()
+					Q.updateAppearance()
 			if(istype(H.belt, /obj/item/quiver))
 				var/obj/item/quiver/Q = H.belt
 				var/obj/item/arrow/I = Q.getArrow(user)
@@ -633,7 +634,7 @@
 					loaded = I
 					I.set_loc(src)
 					overlays += I
-					Q.updateApperance()
+					Q.updateAppearance()
 		return
 
 	attack_hand(var/mob/user)
@@ -697,7 +698,7 @@
 			boutput(user, "<span class='alert'>Nothing is loaded in the bow!</span>")
 			return 0
 		overlays.len = 0
-		var/obj/item/implant/projectile/arrow/A = new
+		var/obj/item/implant/projectile/body_visible/arrow/A = new
 		A.setMaterial(loaded.head_material, appearance = 0, setname = 0)
 		A.arrow = loaded
 		A.name = loaded.name

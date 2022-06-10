@@ -1,7 +1,7 @@
 TYPEINFO(/datum/component/glue_ready)
 	initialization_args = list(
-		ARG_INFO("glue_duration", "num", "How long the glue lasts, null for infinity", null),
-		ARG_INFO("glue_removal_time", "num", "How long does it take to unglue stuff", null),
+		ARG_INFO("glue_duration", DATA_INPUT_NUM, "How long the glue lasts, null for infinity", null),
+		ARG_INFO("glue_removal_time", DATA_INPUT_NUM, "How long does it take to unglue stuff", null),
 	)
 
 /datum/component/glue_ready
@@ -38,6 +38,7 @@ TYPEINFO(/datum/component/glue_ready)
 
 /datum/component/glue_ready/UnregisterFromParent()
 	var/atom/movable/parent = src.parent
+	UnregisterSignal(parent, list(COMSIG_ATTACKBY, COMSIG_ITEM_AFTERATTACK, COMSIG_ATOM_HITBY_THROWN, COMSIG_MOVABLE_HIT_THROWN))
 	parent.remove_filter("glue_ready_outline")
 	. = ..()
 
@@ -76,10 +77,16 @@ TYPEINFO(/datum/component/glue_ready)
 		if(user)
 			boutput(user, "<span class='alert'>Your hand with [thing_glued] passes straight through \the [glued_to].</span>")
 		return FALSE
+	if(istype(thing_glued, /obj/artifact) || istype(thing_glued, /obj/machinery/artifact))
+		if(user)
+			boutput(user, "<span class='alert'>The alien energies of [thing_glued] evaporate the glue.</span>")
+		return FALSE
 	if(istype(thing_glued, /obj/machinery/nuclearbomb))
 		if(user)
 			boutput(user, "<span class='alert'>\The [glued_to]'s radiation dissolves the glue.</span>")
 		qdel(src)
+		return FALSE
+	if(istype(thing_glued, /obj/machinery/portapuke))
 		return FALSE
 	if(isturf(glued_to))
 		var/turf/glued_turf = glued_to

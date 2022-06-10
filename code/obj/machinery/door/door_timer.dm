@@ -258,7 +258,7 @@
 		if (F.id == src.id)
 			. += list(
 				"flasher" = TRUE,
-				"recharging" = F.last_flash && world.time < F.last_flash + 150
+				"recharging" = GET_COOLDOWN(F, "flash")
 			)
 			break
 
@@ -315,6 +315,8 @@
 			for (var/obj/machinery/flasher/F in range(10, src))
 				if (F.id == src.id)
 					src.add_fingerprint(usr)
+					if (GET_COOLDOWN(F, "flash"))
+						return
 					F.flash()
 					logTheThing("station", usr, null, "sets off flashers from a door timer: [src] [log_loc(src)].")
 					return TRUE

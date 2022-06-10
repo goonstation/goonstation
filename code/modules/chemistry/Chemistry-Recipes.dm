@@ -203,11 +203,11 @@ datum
 			name = "no pyrosium foam"
 			id = "no_pyrosium_foam"
 			instant = 1
-			required_reagents = list("thalmerite" = 1, "fluorosurfactant" = 1, "water" = 1)
+			required_reagents = list("pyrosium" = 1, "fluorosurfactant" = 1, "water" = 1)
 			mix_phrase = "The mixture burns away into nothing!"
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				if (holder)
-					holder.del_reagent("thalmerite")
+					holder.del_reagent("pyrosium")
 					holder.del_reagent("fluorosurfactant")
 					holder.del_reagent("water")
 				return
@@ -385,10 +385,10 @@ datum
 				return*/
 
 
-		thalmerite
+		pyrosium
 			name = "Pyrosium"
-			id = "thalmerite"
-			result = "thalmerite"
+			id = "pyrosium"
+			result = "pyrosium"
 			required_reagents = list("plasma" = 1, "radium" = 1, "phosphorus" = 1)
 			result_amount = 3
 			mix_phrase = "The resultant gel begins to emit significant heat."
@@ -647,16 +647,6 @@ datum
 			mix_phrase = "The eggs nog together. Pretend that \"nog\" is a verb."
 			drinkrecipe = 1
 
-		sweet_tea
-			name = "Sweet Tea"
-			id = "sweet_tea"
-			result = "sweet_tea"
-			required_reagents = list("sugar" = 1, "tea" = 1)
-			result_amount = 2
-			mix_phrase = "The tea sweetens. Visually. Somehow."
-			mix_sound = 'sound/misc/drinkfizz.ogg'
-			drinkrecipe = 1
-
 		honey_tea
 			name = "tea"
 			id = "honey_tea"
@@ -684,6 +674,16 @@ datum
 			required_reagents = list("tea" = 3, "juice_orange" = 1, "sugar" = 1)
 			result_amount = 5
 			mix_phrase = "The tea takes on a sweet, summery smell."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+			drinkrecipe = 1
+
+		sweet_tea
+			name = "Sweet Tea"
+			id = "sweet_tea"
+			result = "sweet_tea"
+			required_reagents = list("sugar" = 1, "tea" = 1)
+			result_amount = 2
+			mix_phrase = "The tea sweetens. Visually. Somehow."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 			drinkrecipe = 1
 
@@ -1264,7 +1264,7 @@ datum
 			name = "Dragon's Breath"
 			id = "dbreath"
 			result = "dbreath"
-			required_reagents = list("bourbon" = 1, "phlogiston" = 1, "thalmerite" = 1, "fuel" = 1, "ghostchilijuice"= 1)
+			required_reagents = list("bourbon" = 1, "phlogiston" = 1, "pyrosium" = 1, "fuel" = 1, "ghostchilijuice"= 1)
 			result_amount = 1
 			mix_phrase = "A tiny mushroom cloud erupts from the container. That's not worrying at all!"
 			mix_sound = 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg'
@@ -1923,6 +1923,21 @@ datum
 			result_amount = 3
 			mix_phrase = "An iridescent black chemical forms in the container."
 
+		hemodissolve // denaturing hemolymph
+			name = "Copper"
+			id = "copper"
+			result = "copper"
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+			required_reagents = list("hemolymph" = 5, "cleaner" = 1,  "acetone" = 1)
+			required_temperature = T0C + 30 // just a little bit of heat
+			result_amount = 1
+			mix_phrase = "The hemolymph bubbles as a black precipitate falls out of the solution, denaturing into basic components."
+			on_reaction(var/datum/reagents/holder, created_volume)
+				holder.add_reagent("meat_slurry", created_volume)// meat slurry, since animal tissue
+				holder.add_reagent("saline", 2*created_volume)//  saline-glucose solution, since blood
+				holder.add_reagent("spaceacillin", created_volume)//  spaceacillin, since hemolymph is used for bacterial tests IRL
+				holder.add_reagent("denatured_enzyme", created_volume)// and just some random biological chemicals for good measure
+
 		mutagen
 			name = "Unstable mutagen"
 			id = "mutagen"
@@ -1990,22 +2005,15 @@ datum
 			mix_phrase = "The mixture yields a colorless, odorless liquid."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
-			on_reaction(var/datum/reagents/holder)
+			on_reaction(var/datum/reagents/holder, created_volume)
 				var/location = get_turf(holder.my_atom)
 				for(var/mob/M in all_viewers(null, location))
 					boutput(M, "<span class='alert'>The solution generates a strong vapor!</span>")
 				if(holder?.my_atom?.is_open_container())
 					// A slightly less stupid way of smoking contents. Maybe.
 					var/datum/reagents/smokeContents = new/datum/reagents/
-					smokeContents.add_reagent("sarin", holder.reagent_list["sarin"].volume / 6)
-					//particleMaster.SpawnSystem(new /datum/particleSystem/chemSmoke(location, smokeContents, 10, 2))
+					smokeContents.add_reagent("sarin", created_volume / 6)
 					smoke_reaction(smokeContents, 2, location)
-					/*
-					for(var/mob/living/carbon/human/H in range(location, 2)) // nurfed.
-						if(ishuman(H))
-							if(!H.wear_mask)
-								H.reagents.add_reagent("sarin",4) // griff
-					*/
 					return
 
 
@@ -3601,7 +3609,7 @@ datum
 					if(1 to 70)
 						new /mob/living/carbon/cube/meat(location)
 					if(71 to 94)
-						var/critter = pick(/obj/critter/roach,/obj/critter/pig,/obj/critter/cat,/obj/critter/mouse,/obj/critter/spacebee,/obj/critter/owl,/obj/critter/goose,/obj/critter/goose/swan,/obj/critter/domestic_bee,/obj/critter/walrus,/obj/critter/sealpup)
+						var/critter = pick(/obj/critter/roach,/obj/critter/pig,/obj/critter/cat,/obj/critter/mouse,/obj/critter/wasp,/obj/critter/owl,/obj/critter/goose,/obj/critter/goose/swan,/obj/critter/domestic_bee,/obj/critter/walrus,/obj/critter/sealpup)
 						new critter(location)
 					if(95 to 97)
 						if (location.density)
@@ -3877,10 +3885,10 @@ datum
 			result_amount = 2
 			mix_phrase = "The ants arachnify. What?"
 
-		thalmerite_heat
-			name = "thalmerite heating"
-			id = "thalmerite_heat"
-			required_reagents = list("thalmerite" = 1, "oxygen" = 1)
+		pyrosium_heat
+			name = "pyrosium heating"
+			id = "pyrosium_heat"
+			required_reagents = list("pyrosium" = 1, "oxygen" = 1)
 			result_amount = 1
 			reaction_speed = 1
 			reaction_temp_divider = 25

@@ -14,11 +14,11 @@
 	attack_ai(mob/user as mob)
 		return attack_hand(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(status & (BROKEN|NOPOWER))
 			return
 
-		if(using && (!using.client || using.client.inactivity >= 1200 || get_dist(src, using) > 1))
+		if(using && (!using.client || using.client.inactivity >= 1200 || BOUNDS_DIST(src, using) > 0))
 			using.Browse(null, "window=telescope;override_setting=1")
 			using = null
 
@@ -97,7 +97,7 @@
 
 	Topic(href, href_list)
 		//boutput(world, href)
-		if(!using || get_dist(using, src) > 1)
+		if(!using || BOUNDS_DIST(using, src) > 0)
 			using.Browse(null, "window=telescope;override_setting=1")
 			using = null
 			return

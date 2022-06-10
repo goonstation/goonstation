@@ -84,7 +84,7 @@ Modules to do things with cloning modules
 
 	var/datum/bioEffect/BE = null
 
-/obj/item/cloneModule/genepowermodule/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/cloneModule/genepowermodule/attackby(obj/item/W, mob/user)
 	if (!BE && istype(W, /obj/item/genetics_injector/dna_injector))
 		var/obj/item/genetics_injector/dna_injector/injector = W
 		boutput(user, "You put the DNA injector into the slot on the cartridge.")

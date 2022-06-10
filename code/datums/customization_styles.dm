@@ -197,6 +197,9 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 			pompS
 				name = "Pompadour: Greaser Shine"
 				id = "pompS"
+			shavedhead
+				name = "Shaved Head"
+				id = "shavedhead"
 			shortflip
 				name = "Punky Flip"
 				id = "shortflip"
@@ -305,6 +308,18 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 			longbraid
 				name = "Long Braid"
 				id = "longbraid"
+				gender = FEMININE
+			looselongbraid
+				name = "Loose Long Braid"
+				id = "looselongbraid"
+				gender = FEMININE
+			looselongbraidtwincolor
+				name = "Loose Long Braid: Twin Color"
+				id = "looselongbraidfaded"
+				gender = FEMININE
+			looselongbraidshoulder
+				name = "Loose Long Braid Over Shoulder"
+				id = "looselongbraidshoulder"
 				gender = FEMININE
 			longsidepart_s
 				name = "Long Flip"
@@ -559,6 +574,9 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 		fullbeard
 			name = "Full Beard"
 			id = "fullbeard"
+		fiveoclock
+			name = "Five O'Clock Shadow"
+			id = "fiveoclock"
 		gt
 			name = "Goatee"
 			id = "gt"

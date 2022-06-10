@@ -23,7 +23,7 @@
 
 	flags = FPRINT | CONDUCT | TABLEPASS
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(ispryingtool(W))
 			turn_off()
 			set_dir(turn(dir, -90))

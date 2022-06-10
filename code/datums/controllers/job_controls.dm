@@ -46,6 +46,13 @@ var/datum/job_controller/job_controls
 			if (!J.name)
 				src.special_jobs -= J
 
+		#ifdef UPSCALED_MAP
+		for (var/datum/job/J in staple_jobs)
+			if (J.limit > 0)
+				J.limit *= 4
+		#endif
+
+
 	proc/job_config()
 		var/dat = "<html><body><title>Job Controller</title>"
 		dat += "<b><u>Job Controls</u></b><HR>"

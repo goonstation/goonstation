@@ -52,13 +52,15 @@
 // botanist. chef. janitor.
 /datum/robot/module_tool_creator/recursive/module/civilian
 	definitions = list(
-		/obj/item/extinguisher, // TODO: make large version
+		/obj/item/extinguisher/large,
 		/obj/item/pen, // TODO: make more versatile version
 		/obj/item/seedplanter,
 		/obj/item/plantanalyzer,
 		/obj/item/device/igniter,
 		/obj/item/saw/cyborg,
 		/obj/item/satchel/hydro, // TODO: make more versatile version
+		/obj/item/satchel/hydro,
+		/obj/item/satchel/hydro,
 		/obj/item/paper_bin/robot,
 		/obj/item/reagent_containers/glass/bucket, // TODO: make large version
 		/obj/item/spraybottle/cleaner/robot,
@@ -67,6 +69,7 @@
 		/obj/item/lamp_manufacturer,
 		/obj/item/device/camera_viewer,
 		// TODO: some sort of nutrient dispenser?
+		/obj/item/tongs,
 		/obj/item/kitchen/utensil/knife/bread,
 		/obj/item/ladle,
 		/obj/item/kitchen/rollingpin/light,
@@ -77,7 +80,7 @@
 	definitions = list(
 		/obj/item/device/light/flashlight,
 		/obj/item/tool/omnitool/silicon,
-		/obj/item/device/analyzer/healthanalyzer/borg,
+		/obj/item/device/analyzer/healthanalyzer/upgraded,
 		/obj/item/device/reagentscanner,
 		/obj/item/device/analyzer/atmospheric/upgraded,
 		/obj/item/robojumper,
@@ -123,6 +126,9 @@
 		/obj/item/rcd,
 		/obj/item/lamp_manufacturer,
 		/obj/item/deconstructor/borg,
+		#ifdef MAP_OVERRIDE_OSHAN
+			/obj/item/mining_tool/power_shovel/borg,
+		#endif
 		/datum/robot/module_tool_creator/item_type/amount/steel_tile,
 		/datum/robot/module_tool_creator/item_type/amount/steel_rod,
 		/datum/robot/module_tool_creator/item_type/amount/steel_sheet,

@@ -182,11 +182,11 @@ var/list/telescope_computers = list()
 	attack_ai(mob/user as mob)
 		return attack_hand(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(status & (BROKEN|NOPOWER))
 			return
 
-		if(using && (!using.client || using.client.inactivity >= 1200 || get_dist(src, using) > 1))
+		if(using && (!using.client || using.client.inactivity >= 1200 || BOUNDS_DIST(src, using) > 0))
 			using << browse(null, "window=materials")
 			using = null
 
@@ -290,7 +290,7 @@ var/list/telescope_computers = list()
 
 	Topic(href, href_list)
 		//boutput(world, href)
-		if(!using || get_dist(using, src) > 1)
+		if(!using || BOUNDS_DIST(using, src) > 0)
 			using << browse(null, "window=telescope")
 			using = null
 			return

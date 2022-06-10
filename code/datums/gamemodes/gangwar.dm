@@ -641,7 +641,7 @@
 
 		var/turf/turftarget = get_turf(target)
 
-		if(turftarget == loc || get_dist(src,target) > 1) return
+		if(turftarget == loc || BOUNDS_DIST(src, target) > 0) return
 
 		if(!user.mind || !user.mind.gang)
 			boutput(user, "<span class='alert'>You aren't in a gang, why would you do that?</span>")
@@ -714,7 +714,7 @@
 			..()
 			throw e
 
-		if(get_dist(owner, target_turf) > 1 || target_turf == null || !owner)
+		if(BOUNDS_DIST(owner, target_turf) > 0 || target_turf == null || !owner)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -724,7 +724,7 @@
 
 	onUpdate()
 		..()
-		if(get_dist(owner, target_turf) > 1 || target_turf == null || !owner)
+		if(BOUNDS_DIST(owner, target_turf) > 0 || target_turf == null || !owner)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -741,7 +741,7 @@
 
 	onEnd()
 		..()
-		if(get_dist(owner, target_turf) > 1 || target_turf == null || !owner)
+		if(BOUNDS_DIST(owner, target_turf) > 0 || target_turf == null || !owner)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -818,7 +818,7 @@
 
 		. += "The screen displays \"Total Score: [gang.gang_score()] and Spendable Points: [gang.spendable_points]\""
 
-	attack_hand(var/mob/living/carbon/human/user as mob)
+	attack_hand(var/mob/living/carbon/human/user)
 		if(!isalive(user))
 			boutput(user, "<span class='alert'>Not when you're incapacitated.</span>")
 			return
@@ -876,7 +876,7 @@
 
 	Topic(href, href_list)
 		..()
-		if ((usr.stat || usr.restrained()) || (get_dist(src, usr) > 1))
+		if ((usr.stat || usr.restrained()) || (BOUNDS_DIST(src, usr) > 0))
 			return
 
 		if (href_list["get_gear"])
@@ -1038,7 +1038,7 @@
 		take_damage(250-50*severity)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isweldingtool(W))
 			user.lastattacked = src
 
@@ -1071,7 +1071,7 @@
 				if (G.affecting == mode.kidnapping_target)		//Can only shove the target in, nobody else. target must be not dead and must have a kill or pin grab on em.
 					if (G.affecting.stat == 2)
 						boutput(user, "<span class='alert'>[G.affecting] is dead, you can't kidnap a dead person!</span>")
-					else if (G.state < 3)
+					else if (G.state < GRAB_AGGRESSIVE)
 						boutput(user, "<span class='alert'>You'll need a stronger grip to successfully kinapp this person!")
 					else
 						user.visible_message("<span class='notice'>[user] shoves [G.affecting] into [src]!</span></span>")
@@ -1162,7 +1162,7 @@
 	w_class = W_CLASS_TINY
 	var/datum/gang/gang = null
 
-	attack(mob/target as mob, mob/user as mob)
+	attack(mob/target, mob/user)
 		if (istype(target,/mob/living) && user.a_intent != INTENT_HARM)
 			if(user != target)
 				user.visible_message("<span class='alert'><b>[user] shows [src] to [target]!</b></span>")
@@ -1180,7 +1180,7 @@
 		else
 			return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!src.anchored)
 			return ..()
 
@@ -1219,7 +1219,7 @@
 			boutput(target, "<span class='alert'>You're already in a gang, you can't switch sides!</span>")
 			return
 
-		if(target.mind.assigned_role in list("Security Officer", "Security Assistant", "Vice Officer","Part-time Vice Officer","Head of Security","Captain","Head of Personnel","Communications Officer", "Medical Director", "Chief Engineer", "Research Director", "Detective", "Nanotrasen Security Operative"))
+		if(target.mind.assigned_role in list("Security Officer", "Security Assistant", "Vice Officer","Part-time Vice Officer","Head of Security","Captain","Head of Personnel","Communications Officer", "Medical Director", "Chief Engineer", "Research Director", "Detective", "Nanotrasen Security Consultant"))
 			boutput(target, "<span class='alert'>You are too responsible to join a gang!</span>")
 			return
 
@@ -1239,7 +1239,7 @@
 		src.gang.members += target.mind
 		if (!target.mind.special_role)
 			target.mind.special_role = ROLE_GANG_MEMBER
-		SHOW_GANG_MEMBER_TIPS(target)
+		target.show_antag_popup("gang_member")
 		new /datum/objective/specialist/gang(
 			"Protect your boss, recruit new members, tag up the station and beware the other gangs! [src.gang.gang_name] FOR LIFE!",
 			target.mind)

@@ -22,7 +22,7 @@
 		reagents.add_reagent("grease", 25)
 		reagents.set_reagent_temp(src.frytemp)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isghostdrone(user) || isAI(user))
 			boutput(user, "<span class='alert'>The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
 			return
@@ -77,7 +77,7 @@
 
 		src.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>")
 		user.u_equip(W)
-		W.dropped()
+		W.dropped(user)
 		src.start_frying(W)
 		SubscribeToProcess()
 
@@ -100,7 +100,7 @@
 		else
 			src.icon_state = "fryer0"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (isghostdrone(user))
 			boutput(user, "<span class='alert'>The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
 			return
@@ -233,9 +233,12 @@
 		fryholder.overlays = thing.overlays
 		if (isitem(thing))
 			var/obj/item/item = thing
-			fryholder.amount = item.w_class
+			fryholder.bites_left = item.w_class
+			fryholder.w_class = item.w_class
 		else
-			fryholder.amount = 5
+			fryholder.bites_left = 5
+		if (ismob(thing))
+			fryholder.w_class = W_CLASS_BULKY
 		if(thing.reagents)
 			fryholder.reagents.maximum_volume += thing.reagents.total_volume
 			thing.reagents.trans_to(fryholder, thing.reagents.total_volume)
@@ -252,12 +255,15 @@
 		var/obj/item/reagent_containers/food/snacks/shell/deepfry/fryholder = src.fryify(src.fryitem, src.cooktime >= 60)
 		fryholder.set_loc(get_turf(src))
 
-		src.fryitem = null
-		src.UpdateIcon()
-		for (var/obj/item/I in src) //Things can get dropped somehow sometimes ok
-			I.set_loc(src.loc)
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.fryitem)
+			src.fryitem = null
+			src.UpdateIcon()
+			for (var/obj/item/I in src) //Things can get dropped somehow sometimes ok
+				I.set_loc(src.loc)
+			UnsubscribeProcess()
 
-		UnsubscribeProcess()
 
 	verb/drain()
 		set src in oview(1)

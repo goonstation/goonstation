@@ -1,5 +1,5 @@
 /obj/machinery/manufacturer/pod_wars
-	name = "Ship Component Fabricator"
+	name = "ship component fabricator"
 	desc = "A manufacturing unit calibrated to produce parts for ships."
 	icon_state = "fab-hangar"
 	icon_base = "hangar"
@@ -54,7 +54,7 @@
 			src.resource_amounts = PW.team_SY.resources
 		..()
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (get_pod_wars_team_num(user) != src.team_num)
 			boutput(user, "<span class='alert'>This machine's design makes no sense to you, you can't figure out how to use it!</span>")
 			return
@@ -62,7 +62,7 @@
 		..()
 
 /obj/machinery/manufacturer/pod_wars/nanotrasen
-	name = "NanoTrasen Ship Component Fabricator"
+	name = "\improper NanoTrasen ship component fabricator"
 	team_num = TEAM_NANOTRASEN
 	available = list(
 		/datum/manufacture/pod_wars/lock,
@@ -97,7 +97,7 @@
 	)
 
 /obj/machinery/manufacturer/pod_wars/syndicate
-	name = "Syndicate Ship Component Fabricator"
+	name = "\improper Syndicate ship component fabricator"
 	team_num = TEAM_SYNDICATE
 	available = list(
 		/datum/manufacture/pod_wars/lock,

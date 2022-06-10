@@ -45,7 +45,7 @@
 
 		return 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/paint_can))
 			boutput(user, "<span class='notice'>You refill the paint can.</span>")
 			W:uses = 15
@@ -53,7 +53,7 @@
 
 			return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		var/col_new = input(user, "Pick paint color", "Pick paint color", src.paint_color) as color
 		if(col_new)
 			var/obj/item/paint_can/P = new/obj/item/paint_can(src.loc)
@@ -77,12 +77,12 @@
 	var/repair_stage = 0
 	var/paint_needed = 20
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		boutput(user, "<span class='alert'>This must be repaired before it can be used!</span>")
 		add_fingerprint(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!W || !user)
 			return
 
@@ -262,13 +262,13 @@ var/list/cached_colors = new/list()
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = W_CLASS_SMALL
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		..()
 
 		generate_icon()
 
 	afterattack(atom/target as mob|obj|turf, mob/user as mob)
-		if(target == loc || get_dist(src,target) > 1 || istype(target,/obj/machinery/vending/paint) ) return
+		if(target == loc || BOUNDS_DIST(src, target) > 0 || istype(target,/obj/machinery/vending/paint) ) return
 
 		if(!uses)
 			boutput(user, "It's empty.")
@@ -386,7 +386,7 @@ var/list/cached_colors = new/list()
 		currentpattern = 1
 
 	afterattack(atom/target as mob|obj|turf, mob/user as mob)
-		if(target == loc || get_dist(src,target) > 1 || istype(target,/obj/machinery/vending/paint) ) return
+		if(target == loc || BOUNDS_DIST(src, target) > 0 || istype(target,/obj/machinery/vending/paint) ) return
 
 		if(!uses)
 			boutput(user, "It's empty.")

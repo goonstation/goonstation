@@ -15,7 +15,7 @@
 	if (!ticker)
 		boutput(user, "You can't buckle anyone in before the game starts.")
 		return
-	if ((!( iscarbon(M) ) || get_dist(src, user) > 1 || M.loc != src.loc || user.restrained() || user.stat))
+	if ((!( iscarbon(M) ) || BOUNDS_DIST(src, user) > 0 || M.loc != src.loc || user.restrained() || user.stat))
 		return
 	if (M.buckled)	return
 	if (M == user)
@@ -31,7 +31,7 @@
 	M.setStatus("buckled", duration = INFINITE_STATUS)
 	return
 
-/obj/machinery/imp/chair/attack_hand(mob/user as mob)
+/obj/machinery/imp/chair/attack_hand(mob/user)
 	for(var/mob/M in src.loc)
 		if (M.buckled)
 			if (M != user)

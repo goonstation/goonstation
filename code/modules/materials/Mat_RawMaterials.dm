@@ -50,7 +50,7 @@
 		P.change_stack_amount(toRemove - P.amount)
 		return P
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(user.is_in_hands(src) && src.amount > 1)
 			var/splitnum = round(input("How many material pieces do you want to take from the stack?","Stack of [src.amount]",1) as num)
 			if (!isnum_safe(splitnum) || splitnum >= amount || splitnum < 1)
@@ -78,10 +78,10 @@
 			return
 
 		if(!istype(over_object, /atom/movable/screen/hud))
-			if (get_dist(usr,src) > 1)
+			if (BOUNDS_DIST(usr, src) > 0)
 				boutput(usr, "<span class='alert'>You're too far away from it to do that.</span>")
 				return
-			if (get_dist(usr,over_object) > 1)
+			if (BOUNDS_DIST(usr, over_object) > 0)
 				boutput(usr, "<span class='alert'>You're too far away from it to do that.</span>")
 				return
 
@@ -172,7 +172,7 @@
 		desc = "A weave of some kind."
 		var/in_use = 0
 
-		attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+		attack(mob/living/carbon/M, mob/living/carbon/user)
 			if (user.a_intent == INTENT_GRAB)
 				return ..()
 			if (src.in_use)
@@ -294,7 +294,7 @@
 	setup_material()
 		src.setMaterial(getMaterial("wood"), appearance = 0, setname = 0)
 		..()
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if ((istool(W, TOOL_CUTTING | TOOL_SAWING)))
 			user.visible_message("[user] cuts a plank from the [src].", "You cut a plank from the [src].")
 			var/obj/item/plankobj = new /obj/item/plank(user.loc)
@@ -313,7 +313,7 @@
 	setup_material()
 		src.setMaterial(getMaterial("bamboo"), appearance = 0, setname = 0)
 		..()
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if ((istool(W, TOOL_CUTTING | TOOL_SAWING)))
 			user.visible_message("[user] carefully extracts a shoot from [src].", "You carefully cut a shoot from [src].")
 			new /obj/item/reagent_containers/food/snacks/plant/bamboo/(user.loc)
@@ -356,20 +356,20 @@
 		src.setMaterial(getMaterial("cotton"), appearance = 0, setname = 0)
 		..()
 
-/obj/item/material_piece/cloth/wendigohide
-	name = "wendigo hide"
-	desc = "The hide of a wendigo."
-	icon_state = "wendigohide-fabric"
+/obj/item/material_piece/cloth/brullbarhide
+	name = "brullbar hide"
+	desc = "The hide of a brullbar."
+	icon_state = "brullbarhide-fabric"
 	setup_material()
-		src.setMaterial(getMaterial("wendigohide"), appearance = 0, setname = 0)
+		src.setMaterial(getMaterial("brullbarhide"), appearance = 0, setname = 0)
 		..()
 
-/obj/item/material_piece/cloth/kingwendigohide
-	name = "king wendigo hide"
-	desc = "The hide of a king wendigo."
-	icon_state = "wendigohide-fabric"
+/obj/item/material_piece/cloth/kingbrullbarhide
+	name = "king brullbar hide"
+	desc = "The hide of a king brullbar."
+	icon_state = "brullbarhide-fabric"
 	setup_material()
-		src.setMaterial(getMaterial("kingwendigohide"), appearance = 0, setname = 0)
+		src.setMaterial(getMaterial("kingbrullbarhide"), appearance = 0, setname = 0)
 		..()
 
 /obj/item/material_piece/cloth/carbon

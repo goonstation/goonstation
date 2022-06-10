@@ -69,7 +69,7 @@
 		M.keys_changed(0,0xFFFF) //This is necessary for the designator to work
 		M.removeOverlayComposition(/datum/overlayComposition/sniper_scope)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (..() & ishuman(user))
 			user:special_sprint |= SPRINT_DESIGNATOR
 			var/mob/living/L = user

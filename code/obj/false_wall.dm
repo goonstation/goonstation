@@ -80,7 +80,7 @@
 		src.floorname = Floor_Name
 		return 1
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.add_fingerprint(user)
 		var/known = (user in known_by)
 		if (src.density)
@@ -100,7 +100,7 @@
 				boutput(user, "<span class='notice'>The wall slides shut.</span>")
 		return
 
-	attackby(obj/item/S as obj, mob/user as mob)
+	attackby(obj/item/S, mob/user)
 		src.add_fingerprint(user)
 		var/known = (user in known_by)
 		if (isscrewingtool(S))

@@ -116,7 +116,7 @@ Shield and graivty well generators
 				qdel(src)
 	return
 
-/obj/shieldgen/attack_hand(mob/user as mob)
+/obj/shieldgen/attack_hand(mob/user)
 	if (active)
 		src.visible_message("<font color='blue'>[bicon(src)] [user] deactivated the shield generator.</font>")
 
@@ -135,7 +135,7 @@ Shield and graivty well generators
 	density = 1
 	opacity = 0
 	anchored = 1
-	event_handler_flags = USE_FLUID_ENTER 
+	event_handler_flags = USE_FLUID_ENTER
 	gas_impermeable = TRUE
 
 	New()
@@ -201,7 +201,7 @@ Shield and graivty well generators
 					qdel(src)
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (active)
 			src.visible_message("<font color='blue'>[bicon(src)] [user] deactivated the gravity well.</font>")
 
@@ -227,7 +227,7 @@ Shield and graivty well generators
 
 		for (var/atom/X in orange(range,src))
 			//Skip if they're right beside the thing
-			if (get_dist(src,X) <= 1)
+			if (BOUNDS_DIST(src, X) == 0)
 				continue
 			//Get the distance
 			var/dist = get_dist(src,X)

@@ -105,7 +105,7 @@
 /obj/machinery/portable_atmospherics/scrubber/return_air()
 	return air_contents
 
-/obj/machinery/portable_atmospherics/scrubber/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/portable_atmospherics/scrubber/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/atmosporter))
 		var/obj/item/atmosporter/porter = W
 		if (porter.contents.len >= porter.capacity) boutput(user, "<span class='alert'>Your [W] is full!</span>")
@@ -135,7 +135,7 @@
 		return
 	return src.Attackhand(user)
 
-/obj/machinery/portable_atmospherics/scrubber/attack_hand(var/mob/user as mob)
+/obj/machinery/portable_atmospherics/scrubber/attack_hand(var/mob/user)
 
 	src.add_dialog(user)
 	var/holding_text
@@ -165,7 +165,7 @@ Inlet flow: <A href='?src=\ref[src];volume_adj=-10'>-</A> <A href='?src=\ref[src
 	if (usr.stat || usr.restrained())
 		return
 
-	if (((get_dist(src, usr) <= 1) && istype(src.loc, /turf)))
+	if (((BOUNDS_DIST(src, usr) == 0) && istype(src.loc, /turf)))
 		src.add_dialog(usr)
 
 		if(href_list["power"])

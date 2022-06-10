@@ -1008,8 +1008,8 @@
 
 /datum/commodity/contraband/dnascram
 	comname = "DNA Scrambler"
-	comtype = /obj/item/genetics_injector/dna_scrambler
-	desc = "An injector that gives a new, random identity upon injection."
+	comtype = /obj/item/dna_scrambler
+	desc = "An injector that gives a new, random identity upon injection, storing the original for later."
 	price = 15000
 	baseprice = 15000
 	upperfluc = 3000
@@ -2241,6 +2241,15 @@
 	comname = "Alternate Mime Clothes."
 	comtype = /obj/item/storage/box/costume/mime/alt
 	desc = "This stuff will give you an edge in charades."
+
+/datum/commodity/costume/jester
+	comname = "Jester Costume Set."
+	comtype = /obj/item/storage/box/costume/jester
+	desc = "Travel back in time and become the medieval version of a clown. (Does not provide time travel)"
+	price = 300 //gotta work for it a little
+	baseprice = 100
+	upperfluc = 150
+	lowerfluc = -100
 
 /datum/commodity/backpack/breadpack
 	comname = "Bag-uette"

@@ -56,7 +56,7 @@
 			playsound(src,'sound/machines/engine_alert3.ogg',100,0,5,0.5)
 			animate(src, transform = matrix(4, MATRIX_SCALE), time = 300, loop = 0, easing = LINEAR_EASING)
 		if (random_events.announce_events)
-			command_alert("A severe gravitational anomaly has been detected on the [station_or_ship()] in [get_area(src)]. It may collapse into a black hole if not stabilized. All personnel should feed mass to the anomaly until it stabilizes.", "Gravitational Anomaly")
+			command_alert("A severe gravitational anomaly has been detected on the [station_or_ship()] in [get_area(src)]. It may collapse into a black hole if not stabilized. All personnel should feed mass to the anomaly until it stabilizes.", "Gravitational Anomaly", alert_origin = ALERT_ANOMALY)
 
 		sleep(lifespan)
 		if (!stable)
@@ -78,6 +78,7 @@
 				qdel(A)
 			else if (isliving(A))
 				var/mob/living/L = A
+				logTheThing("combat", L, null, "was elecgibbed by [src] ([src.type]) at [log_loc(L)].")
 				L.elecgib()
 				src.get_fed(10)
 
@@ -129,6 +130,7 @@
 
 	Bumped(atom/A)
 		if (isliving(A))
+			logTheThing("combat", A, null, "was gibbed by [src] ([src.type]) at [log_loc(A)].")
 			A:gib()
 		else if(isobj(A))
 			var/obj/O = A

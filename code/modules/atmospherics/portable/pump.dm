@@ -109,7 +109,7 @@
 		return
 	return src.Attackhand(user)
 
-/obj/machinery/portable_atmospherics/pump/attack_hand(var/mob/user as mob)
+/obj/machinery/portable_atmospherics/pump/attack_hand(var/mob/user)
 
 	src.add_dialog(user)
 	var/holding_text
@@ -141,7 +141,7 @@ Target Pressure: <A href='?src=\ref[src];pressure_adj=-100'>-</A> <A href='?src=
 	if (usr.stat || usr.restrained())
 		return
 
-	if (((get_dist(src, usr) <= 1) && istype(src.loc, /turf)))
+	if (((BOUNDS_DIST(src, usr) == 0) && istype(src.loc, /turf)))
 		src.add_dialog(usr)
 
 		if(href_list["power"])

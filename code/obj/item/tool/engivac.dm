@@ -98,7 +98,7 @@ obj/item/engivac/afterattack(atom/target)
 	find_crud_on_turf(isturf(target) ? target : get_turf(target))
 
 
-obj/item/engivac/attackby(obj/item/I as obj, mob/user as mob)
+obj/item/engivac/attackby(obj/item/I, mob/user)
 	if (istype(I, /obj/item/storage/toolbox) && !held_toolbox)
 		if (!toolbox_contents_check(I))
 			if(!ON_COOLDOWN(src, "rejectsound", 2 SECONDS))
@@ -116,7 +116,7 @@ obj/item/engivac/attackby(obj/item/I as obj, mob/user as mob)
 	..()
 
 
-obj/item/engivac/attack_hand(mob/living/user as mob)
+obj/item/engivac/attack_hand(mob/living/user)
 	if (user.find_in_hand(src) && held_toolbox)
 		if (user.put_in_hand(held_toolbox))
 			held_toolbox = null
@@ -229,7 +229,7 @@ obj/item/engivac/proc/find_crud_on_turf(turf/target_turf)
 obj/item/engivac/proc/attempt_fill(obj/item/target)
 	if (!target)
 		return FALSE
-	if (get_dist(target, src) > 1) //I'm sure smartasses will find a way
+	if (BOUNDS_DIST(target, src) > 0) //I'm sure smartasses will find a way
 		return FALSE
 	var/succeeded = FALSE
 	var/list/toolbox_contents = held_toolbox.get_contents()

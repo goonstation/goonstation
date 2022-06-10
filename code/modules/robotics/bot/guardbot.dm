@@ -364,7 +364,7 @@
 	mail
 		name = "Mailbuddy"
 		desc = "The PR-6PS Mailbuddy is a postal delivery ace.  This may seem like an extremely specialized robot application, but that's just because it is exactly that."
-		icon = 'icons/obj/mailbud.dmi'
+		icon = 'icons/obj/bots/mailbud.dmi'
 
 		New()
 			..()
@@ -480,7 +480,7 @@
 				CheckSafety(src.budgun, 1, user)
 		return 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/pda2) && W:ID_card)
 			W = W:ID_card
 		if (istype(W, /obj/item/card/id))
@@ -1245,7 +1245,7 @@
 		var/my_turf = get_turf(src)
 		var/burst = shotcount	// TODO: Make rapidfire exist, then work.
 		while(burst > 0 && target)
-			if(IN_RANGE(target_turf, my_turf, 1))
+			if((BOUNDS_DIST(target_turf, my_turf) == 0))
 				budgun.shoot_point_blank(target, src)
 			else
 				budgun.shoot(target_turf, my_turf, src)
@@ -1272,16 +1272,16 @@
 	attack_ai(mob/user as mob)
 		src.interacted(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..())
 			return
-		if(user.a_intent == "help" && !user.using_dialog_of(src) && (get_dist(user,src) <= 1))
+		if(user.a_intent == "help" && !user.using_dialog_of(src) && (BOUNDS_DIST(user, src) == 0))
 			var/affection = pick("hug","cuddle","snuggle")
-			user.visible_message("<span class='notice'>[user] [affection]s [src]!</span>","<span class='notice'>You [affection] [src]!</span>")
+			user.visible_message("<span class='notice'>[user] [affection]s [src]!</span>","<span class='notice'>You [affection] [src]!</span>", group="buddyhug")
 			src.task?.task_input("hugged")
 			return
 
-		if(get_dist(user, src) > 1)
+		if(BOUNDS_DIST(user, src) > 0)
 			return
 
 		src.interacted(user)
@@ -1655,7 +1655,7 @@
 					SPAWN(3 SECONDS)
 						src.set_emotion("sad")		// Still kinda sad that someone would bully a defenseless little rectangle.
 			else if(src.tool && (src.tool.tool_id != "GUN"))
-				var/is_ranged = get_dist(src, target) > 1
+				var/is_ranged = BOUNDS_DIST(src, target) > 0
 				src.tool.bot_attack(target, src, is_ranged, lethal)
 			return
 
@@ -1981,20 +1981,10 @@
 			return
 
 		if (ishuman(task.arrest_target))
-			var/mob/living/carbon/human/H = task.arrest_target
-			//if(H.bioHolder.HasEffect("lost_left_arm") || H.bioHolder.HasEffect("lost_right_arm"))
-			if(!H.limbs.l_arm || !H.limbs.r_arm)
-				task.drop_arrest_target()
-				master.set_emotion("sad")
-				return
 			task.arrest_target.handcuffs = new /obj/item/handcuffs/guardbot(task.arrest_target)
 			task.arrest_target.setStatus("handcuffed", duration = INFINITE_STATUS)
 			boutput(task.arrest_target, "<span class='alert'>[master] gently handcuffs you!  It's like the cuffs are hugging your wrists.</span>")
 			task.arrest_target:set_clothing_icon_dirty()
-
-		task.mode = 0
-		task.drop_arrest_target()
-		master.set_emotion("smug")
 
 		if (length(task.arrested_messages))
 			var/arrest_message = pick(task.arrested_messages)
@@ -2005,6 +1995,11 @@
 		var/turf/LT_loc = get_turf(last_target)
 		if(!LT_loc)
 			LT_loc = get_turf(master)
+
+		task.mode = 0
+		task.drop_arrest_target()
+		master.set_emotion("smug")
+
 		//////PDA NOTIFY/////
 		var/datum/signal/pdaSignal = get_free_signal()
 		var/message2send
@@ -2021,7 +2016,7 @@
 	proc/failchecks()
 		if (!master || !master.on || master.idle || master.stunned || master.moving)
 			return 1
-		if (!IN_RANGE(master, task.arrest_target, 1) || !task.arrest_target || task.arrest_target.hasStatus("handcuffed"))
+		if (!(BOUNDS_DIST(master, task.arrest_target) == 0) || !task.arrest_target || task.arrest_target.hasStatus("handcuffed"))
 			return 1
 
 //Robot tools.  Flash boards, batons, etc
@@ -2797,7 +2792,7 @@
 							master.set_emotion("sad")
 							return
 
-						if(get_dist(master, hug_target) <= 1)
+						if(BOUNDS_DIST(master, hug_target) == 0)
 							master.visible_message("<b>[master]</b> hugs [hug_target]!")
 							if (hug_target.reagents)
 								hug_target.reagents.add_reagent("hugs", 10)
@@ -2861,7 +2856,7 @@
 						master.frustration += 2
 
 					// Right up against them? Book em!
-					if(IN_RANGE(src.master, src.arrest_target, 1) && is_incapacitated(src.arrest_target))
+					if((BOUNDS_DIST(src.master, src.arrest_target) == 0) && is_incapacitated(src.arrest_target))
 						actions.start(new/datum/action/bar/icon/buddy_cuff(src.master, src), src.master)
 					// Otherwise, go get them!
 					else
@@ -2946,8 +2941,6 @@
 						next_destination = signal.data["next_patrol"]
 						target = signal.source.loc
 						destination = recv
-						awaiting_beacon = 0
-						patrol_delay = 5
 						return
 					else
 						return
@@ -2957,8 +2950,6 @@
 					next_destination = signal.data["next_patrol"]
 					target = signal.source.loc
 					destination = recv
-					awaiting_beacon = 0
-					patrol_delay = 5
 			return
 
 		attack_response(mob/attacker as mob)
@@ -3257,7 +3248,7 @@
 						master.set_emotion("sad")
 						return
 
-					if(get_dist(master, hug_target) <= 1)
+					if(BOUNDS_DIST(master, hug_target) == 0)
 						if (prob(2))
 							master.speak("Merry Spacemas!")
 							SPAWN(1 SECOND)
@@ -3414,7 +3405,6 @@
 					src.follow_attempts = 0
 					actions.stopId("buddy_cuff", src.master)
 				if("path_error","path_blocked")
-
 					if (src.protected)
 						if(!(src.protected in view(7,master)))
 							src.follow_attempts++
@@ -3561,7 +3551,7 @@
 				return
 
 			if (src.protected && prob(5))
-      
+
 				if (prob(40))
 					var/buddy_cheer_up_chooser = rand(1, length(buddy_cheer_up_phrases))
 					master.speak(buddy_cheer_up_phrases[buddy_cheer_up_chooser])
@@ -4220,7 +4210,7 @@
 	var/created_name = "Guardbuddy" //Name of resulting guardbot
 	var/buddy_model = 6 //What type of guardbot does this belong to (Default is PR-6, but Murray and Marty are PR-4s)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/pen))
 			if (created_name != initial(created_name))
 				boutput(user, "<span class='alert'>This robot has already been named!</span>")
@@ -4265,7 +4255,7 @@
 
 
 	//Frame -> Add cell -> Add core -> Add arm -> Done. Then add tool. Or gun.
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if ((istype(W, /obj/item/guardbot_core)))
 			if(W:buddy_model != src.buddy_model)
 				boutput(user, "<span class='alert'>That core board is for a different model of robot!</span>")
@@ -4368,7 +4358,7 @@
 		return
 
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..() || status & NOPOWER)
 			return
 
@@ -4662,7 +4652,7 @@
 		return
 
 	MouseDrop_T(obj/O as obj, mob/user as mob)
-		if(user.stat || get_dist(user,src)>1)
+		if(user.stat || BOUNDS_DIST(user, src) > 0)
 			return
 		if(istype(O, /obj/machinery/bot/guardbot) && !src.current && !O:charge_dock)
 			if(O.loc != src.loc) return
@@ -4710,7 +4700,7 @@
 
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W))
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 			boutput(user, "You [src.panel_open ? "secure" : "unscrew"] the maintenance panel.")
@@ -4830,7 +4820,7 @@
 		SPAWN(0.8 SECONDS)
 			linked_bot = locate() in orange(1, src)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (..() || (status & (NOPOWER|BROKEN)))
 			return
 
@@ -5019,7 +5009,7 @@
 				src.created_cell.charge = 0.9 * src.created_cell.maxcharge
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if ((istype(W, /obj/item/guardbot_core)))
 			if(W:buddy_model != src.buddy_model)
 				boutput(user, "<span class='alert'>That core board is for a different model of robot!</span>")
@@ -5136,7 +5126,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "holo_console0"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/token/hug_token))
 			user.visible_message("<span class='alert'><b>[user]</b> inserts a [W] into the [src].</span>", "<span class='alert'>You insert a [W] into the [src].</span>")
 			qdel(W)

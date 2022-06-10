@@ -1,0 +1,65 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/random_item_spawner/junk/maybe_few,
+/obj/random_item_spawner/tools/one_or_zero,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"b" = (
+/obj/random_item_spawner/junk/maybe_few,
+/obj/random_item_spawner/shoe/one_or_zero,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"o" = (
+/obj/random_item_spawner/junk/maybe_few,
+/obj/random_item_spawner/tools/one_or_zero,
+/obj/random_item_spawner/med_tool/one_or_zero,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"q" = (
+/obj/random_item_spawner/junk/maybe_few,
+/obj/random_item_spawner/tableware/one_or_zero,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"K" = (
+/obj/random_item_spawner/junk/maybe_few,
+/obj/random_item_spawner/tools/one_or_zero,
+/obj/random_item_spawner/tableware/one_or_zero,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"R" = (
+/obj/random_item_spawner/junk/maybe_few,
+/obj/random_item_spawner/tools_w_igloves/one_or_zero,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"T" = (
+/obj/random_item_spawner/junk/maybe_few,
+/obj/random_item_spawner/medicine/one_or_zero,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"W" = (
+/obj/random_item_spawner/junk/maybe_few,
+/obj/random_item_spawner/snacks/one_or_zero,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+q
+b
+o
+K
+W
+"}
+(2,1,1) = {"
+o
+q
+W
+q
+a
+"}
+(3,1,1) = {"
+T
+R
+q
+b
+a
+"}

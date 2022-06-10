@@ -328,7 +328,12 @@
 	else
 		return 1 // you caught the virus! do you want to give the captured virus a nickname? virus has been recorded in lurgydex
 
-/mob/living/proc/contract_disease(var/ailment_path, var/ailment_name, var/datum/ailment_data/disease/strain, bypass_resistance = 0)
+/// Contract the specified disease.
+/// @param ailment_path Path of the ailment to add. If both ailment_path and ailment_name are passed, this is used.
+/// @param ailment_name Name of the ailment to add. This is not cosmetic; the ailment type is retrieved via this name.
+/// @param strain Instance of the ailment to add. Used to transfer an existing ailment to a person (such as in the case of a diseased organ transplant)
+/// @param bypass_resistance If disease resistance should be bypassed while adding a disease.
+/mob/living/proc/contract_disease(var/ailment_path, var/ailment_name, var/datum/ailment_data/disease/strain, bypass_resistance = FALSE)
 	if (!src)
 		return null
 	if (!ailment_path && !ailment_name && !(istype(strain,/datum/ailment_data/disease) || istype(strain,/datum/ailment_data/malady))) // maladies use strain to transfer specific instances of their selves via organ transplant/etc

@@ -262,7 +262,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 		return
 	ex_act(var/severity)
 		qdel(src)
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!src.anchored)
 			return ..()
 		if (user.a_intent != INTENT_HARM)
@@ -290,7 +290,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 		else
 			return ..()
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (src.popup_win && (src.no_spam + 25) <= ticker.round_elapsed_ticks)
 			user.tri_message("<span class='alert'><b>[user]</b> shoves [src] in [user == M ? "[his_or_her(user)] own" : "[M]'s"] face!</span>",\
 			user, "<span class='alert'>You shove [src] in [user == M ? "your own" : "[M]'s"] face!</span>",\
@@ -324,7 +324,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 			if (!src.poster_HTML)
 				src.generate_poster()
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (istype(W, /obj/item/photo))
 			var/obj/item/photo/new_p = W
 			if (src.photo)
@@ -346,7 +346,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 		else
 			return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.photo)
 			if (src.anchored && user.a_intent == INTENT_HARM)
 				return ..()
@@ -403,14 +403,14 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 	attack_ai(mob/user as mob)
 		return attack_hand(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.add_fingerprint(user)
 		if (user.client)
 			src.add_dialog(user)
 			show_window(user.client)
 			onclose(user, "wp_station")
 
-	attackby(var/obj/item/W as obj, var/mob/user as mob)
+	attackby(var/obj/item/W, var/mob/user)
 		src.add_fingerprint(user)
 		if (istype(W, /obj/item/paper))
 			user.visible_message("[user] loads [W] into [src].",\
@@ -519,14 +519,14 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 	Topic(href, href_list)
 		if (!usr || !usr.client)
 			return ..()
-		if (get_dist(usr,src) > 1)
+		if (BOUNDS_DIST(usr, src) > 0)
 			boutput(usr, "<span class='alert'>You need to be closer to [src] to do that!</span>")
 			return
 		src.ensure_plist()
 
 		if (href_list["print"])
 			var/pnum = input(usr, "Enter amount to print:", "Print Amount", 1) as null|num
-			if (isnull(pnum) || get_dist(usr,src) > 1)
+			if (isnull(pnum) || BOUNDS_DIST(usr, src) > 0)
 				return
 			logTheThing("speech", usr, null, "printed out [pnum] wanted poster(s) [log_loc(src)] contents: name [src.plist["name"]], subtitle [src.plist["subtitle"]], wanted [src.plist["wanted"]], for [src.plist["for"]], notes [src.plist["notes"]]")
 			for (var/i = clamp(pnum, 1, src.papers), i>0, i--)
@@ -538,14 +538,14 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 
 		else if (href_list["entername"])
 			var/ptext = scrubbed_input(usr, "Enter name:", "Name", src.plist["name"])
-			if (isnull(ptext) || !length(ptext) || get_dist(usr,src) > 1)
+			if (isnull(ptext) || !length(ptext) || BOUNDS_DIST(usr, src) > 0)
 				return
 			src.plist["name"] = ptext
 			logTheThing("speech", usr, null, "edited wanted poster's name: [ptext]")
 
 		else if (href_list["selectphoto"])
 			var/ptext = scrubbed_input(usr, "Enter name or ID of crew to search for:", "Locate File Photo", src.plist["name"])
-			if (isnull(ptext) || !length(ptext) || get_dist(usr,src) > 1)
+			if (isnull(ptext) || !length(ptext) || BOUNDS_DIST(usr, src) > 0)
 				return
 			var/datum/db_record/R
 			for (var/datum/db_record/rec as anything in data_core.general.records)
@@ -568,27 +568,27 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 
 		else if (href_list["enterdoa"])
 			var/ptext = scrubbed_input(usr, "Enter wanted level:", "Wanted Level", src.plist["wanted"])
-			if (isnull(ptext) || !length(ptext) || get_dist(usr,src) > 1)
+			if (isnull(ptext) || !length(ptext) || BOUNDS_DIST(usr, src) > 0)
 				return
 			src.plist["wanted"] = ptext
 			logTheThing("speech", usr, null, "edited wanted poster's wanted: [ptext]")
 
 		else if (href_list["enterreward"])
 			var/pnum = input(usr, "Enter reward amount:", "Reward", src.plist["reward"]) as null|num
-			if (isnull(pnum) || get_dist(usr,src) > 1)
+			if (isnull(pnum) || BOUNDS_DIST(usr, src) > 0)
 				return
 			src.plist["reward"] = pnum
 
 		else if (href_list["enterfor"])
 			var/ptext = scrubbed_input(usr, "Enter wanted information:", "Wanted For", src.plist["for"])
-			if (isnull(ptext) || !length(ptext) || get_dist(usr,src) > 1)
+			if (isnull(ptext) || !length(ptext) || BOUNDS_DIST(usr, src) > 0)
 				return
 			src.plist["for"] = ptext
 			logTheThing("speech", usr, null, "edited wanted poster's for: [ptext]")
 
 		else if (href_list["enternotes"])
 			var/ptext = scrubbed_input(usr, "Enter notes:", "Notes", src.plist["notes"])
-			if (isnull(ptext) || !length(ptext) || get_dist(usr,src) > 1)
+			if (isnull(ptext) || !length(ptext) || BOUNDS_DIST(usr, src) > 0)
 				return
 			src.plist["notes"] = ptext
 			logTheThing("speech", usr, null, "edited wanted poster's notes: [ptext]")

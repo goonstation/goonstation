@@ -99,6 +99,7 @@ datum
 			src.total_temperature = new_temp
 			if (react)
 				temperature_react()
+				handle_reactions()
 
 		proc/temperature_react() //Calls the temperature reaction procs without changing the temp.
 			for(var/reagent_id in reagent_list)
@@ -1021,7 +1022,11 @@ datum
 			for (var/current_id in src.reagent_list)
 				var/datum/reagent/current_reagent = src.reagent_list[current_id]
 				if (current_reagent.taste)
-					reag_list[current_reagent.taste] += current_reagent.volume
+					if (islist(current_reagent.taste))
+						for (var/taste in current_reagent.taste)
+							reag_list[taste] += current_reagent.volume
+					else
+						reag_list[current_reagent.taste] += current_reagent.volume
 			// restrict number of tastes
 			num_val = min(num_val, length(reag_list))
 			// make empty lists for results

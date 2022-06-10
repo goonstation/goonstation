@@ -35,8 +35,8 @@ ABSTRACT_TYPE(/datum/bioEffect)
 	var/list/mob_exclusion = list() // this bio-effect won't occur in the pools of mob types in this list
 	var/mob_exclusive = null // bio-effect will only occur in this mob type
 
-	var/mob/owner = null  //Mob that owns this effect.
-	var/datum/bioHolder/holder = null //Holder that contains this effect.
+	var/tmp/mob/owner = null  //Mob that owns this effect.
+	var/tmp/datum/bioHolder/holder = null //Holder that contains this effect.
 
 	var/msgGain = "" //Message shown when effect is added.
 	var/msgLose = "" //Message shown when effect is removed.
@@ -54,7 +54,7 @@ ABSTRACT_TYPE(/datum/bioEffect)
 	var/reclaim_fail = 5 // Chance % for a reclamation of this gene to fail
 	var/curable_by_mutadone = 1
 	var/stability_loss = 0
-	var/activated_from_pool = 0
+	var/tmp/activated_from_pool = 0
 	var/altered = 0
 	var/add_delay = 0
 	var/wildcard = 0
@@ -291,6 +291,11 @@ ABSTRACT_TYPE(/datum/bioEffect)
 
 		if (!owner.cooldowncheck())
 			boutput(user, "<span class='alert'>That ability is on cooldown for [round((owner.last_cast - world.time) / 10)] seconds.</span>")
+			return
+
+		if (owner.targeted && user.targeting_ability == owner)
+			user.targeting_ability = null
+			user.update_cursor()
 			return
 
 		if (!owner.targeted)

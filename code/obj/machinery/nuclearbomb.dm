@@ -106,11 +106,11 @@
 					. += "<span class='alert'><b>It seems to be on the verge of falling apart!</b></span>"
 
 	// Nuke round development was abandoned for 4 whole months, so I went out of my way to implement some user feedback from that 11 pages long forum thread (Convair880).
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.debugmode)
 			open_wire_panel(user)
 			return
-		if (!user.mind || get_dist(src, user) > 1)
+		if (!user.mind || BOUNDS_DIST(src, user) > 0)
 			return
 
 		user.lastattacked = src
@@ -170,7 +170,7 @@
 
 		#undef NUKE_AREA_CHECK
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		src.add_fingerprint(user)
 		user.lastattacked = src
 
@@ -238,10 +238,6 @@
 					// Give the player a notice so they realize what has happened
 					boutput(user, "<span class='alert'>The screws are all weird safety-bit types! You can't turn them!</span>")
 					return
-				//else if (istype(W,/obj/item/wirecutters/))
-				//	user.visible_message("<b>[user]</b> opens up [src]'s wiring panel and takes a look.")
-				//	open_wire_panel(user)
-				//	return
 
 		if (istype(W, /obj/item/wrench/battle) && src._health <= src._max_health)
 			SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, /obj/machinery/nuclearbomb/proc/repair_nuke, null, 'icons/obj/items/tools/wrench.dmi', "battle-wrench", "[user] repairs the [src]!", null)
@@ -265,13 +261,7 @@
 		return
 
 	ex_act(severity)
-		/*switch(severity) // No more suicide-bombing the nuke.
-			if(1)
-				src.take_damage(80)
-			if(2)
-				src.take_damage(50)
-			if(3)
-				src.take_damage(20)*/
+		// No more suicide-bombing the nuke.
 		return
 
 	blob_act(var/power)
@@ -288,10 +278,10 @@
 
 		if(src.material) src.material.triggerOnBullet(src, src, P)
 
-		if (!damage)
+		if (damage <= 0)
 			return
 		if(P.proj_data.damage_type == D_KINETIC || (P.proj_data.damage_type == D_ENERGY && damage))
-			src.take_damage(damage / 1.7)
+			src.take_damage(damage / 3)
 		else if (P.proj_data.damage_type == D_PIERCING)
 			src.take_damage(damage)
 
@@ -402,7 +392,7 @@
 
 	onUpdate()
 		..()
-		if(get_dist(owner, the_bomb) > 1 || the_bomb == null || owner == null)
+		if(BOUNDS_DIST(owner, the_bomb) > 0 || the_bomb == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -412,7 +402,7 @@
 
 	onStart()
 		..()
-		if(get_dist(owner, the_bomb) > 1 || the_bomb == null || owner == null)
+		if(BOUNDS_DIST(owner, the_bomb) > 0 || the_bomb == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -456,7 +446,7 @@
 			decal.icon_state = "balloon_green_pop"
 			qdel(src)
 
-	attackby(var/obj/item/W as obj, mob/user as mob)
+	attackby(var/obj/item/W, mob/user)
 		..()
 		user.lastattacked = src
 		playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_1.ogg', 100, 1)

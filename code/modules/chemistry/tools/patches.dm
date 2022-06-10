@@ -99,7 +99,7 @@
 			src.UpdateIcon()
 			return 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return
 
 	attack_self(mob/user as mob)
@@ -127,7 +127,7 @@
 				apply_to(M,usr)
 				attach_sticker_manual(M)
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (src.in_use)
 			//DEBUG_MESSAGE("[src] in use")
 			return
@@ -526,14 +526,14 @@
 			src.attack(user,user) //do self operation
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/mender_refill_cartridge))
 			var/obj/item/reagent_containers/mender_refill_cartridge/refill = W
 			refill.do_refill(src, user)
 			return
 		..()
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (src.borg == 1 && !issilicon(user))
 			user.show_text("This item is not designed with organic users in mind.", "red")
 			return
@@ -626,14 +626,14 @@
 
 	onUpdate()
 		..()
-		if(get_dist(user, target) > 1 || user == null || target == null)
+		if(BOUNDS_DIST(user, target) > 0 || user == null || target == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 
 	onStart()
 		..()
-		if(get_dist(user, target) > 1 || user == null || target == null)
+		if(BOUNDS_DIST(user, target) > 0 || user == null || target == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		src.loopStart()
@@ -656,7 +656,7 @@
 		M.apply_to(target,user, multiply, silent = (looped >= 1))
 
 	onEnd()
-		if(get_dist(user, target) > 1 || user == null || target == null || !user.find_in_hand(M))
+		if(BOUNDS_DIST(user, target) > 0 || user == null || target == null || !user.find_in_hand(M))
 			..()
 			interrupt(INTERRUPT_ALWAYS)
 			return

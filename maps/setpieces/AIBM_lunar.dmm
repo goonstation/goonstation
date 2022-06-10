@@ -1444,7 +1444,7 @@
 	icon_state = "intact";
 	tag = "icon-intact-f (EAST)"
 	},
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "The dessicated remains of some kind of reporter type.";
 	icon = 'icons/misc/lunar.dmi';
 	icon_state = "mangledhusk";

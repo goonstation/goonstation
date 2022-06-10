@@ -86,6 +86,7 @@
 					H.unkillable = 0
 				if(!M.stat) M.emote("scream")
 				src.visible_message("<span class='alert'><B>[M]</B> falls into the [src] and melts away!</span>")
+				logTheThing("combat", M, null, "was firegibbed by [src] ([src.type]) at [log_loc(M)].")
 				M.firegib() // thanks ISN!
 		else
 			src.visible_message("<span class='alert'><B>[O]</B> falls into the [src] and melts away!</span>")
@@ -108,6 +109,7 @@
 	temperature = 10+T0C
 
 	Entered(var/mob/M)
+		. = ..()
 		if (istype(M,/mob/dead) || istype(M,/mob/wraith) || istype(M,/mob/living/intangible) || istype(M, /obj/lattice))
 			return
 		if(!ismob(M))
@@ -493,7 +495,7 @@
 	anchored = 1
 	density = 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/mining_tool/power_pick))
 			boutput(user, "You hit the [src] a few times with the [W]!")
 			src.visible_message("<span class='notice'><b>[src] crumbles into dust!</b></span>")
@@ -509,7 +511,7 @@
 	density = 1
 
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/mining_tool/power_pick))
 			boutput(user, "You hit the [src] a few times with the [W]!")
 			src.visible_message("<span class='notice'><b>After a few hits [src] crumbles into smaller rocks.</b></span>")
@@ -653,7 +655,7 @@
 	density = 1
 	anchored = 1
 
-	attackby(obj/item/W as obj, mob/user as mob, params)
+	attackby(obj/item/W, mob/user, params)
 		if (istype(W, /obj/item/grab))
 			var/obj/item/grab/G = W
 			if (!G.affecting || G.affecting.buckled)
@@ -695,8 +697,8 @@
 
 		src.tag = "cave[id][src.icon_state == "cave_entrance" ? 0 : 1]"
 
-	attack_hand(mob/user as mob)
-		if (user.stat || user.getStatusDuration("weakened") || get_dist(user, src) > 1)
+	attack_hand(mob/user)
+		if (user.stat || user.getStatusDuration("weakened") || BOUNDS_DIST(user, src) > 0)
 			return
 
 		var/obj/cave_entrance/otherEntrance = locate("cave[id][src.icon_state == "cave_entrance"]")
@@ -948,7 +950,7 @@
 	icon_state = "dispenser_handcuffs"
 	var/amount = 3
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/handcuffs))
 			user.u_equip(W)
 			qdel(W)
@@ -956,7 +958,7 @@
 			boutput(user, "<span class='notice'>You put a pair of handcuffs in the [src]. [amount] left in the dispenser.</span>")
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		add_fingerprint(user)
 		if (src.amount >= 1)
 			src.amount--
@@ -978,7 +980,7 @@
 	bound_width = 96
 	layer = EFFECTS_LAYER_BASE
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (can_reach(user,src))
 			boutput(user, "<span class='alert'>You attempt to open the container but its doors are sealed tight. It doesn't look like you'll be able to open it.</span>")
 			playsound(src.loc, "sound/machines/door_locked.ogg", 50, 1, -2)
@@ -1170,7 +1172,7 @@
 
 	Bumped(mob/user as mob)
 		if(busy) return
-		if(get_dist(user, src) > 1 || user.z != src.z) return
+		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		src.add_dialog(user)
 		busy = 1
 		showswirl(user.loc)
@@ -1269,7 +1271,7 @@
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "ntcrate"
 
-	attackby(var/obj/item/I as obj, var/mob/user as mob)
+	attackby(var/obj/item/I, var/mob/user)
 		if (istype(I, /obj/item/rpcargotele))
 			actions.start(new /datum/action/bar/icon/scenariocrate(src, I, 300), user)
 
@@ -1296,7 +1298,7 @@
 
 	onUpdate()
 		..()
-		if (thecrate == null || the_tool == null || owner == null || get_dist(owner, thecrate) > 1)
+		if (thecrate == null || the_tool == null || owner == null || BOUNDS_DIST(owner, thecrate) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner

@@ -48,7 +48,7 @@
 	UpdateIcon()
 
 	AddComponent(/datum/component/mechanics_holder)
-	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", "toggleinput")
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", .proc/toggleinput)
 	MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, alarm_frequency)
 
 /obj/machinery/firealarm/disposing()
@@ -102,7 +102,7 @@
 		src.alarm()
 	return
 
-/obj/machinery/firealarm/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/firealarm/attackby(obj/item/W, mob/user)
 	if (issnippingtool(W))
 		src.detecting = !( src.detecting )
 		if (src.detecting)
@@ -135,7 +135,7 @@
 			status |= NOPOWER
 			UpdateIcon()
 
-/obj/machinery/firealarm/attack_hand(mob/user as mob)
+/obj/machinery/firealarm/attack_hand(mob/user)
 	if(user.stat || status & (NOPOWER|BROKEN) || ON_COOLDOWN(src, "toggle", 1 SECOND))
 		return
 

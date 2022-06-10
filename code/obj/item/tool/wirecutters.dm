@@ -7,6 +7,7 @@
 
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	tool_flags = TOOL_SNIPPING
+	health = 5
 	w_class = W_CLASS_SMALL
 
 	force = 6.0
@@ -24,7 +25,7 @@
 		..()
 		BLOCK_SETUP(BLOCK_KNIFE)
 
-	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	attack(mob/living/carbon/M, mob/living/carbon/user)
 		if (!src.remove_bandage(M, user) && !snip_surgery(M, user))
 			return ..()
 

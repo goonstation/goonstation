@@ -361,10 +361,10 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 			return
 		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened"))
 			return
-		if (get_dist(src, usr) > 1)
+		if (BOUNDS_DIST(src, usr) > 0)
 			usr.show_text("You are too far away to do this!", "red")
 			return
-		if (get_dist(over_object, src) > 1)
+		if (BOUNDS_DIST(over_object, src) > 0)
 			usr.show_text("The [src.name] is too far away from the target!", "red")
 			return
 		if (!istype(over_object,/turf/simulated/floor/))
@@ -480,7 +480,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		..()
 		if (!src.owner || !src.victim || QDELETED(G))
 			interrupt(INTERRUPT_ALWAYS)
-		if (!IN_RANGE(src.owner, src.brig, 1) || !IN_RANGE(src.victim, src.brig, 1))
+		if (!(BOUNDS_DIST(src.owner, src.brig) == 0) || !(BOUNDS_DIST(src.victim, src.brig) == 0))
 			interrupt(INTERRUPT_ALWAYS)
 		src.brig.visible_message("<span class='alert'>[owner] begins shoving [victim] into [src.brig]!</span>")
 
@@ -489,14 +489,14 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		..()
 		if (!src.owner || !src.victim || QDELETED(G))
 			interrupt(INTERRUPT_ALWAYS)
-		if (!IN_RANGE(src.owner, src.brig, 1) || !IN_RANGE(src.victim, src.brig, 1))
+		if (!(BOUNDS_DIST(src.owner, src.brig) == 0) || !(BOUNDS_DIST(src.victim, src.brig) == 0))
 			interrupt(INTERRUPT_ALWAYS)
 
 	onEnd()
 		..()
 		if (!src.owner || !src.victim || QDELETED(G))
 			interrupt(INTERRUPT_ALWAYS)
-		if (!IN_RANGE(src.owner, src.brig, 1) || !IN_RANGE(src.victim, src.brig, 1))
+		if (!(BOUNDS_DIST(src.owner, src.brig) == 0) || !(BOUNDS_DIST(src.victim, src.brig) == 0))
 			interrupt(INTERRUPT_ALWAYS)
 		src.brig.visible_message("<span class='alert'>[owner] shoves [victim] into [src.brig]!</span>")
 		victim.set_loc(src.brig)
@@ -575,10 +575,10 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 			return
 		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened"))
 			return
-		if (get_dist(src, usr) > 1)
+		if (BOUNDS_DIST(src, usr) > 0)
 			usr.show_text("You are too far away to do this!", "red")
 			return
-		if (get_dist(over_object, src) > 1)
+		if (BOUNDS_DIST(over_object, src) > 0)
 			usr.show_text("The [src.name] is too far away from the target!", "red")
 			return
 		if (!istype(over_object,/turf/simulated/floor/))
@@ -691,7 +691,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		src.homeloc = src.loc
 
 		possible_new_friend = typesof(/obj/critter/bear) + typesof(/obj/critter/spider/ice) + typesof(/obj/critter/cat) + typesof(/obj/critter/parrot)\
-						+ list(/obj/critter/aberration, /obj/critter/domestic_bee, /obj/critter/domestic_bee/chef, /obj/critter/bat/buff, /obj/critter/bat, /obj/critter/bloodling, /obj/critter/wraithskeleton, /obj/critter/magiczombie, /obj/critter/wendigo)\
+						+ list(/obj/critter/aberration, /obj/critter/domestic_bee, /obj/critter/domestic_bee/chef, /obj/critter/bat/buff, /obj/critter/bat, /obj/critter/bloodling, /obj/critter/wraithskeleton, /obj/critter/magiczombie, /obj/critter/brullbar)\
 						- list(/obj/critter/spider/ice/queen)
 
 	disposing()
@@ -713,10 +713,10 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 			return
 		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened"))
 			return
-		if (get_dist(src, usr) > 1)
+		if (BOUNDS_DIST(src, usr) > 0)
 			usr.show_text("You are too far away to do this!", "red")
 			return
-		if (get_dist(over_object, src) > 1)
+		if (BOUNDS_DIST(over_object, src) > 0)
 			usr.show_text("The [src.name] is too far away from the target!", "red")
 			return
 		if (!istype(over_object,/turf/simulated/floor/))
@@ -737,7 +737,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 	allow_drop()
 		return 0
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (src.open && iswrenchingtool(W))
 			return
 		else
@@ -850,6 +850,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		portable_machinery.Add(src)
 
 		animate_bumble(src, Y1 = 1, Y2 = -1, slightly_random = 0)
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 		src.homeloc = src.loc
 		//Products
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/patch/bruise, 20)
@@ -900,10 +901,10 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 			return
 		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened"))
 			return
-		if (get_dist(src, usr) > 1)
+		if (BOUNDS_DIST(src, usr) > 0)
 			usr.show_text("You are too far away to do this!", "red")
 			return
-		if (get_dist(over_object, src) > 1)
+		if (BOUNDS_DIST(over_object, src) > 0)
 			usr.show_text("The [src.name] is too far away from the target!", "red")
 			return
 		if (!istype(over_object,/turf/simulated/floor/))

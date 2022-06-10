@@ -205,11 +205,8 @@ datum
 				if(!istype(A)) return
 
 				if(holder.get_reagent_amount(id) >= 15) //no more thermiting walls with 1u tyvm
-					var/id = src.id
-					var/datum/reagents/holder = src.holder
-					var/volume
 					holder.del_reagent(id)
-					fireflash_sm(A, 0, rand(20000, 25000) + volume * 2500, 0, 0, 1) // Bypasses the RNG roll to melt walls (Convair880).
+					fireflash_sm(A, 0, rand(20000, 25000), 0, 0, 1) // Bypasses the RNG roll to melt walls (Convair880).
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
@@ -509,9 +506,9 @@ datum
 					L.update_burning(50 * mult)
 				..()
 
-		combustible/thalmerite // COGWERKS CHEM REVISION PROJECT. pretty much a magic chem, can leave alone
+		combustible/pyrosium // COGWERKS CHEM REVISION PROJECT. pretty much a magic chem, can leave alone
 			name = "pyrosium"
-			id = "thalmerite"
+			id = "pyrosium"
 			description = "This strange compound seems to slowly heat up all by itself. Very sticky."
 			reagent_state = LIQUID
 			fluid_r = 100
@@ -528,14 +525,14 @@ datum
 				if (O)
 					if(!O.reagents)
 						O.create_reagents(50)
-					O.reagents.add_reagent("thalmerite", 5, null)
+					O.reagents.add_reagent("pyrosium", 5, null)
 				return
 
 			reaction_turf(var/turf/T, var/volume)
 				if (T)
 					if(!T.reagents)
 						T.create_reagents(50)
-					T.reagents.add_reagent("thalmerite", 5, null)
+					T.reagents.add_reagent("pyrosium", 5, null)
 				return
 
 		combustible/argine

@@ -40,7 +40,7 @@ Vulnerability : Slashing<br>
 <b>Ferocious Roar</b><br>
 <i>This creature lets out a deafening roar. Every target within close hearing range must roll a Constitution saving throw or be petrified and miss one turn.</i><br>
 <br>
-<b>Wendigo</b><br>
+<b>Brullbar</b><br>
 Type : Beast<br>
 Size : Large<br>
 DC To Hit : 15<br>

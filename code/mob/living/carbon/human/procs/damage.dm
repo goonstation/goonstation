@@ -100,6 +100,11 @@
 					if (src.organHolder && prob(50))
 						src.organHolder.damage_organ(0, damage, 0, target_organ)
 
+				if (istype(P.proj_data, /datum/projectile/laser))
+					var/wound_num = rand(0, 4)
+					var/image/I = image(icon = 'icons/mob/human.dmi', icon_state = "laser_wound-[wound_num]", layer = MOB_EFFECT_LAYER)
+					src.UpdateOverlays(I, "laser_wound-[wound_num]")
+
 			if (D_BURNING)
 				if (armor_value_bullet > 1)
 					if (src.organHolder && prob(50))
@@ -109,16 +114,20 @@
 						src.organHolder.damage_organ(0, damage, 0, target_organ)
 
 			if (D_TOXIC)
-				if (P.proj_data.reagent_payload)
+				if (P.reagents)
 					if (P.implanted)
 						if (istext(P.implanted))
 							P.implanted = text2path(P.implanted)
 							if (!P.implanted)
 								return
 						var/obj/item/implant/projectile/implanted = new P.implanted
+						implanted.create_reagents(P.reagents.maximum_volume)
+						P.reagents.trans_to(implanted, P.reagents.maximum_volume)
 						implanted.set_loc(src)
 						if (istype(implanted))
 							implanted.owner = src
+							if (P.forensic_ID)
+								implanted.forensic_ID = P.forensic_ID
 							src.implant += implanted
 							implanted.setMaterial(P.proj_data.material)
 							implanted.implanted(src, null, 0)
@@ -187,11 +196,17 @@
 	if(src.bioHolder && src.bioHolder.HasEffect("shoot_limb"))
 		delib_chance += 20
 
-	if (src.traitHolder && src.traitHolder.hasTrait("explolimbs") || src.getStatusDuration("food_explosion_resist"))
+	if (src.getStatusDuration("food_explosion_resist"))
 		delib_chance = round(delib_chance / 2)
 
 	if (prob(delib_chance) && !shielded)
-		src.sever_limb(pick(list("l_arm","r_arm","l_leg","r_leg"))) //max one delimb at once
+		if (src.traitHolder && src.traitHolder.hasTrait("explolimbs"))
+			if(prob(50))
+				boutput(src, "<span class='notice'><b>Your unusually strong bones keep your limbs attached through the blast!</b></span>")
+			else
+				src.sever_limb(pick(list("l_arm","r_arm","l_leg","r_leg")))
+		else
+			src.sever_limb(pick(list("l_arm","r_arm","l_leg","r_leg"))) //max one delimb at once
 
 	switch (power)
 		if (-INFINITY to 0) //blocked
@@ -428,6 +443,12 @@
 
 	src.take_toxin_damage(-tox)
 
+	if (burn > 0)
+		if (burn >= 10 || src.get_burn_damage() <= 5)
+			src.heal_laser_wound("all")
+		else if (prob(10))
+			src.heal_laser_wound("single")
+
 	if (zone == "All")
 		var/bruteOrganCount = 0.0 		//How many organs have brute damage?
 		var/burnOrganCount = 0.0		//How many organs have burn damage?
@@ -501,6 +522,16 @@
 		else
 			return 0
 	return
+
+/mob/living/carbon/human/proc/heal_laser_wound(type)
+	if (type == "single")
+		for (var/i in 0 to 4)
+			if (src.GetOverlayImage("laser_wound-[i]"))
+				src.UpdateOverlays(null, "laser_wound-[i]")
+				break
+	else if (type == "all")
+		for (var/i in 0 to 4)
+			src.UpdateOverlays(null, "laser_wound-[i]")
 
 /mob/living/carbon/human/take_eye_damage(var/amount, var/tempblind = 0, var/side)
 	if (!src || !ishuman(src) || (!isnum(amount) || amount == 0))

@@ -170,6 +170,18 @@ var/global/IP_alerts = 1
 	src.only_local_looc = !src.only_local_looc
 	boutput(usr, "<span class='notice'>Toggled seeing all LOOC messages [src.only_local_looc ?"off":"on"]!</span>")
 
+/client/proc/toggle_hearing_all()
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	set name = "Toggle Hearing All"
+	set desc = "Toggles the ability to hear all messages regardless of where you are, like a ghost."
+	ADMIN_ONLY
+
+	if(src.mob)
+		src.mob.mob_flags ^= MOB_HEARS_ALL
+		boutput(usr, "<span class='notice'>Toggled seeing all messages [src.mob.mob_flags & MOB_HEARS_ALL ? "on" : "off"]!</span>")
+	else
+		boutput(usr, "<span class='notice'>You don't have a mob, somehow, what!</span>")
+
 /client/proc/toggle_attack_messages()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Toggle Attack Alerts"
@@ -204,9 +216,9 @@ client/proc/toggle_ghost_respawns()
 	ADMIN_ONLY
 	src.holder.rp_word_filtering = !src.holder.rp_word_filtering
 	if(src.holder.rp_word_filtering)
-		src.RegisterSignal(GLOBAL_SIGNAL, COMSIG_SUSSY_PHRASE, .proc/message_one_admin)
+		src.RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_SUSSY_PHRASE, .proc/message_one_admin)
 	else
-		src.UnregisterSignal(GLOBAL_SIGNAL, COMSIG_SUSSY_PHRASE)
+		src.UnregisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_SUSSY_PHRASE)
 	boutput(usr, "<span class='notice'>Toggled RP word filter notifications [src.holder.rp_word_filtering ?"on":"off"]!</span>")
 
 /client/proc/toggle_hear_prayers()

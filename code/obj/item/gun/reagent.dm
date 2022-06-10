@@ -86,7 +86,7 @@
 		if(!isliving(usr))
 			return
 
-		if(get_dist(src, usr) > 1)
+		if(BOUNDS_DIST(src, usr) > 0)
 			boutput(usr, "<span class='alert'>You need to be closer to empty \the [src] out!</span>")
 			return
 
@@ -104,7 +104,7 @@
 		else
 			boutput(usr, "<span class='alert'>There's nothing loaded to drain!</span>")
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		if (istype(I, /obj/item/reagent_containers/glass))
 			return
 
@@ -128,7 +128,7 @@
 	tooltip_flags = REBUILD_DIST
 
 	New()
-		set_current_projectile(new/datum/projectile/syringe)
+		set_current_projectile(new/datum/projectile/syringe/syringe_barbed)
 		. = ..()
 
 	get_desc(dist)
@@ -142,6 +142,12 @@
 		else
 			. += "<br><span class='notice'>&emsp; Nothing</span>"
 
+	shoot(target, start, mob/user, POX, POY, is_dual_wield)
+		var/obj/projectile/P = ..()
+		if (istype(P)) //we actually shot something
+			P.create_reagents()
+
+
 /obj/item/gun/reagent/syringe/NT
 	name = "NT syringe gun"
 	icon_state = "syringegun-NT"
@@ -152,6 +158,7 @@
 
 	New()
 		..()
+		set_current_projectile(new/datum/projectile/syringe)
 		if (src.safe && islist(global.chem_whitelist) && length(global.chem_whitelist))
 			src.ammo_reagents = global.chem_whitelist
 
@@ -185,6 +192,7 @@
 
 	New()
 		..()
+		set_current_projectile(new/datum/projectile/syringe)
 		src.reagents.add_reagent("love", src.reagents.maximum_volume)
 
 
@@ -213,7 +221,7 @@ obj/item/gun/reagent/syringe/love/plus // Sometimes you just need more love in y
 			src.icon_state = "ecto[ratio]"
 			return
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		if (istype(I, /obj/item/reagent_containers/food/snacks/ectoplasm) && !src.reagents.is_full())
 			I.reagents.trans_to(src, I.reagents.total_volume)
 			user.visible_message("<span style=\"color:red\">[user] smooshes a glob of ectoplasm into [src].</span>")

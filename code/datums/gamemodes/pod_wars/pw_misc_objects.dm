@@ -307,7 +307,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	is_friend(var/mob/living/C)
 		if (!C.ckey || !C.mind)
 			return 1
-		if (C.mind?.special_role == "NanoTrasen")
+		if (C.mind?.special_role != "Syndicate")
 			return 1
 		else
 			return 0
@@ -339,7 +339,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	is_friend(var/mob/living/C)
 		if (!C.ckey || !C.mind)
 			return 1
-		if (C.mind.special_role == "Syndicate")
+		if (C.mind.special_role != "NanoTrasen")
 			return 1
 		else
 			return 0
@@ -581,7 +581,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 
 		ctrl_pt.capture(user, team_num)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!can_be_captured)
 			var/cur_time
 			var/datum/game_mode/pod_wars/mode = ticker.mode
@@ -657,7 +657,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 		return
 	meteorhit(var/obj/O as obj)
 		return
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return
 
 	//These are basically the same as "normal" pod_wars beacons, but they won't have a capture point so they should never get an owner team
@@ -719,7 +719,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 		user.lastattacked = src
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		switch (user.a_intent)
 			if (INTENT_HELP)
 				visible_message(src, "<span class='notice'>[user] pats [src] [pick("earnestly", "merrily", "happily","enthusiastically")] on top.</span>")

@@ -56,8 +56,8 @@
 	name = "Cryokinesis"
 	desc = "Exert control over cold and ice."
 	icon_state = "cryokinesis"
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 
 	cast(atom/target)
 		if (..())
@@ -129,6 +129,7 @@
 	desc = "Eat just about anything!"
 	icon_state = "mattereater"
 	targeted = FALSE
+	needs_hands = FALSE
 	var/using = FALSE
 
 	cast()
@@ -162,7 +163,7 @@
 			using = FALSE
 			return TRUE
 
-		if (!(the_object in get_filtered_atoms_in_touch_range(owner, base_path)))
+		if (!(the_object in get_filtered_atoms_in_touch_range(owner, base_path)) && !istype(the_object, /obj/the_server_ingame_whoa))
 			owner.show_text("<span class='alert'>Man, that thing is long gone, far away, just let it go.</span>")
 			return TRUE
 
@@ -195,7 +196,19 @@
 				affecting.heal_damage(4, 0)
 			owner.UpdateDamageIcon()
 
-		qdel(the_object)
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if (istype(the_object, /obj/item/organ))
+				var/obj/item/organ/O = the_object
+				if (O.donor)
+					H.organHolder.drop_organ(the_object)
+				qdel(the_object)
+			else if (istype(the_object, /obj/item/parts))
+				var/obj/item/parts/part = the_object
+				part.delete()
+				H.hud.update_hands()
+		else
+			qdel(the_object)
 
 		using = FALSE
 
@@ -283,6 +296,7 @@
 	name = "Jumpy"
 	desc = "Take a big leap forward."
 	icon_state = "jumpy"
+	needs_hands = FALSE
 	targeted = 0
 
 	cast()
@@ -294,8 +308,6 @@
 			return 1
 
 		//store both x and y as transforms mid jump can cause unwanted pixel offsetting
-		var/original_x_offset = owner.pixel_x
-		var/original_y_offset = owner.pixel_y
 		var/jump_tiles = 10 * linked_power.power
 		var/pixel_move = 8 * linked_power.power
 		var/sleep_time = 1 / linked_power.power
@@ -306,17 +318,22 @@
 			var/prevLayer = owner.layer
 			owner.layer = EFFECTS_LAYER_BASE
 
+			animate(owner,
+				pixel_y = pixel_move * jump_tiles / 2,
+				time = sleep_time * jump_tiles / 2,
+				easing = EASE_OUT | CIRCULAR_EASING,
+				flags = ANIMATION_RELATIVE | ANIMATION_PARALLEL)
+			animate(
+				pixel_y = -pixel_move * jump_tiles / 2,
+				time = sleep_time * jump_tiles / 2,
+				easing = EASE_IN | CIRCULAR_EASING,
+				flags = ANIMATION_RELATIVE)
+
 			SPAWN(0)
 				for(var/i=0, i < jump_tiles, i++)
 					step(owner, owner.dir)
-					if(i < jump_tiles / 2)
-						owner.pixel_y += pixel_move
-					else
-						owner.pixel_y -= pixel_move
 					sleep(sleep_time)
 
-				owner.pixel_x = original_x_offset
-				owner.pixel_y = original_y_offset
 				owner.layer = prevLayer
 
 		if (istype(owner.loc,/obj/))
@@ -325,16 +342,7 @@
 			owner.changeStatus("paralysis", 5 SECONDS)
 			owner.changeStatus("weakened", 5 SECONDS)
 			container.visible_message("<span class='alert'><b>[owner.loc]</b> emits a loud thump and rattles a bit.</span>")
-			playsound(owner.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
-			SPAWN(0)
-				var/wiggle = 6
-				while(wiggle > 0)
-					wiggle--
-					container.pixel_x = rand(-3,3)
-					container.pixel_y = rand(-3,3)
-					sleep(0.1 SECONDS)
-				container.pixel_x = 0
-				container.pixel_y = 0
+			animate_storage_thump(container)
 
 		return
 
@@ -423,7 +431,7 @@
 		if (target == owner)
 			boutput(owner, "<span class='alert'>While \"be yourself\" is pretty good advice, that would be taking it a bit too literally.</span>")
 			return 1
-		if (get_dist(target,owner) > 1 && !owner.bioHolder.HasEffect("telekinesis"))
+		if (BOUNDS_DIST(target, owner) > 0 && !owner.bioHolder.HasEffect("telekinesis"))
 			boutput(owner, "<span class='alert'>You must be within touching distance of [target] for this to work.</span>")
 			return 1
 
@@ -476,7 +484,7 @@
 			boutput(owner, "<span class='alert'>[target] does not seem to be compatible with this ability.</span>")
 			return 1
 
-		if (get_dist(H,owner) > 1 && !owner.bioHolder.HasEffect("telekinesis"))
+		if (BOUNDS_DIST(H, owner) > 0 && !owner.bioHolder.HasEffect("telekinesis"))
 			boutput(owner, "<span class='alert'>You must be within touching distance of [target] for this to work.</span>")
 			return 1
 
@@ -506,6 +514,7 @@
 	name = "Trichochromatic Shift"
 	desc = "Swap the colors of your hair around."
 	icon_state = "polymorphism"
+	needs_hands = FALSE
 	targeted = 0
 
 	cast()
@@ -560,6 +569,7 @@
 	name = "Telepathy"
 	desc = "Transmit psychic messages to others."
 	icon_state = "telepathy"
+	needs_hands = FALSE
 	targeted = 1
 
 	cast(atom/target)
@@ -667,6 +677,7 @@
 	name = "Mind Reader"
 	desc = "Read the minds of others for information."
 	icon_state = "empath"
+	needs_hands = FALSE
 	targeted = 1
 
 	cast(atom/target)
@@ -814,6 +825,7 @@
 	name = "Immolate"
 	desc = "Wreath yourself in burning flames."
 	icon_state = "immolate"
+	needs_hands = FALSE
 	targeted = 0
 
 	cast()
@@ -864,6 +876,7 @@
 	name = "Dissolve"
 	desc = "Transform yourself into a liquid state."
 	icon_state = "melt"
+	needs_hands = FALSE
 	targeted = 0
 
 	cast()
@@ -936,6 +949,7 @@
 	name = "Superfart"
 	desc = "Unleash a gigantic fart!"
 	icon_state = "superfart"
+	needs_hands = FALSE
 	targeted = 0
 
 	cast()
@@ -972,6 +986,7 @@
 			if(owner.reagents.has_reagent("anti_fart"))
 				owner.visible_message("<span class='alert'><b>[owner.name]</b> swells up. That can't be good.</span>")
 				boutput(owner, "<span class='alert'><b>Oh god.</b></span>")
+				logTheThing("combat", owner, null, "was gibbed by superfarting while containing anti_fart at [log_loc(owner)].")
 				indigestion_gib()
 				return 1
 
@@ -1003,13 +1018,18 @@
 			if (linked_power.power > 1)
 				for (var/turf/T in range(owner,6))
 					animate_shake(T,5,rand(3,8),rand(3,8))
-			if (gib_user)
-				owner.gib()
 
 			// Superfarted on the bible? Off to hell.
 			for (var/obj/item/storage/bible/B in owner.loc)
-				owner.damn()
+				if(gib_user)
+					owner.mind.damned = TRUE
+				else
+					owner.damn()
 				break
+
+			if (gib_user)
+				owner.gib()
+
 		else
 			boutput(owner, "<span class='alert'>You were interrupted and couldn't fart! Rude!</span>")
 			SF.farting = 0
@@ -1087,9 +1107,9 @@
 	name = "Eyebeams"
 	desc = "Shoot lasers from your eyes."
 	icon_state = "eyebeams"
-	targeted = 1
-	target_anything = 1
-	needs_hands = 0
+	targeted = TRUE
+	target_anything = TRUE
+	needs_hands = FALSE
 
 	cast(atom/target)
 		if (..())
@@ -1155,8 +1175,9 @@
 	name = "Adrenaline Rush"
 	desc = "Infuse your bloodstream with stimulants."
 	icon_state = "adrenaline"
-	targeted = 0
-	can_act_check = 0
+	targeted = FALSE
+	needs_hands = FALSE
+	can_act_check = FALSE
 
 	cast()
 		if (..())
@@ -1212,7 +1233,7 @@
 	name = "Midas Touch"
 	desc = "Transmute an object to gold by touching it."
 	icon_state = "midas"
-	targeted = 0
+	targeted = FALSE
 
 	cast()
 		if (..())
@@ -1314,13 +1335,13 @@
 	name = "Healing Touch"
 	desc = "Soothe the wounds of others."
 	icon_state = "healingtouch"
-	targeted = 1
+	targeted = TRUE
 
 	cast(atom/target)
 		if (..())
 			return 1
 
-		if (get_dist(target,owner) > 1 && !owner.bioHolder.HasEffect("telekinesis"))
+		if (BOUNDS_DIST(target, owner) > 0 && !owner.bioHolder.HasEffect("telekinesis"))
 			boutput(usr, "<span class='alert'>You need to be closer to do that.</span>")
 			return 1
 
@@ -1346,7 +1367,7 @@
 		if (..())
 			return 1
 
-		if (get_dist(target,owner) > 1 && !owner.bioHolder.HasEffect("telekinesis"))
+		if (BOUNDS_DIST(target, owner) > 0 && !owner.bioHolder.HasEffect("telekinesis"))
 			boutput(usr, "<span class='alert'>You need to be closer to do that.</span>")
 			return 1
 
@@ -1418,9 +1439,9 @@
 	name = "Dimension Shift"
 	desc = "Hide in another dimension to avoid hazards."
 	icon_state = "dimensionshift"
-	targeted = 0
-	cooldown = 900
-	has_misfire = 0
+	targeted = FALSE
+	cooldown = 90 SECONDS
+	has_misfire = FALSE
 
 	cast()
 		if (..())
@@ -1507,8 +1528,8 @@
 	name = "Photokinesis"
 	desc = "Create a strong source of light."
 	icon_state = "photokinesis"
-	targeted = 1
-	has_misfire = 0
+	targeted = TRUE
+	has_misfire = FALSE
 
 	cast(atom/target)
 		if (..())
@@ -1575,8 +1596,8 @@
 	name = "Erebokinesis"
 	desc = "Create a field of darkness."
 	icon_state = "erebokinesis"
-	targeted = 1
-	has_misfire = 0
+	targeted = TRUE
+	has_misfire = FALSE
 
 	cast(atom/target)
 		if (..())
@@ -1616,7 +1637,7 @@
 	name = "Fire Breath"
 	desc = "Huff and puff, and burn their house down!"
 	icon_state = "firebreath"
-	targeted = 1
+	targeted = TRUE
 
 	cast(atom/target)
 		if (..())
@@ -1672,7 +1693,8 @@
 	name = "Brown Note"
 	desc = "Mess with others using the power of sound!"
 	icon_state = "brownnote"
-	targeted = 0
+	needs_hands = FALSE
+	targeted = FALSE
 
 	cast()
 		if (..())
@@ -1756,9 +1778,10 @@
 	name = "Telekinetic Throw"
 	icon_state = "tk"
 	desc = "Command a few objects to hurl themselves at the target location."
-	targeted = 1
-	target_anything = 1
-	cooldown = 200
+	targeted = TRUE
+	target_anything = TRUE
+	needs_hands = FALSE
+	cooldown = 20 SECONDS
 
 	cast(atom/T)
 		var/list/thrown = list()
@@ -1876,10 +1899,10 @@
 	name = "Cloak of Darkness"
 	icon_state = "darkcloak"
 	desc = "Activate or deactivate your cloak of darkness."
-	targeted = 0
+	targeted = FALSE
 	cooldown = 0
-	can_act_check = 0
-	has_misfire = 0
+	can_act_check = FALSE
+	has_misfire = FALSE
 
 	cast(atom/T)
 		var/datum/bioEffect/power/darkcloak/DC = linked_power
@@ -1953,10 +1976,10 @@
 	name = "Chameleon"
 	icon_state = "chameleon"
 	desc = "Activate or deactivate your chameleon cloak."
-	targeted = 0
-	cooldown = 0
-	can_act_check = 0
-	has_misfire = 0
+	targeted = FALSE
+	cooldown = FALSE
+	can_act_check = FALSE
+	has_misfire = FALSE
 
 	cast(atom/T)
 		var/datum/bioEffect/power/chameleon/CH = linked_power
@@ -1982,8 +2005,8 @@
 	id = "bigpuke"
 	msgGain = "You feel sick."
 	msgLose = "You feel much better!"
-	cooldown = 300
-	occur_in_genepools = 0
+	cooldown = 30 SECONDS
+	occur_in_genepools = FALSE
 	stability_loss = 10
 	ability_path = /datum/targetable/geneticsAbility/bigpuke
 	var/range = 3
@@ -1992,8 +2015,10 @@
 	name = "Mass Emesis"
 	desc = "BLAAAAAAAARFGHHHHHGHH"
 	icon_state = "bigpuke"
-	targeted = 1
-	has_misfire = 0
+	targeted = TRUE
+	has_misfire = FALSE
+	needs_hands = FALSE
+	var/puke_reagents = list("vomit" = 20)
 
 	cast(atom/target)
 		if (..())
@@ -2008,7 +2033,8 @@
 		owner.visible_message("<span class='alert'><b>[owner] horfs up a huge stream of puke!</b></span>")
 		logTheThing("combat", owner, target, "power-pukes [log_reagents(owner)] at [log_loc(owner)].")
 		playsound(owner.loc, "sound/misc/meat_plop.ogg", 50, 0)
-		owner.reagents.add_reagent("vomit",20)
+		for (var/reagent_id in puke_reagents)
+			owner.reagents.add_reagent(reagent_id, puke_reagents[reagent_id])
 		var/turf/currentturf
 		var/turf/previousturf
 		for(var/turf/F in line_turfs)
@@ -2037,51 +2063,11 @@
 	name = "Acidic Mass Emesis"
 	id = "acid_bigpuke"
 	ability_path = /datum/targetable/geneticsAbility/bigpuke/acid
-	cooldown = 350
+	cooldown = 35 SECONDS
 
 /datum/targetable/geneticsAbility/bigpuke/acid
 	name = "Acidic Mass Emesis"
-	desc = "BLAAAAAAAARFGHHHHHGHH"
-	icon_state = "bigpuke"
-	targeted = 1
-	has_misfire = 0
-
-	cast(atom/target)
-		if (..())
-			return 1
-
-		var/turf/T = get_turf(target)
-		var/list/line_turfs = getline(owner, T)
-		var/list/affected_turfs = list()
-		var/range = 3
-		owner.visible_message("<span class='alert'><b>[owner] horfs up a huge stream of acidic puke!</b></span>")
-		logTheThing("combat", owner, target, "power-pukes [log_reagents(owner)] at [log_loc(owner)].")
-		playsound(owner.loc, "sound/misc/meat_plop.ogg", 50, 0)
-		owner.reagents.add_reagent("gvomit",20)
-		owner.reagents.add_reagent("pacid",10)
-		owner.reagents.add_reagent("radium",5)
-		var/turf/currentturf
-		var/turf/previousturf
-		for(var/turf/F in line_turfs)
-			previousturf = currentturf
-			currentturf = F
-			if(currentturf.density || istype(currentturf, /turf/space))
-				break
-			if(previousturf && LinkBlocked(previousturf, currentturf))
-				break
-			if (F == get_turf(owner))
-				continue
-			if (get_dist(owner,F) > range)
-				continue
-			affected_turfs += F
-		for(var/turf/F in affected_turfs)
-			owner.reagents.reaction(F,TOUCH, owner.reagents.total_volume/length(affected_turfs))
-			for(var/mob/living/L in F.contents)
-				owner.reagents.reaction(L,TOUCH, owner.reagents.total_volume/length(affected_turfs))
-			for(var/obj/O in F.contents)
-				owner.reagents.reaction(O,TOUCH, owner.reagents.total_volume/length(affected_turfs))
-		owner.reagents.clear_reagents()
-		return 0
+	puke_reagents = list("vomit" = 20, "gvomit" = 20, "pacid" = 10, "radium" = 5)
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2106,8 +2092,9 @@
 	name = "Ink Glands"
 	desc = "Spray colorful ink onto an object."
 	icon_state = "ink"
-	targeted = 0
-	has_misfire = 0
+	targeted = FALSE
+	has_misfire = FALSE
+	needs_hands = FALSE
 
 	cast()
 		if (..())
@@ -2181,7 +2168,8 @@
 	name = "Vestigal Ballistics"
 	desc = "OOOOWWWWWW!!!!!!!!"
 	icon_state = "shoot_limb"
-	targeted = 1
+	targeted = TRUE
+	needs_hands = FALSE //hehe
 	var/range = 9
 	var/throw_power = 1
 	var/limb_force = 20
@@ -2262,24 +2250,24 @@
 	name = "Fade"
 	desc = "Fade in and out. An admin power."
 	icon_state = "template"
-	targeted = 0
-	can_act_check = 0
-	has_misfire = 0
-	var/active = 0
-	var/fading = 0
+	targeted = FALSE
+	can_act_check = FALSE
+	has_misfire = FALSE
+	var/active = FALSE
+	var/fading = FALSE
 
 	cast()
 		if (..())
-			return 1
+			return 0
 
 		if (fading)
 			boutput(usr, "/red Already fading. Please wait a bit.")
 
 		if (active)
-			fading = 1
+			fading = TRUE
 			animate(owner, time = 10, alpha = 0, easing = LINEAR_EASING)
-			fading = 0
+			fading = FALSE
 		else
-			fading = 1
+			fading = TRUE
 			animate(owner, time = 10, alpha = 255, easing = LINEAR_EASING)
-			fading = 0
+			fading = FALSE

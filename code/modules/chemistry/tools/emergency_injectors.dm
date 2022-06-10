@@ -36,7 +36,7 @@
 			icon_state = "emerg_inj-[label]0"
 		item_state = "emerg_inj-[label]"
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (iscarbon(M) || ismobcritter(M))
 			if (src.empty || !src.reagents)
 				boutput(user, "<span class='alert'>There's nothing to inject, [src] has already been expended!</span>")
@@ -278,7 +278,7 @@
 /obj/item/reagent_containers/emergency_injector/high_capacity/donk_injector
 	name = "Donk injector"
 	desc = "A large syringe-like thing that automatically injects its contents into someone. This one contains a cocktail of chemicals intended to mimic the effect of eating a warm donk pocket."
-	initial_reagents = list("omnizine" = 15, "teporone" = 15, "synaptizine" = 15, "saline" = 15, "salbutamol" = 15, "methamphetamine" = 15)
+	initial_reagents = list("omnizine" = 15, "teporone" = 15, "synaptizine" = 15, "saline" = 15, "salbutamol" = 15, "synd_methamphetamine" = 15)
 	label = "bigblue"
 	initial_volume = 90
 	amount_per_transfer_from_this = 15
