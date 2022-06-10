@@ -1,7 +1,7 @@
 /obj/machinery/power/combustion_generator
 	name = "Portable Generator"
 	desc = "A portable combustion generator that burns fuel from a fuel tank, there is a port for a gas tank. A warning reads: DO NOT RUN INDOORS."
-	icon_state = "furnace"
+	icon_state = "chemportgen0"
 	density = 1
 	anchored = 0
 	flags = NOSPLASH
@@ -57,11 +57,13 @@
 			if (src.anchored)
 				src.disconnect()
 				boutput(user, "<span class='notice'>You unanchor the [src] to the floor.</span>")
+				src.visible_message("<span class='notice'>The [src] stops as it was unachored by [user].</span>")
 				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
 				return
 
 			src.connect()
 			boutput(user, "<span class='notice'>You anchor the [src] to the floor.</span>")
+			src.visible_message("<span class='notice'>[user] anchors the [src] to the floor.</span>")
 			playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
 
 	process()
@@ -76,7 +78,7 @@
 			src.visible_message("<span class='notice'>The [src] stops, it seems like it ran out of something.</span>")
 			return
 
-		var/amount = ((average_volatility * src.standard_power_output) * (available_oxygen * 5))
+		var/amount = ((average_volatility * src.standard_power_output) * (available_oxygen * 2.5))
 		// debug
 		src.visible_message("<span class='notice'>[amount] WATTS</span>")
 
@@ -85,7 +87,7 @@
 		var/turf/simulated/T = get_turf(src)
 		if (istype(T))
 			var/datum/gas_mixture/payload = new /datum/gas_mixture
-			payload.carbon_dioxide = 10
+			payload.carbon_dioxide = src.atmos_drain_rate
 			payload.temperature = T20C
 			T.assume_air(payload)
 
@@ -138,20 +140,20 @@
 
 	proc/start_engine(var/mob/user as mob)
 		if (!src.ready_to_start())
-			if (user)
+			if (istype(user))
 				boutput(user, "<span class='notice'>You can't seem to get the [src] to start.</span>")
 			return
 
 		src.active = 1
 
-		if (user)
+		if (istype(user))
 			src.visible_message("<span class='notice'>[user] starts the [src].</span>")
 		playsound(src.loc, "sound/machines/tractorrev.ogg", 40, pitch=2)
 
 	proc/stop_engine(var/mob/user as mob)
 		src.active = 0
 
-		if (user)
+		if (istype(user))
 			src.visible_message("<span class='notice'>[user] stops the [src].</span>")
 		playsound(src.loc, "sound/machines/tractorrev.ogg", 40, pitch=2)
 
@@ -195,7 +197,6 @@
 		src.visible_message("<span class='notice'>Oxygen Concentration: [T.air_contents.oxygen / TOTAL_MOLES(T.air_contents)]</span>")
 		return T.air_contents.oxygen / TOTAL_MOLES(T.air_contents)
 
-
 	proc/get_average_volatility(datum/reagents/R)
 		if (!R || !R.total_volume)
 			return
@@ -216,11 +217,13 @@
 
 		src.fuel_tank.set_loc(get_turf(src))
 		if (istype(user))
+			src.visible_message("<span class='notice'>[user] removes the [src.fuel_tank] from the [src].</span>")
 			user.put_in_hand_or_eject(src.fuel_tank)
 
 		playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 		src.fuel_tank = null
 		src.stop_engine()
+		src.visible_message("<span class='notice'>The [src] stops as the fuel tank is removed.</span>")
 
 	proc/eject_inlet_tank(var/mob/user as mob)
 		if (!src || !src.inlet_tank)
@@ -228,6 +231,7 @@
 
 		src.inlet_tank.set_loc(get_turf(src))
 		if (istype(user))
+			src.visible_message("<span class='notice'>[user] removes the [src.inlet_tank] from the [src].</span>")
 			user.put_in_hand_or_eject(src.inlet_tank)
 
 		playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
