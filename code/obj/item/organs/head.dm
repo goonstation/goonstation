@@ -12,6 +12,8 @@
 	var/scalp_op_stage = 0.0 // Needed to track a scalp gash (brain and skull removal) separately from op_stage (head removal)
 	icon = 'icons/mob/human_head.dmi'
 	icon_state = "invis" // we'll overlay some shit on here
+	inhand_image_icon = 'icons/mob/inhand/hand_skulls.dmi'
+	item_state = ""
 	edible = 0
 	rand_pos = 0 // we wanna override it below
 	made_from = "bone"
@@ -29,6 +31,7 @@
 	/// Defines what kind of head this is, for things like lizards being able to colorchange a transplanted lizardhead
 	/// Since we can't easily swap out one head for a different type
 	var/head_type = HEAD_HUMAN
+	var/linked_human = null
 
 	var/image/head_image = null
 	var/head_icon = null
@@ -65,12 +68,22 @@
 					src.UpdateIcon(/*makeshitup*/ 0)
 				else //The heck?
 					src.UpdateIcon(/*makeshitup*/ 1)
+				if (src.donor.eye != null)
+					src.donor.set_eye(null)
 			else
 				src.UpdateIcon(/*makeshitup*/ 1)
 
 	disposing()
+		if (src.donor && ishuman(src.donor))
+			var/mob/living/carbon/human/H = src.donor
+			if (isskeleton(H))
+				var/datum/mutantrace/skeleton/S = H.mutantrace
+				S.head_tracker = null
 		if (holder)
 			holder.head = null
+		if (donor_original.eye == src)
+			donor_original.set_eye(null)
+			boutput(donor_original, "<span class='alert'><b>You feel your vision forcibly punted back to your body!</b></span>")
 		skull = null
 		brain = null
 		left_eye = null
@@ -80,6 +93,7 @@
 		ears = null
 		wear_mask = null
 		glasses = null
+		linked_human = null
 
 		..()
 
@@ -122,6 +136,9 @@
 			. += "<br><span class='alert'><B>[src.name]'s right eye is missing!</B></span>"
 		if (!src.left_eye)
 			. += "<br><span class='alert'><B>[src.name]'s left eye is missing!</B></span>"
+
+		if (isalive(src.donor_original))
+			. += "<br><span class='notice'><B>[src.name] appears conscious!</B></span>"
 
 	/// This proc does a full rebuild of the head's stored data
 	/// only call it if something changes the head in a major way, like becoming a lizard
@@ -239,7 +256,10 @@
 		if (src.ears && src.ears.wear_image_icon)
 			src.overlays += image(src.ears.wear_image_icon, src.ears.icon_state, layer = MOB_EARS_LAYER)
 
-		if (src.head && src.head.wear_image_icon)
+		if (src.head && src.head.wear_image)
+			src.overlays += src.head.wear_image
+
+		else if (src.head && src.head.wear_image_icon)
 			src.overlays += image(src.head.wear_image_icon, src.head.icon_state, layer = MOB_HEAD_LAYER2)
 
 		if(!(src.head && src.head.seal_hair))
@@ -293,7 +313,7 @@
 		update_head_image()
 
 
-	attackby(obj/item/W as obj, mob/user as mob) // this is real ugly
+	attackby(obj/item/W, mob/user) // this is real ugly
 		if (!user)
 			return
 		//Putting stuff on heads
@@ -333,7 +353,14 @@
 			else
 				boutput(user, "<span class='alert'>[src.name] is already wearing [src.glasses.name]!</span>")
 			return
-
+		if (istype(W, /obj/item/cloth))
+			playsound(src, 'sound/items/towel.ogg', 25, 1)
+			user.visible_message("<span class='notice'>[user] [pick("buffs", "shines", "cleans", "wipes", "polishes")] [src] with [W].</span>")
+			src.clean_forensic()
+			return
+		if (istype(W, /obj/item/reagent_containers/food) && head_type == HEAD_SKELETON)
+			user.visible_message("<span class='notice'>[user] tries to feed [W] to [src] but it cannot swallow!</span>")
+			return
 
 		if (src.skull || src.brain)
 
@@ -430,26 +457,26 @@
 	attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
 		/* Overrides parent function to handle special case for attaching heads. */
 		var/mob/living/carbon/human/H = M
-		if (!src.can_attach_organ(H, user))
+		if (!isskeleton(M) && !src.can_attach_organ(H, user))
 			return 0
 
 		var/fluff = pick("attach", "shove", "place", "drop", "smoosh", "squish")
-		if (!H.get_organ("head"))
+		if (!H.get_organ("head") && H.organHolder.receive_organ(src, "head", isskeleton(M) ? 0 : 3))
 
 			H.tri_message("<span class='alert'><b>[user]</b> [fluff][(fluff == "smoosh" || fluff == "squish" || fluff == "attach") ? "es" : "s"] [src] onto [H == user ? "[his_or_her(H)]" : "[H]'s"] neck stump!</span>",\
 			user, "<span class='alert'>You [fluff] [src] onto [user == H ? "your" : "[H]'s"] neck stump!</span>",\
 			H, "<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][(fluff == "smoosh" || fluff == "squish" || fluff == "attach") ? "es" : "s"] [src] onto your neck stump!</span>")
+			playsound(H, 'sound/effects/attach.ogg', 50, 1)
 
 			if (user.find_in_hand(src))
 				user.u_equip(src)
-			H.organHolder.receive_organ(src, "head", 3.0)
+			H.update_equipment_screen_loc()
 
 			SPAWN(rand(50,500))
-				if (H?.organHolder?.head && H.organHolder.head == src) // aaaaaa
-					if (src.op_stage != 0.0)
-						H.visible_message("<span class='alert'><b>[H]'s head comes loose and tumbles off of [his_or_her(H)] neck!</b></span>",\
-						"<span class='alert'><b>Your head comes loose and tumbles off of your neck!</b></span>")
-						H.organHolder.drop_organ("head") // :I
+				if (H?.organHolder?.head == src && src.op_stage != 0.0) // head has not been secured
+					H.visible_message("<span class='alert'><b>[H]'s head comes loose and tumbles off of [his_or_her(H)] neck!</b></span>",\
+					"<span class='alert'><b>Your head comes loose and tumbles off of your neck!</b></span>")
+					H.organHolder.drop_organ("head") // :I
 
 			return 1
 		else
@@ -510,6 +537,7 @@
 				if(HEAD_SKELETON)
 					src.organ_name = "bony head"
 					src.desc = "...does that skull have another skull inside it?"
+					src.item_state = "skull"
 
 				if(HEAD_SEAMONKEY)
 					src.organ_name = "seamonkey head"

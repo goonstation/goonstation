@@ -292,6 +292,15 @@
 		/obj/item/clothing/shoes/black,
 	)
 
+/obj/item/storage/box/costume/jester
+	name = "jester costume"
+	desc = "A box that contains a jester's outfit"
+	spawn_contents = list(
+		/obj/item/clothing/head/jester,
+		/obj/item/clothing/mask/jester,
+		/obj/item/clothing/under/gimmick/jester,
+		/obj/item/clothing/shoes/jester,
+	)
 
 /obj/item/storage/box/costume/robuddy
 	name = "guardbuddy costume"

@@ -39,7 +39,7 @@
 			A.c_state(1)
 		signal_event("icon_updated")
 
-	attackby(obj/A as obj, mob/user as mob)
+	attackby(obj/A, mob/user)
 		if (istype(A, /obj/item/assembly/time_ignite) && !(A:status))
 			var/obj/item/assembly/time_ignite/W = A
 			if (!W.part3)

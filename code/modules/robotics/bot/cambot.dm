@@ -312,7 +312,7 @@
 	var/build_step = 0
 	var/created_name = "Cambot"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/prox_sensor))
 			var/obj/machinery/bot/cambot/B = new /obj/machinery/bot/cambot(get_turf(src))
 			B.name = src.created_name

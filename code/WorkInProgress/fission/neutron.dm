@@ -9,7 +9,7 @@
 
 	var/obj/item/rod/insertedRod = null
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(insertedRod)
 			insertedRod.set_loc(src.loc)
 			insertedRod = null

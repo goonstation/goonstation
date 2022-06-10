@@ -1302,6 +1302,11 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 		if (ismob(A))
 			. += A
 		if (isobj(A) || ismob(A))
+			if (istype(A, /obj/item/organ/head))	//Skeletons can hear from their heads!
+				var/obj/item/organ/head/found_head = A
+				if (found_head.head_type == HEAD_SKELETON && found_head.linked_human != null)
+					var/mob/linked_mob = found_head.linked_human
+					. += linked_mob
 			for(var/mob/M in A.contents)
 				var/can_hear = 0 //this check prevents observers from hearing their target's messages twice
 

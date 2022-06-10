@@ -45,7 +45,7 @@
 	get_damage()
 		return src.brute_dam + src.burn_dam	+ src.tox_dam
 
-	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	attack(mob/living/carbon/M, mob/living/carbon/user)
 		if(!ismob(M))
 			return
 
@@ -199,6 +199,20 @@
 					src.limb_is_transplanted = TRUE
 				else // Maybe we got our old limb back?
 					src.limb_is_transplanted = FALSE
+
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
+		if (hit_atom == thr.return_target)
+			var/mob/living/carbon/human/H = hit_atom
+			if (isskeletonlimb(src) && isskeleton(H) && !H.limbs.get_limb(src.slot))
+				src.attach(H)
+				H.visible_message("<span class='alert'>[H] has been hit by [src].</span> <span class='notice'>It fuses instantly with [H]'s empty socket!</span>")
+				playsound(H, 'sound/effects/attach.ogg', 50, 1)
+			else
+				hit_atom.visible_message("<span class='alert'><b>[hit_atom]</b> gets clonked in the face with [src]!</span>")
+				playsound(hit_atom, 'sound/impact_sounds/Flesh_Break_1.ogg', 30, 1)
+				hit_atom.changeStatus("stunned", 2 SECONDS)
+			return
+		..()
 
 	/// Determines what the limb's skin tone should be
 	proc/colorize_limb_icon()
@@ -1815,12 +1829,16 @@
 	partIcon = 'icons/mob/skeleton.dmi'
 	easy_attach = 1 // Its just a bone... full of meat. Kind of.
 	kind_of_limb = (LIMB_MUTANT | LIMB_SKELLY)
+	force = 10
+	throw_return = TRUE
 
 /obj/item/parts/human_parts/leg/mutant/skeleton
 	icon = 'icons/mob/skeleton.dmi'
 	partIcon = 'icons/mob/skeleton.dmi'
 	easy_attach = 1
 	kind_of_limb = (LIMB_MUTANT | LIMB_SKELLY)
+	force = 10
+	throw_return = TRUE
 
 //// LIMBS ////
 /obj/item/parts/human_parts/arm/mutant/skeleton/left

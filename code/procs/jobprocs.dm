@@ -681,6 +681,12 @@
 					if (src.limbs.r_arm)
 						qdel(src.limbs.r_arm.remove(0))
 				boutput(src, "<b>Your singular arm makes you feel responsible for crimes you couldn't possibly have committed.</b>" )
+
+	// Special mutantrace items
+	if (src.traitHolder && src.traitHolder.hasTrait("pug"))
+		src.put_in_hand_or_drop(new /obj/item/reagent_containers/food/snacks/cookie/dog)
+	else if (src.traitHolder && src.traitHolder.hasTrait("skeleton"))
+		src.put_in_hand_or_drop(new /obj/item/joint_wax)
 	return
 
 /mob/living/carbon/human/proc/spawnId(rank)
@@ -783,11 +789,11 @@ proc/antagify(mob/H, var/traitor_role, var/agimmick)
 		for(var/i = 0, i < num_objectives, i++)
 			var/select_objective = pick(eligible_objectives)
 			new select_objective(null, H.mind)
-			H << browse(grabResource("html/traitorTips/traitorhardTips.html"),"window=antagTips;titlebar=1;size=600x400;can_minimize=0;can_resize=0")
+			H.show_antag_popup("traitorhard")
 			ticker.mode.traitors |= H.mind
 	else
 		ticker.mode.Agimmicks |= H.mind
-		H << browse(grabResource("html/traitorTips/traitorGenericTips.html"),"window=antagTips;titlebar=1;size=600x400;can_minimize=0;can_resize=0")
+		H.show_antag_popup("traitorgeneric")
 	if (traitor_role)
 		H.mind.special_role = traitor_role
 	else

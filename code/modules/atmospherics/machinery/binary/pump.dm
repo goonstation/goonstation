@@ -127,7 +127,7 @@ obj/machinery/atmospherics/binary/pump
 
 		UpdateIcon()
 
-obj/machinery/atmospherics/binary/pump/attackby(obj/item/W as obj, mob/user as mob)
+obj/machinery/atmospherics/binary/pump/attackby(obj/item/W, mob/user)
 	if(ispulsingtool(W) || iswrenchingtool(W))
 		ui.show_ui(user)
 

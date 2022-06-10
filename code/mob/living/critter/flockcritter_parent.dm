@@ -16,6 +16,7 @@
 	mat_appearances_to_ignore = list("gnesis")
 	mat_changename = FALSE
 	mat_changedesc = FALSE
+	see_invisible = INVIS_FLOCK
 	// HEALTHS
 	var/health_brute = 1
 	var/health_burn = 1
@@ -61,7 +62,7 @@
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT, src, 100)
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_AI_UNTRACKABLE, src)
-	src.see_invisible = INVIS_CLOAK
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION, src)
 
 	// do not automatically set up a flock if one is not provided
 	// flockless drones act differently
@@ -87,6 +88,13 @@
 		state["area"] = "???"
 	return state
 
+/mob/living/critter/flock/hand_attack(atom/target, params)
+	var/datum/handHolder/HH = get_active_hand()
+	if (HH.can_attack && !HH.can_hold_items && ismob(target) && src.a_intent == INTENT_GRAB)
+		var/datum/limb/L = src.equipped_limb()
+		L.grab(target, src)
+	. = ..()
+
 /mob/living/critter/flock/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 	..()
 	src.update_health_icon()
@@ -95,7 +103,7 @@
 	src.dormant = TRUE
 	src.ai?.die()
 	actions.stop_all(src)
-
+	src.is_npc = FALSE
 	if (!src.flock)
 		return
 
@@ -341,7 +349,7 @@
 			var/obj/O = new structurepath(target)
 			animate_flock_convert_complete(O)
 			playsound(target, "sound/misc/flockmind/flockdrone_build_complete.ogg", 40, 1)
-
+			O.AddComponent(/datum/component/flock_interest, F?.flock)
 /////////////////////////////////////////////////////////////////////////////////
 // EGG ACTION
 /////////////////////////////////////////////////////////////////////////////////

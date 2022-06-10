@@ -32,7 +32,6 @@ datum
 				fluid_g = 32
 				fluid_b = 32
 				transparency = 120
-				penetrates_skin = 1
 
 		harmful/simple_damage_burn
 			name = "irritant precursor"
@@ -400,6 +399,8 @@ datum
 			fluid_g = 75
 			transparency = 20
 			penetrates_skin = 1
+			touch_modifier = 0.5
+
 			value = 4 // 1 1 1 heat
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -424,6 +425,8 @@ datum
 			transparency = 20
 			penetrates_skin = 1
 			value = 4
+			depletion_rate = 0.6
+			touch_modifier = 0.33
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
@@ -1121,6 +1124,7 @@ datum
 			depletion_rate = 0.1
 			var/counter = 1
 			var/remove_buff = 0
+			var/fainted = FALSE
 			blob_damage = 2
 			threshold = THRESHOLD_INIT
 
@@ -1144,13 +1148,14 @@ datum
 					M.changeStatus("stimulants", -10 SECONDS * mult)
 
 				switch(counter+= (1 * mult))
-					if (1 to 10)
+					if (1 to 11)
 						if (probmult(7)) M.emote("yawn")
-					if (11 to 20)
+					if (11 to 21)
 						M.setStatus("drowsy", 40 SECONDS)
-					if (21)
-						M.emote("faint")
-					if (22 to INFINITY)
+					if (21 to INFINITY)
+						if(!fainted)
+							M.emote("faint")
+							fainted = TRUE
 						if (prob(20))
 							M.emote("faint")
 							M.setStatusMin("paralysis", 8 SECONDS * mult)

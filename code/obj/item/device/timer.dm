@@ -76,7 +76,7 @@
 
 	return
 
-/obj/item/device/timer/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/device/timer/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/device/radio/signaler) )
 		var/obj/item/device/radio/signaler/S = W
 		if(!S.b_stat)

@@ -91,7 +91,7 @@
 
 		the_zoldorf = list()
 		spawn(0)
-			src << browse(grabResource("html/traitorTips/souldorfTips.htm"),"window=antagTips;titlebar=1;size=600x400;can_minimize=0;can_resize=0")
+			src.show_antag_popup("souldorf")
 
 	Login()
 		..()

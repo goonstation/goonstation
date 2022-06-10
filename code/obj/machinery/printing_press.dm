@@ -148,7 +148,7 @@
 //Interaction stuff//
 /////////////////////
 
-	attackby(var/obj/item/W as obj, mob/user as mob)
+	attackby(var/obj/item/W, mob/user)
 		if (istype(W, /obj/item/paper_bin))
 			var/obj/item/paper_bin/P = W
 			if (P.amount > 0 && paper_amt <= paper_max) //if the paper bin has paper, and adding the paper bin doesnt add too much paper
@@ -223,7 +223,7 @@
 		else
 			..()
 
-	attack_hand(var/mob/user as mob) //all of our mode controls and setters here, these control what the books are/look like/have as contents
+	attack_hand(var/mob/user) //all of our mode controls and setters here, these control what the books are/look like/have as contents
 		if (is_running)
 			boutput(user, "\The [src] is busy.") //machine is running
 			return

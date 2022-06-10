@@ -583,7 +583,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	can_dry = 0
 	can_fluid_absorb = 0
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if (H.job == "Chef" || H.job == "Sous-Chef")
@@ -804,7 +804,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		pixel_y += rand(-12,12)
 		pixel_x += rand(-12,12)
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (istype(W, /obj/item/stamp))
 
 			var/obj/item/stamp/S = W
@@ -1119,7 +1119,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		..()
 		qdel(src)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		user.show_text("The ashes slip through your fingers.", "blue")
 		qdel(src)
 		return
@@ -1334,7 +1334,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	icon_state = "gib1"
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6", "gib7")
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if (H.job == "Roboticist" || H.job == "Engineer" || H.job == "Mechanic")

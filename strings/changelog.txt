@@ -1,9 +1,178 @@
 
+(t)fri jun 10 22
+(u)FlameArrow57
+(p)9054
+(e)|
+(+)Added new medals for changeling, blob, head rev, and werewolf antagonists!
+(u)Blahowsky
+(p)9014
+(e)🎨|sprites
+(*)Added two new hairstyles and one fade; Loose Long Braid (with Loose Long Braid: Twin Color to customise) and Loose Long Braid Over Shoulder.
+(t)thu jun 09 22
+(u)Cogwerks
+(e)🎨|sprites
+(*)Made a new sprite and name for the heavy ion blaster
+(*)Occasionally testing a micro-phaser, macro-phaser, and egun Jr. in rounds 
+(u)LeahTheTech
+(p)9052
+(e)🐛|bug
+(+)Renamed the "Open antag popup" verb to "Special role popup"
+(t)wed jun 08 22
+(u)NightmareChamillian and Amylizzle
+(p)8418
+(e)🆕🎨|feature, sprites
+(*)Added a new general-purpose syndicate item: the sawfly. See minor changes for details.
+(+)Sawflies cost 2 TC and come as a 1.5 second grenade that spawns a single sawfly drone on detonation
+(+)Sawfly drones have 50 HP that deal 14 damage a hit to crew. They can be returned to grenade form by traitors.
+(+)Furthermore, all sawfly purchases come with a remote, which can be used to fold and deploy all sawflies in in a 4 tile radius.
+(u)Taylor Kellogg
+(p)9032
+(e)|
+(+)Adds an abort button to the Chemicompiler
+(t)tue jun 07 22
+(u)tarmunora, catface
+(e)⚖|balance
+(+)Hand teles have a 100PU internal cell, and use 25PU per portal. Rechargers in tele rooms ~~coming soon™~~ added to maps
+(u)Azrun
+(e)⚖🔥|balance
+(+)Pipe repairs use slightly less fuel and should stay repaired a bit longer.
+(u)Waffleloffle
+(p)9006
+(e)⚖|balance
+(+)Upped the number of morphine autoinjectors in Security's morphine autoinjector box utility purchase from 4 to 6.
+(t)mon jun 06 22
+(u)NightmareChamillian
+(p)8991
+(e)|
+(+)You now have to confirm when glass recycling a full container. No more accidentally dumping your mixes!
+(u)Moberry
+(p)8890
+(e)|
+(+)Changed the Electroplater to allow bulky items and storage items.
+(u)Bartimeus973
+(p)8986
+(e)|
+(+)Posters, wall-mounted potted plants, loudspeakers and linen/bedsheet bins can now be deconstructed.
+(u)TTerc
+(*)Injecting/drawing blood from mobs with a syringe now has actionbars. Injecting containers is now instant.
+(u)Ikea, Flaborized
+(p)8652
+(e)🎨|sprites
+(*)Medical doctors and directors now spawn with medical labcoats. Regular labcoats can now be found in medical clothing lockers and the Patchwork medal reward now grants a <i>cool</i> medical labcoat (sprite by Flaborized!).
+(t)sun jun 05 22
+(u)Bartimeus973
+(p)8960
+(e)|
+(+)Jailbirds are now wanted for a bunch of new crimes!
+(t)sat jun 04 22
+(u)TTerc
+(+)You can now pin people by clicking fluids, smoke clouds and cleanable decals.
+(u)DimWhat
+(p)8938
+(e)🎨|sprites
+(+)Replaced the SWAT helmet in the captain's locker with a more fitting captain helmet.
+(u)DimWhat
+(p)8948
+(e)🗺|mapping
+(+)QM is now functional on destiny when the shields are on.
+(u)Ikea
+(p)8909
+(e)|
+(*)The bounty refresh interval for spies has been decreased from 25 minutes to 15 minutes on classic. For roleplay the refresh interval remains at 25 minutes.
+(t)fri jun 03 22
+(u)Bartimeus973
+(p)8913
+(e)|
+(+)Decapitated skeletons now speak from their heads, use the radio and listen in on conversations!
+(u)Wisemonster
+(p)8939
+(e)🗺|mapping
+(+)Added status displays to Clarion
+(u)CrystalClover
+(p)8934
+(e)🗺|mapping
+(+)Rearranged Horizon's pharmacy's layout and added a glass recycler
+(u)FlameArrow57
+(p)8593
+(e)🆕🎨⚖|feature, sprites, balance
+(+)Most harmful projectiles now leave a wound on your body.
+(u)aloe
+(+)Plates now just act like. Plates. You can grab food off of them without a menu, they don't make food all weird and small, and you can still use a utensil to eat off them.
+(+)Click dragging a food item on a plate to you will pick up the plate (in case you filled it with too much food)
+(+)Because I am a developer and I have a pathological need to remove features, plate stacks have been removed for being musty and generally bad.
+(u)CodeJester
+(p)8727
+(e)🆕🎨|feature, sprites
+(+)Cyborgs can now click-drag food items onto each other to use them on each other. Try dragging sugar on dough to make sweet dough!
+(+)Civilian cyborgs have a new "tongs" tool that can use a food item as if it were used in-hand. Try using tongs on a dough strip to make a dough circle!
+(+)The "tongs" tool can also get food items out of containers, like egg cartons or boxes.
+(t)thu jun 02 22
+(u)Munien
+(p)8821
+(e)|
+(+)Operating tables are now deconstructable.
+(u)DimWhat
+(p)8839
+(e)⚖|balance
+(+)Changed a few miscellaneous glove conductivity values; gloves that barely cover your hands (rings, fingerless gloves) don't offer electrical protection, and some random gloves have higher conductivity.
+(u)glowbold
+(p)8856
+(e)|
+(+)Cyborgs can now dump the contents of their ore scoop and satchels into material processors and the Rockbox
+(u)CodeJester
+(p)8869
+(e)🆕|feature
+(+)Pointing is now animated. Throw arrows at people today!
+(t)wed jun 01 22
+(u)Flourish
+(p)8761
+(e)🆕🎨|feature, sprites
+(*)Skeletons can now detach their head and limbs by targeting the respective part and using a wrench, crowbar, and wrench again. Once their head is detached, the skeleton's "eye" remains centered on their head object. Once a limb is detached, it can be used as a boomerang that automatically re-attaches upon catching.
+(*)Skeletons now also spawn with a jar of "joint wax" which can be applied to empty joint sockets for a small status buff. Check out the <a href="https://github.com/goonstation/goonstation/pull/8761" target="_blank">PR page</a> to learn more. Special thanks to Virva, DimWhat, and Flaborized for the sfx and sprites that made this possible!
+(u)Momoberry
+(p)8763
+(e)|
+(+)Added a Mimicry crate to cargo. It comes with a standard issue baguette, full mime attire, a pack of cigarettes and a Zippo.
+(u)Azrun
+(p)8873
+(e)⚖|balance
+(+)Limits how quickly other pipes in the same pipeline can rupture.
+(u)Azrun
+(p)8841
+(e)⚖|balance
+(*)Power gloves when augmented to stun can now be charged from wires and APCs! Now holds additional charges and will augment lightning with some additional damage based on charges.
+(+)Power gloves no longer have any effect when used on dead wires.
+(u)TDHooligan
+(p)6952
+(e)⚖|balance
+(+)The gods of the Lava Moon's Shield of Souls demand a toll for their power.
+(u)Flappybat
+(p)8627
+(e)🎨⚖|sprites, balance
+(*)Portable flashers no longer flash anyone with security access and disable their checks for 1.5 seconds. The flasher colors will dull when on cooldown to indicate it is safe to run pass.
+(*)Portable flashers now flash for bigger critters. Be careful of sprinting your antag critter respawn into security.
+(u)fwll & aloe
+(+)You can now obtain changeling meat by either butchering changeling critters (buttcrabs, legworms, etc) or tossing a changeling in the gibber. This meat can either be cooked into a steak, or cooked with dough for an aburgination, which is very unsafe to eat. Otherwise, it's like mystery meat.
+(+)Sprites and ideas by fwll, code by aloe
+(t)tue may 31 22
+(u)aloe
+(+)Changeling control transfers should be fixed (usually wouldn't put this in the changelog but it seems important)
+(u)aloe
+(+)Cyborgs now have text for determining if they're connected on examine; the 3 states are operational (has a player connected), hibernating (has a brain but player is disconnected), and dormant (no brain or inactive SICC)
+(u)aloe
+(e)⚖|balance
+(*)The swooshy cloaking device effect is now only visible to the user, not people with thermals and the AI and whatever else. You can still see the person with thermal vision, you just can't immediately tell they're using a cloaker.
 (t)mon may 30 22
 (u)Bartimeus973
 (p)8651
 (e)🎨|sprites
 (*)Detectives now have a weak scuttlebot of their own! It has taken the shape of the detgadget hat in their locker.
+(u)tarmunora
+(+)chlorine, acetaldehyde, fluorine splash multipler reduced to 0.33, formaldehyde splash multiplier reduced to 0.5, skin penetration removed from nitrogen dioxide
+(+)chorine, acetaldehyde depletion rates 0.4 -> 0.6
+(+)fluorine damage burn/tox damage reduced 1 -> 0.75
+(u)tarmunora
+(*)sec token crate now gets sec assistant token instead and made cheaper
 (t)sun may 29 22
 (u)Wisemonster
 (p)8762

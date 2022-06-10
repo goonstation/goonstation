@@ -30,7 +30,7 @@
 		light.set_color(0.5, 0.3, 0)
 
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(movable && istool(W, TOOL_SCREWING | TOOL_WRENCHING))
 			user.visible_message("<b>[user]</b> [anchored ? "unbolts the [src] from" : "secures the [src] to"] the floor.")
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 80, 1)
@@ -142,7 +142,7 @@
 	/*		else if (oldval && !newval)
 				UnsubscribeProcess() */
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (isghostdrone(user))
 			boutput(user, "<span class='alert'>The [src] refuses to interface with you, as you are not a bus driver!</span>")
 			return
@@ -307,14 +307,18 @@
 		shittysteak.reagents.my_atom = shittysteak
 
 		src.grillitem.set_loc(shittysteak)
-
-		src.grillitem = null
-		src.icon_state = "shittygrill_on"
-		for (var/obj/item/I in src) //Things can get dropped somehow sometimes ok
-			I.set_loc(src.loc)
-		src.cooktime = 0
 	//	UnsubscribeProcess()
 		return
+
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.grillitem)
+			src.grillitem = null
+			src.UpdateIcon()
+			for (var/obj/item/I in src) //Things can get dropped somehow sometimes ok
+				I.set_loc(src.loc)
+			src.cooktime = 0
+			src.icon_state = "shittygrill_on"
 
 	verb/drain()
 		set src in oview(1)

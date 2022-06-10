@@ -946,7 +946,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 		src.operating = 0
 		return
 
-	attackby(obj/item/C as obj, mob/user as mob)
+	attackby(obj/item/C, mob/user)
 		src.add_fingerprint(user)
 		return
 
@@ -1012,7 +1012,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 	pixel_x = -8
 	var/somebody_fucked_up = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!user)
 			return
 
@@ -2094,7 +2094,7 @@ obj/machinery/embedded_controller/radio/maintpanel/mnx
 				src.id_tag = src.tag
 
 /obj/item/kitchen/everyflavor_box/wax
-	attack_hand(mob/user as mob, unused, flag)
+	attack_hand(mob/user, unused, flag)
 		if (flag)
 			return ..()
 		if(user.r_hand == src || user.l_hand == src)
@@ -2165,7 +2165,7 @@ obj/machinery/embedded_controller/radio/maintpanel/mnx
 	icon = 'icons/misc/lunar.dmi'
 	icon_state = "aisleshelf"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (iswrenchingtool(W))
 			return
 
@@ -2187,7 +2187,7 @@ obj/machinery/embedded_controller/radio/maintpanel/mnx
 	anchored = 1
 	density = 0
 
-	attackby(obj/item/C as obj, mob/user as mob)
+	attackby(obj/item/C, mob/user)
 		if (istype(C, /obj/item/device/key))
 			user.visible_message("<b>[user]</b> dully bumps a key against [src].  It's not even going in the lock.  Uhhh.","Really?  We're really doing this?  No, the key doesn't fit.  Do we need to stage an intervention?")
 			return

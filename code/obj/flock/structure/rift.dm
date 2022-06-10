@@ -7,6 +7,7 @@
 	density = FALSE
 	name = "glowing portal thingymabob"
 	desc = "Oh god is that a fucking light grenade?!"
+	flock_desc = "The rift through which your Flock will enter this world."
 	flock_id = "Entry Rift"
 	build_time = 10
 	health = 200
@@ -45,6 +46,7 @@
 					candidate_turfs -= S
 					break
 		flockdronegibs(src.loc, null, eject) //ejectables ejected here
+		src.flock.flockmind.started = TRUE
 		qdel(src)
 	else
 		var/severity = round(((build_time - elapsed)/build_time) * 5)

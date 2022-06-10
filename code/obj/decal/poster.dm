@@ -7,6 +7,7 @@
 	anchored = 1
 	opacity = 0
 	density = 0
+	deconstruct_flags = DECON_WIRECUTTERS
 	var/imgw = 600
 	var/imgh = 400
 	var/popup_win = 0
@@ -896,7 +897,7 @@
 							return award_text
 
 
-			attack_hand(mob/user as mob)
+			attack_hand(mob/user)
 				if (user.stat || isghostdrone(user) || !isliving(user))
 					return
 
@@ -922,7 +923,7 @@
 							src.add_fingerprint(user)
 							src.usage_state = 2
 
-			attackby(obj/item/W as obj, mob/user as mob)
+			attackby(obj/item/W, mob/user)
 				if (user.stat)
 					return
 
@@ -960,7 +961,7 @@
 			icon_empty = "frame"
 			icon_state = "medal"
 
-			attackby(obj/item/W as obj, mob/user as mob)
+			attackby(obj/item/W, mob/user)
 				if (user.stat)
 					return
 

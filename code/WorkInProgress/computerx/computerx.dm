@@ -89,7 +89,7 @@ var/compx_gridx_max = 5
 
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..())
 			return
 

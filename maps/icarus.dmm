@@ -1030,7 +1030,7 @@
 /area/station/crew_quarters/quarters_west)
 "acH" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	pixel_x = 3;
 	pixel_y = 3
 	},
@@ -22208,7 +22208,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hor)
 "aVp" = (
-/obj/machinery/smelter,
+/obj/machinery/neosmelter,
 /turf/simulated/floor/airless/engine,
 /area/station/mining/refinery)
 "aVq" = (
@@ -27465,7 +27465,7 @@
 /area/station/maintenance/east)
 "qUL" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /obj/machinery/light/small,
 /turf/simulated/floor/purpleblack,
 /area/research_outpost/indigo_rye)

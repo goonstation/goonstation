@@ -151,7 +151,7 @@
 		else
 			return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.alive)
 			if (src.sleeping)
 				sleeping = 0
@@ -357,7 +357,7 @@
 				E.set_loc(get_turf(src))
 		return
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (!alive)
 			return ..()
 		if (issnippingtool(W))
@@ -582,7 +582,7 @@
 
 		return honey
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (istype(W, /obj/item/clothing/head))
 			if (src.cant_take_hat)
 				boutput(user, "<span class='alert'>[src] declines, but appreciates the offer.[prob(30) ? " You can tell, because of the bumbling. Appreciative bumbling, definitely." : null]</span>")
@@ -909,7 +909,7 @@
 				masked = 2
 				src.name = "Heistenbee"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.alive)
 			if (user.a_intent == INTENT_HELP)
 				src.visible_message("<span class='notice'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>", group="beehug")
@@ -940,7 +940,7 @@
 
 #endif
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (!src.alive)
 			return ..()
 
@@ -1023,7 +1023,7 @@
 		SPAWN(3.5 SECONDS)
 			src.attacking = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.alive && user.a_intent == INTENT_GRAB)
 			src.visible_message("<span class='alert'><b>[user]</b> attempts to wrangle [src], but [src] is far, FAR too sassy!</span>")
 			return
@@ -1031,7 +1031,7 @@
 		else
 			return ..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/glass/bottle/bubblebath) && src.alive && !cleaned && src.task != "attacking")
 			if (!W.reagents || !W.reagents.has_reagent("fluorosurfactant"))
 				boutput(user, "<span class='alert'>How do you expect this to work without bubble bath in the bubble bath bottle?</span>")
@@ -1154,7 +1154,7 @@
 
 			src.attacking = 0
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if(!alive)
 			return ..()
 
@@ -1186,7 +1186,7 @@
 	generic = 0
 	var/hug_count = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.alive)
 			if (user.a_intent == INTENT_HARM)
 				return ..()
@@ -1257,7 +1257,7 @@
 	sleeping_icon_state = "traumabee-sleep"
 	generic = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.alive && user.a_intent == "help")
 
 			src.visible_message("<span class='notice'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>", group="beehug")
@@ -1379,7 +1379,7 @@
 	angertext = "beeps aggressively at"
 	honey_color = rgb(0, 255, 0)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(src.alive && user.a_intent=="help")
 			src.visible_message("<span class='emote'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>", group="beehug")
 			if(prob(15))
@@ -1585,7 +1585,7 @@
 	ChaseAttack(mob/M)
 		return
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if(!alive)
 			return
 		if (istype(W, /obj/item/reagent_containers/food/snacks))
@@ -1667,13 +1667,13 @@
 		if (prob(25) && !larva_type)
 			larva_type = /obj/critter/domestic_bee_larva/bonnet
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.anchored)
 			return
 		else
 			..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/pen))
 			if (!bee_name)
 				bee_name = pick_string("bee_names.txt", "beename")
@@ -1863,7 +1863,7 @@
 		src.UpdateIcon()
 		return
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/egg/bee))
 			if (!src.open)
 				boutput(user, "<span class='alert'>For <i>some reason</i>, you are unable to place the egg into a closed carton.</span>")
@@ -1883,7 +1883,7 @@
 		else
 			return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.loc == user && src.ourEgg && src.open)
 			user.put_in_hand_or_drop(src.ourEgg)
 			boutput(user, "You take [src.ourEgg] out of [src].")
@@ -1971,7 +1971,7 @@
 
 		return CritterAttack(M)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.alive)
 			if (user.a_intent == INTENT_HARM)
 				return ..()
@@ -1990,7 +1990,7 @@
 		else
 			..()
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if(!alive)
 			return
 		if (istype(W, /obj/item/reagent_containers/food/snacks))

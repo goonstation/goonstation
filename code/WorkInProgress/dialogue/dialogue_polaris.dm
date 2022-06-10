@@ -14,12 +14,12 @@
 		dialogue = new/datum/dialogueMaster/syndicatecorpse1(src)
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/syndicatecorpse1
@@ -58,12 +58,12 @@
 		dialogue = new/datum/dialogueMaster/syndicatecorpse2(src)
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/syndicatecorpse2
@@ -93,12 +93,12 @@
 		dialogue = new/datum/dialogueMaster/syndicatecorpse7(src)
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/syndicatecorpse7
@@ -137,12 +137,12 @@
 		dialogue = new/datum/dialogueMaster/syndicatecorpse8(src)
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/syndicatecorpse8
@@ -200,12 +200,12 @@
 		dialogue = new/datum/dialogueMaster/syndicatecorpse11(src)
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/syndicatecorpse11
@@ -245,12 +245,12 @@
 		dialogue = new/datum/dialogueMaster/syndicatecorpse5(src)
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/syndicatecorpse5
@@ -289,12 +289,12 @@
 		dialogue = new/datum/dialogueMaster/syndicatecorpse10(src)
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/syndicatecorpse10
@@ -340,12 +340,12 @@
 		dialogue = new/datum/dialogueMaster/securitycorpse1(src)
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/securitycorpse1
@@ -384,12 +384,12 @@
 		dialogue = new/datum/dialogueMaster/securitycorpse2(src)
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/securitycorpse2
@@ -428,12 +428,12 @@
 		dialogue = new/datum/dialogueMaster/securitycorpse6(src)
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/securitycorpse6
@@ -473,12 +473,12 @@
 		dialogue = new/datum/dialogueMaster/securitycorpse3(src)
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/securitycorpse3
@@ -518,12 +518,12 @@
 		dialogue = new/datum/dialogueMaster/securitycorpse7(src)
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/securitycorpse7
@@ -564,12 +564,12 @@
 		dialogue = new/datum/dialogueMaster/sergeantscomputer(src)
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/sergeantscomputer
@@ -681,12 +681,12 @@
 		dialogue = new/datum/dialogueMaster/plantoflosthope(src)
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/plantoflosthope
@@ -736,12 +736,12 @@
 		dialogue = new/datum/dialogueMaster/bustedmantapc(src)
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/bustedmantapc
@@ -788,12 +788,12 @@
 		dialogue = new/datum/dialogueMaster/engineeringcomputer(src)
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/engineeringcomputer
@@ -889,12 +889,12 @@
 		dialogue = new/datum/dialogueMaster/engineerscorpse(src)
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/engineerscorpse
@@ -957,12 +957,12 @@
 		dialogue = new/datum/dialogueMaster/polariscrate(src)
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/polariscrate

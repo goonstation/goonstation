@@ -8,7 +8,7 @@
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "flocktrace"
 
-	compute = -100 //it is expensive to run more threads
+	compute = -FLOCKTRACE_COMPUTE_COST //it is expensive to run more threads
 
 /mob/living/intangible/flock/trace/New(atom/loc, datum/flock/F)
 	..()
@@ -93,6 +93,11 @@
 
 /mob/living/intangible/flock/trace/death(gibbed, suicide = FALSE)
 	. = ..()
+	if (istype(src.loc, /mob/living/critter/flock/drone))
+		var/mob/living/critter/flock/drone/F = src.loc
+		F.release_control_abrupt(FALSE)
+		if (F.z == Z_LEVEL_STATION)
+			flock_speak(null, "Control of drone [F.real_name] surrended.", src.flock)
 	if(src.client)
 		if (suicide)
 			flock_speak(null, "Flocktrace [src.real_name] relinquishes their computational designation and reintegrates themselves back into the Flock.", src.flock)

@@ -114,13 +114,14 @@
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "postit"
 	dont_make_an_overlay = 1
+	vis_flags = VIS_INHERIT_PLANE | VIS_INHERIT_LAYER
 	var/words = ""
 	var/max_message = 128
 
 	get_desc()
 		. = "<br><span class='notice'>It says:</span><br><blockquote style='margin: 0 0 0 1em;'>[words]</blockquote>"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		user.lastattacked = user
 		if (src.attached)
 			if (user.a_intent == INTENT_HELP)
@@ -134,7 +135,7 @@
 		else
 			return ..()
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		user.lastattacked = user
 		if (istype(W, /obj/item/stamp))
 
@@ -611,7 +612,7 @@ ABSTRACT_TYPE(/obj/item/sticker/glow)
 		light_c = src.AddComponent(/datum/component/loctargeting/simple_light, col_r*255, col_g*255, col_b*255, brightness*255)
 		light_c.update(0)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		user.lastattacked = user
 		if (src.attached)
 			if (user.a_intent == INTENT_HELP)

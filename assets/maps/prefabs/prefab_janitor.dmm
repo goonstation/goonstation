@@ -301,7 +301,7 @@
 /area/janitor_setpiece)
 "aT" = (
 /obj/table/wood/auto/desk,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /obj/decal/cleanable/cobweb2,
 /turf/simulated/floor,
 /area/janitor_setpiece)
