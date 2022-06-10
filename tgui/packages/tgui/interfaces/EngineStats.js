@@ -14,7 +14,7 @@ import { formatSiUnit } from '../format';
  * Helper function to transform the data into something displayable
  * Lovingly made by Mordent and adapted
  * @param {*} rawData - [ { foo: v, bar: v2, ... }, { foo: v3, bar: v4, ... }, ... ]
- * @returns - { foo: [[i, v], [i+1, v2], ...], bar: [[i, v3], [i+1, v4], ...] }
+ * @returns - { foo: [[i, v], [i+1, v2], ...], bar: [[i, v3], [i+1, v4], ...], ... }
  */
 const processStatsData = rawData => {
   if ((rawData ?? []).length === 0) {
@@ -83,15 +83,6 @@ const generateChartsFromStats = stats => {
     </Stack.Item>
   ));
 };
-
-
-
-/**
- * Converts a number to exponential format if over a million, for display purposes
- * @param {number} value
- * @returns A string containing the number in exponential format or the original input w/ thousand seperators
- */
-const formatExponentialMil = value => `${value >= 1000000 ? value.toExponential(3) : value.toLocaleString()}`;
 
 
 export const EngineStats = (props, context) => {
