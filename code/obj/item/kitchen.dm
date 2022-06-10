@@ -652,7 +652,8 @@ TRAYS
 
 	attack_self(mob/user) // in case you only have one arm or you stacked too many MONSTERs or something just dump a random piece of food
 		. = ..()
-		src.remove_contents(pick(src.contents))
+		if (length(src.contents))
+			src.remove_contents(pick(src.contents))
 
 	attack(mob/M, mob/user)
 		if(user.a_intent == INTENT_HARM)
