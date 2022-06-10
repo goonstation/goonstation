@@ -435,28 +435,60 @@
 // the desk lamp
 /obj/machinery/light/lamp
 	name = "desk lamp"
-	icon_state = "lamp1"
-	base_state = "lamp"
-	fitting = "bulb"
 	brightness = 1
-	desc = "A desk lamp"
+	wallmounted = FALSE
+	fitting = "bulb"
+	desc = "A desk lamp. For lighting desks."
 	light_type = /obj/item/light/bulb
 	allowed_type = /obj/item/light/bulb
-	wallmounted = 0
 	deconstruct_flags = DECON_SIMPLE
+	layer = ABOVE_OBJ_LAYER
 	plane = PLANE_DEFAULT
+	var/switchon = FALSE		// independent switching for lamps - not controlled by area lightswitch
 
-	var/switchon = 0		// independent switching for lamps - not controlled by area lightswitch
+// if attack with hand, only "grab" attacks are an attempt to remove bulb
+// otherwise, switch the lamp on/off
+
+/obj/machinery/light/lamp/attack_hand(mob/user)
+
+	if(user.a_intent == INTENT_GRAB)
+		..()	// do standard hand attack
+	else
+		switchon = !switchon
+		boutput(user, "You switch [switchon ? "on" : "off"] the [name].")
+		seton(switchon && powered(LIGHT))
+
+// called when area power state changes
+// override since lamp does not use area lightswitch
+
+/obj/machinery/light/lamp/power_change()
+	var/area/A = get_area(src)
+	seton(switchon && A.power_light)
+
+// returns whether this lamp has power
+// true if area has power and lamp switch is on
+
+/obj/machinery/light/lamp/has_power()
+	var/area/A = get_area(src)
+	return switchon && A.power_light
+
+/obj/machinery/light/lamp/black
+	icon_state = "lamp1"
+	base_state = "lamp"
+
+	New()
+		..()
+		src.UpdateOverlays(image('icons/obj/lighting.dmi', "lamp-base", layer = 2.99), "lamp base") // Just needs to be under the head of the lamp
 
 	bright
 		brightness = 1.8
-		switchon = 1
+		switchon = TRUE
 
 // green-shaded desk lamp
 /obj/machinery/light/lamp/green
 	icon_state = "green1"
 	base_state = "green"
-	desc = "A green-shaded desk lamp"
+	desc = "A green-shaded desk lamp."
 
 	New()
 		..()
@@ -906,40 +938,6 @@
 	if (A)
 		var/state = !A.power_light || shipAlertState == SHIP_ALERT_BAD
 		seton(state)
-
-
-// special handling for desk lamps
-
-
-// if attack with hand, only "grab" attacks are an attempt to remove bulb
-// otherwise, switch the lamp on/off
-
-/obj/machinery/light/lamp/attack_hand(mob/user)
-
-	if(user.a_intent == INTENT_GRAB)
-		..()	// do standard hand attack
-	else
-		switchon = !switchon
-		boutput(user, "You switch [switchon ? "on" : "off"] the [name].")
-		seton(switchon && powered(LIGHT))
-
-// called when area power state changes
-// override since lamp does not use area lightswitch
-
-/obj/machinery/light/lamp/power_change()
-	var/area/A = get_area(src)
-	seton(switchon && A.power_light)
-
-// returns whether this lamp has power
-// true if area has power and lamp switch is on
-
-/obj/machinery/light/lamp/has_power()
-	var/area/A = get_area(src)
-	return switchon && A.power_light
-
-
-
-
 
 
 // the light item

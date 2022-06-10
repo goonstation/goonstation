@@ -360,6 +360,9 @@
 			vertical
 				dir = EAST
 
+	// meant for use inside station, or if connected to space, not a door
+	shutters
+
 /obj/machinery/door/poddoor/blast/pyro
 	icon = 'icons/obj/doors/SL_doors.dmi'
 	icon_state = "bdoorsingle1"

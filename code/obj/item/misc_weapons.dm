@@ -1016,11 +1016,13 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
-	is_syndicate = 1
+	is_syndicate = TRUE
 	contraband = 7 //Fun fact: sheathing your katana makes you 100% less likely to be tazed by beepsky, probably
 	w_class = W_CLASS_BULKY
 	hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
 	tool_flags = TOOL_CUTTING
+	attack_verbs = "slashes"
+
 
 	// pickup_sfx = "sound/items/blade_pull.ogg"
 	custom_suicide = 1

@@ -675,7 +675,7 @@
 /area/space)
 "abJ" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	icon_state = "lamp-burned"
 	},
 /turf/simulated/floor/plating/airless{
@@ -1018,7 +1018,7 @@
 /area/station/crew_quarters/quarters_east)
 "acz" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	icon_state = "lamp-burned"
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/east,
@@ -2823,7 +2823,7 @@
 /area/station/crew_quarters/lounge)
 "ahd" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /turf/simulated/floor/carpet/blue/fancy/narrow/T_west,
 /area/station/crew_quarters/quarters_east)
 "ahe" = (
@@ -2851,7 +2851,7 @@
 /area/station/crew_quarters/quarters_east)
 "ahh" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /turf/simulated/floor/carpet/blue/fancy/narrow/T_east,
 /area/station/crew_quarters/quarters_east)
 "ahi" = (
@@ -14284,7 +14284,7 @@
 	icon_state = "0-2"
 	},
 /obj/window_blinds/cog2/middle,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "lockdown";
@@ -14300,7 +14300,7 @@
 	},
 /obj/cable,
 /obj/window_blinds/cog2/middle,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "lockdown";
@@ -16275,7 +16275,7 @@
 	dir = 4
 	},
 /obj/access_spawn/captain,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 4;
 	icon_state = "pdoor0";
@@ -17544,7 +17544,7 @@
 /area/station/turret_protected/Zeta)
 "aTL" = (
 /obj/wingrille_spawn/auto,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 4;
 	icon_state = "pdoor0";
@@ -20868,7 +20868,7 @@
 	dir = 8;
 	name = "Teleporter Pad"
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	dir = 4;
 	id = "scienceteleporter2";
 	name = "Teleporter Blast Shield";
@@ -20903,7 +20903,7 @@
 /area/station/science/teleporter)
 "bbl" = (
 /obj/wingrille_spawn/auto,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	dir = 4;
 	id = "scienceteleporter";
 	name = "Teleporter Blast Shield";
@@ -22077,7 +22077,7 @@
 	name = "Teleporter Pad"
 	},
 /obj/access_spawn/research,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	dir = 4;
 	id = "scienceteleporter";
 	name = "Teleporter Blast Shield";
@@ -22870,7 +22870,7 @@
 	dir = 4
 	},
 /obj/access_spawn/ai_upload,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 4;
 	icon_state = "pdoor0";
@@ -23403,7 +23403,7 @@
 /area/station/hallway/secondary/east)
 "bhk" = (
 /obj/wingrille_spawn/auto,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	dir = 4;
 	id = "scienceteleporter2";
 	name = "Teleporter Blast Shield";
@@ -26467,7 +26467,7 @@
 	},
 /obj/machinery/door/firedoor/pyro,
 /obj/access_spawn/heads,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "lockdown";
@@ -26485,7 +26485,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "lockdown";
@@ -26504,7 +26504,7 @@
 	},
 /obj/machinery/door/firedoor/pyro,
 /obj/access_spawn/heads,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "lockdown";
@@ -51165,7 +51165,7 @@
 	})
 "cBw" = (
 /obj/wingrille_spawn/auto,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	dir = 10;
 	id = "scienceteleporter2";
 	name = "Teleporter Blast Shield";
@@ -51175,7 +51175,7 @@
 /area/station/science/teleporter)
 "cBx" = (
 /obj/wingrille_spawn/auto,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	dir = 1;
 	id = "scienceteleporter2";
 	name = "Teleporter Blast Shield";
@@ -58778,7 +58778,7 @@
 /area/station/crew_quarters/kitchen)
 "sch" = (
 /obj/wingrille_spawn/auto,
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 4;
 	icon_state = "pdoor0";
