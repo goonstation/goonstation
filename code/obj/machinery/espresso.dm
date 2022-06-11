@@ -170,6 +170,7 @@
 			if (user)
 				boutput(user, "<span class='notice'>You force the machine to brew something else...</span>")
 
+			src.name = "teamaker"
 			src.desc = " It's top of the line NanoTrasen tea technology! Featuring 100% Organic Locally-Grown green leaves!"
 			src.emagged = true
 			return 1
@@ -196,29 +197,44 @@
 			src.add_fingerprint(user)
 			if (src.my_carafe) //freaking spacing errors made me waste hours on this
 				if (!(status & (NOPOWER|BROKEN)))
-					switch (alert("What would you like to do with [src]?",,"Brew coffee","Remove carafe","Nothing"))
-						if ("Brew coffee")
-							if(!src.emagged)
+					if(!src.emagged)
+						switch (alert("What would you like to do with [src]?",,"Brew coffee","Remove carafe","Nothing"))
+							if ("Brew coffee")
 								for(var/obj/item/reagent_containers/food/drinks/carafe/C in src.contents)
 									C.reagents.add_reagent("coffee_fresh",100)
 									playsound(src.loc, 'sound/misc/pourdrink.ogg', 50, 1)
-							else
+							if ("Remove carafe")
+								if (!src.my_carafe)
+									user.show_text("The carafe is gone!")
+									return
+								if (BOUNDS_DIST(src, user) > 0 || isAI(user))
+									user.show_text("You can not do that remotely.")
+									return
+								user.put_in_hand_or_drop(src.my_carafe)
+								src.my_carafe = null
+								user.show_text("You have removed the [src.carafe_name] from the [src].")
+								src.update()
+							if ("Nothing")
+								return
+					else
+						switch (alert("What would you like to do with [src]?",,"Brew tea","Remove carafe","Nothing"))
+							if ("Brew tea")
 								for(var/obj/item/reagent_containers/food/drinks/carafe/C in src.contents)
 									C.reagents.add_reagent("tea",100)
 									playsound(src.loc, 'sound/misc/pourdrink.ogg', 50, 1)
-						if ("Remove carafe")
-							if (!src.my_carafe)
-								user.show_text("The carafe is gone!")
+							if ("Remove carafe")
+								if (!src.my_carafe)
+									user.show_text("The carafe is gone!")
+									return
+								if (BOUNDS_DIST(src, user) > 0 || isAI(user))
+									user.show_text("You can not do that remotely.")
+									return
+								user.put_in_hand_or_drop(src.my_carafe)
+								src.my_carafe = null
+								user.show_text("You have removed the [src.carafe_name] from the [src].")
+								src.update()
+							if ("Nothing")
 								return
-							if (BOUNDS_DIST(src, user) > 0 || isAI(user))
-								user.show_text("You can not do that remotely.")
-								return
-							user.put_in_hand_or_drop(src.my_carafe)
-							src.my_carafe = null
-							user.show_text("You have removed the [src.carafe_name] from the [src].")
-							src.update()
-						if ("Nothing")
-							return
 			else return ..()
 
 	ex_act(severity)
