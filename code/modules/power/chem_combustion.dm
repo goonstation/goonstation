@@ -110,8 +110,7 @@
 		src.last_output = ((average_volatility * src.standard_power_output) * (available_oxygen * 5))
 		src.add_avail(src.last_output WATTS)
 
-		// debug
-		src.visible_message("<span class='notice'>[src.last_output] WATTS</span>")
+		// src.visible_message("<span class='notice'>[src.last_output] WATTS</span>")
 
 		var/turf/simulated/T = get_turf(src)
 		if (istype(T))
@@ -211,10 +210,9 @@
 		if (!T.air || T.air.oxygen <= 0)
 			return
 
-		// debug, remove dummy
-		src.visible_message("<span class='notice'>Oxygen Moles: [T.air.oxygen]</span>")
+		/* src.visible_message("<span class='notice'>Oxygen Moles: [T.air.oxygen]</span>")
 		src.visible_message("<span class='notice'>Total Moles: [TOTAL_MOLES(T.air)]</span>")
-		src.visible_message("<span class='notice'>Oxygen Concentration: [T.air.oxygen / TOTAL_MOLES(T.air)]</span>")
+		src.visible_message("<span class='notice'>Oxygen Concentration: [T.air.oxygen / TOTAL_MOLES(T.air)]</span>") */
 		return T.air.oxygen / TOTAL_MOLES(T.air)
 
 	proc/check_tank_oxygen(obj/item/tank/T)
@@ -225,9 +223,9 @@
 			return
 
 		// debug, remove dummy
-		src.visible_message("<span class='notice'>Oxygen Moles: [T.air_contents.oxygen]</span>")
+		/* src.visible_message("<span class='notice'>Oxygen Moles: [T.air_contents.oxygen]</span>")
 		src.visible_message("<span class='notice'>Total Moles: [TOTAL_MOLES(T.air_contents)]</span>")
-		src.visible_message("<span class='notice'>Oxygen Concentration: [T.air_contents.oxygen / TOTAL_MOLES(T.air_contents)]</span>")
+		src.visible_message("<span class='notice'>Oxygen Concentration: [T.air_contents.oxygen / TOTAL_MOLES(T.air_contents)]</span>") */
 		return T.air_contents.oxygen / TOTAL_MOLES(T.air_contents)
 
 	proc/get_average_volatility(datum/reagents/R)
