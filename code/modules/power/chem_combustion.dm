@@ -170,25 +170,27 @@
 		return
 
 	proc/start_engine(var/mob/user as mob)
-		if (!src.ready_to_start())
+		if (!src.active)
+			if (!src.ready_to_start())
+				if (istype(user))
+					boutput(user, "<span class='notice'>You can't seem to get the [src] to start.</span>")
+				return
+
+			src.active = 1
+			src.UpdateIcon()
+
+
 			if (istype(user))
-				boutput(user, "<span class='notice'>You can't seem to get the [src] to start.</span>")
-			return
-
-		src.active = 1
-		src.UpdateIcon()
-
-		if (istype(user))
-			src.visible_message("<span class='notice'>[user] starts the [src].</span>")
-		playsound(src.loc, "sound/machines/tractorrev.ogg", 40, pitch=2)
+				src.visible_message("<span class='notice'>[user] starts the [src].</span>")
+			playsound(src.loc, "sound/machines/tractorrev.ogg", 40, pitch=2)
 
 	proc/stop_engine(var/mob/user as mob)
-		src.active = 0
-		src.UpdateIcon()
-
-		if (istype(user))
-			src.visible_message("<span class='notice'>[user] stops the [src].</span>")
-		playsound(src.loc, "sound/machines/tractorrev.ogg", 40, pitch=2)
+		if (src.active)
+			src.active = 0
+			src.UpdateIcon()
+			if (istype(user))
+				src.visible_message("<span class='notice'>[user] stops the [src].</span>")
+			playsound(src.loc, "sound/machines/tractorrev.ogg", 40, pitch=2)
 
 	proc/ready_to_start()
 		if (!anchored || !src.fuel_tank)
