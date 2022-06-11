@@ -46304,7 +46304,11 @@
 	pixel_x = -2;
 	pixel_y = 3
 	},
-/turf/simulated/floor/wood/two,
+/obj/decal/tile_edge/stripe/big,
+/obj/decal/tile_edge/stripe/big{
+	dir = 4
+	},
+/turf/simulated/floor,
 /area/station/medical/medbay)
 "coF" = (
 /obj/machinery/light/emergency{
@@ -49376,7 +49380,6 @@
 /obj/vehicle/segway{
 	pixel_y = 7
 	},
-/obj/decal/tile_edge/stripe/big,
 /obj/decal/tile_edge/stripe/big{
 	dir = 4
 	},
@@ -49642,11 +49645,16 @@
 /area/station/routing/medsci)
 "cwz" = (
 /obj/machinery/vending/coffee,
-/turf/simulated/floor/wood/two,
+/obj/decal/tile_edge/stripe/big,
+/obj/decal/tile_edge/stripe/big{
+	dir = 8
+	},
+/turf/simulated/floor,
 /area/station/medical/medbay)
 "cwA" = (
 /obj/machinery/vending/snack,
-/turf/simulated/floor/wood/two,
+/obj/decal/tile_edge/stripe/big,
+/turf/simulated/floor,
 /area/station/medical/medbay)
 "cwB" = (
 /obj/table/auto,
@@ -49659,7 +49667,7 @@
 	pixel_y = -5
 	},
 /turf/simulated/floor/wood/two,
-/area/space)
+/area/station/medical/medbay)
 "cwE" = (
 /obj/storage/cart/medcart,
 /turf/simulated/floor/bluewhite{
@@ -55990,7 +55998,13 @@
 	dir = 1;
 	pixel_y = 2
 	},
-/turf/simulated/floor/wood/two,
+/obj/decal/tile_edge/stripe/big{
+	dir = 1
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 8
+	},
+/turf/simulated/floor,
 /area/station/medical/medbay)
 "iRa" = (
 /obj/machinery/chem_dispenser/alcohol,
@@ -56418,6 +56432,9 @@
 /area/station/engine/gas)
 "jBv" = (
 /obj/stool/chair/comfy/blue,
+/obj/landmark/start{
+	name = "Medical Doctor"
+	},
 /turf/simulated/floor/wood/two,
 /area/station/medical/medbay)
 "jDy" = (
@@ -57052,6 +57069,9 @@
 	pixel_x = -24
 	},
 /obj/stool/chair/office/blue,
+/obj/landmark/start{
+	name = "Medical Doctor"
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -57233,7 +57253,13 @@
 "kUM" = (
 /obj/table/auto,
 /obj/machinery/coffeemaker/medbay,
-/turf/simulated/floor/wood/two,
+/obj/decal/tile_edge/stripe/big{
+	dir = 1
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 4
+	},
+/turf/simulated/floor,
 /area/station/medical/medbay)
 "kVJ" = (
 /obj/wingrille_spawn/auto,
@@ -58722,12 +58748,6 @@
 /obj/machinery/power/apc/autoname_east,
 /turf/simulated/floor/bot,
 /area/station/engine/gas)
-"nPU" = (
-/obj/wingrille_spawn/auto,
-/obj/drink_rack/cup,
-/obj/drink_rack/mug,
-/turf/simulated/floor/plating,
-/area/station/medical/medbay)
 "nQR" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -63080,7 +63100,24 @@
 "uxk" = (
 /obj/table/auto,
 /obj/cable,
-/turf/simulated/floor/wood/two,
+/obj/item/reagent_containers/food/drinks/mug{
+	pixel_x = 14
+	},
+/obj/item/reagent_containers/food/drinks/mug{
+	pixel_x = 14;
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/food/drinks/mug{
+	pixel_x = 5;
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/food/drinks/mug{
+	pixel_x = 5
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 1
+	},
+/turf/simulated/floor,
 /area/station/medical/medbay)
 "uxY" = (
 /obj/grille/catwalk{
@@ -101212,7 +101249,7 @@ pVz
 ckG
 cxe
 cxf
-nPU
+cxf
 cxe
 cxL
 cxW
