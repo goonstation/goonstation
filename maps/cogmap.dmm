@@ -3766,6 +3766,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
@@ -23483,6 +23487,9 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
+"bif" = (
+/turf/simulated/floor/carpet/blue/fancy/narrow/west,
+/area/station/medical/medbay)
 "big" = (
 /obj/landmark/halloween,
 /turf/simulated/floor/grime,
@@ -46291,11 +46298,13 @@
 	},
 /area/station/medical/medbay)
 "coE" = (
-/obj/disposalpipe/segment,
-/obj/cable{
-	icon_state = "4-8"
+/obj/table/auto,
+/obj/item/plate,
+/obj/item/reagent_containers/food/snacks/plant/apple{
+	pixel_x = -2;
+	pixel_y = 3
 	},
-/turf/simulated/floor/white,
+/turf/simulated/floor/wood/two,
 /area/station/medical/medbay)
 "coF" = (
 /obj/machinery/light/emergency{
@@ -48941,9 +48950,11 @@
 "cuU" = (
 /obj/item/storage/wall/medical_wear,
 /obj/storage/closet/medicalclothes,
-/turf/simulated/floor/bluewhite{
-	dir = 1
+/obj/decal/tile_edge/stripe/big,
+/obj/decal/tile_edge/stripe/big{
+	dir = 8
 	},
+/turf/simulated/floor,
 /area/station/medical/medbay)
 "cuW" = (
 /obj/item/storage/wall/office,
@@ -48975,15 +48986,14 @@
 	pixel_x = 8;
 	pixel_y = -7
 	},
-/turf/simulated/floor/bluewhite{
-	dir = 1
-	},
-/area/station/medical/medbay)
-"cuX" = (
-/obj/disposalpipe/trunk{
+/obj/decal/tile_edge/stripe/big,
+/obj/decal/tile_edge/stripe/big{
 	dir = 4
 	},
-/obj/machinery/disposal/small/west,
+/turf/simulated/floor,
+/area/station/medical/medbay)
+"cuX" = (
+/obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/bluewhite{
 	dir = 5
 	},
@@ -49173,6 +49183,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -49360,7 +49373,20 @@
 /area/station/medical/medbay)
 "cvU" = (
 /obj/railing,
-/turf/simulated/floor/bluewhite,
+/obj/vehicle/segway{
+	pixel_y = 7
+	},
+/obj/decal/tile_edge/stripe/big,
+/obj/decal/tile_edge/stripe/big{
+	dir = 4
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 1
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 8
+	},
+/turf/simulated/floor,
 /area/station/medical/medbay)
 "cvX" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -49624,8 +49650,16 @@
 /area/station/medical/medbay)
 "cwB" = (
 /obj/table/auto,
+/obj/item/cigpacket/propuffs{
+	pixel_y = -2;
+	pixel_x = -9
+	},
+/obj/item/clothing/mask/cigarette/propuffs{
+	pixel_x = -2;
+	pixel_y = -5
+	},
 /turf/simulated/floor/wood/two,
-/area/station/medical/medbay)
+/area/space)
 "cwE" = (
 /obj/storage/cart/medcart,
 /turf/simulated/floor/bluewhite{
@@ -52324,6 +52358,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor/bluewhite{
 	dir = 6
 	},
@@ -54263,6 +54298,9 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
+"fUh" = (
+/turf/simulated/floor/carpet/blue/fancy/narrow/east,
+/area/station/medical/medbay)
 "fVA" = (
 /obj/machinery/portable_atmospherics/canister/empty,
 /obj/machinery/atmospherics/pipe/manifold{
@@ -55192,6 +55230,9 @@
 /obj/item/cloneModule/genepowermodule,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/research)
+"hwi" = (
+/turf/simulated/floor/carpet/blue/fancy/narrow/eastwest,
+/area/station/medical/medbay)
 "hxh" = (
 /obj/table/auto,
 /obj/decal/cleanable/dirt,
@@ -55460,6 +55501,9 @@
 /turf/simulated/floor/plating,
 /area/station/routing/sortingRoom)
 "hSq" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
 "hTA" = (
@@ -58680,9 +58724,10 @@
 /area/station/engine/gas)
 "nPU" = (
 /obj/wingrille_spawn/auto,
+/obj/drink_rack/cup,
 /obj/drink_rack/mug,
 /turf/simulated/floor/plating,
-/area/station/medical/cdc)
+/area/station/medical/medbay)
 "nQR" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -58941,11 +58986,13 @@
 /turf/simulated/floor,
 /area/station/bridge)
 "olR" = (
-/obj/wingrille_spawn/auto,
-/obj/disposalpipe/segment{
-	dir = 4
+/obj/cable{
+	icon_state = "4-8"
 	},
-/turf/simulated/floor/plating,
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/white,
 /area/station/medical/medbay)
 "omw" = (
 /obj/disposalpipe/segment{
@@ -59076,6 +59123,13 @@
 /obj/access_spawn/pathology,
 /turf/simulated/floor/delivery/white,
 /area/station/medical/cdc)
+"owY" = (
+/obj/machinery/disposal/small/west,
+/obj/disposalpipe/trunk{
+	dir = 1
+	},
+/turf/simulated/floor/wood/two,
+/area/station/medical/medbay)
 "oxf" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/computer/power_monitor/smes{
@@ -59177,9 +59231,8 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/turf/simulated/floor/bluewhite{
-	dir = 1
-	},
+/obj/decal/tile_edge/stripe/big,
+/turf/simulated/floor,
 /area/station/medical/medbay)
 "oIF" = (
 /obj/storage/crate{
@@ -59631,6 +59684,7 @@
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "pzq" = (
+/obj/disposalpipe/segment,
 /turf/simulated/floor/stairs/wood/wide{
 	dir = 6
 	},
@@ -59929,6 +59983,9 @@
 /obj/firedoor_spawn,
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
@@ -62934,6 +62991,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "upX" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/stairs/wood/wide,
 /area/station/medical/medbay)
 "uqe" = (
@@ -63018,11 +63078,9 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/abandonedship)
 "uxk" = (
-/obj/disposalpipe/junction{
-	dir = 1;
-	icon_state = "pipe-j2"
-	},
-/turf/simulated/floor/white,
+/obj/table/auto,
+/obj/cable,
+/turf/simulated/floor/wood/two,
 /area/station/medical/medbay)
 "uxY" = (
 /obj/grille/catwalk{
@@ -63977,12 +64035,10 @@
 /turf/simulated/floor/plating,
 /area/station/medical/robotics)
 "wfi" = (
-/obj/disposalpipe/segment{
-	dir = 4
+/obj/cable{
+	icon_state = "1-2"
 	},
-/turf/simulated/floor/bluewhite{
-	dir = 8
-	},
+/turf/simulated/floor/wood/two,
 /area/station/medical/medbay)
 "wfk" = (
 /obj/machinery/atmospherics/valve{
@@ -65079,7 +65135,7 @@
 /turf/simulated/floor,
 /area/station/engine/hotloop)
 "xTV" = (
-/obj/reagent_dispensers/watertank/fountain,
+/obj/decoration/decorativeplant/plant7,
 /turf/simulated/floor/bluewhite{
 	dir = 9
 	},
@@ -99645,7 +99701,7 @@ xTV
 kxk
 cvS
 cwz
-mmR
+bif
 jBv
 cwB
 cxe
@@ -99947,7 +100003,7 @@ cuU
 fdL
 cvT
 cwA
-mmR
+hwi
 mmR
 pYr
 cxe
@@ -100248,8 +100304,8 @@ cuf
 oHn
 nIv
 cvU
-cwB
-mmR
+coE
+fUh
 iQM
 tyu
 cxe
@@ -100548,11 +100604,11 @@ cqB
 sMR
 cuf
 cuW
-nIv
+olR
 hSq
 upX
-mmR
-cwB
+wfi
+uxk
 cxe
 cxJ
 cxV
@@ -100853,7 +100909,7 @@ cuX
 alj
 cYK
 pzq
-mmR
+owY
 kUM
 cxe
 cxK
@@ -101151,7 +101207,7 @@ crC
 krl
 son
 cjk
-olR
+ckG
 pVz
 ckG
 cxe
@@ -101453,7 +101509,7 @@ cst
 crD
 cug
 crD
-wfi
+crD
 cvA
 cwE
 eZu
@@ -101755,8 +101811,8 @@ crE
 crE
 crE
 crE
-uxk
-coE
+crE
+cqF
 cwF
 nFw
 cxl
