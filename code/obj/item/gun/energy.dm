@@ -1376,7 +1376,8 @@
 				are_you_the_law(M, msg[1])
 				return
 		else
-			are_you_the_law(M, msg[1])
+			if (!isflockmob(M)) //snowflake check because birds do not speak english
+				are_you_the_law(M, msg[1])
 			return //AFAIK only humans have fingerprints/"palmprints(in judge dredd)" so just ignore any talk from non-humans arlight? it's not a big deal.
 
 		if(!src.projectiles && !src.projectiles.len > 1)
