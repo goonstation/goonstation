@@ -55,6 +55,7 @@
 	cancelBuild()
 
 /obj/flock_structure/ghost/process()
+	. = ..()
 	if(currentmats > goal)
 		var/obj/item/flockcache/c = new(get_turf(src))
 		flock_speak(src, "ALERT: Material excess detected, ejecting excess", flock)

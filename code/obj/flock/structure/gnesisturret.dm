@@ -61,6 +61,7 @@
 	<br><span class='bold'>Gnesis Tank Level:</span> [src.reagents.total_volume]/[fluid_level_max]."}
 
 	process()
+		. = ..()
 		if(!src.flock)//if it dont exist it off
 			powered = FALSE
 			src.compute = 0

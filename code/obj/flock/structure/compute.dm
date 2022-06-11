@@ -17,6 +17,7 @@
 	src.UpdateOverlays(screen, "screen")
 
 /obj/flock_structure/compute/process()
+	. = ..()
 	var/id = rand(1, src.display_count)
 	var/image/overlay = image('icons/misc/featherzone.dmi', "compute_display[id]", EFFECTS_LAYER_BASE)
 	overlay.pixel_y = 16

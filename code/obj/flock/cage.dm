@@ -163,6 +163,7 @@
 		egg.throw_at(target, 12, 3)
 
 	process()
+		. = ..()
 		// process fluids into stuff
 		if(reagents.has_reagent(target_fluid, create_egg_at_fluid))
 			reagents.remove_reagent(target_fluid, create_egg_at_fluid)
