@@ -1361,7 +1361,7 @@
 	hear_talk(mob/M as mob, msg, real_name, lang_id)
 		var/turf/T = get_turf(src)
 		if (M in range(1, T))
-			src.talk_into(M, msg, null, real_name, lang_id)
+			src.talk_into(M, msg, real_name, lang_id)
 
 	//can only handle one name at a time, if it's more it doesn't do anything
 	talk_into(mob/M as mob, msg, real_name, lang_id)
@@ -1376,7 +1376,7 @@
 				are_you_the_law(M, msg[1])
 				return
 		else
-			if (!isflockmob(M)) //snowflake check because birds do not speak english
+			if (lang_id != "feather") //snowflake check because birds do not speak english
 				are_you_the_law(M, msg[1])
 			return //AFAIK only humans have fingerprints/"palmprints(in judge dredd)" so just ignore any talk from non-humans arlight? it's not a big deal.
 
