@@ -10,10 +10,39 @@
 	var/active = 0
 	var/fuel_drain_rate = 0.3
 	var/atmos_drain_rate = 0.02
-	var/standard_power_output = 5000 // how much the generator will output running normally
+	var/standard_power_output = 2500 // around how much the generator will output running normally
+	var/last_output
 
 	var/obj/item/reagent_containers/food/drinks/fueltank/fuel_tank // power scales with volatility
 	var/obj/item/tank/inlet_tank
+
+	var/image/fuel_tank_image
+	var/image/inlet_tank_image
+
+	update_icon()
+		if (src.active)
+			if (src.last_output >= 40000)
+				src.icon_state = "chemportgen2"
+			else
+				src.icon_state = "chemportgen1"
+		else
+			src.icon_state = "chemportgen0"
+
+		src.overlays = null
+		if (!src.fuel_tank_image)
+			src.fuel_tank_image = image('icons/obj/power.dmi')
+		if (!src.inlet_tank_image)
+			src.inlet_tank_image = image('icons/obj/power.dmi')
+
+		src.fuel_tank_image.icon_state = "genfueltank"
+		src.inlet_tank_image.icon_state = "gengastank"
+		if (src.fuel_tank)
+			src.overlays += src.fuel_tank_image
+		if (src.inlet_tank)
+			src.overlays += src.inlet_tank_image
+
+		signal_event("icon_updated")
+
 
 	attackby(obj/item/W, mob/user)
 		src.add_fingerprint(user)
@@ -78,11 +107,11 @@
 			src.visible_message("<span class='notice'>The [src] stops, it seems like it ran out of something.</span>")
 			return
 
-		var/amount = ((average_volatility * src.standard_power_output) * (available_oxygen * 2.5))
-		// debug
-		src.visible_message("<span class='notice'>[amount] WATTS</span>")
+		src.last_output = ((average_volatility * src.standard_power_output) * (available_oxygen * 5))
+		src.add_avail(src.last_output WATTS)
 
-		src.add_avail(amount WATTS)
+		// debug
+		src.visible_message("<span class='notice'>[src.last_output] WATTS</span>")
 
 		var/turf/simulated/T = get_turf(src)
 		if (istype(T))
@@ -97,7 +126,9 @@
 			// Not sure if I should null check this
 			T.air.remove(src.atmos_drain_rate)
 
-		src.fuel_tank.reagents.remove_any(src.fuel_drain_rate)
+		src.fuel_tank.reagents.remove_any(src.fuel_drain_rate * (available_oxygen * 5))
+
+		src.UpdateIcon()
 
 	proc/connect()
 		if (!get_turf(src))
@@ -145,6 +176,7 @@
 			return
 
 		src.active = 1
+		src.UpdateIcon()
 
 		if (istype(user))
 			src.visible_message("<span class='notice'>[user] starts the [src].</span>")
@@ -152,6 +184,7 @@
 
 	proc/stop_engine(var/mob/user as mob)
 		src.active = 0
+		src.UpdateIcon()
 
 		if (istype(user))
 			src.visible_message("<span class='notice'>[user] stops the [src].</span>")
@@ -224,6 +257,7 @@
 		src.fuel_tank = null
 		src.stop_engine()
 		src.visible_message("<span class='notice'>The [src] stops as the fuel tank is removed.</span>")
+		src.UpdateIcon()
 
 	proc/eject_inlet_tank(var/mob/user as mob)
 		if (!src || !src.inlet_tank)
@@ -236,6 +270,7 @@
 
 		playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 		src.inlet_tank = null
+		src.UpdateIcon()
 
 	// verbs, replace cause stinky
 	verb/start_stop()
