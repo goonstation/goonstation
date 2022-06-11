@@ -48963,16 +48963,16 @@
 /obj/item/reagent_containers/hypospray{
 	pixel_x = -5
 	},
-/obj/item/clothing/gloves/latex/teal{
-	pixel_x = 7;
-	pixel_y = -8
-	},
-/obj/item/clothing/gloves/latex/pink{
-	pixel_x = 8;
-	pixel_y = -10
-	},
 /obj/item/item_box/medical_patches/mini_synthflesh{
 	pixel_x = -9;
+	pixel_y = -7
+	},
+/obj/item/clothing/gloves/latex/random{
+	pixel_x = 7;
+	pixel_y = -9
+	},
+/obj/item/clothing/gloves/latex/random{
+	pixel_x = 8;
 	pixel_y = -7
 	},
 /turf/simulated/floor/bluewhite{
