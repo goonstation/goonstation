@@ -64,7 +64,6 @@
 		return "<b><i>BROADCASTING IN PROGRESS</i></b>"
 
 /obj/flock_structure/relay/process()
-	. = ..()
 	var/elapsed = getTimeInSecondsSinceTime(src.time_started)
 	if(elapsed >= last_time_sound_played_in_seconds + sound_length_in_seconds)
 		play_sound()

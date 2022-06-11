@@ -94,8 +94,6 @@ ABSTRACT_TYPE(/obj/flock_structure)
 	return ""
 
 /obj/flock_structure/proc/process()
-	SHOULD_CALL_PARENT(TRUE)
-	last_process = TIME
 	// override
 
 /// multipler for flock loop, used to compensate for lag

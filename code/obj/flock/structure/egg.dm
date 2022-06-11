@@ -19,7 +19,6 @@
 	return "Approximately <span class='bold'>[time_remaining]</span> second[time_remaining == 1 ? "" : "s"] left until hatching."
 
 /obj/flock_structure/egg/process()
-	. = ..()
 	var/elapsed = getTimeInSecondsSinceTime(src.time_started)
 	if(elapsed >= build_time)
 		src.visible_message("<span class='notice'>[src] breaks open!</span>")

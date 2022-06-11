@@ -18,7 +18,6 @@
 	return "Approximately <span class='bold'>[time_remaining]</span> second[time_remaining == 1 ? "" : "s"] left until entry."
 
 /obj/flock_structure/rift/process()
-	. = ..()
 	var/elapsed = getTimeInSecondsSinceTime(src.time_started)
 	if(elapsed >= build_time)
 		src.visible_message("<span class='text-blue'>Multiple shapes exit out of [src]!</span>")

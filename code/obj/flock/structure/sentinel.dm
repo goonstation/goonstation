@@ -42,7 +42,6 @@
 	<br><span class='bold'>Charge Percentage:</span> [charge]%."}
 
 /obj/flock_structure/sentinel/process()
-	. = ..()
 	updatefilter()
 
 	if(!src.flock)//if it dont exist it off
