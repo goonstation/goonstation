@@ -1241,7 +1241,7 @@
 	var/scramble_prints = 0
 
 	insulated
-		desc = "Tough synthleather work gloves styled in a high-visibility yellow color. They are electrically insulated, and provide full protection against most shocks."
+		desc = "Tough rubber work gloves styled in a high-visibility yellow color. They are electrically insulated, and provide full protection against most shocks."
 		name = "insulated gloves"
 		icon_state = "yellow"
 		item_state = "ygloves"

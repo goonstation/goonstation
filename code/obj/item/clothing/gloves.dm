@@ -269,7 +269,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	icon_state = "latex"
 	item_state = "lgloves"
 	permeability_coefficient = 0.02
-	desc = "Thin, disposal medical gloves used to help prevent the spread of germs."
+	desc = "Thin, disposable medical gloves used to help prevent the spread of germs."
 	protective_temperature = 310
 	scramble_prints = 1
 	setupProperties()
@@ -340,7 +340,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 			return
 
 /obj/item/clothing/gloves/swat
-	desc = "A pair of Syndicate tactical gloves that are electrically insulated and quite heat-resistant. The high-quality materials help prevent ne'er-do-wells from knocking stuff out of your hands."
+	desc = "A pair of Syndicate tactical gloves that are electrically insulated and quite heat-resistant. The high-quality materials help you in blocking attacks."
 	name = "\improper SWAT gloves"
 	icon_state = "swat_syndie"
 	item_state = "swat_syndie"
@@ -370,7 +370,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		setProperty("deflection", 40)
 
 /obj/item/clothing/gloves/swat/NT
-	desc = "A pair of NanoTrasen tactical gloves that are electrically insulated and quite heat-resistant. The high-quality materials help prevent ne'er-do-wells from knocking stuff out of your hands."
+	desc = "A pair of NanoTrasen tactical gloves that are electrically insulated and quite heat-resistant. The high-quality materials help you in blocking attacks."
 	icon_state = "swat_NT"
 	item_state = "swat_NT"
 
@@ -393,7 +393,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 
 /obj/item/clothing/gloves/yellow
-	desc = "Tough synthleather work gloves styled in a high-visibility yellow color. They are electrically insulated, and provide full protection against most shocks."
+	desc = "Tough synthrubber work gloves styled in a high-visibility yellow color. They are electrically insulated, and provide full protection against most shocks."
 	name = "insulated gloves"
 	icon_state = "yellow"
 	item_state = "ygloves"
@@ -406,14 +406,14 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		setProperty("conductivity", 0)
 
 	proc/unsulate()
-		src.desc = "Flimsy synthleather work gloves styled in a drab yellow color. They are not electrically insulated, and provide no protection against any shocks."
+		src.desc = "Flimsy synthrubber work gloves styled in a drab yellow color. They are not electrically insulated, and provide no protection against any shocks."
 		src.name = "unsulated gloves"
 		setProperty("conductivity", 1)
 		src.can_be_charged = 0
 		src.max_uses = 0
 
 /obj/item/clothing/gloves/yellow/unsulated
-	desc = "Flimsy synthleather work gloves styled in an unremarkable yellow color. They are not electrically insulated, and provide no protection against any shocks."
+	desc = "Flimsy synthrubber work gloves styled in a drab yellow color. They are not electrically insulated, and provide no protection against any shocks."
 	name = "unsulated gloves"
 	can_be_charged = 0
 	max_uses = 0
