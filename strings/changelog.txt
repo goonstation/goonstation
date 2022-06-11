@@ -1,5 +1,8 @@
 
 (t)fri jun 10 22
+(u)SgtManGuy/What
+(e)🆕🎨|feature, sprites
+(+)Four new species of domestic space-bees have been discovered. Unfortunately, they only like to nest in the stomachs of stage performers.
 (u)Flappybat
 (e)⚖| balance
 (*)Nerfed medbay floor scanner to give basic health scan. Pester a doctor today!

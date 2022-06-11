@@ -134,8 +134,20 @@
 						cloned_hat.set_loc(larva)
 						larva.stored_hat = cloned_hat
 
+					if (human.mind?.assigned_role == "Mime")
+						larva.color = "#ebedeb"
+						if (human.bioHolder.HasEffect(/datum/bioEffect/noir))
+							larva.custom_bee_type = /obj/critter/domestic_bee/mimebee/noirbee
+						else
+							larva.custom_bee_type = /obj/critter/domestic_bee/mimebee
+					else if (human.mind?.assigned_role == "Clown")
+						larva.color = "#ff0033"
+						larva.custom_bee_type = /obj/critter/domestic_bee/clownbee
+					else if (iscluwne(human))
+						larva.custom_bee_type = /obj/critter/domestic_bee/cluwnebee
+						larva.color = "#35bf4f"
+
 				playsound(affected_mob.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 				affected_mob.visible_message("<span class='alert'><b>[affected_mob] horks up a bee larva!  Grody!</b></span>", "<span class='alert'><b>You cough up...a bee larva. Uhhhhh</b></span>")
 
 				affected_mob.cure_disease(D)
-				return
