@@ -46304,11 +46304,7 @@
 	pixel_x = -2;
 	pixel_y = 3
 	},
-/obj/decal/tile_edge/stripe/big,
-/obj/decal/tile_edge/stripe/big{
-	dir = 4
-	},
-/turf/simulated/floor,
+/turf/simulated/floor/wood/two,
 /area/station/medical/medbay)
 "coF" = (
 /obj/machinery/light/emergency{
@@ -49645,16 +49641,11 @@
 /area/station/routing/medsci)
 "cwz" = (
 /obj/machinery/vending/coffee,
-/obj/decal/tile_edge/stripe/big,
-/obj/decal/tile_edge/stripe/big{
-	dir = 8
-	},
-/turf/simulated/floor,
+/turf/simulated/floor/wood/two,
 /area/station/medical/medbay)
 "cwA" = (
 /obj/machinery/vending/snack,
-/obj/decal/tile_edge/stripe/big,
-/turf/simulated/floor,
+/turf/simulated/floor/wood/two,
 /area/station/medical/medbay)
 "cwB" = (
 /obj/table/auto,
@@ -55998,13 +55989,7 @@
 	dir = 1;
 	pixel_y = 2
 	},
-/obj/decal/tile_edge/stripe/big{
-	dir = 1
-	},
-/obj/decal/tile_edge/stripe/big{
-	dir = 8
-	},
-/turf/simulated/floor,
+/turf/simulated/floor/wood/two,
 /area/station/medical/medbay)
 "iRa" = (
 /obj/machinery/chem_dispenser/alcohol,
@@ -57253,13 +57238,7 @@
 "kUM" = (
 /obj/table/auto,
 /obj/machinery/coffeemaker/medbay,
-/obj/decal/tile_edge/stripe/big{
-	dir = 1
-	},
-/obj/decal/tile_edge/stripe/big{
-	dir = 4
-	},
-/turf/simulated/floor,
+/turf/simulated/floor/wood/two,
 /area/station/medical/medbay)
 "kVJ" = (
 /obj/wingrille_spawn/auto,
@@ -63101,23 +63080,20 @@
 /obj/table/auto,
 /obj/cable,
 /obj/item/reagent_containers/food/drinks/mug{
-	pixel_x = 14
+	pixel_x = 19
 	},
 /obj/item/reagent_containers/food/drinks/mug{
-	pixel_x = 14;
+	pixel_x = 19;
 	pixel_y = 9
 	},
 /obj/item/reagent_containers/food/drinks/mug{
-	pixel_x = 5;
+	pixel_x = 12;
 	pixel_y = 9
 	},
 /obj/item/reagent_containers/food/drinks/mug{
-	pixel_x = 5
+	pixel_x = 12
 	},
-/obj/decal/tile_edge/stripe/big{
-	dir = 1
-	},
-/turf/simulated/floor,
+/turf/simulated/floor/wood/two,
 /area/station/medical/medbay)
 "uxY" = (
 /obj/grille/catwalk{
