@@ -11,6 +11,7 @@
 	var/active = 0
 	var/fuel_drain_rate = 0.3
 	var/atmos_drain_rate = 0.02
+	var/carbon_output = 50
 	var/standard_power_output = 2500 // around how much the generator will output running normally
 	var/last_output
 
@@ -116,7 +117,7 @@
 		var/turf/simulated/T = get_turf(src)
 		if (istype(T))
 			var/datum/gas_mixture/payload = new /datum/gas_mixture
-			payload.carbon_dioxide = src.atmos_drain_rate
+			payload.carbon_dioxide = src.carbon_output * src.atmos_drain_rate
 			payload.temperature = T20C
 			T.assume_air(payload)
 
@@ -126,7 +127,7 @@
 			// Not sure if I should null check this
 			T.air.remove(src.atmos_drain_rate)
 
-		src.fuel_tank.reagents.remove_any(src.fuel_drain_rate * (available_oxygen * 5))
+		src.fuel_tank.reagents.remove_any(src.fuel_drain_rate)
 
 		src.UpdateIcon()
 
@@ -152,12 +153,18 @@
 
 		if(src.netnum)
 			src.powernet = powernets[src.netnum]
-			src.powernet.nodes += src
+			if (!(src in src.powernet.nodes))
+				src.powernet.nodes += src
 
 	proc/disconnect()
 		if(src.powernet)
-			src.powernet.nodes -= src
-			src.powernet.data_nodes -= src
+			for (var/node in src.powernet.nodes)
+				if (node == src)
+					src.powernet.nodes -= src
+
+			for (var/node in src.powernet.data_nodes)
+				if (node == src)
+					src.powernet.data_nodes -= src
 			netnum = 0
 
 		if(!defer_powernet_rebuild)
