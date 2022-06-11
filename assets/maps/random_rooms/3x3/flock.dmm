@@ -1,0 +1,52 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"b" = (
+/obj/decal/cleanable/blood,
+/obj/item/raw_material/shard/gnesis,
+/turf/simulated/floor/plating,
+/area/space)
+"s" = (
+/obj/item/flockcache,
+/turf/simulated/floor/plating,
+/area/space)
+"x" = (
+/turf/simulated/floor/plating,
+/area/space)
+"K" = (
+/obj/machinery/light/flock{
+	dir = 1
+	},
+/turf/simulated/floor/feather,
+/area/space)
+"L" = (
+/obj/item/clothing/suit/flockcultist,
+/turf/simulated/floor/plating,
+/area/space)
+"N" = (
+/obj/decal/cleanable/flockdrone_debris/fluid,
+/turf/simulated/floor/feather,
+/area/space)
+"O" = (
+/turf/simulated/floor/feather/broken,
+/area/space)
+"S" = (
+/mob/living/critter/flock/drone{
+	dormant = 1
+	},
+/turf/simulated/floor/feather,
+/area/space)
+
+(1,1,1) = {"
+x
+N
+L
+"}
+(2,1,1) = {"
+K
+S
+b
+"}
+(3,1,1) = {"
+O
+s
+x
+"}

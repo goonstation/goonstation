@@ -638,6 +638,12 @@
 			var/datum/material/M = getMaterial("plasmaglass")
 			src.setMaterial(M, appearance = 1, setname = 1)
 
+	gnesis
+		setup_material()
+			..()
+			var/datum/material/M = getMaterial("gnesis")
+			src.setMaterial(M, appearance = 1, setname = 1)
+
 /obj/item/raw_material/shard/proc/step_on(mob/living/carbon/human/H as mob)
 	playsound(src.loc, src.sound_stepped, 50, 1)
 	H.changeStatus("weakened", 3 SECONDS)
