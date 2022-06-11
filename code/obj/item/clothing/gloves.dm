@@ -393,7 +393,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 
 /obj/item/clothing/gloves/yellow
-	desc = "High-performance work gloves in an infamous yellow color. They are electrically insulated, providing full protection against most shocks."
+	desc = "Tough synthleather work gloves styled in a high-visibility yellow color. They are electrically insulated, providing full protection against most shocks."
 	name = "insulated gloves"
 	icon_state = "yellow"
 	item_state = "ygloves"
@@ -406,14 +406,14 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		setProperty("conductivity", 0)
 
 	proc/unsulate()
-		src.desc = "Despite looking identical to the real thing, these gloves aren't electrically insulated at all! Hope you kept the receipt."
+		src.desc = "Flimsy synthleather work gloves styled in a drab yellow color. They are not electrically insulated, and provide no protection against any shocks."
 		src.name = "unsulated gloves"
 		setProperty("conductivity", 1)
 		src.can_be_charged = 0
 		src.max_uses = 0
 
 /obj/item/clothing/gloves/yellow/unsulated
-	desc = "Despite looking identical to the real thing, these gloves aren't electrically insulated at all! Hope you kept the receipt."
+	desc = "Flimsy synthleather work gloves styled in an unremarkable yellow color. They are not electrically insulated, and provide no protection against any shocks."
 	name = "unsulated gloves"
 	can_be_charged = 0
 	max_uses = 0
