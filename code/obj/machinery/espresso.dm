@@ -155,12 +155,28 @@
 	var/default_carafe = /obj/item/reagent_containers/food/drinks/carafe
 	var/image/fluid_image
 
+	var/emagged = false
+
 	New()
 		..()
 		UnsubscribeProcess()
 		if (ispath(src.default_carafe))
 			src.my_carafe = new src.default_carafe (src)
 		src.update()
+
+	emag_act(var/mob/user, var/obj/item/card/emag/E)
+
+		if(!src.emagged)
+			if (user)
+				boutput(user, "<span class='notice'>You force the machine to brew something else...</span>")
+
+			src.desc = " It's top of the line NanoTrasen tea technology! Featuring 100% Organic Locally-Grown green leaves!"
+			src.emagged = true
+			return 1
+		else
+			if (user)
+				boutput(user, "<span class='alert'>This has already been tampered with.</span>")
+			return 0
 
 	attackby(var/obj/item/W, var/mob/user)
 		if (istype(W, /obj/item/reagent_containers/food/drinks/carafe))
@@ -182,9 +198,14 @@
 				if (!(status & (NOPOWER|BROKEN)))
 					switch (alert("What would you like to do with [src]?",,"Brew coffee","Remove carafe","Nothing"))
 						if ("Brew coffee")
-							for(var/obj/item/reagent_containers/food/drinks/carafe/C in src.contents)
-								C.reagents.add_reagent("coffee_fresh",100)
-								playsound(src.loc, 'sound/misc/pourdrink.ogg', 50, 1)
+							if(!src.emagged)
+								for(var/obj/item/reagent_containers/food/drinks/carafe/C in src.contents)
+									C.reagents.add_reagent("coffee_fresh",100)
+									playsound(src.loc, 'sound/misc/pourdrink.ogg', 50, 1)
+							else
+								for(var/obj/item/reagent_containers/food/drinks/carafe/C in src.contents)
+									C.reagents.add_reagent("tea",100)
+									playsound(src.loc, 'sound/misc/pourdrink.ogg', 50, 1)
 						if ("Remove carafe")
 							if (!src.my_carafe)
 								user.show_text("The carafe is gone!")
