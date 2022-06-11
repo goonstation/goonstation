@@ -46304,6 +46304,10 @@
 	pixel_x = -2;
 	pixel_y = 3
 	},
+/obj/item/kitchen/food_box/lollipop{
+	pixel_x = 9;
+	pixel_y = 11
+	},
 /turf/simulated/floor/wood/two,
 /area/station/medical/medbay)
 "coF" = (
@@ -49657,6 +49661,11 @@
 	pixel_x = -2;
 	pixel_y = -5
 	},
+/obj/item/decoration/ashtray,
+/obj/item/reagent_containers/food/drinks/tea{
+	pixel_x = -7;
+	pixel_y = 18
+	},
 /turf/simulated/floor/wood/two,
 /area/station/medical/medbay)
 "cwE" = (
@@ -52137,6 +52146,10 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
+"cGX" = (
+/obj/decal/poster/wallsign/poster_eyetest,
+/turf/simulated/wall/auto/supernorn,
+/area/station/medical/medbay)
 "cHQ" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 9
@@ -62067,6 +62080,10 @@
 	dir = 4
 	},
 /area/station/security/secwing)
+"tbJ" = (
+/obj/decal/poster/wallsign/no_smoking,
+/turf/simulated/wall/auto/supernorn,
+/area/station/medical/medbay)
 "tdf" = (
 /obj/item/device/radio/intercom/security{
 	dir = 1
@@ -63092,6 +63109,10 @@
 	},
 /obj/item/reagent_containers/food/drinks/mug{
 	pixel_x = 12
+	},
+/obj/item/decoration/flower_vase/vase7{
+	pixel_x = -9;
+	pixel_y = 11
 	},
 /turf/simulated/floor/wood/two,
 /area/station/medical/medbay)
@@ -65148,6 +65169,7 @@
 /turf/simulated/floor,
 /area/station/engine/hotloop)
 "xTV" = (
+/obj/item/paper/book/from_file/the_trial,
 /obj/decoration/decorativeplant/plant7,
 /turf/simulated/floor/bluewhite{
 	dir = 9
@@ -99709,7 +99731,7 @@ vMi
 opo
 crD
 hyC
-cuf
+cGX
 xTV
 kxk
 cvS
@@ -100917,7 +100939,7 @@ cqC
 cqC
 oOM
 jxO
-cuf
+tbJ
 cuX
 alj
 cYK
