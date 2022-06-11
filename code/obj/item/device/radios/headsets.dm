@@ -54,7 +54,7 @@
 
 /obj/item/device/radio/headset/command
 	name = "command headset"
-	desc = "A radio headset capable of communicating over multiple secure frequencies."
+	desc = "A radio headset capable of communicating over the Command frequency, for use by support staff."
 	icon_state = "command headset"
 	secure_frequencies = list("h" = R_FREQ_COMMAND)
 	secure_classes = list("h" = RADIOCL_COMMAND)
@@ -85,6 +85,7 @@
 
 /obj/item/device/radio/headset/command/nt
 	name = "\improper NT headset"
+	desc = "Issued to NanoTrasen ancillaries, this radio headset can access several secure radio channels."
 	secure_frequencies = list(
 		"h" = R_FREQ_COMMAND,
 		"g" = R_FREQ_SECURITY,
@@ -144,6 +145,7 @@
 
 /obj/item/device/radio/headset/command/comm_officer
 	name = "communications officer's headset"
+	desc = "Used by the communications officer, this headset can communicate over multiple secure frequencies. These things have been a rare sight as of late."
 	secure_frequencies = list(
 		"h" = R_FREQ_COMMAND,
 		"g" = R_FREQ_SECURITY,
@@ -289,7 +291,7 @@
 
 /obj/item/device/radio/headset/medical
 	name = "medical headset"
-	desc = "For your pleas for reprieve to be ignored."
+	desc = "Nominally worn by the trained staff of the medbay, this headset can be counted on to either be utterly silent or to be squawking constantly at any given moment."
 	icon_state = "med headset"
 	secure_frequencies = list("m" = R_FREQ_MEDICAL)
 	secure_classes = list(
@@ -311,7 +313,7 @@
 
 /obj/item/device/radio/headset/civilian
 	name = "civilian headset"
-	desc = "These headsets are used by the civilian staff, who are meant to keep the station clean, fed, and productive. As if."
+	desc = "These headsets are used by the civilian staff, who are employed to keep the station clean, fed, and productive. As if."
 	icon_state = "civ headset"
 	secure_frequencies = list("c" = R_FREQ_CIVILIAN)
 	secure_classes = list(
@@ -321,7 +323,7 @@
 
 /obj/item/device/radio/headset/shipping
 	name = "shipping headset"
-	desc = "The psychology team has determined that the quartermasters are less likely to secede if they're not solely in their own department, so here we are."
+	desc = "Used by the station's quartermasters, who move freight and master the art of watching numbers go up and down."
 	icon_state = "shipping headset"
 	secure_frequencies = list(
 	"e" = R_FREQ_ENGINEERING,
@@ -361,7 +363,7 @@
 
 /obj/item/device/radio/headset/clown
 	name = "clown's headset"
-	desc = "Anybody using this headset is unlikely to be taken seriously... until it's too late."
+	desc = "Anybody using this headset is unlikely to be taken seriously."
 	icon_override = "clown"
 	icon_tooltip = "Clown"
 
