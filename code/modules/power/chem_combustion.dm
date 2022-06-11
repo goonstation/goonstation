@@ -5,6 +5,7 @@
 	density = 1
 	anchored = 0
 	flags = NOSPLASH
+	mats = list("MET-2" = 20, "CON-1" = 10)
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS
 
 	var/active = 0
