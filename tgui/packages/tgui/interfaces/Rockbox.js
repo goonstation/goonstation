@@ -7,14 +7,10 @@ import { Window } from '../layouts';
 export const Rockbox = (_props, context) => {
   const { act, data } = useBackend(context);
   const {
-    amount,
-    forSale,
-    name,
-    price,
-    stats,
+    default_price,
+    autosell,
   } = data;
   const [takeAmount, setTakeAmount] = useLocalState(context, 'takeAmount', 1);
-  const [sellAllPrice, setSellAllPrice] = useLocalState(context, 'sellAllPrice', 0);
   return (
     <Window
       title="Rockbox"
@@ -25,33 +21,33 @@ export const Rockbox = (_props, context) => {
         <Stack vertical fill>
           <Stack.Item>
             <Section fill>
-              <Stack>
-                <Stack.Item grow>
-                  {"Amount to eject: "}
-                  <NumberInput
-                    value={takeAmount}
-                    width={4}
-                    minValue={1}
-                    onDrag={(e, value) => setTakeAmount(value)}
-                    onChange={(e, value) => setTakeAmount(value)}
-                  />
-                </Stack.Item>
-                <Stack.Item mr={3}>
-                  <NumberInput
-                    value={sellAllPrice}
+              {"Amount to eject: "}
+              <NumberInput
+                value={takeAmount}
+                width={4}
+                minValue={1}
+                onDrag={(e, value) => setTakeAmount(value)}
+                onChange={(e, value) => setTakeAmount(value)}
+              />
+              <Divider />
+              <Tooltip content="Default price for new ore entries."
+                position="bottom">
+                <Box as="span"> {/* necessary for tooltip to work */}
+                  Default Price: <NumberInput
+                    value={default_price}
                     width={4}
                     minValue={0}
                     format={value => "$" + value}
-                    onChange={(e, value) => setSellAllPrice(value)}
+                    onChange={(e, value) => act('set-default-price', { newPrice: value })}
                   />
-                  <Button
-                    color="average"
-                    icon="magic"
-                    onClick={() => act('sell-all-ore-at-price', { newPrice: sellAllPrice })}>
-                    Sell All
-                  </Button>
-                </Stack.Item>
-              </Stack>
+                </Box>
+              </Tooltip>
+              <Button.Checkbox
+                checked={autosell}
+                tooltip="Mark new ore entries for sale automatically."
+                onClick={() => act('toggle-auto-sell')}>
+                Auto-Sell
+              </Button.Checkbox>
             </Section>
           </Stack.Item>
           <Stack.Item grow={1}>
