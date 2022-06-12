@@ -309,7 +309,7 @@
 		animate_flock_passthrough(src)
 		return TRUE
 	else
-		return !src.density
+		return ..()
 
 /mob/living/critter/flock/drone/MouseDrop_T(mob/living/target, mob/user)
 	if(!target || !user)
@@ -979,6 +979,11 @@
 	cooldown = 15
 	reload_time = 60
 	reloading_str = "recharging"
+
+/datum/limb/gun/flock_stunner/point_blank(mob/living/target, mob/living/user)
+	if (isflockmob(target))
+		return
+	return ..()
 
 /datum/limb/gun/flock_stunner/attack_range(atom/target, var/mob/living/critter/flock/drone/user, params)
 	if(!target || !user)
