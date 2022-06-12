@@ -1,5 +1,10 @@
 
 (t)sun jun 12 22
+(u)Azrun
+(p)9061
+(e)⚖|balance
+(*)Singularities can be recaptured! Assuming they don't get too big...
+(+)Collector arrays will capture all nearby Hawking Radiation.
 (u)Virvatuli
 (e)🆕⚖|feature, balance
 (*)AI Core Frames are now very limited. They are no longer in roboticist fabricators, but located on a limited-use disk that spawns in the Medical Director's locker.
