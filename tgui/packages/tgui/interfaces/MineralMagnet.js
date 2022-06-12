@@ -77,6 +77,7 @@ export const MineralMagnet = (_props, context) => {
             textAlign="center"
             color={onCooldown && magnetCooldownOverride && "average"}
             icon="search"
+            disabled={!miningEncounters.length}
             onClick={() => setViewEncounters(true)}
             fluid>
             Activate telescope location
