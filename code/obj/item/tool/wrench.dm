@@ -23,6 +23,10 @@
 		..()
 		BLOCK_SETUP(BLOCK_ROD)
 
+	attack(mob/living/carbon/M, mob/user)
+		if (!wrench_surgery(M, user))
+			return ..()
+
 /obj/item/wrench/gold
 	name = "golden wrench"
 	desc = "A generic wrench, but now with gold plating!"

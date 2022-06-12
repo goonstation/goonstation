@@ -20,6 +20,7 @@
 	burn_possible = 1
 	health = 5
 	tooltip_flags = REBUILD_DIST
+	wear_layer = MOB_ARMOR_LAYER // Needs to be below hand layer or any custom foot details will layer over shoes
 	var/step_sound = "step_default"
 	var/step_priority = STEP_PRIORITY_NONE
 	var/step_lots = 0 //classic steps (used for clown shoos)
@@ -42,7 +43,7 @@
 				if (LACES_CUT)
 					. += "The laces are cut."
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/tank/air) || istype(W, /obj/item/tank/oxygen) || istype(W, /obj/item/tank/emergency_oxygen) || istype(W, /obj/item/tank/jetpack))
 			var/uses = 0
 
@@ -268,7 +269,7 @@
 	var/list/crayons = list() // stonepillar's crayon project
 	var/max_crayons = 5
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (istype(W, /obj/item/pen/crayon))
 			if (user.bioHolder.HasEffect("clumsy"))
 				var/obj/item/pen/crayon/C = W
@@ -290,7 +291,7 @@
 		else
 			return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (length(src.crayons) && src.loc == user)
 			if (!user.bioHolder.HasEffect("clumsy"))
 				boutput(user, "<span class='alert'>You aren't funny enough to do that. Wait, did the shoes just laugh at you?</span>")
@@ -370,6 +371,10 @@
 	step_priority = STEP_PRIORITY_LOW
 	duration_remove = 10 SECONDS
 
+	/// Subtype that wizards spawn with, and is in their vendor. Cows can wear them, unlike regular sandals (might also be useful in the future)
+	wizard
+		compatible_species = list("human", "cow")
+
 /obj/item/clothing/shoes/tourist
 	name = "flip-flops"
 	desc = "These cheap sandals don't look very comfortable."
@@ -423,6 +428,7 @@
 	name = "hi-grip assault boots"
 	desc = "Specialist combat boots designed to provide enhanced grip and ankle stability."
 	icon_state = "swatheavy"
+	compatible_species = list("cow", "human")
 	c_flags = NOSLIP
 
 /obj/item/clothing/shoes/swat/heavy
@@ -446,6 +452,7 @@
 	icon_state = "swatheavy"
 	magnetic = 1
 	c_flags = NOSLIP
+	compatible_species = list("cow", "human")
 
 /obj/item/clothing/shoes/fuzzy //not boolean slippers
 	name = "fuzzy slippers"
@@ -496,7 +503,7 @@
 		return
 
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/tank))
 			if (src.tank)
 				boutput(user, "<span class='alert'>There's already a tank installed!</span>")

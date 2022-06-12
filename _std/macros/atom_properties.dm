@@ -240,6 +240,8 @@ To remove:
 #define PROP_MOB_CANTTHROW(x) x("cantthrow", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 
 //-------------------- OBJ PROPS ------------------------
+#define PROP_OBJ_GOLFABLE(x) x("golfable", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
+
 //------------------- MOVABLE PROPS ---------------------
 //-------------------- TURF PROPS -----------------------
 //-------------------- ATOM PROPS -----------------------

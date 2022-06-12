@@ -62,7 +62,7 @@
 	density = 1
 	var/securedstate = 2
 
-/obj/machinery/camera/television/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/camera/television/attackby(obj/item/W, mob/user)
 	..()
 	if (isscrewingtool(W)) //to move them
 		if (securedstate && src.securedstate >= 1)
@@ -275,7 +275,7 @@
 		user.visible_message("<span class='alert'>[user] has reactivated [src]!</span>", "<span class='alert'>You have reactivated [src].</span>")
 		add_fingerprint(user)
 
-/obj/machinery/camera/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/camera/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/parts/human_parts)) //dumb easter egg incoming
 		user.visible_message("<span class='alert'>[user] wipes [src] with the bloody end of [W.name]. What the fuck?</span>", "<span class='alert'>You wipe [src] with the bloody end of [W.name]. What the fuck?</span>")
 		return
@@ -365,7 +365,7 @@
 	detectTime = -1
 	return 1
 
-/obj/machinery/camera/motion/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/camera/motion/attackby(obj/item/W, mob/user)
 	if (issnippingtool(W) && locked == 1) return
 	if (isscrewingtool(W))
 		var/turf/T = user.loc

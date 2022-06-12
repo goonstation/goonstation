@@ -27,7 +27,7 @@ TODO: Enforce ping rate limit here as well in case someone futzes with the javas
 			using = null
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(status & (BROKEN|NOPOWER))
 			return
 

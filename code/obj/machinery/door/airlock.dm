@@ -583,7 +583,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 			src.autoclose = 1
 		..(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.density)
 			src.autoclose = 0
 		..(user)
@@ -1004,6 +1004,7 @@ About the new airlock wires panel:
 	R.airlock_wire = wire_color
 	src.signalers[wire_color] = R
 	tgui_process.update_uis(src)
+	logTheThing("station", user, null, "attaches a remote signaller on frequency [R.frequency] to [src] at [log_loc(src)].")
 	return TRUE
 
 /obj/machinery/door/airlock/proc/detach_signaler(var/wire_color, mob/user)
@@ -1506,7 +1507,7 @@ About the new airlock wires panel:
 	else
 		. = list(start,stop)
 
-/obj/machinery/door/airlock/attack_hand(mob/user as mob)
+/obj/machinery/door/airlock/attack_hand(mob/user)
 	var/valid_tool_found = FALSE
 	if(length(user.equipped_list()))
 		for(var/obj/item/I in user.equipped_list())
@@ -1536,7 +1537,7 @@ About the new airlock wires panel:
 		..(user)
 	return
 
-/obj/machinery/door/airlock/attackby(obj/item/C as obj, mob/user as mob)
+/obj/machinery/door/airlock/attackby(obj/item/C, mob/user)
 	//boutput(world, text("airlock attackby src [] obj [] mob []", src, C, user))
 
 	src.add_fingerprint(user)

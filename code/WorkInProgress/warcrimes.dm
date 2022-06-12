@@ -579,7 +579,7 @@ obj/item/paper/tug/warehouse
 /turf/simulated/wall/r_wall/afterbar
 	name = "wall"
 	desc = null
-	attackby(obj/item/W as obj, mob/user as mob, params)
+	attackby(obj/item/W, mob/user, params)
 		return
 
 

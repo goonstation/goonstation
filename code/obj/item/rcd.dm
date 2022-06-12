@@ -164,7 +164,7 @@ Broken RCD + Effects
 		src.UpdateIcon()
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/rcd_ammo))
 			var/obj/item/rcd_ammo/R = W
 			if (!restricted_materials || (R?.material.mat_id in restricted_materials))
@@ -488,7 +488,7 @@ Broken RCD + Effects
 
 /* flesh wall creation code
 // holy jesus christ
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		if (ishuman(M) && matter >= 3)
 			var/mob/living/carbon/human/H = M
 			if(!isdead(H) && H.health > 0)
@@ -816,8 +816,8 @@ Broken RCD + Effects
 					if (!istype(A, /turf/simulated/floor))
 						return
 				if (do_thing(user, A, "building a window", matter_create_window, time_create_window))
-					// Is /auto always the one to use here? hm.
-					var/obj/window/T = new (get_turf(A))
+					// Is /auto always the one to use here? hm. //yes, yes it should be
+					var/obj/window/auto/T = new (get_turf(A))
 					log_construction(user, "builds a window")
 					T.setMaterial(getMaterial(material_name))
 					return
@@ -898,7 +898,7 @@ Broken RCD + Effects
 	modes = list(RCD_MODE_FLOORSWALLS, RCD_MODE_AIRLOCK, RCD_MODE_DECONSTRUCT, RCD_MODE_WINDOWS)
 
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/rcd_ammo))
 			..()
 		else if (isExploitableObject(W))
@@ -1002,7 +1002,7 @@ Broken RCD + Effects
 		..()
 		src.icon_state = "bad_rcd[rand(0,2)]"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/rcd_ammo))
 			boutput(user, "\the [src] slot is not compatible with this cartridge.")
 			return

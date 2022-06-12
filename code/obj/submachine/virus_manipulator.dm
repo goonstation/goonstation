@@ -26,7 +26,7 @@
 	attack_ai(mob/user as mob)
 		return src.Attackhand(user)
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		src.add_dialog(user)
 		if (!src.working)
 			var/dat = {"<B>Virus Manipulator</B><BR>
@@ -204,7 +204,7 @@
 				src.updateUsrDialog()
 			src.updateUsrDialog()
 
-	attackby(var/obj/item/W as obj, var/mob/user as mob)
+	attackby(var/obj/item/W, var/mob/user)
 		if (src.working)
 			boutput(user, "<span class='alert'>The manipulator is busy!</span>")
 			return

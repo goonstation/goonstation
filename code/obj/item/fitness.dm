@@ -7,7 +7,7 @@
 	deconstruct_flags = DECON_SIMPLE
 	layer = MOB_LAYER_BASE+1 // TODO LAYER
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		user.lastattacked = src
 		flick("[icon_state]2", src)
 		playsound(src.loc, pick(sounds_punch + sounds_hit), 25, 1, -1)
@@ -34,7 +34,7 @@
 		desc = "A bop bag in the shape of a goofy clown."
 		icon_state = "bopbag"
 
-		attack_hand(mob/user as mob)
+		attack_hand(mob/user)
 			user.lastattacked = src
 			flick("[icon_state]2", src)
 			if (narrator_mode)
@@ -55,7 +55,7 @@
 	deconstruct_flags = DECON_WRENCH
 	var/in_use = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(in_use)
 			boutput(user, "<span class='alert'>Its already in use - wait a bit.</span>")
 			return
@@ -103,7 +103,7 @@
 	deconstruct_flags = DECON_WRENCH
 	var/in_use = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(in_use)
 			boutput(user, "<span class='alert'>Its already in use - wait a bit.</span>")
 			return

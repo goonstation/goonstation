@@ -1,7 +1,7 @@
 /obj/flock_structure/ghost
 	name = "weird lookin ghost building"
 	desc = "It's some weird looking ghost building. Seems like its under construction, You can see faint strands of material floating in it."
-
+	flock_desc = "A Flock structure not yet realised. Provide it resources to bring it into existence."
 	var/goal = 0 //mats needed to make the thing actually build
 	var/building = null //thing thats being built
 	var/currentmats = 0 //mats currently in the thing.

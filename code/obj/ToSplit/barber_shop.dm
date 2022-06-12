@@ -86,7 +86,7 @@
 		AddComponent(/datum/component/toggle_tool_use)
 		BLOCK_SETUP(BLOCK_KNIFE)
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (src.remove_bandage(M, user))
 			return 1
 		if (snip_surgery(M, user))
@@ -131,7 +131,7 @@
 		AddComponent(/datum/component/toggle_tool_use)
 		BLOCK_SETUP(BLOCK_KNIFE)
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (scalpel_surgery(M, user))
 			return 1
 		..()
@@ -164,7 +164,7 @@
 		dye_image = image(src.icon, "dye_color", -1)
 		..()
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if(dye_hair(M, user, src))
 			return
 		else // I dunno, hit them with it?
@@ -373,7 +373,7 @@
 	attack_ai(mob/user as mob)
 		return src.Attackhand(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(status & BROKEN)
 			return
 		src.add_dialog(user)

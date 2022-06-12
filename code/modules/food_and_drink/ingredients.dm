@@ -101,6 +101,14 @@
 			else
 				return..()
 
+/// Meat which is butchered from changeling critters (and gibbered changelings)
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/changeling
+	 name = "mutagenic meat"
+	 desc = "Are those eyes?"
+	 icon_state = "meat-changeling"
+	 initial_volume = 30
+	 initial_reagents = list("neurotoxin" = 20, "bloodc" = 10)
+
 /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon
 	name = "bacon"
 	desc = "A strip of salty cured pork. Many disgusting nerds have a bizarre fascination with this meat, going so far as to construct tiny houses out of it."
@@ -182,7 +190,7 @@
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		src.visible_message("<span class='alert'>[src] flops onto the floor!</span>")
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istool(W, TOOL_CUTTING | TOOL_SNIPPING))
 			boutput(user, "<span class='notice'>You cut [src] in half</span>")
 			new /obj/item/reagent_containers/food/snacks/deviledegg(get_turf(src))
@@ -246,7 +254,7 @@
 	custom_food = 1
 	food_effects = list("food_deep_burp")
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/candy) && W.reagents && W.reagents.has_reagent("chocolate"))
 			if (istype(W, /obj/item/reagent_containers/food/snacks/candy/pbcup))
 				return
@@ -379,7 +387,7 @@
 	food_color = "#FFFFFF"
 	custom_food = 0
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/sugar))
 			boutput(user, "<span class='notice'>You add [W] to [src] to make sweet dough!</span>")
 			var/obj/item/reagent_containers/food/snacks/ingredient/dough_s/D = new /obj/item/reagent_containers/food/snacks/ingredient/dough_s(W.loc)
@@ -457,7 +465,7 @@
 	desc = "Used for making pasta-y things."
 	icon_state = "dough-semolina"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/kitchen/rollingpin))
 			boutput(user, "<span class='notice'>You flatten out the dough into a sheet.</span>")
 			if (prob(25))
@@ -478,7 +486,7 @@
 	food_color = "#FFFFF"
 	custom_food = 0
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/dough_strip))
 			boutput(user, "<span class='notice'>You attach the [src]s back together to make a piece of dough.</span>")
 			if (prob(25))
@@ -526,7 +534,7 @@
 	desc = "Used for making cakey things."
 	icon_state = "dough-sweet"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/saw) || istype(W,/obj/item/knife/butcher))
 			boutput(user, "<span class='notice'>You cut [src] into smaller pieces...</span>")
 			for(var/i = 1, i <= 4, i++)
@@ -572,7 +580,7 @@
 	desc = "You need to add tomatoes..."
 	icon_state = "pizzabase"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/condiment/ketchup) || istype(W, /obj/item/reagent_containers/food/snacks/plant/tomato))
 			boutput(user, "<span class='notice'>You add [W] to [src].</span>")
 			var/obj/item/reagent_containers/food/snacks/ingredient/pizza2/D=new /obj/item/reagent_containers/food/snacks/ingredient/pizza2(W.loc)
@@ -596,7 +604,7 @@
 		new /obj/item/reagent_containers/food/snacks/ingredient/dough(get_turf(src))
 		qdel (src)
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		if (user == M)
 			boutput(user, "<span class='alert'>You need to add tomatoes, you greedy beast!</span>")
 			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
@@ -611,7 +619,7 @@
 	icon_state = "pizzabase2"
 	custom_food = 0
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/cheese))
 			boutput(user, "<span class='notice'>You add [W] to [src].</span>")
 			var/obj/item/reagent_containers/food/snacks/ingredient/pizza3/D = new /obj/item/reagent_containers/food/snacks/ingredient/pizza3(W.loc)
@@ -621,7 +629,7 @@
 			qdel(src)
 		else ..()
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		if (user == M)
 			boutput(user, "<span class='alert'>You need to add cheese, you greedy beast!</span>")
 			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
@@ -643,7 +651,7 @@
 	var/list/topping_colors = list()
 	var/toppingstext = null
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/reagent_containers/food/snacks/mushroom))
 			var/pizzam = new /obj/item/reagent_containers/food/snacks/ingredient/pizzam
 			user.put_in_hand_or_drop(pizzam)
@@ -695,7 +703,7 @@
 		src.topping_colors += topping_color
 		src.overlays += I
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		if (user == M)
 			boutput(user, "<span class='alert'>You need to bake it, you greedy beast!</span>")
 			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
@@ -709,7 +717,7 @@
 	desc = "A cheese and mushroom pizza. You need to bake it..."
 	icon_state = "pizzabasem"
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		if (user == M)
 			boutput(user, "<span class='alert'>You need to bake it, you greedy beast!</span>")
 			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
@@ -723,7 +731,7 @@
 	desc = "A cheese and meatball pizza. You need to bake it..."
 	icon_state = "pizzabaseb"
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		if (user == M)
 			boutput(user, "<span class='alert'>You need to bake it, you greedy beast!</span>")
 			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
@@ -737,7 +745,7 @@
 	desc = "A cheese and pepperoni pizza. You need to bake it..."
 	icon_state = "pizzabasep"
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		if (user == M)
 			boutput(user, "<span class='alert'>You need to bake it, you greedy beast!</span>")
 			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
@@ -776,7 +784,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles)
 		desc = "An uncooked sheet of wheat dough, used in noodle-making."
 		icon_state = "noodle-sheet"
 
-		attackby(obj/item/W as obj, mob/user as mob)
+		attackby(obj/item/W, mob/user)
 			if (iscuttingtool(W))
 				var/turf/T = get_turf(src)
 				user.visible_message("[user] cuts [src] into thick noodles.", "You cut [src] into thick noodles.")
@@ -823,7 +831,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles)
 		.= "Original italian [name]."
 
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/reagent_containers/food/snacks/condiment/ketchup))
 			boutput(user, "<span class='notice'>You create [random_spaghetti_name()] with tomato sauce...</span>")
 			var/obj/item/reagent_containers/food/snacks/spaghetti/sauce/D
@@ -902,7 +910,7 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 	food_color = "#ffffff"
 	doants = 0
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (iscuttingtool(W))
 			var/turf/T = get_turf(src)
 			user.visible_message("[user] cuts [src] into slices.", "You cut [src] into slices.")

@@ -649,7 +649,7 @@ var/global/datum/module_research_controller/module_control = new
 			module_control.setup()
 		processing_items.Add(src)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isrobot(user))
 			return
 		if (istype(W, /obj/item/robot_module))
@@ -834,7 +834,7 @@ var/global/datum/module_research_controller/module_control = new
 		else
 			remove_viewer(usr)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		add_viewer(user)
 		show_interface(user)
 

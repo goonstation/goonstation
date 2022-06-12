@@ -64,7 +64,7 @@
 			return 1
 		user.unlock_medal("Bear Hug", 1) //new method to get since obesity is removed
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (!src.alive)
 			// TODO: tie this into surgery()
 			if (istype(W, /obj/item/scalpel))

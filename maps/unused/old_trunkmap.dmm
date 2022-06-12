@@ -1240,7 +1240,7 @@
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "acI" = (
-/obj/machinery/smelter,
+/obj/machinery/neosmelter,
 /turf/simulated/floor/plating,
 /area/station/mining/refinery)
 "acJ" = (

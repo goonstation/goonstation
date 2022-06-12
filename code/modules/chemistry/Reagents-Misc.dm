@@ -3183,9 +3183,9 @@ datum
 			//taste = "metallic yet slightly bitter"
 			description = "Hemolymph is a blood-like bodily fluid found in many invertibrates that derives its blue-green color from the presence of copper proteins."
 			reagent_state = LIQUID
-			fluid_r = 6
-			fluid_b = 161
-			fluid_g = 125
+			fluid_r = 4
+			fluid_b = 165
+			fluid_g = 144
 
 
 		vomit

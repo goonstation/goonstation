@@ -4,6 +4,9 @@
 #define isflockstructure(x) (istype(x, /obj/flock_structure))
 #define isflockdeconimmune(x) (istype(target, /obj/flock_structure/ghost) || istype(target, /mob/living/critter/flock) || istype(target, /turf/simulated/floor/feather) || istype(target, /obj/flock_structure/rift) || istype(target, /obj/flock_structure/egg) || istype(target, /obj/flock_structure/relay))
 
+// process controller
+#define FLOCK_PROCESS_SCHEDULE_INTERVAL 2 SECONDS
+
 //annotation name macros
 #define FLOCK_ANNOTATION_HAZARD "hazard"
 #define FLOCK_ANNOTATION_DECONSTRUCT "deconstruct"
@@ -20,6 +23,8 @@
 #define FLOCK_LAY_EGG_COST 100
 #define FLOCK_REPAIR_COST 10
 #define FLOCK_GHOST_DEPOSIT_AMOUNT 10
+
+#define FLOCKTRACE_COMPUTE_COST 100
 
 // achievements
 #define FLOCK_ACHIEVEMENT_CHEAT_STRUCTURES "all_structures"
