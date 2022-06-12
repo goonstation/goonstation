@@ -142,6 +142,7 @@
 	accepted_token(var/token)
 		if (istype(token, /obj/item/requisition_token/security/assistant))
 			src.credits[WEAPON_VENDOR_CATEGORY_ASSISTANT]++
+			src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]++
 		else if (istype(token, /obj/item/requisition_token/security/utility))
 			src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]++
 		else
