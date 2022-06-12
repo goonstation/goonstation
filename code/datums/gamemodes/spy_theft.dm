@@ -522,6 +522,7 @@
 	big_station_bounties[/obj/machinery/recharge_station] = 2
 
 	big_station_bounties[/obj/machinery/sleeper/port_a_medbay] = 1
+	big_station_bounties[/obj/machinery/port_a_brig] = 3
 	big_station_bounties[/obj/machinery/recharger] = 3
 
 	big_station_bounties[/obj/machinery/manufacturer/robotics] = 2
