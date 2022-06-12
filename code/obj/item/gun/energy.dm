@@ -1368,7 +1368,8 @@
 		//Do I need to check for this? I can't imagine why anyone would pass the wrong var here...
 		if (!islist(msg))
 			return
-
+		if (lang_id != "english")
+			return
 		//only work if the voice is the same as the voice of your owner fingerprints.
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
@@ -1376,8 +1377,7 @@
 				are_you_the_law(M, msg[1])
 				return
 		else
-			if (lang_id != "feather") //snowflake check because birds do not speak english
-				are_you_the_law(M, msg[1])
+			are_you_the_law(M, msg[1])
 			return //AFAIK only humans have fingerprints/"palmprints(in judge dredd)" so just ignore any talk from non-humans arlight? it's not a big deal.
 
 		if(!src.projectiles && !src.projectiles.len > 1)
