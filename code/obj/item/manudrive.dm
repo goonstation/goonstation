@@ -34,3 +34,10 @@
 				MD.drivestored += get_schematic_from_path(X)
 				MD.fablimit = src.fablimit
 		src.read_only = 1
+
+	ai //AI core frame limiting
+		name = "artificial intelligence license"
+		desc = "This diskette carries a blueprint protected by NT-approved DRM that permits the user to manufacture two AI core frames."
+		icon_state = "datadiskjan"
+		temp_recipe_string = list(/datum/manufacture/core_frame)
+		fablimit = 2
