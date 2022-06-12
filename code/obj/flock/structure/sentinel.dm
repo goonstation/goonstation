@@ -41,7 +41,7 @@
 	return {"<span class='bold'>Status:</span> [charge_status == 1 ? "charging" : (charge_status == 2 ? "charged" : "idle")].
 	<br><span class='bold'>Charge Percentage:</span> [charge]%."}
 
-/obj/flock_structure/sentinel/process()
+/obj/flock_structure/sentinel/process(mult)
 	updatefilter()
 
 	if(!src.flock)//if it dont exist it off

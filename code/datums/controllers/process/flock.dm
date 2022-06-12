@@ -12,7 +12,7 @@
 	doWork()
 		var/i
 		for (var/obj/flock_structure/O as anything in by_cat[TR_CAT_FLOCK_STRUCTURE])
-			O.process()
+			O.process(O.get_multiplier())
 			O.last_process = TIME
 			if (!(i++ % 10))
 				scheck()

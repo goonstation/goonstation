@@ -40,6 +40,7 @@ ABSTRACT_TYPE(/obj/flock_structure)
 /obj/flock_structure/New(var/atom/location, var/datum/flock/F=null)
 	..()
 	START_TRACKING_CAT(TR_CAT_FLOCK_STRUCTURE)
+	last_process = TIME
 	health_max = health
 	time_started = world.timeofday
 	setMaterial(getMaterial("gnesis"))
@@ -93,7 +94,7 @@ ABSTRACT_TYPE(/obj/flock_structure)
 /obj/flock_structure/proc/building_specific_info()
 	return ""
 
-/obj/flock_structure/proc/process()
+/obj/flock_structure/proc/process(var/mult)
 	// override
 
 /// multipler for flock loop, used to compensate for lag
