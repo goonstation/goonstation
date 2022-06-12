@@ -768,7 +768,7 @@
 	return
 
 /obj/machinery/vending/proc/postvend_effect()
-	playsound(src.loc, 'sound/machines/ping.ogg', 20, 1, 0.1)
+	playsound(src.loc, 'sound/machines/vending_dispense.ogg', 40, 0.5, 0.1)
 	return
 
 /obj/machinery/vending/power_change()
