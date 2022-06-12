@@ -113,7 +113,7 @@ stare
 /datum/aiTask/sequence/goalbased/replicate/precondition()
 	. = FALSE
 	var/mob/living/critter/flock/drone/F = holder.owner
-	if(F?.can_afford(FLOCK_LAY_EGG_COST))
+	if(F?.can_afford(FLOCK_LAY_EGG_COST + clamp((F.flock.getComplexDroneCount() - FLOCK_MIN_DESIRED_POP) * FLOCK_ADDITIONAL_RESOURCE_RESERVATION_PER_DRONE, 0, FLOCK_LAY_EGG_COST * 2)))
 		. = TRUE
 
 /datum/aiTask/sequence/goalbased/replicate/get_targets()
@@ -134,7 +134,7 @@ stare
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(!F)
 		return TRUE
-	if(F && !F.can_afford(FLOCK_LAY_EGG_COST + clamp((F.flock.getComplexDroneCount() - FLOCK_MIN_DESIRED_POP) * FLOCK_ADDITIONAL_RESOURCE_RESERVATION_PER_DRONE, 0, FLOCK_LAY_EGG_COST * 2)))
+	if(F && !F.can_afford(FLOCK_LAY_EGG_COST))
 		return TRUE
 	var/turf/simulated/floor/feather/N = get_turf(holder.owner)
 	if(!N)
