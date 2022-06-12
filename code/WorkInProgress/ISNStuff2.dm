@@ -194,25 +194,25 @@
 			user.visible_message("<span class='alert'><b>[user] reaches for the button...</b></span>")
 			var/input = null
 
-			input = alert("Are you sure you want to press the button?","DONT PRESS IT","Yes","No")
+			input = tgui_alert(user, "Are you sure you want to press the button?", "DONT PRESS IT", list("Yes","No"))
 			if (input != "Yes")
 				boutput(user, "<span class='notice'>You made the right decision.</span>")
 				being_pressed = 0
 				return
 
-			input = alert("Are you REALLY sure?","DONT PRESS IT","Yes","No")
+			input = tgui_alert(user, "Are you REALLY sure?", "DONT PRESS IT", list("Yes", "No"))
 			if (input != "Yes")
 				boutput(user, "<span class='notice'>You made the right decision.</span>")
 				being_pressed = 0
 				return
 
-			input = alert("Should you press the button?","DONT PRESS IT","Yes","No")
+			input = tgui_alert(user, "Should you press the button?", "DONT PRESS IT", list("Yes", "No"))
 			if (input != "No")
 				boutput(user, "<span class='alert'>Haven't you been paying attention?</span>")
 				being_pressed = 0
 				return
 
-			input = alert("Are you like double-ultra turbo sure you want to press the button?","DONT PRESS IT","No","Yes")
+			input = tgui_alert(user, "Are you like double-ultra turbo sure you want to press the button?", "DONT PRESS IT", list("No", "Yes"))
 			if (input != "Yes")
 				boutput(user, "<span class='notice'>You made the right decision.</span>")
 				being_pressed = 0
@@ -221,7 +221,7 @@
 			boutput(user, "<span class='alert'>Pressing button. Please wait thirty seconds.</span>")
 			sleep(30 SECONDS)
 
-			input = alert("For real though, you're okay with pressing the button?","DONT PRESS IT","Yes","No")
+			input = tgui_alert(user, "For real though, you're okay with pressing the button?", "DONT PRESS IT", list("Yes", "No"))
 			if (input != "Yes")
 				boutput(user, "<span class='notice'>You made the right decision.</span>")
 				being_pressed = 0

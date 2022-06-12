@@ -1369,7 +1369,7 @@
 
 /mob/living/carbon/human/verb/fuck()
 	set hidden = 1
-	alert("Go play HellMOO if you wanna do that.")
+	tgui_alert(usr, "Go play HellMOO if you wanna do that.")
 
 // called when something steps onto a human
 // this could be made more general, but for now just handle mulebot

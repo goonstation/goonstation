@@ -722,7 +722,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 
 		if(M == I)
 			boutput(M, "<span class='alert'>You feel utterly strengthened in your resolve! You are the most important person in the universe!</span>")
-			alert(M, "You feel utterly strengthened in your resolve! You are the most important person in the universe!", "YOU ARE REALY GREAT!!")
+			tgui_alert(M, "You feel utterly strengthened in your resolve! You are the most important person in the universe!", "YOU ARE REALY GREAT!!")
 			return
 
 		if (M.mind && ticker.mode)

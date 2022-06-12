@@ -105,7 +105,7 @@ SHARDS
 
 		if (!( istype(user.loc, /turf/simulated) ))
 			return
-		switch(alert("Sheet-Glass", "Would you like full tile glass or one direction?", "one direct", "full (2 sheets)", "cancel", null))
+		switch(tgui_alert(user, "Would you like full tile glass or one direction?", "Sheet-Glass", list("one direct", "full (2 sheets)", "cancel")))
 			if("one direct")
 				var/obj/window/W
 
@@ -162,6 +162,7 @@ SHARDS
 				W.anchored = 0
 				W.state = 0
 			else
+				return
 		if (src.amount <= 0)
 			user.u_equip(src)
 			qdel(src)

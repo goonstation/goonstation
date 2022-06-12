@@ -60,7 +60,9 @@
 				boutput(user, "<span class='notice'>[src] already has a face!</span>")
 			else
 				var/obj/item/pen/crayon/C = W
-				var/emotion = alert("What face would you like to draw on [src]?",,"happy","angry","sad")
+				var/emotion = tgui_alert(user, "What face would you like to draw on [src]?", "Pick face", list("happy", "angry", "sad"))
+				if (!emotion)
+					return
 				src.face = emotion
 				var/image/item_image = image(src.icon, "face-[face]")
 				item_image.color = C.font_color

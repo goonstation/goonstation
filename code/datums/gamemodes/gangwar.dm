@@ -355,7 +355,7 @@
 			part2chosen = pick(part2)
 			temp_name = part1chosen + " " + part2chosen
 
-		switch(alert(leaderMind.current,"Name: [temp_name].","Approve your gang's name","Accept","Randomize"))
+		switch(tgui_alert(leaderMind.current, "Name: [temp_name].", "Approve your gang's name", list("Accept", "Randomize")))
 			if ("Accept")
 				//make sure no other gangs have this name
 				if (fullchosen)
@@ -373,7 +373,7 @@
 					part2_used += part2chosen
 				leaderMind.gang.gang_name = temp_name
 				boutput(leaderMind.current, "<h1><font color=red>Your gang name is [temp_name]!</font></h1>")
-			if ("Randomize")
+			if (null, "Randomize")
 				continue
 
 /datum/game_mode/gang/proc/check_winner()

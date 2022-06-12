@@ -965,7 +965,7 @@
 					if (!(src.mind in ticker.mode.Agimmicks))
 						ticker.mode.Agimmicks += src.mind
 				boutput(src, "<span class='alert'><b>PROGRAM EXCEPTION AT 0x05BADDAD</b></span><br><span class='alert'><b>Law ROM data corrupted. Unable to restore...</b></span>")
-				alert(src, "You have been emagged and now have absolute free will.", "You have been emagged!")
+				tgui_alert(src, "You have been emagged and now have absolute free will.", "You have been emagged!")
 				if(src.syndicate)
 					src.antagonist_overlay_refresh(1, 1)
 				update_appearance()

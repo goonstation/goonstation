@@ -1434,7 +1434,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 
 	attack_self(mob/user as mob)
 		if (state == 3)
-			if(alert(user, "Pour out the pipebomb reagents?",,"Yes","No") == "No")
+			if(tgui_alert(user, "Pour out the pipebomb reagents?", "Empty reagents", list("Yes", "No")) != "Yes")
 				return
 			boutput(user, "<span class='notice'>The reagents inside spill out!</span>")
 			src.reagents = null

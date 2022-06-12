@@ -618,7 +618,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 			if ("premium_service")
 				var/response = ""
-				response = alert(usr,"Would you like to purchase the Rockbox™ Premium Service for 10000 Credits?",,"Yes","No")
+				response = tgui_alert(usr, "Would you like to purchase the Rockbox™ Premium Service for 10000 Credits?", "Rockbox™ Premium Service", list("Yes", "No"))
 				if(response == "Yes")
 					if(wagesystem.shipping_budget >= 10000)
 						wagesystem.shipping_budget -= 10000

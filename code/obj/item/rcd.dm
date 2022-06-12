@@ -761,7 +761,7 @@ Broken RCD + Effects
 			return
 
 		if (door_name)
-			if (alert("Use current settings?\nName: [door_name]\nAccess: [door_access_name_cache]\nType: [door_type_name_cache]","fdhablkfdbhdflbk","Yes","No") == "No")
+			if (tgui_alert("Use current settings?\nName: [door_name]\nAccess: [door_access_name_cache]\nType: [door_type_name_cache]", "Settings", list("Yes", "No")) != "Yes")
 				set_data = 1
 		else
 			set_data = 1

@@ -435,7 +435,9 @@
 	attack_self(mob/user as mob)
 		var/choice = "Set radio"
 		if (src.has_camera)
-			choice = alert(user, "What would you like to do with [src]?",,"Set radio", "Set camera")
+			choice = tgui_alert(user, "What would you like to do with [src]?", "Configure sticker", list("Set radio", "Set camera"))
+		if (!choice)
+			return
 		if (choice == "Set radio")
 			src.set_internal_radio(user)
 		else

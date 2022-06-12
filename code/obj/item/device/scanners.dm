@@ -686,8 +686,8 @@ that cannot be itched
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
 
 	attack_self(mob/user)
-		var/menuchoice = alert("What would you like to do?",,"Ticket","Nothing")
-		if (menuchoice == "Nothing")
+		var/menuchoice = tgui_alert(user, "What would you like to do?", "Ticket writer", list("Ticket", "Nothing"))
+		if (!menuchoice || menuchoice == "Nothing")
 			return
 		else if (menuchoice == "Ticket")
 			src.ticket(user)

@@ -476,7 +476,7 @@
 			usr.show_text("Automatic lockers can only be linked to a brig timer.", "red")
 			return
 
-		if (alert("Link locker to this brig timer?",,"Yes","No") == "Yes")
+		if (tgui_alert(usr, "Link locker to this brig timer?", "Link locker", list("Yes", "No")) == "Yes")
 			var/obj/machinery/door_timer/DT = over_object
 			if (!DT.id)
 				usr.show_text("This brig timer doesn't have an ID assigned to it.", "red")
