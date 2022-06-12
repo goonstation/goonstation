@@ -29,3 +29,7 @@
 #define FLOCK_ACHIEVEMENT_CHEAT_STRUCTURES "all_structures"
 #define FLOCK_ACHIEVEMENT_CHEAT_COMPUTE "infinite_compute"
 #define FLOCK_ACHIEVEMENT_CAGE_HUMAN "human_dissection"
+
+// replication defs
+#define FLOCK_MIN_DESIRED_POP 10
+#define FLOCK_ADDITIONAL_RESOURCE_RESERVATION_PER_DRONE 7.5

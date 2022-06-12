@@ -134,7 +134,7 @@ stare
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(!F)
 		return TRUE
-	if(F && !F.can_afford(FLOCK_LAY_EGG_COST))
+	if(F && !F.can_afford(FLOCK_LAY_EGG_COST + clamp((F.flock.getComplexDroneCount() - FLOCK_MIN_DESIRED_POP) * FLOCK_ADDITIONAL_RESOURCE_RESERVATION_PER_DRONE, 0, FLOCK_LAY_EGG_COST * 2)))
 		return TRUE
 	var/turf/simulated/floor/feather/N = get_turf(holder.owner)
 	if(!N)
@@ -163,8 +163,6 @@ stare
 	weight = 6
 	can_be_adjacent_to_target = TRUE
 	max_dist = 2
-	var/const/minimum_desired_population = 10
-	var/const/resource_reservation_per_drone = 7.5
 
 /datum/aiTask/sequence/goalbased/nest/New(parentHolder, transTask)
 	..(parentHolder, transTask)
@@ -173,7 +171,7 @@ stare
 /datum/aiTask/sequence/goalbased/nest/precondition()
 	. = FALSE
 	var/mob/living/critter/flock/drone/F = holder.owner
-	if(F?.can_afford(FLOCK_CONVERT_COST + FLOCK_LAY_EGG_COST + clamp((F.flock.getComplexDroneCount() - minimum_desired_population) * resource_reservation_per_drone, 0, FLOCK_LAY_EGG_COST * 2)))
+	if(F?.can_afford(FLOCK_CONVERT_COST + FLOCK_LAY_EGG_COST + clamp((F.flock.getComplexDroneCount() - FLOCK_MIN_DESIRED_POP) * FLOCK_ADDITIONAL_RESOURCE_RESERVATION_PER_DRONE, 0, FLOCK_LAY_EGG_COST * 2)))
 		. = TRUE
 		for(var/turf/simulated/floor/feather/T in view(max_dist, holder.owner))
 			return FALSE
