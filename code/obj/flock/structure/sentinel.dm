@@ -68,7 +68,7 @@
 				charge_status = CHARGING//if its losing charge and suddenly theres energy available begin charging
 			if(CHARGING)
 				if(icon_state != "sentinelon") icon_state = "sentinelon"//forgive me
-				src.charge(charge_per_tick)
+				src.charge(charge_per_tick * mult)
 			if(CHARGED)
 				var/mob/loopmob = null
 				var/list/hit = list()
