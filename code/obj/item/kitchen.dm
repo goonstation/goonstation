@@ -546,11 +546,11 @@ TRAYS
 	force = 2
 	rand_pos = 0
 	pickup_sfx = "sound/items/pickup_plate.ogg"
-	var/food_desc = null
-	var/max_food = 2
-	var/list/throw_targets = list()
-	var/throw_dist = 3
+	event_handler_flags = NO_MOUSEDROP_QOL
 	tooltip_flags = REBUILD_DIST
+
+	var/max_food = 2
+	var/throw_dist = 3
 	var/hit_sound = "sound/items/plate_tap.ogg"
 
 	New()
@@ -566,8 +566,11 @@ TRAYS
 		if (!food.edible)
 			boutput(user, "<span class='alert'>That's not food, it doesn't belong on \the [src]!</span>")
 			return
-		if(food.w_class > W_CLASS_NORMAL)
+		if (food.w_class > W_CLASS_NORMAL)
 			boutput(user, "You try to think of a way to put [food] on \the [src] but it's not possible! It's too large!")
+			return
+		if (food in src.vis_contents)
+			boutput(user, "That's already on the plate!")
 			return
 
 		src.place_on(food, user, click_params) // this handles pixel positioning
@@ -577,7 +580,7 @@ TRAYS
 		food.vis_flags |= VIS_INHERIT_PLANE | VIS_INHERIT_LAYER
 		food.event_handler_flags |= NO_MOUSEDROP_QOL
 		RegisterSignal(food, COMSIG_ATOM_MOUSEDROP, .proc/indirect_pickup)
-		RegisterSignal(food, COMSIG_MOVABLE_MOVED, .proc/remove_contents)
+		RegisterSignal(food, COMSIG_MOVABLE_SET_LOC, .proc/remove_contents)
 		RegisterSignal(food, COMSIG_ATTACKHAND, .proc/remove_contents)
 		src.UpdateIcon()
 		boutput(user, "You put [food] on \the [src].")
@@ -592,7 +595,7 @@ TRAYS
 		food.vis_flags = initial(food.vis_flags)
 		food.event_handler_flags = initial(food.event_handler_flags)
 		UnregisterSignal(food, COMSIG_ATOM_MOUSEDROP)
-		UnregisterSignal(food, COMSIG_MOVABLE_MOVED)
+		UnregisterSignal(food, COMSIG_MOVABLE_SET_LOC)
 		UnregisterSignal(food, COMSIG_ATTACKHAND)
 		src.UpdateIcon()
 
@@ -647,9 +650,10 @@ TRAYS
 		if (isitem(a) && can_reach(user, src) && can_reach(user, a))
 			src.add_contents(a, user)
 
-	attack_self(mob/user) // in case you only have one arm or you stacked too many MONSTERSsomething just dump a random piece of food
+	attack_self(mob/user) // in case you only have one arm or you stacked too many MONSTERs or something just dump a random piece of food
 		. = ..()
-		src.remove_contents(pick(src.contents))
+		if (length(src.contents))
+			src.remove_contents(pick(src.contents))
 
 	attack(mob/M, mob/user)
 		if(user.a_intent == INTENT_HARM)

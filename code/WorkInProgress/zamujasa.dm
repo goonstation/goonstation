@@ -147,8 +147,8 @@
 	anchored = 1
 	density = 1
 	opacity = 0
-	icon = 'icons/obj/glass.dmi'
-	icon_state = "sheet"
+	icon = 'icons/obj/metal.dmi'
+	icon_state = "sheet-g_1"
 
 	var/facing = NW_SE
 	var/list/affecting = list()

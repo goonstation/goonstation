@@ -9,6 +9,7 @@
 ## Operators
 * Don't use `goto`. Bad.
 * Don't use the `:` operator to override type safety checks. Instead, cast the variable to the proper type.
+* Don't use `del`, it's horrendously slow. Use `qdel()`.
 
 ## Stuff To Use
 
@@ -16,6 +17,7 @@
 * Use `TIME` instead of `world.timeofday`
 * Bitflags (`&`) - Write as `bitfield & bitflag`
 * Use `'foo.ogg'` instead of `"foo.ogg"` for resources unless you need to build a string (e.g. `"foo_[rand(2)].ogg"`).
+* Use `FALSE` and `TRUE` instead of `0` and `1` for booleans.
 
 # Syntax
 
@@ -31,7 +33,9 @@ The codebase also has defines for other SI units, such as `WATTS`. There are als
 
 ## No magic numbers
 
-Don't use numbers that have no explanation behind them. Instead, it's reccomended that you either put it into a const variable, a local file #define, or a global #define. For example,
+Don't use numbers that have no explanation behind them. Instead, it's reccomended that you either put it into a const variable, a local file #define, or a global #define.
+
+<span style="color: red">Bad:</span>
 ```csharp
 proc/do_stuff(thing)
 	switch(thing)
@@ -41,8 +45,7 @@ proc/do_stuff(thing)
 			other stuff
 ```
 
-Do this instead:
-
+<span style="color: green">Good:</span>
 ```csharp
 #define DO_THING_CORRECT 0
 #define DO_THING_OTHER 1
@@ -54,11 +57,17 @@ proc/do_stuff(thing)
 			other stuff
 ```
 
+If you don't need the define anywhere outside this file/proc, make sure you undefine it after:
+
+```csharp
+#undef DO_THING_CORRECT
+#undef DO_THING_OTHER
+```
 ## Use early returns
 
 We don't want dozens of nesting levels, don't enclose a proc inside an if block if you can just return on a condition instead.
 
-Bad: 
+<span style="color: red">Bad:</span>
 ```csharp
 obj/test/proc/coolstuff()
     if (foo)
@@ -66,7 +75,7 @@ obj/test/proc/coolstuff()
             if (baz == 420)
                 do_stuff
 ```
-Good: 
+<span style="color: green">Good:</span>
 ```csharp
 obj/test/proc/coolstuff()
     if (!foo || bar)
@@ -75,12 +84,6 @@ obj/test/proc/coolstuff()
         return
     do_stuff
 ```
-
-## Spaces after control statements
-
-See: `if(x)` vs `if (x)`
-
-Nobody cares about this. This is heavily frowned upon for changing with little to no reason.
 
 ## `foo.len` vs. `length(foo)`
 
@@ -101,14 +104,14 @@ Example:
 ```javascript
 ABSTRACT_TYPE(/obj/item/hat)
 /obj/item/hat
-	var/is_cool = 0
+	var/is_cool = FAKSE
 
 /obj/item/hat/uncool
 	name = "Uncool Hat"
 
 /obj/item/hat/cool
 	name = "Cool hat"
-	is_cool = 1
+	is_cool = TRUE
 
 proc/is_hat_cool(hat_type)
 	var/obj/item/hat/hat = hat_type
@@ -119,6 +122,137 @@ proc/random_cool_hat()
 ```
 
 See `_stdlib/_types.dm` for details.
+
+## Whitespace
+
+### Spaces after control statements
+
+See: `if(x)` vs `if (x)`
+
+Nobody cares about this. This is heavily frowned upon for changing with little to no reason.
+
+### Spacing in lists, proc definitions/calls, and arithmetic
+Always put spaces after commas or operators, and before operators:
+
+<span style="color: red">Bad:</span>
+```csharp
+var/whatever=list(1,2,3)
+var/whatever2=multiply_some_numbers(2,2,2)
+var/whatever3=3+4-whatever2
+```
+
+<span style="color: green">Good:</span>
+```csharp
+var/whatever = list(1, 2, 3)
+var/whatever2 = multiply_some_numbers(2, 2, 2)
+var/whatever3 = 3 + 4 - whatever2
+```
+
+## Very long lines
+For long lines, use `\` at the end of the line to split onto multiple lines.
+With the recommended extension pack, a vertical line will appear in the editor; if your code goes far beyond this line, it's time to split the code into multiple lines. Put a space before `\`.
+
+When doing this, indent each line past the first to 1 tab past the start of the right side of the definition (or whatever is similar- for proc calls, 1 tab past the proc name, etc).
+
+<span style="color: red">Bad:</span>
+```csharp
+var/moby_dick = "Call me Ishmael. Some years ago—never mind how long precisely—having little or no money in my purse, and nothing particular to interest me on shore, I thought I would sail about a little and see the watery part of the world. It is a way I have of driving off the spleen and regulating the circulation. ""
+```
+
+<span style="color: green">Good:</span>
+```javascript
+var/moby_dick = "Call me Ishmael. Some years ago—never mind how long precisely \
+                    —having little or no money in my purse, and nothing \
+                    particular to interest me on shore, I thought I would sail \
+                    about a little and see the watery part of the world. It is \
+                    a way I have of driving off the spleen and regulating \
+                    the circulation."
+```
+
+Lists follow a similar pattern, but `\` isn't required.
+
+<span style="color: red">Bad:</span>
+```csharp
+var/list/list_of_integers = list(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50)
+```
+
+<span style="color: green">Good:</span>
+```csharp
+var/list/list_of_integers = list(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 
+                                15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 
+                                27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 
+                                39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50)
+```
+
+For lists of long expressions, 1 line per expression is fine.
+
+<span style="color: green">Good:</span>
+```csharp
+var/list/dog_types = list(/mob/animal/dog/labrador, 
+                         /mob/animal/dog/chihuahua,
+                         /mob/animal/dog/daschund,
+                         /mob/animal/dog/retriever,
+                         /mob/animal/dog/pug)
+```
+
+## Always use explicit `src`
+In procs which are called on an object (i.e. everything but global procs), `src` is the object which the proc is being called on. To reference a variable on this object, you should always use `src.varname`. Simply referencing `varname` (leaving the `src` implicit) should be avoided, as it is less clear and leads to bugs while refactoring.
+
+The same goes for procs- to call a proc on the same object, use `src.procname()`.
+
+<span style="color: red">Bad:</span>
+```javascript
+/datum/thing
+    var/num = 10
+    
+/datum/thing/proc/add_one(var/add_another_time)
+    num += 1
+    if (add_another_time)
+        add_one(FALSE)
+```
+
+<span style="color: green">Good:</span>
+```javascript
+/datum/thing
+    var/num = 10
+    
+/datum/thing/proc/add_one(var/add_another_time)
+    src.num += 1
+    if (add_another_time)
+        src.add_one(FALSE)
+```
+
+## Variable and argument names
+Very short (1-2 character) variable/argument names are acceptable *only* if they are the standard names for common types.
+* `/atom` - `A`
+* `/atom/movable` - `AM`
+* `/obj` - `O`
+* `/obj/item` - `I`
+* `/obj/item/grab` - `G`
+* `/mob` - `M`
+* `/mob/living` - `L`
+* `/mob/living/critter` and `/obj/critter` - `C`
+* `/mob/living/carbon/human` - `H`
+* `/turf` - `T`
+
+Names should be descriptive unless the context and type make it immediately clear what the variable is used for. This includes the above names- only use them if it is clear what the variable is for.
+
+<span style="color: red">Bad:</span>
+```csharp
+var/obj/item/M
+var/turf/J
+
+proc/feed_person_food(mob/person_one, mob/person_two, obj/item/food/F)
+```
+
+<span style="color: green">Good:</span>
+```csharp
+var/obj/item/I
+var/turf/T
+
+proc/feed_person_food(mob/person_feeding, mob/person_eating, obj/item/food/fed_food)
+proc/move_ghost_to_turf(mob/dead/ghost/target, turf/T)
+```
 
 # Whack BYOND shit
 
@@ -196,7 +330,7 @@ If we know the list is supposed to only contain the desired type then we want to
 
 Nulls in lists tend to point to improperly-handled references, making hard deletes hard to debug. Generating a runtime in those cases is more often than not positive.
 
-This is bad:
+<span style="color: red">Bad:</span>
 ```javascript
 var/list/bag_of_atoms = list(new /obj, new /atom, new /atom/movable, new /atom/movable)
 var/highest_alpha = 0
@@ -205,8 +339,7 @@ for(var/atom/thing in bag_of_atoms)
 		continue
 	highest_alpha = thing.alpha
 ```
-
-This is good:
+<span style="color: green">Good:</span>
 ```javascript
 var/list/bag_of_atoms = list(new /obj, new /atom, new /atom/movable, new /atom/movable)
 var/highest_alpha = 0
@@ -214,6 +347,48 @@ for(var/atom/thing as anything in bag_of_atoms)
 	if(thing.alpha <= highest_alpha)
 		continue
 	highest_alpha = thing.alpha
+```
+
+## The `usr` keyword
+`usr`, in a general sense, is "the mob that caused this proc to be invoked". It persists through an arbitrary number of nested proc calls. If something wasn't caused by a mob, `usr` is null. 
+
+`usr` is required by verbs, which are commands specifically invoked by a mob, and is needed to apply things to the calling mob. 
+
+Outside of verbs (every other proc), `usr` is ***extremely unreliable***. An excellent example of this is that if someone hooks a pressure sensor to a gun, and then you step on the pressure plate, *you are the `usr` for that gunshot*.
+
+Instead of using `usr`, pass the user mob into your proc as an argument.
+
+<span style="color: red">Bad:</span>
+```csharp
+proc/explode_user()
+    usr.explode()
+```
+
+<span style="color: green">Good:</span>
+```csharp
+proc/explode_user(mob/user)
+    user.explode()
+    
+/mob/verb/explode_yourself()
+    set name = "Explode Yourself"
+    usr.explode()
+```
+
+## `as mob`, `as obj`, etc
+In verbs, when invoked from the command bar these allow the user to autofill results.
+
+Outside of verbs, they do nothing and should be removed.
+
+<span style="color: red">Bad:</span>
+```csharp
+proc/give_mob_item(mob/person as mob, obj/item/gift as obj)
+```
+
+<span style="color: green">Good:</span>
+```csharp
+proc/give_mob_item(mob/person, obj/item/gift)
+    
+mob/verb/get_mob_to_yourself(mob/target as mob)
 ```
 
 # Useful Things
@@ -244,8 +419,40 @@ You can spawn in a target dummy (`/mob/living/carbon/human/tdummy`) to more easi
 ninjanomnom from TG has written up a [useful primer](https://tgstation13.org/phpBB/viewtopic.php?f=5&t=22674) on signals and components. Most of the stuff there applies, although elements do not exist in this codebase.
 
 ## Generic Action bar
-Hate coding action bars? Making a new definition for an action bar datum just so you have visual feedback for your construction feel gross? Well fear not! You can now use the SETUP_GENERIC_ACTIONBAR() macro! Check [_std/macros/actions.dm](https://github.com/goonstation/goonstation/blob/master/_std/macros/actions.dm) for more information.
+Hate coding action bars? Making a new definition for an action bar datum just so you have visual feedback for your construction feel gross? Well fear not! You can now use the SETUP_GENERIC_ACTIONBAR() macro!
+
+For private action bars (only visible to the owner), SETUP_GENERIC_PRIVATE_ACTIONBAR() does the same.
+
+Check [_std/macros/actions.dm](https://github.com/goonstation/goonstation/blob/master/_std/macros/actions.dm) for more information.
 
 ## Turf Define Macro
 Making multiple turfs can be a real pain sometimes. If you use the `DEFINE_FLOORS()` macro as documented, it will create a simulated, simulated airless, unsimulated and unsimulated airless turf with the specified path and variables at compile time. There are many variations on the definition, so I recommend checking out [_std/macros/turf.dm](https://github.com/goonstation/goonstation/blob/master/_std/macros/turf.dm)
+
+## Tracking Macros
+If you want to track everything of a type for whatever reason (need to iterate over all instances at some point, usually), use the tracking macros. Add `START_TRACKING` to `New()` (after the parent call), and `STOP_TRACKING` to `disposing()` (before the parent call). To get all tracked objects of a type, use `by_type[type]`.
+
+To track a group of things which don't share the same type, define a tracking category and then use `START_TRACKING_CAT(CATEGORY)` and `STOP_TRACKING_CAT(CATEGORY)` in the same way as above. To get all tracked objects of a category use `by_cat[CATEGORY]`.
+
+
+<span style="color: red">VERY VERY BAD:</span>
+```javascript
+for (var/mob/living/jellyfish in world)
+    ...
+```
+
+<span style="color: green">Good:</span>
+```javascript
+/mob/living/jellyfish
+    
+    New()
+        ..()
+        START_TRACKING
+        
+    disposing()
+		STOP_TRACKING
+        ..()
+        
+for (var/mob/living/jellyfish/jelly in by_type[/mob/living/jellyfish])
+        ...
+```
 

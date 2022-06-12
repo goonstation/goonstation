@@ -78,10 +78,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 		if (src.sliceable && istool(W, TOOL_CUTTING | TOOL_SAWING))
 			var/turf/T = get_turf(src)
 			user.visible_message("[user] cuts [src] into [src.slice_amount] slices.", "You cut [src] into [src.slice_amount] slices.")
-			var/amount_to_transfer = src.reagents.total_volume / src.slice_amount
+			var/amount_to_transfer = round(src.reagents.total_volume / src.slice_amount)
 			for (var/i in 1 to src.slice_amount)
 				var/obj/item/reagent_containers/food/slice = new src.slice_product(T)
+				slice.transform = src.transform // for botany crops
 				slice.reagents.clear_reagents() // dont need initial_reagents when you're inheriting reagents of another obj (no cheese duping >:[ )
+				slice.reagents.maximum_volume = amount_to_transfer
 				src.reagents.trans_to(slice, amount_to_transfer)
 			qdel (src)
 		else

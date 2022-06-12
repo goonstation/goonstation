@@ -27,8 +27,8 @@
 /obj/item/storage/box/morphineinjectors
 	name = "morphine autoinjector box"
 	icon_state = "box"
-	desc = "Contains four morphine autoinjectors, for security use"
-	spawn_contents = list(/obj/item/reagent_containers/emergency_injector/morphine = 4)
+	desc = "Contains six morphine autoinjectors, for security use"
+	spawn_contents = list(/obj/item/reagent_containers/emergency_injector/morphine = 6)
 
 /obj/item/storage/lunchbox/robustdonuts
 	name = "robust donuts lunchbox"
