@@ -21,19 +21,22 @@ export const Rockbox = (_props, context) => {
         <Stack vertical fill>
           <Stack.Item>
             <Section fill>
-              {"Amount to eject: "}
-              <NumberInput
-                value={takeAmount}
-                width={4}
-                minValue={1}
-                onDrag={(e, value) => setTakeAmount(value)}
-                onChange={(e, value) => setTakeAmount(value)}
-              />
+              <Box>
+                {"Amount to eject: "}
+                <NumberInput
+                  value={takeAmount}
+                  width={4}
+                  minValue={1}
+                  onDrag={(e, value) => setTakeAmount(value)}
+                  onChange={(e, value) => setTakeAmount(value)}
+                />
+              </Box>
               <Divider />
               <Tooltip content="Default price for new ore entries."
                 position="bottom">
                 <Box as="span"> {/* necessary for tooltip to work */}
-                  Default Price: <NumberInput
+                  {"Default Price: "}
+                  <NumberInput
                     value={default_price}
                     width={4}
                     minValue={0}
