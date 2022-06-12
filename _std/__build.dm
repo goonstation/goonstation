@@ -131,8 +131,6 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define CANADADAY 1
 //#define FOOTBALL_MODE 1
 
-//#define ASS_JAM_ENABLED 1 // Don't re-enable this. -warc
-
 
 //Don't comment this ty
 #ifdef STOP_DISTRACTING_ME
@@ -152,7 +150,7 @@ var/global/vcs_author = "bob"
 #define BUILD_TIME_FULL "2009-02-13 18:31:30"
 #define BUILD_TIME_YEAR 2053
 #define BUILD_TIME_MONTH 01
-#define BUILD_TIME_DAY 13 //SET ME TO 13 TO TEST YOUR ASS_JAM CONTENT!!
+#define BUILD_TIME_DAY 13
 #define BUILD_TIME_HOUR 18
 #define BUILD_TIME_MINUTE 31
 #define BUILD_TIME_SECOND 30

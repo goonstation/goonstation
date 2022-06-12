@@ -9,7 +9,7 @@ var/global/map_setting = null
 var/global/datum/map_settings/map_settings = null
 
 //id corresponds to the name of the /obj/landmark/map
-//playerPickable defines whether the map can be chosen by players when voting on a new map. Setting to ASS_JAM should allow it on the 13th only, and not on RP.
+//playerPickable defines whether the map can be chosen by players when voting on a new map.
 var/global/list/mapNames = list(
 	"Clarion" = 		list("id" = "CLARION", 		"settings" = "destiny/clarion", "playerPickable" = TRUE,		"MaxPlayersAllowed" = 80),
 #ifdef RP_MODE

@@ -788,7 +788,7 @@ var/respawn_arena_enabled = 0
 	set desc = "Visit the Respawn Arena to earn a respawn!"
 	set category = "Ghost"
 
-	if(!ASS_JAM && !respawn_arena_enabled)
+	if(!respawn_arena_enabled)
 		boutput(src,"The respawn arena is not open right now. Tough luck!")
 		return
 
