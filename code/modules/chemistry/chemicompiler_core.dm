@@ -807,7 +807,7 @@
 		RS.trans_to(RT, amount, index = index)
 	if (target == 11)
 		// Generate pill
-		if(RS.total_volume >= 1)
+		if(RS.total_volume >= 1 && amount > 0)
 			showMessage("[src.holder] makes an alarming grinding noise!")
 			var/obj/item/reagent_containers/pill/P = new(get_turf(src.holder))
 			RS.trans_to(P, amount, index = index)
@@ -816,7 +816,7 @@
 			showMessage("[src.holder] doesn't have enough reagents to make a pill.")
 	if (target == 12)
 		// Generate vial
-		if(RS.total_volume >= 1)
+		if(RS.total_volume >= 1 && amount > 0)
 			var/obj/item/reagent_containers/glass/vial/plastic/V = new(get_turf(src.holder))
 			RS.trans_to(V, amount, index = index)
 			showMessage("[src.holder] ejects a vial of some unknown substance.")
