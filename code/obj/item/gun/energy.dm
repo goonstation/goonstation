@@ -1361,14 +1361,15 @@
 	hear_talk(mob/M as mob, msg, real_name, lang_id)
 		var/turf/T = get_turf(src)
 		if (M in range(1, T))
-			src.talk_into(M, msg, null, real_name, lang_id)
+			src.talk_into(M, msg, real_name, lang_id)
 
 	//can only handle one name at a time, if it's more it doesn't do anything
 	talk_into(mob/M as mob, msg, real_name, lang_id)
 		//Do I need to check for this? I can't imagine why anyone would pass the wrong var here...
 		if (!islist(msg))
 			return
-
+		if (lang_id != "english")
+			return
 		//only work if the voice is the same as the voice of your owner fingerprints.
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
