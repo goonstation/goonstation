@@ -952,8 +952,6 @@
 	if(isflockmob(target))
 		boutput(user, "<span class='alert'>The imprisonment matrix doesn't work on flockdrones.</span>")
 		return
-	else if(user.resources < FLOCK_CAGE_COST)
-		boutput(user, "<span class='alert'>Not enough resources to imprison (you need [FLOCK_CAGE_COST]).</span>")
 	else if(istype(target.loc, /obj/flock_structure/cage))
 		boutput(user, "<span class='alert'>They're already imprisoned, you can't double-imprison them!</span>")
 	else
