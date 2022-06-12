@@ -33,6 +33,7 @@
 		var/list/candidate_turfs = list()
 		for(var/turf/simulated/floor/S in orange(src, 4))
 			candidate_turfs += S
+		var/sentinel_count = 2
 		for(var/i in 1 to 10)
 			for(var/S in candidate_turfs)
 				if(istype(S, /turf/simulated/floor/feather))
@@ -41,6 +42,9 @@
 				if(prob(25))
 					if (src.flock)
 						src.flock.claimTurf(flock_convert_turf(S))
+						if (sentinel_count > 0)
+							new /obj/flock_structure/sentinel(S, src.flock)
+							sentinel_count--
 					else
 						flock_convert_turf(S)
 					candidate_turfs -= S
