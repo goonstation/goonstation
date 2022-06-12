@@ -503,7 +503,7 @@
 			var/mob/living/critter/flock/F = owner
 			if(F)
 				F.tri_message("<span class='notice'>[owner] begins forming a cuboid structure around [target].</span>",
-					F, "<span class='notice'>You begin imprisoning [target]. You will need to stay within a tile for this to work.</span>",
+					F, "<span class='notice'>You begin imprisoning [target]. You will need to stay still for this to work.</span>",
 					target, "<span class='alert'>[F] is forming a structure around you!</span>",
 					"You hear strange building noises.")
 				if(istype(target,/mob/living))

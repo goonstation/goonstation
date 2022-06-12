@@ -45,7 +45,7 @@ shooting
 
 capture
 	-weight 15
-	-enemies exist
+	-precondition: enemies exist
 
 butcher
 	-weight 3
