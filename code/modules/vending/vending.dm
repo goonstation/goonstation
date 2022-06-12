@@ -2790,7 +2790,7 @@
 			return
 
 		src.add_dialog(user)
-		var/html = ""
+		var/list/html = list("")
 		html += "<TT><b>Welcome!</b><br>"
 		html += "<b>Current balance: <a href='byond://?src=\ref[src];return_credits=1'>[src.credit] credits</a></b><br>"
 		if (src.scan)
@@ -2809,7 +2809,7 @@
 		html += "<font color = 'green'>Desired pressure:</font> <a href='?src=\ref[src];changepressure=1'>[src.target_pressure] kPa</a><br/>"
 		html += (holding) ? "<a href='?src=\ref[src];fill=1'>Fill ([src.fill_cost()] credits)</a>" : "<font color = 'red'>Fill (unavailable)</red>"
 
-		user.Browse(html, "window=o2_vending")
+		user.Browse(html.Join(), "window=o2_vending")
 		onclose(user, "vending")
 
 	Topic(href, href_list)
