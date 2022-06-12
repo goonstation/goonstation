@@ -64,6 +64,8 @@
 			AddComponent(/datum/component/cell_holder, new from_frame_cell_type)
 
 		SEND_SIGNAL(src, COMSIG_CELL_USE, INFINITY) //also drain the cell out of spite
+		src.is_active = FALSE
+		src.UpdateIcon()
 
 	disposing()
 		processing_items -= src

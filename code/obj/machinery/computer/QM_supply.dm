@@ -545,7 +545,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 					var/datum/supply_order/O = new/datum/supply_order ()
 					var/datum/supply_packs/P = locate(href_list["what"])
-					if(P)
+					if(istype(P))
 
 						// The order computer has no emagged / other ability to display hidden or syndicate packs.
 						// It follows that someone's being clever if trying to order either of these items

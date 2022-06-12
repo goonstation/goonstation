@@ -352,7 +352,7 @@
 		if (src.status & (NOPOWER|BROKEN))
 			boutput(user, "<span class='alert'>\the [src] is broken.</span>")
 			return
-		if (!(can_act(target) && can_reach(user, src) && can_reach(user, target)))
+		if (!(can_act(user) && can_reach(user, src) && can_reach(user, target)))
 			return
 		if (!ishuman(target))
 			boutput(user, "<span class='alert'>You can't seem to fit [target == user ? "yourself" : "[target]"] into \the [src].</span>")

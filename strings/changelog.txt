@@ -1,5 +1,34 @@
 
+(t)sat jun 11 22
+(u)nefarious6th
+(p)9041
+(e)⚖|balance
+(*)SecVend donut utility lunchboxes now only come with one robust (blue) and one robusted (red) donut each. Snack wisely!
+(+)Robust and robusted donuts no longer contain salicylic acid and are only 4 bites each
+(t)fri jun 10 22
+(u)SgtManGuy/What
+(e)🆕🎨|feature, sprites
+(+)Four new species of domestic space-bees have been discovered. Unfortunately, they only like to nest in the stomachs of stage performers.
+(u)Flappybat
+(e)⚖| balance
+(*)Nerfed medbay floor scanner to give basic health scan. Pester a doctor today!
+(u)ZeWaka
+(p)8843
+(e)🆕⚖🔄📄|feature, balance, rework, tgui
+(*)Reworked the Engine Statistics computer on Cog1 to be TGUI, graph-based, and much more intuitive.
+(u)FlameArrow57
+(p)9054
+(e)|
+(+)Added new medals for changeling, blob, head rev, and werewolf antagonists!
+(u)Blahowsky
+(p)9014
+(e)🎨|sprites
+(*)Added two new hairstyles and one fade; Loose Long Braid (with Loose Long Braid: Twin Color to customise) and Loose Long Braid Over Shoulder.
 (t)thu jun 09 22
+(u)Cogwerks
+(e)🎨|sprites
+(*)Made a new sprite and name for the heavy ion blaster
+(*)Occasionally testing a micro-phaser, macro-phaser, and egun Jr. in rounds
 (u)LeahTheTech
 (p)9052
 (e)🐛|bug

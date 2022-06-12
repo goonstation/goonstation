@@ -110,11 +110,12 @@
 
 
 /obj/item/gun/energy/heavyion
-	name = "heavy ion blaster"
+	name = "\improper Tianfei-48 heavy ion blaster"
+	icon = 'icons/obj/large/48x32.dmi'
 	icon_state = "heavyion"
 	item_state = "rifle"
 	force = 1.0
-	desc = "..."
+	desc = "The 天妃-2048 ion disruptor from Xiang-Geisel. A radio-isotopic laser-induced ionic generator, feared by rogue cyborgs across the Frontier."
 	charge_up = 15
 	can_dual_wield = 0
 	two_handed = 1
