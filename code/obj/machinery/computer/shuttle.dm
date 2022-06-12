@@ -171,12 +171,10 @@
 			boutput(world, "<span class='notice'><B>Alert: Shuttle launch time shortened to 10 seconds!</B></span>")
 			emergency_shuttle.settimeleft( 10 )
 			logTheThing("admin", user, null, "shortens Emergency Shuttle launch time to 10 seconds.")
-		return TRUE
 	else
 		boutput(world, "<span class='notice'><B>Alert: Shuttle launch time shortened to 10 seconds!</B></span>")
 		emergency_shuttle.settimeleft( 10 )
-		return 1
-	return 0
+	return TRUE
 
 /obj/machinery/computer/shuttle/attackby(var/obj/item/W, var/mob/user)
 	if(status & (BROKEN|NOPOWER))
