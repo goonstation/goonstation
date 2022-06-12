@@ -742,9 +742,7 @@
 					src.visible_message("<b>[src.name]</b> states, \"Safety lock engaged. Please remove all personnel and vehicles from the magnet area.\"")
 				else
 					src.last_use_attempt = TIME + 10
-					SPAWN(0)
-						if (src)
-							src.pull_new_source(params["encounter_id"])
+					src.pull_new_source(params["encounter_id"])
 					. = TRUE
 			if ("activatemagnet")
 				if (magnetNotReady)
@@ -757,9 +755,7 @@
 					src.visible_message("<b>[src.name]</b> states, \"Safety lock engaged. Please remove all personnel and vehicles from the magnet area.\"")
 				else
 					src.last_use_attempt = TIME + 10 // This is to prevent href exploits or autoclickers from pulling multiple times simultaneously
-					SPAWN(0)
-						if (src)
-							src.pull_new_source()
+					src.pull_new_source()
 					. = TRUE
 			if("overridecooldown")
 				if (!ishuman(usr))
