@@ -116,6 +116,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_PAMGOC			// Pamgoc
 //#define MAP_OVERRIDE_WRESTLEMAP   // Wrestlemap by Overtone
 // #define MAP_OVERRIDE_POD_WARS   // 500x500 Pod Wars map
+	#define MAP_OVERRIDE_FEDERATION //WIP
 
 //////////// Unit Test Framework
 
