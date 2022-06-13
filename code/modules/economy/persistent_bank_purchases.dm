@@ -311,19 +311,6 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			icon = 'icons/obj/items/card.dmi'
 			icon_state = "id_dab"
 
-		battlepass
-			name = "Battle Pass"
-			cost = 1000
-			path = /obj/item/battlepass
-			icon = 'icons/obj/items/card.dmi'
-			icon_state = "id"
-
-			Create(var/mob/living/M)
-				..(M)
-				if(M?.mind)
-					battle_pass_holders.Add(M.mind)
-				return 1
-
 		chem_hint
 			name = "Secret chem hint"
 			cost = 3500

@@ -1,5 +1,40 @@
 
+(t)sun jun 12 22
+(u)Ikea
+(p)8981
+(e)|
+(*)Flock caging no longer costs resources and takes 4 seconds instead of 6.
+(u)Azrun
+(p)9061
+(e)⚖|balance
+(*)Singularities can be recaptured! Assuming they don't get too big...
+(+)Collector arrays will capture all nearby Hawking Radiation.
+(u)Virvatuli
+(e)🆕⚖|feature, balance
+(*)AI Core Frames are now very limited. They are no longer in roboticist fabricators, but located on a limited-use disk that spawns in the Medical Director's locker.
+(+)The Artificial Intelligence License disk can be inserted into a fabricator to unlock the AI Core Frame blueprint, and is limited to two printings. The disk has been added to spy bounties.
+(+)AIs are not meant to be mass printed, and having excessive AIs in a round is a detriment to both the crew and other AIs trying to play the role well.
+(u)Chatauscours
+(p)8933
+(e)⚖|balance
+(*)The Lawbringer is now linked to the user's DNA and not the fingerprints.
+(t)sat jun 11 22
+(u)nefarious6th
+(p)9041
+(e)⚖|balance
+(*)SecVend donut utility lunchboxes now only come with one robust (blue) and one robusted (red) donut each. Snack wisely!
+(+)Robust and robusted donuts no longer contain salicylic acid and are only 4 bites each
 (t)fri jun 10 22
+(u)SgtManGuy/What
+(e)🆕🎨|feature, sprites
+(+)Four new species of domestic space-bees have been discovered. Unfortunately, they only like to nest in the stomachs of stage performers.
+(u)Flappybat
+(e)⚖| balance
+(*)Nerfed medbay floor scanner to give basic health scan. Pester a doctor today!
+(u)ZeWaka
+(p)8843
+(e)🆕⚖🔄📄|feature, balance, rework, tgui
+(*)Reworked the Engine Statistics computer on Cog1 to be TGUI, graph-based, and much more intuitive.
 (u)FlameArrow57
 (p)9054
 (e)|
@@ -12,7 +47,7 @@
 (u)Cogwerks
 (e)🎨|sprites
 (*)Made a new sprite and name for the heavy ion blaster
-(*)Occasionally testing a micro-phaser, macro-phaser, and egun Jr. in rounds 
+(*)Occasionally testing a micro-phaser, macro-phaser, and egun Jr. in rounds
 (u)LeahTheTech
 (p)9052
 (e)🐛|bug

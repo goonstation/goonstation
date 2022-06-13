@@ -1212,7 +1212,6 @@ obj/decoration/gibberBroken
 	desc = "You've never heard of this pistol before... who made it?"
 	icon_state = "e_laser_pistol"
 
-//stolen code for anchorable and movable target sheets. cannot get projectile tracking on them to work right now so. oh well. help appreciated!
 /obj/item/caution/target_sheet
 	desc = "A paper silhouette target sheet with a cardboard backing."
 	name = "paper target"
@@ -1236,6 +1235,7 @@ obj/decoration/gibberBroken
 
 	New()
 		..()
+		src.AddComponent(/datum/component/bullet_holes, 20, 0)
 		BLOCK_SETUP(BLOCK_SOFT)
 
 	attackby(obj/item/W, mob/user, params)
@@ -1243,25 +1243,6 @@ obj/decoration/gibberBroken
 			actions.start(new /datum/action/bar/icon/anchor_or_unanchor(src, W, duration=2 SECONDS), user)
 			return
 		. = ..()
-
-	get_desc()
-		if (islist(src.proj_impacts) && length(src.proj_impacts))
-			var/shots_taken = 0
-			for (var/i in src.proj_impacts)
-				shots_taken ++
-			. += "<br>[src] has [shots_taken] hole[s_es(shots_taken)] in it."
-
-	proc/update_projectile_image(var/update_time)
-		if (src.proj_impacts.len > 10)
-			return
-		if (src.last_proj_update_time && (src.last_proj_update_time + 1) < ticker.round_elapsed_ticks)
-			return
-		if (!src.proj_image)
-			src.proj_image = image('icons/obj/projectiles.dmi', "bhole-small")
-		src.proj_image.overlays = null
-		for (var/image/i in src.proj_impacts)
-			src.proj_image.overlays += i
-		src.UpdateOverlays(src.proj_image, "projectiles")
 
 //Walp Decor
 
