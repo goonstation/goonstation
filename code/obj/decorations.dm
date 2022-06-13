@@ -180,6 +180,7 @@
 				qdel(src)
 			else
 				src.take_damage(45)
+
 	attack_hand(mob/user)
 		if (!user) return
 		if (destroyed && iscow(user) && user.a_intent == INTENT_HELP)
@@ -189,21 +190,7 @@
 			return ..()
 
 		user.lastattacked = src
-		if (iscow(user) && user.a_intent == INTENT_HELP)
-			if (istype(src, /obj/shrub/captainshrub))
-				if (user.mind && user.mind.assigned_role == "Captain")
-					boutput(user, "<span class='notice'>You catch yourself almost taking a bite out of your precious bonzai but stop just in time!</span>")
-					return
-				else
-					boutput(user, "<span class='alert'>I don't think the Captain is going to be too happy about this...</span>")
-					user.visible_message("<b><span class='alert'>[user] violently grazes on [src]!</span></b>", "<span class='notice'>You voraciously devour the bonzai, what a feast!</span>")
-					src.interesting = "Inexplicably, the genetic code of the bonsai tree has the words 'fuck [user.real_name]' encoded in it over and over again."
-					src.destroy()
-					user.changeStatus("food_deep_burp", 2 MINUTES)
-					user.changeStatus("food_hp_up", 2 MINUTES)
-					user.changeStatus("food_energized", 2 MINUTES)
-					return
-
+		if (iscow(user) && user.a_intent == INTENT_HELP)	//Cow people may want to eat some of the bush's leaves
 			src.bites -= 1
 			var/desired_mask = (src.bites / initial(src.bites)) * 5
 			desired_mask = round(desired_mask)
@@ -378,6 +365,30 @@
 		for (var/mob/living/M in mobs)
 			if (M.mind && M.mind.assigned_role == "Captain")
 				boutput(M, "<span class='alert'>You suddenly feel hollow. Something very dear to you has been lost.</span>")
+
+	attack_hand(mob/user)
+		if (!user) return
+		if (destroyed && iscow(user) && user.a_intent == INTENT_HELP)
+			boutput(user, "<span class='notice'>You pick at the ruined bush, looking for any leafs to graze on, but cannot find any.</span>")
+			return
+		else if (destroyed)
+			return ..()
+
+		user.lastattacked = src
+		if (iscow(user) && user.a_intent == INTENT_HELP)	//Bonsai trees are delicious to cow-people
+			if (user.mind && user.mind.assigned_role == "Captain")
+				boutput(user, "<span class='notice'>You catch yourself almost taking a bite out of your precious bonzai but stop just in time!</span>")
+				return
+			else
+				boutput(user, "<span class='alert'>I don't think the Captain is going to be too happy about this...</span>")
+				user.visible_message("<b><span class='alert'>[user] violently grazes on [src]!</span></b>", "<span class='notice'>You voraciously devour the bonzai, what a feast!</span>")
+				src.interesting = "Inexplicably, the genetic code of the bonsai tree has the words 'fuck [user.real_name]' encoded in it over and over again."
+				src.destroy()
+				user.changeStatus("food_deep_burp", 2 MINUTES)
+				user.changeStatus("food_hp_up", 2 MINUTES)
+				user.changeStatus("food_energized", 2 MINUTES)
+				return
+		return ..()
 
 	attackby(obj/item/W, mob/user)
 		if (!W) return
