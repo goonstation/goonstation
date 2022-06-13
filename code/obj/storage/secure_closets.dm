@@ -384,6 +384,13 @@
 /obj/storage/secure/closet/brig
 	name = "\improper Confiscated Items locker"
 	req_access = list(access_brig)
+	icon_state = "safe_locker"
+	icon_closed = "safe_locker"
+	icon_opened = "safe_locker-open"
+	icon_greenlight = "safe-greenlight"
+	icon_redlight = "safe-redlight"
+	open_sound = 'sound/misc/safe_open.ogg'
+	close_sound = 'sound/misc/safe_close.ogg'
 	_max_health = LOCKER_HEALTH_STRONG
 	_health = LOCKER_HEALTH_STRONG
 	reinforced = TRUE
