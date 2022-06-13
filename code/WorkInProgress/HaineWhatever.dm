@@ -472,7 +472,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 /datum/projectile/special/paintball
 	name = "red paintball"
 	icon_state = "paintball-r"
-	icon_turf_hit = "paint-r"
+	impact_image_state = "paint-r"
 	power = 1
 	cost = 1
 	dissipation_rate = 1

@@ -17,6 +17,7 @@
 
 	New()
 		..()
+		src.AddComponent(/datum/component/bullet_holes, 10, src.reinforced ? 25 : 5) // reinforced lockers need 25 power to damage; reflects that
 		if (bolted)
 			anchored = 1
 		src.attack_particle = new /obj/particle/attack
@@ -272,7 +273,8 @@
 /obj/storage/secure/closet/command/medical_director
 	name = "\improper Medical Director's locker"
 	req_access = list(access_medical_director)
-	spawn_contents = list(/obj/item/storage/box/clothing/medical_director,
+	spawn_contents = list(/obj/item/disk/data/floppy/manudrive/ai,
+	/obj/item/storage/box/clothing/medical_director,
 	/obj/item/clothing/shoes/brown,
 	/obj/item/gun/implanter,
 	/obj/item/gun/reagent/syringe/NT,
@@ -281,8 +283,6 @@
 	/obj/item/ammo/bullets/tranq_darts,
 	/obj/item/ammo/bullets/tranq_darts/anti_mutant,
 	/obj/item/robodefibrillator,
-	/obj/item/clothing/gloves/latex,
-	/obj/item/storage/belt/medical,
 	/obj/item/storage/firstaid/docbag,
 	/obj/item/reagent_containers/hypospray,
 	/obj/item/device/flash,

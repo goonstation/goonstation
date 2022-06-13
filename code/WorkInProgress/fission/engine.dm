@@ -213,25 +213,7 @@ REACTOR
 
 			if(FR.amount > 0)
 
-				// Get the turf
-				var/turf/T = get_turf(src)
-				// If it has air in it:
-				if(istype(T, /turf/simulated) && T:air)
-					// This count to see if there already exists
-					// a radiation trace gas
-					var/count = 0
-					if(T:air:trace_gases && length(T:air:trace_gases))
-						for(var/datum/gas/G in T:air:trace_gases)
-							if(istype(G, /datum/gas/rad_particles))
-								count++
-								G.moles += 0.1
-
-					if(count == 0)
-						var/datum/gas/rad_particles/rad = new
-						rad.moles = 0.1
-						if(!T:air:trace_gases)
-							T:air:trace_gases = list()
-						T:air:trace_gases += rad
+				// used to be rad particle code here creating it
 
 				temperature += 60 / numConRods
 				FR.amount -= 60 / numConRods
@@ -287,25 +269,7 @@ REACTOR
 	proc/meltdown()
 		meltdown = 1.0
 
-		// Get the turf
-		var/turf/T = get_turf(src)
-		// If it has air in it:
-		if(istype(T, /turf/simulated) && T:air)
-			// This count to see if there already exists
-			// a radiation trace gas
-			var/count = 0
-			if(T:air:trace_gases && length(T:air:trace_gases))
-				for(var/datum/gas/G in T:air:trace_gases)
-					if(istype(G, /datum/gas/rad_particles))
-						count++
-						G.moles += 1000
-
-			if(count == 0)
-				var/datum/gas/rad_particles/rad = new
-				rad.moles = 1000
-				if(!T:air:trace_gases)
-					T:air:trace_gases = list()
-				T:air:trace_gases += rad
+		// used to be rad particle code here creating it
 
 		SPAWN(0.8 SECONDS)
 			meltdown = 2.0

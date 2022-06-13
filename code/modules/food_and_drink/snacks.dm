@@ -1441,17 +1441,17 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			name = "robust donut"
 			desc = "It's like an energy bar, but in donut form! Contains some chemicals known for partial stun time reduction and boosted stamina regeneration."
 			icon_state = "donut4"
-			bites_left = 6
-			initial_volume = 48
-			initial_reagents = list("sugar"=12,"synaptizine"=12,"epinephrine"=12,"salicylic_acid"=12)
+			bites_left = 4
+			initial_volume = 36
+			initial_reagents = list("sugar"=12,"synaptizine"=12,"epinephrine"=12)
 
 		robusted
 			name = "robusted donut"
 			desc = "A donut for those harsh moments. Contains a mix of chemicals for cardiac emergency recovery and any minor trauma that accompanies it."
 			icon_state = "donut5"
-			bites_left = 6
-			initial_volume = 48
-			initial_reagents = list("salbutamol"=12,"epinephrine"=12,"saline"=12,"salicylic_acid"=12)
+			bites_left = 4
+			initial_volume = 40
+			initial_reagents = list("salbutamol"=12,"epinephrine"=12,"saline"=16)
 
 		random
 			New()

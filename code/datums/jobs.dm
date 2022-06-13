@@ -399,13 +399,15 @@ ABSTRACT_TYPE(/datum/job/command)
 	announce_on_join = 1
 
 	slot_back = list(/obj/item/storage/backpack/withO2)
-	slot_belt = list(/obj/item/device/pda2/medical_director)
+	slot_glov = list(/obj/item/clothing/gloves/latex)
+	slot_belt = list(/obj/item/storage/belt/medical)
 	slot_lhan = list(/obj/item/storage/firstaid/regular/doctor_spawn)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_jump = list(/obj/item/clothing/under/rank/medical_director)
 	slot_suit = list(/obj/item/clothing/suit/labcoat/medical)
 	slot_ears = list(/obj/item/device/radio/headset/command/md)
 	slot_eyes = list(/obj/item/clothing/glasses/healthgoggles/upgraded)
+	slot_poc1 = list(/obj/item/device/pda2/medical_director)
 	items_in_backpack = list(/obj/item/device/flash, /obj/item/robodefibrillator)
 
 	New()
@@ -668,6 +670,7 @@ ABSTRACT_TYPE(/datum/job/research)
 	limit = 5
 	wages = PAY_DOCTORATE
 	slot_back = list(/obj/item/storage/backpack/medic)
+	slot_glov = list(/obj/item/clothing/gloves/latex)
 	slot_belt = list(/obj/item/storage/belt/medical)
 	slot_jump = list(/obj/item/clothing/under/rank/medical)
 	slot_suit = list(/obj/item/clothing/suit/labcoat/medical)

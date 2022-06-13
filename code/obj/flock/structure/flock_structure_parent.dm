@@ -30,12 +30,19 @@ ABSTRACT_TYPE(/obj/flock_structure)
 	var/resourcecost = 50
 	/// can flockdrones pass through this akin to a grille? need to set USE_CANPASS to make this work however
 	var/passthrough = FALSE
+	/// TIME of last process
+	var/last_process
+	/// normal expected tick spacing
+	var/tick_spacing = FLOCK_PROCESS_SCHEDULE_INTERVAL
+	/// maximum allowed tick spacing for mult calculations due to lag
+	var/cap_tick_spacing = FLOCK_PROCESS_SCHEDULE_INTERVAL * 5
 
 /obj/flock_structure/New(var/atom/location, var/datum/flock/F=null)
 	..()
+	START_TRACKING_CAT(TR_CAT_FLOCK_STRUCTURE)
+	last_process = TIME
 	health_max = health
 	time_started = world.timeofday
-	processing_items |= src
 	setMaterial(getMaterial("gnesis"))
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, "flock_structure")
 
@@ -47,11 +54,10 @@ ABSTRACT_TYPE(/obj/flock_structure)
 	src.AddComponent(/datum/component/flock_protection)
 
 /obj/flock_structure/disposing()
-	processing_items -= src
+	STOP_TRACKING_CAT(TR_CAT_FLOCK_STRUCTURE)
 	if (flock)
 		flock.removeStructure(src)
 	flock = null
-
 	..()
 
 /obj/flock_structure/proc/describe_state()
@@ -88,9 +94,12 @@ ABSTRACT_TYPE(/obj/flock_structure)
 /obj/flock_structure/proc/building_specific_info()
 	return ""
 
-/obj/flock_structure/proc/process()
+/obj/flock_structure/proc/process(var/mult)
 	// override
 
+/// multipler for flock loop, used to compensate for lag
+/obj/flock_structure/proc/get_multiplier()
+	. = clamp(TIME - last_process, tick_spacing, cap_tick_spacing) / tick_spacing
 
 /obj/flock_structure/proc/takeDamage(var/damageType, var/amount)
 	switch(damageType)
