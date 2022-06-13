@@ -1,6 +1,6 @@
 var/global/list/available_ai_shells = list()
 var/datum/tgui/map_ui
-var/list/ai_emotions = list("Happy" = "ai_happy",\
+var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	"Very Happy" = "ai_veryhappy",\
 	"Neutral" = "ai_neutral",\
 	"Unsure" = "ai_unsure",\
@@ -31,7 +31,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	"Snoozing" = "ai_zzz",\
 	"Loading Bar" = "ai_loading",\
 	"Exclamation" = "ai_exclamation",\
-	"Question" = "ai_question")
+	"Question" = "ai_question") // this should be in typeinfo
 /mob/living/silicon/ai
 	name = "AI"
 	voice_name = "synthesized voice"
@@ -227,7 +227,9 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	src.internal_pda = new /obj/item/device/pda2/ai(src)
 
 	src.tracker = new /datum/ai_camera_tracker(src)
-	coreSkin = skinToApply
+	src.coreSkin = skinToApply
+	src.set_color(global.random_color())
+	src.faceEmotion = global.ai_emotions[pick(global.ai_emotions)]
 	src.UpdateOverlays(get_image("ai_blank"), "backscreen")
 	update_appearance()
 
@@ -1789,7 +1791,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	if (isdead(src))
 		boutput(usr, "You cannot change your emotional status because you are dead!")
 		return
-	var/list/L = custom_emotions ? custom_emotions : ai_emotions	//In case an AI uses the reward, use a local list instead
+	var/list/L = custom_emotions || ai_emotions	//In case an AI uses the reward, use a local list instead
 
 	var/newEmotion = tgui_input_list(src.get_message_mob(), "Select a status!", "AI Status", sortList(L))
 	var/newMessage = scrubbed_input(usr, "Enter a message for your status displays!", "AI Message", src.status_message)
@@ -1803,7 +1805,6 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		update_appearance()
 	if (newMessage)
 		src.status_message = newMessage
-	return
 
 /mob/living/silicon/ai/proc/ai_colorchange()
 	set category = "AI Commands"
