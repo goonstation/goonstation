@@ -974,10 +974,10 @@
 
 /datum/limb/gun/flock_stunner // fires a stunning bolt on a cooldown which doesn't affect flockdrones
 	proj = new/datum/projectile/energy_bolt/flockdrone
-	shots = 4
-	current_shots = 4
+	shots = 1
+	current_shots = 1
 	cooldown = 15
-	reload_time = 60
+	reload_time = 15
 	reloading_str = "recharging"
 
 /datum/limb/gun/flock_stunner/point_blank(mob/living/target, mob/living/user)
@@ -1001,7 +1001,7 @@
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "stunbolt"
 	cost = 20
-	power = 40
+	power = 44
 	dissipation_rate = 1
 	dissipation_delay = 3
 	sname = "stunbolt"
