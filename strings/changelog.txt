@@ -1,5 +1,9 @@
 
 (t)mon jun 13 22
+(u)Sovexe
+(p)9134
+(e)🆕|feature
+(+)Flockminds and traces may now issue movement commands to drones by clicking and dragging them onto a destination.
 (u)Flappybat and Enderthunder
 (p)9131
 (e)🗺🎨|mapping, sprites
