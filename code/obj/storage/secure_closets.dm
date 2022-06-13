@@ -382,7 +382,7 @@
 	/obj/item/ammo/bullets/abg,)
 
 /obj/storage/secure/closet/brig
-	name = "\improper Confiscated Items locker"
+	name = "\improper Confiscated Items safe"
 	req_access = list(access_brig)
 	icon_state = "safe_locker"
 	icon_closed = "safe_locker"
