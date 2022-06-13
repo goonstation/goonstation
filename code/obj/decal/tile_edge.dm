@@ -31,6 +31,7 @@
 			return ..()
 
 	Move()
+		SHOULD_CALL_PARENT(FALSE)
 		return FALSE
 
 /obj/decal/tile_edge/stripe
