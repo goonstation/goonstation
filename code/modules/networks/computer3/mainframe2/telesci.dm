@@ -20,29 +20,33 @@ proc/is_teleportation_allowed(var/turf/T)
 			if (!TJ.active)
 				continue
 			if(IN_RANGE(TJ, T, TJ.range))
-				return 0
+				return FALSE
 		if (istype(atom, /obj/item/device/flockblocker))
 			var/obj/item/device/flockblocker/F = atom
 			if (!F.active)
 				continue
 			if(IN_RANGE(F, T, F.range))
-				return 0
+				return FALSE
 
 	for_by_tcl(N, /obj/blob/nucleus)
 		if(IN_RANGE(N, T, 3))
-			return 0
+			return FALSE
 
 	// first check the always allowed turfs from map landmarks
 	if (T in landmarks[LANDMARK_TELESCI])
-		return 1
+		return TRUE
 
 	if ((istype(T.loc,/area) && T.loc:teleport_blocked) || isrestrictedz(T.z))
-		return 0
+		return FALSE
 
-	if (istype(T.loc, /area/shuttle/escape/station) && !T.canpass())
-		return 0//forgive me pls
+	if (istype(T.loc, /area/shuttle/escape/station))
+		if (T.density)
+			return FALSE
+		for (var/obj/O in T)
+			if (O.density)
+				return FALSE
 
-	return 1
+	return TRUE
 
 /obj/machinery/networked/telepad
 	icon = 'icons/obj/stationobjs.dmi'

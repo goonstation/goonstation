@@ -94,15 +94,6 @@
 		F["[path].pixel_y"] >> pixel_y
 		return DESERIALIZE_OK
 
-	proc/canpass()
-		if( density )
-			return 0
-		for( var/thing in contents )
-			var/atom/A = thing
-			if( A.density && !ismob(A) )
-				return 0
-		return 1
-
 	proc/can_crossed_by(atom/movable/AM)
 		if(!src.Cross(AM))
 			return 0
@@ -359,9 +350,7 @@ proc/generate_space_color()
 	AM.movement_newloc = newloc
 	. = ..()
 
-/turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
-	if (!mover)
-		return TRUE
+/turf/Enter(atom/movable/mover, atom/forget)
 
 	var/turf/cturf = get_turf(mover)
 	if (cturf == src)
