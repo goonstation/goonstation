@@ -6889,10 +6889,7 @@
 /turf/unsimulated/floor/black,
 /area/swampzone/interiors/bonktek)
 "ikB" = (
-/obj/machinery/atmospherics/pipe/tank/rad_particles{
-	desc = "A large vessel containing an unknown pressurized gas.";
-	name = "Unidentified Gas Tank"
-	},
+/obj/machinery/atmospherics/pipe/tank/toxins/south,
 /obj/cable{
 	icon_state = "1-4"
 	},

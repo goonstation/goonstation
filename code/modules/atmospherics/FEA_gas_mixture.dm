@@ -17,8 +17,6 @@ What are the archived variables for?
 	specific_heat = 300
 /datum/gas/volatile_fuel
 	specific_heat = 30
-/datum/gas/rad_particles
-	specific_heat = 20
 
 
 /datum/gas_mixture
@@ -114,9 +112,7 @@ What are the archived variables for?
 		// refs are accessed directly to optimize functions as trace_gases
 		// has already been asserted above instead of utilizing get_trace_gas_by_type()
 		var/datum/gas/sleeping_agent = src.trace_gas_refs[/datum/gas/sleeping_agent]
-		var/datum/gas/rad_particles = src.trace_gas_refs[/datum/gas/rad_particles]
 		UPDATE_GAS_MIXTURE_GRAPHIC(graphic, GAS_IMG_N2O, sleeping_agent?.moles)
-		UPDATE_GAS_MIXTURE_GRAPHIC(graphic, GAS_IMG_RAD, rad_particles?.moles)
 	. = graphic != graphic_archived
 	graphic_archived = graphic
 
