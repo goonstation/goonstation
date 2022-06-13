@@ -224,7 +224,7 @@
 
 	New()
 		..()
-		var/burn_overlay = image('icons/turf/floors.dmi',"floorscorched1")
+		var/image/burn_overlay = image('icons/turf/floors.dmi',"floorscorched1")
 		burn_overlay.alpha = 116
 		UpdateOverlays(burn_overlay,"burn")
 
@@ -233,7 +233,7 @@
 
 	New()
 		..()
-		var/burn_overlay = image('icons/turf/floors.dmi',"floorscorched2")
+		var/image/burn_overlay = image('icons/turf/floors.dmi',"floorscorched2")
 		burn_overlay.alpha = 116
 		UpdateOverlays(burn_overlay,"burn")
 
