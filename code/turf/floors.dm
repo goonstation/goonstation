@@ -225,6 +225,7 @@
 	New()
 		..()
 		var/burn_overlay = image('icons/turf/floors.dmi',"floorscorched1")
+		UpdateOverlays(burn_overlay,"burn")
 
 /turf/simulated/floor/scorched2
 	burnt = 1
@@ -232,6 +233,7 @@
 	New()
 		..()
 		var/burn_overlay = image('icons/turf/floors.dmi',"floorscorched2")
+		UpdateOverlays(burn_overlay,"burn")
 
 /turf/simulated/floor/damaged1
 	step_material = "step_plating"
