@@ -383,6 +383,7 @@
 
 /obj/storage/secure/closet/brig
 	name = "\improper Confiscated Items safe"
+	desc = "A card-locked safe for storage of contraband. Unfortunately it was made by the lowest bidder."
 	req_access = list(access_brig)
 	icon_state = "safe_locker"
 	icon_closed = "safe_locker"
