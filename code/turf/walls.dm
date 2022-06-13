@@ -77,12 +77,10 @@
 			return
 		if (!src.proj_image)
 			src.proj_image = image('icons/obj/projectiles.dmi', "blank")
-		//src.overlays -= src.proj_image
 		src.proj_image.overlays = null
 		for (var/image/i in src.proj_impacts)
 			src.proj_image.overlays += i
 		src.UpdateOverlays(src.proj_image, "projectiles")
-		//src.overlays += src.proj_image
 
 	proc/xmasify()
 		if(fixed_random(src.x / world.maxx, src.y / world.maxy) <= 0.01)
