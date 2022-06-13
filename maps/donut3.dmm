@@ -15667,7 +15667,7 @@
 	dir = 6;
 	icon_state = "tile1"
 	},
-/obj/storage/secure/closet/brig/automatic/genpop_n,
+/obj/storage/secure/closet/brig_automatic/genpop_n,
 /obj/disposalpipe/segment/ejection{
 	dir = 4
 	},
@@ -20756,7 +20756,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
 "fJd" = (
-/obj/storage/secure/closet/brig/automatic{
+/obj/storage/secure/closet/brig_automatic{
 	id = "solitarycell"
 	},
 /turf/simulated/floor/black,
@@ -46639,7 +46639,7 @@
 	dir = 8;
 	icon_state = "tile1"
 	},
-/obj/storage/secure/closet/brig/automatic/genpop_n,
+/obj/storage/secure/closet/brig_automatic/genpop_n,
 /obj/decal/tile_edge/line/grey{
 	dir = 6;
 	icon_state = "tile1"
@@ -66827,7 +66827,7 @@
 	dir = 8;
 	icon_state = "tile1"
 	},
-/obj/storage/secure/closet/brig/automatic/genpop_n,
+/obj/storage/secure/closet/brig_automatic/genpop_n,
 /turf/simulated/floor/grime,
 /area/station/security/brig/south_side)
 "thh" = (
@@ -70217,7 +70217,7 @@
 	dir = 8;
 	icon_state = "tile1"
 	},
-/obj/storage/secure/closet/brig/automatic/genpop_n,
+/obj/storage/secure/closet/brig_automatic/genpop_n,
 /turf/simulated/floor/grime,
 /area/station/security/brig/south_side)
 "ufs" = (

@@ -75022,16 +75022,8 @@
 	})
 "sdh" = (
 /obj/rack,
-/obj/item/clothing/mask/gas/swat/syndicate,
-/obj/item/clothing/mask/gas/swat/syndicate,
-/obj/item/clothing/mask/gas/swat/syndicate,
-/obj/item/clothing/mask/gas/swat/syndicate,
-/obj/item/clothing/mask/gas/swat/syndicate,
-/obj/item/clothing/mask/gas/swat/syndicate,
-/obj/item/clothing/mask/gas/swat/syndicate,
-/obj/item/clothing/mask/gas/swat/syndicate,
-/obj/item/clothing/mask/gas/swat/syndicate,
-/obj/item/clothing/mask/gas/swat/syndicate,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/breath,
 /turf/unsimulated/floor/darkpurple,
 /area/syndicate_station/battlecruiser)
 "seK" = (

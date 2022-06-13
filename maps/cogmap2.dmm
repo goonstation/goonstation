@@ -40131,7 +40131,7 @@
 /area/station/security/checkpoint/podbay)
 "bLt" = (
 /obj/disposalpipe/segment/mail/bent/south,
-/obj/storage/secure/closet/brig/automatic/minibrig,
+/obj/storage/secure/closet/brig_automatic/minibrig,
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
@@ -44741,7 +44741,7 @@
 	pixel_x = 10;
 	tag = ""
 	},
-/obj/storage/secure/closet/brig/automatic/genpop,
+/obj/storage/secure/closet/brig_automatic/genpop,
 /turf/simulated/floor/grime,
 /area/station/security/main)
 "bUy" = (
@@ -45491,7 +45491,7 @@
 /turf/simulated/floor/bot,
 /area/station/security/main)
 "bWh" = (
-/obj/storage/secure/closet/brig/automatic/solitary2,
+/obj/storage/secure/closet/brig_automatic/solitary2,
 /turf/simulated/floor/grime,
 /area/station/security/main)
 "bWi" = (
@@ -46088,7 +46088,7 @@
 /turf/simulated/floor/grime,
 /area/station/security/main)
 "bXB" = (
-/obj/storage/secure/closet/brig/automatic/solitary,
+/obj/storage/secure/closet/brig_automatic/solitary,
 /turf/simulated/floor/grime,
 /area/station/security/main)
 "bXC" = (

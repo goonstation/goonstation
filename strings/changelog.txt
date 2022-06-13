@@ -1,4 +1,14 @@
 
+(t)mon jun 13 22
+(u)Flappybat and Enderthunder
+(p)9131
+(e)🗺🎨|mapping, sprites
+(+)Converted the Confiscated Items Locker into a safe. Sprites by Enderthunder
+(u)ZWRh3
+(p)8978
+(e)🗺⚖|mapping, balance
+(*)Nuclear Operatives now get syndicate field protective masks by default instead of breath masks.
+(*)Due to the above change the rack with spare syndicate field protective masks has been edited to have 5 breath masks and 5 normal gas masks, this is for infil use.
 (t)sun jun 12 22
 (u)Ikea
 (p)8981

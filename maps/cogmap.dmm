@@ -3817,7 +3817,7 @@
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "alq" = (
-/obj/storage/secure/closet/brig/automatic/solitary,
+/obj/storage/secure/closet/brig_automatic/solitary,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -5968,7 +5968,7 @@
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "arL" = (
-/obj/storage/secure/closet/brig/automatic/genpop_n,
+/obj/storage/secure/closet/brig_automatic/genpop_n,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -9077,7 +9077,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/storage/secure/closet/brig/automatic/genpop_s,
+/obj/storage/secure/closet/brig_automatic/genpop_s,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "azU" = (
@@ -43951,7 +43951,7 @@
 /turf/simulated/floor/grime,
 /area/station/security/checkpoint/cargo)
 "ciP" = (
-/obj/storage/secure/closet/brig/automatic/minibrig,
+/obj/storage/secure/closet/brig_automatic/minibrig,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
