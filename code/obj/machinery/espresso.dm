@@ -155,7 +155,7 @@
 	var/default_carafe = /obj/item/reagent_containers/food/drinks/carafe
 	var/image/fluid_image
 
-	var/emagged = 0
+	var/emagged = FALSE
 
 	New()
 		..()
@@ -171,12 +171,12 @@
 				boutput(user, "<span class='notice'>You force the machine to brew something else...</span>")
 
 			src.desc = " It's top of the line NanoTrasen tea technology! Featuring 100% Organic Locally-Grown green leaves!"
-			src.emagged = 1
-			return 1
+			src.emagged = TRUE
+			return TRUE
 		else
 			if (user)
 				boutput(user, "<span class='alert'>This has already been tampered with.</span>")
-			return 0
+			return FALSE
 
 	attackby(var/obj/item/W, var/mob/user)
 		if (istype(W, /obj/item/reagent_containers/food/drinks/carafe))
