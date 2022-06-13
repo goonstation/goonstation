@@ -86,6 +86,8 @@
 		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, frequency)
 		src.net_id = generate_net_id(src)
 
+		src.AddComponent(/datum/component/bullet_holes, 15, 5)
+
 		if (istype(manuf_controls,/datum/manufacturing_controller))
 			src.set_up_schematics()
 			manuf_controls.manufacturing_units += src

@@ -26,6 +26,8 @@
 		if (P)
 			P.check()
 
+		src.AddComponent(/datum/component/bullet_holes, 15, 10)
+
 		//for fluids
 		if (src.active_liquid && src.active_liquid.group)
 			src.active_liquid.group.displace(src.active_liquid)

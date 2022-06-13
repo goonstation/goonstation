@@ -17,6 +17,7 @@
 
 	New()
 		..()
+		src.AddComponent(/datum/component/bullet_holes, 10, src.reinforced ? 25 : 5) // reinforced lockers need 25 power to damage; reflects that
 		if (bolted)
 			anchored = 1
 		src.attack_particle = new /obj/particle/attack

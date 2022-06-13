@@ -127,6 +127,7 @@
 		#endif
 
 		AddComponent(/datum/component/mechanics_holder)
+		AddComponent(/datum/component/bullet_holes, 8, 5)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Vend Random", .proc/vendinput)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Vend by Name", .proc/vendname)
 		light = new /datum/light/point
