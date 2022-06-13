@@ -16596,10 +16596,6 @@
 /obj/item/device/radio/intercom/medical,
 /turf/simulated/floor/white/checker,
 /area/station/medical/medbay/treatment1)
-"aHZ" = (
-/obj/machinery/vending/medical,
-/turf/simulated/wall/auto/supernorn,
-/area/station/medical/medbay/treatment1)
 "aIa" = (
 /obj/ladder{
 	desc = "Is this supposed to be here?";
@@ -18111,6 +18107,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/machinery/vending/medical,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "aLF" = (
@@ -31759,6 +31756,7 @@
 	dir = 5;
 	icon_state = "line1"
 	},
+/obj/machinery/vending/medical,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "bpP" = (
@@ -43882,7 +43880,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/storage/secure/closet/brig/automatic/genpop,
+/obj/storage/secure/closet/brig_automatic/genpop,
 /turf/simulated/floor/neutral/corner{
 	dir = 4
 	},
@@ -75211,7 +75209,7 @@ aCR
 aFd
 aEa
 aGX
-aHZ
+aGX
 aGX
 aGX
 aLD

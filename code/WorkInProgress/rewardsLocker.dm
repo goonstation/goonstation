@@ -1571,9 +1571,9 @@ datum/achievementReward/ai_dwaine
 			boutput(usr, "<span class='alert'>You already claimed this!</span>")
 			return
 
-		var/M = alert(usr,S.desc + "\n(Earned through the \"[S.required_medal]\" Medal)","Claim this Reward?","Yes","No")
+		var/confirm = tgui_alert(usr, S.desc + "\n(Earned through the \"[S.required_medal]\" Medal)", "Claim this Reward?", list("Yes", "No"))
 		src.verbs += /client/verb/claimreward
-		if(M == "Yes")
+		if(confirm == "Yes")
 			var/worked = S.rewardActivate(src.mob)
 			if (worked)
 				boutput(usr, "<span class='alert'>Successfully claimed \"[S.title]\".</span>")

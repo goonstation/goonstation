@@ -1,4 +1,41 @@
 
+(t)mon jun 13 22
+(u)NightmareChamillian
+(p)9111
+(e)⚖|balance
+(*)Reduced the number of sawflies in nukie utility pouches from 4 to 3 in order to give secoffs a fighting chance.
+(u)Sovexe
+(p)9134
+(e)🆕|feature
+(+)Flockminds and traces may now issue movement commands to drones by clicking and dragging them onto a destination.
+(u)Flappybat and Enderthunder
+(p)9131
+(e)🗺🎨|mapping, sprites
+(+)Converted the Confiscated Items Locker into a safe. Sprites by Enderthunder
+(u)ZWRh3
+(p)8978
+(e)🗺⚖|mapping, balance
+(*)Nuclear Operatives now get syndicate field protective masks by default instead of breath masks.
+(*)Due to the above change the rack with spare syndicate field protective masks has been edited to have 5 breath masks and 5 normal gas masks, this is for infil use.
+(t)sun jun 12 22
+(u)Ikea
+(p)8981
+(e)|
+(*)Flock caging no longer costs resources and takes 4 seconds instead of 6.
+(u)Azrun
+(p)9061
+(e)⚖|balance
+(*)Singularities can be recaptured! Assuming they don't get too big...
+(+)Collector arrays will capture all nearby Hawking Radiation.
+(u)Virvatuli
+(e)🆕⚖|feature, balance
+(*)AI Core Frames are now very limited. They are no longer in roboticist fabricators, but located on a limited-use disk that spawns in the Medical Director's locker.
+(+)The Artificial Intelligence License disk can be inserted into a fabricator to unlock the AI Core Frame blueprint, and is limited to two printings. The disk has been added to spy bounties.
+(+)AIs are not meant to be mass printed, and having excessive AIs in a round is a detriment to both the crew and other AIs trying to play the role well.
+(u)Chatauscours
+(p)8933
+(e)⚖|balance
+(*)The Lawbringer is now linked to the user's DNA and not the fingerprints.
 (t)sat jun 11 22
 (u)nefarious6th
 (p)9041

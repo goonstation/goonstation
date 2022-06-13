@@ -171,12 +171,24 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		move()
 		SPAWN(1.1 SECONDS) // slowing this baby down a little -drsingh
 			move()
+
+			var/recapture_prob = clamp(25-(radius**2) , 0, 25)
+			if((radius < (SINGULARITY_MAX_DIMENSION/2)) && prob(recapture_prob))
+				var/checkpointC = 0
+				for (var/obj/machinery/containment_field/X in orange(radius+2,src))
+					checkpointC++
+				if (checkpointC > max(MIN_TO_CONTAIN,(radius*8)))//as radius of a 5x5 should be 2, 16 tiles are needed to hold it in, this allows for 4 failures before the singularity is loose
+					src.active = FALSE
+					maxradius = radius + 1
+					logTheThing("station", null, null, "[src] has been contained at [log_loc(src)]")
+					message_admins("[src] has been contained at [log_loc(src)]")
+
 	else//this should probably be modified to use the enclosed test of the generator
 		var/checkpointC = 0
 		for (var/obj/machinery/containment_field/X in orange(maxradius+2,src))
 			checkpointC ++
 		if (checkpointC < max(MIN_TO_CONTAIN,(radius*8)))//as radius of a 5x5 should be 2, 16 tiles are needed to hold it in, this allows for 4 failures before the singularity is loose
-			src.active = 1
+			src.active = TRUE
 			maxradius = INFINITY
 			logTheThing("station", null, null, "[src] has become loose at [log_loc(src)]")
 			message_admins("[src] has become loose at [log_loc(src)]")
@@ -243,8 +255,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		if (A.event_handler_flags & IMMUNE_SINGULARITY_INACTIVE)
 			return
 
-	// Don't bump that which no longer exists
-	if(A.disposed)
+	if(QDELETED(A)) // Don't bump that which no longer exists
 		return
 
 	if (isliving(A) && !isintangible(A))//if its a mob
@@ -488,6 +499,12 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 /obj/machinery/field_generator/disposing()
 	STOP_TRACKING
+	for(var/dir in cardinal)
+		src.cleanup(dir)
+	if (link)
+		link.master = null
+		link = null
+	active = FALSE
 	. = ..()
 
 /obj/machinery/field_generator/process()
@@ -505,15 +522,12 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		if(!src.state == WELDED)
 			src.set_active(0)
 			return
-		setup_field(1)
-		setup_field(2)
-		setup_field(4)
-		setup_field(8)
+		setup_field(NORTH)
+		setup_field(SOUTH)
+		setup_field(EAST)
+		setup_field(WEST)
 		src.set_active(2)
-	if(src.power < 0)
-		src.power = 0
-	if(src.power > src.max_power)
-		src.power = src.max_power
+	src.power = clamp(src.power, 0, src.max_power)
 	if(src.active >= 1)
 		src.power -= 1
 		if(Varpower == 0)
@@ -521,10 +535,10 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 				src.visible_message("<span class='alert'>The [src.name] shuts down due to lack of power!</span>")
 				icon_state = "Field_Gen"
 				src.set_active(0)
-				src.cleanup(1)
-				src.cleanup(2)
-				src.cleanup(4)
-				src.cleanup(8)
+				src.cleanup(NORTH)
+				src.cleanup(SOUTH)
+				src.cleanup(EAST)
+				src.cleanup(WEST)
 				for(var/dir in cardinal)
 					src.UpdateOverlays(null, "field_start_[dir]")
 					src.UpdateOverlays(null, "field_end_[dir]")
@@ -534,28 +548,17 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	var/turf/T2 = src.loc
 	var/obj/machinery/field_generator/G
 	var/steps = 0
-	var/oNSEW = 0
-
 
 	if(!NSEW)//Make sure its ran right
 		return
-
-	if(NSEW == 1)
-		oNSEW = 2
-	else if(NSEW == 2)
-		oNSEW = 1
-	else if(NSEW == 4)
-		oNSEW = 8
-	else if(NSEW == 8)
-		oNSEW = 4
+	var/oNSEW = turn(NSEW, 180)
 
 	for(var/dist = 0, dist <= SINGULARITY_MAX_DIMENSION, dist += 1) // checks out to max dimension tiles away for another generator to link to
 		T = get_step(T2, NSEW)
 		T2 = T
 		steps += 1
-		G = (locate(/obj/machinery/field_generator) in T)
-		if(G && G != src)
-			G = (locate(/obj/machinery/field_generator) in T)
+		G = locate(/obj/machinery/field_generator) in T
+		if(G && G != src && !QDELETED(G))
 			steps -= 1
 			if(shortestlink==0)
 				shortestlink = dist
@@ -693,26 +696,30 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	var/obj/machinery/field_generator/G
 	var/turf/T = src.loc
 	var/turf/T2 = src.loc
+	var/oNSEW = turn(NSEW, 180)
 
 	active_dirs &= ~NSEW
 
 	src.UpdateOverlays(null, "field_start_[NSEW]")
-	src.UpdateOverlays(null, "field_end_[turn(NSEW, 180)]")
+	src.UpdateOverlays(null, "field_end_[oNSEW]")
 
-	for(var/dist = 0, dist <= 9, dist += 1) // checks out to 8 tiles away for fields
+	for(var/dist = 0, dist <= SINGULARITY_MAX_DIMENSION, dist += 1) // checks out to 8 tiles away for fields
 		T = get_step(T2, NSEW)
 		T2 = T
-		if(locate(/obj/machinery/containment_field) in T)
-			F = (locate(/obj/machinery/containment_field) in T)
-			qdel(F)
+		for(F in T)
+			if(F.gen_primary == src || F.gen_secondary == src )
+				qdel(F)
 
-		if(locate(/obj/machinery/field_generator) in T)
-			G = (locate(/obj/machinery/field_generator) in T)
+		G = locate(/obj/machinery/field_generator) in T
+		if(G)
 			G.UpdateOverlays(null, "field_end_[NSEW]")
-			G.UpdateOverlays(null, "field_start_[turn(NSEW, 180)]")
-			G.active_dirs &= ~turn(NSEW, 180)
+			G.UpdateOverlays(null, "field_start_[oNSEW]")
+			G.active_dirs &= ~oNSEW
 			if(!G.active)
 				break
+			else
+				G.setup_field(oNSEW)
+
 
 //Send a signal over our link, if possible.
 /obj/machinery/field_generator/proc/post_status(var/target_id, var/key, var/value, var/key2, var/value2, var/key3, var/value3)
@@ -771,16 +778,6 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	return
 
-/obj/machinery/field_generator/disposing()
-	src.cleanup(1)
-	src.cleanup(2)
-	src.cleanup(4)
-	src.cleanup(8)
-	if (link)
-		link.master = null
-		link = null
-	..()
-
 /////////////////////////////////////////////// Containment field //////////////////////////////////
 
 /obj/machinery/containment_field
@@ -811,6 +808,11 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	..()
 
+/obj/machinery/containment_field/disposing()
+	src.gen_primary = null
+	src.gen_secondary = null
+	..()
+
 /obj/machinery/containment_field/ex_act(severity)
 	return
 
@@ -827,10 +829,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		return
 
 /obj/machinery/containment_field/proc/shock(mob/user as mob)
-	if(isnull(gen_primary))
-		qdel(src)
-		return
-	if(isnull(gen_secondary))
+	if(isnull(gen_primary) || isnull(gen_secondary))
 		qdel(src)
 		return
 
@@ -1335,7 +1334,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	var/obj/machinery/power/collector_array/CAS = null
 	var/obj/machinery/power/collector_array/CAE = null
 	var/obj/machinery/power/collector_array/CAW = null
-	var/obj/machinery/the_singularity/S1 = null
+	var/list/obj/machinery/the_singularity/S = null
 
 /obj/machinery/power/collector_control/New()
 	..()
@@ -1344,8 +1343,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		updatecons()
 
 /obj/machinery/power/collector_control/disposing()
-	. = ..()
 	STOP_TRACKING
+	. = ..()
 
 /obj/machinery/power/collector_control/proc/updatecons()
 
@@ -1355,9 +1354,10 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		CAS = locate(/obj/machinery/power/collector_array) in get_step(src,SOUTH)
 		CAE = locate(/obj/machinery/power/collector_array) in get_step(src,EAST)
 		CAW = locate(/obj/machinery/power/collector_array) in get_step(src,WEST)
+		S = list()
 		for_by_tcl(singu, /obj/machinery/the_singularity)//this loop checks for valid singularities
-			if(get_dist(singu,loc)<SINGULARITY_MAX_DIMENSION+2)
-				S1 = singu
+			if(!QDELETED(singu) && GET_DIST(singu,loc)<SINGULARITY_MAX_DIMENSION+2 )
+				S |= singu
 
 		if(!isnull(CAN))
 			CA1 = CAN
@@ -1388,8 +1388,6 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 				P2 = CA2.P
 		else
 			CAE = null
-		if(isnull(S1) || S1.disposed)
-			S1 = null
 
 		UpdateIcon()
 		SPAWN(1 MINUTE)
@@ -1418,10 +1416,12 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			overlays += image('icons/obj/singularity.dmi', "cu 3 on")
 		if((!P1)||(!P2)||(!P3))
 			overlays += image('icons/obj/singularity.dmi', "cu n error")
-		if(S1)
+		if(length(S))
 			overlays += image('icons/obj/singularity.dmi', "cu sing")
-			if(!S1.active)
-				overlays += image('icons/obj/singularity.dmi', "cu conterr")
+			for(var/obj/machinery/the_singularity/singu in S)
+				if(!singu.active)
+					overlays += image('icons/obj/singularity.dmi', "cu conterr")
+					break
 	else
 		overlays += image('icons/obj/singularity.dmi', "cu on")
 		overlays += image('icons/obj/singularity.dmi', "cu 1 on")
@@ -1440,8 +1440,9 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			var/power_s = 0
 			var/power_p = 0
 
-			if(!isnull(S1))
-				power_s += S1.energy*max((S1.radius**2),1)/4
+			for(var/obj/machinery/the_singularity/singu in S)
+				if(singu && !QDELETED(singu))
+					power_s += singu.energy*max((singu.radius**2),1)/4
 			if(P1?.air_contents)
 				if(CA1.active != 0)
 					power_p += P1.air_contents.toxins
@@ -1466,8 +1467,9 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		var/power_a = 0
 		var/power_s = 0
 		var/power_p = 0
-		if(!isnull(S1))
-			power_s += S1.energy*((S1.radius*2+1)**2)/DEFAULT_AREA  //should give the area of the singularity and divide it by the area of a standard singularity(a 5x5)
+		for(var/obj/machinery/the_singularity/singu in S)
+			if(singu && !QDELETED(singu))
+				power_s += singu.energy*((singu.radius*2+1)**2)/DEFAULT_AREA  //should give the area of the singularity and divide it by the area of a standard singularity(a 5x5)
 		power_p += 50
 		power_a = power_p*power_s*50
 		src.lastpower = power_a
