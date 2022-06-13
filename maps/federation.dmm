@@ -19600,9 +19600,7 @@
 /turf/simulated/floor/twotone/yellow,
 /area/station/engine/power)
 "sxY" = (
-/obj/disposalpipe/type_sensing_outlet/east{
-	allowed_types = list(raw_material)
-	},
+/obj/disposalpipe/type_sensing_outlet/east,
 /turf/simulated/floor/caution,
 /area/station/storage/warehouse)
 "syv" = (
