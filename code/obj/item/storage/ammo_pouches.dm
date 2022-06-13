@@ -257,18 +257,18 @@
 	w_class = W_CLASS_SMALL
 	slots = 6
 	does_not_open_in_pocket = 0
-	can_hold = list(/obj/item/ammo, /obj/item/old_grenade, /obj/item/chem_grenade, /obj/item/reagent_containers, /obj/item/deployer/barricade, /obj/item/tool, /obj/item/breaching_charge, /obj/item/pinpointer, /obj/item/mine, /obj/item/remote, )
+	can_hold = list(/obj/item/ammo, /obj/item/old_grenade, /obj/item/chem_grenade, /obj/item/reagent_containers, /obj/item/deployer/barricade, /obj/item/tool, /obj/item/breaching_charge, /obj/item/pinpointer, /obj/item/mine, /obj/item/remote, /obj/item/device/)
 
 /obj/item/storage/sawfly_pouch
 	name = "sawfly pouch"
-	desc = "A pouch for carrying four compact sawflies that comes with a remote."
+	desc = "A pouch for carrying three compact sawflies and a remote."
 	icon_state = "ammopouch-sawflies"
 	health = 6
 	w_class = W_CLASS_SMALL
 	slots = 4
 	does_not_open_in_pocket = 0
-	spawn_contents = list(/obj/item/old_grenade/sawfly = 4)
+	spawn_contents = list(
+		/obj/item/old_grenade/sawfly = 3,
+		/obj/item/remote/sawflyremote
+	)
 
-	New()
-		new /obj/item/remote/sawflyremote(src.loc)
-		..()
