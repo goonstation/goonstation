@@ -122,16 +122,12 @@
 	name = "Radio Show Host's Headset"
 	icon_state = "radio"
 	secure_frequencies = list(
-		"h" = R_FREQ_COMMAND,
-		"g" = R_FREQ_SECURITY,
 		"e" = R_FREQ_ENGINEERING,
 		"r" = R_FREQ_RESEARCH,
 		"m" = R_FREQ_MEDICAL,
 		"c" = R_FREQ_CIVILIAN,
 		)
 	secure_classes = list(
-		"h" = RADIOCL_COMMAND,
-		"g" = RADIOCL_SECURITY,
 		"e" = RADIOCL_ENGINEERING,
 		"r" = RADIOCL_RESEARCH,
 		"m" = RADIOCL_MEDICAL,
