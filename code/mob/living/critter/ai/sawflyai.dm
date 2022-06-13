@@ -94,6 +94,7 @@
 			boutput(C, "<span class='alert'> The sawfly's IFF system silently flags you as an ally! </span>")
 			owncritter.friends += C
 			continue
+		if(istype(C, /mob/living/silicon/ai)) continue // AI cores are tanky and distract nukie sawflies in med/robotics
 		. += C //you passed all the checks it, now you get added to the list for consideration
 
 //chase behaviour - pick someone, run up to them, and stab em

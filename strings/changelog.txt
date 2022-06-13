@@ -1,5 +1,13 @@
 
 (t)mon jun 13 22
+(u)NightmareChamillian
+(p)9111
+(e)⚖|balance
+(*)Reduced the number of sawflies in nukie utility pouches from 4 to 3 in order to give secoffs a fighting chance.
+(u)Sovexe
+(p)9134
+(e)🆕|feature
+(+)Flockminds and traces may now issue movement commands to drones by clicking and dragging them onto a destination.
 (u)Flappybat and Enderthunder
 (p)9131
 (e)🗺🎨|mapping, sprites
