@@ -64,7 +64,7 @@ TYPEINFO(/datum/component/bullet_holes)
 	src.redraw_impacts()
 
 /datum/component/bullet_holes/proc/redraw_impacts()
-	if (ON_COOLDOWN(src, "bullet hole render", 0.1 SECONDS))
+	if (ON_COOLDOWN(src, "bullet hole render", 0.2 SECONDS))
 		return
 
 	var/atom/A = src.parent
