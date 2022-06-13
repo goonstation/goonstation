@@ -1,5 +1,9 @@
 
 (t)mon jun 13 22
+(u)NightmareChamillian
+(p)9111
+(e)⚖|balance
+(*)Reduced the number of sawflies in nukie utility pouches from 4 to 3 in order to give secoffs a fighting chance.
 (u)Sovexe
 (p)9134
 (e)🆕|feature
