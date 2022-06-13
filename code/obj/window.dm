@@ -303,18 +303,18 @@
 		return the_text
 
 	Cross(atom/movable/mover)
-		if(!src.density) return 1
+		if(!src.density)
+			return TRUE
 		if(istype(mover, /obj/projectile))
 			var/obj/projectile/P = mover
 			if(P.proj_data.window_pass)
-				return 1
+				return TRUE
 		if (!is_cardinal(dir))
-			return 0 //full tile window, you can't move into it!
+			return FALSE //full tile window, you can't move into it!
 		if(get_dir(loc, mover) & dir)
-
 			return !density
 		else
-			return 1
+			return TRUE
 
 	gas_cross(turf/target)
 		. = TRUE
