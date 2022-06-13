@@ -480,7 +480,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\mob\who.dm"
 #include "code\mob\wraith.dm"
 #include "code\mob\zoldorfmob.dm"
-#include "code\mob\dead\hhghost.dm"
 #include "code\mob\dead\hivemind_observer.dm"
 #include "code\mob\dead\mentor_mouse_observer.dm"
 #include "code\mob\dead\observer.dm"
