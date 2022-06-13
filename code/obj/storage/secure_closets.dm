@@ -397,10 +397,14 @@
 	bolted = TRUE
 
 // Old Mushroom-era feature I fixed up (Convair880).
-/obj/storage/secure/closet/brig/automatic
+/obj/storage/secure/closet/brig_automatic
 	name = "\improper Automatic Locker"
+	req_access = list(access_brig)
 	desc = "Card-locked closet linked to a brig timer. Will unlock automatically when timer reaches zero."
 	anchored = 1
+	_max_health = LOCKER_HEALTH_STRONG
+	_health = LOCKER_HEALTH_STRONG
+	reinforced = TRUE
 	var/obj/machinery/door_timer/our_timer = null
 	var/id = null
 

@@ -18077,7 +18077,7 @@
 	light_type = /obj/item/light/tube/reddish;
 	pixel_x = -10
 	},
-/obj/storage/secure/closet/brig/automatic{
+/obj/storage/secure/closet/brig_automatic{
 	id = "solitary"
 	},
 /turf/simulated/floor/red/side{
@@ -19101,7 +19101,7 @@
 /turf/simulated/floor/red,
 /area/station/science/lab)
 "Vk" = (
-/obj/storage/secure/closet/brig/automatic{
+/obj/storage/secure/closet/brig_automatic{
 	id = "genpop"
 	},
 /obj/machinery/camera{
