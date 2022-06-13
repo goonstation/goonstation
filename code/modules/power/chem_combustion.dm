@@ -46,6 +46,10 @@
 		signal_event("icon_updated")
 
 
+	was_deconstructed_to_frame(mob/user)
+		src.stop_engine()
+		..()
+
 	attackby(obj/item/W, mob/user)
 		src.add_fingerprint(user)
 
