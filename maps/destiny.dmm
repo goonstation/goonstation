@@ -13384,7 +13384,7 @@
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "bjR" = (
-/obj/storage/secure/closet/brig/automatic/genpop,
+/obj/storage/secure/closet/brig_automatic/genpop,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "bjU" = (
@@ -23495,7 +23495,7 @@
 	},
 /area/station/science/chemistry)
 "eJX" = (
-/obj/storage/secure/closet/brig/automatic/genpop,
+/obj/storage/secure/closet/brig_automatic/genpop,
 /obj/disposalpipe/segment/mail{
 	dir = 1;
 	icon_state = "pipe-c"

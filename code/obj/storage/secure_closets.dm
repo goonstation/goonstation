@@ -382,18 +382,30 @@
 	/obj/item/ammo/bullets/abg,)
 
 /obj/storage/secure/closet/brig
-	name = "\improper Confiscated Items locker"
+	name = "\improper Confiscated Items safe"
+	desc = "A card-locked safe for storage of contraband. Unfortunately it was made by the lowest bidder."
 	req_access = list(access_brig)
+	icon_state = "safe_locker"
+	icon_closed = "safe_locker"
+	icon_opened = "safe_locker-open"
+	icon_greenlight = "safe-greenlight"
+	icon_redlight = "safe-redlight"
+	open_sound = 'sound/misc/safe_open.ogg'
+	close_sound = 'sound/misc/safe_close.ogg'
 	_max_health = LOCKER_HEALTH_STRONG
 	_health = LOCKER_HEALTH_STRONG
 	reinforced = TRUE
 	bolted = TRUE
 
 // Old Mushroom-era feature I fixed up (Convair880).
-/obj/storage/secure/closet/brig/automatic
+/obj/storage/secure/closet/brig_automatic
 	name = "\improper Automatic Locker"
+	req_access = list(access_brig)
 	desc = "Card-locked closet linked to a brig timer. Will unlock automatically when timer reaches zero."
 	anchored = 1
+	_max_health = LOCKER_HEALTH_STRONG
+	_health = LOCKER_HEALTH_STRONG
+	reinforced = TRUE
 	var/obj/machinery/door_timer/our_timer = null
 	var/id = null
 
