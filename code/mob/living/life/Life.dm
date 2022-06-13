@@ -677,20 +677,6 @@
 			return 0
 		return min(GET_ATOM_PROPERTY(src, PROP_MOB_DISARM_RESIST), 90)
 
-		/*
-		// Resistance from covered body parts
-		// See get_cold_protection for comment out reasoning
-		if (w_uniform && (w_uniform.body_parts_covered & TORSO))
-			thermal_protection += 10
-
-		if (wear_suit)
-			if (wear_suit.body_parts_covered & TORSO)
-				thermal_protection += 10
-			if (wear_suit.body_parts_covered & LEGS)
-				thermal_protection += 10
-			if (wear_suit.body_parts_covered & ARMS)
-				thermal_protection += 10
-		*/
 
 	proc/add_fire_protection(var/temp)
 		var/fire_prot = 0
