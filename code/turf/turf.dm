@@ -352,6 +352,9 @@ proc/generate_space_color()
 
 /turf/Enter(atom/movable/mover, atom/forget)
 
+	if (!mover)
+		return TRUE
+
 	var/turf/cturf = get_turf(mover)
 	if (cturf == src)
 		return TRUE
