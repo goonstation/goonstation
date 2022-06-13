@@ -1216,13 +1216,6 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 				juggle_image.pixel_y = body_offset
 				src.body_standing.overlays += juggle_image
 
-#if ASS_JAM
-	src.maptext_y = 32
-	src.maptext_width = 64
-	src.maptext_x = -16
-	health_update_queue |= src
-#endif
-
 	if (src.bioHolder)
 		src.bioHolder.OnMobDraw()
 	//Also forcing the updates since the overlays may have been modified on the images

@@ -12,7 +12,7 @@
 	var/const/max_time = 300
 
 	// Please keep synchronizied with these lists for easy map changes:
-	// /obj/storage/secure/closet/brig/automatic (secure_closets.dm)
+	// /obj/storage/secure/closet/brig_automatic (secure_closets.dm)
 	// /obj/machinery/floorflusher (floorflusher.dm)
 	// /obj/machinery/door/window/brigdoor (window.dm)
 	// /obj/machinery/flasher (flasher.dm)
@@ -226,7 +226,7 @@
 
 		LAGCHECK(LAG_LOW)
 
-		for (var/obj/storage/secure/closet/brig/automatic/B in range(30, src))
+		for (var/obj/storage/secure/closet/brig_automatic/B in range(30, src))
 			if (B.id == src.id && B.our_timer == src)
 				if (B.locked)
 					B.locked = 0

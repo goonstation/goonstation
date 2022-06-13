@@ -34170,7 +34170,7 @@
 /turf/simulated/wall/r_wall,
 /area/station/security/brig)
 "bqf" = (
-/obj/storage/secure/closet/brig/automatic/genpop,
+/obj/storage/secure/closet/brig_automatic/genpop,
 /obj/disposalpipe/segment/brig{
 	icon_state = "pipe-s";
 	dir = 4
@@ -34586,7 +34586,7 @@
 /turf/simulated/floor,
 /area/station/security/brig)
 "bqY" = (
-/obj/storage/secure/closet/brig/automatic/genpop,
+/obj/storage/secure/closet/brig_automatic/genpop,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "bqZ" = (

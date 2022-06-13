@@ -112,7 +112,7 @@ obj/item/ammo/bullets/flechette_mag
 	dissipation_delay = 10
 	dissipation_rate = 3
 	projectile_speed = 56
-	icon_turf_hit = "bhole-small"
+	impact_image_state = "bhole-small"
 	implanted = /obj/item/implant/projectile/bullet_flechette
 	casing = /obj/item/casing/polymer
 

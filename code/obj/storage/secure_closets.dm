@@ -17,6 +17,7 @@
 
 	New()
 		..()
+		src.AddComponent(/datum/component/bullet_holes, 10, src.reinforced ? 25 : 5) // reinforced lockers need 25 power to damage; reflects that
 		if (bolted)
 			anchored = 1
 		src.attack_particle = new /obj/particle/attack
@@ -272,7 +273,8 @@
 /obj/storage/secure/closet/command/medical_director
 	name = "\improper Medical Director's locker"
 	req_access = list(access_medical_director)
-	spawn_contents = list(/obj/item/storage/box/clothing/medical_director,
+	spawn_contents = list(/obj/item/disk/data/floppy/manudrive/ai,
+	/obj/item/storage/box/clothing/medical_director,
 	/obj/item/clothing/shoes/brown,
 	/obj/item/gun/implanter,
 	/obj/item/gun/reagent/syringe/NT,
@@ -281,8 +283,6 @@
 	/obj/item/ammo/bullets/tranq_darts,
 	/obj/item/ammo/bullets/tranq_darts/anti_mutant,
 	/obj/item/robodefibrillator,
-	/obj/item/clothing/gloves/latex,
-	/obj/item/storage/belt/medical,
 	/obj/item/storage/firstaid/docbag,
 	/obj/item/reagent_containers/hypospray,
 	/obj/item/device/flash,
@@ -382,18 +382,30 @@
 	/obj/item/ammo/bullets/abg,)
 
 /obj/storage/secure/closet/brig
-	name = "\improper Confiscated Items locker"
+	name = "\improper Confiscated Items safe"
+	desc = "A card-locked safe for storage of contraband. Unfortunately it was made by the lowest bidder."
 	req_access = list(access_brig)
+	icon_state = "safe_locker"
+	icon_closed = "safe_locker"
+	icon_opened = "safe_locker-open"
+	icon_greenlight = "safe-greenlight"
+	icon_redlight = "safe-redlight"
+	open_sound = 'sound/misc/safe_open.ogg'
+	close_sound = 'sound/misc/safe_close.ogg'
 	_max_health = LOCKER_HEALTH_STRONG
 	_health = LOCKER_HEALTH_STRONG
 	reinforced = TRUE
 	bolted = TRUE
 
 // Old Mushroom-era feature I fixed up (Convair880).
-/obj/storage/secure/closet/brig/automatic
+/obj/storage/secure/closet/brig_automatic
 	name = "\improper Automatic Locker"
+	req_access = list(access_brig)
 	desc = "Card-locked closet linked to a brig timer. Will unlock automatically when timer reaches zero."
 	anchored = 1
+	_max_health = LOCKER_HEALTH_STRONG
+	_health = LOCKER_HEALTH_STRONG
+	reinforced = TRUE
 	var/obj/machinery/door_timer/our_timer = null
 	var/id = null
 

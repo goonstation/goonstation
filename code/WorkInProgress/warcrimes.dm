@@ -663,7 +663,7 @@ Urs' Hauntdog critter
 	on_pet(mob/user)
 		if (..())
 			return 1
-		if (prob(ASS_JAM?50:25))
+		if (prob(25))
 			var/turf/T = get_turf(src)
 			src.visible_message("[src] screams![prob(5) ? " ...uh?" : null]",\
 			"You screams!")

@@ -965,7 +965,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "cR" = (
-/obj/storage/secure/closet/brig/automatic,
+/obj/storage/secure/closet/brig_automatic,
 /turf/simulated/floor/red,
 /area/station/security/brig)
 "cS" = (
