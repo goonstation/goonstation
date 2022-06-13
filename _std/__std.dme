@@ -123,7 +123,6 @@
 #include "macros\twitch_sbill.dm"
 #include "macros\vehicles.dm"
 #include "address.dm"
-#include "ass_jam.dm"
 #include "color.dm"
 #include "copy.dm"
 #include "datum.dm"

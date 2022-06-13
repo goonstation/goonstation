@@ -5,6 +5,7 @@
 /obj/flock_structure/gnesisturret
 	name = "spiky fluid vat"
 	desc = "A vat of bubbling teal fluid, covered in hollow spikes."
+	flock_desc = "A turret that fires gnesis-filled spikes at enemies, beginning their conversion to Flockbits."
 	icon_state = "teleblocker-off"
 	flock_id = "Gnesis turret"
 	resourcecost = 150
@@ -59,7 +60,7 @@
 		return {"<span class='bold'>Status:</span> [status].
 	<br><span class='bold'>Gnesis Tank Level:</span> [src.reagents.total_volume]/[fluid_level_max]."}
 
-	process()
+	process(mult)
 		if(!src.flock)//if it dont exist it off
 			powered = FALSE
 			src.compute = 0
@@ -80,7 +81,7 @@
 		if(src.reagents.total_volume < src.reagents.maximum_volume)
 			if(src.flock.can_afford_compute(base_compute+fluid_gen_cost))
 				src.compute = -(base_compute + fluid_gen_cost)
-				src.reagents.add_reagent(fluid_gen_type, fluid_gen_amt)
+				src.reagents.add_reagent(fluid_gen_type, fluid_gen_amt * mult)
 
 		if(src.reagents.total_volume >= fluid_shot_amt)
 			//shamelessly stolen from deployable_turret.dm

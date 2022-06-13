@@ -27,6 +27,12 @@
 	var/image/atmos_dmi
 	var/image/bomb_dmi
 
+	New()
+		..()
+		src.AddComponent(/datum/component/bullet_holes, 5, 0)
+		atmos_dmi = image('icons/obj/atmospherics/atmos.dmi')
+		bomb_dmi = image('icons/obj/canisterbomb.dmi')
+
 	onMaterialChanged()
 		..()
 		if(istype(src.material))
@@ -82,11 +88,6 @@
 	name = "Canister \[Empty\]"
 	icon_state = "empty"
 	casecolor = "empty"
-
-/obj/machinery/portable_atmospherics/canister/New()
-	..()
-	atmos_dmi = image('icons/obj/atmospherics/atmos.dmi')
-	bomb_dmi = image('icons/obj/canisterbomb.dmi')
 
 /obj/machinery/portable_atmospherics/canister/update_icon()
 	if (src.destroyed)

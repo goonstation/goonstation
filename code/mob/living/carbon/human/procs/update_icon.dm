@@ -1128,22 +1128,22 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 										human_image.icon = limb.handfoot_overlay_1?.icon
 										human_image.icon_state = limb.handfoot_overlay_1?.icon_state
 										human_image.color = limb.handfoot_overlay_1?.color
-										human_image.layer = MOB_LIMB_LAYER
-										src.UpdateOverlays(human_image, "feet")
+										human_image.layer = MOB_HAND_LAYER1
+										src.hands_standing.layer = MOB_HAND_LAYER1
+										src.hands_standing.overlays += human_image
 									if (oldlayer)
 										human_image.layer = oldlayer
 								else
 									var/image/I = part_icon_s
-									I.layer = MOB_LIMB_LAYER
+									I.layer = MOB_HAND_LAYER1
 									I.color = limb_skin_tone
 									I.pixel_y = armleg_offset
-									UpdateOverlays(I, "feet")
+									src.body_standing.overlays += I
 									if(limb.handfoot_overlay_1)
 										I = limb.handfoot_overlay_1
-										I.layer = MOB_LIMB_LAYER
+										I.layer = MOB_HAND_LAYER1
 										src.hands_standing.layer = MOB_HAND_LAYER1
 										src.hands_standing.overlays += I
-										UpdateOverlays(I, "foot overlay")
 
 					else	// Handles stumps
 						var/stump = update_body_limbs[name]
@@ -1215,13 +1215,6 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 				juggle_image.icon_state = "juggle"
 				juggle_image.pixel_y = body_offset
 				src.body_standing.overlays += juggle_image
-
-#if ASS_JAM
-	src.maptext_y = 32
-	src.maptext_width = 64
-	src.maptext_x = -16
-	health_update_queue |= src
-#endif
 
 	if (src.bioHolder)
 		src.bioHolder.OnMobDraw()

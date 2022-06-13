@@ -55,6 +55,8 @@
 	var/obj/item/grab/chokehold = null
 	var/obj/item/grab/special_grab = null
 
+	var/attack_verbs = "attacks" //! Verb used when you attack someone with this, as in [attacker] [attack_verbs] [victim]. Can be a list or single entry
+
 	/*_________*/
 	/*Inventory*/
 	/*‾‾‾‾‾‾‾‾‾*/

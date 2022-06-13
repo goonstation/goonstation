@@ -134,13 +134,6 @@
 				if (prob(30))
 					boutput(donor, "<span class='alert'>Oh god it's so bad you could choke to death in here!</span>")
 
-		if (!rad_immune)
-			var/datum/gas/rad_particles/RV = breath.get_trace_gas_by_type(/datum/gas/rad_particles)
-			if (RV)
-				var/RV_pp = (RV.moles/TOTAL_MOLES(breath))*breath_pressure
-				if(RV_pp >= 1)
-					donor.changeStatus("radiation", (1 + RV_pp) * mult/LUNG_COUNT)
-
 		if (breath.temperature > min(temp_tolerance) && !donor.is_heat_resistant()) // Hot air hurts :(
 			var/lung_burn = clamp(breath.temperature - temp_tolerance, 0, 30) / 3
 			donor.TakeDamage("chest", 0, (lung_burn / LUNG_COUNT) + 3, 0, DAMAGE_BURN)

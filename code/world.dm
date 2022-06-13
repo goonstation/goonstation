@@ -527,10 +527,6 @@ var/f_color_selector_handler/F_Color_Selector
 	Z_LOG_DEBUG("World/Init", "Loading fishing spots...")
 	global.initialise_fishing_spots()
 
-#if ASS_JAM
-	ass_jam_init()
-#endif
-
 	//QM Categories by ZeWaka
 	build_qm_categories()
 
@@ -769,10 +765,6 @@ var/f_color_selector_handler/F_Color_Selector
 
 	if (abandon_allowed)
 		features += "respawn allowed"
-
-#if ASS_JAM
-	features += "Ass Jam"
-#endif
 
 	if(features)
 		s += "[jointext(features, ", ")]"

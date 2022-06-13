@@ -17,6 +17,7 @@
 	var/datum/equipmentHolder/flockAbsorption/absorber
 	health_brute = 30
 	health_burn = 30
+
 	///Custom contextActions list so we can handle opening them ourselves
 	var/list/datum/contextAction/contexts = list()
 	contextLayout = new /datum/contextLayout/experimentalcircle
@@ -308,7 +309,7 @@
 		animate_flock_passthrough(src)
 		return TRUE
 	else
-		return !src.density
+		return ..()
 
 /mob/living/critter/flock/drone/MouseDrop_T(mob/living/target, mob/user)
 	if(!target || !user)
@@ -814,19 +815,16 @@
 	if (!istype(user))
 		return
 
-	if(istype(target,/obj/critter)) //gods how I hate /obj/critter
-		if(user.a_intent == INTENT_DISARM)
-			src.disarm(target,user)
+	if(ismob(target) || iscritter(target)) //gods how I hate /obj/critter
+		if (!isflockmob(target))
+			src.try_cage(target, user)
 			return
 
 	if(user.a_intent == INTENT_HARM)
 		if(HAS_ATOM_PROPERTY(target,PROP_ATOM_FLOCK_THING))
-			if(isflockdeconimmune(target))
+			if(!isflockdeconimmune(target))
+				actions.start(new /datum/action/bar/flock_decon(target), user)
 				return
-			actions.start(new /datum/action/bar/flock_decon(target), user)
-		else
-			..()
-		return
 
 	// CONVERT TURF
 	if(!isturf(target) && (!HAS_ATOM_PROPERTY(target,PROP_ATOM_FLOCK_THING) || istype(target, /obj/lattice/flock)))
@@ -862,14 +860,15 @@
 			else
 				actions.start(new/datum/action/bar/flock_convert(target), user)
 
+	//depositing
+	if (istype(target, /obj/flock_structure/ghost))
+		if (user.resources <= 0)
+			boutput(user, "<span class='alert'>No resources available for construction.</span>")
+		else
+			actions.start(new /datum/action/bar/flock_deposit(target), user)
+		return
 //help intent actions
 	if(user.a_intent == INTENT_HELP)
-		if (istype(target, /obj/flock_structure/ghost))
-			if (user.resources <= 0)
-				boutput(user, "<span class='alert'>No resources available for construction.</span>")
-			else
-				actions.start(new /datum/action/bar/flock_deposit(target), user)
-			return
 		if (!HAS_ATOM_PROPERTY(target, PROP_ATOM_FLOCK_THING) && !istype(target, /turf/simulated/floor/feather))
 			return
 		var/found_target = FALSE
@@ -930,9 +929,16 @@
 		else
 			actions.start(new/datum/action/bar/flock_repair(F), user)
 	else
-		..()
+		src.attack_hand(target, user)
 
+//why doesn't attack_hand trigger on mobs aaa
 /datum/limb/flock_converter/disarm(atom/target, var/mob/living/critter/flock/drone/user)
+	src.attack_hand(target, user)
+
+/datum/limb/flock_converter/grab(atom/target, var/mob/living/critter/flock/drone/user)
+	src.attack_hand(target, user)
+
+/datum/limb/flock_converter/proc/try_cage(atom/target, var/mob/living/critter/flock/drone/user)
 	if(!target || !user)
 		return
 	if(!(isliving(target) || iscritter(target)))
@@ -946,12 +952,11 @@
 	if(isflockmob(target))
 		boutput(user, "<span class='alert'>The imprisonment matrix doesn't work on flockdrones.</span>")
 		return
-	else if(user.resources < FLOCK_CAGE_COST)
-		boutput(user, "<span class='alert'>Not enough resources to imprison (you need [FLOCK_CAGE_COST]).</span>")
 	else if(istype(target.loc, /obj/flock_structure/cage))
 		boutput(user, "<span class='alert'>They're already imprisoned, you can't double-imprison them!</span>")
 	else
 		actions.start(new/datum/action/bar/flock_entomb(target), user)
+		return TRUE
 
 /datum/limb/flock_converter/harm(atom/target, var/mob/living/critter/flock/drone/user)
 	if(!target || !user)
@@ -963,7 +968,7 @@
 		else
 			boutput(user, "<span class='alert'>You can't butcher a living flockdrone!</span>")
 	else
-		..()
+		src.attack_hand(target, user)
 
 /////////////////////////////////////////////////////////////////////////////////
 
@@ -975,10 +980,21 @@
 	reload_time = 60
 	reloading_str = "recharging"
 
+/datum/limb/gun/flock_stunner/point_blank(mob/living/target, mob/living/user)
+	if (isflockmob(target))
+		return
+	return ..()
+
 /datum/limb/gun/flock_stunner/attack_range(atom/target, var/mob/living/critter/flock/drone/user, params)
 	if(!target || !user)
 		return
 	return ..()
+
+/datum/limb/gun/flock_stunner/help(mob/living/target, mob/living/user)
+	src.point_blank(target, user)
+
+/datum/limb/gun/flock_stunner/grab(mob/living/target, mob/living/user)
+	src.point_blank(target, user)
 
 /datum/projectile/energy_bolt/flockdrone
 	name = "incapacitor bolt"

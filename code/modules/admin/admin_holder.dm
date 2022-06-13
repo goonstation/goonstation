@@ -122,7 +122,7 @@
 
 
 	proc/show_pref_window(mob/user)
-		var/HTML = "<html><head><title>Admin Preferences</title></head><body>"
+		var/list/HTML = list("<html><head><title>Admin Preferences</title></head><body>")
 		HTML += "<a href='?src=\ref[src];action=refresh_admin_prefs'>Refresh</a></b><br>"
 		HTML += "<b>Automatically Set Alternate Key?: <a href='?src=\ref[src];action=toggle_auto_alt_key'>[(src.auto_alt_key ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Auto Alt Key: <a href='?src=\ref[src];action=set_auto_alt_key_name'>[(src.auto_alt_key_name ? "[src.auto_alt_key_name]" : "N/A")]</a></b><br>"
@@ -152,7 +152,7 @@
 		HTML += "<hr><b><a href='?src=\ref[src];action=load_admin_prefs'>LOAD</a></b> | <b><a href='?src=\ref[src];action=save_admin_prefs'>SAVE</a></b>"
 		HTML += "</body></html>"
 
-		user.Browse(HTML,"window=aprefs;size=375x520")
+		user.Browse(HTML.Join(),"window=aprefs;size=375x520")
 
 	proc/load_admin_prefs()
 		if (!src.owner)
