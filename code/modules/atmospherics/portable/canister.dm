@@ -27,7 +27,7 @@
 	var/image/atmos_dmi
 	var/image/bomb_dmi
 
-	/obj/machinery/portable_atmospherics/canister/New()
+	New()
 		..()
 		src.AddComponent(/datum/component/bullet_holes, 5, 0)
 		atmos_dmi = image('icons/obj/atmospherics/atmos.dmi')
