@@ -1,5 +1,9 @@
 
 (t)sun jun 12 22
+(u)Ikea
+(p)8981
+(e)|
+(*)Flock caging no longer costs resources and takes 4 seconds instead of 6.
 (u)Azrun
 (p)9061
 (e)⚖|balance
