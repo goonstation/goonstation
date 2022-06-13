@@ -70,16 +70,6 @@
 	proc/updateHealth(var/prevHealth)
 		if(_health <= 0)
 			onDestroy()
-/*		else
-			if((_health > 75) && !(prevHealth > 75))
-				//UpdateOverlays(null, "damage")
-			else if((_health <= 75 && _health > 50) && !(prevHealth <= 75 && prevHealth > 50))
-				//setTexture("damage1", BLEND_MULTIPLY, "damage")
-			else if((_health <= 50 && _health > 25) && !(prevHealth <= 50 && prevHealth > 25))
-				//setTexture("damage2", BLEND_MULTIPLY, "damage")
-			else if((_health <= 25) && !(prevHealth <= 25))
-				//setTexture("damage3", BLEND_MULTIPLY, "damage")
-		return*/
 
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name ? src.real_name : initial(src.name)][name_suffix(null, 1)]"
