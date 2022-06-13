@@ -144,15 +144,17 @@
 /obj/ability_button/magboot_toggle
 	name = "(De)Activate Magboots"
 	icon_state = "magbootson"
+	desc = "Toggle your magboots.<br>When on, they firmly anchor you to the floor, preventing the majority of outside forces from moving you."
 
 	execute_ability()
 		var/obj/item/clothing/shoes/magnetic/W = the_item
 		if(W.magnetic)
 			W.deactivate()
-			boutput(the_mob, "You power off your magnetic boots")
+			boutput(the_mob, "<span class='hint'>You power off your magnetic boots.</span><br><span class='alert'>You are no longer anchored to the floor.</span>", group = "magbootsoff")
 		else
 			W.activate()
-			boutput(the_mob, "You power on your magnetic boots")
+			boutput(the_mob, "<span class='hint'>You power on your magnetic boots.</span><br><span class='success'>You are now firmly anchored to the floor, and cannot be moved by pushing or teleportation.</span>", \
+				group = "magbootson")
 		the_mob.update_equipped_modifiers()
 		the_mob.update_clothing()
 		..()
