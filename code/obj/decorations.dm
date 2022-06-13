@@ -372,7 +372,7 @@
 			boutput(user, "<span class='notice'>You pick at the ruined bush, looking for any leafs to graze on, but cannot find any.</span>")
 			return
 		else if (destroyed)
-			return ..()
+			return
 
 		user.lastattacked = src
 		if (iscow(user) && user.a_intent == INTENT_HELP)	//Bonsai trees are delicious to cow-people
@@ -388,7 +388,7 @@
 				user.changeStatus("food_hp_up", 2 MINUTES)
 				user.changeStatus("food_energized", 2 MINUTES)
 				return
-		return ..()
+		..()
 
 	attackby(obj/item/W, mob/user)
 		if (!W) return
