@@ -11,7 +11,7 @@
 	var/active = 0
 	var/fuel_drain_rate = 0.3
 	var/atmos_drain_rate = 0.02
-	var/carbon_output = 50
+	var/carbon_output = 0.02
 	var/standard_power_output = 2500 // around how much the generator will output running normally
 	var/last_output
 
@@ -113,15 +113,15 @@
 			src.visible_message("<span class='notice'>The [src] stops, it seems like it ran out of something.</span>")
 			return
 
-		src.last_output = ((average_volatility * src.standard_power_output) * (available_oxygen * 5))
+		src.last_output = (((average_volatility / 3) * src.standard_power_output) * (available_oxygen * 5))
 		src.add_avail(src.last_output WATTS)
 
-		// src.visible_message("<span class='notice'>[src.last_output] WATTS</span>")
+		src.visible_message("<span class='notice'>[src.last_output] WATTS</span>")
 
 		var/turf/simulated/T = get_turf(src)
 		if (istype(T))
 			var/datum/gas_mixture/payload = new /datum/gas_mixture
-			payload.carbon_dioxide = src.carbon_output * src.atmos_drain_rate
+			payload.carbon_dioxide = src.carbon_output
 			payload.temperature = T20C
 			T.assume_air(payload)
 
@@ -236,11 +236,12 @@
 		if (T.air_contents.oxygen <= 0)
 			return
 
-		// debug, remove dummy
 		/* src.visible_message("<span class='notice'>Oxygen Moles: [T.air_contents.oxygen]</span>")
 		src.visible_message("<span class='notice'>Total Moles: [TOTAL_MOLES(T.air_contents)]</span>")
 		src.visible_message("<span class='notice'>Oxygen Concentration: [T.air_contents.oxygen / TOTAL_MOLES(T.air_contents)]</span>") */
+
 		return T.air_contents.oxygen / TOTAL_MOLES(T.air_contents)
+
 
 	proc/get_average_volatility(datum/reagents/R)
 		if (!R || !R.total_volume)
@@ -251,8 +252,33 @@
 		for (var/reagent_id in R.reagent_list)
 			var/datum/reagent/current_reagent = R.reagent_list[reagent_id]
 			if (current_reagent)
-				average += current_reagent.volatility
-				i++
+				switch(reagent_id)
+					if ("foof", "kerosene", "nitrotri_dry", "dbreath")
+						average += 5
+						i++
+
+					if ("blackpowder", "phlogiston", "napalm_goo", "sorium", "firedust")
+						average += 4
+						i++
+
+					if ("fuel", "ethanol", "acetone")
+						average += 3
+						i++
+
+					if ("oil", "butter", "diethylamine")
+						average += 2
+						i++
+
+					if ("plasma", "magnesium", "phosphorus")
+						average += 1
+						i++
+
+					else
+						var/datum/reagent/fooddrink/alcoholic/current_alcoholic_reagent = current_reagent
+						if (istype(current_reagent) && current_alcoholic_reagent.alch_strength >= 0.5)
+							average += 3
+							i++
+
 
 		return average / i
 
@@ -309,5 +335,4 @@
 		set category = "Local"
 
 		src.eject_inlet_tank(usr)
-
 
