@@ -323,6 +323,22 @@
 	else
 		..()
 
+/mob/living/critter/flock/drone/mouse_drop(atom/over_object, src_location, over_location, over_control, params)
+	. = ..()
+	if (isdead(src) || isnull(src.flock))
+		return
+	if (!isflockmob(usr))
+		return
+	var/mob/living/intangible/flock/flock_controller = usr
+	if (istype(usr, /mob/living/critter/flock))
+		var/mob/living/critter/flock/flock_mob = usr
+		flock_controller = flock_mob.controller
+	if (!isalive(flock_controller))
+		return // flock mind/trace is stunned or dead
+	if (flock_controller.flock != src.flock)
+		return // this isn't our drone
+	src.rally(over_location)
+
 /mob/living/critter/flock/drone/hotkey(var/name)
 	switch (name)
 		if("equip")
