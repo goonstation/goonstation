@@ -795,7 +795,7 @@ TYPEINFO(/datum/mutantrace)
 		if(act == "scream")
 			if(src.mob.emote_allowed)
 				src.mob.emote_allowed = 0
-				message = "<B>[mob]</B> screams with \his mind! Guh, that's creepy!"
+				message = "<B>[src.mob]</B> screams with \his mind! Guh, that's creepy!"
 				playsound(src.mob, "sound/voice/screams/Psychic_Scream_1.ogg", 80, 0, 0, clamp(1.0 + (30 - src.mob.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
 				SPAWN(3 SECONDS)
 					src.mob.emote_allowed = 1
@@ -987,7 +987,7 @@ TYPEINFO(/datum/mutantrace)
 		if(act == "scream")
 			if(src.mob.emote_allowed)
 				src.mob.emote_allowed = 0
-				message = "<B>[mob]</B> moans!"
+				message = "<B>[src.mob]</B> moans!"
 				playsound(src.mob, "sound/voice/Zgroan[pick("1","2","3","4")].ogg", 80, 0, 0, clamp(1.0 + (30 - src.mob.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
 				SPAWN(3 SECONDS)
 					src.mob.emote_allowed = 1
@@ -1007,7 +1007,7 @@ TYPEINFO(/datum/mutantrace)
 					src.mob.full_heal()
 
 					src.mob.emote("scream")
-					src.mob.visible_message("<span class='alert'><B>[mob]</B> rises from the dead!</span>")
+					src.mob.visible_message("<span class='alert'><B>[src.mob]</B> rises from the dead!</span>")
 
 					if (strain == 0 && prob(25))	//chance to be one or the other
 						strain = rand(1,2)
@@ -1088,7 +1088,7 @@ TYPEINFO(/datum/mutantrace)
 		if(act == "scream")
 			if(src.mob.emote_allowed)
 				src.mob.emote_allowed = 0
-				message = "<B>[mob]</B> moans!"
+				message = "<B>[src.mob]</B> moans!"
 				playsound(src.mob, "sound/voice/Zgroan[pick("1","2","3","4")].ogg", 80, 0, 0, clamp(1.0 + (30 - src.mob.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
 				SPAWN(3 SECONDS)
 					src.mob.emote_allowed = 1
@@ -1275,7 +1275,7 @@ TYPEINFO(/datum/mutantrace)
 			if ("scream")
 				if (src.mob.emote_allowed)
 					src.mob.emote_allowed = 0
-					message = "<span class='alert'><B>[mob] screeches!</B></span>"
+					message = "<span class='alert'><B>[src.mob] screeches!</B></span>"
 					playsound(src.mob, "sound/voice/creepyshriek.ogg", 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 					SPAWN(3 SECONDS)
 						if (src.mob) src.mob.emote_allowed = 1
@@ -1387,14 +1387,14 @@ TYPEINFO(/datum/mutantrace)
 			if("howl", "scream")
 				if(src.mob.emote_allowed)
 					src.mob.emote_allowed = 0
-					message = "<span class='alert'><B>[mob] howls [pick("ominously", "eerily", "hauntingly", "proudly", "loudly")]!</B></span>"
+					message = "<span class='alert'><B>[src.mob] howls [pick("ominously", "eerily", "hauntingly", "proudly", "loudly")]!</B></span>"
 					playsound(src.mob, "sound/voice/animal/werewolf_howl.ogg", 65, 0, 0, clamp(1.0 + (30 - src.mob.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
 					SPAWN(3 SECONDS)
 						src.mob.emote_allowed = 1
 			if("burp")
 				if(src.mob.emote_allowed)
 					src.mob.emote_allowed = 0
-					message = "<B>[mob]</B> belches."
+					message = "<B>[src.mob]</B> belches."
 					playsound(src.mob, "sound/voice/burp_alien.ogg", 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 					SPAWN(1 SECOND)
 						src.mob.emote_allowed = 1
@@ -1542,12 +1542,12 @@ TYPEINFO(/datum/mutantrace)
 					. = "<B>[src.name]</B> rolls."
 			if("gnarl")
 				if (!muzzled)
-					. = "<B>[mob]</B> gnarls and shows \his teeth.."
+					. = "<B>[src.mob]</B> gnarls and shows \his teeth.."
 			if("jump")
 				. = "<B>[src.mob.name]</B> jumps!"
 			if ("scream")
 				if (src.mob.emote_check(voluntary, 50))
-					. = "<B>[mob]</B> screams!"
+					. = "<B>[src.mob]</B> screams!"
 					playsound(src.mob, src.sound_monkeyscream, 80, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 			if ("fart")
 				if(farting_allowed && (!src.mob.reagents || !src.mob.reagents.has_reagent("anti_fart")))
