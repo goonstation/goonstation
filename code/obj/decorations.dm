@@ -281,8 +281,7 @@
 		src.bites -= 1
 		var/desired_mask = (src.bites / initial(src.bites)) * 5
 		desired_mask = round(desired_mask)
-		desired_mask = max(1,desired_mask)
-		desired_mask = min(desired_mask, 5)
+		desired_mask = clamp(desired_mask, 1, 5)
 
 		if (desired_mask != current_mask)
 			current_mask = desired_mask
@@ -295,7 +294,7 @@
 			user.setStatus("weakened", 3 SECONDS)
 			user.visible_message("<span class='notice'>[user] takes a bite out of [src] and chokes on the plastic leaves.</span>", "<span class='alert'>You munch on some of [src]'s leaves, but realise too late it's made of plastic. You start choking!</span>")
 			user.take_oxygen_deprivation(20)
-			user.losebreath+=2
+			user.losebreath += 2
 		else
 			user.changeStatus("food_hp_up", 20 SECONDS)
 			user.visible_message("<span class='notice'>[user] takes a bite out of [src].</span>", "<span class='notice'>You munch on some of [src]'s leaves, like any normal human would.</span>")
