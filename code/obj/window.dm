@@ -987,7 +987,7 @@
 
 
 	auto
-		name = "autowindow grille spawner (will apply in time)"
+		name = "autowindow grille spawner (will place nonreinf soon)"
 		win_path = "/obj/window/auto/reinforced"
 		full_win = 1
 		no_dirs = 1
@@ -999,7 +999,7 @@
 			icon_state = "r-wingrille_f"
 
 		crystal
-			name = "crystal autowindow grille spawner (will apply in time)"
+			name = "crystal autowindow grille spawner (will place nonreinf soon)"
 			win_path = "/obj/window/auto/crystal/reinforced"
 			icon_state = "p-wingrille_f"
 
