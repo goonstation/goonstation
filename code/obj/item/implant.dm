@@ -596,7 +596,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		. = ..()
 		elecflash(src, ., . * 2, TRUE)
 		for (var/mob/living/M in orange(. / 6 + 1, src.owner))
-			if (!isintangible(M))
+			if (!isintangible(M) && (!M.mind || M.mind.special_role != ROLE_NUKEOP)) // I dont feel like making a child for such a minor change.
 				var/dist = get_dist(src.owner, M) + 1
 				// arcflash uses some fucked up thresholds so trust me on this one
 				arcFlash(src.owner, M, (40000 * (4 - (0.4 * dist * log(dist)))) * (15 * log(.) + 3))
@@ -604,7 +604,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			if (prob(. * 7))
 				var/mob/living/target
 				for (var/mob/living/L in orange(machine, 2))
-					if (!isintangible(L))
+					if (!isintangible(L) && (!L.mind || L.mind.special_role != ROLE_NUKEOP))
 						target = L
 						break
 				if (target)
