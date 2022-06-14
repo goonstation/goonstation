@@ -1262,10 +1262,10 @@
 
 /obj/item/ammo/power_cell/self_charging/bigmedium
 	name = "Power Cell - Thermonuclear"
-	desc = "Utilizing dual Fission Fusion capabilities for a lower cost yet high power cell. Holds 275PU."
-	max_charge = 275
-	charge = 275
-	recharge_rate = 25
+	desc = "Utilizing dual Fission Fusion capabilities for a lower cost yet high power cell. Holds 250PU."
+	max_charge = 250
+	charge = 250
+	recharge_rate = 20
 
 /obj/item/ammo/power_cell/self_charging/big
 	name = "Power Cell - Fusion"
