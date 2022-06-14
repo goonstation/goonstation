@@ -423,22 +423,10 @@
 					qdel(I)
 
 			for (var/atom/S in gunsim)
-				if(istype(S, /obj/storage) || istype(S, /obj/artifact) || istype(S, /obj/critter) || istype(S, /obj/machinery) || istype(S, /obj/decal) || istype(S, /mob/living/carbon/human/tdummy))
+				if(istype(S, /obj/storage) || istype(S, /obj/artifact) || istype(S, /obj/critter) || istype(S, /obj/machinery) || istype(S, /obj/decal) || istype(S, /mob/living/carbon/human/tdummy) || istype(S, /mob/living/critter))
 					qdel(S)
 
 
-/*
-			for (var/obj/storage/S in gunsim)
-				qdel(S)
-			for (var/obj/artifact/A in gunsim)
-				qdel(A)
-			for (var/obj/critter/C in gunsim)
-				qdel(C)
-			for (var/obj/machinery/bot/B in gunsim)
-				qdel(B)
-			for (var/obj/decal/D in gunsim)
-				qdel(D)
-*/
 		SPAWN(60 SECONDS)
 			active = 0
 			alpha = 255

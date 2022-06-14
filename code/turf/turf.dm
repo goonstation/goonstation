@@ -148,7 +148,8 @@
 	animate_movement = NO_STEPS // fix for things gliding around all weird
 
 	Move()
-		return 0
+		SHOULD_CALL_PARENT(FALSE)
+		return FALSE
 
 /obj/overlay/tile_gas_effect
 	name = ""
@@ -157,7 +158,8 @@
 	mouse_opacity = 0
 
 	Move()
-		return 0
+		SHOULD_CALL_PARENT(FALSE)
+		return FALSE
 
 /turf/unsimulated/meteorhit(obj/meteor as obj)
 	return

@@ -769,7 +769,7 @@
 	return
 
 /obj/machinery/vending/proc/postvend_effect()
-	playsound(src.loc, 'sound/machines/vending_dispense.ogg', 40, 0.5, 0.1)
+	playsound(src.loc, 'sound/machines/vending_dispense.ogg', 40, 0, 0.1)
 	return
 
 /obj/machinery/vending/power_change()
@@ -1156,8 +1156,6 @@
 	light_g = 0.88
 	light_b = 0.88
 
-
-
 	create_products()
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/patch/bruise, 10)
@@ -1197,6 +1195,10 @@
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/patch/LSD, rand(1, 6), hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/vape/medical, 1, hidden=1, cost=400)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/bath_bomb, rand(7, 13), hidden=1, cost=100)
+
+	postvend_effect()
+		playsound(src.loc, 'sound/machines/vending_dispense_small.ogg', 40, 0, 0.1)
+		return
 
 /obj/machinery/vending/medical_public
 	name = "Public MiniMed"
@@ -1247,6 +1249,10 @@
 			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/coffee, rand(1,5), hidden=1, cost=PAY_TRADESMAN/10)
 		else
 			slogan_list += "ERROR: OUT OF COFFEE!"
+
+	postvend_effect()
+		playsound(src.loc, 'sound/machines/vending_dispense_small.ogg', 40, 0, 0.1)
+		return
 
 /obj/machinery/vending/security
 	name = "SecTech"
