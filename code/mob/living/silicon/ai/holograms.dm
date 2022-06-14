@@ -248,7 +248,7 @@
 				icon_state = pick("d_glitch2", "d_glitch3")
 				distort_size = 10
 
-#define MAX_TILES_PER_HOLOGRAM 3
+#define MAX_TILES_PER_HOLOGRAM 5
 /obj/hologram/text
 	var/message
 	var/original_color
