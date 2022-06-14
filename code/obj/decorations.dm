@@ -159,9 +159,9 @@
 	var/time_between_uses = 400 // The default time between uses.
 	var/override_default_behaviour = 0 // When this is set to 1, the additional_items list will be used to dispense items.
 	var/list/additional_items = list() // See above.
-	var/bites = 5 // How many bites can cow people take out of it?
-	var/current_mask = 5 // The mask used to show bite marks
-	var/is_plastic = FALSE // Is the bush actually made out of plastic?
+	var/bites = 5 /// How many bites can cow people take out of it?
+	var/current_mask = 5 /// The mask used to show bite marks
+	var/is_plastic = FALSE /// Is the bush actually made out of plastic?
 
 	New()
 		..()
