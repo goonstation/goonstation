@@ -651,7 +651,7 @@ stare
 
 /datum/aiTask/succeedable/harvest/failed()
 	var/obj/item/harvest_target = holder.target
-	if(!harvest_target || BOUNDS_DIST(holder.owner, harvest_target) > 0 || fails >= max_fails)
+	if(!harvest_target || !in_interact_range(harvest_target, holder.owner) || fails >= max_fails)
 		. = TRUE
 
 /datum/aiTask/succeedable/harvest/succeeded()
@@ -663,7 +663,7 @@ stare
 		holder.target = null
 		fails++
 		return
-	if(harvest_target && BOUNDS_DIST(holder.owner, harvest_target) == 0 && !succeeded())
+	if(harvest_target && in_interact_range(harvest_target, holder.owner) && !succeeded())
 		var/mob/living/critter/flock/drone/F = holder.owner
 		if(F?.set_hand(1)) // grip tool
 			var/obj/item/already_held = F.get_active_hand().item
