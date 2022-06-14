@@ -2259,7 +2259,8 @@ TYPEINFO(/datum/mutantrace/pug)
 			mob.UpdateOverlays(null, "snore_bubble")
 
 	proc/throw_response(target, item, thrower)
-		if (mob == thrower || is_incapacitated(mob) || prob(85))
+		// Don't dive at things we throw; don't dive if we're stunned or dead; dive 15% of the time, 100% at limbs
+		if (mob == thrower || is_incapacitated(mob) || (prob(85) && !istype(item, /obj/item/parts)))
 			return
 		mob.throw_at(get_turf(item), 1, 1)
 		mob.visible_message("<span class='alert'>[mob] staggers.</span>")
