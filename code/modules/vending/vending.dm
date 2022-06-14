@@ -769,7 +769,7 @@
 	return
 
 /obj/machinery/vending/proc/postvend_effect()
-	playsound(src.loc, 'sound/machines/vending_dispense.ogg', 40, 0.5, 0.1)
+	playsound(src.loc, 'sound/machines/vending_dispense.ogg', 40, 0, 0.1)
 	return
 
 /obj/machinery/vending/power_change()
@@ -1197,7 +1197,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/bath_bomb, rand(7, 13), hidden=1, cost=100)
 
 	postvend_effect()
-		playsound(src.loc, 'sound/machines/vending_dispense_small.ogg', 40, 0.5, 0.1)
+		playsound(src.loc, 'sound/machines/vending_dispense_small.ogg', 40, 0, 0.1)
 		return
 
 /obj/machinery/vending/medical_public
@@ -1251,7 +1251,7 @@
 			slogan_list += "ERROR: OUT OF COFFEE!"
 
 	postvend_effect()
-		playsound(src.loc, 'sound/machines/vending_dispense_small.ogg', 40, 0.5, 0.1)
+		playsound(src.loc, 'sound/machines/vending_dispense_small.ogg', 40, 0, 0.1)
 		return
 
 /obj/machinery/vending/security
