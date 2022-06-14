@@ -2615,6 +2615,9 @@
 	dir = 9;
 	icon_state = "lattice-dir"
 	},
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/space,
 /area/space)
 "cAc" = (
@@ -4598,6 +4601,17 @@
 /turf/simulated/floor/plating,
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/juryroom)
+"eqG" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/sec)
 "erd" = (
 /obj/table/auto,
 /obj/machinery/power/data_terminal,
@@ -5266,6 +5280,18 @@
 "eWt" = (
 /turf/simulated/wall/auto/supernorn/wood,
 /area/station/crew_quarters/bar)
+"eWL" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/obj/warp_beacon/security,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/space,
+/area/space)
 "eXl" = (
 /turf/simulated/floor/carpet/green/fancy/edge/nw,
 /area/station/crew_quarters/jazz)
@@ -6139,6 +6165,11 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/mail,
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/caution,
 /area/station/hangar/medical)
 "fKr" = (
@@ -6923,6 +6954,11 @@
 /area/station/crew_quarters/toilets)
 "gyx" = (
 /obj/disposalpipe/segment,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/medical)
 "gyU" = (
@@ -9345,6 +9381,14 @@
 	},
 /turf/simulated/floor/twotone/yellow,
 /area/station/hallway/primary/east)
+"iOk" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/science)
 "iOH" = (
 /obj/machinery/disposal/small/south,
 /obj/disposalpipe/trunk{
@@ -9352,6 +9396,14 @@
 	},
 /turf/simulated/floor/airless/blackwhite/whitegrime,
 /area/station/crew_quarters/bar)
+"iOM" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/medical)
 "iON" = (
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/white,
@@ -10684,6 +10736,21 @@
 /obj/machinery/vending/paint/broken,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/east)
+"jZy" = (
+/obj/machinery/door/poddoor/blast/pyro{
+	autoclose = 1;
+	dir = 4;
+	icon_state = "bdoormid1";
+	id = "hangar_artlab";
+	name = "Science Hangar"
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/science)
 "jZz" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 5
@@ -12851,6 +12918,17 @@
 	},
 /turf/simulated/floor/marble/black,
 /area/station/hallway/primary/southwest)
+"lRi" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/twotone/purple,
+/area/station/hangar/science)
 "lRl" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/light/lamp/bright,
@@ -15987,6 +16065,11 @@
 /area/station/science/testchamber)
 "oIn" = (
 /obj/machinery/manufacturer/hangar,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/caution,
 /area/station/hangar/medical)
 "oIu" = (
@@ -16260,6 +16343,17 @@
 /obj/machinery/drone_recharger,
 /turf/simulated/floor/white,
 /area/station/medical/robotics)
+"oTX" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/area/station/security/main)
 "oTY" = (
 /obj/decal/cleanable/pathogen_sweat,
 /turf/simulated/floor/red/redblackchecker,
@@ -17732,6 +17826,18 @@
 	},
 /turf/simulated/floor/twotone,
 /area/station/turret_protected/Zeta)
+"qjt" = (
+/obj/warp_beacon/medbay,
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/space,
+/area/space)
 "qjv" = (
 /obj/access_spawn/maint,
 /obj/machinery/door/airlock/gannets/maintenance,
@@ -19965,6 +20071,14 @@
 	},
 /turf/simulated/floor/marble/black,
 /area/station/crew_quarters/market)
+"ssb" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/airless/red/checker,
+/area/station/hangar/sec)
 "ssf" = (
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
@@ -20712,6 +20826,14 @@
 	},
 /turf/unsimulated/floor/twotone/purple,
 /area/station/science/lab)
+"sXm" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/sec)
 "sXz" = (
 /obj/machinery/light/incandescent{
 	dir = 4
@@ -21276,14 +21398,6 @@
 	},
 /turf/simulated/floor/airless/blue,
 /area/station/medical/head/private)
-"tAR" = (
-/obj/warp_beacon/medbay,
-/obj/lattice{
-	dir = 9;
-	icon_state = "lattice-dir"
-	},
-/turf/space,
-/area/space)
 "tBc" = (
 /obj/landmark{
 	icon_state = "x3";
@@ -21383,6 +21497,14 @@
 /obj/table/auto,
 /turf/simulated/floor,
 /area/station/janitor)
+"tFm" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/twotone/purple,
+/area/station/hangar/science)
 "tFI" = (
 /obj/disposalpipe/switch_junction,
 /turf/unsimulated/floor/airless/twotone/red,
@@ -23632,6 +23754,11 @@
 /obj/machinery/vehicle/miniputt/armed{
 	dir = 8
 	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/shuttlebay{
 	dir = 4;
 	icon_state = "engine_caution_east"
@@ -25355,6 +25482,11 @@
 /obj/item/sheet/glass/crystal/reinforced/fullstack,
 /obj/item/sheet/steel/reinforced/fullstack,
 /obj/disposalpipe/segment,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/caution,
 /area/station/hangar/medical)
 "xjA" = (
@@ -25426,6 +25558,17 @@
 /obj/item/suture,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery/storage)
+"xlI" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/shuttlebay{
+	dir = 4;
+	icon_state = "engine_caution_east"
+	},
+/area/station/hangar/science)
 "xmp" = (
 /obj/landmark/start{
 	name = "Head of Personnel"
@@ -26303,6 +26446,28 @@
 /obj/item/rocko,
 /turf/simulated/floor/twotone/yellow,
 /area/station/engine/engineering/ce/private)
+"xZR" = (
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/medbay_horizontal/vertical,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/obj/machinery/door/poddoor/pyro/podbay_autoclose/medsci_horizontal{
+	dir = 8
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 8;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/medical)
 "xZX" = (
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/station/teleporter)
@@ -26510,6 +26675,21 @@
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/airless/plating,
 /area/station/hallway/primary/central)
+"yhY" = (
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/security_horizontal/vertical,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/sec)
 "yhZ" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
@@ -48462,7 +48642,7 @@ aDK
 aDK
 aDK
 aDK
-efh
+sac
 aDK
 aDK
 aDK
@@ -48764,7 +48944,7 @@ aDK
 aDK
 aDK
 aDK
-efh
+sac
 aDK
 aDK
 aDK
@@ -49066,7 +49246,7 @@ aDK
 aDK
 aDK
 aDK
-efh
+sac
 aDK
 dNH
 wIo
@@ -49155,11 +49335,11 @@ aDK
 aDK
 aDK
 aDK
+qjt
 aDK
 aDK
 aDK
 aDK
-tAR
 aDK
 aDK
 aDK
@@ -49368,7 +49548,7 @@ aDK
 aDK
 dNH
 jkm
-jkm
+jZy
 jkm
 dNH
 mZR
@@ -49457,11 +49637,11 @@ aDK
 aDK
 aDK
 aDK
+sac
 aDK
 aDK
 aDK
 aDK
-efh
 aDK
 aDK
 aDK
@@ -49670,7 +49850,7 @@ oUc
 dNH
 xjr
 wFE
-wFE
+iOk
 wFE
 dNH
 wfN
@@ -49759,11 +49939,11 @@ azS
 aDK
 aDK
 aDK
+sac
 aDK
 aDK
 aDK
 aDK
-efh
 aDK
 aDK
 aDK
@@ -49972,7 +50152,7 @@ oUc
 dNH
 wFE
 wFE
-wFE
+iOk
 wFE
 wFE
 wFE
@@ -50061,11 +50241,11 @@ kKc
 aDK
 aDK
 aDK
+sac
 aDK
 aDK
 aDK
 aDK
-efh
 aDK
 aDK
 aDK
@@ -50274,7 +50454,7 @@ oUc
 dNH
 wFE
 tIv
-wFE
+iOk
 wFE
 wFE
 wFE
@@ -50363,7 +50543,7 @@ qfX
 xwk
 vZL
 pFo
-pFo
+xZR
 pFo
 fnX
 xwk
@@ -50576,7 +50756,7 @@ oUc
 dNH
 wFE
 wFE
-wFE
+iOk
 wFE
 wFE
 wFE
@@ -50665,7 +50845,7 @@ qfX
 dZJ
 vSz
 wLL
-wLL
+iOM
 wLL
 ame
 vDU
@@ -50878,7 +51058,7 @@ xlg
 dNH
 wFE
 wFE
-wFE
+iOk
 wFE
 wFE
 nTL
@@ -50967,7 +51147,7 @@ qfX
 kPh
 vSz
 wLL
-wLL
+iOM
 wLL
 ame
 kPh
@@ -51180,7 +51360,7 @@ bfs
 dNH
 cGY
 cGY
-cGY
+xlI
 cGY
 cGY
 cGY
@@ -51482,7 +51662,7 @@ bfs
 dNH
 iEc
 qUX
-qUX
+tFm
 qUX
 qUX
 mwW
@@ -51571,7 +51751,7 @@ xwk
 kPh
 vSz
 wLL
-wLL
+iOM
 eZp
 ame
 dPE
@@ -51784,7 +51964,7 @@ bfs
 dNH
 paa
 qUX
-qUX
+tFm
 qUX
 qUX
 qUX
@@ -51873,7 +52053,7 @@ xwk
 kPh
 vSz
 wLL
-wLL
+iOM
 mUe
 ame
 wUe
@@ -52086,7 +52266,7 @@ mkS
 qby
 ydS
 tRz
-fhi
+lRi
 fhi
 fhi
 eFm
@@ -52477,7 +52657,7 @@ wHJ
 vBG
 kPh
 kPh
-kPh
+wUe
 iwY
 dPE
 flG
@@ -65960,7 +66140,7 @@ aDK
 aDK
 aDK
 aDK
-aDK
+eWL
 aDK
 aDK
 aDK
@@ -66262,7 +66442,7 @@ aDK
 aDK
 aDK
 aDK
-aDK
+sac
 aDK
 aDK
 aDK
@@ -66564,7 +66744,7 @@ aDK
 aDK
 aDK
 aDK
-aDK
+sac
 aDK
 aDK
 aDK
@@ -66866,7 +67046,7 @@ aDK
 aDK
 aDK
 aDK
-aDK
+sac
 aDK
 aDK
 aDK
@@ -67168,7 +67348,7 @@ aDK
 ulf
 ovy
 dsv
-dsv
+yhY
 dsv
 eIq
 ulf
@@ -67470,7 +67650,7 @@ aDK
 ulf
 kIX
 ylE
-kIX
+sXm
 kIX
 qCu
 pjk
@@ -67772,7 +67952,7 @@ aDK
 ulf
 kIX
 kIX
-kIX
+sXm
 kIX
 qCu
 pjk
@@ -68074,7 +68254,7 @@ fOf
 ulf
 kIX
 kIX
-kIX
+sXm
 kIX
 qCu
 pjk
@@ -68376,7 +68556,7 @@ bfR
 ulf
 ijb
 kIX
-kIX
+sXm
 kIX
 qCu
 pjk
@@ -68678,7 +68858,7 @@ bfR
 ulf
 ihJ
 ldB
-ldB
+eqG
 ldB
 qoh
 pjk
@@ -68980,7 +69160,7 @@ iYo
 iYo
 pjk
 cCl
-pjk
+ssb
 pjk
 pjk
 pjk
@@ -69282,7 +69462,7 @@ iYo
 iYo
 rJB
 rJB
-rJB
+tHQ
 wIQ
 rJB
 rJB
@@ -69584,7 +69764,7 @@ rmq
 iYo
 smh
 smh
-smh
+cUs
 smh
 smh
 smh
@@ -69886,7 +70066,7 @@ pgQ
 iYo
 sBg
 smh
-smh
+cUs
 smh
 smh
 smh
@@ -70188,7 +70368,7 @@ kKh
 dSA
 cjP
 cjP
-uKz
+oTX
 uKz
 uKz
 uKz
