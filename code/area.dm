@@ -2612,6 +2612,11 @@ ABSTRACT_TYPE(/area/station/medical)
 	icon_state = "medcdc"
 	sound_environment = 5
 
+/area/station/medical/pandemic
+	name = "Pandemic Ward"
+	icon_state = "medpan"
+	sound_environment = 5
+
 /area/station/medical/dome
 	name = "Monkey Dome"
 	icon_state = "green"
