@@ -1342,7 +1342,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\artifacts\artifact_objects\implanter.dm"
 #include "code\obj\artifacts\artifact_objects\injector.dm"
 #include "code\obj\artifacts\artifact_objects\lamp.dm"
-#include "code\obj\artifacts\artifact_objects\limb_augmentor.dm"
 #include "code\obj\artifacts\artifact_objects\power_gen.dm"
 #include "code\obj\artifacts\artifact_objects\power_giver.dm"
 #include "code\obj\artifacts\artifact_objects\prison.dm"
