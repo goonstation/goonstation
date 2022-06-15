@@ -826,20 +826,6 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		name = ".38 AP round"
 		desc = "A more powerful armor-piercing .38 round. Huh. Aren't these illegal?"
 
-	bullet_nine_mm_NATO
-		name = "9mm NATO round"
-		desc = "A reliable bullet, used ubiquitously in law enforcement and armed forces a century ago."
-
-	ninemmplastic
-		name = "9mm Plastic round"
-		icon_state = "bulletplastic"
-		desc = "A small, sublethal plastic projectile."
-		leaves_wound = FALSE
-
-		New()
-			..()
-			implant_overlay = null
-
 	bullet_308
 		name = "Rifle Round" // this is used by basically every rifle in the game, ignore the "308" path
 		icon_state = "bulletbig"

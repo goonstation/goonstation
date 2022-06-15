@@ -578,7 +578,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 //9mm/0.355
 /obj/item/gun/kinetic/clock_188
-	desc = "A reliable weapon used the world over... 50 years ago. Uses 9mm NATO rounds."
+	desc = "A reliable weapon used the world over... 50 years ago. Uses 9mm plastic rounds."
 	name = "\improper Clock 188"
 	icon_state = "glock"
 	item_state = "glock"
@@ -591,7 +591,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	has_empty_state = 1
 	gildable = 1
 	fire_animation = TRUE
-	default_magazine = /obj/item/ammo/bullets/nine_mm_NATO
+	default_magazine = /obj/item/ammo/bullets/nine_mm_plastic
 
 	New()
 		if (prob(70))
@@ -599,21 +599,21 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			item_state = "glocktan"
 
 		if(throw_return)
-			default_magazine = /obj/item/ammo/bullets/nine_mm_NATO/boomerang
+			default_magazine = /obj/item/ammo/bullets/nine_mm_plastic/boomerang
 		ammo = new default_magazine
 
-		set_current_projectile(new/datum/projectile/bullet/nine_mm_NATO)
+		set_current_projectile(new/datum/projectile/bullet/nine_mm_plastic)
 
 		if(throw_return)
 			projectiles = list(current_projectile)
 		else
-			projectiles = list(current_projectile, new/datum/projectile/bullet/nine_mm_NATO/auto)
+			projectiles = list(current_projectile, new/datum/projectile/bullet/nine_mm_plastic/auto)
 			AddComponent(/datum/component/holdertargeting/fullauto, 1.2, 1.2, 1)
 		..()
 
 	attack_self(mob/user as mob)
 		..()	//burst shot has a slight spread.
-		if (istype(current_projectile, /datum/projectile/bullet/nine_mm_NATO/auto))
+		if (istype(current_projectile, /datum/projectile/bullet/nine_mm_plastic/auto))
 			spread_angle = 10
 			shoot_delay = 4
 		else
@@ -621,7 +621,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			shoot_delay = 2
 
 /obj/item/gun/kinetic/clock_188/boomerang
-	desc = "Jokingly called a \"Gunarang\" in some circles. Uses 9mm NATO rounds."
+	desc = "Jokingly called a \"Gunarang\" in some circles. Uses 9mm plastic rounds."
 	name = "\improper Clock 180"
 	force = MELEE_DMG_PISTOL
 	throw_range = 10
@@ -629,7 +629,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	throw_speed = 1
 	throw_return = 1
 	fire_animation = TRUE
-	default_magazine = /obj/item/ammo/bullets/nine_mm_NATO
+	default_magazine = /obj/item/ammo/bullets/nine_mm_plastic
 	var/prob_clonk = 0
 
 	throw_begin(atom/target)
@@ -680,14 +680,14 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	spread_angle = 2
 	can_dual_wield = 0
-	default_magazine = /obj/item/ammo/bullets/nine_mm_NATO
+	default_magazine = /obj/item/ammo/bullets/nine_mm_plastic
 	var/cases_to_eject = 0
 	var/open = FALSE
 
 
 	New()
 		ammo = new default_magazine
-		set_current_projectile(new/datum/projectile/bullet/nine_mm_NATO/burst)
+		set_current_projectile(new/datum/projectile/bullet/nine_mm_plastic/burst)
 		..()
 
 	attack_hand(mob/user)

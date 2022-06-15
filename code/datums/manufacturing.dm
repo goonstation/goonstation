@@ -2916,7 +2916,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	name = "Clock ammo"
 	item_paths = list("MET-1")
 	item_amounts = list(3)
-	item_outputs = list(/obj/item/ammo/bullets/nine_mm_NATO)
+	item_outputs = list(/obj/item/ammo/bullets/nine_mm_plastic)
 	time = 7 SECONDS
 	create = 1
 	category = "ammo"

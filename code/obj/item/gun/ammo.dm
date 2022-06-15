@@ -490,17 +490,17 @@
 		ammo_cat = AMMO_SMG_9MM
 		ammo_type = new/datum/projectile/bullet/bullet_9mm/smg
 
-/obj/item/ammo/bullets/nine_mm_NATO
-	sname = "9mm frangible"
-	name = "9mm frangible magazine"
+/obj/item/ammo/bullets/nine_mm_plastic
+	sname = "9mm plastic"
+	name = "9mm plastic magazine"
 	desc = "Some 9mm incapacitating bullets, made of plastic with rubber tips. Despite being sublethal, they can still do damage."
-	icon_state = "pistol_clip"	//9mm_clip that exists already. Also, put this in hacked manufacturers cause these bullets are not good.
+	icon_state = "pistol_magazine_plastic"
 	amount_left = 18.0
 	max_amount = 18.0
-	ammo_type = new/datum/projectile/bullet/nine_mm_NATO
+	ammo_type = new/datum/projectile/bullet/nine_mm_plastic
 	ammo_cat = AMMO_PISTOL_9MM
 
-/obj/item/ammo/bullets/nine_mm_NATO/boomerang //empty clip for the clock_188/boomerang
+/obj/item/ammo/bullets/nine_mm_plastic/boomerang //empty clip for the clock_188/boomerang
 	amount_left = 0
 
 //0.357

@@ -326,19 +326,20 @@ toxic - poisons
 		shot_number = 3
 
 
-/datum/projectile/bullet/nine_mm_NATO
+/datum/projectile/bullet/nine_mm_plastic
 	name = "bullet"
 	shot_sound = 'sound/weapons/9x19NATO.ogg'
 	power = 6
-	ks_ratio = 0.9
+	ks_ratio = 0.75
 	hit_ground_chance = 75
 	dissipation_rate = 2
 	dissipation_delay = 8
 	projectile_speed = 48
 	impact_image_state = "bhole-small"
 	hit_type = DAMAGE_BLUNT
-	implanted = /obj/item/implant/projectile/ninemmplastic
+	implanted = null
 	casing = /obj/item/casing/small
+	ie_type = null
 
 	on_hit(atom/hit)
 		..()
@@ -347,12 +348,12 @@ toxic - poisons
 			if(M.getStatusDuration("slowed") < 2.5 SECONDS)
 				M.changeStatus("slowed", 1 SECOND, optional = 2)
 
-/datum/projectile/bullet/nine_mm_NATO/burst
+/datum/projectile/bullet/nine_mm_plastic/burst
 	shot_number = 3
 	cost = 3
 	sname = "burst fire"
 
-/datum/projectile/bullet/nine_mm_NATO/auto
+/datum/projectile/bullet/nine_mm_plastic/auto
 	fullauto_valid = 1
 	shot_number = 1
 	cost = 1
