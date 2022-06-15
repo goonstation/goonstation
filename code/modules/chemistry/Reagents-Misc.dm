@@ -2114,13 +2114,9 @@ datum
 						//make it obvious that you are about to die horribly
 						M.addOverlayComposition(/datum/overlayComposition/flockmindcircuit)
 						// oh no
-						if(probmult(10)) // i hate you more, players
-							H.visible_message("<span class='alert bold'>[H] is torn apart from the inside as some weird floaty thing rips its way out of their body! Holy fuck!!</span>")
-							var/mob/living/critter/flock/bit/B = new()
-							B.set_loc(get_turf(H))
+						if(probmult(1)) // i hate you all, players
+							H.flockbit_gib()
 							logTheThing("combat", H, null, "was gibbed by reagent [name] at [log_loc(H)].")
-							H.gib()
-							return
 					else
 						if (!istype(M.loc, /obj/flock_structure/cage))
 							M.removeOverlayComposition(/datum/overlayComposition/flockmindcircuit)
