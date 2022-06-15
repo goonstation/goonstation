@@ -2071,6 +2071,9 @@ datum
 
 			on_remove()
 				active_reagent_holders -= src
+				var/mob/M = holder.my_atom
+				if (istype(M))
+					M.removeOverlayComposition(/datum/overlayComposition/flockmindcircuit)
 
 			proc/process_reactions()
 				// consume fellow reagents
@@ -2108,6 +2111,8 @@ datum
 						H.blood_volume -= amt
 						H.reagents.add_reagent(id, amt)
 					if(holder.get_reagent_amount(src.id) > gib_threshold)
+						//make it obvious that you are about to die horribly
+						M.addOverlayComposition(/datum/overlayComposition/flockmindcircuit)
 						// oh no
 						if(probmult(10)) // i hate you more, players
 							H.visible_message("<span class='alert bold'>[H] is torn apart from the inside as some weird floaty thing rips its way out of their body! Holy fuck!!</span>")
@@ -2116,6 +2121,7 @@ datum
 							logTheThing("combat", H, null, "was gibbed by reagent [name] at [log_loc(H)].")
 							H.gib()
 					else
+						M.removeOverlayComposition(/datum/overlayComposition/flockmindcircuit)
 						// DO SPOOKY THINGS
 						if(holder.get_reagent_amount(src.id) < 100)
 							if(probmult(2))
