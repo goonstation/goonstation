@@ -2120,30 +2120,31 @@ datum
 							B.set_loc(get_turf(H))
 							logTheThing("combat", H, null, "was gibbed by reagent [name] at [log_loc(H)].")
 							H.gib()
+							return
 					else
 						M.removeOverlayComposition(/datum/overlayComposition/flockmindcircuit)
-						// DO SPOOKY THINGS
-						if(holder.get_reagent_amount(src.id) < 100)
-							if(probmult(2))
-								M.playsound_local(get_turf(M), pick(sounds), 20, 1)
-							if(probmult(6))
-								boutput(M, "<span class='flocksay italics'>[pick_string("flockmind.txt", "flockjuice_low")]</span>")
-						else
-							if (probmult(5) && !ON_COOLDOWN(M, "flock_organ", 3 MINUTES))
-								M.emote("scream")
-								boutput(M, "<span class='alert'><b>You feel something hard and sharp crystallize inside you!</b></span>")
-								src.replace_organ(H)
-							if(probmult(10))
-								M.playsound_local(get_turf(M), pick(sounds), 40, 1)
-								M.add_simple_light("gnesis_glow", rgb2num("#26ffe6a2"))
-								M.simple_light.alpha = 0
-								M.visible_message("<span class='alert'>[M] is enveloped in a shimmering teal glow.</span>", "<span class='alert'>You are enveloped in a shimmering teal glow.</span>")
-								animate(M.simple_light, time = 1 SECOND, alpha = 255)
-								animate(time = 1 SECOND, alpha = 0)
-								SPAWN(2 SECONDS)
-									M.remove_simple_light("gnesis_glow")
-							if(probmult(30))
-								boutput(M, "<span class='flocksay italics'>[pick_string("flockmind.txt", "flockjuice_high")]</span>")
+					// DO SPOOKY THINGS
+					if(holder.get_reagent_amount(src.id) < 100)
+						if(probmult(2))
+							M.playsound_local(get_turf(M), pick(sounds), 20, 1)
+						if(probmult(6))
+							boutput(M, "<span class='flocksay italics'>[pick_string("flockmind.txt", "flockjuice_low")]</span>")
+					else
+						if (probmult(5) && !ON_COOLDOWN(M, "flock_organ", 3 MINUTES))
+							M.emote("scream")
+							boutput(M, "<span class='alert'><b>You feel something hard and sharp crystallize inside you!</b></span>")
+							src.replace_organ(H)
+						if(probmult(10))
+							M.playsound_local(get_turf(M), pick(sounds), 40, 1)
+							M.add_simple_light("gnesis_glow", rgb2num("#26ffe6a2"))
+							M.simple_light.alpha = 0
+							M.visible_message("<span class='alert'>[M] is enveloped in a shimmering teal glow.</span>", "<span class='alert'>You are enveloped in a shimmering teal glow.</span>")
+							animate(M.simple_light, time = 1 SECOND, alpha = 255)
+							animate(time = 1 SECOND, alpha = 0)
+							SPAWN(2 SECONDS)
+								M.remove_simple_light("gnesis_glow")
+						if(probmult(30))
+							boutput(M, "<span class='flocksay italics'>[pick_string("flockmind.txt", "flockjuice_high")]</span>")
 
 				..()
 				return
