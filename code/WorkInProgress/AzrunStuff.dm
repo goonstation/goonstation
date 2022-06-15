@@ -808,3 +808,381 @@
 					attack_hand(P.mob_shooter)
 		else
 			..()
+
+/datum/abilityHolder/silicon/ai
+	var/datum/targetable/ai/module/camera_gun/active_camera_gun
+
+	updateButtons(var/called_by_owner = 0, var/start_x = 2, var/start_y = 0)
+		. = ..()
+
+/mob/living/silicon/ai/New()
+	..()
+	abilityHolder = new /datum/abilityHolder/silicon/ai
+	if(eyecam)
+		eyecam.abilityHolder = abilityHolder
+
+	if(law_rack_connection)
+		holoHolder.text_expansion = law_rack_connection.holo_expansions.Copy()
+
+		for(var/ability_type in law_rack_connection.ai_abilities)
+			abilityHolder.addAbility(ability_type)
+
+/datum/targetable/ai
+	preferred_holder_type = /datum/abilityHolder/silicon/ai
+	icon = 'icons/mob/hud_ai.dmi'
+
+	castcheck(atom/target)
+		. = TRUE
+		var/mob/living/silicon/ai/AI = holder.owner
+		if(istype(AI))
+			if (!AI.deployed_to_eyecam)
+				boutput(holder.owner, "Deploy to an AI Eye first to do that.")
+				. = FALSE
+				return
+
+		var/turf/T = get_turf(target)
+		if(src.targeted)
+			if (!istype(T) || !istype(T.cameras) || !length(T.cameras))
+				boutput(holder.owner, "No camera available to target that location.")
+				. = FALSE
+				return
+
+	proc/get_law_module()
+		var/mob/living/silicon/ai/AI
+		if(istype(holder.owner,/mob/living/silicon/ai))
+			AI = holder.owner
+		else if(istype(holder.owner, /mob/living/intangible/aieye))
+			var/mob/living/intangible/aieye/Aeye = holder.owner
+			AI = Aeye.mainframe
+
+		if(istype(AI))
+			var/obj/machinery/lawrack/law_rack = AI.law_rack_connection
+			for (var/i in 1 to law_rack.MAX_CIRCUITS)
+				var/obj/item/aiModule/ability_expansion/expansion = law_rack.law_circuits[i]
+				if(istype(expansion))
+					if(src.type in expansion.ai_abilities)
+						return expansion
+
+/datum/targetable/ai/module
+	castcheck(atom/target)
+		. = ..()
+		if(.)
+			var/obj/item/aiModule/ability_expansion/expansion = get_law_module()
+			if(expansion)
+				if (expansion.last_use > world.time)
+					boutput(holder.owner, "<span class='alert'>The source module is on cooldown for [round((expansion.last_use - world.time) / 10)] seconds.</span>")
+					return FALSE
+
+	doCooldown()
+		..()
+		var/obj/item/aiModule/ability_expansion/expansion = get_law_module()
+		if(expansion)
+			expansion.last_use = world.time + expansion.shared_cooldown
+
+
+/datum/targetable/ai/module/chems
+	targeted = TRUE
+	target_anything = 1
+	var/obj/item/thrown_reagents/reagent_capsule
+
+	cast(atom/target)
+		if (..())
+			return 1
+
+		if(!ispath(reagent_capsule))
+			boutput(holder.owner, "<span class='alert'>Something appears to be wrong with the chem module... Call 1-800-CODER.</span>")
+			return 1
+
+		var/turf/T = get_turf(target)
+		for(var/obj/machinery/camera/cam in T.cameras)
+			if(!isturf(cam.loc) || !istype_exact(cam,/obj/machinery/camera))
+				continue
+
+			if(!can_line_airborne(cam, T, 15)) // probably want something that tests an object crossing specifically?
+				continue
+
+			if(!ON_COOLDOWN(cam,"[src.type]", 15 SECONDS))
+				var/obj/decal/D = new/obj/decal(cam.loc)
+
+				D.set_dir(get_dir(cam,target))
+				D.name = "metal foam spray"
+				D.icon = 'icons/obj/chemical.dmi'
+				D.icon_state = "chempuff"
+				D.layer = EFFECTS_LAYER_BASE
+
+				playsound(cam, "sound/machines/mixer.ogg", 50, 1)
+
+				logTheThing("combat", holder.owner, null, "fires [src.name], creating metal foam at [log_loc(T)].")
+				var/obj/foam = new reagent_capsule(get_turf(cam))
+				foam.throw_at(target, 10, 1)
+
+				SPAWN(1 SECOND)
+					step_towards(D, get_step(D, D.dir))
+					cam.visible_message("<span class='alert'>[cam] spews out a metalic foam!</span>")
+					sleep(1 SECOND)
+					D.dispose()
+				return
+
+		boutput(holder.owner, "<span class='alert'>Unable to calculate valid shot from available camera.</span>")
+		return 1
+
+/datum/targetable/ai/module/chems/metal_foam
+	name = "Spray Metal Foam"
+	desc = "Launches a small stream of metal foam from the camera."
+	icon_state = "camera_foam"
+	targeted = TRUE
+	target_anything = 1
+	reagent_capsule = /obj/item/thrown_reagents/metal_foam
+
+/obj/item/thrown_reagents
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "ballwhite"
+	var/list/reagent_list
+
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
+		var/datum/effects/system/foam_spread/s = new()
+		s.set_up(5, get_turf(hit_atom), reagent_list, 1) // Aborts if reagent list is null (even for metal foam), but I'm not gonna touch foam_spread.dm (Convair880).
+		s.start()
+		qdel(src)
+
+/obj/item/thrown_reagents/metal_foam
+	color = "#999"
+	reagent_list = list("iron" = 3, "fluorosurfactant" = 1, "acid" = 1)
+
+/datum/targetable/ai/module/camera_gun
+	name = "Camera Lasers"
+	desc = "Makes nearby cameras shoot lasers at the target. Somehow."
+	targeted = TRUE
+	target_anything = 1
+	var/datum/projectile/P
+	var/projectile_cd = 10 SECONDS
+	var/charge_color = rgb(255,0,0)
+	var/charge_time = 1.5 SECONDS
+
+	onAttach(datum/abilityHolder/H)
+		. = ..()
+		var/datum/abilityHolder/silicon/ai/AIH = H
+		if(istype(AIH))
+			AIH.active_camera_gun = src
+
+	cast(atom/target)
+		if (..())
+			return 1
+
+		if(ispath(P))
+			P = new P()
+
+		var/camera_on_cd = FALSE
+		var/turf/T = get_turf(target)
+		for(var/obj/machinery/camera/cam in T.cameras)
+			if(!isturf(cam.loc) || !istype_exact(cam,/obj/machinery/camera))
+				continue
+
+			if(!can_line_airborne(cam, T, 15)) // probably want something that tests an object crossing specifically?
+				continue
+
+			if(!ON_COOLDOWN(cam,"[src.type]", src.projectile_cd))
+				cam.add_filter("charge_outline", 0, outline_filter(size=0, color=charge_color))
+				animate(cam.get_filter("charge_outline"), size=0.5, time=charge_time)
+				SPAWN(charge_time)
+					logTheThing("combat", holder.owner, null, "fires a camera projectile [src], targeting [log_loc(target)].")
+					shoot_projectile_ST(cam, P, target)
+					if(P.cost > 1)
+						cam.use_power(P.cost / CELLRATE)
+					cam.remove_filter("charge_outline")
+				return
+			else
+				camera_on_cd = TRUE
+
+		if(camera_on_cd)
+			boutput(holder.owner, "<span class='alert'>Available camera is still cooling down...</span>")
+		else
+			boutput(holder.owner, "<span class='alert'>Unable to calculate valid shot from available camera.</span>")
+		return 1
+
+
+/datum/targetable/ai/module/camera_gun/taser
+	name = "Camera Taser"
+	icon_state = "camera_taser"
+	P = /datum/projectile/energy_bolt
+	charge_color = rgb(217, 255, 0)
+
+/datum/targetable/ai/module/camera_gun/laser
+	name = "Camera Laser"
+	icon_state = "camera_laser"
+	P = /datum/projectile/laser/light/tracer
+
+/obj/item/aiModule/ability_expansion/taser
+	name = "CLF:Taser Expansion Module"
+	desc = "A camera lense focus module.  This module allows for the AI controlled camera produce a taser like effect."
+	lawText = "CLF:Taser EXPANSION MODULE"
+	highlight_color = rgb(255, 251, 0, 255)
+	ai_abilities = list(/datum/targetable/ai/module/camera_gun/taser)
+
+/obj/item/aiModule/ability_expansion/laser
+	name = "CLF:Laser Expansion Module"
+	desc = "A camera lense focus module.  This module allows for the AI controlled camera produce a laser like effect."
+	lawText = "CLF:Laser EXPANSION MODULE"
+	highlight_color = rgb(255, 0, 0, 255)
+	ai_abilities = list(/datum/targetable/ai/module/camera_gun/laser)
+
+/obj/item/aiModule/ability_expansion/mfoam_launcher
+	name = "Metal Foam Expansion Module"
+	desc = "Chemical release module.  This module allows for the AI controlled camera to launch metal foam payloads."
+	lawText = "MFoam EXPANSION MODULE"
+	highlight_color = rgb(71, 92, 85, 255)
+	ai_abilities = list(/datum/targetable/ai/module/chems/metal_foam)
+
+/obj/item/aiModule/ability_expansion/proto_teleman
+	name = "Prototype Teleporter Expansion Module"
+	desc = "An advanced spacial geometry module.  This module allows for the AI perform basic teleportation actions."
+	lawText = "Prototype Teleman EXPANSION MODULE"
+	highlight_color = rgb(53, 76, 175, 255)
+	ai_abilities = list(/datum/targetable/ai/module/teleport/send, /datum/targetable/ai/module/teleport/receive)
+
+/datum/targetable/ai/module/teleport
+	targeted = TRUE
+	target_anything = 1
+
+	castcheck(atom/target)
+		. = ..()
+		if(.)
+			if(!get_first_teleporter())
+				boutput(holder.owner, "<span class='alert'>No valid telepad found on data network.</span>")
+				return FALSE
+
+	doCooldown()
+		var/since_last_cast = world.time - src.last_cast
+		var/cd_penalty_chance = clamp(src.cooldown * 2 - (since_last_cast), 0, 10)
+		..()
+		if(prob(cd_penalty_chance))
+			boutput(holder.owner, "<span class='alert'>Expansion module registers an error that must be adjusted for.</span>")
+			src.last_cast += src.cooldown
+
+	proc/get_first_teleporter()
+		var/mob/living/silicon/ai/AI
+		if(istype(holder.owner,/mob/living/silicon/ai))
+			AI = holder.owner
+		else if(istype(holder.owner, /mob/living/intangible/aieye))
+			var/mob/living/intangible/aieye/Aeye = holder.owner
+			AI = Aeye.mainframe
+
+		if(istype(AI))
+			var/datum/powernet/PN = AI.link.get_direct_powernet()
+			for(var/obj/machinery/power/data_terminal/DT in PN.data_nodes)
+				var/obj/machinery/networked/telepad/telepad = DT.master
+				if(!istype(telepad) || telepad.status & (NOPOWER|BROKEN) || !telepad.link)
+					continue
+				else
+					return telepad
+
+	send
+		name = "Telepad: Send"
+		desc = "Send current telepad contents to the destination."
+		icon_state = "tele_tx"
+		cast(atom/target)
+			if (..())
+				return 1
+
+			var/turf/T = get_turf(target)
+			var/obj/machinery/networked/telepad/telepad = get_first_teleporter()
+			if(is_teleportation_allowed(T))
+				telepad.send(T)
+			else
+				boutput(holder.owner, "<span class='alert'>Interference inhibits teleportation.</span>")
+
+	receive
+		name = "Telepad: Receive"
+		desc = "Send the contents of the target to the current telepad."
+		icon_state = "tele_rx"
+		cast(atom/target)
+			if (..())
+				return 1
+
+			var/turf/T = get_turf(target)
+			var/obj/machinery/networked/telepad/telepad = get_first_teleporter()
+			if(is_teleportation_allowed(T))
+				telepad.receive(T)
+			else
+				boutput(holder.owner, "<span class='alert'>Interference inhibits teleportation.</span>")
+
+/obj/item/aiModule/ability_expansion/nanite_hive
+	name = "Nanite Expansion Module"
+	desc = "A prototype nanite expansion module.  This module consists of a nanite hive to be utilized by the Station AI."
+	lawText = "Nanite Hive EXPANSION MODULE"
+	highlight_color = rgb(97, 47, 47, 255)
+	ai_abilities = list(/datum/targetable/ai/module/camera_repair, /datum/targetable/ai/module/nanite_repair)
+
+/datum/targetable/ai/module/nanite_repair
+	icon_state = "nanites"
+	targeted = TRUE
+	cooldown = 15 SECONDS
+
+	// This might be a lot better as a homing projectile coming from a camera...
+	cast(atom/target)
+		if(issilicon(target))
+			var/mob/living/silicon/S = target
+			var/nanite_overlay = S.SafeGetOverlayImage("nanite_heal",'icons/misc/critter.dmi', "nanites")
+			S.UpdateOverlays(nanite_overlay, "nanite_heal")
+			SPAWN(3 SECONDS)
+				S.HealDamage("All", 6, 6)
+				S.UpdateOverlays(null,"nanite_heal")
+		else if(istype_exact(target,/obj/machinery/camera)) // sweet you got eyes on that camera
+			var/obj/machinery/camera/C
+			var/nanite_overlay = C.SafeGetOverlayImage("nanite_heal",'icons/misc/critter.dmi', "nanites")
+			C.UpdateOverlays(nanite_overlay, "nanite_heal")
+			C.camera_status = TRUE
+			C.icon_state = "camera"
+			LAZYLISTADDUNIQUE(camerasToRebuild, C)
+
+			SPAWN(5 SECONDS)
+				C.audible_message("[C] makes a soft clicking sound.")
+				C.UpdateOverlays(null, "nanite_heal")
+
+				if (current_state > GAME_STATE_WORLD_NEW && !global.explosions.exploding)
+					world.updateCameraVisibility()
+
+		else
+			boutput(holder.owner, "<span class='alert'>[target] is not a silicon entity.</span>")
+			return 1
+
+/datum/targetable/ai/module/camera_repair
+	name = "Repair Cameras"
+	desc = "Send out nanites to attempt to repair cameras."
+	icon_state = "camera_repair"
+	cooldown = 120 SECONDS
+
+	cast(atom/target)
+		var/obj/machinery/camera/C
+		var/list/obj/machinery/camera/cameras_to_repair = list()
+
+		for(C in camnets["SS13"])
+			if(!C.camera_status && istype_exact(C,/obj/machinery/camera))
+				cameras_to_repair |= C
+
+		boutput(holder.owner, "<span class='alert'>Initiating repair routine...</span>")
+		if(length(cameras_to_repair))
+			SPAWN(rand(10 SECONDS, 20 SECONDS))
+				var/repaired = 0
+				for(C in cameras_to_repair)
+					var/nanite_overlay = C.SafeGetOverlayImage("nanite_heal",'icons/misc/critter.dmi', "nanites")
+					C.UpdateOverlays(nanite_overlay, "nanite_heal")
+					C.camera_status = TRUE
+					C.icon_state = "camera"
+					LAZYLISTADDUNIQUE(camerasToRebuild, C)
+
+					SPAWN(5 SECONDS)
+						C.audible_message("[C] makes a soft clicking sound.")
+						C.UpdateOverlays(null, "nanite_heal")
+
+					if(prob(10 + (repaired*5))) // Not all will be healed
+						break
+
+					repaired++
+
+				sleep(4.5 SECONDS)
+				if (current_state > GAME_STATE_WORLD_NEW && !global.explosions.exploding)
+					world.updateCameraVisibility()
+		else
+			SPAWN(rand(15 SECONDS, 35 SECONDS))
+				boutput(holder.owner, "<span class='alert'>No damaged cameras detected.</span>")
