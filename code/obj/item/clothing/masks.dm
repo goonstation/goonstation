@@ -105,7 +105,6 @@
 	w_class = W_CLASS_NORMAL
 	see_face = 0.0
 	item_state = "gas_mask"
-	permeability_coefficient = 0.05
 	color_r = 0.8 // green tint
 	color_g = 1
 	color_b = 0.8
@@ -116,6 +115,7 @@
 		setProperty("coldprot", 7)
 		setProperty("heatprot", 7)
 		setProperty("disorient_resist_eye", 10)
+		setProperty("chemprot", 10)
 
 /obj/item/clothing/mask/gas/NTSO
 	name = "NT gas mask"
@@ -259,7 +259,6 @@
 	item_state = "breath"
 	c_flags = COVERSMOUTH | MASKINTERNALS
 	w_class = W_CLASS_SMALL
-	permeability_coefficient = 0.50
 
 
 	attackby(obj/item/W, mob/user)
@@ -295,6 +294,7 @@
 		..()
 		setProperty("coldprot", 5)
 		setProperty("heatprot", 5)
+		setProperty("chemprot", 5)
 
 /obj/item/clothing/mask/gas/death_commando
 	name = "Death Commando mask"
@@ -443,12 +443,12 @@
 	item_state = "s_mask"
 	w_class = W_CLASS_TINY
 	c_flags = COVERSMOUTH
-	permeability_coefficient = 0.1
 	path_prot = 0
 
 	setupProperties()
 		..()
 		setProperty("viralprot", 50) // fashion reasons, they're *space* masks, ok?
+		setProperty("chemprot", 5)
 
 /obj/item/clothing/mask/surgical_shield
 	name = "surgical face shield"
@@ -457,13 +457,13 @@
 	item_state = "surgicalshield"
 	w_class = W_CLASS_SMALL
 	c_flags = COVERSMOUTH | COVERSEYES
-	permeability_coefficient = 0.50
 	var/bee = FALSE
 	var/randcol
 
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 1)
+		setProperty("chemprot", 7)
 		setProperty("disorient_resist_eye", 10)
 
 	New()
