@@ -2087,8 +2087,8 @@ datum
 
 					if(length(otherReagents) > 0)
 						var/targetReagent = pick(otherReagents) //pick one reagent and convert it
-						//don't convert normal flushing chems, we're not THAT mean
-						if(!(targetReagent in list("calomel", "hunchback", "penteticacid", "blood_placeholder"))) //blood is handled in on_mob_life
+						//don't convert normal flushing chems in bloodstream, we're not THAT mean
+						if(!ismob(holder.my_atom) || !(targetReagent in list("calomel", "hunchback", "penteticacid", "tealquila", "blood_placeholder"))) //blood is handled in on_mob_life
 							holder.remove_reagent(targetReagent, conversion_rate)
 							holder.add_reagent(id, conversion_rate)
 					else
