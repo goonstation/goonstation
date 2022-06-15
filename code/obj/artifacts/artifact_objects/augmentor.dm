@@ -355,7 +355,7 @@
 
 	post_setup()
 		. = ..()
-		recharge_time = 1 SECOND//pick(30, 60) SECONDS
+		recharge_time = pick(30, 60) SECONDS
 
 		switch(artitype.name)
 			if ("eldritch")
