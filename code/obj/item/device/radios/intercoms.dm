@@ -206,7 +206,6 @@
 	frequency = R_FREQ_SECURITY
 	secure_frequencies = list("g" = R_FREQ_SECURITY)
 	secure_classes = list("g" = R_FREQ_SECURITY)
-	locked_frequency = TRUE
 	device_color = RADIOC_SECURITY
 	layer = 3.1
 
@@ -219,7 +218,6 @@
 	frequency = R_FREQ_DETECTIVE
 	secure_frequencies = list("d" = R_FREQ_DETECTIVE)
 	secure_classes = list("d" = R_FREQ_DETECTIVE)
-	locked_frequency = TRUE
 	device_color = RADIOC_DETECTIVE
 	layer = 3
 
