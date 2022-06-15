@@ -595,6 +595,14 @@
 	},
 /turf/simulated/floor/airless/twotone/red,
 /area/station/ai_monitored/armory)
+"aut" = (
+/obj/machinery/networked/test_apparatus/gas_sensor,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/station/science/lab)
 "auy" = (
 /obj/cable{
 	d2 = 8;
@@ -1029,6 +1037,9 @@
 /area/station/maintenance/central)
 "aPn" = (
 /obj/machinery/atmospherics/unary/vent_pump,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "aPv" = (
@@ -2345,6 +2356,19 @@
 /obj/machinery/light/incandescent{
 	dir = 1
 	},
+/obj/machinery/computer/atmosphere/pumpcontrol,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/machinery/power/data_terminal,
 /turf/unsimulated/floor/twotone/purple,
 /area/station/science/lab)
 "ciU" = (
@@ -3432,6 +3456,10 @@
 	},
 /turf/simulated/wall/auto/reinforced,
 /area/station/hallway/primary/central)
+"dcV" = (
+/obj/wingrille_spawn/reinforced,
+/turf/simulated/floor/plating/jen,
+/area/station/science/lab)
 "ddk" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -3733,7 +3761,10 @@
 /turf/simulated/floor/airless/darkblue,
 /area/station/hallway/primary/central)
 "dqw" = (
-/obj/machinery/atmospherics/pipe/simple,
+/obj/machinery/atmospherics/valve,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/unsimulated/floor/twotone/purple,
 /area/station/science/lab)
 "dqL" = (
@@ -5087,8 +5118,20 @@
 /turf/simulated/floor/black,
 /area/station/medical/crematorium)
 "eAW" = (
-/obj/machinery/atmospherics/pipe/simple,
-/turf/simulated/wall/auto/reinforced/jen/purple,
+/obj/machinery/atmospherics/binary/pump{
+	dir = 1;
+	frequency = 1225;
+	icon_state = "intact_on";
+	id = "Hot Loop Sauna Pump";
+	on = 1;
+	target_pressure = 2000
+	},
+/obj/wingrille_spawn/reinforced_crystal,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "eBo" = (
 /obj/cable{
@@ -5319,6 +5362,9 @@
 /area/station/engine/engineering)
 "eLF" = (
 /obj/machinery/atmospherics/portables_connector/south,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/unsimulated/floor/twotone/purple,
 /area/station/science/lab)
 "eLN" = (
@@ -6037,6 +6083,15 @@
 	},
 /turf/simulated/floor,
 /area/ghostdrone_factory)
+"frN" = (
+/obj/machinery/atmospherics/valve,
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/unsimulated/floor/twotone/purple,
+/area/station/science/lab)
 "fse" = (
 /obj/machinery/door/airlock/gannets/glass/chemistry,
 /obj/access_spawn/medical,
@@ -8839,6 +8894,15 @@
 	icon_state = "floor4"
 	},
 /area/listeningpost)
+"hGt" = (
+/obj/machinery/atmospherics/valve,
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/unsimulated/floor/twotone/purple,
+/area/station/science/lab)
 "hHH" = (
 /obj/tree1,
 /turf/simulated/floor/grasslush/thinner,
@@ -10001,6 +10065,12 @@
 /obj/disposalpipe/segment,
 /turf/space,
 /area/station/hallway/primary/south)
+"iUD" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/station/science/lab)
 "iUZ" = (
 /obj/table/reinforced/chemistry/beakers,
 /obj/machinery/microscope,
@@ -12389,6 +12459,9 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 10;
 	level = 2
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
@@ -15132,12 +15205,26 @@
 /obj/stool/chair/office/syndie,
 /turf/simulated/floor/twotone,
 /area/station/crew_quarters/data)
+"ndq" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/wall/auto/jen/purple,
+/area/station/science/chemistry)
 "ndu" = (
 /obj/machinery/atmospherics/pipe/manifold/south,
 /obj/machinery/camera{
 	dir = 1
 	},
 /obj/machinery/light/incandescent,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/unsimulated/floor/twotone/purple,
 /area/station/science/lab)
 "ndy" = (
@@ -17010,10 +17097,20 @@
 /turf/simulated/floor/caution,
 /area/station/hangar/medical)
 "oIu" = (
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4
+/obj/machinery/atmospherics/binary/pump{
+	dir = 4;
+	frequency = 1225;
+	icon_state = "intact_on";
+	id = "Hot Loop Gas Supply 1";
+	on = 1;
+	target_pressure = 1000
 	},
-/turf/simulated/wall/auto/reinforced/jen/purple,
+/obj/wingrille_spawn/reinforced_crystal,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "oJd" = (
 /obj/submachine/chef_sink/chem_sink{
@@ -17274,6 +17371,12 @@
 "oRF" = (
 /turf/simulated/wall/auto/jen/blue,
 /area/station/medical/medbay/treatment2)
+"oRU" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/floor/twotone/purple,
+/area/station/science/lab)
 "oSf" = (
 /obj/disposalpipe/segment/mail{
 	dir = 1;
@@ -17725,13 +17828,6 @@
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/storage/warehouse)
-"plQ" = (
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4;
-	level = 2
-	},
-/turf/unsimulated/floor/twotone/purple,
-/area/station/science/lab)
 "pmq" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -18615,6 +18711,23 @@
 	},
 /turf/unsimulated/floor/airless/twotone/red,
 /area/station/hallway/primary/north)
+"pZC" = (
+/obj/wingrille_spawn/reinforced_crystal,
+/obj/machinery/atmospherics/binary/pump{
+	frequency = 1225;
+	icon_state = "intact_on";
+	id = "Cold Loop Purge Pump";
+	on = 1;
+	target_pressure = 2000
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/station/science/lab)
 "qaJ" = (
 /obj/item/storage/toilet/random{
 	dir = 8
@@ -19193,7 +19306,22 @@
 /area/station/security/main)
 "qwg" = (
 /obj/wingrille_spawn/reinforced_crystal,
-/obj/machinery/atmospherics/pipe/simple,
+/obj/machinery/atmospherics/binary/pump{
+	dir = 1;
+	frequency = 1225;
+	icon_state = "intact_on";
+	id = "Hot Loop Sauna Pump";
+	on = 1;
+	target_pressure = 2000
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "qwl" = (
@@ -23097,6 +23225,10 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/twotone/purple,
 /area/station/crew_quarters/hor)
+"tTE" = (
+/obj/wingrille_spawn/reinforced,
+/turf/simulated/floor/plating/jen,
+/area/station/science/lobby)
 "tTH" = (
 /obj/cable{
 	d1 = 1;
@@ -23401,7 +23533,8 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/turf/simulated/wall/auto/reinforced/jen/purple,
+/obj/wingrille_spawn/reinforced,
+/turf/simulated/floor/plating/jen,
 /area/station/science/lab)
 "ujX" = (
 /obj/stool/bed,
@@ -23497,6 +23630,13 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/ai_upload_foyer)
+"uoo" = (
+/obj/wingrille_spawn/reinforced_crystal,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/station/science/lab)
 "uoq" = (
 /obj/machinery/nanofab/mining,
 /turf/simulated/floor/caution,
@@ -25253,6 +25393,15 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/communications)
+"vJQ" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/station/science/lab)
 "vJY" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -27517,6 +27666,12 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/wall/auto/reinforced/jen/yellow,
 /area/station/engine/engineering/private)
+"xHr" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/unsimulated/floor/twotone/purple,
+/area/station/science/lab)
 "xHy" = (
 /obj/disposalpipe/segment,
 /obj/disposalpipe/segment/mail{
@@ -59498,7 +59653,7 @@ clE
 clE
 qOS
 clE
-wGc
+uoo
 tqV
 tqV
 tqV
@@ -59796,12 +59951,12 @@ aDK
 aDK
 kTj
 qOS
-clE
-clE
-qOS
+aut
+iUD
+vJQ
 aPn
 qwg
-ltv
+frN
 apw
 tqV
 tqV
@@ -60103,11 +60258,11 @@ wuW
 lRu
 clE
 wGc
+xHr
 tqV
 tqV
 tqV
-tqV
-plQ
+fCu
 tsv
 mRJ
 mQK
@@ -60406,11 +60561,11 @@ vKw
 tCG
 tCG
 ciR
-tqV
+oRU
 eLF
 dqw
 ndu
-tsv
+ndq
 hel
 mQK
 euO
@@ -60707,11 +60862,11 @@ clE
 clE
 clE
 wGc
+xHr
 tqV
 tqV
 tqV
-tqV
-plQ
+fCu
 tsv
 nWp
 mQK
@@ -61004,12 +61159,12 @@ aDK
 aDK
 kTj
 clE
-clE
-clE
-clE
+aut
+iUD
+iUD
 aPn
-qwg
-ltv
+pZC
+hGt
 apw
 tqV
 tqV
@@ -61310,7 +61465,7 @@ clE
 clE
 clE
 clE
-wGc
+uoo
 tqV
 tqV
 tqV
@@ -61612,7 +61767,7 @@ clE
 clE
 clE
 clE
-wGc
+uoo
 tqV
 tqV
 tqV
@@ -61635,7 +61790,7 @@ hNj
 ecl
 hNj
 rzU
-jKa
+tTE
 aDK
 aDK
 aDK
@@ -61937,7 +62092,7 @@ wDu
 lCa
 hNj
 aZU
-jKa
+tTE
 aDK
 aDK
 aDK
@@ -62239,7 +62394,7 @@ hqW
 hqW
 hqW
 omv
-jKa
+tTE
 aDK
 aDK
 aDK
@@ -63431,8 +63586,8 @@ tCG
 tCG
 tCG
 tCG
-tCG
-tCG
+dcV
+dcV
 ujS
 tCG
 tCG
