@@ -16407,6 +16407,9 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/item/device/radio/intercom/AI{
+	dir = 8
+	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
 "aVm" = (
@@ -26110,7 +26113,7 @@
 "bCR" = (
 /obj/table/wood/auto,
 /obj/displaycase{
-	displayed = new /obj/item/captaingun;
+	displayed = new/obj/item/captaingun;
 	pixel_y = 6
 	},
 /turf/simulated/floor/carpet/arcade,
