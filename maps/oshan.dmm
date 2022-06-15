@@ -37961,7 +37961,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating/random,
-/area/station/science/teleporter)
+/area/station/maintenance/inner/central)
 "bTb" = (
 /obj/item/device/light/zippo,
 /turf/simulated/floor/plating/random,
