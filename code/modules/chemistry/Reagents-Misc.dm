@@ -2072,7 +2072,7 @@ datum
 			on_remove()
 				active_reagent_holders -= src
 				var/mob/M = holder.my_atom
-				if (istype(M))
+				if (istype(M) && !istype(M.loc, /obj/flock_structure/cage))
 					M.removeOverlayComposition(/datum/overlayComposition/flockmindcircuit)
 
 			proc/process_reactions()
@@ -2122,7 +2122,8 @@ datum
 							H.gib()
 							return
 					else
-						M.removeOverlayComposition(/datum/overlayComposition/flockmindcircuit)
+						if (!istype(M.loc, /obj/flock_structure/cage))
+							M.removeOverlayComposition(/datum/overlayComposition/flockmindcircuit)
 					// DO SPOOKY THINGS
 					if(holder.get_reagent_amount(src.id) < 100)
 						if(probmult(2))
@@ -2136,13 +2137,7 @@ datum
 							src.replace_organ(H)
 						if(probmult(10))
 							M.playsound_local(get_turf(M), pick(sounds), 40, 1)
-							M.add_simple_light("gnesis_glow", rgb2num("#26ffe6a2"))
-							M.simple_light.alpha = 0
-							M.visible_message("<span class='alert'>[M] is enveloped in a shimmering teal glow.</span>", "<span class='alert'>You are enveloped in a shimmering teal glow.</span>")
-							animate(M.simple_light, time = 1 SECOND, alpha = 255)
-							animate(time = 1 SECOND, alpha = 0)
-							SPAWN(2 SECONDS)
-								M.remove_simple_light("gnesis_glow")
+							M.setStatus("gnesis_glow", 2 SECONDS)
 						if(probmult(30))
 							boutput(M, "<span class='flocksay italics'>[pick_string("flockmind.txt", "flockjuice_high")]</span>")
 

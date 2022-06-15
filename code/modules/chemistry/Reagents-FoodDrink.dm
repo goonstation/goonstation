@@ -4356,7 +4356,7 @@ datum
 			alch_strength = 0.3
 			description = "A shockingly teal cocktail infused with benign gnesis, effective at neutralizing the more aggresssive variety."
 			reagent_state = LIQUID
-			taste = list("teal", "computational")
+			taste = list("teal", "like TV static")
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				. = ..()
