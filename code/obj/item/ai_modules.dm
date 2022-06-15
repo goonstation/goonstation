@@ -409,3 +409,8 @@ ABSTRACT_TYPE(/obj/item/aiModule/hologram_expansion)
 	highlight_color = rgb(173, 11, 11, 255)
 	expansion = "rogue"
 
+/obj/item/aiModule/hologram_expansion/elden
+	name = "Old, Circular Expansion Module"
+	icon_state = "holo_mod_e"
+	highlight_color = "#E7A545"
+	expansion = "circular"

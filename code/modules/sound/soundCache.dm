@@ -1386,7 +1386,6 @@ var/global/list/soundCache = list(
  	"sound/voice/bfreeze.ogg" = 'sound/voice/bfreeze.ogg',\
  	"sound/voice/bgod.ogg" = 'sound/voice/bgod.ogg',\
  	"sound/voice/biamthelaw.ogg" = 'sound/voice/biamthelaw.ogg',\
- 	"sound/voice/binsult.ogg" = 'sound/voice/binsult.ogg',\
  	"sound/voice/binsultbeep.ogg" = 'sound/voice/binsultbeep.ogg',\
  	"sound/voice/bjustice.ogg" = 'sound/voice/bjustice.ogg',\
  	"sound/voice/blob/blobattack.ogg" = 'sound/voice/blob/blobattack.ogg',\
