@@ -45,7 +45,7 @@ export const PortableScrubber = (props, context) => {
             <LabeledList.Item label="Scrubber Power">
               <Button
                 content={on ? 'On' : 'Off'}
-                color={on ? 'green' : 'red'}
+                color={on ? 'average' : 'default'}
                 onClick={handleTogglePower} />
             </LabeledList.Item>
             <LabeledList.Item label="Inlet Flow">

@@ -50,7 +50,7 @@ export const PortablePump = (props, context) => {
             <LabeledList.Item label="Pump Power">
               <Button
                 content={on ? 'On' : 'Off'}
-                color={on ? 'green' : 'red'}
+                color={on ? 'average' : 'default'}
                 onClick={handleTogglePower} />
             </LabeledList.Item>
             <LabeledList.Item label="Target Pressure">
