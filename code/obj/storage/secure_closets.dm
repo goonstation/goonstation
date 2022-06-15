@@ -374,6 +374,7 @@
 	reinforced = TRUE
 	req_access = list(access_maxsec)
 	spawn_contents = list(/obj/item/requisition_token/security = 2,
+	/obj/item/requisition_token/security/assistant = 2,
 	/obj/item/turret_deployer/riot = 2,
 	/obj/item/clothing/glasses/nightvision = 2,
 	/obj/item/clothing/glasses/sunglasses,
