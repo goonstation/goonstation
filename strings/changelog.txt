@@ -1,5 +1,9 @@
 
 (t)wed jun 15 22
+(u)Ikea
+(p)9146
+(e)|
+(+)The syndicate has fixed a bureaucratic error and now syndicate command armor from surplus crates and spy bounties comes with the helmet as well.
 (u)Bartimeus973
 (p)9127
 (e)🆕⚖|feature, balance
