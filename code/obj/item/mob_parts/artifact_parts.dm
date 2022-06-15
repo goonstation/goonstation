@@ -104,7 +104,7 @@
 			if(2)
 				tool.the_mob.visible_message("<span class='alert'>[tool.the_mob] [src.saw_messages[1]] the [src.limb_material] of [holder.name]'s [src.name] with [tool].</span>", "<span class='alert'>You [src.saw_messages[2]] the [src.limb_material] of [holder.name]'s [src.name] with [tool].</span>")
 
-				SPAWN(rand(150, 200))
+				SPAWN(rand(15, 20) SECONDS)
 					if(remove_stage == 2)
 						src.remove(FALSE)
 			if(3)
