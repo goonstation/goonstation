@@ -301,7 +301,6 @@
 		else
 			user.changeStatus("food_hp_up", 20 SECONDS)
 			user.visible_message("<span class='notice'>[user] takes a bite out of [src].</span>", "<span class='notice'>You munch on some of [src]'s leaves, like any normal human would.</span>")
-			var/mob/living/carbon/human/H = user
 			H.sims?.affectMotive("Hunger", 10)
 
 		if(src.bites <= 0)
