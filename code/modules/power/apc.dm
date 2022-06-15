@@ -6,6 +6,10 @@
 var/zapLimiter = 0
 #define APC_ZAP_LIMIT_PER_5 2
 
+#define APC_BUTTON_STATE_OFF 0
+#define APC_BUTTON_STATE_ON 1
+#define APC_BUTTON_STATE_AUTO 2
+
 // the Area Power Controller (APC), formerly Power Distribution Unit (PDU)
 // one per area, needs wire conection to power network
 
@@ -161,17 +165,17 @@ var/zapLimiter = 0
 
 	if (!isnull(src.areastring) && !isnull(get_area_name(src.areastring)))
 		src.area = get_area_name(src.areastring)
-		src.name = "[src.areastring] APC"
+		src.name = "[src.areastring] apc"
 	else
 		src.area = get_area(src)
 		// making life easy for mappers since 2013
-		// 2015 addendum: The fixed name checks are kept for backward compatibility, I'm not gonna manually replace every APC of each of the six maps we have right now.
-		if (src.autoname_on_spawn == 1 || (name == "N APC" || name == "E APC" || name == "S APC" || name == "W APC"))
-			src.name = "[area.name] APC"
-	if (!QDELETED(src.area))
+		// 2015 addendum: the fixed name checks are kept for backward compatibility, i'm not gonna manually replace every apc of each of the six maps we have right now.
+		if (src.autoname_on_spawn == 1 || (name == "n apc" || name == "e apc" || name == "s apc" || name == "w apc"))
+			src.name = "[area.name] apc"
+	if (!qdeleted(src.area))
 		src.area.area_apc = src
 
-	src.UpdateIcon()
+	src.updateicon()
 
 	// create a terminal object at the same position as original turf loc
 	// wires will attach to this
@@ -183,11 +187,11 @@ var/zapLimiter = 0
 	terminal.set_dir(tdir)
 	terminal.master = src
 
-	SPAWN(0.5 SECONDS)
+	spawn(0.5 seconds)
 		src.update()
 
 /obj/machinery/power/apc/disposing()
-	STOP_TRACKING
+	stop_tracking
 	cell = null
 	terminal?.master = null
 	terminal = null
@@ -196,103 +200,103 @@ var/zapLimiter = 0
 /obj/machinery/power/apc/examine(mob/user)
 	. = ..()
 
-	if(status & BROKEN)
+	if(status & broken)
 		switch(repair_status)
 			if(0)
-				. += "<br>It's completely busted! It seems you need to use a screwdriver and disconnect the control board first, to begin the repair process.</br>"
+				. += "<br>it's completely busted! it seems you need to use a screwdriver and disconnect the control board first, to begin the repair process.</br>"
 			if(1)
-				. += "<br>The control board has been disconnected. The autotransformer's wiring is all messed up! You need to grab some cables and fix it.</br>"
+				. += "<br>the control board has been disconnected. the autotransformer's wiring is all messed up! you need to grab some cables and fix it.</br>"
 			if(2)
-				. += "<br>The control panel is disconnected and the autotransformer seems to be in a good condition. You just need to tune it with a wrench now.</br>"
+				. += "<br>the control panel is disconnected and the autotransformer seems to be in a good condition. you just need to tune it with a wrench now.</br>"
 			if(3)
-				. += "<br>The autotransformer seems to be working fine now. The next step is resetting the control board with a multitool.</br>"
+				. += "<br>the autotransformer seems to be working fine now. the next step is resetting the control board with a multitool.</br>"
 			if(4)
-				. += "<br>The autotransformer is working fine and the control board has been reset! Now you just need to reconnect it with a screwdriver, to finish the repair process.</br>"
+				. += "<br>the autotransformer is working fine and the control board has been reset! now you just need to reconnect it with a screwdriver, to finish the repair process.</br>"
 		return
 
 	if(user && !user.stat)
-		. += "A control terminal for the area electrical systems."
+		. += "a control terminal for the area electrical systems."
 		if(opened)
-			. += "The cover is open and the power cell is [ cell ? "installed" : "missing"]."
+			. += "the cover is open and the power cell is [ cell ? "installed" : "missing"]."
 		else
-			. += "The cover is closed."
+			. += "the cover is closed."
 
 
-/obj/machinery/power/apc/proc/getMaxExcess()
+/obj/machinery/power/apc/proc/getmaxexcess()
 	var/netexcess = 0
 	if(terminal)
 		if(terminal.powernet)
 			netexcess = terminal.powernet.netexcess
-			for(var/obj/machinery/power/smes/S in terminal.powernet.nodes)
-				if(S.terminal)
-					if(S.terminal.powernet)
-						netexcess = max(netexcess, S.terminal.powernet.netexcess)
+			for(var/obj/machinery/power/smes/s in terminal.powernet.nodes)
+				if(s.terminal)
+					if(s.terminal.powernet)
+						netexcess = max(netexcess, s.terminal.powernet.netexcess)
 	return netexcess
 
-/obj/machinery/power/apc/proc/zapStuff() // COGWERKS NOTE: disabling calls to this proc for now, it is ruining the live servers
+/obj/machinery/power/apc/proc/zapstuff() // cogwerks note: disabling calls to this proc for now, it is ruining the live servers
 	var/atom/target = null
 	var/atom/last = src
 
 	var/list/starts = new/list()
-	for(var/mob/living/M in oview(5, src))
-		if(M.invisibility) continue
-		starts.Add(M)
+	for(var/mob/living/m in oview(5, src))
+		if(m.invisibility) continue
+		starts.add(m)
 
 	if(!starts.len) return 0
 
 	target = pick(starts)
 
-	arcFlash(last, target, 500000)
+	arcflash(last, target, 500000)
 
 	return 1
 
 
-// update the APC icon to show the three base states
+// update the apc icon to show the three base states
 // also add overlays for indicator lights
 /obj/machinery/power/apc/update_icon()
-	ClearAllOverlays(1)
+	clearalloverlays(1)
 	if(opened)
 		icon_state = "apc1"
 
 		if (cell)
 			// if opened, update overlays for cell
-			var/image/I_cell = SafeGetOverlayImage("cell", 'icons/obj/power.dmi', "apc-[cell.icon_state]")
-			UpdateOverlays(I_cell, "cell", 0, 1)
+			var/image/i_cell = safegetoverlayimage("cell", 'icons/obj/power.dmi', "apc-[cell.icon_state]")
+			updateoverlays(i_cell, "cell", 0, 1)
 
 	else if(emagged)
 		icon_state = "apcemag"
 		return
 	else if(wiresexposed)
 		icon_state = "apcwires"
-		var/image/I_wireorange = SafeGetOverlayImage("wireorange", 'icons/obj/power.dmi', "apccut-orange")
-		var/image/I_wiredarkred = SafeGetOverlayImage("wiredarkred", 'icons/obj/power.dmi', "apccut-darkred")
-		var/image/I_wirewhite = SafeGetOverlayImage("wirewhite", 'icons/obj/power.dmi', "apccut-white")
-		var/image/I_wireyellow = SafeGetOverlayImage("wireyellow", 'icons/obj/power.dmi', "apccut-yellow")
-		UpdateOverlays(isWireColorCut(APC_WIRE_IDSCAN) ? I_wireorange : null, "wireorange", 0, 1)
-		UpdateOverlays(isWireColorCut(APC_WIRE_MAIN_POWER1) ? I_wiredarkred : null, "wiredarkred", 0, 1)
-		UpdateOverlays(isWireColorCut(APC_WIRE_MAIN_POWER2) ? I_wirewhite : null, "wirewhite", 0, 1)
-		UpdateOverlays(isWireColorCut(APC_WIRE_AI_CONTROL) ? I_wireyellow : null, "wireyellow", 0, 1)
+		var/image/i_wireorange = safegetoverlayimage("wireorange", 'icons/obj/power.dmi', "apccut-orange")
+		var/image/i_wiredarkred = safegetoverlayimage("wiredarkred", 'icons/obj/power.dmi', "apccut-darkred")
+		var/image/i_wirewhite = safegetoverlayimage("wirewhite", 'icons/obj/power.dmi', "apccut-white")
+		var/image/i_wireyellow = safegetoverlayimage("wireyellow", 'icons/obj/power.dmi', "apccut-yellow")
+		updateoverlays(iswirecolorcut(apc_wire_idscan) ? i_wireorange : null, "wireorange", 0, 1)
+		updateoverlays(iswirecolorcut(apc_wire_main_power1) ? i_wiredarkred : null, "wiredarkred", 0, 1)
+		updateoverlays(iswirecolorcut(apc_wire_main_power2) ? i_wirewhite : null, "wirewhite", 0, 1)
+		updateoverlays(iswirecolorcut(apc_wire_ai_control) ? i_wireyellow : null, "wireyellow", 0, 1)
 
 		return
 	else
 		icon_state = "apc0"
 
 		// if closed, update overlays for channel status
-		var/image/I_lock = SafeGetOverlayImage("lock", 'icons/obj/power.dmi', "apcox-[locked]") // 0=blue 1=red
-		var/image/I_chrg = SafeGetOverlayImage("charge", 'icons/obj/power.dmi', "apco3-[charging]") // 0=red, 1=yellow/black 2=green
-		var/image/I_brke = SafeGetOverlayImage("breaker", 'icons/obj/power.dmi', "apcbr-[operating]")
-		var/image/I_lite = SafeGetOverlayImage("lighting", 'icons/obj/power.dmi', "apco1-[lighting]") // 0=red, 1=green, 2=blue
-		var/image/I_equp = SafeGetOverlayImage("equipment", 'icons/obj/power.dmi', "apco0-[equipment]")
-		var/image/I_envi = SafeGetOverlayImage("environment", 'icons/obj/power.dmi', "apco2-[environ]")
+		var/image/i_lock = safegetoverlayimage("lock", 'icons/obj/power.dmi', "apcox-[locked]") // 0=blue 1=red
+		var/image/i_chrg = safegetoverlayimage("charge", 'icons/obj/power.dmi', "apco3-[charging]") // 0=red, 1=yellow/black 2=green
+		var/image/i_brke = safegetoverlayimage("breaker", 'icons/obj/power.dmi', "apcbr-[operating]")
+		var/image/i_lite = safegetoverlayimage("lighting", 'icons/obj/power.dmi', "apco1-[lighting]") // 0=red, 1=green, 2=blue
+		var/image/i_equp = safegetoverlayimage("equipment", 'icons/obj/power.dmi', "apco0-[equipment]")
+		var/image/i_envi = safegetoverlayimage("environment", 'icons/obj/power.dmi', "apco2-[environ]")
 
-		UpdateOverlays(I_lock, "lock", 0, 1)
-		UpdateOverlays(I_chrg, "charge", 0, 1)
-		UpdateOverlays(I_brke, "breaker", 0, 1)
+		updateoverlays(i_lock, "lock", 0, 1)
+		updateoverlays(i_chrg, "charge", 0, 1)
+		updateoverlays(i_brke, "breaker", 0, 1)
 
 		if(operating && !do_not_operate)
-			UpdateOverlays(I_lite, "lighting", 0, 1)
-			UpdateOverlays(I_equp, "equipment", 0, 1)
-			UpdateOverlays(I_envi, "environment", 0, 1)
+			updateoverlays(i_lite, "lighting", 0, 1)
+			updateoverlays(i_equp, "equipment", 0, 1)
+			updateoverlays(i_envi, "environment", 0, 1)
 
 /obj/machinery/power/apc/emp_act()
 	..()
@@ -304,35 +308,35 @@ var/zapLimiter = 0
 	src.lighting = 0
 	src.equipment = 0
 	src.environ = 0
-	SPAWN(1 MINUTE)
+	spawn(1 minute)
 		src.equipment = 3
 		src.environ = 3
 	return
 
-/obj/machinery/power/apc/emag_act(var/mob/user, var/obj/item/card/emag/E)
+/obj/machinery/power/apc/emag_act(var/mob/user, var/obj/item/card/emag/e)
 	if (!emagged)		// trying to unlock with an emag card
 		if(opened)
 			if(user)
-				boutput(user, "You must close the cover to swipe an ID card.")
+				boutput(user, "you must close the cover to swipe an id card.")
 		else if(wiresexposed)
 			if(user)
-				boutput(user, "You must close the panel first")
+				boutput(user, "you must close the panel first")
 		else if (setup_networkapc > 1)
 			if (user)
-				boutput(user, "This APC doesn't have a local interface to hack.")
+				boutput(user, "this apc doesn't have a local interface to hack.")
 		else
 			flick("apc-spark", src)
-			sleep(0.6 SECONDS)
+			sleep(0.6 seconds)
 			if(prob(50))
 				emagged = 1
 				locked = 0
 				if (user)
-					boutput(user, "You emag the APC interface.")
-				UpdateIcon()
+					boutput(user, "you emag the apc interface.")
+				updateicon()
 				return 1
 			else
 				if (user)
-					boutput(user, "You fail to [ locked ? "unlock" : "lock"] the APC interface.")
+					boutput(user, "you fail to [ locked ? "unlock" : "lock"] the apc interface.")
 				return 0
 	return 0
 
@@ -340,46 +344,46 @@ var/zapLimiter = 0
 	if (!emagged)
 		return 0
 	if (user)
-		user.show_text("You repair the damage to the [src]'s electronics.", "blue")
+		user.show_text("you repair the damage to the [src]'s electronics.", "blue")
 	emagged = 0
 	return 1
 
 //attack with an item - open/close cover, insert cell, or (un)lock interface
 
 
-/obj/machinery/power/apc/attackby(obj/item/W, mob/user)
+/obj/machinery/power/apc/attackby(obj/item/w, mob/user)
 
 	src.add_fingerprint(user)
-	if(status & BROKEN) //APC REPAIR
-		if (isscrewingtool(W))
+	if(status & broken) //apc repair
+		if (isscrewingtool(w))
 			switch (src.repair_status)
 				if (0)
 					src.repair_status = 1
-					boutput(user, "You loosen the screw terminals on the control board.")
-					playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+					boutput(user, "you loosen the screw terminals on the control board.")
+					playsound(src.loc, "sound/items/screwdriver.ogg", 50, 1)
 					return
 				if (1)
 					src.repair_status = 0
-					boutput(user, "You secure the screw terminals on the control board.")
-					playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+					boutput(user, "you secure the screw terminals on the control board.")
+					playsound(src.loc, "sound/items/screwdriver.ogg", 50, 1)
 					return
 				if (2)
-					boutput(user, "<span class='alert'>Securing the terminals now without tuning the autotransformer could fry the control board.</span>")
+					boutput(user, "<span class='alert'>securing the terminals now without tuning the autotransformer could fry the control board.</span>")
 					return
 				if (3)
-					boutput(user, "<span class='alert'>The control board must be reset before connection to the autotransformer..</span>")
+					boutput(user, "<span class='alert'>the control board must be reset before connection to the autotransformer..</span>")
 					return
 				if (4)
 					src.repair_status = 0
-					boutput(user, "You secure the screw terminals on the control board.")
-					playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+					boutput(user, "you secure the screw terminals on the control board.")
+					playsound(src.loc, "sound/items/screwdriver.ogg", 50, 1)
 
 					if (!src.terminal)
-						var/obj/machinery/power/terminal/newTerm = locate(/obj/machinery/power/terminal) in src.loc
-						if (istype(newTerm) && !newTerm.master)
-							src.terminal = newTerm
-							newTerm.master = src
-							newTerm.set_dir(initial(src.dir)) //Can't use CURRENT dir because it is set to south on spawn.
+						var/obj/machinery/power/terminal/newterm = locate(/obj/machinery/power/terminal) in src.loc
+						if (istype(newterm) && !newterm.master)
+							src.terminal = newterm
+							newterm.master = src
+							newterm.set_dir(initial(src.dir)) //can't use current dir because it is set to south on spawn.
 						else
 							if (src.setup_networkapc)
 								src.terminal = new /obj/machinery/power/terminal/netlink(src.loc)
@@ -388,110 +392,110 @@ var/zapLimiter = 0
 							src.terminal.master = src
 							src.terminal.set_dir(initial(src.dir))
 
-					status &= ~BROKEN //Clear broken flag
+					status &= ~broken //clear broken flag
 					icon_state = initial(src.icon_state)
 					operating = 1
 					update()
-					UpdateIcon()
+					updateicon()
 					return
 			return
 
-		else if (istype(W, /obj/item/cable_coil))
+		else if (istype(w, /obj/item/cable_coil))
 			switch (src.repair_status)
 				if (0)
-					boutput(user, "<span class='alert'>The control board must be disconnected before you can repair the autotransformer.</span>")
+					boutput(user, "<span class='alert'>the control board must be disconnected before you can repair the autotransformer.</span>")
 					return
-				if (1) //Repair the transformer with a cable.
-					var/obj/item/cable_coil/theCoil = W
-					if (theCoil.amount >= 4)
-						boutput(user, "You unravel some cable..<br>Now repairing the autotransformer's windings.  This could take some time.")
+				if (1) //repair the transformer with a cable.
+					var/obj/item/cable_coil/thecoil = w
+					if (thecoil.amount >= 4)
+						boutput(user, "you unravel some cable..<br>now repairing the autotransformer's windings.  this could take some time.")
 					else
-						boutput(user, "<span class='alert'>Not enough cable! <I>(Requires four pieces)</I></span>")
+						boutput(user, "<span class='alert'>not enough cable! <i>(requires four pieces)</i></span>")
 						return
-					SETUP_GENERIC_ACTIONBAR(user, src, 10 SECONDS, /obj/machinery/power/apc/proc/fix_wiring,\
-					list(theCoil, user), W.icon, W.icon_state, null, null)
+					setup_generic_actionbar(user, src, 10 seconds, /obj/machinery/power/apc/proc/fix_wiring,\
+					list(thecoil, user), w.icon, w.icon_state, null, null)
 					return
 				if (2)
-					boutput(user, "The autotransformer is already in good condition, it just needs tuning.")
+					boutput(user, "the autotransformer is already in good condition, it just needs tuning.")
 					return
 				else
 					return
 
-		else if (iswrenchingtool(W))
+		else if (iswrenchingtool(w))
 			switch (src.repair_status)
 				if (0)
-					boutput(user, "<span class='alert'>You must disconnect the control board prior to working on the autotransformer.</span>")
+					boutput(user, "<span class='alert'>you must disconnect the control board prior to working on the autotransformer.</span>")
 				if (1)
-					boutput(user, "<span class='alert'>You must repair the autotransformer's windings prior to tuning it.</span>")
+					boutput(user, "<span class='alert'>you must repair the autotransformer's windings prior to tuning it.</span>")
 				if (2)
-					boutput(user, "You begin to carefully tune the autotransformer.  This might take a little while.")
-					SETUP_GENERIC_ACTIONBAR(user, src, 6 SECONDS, /obj/machinery/power/apc/proc/fix_autotransformer,\
-					list(user), W.icon, W.icon_state, null, null)
+					boutput(user, "you begin to carefully tune the autotransformer.  this might take a little while.")
+					setup_generic_actionbar(user, src, 6 seconds, /obj/machinery/power/apc/proc/fix_autotransformer,\
+					list(user), w.icon, w.icon_state, null, null)
 				else
-					boutput(user, "The autotransformer is already tuned.")
+					boutput(user, "the autotransformer is already tuned.")
 
 			return
 
-		else if (ispulsingtool(W))
+		else if (ispulsingtool(w))
 			switch(src.repair_status)
 				if (3)
-					boutput(user, "<span class='alert'>You reset the control board.[prob(10) ? " Takes no time at all, eh?" : ""]</span>")
+					boutput(user, "<span class='alert'>you reset the control board.[prob(10) ? " takes no time at all, eh?" : ""]</span>")
 					src.repair_status = 4
 				if (4)
-					boutput(user, "The control board has already been reset. It just needs to be reconnected now.")
+					boutput(user, "the control board has already been reset. it just needs to be reconnected now.")
 				else
-					boutput(user, "<span class='alert'>You need to repair and tune the autotransformer before resetting the control board.</span>")
+					boutput(user, "<span class='alert'>you need to repair and tune the autotransformer before resetting the control board.</span>")
 			return
 
 		return
-	if (ispryingtool(W))	// crowbar means open or close the cover
+	if (ispryingtool(w))	// crowbar means open or close the cover
 		if(opened)
 			opened = 0
-			UpdateIcon()
+			updateicon()
 		else
 			if(coverlocked)
-				boutput(user, "The cover is locked and cannot be opened.")
+				boutput(user, "the cover is locked and cannot be opened.")
 			else
 				opened = 1
-				UpdateIcon()
-	else if	(istype(W, /obj/item/cell) && opened)	// trying to put a cell inside
+				updateicon()
+	else if	(istype(w, /obj/item/cell) && opened)	// trying to put a cell inside
 		if(cell)
-			boutput(user, "There is a power cell already installed.")
+			boutput(user, "there is a power cell already installed.")
 		else
 			if (user.drop_item())
-				W.set_loc(src)
-				cell = W
-				boutput(user, "You insert the power cell.")
+				w.set_loc(src)
+				cell = w
+				boutput(user, "you insert the power cell.")
 				chargecount = 0
-		UpdateIcon()
-	else if	(isscrewingtool(W))
+		updateicon()
+	else if	(isscrewingtool(w))
 		if(opened)
-			boutput(user, "Close the APC first")
+			boutput(user, "close the apc first")
 		else if(emagged)
-			boutput(user, "The interface is broken")
+			boutput(user, "the interface is broken")
 		else
 			wiresexposed = !wiresexposed
-			boutput(user, "The wires have been [wiresexposed ? "exposed" : "unexposed"]")
-			UpdateIcon()
+			boutput(user, "the wires have been [wiresexposed ? "exposed" : "unexposed"]")
+			updateicon()
 
-	else if (wiresexposed && (issnippingtool(W) || ispulsingtool(W)))
-		src.Attackhand(user)
+	else if (wiresexposed && (issnippingtool(w) || ispulsingtool(w)))
+		src.attackhand(user)
 
 	else if (issilicon(user))
-		if (istype(W, /obj/item/robojumper))
-			var/mob/living/silicon/S = user
-			var/obj/item/robojumper/jumper = W
+		if (istype(w, /obj/item/robojumper))
+			var/mob/living/silicon/s = user
+			var/obj/item/robojumper/jumper = w
 			var/obj/item/cell/donor_cell = null
 			var/obj/item/cell/recipient_cell = null
 			if (jumper.positive)
-				donor_cell = S.cell
+				donor_cell = s.cell
 				recipient_cell = src.cell
 			else
 				donor_cell = src.cell
-				recipient_cell = S.cell
+				recipient_cell = s.cell
 
 			if (isnull(donor_cell))
-				boutput(user, "<span class='alert'>You have no cell installed!</span>")
+				boutput(user, "<span class='alert'>you have no cell installed!</span>")
 				return
 			else if (isnull(recipient_cell))
 				boutput(user, "<span class='alert'>[jumper.positive? "[src] has" : "you have"] no cell installed!</span>")
@@ -499,91 +503,173 @@ var/zapLimiter = 0
 
 			var/overspill = 250 - recipient_cell.charge
 			if (recipient_cell.charge >= recipient_cell.maxcharge)
-				boutput(user, "<span class='notice'>[jumper.positive ? "[src]" : "Your"] cell is already fully charged.</span>")
+				boutput(user, "<span class='notice'>[jumper.positive ? "[src]" : "your"] cell is already fully charged.</span>")
 			else if (donor_cell.charge <= 250)
-				boutput(user, "<span class='alert'>You do not have enough charge left to do this!</span>")
+				boutput(user, "<span class='alert'>you do not have enough charge left to do this!</span>")
 			else if (overspill >= 250)
 				donor_cell.charge -= overspill
 				recipient_cell.charge += overspill
 				if (jumper.positive)
-					user.visible_message("<span class='notice'>[user] transfers some of their power to [src]!</span>", "<span class='notice'>You transfer [overspill] charge. The APC is now fully charged.</span>")
+					user.visible_message("<span class='notice'>[user] transfers some of their power to [src]!</span>", "<span class='notice'>you transfer [overspill] charge. the apc is now fully charged.</span>")
 				else
-					user.visible_message("<span class='notice'>[user] transfers some of the power from [src] to yourself!</span>", "<span class='notice'>You transfer [overspill] charge. You are now fully charged.</span>")
+					user.visible_message("<span class='notice'>[user] transfers some of the power from [src] to yourself!</span>", "<span class='notice'>you transfer [overspill] charge. you are now fully charged.</span>")
 
 			else
 				donor_cell.charge -= 250
 				recipient_cell.charge += 250
 				if (jumper.positive)
-					user.visible_message("<span class='notice'>[user] transfers some of their power to [src]!</span>", "<span class='notice'>You transfer 250 charge.</span>")
+					user.visible_message("<span class='notice'>[user] transfers some of their power to [src]!</span>", "<span class='notice'>you transfer 250 charge.</span>")
 				else
-					user.visible_message("<span class='notice'>[user] transfers some of the power from [src] to yourself!</span>", "<span class='notice'>You transfer 250 charge.</span>")
+					user.visible_message("<span class='notice'>[user] transfers some of the power from [src] to yourself!</span>", "<span class='notice'>you transfer 250 charge.</span>")
 
 			charging = chargemode
 
-		else return src.Attackhand(user)
+		else return src.attackhand(user)
 
-	else if (istype(W, /obj/item/device/pda2) && W:ID_card)
-		W = W:ID_card
-	if (istype(W, /obj/item/card/id))			// trying to unlock the interface with an ID card
+	else if (istype(w, /obj/item/device/pda2) && w:id_card)
+		w = w:id_card
+	if (istype(w, /obj/item/card/id))			// trying to unlock the interface with an id card
 		if(emagged)
-			boutput(user, "The interface is broken")
+			boutput(user, "the interface is broken")
 		else if(opened)
-			boutput(user, "You must close the cover to swipe an ID card.")
+			boutput(user, "you must close the cover to swipe an id card.")
 		else if(wiresexposed)
-			boutput(user, "You must close the panel")
+			boutput(user, "you must close the panel")
 		else if (setup_networkapc > 1)
-			boutput(user, "This APC doesn't have a local interface.")
+			boutput(user, "this apc doesn't have a local interface.")
 		else
 			if(src.allowed(user))
 				locked = !locked
-				boutput(user, "You [ locked ? "lock" : "unlock"] the APC interface.")
-				UpdateIcon()
+				boutput(user, "you [ locked ? "lock" : "unlock"] the apc interface.")
+				updateicon()
 			else
-				boutput(user, "<span class='alert'>Access denied.</span>")
+				boutput(user, "<span class='alert'>access denied.</span>")
 
-/obj/machinery/power/apc/proc/fix_wiring(obj/item/W, mob/user)
-	W.change_stack_amount(-4)
-	boutput(user, "You repair the autotransformer.")
-	playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+/obj/machinery/power/apc/proc/fix_wiring(obj/item/w, mob/user)
+	w.change_stack_amount(-4)
+	boutput(user, "you repair the autotransformer.")
+	playsound(src.loc, "sound/items/deconstruct.ogg", 50, 1)
 	src.repair_status = 2
 
 /obj/machinery/power/apc/proc/fix_autotransformer(mob/user)
-	boutput(user, "You tune the autotransformer.")
-	playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+	boutput(user, "you tune the autotransformer.")
+	playsound(src.loc, "sound/items/ratchet.ogg", 50, 1)
 	src.repair_status = 3
 
 /obj/machinery/power/apc/attack_ai(mob/user)
 	if (src.aidisabled && !src.wiresexposed)
-		boutput(user, "AI control for this APC interface has been disabled.")
+		boutput(user, "ai control for this apc interface has been disabled.")
 	else
-		return src.Attackhand(user)
+		return src.attack_hand(user)
 
-// attack with hand - remove cell (if cover open) or interact with the APC
-
-/obj/machinery/power/apc/attack_hand(mob/user)
-	if (user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat)
+// attack with hand - remove cell (if cover open) or interact with the apc
+/obj/machinery/power/apc/proc/attack_hand(mob/user)
+	if (user.getstatusduration("stunned") || user.getstatusduration("weakened") || user.stat)
 		return
 
 	add_fingerprint(user)
 
-	if(status & BROKEN) return
+	if(status & broken) return
 
 	interact_particle(user,src)
 
-	if(opened && !isAI(user))
+	if(opened && !isai(user))
 		if(cell)
 			user.put_in_hand_or_drop(cell)
-			cell.UpdateIcon()
+			cell.updateicon()
 			src.cell = null
-			boutput(user, "You remove the power cell.")
+			boutput(user, "you remove the power cell.")
 			charging = 0
-			src.UpdateIcon()
+			src.updateicon()
 
 	else
-		// do APC interaction
+		// do apc interaction
 		src.interacted(user)
 
+/obj/machinery/power/apc/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "apc")
+		ui.open()
 
+/obj/machinery/power/apc/ui_static_data(mob/user)
+	. = list(
+		"foo" = 2,
+	)
+
+/obj/machinery/power/apc/ui_data(mob/user)
+	var/list/apcwires = list(
+		"orange" = 1,
+		"dark red" = 2,
+		"white" = 3,
+		"yellow" = 4,
+	)
+	. = list(
+		"start_charge" = 90,				// initial cell charge %
+		"cell_type" = 2500,				// 0=no cell, 1=regular, 2=high-cap (x5) <- old, now it's just 0=no cell, otherwise dictate cellcapacity by changing this value. 1 used to be 1000, 2 was 2500
+		"opened" = 0,
+		"circuit_disabled" = 0,
+		"shorted" = 0,
+		"lighting" = 3,
+		"equipment" = 3,
+		"environ" = 3,
+		"operating" = 1,
+		"do_not_operate" = 0,
+		"charging" = 0,
+		"chargemode" = 1,
+		"chargecount" = 0,
+		"locked" = 1,
+		"coverlocked" = 1,
+		"aidisabled" = 0,
+		"noalerts" = 0,
+		"lastused_light" = 0,
+		"lastused_equip" = 0,
+		"lastused_environ" = 0,
+		"lastused_total" = 0,
+		"main_status" = 0,
+		"light_consumption" = 0,
+		"equip_consumption" = 0,
+		"environ_consumption" = 0,
+		"emagged" = 0,
+		"wiresexposed" = 0,
+		"apcwires" = 15,
+	)
+
+/obj/machinery/power/apc/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if (.)
+		return
+	switch(action)
+		if("updatemainbreaker")
+			set_main_breaker(params[0])
+			updateicon()
+			ui_state.update()
+			. = TRUE
+		if("updateidlock")
+			set_id_lock(params)
+			updateicon()
+			ui_state.update()
+			. = TRUE
+		if("updateCoverLock")
+			set_cover_lock(params)
+			updateicon()
+			ui_state.update()
+			. = TRUE
+		if("updateAccessPanelExposed")
+			set_access_panel_exposed(params)
+			updateicon()
+			ui_state.update()
+			. = TRUE
+		if("updateWire")
+			set_wire(params)
+			updateicon()
+			ui_state.update()
+			. = TRUE
+		if("updatePowerChannel")
+			set_power_channel(params)
+			updateicon()
+			ui_state.update()
+			. = TRUE
 
 /obj/machinery/power/apc/proc/interacted(mob/user)
 	if (user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat)
@@ -594,6 +680,7 @@ var/zapLimiter = 0
 		user.Browse(null, "window=apc")
 		return
 	if(wiresexposed && (!isAI(user)))
+		src.ui_interact(user)
 		src.add_dialog(user)
 		var/t1 = text("<B>Access Panel</B><br>")
 		t1 += text("An identifier is engraved above the APC's wires: <i>[net_id]</i><br><br>")
@@ -1578,3 +1665,8 @@ var/zapLimiter = 0
 
 	update()
 	UpdateIcon()
+
+
+#undef APC_BUTTON_STATE_OFF
+#undef APC_BUTTON_STATE_ON
+#undef APC_BUTTON_STATE_AUTO
