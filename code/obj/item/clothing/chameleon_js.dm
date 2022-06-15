@@ -1266,7 +1266,7 @@
 
 	boxing
 		name = "boxing gloves"
-		desc = "Big soft gloves used in competitive boxing. Specifically designed to stop your fists from inflicting permanent injuries, so your punches will knock people down without hurting them as much."
+		desc = "Big soft gloves used in competitive boxing. Gives your punches a bit more weight, at the cost of precision."
 		icon_state = "boxinggloves"
 		item_state = "bogloves"
 		print_type = "red leather fibers"

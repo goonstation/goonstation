@@ -423,8 +423,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 /obj/item/clothing/gloves/boxing
 	name = "boxing gloves"
-	// This description reads weirdly without context; it's turned into an understandable version through get_desc()
-	desc = "Big soft gloves used in competitive boxing. Specifically designed to stop your fists from inflicting permanent injuries,"
+	desc = "Big soft gloves used in competitive boxing."
 	icon_state = "boxinggloves"
 	item_state = "bogloves"
 	material_prints = "red leather fibers"
@@ -444,9 +443,9 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 	get_desc()
 		if (src.weighted)
-			. += "but these ones feel unusually heavy."
+			. += " One of the gloves feels unusually heavy."
 		else
-			. += "so your punches will knock people down without hurting them as much."
+			. += " Gives your punches a bit more weight, at the cost of precision."
 
 /obj/item/clothing/gloves/boxing/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/horseshoe))
