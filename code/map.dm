@@ -944,47 +944,46 @@ var/global/list/mapNames = list(
 		"the chapel" = list(/area/station/security/secwing),
 		"the south crew quarters" = list(/area/station/crew_quarters/quarters_south))
 
-/datum/map_settings
-	var/name = "FEDERATION"
-	var/display_name = FEDERATION
-	var/style = "station"
-	var/default_gamemode = "secret"
-	var/goonhub_map = "https://goonhub.com/maps/federation"
-	var/arrivals_type = MAP_SPAWN_SHUTTLE
-	var/dir_fore = null
+/datum/map_settings/federation
+	name = "FEDERATION"
+	style = "station"
+	default_gamemode = "secret"
+	goonhub_map = "https://goonhub.com/maps/federation"
+	arrivals_type = MAP_SPAWN_SHUTTLE
+	dir_fore = null
 
-	var/walls = /turf/simulated/wall
-	var/rwalls = /turf/simulated/wall/r_wall
-	var/auto_walls = 1
+	walls = /turf/simulated/wall
+	rwalls = /turf/simulated/wall/r_wall
+	auto_walls = 1
 
-	var/windows = /obj/window
-	var/windows_thin = /obj/window
-	var/rwindows = /obj/window/reinforced
-	var/rwindows_thin = /obj/window/reinforced
-	var/windows_crystal = /obj/window/crystal
-	var/windows_rcrystal = /obj/window/crystal/reinforced
-	var/window_layer_full = null
-	var/window_layer_north = null
-	var/window_layer_south = null
-	var/auto_windows = 1
+	windows = /obj/window
+	windows_thin = /obj/window
+	rwindows = /obj/window/reinforced
+	rwindows_thin = /obj/window/reinforced
+	windows_crystal = /obj/window/crystal
+	windows_rcrystal = /obj/window/crystal/reinforced
+	window_layer_full = null
+	window_layer_north = null
+	window_layer_south = null
+	auto_windows = 1
 
-	var/ext_airlocks = /obj/machinery/door/airlock/external
-	var/airlock_style = "gannets"
+	ext_airlocks = /obj/machinery/door/airlock/external
+	airlock_style = "gannets"
 
-	var/escape_centcom = /area/shuttle/escape/centcom
-	var/escape_transit = /area/shuttle/escape/transit
-	var/escape_station = /area/shuttle/escape/station
-	var/escape_dir = NORTH
-	var/default_shuttle = null // null = auto, otherwise name of the dmm file without .dmm
+	escape_centcom = /area/shuttle/escape/centcom
+	escape_transit = /area/shuttle/escape/transit
+	escape_station = /area/shuttle/escape/station
+	escape_dir = NORTH
+	default_shuttle = null // null = auto, otherwise name of the dmm file without .dmm
 
-	var/shuttle_map_turf = /turf/space
+	shuttle_map_turf = /turf/space
 
-	var/merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom
-	var/merchant_left_station = /area/shuttle/merchant_shuttle/left_station
-	var/merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom
-	var/merchant_right_station = /area/shuttle/merchant_shuttle/right_station
+	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom
+	merchant_left_station = /area/shuttle/merchant_shuttle/left_station
+	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom
+	merchant_right_station = /area/shuttle/merchant_shuttle/right_station
 
-	var/list/valid_nuke_targets = list("the main security room" = list(/area/station/security/main),
+	list/valid_nuke_targets = list("the main security room" = list(/area/station/security/main),
 		"the central research sector hub" = list(/area/station/science/lobby),
 		"the cargo bay (QM)" = list(/area/station/quartermaster/office),
 		"the engineering control room" = list(/area/station/engine/engineering, /area/station/engine/power),
