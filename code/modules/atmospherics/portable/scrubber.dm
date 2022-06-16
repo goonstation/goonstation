@@ -147,18 +147,14 @@
 		"on" = src.on,
 		"maxPressure" = src.maximum_pressure,
 		"connected" = src.connected_port ? TRUE : FALSE,
-		"holding" = null, // need to explicitly tell the client it doesn't exist so it renders properly
 		"inletFlow" = src.inlet_flow
 	)
 
-	if(src.holding)
-		. += list(
-			"holding" = list(
-				"name" = src.holding.name,
-				"pressure" = MIXTURE_PRESSURE(src.holding.air_contents),
-				"maxPressure" = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE,
-			)
-		)
+	.["holding"] = isnull(holding) ? null : list(
+		"name" = src.holding.name,
+		"pressure" = MIXTURE_PRESSURE(src.holding.air_contents),
+		"maxPressure" = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE,
+	)
 
 /obj/machinery/portable_atmospherics/scrubber/ui_static_data(mob/user)
 	. = list(
