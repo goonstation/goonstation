@@ -598,6 +598,7 @@ var/zapLimiter = 0
 /obj/machinery/power/apc/ui_data(mob/user)
 	. = list(
 		"cell_type" = cell_type, // 0=no cell, 1=regular, 2=high-cap (x5) <- old, now it's just 0=no cell, otherwise dictate cellcapacity by changing this value. 1 used to be 1000, 2 was 2500
+		"cell_percent" = cell ? cell.percent : null,
 		"opened" = opened,
 		"circuit_disabled" = circuit_disabled,
 		"shorted" = shorted,
@@ -632,6 +633,8 @@ var/zapLimiter = 0
 	. = ..()
 	if (.)
 		return
+	if (usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.stat)
+		return
 	switch (action)
 		if ("onPowerChannelEquipmentStatusChange")
 			equipment = params[1]
@@ -643,22 +646,49 @@ var/zapLimiter = 0
 			environ = params[1]
 			. = TRUE
 		if ("onMendWire")
+			if (!usr.find_tool_in_hand(TOOL_SNIPPING))
+				boutput(usr, "You need a snipping tool!")
+				return
 			src.mend(APCIndexToWireColor[params[1]])
 			. = TRUE
 		if ("onCutWire")
+			if (!usr.find_tool_in_hand(TOOL_SNIPPING))
+				boutput(usr, "You need a snipping tool!")
+				return
 			src.cut(APCIndexToWireColor[params[1]])
 			. = TRUE
 		if ("onPulseWire")
-			src.pulse(APCIndexToWireColor[params[1]])
+			if (!usr.find_tool_in_hand(TOOL_PULSING))
+				boutput(usr, "You need a multitool or similar!")
+				return
+			else if (src.isWireColorCut(APCIndexToWireColor[params[1]]))
+				boutput(usr, "You can't pulse a cut wire.")
+				return
+			else
+				src.pulse(APCIndexToWireColor[params[1]])
 			. = TRUE
 		if ("onBiteWire")
-			src.bite(APCIndexToWireColor[params[1]])
+			switch(alert("Really bite the wire off?",,"Yes","No"))
+				if("Yes")
+					src.bite(APCIndexToWireColor[params[1]])
+				if("No")
+					return
 			. = TRUE
 		if ("onMainBreakerChange")
 			main_status = params[1]
 			. = TRUE
 		if ("onChargeModeChange")
 			chargemode = params[1]
+			. = TRUE
+		if ("onLockedChange")
+			locked = params[1]
+			. = TRUE
+		if ("onCoverLockedChange")
+			if ((!locked && setup_networkapc < 2) || issilicon(usr) || isAI(usr))
+				if ((issilicon(usr) || isAI(usr)) && src.aidisabled)
+					boutput(usr, "AI control for this APC interface has been disabled.")
+					return
+				coverlocked = params[1]
 			. = TRUE
 
 /obj/machinery/power/apc/proc/interacted(mob/user)
@@ -1252,7 +1282,6 @@ var/zapLimiter = 0
 		if(src.timeout == 0)
 			src.post_status(host_id, "command","term_disconnect","data","timeout")
 			src.host_id = null
-			src.updateUsrDialog()
 			src.timeout = initial(src.timeout)
 			src.timeout_alert = 0
 		else

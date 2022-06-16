@@ -105,7 +105,7 @@ export const PowerChannelSection = (props) => {
       case POWER_CHANNEL_STATUS_AUTO_ON:
         return <Box>{"Auto (On)"}</Box>;
       default:
-        return <Button label="Auto" onClick={() => onPowerChannelUpdate(POWER_CHANNEL_STATUS_AUTO_ON)} />;
+        return <Button label="Auto" onClick={() => onPowerChannelUpdate(POWER_CHANNEL_STATUS_AUTO_ON)}>Auto</Button>;
     }
   };
 
@@ -117,10 +117,10 @@ export const PowerChannelSection = (props) => {
         </Box>
       </Stack.Item>
       <Stack.Item>
-        {getPowerChannelStatus() === POWER_CHANNEL_STATUS_OFF ? <Box>Off</Box> : <Button label="Off" onClick={() => { onPowerChannelUpdate(POWER_CHANNEL_STATUS_OFF); }} />}
+        {getPowerChannelStatus() === POWER_CHANNEL_STATUS_OFF ? <Box>Off</Box> : <Button label="Off" onClick={() => { onPowerChannelUpdate(POWER_CHANNEL_STATUS_OFF); }}>Off</Button>}
       </Stack.Item>
       <Stack.Item>
-        {getPowerChannelStatus() === POWER_CHANNEL_STATUS_ON ? <Box>On</Box> : <Button label="On" onClick={() => { onPowerChannelUpdate(POWER_CHANNEL_STATUS_ON); }} />}
+        {getPowerChannelStatus() === POWER_CHANNEL_STATUS_ON ? <Box>On</Box> : <Button label="On" onClick={() => { onPowerChannelUpdate(POWER_CHANNEL_STATUS_ON); }}>On</Button>}
       </Stack.Item>
       <Stack.Item>
         {getPowerChannelStatusAutoDisplay()}
@@ -175,9 +175,9 @@ export const Wire = (props) => {
 
   const toggleCutButton = () => {
     if (isCut(wire)) {
-      return <Button label="mend" onClick={onMend} />;
+      return <Button label="mend" onClick={onMend}>mend</Button>;
     } else {
-      return <Button label="cut" onClick={onCut} />;
+      return <Button label="cut" onClick={onCut}>cut</Button>;
     }
   };
 
@@ -190,10 +190,10 @@ export const Wire = (props) => {
         {toggleCutButton()}
       </Stack.Item>
       <Stack.Item>
-        <Button label="pulse" onClick={onPulse} />
+        <Button label="pulse" onClick={onPulse}>pulse</Button>
       </Stack.Item>
       <Stack.Item>
-        <Button label="bite" onClick={onBite} />
+        <Button label="bite" onClick={onBite}>bite</Button>
       </Stack.Item>
     </Stack>
   );
@@ -256,7 +256,7 @@ export const Apc = (props, context) => {
   const chargingStatusToText = () => {
     switch (data["charging"]) {
       case 0:
-        return "Not charging";
+        return data["chargecount"] ? "Performing self-test" : "Not charging";
       case 1:
         return "Fully Charged";
       default:
@@ -275,10 +275,10 @@ export const Apc = (props, context) => {
       return (
         <>
           <Stack.Item>
-            {data["chargemode"] ? <Button label="Off" onClick={() => { () => { onChargeModeChange(CHARGE_MODE_OFF); }; }} /> : <Box>Off</Box>}
+            {data["chargemode"] ? <Button label="Off" onClick={() => { () => { onChargeModeChange(CHARGE_MODE_OFF); }; }} >Off</Button> : <Box>Off</Box>}
           </Stack.Item>
           <Stack.Item>
-            {data["chargemode"] ? <Box>Auto</Box> : <Button label="Auto" onClick={() => { () => { onChargeModeChange(CHARGE_MODE_AUTO); }; }} />}
+            {data["chargemode"] ? <Box>Auto</Box> : <Button label="Auto" onClick={() => { () => { onChargeModeChange(CHARGE_MODE_AUTO); }; }}>Auto</Button>}
           </Stack.Item>
         </>
       );
@@ -286,14 +286,14 @@ export const Apc = (props, context) => {
   };
 
   const cellDisplay = () => {
-    if (data["cell"]) {
+    if (data["cell_type"]) {
       return (
         <Stack>
           <Stack.Item>
             <Box>Power Cell:</Box>
           </Stack.Item>
           <Stack.Item>
-            <Box>{'(' + data["cell"].percent + ')'}</Box>
+            <Box>{'(' + data["cell_percent"] + ')'}</Box>
           </Stack.Item>
           <Stack.Item>
             <Box>{chargingStatusToText()}</Box>
@@ -323,10 +323,10 @@ export const Apc = (props, context) => {
             <Box>Main Breaker</Box>
           </Stack.Item>
           <Stack.Item>
-            <Button label="off" disabled={data["locked"]} onClick={() => { onMainBreakerChange(OFF); }} />
+            <Button label="off" disabled={data["locked"]} onClick={() => { onMainBreakerChange(OFF); }}>off</Button>
           </Stack.Item>
           <Stack.Item>
-            <Button label="on" disabled={data["locked"]} onClick={() => { onMainBreakerChange(ON); }} />
+            <Button label="on" disabled={data["locked"]} onClick={() => { onMainBreakerChange(ON); }}>on</Button>
           </Stack.Item>
         </Stack>
         <Stack>
@@ -353,7 +353,7 @@ export const Apc = (props, context) => {
           </Stack.Item>
         </Stack>
       </Section>
-      {accessPanel ? data["wiresexposed"] : null}
+      {data["wiresexposed"] ? <AccessPanel act={act} data={data} /> : null}
     </Window>
   );
 };
