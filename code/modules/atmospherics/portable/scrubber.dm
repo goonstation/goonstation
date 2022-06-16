@@ -145,8 +145,7 @@
 	. = list(
 		"pressure" = MIXTURE_PRESSURE(src.air_contents),
 		"on" = src.on,
-		"maxPressure" = src.maximum_pressure,
-		"connected" = src.connected_port ? TRUE : FALSE,
+		"connected" = !!src.connected_port,
 		"inletFlow" = src.inlet_flow
 	)
 
@@ -160,6 +159,7 @@
 	. = list(
 		"minFlow" = 0,
 		"maxFlow" = 100,
+		"maxPressure" = src.maximum_pressure
 	)
 
 /obj/machinery/portable_atmospherics/scrubber/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)

@@ -119,8 +119,7 @@
 	. = list(
 		"pressure" = MIXTURE_PRESSURE(src.air_contents),
 		"on" = src.on,
-		"maxPressure" = src.maximum_pressure,
-		"connected" = src.connected_port ? TRUE : FALSE,
+		"connected" = !!src.connected_port,
 		"targetPressure" = src.target_pressure,
 		"direction_out" = src.direction_out
 	)
@@ -134,7 +133,8 @@
 /obj/machinery/portable_atmospherics/pump/ui_static_data(mob/user)
 	. = list(
 		"minRelease" = 0,
-		"maxRelease" = 10*ONE_ATMOSPHERE,
+		"maxRelease" = 10 * ONE_ATMOSPHERE,
+		"maxPressure" = src.maximum_pressure
 	)
 
 /obj/machinery/portable_atmospherics/pump/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
