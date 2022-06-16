@@ -1170,6 +1170,7 @@ MATERIAL
 
 /obj/item/tile/cardboard // for drones
 	desc = "They keep the floor in a good and walkable condition. At least, they would if they were actually made of steel."
+	force = 0.0
 	New()
 		..()
 		var/datum/material/M = getMaterial("cardboard")
