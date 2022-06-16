@@ -63,7 +63,8 @@
 
 	New()
 		..()
-		var/damage_overlay = image('icons/turf/floors.dmi',"damaged1")
+		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged1")
+		damage_overlay.alpha = 200
 		UpdateOverlays(damage_overlay,"damage")
 
 /turf/simulated/floor/airless/damaged2
@@ -71,7 +72,8 @@
 
 	New()
 		..()
-		var/damage_overlay = image('icons/turf/floors.dmi',"damaged2")
+		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged2")
+		damage_overlay.alpha = 200
 		UpdateOverlays(damage_overlay,"damage")
 
 /turf/simulated/floor/airless/damaged3
@@ -79,7 +81,8 @@
 
 	New()
 		..()
-		var/damage_overlay = image('icons/turf/floors.dmi',"damaged3")
+		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged3")
+		damage_overlay.alpha = 200
 		UpdateOverlays(damage_overlay,"damage")
 
 /turf/simulated/floor/airless/damaged4
@@ -87,7 +90,8 @@
 
 	New()
 		..()
-		var/damage_overlay = image('icons/turf/floors.dmi',"damaged4")
+		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged4")
+		damage_overlay.alpha = 200
 		UpdateOverlays(damage_overlay,"damage")
 
 /turf/simulated/floor/airless/damaged5
@@ -95,7 +99,8 @@
 
 	New()
 		..()
-		var/damage_overlay = image('icons/turf/floors.dmi',"damaged5")
+		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged5")
+		damage_overlay.alpha = 200
 		UpdateOverlays(damage_overlay,"damage")
 
 /////////////////////////////////////////

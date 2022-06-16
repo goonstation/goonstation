@@ -244,7 +244,8 @@
 
 	New()
 		..()
-		var/damage_overlay = image('icons/turf/floors.dmi',"damaged1")
+		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged1")
+		damage_overlay.alpha = 200
 		UpdateOverlays(damage_overlay,"damage")
 
 /turf/simulated/floor/damaged2
@@ -254,7 +255,8 @@
 
 	New()
 		..()
-		var/damage_overlay = image('icons/turf/floors.dmi',"damaged2")
+		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged2")
+		damage_overlay.alpha = 200
 		UpdateOverlays(damage_overlay,"damage")
 
 /turf/simulated/floor/damaged3
@@ -264,7 +266,8 @@
 
 	New()
 		..()
-		var/damage_overlay = image('icons/turf/floors.dmi',"damaged3")
+		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged3")
+		damage_overlay.alpha = 200
 		UpdateOverlays(damage_overlay,"damage")
 
 /turf/simulated/floor/damaged4
@@ -274,7 +277,8 @@
 
 	New()
 		..()
-		var/damage_overlay = image('icons/turf/floors.dmi',"damaged4")
+		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged4")
+		damage_overlay.alpha = 200
 		UpdateOverlays(damage_overlay,"damage")
 
 /turf/simulated/floor/damaged5
@@ -284,7 +288,8 @@
 
 	New()
 		..()
-		var/damage_overlay = image('icons/turf/floors.dmi',"damaged5")
+		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged5")
+		damage_overlay.alpha = 200
 		UpdateOverlays(damage_overlay,"damage")
 
 /////////////////////////////////////////
@@ -309,7 +314,8 @@
 
 	New()
 		..()
-		var/damage_overlay = image('icons/turf/floors.dmi',"platingdmg1")
+		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg1")
+		damage_overlay.alpha = 200
 		UpdateOverlays(damage_overlay,"damage")
 
 /turf/simulated/floor/plating/damaged2
@@ -317,7 +323,8 @@
 
 	New()
 		..()
-		var/damage_overlay = image('icons/turf/floors.dmi',"platingdmg2")
+		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg2")
+		damage_overlay.alpha = 200
 		UpdateOverlays(damage_overlay,"damage")
 
 /turf/simulated/floor/plating/damaged3
@@ -325,7 +332,8 @@
 
 	New()
 		..()
-		var/damage_overlay = image('icons/turf/floors.dmi',"platingdmg3")
+		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg3")
+		damage_overlay.alpha = 200
 		UpdateOverlays(damage_overlay,"damage")
 
 /////////////////////////////////////////
@@ -1712,8 +1720,10 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 		icon_old = icon_state
 	if(intact)
 		damage_overlay = image('icons/turf/floors.dmi',"damaged[pick(1,2,3,4,5)]")
+		damage_overlay.alpha = 200
 	else
 		damage_overlay = image('icons/turf/floors.dmi',"platingdmg[pick(1,2,3)]")
+		damage_overlay.alpha = 200
 	broken = 1
 	UpdateOverlays(damage_overlay,"damage")
 	src.UpdateIcon()
