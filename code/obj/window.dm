@@ -1046,11 +1046,11 @@
 // flock windows
 
 /obj/window/auto/feather
-	default_material = "gnesisglass"
 
 /obj/window/auto/feather/New()
 	connects_to += /turf/simulated/wall/auto/feather
 	..()
+	setMaterial(getMaterial("gnesisglass"), appearance = FALSE, setname = FALSE)
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection, FALSE, TRUE, TRUE)
 

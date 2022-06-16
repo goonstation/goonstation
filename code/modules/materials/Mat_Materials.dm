@@ -793,6 +793,7 @@
 	desc = "A rare complex crystalline matrix with a lazily shifting internal structure. Not to be confused with gneiss, a metamorphic rock."
 	color = "#1bdebd"
 	material_flags = MATERIAL_CRYSTAL | MATERIAL_METAL
+	texture = "flock"
 
 	transparent
 		mat_id = "gnesisglass"

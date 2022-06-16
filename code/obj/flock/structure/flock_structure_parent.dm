@@ -43,7 +43,7 @@ ABSTRACT_TYPE(/obj/flock_structure)
 	last_process = TIME
 	health_max = health
 	time_started = world.timeofday
-	setMaterial(getMaterial("gnesis"))
+	setMaterial(getMaterial("gnesis"), appearance = FALSE, setname = FALSE)
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, "flock_structure")
 
 	if(F)
