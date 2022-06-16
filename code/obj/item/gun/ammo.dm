@@ -1231,12 +1231,12 @@
 
 /obj/item/ammo/power_cell/self_charging/ntso_signifer
 	name = "Power Cell - NTSO D49"
-	desc = "A self-contained radioisotope power cell that slowly recharges an internal capacitor. Holds 100PU."
+	desc = "A self-contained radioisotope power cell that slowly recharges an internal capacitor. Holds 250PU."
 	icon = 'icons/obj/items/ammo.dmi'
 	icon_state = "recharger_cell"
 	charge = 250.0
 	max_charge = 250.0
-	recharge_rate = 6
+	recharge_rate = 9
 
 /obj/item/ammo/power_cell/self_charging/ntso_signifer/bad
 	desc = "A self-contained radioisotope power cell that slowly recharges an internal capacitor. Holds 150PU."

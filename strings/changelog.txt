@@ -1,5 +1,8 @@
 
 (t)thu jun 16 22
+(u)Virvatuli
+(e)⚖|balance
+(+)The NTSC no longer has access to the Clock 188, and the Signifer's energy cell now self-charges considerably quicker. This change was supposed too happen when the Signifer was introduced, since the Clock doesn't fit themeatically. Better late than never!
 (u)Mr. Moriarty
 (p)9164
 (e)🆕🗺|feature, mapping
