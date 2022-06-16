@@ -559,8 +559,13 @@
 
 /obj/item/proc/stack_item(obj/item/other)
 	var/added = 0
-	if(isrobot(other.loc) || isghostdrone(other.loc) || istype(other.loc, /obj/item/magtractor))
-		max_stack = 500
+	var/imrobot
+	var/imdrone
+	if((imrobot = isrobot(other.loc)) || (imdrone = isghostdrone(other.loc)) || istype(other.loc, /obj/item/magtractor))
+		if (imrobot)
+			max_stack = 500
+		else if (imdrone)
+			max_stack = 1000
 		if (other != src && check_valid_stack(src))
 			if (src.amount + other.amount > max_stack)
 				added = max_stack - other.amount
