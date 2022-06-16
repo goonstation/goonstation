@@ -29,15 +29,15 @@ Contains:
 
 	abilities = list(/obj/ability_button/tank_valve_toggle)
 
-	/// This value is returned by get_desc(), and is used by subtypes to distinguish what they contain by default.
+	/// This value is read by get_desc(), and is used by subtypes instead of copy-pasting the entire description with minor changes.
 	var/extra_desc = null
 	/// The air contents of this tank.
 	var/datum/gas_mixture/air_contents = null
 	/// This tank's contents will be released at this pressure. Most subtypes use the minimum breathable value here.
 	var/distribute_pressure = ONE_ATMOSPHERE
-	/// If this hits zero and the tank is overpressurized, it may leak or even rupture. 
+	/// Decremented over time when the tank is overpressurized. A damaged tank will leak or even rupture.
 	var/integrity = 3
-	/// If FALSE, this tank can't be used in a tank transfer valve.
+	/// Whether or not this tank can be used in a tank transfer valve.
 	var/compatible_with_TTV = TRUE
 
 	New()
@@ -279,7 +279,7 @@ Contains:
 /obj/item/tank/anesthetic
 	name = "gas tank (sleeping agent)"
 	icon_state = "anesthetic"
-	extra_desc = "It's labeled to contain an anaesthetic capable of keeping somebody unconscious while they breathe it."
+	extra_desc = "It's labeled as containing an anesthetic capable of keeping somebody unconscious while they breathe it."
 	distribute_pressure = 81
 
 	New()
