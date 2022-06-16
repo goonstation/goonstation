@@ -321,6 +321,7 @@ Contains:
 	#if defined(MAP_OVERRIDE_MANTA)
 	icon_state = "jetpack_mag0"
 	item_state = "jetpack_mag"
+	c_flags = IS_JETPACK
 	var/base_icon_state = "jetpack_mag"
 	#else
 	icon_state = "jetpack0"
