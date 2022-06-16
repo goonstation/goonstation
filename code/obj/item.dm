@@ -236,7 +236,7 @@
 					"params" = params,
 					"title" = title,
 					"content" = tooltip_rebuild ? buildTooltipContent() : lastTooltipContent,
-					"theme" = usr.client.preferences.hud_style == "New" ? "newhud" : "item"
+					"theme" = usr.client?.preferences.hud_style == "New" ? "newhud" : "item"
 				)
 
 				if (src.z == 0 && src.loc == usr)

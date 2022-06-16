@@ -2745,6 +2745,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	bites_left = 2
 	heal_amt = 2
 	food_color = "#cd692b"
+	initial_volume = 15
 	food_effects = list("food_brute")
 	meal_time_flags = MEAL_TIME_SNACK | MEAL_TIME_BREAKFAST
 
@@ -2756,6 +2757,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	bites_left = 2
 	heal_amt = 2
 	food_color = "#cd692b"
+	initial_volume = 15
 	food_effects = list("food_brute","food_energized")
 	meal_time_flags = MEAL_TIME_SNACK | MEAL_TIME_BREAKFAST
 
@@ -2767,6 +2769,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	bites_left = 2
 	heal_amt = 2
 	food_color = "#40C100"
+	initial_volume = 15
 	food_effects = list("food_brute","food_refreshed")
 	meal_time_flags = MEAL_TIME_SNACK | MEAL_TIME_BREAKFAST
 
@@ -2778,6 +2781,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	bites_left = 2
 	heal_amt = 2
 	food_color = "#CC0000"
+	initial_volume = 15
 	food_effects = list("food_burn","food_refreshed")
 	meal_time_flags = MEAL_TIME_SNACK | MEAL_TIME_BREAKFAST
 
@@ -2789,6 +2793,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	bites_left = 2
 	heal_amt = 2
 	food_color = "#0000FF"
+	initial_volume = 15
 	food_effects = list("food_burn","food_energized")
 	meal_time_flags = MEAL_TIME_SNACK | MEAL_TIME_BREAKFAST
 

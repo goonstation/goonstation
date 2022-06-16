@@ -2137,6 +2137,14 @@
 		animation.delaydispose()
 	qdel(src)
 
+/mob/proc/flockbit_gib()
+	src.visible_message("<span class='alert bold'>[src] is torn apart from the inside as some weird floaty thing rips its way out of their body! Holy fuck!!</span>")
+	var/mob/living/critter/flock/bit/B = new()
+	var/turf/T = get_turf(src)
+	B.set_loc(T)
+	make_cleanable(/obj/decal/cleanable/flockdrone_debris, T)
+	src.gib()
+
 // Man, there's a lot of possible inventory spaces to store crap. This should get everything under normal circumstances.
 // Well, it's hard to account for every possible matryoshka scenario (Convair880).
 /mob/proc/get_all_items_on_mob()

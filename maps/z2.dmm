@@ -38771,9 +38771,17 @@
 /area/sim/area2)
 "ckx" = (
 /obj/table/wood/auto,
-/obj/item/device/audio_log/wall_mounted{
-	desc = "A data logging utility represented as an audio logger.";
-	name = "Audiolog"
+/obj/item/device/radio/intercom/detnet/detective{
+	pixel_x = -4;
+	pixel_y = -13
+	},
+/obj/item/device/radio/intercom/detnet/security{
+	pixel_x = -4;
+	pixel_y = -4
+	},
+/obj/item/device/radio/intercom/detnet{
+	pixel_x = -4;
+	pixel_y = 5
 	},
 /turf/unsimulated/floor/carpet{
 	dir = 1;
@@ -38860,7 +38868,14 @@
 /obj/item/pen{
 	desc = "It's a normal black ink pen. Looks like it has been chewed on."
 	},
+/obj/item/device/audio_log/wall_mounted{
+	desc = "A data logging utility represented as an audio logger.";
+	name = "Audiolog";
+	pixel_x = 13;
+	pixel_y = 4
+	},
 /obj/machinery/computer/security/wooden_tv/small{
+	pixel_x = -3;
 	pixel_y = 8
 	},
 /turf/unsimulated/floor/carpet{

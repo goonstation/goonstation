@@ -2054,6 +2054,7 @@ obj/item/clothing/gloves/concussive
 				logTheThing("station", user, M, "uses a cargo transporter to send [cargo.name][S && S.locked ? " (locked)" : ""][S && S.welded ? " (welded)" : ""] with [constructTarget(M,"station")] inside to [log_loc(src.target)].")
 
 		cargo.set_loc(get_turf(src.target))
+		target.receive_cargo(cargo)
 		elecflash(src)
 		if (isrobot(user))
 			var/mob/living/silicon/robot/R = user
@@ -2356,34 +2357,64 @@ var/global/datum/cargo_pad_manager/cargo_pad_manager
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 	var/active = TRUE
 	var/group
+	/// The mailgroup to send notifications to
+	var/mailgroup = null
 
 	podbay
 		name = "Pod Bay Pad"
 	hydroponic
+		mailgroup = MGD_BOTANY
 		name = "Hydroponics Pad"
 	robotics
+		mailgroup = MGD_MEDRESEACH
 		name = "Robotics Pad"
 	artlab
+		mailgroup = MGD_SCIENCE
 		name = "Artifact Lab Pad"
 	engineering
+		mailgroup = MGO_ENGINEER
 		name = "Engineering Pad"
 	mechanics
+		mailgroup = MGO_MECHANIC
 		name = "Mechanics Pad"
 	magnet
+		mailgroup = MGD_MINING
 		name = "Mineral Magnet Pad"
 	miningoutpost
+		mailgroup = MGD_MINING
 		name = "Mining Outpost Pad"
 	qm
+		mailgroup = MGD_CARGO
 		name = "QM Pad"
 	qm2
+		mailgroup = MGD_CARGO
 		name = "QM Pad 2"
 	researchoutpost
+		mailgroup = MGD_SCIENCE
 		name = "Research Outpost Pad"
 
 	New()
 		..()
 		if (src.name == "Cargo Pad")
 			src.name += " ([rand(100,999)])"
+
+		//sadly maps often don't use the subtypes, so we do this instead
+		if (!src.mailgroup)
+			var/area/area = get_area(src)
+			if (istype(area, /area/station/hydroponics) || istype(area, /area/station/storage/hydroponics) || istype(area, /area/station/ranch))
+				src.mailgroup = MGD_BOTANY
+			else if (istype(area, /area/station/medical))
+				src.mailgroup = MGD_MEDRESEACH
+			else if (istype(area, /area/station/science) || istype(area, /area/research_outpost))
+				src.mailgroup = MGD_SCIENCE
+			else if (istype(area, /area/station/engine/elect))
+				src.mailgroup = MGO_MECHANIC
+			else if (istype(area, /area/station/engine))
+				src.mailgroup = MGO_ENGINEER
+			else if (istype(area, /area/station/mining) || istype(area, /area/station/quartermaster/refinery) || istype(area, /area/mining))
+				src.mailgroup = MGD_MINING
+			else if (istype(area, /area/station/quartermaster))
+				src.mailgroup = MGD_CARGO
 
 		if (src.active) //in case of map edits etc
 			UpdateOverlays(image('icons/obj/objects.dmi', "cpad-rec"), "lights")
@@ -2412,6 +2443,13 @@ var/global/datum/cargo_pad_manager/cargo_pad_manager
 			UpdateOverlays(image('icons/obj/objects.dmi', "cpad-rec"), "lights")
 			src.active = TRUE
 			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_CARGO_PAD_ENABLED, src)
+
+	proc/receive_cargo(var/obj/cargo)
+		if (!src.mailgroup)
+			return
+		var/datum/signal/pdaSignal = get_free_signal()
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(src.mailgroup), "sender"="00000000", "message"="Notification: Incoming delivery to [src.name].")
+		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 
 // satchels -> obj/item/satchel.dm
 

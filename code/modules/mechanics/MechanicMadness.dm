@@ -888,7 +888,7 @@
 		beamobjs = list()
 		var/turf/lastturf = get_step(get_turf(src), dir)
 		for(var/i = 1, i<range, i++)
-			if(lastturf.opacity || !lastturf.canpass())
+			if(lastturf.opacity || !lastturf.Enter(src)) // bootlegging src as an Enter arg. shouldn't matter
 				break
 			var/obj/mechbeam/newbeam = new(lastturf, src)
 			newbeam.set_dir(src.dir)

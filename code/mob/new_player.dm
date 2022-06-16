@@ -707,6 +707,8 @@ a.latejoin-card:hover {
 		return new_character
 
 	Move()
+		SHOULD_CALL_PARENT(FALSE) // Heeding the warning
+
 		return 1 // do not return 0 in here for the love of god, let me tell you the tale of why:
 		// the default mob/Login (which got called before we actually set our loc onto the start screen), will attempt to put the mob at (1, 1, 1) if the loc is null
 		// however, the documentation actually says "near" (1, 1, 1), and will count Move returning 0 as that it cannot be placed there

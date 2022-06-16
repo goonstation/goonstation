@@ -518,6 +518,8 @@
 		src.x--
 	OnMove()
 
+	. = ..()
+
 /mob/dead/observer/mouse_drop(atom/A)
 	if (usr != src || isnull(A)) return
 	if (ismob(A))
