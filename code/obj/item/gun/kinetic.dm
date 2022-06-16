@@ -663,6 +663,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		return ..(hit_atom)
 
 	ntso // A Clock 180 that comes preloaded with 9mm rounds for NTSOs.
+		desc = "Jokingly called a \"Gunarang\" in some circles. Uses 9mm rounds."
+
 		New()
 			..()
 			default_magazine = /obj/item/ammo/bullets/bullet_9mm
