@@ -197,9 +197,8 @@ Contains:
 		return extras.Join(" ")
 
 	examine(mob/user)
-		. = ..()
-		if (!in_interact_range(src, user) && !isobserver(user))
-			return .
+		. = list()
+		var/can_interact = in_interact_range(src, user) || isobserver(user)
 		var/celsius_temperature = src.air_contents.temperature - T0C
 		var/descriptive = "buggy. Report this to a coder."
 		switch (celsius_temperature)
@@ -217,8 +216,18 @@ Contains:
 				descriptive = "hot."
 			if (299 to INFINITY)
 				descriptive = "furiously hot!"
-		if (istype(loc, /obj/item/assembly))
-			return "<span class='notice'>[bicon(src)] [src] feels [descriptive]</span>"
+		// this call is kind of gross, but it's necessary to show data about the tank used for an assembly
+		// examining an assembly from afar should show nothing about the tank; up close, it should show its temperature info
+		// examining a tank on its own from afar should still show the tank's normal examine,
+		// even if the user is too far away to get temperature info.
+		// thus, we need some tangled logic here to make it work as intended
+		if (istype(src.loc, /obj/item/assembly))
+			if (in_interact_range(src.loc, user) || isobserver(user))
+				. += "<span class='notice'>[bicon(src)] [src] feels [descriptive]</span>"
+			return .
+		. += ..()
+		if (!can_interact)
+			return .
 		. += "<br><span class='notice'>It feels [descriptive]</span>"
 		var/cur_pressure = MIXTURE_PRESSURE(air_contents)
 		if (cur_pressure >= TANK_LEAK_PRESSURE)
@@ -299,7 +308,7 @@ Contains:
 	w_class = W_CLASS_BULKY
 	mats = 16
 	force = 8
-	desc = "A jetpack that can use oxygen as a propellant, allowing the wearer to maneuver freely in space. It can also be used as internals like a regular tank."
+	desc = "A jetpack that can use oxygen as a propellant, allowing the wearer to maneuver freely in space. It can also be used as a gas source for internals like a regular tank."
 	distribute_pressure = 17
 	compatible_with_TTV = FALSE
 	abilities = list(/obj/ability_button/jetpack_toggle, /obj/ability_button/tank_valve_toggle)
