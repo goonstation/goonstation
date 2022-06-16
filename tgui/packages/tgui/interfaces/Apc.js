@@ -161,7 +161,7 @@ export const Wire = (props) => {
   };
 
   const isCut = () => {
-    return data.apcwires & wire;
+    return (data.apcwires & wire) === 0;
   };
 
   const toggleCutButton = () => {
@@ -232,7 +232,7 @@ export const Apc = (props, context) => {
 
   const swipeOrHostDisplay = () => {
     if (data["setup_networkapc"] < 2) {
-      return <Box>Swipe ID card to unlock interface.</Box>;
+      return <Box>Swipe ID card to {data["locked"] ? "unlock" : "lock"} interface.</Box>;
     } else {
       return (
         <Stack>
@@ -332,55 +332,57 @@ export const Apc = (props, context) => {
   };
 
   return (
-    <Window title="Area Power Controller" height="auto" width={400}>
-      <Section title="Main">
-        {swipeOrHostDisplay()}
-        <Stack>
-          <Stack.Item>
-            <Box>Main Breaker</Box>
-          </Stack.Item>
-          <Stack.Item>
-            {data["operating"] ? <Button content="off" disabled={data["locked"]} onClick={() => { onOperatingChange(OFF); }} /> : <Box>off</Box>}
-          </Stack.Item>
-          <Stack.Item>
-            {data["operating"] ? <Box>on</Box> : <Button content="on" disabled={data["locked"]} onClick={() => { onOperatingChange(ON); }} />}
-          </Stack.Item>
-        </Stack>
-        <Stack>
-          <Stack.Item>
-            <Box>External Power:</Box>
-          </Stack.Item>
-          <Stack.Item>
-            <Box>{mainStatusToText()}</Box>
-          </Stack.Item>
-        </Stack>
-        {cellDisplay()}
-      </Section>
+    <Window title="Area Power Controller" width={400} height={data["wiresexposed"] ? 600 : 400}>
+      <Window.Content>
+        <Section title={"Area Power Controller (" + data["area_name"] + ")"}>
+          {swipeOrHostDisplay()}
+          <Stack>
+            <Stack.Item>
+              <Box>Main Breaker</Box>
+            </Stack.Item>
+            <Stack.Item>
+              {data["operating"] ? <Button content="off" disabled={data["locked"]} onClick={() => { onOperatingChange(OFF); }} /> : <Box>off</Box>}
+            </Stack.Item>
+            <Stack.Item>
+              {data["operating"] ? <Box>on</Box> : <Button content="on" disabled={data["locked"]} onClick={() => { onOperatingChange(ON); }} />}
+            </Stack.Item>
+          </Stack>
+          <Stack>
+            <Stack.Item>
+              <Box>External Power:</Box>
+            </Stack.Item>
+            <Stack.Item>
+              <Box>{mainStatusToText()}</Box>
+            </Stack.Item>
+          </Stack>
+          {cellDisplay()}
+        </Section>
 
-      <Section title="PowerChannel">
-        <PowerChannelSection powerChannel={POWER_CHANNEL_EQUIPMENT} act={act} data={data} />
-        <PowerChannelSection powerChannel={POWER_CHANNEL_LIGHTING} act={act} data={data} />
-        <PowerChannelSection powerChannel={POWER_CHANNEL_ENVIRONMENTAL} act={act} data={data} />
-        <Stack>
-          <Stack.Item>
-            <Box>Total Load:</Box>
-          </Stack.Item>
-          <Stack.Item>
-            <Box>{data["lastused_total"]} W</Box>
-          </Stack.Item>
-        </Stack>
-      </Section>
-      <Section>
-        <Stack>
-          <Stack.Item>
-            <Box>Cover lock:</Box>
-          </Stack.Item>
-          <Stack.Item>
-            {coverLockDisplay()}
-          </Stack.Item>
-        </Stack>
-      </Section>
-      {data["wiresexposed"] ? <AccessPanel act={act} data={data} /> : null}
+        <Section title="PowerChannel">
+          <PowerChannelSection powerChannel={POWER_CHANNEL_EQUIPMENT} act={act} data={data} />
+          <PowerChannelSection powerChannel={POWER_CHANNEL_LIGHTING} act={act} data={data} />
+          <PowerChannelSection powerChannel={POWER_CHANNEL_ENVIRONMENTAL} act={act} data={data} />
+          <Stack>
+            <Stack.Item>
+              <Box>Total Load:</Box>
+            </Stack.Item>
+            <Stack.Item>
+              <Box>{data["lastused_total"]} W</Box>
+            </Stack.Item>
+          </Stack>
+        </Section>
+        <Section>
+          <Stack>
+            <Stack.Item>
+              <Box>Cover lock:</Box>
+            </Stack.Item>
+            <Stack.Item>
+              {coverLockDisplay()}
+            </Stack.Item>
+          </Stack>
+        </Section>
+        {data["wiresexposed"] ? <AccessPanel act={act} data={data} /> : null}
+      </Window.Content>
     </Window>
   );
 };

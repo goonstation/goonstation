@@ -593,6 +593,7 @@ var/zapLimiter = 0
 /obj/machinery/power/apc/ui_static_data(mob/user)
 	. = list(
 		"net_id" = net_id,
+		"area_name" = area ? area.name : "Unknown",
 	)
 
 /obj/machinery/power/apc/ui_data(mob/user)
