@@ -217,6 +217,8 @@ Contains:
 				descriptive = "hot."
 			if (299 to INFINITY)
 				descriptive = "furiously hot!"
+		if (istype(loc, /obj/item/assembly))
+			return "<span class='notice'>[bicon(src)] [src] feels [descriptive]</span>"
 		. += "<br><span class='notice'>It feels [descriptive]</span>"
 		var/cur_pressure = MIXTURE_PRESSURE(air_contents)
 		if (cur_pressure >= TANK_LEAK_PRESSURE)
