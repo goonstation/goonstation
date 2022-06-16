@@ -1,5 +1,9 @@
 
 (t)thu jun 16 22
+(u)Mr. Moriarty
+(p)9164
+(e)🆕🗺|feature, mapping
+(+)DetNet is now equipped with three new intercoms, interfacing with General, Security, and the Detective's private channel, for all of the Detective's communication needs.
 (u)LeahTheTech
 (p)9162
 (e)🗺|mapping
