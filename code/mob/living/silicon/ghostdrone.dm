@@ -88,7 +88,7 @@
 		)
 
 		var/obj/item/tile/cardboard/T  =new /obj/item/tile/cardboard/(src)
-		T.amount = 600
+		T.amount = 500
 		src.tools += T
 		var/obj/item/cable_coil/W = new /obj/item/cable_coil(src)
 		W.amount = 1000
