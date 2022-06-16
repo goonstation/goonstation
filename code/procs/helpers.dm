@@ -2143,6 +2143,23 @@ proc/countJob(rank)
 			if (findtext(C.ckey, target))
 				return C.mob
 
+//for spacebee commands, mainly, in case the target logs out
+
+/proc/last_ckey_to_mob(target as text, exact=1)
+	if(isnull(target))
+		return
+	target = ckey(target)
+	for(var/client/C) // exact match first
+		if(C.mob.last_ckey == target)
+			return C.mob
+	if(!exact)
+		for(var/client/C) // prefix match second
+			if(copytext(C.mob.last_ckey, 1, length(target) + 1) == target)
+				return C.mob
+		for(var/client/C) // substring match third
+			if (findtext(C.mob.last_ckey, target))
+				return C.mob
+
 /**
   * Finds whoever's dead.
 	*/

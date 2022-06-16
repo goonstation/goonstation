@@ -99,12 +99,12 @@ ABSTRACT_TYPE(/datum/spacebee_extension_command/state_based/confirmation/mob_tar
 
 /datum/spacebee_extension_command/state_based/confirmation/mob_targeting/prepare(user, ckey)
 	src.ckey = ckey
-	var/mob/M = ckey_to_mob(ckey, 0)
+	var/mob/M = last_ckey_to_mob(ckey, 0)
 	if(!M)
 		system.reply("Ckey not found.", user)
 		return null
-	src.ckey = M.ckey // make sure we can do exact match in do_it(), partial matches could get fucked up by newjoiners etc
-	return "You are about to [src.action_name] [M] ([M.ckey])[isdead(M) ? " DEAD" : ""][checktraitor(M) ? " \[T\]" : ""]."
+	src.ckey = M.last_ckey // make sure we can do exact match in do_it(), partial matches could get fucked up by newjoiners etc
+	return "You are about to [src.action_name] [M] ([M.last_ckey]) [M.ckey ? " (LOGGED OUT)" : ""] [isdead(M) ? " DEAD" : ""][checktraitor(M) ? " \[T\]" : ""]."
 
 /datum/spacebee_extension_command/state_based/confirmation/mob_targeting/do_it(user)
 	var/mob/M = ckey_to_mob(ckey)
