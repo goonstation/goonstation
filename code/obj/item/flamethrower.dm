@@ -192,7 +192,8 @@ A Flamethrower in various states of assembly
 
 /obj/item/tank/jetpack/backtank
 	name = "fuelpack"
-	icon_state = "syndflametank"
+	icon_state = "syndflametank0"
+	base_icon_state = "syndflametank"
 	desc = "A back mounted fueltank/jetpack system for use with a tactical flamethrower."
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBACK | OPENCONTAINER
 	var/obj/item/gun/flamethrower/backtank/linkedflamer
@@ -237,14 +238,6 @@ A Flamethrower in various states of assembly
 	move_trigger(var/mob/M, kindof)
 		if (..() && reagents)
 			reagents.move_trigger(M, kindof)
-
-	toggle()
-		src.on = !( src.on )
-		if(src.on)
-			boutput(usr, "<span class='notice'>The fuelpack's integrated jetpack is now on</span>")
-		else
-			boutput(usr, "<span class='notice'>The fuelpack's integrated jetpack is now off</span>")
-		return
 
 	mouse_drop(over_object, src_location, over_location)
 		..()
