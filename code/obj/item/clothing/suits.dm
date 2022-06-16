@@ -1700,7 +1700,7 @@
 
 	setupProperties()
 		..()
-		setProperty("chem_prot", 70)
+		setProperty("chemprot", 70)
 
 /obj/item/clothing/suit/security_badge
 	name = "Security Badge"
