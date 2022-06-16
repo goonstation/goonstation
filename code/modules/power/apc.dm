@@ -592,7 +592,7 @@ var/zapLimiter = 0
 
 /obj/machinery/power/apc/ui_static_data(mob/user)
 	. = list(
-		"bar" = 22,
+		"net_id" = net_id,
 	)
 
 /obj/machinery/power/apc/ui_data(mob/user)
@@ -625,7 +625,6 @@ var/zapLimiter = 0
 		"wiresexposed" = wiresexposed,
 		"apcwires" = apcwires,
 		"repair_status" = repair_status,
-		"net_id" = net_id,
 		"host_id" = host_id,
 	)
 
@@ -636,27 +635,31 @@ var/zapLimiter = 0
 	switch (action)
 		if ("onPowerChannelEquipmentStatusChange")
 			equipment = params[1]
+			. = TRUE
 		if ("onPowerChannelLightStatusChange")
 			lighting = params[1]
+			. = TRUE
 		if ("onPowerChannelEnvironStatusChange")
 			environ = params[1]
+			. = TRUE
 		if ("onMendWire")
 			src.mend(APCIndexToWireColor[params[1]])
+			. = TRUE
 		if ("onCutWire")
 			src.cut(APCIndexToWireColor[params[1]])
+			. = TRUE
 		if ("onPulseWire")
 			src.pulse(APCIndexToWireColor[params[1]])
+			. = TRUE
 		if ("onBiteWire")
 			src.bite(APCIndexToWireColor[params[1]])
+			. = TRUE
 		if ("onMainBreakerChange")
 			main_status = params[1]
+			. = TRUE
 		if ("onChargeModeChange")
 			chargemode = params[1]
-		
-
-
-
-
+			. = TRUE
 
 /obj/machinery/power/apc/proc/interacted(mob/user)
 	if (user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat)
@@ -666,8 +669,9 @@ var/zapLimiter = 0
 		src.remove_dialog(user)
 		user.Browse(null, "window=apc")
 		return
+
+	src.ui_interact(user)
 	if(wiresexposed && (!isAI(user)))
-		src.ui_interact(user)
 		src.add_dialog(user)
 		var/t1 = text("<B>Access Panel</B><br>")
 		t1 += text("An identifier is engraved above the APC's wires: <i>[net_id]</i><br><br>")
