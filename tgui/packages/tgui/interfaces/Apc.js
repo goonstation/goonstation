@@ -105,7 +105,7 @@ export const PowerChannelSection = (props) => {
       case POWER_CHANNEL_STATUS_AUTO_ON:
         return <Box>{"Auto (On)"}</Box>;
       default:
-        return <Button label="Auto" onClick={() => onPowerChannelUpdate(POWER_CHANNEL_STATUS_AUTO_ON)}>Auto</Button>;
+        return <Button label="Auto" disabled={data["locked"]} onClick={() => onPowerChannelStatusChange(POWER_CHANNEL_STATUS_AUTO_ON)}>Auto</Button>;
     }
   };
 
@@ -117,10 +117,10 @@ export const PowerChannelSection = (props) => {
         </Box>
       </Stack.Item>
       <Stack.Item>
-        {getPowerChannelStatus() === POWER_CHANNEL_STATUS_OFF ? <Box>Off</Box> : <Button label="Off" onClick={() => { onPowerChannelUpdate(POWER_CHANNEL_STATUS_OFF); }}>Off</Button>}
+        {getPowerChannelStatus() === POWER_CHANNEL_STATUS_OFF ? <Box>Off</Box> : <Button label="Off" disabled={data["locked"]} onClick={() => { onPowerChannelStatusChange(POWER_CHANNEL_STATUS_OFF); }}>Off</Button>}
       </Stack.Item>
       <Stack.Item>
-        {getPowerChannelStatus() === POWER_CHANNEL_STATUS_ON ? <Box>On</Box> : <Button label="On" onClick={() => { onPowerChannelUpdate(POWER_CHANNEL_STATUS_ON); }}>On</Button>}
+        {getPowerChannelStatus() === POWER_CHANNEL_STATUS_ON ? <Box>On</Box> : <Button label="On" disabled={data["locked"]} onClick={() => { onPowerChannelStatusChange(POWER_CHANNEL_STATUS_ON); }}>On</Button>}
       </Stack.Item>
       <Stack.Item>
         {getPowerChannelStatusAutoDisplay()}
@@ -323,10 +323,10 @@ export const Apc = (props, context) => {
             <Box>Main Breaker</Box>
           </Stack.Item>
           <Stack.Item>
-            <Button label="off" disabled={data["locked"]} onClick={() => { onMainBreakerChange(OFF); }}>off</Button>
+            {data["operating"] ? <Button label="off" disabled={data["locked"]} onClick={() => { onMainBreakerChange(OFF); }}>off</Button> : <Box>off</Box>}
           </Stack.Item>
           <Stack.Item>
-            <Button label="on" disabled={data["locked"]} onClick={() => { onMainBreakerChange(ON); }}>on</Button>
+            {data["operating"] ? <Box>on</Box> : <Button label="on" disabled={data["locked"]} onClick={() => { onMainBreakerChange(ON); }}>on</Button>}
           </Stack.Item>
         </Stack>
         <Stack>

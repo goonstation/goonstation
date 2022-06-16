@@ -598,7 +598,7 @@ var/zapLimiter = 0
 /obj/machinery/power/apc/ui_data(mob/user)
 	. = list(
 		"cell_type" = cell_type, // 0=no cell, 1=regular, 2=high-cap (x5) <- old, now it's just 0=no cell, otherwise dictate cellcapacity by changing this value. 1 used to be 1000, 2 was 2500
-		"cell_percent" = cell ? cell.percent : null,
+		"cell_percent" = cell.percent(),
 		"opened" = opened,
 		"circuit_disabled" = circuit_disabled,
 		"shorted" = shorted,
@@ -637,59 +637,127 @@ var/zapLimiter = 0
 		return
 	switch (action)
 		if ("onPowerChannelEquipmentStatusChange")
-			equipment = params[1]
+			onPowerChannelEquipmentStatusChange(usr, params)
 			. = TRUE
 		if ("onPowerChannelLightStatusChange")
-			lighting = params[1]
+			onPowerChannelLightStatusChange(usr, params)
 			. = TRUE
 		if ("onPowerChannelEnvironStatusChange")
-			environ = params[1]
+			onPowerChannelEnvironStatusChange(usr, params)
+			environ = params["value"]
 			. = TRUE
 		if ("onMendWire")
 			if (!usr.find_tool_in_hand(TOOL_SNIPPING))
 				boutput(usr, "You need a snipping tool!")
 				return
-			src.mend(APCIndexToWireColor[params[1]])
+			src.mend(APCIndexToWireColor[params["wire"]])
 			. = TRUE
 		if ("onCutWire")
 			if (!usr.find_tool_in_hand(TOOL_SNIPPING))
 				boutput(usr, "You need a snipping tool!")
 				return
-			src.cut(APCIndexToWireColor[params[1]])
+			src.cut(APCIndexToWireColor[params["wire"]])
 			. = TRUE
 		if ("onPulseWire")
 			if (!usr.find_tool_in_hand(TOOL_PULSING))
 				boutput(usr, "You need a multitool or similar!")
 				return
-			else if (src.isWireColorCut(APCIndexToWireColor[params[1]]))
+			else if (src.isWireColorCut(APCIndexToWireColor[params["wire"]]))
 				boutput(usr, "You can't pulse a cut wire.")
 				return
 			else
-				src.pulse(APCIndexToWireColor[params[1]])
+				src.pulse(APCIndexToWireColor[params["wire"]])
 			. = TRUE
 		if ("onBiteWire")
 			switch(alert("Really bite the wire off?",,"Yes","No"))
 				if("Yes")
-					src.bite(APCIndexToWireColor[params[1]])
+					src.bite(APCIndexToWireColor[params["wire"]])
 				if("No")
 					return
 			. = TRUE
 		if ("onMainBreakerChange")
-			main_status = params[1]
+			operating = params["value"]
+			src.update()
 			. = TRUE
 		if ("onChargeModeChange")
-			chargemode = params[1]
+			chargemode = params["value"]
+			if(!chargemode)
+				charging = 0
+				UpdateIcon()
 			. = TRUE
 		if ("onLockedChange")
-			locked = params[1]
+			locked = params["value"]
 			. = TRUE
 		if ("onCoverLockedChange")
 			if ((!locked && setup_networkapc < 2) || issilicon(usr) || isAI(usr))
 				if ((issilicon(usr) || isAI(usr)) && src.aidisabled)
 					boutput(usr, "AI control for this APC interface has been disabled.")
 					return
-				coverlocked = params[1]
+				coverlocked = params["value"]
 			. = TRUE
+
+/obj/machinery/power/apc/proc/onPowerChannelEquipmentStatusChange(mob/user, list/params)
+	if (params["value"] && ((!locked && setup_networkapc < 2) || issilicon(usr) || isAI(usr)))
+		if ((issilicon(usr) || isAI(usr)) && src.aidisabled)
+			boutput(usr, "AI control for this APC interface has been disabled.")
+			return
+
+		var/val = clamp(text2num_safe(href_list["eqp"]), 1, 3)
+
+		// Fix for exploit that allowed synthetics to perma-stun intruders by cycling the APC
+		// ad infinitum (activating power/turrets for one tick) despite missing power cell (Convair880).
+		if ((!src.cell || src.shorted == 1) && (val == 2 || val == 3))
+			if (usr && ismob(usr))
+				usr.show_text("APC offline, can't toggle power.", "red")
+			return
+
+		logTheThing("station", usr, null, "turned the APC equipment power [(val==1) ? "off" : "on"] at [log_loc(src)].")
+		equipment = (val==1) ? 0 : val
+
+		UpdateIcon()
+		update()
+
+/obj/machinery/power/apc/proc/onPowerChannelLightStatusChange(mob/user, list/params)
+	if (params["value"] && ((!locked && setup_networkapc < 2) || issilicon(usr) || isAI(usr)))
+		if ((issilicon(usr) || isAI(usr)) && src.aidisabled)
+			boutput(usr, "AI control for this APC interface has been disabled.")
+			return
+
+		var/val = clamp(text2num_safe(params["value"]), 1, 3)
+
+		// Same deal.
+		if ((!src.cell || src.shorted == 1) && (val == 2 || val == 3))
+			if (usr && ismob(usr))
+				usr.show_text("APC offline, can't toggle power.", "red")
+			return
+
+		logTheThing("station", usr, null, "turned the APC lighting power [(val==1) ? "off" : "on"] at [log_loc(src)].")
+		lighting = (val==1) ? 0 : val
+
+		UpdateIcon()
+		update()
+
+/obj/machinery/power/apc/proc/onPowerChannelEnvironStatusChange(mob/user, list/params)
+	if (params["value"] && ((!locked && setup_networkapc < 2) || issilicon(usr) || isAI(usr)))
+		if ((issilicon(usr) || isAI(usr)) && src.aidisabled)
+			boutput(usr, "AI control for this APC interface has been disabled.")
+			return
+
+		var/val = clamp(text2num_safe(params["value"]), 1, 3)
+
+		// Yep.
+		if ((!src.cell || src.shorted == 1) && (val == 2 || val == 3))
+			if (usr && ismob(usr))
+				usr.show_text("APC offline, can't toggle power.", "red")
+			return
+
+		logTheThing("station", usr, null, "turned the APC environment power [(val==1) ? "off" : "on"] at [log_loc(src)].")
+		environ = (val==1) ? 0 :val
+
+		UpdateIcon()
+		update()
+
+/obj
 
 /obj/machinery/power/apc/proc/interacted(mob/user)
 	if (user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat)
