@@ -3,6 +3,7 @@
 #define APC_WIRE_MAIN_POWER2 3
 #define APC_WIRE_AI_CONTROL 4
 
+
 var/zapLimiter = 0
 #define APC_ZAP_LIMIT_PER_5 2
 
@@ -583,6 +584,78 @@ var/zapLimiter = 0
 		// do APC interaction
 		src.interacted(user)
 
+/obj/machinery/power/apc/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Apc")
+		ui.open()
+
+/obj/machinery/power/apc/ui_static_data(mob/user)
+	. = list(
+		"bar" = 22,
+	)
+
+/obj/machinery/power/apc/ui_data(mob/user)
+	. = list(
+		"cell_type" = cell_type, // 0=no cell, 1=regular, 2=high-cap (x5) <- old, now it's just 0=no cell, otherwise dictate cellcapacity by changing this value. 1 used to be 1000, 2 was 2500
+		"opened" = opened,
+		"circuit_disabled" = circuit_disabled,
+		"shorted" = shorted,
+		"lighting" = lighting,
+		"equipment" = equipment,
+		"environ" = environ,
+		"operating" = operating,
+		"do_not_operate" = do_not_operate,
+		"charging" = charging,
+		"chargemode" = chargemode,
+		"chargecount" = chargecount,
+		"locked" = locked,
+		"coverlocked" = coverlocked,
+		"aidisabled" = aidisabled,
+		"noalerts" = noalerts,
+		"lastused_light" = lastused_light,
+		"lastused_equip" = lastused_equip,
+		"lastused_environ" = lastused_environ,
+		"lastused_total" = lastused_total,
+		"main_status" = main_status,
+		"light_consumption" = light_consumption,
+		"equip_consumption" = equip_consumption,
+		"environ_consumption" = environ_consumption,
+		"emagged" = emagged,
+		"wiresexposed" = wiresexposed,
+		"apcwires" = apcwires,
+		"repair_status" = repair_status,
+		"net_id" = net_id,
+		"host_id" = host_id,
+	)
+
+/obj/machinery/power/apc/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if (.)
+		return
+	switch (action)
+		if ("onPowerChannelEquipmentStatusChange")
+			equipment = params[1]
+		if ("onPowerChannelLightStatusChange")
+			lighting = params[1]
+		if ("onPowerChannelEnvironStatusChange")
+			environ = params[1]
+		if ("onMendWire")
+			src.mend(APCIndexToWireColor[params[1]])
+		if ("onCutWire")
+			src.cut(APCIndexToWireColor[params[1]])
+		if ("onPulseWire")
+			src.pulse(APCIndexToWireColor[params[1]])
+		if ("onBiteWire")
+			src.bite(APCIndexToWireColor[params[1]])
+		if ("onMainBreakerChange")
+			main_status = params[1]
+		if ("onChargeModeChange")
+			chargemode = params[1]
+		
+
+
+
 
 
 /obj/machinery/power/apc/proc/interacted(mob/user)
@@ -594,6 +667,7 @@ var/zapLimiter = 0
 		user.Browse(null, "window=apc")
 		return
 	if(wiresexposed && (!isAI(user)))
+		src.ui_interact(user)
 		src.add_dialog(user)
 		var/t1 = text("<B>Access Panel</B><br>")
 		t1 += text("An identifier is engraved above the APC's wires: <i>[net_id]</i><br><br>")
@@ -723,9 +797,6 @@ var/zapLimiter = 0
 
 /obj/machinery/power/apc/proc/report()
 	return "[area.name] : [equipment]/[lighting]/[environ] ([lastused_equip+lastused_light+lastused_environ]) : [cell? cell.percent() : "N/C"] ([charging])"
-
-
-
 
 /obj/machinery/power/apc/proc/update()
 	if (!QDELETED(src.area))
