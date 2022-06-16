@@ -629,6 +629,10 @@ var/zapLimiter = 0
 		"repair_status" = repair_status,
 		"host_id" = host_id,
 		"setup_networkapc" = setup_networkapc,
+		"orange_cut" = isWireColorCut(1),
+		"dark_red_cut" = isWireColorCut(2),
+		"white_cut" = isWireColorCut(3),
+		"yellow_cut" = isWireColorCut(4),
 	)
 
 /obj/machinery/power/apc/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -655,8 +659,8 @@ var/zapLimiter = 0
 				onChargeModeChange(usr, params)
 			if ("onPowerChannelEquipmentStatusChange")
 				onPowerChannelEquipmentStatusChange(usr, params)
-			if ("onPowerChannelLightStatusChange")
-				onPowerChannelLightStatusChange(usr, params)
+			if ("onPowerChannelLightingStatusChange")
+				onPowerChannelLightingStatusChange(usr, params)
 			if ("onPowerChannelEnvironStatusChange")
 				onPowerChannelEnvironStatusChange(usr, params)
 
@@ -667,7 +671,7 @@ var/zapLimiter = 0
 			boutput(usr, "AI control for this APC interface has been disabled.")
 			return
 
-		var/val = clamp(text2num_safe(params["equipment"]), 1, 3)
+		var/val = clamp(text2num_safe(params["status"]), 1, 3)
 
 		// Fix for exploit that allowed synthetics to perma-stun intruders by cycling the APC
 		// ad infinitum (activating power/turrets for one tick) despite missing power cell (Convair880).
@@ -682,13 +686,13 @@ var/zapLimiter = 0
 		UpdateIcon()
 		update()
 
-/obj/machinery/power/apc/proc/onPowerChannelLightStatusChange(mob/user, list/params)
+/obj/machinery/power/apc/proc/onPowerChannelLightingStatusChange(mob/user, list/params)
 	if ((!locked && setup_networkapc < 2) || issilicon(usr) || isAI(usr))
 		if ((issilicon(usr) || isAI(usr)) && src.aidisabled)
 			boutput(usr, "AI control for this APC interface has been disabled.")
 			return
 
-		var/val = clamp(text2num_safe(params["lighting"]), 1, 3)
+		var/val = clamp(text2num_safe(params["status"]), 1, 3)
 
 		// Same deal.
 		if ((!src.cell || src.shorted == 1) && (val == 2 || val == 3))
@@ -708,7 +712,7 @@ var/zapLimiter = 0
 			boutput(usr, "AI control for this APC interface has been disabled.")
 			return
 
-		var/val = clamp(text2num_safe(params["environ"]), 1, 3)
+		var/val = clamp(text2num_safe(params["status"]), 1, 3)
 
 		// Yep.
 		if ((!src.cell || src.shorted == 1) && (val == 2 || val == 3))
@@ -737,7 +741,7 @@ var/zapLimiter = 0
 		if (!usr.find_tool_in_hand(TOOL_SNIPPING))
 			boutput(usr, "You need a snipping tool!")
 			return
-		else if (src.isWireColorCut(t1))
+		else if (!src.isWireColorCut(t1))
 			src.cut(t1)
 
 /obj/machinery/power/apc/proc/onBiteWire(mob/user, list/params)
@@ -768,7 +772,6 @@ var/zapLimiter = 0
 			return
 		coverlocked = params["coverlocked"]
 
-
 /obj/machinery/power/apc/proc/onOperatingChange(mob/user, list/params)
 	if ((!locked && setup_networkapc < 2) || issilicon(usr) || isAI(usr))
 		if ((issilicon(usr) || isAI(usr)) && src.aidisabled)
@@ -784,7 +787,7 @@ var/zapLimiter = 0
 		if ((issilicon(usr) || isAI(usr)) && src.aidisabled)
 			boutput(usr, "AI control for this APC interface has been disabled.")
 			return
-		chargemode = params["chargemode"]
+		chargemode = !chargemode
 		if(!chargemode)
 			charging = 0
 			UpdateIcon()

@@ -5,8 +5,10 @@ import { clamp, round } from 'common/math';
 
 import {
   Stack,
+  BlockQuote,
   Box,
   Button,
+  Flex,
   ProgressBar,
   Section,
   Slider,
@@ -76,13 +78,13 @@ export const PowerChannelSection = (props) => {
   const onPowerChannelStatusChange = (status) => {
     switch (powerChannel) {
       case POWER_CHANNEL_EQUIPMENT:
-        act("onPowerChannelEquipmentStatusChange", { equpment: status });
+        act("onPowerChannelEquipmentStatusChange", { status });
         break;
       case POWER_CHANNEL_LIGHTING:
-        act("onPowerChannelLightingStatusChange", { lighting: status });
+        act("onPowerChannelLightingStatusChange", { status });
         break;
       case POWER_CHANNEL_ENVIRONMENTAL:
-        act("onPowerChannelEnvironmentalStatusChange", { environ: status });
+        act("onPowerChannelEnvironStatusChange", { status });
         break;
       default:
         return;
@@ -160,8 +162,18 @@ export const Wire = (props) => {
     act("onBiteWire", { wire });
   };
 
-  const isCut = () => {
-    return (data.apcwires & wire) === 0;
+  const isCut = (wire) => {
+    // Logic is slightly different since dm doesn't 0 index for some reason
+    switch (wire) {
+      case WIRE_ORANGE:
+        return data["orange_cut"];
+      case WIRE_DARK_RED:
+        return data["dark_red_cut"];
+      case WIRE_WHITE:
+        return data["white_cut"];
+      case WIRE_YELLOW:
+        return data["yellow_cut"];
+    }
   };
 
   const toggleCutButton = () => {
@@ -173,20 +185,25 @@ export const Wire = (props) => {
   };
 
   return (
-    <Stack>
-      <Stack.Item>
+    <Flex direction="row">
+      <Section fill>
         <Box>{color} wire:</Box>
-      </Stack.Item>
-      <Stack.Item>
-        {toggleCutButton()}
-      </Stack.Item>
-      <Stack.Item>
-        <Button content="pulse" onClick={onPulse} />
-      </Stack.Item>
-      <Stack.Item>
-        <Button content="bite" onClick={onBite} />
-      </Stack.Item>
-    </Stack>
+      </Section>
+      <Flex.Item grow={1} />
+      <Flex.Item grow={1}>
+        <Flex direction="row">
+          <Flex.Item grow={1}>
+            {toggleCutButton()}
+          </Flex.Item>
+          <Flex.Item grow={1}>
+            <Button content="pulse" onClick={onPulse} />
+          </Flex.Item>
+          <Flex.Item grow={1}>
+            <Button content="bite" onClick={onBite} />
+          </Flex.Item>
+        </Flex>
+      </Flex.Item>
+    </Flex>
   );
 };
 
@@ -197,20 +214,16 @@ export const AccessPanel = (props) => {
   } = props;
   return (
     <Section label="Access Panel">
-      <Box>An identifier is engraved above the APC{"'"}s wires: {data["net_id"]}</Box>
-      <Stack>
-        <Stack.Item>
-          <Wire wire={WIRE_ORANGE} act={act} data={data} />
-          <Wire wire={WIRE_DARK_RED} act={act} data={data} />
-          <Wire wire={WIRE_WHITE} act={act} data={data} />
-          <Wire wire={WIRE_YELLOW} act={act} data={data} />
-        </Stack.Item>
-        <Stack.Item>
-          <Box>The APC is {data["locked"] ? "locked" : "unlocked"}.</Box>
-          <Box>{data["shorted"] ? "The APC's power has been shorted." : "The APC is working properly!"}</Box>
-          <Box>The {"'AI control allowed'"} light is {data["aidisabled"] ? "off" : "on"}.</Box>
-        </Stack.Item>
-      </Stack>
+      <BlockQuote>An identifier is engraved above the APC{"'"}s wires: {data["net_id"]}</BlockQuote>
+      <Section>
+        <Wire wire={WIRE_ORANGE} act={act} data={data} />
+        <Wire wire={WIRE_DARK_RED} act={act} data={data} />
+        <Wire wire={WIRE_WHITE} act={act} data={data} />
+        <Wire wire={WIRE_YELLOW} act={act} data={data} />
+      </Section>
+      <Box>The APC is {data["locked"] ? "locked" : "unlocked"}.</Box>
+      <Box>{data["shorted"] ? "The APC's power has been shorted." : "The APC is working properly!"}</Box>
+      <Box>The {"'AI control allowed'"} light is {data["aidisabled"] ? "off" : "on"}.</Box>
     </Section>
   );
 };
@@ -282,10 +295,10 @@ export const Apc = (props, context) => {
       return (
         <>
           <Stack.Item>
-            {data["chargemode"] ? <Button content="Off" onClick={() => { () => { onChargeModeChange(CHARGE_MODE_OFF); }; }} /> : <Box>Off</Box>}
+            {data["chargemode"] ? <Button content="Off" onClick={() => { onChargeModeChange(CHARGE_MODE_OFF); }} /> : <Box>Off</Box>}
           </Stack.Item>
           <Stack.Item>
-            {data["chargemode"] ? <Box>Auto</Box> : <Button content="Auto" onClick={() => { () => { onChargeModeChange(CHARGE_MODE_AUTO); }; }} />}
+            {data["chargemode"] ? <Box>Auto</Box> : <Button content="Auto" onClick={() => { onChargeModeChange(CHARGE_MODE_AUTO); }} />}
           </Stack.Item>
         </>
       );
@@ -332,7 +345,7 @@ export const Apc = (props, context) => {
   };
 
   return (
-    <Window title="Area Power Controller" width={400} height={data["wiresexposed"] ? 600 : 400}>
+    <Window title="Area Power Controller" width={400} height={data["wiresexposed"] ? 500 : 350}>
       <Window.Content>
         <Section title={"Area Power Controller (" + data["area_name"] + ")"}>
           {swipeOrHostDisplay()}
