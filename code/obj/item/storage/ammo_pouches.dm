@@ -172,7 +172,7 @@
 	/obj/item/instrument/whistle,\
 	/obj/item/reagent_containers/food/snacks/donut/custom/frosted)
 
-/obj/item/storage/ntso_pouch
+/obj/item/storage/ntsc_pouch
 	name = "tacticool pouch"
 	desc = "A dump pouch for various security accessories, partially-loaded magazines, or maybe even a snack! Attaches to virtually any webbing system through an incredibly complex and very patented Nanotrasen design."
 	icon_state = "ammopouch-large"
@@ -184,6 +184,10 @@
 	/obj/item/handcuffs/guardbot = 2,
 	/obj/item/device/flash,
 	/obj/item/reagent_containers/food/snacks/candy/candyheart)
+
+	ntso
+		spawn_contents = list(/obj/item/gun/kinetic/clock_188/boomerang/ntso,
+		/obj/item/ammo/bullets/bullet_9mm = 4)
 
 /obj/item/storage/emp_grenade_pouch
 	name = "EMP grenade pouch"

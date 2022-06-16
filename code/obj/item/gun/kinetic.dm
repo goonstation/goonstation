@@ -662,6 +662,15 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 		return ..(hit_atom)
 
+	ntso // A Clock 180 that comes preloaded with 9mm rounds for NTSOs.
+		New()
+			..()
+			default_magazine = /obj/item/ammo/bullets/bullet_9mm
+			ammo = new default_magazine
+			set_current_projectile(new/datum/projectile/bullet/bullet_9mm)
+			projectiles = list(current_projectile)
+			UpdateIcon()
+
 /obj/item/gun/kinetic/SMG_briefcase
 	name = "secure briefcase"
 	icon = 'icons/obj/items/storage.dmi'
