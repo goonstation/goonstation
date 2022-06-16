@@ -598,7 +598,7 @@ var/zapLimiter = 0
 /obj/machinery/power/apc/ui_data(mob/user)
 	. = list(
 		"cell_type" = cell_type, // 0=no cell, 1=regular, 2=high-cap (x5) <- old, now it's just 0=no cell, otherwise dictate cellcapacity by changing this value. 1 used to be 1000, 2 was 2500
-		"cell_percent" = cell.percent(),
+		"cell_percent" = cell ? cell.percent() : null,
 		"opened" = opened,
 		"circuit_disabled" = circuit_disabled,
 		"shorted" = shorted,
@@ -627,6 +627,7 @@ var/zapLimiter = 0
 		"apcwires" = apcwires,
 		"repair_status" = repair_status,
 		"host_id" = host_id,
+		"setup_networkapc" = setup_networkapc,
 	)
 
 /obj/machinery/power/apc/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -739,13 +740,13 @@ var/zapLimiter = 0
 			src.cut(t1)
 
 /obj/machinery/power/apc/proc/onBiteWire(mob/user, list/params)
-		if (wiresexposed)
-			var/t1 = text2num_safe(params["wire"])
-			switch(alert("Really bite the wire off?",,"Yes","No"))
-				if("Yes")
-					src.bite(t1)
-				if("No")
-					return
+	if (wiresexposed)
+		var/t1 = text2num_safe(params["wire"])
+		switch(alert("Really bite the wire off?",,"Yes","No"))
+			if("Yes")
+				src.bite(t1)
+			if("No")
+				return
 
 /obj/machinery/power/apc/proc/onPulseWire(mob/user, list/params)
 	if (wiresexposed)
@@ -760,11 +761,11 @@ var/zapLimiter = 0
 			src.pulse(t1)
 
 /obj/machinery/power/apc/proc/onCoverLockedChange(mob/user, list/params)
-		if ((!locked && setup_networkapc < 2) || issilicon(usr) || isAI(usr))
-			if ((issilicon(usr) || isAI(usr)) && src.aidisabled)
-				boutput(usr, "AI control for this APC interface has been disabled.")
-				return
-			coverlocked = params["coverlocked"]
+	if ((!locked && setup_networkapc < 2) || issilicon(usr) || isAI(usr))
+		if ((issilicon(usr) || isAI(usr)) && src.aidisabled)
+			boutput(usr, "AI control for this APC interface has been disabled.")
+			return
+		coverlocked = params["coverlocked"]
 
 
 /obj/machinery/power/apc/proc/onOperatingChange(mob/user, list/params)

@@ -76,13 +76,13 @@ export const PowerChannelSection = (props) => {
   const onPowerChannelStatusChange = (status) => {
     switch (powerChannel) {
       case POWER_CHANNEL_EQUIPMENT:
-        act("onPowerChannelEquipmentStatusChange", { equpment=status });
+        act("onPowerChannelEquipmentStatusChange", { equpment: status });
         break;
       case POWER_CHANNEL_LIGHTING:
-        act("onPowerChannelLightingStatusChange", { lighting=status });
+        act("onPowerChannelLightingStatusChange", { lighting: status });
         break;
       case POWER_CHANNEL_ENVIRONMENTAL:
-        act("onPowerChannelEnvironmentalStatusChange", { environ=status});
+        act("onPowerChannelEnvironmentalStatusChange", { environ: status });
         break;
       default:
         return;
@@ -228,7 +228,7 @@ export const Apc = (props, context) => {
 
   const onCoverLockedChange = (coverlocked) => {
     act("onCoverLockedChange", { coverlocked });
-  }
+  };
 
   const swipeOrHostDisplay = () => {
     if (data["setup_networkapc"] < 2) {
@@ -325,11 +325,11 @@ export const Apc = (props, context) => {
   const coverLockDisplay = () => {
     let coverLockText = data["coverlocked"] ? "Engaged" : "Disengaged";
     if (data["locked"]) {
-      return <Box>{coverLockText}</Box>
+      return <Box>{coverLockText}</Box>;
     } else {
-      return <Button onClick={() => {() => { onCoverLockedChange(!data["coverlocked"]) }}}
+      return <Button onClick={() => { onCoverLockedChange(!data["coverlocked"]); }} >{coverLockText}</Button>;
     }
-  }
+  };
 
   return (
     <Window title="Area Power Controller">
@@ -376,6 +376,7 @@ export const Apc = (props, context) => {
             <Box>Cover lock:</Box>
           </Stack.Item>
           <Stack.Item>
+            {coverLockDisplay()}
           </Stack.Item>
         </Stack>
       </Section>
