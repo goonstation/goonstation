@@ -308,7 +308,6 @@ Contains:
 	// base_icon_state is used when updating the jetpack's icon, with "1" or "0" appended depending on if the jetpack is on or not
 	// jetpacks have special behavior on Manta, hence the overrides here
 	#if defined(MAP_OVERRIDE_MANTA)
-	extra_desc = "This one features a magnetic tether attachment that keeps its wearer safely within range of a larger vessel, even during movement."
 	icon_state = "jetpack_mag0"
 	item_state = "jetpack_mag"
 	var/base_icon_state = "jetpack_mag"
@@ -458,7 +457,7 @@ Contains:
 		loc.assume_air(removed)
 
 	proc/ignite()
-		if (!QDELETED(src))
+		if (QDELETED(src))
 			return
 		var/fuel_moles = air_contents.toxins + air_contents.oxygen/6
 		var/strength = 1
