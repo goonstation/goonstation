@@ -17,20 +17,6 @@ export const PortableScrubber = (props, context) => {
     maxFlow,
   } = data;
 
-  const handleTogglePower = () => {
-    act("toggle-power");
-  };
-
-  const handleEjectTank = () => {
-    act("eject-tank");
-  };
-
-  const handleSetInletFlow = inletFlow => {
-    act("set-inlet-flow", {
-      inletFlow,
-    });
-  };
-
   return (
     <Window
       width={305}
@@ -46,11 +32,11 @@ export const PortableScrubber = (props, context) => {
               <Button
                 content={on ? 'On' : 'Off'}
                 color={on ? 'average' : 'default'}
-                onClick={handleTogglePower} />
+                onClick={() => act("toggle-power")} />
             </LabeledList.Item>
             <LabeledList.Item label="Inlet Flow">
               <Button
-                onClick={() => handleSetInletFlow(minFlow)}
+                onClick={() => act("set-inlet-flow", { inletFlow: minFlow })}
                 content="Min" />
               <NumberInput
                 animated
@@ -58,16 +44,16 @@ export const PortableScrubber = (props, context) => {
                 value={inletFlow}
                 minValue={minFlow}
                 maxValue={maxFlow}
-                onChange={(e, newInletFlow) => handleSetInletFlow(newInletFlow)} />
+                onChange={(e, newInletFlow) => act("set-inlet-flow", { inletFlow: newInletFlow })} />
               <Button
-                onClick={() => handleSetInletFlow(maxFlow)}
+                onClick={() => act("set-inlet-flow", { inletFlow: maxFlow })}
                 content="Max" />
             </LabeledList.Item>
           </LabeledList>
         </PortableBasicInfo>
         <PortableHoldingTank
           holding={holding}
-          onEjectTank={handleEjectTank} />
+          onEjectTank={() => act("eject-tank")} />
       </Window.Content>
     </Window>
   );

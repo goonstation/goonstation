@@ -18,24 +18,6 @@ export const PortablePump = (props, context) => {
     maxRelease,
   } = data;
 
-  const handleTogglePower = () => {
-    act("toggle-power");
-  };
-
-  const handleEjectTank = () => {
-    act("eject-tank");
-  };
-
-  const handleToggleDirection = () => {
-    act("toggle-pump");
-  };
-
-  const handleSetPressure = targetPressure => {
-    act("set-pressure", {
-      targetPressure,
-    });
-  };
-
   return (
     <Window
       width={305}
@@ -51,11 +33,11 @@ export const PortablePump = (props, context) => {
               <Button
                 content={on ? 'On' : 'Off'}
                 color={on ? 'average' : 'default'}
-                onClick={handleTogglePower} />
+                onClick={() => act("toggle-power")} />
             </LabeledList.Item>
             <LabeledList.Item label="Target Pressure">
               <Button
-                onClick={() => handleSetPressure(minRelease)}
+                onClick={() => act("set-pressure", { targetPressure: minRelease })}
                 content="Min" />
               <NumberInput
                 animated
@@ -63,22 +45,22 @@ export const PortablePump = (props, context) => {
                 value={targetPressure}
                 minValue={minRelease}
                 maxValue={maxRelease}
-                onChange={(e, newTargetPressure) => handleSetPressure(newTargetPressure)} />
+                onChange={(e, newTargetPressure) => act("set-pressure", { targetPressure: newTargetPressure })} />
               <Button
-                onClick={() => handleSetPressure(maxRelease)}
+                onClick={() => act("set-pressure", { targetPressure: maxRelease })}
                 content="Max" />
             </LabeledList.Item>
             <LabeledList.Item label="Pump Direction">
               <Button
                 content={direction_out ? 'Out' : 'In'}
                 color={direction_out ? 'yellow' : 'blue'}
-                onClick={handleToggleDirection} />
+                onClick={() => act("toggle-pump")} />
             </LabeledList.Item>
           </LabeledList>
         </PortableBasicInfo>
         <PortableHoldingTank
           holding={holding}
-          onEjectTank={handleEjectTank} />
+          onEjectTank={() => act("eject-tank")} />
       </Window.Content>
     </Window>
   );
