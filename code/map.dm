@@ -36,6 +36,7 @@ var/global/list/mapNames = list(
 	"Atlas" = 			list("id" = "ATLAS", 		"settings" = "atlas", 				"playerPickable" = 1,				"MaxPlayersAllowed" = 30),
 	"Manta" = 			list("id" = "MANTA", 		"settings" = "manta", 				"playerPickable" = 0,				"MaxPlayersAllowed" = 80),
 	"Wrestlemap" = 			list("id" = "WRESTLEMAP", 	"settings" = "wrestlemap", 		"playerPickable" = ASS_JAM),
+	"Federation" = 		list("id" = "FEDERATION", 		"settings" = "federation", 		"playerPickable" = 0, 	"MinPlayersAllowed" = 40),
 	"pod_wars" = 			list("id" = "POD_WARS", 	"settings" = "pod_wars", 		"playerPickable" = 0),
 	"blank" = 			list("id" = "BLANK", "settings" = "", "playerPickable" = 0),
 	"blank_underwater" =  list("id" = "BLANK_UNDERWATER", "settings" = "", "playerPickable" = 0)
@@ -942,6 +943,73 @@ var/global/list/mapNames = list(
 		"the security lobby" = list(/area/station/chapel/sanctuary),
 		"the chapel" = list(/area/station/security/secwing),
 		"the south crew quarters" = list(/area/station/crew_quarters/quarters_south))
+
+/datum/map_settings
+	var/name = "FEDERATION"
+	var/display_name = FEDERATION
+	var/style = "station"
+	var/default_gamemode = "secret"
+	var/goonhub_map = "https://goonhub.com/maps/federation"
+	var/arrivals_type = MAP_SPAWN_SHUTTLE
+	var/dir_fore = null
+
+	var/walls = /turf/simulated/wall
+	var/rwalls = /turf/simulated/wall/r_wall
+	var/auto_walls = 1
+
+	var/windows = /obj/window
+	var/windows_thin = /obj/window
+	var/rwindows = /obj/window/reinforced
+	var/rwindows_thin = /obj/window/reinforced
+	var/windows_crystal = /obj/window/crystal
+	var/windows_rcrystal = /obj/window/crystal/reinforced
+	var/window_layer_full = null
+	var/window_layer_north = null
+	var/window_layer_south = null
+	var/auto_windows = 0
+
+	var/ext_airlocks = /obj/machinery/door/airlock/external
+	var/airlock_style = "gannets"
+
+	var/escape_centcom = /area/shuttle/escape/centcom
+	var/escape_transit = /area/shuttle/escape/transit
+	var/escape_station = /area/shuttle/escape/station
+	var/escape_dir = NORTH
+	var/default_shuttle = null // null = auto, otherwise name of the dmm file without .dmm
+
+	var/shuttle_map_turf = /turf/space
+
+	var/merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom
+	var/merchant_left_station = /area/shuttle/merchant_shuttle/left_station
+	var/merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom
+	var/merchant_right_station = /area/shuttle/merchant_shuttle/right_station
+
+	var/list/valid_nuke_targets = list("the main security room" = list(/area/station/security/main),
+		"the central research sector hub" = list(/area/station/science/lobby),
+		"the cargo bay (QM)" = list(/area/station/quartermaster/office),
+		"the engineering control room" = list(/area/station/engine/engineering, /area/station/engine/power),
+		"the warehouse" = list(/area/station/storage/warehouse),
+		"the courtroom" = list(/area/station/crew_quarters/courtroom, /area/station/crew_quarters/juryroom),
+		"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay/surgery, /area/station/medical/medbay/lobby),
+		"the station's cafeteria" = list(/area/station/crew_quarters/cafeteria),
+		"the EVA storage" = list(/area/station/ai_monitored/storage/eva),
+		"the robotics lab" = list(/area/station/medical/robotics))
+		"the AI upload foyer" = list(/area/station/turret_protected/ai_upload_foyer))
+		"the barber shop" = list(/area/station/crew_quarters/barber_shop))
+	job_limits_override = list(
+		/datum/job/security/security_officer = 6,
+		/datum/job/security/detective = 1,
+		/datum/job/research/geneticist = 3,
+		/datum/job/research/roboticist = 3,
+		/datum/job/research/scientist = 6,
+		/datum/job/research/medical_doctor = 7,
+		/datum/job/engineering/mechanic = 4,
+		/datum/job/engineering/engineer = 6,
+		/datum/job/civilian/janitor = 5,
+		/datum/job/civilian/chaplain = 2,
+		/datum/job/special/lawyer = 1,
+		/datum/job/special/atmospheric_technician = 1
+	)
 
 /datum/map_settings/pod_wars
 	name = "POD_WARS"
