@@ -2459,7 +2459,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		if (!M)
 			return
 		M.traitHolder.addTrait("training_security")
-		M.show_text("<b>Defend the crew from all current threats!</b>", "blue")
 
 
 /datum/job/special/headminer
