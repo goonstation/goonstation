@@ -33,15 +33,6 @@ const WIRE_DARK_RED = 2;
 const WIRE_WHITE = 3;
 const WIRE_YELLOW = 4;
 
-const WIRE_ACTION_CUT = 1;
-const WIRE_ACTION_PULSE = 2;
-const WIRE_ACTION_BITE = 3;
-const WIRE_ACTION_MEND = 4;
-
-const WIRE_STATE_CUT = 1;
-const WIRE_STATE_WHOLE = 2;
-const WIRE_STATE_PULSED = 3;
-
 const MAIN_STATUS_NONE = 0;
 const MAIN_STATUS_LOW = 1;
 const MAIN_STATUS_GOOD = 2;
@@ -82,16 +73,16 @@ export const PowerChannelSection = (props) => {
 
   const powerChannelLabel = powerChannelToLabel(powerChannel);
 
-  const onPowerChannelStatusChange = (value) => {
+  const onPowerChannelStatusChange = (status) => {
     switch (powerChannel) {
       case POWER_CHANNEL_EQUIPMENT:
-        act("onPowerChannelEquipmentStatusChange", { value });
+        act("onPowerChannelEquipmentStatusChange", { equpment=status });
         break;
       case POWER_CHANNEL_LIGHTING:
-        act("onPowerChannelLightingStatusChange", { value });
+        act("onPowerChannelLightingStatusChange", { lighting=status });
         break;
       case POWER_CHANNEL_ENVIRONMENTAL:
-        act("onPowerChannelEnvironmentalStatusChange", { value });
+        act("onPowerChannelEnvironmentalStatusChange", { environ=status});
         break;
       default:
         return;
@@ -217,7 +208,7 @@ export const AccessPanel = (props) => {
         <Stack.Item>
           <Box>The APC is {data["locked"] ? "locked" : "unlocked"}.</Box>
           <Box>{data["shorted"] ? "The APC's power has been shorted." : "The APC is working properly!"}</Box>
-          <Box>The {"'"}AI control allowed{"'"} light is {data["aidisabled"] ? "off" : "on"}.</Box>
+          <Box>The {"'AI control allowed'"} light is {data["aidisabled"] ? "off" : "on"}.</Box>
         </Stack.Item>
       </Stack>
     </Section>
@@ -227,19 +218,35 @@ export const AccessPanel = (props) => {
 export const Apc = (props, context) => {
   const { act, data } = useBackend(context);
 
-  let accessPanel;
-  if (data.accessPanel) {
-    accessPanel = <AccessPanel act={act} data={data} />;
-  } else {
-    accessPanel = null;
-  }
-
-  const onMainBreakerChange = (value) => {
-    act("onMainBreakerChange", { value });
+  const onOperatingChange = (operating) => {
+    act("onOperatingChange", { operating });
   };
 
-  const onChargeModeChange = (value) => {
-    act("onChargeModeChange", { value });
+  const onChargeModeChange = (chargemode) => {
+    act("onChargeModeChange", { chargemode });
+  };
+
+  const onCoverLockedChange = (coverlocked) => {
+    act("onCoverLockedChange", { coverlocked });
+  }
+
+  const swipeOrHostDisplay = () => {
+    if (data["setup_networkapc"] < 2) {
+      return <Box>Swipe ID card to unlock interface.</Box>;
+    } else {
+      return (
+        <Stack>
+          <Stack.Item>
+            <Box>Host Connection:</Box>
+          </Stack.Item>
+          <Stack.Item>
+            <Box>
+              {data["host_connected"] ? <font color="green">OK</font> : <font color="red">NONE</font>}
+            </Box>
+          </Stack.Item>
+        </Stack>
+      );
+    }
   };
 
   const mainStatusToText = () => {
@@ -293,10 +300,10 @@ export const Apc = (props, context) => {
             <Box>Power Cell:</Box>
           </Stack.Item>
           <Stack.Item>
-            <Box>{'(' + data["cell_percent"] + ')'}</Box>
+            <Box>{round(data["cell_percent"])}%</Box>
           </Stack.Item>
           <Stack.Item>
-            <Box>{chargingStatusToText()}</Box>
+            <Box>{"("}{chargingStatusToText()}{")"}</Box>
           </Stack.Item>
           {chargeModeDisplay()}
         </Stack>
@@ -315,18 +322,28 @@ export const Apc = (props, context) => {
     }
   };
 
+  const coverLockDisplay = () => {
+    let coverLockText = data["coverlocked"] ? "Engaged" : "Disengaged";
+    if (data["locked"]) {
+      return <Box>{coverLockText}</Box>
+    } else {
+      return <Button onClick={() => {() => { onCoverLockedChange(!data["coverlocked"]) }}}
+    }
+  }
+
   return (
     <Window title="Area Power Controller">
       <Section title="Main">
+        {swipeOrHostDisplay()}
         <Stack>
           <Stack.Item>
             <Box>Main Breaker</Box>
           </Stack.Item>
           <Stack.Item>
-            {data["operating"] ? <Button label="off" disabled={data["locked"]} onClick={() => { onMainBreakerChange(OFF); }}>off</Button> : <Box>off</Box>}
+            {data["operating"] ? <Button label="off" disabled={data["locked"]} onClick={() => { onOperatingChange(OFF); }}>off</Button> : <Box>off</Box>}
           </Stack.Item>
           <Stack.Item>
-            {data["operating"] ? <Box>on</Box> : <Button label="on" disabled={data["locked"]} onClick={() => { onMainBreakerChange(ON); }}>on</Button>}
+            {data["operating"] ? <Box>on</Box> : <Button label="on" disabled={data["locked"]} onClick={() => { onOperatingChange(ON); }}>on</Button>}
           </Stack.Item>
         </Stack>
         <Stack>
@@ -350,6 +367,15 @@ export const Apc = (props, context) => {
           </Stack.Item>
           <Stack.Item>
             <Box>{data["lastused_total"]} W</Box>
+          </Stack.Item>
+        </Stack>
+      </Section>
+      <Section>
+        <Stack>
+          <Stack.Item>
+            <Box>Cover lock:</Box>
+          </Stack.Item>
+          <Stack.Item>
           </Stack.Item>
         </Stack>
       </Section>

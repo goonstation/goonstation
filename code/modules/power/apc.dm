@@ -635,74 +635,37 @@ var/zapLimiter = 0
 		return
 	if (usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.stat)
 		return
-	switch (action)
-		if ("onPowerChannelEquipmentStatusChange")
-			onPowerChannelEquipmentStatusChange(usr, params)
-			. = TRUE
-		if ("onPowerChannelLightStatusChange")
-			onPowerChannelLightStatusChange(usr, params)
-			. = TRUE
-		if ("onPowerChannelEnvironStatusChange")
-			onPowerChannelEnvironStatusChange(usr, params)
-			environ = params["value"]
-			. = TRUE
-		if ("onMendWire")
-			if (!usr.find_tool_in_hand(TOOL_SNIPPING))
-				boutput(usr, "You need a snipping tool!")
-				return
-			src.mend(APCIndexToWireColor[params["wire"]])
-			. = TRUE
-		if ("onCutWire")
-			if (!usr.find_tool_in_hand(TOOL_SNIPPING))
-				boutput(usr, "You need a snipping tool!")
-				return
-			src.cut(APCIndexToWireColor[params["wire"]])
-			. = TRUE
-		if ("onPulseWire")
-			if (!usr.find_tool_in_hand(TOOL_PULSING))
-				boutput(usr, "You need a multitool or similar!")
-				return
-			else if (src.isWireColorCut(APCIndexToWireColor[params["wire"]]))
-				boutput(usr, "You can't pulse a cut wire.")
-				return
-			else
-				src.pulse(APCIndexToWireColor[params["wire"]])
-			. = TRUE
-		if ("onBiteWire")
-			switch(alert("Really bite the wire off?",,"Yes","No"))
-				if("Yes")
-					src.bite(APCIndexToWireColor[params["wire"]])
-				if("No")
-					return
-			. = TRUE
-		if ("onMainBreakerChange")
-			operating = params["value"]
-			src.update()
-			. = TRUE
-		if ("onChargeModeChange")
-			chargemode = params["value"]
-			if(!chargemode)
-				charging = 0
-				UpdateIcon()
-			. = TRUE
-		if ("onLockedChange")
-			locked = params["value"]
-			. = TRUE
-		if ("onCoverLockedChange")
-			if ((!locked && setup_networkapc < 2) || issilicon(usr) || isAI(usr))
-				if ((issilicon(usr) || isAI(usr)) && src.aidisabled)
-					boutput(usr, "AI control for this APC interface has been disabled.")
-					return
-				coverlocked = params["value"]
-			. = TRUE
+	if ((in_interact_range(src, usr) && istype(src.loc, /turf))||(issilicon(usr) || isAI(usr)))
+		switch (action)
+			if ("onMendWire")
+				onMendWire(usr, params);
+			if ("onCutWire")
+				onCutWire(usr, params);
+			if ("onPulseWire")
+				onPulseWire(usr, params);
+			if ("onBiteWire")
+				onBiteWire(usr, params);
+			if ("onCoverLockedChange")
+				onCoverLockedChange(usr, params)
+			if ("onOperatingChange")
+				onOperatingChange(usr, params)
+			if ("onChargeModeChange")
+				onChargeModeChange(usr, params)
+			if ("onPowerChannelEquipmentStatusChange")
+				onPowerChannelEquipmentStatusChange(usr, params)
+			if ("onPowerChannelLightStatusChange")
+				onPowerChannelLightStatusChange(usr, params)
+			if ("onPowerChannelEnvironStatusChange")
+				onPowerChannelEnvironStatusChange(usr, params)
 
+// Callbacks used by the UI - called from /tgui/packages/tgui/interfaces/Apc.js
 /obj/machinery/power/apc/proc/onPowerChannelEquipmentStatusChange(mob/user, list/params)
-	if (params["value"] && ((!locked && setup_networkapc < 2) || issilicon(usr) || isAI(usr)))
+	if ((!locked && setup_networkapc < 2) || issilicon(usr) || isAI(usr))
 		if ((issilicon(usr) || isAI(usr)) && src.aidisabled)
 			boutput(usr, "AI control for this APC interface has been disabled.")
 			return
 
-		var/val = clamp(text2num_safe(href_list["eqp"]), 1, 3)
+		var/val = clamp(text2num_safe(params["equipment"]), 1, 3)
 
 		// Fix for exploit that allowed synthetics to perma-stun intruders by cycling the APC
 		// ad infinitum (activating power/turrets for one tick) despite missing power cell (Convair880).
@@ -718,12 +681,12 @@ var/zapLimiter = 0
 		update()
 
 /obj/machinery/power/apc/proc/onPowerChannelLightStatusChange(mob/user, list/params)
-	if (params["value"] && ((!locked && setup_networkapc < 2) || issilicon(usr) || isAI(usr)))
+	if ((!locked && setup_networkapc < 2) || issilicon(usr) || isAI(usr))
 		if ((issilicon(usr) || isAI(usr)) && src.aidisabled)
 			boutput(usr, "AI control for this APC interface has been disabled.")
 			return
 
-		var/val = clamp(text2num_safe(params["value"]), 1, 3)
+		var/val = clamp(text2num_safe(params["lighting"]), 1, 3)
 
 		// Same deal.
 		if ((!src.cell || src.shorted == 1) && (val == 2 || val == 3))
@@ -738,12 +701,12 @@ var/zapLimiter = 0
 		update()
 
 /obj/machinery/power/apc/proc/onPowerChannelEnvironStatusChange(mob/user, list/params)
-	if (params["value"] && ((!locked && setup_networkapc < 2) || issilicon(usr) || isAI(usr)))
+	if ((!locked && setup_networkapc < 2) || issilicon(usr) || isAI(usr))
 		if ((issilicon(usr) || isAI(usr)) && src.aidisabled)
 			boutput(usr, "AI control for this APC interface has been disabled.")
 			return
 
-		var/val = clamp(text2num_safe(params["value"]), 1, 3)
+		var/val = clamp(text2num_safe(params["environ"]), 1, 3)
 
 		// Yep.
 		if ((!src.cell || src.shorted == 1) && (val == 2 || val == 3))
@@ -757,7 +720,72 @@ var/zapLimiter = 0
 		UpdateIcon()
 		update()
 
-/obj
+/obj/machinery/power/apc/proc/onMendWire(mob/user, list/params)
+	if (wiresexposed)
+		var/t1 = text2num_safe(params["wire"])
+		if (!usr.find_tool_in_hand(TOOL_SNIPPING))
+			boutput(usr, "You need a snipping tool!")
+			return
+		else if (src.isWireColorCut(t1))
+			src.mend(t1)
+
+/obj/machinery/power/apc/proc/onCutWire(mob/user, list/params)
+	if (wiresexposed)
+		var/t1 = text2num_safe(params["wire"])
+		if (!usr.find_tool_in_hand(TOOL_SNIPPING))
+			boutput(usr, "You need a snipping tool!")
+			return
+		else if (src.isWireColorCut(t1))
+			src.cut(t1)
+
+/obj/machinery/power/apc/proc/onBiteWire(mob/user, list/params)
+		if (wiresexposed)
+			var/t1 = text2num_safe(params["wire"])
+			switch(alert("Really bite the wire off?",,"Yes","No"))
+				if("Yes")
+					src.bite(t1)
+				if("No")
+					return
+
+/obj/machinery/power/apc/proc/onPulseWire(mob/user, list/params)
+	if (wiresexposed)
+		var/t1 = text2num_safe(params["wire"])
+		if (!usr.find_tool_in_hand(TOOL_PULSING))
+			boutput(usr, "You need a multitool or similar!")
+			return
+		else if (src.isWireColorCut(t1))
+			boutput(usr, "You can't pulse a cut wire.")
+			return
+		else
+			src.pulse(t1)
+
+/obj/machinery/power/apc/proc/onCoverLockedChange(mob/user, list/params)
+		if ((!locked && setup_networkapc < 2) || issilicon(usr) || isAI(usr))
+			if ((issilicon(usr) || isAI(usr)) && src.aidisabled)
+				boutput(usr, "AI control for this APC interface has been disabled.")
+				return
+			coverlocked = params["coverlocked"]
+
+
+/obj/machinery/power/apc/proc/onOperatingChange(mob/user, list/params)
+	if ((!locked && setup_networkapc < 2) || issilicon(usr) || isAI(usr))
+		if ((issilicon(usr) || isAI(usr)) && src.aidisabled)
+			boutput(usr, "AI control for this APC interface has been disabled.")
+			src.updateUsrDialog()
+			return
+		operating = params["operating"]
+		src.update()
+		UpdateIcon()
+
+/obj/machinery/power/apc/proc/onChargeModeChange(mob/user, list/params)
+	if ((!locked && setup_networkapc < 2) || issilicon(usr) || isAI(usr))
+		if ((issilicon(usr) || isAI(usr)) && src.aidisabled)
+			boutput(usr, "AI control for this APC interface has been disabled.")
+			return
+		chargemode = params["chargemode"]
+		if(!chargemode)
+			charging = 0
+			UpdateIcon()
 
 /obj/machinery/power/apc/proc/interacted(mob/user)
 	if (user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat)
