@@ -174,7 +174,7 @@
 		if("set-inlet-flow")
 			var/new_inlet_flow = params["inletFlow"]
 			if(isnum(new_inlet_flow))
-				src.inlet_flow = new_inlet_flow
+				src.inlet_flow = clamp(new_inlet_flow, 0, 100)
 				. = TRUE
 		if("eject-tank")
 			src.eject_tank()

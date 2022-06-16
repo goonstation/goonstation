@@ -152,7 +152,7 @@
 		if("set-pressure")
 			var/new_target_pressure = params["targetPressure"]
 			if(isnum(new_target_pressure))
-				src.target_pressure = new_target_pressure
+				src.target_pressure = clamp(new_target_pressure, 0, 10*ONE_ATMOSPHERE)
 				. = TRUE
 		if("eject-tank")
 			src.eject_tank()
