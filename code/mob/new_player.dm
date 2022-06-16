@@ -185,7 +185,7 @@ mob/new_player
 
 		if(href_list["ready"])
 			if(!ready)
-				if(tgui_alert(src, "Are you sure you are ready? This will lock-in your preferences.", "Player Setup", list("Yes"," No")) == "Yes")
+				if(tgui_alert(src, "Are you sure you are ready? This will lock-in your preferences.", "Player Setup", list("Yes", "No")) == "Yes")
 					ready = 1
 
 		if(href_list["observe"])

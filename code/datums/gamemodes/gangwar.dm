@@ -373,7 +373,7 @@
 					part2_used += part2chosen
 				leaderMind.gang.gang_name = temp_name
 				boutput(leaderMind.current, "<h1><font color=red>Your gang name is [temp_name]!</font></h1>")
-			if (null, "Randomize")
+			else
 				continue
 
 /datum/game_mode/gang/proc/check_winner()
