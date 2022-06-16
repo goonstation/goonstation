@@ -447,9 +447,6 @@
 	action_name = "respawn"
 
 	perform_action(user, mob/target)
-		if(!target.ckey)
-			system.reply("Ckey not found.", user)
-			return
 		logTheThing("admin", "[user] (Discord)", target, "respawned [constructTarget(target,"admin")]")
 		logTheThing("diary", "[user] (Discord)", target, "respawned [constructTarget(target,"diary")].", "admin")
 		message_admins("[user] (Discord) respawned [key_name(target)].")
