@@ -1,4 +1,9 @@
 
+(t)thu jun 16 22
+(u)LeahTheTech
+(p)9162
+(e)🗺|mapping
+(+)Added an intercom to Kondaru AI upload chamber. Use it to tell the AI "law 2 stop being rogue".
 (t)wed jun 15 22
 (u)Ikea
 (p)9146
