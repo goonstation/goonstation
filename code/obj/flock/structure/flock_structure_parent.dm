@@ -12,6 +12,7 @@ ABSTRACT_TYPE(/obj/flock_structure)
 	flags = USEDELAY
 	mat_changename = FALSE
 	mat_changedesc = FALSE
+	mat_appearances_to_ignore = list("gnesis")
 	var/flock_id = "ERROR"
 	/// when did we get created?
 	var/time_started = 0
@@ -43,7 +44,7 @@ ABSTRACT_TYPE(/obj/flock_structure)
 	last_process = TIME
 	health_max = health
 	time_started = world.timeofday
-	setMaterial(getMaterial("gnesis"), appearance = FALSE)
+	setMaterial(getMaterial("gnesis"))
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, "flock_structure")
 
 	if(F)
