@@ -2057,7 +2057,9 @@ datum
 			transparency = 192
 			viscosity = 0.3
 			depletion_rate = 0.25
-			var/conversion_rate = 1
+			flushing_multiplier = 2
+			var/conversion_rate = 0.7
+			var/gib_threshold = 200
 			var/list/sounds = list("sound/machines/ArtifactFea1.ogg", "sound/machines/ArtifactFea2.ogg", "sound/machines/ArtifactFea3.ogg",
 							"sound/misc/flockmind/flockmind_cast.ogg", "sound/misc/flockmind/flockmind_caw.ogg",
 							"sound/misc/flockmind/flockdrone_beep1.ogg", "sound/misc/flockmind/flockdrone_beep2.ogg", "sound/misc/flockmind/flockdrone_beep3.ogg", "sound/misc/flockmind/flockdrone_beep4.ogg",
@@ -2069,6 +2071,9 @@ datum
 
 			on_remove()
 				active_reagent_holders -= src
+				var/mob/M = holder.my_atom
+				if (istype(M) && !istype(M.loc, /obj/flock_structure/cage))
+					M.removeOverlayComposition(/datum/overlayComposition/flockmindcircuit)
 
 			proc/process_reactions()
 				// consume fellow reagents
@@ -2082,7 +2087,8 @@ datum
 
 					if(length(otherReagents) > 0)
 						var/targetReagent = pick(otherReagents) //pick one reagent and convert it
-						if(targetReagent != "blood_placeholder") //blood is handled in on_mob_life
+						//don't convert normal flushing chems in bloodstream, we're not THAT mean
+						if(!ismob(holder.my_atom) || !(targetReagent in list("calomel", "hunchback", "penteticacid", "tealquila", "blood_placeholder"))) //blood is handled in on_mob_life
 							holder.remove_reagent(targetReagent, conversion_rate)
 							holder.add_reagent(id, conversion_rate)
 					else
@@ -2101,29 +2107,50 @@ datum
 					// i'm sorry sir but your blood counts as raw materials
 					var/mob/living/carbon/human/H = M
 					var/amt = conversion_rate * mult
-					if(H.blood_volume >= amt && holder.get_reagent_amount(src.id) > 50)
+					if(H.blood_volume >= amt && holder.get_reagent_amount(src.id) > 40)
 						H.blood_volume -= amt
 						H.reagents.add_reagent(id, amt)
-					if(holder.get_reagent_amount(src.id) > 300)
+					if(holder.get_reagent_amount(src.id) > gib_threshold)
+						//make it obvious that you are about to die horribly
+						M.addOverlayComposition(/datum/overlayComposition/flockmindcircuit)
 						// oh no
 						if(probmult(1)) // i hate you all, players
 							H.flockbit_gib()
 							logTheThing("combat", H, null, "was gibbed by reagent [name] at [log_loc(H)].")
 					else
-						// DO SPOOKY THINGS
-						if(holder.get_reagent_amount(src.id) < 100)
-							if(probmult(2))
-								M.playsound_local(get_turf(M), pick(sounds), 20, 1)
-							if(probmult(6))
-								boutput(M, "<span class='flocksay italics'>[pick_string("flockmind.txt", "flockjuice_low")]</span>")
-						else
-							if(probmult(20))
-								M.playsound_local(get_turf(M), pick(sounds), 40, 1)
-							if(probmult(30))
-								boutput(M, "<span class='flocksay italics'>[pick_string("flockmind.txt", "flockjuice_high")]</span>")
+						if (!istype(M.loc, /obj/flock_structure/cage))
+							M.removeOverlayComposition(/datum/overlayComposition/flockmindcircuit)
+					// DO SPOOKY THINGS
+					if(holder.get_reagent_amount(src.id) < 100)
+						if(probmult(2))
+							M.playsound_local(get_turf(M), pick(sounds), 20, 1)
+						if(probmult(6))
+							boutput(M, "<span class='flocksay italics'>[pick_string("flockmind.txt", "flockjuice_low")]</span>")
+					else
+						if (probmult(5) && !ON_COOLDOWN(M, "flock_organ", 3 MINUTES))
+							M.emote("scream")
+							boutput(M, "<span class='alert'><b>You feel something hard and sharp crystallize inside you!</b></span>")
+							src.replace_organ(H)
+						if(probmult(10))
+							M.playsound_local(get_turf(M), pick(sounds), 40, 1)
+							M.setStatus("gnesis_glow", 2 SECONDS)
+						if(probmult(30))
+							boutput(M, "<span class='flocksay italics'>[pick_string("flockmind.txt", "flockjuice_high")]</span>")
 
 				..()
 				return
+
+			proc/replace_organ(var/mob/living/carbon/human/H)
+				var/organ_name = pick("stomach", "pancreas", "liver", "spleen", "left_lung", "right_lung", "left_kidney", "right_kidney", "appendix")
+				var/obj/item/organ/organ = H.get_organ(organ_name)
+				if (istype(organ, /obj/item/organ/flock_crystal))
+					return
+				H.drop_organ(organ_name, null)
+				var/obj/item/organ/flock_crystal/new_organ = new()
+				new_organ.organ_name = organ_name
+				new_organ.name = "crystallized [organ.name]"
+				H.receive_organ(new_organ, organ_name, FALSE, TRUE)
+				qdel(organ)
 
 			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume_passed)
 				. = ..()
