@@ -28,6 +28,9 @@
 #elif defined(MAP_OVERRIDE_CHIRON)
 
 
+#elif defined(MAP_OVERRIDE_FEDERATION)
+
+
 #elif defined(MAP_OVERRIDE_PAMGOC)
 
 #define REVERSED_MAP

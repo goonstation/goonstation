@@ -18,6 +18,7 @@ var/global/list/mapNames = list(
 	"Cogmap 1" = 		list("id" = "COGMAP", 		"settings" = "cogmap", 			"playerPickable" = 1,		"MaxPlayersAllowed" = 80),
 #endif
 	"Construction" = list("id" = "CONSTRUCTION", "settings" = "construction"),
+	//"Construction" = list("id" = "CONSTRUCTION", "settings" = "construction"),
 	"Cogmap 1 (Old)" = 	list("id" = "COGMAP_OLD", 	"settings" = "cogmap_old"),
 	"Cogmap 2" = 		list("id" = "COGMAP2", 		"settings" = "cogmap2", 		"playerPickable" = 1, 	"MinPlayersAllowed" = 40),
 	"Destiny" = 		list("id" = "DESTINY", 		"settings" = "destiny", 		"playerPickable" = 1,		"MaxPlayersAllowed" = 80),
@@ -32,11 +33,11 @@ var/global/list/mapNames = list(
 	"Ozymandias" = 	list("id" = "OZYMANDIAS", "settings" = "ozymandias", 	"playerPickable" = 0, 	"MinPlayersAllowed" = 40),
 	"Bellerophon Fleet" = list("id" = "FLEET", "settings" = "fleet", "playerPickable" = ASS_JAM),
 	"Icarus" = 			list("id" = "ICARUS",		"settings" = "icarus",				"playerPickable" = ASS_JAM),
-	"Density" = 		list("id" = "DENSITY", 	"settings" = "density", 			"playerPickable" = ASS_JAM,	"MaxPlayersAllowed" = 30),
+	//"Density" = 		list("id" = "DENSITY", 	"settings" = "density", 			"playerPickable" = ASS_JAM,	"MaxPlayersAllowed" = 30),
 	"Atlas" = 			list("id" = "ATLAS", 		"settings" = "atlas", 				"playerPickable" = 1,				"MaxPlayersAllowed" = 30),
 	"Manta" = 			list("id" = "MANTA", 		"settings" = "manta", 				"playerPickable" = 0,				"MaxPlayersAllowed" = 80),
 	"Wrestlemap" = 			list("id" = "WRESTLEMAP", 	"settings" = "wrestlemap", 		"playerPickable" = ASS_JAM),
-	"Federation" = 		list("id" = "FEDERATION", 		"settings" = "federation", 		"playerPickable" = 0),
+	"Federation" = 		list("id" = "FEDERATION", 		"settings" = "federation", 		"playerPickable" = 0, 	"MinPlayersAllowed" = 40),
 	"pod_wars" = 			list("id" = "POD_WARS", 	"settings" = "pod_wars", 		"playerPickable" = 0),
 	"blank" = 			list("id" = "BLANK", "settings" = "", "playerPickable" = 0),
 	"blank_underwater" =  list("id" = "BLANK_UNDERWATER", "settings" = "", "playerPickable" = 0)
