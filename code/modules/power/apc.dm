@@ -594,6 +594,7 @@ var/zapLimiter = 0
 	. = list(
 		"net_id" = net_id,
 		"area_name" = area ? area.name : "Unknown",
+		"area_requires_power" = area ? area.requires_power : null,
 	)
 
 /obj/machinery/power/apc/ui_data(mob/user)
@@ -633,6 +634,9 @@ var/zapLimiter = 0
 		"dark_red_cut" = isWireColorCut(2),
 		"white_cut" = isWireColorCut(3),
 		"yellow_cut" = isWireColorCut(4),
+		"can_access_remotely" = can_access_remotely(usr),
+		"is_ai" = isAI(usr),
+		"is_silicon" = issilicon(usr),
 	)
 
 /obj/machinery/power/apc/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)

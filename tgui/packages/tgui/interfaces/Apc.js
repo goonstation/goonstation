@@ -94,9 +94,9 @@ export const PowerChannelSection = (props) => {
   const getPowerChannelStatusAutoDisplay = () => {
     switch (getPowerChannelStatus()) {
       case POWER_CHANNEL_STATUS_AUTO_OFF:
-        return <Box>{"Auto (Off)"}</Box>;
+        return <Box align="center">{"Auto (Off)"}</Box>;
       case POWER_CHANNEL_STATUS_AUTO_ON:
-        return <Box>{"Auto (On)"}</Box>;
+        return <Box align="center">{"Auto (On)"}</Box>;
       default:
         return <Button content="Auto" disabled={data["locked"]} onClick={() => onPowerChannelStatusChange(POWER_CHANNEL_STATUS_AUTO_ON)} />;
     }
@@ -104,18 +104,18 @@ export const PowerChannelSection = (props) => {
 
   return (
     <Stack>
-      <Stack.Item>
-        <Box>
+      <Stack.Item align="center">
+        <Box align="center">
           {powerChannelLabel}
         </Box>
       </Stack.Item>
-      <Stack.Item>
+      <Stack.Item align="center">
         {getPowerChannelStatus() === POWER_CHANNEL_STATUS_OFF ? <Box>Off</Box> : <Button content="Off" disabled={data["locked"]} onClick={() => { onPowerChannelStatusChange(POWER_CHANNEL_STATUS_OFF); }} />}
       </Stack.Item>
-      <Stack.Item>
+      <Stack.Item align="center">
         {getPowerChannelStatus() === POWER_CHANNEL_STATUS_ON ? <Box>On</Box> : <Button content="On" disabled={data["locked"]} onClick={() => { onPowerChannelStatusChange(POWER_CHANNEL_STATUS_ON); }} />}
       </Stack.Item>
-      <Stack.Item>
+      <Stack.Item align="center">
         {getPowerChannelStatusAutoDisplay()}
       </Stack.Item>
     </Stack>
@@ -185,23 +185,22 @@ export const Wire = (props) => {
   };
 
   return (
-    <Flex direction="row">
-      <Section fill>
-        <Box>{color} wire:</Box>
-      </Section>
-      <Flex.Item grow={1} />
+    <Flex direction="row" align="center">
       <Flex.Item grow={1}>
-        <Flex direction="row">
-          <Flex.Item grow={1}>
+        <Box>{color} wire:</Box>
+      </Flex.Item>
+      <Flex.Item>
+        <Stack>
+          <Stack.Item>
             {toggleCutButton()}
-          </Flex.Item>
-          <Flex.Item grow={1}>
+          </Stack.Item>
+          <Stack.Item>
             <Button content="pulse" onClick={onPulse} />
-          </Flex.Item>
-          <Flex.Item grow={1}>
+          </Stack.Item>
+          <Stack.Item>
             <Button content="bite" onClick={onBite} />
-          </Flex.Item>
-        </Flex>
+          </Stack.Item>
+        </Stack>
       </Flex.Item>
     </Flex>
   );
@@ -213,17 +212,23 @@ export const AccessPanel = (props) => {
     data,
   } = props;
   return (
-    <Section label="Access Panel">
+    <Section title="Access Panel">
       <BlockQuote>An identifier is engraved above the APC{"'"}s wires: {data["net_id"]}</BlockQuote>
-      <Section>
-        <Wire wire={WIRE_ORANGE} act={act} data={data} />
-        <Wire wire={WIRE_DARK_RED} act={act} data={data} />
-        <Wire wire={WIRE_WHITE} act={act} data={data} />
-        <Wire wire={WIRE_YELLOW} act={act} data={data} />
-      </Section>
-      <Box>The APC is {data["locked"] ? "locked" : "unlocked"}.</Box>
-      <Box>{data["shorted"] ? "The APC's power has been shorted." : "The APC is working properly!"}</Box>
-      <Box>The {"'AI control allowed'"} light is {data["aidisabled"] ? "off" : "on"}.</Box>
+      <Flex direction="column">
+        <Flex direction="row">
+          <Section>
+            <Wire wire={WIRE_ORANGE} act={act} data={data} />
+            <Wire wire={WIRE_DARK_RED} act={act} data={data} />
+            <Wire wire={WIRE_WHITE} act={act} data={data} />
+            <Wire wire={WIRE_YELLOW} act={act} data={data} />
+          </Section>
+        </Flex>
+        <Section>
+          <Box>The APC is {data["locked"] ? "locked" : "unlocked"}.</Box>
+          <Box>{data["shorted"] ? "The APC's power has been shorted." : "The APC is working properly!"}</Box>
+          <Box>The {"'AI control allowed'"} light is {data["aidisabled"] ? "off" : "on"}.</Box>
+        </Section>
+      </Flex>
     </Section>
   );
 };
@@ -245,19 +250,21 @@ export const Apc = (props, context) => {
 
   const swipeOrHostDisplay = () => {
     if (data["setup_networkapc"] < 2) {
-      return <Box>Swipe ID card to {data["locked"] ? "unlock" : "lock"} interface.</Box>;
+      return (
+        <Stack.Item align="center">
+          <Box>Swipe ID card to {data["locked"] ? "unlock" : "lock"} interface.</Box>
+        </Stack.Item>
+      );
     } else {
       return (
-        <Stack>
-          <Stack.Item>
+        <>
+          <Stack.Item align="center">
             <Box>Host Connection:</Box>
           </Stack.Item>
-          <Stack.Item>
-            <Box>
-              {data["host_connected"] ? <font color="green">OK</font> : <font color="red">NONE</font>}
-            </Box>
+          <Stack.Item align="center">
+            <Box>{data["host_connected"] ? <font color="green">OK</font> : <font color="red">NONE</font>}</Box>
           </Stack.Item>
-        </Stack>
+        </>
       );
     }
   };
@@ -265,11 +272,11 @@ export const Apc = (props, context) => {
   const mainStatusToText = () => {
     switch (data["main_status"]) {
       case MAIN_STATUS_GOOD:
-        return "Good";
+        return <font color="green">Good</font>;
       case MAIN_STATUS_LOW:
-        return "Low";
+        return <font color="yellow">Low</font>;
       case MAIN_STATUS_NONE:
-        return "None";
+        return <font color="red">None</font>;
     }
   };
 
@@ -287,17 +294,17 @@ export const Apc = (props, context) => {
   const chargeModeDisplay = () => {
     if (data["locked"]) {
       return (
-        <Stack.Item>
+        <Stack.Item align="center">
           <Box>{data["chargemode"] ? "Auto" : "Off"}</Box>
         </Stack.Item>
       );
     } else {
       return (
         <>
-          <Stack.Item>
+          <Stack.Item align="center">
             {data["chargemode"] ? <Button content="Off" onClick={() => { onChargeModeChange(CHARGE_MODE_OFF); }} /> : <Box>Off</Box>}
           </Stack.Item>
-          <Stack.Item>
+          <Stack.Item align="center">
             {data["chargemode"] ? <Box>Auto</Box> : <Button content="Auto" onClick={() => { onChargeModeChange(CHARGE_MODE_AUTO); }} />}
           </Stack.Item>
         </>
@@ -309,13 +316,13 @@ export const Apc = (props, context) => {
     if (data["cell_type"]) {
       return (
         <Stack>
-          <Stack.Item>
+          <Stack.Item align="center">
             <Box>Power Cell:</Box>
           </Stack.Item>
-          <Stack.Item>
+          <Stack.Item align="center">
             <Box>{round(data["cell_percent"])}%</Box>
           </Stack.Item>
-          <Stack.Item>
+          <Stack.Item align="center">
             <Box>{"("}{chargingStatusToText()}{")"}</Box>
           </Stack.Item>
           {chargeModeDisplay()}
@@ -324,10 +331,10 @@ export const Apc = (props, context) => {
     } else {
       return (
         <Stack>
-          <Stack.Item>
+          <Stack.Item align="center">
             <Box>Power Cell:</Box>
           </Stack.Item>
-          <Stack.Item>
+          <Stack.Item align="center">
             <Box>Not Connected</Box>
           </Stack.Item>
         </Stack>
@@ -348,53 +355,54 @@ export const Apc = (props, context) => {
     <Window title="Area Power Controller" width={400} height={data["wiresexposed"] ? 500 : 350}>
       <Window.Content>
         <Section title={"Area Power Controller (" + data["area_name"] + ")"}>
-          {swipeOrHostDisplay()}
           <Stack>
-            <Stack.Item>
+            {swipeOrHostDisplay()}
+          </Stack>
+          <Stack>
+            <Stack.Item align="center">
               <Box>Main Breaker</Box>
             </Stack.Item>
-            <Stack.Item>
+            <Stack.Item align="center">
               {data["operating"] ? <Button content="off" disabled={data["locked"]} onClick={() => { onOperatingChange(OFF); }} /> : <Box>off</Box>}
             </Stack.Item>
-            <Stack.Item>
+            <Stack.Item align="center">
               {data["operating"] ? <Box>on</Box> : <Button content="on" disabled={data["locked"]} onClick={() => { onOperatingChange(ON); }} />}
             </Stack.Item>
           </Stack>
           <Stack>
-            <Stack.Item>
+            <Stack.Item align="center">
               <Box>External Power:</Box>
             </Stack.Item>
-            <Stack.Item>
+            <Stack.Item align="center">
               <Box>{mainStatusToText()}</Box>
             </Stack.Item>
           </Stack>
           {cellDisplay()}
         </Section>
-
         <Section title="PowerChannel">
           <PowerChannelSection powerChannel={POWER_CHANNEL_EQUIPMENT} act={act} data={data} />
           <PowerChannelSection powerChannel={POWER_CHANNEL_LIGHTING} act={act} data={data} />
           <PowerChannelSection powerChannel={POWER_CHANNEL_ENVIRONMENTAL} act={act} data={data} />
           <Stack>
-            <Stack.Item>
+            <Stack.Item align="center">
               <Box>Total Load:</Box>
             </Stack.Item>
-            <Stack.Item>
+            <Stack.Item align="center">
               <Box>{data["lastused_total"]} W</Box>
             </Stack.Item>
           </Stack>
         </Section>
         <Section>
           <Stack>
-            <Stack.Item>
+            <Stack.Item align="center">
               <Box>Cover lock:</Box>
             </Stack.Item>
-            <Stack.Item>
+            <Stack.Item align="center">
               {coverLockDisplay()}
             </Stack.Item>
           </Stack>
         </Section>
-        {data["wiresexposed"] ? <AccessPanel act={act} data={data} /> : null}
+        {data["wiresexposed"] && data[""] ? <AccessPanel act={act} data={data} /> : null}
       </Window.Content>
     </Window>
   );
