@@ -30,9 +30,12 @@ var/datum/explosion_controller/explosions
 		if (epicenter.loc:sanctuary)
 			return//no boom boom in sanctuary
 		var/datum/explosion/E = new/datum/explosion(source, epicenter, power, brisance, angle, width, usr, turf_safe)
-		next_turf_safe |= E.turf_safe
-		SPAWN(0)
-			E.explode()
+		if(exploding)
+			queued_explosions += E
+		else
+			SPAWN(0)
+				next_turf_safe |= E.turf_safe
+				E.explode()
 
 	proc/queue_damage(var/list/new_turfs)
 		var/c = 0
@@ -140,6 +143,14 @@ var/datum/explosion_controller/explosions
 			return
 		else if (queued_turfs.len)
 			kaboom()
+		else if (queued_explosions.len)
+			var/datum/explosion/E
+			while (queued_explosions.len)
+				E = queued_explosions[1]
+				queued_explosions -= E
+				E.explode()
+				next_turf_safe |= E.turf_safe
+
 
 /datum/explosion
 	var/atom/source
