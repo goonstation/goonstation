@@ -100,6 +100,9 @@
 	proc/get_rad_protection()
 		return clamp(GET_ATOM_PROPERTY(src, PROP_MOB_RADPROT), 0, 100)
 
+	proc/get_chem_protection()
+		return clamp(GET_ATOM_PROPERTY(src, PROP_MOB_CHEMPROT), 0, 100)
+
 /mob/living/New()
 	..()
 	//wel gosh, its important that we do this otherwisde the crew could spawn into an airless room and then immediately die

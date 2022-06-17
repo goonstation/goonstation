@@ -7,7 +7,6 @@
 	icon_state = "black"
 	uses_multiple_icon_states = 1
 	item_state = "black"
-	permeability_coefficient = 0.50
 	var/list/clothing_choices = list()
 
 	New()
