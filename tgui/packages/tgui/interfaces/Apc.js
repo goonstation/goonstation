@@ -358,7 +358,7 @@ export const Apc = (props, context) => {
   const overloadDisplay = () => {
     if (data["can_access_remotely"]) {
       return (
-        <Button content="Overload lighting circuit" onClick={() => { onOverload() }} />
+        <Button content="Overload lighting circuit" onClick={() => { onOverload(); }} />
       );
     } else {
       return null;
