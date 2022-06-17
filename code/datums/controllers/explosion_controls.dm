@@ -29,7 +29,10 @@ var/datum/explosion_controller/explosions
 			return
 		if (epicenter.loc:sanctuary)
 			return//no boom boom in sanctuary
-		queued_explosions += new/datum/explosion(source, epicenter, power, brisance, angle, width, usr, turf_safe)
+		var/datum/explosion/E = new/datum/explosion(source, epicenter, power, brisance, angle, width, usr, turf_safe)
+		next_turf_safe |= E.turf_safe
+		SPAWN(0)
+			E.explode()
 
 	proc/queue_damage(var/list/new_turfs)
 		var/c = 0
@@ -137,13 +140,6 @@ var/datum/explosion_controller/explosions
 			return
 		else if (queued_turfs.len)
 			kaboom()
-		else if (queued_explosions.len)
-			var/datum/explosion/E
-			while (queued_explosions.len)
-				E = queued_explosions[1]
-				queued_explosions -= E
-				E.explode()
-				next_turf_safe |= E.turf_safe
 
 /datum/explosion
 	var/atom/source
@@ -258,7 +254,7 @@ var/datum/explosion_controller/explosions
 			for(var/mob/living/carbon/C in T)
 				if (!isdead(C) && C.client)
 					shake_camera(C, 3 * p, p * 4)
-				C.changeStatus("stunned", p SECONDS)
+				C.setStatusMin("stunned", max(p, 0.5) SECONDS)
 				C.stuttering += p
 				C.lying = 1
 				C.set_clothing_icon_dirty()
