@@ -75,6 +75,7 @@ export const PowerChannelSection = (props) => {
 
   const powerChannelLabel = powerChannelToLabel(powerChannel);
 
+  // ------------ Events ------------
   const onPowerChannelStatusChange = (status) => {
     switch (powerChannel) {
       case POWER_CHANNEL_EQUIPMENT:
@@ -90,6 +91,7 @@ export const PowerChannelSection = (props) => {
         return;
     }
   };
+  // ------------ End Events ------------
 
   const getPowerChannelStatusAutoDisplay = () => {
     switch (getPowerChannelStatus()) {
@@ -146,6 +148,7 @@ export const Wire = (props) => {
 
   const color = wireColorToString(wire);
 
+  // ------------ Events ------------
   const onMend = (e) => {
     act("onMendWire", { wire });
   };
@@ -161,6 +164,7 @@ export const Wire = (props) => {
   const onBite = (e) => {
     act("onBiteWire", { wire });
   };
+  // ------------ End Events ------------
 
   const isCut = (wire) => {
     // Logic is slightly different since dm doesn't 0 index for some reason
@@ -236,6 +240,7 @@ export const AccessPanel = (props) => {
 export const Apc = (props, context) => {
   const { act, data } = useBackend(context);
 
+  // ------------ Events ------------
   const onOperatingChange = (operating) => {
     act("onOperatingChange", { operating });
   };
@@ -251,6 +256,7 @@ export const Apc = (props, context) => {
   const onOverload = () => {
     act("onOverload", {});
   };
+  // ------------ End Events ------------
 
   const swipeOrHostDisplay = () => {
     if (data["setup_networkapc"] < 2 && !data["can_access_remotely"]) {
@@ -317,7 +323,7 @@ export const Apc = (props, context) => {
   };
 
   const cellDisplay = () => {
-    if (data["cell_type"]) {
+    if (data["cell_type"] > 0) {
       return (
         <Stack>
           <Stack.Item align="center">
@@ -339,7 +345,9 @@ export const Apc = (props, context) => {
             <Box>Power Cell:</Box>
           </Stack.Item>
           <Stack.Item align="center">
-            <Box>Not Connected</Box>
+            <Box>
+              <font color="red">Not Connected</font>
+            </Box>
           </Stack.Item>
         </Stack>
       );
@@ -365,60 +373,77 @@ export const Apc = (props, context) => {
     }
   };
 
-  return (
-    <Window title="Area Power Controller" width={400} height={data["wiresexposed"] ? 500 : 350}>
-      <Window.Content>
-        <Section title={"Area Power Controller (" + data["area_name"] + ")"}>
-          <Stack>
-            {swipeOrHostDisplay()}
-          </Stack>
-          <Stack>
-            <Stack.Item align="center">
-              <Box>Main Breaker</Box>
-            </Stack.Item>
-            <Stack.Item align="center">
-              {data["operating"] ? <Button content="off" disabled={data["locked"]} onClick={() => { onOperatingChange(OFF); }} /> : <Box>off</Box>}
-            </Stack.Item>
-            <Stack.Item align="center">
-              {data["operating"] ? <Box>on</Box> : <Button content="on" disabled={data["locked"]} onClick={() => { onOperatingChange(ON); }} />}
-            </Stack.Item>
-          </Stack>
-          <Stack>
-            <Stack.Item align="center">
-              <Box>External Power:</Box>
-            </Stack.Item>
-            <Stack.Item align="center">
-              <Box>{mainStatusToText()}</Box>
-            </Stack.Item>
-          </Stack>
-          {cellDisplay()}
-        </Section>
-        <Section title="PowerChannel">
-          <PowerChannelSection powerChannel={POWER_CHANNEL_EQUIPMENT} act={act} data={data} />
-          <PowerChannelSection powerChannel={POWER_CHANNEL_LIGHTING} act={act} data={data} />
-          <PowerChannelSection powerChannel={POWER_CHANNEL_ENVIRONMENTAL} act={act} data={data} />
-          <Stack>
-            <Stack.Item align="center">
-              <Box>Total Load:</Box>
-            </Stack.Item>
-            <Stack.Item align="center">
-              <Box>{data["lastused_total"]} W</Box>
-            </Stack.Item>
-          </Stack>
-        </Section>
-        <Section>
-          <Stack>
-            <Stack.Item align="center">
-              <Box>Cover lock:</Box>
-            </Stack.Item>
-            <Stack.Item align="center">
-              {coverLockDisplay()}
-            </Stack.Item>
-          </Stack>
-          {overloadDisplay()}
-        </Section>
-        {data["wiresexposed"] && !data["is_ai"] ? <AccessPanel act={act} data={data} /> : null}
-      </Window.Content>
-    </Window>
-  );
+  const renderPoweredAreaApc = () => {
+    return (
+      <Window title="Area Power Controller" width={400} height={data["wiresexposed"] ? 500 : 350}>
+        <Window.Content>
+          <Section title={"Area Power Controller (" + data["area_name"] + ")"}>
+            <Stack>
+              {swipeOrHostDisplay()}
+            </Stack>
+            <Stack>
+              <Stack.Item align="center">
+                <Box>Main Breaker</Box>
+              </Stack.Item>
+              <Stack.Item align="center">
+                {data["operating"] ? <Button content="off" disabled={data["locked"]} onClick={() => { onOperatingChange(OFF); }} /> : <Box>off</Box>}
+              </Stack.Item>
+              <Stack.Item align="center">
+                {data["operating"] ? <Box>on</Box> : <Button content="on" disabled={data["locked"]} onClick={() => { onOperatingChange(ON); }} />}
+              </Stack.Item>
+            </Stack>
+            <Stack>
+              <Stack.Item align="center">
+                <Box>External Power:</Box>
+              </Stack.Item>
+              <Stack.Item align="center">
+                <Box>{mainStatusToText()}</Box>
+              </Stack.Item>
+            </Stack>
+            {cellDisplay()}
+          </Section>
+          <Section title="PowerChannel">
+            <PowerChannelSection powerChannel={POWER_CHANNEL_EQUIPMENT} act={act} data={data} />
+            <PowerChannelSection powerChannel={POWER_CHANNEL_LIGHTING} act={act} data={data} />
+            <PowerChannelSection powerChannel={POWER_CHANNEL_ENVIRONMENTAL} act={act} data={data} />
+            <Stack>
+              <Stack.Item align="center">
+                <Box>Total Load:</Box>
+              </Stack.Item>
+              <Stack.Item align="center">
+                <Box>{data["lastused_total"]} W</Box>
+              </Stack.Item>
+            </Stack>
+          </Section>
+          <Section>
+            <Stack>
+              <Stack.Item align="center">
+                <Box>Cover lock:</Box>
+              </Stack.Item>
+              <Stack.Item align="center">
+                {coverLockDisplay()}
+              </Stack.Item>
+            </Stack>
+            {overloadDisplay()}
+          </Section>
+          {data["wiresexposed"] && !data["is_ai"] ? <AccessPanel act={act} data={data} /> : null}
+        </Window.Content>
+      </Window>
+    );
+  };
+
+  const renderUnPoweredAreaApc = () => {
+    return (
+      <Window title="Area Power Controller" width={400} height={data["wiresexposed"] ? 500 : 350}>
+        <Window.Content>
+          <Section title={"Area Power Controller (" + data["area_name"] + ")"}>
+            <Box>This APC has no configurable settings.</Box>
+          </Section>
+          {data["wiresexposed"] && !data["is_ai"] ? <AccessPanel act={act} data={data} /> : null}
+        </Window.Content>
+      </Window>
+    );
+  };
+
+  return data["area_requires_power"] ? renderPoweredAreaApc() : renderUnPoweredAreaApc();
 };

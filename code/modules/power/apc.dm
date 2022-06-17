@@ -682,7 +682,7 @@ var/zapLimiter = 0
 	if ((!locked && setup_networkapc < 2) || issilicon(usr) || isAI(usr))
 		if ((issilicon(usr) || isAI(usr)) && src.aidisabled)
 			boutput(usr, "AI control for this APC interface has been disabled.")
-			return
+			return FALSE
 
 		var/val = clamp(text2num_safe(params["status"]), 1, 3)
 
@@ -691,19 +691,22 @@ var/zapLimiter = 0
 		if ((!src.cell || src.shorted == 1) && (val == 2 || val == 3))
 			if (usr && ismob(usr))
 				usr.show_text("APC offline, can't toggle power.", "red")
-			return
+			return FALSE
 
 		logTheThing("station", usr, null, "turned the APC equipment power [(val==1) ? "off" : "on"] at [log_loc(src)].")
 		equipment = (val==1) ? 0 : val
 
 		UpdateIcon()
 		update()
+		return TRUE
+	else
+		return FALSE
 
 /obj/machinery/power/apc/proc/onPowerChannelLightingStatusChange(mob/user, list/params)
 	if ((!locked && setup_networkapc < 2) || issilicon(usr) || isAI(usr))
 		if ((issilicon(usr) || isAI(usr)) && src.aidisabled)
 			boutput(usr, "AI control for this APC interface has been disabled.")
-			return
+			return FALSE
 
 		var/val = clamp(text2num_safe(params["status"]), 1, 3)
 
@@ -711,13 +714,16 @@ var/zapLimiter = 0
 		if ((!src.cell || src.shorted == 1) && (val == 2 || val == 3))
 			if (usr && ismob(usr))
 				usr.show_text("APC offline, can't toggle power.", "red")
-			return
+			return FALSE
 
 		logTheThing("station", usr, null, "turned the APC lighting power [(val==1) ? "off" : "on"] at [log_loc(src)].")
 		lighting = (val==1) ? 0 : val
 
 		UpdateIcon()
 		update()
+		return TRUE
+	else
+		return FALSE
 
 /obj/machinery/power/apc/proc/onPowerChannelEnvironStatusChange(mob/user, list/params)
 	if ((!locked && setup_networkapc < 2) || issilicon(usr) || isAI(usr))
@@ -848,11 +854,8 @@ var/zapLimiter = 0
 // ------------ End Action Callbacks ------------
 
 // ------------ Callback Helper Procs ------------
-/obj/machinery/power/apc/proc/hasElectronicAccess(mob/user)
-	. = ..()
-	if (.)
-		return
-	if (issilicon(usr) || isAI(usr))
+/obj/machinery/power/apc/proc/canAccessControls(mob/user)
+	if (issilicon(user) || isAI(user))
 		return TRUE
 	else if (!locked && setup_networkapc < 2) // If the apc is unlocked and access isn't remote then we can access it
 		return TRUE
@@ -860,10 +863,7 @@ var/zapLimiter = 0
 		return FALSE
 
 /obj/machinery/power/apc/proc/isBlockedAI(mob/user)
-	. = ..()
-	if (.)
-		return
-	return (issilicon(usr) || isAI(usr)) && src.aidisabled
+	return (issilicon(user) || isAI(user)) && src.aidisabled
 // ------------ End Callback Helper Procs ------------
 
 
