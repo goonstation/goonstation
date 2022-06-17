@@ -321,7 +321,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 
 		pixel_pass
 			name = "Pixel Pass"
-			cost = 5000
+			cost = 2500
 			path = /obj/item/pixel_pass
 			icon_state = "pixel_pass"
 

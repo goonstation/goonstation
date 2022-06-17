@@ -2107,11 +2107,8 @@ datum
 					if(holder.get_reagent_amount(src.id) > 300)
 						// oh no
 						if(probmult(1)) // i hate you all, players
-							H.visible_message("<span class='alert bold'>[H] is torn apart from the inside as some weird floaty thing rips its way out of their body! Holy fuck!!</span>")
-							var/mob/living/critter/flock/bit/B = new()
-							B.set_loc(get_turf(H))
+							H.flockbit_gib()
 							logTheThing("combat", H, null, "was gibbed by reagent [name] at [log_loc(H)].")
-							H.gib()
 					else
 						// DO SPOOKY THINGS
 						if(holder.get_reagent_amount(src.id) < 100)

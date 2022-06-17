@@ -7187,13 +7187,11 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/medbay/cloner)
 "aqX" = (
-/obj/storage/secure/closet/medical{
-	name = "locker"
-	},
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -24
 	},
+/obj/storage/secure/closet/medical/cloning,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "aqY" = (
@@ -7697,10 +7695,8 @@
 /turf/simulated/floor/blue,
 /area/research_outpost/toxins)
 "ash" = (
-/obj/storage/secure/closet/medical{
-	name = "locker"
-	},
 /obj/machinery/light/incandescent/cool,
+/obj/storage/secure/closet/medical/cloning,
 /turf/simulated/floor/white/checker2{
 	dir = 5
 	},
@@ -37961,7 +37957,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating/random,
-/area/station/science/teleporter)
+/area/station/maintenance/inner/central)
 "bTb" = (
 /obj/item/device/light/zippo,
 /turf/simulated/floor/plating/random,

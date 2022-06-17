@@ -289,7 +289,7 @@
 /datum/materiel/utility/donuts
 	name = "Robust(ed) Donuts"
 	path = /obj/item/storage/lunchbox/robustdonuts
-	description = "Two Robust Donuts and two Robusted Donuts, which are loaded with helpful chemicals that help you resist stuns and heal you!"
+	description = "One Robust Donut and one Robusted Donut, which are loaded with helpful chemicals that help you resist stuns and heal you!"
 
 /datum/materiel/utility/crowdgrenades
 	name = "Crowd Dispersal Grenades"

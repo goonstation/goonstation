@@ -322,6 +322,7 @@
 				remove_simple_light("secbot")
 			src.KillPathAndGiveUp(KPAGU_CLEAR_ALL)
 			src.updateUsrDialog()
+			logTheThing("station", usr, null, "turns [src] [src.on ? "on" : "off"] at [log_loc(src)].")
 
 		switch(href_list["operation"])
 			if ("idcheck")

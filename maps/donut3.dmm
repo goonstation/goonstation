@@ -11095,18 +11095,10 @@
 /obj/machinery/light/incandescent/cool,
 /obj/disposalpipe/segment/mail,
 /obj/table/glass/auto,
-/obj/item/storage/box/health_upgrade_kit{
-	pixel_x = 4;
-	pixel_y = 2
-	},
-/obj/item/device/analyzer/healthanalyzer{
-	pixel_x = -15;
-	pixel_y = 5
-	},
-/obj/item/device/analyzer/healthanalyzer{
-	pixel_x = -13;
-	pixel_y = -3
-	},
+/obj/item/clothing/suit/straight_jacket,
+/obj/item/clothing/suit/straight_jacket,
+/obj/item/reagent_containers/syringe/haloperidol,
+/obj/item/reagent_containers/syringe/haloperidol,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
 "cXs" = (
@@ -35352,6 +35344,8 @@
 /area/station/bridge)
 "kcs" = (
 /obj/disposalpipe/junction/left/south,
+/obj/table/glass/auto,
+/obj/random_item_spawner/med_kit/one,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
 "kcx" = (
@@ -47408,7 +47402,18 @@
 "nGs" = (
 /obj/disposalpipe/segment/mail,
 /obj/table/glass/auto,
-/obj/random_item_spawner/med_kit/one,
+/obj/item/storage/box/health_upgrade_kit{
+	pixel_x = 4;
+	pixel_y = 2
+	},
+/obj/item/device/analyzer/healthanalyzer{
+	pixel_x = -15;
+	pixel_y = 5
+	},
+/obj/item/device/analyzer/healthanalyzer{
+	pixel_x = -13;
+	pixel_y = -3
+	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
 "nGx" = (
@@ -47471,9 +47476,7 @@
 /area/station/quartermaster/office)
 "nHR" = (
 /obj/disposalpipe/segment/mail,
-/obj/storage/secure/closet/medical{
-	name = "locker"
-	},
+/obj/storage/secure/closet/medical/cloning,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "nHT" = (

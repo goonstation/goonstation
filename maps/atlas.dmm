@@ -6211,8 +6211,8 @@
 	pixel_y = 5
 	},
 /obj/item/hand_tele{
-	pixel_y = 4;
-	pixel_x = 2
+	pixel_x = 2;
+	pixel_y = 4
 	},
 /turf/simulated/floor/purpleblack{
 	dir = 10
@@ -9085,7 +9085,7 @@
 	},
 /area/station/medical/medbay)
 "vS" = (
-/obj/storage/secure/closet/medical,
+/obj/storage/secure/closet/medical/cloning,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "vU" = (

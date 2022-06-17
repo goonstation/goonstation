@@ -1,4 +1,31 @@
 
+(t)thu jun 16 22
+(u)TTerc
+(+)Cloning storage lockers are a thing now. They're simply the same lockers that spawn next to cloners, except they no longer are bolted to the floor roundstart.
+(u)Virvatuli
+(e)⚖|balance
+(+)The NTSC no longer has access to the Clock 188, and the Signifer's energy cell now self-charges considerably quicker. This change was supposed too happen when the Signifer was introduced, since the Clock doesn't fit themeatically. Better late than never!
+(u)Mr. Moriarty
+(p)9164
+(e)🆕🗺|feature, mapping
+(+)DetNet is now equipped with three new intercoms, interfacing with General, Security, and the Detective's private channel, for all of the Detective's communication needs.
+(u)LeahTheTech
+(p)9162
+(e)🗺|mapping
+(+)Added an intercom to Kondaru AI upload chamber. Use it to tell the AI "law 2 stop being rogue".
+(t)wed jun 15 22
+(u)Ikea
+(p)9146
+(e)|
+(+)The syndicate has fixed a bureaucratic error and now syndicate command armor from surplus crates and spy bounties comes with the helmet as well.
+(u)Bartimeus973
+(p)9127
+(e)🆕⚖|feature, balance
+(+)Cow people can now graze on bushes. Watch out for plastic replicas!
+(u)LeahTheTech
+(p)9097
+(e)🆕|feature
+(*)Added PDA notifications to cargo pads.
 (t)mon jun 13 22
 (u)NightmareChamillian
 (p)9111
