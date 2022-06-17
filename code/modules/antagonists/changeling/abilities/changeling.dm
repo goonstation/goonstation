@@ -183,6 +183,7 @@
 				M.ghost = obs
 			*/
 			obs.set_owner(src)
+			obs.show_antag_popup("changeling_absorbed")
 		else if (istype(victim,/mob/dead/target_observer/hivemind_observer))
 			obs = victim
 
