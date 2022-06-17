@@ -1,3 +1,4 @@
+ABSTRACT_TYPE(/obj/machinery/door/poddoor)
 /obj/machinery/door/poddoor
 	name = "podlock"
 	icon = 'icons/obj/doors/rapid_pdoor.dmi'
