@@ -635,9 +635,9 @@ var/zapLimiter = 0
 		"dark_red_cut" = isWireColorCut(2),
 		"white_cut" = isWireColorCut(3),
 		"yellow_cut" = isWireColorCut(4),
-		"can_access_remotely" = can_access_remotely(usr),
-		"is_ai" = isAI(usr),
-		"is_silicon" = issilicon(usr),
+		"can_access_remotely" = can_access_remotely(user),
+		"is_ai" = isAI(user),
+		"is_silicon" = issilicon(user),
 	)
 
 /obj/machinery/power/apc/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
