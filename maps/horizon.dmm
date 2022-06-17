@@ -17937,9 +17937,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "aUB" = (
-/obj/storage/secure/closet/medical{
-	name = "locker"
-	},
+/obj/storage/secure/closet/medical/cloning,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "aUC" = (
@@ -24296,8 +24294,8 @@
 	pixel_y = 5
 	},
 /obj/item/hand_tele{
-	pixel_y = 3;
-	pixel_x = 4
+	pixel_x = 4;
+	pixel_y = 3
 	},
 /turf/simulated/floor/darkblue/checker,
 /area/station/teleporter)

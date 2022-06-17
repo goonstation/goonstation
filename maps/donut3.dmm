@@ -47476,9 +47476,7 @@
 /area/station/quartermaster/office)
 "nHR" = (
 /obj/disposalpipe/segment/mail,
-/obj/storage/secure/closet/medical{
-	name = "locker"
-	},
+/obj/storage/secure/closet/medical/cloning,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "nHT" = (

@@ -48138,9 +48138,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "csQ" = (
-/obj/storage/secure/closet/medical{
-	name = "locker"
-	},
+/obj/storage/secure/closet/medical/cloning,
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -48757,13 +48755,11 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/obj/storage/secure/closet/medical{
-	name = "locker"
-	},
 /obj/machinery/light_switch{
 	name = "E light switch";
 	pixel_x = 24
 	},
+/obj/storage/secure/closet/medical/cloning,
 /turf/simulated/floor/bluewhite{
 	dir = 6
 	},
@@ -49875,9 +49871,7 @@
 /turf/simulated/floor/blue/checker,
 /area/station/medical/research)
 "cwS" = (
-/obj/storage/secure/closet/medical{
-	name = "locker"
-	},
+/obj/storage/secure/closet/medical/cloning,
 /turf/simulated/floor/bluewhite{
 	dir = 10
 	},
@@ -57790,9 +57784,7 @@
 /area/station/medical/research)
 "mbr" = (
 /obj/disposalpipe/segment,
-/obj/storage/secure/closet/medical{
-	name = "locker"
-	},
+/obj/storage/secure/closet/medical/cloning,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},

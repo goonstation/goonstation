@@ -731,7 +731,7 @@
 		spawn_contents = list(/obj/item/barrier, /obj/item/device/detective_scanner, /obj/item/device/ticket_writer)
 
 	ntsc
-		spawn_contents = list(/obj/item/gun/energy/signifer2, /obj/item/gun/kinetic/clock_188, /obj/item/baton/ntso, /obj/item/instrument/whistle, /obj/item/clothing/mask/gas/NTSO, /obj/item/storage/ntsc_pouch, /obj/item/barrier) //secbelt subtype that only spawns on NTSO, not in vendor
+		spawn_contents = list(/obj/item/gun/energy/signifer2, /obj/item/baton/ntso, /obj/item/instrument/whistle, /obj/item/clothing/mask/gas/NTSO, /obj/item/storage/ntsc_pouch, /obj/item/barrier) //secbelt subtype that only spawns on NTSO, not in vendor
 
 	ntso
 		spawn_contents = list(/obj/item/gun/energy/ntgun, /obj/item/old_grenade/stinger/frag, /obj/item/ammo/power_cell/med_power = 5)

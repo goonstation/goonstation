@@ -16356,9 +16356,7 @@
 	name = "Exit Door Control";
 	pixel_x = 24
 	},
-/obj/storage/secure/closet/medical{
-	name = "Patient Locker"
-	},
+/obj/storage/secure/closet/medical/cloning,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "aVh" = (
@@ -17233,9 +17231,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/storage/secure/closet/medical{
-	name = "Patient Locker"
-	},
+/obj/storage/secure/closet/medical/cloning,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/cloner)
 "aXH" = (

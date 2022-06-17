@@ -510,7 +510,9 @@
 	icon_opened = "secure_white-open"
 	req_access = list(access_medical_lockers)
 
-
+/obj/storage/secure/closet/medical/cloning
+	name = "cloning storage locker"
+	bolted = FALSE
 
 /obj/storage/secure/closet/medical/medicine
 	name = "medicine storage locker"
