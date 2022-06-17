@@ -443,7 +443,6 @@ stare
 		F.hud?.update_hands() // for observers
 
 /datum/aiTask/sequence/goalbased/deposit/get_targets()
-	var/mob/living/critter/flock/drone/F = holder.owner
 	. = list()
 	for (var/obj/flock_structure/ghost/O as anything in by_type[/obj/flock_structure/ghost])
 		if (IN_RANGE(holder.owner, O, max_dist))
