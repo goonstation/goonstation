@@ -12648,6 +12648,7 @@
 	req_access_txt = null
 	},
 /obj/access_spawn/maint,
+/obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "kGS" = (
@@ -13022,12 +13023,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
-"kWh" = (
-/obj/stool/chair/green{
-	dir = 8
-	},
-/turf/simulated/floor/green,
-/area/station/hydroponics)
 "kWo" = (
 /obj/landmark{
 	icon_state = "x3";
@@ -22160,6 +22155,11 @@
 	},
 /turf/simulated/floor/marble/black,
 /area/station/crew_quarters/market)
+"sgG" = (
+/obj/disposalpipe/segment/produce,
+/obj/machinery/plantpot,
+/turf/simulated/floor/airless/grasslush/thinner,
+/area/station/hydroponics)
 "sgH" = (
 /obj/machinery/bot/medbot/no_camera,
 /turf/simulated/floor/shuttle{
@@ -68919,7 +68919,7 @@ aDK
 aDK
 aDK
 aDK
-aDK
+kKj
 kKj
 kKj
 myu
@@ -68929,7 +68929,7 @@ kKj
 kKj
 kKj
 kKj
-aDK
+kKj
 aDK
 aDK
 aDK
@@ -69222,7 +69222,7 @@ tfO
 tfO
 kKj
 kKj
-kKj
+rLA
 rLA
 rLA
 rLA
@@ -69230,7 +69230,7 @@ rLA
 pYo
 rLA
 rLA
-kKj
+rLA
 kKj
 kKj
 kKj
@@ -70432,11 +70432,11 @@ hdn
 xQb
 cmH
 xwj
+sgG
 tQr
 tQr
 tQr
-tQr
-tQr
+sgG
 aej
 aWY
 sgO
@@ -72553,7 +72553,7 @@ uvx
 xFX
 ojR
 vbA
-kWh
+aSJ
 pVV
 lqZ
 fCJ
