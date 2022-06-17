@@ -444,8 +444,9 @@ stare
 
 /datum/aiTask/sequence/goalbased/deposit/get_targets()
 	. = list()
+	var/mob/living/critter/flock/drone/F = holder.owner
 	for (var/obj/flock_structure/ghost/O as anything in by_type[/obj/flock_structure/ghost])
-		if (IN_RANGE(holder.owner, O, max_dist))
+		if (O.flock == F.flock && O.goal > O.currentmats && IN_RANGE(holder.owner, O, max_dist))
 			. += O
 	. = get_path_to(holder.owner, ., max_dist*2, 1)
 
