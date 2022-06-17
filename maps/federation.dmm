@@ -19911,7 +19911,9 @@
 /turf/simulated/floor/airless/darkblue,
 /area/station/bridge/captain)
 "qqt" = (
-/obj/landmark/map,
+/obj/landmark/map{
+	name = "FEDERATION"
+	},
 /turf/space,
 /area/space)
 "qqy" = (
