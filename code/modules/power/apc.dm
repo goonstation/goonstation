@@ -349,7 +349,6 @@ var/zapLimiter = 0
 
 
 /obj/machinery/power/apc/attackby(obj/item/W, mob/user)
-
 	src.add_fingerprint(user)
 	if(status & BROKEN) //APC REPAIR
 		if (isscrewingtool(W))
