@@ -679,8 +679,8 @@ var/zapLimiter = 0
 // ------------ Action Callbacks ------------
 // Callbacks used by the UI - called from /tgui/packages/tgui/interfaces/Apc.js
 /obj/machinery/power/apc/proc/onPowerChannelEquipmentStatusChange(mob/user, list/params)
-	if ((!locked && setup_networkapc < 2) || issilicon(usr) || isAI(usr))
-		if ((issilicon(usr) || isAI(usr)) && src.aidisabled)
+	if (src.canAccessControls(usr))
+		if (src.isBlockedAI(usr))
 			boutput(usr, "AI control for this APC interface has been disabled.")
 			return FALSE
 
@@ -703,8 +703,8 @@ var/zapLimiter = 0
 		return FALSE
 
 /obj/machinery/power/apc/proc/onPowerChannelLightingStatusChange(mob/user, list/params)
-	if ((!locked && setup_networkapc < 2) || issilicon(usr) || isAI(usr))
-		if ((issilicon(usr) || isAI(usr)) && src.aidisabled)
+	if (src.canAccessControls(usr))
+		if (src.isBlockedAI(usr))
 			boutput(usr, "AI control for this APC interface has been disabled.")
 			return FALSE
 
@@ -726,8 +726,8 @@ var/zapLimiter = 0
 		return FALSE
 
 /obj/machinery/power/apc/proc/onPowerChannelEnvironStatusChange(mob/user, list/params)
-	if ((!locked && setup_networkapc < 2) || issilicon(usr) || isAI(usr))
-		if ((issilicon(usr) || isAI(usr)) && src.aidisabled)
+	if (src.canAccessControls(usr))
+		if (src.isBlockedAI(usr))
 			boutput(usr, "AI control for this APC interface has been disabled.")
 			return FALSE
 
@@ -802,8 +802,8 @@ var/zapLimiter = 0
 		return FALSE
 
 /obj/machinery/power/apc/proc/onCoverLockedChange(mob/user, list/params)
-	if ((!locked && setup_networkapc < 2) || issilicon(usr) || isAI(usr))
-		if ((issilicon(usr) || isAI(usr)) && src.aidisabled)
+	if (src.canAccessControls(usr))
+		if (src.isBlockedAI(usr))
 			boutput(usr, "AI control for this APC interface has been disabled.")
 			return FALSE
 		coverlocked = params["coverlocked"]
@@ -812,8 +812,8 @@ var/zapLimiter = 0
 		return FALSE
 
 /obj/machinery/power/apc/proc/onOperatingChange(mob/user, list/params)
-	if ((!locked && setup_networkapc < 2) || issilicon(usr) || isAI(usr))
-		if ((issilicon(usr) || isAI(usr)) && src.aidisabled)
+	if (src.canAccessControls(usr))
+		if (src.isBlockedAI(usr))
 			boutput(usr, "AI control for this APC interface has been disabled.")
 			src.updateUsrDialog()
 			return FALSE
@@ -825,8 +825,8 @@ var/zapLimiter = 0
 		return FALSE
 
 /obj/machinery/power/apc/proc/onChargeModeChange(mob/user, list/params)
-	if ((!locked && setup_networkapc < 2) || issilicon(usr) || isAI(usr))
-		if ((issilicon(usr) || isAI(usr)) && src.aidisabled)
+	if (src.canAccessControls(usr))
+		if (src.isBlockedAI(usr))
 			boutput(usr, "AI control for this APC interface has been disabled.")
 			return FALSE
 		chargemode = !chargemode
