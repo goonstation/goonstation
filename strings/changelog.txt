@@ -1,5 +1,11 @@
 
 (t)fri jun 17 22
+(u)LeahTheTech
+(p)9155
+(e)🆕⚖|feature, balance
+(*)Rebalanced coagulated gnesis and added a new drink to counter it.
+(+)The gib threshold is now 200, and has been made much more reliable. Watch out!
+(+)Tealquila Sunrise rapidly purges coagulated gnesis from your blood, and is made from equal parts Tequila Sunrise and coagulated gnesis.
 (u)Ikea
 (p)9145
 (e)|
