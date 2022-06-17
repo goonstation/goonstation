@@ -100,8 +100,15 @@ export const PowerChannelSection = (props) => {
       case POWER_CHANNEL_STATUS_AUTO_ON:
         return <Box align="center">{"Auto (On)"}</Box>;
       default:
-        return <Button content="Auto" disabled={data["locked"]} onClick={() => onPowerChannelStatusChange(POWER_CHANNEL_STATUS_AUTO_ON)} />;
+        return <Button content="Auto" disabled={!hasPermission()} onClick={() => onPowerChannelStatusChange(POWER_CHANNEL_STATUS_AUTO_ON)} />;
     }
+  };
+
+  const hasPermission = () => {
+    if (data["is_ai"] || data["is_silicon"] || data["can_access_remotely"]) {
+      return data["aidisabled"] ? false : true;
+    }
+    return data["locked"] ? false : true;
   };
 
   return (
@@ -112,10 +119,10 @@ export const PowerChannelSection = (props) => {
         </Box>
       </Stack.Item>
       <Stack.Item align="center">
-        {getPowerChannelStatus() === POWER_CHANNEL_STATUS_OFF ? <Box>Off</Box> : <Button content="Off" disabled={data["locked"]} onClick={() => { onPowerChannelStatusChange(POWER_CHANNEL_STATUS_OFF); }} />}
+        {getPowerChannelStatus() === POWER_CHANNEL_STATUS_OFF ? <Box>Off</Box> : <Button content="Off" disabled={!hasPermission()} onClick={() => { onPowerChannelStatusChange(POWER_CHANNEL_STATUS_OFF); }} />}
       </Stack.Item>
       <Stack.Item align="center">
-        {getPowerChannelStatus() === POWER_CHANNEL_STATUS_ON ? <Box>On</Box> : <Button content="On" disabled={data["locked"]} onClick={() => { onPowerChannelStatusChange(POWER_CHANNEL_STATUS_ON); }} />}
+        {getPowerChannelStatus() === POWER_CHANNEL_STATUS_ON ? <Box>On</Box> : <Button content="On" disabled={!hasPermission()} onClick={() => { onPowerChannelStatusChange(POWER_CHANNEL_STATUS_ON); }} />}
       </Stack.Item>
       <Stack.Item align="center">
         {getPowerChannelStatusAutoDisplay()}
@@ -302,7 +309,7 @@ export const Apc = (props, context) => {
   };
 
   const chargeModeDisplay = () => {
-    if (data["locked"]) {
+    if (!hasPermission()) {
       return (
         <Stack.Item align="center">
           <Box>{data["chargemode"] ? "Auto" : "Off"}</Box>
@@ -356,7 +363,7 @@ export const Apc = (props, context) => {
 
   const coverLockDisplay = () => {
     let coverLockText = data["coverlocked"] ? "Engaged" : "Disengaged";
-    if (data["locked"]) {
+    if (!hasPermission()) {
       return <Box>{coverLockText}</Box>;
     } else {
       return <Button content={coverLockText} onClick={() => { onCoverLockedChange(!data["coverlocked"]); }} />;
@@ -373,6 +380,13 @@ export const Apc = (props, context) => {
     }
   };
 
+  const hasPermission = () => {
+    if (data["is_ai"] || data["is_silicon"] || data["can_access_remotely"]) {
+      return data["aidisabled"] ? false : true;
+    }
+    return data["locked"] ? false : true;
+  };
+
   const renderPoweredAreaApc = () => {
     return (
       <Window title="Area Power Controller" width={400} height={data["wiresexposed"] ? 500 : 350}>
@@ -386,10 +400,10 @@ export const Apc = (props, context) => {
                 <Box>Main Breaker</Box>
               </Stack.Item>
               <Stack.Item align="center">
-                {data["operating"] ? <Button content="off" disabled={data["locked"]} onClick={() => { onOperatingChange(OFF); }} /> : <Box>off</Box>}
+                {data["operating"] ? <Button content="off" disabled={!hasPermission()} onClick={() => { onOperatingChange(OFF); }} /> : <Box>off</Box>}
               </Stack.Item>
               <Stack.Item align="center">
-                {data["operating"] ? <Box>on</Box> : <Button content="on" disabled={data["locked"]} onClick={() => { onOperatingChange(ON); }} />}
+                {data["operating"] ? <Box>on</Box> : <Button content="on" disabled={!hasPermission()} onClick={() => { onOperatingChange(ON); }} />}
               </Stack.Item>
             </Stack>
             <Stack>
