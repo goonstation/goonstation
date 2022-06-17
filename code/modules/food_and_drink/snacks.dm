@@ -719,7 +719,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_DINNER
 
 /obj/item/reagent_containers/food/snacks/cereal_box
-	name = "cereal box -'Cookie Cereal'"
+	name = "cereal box -'Cookie Swirlies'"
 	desc = "A breakfast cereal made up of tiny cookies. Now with 10% less salmonella!"
 	icon_state = "cereal_box"
 	bites_left = 11
