@@ -356,8 +356,8 @@
 /area/racing_track)
 "bc" = (
 /obj/overlay{
-	icon = 'doorint.dmi';
-	icon_state = "door_closed";
+	icon = 'Door1.dmi';
+	icon_state = "doorl";
 	name = "airlock"
 	},
 /turf/unsimulated/wall/other,
