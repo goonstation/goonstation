@@ -182,9 +182,9 @@ stare
 	for(var/turf/simulated/floor/T in view(max_dist, holder.owner))
 		if(F?.flock && !F.flock.isTurfFree(T, F.real_name))
 			continue
-		. += T
-		break
-	. = get_path_to(holder.owner, ., max_dist*2, 1)
+		. = get_path_to(holder.owner, list(T), max_dist*2, 1)
+		if (length(.))
+			return
 
 ////////
 
