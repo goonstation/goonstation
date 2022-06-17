@@ -1306,7 +1306,6 @@ var/zapLimiter = 0
 		UpdateIcon()
 		update()
 
-	src.updateDialog()
 
 // set channels depending on how much charge we have left
 /obj/machinery/power/apc/proc/check_channel_thresholds()
