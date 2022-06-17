@@ -1,5 +1,9 @@
 
 (t)fri jun 17 22
+(u)Wisemonster
+(p)9173
+(e)🆕⚖|feature, balance
+(+)The CE's law rack blueprint has been swapped out with an unlimited-use law rack manudrive.
 (u)Ikea
 (p)9094
 (e)⚖|balance
