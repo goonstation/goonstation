@@ -224,6 +224,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				if (ishuman(M))
 					var/mob/living/carbon/human/H = M
 					var/obj/item/organ/stomach/tummy = H.get_organ("stomach")
+					var/obj/item/clothing/mask/mask = H.wear_mask
 					if (!istype(tummy) || (tummy.broken || tummy.get_damage() > tummy.MAX_DAMAGE))
 						M.visible_message("<span class='notice'>[M] tries to take a bite of [src], but can't swallow!</span>",\
 						"<span class='notice'>You try to take a bite of [src], but can't swallow!</span>")
@@ -231,6 +232,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 					if (!H.organHolder.head)
 						M.visible_message("<span class='notice'>[M] tries to take a bite of [src], but they have no head!</span>",\
 						"<span class='notice'>You try to take a bite of [src], but you have no head to chew with!</span>")
+						return 0
+					if (mask?.c_flags & COVERSMOUTH)
+						M.visible_message("<span class='notice'>[M] tries to take a bite of [src], but their mask is in the way!</span>",\
+						"<span class='notice'>You try to take a bite of [src], but your mask is in the way!</span>")
 						return 0
 
 				src.take_a_bite(M, user)
@@ -253,6 +258,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				if (ishuman(M))
 					var/mob/living/carbon/human/H = M
 					var/obj/item/organ/stomach/tummy = H.get_organ("stomach")
+					var/obj/item/clothing/mask/mask = H.wear_mask
 					if (!istype(tummy) || (tummy.broken || tummy.get_damage() > tummy.MAX_DAMAGE))
 						user.tri_message("<span class='alert'><b>[user]</b>tries to feed [M] [src], but can't make [him_or_her(M)] swallow!</span>",\
 						user, "<span class='alert'>You try to feed [M] [src], but can't make [him_or_her(M)] swallow!</span>",\
@@ -262,6 +268,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 						user.tri_message("<span class='alert'><b>[user]</b>tries to feed [M] [src], but [he_or_she(M)] has no head!!</span>",\
 						user, "<span class='alert'>You try to feed [M] [src], but [he_or_she(M)] has no head!</span>",\
 						M, "<span class='alert'><b>[user]</b> tries to feed you [src], but you don't have a head!</span>")
+						return 0
+					if (mask?.c_flags & COVERSMOUTH)
+						user.tri_message("<span class='alert'><b>[user]</b> tries to feed [M] [src], but their mask is in the way!</span>",\
+						user, "<span class='alert'>You try to feed [M] [src], but their mask is in the way!</span>",\
+						M, "<span class='alert'><b>[user]</b> tries to feed you [src], but your mask is in the way!</span>")
 						return 0
 
 				actions.start(new/datum/action/bar/icon/forcefeed(M, src, src.icon, src.icon_state), user)

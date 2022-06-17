@@ -384,6 +384,15 @@
 		return 0
 
 	if (M == user)
+
+		if (ishuman(M))
+			var/mob/living/carbon/human/H = M
+			var/obj/item/clothing/mask/mask = H.wear_mask
+			if (mask?.c_flags & COVERSMOUTH)
+				M.visible_message("<span class='notice'>[M] tries to take a bite of [src], but their mask is in the way!</span>",\
+				"<span class='notice'>You try to take a bite of [src], but your mask is in the way!</span>")
+				return 0
+
 		M.visible_message("<span class='notice'>[M] takes a bite of [src]!</span>",\
 		"<span class='notice'>You take a bite of [src]!</span>")
 
@@ -406,6 +415,16 @@
 		return 1
 
 	else
+
+		if (ishuman(M))
+			var/mob/living/carbon/human/H = M
+			var/obj/item/clothing/mask/mask = H.wear_mask
+			if (mask?.c_flags & COVERSMOUTH)
+				user.tri_message("<span class='alert'><b>[user]</b> tries to feed [M] [src], but their mask is in the way!</span>",\
+				user, "<span class='alert'>You try to feed [M] [src], but their mask is in the way!</span>",\
+				M, "<span class='alert'><b>[user]</b> tries to feed you [src], but your mask is in the way!</span>")
+				return 0
+
 		user.tri_message("<span class='alert'><b>[user]</b> tries to feed [M] [src]!</span>",\
 		user, "<span class='alert'>You try to feed [M] [src]!</span>",\
 		M, "<span class='alert'><b>[user]</b> tries to feed you [src]!</span>")
