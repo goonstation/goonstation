@@ -41,3 +41,9 @@
 		icon_state = "datadiskcom"
 		temp_recipe_string = list(/datum/manufacture/core_frame)
 		fablimit = 2
+
+	law_rack //The law rack that the CE locker starts with
+		name = "Command ManuDrive: Artificial Intelligence Law Rack Blueprint"
+		desc = "A drive for data storage that can be inserted and removed from manufacturers to temporarily add recipes to a manufacturer. This drive carries a blueprint that permits the user to manufacture AI law racks."
+		icon_state = "datadiskcom"
+		temp_recipe_string = list(/datum/manufacture/mechanics/lawrack)
