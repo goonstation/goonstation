@@ -2182,6 +2182,26 @@
 			owner.delStatus(src.id)
 			return
 		drone.absorber.tick(timePassed/10)
+
+/datum/statusEffect/gnesis_glow
+	id = "gnesis_glow"
+	name = "Gnesis glow"
+	desc = "The gnesis in your veins envelops you in a strange teal glow."
+	visible = FALSE
+	unique = TRUE
+
+	onAdd()
+		. = ..()
+		owner.add_simple_light("gnesis_glow", rgb2num("#26ffe6a2"))
+		owner.simple_light.alpha = 0
+		owner.visible_message("<span class='alert'>[owner] is enveloped in a shimmering teal glow.</span>", "<span class='alert'>You are enveloped in a shimmering teal glow.</span>")
+		animate(owner.simple_light, time = src.duration/2, alpha = 255)
+		animate(time = src.duration/2, alpha = 0)
+
+	onRemove()
+		owner.remove_simple_light("gnesis_glow")
+		..()
+
 /datum/statusEffect/spry
 	id = "spry"
 	name = "Spry"

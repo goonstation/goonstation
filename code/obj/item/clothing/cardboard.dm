@@ -11,7 +11,6 @@
 	wear_layer = MOB_OVERLAY_BASE
 	c_flags = COVERSEYES | COVERSMOUTH
 	body_parts_covered = HEAD|TORSO|LEGS|ARMS
-	permeability_coefficient = 0.8
 	var/eyeholes = FALSE
 	var/accessory = FALSE
 	var/face = null
@@ -30,6 +29,7 @@
 		setProperty("coldprot", 33)
 		setProperty("heatprot", 33)
 		setProperty("meleeprot", 1)
+		setProperty("chemprot", 10)
 
 	attack_hand(mob/user)
 		if (user.a_intent == INTENT_HARM)

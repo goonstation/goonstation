@@ -110,11 +110,12 @@
 
 
 /obj/item/gun/energy/heavyion
-	name = "heavy ion blaster"
+	name = "\improper Tianfei-48 heavy ion blaster"
+	icon = 'icons/obj/large/48x32.dmi'
 	icon_state = "heavyion"
 	item_state = "rifle"
 	force = 1.0
-	desc = "..."
+	desc = "The 天妃-2048 ion disruptor from Xiang-Geisel. A radio-isotopic laser-induced ionic generator, feared by rogue cyborgs across the Frontier."
 	charge_up = 15
 	can_dual_wield = 0
 	two_handed = 1
@@ -311,7 +312,9 @@
 	desc = "The largest phaser from Radnor Photonics. A big gun for big problems."
 	muzzle_flash = "muzzle_flash_phaser"
 	cell_type = /obj/item/ammo/power_cell/higherish_power
-	shoot_delay = 20
+	shoot_delay = 10
+	charge_up = 5
+	can_dual_wield = FALSE
 
 	New()
 		set_current_projectile(new/datum/projectile/laser/light/huge) // light/huge - whatev!!!! this should probably be refactored
@@ -1331,7 +1334,7 @@
 
 	attack_hand(mob/user)
 		if (!owner_prints)
-			boutput(user, "<span class='alert'>[src] has accepted your fingerprint ID. You are its owner!</span>")
+			boutput(user, "<span class='alert'>[src] has accepted your DNA string. You are its owner!</span>")
 			assign_name(user)
 		..()
 
@@ -1341,7 +1344,7 @@
 	attack_self(mob/user as mob)
 		src.add_fingerprint(user)
 		if (!owner_prints)
-			boutput(user, "<span class='alert'>[src] has accepted your fingerprint ID. You are its owner!</span>")
+			boutput(user, "<span class='alert'>[src] has accepted your DNA string. You are its owner!</span>")
 			assign_name(user)
 		else
 			boutput(user, "<span class='notice'>There don't seem to be any buttons on [src] to press.</span>")
@@ -1350,7 +1353,7 @@
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if (H.bioHolder)
-				owner_prints = H.bioHolder.fingerprints
+				owner_prints = H.bioHolder.Uid
 				src.name = "HoS [H.real_name]'s Lawbringer"
 				tooltip_rebuild = 1
 
@@ -1358,18 +1361,19 @@
 	hear_talk(mob/M as mob, msg, real_name, lang_id)
 		var/turf/T = get_turf(src)
 		if (M in range(1, T))
-			src.talk_into(M, msg, null, real_name, lang_id)
+			src.talk_into(M, msg, real_name, lang_id)
 
 	//can only handle one name at a time, if it's more it doesn't do anything
 	talk_into(mob/M as mob, msg, real_name, lang_id)
 		//Do I need to check for this? I can't imagine why anyone would pass the wrong var here...
 		if (!islist(msg))
 			return
-
+		if (lang_id != "english")
+			return
 		//only work if the voice is the same as the voice of your owner fingerprints.
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
-			if (owner_prints && (H.bioHolder.fingerprints != owner_prints))
+			if (owner_prints && (H.bioHolder.Uid != owner_prints))
 				are_you_the_law(M, msg[1])
 				return
 		else
@@ -1516,7 +1520,7 @@
 	// Checks if the gun can shoot based on the fingerprints of the shooter.
 	//returns true if the prints match or there are no prints stored on the gun(emagged). false if it fails
 	proc/fingerprints_can_shoot(var/mob/user)
-		if (!owner_prints || (user.bioHolder.fingerprints == owner_prints))
+		if (!owner_prints || (user.bioHolder.Uid == owner_prints))
 			return 1
 		return 0
 

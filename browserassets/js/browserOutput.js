@@ -1,8 +1,8 @@
-/*****************************************
+/*
 *
 * FUNCTION AND VAR DECLARATIONS
 *
-******************************************/
+*/
 
 var triggerError = attachErrorHandler('chatDebug', true);
 
@@ -24,7 +24,7 @@ var opts = {
     'priorChatHeight': 0, //Thing for height-resizing detection
     'restarting': false, //Is the round restarting?
     'volume': 0.5,
-    'lastMessage': '', //the last message sent to chat
+    'lastMessage': '', //the last message sent to chatks
     'maxStreakGrowth': 20, //at what streak point should we stop growing the last entry?
 	'messageClasses': ['admin','combat','radio','say','ooc','internal'],
 

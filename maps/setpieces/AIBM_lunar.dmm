@@ -380,13 +380,9 @@
 /turf/unsimulated/floor/carpet/office/other,
 /area/moon/underground/hemera)
 "be" = (
-/obj/decal/fakeobjects/firelock_broken{
-	density = 1;
+/obj/decal/fakeobjects/airlock_broken{
 	desc = "It's jammed, apparently.  Or just really locked.";
-	icon = 'icons/obj/doors/doorint.dmi';
-	icon_state = "door_closed";
-	name = "sealed airlock";
-	opacity = 1
+	name = "sealed airlock"
 	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/floors.dmi';
@@ -1726,12 +1722,8 @@
 /area/moon/underground)
 "es" = (
 /obj/decal/fakeobjects/firelock_broken{
-	density = 1;
 	desc = "It's jammed, apparently.  Or just really locked.";
-	icon = 'icons/obj/doors/doorint.dmi';
-	icon_state = "door_closed";
-	name = "sealed airlock";
-	opacity = 1
+	name = "sealed airlock"
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"

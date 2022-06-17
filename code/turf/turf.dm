@@ -94,15 +94,6 @@
 		F["[path].pixel_y"] >> pixel_y
 		return DESERIALIZE_OK
 
-	proc/canpass()
-		if( density )
-			return 0
-		for( var/thing in contents )
-			var/atom/A = thing
-			if( A.density && !ismob(A) )
-				return 0
-		return 1
-
 	proc/can_crossed_by(atom/movable/AM)
 		if(!src.Cross(AM))
 			return 0
@@ -157,7 +148,8 @@
 	animate_movement = NO_STEPS // fix for things gliding around all weird
 
 	Move()
-		return 0
+		SHOULD_CALL_PARENT(FALSE)
+		return FALSE
 
 /obj/overlay/tile_gas_effect
 	name = ""
@@ -166,7 +158,8 @@
 	mouse_opacity = 0
 
 	Move()
-		return 0
+		SHOULD_CALL_PARENT(FALSE)
+		return FALSE
 
 /turf/unsimulated/meteorhit(obj/meteor as obj)
 	return
@@ -359,7 +352,8 @@ proc/generate_space_color()
 	AM.movement_newloc = newloc
 	. = ..()
 
-/turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
+/turf/Enter(atom/movable/mover, atom/forget)
+
 	if (!mover)
 		return TRUE
 

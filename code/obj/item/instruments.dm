@@ -203,6 +203,7 @@
 	'sound/musical_instruments/jukebox/ultralounge.ogg',
 	'sound/musical_instruments/jukebox/jazzpiano.ogg')
 	pick_random_note = 1
+	volume = 40
 
 	show_play_message(mob/user as mob)
 		return

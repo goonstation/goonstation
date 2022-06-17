@@ -45,7 +45,7 @@ shooting
 
 capture
 	-weight 15
-	-precondition: can_afford(FLOCK_CAGE_COST) and enemies exist
+	-precondition: enemies exist
 
 butcher
 	-weight 3
@@ -100,7 +100,7 @@ stare
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // REPLICATION GOAL
 // targets: valid nesting sites
-// precondition: FLOCK_LAY_EGG_COST resources
+// precondition: FLOCK_LAY_EGG_COST resources + 7.5 in reserve for every drone after the first 10 up to a max of 200 extra in reserve
 /datum/aiTask/sequence/goalbased/replicate
 	name = "replicating"
 	weight = 7
@@ -113,7 +113,7 @@ stare
 /datum/aiTask/sequence/goalbased/replicate/precondition()
 	. = FALSE
 	var/mob/living/critter/flock/drone/F = holder.owner
-	if(F?.can_afford(FLOCK_LAY_EGG_COST))
+	if(F?.can_afford(FLOCK_LAY_EGG_COST + clamp((F.flock.getComplexDroneCount() - FLOCK_MIN_DESIRED_POP) * FLOCK_ADDITIONAL_RESOURCE_RESERVATION_PER_DRONE, 0, FLOCK_LAY_EGG_COST * 2)))
 		. = TRUE
 
 /datum/aiTask/sequence/goalbased/replicate/get_targets()
@@ -157,7 +157,7 @@ stare
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // NEST + REPLICATION GOAL
 // targets: valid nesting sites
-// precondition: FLOCK_CONVERT_COST + FLOCK_LAY_EGG_COST resources, no flocktiles in view
+// precondition: FLOCK_CONVERT_COST + FLOCK_LAY_EGG_COST resources + 7.5 in reserve for every drone after the first 10 up to a max of 200 extra in reserve, no flocktiles in view
 /datum/aiTask/sequence/goalbased/nest
 	name = "nesting"
 	weight = 6
@@ -171,7 +171,7 @@ stare
 /datum/aiTask/sequence/goalbased/nest/precondition()
 	. = FALSE
 	var/mob/living/critter/flock/drone/F = holder.owner
-	if(F?.can_afford(FLOCK_CONVERT_COST + FLOCK_LAY_EGG_COST))
+	if(F?.can_afford(FLOCK_CONVERT_COST + FLOCK_LAY_EGG_COST + clamp((F.flock.getComplexDroneCount() - FLOCK_MIN_DESIRED_POP) * FLOCK_ADDITIONAL_RESOURCE_RESERVATION_PER_DRONE, 0, FLOCK_LAY_EGG_COST * 2)))
 		. = TRUE
 		for(var/turf/simulated/floor/feather/T in view(max_dist, holder.owner))
 			return FALSE
@@ -651,7 +651,7 @@ stare
 
 /datum/aiTask/succeedable/harvest/failed()
 	var/obj/item/harvest_target = holder.target
-	if(!harvest_target || BOUNDS_DIST(holder.owner, harvest_target) > 0 || fails >= max_fails)
+	if(!harvest_target || !in_interact_range(harvest_target, holder.owner) || fails >= max_fails)
 		. = TRUE
 
 /datum/aiTask/succeedable/harvest/succeeded()
@@ -663,7 +663,7 @@ stare
 		holder.target = null
 		fails++
 		return
-	if(harvest_target && BOUNDS_DIST(holder.owner, harvest_target) == 0 && !succeeded())
+	if(harvest_target && in_interact_range(harvest_target, holder.owner) && !succeeded())
 		var/mob/living/critter/flock/drone/F = holder.owner
 		if(F?.set_hand(1)) // grip tool
 			var/obj/item/already_held = F.get_active_hand().item
@@ -709,6 +709,7 @@ stare
 	target_range = 12
 	var/shoot_range = 6
 	var/run_range = 3
+	ai_turbo = TRUE
 	var/list/dummy_params = list("icon-x" = 16, "icon-y" = 16)
 
 /datum/aiTask/timed/targeted/flockdrone_shoot/proc/precondition()
@@ -792,12 +793,13 @@ stare
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // FLOCKDRONE-SPECIFIC CAPTURE TASK
 // look through valid targets that are in the flock targets AND are stunned
-// precondition: can_afford(FLOCK_CAGE_COST) and enemies exist
+// precondition: enemies exist
 /datum/aiTask/sequence/goalbased/flockdrone_capture
 	name = "capturing"
 	weight = 15
 	max_dist = 12
 	can_be_adjacent_to_target = TRUE
+	ai_turbo = TRUE
 
 /datum/aiTask/sequence/goalbased/flockdrone_capture/New(parentHolder, transTask)
 	..(parentHolder, transTask)
@@ -805,7 +807,7 @@ stare
 
 /datum/aiTask/sequence/goalbased/flockdrone_capture/precondition()
 	var/mob/living/critter/flock/F = holder.owner
-	return F?.can_afford(FLOCK_CAGE_COST) && (length(F.flock?.enemies))
+	return (length(F.flock?.enemies))
 
 /datum/aiTask/sequence/goalbased/flockdrone_capture/evaluate()
 	. = precondition() * weight * score_target(get_best_target(get_targets()))
@@ -844,8 +846,6 @@ stare
 /datum/aiTask/succeedable/capture/failed()
 	var/mob/living/critter/flock/F = holder.owner
 	if(!F)
-		return TRUE
-	if(!F.can_afford(FLOCK_CAGE_COST))
 		return TRUE
 	if(get_dist(F, holder.target) > 1)
 		return TRUE

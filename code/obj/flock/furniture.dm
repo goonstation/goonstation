@@ -24,6 +24,8 @@
 /obj/table/flock/New()
 	..()
 	setMaterial(getMaterial("gnesis"))
+	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
+	src.AddComponent(/datum/component/flock_protection, report_attack=FALSE)
 
 /obj/table/flock/special_desc(dist, mob/user)
 	if (!isflockmob(user))
@@ -77,6 +79,8 @@
 /obj/stool/chair/comfy/flock/New()
 	..()
 	setMaterial(getMaterial("gnesis"))
+	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
+	src.AddComponent(/datum/component/flock_protection, report_unarmed=FALSE, report_attack=FALSE)
 
 /obj/stool/chair/comfy/flock/special_desc(dist, mob/user)
 	if (!isflockmob(user))
@@ -309,6 +313,9 @@
 	mat_appearances_to_ignore = list("steel","gnesis")
 	mat_changename = FALSE
 	mat_changedesc = FALSE
+	can_be_snipped = FALSE
+	can_be_unscrewed = FALSE
+	can_build_window = FALSE
 
 	update_icon(special_icon_state, override_parent = TRUE) //fix for perspective grilles fucking these up
 		if (ruined)

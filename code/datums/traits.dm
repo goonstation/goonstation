@@ -896,12 +896,12 @@ ABSTRACT_TYPE(/obj/trait/job)
 	points = -1
 
 /obj/trait/jailbird
-	name = "Jailbird (0)"
+	name = "Jailbird (-1)"
 	cleanName = "Jailbird"
 	desc = "You have a criminal record and are currently on the run!"
 	id = "jailbird"
 	icon_state = "jail"
-	points = 0
+	points = -1
 
 /obj/trait/clericalerror
 	name = "Clerical Error (0)"
