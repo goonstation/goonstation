@@ -323,7 +323,7 @@ export const Apc = (props, context) => {
   };
 
   const cellDisplay = () => {
-    if (data["cell_type"] > 0) {
+    if (data["cell_present"]) {
       return (
         <Stack>
           <Stack.Item align="center">
