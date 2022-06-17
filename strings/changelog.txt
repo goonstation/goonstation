@@ -1,5 +1,9 @@
 
 (t)fri jun 17 22
+(u)DimWhat
+(p)9166
+(e)⚖|balance
+(*)Reworked permeability into chemical resistance which has been applied to several clothing items. Please report any weirdness with chemical splashing.
 (u)Wisemonster
 (p)9173
 (e)🆕⚖|feature, balance
