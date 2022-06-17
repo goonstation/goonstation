@@ -248,8 +248,12 @@ export const Apc = (props, context) => {
     act("onCoverLockedChange", { coverlocked });
   };
 
+  const onOverload = () => {
+    act("onOverload", {});
+  };
+
   const swipeOrHostDisplay = () => {
-    if (data["setup_networkapc"] < 2) {
+    if (data["setup_networkapc"] < 2 && !data["can_access_remotely"]) {
       return (
         <Stack.Item align="center">
           <Box>Swipe ID card to {data["locked"] ? "unlock" : "lock"} interface.</Box>
@@ -351,6 +355,16 @@ export const Apc = (props, context) => {
     }
   };
 
+  const overloadDisplay = () => {
+    if (data["can_access_remotely"]) {
+      return (
+        <Button content="Overload lighting circuit" onClick={() => { onOverload() }} />
+      );
+    } else {
+      return null;
+    }
+  };
+
   return (
     <Window title="Area Power Controller" width={400} height={data["wiresexposed"] ? 500 : 350}>
       <Window.Content>
@@ -401,8 +415,9 @@ export const Apc = (props, context) => {
               {coverLockDisplay()}
             </Stack.Item>
           </Stack>
+          {overloadDisplay()}
         </Section>
-        {data["wiresexposed"] && data[""] ? <AccessPanel act={act} data={data} /> : null}
+        {data["wiresexposed"] && !data["is_ai"] ? <AccessPanel act={act} data={data} /> : null}
       </Window.Content>
     </Window>
   );

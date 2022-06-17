@@ -584,6 +584,7 @@ var/zapLimiter = 0
 		// do APC interaction
 		src.interacted(user)
 
+// ------------ UI Methods ------------
 /obj/machinery/power/apc/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if(!ui)
@@ -640,34 +641,42 @@ var/zapLimiter = 0
 	)
 
 /obj/machinery/power/apc/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	// All actions were copied and altered from /obj/machinery/power/apc/Topic
 	. = ..()
 	if (.)
 		return
 	if (usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.stat)
 		return
 	if ((in_interact_range(src, usr) && istype(src.loc, /turf))||(issilicon(usr) || isAI(usr)))
-		switch (action)
+		switch (action) // If action is valid, return true so ui updates
 			if ("onMendWire")
-				onMendWire(usr, params);
+				return onMendWire(usr, params);
 			if ("onCutWire")
-				onCutWire(usr, params);
+				return onCutWire(usr, params);
 			if ("onPulseWire")
-				onPulseWire(usr, params);
+				return onPulseWire(usr, params);
 			if ("onBiteWire")
-				onBiteWire(usr, params);
+				return onBiteWire(usr, params);
 			if ("onCoverLockedChange")
-				onCoverLockedChange(usr, params)
+				return onCoverLockedChange(usr, params)
 			if ("onOperatingChange")
-				onOperatingChange(usr, params)
+				return onOperatingChange(usr, params)
 			if ("onChargeModeChange")
-				onChargeModeChange(usr, params)
+				return onChargeModeChange(usr, params)
 			if ("onPowerChannelEquipmentStatusChange")
-				onPowerChannelEquipmentStatusChange(usr, params)
+				return onPowerChannelEquipmentStatusChange(usr, params)
 			if ("onPowerChannelLightingStatusChange")
-				onPowerChannelLightingStatusChange(usr, params)
+				return onPowerChannelLightingStatusChange(usr, params)
 			if ("onPowerChannelEnvironStatusChange")
-				onPowerChannelEnvironStatusChange(usr, params)
+				return onPowerChannelEnvironStatusChange(usr, params)
+			if ("onOverload")
+				return onOverload(usr, params)
+			else
+				return FALSE
+// ------------ End UI Methods ------------
 
+
+// ------------ Action Callbacks ------------
 // Callbacks used by the UI - called from /tgui/packages/tgui/interfaces/Apc.js
 /obj/machinery/power/apc/proc/onPowerChannelEquipmentStatusChange(mob/user, list/params)
 	if ((!locked && setup_networkapc < 2) || issilicon(usr) || isAI(usr))
@@ -714,7 +723,7 @@ var/zapLimiter = 0
 	if ((!locked && setup_networkapc < 2) || issilicon(usr) || isAI(usr))
 		if ((issilicon(usr) || isAI(usr)) && src.aidisabled)
 			boutput(usr, "AI control for this APC interface has been disabled.")
-			return
+			return FALSE
 
 		var/val = clamp(text2num_safe(params["status"]), 1, 3)
 
@@ -722,79 +731,141 @@ var/zapLimiter = 0
 		if ((!src.cell || src.shorted == 1) && (val == 2 || val == 3))
 			if (usr && ismob(usr))
 				usr.show_text("APC offline, can't toggle power.", "red")
-			return
+			return FALSE
 
 		logTheThing("station", usr, null, "turned the APC environment power [(val==1) ? "off" : "on"] at [log_loc(src)].")
 		environ = (val==1) ? 0 :val
 
 		UpdateIcon()
 		update()
+		return TRUE
+	return FALSE
 
 /obj/machinery/power/apc/proc/onMendWire(mob/user, list/params)
 	if (wiresexposed)
 		var/t1 = text2num_safe(params["wire"])
 		if (!usr.find_tool_in_hand(TOOL_SNIPPING))
 			boutput(usr, "You need a snipping tool!")
-			return
+			return FALSE
 		else if (src.isWireColorCut(t1))
 			src.mend(t1)
+			return TRUE
+	else
+		return FALSE
 
 /obj/machinery/power/apc/proc/onCutWire(mob/user, list/params)
 	if (wiresexposed)
 		var/t1 = text2num_safe(params["wire"])
 		if (!usr.find_tool_in_hand(TOOL_SNIPPING))
 			boutput(usr, "You need a snipping tool!")
-			return
+			return FALSE
 		else if (!src.isWireColorCut(t1))
 			src.cut(t1)
+			return TRUE
+	else
+		return FALSE
 
 /obj/machinery/power/apc/proc/onBiteWire(mob/user, list/params)
 	if (wiresexposed)
 		var/t1 = text2num_safe(params["wire"])
+		if (src.isWireColorCut(t1))
+			boutput(usr, "You can't bite a cut wire.")
+			return FALSE
 		switch(alert("Really bite the wire off?",,"Yes","No"))
 			if("Yes")
 				src.bite(t1)
+				return TRUE
 			if("No")
-				return
+				return FALSE
+	else
+		return FALSE
 
 /obj/machinery/power/apc/proc/onPulseWire(mob/user, list/params)
 	if (wiresexposed)
 		var/t1 = text2num_safe(params["wire"])
 		if (!usr.find_tool_in_hand(TOOL_PULSING))
 			boutput(usr, "You need a multitool or similar!")
-			return
+			return FALSE
 		else if (src.isWireColorCut(t1))
 			boutput(usr, "You can't pulse a cut wire.")
-			return
+			return FALSE
 		else
 			src.pulse(t1)
+			return TRUE
+	else
+		return FALSE
 
 /obj/machinery/power/apc/proc/onCoverLockedChange(mob/user, list/params)
 	if ((!locked && setup_networkapc < 2) || issilicon(usr) || isAI(usr))
 		if ((issilicon(usr) || isAI(usr)) && src.aidisabled)
 			boutput(usr, "AI control for this APC interface has been disabled.")
-			return
+			return FALSE
 		coverlocked = params["coverlocked"]
+		return TRUE
+	else
+		return FALSE
 
 /obj/machinery/power/apc/proc/onOperatingChange(mob/user, list/params)
 	if ((!locked && setup_networkapc < 2) || issilicon(usr) || isAI(usr))
 		if ((issilicon(usr) || isAI(usr)) && src.aidisabled)
 			boutput(usr, "AI control for this APC interface has been disabled.")
 			src.updateUsrDialog()
-			return
+			return FALSE
 		operating = params["operating"]
 		src.update()
 		UpdateIcon()
+		return TRUE
+	else
+		return FALSE
 
 /obj/machinery/power/apc/proc/onChargeModeChange(mob/user, list/params)
 	if ((!locked && setup_networkapc < 2) || issilicon(usr) || isAI(usr))
 		if ((issilicon(usr) || isAI(usr)) && src.aidisabled)
 			boutput(usr, "AI control for this APC interface has been disabled.")
-			return
+			return FALSE
 		chargemode = !chargemode
 		if(!chargemode)
 			charging = 0
 			UpdateIcon()
+		return TRUE
+	else
+		return FALSE
+
+/obj/machinery/power/apc/proc/onOverload(mob/user, list/params)
+	if (issilicon(usr) || isAI(usr))
+		if(isghostdrone(usr)) //This does not help the station at all bad bad drones!
+			boutput(usr, "Your internal law subroutines kick in and prevent you from overloading the lights!")
+			return FALSE
+		if (src.aidisabled)
+			boutput(usr, "AI control for this APC interface has been disabled.")
+			return FALSE
+		message_admins("[key_name(usr)] overloaded the lights at [log_loc(src)].")
+		logTheThing("station", usr, null, "overloaded the lights at [log_loc(src)].")
+		src.overload_lighting()
+		return TRUE
+	else
+		return FALSE
+// ------------ End Action Callbacks ------------
+
+// ------------ Callback Helper Procs ------------
+/obj/machinery/power/apc/proc/hasElectronicAccess(mob/user)
+	. = ..()
+	if (.)
+		return
+	if (issilicon(usr) || isAI(usr))
+		return TRUE
+	else if (!locked && setup_networkapc < 2) // If the apc is unlocked and access isn't remote then we can access it
+		return TRUE
+	else
+		return FALSE
+
+/obj/machinery/power/apc/proc/isBlockedAI(mob/user)
+	. = ..()
+	if (.)
+		return
+	return (issilicon(usr) || isAI(usr)) && src.aidisabled
+// ------------ End Callback Helper Procs ------------
+
 
 /obj/machinery/power/apc/proc/interacted(mob/user)
 	if (user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat)
