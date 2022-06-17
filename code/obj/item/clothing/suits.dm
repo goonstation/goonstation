@@ -1244,7 +1244,7 @@
 
 /obj/item/clothing/suit/space/ntso
 	name = "NT pressure suit"
-	desc = "A Nanotrasen paramilitary space suit, with an integrated chest rig."
+	desc = "A specialised Nanotrasen space suit, with an integrated chest rig."
 	icon_state = "ntso_specialist"
 	item_state = "ntso_specialist"
 

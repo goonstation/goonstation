@@ -119,7 +119,7 @@
 
 /obj/item/clothing/mask/gas/NTSO
 	name = "NT gas mask"
-	desc = "A close-fitting CBRN mask with dual filters and a tinted lens, designed to protect Nanotrasen paramilitary personnel from environmental threats."
+	desc = "A close-fitting CBRN mask with dual filters and a tinted lens, designed to protect Nanotrasen security personnel from environmental threats."
 	icon_state = "gas_mask_NT"
 	item_state = "gas_mask_NT"
 	color_r = 0.8 // cool blueberry nanotrasen tint provides disorientation resist

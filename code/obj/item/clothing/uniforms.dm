@@ -740,7 +740,7 @@
 
 /obj/item/clothing/under/misc/turds
 	name = "NT combat uniform"
-	desc = "A Nanotrasen paramilitary jumpsuit."
+	desc = "A Nanotrasen security jumpsuit."
 	icon_state = "turdsuit"
 	item_state = "turdsuit"
 	team_num = TEAM_NANOTRASEN
