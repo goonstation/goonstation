@@ -1255,7 +1255,7 @@
 
 /obj/item/ammo/power_cell/self_charging/mediumbig
 	name = "Power Cell - Fission"
-	desc = "Half the power of a Fusion model power cell with a tenth of the cost. Holds 200PU"
+	desc = "Half the power of a Fusion model power cell with a tenth of the cost. Holds 200PU."
 	max_charge = 200
 	charge = 200
 	recharge_rate = 20
