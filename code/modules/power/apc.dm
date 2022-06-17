@@ -647,6 +647,7 @@ var/zapLimiter = 0
 		return
 	if (usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.stat)
 		return
+
 	if ((in_interact_range(src, usr) && istype(src.loc, /turf))||(issilicon(usr) || isAI(usr)))
 		switch (action) // If action is valid, return true so ui updates
 			if ("onMendWire")
@@ -748,6 +749,9 @@ var/zapLimiter = 0
 	return FALSE
 
 /obj/machinery/power/apc/proc/onMendWire(mob/user, list/params)
+	if (!src.canPhysicallyAccess(usr))
+		boutput(usr, "You are too far away to mend a wire!.")
+		return FALSE
 	if (wiresexposed)
 		var/t1 = text2num_safe(params["wire"])
 		if (!usr.find_tool_in_hand(TOOL_SNIPPING))
@@ -760,6 +764,9 @@ var/zapLimiter = 0
 		return FALSE
 
 /obj/machinery/power/apc/proc/onCutWire(mob/user, list/params)
+	if (!src.canPhysicallyAccess(usr))
+		boutput(usr, "You are too far away to cut a wire!")
+		return FALSE
 	if (wiresexposed)
 		var/t1 = text2num_safe(params["wire"])
 		if (!usr.find_tool_in_hand(TOOL_SNIPPING))
@@ -772,6 +779,9 @@ var/zapLimiter = 0
 		return FALSE
 
 /obj/machinery/power/apc/proc/onBiteWire(mob/user, list/params)
+	if (!src.canPhysicallyAccess(usr))
+		boutput(usr, "You are too far away to bite a wire!")
+		return FALSE
 	if (wiresexposed)
 		var/t1 = text2num_safe(params["wire"])
 		if (src.isWireColorCut(t1))
@@ -787,6 +797,9 @@ var/zapLimiter = 0
 		return FALSE
 
 /obj/machinery/power/apc/proc/onPulseWire(mob/user, list/params)
+	if (!src.canPhysicallyAccess(usr))
+		boutput(usr, "You are too far away to pulse a wire!")
+		return FALSE
 	if (wiresexposed)
 		var/t1 = text2num_safe(params["wire"])
 		if (!usr.find_tool_in_hand(TOOL_PULSING))
@@ -864,6 +877,9 @@ var/zapLimiter = 0
 
 /obj/machinery/power/apc/proc/isBlockedAI(mob/user)
 	return (issilicon(user) || isAI(user)) && src.aidisabled
+
+/obj/machinery/power/apc/proc/canPhysicallyAccess(mob/user)
+	return (in_interact_range(src, user) && istype(src.loc, /turf) && !isAI(user))
 // ------------ End Callback Helper Procs ------------
 
 
