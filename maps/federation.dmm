@@ -722,6 +722,7 @@
 /obj/machinery/door/airlock/gannets/maintenance,
 /obj/firedoor_spawn,
 /obj/disposalpipe/segment,
+/obj/access_spawn/maint,
 /turf/simulated/floor,
 /area/station/maintenance/northeast)
 "aAs" = (
@@ -3872,10 +3873,8 @@
 /turf/simulated/floor/airless/plating,
 /area/station/maintenance/west)
 "dnY" = (
-/obj/cable{
-	icon_state = "0-4"
-	},
 /obj/machinery/power/apc/autoname_east,
+/obj/cable,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "dom" = (
@@ -4847,6 +4846,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 8
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "ecl" = (
@@ -7549,14 +7549,6 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/stockex)
-"gmQ" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/wall/auto/reinforced/jen,
-/area/station/crew_quarters/barber_shop)
 "gna" = (
 /obj/wingrille_spawn,
 /turf/simulated/floor/airless/plating,
@@ -7837,6 +7829,7 @@
 /area/station/chapel/office)
 "gDw" = (
 /obj/machinery/door/airlock/gannets/maintenance,
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/northeast)
 "gDG" = (
@@ -12654,6 +12647,7 @@
 	name = "External Access";
 	req_access_txt = null
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "kGS" = (
@@ -14414,6 +14408,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/northeast)
 "lSp" = (
@@ -14529,6 +14524,12 @@
 /obj/disposalpipe/switch_junction/left/north,
 /turf/simulated/floor/twotone/yellow,
 /area/station/engine/engineering/private)
+"lXL" = (
+/obj/machinery/door/airlock/gannets/maintenance,
+/obj/firedoor_spawn,
+/obj/access_spawn/maint,
+/turf/simulated/floor/airless/plating,
+/area/station/maintenance/west)
 "lXZ" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 4
@@ -15127,8 +15128,9 @@
 	req_access_txt = null
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/maintenance/south)
 "myN" = (
 /obj/machinery/light/incandescent{
 	dir = 8
@@ -17437,12 +17439,6 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/wood,
 /area/station/library/reading2)
-"otk" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/wall/auto/jen,
-/area/station/crew_quarters/arcade)
 "otU" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -19265,9 +19261,6 @@
 /area/station/hydroponics)
 "pPh" = (
 /obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
@@ -19646,9 +19639,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
-"qha" = (
-/turf/simulated/wall/auto/reinforced/gannets,
-/area/space)
 "qhb" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -20235,6 +20225,10 @@
 "qzS" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/firedoor_spawn,
+/obj/cable{
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/plating/airless/random,
 /area/station/crew_quarters/arcade)
 "qzY" = (
@@ -20543,6 +20537,7 @@
 /area/station/crew_quarters/market)
 "qLy" = (
 /obj/machinery/microwave,
+/obj/table/neon/auto,
 /turf/simulated/floor/specialroom/bar,
 /area/station/medical/asylum/kitchen)
 "qMl" = (
@@ -21778,6 +21773,7 @@
 "rLP" = (
 /obj/machinery/door/airlock/gannets/maintenance,
 /obj/firedoor_spawn,
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "rMq" = (
@@ -22373,6 +22369,7 @@
 	level = -1
 	},
 /obj/machinery/door/airlock/gannets/maintenance,
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "suf" = (
@@ -27839,15 +27836,6 @@
 	},
 /turf/simulated/floor,
 /area/station/chapel/office)
-"wNl" = (
-/obj/machinery/door/airlock/pyro/external{
-	dir = 4;
-	name = "External Access";
-	req_access_txt = null
-	},
-/obj/firedoor_spawn,
-/turf/simulated/floor/plating,
-/area/station/maintenance/south)
 "wNm" = (
 /obj/machinery/atmospherics/pipe/simple{
 	level = 2
@@ -50821,7 +50809,7 @@ aDK
 aDK
 aDK
 aDK
-aDK
+qLm
 qLm
 qLm
 qLm
@@ -51123,8 +51111,8 @@ aDK
 aDK
 aDK
 aDK
-aDK
 xys
+jlH
 jlH
 dEQ
 lLt
@@ -51425,8 +51413,8 @@ aDK
 aDK
 aDK
 aDK
-aDK
 xys
+jlH
 jlH
 qLm
 lLt
@@ -51727,8 +51715,8 @@ aDK
 aDK
 aDK
 aDK
-aDK
 xys
+jlH
 vnU
 qLm
 lLt
@@ -52029,8 +52017,8 @@ aDK
 aDK
 aDK
 aDK
-aDK
 xys
+jlH
 jlH
 xys
 aDK
@@ -52331,8 +52319,8 @@ aDK
 aDK
 aDK
 aDK
-aDK
 xys
+jlH
 jlH
 qLm
 xDc
@@ -52627,7 +52615,6 @@ aDK
 aDK
 aDK
 aDK
-aDK
 aSH
 aSH
 aSH
@@ -52635,6 +52622,7 @@ aSH
 aSH
 aSH
 aSH
+jlH
 jlH
 qLm
 xDc
@@ -52832,7 +52820,7 @@ aDK
 aDK
 aDK
 azS
-tKr
+lXL
 vjo
 tXr
 fJS
@@ -52929,7 +52917,6 @@ aDK
 aDK
 aDK
 aDK
-aDK
 aSH
 mEi
 cMR
@@ -52937,6 +52924,7 @@ lRl
 kFr
 euR
 aSH
+jlH
 jlH
 dEQ
 xDc
@@ -53231,7 +53219,6 @@ aDK
 aDK
 aDK
 aDK
-aDK
 aSH
 fZm
 euR
@@ -53239,6 +53226,7 @@ bEj
 kFr
 euR
 aSH
+jlH
 jlH
 qLm
 xDc
@@ -53436,7 +53424,7 @@ aDK
 azS
 azS
 azS
-tKr
+lXL
 vjo
 lNi
 fJS
@@ -53533,7 +53521,6 @@ aDK
 aDK
 aDK
 aDK
-aDK
 aSH
 rvw
 euR
@@ -53541,6 +53528,7 @@ whl
 pXa
 euR
 ohu
+jlH
 jlH
 qLm
 xDc
@@ -53835,7 +53823,6 @@ ecf
 aHN
 aDK
 aDK
-aDK
 aSH
 cos
 euR
@@ -53843,6 +53830,7 @@ euR
 euR
 euR
 aSH
+jlH
 jlH
 qLm
 aDK
@@ -54137,7 +54125,6 @@ sBb
 aHN
 aDK
 aDK
-aDK
 vKc
 fXm
 nzb
@@ -54145,6 +54132,7 @@ euR
 euR
 euR
 aSH
+jlH
 vnU
 qLm
 cNx
@@ -54439,14 +54427,14 @@ ecf
 aHN
 cTY
 mHI
-gmQ
 sov
 aQY
 aQY
 aQY
 aQY
 aQY
-qLm
+aQY
+jlH
 jlH
 jlH
 jlH
@@ -61693,7 +61681,7 @@ usd
 qtS
 gTT
 gJC
-sBb
+kWr
 qzS
 dnY
 mUC
@@ -61995,9 +61983,9 @@ gTT
 bay
 lUK
 gJC
-sBb
+mWI
 bIQ
-otk
+bIQ
 bIQ
 bIQ
 aLu
@@ -62297,9 +62285,9 @@ gJC
 gJC
 vVY
 gJC
+mWI
 sBb
 sBb
-avD
 sBb
 sBb
 rOm
@@ -62599,7 +62587,7 @@ puI
 puI
 wDC
 rFp
-puI
+wDC
 puI
 pPh
 sBb
@@ -68329,9 +68317,9 @@ aDK
 aDK
 aDK
 aDK
-qha
+kKj
 myu
-qha
+kKj
 aDK
 aDK
 aDK
@@ -68932,15 +68920,15 @@ aDK
 aDK
 aDK
 aDK
-qha
 kKj
-wNl
 kKj
-qha
-qha
-qha
-qha
-qha
+myu
+kKj
+kKj
+kKj
+kKj
+kKj
+kKj
 aDK
 aDK
 aDK
