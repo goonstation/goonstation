@@ -1,4 +1,9 @@
 
+(t)fri jun 17 22
+(u)Ikea
+(p)9094
+(e)⚖|balance
+(*)Security Assistant tokens now have a single utility credit.
 (t)thu jun 16 22
 (u)TTerc
 (+)Cloning storage lockers are a thing now. They're simply the same lockers that spawn next to cloners, except they no longer are bolted to the floor roundstart.
