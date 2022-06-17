@@ -115,7 +115,6 @@
 		setProperty("coldprot", 7)
 		setProperty("heatprot", 7)
 		setProperty("disorient_resist_eye", 10)
-		setProperty("chemprot", 10)
 
 /obj/item/clothing/mask/gas/NTSO
 	name = "NT gas mask"
@@ -294,7 +293,6 @@
 		..()
 		setProperty("coldprot", 5)
 		setProperty("heatprot", 5)
-		setProperty("chemprot", 5)
 
 /obj/item/clothing/mask/gas/death_commando
 	name = "Death Commando mask"
