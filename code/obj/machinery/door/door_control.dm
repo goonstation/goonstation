@@ -409,6 +409,7 @@
 
 	use_power(5)
 	icon_state = "doorctrl1"
+	playsound(src.loc, 'sound/machines/button.ogg', 40, 0.5)
 
 	if (!src.id)
 		return
@@ -507,7 +508,7 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 		return
 
 	use_power(5)
-
+	playsound(src.loc, 'sound/machines/button.ogg', 40, 0.5)
 	src.active = TRUE
 	icon_state = "launcheract"
 

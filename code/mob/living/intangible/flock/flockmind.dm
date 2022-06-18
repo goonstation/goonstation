@@ -131,7 +131,7 @@
 	message_admins("Sending Flocktrace offer to eligible ghosts. They have [ghost_confirmation_delay / 10] seconds to respond.")
 	var/list/candidates = dead_player_list(FALSE, ghost_confirmation_delay, text_messages)
 
-	if (!src) // doesnt work yet
+	if (src.disposed)
 		message_admins("[src.real_name] has died during a Flocktrace respawn offer event.")
 		logTheThing("admin", null, null, "No Flocktraces were created for [src.real_name] due to their death.")
 		return TRUE

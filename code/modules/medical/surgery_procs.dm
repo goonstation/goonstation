@@ -830,7 +830,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					if (patient.organHolder.spleen)
 						patient.tri_message("<span class='alert'><b>[surgeon]</b> cuts [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] spleen out with [src]!</span>",\
 						surgeon, "<span class='alert'>You cut [surgeon == patient ? "your" : "[patient]'s"] spleen out with [src]!</span>",\
-						patient, "<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] spleen out with [src]!</span>")
+						patient, "<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] [surgeon == patient ? "your" : "[patient]'s"] spleen out with [src]!</span>")
 
 						patient.TakeDamage("chest", damage_high, 0)
 						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)

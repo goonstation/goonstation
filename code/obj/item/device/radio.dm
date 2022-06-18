@@ -314,33 +314,47 @@ var/list/headset_channel_lookup
 				else
 					R.speech_bubble()
 				if (secure)
-					for (var/i in R.send_hear())
-						var/mob/rmob = i
-						if (!(i in receive))
-							receive.Add(rmob)
-							if (ai_sender)
-								rmob.playsound_local(R, 'sound/misc/talk/radio_ai.ogg', 30, 1, 0, pitch = 1, ignore_flag = SOUND_SPEECH)
-							else
-								rmob.playsound_local(R, 'sound/misc/talk/radio2.ogg', 30, 1, 0, pitch = 1, ignore_flag = SOUND_SPEECH)
-							//mbc : i dont like doing this here but its the easiest place to fit it in since this is a point where we have access to both the receiving mob and the radio they are receiving through
-							//nex : now we have a list of all the radios someone is hearing through so now we can do this elsewhere, poggers. anyways still gonna leave this here :^)
 
-						associateRadioToMob(rmob, R, receive, messages, secure, real_name, lang_id)
+					var/mob/temp_mob = null
+					if (istype(R.loc, /obj/item/organ/head))
+						var/obj/item/organ/head/O = R.loc
+						if (O.linked_human != null)
+							temp_mob = O.linked_human
+
+					for (var/i in R.send_hear() + temp_mob)
+						if (i)
+							var/mob/rmob = i
+							if (!(i in receive))
+								receive.Add(rmob)
+								if (ai_sender)
+									rmob.playsound_local(R, 'sound/misc/talk/radio_ai.ogg', 30, 1, 0, pitch = 1, ignore_flag = SOUND_SPEECH)
+								else
+									rmob.playsound_local(R, 'sound/misc/talk/radio2.ogg', 30, 1, 0, pitch = 1, ignore_flag = SOUND_SPEECH)
+								//mbc : i dont like doing this here but its the easiest place to fit it in since this is a point where we have access to both the receiving mob and the radio they are receiving through
+								//nex : now we have a list of all the radios someone is hearing through so now we can do this elsewhere, poggers. anyways still gonna leave this here :^)
+
+							associateRadioToMob(rmob, R, receive, messages, secure, real_name, lang_id)
 
 
 				else
-					for (var/i in R.send_hear())
-						if (signal_loss && !R.hardened && R.frequency >= R_FREQ_MINIMUM && R.frequency <= R_FREQ_MAXIMUM)
-							continue
+					var/mob/temp_mob = null
+					if (istype(R.loc, /obj/item/organ/head))
+						var/obj/item/organ/head/O = R.loc
+						if (O.linked_human != null)
+							temp_mob = O.linked_human
 
-						var/mob/rmob = i
-						if (!(i in receive))
-							receive.Add(i)
-							if (ai_sender)
-								rmob.playsound_local(R, 'sound/misc/talk/radio_ai.ogg', 30, 1, 0, pitch = 1, ignore_flag = SOUND_SPEECH)
+					for (var/i in R.send_hear() + temp_mob)
+						if (i)
+							if (signal_loss && !R.hardened && R.frequency >= R_FREQ_MINIMUM && R.frequency <= R_FREQ_MAXIMUM)
+								continue
 
-						associateRadioToMob(rmob, R, receive, messages, secure, real_name, lang_id)
+							var/mob/rmob = i
+							if (!(i in receive))
+								receive.Add(i)
+								if (ai_sender)
+									rmob.playsound_local(R, 'sound/misc/talk/radio_ai.ogg', 30, 1, 0, pitch = 1, ignore_flag = SOUND_SPEECH)
 
+							associateRadioToMob(rmob, R, receive, messages, secure, real_name, lang_id)
 
 		else if (istype(I, /obj/item/mechanics/radioscanner)) //MechComp radio scanner
 			var/obj/item/mechanics/radioscanner/R = I
@@ -604,13 +618,13 @@ var/list/headset_channel_lookup
 	. = ..()
 	if ((in_interact_range(src, user) || src.loc == user))
 		if (src.b_stat)
-			. += "<span class='notice'>\the [src] can be attached and modified!</span>"
+			. += "<br><span class='notice'>[src] can be attached and modified!</span>"
 		else
-			. += "<span class='notice'>\the [src] can not be modified or attached!</span>"
+			. += "<br><span class='notice'>[src] can not be modified or attached!</span>"
 	if (istype(src.secure_frequencies) && length(src.secure_frequencies))
-		. += "Supplementary Channels:"
+		. += "<br><b>Supplementary channels:</b>"
 		for (var/sayToken in src.secure_frequencies) //Most convoluted string of the year award 2013
-			. += "[ headset_channel_lookup["[src.secure_frequencies["[sayToken]"]]"] ? headset_channel_lookup["[src.secure_frequencies["[sayToken]"]]"] : "???" ]: \[[format_frequency(src.secure_frequencies["[sayToken]"])]] (Activator: <b>[sayToken]</b>)"
+			. += "<br>[ headset_channel_lookup["[src.secure_frequencies["[sayToken]"]]"] ? headset_channel_lookup["[src.secure_frequencies["[sayToken]"]]"] : "???" ]: \[[format_frequency(src.secure_frequencies["[sayToken]"])]] (Activator: <b>[sayToken]</b>)"
 
 /obj/item/device/radio/attackby(obj/item/W, mob/user)
 	src.add_dialog(user)

@@ -7,7 +7,7 @@
 		L.blood_id = "bloodc"
 
 	if (src.mind && !src.mind.is_changeling && (src.mind.special_role != ROLE_OMNITRAITOR))
-		src.Browse(grabResource("html/traitorTips/changelingTips.html"),"window=antagTips;size=600x400;title=Antagonist Tips")
+		src.show_antag_popup("changeling")
 
 	var/datum/abilityHolder/changeling/C = src.add_ability_holder(/datum/abilityHolder/changeling)
 	C.addAbility(/datum/targetable/changeling/abomination)
@@ -183,6 +183,7 @@
 				M.ghost = obs
 			*/
 			obs.set_owner(src)
+			obs.show_antag_popup("changeling_absorbed")
 		else if (istype(victim,/mob/dead/target_observer/hivemind_observer))
 			obs = victim
 

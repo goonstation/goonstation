@@ -721,7 +721,7 @@ table#cooktime a#start {
 						F.quality = recipebonus - cook_amt
 						if (istype(F, /obj/item/reagent_containers/food/snacks))
 							F.heal_amt = 0
-					if (src.emagged)
+					if (src.emagged && istype(F))
 						F.from_emagged_oven = 1
 					if (derivename)
 						var/foodname = F.name

@@ -24,13 +24,13 @@
 	desc = "Helps protect against vacuum."
 	seal_hair = 1
 	path_prot = 0
-	permeability_coefficient = 0.2
 
 	setupProperties()
 		..()
 		setProperty("coldprot", 20)
 		setProperty("heatprot", 5)
 		setProperty("viralprot", 50)
+		setProperty("chemprot", 20)
 		setProperty("disorient_resist_eye", 8)
 		setProperty("disorient_resist_ear", 8)
 		setProperty("space_movespeed", 0.2)
@@ -393,12 +393,12 @@
 			name = "specialist health monitor"
 			icon_state = "syndie_specialist"
 			item_state = "syndie_specialist"
-			permeability_coefficient = 0.01
 			c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 
 			setupProperties()
 				..()
 				setProperty("viralprot", 50)
+				setProperty("chemprot", 30)
 
 			equipped(var/mob/user, var/slot)
 				..()
@@ -439,7 +439,7 @@
 
 /obj/item/clothing/head/helmet/space/ntso //recoloured nuke class suits for ntso vs syndicate specialist
 	name = "NT combat helmet"
-	desc = "A modified combat helmet for Nanotrasen paramilitary forces."
+	desc = "A modified combat helmet for Nanotrasen security forces."
 	icon_state = "ntso_specialist"
 	item_state = "ntso_specialist"
 
@@ -942,3 +942,26 @@
 		setProperty("heatprot", 15)
 		setProperty("disorient_resist_eye", 8)
 		setProperty("disorient_resist_ear", 8)
+
+/obj/item/clothing/head/helmet/captain
+	name = "captain's helmet"
+	desc = "Somewhat protects an important person's head from being bashed in. Comes in a intriqueing shade of green befitting of a captain"
+	c_flags = COVERSEYES | BLOCKCHOKE
+	icon_state = "helmet-captain"
+	item_state = "helmet-captain"
+
+	setupProperties()
+		..()
+		setProperty("meleeprot_head", 7)
+
+	blue
+		name = "commander's helmet"
+		desc = "Somewhat protects an important person's head from being bashed in. Comes in a stylish shade of blue befitting of a commander"
+		icon_state = "helmet-captain-blue"
+		item_state = "helmet-captain-blue"
+
+	red
+		name = "\improper CentCom helmet"
+		desc = "Somewhat protects an important person's head from being bashed in. Comes in a stylish shade of red befitting of an executive"
+		icon_state = "helmet-captain-red"
+		item_state = "helmet-captain-red"

@@ -475,7 +475,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	shot_sound = 'sound/impact_sounds/Generic_Swing_1.ogg'
 	dissipation_delay = 1
 	dissipation_rate = 35
-	icon_turf_hit = null
+	impact_image_state = null
 
 	on_hit(atom/hit)
 		if (usr && hit)
@@ -891,7 +891,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	icon_state = "bullet"
 	implanted= null
 	casing = null
-	icon_turf_hit = null
+	impact_image_state = null
 	var/typetospawn = null
 	var/hasspawned = null
 	var/hit_sound = null
@@ -920,7 +920,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	icon_state = "gun"
 	implanted= null
 	casing = null
-	icon_turf_hit = null
+	impact_image_state = null
 	typetospawn = /obj/item/gun/kinetic/derringer
 
 
@@ -965,7 +965,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	cost = 1
 	shot_sound = 'sound/weapons/rocket.ogg'
 	ks_ratio = 1.0
-	icon_turf_hit = "secbot1-wild"
+	impact_image_state = "secbot1-wild"
 	implanted = null
 	typetospawn = /obj/machinery/bot/secbot
 

@@ -647,7 +647,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	cost = 1000
 	containertype = /obj/storage/crate
 	containername = "Portable Welding Tank Crate"
-f
+
 /datum/supply_packs/fueltank
 	name = "Welding Fuel Tank"
 	desc = "1x Welding Fuel Tank"
@@ -826,10 +826,6 @@ f
 	cost = 60000
 	containertype = /obj/storage/crate/wooden
 	containername = "RCD Replacement"
-
-	cost = 3000
-	containertype = /obj/storage/crate/packing
-	containername = "Cold Weather Gear"
 
 /datum/supply_packs/buddy
 	name = "Thinktronic Build Your Own Buddy Kit"

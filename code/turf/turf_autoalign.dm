@@ -488,10 +488,26 @@
 	/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn,
 	/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen)
 
+// Some fun walls by Walpvrgis
+ABSTRACT_TYPE(turf/simulated/wall/auto/hedge)
+/turf/simulated/wall/auto/hedge
+	name = "hedge"
+	desc = "This hedge is sturdy! No light seems to pass through it..."
+	icon = 'icons/turf/walls_hedge.dmi'
+	mod = "hedge-"
+	light_mod = "wall-"
+	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
+	connect_diagonal = 1
+	connects_to = list(/turf/simulated/wall/auto/hedge, /turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
+	/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
+	/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle, /obj/machinery/door,
+	/obj/window, /obj/wingrille_spawn, /turf/simulated/wall/auto/reinforced/supernorn/yellow,
+	/turf/simulated/wall/auto/reinforced/supernorn/blackred, /turf/simulated/wall/auto/reinforced/supernorn/orange,
+	/turf/simulated/wall/auto/old, /turf/simulated/wall/auto/reinforced/old)
 
-
-
-
+	connects_with_overlay = list(/turf/simulated/wall/auto/shuttle,
+	/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn,
+	/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen)
 
 
 /* ===================================================== */

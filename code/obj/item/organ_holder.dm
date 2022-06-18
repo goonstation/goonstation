@@ -466,7 +466,7 @@
 						H.u_equip(W)
 						W.set_loc(myHead)
 						myHead.wear_mask = W
-					if (isskeleton(src.donor) && myHead.head_type & HEAD_SKELETON) // must be skeleton AND have skeleton head
+					if (isskeleton(src.donor) && myHead.head_type == HEAD_SKELETON) // must be skeleton AND have skeleton head
 						src.donor.set_eye(myHead)
 						var/datum/mutantrace/skeleton/S = H.mutantrace
 						S.set_head(myHead)
@@ -826,6 +826,9 @@
 						H.wear_mask = newHead.wear_mask
 						newHead.wear_mask.set_loc(H)
 						newHead.wear_mask = null
+					if (isskeleton(H) && newHead.head_type == HEAD_SKELETON)
+						var/datum/mutantrace/skeleton/S = H.mutantrace
+						S.set_head(newHead)
 					H.set_eye(null)
 				src.donor.update_body()
 				src.donor.UpdateDamageIcon()
@@ -859,7 +862,7 @@
 				if (!src.skull)
 					return 0
 				var/obj/item/organ/brain/newBrain = I
-				boutput(src.donor, "<span class='alert'>You feel yourself forcibly ejected from your corporeal form!</span>")
+				boutput(src.donor, "<span class='alert'><b>You feel yourself forcibly ejected from your corporeal form!</b></span>")
 				src.donor.ghostize()
 				if (newBrain.owner)
 					newBrain.owner.transfer_to(src.donor)
