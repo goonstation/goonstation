@@ -244,6 +244,7 @@
 
 /obj/item/storage/box/costume
 	icon_state = "costume"
+	can_hold = list(/obj/item/clothing/under)
 
 /obj/item/storage/box/costume/clown
 	name = "clown costume"

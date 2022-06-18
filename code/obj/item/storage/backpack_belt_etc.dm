@@ -628,9 +628,7 @@
 	desc = "A specialized belt for treating patients outside medbay in the field. A unique attachment point lets you carry defibrillators."
 	icon_state = "injectorbelt"
 	item_state = "medical"
-	can_hold = list(
-		/obj/item/robodefibrillator
-	)
+	can_hold = list(/obj/item/robodefibrillator)
 	in_list_or_max = 1
 
 /obj/item/storage/belt/roboticist
@@ -656,8 +654,7 @@
 	item_state = "mining"
 	can_hold = list(
 		/obj/item/mining_tool,
-		/obj/item/mining_tools
-	)
+		/obj/item/mining_tools)
 	in_list_or_max = 1
 
 /obj/item/storage/belt/mining/prepared
