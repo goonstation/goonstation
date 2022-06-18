@@ -8,7 +8,9 @@ import {
   BlockQuote,
   Box,
   Button,
+  Divider,
   Flex,
+  LabeledList,
   ProgressBar,
   Section,
   Slider,
@@ -189,31 +191,34 @@ export const Wire = (props) => {
 
   const toggleCutButton = () => {
     if (isCut(wire)) {
-      return <Button content="mend" onClick={onMend} />;
+      return <Button content="mend" onClick={onMend} align="center" />;
     } else {
-      return <Button content="cut" onClick={onCut} />;
+      return <Button content="cut" icon="cut" onClick={onCut} />;
+    }
+  };
+
+  const actionsDisplay = () => {
+    if (isCut(wire)) {
+      return (
+        <Box height={1.8}>
+          <Button content="Mend" onClick={onMend} selected />
+        </Box>
+      );
+    } else {
+      return (
+        <Box height={1.8}>
+          <Button content="Cut" icon="cut" onClick={onCut} />
+          <Button content="Pulse" icon="bolt" onClick={onPulse} />
+          <Button content="Bite" icon="tooth" onClick={onBite} />
+        </Box>
+      );
     }
   };
 
   return (
-    <Flex direction="row" align="center">
-      <Flex.Item grow={1}>
-        <Box>{color} wire:</Box>
-      </Flex.Item>
-      <Flex.Item>
-        <Stack>
-          <Stack.Item>
-            {toggleCutButton()}
-          </Stack.Item>
-          <Stack.Item>
-            <Button content="pulse" onClick={onPulse} />
-          </Stack.Item>
-          <Stack.Item>
-            <Button content="bite" onClick={onBite} />
-          </Stack.Item>
-        </Stack>
-      </Flex.Item>
-    </Flex>
+    <LabeledList.Item key={wire} label={color} labelColor={color.toLowerCase().replace(' ', '')} >
+      {actionsDisplay()}
+    </LabeledList.Item>
   );
 };
 
@@ -222,23 +227,29 @@ export const AccessPanel = (props) => {
     act,
     data,
   } = props;
+
   return (
     <Section title="Access Panel">
       <BlockQuote>An identifier is engraved above the APC{"'"}s wires: {data["net_id"]}</BlockQuote>
       <Flex direction="column">
-        <Flex direction="row">
-          <Section>
-            <Wire wire={WIRE_ORANGE} act={act} data={data} />
-            <Wire wire={WIRE_DARK_RED} act={act} data={data} />
-            <Wire wire={WIRE_WHITE} act={act} data={data} />
-            <Wire wire={WIRE_YELLOW} act={act} data={data} />
-          </Section>
-        </Flex>
-        <Section>
-          <Box>The APC is {data["locked"] ? "locked" : "unlocked"}.</Box>
-          <Box>{data["shorted"] ? "The APC's power has been shorted." : "The APC is working properly!"}</Box>
-          <Box>The {"'AI control allowed'"} light is {data["aidisabled"] ? "off" : "on"}.</Box>
-        </Section>
+        <LabeledList>
+          <Wire wire={WIRE_ORANGE} act={act} data={data} />
+          <Wire wire={WIRE_DARK_RED} act={act} data={data} />
+          <Wire wire={WIRE_WHITE} act={act} data={data} />
+          <Wire wire={WIRE_YELLOW} act={act} data={data} />
+        </LabeledList>
+        <Divider />
+        <LabeledList>
+          <LabeledList.Item label="APC Lock">
+            {data["locked"] ? <font color="green">Locked</font> : <font color="red">Unlocked</font>}
+          </LabeledList.Item>
+          <LabeledList.Item label="Status">
+            {data["shorted"] ? <font color="red">Shorted</font> : <font color="green">Working</font>}
+          </LabeledList.Item>
+          <LabeledList.Item label="AI Control">
+            {data["aidisabled"] ? <font color="red">Disabled</font> : <font color="green">Enabled</font>}
+          </LabeledList.Item>
+        </LabeledList>
       </Flex>
     </Section>
   );
@@ -268,9 +279,7 @@ export const Apc = (props, context) => {
   const swipeOrHostDisplay = () => {
     if (data["setup_networkapc"] < 2 && !data["can_access_remotely"]) {
       return (
-        <Stack.Item align="center">
-          <Box>Swipe ID card to {data["locked"] ? "unlock" : "lock"} interface.</Box>
-        </Stack.Item>
+        <Box align="center" bold fill>Swipe ID card to {data["locked"] ? "unlock" : "lock"} interface</Box>
       );
     } else {
       return (
