@@ -318,7 +318,7 @@
 						var/mob/living/carbon/human/H = user
 						if (H.wear_id)
 							ID = H.wear_id
-				if ((src.req_access && src.allowed(user)) || ID && length(ID.registered) && (src.registered == ID.registered || !src.registered))
+				if ((src.req_access && src.allowed(user)) || (ID && length(ID.registered) && (src.registered == ID.registered || !src.registered)))
 					//they can open all lockers, or nobody owns this, or they own this locker
 					src.locked = !( src.locked )
 					user.visible_message("<span class='notice'>The locker has been [src.locked ? null : "un"]locked by [user].</span>")
