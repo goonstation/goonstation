@@ -74914,7 +74914,7 @@
 /obj/storage/secure/closet/fridge{
 	name = "incredible closetfridge"
 	},
-/obj/item/storage/ntso_pouch{
+/obj/item/storage/ntsc_pouch{
 	desc = "A dump pouch for various security accessories. This one has definitely seen better days.";
 	name = "stained tacticool pouch";
 	pixel_x = 5;

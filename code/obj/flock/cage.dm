@@ -23,7 +23,6 @@
 	var/target_fluid = "flockdrone_fluid"
 	var/create_egg_at_fluid = 100
 	var/absorb_per_process_tick = 2
-	mat_changeappearance = FALSE
 
 
 	New(loc, var/atom/iced, datum/flock/F=null)

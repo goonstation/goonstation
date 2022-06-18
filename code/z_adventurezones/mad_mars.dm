@@ -284,13 +284,13 @@
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
 	item_state = "mars_blue"
 	c_flags = SPACEWEAR
-	permeability_coefficient = 0.1
 	protective_temperature = 700
 
 	setupProperties()
 		..()
 		setProperty("coldprot", 20)
 		setProperty("heatprot", 80)
+		setProperty("chemprot", 20)
 
 /obj/item/clothing/head/helmet/mars
 	name = "ME-3 Helmet "

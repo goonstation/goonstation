@@ -27,7 +27,15 @@
 		. += "[reinforced ? "It's reinforced, only stronger firearms and explosives could break into this. " : ""] [bolted ? "It's bolted to the floor." : ""]"
 
 	attackby(obj/item/I, mob/user)
-		if (src.open || !src.locked)
+		if (iswrenchingtool(I) && !src.open)
+			if (istype(get_turf(src), /turf/space))
+				if (user)
+					user.show_text("What exactly are you gunna secure [src] to?", "red")
+				return
+			playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+			SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, .proc/toggle_bolts, user, I.icon, I.icon_state,"", null)
+			return
+		else if (src.open || !src.locked)
 			..()
 		else if (!I)
 			..()
@@ -35,13 +43,6 @@
 			..()
 		else if (isweldingtool(I))
 			..()
-		else if (iswrenchingtool(I))
-			if (istype(get_turf(src), /turf/space))
-				if (user)
-					user.show_text("What exactly are you gunna secure [src] to?", "red")
-				return
-			playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
-			SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, .proc/toggle_bolts, user, I.icon, I.icon_state,"", null)
 		else if (istype(I, /obj/item/card/))
 			..()
 		else if (user.a_intent == INTENT_HELP)
@@ -299,7 +300,8 @@
 /obj/storage/secure/closet/command/chief_engineer
 	name = "\improper Chief Engineer's locker"
 	req_access = list(access_engineering_chief)
-	spawn_contents = list(/obj/item/storage/toolbox/mechanical/yellow_tools,
+	spawn_contents = list(/obj/item/disk/data/floppy/manudrive/law_rack,
+	/obj/item/storage/toolbox/mechanical/yellow_tools,
 	/obj/item/storage/backpack/engineering,
 	/obj/item/storage/box/clothing/chief_engineer,
 	/obj/item/clothing/gloves/yellow,
@@ -323,8 +325,7 @@
 	/obj/item/clothing/suit/space/engineer,
 	/obj/item/clothing/head/helmet/space/engineer,
 #endif
-	/obj/item/device/radio/headset/command/ce,
-	/obj/item/paper/manufacturer_blueprint/lawrack)
+	/obj/item/device/radio/headset/command/ce)
 
 /* ==================== */
 /* ----- Security ----- */

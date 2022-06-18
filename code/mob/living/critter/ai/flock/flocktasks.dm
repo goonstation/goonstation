@@ -121,8 +121,8 @@ stare
 	for(var/turf/simulated/floor/feather/F in view(max_dist, holder.owner))
 		// let's not spam eggs all the time
 		if(isnull(locate(/obj/flock_structure/egg) in F))
-			. += F
-	. = get_path_to(holder.owner, ., max_dist*2, can_be_adjacent_to_target)
+			. = get_path_to(holder.owner, list(F), max_dist*2, can_be_adjacent_to_target)
+			if (length(.)) return
 
 ////////
 
@@ -176,17 +176,15 @@ stare
 		for(var/turf/simulated/floor/feather/T in view(max_dist, holder.owner))
 			return FALSE
 
-
 /datum/aiTask/sequence/goalbased/nest/get_targets()
 	. = list()
 	var/mob/living/critter/flock/F = holder.owner
-
 	for(var/turf/simulated/floor/T in view(max_dist, holder.owner))
-		if(!isfeathertile(T))
-			if(F?.flock && !F.flock.isTurfFree(T, F.real_name))
-				continue
-			. += T
-	. = get_path_to(holder.owner, ., max_dist*2, 1)
+		if(F?.flock && !F.flock.isTurfFree(T, F.real_name))
+			continue
+		. = get_path_to(holder.owner, list(T), max_dist*2, 1)
+		if (length(.))
+			return
 
 ////////
 
@@ -249,8 +247,9 @@ stare
 	for(var/turf/simulated/T in view(max_dist, holder.owner))
 		if (!valid_target(T))
 			continue // this tile's been claimed by someone else
-		. += T
-	. = get_path_to(holder.owner, ., max_dist*2, 1)
+		. = get_path_to(holder.owner, list(T), max_dist*2, 1)
+		if(length(.))
+			return
 
 ////////
 
@@ -333,7 +332,9 @@ stare
 			locate(/obj/storage) in T))
 			if(F?.flock && !F.flock.isTurfFree(T, F.real_name))
 				continue
-			. += T
+			. = get_path_to(holder.owner, list(T), max_dist, 1)
+			if(length(.))
+				return
 
 	// if there are absolutely no walls/doors/closets in view, and no reserved tiles, then fine, you can have a floor tile
 	if(!length(.))
@@ -341,8 +342,9 @@ stare
 			if(!isfeathertile(T))
 				if(F?.flock && !F.flock.isTurfFree(T, F.real_name))
 					continue
-				. += T
-	. = get_path_to(holder.owner, ., max_dist*2, 1)
+				. = get_path_to(holder.owner, list(T), max_dist, 1)
+				if(length(.))
+					return
 
 ////////
 
@@ -443,9 +445,9 @@ stare
 /datum/aiTask/sequence/goalbased/deposit/get_targets()
 	var/mob/living/critter/flock/drone/F = holder.owner
 	. = list()
-	for(var/obj/flock_structure/ghost/S in view(max_dist, F))
-		if(S.flock == F.flock && S.goal > S.currentmats)
-			. += S
+	for (var/obj/flock_structure/ghost/O as anything in by_type[/obj/flock_structure/ghost])
+		if (O.flock == F.flock && O.goal > O.currentmats && IN_RANGE(holder.owner, O, max_dist))
+			. += O
 	. = get_path_to(holder.owner, ., max_dist*2, 1)
 
 ////////
@@ -640,8 +642,9 @@ stare
 		if(!I.anchored && I.loc != holder.owner)
 			if(istype(I, /obj/item/game_kit))
 				continue
-			. += I
-	. = get_path_to(holder.owner, ., max_dist*2, 1)
+			. = get_path_to(holder.owner, list(I), max_dist, 1)
+			if(length(.))
+				return
 
 ////////
 

@@ -130,12 +130,10 @@ datum
 			switch(method)
 				if(TOUCH)
 					if (penetrates_skin && !("nopenetrate" in paramslist))
+						var/percent_protection = clamp(GET_ATOM_PROPERTY(M, PROP_MOB_CHEMPROT), 0, 100)
 						var/modifier = 1
 						if(!src.pierces_outerwear)
-							for(var/atom in M.get_equipped_items())
-								if (istype(atom, /obj/item/clothing))
-									var/obj/item/clothing/C = atom
-									modifier -= (1 - C.permeability_coefficient)/3
+							modifier -= (percent_protection/100)
 						modifier *= touch_modifier
 
 						if(M.reagents)

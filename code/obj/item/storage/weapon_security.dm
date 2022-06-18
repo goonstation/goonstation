@@ -348,6 +348,10 @@
 
 /obj/item/storage/box/costume/safari
 	name = "safari costume"
+	can_hold = list(/obj/item/boomerang,
+	/obj/item/clothing/under,
+	/obj/item/ammo/bullets/tranq_darts)
+	
 	spawn_contents = list(/obj/item/clothing/head/safari,\
 	/obj/item/clothing/under/gimmick/safari,\
 	/obj/item/boomerang,\

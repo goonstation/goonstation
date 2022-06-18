@@ -28,7 +28,6 @@ var/fartcount = 0
 	desc = "These cheap sandals don't even look legal."
 	icon_state = "thong"
 	protective_temperature = 0
-	permeability_coefficient = 1
 	var/possible_names = list("sandals", "flip-flops", "thongs", "rubber slippers", "jandals", "slops", "chanclas")
 	var/stapled = FALSE
 
@@ -56,6 +55,7 @@ var/fartcount = 0
 		setProperty("coldprot", 0)
 		setProperty("heatprot", 0)
 		setProperty("conductivity", 1)
+		delProperty("chemprot")
 
 
 

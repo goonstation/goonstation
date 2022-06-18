@@ -856,7 +856,6 @@ SYNDICATE DRONE FACTORY AREAS
 	flags = FPRINT | TABLEPASS | SPACEWEAR
 	body_parts_covered = TORSO|LEGS|ARMS
 	fire_resist = T0C+5200
-	permeability_coefficient = 0.02
 	protective_temperature = 1000
 	cant_self_remove = 1
 	cant_other_remove = 1
@@ -869,6 +868,7 @@ SYNDICATE DRONE FACTORY AREAS
 		setProperty("heatprot", 80)
 		setProperty("movespeed", 2)
 		setProperty("disorient_resist", 35)
+		setProperty("chemprot", 30)
 
 // scare the everliving fuck out of the player when they equip it
 // what else should this thing do? idk yet. maybe some crazy hallucinations with an ancient blood reagent or something? something like the obsidian crown?
