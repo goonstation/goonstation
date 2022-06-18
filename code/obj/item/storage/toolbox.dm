@@ -78,7 +78,7 @@
 		/obj/item/electronics/soldering,
 		/obj/item/device/t_scanner,
 		/obj/item/cable_coil,
-		/obj/item/sheet/glass/reinforced/fullstack,
+		/obj/item/sheet/glass/fullstack,
 		/obj/item/sheet/steel/reinforced/fullstack,
 		/obj/item/reagent_containers/food/snacks/plant/banana,)
 
