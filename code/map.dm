@@ -946,7 +946,6 @@ var/global/list/mapNames = list(
 
 /datum/map_settings/federation
 	name = "FEDERATION"
-	style = "station"
 	default_gamemode = "secret"
 	goonhub_map = "https://goonhub.com/maps/federation"
 	arrivals_type = MAP_SPAWN_SHUTTLE
