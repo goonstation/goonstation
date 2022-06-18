@@ -20,7 +20,6 @@
 
 	///Custom contextActions list so we can handle opening them ourselves
 	var/list/datum/contextAction/contexts = list()
-	contextLayout = new /datum/contextLayout/experimentalcircle
 
 	var/damaged = 0 // used for state management for description showing, as well as preventing drones from screaming about being hit
 
@@ -62,8 +61,13 @@
 		else
 			emote("beep")
 			say(pick_string("flockmind.txt", "flockdrone_created"))
-
+	var/datum/contextLayout/experimentalcircle/layout = new
+	layout.center = TRUE
+	src.contextLayout = layout
+	src.contexts += new /datum/contextAction/flockdrone/control
 	for (var/type as anything in childrentypesof(/datum/contextAction/flockdrone))
+		if (type == /datum/contextAction/flockdrone/control)
+			continue
 		src.contexts += new type
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection, FALSE, FALSE, FALSE, FALSE)
