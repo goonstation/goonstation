@@ -16923,14 +16923,7 @@
 /turf/unsimulated/floor/carpet/grime,
 /area/crypt/sigma/rd)
 "ukq" = (
-/obj/decal/fakeobjects/firelock_broken{
-	density = 1;
-	desc = "Rust has rendered this airlock useless.";
-	icon = 'icons/obj/doors/doorint.dmi';
-	icon_state = "door_locked";
-	name = "rusted airlock";
-	opacity = 1
-	},
+/obj/decal/fakeobjects/firelock_broken,
 /turf/unsimulated/floor/delivery,
 /area/crypt/sigma/kitchen)
 "ukS" = (

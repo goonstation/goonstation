@@ -10,7 +10,6 @@
 	item_state = "black"
 	body_parts_covered = TORSO|LEGS|ARMS
 	protective_temperature = T0C + 50
-	permeability_coefficient = 0.90
 	flags = FPRINT|TABLEPASS
 	//cogwerks - burn vars
 	burn_point = 400
@@ -26,6 +25,7 @@
 		setProperty("coldprot", 5)
 		setProperty("heatprot", 5)
 		setProperty("meleeprot", 1)
+		setProperty("chemprot", 10)
 
 
 /obj/item/clothing/under/crafted
@@ -432,7 +432,6 @@
 	desc = "It's got a red plus on it, that's a good thing right?"
 	icon_state = "medical"
 	item_state = "medical"
-	permeability_coefficient = 0.50
 
 	april_fools
 		icon_state = "medical-alt"
@@ -443,7 +442,6 @@
 	desc = "Black and white, like ethics."
 	icon_state = "robotics"
 	item_state = "robotics"
-	permeability_coefficient = 0.50
 
 	april_fools
 		icon_state = "robotics-alt"
@@ -454,7 +452,6 @@
 	desc = "A research jumpsuit, supposedly more resistant to biohazards. It had better be!"
 	icon_state = "scientist"
 	item_state = "scientist"
-	permeability_coefficient = 0.50
 
 	april_fools
 		icon_state = "scientist-alt"
@@ -465,7 +462,6 @@
 	desc = "Genetics is very green these days, isn't it?"
 	icon_state = "genetics"
 	item_state = "genetics"
-	permeability_coefficient = 0.50
 
 	april_fools
 		icon_state = "genetics-alt"
@@ -476,7 +472,6 @@
 	desc = "Scientifically proven to block up to 99% of pathogens."
 	icon_state = "pathology"
 	item_state = "pathology"
-	permeability_coefficient = 0.50
 
 	april_fools
 		icon_state = "medical-alt"
@@ -544,7 +539,6 @@
 	desc = "Has a strong earthy smell to it. Hopefully it's merely dirty as opposed to soiled."
 	icon_state = "hydro"
 	item_state = "hydro"
-	permeability_coefficient = 0.50
 
 	april_fools
 		icon_state = "hydro-alt"
@@ -555,7 +549,6 @@
 	desc = "Smells like a barn; hopefully its wearer wasn't raised in one."
 	icon_state = "rancher"
 	item_state = "rancher"
-	permeability_coefficient = 0.50
 
 /obj/item/clothing/under/rank/janitor
 	name = "janitor's jumpsuit"
@@ -740,7 +733,7 @@
 
 /obj/item/clothing/under/misc/turds
 	name = "NT combat uniform"
-	desc = "A Nanotrasen paramilitary jumpsuit."
+	desc = "A Nanotrasen security jumpsuit."
 	icon_state = "turdsuit"
 	item_state = "turdsuit"
 	team_num = TEAM_NANOTRASEN

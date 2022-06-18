@@ -268,13 +268,13 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	name = "latex gloves"
 	icon_state = "latex"
 	item_state = "lgloves"
-	permeability_coefficient = 0.02
 	desc = "Thin, disposable medical gloves used to help prevent the spread of germs."
 	protective_temperature = 310
 	scramble_prints = 1
 	setupProperties()
 		..()
 		setProperty("conductivity", 0.7)
+		setProperty("chemprot", 15)
 
 /obj/item/clothing/gloves/latex/blue
 	color = "#91d5e9"

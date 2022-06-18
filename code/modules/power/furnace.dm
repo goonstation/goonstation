@@ -1,6 +1,6 @@
 /obj/machinery/power/furnace
-	name = "Furnace"
-	desc = "An inefficient method of powering the station. Generates 5000 units of power while active."
+	name = "Zaojun-2 5kW Furnace"
+	desc = "The venerable Xiang-Giesel model '灶君' combustion furnace with integrated 5 kilowatt thermocouple. A simple power solution for low-demand facilities and outposts."
 	icon_state = "furnace"
 	anchored = 1
 	density = 1

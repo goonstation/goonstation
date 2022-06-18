@@ -51,6 +51,7 @@
 	<a href='?src=\ref[src];action=vampthrall'>Vamp Thrall</a> |
 	<a href='?src=\ref[src];action=vampzombie'>Vamp Zombie</a> |
 	<br><a href='?src=\ref[src];action=changeling'>Changeling</a> |
+	<a href='?src=\ref[src];action=changeling_absorbed'>Changeling victim</a> |
 	<a href='?src=\ref[src];action=handspider'>Handspider</a> |
 	<a href='?src=\ref[src];action=eyespider'>Eyespider</a> |
 	<a href='?src=\ref[src];action=legworm'>Legworm</a> |
@@ -178,6 +179,10 @@
 				filename = "html/traitorTips/vampiricthrallTips.html"
 			if ("changeling")
 				filename = "html/traitorTips/changelingTips.html"
+			if ("changeling_absorbed")
+				filename = "html/mindslave/changelingEaten.html"
+			if ("changeling_leave")
+				filename = "html/mindslave/changelingLeave.html"
 			if ("handspider")
 				filename = "html/mindslave/handspider.html"
 			if ("eyespider")
