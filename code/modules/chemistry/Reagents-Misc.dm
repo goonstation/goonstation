@@ -2816,15 +2816,16 @@ datum
 					arcFlash(grenade, A, 1 MEGA WATT, 0.75)
 
 			reaction_temperature(exposed_temperature, exposed_volume)
-				if (reacting)
-					return
+				if (volume >= 1) //bandaid fix for its lack of scaling allowing a stunlocking chemicompiler that runs forever, doesnt fix its lack of scaling
+					if (reacting)
+						return
 
-				reacting = 1
-				var/count = 0
-				for (var/mob/living/L in oview(5, get_turf(holder.my_atom)))
-					count++
-				for (var/mob/living/L in oview(5, get_turf(holder.my_atom)))
-					arcFlash(holder.my_atom, L, min(75000 / count, volume * 1000 / count))
+					reacting = 1
+					var/count = 0
+					for (var/mob/living/L in oview(5, get_turf(holder.my_atom)))
+						count++
+					for (var/mob/living/L in oview(5, get_turf(holder.my_atom)))
+						arcFlash(holder.my_atom, L, min(75000 / count, volume * 1000 / count))
 
 				holder.del_reagent(id)
 
