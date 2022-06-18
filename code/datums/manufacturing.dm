@@ -1654,7 +1654,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	item_outputs = list(/obj/item/reagent_containers/dropper/mechanical)
 	time = 3 SECONDS
 	create = 1
-	category = "tool"
+	category = "Tool"
 
 // Mining Gear
 #ifndef UNDERWATER_MAP
