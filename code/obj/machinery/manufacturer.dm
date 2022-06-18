@@ -2177,7 +2177,7 @@
 
 /obj/machinery/manufacturer/science
 	name = "science fabricator"
-	supplemental_desc = "This one produces science equipment for chemical and atmospheric experiments as well as expedition equipment.."
+	supplemental_desc = "This one produces science equipment for experiments as well as expeditions."
 	icon_state = "fab-sci"
 	icon_base = "sci"
 	free_resource_amt = 2
@@ -2185,7 +2185,8 @@
 		/obj/item/material_piece/copper,
 		/obj/item/material_piece/glass,
 		/obj/item/material_piece/cloth/cottonfabric)
-	available = list(/datum/manufacture/screwdriver,
+	available = list(
+		/datum/manufacture/screwdriver,
 		/datum/manufacture/wirecutters,
 		/datum/manufacture/wrench,
 		/datum/manufacture/crowbar,
@@ -2194,13 +2195,13 @@
 		/datum/manufacture/welder,
 		/datum/manufacture/patch,
 		/datum/manufacture/atmos_can,
-		/datum/manufacture/biosuit
-		/datum/manufacture/labcoat
-		/datum/manufacture/jumpsuit_white
+		/datum/manufacture/biosuit,
+		/datum/manufacture/labcoat,
+		/datum/manufacture/jumpsuit_white,
 		/datum/manufacture/patient_gown,
 		/datum/manufacture/blindfold,
 		/datum/manufacture/muzzle,
-		/datum/manufacture/gasmask
+		/datum/manufacture/gasmask,
 		/datum/manufacture/latex_gloves,
 		/datum/manufacture/shoes_white,
 		/datum/manufacture/rods2,
