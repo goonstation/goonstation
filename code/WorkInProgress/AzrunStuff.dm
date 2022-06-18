@@ -817,7 +817,7 @@
 
 /mob/living/silicon/ai/New()
 	..()
-	abilityHolder = new /datum/abilityHolder/silicon/ai
+	abilityHolder = new /datum/abilityHolder/silicon/ai(src)
 	if(eyecam)
 		eyecam.abilityHolder = abilityHolder
 
@@ -879,6 +879,26 @@
 		if(expansion)
 			expansion.last_use = world.time + expansion.shared_cooldown
 
+	proc/can_shoot_to(obj/machinery/camera/C, turf/target, atom/A, max_length=10)
+
+		if(isnull(A))
+			A = new /obj/projectile
+		var/turf/current = get_turf(C)
+		var/turf/target_turf = get_turf(target)
+		var/turf/next = get_step_towards(current, target_turf)
+		var/steps = 0
+
+		while(next != target_turf)
+			if (steps > max_length) return 0
+			if (!next) return 0
+			if(!jpsTurfPassable(next, source=current, passer=A))
+				return 0
+
+			current = next
+			next = get_step_towards(next, target_turf)
+			steps++
+
+		return 1
 
 /datum/targetable/ai/module/chems
 	targeted = TRUE
@@ -898,7 +918,7 @@
 			if(!isturf(cam.loc) || !istype_exact(cam,/obj/machinery/camera))
 				continue
 
-			if(!can_line_airborne(cam, T, 15)) // probably want something that tests an object crossing specifically?
+			if(!can_shoot_to(cam, T, max_length=15))
 				continue
 
 			if(!ON_COOLDOWN(cam,"[src.type]", 15 SECONDS))
@@ -974,11 +994,23 @@
 
 		var/camera_on_cd = FALSE
 		var/turf/T = get_turf(target)
+
+		var/obj/projectile/test_projectile = new
+		test_projectile.proj_data = P
+
 		for(var/obj/machinery/camera/cam in T.cameras)
-			if(!isturf(cam.loc) || !istype_exact(cam,/obj/machinery/camera))
+			if(!isturf(cam.loc))
 				continue
 
-			if(!can_line_airborne(cam, T, 15)) // probably want something that tests an object crossing specifically?
+			if(istype(cam, /mob/living/silicon/hivebot/eyebot))
+				if (issilicon(cam))
+					var/mob/living/silicon/S = cam
+					if(S?.cell.charge < P.cost)
+						continue
+			else if(!istype_exact(cam,/obj/machinery/camera))
+				continue
+
+			if(!can_shoot_to(cam, T, test_projectile, max_length=15))
 				continue
 
 			if(!ON_COOLDOWN(cam,"[src.type]", src.projectile_cd))
@@ -988,7 +1020,12 @@
 					logTheThing("combat", holder.owner, null, "fires a camera projectile [src], targeting [log_loc(target)].")
 					shoot_projectile_ST(cam, P, target)
 					if(P.cost > 1)
-						cam.use_power(P.cost / CELLRATE)
+						if (issilicon(cam))
+							var/mob/living/silicon/S = cam
+							if (S.cell)
+								S.cell.charge -= P.cost
+						else
+							cam.use_power(P.cost / CELLRATE)
 					cam.remove_filter("charge_outline")
 				return
 			else
@@ -1049,6 +1086,9 @@
 		if(.)
 			if(!get_first_teleporter())
 				boutput(holder.owner, "<span class='alert'>No valid telepad found on data network.</span>")
+				return FALSE
+			else  if(target.z != Z_LEVEL_STATION)
+				boutput(holder.owner, "<span class='alert'>Module only calibrated for nearby station travel.</span>")
 				return FALSE
 
 	doCooldown()
@@ -1186,3 +1226,99 @@
 		else
 			SPAWN(rand(15 SECONDS, 35 SECONDS))
 				boutput(holder.owner, "<span class='alert'>No damaged cameras detected.</span>")
+
+/obj/item/aiModule/ability_expansion/doctor_vision
+	name = "ProDoc Expansion Module"
+	desc = "A prototype Health Visualization module.  This module provides for the ability to remotely analyze crew members."
+	lawText = "Security EXPANSION MODULE"
+	highlight_color = rgb(166, 0, 172, 255)
+	ai_abilities = list(/datum/targetable/ai/module/prodocs)
+
+/datum/targetable/ai/module/prodocs
+	name = "Camera Scan"
+	desc = "Scan basic vitals on someone."
+	targeted = TRUE
+	target_anything = FALSE
+	icon_state = "prodoc"
+
+	disposing()
+		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_mob(holder.owner)
+		var/mob/living/silicon/ai/AI = holder.owner
+		if(istype(AI) && AI.eyecam)
+			get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_mob(AI.eyecam)
+		. = ..()
+
+	onAttach(datum/abilityHolder/H)
+		. = ..()
+		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_mob(H.owner)
+		var/mob/living/silicon/ai/AI = holder.owner
+		if(istype(AI) && AI.eyecam)
+			get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_mob(AI.eyecam)
+
+	cast(atom/target)
+		boutput(holder.owner, scan_health(target, disease_detection=FALSE, visible=TRUE))
+
+/obj/item/aiModule/ability_expansion/security_vision
+	name = "Security Expansion Module"
+	desc = "A security record expansion module.  This module allows for remote access to security records."
+	lawText = "Security EXPANSION MODULE"
+	highlight_color = rgb(172, 0, 0, 255)
+	ai_abilities = list(/datum/targetable/ai/module/sec_huds)
+	var/obj/machinery/computer/secure_data/sec_comp
+
+	New()
+		..()
+		sec_comp = new(src)
+		sec_comp.ai_access = TRUE
+		sec_comp.authenticated = TRUE
+		sec_comp.rank = "AI"
+
+/datum/targetable/ai/module/sec_huds
+	name = "Security Lookup Scan"
+	desc = "Check someone's security records."
+	targeted = TRUE
+	target_anything = FALSE
+	icon_state = "sec"
+
+	disposing()
+		get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_mob(holder.owner)
+		var/mob/living/silicon/ai/AI = holder.owner
+		if(istype(AI) && AI.eyecam)
+			get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_mob(AI.eyecam)
+
+		. = ..()
+
+	onAttach(datum/abilityHolder/H)
+		. = ..()
+		get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).add_mob(H.owner)
+		var/mob/living/silicon/ai/AI = holder.owner
+		if(istype(AI) && AI.eyecam)
+			get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).add_mob(AI.eyecam)
+
+	cast(atom/target)
+		var/obj/item/aiModule/ability_expansion/security_vision/expansion = get_law_module()
+
+		var/found = FALSE
+		var/t1 = "[target.name]"
+		t1 = adminscrub(t1)
+		expansion.sec_comp.active_record_general = null
+		expansion.sec_comp.active_record_security = null
+		t1 = lowertext(t1)
+		for (var/datum/db_record/R as anything in data_core.general.records)
+			if ((lowertext(R["name"]) == t1 || t1 == lowertext(R["dna"]) || t1 == lowertext(R["id"])))
+				expansion.sec_comp.active_record_general = R
+		if (!expansion.sec_comp.active_record_general)
+			expansion.sec_comp.temp = "Could not locate record [t1]."
+		else
+			for (var/datum/db_record/E as anything in data_core.security.records)
+				if ((E["name"] == expansion.sec_comp.active_record_general["name"] || E["id"] == expansion.sec_comp.active_record_general["id"]))
+					expansion.sec_comp.active_record_security = E
+					expansion.sec_comp.temp = null
+					found = TRUE
+					break
+			expansion.sec_comp.screen = 4 //SECREC_VIEW_RECORD
+
+		if(found)
+			expansion.sec_comp.Attackhand(holder.owner)
+		else
+			boutput(holder.owner, "Could not locate record for [t1]")
