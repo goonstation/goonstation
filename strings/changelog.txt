@@ -1,5 +1,7 @@
 
 (t)sat jun 18 22
+(u)TTerc
+(+)Personal lockers no longer require you to use the ID card specifically on them to claim/lock/unlock them. You just need a valid worn ID on yourself.
 (u)Ilysen
 (p)9207
 (e)|
