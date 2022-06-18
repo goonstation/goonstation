@@ -400,6 +400,7 @@
 	proc/set_loc_callback(var/newloc)
 		.=0
 
+	///Returns the actual mob currently controlling this holder, in case src.owner and composite_owner.owner differ (eg flockmind in a drone)
 	proc/get_controlling_mob()
 		return src.composite_owner?.owner || src.owner
 

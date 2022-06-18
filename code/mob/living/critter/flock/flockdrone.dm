@@ -135,7 +135,6 @@
 	src.hud?.update_intent()
 	var/datum/abilityHolder/composite/composite = src.abilityHolder
 	composite.addHolderInstance(pilot.abilityHolder, TRUE)
-	src.RegisterSignal(controller, COMSIG_MOB_BOUTPUT, .proc/relay_boutput)
 	if (istype(pilot, /mob/living/intangible/flock/flockmind))
 		flock.addAnnotation(src, FLOCK_ANNOTATION_FLOCKMIND_CONTROL)
 	else
@@ -174,7 +173,6 @@
 				ticker.minds += controller.mind
 		var/datum/abilityHolder/composite/composite = src.abilityHolder
 		composite.removeHolder(/datum/abilityHolder/flockmind)
-		src.UnregisterSignal(controller, COMSIG_MOB_BOUTPUT)
 		if (istype(controller, /mob/living/intangible/flock/flockmind))
 			flock.removeAnnotation(src, FLOCK_ANNOTATION_FLOCKMIND_CONTROL)
 		else

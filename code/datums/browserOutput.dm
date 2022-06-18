@@ -413,8 +413,6 @@ var/global
 		if (isclient(target))
 			C = target
 		else if (ismob(target))
-			var/mob/M = target
-			SEND_SIGNAL(M, COMSIG_MOB_BOUTPUT, message, group, forceScroll)
 			C = target:client
 		else if (ismind(target) && target:current)
 			C = target:current:client
