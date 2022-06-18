@@ -1211,3 +1211,47 @@
 		execute(mob/living/critter/flock/drone/target, mob/living/intangible/flock/user)
 			if(user.flock && target.flock == user.flock)
 				target.take_control(user)
+
+/datum/contextAction/rcd
+	icon = 'icons/ui/context16x16.dmi'
+	close_clicked = TRUE
+	desc = ""
+	icon_state = "wrench"
+	var/mode = RCD_MODE_FLOORSWALLS
+
+	execute(var/obj/item/rcd/rcd, var/mob/user)
+		if (!istype(rcd))
+			return
+		rcd.switch_mode(src.mode, user)
+
+	checkRequirements(var/obj/item/rcd/rcd, var/mob/user)
+		return rcd in user
+
+	floorswalls
+		name = "Floors/walls"
+		icon_state = "wall"
+		mode = RCD_MODE_FLOORSWALLS
+	airlock
+		name = "Airlocks"
+		icon_state = "door"
+		mode = RCD_MODE_AIRLOCK
+
+	deconstruct
+		name = "Deconstruct"
+		icon_state = "close"
+		mode = RCD_MODE_DECONSTRUCT
+
+	windows
+		name = "Windows"
+		icon_state = "window"
+		mode = RCD_MODE_WINDOWS
+
+	lightbulbs
+		name = "Lightbulbs"
+		icon_state = "bulb"
+		mode = RCD_MODE_LIGHTBULBS
+
+	lighttubes
+		name = "Light tubes"
+		icon_state = "tube"
+		mode = RCD_MODE_LIGHTTUBES
