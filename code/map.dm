@@ -950,7 +950,6 @@ var/global/list/mapNames = list(
 	default_gamemode = "secret"
 	goonhub_map = "https://goonhub.com/maps/federation"
 	arrivals_type = MAP_SPAWN_SHUTTLE
-	dir_fore = null
 
 	walls = /turf/simulated/wall
 	rwalls = /turf/simulated/wall/r_wall
@@ -1007,7 +1006,7 @@ var/global/list/mapNames = list(
 		/datum/job/civilian/janitor = 5,
 		/datum/job/civilian/chaplain = 2,
 		/datum/job/special/lawyer = 1,
-		/datum/job/special/atmospheric_technician = 1
+		/datum/job/special/atmospheric_technician = 2
 	)
 
 /datum/map_settings/pod_wars
