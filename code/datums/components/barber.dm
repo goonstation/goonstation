@@ -554,8 +554,8 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 				else
 					logTheThing("combat", user, M, "cuts [constructTarget(M,"combat")]'s hair at [log_loc(user)].")
 					M.tri_message(user, "[user] [cuts] [M]'s hair.",\
-					M, "<span class='notice'>[user] [cuts] your hair.</span>",\
-					user, "<span class='notice'>You [cut] [M]'s hair.</span>")
+						"<span class='notice'>[user] [cuts] your hair.</span>",\
+						"<span class='notice'>You [cut] [M]'s hair.</span>")
 					switch(which_part)
 						if (BOTTOM_DETAIL)
 							M.bioHolder.mobAppearance.customization_first = new_style
