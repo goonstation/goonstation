@@ -45808,7 +45808,7 @@
 /turf/simulated/floor/green,
 /area/research_outpost/pathology)
 "jzB" = (
-/obj/machinery/manufacturer/general,
+/obj/machinery/manufacturer/science,
 /turf/simulated/floor,
 /area/research_outpost/hangar)
 "jCs" = (

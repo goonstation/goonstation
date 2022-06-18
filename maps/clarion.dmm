@@ -20377,7 +20377,7 @@
 	},
 /area/station/science/lobby)
 "aQk" = (
-/obj/machinery/manufacturer/general,
+/obj/machinery/manufacturer/science,
 /turf/simulated/floor/purple/side{
 	dir = 1
 	},
@@ -27386,8 +27386,8 @@
 	},
 /obj/table/auto,
 /obj/item/hand_tele{
-	pixel_y = 8;
-	pixel_x = 2
+	pixel_x = 2;
+	pixel_y = 8
 	},
 /obj/machinery/firealarm{
 	layer = 3.5;
@@ -27399,8 +27399,8 @@
 	pixel_y = 28
 	},
 /obj/item/hand_tele{
-	pixel_y = 6;
-	pixel_x = -2
+	pixel_x = -2;
+	pixel_y = 6
 	},
 /turf/simulated/floor/circuit,
 /area/station/teleporter)

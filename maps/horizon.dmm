@@ -10737,7 +10737,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/northeast)
 "aDq" = (
-/obj/machinery/manufacturer/general,
+/obj/machinery/manufacturer/science,
 /turf/simulated/floor/purpleblack{
 	dir = 4
 	},
@@ -24296,8 +24296,8 @@
 	pixel_y = 5
 	},
 /obj/item/hand_tele{
-	pixel_y = 3;
-	pixel_x = 4
+	pixel_x = 4;
+	pixel_y = 3
 	},
 /turf/simulated/floor/darkblue/checker,
 /area/station/teleporter)
