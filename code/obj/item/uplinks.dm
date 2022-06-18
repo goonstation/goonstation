@@ -451,7 +451,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		name = "syndicate equipment uplink"
 		desc = "An uplink terminal that allows you to order weapons and items."
 		icon_state = "uplink"
-		purchase_flags = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY | UPLINK_SPY_THIEF | UPLINK_HEAD_REV //Currently this sits unused except for an admin's character, so we can safely have fun with it
+		purchase_flags = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY | UPLINK_SPY_THIEF | UPLINK_HEAD_REV | UPLINK_SPY_PURCHASE //Currently this sits unused except for an admin's character, so we can safely have fun with it
 
 	traitor
 		purchase_flags = UPLINK_TRAITOR
@@ -479,6 +479,17 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	is_VR_uplink = 1
 	can_selfdestruct = 0
 	purchase_flags = UPLINK_TRAITOR
+
+	explode()
+		src.temp = "Bang! Just kidding."
+		return
+
+/obj/item/uplink/syndicate/spy_purchase
+	name = "Spy console test"
+	desc = "Hey if your seeing this its working!"
+	uses = 0
+	can_selfdestruct = 0
+	purchase_flags = UPLINK_SPY_PURCHASE
 
 	explode()
 		src.temp = "Bang! Just kidding."

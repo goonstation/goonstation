@@ -79,6 +79,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	item = /obj/item/storage/box/pistol
 	cost = 3
 	desc = "A fairly weak yet sneaky pistol, it can still be heard but it won't alert anyone about who fired it."
+	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY | UPLINK_SPY_PURCHASE
 
 /datum/syndicate_buylist/generic/shotgun
 	name = "Shotgun"
@@ -93,43 +94,49 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	item = /obj/item/gun/energy/crossbow
 	cost = 3
 	desc = "Crossbow Model C - Now with safer Niobium core. This ranged weapon is great for hitting someone in a dark corridor! They'll never know what hit em! Will slowly recharge between shots."
+	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY | UPLINK_SPY_PURCHASE
 
 /datum/syndicate_buylist/generic/garrote
 	name = "Fibre Wire"
 	item = /obj/item/garrote
 	cost = 3
 	desc = "Commonly used by special forces for silent removal of isolated targets. Ensure you are out of sight, apply to the target's neck from behind with a firm two-hand grip and wait for death to occur."
+	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY | UPLINK_SPY_PURCHASE
 
 /datum/syndicate_buylist/generic/empgrenades
 	name = "EMP Grenades"
 	item = /obj/item/storage/emp_grenade_pouch
 	cost = 1
 	desc = "A pouch of EMP grenades, each capable of causing havoc with the electrical and computer systems found aboard the modern space station. Shorts out power systems, causes feedback in electronic vision devices such as thermals, and causes robots to go haywire."
-	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY_THIEF
+	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP
 
 /datum/syndicate_buylist/generic/tacticalgrenades
 	name = "Tactical Grenades"
 	item = /obj/item/storage/tactical_grenade_pouch
 	cost = 2
 	desc = "A pouch of assorted special-ops grenades."
+	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY | UPLINK_SPY_PURCHASE
 
 /datum/syndicate_buylist/generic/voicechanger
 	name = "Voice Changer"
 	item = /obj/item/voice_changer
 	cost = 1
 	desc = "This voice-modulation device will dynamically disguise your voice to that of whoever is listed on your identification card, via incredibly complex algorithms. Discretely fits inside most masks, and can be removed with wirecutters."
+	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY | UPLINK_SPY_PURCHASE
 
 /datum/syndicate_buylist/generic/chamsuit
 	name = "Chameleon Jumpsuit"
 	item = /obj/item/clothing/under/chameleon
 	cost = 1
 	desc = "A jumpsuit made of advanced fibres that can change colour to suit the needs of the wearer. Do not expose to electromagnetic interference."
+	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY | UPLINK_SPY_PURCHASE
 
 /datum/syndicate_buylist/generic/syndicard
 	name = "Agent Card"
 	item = /obj/item/card/id/syndicate
 	cost = 1
 	desc = "A counterfeit identification card, designed to prevent tracking by the station's AI systems. It features a one-time programmable identification circuit, allowing the entry of a custom false identity. It is also capable of scanning other ID cards and replicating their access credentials."
+	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY | UPLINK_SPY_PURCHASE
 
 /datum/syndicate_buylist/generic/emag
 	name = "Electromagnet Card (EMAG)"
@@ -143,18 +150,21 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	item = /obj/item/implanter/freedom
 	cost = 1
 	desc = "An implant that allows instant escape from handcuffs and shackles. Multiple uses possible but not guaranteed."
+	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY | UPLINK_SPY_PURCHASE
 
 /datum/syndicate_buylist/generic/spen
 	name = "Sleepy Pen"
 	item = /obj/item/pen/sleepypen
 	cost = 5
 	desc = "A small pen that has a syringe filled with a powerful sleeping agent inside. Capable of injecting a victim discretely. Refillable once initial contents are used up."
+	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY | UPLINK_SPY_PURCHASE
 
 /datum/syndicate_buylist/generic/jammer
 	name = "Signal Jammer"
 	item = /obj/item/radiojammer
 	cost = 3
 	desc = "Silences radios in an area around you while activated. No one will hear them scream."
+	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY | UPLINK_SPY_PURCHASE
 
 /datum/syndicate_buylist/generic/psink
 	name = "Power Sink"
@@ -169,31 +179,35 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	item = /obj/item/disk/data/cartridge/syndicate
 	cost = 1
 	desc = "A PDA cartridge allowing remote detonation of other devices. Detonation programs may be accessed through the file manager. Comes complete with readme file."
-	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY_THIEF
+	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP
 
 /datum/syndicate_buylist/generic/trickcigs
 	name = "Trick Cigarettes"
 	item = /obj/item/cigpacket/syndicate
 	cost = 1
 	desc = "A pack of Syndicool Lights exploding trick cigarettes. Due to the use of a military-grade explosive, please do not attempt to smoke these after lighting."
+	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY | UPLINK_SPY_PURCHASE
 
 /datum/syndicate_buylist/generic/dnascram
 	name = "DNA Scrambler"
 	item = /obj/item/genetics_injector/dna_scrambler
 	cost = 1
 	desc = "An injector that gives a new, random identity upon injection."
+	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY | UPLINK_SPY_PURCHASE
 
 /datum/syndicate_buylist/generic/derringer
 	name = "Derringer"
 	item = /obj/item/gun/kinetic/derringer
 	cost = 2
 	desc = "A small pistol that can be hidden inside worn clothes and retrieved using the wink emote. Comes with two shots and does extreme damage at close range."
+	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY | UPLINK_SPY_PURCHASE
 
 /datum/syndicate_buylist/generic/stealthstorage
 	name = "Stealth Storage"
 	item = /obj/item/storage/box/syndibox
 	cost = 1
 	desc = "This little wonder is capable of not only safely storing most small goods, but it can also be tapped against other objects in order to emulate their appearance. Note: May not perform optimally upon close inspection."
+	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY | UPLINK_SPY_PURCHASE
 
 /datum/syndicate_buylist/generic/esword
 	name = "Cyalume Saber"
@@ -227,12 +241,14 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	item = /obj/item/storage/box/spy_sticker_kit
 	cost = 1
 	desc = "This kit contains innocuous stickers that you can use to broadcast audio and observe a video feed wirelessly."
+	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY | UPLINK_SPY_PURCHASE
 
 /datum/syndicate_buylist/generic/omnitool
 	name = "Syndicate Omnitool"
 	item = /obj/item/tool/omnitool/syndicate
 	cost = 2
 	desc = "A miniature set of tools that you can hide in your clothing and retrieve with the flex emote. Has knife and weldingtool modes."
+	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY | UPLINK_SPY_PURCHASE
 
 /datum/syndicate_buylist/generic/bighat
 	name = "Syndicate Hat"
@@ -264,6 +280,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	item = /obj/item/spongecaps/syndicate
 	cost = 3
 	desc = "A pack of sponge capsules that react with water and produce nasty critters."
+	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY | UPLINK_SPY_PURCHASE
 
 /datum/syndicate_buylist/traitor/bomb
 	name = "Syndicates in Pipebomb"
@@ -271,37 +288,42 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	cost = 3
 	vr_allowed = 0
 	desc = "A rather volatile pipe bomb packed with miniature syndicate troops."
-	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
+	can_buy = UPLINK_TRAITOR
 
 /datum/syndicate_buylist/traitor/champrojector
 	name = "Chameleon Projector"
 	item = /obj/item/device/chameleon
 	cost = 5
 	desc = "Advanced cloaking device that scans an object and, when activated, makes the bearer look like the object. Slows movement while in use."
+	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY | UPLINK_SPY_PURCHASE
 
 /datum/syndicate_buylist/traitor/holographic_disguiser
 	name = "Holographic Disguiser"
 	item = /obj/item/device/disguiser
 	cost = 2
 	desc = "A device capable of disguising your identity temporarily. Beware of flashes and projectiles!"
+	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY | UPLINK_SPY_PURCHASE
 
 /datum/syndicate_buylist/traitor/areacloak
 	name = "Cloaking Field Generator"
 	item = /obj/item/cloak_gen
 	cost = 3
 	desc = "Remote-controlled device that produces an area of effect cloaking field while active. Don't lose the remote!"
+	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY | UPLINK_SPY_PURCHASE
 
 /datum/syndicate_buylist/traitor/floorcloset
 	name = "Floor Closet"
 	item = /obj/storage/closet/syndi
 	cost = 1
 	desc = "This closet was produced using the finest in applied optical illusion technology. When closed, it will dynamically assume the appearance of the floor tile underneath."
+	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY | UPLINK_SPY_PURCHASE
 
 /datum/syndicate_buylist/traitor/snidely
 	name = "Fake Moustache"
 	item = /obj/item/clothing/mask/moustache
 	cost = 1
 	desc = "The ultimate in disguise technology. This will perfectly conceal your identity from any onlookers and leave them stunned at your majestic facial hair."
+	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY | UPLINK_SPY_PURCHASE
 
 /datum/syndicate_buylist/traitor/bowling
 	name = "Bowling Kit"
@@ -323,7 +345,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	cost = 3
 	vr_allowed = 0
 	desc = "Temporarily place an injected victim under your complete control! Faster and more effective than hypnotism! Warning: Implant effects are NOT indefinite."
-	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
+	can_buy = UPLINK_TRAITOR
 
 /datum/syndicate_buylist/traitor/deluxe_mindslave
 	name = "Deluxe Mind Slave implant"
@@ -339,6 +361,9 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	cost = 1
 	vr_allowed = 0
 	desc = "This miniaturized explosive packs a decent punch and will detonate upon the unintentional death of the host. Do not swallow and keep out of reach of children."
+	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY | UPLINK_SPY_PURCHASE
+
+
 
 /datum/syndicate_buylist/traitor/macrobomb
 	name = "Macrobomb Implant"
@@ -352,7 +377,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	item = /obj/item/lightbreaker
 	cost = 4
 	desc = "A casette player that breaks all lights near you. It also temporarily deafens and staggers all nearby people. Comes with four charges and has a distinctive sound. Can be rewound with a screwdriver."
-	can_buy = UPLINK_TRAITOR | UPLINK_SPY | UPLINK_SPY_THIEF | UPLINK_HEAD_REV
+	can_buy = UPLINK_TRAITOR | UPLINK_SPY | UPLINK_HEAD_REV
 
 /datum/syndicate_buylist/traitor/ringtone
 	name = "SounDreamS PRO cartridge"
@@ -366,7 +391,109 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	item = /obj/item/storage/sonic_grenade_pouch
 	cost = 2
 	desc = "A pouch filled with five sonic grenades, each one packs enough power to shatter reinforced windows and pop eardrums. No more being cornered by an angry mob! Comes with earplugs."
-	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
+	can_buy = UPLINK_TRAITOR
+
+/////// spy console link /////////////
+
+/datum/syndicate_buylist/traitor/dagger_S
+	name = "Syndicate Dagger"
+	item = /obj/item/dagger/syndicate
+	cost = 2
+	desc = "An ornamental dagger for stabbing people with."
+	can_buy = UPLINK_SPY_PURCHASE
+/datum/syndicate_buylist/traitor/advanced_laser_S
+	name = "Laser Rifle"
+	item = /obj/item/gun/energy/plasma_gun
+	cost = 6
+	desc = "An experimental laser design with a self-charging cerenkite battery."
+	can_buy = UPLINK_SPY_PURCHASE
+
+/datum/syndicate_buylist/traitor/breachingT_S
+	name = "Thermite Breaching Charge"
+	item = /obj/item/breaching_charge/thermite
+	cost = 1
+	desc = "A self-contained thermite breaching charge, useful for destroying walls."
+	can_buy = UPLINK_SPY_PURCHASE
+
+/datum/syndicate_buylist/traitor/breaching_S
+	name = "Breaching Charge"
+	item = /obj/item/breaching_charge
+	cost = 1
+	desc = "A self-contained explosive breaching charge, useful for destroying walls."
+	can_buy = UPLINK_SPY_PURCHASE
+
+/datum/syndicate_buylist/traitor/flaregun_S
+	name = "Flare Gun"
+	item = /obj/item/storage/box/flaregun // Gave this thing a box of spare ammo. Having only one shot was kinda lackluster (Convair880).
+	cost = 2
+	desc = "A signal flaregun for emergency use. Or for setting jerks on fire"
+	can_buy = UPLINK_SPY_PURCHASE
+
+/datum/syndicate_buylist/traitor/rifle_S
+	name = "Old Hunting Rifle"
+	item = /obj/item/gun/kinetic/hunting_rifle
+	cost = 5
+	desc = "An old hunting rifle, comes with only four bullets. Use them wisely."
+	can_buy = UPLINK_SPY_PURCHASE
+
+/datum/syndicate_buylist/traitor/bananagrenades_S
+	name = "Banana Grenades"
+	item = /obj/item/storage/banana_grenade_pouch
+	cost = 2
+	desc = "Honk."
+	can_buy = UPLINK_SPY_PURCHASE
+
+/datum/syndicate_buylist/traitor/turboflash_box_S
+	name = "Flash/cell assembly box"
+	item = /obj/item/storage/box/turbo_flash_kit
+	cost = 1
+	desc = "A box full of common stun weapons with power cells hastily wired into them. Looks dangerous."
+	can_buy = UPLINK_SPY_PURCHASE
+
+/datum/syndicate_buylist/traitor/syndicate_armor_S
+	name = "Syndicate Command Armor"
+	item = /obj/item/clothing/suit/space/industrial/syndicate
+	cost = 5
+	desc = "A set of syndicate command armor. I guess the last owner must have died."
+	can_buy = UPLINK_SPY_PURCHASE
+
+/datum/syndicate_buylist/traitor/egun_upgrade_S
+	name = "Energy Gun Upgrade Pack"
+	item = /obj/item/ammo/power_cell/self_charging/disruptor
+	cost = 2
+	desc = "An advanced self-charging power cell, the ideal upgrade for an energy gun!"
+	can_buy = UPLINK_SPY_PURCHASE
+
+// Why not, I guess? Cleaned up the old mine code, might as well use it (Convair880).
+/datum/syndicate_buylist/traitor/landmine_S
+	name = "Land Mine"
+	item = /obj/random_item_spawner/landmine/surplus // RNG picker.
+	cost = 1
+	desc = "Some old anti-personnel mine we found in the warehouse."
+	can_buy = UPLINK_SPY_PURCHASE
+
+// At the time of writing, you can't get these anywhere else. And they fit the purpose of surplus crates quite well, I suppose (Convair880).
+// changed to sechuds cause why not - haine
+/datum/syndicate_buylist/traitor/cybereye_kit_sechud_S
+	name = "Ocular Prosthesis Kit (SecHUD)"
+	item = /obj/item/device/ocular_implanter
+	cost = 1
+	desc = "A pair of surplus cybereyes that can access the Security HUD system. Comes with a convenient but terrifying implanter."
+	can_buy = UPLINK_SPY_PURCHASE
+
+/datum/syndicate_buylist/traitor/emaghypo_S
+	name = "Hacked Hypospray"
+	item = /obj/item/reagent_containers/hypospray/emagged
+	cost = 1
+	desc = "A special hacked hypospray, capable of holding any chemical!"
+	can_buy = UPLINK_SPY_PURCHASE
+
+/datum/syndicate_buylist/traitor/sarin_grenade_S
+	name = "Sarin Grenade"
+	item = /obj/item/chem_grenade/sarin
+	cost = 1
+	desc = "A terrifying grenade containing a potent nerve gas. Try not to get caught in the smoke."
+	can_buy = UPLINK_SPY_PURCHASE
 
 /datum/syndicate_buylist/traitor/surplus
 	name = "Surplus Crate"
@@ -900,7 +1027,7 @@ This is basically useless for anyone but miners.
 	cost = 3
 	desc = "A small device that may be installed in a headset to grant access to all station channels, along with one reserved for Syndicate operatives."
 	vr_allowed = 0
-	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
+	can_buy = UPLINK_TRAITOR
 
 /datum/syndicate_buylist/traitor/tape
 	name = "Ducktape"
@@ -922,7 +1049,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
 	item = /obj/item/dagger/syndicate
 	cost = 2
 	desc = "An ornamental dagger for stabbing people with."
-
+	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY | UPLINK_NUKE_OP
 /datum/syndicate_buylist/surplus/advanced_laser
 	name = "Laser Rifle"
 	item = /obj/item/gun/energy/plasma_gun
@@ -935,18 +1062,21 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
 	item = /obj/item/breaching_charge/thermite
 	cost = 1
 	desc = "A self-contained thermite breaching charge, useful for destroying walls."
+	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY | UPLINK_SPY_PURCHASE
 
 /datum/syndicate_buylist/surplus/breaching
 	name = "Breaching Charge"
 	item = /obj/item/breaching_charge
 	cost = 1
 	desc = "A self-contained explosive breaching charge, useful for destroying walls."
+	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY | UPLINK_NUKE_OP | UPLINK_SPY_PURCHASE
 
 /datum/syndicate_buylist/surplus/flaregun
 	name = "Flare Gun"
 	item = /obj/item/storage/box/flaregun // Gave this thing a box of spare ammo. Having only one shot was kinda lackluster (Convair880).
 	cost = 2
 	desc = "A signal flaregun for emergency use. Or for setting jerks on fire"
+	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY | UPLINK_NUKE_OP | UPLINK_SPY_PURCHASE
 
 /datum/syndicate_buylist/surplus/rifle
 	name = "Old Hunting Rifle"
@@ -972,21 +1102,21 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
 	item = /obj/item/storage/box/turbo_flash_kit
 	cost = 1
 	desc = "A box full of common stun weapons with power cells hastily wired into them. Looks dangerous."
-
+	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY | UPLINK_NUKE_OP
 
 /datum/syndicate_buylist/surplus/syndicate_armor
 	name = "Syndicate Command Armor"
 	item = /obj/item/clothing/suit/space/industrial/syndicate
 	cost = 5
 	desc = "A set of syndicate command armor. I guess the last owner must have died."
-	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF | UPLINK_NUKE_OP
+	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP
 
 /datum/syndicate_buylist/surplus/egun_upgrade
 	name = "Energy Gun Upgrade Pack"
 	item = /obj/item/ammo/power_cell/self_charging/disruptor
 	cost = 2
 	desc = "An advanced self-charging power cell, the ideal upgrade for an energy gun!"
-	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF | UPLINK_NUKE_OP
+	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP
 
 // Why not, I guess? Cleaned up the old mine code, might as well use it (Convair880).
 /datum/syndicate_buylist/surplus/landmine
@@ -994,7 +1124,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
 	item = /obj/random_item_spawner/landmine/surplus // RNG picker.
 	cost = 1
 	desc = "Some old anti-personnel mine we found in the warehouse."
-	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF | UPLINK_NUKE_OP
+	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP
 
 // At the time of writing, you can't get these anywhere else. And they fit the purpose of surplus crates quite well, I suppose (Convair880).
 // changed to sechuds cause why not - haine
@@ -1003,21 +1133,21 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
 	item = /obj/item/device/ocular_implanter
 	cost = 1
 	desc = "A pair of surplus cybereyes that can access the Security HUD system. Comes with a convenient but terrifying implanter."
-	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF | UPLINK_SPY | UPLINK_NUKE_OP
+	can_buy = UPLINK_TRAITOR | UPLINK_SPY | UPLINK_NUKE_OP
 
 /datum/syndicate_buylist/surplus/emaghypo
 	name = "Hacked Hypospray"
 	item = /obj/item/reagent_containers/hypospray/emagged
 	cost = 1
 	desc = "A special hacked hypospray, capable of holding any chemical!"
-	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF | UPLINK_NUKE_OP
+	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP
 
 /datum/syndicate_buylist/surplus/sarin_grenade
 	name = "Sarin Grenade"
 	item = /obj/item/chem_grenade/sarin
 	cost = 1
 	desc = "A terrifying grenade containing a potent nerve gas. Try not to get caught in the smoke."
-	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF | UPLINK_NUKE_OP
+	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP
 
 /////////////////////////////////////////// Irregular Items //////////////////////////////////////////////////
 // For things that aren't seen in a regular uplink but are in the buylist datum, e.g. Syndicate commander uplink gear
@@ -1112,6 +1242,191 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/commander)
 	run_on_spawn(var/obj/item/uplink_telecrystal/tc, mob/living/owner, in_surplus_crate=FALSE)
 		tc.name = "[syndicate_currency]"
 
+/////////////////////////////////////////// Spy Telecrystals and duplication of list for higher odds weight //////////////////////////////////////////////////
+
+/datum/syndicate_buylist/generic/telecrystal_1_1
+	name = "1 Pure telecrystal"
+	item = /obj/item/uplink_telecrystal
+	cost = 1
+	desc = "A pure Telecrystal, orignating from plasma giants. Used as currency in Syndicate Uplinks."
+
+	telecrystal = TRUE
+	vr_allowed = 0
+	not_in_crates = 1
+	can_buy = UPLINK_SPY_THIEF
+
+/datum/syndicate_buylist/generic/telecrystal_1_2
+	name = "1 Pure telecrystal"
+	item = /obj/item/uplink_telecrystal
+	cost = 2
+	desc = "A pure Telecrystal, orignating from plasma giants. Used as currency in Syndicate Uplinks."
+
+	telecrystal = TRUE
+	vr_allowed = 0
+	not_in_crates = 1
+	can_buy = UPLINK_SPY_THIEF
+
+/datum/syndicate_buylist/generic/telecrystal_1_3
+	name = "2 Pure telecrystal"
+	item = /obj/item/uplink_telecrystal{
+		amount = 2
+		}
+	cost = 3
+	desc = "A pure Telecrystal, orignating from plasma giants. Used as currency in Syndicate Uplinks."
+
+	telecrystal = TRUE
+	vr_allowed = 0
+	not_in_crates = 1
+	can_buy = UPLINK_SPY_THIEF
+
+/datum/syndicate_buylist/generic/telecrystal_1_4
+	name = "2 Pure telecrystal"
+	item = /obj/item/uplink_telecrystal{
+		amount = 2
+		}
+	cost = 4
+	desc = "A pure Telecrystal, orignating from plasma giants. Used as currency in Syndicate Uplinks."
+
+	telecrystal = TRUE
+	vr_allowed = 0
+	not_in_crates = 1
+	can_buy = UPLINK_SPY_THIEF
+
+/datum/syndicate_buylist/generic/telecrystal_1_5
+	name = "3 Pure telecrystal"
+	item = /obj/item/uplink_telecrystal{
+		amount = 3
+		}
+	cost = 5
+	desc = "A pure Telecrystal, orignating from plasma giants. Used as currency in Syndicate Uplinks."
+
+	telecrystal = TRUE
+	vr_allowed = 0
+	not_in_crates = 1
+	can_buy = UPLINK_SPY_THIEF
+
+/datum/syndicate_buylist/generic/telecrystal_2_1
+	name = "1 Pure telecrystal"
+	item = /obj/item/uplink_telecrystal
+	cost = 1
+	desc = "A pure Telecrystal, orignating from plasma giants. Used as currency in Syndicate Uplinks."
+
+	telecrystal = TRUE
+	vr_allowed = 0
+	not_in_crates = 1
+	can_buy = UPLINK_SPY_THIEF
+
+/datum/syndicate_buylist/generic/telecrystal_2_2
+	name = "1 Pure telecrystal"
+	item = /obj/item/uplink_telecrystal
+	cost = 2
+	desc = "A pure Telecrystal, orignating from plasma giants. Used as currency in Syndicate Uplinks."
+
+	telecrystal = TRUE
+	vr_allowed = 0
+	not_in_crates = 1
+	can_buy = UPLINK_SPY_THIEF
+
+/datum/syndicate_buylist/generic/telecrystal_2_3
+	name = "2 Pure telecrystal"
+	item = /obj/item/uplink_telecrystal{
+		amount = 2
+		}
+	cost = 3
+	desc = "A pure Telecrystal, orignating from plasma giants. Used as currency in Syndicate Uplinks."
+
+	telecrystal = TRUE
+	vr_allowed = 0
+	not_in_crates = 1
+	can_buy = UPLINK_SPY_THIEF
+
+/datum/syndicate_buylist/generic/telecrystal_2_4
+	name = "2 Pure telecrystal"
+	item = /obj/item/uplink_telecrystal{
+		amount = 2
+		}
+	cost = 4
+	desc = "A pure Telecrystal, orignating from plasma giants. Used as currency in Syndicate Uplinks."
+
+	telecrystal = TRUE
+	vr_allowed = 0
+	not_in_crates = 1
+	can_buy = UPLINK_SPY_THIEF
+
+/datum/syndicate_buylist/generic/telecrystal_2_5
+	name = "3 Pure telecrystal"
+	item = /obj/item/uplink_telecrystal{
+		amount = 3
+		}
+	cost = 5
+	desc = "A pure Telecrystal, orignating from plasma giants. Used as currency in Syndicate Uplinks."
+
+	telecrystal = TRUE
+	vr_allowed = 0
+	not_in_crates = 1
+	can_buy = UPLINK_SPY_THIEF
+
+/datum/syndicate_buylist/generic/telecrystal_3_1
+	name = "1 Pure telecrystal"
+	item = /obj/item/uplink_telecrystal
+	cost = 1
+	desc = "A pure Telecrystal, orignating from plasma giants. Used as currency in Syndicate Uplinks."
+
+	telecrystal = TRUE
+	vr_allowed = 0
+	not_in_crates = 1
+	can_buy = UPLINK_SPY_THIEF
+
+/datum/syndicate_buylist/generic/telecrystal_3_2
+	name = "1 Pure telecrystal"
+	item = /obj/item/uplink_telecrystal
+	cost = 2
+	desc = "A pure Telecrystal, orignating from plasma giants. Used as currency in Syndicate Uplinks."
+
+	telecrystal = TRUE
+	vr_allowed = 0
+	not_in_crates = 1
+	can_buy = UPLINK_SPY_THIEF
+
+/datum/syndicate_buylist/generic/telecrystal_3_3
+	name = "2 Pure telecrystal"
+	item = /obj/item/uplink_telecrystal{
+		amount = 2
+		}
+	cost = 3
+	desc = "A pure Telecrystal, orignating from plasma giants. Used as currency in Syndicate Uplinks."
+
+	telecrystal = TRUE
+	vr_allowed = 0
+	not_in_crates = 1
+	can_buy = UPLINK_SPY_THIEF
+
+/datum/syndicate_buylist/generic/telecrystal_3_4
+	name = "2 Pure telecrystal"
+	item = /obj/item/uplink_telecrystal{
+		amount = 2
+		}
+	cost = 4
+	desc = "A pure Telecrystal, orignating from plasma giants. Used as currency in Syndicate Uplinks."
+
+	telecrystal = TRUE
+	vr_allowed = 0
+	not_in_crates = 1
+	can_buy = UPLINK_SPY_THIEF
+
+/datum/syndicate_buylist/generic/telecrystal_3_5
+	name = "3 Pure telecrystal"
+	item = /obj/item/uplink_telecrystal{
+		amount = 3
+		}
+	cost = 5
+	desc = "A pure Telecrystal, orignating from plasma giants. Used as currency in Syndicate Uplinks."
+
+	telecrystal = TRUE
+	vr_allowed = 0
+	not_in_crates = 1
+	can_buy = UPLINK_SPY_THIEF
+
 /////////////////////////////////////////////// Disabled items /////////////////////////////////////////////////////
 
 /datum/syndicate_buylist/traitor/fogmaster
@@ -1182,4 +1497,3 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic/head_rev)
 	item = /obj/item/device/flash
 	cost = 1
 	desc = "Just a standard-issue flash. Won't remove implants like the Revolutionary Flash."
-

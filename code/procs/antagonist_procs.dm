@@ -186,6 +186,16 @@
 		var/obj/F2 = new /obj/item/camera/spy(get_turf(traitor_mob))
 		traitor_mob.put_in_hand_or_drop(F2)
 
+	if (!traitor_mob.r_store)
+		traitor_mob.equip_if_possible(new /obj/item/uplink/syndicate/spy_purchase(traitor_mob), traitor_mob.slot_r_store)
+	else if (!traitor_mob.l_store)
+		traitor_mob.equip_if_possible(new /obj/item/uplink/syndicate/spy_purchase(traitor_mob), traitor_mob.slot_l_store)
+	else if (istype(traitor_mob.back, /obj/item/storage/) && traitor_mob.back.contents.len < 7)
+		traitor_mob.equip_if_possible(new /obj/item/uplink/syndicate/spy_purchase(traitor_mob), traitor_mob.slot_in_backpack)
+	else
+		var/obj/F2 = new /obj/item/uplink/syndicate/spy_purchase(get_turf(traitor_mob))
+		traitor_mob.put_in_hand_or_drop(F2)
+
 	var/pda_pass = null
 
 	//find a PDA, hide the uplink inside
