@@ -1072,7 +1072,7 @@ datum/projectile/bullet/autocannon
 	name = "marker grenade"
 	sname = "paint"
 	window_pass = 0
-	icon_state = "40mm_nonlethal"
+	icon_state = "40mm_paint"
 	damage_type = D_KINETIC
 	power = 15
 	dissipation_delay = 10

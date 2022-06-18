@@ -850,7 +850,7 @@
 	ammo_type = new/datum/projectile/bullet/marker
 	amount_left = 5
 	max_amount = 5
-	icon_state = "40mm_nonlethal"
+	icon_state = "40mm_paint"
 	ammo_cat = AMMO_GRENADE_40MM
 	w_class = W_CLASS_NORMAL
 	icon_dynamic = 0
