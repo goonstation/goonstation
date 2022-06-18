@@ -1,4 +1,9 @@
 
+(t)sat jun 18 22
+(u)Ilysen
+(p)9207
+(e)|
+(+)The Matter Eater mutation now correctly deletes the item that you're eating.
 (t)fri jun 17 22
 (u)aloe
 (*)T-ray scanners can now see where pipes were at the start of the shift. Should make reconstruction a bit easier.
