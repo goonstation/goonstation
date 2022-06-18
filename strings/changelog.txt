@@ -1,5 +1,7 @@
 
 (t)fri jun 17 22
+(u)aloe
+(*)T-ray scanners can now see where pipes were at the start of the shift. Should make reconstruction a bit easier.
 (u)LeahTheTech
 (p)9155
 (e)🆕⚖|feature, balance
