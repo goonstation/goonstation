@@ -2186,11 +2186,6 @@
 		/obj/item/material_piece/glass,
 		/obj/item/material_piece/cloth/cottonfabric)
 	available = list(
-		/datum/manufacture/screwdriver,
-		/datum/manufacture/wirecutters,
-		/datum/manufacture/wrench,
-		/datum/manufacture/crowbar,
-		/datum/manufacture/extinguisher,
 		/datum/manufacture/flashlight,
 		/datum/manufacture/welder,
 		/datum/manufacture/patch,
