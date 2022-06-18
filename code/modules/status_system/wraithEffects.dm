@@ -10,18 +10,14 @@
 
 	onUpdate(var/timePassed)
 
-		var/found_light = FALSE
 		var/mult = timePassed / (2 SECONDS)
 
 		if (!ishuman(owner))
 			return
 
 		H = owner
-		for (var/obj/machinery/light/L in view(3, H))
-			if(L.on && !istype(L, /obj/machinery/light/emergency) && !istype(L, /obj/machinery/light/emergencyflashing))	//Those can't be broken, so ignore them.
-				found_light = TRUE
-				continue
-		if (!found_light)	//Staying in the dark makes it worse and worse
+		var/turf/local_turf = get_turf(H)
+		if (local_turf.RL_GetBrightness() < 0.3)
 			duration += timePassed * 2
 		if ((duration <= 30 SECONDS))
 			if(icon_state != "dread1")

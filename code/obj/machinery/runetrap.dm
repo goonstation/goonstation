@@ -16,12 +16,8 @@
 		..()
 		master = W
 		SPAWN(5 SECONDS)
-			var/found_light = FALSE
-			for (var/obj/machinery/light/L in view(3, src))
-				if(L.on && !istype(L, /obj/machinery/light/emergency) && !istype(L, /obj/machinery/light/emergencyflashing))	//We cant break emergency lights, so ignore them
-					found_light = TRUE
-					visible = TRUE
-			if(!found_light)
+			var/turf/local_turf = get_turf(src)
+			if (local_turf.RL_GetBrightness() < 0.3)
 				APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_CLOAK)
 				animate(src, alpha=120, time = 1 SECONDS)
 			src.armed = TRUE
@@ -30,19 +26,16 @@
 		..()
 		if (!src.armed)	//Wait until we are armed.
 			return 1
-		var/found_light = FALSE
-		for (var/obj/machinery/light/L in view(3, src))
-			if(L.on && !istype(L, /obj/machinery/light/emergency) && !istype(L, /obj/machinery/light/emergencyflashing))
-				found_light = TRUE
-				if(!src.visible)
-					REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src)
-					src.visible = TRUE
-					animate(src, alpha=255, time = 1 SECONDS)
-					src.visible_message("<span class='alert>[src] is revealed!")
-		if(!found_light)
+		var/turf/local_turf = get_turf(src)
+		if (local_turf.RL_GetBrightness() < 0.3 && src.visible)
 			APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_CLOAK)
 			src.visible = FALSE
 			animate(src, alpha=120, time = 1 SECONDS)
+		else if (local_turf.RL_GetBrightness() >= 0.2 && !src.visible)
+			REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src)
+			src.visible = TRUE
+			animate(src, alpha=255, time = 1 SECONDS)
+			src.visible_message("<span class='alert>[src] is revealed!")
 
 	attackby(obj/item/P, mob/living/user)
 		playsound(src, "sound/impact_sounds/Crystal_Shatter_1.ogg", 80)
