@@ -20377,7 +20377,7 @@
 	},
 /area/station/science/lobby)
 "aQk" = (
-/obj/machinery/manufacturer/general,
+/obj/machinery/manufacturer/science,
 /turf/simulated/floor/purple/side{
 	dir = 1
 	},
