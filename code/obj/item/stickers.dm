@@ -28,9 +28,9 @@
 			return
 		if (isarea(A) || istype(A, /obj/item/item_box) || istype(A, /atom/movable/screen) || istype(A, /obj/ability_button))
 			return
-		user.tri_message("<b>[user]</b> sticks [src] to [A]!",\
-		user, "You stick [src] to [user == A ? "yourself" : "[A]"]!",\
-		A, "[user == A ? "You stick" : "<b>[user]</b> sticks"] [src] to you[user == A ? "rself" : null]!")
+		user.tri_message(A, "<b>[user]</b> sticks [src] to [A]!",\
+			"You stick [src] to [user == A ? "yourself" : "[A]"]!",\
+			"[user == A ? "You stick" : "<b>[user]</b> sticks"] [src] to you[user == A ? "rself" : null]!")
 		var/pox = src.pixel_x
 		var/poy = src.pixel_y
 		DEBUG_MESSAGE("pox [pox] poy [poy]")
