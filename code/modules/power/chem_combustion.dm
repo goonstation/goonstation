@@ -10,9 +10,8 @@
 
 	var/active = 0
 	var/fuel_drain_rate = 0.3
-	var/atmos_drain_rate = 0.02
-	var/carbon_output = 0.02
-	var/standard_power_output = 2500 // around how much the generator will output running normally
+	var/atmos_drain_rate = 1
+	var/standard_power_output = 5000 // around how much the generator will output running normally
 	var/last_output
 
 	var/obj/item/reagent_containers/food/drinks/fueltank/fuel_tank // power scales with volatility
@@ -20,10 +19,13 @@
 
 	var/image/fuel_tank_image
 	var/image/inlet_tank_image
+	var/image/status_light_image
 
 	update_icon()
 		if (src.active)
 			if (src.last_output >= 40000)
+				src.icon_state = "chemportgen3"
+			else if (src.last_output >= 20000)
 				src.icon_state = "chemportgen2"
 			else
 				src.icon_state = "chemportgen1"
@@ -37,11 +39,17 @@
 			src.inlet_tank_image = image('icons/obj/power.dmi')
 
 		src.fuel_tank_image.icon_state = "genfueltank"
-		src.inlet_tank_image.icon_state = "gengastank"
+
+		if (istype(src.inlet_tank, /obj/item/tank/oxygen) || istype(src.inlet_tank, /obj/item/tank/emergency_oxygen))
+			src.inlet_tank_image.icon_state = "gengastank_o"
+		else
+			src.inlet_tank_image.icon_state = "gengastank"
+
 		if (src.fuel_tank)
 			src.overlays += src.fuel_tank_image
 		if (src.inlet_tank)
 			src.overlays += src.inlet_tank_image
+
 
 		signal_event("icon_updated")
 
@@ -54,7 +62,7 @@
 		src.add_fingerprint(user)
 
 		// atmos tank
-		if (istype(W, /obj/item/tank))
+		if (istype(W, /obj/item/tank) && !istype(W, /obj/item/tank/plasma) && !istype(W, /obj/item/tank/jetpack))
 			if (src.inlet_tank)
 				user.show_text("There appears to be a tank loaded already.", "red")
 				return
@@ -113,22 +121,22 @@
 			src.visible_message("<span class='notice'>The [src] stops, it seems like it ran out of something.</span>")
 			return
 
-		src.last_output = (((average_volatility / 3) * src.standard_power_output) * (available_oxygen * 5))
+		src.last_output = ((average_volatility * (src.standard_power_output / 3)) * (available_oxygen * 5))
 		src.add_avail(src.last_output WATTS)
 
+		// debug
 		src.visible_message("<span class='notice'>[src.last_output] WATTS</span>")
 
 		var/turf/simulated/T = get_turf(src)
 		if (istype(T))
 			var/datum/gas_mixture/payload = new /datum/gas_mixture
-			payload.carbon_dioxide = src.carbon_output
+			payload.carbon_dioxide = src.atmos_drain_rate * average_volatility
 			payload.temperature = T20C
 			T.assume_air(payload)
 
 		if (src.inlet_tank)
 			src.inlet_tank.air_contents.remove(src.atmos_drain_rate)
 		else
-			// Not sure if I should null check this
 			T.air.remove(src.atmos_drain_rate)
 
 		src.fuel_tank.reagents.remove_any(src.fuel_drain_rate)
@@ -254,11 +262,11 @@
 			if (current_reagent)
 				switch(reagent_id)
 					if ("foof", "kerosene", "nitrotri_dry", "dbreath")
-						average += 5
+						average += 7
 						i++
 
 					if ("blackpowder", "phlogiston", "napalm_goo", "sorium", "firedust")
-						average += 4
+						average += 5
 						i++
 
 					if ("fuel", "ethanol", "acetone")
