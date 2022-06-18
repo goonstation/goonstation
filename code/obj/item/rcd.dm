@@ -157,7 +157,6 @@ Broken RCD + Effects
 			if (action.mode in src.modes)
 				src.contextActions += action
 		src.UpdateIcon()
-		return
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/rcd_ammo))
@@ -189,7 +188,7 @@ Broken RCD + Effects
 
 	proc/switch_mode(var/mode, var/mob/user)
 		if (!(mode in src.modes))
-			return
+			CRASH("RCD [src] tried to switch to a mode not in its modes.")
 
 		playsound(src, "sound/effects/pop.ogg", 50, 0)
 
@@ -220,7 +219,6 @@ Broken RCD + Effects
 				boutput(user, "Changed mode to 'Light Tube Fixture'")
 
 		src.UpdateIcon()
-		return
 
 	afterattack(atom/A, mob/user as mob)
 		if ((isrestrictedz(user.z) || isrestrictedz(A.z)) && !src.really_actually_bypass_z_restriction)
