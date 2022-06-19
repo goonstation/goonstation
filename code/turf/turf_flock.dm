@@ -361,7 +361,7 @@
 	if(istype(AM, /mob/living/critter/flock/drone))
 		var/mob/living/critter/flock/drone/F = AM
 		if(F.floorrunning || (F.can_floorrun && F.resources >= 1))
-			if(!F.client || (F.client && F.client.check_key(KEY_RUN))) //ai doesn't have to hold shift to wallrun, people do
+			if(F.is_npc || (F.client && F.client.check_key(KEY_RUN))) //ai doesn't have to hold shift to wallrun, people do
 				F.start_floorrunning()
 				F.set_loc(src)
 

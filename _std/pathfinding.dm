@@ -415,7 +415,8 @@
 	. = TRUE
 	if(istype(passer,/mob/living/critter/flock/drone) && istype(T, /turf/simulated/wall/auto/feather))
 		var/mob/living/critter/flock/drone/F = passer
-		if(F.floorrunning || (F.can_floorrun && F.resources >= 1))
+		var/turf/simulated/wall/auto/feather/wall = T
+		if(!wall.broken && (F.floorrunning || (F.can_floorrun && F.resources >= 1)))
 			return TRUE // floor running drones can *always* pass through flockwalls
 
 	if(T.density || !T.pathable) // simplest case
