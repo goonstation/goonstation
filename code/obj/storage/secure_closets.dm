@@ -33,6 +33,7 @@
 					user.show_text("What exactly are you gunna secure [src] to?", "red")
 				return
 			playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+			user.visible_message("<b>[user]</b> begins to [src.bolted ? "unbolt the [src.name] from" : "bolt the [src.name] to"] [get_turf(src)].")
 			SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, .proc/toggle_bolts, user, I.icon, I.icon_state,"", null)
 			return
 		else if (src.open || !src.locked)
