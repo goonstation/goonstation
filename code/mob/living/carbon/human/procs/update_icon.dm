@@ -1105,7 +1105,6 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 											I.color = human_decomp_image.color
 										src.body_standing.overlays += I
 
-// dis the one
 							if (part_icon_s)
 								if (istext(part_icon_s))
 									human_image.icon = limb.partIcon
