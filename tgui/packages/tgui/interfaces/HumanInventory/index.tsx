@@ -1,8 +1,25 @@
-import { toTitleCase } from 'common/string';
 import { useBackend } from '../../backend';
 import { Button, LabeledList, Section, Stack } from '../../components';
 import { Window } from '../../layouts';
 import { HumanInventoryData, HumanInventorySlot } from './types';
+
+const SLOT_NAMES = {
+  'slot_head': 'Head',
+  'slot_wear_mask': 'Mask',
+  'slot_glasses': 'Eyes',
+  'slot_ears': 'Ears',
+  'slot_l_hand': 'Left Hand',
+  'slot_r_hand': 'Right Hand',
+  'slot_gloves': 'Gloves',
+  'slot_shoes': 'Shoes',
+  'slot_belt': 'Belt',
+  'slot_w_uniform': 'Uniform',
+  'slot_wear_suit': 'Outer Suit',
+  'slot_back': 'Back',
+  'slot_wear_id': 'ID',
+  'slot_l_store': 'Left Pocket',
+  'slot_r_store': 'Right Pocket',
+};
 
 export const HumanInventory = (_props, context) => {
   const { data, act } = useBackend<HumanInventoryData>(context);
@@ -14,18 +31,20 @@ export const HumanInventory = (_props, context) => {
           <Stack.Item grow>
             <Section scrollable fill>
               <LabeledList>
-                {data.slots.map((slot) => (
-                  <Slot key={slot.slot} {...slot} />
-                ))}
+                {Object.entries(SLOT_NAMES).map(([slotId, name]) => {
+                  const slot = data.slots.find((s) => s.id === slotId);
+
+                  return <Slot key={slotId} name={name} slot={slot} />;
+                })}
               </LabeledList>
             </Section>
           </Stack.Item>
           {Boolean(data.handcuffed || data.canSetInternal || data.internal) && (
             <Stack.Item>
               <Section>
-                {Boolean(data.handcuffed) && <Button onClick={() => act('handcuff')}>Remove handcuffs</Button>}
-                {Boolean(data.canSetInternal) && <Button onClick={() => act('internal')}>Set internals</Button>}
-                {Boolean(data.internal) && <Button onClick={() => act('internal')}>Remove internals</Button>}
+                {Boolean(data.handcuffed) && <Button onClick={() => act('remove-handcuffs')}>Remove handcuffs</Button>}
+                {Boolean(data.canSetInternal) && <Button onClick={() => act('access-internals')}>Set internals</Button>}
+                {Boolean(data.internal) && <Button onClick={() => act('access-internals')}>Remove internals</Button>}
               </Section>
             </Stack.Item>
           )}
@@ -35,35 +54,17 @@ export const HumanInventory = (_props, context) => {
   );
 };
 
-const SlotNames = {
-  [1]: 'Back',
-  [2]: 'Mask',
-  [4]: 'Left Hand',
-  [5]: 'Right Hand',
-  [6]: 'Belt',
-  [7]: 'ID',
-  [8]: 'Ears',
-  [9]: 'Eyes',
-  [10]: 'Gloves',
-  [11]: 'Head',
-  [12]: 'Shoes',
-  [13]: 'Outer Suit',
-  [14]: 'Uniform',
-  [15]: 'Left Pocket',
-  [16]: 'Right Pocket',
-  [18]: 'Backpack',
-};
-
-type SlotProps = HumanInventorySlot;
+type SlotProps = { name: string; slot: HumanInventorySlot };
 
 const Slot = (props: SlotProps, context) => {
   const { act } = useBackend<HumanInventoryData>(context);
-  const { slot, item } = props;
+  const { slot, name } = props;
+  const { id, item } = slot;
 
   return (
-    <LabeledList.Item label={SlotNames[slot] ?? 'Unknown Slot'}>
-      <Button color={item ? 'default' : 'transparent'} fluid onClick={() => act('slot', { slot })}>
-        {item ? toTitleCase(item) : 'Nothing'}
+    <LabeledList.Item label={name}>
+      <Button color={item ? 'default' : 'transparent'} fluid onClick={() => act('access-slot', { id })}>
+        {item ? item : 'Nothing'}
       </Button>
     </LabeledList.Item>
   );

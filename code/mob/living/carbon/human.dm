@@ -165,6 +165,8 @@
 	blood_id = "blood"
 	blood_volume = 500
 
+	var/datum/humanInventory/inventory = null
+
 /mob/living/carbon/human/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE)
 	default_static_icon = human_static_base_idiocy_bullshit_crap // FUCK
 	. = ..()
@@ -245,6 +247,8 @@
 	src.update_colorful_parts()
 
 	init_preferences?.apply_post_new_stuff(src)
+
+	inventory = new(src)
 
 /datum/human_limbs
 	var/mob/living/carbon/human/holder = null

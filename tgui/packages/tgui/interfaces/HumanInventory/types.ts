@@ -11,6 +11,6 @@ export type HumanInventoryData = {
 };
 
 export type HumanInventorySlot = {
-  slot: number;
+  id: string;
   item?: string;
 };
