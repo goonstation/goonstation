@@ -378,6 +378,7 @@
 	icon_state = "twopatch"
 	item_state = "radio"
 	block_vision = TRUE
+	wear_layer = MOB_GLASSES_LAYER2
 	var/pinhole = FALSE
 	var/mob/living/carbon/human/equipper
 
