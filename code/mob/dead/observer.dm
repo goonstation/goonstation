@@ -233,7 +233,8 @@
 		src.corpse = corpse
 		src.set_loc(get_turf(corpse))
 		src.real_name = corpse.real_name
-		src.bioHolder.mobAppearance.CopyOther(corpse.bioHolder.mobAppearance)
+		if (corpse.bioHolder?.mobAppearance)
+			src.bioHolder.mobAppearance.CopyOther(corpse.bioHolder.mobAppearance)
 		src.gender = src.bioHolder.mobAppearance.gender
 		src.UpdateName()
 		src.verbs += /mob/dead/observer/proc/reenter_corpse
