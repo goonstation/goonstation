@@ -1,4 +1,9 @@
 
+(t)sun jun 19 22
+(u)DimWhat
+(p)8971
+(e)⚖|balance
+(+)Made bio suits slow you down a bit when worn.
 (t)sat jun 18 22
 (u)DimWhat
 (p)9206
