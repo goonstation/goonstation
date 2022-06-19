@@ -19,7 +19,6 @@
 	burn_possible = 1
 	health = 5
 	tooltip_flags = REBUILD_DIST
-	wear_layer = MOB_SHOE_LAYER // Needs to be below hand layer or any custom foot details will layer over shoes
 	var/step_sound = "step_default"
 	var/step_priority = STEP_PRIORITY_NONE
 	var/step_lots = 0 //classic steps (used for clown shoos)
