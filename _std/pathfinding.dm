@@ -452,7 +452,7 @@
 						continue
 					else
 						return FALSE
-				return FALSE
+				return A.Cross(passer)
 		if(!A.Cross(passer))
 			return FALSE
 
