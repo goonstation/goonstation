@@ -1647,15 +1647,41 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Clothing"
 
-/datum/manufacture/mechdropper
-	name ="Mechanical Dropper"
-	item_paths = list("MET-1", "CON-1")
-	item_amounts = list(3, 3)
-	item_outputs = list(/obj/item/reagent_containers/dropper/mechanical)
-	time = 3 SECONDS
+/datum/manufacture/dropper
+	name ="Dropper"
+	item_paths = list("INS-1", "CRY-1")
+	item_amounts = list(1,2)
+	item_outputs = list(/obj/item/reagent_containers/dropper)
+	time = 5 SECONDS
 	create = 1
 	category = "Tool"
 
+/datum/manufacture/mechdropper
+	name ="Mechanical Dropper"
+	item_paths = list("MET-1", "CON-1")
+	item_amounts = list(3,3)
+	item_outputs = list(/obj/item/reagent_containers/dropper/mechanical)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
+
+/datum/manufacture/gps
+	name ="Space GPS"
+	item_paths = list("MET-1", "CON-1")
+	item_amounts = list(1,1)
+	item_outputs = list(/obj/item/device/gps)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
+
+/datum/manufacture/reagentscanner
+	name ="Reagent Scanner"
+	item_paths = list("MET-1", "CON-1", "CRY-1")
+	item_amounts = list(2,2,1)
+	item_outputs = list(/obj/item/device/reagentscanner)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
 // Mining Gear
 #ifndef UNDERWATER_MAP
 /datum/manufacture/mining_magnet

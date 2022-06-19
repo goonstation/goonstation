@@ -2187,9 +2187,15 @@
 		/obj/item/material_piece/cloth/cottonfabric)
 	available = list(
 		/datum/manufacture/flashlight,
+		/datum/manufacture/gps,
 		/datum/manufacture/welder,
 		/datum/manufacture/patch,
 		/datum/manufacture/atmos_can,
+		/datum/manufacture/fluidcanister,
+		/datum/manufacture/spectrogoggles,
+		/datum/manufacture/reagentscanner,
+		/datum/manufacture/dropper,
+		/datum/manufacture/mechdropper,
 		/datum/manufacture/biosuit,
 		/datum/manufacture/labcoat,
 		/datum/manufacture/jumpsuit_white,
@@ -2202,6 +2208,15 @@
 		/datum/manufacture/rods2,
 		/datum/manufacture/metal,
 		/datum/manufacture/glass)
+
+	hidden = list(/datum/manufacture/scalpel,
+		/datum/manufacture/circular_saw,
+		/datum/manufacture/surgical_scissors,
+		/datum/manufacture/hemostat,
+		/datum/manufacture/suture,
+		/datum/manufacture/stapler,
+		/datum/manufacture/surgical_spoon
+	)
 
 /obj/machinery/manufacturer/mining
 	name = "mining fabricator"
