@@ -528,7 +528,7 @@
 
 			var/allowfrequency = FALSE
 
-			switch (alert("Allow users to set frequency?",,"Yes","No"))
+			switch (tgui_alert(usr, "Allow users to set frequency?", "Frequency permissions", list("Yes", "No")))
 				if ("Yes")
 					allowfrequency = TRUE
 				else

@@ -150,7 +150,7 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 							if(!src.YN) //if the prompt was not answered, the proc runs itself with modified parameters to move on to the second half of boothing without having to go through the other types of zoldorfing
 								booth(user,zoldorfturf,null,1,1)
 								return //returns after the beta version of the proc completes so the alpha version doesnt run all the way through
-						if(alert(z,"A player has signed over their soul to take your place as the mighty Zoldorf. Do you wish to relinquish control now?", "Relinquish Control", "Yes", "No") == "No") //the prompt
+						if(tgui_alert(z, "A player has signed over their soul to take your place as the mighty Zoldorf. Do you wish to relinquish control now?", "Relinquish Control", list("Yes", "No")) != "Yes") //the prompt
 							if(z.free) //if a zoldorf is free that means they are no longer bound to the booth and therefore either suicided or were freed in another way, either way theyre no longer zoldorf
 								return
 							boutput(z,"<span class='success'><b>You will have three minutes to tie up loose ends!</b></span>") //this will happen if they select the option not to relinquish control now
@@ -497,7 +497,7 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 						if(user.unkillable) //*giggles in scientist language*
 							boutput(user,"<span class='alert'><b>Your soul is shielded and cannot be sold!</b></span>")
 							return
-					var/confirm = alert("Are you sure you want to sell [item.cost] of your soul?", "Confirm Transaction", "Yes", "No")
+					var/confirm = tgui_alert(usr, "Are you sure you want to sell [item.cost] of your soul?", "Confirm Transaction", list("Yes", "No"))
 					if(confirm == "Yes")
 						if(usr in range(1,src))
 							usr << output(list2params(list("spawn", item.cost)),"Zoldorf.browser:serverconfirm")

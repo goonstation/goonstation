@@ -193,7 +193,7 @@
 		boutput(user,"<span class='success'><b>You have drawn the [cardname]!</b></span>")
 		if(cardname == "Head of Personnel")
 			src.icon_state = "hop"
-			var/yn = alert(user,"Do you wish to repeat an effect of an already drawn card or cancel your queued draws?","Choice","Repeat","Cancel")
+			var/yn = tgui_alert(user, "Do you wish to repeat an effect of an already drawn card or cancel your queued draws?", "Choice", list("Repeat", "Cancel"))
 			if(!yn)
 				yn = pick("Repeat","Cancel")
 			if(yn == "Repeat")
@@ -246,7 +246,7 @@
 			if("Cluwne")
 				user.contract_disease(/datum/ailment/disease/cluwneing_around,null,null,1)
 			if("Clown")
-				var/input = alert(user,"Would you prefer to learn the secrets of the clown or the secret to clown immunity?","Choice","Clown","Immunity")
+				var/input = tgui_alert(user, "Would you prefer to learn the secrets of the clown or the secret to clown immunity?", "Choice", list("Clown", "Immunity"))
 				if(!input)
 					input = pick("Clown","Immunity")
 				if(input == "Clown")
@@ -260,7 +260,7 @@
 				else if(input == "Immunity")
 					boutput(user,"<span class='success'>You will never slip again!</span>")
 					user.put_in_hand_or_drop (new /obj/item/clothing/shoes/sandal)
-				input = alert(user, "Do you wish to draw two more cards?","Choice","Yes","No")
+				input = tgui_alert(user, "Do you wish to draw two more cards?", "Choice", list("Yes", "No"))
 				if(!input)
 					input = "No"
 				if (input == "Yes")
