@@ -1,5 +1,9 @@
 
 (t)sat jun 18 22
+(u)DimWhat
+(p)9206
+(e)🗺🎨|mapping, sprites
+(+)Replaced the fabricator in science with a unique variant.
 (u)Mr. Moriarty
 (p)9191
 (e)🎨|sprites

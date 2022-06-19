@@ -15837,8 +15837,8 @@
 /turf/simulated/floor/black,
 /area/station/engine/gas)
 "ery" = (
-/obj/machinery/manufacturer/general,
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
+/obj/machinery/manufacturer/science,
 /turf/simulated/floor/plating/jen,
 /area/station/science/gen_storage)
 "erB" = (
