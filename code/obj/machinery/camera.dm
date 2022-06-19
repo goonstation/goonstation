@@ -1,6 +1,6 @@
 /obj/machinery/camera
 	name = "security camera"
-	desc = "A small, high quality camera with thermal, light-amplification, and diffused laser imaging to see through walls. It is tied into a computer system, allowing those with access to watch what occurs around it."
+	desc = "A small, high quality camera equipped with face and ID recognition. It is tied into a computer system, allowing AI and those with access to watch what occurs through it."
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "camera"
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
@@ -14,6 +14,8 @@
 	anchored = 1.0
 	var/invuln = null
 	var/last_paper = 0
+	///Cameras only the AI can see through
+	var/ai_only = FALSE
 
 	//This camera is a node pointing to the other bunch of cameras nearby for AI movement purposes
 	var/obj/machinery/camera/c_north = null
@@ -62,17 +64,17 @@
 	density = 1
 	var/securedstate = 2
 
-/obj/machinery/camera/television/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/camera/television/attackby(obj/item/W, mob/user)
 	..()
 	if (isscrewingtool(W)) //to move them
 		if (securedstate && src.securedstate >= 1)
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 30, 1, -2)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 30, 1, -2)
 			actions.start(new/datum/action/bar/icon/cameraSecure(src, securedstate), user)
 		else if (securedstate)
 			boutput(user, "<span class='alert'>You need to secure the floor bolts!</span>")
 	else if (iswrenchingtool(W))
 		if (src.securedstate <= 1)
-			playsound(src.loc, "sound/items/Wrench.ogg", 30, 1, -2)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 30, 1, -2)
 			boutput(user, "<span class='alert'>You [securedstate == 1 ? "un" : ""]secure the floor bolts on the [src].</span>")
 			src.securedstate = (securedstate == 1) ? 0 : 1
 
@@ -122,9 +124,12 @@
 
 /obj/machinery/camera/New()
 	..()
-
+	var/area/area = get_area(src)
+	//if only these had a common parent...
+	if (istype(area, /area/station/turret_protected/ai) || istype(area, /area/station/turret_protected/ai_upload) || istype(area, /area/station/turret_protected/AIsat))
+		src.ai_only = TRUE
 	START_TRACKING
-	SPAWN_DBG(1 SECOND)
+	SPAWN(1 SECOND)
 		addToNetwork()
 		updateCoverage()
 
@@ -211,7 +216,7 @@
 	src.network = null                   //Not the best way but it will do. I think.
 	camera_status--
 
-	SPAWN_DBG(90 SECONDS)
+	SPAWN(90 SECONDS)
 		camera_status++
 		src.network = initial(src.network)
 		if(!istype(src, /obj/machinery/camera/television))
@@ -256,26 +261,35 @@
 				O.set_eye(null)
 				boutput(O, "The screen bursts into static.")
 
-/obj/machinery/camera/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/camera/proc/break_camera(mob/user)
+	src.camera_status = FALSE
+	playsound(src.loc, "sound/items/Wirecutter.ogg", 100, 1)
+	src.icon_state = "camera1"
+	updateCoverage()
+	if (user)
+		user.visible_message("<span class='alert'>[user] has deactivated [src]!</span>", "<span class='alert'>You have deactivated [src].</span>")
+		logTheThing("station", null, null, "[key_name(user)] deactivated a security camera ([log_loc(src.loc)])")
+		add_fingerprint(user)
+
+/obj/machinery/camera/proc/repair_camera(mob/user)
+	src.camera_status = TRUE
+	playsound(src.loc, "sound/items/Wirecutter.ogg", 100, 1)
+	src.icon_state = "camera"
+	updateCoverage()
+	if (user)
+		user.visible_message("<span class='alert'>[user] has reactivated [src]!</span>", "<span class='alert'>You have reactivated [src].</span>")
+		add_fingerprint(user)
+
+/obj/machinery/camera/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/parts/human_parts)) //dumb easter egg incoming
 		user.visible_message("<span class='alert'>[user] wipes [src] with the bloody end of [W.name]. What the fuck?</span>", "<span class='alert'>You wipe [src] with the bloody end of [W.name]. What the fuck?</span>")
 		return
 
 	if (issnippingtool(W))
-		src.camera_status = !( src.camera_status )
-		if (!( src.camera_status ))
-			user.visible_message("<span class='alert'>[user] has deactivated [src]!</span>", "<span class='alert'>You have deactivated [src].</span>")
-			logTheThing("station", null, null, "[key_name(user)] deactivated a security camera ([showCoords(src.loc.x, src.loc.y, src.loc.z)])")
-			playsound(src.loc, "sound/items/Wirecutter.ogg", 100, 1)
-			src.icon_state = "camera1"
-			add_fingerprint(user)
-			updateCoverage()
+		if (src.camera_status)
+			src.break_camera(user)
 		else
-			user.visible_message("<span class='alert'>[user] has reactivated [src]!</span>", "<span class='alert'>You have reactivated [src].</span>")
-			playsound(src.loc, "sound/items/Wirecutter.ogg", 100, 1)
-			src.icon_state = "camera"
-			add_fingerprint(user)
-			updateCoverage()
+			src.repair_camera(user)
 		// now disconnect anyone using the camera
 		src.disconnect_viewers()
 		return
@@ -356,7 +370,7 @@
 	detectTime = -1
 	return 1
 
-/obj/machinery/camera/motion/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/camera/motion/attackby(obj/item/W, mob/user)
 	if (issnippingtool(W) && locked == 1) return
 	if (isscrewingtool(W))
 		var/turf/T = user.loc
@@ -408,7 +422,7 @@
 	name_autoname_cameras()
 	var/list/cameras = by_type[/obj/machinery/camera]
 	if (!isnull(cameras))
-		connect_camera_list(by_type[/obj/machinery/camera])
+		connect_camera_list(cameras)
 
 /proc/rebuild_camera_network()
 	if(defer_camnet_rebuild || !camnet_needs_rebuild) return
@@ -442,7 +456,7 @@
 		count++
 
 		if(!(C.c_north || C.c_east || C.c_south || C.c_west))
-			logTheThing("debug", null, null, "<B>SpyGuy/Camnet:</B> Camera at [showCoords(C.x, C.y, C.z)] failed to receive cardinal directions during initialization.")
+			logTheThing("debug", null, null, "<B>SpyGuy/Camnet:</B> Camera at [log_loc(C)] failed to receive cardinal directions during initialization.")
 
 	logTheThing("debug", null, null, "<B>SpyGuy/Camnet:</B> Done. Connected [count] cameras.")
 
@@ -473,7 +487,7 @@
 		candidate = getCameraMove(C, direction)
 		/*
 		if(!candidate)
-			logTheThing("debug", null, null, "<B>SpyGuy/Camnet:</B> Camera at [showCoords(C.x, C.y, C.z)] didn't get a candidate when heading [dir2text(direction)].")
+			logTheThing("debug", null, null, "<B>SpyGuy/Camnet:</B> Camera at [log_loc(C)] didn't get a candidate when heading [dir2text(direction)].")
 			return
 		*/
 		if(candidate && C.z == candidate.z && C.network == candidate.network) // && (!camera_network_reciprocity || !candidate.vars[rec_var]))
@@ -485,9 +499,9 @@
 				C.addToReferrers(candidate)
 /*
 		else
-			logTheThing("debug", null, null, "<B>SpyGuy/Camnet:</B> Camera at [showCoords(C.x, C.y, C.z)] rejected. cand z = [candidate.z], C z = [C.z]; cand net = [candidate.network], C net = [C.network]; reciprocity = [camera_network_reciprocity], rec_var:[rec_var] ( [isnull(candidate.vars[rec_var]) ? "null" : "not null"] )")
+			logTheThing("debug", null, null, "<B>SpyGuy/Camnet:</B> Camera at [log_loc(C)] rejected. cand z = [candidate.z], C z = [C.z]; cand net = [candidate.network], C net = [C.network]; reciprocity = [camera_network_reciprocity], rec_var:[rec_var] ( [isnull(candidate.vars[rec_var]) ? "null" : "not null"] )")
 	else
-		logTheThing("debug", null, null, "<B>SpyGuy/Camnet:</B> Camera at [showCoords(C.x, C.y, C.z)] rejected because [dir_var] was already set.")
+		logTheThing("debug", null, null, "<B>SpyGuy/Camnet:</B> Camera at [log_loc(C)] rejected because [dir_var] was already set.")
 		*/
 
 

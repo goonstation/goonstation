@@ -17,6 +17,10 @@
 #define GRILLE_LAYER 		(TURF_LAYER+0.9)
 #define COG2_WINDOW_LAYER 	(TURF_LAYER+0.95)
 
+// More specific obj layers
+#define STORAGE_LAYER		(OBJ_LAYER - 0.01) // Keep lockers etc below items
+#define ABOVE_OBJ_LAYER 	(OBJ_LAYER + 0.01) // For objects that should generally layer above other objects
+
 // Mob clothing and effect layers
 #define MOB_LAYER_BASE 		4
 #define MOB_OVERLAY_BASE	FLOAT_LAYER
@@ -44,7 +48,7 @@
 #define MOB_UNDERWEAR_LAYER (MOB_OVERLAY_BASE-16)
 #define MOB_DAMAGE_LAYER 	(MOB_OVERLAY_BASE-17)
 #define MOB_BODYDETAIL_LAYER3 	(MOB_OVERLAY_BASE-18)
-#define MOB_BODYDETAIL_LAYER2 	(MOB_OVERLAY_BASE-19)	//
+#define MOB_BODYDETAIL_LAYER2 	(MOB_OVERLAY_BASE-19)	// Used for limb overlays. you can use it for other things too, I won't stop you
 #define MOB_BODYDETAIL_LAYER1 	(MOB_OVERLAY_BASE-20) // Mostly just for torso stuff
 #define MOB_LIMB_LAYER 		(MOB_OVERLAY_BASE-21)
 #define MOB_TAIL_LAYER2 		(MOB_OVERLAY_BASE-23) // Tail detail
@@ -91,3 +95,9 @@
 #define LIGHTING_LAYER_BASE 1
 #define LIGHTING_LAYER_FULLBRIGHT 2
 #define LIGHTING_LAYER_DARKNESS_EFFECTS 3
+
+// Mining asteroid Layers
+#define ASTEROID_LAYER TURF_LAYER
+#define ASTEROID_TOP_OVERLAY_LAYER (TURF_LAYER+0.01)
+#define ASTEROID_ORE_OVERLAY_LAYER (TURF_LAYER+0.02)
+#define ASTEROID_MINING_SCAN_DECAL_LAYER (TURF_LAYER+0.03)

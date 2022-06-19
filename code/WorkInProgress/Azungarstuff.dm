@@ -70,7 +70,7 @@
 			return_if_overlay_or_effect(O)
 
 			if (O.throwing && !isliving(O))
-				SPAWN_DBG(0.8 SECONDS)
+				SPAWN(0.8 SECONDS)
 					if (O && O.loc == src)
 						melt_away(O)
 				return
@@ -86,6 +86,7 @@
 					H.unkillable = 0
 				if(!M.stat) M.emote("scream")
 				src.visible_message("<span class='alert'><B>[M]</B> falls into the [src] and melts away!</span>")
+				logTheThing("combat", M, null, "was firegibbed by [src] ([src.type]) at [log_loc(M)].")
 				M.firegib() // thanks ISN!
 		else
 			src.visible_message("<span class='alert'><B>[O]</B> falls into the [src] and melts away!</span>")
@@ -108,6 +109,7 @@
 	temperature = 10+T0C
 
 	Entered(var/mob/M)
+		. = ..()
 		if (istype(M,/mob/dead) || istype(M,/mob/wraith) || istype(M,/mob/living/intangible) || istype(M, /obj/lattice))
 			return
 		if(!ismob(M))
@@ -115,7 +117,7 @@
 		return_if_overlay_or_effect(M)
 
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if(M.loc == src)
 				if (ishuman(M))
 					var/mob/living/carbon/human/H = M
@@ -493,7 +495,7 @@
 	anchored = 1
 	density = 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/mining_tool/power_pick))
 			boutput(user, "You hit the [src] a few times with the [W]!")
 			src.visible_message("<span class='notice'><b>[src] crumbles into dust!</b></span>")
@@ -509,7 +511,7 @@
 	density = 1
 
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/mining_tool/power_pick))
 			boutput(user, "You hit the [src] a few times with the [W]!")
 			src.visible_message("<span class='notice'><b>After a few hits [src] crumbles into smaller rocks.</b></span>")
@@ -653,7 +655,7 @@
 	density = 1
 	anchored = 1
 
-	attackby(obj/item/W as obj, mob/user as mob, params)
+	attackby(obj/item/W, mob/user, params)
 		if (istype(W, /obj/item/grab))
 			var/obj/item/grab/G = W
 			if (!G.affecting || G.affecting.buckled)
@@ -695,8 +697,8 @@
 
 		src.tag = "cave[id][src.icon_state == "cave_entrance" ? 0 : 1]"
 
-	attack_hand(mob/user as mob)
-		if (user.stat || user.getStatusDuration("weakened") || get_dist(user, src) > 1)
+	attack_hand(mob/user)
+		if (user.stat || user.getStatusDuration("weakened") || BOUNDS_DIST(user, src) > 0)
 			return
 
 		var/obj/cave_entrance/otherEntrance = locate("cave[id][src.icon_state == "cave_entrance"]")
@@ -828,7 +830,7 @@
 		src.visible_message("<span class='combat'><B>[src]</B> bites and claws at [src.target]!</span>")
 		random_brute_damage(src.target, rand(3,5))
 		random_burn_damage(src.target, rand(2,3))
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.attacking = 0
 
 
@@ -849,7 +851,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			bioHolder.mobAppearance.underwear = "briefs"
 			JobEquipSpawned("DO NOT USE THIS JOB")
 			update_clothing()
@@ -915,7 +917,7 @@
 		light.set_brightness(0.7)
 		light.enable()
 
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			animate(src, alpha=130, color="#DDDDDD", time=7, loop=-1)
 			animate(alpha=180, color="#FFFFFF", time=1)
 			animate(src, pixel_y=10, time=15, flags=ANIMATION_PARALLEL, easing=SINE_EASING, loop=-1)
@@ -948,7 +950,7 @@
 	icon_state = "dispenser_handcuffs"
 	var/amount = 3
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/handcuffs))
 			user.u_equip(W)
 			qdel(W)
@@ -956,7 +958,7 @@
 			boutput(user, "<span class='notice'>You put a pair of handcuffs in the [src]. [amount] left in the dispenser.</span>")
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		add_fingerprint(user)
 		if (src.amount >= 1)
 			src.amount--
@@ -978,7 +980,7 @@
 	bound_width = 96
 	layer = EFFECTS_LAYER_BASE
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (can_reach(user,src))
 			boutput(user, "<span class='alert'>You attempt to open the container but its doors are sealed tight. It doesn't look like you'll be able to open it.</span>")
 			playsound(src.loc, "sound/machines/door_locked.ogg", 50, 1, -2)
@@ -1022,7 +1024,7 @@
 	get_desc()
 		return last_result_text ? "<br>The ball is currently on [last_result_text]." : ""
 
-	proc/update_icon()
+	update_icon()
 		if (running == 0)
 			src.icon_state = "roulette_w0"
 		else if (running == 1)
@@ -1039,7 +1041,7 @@
 		else
 			src.visible_message("[src] starts spinning!")
 		src.running = 1
-		update_icon()
+		UpdateIcon()
 		var/real_run_time = rand(src.run_time - 10, src.run_time + 10)
 		sleep(real_run_time - 10)
 		playsound(src.loc, "sound/items/coindrop.ogg", 30, 1)
@@ -1061,12 +1063,12 @@
 		last_result_text = "<span style='padding: 0 0.5em; color: white; background-color: [background_color];'>[src.last_result]</span> [result_color]"
 		src.visible_message("<span class='success'>[src] lands on [last_result_text]!</span>")
 		src.running = 0
-		update_icon()
+		UpdateIcon()
 		sleep(1 SECONDS)
 		src.maptext_x = -1
 		src.maptext_y = 8
 		src.maptext = "<span class='xfont sh c vm' style='background: [background_color];'> [src.last_result] </span>"
-		SPAWN_DBG(4 SECONDS)
+		SPAWN(4 SECONDS)
 			src.maptext = ""
 
 
@@ -1149,7 +1151,7 @@
 					playsound(H.loc, "swing_hit", 50, 1)
 					usr.say("I AM THE LAW!")
 				prob_clonk = min(prob_clonk + 5, 40)
-				SPAWN_DBG(2 SECONDS)
+				SPAWN(2 SECONDS)
 					prob_clonk = max(prob_clonk - 5, 0)
 
 		return ..(hit_atom)
@@ -1170,12 +1172,12 @@
 
 	Bumped(mob/user as mob)
 		if(busy) return
-		if(get_dist(user, src) > 1 || user.z != src.z) return
+		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		src.add_dialog(user)
 		busy = 1
 		showswirl(user.loc)
 		playsound(src, 'sound/effects/teleport.ogg', 60, 1)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 		teleport(user)
 		busy = 0
 
@@ -1189,7 +1191,7 @@
 					src.recharging = 1
 					user.set_loc(S.loc)
 					showswirl(user.loc)
-					SPAWN_DBG(recharge)
+					SPAWN(recharge)
 						S.recharging = 0
 						src.recharging = 0
 				return
@@ -1245,7 +1247,7 @@
 		src.visible_message("<span class='combat'><B>[src]</B> bites and claws at [src.target]!</span>")
 		random_brute_damage(src.target, rand(3,5),1)
 		random_burn_damage(src.target, rand(2,3))
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.attacking = 0
 
 	CritterDeath()
@@ -1269,7 +1271,7 @@
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "ntcrate"
 
-	attackby(var/obj/item/I as obj, var/mob/user as mob)
+	attackby(var/obj/item/I, var/mob/user)
 		if (istype(I, /obj/item/rpcargotele))
 			actions.start(new /datum/action/bar/icon/scenariocrate(src, I, 300), user)
 
@@ -1296,7 +1298,7 @@
 
 	onUpdate()
 		..()
-		if (thecrate == null || the_tool == null || owner == null || get_dist(owner, thecrate) > 1)
+		if (thecrate == null || the_tool == null || owner == null || BOUNDS_DIST(owner, thecrate) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner

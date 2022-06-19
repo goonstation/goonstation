@@ -19,7 +19,7 @@
 	var/O_limit
 	var/atom/target = get_edge_target_turf(src, src.dir)
 	for(var/atom/movable/O in src.loc)
-		if(O.anchored || isobserver(O) || isintangible(O)) continue
+		if(O.anchored || isobserver(O) || isintangible(O) || HAS_ATOM_PROPERTY(O, PROP_ATOM_FLOATING)) continue
 		O_limit++
 		if(O_limit >= 20)
 			for(var/mob/M in hearers(src, null))

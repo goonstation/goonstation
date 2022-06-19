@@ -54,7 +54,7 @@
 /area/noGenerate)
 "am" = (
 /obj/decal/cleanable/dirt,
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "The head seems to be gone.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body2";
@@ -79,7 +79,7 @@
 	},
 /area/noGenerate)
 "ao" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/noGenerate)
 "ap" = (
 /obj/random_item_spawner/landmine,
@@ -189,7 +189,7 @@
 	},
 /area/noGenerate)
 "aD" = (
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	name = "decomposed corpse";
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
@@ -298,7 +298,7 @@
 /area/noGenerate)
 "aR" = (
 /obj/decal/cleanable/oil,
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/noGenerate)
 "aS" = (
 /obj/decal/fakeobjects{
@@ -316,7 +316,7 @@
 /area/noGenerate)
 "aT" = (
 /obj/item/device/analyzer/atmosanalyzer_upgrade,
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	name = "decomposed corpse";
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
@@ -432,7 +432,7 @@
 	icon_state = "floattiles1";
 	dir = 1
 	},
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body6";
@@ -660,7 +660,7 @@
 /area/noGenerate)
 "bG" = (
 /obj/item/raw_material/rock,
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/noGenerate)
 "bH" = (
 /obj/decal/floatingtiles{

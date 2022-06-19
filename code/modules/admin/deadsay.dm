@@ -2,7 +2,7 @@
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "dsay"
 	set hidden = 1
-	admin_only
+	ADMIN_ONLY
 	if (!src.mob)
 		return
 	if (src.ismuted())

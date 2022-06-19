@@ -44,6 +44,9 @@
 /datum/movement_modifier/staggered_or_blocking
 	additive_slowdown = 0.4
 
+/datum/movement_modifier/poisoned
+	additive_slowdown = 3
+
 /datum/movement_modifier/disoriented
 	additive_slowdown = 8
 
@@ -102,6 +105,9 @@
 /datum/movement_modifier/robot_oil
 	additive_slowdown = -0.5
 
+/datum/movement_modifier/spry
+	additive_slowdown = -0.25
+	health_deficiency_adjustment = -25
 
 /datum/movement_modifier/robot_speed_upgrade
 	ask_proc = 1

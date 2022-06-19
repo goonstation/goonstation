@@ -7,7 +7,7 @@ Right Mouse Button on buildmode    = Select reagent<br>
 ***********************************************************"}
 	icon_state = "buildmode6"
 	var/reagent_id
-	var/datum/reagents/reagent_holder
+	var/tmp/datum/reagents/reagent_holder
 
 	New()
 		..()

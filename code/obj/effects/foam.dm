@@ -26,8 +26,7 @@
 
 */
 
-/obj/effects/foam/proc/update_icon()
-
+/obj/effects/foam/update_icon()
 	src.overlays.len = 0
 	icon_state = metal ? "mfoam" : "foam"
 	if(src.reagents && !metal)
@@ -46,20 +45,20 @@
 	//NOW WHO THOUGH IT WOULD BE A GOOD IDEA TO PLAY THIS ON EVERY FOAM OBJ
 	//playsound(src, "sound/effects/bubbles2.ogg", 80, 1, -3)
 
-	update_icon()
+	UpdateIcon()
 	if(metal)
 		if(istype(loc, /turf/space))
 			loc:ReplaceWithMetalFoam(metal)
-	SPAWN_DBG(3 + metal*3)
+	SPAWN(3 + metal*3)
 		process()
-	SPAWN_DBG(12 SECONDS)
+	SPAWN(12 SECONDS)
 		expand = 0 // stop expanding
 		sleep(3 SECONDS)
 
 		if(metal)
 			var/obj/foamedmetal/M = new(src.loc)
 			M.metal = metal
-			M.updateicon()
+			M.UpdateIcon()
 
 		if(metal)
 			flick("mfoam-disolve", src)
@@ -103,6 +102,13 @@
 
 			if(T.loc:sanctuary || !T.Enter(src))
 				continue
+			var/skip = FALSE
+			for(var/atom/movable/AM in T)
+				if(!AM.Cross(src))
+					skip = TRUE
+					break
+			if(skip)
+				continue
 
 			//if(istype(T, /turf/space))
 			//	continue
@@ -134,7 +140,7 @@
 					if(current_reagent)
 						F.reagents.add_reagent(reagent_id,min(current_reagent.volume, 3), current_reagent.data, src.reagents.total_temperature)
 
-				F.update_icon()
+				F.UpdateIcon()
 
 		sleep(1.5 SECONDS)
 
@@ -144,7 +150,7 @@
 	if(!metal && prob(max(0, exposed_temperature - 475)))
 		flick("foam-disolve", src)
 
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			die()
 			expand = 0
 

@@ -6,6 +6,7 @@
 
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	w_class = W_CLASS_SMALL
+	health = 5
 
 	// sensible defaults
 	force = 5.0

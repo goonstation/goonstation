@@ -35,7 +35,7 @@
 /obj/machinery/bot/cambot/New()
 	..()
 	src.clear_invalid_targets = TIME
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		if (src)
 			src.camera = new /obj/item/camera(src)
 			src.icon_state = "cambot[src.on]"
@@ -180,7 +180,7 @@
 		if (!src)
 			return
 
-		src.navigate_to(get_turf(src.target), CAMBOT_MOVE_SPEED, 1, 60)
+		src.navigate_to(get_turf(src.target), CAMBOT_MOVE_SPEED, 1, 20)
 
 		if (!islist(src.path)) // Woops, couldn't find a path.
 			if (!(src.target in src.targets_invalid))
@@ -271,9 +271,9 @@
 	src.photographing = 1
 	src.flash_blink(3, 1)
 
-	SPAWN_DBG(5 SECONDS)
+	SPAWN(5 SECONDS)
 		if (src.on)
-			if (get_dist(src,target) <= 1)
+			if (BOUNDS_DIST(src, target) == 0)
 				src.flash_blink(1, 5)
 				if (src.camera) // take the picture
 					var/obj/item/photo/P = src.camera.create_photo(target, src.emagged)
@@ -312,7 +312,7 @@
 	var/build_step = 0
 	var/created_name = "Cambot"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/prox_sensor))
 			var/obj/machinery/bot/cambot/B = new /obj/machinery/bot/cambot(get_turf(src))
 			B.name = src.created_name

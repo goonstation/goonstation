@@ -13,7 +13,7 @@
 			qdel(src)
 			return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!W) return
 		if (!user) return
 		if (istool(W, TOOL_CUTTING | TOOL_SAWING | TOOL_SCREWING | TOOL_SNIPPING | TOOL_WELDING)) qdel(src)
@@ -45,7 +45,7 @@
 					else dogrowth = 0
 			if (dogrowth == 1)
 				var/obj/alien/weeds/B = new /obj/alien/weeds(Vspread)
-				SPAWN_DBG(5 SECONDS)
+				SPAWN(5 SECONDS)
 					if(B)
 						B.Life()
 			count++
@@ -70,7 +70,7 @@
 /*
 /obj/alien/weeds/burn(fi_amount)
 	if (fi_amount > 18000)
-		SPAWN_DBG( 0 )
+		SPAWN( 0 )
 			qdel(src)
 			return
 		return 0

@@ -9,13 +9,13 @@
 
 	var/obj/item/rod/insertedRod = null
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(insertedRod)
 			insertedRod.set_loc(src.loc)
 			insertedRod = null
 		return
 
-	proc/updateicon()
+	update_icon()
 		if(status & NOPOWER)
 			icon_state = "neutinj"
 			return
@@ -25,7 +25,7 @@
 			icon_state = "neutinj"
 
 	process()
-		updateicon()
+		UpdateIcon()
 
 		if(status & NOPOWER)
 			return
@@ -58,7 +58,7 @@
 				// Unequipping
 				user.u_equip(W)
 				W.set_loc(src)
-				W.dropped()
+				W.dropped(user)
 				// Letting everyone around know
 				boutput(user, "<span class='alert'>You insert the [W] into the [src].</span>")
 				for(var/mob/M in AIviewers(src))

@@ -4,6 +4,158 @@
 	soundproofing = 5
 	can_flip_bust = 1
 	p_class = 3
+	open_sound = 'sound/misc/locker_open.ogg'
+	close_sound = 'sound/misc/locker_close.ogg'
+	volume = 70
+	_max_health = LOCKER_HEALTH_AVERAGE
+	_health = LOCKER_HEALTH_AVERAGE
+	/// Anchored if TRUE
+	var/bolted = TRUE
+	/// Can't be broken open with melee
+	var/reinforced = FALSE
+	var/obj/particle/attack/attack_particle
+
+	New()
+		..()
+		src.AddComponent(/datum/component/bullet_holes, 10, src.reinforced ? 25 : 5) // reinforced lockers need 25 power to damage; reflects that
+		if (bolted)
+			anchored = 1
+		src.attack_particle = new /obj/particle/attack
+		src.attack_particle.icon = 'icons/mob/mob.dmi'
+
+	get_desc(dist)
+		. += "[reinforced ? "It's reinforced, only stronger firearms and explosives could break into this. " : ""] [bolted ? "It's bolted to the floor." : ""]"
+
+	attackby(obj/item/I, mob/user)
+		if (iswrenchingtool(I) && !src.open)
+			if (istype(get_turf(src), /turf/space))
+				if (user)
+					user.show_text("What exactly are you gunna secure [src] to?", "red")
+				return
+			playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+			SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, .proc/toggle_bolts, user, I.icon, I.icon_state,"", null)
+			return
+		else if (src.open || !src.locked)
+			..()
+		else if (!I)
+			..()
+		else if (istype(I, /obj/item/satchel/))
+			..()
+		else if (isweldingtool(I))
+			..()
+		else if (istype(I, /obj/item/card/))
+			..()
+		else if (user.a_intent == INTENT_HELP)
+			..()
+		else if (I.force > 0)
+			user.lastattacked = src
+			if (src.reinforced)
+				boutput(user, "<span class='alert'>[src] is too reinforced to bash into!</span>")
+				attack_particle(user,src)
+				playsound(src.loc, 'sound/impact_sounds/locker_hit.ogg', 40, 1) //quiet, no hit twitch
+			else
+				var/damage
+				var/damage_text
+				user.visible_message("<span class='alert'><b>[user]</b> hits [src] with [I]! [damage_text]</span>")
+				if (I.force <= 10)
+					damage = round(I.force * 0.6)
+					damage_text = " It's not very effective."
+				else
+					damage = I.force
+				attack_particle(user,src)
+				hit_twitch(src)
+				take_damage(clamp(damage, 1, 20), user, I, null)
+				playsound(src.loc, 'sound/impact_sounds/locker_hit.ogg', 90, 1)
+		else
+			..()
+
+	bullet_act(var/obj/projectile/P)
+		var/damage = 0
+		if (!P || !istype(P.proj_data,/datum/projectile/))
+			return
+		if (reinforced)
+			// Prevent weakness to weak guns, shrapnel and NARCS
+			if (P.power <= 25)
+				hit_particle(TRUE)
+				return
+		var/reduced_power
+		if (P.proj_data.damage_type != D_ENERGY)
+			reduced_power = round(P.power * 0.8)
+		else
+			reduced_power = round(P.power * 0.4)
+		damage = round((reduced_power*P.proj_data.ks_ratio), 1.0)
+		if (damage < 1)
+			return
+
+		switch(P.proj_data.damage_type)
+			if (D_KINETIC)
+				take_damage(damage, null, null, P)
+			if (D_PIERCING)
+				take_damage(damage, null, null, P)
+			if (D_ENERGY)
+				if (reinforced)
+					hit_particle(TRUE)
+					return
+				take_damage(damage, null, null, P)
+
+		hit_particle(FALSE)
+		return
+
+	proc/hit_particle(var/block = FALSE)
+		if (ON_COOLDOWN(src, "locker_projectile_hit", 0.3 SECONDS))
+			return
+		if (block)
+			flick("block_spark_armor",src.attack_particle)
+		else
+			flick("block_spark",src.attack_particle)
+		src.attack_particle.alpha = 255
+		src.attack_particle.loc = src.loc
+		src.attack_particle.pixel_x = 0
+		src.attack_particle.pixel_y = 0
+		src.attack_particle.transform.Turn(rand(0,360))
+		SPAWN(0.2 SECONDS)
+			src.attack_particle.alpha = 0
+
+	proc/toggle_bolts(var/mob/M)
+		M.visible_message("<b>[M]</b> [src.bolted ? "loosens" : "tightens"] the floor bolts of [src].[istype(src.loc, /turf/space) ? " It doesn't do much, though, since [src] is in space and all." : null]")
+		src.bolted = !src.bolted
+		src.anchored = !src.anchored
+
+	proc/take_damage(var/amount, var/mob/M = null, obj/item/I = null, var/obj/projectile/P = null)
+		if (!isnum(amount) || amount <= 0)
+			return
+		src._health -= amount
+		if(_health <= 0)
+			_health = 0
+			if (P)
+				var/shooter_data = null
+				var/vehicle
+				if (P.mob_shooter)
+					shooter_data = P.mob_shooter
+				else if (ismob(P.shooter))
+					var/mob/PS = P.shooter
+					shooter_data = PS
+				var/obj/machinery/vehicle/V
+				if (istype(P.shooter,/obj/machinery/vehicle/))
+					V = P.shooter
+					if (!shooter_data)
+						shooter_data = V.pilot
+					vehicle = 1
+				if(shooter_data)
+					logTheThing("combat", shooter_data, src, "[vehicle ? "driving [V.name] " : ""]shoots and breaks open [src] at [log_loc(src)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
+				else
+					logTheThing("combat", src, null, "is hit and broken open by a projectile at [log_loc(src)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
+			else if (M)
+				logTheThing("combat", M, null, "broke open [src] with [I] at [log_loc(src)]")
+			else
+				logTheThing("combat", src, null, "was broken open by an unknown cause at [log_loc(src)]")
+			break_open()
+
+	proc/break_open(var/obj/projectile/P)
+		src.welded = 0
+		src.unlock()
+		src.open()
+		playsound(src.loc, 'sound/impact_sounds/locker_break.ogg', 70, 1)
 
 /obj/storage/secure/closet/personal
 	name = "personal locker"
@@ -30,10 +182,13 @@
 
 /obj/storage/secure/closet/command
 	name = "command locker"
+	_max_health = LOCKER_HEALTH_STRONG
+	_health = LOCKER_HEALTH_STRONG
 	req_access = list(access_heads)
 	icon_state = "command"
 	icon_closed = "command"
 	icon_opened = "secure_blue-open"
+	bolted = TRUE
 
 /obj/storage/secure/closet/command/captain
 	name = "\improper Captain's locker"
@@ -44,7 +199,7 @@
 	/obj/item/clothing/suit/armor/capcoat,
 	/obj/item/clothing/shoes/brown,
 	/obj/item/clothing/suit/armor/vest,
-	/obj/item/clothing/head/helmet/swat,
+	/obj/item/clothing/head/helmet/captain,
 	/obj/item/clothing/glasses/sunglasses,
 	/obj/item/stamp/cap,
 	/obj/item/device/radio/headset/command/captain)
@@ -60,6 +215,7 @@
 
 /obj/storage/secure/closet/command/hos
 	name = "\improper Head of Security's locker"
+	reinforced = TRUE
 	req_access = list(access_maxsec)
 	spawn_contents = list(/obj/item/storage/box/id_kit,
 	/obj/item/handcuffs,
@@ -89,7 +245,8 @@
 	/obj/item/clothing/suit/armor/vest,
 	/obj/item/stamp/hop,
 	/obj/item/device/radio/headset/command/hop,
-	/obj/item/device/accessgun)
+	/obj/item/device/accessgun,
+	/obj/item/clipboard)
 
 /obj/storage/secure/closet/command/research_director
 	name = "\improper Research Director's locker"
@@ -117,7 +274,8 @@
 /obj/storage/secure/closet/command/medical_director
 	name = "\improper Medical Director's locker"
 	req_access = list(access_medical_director)
-	spawn_contents = list(/obj/item/storage/box/clothing/medical_director,
+	spawn_contents = list(/obj/item/disk/data/floppy/manudrive/ai,
+	/obj/item/storage/box/clothing/medical_director,
 	/obj/item/clothing/shoes/brown,
 	/obj/item/gun/implanter,
 	/obj/item/gun/reagent/syringe/NT,
@@ -126,8 +284,6 @@
 	/obj/item/ammo/bullets/tranq_darts,
 	/obj/item/ammo/bullets/tranq_darts/anti_mutant,
 	/obj/item/robodefibrillator,
-	/obj/item/clothing/gloves/latex,
-	/obj/item/storage/belt/medical,
 	/obj/item/storage/firstaid/docbag,
 	/obj/item/reagent_containers/hypospray,
 	/obj/item/device/flash,
@@ -144,7 +300,8 @@
 /obj/storage/secure/closet/command/chief_engineer
 	name = "\improper Chief Engineer's locker"
 	req_access = list(access_engineering_chief)
-	spawn_contents = list(/obj/item/storage/toolbox/mechanical/yellow_tools,
+	spawn_contents = list(/obj/item/disk/data/floppy/manudrive/law_rack,
+	/obj/item/storage/toolbox/mechanical/yellow_tools,
 	/obj/item/storage/backpack/engineering,
 	/obj/item/storage/box/clothing/chief_engineer,
 	/obj/item/clothing/gloves/yellow,
@@ -180,6 +337,9 @@
 	icon_state = "sec"
 	icon_closed = "sec"
 	icon_opened = "secure_red-open"
+	_max_health = LOCKER_HEALTH_STRONG
+	_health = LOCKER_HEALTH_STRONG
+	bolted = TRUE
 
 /obj/storage/secure/closet/security/equipment
 	name = "\improper Security equipment locker"
@@ -212,6 +372,7 @@
 
 /obj/storage/secure/closet/security/armory
 	name = "\improper Special Equipment locker"
+	reinforced = TRUE
 	req_access = list(access_maxsec)
 	spawn_contents = list(/obj/item/requisition_token/security = 2,
 	/obj/item/turret_deployer/riot = 2,
@@ -222,14 +383,30 @@
 	/obj/item/ammo/bullets/abg,)
 
 /obj/storage/secure/closet/brig
-	name = "\improper Confiscated Items locker"
+	name = "\improper Confiscated Items safe"
+	desc = "A card-locked safe for storage of contraband. Unfortunately it was made by the lowest bidder."
 	req_access = list(access_brig)
+	icon_state = "safe_locker"
+	icon_closed = "safe_locker"
+	icon_opened = "safe_locker-open"
+	icon_greenlight = "safe-greenlight"
+	icon_redlight = "safe-redlight"
+	open_sound = 'sound/misc/safe_open.ogg'
+	close_sound = 'sound/misc/safe_close.ogg'
+	_max_health = LOCKER_HEALTH_STRONG
+	_health = LOCKER_HEALTH_STRONG
+	reinforced = TRUE
+	bolted = TRUE
 
 // Old Mushroom-era feature I fixed up (Convair880).
-/obj/storage/secure/closet/brig/automatic
+/obj/storage/secure/closet/brig_automatic
 	name = "\improper Automatic Locker"
+	req_access = list(access_brig)
 	desc = "Card-locked closet linked to a brig timer. Will unlock automatically when timer reaches zero."
 	anchored = 1
+	_max_health = LOCKER_HEALTH_STRONG
+	_health = LOCKER_HEALTH_STRONG
+	reinforced = TRUE
 	var/obj/machinery/door_timer/our_timer = null
 	var/id = null
 
@@ -280,7 +457,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			if (src)
 				// Why range 30? COG2 places linked fixtures much further away from the timer than originally envisioned.
 				for (var/obj/machinery/door_timer/DT in range(30, src))
@@ -294,7 +471,7 @@
 					logTheThing("debug", null, null, "<b>Convair880:</b> couldn't find brig timer with ID [isnull(src.id) ? "*null*" : "[src.id]"] for automatic locker at [log_loc(src)].")
 		return
 
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		..()
 		if (isobserver(usr) || isintangible(usr))
 			return
@@ -302,7 +479,7 @@
 			return
 		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened"))
 			return
-		if (get_dist(src, usr) > 1)
+		if (BOUNDS_DIST(src, usr) > 0)
 			usr.show_text("You are too far away to do this!", "red")
 			return
 		if (get_dist(over_object, src) > 5)
@@ -334,7 +511,9 @@
 	icon_opened = "secure_white-open"
 	req_access = list(access_medical_lockers)
 
-
+/obj/storage/secure/closet/medical/cloning
+	name = "cloning storage locker"
+	bolted = FALSE
 
 /obj/storage/secure/closet/medical/medicine
 	name = "medicine storage locker"
@@ -460,7 +639,7 @@
 	icon_state = "science"
 	icon_closed = "science"
 	icon_opened = "secure_white-open"
-	req_access = list(access_tox_storage)
+	req_access = list(access_research)
 
 /obj/storage/secure/closet/research/uniform
 	name = "science uniform locker"
@@ -561,6 +740,7 @@
 	name = "\improper Engineer's locker"
 	req_access = list(access_engineering_engine)
 	spawn_contents = list(/obj/item/storage/toolbox/mechanical,
+	/obj/item/engivac,
 	/obj/item/storage/box/clothing/engineer,
 	/obj/item/storage/backpack/engineering,
 	/obj/item/clothing/suit/wintercoat/engineering,
@@ -616,9 +796,7 @@
 	/obj/item/reagent_containers/glass/bottle/acetone/janitors = 1,\
 	/obj/item/reagent_containers/glass/bottle/ammonia/janitors = 1,\
 	/obj/item/device/light/flashlight,\
-	/obj/item/caution = 4,
-	/obj/item/clothing/gloves/long,
-	/obj/item/handheld_vacuum)
+	/obj/item/caution = 4)
 
 /obj/storage/secure/closet/civilian/hydro
 	name = "\improper Botanical supplies locker"
@@ -671,6 +849,8 @@
 	/obj/item/clothing/head/formal_turban,\
 	/obj/item/clothing/head/turban,\
 	/obj/item/clothing/shoes/sandal,\
+	/obj/item/clothing/under/misc/chaplain/nun,\
+	/obj/item/clothing/head/nunhood,\
 	/obj/item/clothing/suit/flockcultist,\
 	/obj/item/storage/box/holywaterkit)
 
@@ -688,6 +868,9 @@
 	icon_sparks = "fridge-sparks"
 	intact_frame = 1
 	weld_image_offset_X = 3
+	open_sound = 'sound/misc/fridge_open.ogg'
+	close_sound = 'sound/misc/fridge_close.ogg'
+	volume = 80
 
 /obj/storage/secure/closet/fridge/opened
 	New()

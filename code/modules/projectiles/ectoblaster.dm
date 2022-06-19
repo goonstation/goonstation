@@ -29,7 +29,7 @@
 			var/mob/wraith/W = hit
 			if(!W.density)
 				W.makeCorporeal()
-				SPAWN_DBG(1.5 SECONDS)
+				SPAWN(1.5 SECONDS)
 					W.makeIncorporeal()
 			W.TakeDamage(null, 0, src.power)
 		// kyle TODO: add Spooktober stuff, sucking energy from ghosts or something

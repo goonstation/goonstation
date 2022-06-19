@@ -62,6 +62,7 @@
 
 	cast(atom/target)
 		var/obj/projectile/P = initialize_projectile_ST( holder.owner, fb_proj, target )
+		logTheThing("combat", usr, null, "used their [src.name] ability at [log_loc(usr)]")
 		if (P)
 			P.mob_shooter = holder.owner
 			P.launch()

@@ -3,7 +3,7 @@
 /obj/item/clothing/glasses
 	name = "glasses"
 	icon = 'icons/obj/clothing/item_glasses.dmi'
-	wear_image_icon = 'icons/mob/eyes.dmi'
+	wear_image_icon = 'icons/mob/clothing/eyes.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	item_state = "glasses"
 	w_class = W_CLASS_SMALL
@@ -11,9 +11,17 @@
 	var/allow_blind_sight = 0
 	wear_layer = MOB_GLASSES_LAYER
 	block_vision = 0
+	duration_remove = 1.5 SECONDS
+	duration_put = 1.5 SECONDS
 	var/block_eye = null // R or L
 	var/correct_bad_vision = 0
 	compatible_species = list("human", "cow", "werewolf", "flubber")
+
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/cloth/handkerchief))
+			user.visible_message("<span class='notice'>[user] [pick("polishes", "shines", "cleans", "wipes")] [src] with [src].</span>")
+			return
+		return ..()
 
 /obj/item/clothing/glasses/crafted
 	name = "glasses"
@@ -38,7 +46,7 @@
 	desc = "A strip of cloth painstakingly designed to wear around your eyes so you cannot see."
 	block_vision = 1
 
-	attack(mob/M as mob, mob/user as mob, def_zone) //this is for equipping blindfolds on head attack.
+	attack(mob/M, mob/user, def_zone) //this is for equipping blindfolds on head attack.
 		if (user.zone_sel.selecting == "head" && ishuman(M)) //ishuman() works on monkeys too apparently.
 			if(user == M) //Accidentally blindfolding yourself might be annoying so I'm leaving that out.
 				boutput(user, "<span class='alert'>Put it on your eyes, dingus!</span>")
@@ -82,10 +90,10 @@
 			if (istype(H.glasses, /obj/item/clothing/glasses/meson)) //hamdling of the rest is done in life.dm
 				if (src.on)
 					H.vision.set_scan(1)
-					APPLY_MOB_PROPERTY(toggler, PROP_MESONVISION, src)
+					APPLY_ATOM_PROPERTY(toggler, PROP_MOB_MESONVISION, src)
 				else
 					H.vision.set_scan(0)
-					REMOVE_MOB_PROPERTY(toggler, PROP_MESONVISION, src)
+					REMOVE_ATOM_PROPERTY(toggler, PROP_MOB_MESONVISION, src)
 
 	equipped(var/mob/living/user, var/slot)
 		..()
@@ -93,7 +101,7 @@
 			return
 		if (slot == SLOT_GLASSES && on)
 			user.vision.set_scan(1)
-			APPLY_MOB_PROPERTY(user, PROP_MESONVISION, src)
+			APPLY_ATOM_PROPERTY(user, PROP_MOB_MESONVISION, src)
 
 	unequipped(var/mob/living/user)
 		..()
@@ -103,7 +111,7 @@
 
 	unequipped(mob/user)
 		. = ..()
-		REMOVE_MOB_PROPERTY(user, PROP_MESONVISION, src)
+		REMOVE_ATOM_PROPERTY(user, PROP_MOB_MESONVISION, src)
 
 /obj/item/clothing/glasses/meson/abilities = list(/obj/ability_button/meson_toggle)
 
@@ -128,11 +136,11 @@
 
 	equipped(mob/user, slot)
 		. = ..()
-		APPLY_MOB_PROPERTY(user, PROP_GHOSTVISION, src)
+		APPLY_ATOM_PROPERTY(user, PROP_MOB_GHOSTVISION, src)
 
 	unequipped(mob/user)
 		. = ..()
-		REMOVE_MOB_PROPERTY(user, PROP_GHOSTVISION, src)
+		REMOVE_ATOM_PROPERTY(user, PROP_MOB_GHOSTVISION, src)
 
 /obj/item/clothing/glasses/regular/ecto/goggles
 	name = "ectoplasmoleic imager"
@@ -190,7 +198,7 @@
 				H.take_eye_damage(3, 1)
 				H.change_eye_blurry(5)
 				H.bioHolder.AddEffect("bad_eyesight")
-				SPAWN_DBG(10 SECONDS)
+				SPAWN(10 SECONDS)
 					H.bioHolder.RemoveEffect("bad_eyesight")
 
 	equipped(var/mob/user, var/slot)
@@ -227,16 +235,16 @@
 	equipped(mob/user, slot)
 		. = ..()
 		if(upgraded)
-			APPLY_MOB_PROPERTY(user, PROP_THERMALVISION_MK2, src)
+			APPLY_ATOM_PROPERTY(user, PROP_MOB_THERMALVISION_MK2, src)
 		else
-			APPLY_MOB_PROPERTY(user, PROP_THERMALVISION, src)
+			APPLY_ATOM_PROPERTY(user, PROP_MOB_THERMALVISION, src)
 
 	unequipped(mob/user)
 		. = ..()
 		if(upgraded)
-			REMOVE_MOB_PROPERTY(user, PROP_THERMALVISION_MK2, src)
+			REMOVE_ATOM_PROPERTY(user, PROP_MOB_THERMALVISION_MK2, src)
 		else
-			REMOVE_MOB_PROPERTY(user, PROP_THERMALVISION, src)
+			REMOVE_ATOM_PROPERTY(user, PROP_MOB_THERMALVISION, src)
 
 	emp_act()
 		if (ishuman(src.loc))
@@ -247,17 +255,17 @@
 				H.change_eye_blurry(5)
 				H.bioHolder.AddEffect("bad_eyesight")
 				if(upgraded)
-					REMOVE_MOB_PROPERTY(H, PROP_THERMALVISION_MK2, src)
+					REMOVE_ATOM_PROPERTY(H, PROP_MOB_THERMALVISION_MK2, src)
 				else
-					REMOVE_MOB_PROPERTY(H, PROP_THERMALVISION, src)
+					REMOVE_ATOM_PROPERTY(H, PROP_MOB_THERMALVISION, src)
 
-				SPAWN_DBG(10 SECONDS)
+				SPAWN(10 SECONDS)
 					H.bioHolder.RemoveEffect("bad_eyesight")
 					if(H.glasses == src)
 						if(upgraded)
-							APPLY_MOB_PROPERTY(H, PROP_THERMALVISION_MK2, src)
+							APPLY_ATOM_PROPERTY(H, PROP_MOB_THERMALVISION_MK2, src)
 						else
-							APPLY_MOB_PROPERTY(H, PROP_THERMALVISION, src)
+							APPLY_ATOM_PROPERTY(H, PROP_MOB_THERMALVISION, src)
 		return
 
 /obj/item/clothing/glasses/thermal/traitor //sees people through walls
@@ -325,7 +333,7 @@
 			equipper = user//todo: this is prooobably redundant
 		return ..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if ((isscrewingtool(W) || istype(W, /obj/item/pen)) && !pinhole)
 			if( equipper && equipper.glasses == src )
 				var/obj/item/organ/eye/theEye = equipper.drop_organ((src.icon_state == "eyepatch-L") ? "left_eye" : "right_eye")
@@ -370,7 +378,7 @@
 		setProperty("disorient_resist_eye", 28)
 
 	New()
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 			if (src)
 				src.name += " - '[src.network]'" // They otherwise all look the same (Convair880).
 		..()
@@ -390,6 +398,57 @@
 			//user.verbs -= /mob/proc/jack_in
 			user:network_device = null
 		return
+
+//Goggles used to assume control of a linked scuttlebot
+/obj/item/clothing/glasses/scuttlebot_vr
+	name = "Scuttlebot remote controller"
+	desc = "A pair of VR goggles connected to a remote scuttlebot. Use them on the scuttlebot to turn it back into a hat."
+	icon_state = "vr"
+	item_state = "sunglasses"
+	var/mob/living/critter/robotic/scuttlebot/connected_scuttlebot = null
+
+	equipped(var/mob/user, var/slot) //On equip, if there's a scuttlebot, control it
+		..()
+		var/mob/living/carbon/human/H = user
+		if(connected_scuttlebot != null)
+			if(connected_scuttlebot.mind)
+				boutput(user, "<span class='alert'>The scuttlebot is already active somehow!</span>")
+			else if(!connected_scuttlebot.loc)
+				boutput(user, "<span class='alert'>You put on the glasses but they show no signal. The scuttlebot couldnt be found.</span>")
+			else
+				connected_scuttlebot.controller = H
+				user.mind.transfer_to(connected_scuttlebot)
+		else
+			boutput(user, "<span class='alert'>You put on the glasses but they show no signal. The scuttlebot is likely destroyed.</span>")
+
+	attack(mob/W, mob/M)
+		if (istype(W, /mob/living/critter/robotic/scuttlebot))
+			var/mob/living/critter/robotic/scuttlebot/S = W
+			if (connected_scuttlebot != S)
+				boutput(M, "You try to put the goggles back into the hat but it grumps at you, not recognizing the glasses.")
+				return 1
+
+			if (istype(W, /mob/living/critter/robotic/scuttlebot/weak))
+				var/mob/living/critter/robotic/scuttlebot/weak/O = S
+				if (O.linked_hat != null)
+					O.linked_hat.set_loc(get_turf(O))
+				else
+					new /obj/item/clothing/head/det_hat/gadget(get_turf(O))
+				boutput(M, "You stuff the goggles back into the detgadget hat. It powers down with a low whirr.")
+				qdel(O)
+				qdel(src)
+			else
+				new /obj/item/clothing/head/det_hat/folded_scuttlebot(get_turf(S))
+				boutput(M, "You stuff the goggles back into the hat. It powers down with a low whirr.")
+				qdel(S)
+				qdel(src)
+		else
+			..()
+
+	unequipped(var/mob/user) //Someone might have removed them from us. If we're inside the scuttlebot, we're forced out
+		..()
+		if(connected_scuttlebot != null)
+			connected_scuttlebot.return_to_owner()
 
 /obj/item/clothing/glasses/vr_fake //Only exist IN THE MATRIX.  Used to log out.
 	name = "\improper VR goggles"
@@ -436,7 +495,7 @@
 			get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_mob(user)
 		..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/analyzer/healthanalyzer_upgrade))
 			if (src.scan_upgrade)
 				boutput(user, "<span class='alert'>[src] already has a health scan upgrade!</span>")
@@ -484,11 +543,11 @@
 
 	equipped(mob/user, slot)
 		. = ..()
-		APPLY_MOB_PROPERTY(user, PROP_SPECTRO, src)
+		APPLY_ATOM_PROPERTY(user, PROP_MOB_SPECTRO, src)
 
 	unequipped(mob/user)
 		. = ..()
-		REMOVE_MOB_PROPERTY(user, PROP_SPECTRO, src)
+		REMOVE_ATOM_PROPERTY(user, PROP_MOB_SPECTRO, src)
 
 /obj/item/clothing/glasses/spectro/monocle //used for bartender job reward
 	name = "spectroscopic monocle"
@@ -531,7 +590,7 @@
 		..()
 		if (slot == SLOT_GLASSES)
 			assigned = user.client
-			SPAWN_DBG(-1)
+			SPAWN(-1)
 				//updateIcons()
 				processing_items |= src
 		return
@@ -574,11 +633,11 @@
 
 	equipped(mob/user, slot)
 		. = ..()
-		APPLY_MOB_PROPERTY(user, PROP_NIGHTVISION, src)
+		APPLY_ATOM_PROPERTY(user, PROP_MOB_NIGHTVISION, src)
 
 	unequipped(mob/user)
 		. = ..()
-		REMOVE_MOB_PROPERTY(user, PROP_NIGHTVISION, src)
+		REMOVE_ATOM_PROPERTY(user, PROP_MOB_NIGHTVISION, src)
 
 	emp_act()
 		if (ishuman(src.loc))
@@ -588,7 +647,7 @@
 				H.take_eye_damage(3, 1)
 				H.change_eye_blurry(5)
 				H.bioHolder.AddEffect("bad_eyesight")
-				SPAWN_DBG(10 SECONDS)
+				SPAWN(10 SECONDS)
 					H.bioHolder.RemoveEffect("bad_eyesight")
 
 

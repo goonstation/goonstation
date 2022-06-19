@@ -23,20 +23,20 @@
 		if (fart_attack == 1)
 			return
 		fart_attack = 1
-		SPAWN_DBG(12 SECONDS)
+		SPAWN(12 SECONDS)
 			fart_attack = 0
 		if (random_events.announce_events)
 			var/sensortext = pick("sensors", "technicians", "probes", "satellites", "monitors", 20; "neckbeards")
 			var/pickuptext = pick("picked up", "detected", "found", "sighted", "reported", 20; "drunkenly spotted")
 			var/anomlytext = pick("strange anomaly", "wave of cosmic energy", "spectral emission", 20; "shuttle of phantom George Melons clones")
 			var/ohshittext = pick("en route for collision with", "rapidly approaching", "heading towards", 20; "about to seriously fuck up")
-			command_alert("Our [sensortext] have [pickuptext] \a [anomlytext] [ohshittext] the station. Duck and Cover immediately.", "Anomaly Alert")
+			command_alert("Our [sensortext] have [pickuptext] \a [anomlytext] [ohshittext] the station. Duck and Cover immediately.", "Anomaly Alert", alert_origin = ALERT_ANOMALY)
 		var/loops = rand(20, 100)
 		var/freebie = 1
 		for (var/i=0, i<loops, i++)
 			if (prob(4) || freebie)
 				freebie = 0
-				SPAWN_DBG(50+rand(0,550))
+				SPAWN(50+rand(0,550))
 					playsound_global(world, "sound/voice/farts/superfart.ogg", 60)
 					for (var/mob/M in mobs)
 						if (M.client)
@@ -59,7 +59,7 @@
 											blocked = 1
 											break
 									if (!(!isturf(M.loc) || T1.density) && !(T2.density || blocked == 1))
-										SPAWN_DBG(0)
+										SPAWN(0)
 											M.set_loc(T2)
 
 						if (prob(50))
@@ -178,7 +178,7 @@
 				return 0
 		else if((HAS_FLAG(F,LIMB_ABOM)) || (HAS_FLAG(F,LIMB_BEAR)))
 			return 0 // Not even magic wants to get near these things
-		else if((HAS_FLAG(F,LIMB_WENDIGO)) || (HAS_FLAG(F,LIMB_WOLF)) || (HAS_FLAG(F,LIMB_STONE)))
+		else if((HAS_FLAG(F,LIMB_BRULLBAR)) || (HAS_FLAG(F,LIMB_WOLF)) || (HAS_FLAG(F,LIMB_STONE)))
 			return 2 // Both sturdy and scary
 
 /// returns some flufftext as to why their limb didnt come off. Or came off anyway.
@@ -258,7 +258,7 @@
 					boutput(H, "<span class='alert'>You feel a cosmic force conduct through your body, coursing into your [L]!</span>")
 					boutput(H, "<span class='notification'>...it flails around and disperses the energy back into the aether.</span>")
 
-		else if (HAS_FLAG(F,LIMB_WENDIGO))
+		else if (HAS_FLAG(F,LIMB_BRULLBAR))
 			if(magical)
 				boutput(H, "<span class='alert'>An invisible hand clamps down around [ch ? "our" : "your"] [L] and yanks it with a powerful, otherworldly force!</span>")
 				if(severed)

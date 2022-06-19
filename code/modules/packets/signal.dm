@@ -9,6 +9,12 @@
 	var/encryption
 	var/datum/computer/file/data_file
 
+	var/mob/author
+
+	New(mob/author=null)
+		..()
+		src.author = author || usr
+
 	proc/copy_from(datum/signal/model)
 		source = model.source
 		transmission_method = model.transmission_method
@@ -28,5 +34,5 @@
 		boutput(world, "end of signal")
 
 
-proc/get_free_signal()
-	return new /datum/signal
+proc/get_free_signal(mob/author=null)
+	return new /datum/signal(author)

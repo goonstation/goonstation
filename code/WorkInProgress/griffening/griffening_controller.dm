@@ -384,14 +384,14 @@
 		return answer
 
 	proc/locate_card(var/designation)
-		var/playerid = text2num(chs(designation, 1))
+		var/playerid = text2num_safe(chs(designation, 1))
 		if (!playerid)
 			return null
 		var/array = chs(designation, 2)
 		switch (array)
 			if ("C")
 				var/list/choice = mobs_card_holder[playerid]
-				var/cardid = text2num(chs(designation, 3))
+				var/cardid = text2num_safe(chs(designation, 3))
 				var/obj/griffening_card_holder/holder = choice[cardid]
 				if (!holder.card)
 					return null
@@ -400,7 +400,7 @@
 
 			if ("E")
 				var/list/choice = effects_card_holder[playerid]
-				var/cardid = text2num(chs(designation, 3))
+				var/cardid = text2num_safe(chs(designation, 3))
 				var/obj/griffening_card_holder/holder = choice[cardid]
 				if (!holder.card)
 					return null
@@ -418,7 +418,7 @@
 				var/obj/griffening_card_holder/holder = discard_holder[playerid]
 				if (holder.card)
 					return null
-				var/cardid = text2num(copytext(designation, 3))
+				var/cardid = text2num_safe(copytext(designation, 3))
 				var/obj/item/playing_cards/PC = holder.card
 				if (PC.cards.len <= cardid)
 					return PC.cards[cardid]
@@ -428,7 +428,7 @@
 				var/obj/griffening_card_holder/holder = gibbed_holder[playerid]
 				if (holder.card)
 					return null
-				var/cardid = text2num(copytext(designation, 3))
+				var/cardid = text2num_safe(copytext(designation, 3))
 				var/obj/item/playing_cards/PC = holder.card
 				if (PC.cards.len <= cardid)
 					return PC.cards[cardid]
@@ -438,7 +438,7 @@
 				var/obj/griffening_card_holder/holder = deck_holder[playerid]
 				if (holder.card)
 					return null
-				var/cardid = text2num(copytext(designation, 3))
+				var/cardid = text2num_safe(copytext(designation, 3))
 				var/obj/item/playing_cards/PC = holder.card
 				if (PC.cards.len <= cardid)
 					return PC.cards[cardid]

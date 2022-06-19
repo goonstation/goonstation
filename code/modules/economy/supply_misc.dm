@@ -1,3 +1,7 @@
+ABSTRACT_TYPE(/area/supply)
+/area/supply/
+	expandable = FALSE
+
 /area/supply/spawn_point //the area supplies are spawned at and fired from
 	name = "supply spawn point"
 	icon_state = "shuttle3"
@@ -35,7 +39,7 @@
 			shippingmarket.sell_artifact(AM, art)
 		else if (istype(AM, /obj/storage/crate/biohazard/cdc))
 			QM_CDC.receive_pathogen_samples(AM)
-		else if (istype(AM, /obj/storage/crate))
+		else if (istype(AM, /obj/storage/crate) || istype(AM, /obj/storage/secure/crate/))
 			if (AM.delivery_destination)
 				for (var/datum/trader/T in shippingmarket.active_traders)
 					if (T.crate_tag == AM.delivery_destination)
@@ -51,7 +55,7 @@
 	density = 0
 	anchored = 1
 	layer = EFFECTS_LAYER_UNDER_1
-	event_handler_flags = USE_FLUID_ENTER 
+	event_handler_flags = USE_FLUID_ENTER
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WIRECUTTERS
 
 /obj/plasticflaps/Cross(atom/A)

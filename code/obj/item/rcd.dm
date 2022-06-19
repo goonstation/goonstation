@@ -49,6 +49,7 @@ Broken RCD + Effects
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 5
+	health = 7
 	w_class = W_CLASS_NORMAL
 	m_amt = 50000
 
@@ -109,6 +110,9 @@ Broken RCD + Effects
 	var/matter_remove_light_fixture = 1
 	var/time_remove_light_fixture = 3 SECONDS
 
+	var/matter_remove_limb = 6
+	var/time_remove_limb = 3 SECONDS
+
 	var/shits_sparks = 1
 
 	var/material_name = "steel"
@@ -157,10 +161,10 @@ Broken RCD + Effects
 
 	New()
 		..()
-		src.update_icon()
+		src.UpdateIcon()
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/rcd_ammo))
 			var/obj/item/rcd_ammo/R = W
 			if (!restricted_materials || (R?.material.mat_id in restricted_materials))
@@ -178,7 +182,7 @@ Broken RCD + Effects
 					R.matter = 0
 					qdel(R)
 				R.tooltip_rebuild = 1
-				src.update_icon()
+				src.UpdateIcon()
 				playsound(src, "sound/machines/click.ogg", 50, 1)
 				boutput(user, "\The [src] now holds [src.matter]/[src.max_matter] matter-units.")
 				return
@@ -218,7 +222,7 @@ Broken RCD + Effects
 		// Gonna change this so it doesn't shit sparks when mode switched
 		// Just that it does it only after actually doing something
 		//src.shitSparks()
-		src.update_icon()
+		src.UpdateIcon()
 		return
 
 	afterattack(atom/A, mob/user as mob)
@@ -226,7 +230,7 @@ Broken RCD + Effects
 			boutput(user, "\The [src] won't work here for some reason. Oh well!")
 			return
 
-		if (get_dist(get_turf(src), get_turf(A)) > 1)
+		if (BOUNDS_DIST(get_turf(src), get_turf(A)) > 0)
 			return
 
 		switch(src.mode)
@@ -414,10 +418,77 @@ Broken RCD + Effects
 						W.attach_light_fixture_parts(user, LB, TRUE)
 						log_construction(user, "built a light fixture to a wall ([W])")
 
+ // Express limb surgery with an RCD
+	attack(mob/living/carbon/human/M, mob/living/carbon/user)
+
+		if (issilicon(user))
+			return ..()
+		else if (length(working_on) > 0) //Lets not get too crazy
+			boutput(user, "<span class='notice'>[src] is already working on something else.</span>")
+		else
+			var/obj/item/parts/surgery_target = null
+			var/user_limb_is_missing = false
+			if (surgeryCheck(M, user) && (user.zone_sel.selecting in list("l_arm","r_arm","l_leg","r_leg", "chest")) && (src.mode == RCD_MODE_DECONSTRUCT)) //In surgery conditions and aiming for a limb or an ass in deconstruction mode? Time for ghetto surgery
+				if (user.zone_sel.selecting == "chest") //Ass begone
+					if (M.organHolder.butt == null)
+						user.visible_message("<span class='alert'><b>Tries to remove [M]'s butt, but it's already gone!</b> </span>")
+						return
+					else
+						surgery_target = M.organHolder.get_organ("butt")
+				else if (user.zone_sel.selecting in list("l_arm","r_arm","l_leg","r_leg")) // Is the limb we are aiming for missing?
+					if (M.limbs.vars[user.zone_sel.selecting] == null)
+						user.visible_message("<span class='alert'><b>Tries to remove one of [M]'s limbs, but it's already gone!</b> </span>")
+						return
+					else
+						surgery_target = M.limbs.vars[user.zone_sel.selecting]
+
+				if (surgery_target != null && do_thing(user, surgery_target, "removing [M]'s [surgery_target]", matter_remove_limb, time_remove_limb))
+					if (ishuman(user) && user.bioHolder.HasEffect("clumsy") && prob(40)) //Clowns get a chance to tear off their own limb
+						var/mob/living/carbon/human/H = user
+						if (user.zone_sel.selecting == "chest")
+							if (H.organHolder.butt == null)
+								user_limb_is_missing = true
+						else
+							if (H.limbs.vars[user.zone_sel.selecting] == null) //Cant remove a limb that isnt there
+								user_limb_is_missing = true
+
+						if(user_limb_is_missing == true) //The limb/ass is already missing, maim yourself instead
+							user.visible_message("<span class='alert'><b>[user] messes up really badly with [src] and maims themselves! </b> </span>")
+							random_brute_damage(user, 35)
+							H.changeStatus("weakened", 3 SECONDS)
+							take_bleeding_damage(user, null, 25, DAMAGE_CUT, 1)
+						else	//Limb's here? We lose it
+							if (user.zone_sel.selecting == "chest")
+								var/B = user.organHolder.drop_organ("butt")
+								qdel(B)
+							else
+								surgery_target = H.limbs.vars[user.zone_sel.selecting]
+								surgery_target.remove()
+								qdel(surgery_target)
+							user.visible_message("<span class='alert'><b>[user] holds the [src] by the wrong end and removes their own [surgery_target]! </b> </span>")
+							random_brute_damage(user, 25)
+							take_bleeding_damage(user, null, 20, DAMAGE_CUT, 1)
+						playsound(user.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
+						user.emote("scream")
+						JOB_XP(user, "Clown", 3)
+
+					else
+						if (user.zone_sel.selecting == "chest")
+							var/B = M.organHolder.drop_organ("butt")
+							qdel(B)
+						else
+							surgery_target.remove()
+							qdel(surgery_target)
+						random_brute_damage(M, 25)
+						take_bleeding_damage(M, null, 20)
+						playsound(M.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
+						user.visible_message("<span class='alert'>Deconstructs [M]'s [surgery_target] with the RCD.</span>")
+			else //Not in surgery conditions or aiming for a limb? Do a normal hit
+				return ..()
 
 /* flesh wall creation code
 // holy jesus christ
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		if (ishuman(M) && matter >= 3)
 			var/mob/living/carbon/human/H = M
 			if(!isdead(H) && H.health > 0)
@@ -466,7 +537,7 @@ Broken RCD + Effects
 		else
 			src.matter -= checkamt
 			boutput(user, "\The [src] now holds [src.matter]/[src.max_matter] matter units.")
-			src.update_icon()
+			src.UpdateIcon()
 
 	proc/do_thing(mob/user as mob, atom/target, var/what, var/ammo, var/delay)
 		if (!ammo_check(user, ammo))
@@ -494,7 +565,7 @@ Broken RCD + Effects
 		return 0
 
 	proc/log_construction(mob/user as mob, var/what)
-		logTheThing("station", user, null, "[what] using \the [src] at [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
+		logTheThing("station", user, null, "[what] using \the [src] at [user.loc.loc] ([log_loc(user)])")
 
 	proc/create_door(var/turf/A, mob/user as mob)
 		if(do_thing(user, A, "building an airlock", matter_create_door, time_create_door))
@@ -505,7 +576,7 @@ Broken RCD + Effects
 			//if(map_setting == "COG2") T.set_dir(user.dir)
 			T.autoclose = 1
 
-	proc/update_icon() //we got fancy rcds now
+	update_icon() //we got fancy rcds now
 		if (GetOverlayImage("mode"))
 			src.ClearSpecificOverlays("mode")
 		var/ammo_amt = 0
@@ -614,7 +685,7 @@ Broken RCD + Effects
 							playsound(src, "sound/items/Deconstruct.ogg", 50, 1)
 							src.shitSparks()
 							ammo_consume(user, matter_remove_door)
-							logTheThing("station", user, null, "removes a pod door ([B]) using \the [src] in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
+							logTheThing("station", user, null, "removes a pod door ([B]) using \the [src] in [user.loc.loc] ([log_loc(user)])")
 							qdel(A)
 							playsound(src, "sound/items/Deconstruct.ogg", 50, 1)
 				else
@@ -630,7 +701,7 @@ Broken RCD + Effects
 							playsound(src, "sound/items/Deconstruct.ogg", 50, 1)
 							src.shitSparks()
 							ammo_consume(user, matter_remove_door)
-							logTheThing("station", user, null, "removes a Door Control ([A]) using \the [src] in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
+							logTheThing("station", user, null, "removes a Door Control ([A]) using \the [src] in [user.loc.loc] ([log_loc(user)])")
 							qdel(A)
 							playsound(src, "sound/items/Deconstruct.ogg", 50, 1)
 				else
@@ -661,7 +732,7 @@ Broken RCD + Effects
 						R.pass="[hangar_id]"
 						R.name="Access code: [hangar_id]"
 						ammo_consume(user, matter_create_door)
-						logTheThing("station", user, null, "creates Door Control [hangar_id] using \the [src] in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
+						logTheThing("station", user, null, "creates Door Control [hangar_id] using \the [src] in [user.loc.loc] ([log_loc(user)])")
 						boutput(user, "Now creating pod bay blast doors linked to the new door control.")
 
 		else if (mode == RCD_MODE_PODDOOR)
@@ -679,7 +750,7 @@ Broken RCD + Effects
 						B.set_dir(poddir)
 						B.autoclose = 1
 						ammo_consume(user, matter_create_door)
-						logTheThing("station", user, null, "creates Blast Door [hangar_id] using \the [src] in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
+						logTheThing("station", user, null, "creates Blast Door [hangar_id] using \the [src] in [user.loc.loc] ([log_loc(user)])")
 
 	create_door(var/turf/A, mob/user as mob)
 		var/turf/L = get_turf(user)
@@ -735,7 +806,7 @@ Broken RCD + Effects
 
 
 	afterattack(atom/A, mob/user as mob)
-		if (get_dist(get_turf(src), get_turf(A)) > 1)
+		if (BOUNDS_DIST(get_turf(src), get_turf(A)) > 0)
 			return
 		if (mode == RCD_MODE_WINDOWS)
 			if (istype(A, /turf/simulated/floor) || istype(A, /obj/grille/))
@@ -745,8 +816,8 @@ Broken RCD + Effects
 					if (!istype(A, /turf/simulated/floor))
 						return
 				if (do_thing(user, A, "building a window", matter_create_window, time_create_window))
-					// Is /auto always the one to use here? hm.
-					var/obj/window/T = new (get_turf(A))
+					// Is /auto always the one to use here? hm. //yes, yes it should be
+					var/obj/window/auto/T = new (get_turf(A))
 					log_construction(user, "builds a window")
 					T.setMaterial(getMaterial(material_name))
 					return
@@ -774,8 +845,10 @@ Broken RCD + Effects
 
 /obj/item/rcd/material/cardboard
 	name = "cardboard rapid construction Device"
+	icon_state = "base_cardboard"
 	desc = "Also known as a C-RCD, this device is able to rapidly construct cardboard props."
 	mats = list("DEN-3" = 10, "POW-2" = 10, "cardboard" = 30)
+	force = 0
 	matter_create_floor = 0.5
 	time_create_floor = 0 SECONDS
 
@@ -825,7 +898,7 @@ Broken RCD + Effects
 	modes = list(RCD_MODE_FLOORSWALLS, RCD_MODE_AIRLOCK, RCD_MODE_DECONSTRUCT, RCD_MODE_WINDOWS)
 
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/rcd_ammo))
 			..()
 		else if (isExploitableObject(W))
@@ -864,6 +937,7 @@ Broken RCD + Effects
 	anchored = 0.0
 	m_amt = 30000
 	g_amt = 15000
+	health = 6
 	var/matter = 10
 
 	get_desc()
@@ -928,7 +1002,7 @@ Broken RCD + Effects
 		..()
 		src.icon_state = "bad_rcd[rand(0,2)]"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/rcd_ammo))
 			boutput(user, "\the [src] slot is not compatible with this cartridge.")
 			return
@@ -994,7 +1068,7 @@ Broken RCD + Effects
 
 				boutput(user, "<span class='combat'>\the [src] shorts out!</span>")
 
-				logTheThing("combat", user, null, "manages to vaporize \[[showCoords(A.x, A.y, A.z)]] with a halloween RCD.")
+				logTheThing("combat", user, null, "manages to vaporize \[[log_loc(A)]] with a halloween RCD.")
 
 				new /obj/effects/void_break(A)
 				if (user)
@@ -1010,7 +1084,7 @@ Broken RCD + Effects
 		..()
 		lifespan = rand(2,4)
 		rangeout = lifespan
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			void_shatter()
 			void_loop()
 
@@ -1022,7 +1096,7 @@ Broken RCD + Effects
 				A.pixel_y = rand(-4,4)
 			else if (isliving(A))
 				shake_camera(A, 8, 32)
-				A.ex_act( get_dist(src, A) > 1 ? 3 : 1 )
+				A.ex_act( BOUNDS_DIST(src, A) > 0 ? 3 : 1 )
 
 			else if (istype(A, /obj) && (A != src))
 
@@ -1044,10 +1118,10 @@ Broken RCD + Effects
 			if (prob(5 + lifespan) && limiter.canISpawn(/obj/effects/sparks))
 				var/obj/sparks = new /obj/effects/sparks
 				sparks.set_loc(T)
-				SPAWN_DBG(2 SECONDS) if (sparks) qdel(sparks)
+				SPAWN(2 SECONDS) if (sparks) qdel(sparks)
 
 			T.ex_act((rangeout-lifespan) < 2 ? 1 : 2)
 
-		SPAWN_DBG(1.5 SECONDS)
+		SPAWN(1.5 SECONDS)
 			void_loop()
 		return

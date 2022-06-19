@@ -13,7 +13,7 @@
 
 /obj/effects/mustard_gas/New()
 	..()
-	SPAWN_DBG(10 SECONDS)
+	SPAWN(10 SECONDS)
 		dispose()
 	return
 

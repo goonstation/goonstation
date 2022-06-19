@@ -46,11 +46,11 @@
 		G["sex"] = "Male"
 
 	G["age"] ="[H.bioHolder.age]"
-	G["fingerprint"] = "[H.bioHolder.uid_hash]"
+	G["fingerprint"] = "[H.bioHolder.fingerprints]"
 	G["dna"] = H.bioHolder.Uid
 	G["p_stat"] = "Active"
 	G["m_stat"] = "Stable"
-	SPAWN_DBG(2 SECONDS)
+	SPAWN(2 SECONDS)
 		if (H && G)
 			var/icon/I = H.build_flat_icon(SOUTH)
 			H.flat_icon = I
@@ -82,17 +82,17 @@
 
 	var/traitStr = ""
 	if(H.traitHolder)
-		for(var/X in H.traitHolder.traits)
-			var/obj/trait/T = getTraitById(X)
+		for(var/id in H.traitHolder.traits)
+			var/obj/trait/T = H.traitHolder.traits[id]
 			if(length(traitStr)) traitStr += " | [T.cleanName]"
 			else traitStr = T.cleanName
 			if (istype(T, /obj/trait/random_allergy))
 				var/obj/trait/random_allergy/AT = T
 				if (M["alg"] == "None") //is it in its default state?
-					M["alg"] = reagent_id_to_name(AT.allergic_players[H])
+					M["alg"] = reagent_id_to_name(AT.allergen)
 					M["alg_d"] = "Allergy information imported from CentCom database."
 				else
-					M["alg"] += ", [reagent_id_to_name(AT.allergic_players[H])]"
+					M["alg"] += ", [reagent_id_to_name(AT.allergen)]"
 
 	M["traits"] = traitStr
 
@@ -123,7 +123,27 @@
 								"Illegal haircutting.",\
 								"Staring at a bee for over an hour.",\
 								"Not showering before entering pool.",\
-								"Rampant idiocy.")
+								"Rampant idiocy.",\
+								"Never tipping the catering staff.",\
+								"Disregarding previous tickets.",\
+								"Fashion crimes.",\
+								"Gambling.",\
+								"Bribery.",\
+								"Sleeping on the job.",\
+								"Unauthorized stamp collecting.",\
+								"Refusing to wash their hands.",\
+								"Maintenance lurking.",\
+								"Dumpster diving.",\
+								"Not covering their mouth when sneezing.",\
+								"Open mouth chewing.",\
+								"Riding pods without a license.",\
+								"Breathing loudly.",\
+								"Riding a segway directly into the captain.",\
+								"Wearing their shirt backwards.",\
+								"Excessive swearing",\
+								"Cutting in line.",\
+								"Tying the captain's shoelaces together.",\
+								"Forgetting the captain's birthday.")
 		S["mi_crim_d"] = "No details provided."
 		S["ma_crim"] = pick(\
 								"Grand theft apidae.",\
@@ -141,8 +161,18 @@
 								"Dismemberment and decapitation.",\
 								"Running around with a chainsaw.",\
 								"Throwing explosive tomatoes at people.",\
-								"Caused multiple seemingly unrelated accidents.")
+								"Caused multiple seemingly unrelated accidents.",\
+								"Dabbing.",\
+								"Assembling explosives.",\
+								"Being in the wrong place at the wrong time.",\
+								"Assault.",\
+								"Tossing someone in space.",\
+								"Over-escalation.",\
+								"Manslaughter",\
+								"Refusing to share their meth.",\
+								"Grand larceny.")
 		S["ma_crim_d"] = "No details provided."
+
 
 		var/randomNote = pick("Huge nerd.", "Total jerkface.", "Absolute dingus.", "Insanely endearing.", "Worse than clown.", "Massive crapstain.");
 		if(S["notes"] == "No notes.")
@@ -158,11 +188,18 @@
 		H.mind.store_memory("- [S["mi_crim"]]")
 		H.mind.store_memory("- [S["ma_crim"]]")
 	else
-		S["criminal"] = "None"
-		S["mi_crim"] = "None"
+		if (H.mind?.assigned_role == "Clown")
+			S["criminal"] = "Clown"
+			S["mi_crim"] = "Clown"
+		else
+			S["criminal"] = "None"
+			S["mi_crim"] = "None"
+
 		S["mi_crim_d"] = "No minor crime convictions."
 		S["ma_crim"] = "None"
 		S["ma_crim_d"] = "No major crime convictions."
+
+	S["sec_flag"] = "None"
 
 
 	B["job"] = H.job
@@ -289,29 +326,30 @@
 				Service.Insert(2, "<b>[staff_record["name"]] - [staff_record["rank"]]</b><br>") //Future proofing, just in case
 			else
 				Service.Add("[staff_record["name"]] - [staff_record["rank"]]<br>")
+			continue
 #ifdef MAP_OVERRIDE_OSHAN // Radio host is on Oshan
 		if(rank == "Radio Show Host" || rank == "Talk Show Host")
 			Service.Add("[staff_record["name"]] - [staff_record["rank"]]<br>")
 #endif
-		continue
+			continue
 		Unassigned += "[staff_record["name"]] - [staff_record["rank"]]<br>"
 
-	sorted_manifest += "<b><u>Station Command:</b></u><br>"
+	sorted_manifest += "<b><u>Station Command:</u></b><br>"
 	for(var/crew in Command)
 		sorted_manifest += crew
-	sorted_manifest += "<b><u>Station Security:</b></u><br>"
+	sorted_manifest += "<b><u>Station Security:</u></b><br>"
 	for(var/crew in Security)
 		sorted_manifest += crew
-	sorted_manifest += "<b><u>Engineering and Supply:</b></u><br>"
+	sorted_manifest += "<b><u>Engineering and Supply:</u></b><br>"
 	for(var/crew in Engineering)
 		sorted_manifest += crew
-	sorted_manifest += "<b><u>Medical and Research:</b></u><br>"
+	sorted_manifest += "<b><u>Medical and Research:</u></b><br>"
 	for(var/crew in Medsci)
 		sorted_manifest += crew
-	sorted_manifest += "<b><u>Crew Service:</b></u><br>"
+	sorted_manifest += "<b><u>Crew Service:</u></b><br>"
 	for(var/crew in Service)
 		sorted_manifest += crew
-	sorted_manifest += "<b><u>Unassigned and Civilians:</b></u><br>"
+	sorted_manifest += "<b><u>Unassigned and Civilians:</u></b><br>"
 	for(var/crew in Unassigned)
 		sorted_manifest += crew
 
@@ -329,7 +367,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			statlog_ticket(src, usr)
 
 /datum/fine
@@ -352,7 +390,7 @@
 	New()
 		..()
 		generate_ID()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			bank_record = data_core.bank.find_record("name", target)
 			if(!bank_record) qdel(src)
 			statlog_fine(src, usr)
@@ -372,7 +410,7 @@
 	else
 		paid_amount += bank_record["current_money"]
 		bank_record["current_money"] = 0
-		SPAWN_DBG(30 SECONDS) process_payment()
+		SPAWN(30 SECONDS) process_payment()
 
 /datum/fine/proc/process_payment()
 	if(bank_record["current_money"] >= (amount-paid_amount))
@@ -382,7 +420,7 @@
 	else
 		paid_amount += bank_record["current_money"]
 		bank_record["current_money"] = 0
-		SPAWN_DBG(30 SECONDS) process_payment()
+		SPAWN(30 SECONDS) process_payment()
 
 /datum/fine/proc/generate_ID()
 	if(!ID) ID = (data_core.fines.len + 1)

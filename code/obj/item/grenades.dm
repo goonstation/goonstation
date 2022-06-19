@@ -29,6 +29,7 @@ PIPE BOMBS + CONSTRUCTION
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 0
+	duration_put = 0.25 SECONDS //crime
 	var/is_dangerous = TRUE
 	var/sound_armed = null
 	var/icon_state_armed = null
@@ -43,43 +44,42 @@ PIPE BOMBS + CONSTRUCTION
 			logGrenade(user)
 			if (user?.bioHolder.HasEffect("clumsy"))
 				boutput(user, "<span class='alert'>Huh? How does this thing work?!</span>")
-				src.icon_state = src.icon_state_armed
+				src.UpdateIcon()
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
 				src.add_fingerprint(user)
-				SPAWN_DBG(0.5 SECONDS)
-					if (src) prime()
+				SPAWN(0.5 SECONDS)
+					if (src) prime(user)
 					return
 			else
 				boutput(user, "<span class='alert'>You prime [src]! [det_time/10] seconds!</span>")
-				src.icon_state = src.icon_state_armed
+				src.UpdateIcon()
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
 				src.add_fingerprint(user)
-				SPAWN_DBG(src.det_time)
-					if (src) prime()
+				SPAWN(src.det_time)
+					if (src) prime(user)
 					return
-		return
+
 // warcrimes: Why the fuck is autothrow a feature why would this ever be a feature WHY. Now it wont do it unless it's primed i think.
 	afterattack(atom/target as mob|obj|turf, mob/user as mob)
 		if (src.state)
 			return
-		if (get_dist(user, target) <= 1 || (!isturf(target) && !isturf(target.loc)) || !isturf(user.loc) || !src.state )
+		if (BOUNDS_DIST(user, target) == 0 || (!isturf(target) && !isturf(target.loc)) || !isturf(user.loc) || !src.state )
 			return
 		if (user.equipped() == src)
 			if (!src.state)
 				src.state = 1
-				src.icon_state = src.icon_state_armed
+				src.UpdateIcon()
 				logGrenade(user)
 				boutput(user, "<span class='alert'>You prime [src]! [det_time/10] seconds!</span>")
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
-				SPAWN_DBG(src.det_time)
-					if (src) prime()
+				SPAWN(src.det_time)
+					if (src) prime(user)
 					return
 			user.drop_item()
 			src.throw_at(get_turf(target), 10, 3)
 			src.add_fingerprint(user)
-		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W))
 			if (src.det_time == src.org_det_time)
 				src.det_time = src.alt_det_time
@@ -90,9 +90,15 @@ PIPE BOMBS + CONSTRUCTION
 				user.show_message("<span class='notice'>You set [src] for a [det_time/10] second detonation time.</span>")
 				src.desc = "It is set to detonate in [det_time/10] seconds."
 			src.add_fingerprint(user)
-		return
 
-	proc/prime() // Most grenades require a turf reference.
+	update_icon()
+		..()
+		if (src.state)
+			src.icon_state = src.icon_state_armed
+		else
+			src.icon_state = initial(src.icon_state)
+
+	proc/prime(mob/user) // Most grenades require a turf reference.
 		var/turf/T = get_turf(src)
 		if (!T || !isturf(T))
 			return null
@@ -106,19 +112,16 @@ PIPE BOMBS + CONSTRUCTION
 				message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
 			logTheThing("combat", user, null, "primes a grenade ([src.type]) at [log_loc(user)].")
 
-/obj/item/old_grenade/banana
+ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
+/obj/item/old_grenade/spawner
 	desc = "It is set to detonate in 3 seconds."
-	name = "banana grenade"
 	det_time = 3 SECONDS
 	org_det_time = 3 SECONDS
 	alt_det_time = 6 SECONDS
-	icon_state = "banana"
-	item_state = "banana"
 	is_syndicate = 1
 	sound_armed = "sound/weapons/armbomb.ogg"
-	icon_state_armed = "banana1"
 	is_dangerous = FALSE
-	var/payload = /obj/item/bananapeel
+	var/payload = null
 
 	prime()
 		var/turf/T = ..()
@@ -132,6 +135,31 @@ PIPE BOMBS + CONSTRUCTION
 					new payload(T)
 		qdel(src)
 		return
+
+/obj/item/old_grenade/spawner/banana
+	name = "banana grenade"
+	icon_state = "banana"
+	icon_state_armed = "banana1"
+	payload = /obj/item/bananapeel
+
+/obj/item/old_grenade/spawner/cheese_sandwich
+	name = "cheese sandwich grenade"
+	icon_state = "banana-old"
+	icon_state_armed = "banana1-old"
+	payload = /obj/item/reagent_containers/food/snacks/sandwich/cheese
+
+/obj/item/old_grenade/spawner/banana_corndog
+	name = "banana corndog grenade"
+	icon_state = "banana-old"
+	icon_state_armed = "banana1-old"
+	payload = /obj/item/reagent_containers/food/snacks/corndog/banana
+
+/obj/item/old_grenade/spawner/wasp
+	name = "suspicious looking grenade"
+	icon_state = "wasp"
+	icon_state_armed = "wasp1"
+	payload = /obj/critter/wasp
+	is_dangerous = TRUE
 
 /obj/item/old_grenade/thing_thrower
 	desc = "It is set to detonate in 3 seconds."
@@ -160,25 +188,6 @@ PIPE BOMBS + CONSTRUCTION
 		qdel(src)
 		return
 
-/obj/item/old_grenade/banana/cheese_sandwich
-	name = "cheese sandwich grenade"
-	icon_state = "banana-old"
-	icon_state_armed = "banana1-old"
-	payload = /obj/item/reagent_containers/food/snacks/sandwich/cheese
-
-/obj/item/old_grenade/banana/banana_corndog
-	name = "banana corndog grenade"
-	icon_state = "banana-old"
-	icon_state_armed = "banana1-old"
-	payload = /obj/item/reagent_containers/food/snacks/corndog/banana
-
-/obj/item/old_grenade/banana/wasp
-	name = "suspicious looking grenade"
-	icon_state = "wasp"
-	icon_state_armed = "wasp1"
-	payload = /obj/critter/spacebee
-	is_dangerous = TRUE
-
 /obj/item/old_grenade/graviton //ITS SPELT GRAVITON
 	desc = "It is set to detonate in 10 seconds."
 	name = "graviton grenade"
@@ -206,7 +215,7 @@ PIPE BOMBS + CONSTRUCTION
 				flick(src.icon_state_armed, src)
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
 				src.add_fingerprint(user)
-				SPAWN_DBG(0.5 SECONDS)
+				SPAWN(0.5 SECONDS)
 					if (src) prime()
 					return
 			else
@@ -215,7 +224,7 @@ PIPE BOMBS + CONSTRUCTION
 				flick(src.icon_state_armed, src)
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
 				src.add_fingerprint(user)
-				SPAWN_DBG(src.det_time)
+				SPAWN(src.det_time)
 					if (src) prime()
 					return
 		return
@@ -228,18 +237,13 @@ PIPE BOMBS + CONSTRUCTION
 				elecflash(src,power = 4)
 				qdel(src)
 				return
-			for (var/atom/X in orange(9, T))
-				if (istype(X,/obj/machinery/containment_field))
+			for (var/atom/movable/X in orange(9, T))
+				if (istypes(X, list(/obj/machinery/containment_field, /obj/machinery/field_generator, /obj/fluid, /obj/effect, /obj/overlay)))
 					continue
-				if (istype(X,/obj/machinery/field_generator))
-					continue
-				if (istype(X,/turf))
-					continue
-				if (istype(X, /obj))
-					var/area/t = get_area(X)
-					if(t?.sanctuary) continue
-					if (prob(50) && X:anchored != 2)
-						step_towards(X,src)
+				var/area/t = get_area(X)
+				if(t?.sanctuary) continue
+				if (prob(50) && X.anchored != 2)
+					step_towards(X,src)
 		qdel(src)
 		return
 
@@ -271,7 +275,7 @@ PIPE BOMBS + CONSTRUCTION
 				flick(src.icon_state_armed, src)
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
 				src.add_fingerprint(user)
-				SPAWN_DBG(0.5 SECONDS)
+				SPAWN(0.5 SECONDS)
 					if (src) prime()
 					return
 			else
@@ -280,7 +284,7 @@ PIPE BOMBS + CONSTRUCTION
 				flick(src.icon_state_armed, src)
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
 				src.add_fingerprint(user)
-				SPAWN_DBG(src.det_time)
+				SPAWN(src.det_time)
 					if (src) prime()
 					return
 		return
@@ -337,7 +341,7 @@ PIPE BOMBS + CONSTRUCTION
 				M = src
 			playsound(T, "sound/effects/smoke.ogg", 50, 1, -3)
 
-			SPAWN_DBG(0)
+			SPAWN(0)
 				if (src)
 					if (M && istype(M, /obj/item/old_grenade/smoke/mustard))
 						M.mustard_gas.start()
@@ -394,7 +398,7 @@ PIPE BOMBS + CONSTRUCTION
 	is_syndicate = 0
 	sound_armed = "sound/weapons/pindrop.ogg"
 	icon_state_armed = "fragnade1"
-	var/custom_projectile_type = null
+	var/custom_projectile_type = /datum/projectile/bullet/stinger_ball
 	var/pellets_to_fire = 20
 
 	prime()
@@ -413,7 +417,7 @@ PIPE BOMBS + CONSTRUCTION
 				F = src
 			if (F)
 				playsound(T, "sound/effects/smoke.ogg", 20, 1, -2)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					if (F?.smoke) //Wire note: Fix for Cannot execute null.start()
 						for(var/i = 1 to 6)
 							F.smoke.start()
@@ -427,7 +431,7 @@ PIPE BOMBS + CONSTRUCTION
 			var/targety = src.y - rand(-5,5)
 			var/turf/newtarget = locate(targetx, targety, src.z)
 			shoot_projectile_ST(src, PJ, newtarget)
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				qdel(O)
 				qdel(src)
 		else
@@ -439,6 +443,7 @@ PIPE BOMBS + CONSTRUCTION
 	icon_state = "fragnade-alt"
 	icon_state_armed = "fragnade-alt1"
 	var/datum/effects/system/bad_smoke_spread/smoke
+	custom_projectile_type = /datum/projectile/bullet/grenade_fragment
 
 	New()
 		..()
@@ -469,7 +474,7 @@ PIPE BOMBS + CONSTRUCTION
 			O.layer = NOLIGHT_EFFECTS_LAYER_BASE
 			O.icon = 'icons/effects/64x64.dmi'
 			O.icon_state = "explo_fiery"
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				qdel(O)
 				qdel(src)
 		else
@@ -543,7 +548,7 @@ PIPE BOMBS + CONSTRUCTION
 			pulse.icon_state = "emppulse"
 			pulse.name = "emp pulse"
 			pulse.anchored = 1
-			SPAWN_DBG(2 SECONDS)
+			SPAWN(2 SECONDS)
 				if (pulse) qdel(pulse)
 
 			for (var/turf/tile in range(world.view-1, T))
@@ -677,7 +682,11 @@ PIPE BOMBS + CONSTRUCTION
 
 	New()
 		..()
+		#ifdef UPSCALED_MAP
+		destination = locate(40 * 2,19 * 2,2)
+		#else
 		destination = locate(40,19,2)
+		#endif
 
 	primed
 		state = 1
@@ -689,7 +698,7 @@ PIPE BOMBS + CONSTRUCTION
 			state = 1
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if (get_dist(user, target) <= 1 || (!isturf(target) && !isturf(target.loc)) || !isturf(user.loc))
+		if (BOUNDS_DIST(user, target) == 0 || (!isturf(target) && !isturf(target.loc)) || !isturf(user.loc))
 			return
 		if (istype(target, /obj/item/storage)) return ..()
 		if (src.state == 0)
@@ -712,11 +721,11 @@ PIPE BOMBS + CONSTRUCTION
 			src.state = 1
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.state == 0)
 			..()
 		else
-			SPAWN_DBG(0.1 SECONDS)
+			SPAWN(0.1 SECONDS)
 				playsound(src.loc, 'sound/effects/bamf.ogg', 50, 1)
 				if (old_light_grenade)
 					for (var/obj/item/W in user)
@@ -759,7 +768,7 @@ PIPE BOMBS + CONSTRUCTION
 						user.set_loc(locate(40,19,2))
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return
 
 ////////////////////////// Gimmick bombs /////////////////////////////////
@@ -771,6 +780,7 @@ PIPE BOMBS + CONSTRUCTION
 	var/armed = 0
 	var/sound_explode = 'sound/effects/Explosion2.ogg'
 	var/sound_beep = 'sound/machines/twobeep.ogg'
+	var/is_dangerous = TRUE
 
 	proc/detonate()
 		playsound(src.loc, sound_explode, 45, 1)
@@ -779,7 +789,7 @@ PIPE BOMBS + CONSTRUCTION
 		E.fingerprintslast = src.fingerprintslast
 
 		invisibility = INVIS_ALWAYS_ISH
-		SPAWN_DBG(15 SECONDS)
+		SPAWN(15 SECONDS)
 			qdel (src)
 
 	proc/beep(i)
@@ -792,13 +802,20 @@ PIPE BOMBS + CONSTRUCTION
 		else
 			src.detonate()
 
+	proc/logGrenade(mob/user)
+		var/area/A = get_area(src)
+		if(!A.dont_log_combat)
+			if(is_dangerous)
+				message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
+			logTheThing("combat", user, null, "primes a grenade ([src.type]) at [log_loc(user)].")
+
 	proc/arm(mob/usr as mob)
 		usr.show_message("<span class='alert'><B>You have armed the [src.name]!</span>")
 		for(var/mob/O in viewers(usr))
 			if (O.client)
 				O.show_message("<span class='alert'><B>[usr] has armed the [src.name]! Run!</B></span>", 1)
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.beep(10)
 
 	proc/playbeep(var/atom/source, i as num, sound)
@@ -816,12 +833,13 @@ PIPE BOMBS + CONSTRUCTION
 			if (M.client)
 				if(isturf(source))
 					var/dx = source.x - M.x
-					S.pan = max(-100, min(100, dx/8.0 * 100))
+					S.pan = clamp(dx/8.0 * 100, -100, 100)
 				M << S
 
 	attack_self(mob/user as mob)
-		if (usr.equipped() == src && !armed)
-			src.arm(usr)
+		if (user.equipped() == src && !armed)
+			src.arm(user)
+			logGrenade(user)
 			armed = 1
 
 /obj/item/gimmickbomb/owlgib
@@ -834,7 +852,7 @@ PIPE BOMBS + CONSTRUCTION
 		for(var/mob/living/carbon/human/M in range(5, src))
 			var/area/t = get_area(M)
 			if(t?.sanctuary) continue
-			SPAWN_DBG(0)
+			SPAWN(0)
 				M.owlgib()
 		..()
 
@@ -848,7 +866,7 @@ PIPE BOMBS + CONSTRUCTION
 		for(var/mob/living/carbon/human/M in range(5, src))
 			var/area/t = get_area(M)
 			if(t?.sanctuary) continue
-			SPAWN_DBG(0)
+			SPAWN(0)
 				if (!(M.wear_mask && istype(M.wear_mask, /obj/item/clothing/mask/owl_mask)))
 					for(var/obj/item/clothing/O in M)
 						M.u_equip(O)
@@ -877,7 +895,7 @@ PIPE BOMBS + CONSTRUCTION
 		for(var/mob/living/carbon/human/M in range(5, src))
 			var/area/t = get_area(M)
 			if(t?.sanctuary) continue
-			SPAWN_DBG(0)
+			SPAWN(0)
 				if (!(M.wear_suit && istype(M.wear_suit, /obj/item/clothing/suit/gimmick/hotdog)))
 					for(var/obj/item/clothing/O in M)
 						M.u_equip(O)
@@ -899,6 +917,7 @@ PIPE BOMBS + CONSTRUCTION
 	icon_state = "fartbomb"
 	sound_beep = 'sound/voice/farts/poo2.ogg'
 	sound_explode = 'sound/voice/farts/superfart.ogg'
+	is_dangerous = FALSE
 
 /obj/item/gimmickbomb/gold
 	name = "Gold Bomb"
@@ -916,7 +935,7 @@ PIPE BOMBS + CONSTRUCTION
 		for(var/mob/living/carbon/human/M in range(3, src))
 			var/area/t = get_area(M)
 			if(t?.sanctuary) continue
-			SPAWN_DBG(0)
+			SPAWN(0)
 				M.become_statue(getMaterial("gold"))
 		..()
 
@@ -926,7 +945,7 @@ PIPE BOMBS + CONSTRUCTION
 	anchored = 1
 
 	New()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.beep(10)
 		return ..()
 
@@ -935,7 +954,7 @@ PIPE BOMBS + CONSTRUCTION
 	anchored = 1
 
 	New()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.beep(10)
 		return ..()
 
@@ -944,7 +963,7 @@ PIPE BOMBS + CONSTRUCTION
 	anchored = 1
 
 	New()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.beep(10)
 		return ..()
 
@@ -955,7 +974,7 @@ PIPE BOMBS + CONSTRUCTION
 
 /obj/item/firework
 	name = "firework"
-	desc = "A consumer-grade pyrotechnic, often used in celebrations. This one says it was manufactured in Space-China."
+	desc = "A consumer-grade pyrotechnic, often used in celebrations."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "firework"
 	opacity = 0
@@ -988,7 +1007,7 @@ PIPE BOMBS + CONSTRUCTION
 
 			else if (src.slashed)
 				boutput(user, "<span class='alert'>You accidentally prime the firework! [det_time/10] seconds!</span>")
-				SPAWN_DBG( src.det_time )
+				SPAWN( src.det_time )
 					boutput(user, "<span class='alert'>The firework probably should have exploded by now.</span>")
 					src.primer_burnt = TRUE
 					return
@@ -996,14 +1015,14 @@ PIPE BOMBS + CONSTRUCTION
 			else if (user.bioHolder.HasEffect("clumsy"))
 				boutput(user, "<span class='alert'>Huh? How does this thing work?!</span>")
 				src.primed = TRUE
-				SPAWN_DBG( 5 )
+				SPAWN( 5 )
 					boom(user)
 					return
 
 			else
 				boutput(user, "<span class='alert'>You accidentally prime the firework! [det_time/10] seconds!</span>")
 				src.primed = TRUE
-				SPAWN_DBG( src.det_time )
+				SPAWN( src.det_time )
 					boom(user)
 					return
 
@@ -1038,7 +1057,7 @@ PIPE BOMBS + CONSTRUCTION
 
 			else if (src.slashed)
 				boutput(user, "<span class='alert'>You prime the firework! [det_time/10] seconds!</span>")
-				SPAWN_DBG( src.det_time )
+				SPAWN( src.det_time )
 					boutput(user, "<span class='alert'>The firework probably should have exploded by now. Fuck.</span>")
 					src.primer_burnt = TRUE
 					return
@@ -1046,18 +1065,18 @@ PIPE BOMBS + CONSTRUCTION
 			else if (user.bioHolder.HasEffect("clumsy"))
 				boutput(user, "<span class='alert'>Huh? How does this thing work?!</span>")
 				src.primed = TRUE
-				SPAWN_DBG( 5 )
+				SPAWN( 5 )
 					boom(user)
 					return
 
 			else
 				boutput(user, "<span class='alert'>You prime the firework! [det_time/10] seconds!</span>")
 				src.primed = TRUE
-				SPAWN_DBG( src.det_time )
+				SPAWN( src.det_time )
 					boom(user)
 					return
 
-	attackby(obj/A as obj, mob/user as mob) // adapted from iv_drips.dm
+	attackby(obj/A, mob/user) // adapted from iv_drips.dm
 		if (iscuttingtool(A) && !(src.slashed) && !(src.primed))
 			boutput(user, "You carefully cut [src] open and dump out the contents.")
 			src.slashed = TRUE
@@ -1114,7 +1133,7 @@ PIPE BOMBS + CONSTRUCTION
 
 		..()
 
-	attackby(obj/A as obj, mob/user as mob) // adapted from iv_drips.dm
+	attackby(obj/A, mob/user) // adapted from iv_drips.dm
 		if (iscuttingtool(A) && !(src.slashed) && (src.bootleg_level > 0))
 			boutput(user, "You try to cut [src] open, but the contents spontaneously ignite!")
 			boom(user)
@@ -1162,7 +1181,7 @@ PIPE BOMBS + CONSTRUCTION
 					var/area/A = get_area(src)
 					if(!A.dont_log_combat)
 						logTheThing("combat", user, null, "accidentally triggers [src] (clumsy bioeffect) at [log_loc(user)].")
-					SPAWN_DBG(0.5 SECONDS)
+					SPAWN(0.5 SECONDS)
 						user.u_equip(src)
 						src.boom()
 						return
@@ -1180,7 +1199,7 @@ PIPE BOMBS + CONSTRUCTION
 					if(!A.dont_log_combat)
 						logTheThing("combat", user, null, "attaches a [src] to [target] at [log_loc(target)].")
 
-					SPAWN_DBG (src.det_time)
+					SPAWN(src.det_time)
 						if (src)
 							src.boom()
 							if (target)
@@ -1267,7 +1286,7 @@ PIPE BOMBS + CONSTRUCTION
 					var/area/A = get_area(src)
 					if(!A.dont_log_combat)
 						logTheThing("combat", user, null, "accidentally triggers [src] (clumsy bioeffect) at [log_loc(user)].")
-					SPAWN_DBG(0.5 SECONDS)
+					SPAWN(0.5 SECONDS)
 						user.u_equip(src)
 						src.boom()
 						return
@@ -1285,7 +1304,7 @@ PIPE BOMBS + CONSTRUCTION
 					if(!A.dont_log_combat)
 						logTheThing("combat", user, null, "attaches a [src] to [target] at [log_loc(target)].")
 
-					SPAWN_DBG (src.det_time)
+					SPAWN(src.det_time)
 						if (src)
 							src.boom()
 		return
@@ -1333,7 +1352,13 @@ PIPE BOMBS + CONSTRUCTION
 				if (distance < 2)
 					var/turf/simulated/floor/F = null
 
-					if (istype(T, /turf/simulated/wall))
+					if (istype(T, /turf/simulated/wall/auto/feather))
+						var/turf/simulated/wall/auto/feather/flockwall = T
+						flockwall.takeDamage("fire", 1)
+						O.icon_state = "2"
+						if (flockwall.health <= 0)
+							flockwall.destroy()
+					else if (istype(T, /turf/simulated/wall))
 						var/turf/simulated/wall/W = T
 						F = W.ReplaceWithFloor()
 					else if (istype(T, /turf/simulated/floor/))
@@ -1349,6 +1374,10 @@ PIPE BOMBS + CONSTRUCTION
 						var/turf/simulated/floor/F = T
 						F.burn_tile()
 
+			for (var/obj/machinery/door/DR in src.loc)
+				var/area/a = get_area(DR)
+				if (!DR.cant_emag && !a.sanctuary)
+					DR.take_damage(DR.health)
 			for (var/obj/structure/girder/G in range(src.expl_range, location))
 				var/area/a = get_area(G)
 				if (G && istype(G) && !a.sanctuary)
@@ -1368,7 +1397,7 @@ PIPE BOMBS + CONSTRUCTION
 				M.TakeDamage("chest", 0, damage)
 				M.update_burning(damage)
 
-			SPAWN_DBG(10 SECONDS)
+			SPAWN(10 SECONDS)
 				if (src)
 					for (var/obj/overlay/O in range(src.expl_range, location))
 						if (O.name == "Thermite")
@@ -1386,12 +1415,14 @@ PIPE BOMBS + CONSTRUCTION
 /obj/item/pipebomb
 	icon = 'icons/obj/items/assemblies.dmi'
 	item_state = "r_hands"
+	duration_put = 0.5 SECONDS //crime
 
 /obj/item/pipebomb/frame
 	name = "pipe frame"
 	desc = "Two small pipes joined together with grooves cut into the side."
 	icon_state = "Pipe_Frame"
 	burn_possible = 0
+	material_amt = 0.3
 	var/state = 1
 	var/strength = 5
 	var/list/item_mods = new/list() //stuff something into one or both of the pipes to change the finished product
@@ -1561,6 +1592,7 @@ PIPE BOMBS + CONSTRUCTION
 
 	var/strength = 5
 	var/armed = 0
+	var/is_dangerous = TRUE
 
 	var/glowsticks = 0
 	var/butt = 0
@@ -1587,13 +1619,14 @@ PIPE BOMBS + CONSTRUCTION
 		armed = 1
 		var/area/A = get_area(src)
 		if(!A.dont_log_combat)
-			message_admins("[key_name(user)] arms a pipe bomb (power [strength]) at [log_loc(src)] by [key_name(user)].")
-			logTheThing("combat", user, null, "arms a pipe bomb (power [strength]) at [log_loc(src)])")
+			if(is_dangerous)
+				message_admins("[key_name(user)] arms a [src.name] (power [strength]) at [log_loc(src)] by [key_name(user)].")
+			logTheThing("combat", user, null, "arms a [src.name] (power [strength]) at [log_loc(src)])")
 
 		if (sound_effect)
-			SPAWN_DBG(4 SECONDS) //you can use a sound effect to hold a bomb in hand and throw it at the very last moment!
+			SPAWN(4 SECONDS) //you can use a sound effect to hold a bomb in hand and throw it at the very last moment!
 				playsound(src, sound_effect, 50, 1)
-		SPAWN_DBG(5 SECONDS)
+		SPAWN(5 SECONDS)
 			do_explode()
 
 	ex_act(severity)
@@ -1764,6 +1797,7 @@ PIPE BOMBS + CONSTRUCTION
 	desc = "A weak explosive designed to blast open holes in the sea floor."
 	icon_state = "Pipe_Yellow"
 	strength = 1
+	is_dangerous = FALSE
 
 	on_blowthefuckup(strength) //always blow hole!
 		..(strength)
@@ -1793,9 +1827,10 @@ PIPE BOMBS + CONSTRUCTION
 			boutput(M, "<span class='alert'><b>Your armor blocks the shrapnel!</b></span>")
 		else
 			var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel(M)
+			implanted.bleed_time = 25 * sqstrength
 			implanted.owner = M
 			M.implant += implanted
-			implanted.implanted(M, null, 25 * sqstrength)
+			implanted.implanted(M, null)
 			boutput(M, "<span class='alert'><b>You are struck by shrapnel!</b></span>")
 			if (!M.stat)
 				M.emote("scream")
@@ -1847,9 +1882,10 @@ PIPE BOMBS + CONSTRUCTION
 				boutput(M, "<span class='alert'><b>Your armor blocks the chunks of [src.name]!</b></span>")
 			else
 				var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel(M)
+				implanted.bleed_time = 25 * sqstrength
 				implanted.owner = M
 				M.implant += implanted
-				implanted.implanted(M, null, 25 * sqstrength)
+				implanted.implanted(M, null)
 				boutput(M, "<span class='alert'><b>You are struck by chunks of [src.name]!</b></span>")
 				if (!M.stat)
 					M.emote("scream")

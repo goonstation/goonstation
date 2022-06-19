@@ -13,7 +13,7 @@
 		..()
 		UnsubscribeProcess()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/pda2) && W:ID_card)
 			W = W:ID_card
 		if(istool(W, TOOL_SCREWING | TOOL_WRENCHING))
@@ -54,7 +54,7 @@
 
 			boutput(user, "<span class='notice'>The current host ID is [mainaccount["name"]]. Insert a value less than zero to cancel transaction.</span>")
 			var/amount = input(user, "How much money would you like to send?", "Deposit", 0) as null|num
-			if (amount <= 0)
+			if (amount <= 0 || !isnum_safe(amount))
 				return
 			if (amount > target_account["current_money"])
 				boutput(user, "<span class='alert'>Insufficent funds. [W] only has [target_account["current_money"]] credits.</span>")
@@ -65,7 +65,7 @@
 			mainaccount["current_money"] += amount
 			user.visible_message("<b>[src]</b> beeps, \"[mainaccount["name"]] now holds [mainaccount["current_money"]] credits. Thank you for your service!\"")
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!mainaccount)
 			boutput(user, "<span class='alert'>You press the reset button, but nothing happens.</span>")
 			return

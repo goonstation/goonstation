@@ -211,7 +211,7 @@ proc/filter_is_character_setup_ringtone(type)
 		if(index >= 10)
 			if(!detonating)
 				src.detonating = 1
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					src.holder.explode()
 
 /// Clown ringtones
@@ -698,7 +698,7 @@ ringtone.dm,58: Cannot read null.name (/datum/ringtone/retkid/ring8): return_tex
 			if(6)
 				timesToDoIt = 2
 				howQuicklyToDoIt = 4
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for(var/i in 1 to timesToDoIt)
 				sleep(howQuicklyToDoIt)
 				MakeSoundPlay(index)

@@ -7,7 +7,7 @@
 	cure = "Time"
 	affected_species = list("Human")
 
-/datum/ailment/addiction/stage_act(var/mob/living/affected_mob,var/datum/ailment_data/addiction/D)
+/datum/ailment/addiction/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/addiction/D, mult)
 	if (..())
 		return
 	if (prob(20) && (world.timeofday > (D.last_reagent_dose + D.withdrawal_duration)))

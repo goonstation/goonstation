@@ -80,7 +80,7 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 					var/datum/pathogen/P = patho[uid]
 					var/datum/cdc_contact_analysis/D = new
 					D.uid = uid
-					var/sym_count = max(min(length(P.effects), 7), 2)
+					var/sym_count = clamp(length(P.effects), 2, 7)
 					D.time_factor = sym_count * rand(10, 15) // 200, 600
 					D.cure_cost = sym_count * rand(25, 40) // 2100, 4300
 					D.name = P.name
@@ -157,12 +157,12 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	src.hacked = 0
 	return 1
 
-/obj/machinery/computer/supplycomp/attackby(I as obj, mob/user as mob)
+/obj/machinery/computer/supplycomp/attackby(I, mob/user)
 	if(!istype(I,/obj/item/card/emag))
 		//I guess you'll wanna put the emag away now instead of getting a massive popup
 		..()
 
-/obj/machinery/computer/supplycomp/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/supplycomp/attack_hand(var/mob/user)
 	if(!src.allowed(user))
 		boutput(user, "<span class='alert'>Access Denied.</span>")
 		return
@@ -545,7 +545,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 					var/datum/supply_order/O = new/datum/supply_order ()
 					var/datum/supply_packs/P = locate(href_list["what"])
-					if(P)
+					if(istype(P))
 
 						// The order computer has no emagged / other ability to display hidden or syndicate packs.
 						// It follows that someone's being clever if trying to order either of these items
@@ -767,7 +767,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			var/datum/cdc_contact_analysis/C = locate(subaction)
 			if (!(C in QM_CDC.completed_analysis))
 				last_cdc_message = "<span style=\"color:red; font-style: italic\">That's not ready to be cured yet.</span>"
-			var/count = text2num(href_list["count"])
+			var/count = text2num_safe(href_list["count"])
 			var/cost = 0
 			switch (count)
 				if (1)
@@ -1068,7 +1068,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 		src.temp += "Requisition Code: [RC.req_code]<br><br>"
 		if(RC.flavor_desc) src.temp += "[RC.flavor_desc]<br><br>"
 		src.temp += "[RC.requis_desc]"
-		if(RC.req_class == AID_CONTRACT)
+		if(RC.req_class == AID_CONTRACT && !RC.pinned) // Cannot ordinarily be pinned. Unpin support included for contract testing.
 			src.temp += "URGENT - Cannot Be Reserved<br>"
 		else
 			src.temp += "<A href='[topicLink("pin_contract","\ref[RC]")]'>[RC.pinned ? "Unpin Contract" : "Pin Contract"]</A><br>"
@@ -1077,7 +1077,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 /obj/machinery/computer/supplycomp/proc/print_requisition(var/datum/req_contract/contract)
 	src.printing = 1
 	playsound(src.loc, "sound/machines/printer_thermal.ogg", 60, 0)
-	SPAWN_DBG(2 SECONDS)
+	SPAWN(2 SECONDS)
 		var/obj/item/paper/thermal/P = new(src.loc)
 		P.info = "<font face='System' size='2'><center>REQUISITION CONTRACT MANIFEST<br>"
 		P.info += "FOR SUPPLIER REFERENCE ONLY<br><br>"

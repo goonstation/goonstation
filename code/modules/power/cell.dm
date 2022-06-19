@@ -1,6 +1,6 @@
 /obj/item/cell
 	name = "power cell"
-	desc = "A rechargable electrochemical power cell."
+	desc = "A rechargable electrochemical power cell. It's too large to fit into most handheld devices, but can be used to power cyborgs and APCs."
 	icon = 'icons/obj/power.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "cell"
@@ -10,6 +10,7 @@
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 5
+	health = 8
 	w_class = W_CLASS_NORMAL
 	pressure_resistance = 80
 	var/charge = 0	// note %age conveted to actual charge in New
@@ -104,8 +105,8 @@
 
 //	charge = charge * maxcharge/100.0		// map obj has charge as percentage, convert to real value here
 
-	SPAWN_DBG(0.5 SECONDS)
-		updateicon()
+	SPAWN(0.5 SECONDS)
+		UpdateIcon()
 
 	if (genrate)
 		processing_items |= src
@@ -114,8 +115,7 @@
 	processing_items -= src
 	..()
 
-/obj/item/cell/proc/updateicon()
-
+/obj/item/cell/update_icon()
 	if(src.specialicon) return
 
 	if(maxcharge <= 2500) icon_state = "cell"
@@ -185,7 +185,6 @@
 				boutput(user, "<span class='alert'>The plasma reacts with the erebite and explodes violently!</span>")
 				src.explode()
 			else
-				message_admins("[key_name(user)] rigged [src] to explode at [log_loc(user)].")
 				logTheThing("combat", user, null, "rigged [src] to explode at [log_loc(user)].")
 				rigged = 1
 				rigger = user
@@ -220,7 +219,7 @@
 
 	explosion(src, T, 0, 1, 2, 2)
 
-	SPAWN_DBG(1 DECI SECOND)
+	SPAWN(1 DECI SECOND)
 		qdel(src)
 
 
@@ -256,7 +255,7 @@
 				det.attachedTo.visible_message("<span class='bold' style='color: #B7410E;'>The timer flashes ominously.</span>")
 		if ("cut")
 			src.visible_message("<span class='bold' style='color: #B7410E;'>The failsafe timer buzzes refusingly before going quiet forever.</span>")
-			SPAWN_DBG(0)
+			SPAWN(0)
 				det.detonate()
 
 //kubius potato battery: main def

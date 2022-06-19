@@ -24,7 +24,7 @@
   pulse.icon_state = "emppulse"
   pulse.name = "emp pulse"
   pulse.anchored = 1
-  SPAWN_DBG(2 SECONDS)
+  SPAWN(2 SECONDS)
     if (pulse)
       qdel(pulse)
 

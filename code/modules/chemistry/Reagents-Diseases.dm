@@ -23,9 +23,9 @@ datum
 			*/
 
 			on_mob_life(var/mob/M, var/mult = 1)
-				..()
 				if(!M)
 					M = holder.my_atom
+				..()
 				if (!isliving(M) || !ispath(disease))
 					return
 				if (src.volume < minimum_to_infect)
@@ -104,7 +104,7 @@ datum
 		disease/green_mucus // Flu
 			name = "green Mucus"
 			id = "green mucus"
-			description = "Mucus. Thats green."
+			description = "Mucus. That's green."
 			reagent_state = LIQUID
 			minimum_to_infect = 0
 			fluid_r = 215
@@ -288,6 +288,11 @@ datum
 			random_chem_blacklisted = 1
 			disease = /datum/ailment/disease/necrotic_degeneration
 
+			infectious
+				name = "concentrated necrovirus"
+				id = "necrovirus_infectious"
+				disease = /datum/ailment/disease/necrotic_degeneration/can_infect_more
+
 		disease/viral_curative // Panacaea
 			name = "viral curative"
 			id = "viral curative"
@@ -316,7 +321,6 @@ datum
 			name = "rat venom"
 			id = "rat_venom"
 			description = "Unbelievably deadly. Not to be mistaken with rat poison."
-			random_chem_blacklisted = 1
 			reagent_state = LIQUID
 			fluid_r = 255
 			fluid_g = 40
@@ -350,6 +354,7 @@ datum
 			name = "prions"
 			id = "prions"
 			description = "A disease-causing agent that is neither bacterial nor fungal nor viral and contains no genetic material."
+			taste = "<br>　　∧,,,∧<br>　 （ ・ω・） like prion disease...<br>　　( つ旦O<br>　　と＿)_)<br>"
 			reagent_state = LIQUID
 			minimum_to_infect = 5.1
 			fluid_r = 255

@@ -15,7 +15,7 @@
 				return
 			else
 				owner.waiting_for_hotkey = 1
-				src.updateIcon()
+				src.UpdateIcon()
 				boutput(usr, "<span class='notice'>Please press a number to bind this ability to...</span>")
 				return
 
@@ -32,7 +32,7 @@
 			owner.holder.owner.targeting_ability = owner
 			owner.holder.owner.update_cursor()
 		else
-			SPAWN_DBG(0)
+			SPAWN(0)
 				spell.handleCast()
 		return
 
@@ -110,17 +110,17 @@
 			return 0
 
 		if (!(iscarbon(M) || ismobcritter(M)))
-			boutput(M, __red("You cannot use any powers in your current form."))
+			boutput(M, "<span class='alert'>You cannot use any powers in your current form.</span>")
 			return 0
 
 		if (!isdead(M))
 			return 1
 		if (!can_act(M, 0))
-			boutput(M, __red("You can't use this ability while incapacitated!"))
+			boutput(M, "<span class='alert'>You can't use this ability while incapacitated!</span>")
 			return 0
 
 		if (src.not_when_handcuffed && M.restrained())
-			boutput(M, __red("You can't use this ability when restrained!"))
+			boutput(M, "<span class='alert'>You can't use this ability when restrained!</span>")
 			return 0
 
 		return 1
@@ -217,9 +217,15 @@
 	cooldown = 30 SECONDS
 
 	cast()
-		var/A
-		A = input("Area to jump to", "TELEPORTATION", A) in get_teleareas()
+		var/list/tele_areas = get_teleareas()
+		var/A = tgui_input_list(src, "Area to jump to", "Teleportation", tele_areas)
+		if (isnull(A))
+			boutput(src, "<span class='alert'>Invalid area selected.</span>")
+			return 1
 		var/area/thearea = get_telearea(A)
+		if(thearea.teleport_blocked)
+			boutput(src, "<span class='alert'>That area is blocked from teleportation.</span>")
+			return 1
 
 		holder.owner.visible_message("<span class='alert'><B>[holder.owner] poofs away in a puff of cold, snowy air!</B></span>")
 		playsound(usr.loc, "sound/effects/bamf.ogg", 25, 1, -1)

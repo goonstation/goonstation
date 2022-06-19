@@ -17,6 +17,7 @@
 	name = "Computer-frame"
 	icon = 'icons/obj/computer_frame.dmi'
 	icon_state = "0"
+	material_amt = 0.5
 	var/state = 0
 	var/obj/item/motherboard/mainboard = null
 	var/obj/item/disk/data/fixed_disk/hd = null
@@ -31,6 +32,7 @@
 		desc = "A light micro-computer frame used for terminal systems."
 		icon = 'icons/obj/terminal_frame.dmi'
 		created_icon_state = "dterm"
+		material_amt = 0.3
 		max_peripherals = 2
 		metal_given = 3
 		glass_needed = 1
@@ -67,7 +69,7 @@
 /obj/computer3frame/meteorhit(obj/O as obj)
 	qdel(src)
 
-/obj/computer3frame/attackby(obj/item/P as obj, mob/user as mob)
+/obj/computer3frame/attackby(obj/item/P, mob/user)
 	var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, 2 SECONDS, /obj/computer3frame/proc/state_actions,\
 	list(P,user), P.icon, P.icon_state, null)
 	switch(state)
@@ -140,7 +142,7 @@
 				src.icon_state = "2"
 				var/obj/item/cable_coil/A = new /obj/item/cable_coil( src.loc )
 				A.amount = 5
-				A.updateicon()
+				A.UpdateIcon()
 				if(src.hd)
 					src.hd.set_loc(src.loc)
 					src.hd = null
@@ -208,7 +210,7 @@
 			if(user.equipped(P) && isweldingtool(P))
 				boutput(user, "<span class='notice'>You deconstruct the frame.</span>")
 				var/obj/item/sheet/A = new /obj/item/sheet( src.loc )
-				A.amount = 5
+				A.amount = metal_given
 				if (src.material)
 					A.setMaterial(src.material)
 				else

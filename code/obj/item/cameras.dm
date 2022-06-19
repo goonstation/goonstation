@@ -4,7 +4,7 @@
 	icon_state = "album"
 	item_state = "briefcase"
 
-/obj/item/storage/photo_album/attackby(obj/item/W as obj, mob/user as mob, obj/item/storage/T)
+/obj/item/storage/photo_album/attackby(obj/item/W, mob/user, obj/item/storage/T)
 	if (!istype(W,/obj/item/photo))
 		boutput(user, "<span class='alert'>You can only put photos in a photo album.</span>")
 		return
@@ -43,7 +43,7 @@
 		. = ..()
 		. += "There are [src.pictures_left < 0 ? "a whole lot of" : src.pictures_left] pictures left!"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/camera_film))
 			var/obj/item/camera_film/C = W
 
@@ -102,16 +102,16 @@
 				playsound(user, "sound/items/putback_defib.ogg", 100, 1)
 				src.icon_state = "camera"
 			src.flash_mode = !src.flash_mode
-			src.update_icon()
+			src.UpdateIcon()
 
 	New()
 		var/cell = new/obj/item/ammo/power_cell/self_charging/medium{recharge_rate = 10}
 		AddComponent(/datum/component/cell_holder,cell, FALSE, 200, FALSE)
-		RegisterSignal(src, COMSIG_UPDATE_ICON, .proc/update_icon)
+		RegisterSignal(src, COMSIG_UPDATE_ICON, /atom/proc/UpdateIcon)
 		..()
-		update_icon()
+		UpdateIcon()
 
-	proc/update_icon()
+	update_icon()
 		if (!src.flash_mode)
 			inventory_counter.update_text("")
 		else
@@ -138,7 +138,7 @@
 		if (T.is_sanctuary())
 			user.visible_message("<span class='alert'><b>[user]</b> tries to use [src], cannot quite comprehend the forces at play!</span>")
 			return
-		src.update_icon()
+		src.UpdateIcon()
 		// Generic flash
 		var/mob/M = target
 		SEND_SIGNAL(src, COMSIG_CELL_USE, 25)
@@ -227,7 +227,7 @@
 			. += "At the bottom is written: [written]"
 
 
-/obj/item/photo/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/photo/attackby(obj/item/W, mob/user)
 	var/obj/item/pen/P = W
 	if(istype(P))
 		var/signwrite = input(user, "Sign or Write?", null, null) as null|anything in list("sign","write")
@@ -267,7 +267,7 @@
 
 	//farting is handled in human.dm
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (enchant_power && world.time > src.enchant_delay && cursed_dude && istype(cursed_dude, /mob))
 			cursed_dude.Attackby(W,user)
 			src.enchant_delay = world.time + COMBAT_CLICK_DELAY
@@ -304,7 +304,7 @@
 	composite.underlays = C.underlays
 	return composite
 //////////////////////////////////////////////////////////////////////////////////////////////////
-/obj/item/camera/attack(mob/living/carbon/human/M as mob, mob/user as mob)
+/obj/item/camera/attack(mob/living/carbon/human/M, mob/user)
 	return
 
 /obj/item/camera/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
@@ -321,7 +321,7 @@
 		if (user)
 			boutput(user, "<span class='notice'>[pictures_left] photos left.</span>")
 	can_use = 0
-	SPAWN_DBG(5 SECONDS)
+	SPAWN(5 SECONDS)
 		if (src)
 			src.can_use = 1
 

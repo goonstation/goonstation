@@ -165,7 +165,7 @@
 				t["current_money"] += t["wage"]
 				station_budget -= t["wage"]
 			else
-				command_alert("The station budget appears to have run dry. We regret to inform you that no further wage payments are possible until this situation is rectified.","Payroll Announcement")
+				command_alert("The station budget appears to have run dry. We regret to inform you that no further wage payments are possible until this situation is rectified.","Payroll Announcement", alert_origin = ALERT_STATION)
 				wagesystem.pay_active = 0
 				break
 
@@ -222,7 +222,7 @@
 
 
 	var/pin = null
-	attackby(var/obj/item/I as obj, mob/user as mob)
+	attackby(var/obj/item/I, mob/user)
 		if (istype(I, /obj/item/device/pda2) && I:ID_card)
 			I = I:ID_card
 		if(istype(I, /obj/item/card/id))
@@ -298,7 +298,7 @@
 	attack_ai(var/mob/user as mob)
 		return
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if(..())
 			return
 
@@ -362,7 +362,7 @@
 		switch(href_list["operation"])
 
 			if ("enterpin")
-				var/enterpin = input(usr, "Please enter your PIN number.", "ATM", 0) as null|num
+				var/enterpin = usr.enter_pin("ATM")
 				if (enterpin == src.scan.pin)
 					if(TryToFindRecord())
 						src.state = STATE_LOGGEDIN
@@ -473,7 +473,7 @@
 	attack_ai(mob/user as mob)
 		return src.Attackhand(user)
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		if (istype(I, /obj/item/card/id))
 			if (!src.scan)
 				boutput(user, "<span class='notice'>You insert [I] into the authentication card slot.</span>")
@@ -486,7 +486,7 @@
 		else
 			..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..())
 			return
 		var/list/dat = list()
@@ -514,6 +514,7 @@
 
 			if (src.authenticated)
 
+				var/total_funds = wagesystem.station_budget + wagesystem.research_budget + wagesystem.shipping_budget
 				var/payroll = 0
 				for(var/datum/db_record/R as anything in data_core.bank.records)
 					payroll += R["wage"]
@@ -528,7 +529,7 @@
 					<tr><th>Payroll Budget</th><td class='r'>$[num2text(round(wagesystem.station_budget),50)]</td></tr>
 					<tr><th>Shipping Budget</th><td class='r'>$[num2text(round(wagesystem.shipping_budget),50)]</td></tr>
 					<tr><th>Research Budget</th><td class='r'>$[num2text(round(wagesystem.research_budget),50)]</td></tr>
-					<tr><th>Total Funds</th><th class='r'>$[num2text(round(wagesystem.research_budget),50)]</th></tr>
+					<tr><th>Total Funds</th><th class='r'>$[num2text(round(total_funds),50)]</th></tr>
 					<tr><th colspan="2" class='second'>Payroll Details</th></tr>
 					<tr><th>Payroll Stipend</th><td class='r'>$[num2text(round(wagesystem.payroll_stipend),50)]</td></tr>
 					<tr><th>Payroll Cost</th><td class='r'>$[num2text(round(payroll),50)]</td></tr>
@@ -640,6 +641,7 @@
 					if (t1 > 10000)
 						t1 = 10000
 						boutput(usr, "<span class='alert'>Maximum wage is $10,000.</span>")
+					logTheThing("station", usr, null, "sets <b>[R["name"]]</b>'s wage to $[t1].")
 					R["wage"] = t1
 				else if(href_list["Fmoney"])
 					var/datum/db_record/R = locate(href_list["Fmoney"])
@@ -656,6 +658,7 @@
 						if (t1 < 1) return
 						R["current_money"] -= t1
 						wagesystem.station_budget += t1
+						logTheThing("station", usr, null, "adds $[t1] to the station budget from <b>[R["name"]]</b>'s account.")
 						boutput(usr, "<span class='notice'>$[t1] added to station budget from [R["name"]]'s account.</span>")
 					else if (t2 == "Deposit")
 						avail = wagesystem.station_budget
@@ -663,6 +666,7 @@
 						if (t1 < 1) return
 						R["current_money"] += t1
 						wagesystem.station_budget -= t1
+						logTheThing("station", usr, null, "adds $[t1] to <b>[R["name"]]</b>'s account from the station budget.")
 						boutput(usr, "<span class='notice'>$[t1] added to [R["name"]]'s account from station budget.</span>")
 					else boutput(usr, "<span class='alert'>Error selecting withdraw/deposit mode.</span>")
 				else if(href_list["payroll"])
@@ -673,10 +677,12 @@
 						return
 					if (wagesystem.pay_active)
 						wagesystem.pay_active = 0
-						command_alert("The payroll has been suspended until further notice. No further wages will be paid until the payroll is resumed.","Payroll Announcement")
+						logTheThing("station", usr, null, "suspends the station payroll.")
+						command_alert("The payroll has been suspended until further notice. No further wages will be paid until the payroll is resumed.","Payroll Announcement", alert_origin = ALERT_STATION)
 					else
 						wagesystem.pay_active = 1
-						command_alert("The payroll has been resumed. Wages will now be paid into employee accounts normally.","Payroll Announcement")
+						logTheThing("station", usr, null, "resumes the station payroll.")
+						command_alert("The payroll has been resumed. Wages will now be paid into employee accounts normally.","Payroll Announcement", alert_origin = ALERT_STATION)
 				else if(href_list["transfer"])
 					var/transfrom = input("Transfer from which?", "Budgeting", null, null) in list("Payroll", "Shipping", "Research")
 					if (!transfrom)
@@ -717,6 +723,19 @@
 	icon = 'icons/obj/computerpanel.dmi'
 	icon_state = "bank2"
 
+/obj/submachine
+	name = "You shouldn't see me!"
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "atm"
+
+	New()
+		..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		..()
+
 /obj/submachine/ATM
 	name = "ATM"
 	icon = 'icons/obj/stationobjs.dmi'
@@ -739,7 +758,7 @@
 		STATE_LOGGEDOFF = 1
 		STATE_LOGGEDIN = 2
 
-	attackby(var/obj/item/I as obj, mob/user as mob)
+	attackby(var/obj/item/I, mob/user)
 		if(broken)
 			boutput(user, "<span class='alert'>With its money removed and circuitry destroyed, it's unlikely this ATM will be able to do anything of use.</span>")
 			return
@@ -802,7 +821,7 @@
 	attack_ai(var/mob/user as mob)
 		return
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if(broken)
 			boutput(user, "<span class='alert'>With its money removed and circuitry destroyed, it's unlikely this ATM will be able to do anything of use.</span>")
 			return
@@ -878,7 +897,7 @@
 		switch(href_list["operation"])
 
 			if ("enterpin")
-				var/enterpin = input(usr, "Please enter your PIN number.", "ATM", 0) as null|num
+				var/enterpin = usr.enter_pin("ATM")
 				if (enterpin == src.scan.pin)
 					if(TryToFindRecord())
 						src.state = STATE_LOGGEDIN

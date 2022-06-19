@@ -2,7 +2,7 @@
 	icon = 'icons/obj/atmospherics/vent_pump.dmi'
 	icon_state = "out"
 	name = "Air Vent"
-	desc = "Has a valve and pump attached to it"
+	desc = "A vent used for repressurization. It's probably hooked up to a canister port, somewhere."
 	level = 1
 	plane = PLANE_FLOOR
 	var/on = 1
@@ -173,7 +173,7 @@
 
 	initialize()
 		..()
-		update_icon()
+		UpdateIcon()
 
 	receive_signal(datum/signal/signal)
 		if(signal.data["tag"] && (signal.data["tag"] != id))
@@ -190,7 +190,7 @@
 				on = !on
 
 			if("set_direction")
-				var/number = text2num(signal.data["parameter"])
+				var/number = text2num_safe(signal.data["parameter"])
 				if(number > 0.5)
 					pump_direction = 1
 				else
@@ -209,23 +209,23 @@
 				pump_direction = 1
 
 			if("set_checks")
-				var/number = round(text2num(signal.data["parameter"]),1)
+				var/number = round(text2num_safe(signal.data["parameter"]),1)
 				pressure_checks = number
 
 			if("set_internal_pressure")
-				var/number = text2num(signal.data["parameter"])
-				number = min(max(number, 0), ONE_ATMOSPHERE*50)
+				var/number = text2num_safe(signal.data["parameter"])
+				number = clamp(number, 0, ONE_ATMOSPHERE*50)
 
 				internal_pressure_bound = number
 
 			if("set_external_pressure")
-				var/number = text2num(signal.data["parameter"])
-				number = min(max(number, 0), ONE_ATMOSPHERE*50)
+				var/number = text2num_safe(signal.data["parameter"])
+				number = clamp(number, 0, ONE_ATMOSPHERE*50)
 
 				external_pressure_bound = number
 
 			if("refresh")
-				SPAWN_DBG(0.5 SECONDS) broadcast_status()
+				SPAWN(0.5 SECONDS) broadcast_status()
 
 
 	hide(var/i) //to make the little pipe section invisible, the icon changes.

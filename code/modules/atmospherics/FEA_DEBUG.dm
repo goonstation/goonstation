@@ -129,7 +129,7 @@ obj/machinery/atmospherics
 
 					on = !on
 
-					update_icon()
+					UpdateIcon()
 				adjust_temp(temp as num)
 					set src in world
 					set category = "Minor"
@@ -143,7 +143,7 @@ obj/machinery/atmospherics
 
 					on = !on
 
-					update_icon()
+					UpdateIcon()
 				adjust_temp(temp as num)
 					set src in world
 					set category = "Minor"
@@ -157,7 +157,7 @@ obj/machinery/atmospherics
 
 					on = !on
 
-					update_icon()
+					UpdateIcon()
 
 				toggle_direction()
 					set src in world
@@ -165,7 +165,7 @@ obj/machinery/atmospherics
 
 					pump_direction = !pump_direction
 
-					update_icon()
+					UpdateIcon()
 
 				change_pressure_parameters()
 					set src in world
@@ -195,7 +195,7 @@ obj/machinery/atmospherics
 
 					on = !on
 
-					update_icon()
+					UpdateIcon()
 			verb
 				trigger_inject()
 					set src in world
@@ -211,7 +211,7 @@ obj/machinery/atmospherics
 
 					on = !on
 
-					update_icon()
+					UpdateIcon()
 
 				toggle_scrubbing()
 					set src in world
@@ -219,7 +219,7 @@ obj/machinery/atmospherics
 
 					scrubbing = !scrubbing
 
-					update_icon()
+					UpdateIcon()
 
 				change_rate(amount as num)
 					set src in world
@@ -235,7 +235,7 @@ obj/machinery/atmospherics
 
 				on = !on
 
-				update_icon()
+				UpdateIcon()
 
 			change_pressure(amount as num)
 				set src in world
@@ -249,7 +249,7 @@ obj/machinery/atmospherics
 
 				if(node_in1)
 					var/node_ratio = input(usr, "Node 1 Ratio? ([dir2text(get_dir(src, node_in1))])") as num
-					node_ratio = min(max(0,node_ratio),1)
+					node_ratio = clamp(node_ratio, 0, 1)
 
 					node1_concentration = node_ratio
 					node2_concentration = 1-node_ratio
@@ -268,7 +268,7 @@ obj/machinery/atmospherics
 
 				on = !on
 
-				update_icon()
+				UpdateIcon()
 
 			change_pressure(amount as num)
 				set src in world
@@ -295,7 +295,7 @@ obj/machinery/atmospherics
 
 				on = !on
 
-				update_icon()
+				UpdateIcon()
 			change_pressure(amount as num)
 				set src in world
 				set category = "Minor"

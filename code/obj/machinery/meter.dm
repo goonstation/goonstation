@@ -11,7 +11,7 @@
 
 /obj/machinery/meter/New()
 	..()
-	SPAWN_DBG(1 SECOND)
+	SPAWN(1 SECOND)
 		src.target = locate(/obj/machinery/atmospherics/pipe) in loc
 	MAKE_SENDER_RADIO_PACKET_COMPONENT(null, frequency)
 
@@ -49,7 +49,7 @@
 			if(prob(50))
 				playsound(src.loc, "sound/machines/hiss.ogg", 50, 1)
 				noiselimiter = 1
-				SPAWN_DBG(6 SECONDS)
+				SPAWN(6 SECONDS)
 				noiselimiter = 0
 
 

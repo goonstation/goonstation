@@ -28,7 +28,7 @@ ENGINE
 
 	New()
 		..()
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			setupLinks()
 
 
@@ -41,7 +41,7 @@ ENGINE
 			if(src.id == F.id)
 				F.theEngine = src
 
-	proc/updateicon()
+	update_icon()
 		if(status & BROKEN)
 			icon_state = "enginebrok"
 			active = 0
@@ -59,7 +59,7 @@ ENGINE
 			icon_state = "engineoff"
 
 	power_change()
-		updateicon()
+		UpdateIcon()
 		..()
 
 	process()
@@ -80,7 +80,7 @@ ENGINE
 		add_avail(power)
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(status & (BROKEN | NOPOWER))
 			boutput(user, "The engine won't turn on.")
 			return
@@ -88,7 +88,7 @@ ENGINE
 			src.active = !src.active
 			boutput(user, "You turn [src.active ? "on" : "off"] the engine.")
 			if(src.active == 0) src.lastpower = 0
-			updateicon()
+			UpdateIcon()
 			return
 
 	attackby(obj/item/W, mob/user)
@@ -168,7 +168,7 @@ REACTOR
 		controlRods.len = 5
 
 	process()
-		updateicon()
+		UpdateIcon()
 
 		if (status & BROKEN)
 			return
@@ -213,25 +213,7 @@ REACTOR
 
 			if(FR.amount > 0)
 
-				// Get the turf
-				var/turf/T = get_turf(src)
-				// If it has air in it:
-				if(istype(T, /turf/simulated) && T:air)
-					// This count to see if there already exists
-					// a radiation trace gas
-					var/count = 0
-					if(T:air:trace_gases && length(T:air:trace_gases))
-						for(var/datum/gas/G in T:air:trace_gases)
-							if(istype(G, /datum/gas/rad_particles))
-								count++
-								G.moles += 0.1
-
-					if(count == 0)
-						var/datum/gas/rad_particles/rad = new
-						rad.moles = 0.1
-						if(!T:air:trace_gases)
-							T:air:trace_gases = list()
-						T:air:trace_gases += rad
+				// used to be rad particle code here creating it
 
 				temperature += 60 / numConRods
 				FR.amount -= 60 / numConRods
@@ -261,7 +243,7 @@ REACTOR
 
 	proc/setupCherenkovRad()
 
-	proc/updateicon()
+	UpdateIcon()
 		if (status & BROKEN)
 			icon_state = "reactoroff"
 			return
@@ -287,27 +269,9 @@ REACTOR
 	proc/meltdown()
 		meltdown = 1.0
 
-		// Get the turf
-		var/turf/T = get_turf(src)
-		// If it has air in it:
-		if(istype(T, /turf/simulated) && T:air)
-			// This count to see if there already exists
-			// a radiation trace gas
-			var/count = 0
-			if(T:air:trace_gases && length(T:air:trace_gases))
-				for(var/datum/gas/G in T:air:trace_gases)
-					if(istype(G, /datum/gas/rad_particles))
-						count++
-						G.moles += 1000
+		// used to be rad particle code here creating it
 
-			if(count == 0)
-				var/datum/gas/rad_particles/rad = new
-				rad.moles = 1000
-				if(!T:air:trace_gases)
-					T:air:trace_gases = list()
-				T:air:trace_gases += rad
-
-		SPAWN_DBG(0.8 SECONDS)
+		SPAWN(0.8 SECONDS)
 			meltdown = 2.0
 
 
@@ -320,7 +284,7 @@ REACTOR
 				return
 		src.active = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		return
 
 	attackby(obj/item/W, mob/user)
@@ -332,7 +296,7 @@ REACTOR
 					// Unequipping
 					user.u_equip(W)
 					W.set_loc(src)
-					W.dropped()
+					W.dropped(user)
 					// Letting everyone around know
 					boutput(user, "<span class='alert'>You insert the [W] into the [src].</span>")
 					for(var/mob/M in AIviewers(src))
@@ -348,7 +312,7 @@ REACTOR
 					controlRods[i] = W
 					user.u_equip(W)
 					W.set_loc(src)
-					W.dropped()
+					W.dropped(user)
 					boutput(user, "<span class='alert'>You insert the [W] into the [src].</span>")
 					for(var/mob/M in AIviewers(src))
 						if(M == user)	continue

@@ -6,7 +6,7 @@
 
 	setup()
 		name = "StatusEffects"
-		schedule_interval = 0.3 //Adjust as needed; Wouldnt go over 10.
+		schedule_interval = 0.3 SECONDS //Adjust as needed; Wouldnt go over 10.
 		lastUpdate = world.timeofday
 
 	copyStateFrom(datum/controller/process/target)
@@ -24,9 +24,12 @@
 
 		for (var/datum/statusEffect/S as anything in globalStatusInstances)
 			if(S == null) continue
+			if (S.duration < 0)
+				stack_trace("statusEffect [S.type] with owner [S.owner] updating with negative duration [S.duration]. actual = [actual]")
+				globalStatusInstances -= S
 			if(S.owner)
 				S.onUpdate(actual)
-				if(S.duration)
+				if(!isnull(S.duration))
 					S.duration -= actual
 					if(S.duration <= 0)
 						if(S.owner)
@@ -47,7 +50,7 @@
 				globalStatusInstances -= S
 
 		for(var/atom/A in notifyUiUpdate)
-			SPAWN_DBG(0) if(A?.statusEffects) A.updateStatusUi()
+			SPAWN(0) if(A?.statusEffects) A.updateStatusUi()
 
 		lastUpdate = world.timeofday
 		lastProcessLength =  (world.timeofday - lastProcessLength)

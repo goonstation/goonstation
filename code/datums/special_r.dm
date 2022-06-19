@@ -43,7 +43,7 @@ datum/special_respawn
 				if(!check)
 					break
 				r_number ++
-				SPAWN_DBG(5 SECONDS)
+				SPAWN(5 SECONDS)
 					if(player && !player:client)
 						qdel(player)
 
@@ -77,7 +77,7 @@ datum/special_respawn
 				if(strip_antag)
 					remove_antag(M, usr, 1, 1)
 				r_number ++
-				SPAWN_DBG(5 SECONDS)
+				SPAWN(5 SECONDS)
 					if(player && !player:client)
 						qdel(player)
 			else
@@ -94,7 +94,7 @@ datum/special_respawn
 				player = src.find_player("a person", TRUE)
 			if(player)
 				var/mob/living/carbon/human/normal/M = new/mob/living/carbon/human/normal(pick_landmark(LANDMARK_LATEJOIN))
-				SPAWN_DBG(0)
+				SPAWN(0)
 					M.JobEquipSpawned(job.name)
 
 				if(!player.mind)
@@ -104,7 +104,7 @@ datum/special_respawn
 				if(strip_antag)
 					remove_antag(M, usr, 1, 1)
 				r_number ++
-				SPAWN_DBG(5 SECONDS)
+				SPAWN(5 SECONDS)
 					if(player && !player:client)
 						qdel(player)
 			else
@@ -124,103 +124,14 @@ datum/special_respawn
 
 				//M.ckey = player:ckey
 				r_number++
-				SPAWN_DBG(rand(1,10))
+				SPAWN(rand(1,10))
 					M.set_clothing_icon_dirty()
-				SPAWN_DBG(5 SECONDS)
+				SPAWN(5 SECONDS)
 					if(player && !player:client)
 						qdel(player)
 			else
 				break
 		message_admins("[r_number] players spawned.")
-
-/*
-	proc/spawn_commandos(var/number = 3)
-		var/r_number = 0
-		var/obj/landmark/B
-		for (var/obj/landmark/A in landmarks)//world)
-			if (A.name == "SR commando")
-				B = A
-		for(var/c = 0, c < number, c++)
-			var/player = find_player("a commando")
-			if(player)
-				var/check = spawn_character_human("Central Command Officer #[c+1]",player,B,"commando")
-				if(!check)
-					break
-				r_number ++
-				SPAWN_DBG(5 SECONDS)
-					if(player && !player:client)
-						qdel(player)
-		message_admins("[r_number] officers spawned.")
-		return
-
-
-	proc/spawn_aliens(var/number = 1,var/location = null)
-		if(!location)
-			return 0
-
-		for(var/c = 0, c < number, c++)
-			var/player = find_player("an alien")
-			if(player)
-				var/check = spawn_character_alien(player,location)
-				if(!check)
-					break
-				SPAWN_DBG(5 SECONDS)
-					if(player && !player:client)
-						qdel(player)
-				return 1
-		return 0
-
-
-	proc/spawn_turds(var/number = 5)
-		boutput(src, "The TURDS ship is gone, so no.")
-		return//No the ship is gone
-		var/r_number = 0
-		var/obj/landmark/B
-		var/commander = 0
-		for (var/obj/landmark/A in landmarks)//world)
-			if (A.name == "SR Turds-Spawn")
-				B = A
-
-		if(!B)	return
-		for(var/c = 0, c < number, c++)
-			var/player = find_player("a T.U.R.D.S. Commando")
-			if(player)
-				var/check = 0
-				if(!commander)
-					check = spawn_character_human("T.U.R.D.S. Commander",player,B,"T.U.R.D.S.")
-					commander = 1
-				else
-					check = spawn_character_human("T.U.R.D.S. Commando #[c+1]",player,B,"T.U.R.D.S.")
-				if(!check)
-					break
-				r_number ++
-				SPAWN_DBG(5 SECONDS)
-					if(player && !player:client)
-						qdel(player)
-
-		message_admins("[r_number] T.U.R.D.S. Commandos spawned.")
-		return
-
-	proc/spawn_smilingman(var/number = 1)
-		var/list/landlist = new/list()
-		var/obj/landmark/B
-		for (var/obj/landmark/A in landmarks)//world)
-			if (A.name == "SR Welder")
-				landlist.Add(A)
-		B = pick(landlist)
-		if(!B)	return
-		var/player = input(usr,"Who?","Spawn Smiling Man",) as mob in world
-		if(player)
-			var/check = 0
-			check = spawn_character_human("The Smiling Man",player,B,"Smiling Man")
-			if(!check)
-				return
-			SPAWN_DBG(5 SECONDS)
-				if(player && !player:client)
-					qdel(player)
-
-			message_admins("A Smiling Man has spawned.")
-*/
 
 	proc/spawn_character_human(var/rname = "Unknown", var/mob/player = null, var/obj/spawn_landmark = null,var/equip = "none")
 		if(!player||!spawn_landmark)
@@ -242,7 +153,7 @@ datum/special_respawn
 				O.cant_self_remove = 1
 			mob.nodamage = 1
 			mob.bioHolder.AddEffect("xray", 2)
-			mob.verbs += /client/proc/smnoclip
+			mob.verbs += /client/proc/noclip
 			mob.bioHolder.AddEffect("accent_smiling")
 		else
 			mob = new /mob/living/carbon/human/normal(spawn_landmark)
@@ -260,44 +171,11 @@ datum/special_respawn
 		//mob.key = player.key
 		^*/
 		mob.mind.special_role = equip
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			if (mob)
 				eq_mob(equip,mob)
 				mob.set_clothing_icon_dirty()
 		return 1
-
-
-/*
-	proc/spawn_character_alien(var/mob/player = null, var/spawn_landmark = null)
-		if(!player)
-			return 0
-
-		var/mob/living/carbon/alien/larva/mob = new /mob/living/carbon/alien/larva(spawn_landmark)
-
-		player.client.mob = mob
-
-		mob.mind = new
-		// drsingh attempted fix for Cannot read null.key
-		if (player != null) mob.mind.key = player.key
-		mob.mind.current = player
-		mob.key = mob.mind.key
-		mob.mind.special_role = "alien"
-
-		return 1
-*/
-/*
-Note:
-
-Wouldn't client.mob not be easier for this?
-
-EndNote
-
-		mob.mind = new
-		mob.mind.key = player.key
-		mob.mind.current = player
-		mob.key = player.key
-		return 1
-*/
 
 	proc/eq_mob(var/type, var/mob/living/carbon/human/user)
 		if(!type) return
@@ -370,7 +248,7 @@ EndNote
 				F.icon_state = "bloodfloor_2"
 				F.name = "fleshy floor"
 			else
-				F.icon_state = pick("platingdmg1","platingdmg2","platingdmg3")
+				F.burn_tile()
 		else if(istype(T, /turf/simulated/wall))
 			var/turf/simulated/wall/W = T
 			if (was_eaten)
@@ -378,7 +256,9 @@ EndNote
 				W.icon_state = "bloodwall_2"
 				W.name = "meaty wall"
 			else
-				if(!istype(W, /turf/simulated/wall/r_wall) && !istype(W, /turf/simulated/wall/auto/reinforced))
-					W.icon_state = "r_wall-4"
+				var/overlay
+				if(istype(W,/turf/simulated/wall/auto/supernorn) || istype(W,/turf/simulated/wall/auto/reinforced/supernorn))
+					overlay = image('icons/turf/walls_damage.dmi',"burn-[W.icon_state]")
+				W.UpdateOverlays(overlay,"burn")
 		if(counter++ % 300 == 0)
 			LAGCHECK(LAG_MED)

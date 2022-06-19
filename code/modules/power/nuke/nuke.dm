@@ -86,7 +86,7 @@
 		nuke_core = src
 		nuke_knobs = src.nuke_knobset
 
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			debug_messages = 1 /* XXX */
 			//make_fluid_networks()
 			var/obj/fluid_pipe/sink/temp_i = locate(/obj/fluid_pipe/sink) in get_step(src,NORTH)
@@ -101,7 +101,7 @@
 
 			..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		displayHtml = buildHtml()
 		user << browse(displayHtml,  "window=fissionchamber;size=550x700;can_resize=1;can_minimize=1;allow-html=1;show-url=1;statusbar=1;enable-http-images=1;can-scroll=1")
 		return
@@ -151,8 +151,8 @@
 		src.add_dialog(usr)
 
 		if(href_list["cell"])
-			var/i = text2num(href_list["r"])
-			var/j = text2num(href_list["c"])
+			var/i = text2num_safe(href_list["r"])
+			var/j = text2num_safe(href_list["c"])
 
 			if(fuel_array[i][j] == null)
 				var/obj/item/I = usr.equipped()

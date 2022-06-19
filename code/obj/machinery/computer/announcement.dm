@@ -37,6 +37,9 @@
 
 	attack_hand(mob/user)
 		if(..()) return
+		if(isghostdrone(user))
+			boutput(user, "<span class='alert'>Your processors refuse to interact with this machine!</span>")
+			return 1
 		src.add_dialog(user)
 		var/dat = {"
 			<body>
@@ -56,7 +59,7 @@
 		user.Browse(dat, "window=announcementcomputer")
 		onclose(user, "announcementcomputer")
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/card/id))
 			if (src.ID)
 				src.ID.set_loc(src.loc)
@@ -70,7 +73,9 @@
 		..()
 
 	Topic(href, href_list[])
-		if(..()) return
+		if(..()) return 1
+		if(isghostdrone(usr))
+			return 1
 
 		if(href_list["card"])
 			if(src.ID)
@@ -139,14 +144,19 @@
 			boutput(user, "You try to speak into \the [src] but you can't since you are mute.")
 			return
 
-		logTheThing("say", user, null, "created a command report: [message]")
-		logTheThing("diary", user, null, "created a command report: [message]", "say")
+		logTheThing("say", user, null, "as [ID.registered] ([ID.assignment]) created a command report: [message]")
+		logTheThing("diary", user, null, "as [ID.registered] ([ID.assignment]) created a command report: [message]", "say")
 
+		var/msg_sound = src.sound_to_play
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			message = process_accents(H, message) //Slurred announcements? YES!
+		if (isflockmob(user))
+			var/mob/living/critter/flock/flock_creature = user
+			message = radioGarbleText(message, flock_creature?.flock.snoop_clarity)
+			msg_sound = "sound/misc/flockmind/flockmind_caw.ogg"
 
-		command_announcement(message, "[A.name] Announcement by [ID.registered] ([ID.assignment])", sound_to_play)
+		command_announcement(message, "[A.name] Announcement by [ID.registered] ([ID.assignment])", msg_sound)
 		last_announcement = world.timeofday
 		message = ""
 
@@ -214,7 +224,10 @@
 		if (!src.announcement_radio)
 			src.announcement_radio = new(src)
 
-		var/message = replacetext(replacetext(replacetext(src.departurealert, "$STATION", "[station_name()]"), "$JOB", person.mind.assigned_role), "$NAME", person.real_name)
+		var/job = person.mind.assigned_role
+		if(!job || job == "MODE")
+			job = "Staff Assistant"
+		var/message = replacetext(replacetext(replacetext(src.departurealert, "$STATION", "[station_name()]"), "$JOB", job), "$NAME", person.real_name)
 		message = replacetext(replacetext(replacetext(message, "$THEY", "[he_or_she(person)]"), "$THEM", "[him_or_her(person)]"), "$THEIR", "[his_or_her(person)]")
 
 		var/list/messages = process_language(message)

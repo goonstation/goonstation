@@ -1,5 +1,10 @@
 // p much straight up copied from secbot code =I
 
+
+//don't attack mobs in santuary zones. attacking non-mobs there is fine
+//we can only attack people in pods etc if we're also in the pod etc
+#define ATTACK_CHECK(target) ((!(get_area(target)):sanctuary || !ismob(target)) && (isturf(target:loc) || target:loc == src.loc))
+
 /obj/critter/
 	name = "critter"
 	desc = "you shouldnt be able to see this"
@@ -10,10 +15,11 @@
 	density = 1
 	anchored = 0
 	flags = FPRINT | CONDUCT | USEDELAY | FLUID_SUBMERGE
-	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER 
+	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 	var/is_template = 0
 	var/alive = 1
 	var/health = 10
+	var/maxhealth = 100
 
 	// "sleeping" is a special state that sleeps for 10 cycles, wakes up, sleeps again unless someone is found
 	// "hibernating" is another special state where it does nothing unless explicitly woken up
@@ -33,9 +39,9 @@
 	var/opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	var/frustration = 0
 	var/last_found = null
-	var/target = null
+	var/atom/movable/target = null
 	var/oldtarget_name = null
-	var/target_lastloc = null
+	var/atom/target_lastloc = null
 	var/atkcarbon = 0
 	var/atksilicon = 0
 	var/atcritter = 0
@@ -168,7 +174,7 @@
 	proc/wake_from_hibernation()
 		if(task != "hibernating") return
 
-		//DEBUG_MESSAGE("[src] woke from hibernation at [showCoords(src.x, src.y, src.z)] in [registered_area ? registered_area.name : "nowhere"] due to [usr ? usr : "some mysterious fucking reason"]")
+		//DEBUG_MESSAGE("[src] woke from hibernation at [log_loc(src)] in [registered_area ? registered_area.name : "nowhere"] due to [usr ? usr : "some mysterious fucking reason"]")
 		//Ok, now we look to see if we should get murdlin'
 		task = "sleeping"
 		hibernate_check = 20 //20 sleep_checks
@@ -189,7 +195,7 @@
 			task = "hibernating"
 			registered_area.registered_critters |= src
 			anchored = 1
-			//DEBUG_MESSAGE("[src] started hibernating at [showCoords(src.x, src.y, src.z)] in [registered_area ? registered_area.name : "nowhere"].")
+			//DEBUG_MESSAGE("[src] started hibernating at [log_loc(src)] in [registered_area ? registered_area.name : "nowhere"].")
 			//critters -= src //Stop processing this critter
 
 
@@ -215,7 +221,7 @@
 
 	proc/on_grump()
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		..()
 		if (!src.alive)
 			if (src.skinresult && max_skins)
@@ -248,14 +254,14 @@
 
 		if (istype(W, /obj/item/reagent_containers/food/snacks) || istype(W, /obj/item/seed))
 			boutput(user, "You offer [src] [W].")
-			if (!do_mob(user, src, 1 SECOND) || get_dist(user, src) > 1)
+			if (!do_mob(user, src, 1 SECOND) || BOUNDS_DIST(user, src) > 0)
 				if (user && ismob(user))
 					user.show_text("You were interrupted!", "red")
 				return
 			if (src.feed_text)
 				src.visible_message("<span class='notice'>[src] [src.feed_text]</span>")
 			eat_twitch(src)
-			src.health += src.health_gain_from_food
+			src.health = min(src.maxhealth, src.health + health_gain_from_food)
 			user.drop_item()
 			qdel(W)
 			return
@@ -294,7 +300,7 @@
 			attack_force = rand(attack_force, round(attack_force * W.getProperty("unstable")))
 
 		if(W.hasProperty("frenzy"))
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/frenzy = W.getProperty("frenzy")
 				W.click_delay -= frenzy
 				sleep(3 SECONDS)
@@ -357,11 +363,10 @@
 			return 1 // so things can do if (..())
 		return
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		..()
 		if (!src.alive)
-			..()
-			return
+			return ..()
 
 		if (src.sleeping)
 			sleeping = 0
@@ -414,12 +419,9 @@
 	proc/patrol_to(var/towhat)
 		step_to(src, towhat)
 
-	Bump(M as mob|obj)
-		if (istype(M, /obj/machinery/door/))
-			var/obj/machinery/door/D = M
-			D.Bumped(src) // Doesn't call that automatically for some inexplicable reason.
-		else if ((isliving(M)) && (!src.anchored))
-			src.set_loc(M:loc)
+	bump(atom/M as mob|obj)
+		if ((isliving(M)) && (!src.anchored))
+			src.set_loc(M.loc)
 			src.frustration = 0
 
 	bullet_act(var/obj/projectile/P)
@@ -542,7 +544,7 @@
 
 		for (var/client/C)
 			var/mob/M = C.mob
-			if (M && src.z == M.z && get_dist(src,M) <= 10)
+			if (M && src.z == M.z && GET_DIST(src, M) <= 10)
 				if (isliving(M))
 					waking = 1
 					break
@@ -577,15 +579,10 @@
 
 		for (var/client/C)
 			var/mob/M = C.mob
-			if (M && src.z == M.z && get_dist(src,M) <= 10)
+			if (M && src.z == M.z && GET_DIST(src, M) <= 10)
 				if (isliving(M))
 					stay_awake = 1
 					break
-
-		//for(var/mob/living/M in range(10, src))
-		//	if(M.client)
-		//		stay_awake = 1
-		//		break
 
 		if(!stay_awake)
 			sleeping = 10
@@ -600,8 +597,8 @@
 	proc/process()
 		if (is_template || task == "hibernating")
 			return 0
-		if (!src.alive) return 0
-
+		if (!src.alive)
+			return 0
 		if(sleeping > 0)
 			sleeping--
 			return 0
@@ -610,7 +607,7 @@
 
 		if(task == "following path")
 			follow_path()
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				follow_path()
 		else if(task == "sleeping")
 			do_wake_check()
@@ -625,7 +622,7 @@
 				src.attack = 0
 				src.target = null
 
-				walk_to(src,0)
+				walk_to(src, 0)
 
 				if (src.aggressive) seek_target()
 				if (src.wanderer && src.mobile && !src.target) src.task = "wandering"
@@ -640,7 +637,7 @@
 					src.task = "thinking"
 
 					if (mobile)
-						walk_to(src,0)
+						walk_to(src, 0)
 
 				var/atom/current_target
 				if (src.target)
@@ -657,8 +654,7 @@
 						else if (current_target == src.food_target)
 							src.task = "eating"
 						else
-							var/turf/t = get_turf(current_target)
-							if( !t.loc:sanctuary || !istype(current_target, /mob) )
+							if(ATTACK_CHECK(current_target))
 								ChaseAttack(current_target)
 							src.task = "attacking"
 							src.anchored = 1
@@ -704,16 +700,16 @@
 					src.visible_message("<b>[src]</b> [src.eat_text] [src.food_target].")
 					playsound(src.loc,"sound/items/eatfood.ogg", rand(10,50), 1)
 					if (food_target)
-						if (food_target.amount) src.food_target.amount-- //ZeWaka: Fix for null. amount
+						if (food_target.bites_left) src.food_target.bites_left-- //ZeWaka: Fix for null. bites_left
 						if (food_target.reagents && food_target.reagents.total_volume > 0 && src.reagents.total_volume < 30)
 							food_target.reagents.trans_to(src, 5)
-					if (src.food_target != null && src.food_target.amount <= 0)
+					if (src.food_target != null && src.food_target.bites_left <= 0)
 						src.food_target.set_loc(null)
-						SPAWN_DBG(1 SECOND)
+						SPAWN(1 SECOND)
 							qdel(src.food_target)
 						src.task = "thinking"
 						src.food_target = null
-						src.health += src.health_gain_from_food
+						src.health = min(src.maxhealth, src.health + health_gain_from_food)
 
 			if ("chasing corpse")
 
@@ -758,8 +754,7 @@
 					if (get_dist(src, src.target) <= src.attack_range)
 						var/mob/living/carbon/M = src.target
 						if (!src.attacking)
-							var/turf/t = get_turf(src.target)
-							if( !t.loc:sanctuary || !istype(M) )
+							if(ATTACK_CHECK(src.target))
 								CritterAttack(src.target)
 								if (src)
 									attack_twitch(src)
@@ -906,12 +901,10 @@
 		src.tokenized_message(death_text)
 
 	proc/ChaseAttack(mob/M)
-
 		src.visible_message("<span class='combat'><B>[src]</B> [src.chase_text] [src.target]!</span>")
 		if (isliving(M))
 			var/mob/living/H = M
 			H.was_harmed(src)
-		//playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
 
 	proc/CritterAttack(mob/M)
 		src.attacking = 1
@@ -924,7 +917,7 @@
 		if (isliving(M))
 			var/mob/living/H = M
 			H.was_harmed(src)
-		SPAWN_DBG(src.atk_delay)
+		SPAWN(src.atk_delay)
 			src.attacking = 0
 		if (iscarbon(M) && src.atk_diseases && prob(src.atk_disease_prob))
 			var/mob/living/carbon/C = M
@@ -1014,13 +1007,13 @@
 		if (src.reagents && src.critter_reagent)
 			src.reagents.add_reagent(src.critter_reagent, 10)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.anchored)
 			return
 		else
 			..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/pen))
 			var/t = input(user, "Enter new name", src.name, src.critter_name) as null|text
 			logTheThing("debug", user, null, "names a critter egg \"[t]\"")
@@ -1073,7 +1066,7 @@
 					user.u_equip(src)
 				src.set_loc(get_turf(src))
 
-			SPAWN_DBG(0)
+			SPAWN(0)
 				if (shouldThrow && T)
 					src.visible_message("<span class='alert'>[src] splats onto the floor messily!</span>")
 					playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
@@ -1116,7 +1109,7 @@
 			return
 
 /obj/critter/proc/revive_critter()
-	usr_admin_only
+	USR_ADMIN_ONLY
 	var/obj/critter/C = src
 	if (!istype(C, /obj/critter))
 		boutput(src, "[C] isn't a critter! How did you even get here?!")
@@ -1136,7 +1129,7 @@
 		return
 
 /obj/critter/proc/kill_critter()
-	usr_admin_only
+	USR_ADMIN_ONLY
 	var/obj/critter/C = src
 	if (!istype(C, /obj/critter))
 		boutput(src, "[C] isn't a critter! How did you even get here?!")
@@ -1150,3 +1143,5 @@
 	else
 		boutput(src, "[C] isn't alive, you goof!")
 		return
+
+#undef ATTACK_CHECK

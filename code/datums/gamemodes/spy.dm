@@ -36,7 +36,7 @@
 			num_players++
 
 	var/i = rand(5)
-	var/num_teams = max(setup_min_teams, min(round((num_players + i) / 7), setup_max_teams))
+	var/num_teams = clamp(round((num_players + i) / 7), setup_min_teams, setup_max_teams)
 	if (num_teams > leaders_possible.len)
 		num_teams = length(leaders_possible)
 
@@ -67,12 +67,12 @@
 			if (3,4)
 				spyObjective = bestow_objective(leaderMind,/datum/objective/regular/steal)
 
-		SHOW_SPY_TIPS(leaderMind.current)
+		leaderMind.current.show_antag_popup("spy")
 		boutput(leaderMind.current, "<span class='alert'>Oh yes, and <b>one more thing:</b> <b>[spyObjective.explanation_text]</b> That is, if you <i>really</i> want that new position.</span>")
 
 		equip_leader(leaderMind.current)
 
-	SPAWN_DBG (rand(waittime_l, waittime_h))
+	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
 
 /datum/game_mode/spy/send_intercept()
@@ -219,11 +219,11 @@
 	w_class = W_CLASS_SMALL
 	var/charges = 4
 
-	proc/update_icon()
+	update_icon()
 		src.icon_state = "revimplanter[min(4, round((src.charges/initial(src.charges)), 0.25) * 4)]"
 		return
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (!iscarbon(M))
 			return
 
@@ -265,7 +265,7 @@
 			new_imp.implanted(M, user, override)
 
 			src.charges--
-			src.update_icon()
+			src.UpdateIcon()
 
 
 /obj/item/implant/spy_implant
@@ -318,8 +318,7 @@
 
 		if (M.mind)
 			if (!src.linked_objective)
-				src.linked_objective = new /datum/objective(  )
-				M.mind.objectives += src.linked_objective
+				src.linked_objective = new /datum/objective(null, M.mind)
 
 			src.linked_objective.explanation_text = "Obey [leader_name]'s every order."
 
