@@ -326,6 +326,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\controllers\process\actions.dm"
 #include "code\datums\controllers\process\ai_tracking.dm"
 #include "code\datums\controllers\process\air_system.dm"
+#include "code\datums\controllers\process\area_process.dm"
 #include "code\datums\controllers\process\arena.dm"
 #include "code\datums\controllers\process\blob.dm"
 #include "code\datums\controllers\process\burning.dm"

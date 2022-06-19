@@ -296,7 +296,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 				return null
 		return R
 
-	/*
+	/**
 	 * returns a list of objects matching type in an area
 	 */
 	proc/get_type(var/type)
