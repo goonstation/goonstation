@@ -265,7 +265,7 @@ export const Apc = (props, context) => {
             </Stack>
             {can_access_remotely ? <Button content="Overload lighting circuit" onClick={() => { onOverload(); }} /> : null}
           </Section>
-          {wiresexposed && !is_ai ? <AccessPanel act={act} data={data} /> : null}
+          {wiresexposed && !is_ai ? <AccessPanel /> : null}
         </Window.Content>
       </Window>
     );
@@ -278,7 +278,7 @@ export const Apc = (props, context) => {
           <Section title={"Area Power Controller (" + area_name + ")"}>
             <Box>This APC has no configurable settings.</Box>
           </Section>
-          {wiresexposed && !is_ai ? <AccessPanel act={act} data={data} /> : null}
+          {wiresexposed && !is_ai ? <AccessPanel /> : null}
         </Window.Content>
       </Window>
     );

@@ -36,6 +36,9 @@ export const PowerChannelSection = (props, context) => {
     is_silicon,
     can_access_remotely,
     aidisabled,
+    equipment,
+    lighting,
+    environ,
   } = data;
 
 
@@ -55,11 +58,11 @@ export const PowerChannelSection = (props, context) => {
   const getPowerChannelStatus = () => {
     switch (powerChannel) {
       case POWER_CHANNEL_EQUIPMENT:
-        return data["equipment"];
+        return equipment;
       case POWER_CHANNEL_LIGHTING:
-        return data["lighting"];
+        return lighting;
       case POWER_CHANNEL_ENVIRONMENTAL:
-        return data["environ"];
+        return environ;
     }
   };
 

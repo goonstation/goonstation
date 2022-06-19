@@ -26,6 +26,12 @@ export const Wire = (props, context) => {
     wire,
   } = props;
   const { act, data } = useBackend(context);
+  const {
+    orange_cut,
+    dark_red_cut,
+    white_cut,
+    yellow_cut,
+  } = data;
 
   const wireColorToString = (wire) => {
     switch (wire) {
@@ -66,13 +72,13 @@ export const Wire = (props, context) => {
     // Logic is slightly different since dm doesn't 0 index for some reason
     switch (wire) {
       case WIRE_ORANGE:
-        return data["orange_cut"];
+        return orange_cut;
       case WIRE_DARK_RED:
-        return data["dark_red_cut"];
+        return dark_red_cut;
       case WIRE_WHITE:
-        return data["white_cut"];
+        return white_cut;
       case WIRE_YELLOW:
-        return data["yellow_cut"];
+        return yellow_cut;
     }
   };
 
