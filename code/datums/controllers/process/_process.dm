@@ -45,7 +45,7 @@
 	var/tmp/schedule_interval = PROCESS_DEFAULT_SCHEDULE_INTERVAL
 
 	/// This is added to the [/datum/controller/process/var/schedule_interval] when checking it.
-	/// This allows for more complex behaivor without disturbing the base interval.
+	/// This allows for more complex behavior without disturbing the base interval.
 	var/tmp/schedule_jitter = PROCESS_DEFAULT_SCHEDULE_JITTER
 
 	/// This controls what percentage a single tick (0 to 100) the process should be allowed to run before sleeping.

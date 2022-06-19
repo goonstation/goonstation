@@ -2,7 +2,7 @@
 	name = "AI Law Mount Rack"
 	icon = 'icons/obj/large/32x48.dmi'
 	icon_state = "airack_empty"
-	desc = "A large electronics rack that can contain AI Law Circuits, to modify the behaivor of connected AIs."
+	desc = "A large electronics rack that can contain AI Law Circuits, to modify the behavior of connected AIs."
 	density = 1
 	anchored = 1
 	mats = list("MET-1" = 20, "MET-2" = 5, "INS-1" = 10, "CON-1" = 10) //this bitch should be expensive
@@ -778,4 +778,4 @@
 /obj/machinery/lawrack/syndicate
 	name = "AI Law Mount Rack - Syndicate Model"
 	icon_state = "airack_syndicate_empty"
-	desc = "A large electronics rack that can contain AI Law Circuits, to modify the behaivor of connected AIs. This one has a little S motif on the side."
+	desc = "A large electronics rack that can contain AI Law Circuits, to modify the behavior of connected AIs. This one has a little S motif on the side."

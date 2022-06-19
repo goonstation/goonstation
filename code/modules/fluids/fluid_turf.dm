@@ -100,7 +100,7 @@
 			light_g = fluid_color[2] / 255
 			light_b = fluid_color[3] / 255
 
-		//let's replicate old behaivor
+		//let's replicate old behavior
 		if (generateLight)
 			generateLight = 0
 			if (z != 3) //nono z3
