@@ -31,8 +31,9 @@
 #define MOB_OVERMASK_LAYER (MOB_OVERLAY_BASE-4.8) // for mutant details that go over masks
 #define MOB_HEAD_LAYER1		(MOB_OVERLAY_BASE-5) // masks
 #define MOB_EARS_LAYER		(MOB_OVERLAY_BASE-5.5)
+#define MOB_GLASSES_LAYER2 (MOB_OVERLYA_BASE-5.9) // For eyewear that should layer OVER hair
 #define MOB_HAIR_LAYER2 	(MOB_OVERLAY_BASE-6)
-#define MOB_GLASSES_LAYER	(MOB_OVERLAY_BASE-7)
+#define MOB_GLASSES_LAYER	(MOB_OVERLAY_BASE-7)  // For eyewear that should layer UNDER hair
 #define MOB_BACK_LAYER 		(MOB_OVERLAY_BASE-8)
 #define MOB_OVERSUIT_LAYER1 (MOB_OVERLAY_BASE-8.6)	// For mutant oversuit (de)tails when facing north
 #define MOB_OVERSUIT_LAYER2 (MOB_OVERLAY_BASE-8.7)	// If we have another one
