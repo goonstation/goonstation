@@ -8,6 +8,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
+"p" = (
+/obj/decal/cleanable/dirt/dirt2,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
 "s" = (
 /obj/table/wood/auto,
 /obj/item/instrument/cowbell{
@@ -18,6 +22,9 @@
 	pixel_y = 9
 	},
 /turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"x" = (
+/turf/simulated/floor/plating/damaged3,
 /area/dmm_suite/clear_area)
 "z" = (
 /obj/table/wood/auto,
@@ -59,7 +66,11 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
+/obj/decal/cleanable/cobweb2,
 /turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"I" = (
+/turf/simulated/floor/plating/damaged1,
 /area/dmm_suite/clear_area)
 "N" = (
 /obj/table/wood/auto,
@@ -70,6 +81,14 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"T" = (
+/obj/decal/cleanable/paper,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"U" = (
+/obj/decal/cleanable/dirt/dirt5,
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "W" = (
@@ -102,7 +121,7 @@
 
 (1,1,1) = {"
 N
-Z
+U
 a
 "}
 (2,1,1) = {"
@@ -112,16 +131,16 @@ s
 "}
 (3,1,1) = {"
 Z
-Z
-Z
+T
+x
 "}
 (4,1,1) = {"
 Y
-Z
+p
 z
 "}
 (5,1,1) = {"
 F
-Z
+I
 B
 "}

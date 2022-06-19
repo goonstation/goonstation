@@ -48,6 +48,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
+"v" = (
+/obj/decal/cleanable/dirt/dirt2,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
 "w" = (
 /obj/rack,
 /obj/item/clothing/under/gimmick/marchingband{
@@ -61,6 +65,7 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
+/obj/decal/cleanable/cobweb,
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "x" = (
@@ -79,6 +84,13 @@
 /obj/item/toy/ornate_baton,
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
+"J" = (
+/obj/decal/cleanable/paper,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"L" = (
+/turf/simulated/floor/plating/damaged3,
+/area/dmm_suite/clear_area)
 "Q" = (
 /obj/table/wood/auto,
 /obj/item/instrument/tambourine,
@@ -87,6 +99,9 @@
 	pixel_x = 1
 	},
 /turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"R" = (
+/turf/simulated/floor/plating/damaged1,
 /area/dmm_suite/clear_area)
 "W" = (
 /obj/table/wood/auto,
@@ -99,6 +114,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
+"X" = (
+/obj/decal/cleanable/dirt/dirt5,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 w
@@ -108,16 +127,16 @@ l
 x
 "}
 (2,1,1) = {"
+R
+v
+J
 a
-a
-a
-a
-a
+X
 "}
 (3,1,1) = {"
 A
 f
-a
+L
 W
 Q
 "}
