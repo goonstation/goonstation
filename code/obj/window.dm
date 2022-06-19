@@ -726,7 +726,8 @@
 		/turf/simulated/shuttle/wall, /turf/unsimulated/wall, /turf/simulated/wall/auto/shuttle, /obj/indestructible/shuttle_corner,
 		/obj/machinery/door, /obj/window, /turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred, /turf/simulated/wall/auto/reinforced/supernorn/orange, /turf/simulated/wall/auto/reinforced/paper,
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
-		/turf/unsimulated/wall/auto/supernorn/wood, /turf/unsimulated/wall/auto/adventure/shuttle/dark, /turf/simulated/wall/auto/reinforced/old, /turf/unsimulated/wall/auto/lead/blue, /turf/unsimulated/wall/auto/adventure/old, /turf/unsimulated/wall/auto/adventure/mars/interior, /turf/unsimulated/wall/auto/adventure/shuttle, /turf/unsimulated/wall/auto/reinforced/supernorn)
+		/turf/unsimulated/wall/auto/supernorn/wood, /turf/unsimulated/wall/auto/adventure/shuttle/dark, /turf/simulated/wall/auto/reinforced/old, /turf/unsimulated/wall/auto/lead/blue, /turf/unsimulated/wall/auto/adventure/old, /turf/unsimulated/wall/auto/adventure/mars/interior, /turf/unsimulated/wall/auto/adventure/shuttle, /turf/unsimulated/wall/auto/reinforced/supernorn,
+		/turf/simulated/wall/false_wall)
 
 	var/list/connects_to_exceptions = list(/obj/window/cubicle, /obj/window/reinforced, /turf/unsimulated/wall/auto/lead/blue)
 	var/list/connects_with_overlay_exceptions = list(/obj/window, /obj/machinery/door/poddoor )
