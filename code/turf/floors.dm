@@ -225,7 +225,7 @@
 	New()
 		..()
 		var/image/burn_overlay = image('icons/turf/floors.dmi',"floorscorched1")
-		burn_overlay.alpha = 116
+		burn_overlay.alpha = 200
 		UpdateOverlays(burn_overlay,"burn")
 
 /turf/simulated/floor/scorched2
@@ -234,7 +234,7 @@
 	New()
 		..()
 		var/image/burn_overlay = image('icons/turf/floors.dmi',"floorscorched2")
-		burn_overlay.alpha = 116
+		burn_overlay.alpha = 200
 		UpdateOverlays(burn_overlay,"burn")
 
 /turf/simulated/floor/damaged1
@@ -1735,10 +1735,10 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 		icon_old = icon_state
 	if(intact)
 		burn_overlay = image('icons/turf/floors.dmi',"floorscorched[pick(1,2)]")
-		burn_overlay.alpha = 116
+		burn_overlay.alpha = 200
 	else
 		burn_overlay = image('icons/turf/floors.dmi',"panelscorched")
-		burn_overlay.alpha = 116
+		burn_overlay.alpha = 200
 	UpdateOverlays(burn_overlay,"burn")
 	src.UpdateIcon()
 	burnt = 1
