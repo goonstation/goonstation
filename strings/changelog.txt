@@ -1,5 +1,9 @@
 
 (t)sun jun 19 22
+(u)Mr. Moriarty
+(p)9163
+(e)|
+(+)Two Security Assistant requisition tokens can now be found inside the special equipment lockers in the Armoury.
 (u)DimWhat
 (p)8971
 (e)⚖|balance
