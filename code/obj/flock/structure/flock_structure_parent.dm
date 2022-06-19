@@ -261,9 +261,13 @@ ABSTRACT_TYPE(/obj/flock_structure)
 
 	takeDamage("mixed", damage)
 
-/obj/flock_structure/Cross(atom/movable/mover)
+/obj/flock_structure/Crossed(atom/movable/mover)
 	. = ..()
 	var/mob/living/critter/flock/drone/drone = mover
 	if(src.passthrough && istype(drone) && !drone.floorrunning)
 		animate_flock_passthrough(mover)
 		. = TRUE
+
+/obj/flock_structure/Cross(atom/movable/mover)
+	. = ..()
+	return istype(mover,/mob/living/critter/flock/drone)

@@ -1064,6 +1064,16 @@
 /obj/window/auto/feather/proc/repair()
 	src.health = min(src.health + 10, src.health_max)
 
+/obj/window/auto/feather/Crossed(atom/movable/mover)
+	. = ..()
+	var/mob/living/critter/flock/drone/drone = mover
+	if(istype(drone) && !drone.floorrunning)
+		animate_flock_passthrough(mover)
+		. = TRUE
+
+/obj/window/auto/feather/Cross(atom/movable/mover)
+	. = ..()
+	return istype(mover,/mob/living/critter/flock/drone)
 
 /obj/window/feather
 	icon = 'icons/misc/featherzone.dmi'
