@@ -1,0 +1,126 @@
+import { useBackend } from "../../backend";
+import {
+  Stack,
+  BlockQuote,
+  Box,
+  Button,
+  Divider,
+  Flex,
+  LabeledList,
+  ProgressBar,
+  Section,
+  Slider,
+  Tabs,
+  LabeledControls,
+} from '../../components';
+
+
+export const POWER_CHANNEL_EQUIPMENT = 1;
+export const POWER_CHANNEL_LIGHTING = 2;
+export const POWER_CHANNEL_ENVIRONMENTAL = 3;
+
+export const POWER_CHANNEL_STATUS_OFF = 0;
+export const POWER_CHANNEL_STATUS_AUTO_OFF = 1;
+export const POWER_CHANNEL_STATUS_ON = 2;
+export const POWER_CHANNEL_STATUS_AUTO_ON = 3;
+
+
+export const PowerChannelSection = (props, context) => {
+  const {
+    powerChannel,
+  } = props;
+  const { act, data } = useBackend(context);
+  const {
+    locked,
+    is_ai,
+    is_silicon,
+    can_access_remotely,
+    aidisabled,
+  } = data;
+
+
+  const powerChannelToLabel = () => {
+    switch (powerChannel) {
+      case POWER_CHANNEL_EQUIPMENT:
+        return "Equipment";
+      case POWER_CHANNEL_LIGHTING:
+        return "Lighting";
+      case POWER_CHANNEL_ENVIRONMENTAL:
+        return "Environmental";
+      default:
+        return "Unknown";
+    }
+  };
+
+  const getPowerChannelStatus = () => {
+    switch (powerChannel) {
+      case POWER_CHANNEL_EQUIPMENT:
+        return data["equipment"];
+      case POWER_CHANNEL_LIGHTING:
+        return data["lighting"];
+      case POWER_CHANNEL_ENVIRONMENTAL:
+        return data["environ"];
+    }
+  };
+
+  const powerChannelLabel = powerChannelToLabel(powerChannel);
+
+  // ------------ Events ------------
+  const onPowerChannelStatusChange = (status) => {
+    switch (powerChannel) {
+      case POWER_CHANNEL_EQUIPMENT:
+        act("onPowerChannelEquipmentStatusChange", { status });
+        break;
+      case POWER_CHANNEL_LIGHTING:
+        act("onPowerChannelLightingStatusChange", { status });
+        break;
+      case POWER_CHANNEL_ENVIRONMENTAL:
+        act("onPowerChannelEnvironStatusChange", { status });
+        break;
+      default:
+        return;
+    }
+  };
+  // ------------ End Events ------------
+
+  const hasPermission = () => {
+    if (is_ai || is_silicon || can_access_remotely) {
+      return aidisabled ? false : true;
+    }
+    return locked ? false : true;
+  };
+
+  const isCurrentStatus = (status) => {
+    return status === getPowerChannelStatus();
+  };
+
+  const needsFakeSelectedColor = (status) => {
+    if (status === POWER_CHANNEL_STATUS_AUTO_OFF || status === POWER_CHANNEL_STATUS_AUTO_ON) {
+      let isAutoBased = isCurrentStatus(POWER_CHANNEL_STATUS_AUTO_OFF) || isCurrentStatus(POWER_CHANNEL_STATUS_AUTO_ON);
+      return isAutoBased && !hasPermission();
+    }
+    return isCurrentStatus(status) && !hasPermission();
+  };
+
+  return (
+    <LabeledList.Item label={powerChannelLabel} direction="row" disabled={!hasPermission()}>
+      <Button content="Off"
+        disabled={!hasPermission() && !isCurrentStatus(POWER_CHANNEL_STATUS_OFF)}
+        onClick={() => { onPowerChannelStatusChange(POWER_CHANNEL_STATUS_OFF); }}
+        selected={isCurrentStatus(POWER_CHANNEL_STATUS_OFF)}
+      />
+      <Button content="On"
+        disabled={!hasPermission() && !isCurrentStatus(POWER_CHANNEL_STATUS_ON)}
+        onClick={() => { onPowerChannelStatusChange(POWER_CHANNEL_STATUS_ON); }}
+        selected={isCurrentStatus(POWER_CHANNEL_STATUS_ON)}
+      />
+      <Button content="Auto"
+        disabled={!hasPermission() && !(
+          isCurrentStatus(POWER_CHANNEL_STATUS_AUTO_OFF) || isCurrentStatus(POWER_CHANNEL_STATUS_AUTO_ON)
+        )}
+        onClick={() => { onPowerChannelStatusChange(POWER_CHANNEL_STATUS_AUTO_ON); }}
+        selected={isCurrentStatus(POWER_CHANNEL_STATUS_AUTO_OFF) || isCurrentStatus(POWER_CHANNEL_STATUS_AUTO_ON)}
+      />
+    </LabeledList.Item>
+  );
+};
