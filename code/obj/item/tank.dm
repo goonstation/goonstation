@@ -164,7 +164,7 @@ Contains:
 				return
 			var/turf/epicenter = get_turf(loc)
 			logTheThing("bombing", src, null, "exploded at [log_loc(epicenter)], , range: [range], last touched by: [src.fingerprintslast]")
-			visible_message("<span class='alert'><b>[src] explosively ruptures!</b></span>")
+			src.visible_message("<span class='alert'><b>[src] explosively ruptures!</b></span>")
 			explosion(src, epicenter, round(range * 0.25), round(range * 0.5), round(range), round(range * 1.5))
 			qdel(src)
 
@@ -172,7 +172,7 @@ Contains:
 			if(integrity <= 0)
 				loc.assume_air(air_contents)
 				air_contents = null
-				visible_message("<span class='alert'>[src] violently ruptures!</span>")
+				src.visible_message("<span class='alert'>[src] violently ruptures!</span>")
 				playsound(src.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 60, TRUE)
 				qdel(src)
 			else
@@ -230,10 +230,10 @@ Contains:
 			return .
 		. += "<br><span class='notice'>It feels [descriptive]</span>"
 		var/cur_pressure = MIXTURE_PRESSURE(air_contents)
-		if (cur_pressure >= TANK_LEAK_PRESSURE)
-			. += "<br><span class='alert'>It's leaking air!</span>"
-		else if (cur_pressure >= TANK_RUPTURE_PRESSURE)
+		if (cur_pressure >= TANK_RUPTURE_PRESSURE)
 			. += "<span class='alert'><b>It's starting to rupture! Better get rid of it quick!</b></span>"
+		else if (cur_pressure >= TANK_LEAK_PRESSURE)
+			. += "<br><span class='alert'>It's leaking air!</span>"
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/clothing/mask/breath))
