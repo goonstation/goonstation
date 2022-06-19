@@ -2857,6 +2857,9 @@
 	},
 /obj/access_spawn/janitor,
 /obj/firedoor_spawn,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/janitor)
 "csU" = (
@@ -3541,6 +3544,12 @@
 	dir = 4
 	},
 /area/station/hallway/primary/south)
+"cVl" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/janitor)
 "cVp" = (
 /obj/disposalpipe/trunk/west,
 /obj/machinery/floorflusher/industrial,
@@ -7651,6 +7660,12 @@
 /obj/machinery/chem_dispenser/alcohol,
 /turf/simulated/floor/airless/blackwhite/whitegrime,
 /area/station/crew_quarters/bar)
+"gjs" = (
+/obj/disposalpipe/segment,
+/turf/simulated/floor/greenwhite{
+	dir = 8
+	},
+/area/station/hallway/primary/south)
 "gjB" = (
 /turf/simulated/floor/greenwhite/corner,
 /area/station/hallway/primary/south)
@@ -10711,6 +10726,10 @@
 	},
 /turf/simulated/floor/twotone,
 /area/station/turret_protected/ai)
+"iQD" = (
+/obj/disposalpipe/segment,
+/turf/simulated/floor,
+/area/station/janitor)
 "iQQ" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/airless/darkblue/checker/other,
@@ -10737,12 +10756,6 @@
 	},
 /turf/simulated/floor/airless/plating,
 /area/station/maintenance/central)
-"iSW" = (
-/obj/disposalpipe/switch_junction/left/east,
-/turf/simulated/floor/greenwhite{
-	dir = 1
-	},
-/area/station/hallway/primary/south)
 "iTq" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/airless/plating/jen,
@@ -13478,13 +13491,6 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/airless/green,
 /area/station/ranch)
-"laR" = (
-/obj/disposalpipe/segment,
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/turf/simulated/wall/auto/gannets,
-/area/station/janitor)
 "lbc" = (
 /turf/simulated/floor/marble/border_wb{
 	dir = 3
@@ -14510,7 +14516,6 @@
 /area/listeningpost)
 "lJI" = (
 /obj/storage/closet/biohazard,
-/obj/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/janitor)
 "lJP" = (
@@ -15431,6 +15436,12 @@
 /obj/firedoor_spawn,
 /turf/space,
 /area/station/engine/engineering/ce)
+"mvG" = (
+/obj/disposalpipe/switch_junction/left/east,
+/turf/simulated/floor/greenwhite{
+	dir = 8
+	},
+/area/station/hallway/primary/south)
 "mwf" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/redblack{
@@ -16193,6 +16204,17 @@
 /obj/item/storage/firstaid/docbag,
 /turf/simulated/floor/white,
 /area/station/medical/breakroom)
+"mZQ" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/janitor)
 "mZR" = (
 /obj/machinery/mass_driver{
 	desc = "A device that launches objects, like ANCIENT BOMBS, for example, on it at great velocity when activated.";
@@ -19039,6 +19061,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor/greenwhite{
 	dir = 8
 	},
@@ -23794,6 +23817,15 @@
 "sYD" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/captain)
+"sZl" = (
+/obj/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/greenwhite{
+	dir = 8
+	},
+/area/station/hallway/primary/south)
 "taG" = (
 /obj/disposalpipe/segment/ejection{
 	dir = 8;
@@ -25264,6 +25296,13 @@
 	},
 /turf/simulated/floor/black,
 /area/station/medical/morgue)
+"ugE" = (
+/obj/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor,
+/area/station/janitor)
 "ugP" = (
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/specialroom/chapel{
@@ -27255,12 +27294,15 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/northeast)
 "vFx" = (
-/obj/disposalpipe/segment,
 /obj/machinery/camera{
 	dir = 8
 	},
 /obj/landmark/start{
 	name = "Janitor"
+	},
+/obj/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor,
 /area/station/janitor)
@@ -27419,6 +27461,19 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/airless/plating/jen,
 /area/station/storage/warehouse)
+"vMd" = (
+/obj/stool/chair{
+	dir = 4
+	},
+/obj/landmark/start{
+	name = "Janitor"
+	},
+/obj/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor,
+/area/station/janitor)
 "vNn" = (
 /obj/table/reinforced/bar/auto,
 /turf/simulated/floor/twotone/yellow,
@@ -27585,6 +27640,12 @@
 	dir = 9
 	},
 /area/station/medical/medbay/lobby)
+"vWO" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/turf/simulated/floor/darkblue/checker,
+/area/station/janitor)
 "vXD" = (
 /obj/storage/secure/closet/engineering/mechanic,
 /obj/machinery/light/incandescent{
@@ -77919,12 +77980,12 @@ lqV
 vZR
 cUV
 fDV
-lGr
+mvG
 ppP
-fDV
-fDV
-fDV
-fDV
+gjs
+gjs
+gjs
+sZl
 fDV
 fDV
 fDV
@@ -78528,7 +78589,7 @@ dfW
 aUK
 ana
 ocM
-ocM
+cVl
 ocM
 lxT
 dKk
@@ -78830,7 +78891,7 @@ nqq
 ofv
 mlG
 oZP
-wSM
+mZQ
 wSM
 itq
 hsq
@@ -79132,7 +79193,7 @@ dfW
 sGT
 ocM
 ocM
-ocM
+cVl
 lGT
 wVg
 wSM
@@ -79432,9 +79493,9 @@ rYJ
 oAJ
 dfW
 sGT
-ocM
-ocM
-eLQ
+ugE
+iQD
+vMd
 ocM
 eLQ
 tFj
@@ -79731,8 +79792,8 @@ kKj
 kKj
 hSG
 rYJ
-iSW
-laR
+oAJ
+dfW
 lJI
 vFx
 wow
@@ -80034,7 +80095,7 @@ dxj
 hSG
 ohw
 oAJ
-dfW
+vWO
 gIB
 gIB
 gIB
