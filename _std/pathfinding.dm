@@ -56,7 +56,7 @@
  * Note that this can only be used inside the [datum/pathfind][pathfind datum] since it uses variables from said datum.
  * If you really want to optimize things, optimize this, cuz this gets called a lot.
  */
-#define CAN_STEP(cur_turf, next) (next && !next.density && jpsTurfPassable(next, source=cur_turf, passer=caller, id=id) && !(simulated_only && !istype(next, /turf/simulated)) && (next != avoid))
+#define CAN_STEP(cur_turf, next) (next && jpsTurfPassable(next, source=cur_turf, passer=caller, id=id) && !(simulated_only && !istype(next, /turf/simulated)) && (next != avoid))
 /// Another helper macro for JPS, for telling when a node has forced neighbors that need expanding
 #define STEP_NOT_HERE_BUT_THERE(cur_turf, dirA, dirB) ((!CAN_STEP(cur_turf, get_step(cur_turf, dirA)) && CAN_STEP(cur_turf, get_step(cur_turf, dirB))))
 
@@ -413,6 +413,11 @@
 /// Returns false if there is a dense atom on the turf, unless a custom hueristic is passed.
 /proc/jpsTurfPassable(turf/T, turf/source=null, atom/passer=null, id=null)
 	. = TRUE
+	if(istype(passer,/mob/living/critter/flock/drone) && isfeathertile(T))
+		var/mob/living/critter/flock/drone/F = passer
+		if(F.floorrunning || (F.can_floorrun && F.resources >= 1))
+			return TRUE // floor running drones can *always* pass through flocktiles
+
 	if(T.density || !T.pathable) // simplest case
 		return FALSE
 	var/direction = get_dir(source, T)

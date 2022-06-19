@@ -73,7 +73,11 @@ stare
 
 /datum/aiTask/prioritizer/flock/on_reset()
 	..()
-	walk(holder.owner, 0)
+	if(istype(holder.owner,/mob/living/critter/flock/drone))
+		var/mob/living/critter/flock/drone/F = holder.owner
+		if(F.floorrunning)
+			F.end_floorrunning(TRUE)
+	holder.stop_move()
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // RALLY TO GOAL
