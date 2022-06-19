@@ -649,7 +649,7 @@ a.latejoin-card:hover {
 		if(ishuman(new_character))
 			var/mob/living/carbon/human/H = new_character
 			H.update_colorful_parts()
-		var/client/C = client
+
 		mind.transfer_to(new_character)
 
 		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/assday))
