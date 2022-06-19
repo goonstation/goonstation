@@ -44,6 +44,48 @@ const CHARGE_MODE_AUTO = 1;
 export const Apc = (props, context) => {
   const { act, data } = useBackend(context);
 
+  const {
+    cell_type,
+    cell_percent,
+    cell_present,
+    opened,
+    circuit_disabled,
+    shorted,
+    lighting,
+    equipment,
+    environ,
+    operating,
+    do_not_operate,
+    charging,
+    chargemode,
+    chargecount,
+    locked,
+    coverlocked,
+    aidisabled,
+    noalerts,
+    lastused_light,
+    lastused_equip,
+    lastused_environ,
+    lastused_total,
+    main_status,
+    light_consumption,
+    equip_consumption,
+    environ_consumption,
+    emagged,
+    wiresexposed,
+    apcwires,
+    repair_status,
+    host_id,
+    setup_networkapc,
+    orange_cut,
+    dark_red_cut,
+    white_cut,
+    yellow_cut,
+    can_access_remotely,
+    is_ai,
+    is_silicon,
+  } = data;
+
   // ------------ Events ------------
   const onOperatingChange = (operating) => {
     act("onOperatingChange", { operating });
@@ -63,9 +105,9 @@ export const Apc = (props, context) => {
   // ------------ End Events ------------
 
   const swipeOrHostDisplay = () => {
-    if (data["setup_networkapc"] < 2 && !data["can_access_remotely"]) {
+    if (setup_networkapc < 2 && !can_access_remotely) {
       return (
-        <Box align="center" bold fill>Swipe ID card to {data["locked"] ? "unlock" : "lock"} interface</Box>
+        <Box align="center" bold fill>Swipe ID card to {locked ? "unlock" : "lock"} interface</Box>
       );
     } else {
       return (
@@ -74,7 +116,7 @@ export const Apc = (props, context) => {
             <Box>Host Connection:</Box>
           </Stack.Item>
           <Stack.Item align="center">
-            <Box>{data["host_connected"] ? <font color="green">OK</font> : <font color="red">NONE</font>}</Box>
+            <Box>{host_connected ? <font color="green">OK</font> : <font color="red">NONE</font>}</Box>
           </Stack.Item>
         </>
       );
@@ -82,7 +124,7 @@ export const Apc = (props, context) => {
   };
 
   const mainStatusToText = () => {
-    switch (data["main_status"]) {
+    switch (main_status) {
       case MAIN_STATUS_GOOD:
         return <font color="green">Good</font>;
       case MAIN_STATUS_LOW:
@@ -93,9 +135,9 @@ export const Apc = (props, context) => {
   };
 
   const chargingStatusToText = () => {
-    switch (data["charging"]) {
+    switch (charging) {
       case 0:
-        return data["chargecount"] ? "Performing self-test" : "Not charging";
+        return chargecount ? "Performing self-test" : "Not charging";
       case 1:
         return "Fully Charged";
       default:
@@ -107,17 +149,17 @@ export const Apc = (props, context) => {
     if (!hasPermission()) {
       return (
         <Stack.Item align="center">
-          <Box>{data["chargemode"] ? "Auto" : "Off"}</Box>
+          <Box>{chargemode ? "Auto" : "Off"}</Box>
         </Stack.Item>
       );
     } else {
       return (
         <>
           <Stack.Item align="center">
-            {data["chargemode"] ? <Button content="Off" onClick={() => { onChargeModeChange(CHARGE_MODE_OFF); }} /> : <Box>Off</Box>}
+            {chargemode ? <Button content="Off" onClick={() => { onChargeModeChange(CHARGE_MODE_OFF); }} /> : <Box>Off</Box>}
           </Stack.Item>
           <Stack.Item align="center">
-            {data["chargemode"] ? <Box>Auto</Box> : <Button content="Auto" onClick={() => { onChargeModeChange(CHARGE_MODE_AUTO); }} />}
+            {chargemode ? <Box>Auto</Box> : <Button content="Auto" onClick={() => { onChargeModeChange(CHARGE_MODE_AUTO); }} />}
           </Stack.Item>
         </>
       );
@@ -125,14 +167,14 @@ export const Apc = (props, context) => {
   };
 
   const cellDisplay = () => {
-    if (data["cell_present"]) {
+    if (cell_present) {
       return (
         <Stack>
           <Stack.Item align="center">
             <Box>Power Cell:</Box>
           </Stack.Item>
           <Stack.Item align="center">
-            <Box>{round(data["cell_percent"])}%</Box>
+            <Box>{round(cell_percent)}%</Box>
           </Stack.Item>
           <Stack.Item align="center">
             <Box>{"("}{chargingStatusToText()}{")"}</Box>
@@ -157,26 +199,26 @@ export const Apc = (props, context) => {
   };
 
   const coverLockDisplay = () => {
-    let coverLockText = data["coverlocked"] ? "Engaged" : "Disengaged";
+    let coverLockText = coverlocked ? "Engaged" : "Disengaged";
     if (!hasPermission()) {
       return <Box>{coverLockText}</Box>;
     } else {
-      return <Button content={coverLockText} onClick={() => { onCoverLockedChange(!data["coverlocked"]); }} />;
+      return <Button content={coverLockText} onClick={() => { onCoverLockedChange(!coverlocked); }} />;
     }
   };
 
   const hasPermission = () => {
-    if (data["is_ai"] || data["is_silicon"] || data["can_access_remotely"]) {
-      return data["aidisabled"] ? false : true;
+    if (is_ai || is_silicon || can_access_remotely) {
+      return aidisabled ? false : true;
     }
-    return data["locked"] ? false : true;
+    return locked ? false : true;
   };
 
   const renderPoweredAreaApc = () => {
     return (
       <Window title="Area Power Controller">
         <Window.Content>
-          <Section title={"Area Power Controller (" + data["area_name"] + ")"}>
+          <Section title={"Area Power Controller (" + area_name + ")"}>
             <Stack>
               {swipeOrHostDisplay()}
             </Stack>
@@ -186,10 +228,10 @@ export const Apc = (props, context) => {
                 <Box>Main Breaker</Box>
               </Stack.Item>
               <Stack.Item align="center">
-                {data["operating"] ? <Button content="off" disabled={!hasPermission()} onClick={() => { onOperatingChange(OFF); }} /> : <Box>off</Box>}
+                {operating ? <Button content="off" disabled={!hasPermission()} onClick={() => { onOperatingChange(OFF); }} /> : <Box>off</Box>}
               </Stack.Item>
               <Stack.Item align="center">
-                {data["operating"] ? <Box>on</Box> : <Button content="on" disabled={!hasPermission()} onClick={() => { onOperatingChange(ON); }} />}
+                {operating ? <Box>on</Box> : <Button content="on" disabled={!hasPermission()} onClick={() => { onOperatingChange(ON); }} />}
               </Stack.Item>
             </Stack>
             <Stack>
@@ -208,7 +250,7 @@ export const Apc = (props, context) => {
               <PowerChannelSection powerChannel={POWER_CHANNEL_LIGHTING} />
               <PowerChannelSection powerChannel={POWER_CHANNEL_ENVIRONMENTAL} />
               <LabeledList.Item label="Total Load">
-                <Box>{data["lastused_total"]} W</Box>
+                <Box>{lastused_total} W</Box>
               </LabeledList.Item>
             </LabeledList>
           </Section>
@@ -221,9 +263,9 @@ export const Apc = (props, context) => {
                 {coverLockDisplay()}
               </Stack.Item>
             </Stack>
-            {data["can_access_remotely"] ? <Button content="Overload lighting circuit" onClick={() => { onOverload(); }} /> : null}
+            {can_access_remotely ? <Button content="Overload lighting circuit" onClick={() => { onOverload(); }} /> : null}
           </Section>
-          {data["wiresexposed"] && !data["is_ai"] ? <AccessPanel act={act} data={data} /> : null}
+          {wiresexposed && !is_ai ? <AccessPanel act={act} data={data} /> : null}
         </Window.Content>
       </Window>
     );
@@ -231,16 +273,16 @@ export const Apc = (props, context) => {
 
   const renderUnPoweredAreaApc = () => {
     return (
-      <Window title="Area Power Controller" width={400} height={data["wiresexposed"] ? 500 : 350}>
+      <Window title="Area Power Controller" width={400} height={wiresexposed ? 500 : 350}>
         <Window.Content>
-          <Section title={"Area Power Controller (" + data["area_name"] + ")"}>
+          <Section title={"Area Power Controller (" + area_name + ")"}>
             <Box>This APC has no configurable settings.</Box>
           </Section>
-          {data["wiresexposed"] && !data["is_ai"] ? <AccessPanel act={act} data={data} /> : null}
+          {wiresexposed && !is_ai ? <AccessPanel act={act} data={data} /> : null}
         </Window.Content>
       </Window>
     );
   };
 
-  return data["area_requires_power"] ? renderPoweredAreaApc() : renderUnPoweredAreaApc();
+  return area_requires_power ? renderPoweredAreaApc() : renderUnPoweredAreaApc();
 };
