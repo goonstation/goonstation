@@ -413,10 +413,10 @@
 /// Returns false if there is a dense atom on the turf, unless a custom hueristic is passed.
 /proc/jpsTurfPassable(turf/T, turf/source=null, atom/passer=null, id=null)
 	. = TRUE
-	if(istype(passer,/mob/living/critter/flock/drone) && isfeathertile(T))
+	if(istype(passer,/mob/living/critter/flock/drone) && istype(T, /turf/simulated/wall/auto/feather))
 		var/mob/living/critter/flock/drone/F = passer
 		if(F.floorrunning || (F.can_floorrun && F.resources >= 1))
-			return TRUE // floor running drones can *always* pass through flocktiles
+			return TRUE // floor running drones can *always* pass through flockwalls
 
 	if(T.density || !T.pathable) // simplest case
 		return FALSE
