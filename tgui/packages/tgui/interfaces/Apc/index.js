@@ -45,6 +45,8 @@ export const Apc = (props, context) => {
   const { act, data } = useBackend(context);
 
   const {
+    area_requires_power,
+    area_name,
     cell_type,
     cell_percent,
     cell_present,
