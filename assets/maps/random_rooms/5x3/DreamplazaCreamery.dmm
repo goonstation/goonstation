@@ -59,7 +59,7 @@
 /obj/neon_lining{
 	dir = 10
 	},
-/obj/decoration/decorativeplant/plant6,
+/obj/decoration/pottedfern,
 /turf/simulated/floor/marble,
 /area/dmm_suite/clear_area)
 "H" = (
