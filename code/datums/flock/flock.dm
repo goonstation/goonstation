@@ -692,7 +692,7 @@ var/flock_signal_unleashed = FALSE
 			if (!istype(O, keyPath))
 				continue
 			if (isnull(flock_conversion_paths[keyPath]))
-				qdel(O) //is this safe? probably?
+				qdel(O)
 				continue
 			if (istype(O, /obj/machinery))
 				if (istype(O, /obj/machinery/door))
