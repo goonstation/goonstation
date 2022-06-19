@@ -106,25 +106,6 @@ export const Apc = (props, context) => {
   };
   // ------------ End Events ------------
 
-  const swipeOrHostDisplay = () => {
-    if (setup_networkapc < 2 && !can_access_remotely) {
-      return (
-        <Box align="center" bold fill>Swipe ID card to {locked ? "unlock" : "lock"} interface</Box>
-      );
-    } else {
-      return (
-        <>
-          <Stack.Item align="center">
-            <Box>Host Connection:</Box>
-          </Stack.Item>
-          <Stack.Item align="center">
-            <Box>{host_connected ? <font color="green">OK</font> : <font color="red">NONE</font>}</Box>
-          </Stack.Item>
-        </>
-      );
-    }
-  };
-
   const mainStatusToText = () => {
     switch (main_status) {
       case MAIN_STATUS_GOOD:
@@ -147,55 +128,40 @@ export const Apc = (props, context) => {
     }
   };
 
-  const chargeModeDisplay = () => {
-    if (!hasPermission()) {
-      return (
-        <Stack.Item align="center">
-          <Box>{chargemode ? "Auto" : "Off"}</Box>
-        </Stack.Item>
-      );
-    } else {
-      return (
-        <>
-          <Stack.Item align="center">
-            {chargemode ? <Button content="Off" onClick={() => { onChargeModeChange(CHARGE_MODE_OFF); }} /> : <Box>Off</Box>}
-          </Stack.Item>
-          <Stack.Item align="center">
-            {chargemode ? <Box>Auto</Box> : <Button content="Auto" onClick={() => { onChargeModeChange(CHARGE_MODE_AUTO); }} />}
-          </Stack.Item>
-        </>
-      );
-    }
-  };
-
   const cellDisplay = () => {
     if (cell_present) {
       return (
-        <Stack>
-          <Stack.Item align="center">
-            <Box>Power Cell:</Box>
-          </Stack.Item>
-          <Stack.Item align="center">
-            <Box>{round(cell_percent)}%</Box>
-          </Stack.Item>
-          <Stack.Item align="center">
-            <Box>{"("}{chargingStatusToText()}{")"}</Box>
-          </Stack.Item>
-          {chargeModeDisplay()}
-        </Stack>
+        <>
+          <LabeledList.Item label="Charging" direction="row">
+            <Button content="Off"
+              onClick={() => { onChargeModeChange(CHARGE_MODE_OFF); }}
+              disabled={!hasPermission() && (chargemode !== CHARGE_MODE_OFF)}
+              selected={chargemode === CHARGE_MODE_OFF}
+            />
+            <Button content="Auto"
+              onClick={() => { onChargeModeChange(CHARGE_MODE_AUTO); }}
+              disabled={!hasPermission() && (chargemode !== CHARGE_MODE_AUTO)}
+              selected={chargemode === CHARGE_MODE_AUTO}
+            />
+            <font>{"("}{chargingStatusToText()}{")"}</font>
+          </LabeledList.Item>
+          <LabeledList.Item label="Cell Power">
+            <ProgressBar value={cell_percent}
+              minValue={0}
+              maxValue={100}
+              color={cell_percent < 20 ? "red" : cell_percent < 50 ? "yellow" : "green"} />
+          </LabeledList.Item>
+        </>
       );
     } else {
       return (
-        <Stack>
-          <Stack.Item align="center">
-            <Box>Power Cell:</Box>
-          </Stack.Item>
-          <Stack.Item align="center">
-            <Box>
-              <font color="red">Not Connected</font>
-            </Box>
-          </Stack.Item>
-        </Stack>
+        <LabeledList.Item label="Cell Power">
+          <ProgressBar value={cell_percent}
+            minValue={0}
+            maxValue={100}
+            color={cell_percent < 20 ? "red" : cell_percent < 50 ? "yellow" : "green"} />
+          <font color="red">Not Connected</font>
+        </LabeledList.Item>
       );
     }
   };
@@ -216,35 +182,39 @@ export const Apc = (props, context) => {
     return locked ? false : true;
   };
 
+  const isLocalAccess = () => {
+    return setup_networkapc < 2 && !can_access_remotely;
+  };
+
+  const hostConnectionDisplay = () => {
+    if (isLocalAccess()) {
+      return null;
+    } else {
+      return (
+        <LabeledList.Item label="Host Connection:">
+          <font color={host_connected ? "green" : "red"}>{host_connected ? "OK" : "NONE"}</font>
+        </LabeledList.Item>
+      );
+    }
+  };
+
   const renderPoweredAreaApc = () => {
     return (
       <Window title="Area Power Controller">
         <Window.Content>
           <Section title={"Area Power Controller (" + area_name + ")"}>
-            <Stack>
-              {swipeOrHostDisplay()}
-            </Stack>
-            <Divider />
-            <Stack>
-              <Stack.Item align="center">
-                <Box>Main Breaker</Box>
-              </Stack.Item>
-              <Stack.Item align="center">
-                {operating ? <Button content="off" disabled={!hasPermission()} onClick={() => { onOperatingChange(OFF); }} /> : <Box>off</Box>}
-              </Stack.Item>
-              <Stack.Item align="center">
-                {operating ? <Box>on</Box> : <Button content="on" disabled={!hasPermission()} onClick={() => { onOperatingChange(ON); }} />}
-              </Stack.Item>
-            </Stack>
-            <Stack>
-              <Stack.Item align="center">
-                <Box>External Power:</Box>
-              </Stack.Item>
-              <Stack.Item align="center">
+            {isLocalAccess() ? <Box align="center" bold fill>Swipe ID card to {locked ? "unlock" : "lock"} interface</Box> : null}
+            {isLocalAccess() ? <Divider /> : null}
+            <LabeledList>
+              <LabeledList.Item label="Main Breaker">
+                <Button content="Off" disabled={!hasPermission() && operating} onClick={() => { onOperatingChange(OFF); }} selected={!operating} />
+                <Button content="On" disabled={!hasPermission() && !operating} onClick={() => { onOperatingChange(ON); }} selected={operating} />
+              </LabeledList.Item>
+              {cellDisplay()}
+              <LabeledList.Item label="External Power">
                 <Box>{mainStatusToText()}</Box>
-              </Stack.Item>
-            </Stack>
-            {cellDisplay()}
+              </LabeledList.Item>
+            </LabeledList>
           </Section>
           <Section title="PowerChannel">
             <LabeledList>

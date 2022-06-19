@@ -39,6 +39,9 @@ export const PowerChannelSection = (props, context) => {
     equipment,
     lighting,
     environ,
+    lastused_equip,
+    lastused_light,
+    lastused_environ,
   } = data;
 
 
@@ -66,6 +69,19 @@ export const PowerChannelSection = (props, context) => {
     }
   };
 
+  const powerChannelWatts = () => {
+    switch (powerChannel) {
+      case POWER_CHANNEL_EQUIPMENT:
+        return lastused_equip;
+      case POWER_CHANNEL_LIGHTING:
+        return lastused_light;
+      case POWER_CHANNEL_ENVIRONMENTAL:
+        return lastused_environ;
+      default:
+        return 0;
+    }
+  };
+
   const powerChannelLabel = powerChannelToLabel(powerChannel);
 
   // ------------ Events ------------
@@ -88,9 +104,9 @@ export const PowerChannelSection = (props, context) => {
 
   const hasPermission = () => {
     if (is_ai || is_silicon || can_access_remotely) {
-      return aidisabled ? false : true;
+      return !aidisabled;
     }
-    return locked ? false : true;
+    return !locked;
   };
 
   const isCurrentStatus = (status) => {
@@ -106,24 +122,29 @@ export const PowerChannelSection = (props, context) => {
   };
 
   return (
-    <LabeledList.Item label={powerChannelLabel} direction="row" disabled={!hasPermission()}>
-      <Button content="Off"
-        disabled={!hasPermission() && !isCurrentStatus(POWER_CHANNEL_STATUS_OFF)}
-        onClick={() => { onPowerChannelStatusChange(POWER_CHANNEL_STATUS_OFF); }}
-        selected={isCurrentStatus(POWER_CHANNEL_STATUS_OFF)}
-      />
-      <Button content="On"
-        disabled={!hasPermission() && !isCurrentStatus(POWER_CHANNEL_STATUS_ON)}
-        onClick={() => { onPowerChannelStatusChange(POWER_CHANNEL_STATUS_ON); }}
-        selected={isCurrentStatus(POWER_CHANNEL_STATUS_ON)}
-      />
-      <Button content="Auto"
-        disabled={!hasPermission() && !(
-          isCurrentStatus(POWER_CHANNEL_STATUS_AUTO_OFF) || isCurrentStatus(POWER_CHANNEL_STATUS_AUTO_ON)
-        )}
-        onClick={() => { onPowerChannelStatusChange(POWER_CHANNEL_STATUS_AUTO_ON); }}
-        selected={isCurrentStatus(POWER_CHANNEL_STATUS_AUTO_OFF) || isCurrentStatus(POWER_CHANNEL_STATUS_AUTO_ON)}
-      />
+    <LabeledList.Item label={powerChannelLabel} direction="row">
+      <LabeledList>
+        <LabeledList.Item label={powerChannelWatts() + " W"} direction="row" disabled={!hasPermission()}>
+          <Button content="Off"
+            disabled={!hasPermission() && !isCurrentStatus(POWER_CHANNEL_STATUS_OFF)}
+            onClick={() => { onPowerChannelStatusChange(POWER_CHANNEL_STATUS_OFF); }}
+            selected={isCurrentStatus(POWER_CHANNEL_STATUS_OFF)}
+            align="center"
+          />
+          <Button content="On"
+            disabled={!hasPermission() && !isCurrentStatus(POWER_CHANNEL_STATUS_ON)}
+            onClick={() => { onPowerChannelStatusChange(POWER_CHANNEL_STATUS_ON); }}
+            selected={isCurrentStatus(POWER_CHANNEL_STATUS_ON)}
+          />
+          <Button content="Auto"
+            disabled={!hasPermission() && !(
+              isCurrentStatus(POWER_CHANNEL_STATUS_AUTO_OFF) || isCurrentStatus(POWER_CHANNEL_STATUS_AUTO_ON)
+            )}
+            onClick={() => { onPowerChannelStatusChange(POWER_CHANNEL_STATUS_AUTO_ON); }}
+            selected={isCurrentStatus(POWER_CHANNEL_STATUS_AUTO_OFF) || isCurrentStatus(POWER_CHANNEL_STATUS_AUTO_ON)}
+          />
+        </LabeledList.Item>
+      </LabeledList>
     </LabeledList.Item>
   );
 };
