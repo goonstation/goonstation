@@ -200,7 +200,7 @@ export const Apc = (props, context) => {
 
   const renderPoweredAreaApc = () => {
     return (
-      <Window title="Area Power Controller">
+      <Window title="Area Power Controller" width={400} height={data["wiresexposed"] ? 500 : 350}>
         <Window.Content>
           <Section title={"Area Power Controller (" + area_name + ")"}>
             {isLocalAccess() ? <Box align="center" bold fill>Swipe ID card to {locked ? "unlock" : "lock"} interface</Box> : null}
