@@ -1970,14 +1970,13 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	var/oldbloss = get_brute_damage()
 	var/oldfloss = get_burn_damage()
 	..()
-	SPAWN(0.1 SECONDS) //fix race condition
-		var/newbloss = get_brute_damage()
-		var/damage = ((newbloss - oldbloss) + (get_burn_damage() - oldfloss))
-		if (reagents)
-			reagents.physical_shock((newbloss - oldbloss) * 0.15)
+	var/newbloss = get_brute_damage()
+	var/damage = ((newbloss - oldbloss) + (get_burn_damage() - oldfloss))
+	if (reagents)
+		reagents.physical_shock((newbloss - oldbloss) * 0.15)
 
-		if ((damage > 0) || W.force)
-			src.was_harmed(M, W)
+	if ((damage > 0) || W.force)
+		src.was_harmed(M, W)
 
 
 /mob/living/shock(var/atom/origin, var/wattage, var/zone = "chest", var/stun_multiplier = 1, var/ignore_gloves = 0)

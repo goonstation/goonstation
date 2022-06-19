@@ -2275,9 +2275,7 @@
 /area/maintenance/westsolar)
 "aeF" = (
 /obj/rack,
-/obj/item/device/radio/intercom{
-	
-	},
+/obj/item/device/radio/intercom,
 /turf/simulated/floor,
 /area/crew_quarters/market)
 "aeG" = (
@@ -2623,9 +2621,7 @@
 /obj/stool/chair{
 	dir = 4
 	},
-/obj/item/device/radio/intercom{
-	
-	},
+/obj/item/device/radio/intercom,
 /turf/simulated/floor/plating,
 /area/maintenance/fsmaint)
 "afi" = (
@@ -3485,9 +3481,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/item/device/radio/intercom{
-	
-	},
+/obj/item/device/radio/intercom,
 /turf/simulated/floor,
 /area/janitor)
 "agO" = (
@@ -3529,9 +3523,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/fsmaint)
 "agU" = (
-/obj/item/device/radio/intercom{
-	
-	},
+/obj/item/device/radio/intercom,
 /turf/simulated/floor/plating,
 /area/maintenance/disposal)
 "agV" = (
@@ -4159,9 +4151,7 @@
 /obj/item/storage/mousetraps,
 /obj/item/storage/mousetraps,
 /obj/item/storage/mousetraps,
-/obj/item/device/radio/intercom{
-	
-	},
+/obj/item/device/radio/intercom,
 /turf/simulated/floor/grime,
 /area/janitor)
 "aig" = (
@@ -5886,9 +5876,7 @@
 /turf/simulated/floor,
 /area/quartermaster/storage)
 "alp" = (
-/obj/item/device/radio/intercom{
-	
-	},
+/obj/item/device/radio/intercom,
 /obj/machinery/light,
 /turf/simulated/floor,
 /area/quartermaster/storage)
@@ -8628,9 +8616,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/item/device/radio/intercom{
-	
-	},
+/obj/item/device/radio/intercom,
 /turf/simulated/floor/purple/side{
 	dir = 9
 	},
@@ -10790,9 +10776,7 @@
 	c_tag = "Lounge";
 	dir = 4
 	},
-/obj/item/device/radio/intercom{
-	
-	},
+/obj/item/device/radio/intercom,
 /turf/simulated/floor,
 /area/maintenance/east)
 "avn" = (
@@ -33305,8 +33289,8 @@
 /area/racing_track)
 "bli" = (
 /obj/overlay{
-	icon = 'doorint.dmi';
-	icon_state = "door_closed";
+	icon = 'Door1.dmi';
+	icon_state = "doorl";
 	name = "airlock"
 	},
 /turf/unsimulated/wall/other,

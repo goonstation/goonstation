@@ -29,7 +29,7 @@
 	New(loc, obj/item/bodypart)
 		..()
 		if (bodypart)
-			bodypart.name = "changeling's [initial(bodypart.name)]"
+			bodypart.name = "mutagenic [initial(bodypart.name)]"
 		src.original_bodypart = bodypart
 
 	say(message, involuntary = 0)

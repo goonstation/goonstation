@@ -2242,6 +2242,15 @@
 	comtype = /obj/item/storage/box/costume/mime/alt
 	desc = "This stuff will give you an edge in charades."
 
+/datum/commodity/costume/jester
+	comname = "Jester Costume Set."
+	comtype = /obj/item/storage/box/costume/jester
+	desc = "Travel back in time and become the medieval version of a clown. (Does not provide time travel)"
+	price = 300 //gotta work for it a little
+	baseprice = 100
+	upperfluc = 150
+	lowerfluc = -100
+
 /datum/commodity/backpack/breadpack
 	comname = "Bag-uette"
 	comtype = /obj/item/storage/backpack/breadpack

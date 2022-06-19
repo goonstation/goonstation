@@ -102,7 +102,7 @@
 			O.set_loc(get_turf(src))
 		. = ..()
 
-	Move(var/turf/NewLoc, direct)//Ewww!
+	Move(var/turf/NewLoc, direct) //Ewww!
 		last_loc = src.loc
 
 		src.closeContextActions()
@@ -115,22 +115,7 @@
 		if (!isturf(src.loc))
 			src.cancel_camera()
 
-		if (NewLoc)
-			src.set_dir(get_dir(loc, NewLoc))
-			src.set_loc(NewLoc) //src.set_loc(NewLoc) we don't wanna refresh last_range here and as fas as i can tell there's no reason we Need set_loc
-		else
-
-			src.set_dir(direct)
-			if((direct & NORTH) && src.y < world.maxy)
-				src.y++
-			if((direct & SOUTH) && src.y > 1)
-				src.y--
-			if((direct & EAST) && src.x < world.maxx)
-				src.x++
-			if((direct & WEST) && src.x > 1)
-				src.x--
-
-		//boutput(src,"[client.images.len]") //useful for debuggin that one bad bug
+		. = ..()
 
 		if(src.loc.z != 1)	//you may only move on the station z level!!!
 			src.cancel_camera()

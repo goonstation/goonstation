@@ -9785,9 +9785,7 @@
 /turf/simulated/floor,
 /area/crew_quarters/quarters)
 "atZ" = (
-/obj/item/device/radio/intercom{
-	
-	},
+/obj/item/device/radio/intercom,
 /obj/crate,
 /obj/item/clothing/under/princess,
 /turf/simulated/floor,
@@ -27982,9 +27980,7 @@
 /turf/simulated/floor,
 /area/crew_quarters/juryroom)
 "beu" = (
-/obj/item/device/radio/intercom{
-	
-	},
+/obj/item/device/radio/intercom,
 /turf/simulated/floor,
 /area/crew_quarters/juryroom)
 "bev" = (
@@ -28318,9 +28314,7 @@
 /area/janitor)
 "bfe" = (
 /obj/stool,
-/obj/item/device/radio/intercom{
-	
-	},
+/obj/item/device/radio/intercom,
 /obj/item/chem_grenade/cleaner,
 /obj/item/chem_grenade/cleaner,
 /obj/item/chem_grenade/cleaner,
@@ -31489,9 +31483,7 @@
 	dir = 1
 	},
 /obj/item/device/radio/signaler,
-/obj/item/device/radio/intercom{
-	
-	},
+/obj/item/device/radio/intercom,
 /obj/item/device/radio/signaler{
 	pixel_x = 2;
 	pixel_y = -2
@@ -36203,8 +36195,8 @@
 /area/racing_track)
 "bwb" = (
 /obj/overlay{
-	icon = 'doorint.dmi';
-	icon_state = "door_closed";
+	icon = 'Door1.dmi';
+	icon_state = "doorl";
 	name = "airlock"
 	},
 /turf/unsimulated/wall/other,

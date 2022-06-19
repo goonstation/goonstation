@@ -56,6 +56,8 @@
 	var/turf_flags = 0
 	var/list/list/datum/disjoint_turf/connections
 
+	var/tmp/image/disposal_image = null // 'ghost' image of disposal pipes originally at these coords, visible with a T-ray scanner.
+
 	disposing() // DOES NOT GET CALLED ON TURFS!!!
 		SHOULD_NOT_OVERRIDE(TRUE)
 		SHOULD_CALL_PARENT(FALSE)
@@ -93,15 +95,6 @@
 		F["[path].pixel_x"] >> pixel_x
 		F["[path].pixel_y"] >> pixel_y
 		return DESERIALIZE_OK
-
-	proc/canpass()
-		if( density )
-			return 0
-		for( var/thing in contents )
-			var/atom/A = thing
-			if( A.density && !ismob(A) )
-				return 0
-		return 1
 
 	proc/can_crossed_by(atom/movable/AM)
 		if(!src.Cross(AM))
@@ -157,7 +150,8 @@
 	animate_movement = NO_STEPS // fix for things gliding around all weird
 
 	Move()
-		return 0
+		SHOULD_CALL_PARENT(FALSE)
+		return FALSE
 
 /obj/overlay/tile_gas_effect
 	name = ""
@@ -166,7 +160,8 @@
 	mouse_opacity = 0
 
 	Move()
-		return 0
+		SHOULD_CALL_PARENT(FALSE)
+		return FALSE
 
 /turf/unsimulated/meteorhit(obj/meteor as obj)
 	return
@@ -359,7 +354,8 @@ proc/generate_space_color()
 	AM.movement_newloc = newloc
 	. = ..()
 
-/turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
+/turf/Enter(atom/movable/mover, atom/forget)
+
 	if (!mover)
 		return TRUE
 
@@ -560,6 +556,8 @@ proc/generate_space_color()
 	var/old_aiimage = src.aiImage
 	var/old_cameras = src.cameras
 
+	var/image/old_disposal_image = src.disposal_image
+
 #ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
 	var/old_process_cell_operations = src.process_cell_operations
 #endif
@@ -639,6 +637,8 @@ proc/generate_space_color()
 
 	new_turf.aiImage = old_aiimage
 	new_turf.cameras = old_cameras
+
+	new_turf.disposal_image = old_disposal_image
 
 #ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
 	new_turf.process_cell_operations = old_process_cell_operations

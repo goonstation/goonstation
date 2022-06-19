@@ -2,7 +2,7 @@
 /obj/item/sticker
 	name = "sticker"
 	desc = "You stick it on something, then that thing is even better, because it has a little sparkly unicorn stuck to it, or whatever."
-	flags = FPRINT | TABLEPASS | CLICK_DELAY_IN_CONTENTS | USEDELAY
+	flags = FPRINT | TABLEPASS | CLICK_DELAY_IN_CONTENTS | USEDELAY | NOSPLASH
 	event_handler_flags = HANDLE_STICKER | USE_FLUID_ENTER
 	icon = 'icons/misc/stickers.dmi'
 	icon_state = "bounds"
@@ -435,7 +435,9 @@
 	attack_self(mob/user as mob)
 		var/choice = "Set radio"
 		if (src.has_camera)
-			choice = alert(user, "What would you like to do with [src]?",,"Set radio", "Set camera")
+			choice = tgui_alert(user, "What would you like to do with [src]?", "Configure sticker", list("Set radio", "Set camera"))
+		if (!choice)
+			return
 		if (choice == "Set radio")
 			src.set_internal_radio(user)
 		else

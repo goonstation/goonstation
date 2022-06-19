@@ -722,7 +722,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 
 		if(M == I)
 			boutput(M, "<span class='alert'>You feel utterly strengthened in your resolve! You are the most important person in the universe!</span>")
-			alert(M, "You feel utterly strengthened in your resolve! You are the most important person in the universe!", "YOU ARE REALY GREAT!!")
+			tgui_alert(M, "You feel utterly strengthened in your resolve! You are the most important person in the universe!", "YOU ARE REALY GREAT!!")
 			return
 
 		if (M.mind && ticker.mode)
@@ -2096,7 +2096,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_STAB
 	casing = /obj/item/casing/small
-	icon_turf_hit = "bhole-small"
+	impact_image_state = "bhole-small"
 	shot_number = 1
 	//silentshot = 1
 	var/obj/item/implant/my_implant = null

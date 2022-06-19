@@ -136,12 +136,13 @@ Contents:
 	limit = 0
 	wages = 0
 //	slot_belt = /obj/item/katana_sheath
-	slot_jump = /obj/item/clothing/under/gimmick/hakama/random
-	slot_head = /obj/item/clothing/head/bandana/random_color
-	slot_foot = /obj/item/clothing/shoes/sandal
-	slot_rhan = /obj/item/katana/self_destructing
-	slot_lhan = /obj/item/dojohammer
-	slot_back = null
+	slot_jump = list(/obj/item/clothing/under/gimmick/hakama/random)
+	slot_head = list(/obj/item/clothing/head/bandana/random_color)
+	slot_foot = list(/obj/item/clothing/shoes/sandal/wizard)
+	slot_rhan = null
+	slot_lhan = list(/obj/item/dojohammer)
+	slot_belt = list(/obj/item/katana_sheath/reverse)
+	slot_back = list(/obj/item/storage/backpack/randoseru)
 	slot_card = null
 	slot_ears = null
 

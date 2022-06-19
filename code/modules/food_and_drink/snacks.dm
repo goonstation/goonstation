@@ -719,8 +719,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_DINNER
 
 /obj/item/reagent_containers/food/snacks/cereal_box
-	name = "cereal box -'Pope Crunch'"
-	desc = "A sugary breakfast cereal with a papal mascot. Each 1/8 cup serving is an important part of a balanced breakfast!"
+	name = "cereal box -'Cookie Swirlies'"
+	desc = "A breakfast cereal made up of tiny cookies. Now with 10% less salmonella!"
 	icon_state = "cereal_box"
 	bites_left = 11
 	real_name = "cereal"
@@ -740,6 +740,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 
 		//Hello, here is a dumb hack to get around "you take a bite of cerealbox-'Pope Crunch'!"
 		// apparently there was a runtime error here, i'm guessing someone edited a cereal box's name?
+		//Pope Crunch is now Cookie Cereal
 		var/name_len = length(src.name)
 		if (name_len > 14)
 			var/tempname = src.name
@@ -1440,17 +1441,17 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			name = "robust donut"
 			desc = "It's like an energy bar, but in donut form! Contains some chemicals known for partial stun time reduction and boosted stamina regeneration."
 			icon_state = "donut4"
-			bites_left = 6
-			initial_volume = 48
-			initial_reagents = list("sugar"=12,"synaptizine"=12,"epinephrine"=12,"salicylic_acid"=12)
+			bites_left = 4
+			initial_volume = 36
+			initial_reagents = list("sugar"=12,"synaptizine"=12,"epinephrine"=12)
 
 		robusted
 			name = "robusted donut"
 			desc = "A donut for those harsh moments. Contains a mix of chemicals for cardiac emergency recovery and any minor trauma that accompanies it."
 			icon_state = "donut5"
-			bites_left = 6
-			initial_volume = 48
-			initial_reagents = list("salbutamol"=12,"epinephrine"=12,"saline"=12,"salicylic_acid"=12)
+			bites_left = 4
+			initial_volume = 40
+			initial_reagents = list("salbutamol"=12,"epinephrine"=12,"saline"=16)
 
 		random
 			New()
@@ -2744,6 +2745,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	bites_left = 2
 	heal_amt = 2
 	food_color = "#cd692b"
+	initial_volume = 15
 	food_effects = list("food_brute")
 	meal_time_flags = MEAL_TIME_SNACK | MEAL_TIME_BREAKFAST
 
@@ -2755,6 +2757,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	bites_left = 2
 	heal_amt = 2
 	food_color = "#cd692b"
+	initial_volume = 15
 	food_effects = list("food_brute","food_energized")
 	meal_time_flags = MEAL_TIME_SNACK | MEAL_TIME_BREAKFAST
 
@@ -2766,6 +2769,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	bites_left = 2
 	heal_amt = 2
 	food_color = "#40C100"
+	initial_volume = 15
 	food_effects = list("food_brute","food_refreshed")
 	meal_time_flags = MEAL_TIME_SNACK | MEAL_TIME_BREAKFAST
 
@@ -2777,6 +2781,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	bites_left = 2
 	heal_amt = 2
 	food_color = "#CC0000"
+	initial_volume = 15
 	food_effects = list("food_burn","food_refreshed")
 	meal_time_flags = MEAL_TIME_SNACK | MEAL_TIME_BREAKFAST
 
@@ -2788,6 +2793,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	bites_left = 2
 	heal_amt = 2
 	food_color = "#0000FF"
+	initial_volume = 15
 	food_effects = list("food_burn","food_energized")
 	meal_time_flags = MEAL_TIME_SNACK | MEAL_TIME_BREAKFAST
 

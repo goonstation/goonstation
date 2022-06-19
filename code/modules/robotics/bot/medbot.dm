@@ -30,7 +30,7 @@
 	var/last_found = 0
 	/// Time after injecting someone before they'll try to inject them again. Encourages them to spread the love (and poison). Hitting the bot overrides the cooldown
 	var/last_patient_cooldown = 5 SECONDS
-	var/point_cooldown = 1 SECOND //Don't spam your pointer-finger
+	var/point_cooldown = 10 SECONDS //Don't spam your pointer-finger
 	var/currently_healing = 0
 	var/injection_amount = 10 //How much reagent do we inject at a time?
 	var/heal_threshold = 15 //Start healing when they have this much damage in a category
@@ -424,7 +424,7 @@
 		if (src.assess_patient(C))
 			src.patient = C
 			src.doing_something = 1
-			if (ON_COOLDOWN(src, "[MEDBOT_POINT_COOLDOWN]-[ckey(src.patient?.name)]", src.point_cooldown)) //Don't spam these messages!
+			if (!ON_COOLDOWN(src, "[MEDBOT_POINT_COOLDOWN]-[ckey(src.patient?.name)]", src.point_cooldown)) //Don't spam these messages!
 				src.point(src.patient, 1)
 				var/message = pick("Hey, you! Hold on, I'm coming.","Wait! I want to help!","You appear to be injured!","Don't worry, I'm trained for this!")
 				src.speak(message)

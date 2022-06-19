@@ -421,7 +421,7 @@
 				else
 					return pick(src.c_default)
 		src.in_use = 1
-		. = input(user, "What do you want to write?", null, null) as null|anything in ((isghostdrone(user) || !user.literate) ? src.c_symbol : (list("queue input") + src.c_default + src.c_symbol))
+		. = tgui_input_list(user, "What do you want to write?", "Write something", (isghostdrone(user) || !user.literate) ? src.c_symbol : (list("queue input") + src.c_default + src.c_symbol))
 		if(. == "queue input")
 			var/inp = input(user, "Type letters you want to write.", "Crayon Leter Queue", null)
 			inp = uppertext(inp)
@@ -681,7 +681,7 @@
 	desc = "Make things seem more important than they really are with the hand labeler!<br/>Can also name your fancy new area by naming the fancy new APC you created for it."
 	var/label = null
 	var/labels_left = 10
-	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
+	flags = FPRINT | TABLEPASS | SUPPRESSATTACK | ONBELT
 	rand_pos = 1
 
 	get_desc()
@@ -756,7 +756,7 @@
 	proc/Label(var/atom/A, var/mob/user, var/no_message = 0)
 		var/obj/machinery/power/apc/apc = A
 		if(istype(A,/obj/machinery/power/apc) && apc.area.type == /area/built_zone)
-			if(alert("Would you like to name this area, or just label the APC?", "Area Naming", "Label the APC", "Name the Area") == "Name the Area")
+			if(tgui_alert(user, "Would you like to name this area, or just label the APC?", "Area Naming", list("Label the APC", "Name the Area")) == "Name the Area")
 				var/area/built_zone/ba = apc.area
 				ba.SetName(src.label)
 				return

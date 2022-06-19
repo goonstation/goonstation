@@ -50,6 +50,7 @@
 	c_flags = NOSLIP
 	kick_bonus = 6
 	step_sound = "step_plating"
+	compatible_species = list("cow", "human")
 	step_priority = STEP_PRIORITY_LOW
 	item_function_flags = IMMUNE_TO_ACID
 

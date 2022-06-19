@@ -1202,3 +1202,12 @@
 		desc = "Shoot this enemy"
 		icon_state = "flock_shoot"
 		task_type = /datum/aiTask/timed/targeted/flockdrone_shoot/targetable
+
+	control
+		name = "Control"
+		desc = "Assume direct control of this endpoint"
+		icon_state = "flock_control"
+
+		execute(mob/living/critter/flock/drone/target, mob/living/intangible/flock/user)
+			if(user.flock && target.flock == user.flock)
+				target.take_control(user)

@@ -2779,7 +2779,7 @@
 /area/wizard_station)
 "gb" = (
 /obj/table,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor5"
 	},
@@ -5005,7 +5005,7 @@
 /obj/table/woodentable/single{
 	name = "antique table"
 	},
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /turf/unsimulated/floor/carpet/grime,
 /area/crypt/sigma/crew)
 "lz" = (
@@ -5974,7 +5974,7 @@
 /obj/table/woodentable/single{
 	name = "antique table"
 	},
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /turf/unsimulated/floor/carpet/grime,
 /area/crypt/sigma/rd)
 "nw" = (

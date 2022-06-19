@@ -125,6 +125,7 @@
 				my_ghost.z = 1
 
 		observers -= src
+		my_ghost.show_antag_popup("changeling_leave")
 		qdel(src)
 
 	proc/set_owner(var/datum/abilityHolder/changeling/new_owner)

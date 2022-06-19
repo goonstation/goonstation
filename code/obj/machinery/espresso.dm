@@ -40,9 +40,9 @@
 			src.add_fingerprint(user)
 			if (src.cupinside == 1) //freaking spacing errors made me waste hours on this
 				if(!(status & (NOPOWER|BROKEN)))
-					switch(alert("What would you like to do with [src]?",,"Make espresso","Remove cup","Nothing"))
+					switch(tgui_alert(user, "What would you like to do with [src]?", "Espresso machine", list("Make espresso", "Remove cup", "Nothing")))
 						if ("Make espresso")
-							var/drink_choice = input(user, "What kind of espresso do you want to make?", "Selection") as null|anything in list("Espresso","Latte","Mocha","Cappuchino","Americano", "Decaf", "Flat White")
+							var/drink_choice = tgui_input_list(user, "What kind of espresso do you want to make?", "Selection", list("Americano", "Cappuchino", "Decaf", "Espresso", "Flat White", "Latte", "Mocha"))
 							if (!drink_choice)
 								return
 							switch (drink_choice)  //finds cup in contents and adds chosen drink to it
@@ -180,7 +180,10 @@
 			src.add_fingerprint(user)
 			if (src.my_carafe) //freaking spacing errors made me waste hours on this
 				if (!(status & (NOPOWER|BROKEN)))
-					switch (alert("What would you like to do with [src]?",,"Brew coffee","Remove carafe","Nothing"))
+					var/choice = tgui_alert(user, "What would you like to do with [src]?", "Coffeemaker", list("Brew coffee", "Remove carafe", "Nothing"))
+					if (!choice || choice == "Nothing")
+						return
+					switch (choice)
 						if ("Brew coffee")
 							for(var/obj/item/reagent_containers/food/drinks/carafe/C in src.contents)
 								C.reagents.add_reagent("coffee_fresh",100)
@@ -196,8 +199,6 @@
 							src.my_carafe = null
 							user.show_text("You have removed the [src.carafe_name] from the [src].")
 							src.update()
-						if ("Nothing")
-							return
 			else return ..()
 
 	ex_act(severity)

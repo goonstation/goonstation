@@ -84,7 +84,7 @@
 
 /area/upper_arctic/exterior/surface
 	name = "Ice Moon Surface"
-	icon_state = "white"
+	icon_state = "purple"
 	filler_turf = "/turf/unsimulated/floor/arctic/abyss"
 	skip_sims = 1
 	sims_score = 30

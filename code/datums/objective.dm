@@ -684,6 +684,7 @@ proc/create_fluff(datum/mind/target)
 		return 1
 
 /datum/objective/specialist/absorb
+	medal_name = "Many names, many faces"
 	var/absorb_count
 
 	set_up()
@@ -789,6 +790,7 @@ proc/create_fluff(datum/mind/target)
 		return 1
 
 /datum/objective/specialist/blob
+	medal_name = "Blob everywhere!"
 	var/blobtiletarget = 500
 
 	set_up()
@@ -973,6 +975,7 @@ proc/create_fluff(datum/mind/target)
 		return !failed
 
 /datum/objective/specialist/werewolf/feed
+	medal_name = "Good feasting"
 	var/feed_count = 0
 	var/target_feed_count
 	var/list/mob/mobs_fed_on = list() // Stores bioHolder.Uid of previous victims, so we can't feed on the same person multiple times.

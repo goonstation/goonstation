@@ -67,6 +67,7 @@
 				src.z = 1
 			return
 
+		// Since we can walk through walls, just move regardless
 		if(!isturf(src.loc))
 			src.set_loc(get_turf(src))
 		if(NewLoc)
@@ -80,6 +81,8 @@
 			src.x++
 		if((direct & WEST) && src.x > 1)
 			src.x--
+
+		return ..()
 
 /mob/living/intangible/change_eye_blurry(var/amount, var/cap = 0)
 	if (amount < 0)

@@ -618,13 +618,13 @@ var/list/headset_channel_lookup
 	. = ..()
 	if ((in_interact_range(src, user) || src.loc == user))
 		if (src.b_stat)
-			. += "<span class='notice'>\the [src] can be attached and modified!</span>"
+			. += "<br><span class='notice'>[src] can be attached and modified!</span>"
 		else
-			. += "<span class='notice'>\the [src] can not be modified or attached!</span>"
+			. += "<br><span class='notice'>[src] can not be modified or attached!</span>"
 	if (istype(src.secure_frequencies) && length(src.secure_frequencies))
-		. += "Supplementary Channels:"
+		. += "<br><b>Supplementary channels:</b>"
 		for (var/sayToken in src.secure_frequencies) //Most convoluted string of the year award 2013
-			. += "[ headset_channel_lookup["[src.secure_frequencies["[sayToken]"]]"] ? headset_channel_lookup["[src.secure_frequencies["[sayToken]"]]"] : "???" ]: \[[format_frequency(src.secure_frequencies["[sayToken]"])]] (Activator: <b>[sayToken]</b>)"
+			. += "<br>[ headset_channel_lookup["[src.secure_frequencies["[sayToken]"]]"] ? headset_channel_lookup["[src.secure_frequencies["[sayToken]"]]"] : "???" ]: \[[format_frequency(src.secure_frequencies["[sayToken]"])]] (Activator: <b>[sayToken]</b>)"
 
 /obj/item/device/radio/attackby(obj/item/W, mob/user)
 	src.add_dialog(user)

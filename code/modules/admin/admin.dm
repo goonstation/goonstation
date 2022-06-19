@@ -1167,6 +1167,13 @@ var/global/noir = 0
 				usr.client.cmd_admin_cluwnegib(M)
 			else
 				tgui_alert(usr,"You need to be at least a Primary Admin to cluwne gib a dude.")
+		if("flockgib")
+			if( src.level >= LEVEL_PA )
+				var/mob/M = locate(href_list["target"])
+				if (!M) return
+				usr.client.cmd_admin_flockgib(M)
+			else
+				tgui_alert(usr,"You need to be at least a Primary Admin to flock gib a dude.")
 		if ("tysongib")
 			if( src.level >= LEVEL_PA )
 				var/mob/M = locate(href_list["target"])

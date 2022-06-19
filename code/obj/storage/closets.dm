@@ -14,6 +14,7 @@
 	New()
 		. = ..()
 		START_TRACKING
+		src.AddComponent(/datum/component/bullet_holes, 10, 0)
 
 	disposing()
 		. = ..()

@@ -286,6 +286,15 @@ obj/decal/fakeobjects/teleport_pad
 	icon_state = "door0"
 	anchored = 1
 
+/obj/decal/fakeobjects/airlock_broken
+	name = "rusted airlock"
+	desc = "Rust has rendered this airlock useless."
+	icon = 'icons/obj/doors/Door1.dmi';
+	icon_state = "doorl";
+	anchored = 1
+	density = 1
+	opacity = 1
+
 /obj/decal/fakeobjects/lighttube_broken
 	name = "shattered light tube"
 	desc = "Something has broken this light."

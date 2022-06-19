@@ -10,8 +10,8 @@
 //As long as this is working, solar panels on same powernet will track automatically
 
 /obj/machinery/power/tracker
-	name = "solar tracker"
-	desc = "A solar directional tracker."
+	name = "Houyi stellar tracker"
+	desc = "The Xiang-Giesel model '后羿' star tracker, used to set the alignment of accompanying photo-electric generator panels."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "tracker"
 	anchored = 1
@@ -67,8 +67,8 @@
 /////////////////////////////////////////////// Solar panel /////////////////////////////////////////////////////
 
 /obj/machinery/power/solar
-	name = "solar panel"
-	desc = "A solar electrical generator."
+	name = "Kuafu photoelectric panel"
+	desc = "The Xiang-Giesel model '夸父' photo electrical generator. commonly known as a solar panel."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "solar_panel"
 	anchored = 1
@@ -215,8 +215,8 @@
 /////////////////////////////////////////////////// Solar control computer /////////////////////////////////////////
 
 /obj/machinery/computer/solar_control
-	name = "solar panel control"
-	desc = "A controller for solar panel arrays."
+	name = "Xihe photo-electric generator controller"
+	desc = "The Xiang-Giesel model '羲和' controller for articulated photo-electric panel arrays."
 	icon_state = "solar"
 	circuit_type = /obj/item/circuitboard/solar_control
 	can_reconnect = TRUE
@@ -304,7 +304,7 @@
 	add_fingerprint(user)
 	src.add_dialog(user)
 
-	var/t = "<TT><B>Solar Generator Control</B><HR><PRE>"
+	var/t = "<TT><B>Xiang-Giesel Photo-Electric Generator Control</B><HR><PRE>"
 	t += "Generated power : [round(lastgen)] W<BR><BR>"
 	t += "<B>Orientation</B>: [rate_control(src,"cdir","[cdir]&deg",1,15)] ([angle2text(cdir)])<BR><BR><BR>"
 

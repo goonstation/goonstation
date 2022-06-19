@@ -1367,10 +1367,6 @@
 	if(!isliving(usr)) return
 	src.show_inv(usr)
 
-/mob/living/carbon/human/verb/fuck()
-	set hidden = 1
-	alert("Go play HellMOO if you wanna do that.")
-
 // called when something steps onto a human
 // this could be made more general, but for now just handle mulebot
 /mob/living/carbon/human/Crossed(atom/movable/AM)
@@ -1850,12 +1846,12 @@
 		src.update_clothing()
 
 	if (W && W == src.r_hand)
-		src.r_hand = null
 		W.dropped(src)
+		src.r_hand = null
 		src.update_inhands()
 	if (W && W == src.l_hand)
-		src.l_hand = null
 		W.dropped(src)
+		src.l_hand = null
 		src.update_inhands()
 
 /mob/living/carbon/human/update_equipped_modifiers() // A bruteforce approach, for things like the garrote that like to change their modifier while equipped
@@ -3038,7 +3034,7 @@
 	if(ispath(mutantrace_type, /datum/mutantrace) )	//Set a new mutantrace only if passed one
 		src.mutantrace = new mutantrace_type(src)
 		src.mutantrace.MutateMutant(src, "set")
-
+		src.mutantrace.on_attach() // Mutant race initalization, to avoid issues with abstract representation in New()
 		. = 1
 
 	if(.)
