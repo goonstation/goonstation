@@ -632,6 +632,7 @@ var/flock_signal_unleashed = FALSE
 
 // made into a global proc so a reagent can use it
 // simple enough: if object path matches key, replace with instance of value
+// if value is null, just delete object
 // !!!! priority is determined by list order !!!!
 // if you have a subclass, it MUST go first in the list, or the first type that matches will take priority (ie, the superclass)
 // see /obj/machinery/light/small/floor and /obj/machinery/light for examples of this
