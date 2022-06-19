@@ -1532,11 +1532,7 @@
 		src.recently_harvested = 0
 		UpdateIcon()
 		update_name()
-
-		if(usr && ishellbanned(usr)) //Haw haw
-			growth_rate = 1
-		else
-			growth_rate = 2
+		growth_rate = 2
 
 	proc/HYPkillplant()
 		// Simple proc to kill the plant without clearing the plantpot out altogether.

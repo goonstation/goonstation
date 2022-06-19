@@ -31342,10 +31342,10 @@
 	},
 /area/station/turret_protected/ai)
 "iJP" = (
-/obj/machinery/manufacturer/general,
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/machinery/manufacturer/science,
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "iKa" = (

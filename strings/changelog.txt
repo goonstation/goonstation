@@ -1,4 +1,23 @@
 
+(t)sat jun 18 22
+(u)DimWhat
+(p)9206
+(e)🗺🎨|mapping, sprites
+(+)Replaced the fabricator in science with a unique variant.
+(u)Mr. Moriarty
+(p)9191
+(e)🎨|sprites
+(+)Resprited 40mm smoke shells, 40mm paint marker rounds, 40mm HE pod and pod seeking shells, 40mm HEDP shells, and 40mm HE shells.
+(u)LeahTheTech
+(p)9161
+(e)🗺⚖|mapping, balance
+(*)Security cameras in AI core/upload can now only be used by the AI.
+(u)TTerc
+(+)Personal lockers no longer require you to use the ID card specifically on them to claim/lock/unlock them. You just need a valid worn ID on yourself.
+(u)Ilysen
+(p)9207
+(e)|
+(+)The Matter Eater mutation now correctly deletes the item that you're eating.
 (t)fri jun 17 22
 (u)aloe
 (*)T-ray scanners can now see where pipes were at the start of the shift. Should make reconstruction a bit easier.

@@ -149,7 +149,6 @@
 		if (iscarbon(victim))
 			var/mob/living/M = victim
 			obs = new(src.owner)
-			obs.corpse = null
 
 			//Set up name and vision
 			obs.name = M.name

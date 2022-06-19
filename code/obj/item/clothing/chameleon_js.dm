@@ -1420,6 +1420,7 @@
 	uses_multiple_icon_states = 1
 	var/list/clothing_choices = list()
 	spawn_contents = list()
+	can_hold = list(/obj/item/storage/belt/chameleon)
 
 	New()
 		..()

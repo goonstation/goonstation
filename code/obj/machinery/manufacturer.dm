@@ -2175,6 +2175,34 @@
 	hidden = list(/datum/manufacture/cyberheart,
 	/datum/manufacture/cybereye)
 
+/obj/machinery/manufacturer/science
+	name = "science fabricator"
+	supplemental_desc = "This one produces science equipment for experiments as well as expeditions."
+	icon_state = "fab-sci"
+	icon_base = "sci"
+	free_resource_amt = 2
+	free_resources = list(/obj/item/material_piece/steel,
+		/obj/item/material_piece/copper,
+		/obj/item/material_piece/glass,
+		/obj/item/material_piece/cloth/cottonfabric)
+	available = list(
+		/datum/manufacture/flashlight,
+		/datum/manufacture/welder,
+		/datum/manufacture/patch,
+		/datum/manufacture/atmos_can,
+		/datum/manufacture/biosuit,
+		/datum/manufacture/labcoat,
+		/datum/manufacture/jumpsuit_white,
+		/datum/manufacture/patient_gown,
+		/datum/manufacture/blindfold,
+		/datum/manufacture/muzzle,
+		/datum/manufacture/gasmask,
+		/datum/manufacture/latex_gloves,
+		/datum/manufacture/shoes_white,
+		/datum/manufacture/rods2,
+		/datum/manufacture/metal,
+		/datum/manufacture/glass)
+
 /obj/machinery/manufacturer/mining
 	name = "mining fabricator"
 	supplemental_desc = "This one produces mining equipment like concussive charges and powered tools."

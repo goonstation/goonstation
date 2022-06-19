@@ -90,14 +90,13 @@
 
 		return 0
 
-	//Really stolen from gang, But this basically just picks everyone who is ready and not hellbanned or jobbanned from Command or Captain
+	//Really stolen from gang, But this basically just picks everyone who is ready and not jobbanned from Command or Captain
 	//priority values 1=favorite,2=medium,3=low job priorities
 	proc/get_possible_commanders(var/priority)
 		var/list/candidates = list()
 		for(var/datum/mind/mind in members)
 			var/mob/new_player/M = mind.current
 			if (!istype(M)) continue
-			if (ishellbanned(M)) continue
 			if(jobban_isbanned(M, "Captain")) continue //If you can't captain a Space Station, you probably can't command a starship either...
 			if(jobban_isbanned(M, "NanoTrasen Commander")) continue
 			if(jobban_isbanned(M, "Syndicate Commander")) continue
