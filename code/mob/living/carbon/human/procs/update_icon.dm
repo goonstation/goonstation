@@ -84,7 +84,7 @@
 
 		if (src.w_uniform.blood_DNA)
 			blood_image.icon_state =  "uniformblood_c"
-			blood_image.layer = MOB_CLOTHING_LAYER+0.1
+			blood_image.layer = src.w_uniform.w_layer + 0.1
 			UpdateOverlays(blood_image, "suit_image_blood")
 		else
 			UpdateOverlays(null, "suit_image_blood")
@@ -149,7 +149,7 @@
 	// same as above but for shoes/bare feet
 	if (islist(src.tracked_blood) && !src.shoes)
 
-		blood_image.layer = MOB_CLOTHING_LAYER+0.1
+		blood_image.layer = MOB_CLOTHING_LAYER + 0.1 // idk what layer exactly this is supposed to be on TODO figure that out
 		if (src.limbs && src.limbs.l_leg && src.limbs.l_leg.accepts_normal_human_overlays)
 			blood_image.icon_state = "left_shoeblood_c"
 			UpdateOverlays(blood_image, "bloody_feet_l")
@@ -283,7 +283,7 @@
 			UpdateOverlays(null, "wear_shoes")
 
 		if (src.shoes.blood_DNA)
-			blood_image.layer = MOB_CLOTHING_LAYER+0.1
+			blood_image.layer = src.shoes.layer + 0.1
 			if (src.limbs && src.limbs.l_leg && !.)
 				blood_image.icon_state = "left_shoeblood_c"
 				UpdateOverlays(blood_image, "bloody_shoes_l")
