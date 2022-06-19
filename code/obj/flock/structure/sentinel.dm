@@ -16,6 +16,12 @@
 	var/charge_status = NOT_CHARGED
 	/// 0-100 charge percent
 	var/charge = 0
+	/// charge gained per tick
+	var/charge_per_tick = 20
+	/// Turret range in tiles
+	var/range = 4
+	/// The wattage of the arcflash
+	var/wattage = 6000
 	var/powered = FALSE
 
 
@@ -41,7 +47,7 @@
 	return {"<span class='bold'>Status:</span> [charge_status == 1 ? "charging" : (charge_status == 2 ? "charged" : "idle")].
 	<br><span class='bold'>Charge Percentage:</span> [charge]%."}
 
-/obj/flock_structure/sentinel/process()
+/obj/flock_structure/sentinel/process(mult)
 	updatefilter()
 
 	if(!src.flock)//if it dont exist it off
@@ -62,22 +68,22 @@
 				charge_status = CHARGING//if its losing charge and suddenly theres energy available begin charging
 			if(CHARGING)
 				if(icon_state != "sentinelon") icon_state = "sentinelon"//forgive me
-				src.charge(5)
+				src.charge(charge_per_tick * mult)
 			if(CHARGED)
 				var/mob/loopmob = null
 				var/list/hit = list()
 				var/mob/mobtohit = null
-				for(loopmob in range(5,src.loc))
+				for(loopmob in range(src.range,src.loc))
 					if(!isflockmob(loopmob) && src.flock?.isEnemy(loopmob) && isturf(loopmob.loc) && isalive(loopmob) && !isintangible(loopmob))
 						mobtohit = loopmob
 						break//found target
 				if(!mobtohit) return//if no target stop
-				arcFlash(src, mobtohit, 10000)
+				arcFlash(src, mobtohit, wattage, 1.1)
 				hit += mobtohit
 				for(var/i in 1 to rand(5,6))//this facilitates chaining. legally distinct from the loop above
 					for(var/mob/nearbymob in range(2, mobtohit))//todo: optimize(?) this.
 						if(nearbymob != mobtohit && !isflockmob(nearbymob) && !(nearbymob in hit) && isturf(nearbymob.loc) && src.flock?.isEnemy(nearbymob) && isalive(loopmob) && !isintangible(loopmob))
-							arcFlash(mobtohit, nearbymob, 10000)
+							arcFlash(mobtohit, nearbymob, wattage/1.5, 1.1)
 							hit += nearbymob
 							mobtohit = nearbymob
 				hit.len = 0//clean up

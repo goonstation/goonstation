@@ -80,7 +80,7 @@
 				if(preferences.traitPreferences.isValid())
 					preferences.ShowChoices(usr)
 				else
-					alert(usr, "Invalid trait setup. Please make sure you have 0 or more points available.")
+					tgui_alert(usr, "Invalid trait setup. Please make sure you have 0 or more points available.", "Error")
 					preferences.traitPreferences.showTraits(usr)
 
 	proc

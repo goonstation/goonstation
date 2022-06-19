@@ -262,7 +262,7 @@
 	dissipation_rate = 5
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
-	icon_turf_hit = "bhole"
+	impact_image_state = "bhole"
 	implanted = null
 	casing = null
 

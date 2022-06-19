@@ -14,7 +14,6 @@
 	var/color_b = 1
 
 	var/protective_temperature = 0
-	var/permeability_coefficient = 1 // for chemicals/diseases
 	var/magical = 0 // for wizard item spell power check
 	var/chemicalprotection = 0 //chemsuit and chemhood in combination grant this
 

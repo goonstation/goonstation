@@ -177,7 +177,7 @@ var/datum/respawn_controls/respawn_controller
 	proc/doRespawn()
 		if(checkValid() != RESPAWNEE_STATE_ELIGIBLE)
 			SPAWN(0)
-				alert("You are not eligible for a respawn, bub!")
+				tgui_alert(usr, "You are not eligible for a respawn, bub!", "Cannot respawn")
 
 			return
 

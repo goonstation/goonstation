@@ -142,6 +142,7 @@
 	accepted_token(var/token)
 		if (istype(token, /obj/item/requisition_token/security/assistant))
 			src.credits[WEAPON_VENDOR_CATEGORY_ASSISTANT]++
+			src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]++
 		else if (istype(token, /obj/item/requisition_token/security/utility))
 			src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]++
 		else
@@ -289,7 +290,7 @@
 /datum/materiel/utility/donuts
 	name = "Robust(ed) Donuts"
 	path = /obj/item/storage/lunchbox/robustdonuts
-	description = "Two Robust Donuts and two Robusted Donuts, which are loaded with helpful chemicals that help you resist stuns and heal you!"
+	description = "One Robust Donut and one Robusted Donut, which are loaded with helpful chemicals that help you resist stuns and heal you!"
 
 /datum/materiel/utility/crowdgrenades
 	name = "Crowd Dispersal Grenades"
@@ -479,9 +480,9 @@
 	description = "A 6-slot pouch for carrying multiple different ammunitions at once"
 
 /datum/materiel/utility/sawflies
-	name = "Sawflies"
+	name = "Sawfly pouch"
 	path = /obj/item/storage/sawfly_pouch
-	description = "A pouch of 4 anti-personnel drones that can be folded after use."
+	description = "A pouch of 3 reusable anti-personnel drones."
 // Requisition tokens
 
 /obj/item/requisition_token

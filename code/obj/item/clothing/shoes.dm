@@ -13,14 +13,12 @@
 	var/kick_bonus = 0 //some shoes will yield extra kick damage!
 	compatible_species = list("human")
 	protective_temperature = 500
-	permeability_coefficient = 0.50
 	//cogwerks - burn vars
 	burn_point = 400
 	burn_output = 800
 	burn_possible = 1
 	health = 5
 	tooltip_flags = REBUILD_DIST
-	wear_layer = MOB_ARMOR_LAYER // Needs to be below hand layer or any custom foot details will layer over shoes
 	var/step_sound = "step_default"
 	var/step_priority = STEP_PRIORITY_NONE
 	var/step_lots = 0 //classic steps (used for clown shoos)
@@ -31,6 +29,7 @@
 		..()
 		setProperty("coldprot", 5)
 		setProperty("heatprot", 5)
+		setProperty("chemprot", 5)
 
 	get_desc(dist)
 		..()
@@ -202,7 +201,6 @@
 	desc = "Sandals blessed by the all-powerful goddess of victory and footwear."
 	icon_state = "wizard" //TODO: replace with custom sprite, thinking winged sandals
 	c_flags = NOSLIP
-	permeability_coefficient = 1
 	mats = 0
 	magical = 1
 	burn_possible = 0
@@ -213,6 +211,7 @@
 	setupProperties()
 		..()
 		setProperty("movespeed", -2)
+		delProperty("chemprot")
 
 /obj/item/clothing/shoes/industrial
 #ifdef UNDERWATER_MAP
@@ -241,7 +240,10 @@
 	name = "white shoes"
 	desc = "Protects you against biohazards that would enter your feet."
 	icon_state = "white"
-	permeability_coefficient = 0.05//25
+
+	setupProperties()
+		..()
+		setProperty("chemprot", 7)
 
 /obj/item/clothing/shoes/galoshes
 	name = "galoshes"
@@ -250,12 +252,18 @@
 	c_flags = NOSLIP
 	step_sound = "step_rubberboot"
 	step_priority = STEP_PRIORITY_LOW
-	permeability_coefficient = 0.05
+
+	setupProperties()
+		..()
+		setProperty("chemprot", 7)
 
 	torn
 		desc = "Rubber boots that would prevent slipping on wet surfaces, were they not all torn up. Like these are. Damn."
 		c_flags = null
-		permeability_coefficient = 1
+
+		setupProperties()
+			..()
+			delProperty("chemprot")
 
 /obj/item/clothing/shoes/clown_shoes
 	name = "clown shoes"
@@ -314,13 +322,13 @@
 	name = "flippers"
 	desc = "A pair of rubber flippers that improves swimming ability when worn."
 	icon_state = "flippers"
-	permeability_coefficient = 0.05
 	laces = LACES_NONE
 	step_sound = "step_flipflop"
 	step_priority = STEP_PRIORITY_LOW
 
 	New()
 		..()
+		setProperty("chemprot", 7)
 		setProperty("negate_fluid_speed_penalty",0.6)
 
 /obj/item/clothing/shoes/moon
@@ -380,7 +388,6 @@
 	desc = "These cheap sandals don't look very comfortable."
 	icon_state = "tourist"
 	protective_temperature = 0
-	permeability_coefficient = 1
 	step_sound = "step_flipflop"
 	step_priority = STEP_PRIORITY_LOW
 
@@ -388,7 +395,7 @@
 		..()
 		setProperty("coldprot", 0)
 		setProperty("heatprot", 0)
-		setProperty("conductivity", 1)
+		delProperty("chemprot")
 
 /obj/item/clothing/shoes/detective
 	name = "worn boots"
@@ -399,19 +406,18 @@
 	name = "chef's clogs"
 	desc = "Sturdy shoes that minimize injury from falling objects or knives."
 	icon_state = "chef"
-	permeability_coefficient = 0.30
 	kick_bonus = 1
 	step_sound = "step_wood"
 	step_priority = STEP_PRIORITY_LOW
 	setupProperties()
 		..()
+		setProperty("chemprot", 7)
 		setProperty("meleeprot", 1)
 
 /obj/item/clothing/shoes/swat
 	name = "military boots"
 	desc = "Polished and very shiny military boots."
 	icon_state = "swat"
-	permeability_coefficient = 0.20
 	protective_temperature = 1250
 	step_sound = "step_military"
 	step_priority = STEP_PRIORITY_LOW
@@ -422,6 +428,7 @@
 		..()
 		setProperty("coldprot", 10)
 		setProperty("heatprot", 10)
+		setProperty("chemprot", 7)
 		setProperty("meleeprot", 1)
 
 /obj/item/clothing/shoes/swat/noslip

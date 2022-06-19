@@ -16596,10 +16596,6 @@
 /obj/item/device/radio/intercom/medical,
 /turf/simulated/floor/white/checker,
 /area/station/medical/medbay/treatment1)
-"aHZ" = (
-/obj/machinery/vending/medical,
-/turf/simulated/wall/auto/supernorn,
-/area/station/medical/medbay/treatment1)
 "aIa" = (
 /obj/ladder{
 	desc = "Is this supposed to be here?";
@@ -18111,6 +18107,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/machinery/vending/medical,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "aLF" = (
@@ -20380,7 +20377,7 @@
 	},
 /area/station/science/lobby)
 "aQk" = (
-/obj/machinery/manufacturer/general,
+/obj/machinery/manufacturer/science,
 /turf/simulated/floor/purple/side{
 	dir = 1
 	},
@@ -27389,8 +27386,8 @@
 	},
 /obj/table/auto,
 /obj/item/hand_tele{
-	pixel_y = 8;
-	pixel_x = 2
+	pixel_x = 2;
+	pixel_y = 8
 	},
 /obj/machinery/firealarm{
 	layer = 3.5;
@@ -27402,8 +27399,8 @@
 	pixel_y = 28
 	},
 /obj/item/hand_tele{
-	pixel_y = 6;
-	pixel_x = -2
+	pixel_x = -2;
+	pixel_y = 6
 	},
 /turf/simulated/floor/circuit,
 /area/station/teleporter)
@@ -29562,9 +29559,6 @@
 /area/station/medical/medbay/cloner)
 "bkP" = (
 /obj/disposalpipe/segment,
-/obj/storage/secure/closet/medical{
-	name = "locker"
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -29572,6 +29566,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
+/obj/storage/secure/closet/medical/cloning,
 /turf/simulated/floor/greenwhite{
 	dir = 9
 	},
@@ -30198,12 +30193,10 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/obj/storage/secure/closet/medical{
-	name = "locker"
-	},
 /obj/item/device/radio/intercom/medical{
 	dir = 4
 	},
+/obj/storage/secure/closet/medical/cloning,
 /turf/simulated/floor/greenwhite{
 	dir = 8
 	},
@@ -31759,6 +31752,7 @@
 	dir = 5;
 	icon_state = "line1"
 	},
+/obj/machinery/vending/medical,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "bpP" = (
@@ -43882,7 +43876,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/storage/secure/closet/brig/automatic/genpop,
+/obj/storage/secure/closet/brig_automatic/genpop,
 /turf/simulated/floor/neutral/corner{
 	dir = 4
 	},
@@ -75211,7 +75205,7 @@ aCR
 aFd
 aEa
 aGX
-aHZ
+aGX
 aGX
 aGX
 aLD

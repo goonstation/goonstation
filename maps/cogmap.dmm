@@ -3817,7 +3817,7 @@
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "alq" = (
-/obj/storage/secure/closet/brig/automatic/solitary,
+/obj/storage/secure/closet/brig_automatic/solitary,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -5968,7 +5968,7 @@
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "arL" = (
-/obj/storage/secure/closet/brig/automatic/genpop_n,
+/obj/storage/secure/closet/brig_automatic/genpop_n,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -9077,7 +9077,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/storage/secure/closet/brig/automatic/genpop_s,
+/obj/storage/secure/closet/brig_automatic/genpop_s,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "azU" = (
@@ -41308,7 +41308,7 @@
 	},
 /area/station/science/lobby)
 "cbJ" = (
-/obj/machinery/manufacturer/general,
+/obj/machinery/manufacturer/science,
 /turf/simulated/floor/delivery,
 /area/station/science/lobby)
 "cbK" = (
@@ -43951,7 +43951,7 @@
 /turf/simulated/floor/grime,
 /area/station/security/checkpoint/cargo)
 "ciP" = (
-/obj/storage/secure/closet/brig/automatic/minibrig,
+/obj/storage/secure/closet/brig_automatic/minibrig,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
@@ -48138,9 +48138,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "csQ" = (
-/obj/storage/secure/closet/medical{
-	name = "locker"
-	},
+/obj/storage/secure/closet/medical/cloning,
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -48757,13 +48755,11 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/obj/storage/secure/closet/medical{
-	name = "locker"
-	},
 /obj/machinery/light_switch{
 	name = "E light switch";
 	pixel_x = 24
 	},
+/obj/storage/secure/closet/medical/cloning,
 /turf/simulated/floor/bluewhite{
 	dir = 6
 	},
@@ -49875,9 +49871,7 @@
 /turf/simulated/floor/blue/checker,
 /area/station/medical/research)
 "cwS" = (
-/obj/storage/secure/closet/medical{
-	name = "locker"
-	},
+/obj/storage/secure/closet/medical/cloning,
 /turf/simulated/floor/bluewhite{
 	dir = 10
 	},
@@ -57790,9 +57784,7 @@
 /area/station/medical/research)
 "mbr" = (
 /obj/disposalpipe/segment,
-/obj/storage/secure/closet/medical{
-	name = "locker"
-	},
+/obj/storage/secure/closet/medical/cloning,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},

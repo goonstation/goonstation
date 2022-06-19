@@ -190,7 +190,8 @@ This file is the critter itself, and all the custom procs it needs in order to f
 					src.foldself()
 		else
 			if(prob(50)&& isalive(src))
-				visible_message(user,"<span class='alert' In their attempt to pet the [src], [user] cuts themselves! </span>")
+				src.visible_message("<span class='alert' In [his_or_her(user)] attempt to pet [src], [user] cuts himself_or_herself(user)!</span>", "<span class='alert' In your attempt to pet [src], you cut yourself!</span>")
+
 				random_brute_damage(user, 7)
 				take_bleeding_damage(user, null, 7, DAMAGE_CUT, 1)
 		..()

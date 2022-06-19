@@ -20,7 +20,6 @@
 
 	///Custom contextActions list so we can handle opening them ourselves
 	var/list/datum/contextAction/contexts = list()
-	contextLayout = new /datum/contextLayout/experimentalcircle
 
 	var/damaged = 0 // used for state management for description showing, as well as preventing drones from screaming about being hit
 
@@ -62,8 +61,13 @@
 		else
 			emote("beep")
 			say(pick_string("flockmind.txt", "flockdrone_created"))
-
+	var/datum/contextLayout/experimentalcircle/layout = new
+	layout.center = TRUE
+	src.contextLayout = layout
+	src.contexts += new /datum/contextAction/flockdrone/control
 	for (var/type as anything in childrentypesof(/datum/contextAction/flockdrone))
+		if (type == /datum/contextAction/flockdrone/control)
+			continue
 		src.contexts += new type
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection, FALSE, FALSE, FALSE, FALSE)
@@ -309,7 +313,7 @@
 		animate_flock_passthrough(src)
 		return TRUE
 	else
-		return !src.density
+		return ..()
 
 /mob/living/critter/flock/drone/MouseDrop_T(mob/living/target, mob/user)
 	if(!target || !user)
@@ -322,6 +326,22 @@
 			..() // ghost observe
 	else
 		..()
+
+/mob/living/critter/flock/drone/mouse_drop(atom/over_object, src_location, over_location, over_control, params)
+	. = ..()
+	if (isdead(src) || isnull(src.flock))
+		return
+	if (!isflockmob(usr))
+		return
+	var/mob/living/intangible/flock/flock_controller = usr
+	if (istype(usr, /mob/living/critter/flock))
+		var/mob/living/critter/flock/flock_mob = usr
+		flock_controller = flock_mob.controller
+	if (!isalive(flock_controller))
+		return // flock mind/trace is stunned or dead
+	if (flock_controller.flock != src.flock)
+		return // this isn't our drone
+	src.rally(over_location)
 
 /mob/living/critter/flock/drone/hotkey(var/name)
 	switch (name)
@@ -952,8 +972,6 @@
 	if(isflockmob(target))
 		boutput(user, "<span class='alert'>The imprisonment matrix doesn't work on flockdrones.</span>")
 		return
-	else if(user.resources < FLOCK_CAGE_COST)
-		boutput(user, "<span class='alert'>Not enough resources to imprison (you need [FLOCK_CAGE_COST]).</span>")
 	else if(istype(target.loc, /obj/flock_structure/cage))
 		boutput(user, "<span class='alert'>They're already imprisoned, you can't double-imprison them!</span>")
 	else
@@ -976,11 +994,16 @@
 
 /datum/limb/gun/flock_stunner // fires a stunning bolt on a cooldown which doesn't affect flockdrones
 	proj = new/datum/projectile/energy_bolt/flockdrone
-	shots = 4
-	current_shots = 4
+	shots = 1
+	current_shots = 1
 	cooldown = 15
-	reload_time = 60
+	reload_time = 15
 	reloading_str = "recharging"
+
+/datum/limb/gun/flock_stunner/point_blank(mob/living/target, mob/living/user)
+	if (isflockmob(target))
+		return
+	return ..()
 
 /datum/limb/gun/flock_stunner/attack_range(atom/target, var/mob/living/critter/flock/drone/user, params)
 	if(!target || !user)
@@ -998,7 +1021,7 @@
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "stunbolt"
 	cost = 20
-	power = 40
+	power = 44
 	dissipation_rate = 1
 	dissipation_delay = 3
 	sname = "stunbolt"

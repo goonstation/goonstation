@@ -560,7 +560,7 @@
 						// <br>
 						// "}
 						else
-							alert(usr, "You do not have the required rank to do this!")
+							tgui_alert(usr, "You do not have the required rank to do this!", "Rank not high enough")
 
 			// if ("rank")
 			// 	if (src.active_record_general)

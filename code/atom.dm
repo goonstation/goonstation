@@ -452,6 +452,7 @@
 
 
 /atom/movable/Move(NewLoc, direct)
+	SHOULD_CALL_PARENT(TRUE)
 	if(SEND_SIGNAL(src, COMSIG_MOVABLE_BLOCK_MOVE, NewLoc, direct))
 		return
 

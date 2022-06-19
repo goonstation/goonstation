@@ -1058,12 +1058,14 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
 	desc = "A set of syndicate command armor. I guess the last owner must have died."
 	br_allowed = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF | UPLINK_NUKE_OP
+	run_on_spawn(var/obj/item)
+		new /obj/item/clothing/head/helmet/space/industrial/syndicate/(item.loc)
 
 /datum/syndicate_buylist/surplus/egun_upgrade
-	name = "Energy Gun Upgrade Pack"
-	item = /obj/item/ammo/power_cell/self_charging/disruptor
+	name = "Advanced Energy Cell"
+	item = /obj/item/ammo/power_cell/self_charging/medium
 	cost = 2
-	desc = "An advanced self-charging power cell, the ideal upgrade for an energy gun!"
+	desc = "An advanced self-charging power cell, the ideal upgrade for an energy weapon!"
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF | UPLINK_NUKE_OP
 
 // Why not, I guess? Cleaned up the old mine code, might as well use it (Convair880).

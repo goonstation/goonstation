@@ -21748,14 +21748,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "lun" = (
-/obj/decal/fakeobjects/firelock_broken{
-	density = 1;
-	desc = "Rust has rendered this airlock useless.";
-	icon = 'icons/obj/doors/doorint.dmi';
-	icon_state = "door_closed";
-	name = "rusted airlock";
-	opacity = 1
-	},
+/obj/decal/fakeobjects/airlock_broken,
 /turf/simulated/floor/black,
 /area/helldrone)
 "lwM" = (

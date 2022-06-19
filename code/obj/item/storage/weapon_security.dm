@@ -33,8 +33,8 @@
 /obj/item/storage/lunchbox/robustdonuts
 	name = "robust donuts lunchbox"
 	icon_state = "lunchbox"
-	desc = "Contains two robust donuts and two robusted donuts, for security use"
-	spawn_contents = list(/obj/item/reagent_containers/food/snacks/donut/custom/robust = 2, /obj/item/reagent_containers/food/snacks/donut/custom/robusted = 2)
+	desc = "Contains a robust donut and a robusted donut, for security use"
+	spawn_contents = list(/obj/item/reagent_containers/food/snacks/donut/custom/robust = 1, /obj/item/reagent_containers/food/snacks/donut/custom/robusted = 1)
 
 // For sec officers and the HoS. Really love spawning with a full backpack (Convair880).
 /obj/item/storage/box/security_starter_kit
@@ -348,6 +348,10 @@
 
 /obj/item/storage/box/costume/safari
 	name = "safari costume"
+	can_hold = list(/obj/item/boomerang,
+	/obj/item/clothing/under,
+	/obj/item/ammo/bullets/tranq_darts)
+	
 	spawn_contents = list(/obj/item/clothing/head/safari,\
 	/obj/item/clothing/under/gimmick/safari,\
 	/obj/item/boomerang,\

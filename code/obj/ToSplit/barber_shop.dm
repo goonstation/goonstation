@@ -17,6 +17,7 @@
 	name = "toupée"
 	desc = "You can't tell the difference, Honest!"
 	icon_state= "wig"
+	wear_layer = MOB_HAIR_LAYER2 //it IS hair afterall
 
 	///Takes a list of style ids to colors and generates a wig from it
 	proc/setup_wig(var/style_list)

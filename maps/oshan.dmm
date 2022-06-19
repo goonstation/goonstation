@@ -1319,7 +1319,7 @@
 /turf/simulated/floor,
 /area/station/security/brig)
 "acR" = (
-/obj/storage/secure/closet/brig/automatic/genpop,
+/obj/storage/secure/closet/brig_automatic/genpop,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
@@ -7187,13 +7187,11 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/medbay/cloner)
 "aqX" = (
-/obj/storage/secure/closet/medical{
-	name = "locker"
-	},
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -24
 	},
+/obj/storage/secure/closet/medical/cloning,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "aqY" = (
@@ -7697,10 +7695,8 @@
 /turf/simulated/floor/blue,
 /area/research_outpost/toxins)
 "ash" = (
-/obj/storage/secure/closet/medical{
-	name = "locker"
-	},
 /obj/machinery/light/incandescent/cool,
+/obj/storage/secure/closet/medical/cloning,
 /turf/simulated/floor/white/checker2{
 	dir = 5
 	},
@@ -37961,7 +37957,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating/random,
-/area/station/science/teleporter)
+/area/station/maintenance/inner/central)
 "bTb" = (
 /obj/item/device/light/zippo,
 /turf/simulated/floor/plating/random,
@@ -39063,7 +39059,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/storage/secure/closet/brig/automatic/solitary2,
+/obj/storage/secure/closet/brig_automatic/solitary2,
 /turf/simulated/floor/red,
 /area/station/security/brig)
 "bVS" = (
@@ -39081,7 +39077,7 @@
 /turf/simulated/floor/red,
 /area/station/security/brig)
 "bVU" = (
-/obj/storage/secure/closet/brig/automatic/solitary,
+/obj/storage/secure/closet/brig_automatic/solitary,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -45808,7 +45804,7 @@
 /turf/simulated/floor/green,
 /area/research_outpost/pathology)
 "jzB" = (
-/obj/machinery/manufacturer/general,
+/obj/machinery/manufacturer/science,
 /turf/simulated/floor,
 /area/research_outpost/hangar)
 "jCs" = (

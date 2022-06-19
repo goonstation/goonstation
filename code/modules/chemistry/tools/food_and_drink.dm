@@ -371,7 +371,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			if (src.reagents && src.reagents.total_volume) //only create food chunks for reagents
 				var/obj/item/reagent_containers/food/snacks/bite/B = new /obj/item/reagent_containers/food/snacks/bite
 				B.set_loc(eater)
-				B.reagents.maximum_volume = reagents.total_volume/(src.bites_left || 1) //MBC : I copied this from the Eat proc. It doesn't really handle the reagent transfer evenly??
+				B.reagents.maximum_volume = reagents.total_volume/(src.bites_left+1 || 1) //MBC : I copied this from the Eat proc. It doesn't really handle the reagent transfer evenly??
 				src.reagents.trans_to(B,B.reagents.maximum_volume,1,0)						//i'll leave it tho because i dont wanna mess anything up
 				var/mob/living/L = eater
 				L.stomach_process += B
@@ -1226,7 +1226,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			boutput(user, "<span class='notice'>You can't think of anything to do with [src].</span>")
 			return
 
-		var/selection = input(user, "What do you want to do with [src]?") as null|anything in choices
+		var/selection = tgui_input_list(user, "What do you want to do with [src]?", "Selection", choices)
 		if (isnull(selection) || BOUNDS_DIST(src, user) > 0)
 			return
 
