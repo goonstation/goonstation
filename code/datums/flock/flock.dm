@@ -649,6 +649,7 @@ var/flock_signal_unleashed = FALSE
 	/obj/machinery/computer = /obj/flock_structure/compute,
 	/obj/machinery/networked/teleconsole = /obj/flock_structure/compute,
 	/obj/machinery/networked/mainframe = /obj/flock_structure/compute/mainframe,
+	/obj/spacevine = null
 	)
 
 /proc/flock_convert_turf(var/turf/T)
@@ -689,6 +690,9 @@ var/flock_signal_unleashed = FALSE
 			continue
 		for(var/keyPath in flock_conversion_paths)
 			if (!istype(O, keyPath))
+				continue
+			if (isnull(flock_conversion_paths[keyPath]))
+				qdel(O) //is this safe? probably?
 				continue
 			if (istype(O, /obj/machinery))
 				if (istype(O, /obj/machinery/door))
