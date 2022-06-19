@@ -1566,6 +1566,10 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	delay = 1
 	soundproofing = 5
 
+	New()
+		..()
+		booster_image = image('icons/obj/vehicles.dmi', "boost-bus")
+
 /obj/vehicle/adminbus/Move()
 	if(src.darkness)
 		if(prob(3))

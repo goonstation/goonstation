@@ -1653,6 +1653,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 	icon_state = "ftscanplate"
 	item_state = "ftscanplate"
 	desc = "This eyewear looks incredibly advanced, as do most things that come from the Commonwealth of Free Worlds. Unfortunately, this is a non-functioning replica sold to tourists."
+	wear_layer = MOB_GLASSES_LAYER2
 
 /obj/item/clothing/under/blossomdress
 	name = "cherryblossom dress"

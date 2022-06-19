@@ -117,7 +117,6 @@
 			/*
 			// Latejoin antagonists ignore antag prefs and so should this
 			// Nobody even realized that it checked this!
-			// @todo add hellban check (are hellbans even used still?)
 			if (lucky_dude.current.client.preferences)
 				var/datum/preferences/P = lucky_dude.current.client.preferences
 				switch (src.antagonist_type)

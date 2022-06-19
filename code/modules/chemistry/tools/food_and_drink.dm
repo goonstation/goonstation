@@ -1226,7 +1226,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			boutput(user, "<span class='notice'>You can't think of anything to do with [src].</span>")
 			return
 
-		var/selection = input(user, "What do you want to do with [src]?") as null|anything in choices
+		var/selection = tgui_input_list(user, "What do you want to do with [src]?", "Selection", choices)
 		if (isnull(selection) || BOUNDS_DIST(src, user) > 0)
 			return
 

@@ -1367,10 +1367,6 @@
 	if(!isliving(usr)) return
 	src.show_inv(usr)
 
-/mob/living/carbon/human/verb/fuck()
-	set hidden = 1
-	alert("Go play HellMOO if you wanna do that.")
-
 // called when something steps onto a human
 // this could be made more general, but for now just handle mulebot
 /mob/living/carbon/human/Crossed(atom/movable/AM)

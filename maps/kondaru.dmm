@@ -30306,7 +30306,7 @@
 /turf/simulated/floor/white,
 /area/station/science/lobby)
 "bOl" = (
-/obj/machinery/manufacturer/general,
+/obj/machinery/manufacturer/science,
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "bOm" = (

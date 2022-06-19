@@ -962,14 +962,14 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	if(state == WELDED)
 		if(!src.locked)
 			if(src.active==1)
-				if(alert("Turn off the emitter?",,"Yes","No") == "Yes")
+				if(tgui_alert(user, "Turn off the emitter?", "Emitter controls", list("Yes", "No")) == "Yes")
 					src.active = 0
 					icon_state = "Emitter"
 					boutput(user, "You turn off the emitter.")
 					logTheThing("station", user, null, "deactivated active emitter at [log_loc(src)].")
 					message_admins("[key_name(user)] deactivated active emitter at [log_loc(src)].")
 			else
-				if(alert("Turn on the emitter?",,"Yes","No") == "Yes")
+				if(tgui_alert(user, "Turn on the emitter?", "Emitter controls", list("Yes", "No")) == "Yes")
 					src.active = 1
 					icon_state = "Emitter +a"
 					boutput(user, "You turn on the emitter.")

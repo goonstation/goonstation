@@ -1437,7 +1437,7 @@
 	attackby(obj/item/W, mob/user)
 		if(..(W, user)) return
 		else if(ispulsingtool(W))
-			. = alert(user, "What should trigger the sensor?","Disposal Sensor", "Creatures", "Anything", "A mail tag")
+			. = tgui_alert(user, "What should trigger the sensor?", "Disposal Sensor", list("Creatures", "Anything", "A mail tag"))
 			if (.)
 				if (BOUNDS_DIST(user, src) > 0 || user.stat)
 					return

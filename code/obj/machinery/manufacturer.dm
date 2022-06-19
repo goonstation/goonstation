@@ -664,7 +664,7 @@
 					boutput(usr, "<span class='alert'>Cannot delete this schematic.</span>")
 					return
 				last_queue_op = world.time
-				if(alert("Are you sure you want to remove [I.name] from the [src]?",,"Yes","No") == "Yes")
+				if(tgui_alert(usr, "Are you sure you want to remove [I.name] from the [src]?", "Confirmation", list("Yes", "No")) == "Yes")
 					src.download -= I
 			else if (href_list["disp"])
 				var/datum/manufacture/I = locate(href_list["disp"])
@@ -918,7 +918,10 @@
 		else if (isweldingtool(W))
 			var/do_action = 0
 			if (istype(W,src.base_material_class) && src.accept_loading(user))
-				if (alert(user,"What do you want to do with [W]?","[src.name]","Repair","Load it in") == "Load it in")
+				var/choice = tgui_alert(user, "What do you want to do with [W]?", "[src.name]", list("Repair", "Load it in"))
+				if (!choice)
+					return
+				if (choice == "Load it in")
 					do_action = 1
 			if (do_action == 1)
 				user.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>", "<span class='notice'>You load [W] into the [src].</span>")
@@ -936,7 +939,10 @@
 			var/obj/item/cable_coil/C = W
 			var/do_action = 0
 			if (istype(C,src.base_material_class) && src.accept_loading(user))
-				if (alert(user,"What do you want to do with [C]?","[src.name]","Repair","Load it in") == "Load it in")
+				var/choice = tgui_alert(user, "What do you want to do with [C]?", "[src.name]", list("Repair", "Load it in"))
+				if (!choice)
+					return
+				if (choice == "Load it in")
 					do_action = 1
 			if (do_action == 1)
 				user.visible_message("<span class='notice'>[user] loads [C] into the [src].</span>", "<span class='notice'>You load [C] into the [src].</span>")
@@ -955,7 +961,10 @@
 		else if (iswrenchingtool(W))
 			var/do_action = 0
 			if (istype(W,src.base_material_class) && src.accept_loading(user))
-				if (alert(user,"What do you want to do with [W]?","[src.name]","Dismantle/Construct","Load it in") == "Load it in")
+				var/choice = tgui_alert(user, "What do you want to do with [W]?", "[src.name]", list("Dismantle/Construct", "Load it in"))
+				if (!choice)
+					return
+				if (choice == "Load it in")
 					do_action = 1
 			if (do_action == 1)
 				user.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>", "<span class='notice'>You load [W] into the [src].</span>")
@@ -2174,6 +2183,49 @@
 
 	hidden = list(/datum/manufacture/cyberheart,
 	/datum/manufacture/cybereye)
+
+/obj/machinery/manufacturer/science
+	name = "science fabricator"
+	supplemental_desc = "This one produces science equipment for experiments as well as expeditions."
+	icon_state = "fab-sci"
+	icon_base = "sci"
+	free_resource_amt = 2
+	free_resources = list(/obj/item/material_piece/steel,
+		/obj/item/material_piece/copper,
+		/obj/item/material_piece/glass,
+		/obj/item/material_piece/cloth/cottonfabric)
+	available = list(
+		/datum/manufacture/flashlight,
+		/datum/manufacture/gps,
+		/datum/manufacture/welder,
+		/datum/manufacture/patch,
+		/datum/manufacture/atmos_can,
+		/datum/manufacture/fluidcanister,
+		/datum/manufacture/spectrogoggles,
+		/datum/manufacture/reagentscanner,
+		/datum/manufacture/dropper,
+		/datum/manufacture/mechdropper,
+		/datum/manufacture/biosuit,
+		/datum/manufacture/labcoat,
+		/datum/manufacture/jumpsuit_white,
+		/datum/manufacture/patient_gown,
+		/datum/manufacture/blindfold,
+		/datum/manufacture/muzzle,
+		/datum/manufacture/gasmask,
+		/datum/manufacture/latex_gloves,
+		/datum/manufacture/shoes_white,
+		/datum/manufacture/rods2,
+		/datum/manufacture/metal,
+		/datum/manufacture/glass)
+
+	hidden = list(/datum/manufacture/scalpel,
+		/datum/manufacture/circular_saw,
+		/datum/manufacture/surgical_scissors,
+		/datum/manufacture/hemostat,
+		/datum/manufacture/suture,
+		/datum/manufacture/stapler,
+		/datum/manufacture/surgical_spoon
+	)
 
 /obj/machinery/manufacturer/mining
 	name = "mining fabricator"

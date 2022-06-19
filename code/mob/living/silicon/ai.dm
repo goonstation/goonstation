@@ -623,7 +623,9 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 		actions += "Restart AI"
 
 	if (actions.len > 1)
-		var/action_taken = input("What do you want to do?","AI Unit") in actions
+		var/action_taken = tgui_input_list(user, "What do you want to do?", "AI Unit", actions)
+		if (!action_taken)
+			return
 		switch (action_taken)
 			if ("Remove CPU Unit")
 				src.eject_brain(user)

@@ -59,7 +59,7 @@
 	proc/confirm(var/question, var/mob/M)
 		if (!M)
 			M = usr
-		var/answer = alert(M, question,,"Yes","No")
+		var/answer = tgui_alert(M, question, "Confirm", list("Yes", "No"))
 		return answer == "Yes"
 
 	proc/update_game_status(var/message)
