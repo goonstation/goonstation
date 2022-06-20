@@ -9401,7 +9401,7 @@
 /turf/simulated/floor/plating,
 /area/helldrone)
 "aFu" = (
-/obj/item/clothing/under/gimmick/blackstronaut,
+/obj/item/clothing/under/gimmick/donk,
 /turf/simulated/floor/sanitary,
 /area/abandonedoutpostthing)
 "aFv" = (
@@ -15403,7 +15403,7 @@
 /turf/simulated/floor/white/grime,
 /area/abandonedmedicalship/robot_trader)
 "aVL" = (
-/obj/item/clothing/head/helmet/space/blackstronaut,
+/obj/item/clothing/head/helmet/space/donk,
 /turf/simulated/floor/white/grime,
 /area/abandonedmedicalship/robot_trader)
 "aVM" = (
@@ -15537,7 +15537,7 @@
 	icon_state = "body2";
 	name = "corpse"
 	},
-/obj/item/clothing/under/gimmick/snazza,
+/obj/item/clothing/under/gimmick/donkini,
 /turf/simulated/floor/white/grime,
 /area/abandonedmedicalship/robot_trader)
 "aWc" = (
@@ -20365,7 +20365,7 @@
 /turf/space,
 /area/abandonedship)
 "blq" = (
-/obj/item/clothing/under/gimmick/snazza,
+/obj/item/clothing/under/gimmick/donkini,
 /obj/item/reagent_containers/glass/bottle/ammonia/large,
 /obj/storage/crate/bloody,
 /turf/simulated/floor/airless/damaged2,

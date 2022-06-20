@@ -29729,7 +29729,7 @@
 "bID" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet,
-/obj/item/clothing/under/gimmick/snazza,
+/obj/item/clothing/under/gimmick/donkini,
 /turf/unsimulated/floor/carpet{
 	dir = 10;
 	icon_state = "fred2"
@@ -30075,7 +30075,7 @@
 "bJG" = (
 /obj/storage/crate,
 /obj/item/shipcomponent/engine/helios,
-/obj/item/clothing/under/gimmick/blackstronaut,
+/obj/item/clothing/under/gimmick/donk,
 /turf/unsimulated/floor,
 /area/solarium)
 "bJH" = (
@@ -35422,7 +35422,7 @@
 /turf/unsimulated/floor,
 /area/meat_derelict/entry)
 "caY" = (
-/obj/item/clothing/under/gimmick/blackstronaut,
+/obj/item/clothing/under/gimmick/donk,
 /turf/unsimulated/floor,
 /area/meat_derelict/entry)
 "caZ" = (
