@@ -545,10 +545,6 @@
 			T = get_turf(T)
 		if (!T || !mode)
 			return 0
-		if (mode == "floors" && !isfloor(T))
-			return 0
-		if (mode == "walls" && isfloor(T))
-			return 0
 
 		if (mode == "restore original") //For those who want to undo the carnage
 			if (istype(T, /turf/simulated/floor))
