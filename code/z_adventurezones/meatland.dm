@@ -63,12 +63,12 @@ meaty thoughts from cogwerks to his spacepal aibm:
 /area/meat_derelict/soviet
 	name = "Samostrel patrol craft"
 	icon_state = "purple"
-	ambientSound = 'sound/ambience/spooky/Meatzone_BreathingAndAnthem.ogg'
+	sound_loop = 'sound/ambience/spooky/Meatzone_BreathingAndAnthem.ogg'
 
 /area/meat_derelict/boss
 	name = "The Heart"
 	icon_state = "security"
-	ambientSound = 'sound/ambience/spooky/Meatzone_BreathingFast.ogg'
+	sound_loop = 'sound/ambience/spooky/Meatzone_BreathingFast.ogg'
 	irradiated = 0.1
 
 /turf/unsimulated/floor/setpieces/bloodfloor/stomach
