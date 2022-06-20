@@ -19,15 +19,21 @@ Turfs and decal for the space rift
 	sound_loop = 'sound/ambience/industrial/Timeship_Atmospheric.ogg'
 	sound_loop_vol = 60
 
-/area/timewarp/New()
+/area/timewarp/ship
+	name = "Strange Craft"
+	icon_state = "shuttle"
+	force_fullbright = 0
+	sound_loop = 'sound/ambience/industrial/Timeship_Tones.ogg'
+
+/area/timewarp/ship/New()
 	. = ..()
 	START_TRACKING_CAT(TR_CAT_AREA_PROCESS)
 
-/area/timewarp/disposing()
+/area/timewarp/ship/disposing()
 	STOP_TRACKING_CAT(TR_CAT_AREA_PROCESS)
 	. = ..()
 
-/area/timewarp/area_process()
+/area/timewarp/ship/area_process()
 	if(prob(20))
 		src.sound_fx_2 = pick('sound/ambience/industrial/Timeship_Gong.ogg',\
 		'sound/ambience/industrial/Timeship_Glitchy1.ogg',\
@@ -38,17 +44,6 @@ Turfs and decal for the space rift
 		for(var/mob/living/carbon/human/H in src)
 			if(H.client)
 				H.client.playAmbience(src, AMBIENCE_FX_2, 60)
-
-
-/area/timewarp/ship
-	name = "Strange Craft"
-	icon_state = "shuttle"
-	force_fullbright = 0
-	ambientSound = 'sound/ambience/industrial/Timeship_Tones.ogg'
-
-	New()
-		..()
-		fxlist = timewarp_interior_sounds
 
 /obj/machinery/bot/guardbot/future
 	name = "Wally-392"
