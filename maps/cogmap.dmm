@@ -50103,6 +50103,10 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
+/obj/machinery/light{
+	dir = 4;
+	tag = ""
+	},
 /turf/simulated/floor,
 /area/station/medical/cdc)
 "cxv" = (
@@ -58565,6 +58569,14 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/bridge)
+"nyI" = (
+/obj/machinery/centrifuge,
+/obj/machinery/light{
+	dir = 8;
+	tag = ""
+	},
+/turf/simulated/floor/white,
+/area/station/medical/cdc)
 "nyN" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/cable{
@@ -102819,7 +102831,7 @@ cvZ
 cDo
 cxe
 cxo
-cxw
+nyI
 cxF
 cxQ
 cxp
