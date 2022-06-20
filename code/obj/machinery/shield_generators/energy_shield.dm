@@ -156,7 +156,7 @@
 	desc = "Interfaces with nearby doors, generating linked atmospheric or liquid shielding for them."
 	icon_state = "doorShield"
 	direction = ""
-	MAX_POWER_LEVEL = 2
+	max_power = SHIELD_BLOCK_FLUID
 	max_range = 3
 	var/emagged = FALSE
 
@@ -173,7 +173,7 @@
 				user.show_text("You short out the integrated limiting circuits.", "blue")
 			src.desc += " Smells faintly of burnt electronics."
 			src.emagged = 1
-			src.MAX_POWER_LEVEL = 3
+			src.max_power = SHIELD_BLOCK_ALL
 			return 1
 		else
 			if (user)
