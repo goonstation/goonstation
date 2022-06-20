@@ -44,16 +44,14 @@ Contents:
 	. = ..()
 
 /area/moon/museum/area_process()
-	var/sound/S_fx = null
-
 	if(prob(20))
-		S_fx = sound(file=pick('sound/ambience/loop/Wind_Low.ogg',\
+		src.sound_fx_2 = pick('sound/ambience/loop/Wind_Low.ogg',\
 		'sound/ambience/station/Machinery_Computers2.ogg',\
-		'sound/ambience/station/Machinery_Computers3.ogg'))
+		'sound/ambience/station/Machinery_Computers3.ogg')
 
 		for(var/mob/living/carbon/human/H in src)
 			if(H.client)
-				playsound(H, S_fx, 60, channel = VOLUME_CHANNEL_AMBIENT)
+				H.client.playAmbience(src, AMBIENCE_FX_2, 60)
 
 /area/shuttle/lunar_elevator/museum/upper
 	icon_state = "shuttle"

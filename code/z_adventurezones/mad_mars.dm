@@ -605,18 +605,16 @@
 	. = ..()
 
 /area/marsoutpost/area_process()
-	var/sound/S_fx = null
-
 	if(prob(20))
-		S_fx = sound(file=pick(
+		src.sound_fx_2 = pick(
 			'sound/ambience/nature/Mars_Rockslide1.ogg',\
 			'sound/ambience/industrial/MarsFacility_MovingEquipment.ogg',\
 			'sound/ambience/nature/Mars_Rockslide2.ogg',\
-			'sound/ambience/industrial/MarsFacility_Glitchy.ogg'))
+			'sound/ambience/industrial/MarsFacility_Glitchy.ogg')
 
 		for(var/mob/living/carbon/human/H in src)
 			if(H.client)
-				playsound(H, S_fx, 70, channel = VOLUME_CHANNEL_AMBIENT)
+				H.client.playAmbience(src, AMBIENCE_FX_2, 60)
 
 /area/marsoutpost/duststorm
 	name = "Barren Planet"
