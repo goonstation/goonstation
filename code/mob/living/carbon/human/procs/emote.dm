@@ -96,6 +96,8 @@
 
 			if ("fart")
 				var/oxyplasmafart = 0
+				var/turf/T2 = get_step(src, NORTH)
+				boutput(world, "foo: [T2.Enter(src)]")
 				if (src.emote_check(voluntary) && farting_allowed && (!src.reagents || !src.reagents.has_reagent("anti_fart")))
 					if (!src.get_organ("butt"))
 						m_type = 1
