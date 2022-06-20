@@ -49339,14 +49339,8 @@
 	tag = ""
 	},
 /obj/table/wood/auto,
-/obj/item/device/radio/intercom{
-	frequency = 1445;
-	layer = 9.6;
-	name = "Medical Intercom";
-	dir = 4
-	},
-/obj/machinery/computer3/generic/personal,
 /obj/machinery/power/data_terminal,
+/obj/machinery/networked/printer,
 /turf/simulated/floor/bluewhite{
 	dir = 10
 	},
@@ -49358,17 +49352,20 @@
 /obj/machinery/power/data_terminal,
 /obj/cable,
 /obj/table/wood/auto,
-/obj/machinery/networked/printer,
-/obj/item/spraybottle/cleaner{
-	pixel_x = 9;
-	pixel_y = -2
-	},
 /obj/item/device/radio/headset/medical{
-	pixel_x = -4;
-	pixel_y = 8
+	pixel_x = -15;
+	pixel_y = -3
+	},
+/obj/item/spraybottle/cleaner{
+	pixel_x = -40;
+	pixel_y = 11
+	},
+/obj/item/clipboard{
+	pixel_y = 4;
+	pixel_x = -2
 	},
 /obj/item/pen{
-	pixel_x = 10;
+	pixel_x = 6;
 	pixel_y = 9
 	},
 /turf/simulated/floor/bluewhite,
@@ -50251,11 +50248,8 @@
 	dir = 1;
 	pixel_y = 3
 	},
-/obj/cable{
-	icon_state = "0-8"
-	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/medical/medbay)
+/area/station/medical/cdc)
 "cxL" = (
 /obj/machinery/sleeper/compact{
 	dir = 8
@@ -50425,16 +50419,13 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "cyh" = (
-/obj/machinery/power/apc/autoname_east,
 /obj/stool/chair/comfy/blue{
 	dir = 8
 	},
 /obj/landmark/start{
 	name = "Medical Doctor"
 	},
-/obj/cable{
-	icon_state = "1-4"
-	},
+/obj/cable,
 /turf/simulated/floor/wood/two,
 /area/station/medical/medbay)
 "cyi" = (
@@ -53738,6 +53729,12 @@
 "fdL" = (
 /obj/cable{
 	icon_state = "2-4"
+	},
+/obj/landmark/start{
+	name = "Medical Doctor"
+	},
+/obj/stool/chair/office/blue{
+	dir = 8
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
@@ -57090,10 +57087,8 @@
 	on = 0;
 	pixel_x = -24
 	},
-/obj/stool/chair/office/blue,
-/obj/landmark/start{
-	name = "Medical Doctor"
-	},
+/obj/table/wood/auto,
+/obj/machinery/computer3/generic/personal,
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -99467,7 +99462,7 @@ ckG
 ckG
 ckG
 ckG
-cjk
+ckG
 cxe
 cxe
 cxe
@@ -101276,8 +101271,8 @@ ckG
 pVz
 ckG
 cxe
-cxe
-cxe
+cxf
+cxf
 cxe
 cxe
 cxW
