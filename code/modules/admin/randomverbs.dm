@@ -302,7 +302,6 @@
 	else
 		ticker.ai_law_rack_manager.default_ai_rack.SetLawCustom("Centcom Law Module",input,law_num,TRUE,TRUE)
 	boutput(usr, "Uploaded '[input]' as law # [law_num]")
-	ticker.ai_law_rack_manager.default_ai_rack.UpdateLaws() //I don't love this, but meh
 
 
 	logTheThing("admin", usr, null, "has added a new AI law - [input] (law # [law_num])")
@@ -323,7 +322,6 @@
 	for(var/i = 1, i <= 9, i++)
 		if(i < split.len)
 			ticker.ai_law_rack_manager.default_ai_rack.SetLawCustom("Centcom Law Module",split[i],i,true,true)
-	ticker.ai_law_rack_manager.default_ai_rack.UpdateLaws()
 	logTheThing("admin", usr, null, "has set the AI laws to [input]")
 	logTheThing("diary", usr, null, "has set the AI laws to [input]", "admin")
 	logTheThing("admin", usr, null, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.default_ai_rack.format_for_logs()]")

@@ -1,6 +1,7 @@
 import { useBackend } from '../backend';
 import { BlockQuote, Button, Collapsible, Box, Section } from '../components';
 import { Window } from '../layouts';
+import { formatTime } from '../format';
 
 export const AIRack = (props, context) => {
   const { act, data } = useBackend(context);
@@ -9,11 +10,13 @@ export const AIRack = (props, context) => {
     lawText,
     welded,
     screwed,
+    updateDelay,
+    updateTime,
   } = data;
   return (
     <Window
       resizable
-      title="AI Law Rack"
+      title={`AI Law Rack - Time until next update broadcast: ${formatTime(Math.max(updateDelay - updateTime, 0))}`}
       width={600}
       height={800}>
       <Window.Content scrollable>

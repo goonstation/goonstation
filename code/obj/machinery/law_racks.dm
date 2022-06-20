@@ -22,6 +22,12 @@
 	var/list/screwed[MAX_CIRCUITS]
 	/// list of hologram expansions
 	var/list/holo_expansions = list()
+	/// time of last update
+	var/last_update_time = 0
+	/// delay between each update
+	var/update_delay = 100
+	/// flag indicating a need for law updates
+	var/update_required = FALSE
 
 	New(loc)
 		START_TRACKING
@@ -35,12 +41,13 @@
 		UpdateIcon()
 		update_last_laws()
 
-	/// Causes all law modules to drop to the ground, does not call UpdateLaws()
+	/// Causes all law modules to drop to the ground, will be broadcast on the next update.
 	proc/drop_all_modules()
 		for (var/i in 1 to MAX_CIRCUITS)
 			src.welded[i] = false
 			src.screwed[i] = false
 			if(src.law_circuits[i])
+				src.update_required = TRUE
 				src.law_circuits[i].set_loc(get_turf(src))
 				src.law_circuits[i] = null
 
@@ -339,7 +346,8 @@
 
 	ui_static_data(mob/user)
 		. = list(
-			"lawSlots" = MAX_CIRCUITS
+			"lawSlots" = MAX_CIRCUITS,
+			"updateDelay" = src.update_delay
 		)
 
 	ui_data(mob/user)
@@ -357,7 +365,8 @@
 			"lawTitles" = lawTitles,
 			"lawText" = lawText,
 			"welded" = src.welded,
-			"screwed" = src.screwed
+			"screwed" = src.screwed,
+			"updateTime" = (ticker.round_elapsed_ticks - last_update_time)
 		)
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -445,6 +454,13 @@
 					ui.user.visible_message("<span class='alert'>[ui.user] starts inserting a module!</span>", "<span class='alert'>You start inserting the module!</span>")
 					SETUP_GENERIC_ACTIONBAR(ui.user, src, 5 SECONDS, .proc/insert_module_callback, list(slotNum,ui.user,equipped), ui.user.equipped().icon, ui.user.equipped().icon_state, \
 					"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
+
+	process(mult)
+		. = ..()
+		if(ticker.round_elapsed_ticks - (last_update_time + src.update_delay) > 0)
+			last_update_time = ticker.round_elapsed_ticks
+			if(update_required)
+				src.UpdateLaws()
 
 
 	proc/get_welding_positions(var/slotNum)
@@ -560,6 +576,7 @@
 	* Defaults to <h3>Law update detected</h3>
 	*/
 	proc/UpdateLaws(var/notification_text="<h3>Law update detected</h3>")
+		update_required = FALSE
 		var/list/affected_mobs = list()
 		for (var/mob/living/silicon/R in mobs)
 			if (isghostdrone(R))
@@ -620,7 +637,7 @@
 		logTheThing("station", user, null, "[constructName(user)] <b>inserts</b> law module into rack([constructName(src)]): [equipped]:[equipped.get_law_text()] at slot [slotNum]")
 		message_admins("[key_name(user)] added a new law to rack at [log_loc(src)]: [equipped], with text '[equipped.get_law_text()]' at slot [slotNum]")
 		UpdateIcon()
-		UpdateLaws()
+		src.update_required = TRUE
 
 	proc/remove_module_callback(var/slotNum,var/mob/user)
 		//add circuit to hand
@@ -635,7 +652,7 @@
 		src.law_circuits[slotNum] = null
 		tgui_process.update_uis(src)
 		UpdateIcon()
-		UpdateLaws()
+		src.update_required = TRUE
 
 	proc/insert_videocard_callback(var/mob/user, var/obj/item/peripheral/videocard/I)
 		var/mob/living/target = null
@@ -682,7 +699,7 @@
 				fireflash(I,0,TRUE)
 				I.combust()
 
-	/// Sets an arbitrary slot to the passed aiModule - will override any module in the slot. Does not call UpdateLaws()
+	/// Sets an arbitrary slot to the passed aiModule - will override any module in the slot. Will be broadcast on the next law update.
 	proc/SetLaw(var/obj/item/aiModule/mod,var/slot=1,var/screwed_in=false,var/welded_in=false)
 		if(mod && slot <= MAX_CIRCUITS)
 			src.law_circuits[slot] = mod
@@ -693,16 +710,17 @@
 				var/obj/item/aiModule/hologram_expansion/holo = mod
 				src.holo_expansions |= holo.expansion
 			UpdateIcon()
+			src.update_required = TRUE
 			return true
 
-	/** Sets an arbitrary slot to a custom law specified by lawName and lawText - will override any module in the slot. Does not call UpdateLaws()
+	/** Sets an arbitrary slot to a custom law specified by lawName and lawText - will override any module in the slot. Will be broadcast on the next law update.
 	 * Intended for Admemery
 	*/
 	proc/SetLawCustom(var/lawName,var/lawText,var/slot=1,var/screwed_in=false,var/welded_in=false)
 		var/mod = new /obj/item/aiModule/custom(lawName,lawText)
 		return src.SetLaw(mod,slot,screwed_in,welded_in)
 
-	/// Deletes a law in an abritrary slot. Does not call UpdateLaws()
+	/// Deletes a law in an abritrary slot. Will be broadcast on the next law update.
 	proc/DeleteLaw(var/slot=1)
 		if(istype(src.law_circuits[slot],/obj/item/aiModule/hologram_expansion))
 			var/obj/item/aiModule/hologram_expansion/holo = src.law_circuits[slot]
@@ -711,9 +729,10 @@
 		src.welded[slot]=false
 		src.screwed[slot]=false
 		tgui_process.update_uis(src)
+		src.update_required = TRUE
 		UpdateIcon()
 
-	/// Deletes all laws. Does not call UpdateLaws()
+	/// Deletes all laws. Will be broadcast on the next law update.
 	proc/DeleteAllLaws()
 		for (var/i in 1 to MAX_CIRCUITS)
 			src.DeleteLaw(i)
