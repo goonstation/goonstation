@@ -48994,10 +48994,20 @@
 /obj/decal/tile_edge/stripe/big{
 	dir = 4
 	},
+/obj/item/clothing/gloves/latex/random{
+	pixel_x = 8;
+	pixel_y = -7
+	},
 /turf/simulated/floor,
 /area/station/medical/staff)
 "cuX" = (
 /obj/reagent_dispensers/watertank/fountain,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	tag = ""
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 5
 	},
@@ -50035,23 +50045,16 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/cable{
-	icon_state = "1-4"
-	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
 /turf/simulated/floor,
 /area/station/medical/cdc)
 "cxn" = (
-/obj/cable{
-	icon_state = "0-2"
+/obj/stool/chair/office{
+	dir = 4
 	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/white,
 /area/station/medical/cdc)
 "cxo" = (
 /obj/machinery/autoclave,
@@ -50103,9 +50106,11 @@
 /turf/simulated/floor,
 /area/station/medical/cdc)
 "cxv" = (
-/obj/cable,
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 3
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/cdc)
 "cxw" = (
 /obj/machinery/centrifuge,
@@ -50243,10 +50248,6 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "cxK" = (
-/obj/machinery/light{
-	dir = 1;
-	pixel_y = 3
-	},
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -50323,7 +50324,9 @@
 	},
 /area/station/medical/staff)
 "cxU" = (
-/obj/submachine/chef_sink,
+/obj/submachine/chef_sink{
+	dir = 1
+	},
 /obj/machinery/light{
 	dir = 1;
 	pixel_y = 21
@@ -50623,7 +50626,9 @@
 /turf/simulated/floor/plating,
 /area/station/janitor/supply)
 "cyG" = (
-/obj/submachine/chef_sink,
+/obj/submachine/chef_sink{
+	dir = 8
+	},
 /turf/simulated/floor/bot/white,
 /area/station/medical/cdc)
 "cyH" = (
@@ -50707,6 +50712,10 @@
 	network = "arcadevr";
 	pixel_x = -7;
 	pixel_y = 4
+	},
+/obj/item/clothing/glasses/spectro{
+	pixel_x = -4;
+	pixel_y = -4
 	},
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
@@ -55466,6 +55475,11 @@
 /obj/decal/cleanable/cobweb,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
+"hLn" = (
+/obj/machinery/light,
+/obj/table/auto,
+/turf/simulated/floor/white,
+/area/station/medical/cdc)
 "hNk" = (
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -56032,7 +56046,7 @@
 "iQM" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 1;
-	pixel_y = 2
+	pixel_y = -1
 	},
 /turf/simulated/floor/wood/two,
 /area/station/medical/staff)
@@ -62335,23 +62349,27 @@
 /area/station/engine/engineering)
 "tyu" = (
 /obj/table/auto,
+/obj/item/reagent_containers/food/drinks/mug{
+	pixel_x = 12
+	},
 /obj/item/decoration/flower_vase/vase7{
 	pixel_x = -9;
 	pixel_y = 11
-	},
-/obj/item/reagent_containers/food/drinks/mug{
-	pixel_x = 12
 	},
 /obj/item/reagent_containers/food/drinks/mug{
 	pixel_x = 12;
 	pixel_y = 9
 	},
 /obj/item/reagent_containers/food/drinks/mug{
-	pixel_x = 19
-	},
-/obj/item/reagent_containers/food/drinks/mug{
 	pixel_x = 19;
 	pixel_y = 9
+	},
+/obj/item/reagent_containers/food/drinks/mug{
+	pixel_x = 19
+	},
+/obj/item/reagent_containers/food/snacks/candy/butterscotch{
+	pixel_y = -4;
+	pixel_x = 4
 	},
 /turf/simulated/floor/wood/two,
 /area/station/medical/staff)
@@ -99784,7 +99802,7 @@ cwz
 bif
 jBv
 cwB
-cxe
+cxv
 cyf
 cyr
 cyA
@@ -100689,7 +100707,7 @@ cxT
 upX
 uxk
 tyu
-cxe
+cxv
 cxJ
 cxV
 cxp
@@ -101290,8 +101308,8 @@ lyI
 pVz
 lyI
 cxe
-cxf
-cxf
+cxe
+cxe
 cxe
 cxe
 cxW
@@ -102498,8 +102516,8 @@ cvB
 cvY
 cwH
 cxe
-cxn
-cxv
+cxe
+cxe
 cxe
 cxP
 cxp
@@ -104016,7 +104034,7 @@ cxe
 owN
 gNp
 cxp
-cxp
+cxn
 bCw
 adC
 aah
@@ -104318,7 +104336,7 @@ cxf
 cyp
 cxP
 cyG
-cym
+hLn
 bCw
 adC
 aah
