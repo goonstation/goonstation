@@ -50251,12 +50251,6 @@
 /obj/machinery/chem_dispenser,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
-"cxK" = (
-/obj/cable{
-	icon_state = "0-8"
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/medical/staff)
 "cxL" = (
 /obj/machinery/sleeper/compact{
 	dir = 8
@@ -50434,10 +50428,8 @@
 /obj/landmark/start{
 	name = "Medical Doctor"
 	},
+/obj/cable,
 /obj/machinery/power/apc/autoname_east,
-/obj/cable{
-	icon_state = "1-4"
-	},
 /turf/simulated/floor/wood/two,
 /area/station/medical/staff)
 "cyi" = (
@@ -100417,7 +100409,7 @@ lyI
 coE
 owY
 iQM
-cxK
+oht
 cxe
 cxC
 cys
