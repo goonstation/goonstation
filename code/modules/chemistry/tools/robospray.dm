@@ -68,7 +68,7 @@
 		. += "It is injecting [propername]. There are [botreagents[currentreagent]] units left."
 		return
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		if(ON_COOLDOWN(src, "injection_cooldown", 0.5 SECONDS))
 			user.show_text("[src] is still recharging, give it a moment! ", "red")
 

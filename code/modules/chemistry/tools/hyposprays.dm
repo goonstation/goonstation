@@ -133,7 +133,7 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 		tgui_process.update_uis(src)
 		return 1
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		if (issilicon(M))
 			user.show_text("[src] cannot be used on silicon lifeforms!", "red")
 			return

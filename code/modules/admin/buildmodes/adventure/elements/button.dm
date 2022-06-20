@@ -71,7 +71,7 @@
 	var/button_type = "red"
 	var/pressed = 0
 
-	attack_hand(var/mob/living/user as mob)
+	attack_hand(var/mob/living/user)
 		if (!istype(user))
 			return
 		if (!(user in range(1)))

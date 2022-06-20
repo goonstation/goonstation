@@ -1204,8 +1204,6 @@
 	return 0
 
 /mob/living/carbon/human/get_head_pierce_prot()
-	if (client?.hellbanned)
-		return 0
 	if ((head && head.body_parts_covered & HEAD) || (wear_mask && wear_mask.body_parts_covered & HEAD))
 		if (head && !wear_mask)
 			return max(0, head.getProperty("pierceprot"))
@@ -1219,8 +1217,6 @@
 	return 0
 
 /mob/living/carbon/human/get_chest_pierce_prot()
-	if (client?.hellbanned)
-		return 0
 	if ((wear_suit && wear_suit.body_parts_covered & TORSO) || (w_uniform && w_uniform.body_parts_covered & TORSO))
 		if (wear_suit && !w_uniform)
 			return max(0, wear_suit.getProperty("pierceprot"))

@@ -7,7 +7,7 @@
 			html = ""
 
 		html += {"
-<title>Antag Popup Viewer</title>
+<title>Special Role Popup Viewer</title>
 <style>
 	a {text-decoration:none}
 	.antagType {padding:5px; margin-bottom:8px; border:1px solid black}
@@ -17,7 +17,9 @@
 	<a href='?src=\ref[src];action=traitorradio'>Radio Uplink</a> |
 	<a href='?src=\ref[src];action=traitorpda'>PDA Uplink</a> |
 	<a href='?src=\ref[src];action=traitorhard'>Hard Mode</a> |
-	<a href='?src=\ref[src];action=traitoromni'>Omnitraitor</a>
+	<a href='?src=\ref[src];action=traitoromni'>Omnitraitor</a> |
+	<a href='?src=\ref[src];action=traitorgeneric'>Generic</a> |
+	<a href='?src=\ref[src];action=sleeper'>Sleeper agent</a>
 </div>
 <div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Mindslave</b>
 	<a href='?src=\ref[src];action=mindslave'>Implanted</a> |
@@ -49,9 +51,11 @@
 	<a href='?src=\ref[src];action=vampthrall'>Vamp Thrall</a> |
 	<a href='?src=\ref[src];action=vampzombie'>Vamp Zombie</a> |
 	<br><a href='?src=\ref[src];action=changeling'>Changeling</a> |
+	<a href='?src=\ref[src];action=changeling_absorbed'>Changeling victim</a> |
 	<a href='?src=\ref[src];action=handspider'>Handspider</a> |
-	<a href='?src=\ref[src];action=eyespider'>Eye/Butt Spider</a> |
-	<a href='?src=\ref[src];action=legworm'>Legworm</a>
+	<a href='?src=\ref[src];action=eyespider'>Eyespider</a> |
+	<a href='?src=\ref[src];action=legworm'>Legworm</a> |
+	<a href='?src=\ref[src];action=buttcrab'>Buttcrab</a>
 </div>
 <div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Flock</b>
 	<a href='?src=\ref[src];action=flocktrace'>Flocktrace</a> |
@@ -65,19 +69,26 @@
 	<a href='?src=\ref[src];action=battle'>Battle Royale</a> |
 	<a href='?src=\ref[src];action=martian'>Martian</a> |
 	<a href='?src=\ref[src];action=kudzu'>Kudzu Person</a> |
-	<a href='?src=\ref[src];action=slasher'>The Slasher</a>
+	<a href='?src=\ref[src];action=slasher'>The Slasher</a> |
 	<a href='?src=\ref[src];action=arcfiend'>Arcfiend Person</a>
 	<a href='?src=\ref[src];action=plaguebringer'>Plaguebringer wraith</a>
 	<a href='?src=\ref[src];action=harbinger'>Harbinger wraith</a>
 	<a href='?src=\ref[src];action=trickster'>Trickster wraith</a>
 	<a href='?src=\ref[src];action=plaguerat'>Plague rat</a>
 </div>
+<div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Ghost roles</b>
+	<a href='?src=\ref[src];action=ghostdrone'>Ghostdrone</a> |
+	<a href='?src=\ref[src];action=ghostcritter'>Ghostcritter</a> |
+	<a href='?src=\ref[src];action=ghostcritter_antag'>Antag ghostcritter</a> |
+	<a href='?src=\ref[src];action=ghostcritter_mentor'>Mentor ghostcritter</a>
+</div>
 <div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Misc</b>
 	<a href='?src=\ref[src];action=rogueborgremoved'>Rogue Borg Removed</a> |
 	<a href='?src=\ref[src];action=antagremoved'>Antag Removed</a> |
 	<a href='?src=\ref[src];action=soulsteel'>Soulsteel Posession</a> |
 	<a href='?src=\ref[src];action=mindwipe'>Cloner Mindwipe</a> |
-	<a href='?src=\ref[src];action=slasher_possession'>Slasher Possession</a>
+	<a href='?src=\ref[src];action=slasher_possession'>Slasher Possession</a> |
+	<a href='?src=\ref[src];action=souldorf'>Souldorf</a>
 </div>
 "}
 
@@ -115,6 +126,10 @@
 				filename = "html/traitorTips/traitorhardTips.html"
 			if ("traitoromni")
 				filename = "html/traitorTips/omniTips.html"
+			if ("traitorgeneric")
+				filename ="html/traitorTips/traitorGenericTips.html"
+			if ("sleeper")
+				filename = "html/traitorTips/traitorsleeperTips.html"
 
 			// mindslave
 			if ("mindslave")
@@ -168,12 +183,18 @@
 				filename = "html/traitorTips/vampiricthrallTips.html"
 			if ("changeling")
 				filename = "html/traitorTips/changelingTips.html"
+			if ("changeling_absorbed")
+				filename = "html/mindslave/changelingEaten.html"
+			if ("changeling_leave")
+				filename = "html/mindslave/changelingLeave.html"
 			if ("handspider")
 				filename = "html/mindslave/handspider.html"
 			if ("eyespider")
 				filename = "html/mindslave/eyespider.html"
 			if ("legworm")
 				filename = "html/mindslave/legworm.html"
+			if ("buttcrab")
+				filename = "html/mindslave/buttcrab.html"
 
 			//flock
 			if("flocktrace")
@@ -215,6 +236,16 @@
 			if ("zombie")
 				filename = "html/traitorTips/zombieTips.html"
 
+			// ghost roles
+			if ("ghostdrone")
+				filename = "html/ghostdrone.html"
+			if ("ghostcritter")
+				filename = "html/ghostcritter.html"
+			if ("ghostcritter_antag")
+				filename = "html/ghostcritter_antag.html"
+			if ("ghostcritter_mentor")
+				filename = "html/ghostcritter_mentor.html"
+
 			// misc
 			if ("rogueborgremoved")
 				filename = "html/traitorTips/roguerobotRemoved.html"
@@ -229,6 +260,10 @@
 			if ("mindwipe")
 				window_title = "Mindwiped!"
 				filename = "html/mindwipe.html"
+			if ("zoldorf")
+				filename = "html/traitorTips/zoldorfTips.htm"
+			if ("souldorf")
+				filename = "html/traitorTips/souldorfTips.htm"
 
 		if (!filename)
 			return
@@ -238,7 +273,7 @@
 
 
 /client/proc/cmd_admin_antag_popups()
-	set name = "View Antag Popups"
+	set name = "View Special Role Popups"
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	if (src.holder)
 		get_singleton(/datum/antagPopups).showPanel()
@@ -257,6 +292,6 @@
 		get_singleton(/datum/antagPopups).show_popup(src, popup_name)
 
 	verb/reopen_antag_popup()
-		set name = "Open antag popup"
+		set name = "Special role popup"
 		if (src.last_antag_popup)
 			src.show_antag_popup(src.last_antag_popup, FALSE)

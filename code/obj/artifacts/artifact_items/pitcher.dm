@@ -130,7 +130,7 @@
 		for(var/i in 1 to fillerAmt)
 			reagents.add_reagent(pick(fillerDrinks), 50)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (src.Artifact_attackby(W,user))
 			..()
 

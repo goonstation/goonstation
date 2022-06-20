@@ -112,7 +112,7 @@ TYPEINFO(/datum/component/glued)
 
 /datum/component/glued/proc/on_explode(atom/movable/parent, list/explode_args)
 	// explode_args format: list(atom/source, turf/epicenter, power, brisance = 1, angle = 0, width = 360, turf_safe=FALSE)
-	explode_args[3] /= 6 // reduce explosion size by a factor of 6
+	explode_args[3] /= 3 // reduce explosion size by a factor of 3
 	qdel(src)
 
 /datum/component/glued/UnregisterFromParent()

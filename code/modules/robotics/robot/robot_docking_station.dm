@@ -595,7 +595,7 @@
 
 	src.updateUsrDialog()
 
-/obj/machinery/recharge_station/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/recharge_station/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/clothing) && src.allow_clothes)
 		if (!istype(W, /obj/item/clothing/mask) && !istype(W, /obj/item/clothing/head) && !istype(W, /obj/item/clothing/under) && !istype(W, /obj/item/clothing/suit))
 			boutput(user, "<span class='alert'>This type of is not compatible.</span>")
@@ -882,7 +882,7 @@
 	anchored = 0
 	p_class = 1.5
 
-/obj/machinery/recharge_station/syndicate/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/recharge_station/syndicate/attackby(obj/item/W, mob/user)
 	if (iswrenchingtool(W))
 		src.anchored = !src.anchored
 		if (!anchored)

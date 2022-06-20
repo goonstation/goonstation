@@ -20,12 +20,10 @@
 		for(var/x=0, x<howMany, x++)
 			SPAWN(rand(0, 20)) //Looks better with a bit of variance
 				new/obj/effect/supplymarker(pick(turfs), preDropTime)
-		for(var/datum/mind/M in battle_pass_holders)
+		for(var/datum/mind/M in ticker.minds)
 			boutput(M.current, "<span class='notice'>A supply drop will happen soon in the [A.name]</span>")
 		SPAWN(20 SECONDS)
 			for(var/datum/mind/M in ticker.minds)
-				if (M in battle_pass_holders)
-					continue
 				boutput(M.current, "<span class='notice'>A supply drop occured in [A.name]</span>!")
 
 /obj/effect/supplymarker
@@ -118,7 +116,7 @@
 		obj_path = obj_path_arg
 		return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(used) return
 		used = 1
 		set_density(0)
@@ -137,9 +135,16 @@
 	var/obj/item/I = null
 	var/list/permittedItemPaths = list(/obj/item/clothing)
 	var/pickedClothingPath = pick(typesof(pick(permittedItemPaths)))
+	var/list/obj/murder_supplies = list()
 
-	var/datum/syndicate_buylist/S = pick(syndi_buylist_cache)
-	var/pickedPath = pick(pickedClothingPath, S.item) //50-50 of either clothes or traitor item.
+	for(var/datum/syndicate_buylist/D in syndi_buylist_cache)
+		if(D.item)
+			if(!D.br_allowed)
+				continue
+			murder_supplies.Add(D.item)
+
+	var/datum/syndicate_buylist/S = pick(murder_supplies)
+	var/pickedPath = pick(pickedClothingPath, S) //50-50 of either clothes or traitor item.
 
 	I = new pickedPath()
 

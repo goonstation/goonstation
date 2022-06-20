@@ -473,7 +473,7 @@
 			src.put_out()
 			user.visible_message("<b>[user.name]</b> blows out the candle!")
 
-	attackby(obj/item/W as obj, mob/user as mob) //ok this proc is entirely a mess, but its *hopfully* better on the server than the alternatives
+	attackby(obj/item/W, mob/user) //ok this proc is entirely a mess, but its *hopfully* better on the server than the alternatives
 		if(istool(W, TOOL_CUTTING | TOOL_SAWING))
 			if(!src.sliced)
 				slice_cake(W,user)
@@ -516,7 +516,7 @@
 						src.ignite()
 				qdel(W)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(length(cakeActions))
 			user.showContextActions(cakeActions, src)
 		else
@@ -529,7 +529,7 @@
 			return
 
 
-	attack(mob/M as mob, mob/user as mob, def_zone) //nom nom nom
+	attack(mob/M, mob/user, def_zone) //nom nom nom
 		if(!src.sliced)
 			if(user == M)
 				user.show_text("You can't just cram that in your mouth, you greedy beast!","red")
@@ -665,7 +665,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	icon_state = "cake1-base_cream"
 
-/obj/item/cake_item/attack(target as mob, mob/user as mob)
+/obj/item/cake_item/attack(target, mob/user)
 	var/iteminside = length(src.contents)
 	if(!iteminside)
 		user.show_text("The cake crumbles away!","red")

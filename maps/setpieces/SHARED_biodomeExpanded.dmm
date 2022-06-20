@@ -4569,7 +4569,7 @@
 	dir = 4
 	},
 /obj/table/wood/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /turf/unsimulated/floor/carpet/grime,
 /area/space)
 "fsM" = (
@@ -5219,7 +5219,7 @@
 /area/swampzone/interiors/quarry)
 "gdO" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /obj/item/clothing/glasses/regular,
 /turf/unsimulated/floor/carpet/grime,
 /area/crypt/sigma/rd)
@@ -5694,7 +5694,7 @@
 /area/crater/cave/lower)
 "gJD" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /turf/unsimulated/floor/carpet/grime,
 /area/crypt/sigma/crew)
 "gKm" = (
@@ -6889,10 +6889,7 @@
 /turf/unsimulated/floor/black,
 /area/swampzone/interiors/bonktek)
 "ikB" = (
-/obj/machinery/atmospherics/pipe/tank/rad_particles{
-	desc = "A large vessel containing an unknown pressurized gas.";
-	name = "Unidentified Gas Tank"
-	},
+/obj/machinery/atmospherics/pipe/tank/toxins/south,
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -9751,7 +9748,7 @@
 /turf/unsimulated/floor/black,
 /area/syndicate_station)
 "lBk" = (
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /obj/table/wood/auto,
 /obj/window/cubicle{
 	dir = 4
@@ -13051,7 +13048,7 @@
 	},
 /obj/table/wood/auto,
 /obj/deskclutter,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /obj/window/cubicle{
 	dir = 2
 	},
@@ -13326,7 +13323,6 @@
 	dir = 4;
 	pixel_x = 10
 	},
-/obj/item/radio_tape/advertisement/dans_tickets,
 /obj/item/radio_tape/advertisement/grones{
 	pixel_x = 6;
 	pixel_y = 4
@@ -13340,7 +13336,6 @@
 	pixel_x = 2;
 	pixel_y = -6
 	},
-/obj/item/radio_tape/advertisement/pope_crunch,
 /obj/item/radio_tape/advertisement/security_psa{
 	pixel_x = -3;
 	pixel_y = 4
@@ -13821,7 +13816,7 @@
 /area/swampzone/ground)
 "qBZ" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /turf/unsimulated/floor/wood/eight{
 	dir = 8
 	},
@@ -16606,7 +16601,7 @@
 	dir = 1
 	},
 /obj/table/wood/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /turf/unsimulated/floor/carpet/grime,
 /area/crater/biodome/research)
 "tOH" = (
@@ -16928,14 +16923,7 @@
 /turf/unsimulated/floor/carpet/grime,
 /area/crypt/sigma/rd)
 "ukq" = (
-/obj/decal/fakeobjects/firelock_broken{
-	density = 1;
-	desc = "Rust has rendered this airlock useless.";
-	icon = 'icons/obj/doors/doorint.dmi';
-	icon_state = "door_locked";
-	name = "rusted airlock";
-	opacity = 1
-	},
+/obj/decal/fakeobjects/firelock_broken,
 /turf/unsimulated/floor/delivery,
 /area/crypt/sigma/kitchen)
 "ukS" = (
@@ -17617,7 +17605,7 @@
 	dir = 8
 	},
 /obj/table/wood/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /obj/window/cubicle{
 	dir = 2
 	},
@@ -18910,7 +18898,6 @@
 "wsu" = (
 /obj/table/auto,
 /obj/item/plate/tray,
-/obj/item/platestack,
 /turf/unsimulated/floor/wood,
 /area/swampzone/interiors/bonktek/waffletek)
 "wsQ" = (
@@ -19858,7 +19845,7 @@
 	},
 /obj/table/wood/auto,
 /obj/deskclutter,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /turf/unsimulated/floor/carpet/grime,
 /area/crater/biodome/research)
 "xCd" = (

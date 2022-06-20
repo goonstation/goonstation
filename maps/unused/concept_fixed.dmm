@@ -29420,7 +29420,7 @@
 	d1 = 4;
 	d2 = 8
 	},
-/obj/storage/secure/closet/brig/automatic/solitary,
+/obj/storage/secure/closet/brig_automatic/solitary,
 /turf/simulated/floor,
 /area/station/security/brig)
 "bdL" = (
@@ -29947,7 +29947,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
 "beD" = (
-/obj/storage/secure/closet/brig/automatic/solitary,
+/obj/storage/secure/closet/brig_automatic/solitary,
 /obj/cable{
 	d1 = 1;
 	d2 = 4;
@@ -30488,7 +30488,7 @@
 	d1 = 4;
 	d2 = 8
 	},
-/obj/storage/secure/closet/brig/automatic/solitary,
+/obj/storage/secure/closet/brig_automatic/solitary,
 /obj/cable{
 	icon_state = "2-8";
 	d1 = 2;

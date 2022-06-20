@@ -193,6 +193,7 @@
 						<a href='[playeropt_link(M, "spidergib")]'>Spider</a> &bull;
 						<a href='[playeropt_link(M, "cluwnegib")]'>Cluwne</a> &bull;
 						<a href='[playeropt_link(M, "tysongib")]'>Tyson</a> &bull;
+						<a href='[playeropt_link(M, "flockgib")]'>Flock</a> &bull;
 						<a href='[playeropt_link(M, "damn")]'>(Un)Damn</a>
 					</div>
 					<div class='l'>Misc</div>

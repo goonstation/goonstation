@@ -1578,8 +1578,8 @@
 	desc = "A Cornicen spreader bolt has put you off-balance! Also you should never be seeing this!"
 	icon_state = null
 	visible = FALSE
-	duration = 0.5 SECONDS
 	var/stacks = 1
+	maxDuration = 2 SECONDS
 
 	onChange(optional)
 		. = ..()
@@ -1591,8 +1591,9 @@
 /datum/statusEffect/cornicened2
 	id = "cornicened2"
 	name = "Cornicened2"
+	visible = FALSE
 	desc = "A Cornicen spreader bolt has put you off-balance! Also you should never be seeing this!"
-	duration = 0.5 SECONDS
+	maxDuration = 2 SECONDS
 
 /datum/statusEffect/shivering
 	id = "shivering"
@@ -2170,6 +2171,45 @@
 		if(ismob(owner))
 			var/mob/M = owner
 			M.bioHolder.RemoveEffect("sims_stinky")
+
+/datum/statusEffect/flock_absorb
+	id = "flock_absorbing"
+	name = "Absorbing"
+	desc = "Please call 1800-CODER"
+	visible = FALSE
+	unique = TRUE
+
+	onRemove()
+		var/mob/living/critter/flock/drone/drone = owner
+		if (istype(drone) && drone.absorber.item)
+			drone.changeStatus("flock_absorbing", drone.absorber.item.health/drone.health_absorb_rate SECONDS, drone.absorber.item)
+		..()
+
+	onUpdate(timePassed)
+		var/mob/living/critter/flock/drone/drone = owner
+		if (!istype(drone) || !drone.absorber.item)
+			owner.delStatus(src.id)
+			return
+		drone.absorber.tick(timePassed/10)
+
+/datum/statusEffect/gnesis_glow
+	id = "gnesis_glow"
+	name = "Gnesis glow"
+	desc = "The gnesis in your veins envelops you in a strange teal glow."
+	visible = FALSE
+	unique = TRUE
+
+	onAdd()
+		. = ..()
+		owner.add_simple_light("gnesis_glow", rgb2num("#26ffe6a2"))
+		owner.simple_light.alpha = 0
+		owner.visible_message("<span class='alert'>[owner] is enveloped in a shimmering teal glow.</span>", "<span class='alert'>You are enveloped in a shimmering teal glow.</span>")
+		animate(owner.simple_light, time = src.duration/2, alpha = 255)
+		animate(time = src.duration/2, alpha = 0)
+
+	onRemove()
+		owner.remove_simple_light("gnesis_glow")
+		..()
 
 /datum/statusEffect/spry
 	id = "spry"

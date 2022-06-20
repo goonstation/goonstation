@@ -587,7 +587,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	if (!src.can_respawn_as_ghost_critter())
 		return
 
-	if (alert(src, "Are you sure you want to respawn as an animal?", "Respawn as Animal", "Yes", "No") != "Yes")
+	if (tgui_alert(src, "Are you sure you want to respawn as an animal?", "Respawn as Animal", list("Yes", "No")) != "Yes")
 		return
 
 	var/turf/spawnpoint = pick_landmark(LANDMARK_PESTSTART)
@@ -625,9 +625,9 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	C.original_name = selfmob.real_name
 
 	if (traitor)
-		C.Browse(grabResource("html/ghostcritter.html"),"window=ghostcritter_antag;size=600x400;title=Ghost Critter Help")
+		C.show_antag_popup("ghostcritter_antag")
 	else
-		C.Browse(grabResource("html/ghostcritter.html"),"window=ghostcritter;size=600x400;title=Ghost Critter Help")
+		C.show_antag_popup("ghostcritter")
 
 	//hacky fix : qdel brain to prevent reviving
 	if (C.organHolder)
@@ -647,7 +647,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	if (!can_respawn_as_ghost_critter(0 MINUTES, 2 MINUTES))
 		return
 
-	if (alert(src, "Are you sure you want to respawn as a mentor mouse? You won't be able to come back as a human or cyborg!", "Respawn as Animal", "Yes", "No") != "Yes")
+	if (tgui_alert(src, "Are you sure you want to respawn as a mentor mouse? You won't be able to come back as a human or cyborg!", "Respawn as Animal", list("Yes", "No")) != "Yes")
 		return
 
 	// you can be an animal
@@ -666,7 +666,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	C.literate = 0
 	C.original_name = selfmob.real_name
 
-	C.Browse(grabResource("html/ghostcritter_mentor.html"),"window=ghostcritter_mentor;size=600x400;title=Ghost Critter Help")
+	C.show_antag_popup("ghostcritter_mentor")
 	logTheThing("admin", C, null, "respawned as a mentor mouse at [log_loc(C)].")
 
 	//hacky fix : qdel brain to prevent reviving
@@ -689,7 +689,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 		boutput(src, "<span class='alert'>The game hasn't started yet, silly!</span>")
 		return
 
-	if (alert(src, "Are you sure you want to respawn as an admin mouse?", "Respawn as Animal", "Yes", "No") != "Yes")
+	if (tgui_alert(src, "Are you sure you want to respawn as an admin mouse?", "Respawn as Animal", list("Yes", "No")) != "Yes")
 		return
 
 	if(!src || !src.mind || !src.client)
@@ -788,7 +788,7 @@ var/respawn_arena_enabled = 0
 	set desc = "Visit the Respawn Arena to earn a respawn!"
 	set category = "Ghost"
 
-	if(!ASS_JAM && !respawn_arena_enabled)
+	if(!respawn_arena_enabled)
 		boutput(src,"The respawn arena is not open right now. Tough luck!")
 		return
 

@@ -96,7 +96,7 @@
 			tally -= src.propulsion.speed
 		return tally
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(isweldingtool(W))
 			if (user.a_intent == INTENT_HARM)
 				if (W:try_weld(user,0,-1,0,0))
@@ -361,7 +361,7 @@
 			if(6)
 				. += "It looks almost finished, all that's left to add is extra optional components.\nWrench it together to activate it, or remove all parts and the power cell to deconstruct it."
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		switch(construct_stage)
 			if(3)
 				user.put_in_hand_or_drop(cable_type)
@@ -382,7 +382,7 @@
 			else
 				boutput(user, "You can't figure out what to do with it. Maybe a closer examination is in order.")
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(isweldingtool(W))
 			if(W:try_weld(user, 1))
 				switch(construct_stage)

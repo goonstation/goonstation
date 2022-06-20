@@ -98,7 +98,7 @@
 	var/image/damaged = null
 	var/busted = 0
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (istype(W, /obj/item/pod/paintjob))
 			src.paint_pod(W, user)
 		else return ..(W, user)
@@ -540,7 +540,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 /* Construction                */
 /*-----------------------------*/
 
-/obj/structure/vehicleframe/attackby(obj/item/W as obj, mob/living/user as mob)
+/obj/structure/vehicleframe/attackby(obj/item/W, mob/living/user)
 	switch(stage)
 		if(0)
 			if (iswrenchingtool(W))
@@ -633,7 +633,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 				else
 					boutput(user, "<span class='alert'>These sheets aren't the right kind of material. You need metal!</span>")
 			else
-				boutput(user, "You shouldn't just leave all those circuits exposed! That's dangerous! You'll need three sheets of metal to cover it all up.")
+				boutput(user, "You shouldn't just leave all those circuits exposed! That's dangerous! You'll need [src.metal_amt] sheets of metal to cover it all up.")
 
 		if(6)
 			if(istype(W, src.engine_type))
@@ -729,7 +729,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 				qdel(src)
 
 			else
-				boutput(user, "You weren't thinking of heading out without a reinforced cockpit, were you? Put some reinforced glass on it! Three [src.glass_amt] will do.")
+				boutput(user, "You weren't thinking of heading out without a reinforced cockpit, were you? Put some reinforced glass on it! Just [src.glass_amt] sheets will do.")
 
 /*-----------------------------*/
 /*                             */
@@ -823,7 +823,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 			src.speed = clamp((src.material.getProperty("electrical")) / 30, 0.75, 1.5)
 		return
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (istype(W, /obj/item/pod/paintjob))
 			src.paint_pod(W, user)
 		else return ..(W, user)

@@ -400,7 +400,7 @@
 		return
 	return src.Attackhand(user)
 
-/obj/machinery/door_control/attack_hand(mob/user as mob)
+/obj/machinery/door_control/attack_hand(mob/user)
 	if((status & (NOPOWER|BROKEN)) || inuse)
 		return
 
@@ -409,6 +409,7 @@
 
 	use_power(5)
 	icon_state = "doorctrl1"
+	playsound(src.loc, 'sound/machines/button.ogg', 40, 0.5)
 
 	if (!src.id)
 		return
@@ -466,7 +467,7 @@
 	else
 		icon_state = "doorctrl0"
 
-/obj/machinery/door_control/oneshot/attack_hand(mob/user as mob)
+/obj/machinery/door_control/oneshot/attack_hand(mob/user)
 	..()
 	if (!(status & BROKEN))
 		src.status |= BROKEN
@@ -500,14 +501,14 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 		return
 	return src.Attackhand(user)
 
-/obj/machinery/activation_button/attack_hand(mob/user as mob)
+/obj/machinery/activation_button/attack_hand(mob/user)
 	if(status & (NOPOWER|BROKEN))
 		return
 	if(active)
 		return
 
 	use_power(5)
-
+	playsound(src.loc, 'sound/machines/button.ogg', 40, 0.5)
 	src.active = TRUE
 	icon_state = "launcheract"
 
@@ -1007,7 +1008,7 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 			return
 		return src.Attackhand(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		boutput(user, "<span class='notice'>The password is \[[src.pass]\]</span>")
 		return
 

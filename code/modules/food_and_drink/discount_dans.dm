@@ -413,7 +413,7 @@
 				src.desc = "A box containing a self-heating TV dinner. Have \"fusion\" dishes gone too far?"
 		return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (user.find_in_hand(src))//r_hand == src || user.l_hand == src)
 			if (src.full == 0)
 				user.show_text("The box is empty[prob(20) ? " (much like your head)" : null].", "red")

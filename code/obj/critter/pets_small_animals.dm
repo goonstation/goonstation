@@ -29,7 +29,7 @@
 	butcherable = 1
 	flags = FPRINT | CONDUCT | USEDELAY | TABLEPASS | FLUID_SUBMERGE | FLUID_SUBMERGE
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.alive && (user.a_intent != INTENT_HARM))
 			src.visible_message("<span class='combat'><b>[user]</b> pets [src]!</span>")
 			return
@@ -107,7 +107,7 @@
 	name = "space opossum"
 	desc = "A possum that came from space. Or maybe went to space. Who knows how it got here?"
 	icon_state = "possum"
-	density = 1
+	density = FALSE
 	health = 15
 	aggressive = 1
 	defensive = 1
@@ -134,23 +134,20 @@
 
 	on_revive()
 		..()
+		src.alive = TRUE
 		src.visible_message("<span class='notice'><b>[src]</b> stops playing dead and gets back up!</span>")
-		src.alive = 1
-		src.set_density(1)
 		src.health = initial(src.health)
 		src.icon_state = src.living_state ? src.living_state : initial(src.icon_state)
 		src.target = null
 		src.task = "wandering"
-		return
 
 	CritterDeath()
 		..()
-		SPAWN(rand(200,800))
+		SPAWN(rand(20 SECONDS, 80 SECONDS))
 			if (src && !src.alive)
 				src.on_revive()
-		return
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (!src.alive)
 			if (istype(W, /obj/item/knife/butcher) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/raw_material/shard) || istype(W, /obj/item/sword) || istype(W, /obj/item/saw) || issnippingtool(W))
 				src.on_revive()
@@ -245,7 +242,7 @@
 			else
 				continue
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (src.alive && istype(W, /obj/item/plant/herb/catnip))
 			user.visible_message("<b>[user]</b> gives [src.name] the [W]!","You give [src.name] the [W].")
 			src.catnip_effect()
@@ -285,7 +282,7 @@
 			M.changeStatus("stunned", 2 SECONDS)
 			M.changeStatus("weakened", 2 SECONDS)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.alive && (user.a_intent != INTENT_HARM))
 			src.visible_message("<span class='combat'><b>[user]</b> pets [src]!</span>")
 			if(prob(3) && ispug(user))
@@ -362,7 +359,7 @@
 			user.show_text("You swipe down [src]'s back in a petting motion...")
 		return 1
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (istype(W, /obj/item/card/emag))
 			emag_act(user, W)
 		else
@@ -416,7 +413,7 @@ ABSTRACT_TYPE(/obj/critter/dream_creature)
 	crit_brute_amt = 4
 	chase_text = "jumps on"
 
-	attackby(obj/item/I as obj, mob/living/user as mob)
+	attackby(obj/item/I, mob/living/user)
 		if (istype(I, /obj/item/reagent_containers/food/snacks/cookie))
 			user.drop_item()
 			I.dropped(user)
@@ -483,7 +480,7 @@ ABSTRACT_TYPE(/obj/critter/dream_creature)
 			M.changeStatus("stunned", 2 SECONDS)
 			M.changeStatus("weakened", 2 SECONDS)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.alive && (user.a_intent != INTENT_HARM))
 			src.visible_message("<span class='combat'><b>[user]</b> pets [src]!</span>")
 			if(prob(30))
@@ -519,7 +516,7 @@ ABSTRACT_TYPE(/obj/critter/dream_creature)
 	doggy = "pug"
 	is_pet = 2
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (prob(5) && src.alive && ispug(user))
 			src.visible_message("<span class='combat'><b>[src]</b> pets [user]!</span>")
 			return
@@ -638,7 +635,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	var/feather_color = list("#803427","#7d5431")
 	var/last_feather_time = 0
 
-	attackby(obj/item/W as obj, mob/M as mob)
+	attackby(obj/item/W, mob/M)
 		if(istype(W,/obj/item/clothing/head/void_crown))
 			/*
 			var/data[] = new()
@@ -1091,7 +1088,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			animate( src )
 			animate( src, pixel_y = 10, easing = SINE_EASING, time = ((towhat.y-y)>0)?3:1 )
 			animate( pixel_y = opy, easing = SINE_EASING, time = 3 )
-			playsound( get_turf(src), "sound/misc/boing/[rand(1,6)].ogg", 20, 1 )
+			playsound( get_turf(src), "sound/misc/boing/[rand(1,6)].ogg", 10, 1 )
 
 	CritterAttack(mob/M as mob)
 		src.attacking = 1
@@ -1142,7 +1139,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 		else
 			return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.alive)
 			if (user.a_intent == INTENT_HARM)
 				..()
@@ -1183,7 +1180,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			..()
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (src.sells_furniture && istype(W, /obj/item/spacecash)) // this is hella dumb
 			var/obj/item/spacecash/C = W
 			if (C.amount < 25)
@@ -1820,7 +1817,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			M.changeStatus("stunned", 2 SECONDS)
 			M.changeStatus("weakened", 2 SECONDS)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.alive && (user.a_intent != INTENT_HARM))
 			src.visible_message("<span class='combat'><b>[user]</b> pets [src]!</span>")
 			if(prob(10)) do_a_little_dance()
@@ -1929,7 +1926,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	CritterAttack(mob/M)
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.alive && (user.a_intent == INTENT_HARM)) // ferrets are quick so you might miss!!
 			if (prob(80))
 				..()
@@ -2032,7 +2029,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 		..()
 		AddComponent(/datum/component/floor_slime, "badgrease", slime_chance, 10)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.alive && (user.a_intent != INTENT_HARM))
 			src.visible_message("<span class='combat'><b>[user]</b> pets [src]!</span>")
 			return
@@ -2046,7 +2043,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 				return
 		..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/shaker))
 			var/obj/item/shaker/S = W
 			if (S.stuff == "salt" && S.shakes < 15)
@@ -2084,7 +2081,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	angertext = "snips angrily at"
 	death_text = "%src% dies."
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (src.alive && istype(W, /obj/item/clothing/head/cowboy))
 			user.visible_message("<b>[user]</b> gives \the [src.name] \the [W]!","You give \the [src.name] \the [W].")
 			qdel(W)

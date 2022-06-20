@@ -77,7 +77,7 @@
 	else
 		src.UpdateOverlays(display_tool_idle, "tool")
 
-/obj/machinery/bot/mining/attack_hand(user as mob)
+/obj/machinery/bot/mining/attack_hand(user)
 	src.add_fingerprint(user)
 	ui.show_ui(user)
 

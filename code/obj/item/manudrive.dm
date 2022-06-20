@@ -34,3 +34,16 @@
 				MD.drivestored += get_schematic_from_path(X)
 				MD.fablimit = src.fablimit
 		src.read_only = 1
+
+	ai //AI core frame limiting
+		name = "Command ManuDrive: Artificial Intelligence License"
+		desc = "A drive for data storage that can be inserted and removed from manufacturers to temporarily add recipes to a manufacturer. This drive carries a blueprint protected by NT-approved DRM that permits the user to manufacture two AI core frames."
+		icon_state = "datadiskcom"
+		temp_recipe_string = list(/datum/manufacture/core_frame)
+		fablimit = 2
+
+	law_rack //The law rack that the CE locker starts with
+		name = "Command ManuDrive: Artificial Intelligence Law Rack Blueprint"
+		desc = "A drive for data storage that can be inserted and removed from manufacturers to temporarily add recipes to a manufacturer. This drive carries a blueprint that permits the user to manufacture AI law racks."
+		icon_state = "datadiskcom"
+		temp_recipe_string = list(/datum/manufacture/mechanics/lawrack)

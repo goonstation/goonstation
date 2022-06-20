@@ -55,7 +55,7 @@
 				if (src.s_tone)
 					src.color = src.s_tone
 
-	attack(var/mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	attack(var/mob/living/carbon/M, mob/living/carbon/user)
 		if (!ismob(M))
 			return
 
@@ -152,7 +152,7 @@
 
 			logTheThing("combat", source, target, "rips out the staples on [constructTarget(target,"combat")]'s butt hat") //Crime
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/timer))
 			var/obj/item/gimmickbomb/butt/B = new /obj/item/gimmickbomb/butt
 			B.set_loc(get_turf(user))
@@ -187,7 +187,7 @@
 // no this is not done and I dunno when it will be done
 // I am a bad person who accepts bribes of freaky macho butt drawings and then doesn't prioritize the request the bribe was for
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/parts/robot_parts/arm))
 			var/obj/machinery/bot/buttbot/cyber/B = new /obj/machinery/bot/buttbot/cyber(src, W)
 			if (src.donor || src.donor_name)

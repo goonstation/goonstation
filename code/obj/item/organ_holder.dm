@@ -466,14 +466,17 @@
 						H.u_equip(W)
 						W.set_loc(myHead)
 						myHead.wear_mask = W
+					if (isskeleton(src.donor) && myHead.head_type == HEAD_SKELETON) // must be skeleton AND have skeleton head
+						src.donor.set_eye(myHead)
+						var/datum/mutantrace/skeleton/S = H.mutantrace
+						S.set_head(myHead)
+
 				myHead.set_loc(location)
 				myHead.update_head_image()
 				myHead.on_removal()
 				myHead.holder = null
 				src.head = null
 				src.organ_list["head"] = null
-				src.donor.client?.eye = myHead
-				src.donor.eye = myHead
 				src.donor.update_body()
 				src.donor.UpdateDamageIcon()
 				src.donor.update_clothing()
@@ -769,10 +772,10 @@
 						qdel(src.head)
 					else
 						return FALSE
-				if (src.brain)
-					boutput(usr, "<span class='alert'>[src.donor] already has a brain! You should remove the brain from [I] first before transplanting it.</span>")
-					return FALSE
 				var/obj/item/organ/head/newHead = I
+				if (src.brain && newHead.brain)
+					boutput(usr, "<span class='alert'>[src.donor] already has a brain! You should remove the brain from [newHead] first before transplanting it.</span>")
+					return FALSE
 				newHead.op_stage = op_stage
 				src.head = newHead
 				newHead.set_loc(src.donor)
@@ -823,11 +826,10 @@
 						H.wear_mask = newHead.wear_mask
 						newHead.wear_mask.set_loc(H)
 						newHead.wear_mask = null
-					if (isskeleton(H))
+					if (isskeleton(H) && newHead.head_type == HEAD_SKELETON)
 						var/datum/mutantrace/skeleton/S = H.mutantrace
-						S.head = newHead
-						H.client?.eye = H
-						H.eye = H
+						S.set_head(newHead)
+					H.set_eye(null)
 				src.donor.update_body()
 				src.donor.UpdateDamageIcon()
 				src.donor.update_clothing()
@@ -860,7 +862,7 @@
 				if (!src.skull)
 					return 0
 				var/obj/item/organ/brain/newBrain = I
-				boutput(src.donor, "<span class='alert'>You feel yourself forcibly ejected from your corporeal form!</span>")
+				boutput(src.donor, "<span class='alert'><b>You feel yourself forcibly ejected from your corporeal form!</b></span>")
 				src.donor.ghostize()
 				if (newBrain.owner)
 					newBrain.owner.transfer_to(src.donor)

@@ -249,7 +249,7 @@
 		..()
 		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
 
-/obj/submachine/record_player/attackby(obj/item/W as obj, mob/user as mob)
+/obj/submachine/record_player/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/record))
 		if(has_record)
 			boutput(user, "The record player already has a record inside!")
@@ -289,7 +289,7 @@
 	else
 		..()
 
-/obj/submachine/record_player/attack_hand(mob/user as mob)
+/obj/submachine/record_player/attack_hand(mob/user)
 	if(has_record)
 		if(!is_playing)
 			boutput(user, "You remove the record from the record player. It looks worse for the wear.")
@@ -322,7 +322,7 @@
 	if (record_name)
 		src.desc = "A fairly large record. There's a sticker on it that says \"[record_name]\"."
 
-/obj/item/record/attack(mob/M as mob, mob/user as mob) // copied plate code
+/obj/item/record/attack(mob/M, mob/user) // copied plate code
 	if (user.a_intent == INTENT_HARM)
 		if (M == user)
 			boutput(user, "<span class='alert'><B>You smash the record over your own head!</b></span>")
@@ -635,7 +635,7 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	icon_state = "record_blue"
 	song = "sound/radio_station/music/poo.ogg"
 
-/obj/item/record/poo/attackby(obj/item/P as obj, mob/user as mob)
+/obj/item/record/poo/attackby(obj/item/P, mob/user)
 	if (istype(P, /obj/item/magnifying_glass))
 		boutput(user, "<span class='notice'>You examine the record with the magnifying glass.</span>")
 		sleep(2 SECONDS)
@@ -793,7 +793,7 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	var/is_playing = 0
 	var/obj/item/radio_tape/tape_inside = null
 
-/obj/submachine/tape_deck/attackby(obj/item/W as obj, mob/user as mob)
+/obj/submachine/tape_deck/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/radio_tape))
 		if(has_tape)
 			boutput(user, "The tape deck already has a tape inserted!")
@@ -814,7 +814,7 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 			sleep(6000)
 			is_playing = 0
 
-/obj/submachine/tape_deck/attack_hand(mob/user as mob)
+/obj/submachine/tape_deck/attack_hand(mob/user)
 	if(has_tape)
 		if(!is_playing)
 			if(istype(src.tape_inside,/obj/item/radio_tape/advertisement))

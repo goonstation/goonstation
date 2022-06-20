@@ -9,6 +9,7 @@
 	var/preddesc = "A trophy from a less interesting kill." // See assign_gimmick_skull().
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "skull"
+	inhand_image_icon = 'icons/mob/inhand/hand_skulls.dmi'
 	health = 4
 	w_class = W_CLASS_TINY
 	var/mob/donor = null
@@ -46,7 +47,7 @@
 		if (ishunter(usr))
 			. += "[src.preddesc]\nThis trophy has a value of [src.value]."
 
-	attack(var/mob/living/carbon/M as mob, var/mob/user as mob)
+	attack(var/mob/living/carbon/M, var/mob/user)
 		/* Override so we can check to see if we want to reinsert a skull into a corpse/body */
 		if (!ismob(M))
 			return ..()
@@ -61,7 +62,7 @@
 		else // failure and attack them with the organ
 			return ..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/parts/robot_parts/leg))
 			var/obj/machinery/bot/skullbot/B
 

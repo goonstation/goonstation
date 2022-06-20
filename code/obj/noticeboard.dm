@@ -15,7 +15,7 @@
 	qdel(src)
 
 
-/obj/noticeboard/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/noticeboard/attackby(var/obj/item/O, var/mob/user)
 	if (istype(O, /obj/item/paper) || istype(O, /obj/item/canvas))
 		if (src.notices < 15)
 			O.add_fingerprint(user)
@@ -34,7 +34,7 @@
 	src.icon_state = "nboard0[min(src.notices, 5)]"
 
 
-/obj/noticeboard/attack_hand(mob/user as mob)
+/obj/noticeboard/attack_hand(mob/user)
 	var/dat = "<B>Noticeboard</B><BR>"
 	for(var/obj/item/item in src)
 		if(istype(item, /obj/item/paper) || istype(item, /obj/item/canvas))

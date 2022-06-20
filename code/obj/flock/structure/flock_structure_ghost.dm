@@ -1,7 +1,7 @@
 /obj/flock_structure/ghost
 	name = "weird lookin ghost building"
 	desc = "It's some weird looking ghost building. Seems like its under construction, You can see faint strands of material floating in it."
-
+	flock_desc = "A Flock structure not yet realised. Provide it resources to bring it into existence."
 	var/goal = 0 //mats needed to make the thing actually build
 	var/building = null //thing thats being built
 	var/currentmats = 0 //mats currently in the thing.
@@ -15,6 +15,7 @@
 
 /obj/flock_structure/ghost/New(var/atom/location, building = null, var/datum/flock/F = null, goal = 0)
 	..(location, F)
+	START_TRACKING
 	if(building)
 		var/obj/flock_structure/b = building
 		icon = initial(b.icon)
@@ -44,6 +45,10 @@
 	if(blocked)
 		qdel(src)
 		flock_speak(null, "ERROR: Build area is blocked by an obstruction.", flock)
+
+/obj/flock_structure/ghost/disposing()
+	STOP_TRACKING
+	. = ..()
 
 /obj/flock_structure/ghost/Click(location, control, params)
 	if (("alt" in params2list(params)) || !istype(usr, /mob/living/intangible/flock/flockmind))

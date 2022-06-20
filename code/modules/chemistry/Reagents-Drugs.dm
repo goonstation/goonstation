@@ -351,6 +351,12 @@ datum
 				else
 					animate_fade_from_drug_2(M.client, 40)
 
+			on_remove()
+				. = ..()
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					if (M.client)
+						animate(M.client, color = null, time = 2 SECONDS, easing = SINE_EASING) // gotta come down sometime
 
 		drug/lsd_bee
 			name = "lsbee"

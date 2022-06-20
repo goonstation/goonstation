@@ -17,9 +17,10 @@
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			src.add_fingerprint(H)
-			switch (alert("Which eye would you like to operate on with [src]?",,"Left Eye","Right Eye","Cancel"))
-				if ("Cancel")
-					return
+			var/choice = tgui_alert(user, "Which eye would you like to operate on with [src]?", "Pick eye", list("Left Eye", "Right Eye", "Cancel"))
+			if (!choice || choice == "Cancel")
+				return
+			switch (choice)
 				if ("Right Eye")
 					if (implants_available & EYE_RIGHT)
 						start_replace_eye(EYE_RIGHT, H)

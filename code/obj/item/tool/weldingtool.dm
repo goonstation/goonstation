@@ -42,7 +42,7 @@
 		. = ..()
 		. += "It has [get_fuel()] units of fuel left!"
 
-	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	attack(mob/living/carbon/M, mob/living/carbon/user)
 		if (!src.welding)
 			if (!src.cautery_surgery(M, user, 0, src.welding))
 				return ..()
@@ -110,7 +110,7 @@
 			else return ..()
 		else return ..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W))
 			if (status)
 				status = 0

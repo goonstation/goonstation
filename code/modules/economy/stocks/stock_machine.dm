@@ -143,7 +143,7 @@
 	onclose(user, "computer")
 	return
 
-/obj/machinery/computer/stockexchange/attackby(obj/item/I as obj, mob/user as mob)
+/obj/machinery/computer/stockexchange/attackby(obj/item/I, mob/user)
 	if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
 		if (istype(I, /obj/item/device/pda2) && I:ID_card) I = I:ID_card
 		var/obj/item/card/id/ID = I

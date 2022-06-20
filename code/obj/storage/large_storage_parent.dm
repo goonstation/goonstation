@@ -224,7 +224,7 @@
 		src.open(user=user)
 		src.visible_message("<span class='alert'><b>[user]</b> kicks [src] open!</span>")
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(world.time == src.last_attackhand) // prevent double-attackhand when entering
 			return
 		if (!in_interact_range(src, user))
@@ -239,7 +239,7 @@
 		else if (!src.toggle(user))
 			return src.Attackby(null, user)
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		if (istype(I, /obj/item/satchel/))
 			if(src.secure && src.locked)
 				user.show_text("Access Denied", "red")
@@ -309,9 +309,16 @@
 			if (src.emagged)
 				user.show_text("It appears to be broken.", "red")
 				return
-			else if (src.personal && istype(I, /obj/item/card/id))
-				var/obj/item/card/id/ID = I
-				if ((src.req_access && src.allowed(user)) || !src.registered || (istype(ID, /obj/item/card/id) && src.registered == ID.registered))
+			else if (src.personal)
+				var/obj/item/card/id/ID = null
+				if (istype(I, /obj/item/card/id))
+					ID = I
+				else
+					if (ishuman(user))
+						var/mob/living/carbon/human/H = user
+						if (H.wear_id)
+							ID = H.wear_id
+				if ((src.req_access && src.allowed(user)) || (ID && length(ID.registered) && (src.registered == ID.registered || !src.registered)))
 					//they can open all lockers, or nobody owns this, or they own this locker
 					src.locked = !( src.locked )
 					user.visible_message("<span class='notice'>The locker has been [src.locked ? null : "un"]locked by [user].</span>")

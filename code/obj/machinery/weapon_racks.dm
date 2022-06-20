@@ -142,7 +142,7 @@
 		if (dist <= 1)
 			. += "There's [(src.amount > 0) ? src.amount : "no" ] [src.contained_weapon_name][s_es(src.amount)] in [src]."
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W))
 			if (!src.panelopen)
 				src.overlays += image('icons/obj/vending.dmi', "grife-panel")
@@ -182,7 +182,7 @@
 */
 
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.panelopen || isAI(user))
 			var/list/rackwires = list(
 			"Puce" = 1,

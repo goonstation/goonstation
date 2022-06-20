@@ -44,11 +44,11 @@
 
 	// ---- generic ----
 
-	/// when an AM moves (thing, previous_loc, direction)
+	/// when an AM moves on the map (thing, previous_loc, direction)
 	#define COMSIG_MOVABLE_MOVED "mov_moved"
 	/// when a movable is about to move, return true to prevent (thing, new_loc, direction)
 	#define COMSIG_MOVABLE_BLOCK_MOVE "mov_block_moved"
-	/// when an AM moves (thing, previous_loc)
+	/// when an AM changes its loc (thing, previous_loc)
 	#define COMSIG_MOVABLE_SET_LOC "mov_set_loc"
 	/// when an AM ends throw (thing, /datum/thrown_thing)
 	#define COMSIG_MOVABLE_THROW_END "mov_throw_end"
@@ -167,6 +167,8 @@
 	#define COMSIG_MOB_SHOCKED_DEFIB "mob_shocked"
 	/// Sent to mob when client lifts the mouse button
 	#define COMSIG_MOB_MOUSEUP "mob_mouseup"
+	/// Sent when a mob is grabbed by another mob (grab)
+	#define COMSIG_MOB_GRABBED "mob_grabbed"
 
 	// ---- cloaking device signal ----
 

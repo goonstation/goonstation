@@ -96,7 +96,7 @@ Contains:
 						continue
 				else if(isobj(A))
 					var/obj/O = A
-					if(O.level != 1)
+					if(O.level != 1 && !istype(O, /obj/disposalpipe)) // disposal pipes handled below
 						continue
 				var/image/img = image(A.icon, icon_state=A.icon_state, dir=A.dir)
 				img.plane = PLANE_SCREEN_OVERLAYS
@@ -105,6 +105,9 @@ Contains:
 				img.alpha = 100
 				img.appearance_flags = RESET_ALPHA | RESET_COLOR
 				display.overlays += img
+
+			if (T.disposal_image)
+				display.overlays += T.disposal_image
 
 			if( length(display.overlays))
 				display.plane = PLANE_SCREEN_OVERLAYS
@@ -307,11 +310,11 @@ that cannot be itched
 			UpdateOverlays(scanner_status, "status")
 			boutput(user, "<span class='notice'>Organ scanner [src.organ_scan ? "enabled" : "disabled"].</span>")
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		addUpgrade(src, W, user, src.reagent_upgrade)
 		..()
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if ((user.bioHolder.HasEffect("clumsy") || user.get_brain_damage() >= 60) && prob(50))
 			user.visible_message("<span class='alert'><b>[user]</b> slips and drops [src]'s sensors on the floor!</span>")
 			user.show_message("Analyzing Results for <span class='notice'>The floor:<br>&emsp; Overall Status: Healthy</span>", 1)
@@ -402,7 +405,7 @@ that cannot be itched
 	hide_attack = 2
 	tooltip_flags = REBUILD_DIST
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		return
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
@@ -476,7 +479,7 @@ that cannot be itched
 		boutput(user, scan_atmospheric(location, visible = 1)) // Moved to scanprocs.dm to cut down on code duplication (Convair880).
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		addUpgrade(src, W, user, src.analyzer_upgrade)
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
@@ -579,7 +582,7 @@ that cannot be itched
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT | EXTRADELAY
 	mats = 3
 
-	attack(mob/living/carbon/human/M as mob, mob/user as mob)
+	attack(mob/living/carbon/human/M, mob/user)
 		if (!istype(M))
 			boutput(user, "<span class='alert'>The device displays an error about an \"incompatible target\".</span>")
 			return
@@ -686,8 +689,8 @@ that cannot be itched
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
 
 	attack_self(mob/user)
-		var/menuchoice = alert("What would you like to do?",,"Ticket","Nothing")
-		if (menuchoice == "Nothing")
+		var/menuchoice = tgui_alert(user, "What would you like to do?", "Ticket writer", list("Ticket", "Nothing"))
+		if (!menuchoice || menuchoice == "Nothing")
 			return
 		else if (menuchoice == "Ticket")
 			src.ticket(user)
@@ -753,7 +756,7 @@ that cannot be itched
 	icon_state = "fs"
 	item_state = "electronic"
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		return
 
 	// attack_self

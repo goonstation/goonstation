@@ -110,11 +110,12 @@
 
 
 /obj/item/gun/energy/heavyion
-	name = "heavy ion blaster"
+	name = "\improper Tianfei heavy ion blaster"
+	icon = 'icons/obj/large/48x32.dmi'
 	icon_state = "heavyion"
 	item_state = "rifle"
 	force = 1.0
-	desc = "..."
+	desc = "The Xiang-Giesel model '天妃', a hefty laser-induced ionic disruptor with a self-charging radio-isotopic power core. Feared by rogue cyborgs across the Frontier."
 	charge_up = 15
 	can_dual_wield = 0
 	two_handed = 1
@@ -311,7 +312,9 @@
 	desc = "The largest phaser from Radnor Photonics. A big gun for big problems."
 	muzzle_flash = "muzzle_flash_phaser"
 	cell_type = /obj/item/ammo/power_cell/higherish_power
-	shoot_delay = 20
+	shoot_delay = 10
+	charge_up = 5
+	can_dual_wield = FALSE
 
 	New()
 		set_current_projectile(new/datum/projectile/laser/light/huge) // light/huge - whatev!!!! this should probably be refactored
@@ -411,7 +414,7 @@
 		UpdateIcon()
 		M.update_inhands()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/electronics/scanner))
 			nojobreward = 1
 		..()
@@ -547,8 +550,9 @@
 
 ////////////////////////////////////Wave Gun
 /obj/item/gun/energy/wavegun
-	name = "wave gun"
+	name = "\improper Sancai wave gun"
 	icon = 'icons/obj/items/gun.dmi'
+	desc = "The versatile Xiang-Giesel model '三才' with three monlethal functions: inverse '炎帝', transverse '地皇' and reflective '天皇' ."
 	icon_state = "wavegun100"
 	item_state = "wave"
 	cell_type = /obj/item/ammo/power_cell/med_power
@@ -724,7 +728,7 @@
 			user.show_text("Error: couldn't establish connection to selected teleporter.", "red")
 			return
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (!src.our_target)
 			user.show_text("Error: no target set. Please select a teleporter first.", "red")
 			return
@@ -1193,7 +1197,7 @@
 			else
 				. += "It's not holding anything."
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.loc == user && (src == user.l_hand || src == user.r_hand))
 			if (heldItem)
 				boutput(user, "You remove \the [heldItem.name] from the gun.")
@@ -1205,7 +1209,7 @@
 		else
 			return ..()
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		if (I.cant_drop) return
 		if (heldItem)
 			boutput(user, "The gun is already holding [heldItem.name].")
@@ -1217,7 +1221,7 @@
 			tooltip_rebuild = 1
 		return ..()
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (istype(current_projectile, /datum/projectile/pickpocket/steal) && heldItem)
 			boutput(user, "Cannot steal while gun is holding something!")
 			return
@@ -1329,9 +1333,9 @@
 		indicator_display = null
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!owner_prints)
-			boutput(user, "<span class='alert'>[src] has accepted your fingerprint ID. You are its owner!</span>")
+			boutput(user, "<span class='alert'>[src] has accepted your DNA string. You are its owner!</span>")
 			assign_name(user)
 		..()
 
@@ -1341,7 +1345,7 @@
 	attack_self(mob/user as mob)
 		src.add_fingerprint(user)
 		if (!owner_prints)
-			boutput(user, "<span class='alert'>[src] has accepted your fingerprint ID. You are its owner!</span>")
+			boutput(user, "<span class='alert'>[src] has accepted your DNA string. You are its owner!</span>")
 			assign_name(user)
 		else
 			boutput(user, "<span class='notice'>There don't seem to be any buttons on [src] to press.</span>")
@@ -1350,7 +1354,7 @@
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if (H.bioHolder)
-				owner_prints = H.bioHolder.fingerprints
+				owner_prints = H.bioHolder.Uid
 				src.name = "HoS [H.real_name]'s Lawbringer"
 				tooltip_rebuild = 1
 
@@ -1358,18 +1362,19 @@
 	hear_talk(mob/M as mob, msg, real_name, lang_id)
 		var/turf/T = get_turf(src)
 		if (M in range(1, T))
-			src.talk_into(M, msg, null, real_name, lang_id)
+			src.talk_into(M, msg, real_name, lang_id)
 
 	//can only handle one name at a time, if it's more it doesn't do anything
 	talk_into(mob/M as mob, msg, real_name, lang_id)
 		//Do I need to check for this? I can't imagine why anyone would pass the wrong var here...
 		if (!islist(msg))
 			return
-
+		if (lang_id != "english")
+			return
 		//only work if the voice is the same as the voice of your owner fingerprints.
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
-			if (owner_prints && (H.bioHolder.fingerprints != owner_prints))
+			if (owner_prints && (H.bioHolder.Uid != owner_prints))
 				are_you_the_law(M, msg[1])
 				return
 		else
@@ -1516,7 +1521,7 @@
 	// Checks if the gun can shoot based on the fingerprints of the shooter.
 	//returns true if the prints match or there are no prints stored on the gun(emagged). false if it fails
 	proc/fingerprints_can_shoot(var/mob/user)
-		if (!owner_prints || (user.bioHolder.fingerprints == owner_prints))
+		if (!owner_prints || (user.bioHolder.Uid == owner_prints))
 			return 1
 		return 0
 
