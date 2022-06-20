@@ -459,6 +459,7 @@
 
 	New()
 		..()
+		START_TRACKING
 		SPAWN(0.5 SECONDS)
 			if (src)
 				// Why range 30? COG2 places linked fixtures much further away from the timer than originally envisioned.
@@ -472,6 +473,10 @@
 					message_admins("Automatic locker: couldn't find brig timer with ID [isnull(src.id) ? "*null*" : "[src.id]"] in [get_area(src)].")
 					logTheThing("debug", null, null, "<b>Convair880:</b> couldn't find brig timer with ID [isnull(src.id) ? "*null*" : "[src.id]"] for automatic locker at [log_loc(src)].")
 		return
+
+	disposing()
+		..()
+		STOP_TRACKING
 
 	mouse_drop(over_object, src_location, over_location)
 		..()
