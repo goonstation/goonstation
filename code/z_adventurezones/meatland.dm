@@ -46,8 +46,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 			'sound/ambience/spooky/Meatzone_Rumble.ogg')
 
 		for(var/mob/living/carbon/human/H in src)
-			if(H.client)
-				H.client.playAmbience(src, AMBIENCE_FX_2, 60)
+			H.client?.playAmbience(src, AMBIENCE_FX_2, 60)
 
 /area/meat_derelict/entry
 	name = "Teleportation Lab"

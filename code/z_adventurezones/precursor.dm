@@ -134,8 +134,7 @@
 			'sound/ambience/industrial/Precursor_Bells.ogg')
 
 		for(var/mob/living/carbon/human/H in src)
-			if(H.client)
-				H.client.playAmbience(src, AMBIENCE_FX_2, 60)
+			H.client?.playAmbience(src, AMBIENCE_FX_2, 60)
 
 /area/precursor/pit
 	name = "Ominous Pit"

@@ -50,8 +50,7 @@ Contents:
 		'sound/ambience/station/Machinery_Computers3.ogg')
 
 		for(var/mob/living/carbon/human/H in src)
-			if(H.client)
-				H.client.playAmbience(src, AMBIENCE_FX_2, 60)
+			H.client?.playAmbience(src, AMBIENCE_FX_2, 60)
 
 /area/shuttle/lunar_elevator/museum/upper
 	icon_state = "shuttle"

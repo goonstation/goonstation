@@ -42,8 +42,7 @@ Turfs and decal for the space rift
 		'sound/ambience/industrial/Timeship_Malfunction.ogg')
 
 		for(var/mob/living/carbon/human/H in src)
-			if(H.client)
-				H.client.playAmbience(src, AMBIENCE_FX_2, 60)
+			H.client?.playAmbience(src, AMBIENCE_FX_2, 60)
 
 /obj/machinery/bot/guardbot/future
 	name = "Wally-392"

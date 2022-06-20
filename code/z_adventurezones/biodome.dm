@@ -128,8 +128,7 @@ SYNDICATE DRONE FACTORY AREAS
 		src.sound_fx_2 = pick(sfx_to_pick_from)
 
 		for(var/mob/living/carbon/human/H in src)
-			if(H.client)
-				H.client.playAmbience(src, AMBIENCE_FX_2, 50)
+			H.client?.playAmbience(src, AMBIENCE_FX_2, 50)
 
 /area/swampzone/heights
 	name = "X-05 Heights"

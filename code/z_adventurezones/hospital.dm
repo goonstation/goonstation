@@ -28,8 +28,7 @@
 		'sound/ambience/spooky/Hospital_ScaryChimes.ogg')
 
 		for(var/mob/living/carbon/human/H in src)
-			if(H.client)
-				H.client.playAmbience(src, AMBIENCE_FX_2, 50)
+			H.client?.playAmbience(src, AMBIENCE_FX_2, 50)
 
 /area/hospital/underground
 	name = "utility tunnels"
