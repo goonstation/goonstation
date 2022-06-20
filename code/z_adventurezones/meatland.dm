@@ -23,85 +23,30 @@ meaty thoughts from cogwerks to his spacepal aibm:
 - add a horrible distorted wet gurgly scream for the cosmonauts when they attack	DONE
 */
 
-/obj/crevice/meatland
-	name = "macabre grotesquerie"
-	density = 1
-	desc = "It keeps pulsing.  Ew.  Probably shouldn't put your hand in the..mouth?"
-	icon = 'icons/misc/meatland.dmi'
-	icon_state = "meatlumps"
-	dir = 4
-
-var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg','sound/ambience/spooky/Meatzone_Gurgle.ogg','sound/ambience/spooky/Meatzone_Howl.ogg','sound/ambience/spooky/Meatzone_Rumble.ogg')
-
 /area/meat_derelict
 	icon_state = "red"
 	force_fullbright = 0
-
-	var/sound/ambientSound = 'sound/ambience/spooky/Meatzone_BreathingSlow.ogg'
-	var/list/fxlist = null
-	var/list/soundSubscribers = null
-	var/use_alarm = 0
 	sound_group = "meat"
+	sound_loop = 'sound/ambience/spooky/Meatzone_BreathingSlow.ogg'
+	sound_loop_vol = 60
 
-	New()
-		..()
-		fxlist = meatland_fx_sounds
-		if (ambientSound)
+/area/meat_derelict/New()
+	. = ..()
+	START_TRACKING_CAT(TR_CAT_AREA_PROCESS)
 
-			SPAWN(6 SECONDS)
-				var/sound/S = new/sound()
-				S.file = ambientSound
-				S.repeat = 0
-				S.wait = 0
-				S.channel = 123
-				S.volume = 60
-				S.priority = 255
-				S.status = SOUND_UPDATE
-				ambientSound = S
+/area/meat_derelict/disposing()
+	STOP_TRACKING_CAT(TR_CAT_AREA_PROCESS)
+	. = ..()
 
-				soundSubscribers = list()
-				process()
+/area/meat_derelict/area_process()
+	if(prob(20))
+		src.sound_fx_2 = pick('sound/ambience/spooky/Meatzone_Squishy.ogg',\
+			'sound/ambience/spooky/Meatzone_Gurgle.ogg',\
+			'sound/ambience/spooky/Meatzone_Howl.ogg',\
+			'sound/ambience/spooky/Meatzone_Rumble.ogg')
 
-	Entered(atom/movable/Obj,atom/OldLoc)
-		. = ..()
-		if(ambientSound && ismob(Obj))
-			soundSubscribers |= Obj
-
-	proc/process()
-		if (!soundSubscribers)
-			return
-
-		var/sound/S = null
-		var/sound_delay = 0
-
-
-		while(current_state < GAME_STATE_FINISHED)
-			sleep(6 SECONDS)
-
-			if(prob(10) && fxlist)
-				S = sound(file=pick(fxlist), volume=50)
-				sound_delay = rand(0, 50)
-			else
-				S = null
-				continue
-
-			for(var/mob/living/H in soundSubscribers)
-				var/area/mobArea = get_area(H)
-				if (!istype(mobArea) || mobArea.type != src.type)
-					soundSubscribers -= H
-					if (H.client)
-						ambientSound.status = SOUND_PAUSED | SOUND_UPDATE
-						ambientSound.volume = 0
-						H << ambientSound
-					continue
-
-				if(H.client)
-					ambientSound.status = SOUND_UPDATE
-					ambientSound.volume = 60
-					H << ambientSound
-					if(S)
-						SPAWN(sound_delay)
-							H << S
+		for(var/mob/living/carbon/human/H in src)
+			H.client?.playAmbience(src, AMBIENCE_FX_2, 60)
 
 /area/meat_derelict/entry
 	name = "Teleportation Lab"
@@ -117,14 +62,13 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 /area/meat_derelict/soviet
 	name = "Samostrel patrol craft"
 	icon_state = "purple"
-	ambientSound = 'sound/ambience/spooky/Meatzone_BreathingAndAnthem.ogg'
+	sound_loop = 'sound/ambience/spooky/Meatzone_BreathingAndAnthem.ogg'
 
 /area/meat_derelict/boss
 	name = "The Heart"
 	icon_state = "security"
-	ambientSound = 'sound/ambience/spooky/Meatzone_BreathingFast.ogg'
+	sound_loop = 'sound/ambience/spooky/Meatzone_BreathingFast.ogg'
 	irradiated = 0.1
-
 
 /turf/unsimulated/floor/setpieces/bloodfloor/stomach
 	name = "acid"
@@ -135,6 +79,14 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 	New()
 		..()
 		set_dir(pick(NORTH,SOUTH))
+
+/obj/crevice/meatland
+	name = "macabre grotesquerie"
+	density = 1
+	desc = "It keeps pulsing.  Ew.  Probably shouldn't put your hand in the..mouth?"
+	icon = 'icons/misc/meatland.dmi'
+	icon_state = "meatlumps"
+	dir = 4
 
 /obj/stomachacid
 	name = "acid"
