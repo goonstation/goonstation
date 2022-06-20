@@ -1,6 +1,6 @@
 /obj/machinery/power/combustion_generator
 	name = "Portable Generator"
-	desc = "A portable combustion generator that burns fuel from a fuel tank, there is a port for a gas tank. A warning reads: DO NOT RUN INDOORS."
+	desc = "A portable combustion generator that burns fuel from a fuel tank, there is a port for a gas tank. A warning reads: DO NOT RUN INDOORS"
 	icon_state = "chemportgen0"
 	density = 1
 	anchored = 0
@@ -10,7 +10,7 @@
 
 	var/active = 0
 	var/fuel_drain_rate = 0.3
-	var/atmos_drain_rate = 1
+	var/atmos_drain_rate = 0.2
 	var/standard_power_output = 5000 // around how much the generator will output running normally
 	var/last_output
 
@@ -19,7 +19,6 @@
 
 	var/image/fuel_tank_image
 	var/image/inlet_tank_image
-	var/image/status_light_image
 
 	update_icon()
 		if (src.active)
@@ -135,9 +134,9 @@
 			T.assume_air(payload)
 
 		if (src.inlet_tank)
-			src.inlet_tank.air_contents.remove(src.atmos_drain_rate)
+			src.inlet_tank.air_contents.remove(src.atmos_drain_rate * average_volatility)
 		else
-			T.air.remove(src.atmos_drain_rate)
+			T.air.remove(src.atmos_drain_rate * average_volatility)
 
 		src.fuel_tank.reagents.remove_any(src.fuel_drain_rate)
 
