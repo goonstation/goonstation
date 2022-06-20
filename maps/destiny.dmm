@@ -16740,6 +16740,10 @@
 	dir = 1
 	},
 /area/station/chapel/sanctuary)
+"bHo" = (
+/obj/decal/poster/wallsign/framed_award/cecertification,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/engineering/ce)
 "bHq" = (
 /obj/stool/chair/couch/yellow{
 	dir = 4
@@ -23632,6 +23636,11 @@
 	dir = 1
 	},
 /area/station/science/lobby)
+"eNE" = (
+/obj/disposalpipe/segment/mail,
+/obj/decal/poster/wallsign/framed_award/aiscript,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/turret_protected/ai)
 "eNX" = (
 /obj/table/reinforced/auto,
 /obj/item/hand_labeler,
@@ -106968,7 +106977,7 @@ mqM
 aUy
 mqM
 mqM
-mqM
+eNE
 mqM
 mqM
 mqM
@@ -108831,7 +108840,7 @@ rfx
 bpd
 kwU
 nhz
-mTM
+bHo
 aLv
 iZt
 nHL

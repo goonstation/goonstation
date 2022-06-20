@@ -52331,6 +52331,10 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
+"pbY" = (
+/obj/decal/poster/wallsign/framed_award/firstbill,
+/turf/simulated/wall/auto/reinforced/jen/blue,
+/area/station/crew_quarters/heads)
 "pcj" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/greenwhite{
@@ -77284,6 +77288,10 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn/yellow,
 /area/station/maintenance/outer/se)
+"wgn" = (
+/obj/decal/poster/wallsign/framed_award/cecertification,
+/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/area/station/engine/engineering/ce)
 "wgs" = (
 /obj/cable{
 	d1 = 2;
@@ -80504,6 +80512,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/decal/poster/wallsign/framed_award/aiscript,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/AIsat)
 "wZp" = (
@@ -117423,7 +117432,7 @@ rdj
 rdj
 rdj
 nMc
-nMc
+pbY
 hge
 hle
 rAK
@@ -152761,7 +152770,7 @@ rdj
 rdj
 wCh
 mfw
-wCh
+wgn
 xXC
 liD
 ohB

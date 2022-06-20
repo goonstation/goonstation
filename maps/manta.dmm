@@ -498,7 +498,7 @@
 /area/station/bridge)
 "abw" = (
 /obj/displaycase{
-	displayed = new /obj/item/captaingun;
+	displayed = new/obj/item/captaingun;
 	pixel_y = 8
 	},
 /obj/table/wood/auto,
@@ -40183,6 +40183,10 @@
 /obj/window_blinds/cog2/right,
 /turf/simulated/floor/plating,
 /area/station/engine/engineering/ce)
+"svl" = (
+/obj/decal/poster/wallsign/framed_award/cecertification,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/engineering/ce/private)
 "svA" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -40878,6 +40882,10 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperport)
+"uDt" = (
+/obj/decal/poster/wallsign/framed_award/aiscript,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/turret_protected/ai_upload)
 "uFt" = (
 /obj/decal/tile_edge/line/green{
 	color = "#e7c88c";
@@ -81396,7 +81404,7 @@ ayA
 ayA
 ayA
 azO
-aym
+svl
 azh
 aAc
 aym
@@ -85258,7 +85266,7 @@ aoj
 aBX
 aCf
 aDG
-aFB
+uDt
 aPH
 aPT
 akD

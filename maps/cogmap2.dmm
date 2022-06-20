@@ -76687,6 +76687,10 @@
 	dir = 4
 	},
 /area/space)
+"drw" = (
+/obj/decal/poster/wallsign/framed_award/firstbill,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/crew_quarters/heads)
 "dsV" = (
 /obj/table/wood/auto,
 /obj/item/device/reagentscanner,
@@ -78140,6 +78144,10 @@
 	},
 /turf/simulated/floor/plating/scorched,
 /area/station/garden/owlery)
+"lbK" = (
+/obj/decal/poster/wallsign/framed_award/cecertification,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/crew_quarters/ce)
 "lcc" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
 /turf/simulated/floor,
@@ -78763,6 +78771,10 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/research_outpost/hangar)
+"nZi" = (
+/obj/decal/poster/wallsign/framed_award/aiscript,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/turret_protected/ai)
 "odb" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -125498,7 +125510,7 @@ bzm
 bAS
 bCI
 bEG
-bCD
+lbK
 bIx
 bCD
 bLX
@@ -138107,7 +138119,7 @@ aaG
 aaa
 aaZ
 abh
-abf
+nZi
 abz
 abv
 abY
@@ -146329,7 +146341,7 @@ aaa
 aaa
 brf
 brf
-brf
+drw
 bwx
 brf
 bAc

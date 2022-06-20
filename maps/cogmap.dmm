@@ -60697,6 +60697,10 @@
 	dir = 5
 	},
 /area/station/turret_protected/ai_upload_foyer)
+"ral" = (
+/obj/decal/poster/wallsign/framed_award/aiscript,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/turret_protected/ai)
 "rbE" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -60774,6 +60778,10 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/routing/security)
+"rku" = (
+/obj/decal/poster/wallsign/framed_award/firstbill,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/crew_quarters/heads)
 "rmb" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -61862,6 +61870,10 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/medical/robotics)
+"sOI" = (
+/obj/decal/poster/wallsign/framed_award/cecertification,
+/turf/simulated/wall/auto/supernorn,
+/area/station/engine/engineering/ce)
 "sPX" = (
 /obj/stool,
 /obj/item/clothing/head/helmet/space/santahat,
@@ -94758,7 +94770,7 @@ aVw
 aYe
 aUk
 aZU
-aZQ
+rku
 bbW
 bdd
 aZQ
@@ -106857,7 +106869,7 @@ nJJ
 aGT
 aVV
 bpJ
-bqi
+ral
 bqK
 brq
 brY
@@ -115341,7 +115353,7 @@ bKE
 jbi
 jbi
 jbi
-jbi
+sOI
 jbi
 bKB
 kvk

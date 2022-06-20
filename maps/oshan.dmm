@@ -45684,6 +45684,10 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/caution/west,
 /area/station/maintenance/south)
+"iTG" = (
+/obj/decal/poster/wallsign/framed_award/cecertification,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/turret_protected/ai)
 "iUm" = (
 /obj/machinery/status_display{
 	pixel_x = 32
@@ -47042,6 +47046,10 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
+"qHF" = (
+/obj/decal/poster/wallsign/framed_award/aiscript,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/turret_protected/ai)
 "qKr" = (
 /obj/decal/tile_edge/line/red{
 	dir = 10;
@@ -106872,13 +106880,13 @@ aIt
 aIO
 aJl
 aJK
-aJZ
+qHF
 aKt
 aKS
 aKS
 aKS
 aMx
-aJZ
+iTG
 aOz
 aPP
 aQu

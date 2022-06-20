@@ -54040,6 +54040,10 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/storage/eva)
+"hkJ" = (
+/obj/decal/poster/wallsign/framed_award/cecertification,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/engineering)
 "hlB" = (
 /obj/disposalpipe/segment/ejection{
 	dir = 4
@@ -56917,6 +56921,15 @@
 	},
 /turf/simulated/floor/white,
 /area/station/security/brig/genpop)
+"nIS" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/decal/poster/wallsign/framed_award/aiscript,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/turret_protected/ai)
 "nJw" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -97063,7 +97076,7 @@ cku
 cku
 cku
 oCV
-con
+nIS
 cpl
 cku
 cku
@@ -130574,7 +130587,7 @@ ccB
 cdM
 cfl
 cgp
-bzU
+hkJ
 aRo
 cil
 ciS

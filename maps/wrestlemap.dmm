@@ -10130,7 +10130,7 @@
 	dir = 2
 	},
 /obj/displaycase{
-	displayed = new /obj/item/captaingun
+	displayed = new/obj/item/captaingun
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/captain)
@@ -36773,6 +36773,10 @@
 /obj/item/reagent_containers/food/snacks/hardtack,
 /turf/simulated/floor/black,
 /area/listeningpost)
+"pOa" = (
+/obj/decal/poster/wallsign/framed_award/aiscript,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/turret_protected/ai)
 "pOg" = (
 /obj/table/auto,
 /obj/item/sheet/steel,
@@ -44823,6 +44827,10 @@
 	},
 /turf/space,
 /area/space)
+"tfc" = (
+/obj/decal/poster/wallsign/framed_award/cecertification,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/engineering/ce)
 "tfh" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -85975,7 +85983,7 @@ vGh
 vGh
 qnJ
 qGw
-uZO
+tfc
 sFl
 gMn
 ddA
@@ -93808,7 +93816,7 @@ dbb
 dbb
 dbb
 dbb
-dbb
+pOa
 dbb
 dbb
 dbb
