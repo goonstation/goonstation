@@ -1070,9 +1070,11 @@
 	if(istype(drone) && !drone.floorrunning)
 		animate_flock_passthrough(mover)
 		. = TRUE
+	else if(istype(mover,/mob/living/critter/flock))
+		. = TRUE
 
 /obj/window/auto/feather/Cross(atom/movable/mover)
-	return istype(mover,/mob/living/critter/flock/drone)
+	return istype(mover,/mob/living/critter/flock)
 
 /obj/window/feather
 	icon = 'icons/misc/featherzone.dmi'

@@ -267,6 +267,8 @@ ABSTRACT_TYPE(/obj/flock_structure)
 	if(src.passthrough && istype(drone) && !drone.floorrunning)
 		animate_flock_passthrough(mover)
 		. = TRUE
+	else if(istype(mover,/mob/living/critter/flock))
+		. = TRUE
 
 /obj/flock_structure/Cross(atom/movable/mover)
-	return istype(mover,/mob/living/critter/flock/drone)
+	return istype(mover,/mob/living/critter/flock)

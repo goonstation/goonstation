@@ -40,9 +40,11 @@
 	if(istype(drone) && !drone.floorrunning)
 		animate_flock_passthrough(mover)
 		. = TRUE
+	else if(istype(mover,/mob/living/critter/flock))
+		. = TRUE
 
 /obj/table/flock/Cross(atom/movable/mover)
-	return istype(mover,/mob/living/critter/flock/drone)
+	return istype(mover,/mob/living/critter/flock)
 
 /obj/table/flock/auto
 	auto = TRUE
@@ -360,9 +362,11 @@
 	if(istype(drone) && !drone.floorrunning)
 		animate_flock_passthrough(mover)
 		. = TRUE
+	else if(istype(mover,/mob/living/critter/flock))
+		. = TRUE
 
 /obj/grille/flock/Cross(atom/movable/mover)
-	return istype(mover,/mob/living/critter/flock/drone)
+	return istype(mover,/mob/living/critter/flock)
 
 /obj/grille/flock/special_desc(dist, mob/user)
 	if (!isflockmob(user))

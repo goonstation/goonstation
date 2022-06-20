@@ -279,7 +279,7 @@
 		var/list/reached_target_goals = null
 		if(mintargetdist)
 			for(var/turf/T as anything in ends)
-				if(get_dist(current_turf, T) <= mintargetdist)
+				if(get_dist(current_turf, T) <= mintargetdist && !istype(current_turf,/turf/simulated/wall))
 					LAZYLISTADD(reached_target_goals, ends[T])
 					ends -= T
 		else if(current_turf in ends)
@@ -354,7 +354,7 @@
 		var/list/reached_target_goals = null
 		if(mintargetdist)
 			for(var/turf/T as anything in ends)
-				if(get_dist(current_turf, T) <= mintargetdist)
+				if(get_dist(current_turf, T) <= mintargetdist && !istype(current_turf,/turf/simulated/wall))
 					LAZYLISTADD(reached_target_goals, ends[T])
 					ends -= T
 		else if(current_turf in ends)
@@ -416,7 +416,7 @@
 	if(istype(passer,/mob/living/critter/flock/drone) && istype(T, /turf/simulated/wall/auto/feather))
 		var/mob/living/critter/flock/drone/F = passer
 		var/turf/simulated/wall/auto/feather/wall = T
-		if(!wall.broken && (F.floorrunning || (F.can_floorrun && F.resources >= 1)))
+		if(!wall.broken && (F.floorrunning || (F.can_floorrun && F.resources >= 10))) //greater than 10 to give some wiggle room, actual cost is 1 per wall tile
 			return TRUE // floor running drones can *always* pass through flockwalls
 
 	if(T.density || !T.pathable) // simplest case
