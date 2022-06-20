@@ -21694,7 +21694,7 @@
 "bnu" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
-	icon_state = "generic_locked";
+	icon_state = "door_locked";
 	locked = 1
 	},
 /turf/simulated/floor/grey,

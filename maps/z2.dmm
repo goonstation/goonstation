@@ -7870,7 +7870,7 @@
 /obj/machinery/door/airlock/pyro{
 	desc = "What kind of HORRIBLE THINGS could LURK in here???";
 	frequency = 1499;
-	icon_state = "generic_locked";
+	icon_state = "door_locked";
 	locked = 1;
 	name = "Meat Locker";
 	radiorange = 25;
@@ -12767,7 +12767,7 @@
 	desc = "Rust has rendered this airlock useless.";
 	dir = 4;
 	icon = 'icons/obj/doors/SL_doors.dmi';
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	name = "rusted airlock";
 	opacity = 1
 	},
@@ -13361,7 +13361,7 @@
 /obj/decal/fakeobjects/firelock_broken{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
-	icon_state = "generic_open";
+	icon_state = "door_open";
 	name = "rusted airlock"
 	},
 /turf/unsimulated/floor/grime,
@@ -13945,7 +13945,7 @@
 /obj/decal/fakeobjects/firelock_broken{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
-	icon_state = "generic_open";
+	icon_state = "door_open";
 	name = "broken airlock"
 	},
 /turf/unsimulated/floor/arctic/plating,
@@ -19343,7 +19343,7 @@
 /obj/decal/fakeobjects/firelock_broken{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
-	icon_state = "generic_open";
+	icon_state = "door_open";
 	name = "broken airlock"
 	},
 /turf/unsimulated/floor/grime,
@@ -24356,7 +24356,7 @@
 	desc = "It wont budge.";
 	dir = 4;
 	icon = 'icons/obj/doors/SL_doors.dmi';
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	layer = 6;
 	name = "broken door";
 	opacity = 1
@@ -29130,7 +29130,7 @@
 	desc = "It wont budge.";
 	dir = 4;
 	icon = 'icons/obj/doors/SL_doors.dmi';
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	layer = 6;
 	name = "broken door";
 	opacity = 1
@@ -30708,7 +30708,7 @@
 /obj/overlay{
 	desc = "You could probably squeeze through.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
-	icon_state = "generic_open";
+	icon_state = "door_open";
 	layer = 6;
 	name = "broken door"
 	},
@@ -30836,7 +30836,7 @@
 	desc = "You could probably squeeze through.";
 	dir = 4;
 	icon = 'icons/obj/doors/SL_doors.dmi';
-	icon_state = "generic_open";
+	icon_state = "door_open";
 	layer = 6;
 	name = "broken door"
 	},
@@ -32522,7 +32522,7 @@
 	desc = "It wont budge.";
 	dir = 4;
 	icon = 'icons/obj/doors/SL_doors.dmi';
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	layer = 6;
 	name = "broken door";
 	opacity = 1
@@ -32943,7 +32943,7 @@
 	density = 1;
 	desc = "It wont budge.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	layer = 6;
 	name = "broken door";
 	opacity = 1
@@ -33924,7 +33924,7 @@
 	desc = "Rust has rendered this airlock useless.";
 	dir = 4;
 	icon = 'icons/obj/doors/SL_doors.dmi';
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	name = "rusted airlock";
 	opacity = 1
 	},
@@ -69842,7 +69842,7 @@
 	density = 1;
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
-	icon_state = "generic_locked";
+	icon_state = "door_locked";
 	name = "rusted airlock";
 	opacity = 1
 	},
@@ -76110,7 +76110,7 @@
 	desc = "Rust has rendered this airlock useless.";
 	dir = 4;
 	icon = 'icons/obj/doors/SL_doors.dmi';
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	name = "rusted airlock";
 	opacity = 1
 	},

@@ -28,6 +28,8 @@
 	var/update_delay = 1200
 	/// flag indicating a need for law updates
 	var/update_required = FALSE
+	/// list of ability expansions
+	var/list/datum/targetable/ai_abilities = list()
 
 	New(loc)
 		START_TRACKING
@@ -626,6 +628,18 @@
 					var/mob/living/silicon/ai/holoAI = R
 					holoAI.holoHolder.text_expansion = src.holo_expansions.Copy()
 
+					var/ability_type
+					var/datum/abilityHolder/silicon/ai/aiAH = R.abilityHolder
+					var/list/current_abilities = list()
+					for(var/datum/ability in aiAH.abilities)
+						current_abilities |= ability.type
+					var/list/abilities_to_remove = current_abilities - ai_abilities
+					for(ability_type in abilities_to_remove)
+						aiAH.removeAbility(ability_type)
+					var/list/abilities_to_add = ai_abilities - current_abilities
+					for(ability_type in abilities_to_add)
+						aiAH.addAbility(ability_type)
+
 		for (var/mob/living/intangible/aieye/E in mobs)
 			if(E.mainframe?.law_rack_connection == src)
 				E.playsound_local(E, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
@@ -633,6 +647,7 @@
 				affected_mobs |= E.mainframe
 				var/mob/living/silicon/ai/holoAI = E.mainframe
 				holoAI.holoHolder.text_expansion = src.holo_expansions.Copy()
+				E.abilityHolder?.updateButtons()
 		var/list/mobtextlist = list()
 		for(var/mob/living/M in affected_mobs)
 			mobtextlist += constructName(M, "admin")
@@ -667,6 +682,9 @@
 		if(istype(equipped,/obj/item/aiModule/hologram_expansion))
 			var/obj/item/aiModule/hologram_expansion/holo = equipped
 			src.holo_expansions |= holo.expansion
+		else if(istype(equipped,/obj/item/aiModule/ability_expansion))
+			var/obj/item/aiModule/ability_expansion/expansion = equipped
+			src.ai_abilities |= expansion.ai_abilities
 		logTheThing("station", user, null, "[constructName(user)] <b>inserts</b> law module into rack([constructName(src)]): [equipped]:[equipped.get_law_text()] at slot [slotNum]")
 		message_admins("[key_name(user)] added a new law to rack at [log_loc(src)]: [equipped], with text '[equipped.get_law_text()]' at slot [slotNum]")
 		UpdateIcon()
@@ -682,6 +700,9 @@
 		if(istype(src.law_circuits[slotNum],/obj/item/aiModule/hologram_expansion))
 			var/obj/item/aiModule/hologram_expansion/holo = src.law_circuits[slotNum]
 			src.holo_expansions -= holo.expansion
+		else if(istype(src.law_circuits[slotNum],/obj/item/aiModule/ability_expansion))
+			var/obj/item/aiModule/ability_expansion/expansion = src.law_circuits[slotNum]
+			src.ai_abilities -= expansion.ai_abilities
 		src.law_circuits[slotNum] = null
 		tgui_process.update_uis(src)
 		UpdateIcon()
