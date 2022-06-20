@@ -1,0 +1,57 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/decoration/syndcorpse10,
+/turf/simulated/floor/grasslush/thinner,
+/area/dmm_suite/clear_area)
+"e" = (
+/obj/decoration/syndcorpse5,
+/turf/simulated/floor/grasslush,
+/area/dmm_suite/clear_area)
+"h" = (
+/obj/decal/cleanable/blood/drip/med,
+/turf/simulated/floor/grasslush/thinner,
+/area/dmm_suite/clear_area)
+"n" = (
+/obj/decal/cleanable/blood/drip,
+/turf/simulated/floor/grasslush/thin,
+/area/dmm_suite/clear_area)
+"s" = (
+/obj/decal/cleanable/blood/gibs,
+/turf/simulated/floor/grasslush/thinner,
+/area/dmm_suite/clear_area)
+"E" = (
+/obj/decal/cleanable/blood/drip/high,
+/turf/simulated/floor/grasslush/thin,
+/area/dmm_suite/clear_area)
+"N" = (
+/obj/monkeyplant,
+/obj/decal/lightshaft{
+	pixel_x = -11
+	},
+/obj/decal/cleanable/blood/drip,
+/turf/simulated/floor/grasslush,
+/area/dmm_suite/clear_area)
+"R" = (
+/obj/decal/fakeobjects/skeleton/decomposed_corpse,
+/turf/simulated/floor/grasslush/thin,
+/area/dmm_suite/clear_area)
+"W" = (
+/obj/decal/cleanable/blood/drip/high,
+/turf/simulated/floor/grasslush,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+R
+n
+h
+"}
+(2,1,1) = {"
+E
+N
+s
+"}
+(3,1,1) = {"
+e
+W
+a
+"}
