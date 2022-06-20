@@ -365,10 +365,6 @@
 				F.start_floorrunning()
 				F.set_loc(src)
 
-
-
-
-
 /turf/simulated/wall/auto/feather/proc/on()
 	src.on = TRUE
 	src.UpdateIcon()
