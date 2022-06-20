@@ -190,7 +190,7 @@ proc/create_fluff(datum/mind/target)
 #else
 	set_up()
 		var/list/items = list("Head of Security\'s beret", "prisoner\'s beret", "DetGadget hat", "horse mask", "authentication disk",
-		"\'freeform\' AI module", "gene power module", "mainframe memory board", "yellow cake", "aurora MKII utility belt", "much coveted Gooncode", "golden crayon")
+		"\'freeform\' AI module", "gene power module", "mainframe memory board", "yellow cake", "aurora MKII utility belt", "much coveted Gooncode", "golden crayon", "Head of Personnel\'s First Bill", "Head of Security\'s war medal", "Research Director\'s Diploma", "Medical Director\'s Medical License", "Chief Engineers\'s Certification", "AI\'s First Script")
 
 		if(!countJob("Head of Security"))
 			items.Remove("Head of Security\'s beret")
@@ -223,6 +223,18 @@ proc/create_fluff(datum/mind/target)
 				steal_target = /obj/item/clothing/mask/horse_mask
 			if("golden crayon")
 				steal_target = /obj/item/pen/crayon/golden
+			if("Head of Personnel\'s First Bill")
+				steal_target = /obj/item/firstbill
+			if("Head of Security\'s war medal")
+				steal_target = /obj/item/clothing/suit/hosmedal
+			if("Research Director\'s Diploma")
+				steal_target = /obj/item/rddiploma
+			if("Medical Director\'s Medical License")
+				steal_target = /obj/item/mdlicense
+			if("Chief Engineer\'s Certification")
+				steal_target = /obj/item/cecertification
+			if("AI\'s First Script")
+				steal_target = /obj/item/aiscript
 #endif
 
 		explanation_text = "Steal the [target_name] and have it anywhere on you at the end of the shift."
