@@ -53,8 +53,8 @@
 					master.possession_points++
 
 		if (master != null && master.next_area_change != null)
-			if (master.next_area_change < world.time)
-				master.next_area_change = world.time + 15 MINUTES
+			if (master.next_area_change < TIME)
+				master.next_area_change = TIME + 15 MINUTES
 				master.get_new_booster_zones()
 
 		if(hauntBonus > 0)

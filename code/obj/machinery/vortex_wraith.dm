@@ -35,8 +35,8 @@
 		else	//In case we arent spawned by a wraith, or are spawned on random mode
 			src.mob_type = pick(src.default_mobs)
 		src.visible_message("<span class='alert'>A [src] appears into view, some shadows coalesce within!</b></span>")
-		next_growth = world.time + (20 SECONDS)
-		next_spawn = world.time + (21 SECONDS)	//Should call the first spawn check after the portal grew once.
+		next_growth = TIME + (20 SECONDS)
+		next_spawn = TIME + (21 SECONDS)	//Should call the first spawn check after the portal grew once.
 
 		light = new /datum/light/point
 		light.set_brightness(0.1)
@@ -48,14 +48,14 @@
 
 	process()
 		if ((src.next_growth != null) && (growth < 4))	//Dont grow if we are at max level
-			if (src.next_growth < world.time)	//Growth grants us more health, spawn range, and spawn cap
-				next_growth = world.time + 10 SECONDS + (growth * 10) SECONDS	//Subsequent levels are slower
+			if (src.next_growth < TIME)	//Growth grants us more health, spawn range, and spawn cap
+				next_growth = TIME + 10 SECONDS + (growth * 10) SECONDS	//Subsequent levels are slower
 				if (growth == 0)
 					icon_state = "harbinger_circle"
 				growth++
 				src._health += 10
 				src.mob_value_cap += 5
-		if ((src.next_spawn != null) && (src.next_spawn < world.time))	//Spawn timer is up
+		if ((src.next_spawn != null) && (src.next_spawn < TIME))	//Spawn timer is up
 			var/minion_value = 0
 
 			for (var/obj/critter/M in mob_list)	//Check for dead mobs and adjust cap
@@ -105,7 +105,7 @@
 						animate(minion, alpha=255, time = 2 SECONDS)
 						src.visible_message("<span class='alert'><b>[minion] emerges from the [src]!</b></span>")
 						src.total_mob_value += minion_value
-			next_spawn = world.time + (20 SECONDS) + (minion_value * 5) SECONDS
+			next_spawn = TIME + (20 SECONDS) + (minion_value * 5) SECONDS
 
 	attackby(obj/item/P as obj, mob/living/user as mob)
 		src._health -= P.force

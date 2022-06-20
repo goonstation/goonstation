@@ -41,7 +41,7 @@
 	var/datum/projectile/slam/proj = new
 
 	cast(atom/target)
-		if (disabled && world.time > last_cast)
+		if (disabled && TIME > last_cast)
 			disabled = 0
 		if (disabled)
 			return 1

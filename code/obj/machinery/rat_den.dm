@@ -12,7 +12,7 @@
 
 	New()
 		..()
-		next_spawn_check = world.time + (10 SECONDS)
+		next_spawn_check = TIME + (10 SECONDS)
 		return
 
 	attackby(obj/item/P, mob/living/user)
@@ -29,8 +29,8 @@
 
 	process()	//Spawn some mad mice once in awhile
 		if (src.next_spawn_check != null)
-			if (src.next_spawn_check < world.time)
-				next_spawn_check = world.time + rand(20 SECONDS, 25 SECONDS)
+			if (src.next_spawn_check < TIME)
+				next_spawn_check = TIME + rand(20 SECONDS, 25 SECONDS)
 				if (linked_critters < max_critters)
 					var/obj/critter/mouse/mad/ratden/M = new /obj/critter/mouse/mad/ratden(src.loc)
 					M.linked_den = src

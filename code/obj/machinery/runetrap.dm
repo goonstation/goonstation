@@ -176,12 +176,11 @@
 					return 1
 				src.visible_message("<span class='alert>[M] steps on [src] and triggers it! A flame engulfs them immediatly!</span>")
 				playsound(src, "sound/voice/wraith/wraithraise3.ogg", 80)
-				SPAWN(5 DECI SECONDS)
-					boutput(M, text("<span class='alert'>You blink, and suddenly you're somewhere else!</span>"))
-					playsound(M.loc, "sound/effects/mag_warp.ogg", 25, 1, -1)
-					M.set_loc(pick(randomturfs))
-					elecflash(src, 1, 1)
-					qdel(src)
+				boutput(M, text("<span class='alert'>You blink, and suddenly you're somewhere else!</span>"))
+				playsound(M.loc, "sound/effects/mag_warp.ogg", 25, 1, -1)
+				M.set_loc(pick(randomturfs))
+				elecflash(src, 1, 1)
+				qdel(src)
 
 /obj/machinery/wraith/runetrap/explosive
 	Crossed(atom/movable/A)
@@ -193,10 +192,9 @@
 			if(checkRun(M))
 				src.visible_message("<span class='alert>[M] steps on [src] and triggers it! You hear a buzzing sound!</span>")
 				playsound(src, "sound/voice/wraith/wraithraise3.ogg", 80)
-				SPAWN(5 DECI SECOND)
-					explosion(src, src, -1, 1, 2, 4)
-					elecflash(src, 1, 1)
-					qdel(src)
+				explosion(src, src, -1, 1, 2, 4)
+				elecflash(src, 1, 1)
+				qdel(src)
 
 /obj/machinery/wraith/runetrap/slipping
 	Crossed(atom/movable/A)
@@ -220,7 +218,7 @@
 	if(M != null)
 		var/slip_delay = BASE_SPEED_SUSTAINED + WALK_DELAY_ADD
 		var/movement_delay_real = max(M.movement_delay(get_step(M,M.move_dir), 0),world.tick_lag)
-		var/movedelay = clamp(world.time - M.next_move, movement_delay_real, world.time - M.last_pulled_time)
+		var/movedelay = clamp(TIME - M.next_move, movement_delay_real, TIME - M.last_pulled_time)
 
 		if (movedelay < slip_delay)
 			return TRUE
