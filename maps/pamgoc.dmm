@@ -67522,6 +67522,10 @@
 	icon_state = "Stairs2_wide"
 	},
 /area/station/hydroponics/bay)
+"eFW" = (
+/obj/decal/poster/wallsign/framed_award/firstbill,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/crew_quarters/heads)
 "eJp" = (
 /obj/table/wood/auto,
 /obj/item/plate{
@@ -131737,7 +131741,7 @@ crH
 bGM
 cqm
 bTr
-czu
+eFW
 aJz
 auq
 czu

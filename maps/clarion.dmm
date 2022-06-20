@@ -23655,6 +23655,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/decal/poster/wallsign/framed_award/firstbill,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/heads{
 	name = "Head of Personnel's Quarters"

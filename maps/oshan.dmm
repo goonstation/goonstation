@@ -45998,6 +45998,10 @@
 	},
 /turf/simulated/floor/green,
 /area/station/hydroponics/bay)
+"kvn" = (
+/obj/decal/poster/wallsign/framed_award/firstbill,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/bridge/hos)
 "kwr" = (
 /obj/lattice{
 	dir = 1;
@@ -97554,7 +97558,7 @@ cks
 cke
 cku
 bvL
-bvL
+kvn
 bxc
 bxX
 bvL

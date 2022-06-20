@@ -51410,6 +51410,10 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/catering)
+"owW" = (
+/obj/decal/poster/wallsign/framed_award/firstbill,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/bridge/hos)
 "oyG" = (
 /obj/item/clothing/glasses/blindfold,
 /turf/simulated/floor/engine/vacuum,
@@ -122940,7 +122944,7 @@ bBJ
 bxm
 bvY
 bEP
-vTk
+owW
 bHi
 bIF
 nXl
