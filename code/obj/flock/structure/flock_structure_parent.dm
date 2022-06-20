@@ -269,5 +269,4 @@ ABSTRACT_TYPE(/obj/flock_structure)
 		. = TRUE
 
 /obj/flock_structure/Cross(atom/movable/mover)
-	. = ..()
 	return istype(mover,/mob/living/critter/flock/drone)

@@ -352,7 +352,6 @@
 		. = TRUE
 
 /obj/grille/flock/Cross(atom/movable/mover)
-	. = ..()
 	return istype(mover,/mob/living/critter/flock/drone)
 
 /obj/grille/flock/special_desc(dist, mob/user)

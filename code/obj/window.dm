@@ -1072,7 +1072,6 @@
 		. = TRUE
 
 /obj/window/auto/feather/Cross(atom/movable/mover)
-	. = ..()
 	return istype(mover,/mob/living/critter/flock/drone)
 
 /obj/window/feather
