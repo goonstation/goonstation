@@ -1066,7 +1066,7 @@
 				. += "and is entitled to perform related actions to it in space."
 		framed_award/aiscript
 			name = "AI's first space-python script"
-			desc = "Print ('Hello World')".
+			desc = "Print ('Hello World')"
 			award_type = /obj/item/aiscript/
 			award_name = "script"
 			owner_job = "AI"

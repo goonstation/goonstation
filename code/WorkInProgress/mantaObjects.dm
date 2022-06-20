@@ -686,6 +686,15 @@ var/obj/manta_speed_lever/mantaLever = null
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "hopbill"
 
+/obj/item/cecertification
+	name = "CE's certification"
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "cecertification"
+
+/obj/item/aiscript
+	name = "AI's first script"
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "aiscript"
 //CONSTRUCTION WORKER STUFF//
 
 /obj/item/sledgehammer
