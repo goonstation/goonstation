@@ -34,6 +34,16 @@
 		<br><span class='bold'>ID:</span> Storage Surface
 		<br><span class='bold'>###=-</span></span>"}
 
+/obj/table/flock/Crossed(atom/movable/mover)
+	. = ..()
+	var/mob/living/critter/flock/drone/drone = mover
+	if(istype(drone) && !drone.floorrunning)
+		animate_flock_passthrough(mover)
+		. = TRUE
+
+/obj/table/flock/Cross(atom/movable/mover)
+	return istype(mover,/mob/living/critter/flock/drone)
+
 /obj/table/flock/auto
 	auto = TRUE
 
