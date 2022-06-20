@@ -592,55 +592,31 @@
 /area/marsoutpost
 	name = "Abandoned Outpost"
 	icon_state = "red"
-	var/sound/mysound = null
 	sound_group = "mars"
+	sound_loop = 'sound/ambience/loop/Mars_Interior.ogg'
+	sound_loop_vol = 60
 
 /area/marsoutpost/New()
-	..()
-	var/sound/S = new/sound()
-	mysound = S
-	S.file = 'sound/ambience/loop/Mars_Interior.ogg'
-	S.repeat = 1
-	S.wait = 0
-	S.channel = 123
-	S.volume = 60
-	S.priority = 255
-	S.status = SOUND_UPDATE
-
+	. = ..()
 	START_TRACKING_CAT(TR_CAT_AREA_PROCESS)
 
 /area/marsoutpost/disposing()
 	STOP_TRACKING_CAT(TR_CAT_AREA_PROCESS)
 	. = ..()
 
-/area/marsoutpost/Entered(atom/movable/Obj,atom/OldLoc)
-	..()
-	if(ismob(Obj))
-		if(Obj:client)
-			mysound.status = SOUND_UPDATE
-			Obj << mysound
-	return
-
-/area/marsoutpost/Exited(atom/movable/Obj)
-	..()
-	if(ismob(Obj))
-		if(Obj:client)
-			mysound.status = SOUND_PAUSED | SOUND_UPDATE
-			Obj << mysound
-
 /area/marsoutpost/area_process()
-	var/sound/S = null
+	var/sound/S_fx = null
 
 	if(prob(20))
-		S = sound(file=pick(
-			'sound/ambience/nature/Mars_Rockslide1.ogg', \
-			'sound/ambience/industrial/MarsFacility_MovingEquipment.ogg', \
-			'sound/ambience/nature/Mars_Rockslide2.ogg', \
+		S_fx = sound(file=pick(
+			'sound/ambience/nature/Mars_Rockslide1.ogg',\
+			'sound/ambience/industrial/MarsFacility_MovingEquipment.ogg',\
+			'sound/ambience/nature/Mars_Rockslide2.ogg',\
 			'sound/ambience/industrial/MarsFacility_Glitchy.ogg'))
 
 		for(var/mob/living/carbon/human/H in src)
 			if(H.client)
-				playsound(H, S, 70, channel = VOLUME_CHANNEL_AMBIENT)
+				playsound(H, S_fx, 70, channel = VOLUME_CHANNEL_AMBIENT)
 
 /area/marsoutpost/duststorm
 	name = "Barren Planet"

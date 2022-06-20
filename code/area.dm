@@ -121,7 +121,10 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 	var/waking_critters = 0
 
 	// this chunk zone is for Area Ambience
+
+	/// Set to a sound you want to loop in an area
 	var/sound_loop = null
+	/// Volume for [sound_loop]
 	var/sound_loop_vol = 50
 	var/sound_fx_1 = null
 	var/sound_fx_2 = null

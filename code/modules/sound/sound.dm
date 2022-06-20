@@ -532,6 +532,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 	sound_playing[ S.channel ][1] = S.volume
 	sound_playing[ S.channel ][2] = VOLUME_CHANNEL_AMBIENT
 	S.volume *= getVolume( VOLUME_CHANNEL_AMBIENT ) / 100
+	S.status = SOUND_UPDATE | SOUND_STREAM // playing one at a time, update
 	if (pass_volume != 0)
 		S.volume *= attenuate_for_location(A)
 		EARLY_RETURN_IF_QUIET(S.volume)
