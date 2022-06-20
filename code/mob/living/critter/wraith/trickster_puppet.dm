@@ -1,6 +1,6 @@
 //Look like someone else
 
-/mob/living/critter/trickster_puppet
+/mob/living/critter/wraith/trickster_puppet
 	name = "Trickster puppet"
 	desc = "A strange shell of a person looking straight ahead with lifeless eyes."
 	density = 1

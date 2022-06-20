@@ -78,7 +78,7 @@
 			border_state = "plague_frame"
 		else if (istype(holder.owner, /mob/wraith/wraith_harbinger))
 			border_state = "harbinger_frame"
-		else if (istype(holder.owner, /mob/wraith/wraith_trickster) || istype(holder.owner, /mob/living/critter/trickster_puppet))
+		else if (istype(holder.owner, /mob/wraith/wraith_trickster) || istype(holder.owner, /mob/living/critter/wraith/trickster_puppet))
 			border_state = "trickster_frame"
 
 		var/atom/movable/screen/ability/topBar/B = src.object
@@ -543,8 +543,8 @@
 		if (..())
 			return 1
 
-		if(istype(holder.owner, /mob/living/critter/trickster_puppet))
-			var/mob/living/critter/trickster_puppet/P = holder.owner
+		if(istype(holder.owner, /mob/living/critter/wraith/trickster_puppet))
+			var/mob/living/critter/wraith/trickster_puppet/P = holder.owner
 			P.demanifest()
 			return 0
 
@@ -562,7 +562,7 @@
 			if ((istype(W, /mob/wraith/wraith_trickster)))	//Trickster can appear as a human, living or dead.
 				var/mob/wraith/wraith_trickster/T = holder.owner
 				if (T.copied_appearance != null)
-					var/mob/living/critter/trickster_puppet/puppet = new /mob/living/critter/trickster_puppet(get_turf(T), T)
+					var/mob/living/critter/wraith/trickster_puppet/puppet = new /mob/living/critter/wraith/trickster_puppet(get_turf(T), T)
 					T.mind.transfer_to(puppet)
 					puppet.appearance = T.copied_appearance
 					puppet.desc = T.copied_desc
@@ -1566,12 +1566,12 @@
 		if (..())
 			return 1
 
-		if (!istype(holder.owner, /mob/wraith/wraith_trickster) && !istype(holder.owner, /mob/living/critter/trickster_puppet))
+		if (!istype(holder.owner, /mob/wraith/wraith_trickster) && !istype(holder.owner, /mob/living/critter/wraith/trickster_puppet))
 			boutput(holder.owner, "<span class='notice'>You cannot cast this under your current form.</span>")
 			return 1
 
 		var/mob/wraith/wraith_trickster/W = null
-		var/mob/living/critter/trickster_puppet/P = null
+		var/mob/living/critter/wraith/trickster_puppet/P = null
 		if(istype(holder.owner, /mob/wraith/wraith_trickster))
 			W = holder.owner
 			if (!W.haunting)
