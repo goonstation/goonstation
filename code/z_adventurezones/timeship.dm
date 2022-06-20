@@ -9,79 +9,35 @@ Decals that float, including clocks
 Turfs and decal for the space rift
 */
 
-var/list/timewarp_interior_sounds = list('sound/ambience/industrial/Timeship_Gong.ogg','sound/ambience/industrial/Timeship_Glitchy3.ogg','sound/ambience/industrial/Timeship_Glitchy1.ogg','sound/ambience/industrial/Timeship_Glitchy2.ogg','sound/ambience/industrial/Timeship_Malfunction.ogg')
-
 /area/timewarp
 	requires_power = 0
 	luminosity = 1
 	force_fullbright = 1
 	name = "Strange Place"
 	icon_state = "shuttle2"
-	var/sound/ambientSound = 'sound/ambience/industrial/Timeship_Atmospheric.ogg'
-	var/list/fxlist = null
-	var/list/soundSubscribers = null
+	sound_group = "timeship"
+	sound_loop = 'sound/ambience/industrial/Timeship_Atmospheric.ogg'
+	sound_loop_vol = 60
 
-	New()
-		..()
-		//fxlist =
-		if (ambientSound)
+/area/timewarp/New()
+	. = ..()
+	START_TRACKING_CAT(TR_CAT_AREA_PROCESS)
 
-			SPAWN(6 SECONDS)
-				var/sound/S = new/sound()
-				S.file = ambientSound
-				S.repeat = 0
-				S.wait = 0
-				S.channel = 123
-				S.volume = 60
-				S.priority = 255
-				S.status = SOUND_UPDATE
-				ambientSound = S
+/area/timewarp/disposing()
+	STOP_TRACKING_CAT(TR_CAT_AREA_PROCESS)
+	. = ..()
 
-				soundSubscribers = list()
-				process()
+/area/timewarp/area_process()
+	if(prob(20))
+		src.sound_fx_2 = pick('sound/ambience/industrial/Timeship_Gong.ogg',\
+		'sound/ambience/industrial/Timeship_Glitchy1.ogg',\
+		'sound/ambience/industrial/Timeship_Glitchy2.ogg',\
+		'sound/ambience/industrial/Timeship_Glitchy3.ogg',\
+		'sound/ambience/industrial/Timeship_Malfunction.ogg')
 
-	Entered(atom/movable/Obj,atom/OldLoc)
-		..()
-		if(ambientSound && ismob(Obj))
-			if (!soundSubscribers:Find(Obj))
-				soundSubscribers += Obj
-
-		return
-
-	proc/process()
-		if (!soundSubscribers)
-			return
-
-		var/sound/S = null
-		var/sound_delay = 0
-
-		while(current_state < GAME_STATE_FINISHED)
-			sleep(6 SECONDS)
-
-			if(prob(10) && fxlist)
-				S = sound(file=pick(fxlist), volume=50)
-				sound_delay = rand(0, 50)
-			else
-				S = null
-				continue
-
-			for(var/mob/living/H in soundSubscribers)
-				var/area/mobArea = get_area(H)
-				if (!istype(mobArea) || mobArea.type != src.type)
-					soundSubscribers -= H
-					if (H.client)
-						ambientSound.status = SOUND_PAUSED | SOUND_UPDATE
-						ambientSound.volume = 0
-						H << ambientSound
-					continue
-
-				if(H.client)
-					ambientSound.status = SOUND_UPDATE
-					ambientSound.volume = 60
-					H << ambientSound
-					if(S)
-						SPAWN(sound_delay)
-							H << S
+		for(var/mob/living/carbon/human/H in src)
+			if(H.client)
+				H.client.playAmbience(src, AMBIENCE_FX_2, 60)
 
 
 /area/timewarp/ship
