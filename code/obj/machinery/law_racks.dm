@@ -25,7 +25,7 @@
 	/// time of last update
 	var/last_update_time = 0
 	/// delay between each update
-	var/update_delay = 100
+	var/update_delay = 1200
 	/// flag indicating a need for law updates
 	var/update_required = FALSE
 
@@ -492,6 +492,17 @@
 	proc/format_for_logs(var/glue = "<br>")
 		var/law_counter = 1
 		var/lawOut = list()
+		if(update_required)
+			for (var/X in last_laws)
+				if(X)
+					var/lt = X["law"]
+					if(islist(lt))
+						for(var/law in lt)
+							lawOut += "[law_counter++]: [law]"
+					else
+						lawOut += "[law_counter++]: [lt]"
+			return jointext(lawOut, glue)
+
 		for (var/obj/item/aiModule/X in law_circuits)
 			if(!X)
 				continue
@@ -512,6 +523,16 @@
 		var/removed_law_offset = 0
 		var/list/lawOut = new
 		var/list/removed_laws = new
+		if(update_required)
+			for (var/X in last_laws)
+				if(X)
+					var/lt = X["law"]
+					if(islist(lt))
+						for(var/law in lt)
+							lawOut += "<span class=\"regular\">[law_counter++]: [law]</span>"
+					else
+						lawOut += "<span class=\"regular\">[law_counter++]: [lt]</span>"
+			return jointext(lawOut, glue)
 
 		for (var/i in 1 to MAX_CIRCUITS)
 			var/obj/item/aiModule/module = law_circuits[i]
@@ -550,6 +571,17 @@
 		var/list/laws = list()
 
 		var/law_counter = 1
+		if(update_required)
+			for (var/X in last_laws)
+				if(X)
+					var/lt = X["law"]
+					if(islist(lt))
+						for(var/law in lt)
+							laws["[law_counter++]"] = law
+					else
+						laws["[law_counter++]"] = lt
+			return laws
+
 		for (var/obj/item/aiModule/X in law_circuits)
 			if(!X)
 				continue
