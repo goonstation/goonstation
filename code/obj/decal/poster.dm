@@ -1056,6 +1056,7 @@
 			icon_award = "cecertification"
 			icon_empty = "frame"
 			icon_state = "cecertification"
+
 			get_award_text(var/datum/mind/M)
 				var/cename = "Anonymous"
 				if(M?.current?.client?.preferences?.name_last)
