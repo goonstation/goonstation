@@ -601,7 +601,7 @@ var/zapLimiter = 0
 	. = list(
 		"cell_type" = cell_type, // 0=no cell, 1=regular, 2=high-cap (x5) <- old, now it's just 0=no cell, otherwise dictate cellcapacity by changing this value. 1 used to be 1000, 2 was 2500
 		"cell_percent" = cell ? cell.percent() : null,
-		"cell_present" = cell ? 1 : 0,
+		"cell_present" = !!cell,
 		"opened" = opened,
 		"circuit_disabled" = circuit_disabled,
 		"shorted" = shorted,
