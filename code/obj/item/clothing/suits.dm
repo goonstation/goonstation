@@ -230,7 +230,7 @@
 		setProperty("chemprot", 60)
 		setProperty("meleeprot", 2)
 		setProperty("rangedprot", 0.5)
-		setProperty("movespeed", 0.45)
+		setProperty("movespeed", 0.3)
 		setProperty("disorient_resist", 15)
 
 /obj/item/clothing/suit/bio_suit/attackby(obj/item/W, mob/user)
@@ -270,13 +270,14 @@
 
 /obj/item/clothing/suit/bio_suit/armored
 	name = "armored bio suit"
-	desc = "A suit that protects against biological contamination. Somebody slapped some armor onto the chest."
+	desc = "A suit that protects against biological contamination. Somebody slapped some bulky armor onto the chest."
 	icon_state = "armorbio"
 	item_state = "armorbio"
 	setupProperties()
 		..()
 		setProperty("meleeprot", 5)
 		setProperty("rangedprot", 1)
+		setProperty("movespeed", 0.45)
 
 /obj/item/clothing/suit/bio_suit/armored/nt
 	name = "\improper NT bio suit"
@@ -287,6 +288,7 @@
 		..()
 		setProperty("meleeprot", 5)
 		setProperty("rangedprot", 1)
+		delProperty("movespeed")
 
 /obj/item/clothing/suit/bio_suit/paramedic/armored
 	name = "armored paramedic suit"
@@ -345,7 +347,7 @@
 
 	setupProperties()
 		..()
-		setProperty("movespeed", 0.45)
+		setProperty("movespeed", 0.3)
 		setProperty("radprot", 50)
 		setProperty("coldprot", 15)
 		setProperty("heatprot", 15)
@@ -934,18 +936,19 @@
 		setProperty("chemprot", 10)
 		setProperty("meleeprot", 3)
 		setProperty("rangedprot", 0.5)
-		setProperty("movespeed", 1)
+		setProperty("movespeed", 0.6)
 		setProperty("disorient_resist", 15)
 
 /obj/item/clothing/suit/fire/armored
 	name = "armored firesuit"
-	desc = "A suit that protects against fire and heat. Somebody slapped some armor onto the chest."
+	desc = "A suit that protects against fire and heat. Somebody slapped some bulky armor onto the chest."
 	icon_state = "fire_armor"
 	item_state = "fire_suit"
 	setupProperties()
 		..()
 		setProperty("meleeprot", 6)
 		setProperty("rangedprot", 1)
+		setProperty("movespeed", 1)
 
 /obj/item/clothing/suit/fire/attackby(obj/item/W, mob/user)
 	var/turf/T = user.loc
@@ -972,7 +975,7 @@
 		setProperty("heatprot", 65)
 		setProperty("meleeprot", 4)
 		setProperty("rangedprot", 0.8)
-		setProperty("movespeed", 2)
+		setProperty("movespeed", 1.5)
 		setProperty("disorient_resist", 25)
 
 // SWEATERS
