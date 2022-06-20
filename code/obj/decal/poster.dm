@@ -1063,7 +1063,7 @@
 				. += "It says \ [cename] has been granted a certification"
 				. += " in [pick("Logistical","Thermal","Microscopic","Informative","Quantum","Theoretical","Honkmother")] [pick("Freighting","Engineering","Mechanics","Mining","Cargology")]/"
 				. += "and is entitled to perform related actions to it in space."
-		framed_award/aipython
+		framed_award/aiscript
 			name = "AI's first space-python script"
 			desc = "Print ('Hello World')".
 			award_type = /obj/item/aiscript/
