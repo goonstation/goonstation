@@ -561,7 +561,7 @@ var/zapLimiter = 0
 // attack with hand - remove cell (if cover open) or interact with the APC
 
 /obj/machinery/power/apc/attack_hand(mob/user)
-	if (user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat)
+	if (!can_act(user))
 		return
 
 	add_fingerprint(user)
@@ -645,10 +645,10 @@ var/zapLimiter = 0
 	. = ..()
 	if (.)
 		return
-	if (usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.stat)
+	if (!can_act(usr))
 		return
 
-	if ((in_interact_range(src, usr) && istype(src.loc, /turf))||(issilicon(usr) || isAI(usr)))
+	if ((in_interact_range(src, usr) && istype(src.loc, /turf)) || (issilicon(usr) || isAI(usr)))
 		switch (action) // If action is valid, return true so ui updates
 			if ("onMendWire")
 				return onMendWire(usr, params);

@@ -1,20 +1,14 @@
 import { Window } from '../../layouts';
 import { useBackend } from "../../backend";
-import { round } from 'common/math';
 
 import {
   Stack,
-  BlockQuote,
   Box,
   Button,
   Divider,
-  Flex,
   LabeledList,
   ProgressBar,
   Section,
-  Slider,
-  Tabs,
-  LabeledControls,
 } from '../../components';
 
 import {
@@ -47,42 +41,19 @@ export const Apc = (props, context) => {
   const {
     area_requires_power,
     area_name,
-    cell_type,
     cell_percent,
     cell_present,
-    opened,
-    circuit_disabled,
-    shorted,
-    lighting,
-    equipment,
-    environ,
     operating,
-    do_not_operate,
     charging,
     chargemode,
     chargecount,
     locked,
     coverlocked,
     aidisabled,
-    noalerts,
-    lastused_light,
-    lastused_equip,
-    lastused_environ,
     lastused_total,
     main_status,
-    light_consumption,
-    equip_consumption,
-    environ_consumption,
-    emagged,
     wiresexposed,
-    apcwires,
-    repair_status,
-    host_id,
     setup_networkapc,
-    orange_cut,
-    dark_red_cut,
-    white_cut,
-    yellow_cut,
     can_access_remotely,
     is_ai,
     is_silicon,
@@ -202,7 +173,7 @@ export const Apc = (props, context) => {
     return (
       <Window title="Area Power Controller" width={400} height={data["wiresexposed"] ? 680 : 420}>
         <Window.Content>
-          <Section title={"Area Power Controller (" + area_name + ")"}>
+          <Section title={area_name}>
             {isLocalAccess() ? <Box align="center" bold fill>Swipe ID card to {locked ? "unlock" : "lock"} interface</Box> : null}
             {isLocalAccess() ? <Divider /> : null}
             <LabeledList>
@@ -215,6 +186,7 @@ export const Apc = (props, context) => {
                 <Box>{mainStatusToText()}</Box>
               </LabeledList.Item>
             </LabeledList>
+            {hostConnectionDisplay()}
           </Section>
           <Section title="PowerChannel">
             <LabeledList>

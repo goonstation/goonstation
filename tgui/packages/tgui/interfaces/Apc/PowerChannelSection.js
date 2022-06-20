@@ -1,17 +1,7 @@
 import { useBackend } from "../../backend";
 import {
-  Stack,
-  BlockQuote,
-  Box,
   Button,
-  Divider,
-  Flex,
   LabeledList,
-  ProgressBar,
-  Section,
-  Slider,
-  Tabs,
-  LabeledControls,
 } from '../../components';
 
 
@@ -111,14 +101,6 @@ export const PowerChannelSection = (props, context) => {
 
   const isCurrentStatus = (status) => {
     return status === getPowerChannelStatus();
-  };
-
-  const needsFakeSelectedColor = (status) => {
-    if (status === POWER_CHANNEL_STATUS_AUTO_OFF || status === POWER_CHANNEL_STATUS_AUTO_ON) {
-      let isAutoBased = isCurrentStatus(POWER_CHANNEL_STATUS_AUTO_OFF) || isCurrentStatus(POWER_CHANNEL_STATUS_AUTO_ON);
-      return isAutoBased && !hasPermission();
-    }
-    return isCurrentStatus(status) && !hasPermission();
   };
 
   return (
