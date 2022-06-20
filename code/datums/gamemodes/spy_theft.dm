@@ -13,7 +13,11 @@
 	var/const/waittime_l = 600	// Minimum after round start to send threat information to printer
 	var/const/waittime_h = 1800	// Maximum after round start to send threat information to printer
 
+#ifdef RP_MODE
 	var/const/bounty_refresh_interval = 25 MINUTES
+#else
+	var/const/bounty_refresh_interval = 15 MINUTES
+#endif
 	var/last_refresh_time = 0
 
 	var/const/spies_possible = 7
@@ -70,7 +74,7 @@
 	// Adjust reward based off target job to estimate risk level
 		if (job == "Head of Security" || job == "Captain")
 			return 3
-		else if (job == "Medical Director" || job == "Head of Personnel" || job == "Chief Engineer" || job == "Research Director" || job == "Nanotrasen Special Operative" || job == "Security Officer" || job == "Detective")
+		else if (job == "Medical Director" || job == "Head of Personnel" || job == "Chief Engineer" || job == "Research Director" || job == "Nanotrasen Security Consultant" || job == "Security Officer" || job == "Detective")
 			return 2
 		else
 			return 1
@@ -450,6 +454,7 @@
 	station_bounties[/obj/item/device/radio/headset/mail] = 1
 	station_bounties[/obj/item/device/radio/headset/clown] = 1
 	station_bounties[/obj/item/device/radio/headset/deaf] = 1
+	station_bounties[/obj/item/device/radio/headset/miner] = 1
 	station_bounties[/obj/item/device/radio/headset/security] = 2
 	station_bounties[/obj/item/device/radio/headset/command/radio_show_host] = 2
 	station_bounties[/obj/item/device/radio/headset/command/hop] = 2
@@ -497,6 +502,7 @@
 	big_station_bounties[/obj/machinery/genetics_scanner] = 2
 	big_station_bounties[/obj/machinery/atmospherics/unary/cryo_cell] = 2
 	big_station_bounties[/obj/machinery/computer/cloning] = 2
+	big_station_bounties[/obj/item/disk/data/floppy/manudrive/ai] = 2
 	big_station_bounties[/obj/machinery/clonepod] = 2
 
 	big_station_bounties[/obj/machinery/flasher/portable] = 2

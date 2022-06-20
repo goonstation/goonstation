@@ -145,7 +145,7 @@
 		logTheThing("admin", H, null, "awakened as a sleeper agent antagonist. Source: [source ? "[source]" : "random event"]")
 		H.show_text("<h2><font color=red><B>You have awakened as a syndicate sleeper agent!</B></font></h2>", "red")
 		H.mind.special_role = ROLE_SLEEPER_AGENT
-		H << browse(grabResource("html/traitorTips/traitorsleeperTips.html"),"window=antagTips;titlebar=1;size=600x400;can_minimize=0;can_resize=0")
+		H.show_antag_popup("sleeper")
 		if(!(H.mind in ticker.mode.traitors))
 			ticker.mode.traitors += H.mind
 		if (H.mind.current)
@@ -193,7 +193,7 @@
 				if (M.client.ignore_sound_flags)
 					if (M.client.ignore_sound_flags & SOUND_ALL)
 						continue
-				M.playsound_local(M, soundfile, 30, 0, flags = SOUND_IGNORE_SPACE)
+				M.playsound_local(M, soundfile, 15, 0)
 		sleep(1 SECOND)
 
 	proc/play_all_numbers()

@@ -20,6 +20,7 @@
 #define iscow(x) (istype(x, /mob/living/carbon/human) && istype(x:mutantrace, /datum/mutantrace/cow))
 #define ispug(x) (istype(x, /mob/living/carbon/human) && istype(x:mutantrace, /datum/mutantrace/pug))
 #define isfrog(x) (istype(x, /mob/living/carbon/human) && istype(x:mutantrace, /datum/mutantrace/amphibian))
+#define isskeleton(x) (istype(x, /mob/living/carbon/human) && istype(x:mutantrace, /datum/mutantrace/skeleton))
 #define iscritter(x) istype(x, /obj/critter)
 #define isintangible(x) istype(x, /mob/living/intangible)
 #define ismobcritter(x) istype(x, /mob/living/critter)
@@ -41,9 +42,14 @@
 #define issmallanimal(x) istype(x, /mob/living/critter/small_animal)
 #define isghostcritter(x) (istype(x, /mob/living/critter) && x:ghost_spawned)
 #define ishelpermouse(x) (istype(x, /mob/living/critter/small_animal/mouse/weak/mentor))//mentor and admin mice
+#define islivingobject(x) (istype(x, /mob/living/object)) //! Is a possessed object
 
 /// Returns true if x is a new player mob (what u r if ur in the lobby screen, usually)
 #define isnewplayer(x) (istype(x, /mob/new_player))
 
 /// Returns true if this mob immune to breathing in smoke?
 #define issmokeimmune(x) (!isliving(x) || isintangible(x) || issilicon(x) || ((x?.wear_mask && (x.wear_mask.c_flags & BLOCKSMOKE || (x.wear_mask.c_flags & MASKINTERNALS && x.internal))) || ischangeling(x) || HAS_ATOM_PROPERTY(x, PROP_MOB_REBREATHING) || HAS_ATOM_PROPERTY(x, PROP_MOB_BREATHLESS) || isdead(x)))
+
+/// This is for objects which have some sort of prerequisite for people to use them. Allows you to bypass those checks if
+/// the user is the possessed version of the object being interacted with
+#define IS_LIVING_OBJECT_USING_SELF(x) (islivingobject(x) && x:possessed_thing == src)

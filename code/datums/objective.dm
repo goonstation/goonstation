@@ -684,6 +684,7 @@ proc/create_fluff(datum/mind/target)
 		return 1
 
 /datum/objective/specialist/absorb
+	medal_name = "Many names, many faces"
 	var/absorb_count
 
 	set_up()
@@ -789,6 +790,7 @@ proc/create_fluff(datum/mind/target)
 		return 1
 
 /datum/objective/specialist/blob
+	medal_name = "Blob everywhere!"
 	var/blobtiletarget = 500
 
 	set_up()
@@ -809,6 +811,13 @@ proc/create_fluff(datum/mind/target)
 
 		if (O.blobs.len >= blobtiletarget)
 			return 1
+
+/datum/objective/specialist/flock
+	explanation_text = "Construct the relay and transmit The Signal."
+
+	check_completion()
+		return flock_signal_unleashed
+
 
 /datum/objective/specialist/wraith
 	explanation_text = "Be dastardly as heck!"
@@ -966,6 +975,7 @@ proc/create_fluff(datum/mind/target)
 		return !failed
 
 /datum/objective/specialist/werewolf/feed
+	medal_name = "Good feasting"
 	var/feed_count = 0
 	var/target_feed_count
 	var/list/mob/mobs_fed_on = list() // Stores bioHolder.Uid of previous victims, so we can't feed on the same person multiple times.
@@ -1390,6 +1400,25 @@ ABSTRACT_TYPE(/datum/objective/conspiracy)
 		return 1
 
 /////////////////////////////////////////////////////////
+// Arcfiend Objectives                                 //
+/////////////////////////////////////////////////////////
+
+/datum/objective/specialist/powerdrain // this is basically just a repurposed vamp objective, but it should work.
+	var/powergoal
+
+	set_up()
+#ifdef RP_MODE
+		powergoal = rand(350,400) * 10
+#else
+		powergoal = rand(450,500) * 10
+#endif
+		explanation_text = "Accumulate at least [powergoal] units of charge in total."
+
+	check_completion()
+		var/datum/abilityHolder/arcfiend/AH = owner.current?.get_ability_holder(/datum/abilityHolder/arcfiend)
+		return (AH?.lifetime_energy >= powergoal)
+
+/////////////////////////////////////////////////////////
 // Neatly packaged objective sets for your convenience //
 /////////////////////////////////////////////////////////
 
@@ -1458,6 +1487,11 @@ ABSTRACT_TYPE(/datum/objective/conspiracy)
 /datum/objective_set/blob
 	objective_list = list(/datum/objective/specialist/blob)
 	escape_choices = list(/datum/objective/escape/survive)
+
+/datum/objective_set/arcfiend
+	objective_list = list(/datum/objective/specialist/powerdrain)
+	escape_choices = list(/datum/objective/escape,
+	/datum/objective/escape/hijack)
 
 // Wraith not listed since it has its own dedicated proc
 

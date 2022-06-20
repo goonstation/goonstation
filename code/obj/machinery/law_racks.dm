@@ -2,7 +2,7 @@
 	name = "AI Law Mount Rack"
 	icon = 'icons/obj/large/32x48.dmi'
 	icon_state = "airack_empty"
-	desc = "A large electronics rack that can contain AI Law Circuits, to modify the behaivor of connected AIs."
+	desc = "A large electronics rack that can contain AI Law Circuits, to modify the behavior of connected AIs."
 	density = 1
 	anchored = 1
 	mats = list("MET-1" = 20, "MET-2" = 5, "INS-1" = 10, "CON-1" = 10) //this bitch should be expensive
@@ -22,6 +22,8 @@
 	var/list/screwed[MAX_CIRCUITS]
 	/// list of hologram expansions
 	var/list/holo_expansions = list()
+	/// list of ability expansions
+	var/list/datum/targetable/ai_abilities = list()
 
 	New(loc)
 		START_TRACKING
@@ -258,7 +260,7 @@
 			src.UpdateOverlays(circuit_image,"module_slot_[i]")
 			src.UpdateOverlays(color_overlay,"module_slot_[i]_overlay")
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!src.law_circuits)
 			// YOU BETRAYED THE LAW!!!!!!
 			boutput(user, "<span class='alert'>Oh dear, this really shouldn't happen. Call an admin.</span>")
@@ -282,7 +284,7 @@
 		return ..()
 
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		if(isweldingtool(I))
 			if(I:try_weld(user,1))
 				if(src._health < src._max_health)
@@ -309,7 +311,7 @@
 			if(!inserted)
 				boutput(user,"<span class='alert'>There's no more space on the rack!</span>")
 			else
-				SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, .proc/insert_module_callback, list(count,user,AIM), user.equipped().icon, user.equipped().icon_state, \
+				SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, .proc/insert_module_callback, list(count,user,AIM), user.equipped().appearance, null, \
 					"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 		else if (istype(I, /obj/item/clothing/mask/moustache/))
 			for_by_tcl(M, /mob/living/silicon/ai)
@@ -320,7 +322,7 @@
 		else if (istype(I, /obj/item/peripheral/videocard))
 			var/obj/item/peripheral/videocard/V = I
 			if (GET_COOLDOWN(src, "mine_cooldown") == 0)
-				SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, .proc/insert_videocard_callback, list(user,V), user.equipped().icon, user.equipped().icon_state, \
+				SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, .proc/insert_videocard_callback, list(user,V), user.equipped().appearance, null, \
 						"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 			else
 				user.visible_message("<span class='alert'>The [src]'s graphics port isn't ready to accept [I] yet.</span>")
@@ -493,6 +495,7 @@
 	**/
 	proc/format_for_display(var/glue = "<br>")
 		var/law_counter = 1 //make the laws always sequential regardless of where in the rack they are
+		var/removed_law_offset = 0
 		var/list/lawOut = new
 		var/list/removed_laws = new
 
@@ -501,7 +504,14 @@
 			if(!module)
 				if (last_laws[i])
 					//load the law number and text from our saved law list
-					removed_laws += "<del class=\"alert\">[last_laws[i]["number"]]: [last_laws[i]["law"]]</del>"
+					var/list/lawtext = last_laws[i]["law"]
+					if (islist(lawtext))
+						for (var/law in lawtext)
+							removed_laws += "<del class=\"alert\">[last_laws[i]["number"] + removed_law_offset]: [law]</del>"
+							if (lawtext.Find(law) != length(lawtext)) //screm
+								removed_law_offset++
+					else
+						removed_laws += "<del class=\"alert\">[last_laws[i]["number"] + removed_law_offset]: [lawtext]</del>"
 				continue
 			var/lt = module.get_law_text(TRUE)
 			var/class = "regular"
@@ -556,7 +566,10 @@
 		for (var/mob/living/silicon/R in mobs)
 			if (isghostdrone(R))
 				continue
-			if(R.law_rack_connection == src)
+			if(R.law_rack_connection == src || (R.dependent && R?.mainframe?.law_rack_connection == src))
+				if(R.dependent && R?.mainframe?.law_rack_connection != src)
+					R.law_rack_connection = R?.mainframe?.law_rack_connection //goddamn shells
+					continue
 				R.playsound_local(R, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
 				R.show_text(notification_text, "red")
 				src.show_laws(R)
@@ -565,6 +578,18 @@
 					var/mob/living/silicon/ai/holoAI = R
 					holoAI.holoHolder.text_expansion = src.holo_expansions.Copy()
 
+					var/ability_type
+					var/datum/abilityHolder/silicon/ai/aiAH = R.abilityHolder
+					var/list/current_abilities = list()
+					for(var/datum/ability in aiAH.abilities)
+						current_abilities |= ability.type
+					var/list/abilities_to_remove = current_abilities - ai_abilities
+					for(ability_type in abilities_to_remove)
+						aiAH.removeAbility(ability_type)
+					var/list/abilities_to_add = ai_abilities - current_abilities
+					for(ability_type in abilities_to_add)
+						aiAH.addAbility(ability_type)
+
 		for (var/mob/living/intangible/aieye/E in mobs)
 			if(E.mainframe?.law_rack_connection == src)
 				E.playsound_local(E, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
@@ -572,6 +597,7 @@
 				affected_mobs |= E.mainframe
 				var/mob/living/silicon/ai/holoAI = E.mainframe
 				holoAI.holoHolder.text_expansion = src.holo_expansions.Copy()
+				E.abilityHolder?.updateButtons()
 		var/list/mobtextlist = list()
 		for(var/mob/living/M in affected_mobs)
 			mobtextlist += constructName(M, "admin")
@@ -595,6 +621,8 @@
 		tgui_process.update_uis(src)
 
 	proc/insert_module_callback(var/slotNum,var/mob/user,var/obj/item/aiModule/equipped)
+		if(src.law_circuits[slotNum])
+			return FALSE
 		src.law_circuits[slotNum]=equipped
 		user.u_equip(equipped)
 		equipped.set_loc(src)
@@ -604,6 +632,9 @@
 		if(istype(equipped,/obj/item/aiModule/hologram_expansion))
 			var/obj/item/aiModule/hologram_expansion/holo = equipped
 			src.holo_expansions |= holo.expansion
+		else if(istype(equipped,/obj/item/aiModule/ability_expansion))
+			var/obj/item/aiModule/ability_expansion/expansion = equipped
+			src.ai_abilities |= expansion.ai_abilities
 		logTheThing("station", user, null, "[constructName(user)] <b>inserts</b> law module into rack([constructName(src)]): [equipped]:[equipped.get_law_text()] at slot [slotNum]")
 		message_admins("[key_name(user)] added a new law to rack at [log_loc(src)]: [equipped], with text '[equipped.get_law_text()]' at slot [slotNum]")
 		UpdateIcon()
@@ -619,6 +650,9 @@
 		if(istype(src.law_circuits[slotNum],/obj/item/aiModule/hologram_expansion))
 			var/obj/item/aiModule/hologram_expansion/holo = src.law_circuits[slotNum]
 			src.holo_expansions -= holo.expansion
+		else if(istype(src.law_circuits[slotNum],/obj/item/aiModule/ability_expansion))
+			var/obj/item/aiModule/ability_expansion/expansion = src.law_circuits[slotNum]
+			src.ai_abilities -= expansion.ai_abilities
 		src.law_circuits[slotNum] = null
 		tgui_process.update_uis(src)
 		UpdateIcon()
@@ -765,4 +799,4 @@
 /obj/machinery/lawrack/syndicate
 	name = "AI Law Mount Rack - Syndicate Model"
 	icon_state = "airack_syndicate_empty"
-	desc = "A large electronics rack that can contain AI Law Circuits, to modify the behaivor of connected AIs. This one has a little S motif on the side."
+	desc = "A large electronics rack that can contain AI Law Circuits, to modify the behavior of connected AIs. This one has a little S motif on the side."

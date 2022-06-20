@@ -2139,7 +2139,7 @@
 /obj/machinery/handscanner{
 	pixel_y = 32
 	},
-/mob/living/critter/gunbot{
+/mob/living/critter/robotic/gunbot{
 	desc = "Painted in red and black, all indentifying marks have been scraped off. Darn.";
 	icon_state = "mars_nuke_bot";
 	interesting = "your scanner picks up a faint etching of a name. Even though your being shot at. Seems this one is named Ketchup.";
@@ -2279,7 +2279,7 @@
 	pixel_y = 32
 	},
 /obj/map/light/green,
-/mob/living/critter/gunbot{
+/mob/living/critter/robotic/gunbot{
 	desc = "Painted in red and black, all indentifying marks have been scraped off. Darn.";
 	icon_state = "mars_nuke_bot";
 	interesting = "your scanner picks up a faint etching of a name. Even though your being shot at. Seems this one is named Mustard.";
@@ -2850,6 +2850,7 @@
 	free_resources = null;
 	malfunction = 1;
 	name = "grody manufacturer";
+	supplemental_desc = null;
 	wires = 11
 	},
 /obj/machinery/light/small{

@@ -123,7 +123,27 @@
 								"Illegal haircutting.",\
 								"Staring at a bee for over an hour.",\
 								"Not showering before entering pool.",\
-								"Rampant idiocy.")
+								"Rampant idiocy.",\
+								"Never tipping the catering staff.",\
+								"Disregarding previous tickets.",\
+								"Fashion crimes.",\
+								"Gambling.",\
+								"Bribery.",\
+								"Sleeping on the job.",\
+								"Unauthorized stamp collecting.",\
+								"Refusing to wash their hands.",\
+								"Maintenance lurking.",\
+								"Dumpster diving.",\
+								"Not covering their mouth when sneezing.",\
+								"Open mouth chewing.",\
+								"Riding pods without a license.",\
+								"Breathing loudly.",\
+								"Riding a segway directly into the captain.",\
+								"Wearing their shirt backwards.",\
+								"Excessive swearing",\
+								"Cutting in line.",\
+								"Tying the captain's shoelaces together.",\
+								"Forgetting the captain's birthday.")
 		S["mi_crim_d"] = "No details provided."
 		S["ma_crim"] = pick(\
 								"Grand theft apidae.",\
@@ -141,8 +161,18 @@
 								"Dismemberment and decapitation.",\
 								"Running around with a chainsaw.",\
 								"Throwing explosive tomatoes at people.",\
-								"Caused multiple seemingly unrelated accidents.")
+								"Caused multiple seemingly unrelated accidents.",\
+								"Dabbing.",\
+								"Assembling explosives.",\
+								"Being in the wrong place at the wrong time.",\
+								"Assault.",\
+								"Tossing someone in space.",\
+								"Over-escalation.",\
+								"Manslaughter",\
+								"Refusing to share their meth.",\
+								"Grand larceny.")
 		S["ma_crim_d"] = "No details provided."
+
 
 		var/randomNote = pick("Huge nerd.", "Total jerkface.", "Absolute dingus.", "Insanely endearing.", "Worse than clown.", "Massive crapstain.");
 		if(S["notes"] == "No notes.")
@@ -158,8 +188,13 @@
 		H.mind.store_memory("- [S["mi_crim"]]")
 		H.mind.store_memory("- [S["ma_crim"]]")
 	else
-		S["criminal"] = "None"
-		S["mi_crim"] = "None"
+		if (H.mind?.assigned_role == "Clown")
+			S["criminal"] = "Clown"
+			S["mi_crim"] = "Clown"
+		else
+			S["criminal"] = "None"
+			S["mi_crim"] = "None"
+
 		S["mi_crim_d"] = "No minor crime convictions."
 		S["ma_crim"] = "None"
 		S["ma_crim_d"] = "No major crime convictions."

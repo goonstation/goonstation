@@ -68,13 +68,13 @@
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, __red("Nothing to devour there."))
+				boutput(holder.owner, "<span class='alert'>Nothing to devour there.</span>")
 				return 1
 		if (!isliving(target))
-			boutput(holder.owner, __red("Invalid target."))
+			boutput(holder.owner, "<span class='alert'>Invalid target.</span>")
 			return 1
 		if (BOUNDS_DIST(holder.owner, target) > 0)
-			boutput(holder.owner, __red("That is too far away to devour."))
+			boutput(holder.owner, "<span class='alert'>That is too far away to devour.</span>")
 			return 1
 		actions.start(new/datum/action/bar/icon/devourAbility(target, src), holder.owner)
 		return 0

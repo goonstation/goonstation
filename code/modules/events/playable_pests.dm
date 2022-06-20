@@ -14,7 +14,7 @@
 	list(/mob/living/critter/changeling/eyespider,/mob/living/critter/changeling/buttcrab),\
 	list(/mob/living/critter/small_animal/frog/weak),\
 	list(/mob/living/critter/small_animal/cockroach/robo/weak),\
-	list(/mob/living/critter/bot/cleanbot, /mob/living/critter/bot/firebot),)
+	list(/mob/living/critter/robotic/bot/cleanbot, /mob/living/critter/robotic/bot/firebot),)
 
 	admin_call(var/source)
 		if (..())

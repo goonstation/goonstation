@@ -25,7 +25,7 @@
 		if(prob(15))
 			spiderflail(src.target)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.alive)
 			if (user.a_intent == INTENT_HARM)
 				return ..()
@@ -464,7 +464,7 @@
 		..()
 		src.parent = parent
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.alive && (user.a_intent != INTENT_HARM))
 			src.visible_message("<span class='combat'><b>[user]</b> [src.pet_text] [src]!</span>")
 			return
@@ -568,6 +568,7 @@
 			src.task = "chasing"
 			return
 		for (var/mob/living/C in hearers(src.seekrange,src))
+			if (isintangible(C)) continue
 			if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100)) continue
 			if (C.bioHolder && C.bioHolder.HasEffect("husk")) continue
 			if (istype(C, /mob/living/critter/spider)) continue

@@ -34,7 +34,7 @@
 		if (isliving(user))
 			O.visible_message("<span class='alert'><b>[O]</b> suddenly pulls [user.name] inside and slams shut!</span>")
 			if (src.living)
-				new /mob/living/object/artifact(O, user)
+				new /mob/living/object/artifact(O.loc, O, user)
 			else
 				user.set_loc(O)
 			O.ArtifactFaultUsed(user)

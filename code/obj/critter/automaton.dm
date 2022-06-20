@@ -162,7 +162,7 @@ var/global/the_automaton = null
 				ircmsg["msg"] = "inserted the 6th key into the Automaton and began the Solar Flare event at [round(ticker.round_elapsed_ticks / 600)] minutes into the round."
 				ircbot.export("admin", ircmsg)
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (!alive)
 			return ..()
 		if (aggressive)

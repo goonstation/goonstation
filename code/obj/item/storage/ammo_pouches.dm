@@ -172,7 +172,7 @@
 	/obj/item/instrument/whistle,\
 	/obj/item/reagent_containers/food/snacks/donut/custom/frosted)
 
-/obj/item/storage/ntso_pouch
+/obj/item/storage/ntsc_pouch
 	name = "tacticool pouch"
 	desc = "A dump pouch for various security accessories, partially-loaded magazines, or maybe even a snack! Attaches to virtually any webbing system through an incredibly complex and very patented Nanotrasen design."
 	icon_state = "ammopouch-large"
@@ -184,6 +184,10 @@
 	/obj/item/handcuffs/guardbot = 2,
 	/obj/item/device/flash,
 	/obj/item/reagent_containers/food/snacks/candy/candyheart)
+
+	ntso
+		spawn_contents = list(/obj/item/gun/kinetic/clock_188/boomerang/ntso,
+		/obj/item/ammo/bullets/bullet_9mm = 4)
 
 /obj/item/storage/emp_grenade_pouch
 	name = "EMP grenade pouch"
@@ -221,6 +225,16 @@
 	spawn_contents = list(/obj/item/old_grenade/sonic = 5,\
 	/obj/item/clothing/ears/earmuffs/earplugs)
 
+/obj/item/storage/concussion_grenade_pouch
+	name = "concussion grenade pouch"
+	desc = "A pouch full of odd energy-based concussion grenades. Likely dusty old surplus from the corporate wars."
+	icon_state = "ammopouch-quad"
+	health = 6
+	w_class = W_CLASS_SMALL
+	slots = 6
+	does_not_open_in_pocket = 0
+	spawn_contents = list(/obj/item/old_grenade/energy_concussion = 5)
+
 /obj/item/storage/banana_grenade_pouch
 	name = "banana grenade pouch"
 	desc = "A fun pouch designed to hold banana grenades."
@@ -239,3 +253,26 @@
 	slots = 4
 	does_not_open_in_pocket = 0
 	spawn_contents = list(/obj/item/beartrap = 4)
+
+/obj/item/storage/pouch/highcap
+	name = "tactical pouch"
+	desc = "A large pouch for carrying multiple miscellaneous things at once."
+	icon_state = "ammopouch-quad"
+	w_class = W_CLASS_SMALL
+	slots = 6
+	does_not_open_in_pocket = 0
+	can_hold = list(/obj/item/ammo, /obj/item/old_grenade, /obj/item/chem_grenade, /obj/item/reagent_containers, /obj/item/deployer/barricade, /obj/item/tool, /obj/item/breaching_charge, /obj/item/pinpointer, /obj/item/mine, /obj/item/remote, /obj/item/device/)
+
+/obj/item/storage/sawfly_pouch
+	name = "sawfly pouch"
+	desc = "A pouch for carrying three compact sawflies and a remote."
+	icon_state = "ammopouch-sawflies"
+	health = 6
+	w_class = W_CLASS_SMALL
+	slots = 4
+	does_not_open_in_pocket = 0
+	spawn_contents = list(
+		/obj/item/old_grenade/sawfly = 3,
+		/obj/item/remote/sawflyremote
+	)
+

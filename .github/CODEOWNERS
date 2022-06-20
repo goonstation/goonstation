@@ -11,9 +11,6 @@
 # Aloe
 /code/mob/dead/ @frawhst
 
-# Emily
-/maps/manta.dmm @UrsulaMejor
-
 # Flourish
 /code/obj/item/toys.dm @flrsh
 /maps/oshan.dmm @flrsh
@@ -47,6 +44,9 @@
 
 # Virvatuli
 /sound/ @virvatuli-gh
+
+# Walpvrgis
+/icons/misc/critter.dmi @WALPVRGIS
 
 # ZeWaka
 *.md @ZeWaka

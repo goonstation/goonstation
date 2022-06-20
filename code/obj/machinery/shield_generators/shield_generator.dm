@@ -128,7 +128,7 @@
 				src.post_reply("SGEN_DACTVD", target)
 
 	// for testing atm
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (status & (NOPOWER|BROKEN) || !src.link)
 			user.show_text("[src] seems inoperable, as pressing the button does nothing.")
 			return

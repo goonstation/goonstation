@@ -44,7 +44,7 @@
 	var/ignore_light_or_cam_opacity = 0
 
 /obj/machinery/door/Bumped(atom/AM)
-	if (src.p_open || src.operating) return
+	if (src.operating) return
 	if (src.isblocked()) return
 
 	if (ismob(AM))
@@ -169,6 +169,7 @@
 		UnsubscribeProcess()
 		AddComponent(/datum/component/mechanics_holder)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", .proc/toggleinput)
+		AddComponent(/datum/component/bullet_holes, 15, hardened ? 999 : 5) // no bullet holes if hardened; wouldn't want to get their hopes up
 		update_nearby_tiles(need_rebuild=1)
 		START_TRACKING
 		for (var/turf/simulated/wall/auto/T in orange(1))
@@ -207,7 +208,7 @@
 /obj/machinery/door/attack_ai(mob/user as mob)
 	return src.Attackhand(user)
 
-/obj/machinery/door/attack_hand(mob/user as mob)
+/obj/machinery/door/attack_hand(mob/user)
 	interact_particle(user,src)
 	return src.Attackby(null, user)
 
@@ -301,7 +302,7 @@
 	close()
 	return 1
 
-/obj/machinery/door/attackby(obj/item/I as obj, mob/user as mob)
+/obj/machinery/door/attackby(obj/item/I, mob/user)
 	if (user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat || user.restrained())
 		return
 	if(istype(I, /obj/item/grab))
@@ -666,10 +667,10 @@
 /obj/machinery/door/unpowered/attack_ai(mob/user as mob)
 	return src.Attackhand(user)
 
-/obj/machinery/door/unpowered/attack_hand(mob/user as mob)
+/obj/machinery/door/unpowered/attack_hand(mob/user)
 	return src.Attackby(null, user)
 
-/obj/machinery/door/unpowered/attackby(obj/item/I as obj, mob/user as mob)
+/obj/machinery/door/unpowered/attackby(obj/item/I, mob/user)
 	if (src.operating)
 		return
 	src.add_fingerprint(user)
@@ -755,7 +756,7 @@
 	. = ..()
 	. += " It's [!src.locked ? "un" : null]locked."
 
-/obj/machinery/door/unpowered/wood/attackby(obj/item/I as obj, mob/user as mob)
+/obj/machinery/door/unpowered/wood/attackby(obj/item/I, mob/user)
 	if (I) // eh, this'll work well enough.
 		src.material?.triggerOnHit(src, I, user, 1)
 	if (src.operating)

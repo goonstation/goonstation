@@ -751,13 +751,6 @@
 	opacity = 1
 	},
 /area/adventure/channel)
-"abh" = (
-/turf/unsimulated/grass{
-	density = 1;
-	name = "grass.";
-	opacity = 1
-	},
-/area/hospital/somewhere)
 "abi" = (
 /turf/space/no_replace,
 /turf/unsimulated/floor/void/channel,
@@ -769,9 +762,6 @@
 	name = "cloaking field"
 	},
 /area/space)
-"abk" = (
-/turf/unsimulated/floor/grass/leafy,
-/area/hospital/somewhere)
 "abl" = (
 /turf/space/no_replace,
 /turf/unsimulated/floor/void/channel,
@@ -800,10 +790,6 @@
 "abp" = (
 /turf/unsimulated/wall/auto/adventure/hospital,
 /area/hospital)
-"abq" = (
-/obj/tree1,
-/turf/unsimulated/floor/grass/leafy,
-/area/hospital/somewhere)
 "abr" = (
 /turf/unsimulated/wall/auto/adventure/shuttle,
 /area/hospital/samostrel)
@@ -839,18 +825,6 @@
 	},
 /turf/unsimulated/floor/caution/south,
 /area/hospital/samostrel)
-"aby" = (
-/obj/stone{
-	dir = 1
-	},
-/turf/unsimulated/floor/grass/leafy,
-/area/hospital/somewhere)
-"abz" = (
-/obj/tree1{
-	dir = 1
-	},
-/turf/unsimulated/floor/grass/leafy,
-/area/hospital/somewhere)
 "abA" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -964,33 +938,6 @@
 	dir = 5
 	},
 /area/hospital)
-"abN" = (
-/obj/grassplug{
-	dir = 8
-	},
-/turf/unsimulated/grasstodirt{
-	dir = 1
-	},
-/area/hospital/somewhere)
-"abO" = (
-/turf/unsimulated/grasstodirt{
-	dir = 1
-	},
-/area/hospital/somewhere)
-"abP" = (
-/obj/grassplug{
-	dir = 4
-	},
-/turf/unsimulated/grasstodirt{
-	dir = 1
-	},
-/area/hospital/somewhere)
-"abQ" = (
-/obj/stone{
-	dir = 4
-	},
-/turf/unsimulated/floor/grass/leafy,
-/area/hospital/somewhere)
 "abR" = (
 /obj/stool/chair/comfy/shuttle{
 	desc = "Equipped with a safety buckle!";
@@ -1086,35 +1033,6 @@
 	dir = 4
 	},
 /area/hospital)
-"acd" = (
-/obj/grassplug{
-	dir = 1
-	},
-/turf/unsimulated/grasstodirt{
-	dir = 8
-	},
-/area/hospital/somewhere)
-"ace" = (
-/turf/unsimulated/grasstodirt{
-	dir = 9
-	},
-/area/hospital/somewhere)
-"acf" = (
-/turf/unsimulated/dirt,
-/area/hospital/somewhere)
-"acg" = (
-/turf/unsimulated/grasstodirt{
-	dir = 5
-	},
-/area/hospital/somewhere)
-"ach" = (
-/obj/grassplug{
-	dir = 1
-	},
-/turf/unsimulated/grasstodirt{
-	dir = 4
-	},
-/area/hospital/somewhere)
 "aci" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
@@ -1177,38 +1095,6 @@
 	},
 /turf/unsimulated/floor/white,
 /area/hospital)
-"acr" = (
-/obj/tree1{
-	dir = 8
-	},
-/turf/unsimulated/floor/grass/leafy,
-/area/hospital/somewhere)
-"acs" = (
-/turf/unsimulated/grasstodirt{
-	dir = 8
-	},
-/area/hospital/somewhere)
-"act" = (
-/obj/decal/fakeobjects{
-	desc = "It's like that one movie, uh, what was it called....Jaws?";
-	icon = 'icons/misc/halloween.dmi';
-	icon_state = "well";
-	name = "stone well"
-	},
-/obj/machinery/camera{
-	c_tag = "Channel 3";
-	desc = "";
-	invisibility = 100;
-	network = "spooky"
-	},
-/obj/map/light/cyan,
-/turf/unsimulated/dirt,
-/area/hospital/somewhere)
-"acu" = (
-/turf/unsimulated/grasstodirt{
-	dir = 4
-	},
-/area/hospital/somewhere)
 "acv" = (
 /obj/lattice{
 	dir = 6;
@@ -1338,28 +1224,6 @@
 /obj/item/clothing/suit/straight_jacket,
 /turf/unsimulated/floor/white,
 /area/hospital)
-"acR" = (
-/obj/grassplug,
-/turf/unsimulated/grasstodirt{
-	dir = 8
-	},
-/area/hospital/somewhere)
-"acS" = (
-/turf/unsimulated/grasstodirt{
-	dir = 10
-	},
-/area/hospital/somewhere)
-"acT" = (
-/turf/unsimulated/grasstodirt{
-	dir = 6
-	},
-/area/hospital/somewhere)
-"acU" = (
-/obj/grassplug,
-/turf/unsimulated/grasstodirt{
-	dir = 4
-	},
-/area/hospital/somewhere)
 "acV" = (
 /obj/lattice,
 /obj/cable{
@@ -1493,10 +1357,6 @@
 /obj/random_item_spawner/med_tool,
 /turf/unsimulated/floor/white,
 /area/hospital)
-"ado" = (
-/obj/shrub,
-/turf/unsimulated/floor/grass/leafy,
-/area/hospital/somewhere)
 "adp" = (
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor{
@@ -4248,9 +4108,6 @@
 /obj/stool/chair/comfy/blue,
 /turf/unsimulated/floor/carpet/office,
 /area/hospital)
-"alE" = (
-/turf/unsimulated/wall/auto/adventure/hospital,
-/area/cordon)
 "alF" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -8013,7 +7870,7 @@
 /obj/machinery/door/airlock/pyro{
 	desc = "What kind of HORRIBLE THINGS could LURK in here???";
 	frequency = 1499;
-	icon_state = "generic_locked";
+	icon_state = "door_locked";
 	locked = 1;
 	name = "Meat Locker";
 	radiorange = 25;
@@ -12394,7 +12251,7 @@
 /turf/unsimulated/floor/grass/leafy,
 /area/crater/biodome/north)
 "aMM" = (
-/obj/critter/spacebee,
+/obj/critter/wasp,
 /obj/spacevine{
 	icon_state = "vine-light2"
 	},
@@ -12615,7 +12472,7 @@
 /turf/unsimulated/floor/airless,
 /area/space)
 "aNu" = (
-/obj/critter/spacebee,
+/obj/critter/wasp,
 /obj/spacevine{
 	icon_state = "vine-light3"
 	},
@@ -12792,7 +12649,7 @@
 	density = 1;
 	icon_state = "vine-med2"
 	},
-/obj/critter/spacebee,
+/obj/critter/wasp,
 /turf/unsimulated/floor/green/side{
 	dir = 1
 	},
@@ -12816,7 +12673,7 @@
 	},
 /area/crater/biodome/north)
 "aOd" = (
-/obj/critter/spacebee,
+/obj/critter/wasp,
 /obj/spacevine{
 	icon_state = "vine-light2"
 	},
@@ -12842,7 +12699,7 @@
 /obj/spacevine{
 	icon_state = "vine-light3"
 	},
-/obj/critter/spacebee,
+/obj/critter/wasp,
 /turf/unsimulated/floor/green/side{
 	dir = 1
 	},
@@ -12910,7 +12767,7 @@
 	desc = "Rust has rendered this airlock useless.";
 	dir = 4;
 	icon = 'icons/obj/doors/SL_doors.dmi';
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	name = "rusted airlock";
 	opacity = 1
 	},
@@ -13221,7 +13078,7 @@
 	icon_state = "4-8"
 	},
 /obj/spacevine,
-/obj/critter/spacebee,
+/obj/critter/wasp,
 /turf/unsimulated/floor/green/side,
 /area/crater/biodome/north)
 "aPd" = (
@@ -13504,7 +13361,7 @@
 /obj/decal/fakeobjects/firelock_broken{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
-	icon_state = "generic_open";
+	icon_state = "door_open";
 	name = "rusted airlock"
 	},
 /turf/unsimulated/floor/grime,
@@ -13686,7 +13543,7 @@
 	},
 /obj/table/wood/auto,
 /obj/deskclutter,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /turf/unsimulated/floor/carpet/grime,
 /area/crater/biodome/research)
 "aQw" = (
@@ -13722,7 +13579,7 @@
 	dir = 1
 	},
 /obj/table/wood/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /turf/unsimulated/floor/carpet/grime,
 /area/crater/biodome/research)
 "aQE" = (
@@ -14088,7 +13945,7 @@
 /obj/decal/fakeobjects/firelock_broken{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
-	icon_state = "generic_open";
+	icon_state = "door_open";
 	name = "broken airlock"
 	},
 /turf/unsimulated/floor/arctic/plating,
@@ -14463,7 +14320,7 @@
 	dir = 8
 	},
 /obj/table/wood/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /obj/window/cubicle{
 	dir = 2
 	},
@@ -14519,7 +14376,7 @@
 	},
 /obj/table/wood/auto,
 /obj/deskclutter,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /obj/window/cubicle{
 	dir = 2
 	},
@@ -19486,7 +19343,7 @@
 /obj/decal/fakeobjects/firelock_broken{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
-	icon_state = "generic_open";
+	icon_state = "door_open";
 	name = "broken airlock"
 	},
 /turf/unsimulated/floor/grime,
@@ -20359,7 +20216,7 @@
 	layer = 8;
 	name = "window"
 	},
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	icon_state = "lamp-burned"
 	},
 /turf/unsimulated/floor/specialroom/medbay,
@@ -21240,7 +21097,7 @@
 	dir = 8
 	},
 /obj/table/wood/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /turf/unsimulated/floor/carpet/grime,
 /area/drone/office)
 "bkV" = (
@@ -21448,7 +21305,7 @@
 	dir = 4
 	},
 /obj/table/wood/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /turf/unsimulated/floor/carpet/grime,
 /area/drone/office)
 "blw" = (
@@ -24499,7 +24356,7 @@
 	desc = "It wont budge.";
 	dir = 4;
 	icon = 'icons/obj/doors/SL_doors.dmi';
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	layer = 6;
 	name = "broken door";
 	opacity = 1
@@ -25163,7 +25020,7 @@
 /area/iomoon/base)
 "bvv" = (
 /obj/table/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /turf/unsimulated/floor/carpet/grime,
 /area/iomoon/base)
 "bvw" = (
@@ -27067,7 +26924,7 @@
 /obj/window/cubicle{
 	dir = 1
 	},
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /turf/unsimulated/floor/carpet{
 	icon_state = "fred1"
 	},
@@ -27098,7 +26955,7 @@
 /obj/window/cubicle{
 	dir = 1
 	},
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /turf/unsimulated/floor/carpet{
 	icon_state = "fred1"
 	},
@@ -29273,7 +29130,7 @@
 	desc = "It wont budge.";
 	dir = 4;
 	icon = 'icons/obj/doors/SL_doors.dmi';
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	layer = 6;
 	name = "broken door";
 	opacity = 1
@@ -30311,7 +30168,7 @@
 /turf/unsimulated/floor/ancient,
 /area/crunch)
 "bJX" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/crunch)
 "bJY" = (
 /obj/decal/fakeobjects/teleport_pad,
@@ -30851,7 +30708,7 @@
 /obj/overlay{
 	desc = "You could probably squeeze through.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
-	icon_state = "generic_open";
+	icon_state = "door_open";
 	layer = 6;
 	name = "broken door"
 	},
@@ -30979,7 +30836,7 @@
 	desc = "You could probably squeeze through.";
 	dir = 4;
 	icon = 'icons/obj/doors/SL_doors.dmi';
-	icon_state = "generic_open";
+	icon_state = "door_open";
 	layer = 6;
 	name = "broken door"
 	},
@@ -31293,7 +31150,7 @@
 /area/afterlife/heaven/hydroponics)
 "bMZ" = (
 /obj/table/reinforced/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /turf/unsimulated/floor/red,
 /area/syndicate_station/battlecruiser)
 "bNa" = (
@@ -32282,13 +32139,10 @@
 /turf/unsimulated/floor/caution/corner/nw,
 /area/crypt/sigma/lab)
 "bQd" = (
-/obj/machinery/atmospherics/pipe/tank/rad_particles{
-	desc = "A large vessel containing an unknown pressurized gas.";
-	name = "Unidentified Gas Tank"
-	},
 /obj/cable{
 	icon_state = "1-4"
 	},
+/obj/machinery/atmospherics/pipe/tank/toxins/south,
 /turf/unsimulated/floor/plating/scorched,
 /area/crater)
 "bQe" = (
@@ -32421,7 +32275,7 @@
 /area/crypt/sigma/crew)
 "bQs" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /turf/unsimulated/floor/carpet/grime,
 /area/crypt/sigma/crew)
 "bQt" = (
@@ -32668,7 +32522,7 @@
 	desc = "It wont budge.";
 	dir = 4;
 	icon = 'icons/obj/doors/SL_doors.dmi';
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	layer = 6;
 	name = "broken door";
 	opacity = 1
@@ -33089,7 +32943,7 @@
 	density = 1;
 	desc = "It wont budge.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	layer = 6;
 	name = "broken door";
 	opacity = 1
@@ -34070,7 +33924,7 @@
 	desc = "Rust has rendered this airlock useless.";
 	dir = 4;
 	icon = 'icons/obj/doors/SL_doors.dmi';
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	name = "rusted airlock";
 	opacity = 1
 	},
@@ -38917,9 +38771,17 @@
 /area/sim/area2)
 "ckx" = (
 /obj/table/wood/auto,
-/obj/item/device/audio_log/wall_mounted{
-	desc = "A data logging utility represented as an audio logger.";
-	name = "Audiolog"
+/obj/item/device/radio/intercom/detnet/detective{
+	pixel_x = -4;
+	pixel_y = -13
+	},
+/obj/item/device/radio/intercom/detnet/security{
+	pixel_x = -4;
+	pixel_y = -4
+	},
+/obj/item/device/radio/intercom/detnet{
+	pixel_x = -4;
+	pixel_y = 5
 	},
 /turf/unsimulated/floor/carpet{
 	dir = 1;
@@ -39006,7 +38868,14 @@
 /obj/item/pen{
 	desc = "It's a normal black ink pen. Looks like it has been chewed on."
 	},
+/obj/item/device/audio_log/wall_mounted{
+	desc = "A data logging utility represented as an audio logger.";
+	name = "Audiolog";
+	pixel_x = 13;
+	pixel_y = 4
+	},
 /obj/machinery/computer/security/wooden_tv/small{
+	pixel_x = -3;
 	pixel_y = 8
 	},
 /turf/unsimulated/floor/carpet{
@@ -44687,7 +44556,7 @@
 /area/owlery/office)
 "cAE" = (
 /obj/table/reinforced/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /turf/unsimulated/floor/white,
 /area/owlery/lab)
 "cAF" = (
@@ -48111,7 +47980,7 @@
 /obj/machinery/light/emergency{
 	dir = 8
 	},
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /turf/unsimulated/floor/redblack{
 	dir = 10
 	},
@@ -48361,7 +48230,7 @@
 /area/owlery/gangzone)
 "cJs" = (
 /obj/table/reinforced/bar/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /turf/unsimulated/floor/wizard/carpet,
 /area/owlery/office)
 "cJt" = (
@@ -54344,7 +54213,7 @@
 /area/owlery/owleryhall)
 "cWL" = (
 /obj/table/wood/auto/desk,
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	pixel_y = 10
 	},
 /turf/unsimulated/floor/wood/two,
@@ -61450,7 +61319,7 @@
 	pixel_y = 28
 	},
 /obj/table/wood/auto/desk,
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	pixel_y = 7
 	},
 /obj/item/clothing/head/sea_captain{
@@ -62742,30 +62611,6 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
-"dzM" = (
-/obj/decal/garland{
-	pixel_y = 32
-	},
-/obj/decal/xmas_lights{
-	pixel_y = 32
-	},
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/stocking{
-	pixel_x = -32
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/ines)
-"dzN" = (
-/obj/decal/garland{
-	pixel_y = 32
-	},
-/obj/decal/xmas_lights{
-	pixel_y = 32
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/ines)
 "dzS" = (
 /obj/machinery/door/unpowered/wood{
 	icon = 'icons/obj/doors/door_office.dmi';
@@ -62903,31 +62748,6 @@
 /obj/table/auto,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/pacra)
-"dAs" = (
-/obj/machinery/door/unpowered/wood{
-	icon = 'icons/obj/doors/door_office.dmi';
-	lock_dir = 8
-	},
-/turf/unsimulated/floor/black,
-/area/centcom/offices/ines)
-"dAt" = (
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/ines)
-"dAu" = (
-/obj/decal/fakeobjects{
-	icon = 'icons/misc/old_or_unused.dmi';
-	icon_state = "tree2";
-	name = "spacemas tree"
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/ines)
-"dAv" = (
-/obj/stool/chair/comfy/purple{
-	dir = 4
-	},
-/obj/item/clothing/head/longbee,
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/ines)
 "dAw" = (
 /obj/shrub{
 	icon = 'icons/obj/stationobjs.dmi';
@@ -63034,73 +62854,6 @@
 /obj/machinery/light,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/pacra)
-"dAS" = (
-/obj/shrub{
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant_small";
-	layer = 3;
-	pixel_y = 18
-	},
-/obj/item/reagent_containers/food/drinks/cola/random,
-/obj/item/reagent_containers/food/drinks/cola{
-	initial_reagents = list("cola" = 10, "VHFCS" = 10, "energydrink" = 10);
-	name = "energy drink";
-	pixel_x = -8
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	name = "energy drink";
-	pixel_x = 14
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	name = "energy drink";
-	pixel_x = 4
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	name = "energy drink";
-	pixel_x = 1;
-	pixel_y = -10
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	initial_reagents = list("cola" = 10, "VHFCS" = 10, "energydrink" = 10);
-	name = "energy drink";
-	pixel_y = 7
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	name = "energy drink";
-	pixel_x = -10;
-	pixel_y = -9
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/ines)
-"dAT" = (
-/obj/machinery/bot/guardbot/xmas,
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/ines)
-"dAU" = (
-/obj/machinery/light,
-/obj/item/reagent_containers/food/drinks/cola/random,
-/obj/item/reagent_containers/food/drinks/cola{
-	name = "energy drink";
-	pixel_x = 7;
-	pixel_y = 1
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	name = "energy drink";
-	pixel_x = 13;
-	pixel_y = -6
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	name = "energy drink";
-	pixel_x = 1;
-	pixel_y = -6
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	name = "energy drink";
-	pixel_x = -8;
-	pixel_y = -12
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/ines)
 "dAW" = (
 /obj/machinery/light{
 	dir = 1
@@ -63133,17 +62886,6 @@
 "dAZ" = (
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/hydro)
-"dBb" = (
-/obj/admin_plaque{
-	name = "Souricelle's Office";
-	pixel_x = 32
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/centcom/offices{
-	icon_state = "blue"
-	})
 "dBf" = (
 /obj/machinery/light{
 	dir = 1
@@ -65012,11 +64754,6 @@
 /area/crypt/sigma/morgue)
 "dFD" = (
 /obj/creepy_sound_trigger,
-/obj/machinery/door/airlock/pyro/medical{
-	dir = 4;
-	name = "Morgue";
-	req_access_txt = "5"
-	},
 /obj/machinery/door/airlock/pyro/medical{
 	dir = 4;
 	name = "Morgue";
@@ -66945,7 +66682,7 @@
 /obj/table/reinforced/bar/auto{
 	name = "table"
 	},
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /turf/unsimulated/floor/carpet{
 	dir = 1;
 	icon_state = "fpurple2"
@@ -67688,7 +67425,7 @@
 /obj/table/reinforced/bar/auto{
 	name = "table"
 	},
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /turf/unsimulated/floor/carpet{
 	dir = 9;
 	icon_state = "fblue4"
@@ -68132,7 +67869,7 @@
 /obj/table/reinforced/bar/auto{
 	name = "table"
 	},
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /turf/unsimulated/floor/carpet{
 	dir = 6;
 	icon_state = "fblue4"
@@ -69358,7 +69095,7 @@
 /area/centcom/lounge)
 "dRH" = (
 /obj/table/wood/round/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /turf/unsimulated/floor/carpet{
 	dir = 9;
 	icon_state = "purple3";
@@ -69429,17 +69166,6 @@
 	},
 /turf/unsimulated/floor/wood/six,
 /area/centcom/offices/zamujasa)
-"dRP" = (
-/obj/admin_plaque{
-	name = "Ines's Office";
-	pixel_x = -32
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/centcom/offices{
-	icon_state = "blue"
-	})
 "dRQ" = (
 /obj/storage/crate/bin,
 /obj/item/paper{
@@ -70037,7 +69763,7 @@
 /obj/item/crowbar,
 /obj/storage/secure/closet/civilian/janitor{
 	locked = 0;
-	spawn_contents = list(/obj/item/clothing/shoes/galoshes, /obj/item/reagent_containers/glass/bottle/cleaner = 2, /obj/item/reagent_containers/glass/bottle/acetone/janitors = 1, /obj/item/reagent_containers/glass/bottle/ammonia/janitors = 1, /obj/item/device/light/flashlight, /obj/item/caution = 4)
+	spawn_contents = list(/obj/item/clothing/shoes/galoshes,/obj/item/reagent_containers/glass/bottle/cleaner=2,/obj/item/reagent_containers/glass/bottle/acetone/janitors=1,/obj/item/reagent_containers/glass/bottle/ammonia/janitors=1,/obj/item/device/light/flashlight,/obj/item/caution=4)
 	},
 /obj/item/mop/old,
 /obj/item/sponge,
@@ -70116,7 +69842,7 @@
 	density = 1;
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
-	icon_state = "generic_locked";
+	icon_state = "door_locked";
 	name = "rusted airlock";
 	opacity = 1
 	},
@@ -70297,7 +70023,7 @@
 /area/crypt/sigma/rd)
 "dUn" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /obj/item/clothing/glasses/regular,
 /turf/unsimulated/floor/carpet/grime,
 /area/crypt/sigma/rd)
@@ -70317,7 +70043,7 @@
 /area/iomoon/caves)
 "dXN" = (
 /obj/table/wood/auto/desk,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /turf/unsimulated/floor/wood/seven,
 /area/centcom/offices/sovexe)
 "dYf" = (
@@ -70554,6 +70280,16 @@
 	icon_state = "floor"
 	},
 /area/centcom/lounge)
+"evP" = (
+/obj/stool/chair/comfy/shuttle/pilot{
+	dir = 1
+	},
+/obj/critter/domestic_bee/aloe_bee,
+/obj/effects/precipitation/rain/dense/tile,
+/turf/unsimulated/floor/carpet/darkcarpet/border{
+	dir = 9
+	},
+/area/centcom/offices/aloe)
 "ewi" = (
 /turf/unsimulated/floor/carpet/clowncarpet/border{
 	dir = 10
@@ -71118,6 +70854,14 @@
 /obj/lattice,
 /turf/unsimulated/floor/void,
 /area/diner/cow)
+"gmI" = (
+/obj/table/reinforced/auto,
+/obj/traitorifier/virtual/arcfiend,
+/turf/unsimulated/floor/setpieces/gauntlet{
+	desc = "This place is going to be a fucking mess.";
+	name = "\proper the murderbox"
+	},
+/area/sim/gunsim)
 "gmY" = (
 /obj/machinery/lawrack/syndicate,
 /turf/unsimulated/floor/darkblue,
@@ -71177,6 +70921,10 @@
 	dir = 1
 	},
 /area/centcom)
+"gCS" = (
+/obj/stool/bee_bed,
+/turf/unsimulated/floor/carpet/darkcarpet/border,
+/area/centcom/offices/aloe)
 "gDk" = (
 /obj/table/reinforced/auto,
 /obj/item/plate/tray,
@@ -71413,6 +71161,12 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/left_centcom/cogmap)
+"hyC" = (
+/obj/effects/precipitation/rain/dense/tile,
+/turf/unsimulated/floor/carpet/darkcarpet/border{
+	dir = 5
+	},
+/area/centcom/offices/aloe)
 "hBd" = (
 /obj/critter/frog{
 	anchored = 1;
@@ -71535,12 +71289,6 @@
 	pixel_x = -4;
 	pixel_y = -2
 	},
-/obj/item/paper{
-	icon_state = "paper";
-	name = "Promotion to Double Mentor";
-	pixel_x = 3;
-	pixel_y = 4
-	},
 /turf/unsimulated/floor/wood/seven,
 /area/centcom/offices/sovexe)
 "hQy" = (
@@ -71611,6 +71359,11 @@
 	},
 /turf/unsimulated/floor/carpet/purple/fancy/edge/west,
 /area/centcom/offices/virvatuli)
+"hZA" = (
+/turf/unsimulated/floor/carpet/darkcarpet/border{
+	dir = 6
+	},
+/area/centcom/offices/aloe)
 "iag" = (
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater"
@@ -72041,9 +71794,7 @@
 	},
 /area/titlescreen)
 "jwG" = (
-/obj/stool/chair/wooden{
-	dir = 1
-	},
+/obj/item/storage/toilet/goldentoilet/azrun,
 /turf/unsimulated/floor/caution/south,
 /area/centcom/offices/azrun)
 "jxX" = (
@@ -72194,60 +71945,6 @@
 "jXJ" = (
 /turf/unsimulated/wall/auto/lead/white,
 /area/moon)
-"jYh" = (
-/obj/decal/garland{
-	pixel_y = 32
-	},
-/obj/decal/xmas_lights{
-	pixel_y = 32
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	initial_reagents = list("cola" = 10, "VHFCS" = 10, "energydrink" = 10);
-	name = "energy drink";
-	pixel_y = -1
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	name = "energy drink";
-	pixel_x = 14;
-	pixel_y = 6
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	name = "energy drink";
-	pixel_x = -10
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	name = "energy drink";
-	pixel_x = -8;
-	pixel_y = 17
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	name = "energy drink";
-	pixel_x = 4;
-	pixel_y = 16
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	initial_reagents = list("cola" = 10, "VHFCS" = 10, "energydrink" = 10);
-	name = "energy drink";
-	pixel_x = -6;
-	pixel_y = -11
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	name = "energy drink";
-	pixel_x = 3;
-	pixel_y = -8
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	name = "energy drink";
-	pixel_x = 9;
-	pixel_y = 3
-	},
-/obj/item/reagent_containers/food/drinks/cola{
-	name = "energy drink";
-	pixel_x = -3;
-	pixel_y = 13
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/ines)
 "kbk" = (
 /obj/decal/aliencomputer{
 	desc = "This appears to be some sort of martian computer. A broken one, at that.";
@@ -72516,7 +72213,7 @@
 "kKt" = (
 /obj/table/wood/auto/desk,
 /obj/item/reagent_containers/food/drinks/cola{
-	initial_reagents = list("cola" = 10, "VHFCS" = 10, "crime" = 10);
+	initial_reagents = list("cola"=10,"VHFCS"=10,"crime"=10);
 	name = "Bebop Cola";
 	pixel_x = -11;
 	pixel_y = -9
@@ -72672,6 +72369,10 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"loK" = (
+/obj/effects/precipitation/rain/dense/tile,
+/turf/unsimulated/floor/wood/six,
+/area/centcom/offices/aloe)
 "lqh" = (
 /turf/unsimulated/wall/auto/adventure/shuttle{
 	opacity = 0
@@ -72977,6 +72678,18 @@
 	icon_state = "floor"
 	},
 /area/centcom/lounge)
+"mvU" = (
+/obj/admin_plaque{
+	desc = "a nameplate signifying who this office belongs to.";
+	name = "\proper aloe's office";
+	pixel_x = -32
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "mxo" = (
 /obj/admin_plaque{
 	name = "Azrun's Office";
@@ -73554,7 +73267,7 @@
 /area/centcom/offices/rodney)
 "nRU" = (
 /obj/table/glass/auto,
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	pixel_x = 3;
 	pixel_y = 6
 	},
@@ -74136,6 +73849,17 @@
 	},
 /turf/unsimulated/floor/circuit/red,
 /area/syndicate_station/assault_pod)
+"ptp" = (
+/obj/table/wood/auto,
+/obj/machinery/light/lamp/black{
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/artifact{
+	pixel_y = 4
+	},
+/obj/effects/precipitation/rain/dense/tile,
+/turf/unsimulated/floor/wood/six,
+/area/centcom/offices/aloe)
 "ptv" = (
 /obj/admin_plaque{
 	name = "Mark's Code Dungeon";
@@ -74212,6 +73936,13 @@
 	},
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel/flingy)
+"pFd" = (
+/obj/machinery/door/unpowered/wood{
+	icon = 'icons/obj/doors/door_office.dmi';
+	lock_dir = 8
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/aloe)
 "pFm" = (
 /obj/reagent_dispensers/watertank/fountain/piss,
 /obj/machinery/light{
@@ -74508,6 +74239,12 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"qjb" = (
+/obj/item/clothing/under/misc/flame_purple,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/offices/pali)
 "qkO" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-6"
@@ -74612,6 +74349,27 @@
 	},
 /turf/unsimulated/floor/caution/north,
 /area/centcom/offices/azrun)
+"qJM" = (
+/obj/noticeboard/persistent{
+	name = "aloe's personal persistent notice board";
+	persistent_id = "aloe"
+	},
+/obj/effects/precipitation/rain/dense/tile,
+/obj/storage/crate/bin,
+/obj/item/paper{
+	icon_state = "paper";
+	info = "<h1>IOU</h1><br>one lesson in how git works (realistically like 7)";
+	name = "IOU"
+	},
+/obj/item/paper{
+	icon_state = "paper";
+	info = "<h1>DO NOT TRUST THE WIDE AREA SPAWN TOOL</h1>";
+	name = "note to self";
+	pixel_x = -2;
+	pixel_y = -9
+	},
+/turf/unsimulated/floor/wood/six,
+/area/centcom/offices/aloe)
 "qJO" = (
 /obj/machinery/vending/cola/blue,
 /turf/unsimulated/floor{
@@ -74632,6 +74390,12 @@
 "qJS" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/upper_arctic/comms)
+"qMM" = (
+/obj/effects/precipitation/rain/dense/tile,
+/turf/unsimulated/floor/carpet/darkcarpet/border{
+	dir = 1
+	},
+/area/centcom/offices/aloe)
 "qMN" = (
 /obj/machinery/light{
 	dir = 1
@@ -74903,6 +74667,12 @@
 	dir = 4
 	},
 /area/centcom)
+"rvM" = (
+/obj/machinery/light/small/floor/warm/very,
+/turf/unsimulated/floor/carpet/darkcarpet/border{
+	dir = 10
+	},
+/area/centcom/offices/aloe)
 "rwD" = (
 /obj/machinery/door/airlock/pyro/classic{
 	dir = 4
@@ -75144,12 +74914,12 @@
 /obj/storage/secure/closet/fridge{
 	name = "incredible closetfridge"
 	},
-/obj/item/storage/ntso_pouch{
+/obj/item/storage/ntsc_pouch{
 	desc = "A dump pouch for various security accessories. This one has definitely seen better days.";
 	name = "stained tacticool pouch";
 	pixel_x = 5;
 	pixel_y = -5;
-	spawn_contents = list(/obj/item/handcuffs = 1, /obj/item/old_grenade/energy_concussion = 1, /obj/item/ammo/power_cell/self_charging/potato = 1, /obj/item/reagent_containers/food/snacks/donut/custom/robust = 1, /obj/item/reagent_containers/food/snacks/candy/candyheart)
+	spawn_contents = list(/obj/item/handcuffs=1,/obj/item/old_grenade/energy_concussion=1,/obj/item/ammo/power_cell/self_charging/potato=1,/obj/item/reagent_containers/food/snacks/donut/custom/robust=1,/obj/item/reagent_containers/food/snacks/candy/candyheart)
 	},
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
 	desc = "Incredibly stinky.";
@@ -75159,7 +74929,7 @@
 	},
 /obj/item/reagent_containers/food/snacks/mushroom/psilocybin{
 	desc = "If you were a mycologist, weird fridge mushrooms might seem like a bad idea. But you're not, so chow down!";
-	initial_reagents = list("psilocybin" = 20, "lsd_bee" = 20, "space_drugs" = 20);
+	initial_reagents = list("psilocybin"=20,"lsd_bee"=20,"space_drugs"=20);
 	name = "mystical fun guy";
 	pixel_x = -4;
 	pixel_y = -3
@@ -75267,16 +75037,8 @@
 	})
 "sdh" = (
 /obj/rack,
-/obj/item/clothing/mask/gas/swat/syndicate,
-/obj/item/clothing/mask/gas/swat/syndicate,
-/obj/item/clothing/mask/gas/swat/syndicate,
-/obj/item/clothing/mask/gas/swat/syndicate,
-/obj/item/clothing/mask/gas/swat/syndicate,
-/obj/item/clothing/mask/gas/swat/syndicate,
-/obj/item/clothing/mask/gas/swat/syndicate,
-/obj/item/clothing/mask/gas/swat/syndicate,
-/obj/item/clothing/mask/gas/swat/syndicate,
-/obj/item/clothing/mask/gas/swat/syndicate,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/breath,
 /turf/unsimulated/floor/darkpurple,
 /area/syndicate_station/battlecruiser)
 "seK" = (
@@ -75365,6 +75127,20 @@
 "sjM" = (
 /turf/unsimulated/floor/white/checker,
 /area/wizard_station)
+"skF" = (
+/obj/storage/closet/dresser,
+/obj/machinery/light/small/floor/warm/very,
+/obj/effects/precipitation/rain/dense/tile,
+/obj/item/clothing/head/NTberet,
+/obj/item/clothing/suit/bio_suit/paramedic/armored/prenerf,
+/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/shoes/black,
+/obj/item/storage/backpack/satchel/blue,
+/obj/item/clothing/under/misc/flame_purple,
+/obj/item/clothing/head/helmet/space/captain/blue,
+/obj/item/clothing/mask/gas/swat/rainbow,
+/turf/unsimulated/floor/wood/six,
+/area/centcom/offices/aloe)
 "smg" = (
 /turf/unsimulated/floor/dream/space,
 /area/titlescreen)
@@ -75388,6 +75164,13 @@
 	icon_state = "floor5"
 	},
 /area/wizard_station)
+"ssh" = (
+/obj/table/reinforced/auto,
+/turf/unsimulated/floor/setpieces/gauntlet{
+	desc = "This place is going to be a fucking mess.";
+	name = "\proper the murderbox"
+	},
+/area/sim/gunsim)
 "suO" = (
 /obj/machinery/shuttle/engine/heater{
 	dir = 1;
@@ -75663,7 +75446,7 @@
 /area/iomoon)
 "tuF" = (
 /obj/table/wood/round/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -75684,7 +75467,7 @@
 "tyn" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/reagent_containers/food/drinks/bottle/mead{
-	initial_reagents = list("milk" = 30);
+	initial_reagents = list("milk"=30);
 	name = "mood";
 	pixel_x = -4;
 	pixel_y = 12
@@ -75698,6 +75481,15 @@
 	icon_state = "red2"
 	},
 /area/diner/cow)
+"tzl" = (
+/obj/table/wood/auto/desk/aloe,
+/obj/item/luggable_computer/personal{
+	pixel_y = 5
+	},
+/obj/machinery/light/small/floor/warm/very,
+/obj/effects/precipitation/rain/dense/tile,
+/turf/unsimulated/floor/wood/six,
+/area/centcom/offices/aloe)
 "tAi" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/shuttle/merchant_shuttle/left_centcom/cogmap)
@@ -75881,7 +75673,9 @@
 	},
 /area/titlescreen)
 "upc" = (
-/obj/decal/poster/wallsign/teleport_sign,
+/obj/decal/poster/wallsign/teleport_sign{
+	dir = 8
+	},
 /turf/unsimulated/wall/auto/supernorn/wood,
 /area/wizard_station)
 "usD" = (
@@ -76099,6 +75893,13 @@
 /obj/critter/cat/cathara,
 /turf/unsimulated/floor/carpet/office/other,
 /area/centcom/offices/adhara)
+"vis" = (
+/obj/machinery/light/small/floor/warm/very,
+/obj/machinery/recharge_station/cat{
+	name = "cat docking station"
+	},
+/turf/unsimulated/floor/wood/six,
+/area/centcom/offices/aloe)
 "viL" = (
 /obj/item/paper/book/from_file/guardbot_guide,
 /turf/unsimulated/floor/yellow,
@@ -76309,7 +76110,7 @@
 	desc = "Rust has rendered this airlock useless.";
 	dir = 4;
 	icon = 'icons/obj/doors/SL_doors.dmi';
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	name = "rusted airlock";
 	opacity = 1
 	},
@@ -76776,6 +76577,7 @@
 	},
 /obj/table/wood/auto/desk,
 /obj/item/gimmickbomb/grenyanda/inert,
+/obj/item/staff/monkey_staff,
 /turf/unsimulated/floor/wood/seven,
 /area/centcom/offices/sovexe)
 "xoW" = (
@@ -111821,7 +111623,7 @@ cnw
 cnw
 "}
 (116,1,1) = {"
-cnw
+aaa
 cnw
 cnw
 cnw
@@ -112123,7 +111925,7 @@ cnw
 cnw
 "}
 (117,1,1) = {"
-cnw
+aaa
 cnw
 cnw
 cnw
@@ -112425,7 +112227,7 @@ aaa
 aaa
 "}
 (118,1,1) = {"
-aab
+aaa
 aab
 aab
 aaa
@@ -112727,7 +112529,7 @@ cil
 cil
 "}
 (119,1,1) = {"
-aab
+aaa
 aab
 aab
 aaa
@@ -113029,7 +112831,7 @@ cvd
 civ
 "}
 (120,1,1) = {"
-aab
+aaa
 aab
 aab
 aaa
@@ -113331,7 +113133,7 @@ cvg
 civ
 "}
 (121,1,1) = {"
-aab
+aaa
 aab
 aab
 aaa
@@ -113633,7 +113435,7 @@ cvh
 civ
 "}
 (122,1,1) = {"
-aab
+aaa
 aab
 aab
 aaa
@@ -113935,7 +113737,7 @@ ckH
 civ
 "}
 (123,1,1) = {"
-aab
+aaa
 aab
 aab
 aaa
@@ -114237,7 +114039,7 @@ ciu
 civ
 "}
 (124,1,1) = {"
-aab
+aaa
 aab
 aab
 aaa
@@ -114539,7 +114341,7 @@ doZ
 civ
 "}
 (125,1,1) = {"
-aab
+aaa
 aab
 aab
 aaa
@@ -114841,7 +114643,7 @@ cmq
 civ
 "}
 (126,1,1) = {"
-aab
+aaa
 aab
 aab
 aaa
@@ -115143,7 +114945,7 @@ cnc
 civ
 "}
 (127,1,1) = {"
-aab
+aaa
 aab
 aaa
 aaa
@@ -115445,7 +115247,7 @@ cnc
 civ
 "}
 (128,1,1) = {"
-aab
+aaa
 aab
 aaa
 abp
@@ -115747,7 +115549,7 @@ clR
 civ
 "}
 (129,1,1) = {"
-aab
+aaa
 aab
 aaa
 abp
@@ -116049,7 +115851,7 @@ cmq
 cmf
 "}
 (130,1,1) = {"
-aab
+aaa
 aab
 aaa
 abp
@@ -116351,7 +116153,7 @@ cmq
 civ
 "}
 (131,1,1) = {"
-aab
+aaa
 aab
 aaa
 abp
@@ -116653,7 +116455,7 @@ cnd
 civ
 "}
 (132,1,1) = {"
-aab
+aaa
 aab
 aaa
 abp
@@ -116955,7 +116757,7 @@ cmq
 civ
 "}
 (133,1,1) = {"
-aab
+aaa
 aab
 aaa
 abp
@@ -117257,7 +117059,7 @@ cne
 civ
 "}
 (134,1,1) = {"
-aab
+aaa
 aab
 aaa
 abp
@@ -117559,7 +117361,7 @@ ciu
 civ
 "}
 (135,1,1) = {"
-aab
+aaa
 aab
 aaa
 abp
@@ -117861,7 +117663,7 @@ ckH
 civ
 "}
 (136,1,1) = {"
-aab
+aaa
 aab
 aaa
 abp
@@ -118163,7 +117965,7 @@ ckH
 civ
 "}
 (137,1,1) = {"
-aab
+aaa
 aab
 aaa
 abp
@@ -118465,7 +118267,7 @@ ckH
 civ
 "}
 (138,1,1) = {"
-aab
+aaa
 aab
 aaa
 aaa
@@ -118767,7 +118569,7 @@ ckH
 civ
 "}
 (139,1,1) = {"
-aab
+aaa
 aab
 aab
 aab
@@ -119069,7 +118871,7 @@ cnf
 civ
 "}
 (140,1,1) = {"
-aab
+aaa
 aab
 aab
 aab
@@ -119371,7 +119173,7 @@ ckH
 civ
 "}
 (141,1,1) = {"
-aab
+aaa
 aab
 aab
 aab
@@ -119673,7 +119475,7 @@ ckH
 civ
 "}
 (142,1,1) = {"
-aab
+aaa
 aab
 aab
 aab
@@ -119975,7 +119777,7 @@ cmM
 civ
 "}
 (143,1,1) = {"
-aab
+aaa
 aab
 aab
 aab
@@ -120277,7 +120079,7 @@ cng
 civ
 "}
 (144,1,1) = {"
-aab
+aaa
 aab
 aab
 aab
@@ -120579,7 +120381,7 @@ cng
 civ
 "}
 (145,1,1) = {"
-aab
+aaa
 aab
 aab
 aab
@@ -120881,7 +120683,7 @@ civ
 civ
 "}
 (146,1,1) = {"
-aab
+aaa
 aab
 aab
 aab
@@ -121183,7 +120985,7 @@ ciz
 ciz
 "}
 (147,1,1) = {"
-aab
+aaa
 aab
 aab
 aab
@@ -121485,7 +121287,7 @@ cmN
 ciz
 "}
 (148,1,1) = {"
-aab
+aaa
 aab
 aab
 aab
@@ -121787,7 +121589,7 @@ cmN
 ciz
 "}
 (149,1,1) = {"
-aab
+aaa
 aab
 aab
 aab
@@ -122090,14 +121892,14 @@ ciz
 "}
 (150,1,1) = {"
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 aaa
 aaa
 aaa
@@ -122392,18 +122194,18 @@ ciz
 "}
 (151,1,1) = {"
 aaa
-abh
-abh
-abh
-abh
-abh
-abh
-abh
-abh
-abh
-abh
-abh
-abh
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+aaa
 aaa
 aaa
 abp
@@ -122694,18 +122496,18 @@ ciz
 "}
 (152,1,1) = {"
 aaa
-abh
-abk
-abk
-abk
-abk
-abk
-abk
-abk
-abk
-abk
-abk
-abh
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+aaa
 aaa
 aaa
 aaa
@@ -122996,18 +122798,18 @@ ciz
 "}
 (153,1,1) = {"
 aaa
-abh
-abk
-abk
-abq
-abk
-abk
-acr
-abk
-abq
-abk
-abk
-abh
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+aaa
 aaa
 aaa
 aaa
@@ -123298,18 +123100,18 @@ ciz
 "}
 (154,1,1) = {"
 aaa
-abh
-abk
-abk
-abk
-abk
-abk
-abk
-abk
-abk
-abk
-abk
-abh
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+aaa
 aaa
 aaa
 aaa
@@ -123600,18 +123402,18 @@ ciz
 "}
 (155,1,1) = {"
 aaa
-abh
-abk
-abk
-aby
-abk
-acd
-acs
-acs
-acR
-ado
-abk
-abh
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+aaa
 aaa
 aaa
 aaa
@@ -123902,19 +123704,19 @@ ciz
 "}
 (156,1,1) = {"
 aaa
-abh
-abk
-abq
-abk
-abN
-ace
-acf
-acf
-acS
-abk
-abk
-abh
-alE
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+aaa
+abp
 abp
 abp
 abp
@@ -124204,19 +124006,19 @@ ciz
 "}
 (157,1,1) = {"
 aaa
-abh
-abk
-abk
-abk
-abO
-acf
-act
-acf
-acf
-acf
-acf
-abh
-alE
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+aaa
+abp
 aeX
 aeX
 aeX
@@ -124506,19 +124308,19 @@ ciz
 "}
 (158,1,1) = {"
 aaa
-abh
-abk
-abk
-abz
-abP
-acg
-acf
-acf
-acT
-abk
-abk
-abh
-alE
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+aaa
+abp
 aeX
 aeK
 aeK
@@ -124808,19 +124610,19 @@ ciz
 "}
 (159,1,1) = {"
 aaa
-abh
-abk
-abk
-abk
-abk
-ach
-acu
-acu
-acU
-abk
-abk
-abh
-alE
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+aaa
+abp
 aeX
 aeL
 afh
@@ -125110,19 +124912,19 @@ ciz
 "}
 (160,1,1) = {"
 aaa
-abh
-abk
-abk
-abk
-abQ
-abk
-abk
-abk
-abz
-abk
-abk
-abh
-alE
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+aaa
+abp
 aeX
 aeX
 aeX
@@ -125412,19 +125214,19 @@ cbw
 "}
 (161,1,1) = {"
 aaa
-abh
-abk
-abk
-abk
-abk
-abk
-abq
-abk
-abk
-abk
-abq
-abh
-alE
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+aaa
+abp
 abp
 abp
 abp
@@ -125714,18 +125516,18 @@ cbw
 "}
 (162,1,1) = {"
 aaa
-abh
-abk
-abk
-abk
-abk
-abk
-abk
-abk
-abk
-abk
-abk
-abh
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+aaa
 aaa
 aaa
 aaa
@@ -126016,21 +125818,21 @@ cbw
 "}
 (163,1,1) = {"
 aaa
-abh
-abh
-abh
-abh
-abh
-abh
-abh
-abh
-abh
-abh
-abh
-abh
-aaa
-aaa
-aaa
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 aaa
 abp
 aeX
@@ -126318,21 +126120,21 @@ cbw
 "}
 (164,1,1) = {"
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 aaa
 abp
 aeX
@@ -126620,21 +126422,21 @@ cbw
 "}
 (165,1,1) = {"
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 aaa
 abp
 aeX
@@ -126922,21 +126724,21 @@ cbw
 "}
 (166,1,1) = {"
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 aaa
 abp
 abp
@@ -127224,21 +127026,21 @@ cbw
 "}
 (167,1,1) = {"
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 aaa
 aaa
 aaa
@@ -136274,8 +136076,8 @@ cim
 cim
 cim
 cim
-cim
 dfm
+cim
 cim
 cim
 cim
@@ -136572,12 +136374,12 @@ aaa
 aaa
 aaa
 aaa
-aaa
 cim
 cix
 ciw
 ciw
 ciw
+gmI
 clQ
 clP
 cmw
@@ -136874,11 +136676,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
 cim
 ciy
 ciw
 ckD
+ciw
 ciw
 ciw
 ciw
@@ -137176,11 +136978,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
 cim
 ciM
 ciw
 ckE
+ciw
 ciw
 ciw
 ciw
@@ -137478,12 +137280,12 @@ aaa
 aaa
 aaa
 aaa
-aaa
 cim
 ciN
 ciw
 ciw
 ciw
+ssh
 sfP
 mIR
 cmG
@@ -137780,7 +137582,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cim
 cim
 cim
 cim
@@ -138045,7 +137847,7 @@ cnw
 cnw
 cnw
 cnw
-aaa
+cnw
 aaa
 aaa
 aaa
@@ -138347,7 +138149,7 @@ cnw
 cnw
 cnw
 cnw
-aaa
+cnw
 aaa
 bZd
 bZd
@@ -138649,7 +138451,7 @@ cnw
 cnw
 cnw
 cnw
-aaa
+cnw
 aaa
 bZd
 clZ
@@ -138722,12 +138524,12 @@ cnw
 cnw
 cnw
 cnw
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 aaa
 duq
 duq
@@ -138951,7 +138753,7 @@ cnw
 cnw
 cnw
 cnw
-aaa
+cnw
 aaa
 bZd
 bZs
@@ -139024,12 +138826,12 @@ cnw
 cnw
 cnw
 cnw
-aaa
-uOm
-uOm
-uOm
-uOm
-uOm
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 aaa
 duq
 duq
@@ -139253,7 +139055,7 @@ cnw
 cnw
 cnw
 cnw
-aaa
+cnw
 aaa
 bZd
 bZs
@@ -139326,12 +139128,12 @@ cnw
 cnw
 cnw
 cnw
-aaa
-uOm
-etu
-riE
-iwj
-uOm
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 aaa
 duq
 duq
@@ -139555,7 +139357,7 @@ cnw
 cnw
 cnw
 cnw
-aaa
+cnw
 aaa
 clZ
 bZs
@@ -139628,12 +139430,12 @@ cnw
 cnw
 cnw
 cnw
-aaa
-mXf
-xYs
-rpG
-vFJ
-ptv
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 aaa
 duq
 duq
@@ -139857,7 +139659,7 @@ cnw
 cnw
 cnw
 cnw
-aaa
+cnw
 aaa
 bZd
 khy
@@ -139930,12 +139732,12 @@ cnw
 cnw
 cnw
 cnw
-aaa
-xGt
-rKt
-leI
-rpG
-uOm
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 aaa
 duq
 duq
@@ -140159,7 +139961,7 @@ cnw
 cnw
 cnw
 cnw
-aaa
+cnw
 aaa
 bZd
 bZs
@@ -140232,12 +140034,12 @@ cnw
 cnw
 cnw
 cnw
-aaa
-koF
-xAQ
-xAQ
-icJ
-uOm
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 aaa
 duq
 duq
@@ -140461,7 +140263,7 @@ cnw
 cnw
 cnw
 cnw
-aaa
+cnw
 aaa
 bZd
 cdF
@@ -140534,12 +140336,12 @@ cnw
 cnw
 cnw
 cnw
-aaa
-uOm
-uOm
-uOm
-uOm
-uOm
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 aaa
 duq
 duq
@@ -140763,7 +140565,7 @@ cnw
 cnw
 cnw
 cnw
-aaa
+cnw
 aaa
 bZd
 cdF
@@ -140836,9 +140638,9 @@ cnw
 cnw
 cnw
 cnw
-aaa
-aaa
-aaa
+cnw
+cnw
+cnw
 aaa
 aaa
 aaa
@@ -141065,7 +140867,7 @@ cnw
 cnw
 cnw
 cnw
-aaa
+cnw
 aaa
 bZd
 bZd
@@ -141367,7 +141169,7 @@ cnw
 cnw
 cnw
 cnw
-aaa
+cnw
 aaa
 bWB
 bWB
@@ -141669,7 +141471,7 @@ cnw
 cnw
 cnw
 cnw
-aaa
+cnw
 aaa
 bXx
 bWB
@@ -141971,7 +141773,7 @@ cnw
 cnw
 cnw
 cnw
-aaa
+cnw
 aaa
 bXx
 bWQ
@@ -142273,7 +142075,7 @@ cnw
 cnw
 cnw
 cnw
-aaa
+cnw
 aaa
 bWD
 bWQ
@@ -142575,7 +142377,7 @@ cnw
 cnw
 cnw
 cnw
-aaa
+cnw
 aaa
 bWB
 bWB
@@ -142877,7 +142679,7 @@ cnw
 cnw
 cnw
 cnw
-aaa
+cnw
 aaa
 aaa
 aaa
@@ -150902,7 +150704,7 @@ dCF
 eTm
 wel
 iOu
-iOu
+qjb
 iOu
 wel
 wvy
@@ -152399,9 +152201,9 @@ goR
 sPY
 tma
 wel
-dzM
-dAt
-dAS
+dvW
+dvW
+dCj
 wel
 nRU
 iyY
@@ -152419,9 +152221,9 @@ dvW
 dvW
 dCj
 wel
-dvW
-dvW
-dCj
+tzl
+evP
+rvM
 wel
 dEM
 dES
@@ -152701,9 +152503,9 @@ plh
 uvs
 nWE
 wel
-dzN
-dAv
-dAt
+dvW
+dvW
+dvW
 wel
 ezH
 vWb
@@ -152721,9 +152523,9 @@ dvW
 dvW
 dvW
 wel
-dvW
-dvW
-dvW
+ptp
+qMM
+gCS
 wel
 dEN
 dER
@@ -153003,9 +152805,9 @@ wPn
 uvs
 vnh
 wel
-dzN
-dAu
-dAT
+dvX
+dvW
+dvW
 wel
 qMN
 fUa
@@ -153023,9 +152825,9 @@ dvX
 dvW
 dvW
 wel
-dvX
-dvW
-dvW
+qJM
+hyC
+hZA
 wel
 dRJ
 dEQ
@@ -153192,7 +152994,7 @@ cnw
 cnw
 cnw
 cnw
-cnw
+aaa
 "}
 (253,1,1) = {"
 aaa
@@ -153305,9 +153107,9 @@ eOA
 uvs
 iQw
 wel
-jYh
-dAt
-dAU
+dvW
+dvW
+dvW
 qvY
 fqO
 kAr
@@ -153325,9 +153127,9 @@ dvW
 dvW
 dvW
 wel
-dvW
-dvW
-dvW
+skF
+loK
+vis
 wel
 dEP
 dER
@@ -153494,7 +153296,7 @@ cnw
 cnw
 cnw
 cnw
-cnw
+aaa
 "}
 (254,1,1) = {"
 aaa
@@ -153608,7 +153410,7 @@ dqa
 wel
 wel
 wel
-dAs
+kKw
 wel
 wel
 wel
@@ -153628,7 +153430,7 @@ kKw
 wel
 wel
 wel
-kKw
+pFd
 wel
 wel
 dvy
@@ -153796,7 +153598,7 @@ cnw
 cnw
 cnw
 cnw
-cnw
+aaa
 "}
 (255,1,1) = {"
 aaa
@@ -153909,7 +153711,7 @@ vsg
 dvy
 dvy
 dvy
-dRP
+rUQ
 dvy
 dxa
 dvy
@@ -153929,7 +153731,7 @@ rUQ
 dvy
 dxa
 dvy
-rUQ
+mvU
 dvy
 dvy
 dvy
@@ -154098,7 +153900,7 @@ cnw
 cnw
 cnw
 cnw
-cnw
+aaa
 "}
 (256,1,1) = {"
 aaa
@@ -154400,7 +154202,7 @@ cnw
 cnw
 cnw
 cnw
-cnw
+aaa
 "}
 (257,1,1) = {"
 aaa
@@ -154702,7 +154504,7 @@ cnw
 cnw
 cnw
 cnw
-cnw
+aaa
 "}
 (258,1,1) = {"
 aaa
@@ -155004,7 +154806,7 @@ cnw
 cnw
 cnw
 cnw
-cnw
+aaa
 "}
 (259,1,1) = {"
 aaa
@@ -155218,7 +155020,7 @@ cnw
 cnw
 cnw
 cnw
-aaa
+cnw
 aaa
 aaa
 aaa
@@ -155306,7 +155108,7 @@ cnw
 cnw
 cnw
 cnw
-cnw
+aaa
 "}
 (260,1,1) = {"
 aaa
@@ -155520,7 +155322,7 @@ cnw
 cnw
 cnw
 cnw
-aaa
+cnw
 aaa
 kmt
 kmt
@@ -155608,7 +155410,7 @@ cnw
 cnw
 cnw
 cnw
-cnw
+aaa
 "}
 (261,1,1) = {"
 aaa
@@ -155822,7 +155624,7 @@ cnw
 cnw
 cnw
 cnw
-aaa
+cnw
 aaa
 kmt
 gGM
@@ -155910,7 +155712,7 @@ cnw
 cnw
 cnw
 cnw
-cnw
+aaa
 "}
 (262,1,1) = {"
 aaa
@@ -156212,7 +156014,7 @@ cnw
 cnw
 cnw
 cnw
-cnw
+aaa
 "}
 (263,1,1) = {"
 aaa
@@ -156514,7 +156316,7 @@ cnw
 cnw
 cnw
 cnw
-cnw
+aaa
 "}
 (264,1,1) = {"
 aaa
@@ -156816,7 +156618,7 @@ cnw
 cnw
 cnw
 cnw
-cnw
+aaa
 "}
 (265,1,1) = {"
 aaa
@@ -157118,7 +156920,7 @@ cnw
 cnw
 cnw
 cnw
-cnw
+aaa
 "}
 (266,1,1) = {"
 aaa
@@ -157420,7 +157222,7 @@ cnw
 cnw
 cnw
 cnw
-cnw
+aaa
 "}
 (267,1,1) = {"
 aaa
@@ -157607,34 +157409,34 @@ cnw
 cnw
 cnw
 cnw
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
 cnw
+cnw
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 kmt
 gGM
@@ -157722,7 +157524,7 @@ cnw
 cnw
 cnw
 cnw
-cnw
+aaa
 "}
 (268,1,1) = {"
 aaa
@@ -157909,34 +157711,34 @@ cnw
 cnw
 cnw
 cnw
-aaa
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-aaa
 cnw
+cnw
+aaa
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
 aaa
 kmt
 gGM
@@ -158024,7 +157826,7 @@ cnw
 cnw
 cnw
 cnw
-cnw
+aaa
 "}
 (269,1,1) = {"
 aaa
@@ -158180,65 +157982,65 @@ aaa
 cnw
 cnw
 cnw
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-dkY
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-dkY
-aaa
 cnw
+cnw
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+dkY
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+dkY
 aaa
 kmt
 gGM
@@ -158326,7 +158128,7 @@ cnw
 cnw
 cnw
 cnw
-cnw
+aaa
 "}
 (270,1,1) = {"
 aaa
@@ -158482,6 +158284,8 @@ aaa
 cnw
 cnw
 cnw
+cnw
+cnw
 aaa
 dkG
 dkG
@@ -158539,8 +158343,6 @@ xWi
 xWi
 xWi
 dkY
-aaa
-cnw
 aaa
 kmt
 gGM
@@ -158628,7 +158430,7 @@ cnw
 cnw
 cnw
 cnw
-cnw
+aaa
 "}
 (271,1,1) = {"
 aaa
@@ -158784,65 +158586,65 @@ aaa
 cnw
 cnw
 cnw
-aaa
-dkG
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkG
-aaa
-dkY
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-dkY
-aaa
 cnw
+cnw
+aaa
+dkG
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkG
+aaa
+dkY
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+dkY
 aaa
 kmt
 gGM
@@ -158930,7 +158732,7 @@ cnw
 cnw
 cnw
 cnw
-cnw
+aaa
 "}
 (272,1,1) = {"
 aaa
@@ -159086,65 +158888,65 @@ aaa
 cnw
 cnw
 cnw
-aaa
-dkG
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkG
-aaa
-dkY
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-dkY
-aaa
 cnw
+cnw
+aaa
+dkG
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkG
+aaa
+dkY
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+dkY
 aaa
 kmt
 gGM
@@ -159232,7 +159034,7 @@ cnw
 cnw
 cnw
 cnw
-cnw
+aaa
 "}
 (273,1,1) = {"
 aaa
@@ -159388,65 +159190,65 @@ aaa
 cnw
 cnw
 cnw
-aaa
-dkG
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkG
-aaa
-dkY
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-dkY
-aaa
 cnw
+cnw
+aaa
+dkG
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkG
+aaa
+dkY
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+dkY
 aaa
 kmt
 gGM
@@ -159534,7 +159336,7 @@ cnw
 cnw
 cnw
 cnw
-cnw
+aaa
 "}
 (274,1,1) = {"
 aaa
@@ -159690,6 +159492,8 @@ aaa
 cnw
 cnw
 cnw
+cnw
+cnw
 aaa
 dkG
 dkQ
@@ -159747,8 +159551,6 @@ xWi
 xWi
 xWi
 dkY
-aaa
-cnw
 aaa
 kmt
 gGM
@@ -159836,7 +159638,7 @@ cnw
 cnw
 cnw
 cnw
-cnw
+aaa
 "}
 (275,1,1) = {"
 aaa
@@ -159992,6 +159794,8 @@ aaa
 cnw
 cnw
 cnw
+cnw
+cnw
 aaa
 dkG
 dkQ
@@ -160049,8 +159853,6 @@ xWi
 xWi
 xWi
 dkY
-aaa
-cnw
 aaa
 kmt
 gGM
@@ -160138,7 +159940,7 @@ cnw
 cnw
 cnw
 cnw
-cnw
+aaa
 "}
 (276,1,1) = {"
 aaa
@@ -160294,6 +160096,8 @@ aaa
 cnw
 cnw
 cnw
+cnw
+cnw
 aaa
 dkG
 dkQ
@@ -160351,8 +160155,6 @@ xWi
 xWi
 xWi
 dkY
-aaa
-cnw
 aaa
 kmt
 gGM
@@ -160440,7 +160242,7 @@ cnw
 cnw
 cnw
 cnw
-cnw
+aaa
 "}
 (277,1,1) = {"
 aaa
@@ -160596,65 +160398,65 @@ cnw
 cnw
 cnw
 cnw
-aaa
-dkG
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkG
-aaa
-dkY
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-dlh
-dlm
-dlu
-dlm
-dlu
-dlm
-dlu
-dlm
-dlh
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-dkY
-aaa
 cnw
+cnw
+aaa
+dkG
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkG
+aaa
+dkY
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+dlh
+dlm
+dlu
+dlm
+dlu
+dlm
+dlu
+dlm
+dlh
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+dkY
 aaa
 kmt
 gGM
@@ -160898,65 +160700,65 @@ cnw
 cnw
 cnw
 cnw
-aaa
-dkG
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkG
-aaa
-dkY
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-dlh
-dlm
-dlv
-dlm
-dlv
-dlm
-dlv
-dlm
-dlh
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-dkY
-aaa
 cnw
+cnw
+aaa
+dkG
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkG
+aaa
+dkY
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+dlh
+dlm
+dlv
+dlm
+dlv
+dlm
+dlv
+dlm
+dlh
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+dkY
 aaa
 kmt
 gGM
@@ -161200,6 +161002,8 @@ cnw
 cnw
 cnw
 cnw
+cnw
+cnw
 aaa
 dkG
 dkQ
@@ -161257,8 +161061,6 @@ xWi
 xWi
 xWi
 dkY
-aaa
-cnw
 aaa
 kmt
 gGM
@@ -161502,6 +161304,8 @@ cnw
 cnw
 cnw
 cnw
+cnw
+cnw
 aaa
 dkG
 dkQ
@@ -161559,8 +161363,6 @@ xWi
 xWi
 xWi
 dkY
-aaa
-cnw
 aaa
 kmt
 mZE
@@ -161804,6 +161606,8 @@ cnw
 cnw
 cnw
 cnw
+cnw
+cnw
 aaa
 dkG
 dkQ
@@ -161861,8 +161665,6 @@ xWi
 xWi
 xWi
 dkY
-aaa
-cnw
 aaa
 kmt
 gGM
@@ -162079,11 +161881,13 @@ dCH
 dvy
 dxn
 dvy
-dBb
+dwd
 dvy
 dvy
 dzo
 aaa
+cnw
+cnw
 cnw
 cnw
 cnw
@@ -162163,8 +161967,6 @@ xWi
 xWi
 xWi
 dkY
-aaa
-cnw
 aaa
 kmt
 gGM
@@ -162408,6 +162210,8 @@ cnw
 cnw
 cnw
 cnw
+cnw
+cnw
 aaa
 dkG
 dkQ
@@ -162465,8 +162269,6 @@ xWi
 xWi
 xWi
 dkY
-aaa
-cnw
 aaa
 kmt
 gGM
@@ -162710,6 +162512,8 @@ cnw
 cnw
 cnw
 cnw
+cnw
+cnw
 aaa
 dkG
 dkQ
@@ -162767,8 +162571,6 @@ xWi
 xWi
 xWi
 dkY
-aaa
-cnw
 aaa
 kmt
 gGM
@@ -163012,6 +162814,8 @@ cnw
 cnw
 cnw
 cnw
+cnw
+cnw
 aaa
 dkG
 dkQ
@@ -163069,8 +162873,6 @@ xWi
 xWi
 xWi
 dkY
-aaa
-cnw
 aaa
 kmt
 gGM
@@ -163314,65 +163116,65 @@ cnw
 cnw
 cnw
 cnw
-aaa
-dkG
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkG
-aaa
-dkY
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-dlh
-dlm
-dlv
-dlm
-dlv
-dlm
-dlv
-dlm
-dlh
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-dkY
-aaa
 cnw
+cnw
+aaa
+dkG
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkG
+aaa
+dkY
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+dlh
+dlm
+dlv
+dlm
+dlv
+dlm
+dlv
+dlm
+dlh
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+dkY
 aaa
 kmt
 gGM
@@ -163616,6 +163418,8 @@ cnw
 cnw
 cnw
 cnw
+cnw
+cnw
 aaa
 dkG
 dkQ
@@ -163673,8 +163477,6 @@ xWi
 xWi
 xWi
 dkY
-aaa
-cnw
 aaa
 kmt
 gGM
@@ -163918,6 +163720,8 @@ cnw
 cnw
 cnw
 cnw
+cnw
+cnw
 aaa
 dkG
 dkQ
@@ -163975,8 +163779,6 @@ xWi
 xWi
 xWi
 dkY
-aaa
-cnw
 aaa
 kmt
 gGM
@@ -164220,6 +164022,8 @@ cnw
 cnw
 cnw
 cnw
+cnw
+cnw
 aaa
 dkG
 dkQ
@@ -164277,8 +164081,6 @@ xWi
 xWi
 xWi
 dkY
-aaa
-cnw
 aaa
 kmt
 gGM
@@ -164522,6 +164324,8 @@ cnw
 cnw
 cnw
 cnw
+cnw
+cnw
 aaa
 dkG
 dkQ
@@ -164579,8 +164383,6 @@ xWi
 xWi
 xWi
 dkY
-aaa
-cnw
 aaa
 kmt
 gGM
@@ -164799,11 +164601,13 @@ aES
 dFc
 aaa
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 cnw
 cnw
 cnw
@@ -164881,8 +164685,6 @@ xWi
 xWi
 xWi
 dkY
-aaa
-cnw
 aaa
 kmt
 gGM
@@ -165101,11 +164903,13 @@ aES
 dFc
 aaa
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+uOm
+uOm
+uOm
+uOm
+uOm
+aaa
 cnw
 cnw
 cnw
@@ -165183,8 +164987,6 @@ xWi
 xWi
 xWi
 dkY
-aaa
-cnw
 aaa
 kmt
 gGM
@@ -165403,11 +165205,13 @@ aES
 dFc
 aaa
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+uOm
+etu
+riE
+iwj
+uOm
+aaa
 cnw
 cnw
 cnw
@@ -165485,8 +165289,6 @@ xWi
 xWi
 xWi
 dkY
-aaa
-cnw
 aaa
 kmt
 gGM
@@ -165705,11 +165507,13 @@ aES
 dFc
 aaa
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+mXf
+xYs
+rpG
+vFJ
+ptv
+aaa
 cnw
 cnw
 cnw
@@ -165787,8 +165591,6 @@ xWi
 xWi
 xWi
 dkY
-aaa
-cnw
 aaa
 kmt
 gGM
@@ -166007,11 +165809,13 @@ aES
 dFc
 aaa
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+xGt
+rKt
+leI
+rpG
+uOm
+aaa
 cnw
 cnw
 cnw
@@ -166089,8 +165893,6 @@ xWi
 xWi
 xWi
 dkY
-aaa
-cnw
 aaa
 kmt
 gGM
@@ -166309,11 +166111,13 @@ aES
 dFc
 aaa
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+koF
+xAQ
+xAQ
+icJ
+uOm
+aaa
 cnw
 cnw
 cnw
@@ -166391,8 +166195,6 @@ xWi
 xWi
 xWi
 dkY
-aaa
-cnw
 aaa
 kmt
 gGM
@@ -166611,11 +166413,13 @@ aES
 dFc
 aaa
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+uOm
+uOm
+uOm
+uOm
+uOm
+aaa
 cnw
 cnw
 cnw
@@ -166693,8 +166497,6 @@ xWi
 xWi
 xWi
 dkY
-aaa
-cnw
 aaa
 kmt
 gGM
@@ -166913,11 +166715,13 @@ aES
 dFc
 aaa
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 cnw
 cnw
 cnw
@@ -166995,8 +166799,6 @@ xWi
 xWi
 xWi
 dkY
-aaa
-cnw
 aaa
 kmt
 gGM
@@ -167240,65 +167042,65 @@ cnw
 cnw
 cnw
 cnw
-aaa
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-aaa
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-aaa
 cnw
+cnw
+aaa
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+aaa
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
 aaa
 kmt
 kmt
@@ -167516,32 +167318,6 @@ aaa
 aaa
 aaa
 aaa
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
 aaa
 aaa
 aaa
@@ -167600,7 +167376,33 @@ aaa
 aaa
 aaa
 aaa
-cnw
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa

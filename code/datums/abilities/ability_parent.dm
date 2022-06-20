@@ -993,7 +993,7 @@
 				var/obj/item/grab/GD = M.equipped()
 
 				if (!GD || !istype(GD) || (!GD.affecting || !ismob(GD.affecting)))
-					boutput(M, __red("You need to grab hold of the target with your active hand first!"))
+					boutput(M, "<span class='alert'>You need to grab hold of the target with your active hand first!</span>")
 					return 0
 
 				var/mob/living/L = GD.affecting
@@ -1001,9 +1001,9 @@
 					if (GD.state >= state)
 						G = GD
 					else
-						boutput(M, __red("You need a tighter grip!"))
+						boutput(M, "<span class='alert'>You need a tighter grip!</span>")
 				else
-					boutput(M, __red("You need to grab hold of the target with your active hand first!"))
+					boutput(M, "<span class='alert'>You need to grab hold of the target with your active hand first!</span>")
 
 				return G
 
@@ -1022,10 +1022,10 @@
 								G = G2
 								break
 							else
-								boutput(M, __red("You need a tighter grip!"))
+								boutput(M, "<span class='alert'>You need a tighter grip!</span>")
 								return 0
 					if (isnull(G) || !istype(G))
-						boutput(M, __red("You need to grab hold of [target] first!"))
+						boutput(M, "<span class='alert'>You need to grab hold of [target] first!</span>")
 						return 0
 					else
 						return G

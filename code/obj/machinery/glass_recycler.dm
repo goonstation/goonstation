@@ -50,6 +50,8 @@
 	var/glass_amt = 0
 	var/list/product_list = list()
 	mats = 10
+	flags = NOSPLASH | FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE
+
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS
 
 	New()
@@ -57,7 +59,7 @@
 		src.get_products()
 		UnsubscribeProcess()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W.loc, /obj/item/storage))
 			var/obj/item/storage/storage = W.loc
 			storage.hud.remove_object(W)
@@ -67,10 +69,15 @@
 		if(istype(W, /obj/item/reagent_containers/glass/jar) && length(W.contents))
 			boutput(user, "<span class='alert'>You need to empty [W] first!</span>")
 			return
+		if(W.reagents?.total_volume) // Ask if they really want to lose the contents of the beaker
+			if (tgui_alert(user,"The [W] has reagents in it, are you sure you want to recycle it?","Recycler alert!",list("Yes","No")) != "Yes")
+				return 0 //they said no, do nothing
+
 
 
 		var/success = FALSE //did we successfully recycle a thing?
 		if(istype(W, /obj/item/reagent_containers/glass))
+
 			if (istype(W, /obj/item/reagent_containers/glass/beaker))
 				success = TRUE
 				if (istype(W, /obj/item/reagent_containers/glass/beaker/large))
@@ -104,11 +111,6 @@
 		else if (istype(W, /obj/item/plate))
 			success = TRUE
 			glass_amt += PLATE_COST
-		else if (istype(W, /obj/item/platestack))
-			success = TRUE
-			var/obj/item/platestack/PS = W
-			var/plateCount = PS.platenum + 1
-			glass_amt += plateCount * PLATE_COST
 		else if (istype(W, /obj/item/storage/box))
 			var/obj/item/storage/S = W
 			for (var/obj/item/I in S.get_contents())

@@ -12,7 +12,7 @@
 	var/const/max_time = 300
 
 	// Please keep synchronizied with these lists for easy map changes:
-	// /obj/storage/secure/closet/brig/automatic (secure_closets.dm)
+	// /obj/storage/secure/closet/brig_automatic (secure_closets.dm)
 	// /obj/machinery/floorflusher (floorflusher.dm)
 	// /obj/machinery/door/window/brigdoor (window.dm)
 	// /obj/machinery/flasher (flasher.dm)
@@ -226,7 +226,7 @@
 
 		LAGCHECK(LAG_LOW)
 
-		for (var/obj/storage/secure/closet/brig/automatic/B in range(30, src))
+		for (var/obj/storage/secure/closet/brig_automatic/B in range(30, src))
 			if (B.id == src.id && B.our_timer == src)
 				if (B.locked)
 					B.locked = 0
@@ -258,7 +258,7 @@
 		if (F.id == src.id)
 			. += list(
 				"flasher" = TRUE,
-				"recharging" = F.last_flash && world.time < F.last_flash + 150
+				"recharging" = GET_COOLDOWN(F, "flash")
 			)
 			break
 
@@ -315,6 +315,8 @@
 			for (var/obj/machinery/flasher/F in range(10, src))
 				if (F.id == src.id)
 					src.add_fingerprint(usr)
+					if (GET_COOLDOWN(F, "flash"))
+						return
 					F.flash()
 					logTheThing("station", usr, null, "sets off flashers from a door timer: [src] [log_loc(src)].")
 					return TRUE

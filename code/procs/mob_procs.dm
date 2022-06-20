@@ -122,7 +122,7 @@
 	if (!src.can_slip())
 		return
 
-	var/slip_delay = BASE_SPEED_SUSTAINED + (WALK_DELAY_ADD*0.15) //we need to fall under this movedelay value in order to slip :O
+	var/slip_delay = BASE_SPEED_SUSTAINED + (WALK_DELAY_ADD*0.14) //we need to fall under this movedelay value in order to slip :O
 
 	if (walking_matters)
 		slip_delay = BASE_SPEED_SUSTAINED + WALK_DELAY_ADD
@@ -208,7 +208,7 @@
 		if (G.block_vision)
 			return 0
 
-	if ((src.bioHolder && src.bioHolder.HasEffect("blind")) || src.blinded || src.get_eye_damage(1) || (src.organHolder && !src.organHolder.left_eye && !src.organHolder.right_eye))
+	if ((src.bioHolder && src.bioHolder.HasEffect("blind")) || src.blinded || src.get_eye_damage(1) || (src.organHolder && !src.organHolder.left_eye && !src.organHolder.right_eye && !isskeleton(src)))
 		return 0
 
 	return 1
@@ -235,7 +235,7 @@
 
 // We've had like 10+ code snippets for a variation of the same thing, now it's just one mob proc (Convair880).
 /mob/living/apply_flash(var/animation_duration = 30, var/weak = 8, var/stun = 0, var/misstep = 0, var/eyes_blurry = 0, var/eyes_damage = 0, var/eye_tempblind = 0, var/burn = 0, var/uncloak_prob = 50, var/stamina_damage = 130,var/disorient_time = 60)
-	if (!src || !isliving(src) || isintangible(src) || istype(src, /mob/living/object))
+	if (isintangible(src) || islivingobject(src))
 		return
 	if (animation_duration <= 0)
 		return
@@ -329,8 +329,8 @@
 		src.TakeDamage("head", 0, 5)
 
 	if (prob(clamp(uncloak_prob, 0, 100)))
-		SEND_SIGNAL(src, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
-		SEND_SIGNAL(src, COMSIG_DISGUISER_DEACTIVATE)
+		SEND_SIGNAL(src, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
+		SEND_SIGNAL(src, COMSIG_MOB_DISGUISER_DEACTIVATE)
 
 	if (safety)
 		return 0
@@ -379,7 +379,7 @@
 // Similar concept to apply_flash(). One proc in place of a bunch of individually implemented code snippets (Convair880).
 #define DO_NOTHING (!weak && !stun && !misstep && !slow && !drop_item && !ears_damage && !ear_tempdeaf)
 /mob/living/apply_sonic_stun(var/weak = 0, var/stun = 8, var/misstep = 0, var/slow = 0, var/drop_item = 0, var/ears_damage = 0, var/ear_tempdeaf = 0, var/stamina_damage = 130)
-	if (!src || !isliving(src) || isintangible(src) || istype(src, /mob/living/object))
+	if (isintangible(src) || islivingobject(src))
 		return
 	if (DO_NOTHING)
 		return
@@ -440,7 +440,7 @@
 			src.take_ear_damage(ear_tempdeaf, 1)
 
 		if (weak == 0 && stun == 0 && prob(clamp(drop_item, 0, 100)))
-			src.show_message(__red("<B>You drop what you were holding to clutch at your ears!</B>"))
+			src.show_message("<span class='alert'><B>You drop what you were holding to clutch at your ears!</B></span>")
 			src.drop_item()
 
 	return
@@ -752,10 +752,13 @@
 	var/see_revs = 0
 	var/see_heads = 0
 	var/see_xmas = 0
+	var/see_zombies = 0
 	var/see_special = 0 // Just a pass-through. Game mode-specific stuff is handled further down in the proc.
 	var/see_everything = 0
 	var/datum/gang/gang_to_see = null
 	var/PWT_to_see = null
+	var/datum/abilityHolder/vampire/V = null
+	var/datum/abilityHolder/vampiric_thrall/VT = null
 
 	if (isadminghost(src) || src.client?.adventure_view || current_state >= GAME_STATE_FINISHED)
 		see_everything = 1
@@ -768,20 +771,20 @@
 				see_revs = 1
 			if (src.mind in HR)
 				see_heads = 1
-		if (istype(ticker.mode, /datum/game_mode/spy))
+		else if (istype(ticker.mode, /datum/game_mode/spy))
 			var/datum/game_mode/spy/S = ticker.mode
 			var/list/L = S.leaders
 			var/list/M = S.spies
 			if (src.mind in (L + M))
 				see_special = 1
-		if (istype(ticker.mode, /datum/game_mode/gang))
+		else if (istype(ticker.mode, /datum/game_mode/gang))
 			if(src.mind.gang != null)
 				gang_to_see = src.mind.gang
 		//mostly took this from gang. I'm sure it can be better though, sorry. -Kyle
-		if (istype(ticker.mode, /datum/game_mode/pod_wars))
+		else if (istype(ticker.mode, /datum/game_mode/pod_wars))
 			// var/datum/game_mode/pod_wars/PW = ticker.mode
 			PWT_to_see = get_pod_wars_team_num(src)
-		if (issilicon(src)) // We need to look for borged antagonists too.
+		else if (issilicon(src)) // We need to look for borged antagonists too.
 			var/mob/living/silicon/S = src
 			if (src.mind.special_role == ROLE_SYNDICATE_ROBOT || (S.syndicate && !S.dependent)) // No AI shells.
 				see_traitors = 1
@@ -789,9 +792,15 @@
 				see_revs = 1
 		if (isnukeop(src) || isnukeopgunbot(src))
 			see_nukeops = 1
-		if (iswizard(src))
+		else if (iswizard(src))
 			see_wizards = 1
-		if (src.mind && src.mind.special_role == ROLE_GRINCH)
+		else if (isvampire(src))
+			V = src.get_ability_holder(/datum/abilityHolder/vampire)
+		else if (isvampiricthrall(src))
+			VT = src.get_ability_holder(/datum/abilityHolder/vampiric_thrall)
+		else if (iszombie(src))
+			see_zombies = 1
+		else if (src.mind && src.mind.special_role == ROLE_GRINCH)
 			see_xmas = 1
 
 	// Clear existing overlays.
@@ -807,7 +816,7 @@
 	if (remove)
 		return
 
-	if (!see_traitors && !see_nukeops && !see_wizards && !see_revs && !see_heads && !see_xmas && !see_special && !see_everything && gang_to_see == null && PWT_to_see == null)
+	if (!see_traitors && !see_nukeops && !see_wizards && !see_revs && !see_heads && !see_xmas && !see_zombies && !see_special && !see_everything && gang_to_see == null && PWT_to_see == null && !V && !VT)
 		src.last_overlay_refresh = world.time
 		return
 
@@ -820,7 +829,12 @@
 	for (var/datum/mind/M in (regular + misc))
 		robot_override = 0 // Gotta reset this.
 
-		if (M.current && issilicon(M.current)) // We need to look for borged antagonists too.
+		if (!M.current) // no body?
+			continue
+		if (!see_everything && isobserver(M.current))
+			continue
+
+		if (issilicon(M.current)) // We need to look for borged antagonists too.
 			var/mob/living/silicon/S = M.current
 			if (M.special_role == ROLE_SYNDICATE_ROBOT || (S.syndicate && !S.dependent)) // No AI shells.
 				if (see_everything || see_traitors)
@@ -838,88 +852,70 @@
 			switch (M.special_role)
 				if (ROLE_TRAITOR, ROLE_HARDMODE_TRAITOR, ROLE_SLEEPER_AGENT)
 					if (see_everything || see_traitors)
-						if (M.current)
-							if (!see_everything && isobserver(M.current)) continue
-							var/I = image(antag_traitor, loc = M.current)
-							can_see.Add(I)
+						var/I = image(antag_traitor, loc = M.current)
+						can_see.Add(I)
 				if (ROLE_CHANGELING)
 					if (see_everything)
-						if (M.current)
-							var/I = image(antag_changeling, loc = M.current)
-							can_see.Add(I)
+						var/I = image(antag_changeling, loc = M.current)
+						can_see.Add(I)
 				if (ROLE_WIZARD)
 					if (see_everything || see_wizards)
-						if (M.current)
-							if (!see_everything && isobserver(M.current)) continue
-							var/I = image(antag_wizard, loc = M.current)
-							can_see.Add(I)
+						var/I = image(antag_wizard, loc = M.current)
+						can_see.Add(I)
 				if (ROLE_VAMPIRE)
-					if (see_everything)
-						if (M.current)
-							var/I = image(antag_vampire, loc = M.current)
-							can_see.Add(I)
+					var/datum/abilityHolder/vampire/MV = M.current.get_ability_holder(/datum/abilityHolder/vampire)
+					if (see_everything || (src in MV?.thralls)) // you're their thrall
+						var/I = image(antag_vampire, loc = M.current)
+						can_see.Add(I)
 				if (ROLE_HUNTER)
 					if (see_everything)
-						if (M.current)
-							var/I = image(antag_hunter, loc = M.current)
-							can_see.Add(I)
+						var/I = image(antag_hunter, loc = M.current)
+						can_see.Add(I)
 				if (ROLE_WEREWOLF)
 					if (see_everything)
-						if (M.current)
-							var/I = image(antag_werewolf, loc = M.current)
-							can_see.Add(I)
-				if (ROLE_MINDSLAVE)
-					if (see_everything)
-						if (M.current)
-							var/I = image(antag_mindslave, loc = M.current)
-							can_see.Add(I)
+						var/I = image(antag_werewolf, loc = M.current)
+						can_see.Add(I)
 				if (ROLE_VAMPTHRALL)
-					if (see_everything)
-						if (M.current)
-							var/I = image(antag_vampthrall, loc = M.current)
-							can_see.Add(I)
+					var/datum/abilityHolder/vampiric_thrall/VT2 = M.current.get_ability_holder(/datum/abilityHolder/vampiric_thrall)
+					if (see_everything || (M.current in V?.thralls) || (VT?.master == VT2?.master)) // they're your thrall or they have the same vamp master
+						var/I = image(antag_vampthrall, loc = M.current)
+						can_see.Add(I)
 				if (ROLE_WRAITH)
 					if (see_everything)
-						if (M.current)
-							var/I = image(antag_wraith, loc = M.current)
-							can_see.Add(I)
+						var/I = image(antag_wraith, loc = M.current)
+						can_see.Add(I)
 				if (ROLE_BLOB)
 					if (see_everything)
-						if (M.current)
-							var/I = image(antag_blob, loc = M.current)
-							can_see.Add(I)
+						var/I = image(antag_blob, loc = M.current)
+						can_see.Add(I)
 				if (ROLE_OMNITRAITOR)
 					if (see_everything)
-						if (M.current)
-							var/I = image(antag_omnitraitor, loc = M.current)
-							can_see.Add(I)
+						var/I = image(antag_omnitraitor, loc = M.current)
+						can_see.Add(I)
 				if (ROLE_WRESTLER)
 					if (see_everything)
-						if (M.current)
-							var/I = image(antag_wrestler, loc = M.current)
-							can_see.Add(I)
+						var/I = image(antag_wrestler, loc = M.current)
+						can_see.Add(I)
 				if (ROLE_GRINCH)
 					if (see_everything || see_xmas)
-						if (M.current)
-							if (!see_everything && isobserver(M.current)) continue
-							var/I = image(antag_grinch, loc = M.current)
-							can_see.Add(I)
+						var/I = image(antag_grinch, loc = M.current)
+						can_see.Add(I)
 				if (ROLE_SPY_THIEF)
 					if (see_everything)
-						if (M.current)
-							if (!see_everything && isobserver(M.current)) continue
-							var/I = image(antag_spy_theft, loc = M.current)
-							can_see.Add(I)
+						var/I = image(antag_spy_theft, loc = M.current)
+						can_see.Add(I)
 				if (ROLE_ARCFIEND)
 					if (see_everything)
-						if (M.current)
-							var/I = image(antag_arcfiend, loc = M.current)
-							can_see.Add(I)
+						var/I = image(antag_arcfiend, loc = M.current)
+						can_see.Add(I)
+				if (ROLE_ZOMBIE)
+					if (see_everything || see_zombies)
+						var/I = image(antag_generic, loc = M.current)
+						can_see.Add(I)
 				else
 					if (see_everything)
-						if (M.current)
-							var/I = image(antag_generic, loc = M.current) // Default to this.
-							can_see.Add(I)
+						var/I = image(antag_generic, loc = M.current) // Default to this.
+						can_see.Add(I)
 
 	// Antagonists who generally only appear in certain game modes.
 	if (istype(ticker.mode, /datum/game_mode/revolution))
@@ -1126,14 +1122,10 @@
 	.=0
 
 /mob/living/carbon/human/clothing_protects_from_chems()
-	.= 0
-	if (\
-		(src.wear_suit 	&& src.wear_suit.permeability_coefficient 	<= 0.01) && \
-		(src.head 		&& src.head.permeability_coefficient 		<= 0.01) && \
-		(src.wear_mask 	&& src.wear_mask.permeability_coefficient 	<= 0.10) && \
-		(src.shoes 		&& src.shoes.permeability_coefficient 		<= 0.10) && \
-		(src.gloves 	&& src.gloves.permeability_coefficient 		<= 0.02 ))
-		.=1
+	if (src.get_chem_protection() == 100)
+		return 1
+	else
+		return 0
 
 
 /// Changes ghost invisibility for the round.

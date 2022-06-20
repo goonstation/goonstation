@@ -64,10 +64,10 @@
 		src.set_dir(get_dir(src, target))
 		SPAWN(0.5 SECONDS) update()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		vanish()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		vanish()
 
 	proc/update()

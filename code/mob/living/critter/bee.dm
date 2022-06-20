@@ -188,7 +188,7 @@
 		src.UpdateIcon()
 		return
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (isdead(src))
 			return ..()
 		if (issnippingtool(W))
@@ -468,12 +468,12 @@
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, __red("Nothing to sting there."))
+				boutput(holder.owner, "<span class='alert'>Nothing to sting there.</span>")
 				return 1
 		if (target == holder.owner)
 			return 1
 		if (BOUNDS_DIST(holder.owner, target) > 0)
-			boutput(holder.owner, __red("That is too far away to sting."))
+			boutput(holder.owner, "<span class='alert'>That is too far away to sting.</span>")
 			return 1
 		var/mob/living/MT = target
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner] pokes [MT] with [his_or_her(holder.owner)] [pick(src.sting_adjectives)] stinger!</b></span>")
@@ -536,12 +536,12 @@
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, __red("Nothing to swallow there."))
+				boutput(holder.owner, "<span class='alert'>Nothing to swallow there.</span>")
 				return 1
 		if (target == holder.owner)
 			return 1
 		if (BOUNDS_DIST(holder.owner, target) > 0)
-			boutput(holder.owner, __red("That is too far away to swallow."))
+			boutput(holder.owner, "<span class='alert'>That is too far away to swallow.</span>")
 			return 1
 		var/mob/living/MT = target
 		if (MT.loc != holder.owner)
@@ -584,13 +584,13 @@
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, __red("Nothing to teleport there."))
+				boutput(holder.owner, "<span class='alert'>Nothing to teleport there.</span>")
 				return 1
 		if (target == holder.owner)
 			return 1
 		var/mob/living/MT = target
 		if (BOUNDS_DIST(holder.owner, target) > 0)
-			boutput(holder.owner, __red("That is too far away to teleport away."))
+			boutput(holder.owner, "<span class='alert'>That is too far away to teleport away.</span>")
 			return 1
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner]</b> stares at [MT]!</span>")
 		if(do_buzz)
@@ -619,7 +619,7 @@
 	honey_color = rgb(0, 255, 255)
 	// halloween stuff can come a little later seeing as we just now finished halloween
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (src.stat)
 			return ..()
 
@@ -871,7 +871,7 @@
 		src.visible_message("<b>[src]</b> wills a blob of honey into existence![prob(10) ? " Weird!" : null]")
 		playsound(src.loc, "sound/effects/mag_forcewall.ogg", 50, 1)
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (src.stat)
 			return ..()
 

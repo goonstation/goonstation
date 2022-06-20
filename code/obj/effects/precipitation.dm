@@ -17,6 +17,18 @@ particles/rain
 	dense
 		spawning = 60
 
+		tile
+			count = 10
+			spawning = 1.2
+			fade = 4
+			fadein = 2
+			lifespan = generator("num", 6, 8, LINEAR_RAND)
+			position = generator("box", list(-32,32,0), list(32,40,50))
+			bound1 = list(-32, -32, -1000)
+			bound2 = list(40, 40, 1000)
+			width = 96
+			height = 96
+
 	sideways
 		rotation = generator("num", -10, -20 )
 		gravity = list(0.4, -3)
@@ -191,6 +203,9 @@ obj/effects/precipitation/rain
 
 	dense
 		particles = new/particles/rain/dense
+
+		tile
+			particles = new/particles/rain/dense/tile
 
 	sideways
 		particles = new/particles/rain/sideways

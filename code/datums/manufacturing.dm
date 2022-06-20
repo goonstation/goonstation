@@ -1356,8 +1356,8 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/flash
 	name = "Flash"
-	item_paths = list("CRY-1","CON-1")
-	item_amounts = list(2,2)
+	item_paths = list("MET-1","CON-1","CRY-1")
+	item_amounts = list(3,5,5)
 	item_outputs = list(/obj/item/device/flash)
 	time = 15 SECONDS
 	create = 1
@@ -1637,7 +1637,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	category = "Resource"
 
 /datum/manufacture/thrusters
-	name = "Alastor Pattern Thrusters "
+	name = "Alastor Pattern Thrusters"
 	item_paths = list("MET-2")
 	item_amounts = list(50)
 	item_outputs = list(/obj/item/parts/robot_parts/leg/right/thruster,/obj/item/parts/robot_parts/leg/left/thruster)
@@ -1645,10 +1645,70 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Component"
 
+/******************** Science **************************/
 
+/datum/manufacture/biosuit
+	name = "Biosuit Set"
+	item_paths = list("FAB-1","CRY-1")
+	item_amounts = list(5,2)
+	item_outputs = list(/obj/item/clothing/suit/bio_suit,/obj/item/clothing/head/bio_hood)
+	time = 10 SECONDS
+	create = 1
+	category = "Clothing"
 
+/datum/manufacture/spectrogoggles
+	name = "Spectroscopic Scanner Goggles"
+	item_paths = list("MET-1","CRY-1")
+	item_amounts = list(1,2)
+	item_outputs = list(/obj/item/clothing/glasses/spectro)
+	time = 20 SECONDS
+	create = 1
+	category = "Clothing"
 
+/datum/manufacture/gasmask
+	name = "Gas Mask"
+	item_paths = list("FAB-1", "MET-2", "CRY-1")
+	item_amounts = list(2,4,2)
+	item_outputs = list(/obj/item/clothing/mask/gas)
+	time = 5 SECONDS
+	create = 1
+	category = "Clothing"
 
+/datum/manufacture/dropper
+	name ="Dropper"
+	item_paths = list("INS-1", "CRY-1")
+	item_amounts = list(1,2)
+	item_outputs = list(/obj/item/reagent_containers/dropper)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
+
+/datum/manufacture/mechdropper
+	name ="Mechanical Dropper"
+	item_paths = list("MET-1", "CON-1")
+	item_amounts = list(3,3)
+	item_outputs = list(/obj/item/reagent_containers/dropper/mechanical)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
+
+/datum/manufacture/gps
+	name ="Space GPS"
+	item_paths = list("MET-1", "CON-1")
+	item_amounts = list(1,1)
+	item_outputs = list(/obj/item/device/gps)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
+
+/datum/manufacture/reagentscanner
+	name ="Reagent Scanner"
+	item_paths = list("MET-1", "CON-1", "CRY-1")
+	item_amounts = list(2,2,1)
+	item_outputs = list(/obj/item/device/reagentscanner)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
 // Mining Gear
 #ifndef UNDERWATER_MAP
 /datum/manufacture/mining_magnet
@@ -2778,7 +2838,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	name = "ID Briefcase"
 	item_paths = list("CON-1","CRY-1","MET-1","gold")
 	item_amounts = list(25,15,35,2)
-	item_outputs = list(/obj/item/acesscomputerunfolder)
+	item_outputs = list(/obj/machinery/computer/card/portable)
 	time = 75 SECONDS
 	create = 1
 	category = "Resource"
@@ -2857,10 +2917,18 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	create = 1
 	category = "Miscellaneous"
 
+/datum/manufacture/freezer
+	name = "Freezer Crate"
+	item_paths = list("MET-1")
+	item_amounts = list(5)
+	item_outputs = list(/obj/storage/crate/freezer)
+	time = 10 SECONDS
+	create = 1
+	category = "Miscellaneous"
 /******************** GUNS *******************/
 
 /datum/manufacture/alastor
-	name = "Alastor pattern laser rifle"
+	name = "Alastor Pattern Laser Rifle"
 	item_paths = list("DEN-1","MET-3","CON-1","CRY-1")
 	item_amounts = list(1,10,20,20)
 	item_outputs = list(/obj/item/gun/energy/alastor)

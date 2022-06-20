@@ -52,7 +52,7 @@ CONTAINS:
 		BLOCK_SETUP(BLOCK_KNIFE)
 
 
-	attack(mob/living/carbon/M as mob, mob/user as mob)
+	attack(mob/living/carbon/M, mob/user)
 		if (src.reagents && src.reagents.total_volume)
 			logTheThing("combat", user, M, "used [src] on [constructTarget(M,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
 		else
@@ -122,7 +122,7 @@ CONTAINS:
 		AddComponent(/datum/component/transfer_on_attack)
 		BLOCK_SETUP(BLOCK_LARGE)
 
-	attack(mob/living/carbon/M as mob, mob/user as mob)
+	attack(mob/living/carbon/M, mob/user)
 		if (src.reagents && src.reagents.total_volume)
 			logTheThing("combat", user, M, "used [src] on [constructTarget(M,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
 		else
@@ -188,7 +188,7 @@ CONTAINS:
 		setProperty("piercing", 80)
 
 
-	attack(mob/living/carbon/M as mob, mob/user as mob)
+	attack(mob/living/carbon/M, mob/user)
 		if (src.reagents && src.reagents.total_volume)
 			logTheThing("combat", user, M, "used [src] on [constructTarget(M,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
 		else
@@ -244,7 +244,7 @@ CONTAINS:
 		. = ..()
 		. += "There are [src.ammo] staples left."
 
-	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	attack(mob/living/carbon/M, mob/living/carbon/user)
 		if (!ismob(M))
 			return
 
@@ -389,7 +389,7 @@ CONTAINS:
 		src.emagged = 0
 		return 1
 
-	attack(mob/living/M as mob, mob/user as mob)
+	attack(mob/living/M, mob/user)
 		if (!isliving(M) || issilicon(M))
 			return ..()
 		if (src.defibrillate(M, user, src.emagged, src.makeshift, src.cell))
@@ -644,6 +644,11 @@ CONTAINS:
 	mats = 25
 	var/obj/item/robodefibrillator/mounted/defib = null
 
+	New()
+		..()
+		if (!defib)
+			src.defib = new /obj/item/robodefibrillator/mounted(src)
+
 	emag_act()
 		..()
 		return defib?.emag_act()
@@ -667,12 +672,15 @@ CONTAINS:
 					put_back_defib(src.defib.loc)
 		..()
 
-	attack_hand(mob/living/user as mob)
+	attack_hand(mob/living/user)
 		if (isAI(user) || isintangible(user) || isobserver(user)) return
 		user.lastattacked = src
 		..()
-		if (!defib)
-			src.defib = new /obj/item/robodefibrillator/mounted(src)
+		if(!defib || QDELETED(defib))
+			defib = null // ditch the ref, just in case we're QDEL'd but defib is still holding on
+			return //maybe a bird ate it
+		if(defib.loc != src)
+			return //if someone else has it, don't put it in user's hand
 		user.put_in_hand_or_drop(src.defib)
 		src.defib.parent = src
 		playsound(src, "sound/items/pickup_defib.ogg", 65, vary=0.2)
@@ -688,7 +696,7 @@ CONTAINS:
 			else
 				user.move_laying = list(src.defib)
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		user.lastattacked = src
 		if (W == src.defib)
 			src.defib.move_callback(user,get_turf(user),get_turf(src))
@@ -733,7 +741,7 @@ CONTAINS:
 	var/in_use = 0
 	hide_attack = 2
 
-	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	attack(mob/living/carbon/M, mob/living/carbon/user)
 		if (!suture_surgery(M,user))
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
@@ -807,7 +815,7 @@ CONTAINS:
 				if (6 to INFINITY)
 					. += "None of it has been used."
 
-	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	attack(mob/living/carbon/M, mob/living/carbon/user)
 		if (!src.uses || src.icon_state == "bandage-item-0")
 			user.show_text("There's nothing left of [src]!", "red")
 			return
@@ -1002,7 +1010,7 @@ CONTAINS:
 				if (100 to INFINITY)
 					. += "<span class='notice'>It's full.</span>"
 
-	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	attack(mob/living/carbon/M, mob/living/carbon/user)
 		if (volume <= 0)
 			user.show_text("There's nothing left in [src]!", "red")
 			return
@@ -1153,7 +1161,7 @@ CONTAINS:
 		else
 			return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		add_fingerprint(user)
 		if (src.icon_state == "bodybag" && src.w_class == W_CLASS_TINY)
 			return ..()
@@ -1244,7 +1252,7 @@ CONTAINS:
 	stamina_crit_chance = 15
 	hide_attack = 2
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (!ishuman(M))
 			if (user.a_intent == INTENT_HELP)
 				return
@@ -1281,7 +1289,7 @@ CONTAINS:
 /* -------------------- Reflex Hammer -------------------- */
 /* ======================================================= */
 /*
-/obj/item/tinyhammer/attack(mob/M as mob, mob/user as mob, def_zone) // the rest of this is defined in shipalert.dm
+/obj/item/tinyhammer/attack(mob/M, mob/user, def_zone) // the rest of this is defined in shipalert.dm
 	// todo: give people's limbs the ol' tappa tappa
 	// also make sure intent, force and armor matter
 	if (!def_zone)
@@ -1383,7 +1391,7 @@ CONTAINS:
 	brightness = 2
 	var/anim_duration = 10 // testing var so I can adjust in-game to see what looks nice
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		// todo: check zone, make sure people are shining the light 1) at a human 2) in the eyes, clauses for whatever else
 		if (!def_zone && user?.zone_sel?.selecting)
 			def_zone = user.zone_sel.selecting
@@ -1592,7 +1600,7 @@ keeping this here because I want to make something else with it eventually
 				falling?.throw_at(target, 1, 1)
 
 
-	attackby(obj/item/W as obj, mob/user as mob, params)
+	attackby(obj/item/W, mob/user, params)
 		if (iswrenchingtool(W))
 			actions.start(new /datum/action/bar/icon/furniture_deconstruct(src, W, 30), user)
 			return
@@ -1627,7 +1635,7 @@ keeping this here because I want to make something else with it eventually
 
 	proc/attach(obj/item/I as obj)
 		if(I.anchored) return
-		else if (istype(I, /obj/item/mechanics))
+		else if (istype(I, /obj/item/mechanics) || istype(I, /obj/item/storage/mechanics))
 			return
 		src.attached_objs.Add(I) // attach the item to the table
 		I.glide_size = 0 // required for smooth movement with the tray
@@ -1639,7 +1647,7 @@ keeping this here because I want to make something else with it eventually
 		src.attached_objs.Remove(I)
 		UnregisterSignal(I, list(COMSIG_ITEM_PICKUP, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_PRE_DISPOSING))
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!anchored)
 			boutput(user, "You apply \the [name]'s brake.")
 		else

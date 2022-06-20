@@ -140,7 +140,7 @@
 		logTheThing("station", usr, null, "disassembles [src] [log_loc(src)]")
 
 
-/obj/machinery/computer/cloning/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/computer/cloning/attackby(obj/item/W, mob/user)
 	if (wagesystem.clones_for_cash && istype(W, /obj/item/spacecash))
 		var/obj/item/spacecash/cash = W
 		src.held_credit += cash.amount
@@ -236,7 +236,7 @@
 	if (istype(subject.mutantrace, /datum/mutantrace/zombie))
 		show_message("Error: Incompatible cellular structure.", "danger")
 		return
-	if (subject.mob_flags & IS_BONER)
+	if (subject.mob_flags & IS_BONEY)
 		show_message("Error: No tissue mass present.<br>Total ossification of subject detected.", "danger")
 		return
 
@@ -471,7 +471,7 @@ proc/find_ghost_by_key(var/find_key)
 			return
 
 		if (target == user)
-			move_mob_inside(target)
+			move_mob_inside(target, user)
 		else if (can_operate(user))
 			var/previous_user_intent = user.a_intent
 			user.set_a_intent(INTENT_GRAB)
@@ -500,11 +500,11 @@ proc/find_ghost_by_key(var/find_key)
 		set src in oview(1)
 		set category = "Local"
 
-		move_mob_inside(usr)
+		move_mob_inside(usr, usr)
 		return
 
-	proc/move_mob_inside(var/mob/M)
-		if (!can_operate(M) || !ishuman(M)) return
+	proc/move_mob_inside(var/mob/M, var/mob/user)
+		if (!can_operate(user) || !ishuman(M)) return
 
 		M.remove_pulling()
 		M.set_loc(src)
@@ -514,12 +514,12 @@ proc/find_ghost_by_key(var/find_key)
 		for(var/obj/O in src)
 			O.set_loc(src.loc)
 
-		src.add_fingerprint(usr)
+		src.add_fingerprint(user)
 		src.connected?.updateUsrDialog()
 
 		playsound(src.loc, "sound/machines/sleeper_close.ogg", 50, 1)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		..()
 		eject_occupant(user)
 
@@ -542,7 +542,7 @@ proc/find_ghost_by_key(var/find_key)
 		src.go_out()
 		add_fingerprint(user)
 
-	attackby(var/obj/item/grab/G as obj, user as mob)
+	attackby(var/obj/item/grab/G, user)
 		if ((!( istype(G, /obj/item/grab) ) || !( ismob(G.affecting) )))
 			return
 
@@ -550,17 +550,7 @@ proc/find_ghost_by_key(var/find_key)
 			boutput(user, "<span class='notice'><B>The scanner is already occupied!</B></span>")
 			return
 
-		var/mob/M = G.affecting
-		M.set_loc(src)
-		src.occupant = M
-		src.icon_state = "scanner_1"
-
-		playsound(src.loc, "sound/machines/sleeper_close.ogg", 50, 1)
-
-		for(var/obj/O in src)
-			O.set_loc(src.loc)
-
-		src.add_fingerprint(user)
+		move_mob_inside(G.affecting, user)
 		qdel(G)
 		return
 

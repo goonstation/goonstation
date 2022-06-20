@@ -937,7 +937,7 @@
 	icon_state = "smear3"
 	},
 /obj/table/reinforced/chemistry/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /turf/simulated/floor/shuttlebay{
 	icon_state = "engine-blue"
 	},

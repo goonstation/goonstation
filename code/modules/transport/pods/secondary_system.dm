@@ -158,12 +158,12 @@
 	return
 
 /obj/item/shipcomponent/secondary_system/cargo/deactivate()
-	for(var/obj/O in load) //Drop cargo.
+	for(var/atom/movable/O in load) //Drop cargo.
 		src.unload(O)
 	return
 
 /obj/item/shipcomponent/secondary_system/cargo/activate()
-	var/loadmode = input(usr, "Unload/Load", "Unload/Load")  as null|anything in list("Load", "Unload")
+	var/loadmode = tgui_input_list(usr, "Unload/Load", "Unload/Load", list("Load", "Unload"))
 	switch(loadmode)
 		if("Load")
 			var/atom/movable/AM = null
@@ -285,8 +285,6 @@
 		playsound(src.loc, "sound/machines/buzz-sigh.ogg", 50, 0)
 		return 1 // invalid cargo
 
-	C.set_loc(src.loc)
-	sleep(0.2 SECONDS)
 	C.set_loc(src)
 	load += C
 	playsound(src.loc, "sound/machines/ping.ogg", 50, 0)

@@ -180,14 +180,33 @@
 	if (.)
 		src.visible_message("<span class='alert'><b>[src] suddenly dies for no adequately explained reason!</b></span>")
 
-// instead of dying, flockdrone suicide should hand control back to the mobcritter AI
 /mob/living/critter/flock/drone/do_suicide()
-	emote("beep")
-	say("\[System notification: self-aware drone has voluntarily surrendered its self-awareness and returned to basic function.\]")
-	var/mob/living/C = src.controller
-	src.release_control()
-	if(C)
-		C.suicide()
-		C.unlock_medal("Damned", 1)
+	if ((locate(/obj/flock_structure/relay) in src.flock.structures) && istype(src.controller, /mob/living/intangible/flock/flockmind) && !length(src.flock.getActiveTraces()))
+		boutput(src, "<span class='alert'>You can't abandon your Flock with the Relay active!</span>")
+		return
+	if (tgui_alert(src, "Are you sure you want to commit suicide?", "Confirm Suicide", list("Yes", "No")) == "Yes")
+		var/mob/living/intangible/flock/C = src.controller
+		src.release_control()
+		C.do_suicide(TRUE)
 
-	return TRUE
+/mob/living/intangible/flock/do_suicide(skip_prompt) // override, skip_prompt should be true for suiciding while in a drone
+	return
+
+/mob/living/intangible/flock/flockmind/do_suicide(skip_prompt)
+	if ((locate(/obj/flock_structure/relay) in src.flock.structures) && !length(src.flock.getActiveTraces()))
+		boutput(src, "<span class='alert'>You can't abandon your Flock with the Relay active!</span>")
+		return
+	if (skip_prompt || tgui_alert(src, "Are you sure you want to commit suicide?", "Confirm Suicide", list("Yes", "No")) == "Yes")
+		var/result = src.getTraceToPromote()
+		if (istype(result, /mob/living/intangible/flock/trace))
+			src.unlock_medal("Damned", 1)
+			var/mob/living/intangible/flock/trace/T = result
+			T.promoteToFlockmind(TRUE)
+		else if (result == -1)
+			src.unlock_medal("Damned", 1)
+			src.death(suicide = TRUE)
+
+/mob/living/intangible/flock/trace/do_suicide(skip_prompt)
+	if (skip_prompt || tgui_alert(src, "Are you sure you want to commit suicide?", "Confirm Suicide", list("Yes", "No")) == "Yes")
+		src.unlock_medal("Damned", 1)
+		src.death(suicide = TRUE)

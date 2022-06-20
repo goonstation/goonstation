@@ -105,6 +105,9 @@
 /datum/movement_modifier/robot_oil
 	additive_slowdown = -0.5
 
+/datum/movement_modifier/spry
+	additive_slowdown = -0.25
+	health_deficiency_adjustment = -25
 
 /datum/movement_modifier/robot_speed_upgrade
 	ask_proc = 1

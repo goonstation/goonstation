@@ -486,12 +486,12 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "aaY" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "ast1"
 	},
 /area/space)
 "aaZ" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "aba" = (
 /obj/machinery/mass_driver{
@@ -724,14 +724,14 @@
 /turf/simulated/floor/plating/airless,
 /area/listeningpost)
 "abz" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1;
 	icon_state = "ast1"
 	},
 /area/space)
 "abA" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1;
 	icon_state = "ast1"
 	},
@@ -747,13 +747,13 @@
 	},
 /area/listeningpost)
 "abC" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "ast1"
 	},
 /area/space)
 "abD" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -764,7 +764,7 @@
 	},
 /area/listeningpost)
 "abF" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4;
 	icon_state = "ast1"
 	},
@@ -775,7 +775,7 @@
 /area/space)
 "abH" = (
 /turf/simulated/floor/plating/airless/asteroid,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -851,7 +851,7 @@
 /turf/space,
 /area/space)
 "abP" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8;
 	icon_state = "ast1"
 	},
@@ -920,14 +920,14 @@
 /area/listeningpost)
 "abW" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "ast1"
 	},
 /area/space)
 "abX" = (
 /turf/simulated/floor/plating/airless/asteroid,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "ast1"
 	},
@@ -964,13 +964,13 @@
 /area/listeningpost)
 "acd" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8;
 	icon_state = "ast1"
 	},
 /area/space)
 "ace" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "ast1"
 	},
@@ -1014,21 +1014,21 @@
 /area/listeningpost)
 "acj" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4;
 	icon_state = "ast1"
 	},
 /area/space)
 "ack" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
 /area/space)
 "acl" = (
 /turf/simulated/floor/plating/airless/asteroid,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "ast1"
 	},
@@ -1088,14 +1088,14 @@
 /area/listeningpost)
 "act" = (
 /turf/simulated/floor/plating/airless/asteroid,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1;
 	icon_state = "ast1"
 	},
 /area/space)
 "acu" = (
 /turf/simulated/floor/plating/airless,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -1466,14 +1466,14 @@
 /area/listeningpost)
 "adl" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "ast1"
 	},
 /area/space)
 "adm" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "ast1"
 	},
 /area/space)
@@ -11611,9 +11611,7 @@
 /turf/simulated/floor/grime,
 /area/station/crew_quarters/quarters)
 "axr" = (
-/obj/item/device/radio/intercom{
-	
-	},
+/obj/item/device/radio/intercom,
 /obj/crate,
 /obj/item/clothing/under/gimmick/princess,
 /turf/simulated/floor/grime,
@@ -25963,9 +25961,7 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/obj/item/device/radio/intercom{
-	
-	},
+/obj/item/device/radio/intercom,
 /obj/cable{
 	icon_state = "4-8";
 	d1 = 4;
@@ -34495,9 +34491,7 @@
 /turf/simulated/floor/grime,
 /area/station/crew_quarters/juryroom)
 "brd" = (
-/obj/item/device/radio/intercom{
-	
-	},
+/obj/item/device/radio/intercom,
 /turf/simulated/floor/grime,
 /area/station/crew_quarters/juryroom)
 "bre" = (
@@ -34970,9 +34964,7 @@
 /area/station/janitor/office)
 "brZ" = (
 /obj/stool,
-/obj/item/device/radio/intercom{
-	
-	},
+/obj/item/device/radio/intercom,
 /obj/item/chem_grenade/cleaner,
 /obj/item/chem_grenade/cleaner,
 /obj/item/chem_grenade/cleaner,
@@ -38775,9 +38767,7 @@
 	dir = 1
 	},
 /obj/item/device/radio/signaler,
-/obj/item/device/radio/intercom{
-	
-	},
+/obj/item/device/radio/intercom,
 /obj/item/device/radio/signaler{
 	pixel_x = 2;
 	pixel_y = -2
@@ -39500,7 +39490,7 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/refinery)
 "bBd" = (
-/obj/machinery/smelter,
+/obj/machinery/neosmelter,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
@@ -40702,10 +40692,7 @@
 /turf/unsimulated/wall/setpieces/leadwall,
 /area/crater)
 "bDI" = (
-/obj/machinery/atmospherics/pipe/tank/rad_particles{
-	desc = "A large vessel containing an unknown pressurized gas.";
-	name = "Unidentified Gas Tank"
-	},
+/obj/machinery/atmospherics/pipe/tank/toxins/south,
 /turf/unsimulated/floor/plating/scorched,
 /area/crater)
 "bDJ" = (
@@ -41810,7 +41797,7 @@
 /turf/unsimulated/grass,
 /area/crater/biodome/north)
 "bGB" = (
-/obj/critter/spacebee,
+/obj/critter/wasp,
 /obj/spacevine{
 	icon_state = "vine-light2"
 	},
@@ -42054,7 +42041,7 @@
 /turf/unsimulated/grass,
 /area/crater/biodome/north)
 "bHh" = (
-/obj/critter/spacebee,
+/obj/critter/wasp,
 /obj/spacevine{
 	icon_state = "vine-light3"
 	},
@@ -42285,7 +42272,7 @@
 	density = 1;
 	icon_state = "vine-med2"
 	},
-/obj/critter/spacebee,
+/obj/critter/wasp,
 /turf/unsimulated/floor/green/side{
 	dir = 1
 	},
@@ -42309,7 +42296,7 @@
 	},
 /area/crater/biodome/north)
 "bHQ" = (
-/obj/critter/spacebee,
+/obj/critter/wasp,
 /obj/spacevine{
 	icon_state = "vine-light2"
 	},
@@ -42341,7 +42328,7 @@
 /obj/spacevine{
 	icon_state = "vine-light3"
 	},
-/obj/critter/spacebee,
+/obj/critter/wasp,
 /turf/unsimulated/floor/green/side{
 	dir = 1
 	},
@@ -42409,12 +42396,6 @@
 /area/marsoutpost)
 "bIc" = (
 /obj/decal/fakeobjects/firelock_broken{
-	density = 1;
-	desc = "Rust has rendered this airlock useless.";
-	icon = 'icons/obj/doors/doorint.dmi';
-	icon_state = "door_closed";
-	name = "rusted airlock";
-	opacity = 1;
 	tag = "icon-bloodydoor"
 	},
 /turf/unsimulated/floor/grime,
@@ -42748,7 +42729,7 @@
 	d2 = 8
 	},
 /obj/spacevine,
-/obj/critter/spacebee,
+/obj/critter/wasp,
 /turf/unsimulated/floor/green/side,
 /area/crater/biodome/north)
 "bIQ" = (
@@ -65479,7 +65460,7 @@
 /turf/simulated/floor/ancient,
 /area/crunch)
 "cDp" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/crunch)
 "cDq" = (
 /obj/machinery/door/airlock/external,
@@ -67488,12 +67469,6 @@
 /area/crypt/sigma/lab)
 "cIf" = (
 /obj/decal/fakeobjects/firelock_broken{
-	density = 1;
-	desc = "Rust has rendered this airlock useless.";
-	icon = 'icons/obj/doors/doorint.dmi';
-	icon_state = "door_locked";
-	name = "rusted airlock";
-	opacity = 1;
 	tag = "icon-bloodydoor"
 	},
 /obj/decal/fakeobjects/firelock_broken{
@@ -70657,21 +70632,9 @@
 /area/crypt/sigma/kitchen)
 "cPt" = (
 /obj/decal/fakeobjects/firelock_broken{
-	density = 1;
-	desc = "Rust has rendered this airlock useless.";
-	icon = 'icons/obj/doors/doorint.dmi';
-	icon_state = "door_closed";
-	name = "rusted airlock";
-	opacity = 1;
 	tag = "icon-bloodydoor"
 	},
 /obj/decal/fakeobjects/firelock_broken{
-	density = 1;
-	desc = "Rust has rendered this airlock useless.";
-	icon = 'icons/obj/doors/doorint.dmi';
-	icon_state = "door_locked";
-	name = "rusted airlock";
-	opacity = 1;
 	tag = "icon-bloodydoor"
 	},
 /turf/unsimulated/floor/delivery,
@@ -90018,12 +89981,6 @@
 /area/helldrone)
 "dGY" = (
 /obj/decal/fakeobjects/firelock_broken{
-	density = 1;
-	desc = "Rust has rendered this airlock useless.";
-	icon = 'icons/obj/doors/doorint.dmi';
-	icon_state = "door_closed";
-	name = "rusted airlock";
-	opacity = 1;
 	tag = "icon-bloodydoor"
 	},
 /turf/simulated/floor/black,

@@ -48,9 +48,7 @@
 	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))))
 		src.add_dialog(usr)
 		if (href_list["spell_teleport"])
-			if (!can_act(H))
-				return
-			if (src.uses >= 1 && usr.teleportscroll(1, 1, src) == 1)
+			if (src.uses >= 1 && usr.teleportscroll(1, 1, src, null, TRUE) == 1)
 				src.uses -= 1
 		if (ismob(src.loc))
 			attack_self(src.loc)
@@ -151,6 +149,7 @@
 		return
 
 /obj/item/staff/crystal // goes with Gannets' purple wizard robes - it looks different, and that's about it  :I  (always b fabulous)
+	name = "crystal wizard's staff"
 	desc = "A magical staff used for channeling spells. It's got a big crystal on the end."
 	icon_state = "staff_crystal"
 	item_state = "staff_crystal"
@@ -172,7 +171,7 @@
 		. = ..()
 		STOP_TRACKING
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (user.mind)
 			if (iswizard(user) || check_target_immunity(user))
 				if (user.mind.key != src.wizard_key && !check_target_immunity(user))
@@ -184,7 +183,7 @@
 				return
 		else ..()
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (iswizard(user) && !iswizard(M) && !isdead(M) && !check_target_immunity(M))
 			if (M?.traitHolder?.hasTrait("training_chaplain"))
 				M.visible_message("<spab class='alert'>A divine light shields [M] from harm!</span>")
@@ -207,7 +206,7 @@
 		else
 			return
 
-	pull(var/mob/user)
+	pull(mob/user)
 		if(check_target_immunity(user))
 			return ..()
 
@@ -238,23 +237,28 @@
 	pixelaction(atom/target, params, mob/user, reach)
 		if(!IN_RANGE(user, target, WIDE_TILE_WIDTH / 2))
 			return
-		if (istype(get_area(target), /area/station/chapel) || istype(get_area(user), /area/station/chapel))
+		if (!user.wizard_castcheck())
+			return
+		var/area/A = get_area(target)
+		if (istype(A, /area/station/chapel))
 			boutput(user, "<span class='alert'>You cannot summon lightning on holy ground!</span>") //phrasing works if either target or mob are in chapel heh
+			return
+		if (A?.sanctuary || istype(A, /area/wizard_station))
+			boutput(user, "<span class='alert'>You cannot summon lightning in this place!</span>")
 			return
 		if (thunder_charges <= 0)
 			boutput(user, "<span class='alert'>[name] is out of charges! Magically recall it to restore it's power.</span>")
 			return
-		if (iswizard(user))
-			thunder_charges -= 1
-			var/turf/T = get_turf(target)
-			var/obj/lightning_target/lightning = new/obj/lightning_target(T)
-			playsound(T, 'sound/effects/electric_shock_short.ogg', 70, 1)
-			lightning.caster = user
-			UpdateIcon()
-			flick("[icon_state]_fire", src)
-			..()
+		thunder_charges -= 1
+		var/turf/T = get_turf(target)
+		var/obj/lightning_target/lightning = new/obj/lightning_target(T)
+		playsound(T, 'sound/effects/electric_shock_short.ogg', 70, 1)
+		lightning.caster = user
+		UpdateIcon()
+		flick("[icon_state]_fire", src)
+		..()
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (user.mind)
 			if (iswizard(user) || check_target_immunity(user))
 				if (user.mind.key != src.wizard_key && !check_target_immunity(user))
@@ -266,7 +270,7 @@
 				return
 		else ..()
 
-	pull(var/mob/user)
+	pull(mob/user)
 		if(check_target_immunity(user))
 			return ..()
 

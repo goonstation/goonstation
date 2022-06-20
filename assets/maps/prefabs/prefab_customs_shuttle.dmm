@@ -430,7 +430,7 @@
 /turf/simulated/floor/damaged5,
 /area/prefab/crashed_hop_shuttle)
 "zB" = (
-/obj/item/acesscomputerunfolder,
+/obj/machinery/computer/card/portable,
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/hop,
 /turf/simulated/floor/carpet/purple/standard/edge/se,
@@ -554,7 +554,7 @@
 /turf/space,
 /area/prefab/crashed_hop_shuttle)
 "Ij" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/noGenerate)
 "IT" = (
 /obj/fluid_spawner{

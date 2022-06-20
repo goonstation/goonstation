@@ -15,7 +15,7 @@
 	light_b = 1
 
 
-/obj/machinery/computer/robotics/attackby(obj/item/I as obj, user as mob)
+/obj/machinery/computer/robotics/attackby(obj/item/I, user)
 	if (perma && isscrewingtool(I))
 		boutput(user, "<span class='alert'>The screws are all weird safety-bit types! You can't turn them!</span>")
 		return
@@ -34,11 +34,11 @@
 	return
 
 
-/obj/machinery/computer/robotics/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/robotics/attack_hand(var/mob/user)
 	if(..())
 		return
 	src.add_dialog(user)
-	var/dat = "Located AI Units<BR><BR>"
+	var/list/dat = list("Located AI Units<BR><BR>")
 	for_by_tcl(A, /mob/living/silicon/ai)
 		dat += "[A.name] |"
 		if(A.stat)
@@ -112,7 +112,7 @@
 			found_drones = TRUE
 		dat += "[drone] <A href='?src=\ref[src];gib=drone;bot=\ref[drone]'>Kill Switch *Swipe ID*</A><BR>"
 
-	user.Browse(dat, "window=computer;size=400x500")
+	user.Browse(dat.Join(), "window=computer;size=400x500")
 	onclose(user, "computer")
 	return
 

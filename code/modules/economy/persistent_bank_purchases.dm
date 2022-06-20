@@ -22,6 +22,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	new /datum/bank_purchaseable/human_item/sparkler_box,\
 	new /datum/bank_purchaseable/human_item/dabbing_license,\
 	new /datum/bank_purchaseable/human_item/chem_hint,\
+	new /datum/bank_purchaseable/human_item/pixel_pass,\
 
 	new /datum/bank_purchaseable/altjumpsuit,\
 	new /datum/bank_purchaseable/altclown,\
@@ -310,19 +311,6 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			icon = 'icons/obj/items/card.dmi'
 			icon_state = "id_dab"
 
-		battlepass
-			name = "Battle Pass"
-			cost = 1000
-			path = /obj/item/battlepass
-			icon = 'icons/obj/items/card.dmi'
-			icon_state = "id"
-
-			Create(var/mob/living/M)
-				..(M)
-				if(M?.mind)
-					battle_pass_holders.Add(M.mind)
-				return 1
-
 		chem_hint
 			name = "Secret chem hint"
 			cost = 3500
@@ -331,7 +319,11 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			icon = 'icons/obj/dojo.dmi'
 			icon_state = "scroll"
 
-
+		pixel_pass
+			name = "Pixel Pass"
+			cost = 2500
+			path = /obj/item/pixel_pass
+			icon_state = "pixel_pass"
 
 	altjumpsuit
 		name = "Alternate Jumpsuit"

@@ -135,8 +135,6 @@
 		del(owner)
 		return
 
-	/// Called when the material fails due to instability.
-	var/list/triggersFail = list()
 	/// Called when exposed to temperatures.
 	var/list/triggersTemp = list()
 	/// Called when exposed to chemicals.
@@ -167,11 +165,6 @@
 	var/list/triggersOnHit = list()
 
 
-	proc/triggerOnFail(var/atom/owner)
-		for(var/datum/materialProc/X in triggersFail)
-			call(X,  "execute")(owner)
-		fail()
-		return
 
 	proc/triggerOnEntered(var/atom/owner, var/atom/entering)
 		for(var/datum/materialProc/X in triggersOnEntered)
@@ -539,7 +532,7 @@
 
 	New()
 		..()
-		setProperty("density", 25)
+		setProperty("density", 40)
 		setProperty("hard", 30)
 		addTrigger(triggersTemp, new /datum/materialProc/molitz_temp())
 		addTrigger(triggersOnHit, new /datum/materialProc/molitz_on_hit())
@@ -554,9 +547,9 @@
 
 		New()
 			..()
-			..()
-			removeTrigger(triggersTemp, /datum/materialProc/molitz_temp) // no need to remove molitz_on_hit, all it
-			addTrigger(triggersTemp, new /datum/materialProc/molitz_temp/agent_b()) // does is call molitz_temp
+			// no need to remove molitz_on_hit, all it does is call molitz_temp
+			removeTrigger(triggersTemp, /datum/materialProc/molitz_temp)
+			addTrigger(triggersTemp, new /datum/materialProc/molitz_temp/agent_b())
 			return
 
 /datum/material/crystal/claretine
@@ -587,7 +580,6 @@
 		setProperty("radioactive", 75)
 		setProperty("stability", 10)
 
-		addTrigger(triggersFail, new /datum/materialProc/fail_explosive(100))
 		addTrigger(triggersOnAdd, new /datum/materialProc/erebite_flash())
 		addTrigger(triggersTemp, new /datum/materialProc/erebite_temp())
 		addTrigger(triggersExp, new /datum/materialProc/erebite_exp())
@@ -801,6 +793,7 @@
 	desc = "A rare complex crystalline matrix with a lazily shifting internal structure. Not to be confused with gneiss, a metamorphic rock."
 	color = "#1bdebd"
 	material_flags = MATERIAL_CRYSTAL | MATERIAL_METAL
+	texture = "flock"
 
 	transparent
 		mat_id = "gnesisglass"
@@ -862,10 +855,10 @@
 	color = "#B5E0FF"
 	alpha = 80
 	quality = 45
+	value = 1000
 
 	New()
 		..()
-		value = 1000
 		setProperty("reflective", 90)
 		setProperty("density", 85)
 		setProperty("hard", 85)
@@ -897,10 +890,10 @@
 /datum/material/crystal/wizard
 	quality = 50
 	alpha = 100
+	value = 650
 
 	New()
 		..()
-		value = 650
 		setProperty("density", 60)
 		setProperty("hard", 60)
 		addTrigger(triggersOnAdd, new /datum/materialProc/enchanted_add())
@@ -1248,7 +1241,7 @@
 		..()
 		setProperty("density", 26)
 		setProperty("hard", 11)
-		setProperty("electrical", 20)
+		setProperty("electrical", 30)
 		setProperty("thermal", 40)
 
 

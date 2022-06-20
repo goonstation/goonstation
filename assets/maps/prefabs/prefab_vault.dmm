@@ -50,7 +50,7 @@
 /area/prefab/vault)
 "j" = (
 /obj/machinery/door/airlock/pyro/safe{
-	icon_state = "generic_locked";
+	icon_state = "door_locked";
 	locked = 1
 	},
 /turf/simulated/floor/scorched,

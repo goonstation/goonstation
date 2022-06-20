@@ -32,7 +32,7 @@
 		return 1
 	if (ismob(eye))
 		var/mob/M = eye
-		if (M.is_near_colosseum())
+		if (M != src && M.is_near_colosseum())
 			return 1
 	else if (istype(eye, /obj/observable/colosseum))
 		return 1
@@ -1476,7 +1476,7 @@ proc/get_colosseum_message(var/name, var/message)
 
 			qdel(src)
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (isweldingtool(W))
 			if (health >= max_health)
 				boutput(user, "<span class='alert'>That putt is already at full health!</span>")

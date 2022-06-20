@@ -22,7 +22,7 @@
 	process()
 		..()
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if(..())
 			return
 		src.add_dialog(user)

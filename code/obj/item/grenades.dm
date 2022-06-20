@@ -44,7 +44,7 @@ PIPE BOMBS + CONSTRUCTION
 			logGrenade(user)
 			if (user?.bioHolder.HasEffect("clumsy"))
 				boutput(user, "<span class='alert'>Huh? How does this thing work?!</span>")
-				src.icon_state = src.icon_state_armed
+				src.UpdateIcon()
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
 				src.add_fingerprint(user)
 				SPAWN(0.5 SECONDS)
@@ -52,13 +52,13 @@ PIPE BOMBS + CONSTRUCTION
 					return
 			else
 				boutput(user, "<span class='alert'>You prime [src]! [det_time/10] seconds!</span>")
-				src.icon_state = src.icon_state_armed
+				src.UpdateIcon()
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
 				src.add_fingerprint(user)
 				SPAWN(src.det_time)
 					if (src) prime(user)
 					return
-		return
+
 // warcrimes: Why the fuck is autothrow a feature why would this ever be a feature WHY. Now it wont do it unless it's primed i think.
 	afterattack(atom/target as mob|obj|turf, mob/user as mob)
 		if (src.state)
@@ -68,7 +68,7 @@ PIPE BOMBS + CONSTRUCTION
 		if (user.equipped() == src)
 			if (!src.state)
 				src.state = 1
-				src.icon_state = src.icon_state_armed
+				src.UpdateIcon()
 				logGrenade(user)
 				boutput(user, "<span class='alert'>You prime [src]! [det_time/10] seconds!</span>")
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
@@ -78,9 +78,8 @@ PIPE BOMBS + CONSTRUCTION
 			user.drop_item()
 			src.throw_at(get_turf(target), 10, 3)
 			src.add_fingerprint(user)
-		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W))
 			if (src.det_time == src.org_det_time)
 				src.det_time = src.alt_det_time
@@ -91,7 +90,13 @@ PIPE BOMBS + CONSTRUCTION
 				user.show_message("<span class='notice'>You set [src] for a [det_time/10] second detonation time.</span>")
 				src.desc = "It is set to detonate in [det_time/10] seconds."
 			src.add_fingerprint(user)
-		return
+
+	update_icon()
+		..()
+		if (src.state)
+			src.icon_state = src.icon_state_armed
+		else
+			src.icon_state = initial(src.icon_state)
 
 	proc/prime(mob/user) // Most grenades require a turf reference.
 		var/turf/T = get_turf(src)
@@ -153,7 +158,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	name = "suspicious looking grenade"
 	icon_state = "wasp"
 	icon_state_armed = "wasp1"
-	payload = /obj/critter/spacebee
+	payload = /obj/critter/wasp
 	is_dangerous = TRUE
 
 /obj/item/old_grenade/thing_thrower
@@ -716,7 +721,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 			src.state = 1
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.state == 0)
 			..()
 		else
@@ -763,7 +768,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 						user.set_loc(locate(40,19,2))
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return
 
 ////////////////////////// Gimmick bombs /////////////////////////////////
@@ -1071,7 +1076,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 					boom(user)
 					return
 
-	attackby(obj/A as obj, mob/user as mob) // adapted from iv_drips.dm
+	attackby(obj/A, mob/user) // adapted from iv_drips.dm
 		if (iscuttingtool(A) && !(src.slashed) && !(src.primed))
 			boutput(user, "You carefully cut [src] open and dump out the contents.")
 			src.slashed = TRUE
@@ -1128,7 +1133,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 
 		..()
 
-	attackby(obj/A as obj, mob/user as mob) // adapted from iv_drips.dm
+	attackby(obj/A, mob/user) // adapted from iv_drips.dm
 		if (iscuttingtool(A) && !(src.slashed) && (src.bootleg_level > 0))
 			boutput(user, "You try to cut [src] open, but the contents spontaneously ignite!")
 			boom(user)
@@ -1347,7 +1352,13 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				if (distance < 2)
 					var/turf/simulated/floor/F = null
 
-					if (istype(T, /turf/simulated/wall))
+					if (istype(T, /turf/simulated/wall/auto/feather))
+						var/turf/simulated/wall/auto/feather/flockwall = T
+						flockwall.takeDamage("fire", 1)
+						O.icon_state = "2"
+						if (flockwall.health <= 0)
+							flockwall.destroy()
+					else if (istype(T, /turf/simulated/wall))
 						var/turf/simulated/wall/W = T
 						F = W.ReplaceWithFloor()
 					else if (istype(T, /turf/simulated/floor/))
@@ -1423,7 +1434,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 
 	attack_self(mob/user as mob)
 		if (state == 3)
-			if(alert(user, "Pour out the pipebomb reagents?",,"Yes","No") == "No")
+			if(tgui_alert(user, "Pour out the pipebomb reagents?", "Empty reagents", list("Yes", "No")) != "Yes")
 				return
 			boutput(user, "<span class='notice'>The reagents inside spill out!</span>")
 			src.reagents = null

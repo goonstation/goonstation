@@ -76,7 +76,7 @@
 			src.UpdateIcon()
 	return
 
-/obj/machinery/bot/floorbot/attack_hand(mob/user as mob, params)
+/obj/machinery/bot/floorbot/attack_hand(mob/user, params)
 	var/dat
 	dat += "<TT><B>Automatic Station Floor Repairer v1.0</B></TT><BR><BR>"
 	dat += "Status: \[<A href='?src=\ref[src];operation=start'>[src.on ? "On" : "Off"]</A>\]<BR>"

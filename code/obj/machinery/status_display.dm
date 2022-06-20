@@ -18,6 +18,8 @@
 	density = 0
 	mats = 14
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
+	var/glow_in_dark_screen = TRUE
+	var/image/screen_image
 
 	var/mode = 1	// 0 = Blank
 					// 1 = Shuttle timer
@@ -59,6 +61,15 @@
 		UpdateOverlays(crt_image, "crt")
 
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+
+		if(glow_in_dark_screen)
+			src.screen_image = image('icons/obj/status_display.dmi', src.icon_state, -1)
+			screen_image.plane = PLANE_LIGHTING
+			screen_image.blend_mode = BLEND_ADD
+			screen_image.layer = LIGHTING_LAYER_BASE
+			screen_image.color = list(0.66,0.66,0.66, 0.66,0.66,0.66, 0.66,0.66,0.66)
+			src.UpdateOverlays(screen_image, "screen_image")
+
 
 	// timed process
 	process()
@@ -143,6 +154,14 @@
 						repeat_update = TRUE
 
 				update_display_lines(line1,line2)
+
+		if(glow_in_dark_screen) // should re-add the glow if power is restored
+			screen_image.plane = PLANE_LIGHTING
+			screen_image.blend_mode = BLEND_ADD
+			screen_image.layer = LIGHTING_LAYER_BASE
+			screen_image.color = list(0.66,0.66,0.66, 0.66,0.66,0.66, 0.66,0.66,0.66)
+			src.UpdateOverlays(screen_image, "screen_image")
+
 
 	proc/set_message(var/m1, var/m2)
 		if(m1)

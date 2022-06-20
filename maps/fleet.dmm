@@ -222,7 +222,7 @@
 /turf/space,
 /area/space)
 "aF" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/station/garden/owlery)
 "aG" = (
 /obj/cable{
@@ -1307,7 +1307,7 @@
 /turf/simulated/floor/darkblue/checker,
 /area/station/science/artifact)
 "db" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/research_outpost/indigo_rye)
 "dc" = (
 /obj/machinery/light{
@@ -9560,7 +9560,7 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "tv" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/genetics,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "tw" = (
@@ -17707,7 +17707,7 @@
 /turf/space/asteroid,
 /area/space)
 "IN" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "IO" = (
 /obj/cable,
@@ -19158,7 +19158,7 @@
 /area/research_outpost/indigo_rye)
 "Ml" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /obj/machinery/light/small,
 /turf/simulated/floor/purpleblack,
 /area/research_outpost/indigo_rye)

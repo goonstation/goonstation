@@ -261,7 +261,7 @@ turf/proc/collide_here(var/obj/pixel_projectile/p)
 	New()
 		return
 
-/obj/item/pixel_gun/attack(mob/M as mob, mob/user as mob)
+/obj/item/pixel_gun/attack(mob/M, mob/user)
 
 	user.lastattacked = M
 	M.lastattacker = user
@@ -425,7 +425,7 @@ turf/proc/collide_here(var/obj/pixel_projectile/p)
 			boutput(user, "<span class='alert'>*click* *click*</span>")
 			return 0
 
-	attackby(obj/item/b as obj, mob/user as mob)
+	attackby(obj/item/b, mob/user)
 		if(istype(b, /obj/item/ammo/power_cell) && !rechargeable)
 			if(src.cell)
 				if(b:swap(src))
@@ -438,7 +438,7 @@ turf/proc/collide_here(var/obj/pixel_projectile/p)
 		else
 			..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if ((user.r_hand == src || user.l_hand == src) && src.contents && length(src.contents))
 			if (src.cell&&!src.rechargeable)
 				user.put_in_hand_or_drop(src.cell)
