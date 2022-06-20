@@ -155,7 +155,7 @@
 
 // Previous SOLARGENRATE was 1500 WATTS processed every 3.3 SECONDS.  This provides 454.54 WATTS every second
 // Adjust accordingly based on machine proc rate
-#define SOLARGENRATE (454.54 * MACHINE_PROCS_PER_SEC)
+#define SOLARGENRATE (454.54 * MACHINE_PROCS_PER_SEC)	//Can we change the 454.54 when we apply an enhancing reagent?
 
 /obj/machinery/power/solar/process()
 

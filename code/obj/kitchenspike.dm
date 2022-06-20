@@ -1,4 +1,4 @@
-/obj/kitchenspike
+/obj/kitchenspike	//mark for use
 	name = "a meat spike"
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "spike"

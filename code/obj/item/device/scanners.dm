@@ -140,7 +140,7 @@ that cannot be itched
 
 //////////////////////////////////////// Forensic scanner ///////////////////////////////////
 
-/obj/item/device/detective_scanner
+/obj/item/device/detective_scanner	//mark for use
 	name = "forensic scanner"
 	desc = "Used to scan objects for DNA and fingerprints."
 	icon_state = "fs"
