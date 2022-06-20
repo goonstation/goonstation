@@ -54815,6 +54815,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/main)
+"iUa" = (
+/obj/decal/poster/wallsign/framed_award/firstbill{
+	pixel_x = 5
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/crew_quarters/heads)
 "iUz" = (
 /obj/disposalpipe/segment/transport,
 /obj/disposalpipe/segment/transport{
@@ -57166,6 +57172,12 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/hallway/secondary/west)
+"ohU" = (
+/obj/decal/poster/wallsign/framed_award/rddiploma{
+	pixel_x = -5
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/crew_quarters/hor)
 "ojo" = (
 /obj/disposalpipe/broken{
 	color = "#f2a673";
@@ -58535,6 +58547,12 @@
 /obj/access_spawn/hos,
 /turf/simulated/floor/plating/random,
 /area/station/security/hos/horizon)
+"rCw" = (
+/obj/decal/poster/wallsign/framed_award/mdlicense{
+	pixel_x = 15
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/crew_quarters/md)
 "rCS" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/disposalpipe/segment/cargo,
@@ -91003,7 +91021,7 @@ qMF
 aWc
 aWc
 aWc
-aWc
+iUa
 kpc
 aWc
 aWc
@@ -120898,7 +120916,7 @@ aIO
 aOY
 aRF
 aUE
-aXs
+rCw
 aXs
 bdA
 bgS
@@ -141126,7 +141144,7 @@ aad
 bzd
 cig
 cjT
-aEw
+ohU
 aEw
 aEw
 cAt
