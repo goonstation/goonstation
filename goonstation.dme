@@ -494,7 +494,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\mob\living\carbon\cube.dm"
 #include "code\mob\living\carbon\human.dm"
 #include "code\mob\living\carbon\pixelhuman.dm"
-#include "code\mob\living\carbon\wall.dm"
 #include "code\mob\living\carbon\human\clone.dm"
 #include "code\mob\living\carbon\human\gimmick.dm"
 #include "code\mob\living\carbon\human\machoman.dm"
