@@ -40,6 +40,7 @@
 		src.light.attach(src)
 		UpdateIcon()
 		update_last_laws()
+		update_required = FALSE
 
 	/// Causes all law modules to drop to the ground, will be broadcast on the next update.
 	proc/drop_all_modules()
