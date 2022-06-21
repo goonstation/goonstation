@@ -34918,7 +34918,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/west)
 "bCm" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -54664,10 +54664,6 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/medical/robotics)
-"csg" = (
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
-/area/station/medical/robotics)
 "csh" = (
 /turf/simulated/floor/plating,
 /area/station/medical/robotics)
@@ -55195,10 +55191,6 @@
 /obj/disposalpipe/segment/mail/bent/south,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/teleporter)
-"cts" = (
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor,
-/area/station/medical/medbay/lobby)
 "ctt" = (
 /turf/simulated/floor/blue/side{
 	dir = 4
@@ -62232,7 +62224,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/medbay)
 "cJv" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/medical/morgue)
 "cJw" = (
@@ -62282,7 +62274,7 @@
 /turf/simulated/floor/delivery,
 /area/station/medical/medbay/cloner)
 "cJC" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/cloner)
@@ -62942,7 +62934,7 @@
 	},
 /area/station/medical/medbay/cloner)
 "cLj" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/cloner)
 "cLk" = (
@@ -63480,7 +63472,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/medbay/pharmacy)
 "cMB" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
@@ -114671,7 +114663,7 @@ crZ
 coz
 cwl
 cxM
-cts
+mmn
 cAF
 cCh
 cDC
@@ -116177,8 +116169,8 @@ ckq
 coE
 cqn
 cqn
-csg
-csg
+tLy
+tLy
 cwn
 cxO
 czn
