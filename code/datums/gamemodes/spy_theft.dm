@@ -503,6 +503,7 @@
 	big_station_bounties[/obj/machinery/atmospherics/unary/cryo_cell] = 2
 	big_station_bounties[/obj/machinery/computer/cloning] = 2
 	big_station_bounties[/obj/item/disk/data/floppy/manudrive/ai] = 2
+	big_station_bounties[/obj/item/disk/data/floppy/manudrive/law_rack] = 1
 	big_station_bounties[/obj/machinery/clonepod] = 2
 
 	big_station_bounties[/obj/machinery/flasher/portable] = 2
