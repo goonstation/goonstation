@@ -123,15 +123,17 @@ var/global/list/mapNames = list(
 	var/list/job_limits_override = list() /// assoc list of the form `job_type=limit` to override other job settings, works on gimmick jobs too
 
 	/// special parallax position overrides, x y positions per zlevel
-	var/X0_coords = list(list(72,166)) /// plasma giant
-	var/mundus_coords = list(list(145,79))
-	var/fortuna_coords = list(list(245,47))
-	var/iudicium_coords = list(list(205,177))
-	var/iustitia_coords = list(list(120,222))
-	var/star_red_coords = list(list(188,95),list(0,0),list(188,95),list(0,0),list(205,110)) // god damn it the stars are on z5 and z3 AND z1
-	var/star_blue_coords = list(list(177,212),list(0,0),list(225,76),list(0,0),list(74,290))
-	var/ss14_coords = list(list(130,183))
-	var/ss12_coords = list(list(0,0)) /// not existing / 0,0 is used as "this doesnt display here, skip it"
+
+	/// most of this is disabled (0,0) unless a map needs it
+	var/X0_coords = list(list(0,0)) /// plasma giant
+	var/mundus_coords = list(list(0,0))
+	var/fortuna_coords = list(list(0,0))
+	var/iudicium_coords = list(list(0,0))
+	var/iustitia_coords = list(list(0,0))
+	var/star_red_coords = list(list(0,0),list(0,0),list(188,95),list(0,0),list(205,110))
+	var/star_blue_coords = list(list(0,0),list(0,0),list(225,76),list(0,0),list(74,290))
+	var/ss14_coords = list(list(0,0))
+	var/ss12_coords = list(list(0,0))
 	var/ss10_coords = list(list(0,0))
 	var/X3_coords = list(list(0,0))
 	var/X5_coords = list(list(0,0))
@@ -634,9 +636,16 @@ var/global/list/mapNames = list(
 		"the telescience lab" = list(/area/station/science/teleporter),
 		"the genetics lab" = list(/area/station/medical/research, /area/station/medical/medbay/cloner))
 
+	/// most of this is disabled (both coordinates are 0)
+	X0_coords = list(list(0,0))
 	X5_coords = list(list(157,154))
 	X3_coords = list(list(201,192))
-
+	mundus_coords = list(list(0,0))
+	fortuna_coords = list(list(0,0))
+	iudicium_coords = list(list(0,0))
+	iustitia_coords = list(list(0,0))
+	star_red_coords = list(list(0,0),list(0,0),list(188,95),list(0,0),list(205,110))
+	star_blue_coords = list(list(0,0),list(0,0),list(225,76),list(0,0),list(74,290))
 
 /datum/map_settings/kondaru
 	name = "KONDARU"

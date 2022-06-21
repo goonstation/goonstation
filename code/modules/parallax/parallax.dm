@@ -115,18 +115,30 @@
 		#ifdef UNDERWATER_MAP
 		return
 		#endif
+
 		for(var/atom/movable/screen/hud/P as anything in parallax_objects)
 
 			if(length(parallax_coords[P]) >= master_turf.z)
-				if (parallax_coords[P][master_turf.z] == list(0,0))
+				if (parallax_coords[P][master_turf.z] == null)
+					P.transform = matrix(0,0,0,0,0,0)
 					continue
+
+				var/coordx = parallax_coords[P][master_turf.z][1]
+				var/coordy = parallax_coords[P][master_turf.z][2]
+				if (coordx == 0 || coordy == 0)
+					P.transform = matrix(0,0,0,0,0,0)
+					continue
+
 				var/icon/pIcon = icon(P.icon)
-				var/offsetX = ((parallax_coords[P][master_turf.z][1]-master_turf.x)*scale[P])*32-pIcon.Width()/2
-				var/offsetY = ((parallax_coords[P][master_turf.z][2]-master_turf.y)*scale[P])*32-pIcon.Height()/2
+				var/offsetX = ((coordx-master_turf.x)*scale[P])*32-pIcon.Width()/2
+				var/offsetY = ((coordy-master_turf.y)*scale[P])*32-pIcon.Height()/2
 				var/matrix = matrix(size[P], 0, offsetX, 0, size[P], offsetY)
+
 				animate(P,transform=matrix,time=round(world.icon_size/master.glide_size*world.tick_lag,world.tick_lag))
 				continue
+
 			else
+
 				P.transform = matrix(0,0,0,0,0,0)
 				continue
 
