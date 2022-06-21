@@ -58,7 +58,9 @@
 				channel_name = "[format_frequency(R.frequency)] - " + (headset_channel_lookup["[R.frequency]"] ? headset_channel_lookup["[R.frequency]"] : "(Unknown)")
 				choices += channel_name
 				channels[channel_name] = ":[i]"
-
+			if (R.bricked)
+				usr.show_text(R.bricked_msg, "red")
+				return
 			if (istype(R.secure_frequencies) && length(R.secure_frequencies))
 				for (var/sayToken in R.secure_frequencies)
 					channel_name = "[format_frequency(R.secure_frequencies[sayToken])] - " + (headset_channel_lookup["[R.secure_frequencies[sayToken]]"] ? headset_channel_lookup["[R.secure_frequencies[sayToken]]"] : "(Unknown)")
@@ -89,45 +91,56 @@
 
 			src.say_verb(token + " " + text)
 
-	else if (src.ears && istype(src.ears, /obj/item/device/radio))
-		var/obj/item/device/radio/R = src.ears
-		var/token = ""
-		var/list/choices = list()
-		choices += "[ headset_channel_lookup["[R.frequency]"] ? headset_channel_lookup["[R.frequency]"] : "???" ]: \[[format_frequency(R.frequency)]]"
-
-		if (istype(R.secure_frequencies) && length(R.secure_frequencies))
-			for (var/sayToken in R.secure_frequencies)
-				choices += "[ headset_channel_lookup["[R.secure_frequencies["[sayToken]"]]"] ? headset_channel_lookup["[R.secure_frequencies["[sayToken]"]]"] : "???" ]: \[[format_frequency(R.secure_frequencies["[sayToken]"])]]"
-
-		if (src.robot_talk_understand)
-			choices += "Robot Talk: \[***]"
-
-
-		var/choice = 0
-		if (choices.len == 1)
-			choice = choices[1]
-		else
-			choice = input("", "Select Radio Channel", null) as null|anything in choices
-		if (!choice)
-			return
-
-		var/choice_index = choices.Find(choice)
-		if (choice_index == 1)
-			token = ";"
-		else if (choice == "Robot Talk: \[***]")
-			token = ":s"
-		else
-			token = ":" + R.secure_frequencies[choice_index - 1]
-
-		var/text = input("", "Speaking to [choice] frequency") as null|text
-		if (src.capitalize_speech())
-			var/i = 1
-			while (copytext(text, i, i+1) == " ")
-				i++
-			text = capitalize(copytext(text, i))
-		src.say_verb(token + " " + text)
 	else
-		boutput(src, "<span class='notice'>You must put a headset on your ear slot to speak on the radio.</span>")
+		var/obj/item/device/radio/R = null
+		if ((src.ears && istype(src.ears, /obj/item/device/radio)))
+			R = src.ears
+		else if (ishuman(src))	//Check if the decapitated skeleton head has a headset
+			var/mob/living/carbon/human/H = src
+			var/datum/mutantrace/skeleton/S = H.mutantrace
+			if (isskeleton(H) && !H.organHolder.head && S.head_tracker.ears && istype(S.head_tracker.ears, /obj/item/device/radio))
+				R = S.head_tracker.ears
+		if (R)
+			if (R.bricked)
+				usr.show_text(R.bricked_msg, "red")
+				return
+			var/token = ""
+			var/list/choices = list()
+			choices += "[ headset_channel_lookup["[R.frequency]"] ? headset_channel_lookup["[R.frequency]"] : "???" ]: \[[format_frequency(R.frequency)]]"
+
+			if (istype(R.secure_frequencies) && length(R.secure_frequencies))
+				for (var/sayToken in R.secure_frequencies)
+					choices += "[ headset_channel_lookup["[R.secure_frequencies["[sayToken]"]]"] ? headset_channel_lookup["[R.secure_frequencies["[sayToken]"]]"] : "???" ]: \[[format_frequency(R.secure_frequencies["[sayToken]"])]]"
+
+			if (src.robot_talk_understand)
+				choices += "Robot Talk: \[***]"
+
+
+			var/choice = 0
+			if (choices.len == 1)
+				choice = choices[1]
+			else
+				choice = input("", "Select Radio Channel", null) as null|anything in choices
+			if (!choice)
+				return
+
+			var/choice_index = choices.Find(choice)
+			if (choice_index == 1)
+				token = ";"
+			else if (choice == "Robot Talk: \[***]")
+				token = ":s"
+			else
+				token = ":" + R.secure_frequencies[choice_index - 1]
+
+			var/text = input("", "Speaking to [choice] frequency") as null|text
+			if (src.capitalize_speech())
+				var/i = 1
+				while (copytext(text, i, i+1) == " ")
+					i++
+				text = capitalize(copytext(text, i))
+			src.say_verb(token + " " + text)
+		else
+			boutput(src, "<span class='notice'>You must put a headset on your ear slot to speak on the radio.</span>")
 
 // ghosts now can emote now too so vOv
 /*	if (isliving(src))
@@ -727,14 +740,14 @@
 /mob/proc/item_attack_message(var/mob/T, var/obj/item/S, var/d_zone, var/devastating = 0, var/armor_blocked = 0)
 	if (d_zone && ishuman(T))
 		if(armor_blocked)
-			return "<span class='alert'><B>[src] attacks [T] in the [d_zone] with [S], but [T]'s armor blocks it!</B></span>"
+			return "<span class='alert'><B>[src] [islist(S.attack_verbs) ? pick(S.attack_verbs) : S.attack_verbs] [T] in the [d_zone] with [S], but [T]'s armor blocks it!</B></span>"
 		else
-			return "<span class='alert'><B>[src] attacks [T] in the [d_zone] with [S][devastating ? " and lands a devastating hit!" : "!"]</B></span>"
+			return "<span class='alert'><B>[src] [islist(S.attack_verbs) ? pick(S.attack_verbs) : S.attack_verbs] [T] in the [d_zone] with [S][devastating ? " and lands a devastating hit!" : "!"]</B></span>"
 	else
 		if(armor_blocked)
-			return "<span class='alert'><B>[src] attacks [T] with [S], but [T]'s armor blocks it!</B></span>"
+			return "<span class='alert'><B>[src] [islist(S.attack_verbs) ? pick(S.attack_verbs) : S.attack_verbs] [T] with [S], but [T]'s armor blocks it!</B></span>"
 		else
-			return "<span class='alert'><B>[src] attacks [T] with [S] [devastating ? "and lands a devastating hit!" : "!"]</B></span>"
+			return "<span class='alert'><B>[src] [islist(S.attack_verbs) ? pick(S.attack_verbs) : S.attack_verbs] [T] with [S] [devastating ? "and lands a devastating hit!" : "!"]</B></span>"
 
 /mob/proc/get_age_pitch_for_talk()
 	if (!src.bioHolder || !src.bioHolder.age) return
@@ -886,11 +899,16 @@
 				assoc_maptext.show_to(src.client)
 
 			if (isliving(src))
-				for (var/mob/dead/target_observer/observer in src:observers)
+				for (var/mob/dead/target_observer/M in src:observers)
 					if(!just_maptext)
-						boutput(observer, msg, group)
-					if(assoc_maptext && observer.client && !observer.client.preferences.flying_chat_hidden)
-						assoc_maptext.show_to(observer.client)
+						if (M.client?.holder && !M.client.player_mode)
+							if (M.mind)
+								msg = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[msg]</span>"
+							boutput(M, msg)
+						else
+							boutput(M, msg, group)
+					if(assoc_maptext && M.client && !M.client.preferences.flying_chat_hidden)
+						assoc_maptext.show_to(M.client)
 
 // Show a message to all mobs in sight of this one
 // This would be for visible actions by the src mob
@@ -959,56 +977,70 @@
 //#define FLOCK_SPEAKER_FLOCKTRACE 4
 //#define FLOCK_SPEAKER_NPC 5
 
-/proc/flock_speak(var/mob/speaker, var/message as text, var/datum/flock/flock, var/speak_as_admin=0)
+/// how to speak in the flock
+/// for speaker, pass:
+/// -null to give a general system message
+/// -mob to make a mob speak
+/// -flock_structure for a structure message
+/proc/flock_speak(atom/speaker, message as text, datum/flock/flock, speak_as_admin = FALSE)
+	var/mob/mob_speaking = null
+	var/obj/flock_structure/structure_speaking = null
 
-	var/client/C = null
-	if(speaker)
-		C = speaker.client
+	if (ismob(speaker))
+		mob_speaking = speaker
+	else
+		structure_speaking = speaker
 
 	var/name = ""
-	var/is_npc = 0
-	var/is_flockmind = istype(speaker, /mob/living/intangible/flock/flockmind)
-	if(!speak_as_admin)
-		if(speaker)
-			message = speaker.say_quote(message)
+	var/class = "flocksay"
+	var/is_npc = FALSE
+	var/is_flockmind = istype(mob_speaking, /mob/living/intangible/flock/flockmind)
+
+	if (!speak_as_admin)
+		if(mob_speaking)
+			message = mob_speaking.say_quote(message)
 		else // system message
 			message = gradientText("#3cb5a3", "#124e43", "\"[message]\"")
 			message = "alerts, [message]"
-		if(istype(speaker, /mob/living/critter/flock/drone))
-			var/mob/living/critter/flock/drone/F = speaker
+
+		if(istype(mob_speaking, /mob/living/critter/flock/drone))
+			var/mob/living/critter/flock/drone/F = mob_speaking
 			if(F.is_npc)
 				name = "Drone [F.real_name]"
-				is_npc = 1
+				is_npc = TRUE
 			else if(F.controller)
 				name = "[F.controller.real_name]"
 				if(istype(F.controller, /mob/living/intangible/flock/flockmind))
-					is_flockmind = 1
-		else if(speaker) // not set yet
-			name = speaker.real_name // final catch
+					is_flockmind = TRUE
+		else if(mob_speaking)
+			name = mob_speaking.real_name
+
+	if(is_flockmind)
+		class = "flocksay flockmindsay"
+	else if(is_npc)
+		class = "flocksay flocknpc"
+	else if(isnull(mob_speaking))
+		class = "flocksay bold italics"
+		name = "\[SYSTEM\]"
 
 	var/rendered = ""
 	var/flockmindRendered = ""
 	var/siliconrendered = ""
-	var/class = "flocksay"
-	if(is_flockmind)
-		class = "flocksay flockmindsay"
-	if(is_npc)
-		class = "flocksay flocknpc"
-	if(isnull(speaker))
-		class = "flocksay bold italics"
-		name = "\[SYSTEM\]"
 
-	if(C?.holder && speak_as_admin) // for admin verb flocksay
-		// admin mode go
-		var/show_other_key = 0
+	if(speak_as_admin)
+		var/client/C = null
+		if(mob_speaking)
+			C = mob_speaking.client
+
+		var/show_other_key = FALSE
 		if (C.stealth || C.alt_key)
-			show_other_key = 1
+			show_other_key = TRUE
 		rendered = "<span class='game [class]'><span class='bold'></span><span class='name'>ADMIN([show_other_key ? C.fakekey : C.key])</span> informs, <span class='message'>\"[message]\"</span></span>"
 		flockmindRendered = rendered // no need for URLs
 	else
-		rendered = "<span class='game [class]'><span class='bold'>\[[flock ? flock.name : "--.--"]\] </span><span class='name' [speaker ? "data-ctx='\ref[speaker.mind]'" : ""]>[name]</span> <span class='message'>[message]</span></span>"
-		flockmindRendered = "<span class='game [class]'><span class='bold'>\[[flock ? flock.name : "--.--"]\] </span><span class='name'>[flock ? "<a href='?src=\ref[flock.flockmind];origin=\ref[speaker]'>[name]</a>" : "[name]"]</span> <span class='message'>[message]</span></span>"
-		siliconrendered = "<span class='game [class]'><span class='bold'>\[[flock ? flockBasedGarbleText(flock.name, -30, flock) : "--.--"]\] </span><span class='name' [speaker ? "data-ctx='\ref[speaker.mind]'" : ""]>[flockBasedGarbleText(name, -20, flock)]</span> <span class='message'>[flockBasedGarbleText(message, 0, flock)]</span></span>"
+		rendered = "<span class='game [class]'><span class='bold'>\[[flock ? flock.name : "--.--"]\] </span><span class='name' [mob_speaking ? "data-ctx='\ref[mob_speaking.mind]'" : ""]>[name]</span> <span class='message'>[message]</span></span>"
+		flockmindRendered = "<span class='game [class]'><span class='bold'>\[[flock ? flock.name : "--.--"]\] </span><span class='name'>[flock && speaker ? "<a href='?src=\ref[flock.flockmind];origin=\ref[structure_speaking ? structure_speaking.loc : mob_speaking]'>[name]</a>" : "[name]"]</span> <span class='message'>[message]</span></span>"
+		siliconrendered = "<span class='game [class]'><span class='bold'>\[[flock ? flockBasedGarbleText(flock.name, -30, flock) : "--.--"]\] </span><span class='name' [mob_speaking ? "data-ctx='\ref[mob_speaking.mind]'" : ""]>[flockBasedGarbleText(name, -20, flock)]</span> <span class='message'>[flockBasedGarbleText(message, 0, flock)]</span></span>"
 
 	for (var/client/CC)
 		if (!CC.mob) continue
@@ -1018,13 +1050,15 @@
 
 		var/thisR = ""
 
-		if((isflock(M)) || (M.client.holder && !M.client.player_mode) || (isobserver(M) && !(istype(M, /mob/dead/target_observer/hivemind_observer))))
+		if((isflockmob(M)) || (M.client.holder && !M.client.player_mode) || (isobserver(M) && !(istype(M, /mob/dead/target_observer/hivemind_observer))))
 			thisR = rendered
 		if(flock?.snooping && M.client && M.robot_talk_understand)
 			thisR = siliconrendered
-		if(istype(M, /mob/living/intangible/flock/flockmind) && !(istype(speaker, /mob/living/intangible/flock/flockmind)) && M:flock == flock)
+		if(istype(M, /mob/living/intangible/flock/flockmind) && !(istype(mob_speaking, /mob/living/intangible/flock/flockmind)) && M:flock == flock)
 			thisR = flockmindRendered
-		if ((istype(M, /mob/dead/observer)||M.client.holder) && speaker?.mind)
+		if ((istype(M, /mob/dead/observer)||M.client.holder) && mob_speaking?.mind)
+			thisR = rendered
 			thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[thisR]</span>"
+
 		if(thisR != "")
-			M.show_message(thisR, 2)
+			boutput(M, thisR)

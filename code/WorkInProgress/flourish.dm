@@ -15,7 +15,7 @@
 
 /obj/death_button/hotdog
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (current_state < GAME_STATE_FINISHED && !isadmin(user))
 			boutput(user, "<span class='alert'>Looks like you can't press this yet.</span>")
 			return

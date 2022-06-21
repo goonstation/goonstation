@@ -131,7 +131,7 @@
 
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "pda")
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		interact_particle(user, src)
 		src.examine(user)
 
@@ -543,7 +543,7 @@
 		return 1
 
 	//Let's unlock this early I guess.
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/pda2) && W:ID_card)
 			W = W:ID_card
 		if (istype(W, /obj/item/card/id))
@@ -930,7 +930,7 @@
 			boutput(user, "<span class='notice'>You repair the reclaimer's safety mechanism.</span>")
 		return 1
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		interact_particle(user,src)
 
 		if (src.process_timer > 0)
@@ -949,8 +949,8 @@
 		user.visible_message("<b>[user]</b> activates [src]!", "You activate [src].")
 		if (istype(src.occupant))
 			logTheThing("combat", user, src.occupant, "activated [src.name] with [constructTarget(src.occupant,"combat")] ([isdead(src.occupant) ? "dead" : "alive"]) inside at [log_loc(src)].")
-			if (!isdead(src.occupant))
-				message_admins("[key_name(user)] activated [src.name] with [key_name(src.occupant, 1)] ([isdead(src.occupant) ? "dead" : "alive"]) inside at [log_loc(src)].")
+			if (!isdead(src.occupant) && !isnpcmonkey(src.occupant))
+				message_admins("[key_name(user)] activated [src.name] with [key_name(src.occupant, 1)] (alive) inside at [log_loc(src)].")
 		src.start_cycle()
 		return
 
@@ -1032,7 +1032,7 @@
 		src.UpdateIcon(1)
 		SubscribeToProcess()
 
-	attackby(obj/item/grab/G as obj, mob/user as mob)
+	attackby(obj/item/grab/G, mob/user)
 		if (istype(G, /obj/item/grinder_upgrade))
 			if (src.upgraded)
 				boutput(user, "<span class='alert'>There is already an upgrade card installed.</span>")
@@ -1180,7 +1180,7 @@
 		..()
 		owner.visible_message("<span class='alert'><b>[owner] stuffs [target] into [grinder]!</b></span>")
 		logTheThing("combat", owner, target, "forced [constructTarget(target,"combat")] ([isdead(target) ? "dead" : "alive"]) into \an [grinder] at [log_loc(grinder)].")
-		if (!isdead(target))
+		if (!isdead(target) && !isnpcmonkey(target))
 			message_admins("[key_name(owner)] forced [key_name(target, 1)] ([target == 2 ? "dead" : "alive"]) into \an [grinder] at [log_loc(grinder)].")
 		if (grinder.auto_strip && !grinder.emagged)
 			if(target.hasStatus("handcuffed"))

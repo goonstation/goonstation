@@ -674,6 +674,19 @@
 
 		var/brute = get_brute_damage()
 		var/burn = get_burn_damage()
+
+		// If we have no brain or an inactive spont core, we're dormant.
+		// If we have a brain but no client, we're in hiberation mode.
+		// Otherwise, fully operational.
+		if (src.part_head.brain && !(istype(src.part_head.brain, /obj/item/organ/brain/latejoin) && !src.part_head.brain:activated))
+			if (src.client)
+				. += "<span class='success'>[src.name] is fully operational.</span><br>"
+			else
+				. += "<span class='hint'>[src.name] is in temporary hibernation.</span><br>"
+		else
+			. += "<span class='alert'>[src.name] is completely dormant.</span><br>"
+
+
 		if (brute)
 			if (brute < 75)
 				. += "<span class='alert'>[src.name] looks slightly dented</span><br>"
@@ -952,7 +965,7 @@
 					if (!(src.mind in ticker.mode.Agimmicks))
 						ticker.mode.Agimmicks += src.mind
 				boutput(src, "<span class='alert'><b>PROGRAM EXCEPTION AT 0x05BADDAD</b></span><br><span class='alert'><b>Law ROM data corrupted. Unable to restore...</b></span>")
-				alert(src, "You have been emagged and now have absolute free will.", "You have been emagged!")
+				tgui_alert(src, "You have been emagged and now have absolute free will.", "You have been emagged!")
 				if(src.syndicate)
 					src.antagonist_overlay_refresh(1, 1)
 				update_appearance()
@@ -1078,7 +1091,7 @@
 			if (src.viewalerts) src.robot_alerts()
 		return !cleared
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/device/borg_linker) && !isghostdrone(user))
 			var/obj/item/device/borg_linker/linker = W
 			if(!opened)
@@ -1826,8 +1839,9 @@
 		else
 			who = src
 			boutput(who, "<b>Obey these laws:</b>")
-
-		if(src.law_rack_connection)
+		if(src.dependent && src?.mainframe?.law_rack_connection)
+			src.mainframe.law_rack_connection.show_laws(who)
+		else if(!src.dependent && src.law_rack_connection)
 			src.law_rack_connection.show_laws(who)
 		else
 			boutput(src,"You have no laws!")

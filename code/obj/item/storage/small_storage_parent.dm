@@ -97,7 +97,7 @@
 		total_amt = null
 		return 1
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (surgeryCheck(M, user))
 			insertChestItem(M, user)
 			return
@@ -281,7 +281,7 @@
 								M.triggered(usr)
 						hud.remove_item(I)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!src.sneaky)
 			playsound(src.loc, "rustle", 50, 1, -2)
 		if (src.loc == user && (!does_not_open_in_pocket || src == user.l_hand || src == user.r_hand || IS_LIVING_OBJECT_USING_SELF(user)))
@@ -334,7 +334,7 @@
 	desc = "A box that can hold a number of small items."
 	max_wclass = 2
 
-	attackby(obj/item/W as obj, mob/user as mob, obj/item/storage/T)
+	attackby(obj/item/W, mob/user, obj/item/storage/T)
 		if (istype(W, /obj/item/storage/toolbox) || istype(W, /obj/item/storage/box) || istype(W, /obj/item/storage/belt))
 			var/obj/item/storage/S = W
 			for (var/obj/item/I in S.get_contents())
@@ -414,7 +414,7 @@
 	var/locked = 0
 	var/id = null
 
-	attackby(obj/item/W as obj, mob/user as mob, obj/item/storage/T)
+	attackby(obj/item/W, mob/user, obj/item/storage/T)
 		if (istype(W, /obj/item/device/key/filing_cabinet))
 			var/obj/item/device/key/K = W
 			if (src.id && K.id == src.id)

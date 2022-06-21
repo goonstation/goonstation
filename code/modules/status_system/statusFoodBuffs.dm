@@ -5,7 +5,7 @@
 // magboots
 // slime
 
-/// Special wrapper to add food status effects, due to special overriding and duration behaivor.
+/// Special wrapper to add food status effects, due to special overriding and duration behavior.
 /mob/living/proc/add_food_bonus(var/id, var/obj/item/reagent_containers/food/snacks/eaten)
 	if(id)
 

@@ -424,7 +424,7 @@
 	},
 /area/shuttle/escape/centcom)
 "qq" = (
-/obj/machinery/vending/cola,
+/obj/machinery/vending/cola/red,
 /turf/unsimulated/floor/wood/three,
 /area/shuttle/escape/centcom)
 "qI" = (

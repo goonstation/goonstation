@@ -21,7 +21,7 @@
 			return 1
 
 		var/mob/living/carbon/human/C = holder.owner
-		if (alert("Are we sure?","Enter Regenerative Stasis?","Yes","No") != "Yes")
+		if (tgui_alert(C,"Are we sure?","Enter Regenerative Stasis?",list("Yes","No")) != "Yes")
 			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
 			return 1
 
@@ -165,7 +165,7 @@
 	cast(atom/target)
 		if (..())
 			return 1
-		if (alert("Are we sure?","Speed Regenerate?","Yes","No") != "Yes")
+		if (tgui_alert(holder.owner,"Are we sure?","Speed Regenerate?",list("Yes","No")) != "Yes")
 			return 1
 
 		if (!src.cooldowncheck())

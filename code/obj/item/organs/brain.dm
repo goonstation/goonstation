@@ -28,11 +28,11 @@
 
 	Eat(mob/M, mob/user)
 		if(M == user)
-			if(alert(user, "Are you sure you want to eat [src]?", "Eat brain?", "Yes", "No") == "Yes")
+			if(tgui_alert(user, "Are you sure you want to eat [src]?", "Eat brain?", list("Yes", "No")) == "Yes")
 				logTheThing("combat", user, null, "tries to eat [src] (owner's ckey [owner ? owner.ckey : null]).")
 				return ..()
 		else
-			if(alert(user, "Are you sure you want to feed [src] to [M]?", "Feed brain?", "Yes", "No") == "Yes")
+			if(tgui_alert(user, "Are you sure you want to feed [src] to [M]?", "Feed brain?", list("Yes", "No")) == "Yes")
 				logTheThing("combat", user, null, "tries to feed [src] (owner's ckey [owner ? owner.ckey : null]) to [M].")
 				return ..()
 		return 0
@@ -162,9 +162,8 @@
 			boutput(M, "<span class='flocksay italics'><i>... [pick_string("flockmind.txt", "brain")] ...</i></span>")
 
 /obj/item/organ/brain/flockdrone/special_desc(dist, mob/user)
-	if(isflock(user))
-		return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+	if (!isflockmob(user))
+		return
+	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
 		<br><span class='bold'>ID:</span> Computational core
 		<br><span class='bold'>###=-</span></span>"}
-	else
-		return null // give the standard description

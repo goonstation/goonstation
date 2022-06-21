@@ -77,7 +77,7 @@
 				user.canmove = 1
 	return 1
 
-/obj/item/handcuffs/attack(mob/M as mob, mob/user as mob)
+/obj/item/handcuffs/attack(mob/M, mob/user)
 	if (user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))//!user.bioHolder.HasEffect("lost_left_arm") && !user.bioHolder.HasEffect("lost_right_arm"))
 		boutput(user, "<span class='alert'>Uh ... how do those things work?!</span>")
 		if (ishuman(user))

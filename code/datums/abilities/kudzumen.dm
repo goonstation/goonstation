@@ -237,7 +237,7 @@
 		..()
 
 	//mostly same as kudzu
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!W) return
 		if (!user) return
 		var/dmg = 1
@@ -709,7 +709,7 @@
 			boutput(user, "<span class='alert'>[src] breaks apart in your hands.</span>")
 			qdel(src)
 
-	attack(mob/M as mob, mob/user as mob, def_zone, is_special = 0)
+	attack(mob/M, mob/user, def_zone, is_special = 0)
 		..()
 
 		if (prob(20))

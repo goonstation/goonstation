@@ -82,7 +82,7 @@
 
 		if(!closest)
 			return
-		else if (!closest.camera_status)
+		else if (!closest.camera_status || closest.ai_only)
 			boutput(user, "<span class='alert'>ERROR. Cannot connect to camera.</span>")
 			playsound(src.loc, "sound/machines/buzz-sigh.ogg", 10, 0)
 			return
@@ -127,7 +127,7 @@
 	power_change()
 		return
 
-/obj/machinery/computer/security/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/security/attack_hand(var/mob/user)
 	if (status & (NOPOWER|BROKEN) || !user.client)
 		return
 

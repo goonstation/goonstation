@@ -303,18 +303,18 @@
 		return the_text
 
 	Cross(atom/movable/mover)
-		if(!src.density) return 1
+		if(!src.density)
+			return TRUE
 		if(istype(mover, /obj/projectile))
 			var/obj/projectile/P = mover
 			if(P.proj_data.window_pass)
-				return 1
+				return TRUE
 		if (!is_cardinal(dir))
-			return 0 //full tile window, you can't move into it!
+			return FALSE //full tile window, you can't move into it!
 		if(get_dir(loc, mover) & dir)
-
 			return !density
 		else
-			return 1
+			return TRUE
 
 	gas_cross(turf/target)
 		. = TRUE
@@ -354,7 +354,7 @@
 		..()
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		user.lastattacked = src
 		attack_particle(user,src)
 		if (user.a_intent == "harm")
@@ -378,7 +378,7 @@
 					playsound(src.loc, src.hitsound, 100, 1)
 				return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		user.lastattacked = src
 
 		if (isscrewingtool(W))
@@ -767,7 +767,7 @@
 		else
 			src.UpdateOverlays(null, "connect")
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (..(W, user))
 			src.UpdateIcon()
 			src.update_neighbors()
@@ -803,7 +803,7 @@
 		if(actuallysmash)
 			return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(!ON_COOLDOWN(user, "glass_tap", 5 SECONDS))
 			src.visible_message("<span class='alert'><b>[user]</b> knocks on [src].</span>")
 			playsound(src.loc, src.hitsound, 100, 1)
@@ -987,16 +987,26 @@
 
 
 	auto
-		name = "reinforced autowindow grille spawner"
+		name = "autowindow grille spawner (will place nonreinf soon)"
 		win_path = "/obj/window/auto/reinforced"
 		full_win = 1
 		no_dirs = 1
-		icon_state = "r-wingrille_f"
+		icon_state = "wingrille_f"
+
+		reinforced
+			name = "reinforced autowindow grille spawner"
+			win_path = "/obj/window/auto/reinforced"
+			icon_state = "r-wingrille_f"
 
 		crystal
-			name = "crystal autowindow grille spawner"
+			name = "crystal autowindow grille spawner (will place nonreinf soon)"
 			win_path = "/obj/window/auto/crystal/reinforced"
 			icon_state = "p-wingrille_f"
+
+			reinforced
+				name = "reinforced crystal autowindow grille spawner"
+				win_path = "/obj/window/auto/crystal/reinforced"
+				icon_state = "pr-wingrille_f"
 
 		tuff
 			name = "tuff stuff reinforced autowindow grille spawner"
@@ -1023,7 +1033,7 @@
 		if(health <= 0)
 			qdel(src)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W))
 			src.anchored = !( src.anchored )
 			src.stops_space_move = !(src.stops_space_move)
@@ -1043,27 +1053,56 @@
 		dir = 1
 		default_material = "metal"
 
+// flock windows
 
-// Flockdrone BS goes here - cirr
+/obj/window/auto/feather
+
+/obj/window/auto/feather/New()
+	connects_to += /turf/simulated/wall/auto/feather
+	..()
+	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
+	src.AddComponent(/datum/component/flock_protection, FALSE, TRUE, TRUE)
+
+/obj/window/auto/feather/special_desc(dist, mob/user)
+	if (!isflockmob(user))
+		return
+	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+		<br><span class='bold'>ID:</span> Fibrewoven Window
+		<br><span class='bold'>System Integrity:</span> [round((src.health/src.health_max)*100)]%
+		<br><span class='bold'>###=-</span></span>"}
+
+/obj/window/auto/feather/proc/repair()
+	src.health = min(src.health + 10, src.health_max)
+
+
 /obj/window/feather
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "window"
 	default_material = "gnesisglass"
 	hitsound = 'sound/impact_sounds/Crystal_Hit_1.ogg'
 	shattersound = 'sound/impact_sounds/Crystal_Shatter_1.ogg'
+	mat_appearances_to_ignore = list("gnesis")
+	mat_changename = FALSE
+	mat_changedesc = FALSE
 	health = 50 // as strong as reinforced glass, but not as strong as plasmaglass
 	health_max = 50
-	density = 1
+	density = TRUE
+
+/obj/window/feather/New()
+	..()
+	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
+	src.AddComponent(/datum/component/flock_protection)
 
 /obj/window/feather/special_desc(dist, mob/user)
-  if(isflock(user))
-    return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-    <br><span class='bold'>ID:</span> Fibrewoven Window
-    <br><span class='bold'>System Integrity:</span> [round((src.health/src.health_max)*100)]%
-    <br><span class='bold'>###=-</span></span>"}
-    // todo: damageable walls
-  else
-    return null // give the standard description
+	if (!isflockmob(user))
+		return
+	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+		<br><span class='bold'>ID:</span> Fibrewoven Window
+		<br><span class='bold'>System Integrity:</span> [round((src.health/src.health_max)*100)]%
+		<br><span class='bold'>###=-</span></span>"}
+
+/obj/window/feather/proc/repair()
+	src.health = min(src.health + 10, src.health_max)
 
 /obj/window/feather/north
 	dir = NORTH

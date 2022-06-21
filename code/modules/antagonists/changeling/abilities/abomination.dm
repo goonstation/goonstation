@@ -16,7 +16,7 @@
 
 		var/mob/living/carbon/human/H = holder.owner
 		if (isabomination(H))
-			if (alert("Are we sure?","Exit Horror Form?","Yes","No") != "Yes")
+			if (tgui_alert(H,"Are we sure?","Exit Horror Form?",list("Yes","No")) != "Yes")
 				return 1
 			H.revert_from_horror_form()
 		else if (ismonkey(H))
@@ -26,7 +26,7 @@
 			if (holder.points < 15)
 				boutput(holder.owner, "<span class='alert'>We're not strong enough to maintain the form.</span>")
 				return 1
-			if (alert("Are we sure?","Enter Horror Form?","Yes","No") != "Yes")
+			if (tgui_alert(H,"Are we sure?","Enter Horror Form?",list("Yes","No")) != "Yes")
 				return 1
 			H.set_mutantrace(/datum/mutantrace/abomination)
 			setalive(H)

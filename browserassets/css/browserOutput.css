@@ -352,6 +352,7 @@ img.emoji {
 .flocksay a:visited {color: #488276;}
 .flockmindsay {color: #66ad9e; font-size: 120%;}
 .flocknpc {color: #869995; font-size: 80%;}
+.flocksay.ping {font-style: italic;}
 .ghostdronesay {color: #d81aef;}
 .roboticsay {color: white; background-color: #111; font-family: 'Courier New', Courier, monospace; font-weight: bold;}
 .roboticsay .name {text-decoration: underline;}

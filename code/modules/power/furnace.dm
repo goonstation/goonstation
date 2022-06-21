@@ -1,6 +1,6 @@
 /obj/machinery/power/furnace
-	name = "Furnace"
-	desc = "An inefficient method of powering the station. Generates 5000 units of power while active."
+	name = "Zaojun-2 5kW Furnace"
+	desc = "The venerable Xiang-Giesel model '灶君' combustion furnace with integrated 5 kilowatt thermocouple. A simple power solution for low-demand facilities and outposts."
 	icon_state = "furnace"
 	anchored = 1
 	density = 1
@@ -64,13 +64,13 @@
 	was_deconstructed_to_frame(mob/user)
 		src.active = 0
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (!src.fuel) boutput(user, "<span class='alert'>There is no fuel in the furnace!</span>")
 		else
 			src.active = !src.active
 			boutput(user, "You switch [src.active ? "on" : "off"] the furnace.")
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/grab))
 			if (!src.active)
 				boutput(user, "<span class='alert'>It'd probably be easier to dispose of them while the furnace is active...</span>")

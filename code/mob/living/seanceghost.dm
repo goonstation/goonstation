@@ -1,3 +1,4 @@
+// TODO make this mob/living/intangible. the fuck is it doing here?
 /mob/living/seanceghost
 	name = "Seance Ghost"
 	desc = "Ominous hooded figure!"
@@ -83,6 +84,8 @@
 			src.x++
 		if((direct & WEST) && src.x > 1)
 			src.x--
+
+		return ..()
 
 	is_active()
 		return 0

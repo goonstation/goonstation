@@ -989,11 +989,10 @@ var/zapLimiter = 0
 
 		else if (href_list["bite"] && wiresexposed)
 			var/t1 = text2num_safe(href_list["bite"])
-			switch(alert("Really bite the wire off?",,"Yes","No"))
-				if("Yes")
-					src.bite(t1)
-				if("No")
-					return
+			if (tgui_alert(usr, "Really bite the wire off?", "Bite wire", list("Yes", "No")) == "Yes")
+				src.bite(t1)
+			else
+				return
 
 		else if (href_list["pulse"] && wiresexposed)
 			var/t1 = text2num_safe(href_list["pulse"])

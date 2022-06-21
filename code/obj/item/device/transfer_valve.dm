@@ -186,8 +186,6 @@
 	receive_signal(signal)
 		if(toggle)
 			toggle = 0
-			if (ishellbanned(usr))
-				force_dud = 1
 			toggle_valve()
 			SPAWN(5 SECONDS) // To stop a signal being spammed from a proxy sensor constantly going off or whatever
 				toggle = 1
@@ -426,7 +424,7 @@
 	var/updates_before_halt = 10 //So we don't keep updating on a dud bomb forever.
 	var/update_counter = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		return
 
 	disposing()

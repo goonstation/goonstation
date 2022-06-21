@@ -153,7 +153,7 @@
 			src.visible_message("<span class='alert'>The [src] ignites!</span>", group = "cig_ignite")
 			src.light()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (src.on == 0)
 			if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
 				src.light(user, "<span class='alert'><b>[user]</b> casually lights [src] with [W], what a badass.</span>")
@@ -185,7 +185,7 @@
 		else
 			return ..() // CALL your GODDAMN PARENTS
 
-	attack(atom/target, mob/user as mob)
+	attack(atom/target, mob/user)
 		if (isliving(target))
 			var/mob/living/M = target
 
@@ -217,7 +217,7 @@
 			else
 				return ..(target, user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!user) return
 		var/can_blow_smoke = (user.wear_mask == src && src.on && src.reagents.total_volume > 0 && src.puff_ready)
 		var/success = ( ..() )
@@ -444,7 +444,7 @@
 	buttdesc = "Tarry, smelly."
 	buttname = "cigarillo roach"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if((W.tool_flags & TOOL_CUTTING) || (W.hit_type & DAMAGE_CUT) || (W.hit_type & DAMAGE_STAB))
 			var/obj/item/bluntwrap/B = new(user.loc)
 			if(src.flavor)
@@ -592,7 +592,7 @@
 		src.overlays += "cig[length(src.contents)]"
 	return
 
-/obj/item/cigpacket/attack_hand(mob/user as mob)
+/obj/item/cigpacket/attack_hand(mob/user)
 	if (user.find_in_hand(src))//r_hand == src || user.l_hand == src)
 		if (length(src.contents) == 0)
 			user.show_text("You're out of cigs, shit! How you gonna get through the rest of the day?", "red")
@@ -621,7 +621,7 @@
 
 	src.UpdateIcon()
 
-/obj/item/cigpacket/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/cigpacket/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/clothing/mask/cigarette))
 		var/obj/item/clothing/mask/cigarette/cig = W
 		if (cig.on)
@@ -681,7 +681,7 @@
 		src.overlays += "cigar[src.cigcount]"
 	return
 
-/obj/item/cigarbox/attack_hand(mob/user as mob)
+/obj/item/cigarbox/attack_hand(mob/user)
 	if (user.find_in_hand(src))//r_hand == src || user.l_hand == src)
 		if (src.cigcount == 0)
 			user.show_text("You're out of cigars! How you gonna get through the rest of the day?", "red")
@@ -742,7 +742,7 @@
 		src.overlays += "goldcigar[src.cigcount]"
 	return
 
-/obj/item/cigarbox/gold/attack_hand(mob/user as mob)
+/obj/item/cigarbox/gold/attack_hand(mob/user)
 	if (user.find_in_hand(src))//r_hand == src || user.l_hand == src)
 		if (src.cigcount == 0)
 			user.show_text("You're out of cigars! How you gonna get through the rest of the day?", "red")
@@ -827,7 +827,7 @@
 		else
 			. += "It's empty."
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (user.find_in_hand(src))
 			if (src.match_amt == 0)
 				user.show_text("Looks like there's no matches left.", "red")
@@ -1061,7 +1061,7 @@
 					playsound(user.loc, 'sound/items/matchstick_hit.ogg', 50, 1)
 					return
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (ishuman(M))
 			if (src.on > 0)
 				var/mob/living/carbon/human/fella = M
@@ -1169,7 +1169,7 @@
 			playsound(user, 'sound/items/zippo_close.ogg', 30, 1)
 			user.update_inhands()
 
-	attack(mob/target, mob/user as mob)
+	attack(mob/target, mob/user)
 		if (ishuman(target))
 			var/mob/living/carbon/human/fella = target
 
