@@ -1428,6 +1428,135 @@
 	if (M.reagents.get_reagent_amount("lsd_bee") < 20)
 		M.reagents.add_reagent("lsd_bee", 5)
 
+/obj/critter/domestic_bee/beean // a bee bean?? sprite by PeasantUnit
+	name = "greater domestic space-beean"
+	icon_state = "beean-wings"
+	icon_body = "beean"
+	sleeping_icon_state = "beean-sleep"
+
+/mob/living/critter/small_animal/bee/mimebee
+	name = "mime bee"
+	desc = "Never talks. That's normal for a bee, though."
+	icon_state = "mimebee-wings"
+	icon_body = "mimebee"
+	icon_state_dead = "mimebee-dead"
+	icon_state_sleep = "mimebee-sleep"
+	honey_color = "#ebedeb"
+	add_abilities = list(/datum/targetable/critter/bite/bee,
+		/datum/targetable/critter/bee_sting/mime)
+
+	New()
+		..()
+		src.bioHolder.AddEffect("mute")
+
+/datum/targetable/critter/bee_sting/mime
+	venom1 = "wine"
+	amt1 = 5
+	venom2 = "nicotine"
+
+/obj/critter/domestic_bee/mimebee
+	name = "mime bee"
+	desc = "Never talks. That's normal for a bee, though."
+	icon_state = "mimebee-wings"
+	icon_body = "mimebee"
+	sleeping_icon_state = "mimebee-sleep"
+	angertext = "gestures angrily at"
+	honey_color = "#ebedeb"
+
+	do_reagentStuff(mob/M)
+		if (M.reagents.get_reagent_amount("wine") < 20)
+			M.reagents.add_reagent("wine", 5)
+		M.reagents.add_reagent("nicotine", 5)
+
+
+/mob/living/critter/small_animal/bee/mimebee/noirbee
+	name = "noir bee"
+	desc = "Rosebud..."
+	icon_state = "noirbee-wings"
+	icon_body = "noirbee"
+	icon_state_dead = "noirbee-dead"
+	icon_state_sleep = "noirbee-sleep"
+	add_abilities = list(/datum/targetable/critter/bite/bee,
+		/datum/targetable/critter/bee_sting/noir)
+
+/datum/targetable/critter/bee_sting/noir
+	venom1 = "capulettium"
+	amt1 = 8
+	venom2 = "champagne"
+
+/obj/critter/domestic_bee/mimebee/noirbee
+	name = "noir bee"
+	desc = "Rosebud..."
+	icon_state = "noirbee-wings"
+	icon_body = "noirbee"
+	sleeping_icon_state = "noirbee-sleep"
+
+	do_reagentStuff(mob/M)
+		if (M.reagents.get_reagent_amount("capulettium") < 10)
+			M.reagents.add_reagent("capulettium", 5)
+		M.reagents.add_reagent("champagne", 5)
+
+
+/mob/living/critter/small_animal/bee/clownbee
+	name = "clown bee"
+	desc = "It honks AND buzzes."
+	icon_state = "clownbee"
+	icon_body = "clownbee"
+	icon_state_dead = "clownbee-dead"
+	icon_state_sleep = "clownbee-sleep"
+	honey_color = "#ff0033"
+	add_abilities = list(/datum/targetable/critter/bite/bee,
+		/datum/targetable/critter/bee_sting/clown)
+
+/datum/targetable/critter/bee_sting/clown // NO RAINBOW FLUID
+	venom1 = "honk_fart"
+	amt1 = 5
+	venom2 = "lube"
+
+/obj/critter/domestic_bee/clownbee
+	name = "clown bee"
+	desc = "It honks AND buzzes."
+	icon_state = "clownbee-wings"
+	icon_body = "clownbee"
+	sleeping_icon_state = "clownbee-sleep"
+	honey_color = "#ff0033"
+
+	do_reagentStuff(mob/M)
+		if (M.reagents.get_reagent_amount("honkfartium") < 10)
+			M.reagents.add_reagent("honkfartium", 5)
+		M.reagents.add_reagent("lube", 5)
+
+
+/mob/living/critter/small_animal/bee/cluwnebee
+	name = "cluwne bee"
+	desc = "Cursed..."
+	icon_state = "cluwnebee"
+	icon_body = "cluwnebee"
+	icon_state_dead = "cluwnebee-dead"
+	icon_state_sleep = "cluwnebee-sleep"
+	honey_color = "#35bf4f"
+	add_abilities = list(/datum/targetable/critter/bite/bee,
+		/datum/targetable/critter/bee_sting/cluwne)
+
+/datum/targetable/critter/bee_sting/cluwne // NO PAINBOW FLUID
+	venom1 = "honky_tonic"
+	amt1 = 10
+	venom2 = "superlube"
+
+/obj/critter/domestic_bee/cluwnebee
+	name = "cluwne bee"
+	desc = "Cursed..."
+	icon_state = "cluwnebee-wings"
+	icon_body = "cluwnebee"
+	sleeping_icon_state = "cluwnebee-sleep"
+	honey_color = "#35bf4f"
+
+	do_reagentStuff(mob/M)
+		if (M.reagents.get_reagent_amount("honky_tonic") < 20)
+			M.reagents.add_reagent("honky_tonic", 5)
+		M.reagents.add_reagent("superlube", 5)
+
+
 /* ---------------- END BEE TYPES ---------------- */
 
 /* -------------------- LARVA -------------------- */
@@ -1635,12 +1764,6 @@
 				fellow_bee.aggressive = 1
 				SPAWN(0.7 SECONDS)
 					fellow_bee.aggressive = 0
-
-/obj/critter/domestic_bee/beean // a bee bean?? sprite by PeasantUnit
-	name = "greater domestic space-beean"
-	icon_state = "beean-wings"
-	icon_body = "beean"
-	sleeping_icon_state = "beean-sleep"
 
 
 /* -------------------- END -------------------- */

@@ -1799,6 +1799,26 @@ datum
 			mix_phrase = "The orange juice turns an unsettlingly vibrant shade of green."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
+		tealquila
+			name = "Tealquila Sunrise"
+			id = "tealquila"
+			result = "tealquila"
+			required_reagents = list("tequilasunrise" = 1, "flockdrone_fluid" = 1)
+			result_amount = 2
+			mix_phrase = "The bright orange Sunrise neutralizes the gnesis, somehow becoming even more teal in the process."
+			mix_sound = 'sound/misc/flockmind/flockmind_cast.ogg'
+
+			//we don't react in bloodstream, gotta get the gnesis out first
+			does_react(var/datum/reagents/holder)
+				return !ismob(holder.my_atom)
+
+			on_reaction(var/datum/reagents/holder, var/created_volume)
+				if (holder.has_reagent("blood") || holder.has_reagent("bloodc")) //don't expose lings
+					for(var/mob/M in all_viewers(null, get_turf(holder.my_atom)))
+						boutput(M, "<span class='alert'>The gnesis rapidly absorbs the remaining blood before becoming inert.</span>")
+					holder.del_reagent("blood")
+					holder.del_reagent("bloodc")
+
 		explosion_potassium // get in
 			name = "Potassium Explosion"
 			id = "explosion_potassium"

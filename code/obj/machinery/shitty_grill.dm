@@ -307,14 +307,18 @@
 		shittysteak.reagents.my_atom = shittysteak
 
 		src.grillitem.set_loc(shittysteak)
-
-		src.grillitem = null
-		src.icon_state = "shittygrill_on"
-		for (var/obj/item/I in src) //Things can get dropped somehow sometimes ok
-			I.set_loc(src.loc)
-		src.cooktime = 0
 	//	UnsubscribeProcess()
 		return
+
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.grillitem)
+			src.grillitem = null
+			src.UpdateIcon()
+			for (var/obj/item/I in src) //Things can get dropped somehow sometimes ok
+				I.set_loc(src.loc)
+			src.cooktime = 0
+			src.icon_state = "shittygrill_on"
 
 	verb/drain()
 		set src in oview(1)

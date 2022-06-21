@@ -278,7 +278,6 @@
 	item_state = "nassa"
 	c_flags = SPACEWEAR
 	body_parts_covered = TORSO|LEGS|ARMS
-	permeability_coefficient = 0.02
 	protective_temperature = 1000
 
 	setupProperties()
@@ -715,10 +714,13 @@
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "adeptus"
 	item_state = "adeptus"
-	permeability_coefficient = 0.50
 	over_hair = TRUE
 	body_parts_covered = TORSO|LEGS|ARMS
 	wear_layer = MOB_OVERLAY_BASE
+
+	setupProperties()
+		..()
+		setProperty("chemprot", 10)
 
 //power armor
 
@@ -980,7 +982,6 @@
 	desc = "Really, they're just regular overalls, but they have a little bee patch on them. Aww."
 	icon_state = "beekeeper"
 	item_state = "beekeeper"
-	permeability_coefficient = 0.50
 
 /obj/item/clothing/under/gimmick/butler
 	name = "butler suit"
@@ -1652,6 +1653,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 	icon_state = "ftscanplate"
 	item_state = "ftscanplate"
 	desc = "This eyewear looks incredibly advanced, as do most things that come from the Commonwealth of Free Worlds. Unfortunately, this is a non-functioning replica sold to tourists."
+	wear_layer = MOB_GLASSES_LAYER2
 
 /obj/item/clothing/under/blossomdress
 	name = "cherryblossom dress"

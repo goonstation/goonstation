@@ -9,36 +9,37 @@ var/global/map_setting = null
 var/global/datum/map_settings/map_settings = null
 
 //id corresponds to the name of the /obj/landmark/map
-//playerPickable defines whether the map can be chosen by players when voting on a new map. Setting to ASS_JAM should allow it on the 13th only, and not on RP.
+//playerPickable defines whether the map can be chosen by players when voting on a new map.
 var/global/list/mapNames = list(
-	"Clarion" = 		list("id" = "CLARION", 		"settings" = "destiny/clarion", "playerPickable" = 1,		"MaxPlayersAllowed" = 80),
+	"Clarion" = 		list("id" = "CLARION", 		"settings" = "destiny/clarion", "playerPickable" = TRUE,		"MaxPlayersAllowed" = 80),
 #ifdef RP_MODE
-	"Cogmap 1" = 		list("id" = "COGMAP", 		"settings" = "cogmap", 			"playerPickable" = 1, 	"MinPlayersAllowed" = 14),
+	"Cogmap 1" = 		list("id" = "COGMAP", 		"settings" = "cogmap", 			"playerPickable" = TRUE, 	"MinPlayersAllowed" = 14),
 #else
-	"Cogmap 1" = 		list("id" = "COGMAP", 		"settings" = "cogmap", 			"playerPickable" = 1,		"MaxPlayersAllowed" = 80),
+	"Cogmap 1" = 		list("id" = "COGMAP", 		"settings" = "cogmap", 			"playerPickable" = TRUE,		"MaxPlayersAllowed" = 80),
 #endif
 	//"Construction" = list("id" = "CONSTRUCTION", "settings" = "construction"),
 	"Cogmap 1 (Old)" = 	list("id" = "COGMAP_OLD", 	"settings" = "cogmap_old"),
-	"Cogmap 2" = 		list("id" = "COGMAP2", 		"settings" = "cogmap2", 		"playerPickable" = 1, 	"MinPlayersAllowed" = 40),
-	"Destiny" = 		list("id" = "DESTINY", 		"settings" = "destiny", 		"playerPickable" = 1,		"MaxPlayersAllowed" = 80),
-	"Donut 2" = 		list("id" = "DONUT2", 		"settings" = "donut2",			"playerPickable" = ASS_JAM),
-	"Donut 3" = 		list("id" = "DONUT3", 		"settings" = "donut3",			"playerPickable" = 1, 	"MinPlayersAllowed" = 40),
-	"Horizon" = 		list("id" = "HORIZON", 		"settings" = "horizon", 		"playerPickable" = 1),
-	"Mushroom" =		list("id" = "MUSHROOM", 	"settings" = "mushroom",		"playerPickable" = ASS_JAM),
-	"Trunkmap" = 		list("id" = "TRUNKMAP", 	"settings" = "trunkmap",		"playerPickable" = ASS_JAM),
-	"Oshan Laboratory"= list("id" = "OSHAN", 	"settings" = "oshan", 			"playerPickable" = 1),
-	"1 pamgoC" = 		list("id" = "PAMGOC", 		"settings" = "pamgoc", 			"playerPickable" = ASS_JAM),
-	"Kondaru" = 		list("id" = "KONDARU", 		"settings" = "kondaru", 		"playerPickable" = 1,		"MaxPlayersAllowed" = 80),
-	"Ozymandias" = 	list("id" = "OZYMANDIAS", "settings" = "ozymandias", 	"playerPickable" = 0, 	"MinPlayersAllowed" = 40),
-	"Bellerophon Fleet" = list("id" = "FLEET", "settings" = "fleet", "playerPickable" = ASS_JAM),
-	"Icarus" = 			list("id" = "ICARUS",		"settings" = "icarus",				"playerPickable" = ASS_JAM),
-	//"Density" = 		list("id" = "DENSITY", 	"settings" = "density", 			"playerPickable" = ASS_JAM,	"MaxPlayersAllowed" = 30),
-	"Atlas" = 			list("id" = "ATLAS", 		"settings" = "atlas", 				"playerPickable" = 1,				"MaxPlayersAllowed" = 30),
-	"Manta" = 			list("id" = "MANTA", 		"settings" = "manta", 				"playerPickable" = 0,				"MaxPlayersAllowed" = 80),
-	"Wrestlemap" = 			list("id" = "WRESTLEMAP", 	"settings" = "wrestlemap", 		"playerPickable" = ASS_JAM),
-	"pod_wars" = 			list("id" = "POD_WARS", 	"settings" = "pod_wars", 		"playerPickable" = 0),
-	"blank" = 			list("id" = "BLANK", "settings" = "", "playerPickable" = 0),
-	"blank_underwater" =  list("id" = "BLANK_UNDERWATER", "settings" = "", "playerPickable" = 0)
+	"Cogmap 2" = 		list("id" = "COGMAP2", 		"settings" = "cogmap2", 		"playerPickable" = TRUE, 	"MinPlayersAllowed" = 40),
+	"Destiny" = 		list("id" = "DESTINY", 		"settings" = "destiny", 		"playerPickable" = TRUE,		"MaxPlayersAllowed" = 80),
+	"Donut 2" = 		list("id" = "DONUT2", 		"settings" = "donut2",			"playerPickable" = FALSE),
+	"Donut 3" = 		list("id" = "DONUT3", 		"settings" = "donut3",			"playerPickable" = TRUE, 	"MinPlayersAllowed" = 40),
+	"Horizon" = 		list("id" = "HORIZON", 		"settings" = "horizon", 		"playerPickable" = TRUE),
+	"Crash" = 			list("id" = "CRASH", 		"settings" = "horizon/crash", 		"playerPickable" = FALSE),
+	"Mushroom" =		list("id" = "MUSHROOM", 	"settings" = "mushroom",		"playerPickable" = FALSE),
+	"Trunkmap" = 		list("id" = "TRUNKMAP", 	"settings" = "trunkmap",		"playerPickable" = FALSE),
+	"Oshan Laboratory"= list("id" = "OSHAN", 	"settings" = "oshan", 			"playerPickable" = TRUE),
+	"1 pamgoC" = 		list("id" = "PAMGOC", 		"settings" = "pamgoc", 			"playerPickable" = FALSE),
+	"Kondaru" = 		list("id" = "KONDARU", 		"settings" = "kondaru", 		"playerPickable" = TRUE,		"MaxPlayersAllowed" = 80),
+	"Ozymandias" = 	list("id" = "OZYMANDIAS", "settings" = "ozymandias", 	"playerPickable" = FALSE, 	"MinPlayersAllowed" = 40),
+	"Bellerophon Fleet" = list("id" = "FLEET", "settings" = "fleet", "playerPickable" = FALSE),
+	"Icarus" = 			list("id" = "ICARUS",		"settings" = "icarus",				"playerPickable" = FALSE),
+	//"Density" = 		list("id" = "DENSITY", 	"settings" = "density", 			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 30),
+	"Atlas" = 			list("id" = "ATLAS", 		"settings" = "atlas", 				"playerPickable" = TRUE,				"MaxPlayersAllowed" = 30),
+	"Manta" = 			list("id" = "MANTA", 		"settings" = "manta", 				"playerPickable" = FALSE,				"MaxPlayersAllowed" = 80),
+	"Wrestlemap" = 			list("id" = "WRESTLEMAP", 	"settings" = "wrestlemap", 		"playerPickable" = FALSE),
+	"pod_wars" = 			list("id" = "POD_WARS", 	"settings" = "pod_wars", 		"playerPickable" = FALSE),
+	"blank" = 			list("id" = "BLANK", "settings" = "", "playerPickable" = FALSE),
+	"blank_underwater" =  list("id" = "BLANK_UNDERWATER", "settings" = "", "playerPickable" = FALSE)
 )
 
 /obj/landmark/map
@@ -78,7 +79,7 @@ var/global/list/mapNames = list(
 
 	var/walls = /turf/simulated/wall
 	var/rwalls = /turf/simulated/wall/r_wall
-	var/auto_walls = 0
+	var/auto_walls = FALSE
 
 	var/windows = /obj/window
 	var/windows_thin = /obj/window
@@ -89,7 +90,7 @@ var/global/list/mapNames = list(
 	var/window_layer_full = null
 	var/window_layer_north = null // cog2 panel windows need to go under stuff because ~perspective~
 	var/window_layer_south = null
-	var/auto_windows = 0
+	var/auto_windows = FALSE
 
 	var/ext_airlocks = /obj/machinery/door/airlock/external
 	var/airlock_style = "gannets"
@@ -200,7 +201,7 @@ var/global/list/mapNames = list(
 	window_layer_full = COG2_WINDOW_LAYER
 	window_layer_north = GRILLE_LAYER+0.1
 	window_layer_south = FLY_LAYER+1
-	auto_windows = 1
+	auto_windows = TRUE
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/donut2
 	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/donut2
@@ -216,7 +217,7 @@ var/global/list/mapNames = list(
 
 	escape_dir = NORTH
 	default_shuttle = "donut3"
-	auto_windows = 1
+	auto_windows = TRUE
 
 	windows = /obj/window/auto
 	windows_thin = /obj/window/pyro
@@ -227,7 +228,7 @@ var/global/list/mapNames = list(
 	window_layer_full = COG2_WINDOW_LAYER
 	window_layer_north = GRILLE_LAYER+0.1
 	window_layer_south = FLY_LAYER+1
-	auto_windows = 1
+	auto_windows = TRUE
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/destiny
 	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/destiny
@@ -263,7 +264,7 @@ var/global/list/mapNames = list(
 	goonhub_map = "https://goonhub.com/maps/cogmap"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
-	auto_walls = 1
+	auto_walls = TRUE
 
 	windows = /obj/window/auto
 	windows_thin = /obj/window/pyro
@@ -274,7 +275,7 @@ var/global/list/mapNames = list(
 	window_layer_full = COG2_WINDOW_LAYER
 	window_layer_north = GRILLE_LAYER+0.1
 	window_layer_south = FLY_LAYER+1
-	auto_windows = 1
+	auto_windows = TRUE
 
 	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
@@ -307,7 +308,7 @@ var/global/list/mapNames = list(
 	goonhub_map = "https://goonhub.com/maps/cogmap2"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
-	auto_walls = 1
+	auto_walls = TRUE
 
 	windows = /obj/window/auto
 	windows_thin = /obj/window/pyro
@@ -318,7 +319,7 @@ var/global/list/mapNames = list(
 	window_layer_full = COG2_WINDOW_LAYER
 	window_layer_north = GRILLE_LAYER+0.1
 	window_layer_south = FLY_LAYER+1
-	auto_windows = 1
+	auto_windows = TRUE
 
 	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
@@ -357,7 +358,7 @@ var/global/list/mapNames = list(
 
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
-	auto_walls = 1
+	auto_walls = TRUE
 
 	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
@@ -371,7 +372,7 @@ var/global/list/mapNames = list(
 	window_layer_full = COG2_WINDOW_LAYER
 	window_layer_north = GRILLE_LAYER+0.1
 	window_layer_south = FLY_LAYER+1
-	auto_windows = 1
+	auto_windows = TRUE
 
 	escape_dir = NORTH
 
@@ -401,7 +402,7 @@ var/global/list/mapNames = list(
 
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
-	auto_walls = 1
+	auto_walls = TRUE
 
 	windows = /obj/window/auto
 	windows_thin = /obj/window/pyro
@@ -412,7 +413,7 @@ var/global/list/mapNames = list(
 	window_layer_full = COG2_WINDOW_LAYER
 	window_layer_north = GRILLE_LAYER+0.1
 	window_layer_south = FLY_LAYER+1
-	auto_windows = 1
+	auto_windows = TRUE
 
 	valid_nuke_targets = list("the main security room" = list(/area/station/security/main),
 		"the central research sector hub" = list(/area/station/science/lobby),
@@ -436,7 +437,7 @@ var/global/list/mapNames = list(
 	goonhub_map = "https://goonhub.com/maps/horizon"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
-	auto_walls = 1
+	auto_walls = TRUE
 
 	windows = /obj/window/auto
 	windows_thin = /obj/window/pyro
@@ -447,7 +448,7 @@ var/global/list/mapNames = list(
 	window_layer_full = COG2_WINDOW_LAYER
 	window_layer_north = GRILLE_LAYER+0.1
 	window_layer_south = FLY_LAYER+1
-	auto_windows = 1
+	auto_windows = TRUE
 
 	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
@@ -493,13 +494,17 @@ var/global/list/mapNames = list(
 		/datum/job/special/atmospheric_technician = 1
 	)
 
+/datum/map_settings/horizon/crash
+	name = "CRASH"
+	display_name = "Free Fall"
+
 /datum/map_settings/manta
 	name = "MANTA"
 	display_name = "NSS Manta"
 	goonhub_map = "https://goonhub.com/maps/manta"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
-	auto_walls = 1
+	auto_walls = TRUE
 	style = "ship"
 	arrivals_type = MAP_SPAWN_CRYO
 
@@ -512,7 +517,7 @@ var/global/list/mapNames = list(
 	window_layer_full = COG2_WINDOW_LAYER
 	window_layer_north = GRILLE_LAYER+0.1
 	window_layer_south = FLY_LAYER+1
-	auto_windows = 1
+	auto_windows = TRUE
 
 	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
@@ -543,7 +548,7 @@ var/global/list/mapNames = list(
 
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
-	auto_walls = 1
+	auto_walls = TRUE
 	airlock_style = "pyro"
 
 	windows = /obj/window/auto
@@ -555,7 +560,7 @@ var/global/list/mapNames = list(
 	window_layer_full = COG2_WINDOW_LAYER
 	window_layer_north = GRILLE_LAYER+0.1
 	window_layer_south = FLY_LAYER+1
-	auto_windows = 1
+	auto_windows = TRUE
 
 	escape_dir = EAST
 
@@ -579,7 +584,7 @@ var/global/list/mapNames = list(
 
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
-	auto_walls = 1
+	auto_walls = TRUE
 	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
@@ -614,7 +619,7 @@ var/global/list/mapNames = list(
 	goonhub_map = "https://goonhub.com/maps/kondaru"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
-	auto_walls = 1
+	auto_walls = TRUE
 
 	arrivals_type = MAP_SPAWN_CRYO
 
@@ -627,7 +632,7 @@ var/global/list/mapNames = list(
 	window_layer_full = COG2_WINDOW_LAYER
 	window_layer_north = GRILLE_LAYER+0.1
 	window_layer_south = FLY_LAYER+1
-	auto_windows = 1
+	auto_windows = TRUE
 
 	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
@@ -662,9 +667,9 @@ var/global/list/mapNames = list(
 	goonhub_map = "https://i.imgur.com/COYgNvN.jpg"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
-	auto_walls = 1
+	auto_walls = TRUE
 
-	job_limits_from_landmarks = 1
+	job_limits_from_landmarks = TRUE
 	job_limits_override = list(
 		/datum/job/special/atmospheric_technician = 1,
 		/datum/job/special/barber = 1,
@@ -681,7 +686,7 @@ var/global/list/mapNames = list(
 	window_layer_full = COG2_WINDOW_LAYER
 	window_layer_north = GRILLE_LAYER+0.1
 	window_layer_south = FLY_LAYER+1
-	auto_windows = 1
+	auto_windows = TRUE
 
 	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
@@ -711,7 +716,7 @@ var/global/list/mapNames = list(
 	goonhub_map = "https://goonhub.com/maps/bellerophon fleet"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
-	auto_walls = 1
+	auto_walls = TRUE
 	arrivals_type = MAP_SPAWN_CRYO
 	dir_fore = NORTH
 
@@ -724,7 +729,7 @@ var/global/list/mapNames = list(
 	window_layer_full = COG2_WINDOW_LAYER
 	window_layer_north = GRILLE_LAYER+0.1
 	window_layer_south = FLY_LAYER+1
-	auto_windows = 1
+	auto_windows = TRUE
 
 	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 
@@ -750,7 +755,7 @@ var/global/list/mapNames = list(
 	goonhub_map = "https://i.imgur.com/SiI3RC9.png"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
-	auto_walls = 1
+	auto_walls = TRUE
 	arrivals_type = MAP_SPAWN_CRYO
 	dir_fore = NORTH
 
@@ -763,7 +768,7 @@ var/global/list/mapNames = list(
 	window_layer_full = COG2_WINDOW_LAYER
 	window_layer_north = GRILLE_LAYER+0.1
 	window_layer_south = FLY_LAYER+1
-	auto_windows = 1
+	auto_windows = TRUE
 
 	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 
@@ -785,7 +790,7 @@ var/global/list/mapNames = list(
 	goonhub_map = "https://goonhub.com/maps/density"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
-	auto_walls = 1
+	auto_walls = TRUE
 
 	windows = /obj/window/auto
 	windows_thin = /obj/window/pyro
@@ -796,7 +801,7 @@ var/global/list/mapNames = list(
 	window_layer_full = COG2_WINDOW_LAYER
 	window_layer_north = GRILLE_LAYER+0.1
 	window_layer_south = FLY_LAYER+1
-	auto_windows = 1
+	auto_windows = TRUE
 
 	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
@@ -824,7 +829,7 @@ var/global/list/mapNames = list(
 	goonhub_map = "https://goonhub.com/maps/cogmap"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
-	auto_walls = 1
+	auto_walls = TRUE
 
 	windows = /obj/window/auto
 	windows_thin = /obj/window/pyro
@@ -835,7 +840,7 @@ var/global/list/mapNames = list(
 	window_layer_full = COG2_WINDOW_LAYER
 	window_layer_north = GRILLE_LAYER+0.1
 	window_layer_south = FLY_LAYER+1
-	auto_windows = 1
+	auto_windows = TRUE
 
 	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
@@ -859,7 +864,7 @@ var/global/list/mapNames = list(
 
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
-	auto_walls = 1
+	auto_walls = TRUE
 
 	windows = /obj/window/auto
 	windows_thin = /obj/window/pyro
@@ -870,7 +875,7 @@ var/global/list/mapNames = list(
 	window_layer_full = COG2_WINDOW_LAYER
 	window_layer_north = GRILLE_LAYER+0.1
 	window_layer_south = FLY_LAYER+1
-	auto_windows = 1
+	auto_windows = TRUE
 
 	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
@@ -907,7 +912,7 @@ var/global/list/mapNames = list(
 	name = "WRESTLEMAP"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
-	auto_walls = 1
+	auto_walls = TRUE
 
 	arrivals_type = MAP_SPAWN_CRYO
 
@@ -920,7 +925,7 @@ var/global/list/mapNames = list(
 	window_layer_full = COG2_WINDOW_LAYER
 	window_layer_north = GRILLE_LAYER+0.1
 	window_layer_south = FLY_LAYER+1
-	auto_windows = 1
+	auto_windows = TRUE
 
 	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
@@ -949,7 +954,7 @@ var/global/list/mapNames = list(
 	goonhub_map = "https://goonhub.com/maps/pod_wars"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
-	auto_walls = 1
+	auto_walls = TRUE
 	style = "spess"
 
 
@@ -964,7 +969,7 @@ var/global/list/mapNames = list(
 	window_layer_full = COG2_WINDOW_LAYER
 	window_layer_north = GRILLE_LAYER+0.1
 	window_layer_south = FLY_LAYER+1
-	auto_windows = 1
+	auto_windows = TRUE
 
 	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"

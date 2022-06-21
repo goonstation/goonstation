@@ -11,10 +11,8 @@
 	if (P.proj_data)  //ZeWaka: Fix for null.ks_ratio
 		damage = round((P.power*P.proj_data.ks_ratio), 1.0)
 
-	var/armor_value_bullet = 1
+	var/armor_value_bullet = get_ranged_protection()
 
-	if (!(client && client.hellbanned))
-		armor_value_bullet = get_ranged_protection()
 	var/target_organ = pick("left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail")
 	if (P.proj_data) //Wire: Fix for: Cannot read null.damage_type
 		switch(P.proj_data.damage_type)

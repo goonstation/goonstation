@@ -89,14 +89,14 @@
 	return 1
 
 /obj/item/paper/attack_self(mob/user as mob)
-	var/menuchoice = alert("What would you like to do with [src]?",,"Fold","Read","Nothing")
-	if (menuchoice == "Nothing")
+	var/menuchoice = tgui_alert(user, "What would you like to do with [src]?", "Use paper", list("Fold", "Read", "Nothing"))
+	if (!menuchoice || menuchoice == "Nothing")
 		return
 	else if (menuchoice == "Read")
 		src.examine(user)
 	else
-		var/fold = alert("What would you like to fold [src] into?",,"Paper hat","Paper plane","Paper ball")
-		if(src.disposed) //It's possible to queue multiple of these menus before resolving any.
+		var/fold = tgui_alert(user, "What would you like to fold [src] into?", "Fold paper", list("Paper hat", "Paper plane", "Paper ball"))
+		if(src.disposed || !fold) //It's possible to queue multiple of these menus before resolving any.
 			return
 		user.u_equip(src)
 		if (fold == "Paper hat")
@@ -183,6 +183,7 @@
 				stamp(stamp_x, stamp_y, stamp_r, stamp.current_state, stamp.icon_state)
 				update_static_data(usr, ui)
 				boutput(usr, "<span class='notice'>[ui.user] stamps [src] with \the [stamp.name]!</span>")
+				playsound(usr.loc, "sound/misc/stamp_paper.ogg", 50, 0.5)
 			else
 				boutput(usr, "There is no where else you can stamp!")
 			. = TRUE

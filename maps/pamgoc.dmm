@@ -13546,7 +13546,7 @@
 	icon_state = "4-8"
 	},
 /obj/table/reinforced/auto,
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	pixel_x = -7;
 	pixel_y = 12
 	},
@@ -19963,7 +19963,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 8
 	},
-/obj/storage/secure/closet/brig/automatic/genpop_s,
+/obj/storage/secure/closet/brig_automatic/genpop_s,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "aJE" = (
@@ -33666,7 +33666,7 @@
 	pixel_x = -10;
 	pixel_y = 7
 	},
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	pixel_y = 1
 	},
 /turf/simulated/floor/black,
@@ -56966,21 +56966,21 @@
 	},
 /area/station/security/main)
 "cfh" = (
-/obj/storage/secure/closet/brig/automatic/genpop_n,
+/obj/storage/secure/closet/brig_automatic/genpop_n,
 /obj/machinery/light{
 	dir = 8
 	},
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "cfi" = (
-/obj/storage/secure/closet/brig/automatic/minibrig,
+/obj/storage/secure/closet/brig_automatic/minibrig,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
 /turf/simulated/floor/grime,
 /area/station/security/checkpoint/cargo)
 "cfj" = (
-/obj/storage/secure/closet/brig/automatic/solitary,
+/obj/storage/secure/closet/brig_automatic/solitary,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -61921,7 +61921,7 @@
 /area/station/security/checkpoint)
 "cmn" = (
 /obj/table/reinforced/auto,
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	pixel_x = -6;
 	pixel_y = 5
 	},
@@ -61930,7 +61930,7 @@
 /area/station/security/checkpoint)
 "cmp" = (
 /obj/table/reinforced/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /obj/cable{
 	d1 = 1;
 	d2 = 8;
@@ -63270,7 +63270,7 @@
 /area/station/security/detectives_office)
 "coh" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	switchon = 1
 	},
 /turf/simulated/floor/carpet{

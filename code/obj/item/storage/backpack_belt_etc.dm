@@ -628,9 +628,7 @@
 	desc = "A specialized belt for treating patients outside medbay in the field. A unique attachment point lets you carry defibrillators."
 	icon_state = "injectorbelt"
 	item_state = "medical"
-	can_hold = list(
-		/obj/item/robodefibrillator
-	)
+	can_hold = list(/obj/item/robodefibrillator)
 	in_list_or_max = 1
 
 /obj/item/storage/belt/roboticist
@@ -656,8 +654,7 @@
 	item_state = "mining"
 	can_hold = list(
 		/obj/item/mining_tool,
-		/obj/item/mining_tools
-	)
+		/obj/item/mining_tools)
 	in_list_or_max = 1
 
 /obj/item/storage/belt/mining/prepared
@@ -692,10 +689,11 @@
 	/obj/item/gun/energy/wavegun,
 	/obj/item/gun/kinetic/revolver,
 	/obj/item/gun/kinetic/zipgun,
-	/obj/item/clothing/mask/gas/NTSO,
+	/obj/item/clothing/mask/gas/NTSO, //added so the NTSO mask can be clipped to the belt, maybe good to do with all gas masks?
 	/obj/item/gun/energy/tasersmg,
-	/obj/item/gun/energy/signifer2, //added so the NTSO mask can be clipped to the belt, maybe good to do with all gas masks?
-	/obj/item/device/prisoner_scanner)
+	/obj/item/gun/energy/signifer2,
+	/obj/item/device/prisoner_scanner,
+	/obj/item/gun/energy/ntgun)
 	in_list_or_max = 1
 
 // kiki's detective shoulder (holster)
@@ -729,8 +727,11 @@
 	assistant
 		spawn_contents = list(/obj/item/barrier, /obj/item/device/detective_scanner, /obj/item/device/ticket_writer)
 
+	ntsc
+		spawn_contents = list(/obj/item/gun/energy/signifer2, /obj/item/baton/ntso, /obj/item/instrument/whistle, /obj/item/clothing/mask/gas/NTSO, /obj/item/storage/ntsc_pouch, /obj/item/barrier) //secbelt subtype that only spawns on NTSO, not in vendor
+
 	ntso
-		spawn_contents = list(/obj/item/gun/energy/signifer2, /obj/item/gun/kinetic/clock_188, /obj/item/baton/ntso, /obj/item/instrument/whistle, /obj/item/clothing/mask/gas/NTSO, /obj/item/storage/ntso_pouch, /obj/item/barrier) //secbelt subtype that only spawns on NTSO, not in vendor
+		spawn_contents = list(/obj/item/gun/energy/ntgun, /obj/item/old_grenade/stinger/frag, /obj/item/ammo/power_cell/med_power = 5)
 
 	baton
 		spawn_contents = list(/obj/item/baton, /obj/item/barrier, /obj/item/requisition_token/security/utility)

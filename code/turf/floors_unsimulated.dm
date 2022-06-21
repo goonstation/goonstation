@@ -37,38 +37,81 @@
 		if(ispryingtool(W))
 			src.name = "plating"
 			src.icon_state = "plating"
+			UpdateOverlays(null,"burn")
 			src.UpdateIcon()
 			setIntact(FALSE)
 			levelupdate()
 
 	scorched
-		icon_state = "floorscorched1"
+		New()
+			..()
+			var/image/burn_overlay = image('icons/turf/floors.dmi',"floorscorched1")
+			burn_overlay.alpha = 200
+			UpdateOverlays(burn_overlay,"burn")
 
 
 	scorched2
-		icon_state = "floorscorched2"
+		New()
+			..()
+			var/image/burn_overlay = image('icons/turf/floors.dmi',"floorscorched2")
+			burn_overlay.alpha = 200
+			UpdateOverlays(burn_overlay,"burn")
 
 
 /turf/unsimulated/floor/scorched
-	icon_state = "floorscorched1"
+
+	New()
+		..()
+		var/image/burn_overlay = image('icons/turf/floors.dmi',"floorscorched1")
+		burn_overlay.alpha = 200
+		UpdateOverlays(burn_overlay,"burn")
 
 /turf/unsimulated/floor/scorched2
-	icon_state = "floorscorched2"
+	New()
+		..()
+		var/image/burn_overlay = image('icons/turf/floors.dmi',"floorscorched2")
+		burn_overlay.alpha = 200
+		UpdateOverlays(burn_overlay,"burn")
 
 /turf/unsimulated/floor/damaged1
-	icon_state = "damaged1"
+
+	New()
+		..()
+		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged1")
+		damage_overlay.alpha = 200
+		UpdateOverlays(damage_overlay,"damage")
 
 /turf/unsimulated/floor/damaged2
-	icon_state = "damaged2"
+
+	New()
+		..()
+		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged2")
+		damage_overlay.alpha = 200
+		UpdateOverlays(damage_overlay,"damage")
 
 /turf/unsimulated/floor/damaged3
-	icon_state = "damaged3"
+
+	New()
+		..()
+		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged3")
+		damage_overlay.alpha = 200
+		UpdateOverlays(damage_overlay,"damage")
 
 /turf/unsimulated/floor/damaged4
-	icon_state = "damaged4"
+
+	New()
+		..()
+		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged4")
+		damage_overlay.alpha = 200
+		UpdateOverlays(damage_overlay,"damage")
 
 /turf/unsimulated/floor/damaged5
-	icon_state = "damaged5"
+
+	New()
+		..()
+		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged5")
+		damage_overlay.alpha = 200
+		UpdateOverlays(damage_overlay,"damage")
 
 /////////////////////////////////////////
 
@@ -79,22 +122,49 @@
 	layer = PLATING_LAYER
 
 /turf/unsimulated/floor/plating/scorched
-	icon_state = "panelscorched"
+
+	New()
+		..()
+		var/image/burn_overlay = image('icons/turf/floors.dmi',"panelscorched")
+		burn_overlay.alpha = 200
+		UpdateOverlays(burn_overlay,"burn")
 
 /turf/unsimulated/floor/plating/damaged1
-	icon_state = "platingdmg1"
+
+	New()
+		..()
+		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg1")
+		damage_overlay.alpha = 200
+		UpdateOverlays(damage_overlay,"damage")
 
 /turf/unsimulated/floor/plating/damaged2
-	icon_state = "platingdmg2"
+
+	New()
+		..()
+		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg2")
+		damage_overlay.alpha = 200
+		UpdateOverlays(damage_overlay,"damage")
 
 /turf/unsimulated/floor/plating/damaged3
-	icon_state = "platingdmg3"
+
+	New()
+		..()
+		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg3")
+		damage_overlay.alpha = 200
+		UpdateOverlays(damage_overlay,"damage")
 
 /turf/unsimulated/floor/plating/random
 	New()
 		..()
 		if (prob(20))
-			src.icon_state = pick("panelscorched", "platingdmg1", "platingdmg2", "platingdmg3")
+			if (prob(50))
+				var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg[pick(1,2,3)]")
+				damage_overlay.alpha = 200
+				UpdateOverlays(damage_overlay,"damage")
+			else
+				var/image/burn_overlay = image('icons/turf/floors.dmi',"panelscorched")
+				burn_overlay.alpha = 200
+				UpdateOverlays(burn_overlay,"burn")
 		if (prob(2))
 			make_cleanable(/obj/decal/cleanable/dirt,src)
 		if (prob(2))

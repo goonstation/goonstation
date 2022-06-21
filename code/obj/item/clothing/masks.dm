@@ -105,7 +105,6 @@
 	w_class = W_CLASS_NORMAL
 	see_face = 0.0
 	item_state = "gas_mask"
-	permeability_coefficient = 0.05
 	color_r = 0.8 // green tint
 	color_g = 1
 	color_b = 0.8
@@ -119,7 +118,7 @@
 
 /obj/item/clothing/mask/gas/NTSO
 	name = "NT gas mask"
-	desc = "A close-fitting CBRN mask with dual filters and a tinted lens, designed to protect Nanotrasen paramilitary personnel from environmental threats."
+	desc = "A close-fitting CBRN mask with dual filters and a tinted lens, designed to protect Nanotrasen security personnel from environmental threats."
 	icon_state = "gas_mask_NT"
 	item_state = "gas_mask_NT"
 	color_r = 0.8 // cool blueberry nanotrasen tint provides disorientation resist
@@ -259,7 +258,6 @@
 	item_state = "breath"
 	c_flags = COVERSMOUTH | MASKINTERNALS
 	w_class = W_CLASS_SMALL
-	permeability_coefficient = 0.50
 
 
 	attackby(obj/item/W, mob/user)
@@ -443,12 +441,12 @@
 	item_state = "s_mask"
 	w_class = W_CLASS_TINY
 	c_flags = COVERSMOUTH
-	permeability_coefficient = 0.1
 	path_prot = 0
 
 	setupProperties()
 		..()
 		setProperty("viralprot", 50) // fashion reasons, they're *space* masks, ok?
+		setProperty("chemprot", 5)
 
 /obj/item/clothing/mask/surgical_shield
 	name = "surgical face shield"
@@ -457,13 +455,13 @@
 	item_state = "surgicalshield"
 	w_class = W_CLASS_SMALL
 	c_flags = COVERSMOUTH | COVERSEYES
-	permeability_coefficient = 0.50
 	var/bee = FALSE
 	var/randcol
 
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 1)
+		setProperty("chemprot", 7)
 		setProperty("disorient_resist_eye", 10)
 
 	New()
