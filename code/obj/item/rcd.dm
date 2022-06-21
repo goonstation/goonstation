@@ -526,6 +526,8 @@ Broken RCD + Effects
 		elecflash(src)
 
 	proc/ammo_check(mob/user as mob, var/checkamt = 0)
+		if (src.microbioupgrade)
+			checkamt = ceil(checkamt/2)
 		if (issilicon(user))
 			var/mob/living/silicon/S = user
 			return (S.cell && (S.cell.charge >= checkamt * silicon_cost_multiplier))
@@ -543,6 +545,8 @@ Broken RCD + Effects
 			src.UpdateIcon()
 
 	proc/do_thing(mob/user as mob, atom/target, var/what, var/ammo, var/delay)
+		if(src.microbioupgrade)
+			ammo = ceil(ammo/2)
 		if (!ammo_check(user, ammo))
 			boutput(user, "Unable to start [what] &mdash; you need at least [issilicon(user) ? "[ammo * src.silicon_cost_multiplier] charge" : "[ammo] matter units"].")
 			return 0

@@ -1131,13 +1131,6 @@
 	icon = 'icons/obj/pathology.dmi'
 	icon_state = "synthmodule"
 	var/id = "bad"
-	proc/received(obj/machinery/synthomatic/S)
-		return
-
-	afterattack(obj/target, mob/user , flag)
-		if (istype(target, /obj/machinery/synthomatic))
-			return
-		..(target, user, flag)
 
 /obj/item/synthmodule/vaccine
 	name = "Synth-O-Matic Vaccine module"
@@ -1191,7 +1184,7 @@
 */
 /obj/machinery/synthomatic
 	name = "Synth-O-Matic 6.5.535"
-	desc = "The leading technological assistant in synthesizing cure for certain pathogens."
+	desc = "The leading technological assistant in synthesizing useful biochemicals."
 	icon = 'icons/obj/pathology.dmi'
 	icon_state = "synth1"
 	density = 1
@@ -1202,13 +1195,16 @@
 	var/obj/item/beaker = null
 	var/obj/item/bloodbag = null
 	var/list/whitelist = list()
-	var/selectedprecursor = null
+	var/selectedresult = null
 	var/emagged = 0
+	//Emagging may...
+		//Bypass the budget
+		//Improve production (bottles instead of vials, multiple containers)
 
 	var/maintenance = 0
 	var/machine_state = 0
 	var/sel_vial = 0
-	var/const/synthesize_pathogen_cost = 100 // used to be 2000
+	var/const/synthesize_cost = 500 // used to be 2000
 
 	New()
 		..()
@@ -1244,7 +1240,6 @@
 				return
 			else
 				boutput(user, "<span class='notice'>You insert the vial into the machine.</span>")
-				show_interface(user)
 				return
 		if (istype(O, /obj/item/reagent_containers/glass/beaker))
 			if (!(user in range(1)))
@@ -1267,7 +1262,6 @@
 				O.master = src
 				user.client.screen -= O
 				boutput(user, "<span class='notice'>You insert the beaker into the machine.</span>")
-				show_interface(user)
 			return
 		if (istype(O, /obj/item/reagent_containers/iv_drip))
 			if (!(user in range(1)))
@@ -1291,7 +1285,6 @@
 				O.master = src
 				user.client.screen -= O
 				boutput(user, "<span class='notice'>You insert the blood bag into the machine.</span>")
-				show_interface(user)
 			return
 
 		if (isscrewingtool(O))
@@ -1315,7 +1308,7 @@
 		var/output_text = ""
 
 		output_text += "<b>SYNTH-O-MATIC 6.5.535</b><br>"
-		output_text += "<i>\"Introducing the future in safe and controlled pathology science.\"</i><br>"
+		output_text += "<i>\"Introducing the future in safe and controlled <s>pathology science</s> biochemistry.\"</i><br>"
 		output_text += "<br>"
 
 		if (machine_state)
@@ -1331,11 +1324,11 @@
 				output_text += "Vial #[sel_vial]: [rname]<br>"
 				for (var/R in whitelist)
 					if (rid == R)
-						output_text += "Valid precursor: <a href='?src=\ref[src];buymats=1'>Synthesize for [synthesize_pathogen_cost] credits</a><br>"
+						output_text += "Valid precursor: <a href='?src=\ref[src];buymats=1'>Synthesize for [synthesize_cost] credits</a><br>"
 						for (var/L in concrete_typesof(/datum/reagent/microbiology))
 							var/datum/reagent/RE = new L()
 							if (rid == RE.data)
-								src.selectedprecursor = RE.id
+								src.selectedresult = RE.id
 			else
 				output_text += "None<br><br>"
 
@@ -1352,7 +1345,7 @@
 					output_text += "#[i] Empty slot<br>"
 
 			output_text += "<br>"
-			output_text += "<b>Anti-agent beaker slot: </b>"
+			output_text += "<b>Egg reservoir slot: </b>"
 
 			if (beaker)
 				output_text += "[beaker] <a href='?src=\ref[src];ejectanti=1'>\[eject\]</a><br><br>"
@@ -1424,31 +1417,34 @@
 
 			else if (href_list["buymats"])
 				if (machine_state == 0 && (usr in range(1)))
-					var/BL = bloodbag.reagents.get_reagent_amount("blood")
-					var/EG = beaker.reagents.get_reagent_amount("egg")
-					if (synthesize_pathogen_cost > wagesystem.research_budget)
-						boutput(usr, "<span class='alert'>Insufficient research budget to make that transaction.</span>")
-					else if (EG < 5)
-						boutput(usr, "<span class='alert'>Insufficient egg reservoir (5 units needed).</span>")
-					else if (BL < 25)
-						boutput(usr, "<span class='alert'>Insufficient blood reservoir (25 units needed).</span>")
-					else
-						var/count = 3
-						boutput(usr, "<span class='notice'>Transaction successful.</span>")
-						wagesystem.research_budget -= synthesize_pathogen_cost
-						machine_state = 1
-						icon_state = "synth2"
-						src.visible_message("The [src.name] bubbles and begins synthesis.", "You hear a bubbling noise.")
-						beaker.reagents.remove_reagent("egg", 5)
-						bloodbag.reagents.remove_reagent("blood", 25)
-						SPAWN(0 SECONDS)
-							while(count > 0)
-								count--
-								sleep(5 SECONDS)
-								for (var/mob/C in viewers(src))
-									C.show_message("The [src.name] ejects a new pathogen sample.", 3)
-								var/obj/item/reagent_containers/glass/vial/V = new /obj/item/reagent_containers/glass/vial(src.loc)
-								V.reagents.add_reagent(src.selectedprecursor, 5)
+					if (!bloodbag)
+						boutput(usr, "<span class='alert'>No blood reservoir detected.</span>")
+					else if (!beaker)
+						boutput(usr, "<span class='alert'>No egg reservoir detected.</span>")
+					if (bloodbag && beaker)
+						var/BL = bloodbag.reagents.get_reagent_amount("blood")
+						var/EG = beaker.reagents.get_reagent_amount("egg")
+						if (EG < 5)
+							boutput(usr, "<span class='alert'>Insufficient egg reservoir (5 units needed).</span>")
+						else if (BL < 25)
+							boutput(usr, "<span class='alert'>Insufficient blood reservoir (25 units needed).</span>")
+						else if (synthesize_cost > wagesystem.research_budget)
+							boutput(usr, "<span class='alert'>Insufficient research budget to make that transaction.</span>")
+						else
+							boutput(usr, "<span class='notice'>Transaction successful.</span>")
+							wagesystem.research_budget -= synthesize_cost
+							machine_state = 1
+							icon_state = "synth2"
+							show_interface(usr)
+							src.visible_message("The [src.name] bubbles and begins synthesis.", "You hear a bubbling noise.")
+							beaker.reagents.remove_reagent("egg", 5)
+							bloodbag.reagents.remove_reagent("blood", 25)
+							SPAWN(0 SECONDS)
+							sleep(5 SECONDS)
+							for (var/mob/C in viewers(src))
+								C.show_message("The [src.name] ejects a new biochemical sample.", 3)
+							var/obj/item/reagent_containers/glass/vial/V = new /obj/item/reagent_containers/glass/vial(src.loc)
+							V.reagents.add_reagent(src.selectedresult, 5)
 							machine_state = 0
 							icon_state = "synth1"
 				//boutput(usr, "<span class='alert'>[src] unable to complete task. Please contact your network administrator.</span>")
@@ -1530,11 +1526,11 @@
 		..()
 		//Products
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe, 15)
-		product_list += new/datum/data/vending_product(/obj/item/bloodslide, 50)
+		//product_list += new/datum/data/vending_product(/obj/item/bloodslide, 50)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/vial, 25)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/petridish, 10)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/beaker/egg, 20)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/beaker/spaceacillin, 20)
+		//product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/petridish, 10)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/beaker/egg, 10)
+		//product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/beaker/spaceacillin, 20)
 		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/healthanalyzer, 4)
 
 /obj/machinery/incubator

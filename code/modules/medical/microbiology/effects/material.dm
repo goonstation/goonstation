@@ -2,7 +2,7 @@
 ABSTRACT_TYPE(/datum/microbioeffects/material)
 /datum/microbioeffects/material
 	name = "Material Effects"
-
+/*
 /datum/microbioeffects/material/organicglass
 	name = "Organic Glass"
 	desc = "The microbes produce silicate, reinforcing and repairing glass structures."
@@ -197,4 +197,5 @@ datum/microbioeffects/malevolent/o2
 	react_to(var/R, var/zoom)
 		if (R == "infernite" || R == "phlogiston")
 			return "The flame of the hot reagents is oxidized by the gas."
+*/
 */

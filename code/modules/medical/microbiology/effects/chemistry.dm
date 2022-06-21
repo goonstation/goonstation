@@ -4,7 +4,7 @@ ABSTRACT_TYPE(/datum/microbioeffects/chemistry)
 	name = "Chemical Effects"
 
 
-
+/*
 //The following subdatum would allow limited chemical production for specific chems:
 /**
  * Space cleaner
@@ -179,4 +179,5 @@ ABSTRACT_TYPE(/datum/microbioeffects/chemistry)
 	may_react_to()
 		return "The pathogen appears to react with anything but a pure intoxicant."
 
+*/
 */

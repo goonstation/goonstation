@@ -1,5 +1,6 @@
 // Effects related to Botany, Cooking, Distilling go Here
 ABSTRACT_TYPE(/datum/microbioeffects/service)
+/*
 /datum/microbioeffects/service/detoxication
 	name = "Detoxication"
 	desc = "The pathogen aids the host body in metabolizing ethanol."
@@ -81,4 +82,5 @@ ABSTRACT_TYPE(/datum/microbioeffects/service)
 
 	may_react_to()
 		return "The pathogen appears to be rapidly breaking down certain materials around it."
+*/
 */

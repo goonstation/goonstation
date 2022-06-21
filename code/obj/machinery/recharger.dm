@@ -50,6 +50,8 @@ obj/machinery/recharger
 	var/charge_amount = 0
 	var/charge_status = 0
 
+	var/secondarymult = 1
+
 	//wall rechargers!!
 	wall
 		icon_state = "wall_recharger0"
@@ -166,7 +168,7 @@ obj/machinery/recharger
 
 
 	if(charge_status == STATUS_ACTIVE && src.charging)
-		var/ret = SEND_SIGNAL(src.charging, COMSIG_CELL_CHARGE, CHARGE_AMOUNT * mult)
+		var/ret = SEND_SIGNAL(src.charging, COMSIG_CELL_CHARGE, CHARGE_AMOUNT * mult * secondarymult)
 		if(ret & CELL_FULL)
 			// Charge complete
 			charge_status = STATUS_COMPLETE

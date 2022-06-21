@@ -1016,7 +1016,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\medical\microbiology\_microbiology_constants.dm"
 #include "code\modules\medical\microbiology\microbiology_baseEffects.dm"
 #include "code\modules\medical\microbiology\microbiology.dm"
-#include "code\modules\medical\microbiology\microbiology_ailments.dm"
 #include "code\modules\medical\microbiology\microbiology_cures.dm"
 #include "code\modules\medical\microbiology\microbiology_helpers.dm"
 #include "code\modules\medical\microbiology\microbiology_machines.dm"
