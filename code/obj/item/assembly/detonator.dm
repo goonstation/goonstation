@@ -81,7 +81,7 @@
 			src.icon_state = "m-i-p-w-timer"
 			src.det_state = 4
 
-/obj/item/assembly/detonator/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/assembly/detonator/attackby(obj/item/W, mob/user)
 	switch (src.det_state)
 		if (0)
 			if (istype(W, /obj/item/tank/plasma))

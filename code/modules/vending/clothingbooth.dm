@@ -110,7 +110,7 @@ var/list/clothingbooth_items = list()
 				return
 		..()
 
-/obj/machinery/clothingbooth/attackby(obj/item/weapon as obj, mob/user as mob)
+/obj/machinery/clothingbooth/attackby(obj/item/weapon, mob/user)
 	if(istype(weapon, /obj/item/spacecash))
 		if(!(locate(/mob) in src))
 			src.money += weapon.amount
@@ -173,7 +173,7 @@ var/list/clothingbooth_items = list()
 				AM.set_loc(T)
 
 
-/obj/machinery/clothingbooth/attack_hand(mob/user as mob)
+/obj/machinery/clothingbooth/attack_hand(mob/user)
 	if (!ishuman(user))
 		boutput(user,"<span style=\"color:red\">Human clothes don't fit you!</span>")
 		return

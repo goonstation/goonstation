@@ -228,12 +228,13 @@ var/global/meteor_shower_active = 0
 
 		return
 
-	Move(atom/NewLoc,Dir)
+	Move(atom/NewLoc, Dir)
 		if(src.x == world.maxx || src.y == world.maxy || src.x == 1 || src.y == 1)
 			qdel(src)
 		if(src.loc == target)
 			shatter()
 			return
+		. = ..()
 		if(src.loc == last_tile)
 			walk_towards(src, target, speed, pix_speed)
 		if(!hit_object)

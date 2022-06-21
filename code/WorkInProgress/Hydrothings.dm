@@ -384,7 +384,7 @@ obj/item/gnomechompski/elf
 		reload_gun(user)
 
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		fire_gun(user)
 
 	proc/fire_gun(mob/user as mob)
@@ -430,7 +430,7 @@ obj/item/gnomechompski/elf
 		usrverbs -= /proc/owl_slam
 
 	attack_self(mob/user as mob)
-		var/input = alert("Would you like to attempt to absorb the core into your body?","Hoot or not to hoot.", "Yes","No")
+		var/input = tgui_alert(user, "Would you like to attempt to absorb the core into your body?", "Hoot or not to hoot.", list("Yes", "No"))
 		if (input == "Yes" && chosen == 0)
 			chosen = 1
 			user.visible_message("<span class='alert'><b>[user] absorbs the [src] into their body!")
@@ -747,7 +747,7 @@ obj/item/gnomechompski/elf
 					if (prob(flash_prob))
 						src.flash()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (iswrenchingtool(W))
 			add_fingerprint(user)
 			src.anchored = !src.anchored
@@ -1066,7 +1066,7 @@ obj/critter/madnessowl/switchblade
 			break
 
 
-	attackby(obj/item/W as obj, mob/living/user as mob) //ARRRRGH WHY
+	attackby(obj/item/W, mob/living/user) //ARRRRGH WHY
 		user.lastattacked = src
 
 		var/attack_force = 0
@@ -1122,7 +1122,7 @@ obj/critter/madnessowl/switchblade
 		src.oldtarget_name = user.name
 		src.task = "chasing"
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		user.lastattacked = src
 		if (!src.alive)
 			..()

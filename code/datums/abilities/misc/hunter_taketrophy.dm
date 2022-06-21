@@ -35,10 +35,6 @@
 					boutput(M, "<span class='alert'>Mechanical trophies are of no interest to you.</span>")
 					return 1
 
-				else if (istype(target, /mob/living/carbon/wall))
-					boutput(M, "<span class='alert'>This prey is so weak you daren't sully your claws on it!</span>")
-					return 1
-
 				else
 					boutput(M, "<span class='alert'>There's no trophy to be found here.</span>")
 					return 1

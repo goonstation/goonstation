@@ -185,6 +185,23 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	cost = 1
 	desc = "A pack of Syndicool Lights exploding trick cigarettes. Due to the use of a military-grade explosive, please do not attempt to smoke these after lighting."
 
+/datum/syndicate_buylist/generic/sawfly
+	name = "Compact Sawfly"
+	item = /obj/item/old_grenade/sawfly/withremote
+	cost = 2
+	vr_allowed = FALSE
+	br_allowed = TRUE
+	desc = "A small antipersonnel robot that will not attack anyone of syndicate affiliation. It can be folded up after use."
+	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
+
+/datum/syndicate_buylist/generic/sawflymany
+	name = "Cluster Sawfly deployer"
+	item = /obj/item/old_grenade/spawner/sawflycluster
+	cost = 5
+	vr_allowed = FALSE
+	br_allowed = TRUE // A smidge of tomfoolery, if you will
+	desc = "An assembly of five antipersonnel robots that will not attack anyone of syndicate affiliation. They can be individually folded up after use."
+	can_buy = UPLINK_SPY_THIEF | UPLINK_NUKE_OP
 /datum/syndicate_buylist/generic/dnascram
 	name = "DNA Scrambler"
 	item = /obj/item/dna_scrambler
@@ -210,7 +227,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	cost = 7
 	desc = "A powerful melee weapon, crafted using the latest in applied photonics! When inactive, it is small enough to fit in a pocket!"
 	not_in_crates = 1
-	br_allowed = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP
 
 	run_on_spawn(obj/item/sword/stabby, mob/living/owner, in_surplus_crate=FALSE) //Nukies get red ones
@@ -224,7 +240,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	item = /obj/item/katana_sheath
 	cost = 7
 	desc = "A Japanese sword created in the fire of a dying star. Comes with a sheath for easier storage"
-	br_allowed = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/generic/wrestling
@@ -1043,12 +1058,14 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
 	desc = "A set of syndicate command armor. I guess the last owner must have died."
 	br_allowed = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF | UPLINK_NUKE_OP
+	run_on_spawn(var/obj/item)
+		new /obj/item/clothing/head/helmet/space/industrial/syndicate/(item.loc)
 
 /datum/syndicate_buylist/surplus/egun_upgrade
-	name = "Energy Gun Upgrade Pack"
-	item = /obj/item/ammo/power_cell/self_charging/disruptor
+	name = "Advanced Energy Cell"
+	item = /obj/item/ammo/power_cell/self_charging/medium
 	cost = 2
-	desc = "An advanced self-charging power cell, the ideal upgrade for an energy gun!"
+	desc = "An advanced self-charging power cell, the ideal upgrade for an energy weapon!"
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF | UPLINK_NUKE_OP
 
 // Why not, I guess? Cleaned up the old mine code, might as well use it (Convair880).

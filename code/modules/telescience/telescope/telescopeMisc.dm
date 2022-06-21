@@ -24,7 +24,7 @@ var/list/magnet_locations = list()
 	attack_ai(mob/user as mob)
 		return attack_hand(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		ui_interact(user)
 		add_fingerprint(user)
 

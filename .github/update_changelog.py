@@ -63,15 +63,15 @@ def parse_pr_changelog(pr):
 			new_author = True
 		if (content and not author) or new_author:
 			if not author or author == "CodeDude":
-				author = pr.user.name
+				author = pr.user.name or pr.user.login # 'name' is the name set on profile; login is the username
 				print("Author not set, substituting", author)
-			entries.append("(u){}".format(author))
-			entries.append("(p){}".format(pr.number))
+			entries.append(f"(u){author}")
+			entries.append(f"(p){pr.number}")
 			if emoji:
-				entries.append("(e){}".format(emoji))
+				entries.append(f"(e){emoji}")
 		if not content:
 			continue
-		entry = "({}){}".format('*' if is_major else '+', content)
+		entry = f"({'*' if is_major else '+'}){content}"
 		entries.append(entry)
 	return entries
 
@@ -129,7 +129,7 @@ def main():
 		return
 
 	changelog_path = os.environ["ASS_CHANGELOG_PATH"] if any(label.name == 'ass-jam' for label in pr.labels) else os.environ["CHANGELOG_PATH"]
-	status = update_changelog(repo, changelog_path, date_string, pr_data, "Changelog for #{} [skip ci]".format(pr.number))
+	status = update_changelog(repo, changelog_path, date_string, pr_data, f"Changelog for #{pr.number} [skip ci]")
 
 	if not status:
 		sys.exit(1) # scream at people

@@ -16,7 +16,7 @@
 	req_access = list(access_security)
 
 	// Please keep synchronizied with these lists for easy map changes:
-	// /obj/storage/secure/closet/brig/automatic (secure_closets.dm)
+	// /obj/storage/secure/closet/brig_automatic (secure_closets.dm)
 	// /obj/machinery/floorflusher (floorflusher.dm)
 	// /obj/machinery/door_timer (door_timer.dm)
 	// /obj/machinery/door/window/brigdoor (window.dm)
@@ -181,7 +181,7 @@
 		light.disable()
 
 //Don't want to render prison breaks impossible
-/obj/machinery/flasher/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/flasher/attackby(obj/item/W, mob/user)
 	if (issnippingtool(W))
 		add_fingerprint(user)
 		src.disable = !src.disable
@@ -192,7 +192,7 @@
 
 //Let the AI trigger them directly.
 /obj/machinery/flasher/attack_ai()
-	if (src.anchored)
+	if (src.anchored && !ON_COOLDOWN(src, "flash", cooldown_flash))
 		return src.flash()
 	else
 		return
@@ -226,7 +226,7 @@
 	anchored = 0
 	base_state = "pflash"
 	density = 1
-	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 	var/cooldown_scan = 1.5 SECONDS
 	var/cooldown_end = 0
 
@@ -274,7 +274,7 @@
 						UpdateIcon()
 			UpdateIcon()
 
-/obj/machinery/flasher/portable/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/flasher/portable/attackby(obj/item/W, mob/user)
 	if (iswrenchingtool(W))
 		add_fingerprint(user)
 		src.anchored = !src.anchored
@@ -284,6 +284,7 @@
 			UpdateIcon()
 			user.show_message(text("<span class='alert'>[src] can now be moved.</span>"))
 			src.UpdateOverlays(null, "anchor")
+			remove_use_proximity()
 
 		else if (src.anchored)
 			if (powered())
@@ -291,3 +292,4 @@
 			UpdateIcon()
 			user.show_message(text("<span class='alert'>[src] is now secured.</span>"))
 			src.UpdateOverlays(image(src.icon, "[base_state]-s"), "anchor")
+			setup_use_proximity()

@@ -4,8 +4,6 @@
 #define isclient(x) istype(x, /client)
 /// Returns true if the given is a mind datum
 #define ismind(x) istype(x, /datum/mind)
-/// Returns true if the given mob is hellbanned
-#define ishellbanned(x) x?.client?.hellbanned
 
 #define ADMIN_ONLY if(!src.holder) {boutput(src, "Only administrators may use this command."); return}
 #define DENY_TEMPMIN if(!src.holder || src.holder.tempmin) {boutput(src, "Only administrators may use this command."); return}

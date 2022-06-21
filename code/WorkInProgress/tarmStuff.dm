@@ -91,7 +91,7 @@
 	casing = /obj/item/casing/cannon
 	power = 125
 	implanted = /obj/item/implant/projectile/rakshasa
-	icon_turf_hit = "bhole-large"
+	impact_image_state = "bhole-large"
 	goes_through_walls = 1
 	pierces = -1
 
@@ -191,7 +191,7 @@
 	shot_volume = 66
 	dissipation_delay = 10
 	dissipation_rate = 5
-	icon_turf_hit = "bhole-small"
+	impact_image_state = "bhole-small"
 
 	small
 		shot_sound = 'sound/weapons/9x19NATO.ogg'
@@ -305,7 +305,7 @@
 	shot_volume = 100
 	shot_sound = 'sound/weapons/gyrojet.ogg'
 	ks_ratio = 1
-	icon_turf_hit = "bhole-small"
+	impact_image_state = "bhole-small"
 
 	on_launch(obj/projectile/O)
 		O.internal_speed = projectile_speed
@@ -368,7 +368,7 @@
 	dissipation_rate = 5
 	ks_ratio = 1.0
 	implanted = /obj/item/implant/projectile/bullet_50
-	icon_turf_hit = "bhole-large"
+	impact_image_state = "bhole-large"
 	casing = /obj/item/casing/deagle
 	shot_sound = 'sound/weapons/deagle.ogg'
 

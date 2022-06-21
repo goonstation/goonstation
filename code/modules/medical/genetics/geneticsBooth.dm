@@ -389,7 +389,7 @@
 	mob_flip_inside(var/mob/user)
 		..(user)
 		user.show_text("<span class='alert'>[src] [pick("bends","shakes","groans")].</span>")
-		if (prob(8))
+		if (prob(33))
 			src.eject_occupant(add_power = 0)
 
 	relaymove(mob/user, direction)
@@ -398,7 +398,7 @@
 				if (occupant == user && !(started>1))
 					src.eject_occupant(0,0, direction)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		user.lastattacked = src
 		letgo_hp -= W.force
 		attack_particle(user,src)

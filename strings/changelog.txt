@@ -1,5 +1,296 @@
 
+(t)sun jun 19 22
+(u)LeahTheTech
+(p)9227
+(e)⚖|balance
+(+)Kudzu can no longer spread to flocktiles and flock conversion now deletes kudzu
+(u)Chatauscours
+(p)9089
+(e)🆕|feature
+(+)Coffee makers can now be emagged.
+(u)LeahTheTech
+(p)9199
+(e)🎨|sprites
+(+)The RCD now uses a context actions menu, allowing you to immediately switch to deconstruct slightly faster!
+(u)DimWhat
+(p)9220
+(e)|
+(+)Added a few more scientific equipment to the science fabricator
+(u)Mr. Moriarty
+(p)9163
+(e)|
+(+)Two Security Assistant requisition tokens can now be found inside the special equipment lockers in the Armoury.
+(u)DimWhat
+(p)8971
+(e)⚖|balance
+(+)Made bio suits slow you down a bit when worn.
+(t)sat jun 18 22
+(u)DimWhat
+(p)9206
+(e)🗺🎨|mapping, sprites
+(+)Replaced the fabricator in science with a unique variant.
+(u)Mr. Moriarty
+(p)9191
+(e)🎨|sprites
+(+)Resprited 40mm smoke shells, 40mm paint marker rounds, 40mm HE pod and pod seeking shells, 40mm HEDP shells, and 40mm HE shells.
+(u)LeahTheTech
+(p)9161
+(e)🗺⚖|mapping, balance
+(*)Security cameras in AI core/upload can now only be used by the AI.
+(u)TTerc
+(+)Personal lockers no longer require you to use the ID card specifically on them to claim/lock/unlock them. You just need a valid worn ID on yourself.
+(u)Ilysen
+(p)9207
+(e)|
+(+)The Matter Eater mutation now correctly deletes the item that you're eating.
+(t)fri jun 17 22
+(u)aloe
+(*)T-ray scanners can now see where pipes were at the start of the shift. Should make reconstruction a bit easier.
+(u)LeahTheTech
+(p)9155
+(e)🆕⚖|feature, balance
+(*)Rebalanced coagulated gnesis and added a new drink to counter it.
+(+)The gib threshold is now 200, and has been made much more reliable. Watch out!
+(+)Tealquila Sunrise rapidly purges coagulated gnesis from your blood, and is made from equal parts Tequila Sunrise and coagulated gnesis.
+(u)Ikea
+(p)9145
+(e)|
+(+)Due to the syndicate finding out that traitor surplus's were getting surplus disruptor cells from 2037, the syndicate has replaced the energy cells that can be found in surplus crates with a far superior battery design.
+(u)DimWhat
+(p)9166
+(e)⚖|balance
+(*)Reworked permeability into chemical resistance which has been applied to several clothing items. Please report any weirdness with chemical splashing.
+(u)Wisemonster
+(p)9173
+(e)🆕⚖|feature, balance
+(+)The CE's law rack blueprint has been swapped out with an unlimited-use law rack manudrive.
+(u)Ikea
+(p)9094
+(e)⚖|balance
+(*)Security Assistant tokens now have a single utility credit.
+(t)thu jun 16 22
+(u)TTerc
+(+)Cloning storage lockers are a thing now. They're simply the same lockers that spawn next to cloners, except they no longer are bolted to the floor roundstart.
+(u)Virvatuli
+(e)⚖|balance
+(+)The NTSC no longer has access to the Clock 188, and the Signifer's energy cell now self-charges considerably quicker. This change was supposed too happen when the Signifer was introduced, since the Clock doesn't fit themeatically. Better late than never!
+(u)Mr. Moriarty
+(p)9164
+(e)🆕🗺|feature, mapping
+(+)DetNet is now equipped with three new intercoms, interfacing with General, Security, and the Detective's private channel, for all of the Detective's communication needs.
+(u)LeahTheTech
+(p)9162
+(e)🗺|mapping
+(+)Added an intercom to Kondaru AI upload chamber. Use it to tell the AI "law 2 stop being rogue".
+(t)wed jun 15 22
+(u)Ikea
+(p)9146
+(e)|
+(+)The syndicate has fixed a bureaucratic error and now syndicate command armor from surplus crates and spy bounties comes with the helmet as well.
+(u)Bartimeus973
+(p)9127
+(e)🆕⚖|feature, balance
+(+)Cow people can now graze on bushes. Watch out for plastic replicas!
+(u)LeahTheTech
+(p)9097
+(e)🆕|feature
+(*)Added PDA notifications to cargo pads.
+(t)mon jun 13 22
+(u)NightmareChamillian
+(p)9111
+(e)⚖|balance
+(*)Reduced the number of sawflies in nukie utility pouches from 4 to 3 in order to give secoffs a fighting chance.
+(u)Sovexe
+(p)9134
+(e)🆕|feature
+(+)Flockminds and traces may now issue movement commands to drones by clicking and dragging them onto a destination.
+(u)Flappybat and Enderthunder
+(p)9131
+(e)🗺🎨|mapping, sprites
+(+)Converted the Confiscated Items Locker into a safe. Sprites by Enderthunder
+(u)ZWRh3
+(p)8978
+(e)🗺⚖|mapping, balance
+(*)Nuclear Operatives now get syndicate field protective masks by default instead of breath masks.
+(*)Due to the above change the rack with spare syndicate field protective masks has been edited to have 5 breath masks and 5 normal gas masks, this is for infil use.
+(t)sun jun 12 22
+(u)Ikea
+(p)8981
+(e)|
+(*)Flock caging no longer costs resources and takes 4 seconds instead of 6.
+(u)Azrun
+(p)9061
+(e)⚖|balance
+(*)Singularities can be recaptured! Assuming they don't get too big...
+(+)Collector arrays will capture all nearby Hawking Radiation.
+(u)Virvatuli
+(e)🆕⚖|feature, balance
+(*)AI Core Frames are now very limited. They are no longer in roboticist fabricators, but located on a limited-use disk that spawns in the Medical Director's locker.
+(+)The Artificial Intelligence License disk can be inserted into a fabricator to unlock the AI Core Frame blueprint, and is limited to two printings. The disk has been added to spy bounties.
+(+)AIs are not meant to be mass printed, and having excessive AIs in a round is a detriment to both the crew and other AIs trying to play the role well.
+(u)Chatauscours
+(p)8933
+(e)⚖|balance
+(*)The Lawbringer is now linked to the user's DNA and not the fingerprints.
+(t)sat jun 11 22
+(u)nefarious6th
+(p)9041
+(e)⚖|balance
+(*)SecVend donut utility lunchboxes now only come with one robust (blue) and one robusted (red) donut each. Snack wisely!
+(+)Robust and robusted donuts no longer contain salicylic acid and are only 4 bites each
+(t)fri jun 10 22
+(u)SgtManGuy/What
+(e)🆕🎨|feature, sprites
+(+)Four new species of domestic space-bees have been discovered. Unfortunately, they only like to nest in the stomachs of stage performers.
+(u)Flappybat
+(e)⚖| balance
+(*)Nerfed medbay floor scanner to give basic health scan. Pester a doctor today!
+(u)ZeWaka
+(p)8843
+(e)🆕⚖🔄📄|feature, balance, rework, tgui
+(*)Reworked the Engine Statistics computer on Cog1 to be TGUI, graph-based, and much more intuitive.
+(u)FlameArrow57
+(p)9054
+(e)|
+(+)Added new medals for changeling, blob, head rev, and werewolf antagonists!
+(u)Blahowsky
+(p)9014
+(e)🎨|sprites
+(*)Added two new hairstyles and one fade; Loose Long Braid (with Loose Long Braid: Twin Color to customise) and Loose Long Braid Over Shoulder.
+(t)thu jun 09 22
+(u)Cogwerks
+(e)🎨|sprites
+(*)Made a new sprite and name for the heavy ion blaster
+(*)Occasionally testing a micro-phaser, macro-phaser, and egun Jr. in rounds
+(u)LeahTheTech
+(p)9052
+(e)🐛|bug
+(+)Renamed the "Open antag popup" verb to "Special role popup"
+(t)wed jun 08 22
+(u)NightmareChamillian and Amylizzle
+(p)8418
+(e)🆕🎨|feature, sprites
+(*)Added a new general-purpose syndicate item: the sawfly. See minor changes for details.
+(+)Sawflies cost 2 TC and come as a 1.5 second grenade that spawns a single sawfly drone on detonation
+(+)Sawfly drones have 50 HP that deal 14 damage a hit to crew. They can be returned to grenade form by traitors.
+(+)Furthermore, all sawfly purchases come with a remote, which can be used to fold and deploy all sawflies in in a 4 tile radius.
+(u)Taylor Kellogg
+(p)9032
+(e)|
+(+)Adds an abort button to the Chemicompiler
+(t)tue jun 07 22
+(u)tarmunora, catface
+(e)⚖|balance
+(+)Hand teles have a 100PU internal cell, and use 25PU per portal. Rechargers in tele rooms ~~coming soon™~~ added to maps
+(u)Azrun
+(e)⚖🔥|balance
+(+)Pipe repairs use slightly less fuel and should stay repaired a bit longer.
+(u)Waffleloffle
+(p)9006
+(e)⚖|balance
+(+)Upped the number of morphine autoinjectors in Security's morphine autoinjector box utility purchase from 4 to 6.
+(t)mon jun 06 22
+(u)NightmareChamillian
+(p)8991
+(e)|
+(+)You now have to confirm when glass recycling a full container. No more accidentally dumping your mixes!
+(u)Moberry
+(p)8890
+(e)|
+(+)Changed the Electroplater to allow bulky items and storage items.
+(u)Bartimeus973
+(p)8986
+(e)|
+(+)Posters, wall-mounted potted plants, loudspeakers and linen/bedsheet bins can now be deconstructed.
+(u)TTerc
+(*)Injecting/drawing blood from mobs with a syringe now has actionbars. Injecting containers is now instant.
+(u)Ikea, Flaborized
+(p)8652
+(e)🎨|sprites
+(*)Medical doctors and directors now spawn with medical labcoats. Regular labcoats can now be found in medical clothing lockers and the Patchwork medal reward now grants a <i>cool</i> medical labcoat (sprite by Flaborized!).
+(t)sun jun 05 22
+(u)Bartimeus973
+(p)8960
+(e)|
+(+)Jailbirds are now wanted for a bunch of new crimes!
+(t)sat jun 04 22
+(u)TTerc
+(+)You can now pin people by clicking fluids, smoke clouds and cleanable decals.
+(u)DimWhat
+(p)8938
+(e)🎨|sprites
+(+)Replaced the SWAT helmet in the captain's locker with a more fitting captain helmet.
+(u)DimWhat
+(p)8948
+(e)🗺|mapping
+(+)QM is now functional on destiny when the shields are on.
+(u)Ikea
+(p)8909
+(e)|
+(*)The bounty refresh interval for spies has been decreased from 25 minutes to 15 minutes on classic. For roleplay the refresh interval remains at 25 minutes.
+(t)fri jun 03 22
+(u)Bartimeus973
+(p)8913
+(e)|
+(+)Decapitated skeletons now speak from their heads, use the radio and listen in on conversations!
+(u)Wisemonster
+(p)8939
+(e)🗺|mapping
+(+)Added status displays to Clarion
+(u)CrystalClover
+(p)8934
+(e)🗺|mapping
+(+)Rearranged Horizon's pharmacy's layout and added a glass recycler
+(u)FlameArrow57
+(p)8593
+(e)🆕🎨⚖|feature, sprites, balance
+(+)Most harmful projectiles now leave a wound on your body.
+(u)aloe
+(+)Plates now just act like. Plates. You can grab food off of them without a menu, they don't make food all weird and small, and you can still use a utensil to eat off them.
+(+)Click dragging a food item on a plate to you will pick up the plate (in case you filled it with too much food)
+(+)Because I am a developer and I have a pathological need to remove features, plate stacks have been removed for being musty and generally bad.
+(u)CodeJester
+(p)8727
+(e)🆕🎨|feature, sprites
+(+)Cyborgs can now click-drag food items onto each other to use them on each other. Try dragging sugar on dough to make sweet dough!
+(+)Civilian cyborgs have a new "tongs" tool that can use a food item as if it were used in-hand. Try using tongs on a dough strip to make a dough circle!
+(+)The "tongs" tool can also get food items out of containers, like egg cartons or boxes.
+(t)thu jun 02 22
+(u)Munien
+(p)8821
+(e)|
+(+)Operating tables are now deconstructable.
+(u)DimWhat
+(p)8839
+(e)⚖|balance
+(+)Changed a few miscellaneous glove conductivity values; gloves that barely cover your hands (rings, fingerless gloves) don't offer electrical protection, and some random gloves have higher conductivity.
+(u)glowbold
+(p)8856
+(e)|
+(+)Cyborgs can now dump the contents of their ore scoop and satchels into material processors and the Rockbox
+(u)CodeJester
+(p)8869
+(e)🆕|feature
+(+)Pointing is now animated. Throw arrows at people today!
 (t)wed jun 01 22
+(u)Flourish
+(p)8761
+(e)🆕🎨|feature, sprites
+(*)Skeletons can now detach their head and limbs by targeting the respective part and using a wrench, crowbar, and wrench again. Once their head is detached, the skeleton's "eye" remains centered on their head object. Once a limb is detached, it can be used as a boomerang that automatically re-attaches upon catching.
+(*)Skeletons now also spawn with a jar of "joint wax" which can be applied to empty joint sockets for a small status buff. Check out the <a href="https://github.com/goonstation/goonstation/pull/8761" target="_blank">PR page</a> to learn more. Special thanks to Virva, DimWhat, and Flaborized for the sfx and sprites that made this possible!
+(u)Momoberry
+(p)8763
+(e)|
+(+)Added a Mimicry crate to cargo. It comes with a standard issue baguette, full mime attire, a pack of cigarettes and a Zippo.
+(u)Azrun
+(p)8873
+(e)⚖|balance
+(+)Limits how quickly other pipes in the same pipeline can rupture.
+(u)Azrun
+(p)8841
+(e)⚖|balance
+(*)Power gloves when augmented to stun can now be charged from wires and APCs! Now holds additional charges and will augment lightning with some additional damage based on charges.
+(+)Power gloves no longer have any effect when used on dead wires.
 (u)TDHooligan
 (p)6952
 (e)⚖|balance

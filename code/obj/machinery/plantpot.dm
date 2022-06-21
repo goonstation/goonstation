@@ -71,7 +71,7 @@
 	icon_state = "kudzutray"
 	power_usage = 0
 
-	attackby(var/obj/item/W as obj, var/mob/user as mob)
+	attackby(var/obj/item/W, var/mob/user)
 		//Can only attempt to destroy the plant pot if the plant in it is dead or empty.
 		if(!src.current || src.dead)
 			if (destroys_kudzu_object(src, W, user))
@@ -141,7 +141,7 @@
 				if(!src.current)
 					qdel(src)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		// Filter out the following item interactions
 		if(istool(W, TOOL_SCREWING | TOOL_WRENCHING))
 			boutput(user, "<span class='alert'>[W] does not seem like the right tool for the job.</span>")
@@ -150,7 +150,7 @@
 		else
 			..()
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 
 		if(isAI(user) || isobserver(user)) return // naughty AIs used to be able to harvest plants
 		src.add_fingerprint(user)
@@ -507,7 +507,7 @@
 		if(!HAS_FLAG(status, NOPOWER))
 			use_power(power_usage)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(src.current)
 			// Inside this if block we'll handle reactions for specific kinds of plant.
 			// General reactions from the plantpot itself come after these.
@@ -764,7 +764,7 @@
 	attack_ai(mob/user as mob)
 		if(isrobot(user) && BOUNDS_DIST(src, user) == 0) return src.Attackhand(user)
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if(isAI(user) || isobserver(user)) return // naughty AIs used to be able to harvest plants
 		src.add_fingerprint(user)
 		if(src.current)
@@ -848,7 +848,7 @@
 					if(growing.HYPattacked_proc(src,usr,null)) return
 
 			if(growing.growthmode == "weed")
-				if(alert("Clear this tray?",,"Yes","No") == "Yes")
+				if(tgui_alert(usr, "Clear this tray?", "Clear tray", list("Yes", "No")) == "Yes")
 					usr.visible_message("<b>[usr.name]</b> dumps out the tray's contents.")
 					boutput(usr, "<span class='alert'>Weeds still infest the tray. You'll need something a bit more thorough to get rid of them.</span>")
 					src.growth = 0
@@ -856,13 +856,13 @@
 					// The idea here is you gotta use weedkiller or something else to get rid of the
 					// weeds since you can't just clear them out by hand.
 			else
-				if(alert("Clear this tray?",,"Yes","No") == "Yes")
+				if(tgui_alert(usr, "Clear this tray?", "Clear tray", list("Yes", "No")) == "Yes")
 					usr.visible_message("<b>[usr.name]</b> dumps out the tray's contents.")
 					src.reagents.clear_reagents()
 					logTheThing("combat", usr, null, "cleared a hydroponics tray containing [current.name] at [log_loc(src)]")
 					HYPdestroyplant()
 		else
-			if(alert("Clear this tray?",,"Yes","No") == "Yes")
+			if(tgui_alert(usr, "Clear this tray?", "Clear tray", list("Yes", "No")) == "Yes")
 				usr.visible_message("<b>[usr.name]</b> dumps out the tray's contents.")
 				src.reagents.clear_reagents()
 				UpdateIcon()
@@ -1532,11 +1532,7 @@
 		src.recently_harvested = 0
 		UpdateIcon()
 		update_name()
-
-		if(usr && ishellbanned(usr)) //Haw haw
-			growth_rate = 1
-		else
-			growth_rate = 2
+		growth_rate = 2
 
 	proc/HYPkillplant()
 		// Simple proc to kill the plant without clearing the plantpot out altogether.
@@ -1924,7 +1920,7 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 						P.growth += 4
 			use_power(power_usage)
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		src.add_fingerprint(user)
 		src.active = !src.active
 		user.visible_message("<b>[user]</b> switches [src.name] [src.active ? "on" : "off"].")
@@ -1942,7 +1938,7 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 			light.enable()
 
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(isscrewingtool(W) || iswrenchingtool(W))
 			if(!src.anchored)
 				user.visible_message("<b>[user]</b> secures the [src] to the floor!")
@@ -1986,7 +1982,7 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 				src.active = 0
 				src.mode = 0
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/reagent_containers/glass/))
 			// Not just watering cans - any kind of glass can be used to pour stuff in.
 			if(!W.reagents.total_volume)
@@ -1999,7 +1995,7 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 				if(!W.reagents.total_volume) boutput(user, "<span class='alert'><b>[W] is now empty.</b></span>")
 
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		src.add_fingerprint(user)
 		if(!src.active)
 			src.active = 1

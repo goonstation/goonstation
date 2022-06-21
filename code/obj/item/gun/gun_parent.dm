@@ -233,7 +233,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 	return 1
 
-/obj/item/gun/attack(mob/M as mob, mob/user as mob)
+/obj/item/gun/attack(mob/M, mob/user)
 	if (!M || !ismob(M)) //Wire note: Fix for Cannot modify null.lastattacker
 		return ..()
 

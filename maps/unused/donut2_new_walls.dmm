@@ -28354,7 +28354,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/brig)
 "bny" = (
-/obj/storage/secure/closet/brig/automatic/genpop,
+/obj/storage/secure/closet/brig_automatic/genpop,
 /obj/disposalpipe/segment/brig{
 	dir = 4;
 	icon_state = "pipe-s"
@@ -28754,7 +28754,7 @@
 /turf/simulated/floor,
 /area/station/security/brig)
 "boq" = (
-/obj/storage/secure/closet/brig/automatic/genpop,
+/obj/storage/secure/closet/brig_automatic/genpop,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "bor" = (
@@ -30467,7 +30467,7 @@
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "bsp" = (
-/obj/storage/secure/closet/brig/automatic/solitary,
+/obj/storage/secure/closet/brig_automatic/solitary,
 /obj/disposalpipe/segment/ejection,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
@@ -38559,7 +38559,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "dug" = (
-/obj/storage/secure/closet/brig/automatic/minibrig,
+/obj/storage/secure/closet/brig_automatic/minibrig,
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/research)
 "dwF" = (
@@ -43997,7 +43997,7 @@
 	},
 /area/station/ranch)
 "pLx" = (
-/obj/storage/secure/closet/brig/automatic/genpop,
+/obj/storage/secure/closet/brig_automatic/genpop,
 /obj/machinery/light{
 	dir = 8;
 	icon_state = "tube1"
