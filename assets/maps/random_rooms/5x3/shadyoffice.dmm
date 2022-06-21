@@ -24,7 +24,8 @@
 /area/dmm_suite/clear_area)
 "g" = (
 /obj/decal/poster/wallsign/dead_exec_portrait{
-	desc = "A portrait of an Italian-American gentleman."
+	desc = "A portrait of an Italian-American gentleman.";
+	name = "portrait"
 	},
 /turf/simulated/floor/wood/two,
 /area/dmm_suite/clear_area)
@@ -61,7 +62,8 @@
 	},
 /obj/machinery/phone/unlisted{
 	pixel_x = 19;
-	pixel_y = 6
+	pixel_y = 6;
+	stripe_color = "#333333"
 	},
 /obj/item/paper{
 	pixel_x = -7;
@@ -71,10 +73,13 @@
 	pixel_x = -12;
 	pixel_y = 9
 	},
-/obj/machinery/light/lamp/green{
+/obj/machinery/light/lamp{
+	base_state = "green";
+	icon_state = "green1";
 	on = 1;
 	pixel_x = -18;
-	pixel_y = 7
+	pixel_y = 7;
+	switchon = 1
 	},
 /turf/simulated/floor/wood/two,
 /area/dmm_suite/clear_area)
