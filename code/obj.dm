@@ -11,6 +11,7 @@
 	var/list/mats = 0 // either a number or a list of the form list("MET-1"=5, "erebite"=3)
 	var/deconstruct_flags = DECON_NONE
 
+	var/mechanics_blacklist = FALSE // If true, this object can't be scanned by device analyzers
 	var/mechanics_type_override = null //Fix for children of scannable items being reproduced in mechanics
 	var/artifact = null
 	var/move_triggered = 0
@@ -28,6 +29,8 @@
 		if (HAS_FLAG(object_flags, HAS_DIRECTIONAL_BLOCKING))
 			var/turf/T = get_turf(src)
 			T?.UpdateDirBlocks()
+		if (!isnull(src.mats) && src.mats != 0 && !src.mechanics_blacklist)
+			src.AddComponent(/datum/component/analyzable, !isnull(src.mechanics_type_override) ? src.mechanics_type_override : src.type)
 		src.update_access_from_txt()
 
 	Move(NewLoc, direct)

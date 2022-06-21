@@ -120,6 +120,7 @@
 /obj/item/electronics/frame
 	name = "frame"
 	icon_state = "frame"
+	mechanics_blacklist = TRUE
 	var/store_type = null
 	var/secured = 0
 	var/viewstat = 0
@@ -417,29 +418,6 @@
 	syndicate
 		is_syndicate = 1
 
-/obj/item/electronics/scanner/afterattack(var/obj/O, mob/user as mob)
-	if(istype(O,/obj/machinery/rkit) || istype(O, /obj/item/electronics/frame))
-		return
-	if(istype(O,/obj/))
-		if(O.mats == 0 || isnull(O.mats) || O.disposed || (O.is_syndicate != 0 && src.is_syndicate == 0))
-			// if this item doesn't have mats defined or was constructed or
-			// attempting to scan a syndicate item and this is a normal scanner
-			boutput(user, "<span class='alert'>The structure of this object is not compatible with the scanner.</span>")
-			return
-
-		user.visible_message("<B>[user.name]</B> scans [O].")
-
-		var/final_type = O.mechanics_type_override ? O.mechanics_type_override : O.type
-
-		for (var/X in src.scanned)
-			if (final_type == X)
-				boutput(user, "<span class='alert'>You have already scanned that object.</span>")
-				return
-
-		animate_scanning(O, "#FFFF00")
-		src.scanned += final_type
-		boutput(user, "<span class='notice'>Item scan successful.</span>")
-
 ////////////////////////////////////////////////////////////////no
 /obj/machinery/rkit
 	name = "ruckingenur kit"
@@ -448,6 +426,7 @@
 	icon_state = "rkit"
 	anchored = 1
 	density = 1
+	mechanics_blacklist = TRUE
 	//var/datum/electronics/electronics_items/link = null
 	req_access = list(access_captain, access_head_of_personnel, access_maxsec, access_engineering_chief)
 
