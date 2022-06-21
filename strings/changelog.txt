@@ -1,5 +1,9 @@
 
 (t)tue jun 21 22
+(u)DimWhat
+(p)9264
+(e)⚖|balance
+(+)Janitor gloves are now much more chemically resistant instead of insulating
 (u)LeahTheTech
 (p)9240
 (e)|
