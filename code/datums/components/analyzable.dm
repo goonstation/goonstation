@@ -18,23 +18,22 @@ TYPEINFO(/datum/component/analyzable)
 	if (O.mechanics_blacklist)
 		return COMPONENT_INCOMPATIBLE
 	src.final_type = result_type
-	RegisterSignal(parent, list(COMSIG_ATTACKBY), .proc/attempt_analysis)
+	RegisterSignal(parent, list(COMSIG_ATOM_ANALYZE), .proc/attempt_analysis)
 
-/datum/component/analyzable/proc/attempt_analysis(atom/A, obj/item/I, mob/user)
+/datum/component/analyzable/proc/attempt_analysis(atom/parent_atom, obj/item/I, mob/user)
 	PRIVATE_PROC(TRUE)
-	if (A.disposed || user.a_intent == INTENT_HARM || !istype(I, /obj/item/electronics/scanner))
+	var/obj/O = parent_atom
+	if (O.disposed || user.a_intent == INTENT_HARM || !istype(I, /obj/item/electronics/scanner))
 		return
 	var/obj/item/electronics/scanner/S = I
-	var/obj/O = A
-	if(O.mechanics_blacklist || isnull(O.mats) || O.mats == 0 || (O.is_syndicate && !S.is_syndicate))
+	S.do_scan_effects(O, user)
+	if (isnull(O.mats) || O.mats == 0 || (O.is_syndicate && !S.is_syndicate))
 		// if this item doesn't have mats defined or was constructed or
 		// attempting to scan a syndicate item and this is a normal scanner
-		boutput(user, "<span class='alert'>The structure of this object is not compatible with [S].</span>")
+		boutput(user, "<span class='alert'>The structure of [O] is not compatible with [S].</span>")
 		return TRUE
-	user.visible_message("<span class='notice'>[user] scans [O].</span>", "<span class='notice'>You run [S] over [O]...</span>")
-	animate_scanning(O, "#FFFF00")
 	if (S.scanned.Find(src.final_type))
-		boutput(user, "<span class='alert'>You have already scanned that object.</span>")
+		boutput(user, "<span class='alert'>You have already scanned this type of object.</span>")
 		return TRUE
 	S.scanned += src.final_type
 	boutput(user, "<span class='notice'>Item scan successful.</span>")
@@ -42,5 +41,5 @@ TYPEINFO(/datum/component/analyzable)
 	return TRUE
 
 /datum/component/analyzer/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_ATTACKBY)
+	UnregisterSignal(parent, COMSIG_ATOM_ANALYZE)
 	. = ..()

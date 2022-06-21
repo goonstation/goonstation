@@ -417,6 +417,27 @@
 
 	syndicate
 		is_syndicate = 1
+	
+	New()
+		. = ..()
+		RegisterSignal(src, list(COMSIG_ITEM_ATTACKBY_PRE), .proc/pre_attackby)
+	
+	proc/pre_attackby(obj/item/parent_item, atom/A, mob/user)
+		if (user.a_intent == INTENT_HARM)
+			return
+		if (isobj(A))
+			var/obj/O = A
+			if (O.mechanics_blacklist)
+				return
+		if (SEND_SIGNAL(A, COMSIG_ATOM_ANALYZE, parent_item, user))
+			return TRUE
+		do_scan_effects(A, user)
+		boutput(user, "<span class='alert'>The structure of [A] is not compatible with [parent_item].</span>")
+		return TRUE
+	
+	proc/do_scan_effects(atom/target, mob/user)
+		user.visible_message("<span class='notice'>[user] scans [target].</span>", "<span class='notice'>You run [src] over [target]...</span>")
+		animate_scanning(target, "#FFFF00")
 
 ////////////////////////////////////////////////////////////////no
 /obj/machinery/rkit

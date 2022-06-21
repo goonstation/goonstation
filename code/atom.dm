@@ -700,6 +700,8 @@
 	SHOULD_NOT_OVERRIDE(1)
 	if(SEND_SIGNAL(src,COMSIG_ATTACKBY,W,user, params, is_special))
 		return
+	if(SEND_SIGNAL(W, COMSIG_ITEM_ATTACKBY_PRE, src, user))
+		return
 	src.attackby(W, user, params, is_special)
 
 //mbc : sorry, i added a 'is_special' arg to this proc to avoid race conditions.
