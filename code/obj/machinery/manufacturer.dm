@@ -2197,6 +2197,11 @@
 	available = list(
 		/datum/manufacture/flashlight,
 		/datum/manufacture/gps,
+		/datum/manufacture/screwdriver,
+		/datum/manufacture/wirecutters,
+		/datum/manufacture/wrench,
+		/datum/manufacture/crowbar,
+		/datum/manufacture/extinguisher,
 		/datum/manufacture/welder,
 		/datum/manufacture/patch,
 		/datum/manufacture/atmos_can,
