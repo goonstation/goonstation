@@ -63,7 +63,7 @@
 /obj/machinery/phone/unlisted{
 	pixel_x = 19;
 	pixel_y = 6;
-	stripe_color = "#333333"
+	stripe_color = null
 	},
 /obj/item/paper{
 	pixel_x = -7;
