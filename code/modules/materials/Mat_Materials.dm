@@ -12,6 +12,7 @@
 	* # material
 	* Base material datum definition
 	*/
+ABSTRACT_TYPE(/datum/material)
 /datum/material
 	/// The atom that this material is applied to
 	var/atom/owner = null
@@ -65,6 +66,12 @@
 	var/edible = 0
 
 	var/owner_hasentered_added = FALSE
+
+	New()
+		. = ..()
+		for(var/datum/material_property/propPath as anything in concrete_typesof(/datum/material_property))
+			if(initial(propPath.default_value) > 0)
+				src.setProperty(initial(propPath.id), initial(propPath.default_value))
 
 	proc/getProperty(var/property, var/type = VALUE_CURRENT)
 		for(var/datum/material_property/P in properties)
@@ -240,9 +247,16 @@
 // Metals
 
 /// Base metal material parent
+ABSTRACT_TYPE(/datum/material/metal)
 /datum/material/metal
-	material_flags = MATERIAL_METAL
 	color = "#8C8C8C"
+
+	New()
+		. = ..()
+		material_flags |= MATERIAL_METAL
+		setProperty("electrical", 70)
+		setProperty("permeable", 30)
+		setProperty("density", 50)
 
 /datum/material/metal/rock
 	mat_id = "rock"
@@ -347,12 +361,12 @@
 	name = "cerenkite"
 	desc = "Cerenkite is a highly radioactive metal."
 	color = "#CDBDFF"
-	material_flags = MATERIAL_ENERGY | MATERIAL_METAL
 
 	New()
 		..()
 		value = 200
 
+		material_flags |= MATERIAL_ENERGY
 		setProperty("electrical", 55)
 		setProperty("stability", 30)
 		setProperty("radioactive", 55)
@@ -431,11 +445,11 @@
 	name = "neutronium"
 	desc = "Neutrons condensed into a solid form."
 	color = "#043e9b"
-	material_flags = MATERIAL_ENERGY | MATERIAL_METAL
 	alpha = 255
 
 	New()
 		..()
+		material_flags |= MATERIAL_ENERGY
 		setProperty("density", 100) //👀
 		setProperty("hard", 10)
 		setProperty("electrical", 70)
@@ -482,13 +496,25 @@
 	canMix = 1 //Can not be easily modified.
 	desc = "Some sort of advanced iridium alloy."
 	color = "#756596"
-	material_flags = MATERIAL_METAL | MATERIAL_CRYSTAL
 	quality = 60
 
 	New()
 		..()
+		material_flags |= MATERIAL_CRYSTAL
 		setProperty("density", 80)
 		setProperty("hard", 80)
+
+
+/datum/material/metal/negativematter
+	mat_id = "negativematter"
+	name = "negative matter"
+	desc = "It seems to repel matter."
+	color = list(-1, 0, 0, 0, -1, 0, 0, 0, -1, 1, 1, 1)
+
+	New()
+		..()
+		material_flags |= MATERIAL_ENERGY
+		addTrigger(triggersOnAdd, new /datum/materialProc/negative_add())
 
 
 //GIVE THIS STATS AND SPECIAL EFFECTS.
@@ -497,19 +523,28 @@
 	name = "soulsteel"
 	desc = "A metal imbued with souls. Creepy."
 	color = "#73DFF0"
-	material_flags = MATERIAL_METAL | MATERIAL_ENERGY
 
 	New()
 		..()
+		material_flags|= MATERIAL_ENERGY
 		setProperty("density", 60)
 		setProperty("hard", 20)
 		addTrigger(triggersOnEntered, new /datum/materialProc/soulsteel_entered())
 
 
 // Crystals
+ABSTRACT_TYPE(/datum/material/crystal)
 /datum/material/crystal
-	material_flags = MATERIAL_CRYSTAL
 	color = "#A3DCFF"
+
+	New()
+		. = ..()
+		material_flags |= MATERIAL_CRYSTAL
+		setProperty("hard", 50)
+		setProperty("electrical", 25)
+		setProperty("permeable", 10)
+		setProperty("thermal", 30)
+		setProperty("corrosion", 50)
 
 /datum/material/crystal/glass
 	mat_id = "glass"
@@ -570,10 +605,10 @@
 	name = "erebite"
 	desc = "Erebite is an extremely volatile high-energy mineral."
 	color = "#FF3700"
-	material_flags = MATERIAL_CRYSTAL | MATERIAL_ENERGY
 
 	New()
 		..()
+		material_flags |= MATERIAL_ENERGY
 		setProperty("density", 20)
 		setProperty("hard", 20)
 		setProperty("electrical", 60)
@@ -593,10 +628,10 @@
 	name = "plasmastone"
 	desc = "Plasma in its solid state."
 	color = "#A114FF"
-	material_flags = MATERIAL_CRYSTAL | MATERIAL_ENERGY
 
 	New()
 		..()
+		material_flags |= MATERIAL_ENERGY
 		setProperty("density", 10)
 		setProperty("hard", 10)
 		setProperty("electrical", 50)
@@ -792,7 +827,6 @@
 	name = "gnesis"
 	desc = "A rare complex crystalline matrix with a lazily shifting internal structure. Not to be confused with gneiss, a metamorphic rock."
 	color = "#1bdebd"
-	material_flags = MATERIAL_CRYSTAL | MATERIAL_METAL
 	texture = "flock"
 
 	transparent
@@ -804,6 +838,7 @@
 
 	New()
 		..()
+		material_flags |= MATERIAL_METAL
 		setProperty("density", 5) // incredibly brittle
 		setProperty("hard", 50) // very dense
 		setProperty("reflective", 90) // shiny
@@ -816,11 +851,11 @@
 	name = "telecrystal"
 	desc = "Telecrystal is a gemstone with space-warping properties."
 	color = "#4C14F5"
-	material_flags = MATERIAL_CRYSTAL | MATERIAL_ENERGY
 	alpha = 100
 
 	New()
 		..()
+		material_flags |= MATERIAL_ENERGY
 		setProperty("density", 10)
 		setProperty("hard", 10)
 		setProperty("reflective", 80)
@@ -932,18 +967,22 @@
 // Organics
 
 /// Base organic material parent
+ABSTRACT_TYPE(/datum/material/organic)
 /datum/material/organic
 	color = "#555555"
-	material_flags = MATERIAL_ORGANIC
 	alpha 				   = 255
 	quality				   = 0
+
+	New()
+		. = ..()
+		material_flags |= MATERIAL_ORGANIC
+		setProperty("flammable", 50)
 
 /datum/material/organic/blob
 	mat_id = "blob"
 	name = "blob"
 	desc = "The material of the feared giant space amobea."
 	color = "#44cc44"
-	material_flags = MATERIAL_ORGANIC | MATERIAL_CRYSTAL | MATERIAL_CLOTH
 	alpha = 180
 	quality = 2
 	texture = "bubbles"
@@ -954,6 +993,7 @@
 
 	New()
 		..()
+		material_flags |= MATERIAL_CRYSTAL | MATERIAL_CLOTH
 		setProperty("corrosion", 30)
 		setProperty("density", 45)
 		setProperty("hard", 5)
@@ -967,13 +1007,13 @@
 	name = "flesh"
 	desc = "Meat from a carbon-based lifeform."
 	color = "#574846"
-	material_flags = MATERIAL_ORGANIC | MATERIAL_CLOTH
 
 	edible_exact = 0.6 //Just barely edible.
 	edible = 1
 
 	New()
 		..()
+		material_flags |= MATERIAL_CLOTH
 		setProperty("density", 35)
 		setProperty("hard", 5)
 		//addTrigger(triggersOnEat, new /datum/materialProc/oneat_flesh())
@@ -1002,10 +1042,10 @@
 	name = "koshmarite"
 	desc = "An unusual dense pulsating stone. You feel uneasy just looking at it."
 	color = "#600066"
-	material_flags = MATERIAL_ORGANIC | MATERIAL_CRYSTAL
 
 	New()
 		..()
+		material_flags |= MATERIAL_CRYSTAL
 		setProperty("hard", 55)
 		setProperty("reflective", 60)
 		setProperty("radioactive", 20)
@@ -1017,13 +1057,13 @@
 	name = "viscerite"
 	desc = "A disgusting flesh-like material. Ugh. What the hell is this?"
 	color = "#D04FFF"
-	material_flags = MATERIAL_ORGANIC | MATERIAL_CLOTH
 
 	edible_exact = 0.6 //Just barely edible.
 	edible = 1
 
 	New()
 		..()
+		material_flags |= MATERIAL_CLOTH
 		setProperty("density", 45)
 		setProperty("hard", 3)
 		setProperty("corrosion", 70)
@@ -1036,7 +1076,6 @@
 	name = "bone"
 	desc = "Bone is pretty spooky stuff."
 	color = "#DDDDDD"
-	material_flags = MATERIAL_ORGANIC
 
 	New()
 		..()
@@ -1049,7 +1088,6 @@
 	name = "wood"
 	desc = "Wood from some sort of tree."
 	color = "#331f16"
-	material_flags = MATERIAL_ORGANIC
 	texture = "wood"
 	texture_blend = ICON_MULTIPLY
 
@@ -1065,7 +1103,6 @@
 	name = "bamboo"
 	desc = "Bamboo is a giant woody grass."
 	color = "#544c24"
-	material_flags = MATERIAL_ORGANIC
 	texture = "bamboo"
 	texture_blend = ICON_MULTIPLY
 
@@ -1081,7 +1118,6 @@
 	name = "cardboard"
 	desc = "Perfect for making boxes."
 	color = "#d3b173"
-	material_flags = MATERIAL_ORGANIC
 
 	New()
 		..()
@@ -1097,10 +1133,10 @@
 	name = "chitin"
 	desc = "Chitin is an organic material found in the exoskeletons of insects."
 	color = "#118800"
-	material_flags = MATERIAL_ORGANIC | MATERIAL_METAL
 
 	New()
 		..()
+		material_flags |= MATERIAL_METAL
 		setProperty("density", 25)
 		setProperty("hard", 65)
 
@@ -1110,7 +1146,6 @@
 	name = "beeswax"
 	desc = "An organic material consisting of pollen and space-bee secretions.  Mind your own."
 	color = "#C8BB62"
-	material_flags = MATERIAL_ORGANIC
 
 	New()
 		..()
@@ -1123,7 +1158,6 @@
 	name = "refined honey" //Look calling both the globs and the material just "honey" isn't helping people's confusion wrt making clone pods
 	desc = ""
 	color = "#f1da10"
-	material_flags = MATERIAL_ORGANIC
 	edible_exact = TRUE
 	edible = TRUE
 
@@ -1141,7 +1175,6 @@
 	name = "frozen fart"
 	desc = "A semi-solid state of farts originally proposed to exist by Dr. Prof. Wonk in 2016."
 	color = "#003300"
-	material_flags = MATERIAL_ORGANIC
 
 	New()
 		..()
@@ -1157,7 +1190,6 @@
 	name = "hamburgris"
 	desc = "Ancient medium ground chuck, petrified by the ages into a sturdy composite. Or worse."
 	color = "#816962"
-	material_flags = MATERIAL_ORGANIC
 
 	New()
 		..()
@@ -1176,7 +1208,6 @@
 	name = "pizza"
 	desc = "It's pepperoni pizza. Some would say the best kind of pizza"
 	color = "#FFFFFF"
-	material_flags = MATERIAL_ORGANIC | MATERIAL_CRYSTAL
 	texture = "pizza2"
 	texture_blend = ICON_OVERLAY
 	edible_exact = 1
@@ -1184,6 +1215,7 @@
 
 	New()
 		..()
+		material_flags |= MATERIAL_CRYSTAL
 		setProperty("hard", 2)
 
 
@@ -1192,80 +1224,47 @@
 	name = "coral"
 	desc = "Coral harvested from the sea floor."
 	color = "#990099"
-	material_flags = MATERIAL_METAL | MATERIAL_CRYSTAL | MATERIAL_ORGANIC
 	texture = "coral"
 	texture_blend = ICON_OVERLAY
 
 	New()
 		..()
+		material_flags |= MATERIAL_METAL | MATERIAL_CRYSTAL
 		setProperty("density", 5)
 		setProperty("hard", 50)
 
 
+/datum/material/organic/ectoplasm
+	mat_id = "ectoplasm"
+	name = "ectoplasm"
+	desc = "Ghostly residue. Not terribly useful on it's own."
+	color = "#ccffcc"
 
+	New()
+		..()
+		material_flags |= MATERIAL_ENERGY
+		setProperty("density", 3)
+		setProperty("hard", 5)
+		setProperty("stability", 3)
+		addTrigger(triggersOnAdd, new /datum/materialProc/ethereal_add())
 // Fabrics
 
+ABSTRACT_TYPE(/datum/material/fabric)
 /datum/material/fabric
-	material_flags = MATERIAL_CLOTH
 	quality				   = 5
 
-/datum/material/fabric/cloth
-	mat_id = "cloth"
-	name = "cloth"
-	desc = "Generic cloth. Not very special."
-	material_flags = MATERIAL_CLOTH
-
-/datum/material/fabric/latex
-	mat_id = "latex"
-	name = "latex"
-	desc = "A type of synthetic rubber. Conducts electricity poorly."
-	color = "#DDDDDD" //"#FF0000" idgaf ok I want red cables back. no haine, this stuff isnt red.
-	material_flags = MATERIAL_RUBBER
-
 	New()
-		..()
-		setProperty("density", 5)
-		setProperty("hard", 5)
-		setProperty("electrical", 29)
-		setProperty("thermal", 45)
-
-
-/datum/material/fabric/synthrubber
-	mat_id = "synthrubber"
-	name = "synthrubber"
-	desc = "A type of synthetic rubber. Quite garish, really."
-	color = "#FF0000" //But this is red okay.
-	material_flags = MATERIAL_RUBBER
-
-	New()
-		..()
-		setProperty("density", 26)
-		setProperty("hard", 11)
-		setProperty("electrical", 30)
-		setProperty("thermal", 40)
-
-
-/datum/material/fabric/synthblubber //it had to be done
-	mat_id = "synthblubber"
-	name = "synthblubber"
-	desc = "A type of synthetic blubber. Hold on. Blubber?!"
-	color = "#1EA082"
-	material_flags = MATERIAL_RUBBER
-
-	New()
-		..()
-		setProperty("density", 55)
+		. = ..()
+		material_flags |= MATERIAL_CLOTH
+		setProperty("flammable", 50)
 		setProperty("hard", 10)
-		setProperty("electrical", 14)
-		setProperty("thermal", 30)
+		setProperty("density", 20)
 
-
-/datum/material/fabric/cloth/leather
+/datum/material/fabric/leather
 	mat_id = "leather"
 	name = "leather"
 	desc = "Leather is a flexible material derived from processed animal skins."
 	color = "#8A3B11"
-	material_flags = MATERIAL_CLOTH
 
 	New()
 		..()
@@ -1275,12 +1274,11 @@
 		setProperty("electrical", 32)
 
 
-/datum/material/fabric/cloth/synthleather
+/datum/material/fabric/synthleather
 	mat_id = "synthleather"
 	name = "synthleather"
 	desc = "Synthleather is an artificial leather."
 	color = "#BB3B11"
-	material_flags = MATERIAL_CLOTH
 
 	New()
 		..()
@@ -1290,12 +1288,11 @@
 		setProperty("electrical", 32)
 
 
-/datum/material/fabric/cloth/brullbarhide
+/datum/material/fabric/brullbarhide
 	mat_id = "brullbarhide"
 	name = "brullbar hide"
 	desc = "The hide of a fearsome brullbar!"
 	color = "#CCCCCC"
-	material_flags = MATERIAL_CLOTH
 
 	New()
 		..()
@@ -1305,12 +1302,11 @@
 		setProperty("electrical", 45)
 
 
-/datum/material/fabric/cloth/brullbarhide/king
+/datum/material/fabric/brullbarhide/king
 	mat_id = "kingbrullbarhide"
 	name = "king brullbar hide"
 	desc = "The hide of a terrifying brullbar king!!!"
 	color = "#EFEEEE"
-	material_flags = MATERIAL_CLOTH
 
 	New()
 		..()
@@ -1320,12 +1316,11 @@
 		setProperty("electrical", 45)
 
 
-/datum/material/fabric/cloth/cotton
+/datum/material/fabric/cotton
 	mat_id = "cotton"
 	name = "cotton"
 	desc = "Cotton is a soft and fluffy material obtained from certain plants."
 	color = "#FFFFFF"
-	material_flags = MATERIAL_CLOTH
 
 	New()
 		..()
@@ -1336,15 +1331,15 @@
 		setProperty("electrical", 45)
 
 
-/datum/material/fabric/cloth/fibrilith
+/datum/material/fabric/fibrilith
 	mat_id = "fibrilith"
 	name = "fibrilith"
 	desc = "Fibrilith is an odd fibrous crystal known for its high tensile strength. Seems a bit similar to asbestos."
 	color = "#E0FFF6"
-	material_flags = MATERIAL_CLOTH | MATERIAL_CRYSTAL
 
 	New()
 		..()
+		material_flags |= MATERIAL_CRYSTAL
 		setProperty("density", 30)
 		setProperty("hard", 30)
 		setProperty("thermal", 20)
@@ -1358,12 +1353,11 @@
 		addTrigger(triggersOnLife, new /datum/materialProc/generic_itchy_onlife())
 
 
-/datum/material/fabric/cloth/spidersilk
+/datum/material/fabric/spidersilk
 	mat_id = "spidersilk"
 	name = "spider silk"
 	desc = "Spider silk is a protein fiber spun by space spiders."
 	color = "#CCCCCC"
-	material_flags = MATERIAL_CLOTH
 
 	New()
 		..()
@@ -1374,12 +1368,11 @@
 		setProperty("electrical", 60)
 
 
-/datum/material/fabric/cloth/carbonfibre
+/datum/material/fabric/carbonfibre
 	mat_id = "carbonfibre"
 	name = "carbon nanofiber"
 	desc = "Carbon Nanofibers are highly graphitic carbon nanomaterials with excellent mechanical properties, electrical conductivity and thermal conductivity."
 	color = "#333333"
-	material_flags = MATERIAL_CLOTH
 
 	New()
 		..()
@@ -1391,16 +1384,16 @@
 		setProperty("electrical", 65)
 
 
-/datum/material/fabric/cloth/hauntium
+/datum/material/fabric/hauntium
 	mat_id = "hauntium"
 	name = "hauntium"
 	desc = "A silky smooth fabric that almost seems alive."
 	color = "#8c87b2"
 
-	material_flags = MATERIAL_CLOTH | MATERIAL_METAL | MATERIAL_ENERGY
 
 	New()
 		..()
+		material_flags |= MATERIAL_METAL | MATERIAL_ENERGY
 		setProperty("density", 10)
 		setProperty("hard", 10)
 		setProperty("stability", 100)
@@ -1410,16 +1403,16 @@
 		addTrigger(triggersOnEntered, new /datum/materialProc/soulsteel_entered())
 
 
-/datum/material/fabric/cloth/ectofibre
+/datum/material/fabric/ectofibre
 	mat_id = "ectofibre"
 	name = "ectofibre"
 	desc = "Ectoplasmic fibres. Sort of transparent. Seems to be rather strong yet flexible."
 	color = "#ffffff"
-	material_flags = MATERIAL_CLOTH | MATERIAL_ENERGY | MATERIAL_CRYSTAL
 	alpha = 128
 
 	New()
 		..()
+		material_flags |= MATERIAL_ENERGY | MATERIAL_CRYSTAL
 		setProperty("density", 70)
 		setProperty("hard", 10)
 		setProperty("thermal", 90)
@@ -1429,12 +1422,11 @@
 		addTrigger(triggersOnLife, new /datum/materialProc/generic_itchy_onlife())
 
 
-/datum/material/fabric/cloth/dyneema
+/datum/material/fabric/dyneema
 	mat_id = "dyneema"
 	name = "dyneema"
 	desc = "A blend of carbon nanofibres and space spider silk. Highly versatile."
 	color = "#333333"
-	material_flags = MATERIAL_CLOTH
 
 	New()
 		..()
@@ -1446,12 +1438,11 @@
 
 
 
-/datum/material/fabric/cloth/beewool
+/datum/material/fabric/beewool
 	mat_id = "beewool"
 	name = "bee wool"
 	desc = "Wool of adorable furry space bees."
 	color = "#ffcc00"
-	material_flags = MATERIAL_CLOTH
 	texture = "bee"
 	texture_blend = ICON_OVERLAY
 
@@ -1463,42 +1454,50 @@
 		setProperty("electrical", 29)
 		setProperty("thermal", 75)
 
+ABSTRACT_TYPE(/datum/material/rubber)
+/datum/material/rubber
+	New()
+		. = ..()
+		material_flags |= MATERIAL_RUBBER
+		setProperty("electrical", 30)
 
-/datum/material/energy
-	material_flags = MATERIAL_ENERGY
-
-/datum/material/energy/ectoplasm
-	mat_id = "ectoplasm"
-	name = "ectoplasm"
-	desc = "Ghostly residue. Not terribly useful on it's own."
-	color = "#ccffcc"
+/datum/material/rubber/latex
+	mat_id = "latex"
+	name = "latex"
+	desc = "A type of synthetic rubber. Conducts electricity poorly."
+	color = "#DDDDDD" //"#FF0000" idgaf ok I want red cables back. no haine, this stuff isnt red.
 
 	New()
 		..()
-		setProperty("density", 3)
+		setProperty("density", 5)
 		setProperty("hard", 5)
-		setProperty("stability", 3)
-		addTrigger(triggersOnAdd, new /datum/materialProc/ethereal_add())
+		setProperty("electrical", 29)
+		setProperty("thermal", 45)
 
-/datum/material/energy/negativematter
-	mat_id = "negativematter"
-	name = "negative matter"
-	desc = "It seems to repel matter."
-	color = list(-1, 0, 0, 0, -1, 0, 0, 0, -1, 1, 1, 1)
+
+/datum/material/rubber/synthrubber
+	mat_id = "synthrubber"
+	name = "synthrubber"
+	desc = "A type of synthetic rubber. Quite garish, really."
+	color = "#FF0000" //But this is red okay.
 
 	New()
 		..()
-		addTrigger(triggersOnAdd, new /datum/materialProc/negative_add())
+		setProperty("density", 26)
+		setProperty("hard", 11)
+		setProperty("electrical", 30)
+		setProperty("thermal", 40)
 
 
+/datum/material/rubber/synthblubber //it had to be done
+	mat_id = "synthblubber"
+	name = "synthblubber"
+	desc = "A type of synthetic blubber. Hold on. Blubber?!"
+	color = "#1EA082"
 
-
-// TODO: THESE
-/*
-/datum/material/wax
-
-/datum/material/plastic
-
-/datum/material/cardboard
-
-*/
+	New()
+		..()
+		setProperty("density", 55)
+		setProperty("hard", 10)
+		setProperty("electrical", 14)
+		setProperty("thermal", 30)

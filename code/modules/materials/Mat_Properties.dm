@@ -1,4 +1,5 @@
 /// Base material property. Stuff like conductivity. See: [/datum/material/var/properties]
+ABSTRACT_TYPE(/datum/material_property)
 /datum/material_property
 	/// External name of this property.
 	var/name = ""
@@ -178,7 +179,7 @@
 	id = "flammable"
 	min_value = 1
 	max_value = 100
-	default_value = 50
+	default_value = 0
 
 	prefix_high_min = 85
 	prefix_low_max = 15
@@ -357,7 +358,7 @@
 	id = "fissile"
 	min_value = 1
 	max_value = 100
-	default_value = 1
+	default_value = 0
 
 	prefix_high_min = 25
 	prefix_low_max = 75
@@ -382,7 +383,7 @@
 	id = "resonance"
 	min_value = 1
 	max_value = 100
-	default_value = 1
+	default_value = 0
 
 	prefix_high_min = 25
 	prefix_low_max = 75
