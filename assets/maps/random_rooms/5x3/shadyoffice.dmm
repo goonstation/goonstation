@@ -40,9 +40,11 @@
 	},
 /obj/decoration/regallamp{
 	anchored = 1;
+	deconstructable = 0;
 	lit = 1;
 	pixel_x = 8;
-	pixel_y = 8
+	pixel_y = 8;
+	securable = 0
 	},
 /turf/simulated/floor/wood/two,
 /area/dmm_suite/clear_area)
@@ -105,9 +107,11 @@
 	},
 /obj/decoration/regallamp{
 	anchored = 1;
+	deconstructable = 0;
 	lit = 1;
 	pixel_x = -8;
-	pixel_y = 8
+	pixel_y = 8;
+	securable = 0
 	},
 /turf/simulated/floor/wood/two,
 /area/dmm_suite/clear_area)
