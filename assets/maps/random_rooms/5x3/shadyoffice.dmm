@@ -2,6 +2,7 @@
 "a" = (
 /obj/table/wood/round,
 /obj/item/reagent_containers/food/drinks/bottle/empty/rectangular{
+	initial_reagents = list("water"=100);
 	pixel_x = -3;
 	pixel_y = 16
 	},
@@ -22,7 +23,9 @@
 /turf/simulated/floor/wood/two,
 /area/dmm_suite/clear_area)
 "g" = (
-/obj/decal/poster/wallsign/dead_exec_portrait,
+/obj/decal/poster/wallsign/dead_exec_portrait{
+	desc = "A portrait of an Italian-American gentleman."
+	},
 /turf/simulated/floor/wood/two,
 /area/dmm_suite/clear_area)
 "h" = (
@@ -33,6 +36,12 @@
 /obj/item/storage/secure/sbriefcase{
 	pixel_x = -6;
 	pixel_y = 7
+	},
+/obj/decoration/regallamp{
+	anchored = 1;
+	lit = 1;
+	pixel_x = 8;
+	pixel_y = 8
 	},
 /turf/simulated/floor/wood/two,
 /area/dmm_suite/clear_area)
@@ -63,6 +72,7 @@
 	pixel_y = 9
 	},
 /obj/machinery/light/lamp/green{
+	on = 1;
 	pixel_x = -18;
 	pixel_y = 7
 	},
