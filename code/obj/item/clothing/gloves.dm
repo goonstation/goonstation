@@ -208,8 +208,9 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	material_prints = "synthetic silicone rubber fibers"
 	setupProperties()
 		..()
-		setProperty("conductivity", 0.3)
+		setProperty("conductivity", 0.6)
 		setProperty("heatprot", 5)
+		setProperty("chemprot", 15)
 
 /obj/item/clothing/gloves/fingerless
 	desc = "These gloves lack fingers. Good for a space biker look, but not so good for concealing your fingerprints."
