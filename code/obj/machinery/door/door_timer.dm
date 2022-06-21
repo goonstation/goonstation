@@ -11,6 +11,14 @@
 	var/last_tick = 0
 	var/const/max_time = 300
 
+	New()
+		..()
+		START_TRACKING
+
+	disposing()
+		..()
+		STOP_TRACKING
+
 	// Please keep synchronizied with these lists for easy map changes:
 	// /obj/storage/secure/closet/brig_automatic (secure_closets.dm)
 	// /obj/machinery/floorflusher (floorflusher.dm)
