@@ -27,15 +27,14 @@
 /turf/unsimulated/wall/auto/adventure/shuttle,
 /area/space_hive)
 "aah" = (
-/obj/machinery/shuttle/engine/heater{
-	icon_state = "alt_heater-R";
-	dir = 4
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 4;
+	icon_state = "alt_heater-R"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle,
 /area/space_hive)
 "aai" = (
-/obj/machinery/shuttle/engine/propulsion{
-	icon_state = "alt_propulsion";
+/obj/decal/fakeobjects/shuttlethruster{
 	dir = 4
 	},
 /turf/space,
@@ -2112,9 +2111,9 @@
 /turf/space,
 /area/mining/dock)
 "ags" = (
-/obj/machinery/shuttle/engine/heater{
-	icon_state = "alt_heater-L";
-	dir = 4
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 4;
+	icon_state = "alt_heater"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/mining/dock)
@@ -4214,13 +4213,12 @@
 /turf/simulated/floor/grime,
 /area/mining/power)
 "amb" = (
+/obj/decal/fakeobjects/shuttlethruster{
+	dir = 4
+	},
 /obj/indestructible/shuttle_corner{
 	dir = 1;
 	icon_state = "wall3_trans"
-	},
-/obj/machinery/shuttle/engine/propulsion{
-	icon_state = "alt_propulsion";
-	dir = 4
 	},
 /turf/space,
 /turf/space,
@@ -4745,13 +4743,12 @@
 /turf/simulated/floor/caution/east,
 /area/mining/miningoutpost)
 "anp" = (
+/obj/decal/fakeobjects/shuttlethruster{
+	dir = 4
+	},
 /obj/indestructible/shuttle_corner{
 	dir = 4;
 	icon_state = "wall3_trans"
-	},
-/obj/machinery/shuttle/engine/propulsion{
-	icon_state = "alt_propulsion";
-	dir = 4
 	},
 /turf/space,
 /turf/space,
@@ -6514,9 +6511,9 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /area/space)
 "arL" = (
-/obj/machinery/shuttle/engine/heater{
-	icon_state = "alt_heater-L";
-	dir = 4
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 4;
+	icon_state = "alt_heater"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle,
 /area/salyut)
@@ -8662,8 +8659,7 @@
 	name = "GLOMAR Salvager"
 	})
 "axQ" = (
-/obj/machinery/shuttle/engine/propulsion{
-	icon_state = "alt_propulsion";
+/obj/decal/fakeobjects/shuttlethruster{
 	dir = 4
 	},
 /turf/space,
@@ -9753,9 +9749,7 @@
 	},
 /area/abandonedship)
 "aGD" = (
-/obj/machinery/shuttle/engine/propulsion{
-	icon_state = "alt_propulsion"
-	},
+/obj/decal/fakeobjects/shuttlethruster,
 /turf/space,
 /area/abandonedship)
 "aGE" = (
@@ -9764,8 +9758,8 @@
 /area/space)
 "aGF" = (
 /obj/lattice,
-/obj/machinery/shuttle/engine/heater{
-	icon_state = "alt_heater-M"
+/obj/decal/fakeobjects/shuttleengine{
+	icon_state = "alt_heater"
 	},
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
@@ -9785,11 +9779,9 @@
 /turf/space,
 /area/space)
 "aGJ" = (
-/obj/machinery/shuttle/engine/heater{
-	icon_state = "alt_heater-L"
-	},
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/abandonedship)
+/obj/decal/fakeobjects/shuttlethruster,
+/turf/space,
+/area/space)
 "aGK" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/space)
@@ -9806,9 +9798,9 @@
 /turf/space,
 /area/space)
 "aGO" = (
-/obj/machinery/shuttle/engine/heater{
-	icon_state = "alt_heater-R";
-	dir = 8
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 4;
+	icon_state = "alt_heater-R"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/helldrone)
@@ -9820,9 +9812,8 @@
 /turf/simulated/floor,
 /area/radiostation/engineering)
 "aGQ" = (
-/obj/machinery/shuttle/engine/propulsion{
-	icon_state = "alt_propulsion";
-	dir = 8
+/obj/decal/fakeobjects/shuttlethruster{
+	dir = 4
 	},
 /turf/space,
 /area/space)
@@ -9831,8 +9822,8 @@
 	dir = 10;
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/shuttle/engine/heater{
-	icon_state = "alt_heater-R";
+/obj/decal/fakeobjects/shuttleengine{
+	icon_state = "alt_heater";
 	dir = 8
 	},
 /turf/space,
@@ -9940,16 +9931,15 @@
 /turf/simulated/floor/airless/plating/damaged1,
 /area/abandonedmedicalship)
 "aHj" = (
-/obj/machinery/shuttle/engine/propulsion{
-	icon_state = "alt_propulsion";
+/obj/decal/fakeobjects/shuttlethruster{
 	dir = 8
 	},
 /turf/space,
 /area/abandonedmedicalship)
 "aHk" = (
-/obj/machinery/shuttle/engine/heater{
-	icon_state = "alt_heater-L";
-	dir = 8
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 8;
+	icon_state = "alt_heater-M"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle,
 /area/abandonedmedicalship)
@@ -10113,9 +10103,8 @@
 /turf/simulated/floor/airless/plating/damaged1,
 /area/abandonedmedicalship)
 "aHM" = (
-/obj/machinery/shuttle/engine/propulsion{
-	icon_state = "alt_propulsion";
-	dir = 8
+/obj/decal/fakeobjects/shuttlethruster{
+	dir = 4
 	},
 /turf/space,
 /area/abandonedship)
@@ -10178,7 +10167,7 @@
 /turf/unsimulated/wall/auto/adventure/shuttle,
 /area/abandonedship)
 "aHV" = (
-/obj/machinery/shuttle/engine/heater{
+/obj/decal/fakeobjects/shuttleengine{
 	icon_state = "alt_heater-M"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
@@ -10618,12 +10607,14 @@
 /turf/simulated/floor,
 /area/abandonedoutpostthing)
 "aJj" = (
-/obj/machinery/shuttle/engine/heater{
-	icon_state = "alt_heater-M";
-	dir = 4
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 4;
+	icon_state = "alt_heater-R"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/space)
+/area/evilreaver/storage/engineering{
+	name = "GLOMAR Salvager"
+	})
 "aJk" = (
 /obj/decal/floatingtiles{
 	dir = 8
@@ -10669,8 +10660,7 @@
 	name = "GLOMAR Salvager"
 	})
 "aJr" = (
-/obj/machinery/shuttle/engine/propulsion{
-	icon_state = "alt_propulsion";
+/obj/decal/fakeobjects/shuttlethruster{
 	dir = 4
 	},
 /turf/space,
@@ -11436,7 +11426,7 @@
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "gibbl2"
 	},
-/obj/machinery/shuttle/engine/heater{
+/obj/decal/fakeobjects/shuttleengine{
 	icon_state = "alt_heater-L";
 	dir = 8
 	},
@@ -11451,8 +11441,8 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4
 	},
-/obj/machinery/shuttle/engine/heater{
-	icon_state = "alt_heater-R";
+/obj/decal/fakeobjects/shuttleengine{
+	icon_state = "alt_heater";
 	dir = 8
 	},
 /turf/space,
@@ -11678,7 +11668,7 @@
 /turf/simulated/floor/airless/plating/scorched,
 /area/abandonedship)
 "aLT" = (
-/obj/machinery/shuttle/engine/heater{
+/obj/decal/fakeobjects/shuttleengine{
 	icon_state = "alt_heater-R"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle,
@@ -13183,7 +13173,8 @@
 	icon_state = "lattice-dir"
 	},
 /obj/decal/fakeobjects/shuttleengine{
-	dir = 4
+	icon_state = "alt_heater";
+	dir = 8
 	},
 /turf/space,
 /area/space)
@@ -18066,16 +18057,15 @@
 /turf/simulated/floor/airless/plating/damaged1,
 /area/abandonedship)
 "bdP" = (
-/obj/machinery/shuttle/engine/heater{
-	icon_state = "alt_heater-L";
-	dir = 4
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 4;
+	icon_state = "alt_heater-R"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle,
 /area/abandonedship)
 "bdQ" = (
-/obj/machinery/shuttle/engine/propulsion{
-	icon_state = "alt_propulsion";
-	dir = 4
+/obj/decal/fakeobjects/shuttlethruster{
+	dir = 8
 	},
 /turf/space,
 /area/abandonedship)
@@ -20694,13 +20684,9 @@
 /turf/simulated/floor/caution/west,
 /area/derelict_ai_sat/core)
 "bmw" = (
-/obj/machinery/shuttle/engine/heater{
-	icon_state = "alt_heater-L";
-	dir = 4
-	},
-/obj/machinery/shuttle/engine/propulsion{
-	icon_state = "alt_propulsion";
-	dir = 4
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 4;
+	icon_state = "alt_heater"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/space)
@@ -20760,12 +20746,12 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "bmN" = (
-/obj/machinery/shuttle/engine/heater{
-	icon_state = "alt_heater-R";
-	dir = 4
+/obj/decal/fakeobjects/shuttleengine{
+	icon_state = "alt_heater-L";
+	dir = 8
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle,
-/area/abandonedship)
+/area/abandonedmedicalship)
 "bmO" = (
 /obj/reagent_dispensers/beerkeg,
 /obj/decal/tile_edge/stripe/extra_big,
@@ -20782,9 +20768,8 @@
 /turf/space,
 /area/space)
 "bmU" = (
-/obj/machinery/shuttle/engine/propulsion{
-	icon_state = "alt_propulsion";
-	dir = 4
+/obj/decal/fakeobjects/shuttlethruster{
+	dir = 8
 	},
 /turf/space,
 /area/space)
@@ -21127,8 +21112,7 @@
 /turf/unsimulated/floor/black,
 /area/timewarp/ship)
 "bHM" = (
-/obj/machinery/shuttle/engine/propulsion{
-	icon_state = "alt_propulsion";
+/obj/decal/fakeobjects/shuttlethruster{
 	dir = 8
 	},
 /turf/unsimulated/floor/void/timewarp,
@@ -21157,6 +21141,20 @@
 	},
 /turf/simulated/floor/carpet/office,
 /area/mining/hangar)
+"cqX" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1;
+	icon_state = "wall3_trans"
+	},
+/obj/decal/fakeobjects/shuttleengine{
+	icon_state = "alt_heater-R"
+	},
+/turf/unsimulated/wall{
+	icon = 'icons/turf/space.dmi';
+	icon_state = "1";
+	name = "space"
+	},
+/area/abandonedship)
 "cvi" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -21199,12 +21197,12 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/mining/hangar)
 "daM" = (
-/obj/decal/cleanable/blood/splatter{
-	icon_state = "floor4"
-	},
-/obj/machinery/shuttle/engine/heater{
+/obj/decal/fakeobjects/shuttleengine{
 	icon_state = "alt_heater-R";
 	dir = 8
+	},
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor4"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle,
 /area/abandonedmedicalship)
@@ -21278,15 +21276,6 @@
 	},
 /turf/unsimulated/floor/specialroom/freezer,
 /area/timewarp/ship)
-"eiz" = (
-/obj/machinery/shuttle/engine/heater{
-	icon_state = "alt_heater-L";
-	dir = 4
-	},
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
 "elM" = (
 /obj/decal/tile_edge/stripe/big,
 /obj/decal/tile_edge/stripe/big{
@@ -21310,12 +21299,19 @@
 	},
 /turf/simulated/floor/plating,
 /area/helldrone)
-"fcU" = (
-/obj/machinery/shuttle/engine/heater{
-	icon_state = "alt_heater-R"
+"eKc" = (
+/obj/decal/fakeobjects/shuttleengine{
+	icon_state = "alt_heater-R";
+	dir = 8
 	},
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/abandonedship)
+/turf/unsimulated/wall/auto/adventure/shuttle,
+/area/abandonedmedicalship)
+"eME" = (
+/obj/decal/fakeobjects/shuttleengine{
+	icon_state = "alt_heater-L"
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle,
+/area/abandonedmedicalship)
 "fdb" = (
 /obj/table/round,
 /obj/item/paper_bin{
@@ -21333,6 +21329,13 @@
 /obj/window_blinds/cog2/middle,
 /turf/simulated/floor/black,
 /area/radiostation/studio)
+"ftZ" = (
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 4;
+	icon_state = "alt_heater-R"
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/space)
 "fJe" = (
 /obj/decal/cleanable/oil,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
@@ -21365,12 +21368,6 @@
 /obj/machinery/space_heater,
 /turf/simulated/floor/airless/caution/northsouth,
 /area/space)
-"fZT" = (
-/obj/machinery/shuttle/engine/heater{
-	icon_state = "alt_heater-M"
-	},
-/turf/unsimulated/wall/auto/adventure/shuttle,
-/area/abandonedship)
 "gaf" = (
 /turf/unsimulated/wall/auto/adventure/bee,
 /area/space_hive)
@@ -21378,13 +21375,6 @@
 /obj/critter/ancient_repairbot/helldrone_guard,
 /turf/simulated/floor/plating,
 /area/helldrone)
-"gcx" = (
-/obj/machinery/shuttle/engine/heater{
-	icon_state = "alt_heater-L";
-	dir = 4
-	},
-/turf/unsimulated/wall/auto/adventure/shuttle,
-/area/space_hive)
 "ghB" = (
 /obj/securearea{
 	desc = "Blue, blue.";
@@ -21599,13 +21589,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/derelict_ai_sat)
-"iWo" = (
-/obj/machinery/shuttle/engine/heater{
-	icon_state = "alt_heater-R";
-	dir = 4
-	},
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/space)
 "iYn" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/abandonedship)
@@ -21615,6 +21598,12 @@
 "iZM" = (
 /turf/unsimulated/floor/void/timewarp,
 /area/timewarp)
+"jfw" = (
+/obj/decal/fakeobjects/shuttleengine{
+	icon_state = "alt_heater"
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/abandonedship)
 "jfE" = (
 /obj/table/wood/auto,
 /obj/item/staple_gun/red,
@@ -21628,20 +21617,6 @@
 "jmg" = (
 /turf/unsimulated/floor/specialroom/freezer,
 /area/helldrone)
-"jna" = (
-/obj/indestructible/shuttle_corner{
-	dir = 1;
-	icon_state = "wall3_trans"
-	},
-/obj/machinery/shuttle/engine/heater{
-	icon_state = "alt_heater-R"
-	},
-/turf/unsimulated/wall{
-	icon = 'icons/turf/space.dmi';
-	icon_state = "1";
-	name = "space"
-	},
-/area/abandonedship)
 "jqk" = (
 /obj/decal/fakeobjects/lightbulb_broken,
 /turf/simulated/floor/airless/grime,
@@ -21657,20 +21632,6 @@
 	},
 /turf/simulated/floor/airless/plating/damaged2,
 /area/abandonedmedicalship)
-"jzb" = (
-/obj/indestructible/shuttle_corner{
-	dir = 8;
-	icon_state = "wall3_trans"
-	},
-/obj/machinery/shuttle/engine/heater{
-	icon_state = "alt_heater-L"
-	},
-/turf/unsimulated/wall{
-	icon = 'icons/turf/space.dmi';
-	icon_state = "1";
-	name = "space"
-	},
-/area/abandonedship)
 "jzS" = (
 /obj/storage/crate,
 /obj/item/electronics/resistor{
@@ -21715,6 +21676,15 @@
 	icon_state = "floor4"
 	},
 /area/helldrone)
+"jQE" = (
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 4;
+	icon_state = "alt_heater"
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/evilreaver/storage/engineering{
+	name = "GLOMAR Salvager"
+	})
 "jRv" = (
 /obj/item/storage/toilet/random{
 	dir = 8;
@@ -21745,6 +21715,13 @@
 /obj/machinery/door/unpowered/shuttle,
 /turf/simulated/floor/plating/airless,
 /area/abandonedmedicalship)
+"jZX" = (
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 4;
+	icon_state = "alt_heater-M"
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/helldrone)
 "kag" = (
 /obj/decal/tile_edge/stripe{
 	dir = 10;
@@ -21760,6 +21737,12 @@
 /turf/space,
 /turf/simulated/floor,
 /area/helldrone)
+"khq" = (
+/obj/decal/fakeobjects/shuttleengine{
+	icon_state = "alt_heater-L"
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/abandonedship)
 "kjj" = (
 /obj/machinery/door_control{
 	id = "zdrone_hangar";
@@ -21806,17 +21789,6 @@
 	icon_state = "catwalk_cross"
 	},
 /area/space)
-"lbf" = (
-/obj/lattice{
-	dir = 10;
-	icon_state = "lattice-dir"
-	},
-/obj/machinery/shuttle/engine/heater{
-	icon_state = "alt_heater-M";
-	dir = 8
-	},
-/turf/space,
-/area/space)
 "lbt" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/electrical,
@@ -21824,13 +21796,6 @@
 /obj/item/paper/book/from_file/minerals,
 /turf/simulated/floor/grime,
 /area/mining/manufacturing)
-"lgL" = (
-/obj/machinery/shuttle/engine/heater{
-	icon_state = "alt_heater-L";
-	dir = 8
-	},
-/turf/unsimulated/wall/auto/lead/blue,
-/area/timewarp/ship)
 "lkB" = (
 /obj/storage/crate,
 /obj/item/gun/energy/phaser_gun,
@@ -21838,6 +21803,13 @@
 /obj/item/clothing/shoes/black,
 /turf/simulated/floor,
 /area/helldrone)
+"lkN" = (
+/obj/decal/cleanable/oil,
+/obj/decal/fakeobjects/shuttleengine{
+	icon_state = "alt_heater-L"
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/abandonedship)
 "lmj" = (
 /obj/decal/timeplug{
 	dir = 6
@@ -21904,6 +21876,12 @@
 	icon_state = "leadwindow_2"
 	},
 /area/timewarp/ship)
+"lLX" = (
+/obj/decal/fakeobjects/shuttleengine{
+	icon_state = "alt_heater"
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle,
+/area/abandonedship)
 "lMt" = (
 /obj/storage/closet/wardrobe/black,
 /turf/simulated/floor/carpet{
@@ -21977,6 +21955,13 @@
 "miz" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/timewarp/ship)
+"mtO" = (
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 4;
+	icon_state = "alt_heater-M"
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/space)
 "mtR" = (
 /obj/decal/timeplug{
 	dir = 1
@@ -22068,13 +22053,6 @@
 /turf/space,
 /turf/unsimulated/floor/specialroom/freezer,
 /area/helldrone)
-"mSC" = (
-/obj/machinery/shuttle/engine/heater{
-	icon_state = "alt_heater-R";
-	dir = 8
-	},
-/turf/unsimulated/wall/auto/lead/blue,
-/area/timewarp/ship)
 "mTD" = (
 /obj/machinery/sleeper/future{
 	dir = 8
@@ -22154,6 +22132,15 @@
 /obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/space)
+"nkR" = (
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 4;
+	icon_state = "alt_heater-L"
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/evilreaver/storage/engineering{
+	name = "GLOMAR Salvager"
+	})
 "nmd" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -22180,12 +22167,6 @@
 /obj/effects/background_objects/fatuus,
 /turf/space,
 /area/space)
-"nqo" = (
-/obj/machinery/shuttle/engine/heater{
-	icon_state = "alt_heater-L"
-	},
-/turf/unsimulated/wall/auto/adventure/shuttle,
-/area/abandonedmedicalship)
 "nrc" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -22238,15 +22219,6 @@
 /obj/decal/float/clock,
 /turf/unsimulated/floor/void/timewarp,
 /area/timewarp)
-"nKy" = (
-/obj/machinery/shuttle/engine/heater{
-	icon_state = "alt_heater-R";
-	dir = 4
-	},
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
 "nLp" = (
 /obj/stool/chair,
 /turf/simulated/floor/airless/scorched,
@@ -22403,6 +22375,20 @@
 	},
 /turf/space/asteroid,
 /area/space)
+"oZQ" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8;
+	icon_state = "wall3_trans"
+	},
+/obj/decal/fakeobjects/shuttleengine{
+	icon_state = "alt_heater-L"
+	},
+/turf/unsimulated/wall{
+	icon = 'icons/turf/space.dmi';
+	icon_state = "1";
+	name = "space"
+	},
+/area/abandonedship)
 "pci" = (
 /obj/decal/floatingtiles{
 	icon_state = "floattiles5"
@@ -22435,9 +22421,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/helldrone)
-"pgs" = (
-/turf/simulated/wall/auto,
-/area/space)
 "plh" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8;
@@ -22519,6 +22502,13 @@
 /turf/space,
 /turf/simulated/floor/shuttlebay,
 /area/helldrone)
+"pZv" = (
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 4;
+	icon_state = "alt_heater"
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle,
+/area/space_hive)
 "qgt" = (
 /turf/simulated/floor/plating/airless,
 /area/abandonedmedicalship)
@@ -22638,6 +22628,13 @@
 	dir = 8;
 	icon_state = "wall3_space_end"
 	},
+/area/abandonedship)
+"rrn" = (
+/obj/decal/cleanable/oil,
+/obj/decal/fakeobjects/shuttleengine{
+	icon_state = "alt_heater-M"
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/abandonedship)
 "rsU" = (
 /obj/submachine/chef_sink/chem_sink{
@@ -22772,6 +22769,13 @@
 	icon_state = "corner_east"
 	},
 /area/timewarp/ship)
+"sEI" = (
+/obj/decal/fakeobjects/shuttleengine{
+	icon_state = "alt_heater-L";
+	dir = 8
+	},
+/turf/unsimulated/wall/auto/lead/blue,
+/area/timewarp/ship)
 "sFV" = (
 /obj/machinery/computer/pathology{
 	dir = 4
@@ -22780,6 +22784,13 @@
 	dir = 10
 	},
 /area/abandonedoutpostthing)
+"sHH" = (
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 4;
+	icon_state = "alt_heater-L"
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle,
+/area/abandonedship)
 "sQd" = (
 /turf/unsimulated/floor/stairs/wide{
 	dir = 4
@@ -22878,13 +22889,6 @@
 /obj/storage/cart,
 /turf/simulated/floor/white/grime,
 /area/derelict_ai_sat)
-"tmL" = (
-/obj/machinery/shuttle/engine/heater{
-	icon_state = "alt_heater-R";
-	dir = 8
-	},
-/turf/unsimulated/wall/auto/adventure/shuttle,
-/area/abandonedmedicalship)
 "tob" = (
 /obj/item/caution{
 	desc = "Caution! No trespassing!";
@@ -22892,13 +22896,6 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
-"tvg" = (
-/obj/decal/cleanable/oil,
-/obj/machinery/shuttle/engine/heater{
-	icon_state = "alt_heater-M"
-	},
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/abandonedship)
 "tEh" = (
 /obj/stool/chair/office,
 /turf/simulated/floor/shuttle{
@@ -22961,13 +22958,6 @@
 	},
 /turf/simulated/floor/scorched2,
 /area/derelict_ai_sat)
-"urw" = (
-/obj/machinery/shuttle/engine/heater{
-	icon_state = "alt_heater-M";
-	dir = 8
-	},
-/turf/unsimulated/wall/auto/adventure/shuttle,
-/area/abandonedmedicalship)
 "utd" = (
 /obj/decal/cleanable/robot_debris/gib,
 /turf/simulated/floor/plating/airless/asteroid,
@@ -23063,13 +23053,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/helldrone)
-"vDI" = (
-/obj/decal/cleanable/oil,
-/obj/machinery/shuttle/engine/heater{
-	icon_state = "alt_heater-L"
-	},
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/abandonedship)
 "vGG" = (
 /obj/item/mousetrap,
 /turf/unsimulated/floor/specialroom/chapel{
@@ -23213,8 +23196,7 @@
 /turf/simulated/floor/plating,
 /area/helldrone)
 "wEQ" = (
-/obj/machinery/shuttle/engine/propulsion{
-	icon_state = "alt_propulsion";
+/obj/decal/fakeobjects/shuttlethruster{
 	dir = 4
 	},
 /turf/space,
@@ -23249,15 +23231,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/helldrone)
-"wRD" = (
-/obj/machinery/shuttle/engine/propulsion{
-	icon_state = "alt_propulsion"
-	},
-/obj/machinery/shuttle/engine/propulsion{
-	icon_state = "alt_propulsion"
-	},
-/turf/space,
-/area/abandonedship)
 "xht" = (
 /obj/stool/bed,
 /turf/simulated/floor/carpet{
@@ -23319,24 +23292,23 @@
 	},
 /turf/space,
 /area/timewarp)
-"xxv" = (
-/obj/machinery/shuttle/engine/heater{
-	icon_state = "alt_heater-L";
-	dir = 4
+"xFi" = (
+/obj/decal/fakeobjects/shuttleengine{
+	icon_state = "alt_heater-R"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/space)
+/area/abandonedship)
+"xGp" = (
+/obj/decal/fakeobjects/shuttleengine{
+	icon_state = "alt_heater-R";
+	dir = 8
+	},
+/turf/unsimulated/wall/auto/lead/blue,
+/area/timewarp/ship)
 "xHN" = (
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/orangeblack,
 /area/buddyfactory)
-"xIn" = (
-/obj/machinery/shuttle/engine/heater{
-	icon_state = "alt_heater-L";
-	dir = 8
-	},
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/helldrone)
 "xKR" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "It won't budge.";
@@ -30498,7 +30470,7 @@ aaa
 bgh
 aaa
 aaa
-aGQ
+bmU
 aaa
 aaa
 aaa
@@ -30800,7 +30772,7 @@ aaa
 bgi
 aHU
 aHU
-lbf
+aGR
 aHU
 aaa
 aaa
@@ -35660,11 +35632,11 @@ kRB
 iYn
 iYn
 iYn
-aGJ
+jfw
 aGD
 aaa
 aaa
-jzb
+oZQ
 aGD
 aaa
 aaa
@@ -35966,7 +35938,7 @@ iYn
 iYn
 iYn
 fJe
-tvg
+rrn
 aGD
 aaa
 aaa
@@ -36268,7 +36240,7 @@ iYn
 aTj
 aTw
 aTD
-fcU
+iYn
 aGD
 aaa
 aaa
@@ -37174,7 +37146,7 @@ iYn
 aTl
 aWh
 aTG
-aGJ
+khq
 aGD
 aaa
 aaa
@@ -37477,7 +37449,7 @@ aTm
 aTm
 fJe
 aHV
-wRD
+aGD
 aaa
 aaa
 aaa
@@ -37778,7 +37750,7 @@ fJe
 aTn
 blN
 aTH
-jna
+cqX
 aGD
 aaa
 aaa
@@ -39632,8 +39604,8 @@ aaa
 aaa
 aZp
 bgu
-xIn
 aGO
+jZX
 bgu
 bgu
 bcg
@@ -39648,8 +39620,8 @@ bgu
 bfY
 bgu
 bgu
-xIn
 aGO
+jZX
 bgu
 mXB
 aaa
@@ -44130,7 +44102,7 @@ aaa
 aaa
 aaa
 aaa
-aGQ
+bmU
 aaa
 aaa
 aaa
@@ -44824,7 +44796,7 @@ aaa
 aaa
 aay
 aah
-gcx
+pZv
 gaf
 aaq
 aaq
@@ -46971,7 +46943,7 @@ aaa
 aaa
 aay
 aah
-gcx
+pZv
 aaR
 aaa
 aaa
@@ -47666,7 +47638,7 @@ aaa
 aAo
 bkE
 exM
-aGJ
+khq
 aGD
 aaa
 aaa
@@ -47968,7 +47940,7 @@ aaa
 iYn
 bla
 vel
-fcU
+xFi
 aGD
 aaa
 aaa
@@ -49193,11 +49165,11 @@ aaa
 aaa
 aaa
 aaa
-pgs
 aaa
 aaa
 aaa
-aHM
+aaa
+bdQ
 aaa
 aaa
 aaa
@@ -49359,7 +49331,7 @@ aaa
 aaa
 aay
 aah
-gcx
+pZv
 aaR
 aaa
 aaa
@@ -50807,8 +50779,8 @@ aaa
 aaa
 aaa
 oxJ
-bmN
 bdP
+sHH
 wwZ
 aaa
 aaa
@@ -51109,8 +51081,8 @@ aaa
 aaa
 aaa
 aaa
-bdQ
-bdQ
+aHM
+aHM
 aaa
 aaa
 aaa
@@ -53633,13 +53605,13 @@ aaa
 aaa
 aaa
 aaa
-iWo
+bmw
 aGK
 bno
 bnC
 ape
 aGK
-xxv
+bmw
 aaa
 aaa
 aaa
@@ -53935,13 +53907,13 @@ aaa
 aaa
 aaa
 aaa
-bmU
+aGQ
 aGK
 aGK
 bnD
 aGK
 aGK
-bmU
+aGQ
 aaa
 aaa
 aaa
@@ -54918,7 +54890,7 @@ aab
 aab
 aac
 aGF
-bjB
+aGJ
 aaa
 aaa
 aaa
@@ -55749,8 +55721,8 @@ aaa
 aaa
 aaa
 bmY
-iWo
-aJj
+ftZ
+mtO
 bmw
 bor
 aaa
@@ -55826,7 +55798,7 @@ aaa
 aaa
 aaa
 aAU
-aGQ
+bmU
 aaa
 aaa
 aad
@@ -56051,9 +56023,9 @@ aaa
 aaa
 aaa
 aaa
-bmU
-bmU
-bmU
+aGQ
+aGQ
+aGQ
 aaa
 aaa
 aaa
@@ -56852,7 +56824,7 @@ beg
 bew
 bbW
 bbW
-fZT
+lLX
 aGD
 aaa
 aaa
@@ -57124,16 +57096,16 @@ aaa
 aaa
 aaa
 aHc
+bmN
 aHk
-urw
-tmL
+eKc
 aIk
 aaa
 aaa
 aaa
 aHc
 aLk
-urw
+aHk
 daM
 fgb
 abf
@@ -58060,7 +58032,7 @@ bei
 aJn
 beL
 beV
-fZT
+lLX
 aGD
 aaa
 aaa
@@ -59159,7 +59131,7 @@ aaa
 aaa
 aaa
 aaa
-aGQ
+bmU
 aaa
 aaa
 aaa
@@ -59168,7 +59140,7 @@ aaa
 aaa
 aaa
 aaa
-aGQ
+bmU
 aaa
 aaa
 aaa
@@ -59454,7 +59426,7 @@ iYn
 iYn
 iYn
 fJe
-vDI
+lkN
 aGD
 aaa
 aaa
@@ -60360,7 +60332,7 @@ iYn
 iYn
 atJ
 iYn
-fcU
+xFi
 aGD
 aaa
 aaa
@@ -73660,7 +73632,7 @@ aaa
 aaa
 aaa
 aaa
-nKy
+jQE
 aJO
 aKh
 aIz
@@ -73668,7 +73640,7 @@ aKH
 aIz
 aJL
 aKd
-eiz
+jQE
 aaa
 aaa
 aaa
@@ -75776,11 +75748,11 @@ aaa
 aaa
 aaa
 aIA
-nKy
-eiz
+aJj
+nkR
 aIz
-nKy
-eiz
+aJj
+nkR
 aJP
 aaa
 aaa
@@ -95462,8 +95434,8 @@ aJz
 aLo
 aLz
 aLF
-nqo
-bjB
+eME
+aGJ
 aaa
 aaa
 aaa
@@ -95765,7 +95737,7 @@ aHo
 aJz
 aJz
 aLT
-bjB
+aGJ
 aaa
 aaa
 aaa
@@ -96368,8 +96340,8 @@ aHo
 aJz
 aHI
 aLH
-nqo
-bjB
+eME
+aGJ
 aaa
 aaa
 aaa
@@ -96671,7 +96643,7 @@ aLs
 aLB
 aLI
 aLT
-bjB
+aGJ
 aaa
 aaa
 aaa
@@ -101555,8 +101527,8 @@ iZM
 bHM
 bHM
 iZM
-iZM
-iZM
+bHM
+bHM
 iZM
 bHM
 bHM
@@ -101854,14 +101826,14 @@ jBT
 nDp
 iZM
 iZM
-lgL
-mSC
+sEI
+xGp
 dOh
-miz
-miz
+sEI
+xGp
 dOh
-lgL
-mSC
+sEI
+xGp
 iZM
 iZM
 nOd
