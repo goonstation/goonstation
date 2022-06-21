@@ -877,7 +877,7 @@ toxic - poisons
 datum/projectile/bullet/autocannon
 	name = "HE grenade"
 	window_pass = 0
-	icon_state = "40mmR"
+	icon_state = "40mm_lethal"
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
 	power = 25
@@ -999,7 +999,7 @@ datum/projectile/bullet/autocannon
 /datum/projectile/bullet/grenade_round
 	name = "40mm round"
 	window_pass = 0
-	icon_state = "40mmR"
+	icon_state = "40mm_lethal"
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
 	power = 5
@@ -1027,7 +1027,7 @@ datum/projectile/bullet/autocannon
 	name = "smoke grenade"
 	sname = "smokeshot"
 	window_pass = 0
-	icon_state = "40mmB"
+	icon_state = "40mm_smoke"
 	damage_type = D_KINETIC
 	power = 25
 	dissipation_delay = 10
@@ -1072,7 +1072,7 @@ datum/projectile/bullet/autocannon
 	name = "marker grenade"
 	sname = "paint"
 	window_pass = 0
-	icon_state = "40mmR"
+	icon_state = "40mm_paint"
 	damage_type = D_KINETIC
 	power = 15
 	dissipation_delay = 10
@@ -1093,6 +1093,7 @@ datum/projectile/bullet/autocannon
 
 /datum/projectile/bullet/pbr //direct less-lethal 40mm option
 	name = "plastic baton round"
+	icon_state = "40mm_nonlethal"
 	shot_sound = 'sound/weapons/launcher.ogg'
 	power = 50
 	ks_ratio = 0.5
@@ -1104,7 +1105,7 @@ datum/projectile/bullet/autocannon
 	hit_type = DAMAGE_BLUNT
 	impact_image_state = "bhole-large"
 	casing = /obj/item/casing/grenade
-	implanted = null
+	ie_type = null
 
 	on_hit(atom/hit, dirflag, obj/projectile/proj)
 		if (ishuman(hit))
@@ -1129,7 +1130,7 @@ datum/projectile/bullet/autocannon
 /datum/projectile/bullet/grenade_shell
 	name = "40mm grenade conversion shell"
 	window_pass = 0
-	icon_state = "40mmR"
+	icon_state = "40mm_lethal"
 	damage_type = D_KINETIC
 	power = 25
 	dissipation_delay = 20

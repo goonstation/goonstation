@@ -1,5 +1,47 @@
 
+(t)tue jun 21 22
+(u)LeahTheTech
+(p)9240
+(e)|
+(+)The photocopier will now warn you before eating your manuscript.
+(t)sun jun 19 22
+(u)LeahTheTech
+(p)9227
+(e)⚖|balance
+(+)Kudzu can no longer spread to flocktiles and flock conversion now deletes kudzu
+(u)Chatauscours
+(p)9089
+(e)🆕|feature
+(+)Coffee makers can now be emagged.
+(u)LeahTheTech
+(p)9199
+(e)🎨|sprites
+(+)The RCD now uses a context actions menu, allowing you to immediately switch to deconstruct slightly faster!
+(u)DimWhat
+(p)9220
+(e)|
+(+)Added a few more scientific equipment to the science fabricator
+(u)Mr. Moriarty
+(p)9163
+(e)|
+(+)Two Security Assistant requisition tokens can now be found inside the special equipment lockers in the Armoury.
+(u)DimWhat
+(p)8971
+(e)⚖|balance
+(+)Made bio suits slow you down a bit when worn.
 (t)sat jun 18 22
+(u)DimWhat
+(p)9206
+(e)🗺🎨|mapping, sprites
+(+)Replaced the fabricator in science with a unique variant.
+(u)Mr. Moriarty
+(p)9191
+(e)🎨|sprites
+(+)Resprited 40mm smoke shells, 40mm paint marker rounds, 40mm HE pod and pod seeking shells, 40mm HEDP shells, and 40mm HE shells.
+(u)LeahTheTech
+(p)9161
+(e)🗺⚖|mapping, balance
+(*)Security cameras in AI core/upload can now only be used by the AI.
 (u)TTerc
 (+)Personal lockers no longer require you to use the ID card specifically on them to claim/lock/unlock them. You just need a valid worn ID on yourself.
 (u)Ilysen

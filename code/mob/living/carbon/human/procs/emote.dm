@@ -1330,7 +1330,7 @@
 
 						if (M)
 							if (!M.restrained() && M.stat != 1 && !isunconscious(M) && !isdead(M))
-								if (alert(M, "[src] offers you a highfive! Do you accept it?", "Choice", "Yes", "No") == "Yes")
+								if (tgui_alert(M, "[src] offers you a highfive! Do you accept it?", "Choice", list("Yes", "No")) == "Yes")
 									if (M in view(1,null))
 										message = "<B>[src]</B> and [M] highfive!"
 										maptext_out = "<I>highfives [M]!</I>"
@@ -2367,8 +2367,6 @@
 	else
 		src.changeStatus("weakened", 3.9 SECONDS)
 
-		if (client?.hellbanned)
-			src.changeStatus("weakened", 4 SECONDS)
 		G.affecting.changeStatus("weakened", max(G.affecting.getStatusDuration("weakened"), 4.4 SECONDS))
 
 

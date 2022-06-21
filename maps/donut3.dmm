@@ -11154,7 +11154,7 @@
 "cYe" = (
 /obj/bookshelf/persistent{
 	density = 0;
-	layer = 10;
+	layer = 3.01;
 	pixel_y = 19
 	},
 /obj/disposalpipe/segment/transport,
@@ -15837,8 +15837,8 @@
 /turf/simulated/floor/black,
 /area/station/engine/gas)
 "ery" = (
-/obj/machinery/manufacturer/general,
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
+/obj/machinery/manufacturer/science,
 /turf/simulated/floor/plating/jen,
 /area/station/science/gen_storage)
 "erB" = (
@@ -22561,7 +22561,6 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/north)
 "gmo" = (
-/obj/table/glass,
 /obj/item/reagent_containers/glass/beaker/large/antitox{
 	pixel_x = -8;
 	pixel_y = 9
@@ -22578,6 +22577,7 @@
 	pixel_x = 6;
 	pixel_y = -2
 	},
+/obj/table/glass/reinforced/auto,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/surgery/storage)
 "gmq" = (

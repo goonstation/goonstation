@@ -65,6 +65,7 @@
 #include "defines\process.dm"
 #include "defines\projectiles.dm"
 #include "defines\radio.dm"
+#include "defines\RCD.dm"
 #include "defines\robot.dm"
 #include "defines\roles.dm"
 #include "defines\shuttle.dm"

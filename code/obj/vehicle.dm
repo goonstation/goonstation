@@ -320,7 +320,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 	update()
 	..()
 	in_bump = 1
-	if((isturf(AM) || istype(AM, /mob/living/carbon/wall)) && (rider.bioHolder.HasEffect("clumsy") || (rider.reagents && rider.reagents.has_reagent("ethanol"))))
+	if(isturf(AM) && (rider.bioHolder.HasEffect("clumsy") || (rider.reagents && rider.reagents.has_reagent("ethanol"))))
 		boutput(rider, "<span class='alert'><B>You crash into the wall!</B></span>")
 		for (var/mob/C in AIviewers(src))
 			if(C == rider)
@@ -1120,7 +1120,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 	icon_state = "clowncar"
 	..()
 	in_bump = 1
-	if((isturf(AM) || istype(AM, /mob/living/carbon/wall)))
+	if(isturf(AM))
 		boutput(rider, "<span class='alert'><B>You crash into the wall!</B></span>")
 		for (var/mob/C in AIviewers(src))
 			if(C == rider)
@@ -1388,7 +1388,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	walk(src, 0)
 	..()
 	in_bump = 1
-	if((isturf(AM) || istype(AM, /mob/living/carbon/wall)) && (rider.bioHolder.HasEffect("clumsy") || rider.reagents.has_reagent("ethanol")))
+	if(isturf(AM) && (rider.bioHolder.HasEffect("clumsy") || rider.reagents.has_reagent("ethanol")))
 		boutput(rider, "<span class='alert'><B>You run to the wall!</B></span>")
 		for (var/mob/C in AIviewers(src))
 			if(C == rider)
@@ -1565,6 +1565,10 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	booster_upgrade =1
 	delay = 1
 	soundproofing = 5
+
+	New()
+		..()
+		booster_image = image('icons/obj/vehicles.dmi', "boost-bus")
 
 /obj/vehicle/adminbus/Move()
 	if(src.darkness)

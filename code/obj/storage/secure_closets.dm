@@ -33,6 +33,7 @@
 					user.show_text("What exactly are you gunna secure [src] to?", "red")
 				return
 			playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+			user.visible_message("<b>[user]</b> begins to [src.bolted ? "unbolt the [src.name] from" : "bolt the [src.name] to"] [get_turf(src)].")
 			SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, .proc/toggle_bolts, user, I.icon, I.icon_state,"", null)
 			return
 		else if (src.open || !src.locked)
@@ -375,6 +376,7 @@
 	reinforced = TRUE
 	req_access = list(access_maxsec)
 	spawn_contents = list(/obj/item/requisition_token/security = 2,
+	/obj/item/requisition_token/security/assistant = 2,
 	/obj/item/turret_deployer/riot = 2,
 	/obj/item/clothing/glasses/nightvision = 2,
 	/obj/item/clothing/glasses/sunglasses,
@@ -457,10 +459,13 @@
 
 	New()
 		..()
+		START_TRACKING
 		SPAWN(0.5 SECONDS)
 			if (src)
 				// Why range 30? COG2 places linked fixtures much further away from the timer than originally envisioned.
-				for (var/obj/machinery/door_timer/DT in range(30, src))
+				for_by_tcl(DT, /obj/machinery/door_timer)
+					if (!IN_RANGE(DT, src, 30))
+						continue
 					if (DT && DT.id == src.id)
 						src.our_timer = DT
 						if (src.name == "\improper Automatic Locker")
@@ -470,6 +475,10 @@
 					message_admins("Automatic locker: couldn't find brig timer with ID [isnull(src.id) ? "*null*" : "[src.id]"] in [get_area(src)].")
 					logTheThing("debug", null, null, "<b>Convair880:</b> couldn't find brig timer with ID [isnull(src.id) ? "*null*" : "[src.id]"] for automatic locker at [log_loc(src)].")
 		return
+
+	disposing()
+		..()
+		STOP_TRACKING
 
 	mouse_drop(over_object, src_location, over_location)
 		..()
@@ -489,7 +498,7 @@
 			usr.show_text("Automatic lockers can only be linked to a brig timer.", "red")
 			return
 
-		if (alert("Link locker to this brig timer?",,"Yes","No") == "Yes")
+		if (tgui_alert(usr, "Link locker to this brig timer?", "Link locker", list("Yes", "No")) == "Yes")
 			var/obj/machinery/door_timer/DT = over_object
 			if (!DT.id)
 				usr.show_text("This brig timer doesn't have an ID assigned to it.", "red")

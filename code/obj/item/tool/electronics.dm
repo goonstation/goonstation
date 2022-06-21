@@ -246,14 +246,11 @@
 					if("Right")
 						src.set_dir(4)
 			boutput(user, "Ready to deploy!")
-			switch(alert("Ready to deploy?",,"Yes","No"))
-				if("Yes")
-					boutput(user, "<span class='alert'>Place box and solder to deploy!</span>")
-					viewstat = 2
-					secured = 2
-					icon_state = "dbox"
-				if("No")
-					return
+			if (tgui_alert(user, "Ready to deploy?", "Confirmation", list("Yes", "No")) == "Yes")
+				boutput(user, "<span class='alert'>Place box and solder to deploy!</span>")
+				viewstat = 2
+				secured = 2
+				icon_state = "dbox"
 		else
 			return
 

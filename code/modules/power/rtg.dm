@@ -1,6 +1,6 @@
 /obj/machinery/power/rtg
-	name = "radioisotope thermoelectric generator"
-	desc = "Made by wrapping thermocouples around a chunk of nuclear stuff, or something like that."
+	name = "Leigong RTG"
+	desc = "The Xiang-Giesel model '雷公' radio-thermal generator. Wrapped thermocouples produce power from the decay heat of nuclear fuel pellets."
 	icon_state = "rtg_empty"
 	anchored = 1
 	density = 1

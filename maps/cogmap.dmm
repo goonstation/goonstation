@@ -41308,7 +41308,7 @@
 	},
 /area/station/science/lobby)
 "cbJ" = (
-/obj/machinery/manufacturer/general,
+/obj/machinery/manufacturer/science,
 /turf/simulated/floor/delivery,
 /area/station/science/lobby)
 "cbK" = (

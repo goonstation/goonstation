@@ -43,7 +43,7 @@
 				user.show_text("Connection to [src.name] established", "blue")
 				R.my_gen = src
 			else
-				var/choice = alert("Remote is already linked to a generator. Reset and establish new connection?", "Connection override", "Yes", "No")
+				var/choice = tgui_alert(user, "Remote is already linked to a generator. Reset and establish new connection?", "Connection override", list("Yes", "No"))
 				if (choice == "Yes")
 					R.my_gen = src
 					user.show_text("Connection to [src.name] established", "blue")

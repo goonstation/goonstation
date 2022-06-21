@@ -899,11 +899,16 @@
 				assoc_maptext.show_to(src.client)
 
 			if (isliving(src))
-				for (var/mob/dead/target_observer/observer in src:observers)
+				for (var/mob/dead/target_observer/M in src:observers)
 					if(!just_maptext)
-						boutput(observer, msg, group)
-					if(assoc_maptext && observer.client && !observer.client.preferences.flying_chat_hidden)
-						assoc_maptext.show_to(observer.client)
+						if (M.client?.holder && !M.client.player_mode)
+							if (M.mind)
+								msg = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[msg]</span>"
+							boutput(M, msg)
+						else
+							boutput(M, msg, group)
+					if(assoc_maptext && M.client && !M.client.preferences.flying_chat_hidden)
+						assoc_maptext.show_to(M.client)
 
 // Show a message to all mobs in sight of this one
 // This would be for visible actions by the src mob

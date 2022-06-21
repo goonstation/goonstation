@@ -70,6 +70,7 @@
 			src.cell = new /obj/item/cell/shell_cell/charged (src)
 		src.camera = new /obj/machinery/camera(src)
 		src.camera.c_tag = src.name
+		src.camera.ai_only = TRUE
 
 	..()
 	src.botcard.access = get_all_accesses()
