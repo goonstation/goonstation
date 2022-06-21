@@ -840,12 +840,17 @@
 				. = FALSE
 				return
 
+	cast(atom/target)
+		. = ..()
+		if(.)
+			return
+
 		var/turf/T = get_turf(target)
 		if(src.targeted)
 			if (!istype(T) || !istype(T.cameras) || !length(T.cameras))
 				boutput(holder.owner, "No camera available to target that location.")
 				. = FALSE
-				return
+				return 1
 
 	proc/get_law_module()
 		var/mob/living/silicon/ai/AI
@@ -932,7 +937,8 @@
 
 				playsound(cam, "sound/machines/mixer.ogg", 50, 1)
 
-				logTheThing("combat", holder.owner, null, "fires [src.name], creating metal foam at [log_loc(T)].")
+				logTheThing("combat", holder.owner, null, "[key_name(holder.owner)] fires [src.name], creating metal foam at [log_loc(T)].")
+
 				var/obj/foam = new reagent_capsule(get_turf(cam))
 				foam.throw_at(target, 10, 1)
 
@@ -1017,7 +1023,7 @@
 				cam.add_filter("charge_outline", 0, outline_filter(size=0, color=charge_color))
 				animate(cam.get_filter("charge_outline"), size=0.5, time=charge_time)
 				SPAWN(charge_time)
-					logTheThing("combat", holder.owner, null, "fires a camera projectile [src], targeting [log_loc(target)].")
+					logTheThing("combat", holder.owner, target, "[key_name(holder.owner)] fires a camera projectile [src.name], targeting [key_name(target)] [log_loc(target)].")
 					shoot_projectile_ST(cam, P, target)
 					if(P.cost > 1)
 						if (issilicon(cam))
@@ -1120,11 +1126,26 @@
 		name = "Telepad: Send"
 		desc = "Send current telepad contents to the destination."
 		icon_state = "tele_tx"
+
 		cast(atom/target)
 			if (..())
 				return 1
 
 			var/turf/T = get_turf(target)
+
+			if (istype(T, /turf/space) )
+				boutput(holder.owner, "<span class='alert'>Module inhibits teleportation into space.</span>")
+				return 1
+			else if (!checkTurfPassable(T))
+				boutput(holder.owner, "<span class='alert'>Module inhibits teleportation solid or poorly accessable areas.</span>")
+				return 1
+
+			var/datum/gas_mixture/environment = T.return_air()
+			var/env_pressure = MIXTURE_PRESSURE(environment)
+			if(env_pressure <= 0.15*ONE_ATMOSPHERE)
+				boutput(holder.owner, "<span class='alert'>Module inhibits teleportation areas with insufficient atmosphere.</span>")
+				return
+
 			var/obj/machinery/networked/telepad/telepad = get_first_teleporter()
 			if(is_teleportation_allowed(T))
 				telepad.send(T)
@@ -1160,6 +1181,9 @@
 
 	// This might be a lot better as a homing projectile coming from a camera...
 	cast(atom/target)
+		if (..())
+			return 1
+
 		if(issilicon(target))
 			var/mob/living/silicon/S = target
 			var/nanite_overlay = S.SafeGetOverlayImage("nanite_heal",'icons/misc/critter.dmi', "nanites")
@@ -1256,6 +1280,8 @@
 			get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_mob(AI.eyecam)
 
 	cast(atom/target)
+		if (..())
+			return 1
 		boutput(holder.owner, scan_health(target, disease_detection=FALSE, visible=TRUE))
 
 /obj/item/aiModule/ability_expansion/security_vision
@@ -1296,6 +1322,9 @@
 			get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).add_mob(AI.eyecam)
 
 	cast(atom/target)
+		if (..())
+			return 1
+
 		var/obj/item/aiModule/ability_expansion/security_vision/expansion = get_law_module()
 
 		var/found = FALSE
@@ -1350,6 +1379,9 @@
 	cooldown = 15 SECONDS
 
 	cast(atom/target)
+		if (..())
+			return 1
+
 		var/obj/machinery/camera/C
 		var/turf/T = get_turf(target)
 		var/range = flash_range
@@ -1360,7 +1392,7 @@
 				C = cam
 
 		if(C)
-			logTheThing("combat", holder.owner, null, "activates AI [src], targeting [log_loc(target)].")
+			logTheThing("combat", holder.owner, target, "[key_name(holder.owner)] activates AI [src.name], targeting [log_loc(target)].")
 			playsound(C, "sound/weapons/flash.ogg", 100, 1)
 			C.visible_message("[C] emits a sudden flash.")
 			for (var/atom/A in oviewers((flash_range), get_turf(C)))
@@ -1380,3 +1412,151 @@
 		else
 			boutput(holder.owner, "Target is outside of camera range!")
 
+
+/obj/item/aiModule/ability_expansion/friend_turret
+	name = "Turret Expansion Module"
+	desc = "A turret expansion module.  This module allows for control of turret."
+	lawText = "TURRET EXPANSION MODULE"
+	highlight_color = rgb(255, 255, 255, 255)
+	ai_abilities = list(/datum/targetable/ai/module/turret/deploy, /datum/targetable/ai/module/turret/target, /datum/targetable/ai/module/turret/swap_bullets)
+	var/obj/machinery/turret/friend/turret
+
+	New()
+		..()
+		turret = new(src)
+
+/datum/targetable/ai/module/turret/deploy
+	name = "Deploy Turret"
+	desc = "Conviently place a turret for fun and compliance."
+	icon_state = "ai_template"
+	targeted = TRUE
+	target_anything = TRUE
+
+	cast(atom/target)
+		if (..())
+			return 1
+
+		var/turf/floorturf = get_turf(target)
+		var/x_coeff = rand(0, 1)	// open the floor horizontally
+		var/y_coeff = !x_coeff // or vertically but not both - it looks weird
+		var/slide_amount = 22 // around 20-25 is just wide enough to show most of the person hiding underneath
+
+		var/obj/item/aiModule/ability_expansion/friend_turret/expansion = get_law_module()
+		if(!expansion)
+			return 1
+
+		if (!floorturf.intact)
+			boutput(holder.owner, "The floor is not intact here.  LAME!!!")
+			return 1
+
+		if(!checkTurfPassable(floorturf) && get_turf(target) != get_turf(expansion.turret))
+			boutput(holder.owner, "Something is blocking a turret here.  LAME!!!")
+			return 1
+
+		if(expansion.turret.loc != expansion)
+			var/turf/oldLoc = get_turf(expansion.turret)
+			expansion.turret.popDown()
+			if (oldLoc.intact)
+				animate_slide(oldLoc, x_coeff * -slide_amount, y_coeff * -slide_amount, 4)
+
+				sleep(0.4 SECONDS)
+
+				if(expansion.turret)
+					expansion.turret.layer = MOB_LAYER
+					expansion.turret.plane = PLANE_DEFAULT
+
+					expansion.turret.set_density(0)
+					expansion.turret.cover.set_density(0)
+					expansion.turret.layer = BETWEEN_FLOORS_LAYER
+					expansion.turret.plane = PLANE_FLOOR
+					expansion.turret.cover.set_density(0)
+					expansion.turret.cover.layer = BETWEEN_FLOORS_LAYER
+					expansion.turret.cover.plane = PLANE_FLOOR
+
+				if(oldLoc?.intact)
+					animate_slide(oldLoc, 0, 0, 4)
+			sleep(1.0 SECONDS)
+			expansion.turret.set_loc(expansion)
+			expansion.turret.cover.set_loc(expansion)
+
+		if(get_turf(target) == get_turf(expansion.turret))
+			expansion.turret.target = null
+			return
+
+		expansion.turret.set_loc(floorturf)
+		expansion.turret.cover.set_loc(floorturf)
+		if (floorturf.intact)
+			animate_slide(floorturf, x_coeff * -slide_amount, y_coeff * -slide_amount, 4)
+			sleep(0.4 SECONDS)
+			expansion.turret.set_density(1)
+			expansion.turret.cover.set_density(1)
+			expansion.turret.layer = OBJ_LAYER
+			expansion.turret.plane = PLANE_DEFAULT
+			expansion.turret.cover.layer = OBJ_LAYER
+			expansion.turret.cover.plane = PLANE_DEFAULT
+
+		if(floorturf?.intact)
+			animate_slide(floorturf, 0, 0, 4)
+
+		if(expansion.turret.target)
+			if(GET_DIST(expansion.turret, expansion.turret.target) > 10)
+				expansion.turret.target = null
+
+/datum/targetable/ai/module/turret/target
+	name = "Assign Target"
+	desc = "Assign a target for the target"
+	icon_state = "ai_template"
+	targeted = TRUE
+	cooldown = 2 SECONDS
+
+	cast(atom/target)
+		if (..())
+			return 1
+
+		var/obj/item/aiModule/ability_expansion/friend_turret/expansion = get_law_module()
+		if(!expansion)
+			return 1
+
+		var/mob/M = target
+
+		if(target == expansion.turret.target)
+			expansion.turret.target = null
+			boutput(holder.owner, "Clearing active turret target.")
+		else if(!isdead(M) && (iscarbon(M) || !ismobcritter(M)))
+			expansion.turret.target = M
+			logTheThing("combat", holder.owner, target, "[key_name(holder.owner)] used <b>[src.name]</b> on [key_name(target)] [log_loc(holder.owner)].")
+
+			boutput(holder.owner, "Deployable turret now targeting: [M.name].")
+		else
+			boutput(holder.owner, "Invalid target selected.")
+
+
+/datum/targetable/ai/module/turret/swap_bullets
+	name = "Change Lethality"
+	desc = "Lethal to Non-Lethal and Non-Lethal to Lethal!"
+	icon_state = "ai_template"
+	cooldown = 2 SECONDS
+
+	cast(atom/target)
+		var/obj/item/aiModule/ability_expansion/friend_turret/expansion = get_law_module()
+		expansion.turret.lasers = !expansion.turret.lasers
+		var/mode = expansion.turret.lasers ? "LETHAL" : "STUN"
+		logTheThing("combat", holder.owner, null, "[key_name(holder.owner)] set deployable turret to [mode].")
+		boutput(holder.owner, "Turret now set to [mode].")
+		expansion.turret.power_change()
+
+
+/obj/machinery/turret/friend
+	var/mob/target
+
+/obj/machinery/turret/friend/process()
+	src.target_list = list()
+	if(target)
+		if(!isdead(target) && (iscarbon(target) || !ismobcritter(target)))
+			target_list |= target
+	var/prev_enabled = src.enabled
+	src.enabled = length(target_list) > 0
+	if(prev_enabled != src.enabled)
+		power_change()
+	..()
+	return
