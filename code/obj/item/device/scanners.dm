@@ -152,6 +152,7 @@ that cannot be itched
 	var/active = 0
 	var/distancescan = 0
 	var/target = null
+	var/microbioupgrade = 0
 
 	attack_self(mob/user as mob)
 

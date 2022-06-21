@@ -136,6 +136,9 @@ Broken RCD + Effects
 	/// do we really actually for real want this to work in adventure zones?? just do this with varedit dont make children with this on
 	var/really_actually_bypass_z_restriction = false
 
+
+	var/microbioupgrade = 0
+
 	get_desc()
 		. += "<br>It holds [matter]/[max_matter] [istype(src, /obj/item/rcd/material) ? material_name : "matter"]  units. It is currently set to "
 		switch (src.mode)

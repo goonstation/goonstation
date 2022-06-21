@@ -1,4 +1,4 @@
-/obj/machinery/portable_atmospherics/canister
+/obj/machinery/portable_atmospherics/canister	//mark for use
 	name = "canister"
 	icon = 'icons/obj/atmospherics/atmos.dmi'
 	icon_state = "empty"
