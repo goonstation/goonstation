@@ -3657,6 +3657,7 @@
 "aix" = (
 /obj/storage/closet/dresser,
 /obj/item/clothing/under/gimmick/princess,
+/obj/item/clothing/gloves/princess,
 /obj/item/clothing/suit/jacket/yellow,
 /obj/item/clothing/suit/jacket/plastic,
 /obj/item/clothing/under/misc/vice,
