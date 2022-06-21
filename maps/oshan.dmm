@@ -19289,8 +19289,8 @@
 /area/iss)
 "aVj" = (
 /obj/rack,
-/obj/item/clothing/head/helmet/space/blackstronaut,
-/obj/item/clothing/under/gimmick/snazza,
+/obj/item/clothing/head/helmet/space/donk,
+/obj/item/clothing/under/gimmick/donkini,
 /turf/simulated/floor/grime,
 /area/iss)
 "aVk" = (
