@@ -1418,6 +1418,7 @@
 "aeY" = (
 /obj/storage/crate,
 /obj/item/clothing/under/gimmick/princess,
+/obj/item/clothing/gloves/princess
 /obj/window/cubicle{
 	dir = 4
 	},
