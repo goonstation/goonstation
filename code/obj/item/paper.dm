@@ -1656,6 +1656,10 @@ That clump of dirt has a metal substrate, we can just ask Rachid to weld it to t
 	I mean, just making these telecrystals the right color is a pain in the ass, requiring this bulky machine I hardly know how to operate take HOURS per crystal!<br><br>
 	Well, here's to hoping infusing these things with black powder won't blow up in my face."}
 
+/obj/item/paper/false_cake
+	name = "dull note"
+	info = {"i was told i would find cake here"}
+
 /obj/item/paper/recipe_tandoori
 	name = "stained recipe clipping"
 	desc = "It's creased and worn, and smells a little like dried blood."

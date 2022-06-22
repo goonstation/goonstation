@@ -1,0 +1,37 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"t" = (
+/obj/decal/fakeobjects/skeleton{
+	pixel_y = -4
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"u" = (
+/obj/item/paper/false_cake,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"F" = (
+/obj/portal{
+	icon_state = "portal1";
+	name = "orange portal"
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"W" = (
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+W
+W
+W
+"}
+(2,1,1) = {"
+W
+F
+W
+"}
+(3,1,1) = {"
+W
+t
+u
+"}
