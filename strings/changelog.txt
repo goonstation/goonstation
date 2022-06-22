@@ -1,4 +1,9 @@
 
+(t)wed jun 22 22
+(u)Flappybat
+(p)9271
+(e)⚖|balance
+(+)Minimum rounds required to play Detective has increased to 15.
 (t)tue jun 21 22
 (u)Azrun
 (e)🕳️⚖|balance
