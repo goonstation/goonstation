@@ -229,7 +229,7 @@
 	else
 		Vspread = locate(src.x,src.y + rand(-1, 1),src.z)
 	var/dogrowth = 1
-	if (!istype(Vspread, /turf/simulated/floor))
+	if (!istype(Vspread, /turf/simulated/floor) || isfeathertile(Vspread))
 		dogrowth = 0
 	for (var/obj/O in Vspread)
 

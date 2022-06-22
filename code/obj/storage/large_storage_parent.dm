@@ -309,9 +309,16 @@
 			if (src.emagged)
 				user.show_text("It appears to be broken.", "red")
 				return
-			else if (src.personal && istype(I, /obj/item/card/id))
-				var/obj/item/card/id/ID = I
-				if ((src.req_access && src.allowed(user)) || !src.registered || (istype(ID, /obj/item/card/id) && src.registered == ID.registered))
+			else if (src.personal)
+				var/obj/item/card/id/ID = null
+				if (istype(I, /obj/item/card/id))
+					ID = I
+				else
+					if (ishuman(user))
+						var/mob/living/carbon/human/H = user
+						if (H.wear_id)
+							ID = H.wear_id
+				if ((src.req_access && src.allowed(user)) || (ID && length(ID.registered) && (src.registered == ID.registered || !src.registered)))
 					//they can open all lockers, or nobody owns this, or they own this locker
 					src.locked = !( src.locked )
 					user.visible_message("<span class='notice'>The locker has been [src.locked ? null : "un"]locked by [user].</span>")
@@ -751,7 +758,7 @@
 			src.log_me(weldman, M, src.welded ? "welds" : "unwelds")
 
 	proc/crunch(var/mob/M as mob)
-		if (!M || istype(M, /mob/living/carbon/wall))
+		if (!M)
 			return
 
 		if (M.ckey && (M.ckey == owner_ckey))

@@ -1385,8 +1385,8 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 		return 1
 
 /obj/machinery/power/furnace/thermo
-	name = "Furnace"
-	desc = "Generates Heat for the thermoelectric generator."
+	name = "Zaojun-1 Furnace"
+	desc = "The venerable Xiang-Giesel model '灶君' combustion furnace. This version lacks the thermocouple and is designed to heat larger thermo-electric gas circulator systems."
 	icon_state = "furnace"
 	anchored = 1
 	density = 1

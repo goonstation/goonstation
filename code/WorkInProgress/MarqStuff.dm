@@ -583,7 +583,7 @@
 	hit_type = DAMAGE_STAB
 	implanted = null
 	ks_ratio = 1.0
-	icon_turf_hit = "bhole"
+	impact_image_state = "bhole"
 	icon_state = "arrow"
 
 	on_hit(var/atom/A, angle, var/obj/projectile/P)

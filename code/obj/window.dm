@@ -303,18 +303,18 @@
 		return the_text
 
 	Cross(atom/movable/mover)
-		if(!src.density) return 1
+		if(!src.density)
+			return TRUE
 		if(istype(mover, /obj/projectile))
 			var/obj/projectile/P = mover
 			if(P.proj_data.window_pass)
-				return 1
+				return TRUE
 		if (!is_cardinal(dir))
-			return 0 //full tile window, you can't move into it!
+			return FALSE //full tile window, you can't move into it!
 		if(get_dir(loc, mover) & dir)
-
 			return !density
 		else
-			return 1
+			return TRUE
 
 	gas_cross(turf/target)
 		. = TRUE
@@ -987,16 +987,26 @@
 
 
 	auto
-		name = "reinforced autowindow grille spawner"
+		name = "autowindow grille spawner (will place nonreinf soon)"
 		win_path = "/obj/window/auto/reinforced"
 		full_win = 1
 		no_dirs = 1
-		icon_state = "r-wingrille_f"
+		icon_state = "wingrille_f"
+
+		reinforced
+			name = "reinforced autowindow grille spawner"
+			win_path = "/obj/window/auto/reinforced"
+			icon_state = "r-wingrille_f"
 
 		crystal
-			name = "crystal autowindow grille spawner"
+			name = "crystal autowindow grille spawner (will place nonreinf soon)"
 			win_path = "/obj/window/auto/crystal/reinforced"
 			icon_state = "p-wingrille_f"
+
+			reinforced
+				name = "reinforced crystal autowindow grille spawner"
+				win_path = "/obj/window/auto/crystal/reinforced"
+				icon_state = "pr-wingrille_f"
 
 		tuff
 			name = "tuff stuff reinforced autowindow grille spawner"
@@ -1046,7 +1056,6 @@
 // flock windows
 
 /obj/window/auto/feather
-	default_material = "gnesisglass"
 
 /obj/window/auto/feather/New()
 	connects_to += /turf/simulated/wall/auto/feather

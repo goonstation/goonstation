@@ -91,7 +91,6 @@ proc/filter_trait_hats(var/type)
 	name = "bio hood"
 	icon_state = "bio"
 	item_state = "bio_hood"
-	permeability_coefficient = 0.005
 	c_flags = COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	desc = "This hood protects you from harmful biological contaminants."
 	seal_hair = 1
@@ -101,9 +100,11 @@ proc/filter_trait_hats(var/type)
 		..()
 		setProperty("heatprot", 10)
 		setProperty("viralprot", 50)
+		setProperty("chemprot", 30)
 		setProperty("meleeprot_head", 1)
 		setProperty("disorient_resist_eye", 5)
 		setProperty("disorient_resist_ear", 2)
+		setProperty("movespeed", 0.1)
 
 /obj/item/clothing/head/bio_hood/janitor // adhara stuff
 	name = "bio hood"
@@ -122,7 +123,6 @@ proc/filter_trait_hats(var/type)
 	name = "emergency hood"
 	icon_state = "emerg"
 	item_state = "emerg"
-	permeability_coefficient = 0.25
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	desc = "Helps protect from vacuum for a short period of time."
 	seal_hair = 1
@@ -130,6 +130,7 @@ proc/filter_trait_hats(var/type)
 
 	setupProperties()
 		..()
+		setProperty("chemprot", 15)
 		setProperty("disorient_resist_eye", 9)
 		setProperty("disorient_resist_ear", 5)
 		setProperty("space_movespeed", 0.5)
@@ -137,7 +138,6 @@ proc/filter_trait_hats(var/type)
 /obj/item/clothing/head/rad_hood
 	name = "Class II radiation hood"
 	icon_state = "radiation"
-	permeability_coefficient = 0.02
 	c_flags = COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	desc = "Asbestos, right near your face. Perfect!"
 	seal_hair = 1
@@ -147,9 +147,10 @@ proc/filter_trait_hats(var/type)
 		setProperty("radprot", 50)
 		setProperty("heatprot", 10)
 		setProperty("meleeprot_head", 1)
+		setProperty("chemprot", 10)
 		setProperty("disorient_resist_eye", 12)
 		setProperty("disorient_resist_ear", 8)
-		setProperty("movespeed", 0.15)
+		setProperty("movespeed", 0.1)
 
 /obj/item/clothing/head/cakehat
 	name = "cakehat"
@@ -1194,12 +1195,12 @@ proc/filter_trait_hats(var/type)
 	desc = "A thick rubber hood which protects you from almost any harmful chemical substance."
 	icon_state = "chemhood"
 	item_state = "chemhood"
-	permeability_coefficient = 0
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	seal_hair = 1
 
 	setupProperties()
 		..()
+		setProperty("chemprot", 40)
 		setProperty("disorient_resist_eye", 6)
 		setProperty("disorient_resist_ear", 5)
 

@@ -47,7 +47,7 @@ toxic - poisons
 	window_pass = 0
 	implanted = /obj/item/implant/projectile
 	// we create this overlay on walls when we hit them
-	icon_turf_hit = "bhole"
+	impact_image_state = "bhole"
 
 	hit_mob_sound = 'sound/impact_sounds/Flesh_Stab_2.ogg'
 
@@ -68,7 +68,7 @@ toxic - poisons
 	hit_type = DAMAGE_CUT
 	implanted = /obj/item/implant/projectile/staple // HEH
 	shot_sound = 'sound/impact_sounds/Generic_Snap_1.ogg'
-	icon_turf_hit = "bhole-staple"
+	impact_image_state = "bhole-staple"
 	casing = null
 
 /datum/projectile/bullet/vbullet
@@ -81,7 +81,7 @@ toxic - poisons
 	hit_type = DAMAGE_CUT
 	implanted = null
 	casing = null
-	icon_turf_hit = null
+	impact_image_state = null
 
 //0.22
 /datum/projectile/bullet/bullet_22
@@ -92,7 +92,7 @@ toxic - poisons
 	hit_type = DAMAGE_CUT
 	implanted = /obj/item/implant/projectile/bullet_22
 	casing = /obj/item/casing/small
-	icon_turf_hit = "bhole-small"
+	impact_image_state = "bhole-small"
 	silentshot = 1 // It's supposed to be a stealth weapon, right (Convair880)?
 
 /datum/projectile/bullet/bullet_22/smartgun
@@ -113,7 +113,7 @@ toxic - poisons
 	hit_type = DAMAGE_CUT
 	implanted = /obj/item/implant/projectile/bullet_22
 	casing = /obj/item/casing/small
-	icon_turf_hit = "bhole-small"
+	impact_image_state = "bhole-small"
 
 //0.223
 /datum/projectile/bullet/assault_rifle
@@ -125,7 +125,7 @@ toxic - poisons
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
 	shot_number = 1
-	icon_turf_hit = "bhole-small"
+	impact_image_state = "bhole-small"
 	implanted = /obj/item/implant/projectile/bullet_308
 	casing = /obj/item/casing/rifle
 
@@ -155,7 +155,7 @@ toxic - poisons
 	ks_ratio = 1.0
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
-	icon_turf_hit = "bhole-small"
+	impact_image_state = "bhole-small"
 	implanted = /obj/item/implant/projectile/bullet_308
 	casing = /obj/item/casing/rifle
 
@@ -172,7 +172,7 @@ toxic - poisons
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
 	shot_number = 3
-	icon_turf_hit = "bhole-small"
+	impact_image_state = "bhole-small"
 	implanted = /obj/item/implant/projectile/bullet_308
 	casing = /obj/item/casing/rifle
 
@@ -185,7 +185,7 @@ toxic - poisons
 	shot_sound = 'sound/weapons/railgun.ogg'
 	dissipation_delay = 10
 	casing = /obj/item/casing/rifle_loud
-	icon_turf_hit = "bhole-small"
+	impact_image_state = "bhole-small"
 
 	on_hit(atom/hit, dirflag, obj/projectile/proj)
 		if(ishuman(hit))
@@ -215,7 +215,7 @@ toxic - poisons
 	projectile_speed = 72
 	max_range = 100
 	casing = /obj/item/casing/rifle_loud
-	icon_turf_hit = "bhole-small"
+	impact_image_state = "bhole-small"
 	on_launch(obj/projectile/O)
 		O.AddComponent(/datum/component/sniper_wallpierce, 3, 20) //pierces 3 walls/lockers/doors/etc. Does not function on restriced Z, rwalls and blast doors use 2 pierces
 
@@ -281,7 +281,7 @@ toxic - poisons
 	ks_ratio = 1.0
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
-	icon_turf_hit = "bhole-small"
+	impact_image_state = "bhole-small"
 	implanted = /obj/item/implant/projectile/bullet_308
 	casing = /obj/item/casing/rifle
 	var/slow = 1
@@ -318,7 +318,7 @@ toxic - poisons
 	hit_type = DAMAGE_CUT
 	implanted = /obj/item/implant/projectile/bullet_22
 	casing = /obj/item/casing/small
-	icon_turf_hit = "bhole-small"
+	impact_image_state = "bhole-small"
 
 	smg
 		power = 20
@@ -335,7 +335,7 @@ toxic - poisons
 	dissipation_rate = 2
 	dissipation_delay = 8
 	projectile_speed = 48
-	icon_turf_hit = "bhole-small"
+	impact_image_state = "bhole-small"
 	hit_type = DAMAGE_BLUNT
 	implanted = /obj/item/implant/projectile/ninemmplastic
 	casing = /obj/item/casing/small
@@ -366,7 +366,7 @@ toxic - poisons
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
 	implanted = /obj/item/implant/projectile/bullet_357
-	icon_turf_hit = "bhole-small"
+	impact_image_state = "bhole-small"
 	casing = /obj/item/casing/medium
 
 /datum/projectile/bullet/revolver_357/AP
@@ -389,7 +389,7 @@ toxic - poisons
 	power = 35
 	ks_ratio = 1.0
 	implanted = /obj/item/implant/projectile/bullet_38
-	icon_turf_hit = "bhole-small"
+	impact_image_state = "bhole-small"
 	casing = /obj/item/casing/medium
 
 /datum/projectile/bullet/revolver_38/lb
@@ -409,7 +409,7 @@ toxic - poisons
 	damage_type = D_ENERGY // FUCK YOU.
 	ie_type = "T"
 	hit_type = null
-	icon_turf_hit = null // stun bullets shouldn't actually enter walls should they?
+	impact_image_state = null // stun bullets shouldn't actually enter walls should they?
 
 	/* this is now handled in the projectile parent on_hit for all ks_ratio 0.0 weapons.
 	on_hit(atom/hit) // adding this so these work like taser shots I guess, if this sucks feel free to remove it
@@ -428,7 +428,7 @@ toxic - poisons
 	sname = "foam dart"
 	icon_state = "foamdart"
 	shot_sound = 'sound/effects/syringeproj.ogg'
-	icon_turf_hit = null
+	impact_image_state = null
 	projectile_speed = 26
 	implanted = null
 	power = 0
@@ -488,7 +488,7 @@ toxic - poisons
 	hit_ground_chance = 100
 	implanted = /obj/item/implant/projectile/bullet_41
 	ks_ratio = 0.66
-	icon_turf_hit = "bhole"
+	impact_image_state = "bhole"
 	casing = /obj/item/casing/derringer
 
 //0.45
@@ -498,7 +498,7 @@ toxic - poisons
 	ks_ratio = 1.0
 	hit_type = DAMAGE_CUT
 	implanted = /obj/item/implant/projectile/bullet_45
-	icon_turf_hit = "bhole-small"
+	impact_image_state = "bhole-small"
 	casing = /obj/item/casing/medium
 
 //0.58
@@ -511,7 +511,7 @@ toxic - poisons
 	shot_sound = 'sound/weapons/flintlock.ogg'
 	dissipation_delay = 10
 	casing = null
-	icon_turf_hit = "bhole-small"
+	impact_image_state = "bhole-small"
 
 	on_hit(atom/hit, dirflag)
 		if(ishuman(hit))
@@ -539,7 +539,7 @@ toxic - poisons
 	dissipation_rate = 10
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
-	icon_turf_hit = "bhole"
+	impact_image_state = "bhole"
 	hit_ground_chance = 100
 	implanted = /obj/item/implant/projectile/bullet_12ga
 	casing = /obj/item/casing/shotgun/red
@@ -630,7 +630,7 @@ toxic - poisons
 	implanted = null
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
-	icon_turf_hit = "bhole"
+	impact_image_state = "bhole"
 	casing = /obj/item/casing/shotgun/orange
 
 	on_hit(atom/hit)
@@ -661,7 +661,7 @@ toxic - poisons
 	implanted = null
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
-	icon_turf_hit = "bhole"
+	impact_image_state = "bhole"
 	casing = /obj/item/casing/shotgun/blue
 
 	on_hit(atom/hit, dirflag, obj/projectile/proj)
@@ -689,7 +689,7 @@ toxic - poisons
 	implanted = null
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
-	icon_turf_hit = null
+	impact_image_state = null
 	casing = /obj/item/casing/shotgun/blue
 
 	on_hit(atom/hit, dirflag, obj/projectile/proj)
@@ -713,7 +713,7 @@ toxic - poisons
 	implanted = null
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
-	icon_turf_hit = "bhole"
+	impact_image_state = "bhole"
 	casing = /obj/item/casing/shotgun/gray
 
 	on_hit(atom/hit, direction, obj/projectile/P)
@@ -755,7 +755,7 @@ toxic - poisons
 	color_blue = 0
 	icon_state = "flare"
 	implanted = null
-	icon_turf_hit = "bhole"
+	impact_image_state = "bhole"
 	casing = /obj/item/casing/shotgun/orange
 
 	on_hit(atom/hit, direction, obj/projectile/P)
@@ -790,7 +790,7 @@ toxic - poisons
 	implanted = null
 
 	ks_ratio = 1.0
-	icon_turf_hit = "bhole-large"
+	impact_image_state = "bhole-large"
 	casing = /obj/item/casing/cannon
 	pierces = 4
 	shot_sound_extrarange = 1
@@ -868,7 +868,7 @@ toxic - poisons
 	dissipation_delay = 25
 	shot_sound = 'sound/weapons/ACgun2.ogg'
 	casing = null
-	icon_turf_hit = "bhole-large"
+	impact_image_state = "bhole-large"
 
 	on_hit(atom/hit)
 		explosion_new(null, get_turf(hit), 5)
@@ -877,7 +877,7 @@ toxic - poisons
 datum/projectile/bullet/autocannon
 	name = "HE grenade"
 	window_pass = 0
-	icon_state = "40mmR"
+	icon_state = "40mm_lethal"
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
 	power = 25
@@ -885,7 +885,7 @@ datum/projectile/bullet/autocannon
 	cost = 1
 	shot_sound = 'sound/weapons/rocket.ogg'
 	ks_ratio = 1.0
-	icon_turf_hit = "bhole-large"
+	impact_image_state = "bhole-large"
 	casing = /obj/item/casing/grenade
 
 	on_hit(atom/hit)
@@ -913,13 +913,13 @@ datum/projectile/bullet/autocannon
 		color_blue = 0.2
 		power = 50
 		shot_sound = 'sound/machines/engine_alert3.ogg'
-		icon_turf_hit = null
+		impact_image_state = null
 		casing = null
 
 	huge
 		icon_state = "400mm"
 		power = 100
-		icon_turf_hit = "bhole-large"
+		impact_image_state = "bhole-large"
 
 		on_hit(atom/hit)
 			explosion_new(null, get_turf(hit), 80)
@@ -999,7 +999,7 @@ datum/projectile/bullet/autocannon
 /datum/projectile/bullet/grenade_round
 	name = "40mm round"
 	window_pass = 0
-	icon_state = "40mmR"
+	icon_state = "40mm_lethal"
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
 	power = 5
@@ -1007,7 +1007,7 @@ datum/projectile/bullet/autocannon
 	cost = 1
 	shot_sound = 'sound/weapons/launcher.ogg'
 	ks_ratio = 1.0
-	icon_turf_hit = "bhole-large"
+	impact_image_state = "bhole-large"
 	casing = /obj/item/casing/grenade
 
 	explosive
@@ -1027,14 +1027,14 @@ datum/projectile/bullet/autocannon
 	name = "smoke grenade"
 	sname = "smokeshot"
 	window_pass = 0
-	icon_state = "40mmB"
+	icon_state = "40mm_smoke"
 	damage_type = D_KINETIC
 	power = 25
 	dissipation_delay = 10
 	cost = 1
 	shot_sound = 'sound/weapons/launcher.ogg'
 	ks_ratio = 1.0
-	icon_turf_hit = "bhole-large"
+	impact_image_state = "bhole-large"
 	casing = /obj/item/casing/grenade
 	implanted = null
 
@@ -1072,14 +1072,14 @@ datum/projectile/bullet/autocannon
 	name = "marker grenade"
 	sname = "paint"
 	window_pass = 0
-	icon_state = "40mmR"
+	icon_state = "40mm_paint"
 	damage_type = D_KINETIC
 	power = 15
 	dissipation_delay = 10
 	cost = 1
 	shot_sound = 'sound/weapons/launcher.ogg'
 	ks_ratio = 1.0
-	icon_turf_hit = "bhole-large"
+	impact_image_state = "bhole-large"
 	casing = /obj/item/casing/grenade
 	hit_type = DAMAGE_BLUNT
 	hit_mob_sound = "sound/misc/splash_1.ogg"
@@ -1093,6 +1093,7 @@ datum/projectile/bullet/autocannon
 
 /datum/projectile/bullet/pbr //direct less-lethal 40mm option
 	name = "plastic baton round"
+	icon_state = "40mm_nonlethal"
 	shot_sound = 'sound/weapons/launcher.ogg'
 	power = 50
 	ks_ratio = 0.5
@@ -1102,9 +1103,9 @@ datum/projectile/bullet/autocannon
 	implanted = null
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
-	icon_turf_hit = "bhole-large"
+	impact_image_state = "bhole-large"
 	casing = /obj/item/casing/grenade
-	implanted = null
+	ie_type = null
 
 	on_hit(atom/hit, dirflag, obj/projectile/proj)
 		if (ishuman(hit))
@@ -1129,14 +1130,14 @@ datum/projectile/bullet/autocannon
 /datum/projectile/bullet/grenade_shell
 	name = "40mm grenade conversion shell"
 	window_pass = 0
-	icon_state = "40mmR"
+	icon_state = "40mm_lethal"
 	damage_type = D_KINETIC
 	power = 25
 	dissipation_delay = 20
 	cost = 1
 	shot_sound = 'sound/weapons/launcher.ogg'
 	ks_ratio = 1.0
-	icon_turf_hit = "bhole-large"
+	impact_image_state = "bhole-large"
 	casing = /obj/item/casing/grenade
 	implanted = null
 
@@ -1248,7 +1249,7 @@ datum/projectile/bullet/autocannon
 	cost = 1
 	shot_sound = 'sound/weapons/rocket.ogg'
 	ks_ratio = 1.0
-	icon_turf_hit = "bhole-large"
+	impact_image_state = "bhole-large"
 
 	on_hit(atom/hit)
 		var/turf/T = get_turf(hit)
@@ -1282,7 +1283,7 @@ datum/projectile/bullet/autocannon
 	cost = 1
 	shot_sound = 'sound/weapons/rocket.ogg'
 	ks_ratio = 1.0
-	icon_turf_hit = "bhole-large"
+	impact_image_state = "bhole-large"
 	implanted = null
 
 	on_hit(atom/hit)
@@ -1312,7 +1313,7 @@ datum/projectile/bullet/autocannon
 	cost = 1
 	shot_sound = 'sound/weapons/rocket.ogg'
 	ks_ratio = 1.0
-	icon_turf_hit = "bhole-large"
+	impact_image_state = "bhole-large"
 	implanted = null
 
 	on_hit(atom/hit)
@@ -1336,7 +1337,7 @@ datum/projectile/bullet/autocannon
 	dissipation_rate = 2
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
-	icon_turf_hit = "bhole"
+	impact_image_state = "bhole"
 	implanted = null
 	casing = null
 	cost = 1
@@ -1360,7 +1361,7 @@ datum/projectile/bullet/autocannon
 	dissipation_rate = 4
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
-	icon_turf_hit = "bhole"
+	impact_image_state = "bhole"
 	implanted = null
 	casing = null
 	cost = 2
@@ -1384,7 +1385,7 @@ datum/projectile/bullet/autocannon
 	icon = 'icons/obj/scrap.dmi'
 	icon_state = "2metal0"
 	casing = null
-	icon_turf_hit = "bhole-staple"
+	impact_image_state = "bhole-staple"
 
 /datum/projectile/bullet/howitzer
 	name = "howitzer round"
@@ -1403,7 +1404,7 @@ datum/projectile/bullet/autocannon
 	implanted = null
 
 	ks_ratio = 0.5
-	icon_turf_hit = "bhole-large"
+	impact_image_state = "bhole-large"
 	casing = /obj/item/casing/cannon
 	shot_sound_extrarange = 1
 
@@ -1428,7 +1429,7 @@ datum/projectile/bullet/autocannon
 	shot_sound = 'sound/effects/glitchshot.ogg'
 	ks_ratio = 1.0
 	casing = null
-	icon_turf_hit = null
+	impact_image_state = null
 
 	New()
 		..()
@@ -1457,7 +1458,7 @@ datum/projectile/bullet/autocannon
 	sname = "Get In"
 	shot_sound = 'sound/weapons/ribbit.ogg' //heh
 	casing = null
-	icon_turf_hit = null
+	impact_image_state = null
 
 	New()
 		..()
@@ -1480,7 +1481,7 @@ datum/projectile/bullet/autocannon
 	hit_type = DAMAGE_BLUNT
 	implanted = null
 	shot_sound = 'sound/impact_sounds/Generic_Snap_1.ogg'
-	icon_turf_hit = "bhole-staple"
+	impact_image_state = "bhole-staple"
 	casing = null
 	hit_ground_chance = 50
 	icon_state = "random_thing"	//actually exists, looks funny enough to use as the projectile image for this

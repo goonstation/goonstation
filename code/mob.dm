@@ -918,7 +918,7 @@
 	if (confirm != "Yes")
 		return
 	if (!src.mind)
-		src << alert("There was an error setting this status. Perhaps you are a ghost?")
+		tgui_alert(src, "There was an error setting this status. Perhaps you are a ghost?", "Error")
 		return
 //So that players can leave their team and spectate. Since normal dying get's you instantly cloned.
 #if defined(MAP_OVERRIDE_POD_WARS)
@@ -2137,6 +2137,14 @@
 		animation.delaydispose()
 	qdel(src)
 
+/mob/proc/flockbit_gib()
+	src.visible_message("<span class='alert bold'>[src] is torn apart from the inside as some weird floaty thing rips its way out of their body! Holy fuck!!</span>")
+	var/mob/living/critter/flock/bit/B = new()
+	var/turf/T = get_turf(src)
+	B.set_loc(T)
+	make_cleanable(/obj/decal/cleanable/flockdrone_debris, T)
+	src.gib()
+
 // Man, there's a lot of possible inventory spaces to store crap. This should get everything under normal circumstances.
 // Well, it's hard to account for every possible matryoshka scenario (Convair880).
 /mob/proc/get_all_items_on_mob()
@@ -2750,7 +2758,7 @@
 				src.show_text("That name was too short after removing bad characters from it. Please choose a different name.", "red")
 				continue
 			else
-				if (force_instead || alert(src, "Use the name [newname]?", newname, "Yes", "No") == "Yes")
+				if (force_instead || tgui_alert(src, "Use the name [newname]?", newname, list("Yes", "No")) == "Yes")
 					if(!src.traitHolder.hasTrait("immigrant"))// stowaway entertainers shouldn't be on the manifest
 						for (var/datum/record_database/DB in list(data_core.bank, data_core.security, data_core.general, data_core.medical))
 							var/datum/db_record/R = DB.find_record("id", src.datacore_id)

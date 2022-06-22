@@ -4,6 +4,7 @@
 /obj/flock_structure/cage
 	name = "weird energy cage"
 	desc = "You can see the person inside being rapidly taken apart by fibrous mechanisms. You ought to do something about that."
+	flock_desc = "Spins living matter into Flockdrones. Painfully."
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "cage"
 	flock_id = "matter reprocessor"
@@ -22,7 +23,6 @@
 	var/target_fluid = "flockdrone_fluid"
 	var/create_egg_at_fluid = 100
 	var/absorb_per_process_tick = 2
-	mat_changeappearance = FALSE
 
 
 	New(loc, var/atom/iced, datum/flock/F=null)

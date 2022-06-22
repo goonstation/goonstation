@@ -282,7 +282,6 @@
 	for(var/client/C)
 		var/mob/new_player/player = C.mob
 		if (!istype(player)) continue
-		if (ishellbanned(player)) continue //No treason for you
 		if (jobban_isbanned(player, "Syndicate")) continue //antag banned
 
 		if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !(player.mind in candidates))
