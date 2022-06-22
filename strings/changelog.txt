@@ -1,5 +1,8 @@
 
 (t)tue jun 21 22
+(u)aloe
+(+)plate stacks are back
+(+)plates break more easily
 (u)DimWhat
 (p)9262
 (e)🗺🎨|mapping, sprites
