@@ -14,7 +14,7 @@
 #define PARALLAX_OBJ_COUNT 21
 /// guide to the format here: | Coordinates | icon to use              |    icon      |scale|size|layer
 // planets
-#define PARALLAX_OBJ_1(x) x(map_settings.X0_coords, 'icons/misc/1024x1024.dmi',"plasma_giant", 0.14, 1, 1)
+#define PARALLAX_OBJ_1(x) x(map_settings.X0_coords, 'icons/misc/1024x1024.dmi',"plasma_giant", 0.1, 1, 1)
 #define PARALLAX_OBJ_2(x) x(map_settings.X5_coords, 'icons/misc/512x512.dmi',"moon-green", 0.25, 1, 1)
 #define PARALLAX_OBJ_3(x) x(list(list(0,0),list(23,292),list(0,0),list(0,0),list(71,43)), 'icons/obj/large/160x160.dmi',"bigasteroid_1", 0.25, 2, 1)
 #define PARALLAX_OBJ_4(x) x(map_settings.X3_coords, 'icons/misc/512x512.dmi',"moon-chunky", 0.25, 1, 1)
@@ -35,16 +35,16 @@
 #define PARALLAX_OBJ_18(x) x(map_settings.ss12_coords, 'icons/obj/backgrounds.dmi',"ss12-broken", 0.28, 1, 2)
 #define PARALLAX_OBJ_19(x) x(map_settings.ss10_coords, 'icons/obj/backgrounds.dmi',"ss10", 0.28, 1, 2)
 // stars
-#define PARALLAX_OBJ_20(x) x(map_settings.star_red_coords, 'icons/misc/galactic_objects_large.dmi',"star-red", 0.12, 1, 0)
-#define PARALLAX_OBJ_21(x) x(map_settings.star_blue_coords, 'icons/misc/galactic_objects_large.dmi',"star-blue", 0.12, 1, 0)
+#define PARALLAX_OBJ_20(x) x(map_settings.star_red_coords, 'icons/misc/galactic_objects_large.dmi',"star-red", 0.08, 1, 0)
+#define PARALLAX_OBJ_21(x) x(map_settings.star_blue_coords, 'icons/misc/galactic_objects_large.dmi',"star-blue", 0.08, 1, 0)
 
 
 
 /// this is a hud that when given to a client will add parallax to their view.
 /datum/hud/parallax
-	var/list/parallax_objects = list()
-	var/list/parallax_settings = list()
-	var/list/parallax_coords = list(list())
+	var/list/parallax_objects = list(list(),list(),list(),list(),list())
+	var/list/hidden_objects = list(list(),list(),list(),list(),list())
+	var/list/parallax_coords = list(list(),list(),list(),list(),list())
 	var/list/scale = list()
 	var/list/size = list()
 
@@ -61,12 +61,16 @@
 		N.layer = HUD_LAYER + Player
 		N.appearance_flags += TILE_BOUND
 		N.mouse_opacity = 1
+		for(var/i in 1 to length(pCoords))
+			parallax_coords[i][N] = pCoords[i]
+			if (pCoords[i][1] == 0 || pCoords[i][2] == 0)
+				hidden_objects[i][N] = N
+			else
+				parallax_objects[i][N] = N
 
-		parallax_coords[N] = pCoords
 		scale[N] = Pscale
 		size[N] = Psize
 
-		parallax_objects[N] = N
 		N.transform = matrix(0,0,0,0,0,0)
 
 	New(M)
@@ -87,60 +91,58 @@
 			background.icon_state = BGicon
 
 			/// parallax settings setup
-			PARALLAX_PLANET(PARALLAX_OBJ_1)
-			PARALLAX_PLANET(PARALLAX_OBJ_2)
-			PARALLAX_PLANET(PARALLAX_OBJ_3)
-			PARALLAX_PLANET(PARALLAX_OBJ_4)
-			PARALLAX_PLANET(PARALLAX_OBJ_5)
-			PARALLAX_PLANET(PARALLAX_OBJ_6)
-			PARALLAX_PLANET(PARALLAX_OBJ_7)
-			PARALLAX_PLANET(PARALLAX_OBJ_8)
-			PARALLAX_PLANET(PARALLAX_OBJ_9)
-			PARALLAX_PLANET(PARALLAX_OBJ_10)
-			PARALLAX_PLANET(PARALLAX_OBJ_11)
-			PARALLAX_PLANET(PARALLAX_OBJ_12)
-			PARALLAX_PLANET(PARALLAX_OBJ_13)
-			PARALLAX_PLANET(PARALLAX_OBJ_14)
-			PARALLAX_PLANET(PARALLAX_OBJ_15)
-			PARALLAX_PLANET(PARALLAX_OBJ_16)
-			PARALLAX_PLANET(PARALLAX_OBJ_17)
-			PARALLAX_PLANET(PARALLAX_OBJ_18)
-			PARALLAX_PLANET(PARALLAX_OBJ_19)
-			PARALLAX_PLANET(PARALLAX_OBJ_20)
-			PARALLAX_PLANET(PARALLAX_OBJ_21)
+			if (!length(scale))
+				PARALLAX_PLANET(PARALLAX_OBJ_1)
+				PARALLAX_PLANET(PARALLAX_OBJ_2)
+				PARALLAX_PLANET(PARALLAX_OBJ_3)
+				PARALLAX_PLANET(PARALLAX_OBJ_4)
+				PARALLAX_PLANET(PARALLAX_OBJ_5)
+				PARALLAX_PLANET(PARALLAX_OBJ_6)
+				PARALLAX_PLANET(PARALLAX_OBJ_7)
+				PARALLAX_PLANET(PARALLAX_OBJ_8)
+				PARALLAX_PLANET(PARALLAX_OBJ_9)
+				PARALLAX_PLANET(PARALLAX_OBJ_10)
+				PARALLAX_PLANET(PARALLAX_OBJ_11)
+				PARALLAX_PLANET(PARALLAX_OBJ_12)
+				PARALLAX_PLANET(PARALLAX_OBJ_13)
+				PARALLAX_PLANET(PARALLAX_OBJ_14)
+				PARALLAX_PLANET(PARALLAX_OBJ_15)
+				PARALLAX_PLANET(PARALLAX_OBJ_16)
+				PARALLAX_PLANET(PARALLAX_OBJ_17)
+				PARALLAX_PLANET(PARALLAX_OBJ_18)
+				PARALLAX_PLANET(PARALLAX_OBJ_19)
+				PARALLAX_PLANET(PARALLAX_OBJ_20)
+				PARALLAX_PLANET(PARALLAX_OBJ_21)
 
 	/// updates parallax object transform values
-	proc/update(var/turf/master_turf)
+	proc/update(var/turf/master_turf,var/updatehidden)
 		if(!active) return
 		#ifdef UNDERWATER_MAP
 		return
 		#endif
 
-		for(var/atom/movable/screen/hud/P as anything in parallax_objects)
-
-			if(length(parallax_coords[P]) >= master_turf.z)
-				if (parallax_coords[P][master_turf.z] == null)
-					P.transform = matrix(0,0,0,0,0,0)
+		var/Slist = parallax_objects[master_turf.z] /// this exists to reduce unnecessary iterating, only objects on the zlevel will be in the list
+		if (updatehidden == TRUE)
+			var/Hlist = hidden_objects[master_turf.z] /// exact opposite of Slist
+			var/matrix/hidden = matrix(0,0,0,0,0,0)
+			for(var/atom/movable/screen/hud/Ph in Hlist)
+				if (Ph.transform != hidden)
+					Ph.transform = hidden
 					continue
 
-				var/coordx = parallax_coords[P][master_turf.z][1]
-				var/coordy = parallax_coords[P][master_turf.z][2]
-				if (coordx == 0 || coordy == 0)
-					P.transform = matrix(0,0,0,0,0,0)
-					continue
+		for(var/atom/movable/screen/hud/P in Slist)
 
-				var/icon/pIcon = icon(P.icon)
-				var/offsetX = ((coordx-master_turf.x)*scale[P])*32-pIcon.Width()/2
-				var/offsetY = ((coordy-master_turf.y)*scale[P])*32-pIcon.Height()/2
-				var/matrix = matrix(size[P], 0, offsetX, 0, size[P], offsetY)
+			var/coordx = parallax_coords[master_turf.z][P][1]
+			var/coordy = parallax_coords[master_turf.z][P][2]
 
-				animate(P,transform=matrix,time=round(world.icon_size/master.glide_size*world.tick_lag,world.tick_lag))
-				continue
+			var/icon/pIcon = icon(P.icon)
+			var/offsetX = ((coordx-master_turf.x)*scale[P])*32-pIcon.Width()/2
+			var/offsetY = ((coordy-master_turf.y)*scale[P])*32-pIcon.Height()/2
+			var/matrix = matrix(size[P], 0, offsetX, 0, size[P], offsetY)
+			var/smoothtime = round(world.icon_size/clamp(master.glide_size*world.tick_lag,0.01,1),world.tick_lag)
+			animate(P,transform=matrix,time=smoothtime)
+			continue
 
-			else
-
-				P.transform = matrix(0,0,0,0,0,0)
-				continue
 
 
 		/// background scrolling so we dont loop through another time
@@ -191,4 +193,23 @@
 				if(isnull(Mo.client))
 					continue
 				Mo.parallax.update(NewLoc)
-
+/atom/movable
+	set_loc(var/atom/A)
+		. = ..()
+		var/NewLoc = get_turf(A)
+		if (ismob(A))
+			var/mob/M = A
+			if(!isnull(M?.client))
+				M.parallax.update(NewLoc,TRUE)
+			for(var/mob/Mo as anything in M.observers)
+				if(isnull(Mo.client))
+					continue
+				Mo.parallax.update(NewLoc,TRUE)
+		else if (istype(A,/obj/machinery/vehicle) || istype(A,/obj/vehicle))
+			for(var/mob/M in A)
+				if(!isnull(M?.client))
+					M.parallax.update(NewLoc,TRUE)
+				for(var/mob/Mo as anything in M.observers)
+					if(isnull(Mo.client))
+						continue
+					Mo.parallax.update(NewLoc,TRUE)
