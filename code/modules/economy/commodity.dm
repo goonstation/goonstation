@@ -376,7 +376,14 @@
 	baseprice = 3500
 	upperfluc = 5000
 	lowerfluc = -2500
-	onmarket = 1
+/datum/commodity/mat_bar/gold
+	comname = "Gold Bar"
+	comtype = /obj/item/material_piece/gold
+	onmarket = 0
+	price = 3500
+	baseprice = 3500
+	upperfluc = 5000
+	lowerfluc = -2550
 
 /datum/commodity/goldbar
 	comname = "Gold Bullion"
