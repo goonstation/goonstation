@@ -1,5 +1,9 @@
 
 (t)wed jun 22 22
+(u)LeahTheTech
+(p)9281
+(e)🐛⚖|bug, balance
+(*)Fixes wraith being able to emag the escape shuttle console
 (u)Amylizzle
 (p)9273
 (e)⚖|balance
