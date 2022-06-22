@@ -79,7 +79,7 @@
 			spider.icon_prefix = "robo"
 			spider.UpdateIcon()
 
-		spider.Browse(grabResource("html/mindslave/handspider.html"),"window=antagTips;size=600x400;title=Antagonist Tips")
+		spider.show_antag_popup("handspider")
 		boutput(spider, "<h2><font color=red>You have reawakened to serve your host [holder.owner]! You must follow their commands!</font></h2>")
 		boutput(spider, "<font color=red>You are a very small and weak creature that can fit into tight spaces. You are still connected to the hivemind.</font>")
 
@@ -176,7 +176,7 @@
 		H.hivemind += spider
 		spider.hivemind_owner = H
 
-		spider.Browse(grabResource("html/mindslave/eyespider.html"),"window=antagTips;size=600x400;title=Antagonist Tips")
+		spider.show_antag_popup("eyespider")
 		boutput(spider, "<h2><font color=red>You have reawakened to serve your host [holder.owner]! You must follow their commands!</font></h2>")
 		boutput(spider, "<font color=red>You are a very small and weak creature that can fit into tight spaces, and see through walls. You are still connected to the hivemind.</font>")
 
@@ -274,7 +274,7 @@
 		H.hivemind += spider
 		spider.hivemind_owner = H
 
-		spider.Browse(grabResource("html/mindslave/legworm.html"),"window=antagTips;size=600x400;title=Antagonist Tips")
+		spider.show_antag_popup("legworm")
 		boutput(spider, "<h2><font color=red>You have reawakened to serve your host [holder.owner]! You must follow their commands!</font></h2>")
 		boutput(spider, "<font color=red>You are a small creature that can deliver powerful kicks and fit into tight spaces. You are still connected to the hivemind.</font>")
 
@@ -358,7 +358,7 @@
 		H.hivemind += crab
 		crab.hivemind_owner = H
 
-		crab.Browse(grabResource("html/mindslave/eyespider.html"),"window=antagTips;size=600x400;title=Antagonist Tips")
+		crab.show_antag_popup("buttcrab")
 		boutput(crab, "<h2><font color=red>You have reawakened to serve your host [holder.owner]! You must follow their commands!</font></h2>")
 		boutput(crab, "<font color=red>You are a very small, very smelly, and weak creature. You are still connected to the hivemind.</font>")
 

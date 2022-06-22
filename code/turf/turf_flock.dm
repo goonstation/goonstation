@@ -21,7 +21,6 @@
 	var/brightness = 0.5
 	var/on = FALSE
 	var/connected = FALSE //used for collector
-	var/datum/flock_tile_group/group = null //the group its connected to
 
 
 /turf/simulated/floor/feather/New()
@@ -31,9 +30,6 @@
 	light.set_brightness(src.brightness)
 	light.set_color(col_r, col_g, col_b)
 	light.attach(src)
-	src.checknearby() //check for nearby groups
-	if(!group)
-		initializegroup()
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection, report_unarmed=FALSE, report_thrown=FALSE, report_proj=FALSE)
 
@@ -80,11 +76,6 @@
 	off()
 	icon_state = "floor-broken"
 	broken = TRUE
-	splitgroup()
-	for(var/obj/flock_structure/f in src)
-		if(f.usesgroups)
-			f.group?.removestructure(f)
-			f.group = null
 	for (var/mob/living/critter/flock/drone/flockdrone in src.contents)
 		if (flockdrone.floorrunning)
 			flockdrone.end_floorrunning()
@@ -95,12 +86,6 @@
 		src.desc = initial(src.desc)
 		src.icon_state = initial(src.icon_state)
 		src.broken = FALSE
-		if(!src.group)
-			checknearby() //check for groups to join
-		for(var/obj/flock_structure/f in get_turf(src))
-			if(f.usesgroups)
-				f.group = src.group
-				f.group.addstructure(f)
 	src.health = min(src.health + 10, initial(src.health))
 
 /turf/simulated/floor/feather/burn_tile()
@@ -168,95 +153,7 @@
 	icon_state = "floor-broken"
 	broken = TRUE
 
-/turf/simulated/floor/feather/proc/initializegroup() //make a new group
-	group = new/datum/flock_tile_group
-	group.addtile(src)
 
-/turf/simulated/floor/feather/proc/checknearby()//handles merging groups
-	var/list/groups_found = list()
-	var/datum/flock_tile_group/largestgroup = null
-	var/max_group_size = 0
-	for(var/turf/simulated/floor/feather/F in getneighbours(src))
-		if(F.group)
-			if(F.group.size > max_group_size)
-				max_group_size = F.group.size
-				largestgroup = F.group
-			groups_found |= F.group
-	if(length(groups_found) == 1)
-		src.group = groups_found[1]
-		src.group.addtile(src)
-	else if(length(groups_found) > 1) //if there is more then one, then join the largest (add merging functionality here later)
-		for(var/datum/flock_tile_group/oldgroup in groups_found)
-			if(oldgroup == largestgroup) continue
-			for(var/turf/simulated/floor/feather/F in oldgroup.members)
-				F.group = largestgroup
-				largestgroup.addtile(F)
-			for(var/obj/flock_structure/f in oldgroup.connected)
-				f.group = largestgroup
-				largestgroup.addstructure(f)
-			qdel(oldgroup)
-		src.group = largestgroup
-		largestgroup.addtile(src)
-
-	else
-		return null
-
-/turf/simulated/floor/feather/proc/splitgroup()
-	var/count = 0 //count of nearby tiles
-	var/datum/flock_tile_group/oldgroup = src.group
-	for(var/turf/simulated/floor/feather/F in getneighbours(get_turf(src)))
-		count++
-//TODO: fail safe for if there are more then 1 group.
-	if(!src) return
-	src.group?.removetile(src)
-	src.group = null
-	for(var/obj/flock_structure/s in src)
-		s.group = null
-
-	if(count <= 1) //if theres only one tile nearby or it by itself dont bother splitting
-		if(count <=0) qdel(oldgroup)
-		return
-
-	for(var/turf/simulated/floor/feather/tile in getneighbours(get_turf(src)))
-		if(tile.group == oldgroup)
-			var/list/listotiles = bfs(tile)//compile a list of connected tiles
-			var/datum/flock_tile_group/newgroup = new
-			for(tile in listotiles)
-				tile.group.removetile(tile)
-				tile.group = newgroup
-				tile.group.addtile(tile)
-				for(var/obj/flock_structure/s in tile)
-					s.groupcheck()
-	qdel(oldgroup)
-
-// TODO: make this use typecheckless lists
-
-turf/simulated/floor/feather/proc/bfs(turf/start)//breadth first search, made by richardgere(god bless)
-	var/list/queue = list()
-	var/list/visited = list()
-	var/turf/current = null
-
-	if(!istype(start, /turf/simulated/floor/feather))
-		return
-	// start node
-	queue += start
-	visited[start] = TRUE
-
-	while(length(queue))
-		// dequeue
-		current = queue[1]
-		queue -= current
-
-		// enqueue
-		for(var/dir in cardinal)
-			var/next_turf = get_step(current, dir)
-			if(!visited[next_turf] && istype(next_turf, /turf/simulated/floor/feather))
-				var/turf/simulated/floor/feather/f = next_turf
-				if(f.broken)
-					continue
-				queue += f
-				visited[next_turf] = TRUE
-	return visited
 
 // -----
 // WALL

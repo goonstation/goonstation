@@ -281,6 +281,7 @@
 	desc = "A bin for containing bedsheets."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "bedbin"
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
 	var/amount = 23.0
 	anchored = 1.0
 
@@ -308,6 +309,7 @@
 	desc = "A bin for containing towels."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "bedbin"
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
 	var/amount = 23.0
 	anchored = 1.0
 

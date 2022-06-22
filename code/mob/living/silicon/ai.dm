@@ -1980,11 +1980,11 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	set desc = "Change your name."
 
 	var/mob/message_mob = src.get_message_mob()
-	if (!src || !message_mob.client || isdead(src))
+	if (!message_mob.client || isdead(src))
 		return
 
 	if (!ON_COOLDOWN(src, "ai_self_rename", src.rename_cooldown))
-		choose_name(retries=3, default_name=real_name)
+		choose_name(retries = 3, default_name = src.real_name, renaming_mob = message_mob)
 	else
 		src.show_text("This ability is still on cooldown for [round(GET_COOLDOWN(src, "ai_self_rename") / 10)] seconds!", "red")
 
@@ -2412,7 +2412,8 @@ proc/get_mobs_trackable_by_AI()
 
 	vox_help(src)
 
-/mob/living/silicon/ai/choose_name(var/retries = 3, var/what_you_are = null, var/default_name = null, var/force_instead = 0)
+/// Lets the AI choose its own name. If renaming_mob is non-null, then that mob is allowed to rename the AI instead.
+/mob/living/silicon/ai/choose_name(var/retries = 3, var/default_name = null, var/force_instead = FALSE, var/mob/renaming_mob = null)
 	var/obj/item/organ/brain/brain_owner = src.brain.owner
 	if(isnull(default_name))
 		default_name = pick_string_autokey("names/ai.txt")
@@ -2421,7 +2422,7 @@ proc/get_mobs_trackable_by_AI()
 		if(force_instead)
 			newname = default_name
 		else
-			newname = input(src, "You are an AI. Would you like to change your name to something else?", "Name Change", default_name) as null|text
+			newname = input(renaming_mob || src, "You are an AI. Would you like to change your name to something else?", "Name Change", default_name) as null|text
 			if(newname && newname != default_name)
 				phrase_log.log_phrase("name-ai", newname, no_duplicates=TRUE)
 		if (src.brain.owner != brain_owner)
@@ -2438,8 +2439,10 @@ proc/get_mobs_trackable_by_AI()
 				src.show_text("Your name cannot be blank. Please choose a different name.", "red")
 				continue
 			else
-				if (tgui_alert(src, "Use the name [newname]?", newname, list("Yes", "No")) == "Yes")
+				if (tgui_alert(renaming_mob || src, "Use the name [newname]?", newname, list("Yes", "No")) == "Yes")
 					src.real_name = newname
+					if (src.deployed_to_eyecam)
+						src.eyecam.real_name = newname
 					break
 				else
 					continue
@@ -2447,6 +2450,7 @@ proc/get_mobs_trackable_by_AI()
 		src.real_name = default_name
 
 	src.UpdateName()
+	src.eyecam.UpdateName()
 	src.internal_pda.name = "[src.name]'s Internal PDA Unit"
 	src.internal_pda.owner = "[src.name]"
 

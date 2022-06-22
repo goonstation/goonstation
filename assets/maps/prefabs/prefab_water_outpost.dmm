@@ -139,7 +139,7 @@
 /area/prefab/deserted_outpost)
 "A" = (
 /obj/table/auto/desk,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /turf/simulated/floor/grey/blackgrime/other,
 /area/prefab/deserted_outpost)
 "B" = (

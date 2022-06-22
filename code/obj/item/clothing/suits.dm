@@ -551,6 +551,10 @@
 		item_state = "MDlabcoat-alt"
 		coat_style = "MDlabcoat-alt"
 
+	cool
+		icon_state = "MDlabcoat-cool"
+		coat_style = "MDlabcoat-cool"
+
 /obj/item/clothing/suit/labcoat/pathology
 	name = "pathologist's labcoat"
 	desc = "A protective laboratory coat with the orange markings of a Pathologist."
@@ -1760,3 +1764,74 @@
 	icon_state = "jean_jacket"
 	item_state = "jean_jacket"
 	body_parts_covered = TORSO|ARMS
+
+//crate loot
+
+/obj/item/clothing/suit/lined_jacket
+	name = "lined jacket"
+	desc = "A faux-leather jacket with cozy lining."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	icon_state = "lined_jacket"
+	item_state = "lined_jacket"
+	body_parts_covered = TORSO|ARMS
+
+/obj/item/clothing/suit/rugged_jacket
+	name = "rugged jacket"
+	desc = "A pre-torn jacket for that 'mildly cool' sort of look."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	icon_state = "rugged_jacket"
+	item_state = "rugged_jacket"
+	body_parts_covered = TORSO|ARMS
+
+/obj/item/clothing/suit/star_cloak
+	name = "starry cloak"
+	desc = "A cloak with an intricate and detailed view of the night sky viewed from space woven into it."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	icon_state = "star_cloak"
+	item_state = "star_cloak"
+	body_parts_covered = TORSO|ARMS
+
+/obj/item/clothing/suit/cow_jacket
+	name = "cow jacket"
+	desc = "Made of faux-cow."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	icon_state = "cow"
+	item_state = "cow"
+	body_parts_covered = TORSO|ARMS
+
+/obj/item/clothing/suit/warm_jacket
+	name = "warm jacket"
+	desc = "Warm as in its coloration. It's not actually all that insulative."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	icon_state = "gradient_warm"
+	item_state = "gradient_warm"
+	body_parts_covered = TORSO|ARMS
+
+/obj/item/clothing/suit/cool_jacket
+	name = "warm jacket"
+	desc = "Cool as in its coloration. It's not actually all that radical."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	icon_state = "gradient_cool"
+	item_state = "gradient_cool"
+	body_parts_covered = TORSO|ARMS
+
+/obj/item/clothing/suit/billow_cape
+	name = "cape of flowing"
+	desc = "A cape that flutters when worn, even if it's not worn in space-windy conditions."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	icon_state = "billow_cape"
+	item_state = "billow_cape"
+	body_parts_covered = TORSO|ARMS
+
+/obj/item/clothing/suit/space/replica
+	name = "replica space suit"
+	desc = "A replica of an old space suit. Seems to still work, though."
+	icon_state = "space_replica"
+	item_state = "space_replica"

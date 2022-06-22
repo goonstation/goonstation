@@ -522,9 +522,7 @@
 		if (islist(src.tracked_blood))
 			src.track_blood()
 		actions.interrupt(src, INTERRUPT_MOVE)
-		#ifdef COMSIG_MOVABLE_MOVED
 		SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, A, direct)
-		#endif
 	//note : move is still called when we are steping into a wall. sometimes these are unnecesssary i think
 
 	if(last_turf == src.loc)
@@ -968,6 +966,25 @@
 
 /// Does x cold damage to the atom
 /atom/proc/damage_cold(amount)
+
+// Setup USE_PROXIMITY turfs
+/atom/proc/setup_use_proximity()
+	src.event_handler_flags |= USE_PROXIMITY
+	if (isturf(src.loc))
+		var/turf/T = src.loc
+		T.checkinghasproximity++
+		for (var/turf/T2 in range(1, T))
+			T2.neighcheckinghasproximity++
+
+/atom/proc/remove_use_proximity()
+	src.event_handler_flags = src.event_handler_flags & ~USE_PROXIMITY
+	if (isturf(src.loc))
+		var/turf/T = src.loc
+		if (T.checkinghasproximity > 0)
+			T.checkinghasproximity--
+		for (var/turf/T2 in range(1, T))
+			if (T2.neighcheckinghasproximity > 0)
+				T2.neighcheckinghasproximity--
 
 // auto-connecting sprites
 /// Check a turf and its contents to see if they're a valid auto-connection target

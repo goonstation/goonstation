@@ -884,7 +884,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/central)
 "bZ" = (
-/obj/machinery/smelter,
+/obj/machinery/neosmelter,
 /turf/simulated/floor/neutral,
 /area/station/quartermaster/office)
 "ca" = (

@@ -20,6 +20,7 @@
 	burn_possible = 1
 	health = 5
 	tooltip_flags = REBUILD_DIST
+	wear_layer = MOB_ARMOR_LAYER // Needs to be below hand layer or any custom foot details will layer over shoes
 	var/step_sound = "step_default"
 	var/step_priority = STEP_PRIORITY_NONE
 	var/step_lots = 0 //classic steps (used for clown shoos)
@@ -370,6 +371,10 @@
 	step_priority = STEP_PRIORITY_LOW
 	duration_remove = 10 SECONDS
 
+	/// Subtype that wizards spawn with, and is in their vendor. Cows can wear them, unlike regular sandals (might also be useful in the future)
+	wizard
+		compatible_species = list("human", "cow")
+
 /obj/item/clothing/shoes/tourist
 	name = "flip-flops"
 	desc = "These cheap sandals don't look very comfortable."
@@ -423,6 +428,7 @@
 	name = "hi-grip assault boots"
 	desc = "Specialist combat boots designed to provide enhanced grip and ankle stability."
 	icon_state = "swatheavy"
+	compatible_species = list("cow", "human")
 	c_flags = NOSLIP
 
 /obj/item/clothing/shoes/swat/heavy
@@ -446,6 +452,7 @@
 	icon_state = "swatheavy"
 	magnetic = 1
 	c_flags = NOSLIP
+	compatible_species = list("cow", "human")
 
 /obj/item/clothing/shoes/fuzzy //not boolean slippers
 	name = "fuzzy slippers"

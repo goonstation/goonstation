@@ -605,7 +605,7 @@
 					/obj/item/clothing/suit/nursedress = 3,
 					/obj/item/clothing/suit/wintercoat/medical = 3,
 					/obj/item/clothing/head/headmirror = 3,
-					/obj/item/clothing/suit/labcoat/medical = 3)
+					/obj/item/clothing/suit/labcoat = 2)
 
 /obj/storage/closet/command/ruined //replacements for azones and mining level flavor
 	name = "Dented command locker"

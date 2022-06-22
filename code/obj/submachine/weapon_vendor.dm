@@ -197,6 +197,7 @@
 		materiel_stock += new/datum/materiel/utility/comtac
 		materiel_stock += new/datum/materiel/utility/beartraps
 		materiel_stock += new/datum/materiel/utility/miscpouch
+		materiel_stock += new/datum/materiel/utility/sawflies
 
 	accepted_token()
 		src.credits[WEAPON_VENDOR_CATEGORY_SIDEARM]++
@@ -283,7 +284,7 @@
 /datum/materiel/utility/morphineinjectors
 	name = "Morphine Autoinjectors"
 	path = /obj/item/storage/box/morphineinjectors
-	description = "Four Morphine Autoinjectors, capable of ensuring you move at the best possible speed while injured without slowdowns...or used as a makeshift tranquilizer if overdosed."
+	description = "Six Morphine Autoinjectors, capable of ensuring you move at the best possible speed while injured without slowdowns...or used as a makeshift tranquilizer if overdosed."
 
 /datum/materiel/utility/donuts
 	name = "Robust(ed) Donuts"
@@ -476,6 +477,11 @@
 	name = "High capacity tactical pouch"
 	path = /obj/item/storage/pouch/highcap
 	description = "A 6-slot pouch for carrying multiple different ammunitions at once"
+
+/datum/materiel/utility/sawflies
+	name = "Sawflies"
+	path = /obj/item/storage/sawfly_pouch
+	description = "A pouch of 4 anti-personnel drones that can be folded after use."
 // Requisition tokens
 
 /obj/item/requisition_token

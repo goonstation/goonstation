@@ -17,6 +17,7 @@
 	var/datum/equipmentHolder/flockAbsorption/absorber
 	health_brute = 30
 	health_burn = 30
+
 	///Custom contextActions list so we can handle opening them ourselves
 	var/list/datum/contextAction/contexts = list()
 	contextLayout = new /datum/contextLayout/experimentalcircle
@@ -534,20 +535,15 @@
 		// do normal movement
 		return ..(NewLoc, direct)
 
-// catchall for marking people who attack flockdrones as enemies
-/mob/living/critter/flock/drone/proc/harmedBy(var/atom/enemy)
-	if (!enemy)
-		return
-	if(isflockmob(enemy))
-		return
-	if(!isdead(src) && src.is_npc && src.flock)
-		var/enemy_name = lowertext(enemy.name)
-		if(enemy_name != "unknown")
-			if(!src.flock.isEnemy(enemy))
-				emote("scream")
-				say("[pick_string("flockmind.txt", "flockdrone_enemy")] [enemy_name]")
-			src.flock.updateEnemy(enemy)
-			src.ai.interrupt()
+/mob/living/critter/flock/drone/was_harmed(mob/M, obj/item/weapon, special, intent)
+	. = ..()
+	if (!M) return
+	if (isflockmob(M)) return
+	if (!isdead(src) && src.flock)
+		if (!src.flock.isEnemy(M))
+			emote("scream")
+			say("[pick_string("flockmind.txt", "flockdrone_enemy")] [M]")
+		src.flock.updateEnemy(M)
 
 /mob/living/critter/flock/drone/bullet_act(var/obj/projectile/P)
 	if(floorrunning)
@@ -557,35 +553,6 @@
 	var/attacker = P.shooter
 	if(!(ismob(attacker) || iscritter(attacker) || isvehicle(attacker)))
 		attacker = P.mob_shooter //shooter is updated on reflection, so we fall back to mob_shooter if it turns out to be a wall or something
-	src.harmedBy(attacker)
-
-/mob/living/critter/flock/drone/hitby(atom/movable/AM, datum/thrown_thing/thr)
-	. = ..()
-	var/mob/attacker = thr.user
-	if(istype(attacker) && !isflockmob(attacker))
-		src.harmedBy(attacker)
-
-/mob/living/critter/flock/drone/attackby(var/obj/item/I, var/mob/M)
-	var/has_harmful_chemicals = FALSE
-	if(istype(I, /obj/item/reagent_containers/glass))
-		var/list/reagent_list = I.reagents.reagent_list
-		for(var/reagent_id in reagent_list)
-			var/datum/reagent/current_reagent = reagent_list[reagent_id]
-
-			// currently only checking for combustible and harmful reagents
-			if(istype(current_reagent, /datum/reagent/combustible) || istype(current_reagent, /datum/reagent/harmful))
-				has_harmful_chemicals = TRUE
-				break
-	..()
-	if(I.force)
-		src.harmedBy(M)
-	if(has_harmful_chemicals)
-		src.harmedBy(M)
-
-/mob/living/critter/flock/drone/attack_hand(var/mob/living/M)
-	..()
-	if(M.a_intent in list(INTENT_HARM,INTENT_DISARM,INTENT_GRAB))
-		src.harmedBy(M)
 
 /mob/living/critter/flock/drone/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 	..()
@@ -848,19 +815,16 @@
 	if (!istype(user))
 		return
 
-	if(istype(target,/obj/critter)) //gods how I hate /obj/critter
-		if(user.a_intent == INTENT_DISARM)
-			src.disarm(target,user)
+	if(ismob(target) || iscritter(target)) //gods how I hate /obj/critter
+		if (!isflockmob(target))
+			src.try_cage(target, user)
 			return
 
 	if(user.a_intent == INTENT_HARM)
 		if(HAS_ATOM_PROPERTY(target,PROP_ATOM_FLOCK_THING))
-			if(isflockdeconimmune(target))
+			if(!isflockdeconimmune(target))
+				actions.start(new /datum/action/bar/flock_decon(target), user)
 				return
-			actions.start(new /datum/action/bar/flock_decon(target), user)
-		else
-			..()
-		return
 
 	// CONVERT TURF
 	if(!isturf(target) && (!HAS_ATOM_PROPERTY(target,PROP_ATOM_FLOCK_THING) || istype(target, /obj/lattice/flock)))
@@ -896,14 +860,15 @@
 			else
 				actions.start(new/datum/action/bar/flock_convert(target), user)
 
+	//depositing
+	if (istype(target, /obj/flock_structure/ghost))
+		if (user.resources <= 0)
+			boutput(user, "<span class='alert'>No resources available for construction.</span>")
+		else
+			actions.start(new /datum/action/bar/flock_deposit(target), user)
+		return
 //help intent actions
 	if(user.a_intent == INTENT_HELP)
-		if (istype(target, /obj/flock_structure/ghost))
-			if (user.resources <= 0)
-				boutput(user, "<span class='alert'>No resources available for construction.</span>")
-			else
-				actions.start(new /datum/action/bar/flock_deposit(target), user)
-			return
 		if (!HAS_ATOM_PROPERTY(target, PROP_ATOM_FLOCK_THING) && !istype(target, /turf/simulated/floor/feather))
 			return
 		var/found_target = FALSE
@@ -964,9 +929,16 @@
 		else
 			actions.start(new/datum/action/bar/flock_repair(F), user)
 	else
-		..()
+		src.attack_hand(target, user)
 
+//why doesn't attack_hand trigger on mobs aaa
 /datum/limb/flock_converter/disarm(atom/target, var/mob/living/critter/flock/drone/user)
+	src.attack_hand(target, user)
+
+/datum/limb/flock_converter/grab(atom/target, var/mob/living/critter/flock/drone/user)
+	src.attack_hand(target, user)
+
+/datum/limb/flock_converter/proc/try_cage(atom/target, var/mob/living/critter/flock/drone/user)
 	if(!target || !user)
 		return
 	if(!(isliving(target) || iscritter(target)))
@@ -986,6 +958,7 @@
 		boutput(user, "<span class='alert'>They're already imprisoned, you can't double-imprison them!</span>")
 	else
 		actions.start(new/datum/action/bar/flock_entomb(target), user)
+		return TRUE
 
 /datum/limb/flock_converter/harm(atom/target, var/mob/living/critter/flock/drone/user)
 	if(!target || !user)
@@ -993,11 +966,11 @@
 	if(istype(target, /mob/living/critter/flock/drone))
 		var/mob/living/critter/flock/drone/f = target
 		if(isdead(f))
-			actions.start(new/datum/action/bar/icon/butcher_living_critter(f), user)
+			actions.start(new/datum/action/bar/icon/butcher_living_critter(f,f.butcher_time), user)
 		else
 			boutput(user, "<span class='alert'>You can't butcher a living flockdrone!</span>")
 	else
-		..()
+		src.attack_hand(target, user)
 
 /////////////////////////////////////////////////////////////////////////////////
 
@@ -1013,6 +986,12 @@
 	if(!target || !user)
 		return
 	return ..()
+
+/datum/limb/gun/flock_stunner/help(mob/living/target, mob/living/user)
+	src.point_blank(target, user)
+
+/datum/limb/gun/flock_stunner/grab(mob/living/target, mob/living/user)
+	src.point_blank(target, user)
 
 /datum/projectile/energy_bolt/flockdrone
 	name = "incapacitor bolt"

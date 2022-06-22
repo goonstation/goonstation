@@ -126,6 +126,7 @@
 	anchored = 1
 	density = 1
 	mats = 15
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_MULTITOOL
 
 	New()
 		. = ..()

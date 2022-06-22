@@ -1068,7 +1068,7 @@
 	})
 "acL" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	pixel_x = 4;
 	pixel_y = 3;
 	switchon = 1
@@ -1453,7 +1453,7 @@
 	})
 "adq" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	pixel_x = 4;
 	pixel_y = 3;
 	switchon = 1
@@ -1664,7 +1664,7 @@
 	})
 "adF" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	pixel_x = 4;
 	pixel_y = 3;
 	switchon = 1
@@ -2113,7 +2113,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/market)
 "aeB" = (
-/obj/machinery/door/poddoor/pyro{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "market_2";
@@ -2264,7 +2264,7 @@
 	})
 "aeT" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	pixel_x = 4;
 	pixel_y = 3;
 	switchon = 1
@@ -2795,7 +2795,7 @@
 	})
 "agb" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	pixel_x = 4;
 	pixel_y = 3;
 	switchon = 1
@@ -3048,7 +3048,7 @@
 	})
 "agw" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	pixel_x = 4;
 	pixel_y = 3;
 	switchon = 1
@@ -3185,7 +3185,7 @@
 "agE" = (
 /obj/table/wood/auto,
 /obj/item/reagent_containers/food/drinks/bottle/hobo_wine,
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	pixel_x = 4;
 	pixel_y = 3;
 	switchon = 1
@@ -3302,7 +3302,7 @@
 	})
 "agM" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	pixel_x = 4;
 	pixel_y = 3;
 	switchon = 1
@@ -3846,7 +3846,7 @@
 	})
 "ahF" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	pixel_x = 4;
 	pixel_y = 3;
 	switchon = 1
@@ -4496,7 +4496,7 @@
 	})
 "aiF" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	pixel_x = 4;
 	pixel_y = 3;
 	switchon = 1
@@ -4616,7 +4616,7 @@
 	})
 "aiK" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	pixel_x = 4;
 	pixel_y = 3;
 	switchon = 1
@@ -4835,7 +4835,7 @@
 	})
 "aje" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	pixel_x = 4;
 	pixel_y = 3;
 	switchon = 1
@@ -5072,7 +5072,7 @@
 	})
 "ajp" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	pixel_x = 4;
 	pixel_y = 3;
 	switchon = 1
@@ -5784,7 +5784,7 @@
 	})
 "akx" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	pixel_x = 4;
 	pixel_y = 3;
 	switchon = 1
@@ -5982,7 +5982,7 @@
 	})
 "akI" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	pixel_x = 4;
 	pixel_y = 3;
 	switchon = 1
@@ -6169,7 +6169,7 @@
 	pixel_x = 24
 	},
 /obj/table/wood/auto,
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	pixel_x = 4;
 	pixel_y = 3;
 	switchon = 1
@@ -6643,7 +6643,7 @@
 	})
 "alT" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	pixel_x = 4;
 	pixel_y = 3;
 	switchon = 1
@@ -6811,7 +6811,7 @@
 	})
 "amb" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	pixel_x = 4;
 	pixel_y = 3;
 	switchon = 1
@@ -17942,7 +17942,7 @@
 /area/station/science/lobby)
 "aLn" = (
 /obj/table/reinforced/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /turf/simulated/floor/carpet,
 /area/station/science/lobby)
 "aLo" = (
@@ -27363,7 +27363,6 @@
 /area/station/teleporter)
 "bfC" = (
 /obj/table/auto,
-/obj/item/hand_tele,
 /obj/decal/tile_edge/line/blue{
 	dir = 1;
 	icon_state = "line1"
@@ -27378,6 +27377,9 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/machinery/recharger{
+	pixel_y = 5
+	},
 /turf/simulated/floor/circuit,
 /area/station/teleporter)
 "bfD" = (
@@ -27386,7 +27388,10 @@
 	icon_state = "line2"
 	},
 /obj/table/auto,
-/obj/item/hand_tele,
+/obj/item/hand_tele{
+	pixel_y = 8;
+	pixel_x = 2
+	},
 /obj/machinery/firealarm{
 	layer = 3.5;
 	pixel_x = -5;
@@ -27395,6 +27400,10 @@
 /obj/machinery/light_switch/south{
 	pixel_x = 10;
 	pixel_y = 28
+	},
+/obj/item/hand_tele{
+	pixel_y = 6;
+	pixel_x = -2
 	},
 /turf/simulated/floor/circuit,
 /area/station/teleporter)
@@ -46297,7 +46306,7 @@
 	},
 /obj/table/wood/auto,
 /obj/displaycase{
-	displayed = new /obj/item/captaingun();
+	displayed = new/obj/item/captaingun();
 	pixel_y = 8
 	},
 /turf/simulated/floor/carpet/arcade,
@@ -47010,7 +47019,7 @@
 /area/station/science/research_director)
 "kcJ" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	pixel_x = 4;
 	pixel_y = 3;
 	switchon = 1
@@ -50843,7 +50852,7 @@
 	pixel_x = 24
 	},
 /obj/table/wood/auto,
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	pixel_x = 4;
 	pixel_y = 3;
 	switchon = 1

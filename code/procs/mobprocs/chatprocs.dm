@@ -740,14 +740,14 @@
 /mob/proc/item_attack_message(var/mob/T, var/obj/item/S, var/d_zone, var/devastating = 0, var/armor_blocked = 0)
 	if (d_zone && ishuman(T))
 		if(armor_blocked)
-			return "<span class='alert'><B>[src] attacks [T] in the [d_zone] with [S], but [T]'s armor blocks it!</B></span>"
+			return "<span class='alert'><B>[src] [islist(S.attack_verbs) ? pick(S.attack_verbs) : S.attack_verbs] [T] in the [d_zone] with [S], but [T]'s armor blocks it!</B></span>"
 		else
-			return "<span class='alert'><B>[src] attacks [T] in the [d_zone] with [S][devastating ? " and lands a devastating hit!" : "!"]</B></span>"
+			return "<span class='alert'><B>[src] [islist(S.attack_verbs) ? pick(S.attack_verbs) : S.attack_verbs] [T] in the [d_zone] with [S][devastating ? " and lands a devastating hit!" : "!"]</B></span>"
 	else
 		if(armor_blocked)
-			return "<span class='alert'><B>[src] attacks [T] with [S], but [T]'s armor blocks it!</B></span>"
+			return "<span class='alert'><B>[src] [islist(S.attack_verbs) ? pick(S.attack_verbs) : S.attack_verbs] [T] with [S], but [T]'s armor blocks it!</B></span>"
 		else
-			return "<span class='alert'><B>[src] attacks [T] with [S] [devastating ? "and lands a devastating hit!" : "!"]</B></span>"
+			return "<span class='alert'><B>[src] [islist(S.attack_verbs) ? pick(S.attack_verbs) : S.attack_verbs] [T] with [S] [devastating ? "and lands a devastating hit!" : "!"]</B></span>"
 
 /mob/proc/get_age_pitch_for_talk()
 	if (!src.bioHolder || !src.bioHolder.age) return
@@ -1052,7 +1052,8 @@
 		if(istype(M, /mob/living/intangible/flock/flockmind) && !(istype(mob_speaking, /mob/living/intangible/flock/flockmind)) && M:flock == flock)
 			thisR = flockmindRendered
 		if ((istype(M, /mob/dead/observer)||M.client.holder) && mob_speaking?.mind)
+			thisR = rendered
 			thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[thisR]</span>"
 
 		if(thisR != "")
-			M.show_message(thisR, 2)
+			boutput(M, thisR)
