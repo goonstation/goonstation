@@ -1746,9 +1746,7 @@
 		flags |= NOSPLASH
 
 	update_icon()
-		src.overlays -= src.icon_beaker
-		if (src.target)
-			src.overlays += src.icon_beaker
+		icon_state = "incubator_on"
 
 	attack_hand(mob/user)
 		if(isnull(user.equipped()))
