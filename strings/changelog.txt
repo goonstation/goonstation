@@ -1,5 +1,9 @@
 
 (t)wed jun 22 22
+(u)ohjoy
+(p)8790
+(e)🆕|feature
+(*)Added a new non-instant recipe for Saltpetre that produces miasma as it occurs: (1) Space Fungus + (1) Compost + (1) Potash + (1) Water -> (2) Saltpetre + (2) Water
 (u)LeahTheTech
 (p)9281
 (e)🐛⚖|bug, balance
