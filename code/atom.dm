@@ -805,7 +805,7 @@
 		return
 	if (isalive(usr) && !isintangible(usr) && isghostdrone(usr) && ismob(src) && src != usr)
 		return // Stops ghost drones from MouseDropping mobs
-	over_object._MouseDrop_T(src, usr, src_location, over_location, over_control, params)
+	over_object._MouseDrop_T(src, usr, src_location, over_location, src_control, over_control, params)
 	if (SEND_SIGNAL(src, COMSIG_ATOM_MOUSEDROP, usr, over_object, src_location, over_location, src_control, over_control, params))
 		return
 	src.mouse_drop(over_object, src_location, over_location, src_control, over_control, params)
