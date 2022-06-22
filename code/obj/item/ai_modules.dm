@@ -425,7 +425,7 @@ ABSTRACT_TYPE(/obj/item/aiModule/ability_expansion)
 	var/last_use
 	var/shared_cooldown
 
-******************** Gimmicks ********************/
+/******************** Gimmicks ********************/
 
 /obj/item/aiModule/spaceodyssey
 	name = "AI Law Module - 'NT 9000'"
