@@ -256,6 +256,7 @@ proc/move_ghost_to_turf(mob/dead/ghost/target, turf/T)
 
 ## Flowchart: Check distances between things
 ```mermaid
+%%{init: {'themeVariables': { 'fontSize': '26px'}}}%%
 flowchart TD
     root([I need to check something's distance to some other thing])
     literal([I need the literal range value])
@@ -333,88 +334,7 @@ flowchart TD
 ```
 
 ## Flowchart: Get things in an area around a thing
-```mermaid
-flowchart TD
-    root(["I need to get a list of everything in some area, according to some heuristic"])
-    
-    vision(["I care about vision"])
-    canbeseen(["Movables that can be seen from some atom<br>(SS13 lighting darkness is not accounted for)"])
-    cansee(["Every mob that can see some atom"])
-
-    hear(["I care about hearing"])
-
-    rawdist(["I only care about raw distance"])
-
-    turfs(["I need turfs"])
-
-    center([" I want 'center' and its contents to be included in the results list (if relevant)?"])
-    center_yes(["Yeah"])
-    center_no(["Nah"])
-    add_o(["Add 'o' to the start of the proc name (oview, orange, etc)"])
-
-    subgraph view["view(distance, center)"]
-        direction RL
-        subgraph view_obj_turf["center is an obj/turf"]
-            VWOT("Returns a list of movables within the distance that can be seen
-            from the obj/turf's position, with no special vision considerations.
-            You probably actually want viewers().")
-        end
-        subgraph view_mob["center is a mob"]
-            VWM("Returns a list of movables within the distance that can be
-            seen by the mob, including any vision reduction or augmentation.
-            If distance is omitted, returns every atom the mob can see.")
-        end
-        subgraph view_client["center is a client"]
-            VWvision("Returns a list of movables that the client can see.
-            Similar to the above, but for when we care
-            more about what the client can see than an individual mob.
-            If distance is omitted, returns every atom the client can see.")
-        end
-    end
-    subgraph viewers["viewers(distance, atom/center)"]
-        direction RL
-        VWS("Same syntax as view(), but returns a list of
-        all mobs that can see the center.")
-    end
-    subgraph range["range(distance, atom/center)"]
-        direction RL
-        RG("Returns every atom within the
-        specified distance of the center atom.")
-    end
-    subgraph hearers["hearers(distance, atom/center)"]
-        direction RL
-        HR("Returns every atom that can hear 
-        the center atom. Similar to viewers(),
-        assumes that opaque objects block sound.")
-    end
-    subgraph block["block(turf/start, turf/end)"]
-        direction RL
-        TF("The list of turfs in the 3D block defined
-        from the start to end turfs (inclusive).
-        Start is the lower left corner, End is the top right.")
-    end    
-
-    root ----> vision
-    root ----> hear
-    root --> rawdist
-    root ----> turfs
-    vision --> canbeseen
-    vision --> cansee
-    canbeseen --> view
-    cansee --> viewers
-    rawdist --> range
-    hear --> hearers
-
-    view --> center
-    viewers --> center
-    hearers --> center
-
-    center--> center_yes
-    center--> center_no
-    center_no --> add_o
-
-    turfs --> block
-```
+![](https://mermaid.ink/img/pako:eNqlVm2L20YQ_iuDvtgGNUfJt6NcKdw1OWhaOB8JoS7HSjuyt5F23d2VXRPy3zMzK1mS7RxHog-2NDuvz7zsfM5KpzG7zqra7cuN8hEeb1cW6PHOxfnfq-weLKKG6GCNERTUJkRwFeAO_SFujF2DsRBcg6A8qhxUWTqvmU4yQt9g60nKlKvsn0XSnn53Jhhnk5WSpEEVro0deWAulS0wIArnO7dTRY0B4kZFPoICgQ-h8q7pHImu-aXwN_Pl8ufX5PF6E9kfrfwniyGACWBdFE9bGym6yvnFxB4pZGN3HCQ0rhis0clgJMkkqQ0qfxYKE8n0mM-rvSY0Equz9WHMT4fAp8qWOBaKra_COB38PWYokQIR-3APe2UjzBJpBspqMDFA6ejb0gvlhTAztqxbTboofXGD4DG0NZ1KguemIkKNO9K0-HUEjeh8OqA48xHV5uzMOj76c3yitH4S6m9aw8zN2AM2SXF6KSb-2HpXglWE7NztDO5zcF7ZNeaAsVyMYw1tsfZquwFmI638N-9Ryzs_WCKx86ONxzJSVcHDHwN1oujJFf8-Ma6kMangOqGME_2K6ROF_Lz_8NfjfJU9IJ3aMOqNpq_RveEOkfB6_87qdqpTipj5e6uzAFsXDPueiz4qXQhbLI2qu07hzAaj0SvmCq-mGj-6lrEtyKMDlXxsVU0vUiIcNvowX7xaZYtBCq3-FkbUClN4uDkuAPPuh3CZapPmLg7CTdbyrnK5o5U99Bh41G3KsPOg2nVDPgoeJ3DcV4NJCsA1JtIEyEk-eStzTZq7N9i3_YtBKmtDxk9wSsQLUHVD8Fm8BBt2J2kZPJroWprG1Mr33UUTZUftUNBYofkG-w3BuEeZNlO5xh3nz_6yIXbAci8Yq83OaKohRubHoD2N5SK6x5cJxFS0Xd9z-Q6tz7qvXt7_7z8sCfclz5xwoHL5H1QQ_fNFws2fpmSQpS5iCML0ZpC4xP4Qz3kIMtcoAPn_fvcf3oyqZgTu0F2jCuWJURka98cUdXO3K1KWfM5nvskS7N3b9_v99uGy30ck2QIM_Kdejgv9OMLyUWpCaJu-a9xW_dfKOCVPAhS1Kz_RBd5a_Vy0wkaxyv-c5_CVXFa53LxXJPCSQB9_p0Afyfu-oeXa7i_c17edNxorY3E0To6XQLogKUwy2AnPZfoFs8PFqP2WwmiCSNEuR1DVWBGazlv0OdzxDpBOo9uC55VoEn9ayobVD36i56ZfxU7JnKAJ8aZfa85Y06YyWveE-7jSXToh-sniB8kX3I8XtCOR8j9ZrTp_qLeGzQx6t4W5t4r7ZFOKayASzxm9k53Qx3vPQOft6Bsn1p2sSqJO1qPJpidkKY4szxr0jTKatvTPzLLKKIsNbYfX9Mor7Spb2S_E1261ininTXQ-u65UHTDPVBvd8mDLIyFx3RpFhd501C9fAcvH5nU?bgColor=5B5F67)
 
 # Whack BYOND shit
 
