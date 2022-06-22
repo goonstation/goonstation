@@ -17542,13 +17542,11 @@
 /turf/space,
 /area/space)
 "aMD" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/decal/fakeobjects/airlock_broken{
 	density = 1;
 	desc = "This shuttle door's been remotely deactivated. Apparently whoever's in charge of it doesn't want you spacing yourself.";
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "door1";
-	name = "sealed door";
-	opacity = 1
+	icon = 'icons/obj/doors/shuttle.dmi';
+	name = "sealed door"
 	},
 /turf/simulated/shuttle/wall,
 /area/shuttle/arrival/station)

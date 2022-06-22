@@ -682,7 +682,7 @@
 	return
 
 /obj/machinery/door/unpowered/shuttle
-	icon = 'icons/turf/shuttle.dmi'
+	icon = 'icons/obj/doors/shuttle.dmi';
 	name = "door"
 	icon_state = "door1"
 	#ifdef UPSCALED_MAP

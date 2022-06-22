@@ -6184,7 +6184,7 @@
 /area/hospital/samostrel)
 "pb" = (
 /turf/unsimulated/wall{
-	icon = 'icons/turf/shuttle.dmi';
+	icon = 'icons/obj/doors/shuttle.dmi';
 	icon_state = "door1";
 	name = "broken door"
 	},
@@ -6278,7 +6278,7 @@
 "pi" = (
 /obj/decal/fakeobjects/firelock_broken{
 	desc = "This shuttle door is really jammed.  What's the point of it then?  WHAT IS THE POINT";
-	icon = 'icons/turf/shuttle.dmi';
+	icon = 'icons/obj/doors/shuttle.dmi';
 	icon_state = "door0";
 	name = "rusted hatch"
 	},

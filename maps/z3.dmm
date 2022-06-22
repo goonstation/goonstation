@@ -367,8 +367,8 @@
 "abm" = (
 /obj/decal/fakeobjects/firelock_broken{
 	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
-	icon = 'icons/turf/shuttle.dmi';
-	name = "rusted hatch"
+	icon = 'icons/obj/doors/shuttle.dmi';
+	icon_state = "door1"name = "rusted hatch"
 	},
 /turf/unsimulated/floor/white,
 /area/space_hive)
@@ -513,7 +513,7 @@
 /area/space_hive)
 "abF" = (
 /turf/unsimulated/wall{
-	icon = 'icons/turf/shuttle.dmi';
+	icon = 'icons/obj/doors/shuttle.dmi';
 	icon_state = "door1";
 	name = "broken door"
 	},
@@ -1604,7 +1604,7 @@
 "aeI" = (
 /obj/decal/fakeobjects/firelock_broken{
 	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
-	icon = 'icons/turf/shuttle.dmi';
+	icon = 'icons/obj/doors/shuttle.dmi';
 	name = "rusted hatch"
 	},
 /turf/unsimulated/floor/arctic,
@@ -1800,7 +1800,7 @@
 "afl" = (
 /obj/decal/fakeobjects/firelock_broken{
 	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
-	icon = 'icons/turf/shuttle.dmi';
+	icon = 'icons/obj/doors/shuttle.dmi';
 	name = "rusted hatch"
 	},
 /turf/unsimulated/floor,
