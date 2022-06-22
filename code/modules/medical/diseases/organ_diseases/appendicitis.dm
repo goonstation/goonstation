@@ -93,7 +93,6 @@ proc/add_pathogens(var/mob/living/A, var/amount)
 	A.reagents.add_reagent("pathogen", amount)
 	var/datum/reagent/blood/pathogen/R = A.reagents.get_reagent("pathogen")
 	var/datum/microbe/P = new /datum/microbe
-	P.setup(1)
-	R.microbes += P.microbio_uid
-	R.microbes[P.microbio_uid] = P
+	P.randomize()
+	R.microbes = P
 	return 1

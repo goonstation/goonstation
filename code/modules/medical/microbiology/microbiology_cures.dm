@@ -16,7 +16,7 @@ ABSTRACT_TYPE(/datum/suppressant)
 	var/color = "transparent"
 	var/desc = "The pathogen is not suppressed by any external effects."
 	var/therapy = "unknown"
-	ABSTRACT_TYPE(/datum/suppressant)
+	var/exactcure = "unknown"
 	// A list of reagent IDs which can be designated as the suppressant.
 	var/list/cure_synthesis = list()
 
@@ -59,15 +59,15 @@ ABSTRACT_TYPE(/datum/suppressant)
 	name = "Heat"
 	desc = "The pathogen is suppressed by a high body temperature."
 	therapy = "thermal"
-
+	exactcure = "Controlled hyperthermia therapy"
 	cure_synthesis = MB_HOT_REAGENTS
 
-	suppress_act(var/datum/microbe/P)
-		if (!(P.infected.bodytemperature > 320 + P.duration))	//Base temp is 273 + 37 = 310. Add 10 to avoid natural variance.
+	suppress_act(var/datum/microbe/subdata/P)
+		if (!(P.affected_mob.bodytemperature > 320 + P.duration))	//Base temp is 273 + 37 = 310. Add 10 to avoid natural variance.
 			return 0
 		else
 			if (prob(5))
-				P.infected.show_message("<span class='notice'>You feel better.</span>")
+				P.affected_mob.show_message("<span class='notice'>You feel better.</span>")
 			return 1
 
 	onadd(var/datum/microbe/P)
@@ -89,15 +89,16 @@ ABSTRACT_TYPE(/datum/suppressant)
 	name = "Cold"
 	desc = "The pathogen is suppressed by a low body temperature."
 	therapy = "thermal"
+	exactcure = "Cryogenic therapy"
 
 	cure_synthesis = MB_COLD_REAGENTS
 
-	suppress_act(var/datum/microbe/P)
-		if (!(P.infected.bodytemperature < 300 - P.duration)) // Same idea as for heat, but inverse.
+	suppress_act(var/datum/microbe/subdata/P)
+		if (!(P.affected_mob.bodytemperature < 300 - P.duration)) // Same idea as for heat, but inverse.
 			return 0
 		else
 			if (prob(5))
-				P.infected.show_message("<span class='notice'>You feel better.</span>")
+				P.affected_mob.show_message("<span class='notice'>You feel better.</span>")
 			return 1
 
 	may_react_to()
@@ -149,15 +150,16 @@ ABSTRACT_TYPE(/datum/suppressant)
 	name = "Brute Medicine"
 	desc = "The pathogen is suppressed by brute medicine."
 	therapy = "drugs"
+	exactcure = "Brute Medications"
 
 	cure_synthesis = MB_BRUTE_MEDS_CATAGORY				//Make a define for BRUTE_MEDS
 
-	suppress_act(var/datum/microbe/P)
+	suppress_act(var/datum/microbe/subdata/P)
 		for (var/R in cure_synthesis)
-			if (!(P.infected.reagents.has_reagent(R, REAGENT_CURE_THRESHOLD)))
+			if (!(P.affected_mob.reagents.has_reagent(R, REAGENT_CURE_THRESHOLD)))
 				continue
 			if (prob(5))
-				P.infected.show_message("<span class='notice'>You feel better.</span>")
+				P.affected_mob.show_message("<span class='notice'>You feel better.</span>")
 			return 1
 		return 0
 	may_react_to()
@@ -174,13 +176,14 @@ ABSTRACT_TYPE(/datum/suppressant)
 	desc = "The pathogen is suppressed by burn medicine."
 	therapy = "drugs"
 	cure_synthesis = MB_BURN_MEDS_CATAGORY //Make a define for BURN_MEDS
+	exactcure = "Burn Medications"
 
-	suppress_act(var/datum/microbe/P)
+	suppress_act(var/datum/microbe/subdata/P)
 		for (var/R in cure_synthesis)
-			if (!(P.infected.reagents.has_reagent(R, REAGENT_CURE_THRESHOLD)))
+			if (!(P.affected_mob.reagents.has_reagent(R, REAGENT_CURE_THRESHOLD)))
 				continue
 			if (prob(5))
-				P.infected.show_message("<span class='notice'>You feel better.</span>")
+				P.affected_mob.show_message("<span class='notice'>You feel better.</span>")
 			return 1
 		return 0
 
@@ -198,13 +201,14 @@ ABSTRACT_TYPE(/datum/suppressant)
 	desc = "The pathogen is suppressed by anti-toxins."
 	therapy = "drugs"
 	cure_synthesis = MB_TOX_MEDS_CATAGORY //Make a define for BURN_MEDS
+	exactcure = "Anti-Toxin Medications"
 
-	suppress_act(var/datum/microbe/P)
+	suppress_act(var/datum/microbe/subdata/P)
 		for (var/R in cure_synthesis)
-			if (!(P.infected.reagents.has_reagent(R, REAGENT_CURE_THRESHOLD)))
+			if (!(P.affected_mob.reagents.has_reagent(R, REAGENT_CURE_THRESHOLD)))
 				continue
 			if (prob(5))
-				P.infected.show_message("<span class='notice'>You feel better.</span>")
+				P.affected_mob.show_message("<span class='notice'>You feel better.</span>")
 			return 1
 		return 0
 	may_react_to()
@@ -215,19 +219,20 @@ ABSTRACT_TYPE(/datum/suppressant)
 			return "The pathogens near the [R] appear to be weakened by the anti-toxin medicine's presence."
 		else return null
 
-/datum/suppressant/burnmeds
+/datum/suppressant/oxymeds
 	color = "blue"
 	name = "Oxygen Medicine"
 	desc = "The pathogen is suppressed by oxygen medicine."
 	therapy = "drugs"
 	cure_synthesis = MB_OXY_MEDS_CATAGORY //Make a define for BURN_MEDS
+	exactcure = "Oxygen Medications"
 
-	suppress_act(var/datum/microbe/P)
+	suppress_act(var/datum/microbe/subdata/P)
 		for (var/R in cure_synthesis)
-			if (!(P.infected.reagents.has_reagent(R, REAGENT_CURE_THRESHOLD)))
+			if (!(P.affected_mob.reagents.has_reagent(R, REAGENT_CURE_THRESHOLD)))
 				continue
 			if (prob(5))
-				P.infected.show_message("<span class='notice'>You feel better.</span>")
+				P.affected_mob.show_message("<span class='notice'>You feel better.</span>")
 			return 1
 		return 0
 	may_react_to()
@@ -243,23 +248,22 @@ ABSTRACT_TYPE(/datum/suppressant)
 	name = "Sedative"
 	desc = "The pathogen is suppressed by disrupting muscle function."
 	therapy = "sedatives"
-
 	cure_synthesis = MB_SEDATIVES_CATAGORY
 
-	suppress_act(var/datum/microbe/P)
+	suppress_act(var/datum/microbe/subdata/P)
 		for (var/R in cure_synthesis)
-			if (!(P.infected.reagents.has_reagent(R, REAGENT_CURE_THRESHOLD)))
+			if (!(P.affected_mob.reagents.has_reagent(R, REAGENT_CURE_THRESHOLD)))
 				continue
 			if (prob(5))
-				P.infected.show_message("<span class='notice'>You feel better.</span>")
+				P.affected_mob.show_message("<span class='notice'>You feel better.</span>")
 			return 1
 		return 0
 
-	onshocked(var/datum/shockparam/param, var/datum/microbe/P)
+	onshocked(var/datum/shockparam/param, var/datum/microbe/subdata/P)
 		if (param.skipsupp)
 			return
 		if (param.amt > 30)
-			P.infected.show_message("<span class='notice'>You feel better.</span>")
+			P.affected_mob.show_message("<span class='notice'>You feel better.</span>")
 			return
 
 	may_react_to()
@@ -278,12 +282,12 @@ ABSTRACT_TYPE(/datum/suppressant)
 
 	cure_synthesis = MB_STIMULANTS_CATAGORY
 
-	suppress_act(var/datum/microbe/P)
+	suppress_act(var/datum/microbe/subdata/P)
 		for (var/R in cure_synthesis)
-			if (!(P.infected.reagents.has_reagent(R, REAGENT_CURE_THRESHOLD)))
+			if (!(P.affected_mob.reagents.has_reagent(R, REAGENT_CURE_THRESHOLD)))
 				continue
 			if (prob(5))
-				P.infected.show_message("<span class='notice'>You feel better.</span>")
+				P.affected_mob.show_message("<span class='notice'>You feel better.</span>")
 			return 1
 		return 0
 
@@ -303,12 +307,12 @@ ABSTRACT_TYPE(/datum/suppressant)
 
 	cure_synthesis = "spaceacillin"
 
-	suppress_act(var/datum/microbe/P)
+	suppress_act(var/datum/microbe/subdata/P)
 		for (var/R in cure_synthesis)
-			if (!(P.infected.reagents.has_reagent(R, REAGENT_CURE_THRESHOLD)))
+			if (!(P.affected_mob.reagents.has_reagent(R, REAGENT_CURE_THRESHOLD)))
 				continue
 			if (prob(5))
-				P.infected.show_message("<span class='notice'>You feel better.</span>")
+				P.affected_mob.show_message("<span class='notice'>You feel better.</span>")
 			return 1
 		return 0
 

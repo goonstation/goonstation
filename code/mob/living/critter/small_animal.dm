@@ -1866,8 +1866,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				if(prob(70))
 					src.ball_up(emote=FALSE)
 		..()
-		if(infected && prob(1))
-			M.infected(ez_pathogen(/datum/microbioeffects/malevolent/leprosy))
+		//if(infected && prob(1))
+			//M.infected(ez_pathogen(/datum/microbioeffects/malevolent/leprosy))
 
 	death(var/gibbed)
 		if(is_balled())

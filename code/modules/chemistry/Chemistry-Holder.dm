@@ -361,7 +361,7 @@ datum
 
 		proc/aggregate_pathogens()
 			var/list/ret = list()
-			for (var/reagent_id in microbe_controller.pathogen_affected_reagents)
+			for (var/reagent_id in microbio_controls.pathogen_affected_reagents)
 				if (src.has_reagent(reagent_id))
 					var/datum/reagent/blood/B = src.get_reagent(reagent_id)
 					if (!istype(B))

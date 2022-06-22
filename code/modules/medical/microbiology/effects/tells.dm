@@ -10,7 +10,7 @@ ABSTRACT_TYPE(/datum/microbioeffects/tells)
 	name = "Hiccups"
 	desc = "The microbes send involuntary signals to the infected individual's diaphragm."
 
-	mob_act(var/mob/M as mob, var/datum/microbe/origin)
+	mob_act(var/mob/M as mob, var/datum/microbe/subdata/origin)
 		if (prob(origin.probability/2))
 			M:emote("hiccup")
 
@@ -69,7 +69,7 @@ ABSTRACT_TYPE(/datum/microbioeffects/tells)
 			M.glasses = N
 			M.update_clothing()
 
-	mob_act(var/mob/M as mob, var/datum/microbe/origin)
+	mob_act(var/mob/M as mob, var/datum/microbe/subdata/origin)
 		if (!ishuman(M))
 			return
 
@@ -91,7 +91,7 @@ ABSTRACT_TYPE(/datum/microbioeffects/tells)
 	name = "Deathgasping"
 	desc = "The pathogen causes the user's brain to believe the body is dying."
 
-	mob_act(var/mob/M as mob, var/datum/microbe/origin)
+	mob_act(var/mob/M as mob, var/datum/microbe/subdata/origin)
 		if (prob(origin.probability/2))
 			M:emote("deathgasp")
 
@@ -129,7 +129,7 @@ ABSTRACT_TYPE(/datum/microbioeffects/tells)
 		if (!(message in shk))
 			return shakespearify(message)
 
-	mob_act(var/mob/M as mob, var/datum/microbe/origin)
+	mob_act(var/mob/M as mob, var/datum/microbe/subdata/origin)
 		if (prob(origin.probability/4)) // 3. holy shit shut up shUT UP
 			M.say(pick(shk))
 
@@ -156,7 +156,7 @@ ABSTRACT_TYPE(/datum/microbioeffects/tells)
 	name = "Malaise"
 	desc = "The pathogen causes very mild, inconsequential fatigue to its host."
 
-	mob_act(var/mob/M as mob, var/datum/microbe/origin)
+	mob_act(var/mob/M as mob, var/datum/microbe/subdata/origin)
 		if (prob(origin.probability/2))
 			M:emote("yawn")
 		else if (prob(origin.probability/2))
@@ -171,7 +171,7 @@ ABSTRACT_TYPE(/datum/microbioeffects/tells)
 	name = "Psychomotor Agitation"
 	desc = "Also known as restlessness, the infected individual is prone to involuntary motions and tics."
 
-	mob_act(var/mob/M as mob, var/datum/microbe/origin)
+	mob_act(var/mob/M as mob, var/datum/microbe/subdata/origin)
 		if (prob(origin.probability/2))
 			M:emote("gesticulate")
 		else if (prob(origin.probability/2))
@@ -203,7 +203,7 @@ datum/microbioeffects/tells/bloodcolors
 	name = "Exagerrated Startle Reflex"
 	desc = "The pathogen generates synaptic signals that amplify the host's startle reflex."
 
-	mob_act(var/mob/M as mob, var/datum/microbe/origin)
+	mob_act(var/mob/M as mob, var/datum/microbe/subdata/origin)
 		if (prob(origin.probability/2))
 			M:emote("flinch")
 
@@ -214,7 +214,7 @@ datum/microbioeffects/tells/bloodcolors
 	name = "Overactive Eye Glands"
 	desc = "The pathogen causes the host's lacrimal glands to overproduce tears."
 
-	mob_act(var/mob/M as mob, var/datum/microbe/origin)
+	mob_act(var/mob/M as mob, var/datum/microbe/subdata/origin)
 		if (prob(origin.probability/2))
 			M:emote("blink")
 		else if (prob(origin.probability/2))
@@ -229,7 +229,7 @@ datum/microbioeffects/tells/bloodcolors
 	name = "Grumpy Cat Syndrome"
 	desc = "The pathogen causes the host's facial muscles to frown at rest."
 
-	mob_act(var/mob/M as mob, var/datum/microbe/origin)
+	mob_act(var/mob/M as mob, var/datum/microbe/subdata/origin)
 		if (prob(origin.probability/2))
 			M:emote("frown")
 		else if (prob(origin.probability/2))

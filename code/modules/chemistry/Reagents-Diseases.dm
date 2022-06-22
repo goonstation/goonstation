@@ -500,7 +500,7 @@ datum
 				 // sure just fucking splash around in the stuff
 				 // this is mainly so puddles from the sweating symptom can infect
 				for (var/uid in src.microbes)
-					var/datum/microbe/P = src.microbes[uid]
+					var/datum/microbe/subdata/P = src.microbes[uid]
 					logTheThing("pathology", M, null, "is splashed with [src] containing pathogen [P].")
 					if(istype(M, /mob/living/carbon/human))
 						var/mob/living/carbon/human/H = M

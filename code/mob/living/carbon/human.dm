@@ -145,7 +145,7 @@
 	var/list/sound_list_flap = null
 
 	var/list/microbes = list()
-	var/list/immunities = list()
+	var/totalimmunity = 0			// Is this player completely immune to all microbial infections?
 
 	var/datum/simsHolder/sims = null
 
@@ -599,7 +599,7 @@
 		H.on_death()
 
 	for (var/uid in src.microbes)
-		var/datum/microbe/P = src.microbes[uid]
+		var/datum/microbe/subdata/P = src.microbes[uid]
 		P.ondeath()
 
 #ifdef DATALOGGER
@@ -1492,7 +1492,7 @@
 	message = process_accents(src,message)
 
 	for (var/uid in src.microbes)
-		var/datum/microbe/P = src.microbes[uid]
+		var/datum/microbe/subdata/P = src.microbes[uid]
 		message = P.onsay(message)
 
 	..(message)
@@ -2461,49 +2461,6 @@
 		return src.r_hand
 	else
 		return null
-
-/mob/living/carbon/human/infected(var/datum/microbe/P)
-	if(!(P.infectioncount)) //If the microbe has already infected to capacity, return
-		return 0
-	if (isdead(src))
-		return
-	if (ischangeling(src) || isvampire(src)) // Vampires were missing here. They're immune to old-style diseases too (Convair880).
-		return 0
-	if (P.microbio_uid in src.immunities)
-		return 0
-	if (!(P.microbio_uid in src.microbes))
-		var/datum/microbe/Q = new /datum/microbe
-		P.infectioncount--
-		Q.setup(0,P)
-		Q.microbio_playerid++
-		microbe_controller.next_puid++
-		microbe_controller.next_puid++
-		src.microbes += Q.microbio_uid
-		src.microbes[Q.microbio_uid] = Q
-		Q.infected = src
-		//microbe_controller.mob_infected(Q, src)
-		logTheThing("pathology", src, null, "is infected by [Q].")
-		return 1
-	else
-		return 0
-
-/mob/living/carbon/human/cured(var/datum/microbe/P)
-	if (P.microbio_uid in src.microbes)
-		//microbe_controller.mob_cured(src.microbes[P.microbio_uid], src)
-		var/datum/microbe/Q = src.microbes[P.microbio_uid]
-		var/pname = Q.name
-		src.microbes -= P.microbio_uid
-		immunity(P)
-		qdel(Q)
-		src.show_text("You feel that the disease has passed.", "blue")
-		logTheThing("pathology", src, null, "is cured of [pname].")
-
-/mob/living/carbon/human/immunity(var/datum/microbe/P)
-	if (isdead(src))
-		return
-	if (!(P.microbio_uid in src.immunities))
-		src.immunities += P.microbio_uid
-		logTheThing("pathology", src, null, "gains immunity to pathogen [P].")
 
 /mob/living/carbon/human/emag_act(mob/user, obj/item/card/emag/E)
 

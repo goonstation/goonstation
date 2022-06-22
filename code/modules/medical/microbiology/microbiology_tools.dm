@@ -39,7 +39,7 @@
 	icon_state = "petri0"
 	desc = "A dish tailored hold pathogen cultures."
 	initial_volume = 40
-	var/stage = 0
+	/*var/stage = 0
 
 	var/dirty = 0
 	var/dirty_reason = ""
@@ -85,6 +85,7 @@
 			return
 		if (dirty)
 			return
+*/
 /*
 		// Cultivation is already in progress in this dish. Depending on what reagent(s) were introduced, the process
 		// halts, or reverses entirely.
@@ -162,22 +163,22 @@
 				else
 					set_dirty("Foreign chemicals in the petri dish.")
 */
-	proc/update_dish_icon()
+/*	proc/update_dish_icon()
 		if (stage == 0)
 			if (src.reagents && src.reagents.total_volume > 0)
 				icon_state = "petri1"
 			else
 				icon_state = "petri0"
 		else
-			icon_state = "petri[stage]"
-
+			icon_state = "petri[stage]"*/
+/*
 	proc/set_dirty(var/reason)
 		processing_items.Remove(src)
 		dirty = 1
 		stage = 0
 		dirty_reason = reason
 		update_dish_icon()
-
+*/
 	flags = TABLEPASS | CONDUCT | FPRINT | OPENCONTAINER
 
 /obj/item/reagent_containers/glass/vial
@@ -211,7 +212,7 @@
 		AddComponent(/datum/component/biodegradable)
 
 /obj/item/reagent_containers/glass/vial/prepared
-	name = "Totally Safe(tm) pathogen sample"
+	name = "Totally Safe(tm) microbe sample"
 	desc = "A vial. Can hold up to 5 units."
 	icon = 'icons/obj/pathology.dmi'
 	icon_state = "vial0"
@@ -222,11 +223,11 @@
 		SPAWN(2 SECONDS)
 			#ifdef CREATE_PATHOGENS // PATHOLOGY REMOVAL
 			var/datum/microbe/P = new /datum/microbe
-			P.setup(1, null)
+			P.randomize()
 			var/datum/reagents/RE = src.reagents
 			RE.add_reagent("pathogen", 5)
 			var/datum/reagent/blood/pathogen/R = RE.get_reagent("pathogen")
-			R.microbes[P.microbio_uid] = P
+			R.microbes[P.name] = P
 			#else
 			var/datum/reagents/RE = src.reagents
 			RE.add_reagent("water", 5)

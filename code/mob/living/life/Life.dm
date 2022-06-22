@@ -597,11 +597,11 @@
 		if (isdead(src))
 			if (src.microbes.len)
 				for (var/uid in src.microbes)
-					var/datum/microbe/P = src.microbes[uid]
+					var/datum/microbe/subdata/P = src.microbes[uid]
 					P.mob_act_dead(src, P)
 			return
 		for (var/uid in src.microbes)
-			var/datum/microbe/P = src.microbes[uid]
+			var/datum/microbe/subdata/P = src.microbes[uid]
 			P.mob_act(src, P)
 
 

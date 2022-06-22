@@ -119,7 +119,7 @@
 					var/datum/reagent/blood/pathogen/P = new
 					var/datum/reagent/blood/B = src.source.reagents.reagent_list["blood"]
 					if (src.isolated)
-						P.microbes = list(src.isolated.microbio_uid = src.isolated)
+						P.microbes = list(src.isolated.name = src.name)
 					else
 						P.microbes = B.microbes.Copy()
 					P.volume = 5
@@ -184,7 +184,7 @@
 				P.holder = src.target.reagents
 				src.target.reagents.update_total()
 			src.target.icon_state = "petri1"
-			src.target.stage = 0
+			//src.target.stage = 0
 			del(src.source)
 			src.source = null
 			src.isolated = null
@@ -223,11 +223,11 @@
 				if (action == "View [target]")
 					if (zoom)
 						user.show_message("<span class='notice'>You look at the [target] through the microscope.</span>")
-						if (istype(src.target, /obj/item/reagent_containers/glass/petridish))
-							var/obj/item/reagent_containers/glass/petridish/PD = target
-							if (PD.dirty)
-								user.show_message("<span class='notice'>The petri dish cannot be used for cultivating pathogens, due to: </span>")
-								user.show_message(PD.dirty_reason)
+						//if (istype(src.target, /obj/item/reagent_containers/glass/petridish))
+							//var/obj/item/reagent_containers/glass/petridish/PD = target
+							//if (PD.dirty)
+								//user.show_message("<span class='notice'>The petri dish cannot be used for cultivating pathogens, due to: </span>")
+								//user.show_message(PD.dirty_reason)
 						var/list/path_list = src.target.reagents.aggregate_pathogens()
 						var/pcount = length(path_list)
 						if (pcount > 0)

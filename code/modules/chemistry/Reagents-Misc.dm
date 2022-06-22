@@ -3173,7 +3173,7 @@ datum
 						target_pathogens[uid] = source_pathogens[uid]
 						target_changed = 1
 				if (target_changed)
-					for (var/reagent_id in microbe_controller.pathogen_affected_reagents)
+					for (var/reagent_id in microbio_controls.pathogen_affected_reagents)
 						if (target.has_reagent(reagent_id))
 							var/datum/reagent/blood/B = target.get_reagent(reagent_id)
 							if (!istype(B))

@@ -65,26 +65,8 @@
 /mob/proc/become_statue_rock()
 	become_statue(getMaterial("rock"), "Its not too uncommon for our employees to be stoned at work but this is just ridiculous!")
 
-/proc/generate_random_pathogen()
-	var/datum/microbe/P = new /datum/microbe
-	P.setup(1, null)
-	return P
-
 /proc/wrap_pathogen(var/datum/reagents/reagents, var/datum/microbe/P, var/units = 5)
 	reagents.add_reagent("pathogen", units)
 	var/datum/reagent/blood/pathogen/R = reagents.get_reagent("pathogen")
 	if (R)
-		R.microbes[P.microbio_uid] = P
-
-
-// ez_pathogen
-// Currently used twice: for the low sanity motive, and for small_animal armadillo
-/proc/ez_pathogen(var/EP)											//EP for Effect Path
-	var/datum/microbe/P = new /datum/microbe
-	P.generate_name()
-	//var/datum/microbiology_cdc/CDC = P.name
-	P.add_symptom(microbe_controller.path_to_effect[EP])
-	P.generate_cure(P)
-	P.generate_attributes()
-	logTheThing("pathology", null, null, "Microbe culture [P.name] created by quick-pathogen-proc with symptom [EP].")
-	return P
+		R.microbes = P
