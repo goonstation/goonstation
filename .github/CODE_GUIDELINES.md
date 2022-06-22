@@ -254,6 +254,168 @@ proc/feed_person_food(mob/person_feeding, mob/person_eating, obj/item/food/fed_f
 proc/move_ghost_to_turf(mob/dead/ghost/target, turf/T)
 ```
 
+## Flowchart: Check distances between things
+```mermaid
+flowchart TD
+    root([I need to check something's distance to some other thing])
+    literal([I need the literal range value])
+    diag([Diagonal Moves Allowed])
+    tile([Tile-Based])
+    notile([Non-Tile-Based])
+    ndiag([Diagonal Moves Not Allowed])
+    adj([I need to check if two things are literally touching/directly adjacent])
+    touch([I need to check if a mob can touch something])
+    goto([I need to check if a mob go to a tile])
+    subgraph in_interact_range["in_interact_range(atom/target, mob/user)" - can i use a thing]
+        direction RL
+        IIR("Checks that a mob is in range to interact with a target.
+        Accounts for corner cases like telekinesis, silicon
+        machinery interactions, and bibles.")
+    end
+    subgraph GET_DIST["GET_DIST(atom/A, atom/B) - distance in tiles"]
+        direction RL
+        GD("Gets the distance in tiles between A and B.
+        The position of objects is equivalent to the position of 
+        the turf the object is on, through any number of layers
+        (a pen in a bag on a person on a tile is calculated as being on the tile).
+        Different Z levels returns INFINITY.")
+    end
+    subgraph euclidean["Euclidean Distance - direct line distance"]
+        direction RL
+        subgraph euclidean_dist["GET_EUCLIDEAN_DIST"]
+            ED("The exact euclidean distance from A to B.")
+        end
+        subgraph squared_euclidean_dist["GET_SQUARED_EUCLIDEAN_DIST"]
+            SED("The squared euclidean distance sqrt(x^2 + y^2) from A to B.<br>Avoids a square root which saves on performance,<br>so this should be used if possible (such as if you're<br>calculating a ratio of squared distances).<br>Different Z levels returns INFINITY.")
+        end
+    end
+    subgraph manhattan["GET_MANHATTAN_DIST(A, B) - distance in city blocks"]
+        direction RL
+        MAN("The exact manhattan distance from A to B.")
+    end
+    subgraph BOUNDS_DIST["BOUNDS_DIST(atom/A, atom/B) - distance in pixels"]
+        direction RL
+        BD("Wrapper around BYOND's 'bounds_dist' built-in proc.
+        Returns the number of pixels A would have to move to be touching B,
+        Returning a negative value if they are already overlapping.
+        We don't ordinarily care about pixel distances, so this should
+        only be used to check adjacency.
+        Notably, functions fine for large (2x2 tile, 3x3 tile, etc) objects.")
+        subgraph bounds_dist_notouch["BOUNDS_DIST(A, B) > 0"]
+            BDNT("returns TRUE if A and B are not adjacent or overlapping.")
+        end
+        subgraph bounds_dist_touch["BOUNDS_DIST(A, B) == 0"]
+            BDT("returns TRUE if A and B are adjacent or overlapping.")
+        end
+    end
+    subgraph pathfind["get_path_to(atom/movable/mover, atom/target, ...optional args)" - can i go somewhere]
+        direction RL
+        PA("Attempts to pathfind a mover to the turf the target(s) is on.
+        Returns a list of turfs from the caller to the target or
+        a list of lists of the former if multiple targets are specified.
+        If no paths were found, returns an empty list.")
+    end
+    
+    root ------> literal
+    literal --> tile
+    tile --> diag
+    diag --> GET_DIST
+    tile --> ndiag
+    ndiag --> manhattan
+    literal --> notile
+    notile ---> euclidean
+    root --> adj
+    adj ---> BOUNDS_DIST
+    root --> touch
+    touch --> in_interact_range
+    root --> goto
+    goto ----> pathfind
+```
+
+## Flowchart: Get things in an area around a thing
+```mermaid
+flowchart TD
+    root(["I need to get a list of everything in some area, according to some heuristic"])
+    
+    vision(["I care about vision"])
+    canbeseen(["Movables that can be seen from some atom<br>(SS13 lighting darkness is not accounted for)"])
+    cansee(["Every mob that can see some atom"])
+
+    hear(["I care about hearing"])
+
+    rawdist(["I only care about raw distance"])
+
+    turfs(["I need turfs"])
+
+    center([" I want 'center' and its contents to be included in the results list (if relevant)?"])
+    center_yes(["Yeah"])
+    center_no(["Nah"])
+    add_o(["Add 'o' to the start of the proc name (oview, orange, etc)"])
+
+    subgraph view["view(distance, center)"]
+        direction RL
+        subgraph view_obj_turf["center is an obj/turf"]
+            VWOT("Returns a list of movables within the distance that can be seen
+            from the obj/turf's position, with no special vision considerations.
+            You probably actually want viewers().")
+        end
+        subgraph view_mob["center is a mob"]
+            VWM("Returns a list of movables within the distance that can be
+            seen by the mob, including any vision reduction or augmentation.
+            If distance is omitted, returns every atom the mob can see.")
+        end
+        subgraph view_client["center is a client"]
+            VWvision("Returns a list of movables that the client can see.
+            Similar to the above, but for when we care
+            more about what the client can see than an individual mob.
+            If distance is omitted, returns every atom the client can see.")
+        end
+    end
+    subgraph viewers["viewers(distance, atom/center)"]
+        direction RL
+        VWS("Same syntax as view(), but returns a list of
+        all mobs that can see the center.")
+    end
+    subgraph range["range(distance, atom/center)"]
+        direction RL
+        RG("Returns every atom within the
+        specified distance of the center atom.")
+    end
+    subgraph hearers["hearers(distance, atom/center)"]
+        direction RL
+        HR("Returns every atom that can hear 
+        the center atom. Similar to viewers(),
+        assumes that opaque objects block sound.")
+    end
+    subgraph block["block(turf/start, turf/end)"]
+        direction RL
+        TF("The list of turfs in the 3D block defined
+        from the start to end turfs (inclusive).
+        Start is the lower left corner, End is the top right.")
+    end    
+
+    root ----> vision
+    root ----> hear
+    root --> rawdist
+    root ----> turfs
+    vision --> canbeseen
+    vision --> cansee
+    canbeseen --> view
+    cansee --> viewers
+    rawdist --> range
+    hear --> hearers
+
+    view --> center
+    viewers --> center
+    hearers --> center
+
+    center--> center_yes
+    center--> center_no
+    center_no --> add_o
+
+    turfs --> block
+```
+
 # Whack BYOND shit
 
 ## Startup/Runtime trade-offs with lists and the "hidden" init() proc
