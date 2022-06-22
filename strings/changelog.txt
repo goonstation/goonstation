@@ -1,5 +1,9 @@
 
 (t)wed jun 22 22
+(u)Amylizzle
+(p)9273
+(e)⚖|balance
+(*)Removing/inserting/screwing in a module from a law rack now takes 2 seconds (down from 5). Welding now takes 6 seconds (up from 5).
 (u)CalliopeSoups
 (p)9228
 (e)|
