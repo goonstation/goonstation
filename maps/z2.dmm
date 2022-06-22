@@ -2011,13 +2011,6 @@
 	icon_state = "floor3"
 	},
 /area/hospital/samostrel)
-"aeQ" = (
-/turf/unsimulated/wall{
-	icon = 'icons/obj/doors/shuttle.dmi';
-	icon_state = "door1";
-	name = "broken door"
-	},
-/area/hospital/samostrel)
 "aeR" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 6;
@@ -2190,17 +2183,6 @@
 	name = "grimy pipe"
 	},
 /turf/unsimulated/floor/caution/east,
-/area/hospital/samostrel)
-"afl" = (
-/obj/decal/fakeobjects/firelock_broken{
-	desc = "This shuttle door is really jammed.  What's the point of it then?  WHAT IS THE POINT";
-	icon = 'icons/obj/doors/shuttle.dmi';
-	name = "rusted hatch"
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
 /area/hospital/samostrel)
 "afm" = (
 /obj/decal/fakeobjects/lightbulb_broken,
@@ -29726,15 +29708,6 @@
 	},
 /turf/space/no_replace,
 /area/space)
-"bID" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet,
-/obj/item/clothing/under/gimmick/snazza,
-/turf/unsimulated/floor/carpet{
-	dir = 10;
-	icon_state = "fred2"
-	},
-/area/solarium)
 "bIE" = (
 /turf/unsimulated/floor/carpet{
 	icon_state = "fred2"
@@ -30070,12 +30043,6 @@
 /area/crunch)
 "bJF" = (
 /obj/storage/closet/emergency,
-/turf/unsimulated/floor,
-/area/solarium)
-"bJG" = (
-/obj/storage/crate,
-/obj/item/shipcomponent/engine/helios,
-/obj/item/clothing/under/gimmick/blackstronaut,
 /turf/unsimulated/floor,
 /area/solarium)
 "bJH" = (
@@ -35421,10 +35388,6 @@
 "caX" = (
 /turf/unsimulated/floor,
 /area/meat_derelict/entry)
-"caY" = (
-/obj/item/clothing/under/gimmick/blackstronaut,
-/turf/unsimulated/floor,
-/area/meat_derelict/entry)
 "caZ" = (
 /obj/iomoon_puzzle/meat_ganglion{
 	id = "meatland_maze1";
@@ -39004,13 +38967,6 @@
 	icon_state = "fred2"
 	},
 /area/sim/area2)
-"cle" = (
-/turf/unsimulated/wall{
-	icon = 'icons/obj/doors/shuttle.dmi';
-	icon_state = "door1";
-	name = "broken door"
-	},
-/area/meat_derelict/soviet)
 "clf" = (
 /obj/decal/fakeobjects/robot{
 	anchored = 1;
@@ -39455,17 +39411,6 @@
 	name = "sand"
 	},
 /area/sim/area2)
-"cmj" = (
-/obj/decal/fakeobjects/firelock_broken{
-	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
-	icon = 'icons/obj/doors/shuttle.dmi';
-	name = "rusted hatch"
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/meat_derelict/soviet)
 "cmk" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 5
@@ -70306,6 +70251,17 @@
 "eyo" = (
 /turf/unsimulated/wall/auto/lead/white,
 /area/moon/museum/giftshop)
+"eyB" = (
+/obj/decal/fakeobjects/firelock_broken{
+	desc = "This shuttle door is really jammed.  What's the point of it then?  WHAT IS THE POINT";
+	icon = 'icons/obj/doors/shuttle.dmi';
+	name = "rusted hatch"
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/hospital/samostrel)
 "eyM" = (
 /turf/unsimulated/wall/auto/lead/gray,
 /area/crypt/sigma/morgue)
@@ -72034,6 +71990,12 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/right_centcom/cogmap)
+"kjc" = (
+/obj/storage/crate,
+/obj/item/shipcomponent/engine/helios,
+/obj/item/clothing/under/gimmick/donk,
+/turf/unsimulated/floor,
+/area/solarium)
 "kkX" = (
 /turf/unsimulated/wall/auto/lead/white,
 /area/moon/museum)
@@ -72350,6 +72312,13 @@
 /obj/item/gun/kinetic/rpg7,
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/battlecruiser)
+"lip" = (
+/turf/unsimulated/wall{
+	icon = 'icons/obj/doors/shuttle.dmi';
+	icon_state = "door1";
+	name = "broken door"
+	},
+/area/hospital/samostrel)
 "lkL" = (
 /obj/machinery/door/airlock/pyro/glass/command,
 /obj/access_spawn/owlcommand,
@@ -72546,6 +72515,13 @@
 	},
 /turf/unsimulated/grass,
 /area/centcom/lounge)
+"lTQ" = (
+/turf/unsimulated/wall{
+	icon = 'icons/obj/doors/shuttle.dmi';
+	icon_state = "door1";
+	name = "broken door"
+	},
+/area/meat_derelict/soviet)
 "lUo" = (
 /obj/table/reinforced/auto,
 /obj/item/paper/book/from_file/cookbook,
@@ -72654,6 +72630,15 @@
 	name = "sand"
 	},
 /area/centcom/offices/enakai)
+"mnM" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/under/gimmick/donkini,
+/turf/unsimulated/floor/carpet{
+	dir = 10;
+	icon_state = "fred2"
+	},
+/area/solarium)
 "moj" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/eggsplat,
@@ -76153,6 +76138,10 @@
 	dir = 8
 	},
 /area/diner/cow)
+"vQQ" = (
+/obj/item/clothing/under/gimmick/donk,
+/turf/unsimulated/floor,
+/area/meat_derelict/entry)
 "vTG" = (
 /obj/machinery/light{
 	dir = 8
@@ -76347,6 +76336,17 @@
 	opacity = 0
 	},
 /area/titlescreen)
+"wCW" = (
+/obj/decal/fakeobjects/firelock_broken{
+	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
+	icon = 'icons/obj/doors/shuttle.dmi';
+	name = "rusted hatch"
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/meat_derelict/soviet)
 "wEA" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4;
@@ -105493,7 +105493,7 @@ bHV
 jnw
 bJa
 bJn
-bJG
+kjc
 jnw
 bKx
 aab
@@ -106094,7 +106094,7 @@ aab
 aab
 jnw
 cnv
-bID
+mnM
 jnw
 bJo
 jnw
@@ -140302,7 +140302,7 @@ cjL
 cba
 ckB
 cli
-cle
+lTQ
 cli
 cli
 ckB
@@ -140882,7 +140882,7 @@ cba
 cba
 cba
 aqL
-caY
+vQQ
 cbB
 caX
 aqL
@@ -141513,7 +141513,7 @@ cli
 cli
 cly
 cli
-cle
+lTQ
 cli
 cli
 ckB
@@ -142417,9 +142417,9 @@ cba
 ckB
 cli
 cli
-cle
+lTQ
 clY
-cmj
+wCW
 cli
 cli
 ckB
@@ -158662,7 +158662,7 @@ abr
 abB
 abB
 aeN
-aeQ
+lip
 abB
 abB
 adZ
@@ -158689,7 +158689,7 @@ ask
 ask
 ask
 ayy
-aeQ
+lip
 abr
 abr
 abr
@@ -159269,7 +159269,7 @@ aeO
 adZ
 abB
 abB
-afl
+eyB
 abB
 abB
 abr
@@ -161379,7 +161379,7 @@ adJ
 abB
 abB
 abB
-aeQ
+lip
 abB
 abB
 agm
@@ -163805,7 +163805,7 @@ abB
 abB
 abB
 abr
-afl
+eyB
 abr
 abr
 adZ

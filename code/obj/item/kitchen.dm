@@ -549,9 +549,14 @@ TRAYS
 	event_handler_flags = NO_MOUSEDROP_QOL
 	tooltip_flags = REBUILD_DIST
 
+	/// The maximum amount of food you can fit on this plate
 	var/max_food = 2
+	/// The amount the plate contents are thrown when this plate is dropped or thrown
 	var/throw_dist = 3
+	/// The sound which is played when you plate someone on help intent, tapping them
 	var/hit_sound = "sound/items/plate_tap.ogg"
+	/// Can this be stacked with other stackable plates?
+	var/stackable = TRUE
 
 	New()
 		..()
@@ -560,10 +565,14 @@ TRAYS
 	/// Attempts to add an item to the plate, if there's space. Returns TRUE if food is successfully added.
 	proc/add_contents(obj/item/food, mob/user, click_params)
 		. = FALSE
+		if (istype(food, /obj/item/plate))
+			var/obj/item/plate/not_really_food = food
+			. = src.stackable && not_really_food.stackable // . is TRUE if we can stack the other plate on this plate, FALSE otherwise
+
 		if (length(src.contents) == max_food)
 			boutput(user, "<span class='alert'>There's no more space on \the [src]!</span>")
 			return
-		if (!food.edible)
+		if (!food.edible && !.) // plates aren't edible, so we check if we're adding a valid plate as well (. is TRUE if so)
 			boutput(user, "<span class='alert'>That's not food, it doesn't belong on \the [src]!</span>")
 			return
 		if (food.w_class > W_CLASS_NORMAL)
@@ -573,6 +582,7 @@ TRAYS
 			boutput(user, "That's already on the plate!")
 			return
 
+		. = TRUE // If we got this far it's a valid plate content
 		src.place_on(food, user, click_params) // this handles pixel positioning
 		food.set_loc(src)
 		src.vis_contents += food
@@ -584,7 +594,6 @@ TRAYS
 		RegisterSignal(food, COMSIG_ATTACKHAND, .proc/remove_contents)
 		src.UpdateIcon()
 		boutput(user, "You put [food] on \the [src].")
-		return TRUE
 
 	/// Removes a piece of food from the plate.
 	proc/remove_contents(obj/item/food)
@@ -608,16 +617,18 @@ TRAYS
 	proc/shit_goes_everywhere()
 		src.visible_message("<span class='alert'>Everything on \the [src] goes flying!</span>")
 		for (var/atom/movable/food in src)
+			if (istype(food, /obj/item/plate))
+				var/obj/item/plate/not_food = food
+				SPAWN(0.1 SECONDS) // This is rude but I want a small delay in smashing nested plates. More satisfying
+					not_food?.shatter()
+			else
+				food.throw_at(get_offset_target_turf(src.loc, rand(throw_dist)-rand(throw_dist), rand(throw_dist)-rand(throw_dist)), 5, 1)
 			src.remove_contents(food)
-			food.throw_at(get_offset_target_turf(src.loc, rand(throw_dist)-rand(throw_dist), rand(throw_dist)-rand(throw_dist)), 5, 1)
 
 	/// Used to smash the plate over someone's head
 	proc/unique_attack_garbage_fuck(mob/M, mob/user)
 		attack_particle(user,M)
 		M.TakeDamageAccountArmor("head", force, 0, 0, DAMAGE_BLUNT)
-		playsound(src, "sound/impact_sounds/plate_break.ogg", 50, 1)
-
-		var/turf/shardturf = get_turf(M)
 
 		if(src.cant_drop == TRUE)
 			if (istype(user, /mob/living/carbon/human))
@@ -625,20 +636,28 @@ TRAYS
 				H.sever_limb(H.hand == 1 ? "l_arm" : "r_arm")
 		else
 			user.drop_item()
-			src.set_loc(shardturf)
+			src.set_loc(get_turf(M))
 
+		src.shatter()
+
+	/// The plate shatters into shards and tosses its contents around.
+	proc/shatter()
+		playsound(src, "sound/impact_sounds/plate_break.ogg", 50, 1)
+		var/turf/T = get_turf(src)
 		for (var/i in 1 to 2)
 			var/obj/O = new /obj/item/raw_material/shard/glass
-			O.set_loc(shardturf)
+			O.set_loc(T)
 			if(src.material)
 				O.setMaterial(copyMaterial(src.material))
-			O.throw_at(get_offset_target_turf(shardturf, rand(-4,4), rand(-4,4)), 7, 1)
+			O.throw_at(get_offset_target_turf(T, rand(-4,4), rand(-4,4)), 7, 1)
+
+		src.shit_goes_everywhere()
 
 		qdel(src)
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
-		src.shit_goes_everywhere()
+		src.shatter()
 
 	attackby(obj/item/W, mob/user, params)
 		if (!src.add_contents(W, user, params))
@@ -646,7 +665,6 @@ TRAYS
 
 	MouseDrop_T(atom/movable/a, mob/user)
 		. = ..()
-		//jesus christ
 		if (isitem(a) && can_reach(user, src) && can_reach(user, a))
 			src.add_contents(a, user)
 
@@ -692,19 +710,19 @@ TRAYS
 			playsound(src, src.hit_sound, 30, 1)
 			logTheThing("combat", user, M, "taps [constructTarget(M,"combat")] over the head with [src].")
 
-	attack_hand(mob/user)
-		..()
-		src.ClearAllOverlays()
-		src.UpdateIcon()
-
 	dropped(mob/user)
 		..()
 		if(user.lying)
 			user.visible_message("<span class='alert'>[user] drops \the [src]!</span>")
-			src.shit_goes_everywhere()
+			src.shatter()
 		else if(user?.bioHolder.HasEffect("clumsy") && prob(25))
 			user.visible_message("<span class='alert'>[user] clumsily drops \the [src]!</span>")
-			src.shit_goes_everywhere()
+			src.shatter()
+
+	Crossed(atom/movable/AM)
+		. = ..()
+		if (ishuman(AM) && AM.throwing) // only humans have the power to smash plates with their bodies
+			src.shatter()
 
 /obj/item/plate/tray //this is the big boy!
 	name = "serving tray"
@@ -721,8 +739,11 @@ TRAYS
 	max_food = 30 // will look like an absolute shitshow but sure
 	throw_dist = 5
 	two_handed = TRUE
-	var/tray_health = 5 //number of times u can smash with a tray + 1, get_desc values are hardcoded so please adjust them (i know im a bad coder)
+
 	hit_sound = "step_lattice"
+	stackable = FALSE
+
+	var/tray_health = 5 //number of times u can smash with a tray + 1, get_desc values are hardcoded so please adjust them (i know im a bad coder)
 
 	New()
 		..()
@@ -765,7 +786,7 @@ TRAYS
 
 	unique_attack_garbage_fuck(mob/M as mob, mob/user as mob)
 		M.TakeDamageAccountArmor("head", src.force, 0, 0, DAMAGE_BLUNT)
-		playsound(src, "sound/weapons/trayhit.ogg", 50, 1)
+		playsound(src, "sound/weapons/trayhit.ogg", 25, 1)
 		src.visible_message("\The [src] falls out of [user]'s hands due to the impact!")
 		user.drop_item(src)
 

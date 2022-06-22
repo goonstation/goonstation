@@ -1,4 +1,23 @@
 
+(t)tue jun 21 22
+(u)Azrun
+(e)🕳️⚖|balance
+(+)Singularities will pull harder when they get big.  Good luck?
+(u)aloe
+(+)plate stacks are back
+(+)plates break more easily
+(u)DimWhat
+(p)9262
+(e)🗺🎨|mapping, sprites
+(+)Added a new glove type to go with the princess dress.
+(u)DimWhat
+(p)9264
+(e)⚖|balance
+(+)Janitor gloves are now much more chemically resistant instead of insulating
+(u)LeahTheTech
+(p)9240
+(e)|
+(+)The photocopier will now warn you before eating your manuscript.
 (t)sun jun 19 22
 (u)LeahTheTech
 (p)9227

@@ -1,4 +1,4 @@
-/**
+/*
  * This file contains the stuff you need for using JPS (Jump Point Search) pathing, an alternative to A* that skips
  * over large numbers of uninteresting tiles resulting in much quicker pathfinding solutions. Mind that diagonals
  * cost the same as cardinal moves currently, so paths may look a bit strange, but should still be optimal.
@@ -7,7 +7,6 @@
 
 /**
  * This is the proc you use whenever you want to have pathfinding more complex than "try stepping towards the thing".
- * If no path was found, returns an empty list, which is important for bots like medibots who expect an empty list rather than nothing.
  *
  * Arguments:
  * * caller: The movable atom that's trying to find the path
@@ -20,6 +19,9 @@
  * * skip_first: Whether or not to delete the first item in the path. This would be done because the first item is the starting tile, which can break movement for some creatures.
  * * cardinal_only: Whether to find only paths consisting of cardinal steps.
  * * required_goals: How many goals to find to succeed. Null for all.
+ *
+ * Returns: List of turfs from the caller to the end or a list of lists of the former if multiple ends are specified.
+ * If no paths were found, returns an empty list, which is important for bots like medibots who expect an empty list rather than nothing.
  */
 /proc/get_path_to(caller, ends, max_distance = 30, mintargetdist, id=null, simulated_only=TRUE, turf/exclude=null, skip_first=FALSE, cardinal_only=TRUE, required_goals=null)
 	if(isnull(ends))
