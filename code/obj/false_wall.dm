@@ -208,14 +208,6 @@
 			var/turf/simulated/wall/auto/wall_path = ispath(map_settings.walls) ? map_settings.walls : /turf/simulated/wall/auto
 			src.icon = initial(wall_path.icon)
 
-			if (istype(src, /turf/simulated/wall/false_wall/reinforced))
-				wall_path = ispath(map_settings.rwalls) ? map_settings.rwalls : /turf/simulated/wall/auto/reinforced
-
-			/// this was borrowed from autowalls as the code that was barely worked
-
-			/// basically this is doing what an autowall of the path wall_path would do
-			var/s_connect_overlay = initial(wall_path.connect_overlay)
-
 			var/list/s_connects_to = list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
 			/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 			/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle, /obj/machinery/door,
@@ -225,9 +217,19 @@
 			/turf/unsimulated/wall/auto/supernorn,/turf/unsimulated/wall/auto/reinforced/supernorn)
 
 			var/list/s_connects_with_overlay = list(/turf/simulated/wall/auto/shuttle,
-			/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn,
-			/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen)
+			/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn)
 
+			if (istype(src, /turf/simulated/wall/false_wall/reinforced))
+				wall_path = ispath(map_settings.rwalls) ? map_settings.rwalls : /turf/simulated/wall/auto/reinforced
+				/// donut3 walls, remove if they ever connect together like supernorn walls
+				s_connects_with_overlay += /turf/simulated/wall/auto/jen
+			else
+				s_connects_with_overlay += /turf/simulated/wall/auto/reinforced/jen
+
+			/// this was borrowed from autowalls as the code that was barely worked
+
+			/// basically this is doing what an autowall of the path wall_path would do
+			var/s_connect_overlay = initial(wall_path.connect_overlay)
 			var/list/s_connects_with_overlay_exceptions = list()
 			var/list/s_connects_to_exceptions = list(/turf/simulated/wall/auto/shuttle)
 
