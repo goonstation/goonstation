@@ -22034,7 +22034,8 @@
 /obj/decal/fakeobjects/firelock_broken{
 	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
 	icon = 'icons/obj/doors/shuttle.dmi';
-	icon_state = "door1"name = "rusted hatch"
+	icon_state = "door1";
+	name = "rusted hatch"
 	},
 /turf/unsimulated/floor/white,
 /area/space_hive)
