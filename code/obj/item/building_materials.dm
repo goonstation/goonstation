@@ -1122,7 +1122,7 @@ MATERIAL
 			return
 		if(!(user.is_in_hands(src) || inMagtractor))
 			user.put_in_hand(src)
-		if(isrobot(user) || isghostdrone(user))
+		if(issilicon(user))
 			boutput(user, "<span class='notice'>You add [success] tiles to the stack. It now has [W.amount] tiles.</span>")
 		else
 			boutput(user, "<span class='notice'>You add [success] tiles to the stack. It now has [src.amount] tiles.</span>")
