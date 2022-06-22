@@ -39720,6 +39720,7 @@
 "cSO" = (
 /obj/storage/crate,
 /obj/item/clothing/under/gimmick/princess,
+/obj/item/clothing/gloves/princess,
 /obj/item/clothing/mask/horse_mask,
 /obj/machinery/light/small{
 	dir = 1;

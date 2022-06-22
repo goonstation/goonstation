@@ -715,3 +715,14 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 		if(istype(W, /obj/item/plutonium_core/hootonium_core))
 			boutput(user, "<span class='alert'><B>The [src] reacts but the core is too big for the slots.</B></span>")
+
+/obj/item/clothing/gloves/princess
+	name = "party princess gloves"
+	desc = "Glimmer glimmer!"
+	icon_state = "princess"
+	item_state = "princess"
+	material_prints = "silk fibres and glitter"
+
+	setupProperties()
+		..()
+		setProperty("conductivity", 0.75)

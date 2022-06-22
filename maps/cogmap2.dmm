@@ -23797,6 +23797,7 @@
 /area/station/crew_quarters/quartersA)
 "bdN" = (
 /obj/item/clothing/under/gimmick/princess,
+/obj/item/clothing/gloves/princess,
 /obj/storage/crate,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersA)
