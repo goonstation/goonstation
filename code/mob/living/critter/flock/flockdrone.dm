@@ -738,7 +738,7 @@
 		boutput(src, "<span class='alert'>Not enough resources (you need [FLOCK_LAY_EGG_COST]).</span>")
 		return
 	if(src.floorrunning)
-		boutput(src, "<span class='alert'>You can't do that while floor running.</span>")
+		boutput(src, "<span class='alert'>You can't do that while floorrunning.</span>")
 		return
 	var/turf/simulated/floor/feather/nest = get_turf(src)
 	if(!istype(nest, /turf/simulated/floor/feather))
