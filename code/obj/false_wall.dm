@@ -221,7 +221,8 @@
 			/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle, /obj/machinery/door,
 			/obj/window, /obj/wingrille_spawn, /turf/simulated/wall/auto/reinforced/supernorn/yellow,
 			/turf/simulated/wall/auto/reinforced/supernorn/blackred, /turf/simulated/wall/auto/reinforced/supernorn/orange,
-			/turf/simulated/wall/auto/old, /turf/simulated/wall/auto/reinforced/old)
+			/turf/simulated/wall/auto/old, /turf/simulated/wall/auto/reinforced/old,
+			/turf/unsimulated/wall/auto/supernorn,/turf/unsimulated/wall/auto/reinforced/supernorn)
 
 			var/list/s_connects_with_overlay = list(/turf/simulated/wall/auto/shuttle,
 			/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn,
