@@ -1,5 +1,9 @@
 
 (t)wed jun 22 22
+(u)CalliopeSoups
+(p)9228
+(e)|
+(+)Crew no longer need divine help to paint tables.
 (u)Flappybat
 (p)9271
 (e)⚖|balance
