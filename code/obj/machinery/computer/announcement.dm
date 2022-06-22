@@ -4,6 +4,7 @@
 	name = "Announcement Computer"
 	icon_state = "comm"
 	machine_registry_idx = MACHINES_ANNOUNCEMENTS
+	circuit_type = /obj/item/circuitboard/announcement
 	var/last_announcement = 0
 	var/announcement_delay = 1200
 	var/obj/item/card/id/ID = null
