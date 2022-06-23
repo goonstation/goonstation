@@ -68,6 +68,8 @@
 	/// when the z-level of a movable changes (works in nested contents) (thing, old_z_level, new_z_level)
 	#define XSIG_MOVABLE_Z_CHANGED list(/datum/component/complexsignal/outermost_movable, "mov_z-level_changed")
 
+// ---- obj signals ----
+
 // ---- obj/critter signals ----
 
 	// When an obj/critter dies

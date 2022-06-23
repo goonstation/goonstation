@@ -436,10 +436,11 @@
 		return TRUE
 	
 	proc/do_scan_effects(atom/target, mob/user)
+		// more often than not, this will display for objects, but we include a message to scanned mobs just for consistency's sake
 		user.tri_message(target,
 			"<span class='notice'>[user] scans [target].</span>", \
-			"<span class='notice'>You run [src] over [target]...</span>", \
-			"<span class='notice'>[user] waves [src] in your face. You feel [pick("funny", "weird", "odd", "strange", "off")].</span>"
+			"<span class='notice'>You run [src] over [user == target ? "yourself" : target]...</span>", \
+			"<span class='notice'>[user] waves [src] at you. You feel [pick("funny", "weird", "odd", "strange", "off")].</span>"
 		)
 		animate_scanning(target, "#FFFF00")
 
