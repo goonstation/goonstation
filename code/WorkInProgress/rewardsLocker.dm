@@ -861,13 +861,13 @@
 
 /datum/achievementReward/inspectorscloths
 	title = "(Skin set) Inspector's Clothes"
-	desc = "Requires that you wear something in your suit and jumpsuit slots."
+	desc = "Will change the skin of your suit, jumpsuit, and shoulder holster."
 	required_medal = "Neither fashionable noir stylish"
 
 	rewardActivate(var/mob/activator)
 		if (ishuman(activator))
 			var/mob/living/carbon/human/H = activator
-			var/succ = 0
+			var/succ = FALSE
 			if (H.wear_suit)
 				var/obj/item/clothing/M = H.wear_suit
 				if (istype(M, /obj/item/clothing/suit/wizrobe))
@@ -910,6 +910,17 @@
 				M.desc = "A uniform for the modern detective. (Base Item: [prev2])"
 				H.set_clothing_icon_dirty()
 				succ = TRUE
+
+			if (H.belt)
+				var/obj/item/storage/belt/security/shoulder_holster/M = H.belt
+				if (istype(M))
+					M.icon_state = "inspector_holster"
+					M.item_state = "inspector_holster"
+					M.name = "inspector holster"
+					M.real_name = "inspector holster"
+					M.desc = "A shoulder holster for the modern detective"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
 
 			if (!succ)
 				boutput(activator, "<span class='alert'>Unable to redeem... you need to be wearing something in your suit/exosuit slots.</span>")
