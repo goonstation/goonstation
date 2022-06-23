@@ -1,4 +1,65 @@
 
+(t)thu jun 23 22
+(u)Amylizzle
+(p)9296
+(e)|
+(+)Announcement computers are now deconstructable.
+(u)Taylor Kellogg
+(p)9188
+(e)📄|tgui
+(+)Converted the APC's UI to TGUI
+(u)Ikea
+(p)9042
+(e)⚖|balance
+(+)The amount of station/big station item bounties for spies has been increased.
+(u)BatElite
+(p)9225
+(e)🆕|feature
+(+)Space Rhinovirus roams the stars again, stay true to yourself in the face of such adversity!
+(t)wed jun 22 22
+(u)Roddy
+(p)9092
+(e)🗺|mapping
+(*)Updated the Cog1 medical staff room and shifted several objects in pathology to make space.
+(u)ohjoy
+(p)8790
+(e)🆕|feature
+(*)Added a new non-instant recipe for Saltpetre that produces miasma as it occurs: (1) Nitrogen + (1) Compost + (1) Potash -> (1) Saltpetre + (1) Water
+(u)LeahTheTech
+(p)9281
+(e)🐛⚖|bug, balance
+(*)Fixes wraith being able to emag the escape shuttle console
+(u)Amylizzle
+(p)9273
+(e)⚖|balance
+(*)Removing/inserting/screwing in a module from a law rack now takes 2 seconds (down from 5). Welding now takes 6 seconds (up from 5).
+(u)CalliopeSoups
+(p)9228
+(e)|
+(+)Crew no longer need divine help to paint tables.
+(u)Flappybat
+(p)9271
+(e)⚖|balance
+(+)Minimum rounds required to play Detective has increased to 15.
+(t)tue jun 21 22
+(u)Azrun
+(e)🕳️⚖|balance
+(+)Singularities will pull harder when they get big.  Good luck?
+(u)aloe
+(+)plate stacks are back
+(+)plates break more easily
+(u)DimWhat
+(p)9262
+(e)🗺🎨|mapping, sprites
+(+)Added a new glove type to go with the princess dress.
+(u)DimWhat
+(p)9264
+(e)⚖|balance
+(+)Janitor gloves are now much more chemically resistant instead of insulating
+(u)LeahTheTech
+(p)9240
+(e)|
+(+)The photocopier will now warn you before eating your manuscript.
 (t)sun jun 19 22
 (u)LeahTheTech
 (p)9227

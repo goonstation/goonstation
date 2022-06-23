@@ -758,7 +758,7 @@
 			src.log_me(weldman, M, src.welded ? "welds" : "unwelds")
 
 	proc/crunch(var/mob/M as mob)
-		if (!M || istype(M, /mob/living/carbon/wall))
+		if (!M)
 			return
 
 		if (M.ckey && (M.ckey == owner_ckey))

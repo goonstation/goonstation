@@ -1900,6 +1900,7 @@
 /obj/item/clothing/head/maid,
 /obj/item/clothing/shoes/dress_shoes,
 /obj/item/clothing/under/gimmick/princess,
+/obj/item/clothing/gloves/princess,
 /obj/item/clothing/mask/horse_mask,
 /obj/item/clothing/suit/jacket/plastic/random_color,
 /obj/random_item_spawner/dressup/one_or_zero,
@@ -22561,7 +22562,6 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/north)
 "gmo" = (
-/obj/table/glass,
 /obj/item/reagent_containers/glass/beaker/large/antitox{
 	pixel_x = -8;
 	pixel_y = 9
@@ -22578,6 +22578,7 @@
 	pixel_x = 6;
 	pixel_y = -2
 	},
+/obj/table/glass/reinforced/auto,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/surgery/storage)
 "gmq" = (
@@ -57760,6 +57761,7 @@
 /obj/item/clothing/head/maid,
 /obj/item/clothing/shoes/dress_shoes,
 /obj/item/clothing/under/gimmick/princess,
+/obj/item/clothing/gloves/princess,
 /obj/item/clothing/mask/horse_mask,
 /obj/item/clothing/suit/jacket/plastic/random_color,
 /obj/random_item_spawner/mask/one_or_zero,
