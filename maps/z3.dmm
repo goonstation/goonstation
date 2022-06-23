@@ -21292,7 +21292,7 @@
 "fOx" = (
 /obj/decal/fakeobjects/firelock_broken{
 	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
-	icon = 'icons/obj/doors/shuttle.dmi';
+	icon = 'icons/turf/shuttle.dmi';
 	name = "rusted hatch"
 	},
 /turf/unsimulated/floor/arctic,
@@ -22033,8 +22033,7 @@
 "mUx" = (
 /obj/decal/fakeobjects/firelock_broken{
 	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
-	icon = 'icons/obj/doors/shuttle.dmi';
-	icon_state = "door1";
+	icon = 'icons/turf/shuttle.dmi';
 	name = "rusted hatch"
 	},
 /turf/unsimulated/floor/white,
@@ -23006,7 +23005,7 @@
 "vhN" = (
 /obj/decal/fakeobjects/firelock_broken{
 	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
-	icon = 'icons/obj/doors/shuttle.dmi';
+	icon = 'icons/turf/shuttle.dmi';
 	name = "rusted hatch"
 	},
 /turf/unsimulated/floor,
@@ -23085,7 +23084,7 @@
 /area/abandonedmedicalship)
 "vQr" = (
 /turf/unsimulated/wall{
-	icon = 'icons/obj/doors/shuttle.dmi';
+	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "door1";
 	name = "broken door"
 	},

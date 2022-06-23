@@ -47024,10 +47024,9 @@
 	},
 /area/space)
 "qyp" = (
-/obj/decal/fakeobjects/airlock_broken{
+/obj/decal/fakeobjects/firelock_broken{
 	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
-	icon = 'icons/obj/doors/shuttle.dmi';
-	icon_state = "door1";
+	icon = 'icons/turf/shuttle.dmi';
 	name = "rusted hatch"
 	},
 /turf/simulated/floor/damaged2,
