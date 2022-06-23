@@ -41,13 +41,13 @@
 		var/list/path = paths[ends[1]]
 		if(isnull(path))
 			return null
-		if(length(path) > 0 && skip_first)
+		if(length(path) && skip_first)
 			path.Cut(1,2)
 		return path
 
 	if(skip_first)
 		for(var/goal in paths)
-			if(length(paths[goal]) > 0)
+			if(length(paths[goal]))
 				paths[goal].Cut(1,2)
 	return paths
 
