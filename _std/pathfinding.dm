@@ -433,7 +433,7 @@
 			return FALSE
 		else if (source && HAS_ALL_FLAGS(source.blocked_dirs, direction))
 			return FALSE
-	for(var/atom/A in T.contents)
+	for(var/atom/A as anything in T.contents)
 		if (isobj(A))
 			var/obj/O = A
 			// only skip if we did the source check, otherwise fall back to normal density checks
@@ -544,7 +544,7 @@
 					return FALSE
 				else if (HAS_ALL_FLAGS(corner_2.blocked_dirs, turn(direction, 135)) && HAS_ALL_FLAGS(source.blocked_dirs, turn(direction, 45)))
 					return FALSE
-	for(var/atom/A in T.contents)
+	for(var/atom/A as anything in T.contents)
 		if (isobj(A))
 			var/obj/O = A
 			// only skip if we did the source check, otherwise fall back to normal density checks
