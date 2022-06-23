@@ -720,7 +720,7 @@
 	//deconstruct_time = 20
 	object_flags = 0 // so they don't inherit the HAS_DIRECTIONAL_BLOCKING flag from thindows
 	flags = FPRINT | USEDELAY | ON_BORDER | ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
-
+	var/neighbors = list()
 	var/mod = "W-"
 	var/list/connects_to = list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn, /turf/simulated/wall/auto/supernorn/wood, /turf/simulated/wall/auto/marsoutpost,
 		/turf/simulated/shuttle/wall, /turf/unsimulated/wall, /turf/simulated/wall/auto/shuttle, /obj/indestructible/shuttle_corner,
@@ -736,12 +736,21 @@
 		explosion_resistance = 3
 	New()
 		..()
+		for (var/atom/A in orange(1,src))
+			if(istype(A,/obj/window/auto) || istype(A,/obj/grille) || istype(A,/turf/simulated/wall/auto) || istype(A,/turf/simulated/wall/false_wall))
+				var/turf/simulated/wall/auto/W = A
+				neighbors += A
+				W.neighbors += src
 
 		if (map_setting && ticker)
 			src.update_neighbors()
 
 		SPAWN(0)
 			src.UpdateIcon()
+
+	proc/update_neighbors()
+		for (var/atom/A in neighbors)
+			A.UpdateIcon()
 
 	disposing()
 		..()
@@ -772,14 +781,6 @@
 		if (..(W, user))
 			src.UpdateIcon()
 			src.update_neighbors()
-
-	proc/update_neighbors()
-		for (var/turf/simulated/wall/auto/T in orange(1,src))
-			T.UpdateIcon()
-		for (var/obj/window/auto/O in orange(1,src))
-			O.UpdateIcon()
-		for (var/obj/grille/G in orange(1,src))
-			G.UpdateIcon()
 
 /obj/window/auto/reinforced
 	icon_state = "mapwin_r"

@@ -18,6 +18,7 @@
 	var/mod = null
 	var/obj/overlay/floor_underlay = null
 	var/dont_follow_map_settings_for_icon_state = 0
+	var/neighbors = list()
 
 	temp
 		var/was_rwall = 0
@@ -32,20 +33,26 @@
 		src.levelupdate()
 		src.gas_impermeable = 1
 		src.layer = src.layer - 0.1
-		SPAWN(0)
+
+		if (src.can_be_auto)
+			for (var/atom/A in orange(1,src))
+				if(istype(A,/obj/window/auto) || istype(A,/obj/grille) || istype(A,/turf/simulated/wall/auto) || istype(A,/turf/simulated/wall/false_wall))
+					var/turf/simulated/wall/auto/W = A
+					neighbors += A
+					W.neighbors += src
 			src.UpdateIcon()
+			src.update_neighbors()
+
 		SPAWN(1 SECOND)
 			// so that if it's getting created by the map it works, and if it isn't this will just return
 			src.setFloorUnderlay('icons/turf/floors.dmi', "plating", 0, 100, 0, "plating")
-			if (src.can_be_auto)
-				for (var/turf/simulated/wall/auto/W in orange(1,src))
-					W.UpdateIcon()
-				for (var/obj/grille/G in orange(1,src))
-					G.UpdateIcon()
-				for (var/obj/window/auto/W in orange(1,src))
-					W.UpdateIcon()
-				for (var/turf/simulated/wall/false_wall/F in orange(1,src))
-					F.UpdateIcon()
+
+	proc/update()
+		src.UpdateIcon()
+
+	proc/update_neighbors()
+		for (var/atom/A as anything in neighbors)
+			A.UpdateIcon()
 
 	Del()
 		src.RL_SetSprite(null)
@@ -254,9 +261,11 @@
 						s_connect_image = image(src.icon, "connect[overlaydir]")
 					else
 						s_connect_image.icon_state = "connect[overlaydir]"
-					src.UpdateOverlays(s_connect_image, "connect")
+					/// the code here keeps yelling at me if i use updateoverlays and i cant find what is updating it
+					src.overlays = null
+					src.overlays += s_connect_image
 				else
-					src.UpdateOverlays(null, "connect")
+					src.overlays = null
 
 
 	get_desc()

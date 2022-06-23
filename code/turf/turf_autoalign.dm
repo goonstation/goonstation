@@ -17,18 +17,27 @@
 	var/connect_diagonal = 0 // 0 = no diagonal sprites, 1 = diagonal only if both adjacent cardinals are present, 2 = always allow diagonals
 	var/d_state = 0
 	var/connect_across_areas = TRUE
+	var/neighbors = list()
 
 	New()
 		..()
-		if (map_setting && ticker)
-			src.update_neighbors()
 
 		if (current_state > GAME_STATE_WORLD_INIT)
-			SPAWN(0) //worldgen overrides ideally
-				src.UpdateIcon()
+
+			for (var/atom/A as anything in orange(1,src))
+				if(istype(A,/obj/window/auto) || istype(A,/obj/grille) || istype(A,/turf/simulated/wall/auto) || istype(A,/turf/simulated/wall/false_wall))
+					var/turf/simulated/wall/auto/W = A
+					neighbors += A
+					W.neighbors += src
+			src.update_neighbors()
+			src.UpdateIcon()
 
 		else
 			worldgenCandidates[src] = 1
+
+	proc/update_neighbors()
+		for (var/atom/A as anything in neighbors)
+			A.UpdateIcon()
 
 	generate_worldgen()
 		src.UpdateIcon()
@@ -62,11 +71,6 @@
 			else
 				src.UpdateOverlays(null, "connect")
 
-	proc/update_neighbors()
-		for (var/turf/simulated/wall/auto/T in orange(1,src))
-			T.UpdateIcon()
-		for (var/obj/grille/G in orange(1,src))
-			G.UpdateIcon()
 
 /turf/simulated/wall/auto/reinforced
 	name = "reinforced wall"
@@ -202,11 +206,6 @@
 	/turf/simulated/wall/auto/shuttle, /turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn, /turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred,
 	/turf/simulated/wall/auto/reinforced/jen)
 
-	update_neighbors()
-		..()
-		for (var/obj/window/auto/O in orange(1,src))
-			O.UpdateIcon()
-
 	the_tuff_stuff
 		explosion_resistance = 7
 
@@ -264,11 +263,6 @@
 	the_tuff_stuff
 		explosion_resistance = 3
 
-	update_neighbors()
-		..()
-		for (var/obj/window/auto/O in orange(1,src))
-			O.UpdateIcon()
-
 	dark1
 		color = "#dddddd"
 
@@ -324,11 +318,6 @@
 	the_tuff_stuff
 		explosion_resistance = 7
 
-	update_neighbors()
-		..()
-		for (var/obj/window/auto/O in orange(1,src))
-			O.UpdateIcon()
-
 /turf/simulated/wall/auto/reinforced/supernorn
 	icon = 'icons/turf/walls_supernorn_smooth.dmi'
 	mod = "norn-R-"
@@ -349,11 +338,6 @@
 
 	the_tuff_stuff
 		explosion_resistance = 11
-
-	update_neighbors()
-		..()
-		for (var/obj/window/auto/O in orange(1,src))
-			O.UpdateIcon()
 
 /turf/simulated/wall/auto/reinforced/supernorn/yellow
 	icon = 'icons/turf/walls_manta.dmi'
@@ -411,10 +395,6 @@
 	connects_to = list(/turf/simulated/wall/auto/reinforced/paper, /turf/simulated/wall/auto/reinforced/supernorn, /turf/simulated/wall/auto, /obj/table/reinforced/bar/auto, /obj/window, /obj/wingrille_spawn)
 	connects_with_overlay = list(/obj/table/reinforced/bar/auto)
 
-	update_neighbors()
-		..()
-		for (var/obj/window/auto/O in orange(1,src))
-			O.UpdateIcon()
 /turf/simulated/wall/auto/supernorn/wood
 	icon = 'icons/turf/walls_wood.dmi'
 	connect_diagonal = 0
@@ -441,11 +421,6 @@
 
 	connects_with_overlay = list(/turf/simulated/wall/auto/reinforced/supernorn,
 	/obj/machinery/door, /obj/window)
-
-	update_neighbors()
-		..()
-		for (var/obj/window/auto/O in orange(1,src))
-			O.UpdateIcon()
 
 /turf/simulated/wall/auto/reinforced/gannets
 	icon = 'icons/turf/walls_destiny.dmi'
@@ -528,17 +503,27 @@ ABSTRACT_TYPE(turf/simulated/wall/auto/hedge)
 	var/image/connect_image = null
 	var/d_state = 0
 	var/connect_diagonal = 0 // 0 = no diagonal sprites, 1 = diagonal only if both adjacent cardinals are present, 2 = always allow diagonals
-
+	var/neighbors = list()
 	New()
 		..()
-		if (map_setting && ticker)
-			src.update_neighbors()
+
 		if (current_state > GAME_STATE_WORLD_INIT)
-			SPAWN(0) //worldgen overrides ideally
-				src.UpdateIcon()
+
+			for (var/atom/A as anything in orange(1,src))
+				if(istype(A,/obj/window/auto) || istype(A,/obj/grille) || istype(A,/turf/simulated/wall/auto) || istype(A,/turf/simulated/wall/false_wall))
+					var/turf/simulated/wall/auto/W = A
+					neighbors += A
+					W.neighbors += src
+			src.update_neighbors()
+			src.UpdateIcon()
 
 		else
 			worldgenCandidates[src] = 1
+
+	proc/update_neighbors()
+		for (var/atom/A as anything in neighbors)
+			A.UpdateIcon()
+
 
 	generate_worldgen()
 		src.UpdateIcon()
@@ -568,12 +553,6 @@ ABSTRACT_TYPE(turf/simulated/wall/auto/hedge)
 				src.UpdateOverlays(src.connect_image, "connect")
 			else
 				src.UpdateOverlays(null, "connect")
-
-	proc/update_neighbors()
-		for (var/turf/unsimulated/wall/auto/T in orange(1,src))
-			T.UpdateIcon()
-		for (var/obj/grille/G in orange(1,src))
-			G.UpdateIcon()
 
 /turf/unsimulated/wall/auto/reinforced
 	name = "reinforced wall"

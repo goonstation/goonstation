@@ -31,13 +31,21 @@
 	///can you use this as a base for a new window?
 	var/can_build_window = TRUE
 
+	var/neighbors = list()
+
 
 	New()
 		..()
 		if(src.auto)
 			SPAWN(0) //fix for sometimes not joining on map load
+				for (var/atom/A in orange(1,src))
+					if(istype(A,/obj/window/auto) || istype(A,/obj/grille) || istype(A,/turf/simulated/wall/auto) || istype(A,/turf/simulated/wall/false_wall))
+						var/turf/simulated/wall/auto/W = A
+						neighbors += A
+						W.neighbors += src
 				if (map_setting && ticker)
 					src.update_neighbors()
+
 
 				src.UpdateIcon()
 
@@ -510,8 +518,8 @@
 				icon_state = "grille[builtdir]" + "-0"
 
 	proc/update_neighbors()
-		for (var/obj/grille/G in orange(1,src))
-			G.UpdateIcon()
+		for (var/atom/A in neighbors)
+			A.UpdateIcon()
 
 	proc/drop_rods(var/amount)
 		if (!isnum(amount))
