@@ -40,15 +40,13 @@
 					var/turf/simulated/wall/auto/W = A
 					neighbors += A
 					W.neighbors += src
-			src.UpdateIcon()
 			src.update_neighbors()
+			SPAWN(0)
+				src.UpdateIcon()
 
 		SPAWN(1 SECOND)
 			// so that if it's getting created by the map it works, and if it isn't this will just return
 			src.setFloorUnderlay('icons/turf/floors.dmi', "plating", 0, 100, 0, "plating")
-
-	proc/update()
-		src.UpdateIcon()
 
 	proc/update_neighbors()
 		for (var/atom/A in neighbors)
