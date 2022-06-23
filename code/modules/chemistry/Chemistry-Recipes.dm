@@ -2879,8 +2879,8 @@ datum
 			// compost bacteria turns ammonium into nitrates
 			// nitrates are extracted from "soil" with water
 			// potash purifies nitrates into saltpetre
-			required_reagents = list("space_fungus" = 1, "poo" = 1, "potash" = 1, "water" = 1)
-			result_amount = 2
+			required_reagents = list("nitrogen" = 1, "poo" = 1, "potash" = 1)
+			result_amount = 1
 			instant = 0 // Potash filtering takes time.
 			reaction_speed = 1
 			mix_phrase = "A putrid odor pours from the mixture as a white crystalline substance leaches into the water."
