@@ -50,15 +50,10 @@
 				src.UpdateIcon()
 
 	disposing()
-		var/list/neighbors = null
-		if (src.auto && src.anchored && map_setting)
-			neighbors = list()
-			for (var/obj/grille/O in orange(1,src))
-				neighbors += O //find all of our neighbors before we move
 		..()
-		for (var/obj/grille/O in neighbors)
-			O?.UpdateIcon() //now that we are in nullspace tell them to update
-
+		for(var/atom/A in neighbors)
+			var/turf/simulated/wall/auto/W = A
+			W.neighbors -= src
 	steel
 #ifdef IN_MAP_EDITOR
 		icon_state = "grille0-0"

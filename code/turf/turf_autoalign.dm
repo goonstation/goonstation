@@ -44,6 +44,9 @@
 
 	Del()
 		src.RL_SetSprite(null)
+		for (var/atom/A in neighbors)
+			var/turf/simulated/wall/auto/W = A
+			W.neighbors -= src
 		..()
 
 	the_tuff_stuff

@@ -754,9 +754,9 @@
 
 	disposing()
 		..()
-
-		if (map_setting)
-			src.update_neighbors()
+		for (var/atom/A in neighbors)
+			var/turf/simulated/wall/auto/W = A
+			W.neighbors -= src
 
 	update_icon()
 		if (!src.anchored)

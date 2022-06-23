@@ -58,6 +58,9 @@
 		src.RL_SetSprite(null)
 		if (floor_underlay)
 			qdel(floor_underlay)
+		for (var/atom/A in neighbors)
+			var/turf/simulated/wall/auto/W = A
+			W.neighbors -= src
 		..()
 
 	proc/setFloorUnderlay(FloorIcon, FloorIcon_State, Floor_Intact, Floor_Health, Floor_Burnt, Floor_Name)
