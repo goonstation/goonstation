@@ -51,7 +51,7 @@
 		src.UpdateIcon()
 
 	proc/update_neighbors()
-		for (var/atom/A as anything in neighbors)
+		for (var/atom/A in neighbors)
 			A.UpdateIcon()
 
 	Del()

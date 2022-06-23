@@ -36,7 +36,7 @@
 			worldgenCandidates[src] = 1
 
 	proc/update_neighbors()
-		for (var/atom/A as anything in neighbors)
+		for (var/atom/A in neighbors)
 			A.UpdateIcon()
 
 	generate_worldgen()
@@ -521,7 +521,7 @@ ABSTRACT_TYPE(turf/simulated/wall/auto/hedge)
 			worldgenCandidates[src] = 1
 
 	proc/update_neighbors()
-		for (var/atom/A as anything in neighbors)
+		for (var/atom/A in neighbors)
 			A.UpdateIcon()
 
 
