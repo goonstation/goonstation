@@ -334,6 +334,8 @@
 
 	station_bounties[/obj/item/disk/data/floppy/read_only/communications] = 2
 	station_bounties[/obj/item/disk/data/floppy/read_only/authentication] = 3
+	station_bounties[/obj/item/disk/data/floppy/manudrive/ai] = 2
+	station_bounties[/obj/item/disk/data/floppy/manudrive/law_rack] = 1
 	station_bounties[/obj/item/aiModule/freeform] = 3
 
 
