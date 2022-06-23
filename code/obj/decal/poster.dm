@@ -1046,6 +1046,41 @@
 					mdname = M.current.client.preferences.name_last
 				. += "It says \ [mdname] has been granted a license as a Physician and Surgeon entitled to practice the profession of medicine in space."
 
+		framed_award/cecertification
+			name = "chief engineers certification"
+			desc = "The amount of asbestos in this certification violates galactic building codes."
+			award_type = /obj/item/cecertification/
+			award_name = "certification"
+			owner_job = "Chief Engineer"
+			icon_glass = "cecertification1"
+			icon_award = "cecertification"
+			icon_empty = "frame"
+			icon_state = "cecertification"
+
+			get_award_text(var/datum/mind/M)
+				var/cename = "Anonymous"
+				if(M?.current?.client?.preferences?.name_last)
+					cename = M.current.client.preferences.name_last
+				. += "It says \ [cename] has been granted a certification"
+				. += " in [pick("Logistical","Thermal","Microscopic","Informative","Quantum","Theoretical","Honkmother")] [pick("Freighting","Engineering","Mechanics","Mining","Cargology")]/"
+				. += "and is entitled to perform related actions to it in space."
+		framed_award/aiscript
+			name = "AI's first space-python script"
+			desc = "Print ('Hello World')"
+			award_type = /obj/item/aiscript/
+			award_name = "script"
+			owner_job = "AI"
+			icon_glass = "aiscript1"
+			icon_award = "aiscript"
+			icon_empty = "frame"
+			icon_state = "aiscript"
+
+			get_award_text(var/datum/mind/M)
+				var/ainame = "Anonymous"
+				if(M?.current?.client?.preferences?.name_last)
+					ainame = M.current.client.preferences.name_last
+				. += "It says \ [ainame] has written and ran a working space-python script."
+
 /obj/decal/poster/wallsign/pod_build
 	name = "poster"
 	icon = 'icons/obj/decals/posters_64x32.dmi'

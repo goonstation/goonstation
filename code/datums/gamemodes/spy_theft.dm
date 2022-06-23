@@ -334,8 +334,6 @@
 
 	station_bounties[/obj/item/disk/data/floppy/read_only/communications] = 2
 	station_bounties[/obj/item/disk/data/floppy/read_only/authentication] = 3
-	station_bounties[/obj/item/disk/data/floppy/manudrive/ai] = 2
-	station_bounties[/obj/item/disk/data/floppy/manudrive/law_rack] = 1
 	station_bounties[/obj/item/aiModule/freeform] = 3
 
 
@@ -365,7 +363,7 @@
 	station_bounties[/obj/item/reagent_containers/hypospray] = 1
 	station_bounties[/obj/item/paper/book/from_file/pharmacopia] = 1
 
-	station_bounties[/obj/item/reagent_containers/food/drinks/mug/HoS] = 1
+	station_bounties[/obj/item/reagent_containers/food/drinks/mug/HoS] = 3
 	station_bounties[/obj/item/reagent_containers/food/drinks/rum_spaced] = 2
 	station_bounties[/obj/item/reagent_containers/food/drinks/bottle/thegoodstuff] = 2
 	station_bounties[/obj/item/reagent_containers/food/drinks/bottle/champagne] = 2
@@ -375,6 +373,8 @@
 	station_bounties[/obj/item/rddiploma] = 2
 	station_bounties[/obj/item/mdlicense] = 2
 	station_bounties[/obj/item/firstbill] = 2
+	station_bounties[/obj/item/cecertification] = 2
+	station_bounties[/obj/item/aiscript] = 3
 	station_bounties[/obj/captain_bottleship] = 3
 	station_bounties[/obj/item/hand_tele] = 3
 	station_bounties[/obj/item/card/id/captains_spare] = 3
@@ -504,6 +504,7 @@
 	big_station_bounties[/obj/machinery/genetics_scanner] = 2
 	big_station_bounties[/obj/machinery/atmospherics/unary/cryo_cell] = 2
 	big_station_bounties[/obj/machinery/computer/cloning] = 2
+	big_station_bounties[/obj/item/disk/data/floppy/manudrive/ai] = 2
 	big_station_bounties[/obj/machinery/clonepod] = 2
 
 	big_station_bounties[/obj/machinery/flasher/portable] = 2
