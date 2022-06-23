@@ -165,7 +165,7 @@
 /turf/space,
 /area/space)
 "aaC" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/black,
 /area/radiostation/bridge)
 "aaD" = (
@@ -839,7 +839,7 @@
 /turf/simulated/floor/blue,
 /area/radiostation/hallway)
 "acC" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/black,
 /area/radiostation/hallway)
 "acD" = (
@@ -1073,7 +1073,7 @@
 /turf/unsimulated/floor/setpieces/hivefloor,
 /area/space_hive)
 "adn" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/right,
 /turf/simulated/floor/black,
 /area/radiostation/studio)
@@ -1117,7 +1117,7 @@
 /turf/simulated/floor/grime,
 /area/radiostation/hallway)
 "adt" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/machinery/light/small{
 	base_state = "radio";
 	brightness = 1.1;
@@ -1329,14 +1329,14 @@
 	},
 /area/radiostation/studio)
 "adT" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/right{
 	dir = 4
 	},
 /turf/simulated/floor,
 /area/radiostation/studio)
 "adU" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/right{
 	dir = 8
 	},
@@ -1849,7 +1849,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/mining/quarters)
 "afv" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/mining/quarters)
 "afw" = (
@@ -1968,7 +1968,7 @@
 	},
 /area/mining/mainasteroid)
 "afP" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/mining/magnet_control)
 "afQ" = (
@@ -2064,7 +2064,7 @@
 /turf/simulated/floor/grime,
 /area/mining/magnet_control)
 "agk" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor,
 /area/radiostation/engineering)
 "agl" = (
@@ -2099,7 +2099,7 @@
 /turf/unsimulated/floor/setpieces/hivefloor,
 /area/space_hive)
 "ago" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor,
 /area/radiostation/bedroom)
 "agp" = (
@@ -2604,7 +2604,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/mining/magnet_control)
 "ahO" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/black,
 /area/radiostation/engineering)
 "ahP" = (
@@ -2619,7 +2619,7 @@
 /turf/simulated/floor/delivery,
 /area/mining/miningoutpost)
 "ahQ" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/black,
 /area/radiostation/bedroom)
 "ahR" = (
@@ -2994,7 +2994,7 @@
 	},
 /area/mining/mainasteroid)
 "aiL" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/black,
 /area/radiostation/serverroom)
 "aiM" = (
@@ -3172,14 +3172,14 @@
 	},
 /area/mining/manufacturing)
 "ajl" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/mining/dock)
 "ajm" = (
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/mining/dock)
 "ajn" = (
@@ -3242,14 +3242,14 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/mining/manufacturing)
 "ajA" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/mining/manufacturing)
 "ajB" = (
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/mining/manufacturing)
 "ajC" = (
@@ -3718,7 +3718,7 @@
 /turf/simulated/floor/delivery,
 /area/space)
 "akN" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/buddyfactory)
 "akO" = (
@@ -3745,24 +3745,24 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/mining/hangar)
 "akQ" = (
 /obj/cable,
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/mining/hangar)
 "akR" = (
 /obj/disposalpipe/segment/transport,
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/mining/manufacturing)
 "akS" = (
 /turf/simulated/floor/purple/side,
 /area/radiostation/engineering)
 "akT" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/mining/hangar)
 "akU" = (
@@ -7874,7 +7874,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/tech_outpost)
 "avj" = (
@@ -11212,7 +11212,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "aKJ" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/spyshack)
 "aKK" = (
@@ -13124,7 +13124,7 @@
 	},
 /area/derelict_ai_sat/solar)
 "aPL" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/space,
 /turf/simulated/floor/plating,
 /area/h7/control)
@@ -13983,7 +13983,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/derelict_ai_sat)
 "aSl" = (
@@ -14113,7 +14113,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/h7/crew)
 "aSz" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/h7/crew)
 "aSA" = (
@@ -14367,7 +14367,7 @@
 /turf/simulated/floor/white/grime,
 /area/derelict_ai_sat)
 "aTe" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/h7)
 "aTf" = (
@@ -15361,7 +15361,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/h7/crew)
 "aVC" = (
@@ -15529,7 +15529,7 @@
 /turf/simulated/floor/airless/plating/damaged2,
 /area/abandonedship)
 "aVZ" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/abandonedmedicalship/robot_trader)
 "aWa" = (
@@ -15886,7 +15886,7 @@
 	id = "patho_lockdown_z3";
 	name = "Lockdown"
 	},
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
 /area/abandonedoutpostthing)
 "aWY" = (
@@ -15896,7 +15896,7 @@
 /turf/simulated/floor/white,
 /area/abandonedoutpostthing)
 "aWZ" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/h7/control)
 "aXa" = (
@@ -16089,7 +16089,7 @@
 	},
 /area/abandonedoutpostthing)
 "aXz" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
 /area/abandonedoutpostthing)
 "aXA" = (
@@ -16454,7 +16454,7 @@
 /turf/simulated/floor,
 /area/h7/lab)
 "aYC" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/space,
 /turf/simulated/floor/plating,
 /area/h7/lab)
@@ -16661,7 +16661,7 @@
 	},
 /area/h7/lab)
 "aZu" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/h7/lab)
 "aZv" = (
@@ -17737,7 +17737,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/wingrille_spawn/auto/crystal,
+/obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/plating,
 /area/h7/lab)
 "bcK" = (
@@ -18545,7 +18545,7 @@
 	},
 /area/hollowasteroid)
 "bgc" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/helldrone)
 "bgh" = (
@@ -20210,7 +20210,7 @@
 /turf/space,
 /area/space)
 "bkM" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/space)
 "bkN" = (
@@ -20698,7 +20698,7 @@
 /turf/space,
 /area/space)
 "bmA" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/tech_outpost)
 "bmB" = (
@@ -21181,7 +21181,7 @@
 /turf/unsimulated/floor/black,
 /area/timewarp/ship)
 "cSD" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle{
 	dir = 4
 	},
@@ -21325,7 +21325,7 @@
 	},
 /area/abandonedmedicalship)
 "fkT" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle,
 /turf/simulated/floor/black,
 /area/radiostation/studio)
@@ -21526,14 +21526,14 @@
 /turf/space,
 /area/helldrone)
 "hUW" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle{
 	dir = 8
 	},
 /turf/simulated/floor,
 /area/radiostation/studio)
 "hZM" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/left{
 	dir = 4
 	},
@@ -22152,7 +22152,7 @@
 /turf/simulated/floor,
 /area/derelict_ai_sat)
 "npm" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/left{
 	dir = 8
 	},
@@ -22521,7 +22521,7 @@
 /turf/simulated/floor/delivery,
 /area/abandonedship)
 "qmR" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/left,
 /turf/simulated/floor/black,
 /area/radiostation/studio)
@@ -22674,7 +22674,7 @@
 /turf/unsimulated/floor/black,
 /area/timewarp/ship)
 "rHS" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/space,
 /turf/simulated/floor/plating,
 /area/helldrone)
@@ -23107,7 +23107,7 @@
 	},
 /area/timewarp/ship)
 "vYS" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/iss)
 "wav" = (
