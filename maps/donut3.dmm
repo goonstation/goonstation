@@ -18578,6 +18578,10 @@
 	dir = 6
 	},
 /area/station/medical/medbay/lobby)
+"fdX" = (
+/obj/decal/poster/wallsign/framed_award/mdlicense,
+/turf/simulated/wall/auto/reinforced/jen/blue,
+/area/station/medical/head)
 "fdY" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -31634,6 +31638,10 @@
 	dir = 4
 	},
 /area/station/crew_quarters/hor)
+"iVP" = (
+/obj/decal/poster/wallsign/framed_award/cecertification,
+/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/area/station/engine/engineering/ce)
 "iVV" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -80506,6 +80514,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/decal/poster/wallsign/framed_award/aiscript,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/AIsat)
 "wZp" = (
@@ -123786,7 +123795,7 @@ rdj
 rdj
 rdj
 rdj
-eHM
+fdX
 ubn
 pMe
 oCj
@@ -152763,7 +152772,7 @@ rdj
 rdj
 wCh
 mfw
-wCh
+iVP
 xXC
 liD
 ohB

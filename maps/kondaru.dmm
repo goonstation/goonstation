@@ -45269,6 +45269,12 @@
 /obj/machinery/light/emergency,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
+"imA" = (
+/obj/decal/poster/wallsign/framed_award/cecertification{
+	pixel_x = -5
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/crew_quarters/ce)
 "imX" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -45941,6 +45947,12 @@
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/primary/north)
+"iRT" = (
+/obj/decal/poster/wallsign/framed_award/mdlicense{
+	pixel_y = 0
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/crew_quarters/md)
 "iRY" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -56704,6 +56716,10 @@
 /obj/machinery/door/airlock/pyro/classic,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"tJY" = (
+/obj/decal/poster/wallsign/framed_award/firstbill,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/bridge/hos)
 "tKY" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -122639,7 +122655,7 @@ bBI
 bxm
 bvY
 bEO
-vTk
+tJY
 njD
 bIE
 bLs
@@ -126263,7 +126279,7 @@ lJN
 rfe
 ssQ
 wpN
-deR
+iRT
 sdA
 rrI
 nIU
@@ -127159,7 +127175,7 @@ bnq
 bnq
 bfO
 bDX
-xcv
+imA
 xcv
 jAJ
 peT

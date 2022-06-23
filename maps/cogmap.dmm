@@ -50798,6 +50798,10 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/delivery/white,
 /area/station/science/chemistry)
+"cQG" = (
+/obj/decal/poster/wallsign/framed_award/mdlicense,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/medical/head)
 "cRc" = (
 /obj/table/auto,
 /obj/item/kitchen/utensil/knife{
@@ -51763,6 +51767,12 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/solar/north)
+"ebX" = (
+/obj/decal/poster/wallsign/framed_award/cecertification{
+	pixel_y = 2
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/engine/engineering/ce)
 "eeD" = (
 /obj/disposalpipe/segment/ejection,
 /obj/cable{
@@ -57052,6 +57062,10 @@
 	},
 /turf/simulated/floor/yellow/side,
 /area/station/engine/elect)
+"lZg" = (
+/obj/decal/poster/wallsign/framed_award/rddiploma,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/crew_quarters/hor)
 "lZE" = (
 /obj/machinery/light/emergency{
 	dir = 8
@@ -63033,6 +63047,10 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
+"uQf" = (
+/obj/decal/poster/wallsign/framed_award/aiscript,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/turret_protected/ai)
 "uQi" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0;
@@ -63885,6 +63903,10 @@
 	},
 /turf/simulated/floor,
 /area/station/security/main)
+"vUw" = (
+/obj/decal/poster/wallsign/framed_award/firstbill,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/crew_quarters/heads)
 "vXz" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	name = "Catering Storage"
@@ -94371,7 +94393,7 @@ adC
 aam
 aaq
 aap
-bJY
+lZg
 bLj
 bML
 bJY
@@ -94932,7 +94954,7 @@ aVw
 aYe
 aUk
 aZU
-aZQ
+vUw
 bbW
 bdd
 aZQ
@@ -104053,7 +104075,7 @@ cbQ
 cbQ
 oiU
 cbQ
-cih
+cQG
 cjw
 ckS
 cmn
@@ -107031,7 +107053,7 @@ nJJ
 aGT
 aVV
 bpJ
-bqi
+uQf
 bqK
 nhQ
 wex
@@ -114304,7 +114326,7 @@ dZY
 fDa
 uEk
 bMc
-jbi
+ebX
 bNB
 bOV
 ucc

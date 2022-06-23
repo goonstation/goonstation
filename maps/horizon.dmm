@@ -18548,6 +18548,9 @@
 /area/station/crew_quarters/heads)
 "aWf" = (
 /obj/disposalpipe/segment/transport,
+/obj/decal/poster/wallsign/framed_award/firstbill{
+	pixel_x = 15
+	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/bridge/hos)
 "aWg" = (
@@ -58239,6 +58242,12 @@
 	dir = 8
 	},
 /area/station/hallway/secondary/entry)
+"qVB" = (
+/obj/decal/poster/wallsign/framed_award/mdlicense{
+	pixel_x = 10
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/crew_quarters/md)
 "qWA" = (
 /obj/disposalpipe/segment/food{
 	dir = 4
@@ -58919,6 +58928,12 @@
 	},
 /turf/simulated/floor/airless/plating,
 /area/space)
+"srD" = (
+/obj/decal/poster/wallsign/framed_award/rddiploma{
+	pixel_x = 15
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/crew_quarters/hor)
 "srU" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk{
@@ -59441,6 +59456,10 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/storage/auxillary)
+"tHs" = (
+/obj/decal/poster/wallsign/framed_award/cecertification,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/engineering)
 "tHt" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -120885,7 +120904,7 @@ aIO
 aOY
 aRF
 aUE
-aXs
+qVB
 aXs
 bdA
 bgS
@@ -130574,7 +130593,7 @@ ccB
 cdM
 cfl
 cgp
-bzU
+tHs
 aRo
 cil
 ciS
@@ -139601,7 +139620,7 @@ axX
 beu
 avV
 auj
-aEw
+srD
 aEw
 aGt
 aGt

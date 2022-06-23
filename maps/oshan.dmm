@@ -44998,6 +44998,10 @@
 /obj/machinery/lawrack,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
+"feK" = (
+/obj/decal/poster/wallsign/framed_award/mdlicense,
+/turf/simulated/wall/auto/supernorn,
+/area/station/medical/head)
 "fhb" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -45328,6 +45332,10 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/storage/eeva)
+"gGy" = (
+/obj/decal/poster/wallsign/framed_award/firstbill,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/bridge/hos)
 "gGH" = (
 /obj/decal/fakeobjects/flock/antenna{
 	dir = 8
@@ -45472,6 +45480,16 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
+"hoC" = (
+/obj/decal/poster/wallsign/framed_award/aiscript,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/turret_protected/ai)
+"htG" = (
+/obj/decal/poster/wallsign/framed_award/rddiploma{
+	pixel_x = 5
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/turret_protected/Zeta)
 "hzx" = (
 /obj/wingrille_spawn/auto,
 /obj/barber_pole{
@@ -47888,6 +47906,10 @@
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
+"wlW" = (
+/obj/decal/poster/wallsign/framed_award/cecertification,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/turret_protected/ai)
 "wqE" = (
 /obj/submachine/GTM{
 	pixel_y = 32
@@ -97547,7 +97569,7 @@ cks
 cke
 cku
 bvL
-bvL
+gGy
 bxc
 bxX
 bvL
@@ -98995,7 +99017,7 @@ ajb
 ajT
 alj
 aoh
-aog
+feK
 aqf
 apA
 apA
@@ -105342,7 +105364,7 @@ apd
 apb
 apb
 apb
-apb
+htG
 apb
 cfc
 apb
@@ -106873,13 +106895,13 @@ aIt
 aIO
 aJl
 aJK
-aJZ
+hoC
 aKt
 aKS
 aKS
 aKS
 aMx
-aJZ
+wlW
 aOz
 aPP
 aQu

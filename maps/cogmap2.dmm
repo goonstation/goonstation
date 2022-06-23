@@ -66868,9 +66868,6 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/obj/decal/poster/wallsign/poster_nt{
-	pixel_y = 28
-	},
 /obj/storage/secure/closet/command/medical_director,
 /turf/simulated/floor/carpet{
 	dir = 5;
@@ -77517,6 +77514,10 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/hallway/primary/west)
+"hXn" = (
+/obj/decal/poster/wallsign/framed_award/rddiploma,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/crew_quarters/hor)
 "hYU" = (
 /obj/securearea{
 	desc = "This hazard stripe marks a high-intensity beamline.";
@@ -78058,6 +78059,10 @@
 /obj/machinery/manufacturer/general,
 /turf/simulated/floor/bot,
 /area/station/storage/emergency)
+"kHv" = (
+/obj/decal/poster/wallsign/framed_award/firstbill,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/crew_quarters/heads)
 "kOo" = (
 /obj/machinery/shuttle/engine/heater/seaheater_left{
 	pixel_y = -14;
@@ -78137,6 +78142,11 @@
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
 /turf/simulated/floor,
 /area/station/security/checkpoint/podbay)
+"lfe" = (
+/obj/decal/poster/wallsign/framed_award/cecertification,
+/obj/decal/poster/wallsign/framed_award/cecertification,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/crew_quarters/ce)
 "lhJ" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment{
@@ -80117,6 +80127,10 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/hallway/primary/west)
+"vng" = (
+/obj/decal/poster/wallsign/framed_award/mdlicense,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/medical/head)
 "vrU" = (
 /obj/table/wood/auto,
 /obj/item/plantanalyzer,
@@ -107707,7 +107721,7 @@ aah
 aah
 aah
 aah
-cii
+hXn
 cjt
 ckO
 cmD
@@ -117093,7 +117107,7 @@ cHZ
 cNT
 cPs
 cQM
-cSy
+vng
 cTT
 cVv
 cWu
@@ -125499,7 +125513,7 @@ bzm
 bAS
 bCI
 bEG
-bCD
+lfe
 bIx
 bCD
 bLX
@@ -146630,7 +146644,7 @@ aaa
 abs
 aaa
 aaa
-brf
+kHv
 bsS
 buJ
 bwy

@@ -44316,6 +44316,12 @@
 /area/station/medical/research{
 	name = "Genetic Research"
 	})
+"dks" = (
+/obj/decal/poster/wallsign/framed_award/rddiploma,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/crew_quarters/hor{
+	name = "Research Director's Quarters"
+	})
 "dnX" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -45009,6 +45015,13 @@
 	},
 /turf/space,
 /area/space)
+"eQb" = (
+/obj/decal/poster/wallsign/framed_award/aiscript,
+/turf/simulated/wall/auto/reinforced/supernorn{
+	explosion_resistance = 15;
+	name = "very reinforced wall"
+	},
+/area/station/turret_protected/ai)
 "eRf" = (
 /obj/storage/closet/wardrobe/red/security_gimmick,
 /obj/item/clothing/head/beret/random_color,
@@ -47059,6 +47072,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/brig)
+"keW" = (
+/obj/decal/poster/wallsign/framed_award/cecertification,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/engineering/ce/private)
 "kgl" = (
 /obj/machinery/portable_atmospherics/canister/sleeping_agent,
 /obj/machinery/firealarm{
@@ -47164,6 +47181,10 @@
 	dir = 1
 	},
 /area/station/medical/medbay/treatment2)
+"kpB" = (
+/obj/decal/poster/wallsign/framed_award/mdlicense,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/medical/head/private)
 "ksO" = (
 /obj/disposalpipe/segment/food{
 	dir = 8;
@@ -49290,6 +49311,12 @@
 	dir = 1
 	},
 /area/station/engine/substation/east)
+"qgF" = (
+/obj/decal/poster/wallsign/framed_award/firstbill,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/crew_quarters/heads{
+	name = "Head of Personnel's Quarters"
+	})
 "qhs" = (
 /obj/shrub{
 	dir = 1;
@@ -84668,12 +84695,12 @@ oLM
 jkE
 nPr
 wfO
-nup
+kpB
 iIl
 ufv
 ewp
 czx
-aho
+dks
 ahL
 aik
 aiI
@@ -84920,7 +84947,7 @@ abd
 aap
 aby
 abe
-uja
+keW
 oKT
 esY
 dFF
@@ -86269,11 +86296,11 @@ aUg
 aVD
 aWQ
 aWQ
-aWQ
+qgF
 vKp
 aWQ
 bdd
-bem
+eQb
 bfu
 bgE
 bhC

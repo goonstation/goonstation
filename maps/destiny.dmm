@@ -41646,6 +41646,10 @@
 /obj/machinery/nanofab/refining,
 /turf/simulated/floor,
 /area/station/mining/staff_room)
+"omt" = (
+/obj/decal/poster/wallsign/framed_award/cecertification,
+/turf/simulated/wall/auto/supernorn,
+/area/station/crew_quarters/ce)
 "omH" = (
 /obj/disposalpipe/segment/mail,
 /obj/disposalpipe/segment{
@@ -48466,6 +48470,11 @@
 	dir = 8
 	},
 /area/station/chapel/sanctuary)
+"rXp" = (
+/obj/disposalpipe/segment/mail,
+/obj/decal/poster/wallsign/framed_award/aiscript,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/turret_protected/ai)
 "rXL" = (
 /obj/machinery/light_switch/north{
 	pixel_y = 28
@@ -54680,9 +54689,6 @@
 /obj/stool/chair/comfy/yellow,
 /obj/landmark/start{
 	name = "Chief Engineer"
-	},
-/obj/item/storage/secure/ssafe{
-	pixel_y = 28
 	},
 /turf/simulated/floor/carpet{
 	dir = 1;
@@ -106964,7 +106970,7 @@ amg
 amN
 dWa
 omH
-mqM
+rXp
 aUy
 mqM
 mqM
@@ -107501,7 +107507,7 @@ adl
 jVS
 erm
 adI
-vso
+omt
 viM
 ams
 mUg

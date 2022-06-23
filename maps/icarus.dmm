@@ -22698,12 +22698,6 @@
 	can_rupture = 0
 	},
 /obj/machinery/meter,
-/obj/machinery/ignition_switch{
-	id = "icarvs_ignition";
-	name = "Chamber Ignition Switch";
-	pixel_x = 8;
-	pixel_y = -24
-	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "aWt" = (
@@ -23331,14 +23325,6 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
-"aXK" = (
-/obj/machinery/driver_button{
-	id = "begone_noisemaker";
-	name = "Emergency Ejection Driver";
-	pixel_x = -24
-	},
-/turf/simulated/floor/white/grime,
-/area/station/hangar/science)
 "aXL" = (
 /turf/simulated/floor/white/grime,
 /area/station/hangar/science)
@@ -26590,6 +26576,12 @@
 /obj/item/storage/wall/random,
 /turf/simulated/floor/black,
 /area/research_outpost/indigo_rye)
+"hml" = (
+/obj/decal/poster/wallsign/framed_award/firstbill{
+	pixel_x = 10
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/crew_quarters/heads)
 "hEc" = (
 /turf/simulated/floor/sanitary,
 /area/research_outpost/indigo_rye)
@@ -26814,6 +26806,12 @@
 	},
 /turf/simulated/floor/specialroom/arcade,
 /area/research_outpost/indigo_rye)
+"jEj" = (
+/obj/decal/poster/wallsign/framed_award/mdlicense{
+	pixel_x = -10
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/medical/head)
 "jJO" = (
 /obj/machinery/light/emergency{
 	dir = 8;
@@ -26903,6 +26901,12 @@
 "kUB" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/quarters_west)
+"kXA" = (
+/obj/decal/poster/wallsign/framed_award/cecertification{
+	pixel_x = 10
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/engineering)
 "ldu" = (
 /obj/table/round/auto,
 /obj/machinery/computer/security/wooden_tv/small{
@@ -27124,6 +27128,10 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/east)
+"mLU" = (
+/obj/decal/poster/wallsign/framed_award/rddiploma,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/crew_quarters/hor)
 "mZv" = (
 /obj/decal/poster/wallsign/stencil/left/i{
 	pixel_x = 3
@@ -27390,7 +27398,7 @@
 	},
 /obj/table/wood/auto,
 /obj/displaycase{
-	displayed = new /obj/item/captaingun;
+	displayed = new/obj/item/captaingun;
 	pixel_y = 6
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
@@ -27579,6 +27587,10 @@
 	dir = 1
 	},
 /area/research_outpost/indigo_rye)
+"tRh" = (
+/obj/decal/poster/wallsign/framed_award/hos_medal,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/security/hos)
 "ufN" = (
 /obj/machinery/power/furnace,
 /obj/cable,
@@ -58387,7 +58399,7 @@ aUa
 aUa
 aTr
 aWW
-aXK
+aXL
 aYn
 aTr
 aTr
@@ -66822,7 +66834,7 @@ aGm
 aHb
 aHM
 aIv
-aJa
+tRh
 aJI
 aKs
 aKW
@@ -67742,7 +67754,7 @@ aPX
 aPX
 aRE
 aSq
-aTa
+mLU
 aTI
 aUx
 aVm
@@ -69155,7 +69167,7 @@ adB
 abK
 adR
 aeb
-aej
+hml
 aes
 aeD
 aes
@@ -70730,7 +70742,7 @@ axh
 axf
 ayl
 axf
-auW
+kXA
 azP
 aAx
 azT
@@ -74082,7 +74094,7 @@ aOL
 aPs
 aPs
 aPs
-aPs
+jEj
 aPs
 aTj
 aQr
