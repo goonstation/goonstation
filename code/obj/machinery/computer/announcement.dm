@@ -4,7 +4,6 @@
 	name = "Announcement Computer"
 	icon_state = "comm"
 	machine_registry_idx = MACHINES_ANNOUNCEMENTS
-	var/last_announcement = 0
 	var/announcement_delay = 1200
 	var/obj/item/card/id/ID = null
 	var/unlocked = 0
@@ -47,7 +46,7 @@
 				<hr>
 				Status: [announce_status]<BR>
 				Card: <a href='?src=\ref[src];card=1'>[src.ID ? src.ID.name : "--------"]</a><br>
-				Broadcast delay: [nice_timer()]<br>
+				Broadcast delay: [nice_timer(user)]<br>
 				<br>
 				Message: "<a href='?src=\ref[src];edit_message=1'>[src.message ? src.message : "___________"]</a>" <a href='?src=\ref[src];clear_message=1'>(Clear)</a><br>
 				<br>
@@ -131,13 +130,13 @@
 			announce_status = "Insufficient Access"
 		else if(!message)
 			announce_status = "Input message."
-		else if(get_time() > 0)
+		else if(get_time(usr) > 0)
 			announce_status = "Broadcast delay in effect."
 		else
 			announce_status = "Ready to transmit!"
 
 	proc/send_message(var/mob/user)
-		if(!message || !unlocked || get_time() > 0) return
+		if(!message || !unlocked || get_time(user) > 0) return
 		var/area/A = get_area(src)
 
 		if(user.bioHolder.HasEffect("mute"))
@@ -157,13 +156,11 @@
 			msg_sound = "sound/misc/flockmind/flockmind_caw.ogg"
 
 		command_announcement(message, "[A.name] Announcement by [ID.registered] ([ID.assignment])", msg_sound)
-		last_announcement = world.timeofday
+		ON_COOLDOWN(user,"announcement_computer",announcement_delay)
 		message = ""
 
-	proc/nice_timer()
-		if (world.timeofday < last_announcement)
-			last_announcement = 0
-		var/time = get_time()
+	proc/nice_timer(mob/user)
+		var/time = get_time(user)
 		if(time < 0)
 			return "--:--"
 		else
@@ -176,8 +173,8 @@
 
 			return "[minutes][flick_seperator ? ":" : " "][seconds]"
 
-	proc/get_time()
-		return max(((last_announcement + announcement_delay) - world.timeofday ) / 10, 0)
+	proc/get_time(mob/user)
+		return GET_COOLDOWN(user,"announcement_computer")
 
 	proc/set_arrival_alert(var/mob/user)
 		if (!user)
