@@ -35,7 +35,7 @@
 		src.layer = src.layer - 0.1
 
 		if (src.can_be_auto)
-			for (var/atom/A in orange(1,src))
+			for (var/atom/A as anything in orange(1,src))
 				if(istype(A,/obj/window/auto) || istype(A,/obj/grille) || istype(A,/turf/simulated/wall/auto) || istype(A,/turf/simulated/wall/false_wall))
 					var/turf/simulated/wall/auto/W = A
 					neighbors += A
