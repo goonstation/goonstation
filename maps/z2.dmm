@@ -70282,7 +70282,7 @@
 /area/centcom/offices/cogwerks)
 "fyG" = (
 /turf/unsimulated/wall{
-	icon = 'icons/turf/shuttle.dmi';
+	icon = 'icons/obj/doors/shuttle.dmi';
 	icon_state = "door1";
 	name = "broken door"
 	},
@@ -72798,7 +72798,7 @@
 "nhL" = (
 /obj/decal/fakeobjects/firelock_broken{
 	desc = "This shuttle door is really jammed.  What's the point of it then?  WHAT IS THE POINT";
-	icon = 'icons/turf/shuttle.dmi';
+	icon = 'icons/obj/doors/shuttle.dmi';
 	name = "rusted hatch"
 	},
 /turf/unsimulated/floor{
@@ -76342,7 +76342,7 @@
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
 "wyB" = (
 /turf/unsimulated/wall{
-	icon = 'icons/turf/shuttle.dmi';
+	icon = 'icons/obj/doors/shuttle.dmi';
 	icon_state = "door1";
 	name = "broken door"
 	},
@@ -76884,7 +76884,7 @@
 "xZU" = (
 /obj/decal/fakeobjects/firelock_broken{
 	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
-	icon = 'icons/turf/shuttle.dmi';
+	icon = 'icons/obj/doors/shuttle.dmi';
 	name = "rusted hatch"
 	},
 /turf/unsimulated/floor{
