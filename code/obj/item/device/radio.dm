@@ -263,12 +263,12 @@ var/list/headset_channel_lookup
 	var/ai_sender = 0
 	var/eqjobname
 
-	if (iscarbon(M))
-		if (hasvar(M, "wear_id"))
-			if (M:wear_id)
-				eqjobname = M:wear_id:assignment
-			else
-				eqjobname = "No ID"
+	if (ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if (H.wear_id)
+			eqjobname = H.wear_id:assignment
+		else
+			eqjobname = "No ID"
 	else if (isAI(M))
 		eqjobname = "AI"
 		ai_sender = 1

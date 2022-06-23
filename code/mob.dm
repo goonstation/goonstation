@@ -918,7 +918,7 @@
 	if (confirm != "Yes")
 		return
 	if (!src.mind)
-		src << alert("There was an error setting this status. Perhaps you are a ghost?")
+		tgui_alert(src, "There was an error setting this status. Perhaps you are a ghost?", "Error")
 		return
 //So that players can leave their team and spectate. Since normal dying get's you instantly cloned.
 #if defined(MAP_OVERRIDE_POD_WARS)
@@ -2758,7 +2758,7 @@
 				src.show_text("That name was too short after removing bad characters from it. Please choose a different name.", "red")
 				continue
 			else
-				if (force_instead || alert(src, "Use the name [newname]?", newname, "Yes", "No") == "Yes")
+				if (force_instead || tgui_alert(src, "Use the name [newname]?", newname, list("Yes", "No")) == "Yes")
 					if(!src.traitHolder.hasTrait("immigrant"))// stowaway entertainers shouldn't be on the manifest
 						for (var/datum/record_database/DB in list(data_core.bank, data_core.security, data_core.general, data_core.medical))
 							var/datum/db_record/R = DB.find_record("id", src.datacore_id)

@@ -19,8 +19,6 @@ Contents:
 	ambient_light = rgb(0.9 * 255, 0.9 * 255, 0.9 * 255)
 	sound_group = "moon"
 
-var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambience/station/Machinery_Computers2.ogg', 'sound/ambience/station/Machinery_Computers3.ogg')
-
 /area/moon/underground
 	name = "Lunar Underground"
 	icon_state = "orange"
@@ -34,70 +32,25 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 	name = "Museum of Lunar History"
 	icon_state = "purple"
 	ambient_light = rgb(0.5 * 255, 0.5 * 255, 0.5 * 255)
+	sound_loop = 'sound/ambience/industrial/LavaPowerPlant_Rumbling1.ogg'
+	sound_loop_vol = 60
 
-	var/sound/ambientSound = 'sound/ambience/industrial/LavaPowerPlant_Rumbling1.ogg'
-	var/list/fxlist = null
-	var/list/soundSubscribers = null
+/area/moon/museum/New()
+	. = ..()
+	START_TRACKING_CAT(TR_CAT_AREA_PROCESS)
 
-	New()
-		..()
-		fxlist = lunar_fx_sounds
-		if (ambientSound)
+/area/moon/museum/disposing()
+	STOP_TRACKING_CAT(TR_CAT_AREA_PROCESS)
+	. = ..()
 
-			SPAWN(6 SECONDS)
-				var/sound/S = new/sound()
-				S.file = ambientSound
-				S.repeat = 0
-				S.wait = 0
-				S.channel = 123
-				S.volume = 60
-				S.priority = 255
-				S.status = SOUND_UPDATE
-				ambientSound = S
+/area/moon/museum/area_process()
+	if(prob(20))
+		src.sound_fx_2 = pick('sound/ambience/loop/Wind_Low.ogg',\
+		'sound/ambience/station/Machinery_Computers2.ogg',\
+		'sound/ambience/station/Machinery_Computers3.ogg')
 
-				soundSubscribers = list()
-				process()
-
-	Entered(atom/movable/Obj,atom/OldLoc)
-		. = ..()
-		if(ambientSound && ismob(Obj))
-			soundSubscribers |= Obj
-
-	proc/process()
-		if (!soundSubscribers)
-			return
-
-		var/sound/S = null
-		var/sound_delay = 0
-
-
-		while(current_state < GAME_STATE_FINISHED)
-			sleep(6 SECONDS)
-
-			if(prob(10) && fxlist)
-				S = sound(file=pick(fxlist), volume=50)
-				sound_delay = rand(0, 50)
-			else
-				S = null
-				continue
-
-			for(var/mob/living/H in soundSubscribers)
-				var/area/mobArea = get_area(H)
-				if (!istype(mobArea) || mobArea.type != src.type)
-					soundSubscribers -= H
-					if (H.client)
-						ambientSound.status = SOUND_PAUSED | SOUND_UPDATE
-						ambientSound.volume = 0
-						H << ambientSound
-					continue
-
-				if(H.client)
-					ambientSound.status = SOUND_UPDATE
-					ambientSound.volume = 60
-					H << ambientSound
-					if(S)
-						SPAWN(sound_delay)
-							H << S
+		for(var/mob/living/carbon/human/H in src)
+			H.client?.playAmbience(src, AMBIENCE_FX_2, 60)
 
 /area/shuttle/lunar_elevator/museum/upper
 	icon_state = "shuttle"

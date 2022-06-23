@@ -31,15 +31,15 @@
 #define MOB_OVERMASK_LAYER (MOB_OVERLAY_BASE-4.8) // for mutant details that go over masks
 #define MOB_HEAD_LAYER1		(MOB_OVERLAY_BASE-5) // masks
 #define MOB_EARS_LAYER		(MOB_OVERLAY_BASE-5.5)
+#define MOB_GLASSES_LAYER2 (MOB_OVERLAY_BASE-5.9) // For eyewear that should layer OVER hair
 #define MOB_HAIR_LAYER2 	(MOB_OVERLAY_BASE-6)
-#define MOB_GLASSES_LAYER	(MOB_OVERLAY_BASE-7)
+#define MOB_GLASSES_LAYER	(MOB_OVERLAY_BASE-7)  // For eyewear that should layer UNDER hair
 #define MOB_BACK_LAYER 		(MOB_OVERLAY_BASE-8)
 #define MOB_OVERSUIT_LAYER1 (MOB_OVERLAY_BASE-8.6)	// For mutant oversuit (de)tails when facing north
 #define MOB_OVERSUIT_LAYER2 (MOB_OVERLAY_BASE-8.7)	// If we have another one
 #define MOB_SHEATH_LAYER 	(MOB_OVERLAY_BASE-8.8)
 #define MOB_BACK_LAYER_SATCHEL  (MOB_OVERLAY_BASE-8.9)  // For satchels so they don't show over a tail or something
 #define MOB_ARMOR_LAYER 	(MOB_OVERLAY_BASE-9)
-#define MOB_SHOE_LAYER 		(MOB_OVERLAY_BASE-9.5) // aw yeah decimals woo fuck
 #define MOB_HAND_LAYER2 	(MOB_OVERLAY_BASE-10) 	// gloves
 #define MOB_HAND_LAYER1 	(MOB_OVERLAY_BASE-11)
 #define MOB_BELT_LAYER 		(MOB_OVERLAY_BASE-12) 	// bit missleading name, used for more than just belts
@@ -49,7 +49,7 @@
 #define MOB_UNDERWEAR_LAYER (MOB_OVERLAY_BASE-16)
 #define MOB_DAMAGE_LAYER 	(MOB_OVERLAY_BASE-17)
 #define MOB_BODYDETAIL_LAYER3 	(MOB_OVERLAY_BASE-18)
-#define MOB_BODYDETAIL_LAYER2 	(MOB_OVERLAY_BASE-19)	//
+#define MOB_BODYDETAIL_LAYER2 	(MOB_OVERLAY_BASE-19)	// Used for limb overlays. you can use it for other things too, I won't stop you
 #define MOB_BODYDETAIL_LAYER1 	(MOB_OVERLAY_BASE-20) // Mostly just for torso stuff
 #define MOB_LIMB_LAYER 		(MOB_OVERLAY_BASE-21)
 #define MOB_TAIL_LAYER2 		(MOB_OVERLAY_BASE-23) // Tail detail

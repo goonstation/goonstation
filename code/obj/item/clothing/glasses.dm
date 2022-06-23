@@ -322,6 +322,7 @@
 	block_eye = "R"
 	var/pinhole = 0
 	var/mob/living/carbon/human/equipper
+	wear_layer = MOB_GLASSES_LAYER2
 
 	setupProperties()
 		..()
@@ -630,6 +631,7 @@
 	color_r = 0.5
 	color_g = 1
 	color_b = 0.5
+	wear_layer = MOB_GLASSES_LAYER2
 
 	equipped(mob/user, slot)
 		. = ..()
