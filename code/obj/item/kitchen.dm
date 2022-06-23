@@ -566,6 +566,8 @@ TRAYS
 	proc/add_contents(obj/item/food, mob/user, click_params)
 		. = FALSE
 		if (istype(food, /obj/item/plate))
+			if (food == src)
+				boutput(user, "<span class='alert>You can't stack a plate on itself!</span>")
 			var/obj/item/plate/not_really_food = food
 			. = src.stackable && not_really_food.stackable // . is TRUE if we can stack the other plate on this plate, FALSE otherwise
 
@@ -615,15 +617,16 @@ TRAYS
 
 	/// Called when you throw or smash the plate, throwing the contents everywhere
 	proc/shit_goes_everywhere()
-		src.visible_message("<span class='alert'>Everything on \the [src] goes flying!</span>")
+		if (length(src.contents))
+			src.visible_message("<span class='alert'>Everything on \the [src] goes flying!</span>")
 		for (var/atom/movable/food in src)
+			food.set_loc(get_turf(src))
 			if (istype(food, /obj/item/plate))
 				var/obj/item/plate/not_food = food
 				SPAWN(0.1 SECONDS) // This is rude but I want a small delay in smashing nested plates. More satisfying
 					not_food?.shatter()
 			else
 				food.throw_at(get_offset_target_turf(src.loc, rand(throw_dist)-rand(throw_dist), rand(throw_dist)-rand(throw_dist)), 5, 1)
-			src.remove_contents(food)
 
 	/// Used to smash the plate over someone's head
 	proc/unique_attack_garbage_fuck(mob/M, mob/user)
@@ -663,10 +666,10 @@ TRAYS
 		if (!src.add_contents(W, user, params))
 			..()
 
-	MouseDrop_T(atom/movable/a, mob/user)
+	MouseDrop_T(atom/movable/a, mob/user, src_location, over_location, src_control, over_control, params)
 		. = ..()
 		if (isitem(a) && can_reach(user, src) && can_reach(user, a))
-			src.add_contents(a, user)
+			src.add_contents(a, user, params2list(params))
 
 	attack_self(mob/user) // in case you only have one arm or you stacked too many MONSTERs or something just dump a random piece of food
 		. = ..()
@@ -680,7 +683,6 @@ TRAYS
 			else
 				M.visible_message("<span class='alert'><B>[user] smashes [src] over [M]'s head!</B></span>")
 				logTheThing("combat", user, M, "smashes [src] over [constructTarget(M,"combat")]'s head! ")
-			src.shit_goes_everywhere()
 
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
@@ -797,6 +799,9 @@ TRAYS
 			qdel(src)
 			return
 		tray_health--
+
+	shatter() // don't
+		return
 
 //sushiiiiiii
 /obj/item/kitchen/sushi_roller
