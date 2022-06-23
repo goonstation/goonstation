@@ -1068,76 +1068,16 @@
 /obj/window/auto/feather/Crossed(atom/movable/mover)
 	. = ..()
 	var/mob/living/critter/flock/drone/drone = mover
-	if(istype(drone))
-		return drone.floorrunning || ((drone.can_floorrun && drone.resources >= 1) && drone.start_floorrunning())
+	if(istype(drone) && isfeathertile(src.loc) && (drone.is_npc || (drone.client && drone.client.check_key(KEY_RUN))))
+		if(drone.floorrunning || (drone.can_floorrun && drone.resources >= 1))
+			drone.set_loc(src.loc)
+			drone.start_floorrunning()
+			return TRUE
 
 /obj/window/auto/feather/Cross(atom/movable/mover)
 	if(istype(mover, /mob/living/critter/flock/drone))
 		var/mob/living/critter/flock/drone/F = mover
-		return (F.floorrunning || (F.can_floorrun && F.resources >= 1))
-
-
-/obj/window/auto/feather/Entered(var/mob/living/critter/flock/drone/F, atom/oldloc)
-	..()
-	if(!istype(F) || !oldloc)
-		return
-	if(!F.floorrunning && F.resources >= 1)
-		F.start_floorrunning()
-
-	if(F.floorrunning)
-		F.resources--
-		if (F.resources < 1)
-			F.end_floorrunning()
-		else if (!src.on)
-			src.on()
-
-/obj/window/auto/feather/Exited(var/mob/living/critter/flock/drone/F, atom/newloc)
-	..()
-	if(!istype(F) || !newloc)
-		return
-	if(F.floorrunning)
-		if (locate(/mob/living/critter/flock/drone) in src.contents)
-			var/floorrunning_flockdrone = FALSE
-			for (var/mob/living/critter/flock/drone/flockdrone in src.contents)
-				if (flockdrone.floorrunning)
-					floorrunning_flockdrone = TRUE
-			if (!floorrunning_flockdrone)
-				src.off()
-		else
-			src.off()
-
-		if(istype(newloc, /turf/simulated/floor/feather))
-			var/turf/simulated/floor/feather/T = newloc
-			if(T.broken)
-				F.end_floorrunning()
-		else if(!isfeathertile(newloc))
-			F.end_floorrunning()
-
-/obj/window/auto/feather/Bumped(AM)
-	. = ..()
-	if(istype(AM, /mob/living/critter/flock/drone))
-		var/mob/living/critter/flock/drone/F = AM
-		if(F.floorrunning || (F.can_floorrun && F.resources >= 1))
-			if(F.is_npc || (F.client && F.client.check_key(KEY_RUN))) //ai doesn't have to hold shift to wallrun, people do
-				F.start_floorrunning()
-				F.set_loc(src)
-
-/obj/window/auto/feather/proc/on()
-	src.on = TRUE
-	src.UpdateIcon()
-
-/obj/window/auto/feather/proc/off()
-	src.on = FALSE
-	src.UpdateIcon()
-
-
-/obj/window/auto/feather/update_icon()
-	..()
-	//TODO animate windows and put this back
-	//if (src.broken)
-	//	icon_state = icon_state + "b"
-	//else
-	//	icon_state = icon_state + (src.on ? "on" : "")
+		return isfeathertile(src.loc) && (F.floorrunning || (F.can_floorrun && F.resources >= 1)) && (F.is_npc || (F.client && F.client.check_key(KEY_RUN)))
 
 /obj/window/feather
 	icon = 'icons/misc/featherzone.dmi'
