@@ -57929,6 +57929,12 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/hotloop)
+"msa" = (
+/obj/decal/poster/wallsign/framed_award/cecertification{
+	pixel_y = 2
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/engine/engineering/ce)
 "msj" = (
 /obj/machinery/door/airlock/pyro/maintenance,
 /obj/firedoor_spawn,
@@ -61870,10 +61876,6 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/medical/robotics)
-"sOI" = (
-/obj/decal/poster/wallsign/framed_award/cecertification,
-/turf/simulated/wall/auto/supernorn,
-/area/station/engine/engineering/ce)
 "sPX" = (
 /obj/stool,
 /obj/item/clothing/head/helmet/space/santahat,
@@ -114142,7 +114144,7 @@ dZY
 fDa
 uEk
 bMc
-jbi
+msa
 bNB
 bOV
 ucc
@@ -115353,7 +115355,7 @@ bKE
 jbi
 jbi
 jbi
-sOI
+jbi
 jbi
 bKB
 kvk
