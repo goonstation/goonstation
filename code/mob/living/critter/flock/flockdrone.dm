@@ -505,7 +505,7 @@
 			if (wall.on)
 				wall.off()
 	animate_flock_floorrun_end(src)
-	if (istype(src.loc, /turf/simulated/wall/auto/feather))
+	if (flock_is_blocked_turf(get_turf(src.loc)))
 		for(var/turf/T in getneighbours(src.loc))
 			if(!flock_is_blocked_turf(T))
 				src.set_loc(T)
