@@ -4,20 +4,21 @@
   * Syndicate objects can't be scanned by non-Syndicate scanners.
   */
 /datum/component/analyzable
-	var/final_type
+	/// When this component is scanned, it will add the following typepath to the device analyzer's database
+	var/result_type
 
 TYPEINFO(/datum/component/analyzable)
 	initialization_args = list(
 		ARG_INFO("result_type", DATA_INPUT_TYPE, "the typepath that scanning this object will provide")
 	)
 
-/datum/component/analyzable/Initialize(result_type)
+/datum/component/analyzable/Initialize(type_override)
 	if (!isobj(parent))
 		return COMPONENT_INCOMPATIBLE
 	var/obj/O = parent
 	if (O.mechanics_blacklist)
 		return COMPONENT_INCOMPATIBLE
-	src.final_type = result_type
+	src.result_type = type_override
 	RegisterSignal(parent, list(COMSIG_ATOM_ANALYZE), .proc/attempt_analysis)
 
 /datum/component/analyzable/proc/attempt_analysis(atom/parent_atom, obj/item/I, mob/user)
@@ -32,10 +33,10 @@ TYPEINFO(/datum/component/analyzable)
 		// attempting to scan a syndicate item and this is a normal scanner
 		boutput(user, "<span class='alert'>The structure of [O] is not compatible with [S].</span>")
 		return TRUE
-	if (S.scanned.Find(src.final_type))
+	if (S.scanned.Find(src.result_type))
 		boutput(user, "<span class='alert'>You have already scanned this type of object.</span>")
 		return TRUE
-	S.scanned += src.final_type
+	S.scanned += src.result_type
 	boutput(user, "<span class='notice'>Item scan successful.</span>")
 	playsound(O.loc, "sound/machines/tone_beep.ogg", 30, FALSE)
 	return TRUE

@@ -11,8 +11,10 @@
 	var/list/mats = 0 // either a number or a list of the form list("MET-1"=5, "erebite"=3)
 	var/deconstruct_flags = DECON_NONE
 
-	var/mechanics_blacklist = FALSE // If true, this object can't be scanned by device analyzers
-	var/mechanics_type_override = null //Fix for children of scannable items being reproduced in mechanics
+	/// If TRUE, this object can't be scanned at all by device analyzers
+	var/mechanics_blacklist = FALSE
+	/// If defined, device analyzer scans will yield this typepath (instead of the default, which is just the object's type itself)
+	var/mechanics_type_override = null
 	var/artifact = null
 	var/move_triggered = 0
 	var/object_flags = 0
