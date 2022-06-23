@@ -510,7 +510,7 @@ ABSTRACT_TYPE(turf/simulated/wall/auto/hedge)
 		if (current_state > GAME_STATE_WORLD_INIT)
 
 			for (var/atom/A as anything in orange(1,src))
-				if(istype(A,/obj/window/auto) || istype(A,/obj/grille) || istype(A,/turf/simulated/wall/auto) || istype(A,/turf/simulated/wall/false_wall))
+				if(istype(A,/obj/window/auto) || istype(A,/obj/grille) || istype(A,/turf/unsimulated/wall/auto) || istype(A,/turf/simulated/wall/false_wall))
 					var/turf/simulated/wall/auto/W = A
 					neighbors += A
 					W.neighbors += src
