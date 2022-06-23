@@ -42,7 +42,7 @@
 				if(prob(25))
 					if (src.flock)
 						src.flock.claimTurf(flock_convert_turf(S))
-						if (sentinel_count > 0)
+						if (sentinel_count > 0 && !flock_is_blocked_turf(S))
 							new /obj/flock_structure/sentinel(S, src.flock)
 							sentinel_count--
 					else

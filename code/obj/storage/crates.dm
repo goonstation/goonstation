@@ -731,7 +731,7 @@
 		/obj/item/shipcomponent/sensor/mining)
 
 	clothes
-		spawn_contents = list(/obj/item/clothing/under/gimmick/blackstronaut,
+		spawn_contents = list(/obj/item/clothing/under/gimmick/donk,
 		/obj/item/clothing/shoes/cleats,
 		/obj/item/clothing/mask/balaclava,
 		/obj/item/reagent_containers/glass/beaker/burn)

@@ -2871,6 +2871,29 @@ datum
 			mix_phrase = "A white crystalline substance condenses out of the mixture."
 			mix_sound = 'sound/misc/fuse.ogg'
 
+		slow_saltpetre
+			name = "slow saltpetre"
+			id = "slow_saltpetre"
+			result = "saltpetre"
+			// fungus turns compost into ammonium
+			// compost bacteria turns ammonium into nitrates
+			// nitrates are extracted from "soil" with water
+			// potash purifies nitrates into saltpetre
+			required_reagents = list("nitrogen" = 1, "poo" = 1, "potash" = 1)
+			result_amount = 1
+			instant = 0 // Potash filtering takes time.
+			reaction_speed = 1
+			mix_phrase = "A putrid odor pours from the mixture as a white crystalline substance leaches into the water."
+			mix_sound = 'sound/misc/fuse.ogg'
+
+			on_reaction(var/datum/reagents/holder, var/created_volume)
+				// water byproduct
+				// some nitrification processes create additional water.
+				holder.add_reagent("water", created_volume,,holder.total_temperature)
+				// disgusting
+				var/turf/location = pick(holder.covered_turf())
+				location.fluid_react_single("miasma", created_volume, airborne = 1)
+
 		jenkem // moved this down so improperly mixed nutrients yield jenkem instead
 			name = "Jenkem"
 			id = "jenkem"

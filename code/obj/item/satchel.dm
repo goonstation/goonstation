@@ -39,8 +39,9 @@
 		else boutput(user, "<span class='alert'>[src] is full!</span>")
 
 	attack_self(var/mob/user as mob)
-		if (src.contents.len)
+		if (length(src.contents))
 			var/turf/T = user.loc
+			logTheThing("station", user, null, "dumps the contents of [src] ([length(src.contents)] items) out at [log_loc(T)].")
 			for (var/obj/item/I in src.contents)
 				I.set_loc(T)
 				I.add_fingerprint(user)
