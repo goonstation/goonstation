@@ -1244,6 +1244,12 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_brute = 30
 	health_burn = 30
 
+/mob/living/critter/small_animal/bird/crow/strong/strongest
+	name = "starry crow"
+	icon_state = "space"
+	health_brute = 100
+	health_burn = 100
+
 /* -------------------- Goose -------------------- */
 
 /mob/living/critter/small_animal/bird/goose
