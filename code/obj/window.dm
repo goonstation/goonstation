@@ -1046,7 +1046,6 @@
 // flock windows
 
 /obj/window/auto/feather
-	var/on = FALSE
 
 /obj/window/auto/feather/New()
 	connects_to += /turf/simulated/wall/auto/feather
