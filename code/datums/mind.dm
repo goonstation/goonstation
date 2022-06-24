@@ -23,6 +23,9 @@ datum/mind
 	var/late_special_role = 0
 	var/random_event_special_role = 0
 
+	/// A list of every antagonist datum that we have.
+	var/list/datum/antagonist/antagonists = list()
+
 	// This used for dead/released/etc mindslaves and rogue robots we still want them to show up
 	// in the game over stats. It's a list because former mindslaves could also end up as an emagged
 	// cyborg or something. Use strings here, just like special_role (Convair880).
@@ -214,6 +217,16 @@ datum/mind
 		src.store_memory("Time of death: [tod]", 0)
 		// stuff for critter respawns
 		src.last_death_time = world.timeofday
+	
+	/// Attempts to add the antagonist datum of ID role_id to this mind.
+	proc/add_antagonist(role_id, do_equip = TRUE, do_objectives = TRUE, do_relocate = TRUE, silent = FALSE)
+		for (var/V in concrete_typesof(/datum/antagonist))
+			var/datum/antagonist/A = V
+			if (initial(A.id) == role_id)
+				src.antagonists.Add(new A(src, do_equip, do_objectives, do_relocate, silent))
+				src.current.antagonist_overlay_refresh(TRUE, FALSE)
+				return TRUE
+		return FALSE
 
 	disposing()
 		logTheThing("debug", null, null, "<b>Mind</b> Mind for \[[src.key ? src.key : "NO KEY"]] deleted!")
