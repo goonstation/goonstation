@@ -33,7 +33,7 @@
 		src.gas_impermeable = 1
 		src.layer = src.layer - 0.1
 		SPAWN(0)
-			src.find_icon_state()
+			src.UpdateIcon()
 		SPAWN(1 SECOND)
 			// so that if it's getting created by the map it works, and if it isn't this will just return
 			src.setFloorUnderlay('icons/turf/floors.dmi', "plating", 0, 100, 0, "plating")
@@ -42,6 +42,10 @@
 					W.UpdateIcon()
 				for (var/obj/grille/G in orange(1,src))
 					G.UpdateIcon()
+				for (var/obj/window/auto/W in orange(1,src))
+					W.UpdateIcon()
+				for (var/turf/simulated/wall/false_wall/F in orange(1,src))
+					F.UpdateIcon()
 
 	Del()
 		src.RL_SetSprite(null)
@@ -193,32 +197,67 @@
 			src.operating = 0
 		return 1
 
-	proc/find_icon_state()
+	update_icon()
+		..()
 		if(dont_follow_map_settings_for_icon_state)
 			return
 		if (!map_settings)
 			return
 
-		var/turf/wall_path = ispath(map_settings.walls) ? map_settings.walls : /turf/simulated/wall/auto
-		var/turf/r_wall_path = ispath(map_settings.rwalls) ? map_settings.rwalls : /turf/simulated/wall/auto/reinforced
-		src.icon = initial(wall_path.icon)
-		if (src.can_be_auto)
-			var/dirs = 0
-			for (var/dir in cardinal)
-				var/turf/T = get_step(src, dir)
-				if (istype(T, /turf/simulated/wall/auto))
-					var/turf/simulated/wall/auto/W = T
-					if (istype(W, /turf/simulated/wall/false_wall) || \
-							istype(W, wall_path) || \
-							istype(W, r_wall_path) && istype(src, /turf/simulated/wall/false_wall/reinforced)
-						)
-						dirs |= dir
-					if (W.light_mod) //If the walls have a special light overlay, apply it.
-						src.RL_SetSprite("[W.light_mod][num2text(dirs)]")
-			var/turf/simulated/wall/auto/T = istype(src, /turf/simulated/wall/false_wall/reinforced) ? r_wall_path : wall_path
-			mod = initial(T.mod)
-			src.icon_state = "[mod][num2text(dirs)]"
-		return src.icon_state
+		if (src.can_be_auto) /// is the false wall able to mimic autowalls
+			var/turf/simulated/wall/auto/wall_path = ispath(map_settings.walls) ? map_settings.walls : /turf/simulated/wall/auto
+			src.icon = initial(wall_path.icon)
+
+			var/list/s_connects_to = list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
+			/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
+			/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle, /obj/machinery/door,
+			/obj/window, /obj/wingrille_spawn, /turf/simulated/wall/auto/reinforced/supernorn/yellow,
+			/turf/simulated/wall/auto/reinforced/supernorn/blackred, /turf/simulated/wall/auto/reinforced/supernorn/orange,
+			/turf/simulated/wall/auto/old, /turf/simulated/wall/auto/reinforced/old,
+			/turf/unsimulated/wall/auto/supernorn,/turf/unsimulated/wall/auto/reinforced/supernorn)
+
+			var/list/s_connects_with_overlay = list(/turf/simulated/wall/auto/shuttle,
+			/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn)
+
+			if (istype(src, /turf/simulated/wall/false_wall/reinforced))
+				wall_path = ispath(map_settings.rwalls) ? map_settings.rwalls : /turf/simulated/wall/auto/reinforced
+				/// donut3 walls, remove if they ever connect together like supernorn walls
+				s_connects_with_overlay += /turf/simulated/wall/auto/jen
+			else
+				s_connects_with_overlay += /turf/simulated/wall/auto/reinforced/jen
+
+			/// this was borrowed from autowalls as the code that was barely worked
+
+			/// basically this is doing what an autowall of the path wall_path would do
+			var/s_connect_overlay = initial(wall_path.connect_overlay)
+			var/list/s_connects_with_overlay_exceptions = list()
+			var/list/s_connects_to_exceptions = list(/turf/simulated/wall/auto/shuttle)
+
+			var/s_connect_diagonal =  initial(wall_path.connect_diagonal)
+			var/image/s_connect_image = initial(wall_path.connect_image)
+
+			var/light_mod = initial(wall_path.light_mod)
+			mod = initial(wall_path.mod)
+
+
+			var/connectdir = get_connected_directions_bitflag(s_connects_to, s_connects_to_exceptions, TRUE, s_connect_diagonal)
+			var/the_state = "[mod][connectdir]"
+			icon_state = the_state
+
+			if (light_mod)
+				src.RL_SetSprite("[light_mod][connectdir]")
+
+			if (s_connect_overlay)
+				var/overlaydir = get_connected_directions_bitflag(s_connects_with_overlay, s_connects_with_overlay_exceptions, TRUE)
+				if (overlaydir)
+					if (!s_connect_image)
+						s_connect_image = image(src.icon, "connect[overlaydir]")
+					else
+						s_connect_image.icon_state = "connect[overlaydir]"
+					src.UpdateOverlays(s_connect_image, "connect")
+				else
+					src.UpdateOverlays(null, "connect")
+
 
 	get_desc()
 		if (!src.density)
@@ -259,8 +298,6 @@
 	icon_state = "hive"
 	can_be_auto = 0
 
-	find_icon_state()
-		return
 
 /turf/simulated/wall/false_wall/centcom
 	desc = "There seems to be markings on one of the edges, huh."
@@ -268,13 +305,9 @@
 	icon_state = "leadwall"
 	can_be_auto = 0
 
-	find_icon_state()
-		return
 
 /turf/simulated/wall/false_wall/tempus
 	desc = "The pattern on the wall seems to have a seam on it"
 	icon = 'icons/turf/walls_tempus-green.dmi'
 	icon_state = "0"
 
-	find_icon_state()
-		return

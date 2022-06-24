@@ -632,6 +632,7 @@ var/flock_signal_unleashed = FALSE
 
 // made into a global proc so a reagent can use it
 // simple enough: if object path matches key, replace with instance of value
+// if value is null, just delete object
 // !!!! priority is determined by list order !!!!
 // if you have a subclass, it MUST go first in the list, or the first type that matches will take priority (ie, the superclass)
 // see /obj/machinery/light/small/floor and /obj/machinery/light for examples of this
@@ -649,6 +650,7 @@ var/flock_signal_unleashed = FALSE
 	/obj/machinery/computer = /obj/flock_structure/compute,
 	/obj/machinery/networked/teleconsole = /obj/flock_structure/compute,
 	/obj/machinery/networked/mainframe = /obj/flock_structure/compute/mainframe,
+	/obj/spacevine = null
 	)
 
 /proc/flock_convert_turf(var/turf/T)
@@ -689,6 +691,9 @@ var/flock_signal_unleashed = FALSE
 			continue
 		for(var/keyPath in flock_conversion_paths)
 			if (!istype(O, keyPath))
+				continue
+			if (isnull(flock_conversion_paths[keyPath]))
+				qdel(O)
 				continue
 			if (istype(O, /obj/machinery))
 				if (istype(O, /obj/machinery/door))

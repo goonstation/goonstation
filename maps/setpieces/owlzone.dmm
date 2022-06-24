@@ -3499,7 +3499,7 @@
 /area/owlery/Owlopen)
 "il" = (
 /obj/machinery/door/airlock/pyro{
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	dir = 8
 	},
 /turf/unsimulated/floor/specialroom/arcade,
@@ -6590,7 +6590,7 @@
 /area/owlery/owleryhall)
 "pp" = (
 /obj/machinery/door/airlock/pyro{
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	dir = 8
 	},
 /obj/access_spawn/owlcommand,
@@ -7027,7 +7027,7 @@
 	},
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	locked = 1
 	},
 /turf/unsimulated/floor/green,
@@ -7196,7 +7196,7 @@
 	},
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	locked = 1
 	},
 /turf/unsimulated/floor/green,

@@ -9,15 +9,6 @@ RCD ammo
 Broken RCD + Effects
 */
 
-#define RCD_MODE_FLOORSWALLS 1
-#define RCD_MODE_AIRLOCK 2
-#define RCD_MODE_DECONSTRUCT 3
-#define RCD_MODE_WINDOWS 4
-#define RCD_MODE_LIGHTBULBS 7
-#define RCD_MODE_LIGHTTUBES 8
-#define RCD_MODE_PODDOORCONTROL 5
-#define RCD_MODE_PODDOOR 6
-
 // @TODO: RCD Deluxe additional features (pod bay, etc)
 // Letting the RCD-non-deluxe edit doors would be neat too, maybe. i guess. idk.
 // bleh.
@@ -58,6 +49,7 @@ Broken RCD + Effects
 	stamina_cost = 15
 	stamina_crit_chance = 5
 	inventory_counter_enabled = 1
+	contextLayout = new /datum/contextLayout/experimentalcircle
 
 	// Borgs/drones can't really use matter units.
 	// (matter cost) x (this) = (power cell charge used)
@@ -126,18 +118,18 @@ Broken RCD + Effects
 	// No more easily flooding airlocks, jerks. Do it one at a time. >8)
 	var/tmp/list/working_on = list()
 
-	// The modes that this RCD has available to it
+	/// The modes that this RCD has available to it
 	var/list/modes = list(RCD_MODE_FLOORSWALLS, RCD_MODE_AIRLOCK, RCD_MODE_DECONSTRUCT, RCD_MODE_WINDOWS, RCD_MODE_LIGHTBULBS, RCD_MODE_LIGHTTUBES)
-	// The actual selected mode
+	/// The selected mode
 	var/mode = 1
-	// What index into mode list we are (used for updating)
-	var/internal_mode = 1
 
 	/// do we really actually for real want this to work in adventure zones?? just do this with varedit dont make children with this on
 	var/really_actually_bypass_z_restriction = false
 
 
 	var/microbioupgrade = 0
+	///Custom contextActions list so we can handle opening them ourselves
+	var/list/datum/contextAction/contexts = list()
 
 	get_desc()
 		. += "<br>It holds [matter]/[max_matter] [istype(src, /obj/item/rcd/material) ? material_name : "matter"]  units. It is currently set to "
@@ -164,8 +156,11 @@ Broken RCD + Effects
 
 	New()
 		..()
+		for(var/actionType in childrentypesof(/datum/contextAction/rcd)) //see context_actions.dm for those
+			var/datum/contextAction/rcd/action = new actionType()
+			if (action.mode in src.modes)
+				src.contexts += action
 		src.UpdateIcon()
-		return
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/rcd_ammo))
@@ -193,10 +188,15 @@ Broken RCD + Effects
 				boutput(user, "This cartridge is not made of the proper material to be used in \The [src].")
 
 	attack_self(mob/user as mob)
+		user.showContextActions(src.contexts, src, src.contextLayout)
+
+	proc/switch_mode(var/mode, var/mob/user)
+		if (!(mode in src.modes))
+			CRASH("RCD [src] tried to switch to a mode not in its modes.")
+
 		playsound(src, "sound/effects/pop.ogg", 50, 0)
 
-		src.internal_mode = (src.internal_mode % src.modes.len) + 1
-		src.mode = src.modes[internal_mode]
+		src.mode = mode
 
 		switch (mode)
 			if (RCD_MODE_AIRLOCK)
@@ -222,11 +222,7 @@ Broken RCD + Effects
 			if (RCD_MODE_LIGHTTUBES)
 				boutput(user, "Changed mode to 'Light Tube Fixture'")
 
-		// Gonna change this so it doesn't shit sparks when mode switched
-		// Just that it does it only after actually doing something
-		//src.shitSparks()
 		src.UpdateIcon()
-		return
 
 	afterattack(atom/A, mob/user as mob)
 		if ((isrestrictedz(user.z) || isrestrictedz(A.z)) && !src.really_actually_bypass_z_restriction)

@@ -192,7 +192,8 @@ A Flamethrower in various states of assembly
 
 /obj/item/tank/jetpack/backtank
 	name = "fuelpack"
-	icon_state = "syndflametank"
+	icon_state = "syndflametank0"
+	base_icon_state = "syndflametank"
 	desc = "A back mounted fueltank/jetpack system for use with a tactical flamethrower."
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBACK | OPENCONTAINER
 	var/obj/item/gun/flamethrower/backtank/linkedflamer
@@ -212,39 +213,32 @@ A Flamethrower in various states of assembly
 	equipped(mob/user, slot)
 		..()
 		inventory_counter?.show_count()
-	get_desc()
+		
+	examine()
 		. = ..()
 		if(linkedflamer && (linkedflamer in src.contents))
-			. += " There is a flamethrower stowed neatly away in a compartment."
+			. += "<br>\A [linkedflamer] is stowed away neatly in a compartment."
 
 	attackby(obj/item/W, mob/user)
 		if(src.loc == user && linkedflamer && W == linkedflamer)
-			boutput(user, "<span class='notice'>You stow the the [W] into your fuelpack.</span>")
+			boutput(user, "<span class='notice'>You stow [W] into your [src.name].</span>")
 			user.u_equip(W)
 			W.set_loc(src)
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 		else
 			..()
 
 	attack_hand(mob/user)
 		if(src.loc == user && linkedflamer && (linkedflamer in src.contents))
-			boutput(user, "<span class='notice'>You retrieve the [linkedflamer] from your fuelpack.</span>")
+			boutput(user, "<span class='notice'>You retrieve [linkedflamer] from your [src.name].</span>")
 			user.put_in_hand_or_drop(linkedflamer)
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 		else
 			..()
 
-	move_trigger(var/mob/M, kindof)
+	move_trigger(mob/M, kindof)
 		if (..() && reagents)
 			reagents.move_trigger(M, kindof)
-
-	toggle()
-		src.on = !( src.on )
-		if(src.on)
-			boutput(usr, "<span class='notice'>The fuelpack's integrated jetpack is now on</span>")
-		else
-			boutput(usr, "<span class='notice'>The fuelpack's integrated jetpack is now off</span>")
-		return
 
 	mouse_drop(over_object, src_location, over_location)
 		..()
@@ -286,7 +280,7 @@ A Flamethrower in various states of assembly
 		..()
 
 /obj/item/gun/flamethrower/backtank
-	name = "Vega flamethrower"
+	name = "\improper Vega flamethrower"
 	desc = "A military-grade flamethrower, supplied with fuel and propellant from a back-mounted fuelpack. Developed by Almagest Weapons Fabrication."
 	icon_state = "syndthrower_0"
 	item_state = "syndthrower_0"

@@ -91,101 +91,41 @@ var/sound/iomoon_alarm_sound = null
 	requires_power = 0
 	force_fullbright = 0
 	ambient_light = rgb(0.45 * 255, 0.2 * 255, 0.1 * 255)
-
 	sound_group = "iomoon"
+	sound_loop = 'sound/ambience/nature/Lavamoon_FireCrackling.ogg'
+	sound_loop_vol = 60
+	var/list/sfx_to_pick_from = null
 
-	var/radiation_level = 0.5 //Value to set irradiated to during the mini-blowout.
-	var/sound/ambientSound = 'sound/ambience/nature/Lavamoon_FireCrackling.ogg'
-	var/list/fxlist = null
-	var/list/soundSubscribers = null
-	var/use_alarm = 0
+	/// Value to set irradiated to during the mini-blowout.
+	var/radiation_level = 0.5
+	var/use_alarm = FALSE
 
+/area/iomoon/New()
+	. = ..()
+	START_TRACKING_CAT(TR_CAT_AREA_PROCESS)
+	sfx_to_pick_from = iomoon_exterior_sounds
 
+	if (use_alarm && !iomoon_alarm_sound)
+		iomoon_alarm_sound = new/sound('sound/machines/lavamoon_alarm1.ogg', FALSE, FALSE, VOLUME_CHANNEL_AMBIENT, 60)
+		iomoon_alarm_sound.priority = 255
+		iomoon_alarm_sound.status = SOUND_UPDATE | SOUND_STREAM
 
-	New()
-		..()
-		fxlist = iomoon_exterior_sounds
-		if (ambientSound)
+/area/iomoon/disposing()
+	STOP_TRACKING_CAT(TR_CAT_AREA_PROCESS)
+	. = ..()
 
-			SPAWN(6 SECONDS)
-				var/sound/S = new/sound()
-				S.file = ambientSound
-				S.repeat = 0
-				S.wait = 0
-				S.channel = 123
-				S.volume = 60
-				S.priority = 255
-				S.status = SOUND_UPDATE
-				ambientSound = S
+/area/iomoon/area_process()
+	if(prob(20))
+		src.sound_fx_2 = pick(sfx_to_pick_from)
 
-				soundSubscribers = list()
-				process()
+		var/list/client/client_list = list()
+		for(var/mob/living/carbon/human/H in src)
+			if(H.client)
+				client_list += H.client
+				H.client.playAmbience(src, AMBIENCE_FX_2, 50)
 
-				if (use_alarm && !iomoon_alarm_sound)
-					iomoon_alarm_sound = new/sound()
-					iomoon_alarm_sound.file = 'sound/machines/lavamoon_alarm1.ogg'
-					iomoon_alarm_sound.repeat = 0
-					iomoon_alarm_sound.wait = 0
-					iomoon_alarm_sound.channel = 122
-					iomoon_alarm_sound.volume = 60
-					iomoon_alarm_sound.priority = 255
-					iomoon_alarm_sound.status = SOUND_UPDATE
-
-	Entered(atom/movable/Obj,atom/OldLoc)
-		. = ..()
-		if(ambientSound && ismob(Obj))
-			soundSubscribers |= Obj
-/*
-	Exited(atom/movable/Obj)
-		if(ambientSound && ismob(Obj))
-			if(Obj:client)
-//				ambientSound.status = SOUND_PAUSED | SOUND_UPDATE
-//				Obj << ambientSound
-			if (master && master != src)
-				master.soundSubscribers -= Obj
-			else if (!master || master == src)
-				src.soundSubscribers -= Obj
-*/
-	proc/process()
-		if (!soundSubscribers)
-			return
-
-		var/sound/S = null
-		var/sound_delay = 0
-
-
-		while(current_state < GAME_STATE_FINISHED)
-			sleep(6 SECONDS)
-
-			if(prob(10) && fxlist)
-				S = sound(file=pick(fxlist), volume=50)
-				sound_delay = rand(0, 50)
-			else
-				S = null
-				continue
-
-			for(var/mob/living/H in soundSubscribers)
-				var/area/mobArea = get_area(H)
-				if (!istype(mobArea) || mobArea.type != src.type)
-					soundSubscribers -= H
-					if (H.client)
-						ambientSound.status = SOUND_PAUSED | SOUND_UPDATE
-						ambientSound.volume = 0
-						H << ambientSound
-					continue
-
-				if(H.client)
-					ambientSound.status = SOUND_UPDATE
-					ambientSound.volume = 60
-					H << ambientSound
-					if(S)
-						SPAWN(sound_delay)
-							H << S
-
-					if (use_alarm && iomoon_blowout_state == 1)
-						H << iomoon_alarm_sound
-
-
+		if (use_alarm && iomoon_blowout_state == 1 && length(client_list))
+			playsound_global(client_list, iomoon_alarm_sound, 50, channel = VOLUME_CHANNEL_AMBIENT)
 
 /area/iomoon/base
 	name = "Power Plant"
@@ -194,23 +134,20 @@ var/sound/iomoon_alarm_sound = null
 	requires_power = 1
 	force_fullbright = 0
 	ambient_light = rgb(0.3 * 255, 0.3 * 255, 0.3 * 255)
-
-	ambientSound = 'sound/ambience/industrial/LavaPowerPlant_Rumbling1.ogg'
+	sound_loop = 'sound/ambience/industrial/LavaPowerPlant_Rumbling1.ogg'
 	use_alarm = 1
-
 	New()
-		..()
-		fxlist = iomoon_powerplant_sounds
+		. = ..()
+		sfx_to_pick_from = iomoon_powerplant_sounds
+
 
 /area/iomoon/base/underground
 	name = "Power Plant Tunnels"
-
-	ambientSound = 'sound/ambience/industrial/LavaPowerPlant_Rumbling2.ogg'
+	sound_loop = 'sound/ambience/industrial/LavaPowerPlant_Rumbling2.ogg'
 
 	New()
-		..()
-		fxlist = iomoon_basement_sounds
-
+		. = ..()
+		sfx_to_pick_from = iomoon_basement_sounds
 
 /area/iomoon/caves
 	name = "Magma Cavern"
@@ -218,12 +155,11 @@ var/sound/iomoon_alarm_sound = null
 	requires_power = 1
 	force_fullbright = 0
 	luminosity = 0
-
 	radiation_level = 0.75
 
 	New()
-		..()
-		fxlist = iomoon_exterior_sounds
+		. = ..()
+		sfx_to_pick_from = iomoon_exterior_sounds
 
 /area/iomoon/robot_ruins
 	name = "Strange Ruins"
@@ -233,20 +169,19 @@ var/sound/iomoon_alarm_sound = null
 	force_fullbright = 0
 	luminosity = 0
 	teleport_blocked = 1
-
 	radiation_level = 0.8
-	ambientSound = 'sound/ambience/industrial/AncientPowerPlant_Drone1.ogg'
+	sound_loop = 'sound/ambience/industrial/AncientPowerPlant_Drone1.ogg'
 
 	New()
-		..()
-		fxlist = iomoon_ancient_sounds
+		. = ..()
+		sfx_to_pick_from = iomoon_ancient_sounds
 
 /area/iomoon/robot_ruins/boss_chamber
 	name = "Central Chamber"
 	icon_state = "blue"
 	radiation_level = 1
+	sound_loop = 'sound/ambience/industrial/AncientPowerPlant_Creaking2.ogg'
 
-	ambientSound = 'sound/ambience/industrial/AncientPowerPlant_Creaking2.ogg'
 
 //Logs
 /obj/item/audio_tape/iomoon_00
