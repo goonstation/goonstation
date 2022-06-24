@@ -149,12 +149,9 @@ stare
 
 /datum/aiTask/succeedable/replicate/on_tick()
 	if(!has_started)
-		if(istype(holder.owner,/mob/living/critter/flock/drone))
-			var/mob/living/critter/flock/drone/F = holder.owner
-			if(F.floorrunning)
-				F.end_floorrunning(TRUE)
 		var/mob/living/critter/flock/drone/F = holder.owner
 		if(F)
+			F.end_floorrunning(TRUE)
 			F.create_egg()
 			has_started = TRUE
 
@@ -282,11 +279,11 @@ stare
 
 /datum/aiTask/succeedable/build/on_tick()
 	if(!has_started && !failed() && !succeeded())
-		if(istype(holder.owner,/mob/living/critter/flock/drone))
-			var/mob/living/critter/flock/drone/F = holder.owner
-			if(F.floorrunning)
-				F.end_floorrunning(TRUE)
 		var/mob/living/critter/flock/F = holder.owner
+		if(istype(holder.owner,/mob/living/critter/flock/drone))
+			var/mob/living/critter/flock/drone/drone = holder.owner
+			if(drone && drone.floorrunning)
+				drone.end_floorrunning(TRUE)
 		if(F?.set_hand(2)) // nanite spray
 			holder.owner.set_dir(get_dir(holder.owner, holder.target))
 			F.hand_attack(holder.target)
@@ -486,10 +483,10 @@ stare
 /datum/aiTask/succeedable/deposit/on_tick()
 	if(!has_started)
 		var/mob/living/critter/flock/drone/F = holder.owner
-		if(F.floorrunning)
-			F.end_floorrunning(TRUE)
 		var/obj/flock_structure/ghost/T = holder.target
 		if(F && T && BOUNDS_DIST(holder.owner, holder.target) == FALSE)
+			if(F.floorrunning)
+				F.end_floorrunning(TRUE)
 			if(F.set_hand(2)) // nanite spray
 				holder.owner.set_dir(get_dir(holder.owner, holder.target))
 				F.hand_attack(T)
@@ -965,9 +962,9 @@ stare
 	if(!has_started)
 		var/mob/living/critter/flock/drone/F = holder.owner
 		var/mob/living/critter/flock/drone/T = holder.target
-		if(F.floorrunning)
-			F.end_floorrunning(TRUE)
 		if(F && T && BOUNDS_DIST(holder.owner, holder.target) == 0)
+			if(F.floorrunning)
+				F.end_floorrunning(TRUE)
 			if(F.set_hand(2)) // nanite spray
 				holder.owner.set_dir(get_dir(holder.owner, holder.target))
 				F.hand_attack(T)
@@ -1087,10 +1084,10 @@ stare
 /datum/aiTask/succeedable/deconstruct/on_tick()
 	if(!has_started)
 		var/mob/living/critter/flock/drone/F = holder.owner
-		if(F.floorrunning)
-			F.end_floorrunning(TRUE)
 		var/atom/T = holder.target
 		if(F && T && BOUNDS_DIST(holder.owner, holder.target) == FALSE)
+			if(F.floorrunning)
+				F.end_floorrunning(TRUE)
 			if(F.set_hand(2)) // nanite spray
 				F.set_a_intent(INTENT_HARM)
 				holder.owner.set_dir(get_dir(holder.owner, holder.target))
@@ -1147,7 +1144,7 @@ stare
 
 	var/mob/living/critter/target = holder.target
 	var/mob/living/critter/flock/drone/F = holder.owner
-	if(F.floorrunning)
+	if(F && F.floorrunning)
 		F.end_floorrunning(TRUE)
 	if(!target)
 		return
