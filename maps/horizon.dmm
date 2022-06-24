@@ -19071,6 +19071,8 @@
 	tag = ""
 	},
 /obj/machinery/recharge_station,
+/obj/machinery/power/apc/autoname_west,
+/obj/cable,
 /turf/simulated/floor/airless/engine/vacuum,
 /area/station/hangar/qm)
 "aXi" = (
@@ -19290,6 +19292,9 @@
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
+	},
+/obj/cable{
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/airless/engine/vacuum,
 /area/station/hangar/qm)
