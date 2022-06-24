@@ -21694,7 +21694,7 @@
 "bnu" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
-	icon_state = "generic_locked";
+	icon_state = "door_locked";
 	locked = 1
 	},
 /turf/simulated/floor/grey,
@@ -33878,8 +33878,8 @@
 /obj/item/clothing/suit/hoodie{
 	desc = "Smells vaguely of cabbage and diesel."
 	},
-/obj/item/clothing/head/helmet/space/blackstronaut{
-	desc = "This was cheaply spray-painted with flames at some point, but only a few flecks remain. There's a little tag on the back that says 'NASSA'.";
+/obj/item/clothing/head/helmet/space/donk{
+	desc = "This was cheaply spray-painted with flames at some point, but only a few flecks remain. There's a little tag on the back that says 'Donk Co.'.";
 	name = "dented motorbike helm"
 	},
 /obj/machinery/light{
@@ -39720,6 +39720,7 @@
 "cSO" = (
 /obj/storage/crate,
 /obj/item/clothing/under/gimmick/princess,
+/obj/item/clothing/gloves/princess,
 /obj/item/clothing/mask/horse_mask,
 /obj/machinery/light/small{
 	dir = 1;

@@ -701,6 +701,7 @@
 
 	shoulder_holster
 		name = "shoulder holster"
+		desc = "A holster to hold a gun, and whatever is just a bit too big to put under a hat."
 		icon_state = "shoulder_holster"
 		item_state = "shoulder_holster"
 

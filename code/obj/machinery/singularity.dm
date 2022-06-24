@@ -136,6 +136,11 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	event()
 	if (Ti)
 		src.Dtime = Ti
+
+	var/offset = rand(1000)
+	add_filter("loose rays", 1, rays_filter(size=1, density=10, factor=0, offset=offset, threshold=0.20, color="#c0c", x=0, y=0))
+	animate(get_filter("loose rays"), offset=offset+60, time=5 MINUTES, easing=LINEAR_EASING, flags=ANIMATION_PARALLEL, loop=-1)
+
 	..()
 
 /obj/machinery/the_singularity/disposing()
@@ -179,6 +184,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 					checkpointC++
 				if (checkpointC > max(MIN_TO_CONTAIN,(radius*8)))//as radius of a 5x5 should be 2, 16 tiles are needed to hold it in, this allows for 4 failures before the singularity is loose
 					src.active = FALSE
+					animate(get_filter("loose rays"), size=1, time=5 SECONDS, easing=LINEAR_EASING, flags=ANIMATION_PARALLEL, loop=1)
 					maxradius = radius + 1
 					logTheThing("station", null, null, "[src] has been contained at [log_loc(src)]")
 					message_admins("[src] has been contained at [log_loc(src)]")
@@ -189,6 +195,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			checkpointC ++
 		if (checkpointC < max(MIN_TO_CONTAIN,(radius*8)))//as radius of a 5x5 should be 2, 16 tiles are needed to hold it in, this allows for 4 failures before the singularity is loose
 			src.active = TRUE
+			animate(get_filter("loose rays"), size=100, time=5 SECONDS, easing=LINEAR_EASING, flags=ANIMATION_PARALLEL, loop=1)
 			maxradius = INFINITY
 			logTheThing("station", null, null, "[src] has become loose at [log_loc(src)]")
 			message_admins("[src] has become loose at [log_loc(src)]")
@@ -338,6 +345,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	if(radius<maxradius)
 		radius++
 		SafeScale((radius+0.5)/(radius-0.5),(radius+0.5)/(radius-0.5))
+		grav_pull = max(grav_pull, radius)
 
 // totally rewrote this proc from the ground-up because it was puke but I want to keep this comment down here vvv so we can bask in the glory of What Used To Be - haine
 		/* uh why was lighting a cig causing the singularity to have an extra process()?
@@ -419,6 +427,24 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 				T.ReplaceWithFloor()
 	return
 #endif
+
+/particles/singularity
+	transform = list(1, 0, 0, 0,
+	                 0, 1, 0, 0,
+					 0, 0, 0, 1,
+					 0, 0, 0, 1)
+	width = 200
+	height = 200
+	spawning = 2
+	count = 1000
+	lifespan = 8
+	fade = 10
+	fadein = 8
+	position = generator("circle", 200, 300, UNIFORM_RAND)
+	gravity = list(0, 0, 0.05)
+	velocity = list(0, 0, 0.4)
+	friction = 0.2
+
 //////////////////////////////////////// Field generator /////////////////////////////////////////
 
 /obj/machinery/field_generator
