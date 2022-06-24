@@ -44567,8 +44567,7 @@
 /obj/item/clothing/suit/jacket/plastic,
 /obj/item/clothing/under/misc/vice,
 /obj/machinery/firealarm{
-	pixel_y = 24;
-	text = "NF"
+	pixel_y = 24
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
