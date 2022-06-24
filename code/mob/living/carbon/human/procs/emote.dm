@@ -23,7 +23,8 @@
 			act = copytext(act, 1, t1)
 
 	for (var/uid in src.microbes)
-		var/datum/microbe/subdata/P = src.microbes[uid]
+		var/datum/microbesubdata/S = src.microbes[uid]
+		var/datum/microbe/P = S.master
 		if (P.onemote(act, voluntary, param))
 			return
 

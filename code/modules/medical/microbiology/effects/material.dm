@@ -92,7 +92,7 @@ ABSTRACT_TYPE(/datum/microbioeffects/material)
 
 	onemote(mob/M as mob, act, voluntary, param, datum/pathogen/P)
 		// involuntary farts are free, but the others use the cooldown
-		if(voluntary && TIME-P.effectdata[name] < cooldown)
+		if(voluntary && TIME-P.master.effectdata[name] < cooldown)
 			return
 		if(act == "fart")
 			fart(M, P, voluntary)

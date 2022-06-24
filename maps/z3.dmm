@@ -11559,7 +11559,7 @@
 /area/abandonedmedicalship)
 "aLH" = (
 /obj/table/auto,
-//obj/item/synthmodule/assistant,
+/obj/item/synthmodule/assistant,
 /turf/simulated/floor/airless/damaged4,
 /area/abandonedmedicalship)
 "aLI" = (
@@ -16894,7 +16894,7 @@
 /area/h7)
 "bag" = (
 /obj/table/auto,
-//obj/item/synthmodule/radiation,
+/obj/item/synthmodule/radiation,
 /turf/simulated/floor/purplewhite{
 	dir = 8
 	},
@@ -17517,7 +17517,7 @@
 /turf/simulated/floor/airless/plating/damaged1,
 /area/abandonedship)
 "bcm" = (
-//obj/item/synthmodule/synthesizer,
+/obj/item/synthmodule/synthesizer,
 /obj/storage/crate,
 /obj/item/grinder_upgrade,
 /turf/simulated/floor/purplewhite{

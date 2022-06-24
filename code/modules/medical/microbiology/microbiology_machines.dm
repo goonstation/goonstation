@@ -5,7 +5,7 @@
 	desc = "A large machine that can be used to separate a pathogen sample from a blood sample."
 	anchored = 1
 	density = 1
-
+/*
 	var/obj/item/bloodslide/source = null
 	var/datum/microbe/isolated = null
 	var/obj/item/reagent_containers/glass/petridish/target = null
@@ -190,13 +190,13 @@
 			src.isolated = null
 			src.on = 0
 			src.icon_state = "centrifuge0"
-
+*/
 /obj/machinery/microscope
 	name = "Microscope"
 	icon = 'icons/obj/pathology.dmi'
 	icon_state = "microscope0"
 	desc = "A device which provides a magnified view of a culture in a petri dish."
-
+/*
 	var/obj/item/target = null
 
 	var/list/symptom_action_out = new/list()
@@ -366,7 +366,7 @@
 									src.symptom_action_out += a_out
 									SPAWN(10 SECONDS) // 100
 										src.symptom_action_out -= a_out
-
+*/
 /*
 #define PATHOGEN_MANIPULATOR_STATE_MAIN 0
 #define PATHOGEN_MANIPULATOR_STATE_LOADER 1
@@ -1125,7 +1125,7 @@
 #undef PATHOGEN_MANIPULATOR_STATE_SPLICE
 #undef PATHOGEN_MANIPULATOR_STATE_SPLICING_SESSION
 */
-/*/obj/item/synthmodule
+/obj/item/synthmodule
 	name = "Synth-O-Matic module"
 	desc = "A module that integrates with a Synth-O-Matic machine."
 	icon = 'icons/obj/pathology.dmi'
@@ -1181,7 +1181,7 @@
 	name = "Synth-O-Matic Irradiation module"
 	desc = "A module that allows the Synth-O-Matic to generate cure through irradiation, instead of chemicals."
 	id = "radiation"
-*/
+
 /obj/machinery/synthomatic
 	name = "Synth-O-Matic 6.5.535"
 	desc = "The leading technological assistant in synthesizing useful biochemicals."

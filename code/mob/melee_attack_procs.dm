@@ -281,7 +281,8 @@
 
 	if (istype(H))
 		for (var/uid in H.microbes)
-			var/datum/microbe/subdata/P = H.microbes[uid]
+			var/datum/microbesubdata/S = H.microbes[uid]
+			var/datum/microbe/P = S.master
 			P.ongrab(target)
 
 	if (!grab_item)
@@ -406,7 +407,8 @@
 		if (ishuman(src))
 			var/mob/living/carbon/human/H = src
 			for (var/uid in H.microbes)
-				var/datum/microbe/subdata/P = H.microbes[uid]
+				var/datum/microbesubdata/S = H.microbes[uid]
+				var/datum/microbe/P = S.master
 				var/ret = P.ondisarm(target, 1)
 				if (!ret)
 					msgs.base_attack_message = "<span class='alert'><B>[src] shoves [target][DISARM_WITH_ITEM_TEXT]!</B></span>"
@@ -430,7 +432,8 @@
 	if (ishuman(src))
 		var/mob/living/carbon/human/H2 = src
 		for (var/uid in H2.microbes)
-			var/datum/microbe/subdata/P = H2.microbes[uid]
+			var/datum/microbesubdata/S = H2.microbes[uid]
+			var/datum/microbe/P = S.master
 			var/ret = P.ondisarm(target, 1)
 			if (!ret)
 				disarm_success = 0
@@ -640,7 +643,8 @@
 	if(ishuman(src))
 		var/mob/living/carbon/human/LM = src
 		for (var/uid in LM.microbes)
-			var/datum/microbe/subdata/P = LM.microbes[uid]
+			var/datum/microbesubdata/S = LM.microbes[uid]
+			var/datum/microbe/P = S.master
 			punchmult *= P.onpunch(target, def_zone)
 
 	var/punchedmult = target.get_taken_base_damage_multiplier(src, def_zone)
@@ -1152,7 +1156,8 @@
 	var/punchedmult = 1
 
 	for (var/uid in src.microbes)
-		var/datum/microbe/subdata/P = src.microbes[uid]
+		var/datum/microbesubdata/S = src.microbes[uid]
+		var/datum/microbe/P = S.master
 		punchedmult *= P.onpunched(attacker, def_zone)
 
 	return punchedmult

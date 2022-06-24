@@ -5,7 +5,7 @@ ABSTRACT_TYPE(/datum/microbioeffects/service)
 	name = "Detoxication"
 	desc = "The pathogen aids the host body in metabolizing ethanol."
 
-	mob_act(var/datum/microbe/subdata/P)
+	mob_act(var/datum/microbesubdata/P)
 		var/times = 1
 		var/met = 0
 		for (var/rid in M.reagents.reagent_list)

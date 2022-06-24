@@ -341,6 +341,7 @@ ABSTRACT_TYPE(/datum/microbe)
 	var/mob/infected = list()						// The mobs that are currently infected with this pathogen.
 	var/mob/immune = list()							// The mobs that are immune to this microbe.
 	var/infectioncount								// Int variable, used to limit transmissible spread for singular cultures
+	var/infectiontotal								// Int constant, called when a fresh identical culture is made
 	var/durationtotal								// How long a pathogen stays in an infected mob before being naturally immunized.
 
 	var/datum/suppressant/suppressant				// Handles curing
@@ -348,8 +349,13 @@ ABSTRACT_TYPE(/datum/microbe)
 	var/list/effects = list()						// A list of symptoms exhibited by those infected with this pathogen.
 	var/list/effectdata = list()					// used for custom var calls
 
-
+	var/artificial									// Did someone make this microbe using a machine? (1 yes, 0 no)
 // PROCS AND FUNCTIONS FOR GENERATION
+
+
+	New()
+		//clear()
+		..()
 
 	proc/clear()
 		name = ""
@@ -362,9 +368,7 @@ ABSTRACT_TYPE(/datum/microbe)
 		suppressant = null
 		effects = list()
 		effectdata = list()
-
-	New()
-		..()
+		artificial = 0
 
 	//generate_name
 	//Called on creation of a new parent microbe
@@ -405,6 +409,8 @@ ABSTRACT_TYPE(/datum/microbe)
 		src.desc = "[suppressant.color] [shape] microbes" //color determined by average of cure reagent and assigned-effect colors
 		src.durationtotal = 2*rand(60,120)					//4 to 8 minute lifespan
 		src.infectioncount = 8								// See below for explanation.
+		src.infectiontotal = src.infectioncount
+		src.artificial = 0
 
 		//Infection count should be dependent on active player count, balanced at ~5-10% of living serverpop
 		//For Goon1 at high pop (90-110), ~10 people per microbial culture
@@ -420,22 +426,6 @@ ABSTRACT_TYPE(/datum/microbe)
 		generate_attributes()
 		logTheThing("pathology", null, null, "Microbe culture [name] created by randomization.")
 		return
-
-	proc/duplicate(var/datum/microbe/subdata/M)
-		if (!M)
-			return
-		src.name = M.name
-		src.print_name = M.print_name
-		src.desc = M.desc
-		src.infected = M.infected
-		src.immune = M.immune
-		src.infectioncount = M.infectioncount
-		src.durationtotal = M.durationtotal
-		src.effects = M.effects.Copy()
-		for (var/datum/microbioeffects/E in src.effects)			//Only used for a few effects to add to effectdata list
-			E.onadd(src)
-		src.suppressant = M.suppressant
-		processing_items.Add(src)
 
 	//=============================================================================
 	//	Events
@@ -580,14 +570,14 @@ ABSTRACT_TYPE(/datum/microbe)
 	var/skipsupp
 
 //Subdata is player specific.
-/datum/microbe/subdata
-	var/datum/microbe/master = null					// Structually same to disease.dm
+ABSTRACT_TYPE(/datum/microbesubdata)
+/datum/microbesubdata
+	var/datum/microbe/master = null						// Structually same to disease.dm
 	var/tmp/mob/living/affected_mob = null			// the poor sod suffering from the disease
 	var/duration									// Counter for durationtotal
 	var/probability									// Varies from 0 to 5. Sent to effects for probability
 	var/ticked										// Stops runtimes
 	var/iscured										// Flag: changes the disease progression regime
-
 
 	disposing()
 		if (affected_mob)
@@ -623,29 +613,29 @@ ABSTRACT_TYPE(/datum/microbe)
 	/////////////////////////////////////////////////////////////////////////////////
 	// P(t) = -a*t^2 + b*t
 	// Where a = 20/durationtotal**2 and b = 20/durationtotal
-	proc/progress_pathogen(var/mob/M, var/datum/microbe/subdata/P)
+	proc/progress_pathogen(var/mob/M, var/datum/microbesubdata/P)
 		if (P.duration <= 0)
 			M.cured(src)				// cured proc in human.dM?
 			return
-		var/B = 20/P.durationtotal
-		var/A = B/P.durationtotal
+		var/B = 20/P.master.durationtotal
+		var/A = B/P.master.durationtotal
 		P.probability = ceil(-A*P.duration**2+B*P.duration)
-		iscured = P.suppressant.suppress_act(src)
+		iscured = P.master.suppressant.suppress_act(src)
 		if (iscured)
 			P.duration = ceil(P.duration/2) - 1
 			return
 		else
 			P.duration--							//  Wrap into process
 
-	proc/mob_act(var/mob/M, var/datum/microbe/subdata/P)
-		for (var/datum/effect in src.effects)
-			effect:mob_act(M,src)
+	proc/mob_act(var/mob/M, var/datum/microbesubdata/P)
+		for (var/datum/effect in P.master.effects)
+			effect:mob_act(M,P.master)
 		progress_pathogen(M,P)
 
 	// it's like mob_act, but for dead people!
-	proc/mob_act_dead(var/mob/M, var/datum/microbe/subdata/P)
-		for (var/datum/effect in src.effects)
-			effect:mob_act_dead(M,src)
+	proc/mob_act_dead(var/mob/M, var/datum/microbesubdata/P)
+		for (var/datum/effect in P.master.effects)
+			effect:mob_act_dead(M,P.master)
 		progress_pathogen(M,P)
 
 /mob/living/carbon/human/infected(var/datum/microbe/P)
@@ -660,39 +650,30 @@ ABSTRACT_TYPE(/datum/microbe)
 	if (src.totalimmunity)
 		return 0
 	if (!(src in P.infected))
-		var/datum/microbe/subdata/Q = new /datum/microbe/subdata
+		var/datum/microbesubdata/Q = new /datum/microbesubdata
+		var/uid = src.microbes.len + 1
+		src.microbes[uid] += Q
 		P.infectioncount--
 		P.infected += src
 		Q.master = P
 		Q.affected_mob = src
 		Q.duration = P.durationtotal - 1
 		Q.probability = 0
-		src.microbes[P.name] += Q
-		Q.name = P.name
-		Q.print_name = P.print_name
-		Q.desc = P.desc
-		Q.durationtotal = P.durationtotal
-		Q.infected = P.infected
-		Q.immune = P.immune
-		Q.infectioncount = P.infectioncount
-		Q.durationtotal = P.durationtotal
-		Q.effects = P.effects.Copy()
-		for (var/datum/microbioeffects/E in P.effects)			//Only used for a few effects to add to effectdata list
-			E.onadd(Q)
-		Q.suppressant = P.suppressant
 		logTheThing("pathology", src, null, "is infected by [Q].")
 		return 1
 	else
 		return 0
 
-/mob/living/carbon/human/cured(var/datum/microbe/subdata/P)
+/mob/living/carbon/human/cured(var/datum/microbesubdata/P)
 	if (!istype(P) || !P.master)
 		return 0
-	var/datum/microbe/subdata/Q = src.microbes[P.name]
-	var/pname = P.name
-	src.microbes -= Q
-	P.infected -= src
-	P.immune += src
-	qdel(Q)
-	src.show_text("You feel that the disease has passed.", "blue")
-	logTheThing("pathology", src, null, "is cured of and gains immunity to [pname].")
+	for (var/uid in src.microbes)
+		var/datum/microbesubdata/Q = src.microbes[uid]
+		if (P == Q)
+			src.microbes[uid] -= Q
+			P.master.infected -= src
+			P.master.immune += src
+			qdel(Q)
+			src.show_text("You feel that the disease has passed.", "blue")
+			logTheThing("pathology", src, null, "is cured of and gains immunity to [P.master.name] ([P.master.print_name]).")
+			return 1

@@ -9,7 +9,7 @@ ABSTRACT_TYPE(/datum/microbioeffects/malevolent)
 	desc = "Violent coughing occasionally plagues the infected."
 	infect_message = "<span class='alert'>A drop of saliva lands on your face.</span>"
 
-	mob_act(var/datum/microbe/subdata/P)
+	mob_act(var/datum/microbesubdata/P)
 		if (prob(origin.probability))
 			M.show_message("<span class='alert'>You cough.</span>")
 			src.infect_direct(M, origin)
@@ -21,7 +21,7 @@ ABSTRACT_TYPE(/datum/microbioeffects/malevolent)
 	name = "Indigestion"
 	desc = "A bad case of indigestion which occasionally cramps the infected."
 
-	mob_act(var/datum/microbe/subdata/P)
+	mob_act(var/datum/microbesubdata/P)
 		if (prob(origin.probability))
 			M.show_message("<span class='alert'>Your stomach hurts.</span>")
 
@@ -36,7 +36,7 @@ ABSTRACT_TYPE(/datum/microbioeffects/malevolent)
 	name = "Muscle Ache"
 	desc = "The infected feels a slight, constant aching of muscles."
 
-	mob_act(var/mob/M as mob, var/datum/microbe/subdata/origin)
+	mob_act(var/mob/M as mob, var/datum/microbesubdata/origin)
 		if (prob(origin.probability))
 			M.show_message("<span class='alert'>Your muscles ache.</span>")
 
@@ -52,7 +52,7 @@ ABSTRACT_TYPE(/datum/microbioeffects/malevolent)
 	desc = "The infected sneezes frequently."
 	infect_message = "<span class='alert'>You feel mucus landing on your face.</span>"
 
-	mob_act(var/datum/microbe/subdata/P)
+	mob_act(var/datum/microbesubdata/P)
 		if (prob(origin.probability))
 			M.visible_message("<span class='alert'>[M] sneezes!</span>", "<span class='alert'>You sneeze.</span>", "<span class='alert'>You hear someone sneezing.</span>")
 			src.infect_direct(M, origin)
@@ -92,7 +92,7 @@ ABSTRACT_TYPE(/datum/microbioeffects/malevolent)
 	name = "Gasping"
 	desc = "The infected has trouble breathing."
 
-	mob_act(var/datum/microbe/subdata/P)
+	mob_act(var/datum/microbesubdata/P)
 		if (!(prob(origin.probability)))
 			return
 		M.emote("gasp")
@@ -140,7 +140,7 @@ ABSTRACT_TYPE(/datum/microbioeffects/malevolent)
 	name = "Chills"
 	desc = "The pathogen lowers the homeostatic set point of the infected."
 
-	mob_act(var/datum/microbe/subdata/P)
+	mob_act(var/datum/microbesubdata/P)
 		if (prob(origin.probability*2))
 			M:emote("shiver")
 			M.show_message("<span class='alert'> You feel unusually hot. </span>")
@@ -153,7 +153,7 @@ ABSTRACT_TYPE(/datum/microbioeffects/malevolent)
 	name = "Fever"
 	desc = "The pathogen raises the homeostatic set point of the infected."
 
-	mob_act(var/datum/microbe/subdata/P)
+	mob_act(var/datum/microbesubdata/P)
 		if (prob(origin.probability))
 			M.show_message("<span class='alert'> You feel unusually cold. </span>")
 			M.bodytemperature += 2*origin.probability
@@ -167,7 +167,7 @@ ABSTRACT_TYPE(/datum/microbioeffects/malevolent)
 	infect_attempt_message = "Ew, their hands feel really gross and sweaty!"
 	var/choices = list("You're sweating heavily.", "You're soaked in your own sweat.")
 
-	mob_act(var/datum/microbe/subdata/P)
+	mob_act(var/datum/microbesubdata/P)
 		if (prob(origin.probability))
 			M.show_message("<span class='alert'> [pick(choices)] </span>")
 			src.infect_direct(M, origin)
@@ -203,7 +203,7 @@ ABSTRACT_TYPE(/datum/microbioeffects/malevolent)
 		toThrow.throw_at(target, 6, 1)
 		//src.infect_cloud(M, origin, origin.spread) // TODO: at some point I want the bees to spread this instead
 
-	mob_act(var/datum/microbe/subdata/P)
+	mob_act(var/datum/microbesubdata/P)
 		if (prob(origin.probability) && origin.probability > 3)
 			sneeze(M, origin)
 

@@ -148,8 +148,13 @@
 			if (H.microbes.len)
 				pathogen_data = "<span class='alert'>Scans indicate the presence of [H.microbes.len > 1 ? "[H.microbes.len] " : null]microbial bodies.</span>"
 				for (var/uid in H.microbes)
-					var/datum/microbe/subdata/P = H.microbes[uid]
-					pathogen_data += "<br>&emsp;<span class='alert'>Strain: [P.name]. Suggested suppressant: [P.master.suppressant.exactcure].</span>"
+					var/datum/microbesubdata/P = H.microbes[uid]
+					if (disease_detection || P.master.artificial)
+						var/treatment = P.master.suppressant.exactcure
+						pathogen_data += "<br>&emsp;<span class='alert'>Strain: [P.master.print_name]. Suggested suppressant: [treatment].</span>"
+					else
+						var/treatment = P.master.suppressant.therapy
+						pathogen_data += "<br>&emsp;<span class='alert'>Strain: [P.master.print_name]. Suggested suppressant: [treatment].</span>"
 
 			if (H.get_organ("brain"))
 				if (H.get_brain_damage() >= 100)

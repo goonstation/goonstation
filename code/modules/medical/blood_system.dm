@@ -528,9 +528,8 @@ this is already used where it needs to be used, you can probably ignore it.
 		var/list/SP = A.reagents.aggregate_pathogens()
 		for (var/uid in some_human_idiot.microbes)
 			if (!(uid in SP))
-				var/datum/microbe/subdata/P = new /datum/microbe/subdata
-				P.duplicate(SP)
-				B.microbes[uid] = P
+				var/datum/microbesubdata/S = new /datum/microbesubdata
+				B.microbes[uid] = S
 
 	// Vampires can't use this trick to inflate their blood count, because they can't get more than ~30% of it back (Convair880).
 	if (blood_system && (isvampire(some_idiot) && (some_idiot.get_vampire_blood() >= blood_to_transfer)))

@@ -62,7 +62,7 @@ ABSTRACT_TYPE(/datum/suppressant)
 	exactcure = "Controlled hyperthermia therapy"
 	cure_synthesis = MB_HOT_REAGENTS
 
-	suppress_act(var/datum/microbe/subdata/P)
+	suppress_act(var/datum/microbesubdata/P)
 		if (!(P.affected_mob.bodytemperature > 320 + P.duration))	//Base temp is 273 + 37 = 310. Add 10 to avoid natural variance.
 			return 0
 		else
@@ -93,7 +93,7 @@ ABSTRACT_TYPE(/datum/suppressant)
 
 	cure_synthesis = MB_COLD_REAGENTS
 
-	suppress_act(var/datum/microbe/subdata/P)
+	suppress_act(var/datum/microbesubdata/P)
 		if (!(P.affected_mob.bodytemperature < 300 - P.duration)) // Same idea as for heat, but inverse.
 			return 0
 		else
@@ -119,22 +119,22 @@ ABSTRACT_TYPE(/datum/suppressant)
 
 	suppress_act(var/datum/pathogen/P)
 		if (P.infected.sleeping)
-			P.effectdata["suppressant"]++
-			var/slept = P.effectdata["suppressant"]
+			P.master.effectdata["suppressant"]++
+			var/slept = P.master.effectdata["suppressant"]
 			if (slept > P.suppression_threshold)
 				if (P.stage > 3 && prob(P.advance_speed * 4))
 					P.infected.show_message("<span class='notice'>You feel better.</span>")
 					P.stage--
-					P.effectdata["suppressant"] = 0
+					P.master.effectdata["suppressant"] = 0
 			return 1
 		else
-			P.effectdata["suppressant"] = 0
+			P.master.effectdata["suppressant"] = 0
 		return 0
 
 	cure_synthesis = list("morphine", "ketamine")
 
 	onadd(var/datum/pathogen/P)
-		P.effectdata["suppressant"] = 0
+		P.master.effectdata["suppressant"] = 0
 
 	may_react_to()
 		return "Membrane patterns of the pathogen indicate it might be <b style='font-size:20px;color:red'>suppressed</b> by a reagent affecting neural activity."
@@ -154,7 +154,7 @@ ABSTRACT_TYPE(/datum/suppressant)
 
 	cure_synthesis = MB_BRUTE_MEDS_CATAGORY				//Make a define for BRUTE_MEDS
 
-	suppress_act(var/datum/microbe/subdata/P)
+	suppress_act(var/datum/microbesubdata/P)
 		for (var/R in cure_synthesis)
 			if (!(P.affected_mob.reagents.has_reagent(R, REAGENT_CURE_THRESHOLD)))
 				continue
@@ -178,7 +178,7 @@ ABSTRACT_TYPE(/datum/suppressant)
 	cure_synthesis = MB_BURN_MEDS_CATAGORY //Make a define for BURN_MEDS
 	exactcure = "Burn Medications"
 
-	suppress_act(var/datum/microbe/subdata/P)
+	suppress_act(var/datum/microbesubdata/P)
 		for (var/R in cure_synthesis)
 			if (!(P.affected_mob.reagents.has_reagent(R, REAGENT_CURE_THRESHOLD)))
 				continue
@@ -203,7 +203,7 @@ ABSTRACT_TYPE(/datum/suppressant)
 	cure_synthesis = MB_TOX_MEDS_CATAGORY //Make a define for BURN_MEDS
 	exactcure = "Anti-Toxin Medications"
 
-	suppress_act(var/datum/microbe/subdata/P)
+	suppress_act(var/datum/microbesubdata/P)
 		for (var/R in cure_synthesis)
 			if (!(P.affected_mob.reagents.has_reagent(R, REAGENT_CURE_THRESHOLD)))
 				continue
@@ -227,7 +227,7 @@ ABSTRACT_TYPE(/datum/suppressant)
 	cure_synthesis = MB_OXY_MEDS_CATAGORY //Make a define for BURN_MEDS
 	exactcure = "Oxygen Medications"
 
-	suppress_act(var/datum/microbe/subdata/P)
+	suppress_act(var/datum/microbesubdata/P)
 		for (var/R in cure_synthesis)
 			if (!(P.affected_mob.reagents.has_reagent(R, REAGENT_CURE_THRESHOLD)))
 				continue
@@ -250,7 +250,7 @@ ABSTRACT_TYPE(/datum/suppressant)
 	therapy = "sedatives"
 	cure_synthesis = MB_SEDATIVES_CATAGORY
 
-	suppress_act(var/datum/microbe/subdata/P)
+	suppress_act(var/datum/microbesubdata/P)
 		for (var/R in cure_synthesis)
 			if (!(P.affected_mob.reagents.has_reagent(R, REAGENT_CURE_THRESHOLD)))
 				continue
@@ -259,7 +259,7 @@ ABSTRACT_TYPE(/datum/suppressant)
 			return 1
 		return 0
 
-	onshocked(var/datum/shockparam/param, var/datum/microbe/subdata/P)
+	onshocked(var/datum/shockparam/param, var/datum/microbesubdata/P)
 		if (param.skipsupp)
 			return
 		if (param.amt > 30)
@@ -282,7 +282,7 @@ ABSTRACT_TYPE(/datum/suppressant)
 
 	cure_synthesis = MB_STIMULANTS_CATAGORY
 
-	suppress_act(var/datum/microbe/subdata/P)
+	suppress_act(var/datum/microbesubdata/P)
 		for (var/R in cure_synthesis)
 			if (!(P.affected_mob.reagents.has_reagent(R, REAGENT_CURE_THRESHOLD)))
 				continue
@@ -307,7 +307,7 @@ ABSTRACT_TYPE(/datum/suppressant)
 
 	cure_synthesis = "spaceacillin"
 
-	suppress_act(var/datum/microbe/subdata/P)
+	suppress_act(var/datum/microbesubdata/P)
 		for (var/R in cure_synthesis)
 			if (!(P.affected_mob.reagents.has_reagent(R, REAGENT_CURE_THRESHOLD)))
 				continue

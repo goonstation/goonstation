@@ -597,12 +597,12 @@
 		if (isdead(src))
 			if (src.microbes.len)
 				for (var/uid in src.microbes)
-					var/datum/microbe/subdata/P = src.microbes[uid]
-					P.mob_act_dead(src, P)
+					var/datum/microbesubdata/S = src.microbes[uid]
+					S.mob_act_dead(src, S)
 			return
 		for (var/uid in src.microbes)
-			var/datum/microbe/subdata/P = src.microbes[uid]
-			P.mob_act(src, P)
+			var/datum/microbesubdata/S = src.microbes[uid]
+			S.mob_act(src, S)
 
 
 	proc/get_disease_protection(var/ailment_path=null, var/ailment_name=null)

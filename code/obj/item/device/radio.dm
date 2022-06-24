@@ -834,7 +834,8 @@ var/list/headset_channel_lookup
 			if(istype(M, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = M
 				for (var/uid in H.microbes)
-					var/datum/microbe/P = H.microbes[uid]
+					var/datum/microbesubdata/S = H.microbes[uid]
+					var/datum/microbe/P = S.master
 					P.onshocked(35, 500)
 
 	if ((src.master && src.wires & WIRE_SIGNAL))

@@ -479,6 +479,17 @@ datum
 			fluid_b = 120
 			transparency = 255
 
+		disease/leprosybacteria
+			name = "mycobacterium leprae"
+			id = "mycobacterium leprae"
+			description = "A bacterial strain that known to cause leprosy in humans."
+			reagent_state = LIQUID
+			fluid_r = 255
+			fluid_g = 40
+			fluid_b = 40
+			transparency = 50
+			disease = /datum/ailment/disease/leprosy
+
 		// Marquesas' one stop pathology shop
 		blood/pathogen
 			name = "pathogen"
@@ -500,7 +511,8 @@ datum
 				 // sure just fucking splash around in the stuff
 				 // this is mainly so puddles from the sweating symptom can infect
 				for (var/uid in src.microbes)
-					var/datum/microbe/subdata/P = src.microbes[uid]
+					var/datum/microbesubdata/S = src.microbes[uid]
+					var/datum/microbe/P = S.master
 					logTheThing("pathology", M, null, "is splashed with [src] containing pathogen [P].")
 					if(istype(M, /mob/living/carbon/human))
 						var/mob/living/carbon/human/H = M
@@ -533,14 +545,14 @@ datum
 			id = "inhibitor"
 			description = "An agent which can be used to create a specialized cure for a cellular mutative pathogen"
 			reagent_state = 2
-
+*/
 		bacterialmedium
 			name = "Bacterial Medium"
 			id = "bacterialmedium"
 			description = "A solution useful for the cultivation of bacteria."
 			reagent_state = 2
 			pathogen_nutrition = list("water", "sugar", "sodium", "iron", "nitrogen")
-
+/*
 		parasiticmedium
 			name = "Parasitic Medium"
 			id = "parasiticmedium"

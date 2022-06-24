@@ -2433,7 +2433,7 @@
 /mob/proc/infected(var/datum/microbe/P)
 	return
 
-/mob/proc/cured(var/datum/microbe/subdata/P)
+/mob/proc/cured(var/datum/microbesubdata/P)
 	return
 
 /mob/proc/shock(var/atom/origin, var/wattage, var/zone, var/stun_multiplier = 1, var/ignore_gloves = 0)

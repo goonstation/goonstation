@@ -7,7 +7,7 @@ ABSTRACT_TYPE(/datum/microbioeffects/benevolent)
 	name = "Exclusive Immunity"
 	desc = "The microbial culture occupies almost all possible routes of infection, preventing other diseases from entering."
 
-	mob_act(var/datum/microbe/subdata/P)
+	mob_act(var/datum/microbesubdata/P)
 		if (!(istype(mob, /mob/living/carbon/human)))
 			return
 		var/mob/living/carbon/human/H = mob
@@ -21,7 +21,7 @@ ABSTRACT_TYPE(/datum/microbioeffects/benevolent)
 	name = "Wound Mending"
 	desc = "Slow paced brute damage healing."
 
-	mob_act(var/mob/M, var/datum/microbe/subdata/P)
+	mob_act(var/mob/M, var/datum/microbesubdata/P)
 		if (prob(P.probability*2))
 			M.HealDamage("All", 2, 0)
 
@@ -37,7 +37,7 @@ ABSTRACT_TYPE(/datum/microbioeffects/benevolent)
 	name = "Burn Healing"
 	desc = "Slow paced burn damage healing."
 
-	mob_act(var/mob/M, var/datum/microbe/subdata/P)
+	mob_act(var/mob/M, var/datum/microbesubdata/P)
 		if (prob(P.probability*2))
 			M.HealDamage("All", 0, 2)
 
@@ -56,7 +56,7 @@ ABSTRACT_TYPE(/datum/microbioeffects/benevolent)
 	name = "Flesh Restructuring"
 	desc = "Fast paced general healing."
 
-	mob_act(var/mob/M, var/datum/microbe/subdata/P)
+	mob_act(var/mob/M, var/datum/microbesubdata/P)
 		if (prob(P.probability*2))
 			M.HealDamage("All", 2, 2)
 		if(ishuman(M))
@@ -82,7 +82,7 @@ datum/microbioeffects/benevolent/cleansing
 	name = "Cleansing"
 	desc = "The pathogen cleans the body of damage caused by toxins."
 
-	mob_act(var/mob/M, var/datum/microbe/subdata/P)
+	mob_act(var/mob/M, var/datum/microbesubdata/P)
 		//if (prob(origin.stage * 5) && M.get_toxin_damage())
 		if (M.get_toxin_damage())
 			M.take_toxin_damage(-1)
@@ -102,7 +102,7 @@ datum/microbioeffects/benevolent/oxygenconversion
 	onadd(var/datum/microbe/origin)
 		origin.effectdata += "Oxy Conversion"
 
-	mob_act(var/mob/M, var/datum/microbe/subdata/P)
+	mob_act(var/mob/M, var/datum/microbesubdata/P)
 		var/mob/living/carbon/C = M
 		if (C.get_oxygen_deprivation())
 			C.setStatus("patho_oxy_speed_bad", duration = INFINITE_STATUS, optional = 1)
@@ -121,18 +121,18 @@ datum/microbioeffects/benevolent/oxygenstorage
 	onadd(var/datum/microbe/origin)
 		origin.effectdata += "Oxy Storage"
 
-	mob_act(var/mob/M, var/datum/microbe/subdata/P)
-		if(!P.effectdata["oxygen_storage"]) // if not yet set, initialize
-			P.effectdata["oxygen_storage"] = 0
+	mob_act(var/mob/M, var/datum/microbesubdata/P)
+		if(!P.master.effectdata["oxygen_storage"]) // if not yet set, initialize
+			P.master.effectdata["oxygen_storage"] = 0
 
 		var/mob/living/carbon/C = M
 		if (C.get_oxygen_deprivation())
-			if(P.effectdata["oxygen_storage"] > 10)
-				C.setStatus("patho_oxy_speed", duration = INFINITE_STATUS, optional = P.effectdata["oxygen_storage"])
-				P.effectdata["oxygen_storage"] = 0
+			if(P.master.effectdata["oxygen_storage"] > 10)
+				C.setStatus("patho_oxy_speed", duration = INFINITE_STATUS, optional = P.master.effectdata["oxygen_storage"])
+				P.master.effectdata["oxygen_storage"] = 0
 		else
 			// faster reserve replenishment at higher stages
-			P.effectdata["oxygen_storage"] = min(100, P.effectdata["oxygen_storage"] + 2)
+			P.master.effectdata["oxygen_storage"] = min(100, P.master.effectdata["oxygen_storage"] + 2)
 
 	may_react_to()
 		return "The pathogen appears to have a bubble of oxygen around it."
@@ -145,14 +145,14 @@ datum/microbioeffects/benevolent/resurrection
 	onadd(var/datum/microbe/origin)
 		origin.effectdata += "Ressurection"
 
-	mob_act_dead(var/mob/M, var/datum/microbe/subdata/P)
-		if(!P.effectdata["resurrect_cd"]) // if not yet set, initialize it so that it is off cooldown
-			P.effectdata["resurrect_cd"] = -cooldown
-		if(TIME-P.effectdata["resurrect_cd"] < cooldown)
+	mob_act_dead(var/mob/M, var/datum/microbesubdata/P)
+		if(!P.master.effectdata["resurrect_cd"]) // if not yet set, initialize it so that it is off cooldown
+			P.master.effectdata["resurrect_cd"] = -cooldown
+		if(TIME-P.master.effectdata["resurrect_cd"] < cooldown)
 			return
 		// Shamelessly stolen from Strange Reagent
 		if (isdead(M) || istype(get_area(M),/area/afterlife/bar))
-			P.effectdata["resurrect_cd"] = TIME
+			P.master.effectdata["resurrect_cd"] = TIME
 			// range from 65 to 45. This is applied to both brute and burn, so the total max damage after resurrection is 130 to 90.
 			var/brute = min(rand(45,65), M.get_brute_damage())
 			var/burn = min(rand(45,65), M.get_burn_damage())
@@ -194,7 +194,7 @@ datum/microbioeffects/benevolent/neuronrestoration
 	name = "Neuron Restoration"
 	desc = "Infection slowly repairs nerve cells in the brain."
 
-	mob_act(var/mob/M, var/datum/microbe/subdata/P)
+	mob_act(var/mob/M, var/datum/microbesubdata/P)
 		if (prob(P.probability))
 			M.take_brain_damage(-1)
 
@@ -211,7 +211,7 @@ datum/pathogeneffects/benevolent/genetictemplate
 
 	var/list/mutationMap = list() // stores the kind of mutation with the index being the pathogen's name (which is something like "L41D9")
 
-	mob_act(var/mob/M, var/datum/microbe/subdata/P)
+	mob_act(var/mob/M, var/datum/microbesubdata/P)
 		if (!M.bioHolder)
 			return
 		if(mutationMap[origin.name] == null) // if no mutation has been picked yet, go for a random one from this person

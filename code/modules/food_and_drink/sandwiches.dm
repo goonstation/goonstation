@@ -290,13 +290,10 @@
 	initial_reagents = null
 	food_effects = list("food_bad_breath")
 
-	New()
-		..()
-
 	heal(var/mob/M)
-		boutput(M, "<span class='alert'>Oof, how old was that?.</span>")
+		boutput(M, "<span class='alert'>Oof, how old was that?</span>")
 		if(prob(66))
-			M.reagents.add_reagent("salmonella",15)
+			M.reagents.add_reagent(pick("salmonella","mucus"),15)
 		..()
 
 /obj/item/reagent_containers/food/snacks/burger/plague
@@ -309,10 +306,11 @@
 	initial_reagents = null
 	var/roundstart_pathogens = 1
 
-	New()
+	heal(var/mob/M)
+		boutput(M, "<span class='alert'>EW! What the hell did you just taste?!</span>")
+		M.reagents.add_reagent("salmonella",15)
 		..()
-		//if(roundstart_pathogens)
-			//wrap_pathogen(reagents, generate_random_pathogen(), 15)
+
 
 	fishstick
 		roundstart_pathogens = 0
