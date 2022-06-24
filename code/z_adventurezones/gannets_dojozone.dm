@@ -101,22 +101,21 @@ Contents:
 	sound_loop = 'sound/ambience/dojo/dojoambi.ogg'
 	sound_loop_vol = 50
 
-/area/dojo/New()
-	. = ..()
-	START_TRACKING_CAT(TR_CAT_AREA_PROCESS)
 
-/area/dojo/disposing()
-	STOP_TRACKING_CAT(TR_CAT_AREA_PROCESS)
-	. = ..()
+	New()
+		..()
+		SPAWN(1 SECOND)
+			process()
 
-/area/dojo/area_process()
-	if(prob(15)) // originally 12-22s
-		src.sound_fx_2 = pick('sound/ambience/nature/Biodome_Birds1.ogg',\
-			'sound/ambience/nature/Biodome_Birds2.ogg',\
-			'sound/ambience/nature/Biodome_Bugs.ogg')
-
-		for(var/mob/living/carbon/human/H in src)
-			H.client?.playAmbience(src, AMBIENCE_FX_2, 30)
+	proc/process()
+		while(current_state < GAME_STATE_FINISHED)
+			sleep(rand(125,225))
+			if (current_state == GAME_STATE_PLAYING)
+				if(!played_fx_2 && prob(10))
+					sound_fx_2 = pick('sound/ambience/nature/Biodome_Birds1.ogg','sound/ambience/nature/Biodome_Birds2.ogg','sound/ambience/nature/Biodome_Bugs.ogg')
+					for(var/mob/M in src)
+						if (M.client)
+							M.client.playAmbience(src, AMBIENCE_FX_2, 30)
 
 // Mobs
 
@@ -706,6 +705,8 @@ Contents:
 	icon_state = "2"
 	can_be_auto = 0
 
+	find_icon_state()
+		return
 
 // -Floors
 

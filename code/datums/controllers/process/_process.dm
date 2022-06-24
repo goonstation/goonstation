@@ -110,7 +110,7 @@
 	idle()
 	name = "process"
 	schedule_interval = 50
-	schedule_jitter = ((rand() * 2) - 1) * schedule_jitter // for first run
+	schedule_jitter = rand(-1, 1) * schedule_jitter // for first run
 	last_slept = 0
 	run_start = 0
 	tick_start = 0

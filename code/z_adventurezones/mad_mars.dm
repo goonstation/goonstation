@@ -592,28 +592,57 @@
 /area/marsoutpost
 	name = "Abandoned Outpost"
 	icon_state = "red"
+	var/sound/mysound = null
 	sound_group = "mars"
-	sound_loop = 'sound/ambience/loop/Mars_Interior.ogg'
-	sound_loop_vol = 60
 
-/area/marsoutpost/New()
-	. = ..()
-	START_TRACKING_CAT(TR_CAT_AREA_PROCESS)
+	New()
+		..()
+		var/sound/S = new/sound()
+		mysound = S
+		S.file = 'sound/ambience/loop/Mars_Interior.ogg'
+		S.repeat = 1
+		S.wait = 0
+		S.channel = 123
+		S.volume = 60
+		S.priority = 255
+		S.status = SOUND_UPDATE
+		SPAWN(1 SECOND) process()
 
-/area/marsoutpost/disposing()
-	STOP_TRACKING_CAT(TR_CAT_AREA_PROCESS)
-	. = ..()
+	Entered(atom/movable/Obj,atom/OldLoc)
+		..()
+		if(ismob(Obj))
+			if(Obj:client)
+				mysound.status = SOUND_UPDATE
+				Obj << mysound
+		return
 
-/area/marsoutpost/area_process()
-	if(prob(20))
-		src.sound_fx_2 = pick(
-			'sound/ambience/nature/Mars_Rockslide1.ogg',\
-			'sound/ambience/industrial/MarsFacility_MovingEquipment.ogg',\
-			'sound/ambience/nature/Mars_Rockslide2.ogg',\
-			'sound/ambience/industrial/MarsFacility_Glitchy.ogg')
+	Exited(atom/movable/Obj)
+		..()
+		if(ismob(Obj))
+			if(Obj:client)
+				mysound.status = SOUND_PAUSED | SOUND_UPDATE
+				Obj << mysound
 
-		for(var/mob/living/carbon/human/H in src)
-			H.client?.playAmbience(src, AMBIENCE_FX_2, 60)
+	proc/process()
+		var/sound/S = null
+		var/sound_delay = 0
+		while(current_state < GAME_STATE_FINISHED)
+			sleep(6 SECONDS)
+			if (current_state == GAME_STATE_PLAYING)
+				if(prob(10))
+					S = sound(file=pick('sound/ambience/nature/Mars_Rockslide1.ogg','sound/ambience/industrial/MarsFacility_MovingEquipment.ogg','sound/ambience/nature/Mars_Rockslide2.ogg','sound/ambience/industrial/MarsFacility_Glitchy.ogg'))
+					sound_delay = rand(0, 50)
+				else
+					S = null
+					continue
+
+				for(var/mob/living/carbon/human/H in src)
+					if(H.client)
+						mysound.status = SOUND_UPDATE
+						H << mysound
+						if(S)
+							SPAWN(sound_delay)
+								playsound(H, S, 70, channel = VOLUME_CHANNEL_AMBIENT)
 
 /area/marsoutpost/duststorm
 	name = "Barren Planet"

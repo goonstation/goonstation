@@ -247,9 +247,6 @@
 			else
 				boutput(user, "<span class='notice'>\The [src] is too weak to be modified!</span>")
 
-		else if (istype(W, /obj/item/paint_can))
-			return
-
 		else if (isscrewingtool(W))
 			if (istype(src.desk_drawer) && src.desk_drawer.locked)
 				actions.start(new /datum/action/bar/icon/table_tool_interact(src, W, TABLE_LOCKPICK), user)
@@ -862,9 +859,6 @@
 					smashprob += 15
 				else
 					return
-
-		else if(istype(W, /obj/item/paint_can))
-			return
 
 		else if (istype(W)) // determine smash chance via item size and user clumsiness  :v
 			if (user.bioHolder.HasEffect("clumsy"))

@@ -109,9 +109,6 @@
 			success = TRUE
 			glass_amt += W.amount
 		else if (istype(W, /obj/item/plate))
-			if (length(W.contents))
-				boutput(user, "<span class='alert'>You can't put [W] into [src] while it has things on it!</span>")
-				return FALSE // early return for custom messageP
 			success = TRUE
 			glass_amt += PLATE_COST
 		else if (istype(W, /obj/item/storage/box))
@@ -123,12 +120,15 @@
 		if (success)
 			user.visible_message("<span class='notice'>[user] inserts [W] into [src].</span>")
 			user.u_equip(W)
-			qdel(W)
+			if (istype(W, /obj/item/raw_material/shard))
+				qdel(W)
+			else
+				qdel(W)
 			ui_interact(user)
-			return TRUE
+			return 1
 		else
 			boutput(user, "<span class='alert'>You cannot put [W] into [src]!</span>")
-			return FALSE
+			return 0
 
 	proc/get_products()
 		product_list += new /datum/glass_product("beaker", /obj/item/reagent_containers/glass/beaker, 1)

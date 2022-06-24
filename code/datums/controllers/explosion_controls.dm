@@ -143,8 +143,7 @@ var/datum/explosion_controller/explosions
 			return
 		else if (queued_turfs.len)
 			kaboom()
-
-		if (queued_explosions.len)
+		else if (queued_explosions.len)
 			var/datum/explosion/E
 			while (queued_explosions.len)
 				E = queued_explosions[1]

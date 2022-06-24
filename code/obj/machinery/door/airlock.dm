@@ -150,7 +150,8 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 /obj/machinery/door/airlock
 	name = "airlock"
 	icon = 'icons/obj/doors/SL_doors.dmi'
-	icon_state = "door_closed"
+	icon_state = "generic_closed"
+	icon_base = "generic"
 	deconstruct_flags = DECON_ACCESS | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_SCREWDRIVER | DECON_MULTITOOL
 	object_flags = BOTS_DIRBLOCK | CAN_REPROGRAM_ACCESS
 

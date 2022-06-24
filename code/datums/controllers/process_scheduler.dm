@@ -229,7 +229,7 @@ var/global/datum/controller/processScheduler/processScheduler
 
 /datum/controller/processScheduler/proc/setQueuedProcessState(var/datum/controller/process/process)
 	// Do jitter adjustments since we just queued (± in the !initial! jitter range)
-	process.schedule_jitter = ((rand() * 2) - 1) * initial(process.schedule_jitter)
+	process.schedule_jitter = rand(-1, 1) * initial(process.schedule_jitter)
 
 	running -= process
 	idle -= process

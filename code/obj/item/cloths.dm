@@ -4,7 +4,6 @@ SPRITES BY WAFFLEOFFLE
 
 TOWELS:
 	* clean drinking glasses
-	* clean plates and bowls
 	* wipe down tables + chairs
 	* wipe people down
 	* clown: can eat and vomit
@@ -79,8 +78,8 @@ ABSTRACT_TYPE(/obj/item/cloth/towel)
 	animate_smush(M)
 
 /obj/item/cloth/towel/afterattack(atom/target, mob/user as mob)
-	if (istype(target, /obj/item/reagent_containers/food/drinks) || istype(target, /obj/item/reagent_containers/food/drinks/bowl) || istype(target, /obj/item/plate))
-		if (target.reagents?.total_volume || length(target.contents))
+	if (istype(target, /obj/item/reagent_containers/food/drinks))
+		if (target.reagents?.total_volume)
 			boutput(user, "<span class='alert'>[target] needs to be emptied first.</span>")
 			return
 		user.visible_message("<span class='notice'>[user] [pick("polishes", "shines", "cleans", "wipes")] [target] with [src].</span>")

@@ -320,7 +320,7 @@ obj/decal/fakeobjects/teleport_pad
 	name = "propulsion unit"
 	desc = "A small impulse drive that moves the shuttle."
 	icon = 'icons/turf/shuttle.dmi'
-	icon_state = "alt_propulsion"
+	icon_state = "propulsion"
 	anchored = 1
 	density = 1
 	opacity = 0

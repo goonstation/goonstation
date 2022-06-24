@@ -459,13 +459,10 @@
 
 	New()
 		..()
-		START_TRACKING
 		SPAWN(0.5 SECONDS)
 			if (src)
 				// Why range 30? COG2 places linked fixtures much further away from the timer than originally envisioned.
-				for_by_tcl(DT, /obj/machinery/door_timer)
-					if (!IN_RANGE(DT, src, 30))
-						continue
+				for (var/obj/machinery/door_timer/DT in range(30, src))
 					if (DT && DT.id == src.id)
 						src.our_timer = DT
 						if (src.name == "\improper Automatic Locker")
@@ -475,10 +472,6 @@
 					message_admins("Automatic locker: couldn't find brig timer with ID [isnull(src.id) ? "*null*" : "[src.id]"] in [get_area(src)].")
 					logTheThing("debug", null, null, "<b>Convair880:</b> couldn't find brig timer with ID [isnull(src.id) ? "*null*" : "[src.id]"] for automatic locker at [log_loc(src)].")
 		return
-
-	disposing()
-		..()
-		STOP_TRACKING
 
 	mouse_drop(over_object, src_location, over_location)
 		..()
