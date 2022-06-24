@@ -11465,7 +11465,9 @@
 	pixel_y = 12
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/jazz)
+/area/station/crew_quarters/jazz{
+	requires_power = 0
+	})
 "aFb" = (
 /obj/item/raw_material/shard,
 /turf/simulated/floor/plating/airless/random,
@@ -11781,7 +11783,9 @@
 	dir = 6;
 	icon_state = "fred6"
 	},
-/area/station/crew_quarters/jazz)
+/area/station/crew_quarters/jazz{
+	requires_power = 0
+	})
 "aFV" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 8
@@ -16821,7 +16825,9 @@
 /obj/table/reinforced/bar/auto,
 /obj/item/clothing/glasses/monocle,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/jazz)
+/area/station/crew_quarters/jazz{
+	requires_power = 0
+	})
 "aRX" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -18204,7 +18210,9 @@
 	dir = 6;
 	icon_state = "fred4"
 	},
-/area/station/crew_quarters/jazz)
+/area/station/crew_quarters/jazz{
+	requires_power = 0
+	})
 "aVl" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/portable_atmospherics/scrubber,
@@ -25969,7 +25977,9 @@
 /obj/item/storage/firstaid/fire,
 /obj/item/storage/firstaid/fire,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/jazz)
+/area/station/crew_quarters/jazz{
+	requires_power = 0
+	})
 "bne" = (
 /obj/cable{
 	d1 = 1;
@@ -28081,7 +28091,9 @@
 /turf/simulated/floor/carpet{
 	icon_state = "fred6"
 	},
-/area/station/crew_quarters/jazz)
+/area/station/crew_quarters/jazz{
+	requires_power = 0
+	})
 "bsM" = (
 /turf/space,
 /area/station/com_dish/comdish)
@@ -31716,7 +31728,9 @@
 "bCK" = (
 /obj/table/reinforced/bar/auto,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/jazz)
+/area/station/crew_quarters/jazz{
+	requires_power = 0
+	})
 "bCL" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -47698,7 +47712,9 @@
 /obj/item/reagent_containers/food/drinks/drinkingglass/random_style,
 /obj/item/reagent_containers/food/drinks/drinkingglass/random_style,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/jazz)
+/area/station/crew_quarters/jazz{
+	requires_power = 0
+	})
 "crx" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -48122,7 +48138,9 @@
 	operating = 1
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/jazz)
+/area/station/crew_quarters/jazz{
+	requires_power = 0
+	})
 "csS" = (
 /obj/machinery/light_switch{
 	name = "N light switch";
@@ -48133,7 +48151,9 @@
 	dir = 1;
 	icon_state = "fred6"
 	},
-/area/station/crew_quarters/jazz)
+/area/station/crew_quarters/jazz{
+	requires_power = 0
+	})
 "csT" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -48193,7 +48213,9 @@
 /area/ghostdrone_factory)
 "cte" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/crew_quarters/jazz)
+/area/station/crew_quarters/jazz{
+	requires_power = 0
+	})
 "ctf" = (
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/plating,
@@ -48215,7 +48237,9 @@
 	dir = 9;
 	icon_state = "fred6"
 	},
-/area/station/crew_quarters/jazz)
+/area/station/crew_quarters/jazz{
+	requires_power = 0
+	})
 "ctj" = (
 /obj/stool/chair/couch{
 	dir = 4
@@ -48232,7 +48256,9 @@
 	dir = 5;
 	icon_state = "fred6"
 	},
-/area/station/crew_quarters/jazz)
+/area/station/crew_quarters/jazz{
+	requires_power = 0
+	})
 "ctk" = (
 /turf/simulated/floor/caution,
 /area/ghostdrone_factory)
@@ -48276,13 +48302,17 @@
 	pixel_y = 6
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/jazz)
+/area/station/crew_quarters/jazz{
+	requires_power = 0
+	})
 "ctr" = (
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fred4"
 	},
-/area/station/crew_quarters/jazz)
+/area/station/crew_quarters/jazz{
+	requires_power = 0
+	})
 "cts" = (
 /turf/simulated/floor/carpet{
 	dir = 5;
@@ -48349,7 +48379,9 @@
 	dir = 8;
 	icon_state = "fred3"
 	},
-/area/station/crew_quarters/jazz)
+/area/station/crew_quarters/jazz{
+	requires_power = 0
+	})
 "ctF" = (
 /obj/stool/chair/comfy{
 	dir = 8
@@ -48358,7 +48390,9 @@
 	dir = 4;
 	icon_state = "fred3"
 	},
-/area/station/crew_quarters/jazz)
+/area/station/crew_quarters/jazz{
+	requires_power = 0
+	})
 "ctG" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3_space"
@@ -48399,7 +48433,9 @@
 	dir = 8;
 	icon_state = "fred3"
 	},
-/area/station/crew_quarters/jazz)
+/area/station/crew_quarters/jazz{
+	requires_power = 0
+	})
 "ctN" = (
 /obj/machinery/light/small{
 	dir = 8;
@@ -48433,7 +48469,9 @@
 	dir = 9;
 	icon_state = "fred6"
 	},
-/area/station/crew_quarters/jazz)
+/area/station/crew_quarters/jazz{
+	requires_power = 0
+	})
 "ctS" = (
 /obj/lattice{
 	dir = 5;
@@ -52439,7 +52477,9 @@
 "doI" = (
 /obj/machinery/vending/cards,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/jazz)
+/area/station/crew_quarters/jazz{
+	requires_power = 0
+	})
 "dpj" = (
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating,
@@ -52833,11 +52873,12 @@
 /area/station/maintenance/northwest)
 "egJ" = (
 /obj/critter/boogiebot,
-/obj/machinery/light/small/floor/warm,
 /turf/simulated/floor/carpet{
 	icon_state = "fred3"
 	},
-/area/station/crew_quarters/jazz)
+/area/station/crew_quarters/jazz{
+	requires_power = 0
+	})
 "egK" = (
 /obj/table/reinforced/auto,
 /obj/item/handcuffs,
@@ -52972,7 +53013,9 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/jazz)
+/area/station/crew_quarters/jazz{
+	requires_power = 0
+	})
 "epE" = (
 /turf/simulated/floor/grasstodirt{
 	dir = 10
@@ -53011,7 +53054,9 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/jazz)
+/area/station/crew_quarters/jazz{
+	requires_power = 0
+	})
 "eyd" = (
 /obj/disposalpipe/segment/food{
 	dir = 1;
@@ -53287,7 +53332,9 @@
 "fiM" = (
 /obj/machinery/light/small/floor/warm,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/jazz)
+/area/station/crew_quarters/jazz{
+	requires_power = 0
+	})
 "fiU" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
@@ -53720,7 +53767,9 @@
 	dir = 5;
 	icon_state = "fred6"
 	},
-/area/station/crew_quarters/jazz)
+/area/station/crew_quarters/jazz{
+	requires_power = 0
+	})
 "gms" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor,
@@ -54030,7 +54079,9 @@
 	},
 /obj/item/cigarbox,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/jazz)
+/area/station/crew_quarters/jazz{
+	requires_power = 0
+	})
 "hhi" = (
 /obj/railing/orange/reinforced{
 	dir = 8
@@ -54341,7 +54392,9 @@
 "hOc" = (
 /obj/table/wood/auto,
 /turf/simulated/floor/carpet,
-/area/station/crew_quarters/jazz)
+/area/station/crew_quarters/jazz{
+	requires_power = 0
+	})
 "hOk" = (
 /obj/disposalpipe/segment/transport{
 	icon_state = "pipe-c"
@@ -54685,7 +54738,9 @@
 	dir = 4;
 	icon_state = "fred6"
 	},
-/area/station/crew_quarters/jazz)
+/area/station/crew_quarters/jazz{
+	requires_power = 0
+	})
 "izt" = (
 /turf/simulated/floor/escape{
 	dir = 1
@@ -54805,7 +54860,9 @@
 "iNK" = (
 /obj/machinery/launcher_loader/north,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/jazz)
+/area/station/crew_quarters/jazz{
+	requires_power = 0
+	})
 "iNS" = (
 /obj/disposalpipe/segment/brig{
 	dir = 8
@@ -54892,7 +54949,9 @@
 /obj/machinery/glass_recycler,
 /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/jazz)
+/area/station/crew_quarters/jazz{
+	requires_power = 0
+	})
 "iXL" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -56312,7 +56371,9 @@
 	dir = 8;
 	icon_state = "fred6"
 	},
-/area/station/crew_quarters/jazz)
+/area/station/crew_quarters/jazz{
+	requires_power = 0
+	})
 "mmm" = (
 /obj/lattice,
 /obj/machinery/atmospherics/pipe/simple/insulated{
@@ -56644,7 +56705,9 @@
 	dir = 10;
 	icon_state = "fred6"
 	},
-/area/station/crew_quarters/jazz)
+/area/station/crew_quarters/jazz{
+	requires_power = 0
+	})
 "mVg" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -56838,7 +56901,9 @@
 "njR" = (
 /obj/machinery/vending/air_vendor,
 /turf/simulated/floor/plating/scorched,
-/area/station/crew_quarters/jazz)
+/area/station/crew_quarters/jazz{
+	requires_power = 0
+	})
 "nkk" = (
 /obj/disposalpipe/segment/brig{
 	dir = 8
@@ -56953,7 +57018,9 @@
 /obj/table/wood/auto,
 /obj/item/card_box/Mono,
 /turf/simulated/floor/carpet,
-/area/station/crew_quarters/jazz)
+/area/station/crew_quarters/jazz{
+	requires_power = 0
+	})
 "nwH" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
@@ -57346,7 +57413,9 @@
 /area/station/crew_quarters/courtroom)
 "onx" = (
 /turf/simulated/floor/black,
-/area/station/crew_quarters/jazz)
+/area/station/crew_quarters/jazz{
+	requires_power = 0
+	})
 "ooj" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -58414,7 +58483,9 @@
 	dir = 10;
 	icon_state = "fred4"
 	},
-/area/station/crew_quarters/jazz)
+/area/station/crew_quarters/jazz{
+	requires_power = 0
+	})
 "qRl" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -59388,7 +59459,9 @@
 	dir = 8
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/jazz)
+/area/station/crew_quarters/jazz{
+	requires_power = 0
+	})
 "sWl" = (
 /obj/storage/secure/closet/security/equipment,
 /turf/simulated/floor/wood/two,
@@ -59435,7 +59508,9 @@
 	dir = 1;
 	icon_state = "fred3"
 	},
-/area/station/crew_quarters/jazz)
+/area/station/crew_quarters/jazz{
+	requires_power = 0
+	})
 "tbi" = (
 /obj/decal/cleanable/dirt,
 /obj/disposalpipe/junction/left/south,
@@ -60161,7 +60236,9 @@
 /obj/machinery/chem_dispenser/soda,
 /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/jazz)
+/area/station/crew_quarters/jazz{
+	requires_power = 0
+	})
 "uMj" = (
 /obj/disposalpipe/segment/food{
 	dir = 4
@@ -60934,7 +61011,9 @@
 "wuS" = (
 /obj/machinery/vending/coffee,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/jazz)
+/area/station/crew_quarters/jazz{
+	requires_power = 0
+	})
 "www" = (
 /obj/item/poster,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -61838,7 +61917,9 @@
 	id = "QM_Buy_1"
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/jazz)
+/area/station/crew_quarters/jazz{
+	requires_power = 0
+	})
 
 (1,1,1) = {"
 aaa
