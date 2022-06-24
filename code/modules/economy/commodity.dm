@@ -35,14 +35,6 @@
 	upperfluc = 10
 	lowerfluc = 10 */
 
-/datum/commodity/electronics
-	comname = "Electronic Parts"
-	comtype = /obj/item/electronics
-	price = 25
-	baseprice = 25
-	upperfluc = 15
-	lowerfluc = -15
-	onmarket = 1
 
 /datum/commodity/robotics
 	comname = "Robot Parts"
