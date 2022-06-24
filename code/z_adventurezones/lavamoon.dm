@@ -83,6 +83,12 @@ var/list/iomoon_basement_sounds = list('sound/ambience/industrial/LavaPowerPlant
 var/list/iomoon_ancient_sounds = list('sound/ambience/industrial/AncientPowerPlant_Creaking1.ogg','sound/ambience/industrial/AncientPowerPlant_Creaking2.ogg','sound/ambience/industrial/AncientPowerPlant_Drone2.ogg')
 var/sound/iomoon_alarm_sound = null
 
+/turf/unsimulated/floor/logo_xg
+	name = "XIANG|GIESEL"
+	desc = "A floor sign with the logo for XIANG|GIESEL Advanced Power Systems, GmbH."
+	icon = 'icons/turf/adventure.dmi'
+	icon_state = "logo_xg1"
+
 //Areas
 /area/iomoon
 	name = "Lava Moon Surface"
@@ -382,7 +388,7 @@ var/sound/iomoon_alarm_sound = null
 		var/datum/computer/file/record/testR = new
 		testR.name = "motd"
 		testR.fields += "Welcome to DWAINE System VI!"
-		testR.fields += "This System Licensed to Xiang-Geisel Advanced Power Systems"
+		testR.fields += "This System Licensed to XIANG|GIESEL Advanced Power Systems"
 		newfolder.add_file( testR )
 
 		newfolder.add_file( new /datum/computer/file/record/dwaine_help(src) )
@@ -432,7 +438,7 @@ var/sound/iomoon_alarm_sound = null
 			"",
 			"Again, we apologize for the wait.  Please bear with us.",
 			"Johann Eisenhauer",
-			"Xiang-Giesel Advanced Power Systems")
+			"XIANG|GIESEL Advanced Power Systems")
 
 	rad_advisory
 		New()
@@ -443,7 +449,7 @@ var/sound/iomoon_alarm_sound = null
 			"GENERIC@XG5",
 			"HIGH",
 			"AUTOMATED ALERT",
-			"This is an automated alert message sent as part of the XIANG-GEISEL",
+			"This is an automated alert message sent as part of the XIANG|GIESEL",
 			"AUTOMATED HAZARD WARNING SYSTEM. This message has been sent due to",
 			"the detection of a critical safety hazard by plant sensors.",
 			"",
