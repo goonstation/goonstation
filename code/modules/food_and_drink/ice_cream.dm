@@ -108,3 +108,9 @@
 	heal_amt = 2
 	initial_volume = 30
 	initial_reagents = list("cryostylane"=30)
+
+/obj/item/reagent_containers/food/snacks/yoghurt/frozen/roach
+	name = "Carapace Cream"
+	desc = "A tub of velvety soft ice cream, made with real roach pieces! This one's political prisoner flavoured."
+	icon_state = "roachcream"
+	initial_reagents = list("hemolymph"=30)
