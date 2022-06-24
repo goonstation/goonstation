@@ -1,5 +1,16 @@
 
 (t)thu jun 23 22
+(u)Kubius
+(p)8140
+(e)🆕🎨🔄|feature, sprites, rework
+(*)Energy-shield generator upgrade: new door-shield generator, support for manufacture of all 3 variants, and new wire-connection behavior.
+(+)The Door-Shield Generator has a lower range and power, and interfaces only with doors, shielding them while they're open and consuming less power while they're closed.
+(+)General manufacturers are now capable of manufacturing the existing energy-shield and meteor-shield generators, as well as the new door-shield generator. They do not come with cells.
+(+)Electrical draw is now calculated based on generator types, and wire-powered operation now actually requires the wire to be powered, permitting shield deactivation by severing grid connection.
+(u)Amylizzle
+(p)9296
+(e)|
+(+)Announcement computers are now deconstructable.
 (u)Taylor Kellogg
 (p)9188
 (e)📄|tgui

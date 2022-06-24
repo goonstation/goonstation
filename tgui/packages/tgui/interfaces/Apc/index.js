@@ -57,6 +57,7 @@ export const Apc = (props, context) => {
     can_access_remotely,
     is_ai,
     is_silicon,
+    host_id,
   } = data;
 
   // ------------ Events ------------
@@ -162,8 +163,8 @@ export const Apc = (props, context) => {
       return null;
     } else {
       return (
-        <LabeledList.Item label="Host Connection:">
-          <font color={host_connected ? "green" : "red"}>{host_connected ? "OK" : "NONE"}</font>
+        <LabeledList.Item label="Host Connection">
+          <Box><font color={host_id ? "green" : "red"}>{host_id ? "OK" : "NONE"}</font></Box>
         </LabeledList.Item>
       );
     }
@@ -185,8 +186,8 @@ export const Apc = (props, context) => {
               <LabeledList.Item label="External Power">
                 <Box>{mainStatusToText()}</Box>
               </LabeledList.Item>
+              {hostConnectionDisplay()}
             </LabeledList>
-            {hostConnectionDisplay()}
           </Section>
           <Section title="PowerChannel">
             <LabeledList>
