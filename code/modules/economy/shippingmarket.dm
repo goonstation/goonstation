@@ -258,7 +258,7 @@
 		// send artifact resupply
 		if(src.artifact_resupply_amount > 1 && !src.artifacts_on_the_way)
 			src.artifacts_on_the_way = TRUE
-			SPAWN(1 MINUTES)
+			SPAWN(30 SECONDS)
 				// handle the artifact amount
 				var/art_amount = round(artifact_resupply_amount)
 				artifact_resupply_amount -= art_amount
