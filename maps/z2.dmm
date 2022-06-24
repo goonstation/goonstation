@@ -24521,17 +24521,8 @@
 	},
 /area/iomoon/base)
 "btu" = (
-/obj/overlay{
-	density = 1;
-	desc = "It wont budge.";
-	dir = 4;
-	icon = 'icons/obj/doors/SL_doors.dmi';
-	icon_state = "door_closed";
-	layer = 6;
-	name = "broken door";
-	opacity = 1
-	},
-/turf/unsimulated/floor,
+/obj/storage/closet/dresser/random,
+/turf/unsimulated/floor/carpet/grime,
 /area/iomoon/base/underground)
 "btw" = (
 /obj/overlay{
@@ -26198,7 +26189,7 @@
 	dir = 4;
 	name = "Surface Airlock"
 	},
-/turf/unsimulated/floor/industrial,
+/turf/unsimulated/floor/orange,
 /area/iomoon/base)
 "bxZ" = (
 /turf/unsimulated/wall/auto/adventure/iomoon,
@@ -26232,7 +26223,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-/turf/unsimulated/floor,
+/turf/unsimulated/floor/black,
 /area/iomoon/base/underground)
 "byc" = (
 /obj/noticeboard{
@@ -26704,13 +26695,10 @@
 	},
 /area/iomoon/base)
 "bzN" = (
-/obj/storage/crate,
-/obj/item/motherboard,
-/obj/item/peripheral/drive/tape_reader,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/iomoon/base)
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/pink,
+/turf/unsimulated/floor/carpet/grime,
+/area/iomoon/base/underground)
 "bzO" = (
 /obj/table/auto,
 /obj/item/storage/pill_bottle/silver_sulfadiazine,
@@ -26991,11 +26979,22 @@
 	},
 /area/iomoon/base)
 "bAA" = (
-/obj/item/cable_coil,
-/turf/unsimulated/floor{
-	icon_state = "floor"
+/obj/overlay{
+	density = 1;
+	desc = "It wont budge.";
+	dir = 4;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "door_closed";
+	layer = 6;
+	name = "broken door";
+	opacity = 1
 	},
-/area/iomoon/base)
+/obj/decal/fakeobjects/firelock_broken{
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
+	},
+/turf/unsimulated/floor/carpet/grime,
+/area/iomoon/base/underground)
 "bAC" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -27137,23 +27136,14 @@
 	},
 /area/iomoon/base/underground)
 "bAS" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 4;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit"
+/obj/decal/fakeobjects/firelock_broken{
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
 	},
-/obj/decal/fakeobjects/pipe{
-	desc = "It is not working.";
-	dir = 1;
-	icon = 'icons/obj/atmospherics/pump.dmi';
-	icon_state = "intact_off";
-	name = "pump"
+/obj/machinery/door/airlock/pyro{
+	name = "Crew Quarters"
 	},
-/turf/unsimulated/floor,
+/turf/unsimulated/floor/black,
 /area/iomoon/base/underground)
 "bAT" = (
 /obj/securearea{
@@ -27463,9 +27453,6 @@
 /turf/unsimulated/floor,
 /area/iomoon/base/underground)
 "bBF" = (
-/obj/decal/fakeobjects/pipe{
-	dir = 1
-	},
 /obj/decal/fakeobjects{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
@@ -27474,6 +27461,13 @@
 	icon_state = "conduit";
 	layer = 2.5;
 	name = "power conduit"
+	},
+/obj/decal/fakeobjects/pipe{
+	desc = "It is not working.";
+	dir = 1;
+	icon = 'icons/obj/atmospherics/pump.dmi';
+	icon_state = "intact_off";
+	name = "pump"
 	},
 /turf/unsimulated/floor,
 /area/iomoon/base/underground)
@@ -70653,6 +70647,10 @@
 	dir = 1
 	},
 /area/moon/museum)
+"fbQ" = (
+/obj/table/auto,
+/turf/unsimulated/floor/purple/side,
+/area/iomoon/base)
 "fel" = (
 /turf/unsimulated/floor/black/side{
 	dir = 1
@@ -72101,6 +72099,13 @@
 	},
 /turf/unsimulated/floor/setpieces/swampgrass,
 /area/centcom/offices/tterc)
+"jjh" = (
+/obj/item/device/light/lava_lamp/activated{
+	pixel_y = 11
+	},
+/obj/table/wood/round,
+/turf/unsimulated/floor/carpet/grime,
+/area/iomoon/base/underground)
 "jjv" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/unsimulated/floor/black,
@@ -72202,6 +72207,9 @@
 "jxZ" = (
 /turf/unsimulated/floor/stairs/wood2,
 /area/afterlife/bar)
+"jyw" = (
+/turf/unsimulated/iomoon/floor,
+/area/iomoon/base)
 "jBr" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-32"
@@ -72593,7 +72601,7 @@
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor0"
 	},
-/turf/unsimulated/floor/carpet/grime,
+/turf/unsimulated/floor/black,
 /area/iomoon/base)
 "kxa" = (
 /turf/unsimulated/wall/auto/lead/gray,
@@ -74731,7 +74739,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/unsimulated/wall/auto/lead/gray,
+/turf/unsimulated/wall/setpieces/leadwindow/gray{
+	dir = 4
+	},
 /area/iomoon/base)
 "pXI" = (
 /turf/simulated/shuttle/wall{
@@ -75785,6 +75795,11 @@
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/shuttle/merchant_shuttle/diner_centcom)
+"shq" = (
+/turf/unsimulated/floor/stairs/dark{
+	dir = 1
+	},
+/area/iomoon/base/underground)
 "shs" = (
 /obj/cable{
 	d1 = 1;
@@ -75851,6 +75866,12 @@
 "smg" = (
 /turf/unsimulated/floor/dream/space,
 /area/titlescreen)
+"snl" = (
+/obj/table/auto,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/iomoon/base)
 "soS" = (
 /obj/securearea{
 	desc = "It looks pretty dangerous in there.";
@@ -76343,6 +76364,17 @@
 	name = "plating"
 	},
 /area/centcom)
+"uaj" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/table/auto,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/iomoon/base)
 "ubB" = (
 /obj/rack,
 /obj/item/tank/jetpack/syndicate,
@@ -76919,6 +76951,14 @@
 	dir = 8
 	},
 /area/diner/cow)
+"vQH" = (
+/obj/storage/crate,
+/obj/item/peripheral/drive/tape_reader,
+/obj/item/motherboard,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/iomoon/base)
 "vTG" = (
 /obj/machinery/light{
 	dir = 8
@@ -84878,10 +84918,10 @@ boW
 boW
 boW
 bql
-izT
+buq
 bxg
 byR
-izT
+buq
 bql
 boV
 boW
@@ -86690,7 +86730,7 @@ btM
 btM
 btM
 bvO
-izT
+bxq
 fel
 byH
 izT
@@ -87589,7 +87629,7 @@ bqN
 brw
 bsg
 bsG
-izT
+bxq
 bto
 bzU
 byH
@@ -89413,8 +89453,8 @@ qyc
 byH
 byI
 izT
-bzN
-bAA
+izT
+izT
 izT
 buK
 bwv
@@ -89714,10 +89754,10 @@ bwu
 fel
 byH
 wrp
+buK
+fbQ
 izT
-izT
-izT
-izT
+vQH
 byL
 bCP
 bxo
@@ -90012,7 +90052,7 @@ btM
 izT
 bvo
 bvT
-bwv
+uaj
 bxk
 byH
 wrp
@@ -90320,8 +90360,8 @@ bya
 byK
 qzK
 bzP
-izT
-buK
+buq
+snl
 bCg
 bCR
 bDx
@@ -90925,7 +90965,7 @@ wrp
 buK
 bzR
 izT
-buK
+snl
 bCg
 bCR
 bDx
@@ -97563,12 +97603,12 @@ bpD
 bpD
 bpD
 bpD
-izT
+buq
 bxg
 byR
-izT
-izT
-izT
+buq
+jyw
+jyw
 izT
 izT
 izT
@@ -109640,7 +109680,7 @@ bqB
 bqB
 bqB
 bqB
-bqB
+shq
 byb
 bwe
 bBA
@@ -109938,9 +109978,9 @@ rHr
 rHr
 rHr
 rHr
-btu
 rHr
 rHr
+bAA
 rHr
 rHr
 rHr
@@ -110240,12 +110280,12 @@ rHr
 btb
 btb
 btb
-btb
-btb
-btb
-btb
 rHr
-bAS
+btu
+bAd
+bAd
+jjh
+rHr
 bwe
 bBA
 rHr
@@ -110542,11 +110582,11 @@ btb
 btb
 btb
 btb
-btb
-btb
-btb
-btb
 rHr
+btu
+bAd
+bAd
+shq
 bAS
 bwe
 bBA
@@ -110843,11 +110883,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 btb
-btb
-btb
+rHr
+bzN
+bAd
+bzN
 rHr
 rHr
 bwe
@@ -111145,11 +111185,11 @@ pHY
 pHY
 pHY
 aaa
-aaa
-aaa
 btb
-btb
-btb
+rHr
+bzN
+bAd
+bzN
 rHr
 bBE
 bwe
@@ -111447,11 +111487,11 @@ brb
 bqD
 pHY
 aaa
-aaa
-aaa
 btb
-btb
-btb
+rHr
+bzN
+gEn
+bzN
 rHr
 bBF
 bwL
@@ -111750,8 +111790,8 @@ bqD
 pHY
 aaa
 btb
-btb
-btb
+rHr
+rHr
 rHr
 rHr
 rHr
@@ -112053,7 +112093,7 @@ pHY
 aaa
 btb
 rHr
-rHr
+btV
 rHr
 buR
 bvz
