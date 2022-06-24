@@ -58,7 +58,6 @@ var/global/list/mapNames = list(
 
 				if (mapID == map_setting)
 					var/path = (mapNames[map]["settings"] == "") ? /datum/map_settings : text2path("/datum/map_settings/" + mapNames[map]["settings"])
-					boutput(world, path)
 					map_settings = new path
 					break
 
