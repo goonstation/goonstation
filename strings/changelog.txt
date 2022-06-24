@@ -1,4 +1,9 @@
 
+(t)fri jun 24 22
+(u)Flaborized
+(p)9325
+(e)|
+(*)Quartermasters can now buy a banjo for 2,000 credits.
 (t)thu jun 23 22
 (u)Kubius
 (p)8140
