@@ -243,6 +243,7 @@ var/global
 	speechpopups = 1
 
 	monkeysspeakhuman = 0
+	traitorsseeeachother = FALSE
 	late_traitors = 1
 	no_automatic_ending = 0
 
