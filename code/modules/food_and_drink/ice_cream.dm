@@ -111,6 +111,6 @@
 
 /obj/item/reagent_containers/food/snacks/yoghurt/frozen/roach
 	name = "Carapace Cream"
-	desc = "A tub of velvety soft ice cream, made with real roach pieces! This one's political prisoner flavoured."
+	desc = "A tub of velvety soft ice cream, made with real roach pieces! Certified sapient-free."
 	icon_state = "roachcream"
 	initial_reagents = list("hemolymph"=30)
