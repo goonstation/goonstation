@@ -31,29 +31,25 @@
 	///can you use this as a base for a new window?
 	var/can_build_window = TRUE
 
-	var/neighbors = list()
-
-
 	New()
 		..()
 		if(src.auto)
 			SPAWN(0) //fix for sometimes not joining on map load
-				for (var/atom/A in orange(1,src))
-					if(istype(A,/obj/window/auto) || istype(A,/obj/grille) || istype(A,/turf/simulated/wall/auto) || istype(A,/turf/simulated/wall/false_wall))
-						var/turf/simulated/wall/auto/W = A
-						neighbors += A
-						W.neighbors += src
+				for (var/atom/A as anything in orange(1,src))
+					if(istype(A,/obj/window/auto) || istype(A,/obj/grille) || istype(A,/turf/simulated/wall/auto) || istype(A,/turf/unsimulated/wall/auto) || istype(A,/turf/simulated/wall/false_wall))
+						A.UnregisterSignal(src,"atom_wallneighbor_update", /atom/proc/UpdateIcon)
 				if (map_setting && ticker)
-					src.update_neighbors()
-
+					SEND_SIGNAL(src,"atom_wallneighbor_update")
 
 				src.UpdateIcon()
 
 	disposing()
 		..()
-		for(var/atom/A in neighbors)
-			var/turf/simulated/wall/auto/W = A
-			W.neighbors -= src
+		for (var/atom/A as anything in orange(1,src))
+			if(istype(A,/obj/window/auto) || istype(A,/obj/grille) || istype(A,/turf/simulated/wall/auto) || istype(A,/turf/unsimulated/wall/auto) || istype(A,/turf/simulated/wall/false_wall))
+				A.UnregisterSignal(src,"atom_wallneighbor_update", /atom/proc/UpdateIcon)
+
+
 	steel
 #ifdef IN_MAP_EDITOR
 		icon_state = "grille0-0"
@@ -438,10 +434,22 @@
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 
 		else if (can_be_unscrewed && (isscrewingtool(W) && (istype(src.loc, /turf/simulated) || src.anchored)))
+			/// its most likely a bad idea to have unanchored things updating still
+			if (src.auto)
+				for (var/atom/A as anything in orange(1,src))
+					if(istype(A,/obj/window/auto) || istype(A,/obj/grille) || istype(A,/turf/simulated/wall/auto) || istype(A,/turf/unsimulated/wall/auto) || istype(A,/turf/simulated/wall/false_wall))
+						if (src.anchored)
+							A.UnregisterSignal(src,"atom_wallneighbor_update", /atom/proc/UpdateIcon)
+						else
+							A.RegisterSignal(src,"atom_wallneighbor_update", /atom/proc/UpdateIcon, override=TRUE)
+
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 			src.anchored = !( src.anchored )
 			src.stops_space_move = !(src.stops_space_move)
 			src.visible_message("<span class='alert'><b>[usr]</b> [src.anchored ? "fastens" : "unfastens"] [src].</span>")
+
+			src.UpdateIcon()
+			SEND_SIGNAL(src,"atom_wallneighbor_update")
 			return
 
 		else
@@ -512,9 +520,9 @@
 			if(76 to INFINITY)
 				icon_state = "grille[builtdir]" + "-0"
 
+	/// this is here because some procs still expect this to exist.
 	proc/update_neighbors()
-		for (var/atom/A in neighbors)
-			A.UpdateIcon()
+		SEND_SIGNAL(src,"atom_wallneighbor_update")
 
 	proc/drop_rods(var/amount)
 		if (!isnum(amount))

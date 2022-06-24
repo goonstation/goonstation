@@ -18,7 +18,6 @@
 	var/mod = null
 	var/obj/overlay/floor_underlay = null
 	var/dont_follow_map_settings_for_icon_state = 0
-	var/neighbors = list()
 
 	temp
 		var/was_rwall = 0
@@ -36,11 +35,9 @@
 
 		if (src.can_be_auto)
 			for (var/atom/A as anything in orange(1,src))
-				if(istype(A,/obj/window/auto) || istype(A,/obj/grille) || istype(A,/turf/simulated/wall/auto) || istype(A,/turf/simulated/wall/false_wall))
-					var/turf/simulated/wall/auto/W = A
-					neighbors += A
-					W.neighbors += src
-			src.update_neighbors()
+				if(istype(A,/obj/window/auto) || istype(A,/obj/grille) || istype(A,/turf/unsimulated/wall/auto) || istype(A,/turf/simulated/wall/auto) || istype(A,/turf/simulated/wall/false_wall))
+					A.RegisterSignal(src,"atom_wallneighbor_update", /atom/proc/UpdateIcon, override = TRUE)
+			SEND_SIGNAL(src,"atom_wallneighbor_update")
 			SPAWN(0)
 				src.UpdateIcon()
 
@@ -49,16 +46,15 @@
 			src.setFloorUnderlay('icons/turf/floors.dmi', "plating", 0, 100, 0, "plating")
 
 	proc/update_neighbors()
-		for (var/atom/A in neighbors)
-			A.UpdateIcon()
+		SEND_SIGNAL(src,"atom_wallneighbor_update")
 
 	Del()
 		src.RL_SetSprite(null)
 		if (floor_underlay)
 			qdel(floor_underlay)
-		for (var/atom/A in neighbors)
-			var/turf/simulated/wall/auto/W = A
-			W.neighbors -= src
+		for (var/atom/A as anything in orange(1,src))
+			if(istype(A,/obj/window/auto) || istype(A,/obj/grille) || istype(A,/turf/simulated/wall/auto) || istype(A,/turf/unsimulated/wall/auto) || istype(A,/turf/simulated/wall/false_wall))
+				A.UnregisterSignal(src,"atom_wallneighbor_update", /atom/proc/UpdateIcon)
 		..()
 
 	proc/setFloorUnderlay(FloorIcon, FloorIcon_State, Floor_Intact, Floor_Health, Floor_Burnt, Floor_Name)

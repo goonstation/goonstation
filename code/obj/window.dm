@@ -720,7 +720,6 @@
 	//deconstruct_time = 20
 	object_flags = 0 // so they don't inherit the HAS_DIRECTIONAL_BLOCKING flag from thindows
 	flags = FPRINT | USEDELAY | ON_BORDER | ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
-	var/neighbors = list()
 	var/mod = "W-"
 	var/list/connects_to = list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn, /turf/simulated/wall/auto/supernorn/wood, /turf/simulated/wall/auto/marsoutpost,
 		/turf/simulated/shuttle/wall, /turf/unsimulated/wall, /turf/simulated/wall/auto/shuttle, /obj/indestructible/shuttle_corner,
@@ -737,26 +736,25 @@
 	New()
 		..()
 		for (var/atom/A as anything in orange(1,src))
-			if(istype(A,/obj/window/auto) || istype(A,/obj/grille) || istype(A,/turf/simulated/wall/auto) || istype(A,/turf/simulated/wall/false_wall))
-				var/turf/simulated/wall/auto/W = A
-				neighbors += A
-				W.neighbors += src
+			if(istype(A,/obj/window/auto) || istype(A,/obj/grille) || istype(A,/turf/simulated/wall/auto) || istype(A,/turf/unsimulated/wall/auto) || istype(A,/turf/simulated/wall/false_wall))
+				A.RegisterSignal(src,"atom_wallneighbor_update", /atom/proc/UpdateIcon, override = TRUE)
 
 		if (map_setting && ticker)
-			src.update_neighbors()
+			SEND_SIGNAL(src,"atom_wallneighbor_update")
 
 		SPAWN(0)
 			src.UpdateIcon()
 
+	/// this is here because some procs still expect this to exist.
 	proc/update_neighbors()
-		for (var/atom/A in neighbors)
-			A.UpdateIcon()
+		SEND_SIGNAL(src,"atom_wallneighbor_update")
 
 	disposing()
 		..()
-		for (var/atom/A in neighbors)
-			var/turf/simulated/wall/auto/W = A
-			W.neighbors -= src
+		for (var/atom/A as anything in orange(1,src))
+			if(istype(A,/obj/window/auto) || istype(A,/obj/grille) || istype(A,/turf/simulated/wall/auto) || istype(A,/turf/unsimulated/wall/auto) || istype(A,/turf/simulated/wall/false_wall))
+				A.UnregisterSignal(src,"atom_wallneighbor_update", /atom/proc/UpdateIcon)
+
 
 	update_icon()
 		if (!src.anchored)
@@ -779,8 +777,17 @@
 
 	attackby(obj/item/W, mob/user)
 		if (..(W, user))
+			if (isscrewingtool(W))
+				/// its most likely a bad idea to have unanchored things updating still
+				for (var/atom/A as anything in orange(1,src))
+					if(istype(A,/obj/window/auto) || istype(A,/obj/grille) || istype(A,/turf/simulated/wall/auto) || istype(A,/turf/unsimulated/wall/auto) || istype(A,/turf/simulated/wall/false_wall))
+						if (!src.anchored)
+							A.UnregisterSignal(src,"atom_wallneighbor_update", /atom/proc/UpdateIcon)
+						else
+							A.RegisterSignal(src,"atom_wallneighbor_update", /atom/proc/UpdateIcon, override=TRUE)
+
 			src.UpdateIcon()
-			src.update_neighbors()
+			SEND_SIGNAL(src,"atom_wallneighbor_update")
 
 /obj/window/auto/reinforced
 	icon_state = "mapwin_r"

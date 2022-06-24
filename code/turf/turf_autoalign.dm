@@ -17,7 +17,6 @@
 	var/connect_diagonal = 0 // 0 = no diagonal sprites, 1 = diagonal only if both adjacent cardinals are present, 2 = always allow diagonals
 	var/d_state = 0
 	var/connect_across_areas = TRUE
-	var/neighbors = list()
 
 	New()
 		..()
@@ -26,27 +25,25 @@
 
 			for (var/atom/A as anything in orange(1,src))
 				if(istype(A,/obj/window/auto) || istype(A,/obj/grille) || istype(A,/turf/simulated/wall/auto) || istype(A,/turf/simulated/wall/false_wall))
-					var/turf/simulated/wall/auto/W = A
-					neighbors += A
-					W.neighbors += src
-			src.update_neighbors()
+					A.RegisterSignal(src,"atom_wallneighbor_update", /atom/proc/UpdateIcon, override = TRUE)
+			SEND_SIGNAL(src,"atom_wallneighbor_update")
 			src.UpdateIcon()
 
 		else
 			worldgenCandidates[src] = 1
 
+	/// this is here because some procs still expect this to exist.
 	proc/update_neighbors()
-		for (var/atom/A in neighbors)
-			A.UpdateIcon()
+		SEND_SIGNAL(src,"atom_wallneighbor_update")
 
 	generate_worldgen()
 		src.UpdateIcon()
 
 	Del()
 		src.RL_SetSprite(null)
-		for (var/atom/A in neighbors)
-			var/turf/simulated/wall/auto/W = A
-			W.neighbors -= src
+		for (var/atom/A as anything in orange(1,src))
+			if(istype(A,/obj/window/auto) || istype(A,/obj/grille) || istype(A,/turf/simulated/wall/auto) || istype(A,/turf/simulated/wall/false_wall))
+				A.UnregisterSignal(src,"atom_wallneighbor_update", /atom/proc/UpdateIcon)
 		..()
 
 	the_tuff_stuff
@@ -507,32 +504,32 @@ ABSTRACT_TYPE(turf/simulated/wall/auto/hedge)
 	var/d_state = 0
 	var/connect_diagonal = 0 // 0 = no diagonal sprites, 1 = diagonal only if both adjacent cardinals are present, 2 = always allow diagonals
 	var/neighbors = list()
+
 	New()
 		..()
 
 		if (current_state > GAME_STATE_WORLD_INIT)
-
 			for (var/atom/A as anything in orange(1,src))
 				if(istype(A,/obj/window/auto) || istype(A,/obj/grille) || istype(A,/turf/unsimulated/wall/auto) || istype(A,/turf/simulated/wall/false_wall))
-					var/turf/simulated/wall/auto/W = A
-					neighbors += A
-					W.neighbors += src
-			src.update_neighbors()
+					A.RegisterSignal(src,"atom_wallneighbor_update", /atom/proc/UpdateIcon, override = TRUE)
+			SEND_SIGNAL(src,"atom_wallneighbor_update")
 			src.UpdateIcon()
 
 		else
 			worldgenCandidates[src] = 1
 
+	/// this is here because some procs still expect this to exist.
 	proc/update_neighbors()
-		for (var/atom/A in neighbors)
-			A.UpdateIcon()
-
+		SEND_SIGNAL(src,"atom_wallneighbor_update")
 
 	generate_worldgen()
 		src.UpdateIcon()
 
 	Del()
 		src.RL_SetSprite(null)
+		for (var/atom/A as anything in orange(1,src))
+			if(istype(A,/obj/window/auto) || istype(A,/obj/grille) || istype(A,/turf/unsimulated/wall/auto) || istype(A,/turf/simulated/wall/false_wall))
+				A.UnregisterSignal(src,"atom_wallneighbor_update", /atom/proc/UpdateIcon)
 		..()
 
 

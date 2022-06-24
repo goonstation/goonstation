@@ -21,6 +21,8 @@
 	#define COMSIG_ATOM_PRE_UPDATE_ICON "atom_before_update_icon"
 	/// When something calls UpdateIcon, after the icon is updated
 	#define COMSIG_ATOM_POST_UPDATE_ICON "atom_after_update_icon"
+	/// When something's neighboring wall changes
+	#define COMSIG_ATOM_WALLNEIGHBOR_UPDATE "atom_wallneighbor_update"
 	/// When reagents change
 	#define COMSIG_ATOM_REAGENT_CHANGE "atm_reag"
 	/// When an atom is dragged onto something (usr, over_object, src_location, over_location, src_control, over_control, params)
