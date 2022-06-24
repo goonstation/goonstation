@@ -2000,6 +2000,9 @@
 		/datum/manufacture/shoes,
 		/datum/manufacture/breathmask,
 		/datum/manufacture/fluidcanister,
+		/datum/manufacture/meteorshieldgen,
+		/datum/manufacture/shieldgen,
+		/datum/manufacture/doorshieldgen,
 		/datum/manufacture/patch)
 	hidden = list(/datum/manufacture/RCDammo,
 		/datum/manufacture/RCDammomedium,
@@ -2197,6 +2200,8 @@
 	available = list(
 		/datum/manufacture/flashlight,
 		/datum/manufacture/gps,
+		/datum/manufacture/crowbar,
+		/datum/manufacture/extinguisher,
 		/datum/manufacture/welder,
 		/datum/manufacture/patch,
 		/datum/manufacture/atmos_can,

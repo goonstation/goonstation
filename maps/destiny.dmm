@@ -26708,7 +26708,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/west)
 "gje" = (
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "5-8"
 	},
 /turf/simulated/floor/neutral/side{
@@ -40565,7 +40565,6 @@
 /turf/space,
 /area/station/turret_protected/armory_outside)
 "nHL" = (
-/obj/storage/crate/rcd/CE,
 /obj/wingrille_spawn/auto,
 /obj/cable{
 	icon_state = "0-4"
@@ -42744,7 +42743,7 @@
 /obj/cable/yellow{
 	icon_state = "2-4"
 	},
-/obj/cable{
+/obj/cable/yellow{
 	icon_state = "4-10"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -55749,6 +55748,7 @@
 /obj/item/clothing/under/gimmick/kilt,
 /obj/item/instrument/bagpipe,
 /obj/item/clothing/under/gimmick/princess,
+/obj/item/clothing/gloves/princess,
 /obj/item/instrument/saxophone,
 /obj/item/clothing/head/flatcap,
 /obj/item/clothing/suit/jacket/yellow,

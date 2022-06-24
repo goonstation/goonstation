@@ -126,6 +126,9 @@ Broken RCD + Effects
 	/// do we really actually for real want this to work in adventure zones?? just do this with varedit dont make children with this on
 	var/really_actually_bypass_z_restriction = false
 
+	///Custom contextActions list so we can handle opening them ourselves
+	var/list/datum/contextAction/contexts = list()
+
 	get_desc()
 		. += "<br>It holds [matter]/[max_matter] [istype(src, /obj/item/rcd/material) ? material_name : "matter"]  units. It is currently set to "
 		switch (src.mode)
@@ -151,11 +154,10 @@ Broken RCD + Effects
 
 	New()
 		..()
-		src.contextActions = list()
 		for(var/actionType in childrentypesof(/datum/contextAction/rcd)) //see context_actions.dm for those
 			var/datum/contextAction/rcd/action = new actionType()
 			if (action.mode in src.modes)
-				src.contextActions += action
+				src.contexts += action
 		src.UpdateIcon()
 
 	attackby(obj/item/W, mob/user)
@@ -184,7 +186,7 @@ Broken RCD + Effects
 				boutput(user, "This cartridge is not made of the proper material to be used in \The [src].")
 
 	attack_self(mob/user as mob)
-		user.showContextActions(src.contextActions, src, src.contextLayout)
+		user.showContextActions(src.contexts, src, src.contextLayout)
 
 	proc/switch_mode(var/mode, var/mob/user)
 		if (!(mode in src.modes))
