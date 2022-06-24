@@ -1079,7 +1079,7 @@
 				var/ainame = "Anonymous"
 				if(M?.current?.client?.preferences?.name_last)
 					ainame = M.current.client.preferences.name_last
-				. += "It says \ [ainame] has written and ran a working space-python script."
+				. += "It says \ [ainame] has written and run a working space-python script."
 
 /obj/decal/poster/wallsign/pod_build
 	name = "poster"
