@@ -13274,7 +13274,7 @@
 	pixel_x = -6
 	},
 /obj/decal/poster/wallsign/stencil/right/o{
-	pixel_x = -12
+	pixel_x = 8
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/north)
@@ -42201,7 +42201,7 @@
 	pixel_x = -6
 	},
 /obj/decal/poster/wallsign/stencil/right/o{
-	pixel_x = -12
+	pixel_x = 8
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/south)
@@ -46032,15 +46032,6 @@
 /obj/item/paper/book/from_file/the_trial,
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/barber_shop)
-"cmL" = (
-/obj/decal/poster/wallsign/stencil/left/z{
-	pixel_x = -6
-	},
-/obj/decal/poster/wallsign/stencil/right/o{
-	pixel_x = -12
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/turret_protected/ai)
 "cmM" = (
 /obj/grille/catwalk{
 	dir = 6
@@ -96526,7 +96517,7 @@ nhJ
 aaa
 cjp
 cjP
-cmL
+ckz
 cku
 clL
 cms
