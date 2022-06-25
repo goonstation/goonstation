@@ -744,12 +744,12 @@
 		else
 			var/spread_base = 40
 			if(src.material)
-				if(src.material.geProperty("density") <= 2)
+				if(src.material.getProperty("density") <= 2)
 					spread_base *= 1.5
-				else if (src.material.geProperty("density") >= 5)
+				else if (src.material.getProperty("density") >= 5)
 					spread_base *= 0.75
 
-				else if (src.material.geProperty("density") >= 7)
+				else if (src.material.getProperty("density") >= 7)
 					spread_base *= 0.5
 
 			spread_angle = spread_base
