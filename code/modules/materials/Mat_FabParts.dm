@@ -1,5 +1,5 @@
 /datum/matfab_part/variable
-	var/required_value = 50
+	var/required_value = 5
 	var/greater_than = 1
 	var/required_property = "hard"
 	var/proper_name = "hardness"

@@ -42,22 +42,6 @@
 	materials = list("!metalcrystal"=3)
 	result = /obj/item/musicpart/h_rod
 
-/datum/matfab_recipe/blueprint/blastarmor
-	name = "Blueprint: EOD Armor"
-	desc = "Blueprints for EOD Armor"
-	category = "Blueprints"
-
-	New()
-		..()
-		required_parts.Add(new/datum/matfab_part/variable {part_name = "Hard material"; required_amount = 5; required_value = 70; greater_than = 1; required_property = "hard"; proper_name = "hardness"} ())
-		required_parts.Add(new/datum/matfab_part/variable {part_name = "Dense material"; required_amount = 2; required_value = 60; greater_than = 1; required_property = "density"; proper_name = "density"} ())
-
-	build(amount, var/obj/machinery/nanofab/owner)
-		for(var/i=0, i<amount, i++)
-			var/obj/item/clothing/suit/space/suit = new()
-			suit.set_loc(getOutputLocation(owner))
-		return
-
 /datum/matfab_recipe/spacesuit
 	name = "Space Suit Set"
 	desc = "A complete space suit."
