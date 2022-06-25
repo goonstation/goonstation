@@ -187,7 +187,7 @@
 				del(src)
 				return
 
-		src.take_hit(W)
+		src.visible_message("<span class='alert'>[usr ? usr : "Someone"] uselessly hits [src] with [W].</span>", "<span class='alert'>You uselessly hit [src] with [W].</span>")
 
 /turf/simulated/wall/auto/jen
 	icon = 'icons/turf/walls_jen.dmi'
