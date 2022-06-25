@@ -563,7 +563,7 @@
 	icon_state = "spectro_monocle"
 	item_state = "spectro_monocle"
 	desc = "Such a dapper eyepiece! And a practical one at that."
-	COVERSEYES = FALSE // Doesn't really make sense for it to cover eyes
+	c_flags = null // Doesn't really make sense for it to cover eyes
 
 // testing thing for static overlays
 /obj/item/clothing/glasses/staticgoggles
