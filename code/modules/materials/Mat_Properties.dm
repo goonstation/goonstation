@@ -96,7 +96,7 @@ ABSTRACT_TYPE(/datum/material_property)
 				return "hard"
 			if(6 to 8)
 				return "very hard"
-			if(8 to INFIINITY)
+			if(8 to INFINITY)
 				return "extremely hard"
 
 /datum/material_property/density
@@ -119,7 +119,7 @@ ABSTRACT_TYPE(/datum/material_property)
 				return "dense"
 			if(6 to 8)
 				return "very dense"
-			if(8 to INFIINITY)
+			if(8 to INFINITY)
 				return "extremely dense"
 
 /datum/material_property/reflectivity
@@ -169,7 +169,7 @@ ABSTRACT_TYPE(/datum/material_property)
 				return "slightly flammable"
 			if(6 to 8)
 				return "flammable"
-			if(8 to INNFINITY)
+			if(8 to INFINITY)
 				return "very flammable"
 
 /datum/material_property/corrosion
@@ -255,7 +255,7 @@ ABSTRACT_TYPE(/datum/material_property)
 				return "very radioactive"
 			if(6 to 8)
 				return "extremely radioactive"
-			if(8 to INNFINITY)
+			if(8 to INFINITY)
 				return "impossibly radioactive"
 
 	onAdded(var/datum/material/M, var/new_value)
