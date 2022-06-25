@@ -9,6 +9,7 @@
 #define SPAWN_TRILOBITE 32
 #define SPAWN_HALLU 64
 #define SPAWN_HOSTILE 128
+#define SPAWN_ACID_DOODADS 256
 
 
 /turf/proc/make_light() //dummyproc so we can inherit
@@ -181,6 +182,12 @@
 				var/obj/sea_plant_manta/P = new plant(src)
 				//mbc : bleh init() happens BFORRE this, most likely
 				P.initialize()
+
+		if (spawningFlags & SPAWN_ACID_DOODADS)
+			if (prob(8))
+				var/obj/doodad = pick( childrentypesof(/obj/nadir_doodad) )
+				var/obj/nadir_doodad/D = new doodad(src)
+				D.initialize()
 
 		#ifndef UPSCALED_MAP
 		if(spawningFlags & SPAWN_FISH) //can spawn bad fishy
@@ -389,7 +396,7 @@
 	generateLight = 0
 	allow_hole = 0
 #ifdef MAP_OVERRIDE_NADIR
-	spawningFlags = SPAWN_LOOT | SPAWN_HOSTILE
+	spawningFlags = SPAWN_LOOT | SPAWN_HOSTILE | SPAWN_ACID_DOODADS
 #else
 	spawningFlags = SPAWN_DECOR | SPAWN_PLANTS | SPAWN_FISH | SPAWN_LOOT | SPAWN_HALLU
 #endif
@@ -521,7 +528,7 @@
 
 /turf/space/fluid/acid
 	name = "acid sea floor"
-	spawningFlags = null
+	spawningFlags = SPAWN_ACID_DOODADS
 	generateLight = 0
 	temperature = TRENCH_TEMP
 
