@@ -11,7 +11,7 @@ var/global/datum/map_settings/map_settings = null
 //id corresponds to the name of the /obj/landmark/map
 //playerPickable defines whether the map can be chosen by players when voting on a new map.
 var/global/list/mapNames = list(
-	"Clarion" = 		list("id" = "CLARION", 		"settings" = "destiny/clarion", "playerPickable" = TRUE,		"MaxPlayersAllowed" = 80),
+	"Clarion" = 		list("id" = "CLARION", 		"settings" = "destiny/clarion", "playerPickable" = TRUE,		"MaxPlayersAllowed" = 200),
 #ifdef RP_MODE
 	"Cogmap 1" = 		list("id" = "COGMAP", 		"settings" = "cogmap", 			"playerPickable" = TRUE, 	"MinPlayersAllowed" = 14),
 #else
