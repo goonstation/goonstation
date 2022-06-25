@@ -287,7 +287,7 @@
 		return 1
 
 	proc/setFaceDialog()
-		var/newFace = input(usr, "Select your faceplate", "Drone", src.faceType) as null|anything in list("Happy", "Sad", "Mad", "Heart", "Sleepy", "Exclaim", "Question", "Lopsy", "Kitty", "Eye")
+		var/newFace = tgui_input_list(usr, "Select your faceplate", "Drone", list("Exclaim", "Eye", "Happy", "Heart", "Kitty", "Lopsy", "Mad", "Question", "Sad", "Sleepy"))
 		if (!newFace) return 0
 		var/newColor = input(usr, "Select your faceplate color", "Drone", src.faceColor) as null|color
 		if (!newFace && !newColor) return 0

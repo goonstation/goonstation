@@ -534,6 +534,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 	desc = "A snazzy pair of shades."
 	icon_state = "machoglasses"
 	item_state = "glasses"
+	wear_layer = MOB_GLASSES_LAYER2
 
 /obj/item/clothing/head/helmet/macho
 	name = "Macho Man Doo-Rag"

@@ -17,6 +17,7 @@
 	name = "toupée"
 	desc = "You can't tell the difference, Honest!"
 	icon_state= "wig"
+	wear_layer = MOB_HAIR_LAYER2 //it IS hair afterall
 
 	///Takes a list of style ids to colors and generates a wig from it
 	proc/setup_wig(var/style_list)
@@ -310,9 +311,9 @@
 					else
 						M.emote("scream", 0)
 						boutput(M, "<span class='alert'>IT BURNS!</span> But the pain fades quickly. Huh.")
-			user.tri_message(result_msg1,\
-												user, result_msg2,\
-												M,result_msg3)
+			user.tri_message(M, result_msg1,\
+												result_msg2,\
+												result_msg3)
 			if (bottle.hair_group == ALL_HAIR)
 				boutput(user, "That was a big dyejob! It used the whole bottle!")
 				src.uses_left = 0

@@ -239,6 +239,16 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	src.attach_hud(hud)
 	src.eyecam.attach_hud(hud)
 
+	abilityHolder = new /datum/abilityHolder/silicon/ai(src)
+	if(eyecam)
+		eyecam.abilityHolder = abilityHolder
+
+	if(law_rack_connection)
+		holoHolder.text_expansion = law_rack_connection.holo_expansions.Copy()
+
+		for(var/ability_type in law_rack_connection.ai_abilities)
+			abilityHolder.addAbility(ability_type)
+
 	src.hologramContextActions = list()
 	for(var/actionType in childrentypesof(/datum/contextAction/ai_hologram))
 		var/datum/contextAction/ai_hologram/action = new actionType(src)
@@ -623,7 +633,9 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 		actions += "Restart AI"
 
 	if (actions.len > 1)
-		var/action_taken = input("What do you want to do?","AI Unit") in actions
+		var/action_taken = tgui_input_list(user, "What do you want to do?", "AI Unit", actions)
+		if (!action_taken)
+			return
 		switch (action_taken)
 			if ("Remove CPU Unit")
 				src.eject_brain(user)

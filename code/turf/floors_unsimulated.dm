@@ -46,7 +46,7 @@
 		New()
 			..()
 			var/image/burn_overlay = image('icons/turf/floors.dmi',"floorscorched1")
-			burn_overlay.alpha = 116
+			burn_overlay.alpha = 200
 			UpdateOverlays(burn_overlay,"burn")
 
 
@@ -54,7 +54,7 @@
 		New()
 			..()
 			var/image/burn_overlay = image('icons/turf/floors.dmi',"floorscorched2")
-			burn_overlay.alpha = 116
+			burn_overlay.alpha = 200
 			UpdateOverlays(burn_overlay,"burn")
 
 
@@ -63,14 +63,14 @@
 	New()
 		..()
 		var/image/burn_overlay = image('icons/turf/floors.dmi',"floorscorched1")
-		burn_overlay.alpha = 116
+		burn_overlay.alpha = 200
 		UpdateOverlays(burn_overlay,"burn")
 
 /turf/unsimulated/floor/scorched2
 	New()
 		..()
 		var/image/burn_overlay = image('icons/turf/floors.dmi',"floorscorched2")
-		burn_overlay.alpha = 116
+		burn_overlay.alpha = 200
 		UpdateOverlays(burn_overlay,"burn")
 
 /turf/unsimulated/floor/damaged1

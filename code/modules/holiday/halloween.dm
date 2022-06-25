@@ -105,7 +105,7 @@
 		for(var/mob/living/M in view(6))
 			if(M.loc == src) continue //Don't add the jerk trapped souls.
 			if(M.key) //Okay cool, we have a player to transfer.
-				var/mob/living/carbon/wall/holder = new
+				var/mob/living/holder = new
 				holder.set_loc(src)
 				if(M.mind)
 					M.mind.transfer_to(holder)
@@ -281,23 +281,6 @@
 	pictures_left = -1 // halloween magic doesn't need photos
 	steals_souls = TRUE
 
-/mob/living/carbon/wall/halloween
-	var/mob/oldbody = null
-
-/mob/living/carbon/wall/horror
-	say_quote(var/text)
-		if(src.emote_allowed)
-			if(!(src.client && src.client.holder))
-				src.emote_allowed = 0
-
-			if(src.gender == MALE) playsound(src, "sound/voice/screams/male_scream.ogg", 100, 0, 0, 0.91, channel=VOLUME_CHANNEL_EMOTE)
-			else playsound(src, "sound/voice/screams/female_scream.ogg", 100, 0, 0, 0.9, channel=VOLUME_CHANNEL_EMOTE)
-			SPAWN(5 SECONDS)
-				src.emote_allowed = 1
-			return "screams!"
-		else
-			return pick("gurgles.","shivers.","twitches.","shakes.","squirms.", "cries.")
-
 /obj/item/photo/haunted
 	var/list/mob/old_bodies = list()
 
@@ -345,9 +328,8 @@
 			var/mob/living/carbon/human/M = user
 
 			M.visible_message("<span class='combat'>[M] stares blankly into [src], \his eyes growing duller and duller...</span>","<span class='combat'>You stare deeply into [src].  You...can't look away.  It's mesmerizing.  Sights, sounds, colors, shapes.  They blur together into a phantasm of beauty and wonder.</span>")
-			var/mob/living/carbon/wall/halloween/holder = new
+			var/mob/living/carbon/holder = new
 			holder.set_loc(src)
-			holder.oldbody = M
 			if(M.mind)
 				M.mind.transfer_to(holder)
 			else
