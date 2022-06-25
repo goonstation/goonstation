@@ -81,21 +81,24 @@
 	. = list()
 	var/mob/living/critter/robotic/sawfly/owncritter = holder.owner
 
-	for (var/mob/living/C in view(owncritter,target_range))
-		if(C == owncritter) continue
-
+	for (var/mob/living/C in viewers(owncritter,target_range))
+	//	if(C == owncritter) continue
 		if(istype(C, /mob/living/critter/robotic/sawfly)) continue
 		if (C.health < -50 || !isalive(C)) continue
-		if (C.job == "Security Officer" || C.job == "Head of Security")
+		if(C.job in list( "Head of Security", "Security Officer", "Detective", "Nanotrasen Security Consultant")) //hopefully this is cheaper than the OR chain I had before
 			. = list(C) //found a secoff, just return that
 			return
 		if (C in owncritter.friends) continue
-		if (istraitor(C) || isnukeop(C) || isspythief(C)) // frens :)
-			boutput(C, "<span class='alert'> The sawfly's IFF system silently flags you as an ally! </span>")
+		if (istraitor(C) || isnukeop(C) || isspythief(C) || isnukeopgunbot(C)) // frens :)
+			boutput(C, "<span class='alert'> [owncritter]'s IFF system silently flags you as an ally! </span>")
 			owncritter.friends += C
 			continue
 		if(istype(C, /mob/living/silicon/ai)) continue // AI cores are tanky and distract nukie sawflies in med/robotics
-		. += C //you passed all the checks it, now you get added to the list for consideration
+
+		. = list(C) //ensures sawflies will always go after the closest person they see (probably)
+		return
+
+
 
 //chase behaviour - pick someone, run up to them, and stab em
 /datum/aiTask/sequence/goalbased/sawfly_chase_n_stab
@@ -121,7 +124,7 @@
 /datum/aiTask/sequence/goalbased/sawfly_chase_n_stab/get_targets()
 	. = list()
 	var/mob/living/critter/robotic/sawfly/owncritter = holder.owner
-	for (var/mob/living/C in view(owncritter,max_dist))
+	for (var/mob/living/C in viewers(owncritter,max_dist))
 		if(C == owncritter) continue
 		if (C.health < -50 || !isalive(C)) continue
 		if (C.job == "Security Officer" || C.job == "Head of Security")
@@ -129,14 +132,14 @@
 			return
 		if(istype(C, /mob/living/critter/robotic/sawfly)) continue
 		if (C in owncritter.friends) continue
-		if (istraitor(C) || isnukeop(C) || isspythief(C)) // frens :)
-			boutput(C, "<span class='alert'> The [owncritter]'s IFF system silently flags you as an ally! </span>")
+		if (istraitor(C) || isnukeop(C) || isspythief(C) || isnukeopgunbot(C)) // frens :)
+			boutput(C, "<span class='alert'> [owncritter]'s IFF system silently flags you as an ally! </span>")
 			owncritter.friends += C
 			continue
 		. += C //you passed all the checks it, now you get added to the list for consideration
+
 	. = get_path_to(holder.owner, ., max_dist*2, 1) //calculate paths to the target, any unreachable targets will be discarded
-	//if(prob(5))
-	//	holder.owner.communalbeep()
+
 
 /datum/aiTask/succeedable/sawfly_stab
 	name = "stab subtask"
@@ -166,6 +169,7 @@
 		else
 			holder.interrupt() //somehow lost target, go do something else
 			return
+
 
 /datum/aiTask/succeedable/sawfly_stab/on_reset()
 	has_started = FALSE

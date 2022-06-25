@@ -28,7 +28,7 @@
 	prime()
 		var/turf/T =  get_turf(src)
 		if (T)
-			new /mob/living/critter/robotic/sawfly(T)// this is probably a shitty way of doing it but it works
+			new /mob/living/critter/robotic/sawfly/withai(T)// this is probably a shitty way of doing it but it works
 		qdel(src)
 		return
 
@@ -48,7 +48,7 @@
 	prime()
 		var/turf/T =  get_turf(src)
 		if (T)
-			var/mob/living/critter/robotic/sawfly/D = new /mob/living/critter/robotic/sawfly(T)
+			var/mob/living/critter/robotic/sawfly/withai/D = new /mob/living/critter/robotic/sawfly/withai(T)
 			D.isnew = FALSE // give it characteristics of old drone
 			D.name = tempname
 			D.TakeDamage("All", (tempdam))
@@ -69,7 +69,7 @@
 	sound_armed = 'sound/machines/sawflyrev.ogg'
 	icon_state = "clusterflyA"
 	icon_state_armed = "clusterflyA1"
-	payload = /mob/living/critter/robotic/sawfly
+	payload = /mob/living/critter/robotic/sawfly/withai
 	is_dangerous = TRUE
 	is_syndicate = TRUE
 	contraband = 5
