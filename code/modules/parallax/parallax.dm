@@ -150,34 +150,30 @@
 
 			/// half screen width
 			var/Hsw = master.client.widescreen ? 10 : 7
-			var/Mx = master_turf.x
-			var/My = master_turf.y
-			var/IWidth = icon(P.icon).Height()
-			var/IHeight = icon(P.icon).Height()
-			var/offsetX = ((coordx-Mx)*scale[P])*32-IWidth/2
-			var/offsetY = ((coordy-My)*scale[P])*32-IWidth/2
+			var/icon/Picon = icon(P.icon)
+			///should be able to save a proc call because pretty much every planet is 1:1 width:height
+			var/IWidth = Picon.Width()
+			var/offsetX = ((coordx-master_turf.x)*scale[P])*32-IWidth/2
+			var/offsetY = ((coordy-master_turf.y)*scale[P])*32-IWidth/2
 
 			/// if the object is far enough away, we can hide it
-			if ((offsetX < -(Hsw*32+IWidth)) || (offsetY < -(7*32+IHeight)))
+			if ((offsetX < -(Hsw*32+IWidth)) || (offsetY < -(7*32+IWidth)))
 				P.alpha = 0
 				continue
-			else if ((offsetX > (Hsw*32+IWidth)) || (offsetY > (7*32+IHeight)))
+			else if ((offsetX > (Hsw*32+IWidth)) || (offsetY > (7*32+IWidth)))
 				P.alpha = 0
 				continue
 			var/matrix/matrix = matrix(size[P], 0, offsetX, 0, size[P], offsetY)
-
 			/// zlevelchanged means the master's zlevel changed
-			if (zlevelchanged == TRUE)
+			if (zlevelchanged == TRUE || P.alpha == 0)
 				P.transform = matrix
 				P.alpha = 255
-			else
-				/// if screen loc is null on these objects, then we are hiding them
-				if (P.alpha == 0)
-					P.transform = matrix
-					P.alpha = 255
-				else
-					var/smoothtime = round(world.icon_size/max(master.glide_size*world.tick_lag,0.01),world.tick_lag)
-					animate(P,transform=matrix,time=smoothtime)
+				continue
+
+			/// smooth out the stuff if we didnt change zlevel
+			var/smoothtime = round(world.icon_size/max(master.glide_size*world.tick_lag,0.01),world.tick_lag)
+			animate(P,transform=matrix,time=smoothtime)
+
 			continue
 
 	/// turns parallax on or off so update() doesnt have to loop through extra stuff
@@ -187,7 +183,7 @@
 		if(!setting)
 			var/Slist = parallax_objects[master_turf.z]
 			for(var/atom/movable/screen/hud/P as anything in Slist)
-				P.screen_loc = null
+				P.alpha = 0
 			active = FALSE
 			background.transform = matrix(0,0,0,0,0,0)
 		else
