@@ -14273,6 +14273,7 @@
 	dir = 4
 	},
 /obj/item_dispenser/latex_gloves,
+/obj/storage/secure/closet/medical/uniforms,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
