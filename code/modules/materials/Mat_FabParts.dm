@@ -40,7 +40,7 @@
 	checkMatch(var/obj/item/I)
 		if(!I.material) return 0
 		if(!istype(I, /obj/item/material_piece) && !istype(I, /obj/item/raw_material)) return 0
-		if(I.material.getProperty("radioactive") < 10) return 0
+		if(I.material.getProperty("radioactive") < 1) return 0
 		return ..()
 
 /datum/matfab_part/charge
