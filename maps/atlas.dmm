@@ -12177,6 +12177,9 @@
 /turf/simulated/floor/purple/checker,
 /area/station/science/teleporter)
 "DN" = (
+/obj/machinery/computer/chem_request_receiver{
+	dir = 4
+	},
 /turf/simulated/floor/purplewhite{
 	dir = 8
 	},
@@ -20538,6 +20541,12 @@
 /obj/machinery/phone,
 /turf/simulated/floor/carpet/red/fancy/edge/ne,
 /area/station/security/main)
+"YZ" = (
+/obj/machinery/computer/chem_requester{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/station/hallway/primary/east)
 "Za" = (
 /obj/machinery/atmospherics/binary/pump{
 	dir = 8;
@@ -61791,7 +61800,7 @@ QM
 yV
 yA
 Zy
-Zy
+YZ
 Xx
 nv
 QX
