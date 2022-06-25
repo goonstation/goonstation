@@ -1457,6 +1457,7 @@
 
 		setupProperties()
 			..()
+			setProperty("chemprot",60)
 			setProperty("space_movespeed", 0)  // syndicate space suits don't suffer from slowdown
 
 		commander

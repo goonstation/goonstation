@@ -479,6 +479,7 @@
 
 	setupProperties()
 		..()
+		setProperty("chemprot",30)
 		setProperty("space_movespeed", 0)
 
 /obj/item/clothing/head/helmet/swat
