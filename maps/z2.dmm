@@ -25176,6 +25176,9 @@
 	dir = 8
 	},
 /obj/item/reagent_containers/food/snacks/candy/negativeonebar,
+/obj/item/storage/secure/ssafe/loot{
+	pixel_y = 28
+	},
 /turf/unsimulated/floor/purple/side{
 	dir = 9
 	},
@@ -25717,10 +25720,7 @@
 /turf/unsimulated/floor/specialroom/cafeteria,
 /area/iomoon/base)
 "bwF" = (
-/obj/item/storage/secure/ssafe/loot{
-	pixel_x = 6;
-	pixel_y = -28
-	},
+/obj/item/reagent_containers/food/drinks/bottle/empty,
 /turf/unsimulated/floor/carpet/grime,
 /area/iomoon/base)
 "bwG" = (
@@ -25746,9 +25746,8 @@
 	},
 /area/iomoon/base)
 "bwK" = (
-/obj/shrub/dead{
-	desc = "Someone's pretty bad at bonsai";
-	pixel_y = 15
+/obj/item/paper/xg_tapes{
+	pixel_y = 3
 	},
 /turf/unsimulated/floor/carpet/grime,
 /area/iomoon/base)
@@ -72789,6 +72788,10 @@
 	icon_state = "rootfloor_2"
 	},
 /area/centcom/offices/marknstein)
+"leK" = (
+/obj/item/radio_tape/adventure/xg,
+/turf/unsimulated/floor/carpet/grime,
+/area/iomoon/base)
 "lfp" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4
@@ -73932,6 +73935,20 @@
 	icon_state = "fblue2"
 	},
 /area/centcom/offices/varshie)
+"ojo" = (
+/obj/storage/crate/classcrate{
+	desc = "A crate for XIANG|GIESEL training materials.";
+	name = "shielded crate"
+	},
+/obj/item/reagent_containers/emergency_injector/anti_rad{
+	pixel_x = -3
+	},
+/obj/item/cloth/towel/yellow{
+	pixel_x = 6
+	},
+/obj/decal/cleanable/generic,
+/turf/unsimulated/floor/carpet/grime,
+/area/iomoon/base)
 "oju" = (
 /obj/landmark{
 	name = "lobby_leftside"
@@ -77027,6 +77044,14 @@
 /obj/item/ammo/ammobox/shootingrange,
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/firing_range)
+"wiS" = (
+/obj/decal/fakeobjects/lightbulb_broken,
+/obj/item/reagent_containers/food/snacks/chips{
+	name = "crisps"
+	},
+/obj/decal/cleanable/generic,
+/turf/unsimulated/floor/carpet/grime,
+/area/iomoon/base)
 "wjR" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -94579,7 +94604,7 @@ boW
 boW
 btP
 buq
-bwK
+buN
 bvt
 bvt
 buN
@@ -96090,8 +96115,8 @@ bqZ
 izT
 izT
 izT
-buN
-buN
+bwK
+leK
 bwF
 izT
 toV
@@ -96392,8 +96417,8 @@ bpD
 izT
 izT
 izT
-izT
-izT
+ojo
+wiS
 izT
 izT
 fel
