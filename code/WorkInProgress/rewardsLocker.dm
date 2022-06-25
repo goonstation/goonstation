@@ -867,7 +867,7 @@
 	rewardActivate(var/mob/activator)
 		if (ishuman(activator))
 			var/mob/living/carbon/human/H = activator
-			var/succ = 0
+			var/succ = FALSE
 			if (H.wear_suit)
 				var/obj/item/clothing/M = H.wear_suit
 				if (istype(M, /obj/item/clothing/suit/wizrobe))
@@ -910,6 +910,63 @@
 				M.desc = "A uniform for the modern detective. (Base Item: [prev2])"
 				H.set_clothing_icon_dirty()
 				succ = TRUE
+
+			if (H.head)
+				var/obj/item/clothing/M = H.head
+				var/obj/item/clothing/head/det_hat/gadget/G
+				if (istype(G))
+					var/prev = M.name
+					G.icon_state = "inspector"
+					G.item_state = "inspector"
+					G.desc = "Detective's special hat you can outfit with various items for easy retrieval! (Base Item: [prev])"
+					G.make_inspector()
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+				else if (istype(M, /obj/item/clothing/head/det_hat))
+					var/prev = M.name
+					M.icon_state = "inspector"
+					M.item_state = "inspector"
+					M.name = "inspector's hat"
+					M.real_name = "inspector's hat"
+					M.desc = "A hat for the modern detective. (Base Item: [prev])"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
+			if (H.belt)
+				var/obj/item/storage/belt/M = H.belt
+				if (istype(M, /obj/item/storage/belt/security/shoulder_holster))
+					var/prev = M.name
+					M.icon_state = "inspector_holster"
+					M.item_state = "inspector_holster"
+					M.name = "inspector's holster"
+					M.real_name = "inspector holster"
+					M.desc = "A shoulder holster for the modern detective. (Base Item: [prev])"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
+			if (H.shoes)
+				var/obj/item/clothing/M = H.shoes
+				if (istype(M, /obj/item/clothing/shoes/detective))
+					var/prev = M.name
+					M.icon_state = "inspector"
+					M.item_state = "inspector"
+					M.name = "inspector's boots"
+					M.real_name = "inspector's boots"
+					M.desc = "This pair of boots has inspected it's fair share of mysteries. (Base Item: [prev])"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
+			if (H.gloves)
+				var/obj/item/clothing/M = H.gloves
+				if (istype(M, /obj/item/clothing/gloves/black))
+					var/prev = M.name
+					M.icon_state = "inspector"
+					M.item_state = "inspector"
+					M.name = "inspector's gloves"
+					M.real_name = "inspector's gloves"
+					M.desc = "A pair of gloves for the modern detective. (Base Item: [prev])"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
 
 			if (!succ)
 				boutput(activator, "<span class='alert'>Unable to redeem... you need to be wearing something in your suit/exosuit slots.</span>")
