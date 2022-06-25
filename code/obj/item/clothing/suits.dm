@@ -428,7 +428,7 @@
 
 	proc/unbutton()
 		if (src.coat_style)
-			src.icon_state = "[src.coat_style]_o"
+			src.icon_state = "[initial(src.icon_state)]_o"
 			usr.set_clothing_icon_dirty()
 		usr.visible_message("[usr] unbuttons [his_or_her(usr)] [src.name].",\
 		"You unbutton your [src.name].")
