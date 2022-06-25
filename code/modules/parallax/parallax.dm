@@ -45,6 +45,7 @@
 	var/list/parallax_coords = list(list(),list(),list(),list(),list())
 	var/list/scale = list()
 	var/list/size = list()
+	var/list/iconsize = list()
 
 	var/mob/master
 	var/active = TRUE
@@ -74,6 +75,9 @@
 
 		scale[N] = Pscale
 		size[N] = Psize
+
+		var/icon/Picon2 = icon(Picon)
+		iconsize[N] = list(Picon2.Width(),Picon2.Height())
 
 		N.transform = matrix(0,0,0,0,0,0)
 
@@ -124,7 +128,9 @@
 	/// updates parallax object transform values
 	proc/update(var/zlevelchanged)
 		if(!active || !master.client) return
+
 		var/turf/master_turf = get_turf(master)
+
 		/// due to the fact that the hud tracks the last zlevel it updated on, we dont need to use a complex signal
 		if (lastzlevel != master_turf?.z)
 			lastzlevel = master_turf.z
@@ -142,6 +148,7 @@
 		if (background)
 			background.transform = matrix(master.client?.widescreen ? 2.61 : 2.5,0,(150-master_turf.x)/2,0,2.5,(150-master_turf.y)/2)
 		#endif
+
 		/// list of objects that are intended to show up on this zlevel
 		for(var/atom/movable/screen/hud/P as anything in parallax_objects[master_turf.z])
 
@@ -150,20 +157,22 @@
 
 			/// half screen width
 			var/Hsw = master.client.widescreen ? 10 : 7
-			var/icon/Picon = icon(P.icon)
-			///should be able to save a proc call because pretty much every planet is 1:1 width:height
-			var/IWidth = Picon.Width()
+
+			var/IWidth = iconsize[P][1]
+			var/IHeight = iconsize[P][2]
 			var/offsetX = ((coordx-master_turf.x)*scale[P])*32-IWidth/2
 			var/offsetY = ((coordy-master_turf.y)*scale[P])*32-IWidth/2
 
 			/// if the object is far enough away, we can hide it
-			if ((offsetX < -(Hsw*32+IWidth)) || (offsetY < -(7*32+IWidth)))
+			if ((offsetX < -(Hsw*32+IWidth)) || (offsetY < -(7*32+IHeight)))
 				P.alpha = 0
 				continue
-			else if ((offsetX > (Hsw*32+IWidth)) || (offsetY > (7*32+IWidth)))
+			else if ((offsetX > (Hsw*32+IWidth)) || (offsetY > (7*32+IHeight)))
 				P.alpha = 0
 				continue
+
 			var/matrix/matrix = matrix(size[P], 0, offsetX, 0, size[P], offsetY)
+
 			/// zlevelchanged means the master's zlevel changed
 			if (zlevelchanged == TRUE || P.alpha == 0)
 				P.transform = matrix
