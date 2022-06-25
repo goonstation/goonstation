@@ -1,4 +1,4 @@
-INCLUDE_MAP("../kondaru.dmm")
+INCLUDE_MAP("../clarion.dmm")
 INCLUDE_MAP("../z2.dmm")
 INCLUDE_MAP("../z3.dmm")
 #include "z4.dm"
