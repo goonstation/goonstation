@@ -183,7 +183,7 @@
 	var/random_color = TRUE
 	var/luminant = FALSE //automatically propagates a light overlay based on icon state name
 	var/image/luminant_img
-	var/datum/light/point/light = null
+	//var/datum/light/point/light = null
 	var/init = 0
 
 	var/drop_table = list() //table of drops and their probabilities of appearing
@@ -194,16 +194,16 @@
 		src.dir = pick(cardinal)
 		if (src.random_color)
 			src.color = rgb(rand(90,255), rand(90, 255), 255)
-
+	/*
 	disposing()
 		light = 0
 		..()
-
+	*/
 	initialize()
 		..()
 		if (luminant && !init)
 			init = 1
-
+			/*
 			var/datum/color/C = new
 			C.from_hex(src.color)
 			if (!light)
@@ -212,7 +212,7 @@
 			light.set_brightness(0.4)
 			light.set_color(C.r/255, C.g/255, 1)
 			light.enable()
-
+			*/
 			src.luminant_img = image('icons/obj/nadir_seaobj.dmi', "[src.icon_state]-glow", -1)
 			luminant_img.plane = PLANE_LIGHTING
 			luminant_img.layer = LIGHTING_LAYER_BASE
@@ -244,7 +244,7 @@
 		..()
 
 /obj/nadir_doodad/sinkspires
-	name = "sinkspires"
+	name = "sinkspire cluster"
 	icon_state = "sinkspires"
 	desc = "Strange pillars rising from cracks in the ground. They're covered in tiny pores."
 	luminant = TRUE
