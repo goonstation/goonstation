@@ -364,14 +364,6 @@
 /obj/table/wood/auto,
 /turf/unsimulated/floor/setpieces/hivefloor,
 /area/space_hive)
-"abm" = (
-/obj/decal/fakeobjects/firelock_broken{
-	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
-	icon = 'icons/turf/shuttle.dmi';
-	name = "rusted hatch"
-	},
-/turf/unsimulated/floor/white,
-/area/space_hive)
 "abn" = (
 /obj/machinery/computer/security/wooden_tv{
 	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
@@ -510,13 +502,6 @@
 	name = "Bathroom"
 	},
 /turf/unsimulated/floor/setpieces/hivefloor,
-/area/space_hive)
-"abF" = (
-/turf/unsimulated/wall{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "door1";
-	name = "broken door"
-	},
 /area/space_hive)
 "abG" = (
 /turf/unsimulated/floor/white/side{
@@ -1601,14 +1586,6 @@
 	},
 /turf/space,
 /area/space)
-"aeI" = (
-/obj/decal/fakeobjects/firelock_broken{
-	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
-	icon = 'icons/turf/shuttle.dmi';
-	name = "rusted hatch"
-	},
-/turf/unsimulated/floor/arctic,
-/area/space_hive)
 "aeJ" = (
 /obj/item/reagent_containers/food/drinks/rum_spaced,
 /turf/unsimulated/floor/setpieces/hivefloor,
@@ -1797,14 +1774,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/radiostation/podbay)
-"afl" = (
-/obj/decal/fakeobjects/firelock_broken{
-	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
-	icon = 'icons/turf/shuttle.dmi';
-	name = "rusted hatch"
-	},
-/turf/unsimulated/floor,
-/area/space_hive)
 "afm" = (
 /obj/decal/poster/wallsign/danger_highvolt,
 /turf/simulated/wall/auto/supernorn,
@@ -9403,10 +9372,6 @@
 /obj/item/clothing/mask/medical,
 /turf/simulated/floor/plating,
 /area/helldrone)
-"aFu" = (
-/obj/item/clothing/under/gimmick/donk,
-/turf/simulated/floor/sanitary,
-/area/abandonedoutpostthing)
 "aFv" = (
 /turf/simulated/floor/sanitary,
 /area/abandonedoutpostthing)
@@ -15420,10 +15385,6 @@
 	},
 /turf/simulated/floor/white/grime,
 /area/abandonedmedicalship/robot_trader)
-"aVL" = (
-/obj/item/clothing/head/helmet/space/donk,
-/turf/simulated/floor/white/grime,
-/area/abandonedmedicalship/robot_trader)
 "aVM" = (
 /obj/table/auto,
 /obj/item/staple_gun,
@@ -15546,16 +15507,6 @@
 	name = "inactive computer";
 	pixel_x = -5
 	},
-/turf/simulated/floor/white/grime,
-/area/abandonedmedicalship/robot_trader)
-"aWb" = (
-/obj/decal/fakeobjects/skeleton{
-	desc = "The head seems to be gone.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body2";
-	name = "corpse"
-	},
-/obj/item/clothing/under/gimmick/donkini,
 /turf/simulated/floor/white/grime,
 /area/abandonedmedicalship/robot_trader)
 "aWc" = (
@@ -20383,12 +20334,6 @@
 	},
 /turf/space,
 /area/abandonedship)
-"blq" = (
-/obj/item/clothing/under/gimmick/donkini,
-/obj/item/reagent_containers/glass/bottle/ammonia/large,
-/obj/storage/crate/bloody,
-/turf/simulated/floor/airless/damaged2,
-/area/abandonedship)
 "blr" = (
 /obj/critter/gunbot/drone/laserdrone,
 /turf/space,
@@ -21283,6 +21228,10 @@
 	},
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
+"ems" = (
+/obj/item/clothing/head/helmet/space/donk,
+/turf/simulated/floor/white/grime,
+/area/abandonedmedicalship/robot_trader)
 "evf" = (
 /obj/table/reinforced/auto,
 /turf/simulated/floor/orangeblack/side{
@@ -21340,6 +21289,14 @@
 /obj/decal/cleanable/oil,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/abandonedship)
+"fOx" = (
+/obj/decal/fakeobjects/firelock_broken{
+	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
+	icon = 'icons/obj/doors/shuttle.dmi';
+	name = "rusted hatch"
+	},
+/turf/unsimulated/floor/arctic,
+/area/space_hive)
 "fPL" = (
 /obj/cable{
 	d2 = 4;
@@ -21780,6 +21737,10 @@
 	name = "space"
 	},
 /area/abandonedship)
+"kRT" = (
+/obj/item/clothing/under/gimmick/donk,
+/turf/simulated/floor/sanitary,
+/area/abandonedoutpostthing)
 "laI" = (
 /obj/grille/catwalk{
 	dir = 5
@@ -21832,6 +21793,16 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/helldrone/core)
+"lsC" = (
+/obj/decal/fakeobjects/skeleton{
+	desc = "The head seems to be gone.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "body2";
+	name = "corpse"
+	},
+/obj/item/clothing/under/gimmick/donkini,
+/turf/simulated/floor/white/grime,
+/area/abandonedmedicalship/robot_trader)
 "lsF" = (
 /obj/cable{
 	d2 = 8;
@@ -22059,6 +22030,14 @@
 	},
 /turf/unsimulated/floor/white/grime,
 /area/timewarp/ship)
+"mUx" = (
+/obj/decal/fakeobjects/firelock_broken{
+	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
+	icon = 'icons/obj/doors/shuttle.dmi';
+	name = "rusted hatch"
+	},
+/turf/unsimulated/floor/white,
+/area/space_hive)
 "mXB" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
@@ -22388,6 +22367,12 @@
 	icon_state = "1";
 	name = "space"
 	},
+/area/abandonedship)
+"pbG" = (
+/obj/item/clothing/under/gimmick/donkini,
+/obj/item/reagent_containers/glass/bottle/ammonia/large,
+/obj/storage/crate/bloody,
+/turf/simulated/floor/airless/damaged2,
 /area/abandonedship)
 "pci" = (
 /obj/decal/floatingtiles{
@@ -23017,6 +23002,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/helldrone)
+"vhN" = (
+/obj/decal/fakeobjects/firelock_broken{
+	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
+	icon = 'icons/obj/doors/shuttle.dmi';
+	name = "rusted hatch"
+	},
+/turf/unsimulated/floor,
+/area/space_hive)
 "vjf" = (
 /turf/simulated/floor/stairs{
 	dir = 1
@@ -23089,6 +23082,13 @@
 	},
 /turf/space,
 /area/abandonedmedicalship)
+"vQr" = (
+/turf/unsimulated/wall{
+	icon = 'icons/obj/doors/shuttle.dmi';
+	icon_state = "door1";
+	name = "broken door"
+	},
+/area/space_hive)
 "vQz" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 4
@@ -38476,7 +38476,7 @@ aaf
 aaf
 aaf
 aaf
-afl
+vhN
 aaf
 aaf
 aal
@@ -39078,7 +39078,7 @@ aaq
 aaq
 aed
 aev
-aeI
+fOx
 aev
 abk
 abk
@@ -39976,7 +39976,7 @@ gaf
 gaf
 gaf
 aaf
-abF
+vQr
 aaf
 aaf
 aaf
@@ -40880,7 +40880,7 @@ aaq
 aaT
 aaW
 aaW
-abm
+mUx
 aaW
 abH
 abY
@@ -41484,7 +41484,7 @@ gaf
 gaf
 aaW
 aaW
-abm
+mUx
 aaW
 abH
 aca
@@ -42396,7 +42396,7 @@ aaf
 acc
 acc
 aaf
-abm
+mUx
 aaf
 aaf
 aaf
@@ -59726,7 +59726,7 @@ aaa
 iYn
 blg
 blo
-blq
+pbG
 avn
 aHV
 aGD
@@ -90925,8 +90925,8 @@ aTQ
 aTQ
 wAy
 aVD
-aVL
-aWb
+ems
+lsC
 aVD
 aVD
 wAy
@@ -103161,7 +103161,7 @@ aab
 aab
 aDy
 aER
-aFu
+kRT
 aDy
 aFg
 aFg
