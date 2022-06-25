@@ -396,9 +396,9 @@
 
 /obj/item/clothing/suit/hopjacket
 	name = "Head of Personnel's jacket"
-	desc = "A tacky green and red jacket for a tacky green beurocrat."
+	desc = "A tacky green and red jacket for a tacky green bureaucrat."
 	icon_state = "hopjacket"
-	uses_multiple_icon_states = 1
+	uses_multiple_icon_states = TRUE
 	item_state = "hopjacket"
 	var/coat_style = "hopjacket"
 	var/buttoned = TRUE
@@ -410,8 +410,6 @@
 		..()
 		setProperty("rangedprot", 0.5)
 
-	New()
-		..()
 
 	attack_self()
 		..()
