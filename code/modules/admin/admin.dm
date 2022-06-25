@@ -821,7 +821,7 @@ var/global/noir = 0
 							<A href='?src=\ref[src];action=[cmd];type=arcfiend'>Arcfiend</A><br>
 							<b>Other Modes</b><br>
 							<A href='?src=\ref[src];action=[cmd];type=extended'>Extended</A><br>
-							<A href='?src=\ref[src];action=[cmd];type=flock'>Flock(probably wont work. Press at own risk)</A><br>
+							<A href='?src=\ref[src];action=[cmd];type=flock'>Flock (Beta)</A><br>
 							<A href='?src=\ref[src];action=[cmd];type=disaster'>Disaster (Beta)</A><br>
 							<A href='?src=\ref[src];action=[cmd];type=spy'>Spy</A><br>
 							<A href='?src=\ref[src];action=[cmd];type=revolution'>Revolution</A><br>
@@ -1167,6 +1167,13 @@ var/global/noir = 0
 				usr.client.cmd_admin_cluwnegib(M)
 			else
 				tgui_alert(usr,"You need to be at least a Primary Admin to cluwne gib a dude.")
+		if("flockgib")
+			if( src.level >= LEVEL_PA )
+				var/mob/M = locate(href_list["target"])
+				if (!M) return
+				usr.client.cmd_admin_flockgib(M)
+			else
+				tgui_alert(usr,"You need to be at least a Primary Admin to flock gib a dude.")
 		if ("tysongib")
 			if( src.level >= LEVEL_PA )
 				var/mob/M = locate(href_list["target"])

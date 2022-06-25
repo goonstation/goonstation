@@ -94,7 +94,7 @@
 	*  Item Adding
 	*/
 
-obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
+obj/machinery/microwave/attackby(var/obj/item/O, var/mob/user)
 	if(src.operating)
 		return
 	if(src.microwave_state > 0)
@@ -196,7 +196,7 @@ obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	*  Microwave Menu
 	*/
 
-/obj/machinery/microwave/attack_hand(mob/user as mob)
+/obj/machinery/microwave/attack_hand(mob/user)
 	if (isghostdrone(user))
 		boutput(user, "<span class='alert'>\The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
 		return

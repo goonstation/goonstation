@@ -12,7 +12,7 @@ macro "base_macro"
 		command = "dsay"
 	elem "startsay"
 		name = "T"
-		command = ".winset \"command=\".start_typing say\";command=.init_say;saywindow.is-visible=true;saywindow.input.focus=true\""
+		command = ".winset \"command=\".start_typing say\";command=.init_say;saywindow.is-visible=true;saywindow.say-input.focus=true\""
 	elem "radiosay"
 		name = ";"
 		command = "say_main_radio"
@@ -408,16 +408,6 @@ menu "menu"
 	elem
 		name = "&Mentor Help\tF3"
 		command = "mentorhelp"
-		category = "&Help"
-		saved-params = "is-checked"
-	elem
-		name = "&Hotkeys"
-		command = "hotkeys"
-		category = "&Help"
-		saved-params = "is-checked"
-	elem
-		name = "&Overview"
-		command = "Help"
 		category = "&Help"
 		saved-params = "is-checked"
 
@@ -1728,7 +1718,7 @@ window "input_box"
 		can-resize = false
 		outer-size = 308x114
 		inner-size = 302x86
-	elem "input"
+	elem "say-input"
 		type = INPUT
 		pos = 11,17
 		size = 281x23

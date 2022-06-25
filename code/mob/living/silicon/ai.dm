@@ -1,6 +1,6 @@
 var/global/list/available_ai_shells = list()
 var/datum/tgui/map_ui
-var/list/ai_emotions = list("Happy" = "ai_happy",\
+var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	"Very Happy" = "ai_veryhappy",\
 	"Neutral" = "ai_neutral",\
 	"Unsure" = "ai_unsure",\
@@ -31,7 +31,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	"Snoozing" = "ai_zzz",\
 	"Loading Bar" = "ai_loading",\
 	"Exclamation" = "ai_exclamation",\
-	"Question" = "ai_question")
+	"Question" = "ai_question") // this should be in typeinfo
 /mob/living/silicon/ai
 	name = "AI"
 	voice_name = "synthesized voice"
@@ -227,7 +227,9 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	src.internal_pda = new /obj/item/device/pda2/ai(src)
 
 	src.tracker = new /datum/ai_camera_tracker(src)
-	coreSkin = skinToApply
+	src.coreSkin = skinToApply
+	src.set_color(global.random_color())
+	src.faceEmotion = global.ai_emotions[pick(global.ai_emotions)]
 	src.UpdateOverlays(get_image("ai_blank"), "backscreen")
 	update_appearance()
 
@@ -236,6 +238,16 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	hud = new(src)
 	src.attach_hud(hud)
 	src.eyecam.attach_hud(hud)
+
+	abilityHolder = new /datum/abilityHolder/silicon/ai(src)
+	if(eyecam)
+		eyecam.abilityHolder = abilityHolder
+
+	if(law_rack_connection)
+		holoHolder.text_expansion = law_rack_connection.holo_expansions.Copy()
+
+		for(var/ability_type in law_rack_connection.ai_abilities)
+			abilityHolder.addAbility(ability_type)
 
 	src.hologramContextActions = list()
 	for(var/actionType in childrentypesof(/datum/contextAction/ai_hologram))
@@ -320,7 +332,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 //sound.dm
 
 
-/mob/living/silicon/ai/attackby(obj/item/W as obj, mob/user as mob)
+/mob/living/silicon/ai/attackby(obj/item/W, mob/user)
 	if (istype(W,/obj/item/device/borg_linker) && !isghostdrone(user))
 		var/obj/item/device/borg_linker/linker = W
 		if(src.dismantle_stage<2)
@@ -621,7 +633,9 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		actions += "Restart AI"
 
 	if (actions.len > 1)
-		var/action_taken = input("What do you want to do?","AI Unit") in actions
+		var/action_taken = tgui_input_list(user, "What do you want to do?", "AI Unit", actions)
+		if (!action_taken)
+			return
 		switch (action_taken)
 			if ("Remove CPU Unit")
 				src.eject_brain(user)
@@ -1789,7 +1803,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	if (isdead(src))
 		boutput(usr, "You cannot change your emotional status because you are dead!")
 		return
-	var/list/L = custom_emotions ? custom_emotions : ai_emotions	//In case an AI uses the reward, use a local list instead
+	var/list/L = custom_emotions || ai_emotions	//In case an AI uses the reward, use a local list instead
 
 	var/newEmotion = tgui_input_list(src.get_message_mob(), "Select a status!", "AI Status", sortList(L))
 	var/newMessage = scrubbed_input(usr, "Enter a message for your status displays!", "AI Message", src.status_message)
@@ -1803,7 +1817,6 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		update_appearance()
 	if (newMessage)
 		src.status_message = newMessage
-	return
 
 /mob/living/silicon/ai/proc/ai_colorchange()
 	set category = "AI Commands"
@@ -1980,11 +1993,11 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	set desc = "Change your name."
 
 	var/mob/message_mob = src.get_message_mob()
-	if (!src || !message_mob.client || isdead(src))
+	if (!message_mob.client || isdead(src))
 		return
 
 	if (!ON_COOLDOWN(src, "ai_self_rename", src.rename_cooldown))
-		choose_name(retries=3, default_name=real_name)
+		choose_name(retries = 3, default_name = src.real_name, renaming_mob = message_mob)
 	else
 		src.show_text("This ability is still on cooldown for [round(GET_COOLDOWN(src, "ai_self_rename") / 10)] seconds!", "red")
 
@@ -2412,7 +2425,8 @@ proc/get_mobs_trackable_by_AI()
 
 	vox_help(src)
 
-/mob/living/silicon/ai/choose_name(var/retries = 3, var/what_you_are = null, var/default_name = null, var/force_instead = 0)
+/// Lets the AI choose its own name. If renaming_mob is non-null, then that mob is allowed to rename the AI instead.
+/mob/living/silicon/ai/choose_name(var/retries = 3, var/default_name = null, var/force_instead = FALSE, var/mob/renaming_mob = null)
 	var/obj/item/organ/brain/brain_owner = src.brain.owner
 	if(isnull(default_name))
 		default_name = pick_string_autokey("names/ai.txt")
@@ -2421,7 +2435,7 @@ proc/get_mobs_trackable_by_AI()
 		if(force_instead)
 			newname = default_name
 		else
-			newname = input(src, "You are an AI. Would you like to change your name to something else?", "Name Change", default_name) as null|text
+			newname = input(renaming_mob || src, "You are an AI. Would you like to change your name to something else?", "Name Change", default_name) as null|text
 			if(newname && newname != default_name)
 				phrase_log.log_phrase("name-ai", newname, no_duplicates=TRUE)
 		if (src.brain.owner != brain_owner)
@@ -2438,8 +2452,10 @@ proc/get_mobs_trackable_by_AI()
 				src.show_text("Your name cannot be blank. Please choose a different name.", "red")
 				continue
 			else
-				if (tgui_alert(src, "Use the name [newname]?", newname, list("Yes", "No")) == "Yes")
+				if (tgui_alert(renaming_mob || src, "Use the name [newname]?", newname, list("Yes", "No")) == "Yes")
 					src.real_name = newname
+					if (src.deployed_to_eyecam)
+						src.eyecam.real_name = newname
 					break
 				else
 					continue
@@ -2447,6 +2463,7 @@ proc/get_mobs_trackable_by_AI()
 		src.real_name = default_name
 
 	src.UpdateName()
+	src.eyecam.UpdateName()
 	src.internal_pda.name = "[src.name]'s Internal PDA Unit"
 	src.internal_pda.owner = "[src.name]"
 
@@ -2496,7 +2513,7 @@ proc/get_mobs_trackable_by_AI()
 			if(build_step == 2)
 				UpdateOverlays(image_wire_overlay, "wires")
 
-/obj/ai_core_frame/attackby(obj/item/W as obj, mob/user as mob)
+/obj/ai_core_frame/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/sheet))
 		if (W.material.material_flags & MATERIAL_METAL) // metal sheets
 			if (src.build_step < 1)

@@ -1,5 +1,5 @@
 
-/mob/attackby(obj/item/W as obj, mob/user as mob, params, is_special = 0)
+/mob/attackby(obj/item/W, mob/user, params, is_special = 0)
 	actions.interrupt(src, INTERRUPT_ATTACKED)
 
 	// why is this not in human/attackby?

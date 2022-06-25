@@ -8,7 +8,7 @@
 	desc = "Jane Goodall is crying."
 	density = 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		user.lastattacked = src
 		src.visible_message("<B>[src]</B> screams!",1)
 		if (narrator_mode)
@@ -69,7 +69,7 @@
 				break
 			if(!ai) qdel(src)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(!ai) return
 		if(!ai.on) return
 		if(!ai.ready_for_tapes) return
@@ -82,7 +82,7 @@
 			ai.tapes_loaded--
 			src.loaded = 0
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if(!ai) return
 		if (istype(W, /obj/item/aiboss_tape/))
 			if(src.loaded)
@@ -151,7 +151,7 @@
 		src.audible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"")
 		return
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if(istype(W,/obj/item/paper/brad_punchcard))
 
 			if(src.teaser_enabled) return

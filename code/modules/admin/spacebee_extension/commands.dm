@@ -249,6 +249,19 @@
 				return
 		system.reply("Could not locate [ckey].", user)
 
+/datum/spacebee_extension_command/removelabels
+	name = "removelabels"
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+	help_message = "Removes all labels from a chosen server."
+
+	execute(user)
+		for(var/atom/A in world)
+			if(!isnull(A.name_suffixes))
+				A.name_suffixes = null
+				A.UpdateName()
+			LAGCHECK(LAG_LOW)
+		system.reply("Labels removed.", user)
+
 /datum/spacebee_extension_command/prison
 	name = "prison"
 	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
@@ -589,6 +602,7 @@
 		global.vpn_ip_checks?.Cut() // to allow them to reconnect this round
 		message_admins("Ckey [ckey] added to the VPN whitelist by [user] (Discord).")
 		logTheThing("admin", "[user] (Discord)", null, "Ckey [ckey] added to the VPN whitelist.")
+		addPlayerNote(ckey, user + " (Discord)", "Ckey [ckey] added to the VPN whitelist.")
 		system.reply("[ckey] added to the VPN whitelist.")
 		return TRUE
 

@@ -12,6 +12,7 @@
 	New()
 		. = ..()
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_GHOST)
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 		src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 		src.see_invisible = INVIS_GHOST
 		src.see_in_dark = SEE_DARK_FULL
@@ -66,6 +67,7 @@
 				src.z = 1
 			return
 
+		// Since we can walk through walls, just move regardless
 		if(!isturf(src.loc))
 			src.set_loc(get_turf(src))
 		if(NewLoc)
@@ -79,6 +81,8 @@
 			src.x++
 		if((direct & WEST) && src.x > 1)
 			src.x--
+
+		return ..()
 
 /mob/living/intangible/change_eye_blurry(var/amount, var/cap = 0)
 	if (amount < 0)

@@ -309,7 +309,7 @@
 			eject_rider(0, 1)
 		return
 
-	attack_hand(mob/living/carbon/human/M as mob)
+	attack_hand(mob/living/carbon/human/M)
 		if (!M || !rider)
 			..()
 			return

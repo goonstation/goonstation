@@ -15,7 +15,7 @@ var/global/list/material_cache = list()
 	return 0
 
 /// This contains the names of the trigger lists on materials. Required for copying materials. Remember to keep this updated if you add new triggers.
-var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "triggersFail", "triggersTemp", "triggersChem", "triggersPickup", "triggersDrop", "triggersExp", "triggersOnAdd", "triggersOnLife", "triggersOnAttack", "triggersOnAttacked", "triggersOnEntered")
+var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "triggersTemp", "triggersChem", "triggersPickup", "triggersDrop", "triggersExp", "triggersOnAdd", "triggersOnLife", "triggersOnAttack", "triggersOnAttacked", "triggersOnEntered")
 
 /// Returns one of the base materials by id.
 /proc/getMaterial(var/mat)
@@ -122,7 +122,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 //Time for some super verbose proc names.
 /proc/get_material_trait_desc(var/datum/material/mat1)
 	var/string = ""
-	var/list/allTriggers = (mat1.triggersFail + mat1.triggersTemp + mat1.triggersChem + mat1.triggersPickup + mat1.triggersDrop + mat1.triggersExp + mat1.triggersOnAdd + mat1.triggersOnLife + mat1.triggersOnAttack + mat1.triggersOnAttacked + mat1.triggersOnEntered)
+	var/list/allTriggers = (mat1.triggersTemp + mat1.triggersChem + mat1.triggersPickup + mat1.triggersDrop + mat1.triggersExp + mat1.triggersOnAdd + mat1.triggersOnLife + mat1.triggersOnAttack + mat1.triggersOnAttacked + mat1.triggersOnEntered)
 	for(var/datum/materialProc/P in allTriggers)
 		if(length(P.desc))
 			if(length(string))
@@ -183,7 +183,16 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 			src.desc = "[initial(src.desc)] It is made of [mat1.name].[length(traitDesc) ? " " + traitDesc : ""]"
 		if (mat1.mat_id == "gold") //marks material gold as not a good choice to sell for people who dont already know
 			src.desc += " It's probably not very valuable to a reputable buyer."
+	if(appearance)
+		src.setMaterialAppearance(mat1)
 
+	src.material = mat1
+	mat1.owner = src
+	mat1.triggerOnAdd(src)
+	src.onMaterialChanged()
+
+/// sets the *appearance* of a material, but does not trigger any tiggerOnAdd or onMaterialChanged behaviour
+/atom/proc/setMaterialAppearance(var/datum/material/mat1)
 	var/set_color_alpha = TRUE
 	src.alpha = 255
 	src.color = null
@@ -191,16 +200,11 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 	if (islist(src.mat_appearances_to_ignore) && length(src.mat_appearances_to_ignore))
 		if (mat1.name in src.mat_appearances_to_ignore)
 			set_color_alpha = FALSE
-	if (set_color_alpha && src.mat_changeappearance && appearance && mat1.applyColor)
+	if (set_color_alpha && src.mat_changeappearance && mat1.applyColor)
 		if (mat1.texture)
 			src.setTexture(mat1.texture, mat1.texture_blend, "material")
 		src.alpha = mat1.alpha
 		src.color = mat1.color
-
-	src.material = mat1
-	mat1.owner = src
-	mat1.triggerOnAdd(src)
-	src.onMaterialChanged()
 
 /proc/getProcessedMaterialForm(var/datum/material/MAT)
 	if (!istype(MAT))
@@ -296,7 +300,6 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 	newMat.mixOnly = FALSE
 
 	//--
-	newMat.triggersFail = getFusedTriggers(mat1.triggersFail, mat2.triggersFail, newMat)
 	newMat.triggersTemp = getFusedTriggers(mat1.triggersTemp, mat2.triggersTemp, newMat)
 	newMat.triggersChem = getFusedTriggers(mat1.triggersChem, mat2.triggersChem, newMat)
 	newMat.triggersPickup = getFusedTriggers(mat1.triggersPickup, mat2.triggersPickup, newMat)
@@ -308,7 +311,6 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 	newMat.triggersOnAttacked = getFusedTriggers(mat1.triggersOnAttacked, mat2.triggersOnAttacked, newMat)
 	newMat.triggersOnEntered = getFusedTriggers(mat1.triggersOnEntered, mat2.triggersOnEntered, newMat)
 
-	handleTriggerGenerations(newMat.triggersFail)
 	handleTriggerGenerations(newMat.triggersTemp)
 	handleTriggerGenerations(newMat.triggersChem)
 	handleTriggerGenerations(newMat.triggersPickup)

@@ -79,7 +79,7 @@
 			src.desc = "A [src.pname] pill bottle. There [totalpills==1? "is [totalpills] pill." : "are [totalpills] pills." ]"
 			src.inventory_counter.update_number(totalpills)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/pill))
 			user.u_equip(W)
 			W.set_loc(src)
@@ -106,7 +106,7 @@
 			boutput(user, "<span class='alert'>It's empty.</span>")
 			return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(user.r_hand == src || user.l_hand == src)
 			var/obj/item/reagent_containers/pill/P = src.create_pill()
 			if(istype(P))

@@ -17,7 +17,7 @@
 		..()
 		src.UpdateIcon()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		var/proceed = 0
 		for(var/check_path in src.allowed)
 			if(istype(W, check_path) && W.w_class < W_CLASS_BULKY)
@@ -39,8 +39,9 @@
 		else boutput(user, "<span class='alert'>[src] is full!</span>")
 
 	attack_self(var/mob/user as mob)
-		if (src.contents.len)
+		if (length(src.contents))
 			var/turf/T = user.loc
+			logTheThing("station", user, null, "dumps the contents of [src] ([length(src.contents)] items) out at [log_loc(T)].")
 			for (var/obj/item/I in src.contents)
 				I.set_loc(T)
 				I.add_fingerprint(user)
@@ -49,7 +50,7 @@
 			tooltip_rebuild = 1
 		else ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		// There's a hilarious bug in here - if you're searching through the container
 		// and then throw it, after you finish searching the container will just.
 		// warp back to your hands.
@@ -241,7 +242,7 @@
 			return
 
 		// ITS GONNA BE CLICKY AND OPEN OK   SHUT UP
-		attackby(obj/item/W as obj, mob/user as mob)
+		attackby(obj/item/W, mob/user)
 			src.open_it_up(1)
 			..()
 			src.open_it_up(0)
@@ -251,7 +252,7 @@
 			..()
 			src.open_it_up(0)
 
-		attack_hand(mob/user as mob)
+		attack_hand(mob/user)
 			if (get_dist(user, src) <= 0 && src.contents.len && (user.l_hand == src || user.r_hand == src))
 				src.open_it_up(1)
 			..()

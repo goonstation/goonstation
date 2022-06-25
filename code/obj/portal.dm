@@ -32,7 +32,7 @@
 	SPAWN(0)
 		src.teleport(AM)
 
-/obj/portal/attack_hand(mob/M as mob)
+/obj/portal/attack_hand(mob/M)
 	SPAWN(0)
 		src.teleport(M)
 
@@ -114,7 +114,7 @@
 				M.ghostize()
 			qdel(src)
 
-	attack_hand(mob/M as mob)
+	attack_hand(mob/M)
 		SPAWN(0)
 			M.ghostize()
 			qdel(src)

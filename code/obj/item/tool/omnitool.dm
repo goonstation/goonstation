@@ -45,7 +45,7 @@
 		if (new_mode)
 			src.change_mode(new_mode, user)
 
-	attack(mob/living/carbon/M as mob, mob/user as mob)
+	attack(mob/living/carbon/M, mob/user)
 		if (src.omni_mode == "prying")
 			if (!pry_surgery(M, user))
 				return ..()

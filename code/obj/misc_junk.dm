@@ -128,9 +128,9 @@
 		src.setItemSpecial(/datum/item_special/swipe)
 		BLOCK_SETUP(BLOCK_ROD)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(issnippingtool(W))
-			boutput(user, __blue("You cut [src] horizontally across and flatten it out."))
+			boutput(user, "<span class='notice'>You cut [src] horizontally across and flatten it out.</span>")
 			new /obj/item/c_sheet(get_turf(src))
 			qdel(src)
 
@@ -156,7 +156,7 @@
 	stamina_cost = 0
 
 	attack_self(mob/user as mob)
-		boutput(user, __blue("You deftly fold [src] into a party hat!."))
+		boutput(user, "<span class='notice'>You deftly fold [src] into a party hat!.</span>")
 		user.put_in_hand_or_drop(new /obj/item/clothing/head/party)
 		qdel(src)
 
@@ -237,7 +237,7 @@
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "emeter"
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		if (ismob(M))
 			user.visible_message("<b>[user]</b> takes a reading with the [src].",\
 			"[M]'s Thetan Level: [user == M ? 0 : rand(1,10)]")
@@ -282,7 +282,7 @@
 		..()
 		BLOCK_SETUP(BLOCK_ALL)
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		src.add_fingerprint(user)
 
 		playsound(M, "sound/musical_instruments/Bikehorn_1.ogg", 50, 1, -1)
@@ -464,7 +464,7 @@
 	deconstruct_flags = DECON_WRENCH
 	var/last_ring = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(last_ring + 20 >= world.time)
 			return
 		else
@@ -478,35 +478,6 @@
 	density = 0
 	icon = 'icons/obj/junk.dmi'
 	icon_state = "trophy"
-
-/obj/item/battlepass
-	icon = 'icons/obj/items/card.dmi'
-	icon_state = "id"
-	name = "Battle Pass"
-	desc = "Lets you know in advance where supply drops are happening. Also allows you to use 3 10 second long shields by clicking it in you hand"
-	var/uses = 3
-
-	attack_self(mob/user as mob)
-		if(uses <= 0)
-			boutput(user, "<span class='alert'>Your pass has no more uses!</span>")
-			return
-		if(user.spellshield == 1)
-			boutput(user, "<span class='alert'>You already have a shield up, nerd.</span>")
-			return
-		uses--
-		var/shield_overlay = image('icons/effects/effects.dmi', user, "enshield", MOB_LAYER+1)
-		user.underlays += shield_overlay
-		playsound(user,"sound/effects/MagShieldUp.ogg",50,1)
-		boutput(user, "<span class='notice'><b>You are surrounded by a BATTLE BARRIER!</b></span>")
-		user.visible_message("<span class='alert'>[user] is encased in a protective shield.</span>")
-		user.spellshield = 1
-		SPAWN(10 SECONDS)
-			user.spellshield = 0
-			boutput(user, "<span class='notice'><b>Your magical barrier fades away!</b></span>")
-			user.visible_message("<span class='alert'>The shield protecting [user] fades away.</span>")
-			user.underlays -= shield_overlay
-			shield_overlay = null
-			playsound(user,"sound/effects/MagShieldDown.ogg", 50, 1)
 
 /obj/item/ass_day_artifact
 	name = "Ass Day Artifact"
@@ -580,7 +551,7 @@
 	density = 1
 	var/gnome = 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/scpgnome_lid) && ((src.icon_state == "sarc_2")||(src.icon_state == "sarc_3")))
 			user.u_equip(W)
 			qdel(W)
@@ -597,7 +568,7 @@
 		else
 			..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(src.icon_state == "sarc_key")
 			src.icon_state = "opening"
 			animate(src, time = 2.3 SECONDS)

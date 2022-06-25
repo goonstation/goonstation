@@ -165,7 +165,7 @@
 				M.bodytemperature = max(M.bodytemperature-40,0)
 				takeDamage(1)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		user.visible_message("<span class='combat'><b>[user]</b> kicks [src]!</span>", "<span class='notice'>You kick [src].</span>")
 		takeDamage(2)
 
@@ -183,7 +183,7 @@
 			if(D_ENERGY)
 				takeDamage(damage/4)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		takeDamage(W.force)
 
 	mob_flip_inside(var/mob/user)

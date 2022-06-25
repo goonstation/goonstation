@@ -23,9 +23,9 @@
 	#define COMSIG_ATOM_POST_UPDATE_ICON "atom_after_update_icon"
 	/// When reagents change
 	#define COMSIG_ATOM_REAGENT_CHANGE "atm_reag"
-	/// When an atom is dragged onto something (usr, over_object, src_location, over_location, over_control, params)
+	/// When an atom is dragged onto something (usr, over_object, src_location, over_location, src_control, over_control, params)
 	#define COMSIG_ATOM_MOUSEDROP "atom_mousedrop"
-	/// When something is dragged onto an atom (object, usr)
+	/// When something is dragged onto an atom (object, usr, src_location, over_location, over_control, params)
 	#define COMSIG_ATOM_MOUSEDROP_T "atom_mousedrop_t"
 	/// When the atom is a source of an explosion (object, args_to_explode_at)
 	#define COMSIG_ATOM_EXPLODE "atom_explode"
@@ -44,11 +44,11 @@
 
 	// ---- generic ----
 
-	/// when an AM moves (thing, previous_loc, direction)
+	/// when an AM moves on the map (thing, previous_loc, direction)
 	#define COMSIG_MOVABLE_MOVED "mov_moved"
 	/// when a movable is about to move, return true to prevent (thing, new_loc, direction)
 	#define COMSIG_MOVABLE_BLOCK_MOVE "mov_block_moved"
-	/// when an AM moves (thing, previous_loc)
+	/// when an AM changes its loc (thing, previous_loc)
 	#define COMSIG_MOVABLE_SET_LOC "mov_set_loc"
 	/// when an AM ends throw (thing, /datum/thrown_thing)
 	#define COMSIG_MOVABLE_THROW_END "mov_throw_end"
@@ -167,6 +167,8 @@
 	#define COMSIG_MOB_SHOCKED_DEFIB "mob_shocked"
 	/// Sent to mob when client lifts the mouse button
 	#define COMSIG_MOB_MOUSEUP "mob_mouseup"
+	/// Sent when a mob is grabbed by another mob (grab)
+	#define COMSIG_MOB_GRABBED "mob_grabbed"
 
 	// ---- cloaking device signal ----
 

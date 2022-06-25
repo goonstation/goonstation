@@ -10,7 +10,7 @@
 	w_class = W_CLASS_SMALL
 	var/uses = 1
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if(!M || !user)
 			return
 
@@ -143,7 +143,7 @@
 			payload = null
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/genetics_injector/dna_injector/))
 			if (payload)
 				boutput(user, "<span class='alert'>The injector is already loaded.</span>")
@@ -163,7 +163,7 @@
 			..()
 		return
 
-	attack(mob/M, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (!iscarbon(M))
 			return
 		if (payload)

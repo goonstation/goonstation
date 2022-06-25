@@ -397,6 +397,9 @@ datum
 						var/mob/living/H = M
 						if (H.bleeding)
 							repair_bleeding_damage(H, 80, 2)
+						if (ishuman(M))
+							var/mob/living/carbon/human/healed = M
+							healed.heal_laser_wound("all")
 
 					var/silent = 0
 					if (length(paramslist))

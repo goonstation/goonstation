@@ -136,7 +136,7 @@
 		store_type = null
 		..()
 
-/obj/item/electronics/frame/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/electronics/frame/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/electronics/))
 		var/obj/item/electronics/E = W
 		if(!(istype(E,/obj/item/electronics/disk)||istype(E,/obj/item/electronics/scanner)||istype(E,/obj/item/electronics/soldering)||istype(E,/obj/item/electronics/frame)))
@@ -246,14 +246,11 @@
 					if("Right")
 						src.set_dir(4)
 			boutput(user, "Ready to deploy!")
-			switch(alert("Ready to deploy?",,"Yes","No"))
-				if("Yes")
-					boutput(user, "<span class='alert'>Place box and solder to deploy!</span>")
-					viewstat = 2
-					secured = 2
-					icon_state = "dbox"
-				if("No")
-					return
+			if (tgui_alert(user, "Ready to deploy?", "Confirmation", list("Yes", "No")) == "Yes")
+				boutput(user, "<span class='alert'>Place box and solder to deploy!</span>")
+				viewstat = 2
+				secured = 2
+				icon_state = "dbox"
 		else
 			return
 
@@ -723,7 +720,7 @@
 			if (targetitem == O.name)
 				upload_blueprint(O, target)
 
-/obj/machinery/rkit/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/rkit/attackby(obj/item/W, mob/user)
 	if(status & (NOPOWER|BROKEN))
 		return
 
@@ -759,7 +756,7 @@
 	else
 		..()
 
-/obj/machinery/rkit/attack_hand(mob/user as mob)
+/obj/machinery/rkit/attack_hand(mob/user)
 	src.add_fingerprint(user)
 	var/dat
 	var/hide_allowed = src.allowed(user)
@@ -928,7 +925,7 @@
 			return
 
  // here be extra surgery penalties
-	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	attack(mob/living/carbon/M, mob/living/carbon/user)
 
 		if(!surgeryCheck(M, user)) // if it ain't surgery compatible, do whatever!
 			return ..()

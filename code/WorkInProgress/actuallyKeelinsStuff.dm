@@ -1562,12 +1562,12 @@ Returns:
 		setMaterial(getMaterial("slag"))
 		name = "Statue of Dr.Floorpills"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		boutput(user, "[src] feels oddly warm ...")
 		user.changeStatus("radiation", 5 SECONDS)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(prob(8) && (!broken))
 			for(var/i=0, i<5, i++)
 				new/obj/item/material_piece/slag(src.loc)
@@ -1726,7 +1726,7 @@ Returns:
 		src.setMaterial(head.material, appearance = 0, setname = 0)
 		return
 
-	attack(mob/M as mob, mob/user as mob) //TBI
+	attack(mob/M, mob/user) //TBI
 		return ..(M,user)
 
 /obj/item/craftedmelee
@@ -1761,7 +1761,7 @@ Returns:
 		desc = "Someone taped together \a [item1.name] and \a [item2.name]. Great."
 		return
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		if(!item1 || !item2)
 			src.fall_apart()
 			return
@@ -1947,7 +1947,7 @@ Returns:
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "pen"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/device/key))
 			boutput(user, "[W] disappears suddenly as you bring it close to the inscription ... huh")
 			del(W)
@@ -1984,156 +1984,13 @@ Returns:
 		light = null
 		..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/clothing/mask/cigarette))
 			var/obj/item/clothing/mask/cigarette/C = W
 			if(!C.on)
 				C.light(user, "<span class='alert'>[user] lights the [C] with [src]. That seems appropriate.</span>")
 
-/*
 
-/obj/hh_portal_exit
-	icon = 'icons/misc/exploration.dmi'
-	icon_state = "riftexit"
-	name = "???"
-	desc = ""
-	anchored = 1
-	density = 1
-	opacity = 0
-
-	Bumped(atom/movable/AM)
-		if(!ismob(AM)) return
-		var/mob/M = AM
-
-		if(M.adventure_variables.hh_energy < 3)
-			boutput(M, "<span class='alert'>You can't seem to pass through the energy ... </span>")
-			return
-
-		var/mob/dead/hhghost/H = new(AM.loc)
-		H.client = M.client
-		H.original = M
-		M.set_loc(H)
-
-		AM = H
-
-		var/area/srcar = AM.loc.loc
-		srcar.Exited(AM)
-
-		var/obj/target = locate(/obj/landmark/hh_exit)
-
-		if (!istype(target))
-			return
-
-		var/turf/trg_turf = target.loc
-
-		var/area/trgar = trg_turf.loc
-		trgar.Entered(AM, AM.loc)
-
-		AM.set_loc(trg_turf)
-
-/obj/hh_portal_entry
-	icon = 'icons/misc/exploration.dmi'
-	icon_state = "atear"
-	name = "???"
-	desc = ""
-	anchored = 1
-	density = 1
-	opacity = 0
-
-	Bumped(atom/movable/AM)
-		if(!AM.reagents) return
-		if(!ismob(AM)) return
-
-		if(AM.reagents.has_reagent("anima") && !AM.reagents.has_reagent("anima", 10))
-			boutput(AM, "<span class='alert'>The portal briefly glows as you get near but quickly dulls again. It seems like you have done SOMETHING correctly but it isn't quite enough.</span>")
-			return
-
-		if(!AM.reagents.has_reagent("anima"))
-			boutput(AM, "<span class='alert'>The strange energy in front of you becomes solid as you approach ...</span>")
-			return
-
-		AM.reagents.del_reagent("anima")
-
-		var/area/srcar = AM.loc.loc
-		srcar.Exited(AM)
-
-		var/obj/target = locate(/obj/landmark/hh_entry)
-
-		if (!istype(target))
-			return
-
-		var/turf/trg_turf = target.loc
-
-		var/area/trgar = trg_turf.loc
-		trgar.Entered(AM, AM.loc)
-
-		AM.set_loc(trg_turf)
-
-		return
-
-/obj/landmark/hh_exit
-	name = "hh_exit"
-	//tag = "hh_exit"
-
-/obj/landmark/hh_entry
-	name = "hh_entry"
-	//tag = "hh_entry"
-
-/obj/hh_sfrag
-	name = "soul fragment"
-	desc = "a small portion of someones life energies ..."
-	icon = 'icons/misc/exploration.dmi'
-	icon_state = "empty"
-	anchored = 1
-	density = 0
-	opacity = 0
-	invisibility = INVIS_ALWAYS_ISH
-	var/image/oimage = null
-	event_handler_flags = USE_FLUID_ENTER
-
-	New()
-		oimage = image('icons/misc/exploration.dmi',src,"sfrag")
-		orbicons.Add(oimage)
-		return ..()
-
-	disposing()
-		orbicons.Remove(oimage)
-		del(oimage)
-		..()
-
-	Crossed(atom/movable/A)
-		if(!istype(A,/mob/dead/hhghost)) return
-		var/mob/dead/hhghost/M = A
-		M.adventure_variables.hh_soul += 1
-		particleMaster.SpawnSystem(new /datum/particleSystem/elecburst(M))
-
-		if(M.adventure_variables.hh_soul > 15)
-			M.original.set_loc(src.loc)
-			M.original.client = M.client
-			del(M)
-
-		del(src)
-		return
-
-/obj/hh_energyorb
-	name = "scintilating energy"
-	desc = "..."
-	icon = 'icons/misc/exploration.dmi'
-	icon_state = "eorb"
-	anchored = 1
-	density = 0
-	opacity = 0
-	event_handler_flags = USE_FLUID_ENTER
-
-	Crossed(atom/movable/A)
-		if(!ismob(A) || !isliving(A)) return
-		qdel(src)
-		var/mob/living/M = A
-		M.adventure_variables.hh_energy += 1
-		particleMaster.SpawnSystem(new /datum/particleSystem/energysp(M))
-		return
-
-*/
 
 /obj/decal/nothing
 	name = "nothing"
@@ -2413,7 +2270,7 @@ Returns:
 	icon_state = "fireworksbox"
 	var/fireworking = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(fireworking) return
 		fireworking = 1
 		boutput(user, "<span class='alert'>The fireworks go off as soon as you touch the box. This is some high quality stuff.</span>")
@@ -2772,7 +2629,7 @@ Returns:
 
 /obj/dfissure_to
 	name = "dimensional fissure"
-	desc = "a rip in time and space"
+	desc = "A rip in time and space."
 	opacity = 0
 	density = 1
 	anchored = 1
@@ -2797,7 +2654,7 @@ Returns:
 
 /obj/dfissure_from
 	name = "dimensional fissure"
-	desc = "a rip in time and space"
+	desc = "A rip in time and space."
 	opacity = 0
 	density = 1
 	anchored = 1
@@ -3091,7 +2948,7 @@ Returns:
 	amount = 1
 	heal_amt = 5
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		if(ishuman(M))
 			if(M == user)
 				M.nutrition += src.heal_amt * 10
@@ -3264,14 +3121,14 @@ Returns:
 	var/suiciding = 0
 	var/deadly = 0
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 	MouseDrop_T(atom/target, mob/user)
 		if (BOUNDS_DIST(user, src) == 0 && target == user)
 			src.Attackhand(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(in_use)
 			boutput(user, "<span class='alert'>Its already in use - wait a bit.</span>")
 			return
@@ -3764,10 +3621,10 @@ var/list/lag_list = new/list()
 	anchored = 1
 	density = 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		switch(alert("Travel back to ss13?",,"Yes","No"))
 			if("Yes")
 				user.set_loc(pick_landmark(LANDMARK_LATEJOIN))

@@ -1,3 +1,4 @@
+// TODO make this mob/living/intangible. the fuck is it doing here?
 /mob/living/seanceghost
 	name = "Seance Ghost"
 	desc = "Ominous hooded figure!"
@@ -84,6 +85,8 @@
 		if((direct & WEST) && src.x > 1)
 			src.x--
 
+		return ..()
+
 	is_active()
 		return 0
 
@@ -127,6 +130,7 @@
 			src.visible_message("<span><b>[src.name]</b> [message]</span>")
 
 	death(gibbed)
+		. = ..()
 		if(originalmob)
 			if (src.client)
 				src.removeOverlaysClient(src.client)

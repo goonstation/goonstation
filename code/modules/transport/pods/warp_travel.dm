@@ -69,7 +69,7 @@
 	deployed
 		packable = 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/wrench))
 			if (!packable)
 				boutput(user,"This beacon's retraction hardware is locked into place and can't be altered.")
@@ -190,7 +190,7 @@
 		src.name = "warp buoy unit [beaconid]"
 		..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/wrench) && !src.deploying)
 			for (var/turf/T in range(2,src))
 				if (!T.allows_vehicles)
@@ -244,7 +244,7 @@
 	density = 1
 	var/state = 1
 
-	attackby(var/obj/item/I as obj, var/mob/user as mob)
+	attackby(var/obj/item/I, var/mob/user)
 		switch(state)
 			if(1)
 				if (istype(I, /obj/item/rods))

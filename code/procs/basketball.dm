@@ -312,14 +312,14 @@
 	if(istype(equipped_thing, /obj/item/basketball))
 		var/obj/item/basketball/BB = equipped_thing
 		if(!BB.payload)
-			boutput(M, __red("This b-ball doesn't have the right heft to it!"))
+			boutput(M, "<span class='alert'>This b-ball doesn't have the right heft to it!</span>")
 			return
 		else //Safety thing to ensure the plutonium core is only good for one dunk
 			var/pl = BB.payload
 			BB.payload = null
 			qdel(pl)
 	else
-		boutput(M, __red("You can't dunk without a b-ball, yo!"))
+		boutput(M, "<span class='alert'>You can't dunk without a b-ball, yo!</span>")
 		return
 
 	M.verbs -= /mob/proc/chaos_dunk
@@ -375,7 +375,7 @@
 	world << siren
 	M.visible_message("<span class='alert'>[M] successfully executes a Chaos Dunk!</span>")
 	M.unlock_medal("Shut Up and Jam", 1)
-	explosion_new(src, get_turf(M), 1500, 22.78)
+	explosion_new(src, get_turf(M), 2500)
 
 	for(var/area/A in world)
 		LAGCHECK(LAG_LOW)

@@ -29,10 +29,12 @@
 #define ROLE_HARDMODE_TRAITOR "hard-mode traitor"
 #define ROLE_MINDSLAVE "mindslave"
 #define ROLE_NUKEOP_GUNBOT "nukeop gunbot"
+#define ROLE_ZOMBIE "zombie"
 
 // gimmicks
 #define ROLE_BATTLER "battler"
 #define ROLE_FLOCKMIND "flockmind"
+#define ROLE_FLOCKTRACE "flocktrace"
 #define ROLE_OMNITRAITOR "omnitraitor"
 #define ROLE_GRINCH "grinch"
 #define ROLE_FLOOR_GOBLIN "floor_goblin"

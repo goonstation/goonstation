@@ -6,7 +6,7 @@
 
 	setup()
 		name = "StatusEffects"
-		schedule_interval = 0.3 //Adjust as needed; Wouldnt go over 10.
+		schedule_interval = 0.3 SECONDS //Adjust as needed; Wouldnt go over 10.
 		lastUpdate = world.timeofday
 
 	copyStateFrom(datum/controller/process/target)
