@@ -643,7 +643,6 @@
 	wear_layer = MOB_GLASSES_LAYER2
 	c_flags = COVERSEYES
 
-
 	equipped(mob/user, slot)
 		. = ..()
 		APPLY_ATOM_PROPERTY(user, PROP_MOB_NIGHTVISION, src)
