@@ -7,7 +7,6 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	item_state = "glasses"
 	w_class = W_CLASS_SMALL
-	c_flags = COVERSEYES
 	var/allow_blind_sight = 0
 	wear_layer = MOB_GLASSES_LAYER
 	block_vision = 0
@@ -45,6 +44,7 @@
 	item_state = "blindfold"
 	desc = "A strip of cloth painstakingly designed to wear around your eyes so you cannot see."
 	block_vision = 1
+	c_flags = COVERSEYES // hard to do eye surgery with a tight blind fold in the way
 
 	attack(mob/M, mob/user, def_zone) //this is for equipping blindfolds on head attack.
 		if (user.zone_sel.selecting == "head" && ishuman(M)) //ishuman() works on monkeys too apparently.
@@ -70,6 +70,7 @@
 	color_g = 1
 	color_b = 0.92
 	var/on = 1
+	c_flags = COVERSEYES
 
 	setupProperties()
 		..()
@@ -146,6 +147,7 @@
 	name = "ectoplasmoleic imager"
 	desc = "A pair of goggles with a dumb name."
 	icon_state = "ectogoggles"
+	c_flags = COVERSEYES
 
 /obj/item/clothing/glasses/sunglasses
 	name = "sunglasses"
@@ -189,6 +191,7 @@
 	color_r = 0.95 // darken a little, kinda red
 	color_g = 0.9
 	color_b = 0.9
+	c_flags = COVERSEYES // sechuds should at least cover eyes due to their special nature
 
 	emp_act()
 		if (ishuman(src.loc))
@@ -231,6 +234,7 @@
 	color_b = 0.8
 	/// For seeing through walls
 	var/upgraded = FALSE
+	c_flags = COVERSEYES
 
 	equipped(mob/user, slot)
 		. = ..()
@@ -293,6 +297,7 @@
 	color_r = 0.92
 	color_g = 0.92
 	color_b = 1
+	c_flags = COVERSEYES
 
 	setupProperties()
 		..()
@@ -373,6 +378,7 @@
 	icon_state = "vr"
 	item_state = "sunglasses"
 	var/network = LANDMARK_VR_DET_NET
+	c_flags = COVERSEYES
 
 	setupProperties()
 		..()
@@ -407,6 +413,7 @@
 	icon_state = "vr"
 	item_state = "sunglasses"
 	var/mob/living/critter/robotic/scuttlebot/connected_scuttlebot = null
+	c_flags = COVERSEYES
 
 	equipped(var/mob/user, var/slot) //On equip, if there's a scuttlebot, control it
 		..()
@@ -537,6 +544,7 @@
 	color_r = 1 // pink tint?
 	color_g = 0.8
 	color_b = 0.9
+	c_flags = COVERSEYES
 
 	setupProperties()
 		..()
@@ -555,6 +563,7 @@
 	icon_state = "spectro_monocle"
 	item_state = "spectro_monocle"
 	desc = "Such a dapper eyepiece! And a practical one at that."
+	COVERSEYES = FALSE // Doesn't really make sense for it to cover eyes
 
 // testing thing for static overlays
 /obj/item/clothing/glasses/staticgoggles
@@ -632,6 +641,8 @@
 	color_g = 1
 	color_b = 0.5
 	wear_layer = MOB_GLASSES_LAYER2
+	c_flags = COVERSEYES
+
 
 	equipped(mob/user, slot)
 		. = ..()
@@ -663,6 +674,7 @@
 	color_r = 0.9
 	color_g = 1.0
 	color_b = 0.9
+	c_flags = COVERSEYES
 
 	equipped(var/mob/user, var/slot)
 		..()
