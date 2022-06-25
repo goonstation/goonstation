@@ -91,13 +91,13 @@ ABSTRACT_TYPE(/datum/material_property)
 			if(1 to 2)
 				return "soft"
 			if(2 to 4)
-				return "slightly soft"
-			if(4 to 6)
 				return "slightly hard"
-			if(6 to 8)
+			if(4 to 6)
 				return "hard"
-			if(8 to INFIINITY)
+			if(6 to 8)
 				return "very hard"
+			if(8 to INFIINITY)
+				return "extremely hard"
 
 /datum/material_property/density
 	name = "Density"
@@ -114,13 +114,13 @@ ABSTRACT_TYPE(/datum/material_property)
 			if(1 to 2)
 				return "light"
 			if(2 to 4)
-				return "somewhat light"
-			if(4 to 6)
 				return "somewhat dense"
-			if(6 to 8)
+			if(4 to 6)
 				return "dense"
-			if(8 to INFIINITY)
+			if(6 to 8)
 				return "very dense"
+			if(8 to INFIINITY)
+				return "extremely dense"
 
 /datum/material_property/reflectivity
 	name = "Reflectivity"
