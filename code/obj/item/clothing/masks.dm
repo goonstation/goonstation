@@ -213,6 +213,7 @@
 
 		New()
 			..()
+			setProperty("chemprot", 100) // this makes no sense but balance > logic
 			START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 
 		disposing()
