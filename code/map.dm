@@ -38,6 +38,7 @@ var/global/list/mapNames = list(
 	"Manta" = 			list("id" = "MANTA", 		"settings" = "manta", 				"playerPickable" = FALSE,				"MaxPlayersAllowed" = 80),
 	"Wrestlemap" = 			list("id" = "WRESTLEMAP", 	"settings" = "wrestlemap", 		"playerPickable" = FALSE),
 	"pod_wars" = 			list("id" = "POD_WARS", 	"settings" = "pod_wars", 		"playerPickable" = FALSE),
+	"Event" = 			list("id" = "EVENT", 		"settings" = "destiny/clarion", 		"playerPickable" = FALSE),
 	"blank" = 			list("id" = "BLANK", "settings" = "", "playerPickable" = FALSE),
 	"blank_underwater" =  list("id" = "BLANK_UNDERWATER", "settings" = "", "playerPickable" = FALSE)
 )

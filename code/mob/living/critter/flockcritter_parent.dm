@@ -431,16 +431,16 @@
 		var/mob/living/critter/flock/C
 		C = target
 		if(istype(C))
-			F.tri_message("<span class='notice'>[owner] begins spraying glowing fibers onto [C].</span>",
-				F, "<span class='notice'>You begin repairing [C.real_name]. You will both need to stay still for this to work.</span>",
-				target, "<span class='notice'>[F.real_name] begins repairing you. You will both need to stay still for this to work.</span>",
+			F.tri_message(C, "<span class='notice'>[owner] begins spraying glowing fibers onto [C].</span>",
+				"<span class='notice'>You begin repairing [C.real_name]. You will both need to stay still for this to work.</span>",
+				"<span class='notice'>[F.real_name] begins repairing you. You will both need to stay still for this to work.</span>",
 				"You hear hissing and spraying.")
 			if (C.is_npc)
 				C.ai.wait()
 		else
-			F.tri_message("<span class='notice'>[owner] begins spraying glowing fibers onto [target].</span>",
-				F, "<span class='notice'>You begin repairing [target]. You will need to stay still for this to work.</span>",
-				null, null, "You hear hissing and spraying.")
+			F.visible_message("<span class='notice'>[owner] begins spraying glowing fibers onto [target].</span>",
+				"<span class='notice'>You begin repairing [target]. You will need to stay still for this to work.</span>",
+				"You hear hissing and spraying.")
 		playsound(target, "sound/misc/flockmind/flockdrone_quickbuild.ogg", 50, 1)
 
 	onEnd()
@@ -514,10 +514,10 @@
 		if(target)
 			var/mob/living/critter/flock/F = owner
 			if(F)
-				F.tri_message("<span class='notice'>[owner] begins forming a cuboid structure around [target].</span>",
-					F, "<span class='notice'>You begin imprisoning [target]. You will need to stay still for this to work.</span>",
-					target, "<span class='alert'>[F] is forming a structure around you!</span>",
-					"You hear strange building noises.")
+				F.tri_message(target, "<span class='notice'>[owner] begins forming a cuboid structure around [target].</span>",
+						"<span class='notice'>You begin imprisoning [target]. You will need to stay still for this to work.</span>",
+						"<span class='alert'>[F] is forming a structure around you!</span>",
+						"You hear strange building noises.")
 				if(istype(target,/mob/living))
 					var/mob/living/M = target
 					M.was_harmed(F, null, "flock", INTENT_DISARM)
