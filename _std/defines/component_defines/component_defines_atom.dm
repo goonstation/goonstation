@@ -169,6 +169,8 @@
 	#define COMSIG_MOB_MOUSEUP "mob_mouseup"
 	/// Sent when a mob is grabbed by another mob (grab)
 	#define COMSIG_MOB_GRABBED "mob_grabbed"
+	/// Sent an mob moves in a vehicle (passengers and driver)
+	#define COMSIG_MOB_MOVE_VEHICLE "mob_move_vehicle"
 
 	// ---- cloaking device signal ----
 

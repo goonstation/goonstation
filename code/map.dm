@@ -131,11 +131,11 @@ var/global/list/mapNames = list(
 	var/fortuna_coords = list(list(0,0))
 	var/iudicium_coords = list(list(0,0))
 	var/iustitia_coords = list(list(0,0))
-	var/star_red_coords = list(list(0,0),list(0,0),list(188,95),list(0,0),list(205,110))
+	var/star_red_coords = list(list(0,0),list(0,0),list(157,219),list(0,0),list(205,110))
 	var/star_blue_coords = list(list(0,0),list(0,0),list(225,76),list(0,0),list(74,290))
 	var/ss14_coords = list(list(0,0))
 	var/ss12_coords = list(list(0,0))
-	var/ss10_coords = list(list(0,0))
+	var/ss10_coords = list(list(0,0),list(0,0),list(173,266))
 	var/X3_coords = list(list(0,0))
 	var/X5_coords = list(list(0,0))
 
@@ -266,6 +266,12 @@ var/global/list/mapNames = list(
 		"the central room in security" = list(/area/station/security/main),
 		"the hydroponics bay" = list(/area/station/hydroponics/bay))
 
+	X0_coords = list(list(59,162))
+	X3_coords = list(list(227,157))
+	X5_coords = list(list(195,76))
+	ss10_coords = list(list(178,94),list(0,0),list(173,266))
+	ss12_coords = list(list(153,121))
+
 /datum/map_settings/cogmap_old
 	name = "COGMAP_OLD"
 	escape_dir = SOUTH
@@ -370,7 +376,7 @@ var/global/list/mapNames = list(
 	fortuna_coords = list(list(252,46))
 	ss14_coords = list(list(178,205))
 	star_blue_coords = list(list(106,78),list(0,0),list(225,76),list(0,0),list(74,290))
-	star_red_coords = list(list(0,0),list(0,0),list(188,95),list(0,0),list(205,110))
+	star_red_coords = list(list(0,0),list(0,0),list(157,219),list(0,0),list(205,110))
 	 /// this map doesnt have the red star on z1, but still has it on z3 and z5
 	iustitia_coords = list(list(80,127))
 

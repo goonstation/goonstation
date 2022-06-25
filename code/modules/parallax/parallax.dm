@@ -1,5 +1,3 @@
-#define PARALLAX_VIEW_WIDTH (WIDE_TILE_WIDTH + 4)
-#define PARALLAX_VIEW_HEIGHT (SQUARE_TILE_WIDTH + 4)
 
 /// before doing this, i had no idea what tuples even were. i still dont know, but now i know not to question what they are.
 #define PARALLAX_GET_COORDS TUPLE_GET_1
@@ -50,6 +48,7 @@
 
 	var/mob/master
 	var/active = TRUE
+	var/lastzlevel
 
 	var/atom/movable/screen/hud/background
 	var/BGicon = "background"
@@ -60,13 +59,18 @@
 		N.plane = PLANE_SPACE
 		N.layer = HUD_LAYER + Player
 		N.appearance_flags += TILE_BOUND
-		N.mouse_opacity = 1
-		for(var/i in 1 to length(pCoords))
-			parallax_coords[i][N] = pCoords[i]
-			if (pCoords[i][1] == 0 || pCoords[i][2] == 0)
-				hidden_objects[i][N] = N
+		N.mouse_opacity = 0
+		N.screen_loc = "CENTER"
+		/// generate visible / hidden on zlevel lists for z1 to z5
+		for(var/i in 1 to 5)
+			if (length(pCoords) >= i)
+				parallax_coords[i][N] = pCoords[i]
+				if (pCoords[i][1] == 0 || pCoords[i][2] == 0)
+					hidden_objects[i][N] = N
+				else
+					parallax_objects[i][N] = N
 			else
-				parallax_objects[i][N] = N
+				hidden_objects[i][N] = N
 
 		scale[N] = Pscale
 		size[N] = Psize
@@ -78,13 +82,15 @@
 		if(isnull(M))
 			CRASH("parallax HUD created with no master")
 		master = M
+		RegisterSignal(M,"mov_moved", .proc/update)
+		RegisterSignal(M,"mob_move_vehicle", .proc/update)
 		clients += master.client
 		SPAWN(0)
 
 			/// background setup, this will be "in" every zlevel, but wont necessarily be visible
 			background = create_screen("background", "Space", 'icons/effects/overlays/parallaxBackground.dmi', "background", "1,1", HUD_LAYER-1)
 			background.transform = matrix(0,0,0,0,0,0)
-			background.screen_loc = master?.client?.view ? "4,1" : "1,1"
+			background.screen_loc = "CENTER"
 			background.plane = PLANE_SPACE
 			background.appearance_flags += TILE_BOUND
 			background.mouse_opacity = 0
@@ -113,103 +119,77 @@
 				PARALLAX_PLANET(PARALLAX_OBJ_19)
 				PARALLAX_PLANET(PARALLAX_OBJ_20)
 				PARALLAX_PLANET(PARALLAX_OBJ_21)
+			src.update()
 
 	/// updates parallax object transform values
-	proc/update(var/turf/master_turf,var/updatehidden)
-		if(!active) return
+	proc/update(var/zlevelchanged)
+		if(!active || !master.client) return
+		var/turf/master_turf = get_turf(master)
+		/// due to the fact that the hud tracks the last zlevel it updated on, we dont need to use a complex signal
+		if (lastzlevel != master_turf?.z)
+			lastzlevel = master_turf.z
+			zlevelchanged = TRUE
+			for(var/atom/movable/screen/hud/Ph as anything in hidden_objects[master_turf.z])
+				Ph.alpha = 0
+				continue
+
+		/// background scrolling and oshan handling
 		#ifdef UNDERWATER_MAP
-		return
+		if (master_turf.z != 2)
+			background.alpha = 0
+			return
+		#else
+		if (background)
+			background.transform = matrix(master.client?.widescreen ? 2.61 : 2.5,0,(150-master_turf.x)/2,0,2.5,(150-master_turf.y)/2)
 		#endif
-
-		var/Slist = parallax_objects[master_turf.z] /// this exists to reduce unnecessary iterating, only objects on the zlevel will be in the list
-		if (updatehidden == TRUE)
-			var/Hlist = hidden_objects[master_turf.z] /// exact opposite of Slist
-			var/matrix/hidden = matrix(0,0,0,0,0,0)
-			for(var/atom/movable/screen/hud/Ph in Hlist)
-				if (Ph.transform != hidden)
-					Ph.transform = hidden
-					continue
-
-		for(var/atom/movable/screen/hud/P in Slist)
+		/// list of objects that are intended to show up on this zlevel
+		for(var/atom/movable/screen/hud/P as anything in parallax_objects[master_turf.z])
 
 			var/coordx = parallax_coords[master_turf.z][P][1]
 			var/coordy = parallax_coords[master_turf.z][P][2]
 
-			var/icon/pIcon = icon(P.icon)
-			var/offsetX = ((coordx-master_turf.x)*scale[P])*32-pIcon.Width()/2
-			var/offsetY = ((coordy-master_turf.y)*scale[P])*32-pIcon.Height()/2
-			var/matrix = matrix(size[P], 0, offsetX, 0, size[P], offsetY)
-			var/smoothtime = round(world.icon_size/clamp(master.glide_size*world.tick_lag,0.01,1),world.tick_lag)
-			animate(P,transform=matrix,time=smoothtime)
+			/// half screen width
+			var/Hsw = master.client.widescreen ? 10 : 7
+			var/Mx = master_turf.x
+			var/My = master_turf.y
+			var/IWidth = icon(P.icon).Height()
+			var/IHeight = icon(P.icon).Height()
+			var/offsetX = ((coordx-Mx)*scale[P])*32-IWidth/2
+			var/offsetY = ((coordy-My)*scale[P])*32-IWidth/2
+
+			/// if the object is far enough away, we can hide it
+			if ((offsetX < -(Hsw*32+IWidth)) || (offsetY < -(7*32+IHeight)))
+				P.alpha = 0
+				continue
+			else if ((offsetX > (Hsw*32+IWidth)) || (offsetY > (7*32+IHeight)))
+				P.alpha = 0
+				continue
+			var/matrix/matrix = matrix(size[P], 0, offsetX, 0, size[P], offsetY)
+
+			/// zlevelchanged means the master's zlevel changed
+			if (zlevelchanged == TRUE)
+				P.transform = matrix
+				P.alpha = 255
+			else
+				/// if screen loc is null on these objects, then we are hiding them
+				if (P.alpha == 0)
+					P.transform = matrix
+					P.alpha = 255
+				else
+					var/smoothtime = round(world.icon_size/max(master.glide_size*world.tick_lag,0.01),world.tick_lag)
+					animate(P,transform=matrix,time=smoothtime)
 			continue
-
-
-
-		/// background scrolling so we dont loop through another time
-		background.transform = matrix(master?.client.view ?2.1:1.5,0,(150-master_turf.x)/2,0,1.5,(150-master_turf.y)/2)
-		//animate(background,transform=matrix,time=round(world.icon_size/master.glide_size*world.tick_lag,world.tick_lag))
 
 	/// turns parallax on or off so update() doesnt have to loop through extra stuff
 	proc/toggle()
 		var/setting = master?.client?.parallax
+		var/turf/master_turf = get_turf(master.loc)
 		if(!setting)
-			for(var/atom/movable/screen/hud/P as anything in parallax_objects)
-				P.transform = matrix(0,0,0,0,0,0)
+			var/Slist = parallax_objects[master_turf.z]
+			for(var/atom/movable/screen/hud/P as anything in Slist)
+				P.screen_loc = null
 			active = FALSE
 			background.transform = matrix(0,0,0,0,0,0)
 		else
 			active = TRUE
-
-
-/// below stuff is everything that will trigger the update() proc
-/mob
-	OnMove()
-		..()
-		if(!isnull(src.client))
-			var/turf/NewLoc = get_turf(src)
-			src.parallax.update(NewLoc)
-		for(var/mob/M as anything in src.observers)
-			if(isnull(M.client))
-				continue
-			var/turf/NewLoc = get_turf(M)
-			M.parallax.update(NewLoc)
-/obj/machinery/vehicle
-	Move(var/NewLoc)
-		..()
-		for(var/mob/M in src)
-			if(!isnull(M.client))
-				M.parallax.update(NewLoc)
-			for(var/mob/Mo as anything in M.observers)
-				if(isnull(Mo.client))
-					continue
-				Mo.parallax.update(NewLoc)
-/obj/vehicle
-	Move(var/NewLoc)
-		. = ..()
-		for(var/mob/M in src)
-			if(!isnull(M?.client))
-				M.parallax.update(NewLoc)
-			for(var/mob/Mo as anything in M.observers)
-				if(isnull(Mo.client))
-					continue
-				Mo.parallax.update(NewLoc)
-/atom/movable
-	set_loc(var/atom/A)
-		. = ..()
-		var/NewLoc = get_turf(A)
-		if (ismob(A))
-			var/mob/M = A
-			if(!isnull(M?.client))
-				M.parallax.update(NewLoc,TRUE)
-			for(var/mob/Mo as anything in M.observers)
-				if(isnull(Mo.client))
-					continue
-				Mo.parallax.update(NewLoc,TRUE)
-		else if (istype(A,/obj/machinery/vehicle) || istype(A,/obj/vehicle))
-			for(var/mob/M in A)
-				if(!isnull(M?.client))
-					M.parallax.update(NewLoc,TRUE)
-				for(var/mob/Mo as anything in M.observers)
-					if(isnull(Mo.client))
-						continue
-					Mo.parallax.update(NewLoc,TRUE)
+			src.update(TRUE)

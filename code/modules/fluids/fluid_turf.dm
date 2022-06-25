@@ -424,6 +424,8 @@
 	name = "cenote"
 	desc = "A deep flooded sinkhole."
 	randomIcon = 0
+	//parallax messed with this
+	plane = PLANE_SPACE+1
 
 	New()
 		..()

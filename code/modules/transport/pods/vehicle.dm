@@ -665,6 +665,9 @@
 		// set return value to default
 		.=..(NewLoc,Dir,step_x,step_y)
 
+		for(var/mob/M in src)
+			SEND_SIGNAL(M,"mob_move_vehicle")
+
 		if (movement_controller)
 			movement_controller.update_owner_dir()
 		else if (flying && facing != flying)
