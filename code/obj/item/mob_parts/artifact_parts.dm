@@ -300,7 +300,7 @@
 		if (H.lying)
 			return
 
-		var/turf/T = get_turf(H)
+		var/turf/T = get_turf(oldLoc)
 
 		var/image/I = image('icons/obj/artifacts/artifactLimbs.dmi', icon_state = "footprints-L", layer = DECAL_LAYER, dir = H.dir)
 		T.UpdateOverlays(I, "precursorfootprints-L-[ref(I)]")
@@ -311,7 +311,7 @@
 		if (H.lying)
 			return
 
-		var/turf/T = get_turf(H)
+		var/turf/T = get_turf(oldLoc)
 
 		var/image/I = image('icons/obj/artifacts/artifactLimbs.dmi', icon_state = "footprints-R", layer = DECAL_LAYER, dir = H.dir)
 		T.UpdateOverlays(I, "precursorfootprints-R-[ref(I)]")
