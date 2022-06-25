@@ -73947,6 +73947,9 @@
 	pixel_x = 6
 	},
 /obj/decal/cleanable/generic,
+/obj/item/reagent_containers/food/snacks/chips{
+	name = "crisps"
+	},
 /turf/unsimulated/floor/carpet/grime,
 /area/iomoon/base)
 "oju" = (
@@ -77046,10 +77049,8 @@
 /area/syndicate_station/firing_range)
 "wiS" = (
 /obj/decal/fakeobjects/lightbulb_broken,
-/obj/item/reagent_containers/food/snacks/chips{
-	name = "crisps"
-	},
 /obj/decal/cleanable/generic,
+/obj/item/radio_tape/adventure/xg2,
 /turf/unsimulated/floor/carpet/grime,
 /area/iomoon/base)
 "wjR" = (
