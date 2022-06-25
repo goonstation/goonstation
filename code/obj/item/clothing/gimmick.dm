@@ -264,33 +264,35 @@
 	icon_state = "devil"
 	item_state = "devil"
 
-// NASSA
+// Donk clothes
 
-/obj/item/clothing/head/helmet/space/blackstronaut
-	name = "NASSA space helmet"
+/obj/item/clothing/head/helmet/space/donk
+	name = "\improper Donk space helmet"
 	desc = "A helmet with a self-contained pressurized environment. Kinda resembles a motorcycle helmet."
 	icon_state = "EOD"
 
-/obj/item/clothing/under/gimmick/blackstronaut
-	name = "NASSA space suit"
-	desc = "A space activity suit embroidered with the NASSA logo. Space is one cold muthafucka."
-	icon_state = "nassa"
-	item_state = "nassa"
+/obj/item/clothing/under/gimmick/donk
+	name = "\improper Donk space suit"
+	desc = "Some Donk brand spacewear. It's uncomfortable and made out of some really crinkly, metallic materials. Amazingly, this seems to be vacuum sealed."
+	icon_state = "donk"
+	item_state = "donk"
 	c_flags = SPACEWEAR
 	body_parts_covered = TORSO|LEGS|ARMS
 	protective_temperature = 1000
 
 	setupProperties()
 		..()
+		setProperty("heatprot", -20)//it's made out of foil, that would make fire a LOT worse
 		setProperty("coldprot", 20)
+		setProperty("radprot", 5)
 
-// SNAZZA
+// Donkini
 
-/obj/item/clothing/under/gimmick/snazza
-	name = "SNAZZA suit"
-	desc = "A NASSA Suit that appears to have been gussied and repurposed as a space bikini. Snazzy, but utterly useless for space travel."
-	icon_state = "snazza"
-	item_state = "snazza"
+/obj/item/clothing/under/gimmick/donkini
+	name = "\improper Donkini"
+	desc = "A Donk suit that appears to have been gussied and repurposed as a space bikini. Snazzy, but utterly useless for space travel."
+	icon_state = "donkini"
+	item_state = "donkini"
 
 // Duke Nukem
 
