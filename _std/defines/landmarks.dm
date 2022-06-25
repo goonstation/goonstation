@@ -82,6 +82,7 @@
 #define LANDMARK_FALL_SPACEMAS "spacemasfall" // Merry Spacemas!
 
 // misc adventure zone stuff
+#define LANDMARK_SUMMON "summon"
 
 /// allowed turfs for telesci
 #define LANDMARK_TELESCI "telesci"
