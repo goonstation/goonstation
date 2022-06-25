@@ -669,7 +669,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				M.changeStatus("radiation", 3 SECONDS * mult, 1)
+				M.take_radiation_dose( 3 SECONDS * mult, 1)
 				..()
 				return
 
@@ -710,7 +710,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1 )
 				if(!M) M = holder.my_atom
-				M.changeStatus("radiation", 3 SECONDS * mult, 1)
+				M.take_radiation_dose( 3 SECONDS * mult, 1)
 				..()
 				return
 

@@ -1564,7 +1564,7 @@ Returns:
 
 	attack_hand(mob/user)
 		boutput(user, "[src] feels oddly warm ...")
-		user.changeStatus("radiation", 5 SECONDS)
+		user.take_radiation_dose( 5 SECONDS)
 		return
 
 	attackby(obj/item/W, mob/user)

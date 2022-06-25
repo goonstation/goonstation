@@ -599,9 +599,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				if(M.getStatusDuration("radiation") && prob(80))
-					M.changeStatus("radiation", -2 SECONDS * mult, 1)
-				if(M.getStatusDuration("n_radiation") && prob(80))
-					M.changeStatus("n_radiation", -2 SECONDS * mult, 1)
+					M.take_radiation_dose( -2 SECONDS * mult, 1)
 
 				M.take_toxin_damage(-0.5 * mult)
 				M.HealDamage("All", 0, 0, 0.5 * mult)
@@ -647,7 +645,7 @@ datum
 					if (M.health < -5 && M.health > -30)
 						M.HealDamage("All", 1 * mult, 1 * mult, 1 * mult)
 				if(M.getStatusDuration("radiation") && prob(30))
-					M.changeStatus("radiation", -2 SECONDS * mult, 1)
+					M.take_radiation_dose( -2 SECONDS * mult, 1)
 				if (prob(5))
 					M.take_toxin_damage(1 * mult)
 				..()
@@ -1119,7 +1117,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				flush(M, 5 * mult) //flushes all chemicals but itself
-				M.changeStatus("radiation", -7 SECONDS, 1)
+				M.take_radiation_dose( -7 SECONDS, 1)
 				if (prob(75))
 					M.HealDamage("All", 0, 0, 4 * mult)
 				if (prob(33))

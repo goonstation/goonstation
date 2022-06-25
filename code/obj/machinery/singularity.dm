@@ -371,7 +371,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			if (H.wear_suit)
 				return
 		M.take_toxin_damage(12)
-		M.changeStatus("radiation", 4*(radius+1) SECONDS)
+		M.take_radiation_dose( 4*(radius+1) SECONDS)
 		M.show_text("You feel odd.", "red")
 
 /obj/machinery/the_singularity/proc/Mezzer()

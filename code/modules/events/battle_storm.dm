@@ -96,7 +96,7 @@
 					for(var/mob/living/M in mobs)
 						if(M.z == Z_LEVEL_STATION)
 							M.changeStatus("burning", 10 SECONDS)
-							M.changeStatus("radiation", 10 SECONDS)
+							M.take_radiation_dose( 10 SECONDS)
 							random_brute_damage(M, 14)
 							random_burn_damage(M, 14)
 			else
@@ -109,7 +109,7 @@
 						if(mob_area?.storming)
 							M.changeStatus("burning", clamp(2 * activations, 2, 8) SECONDS)
 							if  (activations > 1)
-								M.changeStatus("radiation", clamp(1 * activations, 2, 6) SECONDS)
+								M.take_radiation_dose( clamp(1 * activations, 2, 6) SECONDS)
 							random_brute_damage(M, clamp(2 * activations, 2, 10))
 
 			command_alert("The storm has almost passed. ETA 5 seconds until all areas are safe.", "BATTLE STORM ABOUT TO END")

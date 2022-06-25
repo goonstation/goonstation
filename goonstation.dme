@@ -577,6 +577,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\mob\living\life\Life.dm"
 #include "code\mob\living\life\mutations.dm"
 #include "code\mob\living\life\organs.dm"
+#include "code\mob\living\life\radiation.dm"
 #include "code\mob\living\life\sight.dm"
 #include "code\mob\living\life\skin.dm"
 #include "code\mob\living\life\statusupdate.dm"

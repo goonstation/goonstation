@@ -137,6 +137,7 @@
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/viruses)
 	add_lifeprocess(/datum/lifeprocess/blindness)
+	add_lifeprocess(/datum/lifeprocess/radiation)
 
 /mob/living/carbon/human/New()
 	..()
@@ -160,6 +161,7 @@
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/viruses)
 	add_lifeprocess(/datum/lifeprocess/blindness)
+	add_lifeprocess(/datum/lifeprocess/radiation)
 
 /mob/living/carbon/cube/New()
 	..()
@@ -172,6 +174,7 @@
 	add_lifeprocess(/datum/lifeprocess/statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/blindness)
+	add_lifeprocess(/datum/lifeprocess/radiation)
 
 /mob/living/silicon/ai/New()
 	..()

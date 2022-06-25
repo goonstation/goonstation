@@ -72,7 +72,6 @@
 			M.delStatus("slowed")
 			M.delStatus("disorient")
 			M.delStatus("radiation")
-			M.delStatus("n_radiation")
 			M.delStatus("burning")
 			M.delStatus("staggered")
 			M.change_misstep_chance(-INFINITY)

@@ -404,12 +404,12 @@
 
 	OnLife(var/mult)
 		if(..()) return
-		owner.changeStatus("radiation", 3 SECONDS*mult, 1)
+		owner.take_radiation_dose( 3 SECONDS*mult, 1)
 		for(var/mob/living/L in range(1, owner))
 			if (L == owner)
 				continue
 			boutput(L, "<span class='alert'>You are enveloped by a soft green glow emanating from [owner].</span>")
-			L.changeStatus("radiation", 5 SECONDS*mult, 1)
+			L.take_radiation_dose( 5 SECONDS*mult, 1)
 		return
 
 /datum/bioEffect/mutagenic_field
