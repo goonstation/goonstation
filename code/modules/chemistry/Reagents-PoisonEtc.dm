@@ -1010,7 +1010,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
-				M.take_radiation_dose( 5 SECONDS * mult, 4)
+				M.take_radiation_dose(0.75 * mult)
 				..()
 				return
 
@@ -1326,7 +1326,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
-				M.take_radiation_dose( 3 SECONDS * mult, 1)
+				M.take_radiation_dose(0.2 * mult)
 				var/mutChance = 4
 				if (M.traitHolder && M.traitHolder.hasTrait("stablegenes")) mutChance = 2
 				if (probmult(mutChance))
@@ -1362,7 +1362,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
-				M.take_radiation_dose( 2 SECONDS * mult)
+				M.take_radiation_dose( 0.2 * mult)
 				// DNA buckshot
 				var/mutChance = 15
 				if (M.traitHolder && M.traitHolder.hasTrait("stablegenes")) mutChance = 7
@@ -1633,7 +1633,6 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
-				//M.take_radiation_dose( 30, 1)
 				if (!src.data) // Pull bioholder data from blood that's in the same reagentholder
 					if(holder.has_reagent("bloodc"))
 						var/datum/reagent/blood/cheating = holder.reagent_list["bloodc"]

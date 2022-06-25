@@ -503,7 +503,9 @@
 					if(!istype(thing, drag_type))
 						continue
 					if (thing.material && thing.material.getProperty("radioactive") > 0)
-						user.take_radiation_dose( (round(min(thing.material.getProperty("radioactive") / 2, 20))) SECONDS, 2)
+						user.take_radiation_dose( 0.05 * prob(thing.material.getProperty("radioactive")))
+					if (thing.material && thing.material.getProperty("n_radioactive") > 0)
+						user.take_radiation_dose( 0.1 * prob(thing.material.getProperty("n_radioactive")))
 					if (thing in user)
 						continue
 					if (!check_if_enterable(thing))

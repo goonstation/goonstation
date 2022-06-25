@@ -159,13 +159,13 @@
 		if (..())
 			return
 		for (var/mob/living/L in range(1,AST))
-			L.take_radiation_dose( 5 SECONDS, 2)
+			L.take_radiation_dose(0.1)
 
 	onExcavate(var/turf/simulated/wall/auto/asteroid/AST)
 		if (..())
 			return
 		for (var/mob/living/L in range(1,AST))
-			L.take_radiation_dose( 10 SECONDS, 2)
+			L.take_radiation_dose(0.2)
 
 /datum/ore/plasmastone
 	name = "plasmastone"

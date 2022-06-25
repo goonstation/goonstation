@@ -3308,7 +3308,7 @@
 				if (1 to 3)
 					//telehop + radiation
 					if (iscarbon(hitMob))
-						hitMob.take_radiation_dose( 100 SECONDS)
+						hitMob.take_radiation_dose(3)
 						hitMob.changeStatus("weakened", 2 SECONDS)
 					telehop(hitMob, src.power, src.power > 2)
 					return
@@ -3316,7 +3316,7 @@
 				if (4)
 					//big telehop + might leave parts behind.
 					if (iscarbon(hitMob))
-						hitMob.take_radiation_dose( 100 SECONDS)
+						hitMob.take_radiation_dose(3)
 
 						random_brute_damage(hitMob, 25)
 						hitMob.changeStatus("weakened", 2 SECONDS)

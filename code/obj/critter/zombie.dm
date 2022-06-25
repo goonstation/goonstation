@@ -333,7 +333,7 @@
 
 	after_attack_special(mob/living/M)
 		boutput(M, "<span class='alert'>You are enveloped by a soft green glow emanating from [src].</span>")
-		M.take_radiation_dose( 8 SECONDS, 4)
+		M.take_radiation_dose(0.2)
 
 	CritterDeath()
 		..()
