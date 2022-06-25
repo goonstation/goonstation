@@ -1653,7 +1653,7 @@
 					return 1
 				if (W.linked_portal)
 					if (alert(holder.owner, "You already have a portal. Do you want to destroy the old one?", "Confirmation", "Yes", "No") == "Yes")
-						W.linked_portal.deleteLinkedMobs()
+						W.linked_portal.deleteLinkedCritters()
 						qdel(W.linked_portal)
 						W.linked_portal = null
 					else

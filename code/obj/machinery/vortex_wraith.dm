@@ -6,7 +6,7 @@
 	anchored = 1
 	density = 1
 	_health = 25
-	var/list/mob_list = list()
+	var/list/critter_list = list()
 	var/mob_value_cap = 10	//Total allowed point value of all linked mobs
 	var/growth = 0
 	var/next_growth = 10 SECONDS
@@ -58,11 +58,11 @@
 		if ((src.next_spawn != null) && (src.next_spawn < TIME))	//Spawn timer is up
 			var/minion_value = 0
 
-			for (var/obj/critter/M in mob_list)	//Check for dead mobs and adjust cap
+			for (var/obj/critter/M in critter_list)	//Check for dead mobs and adjust cap
 				if ((M == null) || (M?.health <= 0) || (!M.loc))	//We have a mob in the list, but it's dead or missing...
 					var/point_value = getMobValue(M.type)
 					src.total_mob_value -= point_value
-					mob_list -= M
+					critter_list -= M
 
 			if (growth > 0)	//Are we spawning mobs yet? If not, wait for next tick
 				var/list/eligible_turf = list()
@@ -100,7 +100,7 @@
 					minion_value = getMobValue(src.mob_type)
 					if ((src.total_mob_value + minion_value) <= src.mob_value_cap)
 						var/obj/minion = new src.mob_type(chosen_turf)
-						src.mob_list += minion
+						src.critter_list += minion
 						minion.alpha = 0
 						animate(minion, alpha=255, time = 2 SECONDS)
 						src.visible_message("<span class='alert'><b>[minion] emerges from the [src]!</b></span>")
@@ -116,19 +116,19 @@
 		if(src._health <= 0)
 			if (src.master != null)
 				src.master.linked_portal = null
-			deleteLinkedMobs()
+			deleteLinkedCritters()
 			qdel(src)
 
 	onDestroy()
 		. = ..()
 		if (src.master != null)
 			src.master.linked_portal = null
-		deleteLinkedMobs()
+		deleteLinkedCritters()
 
 	disposing()
 		if (src.master != null)
 			src.master.linked_portal = null
-		deleteLinkedMobs()
+		deleteLinkedCritters()
 		. = ..()
 
 	proc/getMobValue(var/obj/O)
@@ -156,8 +156,8 @@
 			else	//You never know, lets give an average point cost
 				return 6
 
-	proc/deleteLinkedMobs()
-		for (var/obj/C in src.mob_list)
+	proc/deleteLinkedCritters()
+		for (var/obj/critter/C in src.critter_list)
 			animate(C, alpha=0, time=2 SECONDS)
 			SPAWN(2 SECOND)
 				qdel(C)
