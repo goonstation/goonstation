@@ -1917,6 +1917,9 @@
 /obj/stool/chair/couch{
 	dir = 9
 	},
+/obj/landmark/start{
+	name = "Medical Doctor"
+	},
 /turf/simulated/floor/carpet/blue,
 /area/station/medical/breakroom)
 "anh" = (
@@ -28745,6 +28748,9 @@
 /obj/stool/chair/couch{
 	dir = 4
 	},
+/obj/landmark/start{
+	name = "Medical Doctor"
+	},
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
 /area/station/medical/breakroom)
 "icb" = (
@@ -42674,6 +42680,13 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/medical/asylum/computer)
+"mja" = (
+/obj/stool/bench/auto,
+/obj/landmark/start{
+	name = "Medical Doctor"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/medical/breakroom)
 "mjf" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 1
@@ -52223,6 +52236,9 @@
 /obj/stool/chair/couch{
 	dir = 5
 	},
+/obj/landmark/start{
+	name = "Medical Doctor"
+	},
 /turf/simulated/floor/carpet/blue,
 /area/station/medical/breakroom)
 "oZD" = (
@@ -54060,6 +54076,9 @@
 	},
 /obj/cable{
 	icon_state = "1-4"
+	},
+/obj/landmark/start{
+	name = "Medical Doctor"
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
 /area/station/medical/breakroom)
@@ -123545,8 +123564,8 @@ mdg
 xiU
 hhT
 aOP
-aOP
-aOP
+mja
+mja
 pGy
 tDz
 tDz
