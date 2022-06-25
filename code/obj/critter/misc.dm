@@ -868,25 +868,27 @@
 
 /obj/critter/bloodling
 	name = "Bloodling"
-	desc = "A force of pure sorrow and evil."
+	desc = "A force of pure sorrow and evil. They shy away from that which is holy."
 	icon_state = "bling"
 	density = 1
-	health = 20
+	health = 15
 	aggressive = 1
 	defensive = 0
 	wanderer = 1
-	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 1
 	atksilicon = 0
 	atcritter = 0
-	firevuln = 0
-	brutevuln = 0
+	firevuln = 1
+	brutevuln = 0.5
 	seekrange = 5
-	invisibility = INVIS_INFRA
 	flying = 1
 	is_pet = FALSE
-
 	generic = 0
+
+	New()
+		UpdateParticles(new/particles/bloody_aura, "bloodaura")
+		..()
 
 	seek_target()
 		src.anchored = 0
@@ -912,12 +914,9 @@
 		if (narrator_mode)
 			playsound(src.loc, 'sound/vox/ghost.ogg', 50, 1, -1)
 		else
-			playsound(src.loc, 'sound/effects/ghost.ogg', 50, 1, -1)
+			playsound(src.loc, 'sound/effects/ghost.ogg', 30, 1, -1)
 		if(iscarbon(M) && prob(50))
-			if(M.see_invisible < INVIS_CLOAK)
-				boutput(M, "<span class='combat'><b>You are forced to the ground by an unseen being!</b></span>")
-			else
-				boutput(M, "<span class='combat'><b>You are forced to the ground by the Bloodling!</b></span>")
+			boutput(M, "<span class='combat'><b>You are forced to the ground by the Bloodling!</b></span>")
 			random_brute_damage(M, rand(0,3))
 			M.changeStatus("stunned", 2 SECONDS)
 			M.changeStatus("weakened", 2 SECONDS)
@@ -926,14 +925,14 @@
 
 
 	CritterAttack(mob/M)
-		playsound(src.loc, "sound/effects/ghost2.ogg", 50, 1, -1)
+		playsound(src.loc, "sound/effects/ghost2.ogg", 30, 1, -1)
 		attacking = 1
 		if(iscarbon(M))
-			if(prob(50))
+			if(prob(30))
 				random_brute_damage(M, rand(3,7))
 				boutput(M, "<span class='combat'><b>You feel blood getting drawn out through your skin!</b></span>")
 			else
-				boutput(M, "<span class='combat'>You feel uncomfortable.</span>")
+				boutput(M, "<span class='combat'>You feel uncomfortable. Your blood seeks to escape you.</span>")
 
 		SPAWN(0.5 SECONDS)
 			attacking = 0
@@ -956,9 +955,18 @@
 
 	ai_think()
 		if(!locate(/obj/decal/cleanable/blood) in src.loc)
-			playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1, -1)
-			make_cleanable( /obj/decal/cleanable/blood,loc)
+			if(prob(50))
+				playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1, -1)
+				make_cleanable( /obj/decal/cleanable/blood,loc)
 		return ..()
+
+	CritterDeath()
+		if (!src.alive)
+			return
+		..()
+		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1, -1)
+		new /obj/decal/cleanable/blood(src.loc)
+		qdel(src)
 
 /obj/critter/blobman
 	name = "mutant"

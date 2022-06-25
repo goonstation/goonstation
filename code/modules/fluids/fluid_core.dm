@@ -813,21 +813,23 @@ var/mutable_appearance/fluid_ma
 
 	var/do_reagent_reaction = 1
 
-	if(F.my_depth_level == 1 && src.shoes?.permeability_coefficient < 1) //sandals do not help
-		do_reagent_reaction = 0
+	if (F.my_depth_level == 1)
+		if(src.shoes && src.shoes.hasProperty ("chemprot") && (src.shoes.getProperty("chemprot") >= 5)) //sandals do not help
+			do_reagent_reaction = 0
 
 	if (F.my_depth_level == 2 || F.my_depth_level == 3)
-		if (src.wear_suit && src.wear_suit.permeability_coefficient <= 0.01)
-			do_reagent_reaction = 0
-	if (F.my_depth_level >= 4)
-		if ((src.wear_suit && src.wear_suit.permeability_coefficient <= 0.01) && (src.head && src.head.seal_hair))
+		if (src.wear_suit && src.wear_suit.hasProperty ("chemprot") && (src.wear_suit.getProperty("chemprot") >= 40))
 			do_reagent_reaction = 0
 
-	if(!shoes)
+	if (F.my_depth_level >= 4)
+		if ((src.wear_suit && src.wear_suit.hasProperty ("chemprot") && (src.wear_suit.getProperty("chemprot") >= 40)) && (src.head && src.head.seal_hair))
+			do_reagent_reaction = 0
+
+	if (!shoes)
 		do_reagent_reaction = 1
 
 	if (src.lying)
-		if (!((src.wear_suit && src.wear_suit.permeability_coefficient <= 0.01) && (src.head && src.head.seal_hair)))
+		if (!(src.wear_suit && src.wear_suit.hasProperty ("chemprot") && (src.wear_suit.getProperty("chemprot") >= 40)) && (src.head && src.head.seal_hair))
 			do_reagent_reaction = 1
 
 	if (do_reagent_reaction && entered_group) //if entered_group == 1, it may not have been set yet

@@ -888,7 +888,7 @@
 		beamobjs = list()
 		var/turf/lastturf = get_step(get_turf(src), dir)
 		for(var/i = 1, i<range, i++)
-			if(lastturf.opacity || !lastturf.canpass())
+			if(lastturf.opacity || !lastturf.Enter(src)) // bootlegging src as an Enter arg. shouldn't matter
 				break
 			var/obj/mechbeam/newbeam = new(lastturf, src)
 			newbeam.set_dir(src.dir)
@@ -1872,7 +1872,7 @@
 				var/packets = ""
 				for(var/d in signal.data)
 					packets += "[d]=[signal.data[d]]; "
-				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, html_decode("ERR_12939_CORRUPT_PACKET:" + stars(packets, 15)), null)
+				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html(html_decode("ERR_12939_CORRUPT_PACKET:" + stars(packets, 15))), null)
 				animate_flash_color_fill(src,"#ff0000",2, 2)
 				return
 
@@ -1880,21 +1880,21 @@
 				var/packets = ""
 				for(var/d in signal.data)
 					packets += "[d]=[signal.data[d]]; "
-				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, html_decode("[signal.encryption]" + stars(packets, 15)), null)
+				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html(html_decode("[signal.encryption]" + stars(packets, 15))), null)
 				animate_flash_color_fill(src,"#ff0000",2, 2)
 				return
 
 			if(forward_all)
-				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, html_decode(list2params(signal.data)), signal.data_file?.copy_file())
+				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html(html_decode(list2params(signal.data))), signal.data_file?.copy_file())
 				animate_flash_color_fill(src,"#00FF00",2, 2)
 				return
 
 			else if(signal.data["command"] == "sendmsg" && signal.data["data"])
-				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, html_decode(signal.data["data"]), signal.data_file?.copy_file())
+				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html(html_decode(signal.data["data"])), signal.data_file?.copy_file())
 				animate_flash_color_fill(src,"#00FF00",2, 2)
 
 			else if(signal.data["command"] == "text_message" && signal.data["message"])
-				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, html_decode(signal.data["message"]), null)
+				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html(html_decode(signal.data["message"])), null)
 				animate_flash_color_fill(src,"#00FF00",2, 2)
 
 			else if(signal.data["command"] == "setfreq" && signal.data["data"])

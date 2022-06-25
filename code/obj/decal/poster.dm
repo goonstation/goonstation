@@ -7,6 +7,7 @@
 	anchored = 1
 	opacity = 0
 	density = 0
+	deconstruct_flags = DECON_WIRECUTTERS
 	var/imgw = 600
 	var/imgh = 400
 	var/popup_win = 0

@@ -496,6 +496,10 @@
 
 	..() // Admin-assigned antagonists or whatever.
 
+	if (finished == 1)
+		for(var/datum/mind/rev_mind as anything in head_revolutionaries)
+			if(rev_mind.current && !isdead(rev_mind.current))
+				rev_mind.current.unlock_medal("This station is ours!", TRUE)
 
 
 

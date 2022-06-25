@@ -264,34 +264,35 @@
 	icon_state = "devil"
 	item_state = "devil"
 
-// NASSA
+// Donk clothes
 
-/obj/item/clothing/head/helmet/space/blackstronaut
-	name = "NASSA space helmet"
+/obj/item/clothing/head/helmet/space/donk
+	name = "\improper Donk space helmet"
 	desc = "A helmet with a self-contained pressurized environment. Kinda resembles a motorcycle helmet."
 	icon_state = "EOD"
 
-/obj/item/clothing/under/gimmick/blackstronaut
-	name = "NASSA space suit"
-	desc = "A space activity suit embroidered with the NASSA logo. Space is one cold muthafucka."
-	icon_state = "nassa"
-	item_state = "nassa"
+/obj/item/clothing/under/gimmick/donk
+	name = "\improper Donk space suit"
+	desc = "Some Donk brand spacewear. It's uncomfortable and made out of some really crinkly, metallic materials. Amazingly, this seems to be vacuum sealed."
+	icon_state = "donk"
+	item_state = "donk"
 	c_flags = SPACEWEAR
 	body_parts_covered = TORSO|LEGS|ARMS
-	permeability_coefficient = 0.02
 	protective_temperature = 1000
 
 	setupProperties()
 		..()
+		setProperty("heatprot", -20)//it's made out of foil, that would make fire a LOT worse
 		setProperty("coldprot", 20)
+		setProperty("radprot", 5)
 
-// SNAZZA
+// Donkini
 
-/obj/item/clothing/under/gimmick/snazza
-	name = "SNAZZA suit"
-	desc = "A NASSA Suit that appears to have been gussied and repurposed as a space bikini. Snazzy, but utterly useless for space travel."
-	icon_state = "snazza"
-	item_state = "snazza"
+/obj/item/clothing/under/gimmick/donkini
+	name = "\improper Donkini"
+	desc = "A Donk suit that appears to have been gussied and repurposed as a space bikini. Snazzy, but utterly useless for space travel."
+	icon_state = "donkini"
+	item_state = "donkini"
 
 // Duke Nukem
 
@@ -715,10 +716,13 @@
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "adeptus"
 	item_state = "adeptus"
-	permeability_coefficient = 0.50
 	over_hair = TRUE
 	body_parts_covered = TORSO|LEGS|ARMS
 	wear_layer = MOB_OVERLAY_BASE
+
+	setupProperties()
+		..()
+		setProperty("chemprot", 10)
 
 //power armor
 
@@ -980,7 +984,6 @@
 	desc = "Really, they're just regular overalls, but they have a little bee patch on them. Aww."
 	icon_state = "beekeeper"
 	item_state = "beekeeper"
-	permeability_coefficient = 0.50
 
 /obj/item/clothing/under/gimmick/butler
 	name = "butler suit"
@@ -1652,6 +1655,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 	icon_state = "ftscanplate"
 	item_state = "ftscanplate"
 	desc = "This eyewear looks incredibly advanced, as do most things that come from the Commonwealth of Free Worlds. Unfortunately, this is a non-functioning replica sold to tourists."
+	wear_layer = MOB_GLASSES_LAYER2
 
 /obj/item/clothing/under/blossomdress
 	name = "cherryblossom dress"

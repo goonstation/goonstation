@@ -1349,10 +1349,14 @@ ABSTRACT_TYPE(/mob/living/critter/robotic)
 /// Parent for robotic critters. Handles some traits that robots should have- damaged by EMPs, immune to fire and rads
 /mob/living/critter/robotic
 	name = "a fucked up robot"
+	can_bleed = FALSE
+	metabolizes = FALSE
 	var/emp_vuln = 1
+	blood_id = null
 
 	New()
 		..()
+		src.reagents = null
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT, src, 100)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_HEATPROT, src, 100)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_COLDPROT, src, 100)
@@ -1361,3 +1365,6 @@ ABSTRACT_TYPE(/mob/living/critter/robotic)
 	emp_act()
 		src.emag_act() // heh
 		src.TakeDamage(10 * emp_vuln, 10 * emp_vuln)
+
+	vomit()
+		return

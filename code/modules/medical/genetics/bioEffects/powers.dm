@@ -184,30 +184,33 @@
 
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
+
+			// First, restore a little hunger, and heal our organs
 			if (isitem(the_object))
 				var/obj/item/the_item = the_object
 				H.sims?.affectMotive("Hunger", (the_item.w_class + 1) * 5) // +1 so tiny items still give a small boost
-			for(var/A in owner.organs)
-				var/obj/item/affecting = null
-				if (!owner.organs[A])    continue
-				affecting = owner.organs[A]
-				if (!isitem(affecting))
-					continue
-				affecting.heal_damage(4, 0)
-			owner.UpdateDamageIcon()
+				for(var/A in owner.organs)
+					var/obj/item/affecting = null
+					if (!owner.organs[A])
+						continue
+					affecting = owner.organs[A]
+					if (!isitem(affecting))
+						continue
+					affecting.heal_damage(4, 0)
+				owner.UpdateDamageIcon()
 
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
+			// Then delete the actual item itself
+			// Organs and body parts have special behaviors we need to account for
 			if (istype(the_object, /obj/item/organ))
 				var/obj/item/organ/O = the_object
 				if (O.donor)
 					H.organHolder.drop_organ(the_object)
-				qdel(the_object)
 			else if (istype(the_object, /obj/item/parts))
 				var/obj/item/parts/part = the_object
 				part.delete()
 				H.hud.update_hands()
-		else
+
+		if (!QDELETED(the_object)) // Finally, ensure that the item is deleted regardless of what it is
 			qdel(the_object)
 
 		using = FALSE

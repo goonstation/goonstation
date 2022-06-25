@@ -430,7 +430,7 @@ obj/item/gnomechompski/elf
 		usrverbs -= /proc/owl_slam
 
 	attack_self(mob/user as mob)
-		var/input = alert("Would you like to attempt to absorb the core into your body?","Hoot or not to hoot.", "Yes","No")
+		var/input = tgui_alert(user, "Would you like to attempt to absorb the core into your body?", "Hoot or not to hoot.", list("Yes", "No"))
 		if (input == "Yes" && chosen == 0)
 			chosen = 1
 			user.visible_message("<span class='alert'><b>[user] absorbs the [src] into their body!")

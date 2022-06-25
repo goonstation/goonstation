@@ -40,9 +40,9 @@
 			src.add_fingerprint(user)
 			if (src.cupinside == 1) //freaking spacing errors made me waste hours on this
 				if(!(status & (NOPOWER|BROKEN)))
-					switch(alert("What would you like to do with [src]?",,"Make espresso","Remove cup","Nothing"))
+					switch(tgui_alert(user, "What would you like to do with [src]?", "Espresso machine", list("Make espresso", "Remove cup", "Nothing")))
 						if ("Make espresso")
-							var/drink_choice = input(user, "What kind of espresso do you want to make?", "Selection") as null|anything in list("Espresso","Latte","Mocha","Cappuchino","Americano", "Decaf", "Flat White")
+							var/drink_choice = tgui_input_list(user, "What kind of espresso do you want to make?", "Selection", list("Americano", "Cappuchino", "Decaf", "Espresso", "Flat White", "Latte", "Mocha"))
 							if (!drink_choice)
 								return
 							switch (drink_choice)  //finds cup in contents and adds chosen drink to it
@@ -155,12 +155,28 @@
 	var/default_carafe = /obj/item/reagent_containers/food/drinks/carafe
 	var/image/fluid_image
 
+	var/emagged = FALSE
+
 	New()
 		..()
 		UnsubscribeProcess()
 		if (ispath(src.default_carafe))
 			src.my_carafe = new src.default_carafe (src)
 		src.update()
+
+	emag_act(var/mob/user, var/obj/item/card/emag/E)
+
+		if(!src.emagged)
+			if (user)
+				boutput(user, "<span class='notice'>You force the machine to brew something else...</span>")
+
+			src.desc = " It's top of the line NanoTrasen tea technology! Featuring 100% Organic Locally-Grown green leaves!"
+			src.emagged = TRUE
+			return TRUE
+		else
+			if (user)
+				boutput(user, "<span class='alert'>This has already been tampered with.</span>")
+			return FALSE
 
 	attackby(var/obj/item/W, var/mob/user)
 		if (istype(W, /obj/item/reagent_containers/food/drinks/carafe))
@@ -180,10 +196,13 @@
 			src.add_fingerprint(user)
 			if (src.my_carafe) //freaking spacing errors made me waste hours on this
 				if (!(status & (NOPOWER|BROKEN)))
-					switch (alert("What would you like to do with [src]?",,"Brew coffee","Remove carafe","Nothing"))
-						if ("Brew coffee")
+					var/choice = tgui_alert(user, "What would you like to do with [src]?", "Coffeemaker", list("Brew [src.emagged ? "tea" : "coffee"]", "Remove carafe", "Nothing"))
+					if (!choice || choice == "Nothing")
+						return
+					switch (choice)
+						if ("Brew coffee","Brew tea")
 							for(var/obj/item/reagent_containers/food/drinks/carafe/C in src.contents)
-								C.reagents.add_reagent("coffee_fresh",100)
+								C.reagents.add_reagent(src.emagged ? "tea" : "coffee_fresh",100)
 								playsound(src.loc, 'sound/misc/pourdrink.ogg', 50, 1)
 						if ("Remove carafe")
 							if (!src.my_carafe)
@@ -196,8 +215,6 @@
 							src.my_carafe = null
 							user.show_text("You have removed the [src.carafe_name] from the [src].")
 							src.update()
-						if ("Nothing")
-							return
 			else return ..()
 
 	ex_act(severity)

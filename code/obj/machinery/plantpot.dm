@@ -848,7 +848,7 @@
 					if(growing.HYPattacked_proc(src,usr,null)) return
 
 			if(growing.growthmode == "weed")
-				if(alert("Clear this tray?",,"Yes","No") == "Yes")
+				if(tgui_alert(usr, "Clear this tray?", "Clear tray", list("Yes", "No")) == "Yes")
 					usr.visible_message("<b>[usr.name]</b> dumps out the tray's contents.")
 					boutput(usr, "<span class='alert'>Weeds still infest the tray. You'll need something a bit more thorough to get rid of them.</span>")
 					src.growth = 0
@@ -856,13 +856,13 @@
 					// The idea here is you gotta use weedkiller or something else to get rid of the
 					// weeds since you can't just clear them out by hand.
 			else
-				if(alert("Clear this tray?",,"Yes","No") == "Yes")
+				if(tgui_alert(usr, "Clear this tray?", "Clear tray", list("Yes", "No")) == "Yes")
 					usr.visible_message("<b>[usr.name]</b> dumps out the tray's contents.")
 					src.reagents.clear_reagents()
 					logTheThing("combat", usr, null, "cleared a hydroponics tray containing [current.name] at [log_loc(src)]")
 					HYPdestroyplant()
 		else
-			if(alert("Clear this tray?",,"Yes","No") == "Yes")
+			if(tgui_alert(usr, "Clear this tray?", "Clear tray", list("Yes", "No")) == "Yes")
 				usr.visible_message("<b>[usr.name]</b> dumps out the tray's contents.")
 				src.reagents.clear_reagents()
 				UpdateIcon()
@@ -1532,11 +1532,7 @@
 		src.recently_harvested = 0
 		UpdateIcon()
 		update_name()
-
-		if(usr && ishellbanned(usr)) //Haw haw
-			growth_rate = 1
-		else
-			growth_rate = 2
+		growth_rate = 2
 
 	proc/HYPkillplant()
 		// Simple proc to kill the plant without clearing the plantpot out altogether.

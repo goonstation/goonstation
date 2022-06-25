@@ -206,31 +206,30 @@
 		return
 
 	if(authed && (access_maxsec in W:access))
-		var/choice = alert(user, "Would you like to unauthorize security's access to riot gear?", "Armory Unauthorization", "Unauthorize", "No")
+		var/choice = tgui_alert(user, "Would you like to unauthorize security's access to riot gear?", "Armory Unauthorization", list("Unauthorize", "No"))
 		if(BOUNDS_DIST(user, src) > 0) return
 		src.add_fingerprint(user)
-		switch(choice)
-			if("Unauthorize")
-				if(GET_COOLDOWN(src, "unauth"))
-					boutput(user, "<span class='alert'> The armory computer cannot take your commands at the moment! Wait [GET_COOLDOWN(src, "unauth")/10] seconds!</span>")
-					playsound( src.loc,"sound/machines/airlock_deny.ogg", 10, 0 )
-					return
-				if(!ON_COOLDOWN(src, "unauth", 5 MINUTES))
-					unauthorize()
-					playsound(src.loc,"sound/machines/chime.ogg", 10, 1)
-					boutput(user,"<span class='notice'> The armory's equipments have returned to having their default access!</span>")
-					return
-			if("No")
+		if (choice == "Unauthorize")
+			if(GET_COOLDOWN(src, "unauth"))
+				boutput(user, "<span class='alert'> The armory computer cannot take your commands at the moment! Wait [GET_COOLDOWN(src, "unauth")/10] seconds!</span>")
+				playsound( src.loc,"sound/machines/airlock_deny.ogg", 10, 0 )
 				return
+			if(!ON_COOLDOWN(src, "unauth", 5 MINUTES))
+				unauthorize()
+				playsound(src.loc,"sound/machines/chime.ogg", 10, 1)
+				boutput(user,"<span class='notice'> The armory's equipments have returned to having their default access!</span>")
+		return
 
 	if (!src.authorized)
 		src.authorized = list()
 		src.authorized_registered = list()
 
-	var/choice = alert(user, text("Would you like to authorize access to riot gear? [] authorization\s are still needed.", src.auth_need - src.authorized.len), "Armory Auth", "Authorize", "Repeal")
+	var/choice = tgui_alert(user, "Would you like to authorize access to riot gear? [src.auth_need - length(src.authorized)] authorization\s are still needed.", "Armory Auth", list("Authorize", "Repeal"))
 	if(BOUNDS_DIST(user, src) > 0 || src.authed)
 		return
 	src.add_fingerprint(user)
+	if (!choice)
+		return
 	switch(choice)
 		if("Authorize")
 			if (user in src.authorized)

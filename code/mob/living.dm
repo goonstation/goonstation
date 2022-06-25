@@ -617,7 +617,7 @@
 	else
 		src.visible_message("<span style='font-weight:bold;color:#f00;font-size:120%;'>[src] points \the [G] at [target]!</span>")
 
-	if (!ON_COOLDOWN(src, "point", 1 SECOND))
+	if (!ON_COOLDOWN(src, "point", 0.5 SECONDS))
 		make_point(get_turf(target), pixel_x=target.pixel_x, pixel_y=target.pixel_y, color=src.bioHolder.mobAppearance.customization_first_color, pointer=src)
 
 
@@ -643,7 +643,7 @@
 				if(isskeleton(H) && !H.organHolder.head)
 					var/datum/mutantrace/skeleton/S = H.mutantrace
 					if(S.head_tracker != null)
-						S.head_tracker.ears.talk_into(src, messages, param, src.real_name, lang_id)
+						S.head_tracker.ears?.talk_into(src, messages, param, src.real_name, lang_id)
 
 		if ("secure headset")
 			if (src.ears)
@@ -653,16 +653,16 @@
 				if(isskeleton(H) && !H.organHolder.head)
 					var/datum/mutantrace/skeleton/S = H.mutantrace
 					if(S.head_tracker != null)
-						S.head_tracker.ears.talk_into(src, messages, param, src.real_name, lang_id)
+						S.head_tracker.ears?.talk_into(src, messages, param, src.real_name, lang_id)
 
 		if ("right hand")
-			if (src.r_hand)
+			if (src.r_hand && src.organHolder.head)
 				src.r_hand.talk_into(src, messages, param, src.real_name, lang_id)
 			else
 				src.emote("handpuppet")
 
 		if ("left hand")
-			if (src.l_hand)
+			if (src.l_hand && src.organHolder.head)
 				src.l_hand.talk_into(src, messages, param, src.real_name, lang_id)
 			else
 				src.emote("handpuppet")
@@ -1054,14 +1054,16 @@
 
 	var/heardname = src.real_name
 
-	if (!skip_open_mics_in_range)
+	var/is_decapitated_skeleton = ishuman(src) && isskeleton(src) && !src.organHolder.head
+
+	if (!skip_open_mics_in_range && !is_decapitated_skeleton)
 		src.send_hear_talks(message_range, messages, heardname, lang_id)
 
 	var/list/listening = list()
 	var/list/olocs = list()
 	var/atom/say_location = src
 	var/thickness = 0
-	if (ishuman(src) && isskeleton(src) && !src.organHolder.head)	//Decapitated skeletons speak from their heads
+	if (is_decapitated_skeleton)	//Decapitated skeletons speak from their heads
 		var/mob/living/carbon/human/H = src
 		var/datum/mutantrace/skeleton/S = H.mutantrace
 		if (S.head_tracker)
@@ -1968,14 +1970,13 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	var/oldbloss = get_brute_damage()
 	var/oldfloss = get_burn_damage()
 	..()
-	SPAWN(0.1 SECONDS) //fix race condition
-		var/newbloss = get_brute_damage()
-		var/damage = ((newbloss - oldbloss) + (get_burn_damage() - oldfloss))
-		if (reagents)
-			reagents.physical_shock((newbloss - oldbloss) * 0.15)
+	var/newbloss = get_brute_damage()
+	var/damage = ((newbloss - oldbloss) + (get_burn_damage() - oldfloss))
+	if (reagents)
+		reagents.physical_shock((newbloss - oldbloss) * 0.15)
 
-		if ((damage > 0) || W.force)
-			src.was_harmed(M, W)
+	if ((damage > 0) || W.force)
+		src.was_harmed(M, W)
 
 
 /mob/living/shock(var/atom/origin, var/wattage, var/zone = "chest", var/stun_multiplier = 1, var/ignore_gloves = 0)

@@ -135,6 +135,10 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 		if(active)
 			set_projectile()
 
+		#ifdef LOW_SECURITY
+		START_TRACKING_CAT(TR_CAT_DELETE_ME)
+		#endif
+
 	disposing()
 		processing_items.Remove(src)
 		..()

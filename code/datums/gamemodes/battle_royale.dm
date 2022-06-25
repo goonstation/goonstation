@@ -3,7 +3,6 @@
 */
 
 var/global/area/current_battle_spawn = null
-var/global/list/datum/mind/battle_pass_holders = list()
 
 #define TIME_BETWEEN_SHUTTLE_MOVES 5 SECONDS
 #define MAX_TIME_ON_SHUTTLE 60 SECONDS
@@ -419,7 +418,7 @@ proc/equip_battler(mob/living/carbon/human/battler)
 		/obj/item/clothing/under/gimmick/fake_waldo,
 		/obj/item/clothing/under/gimmick/johnny,
 		/obj/item/clothing/under/gimmick/police,
-		/obj/item/clothing/under/gimmick/blackstronaut,
+		/obj/item/clothing/under/gimmick/donk,
 		/obj/item/clothing/under/gimmick/duke,
 		/obj/item/clothing/under/gimmick/mj_clothes,
 		/obj/item/clothing/under/gimmick/viking,

@@ -169,6 +169,7 @@
 		UnsubscribeProcess()
 		AddComponent(/datum/component/mechanics_holder)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", .proc/toggleinput)
+		AddComponent(/datum/component/bullet_holes, 15, hardened ? 999 : 5) // no bullet holes if hardened; wouldn't want to get their hopes up
 		update_nearby_tiles(need_rebuild=1)
 		START_TRACKING
 		for (var/turf/simulated/wall/auto/T in orange(1))
@@ -725,6 +726,7 @@
 	density = 1
 	p_open = 0
 	operating = 0
+	layer = EFFECTS_LAYER_UNDER_1
 	anchored = 1
 	autoclose = 1
 	var/blocked = null
