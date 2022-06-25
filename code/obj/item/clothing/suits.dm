@@ -396,13 +396,11 @@
 
 /obj/item/clothing/suit/hopjacket
 	name = "Head of Personnel's jacket"
-	desc = "A tacky green and red coat for a tacky green beurocrat."
+	desc = "A tacky green and red jacket for a tacky green beurocrat."
 	icon_state = "hopjacket"
 	uses_multiple_icon_states = 1
 	item_state = "hopjacket"
 	var/coat_style = "hopjacket"
-	body_parts_covered = TORSO|ARMS
-	permeability_coefficient = 0.25
 	var/buttoned = TRUE
 	bloodoverlayimage = SUITBLOOD_COAT
 
@@ -411,7 +409,6 @@
 	setupProperties()
 		..()
 		setProperty("rangedprot", 0.5)
-		delProperty("chemprot")
 
 	New()
 		..()
