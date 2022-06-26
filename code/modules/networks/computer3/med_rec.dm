@@ -683,7 +683,7 @@
 
 			return dat
 
-		virusmenu_text() //Mark for integration
+		virusmenu_text()
 			var/dat = {"<b>Known Diseases:</b><br>
 					(01) GBS<br>
 					(02) Common Cold<br>

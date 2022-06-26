@@ -79,7 +79,11 @@
 					if (prob(20))
 						H.reagents.add_reagent("toxin", 20)
 					#ifdef CREATE_PATHOGENS
-					//add_pathogens(H, 30) //Implement sepsis
+					A.reagents.add_reagent("pathogen", amount)
+					var/datum/reagent/blood/pathogen/R = A.reagents.get_reagent("pathogen")
+					var/datum/microbe/P = new /datum/microbe
+					P.randomize()
+					R.microbes = P
 					#endif
 					boutput(H, "<span class='alert'>Your appendix has burst! Seek medical help!</span>")
 

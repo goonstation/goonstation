@@ -1693,7 +1693,7 @@
 		if(weighted_average > 4)
 			weighted_average = 0
 			#ifdef CREATE_PATHOGENS				//Should corpses produce bad microbes? I don't think its a great idea...
-			if(!isdead(L) && prob(0.01))		//Good luck farming for germs.
+			if(!isdead(L) && prob(0.0001))		//Good luck farming for germs.
 				var/datum/microbe/P = new /datum/microbe
 				P.randomize()
 				L.infected(P)
