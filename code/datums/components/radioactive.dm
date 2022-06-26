@@ -38,15 +38,21 @@ TYPEINFO(/datum/component/radioactive)
 				src._added_to_items_processing = TRUE
 		else if(ismob(parent))
 			RegisterSignal(parent, list(COMSIG_LIVING_LIFE_TICK), .proc/ticked)
+		else
+			global.processing_items.Add(src) //gross - in the event that this component is put on something that isn't an item/mob, use the item processing loop anyway
 		var/atom/PA = parent
 		PA.add_simple_light("radiation_light", rgb2num(neutron ? "#2e3ae4" : "#18e022")+list(round(255*radStrength/100)))
 		PA.add_filter("radiation_outline", 1, outline_filter(size=1,color=(neutron ? "#2e3ae4FF" : "#18e022FF")))
+
+	proc/process()
+		ticked(parent)
 
 	UnregisterFromParent()
 		. = ..()
 		var/atom/PA = parent
 		if(src._added_to_items_processing)
 			global.processing_items.Remove(parent)
+		global.processing_items.Remove(src)
 		PA.remove_simple_light("radiation_light")
 		PA.remove_filter("radiation_outline")
 		UnregisterSignal(parent, list(COMSIG_ATOM_EXAMINE))

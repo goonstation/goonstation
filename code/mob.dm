@@ -221,7 +221,7 @@
 	/// stores total accumulated radiation dose
 	var/radiation_dose = 0
 	/// natural decay of radiation exposure
-	var/radiation_dose_decay = 0.01
+	var/radiation_dose_decay = 0.001
 
 //obj/item/setTwoHanded calls this if the item is inside a mob to enable the mob to handle UI and hand updates as the item changes to or from 2-hand
 /mob/proc/updateTwoHanded(var/obj/item/I, var/twoHanded = 1)

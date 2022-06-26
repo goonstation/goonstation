@@ -509,7 +509,7 @@
 					if (thing.loc == src || thing.loc == src.loc) // we're already there!
 						continue
 					thing.set_loc(T)
-					SEND_SIGNAL(thing,COMSIG_ATTACKHAND) //triggers radiation/explsion/glue stuff
+					SEND_SIGNAL(thing,COMSIG_ATTACKHAND,user) //triggers radiation/explsion/glue stuff
 					sleep(0.5)
 					if (!src.open)
 						break
