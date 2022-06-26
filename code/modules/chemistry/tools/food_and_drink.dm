@@ -1723,8 +1723,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 /obj/item/reagent_containers/food/drinks/carafe
 	name = "coffee carafe"
 	desc = null
-	icon_state = "carafe-eng"
-	item_state = "carafe-eng"
+	icon_state = "carafe-gen"
+	item_state = "carafe-gen"
 	initial_volume = 100
 	can_chug = 0
 	var/smashed = 0
@@ -1809,6 +1809,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	icon_state = "carafe-sci"
 	item_state = "carafe-sci"
 
+/obj/item/reagent_containers/food/drinks/carafe/engineering
+	icon_state = "carafe-eng"
+	item_state = "carafe-eng"
+
 /obj/item/reagent_containers/food/drinks/coconut
 	name = "Coconut"
 	desc = "Must be migrational."
@@ -1887,3 +1891,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	name = "golden cocktail shaker"
 	desc = "A golden plated tumbler with a top, used to mix cocktails. Can hold up to 120 units. So rich! So opulent! So... tacky."
 	icon_state = "golden_cocktailshaker"
+
+/obj/item/reagent_containers/food/drinks/creamer
+	name = "coffee creamer"
+	desc = "A bottle of dairy-based coffee creamer. It's been left out at room temperature for a bit too long, don't you think?"
+	icon = 'icons/obj/foodNdrink/espresso.dmi'
+	icon_state = "creamer"
+	item_state = "creamer"
+	initial_volume = 50
+	initial_reagents = list("milk"=50)
+	can_recycle = 0
