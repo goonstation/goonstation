@@ -17,7 +17,7 @@
 			boutput(V, "<span class='notice'>We slip into the shadows</span>")
 			V.cloaked = TRUE
 			SPAWN(20 SECONDS)
-				if(V != null && V.cloaked)
+				if(V?.cloaked)
 					animate(V, alpha=255, time=3 SECONDS)
 					boutput(V, "<span class='notice'>We reappear</span>")
 
