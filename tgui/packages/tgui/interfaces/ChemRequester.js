@@ -1,8 +1,9 @@
-import { useBackend } from '../backend';
+import { useBackend, useLocalState } from '../backend';
 import { Button, Input, Section, Box, Stack, NumberInput } from '../components';
 import { Window } from '../layouts';
 import { KEY_ENTER } from 'common/keycodes';
 import { capitalize } from '../../common/string';
+import { ListSearch } from './common/ListSearch';
 
 const IDCard = (props, context) => {
   if (!props.card) {
@@ -23,43 +24,25 @@ const IDCard = (props, context) => {
   );
 };
 
-const AutocompleteInput = (props, context) => {
-  const {
-    words,
-    onChosen,
-  } = props;
+const ReagentSearch = (props, context) => {
+  const { act } = useBackend(context);
+  const { chemicals } = props;
+  const [searchText, setSearchText] = useLocalState(context, 'searchText', '');
+  const filteredReagents = (
+    Object.keys(chemicals).filter(chemical => chemical.includes(searchText))
+  );
+  const handleSelectReagent = (reagent) => {
+    act("set_reagent", { reagent_name: reagent, reagent_id: chemicals[reagent] });
+    setSearchText('');
+  };
   return (
-    <>
-      <Input
-        onInput={(e, typedValue) => {
-          // hide/unhide words based on whether they match our search term
-          let children = document.getElementById("autocomplete").children;
-          for (let i = 0; i < children.length; i++) {
-            children[i].hidden = !(words[i].includes(typedValue));
-          }
-          // on hitting enter we pick the first matching word
-          if (e.keyCode === KEY_ENTER) {
-            for (let i = 0; i < children.length; i++) {
-              if (!children[i].hidden) {
-                onChosen(words[i]);
-                return;
-              }
-            }
-          }
-        }}
-      />
-      <Section>
-        <Stack vertical id="autocomplete">
-          {words.map((word) => {
-            return (
-              <Stack.Item key={word} grow>
-                <Button width={25} onClick={() => { onChosen(word); }}>{capitalize(word)}</Button>
-              </Stack.Item>
-            );
-          })}
-        </Stack>
-      </Section>
-    </>
+    <ListSearch
+      autoFocus
+      currentSearch={searchText}
+      options={filteredReagents}
+      onSearch={setSearchText}
+      onSelect={handleSelectReagent}
+    />
   );
 };
 
@@ -83,7 +66,7 @@ export const ChemRequester = (props, context) => {
             </Stack.Item>
             <Stack.Item height="50%">
               {!selected_reagent && (
-                <AutocompleteInput words={Object.keys(chemicals)} onChosen={(reagent) => act("set_reagent", { reagent_name: reagent, reagent_id: chemicals[reagent] })} />
+                <ReagentSearch chemicals={chemicals} />
               )}
               {!!selected_reagent && (
                 <Button onClick={() => { act("set_reagent", { reagent: null }); }}>{capitalize(selected_reagent)}</Button>
