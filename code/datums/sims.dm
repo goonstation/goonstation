@@ -276,7 +276,7 @@
 				showOwner("<span class='alert'>You are [pick("disgusted", "revolted", "repelled", "sickened", "nauseated")] by your own [pick("smell", "odor", "body odor", "scent", "fragrance", "bouquet", "savour", "tang", "whiff")]!</span>")
 			*/
 			#ifdef CREATE_PATHOGENS //PATHOLOGY_REMOVAL
-			if (value < 5 && prob(1) && prob(1))	//Not so easy to become a germ colony anymore
+			if (value < 5 && prob(1) && holder.owner.microbes.len < 3)	//Not so easy to become a germ colony anymore
 				var/datum/microbe/P = new /datum/microbe
 				P.randomize()
 				holder.owner.infected(P)

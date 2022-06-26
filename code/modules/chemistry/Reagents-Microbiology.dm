@@ -260,3 +260,15 @@ datum
 			transparency = 50
 			value = 4
 			data = "carbon"
+
+		microbiology/botanicalalgae
+			name = "Botanical Algae"
+			id = "botanicalalgae"
+			description = "A culture of germs: this one seems to reduce the power consumption of hydroponics trays."
+			taste = "mossy"
+			fluid_r = 150
+			fluid_b = 15
+			fluid_g = 20
+			transparency = 50
+			value = 4
+			data = "carpet"

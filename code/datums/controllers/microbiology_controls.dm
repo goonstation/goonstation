@@ -31,6 +31,47 @@ var/datum/microbiology_controller/microbio_controls
 				var/datum/microbe/A = new X
 				cultures += A
 
+	proc/updatemicrobe(var/datum/microbe/P, var/selection, var/newname = "Optional", var/reportaccuracy = 0)
+		if (!(P) || !(selection))
+			return
+		if (selection == "infected")
+			P.infected += src
+			P.infectioncount--
+			for (var/mob/living/carbon/human/H in P.infected)
+				updatesubdata(H,P)
+			return
+		if (selection == "cured")
+			P.infected -= src
+			P.immune += src
+			if (!(P.infected))	//If the disease is extinct skip the for loops
+				return
+			for (var/mob/living/carbon/human/H in P.infected)
+				updatesubdata(H,P)
+			return
+		if (selection == "rename")
+			P.print_name = newname
+			if (!(P.infected))	//If the disease is extinct skip the for loops
+				return
+			for (var/mob/living/carbon/human/H in P.infected)
+				updatesubdata(H,P)
+			return
+		if (selection == "researched")
+			P.reported = 1
+			if (reportaccuracy)
+				P.curereported = 1
+			if (!(P.infected))	//If the disease is extinct/has no hosts skip the for loops
+				return
+			for (var/mob/living/carbon/human/H in P.infected)
+				updatesubdata(H,P)
+			return
+
+	proc/updatesubdata(var/mob/living/carbon/human/H, var/datum/microbe/P)
+		if (!H.microbes.len)	//If the listed mob does not have any microbes return early
+			return
+		for (var/uid in H.microbes)
+			if (P.name == H.microbes[uid].master.name)
+				H.microbes[uid].master = P
+
 	proc/get_microbe_from_path(var/microbe_path)
 		rerendermicrobes()
 		if (!ispath(microbe_path))

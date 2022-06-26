@@ -350,6 +350,8 @@ ABSTRACT_TYPE(/datum/microbe)
 	var/list/effectdata = list()					// used for custom var calls
 
 	var/artificial									// Did someone make this microbe using a machine? (1 yes, 0 no)
+	var/reported									// Has someone analyzed this culture?
+	var/curereported								// Did the reporter correctly identify the right cure?
 // PROCS AND FUNCTIONS FOR GENERATION
 
 
@@ -369,6 +371,8 @@ ABSTRACT_TYPE(/datum/microbe)
 		effects = list()
 		effectdata = list()
 		artificial = 0
+		reported = 0
+		curereported = 0
 
 	//generate_name
 	//Called on creation of a new parent microbe
@@ -411,6 +415,8 @@ ABSTRACT_TYPE(/datum/microbe)
 		src.infectioncount = 8								// See below for explanation.
 		src.infectiontotal = src.infectioncount
 		src.artificial = 0
+		src.reported = 0
+		src.curereported = 0
 
 		//Infection count should be dependent on active player count, balanced at ~5-10% of living serverpop
 		//For Goon1 at high pop (90-110), ~10 people per microbial culture
@@ -652,8 +658,7 @@ ABSTRACT_TYPE(/datum/microbesubdata)
 		var/datum/microbesubdata/Q = new /datum/microbesubdata
 		var/uid = src.microbes.len + 1
 		src.microbes[uid] += Q
-		P.infectioncount--
-		P.infected += src
+		microbio_controls.updatemicrobe(P,"infected")
 		Q.master = P
 		Q.affected_mob = src
 		Q.duration = P.durationtotal - 1
@@ -663,16 +668,16 @@ ABSTRACT_TYPE(/datum/microbesubdata)
 	else
 		return 0
 
-/mob/living/carbon/human/cured(var/datum/microbesubdata/P)
-	if (!istype(P) || !P.master)
+/mob/living/carbon/human/cured(var/datum/microbesubdata/S)
+	if (!istype(S) || !S.master)
 		return 0
 	for (var/uid in src.microbes)
 		var/datum/microbesubdata/Q = src.microbes[uid]
-		if (P == Q)
+		if (S == Q)
+			var/datum/microbe/P = microbio_controls.get_microbe_from_name(S.master.name)
+			microbio_controls.updatemicrobe(P,"cured")
 			src.microbes[uid] -= Q
-			P.master.infected -= src
-			P.master.immune += src
 			qdel(Q)
 			src.show_text("You feel that the disease has passed.", "blue")
-			logTheThing("pathology", src, null, "is cured of and gains immunity to [P.master.name] ([P.master.print_name]).")
+			logTheThing("pathology", src, null, "is cured of and gains immunity to [P.name] ([P.print_name]).")
 			return 1
