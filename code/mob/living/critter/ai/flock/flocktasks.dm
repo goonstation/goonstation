@@ -139,7 +139,7 @@ stare
 	. = list()
 	for(var/turf/simulated/floor/feather/F in view(max_dist, holder.owner))
 		// let's not spam eggs all the time
-		if(isnull(locate(/obj/flock_structure/egg) in F))
+		if(!is_blocked_turf(F) && isnull(locate(/obj/flock_structure/egg) in F))
 			. = get_path_to(holder.owner, list(F), max_dist*2, can_be_adjacent_to_target)
 			if (length(.)) return
 
