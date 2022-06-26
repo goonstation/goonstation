@@ -89,41 +89,40 @@
 		RegisterSignal(M,"mov_moved", .proc/update)
 		RegisterSignal(M,"mob_move_vehicle", .proc/update)
 		clients += master.client
-		SPAWN(0)
 
-			/// background setup, this will be "in" every zlevel, but wont necessarily be visible
-			background = create_screen("background", "Space", 'icons/effects/overlays/parallaxBackground.dmi', "background", "1,1", HUD_LAYER-1)
-			background.transform = matrix(0,0,0,0,0,0)
-			background.screen_loc = "CENTER"
-			background.plane = PLANE_SPACE
-			background.appearance_flags += TILE_BOUND
-			background.mouse_opacity = 0
-			background.icon_state = BGicon
+		/// background setup, this will be "in" every zlevel, but wont necessarily be visible
+		background = create_screen("background", "Space", 'icons/effects/overlays/parallaxBackground.dmi', "background", "1,1", HUD_LAYER-1)
+		background.transform = matrix(0,0,0,0,0,0)
+		background.screen_loc = "CENTER"
+		background.plane = PLANE_SPACE
+		background.appearance_flags += TILE_BOUND
+		background.mouse_opacity = 0
+		background.icon_state = BGicon
 
-			/// parallax settings setup
-			if (!length(scale))
-				PARALLAX_PLANET(PARALLAX_OBJ_1)
-				PARALLAX_PLANET(PARALLAX_OBJ_2)
-				PARALLAX_PLANET(PARALLAX_OBJ_3)
-				PARALLAX_PLANET(PARALLAX_OBJ_4)
-				PARALLAX_PLANET(PARALLAX_OBJ_5)
-				PARALLAX_PLANET(PARALLAX_OBJ_6)
-				PARALLAX_PLANET(PARALLAX_OBJ_7)
-				PARALLAX_PLANET(PARALLAX_OBJ_8)
-				PARALLAX_PLANET(PARALLAX_OBJ_9)
-				PARALLAX_PLANET(PARALLAX_OBJ_10)
-				PARALLAX_PLANET(PARALLAX_OBJ_11)
-				PARALLAX_PLANET(PARALLAX_OBJ_12)
-				PARALLAX_PLANET(PARALLAX_OBJ_13)
-				PARALLAX_PLANET(PARALLAX_OBJ_14)
-				PARALLAX_PLANET(PARALLAX_OBJ_15)
-				PARALLAX_PLANET(PARALLAX_OBJ_16)
-				PARALLAX_PLANET(PARALLAX_OBJ_17)
-				PARALLAX_PLANET(PARALLAX_OBJ_18)
-				PARALLAX_PLANET(PARALLAX_OBJ_19)
-				PARALLAX_PLANET(PARALLAX_OBJ_20)
-				PARALLAX_PLANET(PARALLAX_OBJ_21)
-			src.update()
+		/// parallax settings setup
+		PARALLAX_PLANET(PARALLAX_OBJ_1)
+		PARALLAX_PLANET(PARALLAX_OBJ_2)
+		PARALLAX_PLANET(PARALLAX_OBJ_3)
+		PARALLAX_PLANET(PARALLAX_OBJ_4)
+		PARALLAX_PLANET(PARALLAX_OBJ_5)
+		PARALLAX_PLANET(PARALLAX_OBJ_6)
+		PARALLAX_PLANET(PARALLAX_OBJ_7)
+		PARALLAX_PLANET(PARALLAX_OBJ_8)
+		PARALLAX_PLANET(PARALLAX_OBJ_9)
+		PARALLAX_PLANET(PARALLAX_OBJ_10)
+		PARALLAX_PLANET(PARALLAX_OBJ_11)
+		PARALLAX_PLANET(PARALLAX_OBJ_12)
+		PARALLAX_PLANET(PARALLAX_OBJ_13)
+		PARALLAX_PLANET(PARALLAX_OBJ_14)
+		PARALLAX_PLANET(PARALLAX_OBJ_15)
+		PARALLAX_PLANET(PARALLAX_OBJ_16)
+		PARALLAX_PLANET(PARALLAX_OBJ_17)
+		PARALLAX_PLANET(PARALLAX_OBJ_18)
+		PARALLAX_PLANET(PARALLAX_OBJ_19)
+		PARALLAX_PLANET(PARALLAX_OBJ_20)
+		PARALLAX_PLANET(PARALLAX_OBJ_21)
+
+		src.update()
 
 	/// updates parallax object transform values
 	proc/update(var/zlevelchanged)
