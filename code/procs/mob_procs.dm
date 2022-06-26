@@ -790,7 +790,9 @@
 				see_traitors = 1
 				see_nukeops = 1
 				see_revs = 1
-		if (isnukeop(src) || isnukeopgunbot(src))
+		if (istraitor(src) && traitorsseeeachother)
+			see_traitors = TRUE
+		else if (isnukeop(src) || isnukeopgunbot(src))
 			see_nukeops = 1
 		else if (iswizard(src))
 			see_wizards = 1

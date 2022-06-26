@@ -2005,6 +2005,9 @@ obj/item/clothing/gloves/concussive
 		if (!istype(O))
 			return ..()
 		if (O.artifact || src.allowed_types[O.type])
+			if (O.anchored)
+				boutput(user, "<span class='alert'>You can't teleport [O] while it is anchored!</span>")
+				return
 			src.try_teleport(O, user)
 
 	proc/can_teleport(var/obj/cargo, var/mob/user)

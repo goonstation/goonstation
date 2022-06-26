@@ -618,9 +618,11 @@
 	desc = "A mask. Specifically for masquerades."
 	icon_state = "cherryblossom"
 	item_state = "cherryblossom"
+	see_face = 0
 
 /obj/item/clothing/mask/peacockmask
 	name = "peacock mask"
 	desc = "A mask. Specifically for masquerades."
 	icon_state = "peacock"
 	item_state = "peacock"
+	see_face = 0

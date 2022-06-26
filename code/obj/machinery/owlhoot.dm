@@ -7,19 +7,17 @@
 	var/base_state = "owl"
 	anchored = 0
 	density = 1
-	var/last_flash = 0
 	var/flash_prob = 80
 
 	proc/flash()
-		if (src.last_flash && world.time < src.last_flash + 10)
+		if(!ON_COOLDOWN(src, "flash", 5 SECONDS))
 			return
 
 		playsound(src.loc, "sound/voice/animal/hoot.ogg", 100, 1)
 		flick("[base_state]_flash", src)
-		src.last_flash = world.time
 
 	HasProximity(atom/movable/AM as mob|obj)
-		if (src.last_flash && world.time < src.last_flash + 10)
+		if(!ON_COOLDOWN(src, "flash", 5 SECONDS))
 			return
 
 		if (iscarbon(AM))
@@ -42,7 +40,7 @@
 
 	attack_hand(user)
 		if (src.anchored)
-			if (src.last_flash && world.time < src.last_flash + 10)
+			if(!ON_COOLDOWN(src, "flash", 5 SECONDS))
 				return
 
 			src.flash()
@@ -64,14 +62,12 @@
 
 	process()
 		..()
-		if (prob(10)) // I stole this from the automaton because I am a dirty code frankenstein
-			var/list/mobsnearby = list()
-			for (var/mob/M in view(7,src))
+		if (prob(5)) // I stole this from the automaton because I am a dirty code frankenstein
+			var/list/mob/mobs_nearby = list()
+			for (var/mob/M as anything in viewers(7, src))
 				if (iswraith(M) || isintangible(M))
 					continue
-				mobsnearby.Add("[M.name]")
-			var/mob/M1 = null
-			if (mobsnearby.len > 0)
-				M1 = pick(mobsnearby)
-			if (M1 && prob(50))
-				src.visible_message("<span class='alert'><b>[src]</b> frowns at [M1].</span>")
+				mobs_nearby += M
+			var/mob/frown_target = pick(mobs_nearby)
+			if (frown_target)
+				src.visible_message("<span class='alert'><b>[src]</b> frowns at [frown_target].</span>")
