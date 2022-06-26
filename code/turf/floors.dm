@@ -19,8 +19,8 @@
 	var/plate_mat = null
 	var/reinforced = FALSE
 	//Stuff for the floor & wall planner undo mode that initial() doesn't resolve.
-	var/roundstart_icon_state
-	var/roundstart_dir
+	var/tmp/roundstart_icon_state
+	var/tmp/roundstart_dir
 
 	New()
 		..()
@@ -178,7 +178,11 @@
 	New()
 		..()
 		if (prob(20))
-			src.icon_state = pick("panelscorched", "platingdmg1", "platingdmg2", "platingdmg3")
+			if (prob(50))
+				src.break_tile()
+			else
+				src.burn_tile()
+			src.UpdateIcon()
 		if (prob(2))
 			make_cleanable(/obj/decal/cleanable/dirt,src)
 		if (prob(2))
@@ -207,41 +211,86 @@
 	New()
 		..()
 		if (prob(20))
-			src.icon_state = pick("panelscorched", "platingdmg1", "platingdmg2", "platingdmg3")
+			if (prob(50))
+				src.break_tile()
+			else
+				src.burn_tile()
 
 
 /////////////////////////////////////////
 
 /turf/simulated/floor/scorched
-	icon_state = "floorscorched1"
+	burnt = 1
+
+	New()
+		..()
+		var/image/burn_overlay = image('icons/turf/floors.dmi',"floorscorched1")
+		burn_overlay.alpha = 200
+		UpdateOverlays(burn_overlay,"burn")
 
 /turf/simulated/floor/scorched2
-	icon_state = "floorscorched2"
+	burnt = 1
+
+	New()
+		..()
+		var/image/burn_overlay = image('icons/turf/floors.dmi',"floorscorched2")
+		burn_overlay.alpha = 200
+		UpdateOverlays(burn_overlay,"burn")
 
 /turf/simulated/floor/damaged1
-	icon_state = "damaged1"
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
+	broken = 1
+
+	New()
+		..()
+		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged1")
+		damage_overlay.alpha = 200
+		UpdateOverlays(damage_overlay,"damage")
 
 /turf/simulated/floor/damaged2
-	icon_state = "damaged2"
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
+	broken = 1
+
+	New()
+		..()
+		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged2")
+		damage_overlay.alpha = 200
+		UpdateOverlays(damage_overlay,"damage")
 
 /turf/simulated/floor/damaged3
-	icon_state = "damaged3"
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
+	broken = 1
+
+	New()
+		..()
+		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged3")
+		damage_overlay.alpha = 200
+		UpdateOverlays(damage_overlay,"damage")
 
 /turf/simulated/floor/damaged4
-	icon_state = "damaged4"
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
+	broken = 1
+
+	New()
+		..()
+		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged4")
+		damage_overlay.alpha = 200
+		UpdateOverlays(damage_overlay,"damage")
 
 /turf/simulated/floor/damaged5
-	icon_state = "damaged5"
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
+	broken = 1
+
+	New()
+		..()
+		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged5")
+		damage_overlay.alpha = 200
+		UpdateOverlays(damage_overlay,"damage")
 
 /////////////////////////////////////////
 
@@ -255,16 +304,37 @@
 	icon_state = "plating_jen"
 
 /turf/simulated/floor/plating/scorched
-	icon_state = "panelscorched"
+
+	New()
+		..()
+		burn_tile()
 
 /turf/simulated/floor/plating/damaged1
-	icon_state = "platingdmg1"
+	broken = 1
+
+	New()
+		..()
+		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg1")
+		damage_overlay.alpha = 200
+		UpdateOverlays(damage_overlay,"damage")
 
 /turf/simulated/floor/plating/damaged2
-	icon_state = "platingdmg2"
+	broken = 1
+
+	New()
+		..()
+		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg2")
+		damage_overlay.alpha = 200
+		UpdateOverlays(damage_overlay,"damage")
 
 /turf/simulated/floor/plating/damaged3
-	icon_state = "platingdmg3"
+	broken = 1
+
+	New()
+		..()
+		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg3")
+		damage_overlay.alpha = 200
+		UpdateOverlays(damage_overlay,"damage")
 
 /////////////////////////////////////////
 
@@ -630,13 +700,6 @@
 		..()
 		setMaterial(getMaterial("cloth"))
 
-	break_tile()
-		..()
-		icon = 'icons/turf/floors.dmi'
-
-	burn_tile()
-		..()
-		icon = 'icons/turf/floors.dmi'
 
 /turf/simulated/floor/carpet/grime
 	name = "cheap carpet"
@@ -1326,6 +1389,7 @@ DEFINE_FLOORS(techfloor/green,
 /turf/simulated/floor/grassify()
 	src.icon = 'icons/turf/outdoors.dmi'
 	src.icon_state = "grass"
+	src.UpdateIcon()
 	if(prob(30))
 		src.icon_state += pick("_p", "_w", "_b", "_y", "_r", "_a")
 	src.name = "grass"
@@ -1397,6 +1461,20 @@ DEFINE_FLOORS(grasslush/thinner,
 DEFINE_FLOORS(grasslush/thin,
 	icon_state = "grass_thin")
 
+/////////////////////////////////////////
+
+DEFINE_FLOORS(solidcolor,
+	icon_state = "solid_white")
+
+DEFINE_FLOORS(solidcolor/fullbright,
+	fullbright = 1)
+
+DEFINE_FLOORS(solidcolor/black,
+	icon_state = "solid_black")
+
+DEFINE_FLOORS(solidcolor/black/fullbright,
+	fullbright = 1)
+
 /* ._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._. */
 /*-=-=-=-=-=-=-=-FUCK THAT SHIT MY WRIST HURTS=-=-=-=-=-=-=-=-=*/
 /* '~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~' */
@@ -1446,7 +1524,7 @@ DEFINE_FLOORS(grasslush/thin,
 /turf/simulated/floor/blob
 	name = "blob floor"
 	desc = "Blob floors to lob blobs over."
-	icon = 'icons/mob/blob.dmi'
+	icon = 'icons/mob/blob_organs.dmi'
 	icon_state = "bridge"
 	default_melt_cap = 80
 	allows_vehicles = 1
@@ -1456,10 +1534,8 @@ DEFINE_FLOORS(grasslush/thin,
 		setMaterial(getMaterial("blob"))
 
 	proc/setOvermind(var/mob/living/intangible/blob_overmind/O)
-		if (!material)
-			setMaterial(getMaterial("blob"))
-		material.color = O.color
-		color = O.color
+		setMaterial(copyMaterial(O.my_material))
+		color = material.color
 
 	attackby(var/obj/item/W, var/mob/user)
 		if (isweldingtool(W))
@@ -1479,6 +1555,7 @@ DEFINE_FLOORS(grasslush/thin,
 // metal foam floors
 
 /turf/simulated/floor/metalfoam/update_icon()
+	. = ..()
 	if(metal == 1)
 		icon_state = "metalfoam"
 	else
@@ -1487,7 +1564,7 @@ DEFINE_FLOORS(grasslush/thin,
 /turf/simulated/floor/metalfoam/ex_act()
 	ReplaceWithSpace()
 
-/turf/simulated/floor/metalfoam/attackby(obj/item/C as obj, mob/user as mob)
+/turf/simulated/floor/metalfoam/attackby(obj/item/C, mob/user)
 
 	if(!C || !user)
 		return 0
@@ -1522,7 +1599,10 @@ DEFINE_FLOORS(grasslush/thin,
 	return ..()
 
 /turf/simulated/floor/burn_down()
-	src.ex_act(2)
+	if (src.intact)
+		src.ex_act(2)
+	else //make sure plating always burns down to space and not... plating
+		src.ex_act(1)
 
 /turf/simulated/floor/ex_act(severity)
 	switch(severity)
@@ -1570,12 +1650,12 @@ DEFINE_FLOORS(grasslush/thin,
 /turf/simulated/floor/blob_act(var/power)
 	return
 
-/turf/simulated/attack_hand(mob/user as mob)
+/turf/simulated/attack_hand(mob/user)
 	if (src.density == 1)
 		return
 	if (!user.canmove || user.restrained())
 		return
-	if (!user.pulling || user.pulling.anchored || (user.pulling.loc != user.loc && get_dist(user, user.pulling) > 1))
+	if (!user.pulling || user.pulling.anchored || (user.pulling.loc != user.loc && BOUNDS_DIST(user, user.pulling) > 0))
 		//get rid of click delay since we didn't do anything
 		user.next_click = world.time
 		return
@@ -1610,6 +1690,7 @@ DEFINE_FLOORS(grasslush/thin,
 		name_old = name
 	src.name = "plating"
 	src.icon_state = "plating"
+	src.UpdateIcon()
 	setIntact(FALSE)
 	broken = 0
 	burnt = 0
@@ -1634,23 +1715,32 @@ DEFINE_FLOORS(grasslush/thin,
 		if(src.reinforced) return
 
 	if(broken) return
+	var/image/damage_overlay
 	if (!icon_old)
 		icon_old = icon_state
 	if(intact)
-		src.icon_state = "damaged[pick(1,2,3,4,5)]"
-		broken = 1
+		damage_overlay = image('icons/turf/floors.dmi',"damaged[pick(1,2,3,4,5)]")
+		damage_overlay.alpha = 200
 	else
-		src.icon_state = "platingdmg[pick(1,2,3)]"
-		broken = 1
+		damage_overlay = image('icons/turf/floors.dmi',"platingdmg[pick(1,2,3)]")
+		damage_overlay.alpha = 200
+	broken = 1
+	UpdateOverlays(damage_overlay,"damage")
+	src.UpdateIcon()
 
 /turf/simulated/floor/proc/burn_tile()
 	if(broken || burnt || reinforced) return
+	var/image/burn_overlay
 	if (!icon_old)
 		icon_old = icon_state
 	if(intact)
-		src.icon_state = "floorscorched[pick(1,2)]"
+		burn_overlay = image('icons/turf/floors.dmi',"floorscorched[pick(1,2)]")
+		burn_overlay.alpha = 200
 	else
-		src.icon_state = "panelscorched"
+		burn_overlay = image('icons/turf/floors.dmi',"panelscorched")
+		burn_overlay.alpha = 200
+	UpdateOverlays(burn_overlay,"burn")
+	src.UpdateIcon()
 	burnt = 1
 
 /turf/simulated/floor/shuttle/burn_tile()
@@ -1666,6 +1756,9 @@ DEFINE_FLOORS(grasslush/thin,
 		icon_state = icon_old
 	else
 		icon_state = "floor"
+	UpdateOverlays(null,"burn")
+	UpdateOverlays(null,"damage")
+	src.UpdateIcon()
 	if (name_old)
 		name = name_old
 	levelupdate()
@@ -1709,6 +1802,8 @@ DEFINE_FLOORS(grasslush/thin,
 
 	if(broken || burnt)
 		boutput(user, "<span class='alert'>You remove the broken plating.</span>")
+		UpdateOverlays(null,"burn")
+		UpdateOverlays(null,"damage")
 	else
 		var/atom/A = new /obj/item/tile(src)
 		if(src.material)
@@ -1717,11 +1812,12 @@ DEFINE_FLOORS(grasslush/thin,
 			var/datum/material/M = getMaterial("steel")
 			A.setMaterial(M)
 		.= A //return tile for crowbar special attack ok
+		user.unlock_medal("Misclick", 1)
 
 	to_plating()
 	playsound(src, "sound/items/Crowbar.ogg", 80, 1)
 
-/turf/simulated/floor/attackby(obj/item/C as obj, mob/user as mob, params)
+/turf/simulated/floor/attackby(obj/item/C, mob/user, params)
 
 	if (!C || !user)
 		return 0
@@ -1791,16 +1887,15 @@ DEFINE_FLOORS(grasslush/thin,
 
 		// Don't replace with an [else]! If a prying tool is found above [intact] might become 0 and this runs too, which is how floor swapping works now! - BatElite
 		if (!intact)
-			restore_tile()
-			src.plate_mat = src.material
-			if(C.material)
-				src.setMaterial(C.material)
-			playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+			if(T.change_stack_amount(-1))
+				restore_tile()
+				src.plate_mat = src.material
+				if(C.material)
+					src.setMaterial(C.material)
+				playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 
-			if(!istype(src.material, /datum/material/metal/steel))
-				logTheThing("station", user, null, "constructs a floor (<b>Material:</b>: [src.material && src.material.name ? "[src.material.name]" : "*UNKNOWN*"]) at [log_loc(src)].")
-
-			T.change_stack_amount(-1)
+				if(!istype(src.material, /datum/material/metal/steel))
+					logTheThing("station", user, null, "constructs a floor (<b>Material:</b>: [src.material && src.material.name ? "[src.material.name]" : "*UNKNOWN*"]) at [log_loc(src)].")
 			//if(T && (--T.amount < 1))
 			//	qdel(T)
 			//	return
@@ -1905,7 +2000,7 @@ DEFINE_FLOORS(grasslush/thin,
 	if(istype(C, /obj/item/cable_coil))
 		if(!intact)
 			var/obj/item/cable_coil/coil = C
-			coil.turf_place(src, user)
+			coil.turf_place(src, get_turf(user), user)
 		else
 			boutput(user, "<span class='alert'>You must remove the plating first.</span>")
 
@@ -1931,7 +2026,7 @@ DEFINE_FLOORS(grasslush/thin,
 		if (K)
 			K.Attackby(C, user, params)
 
-	else if (!user.pulling || user.pulling.anchored || (user.pulling.loc != user.loc && get_dist(user, user.pulling) > 1)) // this seemed like the neatest way to make attack_hand still trigger when needed
+	else if (!user.pulling || user.pulling.anchored || (user.pulling.loc != user.loc && BOUNDS_DIST(user, user.pulling) > 0)) // this seemed like the neatest way to make attack_hand still trigger when needed
 		src?.material?.triggerOnHit(src, C, user, 1)
 	else
 		return attack_hand(user)
@@ -1944,7 +2039,7 @@ DEFINE_FLOORS(grasslush/thin,
 		if(I)
 			if(istype(I,/obj/item/cable_coil))
 				var/obj/item/cable_coil/C = I
-				if((get_dist(user,F)<2) && (get_dist(user,src)<2))
+				if(BOUNDS_DIST(user,F) == 0 && BOUNDS_DIST(user,src) == 0)
 					C.move_callback(user, F, src)
 
 ////////////////////////////////////////////ADVENTURE SIMULATED FLOORS////////////////////////
@@ -2042,7 +2137,7 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 		icon_state = "bluewall_glow"
 		can_replace_with_stuff = 1
 
-		attackby(obj/item/W as obj, mob/user as mob)
+		attackby(obj/item/W, mob/user)
 			if (istype(W, /obj/item/device/key))
 				playsound(src, "sound/effects/mag_warp.ogg", 50, 1)
 				src.visible_message("<span class='notice'><b>[src] slides away!</b></span>")
@@ -2144,6 +2239,11 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 		name = "overgrown floor"
 		desc = "This floor is covered in vines."
 		icon_state = "rootfloor_1"
+
+		random
+			New()
+				. = ..()
+				icon_state = "rootfloor_[rand(1,3)]"
 
 	oldfloor
 		name = "floor"

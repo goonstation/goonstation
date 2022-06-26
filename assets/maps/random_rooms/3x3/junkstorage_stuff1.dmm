@@ -1,0 +1,54 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"n" = (
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"r" = (
+/obj/table/auto,
+/obj/random_item_spawner/medicine/one,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"y" = (
+/obj/table/auto,
+/obj/random_item_spawner/snacks/few,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"L" = (
+/obj/stool/chair{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"U" = (
+/obj/table/auto,
+/obj/random_item_spawner/med_tool/one_or_zero,
+/obj/random_item_spawner/med_tool/one_or_zero,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"V" = (
+/obj/stool/chair{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+r
+L
+a
+"}
+(2,1,1) = {"
+U
+n
+V
+"}
+(3,1,1) = {"
+a
+a
+y
+"}

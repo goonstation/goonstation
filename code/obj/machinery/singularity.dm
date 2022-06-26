@@ -18,6 +18,11 @@ Contains:
 #define WRENCHED 1
 #define WELDED 2
 
+#ifdef UPSCALED_MAP
+#undef SINGULARITY_MAX_DIMENSION
+#define SINGULARITY_MAX_DIMENSION 22
+#endif
+
 // I'm sorry
 //////////////////////////////////////////////////// Singularity generator /////////////////////
 
@@ -131,6 +136,11 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	event()
 	if (Ti)
 		src.Dtime = Ti
+
+	var/offset = rand(1000)
+	add_filter("loose rays", 1, rays_filter(size=1, density=10, factor=0, offset=offset, threshold=0.20, color="#c0c", x=0, y=0))
+	animate(get_filter("loose rays"), offset=offset+60, time=5 MINUTES, easing=LINEAR_EASING, flags=ANIMATION_PARALLEL, loop=-1)
+
 	..()
 
 /obj/machinery/the_singularity/disposing()
@@ -166,12 +176,26 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		move()
 		SPAWN(1.1 SECONDS) // slowing this baby down a little -drsingh
 			move()
+
+			var/recapture_prob = clamp(25-(radius**2) , 0, 25)
+			if((radius < (SINGULARITY_MAX_DIMENSION/2)) && prob(recapture_prob))
+				var/checkpointC = 0
+				for (var/obj/machinery/containment_field/X in orange(radius+2,src))
+					checkpointC++
+				if (checkpointC > max(MIN_TO_CONTAIN,(radius*8)))//as radius of a 5x5 should be 2, 16 tiles are needed to hold it in, this allows for 4 failures before the singularity is loose
+					src.active = FALSE
+					animate(get_filter("loose rays"), size=1, time=5 SECONDS, easing=LINEAR_EASING, flags=ANIMATION_PARALLEL, loop=1)
+					maxradius = radius + 1
+					logTheThing("station", null, null, "[src] has been contained at [log_loc(src)]")
+					message_admins("[src] has been contained at [log_loc(src)]")
+
 	else//this should probably be modified to use the enclosed test of the generator
 		var/checkpointC = 0
 		for (var/obj/machinery/containment_field/X in orange(maxradius+2,src))
 			checkpointC ++
 		if (checkpointC < max(MIN_TO_CONTAIN,(radius*8)))//as radius of a 5x5 should be 2, 16 tiles are needed to hold it in, this allows for 4 failures before the singularity is loose
-			src.active = 1
+			src.active = TRUE
+			animate(get_filter("loose rays"), size=100, time=5 SECONDS, easing=LINEAR_EASING, flags=ANIMATION_PARALLEL, loop=1)
 			maxradius = INFINITY
 			logTheThing("station", null, null, "[src] has become loose at [log_loc(src)]")
 			message_admins("[src] has become loose at [log_loc(src)]")
@@ -238,8 +262,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		if (A.event_handler_flags & IMMUNE_SINGULARITY_INACTIVE)
 			return
 
-	// Don't bump that which no longer exists
-	if(A.disposed)
+	if(QDELETED(A)) // Don't bump that which no longer exists
 		return
 
 	if (isliving(A) && !isintangible(A))//if its a mob
@@ -308,7 +331,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	return src.loc
 
 
-/obj/machinery/the_singularity/attackby(var/obj/item/I as obj, var/mob/user as mob)
+/obj/machinery/the_singularity/attackby(var/obj/item/I, var/mob/user)
 	if (istype(I, /obj/item/clothing/mask/cigarette))
 		var/obj/item/clothing/mask/cigarette/C = I
 		if (!C.on)
@@ -322,6 +345,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	if(radius<maxradius)
 		radius++
 		SafeScale((radius+0.5)/(radius-0.5),(radius+0.5)/(radius-0.5))
+		grav_pull = max(grav_pull, radius)
 
 // totally rewrote this proc from the ground-up because it was puke but I want to keep this comment down here vvv so we can bask in the glory of What Used To Be - haine
 		/* uh why was lighting a cig causing the singularity to have an extra process()?
@@ -403,6 +427,24 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 				T.ReplaceWithFloor()
 	return
 #endif
+
+/particles/singularity
+	transform = list(1, 0, 0, 0,
+	                 0, 1, 0, 0,
+					 0, 0, 0, 1,
+					 0, 0, 0, 1)
+	width = 200
+	height = 200
+	spawning = 2
+	count = 1000
+	lifespan = 8
+	fade = 10
+	fadein = 8
+	position = generator("circle", 200, 300, UNIFORM_RAND)
+	gravity = list(0, 0, 0.05)
+	velocity = list(0, 0, 0.4)
+	friction = 0.2
+
 //////////////////////////////////////// Field generator /////////////////////////////////////////
 
 /obj/machinery/field_generator
@@ -440,7 +482,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			else
 				event_handler_flags &= ~IMMUNE_SINGULARITY
 
-/obj/machinery/field_generator/attack_hand(mob/user as mob)
+/obj/machinery/field_generator/attack_hand(mob/user)
 	if(state == WELDED)
 		if(!src.locked)
 			if(src.active >= 1)
@@ -483,6 +525,12 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 /obj/machinery/field_generator/disposing()
 	STOP_TRACKING
+	for(var/dir in cardinal)
+		src.cleanup(dir)
+	if (link)
+		link.master = null
+		link = null
+	active = FALSE
 	. = ..()
 
 /obj/machinery/field_generator/process()
@@ -500,15 +548,12 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		if(!src.state == WELDED)
 			src.set_active(0)
 			return
-		setup_field(1)
-		setup_field(2)
-		setup_field(4)
-		setup_field(8)
+		setup_field(NORTH)
+		setup_field(SOUTH)
+		setup_field(EAST)
+		setup_field(WEST)
 		src.set_active(2)
-	if(src.power < 0)
-		src.power = 0
-	if(src.power > src.max_power)
-		src.power = src.max_power
+	src.power = clamp(src.power, 0, src.max_power)
 	if(src.active >= 1)
 		src.power -= 1
 		if(Varpower == 0)
@@ -516,10 +561,10 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 				src.visible_message("<span class='alert'>The [src.name] shuts down due to lack of power!</span>")
 				icon_state = "Field_Gen"
 				src.set_active(0)
-				src.cleanup(1)
-				src.cleanup(2)
-				src.cleanup(4)
-				src.cleanup(8)
+				src.cleanup(NORTH)
+				src.cleanup(SOUTH)
+				src.cleanup(EAST)
+				src.cleanup(WEST)
 				for(var/dir in cardinal)
 					src.UpdateOverlays(null, "field_start_[dir]")
 					src.UpdateOverlays(null, "field_end_[dir]")
@@ -529,27 +574,17 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	var/turf/T2 = src.loc
 	var/obj/machinery/field_generator/G
 	var/steps = 0
-	var/oNSEW = 0
-
 
 	if(!NSEW)//Make sure its ran right
 		return
-
-	if(NSEW == 1)
-		oNSEW = 2
-	else if(NSEW == 2)
-		oNSEW = 1
-	else if(NSEW == 4)
-		oNSEW = 8
-	else if(NSEW == 8)
-		oNSEW = 4
+	var/oNSEW = turn(NSEW, 180)
 
 	for(var/dist = 0, dist <= SINGULARITY_MAX_DIMENSION, dist += 1) // checks out to max dimension tiles away for another generator to link to
 		T = get_step(T2, NSEW)
 		T2 = T
 		steps += 1
-		if(locate(/obj/machinery/field_generator) in T)
-			G = (locate(/obj/machinery/field_generator) in T)
+		G = locate(/obj/machinery/field_generator) in T
+		if(G && G != src && !QDELETED(G))
 			steps -= 1
 			if(shortestlink==0)
 				shortestlink = dist
@@ -687,26 +722,30 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	var/obj/machinery/field_generator/G
 	var/turf/T = src.loc
 	var/turf/T2 = src.loc
+	var/oNSEW = turn(NSEW, 180)
 
 	active_dirs &= ~NSEW
 
 	src.UpdateOverlays(null, "field_start_[NSEW]")
-	src.UpdateOverlays(null, "field_end_[turn(NSEW, 180)]")
+	src.UpdateOverlays(null, "field_end_[oNSEW]")
 
-	for(var/dist = 0, dist <= 9, dist += 1) // checks out to 8 tiles away for fields
+	for(var/dist = 0, dist <= SINGULARITY_MAX_DIMENSION, dist += 1) // checks out to 8 tiles away for fields
 		T = get_step(T2, NSEW)
 		T2 = T
-		if(locate(/obj/machinery/containment_field) in T)
-			F = (locate(/obj/machinery/containment_field) in T)
-			qdel(F)
+		for(F in T)
+			if(F.gen_primary == src || F.gen_secondary == src )
+				qdel(F)
 
-		if(locate(/obj/machinery/field_generator) in T)
-			G = (locate(/obj/machinery/field_generator) in T)
+		G = locate(/obj/machinery/field_generator) in T
+		if(G)
 			G.UpdateOverlays(null, "field_end_[NSEW]")
-			G.UpdateOverlays(null, "field_start_[turn(NSEW, 180)]")
-			G.active_dirs &= ~turn(NSEW, 180)
+			G.UpdateOverlays(null, "field_start_[oNSEW]")
+			G.active_dirs &= ~oNSEW
 			if(!G.active)
 				break
+			else
+				G.setup_field(oNSEW)
+
 
 //Send a signal over our link, if possible.
 /obj/machinery/field_generator/proc/post_status(var/target_id, var/key, var/value, var/key2, var/value2, var/key3, var/value3)
@@ -765,16 +804,6 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	return
 
-/obj/machinery/field_generator/disposing()
-	src.cleanup(1)
-	src.cleanup(2)
-	src.cleanup(4)
-	src.cleanup(8)
-	if (link)
-		link.master = null
-		link = null
-	..()
-
 /////////////////////////////////////////////// Containment field //////////////////////////////////
 
 /obj/machinery/containment_field
@@ -783,7 +812,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "Contain_F"
 	anchored = 1
-	density = 0
+	density = 1
 	event_handler_flags = USE_FLUID_ENTER | IMMUNE_SINGULARITY
 	var/active = 1
 	var/power = 10
@@ -805,7 +834,15 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	..()
 
-/obj/machinery/containment_field/attack_hand(mob/user as mob)
+/obj/machinery/containment_field/disposing()
+	src.gen_primary = null
+	src.gen_secondary = null
+	..()
+
+/obj/machinery/containment_field/ex_act(severity)
+	return
+
+/obj/machinery/containment_field/attack_hand(mob/user)
 	return
 
 /obj/machinery/containment_field/process()
@@ -818,10 +855,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		return
 
 /obj/machinery/containment_field/proc/shock(mob/user as mob)
-	if(isnull(gen_primary))
-		qdel(src)
-		return
-	if(isnull(gen_secondary))
+	if(isnull(gen_primary) || isnull(gen_secondary))
 		qdel(src)
 		return
 
@@ -870,12 +904,12 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	if(user.get_burn_damage() >= 500) //This person has way too much BURN, they've probably been shocked a lot! Let's destroy them!
 		user.visible_message("<span style=\"color:red;font-weight:bold;\">[user.name] was disintegrated by the [src.name]!</span>")
+		logTheThing("user", user, null, "was elecgibbed by [src] ([src.type]) at [log_loc(user)].")
 		user.elecgib()
 		return
 	else
 		var/throwdir = get_dir(src, get_step_away(user, src))
-		if (prob(20))
-			user.set_loc(get_turf(src))
+		if (get_turf(user) == get_turf(src))
 			if (prob(50))
 				throwdir = turn(throwdir,90)
 			else
@@ -890,11 +924,20 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	src.gen_secondary.power -= 3
 	return
 
-/obj/machinery/containment_field/Cross(atom/movable/O as mob|obj)
-	if(iscarbon(O) && prob(80))
+/obj/machinery/containment_field/Bumped(atom/O)
+	. = ..()
+	if(iscarbon(O))
 		shock(O)
-	..()
 
+/obj/machinery/containment_field/Cross(atom/movable/mover)
+	. = ..()
+	if(prob(10))
+		. = TRUE
+
+/obj/machinery/containment_field/Crossed(atom/movable/AM)
+	. = ..()
+	if(iscarbon(AM))
+		shock(AM)
 
 /////////////////////////////////////////// Emitter ///////////////////////////////
 /obj/machinery/emitter
@@ -941,18 +984,18 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	return
 
-/obj/machinery/emitter/attack_hand(mob/user as mob)
+/obj/machinery/emitter/attack_hand(mob/user)
 	if(state == WELDED)
 		if(!src.locked)
 			if(src.active==1)
-				if(alert("Turn off the emitter?",,"Yes","No") == "Yes")
+				if(tgui_alert(user, "Turn off the emitter?", "Emitter controls", list("Yes", "No")) == "Yes")
 					src.active = 0
 					icon_state = "Emitter"
 					boutput(user, "You turn off the emitter.")
 					logTheThing("station", user, null, "deactivated active emitter at [log_loc(src)].")
 					message_admins("[key_name(user)] deactivated active emitter at [log_loc(src)].")
 			else
-				if(alert("Turn on the emitter?",,"Yes","No") == "Yes")
+				if(tgui_alert(user, "Turn on the emitter?", "Emitter controls", list("Yes", "No")) == "Yes")
 					src.active = 1
 					icon_state = "Emitter +a"
 					boutput(user, "You turn on the emitter.")
@@ -1231,7 +1274,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			UpdateIcon()
 		..()
 
-/obj/machinery/power/collector_array/attack_hand(mob/user as mob)
+/obj/machinery/power/collector_array/attack_hand(mob/user)
 	if(src.active==1)
 		src.active = 0
 		icon_state = "ca_deactive"
@@ -1317,7 +1360,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	var/obj/machinery/power/collector_array/CAS = null
 	var/obj/machinery/power/collector_array/CAE = null
 	var/obj/machinery/power/collector_array/CAW = null
-	var/obj/machinery/the_singularity/S1 = null
+	var/list/obj/machinery/the_singularity/S = null
 
 /obj/machinery/power/collector_control/New()
 	..()
@@ -1326,8 +1369,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		updatecons()
 
 /obj/machinery/power/collector_control/disposing()
-	. = ..()
 	STOP_TRACKING
+	. = ..()
 
 /obj/machinery/power/collector_control/proc/updatecons()
 
@@ -1337,9 +1380,10 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		CAS = locate(/obj/machinery/power/collector_array) in get_step(src,SOUTH)
 		CAE = locate(/obj/machinery/power/collector_array) in get_step(src,EAST)
 		CAW = locate(/obj/machinery/power/collector_array) in get_step(src,WEST)
+		S = list()
 		for_by_tcl(singu, /obj/machinery/the_singularity)//this loop checks for valid singularities
-			if(get_dist(singu,loc)<SINGULARITY_MAX_DIMENSION+2)
-				S1 = singu
+			if(!QDELETED(singu) && GET_DIST(singu,loc)<SINGULARITY_MAX_DIMENSION+2 )
+				S |= singu
 
 		if(!isnull(CAN))
 			CA1 = CAN
@@ -1370,8 +1414,6 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 				P2 = CA2.P
 		else
 			CAE = null
-		if(isnull(S1) || S1.disposed)
-			S1 = null
 
 		UpdateIcon()
 		SPAWN(1 MINUTE)
@@ -1400,10 +1442,12 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			overlays += image('icons/obj/singularity.dmi', "cu 3 on")
 		if((!P1)||(!P2)||(!P3))
 			overlays += image('icons/obj/singularity.dmi', "cu n error")
-		if(S1)
+		if(length(S))
 			overlays += image('icons/obj/singularity.dmi', "cu sing")
-			if(!S1.active)
-				overlays += image('icons/obj/singularity.dmi', "cu conterr")
+			for(var/obj/machinery/the_singularity/singu in S)
+				if(!singu.active)
+					overlays += image('icons/obj/singularity.dmi', "cu conterr")
+					break
 	else
 		overlays += image('icons/obj/singularity.dmi', "cu on")
 		overlays += image('icons/obj/singularity.dmi', "cu 1 on")
@@ -1422,8 +1466,9 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			var/power_s = 0
 			var/power_p = 0
 
-			if(!isnull(S1))
-				power_s += S1.energy*max((S1.radius**2),1)/4
+			for(var/obj/machinery/the_singularity/singu in S)
+				if(singu && !QDELETED(singu))
+					power_s += singu.energy*max((singu.radius**2),1)/4
 			if(P1?.air_contents)
 				if(CA1.active != 0)
 					power_p += P1.air_contents.toxins
@@ -1448,15 +1493,16 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		var/power_a = 0
 		var/power_s = 0
 		var/power_p = 0
-		if(!isnull(S1))
-			power_s += S1.energy*((S1.radius*2+1)**2)/DEFAULT_AREA  //should give the area of the singularity and divide it by the area of a standard singularity(a 5x5)
+		for(var/obj/machinery/the_singularity/singu in S)
+			if(singu && !QDELETED(singu))
+				power_s += singu.energy*((singu.radius*2+1)**2)/DEFAULT_AREA  //should give the area of the singularity and divide it by the area of a standard singularity(a 5x5)
 		power_p += 50
 		power_a = power_p*power_s*50
 		src.lastpower = power_a
 		add_avail(power_a)
 		..()
 
-/obj/machinery/power/collector_control/attack_hand(mob/user as mob)
+/obj/machinery/power/collector_control/attack_hand(mob/user)
 	if(src.active==1)
 		src.active = 0
 		boutput(user, "You turn off the collector control.")
@@ -1657,14 +1703,14 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 /obj/machinery/the_singularitybomb/attack_ai(mob/user as mob)
 	return
 
-/obj/machinery/the_singularitybomb/attack_hand(mob/user as mob)
+/obj/machinery/the_singularitybomb/attack_hand(mob/user)
 	..()
 	if(src.state != 3)
 		boutput(user, "The bomb needs to be firmly secured to the floor first.")
 		return
 	if (user.stat || user.restrained() || user.lying)
 		return
-	if ((get_dist(src, user) <= 1 && istype(src.loc, /turf)))
+	if ((BOUNDS_DIST(src, user) == 0 && istype(src.loc, /turf)))
 		src.add_dialog(user)
 		/*
 		var/dat = text("<TT><B>Timing Unit</B><br>[] []:[]<br><A href='?src=\ref[];tp=-30'>-</A> <A href='?src=\ref[];tp=-1'>-</A> <A href='?src=\ref[];tp=1'>+</A> <A href='?src=\ref[];tp=30'>+</A><br></TT>", (src.timing ? text("<A href='?src=\ref[];time=0'>Timing</A>", src) : text("<A href='?src=\ref[];time=1'>Not Timing</A>", src)), minute, second, src, src, src, src)

@@ -73,7 +73,7 @@
 	..()
 	return
 
-/obj/item/assembly/proximity_bomb/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/assembly/proximity_bomb/attackby(obj/item/W, mob/user)
 	if (iswrenchingtool(W) && !(src.status))
 		var/obj/item/assembly/prox_ignite/R = new /obj/item/assembly/prox_ignite(  )
 		R.part1 = src.part1
@@ -201,7 +201,7 @@
 	..()
 	return
 
-/obj/item/assembly/time_bomb/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/assembly/time_bomb/attackby(obj/item/W, mob/user)
 	if (iswrenchingtool(W) && !(src.status))
 		var/obj/item/assembly/time_ignite/R = new /obj/item/assembly/time_ignite(  )
 		R.part1 = src.part1
@@ -276,16 +276,16 @@
 
 /obj/item/assembly/radio_bomb/disposing()
 
-	//src.part1 = null
 	qdel(src.part1)
-	//src.part2 = null
+	src.part1 = null
 	qdel(src.part2)
-	//src.part3 = null
+	src.part2 = null
 	qdel(src.part3)
+	src.part3 = null
 	..()
 	return
 
-/obj/item/assembly/radio_bomb/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/assembly/radio_bomb/attackby(obj/item/W, mob/user)
 	if (iswrenchingtool(W) && !(src.status))
 		var/obj/item/assembly/rad_ignite/R = new /obj/item/assembly/rad_ignite(  )
 		R.part1 = src.part1

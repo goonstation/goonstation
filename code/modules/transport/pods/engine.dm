@@ -82,24 +82,26 @@
 			boutput(usr, "[ship.ship_message("Ship must have ZERO relative velocity (be stopped) to calculate warp destination!")]")
 			playsound(src, "sound/machines/buzz-sigh.ogg", 50)
 
-
 	var/list/beacons = list()
+	var/list/count = list() // associative list of number of times names in beacons are used (if possibly occuring more than once)
 	//This is bad and dumb. I should turn the by_type[/obj/warp_beacon] list into a manager datum, but this is already taking too long. -kyle
 	//I realize the possiblity of a bug where if you sit here ready to warp when it's about to change and then warp, but whatever
 #if defined(MAP_OVERRIDE_POD_WARS)
 	var/pilot_team = get_pod_wars_team_num(ship?.pilot)
 	for(var/obj/warp_beacon/pod_wars/W in by_type[/obj/warp_beacon])
 		if (W.current_owner == pilot_team)
-			beacons += W
+			beacons[W.name] = W
 #else
 	for(var/obj/warp_beacon/W in by_type[/obj/warp_beacon])
-		beacons += W
+		count[W.name]++
+		beacons["[W.name][count[W.name] == 1 ? null : " #[count[W.name]]"]"] = W
 #endif
 	for (var/obj/machinery/tripod/T in machine_registry[MACHINES_MISC])
 		if (istype(T.bulb, /obj/item/tripod_bulb/beacon))
-			beacons += T
+			count[T.name]++
+			beacons["[T.name][count[T.name] == 1 ? null : " #[count[T.name]]"]"] = T
 	wormholeQueued = 1
-	var/obj/target = input(usr, "Please select a location to warp to.", "Warp Computer") as null|obj in beacons
+	var/obj/target = beacons[tgui_input_list(usr, "Please select a location to warp to.", "Warp Computer", sortList(beacons))]
 	if(!target)
 		wormholeQueued = 0
 		return

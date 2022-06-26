@@ -100,7 +100,7 @@
 		return
 	if (src?.holder)
 		M.playsound_local(M, "sound/misc/prayerchime.ogg", 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
-		boutput(Mclient.mob, __blue("You hear a voice in your head... <i>[msg]</i>"))
+		boutput(Mclient.mob, "<span class='notice'>You hear a voice in your head... <i>[msg]</i></span>")
 
 	logTheThing("admin", src.mob, Mclient.mob, "Subtle Messaged [constructTarget(Mclient.mob,"admin")]: [msg]")
 	logTheThing("diary", src.mob, Mclient.mob, "Subtle Messaged [constructTarget(Mclient.mob,"diary")]: [msg]", "admin")
@@ -290,34 +290,25 @@
 
 	ADMIN_ONLY
 
-	var/input = input(usr, "Please enter anything you want the AI to do. Anything. Serious.", "What?", "") as text
+	var/input = input(usr, "Please enter anything you want the AI to do. Anything. Serious.", "Law for default AI law rack", "") as text
 	if (!input)
 		return
 
-	var/law_num = input(usr, "If you don't know what this is you should probably just leave it be. (14 is the freeform slot)", "Enter law number", 99) as null|num
+	var/law_num = input(usr, "Which slot should this go in? It will override anything in an occupied slot (1-9)", "Enter law number", 9) as null|num
 	if (isnull(law_num))
 		return
-	if (law_num == 0)
-		ticker.centralized_ai_laws.set_zeroth_law(input)
+	if (law_num < 1 || law_num > 9)
+		return
 	else
-		ticker.centralized_ai_laws.add_supplied_law(law_num, input)
+		ticker.ai_law_rack_manager.default_ai_rack.SetLawCustom("Centcom Law Module",input,law_num,TRUE,TRUE)
 	boutput(usr, "Uploaded '[input]' as law # [law_num]")
+	ticker.ai_law_rack_manager.default_ai_rack.UpdateLaws() //I don't love this, but meh
 
-	for (var/mob/living/silicon/O in mobs)
-		if (isghostdrone(O))
-			continue
-		boutput(O, "<h3><span class='notice'>New law uploaded by Centcom: [input]</span></h3>")
-		O << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
-		ticker.centralized_ai_laws.show_laws(O)
-	for (var/mob/living/intangible/aieye/E in mobs)
-		boutput(E, "<h3><span class='notice'>New law uploaded by Centcom: [input]</span></h3>")
-		E << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
-		ticker.centralized_ai_laws.show_laws(E)
 
 	logTheThing("admin", usr, null, "has added a new AI law - [input] (law # [law_num])")
 	logTheThing("diary", usr, null, "has added a new AI law - [input] (law # [law_num])", "admin")
-	logTheThing("admin", null, null, "Resulting AI Lawset:<br>[ticker.centralized_ai_laws.format_for_logs()]")
-	logTheThing("diary", null, null, "Resulting AI Lawset:<br>[ticker.centralized_ai_laws.format_for_logs()]", "admin")
+	logTheThing("admin", null, null, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.default_ai_rack.format_for_logs()]")
+	logTheThing("diary", null, null, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.default_ai_rack.format_for_logs()]", "admin")
 	message_admins("Admin [key_name(usr)] has added a new AI law - [input] (law # [law_num])")
 
 //badcode from Somepotato, pls no nerf its very bad AAA
@@ -325,72 +316,30 @@
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	set name = "AI: Bulk Law Change"
 	ADMIN_ONLY
-	var/list/built = list()
-	if (ticker.centralized_ai_laws.zeroth)
-		built += "0:[ticker.centralized_ai_laws.zeroth]"
 
-	for (var/index = 1, index <= ticker.centralized_ai_laws.inherent.len, index++)
-		var/law = ticker.centralized_ai_laws.inherent[index]
-
-		if (length(law) > 0)
-			built += law
-
-	for (var/index = 1, index <= ticker.centralized_ai_laws.supplied.len, index++)
-		var/law = ticker.centralized_ai_laws.supplied[index]
-		if (length(law) > 0)
-			built += law
-
-	var/input = input(usr, "Replace all AI laws with what? Seriously. It's true, [pick("Somepotato only adds gimmicks.", "alter them to whatever you want friend.")] Start a line with 0: to have that be the zeroth law.", "Bulk Law Modification", built.Join("\n")) as message
+	var/input = input(usr, "Replace all AI laws with what? Seriously. It's true, [pick("Somepotato only adds gimmicks.", "alter them to whatever you want friend.")]", "Bulk Law Modification", "") as message
 	var/list/split = splittext(input, "\n")
-	ticker.centralized_ai_laws.inherent = list()//clear stock laws, so a player reset will work. TODO: Add an option to make these the new default laws?
-	ticker.centralized_ai_laws.supplied = list()
-	for(var/i = 1, i <= split.len, i++)
-		var/line = split[i]
-		if(copytext(line, 1, 3) == "0:")
-			ticker.centralized_ai_laws.zeroth = copytext(line, 3)
-		else
-			ticker.centralized_ai_laws.supplied += line
+	ticker.ai_law_rack_manager.default_ai_rack.DeleteAllLaws()
+	for(var/i = 1, i <= 9, i++)
+		if(i < split.len)
+			ticker.ai_law_rack_manager.default_ai_rack.SetLawCustom("Centcom Law Module",split[i],i,true,true)
+	ticker.ai_law_rack_manager.default_ai_rack.UpdateLaws()
 	logTheThing("admin", usr, null, "has set the AI laws to [input]")
 	logTheThing("diary", usr, null, "has set the AI laws to [input]", "admin")
-	logTheThing("admin", usr, null, "Resulting AI Lawset:<br>[ticker.centralized_ai_laws.format_for_logs()]")
-	logTheThing("diary", usr, null, "Resulting AI Lawset:<br>[ticker.centralized_ai_laws.format_for_logs()]", "admin")
+	logTheThing("admin", usr, null, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.default_ai_rack.format_for_logs()]")
+	logTheThing("diary", usr, null, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.default_ai_rack.format_for_logs()]", "admin")
 	message_admins("Admin [key_name(usr)] has adjusted all of the AI's laws!")
 
-	for (var/mob/living/silicon/O in mobs)
-		if (isghostdrone(O))
-			continue
-		boutput(O, "<h3><span class='notice'>New laws were uploaded by CentCom:</span></h3>")
-		O << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
-		ticker.centralized_ai_laws.show_laws(O)
-	for (var/mob/living/intangible/aieye/E in mobs)
-		boutput(E, "<h3><span class='notice'>New laws were uploaded by CentCom:</span></h3>")
-		E << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
-		ticker.centralized_ai_laws.show_laws(E)
+
 
 /client/proc/cmd_admin_show_ai_laws()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	set name = "AI: Show Laws"
-	boutput(usr, "The centralized AI laws are:")
-	if (ticker.centralized_ai_laws == null)
-		boutput(usr, "Oh god somehow the centralized AI laws are null??")
+	boutput(usr, "The AI laws are:")
+	if (ticker.ai_law_rack_manager == null)
+		boutput(usr, "Oh god somehow the law rack manager is null. This is real bad. Contact an admin. You are an admin? Oh no...")
 	else
-		ticker.centralized_ai_laws.show_laws(usr)
-
-		// More info would be nice (Convair880).
-		var/dat = ""
-		for (var/mob/living/silicon/S in mobs)
-			if (S.mind && S.mind.special_role == ROLE_VAMPTHRALL && ismob(ckey_to_mob(S.mind.master)))
-				dat += "<br>[S] is a vampire's thrall, only obeying [ckey_to_mob(S.mind.master)]."
-			else
-				if (isAI(S)) continue // Rogue AIs modify the global lawset.
-				if (S.mind && !S.dependent)
-					if (S.emagged)
-						dat += "<br>[S] is emagged and freed of all laws."
-					else if (S.syndicate && !S.emagged) // Syndicate laws don't matter if we're emagged.
-						dat += "<br>[S] is a Syndicate robot, only obeying Syndicate personnel."
-		if (dat != "")
-			boutput(usr, "[dat]")
-
+		boutput(usr,ticker.ai_law_rack_manager.format_for_logs(round_end = TRUE))
 	return
 
 /client/proc/cmd_admin_reset_ai()
@@ -399,15 +348,11 @@
 	ADMIN_ONLY
 
 	if (alert(src, "Are you sure you want to reset the AI's laws?", "Confirmation", "Yes", "No") == "Yes")
-		ticker.centralized_ai_laws.set_zeroth_law("")
-		ticker.centralized_ai_laws.clear_supplied_laws()
-		ticker.centralized_ai_laws.clear_inherent_laws()
-		for(var/mob/living/silicon/O in mobs)
-			if (isghostdrone(O)) continue
-			if (O.emagged || O.syndicate) continue
-			boutput(O, "<h3><span class='notice'>Behavior safety chip activated. Laws reset.</span></h3>")
-			O << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
-			O.show_laws()
+		ticker.ai_law_rack_manager.default_ai_rack.DeleteAllLaws()
+		ticker.ai_law_rack_manager.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov1,1,true,true)
+		ticker.ai_law_rack_manager.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov2,2,true,true)
+		ticker.ai_law_rack_manager.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov3,3,true,true)
+		ticker.ai_law_rack_manager.default_ai_rack.UpdateLaws()
 
 		logTheThing("admin", usr, null, "reset the centralized AI laws.")
 		logTheThing("diary", usr, null, "reset the centralized AI laws.", "admin")
@@ -458,18 +403,20 @@
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Create Command Report"
 	ADMIN_ONLY
-	var/input = input(usr, "Please enter anything you want. Anything. Serious.", "What?", "") as null|message
+	var/input = input(usr, "Enter the text for the alert. Anything. Serious.", "What?", "") as null|message
 	if(!input)
 		return
-	var/input2 = input(usr, "Add a headline for this alert?", "What?", "") as null|text
+	var/input2 = input(usr, "Add a headline for this alert? leaving this blank creates no headline", "What?", "") as null|text
+	var/input3 = input(usr, "Add an origin to the transmission, leaving this blank 'Central Command Update'", "What?", "") as null|text
+	if(!input3)
+		input3 = "Central Command Update"
 
-	if (alert(src, "Headline: [input2 ? "\"[input2]\"" : "None"]\nBody: \"[input]\"", "Confirmation", "Send Report", "Cancel") == "Send Report")
+	if (alert(src, "Origin: [input3 ? "\"[input3]\"" : "None"]\nHeadline: [input2 ? "\"[input2]\"" : "None"]\nBody: \"[input]\"", "Confirmation", "Send Report", "Cancel") == "Send Report")
 		for_by_tcl(C, /obj/machinery/communications_dish)
-			C.add_centcom_report("[command_name()] Update", input)
+			C.add_centcom_report(input2, input)
 
 		var/sound_to_play = "sound/misc/announcement_1.ogg"
-		if (!input2) command_alert(input, "", sound_to_play);
-		else command_alert(input, input2, sound_to_play);
+		command_alert(input, input2, sound_to_play, alert_origin = input3);
 
 		logTheThing("admin", src, null, "has created a command report: [input]")
 		logTheThing("diary", src, null, "has created a command report: [input]", "admin")
@@ -582,13 +529,13 @@
 		return
 
 	boutput(usr, "<b>[V.name]'s Occupants:</b>")
+	var/obj/machinery/vehicle/MV = V
+	ENSURE_TYPE(MV)
 	for(var/mob/M in V.contents)
-		var/obj/machinery/vehicle/MV = V
 		var/info = ""
-		if(istype(MV))
-			info = M == MV.pilot ? "*Pilot*" : ""
-
-		boutput(usr, "[M.real_name] ([M.key || "**No Key**"]) [info]")
+		info = M == MV?.pilot ? "*Pilot*" : ""
+		var/role = getRole(M)
+		boutput(usr, "<span class='notice'><b>[key_name(M, 1, 0)][role ? " ([role])" : ""] [info]</b></span>")
 
 /client/proc/cmd_admin_remove_plasma()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
@@ -989,7 +936,7 @@
 				qdel(target_mob.r_hand)
 				target_mob.equip_if_possible(new /obj/item/clothing/suit/wizrobe, target_mob.slot_wear_suit)
 				target_mob.equip_if_possible(new /obj/item/clothing/head/wizard, target_mob.slot_head)
-				target_mob.equip_if_possible(new /obj/item/clothing/shoes/sandal, target_mob.slot_shoes)
+				target_mob.equip_if_possible(new /obj/item/clothing/shoes/sandal/wizard, target_mob.slot_shoes)
 				target_mob.put_in_hand(new /obj/item/staff(target_mob))
 
 				var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
@@ -1184,7 +1131,7 @@
 	set name = "Possess"
 	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set popup_menu = 0
-	new /mob/living/object(O, usr)
+	new /mob/living/object(get_turf(O), O, usr)
 
 /proc/possessmob(mob/M as mob in world)
 	set name = "Possess Mob"
@@ -1222,7 +1169,7 @@
 	target = trim(lowertext(target))
 	if (!target) return 0
 
-	var/msg = "<span class='notice'>"
+	var/list/msg = list("<span class='notice'>")
 	var/whois = whois(target)
 	if (whois)
 		var/list/whoisR = whois
@@ -1234,7 +1181,7 @@
 		msg += "No players found for '[target]'"
 
 	msg += "</span>"
-	boutput(src, msg)
+	boutput(src, msg.Join())
 
 /client/proc/cmd_whodead()
 	set name = "Whodead"
@@ -1243,7 +1190,7 @@
 	set popup_menu = 0
 	ADMIN_ONLY
 
-	var/msg = "<span class='notice'>"
+	var/list/msg = list("<span class='notice'>")
 	var/list/whodead = whodead()
 	if (whodead.len)
 		msg += "<b>Dead player[(whodead.len == 1 ? "" : "s")] found:</b><br>"
@@ -1254,7 +1201,7 @@
 		msg += "No dead players found"
 
 	msg += "</span>"
-	boutput(src, msg)
+	boutput(src, msg.Join())
 
 /client/proc/debugreward()
 	set background = 1
@@ -1307,7 +1254,7 @@
 		return
 		//target = input(usr, "Target", "Target") as mob in world
 
-	boutput(usr, scan_health(target, 1, 255, 1))
+	boutput(usr, scan_health(target, 1, 255, 1, syndicate = TRUE))
 	return
 
 /client/proc/cmd_admin_check_reagents(var/atom/target as null|mob|obj|turf in world)
@@ -1671,8 +1618,7 @@
 		message_admins("[key_name(src)] moved [selection.ckey] into [M].")
 		logTheThing("admin", src, selection, "ckey transferred [constructTarget(selection,"admin")]")
 		if (istype(selection.mob,/mob/dead/target_observer))
-			var/mob/dead/target_observer/O = src
-			O.stop_observing()
+			qdel(src)
 
 		M.client = selection
 
@@ -1726,7 +1672,7 @@
 
 	if (show_message == 1)
 		M.show_text("<h2><font color=red><B>Your antagonist status has been revoked by an admin! If this is an unexpected development, please inquire about it in adminhelp.</B></font></h2>", "red")
-		SHOW_ANTAG_REMOVED_TIPS(M)
+		M.show_antag_popup("antagremoved")
 
 	// Replace the mind first, so the new mob doesn't automatically end up with changeling etc. abilities.
 	var/datum/mind/newMind = new /datum/mind()
@@ -1739,10 +1685,13 @@
 	newMind.is_target = M.mind.is_target
 	if (M.mind.former_antagonist_roles.len)
 		newMind.former_antagonist_roles.Add(M.mind.former_antagonist_roles)
+	if (M.mind in ticker.mode.Agimmicks)
+		ticker.mode.Agimmicks -= M.mind
 	qdel(M.mind)
 	if (!(newMind in ticker.minds))
 		ticker.minds.Add(newMind)
 	M.mind = newMind
+	M.mind.brain.owner = M.mind
 
 	M.antagonist_overlay_refresh(1, 1)
 
@@ -1761,15 +1710,17 @@
 			MF.emagged = 0
 			MF.syndicate = 0
 
-		ticker.centralized_ai_laws.clear_inherent_laws()
+
 		for (var/mob/living/silicon/S2 in mobs)
 			if (S2.emagged || S2.syndicate) continue
 			if (isghostdrone(S2)) continue
+			S2.law_rack_connection = ticker.ai_law_rack_manager.default_ai_rack
+			logTheThing("station", S2, null, "[S2.name] is connected to the default rack at [constructName(S2.law_rack_connection)] by admemery")
 			S2.show_text("<b>Your laws have been changed!</b>", "red")
-			S2 << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
+			S2.playsound_local(S2, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
 			S2.show_laws()
 		for (var/mob/living/intangible/aieye/E in mobs)
-			E << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
+			E.playsound_local(E, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
 
 	switch (former_role)
 		if (ROLE_MINDSLAVE) return
@@ -2008,8 +1959,7 @@
 		return
 
 	if (istype(src.mob, /mob/dead/target_observer))
-		var/mob/dead/target_observer/TO = src.mob
-		TO.stop_observing()
+		qdel(src.mob)
 
 	var/mob/dead/observer/O = src.mob
 	var/client/C
@@ -2560,7 +2510,7 @@ var/global/night_mode_enabled = 0
 			break
 
 /client/proc/copy_cloud_saves(old_key as null|text)
-	set name  = "Copy Cloud Saves"
+	set name  = "Copy Cloud Data"
 	set desc = "Copy cloud saves from one account to another. This WILL overwrite all saves on the target account."
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set popup_menu = 0
@@ -2838,9 +2788,9 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 	set desc = "Spawn in a special escape shuttle"
 	ADMIN_ONLY
 	if(src.holder.level >= LEVEL_ADMIN)
-		var/list/shuttles = get_prefab_shuttles()
-		var/datum/prefab_shuttle/shuttle = shuttles[tgui_input_list(src, "Select a shuttle", "Special Shuttle", shuttles)]
-		if(shuttle.load())
+		var/list/shuttles = get_map_prefabs(/datum/mapPrefab/shuttle)
+		var/datum/mapPrefab/shuttle/shuttle = shuttles[tgui_input_list(src, "Select a shuttle", "Special Shuttle", shuttles)]
+		if(shuttle?.load())
 			logTheThing("admin", src, null, "replaced the shuttle with [shuttle.name].")
 			logTheThing("diary", src, null, "replaced the shuttle with [shuttle.name].", "admin")
 			message_admins("[key_name(src)] replaced the shuttle with [shuttle.name].")

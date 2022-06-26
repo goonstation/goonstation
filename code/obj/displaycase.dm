@@ -93,7 +93,7 @@
 	return
 
 
-/obj/displaycase/attackby(obj/item/W as obj, mob/user as mob)
+/obj/displaycase/attackby(obj/item/W, mob/user)
 	if (isscrewingtool(W)) // To bolt to the floor
 		if (src.anchored == 0)
 			src.anchored = 1
@@ -152,7 +152,7 @@
 	..()
 	return
 
-/obj/displaycase/attack_hand(mob/user as mob)
+/obj/displaycase/attack_hand(mob/user)
 	if (user.a_intent == INTENT_HARM)
 		user.visible_message("<span class='alert'>[user] kicks the display case.</span>")
 		user.lastattacked = src
@@ -238,7 +238,7 @@
 	6 Power cell
 	7 Screwdriver
 	*/
-	attackby(obj/item/O as obj, mob/user as mob)
+	attackby(obj/item/O, mob/user)
 		if (isscrewingtool(O))
 			if (src.repair_stage == 0)
 				user.show_text("You open the maintenance panel.", "blue")
@@ -253,7 +253,7 @@
 				if (!isnull(src.our_projectile2))
 					src.our_projectiles = list(new src.our_projectile, new src.our_projectile2)
 					L.projectiles = src.our_projectiles
-				AddComponent(/datum/component/cell_holder, our_cell)
+				L.AddComponent(/datum/component/cell_holder, our_cell)
 				// The man with the golden gun.
 				if (src.quality_counter >= src.q_threshold2)
 					L.setMaterial(getMaterial("gold"), appearance = 0, setname = 0)

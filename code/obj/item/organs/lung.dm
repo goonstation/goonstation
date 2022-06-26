@@ -134,13 +134,6 @@
 				if (prob(30))
 					boutput(donor, "<span class='alert'>Oh god it's so bad you could choke to death in here!</span>")
 
-		if (!rad_immune)
-			var/datum/gas/rad_particles/RV = breath.get_trace_gas_by_type(/datum/gas/rad_particles)
-			if (RV)
-				var/RV_pp = (RV.moles/TOTAL_MOLES(breath))*breath_pressure
-				if(RV_pp >= 1)
-					donor.changeStatus("radiation", (1 + RV_pp) * mult/LUNG_COUNT)
-
 		if (breath.temperature > min(temp_tolerance) && !donor.is_heat_resistant()) // Hot air hurts :(
 			var/lung_burn = clamp(breath.temperature - temp_tolerance, 0, 30) / 3
 			donor.TakeDamage("chest", 0, (lung_burn / LUNG_COUNT) + 3, 0, DAMAGE_BURN)
@@ -181,27 +174,27 @@
 				target_organ_location = pick("right", "left")
 
 			if (target_organ_location == "right" && !H.organHolder.right_lung)
-				H.tri_message("<span class='alert'><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] right lung socket!</span>",\
-				user, "<span class='alert'>You [fluff] [src] into [user == H ? "your" : "[H]'s"] right lung socket!</span>",\
-				H, "<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your right lung socket!</span>")
+				user.tri_message(H, "<span class='alert'><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] right lung socket!</span>",\
+					"<span class='alert'>You [fluff] [src] into [user == H ? "your" : "[H]'s"] right lung socket!</span>",\
+					"<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your right lung socket!</span>")
 
 				if (user.find_in_hand(src))
 					user.u_equip(src)
 				H.organHolder.receive_organ(src, "right_lung", 2.0)
 				H.update_body()
 			else if (target_organ_location == "left" && !H.organHolder.left_lung)
-				H.tri_message("<span class='alert'><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] left lung socket!</span>",\
-				user, "<span class='alert'>You [fluff] [src] into [user == H ? "your" : "[H]'s"] left lung socket!</span>",\
-				H, "<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your left lung socket!</span>")
+				user.tri_message(H, "<span class='alert'><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] left lung socket!</span>",\
+					"<span class='alert'>You [fluff] [src] into [user == H ? "your" : "[H]'s"] left lung socket!</span>",\
+					"<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your left lung socket!</span>")
 
 				if (user.find_in_hand(src))
 					user.u_equip(src)
 				H.organHolder.receive_organ(src, "left_lung", 2.0)
 				H.update_body()
 			else
-				H.tri_message("<span class='alert'><b>[user]</b> tries to [fluff] the [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] right lung socket!<br>But there's something already there!</span>",\
-				user, "<span class='alert'>You try to [fluff] the [src] into [user == H ? "your" : "[H]'s"] right lung socket!<br>But there's something already there!</span>",\
-				H, "<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [H == user ? "try" : "tries"] to [fluff] the [src] into your right lung socket!<br>But there's something already there!</span>")
+				user.tri_message(H, "<span class='alert'><b>[user]</b> tries to [fluff] the [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] right lung socket!<br>But there's something already there!</span>",\
+					"<span class='alert'>You try to [fluff] the [src] into [user == H ? "your" : "[H]'s"] right lung socket!<br>But there's something already there!</span>",\
+					"<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [H == user ? "try" : "tries"] to [fluff] the [src] into your right lung socket!<br>But there's something already there!</span>")
 				return 0
 
 			return 1
@@ -236,21 +229,11 @@
 	mats = 6
 	temp_tolerance = T0C+500
 	var/overloading = 0
+	var/grace_period = 30
 	safe_oxygen_min = 9
 	safe_co2_max = 18
 	safe_toxins_max = 5		//making it a lot higher than regular, because even doubling the regular value is pitifully low. This is still reasonably low, but it might be noticable
 	rad_immune = TRUE
-
-/obj/item/organ/lung/synth
-	name = "synthlungs"
-	icon_state = "plant"
-	desc = "Surprisingly, doesn't produce its own oxygen. Luckily, it works just as well at moving oxygen to the bloodstream."
-	synthetic = 1
-	failure_disease = /datum/ailment/disease/respiratory_failure
-	var/overloading = 0
-	New()
-		..()
-		src.icon_state = pick("plant_lung_t", "plant_lung_t_bloom")
 
 	add_ability(var/datum/abilityHolder/aholder, var/abil)
 		if (!ispath(abil, /datum/targetable/organAbility/rebreather) || !aholder)
@@ -283,7 +266,11 @@
 			return 0
 
 		if(overloading)
-			src.take_damage(0, 1 * mult)
+			src.grace_period = max(grace_period - 3 * mult, 0)
+			if(grace_period <= 5)
+				src.take_damage(0, 1 * mult)
+		else
+			src.grace_period = min(grace_period + 1 * mult, initial(src.grace_period))
 		return 1
 
 	disposing()
@@ -298,6 +285,17 @@
 	demag(mob/user)
 		..()
 		organ_abilities = initial(organ_abilities)
+
+/obj/item/organ/lung/synth
+	name = "synthlungs"
+	icon_state = "plant"
+	desc = "Surprisingly, doesn't produce its own oxygen. Luckily, it works just as well at moving oxygen to the bloodstream."
+	synthetic = 1
+	failure_disease = /datum/ailment/disease/respiratory_failure
+
+	New()
+		..()
+		src.icon_state = pick("plant_lung_t", "plant_lung_t_bloom")
 
 /obj/item/organ/lung/synth/left
 	name = "left lung"

@@ -1,11 +1,49 @@
-"a" = (/turf/dmm_suite/clear_turf,/area/space)
-"b" = (/turf/variableTurf/floor,/area/space)
-"c" = (/obj/critter/rockworm{task = "sleeping"},/turf/variableTurf/floor,/area/space)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/dmm_suite/clear_turf,
+/area/space)
+"b" = (
+/turf/variableTurf/floor,
+/area/space)
+"c" = (
+/obj/critter/rockworm{
+	task = "sleeping"
+	},
+/turf/variableTurf/floor,
+/area/space)
 
 (1,1,1) = {"
-aabaa
-accca
-bcccb
-accca
-aabaa
+a
+a
+b
+a
+a
+"}
+(2,1,1) = {"
+a
+c
+c
+c
+a
+"}
+(3,1,1) = {"
+b
+c
+c
+c
+b
+"}
+(4,1,1) = {"
+a
+c
+c
+c
+a
+"}
+(5,1,1) = {"
+a
+a
+b
+a
+a
 "}

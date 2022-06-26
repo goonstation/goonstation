@@ -327,8 +327,8 @@
 			var/turf/T
 			for( var/dir in cardinal )
 				T = get_step( F, dir )
-				if (! (istype(T,/turf/simulated/floor) || istype (T,/turf/unsimulated/floor)) ) continue
-				if (T.canpass())
+				if (! (istype(T, /turf/simulated/floor) || istype (T, /turf/unsimulated/floor)) ) continue
+				if (T.Enter(src))
 					if (T.active_liquid && T.active_liquid.group)
 						T.active_liquid.group.join(src)
 					else
@@ -617,7 +617,7 @@
 					if (F.blood_type && !C.blood_type)
 						C.blood_type = F.blood_type
 
-					members += C
+					members |= C
 					.++
 
 				if ((membercount + .)<=0) //this can happen somehow

@@ -7,7 +7,7 @@
 	density = 0
 	mats = 25
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WIRECUTTERS | DECON_MULTITOOL
-	_health = 50
+	_health = 25
 	color = null
 	var/can_talk_across_z_levels = 0
 	var/phone_id = null
@@ -90,7 +90,7 @@
 		..()
 
 	// Attempt to pick up the handset
-	attack_hand(mob/living/user as mob)
+	attack_hand(mob/living/user)
 		..(user)
 		if(src.answered == 1)
 			return
@@ -122,7 +122,7 @@
 	attack_ai(mob/user as mob)
 		return
 
-	attackby(obj/item/P as obj, mob/living/user as mob)
+	attackby(obj/item/P, mob/living/user)
 		if(istype(P, /obj/item/phone_handset))
 			var/obj/item/phone_handset/PH = P
 			if(PH.parent == src)
@@ -155,6 +155,9 @@
 		..()
 		src._health -= P.force
 		attack_particle(user,src)
+		user.lastattacked = src
+		hit_twitch(src)
+		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)
 		if(src._health <= 0)
 			if(src.linked)
 				hang_up()
@@ -319,7 +322,7 @@
 		if(!src.parent)
 			qdel(src)
 			return
-		if(src.parent.answered == 1 && get_dist(src,src.parent) > 1)
+		if(src.parent.answered == 1 && BOUNDS_DIST(src, src.parent) > 0)
 			boutput(src.holder,"<span class='alert'>The phone cord reaches it limit and the handset is yanked back to its base!</span>")
 			src.holder.drop_item(src)
 			src.parent.hang_up()
@@ -340,7 +343,7 @@
 				I.talk_into(M, text, null, M.real_name, lang_id)
 
 	// Attempt to pick up the handset
-	attack_hand(mob/living/user as mob)
+	attack_hand(mob/living/user)
 		..(user)
 		holder = user
 
@@ -421,7 +424,7 @@
 	New()
 		..()
 
-	attackby(obj/item/P as obj, mob/living/user as mob)
+	attackby(obj/item/P, mob/living/user)
 		if(istype(P,/obj/item/card/id))
 			if(src.activated)
 				if(alert("Do you want to un-register this phone?","yes","no") == "yes")

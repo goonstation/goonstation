@@ -225,7 +225,7 @@ See: [Component Reference](docs/component-reference.md).
 
 ## FontAwesome Icon
 
-For a list of all the icons you can use, see the [FontAwesome website](https://fontawesome.com/v5.14.0/icons?d=gallery&s=regular,solid&m=free)
+For a list of all the icons you can use, see the [FontAwesome website](https://fontawesome.com/v5/search?m=free&s=regular%2Csolid)
 
 ## License
 

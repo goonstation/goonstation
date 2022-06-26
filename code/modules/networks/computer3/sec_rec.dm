@@ -393,7 +393,7 @@
 
 					if (FIELDNUM_PRINT)
 						if (ckey(inputText))
-							src.active_general["fingerprint"] = copytext(inputText, 1, 33)
+							src.active_general["fingerprint"] = copytext(inputText, 1, 35)
 						else
 							return
 

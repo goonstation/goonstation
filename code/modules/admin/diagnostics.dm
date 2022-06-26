@@ -252,6 +252,15 @@ proc/debug_map_apc_count(delim,zlim)
 			else
 				img.app.color = "#f00"
 
+	proximity
+		name = "proximity turfs"
+		help = "Green tiles are turfs with checkinghasproximity, red tiles have neighcheckinghasproximity."
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			if(theTurf:checkinghasproximity)
+				img.app.color = "#0f0"
+			else if(theTurf:neighcheckinghasproximity)
+				img.app.color = "#f00"
+
 	areas
 		name = "areas"
 		help = "Differentiates between different areas. Also gives you area names because thats cool and stuff."
@@ -957,12 +966,6 @@ proc/debug_map_apc_count(delim,zlim)
 		proc/is_ok(atom/A)
 			return TRUE
 
-	checkingexit
-		name = "checkingexit"
-		help = "Green = yes."
-		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
-			img.app.color = theTurf.checkingexit ? "#0f0" : "#f00"
-
 	blocked_dirs
 		name = "blocked dirs"
 		help = "Displays dir flags of blocked turf exits"
@@ -1279,8 +1282,8 @@ proc/info_overlay_choices()
 				img:loc = null
 				qdel(img)
 			infoOverlayImages = list()
-		activeOverlay = null
 		qdel(activeOverlay)
+		activeOverlay = null
 	else
 		var/type = available_overlays[name]
 		activeOverlay = new type()

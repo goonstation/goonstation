@@ -25,7 +25,7 @@ TOILET
 	STOP_TRACKING
 	..()
 
-/obj/item/storage/toilet/attackby(obj/item/W as obj, mob/user as mob, obj/item/storage/T)
+/obj/item/storage/toilet/attackby(obj/item/W, mob/user, obj/item/storage/T)
 	if (src.contents.len >= 7)
 		boutput(user, "The toilet is clogged!")
 		user.unlock_medal("Try jiggling the handle",1) //new method to get this medal since the old one (fat person in disposal pipe) is gone
@@ -33,10 +33,14 @@ TOILET
 	if (istype(W, /obj/item/storage))
 		return
 	if (istype(W, /obj/item/grab))
-		playsound(src, "sound/effects/toilet_flush.ogg", 50, 1)
-		user.visible_message("<span class='notice'>[user] gives [W:affecting] a swirlie!</span>", "<span class='notice'>You give [W:affecting] a swirlie. It's like Middle School all over again!</span>")
+		var/obj/item/grab/G = W
+		playsound(src, 'sound/effects/toilet_flush.ogg', 50, 1)
+		user.visible_message("<span class='notice'>[user] gives [G.affecting] a swirlie!</span>", "<span class='notice'>You give [G.affecting] a swirlie. It's like Middle School all over again!</span>")
+		if (G.affecting.hasStatus("burning"))
+			G.affecting.changeStatus("burning", -2 SECONDS)
+			playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 70, 1)
+			return
 		return
-
 	return ..()
 
 /obj/item/storage/toilet/mouse_drop(atom/over_object, src_location, over_location)
@@ -49,7 +53,7 @@ TOILET
 	if (!ticker)
 		boutput(user, "You can't help relieve anyone before the game starts.")
 		return
-	if (!ishuman(M) || get_dist(src, user) > 1 || M.loc != src.loc || user.restrained() || user.stat)
+	if (!ishuman(M) || BOUNDS_DIST(src, user) > 0 || M.loc != src.loc || user.restrained() || user.stat)
 		return
 	if (M == user && ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -83,7 +87,7 @@ TOILET
 	src.add_fingerprint(user)
 	return
 
-/obj/item/storage/toilet/attack_hand(mob/user as mob)
+/obj/item/storage/toilet/attack_hand(mob/user)
 
 	for(var/mob/M in src.loc)
 		if (M.buckled)
@@ -110,11 +114,14 @@ TOILET
 #endif
 		src.clogged = 0
 		for (var/item in src.contents)
-			qdel(item)
+			flush(item)
 			src.hud?.remove_item(item)
 
 	else if((src.clogged >= 1) || (src.contents.len >= 7) || (user.buckled != src.loc))
 		src.visible_message("<span class='notice'>The toilet is clogged!</span>")
+
+/obj/item/storage/toilet/proc/flush(atom)
+	qdel(atom)
 
 /obj/item/storage/toilet/custom_suicide = 1
 /obj/item/storage/toilet/suicide_in_hand = 0

@@ -117,10 +117,7 @@
 	boutput(O, "To use something, simply double-click it.")
 	boutput(O, "Currently right-click functions will not work for the AI (except examine), and will either be replaced with dialogs or won't be usable by the AI.")
 
-//	O.laws_object = new /datum/ai_laws/asimov
-//	O.laws_object = ticker.centralized_ai_laws
-//	O.current_law_set = O.laws_object
-	ticker.centralized_ai_laws.show_laws(O)
+	O.show_laws()
 	boutput(O, "<b>These laws may be changed by other players.</b>")
 
 	O.verbs += /mob/living/silicon/ai/proc/ai_call_shuttle
@@ -151,6 +148,7 @@
 	O.verbs += /mob/living/silicon/ai/proc/ai_colorchange
 	O.verbs += /mob/living/silicon/ai/proc/ai_station_announcement
 	O.verbs += /mob/living/silicon/ai/proc/view_messageLog
+	O.verbs += /mob/living/silicon/ai/verb/rename_self
 	O.job = "AI"
 
 	SPAWN(0)
@@ -232,7 +230,7 @@
 			src.mind.transfer_to(cyborg)
 	cyborg.set_loc(get_turf(src.loc))
 	if (syndicate)
-		cyborg.handle_robot_antagonist_status("converted")
+		cyborg.make_syndicate("Robotize_MK2 (probably cyborg converter)")
 		boutput(cyborg, "<B>You have been transformed into a <i>syndicate</i> Cyborg. Cyborgs can interact with most electronic objects in their view.</B>")
 		boutput(cyborg, "<B>You must follow your laws and assist syndicate agents, who are identifiable by their icon.</B>")
 	else
@@ -326,7 +324,7 @@
 				W.set_loc(locate(1, 1, 1))
 		else
 			W.set_loc(T)
-		SHOW_SLASHER_TIPS(src)
+		src.show_antag_popup("slasher")
 		if(src.mind)
 			src.mind.transfer_to(W)
 			src.mind.special_role = "slasher"
@@ -589,7 +587,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	if (!src.can_respawn_as_ghost_critter())
 		return
 
-	if (alert(src, "Are you sure you want to respawn as an animal?", "Respawn as Animal", "Yes", "No") != "Yes")
+	if (tgui_alert(src, "Are you sure you want to respawn as an animal?", "Respawn as Animal", list("Yes", "No")) != "Yes")
 		return
 
 	var/turf/spawnpoint = pick_landmark(LANDMARK_PESTSTART)
@@ -627,9 +625,9 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	C.original_name = selfmob.real_name
 
 	if (traitor)
-		C.Browse(grabResource("html/ghostcritter.html"),"window=ghostcritter_antag;size=600x400;title=Ghost Critter Help")
+		C.show_antag_popup("ghostcritter_antag")
 	else
-		C.Browse(grabResource("html/ghostcritter.html"),"window=ghostcritter;size=600x400;title=Ghost Critter Help")
+		C.show_antag_popup("ghostcritter")
 
 	//hacky fix : qdel brain to prevent reviving
 	if (C.organHolder)
@@ -649,7 +647,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	if (!can_respawn_as_ghost_critter(0 MINUTES, 2 MINUTES))
 		return
 
-	if (alert(src, "Are you sure you want to respawn as a mentor mouse? You won't be able to come back as a human or cyborg!", "Respawn as Animal", "Yes", "No") != "Yes")
+	if (tgui_alert(src, "Are you sure you want to respawn as a mentor mouse? You won't be able to come back as a human or cyborg!", "Respawn as Animal", list("Yes", "No")) != "Yes")
 		return
 
 	// you can be an animal
@@ -668,7 +666,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	C.literate = 0
 	C.original_name = selfmob.real_name
 
-	C.Browse(grabResource("html/ghostcritter_mentor.html"),"window=ghostcritter_mentor;size=600x400;title=Ghost Critter Help")
+	C.show_antag_popup("ghostcritter_mentor")
 	logTheThing("admin", C, null, "respawned as a mentor mouse at [log_loc(C)].")
 
 	//hacky fix : qdel brain to prevent reviving
@@ -691,7 +689,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 		boutput(src, "<span class='alert'>The game hasn't started yet, silly!</span>")
 		return
 
-	if (alert(src, "Are you sure you want to respawn as an admin mouse?", "Respawn as Animal", "Yes", "No") != "Yes")
+	if (tgui_alert(src, "Are you sure you want to respawn as an admin mouse?", "Respawn as Animal", list("Yes", "No")) != "Yes")
 		return
 
 	if(!src || !src.mind || !src.client)
@@ -720,6 +718,9 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	set desc = "Visit the Afterlife Bar"
 	set category = null
 
+	if (current_state < GAME_STATE_PLAYING)
+		boutput(src, "It's too early to go to the bar!")
+		return
 	if(!isdead(src) || !src.mind || !ticker || !ticker.mode)
 		return
 	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/football))
@@ -787,7 +788,7 @@ var/respawn_arena_enabled = 0
 	set desc = "Visit the Respawn Arena to earn a respawn!"
 	set category = "Ghost"
 
-	if(!ASS_JAM && !respawn_arena_enabled)
+	if(!respawn_arena_enabled)
 		boutput(src,"The respawn arena is not open right now. Tough luck!")
 		return
 
@@ -859,10 +860,13 @@ var/respawn_arena_enabled = 0
 		O.mind.key = key
 		O.mind.current = O
 		ticker.minds += O.mind
+	O.flock.flockmind_mind = O.mind
+	O.mind.special_role = ROLE_FLOCKMIND
 	qdel(src)
 	boutput(O, "<B>You are a flockmind, the collective machine consciousness of a flock of drones! Your existence is tied to your flock! Ensure that it survives and thrives!</B>")
 	boutput(O, "<B>Silicon units are able to detect your transmissions and messages (with some signal corruption), so exercise caution in what you say.</B>")
 	boutput(O, "<B>On the flipside, you can hear silicon transmissions and all radio signals, but with heavy corruption.</B>")
+	O.show_antag_popup("flockmind")
 	return O
 
 // flocktraces are made by flockminds
@@ -876,6 +880,7 @@ var/respawn_arena_enabled = 0
 		var/mob/living/intangible/flock/trace/O = new/mob/living/intangible/flock/trace(spawnloc, flock)
 		if (src.mind)
 			src.mind.transfer_to(O)
+			flock.trace_minds[O.name] = O.mind
 		else
 			var/key = src.client.key
 			if (src.client)
@@ -885,12 +890,20 @@ var/respawn_arena_enabled = 0
 			O.mind.key = key
 			O.mind.current = O
 			ticker.minds += O.mind
+
+		if (!O.mind.special_role) // Preserve existing antag role (if any).
+			O.mind.special_role = ROLE_FLOCKTRACE
+		if (!(O.mind in ticker.mode.Agimmicks))
+			ticker.mode.Agimmicks += O.mind
 		qdel(src)
 
-		boutput(O, "<span class='bold'>You are a flocktrace, a partition of the flock's collective computation!</span>")
-		boutput(O, "<span class='bold'>Your loyalty is to the flock and to the flockmind. Spread drones, convert the station, aid in the construction of the Relay.</span>")
+		boutput(O, "<span class='bold'>You are a Flocktrace, a partition of the Flock's collective computation!</span>")
+		boutput(O, "<span class='bold'>Your loyalty is to the Flock of [flock.flockmind.real_name]. Spread drones, convert the station, and aid in the construction of the Relay.</span>")
 		boutput(O, "<span class='bold'>In this form, you cannot be harmed, but you can't do anything to the world at large.</span>")
-		boutput(O, "<span class='italic'>Tip: click-drag yourself onto unoccupied drones to take direct control of them.</span>")
+		boutput(O, "<span class='italic'>Tip: Click-drag yourself onto unoccupied drones to take direct control of them.</span>")
 		boutput(O, "<span class='notice'>You are part of the <span class='bold'>[flock.name]</span> flock.</span>")
+		O.show_antag_popup("flocktrace")
+		flock_speak(null, "Trace partition [O.real_name] has been instantiated.", flock)
+
 		return O
 	return null

@@ -6,6 +6,7 @@
 	flags = FPRINT | USEDELAY
 	anchored = 1.0
 	stops_space_move = 1
+	status = REQ_PHYSICAL_ACCESS
 	var/datum/effects/system/ion_trail_follow/ion_trail = null
 	var/mob/pilot = null //The mob which actually flys the ship
 	var/capacity = 3 //How many passengers the ship can hold
@@ -108,7 +109,7 @@
 	///////Attack Code									////
 	////////////////////////////////////////////////////////
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		user.lastattacked = src
 		if (health < maxhealth && isweldingtool(W))
 			if(!W:try_weld(user, 1))
@@ -192,7 +193,7 @@
 
 	updateDialog()
 		for(var/client/C)
-			if (C.mob && C.mob.using_dialog_of(src) && get_dist(C.mob,src) <= 1)
+			if (C.mob && C.mob.using_dialog_of(src) && BOUNDS_DIST(C.mob, src) == 0)
 				src.open_parts_panel(C.mob)
 
 	Topic(href, href_list)
@@ -700,11 +701,11 @@
 		STOP_TRACKING
 
 		..()
+
 	process()
 		if(sec_system)
 			if(sec_system.active)
 				sec_system.run_component()
-		return
 
 	proc/checkhealth()
 		myhud?.update_health()
@@ -885,22 +886,10 @@
 		return
 
 	src.leave_pod(usr)
-/*
-	if (usr.loc != src)
-		return
-	src.passengers--
-	usr.set_loc(src.loc)
-	usr.remove_shipcrewmember_powers(src.weapon_class)
-	if (usr.client)
-		usr.client.perspective = MOB_PERSPECTIVE
-	if(src.pilot == usr)
-		src.pilot = null
-	if(passengers)
-		find_pilot()
-	else
-		src.ion_trail.stop()
-*/
-/obj/machinery/vehicle/proc/eject(mob/ejectee as mob) // Call leave_pod if you're having the mob leave the vehicle normally, otherwise use set_loc and it'll call this for you.
+
+/// Called when the loc of an occupant changes to something other than a pod. (It's in mob/set_loc. Yes, really.)
+/// Use leave_pod if the occupant is exiting the pod normally, and don't call this directly.
+/obj/machinery/vehicle/proc/eject(mob/ejectee)
 	if (!ejectee || ejectee.loc != src)
 		return
 
@@ -976,6 +965,10 @@
 		boutput(boarder, "<span class='alert'>You have no idea how to work this.</span>")
 		return
 
+	if(isflockmob(boarder))
+		boutput(boarder, "<span class='alert'>You're unable to use this vehicle!</span>")
+		return
+
 	if(locked)
 		boutput(boarder, "<span class='alert'>[src] is locked!</span>")
 		return
@@ -1003,7 +996,7 @@
 		boutput(boarder, "There is no more room!")
 		return
 
-	actions.start(new/datum/action/bar/icon/board_pod(src,boarder), boarder)
+	actions.start(new/datum/action/bar/board_pod(src,boarder), boarder)
 
 /obj/machinery/vehicle/proc/finish_board_pod(var/mob/boarder)
 	for(var/obj/item/shipcomponent/S in src.components)
@@ -1064,12 +1057,10 @@
 		O.set_loc(floor)
 
 
-/datum/action/bar/icon/board_pod
+/datum/action/bar/board_pod
 	duration = 20
 	interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_MOVE
 	id = "board_pod"
-	icon = 'icons/ui/actions.dmi'
-	//icon_state = "working"
 	var/mob/M
 	var/obj/machinery/vehicle/V
 
@@ -1188,16 +1179,9 @@
 		boutput(M, "<span class='alert'><b>You are ejected from [src]!</b></span>")
 		logTheThing("vehicle", M, src.name, "is ejected from pod: <b>[constructTarget(src.name,"vehicle")]</b> when it blew up!")
 
-		src.leave_pod(M)
-		//var/atom/target = get_edge_target_turf(M,pick(alldirs))
-		//SPAWN(0)
-		//M.throw_at(target, 10, 2)
-		SPAWN(0)
-		step_rand(M, 0)
-		step_rand(M, 0)
-		step_rand(M, 0)
-		step_rand(M, 0)
-		step_rand(M, 0)
+		M.set_loc(get_turf(src))
+		var/atom/target = get_edge_cheap(M, src.dir)
+		M.throw_at(target, 10, 2)
 
 
 /////////////////////////////////////////////////////////////////////
@@ -1467,7 +1451,7 @@
 ////////////////////////////////////////////////////////////////////////
 
 /obj/machinery/vehicle/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-	if (!user.client || !isliving(user))
+	if (!user.client || !isliving(user) || isintangible(usr))
 		return
 	if (is_incapacitated(user))
 		user.show_text("Not when you're incapacitated.", "red")
@@ -1494,7 +1478,7 @@
 	return
 
 /obj/machinery/vehicle/mouse_drop(over_object, src_location, over_location)
-	if (!usr.client || !isliving(usr))
+	if (!usr.client || !isliving(usr) || isintangible(usr))
 		return
 	if (is_incapacitated(usr))
 		usr.show_text("Not when you're incapacitated.", "red")

@@ -32,7 +32,7 @@
 		return 1
 	if (ismob(eye))
 		var/mob/M = eye
-		if (M.is_near_colosseum())
+		if (M != src && M.is_near_colosseum())
 			return 1
 	else if (istype(eye, /obj/observable/colosseum))
 		return 1
@@ -327,7 +327,7 @@
 		if (score > 10000)
 			var/command_report = "A Pod Colosseum match has concluded with score [score]. Congratulations to: [moblist_names]."
 			for_by_tcl(C, /obj/machinery/communications_dish)
-				C.add_centcom_report("[command_name()] Update", command_report)
+				C.add_centcom_report(ALERT_GENERAL, command_report)
 
 			command_alert(command_report, "Pod Colosseum match finished")
 		statlog_gauntlet(moblist_names, score, 0)
@@ -1476,7 +1476,7 @@ proc/get_colosseum_message(var/name, var/message)
 
 			qdel(src)
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (isweldingtool(W))
 			if (health >= max_health)
 				boutput(user, "<span class='alert'>That putt is already at full health!</span>")

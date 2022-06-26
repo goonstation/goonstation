@@ -75,6 +75,8 @@
 	var/atom/last_bumped_atom = null
 	var/list/bumped_queue = list()
 	density = 0
+	mob_flip_inside(var/mob/user)
+		animate_spin(src, prob(50) ? "L" : "R", 1, 0)
 
 /obj/vehicle/skateboard/New()
 	..()
@@ -165,7 +167,7 @@
 	if(bumped_queue.len >= 9)
 		bumped_queue.Cut(1,2)
 
-	if(isturf(AM) || istype(AM, /mob/living/carbon/wall) || istype(AM, /obj/window) || istype(AM, /obj/grille))
+	if(isturf(AM) || istype(AM, /obj/window) || istype(AM, /obj/grille))
 		if(sickness < 100 || z == 2 || z == 4)
 			src.messageNearby("<span class='alert'><B>You crash into the [AM]!</B></span>", "<span class='alert'><B>[rider] crashes into the [AM] with the [src]!</B></span>")
 			playsound(src, pick(sb_fails), 55, 1)
@@ -268,7 +270,7 @@
 			M.set_loc(src.loc)
 
 /obj/vehicle/skateboard/MouseDrop_T(mob/living/target, mob/user)
-	if (rider || !istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user) || isAI(user))
+	if (rider || !istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, target) > 0 || is_incapacitated(user) || isAI(user))
 		return
 
 	if(target == user && !user.stat)
@@ -301,7 +303,7 @@
 		eject_rider(0, 1)
 	return
 
-/obj/vehicle/skateboard/attack_hand(mob/living/carbon/human/M as mob)
+/obj/vehicle/skateboard/attack_hand(mob/living/carbon/human/M)
 	if(!M || !rider)
 		..()
 		return

@@ -195,7 +195,7 @@
 	pointCost = 300
 	cooldown = 150 SECONDS //Tweaked this down from 3 minutes to 2 1/2, let's see if that ruins anything
 
-	cast(atom/T)
+	cast(var/atom/target)
 		if (..())
 			return 1
 
@@ -203,20 +203,23 @@
 			boutput(usr, "<span class='alert'>You cannot force your consciousness into a body while corporeal.</span>")
 			return 1
 
-		if (!isitem(T) || istype(T, /obj/item/storage/bible))
+		if (istype(target, /obj/item/storage/bible))
+			boutput(holder.owner, "<span class='alert'><b>You feel rebuffed by a holy force!<b></span>")
+
+		if (!isitem(target))
 			boutput(holder.owner, "<span class='alert'>You cannot possess this!</span>")
 			return 1
 
-		boutput(holder.owner, "<span class='alert'><strong>[pick("You extend your will into [T].", "You force [T] to do your bidding.")]</strong></span>")
+		boutput(holder.owner, "<span class='alert'><strong>[pick("You extend your will into [target].", "You force [target] to do your bidding.")]</strong></span>")
 		usr.playsound_local(usr.loc, "sound/voice/wraith/wraithpossesobject.ogg", 50, 0)
-		var/mob/living/object/O = new/mob/living/object(T, holder.owner)
+		var/mob/living/object/O = new/mob/living/object(get_turf(target), target, holder.owner)
 		SPAWN(45 SECONDS)
 			if (O)
 				boutput(O, "<span class='alert'>You feel your control of this vessel slipping away!</span>")
 		SPAWN(60 SECONDS) //time limit on possession: 1 minute
 			if (O)
 				boutput(O, "<span class='alert'><strong>Your control is wrested away! The item is no longer yours.</strong></span>")
-				usr.playsound_local(usr.loc, "sound/voice/wraith/wraithleaveoject.ogg", 50, 0)
+				usr.playsound_local(usr.loc, "sound/voice/wraith/wraithleaveobject.ogg", 50, 0)
 				O.death(FALSE)
 		return 0
 
@@ -267,7 +270,7 @@
 
 	cast(atom/T)
 		if (..())
-			return 1
+			return TRUE
 
 		//If you targeted a turf for some reason, find a valid target on it
 		var/atom/target = null
@@ -287,7 +290,7 @@
 			var/mob/living/carbon/H = T
 			if (H.traitHolder.hasTrait("training_chaplain"))
 				boutput(usr, "<span class='alert'>Some mysterious force protects [T] from your influence.</span>")
-				return 1
+				return TRUE
 			else
 				boutput(usr, "<span class='notice'>[pick("You sap [T]'s energy.", "You suck the breath out of [T].")]</span>")
 				boutput(T, "<span class='alert'>You feel really tired all of a sudden!</span>")
@@ -295,22 +298,22 @@
 				H.emote("pale")
 				H.remove_stamina( rand(100, 120) )//might be nice if decay was useful.
 				H.changeStatus("stunned", 4 SECONDS)
-				return 0
+				return FALSE
 		else if (isobj(T))
 			var/obj/O = T
-			if(istype(O, /obj/machinery/computer/shuttle/embedded))
-				boutput(usr, "<span class='alert'>You cannot seem to alter the energy off [O].</span>" )
-				return 0
+			if(istype(O, /obj/machinery/computer/shuttle))
+				boutput(usr, "<span class='alert'>You cannot seem to alter the energy of [O].</span>" )
+				return TRUE
 			// go to jail, do not pass src, do not collect pushed messages
 			if (O.emag_act(null, null))
 				boutput(usr, "<span class='notice'>You alter the energy of [O].</span>")
-				return 0
+				return FALSE
 			else
 				boutput(usr, "<span class='alert'>You fail to alter the energy of the [O].</span>")
-				return 1
+				return TRUE
 		else
 			boutput(usr, "<span class='alert'>There is nothing to decay here!</span>")
-			return 1
+			return FALSE
 
 /datum/targetable/wraithAbility/command
 	name = "Command"
@@ -412,22 +415,7 @@
 			if(istype(O, /obj/critter) || istype(O, /obj/machinery/bot) || istype(O, /obj/decal) || O.anchored || O.invisibility)
 				boutput(usr, "<span class='alert'>That is not a valid target for animation!</span>")
 				return 1
-			O.visible_message("<span class='alert'>The [O] comes to life!</span>")
-			var/obj/critter/livingobj/L = new/obj/critter/livingobj(O.loc)
-			O.set_loc(L)
-			L.name = "Living [O.name]"
-			L.desc = "[O.desc]. It appears to be alive!"
-			L.overlays += O
-			L.health = rand(10, 50)
-			L.atk_brute_amt = rand(5, 20)
-			L.defensive = 1
-			L.aggressive = 1
-			L.atkcarbon = 1
-			L.atksilicon = 1
-			L.opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
-			L.stunprob = 15
-			L.original_object = O
-			animate_levitate(L, -1, 30)
+			new/mob/living/object/ai_controlled(O.loc, O)
 			usr.playsound_local(usr.loc, "sound/voice/wraith/wraithlivingobject.ogg", 50, 0)
 			return 0
 		else

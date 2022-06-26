@@ -73,7 +73,7 @@
 		if (..())
 			return 1
 		disabled = 1
-		boutput(holder.owner, __blue("You fade out of sight."))
+		boutput(holder.owner, "<span class='notice'>You fade out of sight.</span>")
 		var/datum/action/invisibility/I = new
 		I.owner = holder.owner
 		I.ability = src
@@ -91,7 +91,7 @@
 
 	proc/fade_in()
 		if (holder.owner)
-			boutput(holder.owner, __red("You fade back into sight!"))
+			boutput(holder.owner, "<span class='alert'>You fade back into sight!</span>")
 			disabled = 0
 			doCooldown()
 			SPAWN(linger_time)
@@ -103,7 +103,7 @@
 					holder.owner.alpha = 64
 					animate(holder.owner, alpha=255, time=5)
 
-	wendigo
-		fade_in_icon_state = "wendigo_appear"
-		fade_out_icon_state = "wendigo_melt"
+	brullbar
+		fade_in_icon_state = "brullbar_appear"
+		fade_out_icon_state = "brullbar_melt"
 		fade_anim_length = 12

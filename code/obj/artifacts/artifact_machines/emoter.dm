@@ -6,6 +6,7 @@
 /datum/artifact/emoter
 	associated_object = /obj/machinery/artifact/emoter
 	type_name = "Emote Forcer Field" //this was brown note originally
+	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 350
 	validtypes = list("martian","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch)

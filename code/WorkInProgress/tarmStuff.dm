@@ -1,5 +1,45 @@
 //bot go brr?
 //GUNS GUNS GUNS
+/obj/item/gun/energy/cannon
+	name = "Vexillifer IV"
+	desc = "It's a cannon? A laser gun? You can't tell."
+	icon = 'icons/obj/large/64x32.dmi'
+	icon_state = "lasercannon"
+	item_state = "cannon"
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
+	force = MELEE_DMG_LARGE
+
+
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+
+	can_dual_wield = 0
+
+	//color = list(0.110785,0.179801,0.533943,0.0890215,-0.0605533,-1.35334,0.823851,0.958116,1.79703)
+
+	two_handed = 1
+	w_class = W_CLASS_BULKY
+	muzzle_flash = "muzzle_flash_bluezap"
+	cell_type = /obj/item/ammo/power_cell/self_charging/mediumbig
+	shoot_delay = 0.8 SECONDS
+
+
+	New()
+		set_current_projectile(new/datum/projectile/laser/asslaser)
+		..()
+
+	setupProperties()
+		..()
+		setProperty("movespeed", 0.3)
+
+	flashy
+		icon_state = "lasercannon-anim"
+
+		shoot(target, start, mob/user, POX, POY, is_dual_wield)
+			if(src.canshoot())
+				flick("lasercannon-fire", src)
+			. = ..()
+
 /datum/projectile/special/target_designator
 	sname = "foo"
 	name = "bar"
@@ -51,7 +91,7 @@
 	casing = /obj/item/casing/cannon
 	power = 125
 	implanted = /obj/item/implant/projectile/rakshasa
-	icon_turf_hit = "bhole-large"
+	impact_image_state = "bhole-large"
 	goes_through_walls = 1
 	pierces = -1
 
@@ -108,7 +148,7 @@
 		. = ..(target, start, user, POX+rand(-spread_angle, spread_angle)*16, POY+rand(-spread_angle, spread_angle)*16)
 		last_shot_time = TIME
 
-	shoot_point_blank(mob/M, mob/user, second_shot)
+	shoot_point_blank(atom/target, mob/user, second_shot)
 		shotcount = 0
 		. = ..()
 
@@ -151,7 +191,7 @@
 	shot_volume = 66
 	dissipation_delay = 10
 	dissipation_rate = 5
-	icon_turf_hit = "bhole-small"
+	impact_image_state = "bhole-small"
 
 	small
 		shot_sound = 'sound/weapons/9x19NATO.ogg'
@@ -265,7 +305,7 @@
 	shot_volume = 100
 	shot_sound = 'sound/weapons/gyrojet.ogg'
 	ks_ratio = 1
-	icon_turf_hit = "bhole-small"
+	impact_image_state = "bhole-small"
 
 	on_launch(obj/projectile/O)
 		O.internal_speed = projectile_speed
@@ -328,7 +368,7 @@
 	dissipation_rate = 5
 	ks_ratio = 1.0
 	implanted = /obj/item/implant/projectile/bullet_50
-	icon_turf_hit = "bhole-large"
+	impact_image_state = "bhole-large"
 	casing = /obj/item/casing/deagle
 	shot_sound = 'sound/weapons/deagle.ogg'
 

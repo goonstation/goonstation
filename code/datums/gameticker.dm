@@ -1,15 +1,7 @@
 var/global/datum/controller/gameticker/ticker
 var/global/current_state = GAME_STATE_WORLD_INIT
-/* -- moved to _setup.dm
-#define GAME_STATE_PREGAME		1
-#define GAME_STATE_SETTING_UP	2
-#define GAME_STATE_PLAYING		3
-#define GAME_STATE_FINISHED		4
-*/
-/datum/controller/gameticker
-	//var/current_state = GAME_STATE_PREGAME
-	//replaced with global
 
+/datum/controller/gameticker
 	var/hide_mode = TRUE
 	var/datum/game_mode/mode = null
 	var/event_time = null
@@ -25,7 +17,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 	var/click_delay = 3
 
-	var/datum/ai_laws/centralized_ai_laws
+	var/datum/ai_rack_manager/ai_law_rack_manager = new /datum/ai_rack_manager()
 
 	var/skull_key_assigned = 0
 
@@ -117,7 +109,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	switch(master_mode)
 		if("random","secret") src.mode = config.pick_random_mode()
 		if("action") src.mode = config.pick_mode(pick("nuclear","wizard","blob"))
-		if("intrigue") src.mode = config.pick_mode(pick("mixed_rp", "traitor","changeling","vampire","conspiracy","spy_theft","arcfiend", prob(50); "extended"))
+		if("intrigue") src.mode = config.pick_mode(pick(prob(300);"mixed_rp", prob(200); "traitor", prob(75);"changeling","vampire", prob(50); "conspiracy", "spy_theft","arcfiend", prob(50); "extended"))
 		if("pod_wars") src.mode = config.pick_mode("pod_wars")
 		else src.mode = config.pick_mode(master_mode)
 
@@ -137,9 +129,6 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		#endif
 	else
 		src.mode.announce()
-
-	// uhh is this where this goes??
-	src.centralized_ai_laws = new /datum/ai_laws/asimov()
 
 	//Configure mode and assign player to special mode stuff
 	var/can_continue = src.mode.pre_setup()
@@ -165,7 +154,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	ooc_allowed = 0
 	boutput(world, "<B>OOC has been automatically disabled until the round ends.</B>")
 #else
-	if (ASS_JAM || istype(src.mode, /datum/game_mode/construction))
+	if (istype(src.mode, /datum/game_mode/construction))
 		looc_allowed = 1
 		boutput(world, "<B>LOOC has been automatically enabled.</B>")
 	else
@@ -225,7 +214,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		ircbot.event("roundstart")
 		mode.post_setup()
 
-		event_wormhole_buildturflist()
+		build_random_floor_turf_list()
 
 		mode.post_post_setup()
 
@@ -256,7 +245,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			LAGCHECK(LAG_LOW)
 			var/datum/powernet/PN = E.get_direct_powernet()
 			if(PN?.avail <= 0)
-				command_alert("Reports indicate that the engine on-board [station_name()] has not yet been started. Setting up the engine is strongly recommended, or else stationwide power failures may occur.", "Power Grid Warning")
+				command_alert("Reports indicate that the engine on-board [station_name()] has not yet been started. Setting up the engine is strongly recommended, or else stationwide power failures may occur.", "Power Grid Warning", alert_origin = ALERT_STATION)
 			break
 
 	for(var/turf/T in job_start_locations["AI"])
@@ -345,7 +334,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 					if (periodic_check == 1)
 						logTheThing("debug", player, null, "<b>Gameticker fallback:</b> re-added player to ticker.minds.")
 					else
-						logTheThing("debug", player, null, "<b>Gameticker setup:</b> added player to ticker.minds.")
+						logTheThing("debug", player, null, "<b>Gameticker setup:</b> added player to ticker.minds. [player.mind.on_ticker_add_log()]")
 					ticker.minds.Add(player.mind)
 
 	proc/implant_skull_key()
@@ -440,6 +429,8 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 			SPAWN(0)
 				change_ghost_invisibility(INVIS_NONE)
+				for(var/mob/M in global.mobs)
+					M.antagonist_overlay_refresh(bypass_cooldown=TRUE)
 
 			// i feel like this should probably be a proc call somewhere instead but w/e
 			if (!ooc_allowed)
@@ -587,7 +578,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	boutput(world, score_tracker.escapee_facts())
 	boutput(world, score_tracker.heisenhat_stats())
 	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] ai law display")
-	boutput(world, "<b>AIs and Cyborgs had the following laws at the end of the game:</b><br>[ticker.centralized_ai_laws.format_for_logs()]")
+	boutput(world, "<b>AIs and Cyborgs had the following laws at the end of the game:</b><br>[ticker.ai_law_rack_manager.format_for_logs("<br>",true)]")
 
 
 	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] resetting gauntlet (why? who cares! the game is over!)")
@@ -765,8 +756,6 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	for_by_tcl(P, /obj/bookshelf/persistent) //make the bookshelf save its contents
 		P.build_curr_contents()
 
-	global.save_noticeboards()
-
 #ifdef SECRETS_ENABLED
 	for_by_tcl(S, /obj/santa_helper)
 		S.save_mail()
@@ -819,70 +808,3 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		global.lag_detection_process.automatic_profiling(force_stop=TRUE)
 
 	return 1
-
-/////
-/////SETTING UP THE GAME
-/////
-
-/////
-/////MAIN PROCESS PART
-/////
-/*
-/datum/controller/gameticker/proc/game_process()
-
-	switch(mode.name)
-		if("deathmatch","monkey","nuclear emergency","Corporate Restructuring","revolution","traitor",
-		"wizard","extended")
-			do
-				if (!( shuttle_frozen ))
-					if (src.timing == 1)
-						src.timeleft -= 10
-					else
-						if (src.timing == -1.0)
-							src.timeleft += 10
-							if (src.timeleft >= shuttle_time_to_arrive)
-								src.timeleft = null
-								src.timing = 0
-				if (prob(0.5))
-					spawn_meteors()
-				if (src.timeleft <= 0 && src.timing)
-					src.timeup()
-				sleep(1 SECOND)
-			while(src.processing)
-			return
-//Standard extended process (incorporates most game modes).
-//Put yours in here if you don't know where else to put it.
-		if("AI malfunction")
-			do
-				check_win()
-				ticker.AItime += 10
-				sleep(1 SECOND)
-				if (ticker.AItime == 6000)
-					boutput(world, "<FONT size = 3><B>Cent. Com. Update</B> AI Malfunction Detected</FONT>")
-					boutput(world, "<span class='alert'>It seems we have provided you with a malfunctioning AI. We're very sorry.</span>")
-			while(src.processing)
-			return
-//malfunction process
-		if("meteor")
-			do
-				if (!( shuttle_frozen ))
-					if (src.timing == 1)
-						src.timeleft -= 10
-					else
-						if (src.timing == -1.0)
-							src.timeleft += 10
-							if (src.timeleft >= shuttle_time_to_arrive)
-								src.timeleft = null
-								src.timing = 0
-				for(var/i = 0; i < 10; i++)
-					spawn_meteors()
-				if (src.timeleft <= 0 && src.timing)
-					src.timeup()
-				sleep(1 SECOND)
-			while(src.processing)
-			return
-//meteor mode!!! MORE METEORS!!!
-		else
-			return
-//Anything else, like sandbox, return.
-*/

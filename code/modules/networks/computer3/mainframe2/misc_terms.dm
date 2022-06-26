@@ -215,7 +215,7 @@
 
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..() && !(status & NOPOWER)) //Allow them to remove tapes even if the power's out.
 			return
 
@@ -269,7 +269,7 @@
 				return
 
 			//Ai/cyborgs cannot physically remove a tape from a room away.
-			if(issilicon(usr) && get_dist(src, usr) > 1)
+			if(issilicon(usr) && BOUNDS_DIST(src, usr) > 0)
 				boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
 				return
 
@@ -331,7 +331,7 @@
 		src.add_fingerprint(usr)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, src.setup_tape_type) && setup_accept_tapes) //INSERT SOME TAPES
 			if (src.tape)
 				boutput(user, "<span class='alert'>There is already a [src.setup_tape_tag] in the drive.</span>")
@@ -722,7 +722,7 @@
 
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/tank))
 			return attack_hand(user)
 		else if (isscrewingtool(W))
@@ -735,14 +735,14 @@
 			..()
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(status & (NOPOWER|BROKEN))
 			return
 
 		if(user.lying || user.stat)
 			return 1
 
-		if ((get_dist(src, user) > 1 || !istype(src.loc, /turf)) && !issilicon(user))
+		if ((BOUNDS_DIST(src, user) > 0 || !istype(src.loc, /turf)) && !issilicon(user))
 			return 1
 
 		src.add_dialog(user)
@@ -784,7 +784,7 @@
 		if (href_list["tank"])
 
 			//Ai/cyborgs cannot physically remove a tape from a room away.
-			if(issilicon(usr) && get_dist(src, usr) > 1)
+			if(issilicon(usr) && BOUNDS_DIST(src, usr) > 0)
 				boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
 				return
 
@@ -1054,7 +1054,7 @@
 					src.link = test_link
 					src.link.master = src
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..() || status & NOPOWER)
 			return
 
@@ -1170,7 +1170,7 @@
 
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W))
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 			boutput(user, "You [src.panel_open ? "secure" : "unscrew"] the maintenance panel.")
@@ -1276,14 +1276,13 @@
 							admessage += "<b> ([T.x],[T.y],[T.z])</b>"
 						message_admins(admessage)
 						//World announcement.
-						if(station_or_ship() == "ship")
-							command_alert("The ship's self-destruct sequence has been activated, please evacuate the ship or abort the sequence as soon as possible. Detonation in T-[src.time] seconds", "Self-Destruct Activated")
+						if (src.z == Z_LEVEL_STATION)
+							command_alert("The [station_or_ship()]'s self-destruct sequence has been activated at coordinates (<b>X</b>: [src.x], <b>Y</b>: [src.y], <b>Z</b>: [src.z]), please evacuate the [station_or_ship()] or abort the sequence as soon as possible. Detonation in T-[src.time] seconds", "Self-Destruct Activated", alert_origin = ALERT_STATION)
 							playsound_global(world, "sound/machines/engine_alert2.ogg", 40)
-							return
-						if(station_or_ship() == "station")
-							command_alert("The station's self-destruct sequence has been activated, please evacuate the station or abort the sequence as soon as possible. Detonation in T-[src.time] seconds", "Self-Destruct Activated")
-							playsound_global(world, "sound/machines/engine_alert2.ogg", 40)
-							return
+						else
+							command_alert("A nuclear charge at [get_area(src)] has been activated, please stay clear or abort the sequence as soon as possible. Detonation in T-[src.time] seconds", "Nuclear Charge Activated", alert_origin = ALERT_STATION)
+							playsound_global(world, "sound/misc/airraid_loop.ogg", 25)
+						return
 					if("deact")
 						if(data["auth"] != netpass_heads)
 							src.post_status(target,"command","term_message","data","command=status&status=badauth&session=[sessionid]")
@@ -1385,7 +1384,7 @@
 	proc/add_frequency(newFreq)
 		frequencies["[newFreq]"] = MAKE_DEFAULT_RADIO_PACKET_COMPONENT("f[newFreq]", newFreq)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..() || (status & (NOPOWER|BROKEN)))
 			return
 
@@ -1427,7 +1426,7 @@
 		onclose(user,"net_radio")
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W))
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 			boutput(user, "You [src.panel_open ? "secure" : "unscrew"] the maintenance panel.")
@@ -1715,7 +1714,7 @@
 		..()
 
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/paper)) //Load up the printer!
 			if (sheets_remaining >= MAX_SHEETS)
 				boutput(user, "<span class='alert'>The tray is full!</span>")
@@ -1775,7 +1774,7 @@
 		playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 50, 1)
 		. = ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..() || (status & (NOPOWER|BROKEN)))
 			return
 
@@ -1819,7 +1818,7 @@
 
 		if (href_list["unjam"])
 			if(src.jam)
-				if(get_dist(src,usr) > 1)
+				if(BOUNDS_DIST(src, usr) > 0)
 					boutput(usr, "You are too far away to unjam it.")
 					return
 				src.jam = 0
@@ -2167,14 +2166,14 @@
 		if (!dd_hasprefix(uppertext(src.bank_id),"SC-"))
 			src.bank_id = "SC-[bank_id]"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(status & (NOPOWER|BROKEN))
 			return
 
 		if(user.lying || user.stat)
 			return 1
 
-		if ((get_dist(src, user) > 1 || !istype(src.loc, /turf)) && !issilicon(user))
+		if ((BOUNDS_DIST(src, user) > 0 || !istype(src.loc, /turf)) && !issilicon(user))
 			return 1
 
 		src.add_dialog(user)
@@ -2204,7 +2203,7 @@
 		onclose(user,"scanner")
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/paper) || istype(W, /obj/item/photo))
 			if (scanned_thing)
 				boutput(user, "<span class='alert'>There is already something in the scanner!</span>")
@@ -2228,7 +2227,7 @@
 		src.add_dialog(usr)
 
 		if (href_list["document"])
-			if(issilicon(usr) && get_dist(src, usr) > 1)
+			if(issilicon(usr) && BOUNDS_DIST(src, usr) > 0)
 				boutput(usr, "<span class='alert'>There is no electronic control over the actual document.</span>")
 				return
 
@@ -2435,7 +2434,7 @@
 
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..() || (status & (NOPOWER|BROKEN)))
 			return
 
@@ -2897,7 +2896,7 @@
 		src.telecrystals.len = 0
 		..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/raw_material/telecrystal))
 			return attack_hand(user)
 		else if (isscrewingtool(W))
@@ -2910,7 +2909,7 @@
 			..()
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..() || (status & (NOPOWER|BROKEN)))
 			return
 
@@ -3408,7 +3407,7 @@
 			src.UpdateIcon()
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/raw_material/telecrystal))
 			return attack_hand(user)
 
@@ -3422,7 +3421,7 @@
 			..()
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..() || (status & (NOPOWER|BROKEN)))
 			return
 
@@ -3455,7 +3454,7 @@
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		if (!istype(O,/obj/) || O.anchored) return
-		if (get_dist(src,O) > 1 || !isturf(O.loc)) return
+		if (BOUNDS_DIST(src, O) > 0 || !isturf(O.loc)) return
 		if (!in_interact_range(user, O) || !in_interact_range(user, src) || !isalive(user)) return
 		if (src.dragload)
 			if (src.contents.len)
@@ -3479,7 +3478,7 @@
 
 	proc/ejectContents(var/mob/unloader, var/target_location)
 		if (!istype(target_location, /turf/)) return
-		if (get_dist(src,target_location) > 1) return
+		if (BOUNDS_DIST(src, target_location) > 0) return
 		if (!in_interact_range(unloader, target_location) || !in_interact_range(unloader, src) || !isalive(unloader)) return
 		if (src.active)
 			boutput(unloader, "<span class='alert'>You can't unload it while it's active!</span>")
@@ -4812,14 +4811,14 @@
 		..()
 
 		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 0", "fire0")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 1", "fire1")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 2", "fire2")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 3", "fire3")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 4", "fire4")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 5", "fire5")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 6", "fire6")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 7", "fire7")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 0", .proc/fire0)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 1", .proc/fire1)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 2", .proc/fire2)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 3", .proc/fire3)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 4", .proc/fire4)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 5", .proc/fire5)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 6", .proc/fire6)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 7", .proc/fire7)
 
 	return_html_interface()
 		. = {"<b>INPUT STATUS</b>

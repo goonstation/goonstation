@@ -70,14 +70,14 @@
 //	if(!src.locked)
 //To-Do: Behavior control stuff to go with ~fire patrols~
 
-	if (user.client.tooltipHolder)
+	if (user.client?.tooltipHolder)
 		user.client.tooltipHolder.showClickTip(src, list(
 			"params" = params,
 			"title" = "Firebot v1.0 controls",
 			"content" = dat,
 		))
 
-/obj/machinery/bot/firebot/attack_hand(mob/user as mob, params)
+/obj/machinery/bot/firebot/attack_hand(mob/user, params)
 	var/dat
 	dat += "<TT><B>Automatic Fire-Fighting Unit v1.0</B></TT><BR><BR>"
 	dat += "Status: <A href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A><BR>"
@@ -86,7 +86,7 @@
 //	if(!src.locked)
 //To-Do: Behavior control stuff to go with ~fire patrols~
 
-	if (user.client.tooltipHolder)
+	if (user.client?.tooltipHolder)
 		user.client.tooltipHolder.showClickTip(src, list(
 			"params" = params,
 			"title" = "Firebot v1.0 controls",
@@ -143,7 +143,7 @@
 		src.explode()
 	return
 
-/obj/machinery/bot/firebot/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/bot/firebot/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/card/emag))
 		//Swedenfact:
 		//"Fart" means "speed", so if a policeman pulls you over with the words "fartkontroll" you should not pull your pants down
@@ -414,7 +414,7 @@
 	qdel(P)
 	qdel(src)
 
-/obj/item/toolbox_arm/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/toolbox_arm/attackby(obj/item/W, mob/user)
 	if ((istype(W, /obj/item/extinguisher)) && (!src.extinguisher))
 		src.extinguisher = 1
 		boutput(user, "You add the fire extinguisher to [src]!")

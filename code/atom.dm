@@ -266,10 +266,24 @@
 /atom/proc/allow_drop()
 	return 1
 
-//atom.event_handler_flags & USE_CHECKEXIT MUST EVALUATE AS TRUE OR THIS PROC WONT BE CALLED
-/atom/proc/CheckExit(atom/mover, turf/target)
-	//return !(src.flags & ON_BORDER) || src.Cross(mover, target, 1, 0)
-	return 1 // fuck it
+// not actually overriden because we want to avoid the overhead if possible. This provides documentation
+#ifdef SPACEMAN_DMM
+/**
+ * Override and return FALSE to prevent O from moving out of the tile where src is.
+ * In order to override this properly be sure to have the `do_bump = TRUE` default argument AND
+ * to call UNCROSS_BUMP_CHECK(O) in all branches where the return value can be FALSE (assign this return
+ * value to `.` instead of doing an explicit `return`).
+ */
+/atom/Uncross(atom/movable/O, do_bump = TRUE)
+	. = TRUE
+	UNCROSS_BUMP_CHECK(O)
+#endif
+
+/// Wrapper around Uncross for when you want to call it manually with a target turf
+/atom/proc/CheckExit(atom/movable/mover, turf/target, do_bump=FALSE)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	mover.movement_newloc = target
+	return src.Uncross(mover, do_bump=do_bump)
 
 /atom/Crossed(atom/movable/AM)
 	SHOULD_CALL_PARENT(TRUE)
@@ -277,6 +291,13 @@
 	..()
 	#endif
 	SEND_SIGNAL(src, COMSIG_ATOM_CROSSED, AM)
+
+/atom/Entered(atom/movable/AM, atom/OldLoc)
+	SHOULD_CALL_PARENT(TRUE)
+	#ifdef SPACEMAN_DMM //im cargo culter
+	..()
+	#endif
+	SEND_SIGNAL(src, COMSIG_ATOM_ENTERED, AM, OldLoc)
 
 /atom/proc/ProximityLeave(atom/movable/AM as mob|obj)
 	return
@@ -318,6 +339,7 @@
 /// Call this proc inplace of update_icon(...)
 /atom/proc/UpdateIcon(...)
 	SHOULD_NOT_OVERRIDE(TRUE)
+	if (HAS_ATOM_PROPERTY(src, PROP_ATOM_NO_ICON_UPDATES)) return
 	SEND_SIGNAL(src, COMSIG_ATOM_PRE_UPDATE_ICON)
 	update_icon(arglist(args))
 	SEND_SIGNAL(src, COMSIG_ATOM_POST_UPDATE_ICON)
@@ -372,6 +394,9 @@
 	var/throw_range = 7
 	var/throwforce = 1
 
+	/// Temporary value to smuggle newloc to Uncross during Move-related procs
+	var/tmp/atom/movement_newloc = null
+
 	var/soundproofing = 5
 	appearance_flags = LONG_GLIDE | PIXEL_SCALE
 	var/l_spd = 0
@@ -393,9 +418,6 @@
 	//hey this is mbc, there is probably a faster way to do this but i couldnt figure it out yet
 	if (isturf(src.loc))
 		var/turf/T = src.loc
-		if (src.event_handler_flags & USE_CHECKEXIT)
-			T.checkingexit++
-
 		if (src.event_handler_flags & USE_PROXIMITY)
 			T.checkinghasproximity++
 			for (var/turf/T2 in range(1, T))
@@ -430,6 +452,7 @@
 
 
 /atom/movable/Move(NewLoc, direct)
+	SHOULD_CALL_PARENT(TRUE)
 	if(SEND_SIGNAL(src, COMSIG_MOVABLE_BLOCK_MOVE, NewLoc, direct))
 		return
 
@@ -500,30 +523,23 @@
 		if (islist(src.tracked_blood))
 			src.track_blood()
 		actions.interrupt(src, INTERRUPT_MOVE)
-		#ifdef COMSIG_MOVABLE_MOVED
 		SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, A, direct)
-		#endif
 	//note : move is still called when we are steping into a wall. sometimes these are unnecesssary i think
 
 	if(last_turf == src.loc)
 		return
 
-	if (src.event_handler_flags & (USE_CHECKEXIT | USE_PROXIMITY))
-		if (isturf(last_turf))
-			if (src.event_handler_flags & USE_CHECKEXIT)
-				last_turf.checkingexit = max(last_turf.checkingexit-1, 0)
-			if (src.event_handler_flags & USE_PROXIMITY)
-				last_turf.checkinghasproximity = max(last_turf.checkinghasproximity-1, 0)
-				for (var/turf/T2 in range(1, last_turf))
-					T2.neighcheckinghasproximity--
-		if(isturf(src.loc))
-			var/turf/T = src.loc
-			if (src.event_handler_flags & USE_CHECKEXIT)
-				T.checkingexit++
-			if (src.event_handler_flags & USE_PROXIMITY)
-				T.checkinghasproximity++
-				for (var/turf/T2 in range(1, T))
-					T2.neighcheckinghasproximity++
+	if (isturf(last_turf))
+		if (src.event_handler_flags & USE_PROXIMITY)
+			last_turf.checkinghasproximity = max(last_turf.checkinghasproximity-1, 0)
+			for (var/turf/T2 in range(1, last_turf))
+				T2.neighcheckinghasproximity--
+	if(isturf(src.loc))
+		var/turf/T = src.loc
+		if (src.event_handler_flags & USE_PROXIMITY)
+			T.checkinghasproximity++
+			for (var/turf/T2 in range(1, T))
+				T2.neighcheckinghasproximity++
 
 	last_turf = isturf(src.loc) ? src.loc : null
 
@@ -540,38 +556,38 @@
 	*/
 /atom/movable/proc/OnMove(source = null)
 
-/atom/movable/proc/pull()
-	if (!( usr ))
-		return
+/// Base pull proc, returns 1 if the various checks for pulling fail, so that it can be overriden to add extra functionality without rewriting all the conditions.
+/atom/movable/proc/pull(mob/user)
+	if (!(user))
+		return 1
 
-	if(src.loc == usr)
-		return
+	if(src.loc == user)
+		return 1
 
-	if (!isliving(usr))
-		return
+	if (!isliving(user))
+		return 1
 
-	if (isintangible(usr)) //can't pull shit if you can't touch shit
-		return
+	if (isintangible(user)) //can't pull shit if you can't touch shit
+		return 1
 
 	// no pulling other mobs for ghostdrones (but they can pull other ghostdrones)
-	else if (isghostdrone(usr) && ismob(src) && !isghostdrone(src))
-		return
+	else if (isghostdrone(user) && ismob(src) && !isghostdrone(src))
+		return 1
 
-	if (isghostcritter(usr))
-		var/mob/living/critter/C = usr
+	if (isghostcritter(user))
+		var/mob/living/critter/C = user
 		if (!C.can_pull(src))
-			boutput(usr,"<span class='alert'><b>[src] is too heavy for you pull in your half-spectral state!</b></span>")
-			return
+			boutput(user,"<span class='alert'><b>[src] is too heavy for you pull in your half-spectral state!</b></span>")
+			return 1
 
-	if (iscarbon(usr) || issilicon(usr))
-		add_fingerprint(usr)
+	if (iscarbon(user) || issilicon(user))
+		add_fingerprint(user)
 
 	if (istype(src,/obj/item/old_grenade/light_gimmick))
-		boutput(usr, "<span class='notice'>You feel your hand reach out and clasp the grenade.</span>")
-		src.Attackhand(usr)
-		return
+		boutput(user, "<span class='notice'>You feel your hand reach out and clasp the grenade.</span>")
+		src.Attackhand(user)
+		return 1
 	if (!( src.anchored ))
-		var/mob/user = usr
 		user.set_pulling(src)
 
 		if (user.mob_flags & AT_GUNPOINT)
@@ -653,14 +669,14 @@
 			. += "<br>*No PDA detected!*"
 
 /// Override MouseDrop_T instead of this. Call this instead of MouseDrop_T, but you probably shouldn't!
-/atom/proc/_MouseDrop_T(dropped, user)
+/atom/proc/_MouseDrop_T(dropped, user, src_location, over_location, src_control, over_control, params)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	SPAWN(0) // Yes, things break if this isn't a spawn.
-		if(SEND_SIGNAL(src, COMSIG_ATOM_MOUSEDROP_T, dropped, user))
+		if(SEND_SIGNAL(src, COMSIG_ATOM_MOUSEDROP_T, dropped, user, src_location, over_location, src_control, over_control, params))
 			return
-		src.MouseDrop_T(dropped, user)
+		src.MouseDrop_T(dropped, user, src_location, over_location, over_control, src_control, params)
 
-/atom/proc/MouseDrop_T(dropped, user)
+/atom/proc/MouseDrop_T(dropped, user, src_location, over_location, over_control, src_control, params)
 	PROTECTED_PROC(TRUE)
 	return
 
@@ -670,7 +686,7 @@
 		return
 	src.attack_hand(user)
 
-/atom/proc/attack_hand(mob/user as mob)
+/atom/proc/attack_hand(mob/user)
 	PROTECTED_PROC(TRUE)
 	if (flags & TGUI_INTERACTIVE)
 		return ui_interact(user)
@@ -680,7 +696,7 @@
 	return
 
 ///wrapper proc for /atom/proc/attackby so that signals are always sent. Call this, but do not override it.
-/atom/proc/Attackby(obj/item/W as obj, mob/user as mob, params, is_special = 0)
+/atom/proc/Attackby(obj/item/W, mob/user, params, is_special = 0)
 	SHOULD_NOT_OVERRIDE(1)
 	if(SEND_SIGNAL(src,COMSIG_ATTACKBY,W,user, params, is_special))
 		return
@@ -688,10 +704,10 @@
 
 //mbc : sorry, i added a 'is_special' arg to this proc to avoid race conditions.
 ///internal proc for when an atom is attacked by an item. Override this, but do not call it,
-/atom/proc/attackby(obj/item/W as obj, mob/user as mob, params, is_special = 0)
+/atom/proc/attackby(obj/item/W, mob/user, params, is_special = 0)
 	PROTECTED_PROC(TRUE)
 	src.material?.triggerOnHit(src, W, user, 1)
-	if (user && W && !(W.flags & SUPPRESSATTACK))  //!( istype(W, /obj/item/grab)  || istype(W, /obj/item/spraybottle) || istype(W, /obj/item/card/emag)))
+	if (user && W && !(W.flags & SUPPRESSATTACK))
 		user.visible_message("<span class='combat'><B>[user] hits [src] with [W]!</B></span>")
 	return
 
@@ -783,18 +799,18 @@
 	return null
 
 /// Override mouse_drop instead of this. Call this instead of mouse_drop, but you probably shouldn't!
-/atom/MouseDrop(atom/over_object, src_location, over_location, over_control, params)
+/atom/MouseDrop(atom/over_object, src_location, over_location, src_control, over_control, params)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	if(!isatom(over_object))
 		return
 	if (isalive(usr) && !isintangible(usr) && isghostdrone(usr) && ismob(src) && src != usr)
 		return // Stops ghost drones from MouseDropping mobs
-	over_object._MouseDrop_T(src, usr)
-	if (SEND_SIGNAL(src, COMSIG_ATOM_MOUSEDROP, usr, over_object, src_location, over_location, over_control, params))
+	over_object._MouseDrop_T(src, usr, src_location, over_location, src_control, over_control, params)
+	if (SEND_SIGNAL(src, COMSIG_ATOM_MOUSEDROP, usr, over_object, src_location, over_location, src_control, over_control, params))
 		return
-	src.mouse_drop(over_object, src_location, over_location, over_control, params)
+	src.mouse_drop(over_object, src_location, over_location, src_control, over_control, params)
 
-/atom/proc/mouse_drop(atom/over_object, src_location, over_location, over_control, params)
+/atom/proc/mouse_drop(atom/over_object, src_location, over_location, src_control, over_control, params)
 	PROTECTED_PROC(TRUE)
 	return
 
@@ -901,28 +917,19 @@
 		for (var/atom/movable/M in src.attached_objs)
 			M.set_loc(src.loc)
 
+	if (isturf(last_turf) && (src.event_handler_flags & USE_PROXIMITY))
+		last_turf.checkinghasproximity = max(last_turf.checkinghasproximity-1, 0)
+		for (var/turf/T2 in range(1, last_turf))
+			T2.neighcheckinghasproximity--
 
-	// We only need to do any of these checks if one of the flags is set OR density = 1
-	var/do_checks = (src.event_handler_flags & (USE_CHECKEXIT  | USE_PROXIMITY)) || src.density == 1
-
-	if (do_checks && last_turf && isturf(last_turf))
-		if (src.event_handler_flags & USE_CHECKEXIT)
-			last_turf.checkingexit = max(last_turf.checkingexit-1, 0)
-		if (src.event_handler_flags & USE_PROXIMITY)
-			last_turf.checkinghasproximity = max(last_turf.checkinghasproximity-1, 0)
-			for (var/turf/T2 in range(1, last_turf))
-				T2.neighcheckinghasproximity--
-
-	if (do_checks && isturf(src.loc))
+	if (isturf(src.loc))
 		last_turf = src.loc
-		if (src.event_handler_flags & USE_CHECKEXIT)
-			last_turf.checkingexit++
 		if (src.event_handler_flags & USE_PROXIMITY)
 			last_turf.checkinghasproximity++
 			for (var/turf/T2 in range(1, last_turf))
 				T2.neighcheckinghasproximity++
 	else
-		last_turf = 0
+		last_turf = null
 
 	if(src.medium_lights)
 		update_medium_light_visibility()
@@ -933,10 +940,7 @@
 
 //reason for having this proc is explained below
 /atom/proc/set_density(var/newdensity)
-	src.density = newdensity
-
-/atom/movable/set_density(var/newdensity)
-	..()
+	src.density = HAS_ATOM_PROPERTY(src, PROP_ATOM_NEVER_DENSE) ? 0 : newdensity
 
 // standardized damage procs
 
@@ -963,6 +967,86 @@
 
 /// Does x cold damage to the atom
 /atom/proc/damage_cold(amount)
+
+// Setup USE_PROXIMITY turfs
+/atom/proc/setup_use_proximity()
+	src.event_handler_flags |= USE_PROXIMITY
+	if (isturf(src.loc))
+		var/turf/T = src.loc
+		T.checkinghasproximity++
+		for (var/turf/T2 in range(1, T))
+			T2.neighcheckinghasproximity++
+
+/atom/proc/remove_use_proximity()
+	src.event_handler_flags = src.event_handler_flags & ~USE_PROXIMITY
+	if (isturf(src.loc))
+		var/turf/T = src.loc
+		if (T.checkinghasproximity > 0)
+			T.checkinghasproximity--
+		for (var/turf/T2 in range(1, T))
+			if (T2.neighcheckinghasproximity > 0)
+				T2.neighcheckinghasproximity--
+
+// auto-connecting sprites
+/// Check a turf and its contents to see if they're a valid auto-connection target
+/atom/proc/should_auto_connect(var/turf/T, var/connect_to = list(), var/exceptions = list(), var/cross_areas = TRUE)
+	if (!connect_to || !islist(connect_to)) // nothing to connect to
+		return FALSE
+	if (!cross_areas && (get_area(T) != get_area(src))) // don't connect across areas
+		return FALSE
+
+	for (var/connect in connect_to)
+		var/list/matches= list()
+		if(istype(T, connect))
+			matches.Add(T)
+		else
+			for (var/atom/A in T)
+				if (!isnull(A))
+					if (istype(A, /atom/movable))
+						var/atom/movable/M = A
+						if (!M.anchored)
+							continue
+						if (istype(A, connect))
+							matches.Add(A)
+		for (var/match in matches)
+			var/valid = TRUE
+			if (exceptions && islist(exceptions))
+				for (var/exception in exceptions)
+					if (istype(match, exception))
+						valid = FALSE
+			if (valid)
+				return TRUE
+	return FALSE
+
+/// Return a bitflag that represents all potential connected icon_states
+/*
+connecting with diagonal tiles require additional bitflags
+i.e. there is a difference between N & E, and N & E & NE
+N, S, E, W, NE, SE, SW, NW
+1, 2, 4, 8, 16, 32, 64, 128
+*/
+/atom/proc/get_connected_directions_bitflag(var/valid_atoms = list(), var/exceptions = list(), var/cross_areas = TRUE, var/connect_diagonal = 0)
+	var/ordir = null
+	var/connected_directions = 0
+	if (!valid_atoms || !islist(valid_atoms))
+		return
+
+	// cardinals first
+	for (var/dir in cardinal)
+		var/turf/CT = get_step(src, dir)
+		if (should_auto_connect(CT, valid_atoms, exceptions, cross_areas))
+			connected_directions |= dir
+
+	// connect_diagonals 0 = no diagonal sprites, 1 = diagonal only if both adjacent cardinals are present, 2 = always allow diagonals
+	if (connect_diagonal)
+		for (var/i = 1 to 4)  // needed for bitshift
+			ordir = ordinal[i]
+			if (connect_diagonal < 2 && (ordir & connected_directions) != ordir)
+				continue
+			var/turf/OT = get_step(src, ordir)
+			if (should_auto_connect(OT, valid_atoms, exceptions, cross_areas))
+				connected_directions |= 8 << i
+	return connected_directions
 
 /proc/scaleatomall()
 	var/scalex = input(usr,"X Scale","1 normal, 2 double etc","1") as num

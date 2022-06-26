@@ -20,7 +20,7 @@
 	if (timing > 0)
 		timing--
 
-/obj/machinery/partyalarm/attack_hand(mob/user as mob)
+/obj/machinery/partyalarm/attack_hand(mob/user)
 	if(user.stat || status & (NOPOWER|BROKEN))
 		return
 

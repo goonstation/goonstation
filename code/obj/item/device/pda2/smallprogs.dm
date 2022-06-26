@@ -1258,7 +1258,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 			if (station_name_changing)
 				var/nextName = lastStationNameChange + stationNameChangeDelay
 				if (nextName > world.timeofday)
-					alert("You must wait for the station naming coils to recharge! Did space school teach you nothing?!")
+					tgui_alert(usr, "You must wait for the station naming coils to recharge! Did space school teach you nothing?!", "Naming coils recharging")
 					usr.Browse(null, "window=stationnamechanger")
 					src.master.updateSelfDialog()
 					return
@@ -1267,7 +1267,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 				var/newName = href_list["newName"]
 
 				if (set_station_name(usr, newName))
-					command_alert("The new station name is [station_name]", "Station Naming Ceremony Completion Detection Algorithm")
+					command_alert("The new station name is [station_name]", "Station Naming Ceremony Completion Detection Algorithm", alert_origin = ALERT_STATION)
 
 			usr.Browse(null, "window=stationnamechanger")
 			src.master.updateSelfDialog()

@@ -2,9 +2,9 @@
 
 TYPEINFO(/datum/component/glued)
 	initialization_args = list(
-		ARG_INFO("target", "ref", "What is this glued to", null),
-		ARG_INFO("glue_duration", "num", "How long the glue lasts, null for infinity", null),
-		ARG_INFO("glue_removal_time", "num", "How long does it take to unglue stuff", null),
+		ARG_INFO("target", DATA_INPUT_REF, "What is this glued to", null),
+		ARG_INFO("glue_duration", DATA_INPUT_NUM, "How long the glue lasts, null for infinity", null),
+		ARG_INFO("glue_removal_time", DATA_INPUT_NUM, "How long does it take to unglue stuff", null),
 	)
 
 /datum/component/glued
@@ -48,11 +48,12 @@ TYPEINFO(/datum/component/glued)
 	else
 		parent.plane = PLANE_UNDERFLOOR
 	parent.vis_flags |= VIS_INHERIT_PLANE | VIS_INHERIT_LAYER
-	RegisterSignal(parent, COMSIG_ATTACKHAND, .proc/start_ungluing)
+	RegisterSignal(parent, COMSIG_ATTACKHAND, .proc/on_attackhand)
 	RegisterSignal(parent, COMSIG_ATTACKBY, .proc/pass_on_attackby)
 	RegisterSignal(parent, COMSIG_MOVABLE_BLOCK_MOVE, .proc/move_blocked_check)
 	RegisterSignal(parent, COMSIG_MOVABLE_SET_LOC, .proc/on_set_loc)
 	RegisterSignal(parent, list(COMSIG_ATOM_EXPLODE, COMSIG_ATOM_EXPLODE_INSIDE), .proc/on_explode)
+	RegisterSignal(parent, COMSIG_ATOM_HITBY_PROJ, .proc/on_hitby_proj)
 
 /datum/component/glued/proc/delayed_dry_up(glue_duration)
 	set waitfor = FALSE
@@ -71,6 +72,13 @@ TYPEINFO(/datum/component/glued)
 	T.visible_message("<span class='notice'>The glue on [parent] dries up and it falls off from [glued_to].</span>")
 	qdel(src)
 
+/datum/component/glued/proc/on_attackhand(atom/movable/parent, mob/user)
+	if(user?.a_intent == INTENT_HELP)
+		src.start_ungluing(parent, user)
+	else
+		src.glued_to.Attackhand(user)
+		user.lastattacked = user
+
 /datum/component/glued/proc/start_ungluing(atom/movable/parent, mob/user)
 	if(isnull(src.glue_removal_time))
 		boutput(user, "<span class='alert'>You try to unglue [parent] from [src.glued_to] but the glue is too strong.</span>")
@@ -83,6 +91,10 @@ TYPEINFO(/datum/component/glued)
 
 /datum/component/glued/proc/pass_on_attackby(atom/movable/parent, obj/item/item, mob/user, list/params, is_special)
 	src.glued_to.Attackby(item, user, params, is_special)
+	user.lastattacked = user
+
+/datum/component/glued/proc/on_hitby_proj(atom/movable/parent, obj/projectile/proj)
+	src.glued_to.bullet_act(proj)
 
 /datum/component/glued/proc/move_blocked_check(atom/movable/parent, atom/new_loc, direct)
 	return new_loc != glued_to.loc
@@ -100,11 +112,14 @@ TYPEINFO(/datum/component/glued)
 
 /datum/component/glued/proc/on_explode(atom/movable/parent, list/explode_args)
 	// explode_args format: list(atom/source, turf/epicenter, power, brisance = 1, angle = 0, width = 360, turf_safe=FALSE)
-	explode_args[3] /= 6 // reduce explosion size by a factor of 6
+	explode_args[3] /= 3 // reduce explosion size by a factor of 3
 	qdel(src)
 
 /datum/component/glued/UnregisterFromParent()
 	var/atom/movable/parent = src.parent
+	UnregisterSignal(parent, list(COMSIG_ATTACKHAND, COMSIG_ATTACKBY, COMSIG_MOVABLE_BLOCK_MOVE, COMSIG_MOVABLE_SET_LOC, COMSIG_ATOM_EXPLODE,
+		COMSIG_ATOM_EXPLODE_INSIDE, COMSIG_ATOM_HITBY_PROJ))
+	UnregisterSignal(glued_to, COMSIG_PARENT_PRE_DISPOSING)
 	parent.remove_filter("glued_outline")
 	parent.animate_movement = src.original_animate_movement
 	if(parent.anchored == MAGIC_GLUE_ANCHORED)

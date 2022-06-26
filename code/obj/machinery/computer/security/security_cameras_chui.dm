@@ -6,7 +6,7 @@ chui/window/security_cameras
 	flags = CHUI_FLAG_MOVABLE | CHUI_FLAG_CLOSABLE
 
 	proc/create_viewport(client/target_client, turf/T)
-		if(get_dist(owner,target_client.mob) > 1)
+		if(BOUNDS_DIST(owner, target_client.mob) > 0)
 			boutput(target_client,"<span class='alert'>You are too far to see the screen.</span>")
 		else
 			var/list/viewports = target_client.getViewportsByType("cameras: Viewport")
@@ -41,8 +41,8 @@ chui/window/security_cameras
 		for (var/obj/machinery/camera/C in L)
 			if (C.network == owner.network)
 				. = "[C.c_tag][C.camera_status ? null : " (Deactivated)"]"
-				// Don't draw if it's in favorites
-				if (C in owner.favorites)
+				// Don't draw if it's in favorites or AI core/upload
+				if ((C in owner.favorites) || C.ai_only)
 					continue
 				// &#128190; is save symbol
 				cameras_list += \

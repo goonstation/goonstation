@@ -27,6 +27,12 @@
 	var/image/atmos_dmi
 	var/image/bomb_dmi
 
+	New()
+		..()
+		src.AddComponent(/datum/component/bullet_holes, 5, 0)
+		atmos_dmi = image('icons/obj/atmospherics/atmos.dmi')
+		bomb_dmi = image('icons/obj/canisterbomb.dmi')
+
 	onMaterialChanged()
 		..()
 		if(istype(src.material))
@@ -82,11 +88,6 @@
 	name = "Canister \[Empty\]"
 	icon_state = "empty"
 	casecolor = "empty"
-
-/obj/machinery/portable_atmospherics/canister/New()
-	..()
-	atmos_dmi = image('icons/obj/atmospherics/atmos.dmi')
-	bomb_dmi = image('icons/obj/canisterbomb.dmi')
 
 /obj/machinery/portable_atmospherics/canister/update_icon()
 	if (src.destroyed)
@@ -335,7 +336,7 @@
 	healthcheck()
 	return
 
-/obj/machinery/portable_atmospherics/canister/attackby(var/obj/item/W as obj, var/mob/user as mob)
+/obj/machinery/portable_atmospherics/canister/attackby(var/obj/item/W, var/mob/user)
 	if (istype(W, /obj/item/assembly/detonator)) //Wire: canister bomb stuff
 		if (holding)
 			user.show_message("<span class='alert'>You must remove the currently inserted tank from the slot first.</span>")
@@ -374,6 +375,10 @@
 			elecflash(src)
 	else if(!iswrenchingtool(W) && !istype(W, /obj/item/tank) && !istype(W, /obj/item/device/analyzer/atmospheric) && !istype(W, /obj/item/device/pda2))
 		src.visible_message("<span class='alert'>[user] hits the [src] with a [W]!</span>")
+		user.lastattacked = src
+		attack_particle(user,src)
+		hit_twitch(src)
+		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)
 		logTheThing("combat", user, null, "attacked [src] [log_atmos(src)] with [W] at [log_loc(src)].")
 		src.health -= W.force
 		healthcheck(user)
@@ -490,7 +495,7 @@
 				src.det_wires_interact(tool, index+1, user)
 				. = TRUE
 
-/obj/machinery/portable_atmospherics/canister/attack_hand(var/mob/user as mob)
+/obj/machinery/portable_atmospherics/canister/attack_hand(var/mob/user)
 	if (src.destroyed)
 		return
 

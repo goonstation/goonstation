@@ -151,7 +151,7 @@
 		else
 			return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.alive)
 			if (src.sleeping)
 				sleeping = 0
@@ -178,7 +178,7 @@
 
 			else
 
-				src.visible_message("<span class='notice'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>")
+				src.visible_message("<span class='notice'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>", group="beehug")
 				if(prob(15))
 					for(var/mob/O in hearers(src, null))
 						O.show_message("[src] buzzes[prob(50) ? " happily!" : ""]!",2)
@@ -357,7 +357,7 @@
 				E.set_loc(get_turf(src))
 		return
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (!alive)
 			return ..()
 		if (issnippingtool(W))
@@ -582,7 +582,7 @@
 
 		return honey
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (istype(W, /obj/item/clothing/head))
 			if (src.cant_take_hat)
 				boutput(user, "<span class='alert'>[src] declines, but appreciates the offer.[prob(30) ? " You can tell, because of the bumbling. Appreciative bumbling, definitely." : null]</span>")
@@ -731,7 +731,7 @@
 		if (.)
 			var/obj/item/reagent_containers/food/snacks/ingredient/honey/honey = .
 			honey.icon_state = "bighoneyblob"
-			honey.amount++
+			honey.bites_left++
 
 /obj/critter/domestic_bee/queen/buddy
 	desc = "It appears to be a hybrid of a queen domestic space-bee and a PR-6 Robuddy. How is that even possible?"
@@ -909,10 +909,10 @@
 				masked = 2
 				src.name = "Heistenbee"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.alive)
 			if (user.a_intent == INTENT_HELP)
-				src.visible_message("<span class='notice'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>")
+				src.visible_message("<span class='notice'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>", group="beehug")
 				user.add_karma(1)
 
 				if (masked == 1)
@@ -940,7 +940,7 @@
 
 #endif
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (!src.alive)
 			return ..()
 
@@ -1023,7 +1023,7 @@
 		SPAWN(3.5 SECONDS)
 			src.attacking = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.alive && user.a_intent == INTENT_GRAB)
 			src.visible_message("<span class='alert'><b>[user]</b> attempts to wrangle [src], but [src] is far, FAR too sassy!</span>")
 			return
@@ -1031,7 +1031,7 @@
 		else
 			return ..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/glass/bottle/bubblebath) && src.alive && !cleaned && src.task != "attacking")
 			if (!W.reagents || !W.reagents.has_reagent("fluorosurfactant"))
 				boutput(user, "<span class='alert'>How do you expect this to work without bubble bath in the bubble bath bottle?</span>")
@@ -1147,14 +1147,14 @@
 			if ((get_dist(src, M) <= 6) && src.alive)
 				M.visible_message("<span class='alert'><b>[M.name] clutches their temples!</b></span>")
 				M.emote("scream")
-				M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 10 SECONDS))
+				M.setStatusMin("paralysis", 10 SECONDS)
 				M.take_brain_damage(10)
 
 				do_teleport(M, locate((world.maxx/2) + rand(-10,10), (world.maxy/2) + rand(-10,10), 1), 0)
 
 			src.attacking = 0
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if(!alive)
 			return ..()
 
@@ -1186,7 +1186,7 @@
 	generic = 0
 	var/hug_count = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.alive)
 			if (user.a_intent == INTENT_HARM)
 				return ..()
@@ -1205,7 +1205,7 @@
 
 			else
 
-				src.visible_message("<span class='notice'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>")
+				src.visible_message("<span class='notice'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>", group="beehug")
 				switch (++hug_count)
 					if (10)
 						src.visible_message("<b>[src]</b> burps!  It smells like beeswax.")
@@ -1257,10 +1257,10 @@
 	sleeping_icon_state = "traumabee-sleep"
 	generic = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.alive && user.a_intent == "help")
 
-			src.visible_message("<span class='notice'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>")
+			src.visible_message("<span class='notice'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>", group="beehug")
 			if(prob(15))
 				for(var/mob/O in hearers(src, null))
 					O.show_message("[src] buzzes[prob(50) ? " in a comforted manner" : ""].",2)
@@ -1379,9 +1379,9 @@
 	angertext = "beeps aggressively at"
 	honey_color = rgb(0, 255, 0)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(src.alive && user.a_intent=="help")
-			src.visible_message("<span class='emote'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>")
+			src.visible_message("<span class='emote'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>", group="beehug")
 			if(prob(15))
 				for(var/mob/O in hearers(src, null))
 					O.show_message("<span class='emote'><b>[src]</b> beeps[prob(50) ? " in a comforted manner, and gives [user] the ASCII" : ""].</span>",2)
@@ -1428,6 +1428,135 @@
 	if (M.reagents.get_reagent_amount("lsd_bee") < 20)
 		M.reagents.add_reagent("lsd_bee", 5)
 
+/obj/critter/domestic_bee/beean // a bee bean?? sprite by PeasantUnit
+	name = "greater domestic space-beean"
+	icon_state = "beean-wings"
+	icon_body = "beean"
+	sleeping_icon_state = "beean-sleep"
+
+/mob/living/critter/small_animal/bee/mimebee
+	name = "mime bee"
+	desc = "Never talks. That's normal for a bee, though."
+	icon_state = "mimebee-wings"
+	icon_body = "mimebee"
+	icon_state_dead = "mimebee-dead"
+	icon_state_sleep = "mimebee-sleep"
+	honey_color = "#ebedeb"
+	add_abilities = list(/datum/targetable/critter/bite/bee,
+		/datum/targetable/critter/bee_sting/mime)
+
+	New()
+		..()
+		src.bioHolder.AddEffect("mute")
+
+/datum/targetable/critter/bee_sting/mime
+	venom1 = "wine"
+	amt1 = 5
+	venom2 = "nicotine"
+
+/obj/critter/domestic_bee/mimebee
+	name = "mime bee"
+	desc = "Never talks. That's normal for a bee, though."
+	icon_state = "mimebee-wings"
+	icon_body = "mimebee"
+	sleeping_icon_state = "mimebee-sleep"
+	angertext = "gestures angrily at"
+	honey_color = "#ebedeb"
+
+	do_reagentStuff(mob/M)
+		if (M.reagents.get_reagent_amount("wine") < 20)
+			M.reagents.add_reagent("wine", 5)
+		M.reagents.add_reagent("nicotine", 5)
+
+
+/mob/living/critter/small_animal/bee/mimebee/noirbee
+	name = "noir bee"
+	desc = "Rosebud..."
+	icon_state = "noirbee-wings"
+	icon_body = "noirbee"
+	icon_state_dead = "noirbee-dead"
+	icon_state_sleep = "noirbee-sleep"
+	add_abilities = list(/datum/targetable/critter/bite/bee,
+		/datum/targetable/critter/bee_sting/noir)
+
+/datum/targetable/critter/bee_sting/noir
+	venom1 = "capulettium"
+	amt1 = 8
+	venom2 = "champagne"
+
+/obj/critter/domestic_bee/mimebee/noirbee
+	name = "noir bee"
+	desc = "Rosebud..."
+	icon_state = "noirbee-wings"
+	icon_body = "noirbee"
+	sleeping_icon_state = "noirbee-sleep"
+
+	do_reagentStuff(mob/M)
+		if (M.reagents.get_reagent_amount("capulettium") < 10)
+			M.reagents.add_reagent("capulettium", 5)
+		M.reagents.add_reagent("champagne", 5)
+
+
+/mob/living/critter/small_animal/bee/clownbee
+	name = "clown bee"
+	desc = "It honks AND buzzes."
+	icon_state = "clownbee"
+	icon_body = "clownbee"
+	icon_state_dead = "clownbee-dead"
+	icon_state_sleep = "clownbee-sleep"
+	honey_color = "#ff0033"
+	add_abilities = list(/datum/targetable/critter/bite/bee,
+		/datum/targetable/critter/bee_sting/clown)
+
+/datum/targetable/critter/bee_sting/clown // NO RAINBOW FLUID
+	venom1 = "honk_fart"
+	amt1 = 5
+	venom2 = "lube"
+
+/obj/critter/domestic_bee/clownbee
+	name = "clown bee"
+	desc = "It honks AND buzzes."
+	icon_state = "clownbee-wings"
+	icon_body = "clownbee"
+	sleeping_icon_state = "clownbee-sleep"
+	honey_color = "#ff0033"
+
+	do_reagentStuff(mob/M)
+		if (M.reagents.get_reagent_amount("honkfartium") < 10)
+			M.reagents.add_reagent("honkfartium", 5)
+		M.reagents.add_reagent("lube", 5)
+
+
+/mob/living/critter/small_animal/bee/cluwnebee
+	name = "cluwne bee"
+	desc = "Cursed..."
+	icon_state = "cluwnebee"
+	icon_body = "cluwnebee"
+	icon_state_dead = "cluwnebee-dead"
+	icon_state_sleep = "cluwnebee-sleep"
+	honey_color = "#35bf4f"
+	add_abilities = list(/datum/targetable/critter/bite/bee,
+		/datum/targetable/critter/bee_sting/cluwne)
+
+/datum/targetable/critter/bee_sting/cluwne // NO PAINBOW FLUID
+	venom1 = "honky_tonic"
+	amt1 = 10
+	venom2 = "superlube"
+
+/obj/critter/domestic_bee/cluwnebee
+	name = "cluwne bee"
+	desc = "Cursed..."
+	icon_state = "cluwnebee-wings"
+	icon_body = "cluwnebee"
+	sleeping_icon_state = "cluwnebee-sleep"
+	honey_color = "#35bf4f"
+
+	do_reagentStuff(mob/M)
+		if (M.reagents.get_reagent_amount("honky_tonic") < 20)
+			M.reagents.add_reagent("honky_tonic", 5)
+		M.reagents.add_reagent("superlube", 5)
+
+
 /* ---------------- END BEE TYPES ---------------- */
 
 /* -------------------- LARVA -------------------- */
@@ -1460,7 +1589,8 @@
 	var/grow_anim = "grow"
 	var/beeMomCkey = null
 	var/scolded = 0
-
+	/// stored when a larva is puked up by someone. when the larva grows up, the bee puts on this hat
+	var/obj/item/clothing/head/stored_hat
 	var/tmp/blog = "larvalog|"
 
 	bonnet
@@ -1516,6 +1646,12 @@
 
 					grownbee.beeMom = src.beeMom
 					grownbee.beeMomCkey = src.beeMomCkey
+
+					if (src.stored_hat && !grownbee.cant_take_hat && (src.stored_hat.icon_state in grownbee.hat_list))
+						grownbee.hat_that_bee(src.stored_hat)
+						src.stored_hat.set_loc(grownbee)
+						src.stored_hat = null
+
 					grownbee.UpdateIcon()
 					src.reagents = null
 					qdel(src)
@@ -1542,6 +1678,12 @@
 					grownbee.beeMomCkey = src.beeMomCkey
 					grownbee.UpdateIcon()
 					grownbee.blog = src.blog + "all grown up!|"
+
+					if (src.stored_hat && !grownbee.cant_take_hat && (src.stored_hat.icon_state in grownbee.hat_list))
+						grownbee.hat_that_bee(src.stored_hat)
+						src.stored_hat.set_loc(grownbee)
+						src.stored_hat = null
+
 					src.reagents = null
 					qdel(src)
 
@@ -1572,7 +1714,7 @@
 	ChaseAttack(mob/M)
 		return
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if(!alive)
 			return
 		if (istype(W, /obj/item/reagent_containers/food/snacks))
@@ -1623,12 +1765,6 @@
 				SPAWN(0.7 SECONDS)
 					fellow_bee.aggressive = 0
 
-/obj/critter/domestic_bee/beean // a bee bean?? sprite by PeasantUnit
-	name = "greater domestic space-beean"
-	icon_state = "beean-wings"
-	icon_body = "beean"
-	sleeping_icon_state = "beean-sleep"
-
 
 /* -------------------- END -------------------- */
 
@@ -1654,13 +1790,13 @@
 		if (prob(25) && !larva_type)
 			larva_type = /obj/critter/domestic_bee_larva/bonnet
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.anchored)
 			return
 		else
 			..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/pen))
 			if (!bee_name)
 				bee_name = pick_string("bee_names.txt", "beename")
@@ -1850,7 +1986,7 @@
 		src.UpdateIcon()
 		return
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/egg/bee))
 			if (!src.open)
 				boutput(user, "<span class='alert'>For <i>some reason</i>, you are unable to place the egg into a closed carton.</span>")
@@ -1870,7 +2006,7 @@
 		else
 			return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.loc == user && src.ourEgg && src.open)
 			user.put_in_hand_or_drop(src.ourEgg)
 			boutput(user, "You take [src.ourEgg] out of [src].")
@@ -1900,7 +2036,7 @@
 	desc = "A bowl of \"bee kibble.\" It is probably best not to think too hard about its composition."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "petfood"
-	amount = 4
+	bites_left = 4
 	heal_amt = 1
 	doants = 0
 	initial_volume = 50
@@ -1958,7 +2094,7 @@
 
 		return CritterAttack(M)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.alive)
 			if (user.a_intent == INTENT_HARM)
 				return ..()
@@ -1977,7 +2113,7 @@
 		else
 			..()
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if(!alive)
 			return
 		if (istype(W, /obj/item/reagent_containers/food/snacks))

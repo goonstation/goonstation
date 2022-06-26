@@ -51,6 +51,7 @@
 	var/amount_left = 0.0
 	var/max_amount = 1000
 	var/unusualCell
+	var/refillable = TRUE
 	ammo_type = new/datum/projectile/bullet
 
 	var/ammo_cat = null
@@ -80,7 +81,7 @@
 			src.UpdateIcon()
 			return 0
 
-	attackby(obj/b as obj, mob/user as mob)
+	attackby(obj/b, mob/user)
 		if(istype(b, /obj/item/gun/kinetic) && b:allowReverseReload)
 			b.Attackby(src, user)
 		else if(b.type == src.type)
@@ -363,7 +364,7 @@
 	icon_state = "stenag_mag"
 	amount_left = 20.0
 	max_amount = 20.0
-	ammo_cat = AMMO_AUTO_562
+	ammo_cat = AMMO_AUTO_556
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 
 	armor_piercing
@@ -577,12 +578,7 @@
 	max_amount = 6
 	ammo_cat = AMMO_FOAMDART
 	ammo_type = new/datum/projectile/bullet/foamdart
-
-	update_icon()
-		if(amount_left == 0)
-			qdel(src)
-		else
-			..()
+	delete_on_reload = TRUE
 
 //0.40
 /obj/item/ammo/bullets/blow_darts
@@ -742,12 +738,12 @@
 	name = "20mm APHE shells"
 	amount_left = 5
 	max_amount = 5
-	icon_state = "40mmR"
+	icon_state = "40mm_lethal"
 	ammo_type = new/datum/projectile/bullet/cannon
 	ammo_cat = AMMO_CANNON_20MM
 	w_class = W_CLASS_SMALL
 	icon_dynamic = 1
-	icon_empty = "40mmR-0"
+	icon_empty = "40mm_lethal-0"
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 
 	single
@@ -770,16 +766,16 @@
 //1.57
 /obj/item/ammo/bullets/autocannon
 	sname = "40mm HE"
-	name = "40mm HE shells"
-	desc = "Some high explosive grenades, for use in 40MM weapons."
+	name = "40mm HE pod shells"
+	desc = "Some high explosive grenades, for use in 40mm weapons."
 	amount_left = 2
 	max_amount = 2
-	icon_state = "40mmR"
+	icon_state = "40mm_HE_pod"
 	ammo_type = new/datum/projectile/bullet/autocannon
 	ammo_cat = AMMO_CANNON_40MM
 	w_class = W_CLASS_NORMAL
 	icon_dynamic = 0
-	icon_empty = "40mmR-0"
+	icon_empty = "40mm_HE_pod-0"
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 
 	single
@@ -796,32 +792,37 @@
 		sname = "40mm HE Knocker"
 		name = "40mm HE airlock-breaching shells"
 		desc = "Some explosive breaching shells."
+		icon_state = "40mm_HE"
 		ammo_type = new/datum/projectile/bullet/autocannon/knocker
 
 /obj/item/ammo/bullets/grenade_round
-	sname = "40mm HEDP"
-	name = "40mm HEDP shells"
+	sname = "40mm"
+	name = "40mm shells"
 	desc = "A box of general utility 40mm grenades."
 	amount_left = 8
 	max_amount = 8
-	icon_state = "40mmR"
+	icon_state = "40mm_lethal"
 	ammo_type = new/datum/projectile/bullet/grenade_round/
 	ammo_cat = AMMO_GRENADE_40MM
 	w_class = W_CLASS_NORMAL
 	icon_dynamic = 0
-	icon_empty = "40mmR-0"
+	icon_empty = "40mm_lethal-0"
 	sound_load = 'sound/weapons/gunload_40mm.ogg'
 
 	explosive
+		sname = "40mm HEDP"
+		name = "40mm HEDP shells"
 		desc = "High Explosive Dual Purpose grenade rounds compatible with grenade launchers. Effective against infantry and armour."
+		icon_state = "40mm_HE"
+		icon_empty = "40mm_HE-0"
 		ammo_type = new/datum/projectile/bullet/grenade_round/explosive
 
 	high_explosive
-		desc = "High Explosive grenade rounds compatible with grenade launchers. Devastatingly effective against infantry targets."
 		sname = "40mm HE"
 		name = "40mm HE shells"
-		icon_state = "AEX"
-		icon_empty = "AEX-0"
+		desc = "High Explosive grenade rounds compatible with grenade launchers. Devastatingly effective against infantry targets."
+		icon_state = "40mm_HE_conc"
+		icon_empty = "40mm_HE_conc-0"
 		ammo_type = new/datum/projectile/bullet/grenade_round/high_explosive
 
 /obj/item/ammo/bullets/smoke
@@ -830,12 +831,12 @@
 	desc = "Some smoke shells, for the 40mm platform."
 	amount_left = 5
 	max_amount = 5
-	icon_state = "40mmB"
+	icon_state = "40mm_smoke"
 	ammo_type = new/datum/projectile/bullet/smoke
 	ammo_cat = AMMO_GRENADE_40MM
 	w_class = W_CLASS_NORMAL
 	icon_dynamic = 0
-	icon_empty = "40mmB-0"
+	icon_empty = "40mm_smoke-0"
 	sound_load = 'sound/weapons/gunload_40mm.ogg'
 
 	single
@@ -849,11 +850,11 @@
 	ammo_type = new/datum/projectile/bullet/marker
 	amount_left = 5
 	max_amount = 5
-	icon_state = "40mmR"
+	icon_state = "40mm_paint"
 	ammo_cat = AMMO_GRENADE_40MM
 	w_class = W_CLASS_NORMAL
 	icon_dynamic = 0
-	icon_empty = "40mmR-0"
+	icon_empty = "40mm_nonlethal-0"
 	sound_load = 'sound/weapons/gunload_40mm.ogg'
 
 /obj/item/ammo/bullets/pbr
@@ -863,11 +864,11 @@
 	ammo_type = new/datum/projectile/bullet/pbr
 	amount_left = 5
 	max_amount = 5
-	icon_state = "40mmB"
+	icon_state = "40mm_nonlethal"
 	ammo_cat = AMMO_GRENADE_40MM
 	w_class = W_CLASS_NORMAL
 	icon_dynamic = 0
-	icon_empty = "40mmB-0"
+	icon_empty = "40mm_nonlethal-0"
 	sound_load = 'sound/weapons/gunload_40mm.ogg'
 
 //basically an internal object for converting hand-grenades into shells, but can be spawned independently.
@@ -890,7 +891,7 @@
 	rigil
 		max_amount = 4
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		var/datum/projectile/bullet/grenade_shell/AMMO = src.ammo_type
 		if(!W || !user)
 			return
@@ -912,7 +913,7 @@
 		else
 			return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		var/datum/projectile/bullet/grenade_shell/AMMO = src.ammo_type
 		if(!user)
 			return
@@ -931,9 +932,9 @@
 		inventory_counter.update_number(src.amount_left)
 		var/datum/projectile/bullet/grenade_shell/AMMO = src.ammo_type
 		if (AMMO.has_grenade != 0)
-			src.icon_state = "40mmR"
+			src.icon_state = "40mm_lethal"
 		else
-			src.icon_state = "40mmR-0"
+			src.icon_state = "40mm_lethal-0"
 
 	after_unload(mob/user)
 		var/datum/projectile/bullet/grenade_shell/AMMO = src.ammo_type
@@ -1049,7 +1050,17 @@
 	desc = "A box containg a single meowitzer. It's softly purring and feels cool to the touch. Wait, is that a cat?"
 	ammo_type = new/datum/projectile/special/meowitzer/inert
 
-
+/obj/item/ammo/bullets/howitzer
+	sname = "howitzer"
+	name = "howitzer shell"
+	desc = "A carton containing a single 120mm shell. It's huge."
+	icon_state = "meow_ammo"
+	icon_empty = "meow_ammo-0"
+	amount_left = 1
+	max_amount = 1
+	ammo_type = new/datum/projectile/bullet/howitzer
+	ammo_cat = AMMO_HOWITZER
+	w_class = W_CLASS_NORMAL
 //////////////////////////////////// Power cells for eguns //////////////////////////
 
 /obj/item/ammo/power_cell
@@ -1112,6 +1123,9 @@
 		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
 			. += "There are [ret["charge"]]/[ret["max_charge"]] PU left!"
 
+
+/obj/item/ammo/power_cell/empty
+	charge = 0
 
 /obj/item/ammo/power_cell/med_power
 	name = "Power Cell - 200"
@@ -1210,7 +1224,6 @@
 	g_amt = 38000
 	charge = 100.0
 	max_charge = 100.0
-	recharge_rate = 7.5
 
 /obj/item/ammo/power_cell/self_charging/ntso_baton
 	name = "Power Cell - NTSO Stun Baton"
@@ -1223,12 +1236,18 @@
 
 /obj/item/ammo/power_cell/self_charging/ntso_signifer
 	name = "Power Cell - NTSO D49"
-	desc = "A self-contained radioisotope power cell that slowly recharges an internal capacitor. Holds 100PU."
+	desc = "A self-contained radioisotope power cell that slowly recharges an internal capacitor. Holds 250PU."
 	icon = 'icons/obj/items/ammo.dmi'
 	icon_state = "recharger_cell"
 	charge = 250.0
 	max_charge = 250.0
-	recharge_rate = 6
+	recharge_rate = 9
+
+/obj/item/ammo/power_cell/self_charging/ntso_signifer/bad
+	desc = "A self-contained radioisotope power cell that slowly recharges an internal capacitor. Holds 150PU."
+	charge = 150.0
+	max_charge = 150.0
+	recharge_rate = 4
 
 /obj/item/ammo/power_cell/self_charging/medium
 	name = "Power Cell - Hicap RTG"
@@ -1241,7 +1260,7 @@
 
 /obj/item/ammo/power_cell/self_charging/mediumbig
 	name = "Power Cell - Fission"
-	desc = "Half the power of a Fusion model power cell with a tenth of the cost. Holds 200PU"
+	desc = "Half the power of a Fusion model power cell with a tenth of the cost. Holds 200PU."
 	max_charge = 200
 	charge = 200
 	recharge_rate = 20
@@ -1268,6 +1287,11 @@
 	max_charge = 300.0
 	recharge_rate = 10.0
 
+/obj/item/ammo/power_cell/self_charging/lawbringer/bad
+	desc = "A self-contained radioisotope power cell that slowly recharges an internal capacitor. Holds 175PU."
+	max_charge = 175.0
+	recharge_rate = 6.0
+
 /obj/item/ammo/power_cell/self_charging/howitzer
 	name = "Miniaturized SMES"
 	desc = "This thing is huge! How did you even lift it put it into the gun?"
@@ -1293,20 +1317,20 @@
 
 	onUpdate()
 		..()
-		if(get_dist(user, gun) > 1 || user == null || cell == null || gun == null || get_turf(gun) != get_turf(cell) )
+		if(BOUNDS_DIST(user, gun) > 0 || user == null || cell == null || gun == null || get_turf(gun) != get_turf(cell) )
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(user, gun) > 1 || user == null || cell == null || gun == null || get_turf(gun) != get_turf(cell) )
+		if(BOUNDS_DIST(user, gun) > 0 || user == null || cell == null || gun == null || get_turf(gun) != get_turf(cell) )
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		return
 
 	onEnd()
 		..()
-		if(get_dist(user, gun) > 1 || user == null || cell == null || gun == null || get_turf(gun) != get_turf(cell) )
+		if(BOUNDS_DIST(user, gun) > 0 || user == null || cell == null || gun == null || get_turf(gun) != get_turf(cell) )
 			..()
 			interrupt(INTERRUPT_ALWAYS)
 			return

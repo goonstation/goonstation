@@ -76,7 +76,7 @@
 		clear_armer()
 		. = ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.armed)
 			if ((user.get_brain_damage() >= 60 || user.bioHolder.HasEffect("clumsy")) && prob(50))
 				var/which_hand = "l_arm"
@@ -90,7 +90,7 @@
 		..()
 		return
 
-	attackby(obj/item/C as obj, mob/user as mob)
+	attackby(obj/item/C, mob/user)
 		if (istype(C, /obj/item/chem_grenade) && !src.grenade && !src.grenade_old && !src.pipebomb && !src.arm && !src.signaler && !src.butt && !src.buttbomb)
 			var/obj/item/chem_grenade/CG = C
 			if (CG.stage == 2 && !CG.state)
@@ -358,8 +358,8 @@
 			var/obj/effects/explosion/E = new /obj/effects/explosion(get_turf(src.loc))
 			E.fingerprintslast = src.fingerprintslast
 			playsound(src.loc, 'sound/voice/farts/superfart.ogg', 100, 1)
-			src.buttbomb = null
 			qdel(src.buttbomb)
+			src.buttbomb = null
 		clear_armer()
 		return
 
@@ -413,7 +413,7 @@
 
 		return
 
-	attackby(obj/item/C as obj, mob/user as mob)
+	attackby(obj/item/C, mob/user)
 		if (iswrenchingtool(C))
 			if (!isturf(src.loc))
 				user.show_text("Place the [src.name] on the ground first.", "red")
@@ -435,7 +435,7 @@
 			..()
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.armed)
 			return
 
@@ -454,7 +454,7 @@
 		logTheThing("bombing", user, null, "releases a [src] (Payload: [src.payload]) at [log_loc(user)]. Direction: [dir2text(user.dir)].")
 
 		src.armed = 1
-		if (src.mousetrap)
+		if (!(src.mousetrap?.armed))
 			src.mousetrap.armed = 1 // Must be armed or it won't work in mousetrap.triggered().
 			src.mousetrap.set_armer(user)
 		src.set_density(1)

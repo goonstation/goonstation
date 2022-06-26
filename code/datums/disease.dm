@@ -63,8 +63,6 @@
 	var/develop_resist = 0
 	var/associated_reagent = null // associated reagent, duh
 
-	var/list/disease_data = list() // A list of things for people to research about the disease to make it
-	var/list/strain_data = list()  // Used for Rhinovirus
 
 // IMPLEMENT PROPER CURE PROC
 
@@ -153,6 +151,7 @@
 	var/virulence = 100    // how likely is this disease to spread
 	var/develop_resist = 0 // can you develop a resistance to this?
 	var/cycles = 0         // does this disease have a cyclical nature? if so, how many cycles have elapsed?
+	var/list/strain_data = list()  // Used for Rhinovirus, basically arbitrary data storage
 
 	stage_act(var/mult)
 		if (!affected_mob || disposed)
@@ -228,6 +227,10 @@
 				master.stage_act(affected_mob, src, mult)
 
 		return 0
+
+	disposing()
+		strain_data = null
+		..()
 
 /datum/ailment_data/addiction
 	var/associated_reagent = null
@@ -328,7 +331,12 @@
 	else
 		return 1 // you caught the virus! do you want to give the captured virus a nickname? virus has been recorded in lurgydex
 
-/mob/living/proc/contract_disease(var/ailment_path, var/ailment_name, var/datum/ailment_data/disease/strain, bypass_resistance = 0)
+/// Contract the specified disease.
+/// @param ailment_path Path of the ailment to add. If both ailment_path and ailment_name are passed, this is used.
+/// @param ailment_name Name of the ailment to add. This is not cosmetic; the ailment type is retrieved via this name.
+/// @param strain Instance of the ailment to add. Used to transfer an existing ailment to a person (such as in the case of a diseased organ transplant)
+/// @param bypass_resistance If disease resistance should be bypassed while adding a disease.
+/mob/living/proc/contract_disease(var/ailment_path, var/ailment_name, var/datum/ailment_data/disease/strain, bypass_resistance = FALSE)
 	if (!src)
 		return null
 	if (!ailment_path && !ailment_name && !(istype(strain,/datum/ailment_data/disease) || istype(strain,/datum/ailment_data/malady))) // maladies use strain to transfer specific instances of their selves via organ transplant/etc
@@ -378,9 +386,11 @@
 			AD.detectability = strain.detectability
 			AD.develop_resist = strain.develop_resist
 			AD.cure = strain.cure
+			AD.spread = strain.spread
 			AD.info = strain.info
 			AD.resistance_prob = strain.resistance_prob
 			AD.temperature_cure = strain.temperature_cure
+			AD.strain_data = strain.strain_data.Copy()
 		else
 			AD.name = D.name
 			AD.stage_prob = D.stage_prob
@@ -390,6 +400,7 @@
 			AD.detectability = D.detectability
 			AD.develop_resist = D.develop_resist
 			AD.cure = D.cure
+			AD.spread = D.spread
 			AD.info = D.info
 			AD.resistance_prob = D.resistance_prob
 			AD.temperature_cure = D.temperature_cure

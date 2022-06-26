@@ -2,6 +2,7 @@
 	name = "Spatial Tear"
 	centcom_headline = "Spatial Anomaly"
 	centcom_message = "A severe spatial anomaly has been detected near the station. Personnel are advised to avoid any unusual phenomenae."
+	centcom_origin = ALERT_ANOMALY
 	required_elapsed_round_time = 10 MINUTES
 
 	event_effect(var/source)
@@ -62,6 +63,9 @@
 		if(AM.client?.check_key(KEY_RUN) && src.stabilized)
 			src.try_pass(AM)
 
+	ex_act(severity)
+		return
+
 	proc/try_pass(mob/user)
 		actions.start(new /datum/action/bar/icon/push_through_tear(user, src), user)
 
@@ -97,14 +101,14 @@
 	onUpdate()
 		..()
 		// you gotta hold still to jump!
-		if (get_dist(ownerMob, spatialtear) > 1)
+		if (BOUNDS_DIST(ownerMob, spatialtear) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			ownerMob.show_text("Your attempt to push through the spatial tear was interrupted!", "red")
 			return
 
 	onStart()
 		..()
-		if (get_dist(ownerMob, spatialtear) > 1 || spatialtear == null || ownerMob == null)
+		if (BOUNDS_DIST(ownerMob, spatialtear) > 0 || spatialtear == null || ownerMob == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		for(var/mob/O in AIviewers(ownerMob))

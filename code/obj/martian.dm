@@ -14,7 +14,7 @@
 	var/used = 0
 	var/id = null
 
-/obj/crevice/attack_hand(var/mob/user as mob)
+/obj/crevice/attack_hand(var/mob/user)
 	if(..())
 		return
 	if(used)
@@ -44,6 +44,7 @@
 					var/datum/human_limbs/HL = H.limbs
 					HL.sever("both_arms", user)
 				else
+					logTheThing("user", user, null, "was gibbed by [src] ([src.type]) at [log_loc(user)].")
 					user.gib()
 				icon_state = "crevice1"
 				desc = "The crevice has closed"

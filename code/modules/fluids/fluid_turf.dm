@@ -78,12 +78,13 @@
 			// idk about the above. walls still use [src]=1 ...
 			// the bottom is much faster in my testing and works just as well
 			// maybe should be converted to this everywhere?
-			worldgenCandidates += src //Adding self to possible worldgen turfs
+			if(src.z == Z_LEVEL_STATION || src.z == Z_LEVEL_MINING)
+				worldgenCandidates += src //Adding self to possible worldgen turfs
 
 		if(current_state > GAME_STATE_WORLD_INIT)
 			for(var/dir in cardinal)
 				var/turf/T = get_step(src, dir)
-				if(T?.ocean_canpass() && !istype(T, /turf/space))
+				if(istype(T) && T.ocean_canpass() && !istype(T, /turf/space))
 					src.tilenotify(T)
 					break
 
@@ -99,7 +100,7 @@
 			light_g = fluid_color[2] / 255
 			light_b = fluid_color[3] / 255
 
-		//let's replicate old behaivor
+		//let's replicate old behavior
 		if (generateLight)
 			generateLight = 0
 			if (z != 3) //nono z3
@@ -180,6 +181,7 @@
 				//mbc : bleh init() happens BFORRE this, most likely
 				P.initialize()
 
+		#ifndef UPSCALED_MAP
 		if(spawningFlags & SPAWN_FISH) //can spawn bad fishy
 			if (src.z == 5 && prob(1) && prob(2))
 				new /obj/critter/gunbot/drone/buzzdrone/fish(src)
@@ -199,6 +201,7 @@
 					O = new /obj/naval_mine/rusted(src)
 				if (O)
 					O.initialize()
+		#endif
 
 		if(spawningFlags & SPAWN_TRILOBITE)
 			if (prob(17))
@@ -257,10 +260,10 @@
 			react_volume = min(react_volume, abs(M.reagents.maximum_volume - M.reagents.total_volume)) //don't push out other reagents if we are full
 			M.reagents.add_reagent(ocean_reagent_id, react_volume) //todo : maybe add temp var here too
 
-	attackby(obj/item/C as obj, mob/user as mob, params) //i'm sorry
+	attackby(obj/item/C, mob/user, params) //i'm sorry
 		if(istype(C, /obj/item/cable_coil))
 			var/obj/item/cable_coil/coil = C
-			coil.turf_place(src, user)
+			coil.turf_place(src, get_turf(user), user)
 		..()
 
 
@@ -312,6 +315,7 @@
 				L+=T
 
 	Entered(var/atom/movable/AM)
+		. = ..()
 		if (istype(AM,/mob/dead) || istype(AM,/mob/wraith) || istype(AM,/mob/living/intangible) || istype(AM, /obj/lattice) || istype(AM, /obj/cable/reinforced) || istype(AM,/obj/torpedo_targeter) || istype(AM,/obj/overlay) || istype (AM, /obj/arrival_missile) || istype(AM, /obj/sea_ladder_deployed))
 			return
 		if (locate(/obj/lattice) in src)
@@ -510,7 +514,7 @@
 	var/active = 0
 	var/location = 1 // 0 for bottom, 1 for top
 
-/obj/machinery/computer/sea_elevator/attack_hand(mob/user as mob)
+/obj/machinery/computer/sea_elevator/attack_hand(mob/user)
 	if(..())
 		return
 	var/dat = "<a href='byond://?src=\ref[src];close=1'>Close</a><BR><BR>"

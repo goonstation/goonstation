@@ -24,7 +24,8 @@
 	var/burn_possible = 1 //cogwerks fire project - can object catch on fire - let's have all sorts of shit burn at hellish temps
 	//MBC : im shit. change burn_possible to '2' if you want it to pool itself instead of qdeling when burned
 	var/burning = null
-	var/health = 4 //burn faster
+	/// How long an item takes to burn (or be consumed by other means), based on the weight class if no value is set
+	var/health = null
 	var/burn_point = 15000  //this already exists but nothing uses it???
 	var/burn_output = 1500 //how hot should it burn
 	var/burn_type = 0 //0 = ash, 1 = melt
@@ -54,6 +55,8 @@
 	var/obj/item/grab/chokehold = null
 	var/obj/item/grab/special_grab = null
 
+	var/attack_verbs = "attacks" //! Verb used when you attack someone with this, as in [attacker] [attack_verbs] [victim]. Can be a list or single entry
+
 	/*_________*/
 	/*Inventory*/
 	/*‾‾‾‾‾‾‾‾‾*/
@@ -65,7 +68,10 @@
 	var/cant_other_remove = 0 // Can't be removed from non-hand slots by others
 	var/cant_drop = 0 // Cant' be removed in general. I guess.
 
+	///This is for things which are stackable! It means that there are [amount] things here, which could be discretely split or stacked!
+	///if you use this to represent something other than a literal stack of items I will break your kneecaps
 	var/amount = 1
+
 	var/max_stack = 1
 	var/stack_type = null // if null, only current type. otherwise uses this
 
@@ -164,7 +170,7 @@
 			for(var/datum/objectProperty/P in src.properties)
 				if(!P.hidden)
 					. += "<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> [P.name]: [P.getTooltipDesc(src, src.properties[P])]"
-			SEND_SIGNAL(src, COMSIG_TOOLTIP_BLOCKING_APPEND, .)
+			SEND_SIGNAL(src, COMSIG_ITEM_BLOCK_TOOLTIP_BLOCKING_APPEND, .)
 
 		//Item block section
 		if(src.c_flags & HAS_GRAB_EQUIP)
@@ -179,7 +185,7 @@
 					for(var/datum/objectProperty/P in B.properties)
 						if(!P.hidden)
 							. += "<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> [P.name]: [P.getTooltipDesc(B, B.properties[P])]"
-			SEND_SIGNAL(src, COMSIG_TOOLTIP_BLOCKING_APPEND, .)
+			SEND_SIGNAL(src, COMSIG_ITEM_BLOCK_TOOLTIP_BLOCKING_APPEND, .)
 		else if(src.c_flags & BLOCK_TOOLTIP)
 			. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/prot.png")]\" width=\"12\" height=\"12\" /> Block+: RESIST with this item for more info"
 
@@ -230,7 +236,7 @@
 					"params" = params,
 					"title" = title,
 					"content" = tooltip_rebuild ? buildTooltipContent() : lastTooltipContent,
-					"theme" = usr.client.preferences.hud_style == "New" ? "newhud" : "item"
+					"theme" = usr.client?.preferences.hud_style == "New" ? "newhud" : "item"
 				)
 
 				if (src.z == 0 && src.loc == usr)
@@ -296,7 +302,17 @@
 		if (src.amount != 1)
 			// this is a gross hack to make things not just show "1" by default
 			src.inventory_counter.update_number(src.amount)
+
+	src.set_health()
 	..()
+
+/obj/item/proc/set_health()
+	if (isnull(initial(src.health))) // if not overridden
+		switch (src.w_class)
+			if (W_CLASS_TINY to W_CLASS_NORMAL)
+				src.health = src.w_class + 1
+			else
+				src.health = src.w_class + 2
 
 /obj/item/set_loc(var/newloc as turf|mob|obj in world)
 	if (src.temp_flags & IS_LIMB_ITEM)
@@ -390,19 +406,19 @@
 		return 1
 
 	else
-		user.tri_message("<span class='alert'><b>[user]</b> tries to feed [M] [src]!</span>",\
-		user, "<span class='alert'>You try to feed [M] [src]!</span>",\
-		M, "<span class='alert'><b>[user]</b> tries to feed you [src]!</span>")
+		user.tri_message(M, "<span class='alert'><b>[user]</b> tries to feed [M] [src]!</span>",\
+			"<span class='alert'>You try to feed [M] [src]!</span>",\
+			"<span class='alert'><b>[user]</b> tries to feed you [src]!</span>")
 		logTheThing("combat", user, M, "attempts to feed [constructTarget(M,"combat")] [src] [log_reagents(src)]")
 
 		if (!do_mob(user, M))
 			return 0
-		if (get_dist(user,M) > 1)
+		if (BOUNDS_DIST(user, M) > 0)
 			return 0
 
-		user.tri_message("<span class='alert'><b>[user]</b> feeds [M] [src]!</span>",\
-		user, "<span class='alert'>You feed [M] [src]!</span>",\
-		M, "<span class='alert'><b>[user]</b> feeds you [src]!</span>")
+		user.tri_message(M, "<span class='alert'><b>[user]</b> feeds [M] [src]!</span>",\
+			"<span class='alert'>You feed [M] [src]!</span>",\
+			"<span class='alert'><b>[user]</b> feeds you [src]!</span>")
 		logTheThing("combat", user, M, "feeds [constructTarget(M,"combat")] [src] [log_reagents(src)]")
 
 		if (src.material && src.material.edible)
@@ -602,7 +618,7 @@
 
 /obj/item/MouseDrop_T(atom/movable/O as obj, mob/user as mob)
 	..()
-	if (max_stack > 1 && src.loc == user && get_dist(O, user) <= 1 && check_valid_stack(O))
+	if (max_stack > 1 && src.loc == user && BOUNDS_DIST(O, user) == 0 && check_valid_stack(O))
 		if ( src.amount >= max_stack)
 			failed_stack(O, user)
 			return
@@ -649,7 +665,7 @@
 		if (user == over_object)
 			actions.start(new /datum/action/bar/private/icon/pickup(src), user)
 		//else // use laterr, after we improve the 'give' dialog to work with multicontext
-		//	if (get_dist(user,over_object) <= 1 && src_exists_inside_usr_or_usr_storage)
+		//	if (BOUNDS_DIST(user, over_object) == 0 && src_exists_inside_usr_or_usr_storage)
 		//		user.give_to(over_object)
 	else
 
@@ -760,6 +776,9 @@
 	if(src.equipped_in_slot && src.cant_self_remove)
 		return 0
 
+	var/mob/living/carbon/human/target
+	if (ishuman(user))
+		target = user
 	if (!src.anchored)
 		if (!user.r_hand || !user.l_hand || (user.r_hand == src) || (user.l_hand == src))
 			if (!user.hand) //big messy ugly bad if() chunk here because we want to prefer active hand
@@ -772,9 +791,13 @@
 					user.u_equip(src)
 					. = user.put_in_hand(src, 0)
 				else if (!user.l_hand)
-					user.swap_hand(1)
-					user.u_equip(src)
-					. = user.put_in_hand(src, 1)
+					if (!target?.can_equip(src, target.slot_l_hand))
+						user.show_text("You need a free hand to do that!", "blue")
+						.= 0
+					else
+						user.swap_hand(1)
+						user.u_equip(src)
+						. = user.put_in_hand(src, 1)
 			else
 				if (user.l_hand == src)
 					.= 1
@@ -785,9 +808,13 @@
 					user.u_equip(src)
 					. = user.put_in_hand(src, 1)
 				else if (!user.r_hand)
-					user.swap_hand(0)
-					user.u_equip(src)
-					. = user.put_in_hand(src, 0)
+					if (!target?.can_equip(src, target.slot_r_hand))
+						user.show_text("You need a free hand to do that!", "blue")
+						.= 0
+					else
+						user.swap_hand(0)
+						user.u_equip(src)
+						. = user.put_in_hand(src, 0)
 
 		else
 			user.show_text("You need a free hand to do that!", "blue")
@@ -802,7 +829,7 @@
 			//S.hud.remove_item(src)
 			S.hud.objects -= src // prevents invisible object from failed transfer (item doesn't fit in pockets from backpack for example)
 
-/obj/item/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/item/attackby(obj/item/W, mob/user, params)
 	if(src.material)
 		src.material.triggerTemp(src ,1500)
 	if (W.firesource)
@@ -1033,7 +1060,7 @@
 		return
 
 	.= 1
-	SEND_SIGNAL(M, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
+	SEND_SIGNAL(M, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 	if (issmallanimal(M))
 		var/mob/living/critter/small_animal = M
 
@@ -1082,7 +1109,7 @@
 	if (usr?.bioHolder?.HasEffect("clumsy") && prob(50)) t = "funny-looking"
 	return "It is \an [t] item."
 
-/obj/item/attack_hand(mob/user as mob)
+/obj/item/attack_hand(mob/user)
 	var/checkloc = src.loc
 	while(checkloc && !istype(checkloc,/turf))
 		if (isliving(checkloc) && checkloc != user)
@@ -1153,7 +1180,7 @@
 
 
 //MBC : I had to move some ItemSpecial number changes here to avoid race conditions. is_special flag passed as an arg; If true we take a look at src.special
-/obj/item/proc/attack(mob/M as mob, mob/user as mob, def_zone, is_special = 0)
+/obj/item/proc/attack(mob/M, mob/user, def_zone, is_special = 0)
 	if (!M || !user) // not sure if this is the right thing...
 		return
 
@@ -1566,7 +1593,7 @@
 		#ifdef COMSIG_MOB_DROPPED
 		SEND_SIGNAL(user, COMSIG_MOB_DROPPED, src)
 		#endif
-	if (src.c_flags & EQUIPPED_WHILE_HELD)
+	if (src.c_flags & EQUIPPED_WHILE_HELD && src == user.equipped())
 		src.unequipped(user)
 	#ifdef COMSIG_ITEM_DROPPED
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user)

@@ -29,6 +29,7 @@ datum
 		var/reacting = 0 // fuck off chemist spam
 		var/overdose = 0 // if reagents are at or above this in a mob, it's an overdose - if double this, it's a major overdose
 		var/depletion_rate = 0.4 // this much goes away per tick
+		var/flushing_multiplier = 1 // this decides how succeptible it is to other chemical's flushing
 		var/penetrates_skin = 0 //if this reagent can enter the bloodstream through simple touch.
 		var/touch_modifier = 1 //If this does penetrate skin, how much should be transferred by default (assuming naked dude)? 1 = transfer full amount, 0.5 = transfer half, etc.
 		var/taste = null
@@ -129,12 +130,11 @@ datum
 			switch(method)
 				if(TOUCH)
 					if (penetrates_skin && !("nopenetrate" in paramslist))
-						var/modifier = touch_modifier
+						var/percent_protection = clamp(GET_ATOM_PROPERTY(M, PROP_MOB_CHEMPROT), 0, 100)
+						var/modifier = 1
 						if(!src.pierces_outerwear)
-							for(var/atom in M.get_equipped_items())
-								if (istype(atom, /obj/item/clothing))
-									var/obj/item/clothing/C = atom
-									modifier -= (1 - C.permeability_coefficient)/3
+							modifier -= (percent_protection/100)
+						modifier *= touch_modifier
 
 						if(M.reagents)
 							M.reagents.add_reagent(self.id,volume*modifier,self.data)
@@ -295,6 +295,12 @@ datum
 				M.ailments += AD
 				//DEBUG_MESSAGE("became addicted: [AD.name]")
 				return AD
+			return
+
+		proc/flush(var/mob/M, var/amount, var/list/flush_specific_reagents)
+			for (var/reagent_id in M.reagents.reagent_list)
+				if ((reagent_id != src.id) && ((reagent_id in flush_specific_reagents) || !flush_specific_reagents))//checks if there's a specific reagent list to flush or if it should flush all reagents.
+					holder.remove_reagent(reagent_id, (amount * M.reagents.reagent_list[reagent_id].flushing_multiplier))
 			return
 
 		// reagent state helper procs

@@ -26,6 +26,8 @@
 		if (P)
 			P.check()
 
+		src.AddComponent(/datum/component/bullet_holes, 15, 10)
+
 		//for fluids
 		if (src.active_liquid && src.active_liquid.group)
 			src.active_liquid.group.displace(src.active_liquid)
@@ -77,12 +79,10 @@
 			return
 		if (!src.proj_image)
 			src.proj_image = image('icons/obj/projectiles.dmi', "blank")
-		//src.overlays -= src.proj_image
 		src.proj_image.overlays = null
 		for (var/image/i in src.proj_impacts)
 			src.proj_image.overlays += i
 		src.UpdateOverlays(src.proj_image, "projectiles")
-		//src.overlays += src.proj_image
 
 	proc/xmasify()
 		if(fixed_random(src.x / world.maxx, src.y / world.maxy) <= 0.01)
@@ -289,7 +289,7 @@
 	if(prob(power))
 		dismantle_wall(1)
 
-/turf/simulated/wall/attack_hand(mob/user as mob)
+/turf/simulated/wall/attack_hand(mob/user)
 	if (user.is_hulk())
 		if(isrwall(src))
 			boutput(user, text("<span class='notice'>You punch the [src.name], but can't seem to make a dent!</span>"))
@@ -327,7 +327,7 @@
 	interact_particle(user,src)
 	return
 
-/turf/simulated/wall/attackby(obj/item/W as obj, mob/user as mob, params)
+/turf/simulated/wall/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/spray_paint) || istype(W, /obj/item/gang_flyer))
 		return
 
@@ -411,7 +411,7 @@
 				health /= 2
 		return
 
-/turf/simulated/wall/r_wall/attackby(obj/item/W as obj, mob/user as mob, params)
+/turf/simulated/wall/r_wall/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/spray_paint) || istype(W, /obj/item/gang_flyer))
 		return
 

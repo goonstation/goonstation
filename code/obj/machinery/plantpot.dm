@@ -71,7 +71,7 @@
 	icon_state = "kudzutray"
 	power_usage = 0
 
-	attackby(var/obj/item/W as obj, var/mob/user as mob)
+	attackby(var/obj/item/W, var/mob/user)
 		//Can only attempt to destroy the plant pot if the plant in it is dead or empty.
 		if(!src.current || src.dead)
 			if (destroys_kudzu_object(src, W, user))
@@ -102,7 +102,7 @@
 	var/list/datum/plant_gene_strain/spawn_commuts = list()
 	var/auto_water = TRUE
 
-	New()
+	New(newLoc, obj/item/seed/initial_seed)
 		SPAWN(0) // delay for prefab attribute assignment
 			var/datum/plant/P
 			//Adjust processing tier to slow down server burden unless necessary
@@ -113,7 +113,10 @@
 			..()
 			status |= BROKEN
 
-			if(P)
+			if(initial_seed)
+				src.HYPnewplant(initial_seed)
+				UpdateIcon()
+			else if(P)
 				var/obj/item/seed/S = new /obj/item/seed
 
 				S.generic_seed_setup(P)
@@ -138,7 +141,7 @@
 				if(!src.current)
 					qdel(src)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		// Filter out the following item interactions
 		if(istool(W, TOOL_SCREWING | TOOL_WRENCHING))
 			boutput(user, "<span class='alert'>[W] does not seem like the right tool for the job.</span>")
@@ -147,7 +150,7 @@
 		else
 			..()
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 
 		if(isAI(user) || isobserver(user)) return // naughty AIs used to be able to harvest plants
 		src.add_fingerprint(user)
@@ -178,7 +181,7 @@
 	process()
 		..()
 		if(auto_water)
-			if(!src.reagents.has_reagent("water", 50))
+			if(src.reagents && !src.reagents.has_reagent("water", 50))
 				src.reagents.add_reagent("water", 200)
 
 	flower
@@ -241,7 +244,7 @@
 	var/image/water_meter = null
 	var/image/plant_sprite = null
 	var/grow_level = 1 // Same as the above except for current plant growth
-	var/do_update_icon = 0 // this is now a var on the pot itself so you can actually call it outside of process()
+	var/do_update_icon = FALSE // this is now a var on the pot itself so you can actually call it outside of process()
 	var/do_update_water_icon = 1 // this handles the water overlays specifically (water and water level) It's set to 1 by default so it'll update on spawn
 	var/growth_rate = 2
 		// We have this here as a check for whether or not the plant needs to update its sprite.
@@ -322,10 +325,6 @@
 
 	process()
 		..()
-
-		if(do_update_icon)
-			UpdateIcon()
-			update_name()
 
 			// We skip every other tick. Another cpu-conserving measure.
 		if(!src.current || src.dead)
@@ -479,21 +478,21 @@
 
 		if(current_growth_level != src.grow_level)
 			src.grow_level = current_growth_level
-			do_update_icon = 1
+			src.do_update_icon = TRUE
 
 		if(!harvest_warning && HYPcheck_if_harvestable())
 			src.harvest_warning = 1
-			do_update_icon = 1
+			src.do_update_icon = TRUE
 		else if(harvest_warning && !HYPcheck_if_harvestable())
 			src.harvest_warning = 0
-			do_update_icon = 1
+			src.do_update_icon = TRUE
 
 		if(!health_warning && src.health <= growing.starthealth / 2)
 			src.health_warning = 1
-			do_update_icon = 1
+			src.do_update_icon = TRUE
 		else if(health_warning && src.health > growing.starthealth / 2)
 			src.health_warning = 0
-			do_update_icon = 1
+			src.do_update_icon = TRUE
 
 		// Have we lost all health or growth, or used up all available harvests? If so, this plant
 		// should now die. Sorry, that's just life! Didn't they teach you the curds and the peas?
@@ -501,14 +500,14 @@
 			HYPkillplant()
 			return
 
-		if(do_update_icon)
+		if(src.do_update_icon)
 			UpdateIcon()
 			update_name()
 
 		if(!HAS_FLAG(status, NOPOWER))
 			use_power(power_usage)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(src.current)
 			// Inside this if block we'll handle reactions for specific kinds of plant.
 			// General reactions from the plantpot itself come after these.
@@ -763,9 +762,9 @@
 		else ..()
 
 	attack_ai(mob/user as mob)
-		if(isrobot(user) && get_dist(src, user) <= 1) return src.Attackhand(user)
+		if(isrobot(user) && BOUNDS_DIST(src, user) == 0) return src.Attackhand(user)
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if(isAI(user) || isobserver(user)) return // naughty AIs used to be able to harvest plants
 		src.add_fingerprint(user)
 		if(src.current)
@@ -822,7 +821,7 @@
 	mouse_drop(over_object, src_location, over_location)
 		..()
 		if(!isliving(usr) || isintangible(usr)) return // ghosts killing plants fix
-		if(get_dist(src, usr) > 1)
+		if(BOUNDS_DIST(src, usr) > 0)
 			boutput(usr, "<span class='alert'>You need to be closer to empty the tray out!</span>")
 			return
 
@@ -849,7 +848,7 @@
 					if(growing.HYPattacked_proc(src,usr,null)) return
 
 			if(growing.growthmode == "weed")
-				if(alert("Clear this tray?",,"Yes","No") == "Yes")
+				if(tgui_alert(usr, "Clear this tray?", "Clear tray", list("Yes", "No")) == "Yes")
 					usr.visible_message("<b>[usr.name]</b> dumps out the tray's contents.")
 					boutput(usr, "<span class='alert'>Weeds still infest the tray. You'll need something a bit more thorough to get rid of them.</span>")
 					src.growth = 0
@@ -857,27 +856,27 @@
 					// The idea here is you gotta use weedkiller or something else to get rid of the
 					// weeds since you can't just clear them out by hand.
 			else
-				if(alert("Clear this tray?",,"Yes","No") == "Yes")
+				if(tgui_alert(usr, "Clear this tray?", "Clear tray", list("Yes", "No")) == "Yes")
 					usr.visible_message("<b>[usr.name]</b> dumps out the tray's contents.")
 					src.reagents.clear_reagents()
-					src.do_update_icon = 1
 					logTheThing("combat", usr, null, "cleared a hydroponics tray containing [current.name] at [log_loc(src)]")
 					HYPdestroyplant()
 		else
-			if(alert("Clear this tray?",,"Yes","No") == "Yes")
+			if(tgui_alert(usr, "Clear this tray?", "Clear tray", list("Yes", "No")) == "Yes")
 				usr.visible_message("<b>[usr.name]</b> dumps out the tray's contents.")
 				src.reagents.clear_reagents()
-				src.do_update_icon = 1
+				UpdateIcon()
+				update_name()
 		return
 
 	MouseDrop_T(atom/over_object as obj, mob/user as mob) // ty to Razage for the initial code
-		if(get_dist(user, src) > 1 || get_dist(user, over_object) > 1 || is_incapacitated(user) || isAI(user))
+		if(BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, over_object) > 0 || is_incapacitated(user) || isAI(user))
 			return
 		if(istype(over_object, /obj/item/seed))  // Checks to make sure it's a seed being dragged onto the tray.
-			if(get_dist(user, src) > 1)
+			if(BOUNDS_DIST(user, src) > 0)
 				boutput(user, "<span class='alert'>You need to be closer to the tray!</span>")
 				return
-			if(get_dist(user, over_object) > 1)
+			if(BOUNDS_DIST(user, over_object) > 0)
 				boutput(user, "<span class='alert'>[over_object] is too far away!</span>")
 				return
 			src.Attackby(over_object, user)  // Activates the same command as would be used with a seed in hand on the tray.
@@ -1259,11 +1258,11 @@
 						// The unstable gene can do weird shit to your produce.
 						F.name = "[pick("awkward","irregular","crooked","lumpy","misshapen","abnormal","malformed")] [F.name]"
 						F.heal_amt += rand(-2,2)
-						F.amount += rand(-2,2)
+						F.bites_left += rand(-2,2)
 
 					if(quality_status == "jumbo")
 						F.heal_amt *= 2
-						F.amount *= 2
+						F.bites_left *= 2
 					else if(quality_status == "rotten")
 						F.heal_amt = 0
 
@@ -1306,7 +1305,7 @@
 					if(HYPCheckCommut(DNA,/datum/plant_gene_strain/unstable) && prob(33))
 						M.name = "[pick("awkward","irregular","crooked","lumpy","misshapen","abnormal","malformed")] [M.name]"
 						M.heal_amt += rand(-2,2)
-						M.amount += rand(-2,2)
+						M.bites_left += rand(-2,2)
 
 					if(quality_status == "jumbo")
 						M.heal_amt *= 2
@@ -1533,11 +1532,7 @@
 		src.recently_harvested = 0
 		UpdateIcon()
 		update_name()
-
-		if(usr && ishellbanned(usr)) //Haw haw
-			growth_rate = 1
-		else
-			growth_rate = 2
+		growth_rate = 2
 
 	proc/HYPkillplant()
 		// Simple proc to kill the plant without clearing the plantpot out altogether.
@@ -1577,6 +1572,7 @@
 
 		src.generation = 0
 		UpdateIcon()
+		update_name()
 		post_alert("event_cleared")
 
 	proc/HYPdamageplant(var/damage_source, var/damage_amount, var/bypass_resistance = 0)
@@ -1924,7 +1920,7 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 						P.growth += 4
 			use_power(power_usage)
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		src.add_fingerprint(user)
 		src.active = !src.active
 		user.visible_message("<b>[user]</b> switches [src.name] [src.active ? "on" : "off"].")
@@ -1942,7 +1938,7 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 			light.enable()
 
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(isscrewingtool(W) || iswrenchingtool(W))
 			if(!src.anchored)
 				user.visible_message("<b>[user]</b> secures the [src] to the floor!")
@@ -1986,7 +1982,7 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 				src.active = 0
 				src.mode = 0
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/reagent_containers/glass/))
 			// Not just watering cans - any kind of glass can be used to pour stuff in.
 			if(!W.reagents.total_volume)
@@ -1999,7 +1995,7 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 				if(!W.reagents.total_volume) boutput(user, "<span class='alert'><b>[W] is now empty.</b></span>")
 
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		src.add_fingerprint(user)
 		if(!src.active)
 			src.active = 1

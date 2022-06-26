@@ -20,29 +20,33 @@ proc/is_teleportation_allowed(var/turf/T)
 			if (!TJ.active)
 				continue
 			if(IN_RANGE(TJ, T, TJ.range))
-				return 0
+				return FALSE
 		if (istype(atom, /obj/item/device/flockblocker))
 			var/obj/item/device/flockblocker/F = atom
 			if (!F.active)
 				continue
 			if(IN_RANGE(F, T, F.range))
-				return 0
+				return FALSE
 
 	for_by_tcl(N, /obj/blob/nucleus)
 		if(IN_RANGE(N, T, 3))
-			return 0
+			return FALSE
 
 	// first check the always allowed turfs from map landmarks
 	if (T in landmarks[LANDMARK_TELESCI])
-		return 1
+		return TRUE
 
 	if ((istype(T.loc,/area) && T.loc:teleport_blocked) || isrestrictedz(T.z))
-		return 0
+		return FALSE
 
-	if (istype(T.loc, /area/shuttle/escape/station) && !T.canpass())
-		return 0//forgive me pls
+	if (istype(T.loc, /area/shuttle/escape/station))
+		if (T.density)
+			return FALSE
+		for (var/obj/O in T)
+			if (O.density)
+				return FALSE
 
-	return 1
+	return TRUE
 
 /obj/machinery/networked/telepad
 	icon = 'icons/obj/stationobjs.dmi'
@@ -96,7 +100,7 @@ proc/is_teleportation_allowed(var/turf/T)
 		if (!src.host_id)
 			. += "<span class='alert'>The [src.name]'s \"disconnected from host\" light is flashing.</span>"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..())
 			return
 
@@ -492,7 +496,7 @@ proc/is_teleportation_allowed(var/turf/T)
 				logTheThing("station", usr, which, "sent [constructTarget(which,"station")] to [log_loc(target)] from [log_loc(src)] with a telepad")
 			which.set_loc(target)
 
-		showswirl(src.loc)
+		showswirl_out(src.loc)
 		leaveresidual(src.loc)
 		showswirl(target)
 		leaveresidual(target)
@@ -523,7 +527,7 @@ proc/is_teleportation_allowed(var/turf/T)
 			which.set_loc(src.loc)
 		showswirl(src.loc)
 		leaveresidual(src.loc)
-		showswirl(receiveturf)
+		showswirl_out(receiveturf)
 		leaveresidual(receiveturf)
 		use_power(1500)
 		if(prob(2) && prob(2))
@@ -581,7 +585,7 @@ proc/is_teleportation_allowed(var/turf/T)
 		return P
 
 	proc/badsend()
-		showswirl(src.loc)
+		showswirl_error(src.loc)
 
 		var/effect = ""
 		if(prob(90)) //MINOR EFFECTS
@@ -594,7 +598,7 @@ proc/is_teleportation_allowed(var/turf/T)
 		processbadeffect(effect)
 
 	proc/badreceive()
-		showswirl(src.loc)
+		showswirl_error(src.loc)
 
 		var/effect = ""
 		if(prob(80)) //MINOR EFFECTS
@@ -701,6 +705,7 @@ proc/is_teleportation_allowed(var/turf/T)
 				return
 			if("gib")
 				for(var/mob/living/M in src.loc)
+					logTheThing("combat", M, null, "was gibbed by a telescience fault at [log_loc(M)].")
 					M.gib()
 				return
 			if("majormutate")
@@ -756,7 +761,7 @@ proc/is_teleportation_allowed(var/turf/T)
 					O.show_message("<span class='alert'>The area surrounding the [src] bursts into flame!</span>", 1)
 				return
 			if("mediumsummon")
-				var/summon = pick(/obj/critter/maneater,/obj/critter/killertomato,/obj/critter/spacebee,/obj/critter/golem,/obj/critter/magiczombie,/obj/critter/mimic)
+				var/summon = pick(/obj/critter/maneater,/obj/critter/killertomato,/obj/critter/wasp,/obj/critter/golem,/obj/critter/magiczombie,/obj/critter/mimic)
 				new summon(src.loc)
 				return
 			if("getrandom")
@@ -936,7 +941,7 @@ proc/is_teleportation_allowed(var/turf/T)
 
 		return
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (..(user))
 			return
 
@@ -984,7 +989,7 @@ proc/is_teleportation_allowed(var/turf/T)
 		onclose(user, "t_computer")
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W))
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 			src.panel_open = !src.panel_open
@@ -1233,9 +1238,10 @@ proc/is_teleportation_allowed(var/turf/T)
 		if (!src.host_id || !message)
 			return
 
+		if (ON_COOLDOWN(src, "hostmsg", 0.5 SECONDS))
+			return
+
 		if (file)
 			src.post_file(src.host_id,"data",message, file)
 		else
 			src.post_status(src.host_id,"command","term_message","data",message)
-
-		return

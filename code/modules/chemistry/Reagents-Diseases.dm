@@ -25,13 +25,13 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M)
 					M = holder.my_atom
+				..()
 				if (!isliving(M) || !ispath(disease))
 					return
 				if (src.volume < minimum_to_infect)
 					return
 				var/mob/living/L = M
 				L.contract_disease(disease, null, null, 1)
-				..()
 
 		disease/rainbow_fluid // Clowning Around
 			name = "rainbow fluid"
@@ -287,6 +287,11 @@ datum
 			transparency = 170
 			random_chem_blacklisted = 1
 			disease = /datum/ailment/disease/necrotic_degeneration
+
+			infectious
+				name = "concentrated necrovirus"
+				id = "necrovirus_infectious"
+				disease = /datum/ailment/disease/necrotic_degeneration/can_infect_more
 
 		disease/viral_curative // Panacaea
 			name = "viral curative"

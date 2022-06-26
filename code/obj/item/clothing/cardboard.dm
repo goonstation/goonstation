@@ -11,11 +11,11 @@
 	wear_layer = MOB_OVERLAY_BASE
 	c_flags = COVERSEYES | COVERSMOUTH
 	body_parts_covered = HEAD|TORSO|LEGS|ARMS
-	permeability_coefficient = 0.8
 	var/eyeholes = FALSE
 	var/accessory = FALSE
 	var/face = null
 	block_vision = 1
+	material_amt = 0.2
 
 	New()
 		..()
@@ -29,8 +29,9 @@
 		setProperty("coldprot", 33)
 		setProperty("heatprot", 33)
 		setProperty("meleeprot", 1)
+		setProperty("chemprot", 10)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (user.a_intent == INTENT_HARM)
 			user.visible_message("<span class='notice'>[user] taps [src].</span>",\
 			"<span class='notice'>You tap [src].</span>")
@@ -59,7 +60,9 @@
 				boutput(user, "<span class='notice'>[src] already has a face!</span>")
 			else
 				var/obj/item/pen/crayon/C = W
-				var/emotion = alert("What face would you like to draw on [src]?",,"happy","angry","sad")
+				var/emotion = tgui_alert(user, "What face would you like to draw on [src]?", "Pick face", list("happy", "angry", "sad"))
+				if (!emotion)
+					return
 				src.face = emotion
 				var/image/item_image = image(src.icon, "face-[face]")
 				item_image.color = C.font_color

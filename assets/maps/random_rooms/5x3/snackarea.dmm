@@ -1,0 +1,68 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/floor/plating/random,
+/area/dmm_suite/clear_area)
+"v" = (
+/obj/storage/crate,
+/obj/item/clothing/head/green,
+/obj/item/clothing/head/party/random,
+/obj/item/clothing/head/sunhat/sunhatg,
+/turf/simulated/floor/plating/random,
+/area/dmm_suite/clear_area)
+"z" = (
+/obj/stool/chair{
+	dir = 4
+	},
+/turf/simulated/floor/plating/random,
+/area/dmm_suite/clear_area)
+"D" = (
+/obj/stool/chair{
+	dir = 8
+	},
+/turf/simulated/floor/plating/random,
+/area/dmm_suite/clear_area)
+"E" = (
+/obj/storage/crate,
+/obj/critter/roach,
+/obj/critter/roach,
+/obj/critter/roach,
+/turf/simulated/floor/plating/random,
+/area/dmm_suite/clear_area)
+"Q" = (
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/plating/random,
+/area/dmm_suite/clear_area)
+"Y" = (
+/obj/table/glass/reinforced/auto,
+/obj/item/reagent_containers/food/snacks/onionchips{
+	pixel_x = -3
+	},
+/obj/item/reagent_containers/food/drinks/cola,
+/turf/simulated/floor/plating/random,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+z
+a
+v
+"}
+(2,1,1) = {"
+Y
+Q
+a
+"}
+(3,1,1) = {"
+D
+a
+a
+"}
+(4,1,1) = {"
+a
+Q
+a
+"}
+(5,1,1) = {"
+a
+a
+E
+"}

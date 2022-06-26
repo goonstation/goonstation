@@ -18,6 +18,7 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
+	health = 5
 	w_class = W_CLASS_SMALL
 	m_amt = 30
 	g_amt = 30
@@ -41,7 +42,7 @@
 		. = ..()
 		. += "It has [get_fuel()] units of fuel left!"
 
-	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	attack(mob/living/carbon/M, mob/living/carbon/user)
 		if (!src.welding)
 			if (!src.cautery_surgery(M, user, 0, src.welding))
 				return ..()
@@ -109,7 +110,7 @@
 			else return ..()
 		else return ..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W))
 			if (status)
 				status = 0
@@ -142,7 +143,7 @@
 
 
 	afterattack(obj/O as obj, mob/user as mob)
-		if ((istype(O, /obj/reagent_dispensers/fueltank) || istype(O, /obj/item/reagent_containers/food/drinks/fueltank)) && get_dist(src,O) <= 1)
+		if ((istype(O, /obj/reagent_dispensers/fueltank) || istype(O, /obj/item/reagent_containers/food/drinks/fueltank)) && BOUNDS_DIST(src, O) == 0)
 			if  (!O.reagents.total_volume)
 				boutput(user, "<span class='alert'>The [O.name] is empty!</span>")
 				return

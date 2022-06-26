@@ -45,6 +45,7 @@ var/list/globalPropList = null
 
 /obj
 	proc/setupProperties() //Should always be called by new(). This will contain all the default property initializations for objects.
+		SHOULD_CALL_PARENT(TRUE)
 		return
 
 	proc/setProperty(var/propId, var/propVal=null) //Adds or sets property.
@@ -486,7 +487,16 @@ to say if there's demand for that.
 
 	ASSOCIATE_ATOM_PROPERTY(PROP_MOB_EXPLOPROT)
 
+/datum/objectProperty/equipment/chemprot
+	name = "Resistance (Chemical)"
+	id = "chemprot"
+	desc = "Protects from chemicals." //Value is % of chemicals blocked
+	tooltipImg = "chemical.png"
+	defaultValue = 10
+	getTooltipDesc(var/obj/propOwner, var/propVal)
+		return "[propVal]%"
 
+	ASSOCIATE_ATOM_PROPERTY(PROP_MOB_CHEMPROT)
 
 /datum/objectProperty/equipment/reflection // force increases as you attack players.
 	name = "Reflection"

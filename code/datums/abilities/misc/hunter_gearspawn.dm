@@ -43,7 +43,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		boutput(M, __red("<B>Request acknowledged. You must stand still.</B>"))
+		boutput(M, "<span class='alert'><B>Request acknowledged. You must stand still.</B></span>")
 
 	onUpdate()
 		..()
@@ -61,7 +61,7 @@
 		var/datum/abilityHolder/H = transform.holder
 
 		if (M.hunter_transform() != 1)
-			boutput(M, __red("Gearspawn failed. Make sure you're a human and try again later."))
+			boutput(M, "<span class='alert'>Gearspawn failed. Make sure you're a human and try again later.</span>")
 		else
 			H.removeAbility(/datum/targetable/hunter/hunter_gearspawn)
 
@@ -69,4 +69,4 @@
 		..()
 
 		var/mob/living/M = owner
-		boutput(M, __red("You were interrupted!"))
+		boutput(M, "<span class='alert'>You were interrupted!</span>")

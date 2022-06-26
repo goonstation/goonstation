@@ -10,8 +10,8 @@
 		dialogue = new/datum/dialogueMaster/mantalog(src)
 		..()
 
-	attack_hand(mob/user as mob)
-		if(get_dist(user, src) > 1 || user.z != src.z) return
+	attack_hand(mob/user)
+		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 

@@ -492,7 +492,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 				if (4)
 					new/obj/item/reagent_containers/food/snacks/plant/pumpkin/summon(T)
 				if (5)
-					new/obj/decal/skeleton/unanchored/summon(T)
+					new/obj/decal/fakeobjects/skeleton/unanchored/summon(T)
 				if (6)
 					new/obj/decal/cleanable/vomit/spiders(T)
 

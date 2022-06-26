@@ -7,7 +7,7 @@
 	health_burn = 40
 	var/being_seen = FALSE
 	var/mob/last_witness
-	var/icon_states_with_supported_eyes = list("bee", "buddy", "kitten", "monkey", "possum", "wendigo", "bunny", "penguin")
+	var/icon_states_with_supported_eyes = list("bee", "buddy", "kitten", "monkey", "possum", "brullbar", "bunny", "penguin")
 	var/image/eye_light
 	var/glowing_eye_color = "#c40000ff"
 	var/glowing_eyes_enabled_alpha = 190
@@ -29,8 +29,8 @@
 	possum
 		icon_state = "possum"
 		pick_random_icon_state = 0
-	wendigo
-		icon_state = "wendigo"
+	brullbar
+		icon_state = "brullbar"
 		pick_random_icon_state = 0
 	bunny
 		icon_state = "bunny"

@@ -121,7 +121,7 @@
 			. += "<br><span class='notice'>[reagents.get_description(user,RC_SCALE)]</span>"
 
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		var/open = is_open_container()
 
 		// Weld > Crowbar > Rods > Weld
@@ -291,7 +291,7 @@
 				reaction_temp -= 200
 				if(prob(5))
 					src.visible_message("<span class='alert'>A thin layer of frost momentarily forms around [src].</span>")
-			if(src.reagents.has_active_reaction("thalmerite_heat"))
+			if(src.reagents.has_active_reaction("pyrosium_heat"))
 				reaction_temp += 200
 				if(prob(5))
 					src.visible_message("<span class='alert'>The [src] looks kind of hazey for a moment.</span>")
@@ -537,6 +537,19 @@ datum/pump_ui/circulator_ui
 	density = 1
 	anchored = 1
 
+/obj/machinery/teg_connector
+	name = "\improper TEG connector"
+	desc = "Connects a Thermo-Electric Generator to its turbines."
+	icon = 'icons/obj/power.dmi'
+	icon_state = "teg_connector"
+	anchored = 1
+	density = 1
+
+/obj/machinery/teg_connector/random_appearance
+	New()
+		..()
+		src.dir = cardinal[BUILD_TIME_SECOND % 4 + 1]
+
 /obj/machinery/power/generatorTemp
 	name = "generator"
 	desc = "A high efficiency thermoelectric generator."
@@ -655,8 +668,16 @@ datum/pump_ui/circulator_ui
 		light.attach(src)
 
 		SPAWN(0.5 SECONDS)
-			src.circ1 = locate(/obj/machinery/atmospherics/binary/circulatorTemp) in get_step(src,WEST)
-			src.circ2 = locate(/obj/machinery/atmospherics/binary/circulatorTemp) in get_step(src,EAST)
+			var/turf/T = get_step(src, WEST)
+			while(locate(/obj/machinery/teg_connector) in T)
+				T = get_step(T, WEST)
+			src.circ1 = locate(/obj/machinery/atmospherics/binary/circulatorTemp) in T
+
+			T = get_step(src, EAST)
+			while(locate(/obj/machinery/teg_connector) in T)
+				T = get_step(T, EAST)
+			src.circ2 = locate(/obj/machinery/atmospherics/binary/circulatorTemp) in T
+
 			if(!src.circ1 || !src.circ2)
 				src.status |= BROKEN
 
@@ -875,7 +896,7 @@ datum/pump_ui/circulator_ui
 
 		return efficiency_scale * 0.01
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		// Weld > Crowbar > Rods > Weld
 		switch(semiconductor_state)
 			if(TEG_SEMI_STATE_INSTALLED)
@@ -1087,7 +1108,8 @@ datum/pump_ui/circulator_ui
 				next.Add(M)
 
 			last = target
-			target = pick(next)
+			if (length(next))
+				target = pick(next)
 
 	power_change()
 		..()
@@ -1363,8 +1385,8 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 		return 1
 
 /obj/machinery/power/furnace/thermo
-	name = "Furnace"
-	desc = "Generates Heat for the thermoelectric generator."
+	name = "Zaojun-1 Furnace"
+	desc = "The venerable XIANG|GIESEL model '灶君' combustion furnace. This version lacks the thermocouple and is designed to heat larger thermo-electric gas circulator systems."
 	icon_state = "furnace"
 	anchored = 1
 	density = 1

@@ -62,7 +62,7 @@ var/global/meteor_shower_active = 0
 		var/commins = round((ticker.round_elapsed_ticks + warning_delay - ticker.round_elapsed_ticks)/10 ,1)
 		commins = max(0,commins)
 		if (random_events.announce_events)
-			command_alert("[comsev] [shower_name] approaching [comdir]. Impact in [commins] seconds.", "Meteor Alert")
+			command_alert("[comsev] [shower_name] approaching [comdir]. Impact in [commins] seconds.", "Meteor Alert", alert_origin = ALERT_WEATHER)
 			playsound_global(world, 'sound/machines/engine_alert2.ogg', 40)
 			meteor_shower_active = direction
 			for (var/obj/machinery/shield_generator/S as anything in machine_registry[MACHINES_SHIELDGENERATORS])
@@ -70,7 +70,7 @@ var/global/meteor_shower_active = 0
 
 		SPAWN(warning_delay)
 			if (random_events.announce_events)
-				command_alert("The [shower_name] has reached the [station_or_ship()]. Brace for impact.", "Meteor Alert")
+				command_alert("The [shower_name] has reached the [station_or_ship()]. Brace for impact.", "Meteor Alert", alert_origin = ALERT_WEATHER)
 				playsound_global(world, 'sound/machines/engine_alert1.ogg', 30)
 
 			var/start_x
@@ -228,17 +228,18 @@ var/global/meteor_shower_active = 0
 
 		return
 
-	Move(atom/NewLoc,Dir)
+	Move(atom/NewLoc, Dir)
 		if(src.x == world.maxx || src.y == world.maxy || src.x == 1 || src.y == 1)
 			qdel(src)
 		if(src.loc == target)
 			shatter()
 			return
+		. = ..()
 		if(src.loc == last_tile)
 			walk_towards(src, target, speed, pix_speed)
 		if(!hit_object)
 			last_tile = src.loc
-			src.loc.Exit()
+			src.loc.Exit(src, NewLoc)
 			if(NewLoc.Enter())
 				src.set_loc(NewLoc)
 				src.set_dir(Dir)
