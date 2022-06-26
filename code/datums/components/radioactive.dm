@@ -40,6 +40,7 @@ TYPEINFO(/datum/component/radioactive)
 			RegisterSignal(parent, list(COMSIG_LIVING_LIFE_TICK), .proc/ticked)
 		var/atom/PA = parent
 		PA.add_simple_light("radiation_light", rgb2num(neutron ? "#2e3ae4" : "#18e022")+list(round(255*radStrength/100)))
+		PA.add_filter("radiation_outline", 1, outline_filter(size=1,color=(neutron ? "#2e3ae4FF" : "#18e022FF")))
 
 	UnregisterFromParent()
 		. = ..()
@@ -47,10 +48,30 @@ TYPEINFO(/datum/component/radioactive)
 		if(src._added_to_items_processing)
 			global.processing_items.Remove(parent)
 		PA.remove_simple_light("radiation_light")
+		PA.remove_filter("radiation_outline")
+		UnregisterSignal(parent, list(COMSIG_ATOM_EXAMINE))
+		UnregisterSignal(parent, list(COMSIG_ATOM_CROSSED,
+			COMSIG_ATOM_ENTERED,
+			COMSIG_ATTACKHAND,
+			COMSIG_ITEM_EQUIPPED,
+			COMSIG_ITEM_PICKUP,
+			COMSIG_MOB_GRABBED,
+			COMSIG_ITEM_ATTACK_POST,
+		))
+		UnregisterSignal(parent, list(COMSIG_ITEM_CONSUMED_PARTIAL, COMSIG_ITEM_CONSUMED_ALL))
+		if(isitem(parent))
+			UnregisterSignal(parent, list(COMSIG_ITEM_PROCESS))
+		else if(ismob(parent))
+			UnregisterSignal(parent, list(COMSIG_LIVING_LIFE_TICK))
+
 
 	proc/ticked(atom/owner, mult=1)
-		for(var/mob/M in viewers(2,parent))
+		for(var/mob/M in viewers(1,parent))
 			M.take_radiation_dose(mult * (neutron ? 3 : 1) * (radStrength/1000))
+		if(src.decays)
+			src.radStrength = max(0, src.radStrength - mult)
+		if(!src.radStrength)
+			src.RemoveComponent()
 
 	proc/touched(atom/owner, mob/toucher)
 		if(istype(toucher))
