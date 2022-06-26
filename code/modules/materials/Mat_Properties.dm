@@ -299,17 +299,13 @@
 				return "impossibly radioactive"
 
 	onAdded(var/datum/material/M, var/new_value)
-		M.addTrigger(M.triggersPickup, new /datum/materialProc/radioactive_pickup())
-		M.addTrigger(M.triggersOnLife, new /datum/materialProc/radioactive_life())
 		M.addTrigger(M.triggersOnAdd, new /datum/materialProc/radioactive_add())
-		M.addTrigger(M.triggersOnEntered, new /datum/materialProc/radioactive_on_enter())
+		M.addTrigger(M.triggersOnRemove, new /datum/materialProc/radioactive_remove())
 		return
 
 	onRemoved(var/datum/material/M)
-		M.removeTrigger(M.triggersPickup, /datum/materialProc/radioactive_pickup)
-		M.removeTrigger(M.triggersOnLife, /datum/materialProc/radioactive_life)
 		M.removeTrigger(M.triggersOnAdd, /datum/materialProc/radioactive_add)
-		M.removeTrigger(M.triggersOnEntered, /datum/materialProc/radioactive_on_enter)
+		M.removeTrigger(M.triggersOnRemove, /datum/materialProc/radioactive_remove)
 		return
 
 /datum/material_property/neutron_radioactivity
@@ -339,17 +335,13 @@
 				return "blindingly glowing blue"
 
 	onAdded(var/datum/material/M, var/new_value)
-		M.addTrigger(M.triggersPickup, new /datum/materialProc/n_radioactive_pickup())
-		M.addTrigger(M.triggersOnLife, new /datum/materialProc/n_radioactive_life())
 		M.addTrigger(M.triggersOnAdd, new /datum/materialProc/n_radioactive_add())
-		M.addTrigger(M.triggersOnEntered, new /datum/materialProc/n_radioactive_on_enter())
+		M.addTrigger(M.triggersOnRemove, new /datum/materialProc/n_radioactive_remove())
 		return
 
 	onRemoved(var/datum/material/M)
-		M.removeTrigger(M.triggersPickup, /datum/materialProc/n_radioactive_pickup)
-		M.removeTrigger(M.triggersOnLife, /datum/materialProc/n_radioactive_life)
 		M.removeTrigger(M.triggersOnAdd, /datum/materialProc/n_radioactive_add)
-		M.removeTrigger(M.triggersOnEntered, /datum/materialProc/n_radioactive_on_enter)
+		M.removeTrigger(M.triggersOnRemove, /datum/materialProc/n_radioactive_remove)
 		return
 
 /datum/material_property/fissile

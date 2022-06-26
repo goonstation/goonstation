@@ -147,6 +147,8 @@
 	var/list/triggersExp = list()
 	/// Called when the material is added to an object
 	var/list/triggersOnAdd = list()
+	/// Called when the material is removed from an object
+	var/list/triggersOnRemove = list()
 	/// Called when the life proc of a mob that has the owning item equipped runs.
 	var/list/triggersOnLife = list()
 	/// Called when the owning object is used to attack something or someone.
@@ -192,6 +194,11 @@
 		return
 
 	proc/triggerOnAdd(var/location)
+		for(var/datum/materialProc/X in triggersOnAdd)
+			call(X,  "execute")(location)
+		return
+
+	proc/triggerOnRemove(var/location)
 		for(var/datum/materialProc/X in triggersOnAdd)
 			call(X,  "execute")(location)
 		return

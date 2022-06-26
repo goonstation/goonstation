@@ -186,6 +186,8 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 	if(appearance)
 		src.setMaterialAppearance(mat1)
 
+	if(src.material)
+		src.material.triggerOnRemove(src)
 	src.material = mat1
 	mat1.owner = src
 	mat1.triggerOnAdd(src)

@@ -439,37 +439,29 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		return
 
 /datum/materialProc/radioactive_add
-	execute(var/location)
+	execute(var/atom/location)
 		animate_flash_color_fill_inherit(location,"#1122EE",-1,40)
+		location.AddComponent(/datum/component/radioactive, location.material.getProperty("radioactive"), FALSE,FALSE)
 		return
 
-/datum/materialProc/radioactive_life
-	execute(var/mob/M, var/obj/item/I, mult)
-		if(I.material)
-			M.take_radiation_dose( 0.05 * prob(I.material.getProperty("radioactive")))
-		return
-
-/datum/materialProc/radioactive_pickup
-	execute(var/mob/M, var/obj/item/I)
-		if(I.material)
-			M.take_radiation_dose( 0.05 * prob(I.material.getProperty("radioactive")))
+/datum/materialProc/radioactive_remove
+	execute(var/atom/location)
+		animate_flash_color_fill_inherit(location,"#1122EE",-1,40)
+		var/datum/component/radioactive/R = location.GetComponent(/datum/component/radioactive)
+		R?.RemoveComponent()
 		return
 
 /datum/materialProc/n_radioactive_add
-	execute(var/location)
-		animate_flash_color_fill_inherit(location,"#4279D1",-1,40)
+	execute(var/atom/location)
+		animate_flash_color_fill_inherit(location,"#1122EE",-1,40)
+		location.AddComponent(/datum/component/radioactive, location.material.getProperty("n_radioactive"), FALSE,TRUE)
 		return
 
-/datum/materialProc/n_radioactive_life
-	execute(var/mob/M, var/obj/item/I, mult)
-		if(I.material)
-			M.take_radiation_dose(0.1 * prob(I.material.getProperty("n_radioactive")))
-		return
-
-/datum/materialProc/n_radioactive_pickup
-	execute(var/mob/M, var/obj/item/I)
-		if(I.material)
-			M.take_radiation_dose(0.1 * prob(I.material.getProperty("n_radioactive")))
+/datum/materialProc/n_radioactive_remove
+	execute(var/atom/location)
+		animate_flash_color_fill_inherit(location,"#1122EE",-1,40)
+		var/datum/component/radioactive/R = location.GetComponent(/datum/component/radioactive)
+		R?.RemoveComponent()
 		return
 
 /datum/materialProc/erebite_flash
