@@ -6,7 +6,7 @@
 	anchored = 1
 	density = 1
 	_health = 25
-	var/list/critter_list = list()
+	var/list/obj/critter/critter_list = list()
 	var/mob_value_cap = 10	//Total allowed point value of all linked mobs
 	var/growth = 0
 	var/next_growth = 10 SECONDS
@@ -17,7 +17,7 @@
 	var/mob/wraith/master = null
 	var/datum/light/light
 	var/datum/light/portal_light
-	var/list/default_mobs = list(/obj/critter/crunched,	//Useful for random mode or when we dont have a mob_type on spawn
+	var/list/obj/critter/default_mobs = list(/obj/critter/crunched,	//Useful for random mode or when we dont have a mob_type on spawn
 								/obj/critter/ancient_thing,
 								/obj/critter/ancient_repairbot/security,
 								/obj/critter/mechmonstrositycrawler,
