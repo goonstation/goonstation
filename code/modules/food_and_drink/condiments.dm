@@ -108,7 +108,7 @@
 
 /obj/item/reagent_containers/food/snacks/condiment/matcha
 	name = "matcha"
-	desc = "A powder created from dried tea leaves that could help with."
+	desc = "A powder created from dried tea leaves."
 	icon_state = "matcha"
 	initial_volume = 5
 	initial_reagents = "matcha"
