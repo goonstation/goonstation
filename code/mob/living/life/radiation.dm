@@ -4,8 +4,10 @@
 			return
 
 		//apply effects
-		owner.changeStatus("radiation",null)
+		if(!owner.hasStatus("radiation"))
+			owner.changeStatus("radiation",null)
 
-		//remove some rads
-		owner.radiation_dose = max(owner.radiation_dose - (src.get_multiplier() * owner.radiation_dose_decay),0)
+		if(isalive(owner))
+			//remove some rads
+			owner.radiation_dose = max(owner.radiation_dose - (src.get_multiplier() * owner.radiation_dose_decay),0)
 		..()

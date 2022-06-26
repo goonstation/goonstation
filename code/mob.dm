@@ -2420,6 +2420,7 @@
 	src.delStatus("slowed")
 	src.delStatus("burning")
 	src.delStatus("radiation")
+	src.take_radiation_dose(-INFINITY)
 	src.change_eye_blurry(-INFINITY)
 	src.take_eye_damage(-INFINITY)
 	src.take_eye_damage(-INFINITY, 1)
@@ -3132,5 +3133,9 @@
 /// absorb radiation dose in Sieverts (note 0.4Sv is enough to make someone sick. 2Sv is enough to make someone dead.)
 /mob/proc/take_radiation_dose(Sv)
 	var/rad_res = GET_ATOM_PROPERTY(src,PROP_MOB_RADPROT) & 0 //atom prop can return null, we need it to default to 0
-	src.radiation_dose += (1-(rad_res/(rad_res+1)))*Sv
-	SEND_SIGNAL(src, COMSIG_MOB_GEIGER_TICK, Sv)
+	if(Sv > 0)
+		src.radiation_dose += (1-(rad_res/(rad_res+1)))*Sv
+		SEND_SIGNAL(src, COMSIG_MOB_GEIGER_TICK, max(min(round(Sv/0.4),1),5))
+	else
+		src.radiation_dose = max(0, src.radiation_dose + Sv) //rad resistance shouldn't stop you healing
+

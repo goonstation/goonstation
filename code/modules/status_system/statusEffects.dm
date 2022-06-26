@@ -345,7 +345,8 @@
 				tickCount -= (round(times) * tickSpacing)
 				for(var/i in 1 to times)
 					var/mob/M = owner
-					M.TakeDamage("All", damage_brute, damage_burn, damage_tox, damage_type)
+					if(damage_brute || damage_burn || damage_tox) //only hittwitch if you're really taking damage
+						M.TakeDamage("All", damage_brute, damage_burn, damage_tox, damage_type)
 
 	simpledot/radiation
 		id = "radiation"
@@ -399,6 +400,8 @@
 			var/mob/M = null
 			if(ismob(owner))
 				M = owner
+			else
+				return ..(timePassed)
 
 			stage = get_stage(M.radiation_dose)
 			switch(stage)
@@ -412,28 +415,30 @@
 					damage_burn = 0
 				if(2)
 					howMuch = "moderately " //you don't feel so good
-					damage_tox = 2
+					damage_tox = prob(50)
 					damage_burn = 0
 				if(3)
-					howMuch = "very much " // not great, not terrible
-					damage_tox = 2
-					damage_burn = 1
+					howMuch = "very " // not great, not terrible
+					damage_tox = 1 + prob(50)
+					damage_burn = 1 + prob(50)
 				if(4)
 					howMuch = "extremely " //oh no, you're very sick
-					damage_tox = 5
-					damage_burn = 3
+					damage_tox = rand(3,7)
+					damage_burn = rand(1,4)
 				if(5)
 					howMuch = "fatally " //congrats, you're dead in a minute
-					damage_tox = 10
-					damage_burn = 5
+					damage_tox = rand(5,10)
+					damage_burn = rand(3,7)
 				if(6)
 					howMuch = "totally " // you are literally dying in seconds
-					damage_tox = 20
-					damage_burn = 20
+					damage_tox = rand(15,25)
+					damage_burn = rand(15,25)
 			if(stage > 0)
 				visible = TRUE
+			else
+				visible = FALSE
 
-			if(M && !isdead(M))
+			if(stage > 0 && !isdead(M))
 				if (prob((stage-(2+M.traitHolder?.hasTrait("stablegenes")))**2) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
 					boutput(M, "<span class='alert'>You mutate!</span>")
 					M.bioHolder.RandomEffect("either")
