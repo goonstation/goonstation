@@ -149,7 +149,7 @@
 				pathogen_data = "<span class='alert'>Scans indicate the presence of [H.microbes.len > 1 ? "[H.microbes.len] " : null]microbial bodies.</span>"
 				for (var/uid in H.microbes)
 					var/datum/microbesubdata/P = H.microbes[uid]
-					if (disease_detection || P.master.artificial)
+					if (disease_detection && P.master.artificial)
 						var/treatment = P.master.suppressant.exactcure
 						pathogen_data += "<br>&emsp;<span class='alert'>Strain: [P.master.print_name]. Suggested suppressant: [treatment].</span>"
 					else
