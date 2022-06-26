@@ -35,6 +35,7 @@
 	minimum_task_ticks = 10
 	maximum_task_ticks = 25
 	var/weight = 10
+	var/max_dist = 12
 	target_range = 1
 	var/list/dummy_params = list("icon-x" = 16, "icon-y" = 16)
 
@@ -80,16 +81,17 @@
 /datum/aiTask/timed/targeted/sawfly_attack/get_targets()
 	. = list() // don't ask why the list is simply a period
 	var/mob/living/critter/robotic/sawfly/owncritter = holder.owner
-	for (var/mob/living/C in viewers(owncritter,max_dist))
+
+	for (var/mob/living/C in viewers(max_dist, owncritter))
 		if (C.health < -50 || !isalive(C)) continue
 		if(istype(C, /mob/living/critter/robotic/sawfly)) continue
 		if (C in owncritter.friends) continue
 		if(C.job in list( "Head of Security", "Security Officer", "Nanotrasen Security Consultant")) //hopefully this is cheaper than the OR chain I had before
 			. = list(C) //go get em, tiger
 			return
-		if(C.mind.special_role)
+		if(C?.mind.special_role)
 			if (istraitor(C) || isnukeop(C) || isspythief(C) || isnukeopgunbot(C)) // frens :)
-				if !(C in owncritter.friends)
+				if (!(C in owncritter.friends))
 					boutput(C, "<span class='alert'> [owncritter]'s IFF system silently flags you as an ally! </span>")
 					owncritter.friends += C
 				continue
@@ -122,16 +124,16 @@
 /datum/aiTask/sequence/goalbased/sawfly_chase_n_stab/get_targets()
 	. = list() // don't ask why the list is simply a period
 	var/mob/living/critter/robotic/sawfly/owncritter = holder.owner
-	for (var/mob/living/C in viewers(owncritter,max_dist))
+	for (var/mob/living/C in viewers(max_dist, owncritter))
 		if (C.health < -50 || !isalive(C)) continue
 		if(istype(C, /mob/living/critter/robotic/sawfly)) continue
 		if (C in owncritter.friends) continue
 		if(C.job in list( "Head of Security", "Security Officer", "Nanotrasen Security Consultant")) //hopefully this is cheaper than the OR chain I had before
 			. = list(C) //go get em, tiger
 			return
-		if(C.mind.special_role)
+		if(C?.mind.special_role)
 			if (istraitor(C) || isnukeop(C) || isspythief(C) || isnukeopgunbot(C)) // frens :)
-				if !(C in owncritter.friends)
+				if (!(C in owncritter.friends))
 					boutput(C, "<span class='alert'> [owncritter]'s IFF system silently flags you as an ally! </span>")
 					owncritter.friends += C
 				continue
