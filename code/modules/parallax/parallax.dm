@@ -61,7 +61,12 @@
 		N.layer = HUD_LAYER + Player
 		N.appearance_flags += TILE_BOUND
 		N.mouse_opacity = 0
-		N.screen_loc = "CENTER"
+
+		var/icon/Picon2 = icon(Picon)
+		/// iconsize is half the width/height of the icon in tiles
+		iconsize[N] = list(Picon2.Width()/64,Picon2.Height()/64)
+		N.screen_loc = "CENTER:[-Picon2.Width()/2],CENTER:[-Picon2.Height()/2]"
+
 		/// generate visible / hidden on zlevel lists for z1 to z5
 		for(var/i in 1 to 5)
 			if (length(pCoords) >= i)
@@ -75,9 +80,6 @@
 
 		scale[N] = Pscale
 		size[N] = Psize
-
-		var/icon/Picon2 = icon(Picon)
-		iconsize[N] = list(Picon2.Width(),Picon2.Height())
 
 		N.transform = matrix(0,0,0,0,0,0)
 
@@ -148,6 +150,8 @@
 			background.transform = matrix(master.client?.widescreen ? 2.61 : 2.5,0,(150-master_turf.x)/2,0,2.5,(150-master_turf.y)/2)
 		#endif
 
+		var/Hsw = master.client.widescreen ? 10 : 7
+		var/smoothtime = round(world.icon_size/max(master.glide_size*world.tick_lag,0.01),world.tick_lag)
 		/// list of objects that are intended to show up on this zlevel
 		for(var/atom/movable/screen/hud/P as anything in parallax_objects[master_turf.z])
 
@@ -155,22 +159,19 @@
 			var/coordy = parallax_coords[master_turf.z][P][2]
 
 			/// half screen width
-			var/Hsw = master.client.widescreen ? 10 : 7
 
-			var/IWidth = iconsize[P][1]
-			var/IHeight = iconsize[P][2]
-			var/offsetX = ((coordx-master_turf.x)*scale[P])*32-IWidth/2
-			var/offsetY = ((coordy-master_turf.y)*scale[P])*32-IWidth/2
+			var/offsetX = ((coordx-master_turf.x)*scale[P])
+			var/offsetY = ((coordy-master_turf.y)*scale[P])
 
 			/// if the object is far enough away, we can hide it
-			if ((offsetX < -(Hsw*32+IWidth)) || (offsetY < -(7*32+IHeight)))
+			if ((offsetX < -(Hsw+iconsize[P][1])) || (offsetY < -(7+iconsize[P][2])))
 				P.alpha = 0
 				continue
-			else if ((offsetX > (Hsw*32+IWidth)) || (offsetY > (7*32+IHeight)))
+			else if ((offsetX > (Hsw+iconsize[P][1])) || (offsetY > (7+iconsize[P][2])))
 				P.alpha = 0
 				continue
 
-			var/matrix/matrix = matrix(size[P], 0, offsetX, 0, size[P], offsetY)
+			var/matrix/matrix = matrix(size[P], 0, offsetX*32, 0, size[P], offsetY*32)
 
 			/// zlevelchanged means the master's zlevel changed
 			if (zlevelchanged == TRUE || P.alpha == 0)
@@ -179,7 +180,6 @@
 				continue
 
 			/// smooth out the stuff if we didnt change zlevel
-			var/smoothtime = round(world.icon_size/max(master.glide_size*world.tick_lag,0.01),world.tick_lag)
 			animate(P,transform=matrix,time=smoothtime)
 
 			continue
