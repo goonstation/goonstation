@@ -2695,7 +2695,7 @@ Returns:
 
 	picked2?.zombify()
 
-	for(var/turf/T in wormholeturfs)
+	for(var/turf/T in random_floor_turfs)
 		if(prob(3))
 			new/obj/item/plank(T)
 			new/obj/item/plank(T)
