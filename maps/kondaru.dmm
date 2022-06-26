@@ -32226,6 +32226,10 @@
 	pixel_x = -20
 	},
 /obj/machinery/coffeemaker/medbay,
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = -8;
+	pixel_y = 12
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -33451,6 +33455,9 @@
 "bZZ" = (
 /obj/table/auto,
 /obj/machinery/coffeemaker/research,
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = -8
+	},
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "caa" = (
@@ -40075,6 +40082,10 @@
 /obj/disposalpipe/segment/brig{
 	dir = 8
 	},
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = 8;
+	pixel_y = 12
+	},
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
@@ -45973,6 +45984,10 @@
 "iSH" = (
 /obj/table/auto,
 /obj/machinery/coffeemaker/botany,
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = 8;
+	pixel_y = 12
+	},
 /turf/simulated/floor/green/side,
 /area/station/hydroponics/bay)
 "iTr" = (
@@ -53774,7 +53789,10 @@
 /area/station/maintenance/central)
 "qOQ" = (
 /obj/table/auto,
-/obj/machinery/coffeemaker,
+/obj/machinery/coffeemaker/engineering,
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = -8
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},

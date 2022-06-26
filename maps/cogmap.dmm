@@ -53330,6 +53330,9 @@
 /obj/drink_rack/mug{
 	pixel_y = 28
 	},
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = 8
+	},
 /turf/simulated/floor/delivery,
 /area/station/science/lobby)
 "geM" = (
@@ -58419,6 +58422,10 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = -8;
+	pixel_y = 12
+	},
 /turf/simulated/floor/bot,
 /area/station/security/main)
 "oiU" = (
@@ -59015,6 +59022,10 @@
 /obj/item/reagent_containers/food/snacks/candy/butterscotch{
 	pixel_y = -4;
 	pixel_x = 4
+	},
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = 3;
+	pixel_y = 11
 	},
 /turf/simulated/floor/wood/two,
 /area/station/medical/staff)
@@ -60042,9 +60053,13 @@
 /obj/drink_rack/mug{
 	pixel_x = -26
 	},
-/obj/machinery/coffeemaker{
-	pixel_x = -3;
-	pixel_y = 3
+/obj/machinery/coffeemaker/engineering{
+	pixel_y = 3;
+	pixel_x = -3
+	},
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = 8;
+	pixel_y = 12
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 8
@@ -61214,6 +61229,10 @@
 	},
 /obj/drink_rack/mug{
 	pixel_y = -26
+	},
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = -8;
+	pixel_y = 12
 	},
 /turf/simulated/floor/green/side,
 /area/station/hydroponics/lobby)
@@ -62909,9 +62928,13 @@
 /area/station/engine/engineering)
 "uEk" = (
 /obj/table/wood/auto,
-/obj/machinery/coffeemaker,
 /obj/drink_rack/mug{
 	pixel_y = -26
+	},
+/obj/machinery/coffeemaker/engineering,
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = -8;
+	pixel_y = 12
 	},
 /turf/simulated/floor/yellow/side,
 /area/station/engine/engineering)

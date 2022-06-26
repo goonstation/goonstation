@@ -15068,6 +15068,10 @@
 /obj/drink_rack/mug{
 	pixel_y = -26
 	},
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = -8;
+	pixel_y = 12
+	},
 /turf/simulated/floor/green/side{
 	dir = 6
 	},
@@ -31316,9 +31320,13 @@
 "bvf" = (
 /obj/table/auto,
 /obj/machinery/light,
-/obj/machinery/coffeemaker,
 /obj/drink_rack/mug{
 	pixel_y = -24
+	},
+/obj/machinery/coffeemaker/engineering,
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = 8;
+	pixel_y = 12
 	},
 /turf/simulated/floor/yellow/side,
 /area/station/engine/engineering)
@@ -33570,6 +33578,9 @@
 	},
 /obj/table/reinforced/auto,
 /obj/machinery/coffeemaker/security,
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = 8
+	},
 /turf/simulated/floor/red/side{
 	dir = 10
 	},
@@ -54803,6 +54814,9 @@
 /obj/drink_rack/mug{
 	pixel_y = 28
 	},
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = 8
+	},
 /turf/simulated/floor/purple/side{
 	dir = 9
 	},
@@ -67220,6 +67234,9 @@
 /obj/machinery/coffeemaker/medbay,
 /obj/drink_rack/mug{
 	pixel_x = -26
+	},
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = 8
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)

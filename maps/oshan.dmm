@@ -4242,6 +4242,9 @@
 	pixel_x = 26;
 	pixel_y = 4
 	},
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = 8
+	},
 /turf/simulated/floor/red/checker,
 /area/station/medical/medbay/surgery/storage)
 "ajU" = (
@@ -15284,6 +15287,10 @@
 	pixel_x = 26;
 	pixel_y = 4
 	},
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = -8;
+	pixel_y = 12
+	},
 /turf/simulated/floor/wood,
 /area/station/science/lobby)
 "aKr" = (
@@ -18444,10 +18451,14 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/machinery/coffeemaker,
 /obj/drink_rack/mug{
 	pixel_x = 26;
 	pixel_y = 4
+	},
+/obj/machinery/coffeemaker/engineering,
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = -8;
+	pixel_y = 12
 	},
 /turf/simulated/floor/yellow/checker{
 	dir = 8
@@ -33526,9 +33537,13 @@
 /area/station/hallway/secondary/exit)
 "bHP" = (
 /obj/table/auto,
-/obj/machinery/coffeemaker,
 /obj/drink_rack/mug{
 	pixel_y = 28
+	},
+/obj/machinery/coffeemaker/engineering,
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = -8;
+	pixel_y = 12
 	},
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
@@ -39498,6 +39513,9 @@
 	},
 /obj/disposalpipe/segment,
 /obj/machinery/coffeemaker/security,
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = 8
+	},
 /turf/simulated/floor/red,
 /area/station/security/main)
 "bWS" = (
@@ -47587,6 +47605,9 @@
 /obj/machinery/coffeemaker/botany,
 /obj/drink_rack/mug{
 	pixel_y = 28
+	},
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = -8
 	},
 /turf/simulated/floor/black,
 /area/station/hydroponics/bay)

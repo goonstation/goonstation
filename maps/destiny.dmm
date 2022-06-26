@@ -20167,6 +20167,10 @@
 	},
 /obj/table/reinforced/auto,
 /obj/machinery/coffeemaker/botany,
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = -8;
+	pixel_y = 12
+	},
 /turf/simulated/floor/blue/side{
 	dir = 4
 	},
@@ -22165,6 +22169,10 @@
 /obj/decal/tile_edge/line/red{
 	dir = 10;
 	icon_state = "line2"
+	},
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = 8;
+	pixel_y = 12
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/main)
@@ -27283,7 +27291,12 @@
 	nostick = 1
 	},
 /obj/table/reinforced/industrial/auto,
-/obj/machinery/coffeemaker,
+/obj/machinery/coffeemaker/engineering{
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = 8
+	},
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "gxl" = (
@@ -30103,6 +30116,9 @@
 	dir = 4
 	},
 /obj/machinery/drainage,
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = 8
+	},
 /turf/simulated/floor/blue/corner,
 /area/station/medical/cdc)
 "hYW" = (
@@ -42052,11 +42068,14 @@
 	pixel_x = -20
 	},
 /obj/table/reinforced/industrial/auto,
-/obj/machinery/coffeemaker{
-	pixel_y = 4
-	},
 /obj/drink_rack/mug{
 	pixel_y = 29
+	},
+/obj/machinery/coffeemaker/engineering{
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = 8
 	},
 /turf/simulated/floor/yellow/corner,
 /area/station/engine/engineering)

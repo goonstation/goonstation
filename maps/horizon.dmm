@@ -18036,6 +18036,10 @@
 /obj/drink_rack/mug{
 	pixel_x = 26
 	},
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = -8;
+	pixel_y = 12
+	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
 "aUQ" = (
@@ -36450,6 +36454,10 @@
 /obj/disposalpipe/segment/mineral{
 	dir = 4
 	},
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = 8;
+	pixel_y = 12
+	},
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "bPq" = (
@@ -47863,6 +47871,9 @@
 	pixel_y = 28
 	},
 /obj/machinery/coffeemaker/research,
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = 8
+	},
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
@@ -56072,6 +56083,9 @@
 /obj/drink_rack/mug{
 	pixel_x = -26;
 	pixel_y = 6
+	},
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = 8
 	},
 /turf/simulated/floor,
 /area/station/security/main)
