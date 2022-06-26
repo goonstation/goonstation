@@ -11,7 +11,7 @@ TYPEINFO(/datum/component/radioactive)
 	var/radStrength = 0
 	var/decays = FALSE
 	var/neutron = FALSE
-	var/glow_color = "#18e022"
+	var/_added_to_items_processing = FALSE
 
 	Initialize(radStrength=100, decays=FALSE, neutron=FALSE)
 		if(!istype(parent,/atom))
@@ -33,25 +33,32 @@ TYPEINFO(/datum/component/radioactive)
 
 		if(isitem(parent))
 			RegisterSignal(parent, list(COMSIG_ITEM_PROCESS), .proc/ticked)
+			if(!(parent in global.processing_items))
+				global.processing_items.Add(parent)
+				src._added_to_items_processing = TRUE
 		else if(ismob(parent))
 			RegisterSignal(parent, list(COMSIG_LIVING_LIFE_TICK), .proc/ticked)
 		var/atom/PA = parent
-		PA.add_simple_light("radiation_light", rgb2num(neutron ? "#2e3ae4d2" : "#18e022d2"))
+		PA.add_simple_light("radiation_light", rgb2num(neutron ? "#2e3ae4" : "#18e022")+list(round(255*radStrength/100)))
 
 	UnregisterFromParent()
 		. = ..()
 		var/atom/PA = parent
+		if(src._added_to_items_processing)
+			global.processing_items.Remove(parent)
 		PA.remove_simple_light("radiation_light")
 
 	proc/ticked(atom/owner, mult=1)
-		for(var/mob/M in viewers(1,src))
-			M.take_radiation_dose((neutron ? 3 : 1) * (radStrength/1000))
+		for(var/mob/M in viewers(2,parent))
+			M.take_radiation_dose(mult * (neutron ? 3 : 1) * (radStrength/1000))
 
 	proc/touched(atom/owner, mob/toucher)
-		toucher.take_radiation_dose((neutron ? 3 : 1) * (radStrength/1000))
+		if(istype(toucher))
+			toucher.take_radiation_dose((neutron ? 3 : 1) * (radStrength/1000))
 
 	proc/eaten(atom/owner, mob/eater)
-		eater.take_radiation_dose((neutron ? 3 : 1) * (radStrength/100)) //don't eat radioactive stuff, ya dingus!
+		if(istype(eater))
+			eater.take_radiation_dose((neutron ? 3 : 1) * (radStrength/100)) //don't eat radioactive stuff, ya dingus!
 
 	proc/examined(atom/owner, mob/examiner, list/lines)
 		var/rad_word = ""
@@ -67,4 +74,4 @@ TYPEINFO(/datum/component/radioactive)
 			if(90 to INFINITY)
 				rad_word = "radiating blindingly"
 
-		lines += "It is [rad_word] with a [neutron ? "blue" : "green"] light.[examiner.job == "Clown" ? " You should touch it!" : ""]"
+		lines += "It is [rad_word] with a [pick("fuzzy","sickening","nauseating","worrying")] [neutron ? "blue" : "green"] light.[examiner.job == "Clown" ? " You should touch it!" : ""]"
