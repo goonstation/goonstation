@@ -173,3 +173,22 @@
 /obj/effects/foam/gas_cross(turf/target)
 	if(src.metal)
 		return 0 //opaque to air
+
+//This should probably be reworked to be a subtype of /obj/effects/foam
+/obj/fire_foam
+	name = "Fire fighting foam"
+	desc = "It's foam."
+	opacity = 0
+	density = 0
+	anchored = 1
+	icon = 'icons/effects/fire.dmi'
+	icon_state = "foam"
+	animate_movement = SLIDE_STEPS
+	mouse_opacity = 0
+	var/my_dir = null
+
+	Move(NewLoc,Dir=0)
+		. = ..(NewLoc,Dir)
+		if(isnull(my_dir))
+			my_dir = pick(alldirs)
+		src.set_dir(my_dir)

@@ -6750,13 +6750,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/quartersB)
 "asL" = (
-/obj/lattice{
-	dir = 4;
-	icon_state = "lattice-dir"
-	},
-/obj/machinery/r_door_control/podbay/mainpod1/new_walls/west{
-	pixel_x = 0
-	},
+/obj/machinery/r_door_control/podbay/mainpod1/new_walls/south,
 /turf/space,
 /area/space)
 "asM" = (
@@ -94888,8 +94882,8 @@ aaa
 aaa
 aaa
 aaa
+aal
 asL
-aaa
 arQ
 ash
 bBY
