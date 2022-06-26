@@ -1965,7 +1965,6 @@ Returns:
 	anchored = 1
 	opacity = 0
 
-	var/datum/particleSystem/barrelSmoke/smoke_part
 	var/datum/light/light
 
 	New()
