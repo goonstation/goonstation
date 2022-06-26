@@ -356,7 +356,7 @@
 	crop_suffix	= " leaves"
 	desc = "Leaves from a green tea plant, which can be used to create matcha."
 	icon_state = "tealeaves"
-	brewable = 1
+	brewable = TRUE
 	brew_result = "matcha"
 
 /obj/item/plant/herb/aconite
