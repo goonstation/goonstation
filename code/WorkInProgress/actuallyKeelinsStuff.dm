@@ -1560,11 +1560,11 @@ Returns:
 	New()
 		..()
 		setMaterial(getMaterial("slag"))
+		AddComponent(/datum/component/radioactive,20,FALSE,FALSE)
 		name = "Statue of Dr.Floorpills"
 
 	attack_hand(mob/user)
 		boutput(user, "[src] feels oddly warm ...")
-		user.take_radiation_dose(0.2)
 		return
 
 	attackby(obj/item/W, mob/user)
