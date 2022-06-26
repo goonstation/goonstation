@@ -78,24 +78,22 @@
 
 
 /datum/aiTask/timed/targeted/sawfly_attack/get_targets()
-	. = list()
+	. = list() // don't ask why the list is simply a period
 	var/mob/living/critter/robotic/sawfly/owncritter = holder.owner
-
-	for (var/mob/living/C in viewers(owncritter,target_range))
-	//	if(C == owncritter) continue
-		if(istype(C, /mob/living/critter/robotic/sawfly)) continue
+	for (var/mob/living/C in viewers(owncritter,max_dist))
 		if (C.health < -50 || !isalive(C)) continue
-		if(C.job in list( "Head of Security", "Security Officer", "Detective", "Nanotrasen Security Consultant")) //hopefully this is cheaper than the OR chain I had before
-			. = list(C) //found a secoff, just return that
-			return
+		if(istype(C, /mob/living/critter/robotic/sawfly)) continue
 		if (C in owncritter.friends) continue
-		if (istraitor(C) || isnukeop(C) || isspythief(C) || isnukeopgunbot(C)) // frens :)
-			boutput(C, "<span class='alert'> [owncritter]'s IFF system silently flags you as an ally! </span>")
-			owncritter.friends += C
-			continue
-		if(istype(C, /mob/living/silicon/ai)) continue // AI cores are tanky and distract nukie sawflies in med/robotics
-
-		. = list(C) //ensures sawflies will always go after the closest person they see (probably)
+		if(C.job in list( "Head of Security", "Security Officer", "Nanotrasen Security Consultant")) //hopefully this is cheaper than the OR chain I had before
+			. = list(C) //go get em, tiger
+			return
+		if(C.mind.special_role)
+			if (istraitor(C) || isnukeop(C) || isspythief(C) || isnukeopgunbot(C)) // frens :)
+				if !(C in owncritter.friends)
+					boutput(C, "<span class='alert'> [owncritter]'s IFF system silently flags you as an ally! </span>")
+					owncritter.friends += C
+				continue
+		. += C //you passed all the checks it, now you get added to the list for consideration
 		return
 
 
@@ -122,20 +120,21 @@
 	..()
 
 /datum/aiTask/sequence/goalbased/sawfly_chase_n_stab/get_targets()
-	. = list()
+	. = list() // don't ask why the list is simply a period
 	var/mob/living/critter/robotic/sawfly/owncritter = holder.owner
 	for (var/mob/living/C in viewers(owncritter,max_dist))
-		if(C == owncritter) continue
 		if (C.health < -50 || !isalive(C)) continue
-		if (C.job == "Security Officer" || C.job == "Head of Security")
-			. = list(C) //found a secoff, just return that
-			return
 		if(istype(C, /mob/living/critter/robotic/sawfly)) continue
 		if (C in owncritter.friends) continue
-		if (istraitor(C) || isnukeop(C) || isspythief(C) || isnukeopgunbot(C)) // frens :)
-			boutput(C, "<span class='alert'> [owncritter]'s IFF system silently flags you as an ally! </span>")
-			owncritter.friends += C
-			continue
+		if(C.job in list( "Head of Security", "Security Officer", "Nanotrasen Security Consultant")) //hopefully this is cheaper than the OR chain I had before
+			. = list(C) //go get em, tiger
+			return
+		if(C.mind.special_role)
+			if (istraitor(C) || isnukeop(C) || isspythief(C) || isnukeopgunbot(C)) // frens :)
+				if !(C in owncritter.friends)
+					boutput(C, "<span class='alert'> [owncritter]'s IFF system silently flags you as an ally! </span>")
+					owncritter.friends += C
+				continue
 		. += C //you passed all the checks it, now you get added to the list for consideration
 
 	. = get_path_to(holder.owner, ., max_dist*2, 1) //calculate paths to the target, any unreachable targets will be discarded
