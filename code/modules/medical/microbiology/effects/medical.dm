@@ -150,6 +150,8 @@ datum/microbioeffects/benevolent/resurrection
 			P.master.effectdata["resurrect_cd"] = -cooldown
 		if(TIME-P.master.effectdata["resurrect_cd"] < cooldown)
 			return
+		if (M.traitHolder.hasTrait("puritan"))	//See forum post "Cloning: A Discussion". Opinion seems that puritans should have only borging.
+			return
 		// Shamelessly stolen from Strange Reagent
 		if (isdead(M) || istype(get_area(M),/area/afterlife/bar))
 			P.master.effectdata["resurrect_cd"] = TIME
