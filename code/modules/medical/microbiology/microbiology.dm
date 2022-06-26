@@ -560,7 +560,6 @@ ABSTRACT_TYPE(/datum/microbe)
 			if (E in src.effects)
 				src.effects -= E
 			return 1
-		return 0
 
 // todo: remove this, port. (To where?)
 // A wrapper record returned by the onshocked event of a pathogen symptom.
@@ -645,7 +644,7 @@ ABSTRACT_TYPE(/datum/microbesubdata)
 		return
 	if (ischangeling(src) || isvampire(src)) // Vampires were missing here. They're immune to old-style diseases too (Convair880).
 		return 0
-	if (src in P.immune || src in P.infected)
+	if ((src in P.immune) || (src in P.infected))
 		return 0
 	if (src.totalimmunity)
 		return 0

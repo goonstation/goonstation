@@ -10,7 +10,7 @@ ABSTRACT_TYPE(/datum/microbioeffects/tells)
 	name = "Hiccups"
 	desc = "The microbes send involuntary signals to the infected individual's diaphragm."
 
-	mob_act(var/mob/M as mob, var/datum/microbesubdata/origin)
+	mob_act(var/mob/M, var/datum/microbesubdata/origin)
 		if (prob(origin.probability/2))
 			M:emote("hiccup")
 
@@ -141,7 +141,7 @@ ABSTRACT_TYPE(/datum/microbioeffects/tells)
 	name = "Hoarseness"
 	desc = "The pathogen causes dry throat, leading to hoarse speech."
 
-	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
+	mob_act(var/mob/M, var/datum/microbesubdata/origin)
 		if (prob(2))
 			M:emote("wheeze")
 		else if (prob(2))
