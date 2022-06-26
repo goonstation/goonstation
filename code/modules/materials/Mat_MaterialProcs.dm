@@ -71,27 +71,6 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	execute(var/mob/M, var/obj/item/I, mult)
 		M?.bodytemperature = 310
 		return
-
-/datum/materialProc/radioactive_on_enter
-	desc = "It glows faintly."
-
-	execute(var/atom/owner, var/atom/entering)
-		if(ismob(entering))
-			var/mob/M = entering
-			if(owner.material)
-				M.take_radiation_dose( 0.05 * prob(owner.material.getProperty("radioactive")))
-		return
-
-/datum/materialProc/n_radioactive_on_enter
-	desc = "It glows blue faintly."
-
-	execute(var/atom/owner, var/atom/entering)
-		if(ismob(entering))
-			var/mob/M = entering
-			if(owner.material)
-				M.take_radiation_dose( 0.1 * prob(owner.material.getProperty("n_radioactive")))
-		return
-
 /datum/materialProc/generic_reagent_onattacked
 	var/trigger_chance = 100
 	var/limit = 0

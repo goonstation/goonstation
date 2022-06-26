@@ -42,7 +42,7 @@ TYPEINFO(/datum/component/radioactive)
 			global.processing_items.Add(src) //gross - in the event that this component is put on something that isn't an item/mob, use the item processing loop anyway
 		var/atom/PA = parent
 		PA.add_simple_light("radiation_light", rgb2num(neutron ? "#2e3ae4" : "#18e022")+list(round(255*radStrength/100)))
-		PA.add_filter("radiation_outline", 1, outline_filter(size=1,color=(neutron ? "#2e3ae4FF" : "#18e022FF")))
+		PA.add_filter("radiation_outline", 2, outline_filter(size=1,color=(neutron ? "#2e3ae4FF" : "#18e022FF")))
 
 	proc/process()
 		ticked(parent)
@@ -73,7 +73,7 @@ TYPEINFO(/datum/component/radioactive)
 
 	proc/ticked(atom/owner, mult=1)
 		for(var/mob/M in viewers(1,parent))
-			M.take_radiation_dose(mult * (neutron ? 3 : 1) * (radStrength/1000))
+			M.take_radiation_dose(mult * (neutron ? 0.2 : 0.05) * (radStrength/100))
 		if(src.decays)
 			src.radStrength = max(0, src.radStrength - mult)
 		if(!src.radStrength)
@@ -81,11 +81,11 @@ TYPEINFO(/datum/component/radioactive)
 
 	proc/touched(atom/owner, mob/toucher)
 		if(istype(toucher))
-			toucher.take_radiation_dose((neutron ? 3 : 1) * (radStrength/1000))
+			toucher.take_radiation_dose((neutron ? 0.2 : 0.05) * (radStrength/100))
 
 	proc/eaten(atom/owner, mob/eater)
 		if(istype(eater))
-			eater.take_radiation_dose((neutron ? 3 : 1) * (radStrength/100)) //don't eat radioactive stuff, ya dingus!
+			eater.take_radiation_dose((neutron ? 0.2 : 0.05) * (radStrength/100)) //don't eat radioactive stuff, ya dingus!
 
 	proc/examined(atom/owner, mob/examiner, list/lines)
 		var/rad_word = ""

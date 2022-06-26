@@ -96,7 +96,7 @@
 					for(var/mob/living/M in mobs)
 						if(M.z == Z_LEVEL_STATION)
 							M.changeStatus("burning", 10 SECONDS)
-							M.take_radiation_dose(0.5)
+							M.take_radiation_dose(0.05)
 							random_brute_damage(M, 14)
 							random_burn_damage(M, 14)
 			else

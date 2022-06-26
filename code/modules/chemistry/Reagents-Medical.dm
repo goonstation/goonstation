@@ -595,11 +595,12 @@ datum
 			transparency = 40
 			value = 2 // 1c + 1c
 			target_organs = list("left_kidney", "right_kidney", "liver")
+			threshold = 5
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				if(M.getStatusDuration("radiation") && prob(80))
-					M.take_radiation_dose(-0.25 * mult)
+				if(M.radiation_dose && prob(75))
+					M.take_radiation_dose(-0.01 * mult)
 
 				M.take_toxin_damage(-0.5 * mult)
 				M.HealDamage("All", 0, 0, 0.5 * mult)
@@ -610,6 +611,18 @@ datum
 						H.organHolder.heal_organs(1*mult, 1*mult, 1*mult, target_organs)
 				..()
 				return
+
+			cross_threshold_over()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_RADPROT, "r_potassium_iodide", 25)
+				..()
+
+			cross_threshold_under()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_RADPROT, "r_potassium_iodide")
+				..()
 
 		medical/smelling_salt
 			name = "ammonium bicarbonate"
@@ -645,7 +658,7 @@ datum
 					if (M.health < -5 && M.health > -30)
 						M.HealDamage("All", 1 * mult, 1 * mult, 1 * mult)
 				if(M.getStatusDuration("radiation") && prob(30))
-					M.take_radiation_dose(-0.25 * mult)
+					M.take_radiation_dose(-0.005 * mult)
 				if (prob(5))
 					M.take_toxin_damage(1 * mult)
 				..()
@@ -1117,7 +1130,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				flush(M, 5 * mult) //flushes all chemicals but itself
-				M.take_radiation_dose(-0.5 * mult)
+				M.take_radiation_dose(-0.05 * mult)
 				if (prob(75))
 					M.HealDamage("All", 0, 0, 4 * mult)
 				if (prob(33))
