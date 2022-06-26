@@ -679,7 +679,7 @@ datum
 			value = 3 // 1 1 1
 			viscosity = 0.4
 
-			reaction_obj(var/obj/O, var/volume) //Mark for use
+			reaction_obj(var/obj/O, var/volume)
 				if (istype(O,/obj/window))
 					var/obj/window/W = O
 
@@ -3087,7 +3087,7 @@ datum
 			fluid_g = 0
 			transparency = 255
 			value = 2
-			var/list/microbes = list()			//Carries the name var of microbes
+			var/list/microbes = list()
 			var/pathogens_processed = 0
 			hygiene_value = -2
 			hunger_value = 0.068
@@ -3148,7 +3148,7 @@ datum
 					for (var/uid in src.microbes)
 						var/datum/microbesubdata/S = src.microbes[uid]
 						logTheThing("pathology", M, null, "metabolizing [src] containing pathogen [S.master.name] ([S.master.print_name]).")
-						M.infected(S)
+						M.infected(S.master)
 				..()
 
 /* this begs the question how bloodbags worked at all if this was a thing
