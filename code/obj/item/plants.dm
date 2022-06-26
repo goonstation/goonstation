@@ -353,7 +353,7 @@
 
 /obj/item/plant/herb/tea
 	name = "tea leaves"
-	crop_suffix	= " leaves"
+	crop_suffix = " leaves"
 	desc = "Leaves from a green tea plant, which can be used to create matcha."
 	icon_state = "tealeaves"
 	brewable = TRUE
