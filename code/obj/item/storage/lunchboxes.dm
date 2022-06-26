@@ -12,7 +12,7 @@
 
 	New()
 		..()
-		var/my_lunchbox = pick("black","red","orange","yellow","purple")
+		var/my_lunchbox = pick("black","red","orange","yellow","purple", "silver", "blue", "green", "pink", "brown")
 		src.icon_state = "lunchbox_[my_lunchbox]"
 		src.item_state = src.icon_state
 
@@ -112,7 +112,7 @@
 
 	New()
 		..()
-		var/which = rand(1,11)
+		var/which = rand(1,13)
 		switch(which)
 			if(1)
 				info = {"I have eaten<br>
@@ -158,3 +158,7 @@
 			if(11)
 				info = {"I know what you're thinking. <i>What an absolutely divine lunch.</i><br>
 				But, really. No need to thank me. I fucking love meal prep."}
+			if(12)
+				info = {"Okay, I know you were hungry last time I made you lunch, so I packed a little more this time. I hope you like it!"}
+			if(13)
+				info = "<i>Something is written in really fancy cursive here, but you can't read it. Who even uses cursive anymore?</i>"
