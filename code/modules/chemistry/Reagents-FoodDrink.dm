@@ -4396,4 +4396,3 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				flush(M, 3 * mult, flushed_reagents)
 				..()
-				return
