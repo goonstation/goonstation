@@ -235,7 +235,7 @@ ABSTRACT_TYPE(/datum/plant/herb)
 	harvtime = 60
 	cropsize = 5
 	harvests = 1
-	isgrass = 1
+	isgrass = TRUE
 	endurance = 3
 	nectarlevel = 5
 	genome = 1
