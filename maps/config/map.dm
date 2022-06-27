@@ -163,6 +163,9 @@
 #elif defined(MAP_OVERRIDE_POD_WARS)
 #include "pod_wars.dm"
 
+#elif defined(MAP_OVERRIDE_EVENT)
+#include "event.dm"
+
 #elif defined(GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW)
 #include "gottagofast.dm"
 

@@ -56,6 +56,15 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/herring = 15,\
 	/obj/item/fish/red_herring = 5)
 
+/datum/fishing_spot/swamp
+	fishing_atom_type = /turf/unsimulated/floor/auto/swamp
+	fish_available = list(/obj/item/fish/carp = 40,\
+	/obj/item/fish/bass = 30,\
+	/obj/critter/slug = 10,\
+	/obj/critter/snake = 10,\
+	/obj/critter/frog = 10,\
+	/obj/item/clothing/head/rafflesia = 5)
+
 /datum/fishing_spot/test
 	fishing_atom_type = /turf/simulated/floor/ancient
 	fish_available = list(/obj/item/fish/carp = 40,\

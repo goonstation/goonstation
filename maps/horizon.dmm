@@ -6749,16 +6749,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/quartersB)
-"asL" = (
-/obj/lattice{
-	dir = 4;
-	icon_state = "lattice-dir"
-	},
-/obj/machinery/r_door_control/podbay/mainpod1/new_walls/west{
-	pixel_x = 0
-	},
-/turf/space,
-/area/space)
 "asM" = (
 /obj/lattice{
 	dir = 8;
@@ -13738,12 +13728,6 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
-/turf/simulated/floor/bluewhite{
-	dir = 1
-	},
-/area/station/medical/medbay)
-"aKQ" = (
-/obj/machinery/computer/chem_requester/medical,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -25702,12 +25686,6 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/carpet/red/fancy,
-/area/station/hallway/secondary/east)
-"bmC" = (
-/obj/machinery/computer/chem_requester/science,
-/turf/simulated/floor/purpleblack{
-	dir = 1
-	},
 /area/station/hallway/secondary/east)
 "bmD" = (
 /obj/table/wood/auto,
@@ -40119,19 +40097,6 @@
 /obj/disposalpipe/junction/right/east,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
-"bYs" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe/horizontal,
-/obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/machinery/vending/computer3,
-/turf/simulated/floor/carpet/red/fancy/edge/south,
-/area/station/hallway/secondary/east)
 "bYt" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -50757,14 +50722,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
-"cAc" = (
-/obj/machinery/computer/chem_request_receiver{
-	dir = 8
-	},
-/turf/simulated/floor/purpleblack{
-	dir = 4
-	},
-/area/station/science/chemistry)
 "cAd" = (
 /obj/disposalpipe/segment/ejection{
 	dir = 4
@@ -55136,6 +55093,13 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/hallway/primary/west)
+"jEi" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/reagent_dispensers/watertank/fountain,
+/turf/simulated/floor/blueblack,
+/area/station/medical/medbay/lobby)
 "jEo" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -55345,6 +55309,10 @@
 	dir = 8
 	},
 /area/station/ranch)
+"kef" = (
+/obj/machinery/r_door_control/podbay/mainpod1/new_walls/south,
+/turf/space,
+/area/space)
 "kex" = (
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/neutral/side,
@@ -56075,6 +56043,12 @@
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/bar)
+"lXL" = (
+/obj/machinery/computer/chem_requester/science,
+/turf/simulated/floor/purpleblack{
+	dir = 1
+	},
+/area/station/hallway/secondary/east)
 "lYQ" = (
 /obj/table/wood/auto,
 /obj/disposalpipe/segment/brig{
@@ -56822,13 +56796,6 @@
 /obj/disposalpipe/segment/transport,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/east)
-"nuy" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/reagent_dispensers/watertank/fountain,
-/turf/simulated/floor/blueblack,
-/area/station/medical/medbay/lobby)
 "nwH" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
@@ -57251,6 +57218,14 @@
 	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
+"owe" = (
+/obj/machinery/computer/chem_request_receiver{
+	dir = 8
+	},
+/turf/simulated/floor/purpleblack{
+	dir = 4
+	},
+/area/station/science/chemistry)
 "owV" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -57672,6 +57647,12 @@
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe/vertical,
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/bar)
+"pAU" = (
+/obj/machinery/computer/chem_requester/medical,
+/turf/simulated/floor/bluewhite{
+	dir = 1
+	},
+/area/station/medical/medbay)
 "pCJ" = (
 /obj/disposalpipe/segment/produce{
 	dir = 1
@@ -58541,6 +58522,19 @@
 /obj/access_spawn/hos,
 /turf/simulated/floor/plating/random,
 /area/station/security/hos/horizon)
+"rCR" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe/horizontal,
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/machinery/vending/computer3,
+/turf/simulated/floor/carpet/red/fancy/edge/south,
+/area/station/hallway/secondary/east)
 "rCS" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/disposalpipe/segment/cargo,
@@ -94907,8 +94901,8 @@ aaa
 aaa
 aaa
 aaa
-asL
-aaa
+aal
+kef
 arQ
 ash
 bBY
@@ -123919,7 +123913,7 @@ aCg
 aFZ
 aHC
 aIO
-aKQ
+pAU
 dhV
 aPe
 aRz
@@ -123928,7 +123922,7 @@ aXx
 aEd
 bdG
 bdG
-nuy
+jEi
 aXx
 trF
 bsi
@@ -128766,7 +128760,7 @@ bpF
 bso
 buu
 bwK
-bYs
+rCR
 mtl
 oGS
 wrp
@@ -130271,7 +130265,7 @@ aXP
 bbh
 bhk
 cBw
-bmC
+lXL
 fge
 svQ
 fge
@@ -139626,7 +139620,7 @@ aGt
 aGt
 aGt
 czD
-cAc
+owe
 cAn
 cAQ
 ntj
