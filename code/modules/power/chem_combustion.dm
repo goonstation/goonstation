@@ -10,7 +10,7 @@
 
 	var/active = 0
 	var/fuel_drain_rate = 0.3
-	var/atmos_drain_rate = 0.2
+	var/atmos_drain_rate = 0.02
 	var/standard_power_output = 5000 // around how much the generator will output running normally
 	var/last_output
 
@@ -57,11 +57,75 @@
 		src.stop_engine()
 		..()
 
+	attack_hand(var/mob/user, params)
+		if (..(user, params))
+			return
+
+		var/dat = {"
+		<b>Status:</b><BR>
+		Engine: [active ? "Working..." : "Stopped..."] <BR>
+		Power Grid: [src.powernet ? "Connected..." : "Disconnected..."] <BR>
+		Power Output: [active ? src.last_output : 0]W<BR><BR>
+		<b>Controls:</b><BR>
+		<A href='?src=\ref[src];engine=1'>Engine: [active ? "Stop" : "Start"]</A><BR>
+		<A href='?src=\ref[src];fuel=1'>[src.fuel_tank ? "Eject [src.fuel_tank.name]" : "Connect Fuel Tank"]</A><BR>
+		<A href='?src=\ref[src];inlet=1'>[src.inlet_tank ? "Eject [src.inlet_tank.name]" : "Connect Gas Tank"]</A><BR>
+		"}
+
+		if (user.client.tooltipHolder)
+			user.client.tooltipHolder.showClickTip(src, list(
+				"params" = params,
+				"title" = src.name,
+				"content" = dat,
+			))
+
+		return
+
+	Topic(href, href_list)
+		if (..(href, href_list))
+			return
+
+		if (href_list["engine"])
+			if (!src.active)
+				src.start_engine(usr)
+			else
+				src.stop_engine(usr)
+
+		else if (href_list["fuel"])
+			if (src.fuel_tank)
+				src.eject_fuel_tank(usr)
+
+			else
+				var/obj/item/I = usr.equipped()
+				if (istype(I, /obj/item/reagent_containers/food/drinks/fueltank))
+					usr.u_equip(I)
+					I.set_loc(src)
+					src.fuel_tank = I
+
+					src.visible_message("<span class='notice'>[usr] loads the [I] into the [src].</span>")
+
+		else if (href_list["inlet"])
+			if (src.inlet_tank)
+				src.eject_inlet_tank(usr)
+
+			else
+				var/obj/item/I = usr.equipped()
+				if (istype(I, /obj/item/tank) && (!istype(I, /obj/item/tank/plasma) || !istype(I, /obj/item/tank/jetpack)))
+					usr.u_equip(I)
+					I.set_loc(src)
+					src.inlet_tank = I
+
+					src.visible_message("<span class='notice'>[usr] loads the [I] into the [src].</span>")
+
+		src.updateDialog()
+		return
+
+
 	attackby(obj/item/W, mob/user)
 		src.add_fingerprint(user)
 
 		// atmos tank
-		if (istype(W, /obj/item/tank) && !istype(W, /obj/item/tank/plasma) && !istype(W, /obj/item/tank/jetpack))
+		if (istype(W, /obj/item/tank) && (!istype(W, /obj/item/tank/plasma) || !istype(W, /obj/item/tank/jetpack)))
 			if (src.inlet_tank)
 				user.show_text("There appears to be a tank loaded already.", "red")
 				return
@@ -141,6 +205,7 @@
 		src.fuel_tank.reagents.remove_any(src.fuel_drain_rate)
 
 		src.UpdateIcon()
+		src.updateDialog()
 
 	proc/connect()
 		if (!get_turf(src))
@@ -317,7 +382,7 @@
 		src.inlet_tank = null
 		src.UpdateIcon()
 
-	// verbs, replace cause stinky
+/*	smelly verbs
 	verb/start_stop()
 		set name = "Start/Stop Generator"
 		set src in oview(1)
@@ -341,5 +406,5 @@
 		set src in oview(1)
 		set category = "Local"
 
-		src.eject_inlet_tank(usr)
+		src.eject_inlet_tank(usr) */
 
