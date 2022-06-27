@@ -67,10 +67,12 @@
 			donor.reagents.add_reagent("omnizine", 15) //reduced omnizine amount
 			donor.reagents.add_reagent("teporone", 20)
 			#ifdef CREATE_PATHOGENS
-			A.reagents.add_reagent("pathogen", 15)
-			var/datum/reagent/blood/pathogen/R = A.reagents.get_reagent("pathogen")
+			donor.reagents.add_reagent("pathogen", 15)
+			var/datum/reagent/blood/pathogen/R = donor.reagents.get_reagent("pathogen")
 			var/datum/microbe/P = new /datum/microbe
 			P.randomize()
-			R.microbes = P
+			var/uid = 1
+			R.microbes += uid
+			R.microbes[uid] = P
 			#endif
 			boutput(donor, "<span class='alert'>Your appendix has burst! It has given you medical help... though you might want to see a doctor very soon.</span>")

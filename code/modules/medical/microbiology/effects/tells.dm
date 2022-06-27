@@ -92,7 +92,7 @@ ABSTRACT_TYPE(/datum/microbioeffects/tells)
 	desc = "The pathogen causes the user's brain to believe the body is dying."
 
 	mob_act(var/mob/M as mob, var/datum/microbesubdata/origin)
-		if (prob(origin.probability/2))
+		if (prob(origin.probability/10))
 			M:emote("deathgasp")
 
 	may_react_to()

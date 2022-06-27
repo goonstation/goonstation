@@ -1692,14 +1692,9 @@
 		L.take_toxin_damage(tox * mult)
 		if(weighted_average > 4)
 			weighted_average = 0
-			#ifdef CREATE_PATHOGENS				//Should corpses produce bad microbes? I don't think its a great idea...
-			if(!isdead(L) && prob(1))		//Good luck farming for germs.
-				//var/datum/microbe/P = new /datum/microbe
-				//P.randomize()
-				//L.infected(P)
-				L.reagents.add_reagent("MRSA",10)	//MRSA occurs primarily in hospital settings around dead/wounded patients.
+			if(!isdead(L) && prob(0.1))
+				L.reagents.add_reagent("MRSA",5)	//MRSA occurs primarily in hospital settings around dead/wounded patients.
 				boutput(L, "<span class='alert'>You feel a sense of dread wash over you.</span>")
-			#endif
 		if(probmult(puke_prob))
 			L.visible_message("<span class='alert'>[L] pukes all over [himself_or_herself(L)].</span>", "<span class='alert'>You puke all over yourself!</span>")
 			L.vomit()

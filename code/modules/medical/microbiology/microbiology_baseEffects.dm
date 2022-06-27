@@ -21,12 +21,12 @@ ABSTRACT_TYPE(/datum/microbioeffects)
 	// to only work on events like human interaction or external effects. A symptom therefore should override this proc.
 	// mob_act is also responsible for handling the symptom's ability to suppress the pathogen. Check the documentation on suppression in pathogen.dm.
 	// OVERRIDE: A subclass (direct or otherwise) is expected to override this.
-	proc/mob_act(var/mob/M as mob, var/datum/microbe/origin)
+	proc/mob_act(var/mob/M, var/datum/microbesubdata/origin)
 
 	// mob_act_dead(mob, datum/pathogen) : void
 	// This functions identically to mob_act, except it is only called when the mob is dead. (mob_act is not called if that is the case.)
 	// OVERRIDE: Only override this if if it needed for the symptom.
-	proc/mob_act_dead(var/mob/M as mob, var/datum/microbe/origin)
+	proc/mob_act_dead(var/mob/M, var/datum/microbesubdata/origin)
 
 	// does an infectious snap
 	// makes others snap, should possibly infect you in the future if you are made to snap a certain amount of times
@@ -81,15 +81,16 @@ ABSTRACT_TYPE(/datum/microbioeffects)
 	// gets his bodily fluids onto another when they directly disarm, punch, or grab a person.
 	// For INFECT_TOUCH diseases this is automatically called on a successful disarm, punch or grab. When overriding any of these events, use ..() to keep this behaviour.
 	// OVERRIDE: Generally, you do not need to override this.
-	proc/infect_direct(var/mob/target as mob, var/datum/microbe/origin, contact_type = "touch")
+	proc/infect_direct(var/mob/target, var/datum/microbesubdata/S, contact_type = "touch")
+		var/datum/microbe/origin = microbio_controls.get_microbe_from_name(S.master.name)
 		if (infect_attempt_message)
 			target.show_message("<span class='alert'><B>[infect_attempt_message]</B></span>")
 		if(istype(target, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = target
 			if(prob(100-H.get_disease_protection()))
-				//if (target.infected(origin))
-					//if (infect_message)
-						//target.show_message(infect_message)
+				if (target.infected(origin))
+					if (infect_message)
+						target.show_message(infect_message)
 				logTheThing("pathology", origin.infected, target, "infects [constructTarget(target,"pathology")] with [origin.name] due to symptom [name] through direct contact ([contact_type]).")
 				return 1
 
@@ -100,56 +101,60 @@ ABSTRACT_TYPE(/datum/microbioeffects)
 	// Events from this point on. Their exact behaviour is documented in pathogen.dm. Please do not add any event definitions outside this block.
 	// ondisarm(mob, mob, boolean, datum/pathogen) : float
 	// OVERRIDE: Overriding this is situational. ..() is expected to be called.
-	proc/ondisarm(var/mob/M as mob, var/mob/V as mob, isPushDown, var/datum/microbesubdata/origin)
+	proc/ondisarm(var/mob/M, var/mob/V, isPushDown, var/datum/microbesubdata/origin)
 		if (prob(origin.probability))
-			infect_direct(V, origin, "disarm")
+			var/datum/microbe/P = microbio_controls.get_microbe_from_name(origin.master.name)
+			infect_direct(V, P, "disarm")
 		return 1
 
 	// ongrab(mob, mob, datum/pathogen) : void
 	// TODO: Make this a veto event.
 	// OVERRIDE: Overriding this is situational. ..() is expected to be called.
-	proc/ongrab(var/mob/M as mob, var/mob/V as mob, var/datum/microbesubdata/origin)
+	proc/ongrab(var/mob/M, var/mob/V, var/datum/microbesubdata/origin)
 		if (prob(origin.probability))
-			infect_direct(V, origin, "grab")
+			var/datum/microbe/P = microbio_controls.get_microbe_from_name(origin.master.name)
+			infect_direct(V, P, "grab")
 		return
 
 	// onpunch(mob, mob, string, datum/pathogen) : float
 	// OVERRIDE: Overriding this is situational. ..() is expected to be called.
-	proc/onpunch(var/mob/M as mob, var/mob/V as mob, zone, var/datum/microbesubdata/origin)
+	proc/onpunch(var/mob/M, var/mob/V, zone, var/datum/microbesubdata/origin)
 		if (prob(origin.probability))
-			infect_direct(V, origin, "punching")
+			var/datum/microbe/P = microbio_controls.get_microbe_from_name(origin.master.name)
+			infect_direct(V, P, "punching")
 		return 1
 
 	// onpunched(mob, mob, string, datum/pathogen) : float
 	// OVERRIDE: Overriding this is situational. ..() is expected to be called.
-	proc/onpunched(var/mob/M as mob, var/mob/A as mob, zone, var/datum/microbesubdata/origin)
+	proc/onpunched(var/mob/M, var/mob/A, zone, var/datum/microbesubdata/origin)
 		if (prob(origin.probability))
-			infect_direct(A, origin, "being punched")
+			var/datum/microbe/P = microbio_controls.get_microbe_from_name(origin.master.name)
+			infect_direct(A, P, "being punched")
 		return 1
 
 	// onshocked(mob, mob, datum/shockparam, datum/pathogen) : datum/shockparam
 	// OVERRIDE: Overriding this is situational.
-	proc/onshocked(var/mob/M as mob, var/datum/shockparam/ret, var/datum/microbe/origin)
+	proc/onshocked(var/mob/M, var/datum/shockparam/ret, var/datum/microbesubdata/origin)
 		return //ret
 
 	// onsay(mob, string, datum/pathogen) : string
 	// OVERRIDE: Overriding this is situational.
-	proc/onsay(var/mob/M as mob, message, var/datum/microbe/origin)
+	proc/onsay(var/mob/M, message, var/datum/microbesubdata/origin)
 		return message
 
 	// onemote(mob, string, number, string, datum/pathogen) : string
 	// OVERRIDE: Overriding this is situational.
-	proc/onemote(var/mob/M as mob, act, voluntary, param, var/datum/microbe/P)
+	proc/onemote(var/mob/M, act, voluntary, param, var/datum/microbesubdata/origin)
 		return 1
 
 	// ondeath(mob, datum/pathogen) : void
 	// OVERRIDE: Overriding this is situational.
-	proc/ondeath(var/mob/M as mob, var/datum/microbe/origin)
+	proc/ondeath(var/mob/M, var/datum/microbesubdata/origin)
 		return
 
 	// oncured(mob, datum/pathogen) : void
 	// OVERRIDE: Overriding this is situational.
-	proc/oncured(var/mob/M as mob, var/datum/microbe/origin)
+	proc/oncured(var/mob/M, var/datum/microbesubdata/origin)
 		return
 
 

@@ -276,11 +276,13 @@
 				showOwner("<span class='alert'>You are [pick("disgusted", "revolted", "repelled", "sickened", "nauseated")] by your own [pick("smell", "odor", "body odor", "scent", "fragrance", "bouquet", "savour", "tang", "whiff")]!</span>")
 			*/
 			#ifdef CREATE_PATHOGENS //PATHOLOGY_REMOVAL
-			if (value < 5 && prob(1) && holder.owner.microbes.len < 3)	//Not so easy to become a germ colony anymore
-				var/datum/microbe/P = new /datum/microbe
-				P.randomize()
-				holder.owner.infected(P)
-				showOwner("<span class='alert'>You feel really sick.</span>") // in a bad way
+			if (ishuman(holder.owner))
+				var/mob/living/carbon/human/H = holder.owner
+				if (value < 5 && prob(1) && !(H.microbes.len))	//Not so easy to become a germ colony anymore
+					var/datum/microbe/P = new /datum/microbe
+					P.randomize()
+					H.infected(P)
+					showOwner("<span class='alert'>You feel really sick.</span>") // in a bad way
 			#endif
 
 		getWarningMessage()

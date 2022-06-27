@@ -224,14 +224,12 @@
 			#ifdef CREATE_PATHOGENS // PATHOLOGY REMOVAL
 			var/datum/microbe/P = new /datum/microbe
 			P.randomize()
-			var/datum/microbesubdata/S = new /datum/microbesubdata
-			S.master = P
-			S.duration = P.durationtotal - 1
-			S.probability = 0
 			var/datum/reagents/RE = src.reagents
 			RE.add_reagent("pathogen", 5)
 			var/datum/reagent/blood/pathogen/R = RE.get_reagent("pathogen")
-			R.microbes += S
+			var/uid = 1
+			R.microbes += uid
+			R.microbes[uid] = P
 			#else
 			var/datum/reagents/RE = src.reagents
 			RE.add_reagent("water", 5)

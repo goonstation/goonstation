@@ -31,18 +31,18 @@ var/datum/microbiology_controller/microbio_controls
 				var/datum/microbe/A = new X
 				cultures += A
 
-	proc/updatemicrobe(var/datum/microbe/P, var/selection, var/newname = "Optional", var/reportaccuracy = 0)
+	proc/updatemicrobe(var/datum/microbe/P, var/mob/M, var/selection, var/newname = "Optional", var/reportaccuracy = 0)
 		if (!(P) || !(selection))
 			return
 		if (selection == "infected")
-			P.infected += src
+			P.infected += M
 			P.infectioncount--
 			for (var/mob/living/carbon/human/H in P.infected)
 				updatesubdata(H,P)
 			return
 		if (selection == "cured")
-			P.infected -= src
-			P.immune += src
+			P.infected -= M
+			P.immune += M
 			if (!(P.infected))	//If the disease is extinct skip the for loops
 				return
 			for (var/mob/living/carbon/human/H in P.infected)

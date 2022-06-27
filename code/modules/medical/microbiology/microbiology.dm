@@ -352,6 +352,9 @@ ABSTRACT_TYPE(/datum/microbe)
 	var/artificial									// Did someone make this microbe using a machine? (1 yes, 0 no)
 	var/reported									// Has someone analyzed this culture?
 	var/curereported								// Did the reporter correctly identify the right cure?
+
+	var/tellcount									// Tells the microscope how many of this effect group are present
+	var/benefitcount								// Tells the microscope how many of this effect group are present
 // PROCS AND FUNCTIONS FOR GENERATION
 
 
@@ -373,6 +376,8 @@ ABSTRACT_TYPE(/datum/microbe)
 		artificial = 0
 		reported = 0
 		curereported = 0
+		tellcount = 0
+		benefitcount = 0
 
 	//generate_name
 	//Called on creation of a new parent microbe
@@ -412,7 +417,7 @@ ABSTRACT_TYPE(/datum/microbe)
 		var/shape = pick("stringy", "snake", "blob", "spherical", "tetrahedral", "star shaped", "tesselated")
 		src.desc = "[suppressant.color] [shape] microbes" //color determined by average of cure reagent and assigned-effect colors
 		src.durationtotal = 2*rand(60,120)					//4 to 8 minute lifespan
-		src.infectioncount = 8								// See below for explanation.
+		src.infectioncount = rand(6,18)								// See below for explanation.
 		src.infectiontotal = src.infectioncount
 		src.artificial = 0
 		src.reported = 0
@@ -459,14 +464,14 @@ ABSTRACT_TYPE(/datum/microbe)
 	// Act when grabbing a mob. Does not return anything, the grab always happens.
 	// This event is only fired when the PASSIVE grab comes into play.
 	// @TODO: Extend this event to all grab levels. Add the possibility of vetoing.
-	proc/ongrab(var/mob/target as mob)
+	proc/ongrab(var/mob/target)
 		for (var/effect in src.effects)
 			effect:ongrab(infected, target, src)
 		suppressant.ongrab(target, src)
 
 	// Act when punched by a mob. Returns a multiplier for the damage done by the punch.
 	// A hardened skin symptom might make good use of it one day (AT THE TIME OF WRITING THIS COMMENT THAT DID NOT EXIST OKAY)
-	proc/onpunched(var/mob/origin as mob, zone)
+	proc/onpunched(var/mob/origin, zone)
 		var/ret = 1
 		for (var/effect in src.effects)
 			ret *= effect:onpunched(infected, origin, zone, src)
@@ -476,7 +481,7 @@ ABSTRACT_TYPE(/datum/microbe)
 	// Act when punching a mob. Returns a multipier for the damage done by the punch.
 	// This opens up the availability for both hulk (quad-damage anyone?) and muscle deficiency diseases.
 	// Returning 0 from any symptom vetoes the punch.
-	proc/onpunch(var/mob/target as mob, zone)
+	proc/onpunch(var/mob/target, zone)
 		var/ret = 1
 		for (var/effect in src.effects)
 			ret *= effect:onpunch(infected, target, zone, src)
@@ -488,7 +493,7 @@ ABSTRACT_TYPE(/datum/microbe)
 	// Think of it this way. Suppose you have a muscle disease that makes you weak. When your puny body finally hits the target...
 	// ...nothing actually happens because you're a weak mess and failed to even scratch him.
 	// Returning 0 from ANY of the symptoms' disarm events will make disarming fail.
-	proc/ondisarm(var/mob/target as mob, isPushDown)
+	proc/ondisarm(var/mob/target, isPushDown)
 		var/ret = 1
 		for (var/effect in src.effects)
 			ret = min(effect:ondisarm(infected, target, isPushDown, src), ret)
@@ -552,6 +557,10 @@ ABSTRACT_TYPE(/datum/microbe)
 				for (var/T in typesof(mutex))
 					if (!(T in mutex))
 						mutex += T*/
+			if (istype(E,/datum/microbioeffects/tells))
+				src.tellcount++
+			else if (istype(E,/datum/microbioeffects/benevolent))
+				src.benefitcount++
 			effects += E
 			E.onadd(src)
 			return 1
@@ -561,9 +570,17 @@ ABSTRACT_TYPE(/datum/microbe)
 		if (all)
 			while (E in src.effects)
 				src.effects -= E
+			src.tellcount = 0
+			src.benefitcount = 0
 			return 1
 		else
-			if (E in src.effects)
+			if (!(E in src.effects))
+				return 0
+			if (istype(E,/datum/microbioeffects/tells))
+				src.tellcount--
+				src.effects -= E
+			else if (istype(E,/datum/microbioeffects/benevolent))
+				src.benefitcount--
 				src.effects -= E
 			return 1
 
@@ -620,11 +637,11 @@ ABSTRACT_TYPE(/datum/microbesubdata)
 	// Where a = 20/durationtotal**2 and b = 20/durationtotal
 	proc/progress_pathogen(var/mob/M, var/datum/microbesubdata/P)
 		if (P.duration <= 0)
-			M.cured(src)				// cured proc in human.dM?
+			M.cured(P)				// cured proc in human.dM?
 			return
 		var/B = 20/P.master.durationtotal
 		var/A = B/P.master.durationtotal
-		P.probability = ceil(-A*P.duration**2+B*P.duration)
+		P.probability = round(-A*P.duration**2+B*P.duration)
 		iscured = P.master.suppressant.suppress_act(src)
 		if (iscured)
 			P.duration = ceil(P.duration/2) - 1
@@ -632,19 +649,19 @@ ABSTRACT_TYPE(/datum/microbesubdata)
 		else
 			P.duration--							//  Wrap into process
 
-	proc/mob_act(var/mob/M, var/datum/microbesubdata/P)
-		for (var/datum/effect in P.master.effects)
-			effect:mob_act(M,P.master)
-		progress_pathogen(M,P)
+	proc/mob_act(var/mob/M, var/datum/microbesubdata/S)
+		for (var/datum/effect in S.master.effects)
+			effect:mob_act(M,S)
+		progress_pathogen(M,S)
 
 	// it's like mob_act, but for dead people!
-	proc/mob_act_dead(var/mob/M, var/datum/microbesubdata/P)
-		for (var/datum/effect in P.master.effects)
-			effect:mob_act_dead(M,P.master)
-		progress_pathogen(M,P)
+	proc/mob_act_dead(var/mob/M, var/datum/microbesubdata/S)
+		for (var/datum/effect in S.master.effects)
+			effect:mob_act_dead(M,S)
+		progress_pathogen(M,S)
 
 /mob/living/carbon/human/infected(var/datum/microbe/P)
-	if(!(P.infectioncount)) //If the microbe has already infected to capacity, return
+	if (!(P.infectioncount)) //If the microbe has already infected to capacity, return
 		return 0
 	if (isdead(src))
 		return
@@ -657,13 +674,14 @@ ABSTRACT_TYPE(/datum/microbesubdata)
 	if (!(src in P.infected))
 		var/datum/microbesubdata/Q = new /datum/microbesubdata
 		var/uid = src.microbes.len + 1
-		src.microbes[uid] += Q
-		microbio_controls.updatemicrobe(P,"infected")
+		src.microbes += uid
+		src.microbes[uid] = Q
 		Q.master = P
 		Q.affected_mob = src
 		Q.duration = P.durationtotal - 1
 		Q.probability = 0
-		logTheThing("pathology", src, null, "is infected by [Q].")
+		microbio_controls.updatemicrobe(P, src, "infected")
+		logTheThing("pathology", src, null, "is infected by [Q.master.name].")
 		return 1
 	else
 		return 0
@@ -675,9 +693,9 @@ ABSTRACT_TYPE(/datum/microbesubdata)
 		var/datum/microbesubdata/Q = src.microbes[uid]
 		if (S == Q)
 			var/datum/microbe/P = microbio_controls.get_microbe_from_name(S.master.name)
-			microbio_controls.updatemicrobe(P,"cured")
+			microbio_controls.updatemicrobe(P, src, "cured")
+			logTheThing("pathology", src, null, "is cured of and gains immunity to [Q.master.name].")
 			src.microbes[uid] -= Q
 			qdel(Q)
 			src.show_text("You feel that the disease has passed.", "blue")
-			logTheThing("pathology", src, null, "is cured of and gains immunity to [P.name] ([P.print_name]).")
 			return 1

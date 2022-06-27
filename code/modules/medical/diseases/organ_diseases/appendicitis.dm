@@ -79,11 +79,13 @@
 					if (prob(20))
 						H.reagents.add_reagent("toxin", 20)
 					#ifdef CREATE_PATHOGENS
-					A.reagents.add_reagent("pathogen", amount)
-					var/datum/reagent/blood/pathogen/R = A.reagents.get_reagent("pathogen")
+					H.reagents.add_reagent("pathogen", 15)
+					var/datum/reagent/blood/pathogen/R = H.reagents.get_reagent("pathogen")
 					var/datum/microbe/P = new /datum/microbe
 					P.randomize()
-					R.microbes = P
+					var/uid = 1
+					R.microbes += uid
+					R.microbes[uid] = P
 					#endif
 					boutput(H, "<span class='alert'>Your appendix has burst! Seek medical help!</span>")
 
