@@ -5,6 +5,15 @@
 	desc = "A large machine that can be used to separate a pathogen sample from a blood sample."
 	anchored = 1
 	density = 1
+
+	ui_state(mob/user)
+
+	ui_interact(mob/user, datum/tgui/ui)
+
+	ui_data(mob/user)
+
+	ui_act(action, params)
+
 /*
 	var/obj/item/bloodslide/source = null
 	var/datum/microbe/isolated = null
@@ -196,6 +205,15 @@
 	icon = 'icons/obj/pathology.dmi'
 	icon_state = "microscope0"
 	desc = "A device which provides a magnified view of a culture in a petri dish."
+
+	ui_state(mob/user)
+
+	ui_interact(mob/user, datum/tgui/ui)
+
+	ui_data(mob/user)
+
+	ui_act(action, params)
+
 /*
 	var/obj/item/target = null
 
@@ -394,6 +412,15 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "pathology"
 	desc = "A bulky machine used to control the pathogen manipulator."
+
+	ui_state(mob/user)
+
+	ui_interact(mob/user, datum/tgui/ui)
+
+	ui_data(mob/user)
+
+	ui_act(action, params)
+
 	/*
 	var/obj/machinery/pathogen_manipulator/manip = null
 
@@ -1035,6 +1062,7 @@
 	desc = "A large, softly humming machine."
 	density = 1
 	anchored = 1
+
 /*
 	var/machine_state = 0
 
@@ -1526,11 +1554,11 @@
 		..()
 		//Products
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe, 15)
-		//product_list += new/datum/data/vending_product(/obj/item/bloodslide, 50)
+		product_list += new/datum/data/vending_product(/obj/item/bloodslide, 50)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/vial, 25)
-		//product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/petridish, 10)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/petridish, 10)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/beaker/egg, 10)
-		//product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/beaker/spaceacillin, 20)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/beaker/spaceacillin, 20)
 		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/healthanalyzer, 4)
 
 /obj/machinery/incubator
@@ -1541,6 +1569,15 @@
 	desc = "A machine that can automatically provide a petri dish with nutrients. It can also directly fill vials with a sample of the pathogen inside."
 	anchored = 1
 	density = 1
+
+	ui_state(mob/user)
+
+	ui_interact(mob/user, datum/tgui/ui)
+
+	ui_data(mob/user)
+
+	ui_act(action, params)
+
 /*
 	var/obj/item/reagent_containers/glass/petridish/target = null
 	var/medium = null
