@@ -144,7 +144,7 @@
 	var/list/sound_list_laugh = null
 	var/list/sound_list_flap = null
 
-	var/list/microbes = list()
+	var/list/datum/microbesubdata/microbes = list()
 	var/totalimmunity = 0			// Is this player completely immune to all microbial infections?
 
 	var/datum/simsHolder/sims = null
