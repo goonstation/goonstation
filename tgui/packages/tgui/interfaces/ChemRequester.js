@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2022
+ * @author LeahTheTech (https://github.com/TobleroneSwordfish)
+ * @license MIT
+ */
+
 import { useBackend, useLocalState } from '../backend';
 import { Button, Input, Section, Box, Stack, NumberInput } from '../components';
 import { Window } from '../layouts';
