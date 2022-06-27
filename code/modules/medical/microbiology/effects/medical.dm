@@ -6,41 +6,28 @@ ABSTRACT_TYPE(/datum/microbioeffects/benevolent)
 /datum/microbioeffects/benevolent/mending
 	name = "Wound Mending"
 	desc = "Slow paced brute damage healing."
+	reactionlist = list("synthflesh")
+	reactionmessage = "Microscopic damage on the synthetic flesh appears to be mended by the microbes."
 
 	mob_act(var/mob/M, var/datum/microbesubdata/P)
 		if (prob(P.probability*2))
 			M.HealDamage("All", 2, 0)
 
-	react_to(var/R, var/zoom)
-		if (R == "synthflesh")
-			if (zoom)
-				return "Microscopic damage on the synthetic flesh appears to be mended by the pathogen."
-
-	may_react_to()
-		return "The pathogen appears to have the ability to bond with organic tissue."
-
 /datum/microbioeffects/benevolent/healing
 	name = "Burn Healing"
 	desc = "Slow paced burn damage healing."
+	reactionlist = MB_HOT_REAGENTS
+	reactionmessage = "The microbes repel the scalding hot chemical and quickly repair any damage caused by it to organic tissue."
 
 	mob_act(var/mob/M, var/datum/microbesubdata/P)
 		if (prob(P.probability*2))
 			M.HealDamage("All", 0, 2)
 
-	react_to(var/R, var/zoom)
-		if (R == "synthflesh")
-			if (zoom)
-				return "The pathogen does not appear to mend the synthetic flesh. Perhaps something that might cause other types of injuries might help."
-		if (R == "infernite")
-			if (zoom)
-				return "The pathogen repels the scalding hot chemical and quickly repairs any damage caused by it to organic tissue."
-
-	may_react_to()
-		return "The pathogen appears to have the ability to bond with organic tissue."
-
 /datum/microbioeffects/benevolent/fleshrestructuring
 	name = "Flesh Restructuring"
 	desc = "Fast paced general healing."
+	reactionlist = MB_ACID_REAGENTS
+	reactionmessage = "The microbes become agitated and work to repair the damage caused by the acid."
 
 	mob_act(var/mob/M, var/datum/microbesubdata/P)
 		if (prob(P.probability*2))
@@ -52,38 +39,25 @@ ABSTRACT_TYPE(/datum/microbioeffects/benevolent)
 				if (prob(20))
 					M.show_message("<span class='notice'>You feel your wounds closing by themselves.</span>")
 
-	react_to(var/R, var/zoom)
-		if (R == "synthflesh")
-			if (zoom)
-				return "The pathogen appears to mimic the behavior of the synthflesh."
-		if (R == "acid")
-			if (zoom)
-				return "The pathogen becomes agitated and works to repair the damage caused by the sulfuric acid."
-
-	may_react_to()
-		return "The pathogen appears to be rapidly repairing the other cells around it."
 	//podrickequus's first code, yay
 
 /datum/microbioeffects/benevolent/cleansing
 	name = "Cleansing"
-	desc = "The pathogen cleans the body of damage caused by toxins."
+	desc = "The microbes clean the body of damage caused by toxins."
+	reactionlist = MB_TOXINS_REAGENTS
+	reactionmessage = "The microbes appear to have entirely metabolized... all chemical agents in the dish."
 
 	mob_act(var/mob/M, var/datum/microbesubdata/P)
-		//if (prob(origin.stage * 5) && M.get_toxin_damage())
-		if (M.get_toxin_damage())
+		if (prob(P.probability) && M.get_toxin_damage())
 			M.take_toxin_damage(-1)
 			if (prob(2))
 				M.show_message("<span class='notice'>You feel cleansed.</span>")
 
-	react_to(var/R, var/zoom)
-		return "The pathogen appears to have entirely metabolized... all chemical agents in the dish."
-
-	may_react_to()
-		return "The pathogen seems to be much cleaner than normal."
-
 /datum/microbioeffects/benevolent/oxygenconversion
 	name = "Oxygen Conversion"
-	desc = "The pathogen converts organic tissue into oxygen when required by the host."
+	desc = "The microbes convert organic tissue into oxygen when required by the host."
+	reactionlist = list("synthflesh")
+	reactionmessage = "The microbes consume the synthflesh, converting it into oxygen."
 
 	onadd(var/datum/microbe/origin)
 		origin.effectdata += "Oxy Conversion"
@@ -93,16 +67,11 @@ ABSTRACT_TYPE(/datum/microbioeffects/benevolent)
 		if (C.get_oxygen_deprivation())
 			C.setStatus("patho_oxy_speed_bad", duration = INFINITE_STATUS, optional = 1)
 
-	may_react_to()
-		return "The pathogen appears to radiate oxygen."
-
-	react_to(var/R, var/zoom)
-		if (R == "synthflesh")
-			return "The pathogen consumes the synthflesh and converts it into oxygen."
-
 /datum/microbioeffects/benevolent/oxygenstorage
 	name = "Oxygen Storage"
-	desc = "The pathogen stores oxygen and releases it when needed by the host."
+	desc = "The microbes store oxygen and releases it when needed by the host."
+	reactionlist = MB_OXY_MEDS_CATAGORY
+	reactionmessage = "The microbes appear to generate bubbles of oxygen around the reagent."
 
 	onadd(var/datum/microbe/origin)
 		origin.effectdata += "Oxy Storage"
@@ -120,12 +89,11 @@ ABSTRACT_TYPE(/datum/microbioeffects/benevolent)
 			// faster reserve replenishment at higher stages
 			P.master.effectdata["oxygen_storage"] = min(100, P.master.effectdata["oxygen_storage"] + 2)
 
-	may_react_to()
-		return "The pathogen appears to have a bubble of oxygen around it."
-
 /datum/microbioeffects/benevolent/resurrection
 	name = "Necrotic Resurrection"
-	desc = "The pathogen will resurrect you if it procs while you are dead."
+	desc = "The microbes will attempt to revive dead hosts."
+	reactionlist = list("synthflesh")
+	reactionmessage = "Dead parts of the synthflesh seem to start transferring blood again!"
 	var/cooldown = 1 MINUTES			// Make this competitive?
 
 	onadd(var/datum/microbe/origin)
@@ -168,34 +136,24 @@ ABSTRACT_TYPE(/datum/microbioeffects/benevolent)
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
 				H.contract_disease(/datum/ailment/disease/tissue_necrosis, null, null, 1) // this disease will make the person more and more rotten even while alive
-				H.visible_message("<span class='alert'>[H] suddenly starts moving again!</span>","<span class='alert'>You feel the pathogen weakening as you rise from the dead.</span>")
-
-	may_react_to()
-		return "Some of the pathogen's dead cells seem to remain active."
-
-	react_to(var/R, var/zoom)
-		if (R == "synthflesh")
-			return "Dead parts of the synthflesh seem to still be transferring blood."
+				H.visible_message("<span class='alert'>[H] suddenly starts moving again!</span>","<span class='alert'>You feel the disease weakening as you rise from the dead.</span>")
 
 
 /datum/microbioeffects/benevolent/neuronrestoration
 	name = "Neuron Restoration"
 	desc = "Infection slowly repairs nerve cells in the brain."
+	reactionlist = MB_BRAINDAMAGE_REAGENTS
+	reactionmessage = "The microbes release a chemical in an attempt to counteract the effects of the test reagent."
 
 	mob_act(var/mob/M, var/datum/microbesubdata/P)
 		if (prob(P.probability))
 			M.take_brain_damage(-1)
 
-	react_to(var/R, var/zoom)
-		if (!(R == "neurotoxin"))
-			return "The pathogen releases a chemical in an attempt to counteract the effects of the neurotoxin."
-
-	may_react_to()
-		return "The pathogen appears to have a gland that may affect neural functions."
-
 /datum/microbioeffects/benevolent/metabolisis
 	name = "Accelerated Metabolisis"
 	desc = "The pathogen accelerates the metabolisis of all chemicals present in the host body."
+	reactionlist = list("water")
+	reactionmessage = "The microbes metabolize the water: it seems capable of processing any reagent."
 
 	mob_act(var/mob/M, var/datum/microbesubdata/origin)
 		var/times = 1
@@ -213,12 +171,34 @@ ABSTRACT_TYPE(/datum/microbioeffects/benevolent)
 		if (met)
 			M.reagents.update_total()
 
+/*datum/pathogeneffects/chemistry/ethanol
+	name = "Auto-Brewery"
+	desc = "The pathogen aids the host body in metabolizing chemicals into ethanol."
+
+	mob_act(var/mob/M as mob, var/datum/pathogen/origin)
+		var/met = 0
+		for (var/rid in M.reagents.reagent_list)
+			var/datum/reagent/R = M.reagents.reagent_list[rid]
+			if (!(rid == "ethanol" || istype(R, /datum/reagent/fooddrink/alcoholic)))
+				met = 1
+				if (R) //Wire: Fix for Cannot execute null.on mob life().
+					R.on_mob_life()
+				if (!R || R.disposed)
+					break
+				if (R && !R.disposed)
+					var/amt = R.depletion_rate * times
+					M.reagents.remove_reagent(rid, amt)
+					M.reagents.add_reagent("ethanol", amt)
+		if (met)
+			M.reagents.update_total()
 
 	react_to(var/R, var/zoom)
-		return "The pathogen appears to have entirely metabolized... all chemical agents in the dish."
+		if (!(R == "ethanol"))
+			return "The pathogen appears to have entirely metabolized all chemical agents in the dish into... ethanol."
 
 	may_react_to()
-		return "The pathogen appears to be rapidly breaking down certain materials around it."
+		return "The pathogen appears to react with anything but a pure intoxicant."
+*/
 
 /*
 datum/pathogeneffects/benevolent/genetictemplate

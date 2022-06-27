@@ -4,6 +4,8 @@ ABSTRACT_TYPE(/datum/microbioeffects)
 	var/desc
 	var/infect_message = null
 	var/infect_attempt_message = null // shown to person when an attempt to directly infect them is made
+	var/reactionlist = list()
+	var/reactionmessage
 
 	// This is a list of mutual exclusive symptom TYPES.
 	// If this contains any symptoms, none of these symptoms will be picked upon mutation or initial raffle.
@@ -161,6 +163,9 @@ ABSTRACT_TYPE(/datum/microbioeffects)
 	// End of events: please do not add any event definitions outside this block.
 	// ====
 
+	// Below is deprecated code and documentation.
+	// may_react_to() is replaced with vars on the microbe datum telling the player how many of each effect type there are.
+	//
 	// may_react_to() : string | null
 	// A set of features that you can observe through a microscope and what it might suggest.
 	// This will be used to NARROW DOWN what chemicals the pathogen might react to, so that you only need to try a finite set of reagents to determine exactly what symptoms the pathogen has.
@@ -190,9 +195,14 @@ ABSTRACT_TYPE(/datum/microbioeffects)
 	// Very obscure "hint": "The pathogen reacts with chemicals."
 	// - well fuck you too, that's very useful, microscope. Do not do this.
 	// OVERRIDE: A subclass is expected to override this.
-	proc/may_react_to()
-		return null
+	//proc/may_react_to()
+		//return null
 
+	// react_to is replaced by vars on the effects and cures.
+	// var/reactionlist = list() containing reagent ids.
+	// var/reactionmessage = "" containing the message to output.
+	// the zoom var is handled on the microscope code.
+	//
 	// react_to(string, int) : string | null
 	// How a pathogen with this symptom reacts to a reagent being introduced to it.
 	// This is:
@@ -205,5 +215,5 @@ ABSTRACT_TYPE(/datum/microbioeffects)
 	// At least one of the zoom levels should be a good enough hint at what the symptom might do.
 	// NOTE: Conforming with the new reagent system, R is now a reagent ID, not a reagent instance.
 	// OVERRIDE: A subclass is expected to override this.
-	proc/react_to(var/R, var/zoom)
-		return null
+	//proc/react_to(var/R, var/zoom)
+		//return null

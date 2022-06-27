@@ -17,8 +17,10 @@ ABSTRACT_TYPE(/datum/suppressant)
 	var/desc = "The pathogen is not suppressed by any external effects."
 	var/therapy = "unknown"
 	var/exactcure = "unknown"
-	// A list of reagent IDs which can be designated as the suppressant.
+	// A list of reagent IDs which can be designated as the cure.
 	var/list/cure_synthesis = list()
+	var/reactionlist = list()
+	var/reactionmessage = MICROBIO_INSPECT_HIT_CURE
 
 	// Override this to define when your suppression method should act.
 	// Returns the new value for suppressed which is ONLY considered if suppressed is 0.
@@ -48,19 +50,18 @@ ABSTRACT_TYPE(/datum/suppressant)
 	// Returns null if the pathogen does not react to the reagent.
 	// Returns a string describing what happened if it does react to the reagent.
 	// NOTE: Conforming with the new chemistry system, R is now a reagent ID, not a reagent instance.
-	proc/react_to(var/R)
-		return ""
 
-	proc/may_react_to()
-		return ""
+	New()
+		..()
+		color = pick(named_colors)
 
 /datum/suppressant/heat
-	color = "blue"
 	name = "Heat"
 	desc = "The pathogen is suppressed by a high body temperature."
-	therapy = "thermal"
+	therapy = "Thermal"
 	exactcure = "Controlled hyperthermia therapy"
 	cure_synthesis = MB_HOT_REAGENTS
+	reactionlist = MB_COLD_REAGENTS
 
 	suppress_act(var/datum/microbesubdata/P)
 		if (!(P.affected_mob.bodytemperature > 320 + P.duration))	//Base temp is 273 + 37 = 310. Add 10 to avoid natural variance.
@@ -74,24 +75,13 @@ ABSTRACT_TYPE(/datum/suppressant)
 		P.suppressant = "Heat"
 		return
 
-	may_react_to()
-		return "A peculiar gland on the pathogen suggests it may be <b style='font-size:20px;color:red'>suppressed</b> by affecting its temperature."
-
-	react_to(var/R)
-		if (R in MB_HOT_REAGENTS)
-			return MICROBIO_INSPECT_DISLIKES + "[R]."
-		else if (R in cure_synthesis)
-			return MICROBIO_INSPECT_LIKES + "[R]."
-		else return null
-
 /datum/suppressant/cold
-	color = "red"
 	name = "Cold"
 	desc = "The pathogen is suppressed by a low body temperature."
-	therapy = "thermal"
+	therapy = "Thermal"
 	exactcure = "Cryogenic therapy"
-
 	cure_synthesis = MB_COLD_REAGENTS
+	reactionlist = MB_HOT_REAGENTS
 
 	suppress_act(var/datum/microbesubdata/P)
 		if (!(P.affected_mob.bodytemperature < 300 - P.duration)) // Same idea as for heat, but inverse.
@@ -101,58 +91,13 @@ ABSTRACT_TYPE(/datum/suppressant)
 				P.affected_mob.show_message("<span class='notice'>You feel better.</span>")
 			return 1
 
-	may_react_to()
-		return "A peculiar gland on the pathogen suggests it may be <b style='font-size:20px;color:red'>suppressed</b> by affecting its temperature."
-
-	react_to(var/R)
-		if (R == "phlogiston" || R == "infernite")
-			return MICROBIO_INSPECT_LIKES + "[R]."
-		else if (R in cure_synthesis)
-			return MICROBIO_INSPECT_DISLIKES + "[R]."
-		else return null
-/*
-/datum/suppressant/sleeping
-	color = "green"
-	name = "Sedative"
-	desc = "The pathogen is suppressed by sleeping."
-	therapy = "sedative"
-
-	suppress_act(var/datum/pathogen/P)
-		if (P.infected.sleeping)
-			P.master.effectdata["suppressant"]++
-			var/slept = P.master.effectdata["suppressant"]
-			if (slept > P.suppression_threshold)
-				if (P.stage > 3 && prob(P.advance_speed * 4))
-					P.infected.show_message("<span class='notice'>You feel better.</span>")
-					P.stage--
-					P.master.effectdata["suppressant"] = 0
-			return 1
-		else
-			P.master.effectdata["suppressant"] = 0
-		return 0
-
-	cure_synthesis = list("morphine", "ketamine")
-
-	onadd(var/datum/pathogen/P)
-		P.master.effectdata["suppressant"] = 0
-
-	may_react_to()
-		return "Membrane patterns of the pathogen indicate it might be <b style='font-size:20px;color:red'>suppressed</b> by a reagent affecting neural activity."
-
-	react_to(var/R)
-		if (R in cure_synthesis)
-			return "The pathogens near the sedative appear to be in stasis."
-		else return null
-*/
-
 /datum/suppressant/brutemeds
-	color = "black"
 	name = "Brute Medicine"
 	desc = "The pathogen is suppressed by brute medicine."
-	therapy = "drugs"
+	therapy = "Medications"
 	exactcure = "Brute Medications"
-
-	cure_synthesis = MB_BRUTE_MEDS_CATAGORY				//Make a define for BRUTE_MEDS
+	cure_synthesis = MB_BRUTE_MEDS_CATAGORY
+	reactionlist = MB_BRUTE_MEDS_CATAGORY
 
 	suppress_act(var/datum/microbesubdata/P)
 		for (var/R in cure_synthesis)
@@ -162,21 +107,14 @@ ABSTRACT_TYPE(/datum/suppressant)
 				P.affected_mob.show_message("<span class='notice'>You feel better.</span>")
 			return 1
 		return 0
-	may_react_to()
-		return "The DNA repair processes of the pathogen indicate that it might be <b style='font-size:20px;color:red'>suppressed</b> by certain kinds of medicine."
-
-	react_to(var/R)
-		if (R in cure_synthesis)
-			return "The pathogens near the [R] appear to be weakened by the brute medicine's presence."
-		else return null
 
 /datum/suppressant/burnmeds
-	color = "cyan"
 	name = "Burn Medicine"
 	desc = "The pathogen is suppressed by burn medicine."
-	therapy = "drugs"
-	cure_synthesis = MB_BURN_MEDS_CATAGORY //Make a define for BURN_MEDS
+	therapy = "Medications"
 	exactcure = "Burn Medications"
+	cure_synthesis = MB_BURN_MEDS_CATAGORY
+	reactionlist = MB_BURN_MEDS_CATAGORY
 
 	suppress_act(var/datum/microbesubdata/P)
 		for (var/R in cure_synthesis)
@@ -186,22 +124,15 @@ ABSTRACT_TYPE(/datum/suppressant)
 				P.affected_mob.show_message("<span class='notice'>You feel better.</span>")
 			return 1
 		return 0
-
-	may_react_to()
-		return "The DNA repair processes of the pathogen indicate that it might be <b style='font-size:20px;color:red'>suppressed</b> by certain kinds of medicine."
-
-	react_to(var/R)
-		if (R in cure_synthesis)
-			return "The pathogens near the [R] appear to be weakened by the burn medicine's presence."
-		else return null
 
 /datum/suppressant/antitox
-	color = "lime"
 	name = "Anti-Toxins"
 	desc = "The pathogen is suppressed by anti-toxins."
-	therapy = "drugs"
-	cure_synthesis = MB_TOX_MEDS_CATAGORY //Make a define for BURN_MEDS
+	therapy = "Medications"
 	exactcure = "Anti-Toxin Medications"
+	cure_synthesis = MB_TOX_MEDS_CATAGORY
+	reactionlist = MB_TOX_MEDS_CATAGORY
+
 
 	suppress_act(var/datum/microbesubdata/P)
 		for (var/R in cure_synthesis)
@@ -211,21 +142,14 @@ ABSTRACT_TYPE(/datum/suppressant)
 				P.affected_mob.show_message("<span class='notice'>You feel better.</span>")
 			return 1
 		return 0
-	may_react_to()
-		return "The DNA repair processes of the pathogen indicate that it might be <b style='font-size:20px;color:red'>suppressed</b> by certain kinds of medicine."
-
-	react_to(var/R)
-		if (R in cure_synthesis)
-			return "The pathogens near the [R] appear to be weakened by the anti-toxin medicine's presence."
-		else return null
 
 /datum/suppressant/oxymeds
-	color = "blue"
 	name = "Oxygen Medicine"
 	desc = "The pathogen is suppressed by oxygen medicine."
-	therapy = "drugs"
-	cure_synthesis = MB_OXY_MEDS_CATAGORY //Make a define for BURN_MEDS
+	therapy = "Medications"
 	exactcure = "Oxygen Medications"
+	cure_synthesis = MB_OXY_MEDS_CATAGORY
+	reactionlist = MB_OXY_MEDS_CATAGORY
 
 	suppress_act(var/datum/microbesubdata/P)
 		for (var/R in cure_synthesis)
@@ -235,20 +159,14 @@ ABSTRACT_TYPE(/datum/suppressant)
 				P.affected_mob.show_message("<span class='notice'>You feel better.</span>")
 			return 1
 		return 0
-	may_react_to()
-		return "The DNA repair processes of the pathogen indicate that it might be <b style='font-size:20px;color:red'>suppressed</b> by certain kinds of medicine."
-
-	react_to(var/R)
-		if (R in cure_synthesis)
-			return "The pathogens near the [R] appear to be weakened by the oxygen medicine's presence."
-		else return null
 
 /datum/suppressant/sedatives
-	color = "white"
 	name = "Sedative"
 	desc = "The pathogen is suppressed by disrupting muscle function."
-	therapy = "sedatives"
+	therapy = "Drugs"
+	exactcure = "Sedatives"
 	cure_synthesis = MB_SEDATIVES_CATAGORY
+	reactionlist = MB_SEDATIVES_CATAGORY
 
 	suppress_act(var/datum/microbesubdata/P)
 		for (var/R in cure_synthesis)
@@ -266,21 +184,13 @@ ABSTRACT_TYPE(/datum/suppressant)
 			P.affected_mob.show_message("<span class='notice'>You feel better.</span>")
 			return
 
-	may_react_to()
-		return "Membrane patterns of the pathogen indicate it might be <b style='font-size:20px;color:red'>suppressed</b> by a reagent affecting neural activity."
-
-	react_to(var/R)
-		if (R in cure_synthesis)
-			return "The pathogens near the [R] appear to move at a slower pace."
-		else return null
-
 /datum/suppressant/stimulants
-	color = "grey"
 	name = "Stimulants"
 	desc = "The pathogen is suppressed by facilitating muscle function."
-	therapy = "stimulants"
-
+	therapy = "Drugs"
+	exactcure = "Stimulants"
 	cure_synthesis = MB_STIMULANTS_CATAGORY
+	reactionlist = MB_STIMULANTS_CATAGORY
 
 	suppress_act(var/datum/microbesubdata/P)
 		for (var/R in cure_synthesis)
@@ -290,22 +200,14 @@ ABSTRACT_TYPE(/datum/suppressant)
 				P.affected_mob.show_message("<span class='notice'>You feel better.</span>")
 			return 1
 		return 0
-
-	may_react_to()
-		return "Membrane patterns of the pathogen indicate it might be <b style='font-size:20px;color:red'>suppressed</b> by a reagent affecting neural activity."
-
-	react_to(var/R)
-		if (R in cure_synthesis)
-			return "The pathogens near the [R] appear to move at a faster pace."
-		else return null
 
 /datum/suppressant/spaceacillin
-	color = "red"
 	name = "Spaceacillin"
 	desc = "The pathogen is suppressed by spaceacillin."
-	therapy = "spaceacillin"
-
+	therapy = "Drugs"
+	exactcure = "Spaceacillin"
 	cure_synthesis = "spaceacillin"
+	reactionlist = "spaceacillin"
 
 	suppress_act(var/datum/microbesubdata/P)
 		for (var/R in cure_synthesis)
@@ -316,13 +218,6 @@ ABSTRACT_TYPE(/datum/suppressant)
 			return 1
 		return 0
 
-	may_react_to()
-		return "Membrane patterns of the pathogen indicate it might be <b style='font-size:20px;color:red'>suppressed</b> by spaceacillin."
-
-	react_to(var/R)
-		if (R in cure_synthesis)
-			return "The pathogens near the [R] appear to move at a slower pace."
-		else return null
 /*
 /datum/suppressant/chickensoup
 	color = "pink"
@@ -423,4 +318,39 @@ ABSTRACT_TYPE(/datum/suppressant)
 	react_to(var/datum/reagent/R)
 		if (R in cure_synthesis)
 			return "The mutagenic substance is severely damaging the inner elements of the pathogen."
+*/
+
+/*
+/datum/suppressant/sleeping
+	color = "green"
+	name = "Sedative"
+	desc = "The pathogen is suppressed by sleeping."
+	therapy = "sedative"
+
+	suppress_act(var/datum/pathogen/P)
+		if (P.infected.sleeping)
+			P.master.effectdata["suppressant"]++
+			var/slept = P.master.effectdata["suppressant"]
+			if (slept > P.suppression_threshold)
+				if (P.stage > 3 && prob(P.advance_speed * 4))
+					P.infected.show_message("<span class='notice'>You feel better.</span>")
+					P.stage--
+					P.master.effectdata["suppressant"] = 0
+			return 1
+		else
+			P.master.effectdata["suppressant"] = 0
+		return 0
+
+	cure_synthesis = list("morphine", "ketamine")
+
+	onadd(var/datum/pathogen/P)
+		P.master.effectdata["suppressant"] = 0
+
+	may_react_to()
+		return "Membrane patterns of the pathogen indicate it might be <b style='font-size:20px;color:red'>suppressed</b> by a reagent affecting neural activity."
+
+	react_to(var/R)
+		if (R in cure_synthesis)
+			return "The pathogens near the sedative appear to be in stasis."
+		else return null
 */

@@ -7,7 +7,7 @@
 
 	var/datum/reagent/blood/blood = null
 
-	flags = TABLEPASS | CONDUCT | FPRINT | NOSPLASH
+	flags = TABLEPASS | CONDUCT | FPRINT | NOSPLASH | OPENCONTAINER
 
 	New()
 		..()
@@ -34,58 +34,31 @@
 			desc = "This blood slide is contaminated and useless."
 
 /obj/item/reagent_containers/glass/petridish
-	name = "Petri Dish"
+	name = "petri dish"
 	icon = 'icons/obj/pathology.dmi'
 	icon_state = "petri0"
-	desc = "A dish tailored hold pathogen cultures."
+	desc = "A dish tailored hold microbial cultures."
 	initial_volume = 40
-	/*var/stage = 0
-
-	var/dirty = 0
-	var/dirty_reason = ""
-	var/datum/reagent/medium = null
-	var/list/nutrition = list()
-
-	var/ctime = 8
-	var/starving = 5
-	rc_flags = 0
 
 	examine()
-		if (src.dirty || src.dirty_reason)
-			. = ..()
-			. += "<span class='alert'>The petri dish appears to be incapable of growing any pathogen, and must be cleaned.</span><br/>"
-			return
-
-		. = list("This is [src]<br/>")
+		. = list("This is a [src].<br/>")
 		if (src.reagents.reagent_list["pathogen"])
 			var/datum/reagent/blood/pathogen/P = src.reagents.reagent_list["pathogen"]
-			. += "<span class='notice'>It contains [P.volume] unit\s of harvestable pathogen.</span><br/>"
+			. += "<span class='notice'>It contains [P.volume] unit\s of microbial fluid.</span><br/>"
 
-	afterattack(obj/target, mob/user , flag)
-		if (istype(target, /obj/machinery/microscope))
+	afterattack(obj/target, mob/user, flag)
+		if (istype(target, /obj/machinery/microscope) || istype(target, /obj/machinery/incubator))
 			return
 		var/amount = src.reagents.total_volume
 		..(target, user, flag)
 		if (amount && !src.reagents.total_volume)
 			processing_items.Remove(src)
-			for (var/N in nutrition)
-				nutrition[N] = 0
 			reagents.clear_reagents()
-
-	process()
-		if (dirty && (src in processing_items))
-			processing_items -= src
-		ctime--
-		if (!src.reagents || !src.reagents.reagent_list["pathogen"] )
-			set_dirty("All viable pathogen has been harvested from the petri dish.")
 
 	on_reagent_change()
 		..()
 		if (reagents.total_volume < 0.5)
 			return
-		if (dirty)
-			return
-*/
 /*
 		// Cultivation is already in progress in this dish. Depending on what reagent(s) were introduced, the process
 		// halts, or reverses entirely.
@@ -179,7 +152,6 @@
 		dirty_reason = reason
 		update_dish_icon()
 */
-	flags = TABLEPASS | CONDUCT | FPRINT | OPENCONTAINER
 
 /obj/item/reagent_containers/glass/vial
 	name = "vial"
@@ -262,6 +234,13 @@
 	New()
 		..()
 		src.reagents.add_reagent("spaceacillin", 50)
+
+/obj/item/reagent_containers/glass/beaker
+	afterattack(obj/target, mob/user , flag)
+		if (istype(target, /obj/machinery/synthomatic))
+			return
+		..()
+
 /*
 /obj/item/serum_injector
 	name = "Pathological Injector"
@@ -334,8 +313,3 @@
 				src.name = "empty [src.name]"
 				inject(user, user)
 */
-/obj/item/reagent_containers/glass/beaker
-	afterattack(obj/target, mob/user , flag)
-		if (istype(target, /obj/machinery/synthomatic))
-			return
-		..()

@@ -18,26 +18,35 @@
 #define MB_BURN_MEDS_CATAGORY list("silver_sulfadiazine", "synthflesh", "menthol")
 #define MB_TOX_MEDS_CATAGORY list("anti_rad", "penteticacid", "charcoal", "antihol")
 #define MB_OXY_MEDS_CATAGORY list("iron", "salbutamol", "epinephrine", "atropine", "perfluorodecalin")
+
 #define MB_SEDATIVES_CATAGORY list("haloperidol", "morphine", "neurotoxin", "ethanol", "lithium", "ether", "ketamine")
 #define MB_STIMULANTS_CATAGORY list("smelling_salt", "epinephrine", "sugar", "ephedrine", "synaptizine", "methamphetamine")
-#define MB_FATS_CATAGORY list("badgrease", "grease", "porktonium", "cholesterol")
+//#define MB_FATS_CATAGORY list("badgrease", "grease", "porktonium", "cholesterol")
 
 #define MB_HOT_REAGENTS list("phlogiston", "infernite")
 #define MB_COLD_REAGENTS list("cryostylane", "cryoxadone")
 
+#define MB_ACID_REAGENTS list("acid", "clacid", "pacid")
+//yoinked from the artifact injector code
+#define MB_TOXINS_REAGENTS list("chlorine","fluorine","lithium","mercury","plasma","radium","uranium","strange_reagent",\
+"amanitin","coniine","cyanide","curare","formaldehyde","lipolicide","initropidril","cholesterol","itching","pancuronium","polonium",\
+"sodium_thiopental","ketamine","sulfonal","toxin","venom","neurotoxin","mutagen","wolfsbane","toxic_slurry","histamine","sarin")
+
+#define MB_BRAINDAMAGE_REAGENTS list("mercury","neurotoxin","haloperidol","sarin")
 // Inspection Responses
 
-#define MICROBIO_INSPECT_LIKES "The pathogens are moving towards the area affected by the " // + "[R]."
+#define MICROBIO_INSPECT_LIKES "The microbes are moving towards the area affected by the reagent!"
 
-#define MICROBIO_INSPECT_DISLIKES "The pathogens are attemping to escape from the area affected by the " // + "[R]."
+#define MICROBIO_INSPECT_DISLIKES "The microbes are attemping to escape from the area affected by the reagent!"
 
-#define MICROBIO_INSPECT_DISLIKES_GENERIC "One of the glands of the pathogen seems to shut down in the presence of the solution."
+#define MICROBIO_INSPECT_DISLIKES_GENERIC "The microbes seem to shut down in the presence of the solution."
 
+#define MICROBIO_INSPECT_HIT_CURE "The microbes in the test reagent are rapidly withering away!"
 
 // Other constants
 
 #define MICROBIO_INDIVIDUALMICROBELIMIT 3
-#define MICROBIO_DEFAULTPROBABILITYDIVIDEND 2
+#define MICROBIO_DEFAULTPROBABILITYDIVIDEND 5
 #define MICROBIO_MAXIMUMPROBABILITY 5
 #define MICROBIO_NAMINGLIST list("Disease", "Strain", "Plague", "Syndrome", "Virions")
 
