@@ -696,15 +696,17 @@
 	category = "Tools"
 
 	New()
-		required_parts.Add(new/datum/matfab_part/energy {part_name = "Core"; required_amount = 4} ())
+		required_parts.Add(new/datum/matfab_part/conductive {part_name = "Core"; required_amount = 4} ())
+		required_parts.Add(new/datum/matfab_part/radiocative_material {part_name = "Glowy Stuff"; required_amount = 4; optional = TRUE} ())
 		..()
 
 	build(amount, var/obj/machinery/nanofab/owner)
 		for(var/i=0, i<amount, i++)
 			var/obj/item/cell/custom/newObj = new()
 			var/obj/item/source = getObjectByPartName("Core")
+			var/obj/item/rads = getObjectByPartName("Glowy Stuff")
 			if(source?.material)
-				newObj.setMaterial(source.material)
+				newObj.set_custom_mats(source?.material, rads?.material)
 
 			newObj.set_loc(getOutputLocation(owner))
 		return
