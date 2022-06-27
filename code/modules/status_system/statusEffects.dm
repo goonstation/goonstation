@@ -411,12 +411,12 @@
 					damage_burn = 0
 				if(1)
 					howMuch = "slightly " //it's not great, but you'll be fine
-					damage_tox = prob(20)
+					damage_tox = prob(70)
 					damage_burn = 0
 				if(2)
 					howMuch = "moderately " //you don't feel so good
-					damage_tox = prob(50)
-					damage_burn = 0
+					damage_tox = 1
+					damage_burn = prob(20)
 				if(3)
 					howMuch = "very " // not great, not terrible
 					damage_tox = 1 + prob(50)
@@ -439,10 +439,10 @@
 				visible = FALSE
 
 			if(stage > 0 && !isdead(M))
-				if (prob((stage-(2+M.traitHolder?.hasTrait("stablegenes")))**2) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
+				if (prob(min(stage-(2+M.traitHolder?.hasTrait("stablegenes")),0)**2) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
 					boutput(M, "<span class='alert'>You mutate!</span>")
 					M.bioHolder.RandomEffect("either")
-				if(!ON_COOLDOWN(M, "radiation_stun_check", 1 SECOND) && prob(stage**2) && M.bioHolder && !M.bioHolder.HasEffect("revenant"))
+				if(!ON_COOLDOWN(M, "radiation_stun_check", 1 SECOND) && prob((stage-1)**2) && M.bioHolder && !M.bioHolder.HasEffect("revenant"))
 					M.changeStatus("weakened", 3 SECONDS)
 					boutput(M, "<span class='alert'>You feel weak.</span>")
 					M.emote("collapse")

@@ -150,7 +150,7 @@
 			logTheThing("combat", T, null, "entered [src] at [log_loc(src)] and gibbed")
 			return
 		else
-			T.take_radiation_dose( rand(0.05,0.5))
+			T.take_radiation_dose( rand()*0.5 )
 			if(ishuman(T))
 				var/mob/living/carbon/human/H = T
 				if (prob(75))
