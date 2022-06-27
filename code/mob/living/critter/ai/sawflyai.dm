@@ -35,7 +35,7 @@
 	minimum_task_ticks = 10
 	maximum_task_ticks = 25
 	var/weight = 10
-	var/max_dist = 12
+	var/max_dist = 6
 	target_range = 1
 	var/list/dummy_params = list("icon-x" = 16, "icon-y" = 16)
 
@@ -85,16 +85,16 @@
 	for (var/mob/living/C in viewers(max_dist, owncritter))
 		if (C.health < -50 || !isalive(C)) continue
 		if(istype(C, /mob/living/critter/robotic/sawfly)) continue
-		if (C in owncritter.friends) continue
-		if(C.job in list( "Head of Security", "Security Officer", "Nanotrasen Security Consultant")) //hopefully this is cheaper than the OR chain I had before
-			. = list(C) //go get em, tiger
-			return
+
 		if(C?.mind.special_role)
 			if (istraitor(C) || isnukeop(C) || isspythief(C) || isnukeopgunbot(C)) // frens :)
 				if (!(C in owncritter.friends))
 					boutput(C, "<span class='alert'> [owncritter]'s IFF system silently flags you as an ally! </span>")
 					owncritter.friends += C
 				continue
+		if(C.job in list( "Head of Security", "Security Officer", "Nanotrasen Security Consultant")) //hopefully this is cheaper than the OR chain I had before
+			. = list(C) //go get em, tiger
+			return
 		. += C //you passed all the checks it, now you get added to the list for consideration
 		return
 
@@ -104,7 +104,7 @@
 /datum/aiTask/sequence/goalbased/sawfly_chase_n_stab
 	name = "chasing"
 	weight = 15
-	max_dist = 12
+	max_dist = 6
 	can_be_adjacent_to_target = TRUE
 	var/found_path = null
 
@@ -127,10 +127,6 @@
 	for (var/mob/living/C in viewers(max_dist, owncritter))
 		if (C.health < -50 || !isalive(C)) continue
 		if(istype(C, /mob/living/critter/robotic/sawfly)) continue
-		if (C in owncritter.friends) continue
-		if(C.job in list( "Head of Security", "Security Officer", "Nanotrasen Security Consultant")) //hopefully this is cheaper than the OR chain I had before
-			. = list(C) //go get em, tiger
-			return
 		if(C?.mind.special_role)
 			if (istraitor(C) || isnukeop(C) || isspythief(C) || isnukeopgunbot(C)) // frens :)
 				if (!(C in owncritter.friends))
@@ -138,7 +134,9 @@
 					owncritter.friends += C
 				continue
 		. += C //you passed all the checks it, now you get added to the list for consideration
-
+		if(C.job in list( "Head of Security", "Security Officer", "Nanotrasen Security Consultant")) //hopefully this is cheaper than the OR chain I had before
+			. = list(C) //go get em, tiger
+			return
 	. = get_path_to(holder.owner, ., max_dist*2, 1) //calculate paths to the target, any unreachable targets will be discarded
 
 

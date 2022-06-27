@@ -54,7 +54,6 @@ This file is the critter itself, and all the custom procs it needs in order to f
 		if(isnew)
 			name = "Sawfly [pick(sawflynames)]-[rand(1,999)]"
 		deathtimer = rand(1, 5)
-		beeptext = "[pick(list("beeps",  "boops", "bwoops", "bips", "bwips", "bops", "chirps", "whirrs", "pings", "purrs", "thrums"))]"
 		animate_bumble(src) // gotta get the float goin' on
 		src.set_a_intent(INTENT_HARM) // incredibly stupid way of ensuring they aren't passable but it works
 		// ai setup
@@ -80,7 +79,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 		switch (act)
 			if ("scream")
 				playsound(src, pick(src.beeps), 40, 1)
-				src.visible_message("<b>[src] [beeptext].</b>")
+				src.visible_message("<b>[src] [pick(list("beeps",  "boops", "bwoops", "bips", "bwips", "bops", "chirps", "whirrs", "pings", "purrs", "thrums"))].</b>")
 
 
 
@@ -88,12 +87,14 @@ This file is the critter itself, and all the custom procs it needs in order to f
 		if(!isalive(src))
 			return 0
 		else
-			var/obj/item/old_grenade/sawfly/reused/N = new /obj/item/old_grenade/sawfly/reused(get_turf(src))
+			var/obj/item/old_grenade/sawflyreused/N = new /obj/item/old_grenade/sawflyreused(get_turf(src))
 			// pass our name and health
 			N.name = "Compact [name]"
 			N.tempname = src.name
-			N.tempdam = (50 - src.health )
-			qdel(src)
+			src.is_npc = FALSE
+			N.heldfly = src
+
+			src.set_loc(N)
 
 
 	proc/communalbeep() // distributes the beepchance among the number of sawflies nearby
@@ -106,7 +107,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 		if(prob(beepchance))
 			if(isalive(src))
 				playsound(src, pick(src.beeps), 40, 1)
-				src.visible_message("<b>[src] [beeptext].</b>")
+				src.visible_message("<b>[src] [pick(list("beeps",  "boops", "bwoops", "bips", "bwips", "bops", "chirps", "whirrs", "pings", "purrs", "thrums"))].</b>")
 
 
 	emp_act() // allows armory's pulse rifles to fuck their shit

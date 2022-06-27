@@ -23,7 +23,7 @@
 	is_dangerous = TRUE
 	is_syndicate = TRUE
 	contraband = 2
-	custom_suicide = 1
+
 
 	prime()
 		var/turf/T =  get_turf(src)
@@ -38,22 +38,33 @@
 		new /obj/item/remote/sawflyremote(src.loc)
 		..()
 
-/obj/item/old_grenade/sawfly/reused
+/obj/item/old_grenade/sawflyreused
 	name = "Compact sawfly"
 	var/tempname = "Uh oh! Call 1-800-imcoder!"
 	desc = "A self-deploying antipersonnel robot. This one has seen some use."
-	var/tempdam = 0
 
+	//EPIC copy paste
+	det_time = 1.5 SECONDS
+	throwforce = 7
+	icon_state = "sawfly"
+	icon_state_armed = "sawfly1"
+	sound_armed = 'sound/machines/sawflyrev.ogg'
+	inhand_image_icon = 'icons/mob/inhand/tools/omnitool.dmi' // could be better but it's distinct enough
+	is_dangerous = TRUE
+	is_syndicate = TRUE
+	contraband = 2
+	//var/tempdam = 0
+	var/mob/living/critter/robotic/sawfly/heldfly = null
 
 	prime()
 		var/turf/T =  get_turf(src)
 		if (T)
-			var/mob/living/critter/robotic/sawfly/withai/D = new /mob/living/critter/robotic/sawfly/withai(T)
-			D.isnew = FALSE // give it characteristics of old drone
-			D.name = tempname
-			D.TakeDamage("All", (tempdam))
+			heldfly.set_loc(T)
+			heldfly.is_npc = TRUE
 
-		qdel(src)
+			qdel(src)
+
+
 		return
 
 /obj/item/old_grenade/spawner/sawflycluster
