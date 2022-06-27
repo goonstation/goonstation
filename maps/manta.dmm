@@ -498,7 +498,7 @@
 /area/station/bridge)
 "abw" = (
 /obj/displaycase{
-	displayed = new /obj/item/captaingun;
+	displayed = new/obj/item/captaingun;
 	pixel_y = 8
 	},
 /obj/table/wood/auto,
@@ -5032,6 +5032,7 @@
 	dir = 1;
 	pixel_y = 16
 	},
+/obj/machinery/computer/chem_requester,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -11515,6 +11516,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/machinery/computer/chem_request_receiver,
 /turf/simulated/floor/blackwhite,
 /area/station/science/chemistry)
 "aGV" = (
@@ -33226,6 +33228,12 @@
 /obj/access_spawn/mining,
 /turf/unsimulated/floor/orange,
 /area/station/mining/staff_room)
+"cdF" = (
+/obj/machinery/computer/chem_requester{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/hallway/starboardlowerhallway)
 "cea" = (
 /obj/decal/tile_edge/check{
 	dir = 4;
@@ -94966,7 +94974,7 @@ brb
 bsm
 bpV
 uHX
-bpV
+cdF
 bze
 bAx
 bCb

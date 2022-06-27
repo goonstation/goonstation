@@ -13743,10 +13743,10 @@
 	},
 /area/station/medical/medbay)
 "aKQ" = (
-/obj/reagent_dispensers/watertank/fountain,
 /obj/machinery/status_display{
 	pixel_y = 30
 	},
+/obj/machinery/computer/chem_requester,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -50748,7 +50748,9 @@
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "cAc" = (
-/obj/table/reinforced/chemistry/auto,
+/obj/machinery/computer/chem_request_receiver{
+	dir = 8
+	},
 /turf/simulated/floor/purpleblack{
 	dir = 4
 	},
@@ -56810,6 +56812,13 @@
 /obj/disposalpipe/segment/transport,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/east)
+"nuy" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/reagent_dispensers/watertank/fountain,
+/turf/simulated/floor/blueblack,
+/area/station/medical/medbay/lobby)
 "nwH" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
@@ -123909,7 +123918,7 @@ aXx
 aEd
 bdG
 bdG
-bjQ
+nuy
 aXx
 trF
 bsi

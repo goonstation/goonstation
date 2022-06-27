@@ -13126,6 +13126,10 @@
 /obj/fitness/weightlifter,
 /turf/simulated/floor,
 /area/station/crew_quarters/fitness)
+"dCO" = (
+/obj/machinery/computer/chem_request_receiver,
+/turf/simulated/floor/black,
+/area/station/science/chemistry)
 "dCV" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 1
@@ -33899,6 +33903,7 @@
 /obj/item/hand_labeler{
 	pixel_y = -8
 	},
+/obj/machinery/glass_recycler,
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "jFH" = (
@@ -38291,7 +38296,9 @@
 /obj/machinery/light/incandescent/cool{
 	dir = 8
 	},
-/obj/machinery/vending/port_a_nanomed,
+/obj/machinery/computer/chem_requester{
+	dir = 4
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -68268,6 +68275,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/machinery/vending/port_a_nanomed,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
 "tAW" = (
@@ -70483,15 +70491,6 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
-"ukA" = (
-/obj/machinery/firealarm{
-	pixel_x = 1;
-	pixel_y = -25
-	},
-/obj/table/reinforced/chemistry/beakers,
-/obj/machinery/glass_recycler,
-/turf/simulated/floor/purpleblack/corner,
-/area/station/science/chemistry)
 "ukM" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 1
@@ -70999,6 +70998,12 @@
 	dir = 4
 	},
 /area/station/bridge)
+"utB" = (
+/obj/machinery/computer/chem_requester{
+	dir = 8
+	},
+/turf/simulated/floor/purple,
+/area/station/science/chemistry)
 "utC" = (
 /turf/simulated/floor/red,
 /area/listeningpost)
@@ -122610,8 +122615,8 @@ sZM
 dpI
 fHL
 pyL
-mfI
-qEc
+mZl
+utB
 oqi
 oqi
 aZz
@@ -122912,8 +122917,8 @@ oos
 eOq
 npV
 pyL
-mZl
-aLq
+mfI
+qEc
 xXq
 gfr
 bmF
@@ -123216,7 +123221,7 @@ dYa
 dNb
 mZl
 aLq
-lnW
+dCO
 saq
 saq
 srh
@@ -123827,7 +123832,7 @@ jFD
 opG
 mHF
 saq
-ukA
+lnW
 afo
 bIV
 vce

@@ -16,6 +16,7 @@ var/list/datum/chem_request/chem_requests = list()
 		src.id = ++last_id
 
 /obj/machinery/computer/chem_requester
+	name = "Chemical request console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "chemreq"
 	var/datum/chem_request/request = new
@@ -64,7 +65,7 @@ var/list/datum/chem_request/chem_requests = list()
 					src.request.reagent_color = list(reagent.fluid_r, reagent.fluid_g, reagent.fluid_b)
 				. = TRUE
 			if ("set_notes")
-				src.request.note = params["notes"]
+				src.request.note = strip_html(params["notes"], 80)
 			if ("set_volume")
 				src.request.volume = clamp(params["volume"], 1, src.max_volume)
 				. = TRUE
@@ -89,8 +90,11 @@ var/list/datum/chem_request/chem_requests = list()
 		else src.Attackhand(user)
 
 /obj/machinery/computer/chem_request_receiver
+	name = "Chemical request display"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "chemreq"
+	req_access = list(access_chemistry)
+	object_flags = CAN_REPROGRAM_ACCESS
 
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
@@ -98,7 +102,7 @@ var/list/datum/chem_request/chem_requests = list()
 			ui = new(user, src, "ChemRequestReceiver")
 			ui.open()
 
-	ui_data()
+	ui_data(mob/user)
 		var/list/requests = list()
 		for (var/request_id in chem_requests)
 			var/datum/chem_request/request = chem_requests[request_id]
@@ -108,11 +112,14 @@ var/list/datum/chem_request/chem_requests = list()
 				"reagent_name" = request.reagent_name,
 				"volume" = request.volume,
 				"reagent_color" = request.reagent_color,
-				"notes" = request.note,
+				"notes" = copytext(request.note, 1, 80),
 				"area" = request.area.name,
 				"state" = request.state
 			))
-		return list("requests" = requests)
+		return list(
+			"requests" = requests,
+			"allowed" = src.allowed(user)
+			)
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 		switch (action)
@@ -120,7 +127,9 @@ var/list/datum/chem_request/chem_requests = list()
 				var/datum/chem_request/request = chem_requests["[params["id"]]"]
 				if (request)
 					request.state = "denied"
+				. = TRUE
 			if ("fulfil")
 				var/datum/chem_request/request = chem_requests["[params["id"]]"]
 				if (request)
 					request.state = "fulfilled"
+				. = TRUE

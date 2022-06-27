@@ -9347,8 +9347,9 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "awg" = (
-/obj/table/auto,
-/obj/random_item_spawner/medicine,
+/obj/machinery/computer/chem_requester{
+	dir = 4
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "awh" = (
@@ -9877,6 +9878,7 @@
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/access_spawn/medical,
+/obj/random_item_spawner/medicine,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "axt" = (
@@ -13364,11 +13366,10 @@
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
 "aFS" = (
-/obj/submachine/chem_extractor{
-	dir = 4;
-	pixel_x = -4
-	},
 /obj/machinery/light/incandescent/cool,
+/obj/machinery/computer/chem_request_receiver{
+	dir = 4
+	},
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
 "aFT" = (
@@ -14405,6 +14406,9 @@
 /obj/disposalpipe/segment/mail{
 	dir = 8;
 	icon_state = "pipe-c"
+	},
+/obj/machinery/computer/chem_requester{
+	dir = 8
 	},
 /turf/simulated/floor/purple/side{
 	dir = 6

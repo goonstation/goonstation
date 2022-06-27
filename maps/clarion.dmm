@@ -17524,7 +17524,7 @@
 	dir = 4;
 	pixel_x = 10
 	},
-/obj/iv_stand,
+/obj/machinery/vending/monkey/research,
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
 "aKq" = (
@@ -22529,6 +22529,9 @@
 	dir = 4;
 	pixel_x = 10
 	},
+/obj/machinery/computer/chem_requester{
+	dir = 8
+	},
 /turf/simulated/floor/purpleblack{
 	dir = 4
 	},
@@ -25114,6 +25117,9 @@
 /obj/decal/tile_edge/line/blue{
 	dir = 4;
 	icon_state = "line1"
+	},
+/obj/machinery/computer/chem_requester{
+	dir = 8
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
@@ -28195,8 +28201,8 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/machinery/vending/monkey/research,
 /obj/item/device/radio/intercom/science,
+/obj/machinery/computer/chem_request_receiver,
 /turf/simulated/floor/purpleblack{
 	dir = 9
 	},
@@ -47721,6 +47727,10 @@
 	dir = 5
 	},
 /area/station/security/hos)
+"lsT" = (
+/obj/iv_stand,
+/turf/simulated/floor/engine,
+/area/station/science/testchamber)
 "ltT" = (
 /obj/machinery/r_door_control/podbay/security/new_walls/west{
 	pixel_x = -24
@@ -94994,7 +95004,7 @@ aET
 aET
 aET
 aHO
-aIV
+lsT
 aKm
 aLr
 aMN

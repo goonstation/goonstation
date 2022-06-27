@@ -37913,6 +37913,9 @@
 	dir = 8;
 	tag = ""
 	},
+/obj/machinery/computer/chem_requester{
+	dir = 4
+	},
 /turf/simulated/floor/purple/side{
 	dir = 8
 	},
@@ -55804,6 +55807,11 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/sortingRoom)
+"jWU" = (
+/obj/disposalpipe/segment/transport,
+/obj/storage/closet/biohazard,
+/turf/simulated/floor/plating,
+/area/station/science/testchamber)
 "jWX" = (
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
@@ -56130,6 +56138,14 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/bridge)
+"kuQ" = (
+/obj/machinery/computer/chem_request_receiver{
+	dir = 4
+	},
+/turf/simulated/floor/purplewhite{
+	dir = 8
+	},
+/area/station/science/chemistry)
 "kvk" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /obj/wingrille_spawn/auto,
@@ -63757,6 +63773,9 @@
 "vMi" = (
 /obj/cable{
 	icon_state = "1-8"
+	},
+/obj/machinery/computer/chem_requester{
+	dir = 4
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 8
@@ -95604,7 +95623,7 @@ clU
 cnb
 coj
 cpm
-cqn
+jWU
 crq
 cqn
 cqn
@@ -96208,7 +96227,7 @@ clW
 cnd
 col
 cpo
-cqo
+kuQ
 coT
 cqo
 ctd

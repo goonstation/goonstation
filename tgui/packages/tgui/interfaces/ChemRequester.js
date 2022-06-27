@@ -56,6 +56,7 @@ export const ChemRequester = (props, context) => {
     max_volume,
     notes,
   } = data;
+  const [notesText, setNotesText] = useLocalState(context, 'notesText', '');
   return (
     <Window title="Chemical request" width={400} height={600}>
       <Window.Content align="center">
@@ -75,10 +76,18 @@ export const ChemRequester = (props, context) => {
             </Stack.Item>
             <Stack.Item>
               <Box align="left">Notes:</Box>
-              <Input width="100%" id="notes" onChange={(e, value) => { act("set_notes", { notes: value }); }} >{notes}</Input>
+              <Input
+                width="100%"
+                value={notesText}
+                onInput={(e, value) => { setNotesText(value.substring(0, 80)); }}
+                onChange={(e, value) => { act("set_notes", { notes: value }); }} >{notes}
+              </Input>
             </Stack.Item>
             <Stack.Item>
-              <Button onClick={() => { act("submit"); }}
+              <Button onClick={() => {
+                act("submit");
+                setNotesText('');
+              }}
               >
                 Submit request
               </Button>

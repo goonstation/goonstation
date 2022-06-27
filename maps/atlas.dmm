@@ -8736,6 +8736,11 @@
 	},
 /turf/simulated/floor/purple,
 /area/station/bridge/united_command)
+"uY" = (
+/turf/simulated/floor/airless/purpleblack{
+	dir = 1
+	},
+/area/station/hallway/primary/east)
 "va" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -10503,6 +10508,11 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
+/obj/shrub{
+	dir = 4;
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant"
+	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "zr" = (
@@ -11354,18 +11364,13 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay)
 "By" = (
-/obj/shrub{
-	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
-	dir = 1;
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant"
-	},
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
 	pixel_y = 21
 	},
-/turf/simulated/floor/black,
+/obj/machinery/computer/chem_requester,
+/turf/simulated/floor/white,
 /area/station/hallway/primary/east)
 "Bz" = (
 /turf/simulated/floor/bluewhite{
@@ -13051,6 +13056,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/janitor/office)
+"FQ" = (
+/obj/machinery/computer/chem_requester,
+/turf/simulated/floor/bluewhite{
+	dir = 1
+	},
+/area/station/medical/medbay)
 "FR" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -17649,7 +17660,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/airless/purpleblack{
+	dir = 4
+	},
 /area/station/hallway/primary/east)
 "Rg" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -17665,6 +17678,11 @@
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /turf/simulated/floor/caution/north,
 /area/station/engine/hotloop)
+"Ri" = (
+/turf/simulated/floor/airless/purpleblack/corner{
+	dir = 1
+	},
+/area/station/hallway/primary/east)
 "Rk" = (
 /obj/machinery/atmospherics/binary/pump{
 	dir = 1;
@@ -17919,7 +17937,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/airless/purpleblack/corner{
+	dir = 8
+	},
 /area/station/hallway/primary/east)
 "RY" = (
 /obj/item/reagent_containers/food/snacks/burger/moldy{
@@ -19562,7 +19582,9 @@
 	dir = 4;
 	tag = "icon-chair (EAST)"
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/airless/purpleblack{
+	dir = 8
+	},
 /area/station/hallway/primary/east)
 "Wz" = (
 /obj/stool/chair/office/blue,
@@ -20541,12 +20563,6 @@
 /obj/machinery/phone,
 /turf/simulated/floor/carpet/red/fancy/edge/ne,
 /area/station/security/main)
-"YZ" = (
-/obj/machinery/computer/chem_requester{
-	dir = 4
-	},
-/turf/simulated/floor/black,
-/area/station/hallway/primary/east)
 "Za" = (
 /obj/machinery/atmospherics/binary/pump{
 	dir = 8;
@@ -61800,7 +61816,7 @@ QM
 yV
 yA
 Zy
-YZ
+Zy
 Xx
 nv
 QX
@@ -63310,7 +63326,7 @@ rw
 qD
 qD
 By
-Zy
+uY
 RJ
 Ui
 Rp
@@ -63612,7 +63628,7 @@ vI
 qj
 qD
 Wy
-Zy
+Ri
 nu
 RZ
 Rp
@@ -70566,7 +70582,7 @@ PN
 Dl
 Eb
 yg
-Bz
+FQ
 Go
 GV
 HA

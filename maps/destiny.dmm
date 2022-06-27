@@ -3679,6 +3679,7 @@
 	dir = 1;
 	nostick = 1
 	},
+/obj/machinery/computer/chem_request_receiver,
 /turf/simulated/floor/purplewhite{
 	dir = 1
 	},
@@ -6867,10 +6868,12 @@
 	dir = 4;
 	nostick = 1
 	},
-/obj/machinery/vending/medical_public,
 /obj/decal/tile_edge/line/purple{
 	dir = 5;
 	icon_state = "line1"
+	},
+/obj/machinery/computer/chem_requester{
+	dir = 8
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)
@@ -33131,6 +33134,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/machinery/vending/medical_public,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)
 "jJZ" = (
@@ -54145,10 +54149,10 @@
 	})
 "uWW" = (
 /obj/item_dispenser/latex_gloves,
-/obj/stool/chair/blue,
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/machinery/computer/chem_requester,
 /turf/simulated/floor/bluewhite{
 	dir = 10
 	},

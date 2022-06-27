@@ -59618,7 +59618,6 @@
 /area/station/science/lobby)
 "cDr" = (
 /obj/item/device/radio/intercom/science,
-/obj/stool/chair,
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -26;
@@ -59626,6 +59625,10 @@
 	},
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/disposalpipe/segment,
+/obj/shrub,
+/obj/landmark{
+	name = "kudzustart"
+	},
 /turf/simulated/floor/purple/side{
 	dir = 9
 	},
@@ -60925,14 +60928,13 @@
 	},
 /area/station/science/lobby)
 "cGx" = (
-/obj/shrub,
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/landmark{
-	name = "kudzustart"
+/obj/machinery/computer/chem_requester{
+	dir = 4
 	},
 /turf/simulated/floor/purple/side{
 	dir = 10
@@ -61991,12 +61993,12 @@
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
 "cIZ" = (
-/obj/storage/secure/closet/research/chemical,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/autoname_north,
+/obj/machinery/computer/chem_request_receiver,
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
 "cJa" = (
@@ -64535,6 +64537,10 @@
 /turf/simulated/floor/purplewhite,
 /area/station/science/chemistry)
 "cOZ" = (
+/obj/storage/secure/closet/research/chemical,
+/turf/simulated/floor/purplewhite,
+/area/station/science/chemistry)
+"cPa" = (
 /obj/table/reinforced/chemistry/auto,
 /obj/item/storage/box/syringes,
 /obj/item/storage/box/syringes,
@@ -64543,11 +64549,6 @@
 	},
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/machinery/light,
-/turf/simulated/floor/purplewhite,
-/area/station/science/chemistry)
-"cPa" = (
-/obj/table/reinforced/chemistry/auto,
-/obj/item/storage/firstaid/toxin,
 /turf/simulated/floor/purplewhite/corner{
 	dir = 4
 	},
@@ -66147,6 +66148,7 @@
 	name = "Privacy Shutters";
 	pixel_x = 28
 	},
+/obj/item/storage/firstaid/toxin,
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
 "cSn" = (
@@ -68697,6 +68699,9 @@
 	dir = 8;
 	layer = 9.1;
 	pixel_x = -10
+	},
+/obj/machinery/computer/chem_requester{
+	dir = 4
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
