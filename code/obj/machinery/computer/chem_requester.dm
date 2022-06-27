@@ -6,7 +6,7 @@ var/list/datum/chem_request/chem_requests = list()
 	var/reagent_color = null
 	var/note = ""
 	var/volume = 5
-	var/area/area = null
+	var/area_name = "Somewhere"
 	var/state = "pending"
 	var/id
 	var/static/last_id = 0
@@ -72,7 +72,7 @@ var/list/datum/chem_request/chem_requests = list()
 				src.request.volume = clamp(params["volume"], 1, src.max_volume)
 				. = TRUE
 			if ("submit")
-				src.request.area = src.area_name || get_area(src)
+				src.request.area_name = src.area_name || (get_area(src))?.name || src.request.area_name
 				src.request.requester_name = src.card.registered + " ([src.card.assignment])"
 				src.request.time = ticker.round_elapsed_ticks
 				//byond jank, lists are only associative if they aren't int indexed
@@ -129,7 +129,7 @@ var/list/datum/chem_request/chem_requests = list()
 				"volume" = request.volume,
 				"reagent_color" = request.reagent_color,
 				"notes" = copytext(request.note, 1, 80),
-				"area" = request.area.name,
+				"area" = request.area_name,
 				"state" = request.state,
 				"age" = src.get_age(request),
 			))
