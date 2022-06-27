@@ -2011,8 +2011,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 	if (H)
 		for (var/uid in H.microbes)
-			var/datum/microbesubdata/S = H.microbes[uid]
-			var/datum/microbe/P = S.master
+			var/datum/microbe/P = H.microbes[uid].master
 			shock_damage = P.onshocked(shock_damage, wattage)
 			if (!shock_damage)
 				return 0

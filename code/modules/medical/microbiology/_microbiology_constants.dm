@@ -32,3 +32,35 @@
 #define MICROBIO_INSPECT_DISLIKES "The pathogens are attemping to escape from the area affected by the " // + "[R]."
 
 #define MICROBIO_INSPECT_DISLIKES_GENERIC "One of the glands of the pathogen seems to shut down in the presence of the solution."
+
+
+// Other constants
+
+#define MICROBIO_INDIVIDUALMICROBELIMIT 3
+#define MICROBIO_DEFAULTPROBABILITYDIVIDEND 2
+#define MICROBIO_MAXIMUMPROBABILITY 5
+#define MICROBIO_NAMINGLIST list("Disease", "Strain", "Plague", "Syndrome", "Virions")
+
+
+#define MICROBIO_SHAKESPEARE list("Expectation is the root of all heartache.",\
+"A fool thinks himself to be wise, but a wise man knows himself to be a fool.",\
+"Love all, trust a few, do wrong to none.",\
+"Hell is empty and all the devils are here.",\
+"Better a witty fool than a foolish wit.",\
+"The course of true love never did run smooth.",\
+"Come, gentlemen, I hope we shall drink down all unkindness.",\
+"Suspicion always haunts the guilty mind.",\
+"No legacy is so rich as honesty.",\
+"Alas, I am a woman friendless, hopeless!",\
+"The empty vessel makes the loudest sound.",\
+"Words without thoughts never to heaven go.",\
+"This above all; to thine own self be true.",\
+"An overflow of good converts to bad.",\
+"It is a wise father that knows his own child.",\
+"Listen to many, speak to a few.",\
+"Boldness be my friend.",\
+"Speak low, if you speak love.",\
+"Give thy thoughts no tongue.",\
+"The devil can cite Scripture for his purpose.",\
+"In time we hate that which we often fear.",\
+"The lady doth protest too much, methinks.")

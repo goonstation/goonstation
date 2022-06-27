@@ -3,20 +3,6 @@ ABSTRACT_TYPE(/datum/microbioeffects/benevolent)
 /datum/microbioeffects/benevolent
 	name = "Medical Probiotics"
 
-/*datum/microbioeffects/benevolent/exclusiveimmunity
-	name = "Exclusive Immunity"
-	desc = "The microbial culture occupies almost all possible routes of infection, preventing other diseases from entering."
-
-	mob_act(var/datum/microbesubdata/P)
-		if (!(istype(mob, /mob/living/carbon/human)))
-			return
-		var/mob/living/carbon/human/H = mob
-		set disease prot to 100?
-
-	may_react_to()
-		return "The pathogen appears to have the ability to bond with organic tissue."
-*/
-
 /datum/microbioeffects/benevolent/mending
 	name = "Wound Mending"
 	desc = "Slow paced brute damage healing."
@@ -78,7 +64,7 @@ ABSTRACT_TYPE(/datum/microbioeffects/benevolent)
 		return "The pathogen appears to be rapidly repairing the other cells around it."
 	//podrickequus's first code, yay
 
-datum/microbioeffects/benevolent/cleansing
+/datum/microbioeffects/benevolent/cleansing
 	name = "Cleansing"
 	desc = "The pathogen cleans the body of damage caused by toxins."
 
@@ -95,7 +81,7 @@ datum/microbioeffects/benevolent/cleansing
 	may_react_to()
 		return "The pathogen seems to be much cleaner than normal."
 
-datum/microbioeffects/benevolent/oxygenconversion
+/datum/microbioeffects/benevolent/oxygenconversion
 	name = "Oxygen Conversion"
 	desc = "The pathogen converts organic tissue into oxygen when required by the host."
 
@@ -114,7 +100,7 @@ datum/microbioeffects/benevolent/oxygenconversion
 		if (R == "synthflesh")
 			return "The pathogen consumes the synthflesh and converts it into oxygen."
 
-datum/microbioeffects/benevolent/oxygenstorage
+/datum/microbioeffects/benevolent/oxygenstorage
 	name = "Oxygen Storage"
 	desc = "The pathogen stores oxygen and releases it when needed by the host."
 
@@ -137,7 +123,7 @@ datum/microbioeffects/benevolent/oxygenstorage
 	may_react_to()
 		return "The pathogen appears to have a bubble of oxygen around it."
 
-datum/microbioeffects/benevolent/resurrection
+/datum/microbioeffects/benevolent/resurrection
 	name = "Necrotic Resurrection"
 	desc = "The pathogen will resurrect you if it procs while you are dead."
 	var/cooldown = 1 MINUTES			// Make this competitive?
@@ -192,7 +178,7 @@ datum/microbioeffects/benevolent/resurrection
 			return "Dead parts of the synthflesh seem to still be transferring blood."
 
 
-datum/microbioeffects/benevolent/neuronrestoration
+/datum/microbioeffects/benevolent/neuronrestoration
 	name = "Neuron Restoration"
 	desc = "Infection slowly repairs nerve cells in the brain."
 
@@ -206,6 +192,34 @@ datum/microbioeffects/benevolent/neuronrestoration
 
 	may_react_to()
 		return "The pathogen appears to have a gland that may affect neural functions."
+
+/datum/microbioeffects/benevolent/metabolisis
+	name = "Accelerated Metabolisis"
+	desc = "The pathogen accelerates the metabolisis of all chemicals present in the host body."
+
+	mob_act(var/mob/M, var/datum/microbesubdata/origin)
+		var/times = 1
+		var/met = 0
+		for (var/rid in M.reagents.reagent_list)
+			var/datum/reagent/R = M.reagents.reagent_list[rid]
+			met = 1
+			for (var/i = 1, i <= times, i++)
+				if (R) //Wire: Fix for Cannot execute null.on mob life().
+					R.on_mob_life()
+				if (!R || R.disposed)
+					break
+			if (R && !R.disposed)
+				M.reagents.remove_reagent(rid, R.depletion_rate * times)
+		if (met)
+			M.reagents.update_total()
+
+
+	react_to(var/R, var/zoom)
+		return "The pathogen appears to have entirely metabolized... all chemical agents in the dish."
+
+	may_react_to()
+		return "The pathogen appears to be rapidly breaking down certain materials around it."
+
 /*
 datum/pathogeneffects/benevolent/genetictemplate
 	name = "Genetic Template"

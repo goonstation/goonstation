@@ -367,7 +367,7 @@ datum
 					if (!istype(B))
 						continue
 					for (var/uid in B.microbes)
-						if (!(B.microbes[uid] in ret))
+						if (!(uid in ret))
 							ret += uid
 							ret[uid] = B.microbes[uid]
 			return ret

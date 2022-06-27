@@ -1449,9 +1449,7 @@
 	var/datum/reagent/blood/pathogen/R = A.reagents.get_reagent("pathogen")
 	var/datum/microbe/P = new /datum/microbe
 	P.randomize()
-	var/uid = 1
-	R.microbes += uid
-	R.microbes[uid] = P
+	R.microbes[P.name] = P
 
 	boutput(usr, "<span class='success'>Added [amount] units of pathogen to [A.name] with pathogen [P.name].</span>")
 

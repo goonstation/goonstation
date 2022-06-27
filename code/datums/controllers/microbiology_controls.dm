@@ -3,6 +3,7 @@ var/datum/microbiology_controller/microbio_controls
 /datum/microbiology_controller
 
 	var/list/pathogen_affected_reagents = list("blood", "pathogen", "bloodc")
+
 	var/next_uid = 1
 
 	var/list/cultures = list()
@@ -69,7 +70,7 @@ var/datum/microbiology_controller/microbio_controls
 		if (!H.microbes.len)	//If the listed mob does not have any microbes return early
 			return
 		for (var/uid in H.microbes)
-			if (P.name == H.microbes[uid].master.name)
+			if (P.name == uid)
 				H.microbes[uid].master = P
 
 	proc/get_microbe_from_path(var/microbe_path)

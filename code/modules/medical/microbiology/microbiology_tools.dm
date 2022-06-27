@@ -227,9 +227,7 @@
 			var/datum/reagents/RE = src.reagents
 			RE.add_reagent("pathogen", 5)
 			var/datum/reagent/blood/pathogen/R = RE.get_reagent("pathogen")
-			var/uid = 1
-			R.microbes += uid
-			R.microbes[uid] = P
+			R.microbes[P.name] = P
 			#else
 			var/datum/reagents/RE = src.reagents
 			RE.add_reagent("water", 5)

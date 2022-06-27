@@ -69,6 +69,4 @@
 	reagents.add_reagent("pathogen", units)
 	var/datum/reagent/blood/pathogen/R = reagents.get_reagent("pathogen")
 	if (R)
-		var/uid = 1
-		R.microbes += uid
-		R.microbes[uid] = P
+		R.microbes[P.name] = P

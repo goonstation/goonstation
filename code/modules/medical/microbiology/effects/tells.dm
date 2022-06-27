@@ -11,7 +11,7 @@ ABSTRACT_TYPE(/datum/microbioeffects/tells)
 	desc = "The microbes send involuntary signals to the infected individual's diaphragm."
 
 	mob_act(var/mob/M, var/datum/microbesubdata/origin)
-		if (prob(origin.probability/2))
+		if (prob(origin.probability))
 			M:emote("hiccup")
 
 	may_react_to()
@@ -54,7 +54,7 @@ ABSTRACT_TYPE(/datum/microbioeffects/tells)
 	name = "Sunglass Glands"
 	desc = "The infected grew sunglass glands."
 
-	proc/glasses(var/mob/living/carbon/human/M as mob)
+	proc/glasses(var/mob/living/carbon/human/M)
 		var/obj/item/clothing/glasses/G = M.glasses
 		var/obj/item/clothing/glasses/N = new/obj/item/clothing/glasses/sunglasses()
 		M.show_message({"<span class='notice'>[pick("You feel cooler!", "You find yourself wearing sunglasses.", "A pair of sunglasses grow onto your face.")][G?" But you were already wearing glasses!":""]</span>"})
@@ -69,12 +69,12 @@ ABSTRACT_TYPE(/datum/microbioeffects/tells)
 			M.glasses = N
 			M.update_clothing()
 
-	mob_act(var/mob/M as mob, var/datum/microbesubdata/origin)
+	mob_act(var/mob/M, var/datum/microbesubdata/origin)
 		if (!ishuman(M))
 			return
 
 		var/mob/living/carbon/human/H = M
-		if ((!(H.glasses) &&prob (2)) || (!(istype(H.glasses, /obj/item/clothing/glasses/sunglasses)) && prob(1)))
+		if ((!(H.glasses) && prob (origin.probability)) || (!(istype(H.glasses, /obj/item/clothing/glasses/sunglasses)) && prob(origin.probability/2)))
 			glasses(M)
 
 	may_react_to()
@@ -91,62 +91,39 @@ ABSTRACT_TYPE(/datum/microbioeffects/tells)
 	name = "Deathgasping"
 	desc = "The pathogen causes the user's brain to believe the body is dying."
 
-	mob_act(var/mob/M as mob, var/datum/microbesubdata/origin)
-		if (prob(origin.probability/10))
+	mob_act(var/mob/M, var/datum/microbesubdata/origin)
+		if (prob(origin.probability/20))
 			M:emote("deathgasp")
 
 	may_react_to()
 		return "The pathogen appears to be.. sort of dead?"
-/*
+
 /datum/microbioeffects/tells/shakespeare
 	name = "Shakespeare"
 	desc = "The infected has an urge to begin reciting shakespearean poetry."
 
-	var/static/list/shk = list("Expectation is the root of all heartache.",
-"A fool thinks himself to be wise, but a wise man knows himself to be a fool.",
-"Love all, trust a few, do wrong to none.",
-"Hell is empty and all the devils are here.",
-"Better a witty fool than a foolish wit.",
-"The course of true love never did run smooth.",
-"Come, gentlemen, I hope we shall drink down all unkindness.",
-"Suspicion always haunts the guilty mind.",
-"No legacy is so rich as honesty.",
-"Alas, I am a woman friendless, hopeless!",
-"The empty vessel makes the loudest sound.",
-"Words without thoughts never to heaven go.",
-"This above all; to thine own self be true.",
-"An overflow of good converts to bad.",
-"It is a wise father that knows his own child.",
-"Listen to many, speak to a few.",
-"Boldness be my friend.",
-"Speak low, if you speak love.",
-"Give thy thoughts no tongue.",
-"The devil can cite Scripture for his purpose.",
-"In time we hate that which we often fear.",
-"The lady doth protest too much, methinks.")
-
-	onsay(var/mob/M as mob, message, var/datum/pathogen/origin)
-		if (!(message in shk))
+	onsay(var/mob/M, message, var/datum/microbesubdata/origin)
+		if (!(message in MICROBIO_SHAKESPEARE))
 			return shakespearify(message)
 
-	mob_act(var/mob/M as mob, var/datum/microbesubdata/origin)
-		if (prob(origin.probability/4)) // 3. holy shit shut up shUT UP
-			M.say(pick(shk))
+	mob_act(var/mob/M, var/datum/microbesubdata/origin)
+		if (prob(origin.probability/10)) // 3. holy shit shut up shUT UP
+			M.say(pick(MICROBIO_SHAKESPEARE))
 
 	may_react_to()
 		return "The culture appears to be quite dramatic."
-*/
+
 
 /datum/microbioeffects/tells/hoarseness
 	name = "Hoarseness"
 	desc = "The pathogen causes dry throat, leading to hoarse speech."
 
 	mob_act(var/mob/M, var/datum/microbesubdata/origin)
-		if (prob(2))
+		if (prob(origin.probability))
 			M:emote("wheeze")
-		else if (prob(2))
+		else if (prob(origin.probability))
 			M:emote("cough")
-		else if (prob(2))
+		else if (prob(origin.probability))
 			M:emote("grumble")
 
 	may_react_to()
@@ -156,12 +133,12 @@ ABSTRACT_TYPE(/datum/microbioeffects/tells)
 	name = "Malaise"
 	desc = "The pathogen causes very mild, inconsequential fatigue to its host."
 
-	mob_act(var/mob/M as mob, var/datum/microbesubdata/origin)
-		if (prob(origin.probability/2))
+	mob_act(var/mob/M, var/datum/microbesubdata/origin)
+		if (prob(origin.probability))
 			M:emote("yawn")
-		else if (prob(origin.probability/2))
+		else if (prob(origin.probability))
 			M:emote("cough")
-		else if (prob(origin.probability/2))
+		else if (prob(origin.probability))
 			M:emote("stretch")
 
 	may_react_to()
@@ -171,16 +148,121 @@ ABSTRACT_TYPE(/datum/microbioeffects/tells)
 	name = "Psychomotor Agitation"
 	desc = "Also known as restlessness, the infected individual is prone to involuntary motions and tics."
 
-	mob_act(var/mob/M as mob, var/datum/microbesubdata/origin)
-		if (prob(origin.probability/2))
+	mob_act(var/mob/M, var/datum/microbesubdata/origin)
+		if (prob(origin.probability))
 			M:emote("gesticulate")
-		else if (prob(origin.probability/2))
+		else if (prob(origin.probability))
 			M:emote("blink_r")
-		else if (prob(origin.probability/2))
+		else if (prob(origin.probability))
 			M:emote("twitch")
 
 	may_react_to()
 		return "The pathogen appears to be wilder than usual, perhaps sedatives or psychoactive substances might affect its behaviour."
+
+/datum/microbioeffects/tells/startleresponse
+	name = "Exagerrated Startle Reflex"
+	desc = "The pathogen generates synaptic signals that amplify the host's startle reflex."
+
+	mob_act(var/mob/M, var/datum/microbesubdata/origin)
+		if (prob(origin.probability))
+			M:emote("flinch")
+
+	may_react_to()
+		return "The pathogen appears to have a gland that may affect neural functions."
+
+/datum/microbioeffects/tells/tearyeyed
+	name = "Overactive Eye Glands"
+	desc = "The pathogen causes the host's lacrimal glands to overproduce tears."
+
+	mob_act(var/mob/M, var/datum/microbesubdata/origin)
+		if (prob(origin.probability))
+			M:emote("blink")
+		else if (prob(origin.probability))
+			M:emote("blink_r")
+		else if (prob(origin.probability))
+			M:emote("cry")
+
+	may_react_to()
+		return "The pathogen appears to generate a high amount of fluids."
+
+/datum/microbioeffects/tells/restingface
+	name = "Grumpy Cat Syndrome"
+	desc = "The pathogen causes the host's facial muscles to frown at rest."
+
+	mob_act(var/mob/M, var/datum/microbesubdata/origin)
+		if (prob(origin.probability))
+			M:emote("frown")
+		else if (prob(origin.probability))
+			M:emote("scowl")
+		else if (prob(origin.probability))
+			M:emote("grimace")
+
+	may_react_to()
+		return "The pathogen appears to react to hydrating agents."
+
+/datum/microbioeffects/tells/farts
+	name = "Farts"
+	desc = "The infected individual occasionally farts."
+	/*
+	var/cooldown = 200 // we just use the name of the symptom to keep track of different fart effects, so their cooldowns do not interfere
+	var/doInfect = 1 // smoke farts were just too good
+
+	proc/fart(var/mob/M, var/datum/microbe/origin, var/voluntary)
+		//if(doInfect)
+			//src.infect_cloud(M, origin, origin.spread/5)
+		if(voluntary)
+			origin.effectdata[name] = TIME
+
+	onemote(var/mob/M, act, voluntary, param, var/datum/microbe/P)
+		// involuntary farts are free, but the others use the cooldown
+		if(voluntary && TIME-P.master.effectdata[name] < cooldown)
+			return
+		if(act == "fart")
+			fart(M, P, voluntary)
+	*/
+	mob_act(var/mob/M, var/datum/microbesubdata/origin)
+		if (prob(origin.probability))
+			M.emote("fart")
+
+	may_react_to()
+		return "The pathogen appears to produce a large volume of gas."
+
+/datum/microbioeffects/tells/beesneeze
+	name = "Projectile Bee Egg Sneezing"
+	desc = "The infected sneezes bee eggs frequently."
+
+	proc/sneeze(var/mob/M, var/datum/microbesubdata/origin)
+		if (!M || !origin)
+			return
+		var/turf/T = get_turf(M)
+		var/flyroll = rand(10)
+		var/turf/target = locate(M.x,M.y,M.z)
+		var/chosen_phrase = pick("<B><span class='alert'>W</span><span class='notice'>H</span>A<span class='alert'>T</span><span class='notice'>.</span></B>","<span class='alert'><B>What the [pick("hell","fuck","christ","shit")]?!</B></span>","<span class='alert'><B>Uhhhh. Uhhhhhhhhhhhhhhhhhhhh.</B></span>","<span class='alert'><B>Oh [pick("no","dear","god","dear god","sweet merciful [pick("neptune","poseidon")]")]!</B></span>")
+		switch (M.dir)
+			if (NORTH)
+				target = locate(M.x, M.y+flyroll, M.z)
+			if (SOUTH)
+				target = locate(M.x, M.y-flyroll, M.z)
+			if (EAST)
+				target = locate(M.x+flyroll, M.y, M.z)
+			if (WEST)
+				target = locate(M.x-flyroll, M.y, M.z)
+		var/obj/item/reagent_containers/food/snacks/ingredient/egg/bee/toThrow = new /obj/item/reagent_containers/food/snacks/ingredient/egg/bee(T)
+		M.visible_message("<span class='alert'>[M] sneezes out a space bee egg!</span> [chosen_phrase]", "<span class='alert'>You sneeze out a bee egg!</span> [chosen_phrase]", "<span class='alert'>You hear someone sneezing.</span>")
+		toThrow.throw_at(target, 6, 1)
+		//src.infect_cloud(M, origin, origin.spread) // TODO: at some point I want the bees to spread this instead
+
+	mob_act(var/mob/M, var/datum/microbesubdata/origin)
+		if (prob(origin.probability/10))
+			sneeze(M, origin)
+
+	may_react_to()
+		return "The pathogen appears to generate a high amount of fluids. Honey, to be more specific."
+
+	react_to(var/R, var/zoom)
+		if (R == "pepper")
+			return "The pathogen violently discharges honey when coming in contact with pepper."
+
 /*
 datum/microbioeffects/tells/bloodcolors
 	name = "Blood Pigmenting"
@@ -198,75 +280,4 @@ datum/microbioeffects/tells/bloodcolors
 
 	may_react_to()
 		return "The pathogen appears to generate a high amount of fluids."
-*/
-/datum/microbioeffects/tells/startleresponse
-	name = "Exagerrated Startle Reflex"
-	desc = "The pathogen generates synaptic signals that amplify the host's startle reflex."
-
-	mob_act(var/mob/M as mob, var/datum/microbesubdata/origin)
-		if (prob(origin.probability/2))
-			M:emote("flinch")
-
-	may_react_to()
-		return "The pathogen appears to have a gland that may affect neural functions."
-
-/datum/microbioeffects/tells/tearyeyed
-	name = "Overactive Eye Glands"
-	desc = "The pathogen causes the host's lacrimal glands to overproduce tears."
-
-	mob_act(var/mob/M as mob, var/datum/microbesubdata/origin)
-		if (prob(origin.probability/2))
-			M:emote("blink")
-		else if (prob(origin.probability/2))
-			M:emote("blink_r")
-		else if (prob(origin.probability/2))
-			M:emote("cry")
-
-	may_react_to()
-		return "The pathogen appears to generate a high amount of fluids."
-
-/datum/microbioeffects/tells/restingface
-	name = "Grumpy Cat Syndrome"
-	desc = "The pathogen causes the host's facial muscles to frown at rest."
-
-	mob_act(var/mob/M as mob, var/datum/microbesubdata/origin)
-		if (prob(origin.probability/2))
-			M:emote("frown")
-		else if (prob(origin.probability/2))
-			M:emote("scowl")
-		else if (prob(origin.probability/2))
-			M:emote("grimace")
-
-	may_react_to()
-		return "The pathogen appears to react to hydrating agents."
-/*
-/datum/microbioeffects/tells/farts
-	name = "Farts"
-	desc = "The infected individual occasionally farts."
-
-	var/cooldown = 200 // we just use the name of the symptom to keep track of different fart effects, so their cooldowns do not interfere
-	var/doInfect = 1 // smoke farts were just too good
-
-	proc/fart(var/mob/M, var/datum/pathogen/origin, var/voluntary)
-		if(doInfect)
-			src.infect_cloud(M, origin, origin.spread/5)
-		if(voluntary)
-			origin.effectdata[name] = TIME
-
-	onemote(mob/M as mob, act, voluntary, param, datum/pathogen/P)
-		// involuntary farts are free, but the others use the cooldown
-		if(voluntary && TIME-P.master.effectdata[name] < cooldown)
-			return
-		if(act == "fart")
-			fart(M, P, voluntary)
-
-	mob_act(var/mob/M, var/datum/pathogen/origin)
-		if (origin.in_remission)
-			return
-		if (prob(origin.stage))
-			M.emote("fart")
-
-	may_react_to()
-		return "The pathogen appears to produce a large volume of gas."
-
 */

@@ -385,7 +385,7 @@ ABSTRACT_TYPE(/datum/microbe)
 	proc/generate_name()
 		var/uid = "[microbio_controls.next_uid]"
 		microbio_controls.next_uid++
-		src.name = "Custom Culture UID [uid]"
+		src.name = "Culture [uid]: [capitalize(pick_string_autokey("names/last.txt"))]'s [pick(MICROBIO_NAMINGLIST)]"
 		src.print_name = src.name
 		return
 
@@ -539,7 +539,7 @@ ABSTRACT_TYPE(/datum/microbe)
 		suppressant.oncured(src)
 		return
 
-	proc/add_new_symptom(var/list/allowed, var/allow_evil)
+	proc/add_new_symptom(var/list/allowed, var/allow_evil = 0)
 		var/datum/microbioeffects/E = pick(allowed)
 		if (add_symptom(E, allow_evil))
 			return 1
@@ -629,19 +629,26 @@ ABSTRACT_TYPE(/datum/microbesubdata)
 	// progress_pathogen uses a continuous downward parabola function to determine the
 	// probability for effects to act. The functionn zeroed at the
 	// initial time of infection and at natural immunization.
-	// The probability factors manipulate the function to move the apex of the parabola to (5),
-	// representing a 5% base effect chance.
+	// The probability factors manipulate the function to move the apex of the parabola to MICROBIO_MAXIMUMPROBABILITY.
+	// MICROBIO_MAXIMUMPROBABILITY is 1-to-1, so a value of 5 gives a max probability of 5.
 	// ceil() wraps the entire function to round probability to the higher integer.
 	/////////////////////////////////////////////////////////////////////////////////
 	// P(t) = -a*t^2 + b*t
 	// Where a = 20/durationtotal**2 and b = 20/durationtotal
+	//
+	// Additionally, the probability is decreased if more microbes are present in the player.
+	// This is to mitigate spamming the chatbox.
 	proc/progress_pathogen(var/mob/M, var/datum/microbesubdata/P)
 		if (P.duration <= 0)
 			M.cured(P)				// cured proc in human.dM?
 			return
-		var/B = 20/P.master.durationtotal
+		var/B = MICROBIO_MAXIMUMPROBABILITY*4/P.master.durationtotal
 		var/A = B/P.master.durationtotal
-		P.probability = round(-A*P.duration**2+B*P.duration)
+		if (ishuman(M))
+			var/mob/living/carbon/human/H = M
+			P.probability = (ceil(-A*P.duration**2+B*P.duration))/H.microbes.len
+		else
+			P.probability = (ceil(-A*P.duration**2+B*P.duration))/MICROBIO_DEFAULTPROBABILITYDIVIDEND
 		iscured = P.master.suppressant.suppress_act(src)
 		if (iscured)
 			P.duration = ceil(P.duration/2) - 1
@@ -671,11 +678,11 @@ ABSTRACT_TYPE(/datum/microbesubdata)
 		return 0
 	if (src.totalimmunity)
 		return 0
+	if (src.microbes.len >= MICROBIO_INDIVIDUALMICROBELIMIT)
+		return 0
 	if (!(src in P.infected))
 		var/datum/microbesubdata/Q = new /datum/microbesubdata
-		var/uid = src.microbes.len + 1
-		src.microbes += uid
-		src.microbes[uid] = Q
+		src.microbes[P.name] = Q
 		Q.master = P
 		Q.affected_mob = src
 		Q.duration = P.durationtotal - 1
@@ -695,7 +702,7 @@ ABSTRACT_TYPE(/datum/microbesubdata)
 			var/datum/microbe/P = microbio_controls.get_microbe_from_name(S.master.name)
 			microbio_controls.updatemicrobe(P, src, "cured")
 			logTheThing("pathology", src, null, "is cured of and gains immunity to [Q.master.name].")
-			src.microbes[uid] -= Q
+			src.microbes -= uid
 			qdel(Q)
 			src.show_text("You feel that the disease has passed.", "blue")
 			return 1

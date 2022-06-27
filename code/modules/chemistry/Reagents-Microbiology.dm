@@ -1,6 +1,6 @@
-var/global/list/biochemistry_whitelist = list("copper","silicon","carbon",/*"cblood"*/,"ldmatter",\
+var/global/list/biochemistry_whitelist = list("copper","silicon","carbon","ldmatter",\
 "luminol","oxygen","nitrogen","plasma","synthflesh","sonic_powder","perfluorodecalin",\
-"insulin","calomel")
+"insulin","calomel","spaceacillin", "space_cleaner")
 
 ABSTRACT_TYPE(/datum/reagent/microbiology)
 
@@ -10,6 +10,32 @@ datum
 			name = "germs"
 			id = "germs"
 			data = null				//The precursor reagent
+
+		microbiology/exclusiveimmunity
+			name = "Toggleable Immunizers"
+			id = "exlusiveimmunity"
+			description = "A culture of germs: this one allows a person to choose if they wish to interact with custom microbes. Works on ingestion."
+			taste = "sharp"
+			fluid_r = 150
+			fluid_b = 15
+			fluid_g = 20
+			transparency = 50
+			value = 4
+			data = "spaceacillin"
+			var/special_chem_processed = 0
+
+			reaction_mob(var/mob/M, var/method=INGEST, var/volume_passed)
+				if (!(istype(M, /mob/living/carbon/human)))
+					return
+				var/mob/living/carbon/human/H = M
+				if(!(H.totalimmunity) && !(special_chem_processed))
+					H.totalimmunity = 1
+					special_chem_processed = 1
+				else
+					H.totalimmunity = 0
+					special_chem_processed = 1
+				..()
+				return
 
 		microbiology/photovoltaic
 			name = "photovoltaic cyanobacteria"
@@ -128,6 +154,31 @@ datum
 						return
 				return
 
+		microbiology/drycleaner
+			name = "Organic Sanitizer"
+			id = "drycleaner"
+			description = "A culture of germs: this one seems to live on fabrics and feeds off of filth."
+			taste = "slimy"
+			fluid_r = 150
+			fluid_b = 15
+			fluid_g = 20
+			transparency = 50
+			value = 4
+			data = "space_cleaner"
+
+			reaction_obj(var/obj/O, var/volume)
+				if(!(istype(O,/obj/item/clothing)))
+					return
+				var/obj/item/clothing/C = O
+				if (C.can_stain)
+					C.can_stain = 0
+					return
+				return
+
+//datum/microbioeffects/service/drycleaning
+	//On object:
+		//Define a durability var
+		//If the object gets bloody (clothing), clean it and reduce durability
 //Auxillary Reagents
 
 		microbiology/organ_drug3

@@ -315,10 +315,12 @@
 	fishstick
 		roundstart_pathogens = 0
 		pickup(mob/user)
-			//if(isadmin(user) || current_state == GAME_STATE_FINISHED)
-				//wrap_pathogen(reagents, generate_random_pathogen(), 15)
-			//else
-				//boutput(user, "<span class='notice'>You feel that it was too soon for this...</span>")
+			if(isadmin(user) || current_state == GAME_STATE_FINISHED)
+				var/datum/microbe/P = new /datum/microbe
+				P.randomize()
+				wrap_pathogen(reagents, P, 15)
+			else
+				boutput(user, "<span class='notice'>You feel that it was too soon for this...</span>")
 			. = ..()
 
 

@@ -599,8 +599,7 @@
 		H.on_death()
 
 	for (var/uid in src.microbes)
-		var/datum/microbesubdata/S = src.microbes[uid]
-		var/datum/microbe/P = S.master
+		var/datum/microbe/P = src.microbes[uid].master
 		P.ondeath()
 
 #ifdef DATALOGGER
@@ -1493,8 +1492,7 @@
 	message = process_accents(src,message)
 
 	for (var/uid in src.microbes)
-		var/datum/microbesubdata/S = src.microbes[uid]
-		var/datum/microbe/P = S.master
+		var/datum/microbe/P = src.microbes[uid].master
 		message = P.onsay(message)
 
 	..(message)

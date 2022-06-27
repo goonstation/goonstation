@@ -1443,7 +1443,7 @@
 							sleep(5 SECONDS)
 							for (var/mob/C in viewers(src))
 								C.show_message("The [src.name] ejects a new biochemical sample.", 3)
-							var/obj/item/reagent_containers/glass/vial/V = new /obj/item/reagent_containers/glass/vial(src.loc)
+							var/obj/item/reagent_containers/glass/vial/V = new /obj/item/reagent_containers/glass/vial/plastic(src.loc)
 							V.reagents.add_reagent(src.selectedresult, 5)
 							machine_state = 0
 							icon_state = "synth1"

@@ -71,8 +71,6 @@
 			var/datum/reagent/blood/pathogen/R = donor.reagents.get_reagent("pathogen")
 			var/datum/microbe/P = new /datum/microbe
 			P.randomize()
-			var/uid = 1
-			R.microbes += uid
-			R.microbes[uid] = P
+			R.microbes[P.name] = P
 			#endif
 			boutput(donor, "<span class='alert'>Your appendix has burst! It has given you medical help... though you might want to see a doctor very soon.</span>")
