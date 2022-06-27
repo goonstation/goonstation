@@ -210,6 +210,7 @@
 
 	setup_material()
 		src.setMaterial(getMaterial("molitz_b"), appearance = 1, setname = 0)
+		src.pressure_resistance = INFINITY //has to be after material setup. REASONS
 		return ..()
 
 /obj/item/raw_material/pharosium
@@ -598,7 +599,7 @@
 	Crossed(atom/movable/AM as mob|obj)
 		if(ishuman(AM))
 			var/mob/living/carbon/human/H = AM
-			if(H.getStatusDuration("stunned") || H.getStatusDuration("weakened")) // nerf for dragging a person and a shard to damage them absurdly fast - drsingh
+			if(ON_COOLDOWN(H, "shard_Crossed", 7 SECONDS) || H.getStatusDuration("stunned") || H.getStatusDuration("weakened")) // nerf for dragging a person and a shard to damage them absurdly fast - drsingh
 				return
 			if(isabomination(H))
 				return
