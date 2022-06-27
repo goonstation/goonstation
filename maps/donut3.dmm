@@ -38293,10 +38293,7 @@
 /turf/simulated/floor/yellowblack/corner,
 /area/station/engine/engineering)
 "kYu" = (
-/obj/machinery/light/incandescent/cool{
-	dir = 8
-	},
-/obj/machinery/computer/chem_requester{
+/obj/machinery/computer/chem_requester/medical{
 	dir = 4
 	},
 /turf/simulated/floor/bluewhite{
@@ -70999,7 +70996,7 @@
 	},
 /area/station/bridge)
 "utB" = (
-/obj/machinery/computer/chem_requester{
+/obj/machinery/computer/chem_requester/science{
 	dir = 8
 	},
 /turf/simulated/floor/purple,

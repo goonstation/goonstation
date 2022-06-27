@@ -22525,11 +22525,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "aUr" = (
-/obj/machinery/light{
-	dir = 4;
-	pixel_x = 10
-	},
-/obj/machinery/computer/chem_requester{
+/obj/machinery/computer/chem_requester/science{
 	dir = 8
 	},
 /turf/simulated/floor/purpleblack{
@@ -25114,11 +25110,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "bae" = (
-/obj/decal/tile_edge/line/blue{
-	dir = 4;
-	icon_state = "line1"
-	},
-/obj/machinery/computer/chem_requester{
+/obj/machinery/computer/chem_requester/medical{
 	dir = 8
 	},
 /turf/simulated/floor/white,

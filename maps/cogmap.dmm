@@ -37903,17 +37903,7 @@
 	},
 /area/station/hallway/primary/south)
 "bVC" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/obj/machinery/light{
-	dir = 8;
-	tag = ""
-	},
-/obj/machinery/computer/chem_requester{
+/obj/machinery/computer/chem_requester/science{
 	dir = 4
 	},
 /turf/simulated/floor/purple/side{
@@ -63771,10 +63761,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/engine/power)
 "vMi" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/machinery/computer/chem_requester{
+/obj/machinery/computer/chem_requester/medical{
 	dir = 4
 	},
 /turf/simulated/floor/bluewhite{

@@ -10,7 +10,8 @@ var/list/datum/chem_request/chem_requests = list()
 	var/state = "pending"
 	var/id
 	var/static/last_id = 0
-	var/time
+	// the tick count this request was placed on
+	var/time = 0
 	New()
 		..()
 		src.id = ++last_id
@@ -22,6 +23,7 @@ var/list/datum/chem_request/chem_requests = list()
 	var/datum/chem_request/request = new
 	var/obj/item/card/id/card = null
 	var/max_volume = 400
+	var/area_name = null
 
 	ui_data(mob/user)
 		. = list()
@@ -41,7 +43,7 @@ var/list/datum/chem_request/chem_requests = list()
 			if (reaction.result)
 				var/datum/reagent/reagent = reagents_cache[reaction.result]
 				if (reagent && !istype(reagent, /datum/reagent/fooddrink)) //all the cocktails clog the UI
-					chems[reagent.name] = reagent.id
+					chems[lowertext(reagent.name)] = reagent.id
 		.["chemicals"] = sortList(chems)
 		.["max_volume"] = src.max_volume
 
@@ -70,8 +72,9 @@ var/list/datum/chem_request/chem_requests = list()
 				src.request.volume = clamp(params["volume"], 1, src.max_volume)
 				. = TRUE
 			if ("submit")
-				src.request.area = get_area(src)
+				src.request.area = src.area_name || get_area(src)
 				src.request.requester_name = src.card.registered + " ([src.card.assignment])"
+				src.request.time = ticker.round_elapsed_ticks
 				//byond jank, lists are only associative if they aren't int indexed
 				chem_requests["[src.request.id]"] = src.request
 				var/datum/signal/pdaSignal = get_free_signal()
@@ -89,12 +92,25 @@ var/list/datum/chem_request/chem_requests = list()
 			tgui_process.try_update_ui(user, src)
 		else src.Attackhand(user)
 
+	science
+		area_name = "Science"
+
+	medical
+		area_name = "Medbay"
+
 /obj/machinery/computer/chem_request_receiver
 	name = "Chemical request display"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "chemreq"
 	req_access = list(access_chemistry)
 	object_flags = CAN_REPROGRAM_ACCESS
+
+	proc/get_age(var/datum/chem_request/request)
+		var/delta = ticker.round_elapsed_ticks - request.time
+		if (delta < 1 MINUTE)
+			return "[round(delta / (1 SECOND))]s"
+		else
+			return "[round(delta / (1 MINUTE))]m"
 
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
@@ -114,7 +130,8 @@ var/list/datum/chem_request/chem_requests = list()
 				"reagent_color" = request.reagent_color,
 				"notes" = copytext(request.note, 1, 80),
 				"area" = request.area.name,
-				"state" = request.state
+				"state" = request.state,
+				"age" = src.get_age(request),
 			))
 		return list(
 			"requests" = requests,

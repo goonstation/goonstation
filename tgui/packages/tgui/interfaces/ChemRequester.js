@@ -38,7 +38,7 @@ const ReagentSearch = (props, context) => {
   return (
     <ListSearch
       autoFocus
-      currentSearch={searchText}
+      currentSearch={searchText.toLowerCase()}
       options={filteredReagents}
       onSearch={setSearchText}
       onSelect={handleSelectReagent}

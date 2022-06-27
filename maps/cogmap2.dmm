@@ -60928,12 +60928,7 @@
 	},
 /area/station/science/lobby)
 "cGx" = (
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
-/obj/machinery/computer/chem_requester{
+/obj/machinery/computer/chem_requester/science{
 	dir = 4
 	},
 /turf/simulated/floor/purple/side{
@@ -68695,12 +68690,7 @@
 /turf/simulated/floor/purple,
 /area/station/science/artifact)
 "cXG" = (
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
-/obj/machinery/computer/chem_requester{
+/obj/machinery/computer/chem_requester/medical{
 	dir = 4
 	},
 /turf/simulated/floor/blue,

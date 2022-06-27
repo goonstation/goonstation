@@ -6227,7 +6227,9 @@
 /area/station/teleporter)
 "pC" = (
 /obj/machinery/light_switch/auto,
-/turf/simulated/floor/purpleblack,
+/turf/simulated/floor/purpleblack{
+	dir = 1
+	},
 /area/station/teleporter)
 "pD" = (
 /obj/machinery/power/apc/autoname_west,
@@ -8737,7 +8739,7 @@
 /turf/simulated/floor/purple,
 /area/station/bridge/united_command)
 "uY" = (
-/turf/simulated/floor/airless/purpleblack{
+/turf/simulated/floor/purpleblack{
 	dir = 1
 	},
 /area/station/hallway/primary/east)
@@ -11364,12 +11366,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay)
 "By" = (
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
-/obj/machinery/computer/chem_requester,
+/obj/machinery/computer/chem_requester/science,
 /turf/simulated/floor/white,
 /area/station/hallway/primary/east)
 "Bz" = (
@@ -13057,7 +13054,7 @@
 /turf/simulated/floor/plating,
 /area/station/janitor/office)
 "FQ" = (
-/obj/machinery/computer/chem_requester,
+/obj/machinery/computer/chem_requester/medical,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -17660,7 +17657,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/airless/purpleblack{
+/turf/simulated/floor/purpleblack{
 	dir = 4
 	},
 /area/station/hallway/primary/east)
@@ -17679,7 +17676,7 @@
 /turf/simulated/floor/caution/north,
 /area/station/engine/hotloop)
 "Ri" = (
-/turf/simulated/floor/airless/purpleblack/corner{
+/turf/simulated/floor/purpleblack/corner{
 	dir = 1
 	},
 /area/station/hallway/primary/east)
@@ -17937,7 +17934,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/airless/purpleblack/corner{
+/turf/simulated/floor/purpleblack/corner{
 	dir = 8
 	},
 /area/station/hallway/primary/east)
@@ -19582,7 +19579,7 @@
 	dir = 4;
 	tag = "icon-chair (EAST)"
 	},
-/turf/simulated/floor/airless/purpleblack{
+/turf/simulated/floor/purpleblack{
 	dir = 8
 	},
 /area/station/hallway/primary/east)

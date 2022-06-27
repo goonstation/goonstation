@@ -13743,10 +13743,7 @@
 	},
 /area/station/medical/medbay)
 "aKQ" = (
-/obj/machinery/status_display{
-	pixel_y = 30
-	},
-/obj/machinery/computer/chem_requester,
+/obj/machinery/computer/chem_requester/medical,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -25707,7 +25704,7 @@
 /turf/simulated/floor/carpet/red/fancy,
 /area/station/hallway/secondary/east)
 "bmC" = (
-/obj/machinery/vending/computer3,
+/obj/machinery/computer/chem_requester/science,
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
@@ -40122,6 +40119,19 @@
 /obj/disposalpipe/junction/right/east,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
+"bYs" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe/horizontal,
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/machinery/vending/computer3,
+/turf/simulated/floor/carpet/red/fancy/edge/south,
+/area/station/hallway/secondary/east)
 "bYt" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -128756,7 +128766,7 @@ bpF
 bso
 buu
 bwK
-bzB
+bYs
 mtl
 oGS
 wrp

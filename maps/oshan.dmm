@@ -6675,6 +6675,8 @@
 	pixel_x = -10;
 	tag = ""
 	},
+/obj/table/reinforced/auto,
+/obj/random_item_spawner/medicine,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay)
 "apN" = (
@@ -9347,7 +9349,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "awg" = (
-/obj/machinery/computer/chem_requester{
+/obj/machinery/computer/chem_requester/medical{
 	dir = 4
 	},
 /turf/simulated/floor/white,
@@ -9878,7 +9880,6 @@
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/access_spawn/medical,
-/obj/random_item_spawner/medicine,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "axt" = (
@@ -14403,11 +14404,7 @@
 	},
 /area/station/hallway/primary/east)
 "aIu" = (
-/obj/disposalpipe/segment/mail{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
-/obj/machinery/computer/chem_requester{
+/obj/machinery/computer/chem_requester/science{
 	dir = 8
 	},
 /turf/simulated/floor/purple/side{

@@ -5025,14 +5025,7 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "apy" = (
-/obj/decal/tile_edge/line/blue{
-	icon_state = "line3"
-	},
-/obj/machinery/light/emergency{
-	dir = 1;
-	pixel_y = 16
-	},
-/obj/machinery/computer/chem_requester,
+/obj/machinery/computer/chem_requester/medical,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -33229,7 +33222,7 @@
 /turf/unsimulated/floor/orange,
 /area/station/mining/staff_room)
 "cdF" = (
-/obj/machinery/computer/chem_requester{
+/obj/machinery/computer/chem_requester/science{
 	dir = 4
 	},
 /turf/simulated/floor,

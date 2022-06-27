@@ -47280,15 +47280,7 @@
 /turf/simulated/floor/caution/westeast,
 /area/station/quartermaster/cargobay)
 "kuP" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
-/obj/decal/tile_edge/floorguide/science,
-/obj/machinery/computer/chem_requester,
+/obj/machinery/computer/chem_requester/science,
 /turf/simulated/floor/purple/side{
 	dir = 9
 	},
@@ -58179,7 +58171,7 @@
 /turf/simulated/floor/plating,
 /area/station/bridge/captain)
 "vhr" = (
-/obj/machinery/computer/chem_requester,
+/obj/machinery/computer/chem_requester/medical,
 /turf/simulated/floor/delivery/white,
 /area/station/medical/medbay)
 "vhz" = (

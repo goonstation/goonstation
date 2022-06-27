@@ -6864,15 +6864,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)
 "aCn" = (
-/obj/machinery/light/incandescent{
-	dir = 4;
-	nostick = 1
-	},
-/obj/decal/tile_edge/line/purple{
-	dir = 5;
-	icon_state = "line1"
-	},
-/obj/machinery/computer/chem_requester{
+/obj/machinery/computer/chem_requester/science{
 	dir = 8
 	},
 /turf/simulated/floor/black,
@@ -54148,11 +54140,7 @@
 	name = "Genetic Research"
 	})
 "uWW" = (
-/obj/item_dispenser/latex_gloves,
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/machinery/computer/chem_requester,
+/obj/machinery/computer/chem_requester/medical,
 /turf/simulated/floor/bluewhite{
 	dir = 10
 	},
