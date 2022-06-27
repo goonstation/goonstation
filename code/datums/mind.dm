@@ -219,11 +219,11 @@ datum/mind
 		src.last_death_time = world.timeofday
 	
 	/// Attempts to add the antagonist datum of ID role_id to this mind.
-	proc/add_antagonist(role_id, do_equip = TRUE, do_objectives = TRUE, do_relocate = TRUE, silent = FALSE)
+	proc/add_antagonist(role_id, do_equip = TRUE, do_objectives = TRUE, do_relocate = TRUE, silent = FALSE, source = ANTAGONIST_SOURCE_ROUNDSTART)
 		for (var/V in concrete_typesof(/datum/antagonist))
 			var/datum/antagonist/A = V
 			if (initial(A.id) == role_id)
-				src.antagonists.Add(new A(src, do_equip, do_objectives, do_relocate, silent))
+				src.antagonists.Add(new A(src, do_equip, do_objectives, do_relocate, silent, source))
 				src.current.antagonist_overlay_refresh(TRUE, FALSE)
 				return TRUE
 		return FALSE

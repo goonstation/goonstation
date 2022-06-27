@@ -1,14 +1,23 @@
+ABSTRACT_TYPE(/datum/antagonist)
 /datum/antagonist
 	/// Internal ID used to track this type of antagonist. This should *always* be unique between types and subtypes.
 	var/id = null
 	/// Human-readable name for displaying this antagonist for admin menus, round-end summary, etc.
 	var/display_name = "traitor tot"
-	/// The mind of the player that that this antagonist is assigned to.
-	var/datum/mind/owner
 	/// If TRUE, this antagonist has an associated browser window that will be displayed on announce.
 	var/has_info_popup = TRUE
+	/// The medal unlocked at the end of the round by succeeding as this antagonist.
+	var/success_medal = null
+	/// If FALSE, this antagonist will not be displayed at the end of the round.
+	var/display_at_round_end = TRUE
+
+
+	/// The mind of the player that that this antagonist is assigned to.
+	var/datum/mind/owner
+	/// How this antagonist was created. Displayed at the end of the round.
+	var/assigned_by = ANTAGONIST_SOURCE_ROUNDSTART
 	
-	New(datum/mind/M, do_equip = TRUE, do_objectives = TRUE, do_relocate = TRUE, silent = FALSE)
+	New(datum/mind/M, do_equip, do_objectives, do_relocate, silent, source)
 		. = ..()
 		if (!M)
 			DEBUG_MESSAGE("Antagonist datum of type [src.type] and usr [usr] attempted to spawn without a mind. This should never happen!!")
@@ -16,11 +25,13 @@
 			return FALSE
 		owner = M
 		M.special_role = id
-		src.setup_antagonist(do_equip, do_objectives, do_relocate, silent)
+		src.setup_antagonist(do_equip, do_objectives, do_relocate, silent, source)
 
 	/// Base proc to set up the antagonist. It can call equip procs, assigns objectives, and announces itself to the player.
-	proc/setup_antagonist(do_equip, do_objectives, do_relocate, silent)
+	proc/setup_antagonist(do_equip, do_objectives, do_relocate, silent, source)
 		SHOULD_NOT_OVERRIDE(TRUE)
+
+		src.assigned_by = source
 
 		if (!silent)
 			src.announce()
@@ -75,3 +86,44 @@
 	proc/announce_removal()
 		boutput(owner.current, "<h3><span class='alert'>You are no longer \a [src.display_name]!</span></h3>")
 		return
+	
+	/// Returns whether or not this antagonist is considered to have succeeded.
+	proc/check_success()
+		for (var/datum/objective/O as anything in owner.objectives)
+			boutput(world, "checking objective of type [O.type]...")
+			if (!O.check_completion())
+				boutput(world, "objective of type [O.type] failed - returning false")
+				return FALSE
+		boutput(world, "all objectives succeeded. returning true")
+		return TRUE
+
+	/// Gets a data block representing this antagonist in round end. Shows things like objectives, success status, etc.
+	proc/build_round_end_dat(log_data = FALSE)
+		var/list/dat = list()
+		if (owner.current)
+			dat.Add("<b>[owner.current]</b> (played by <b>[owner.displayed_key]</b>) was \a [assigned_by][display_name]!")
+		else
+			dat.Add("<b>[owner.displayed_key]</b> (character destroyed) was \a [assigned_by][display_name]!")
+		if (length(owner.objectives))
+			var/obj_count = 1
+			for (var/datum/objective/O as anything in owner.objectives)
+				if (istype(O, /datum/objective/crew) || istype(O, /datum/objective/miscreant))
+					continue
+				if (O.check_completion())
+					dat.Add("<b>Objective #[obj_count]:</b> [O.explanation_text] <span class='success'><b>Success!</b></span>")
+					if (log_data)
+						logTheThing("diary", owner, null,"completed objective: [O.explanation_text]")
+						if (!isnull(O.medal_name) && !isnull(owner.current))
+							owner.current.unlock_medal(O.medal_name, O.medal_announce)
+				else
+					dat.Add("<b>Objective #[obj_count]:</b> [O.explanation_text] <span class='alert'><b>Failure!</b></span>")
+					if (log_data)
+						logTheThing("diary", owner, null, "failed objective: [O.explanation_text]. Womp womp.")
+				obj_count++
+		if (src.check_success())
+			dat.Add("<span class='success'><b>\The [src.display_name] has succeeded!</b></span>")
+			if (!isnull(success_medal) && log_data)
+				owner.current.unlock_medal(success_medal, TRUE)
+		else
+			dat.Add("<span class='alert'><b>\The [src.display_name] has failed!</b></span>")
+		return dat

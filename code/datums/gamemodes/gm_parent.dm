@@ -262,6 +262,16 @@
 						stuff_to_output += "<B>[traitor_name] was a [string]!</B>"
 		catch(var/exception/e)
 			logTheThing("debug", null, null, "kyle|former-antag-runtime: [e.file]:[e.line] - [e.name] - [e.desc]")
+	
+	for (var/V in concrete_typesof(/datum/antagonist))
+		var/datum/antagonist/dummy = V
+		for (var/datum/antagonist/A as anything in get_all_antagonists(initial(dummy.id)))
+			#ifdef DATA_LOGGER
+			game_stats.Increment(A.check_completion() ? "traitorwin" : "traitorloss")
+			#endif
+			if (!A.display_at_round_end)
+				continue
+			stuff_to_output.Add(A.build_round_end_dat(TRUE))
 
 	boutput(world, stuff_to_output.Join("<br>"))
 
