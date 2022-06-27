@@ -502,7 +502,6 @@ datum
 			transparency = 200
 			depletion_rate = 0.8
 			smoke_spread_mod = 10
-			pathogens_processed = 0
 			microbes = list()
 
 			reaction_turf(var/turf/T, var/volume)
@@ -512,10 +511,9 @@ datum
 				. = ..()
 				 // sure just fucking splash around in the stuff
 				 // this is mainly so puddles from the sweating symptom can infect
-				var/datum/reagent/blood/pathogen/PA = src
-				for (var/uid in PA.microbes)
-					var/datum/microbe/P = PA.microbes[uid]
-					logTheThing("pathology", M, null, "is splashed with [PA] contaminated with [PA.microbes[uid]].")
+				for (var/uid in src.microbes)
+					var/datum/microbe/P = src.microbes[uid]
+					logTheThing("pathology", M, null, "is splashed with [src] contaminated with [src.microbes[uid]].")
 					if(istype(M, /mob/living/carbon/human))
 						var/mob/living/carbon/human/H = M
 						if(prob(100-H.get_disease_protection()))

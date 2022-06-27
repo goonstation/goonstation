@@ -3087,7 +3087,7 @@ datum
 			fluid_g = 0
 			transparency = 255
 			value = 2
-			var/list/microbes = list()
+			var/list/datum/microbe/microbes = list()
 			var/pathogens_processed = 0
 			hygiene_value = -2
 			hunger_value = 0.068
@@ -3146,9 +3146,9 @@ datum
 				if (!pathogens_processed) //Only process pathogens once
 					pathogens_processed = 1
 					for (var/uid in src.microbes)
-						var/datum/microbesubdata/S = src.microbes[uid]
-						logTheThing("pathology", M, null, "metabolizing [src] containing pathogen [S.master.name] ([S.master.print_name]).")
-						M.infected(S.master)
+						var/datum/microbe/P = src.microbes[uid]
+						logTheThing("pathology", M, null, "metabolizing [src] containing pathogen [P.name] ([P.print_name]).")
+						M.infected(P)
 				..()
 
 /* this begs the question how bloodbags worked at all if this was a thing
@@ -3168,7 +3168,7 @@ datum
 				var/list/target_pathogens = target.aggregate_pathogens()
 				var/target_changed = 0
 				for (var/uid in source_pathogens)
-					if (!(uid in target_pathogens))
+					if (!(source_pathogens[uid] in target_pathogens))
 						target_pathogens += uid
 						target_pathogens[uid] = source_pathogens[uid]
 						target_changed = 1
