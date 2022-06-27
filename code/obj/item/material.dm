@@ -210,6 +210,7 @@
 
 	setup_material()
 		src.setMaterial(getMaterial("molitz_b"), appearance = 1, setname = 0)
+		src.pressure_resistance = INFINITY //has to be after material setup. REASONS
 		return ..()
 
 /obj/item/raw_material/pharosium
