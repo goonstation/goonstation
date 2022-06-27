@@ -223,6 +223,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_fake_medal,
 		/datum/admins/proc/togglespeechpopups,
 		/datum/admins/proc/togglemonkeyspeakhuman,
+		/datum/admins/proc/toggletraitorsseeeachother,
 		/datum/admins/proc/toggleautoending,
 		/datum/admins/proc/togglelatetraitors,
 		/datum/admins/proc/toggle_pull_slowing,
@@ -263,6 +264,7 @@ var/list/admin_verbs = list(
 		/client/proc/idclip,
 		///client/proc/addpathogens,
 		/client/proc/respawn_as_self,
+		/client/proc/respawn_list_players,
 		/client/proc/cmd_give_pet,
 		/client/proc/cmd_give_pets,
 		/client/proc/cmd_give_player_pets,
@@ -1058,6 +1060,28 @@ var/list/fun_images = list()
 	if (flourish)
 		for (var/mob/living/M in oviewers(5, get_turf(H)))
 			M.apply_flash(animation_duration = 30, weak = 5, uncloak_prob = 0, stamina_damage = 250)
+
+/client/proc/respawn_list_players()
+	set name = "Respawn List of Players"
+	set desc = "Respawn the provided list of players."
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	set popup_menu = FALSE
+	ADMIN_ONLY
+
+	var/list/ckeys = splittext(input(src, "Input list of players", "Ckeys with spaces as delimiters", null) as null|text, " ")
+	if (!length(ckeys))
+		return
+	var/list/jobs = job_controls.staple_jobs + job_controls.special_jobs + job_controls.hidden_jobs
+	SortList(jobs, /proc/compareName)
+	var/datum/job/job = tgui_input_list(usr, "Select job to respawn", "Respawn As", jobs)
+	if (!job)
+		return
+	for (var/CK in ckeys)
+		var/mob/M = ckey_to_mob(CK)
+		if (!M)
+			continue
+		var/mob/new_player/NP = src.respawn_target(M)
+		NP?.AttemptLateSpawn(job, force=TRUE)
 
 /client/proc/cmd_admin_humanize(var/mob/M in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)

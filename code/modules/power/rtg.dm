@@ -1,6 +1,6 @@
 /obj/machinery/power/rtg
 	name = "Leigong RTG"
-	desc = "The Xiang-Giesel model '雷公' radio-thermal generator. Wrapped thermocouples produce power from the decay heat of nuclear fuel pellets."
+	desc = "The XIANG|GIESEL model '雷公' radio-thermal generator. Wrapped thermocouples produce power from the decay heat of nuclear fuel pellets."
 	icon_state = "rtg_empty"
 	anchored = 1
 	density = 1

@@ -552,6 +552,7 @@ ABSTRACT_TYPE(/datum/job/security)
 	slot_ears = list(/obj/item/device/radio/headset/detective)
 	items_in_backpack = list(/obj/item/clothing/glasses/vr,/obj/item/storage/box/detectivegun)
 	map_can_autooverride = 0
+	rounds_needed_to_play = 15 // Half of sec, please stop shooting people with lethals
 
 	New()
 		..()
@@ -1384,8 +1385,6 @@ ABSTRACT_TYPE(/datum/job/civilian)
 			return
 		M.bioHolder.AddEffect("mute", magical=1)
 		M.bioHolder.AddEffect("blankman", magical=1)
-		if(prob(20))
-			M.bioHolder.AddEffect("noir", magical=1)
 
 /datum/job/special/musician
 	name = "Musician"

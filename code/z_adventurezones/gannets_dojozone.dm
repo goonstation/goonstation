@@ -706,8 +706,6 @@ Contents:
 	icon_state = "2"
 	can_be_auto = 0
 
-	find_icon_state()
-		return
 
 // -Floors
 
