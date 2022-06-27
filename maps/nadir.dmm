@@ -910,7 +910,7 @@
 	},
 /turf/space/fluid/acid,
 /area/station/engine/inner{
-	name = "Transception Antenna Control"
+	name = "Transception Array Control"
 	})
 "auQ" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
@@ -1611,7 +1611,7 @@
 "aPz" = (
 /turf/space/fluid/acid,
 /area/station/engine/inner{
-	name = "Transception Antenna Control"
+	name = "Transception Array Control"
 	})
 "aQs" = (
 /obj/table/reinforced/auto,
@@ -1883,7 +1883,7 @@
 /obj/lattice,
 /turf/space/fluid/acid,
 /area/station/engine/inner{
-	name = "Transception Antenna Control"
+	name = "Transception Array Control"
 	})
 "aXj" = (
 /obj/stool/chair/comfy{
@@ -2004,7 +2004,7 @@
 "baj" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/inner{
-	name = "Transception Antenna Control"
+	name = "Transception Array Control"
 	})
 "bat" = (
 /obj/wingrille_spawn/auto/crystal,
@@ -2201,15 +2201,15 @@
 /area/station/hallway/primary/southwest)
 "bhB" = (
 /obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
 	icon_state = "1-4"
 	},
 /obj/machinery/drainage,
+/obj/cable{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/inner{
-	name = "Transception Antenna Control"
+	name = "Transception Array Control"
 	})
 "bib" = (
 /obj/stool/chair/office{
@@ -5006,7 +5006,7 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/turf/simulated/floor/white,
+/turf/simulated/floor/bluewhite/corner,
 /area/station/crew_quarters/pool)
 "cEO" = (
 /turf/simulated/floor/grey/side{
@@ -7176,7 +7176,7 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/inner{
-	name = "Transception Antenna Control"
+	name = "Transception Array Control"
 	})
 "dSd" = (
 /obj/wingrille_spawn/auto/crystal,
@@ -9005,7 +9005,7 @@
 	},
 /turf/space/fluid/acid,
 /area/station/engine/inner{
-	name = "Transception Antenna Control"
+	name = "Transception Array Control"
 	})
 "eSz" = (
 /obj/disposalpipe/segment/mail/horizontal,
@@ -10294,6 +10294,11 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
+"fDk" = (
+/turf/simulated/floor/bluewhite/corner{
+	dir = 1
+	},
+/area/station/crew_quarters/pool)
 "fDR" = (
 /obj/machinery/plantpot,
 /obj/machinery/light,
@@ -10539,6 +10544,9 @@
 	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/landmark/spawner{
+	name = "monkeyspawn_rathen"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/engineering)
@@ -11319,6 +11327,14 @@
 	icon_state = "3"
 	},
 /area/shuttle/arrival/station)
+"geI" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/inner{
+	name = "Transception Array Control"
+	})
 "geL" = (
 /obj/stool/bench/red,
 /obj/item/storage/secure/ssafe{
@@ -11368,7 +11384,7 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/inner{
-	name = "Transception Antenna Control"
+	name = "Transception Array Control"
 	})
 "gfR" = (
 /obj/wingrille_spawn/auto/crystal,
@@ -13279,7 +13295,8 @@
 "haW" = (
 /obj/machinery/computer/announcement{
 	announces_arrivals = 1;
-	dir = 8
+	dir = 8;
+	name = "Command Announcement Computer"
 	},
 /obj/decal/tile_edge/line/blue{
 	dir = 8;
@@ -14901,6 +14918,14 @@
 /area/station/hallway/secondary/entry{
 	name = "Arrival Shuttle Hallway"
 	})
+"hMP" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/inner{
+	name = "Transception Array Control"
+	})
 "hOc" = (
 /turf/unsimulated/wall/setpieces/leadwindow/white,
 /area/abandonedmedicalship/robot_trader)
@@ -15341,7 +15366,7 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/inner{
-	name = "Transception Antenna Control"
+	name = "Transception Array Control"
 	})
 "hYD" = (
 /obj/rack,
@@ -15679,11 +15704,22 @@
 /turf/simulated/floor/engine,
 /area/station/medical/robotics)
 "igO" = (
-/obj/machinery/light/incandescent/warm,
-/obj/item/plate,
+/obj/table/reinforced/industrial/auto,
+/obj/item/reagent_containers/food/snacks/chips{
+	pixel_x = 7;
+	pixel_y = 5
+	},
+/obj/item/diceholder/dicebox{
+	pixel_x = -10;
+	pixel_y = 3
+	},
+/obj/decal/tile_edge/line/yellow{
+	dir = 1;
+	icon_state = "line1"
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/inner{
-	name = "Transception Antenna Control"
+	name = "Transception Array Control"
 	})
 "ihb" = (
 /obj/machinery/door/airlock/pyro/glass/med{
@@ -15816,7 +15852,7 @@
 	},
 /turf/space/fluid/acid,
 /area/station/engine/inner{
-	name = "Transception Antenna Control"
+	name = "Transception Array Control"
 	})
 "ijT" = (
 /obj/decal/tile_edge/line/blue{
@@ -17326,7 +17362,7 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/inner{
-	name = "Transception Antenna Control"
+	name = "Transception Array Control"
 	})
 "iYk" = (
 /obj/loudspeaker,
@@ -18417,6 +18453,20 @@
 /obj/storage/crate/rcd/CE,
 /turf/simulated/floor/engine,
 /area/station/engine/engineering/ce)
+"jyU" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/computer/transception{
+	dir = 4
+	},
+/obj/decal/tile_edge/line/yellow{
+	icon_state = "line1"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/inner{
+	name = "Transception Array Control"
+	})
 "jzr" = (
 /obj/machinery/door/airlock/pyro/glass/sci{
 	dir = 4
@@ -18513,7 +18563,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/sauna)
 "jBH" = (
-/turf/simulated/floor/white,
+/turf/simulated/floor/bluewhite/corner,
 /area/station/crew_quarters/pool)
 "jCi" = (
 /obj/stool/chair/red{
@@ -18532,10 +18582,12 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/item/plate,
+/obj/cable{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/inner{
-	name = "Transception Antenna Control"
+	name = "Transception Array Control"
 	})
 "jCt" = (
 /obj/cable{
@@ -18615,7 +18667,9 @@
 	name = "Staff Assistant"
 	},
 /obj/item/device/radio/intercom,
-/turf/simulated/floor/blue/checker,
+/turf/simulated/floor/bluewhite/corner{
+	dir = 1
+	},
 /area/station/crew_quarters/pool)
 "jFB" = (
 /obj/machinery/optable,
@@ -19863,6 +19917,10 @@
 	dir = 4;
 	icon_state = "line1"
 	},
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
 /turf/simulated/floor/engine,
 /area/station/quartermaster/magnet{
 	name = "Cargo Transception"
@@ -19989,7 +20047,7 @@
 /obj/machinery/light/small/cool/very,
 /turf/space/fluid/acid,
 /area/station/engine/inner{
-	name = "Transception Antenna Control"
+	name = "Transception Array Control"
 	})
 "knQ" = (
 /obj/wingrille_spawn/auto/crystal,
@@ -20475,7 +20533,9 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/turf/simulated/floor/blue/checker,
+/turf/simulated/floor/bluewhite/corner{
+	dir = 1
+	},
 /area/station/crew_quarters/pool)
 "kyi" = (
 /obj/table/reinforced/auto,
@@ -21184,7 +21244,7 @@
 "kST" = (
 /turf/simulated/floor/black/grime,
 /area/station/engine/inner{
-	name = "Transception Antenna Control"
+	name = "Transception Array Control"
 	})
 "kSY" = (
 /obj/wingrille_spawn/auto/crystal,
@@ -21713,12 +21773,21 @@
 /turf/simulated/floor/engine,
 /area/station/engine/elect)
 "leU" = (
-/obj/item/device/radio/intercom/engineering{
-	dir = 8
+/obj/cable,
+/obj/machinery/computer/power_monitor{
+	dir = 8;
+	name = "Station Power Grid Monitoring"
+	},
+/obj/decal/tile_edge/line/yellow{
+	dir = 9;
+	icon_state = "line2"
+	},
+/obj/machinery/light/incandescent/warm{
+	dir = 4
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/inner{
-	name = "Transception Antenna Control"
+	name = "Transception Array Control"
 	})
 "lfS" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
@@ -22920,7 +22989,9 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/turf/simulated/floor/blue/checker,
+/turf/simulated/floor/bluewhite/corner{
+	dir = 1
+	},
 /area/station/crew_quarters/pool)
 "lLC" = (
 /obj/stool/chair/green{
@@ -23761,6 +23832,17 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/hallway/primary/southwest)
+"mbf" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/inner{
+	name = "Transception Array Control"
+	})
 "mbi" = (
 /obj/decal/tile_edge/check/red{
 	icon_state = "check1"
@@ -24091,7 +24173,7 @@
 	},
 /turf/space/fluid/acid,
 /area/station/engine/inner{
-	name = "Transception Antenna Control"
+	name = "Transception Array Control"
 	})
 "mjy" = (
 /obj/machinery/drainage,
@@ -24502,7 +24584,7 @@
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/engine,
 /area/station/engine/inner{
-	name = "Transception Antenna Control"
+	name = "Transception Array Control"
 	})
 "mvK" = (
 /obj/cable{
@@ -24552,7 +24634,7 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/inner{
-	name = "Transception Antenna Control"
+	name = "Transception Array Control"
 	})
 "mwl" = (
 /obj/railing/orange/reinforced{
@@ -24574,7 +24656,7 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/inner{
-	name = "Transception Antenna Control"
+	name = "Transception Array Control"
 	})
 "mxa" = (
 /obj/rack,
@@ -24659,7 +24741,7 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/inner{
-	name = "Transception Antenna Control"
+	name = "Transception Array Control"
 	})
 "myU" = (
 /obj/storage/secure/closet/kitchen,
@@ -24697,15 +24779,18 @@
 	},
 /turf/space/fluid/acid,
 /area/station/engine/inner{
-	name = "Transception Antenna Control"
+	name = "Transception Array Control"
 	})
 "mzS" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/cable{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/inner{
-	name = "Transception Antenna Control"
+	name = "Transception Array Control"
 	})
 "mzU" = (
 /obj/shrub{
@@ -24729,7 +24814,7 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/inner{
-	name = "Transception Antenna Control"
+	name = "Transception Array Control"
 	})
 "mAy" = (
 /obj/table/reinforced/bar/auto,
@@ -24793,7 +24878,9 @@
 /area/station/crew_quarters/fitness)
 "mDY" = (
 /obj/disposalpipe/segment/vertical,
-/turf/simulated/floor/blue/checker,
+/turf/simulated/floor/bluewhite/corner{
+	dir = 1
+	},
 /area/station/crew_quarters/pool)
 "mEp" = (
 /obj/machinery/camera{
@@ -25425,9 +25512,13 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/decal/tile_edge/line/yellow{
+	dir = 1;
+	icon_state = "line1"
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/inner{
-	name = "Transception Antenna Control"
+	name = "Transception Array Control"
 	})
 "mUi" = (
 /obj/cable{
@@ -25950,7 +26041,7 @@
 	},
 /turf/space/fluid/acid,
 /area/station/engine/inner{
-	name = "Transception Antenna Control"
+	name = "Transception Array Control"
 	})
 "nlI" = (
 /turf/simulated/floor/engine,
@@ -26079,13 +26170,9 @@
 /turf/simulated/floor/engine,
 /area/station/hallway/secondary/exit)
 "npp" = (
-/obj/item/paper{
-	info = "IOU 1 transception antenna control";
-	name = "wrinkled printout"
-	},
 /turf/simulated/floor/engine,
 /area/station/engine/inner{
-	name = "Transception Antenna Control"
+	name = "Transception Array Control"
 	})
 "npv" = (
 /obj/item/storage/toilet{
@@ -26841,7 +26928,7 @@
 /obj/machinery/communications_dish/transception,
 /turf/space/fluid/acid,
 /area/station/engine/inner{
-	name = "Transception Antenna Control"
+	name = "Transception Array Control"
 	})
 "nKx" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -27602,7 +27689,9 @@
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
-/turf/simulated/floor/blue/checker,
+/turf/simulated/floor/bluewhite/corner{
+	dir = 1
+	},
 /area/station/crew_quarters/pool)
 "omx" = (
 /obj/disposalpipe/segment/horizontal,
@@ -28031,10 +28120,12 @@
 	name = "Hydroponics Storage"
 	})
 "ozD" = (
-/obj/item/plate,
+/obj/stool/chair/office/blue{
+	dir = 4
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/inner{
-	name = "Transception Antenna Control"
+	name = "Transception Array Control"
 	})
 "ozL" = (
 /obj/decal/boxingrope{
@@ -28218,7 +28309,7 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/inner{
-	name = "Transception Antenna Control"
+	name = "Transception Array Control"
 	})
 "oGf" = (
 /obj/decal/cleanable/dirt/dirt3,
@@ -28611,7 +28702,7 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/inner{
-	name = "Transception Antenna Control"
+	name = "Transception Array Control"
 	})
 "oQG" = (
 /obj/stool/chair/yellow{
@@ -28886,7 +28977,7 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/inner{
-	name = "Transception Antenna Control"
+	name = "Transception Array Control"
 	})
 "oXK" = (
 /obj/decal/tile_edge{
@@ -29020,6 +29111,16 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/storage/emergency2)
+"pdH" = (
+/obj/table/reinforced/industrial/auto,
+/obj/item/storage/toolbox/emergency,
+/obj/decal/tile_edge/line/yellow{
+	icon_state = "line1"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/inner{
+	name = "Transception Array Control"
+	})
 "pdU" = (
 /obj/decal/tile_edge/line/red{
 	dir = 1;
@@ -29578,6 +29679,17 @@
 /area/iss{
 	name = "Drop Capsule"
 	})
+"pth" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/line/yellow{
+	icon_state = "line1"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/inner{
+	name = "Transception Array Control"
+	})
 "ptA" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor{
@@ -29602,10 +29714,18 @@
 /area/station/medical/crematorium)
 "puP" = (
 /obj/table/reinforced/auto,
-/obj/item/reagent_containers/glass/beaker/large/antitox,
-/obj/item/reagent_containers/glass/beaker/large/epinephrine,
-/obj/item/reagent_containers/hypospray,
-/obj/item/reagent_containers/hypospray,
+/obj/item/reagent_containers/glass/beaker/large/epinephrine{
+	pixel_x = -3;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/hypospray{
+	pixel_x = 16;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/hypospray{
+	pixel_x = 9;
+	pixel_y = 6
+	},
 /obj/decal/tile_edge/line/blue{
 	dir = 1;
 	icon_state = "line1"
@@ -29618,6 +29738,10 @@
 	tag = ""
 	},
 /obj/machinery/light_switch/west,
+/obj/item/reagent_containers/glass/beaker/large/antitox{
+	pixel_x = -3;
+	pixel_y = -3
+	},
 /turf/simulated/floor/engine,
 /area/station/medical/staff)
 "pva" = (
@@ -32158,9 +32282,21 @@
 	pixel_x = -10;
 	tag = ""
 	},
+/obj/cable,
+/obj/machinery/power/data_terminal,
+/obj/table/reinforced/industrial/auto,
+/obj/machinery/networked/printer{
+	name = "Printer - Transception Control";
+	pixel_y = 5;
+	print_id = "Tracon"
+	},
+/obj/decal/tile_edge/line/yellow{
+	dir = 5;
+	icon_state = "line1"
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/inner{
-	name = "Transception Antenna Control"
+	name = "Transception Array Control"
 	})
 "qTn" = (
 /obj/rack,
@@ -32630,7 +32766,7 @@
 /obj/machinery/door/airlock/pyro/glass/engineering,
 /turf/simulated/floor/engine,
 /area/station/engine/inner{
-	name = "Transception Antenna Control"
+	name = "Transception Array Control"
 	})
 "rhg" = (
 /obj/stool/bed/moveable,
@@ -32810,7 +32946,7 @@
 	},
 /turf/space/fluid/acid,
 /area/station/engine/inner{
-	name = "Transception Antenna Control"
+	name = "Transception Array Control"
 	})
 "rlt" = (
 /obj/cable{
@@ -33397,7 +33533,7 @@
 	pixel_x = 10;
 	tag = ""
 	},
-/turf/simulated/floor/blue/checker,
+/turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
 "rJi" = (
 /obj/wingrille_spawn/auto/crystal,
@@ -33980,7 +34116,7 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/inner{
-	name = "Transception Antenna Control"
+	name = "Transception Array Control"
 	})
 "rYw" = (
 /obj/landmark/gps_waypoint,
@@ -34052,7 +34188,7 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/inner{
-	name = "Transception Antenna Control"
+	name = "Transception Array Control"
 	})
 "sbw" = (
 /obj/storage/closet/wardrobe/pride,
@@ -35616,6 +35752,22 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/quarters_east)
+"sOI" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/computer3frame{
+	anchored = 1;
+	dir = 8;
+	state = 1
+	},
+/obj/decal/tile_edge/line/yellow{
+	icon_state = "line1"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/inner{
+	name = "Transception Array Control"
+	})
 "sOU" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/Zeta)
@@ -36331,7 +36483,7 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/inner{
-	name = "Transception Antenna Control"
+	name = "Transception Array Control"
 	})
 "thH" = (
 /obj/table/reinforced/auto,
@@ -37634,6 +37786,21 @@
 /obj/item/light/tube,
 /turf/simulated/floor/industrial,
 /area/ghostdrone_factory)
+"tRm" = (
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "kitchen";
+	layer = 4;
+	name = "Kitchen Shutter";
+	opacity = 0;
+	p_open = 1
+	},
+/obj/table/reinforced/auto,
+/obj/machinery/door/airlock/pyro/glass/windoor,
+/obj/access_spawn/kitchen,
+/turf/simulated/floor/engine,
+/area/station/crew_quarters/kitchen)
 "tRz" = (
 /obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/engine,
@@ -38344,7 +38511,7 @@
 	},
 /turf/space/fluid/acid,
 /area/station/engine/inner{
-	name = "Transception Antenna Control"
+	name = "Transception Array Control"
 	})
 "uoc" = (
 /obj/decal/tile_edge/line/white{
@@ -38426,6 +38593,28 @@
 "uqF" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/courtroom)
+"uqH" = (
+/obj/table/reinforced/industrial/auto,
+/obj/item/device/radio{
+	pixel_x = -10;
+	pixel_y = 5
+	},
+/obj/item/device/light/flashlight{
+	pixel_x = 13;
+	pixel_y = 11
+	},
+/obj/item/storage/toolbox/electrical{
+	pixel_x = 7;
+	pixel_y = -2
+	},
+/obj/decal/tile_edge/line/yellow{
+	dir = 1;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/inner{
+	name = "Transception Array Control"
+	})
 "uqY" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -39938,9 +40127,15 @@
 	pixel_x = 10;
 	tag = ""
 	},
+/obj/table/reinforced/industrial/auto,
+/obj/machinery/phone,
+/obj/decal/tile_edge/line/yellow{
+	dir = 9;
+	icon_state = "line1"
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/inner{
-	name = "Transception Antenna Control"
+	name = "Transception Array Control"
 	})
 "vlf" = (
 /obj/machinery/atmospherics/valve,
@@ -40228,6 +40423,19 @@
 /turf/simulated/floor/engine,
 /area/station/science/construction{
 	name = "Extraction Nexus"
+	})
+"vtc" = (
+/obj/table/reinforced/industrial/auto,
+/obj/item/storage/firstaid/fire,
+/obj/decal/tile_edge/line/yellow{
+	icon_state = "line1"
+	},
+/obj/item/device/radio/intercom/engineering{
+	dir = 8
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/inner{
+	name = "Transception Array Control"
 	})
 "vtr" = (
 /turf/simulated/floor/plating,
@@ -42328,7 +42536,7 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/inner{
-	name = "Transception Antenna Control"
+	name = "Transception Array Control"
 	})
 "wMJ" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -42473,20 +42681,40 @@
 /turf/simulated/floor/sanitary,
 /area/station/engine/engineering/ce)
 "wSi" = (
+/obj/table/reinforced/industrial/auto,
+/obj/item/paper_bin{
+	pixel_x = -13
+	},
+/obj/item/paper/yachtdice{
+	pixel_y = 2
+	},
+/obj/item/paper/yachtdice{
+	pixel_x = 4;
+	pixel_y = -1
+	},
+/obj/item/pen,
+/obj/item/pen{
+	pixel_x = 2;
+	pixel_y = 6
+	},
+/obj/decal/tile_edge/line/yellow{
+	dir = 1;
+	icon_state = "line1"
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/inner{
-	name = "Transception Antenna Control"
+	name = "Transception Array Control"
 	})
 "wSt" = (
-/obj/machinery/light/incandescent/warm{
+/obj/stool/chair/office/blue{
 	dir = 1
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_rathen"
+/obj/decal/tile_edge/line/yellow{
+	icon_state = "line1"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/inner{
-	name = "Transception Antenna Control"
+	name = "Transception Array Control"
 	})
 "wSE" = (
 /obj/disposalpipe/segment/ejection{
@@ -43324,7 +43552,7 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/inner{
-	name = "Transception Antenna Control"
+	name = "Transception Array Control"
 	})
 "xsy" = (
 /obj/machinery/light/small{
@@ -43498,7 +43726,7 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/inner{
-	name = "Transception Antenna Control"
+	name = "Transception Array Control"
 	})
 "xyj" = (
 /obj/cable{
@@ -44709,7 +44937,7 @@
 	},
 /turf/space/fluid/acid,
 /area/station/engine/inner{
-	name = "Transception Antenna Control"
+	name = "Transception Array Control"
 	})
 "yhI" = (
 /obj/stool/bed,
@@ -44733,6 +44961,27 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/security/brig/genpop)
+"yik" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer3/terminal/zeta{
+	dir = 4;
+	setup_os_string = "ZETA_MAINFRAME"
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/decal/tile_edge/line/yellow{
+	dir = 5;
+	icon_state = "line2"
+	},
+/obj/machinery/light/incandescent/warm{
+	dir = 8
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/inner{
+	name = "Transception Array Control"
+	})
 "yiL" = (
 /obj/machinery/manufacturer/gas,
 /turf/simulated/floor/industrial,
@@ -80613,7 +80862,7 @@ vAs
 rCD
 maE
 bRT
-uel
+tRm
 pGy
 pGy
 pGy
@@ -82987,7 +83236,7 @@ bRa
 tIz
 hVC
 bTg
-bTg
+fDk
 fcO
 jBH
 otR
@@ -83289,7 +83538,7 @@ iHW
 iHW
 iHW
 uhK
-bTg
+fDk
 fcO
 jBH
 otR
@@ -89416,7 +89665,7 @@ baj
 mwe
 myz
 rhf
-mUh
+pth
 iYe
 mUh
 xsc
@@ -90018,11 +90267,11 @@ yge
 knN
 mvA
 xxN
-mzS
+geI
 mvA
-wSi
+pdH
 jCp
-wSi
+yik
 qTl
 baj
 nsy
@@ -90322,7 +90571,7 @@ mvA
 mvA
 gfC
 mvA
-ozD
+jyU
 mzS
 ozD
 wSi
@@ -90621,11 +90870,11 @@ aPz
 yge
 eSp
 oFV
-mUh
+hMP
 bhB
 mvA
 wSt
-jCp
+geI
 npp
 igO
 baj
@@ -90926,10 +91175,10 @@ mvA
 mvA
 gfC
 mvA
-ozD
-mzS
-ozD
-wSi
+sOI
+mbf
+npp
+uqH
 baj
 nsy
 dQM
@@ -91226,9 +91475,9 @@ yge
 knN
 mvA
 rYl
-mzS
+geI
 mvA
-wSi
+vtc
 jCp
 leU
 vkT
@@ -91527,7 +91776,7 @@ mvA
 mvA
 mvA
 baj
-wSi
+npp
 sbd
 baj
 baj
@@ -91832,7 +92081,7 @@ baj
 mwA
 mAj
 rhf
-mUh
+pth
 oQE
 mUh
 xsc
