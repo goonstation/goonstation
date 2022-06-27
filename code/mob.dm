@@ -850,7 +850,12 @@
 					unlocks.Add(D)
 			if (announce)
 				boutput(world, "<span class=\"medal\">[displayed_key] earned the [title] medal.</span>")//src.client.stealth ? src.client.fakekey : << seems to be causing trouble
+				if(ishuman(src))
+					src.hud.showmedalpopup(title)
 			else if (ismob(src) && src.client)
+				// neat little medal popup that generates based on a medal name passed in, and uses the player's hud theme
+				if(ishuman(src))
+					src.hud.showmedalpopup(title)
 				boutput(src, "<span class=\"medal\">You earned the [title] medal.</span>")
 
 			if (length(unlocks))

@@ -39,6 +39,7 @@
 		stats
 		legend
 		sel
+		medalpopup
 	var/list/atom/movable/screen/hud/inventory_bg = list()
 	var/list/obj/item/inventory_items = list()
 	var/show_inventory = 1
@@ -287,6 +288,23 @@
 			sel = create_screen("sel", "sel", src.icon_hud, "sel", null, HUD_LAYER+1.2)
 			sel.mouse_opacity = 0
 			default_sel_appearance = new(sel)
+
+			// fancy medal achievement popup idea
+			medalpopup = create_screen("medalpopup","", src.icon_hud, "medalpopup1", "CENTER:-16, NORTH:36-2", HUD_LAYER+1)
+
+			var/image/leftpopup = image(src.icon_hud,icon_state="medalpopup0")
+			leftpopup.pixel_x = -32
+			leftpopup.layer = HUD_LAYER
+			medalpopup.UpdateOverlays(leftpopup,"left")
+			var/image/rightpopup = image(src.icon_hud,icon_state="medalpopup2")
+			rightpopup.pixel_x = 32
+			rightpopup.layer = HUD_LAYER
+			medalpopup.UpdateOverlays(rightpopup,"right")
+			var/image/rightpopup2 = image(src.icon_hud,icon_state="medalpopup3")
+			rightpopup2.pixel_x = 64
+			rightpopup2.layer = HUD_LAYER
+			medalpopup.UpdateOverlays(rightpopup2,"right2")
+			set_visible(medalpopup, 0)
 
 			set_visible(twohandl, 0)
 			set_visible(twohandr, 0)
@@ -1199,6 +1217,22 @@
 			if (health_tox) health_tox.icon = new_file
 			if (health_oxy) health_oxy.icon = new_file
 
+			if (medalpopup)
+				var/image/leftpopup = image(new_file,icon_state="medalpopup0")
+				leftpopup.pixel_x = -32
+				leftpopup.layer = HUD_LAYER
+				medalpopup.UpdateOverlays(leftpopup,"left")
+				var/image/rightpopup = image(new_file,icon_state="medalpopup2")
+				rightpopup.pixel_x = 32
+				rightpopup.layer = HUD_LAYER
+				medalpopup.UpdateOverlays(rightpopup,"right")
+				var/image/rightpopup2 = image(src.icon_hud,icon_state="medalpopup3")
+				rightpopup2.pixel_x = 64
+				rightpopup2.layer = HUD_LAYER
+				medalpopup.UpdateOverlays(rightpopup2,"right2")
+
+				medalpopup.icon = new_file
+
 			for (var/atom/movable/screen/hud/H in inventory_bg)
 				H.icon = new_file
 
@@ -1209,9 +1243,26 @@
 		if(stamina)
 			stamina.icon_state = on ? "stamina_sprint" : "stamina"
 
+	proc/showmedalpopup(var/name)
+		// achievement get: achievements
+		var/image/medalicon = image('icons/mob/medalpopups.dmi',icon_state=name)
+		medalicon.pixel_x = -48
+		medalicon.pixel_y = -16
+		medalicon.transform = matrix(0.5,0,0,0,0.5,0)
+		medalpopup.UpdateOverlays(medalicon,"medal")
 
+		medalpopup.maptext_width = 94
+		medalpopup.maptext_height = 25
+		medalpopup.maptext_x = 2
+		var/textcolor = "#ffff00"
+		medalpopup.maptext = "<span style='color: [textcolor];text-align: center;vertical-align: middle'>[copytext(name,1,30)]</span></span>"
 
+		medalpopup.transform = matrix(1,0,0,0,1,0)
+		set_visible(src.medalpopup, 1)
+		animate(src.medalpopup, transform=matrix(1,0,0,0,1,-36), easing = EASE_IN | QUAD_EASING, time=8)
 
+		sleep(3 SECONDS)
+		set_visible(src.medalpopup, 0)
 
 
 
