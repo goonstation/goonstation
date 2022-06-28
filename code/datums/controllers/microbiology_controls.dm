@@ -6,9 +6,9 @@ var/datum/microbiology_controller/microbio_controls
 
 	var/next_uid = 1
 
-	var/list/cultures = list()
-	var/list/effects = list()
-	var/list/cures = list()
+	var/list/datum/microbe/cultures = list()
+	var/list/datum/microbioeffects/effects = list()
+	var/list/datum/suppressant/cures = list()
 	//var/list/path_to_evil = list()
 
 	New()	//Initialize effect and cure paths.

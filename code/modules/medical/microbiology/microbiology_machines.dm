@@ -286,13 +286,6 @@
 #define PA_FAIL 	4
 */
 
-
-/datum/pathobank
-	var/list/known_sequences = list()
-	var/certainty = 0
-	var/list/assigned_names = list()
-	var/list/transient_sequences = list()
-
 /obj/machinery/computer/pathology
 	name = "Microbiology Research"
 	icon = 'icons/obj/computer.dmi'
@@ -306,6 +299,9 @@
 	//ui_data(mob/user)
 
 	//ui_act(action, params)
+
+
+	// Whatever remains of this has to be TGUI.
 
 	/*
 	var/obj/machinery/pathogen_manipulator/manip = null
@@ -1118,7 +1114,7 @@
 	var/maintenance = 0
 	var/machine_state = 0
 	var/sel_vial = 0
-	var/const/synthesize_cost = 500 // used to be 2000
+	var/const/synthesize_cost = 500 //used to be 100 // used to used to be 2000
 
 	New()
 		..()
@@ -1372,6 +1368,7 @@
 	icon_state = "autoclave"
 	density = 1
 	anchored = 1
+// This whole unique cleaning business is not fun for players...
 /*
 	var/obj/item/reagent_containers/glass/sanitizing = null
 	var/machine_state = 0
