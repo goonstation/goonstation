@@ -20,7 +20,7 @@
 		else if (istype(H.r_store, /obj/item/device/pda2))
 			uplink_source = H.r_store
 			loc_string = "in your pocket"
-		else if (!istype(H.l_store, /obj/item/device/pda2))
+		else if (istype(H.l_store, /obj/item/device/pda2))
 			uplink_source = H.l_store
 			loc_string = "in your pocket"
 		else if (istype(H.ears, /obj/item/device/radio))
@@ -49,8 +49,9 @@
 			boutput(H, "The Syndicate have cunningly disguised an uplink as your [uplink_source.name] [loc_string]. Simply enter the the code <b>\"[uplink.lock_code]\"</b> as the ringtone in its Messenger app to unlock its hidden features.")
 			owner.store_memory("<b>Uplink password:</b> [uplink.lock_code].")
 		else if (istype(uplink_source, /obj/item/device/radio))
-			boutput(H, "The Syndicate have cunningly disguised an uplink as your [uplink_source.name] [loc_string]. Simply dial the frequency <b>\"[uplink.lock_code]\"</b> to unlock its hidden features.")
-			owner.store_memory("<b>Uplink frequency:</b> [uplink.lock_code].")
+			var/obj/item/device/radio/R = uplink_source
+			boutput(H, "The Syndicate have cunningly disguised an uplink as your [uplink_source.name] [loc_string]. Simply dial the frequency <b>\"[R.traitor_frequency]\"</b> to unlock its hidden features.")
+			owner.store_memory("<b>Uplink frequency:</b> [R.traitor_frequency].")
 		else
 			boutput(H, "The Syndicate have provided you with a standalone uplink [loc_string]. Simply dial the frequency <b>\"[uplink.lock_code]\"</b> to unlock its hidden features.")
 			owner.store_memory("<b>Uplink frequency:</b> [uplink.lock_code].")

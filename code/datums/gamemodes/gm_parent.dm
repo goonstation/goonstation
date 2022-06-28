@@ -263,6 +263,7 @@
 		catch(var/exception/e)
 			logTheThing("debug", null, null, "kyle|former-antag-runtime: [e.file]:[e.line] - [e.name] - [e.desc]")
 	
+	// Display all antagonist datums. We arrange them like this so that each antagonist is bundled together by type
 	for (var/V in concrete_typesof(/datum/antagonist))
 		var/datum/antagonist/dummy = V
 		for (var/datum/antagonist/A as anything in get_all_antagonists(initial(dummy.id)))
