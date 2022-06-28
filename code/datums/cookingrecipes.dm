@@ -1826,10 +1826,10 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	output = /obj/item/reagent_containers/food/snacks/curry_udon_bowl
 
 /datum/cookingrecipe/ratatouille
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/cucumber
-	item2 = /obj/item/reagent_containers/food/snacks/ingredient/tomato
-	item3 = /obj/item/reagent_containers/food/snacks/ingredient/eggplant
-	item4 = /obj/item/reagent_containers/food/snacks/ingredient/garlic
+	item1 = /obj/item/reagent_containers/food/snacks/plant/cucumber
+	item2 = /obj/item/reagent_containers/food/snacks/plant/tomato
+	item3 = /obj/item/reagent_containers/food/snacks/plant/eggplant
+	item4 = /obj/item/reagent_containers/food/snacks/plant/garlic
 	cookbonus = 6
 	output = /obj/item/reagent_containers/food/snacks/ratatouille
 
