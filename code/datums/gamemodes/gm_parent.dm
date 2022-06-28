@@ -161,22 +161,6 @@
 								absorbed_announce += "<span class='success'>[AV:real_name]([AV:last_client:key])</span>, "
 						stuff_to_output += absorbed_announce
 
-				if (traitor.special_role == ROLE_TRAITOR)
-					var/purchases = length(traitor.purchased_traitor_items)
-					var/surplus = length(traitor.traitor_crate_items)
-					stuff_to_output += "They purchased [purchases <= 0 ? "nothing" : "[purchases] item[s_es(purchases)]"] with their [syndicate_currency]![purchases <= 0 ? " [pick("Wow", "Dang", "Gosh", "Good work", "Good job")]!" : null]"
-					if (purchases)
-						var/item_detail = "They purchased: "
-						for (var/i in traitor.purchased_traitor_items)
-							item_detail += "[bicon(i:item)] [i:name], "
-						item_detail = copytext(item_detail, 1, -2)
-						if (surplus)
-							item_detail += "<br>Their surplus crate contained: "
-							for (var/i in traitor.traitor_crate_items)
-								item_detail += "[bicon(i:item)] [i:name], "
-							item_detail = copytext(item_detail, 1, -2)
-						stuff_to_output += item_detail
-
 				if (traitor.special_role == ROLE_SPY_THIEF)
 					var/purchases = length(traitor.purchased_traitor_items)
 					var/stolen = length(traitor.spy_stolen_items)
