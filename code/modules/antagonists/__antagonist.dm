@@ -3,13 +3,15 @@ ABSTRACT_TYPE(/datum/antagonist)
 	/// Internal ID used to track this type of antagonist. This should *always* be unique between types and subtypes.
 	var/id = null
 	/// Human-readable name for displaying this antagonist for admin menus, round-end summary, etc.
-	var/display_name = "traitor tot"
-	/// If TRUE, this antagonist has an associated browser window that will be displayed on announce.
+	var/display_name = null
+	/// If TRUE, this antagonist has an associated browser window (ideally with the same ID as itself) that will be displayed in do_popup() by default.
 	var/has_info_popup = TRUE
-	/// The medal unlocked at the end of the round by succeeding as this antagonist.
-	var/success_medal = null
 	/// If FALSE, this antagonist will not be displayed at the end of the round.
 	var/display_at_round_end = TRUE
+	/// If TRUE, no other antagonists can be naturally gained if this one is active. Admins can still manually add new ones.
+	var/mutually_exclusive = TRUE
+	/// The medal unlocked at the end of the round by succeeding as this antagonist.
+	var/success_medal = null
 
 
 	/// The mind of the player that that this antagonist is assigned to.
@@ -20,14 +22,30 @@ ABSTRACT_TYPE(/datum/antagonist)
 	New(datum/mind/M, do_equip, do_objectives, do_relocate, silent, source)
 		. = ..()
 		if (!M)
-			DEBUG_MESSAGE("Antagonist datum of type [src.type] and usr [usr] attempted to spawn without a mind. This should never happen!!")
+			message_admins("Antagonist datum of type [src.type] and usr [usr] attempted to spawn without a mind. This should never happen!!")
 			qdel(src)
 			return FALSE
 		owner = M
 		M.special_role = id
 		src.setup_antagonist(do_equip, do_objectives, do_relocate, silent, source)
 
-	/// Base proc to set up the antagonist. It can call equip procs, assigns objectives, and announces itself to the player.
+	/// Calls removal procs to soft-remove this antagonist from its owner. Actual movement or deletion of the datum still needs to happen elsewhere.
+	proc/remove_self(take_gear, silent)
+		if (take_gear)
+			src.remove_equipment()
+		
+		if (!silent)
+			src.announce_removal()
+		
+		if (owner.special_role == id)
+			owner.former_antagonist_roles.Add(owner.special_role)
+			owner.special_role = null
+
+	/// Returns TRUE if this antagonist can be assigned to the given mind, and FALSE otherwise. 
+	proc/is_compatible_with(datum/mind/M)
+		return TRUE
+
+	/// Base proc to set up the antagonist. Depending on arguments, it can spawn equipment, assign objectives, move the player (if applicable), and announce itself.
 	proc/setup_antagonist(do_equip, do_objectives, do_relocate, silent, source)
 		SHOULD_NOT_OVERRIDE(TRUE)
 
@@ -42,7 +60,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 		if (do_objectives)
 			src.assign_objectives()
 			if (!silent)
-				announce_objectives()
+				src.announce_objectives()
 		
 		if (do_relocate)
 			src.relocate()
@@ -54,7 +72,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 	proc/give_equipment()
 		return
 	
-	/// The inverse of give_equipment. Remove things like changeling abilities, etc. Non-innate things like items should probably be kept.
+	/// The inverse of give_equipment(). Remove things like changeling abilities, etc. Non-innate things like items should probably be kept.
 	proc/remove_equipment()
 		return
 
@@ -66,18 +84,18 @@ ABSTRACT_TYPE(/datum/antagonist)
 	proc/assign_objectives()
 		return
 
-	// Show the player what objectives they have.
+	// Show the player what objectives they have in their mind.
 	proc/announce_objectives()
 		var/obj_count = 1
 		for (var/datum/objective/O in owner.objectives)
 			boutput(owner.current, "<b>Objective #[obj_count]:</b> [O.explanation_text]")
 			obj_count++
 
-	/// Give some preliminary information about this antagonist to the player. By default, this is just the name.
+	/// Display a greeting to the player to inform that they're an antagonist. This can be anything, but by default it's just the name.
 	proc/announce()
 		boutput(owner.current, "<h3><span class='alert'>You are \a [src.display_name]!</span></h3>")
 
-	/// Show a defined popup for this antagonist, if there is one.
+	/// Show a popup window for this antagonist. Defaults to using the same ID as the antagonist itself.
 	proc/do_popup(override)
 		if (has_info_popup || override)
 			owner.current.show_antag_popup(!override ? id : override)
@@ -87,18 +105,21 @@ ABSTRACT_TYPE(/datum/antagonist)
 		boutput(owner.current, "<h3><span class='alert'>You are no longer \a [src.display_name]!</span></h3>")
 		return
 	
-	/// Returns whether or not this antagonist is considered to have succeeded.
+	/// Returns whether or not this antagonist is considered to have succeeded. By default, this checks all antagonist-specific objectives.
 	proc/check_success()
 		for (var/datum/objective/O as anything in owner.objectives)
-			boutput(world, "checking objective of type [O.type]...")
+			if (istype(O, /datum/objective/crew) || istype(O, /datum/objective/miscreant))
+				continue
 			if (!O.check_completion())
-				boutput(world, "objective of type [O.type] failed - returning false")
 				return FALSE
-		boutput(world, "all objectives succeeded. returning true")
 		return TRUE
 
-	/// Gets a data block representing this antagonist in round end. Shows things like objectives, success status, etc.
-	proc/build_round_end_dat(log_data = FALSE)
+	/**
+	 * Handle special behavior at the end of the round.
+	 * This should always return a list of strings if you want something to be displayed. The default (list each objective and its success state) should be enough for most roles, but for more loosely-defined ones you might want to display other stuff instead.
+	 * display_at_round_end will prevent the returned info from being displayed, so an override isn't necessary for antagonists that have things like success medals but that shouldn't pop up after the round ends.
+	 */
+	proc/handle_round_end(log_data = FALSE)
 		var/list/dat = list()
 		if (owner.current)
 			dat.Add("<b>[owner.current]</b> (played by <b>[owner.displayed_key]</b>) was \a [assigned_by][display_name]!")

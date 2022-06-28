@@ -269,9 +269,9 @@
 			#ifdef DATA_LOGGER
 			game_stats.Increment(A.check_completion() ? "traitorwin" : "traitorloss")
 			#endif
-			if (!A.display_at_round_end)
-				continue
-			stuff_to_output.Add(A.build_round_end_dat(TRUE))
+			var/antag_dat = A.handle_round_end(TRUE)
+			if (A.display_at_round_end && length(antag_dat))
+				stuff_to_output.Add(antag_dat)
 
 	boutput(world, stuff_to_output.Join("<br>"))
 
