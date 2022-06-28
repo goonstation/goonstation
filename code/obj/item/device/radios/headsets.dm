@@ -139,6 +139,10 @@
 	icon_override = "rh"
 	icon_tooltip = "Radio Show Host"
 
+	set_Properties()
+		..()
+		setProperty("disorient_resist_ear", 20)
+
 /obj/item/device/radio/headset/command/comm_officer
 	name = "communications officer's headset"
 	desc = "Used by the communications officer, this headset can communicate over multiple secure frequencies. These things have been a rare sight as of late."
