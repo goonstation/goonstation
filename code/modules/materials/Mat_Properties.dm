@@ -56,7 +56,6 @@ ABSTRACT_TYPE(/datum/material_property)
 			if(8 to INFINITY)
 				return "highly conductive"
 
-
 /datum/material_property/thermal_conductivity
 	name = "Thermal conductivity"
 	id = "thermal"
