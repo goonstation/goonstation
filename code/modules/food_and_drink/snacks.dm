@@ -2898,7 +2898,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "Stewed and caramalized vegetables. Remy not included."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "ratatouille"
-	needspoon = 1
+	needspoon = true
 	heal_amt = 2
 	bites_left = 3
 	food_effects = list("food_refreshed","food_warm")
