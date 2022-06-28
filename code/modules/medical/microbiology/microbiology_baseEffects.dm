@@ -5,7 +5,7 @@ ABSTRACT_TYPE(/datum/microbioeffects)
 	var/infect_message = null
 	var/infect_attempt_message = null // shown to person when an attempt to directly infect them is made
 	var/reactionlist = list()
-	var/reactionmessage
+	var/reactionmessage = "Default Message"
 
 	// This is a list of mutual exclusive symptom TYPES.
 	// If this contains any symptoms, none of these symptoms will be picked upon mutation or initial raffle.

@@ -2,6 +2,7 @@
  * @file
  * @copyright 2022
  * @author XyzzyThePretender (https://github.com/XyzzyThePretender)
+ * @author CodeJester (https://github.com/codeJester27) //This code is based off of CodeJester's ChemHeater
  * @license ISC
  */
 
