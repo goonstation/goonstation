@@ -81,6 +81,11 @@
 			var/obj_count = 0
 			var/traitor_name
 
+			// This is a really hacky check to prevent traitors from being outputted twice if their primary antag role has an antagonist datum that could be used for data instead.
+			// Once antagonist datums are completed, this check should be removed entirely.
+			if (traitor.get_antagonist(traitor.special_role))
+				continue
+
 			if (traitor.current)
 				traitor_name = "[traitor.current.real_name] (played by [traitor.displayed_key])"
 			else

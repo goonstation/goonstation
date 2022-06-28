@@ -122,9 +122,10 @@ ABSTRACT_TYPE(/datum/antagonist)
 	proc/handle_round_end(log_data = FALSE)
 		var/list/dat = list()
 		if (owner.current)
-			dat.Add("<b>[owner.current]</b> (played by <b>[owner.displayed_key]</b>) was \a [assigned_by][display_name]!")
+			// we conjugate manually here so that the text macro doesn't treat null assigned_by values as their own text, thus working incorrectly
+			dat.Add("<b>[owner.current]</b> (played by <b>[owner.displayed_key]</b>) was \a [assigned_by + display_name]!")
 		else
-			dat.Add("<b>[owner.displayed_key]</b> (character destroyed) was \a [assigned_by][display_name]!")
+			dat.Add("<b>[owner.displayed_key]</b> (character destroyed) was \a [assigned_by + display_name]!")
 		if (length(owner.objectives))
 			var/obj_count = 1
 			for (var/datum/objective/O as anything in owner.objectives)
