@@ -61,7 +61,7 @@
 		if (T)
 			heldfly.set_loc(T)
 			heldfly.is_npc = TRUE
-
+			heldfly.isdisabled = FALSE
 			qdel(src)
 
 
@@ -132,6 +132,8 @@
 		if(!ON_COOLDOWN(user, "sawfly_attackCD", 1 SECONDS))
 			user.visible_message("<b class='alert'>[user] [pick(list("gouges", "cleaves", "lacerates", "shreds", "cuts", "tears", "saws", "mutilates", "hacks", "slashes",))] [target]!</b>")
 			playsound(user, "sound/machines/chainsaw_green.ogg", 50, 1)
+			if(prob(3))
+				user.communalbeep()
 			take_bleeding_damage(target, null, 17, DAMAGE_STAB)
 			random_brute_damage(target, 14, FALSE)
 

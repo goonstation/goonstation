@@ -18,7 +18,8 @@ This file is the critter itself, and all the custom procs it needs in order to f
 	var/deathtimer = 0 // for catastrophic failure on death
 	var/isnew = TRUE // for seeing whether or not they will make a new name on redeployment
 	var/sawflynames = list("A", "B", "C", "D", "E", "F", "V", "W", "X", "Y", "Z", "Alpha", "Beta", "Gamma", "Lambda", "Delta")
-	speechverb_say = "bzzs"
+	var/isdisabled = FALSE //only used in reusable grenade- stops life() from doing anything
+	speechverb_say = "whirrs"
 	speechverb_exclaim = "buzzes"
 	speechverb_ask = "hums"
 	health = 50 //this value's pretty arbitrary, since it's overridden when they get their healtholders
@@ -57,9 +58,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 		animate_bumble(src) // gotta get the float goin' on
 		src.set_a_intent(INTENT_HARM) // incredibly stupid way of ensuring they aren't passable but it works
 		// ai setup
-		src.mob_flags |= HEAVYWEIGHT_AI_MOB
-		src.ai = new /datum/aiHolder/sawfly(src)
-		src.is_npc = TRUE
+
 		START_TRACKING
 
 	setup_hands()
@@ -82,7 +81,6 @@ This file is the critter itself, and all the custom procs it needs in order to f
 				src.visible_message("<b>[src] [pick(list("beeps",  "boops", "bwoops", "bips", "bwips", "bops", "chirps", "whirrs", "pings", "purrs", "thrums"))].</b>")
 
 
-
 	proc/foldself()
 		if(!isalive(src))
 			return 0
@@ -92,6 +90,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 			N.name = "Compact [name]"
 			N.tempname = src.name
 			src.is_npc = FALSE
+			src.isdisabled = TRUE
 			N.heldfly = src
 
 			src.set_loc(N)
@@ -213,8 +212,9 @@ This file is the critter itself, and all the custom procs it needs in order to f
 				take_bleeding_damage(user, null, 7, DAMAGE_CUT, 1)
 		..()
 
-
 	Life()
+		if(src.isdisabled) //prevents them from doing much of anything when in grenade form
+			return
 		..()
 		if(prob(8)) communalbeep()
 		if(!isalive(src)) src.set_density(FALSE) //according to lizzle something in the mob life resets density so this has to be below parent-
@@ -229,3 +229,4 @@ This file is the critter itself, and all the custom procs it needs in order to f
 		src.ai = new /datum/aiHolder/sawfly(src)
 		src.is_npc = TRUE
 		START_TRACKING
+
