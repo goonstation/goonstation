@@ -556,6 +556,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/risotto(src)
 			src.recipes += new /datum/cookingrecipe/omurice(src)
 			src.recipes += new /datum/cookingrecipe/riceandbeans(src)
+			src.recipes += new /datum/cookingrecipe/ratatouille(src)
 			src.recipes += new /datum/cookingrecipe/sushi_roll(src)
 			src.recipes += new /datum/cookingrecipe/nigiri_roll(src)
 			src.recipes += new /datum/cookingrecipe/porridge(src)

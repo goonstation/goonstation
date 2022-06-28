@@ -2892,3 +2892,14 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	initial_volume = 20
 	initial_reagents = "currypowder"
 	food_effects = list("food_hp_up","food_refreshed","food_warm")
+
+/obj/item/reagent_containers/food/snacks/ratatouille
+	name = "ratatouille"
+	desc = "Stewed and caramalized vegetables. Remy not included."
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
+	icon_state = "ratatouille"
+	needspoon = 1
+	heal_amt = 2
+	bites_left = 6
+	food_effects = list("food_refreshed","food_warm")
+	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_DINNER

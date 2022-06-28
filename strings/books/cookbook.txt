@@ -172,6 +172,19 @@
 	</div>
 
 	<hr>
+	<h2>Ratatouille</h2>
+	<h3>Ingredients</h3>
+	<div class = "ratatouille">
+	<li>2 Cucumber
+	<li>1 Eggplant
+	<li>1 Garlic
+	</div>
+	<h3>Steps</h3>
+	<div class = "ratatouille">
+	<li>Cook the ingredients in the oven for 3 seconds on high.
+	</div>
+
+	<hr>
 	<h2>Donut</h2>
 	<h3>Ingredients</h3>
 	<div class = "donut">
