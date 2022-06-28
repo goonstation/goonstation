@@ -399,7 +399,6 @@
 			setupProperties()
 				..()
 				setProperty("viralprot", 50)
-				setProperty("chemprot", 30)
 
 			equipped(var/mob/user, var/slot)
 				..()

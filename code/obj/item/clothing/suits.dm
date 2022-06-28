@@ -1200,7 +1200,6 @@
 			setupProperties()
 				..()
 				setProperty("viralprot", 50)
-				setProperty("chemprot", 50)
 
 		infiltrator
 			name = "specialist operative espionage suit"
