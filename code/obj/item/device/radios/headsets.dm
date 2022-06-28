@@ -139,7 +139,7 @@
 	icon_override = "rh"
 	icon_tooltip = "Radio Show Host"
 
-	set_Properties()
+	setupProperties()
 		..()
 		setProperty("disorient_resist_ear", 20)
 
