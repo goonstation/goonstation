@@ -67,7 +67,7 @@ var/list/datum/chem_request/chem_requests = list()
 					src.request.reagent_color = list(reagent.fluid_r, reagent.fluid_g, reagent.fluid_b)
 				. = TRUE
 			if ("set_notes")
-				src.request.note = strip_html(params["notes"], 80)
+				src.request.note = strip_html(copytext(params["notes"], 1, 66))
 			if ("set_volume")
 				src.request.volume = clamp(params["volume"], 1, src.max_volume)
 				. = TRUE

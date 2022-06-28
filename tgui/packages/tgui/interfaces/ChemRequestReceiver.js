@@ -35,7 +35,7 @@ const ChemRequest = (props, context) => {
           <Stack vertical>
             <Stack.Item>{name} requested</Stack.Item>
             <Stack.Item align="center"><Box width={16} textAlign="center" backgroundColor={color_string} color={lightness > 255/2 ? "black" : "white"}>{capitalize(reagent_name)} ({volume}u)</Box></Stack.Item>
-            <Stack.Item style={{ 'overflow-wrap': 'break-word' }}>from {area} {age} ago. <br /> {notes && `Notes: ${notes}`}</Stack.Item>
+            <Stack.Item>from {area} {age} ago. <br /> {notes && `Notes: ${notes}`}</Stack.Item>
           </Stack>
         </Flex.Item>
         <Flex.Item>

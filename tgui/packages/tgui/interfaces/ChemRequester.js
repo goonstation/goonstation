@@ -86,7 +86,8 @@ export const ChemRequester = (props, context) => {
               <Input
                 width="100%"
                 value={notesText}
-                onInput={(e, value) => { setNotesText(value.substring(0, 80)); }}
+                maxLength={65}
+                onInput={setNotesText}
                 onChange={(e, value) => { act("set_notes", { notes: value }); }} >{notes}
               </Input>
             </Stack.Item>
