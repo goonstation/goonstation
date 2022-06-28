@@ -2,19 +2,10 @@
 	name = "Centrifuge"
 	icon = 'icons/obj/pathology.dmi'
 	icon_state = "centrifuge0"
-	desc = "A large machine that can be used to separate a pathogen sample from a blood sample."
+	desc = "A large machine that can be used to separate a microbe sample from a blood sample."
 	anchored = 1
 	density = 1
 
-	ui_state(mob/user)
-
-	ui_interact(mob/user, datum/tgui/ui)
-
-	ui_data(mob/user)
-
-	ui_act(action, params)
-
-/*
 	var/obj/item/bloodslide/source = null
 	var/datum/microbe/isolated = null
 	var/obj/item/reagent_containers/glass/petridish/target = null
@@ -44,8 +35,8 @@
 						var/datum/reagent/blood/B = src.source.reagents.reagent_list["blood"]
 						if (B.volume && length(B.microbes))
 							if (B.microbes.len > 1)
-								output_text += "The centrifuge is calibrated to isolate a sample of [src.isolated ? src.isolated.name : "all pathogens"].<br><br>"
-								output_text += "The blood in the [src.source] contains multiple pathogens. Calibrate to isolate a sample of:<br>"
+								output_text += "The centrifuge is calibrated to isolate a sample of [src.isolated ? src.isolated.name : "all microbes"].<br><br>"
+								output_text += "The blood in the [src.source] contains different microbes. Calibrate to isolate a sample of:<br>"
 								output_text += "<a href='?src=\ref[src];all=1'>All</a><BR>"
 								for (var/uid in B.microbes)
 									var/datum/microbe/P = B.microbes[uid]
@@ -99,7 +90,7 @@
 				processing_items.Remove(src)
 		else if (href_list["isolate"])
 			if (!src.on)
-				if (href_list["isolate"] == "All")
+				if (href_list["isolate"] == "all")
 					src.isolated = null
 				else
 					src.isolated = locate(href_list["isolate"])
@@ -185,7 +176,6 @@
 				var/datum/reagent/blood/pathogen/Q = src.target.reagents.reagent_list["pathogen"]
 				for (var/uid in P.microbes)
 					var/datum/microbe/PT = P.microbes[uid]
-					Q.microbes += uid
 					Q.microbes[uid] = PT
 			else
 				src.target.reagents.reagent_list += "pathogen"
@@ -199,192 +189,88 @@
 			src.isolated = null
 			src.on = 0
 			src.icon_state = "centrifuge0"
-*/
+
+
 /obj/machinery/microscope
 	name = "Microscope"
 	icon = 'icons/obj/pathology.dmi'
 	icon_state = "microscope0"
 	desc = "A device which provides a magnified view of a culture in a petri dish."
-
-	ui_state(mob/user)
-
-	ui_interact(mob/user, datum/tgui/ui)
-
-	ui_data(mob/user)
-
-	ui_act(action, params)
-
-/*
-	var/obj/item/target = null
-
-	var/list/symptom_action_out = new/list()
-	var/list/symptom_action_in = new/list()
-	var/list/supp_action = new/list()
-
+	anchored = 1
 	var/zoom = 0
 
-	anchored = 1
-
-	proc/message_parts(var/message)
-		var/cloc = findtext(message, ":")
-		if (cloc)
-			var/name = copytext(message, 1, cloc)
-			var/data = copytext(message, cloc + 1)
-			return list(name, data)
-		else
-			return null
+	var/obj/item/target = null
 
 	attack_hand(mob/user)
-		if (src.target)
-			var/action = input("What would you like to do with the microscope?", "Microscope", "View [target]") in list("View [target]", "[src.zoom ? "Zoom Out" : "Zoom In"]", "Remove [target]", "Cancel")
-			if (BOUNDS_DIST(user.loc, src.loc) == 0)
-				if (action == "View [target]")
-					if (zoom)
-						user.show_message("<span class='notice'>You look at the [target] through the microscope.</span>")
-						//if (istype(src.target, /obj/item/reagent_containers/glass/petridish))
-							//var/obj/item/reagent_containers/glass/petridish/PD = target
-							//if (PD.dirty)
-								//user.show_message("<span class='notice'>The petri dish cannot be used for cultivating pathogens, due to: </span>")
-								//user.show_message(PD.dirty_reason)
-						var/list/path_list = src.target.reagents.aggregate_pathogens()
-						var/pcount = length(path_list)
-						if (pcount > 0)
-							var/uid
-							var/datum/microbe/P
-							if (pcount > 1)
-								var/list/names = new/list()
-								for (uid in path_list)
-									P = path_list[uid]
-									names += P.name
-								names += "Cancel"
-								var/name = input("Which pathogen?", "Microscope", "Cancel") in names
-								if (name == "Cancel")
-									return
-								for (uid in path_list)
-									P = path_list[uid]
-									if (P.name == name)
-										break
-							else
-								uid = path_list[1]
-								P = path_list[uid]
-							user.show_message("<span class='notice'>Apparent features of the pathogen:</span>")
-							var/lines = 1
-							user.show_message(P.suppressant.may_react_to())
-							for (var/datum/microbioeffects/E in P.effects)
-								var/res = E.may_react_to()
-								if (res)
-									lines++
-									user.show_message("[res]")
-							if (!lines)
-								user.show_message("You cannot see anything out of the ordinary.")
-							if (src.symptom_action_in.len)
-								user.show_message("<span class='notice'>You can observe in the [target]:</span>")
-								for (var/act in src.symptom_action_in)
-									var/list/actl = message_parts(act)
-									if (actl[1] == P.name)
-										user.show_message("[actl[2]]")
-							if (src.supp_action[P.name])
-								user.show_message("[src.supp_action[P.name]]")
-						else
-							user.show_message("The [target] is empty.")
-					else
-						var/list/path_list = src.target.reagents.aggregate_pathogens()
-						user.show_message("<span class='notice'>You look at the [target] through the microscope.</span>")
-						var/pcount = length(path_list)
-						if (pcount > 0)
-							var/uid
-							var/datum/microbe/P
-							if (pcount > 1)
-								var/list/names = new/list()
-								for (uid in path_list)
-									P = path_list[uid]
-									names += P.name
-								names += "Cancel"
-								var/name = input("Which pathogen?", "Microscope", "Cancel") in names
-								if (name == "Cancel")
-									return
-								for (uid in path_list)
-									P = path_list[uid]
-									if (P.name == name)
-										break
-							else
-								uid = path_list[1]
-								P = path_list[uid]
-							user.show_message("<span class='notice'>The pathogen appears to be consistent with the strain [P.name]</span>")
-							user.show_message("The pathogen appears to be composed of [P.desc].")
-							if (src.symptom_action_out.len)
-								user.show_message("<span class='notice'>You can observe in the [target]:</span>")
-								for (var/act in src.symptom_action_out)
-									var/list/actl = message_parts(act)
-									if (actl[1] == P.name)
-										user.show_message("[actl[2]]")
-							if (src.supp_action[P.name])
-								user.show_message("[src.supp_action[P.name]]")
-						else
-							user.show_message("The [target] is empty.")
-				else if (action == "Zoom Out")
-					zoom = 0
-					icon_state = "microscope1"
-					user.show_message("The microscope is now zoomed out.")
-				else if (action == "Zoom In")
-					zoom = 1
-					icon_state = "microscope3"
-					user.show_message("The microscope is now zoomed in.")
-				else if (action == "Remove [target]")
-					user.show_message("<span class='notice'>You remove the [target] from the microscope.</span>")
-					src.target.set_loc(src.loc)
-					src.target.layer = initial(src.target.layer)
-					src.target.master = null
-					icon_state = zoom ? "microscope2" : "microscope0"
-					src.contents -= src.target
-					src.target = null
+		if (!(src.target))
+			boutput(user, "There is nothing loaded under the microscope.")
+			return
+		var/action = input("What would you like to do with the microscope?", "Microscope", "View [target]") in list("View [target]", "[src.zoom ? "Zoom Out" : "Zoom In"]", "Remove [target]", "Cancel")
+		if (BOUNDS_DIST(user.loc, src.loc) == 0)
+			if (action == "View [target]")
+				var/list/datum/microbe/microbelist = target.reagents.aggregate_pathogens()
+				for (var/uid in microbelist)
+					user.show_message("You see [microbelist[uid].desc].")
+				return
+			if (action == "Zoom Out")
+				if (!zoom)
+					boutput(user,"The microscope is already zoomed out.")
+					return
+				zoom = 0
+				icon_state = target ? "microscope1" : "microscope0"
+				user.show_message("The microscope is now zoomed out.")
+			if (action == "Zoom In")
+				if (zoom)
+					boutput(user,"The microscope is already zoomed in.")
+					return
+				zoom = 1
+				icon_state = target ? "microscope3" : "microscope1"
+				user.show_message("The microscope is now zoomed in.")
+			if (action == "Remove [target]")
+				if (zoom)
+					boutput(user, "The microscope is still zoomed in. Readjust it before removing the [target].")
+					return
+				user.show_message("<span class='notice'>You remove the [target] from the microscope.</span>")
+				src.target.set_loc(src.loc)
+				src.target.master = null
+				icon_state = "microscope0"
+				src.contents -= src.target
+				src.target = null
 
 	attackby(var/obj/item/O, var/mob/user)
 		if (istype(O, /obj/item/reagent_containers/glass/petridish) || istype(O, /obj/item/bloodslide))
 			if (src.target)
-				boutput(user, "<span class='alert'>There is already a [target] on the microscope.</span>")
+				boutput(user, "<span class='alert'>There is already a [target] under the microscope.</span>")
 				return
-			else
-				src.target = O
-				O.set_loc(src)
-				O.master = src
-				O.layer = src.layer
-				src.contents += O
-				if (user.client)
-					user.client.screen -= O
-				user.u_equip(O)
-				src.icon_state = zoom ? "microscope3" : "microscope1"
-				boutput(user, "You insert the [O] into the microscope.")
+			src.target = O
+			O.set_loc(src)
+			O.master = src
+			O.layer = src.layer
+			src.contents += O
+			if (user.client)
+				user.client.screen -= O
+			user.u_equip(O)
+			if (zoom)
+				boutput(user, "There isn't enough clearance to insert the [O] while the microscope is zoomed in.")
+				return
+			src.icon_state = "microscope1"
+			boutput(user, "You insert the [O] into the microscope.")
 		else if (istype(O, /obj/item/reagent_containers/dropper))
-			if (src.target && istype(src.target, /obj/item/reagent_containers/glass/petridish))
-				if (O.reagents.total_volume > 0)
-					user.visible_message("[user] drips some of the contents of the dropper into the petri dish.", "You drip some of the contents of the dropper into the petri dish.")
-					var/list/path_list = src.target.reagents.aggregate_pathogens()
-					for (var/rid in O.reagents.reagent_list)
-						var/datum/reagent/R = O.reagents.reagent_list[rid]
-						if (R.volume < 1)
-							continue
-						for (var/uid in path_list)
-							var/datum/microbe/P = path_list[uid]
-							var/act = P.suppressant.react_to(R.id)
-							if (act != null)
-								if (!(P.name in src.supp_action))
-									src.supp_action += P.name
-								src.supp_action[P.name] = act
-								SPAWN(10 SECONDS) // 100
-									src.supp_action -= P.name
-							for (var/datum/microbioeffects/E in P.effects)
-								var/a_in = "[P.name]: " + E.react_to(R.id, 1)
-								var/a_out = "[P.name]: " + E.react_to(R.id, 0)
-								if (a_in && !(a_in in src.symptom_action_in))
-									src.symptom_action_in += a_in
-									SPAWN(10 SECONDS) // 100
-										src.symptom_action_in -= a_in
-								if (a_out && !(a_out in src.symptom_action_out))
-									src.symptom_action_out += a_out
-									SPAWN(10 SECONDS) // 100
-										src.symptom_action_out -= a_out
-*/
+			if (src.target && istype(src.target, /obj/item/reagent_containers/glass/petridish) && O.reagents.total_volume > 0)
+				user.visible_message("[user] drips some of the contents of the dropper into the petri dish.", "You drip some of the contents of the dropper into the petri dish.")
+				var/list/path_list = src.target.reagents.aggregate_pathogens()
+				for (var/rid in O.reagents.reagent_list)
+					var/datum/reagent/R = O.reagents.reagent_list[rid]
+					if (R.volume < 1)
+						continue
+					for (var/uid in path_list)
+						var/datum/microbe/P = path_list[uid]
+						if (R in P.suppressant.reactionlist)
+							boutput(user, P.suppressant.reactionmessage)
+						for (var/key in P.effects)
+							if (R in P.effects[key])
+								boutput(user, P.effects[key].reactionmessage)
+
 /*
 #define PATHOGEN_MANIPULATOR_STATE_MAIN 0
 #define PATHOGEN_MANIPULATOR_STATE_LOADER 1
@@ -413,13 +299,13 @@
 	icon_state = "pathology"
 	desc = "A bulky machine used to control the pathogen manipulator."
 
-	ui_state(mob/user)
+	//ui_state(mob/user)
 
-	ui_interact(mob/user, datum/tgui/ui)
+	//ui_interact(mob/user, datum/tgui/ui)
 
-	ui_data(mob/user)
+	//ui_data(mob/user)
 
-	ui_act(action, params)
+	//ui_act(action, params)
 
 	/*
 	var/obj/machinery/pathogen_manipulator/manip = null
@@ -1570,13 +1456,13 @@
 	anchored = 1
 	density = 1
 
-	ui_state(mob/user)
+	//ui_state(mob/user)
 
-	ui_interact(mob/user, datum/tgui/ui)
+	//ui_interact(mob/user, datum/tgui/ui)
 
-	ui_data(mob/user)
+	//ui_data(mob/user)
 
-	ui_act(action, params)
+	//ui_act(action, params)
 
 /*
 	var/obj/item/reagent_containers/glass/petridish/target = null

@@ -623,7 +623,7 @@
 	icon = 'icons/obj/furniture/table_chemistry.dmi'
 	auto_type = /obj/table/reinforced/chemistry/auto
 	parts_type = /obj/item/furniture_parts/table/reinforced/chemistry
-	has_storage = 1
+	has_storage = 0 //1	//Why?
 
 	auto
 		auto = 1

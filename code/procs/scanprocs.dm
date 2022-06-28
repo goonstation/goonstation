@@ -151,10 +151,10 @@
 					var/datum/microbesubdata/P = H.microbes[uid]
 					if (disease_detection && P.master.artificial)
 						var/treatment = P.master.suppressant.exactcure
-						pathogen_data += "<br>&emsp;<span class='alert'>[P.master.print_name]. Suggested suppressant: [treatment].</span>"
+						pathogen_data += "<br>&emsp;<span class='alert'>[P.master.print_name]. Suggested treatment: [treatment].</span>"
 					else
 						var/treatment = P.master.suppressant.therapy
-						pathogen_data += "<br>&emsp;<span class='alert'>[P.master.print_name]. Suggested suppressant: [treatment].</span>"
+						pathogen_data += "<br>&emsp;<span class='alert'>[P.master.print_name]. Suggested treatment: [treatment].</span>"
 
 			if (H.get_organ("brain"))
 				if (H.get_brain_damage() >= 100)

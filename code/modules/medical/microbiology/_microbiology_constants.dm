@@ -1,14 +1,15 @@
 // Spread flags. Determines what slots are taken into account during a permeability scan.
-#define SPREAD_FACE 1
-#define SPREAD_BODY 2
-#define SPREAD_HANDS 4
-#define SPREAD_AIR 8
 
-#define COOLDOWN_MULTIPLIER 1
+//#define SPREAD_FACE 1
+//#define SPREAD_BODY 2
+//#define SPREAD_HANDS 4
+//#define SPREAD_AIR 8
 
-#define INFECT_NONE 0
-#define INFECT_TOUCH 1
-#define INFECT_AREA 3
+//#define COOLDOWN_MULTIPLIER 1
+
+//#define INFECT_NONE 0
+//#define INFECT_TOUCH 1
+//#define INFECT_AREA 3
 
 #define REAGENT_CURE_THRESHOLD 10
 
@@ -45,9 +46,13 @@
 
 // Other constants
 
+#define MICROBIO_LOWERDURATIONVALUE 120
+#define MICROBIO_UPPERDURATIONVALUE 240
+
 #define MICROBIO_INDIVIDUALMICROBELIMIT 3
 #define MICROBIO_DEFAULTPROBABILITYDIVIDEND 5
 #define MICROBIO_MAXIMUMPROBABILITY 5
+#define MICROBIO_MICROBEWEIGHTEDPROBABILITYDIVIDEND 2
 #define MICROBIO_NAMINGLIST list("Disease", "Strain", "Plague", "Syndrome", "Virions")
 
 

@@ -3169,7 +3169,6 @@ datum
 				var/target_changed = 0
 				for (var/uid in source_pathogens)
 					if (!(source_pathogens[uid] in target_pathogens))
-						target_pathogens += uid
 						target_pathogens[uid] = source_pathogens[uid]
 						target_changed = 1
 				if (target_changed)

@@ -416,7 +416,7 @@ ABSTRACT_TYPE(/datum/microbe)
 	proc/generate_attributes() //WIP
 		var/shape = pick("stringy", "snake", "blob", "spherical", "tetrahedral", "star shaped", "tesselated")
 		src.desc = "[suppressant.color] [shape] microbes" //color determined by average of cure reagent and assigned-effect colors
-		src.durationtotal = 2*rand(60,120)					//4 to 8 minute lifespan
+		src.durationtotal = 2*rand(MICROBIO_LOWERDURATIONVALUE,MICROBIO_UPPERDURATIONVALUE)					//4 to 8 minute lifespan
 		src.infectioncount = rand(6,18)								// See below for explanation.
 		src.infectiontotal = src.infectioncount
 		src.artificial = 0
@@ -646,7 +646,7 @@ ABSTRACT_TYPE(/datum/microbesubdata)
 		var/A = B/P.master.durationtotal
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
-			P.probability = (ceil(-A*P.duration**2+B*P.duration))/H.microbes.len
+			P.probability = (ceil(-A*P.duration**2+B*P.duration))/(MICROBIO_MICROBEWEIGHTEDPROBABILITYDIVIDEND*H.microbes.len)
 		else
 			P.probability = (ceil(-A*P.duration**2+B*P.duration))/MICROBIO_DEFAULTPROBABILITYDIVIDEND
 		iscured = P.master.suppressant.suppress_act(src)
