@@ -73,8 +73,8 @@
 
 		update_shipping_data()
 
-		time_between_shifts = 4500 // 7.5 minutes base.
-		time_until_shift = time_between_shifts + rand(-1500,1500)
+		time_between_shifts = 6000 // 10 minutes
+		time_until_shift = time_between_shifts + rand(-900,1200)
 
 	proc/add_commodity(var/datum/commodity/new_c)
 		src.commodities["[new_c.comtype]"] = new_c
@@ -258,7 +258,7 @@
 		// send artifact resupply
 		if(src.artifact_resupply_amount > 1 && !src.artifacts_on_the_way)
 			src.artifacts_on_the_way = TRUE
-			SPAWN(1 MINUTES)
+			SPAWN(rand(1,5) MINUTES)
 				// handle the artifact amount
 				var/art_amount = round(artifact_resupply_amount)
 				artifact_resupply_amount -= art_amount
