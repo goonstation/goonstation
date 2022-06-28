@@ -183,7 +183,6 @@
 				P.holder = src.target.reagents
 				src.target.reagents.update_total()
 			src.target.icon_state = "petri1"
-			//src.target.stage = 0
 			del(src.source)
 			src.source = null
 			src.isolated = null
