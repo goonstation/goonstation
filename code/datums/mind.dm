@@ -226,7 +226,7 @@ datum/mind
 		return null
 
 	/// Attempts to add the antagonist datum of ID role_id to this mind.
-	proc/add_antagonist(role_id, do_equip = TRUE, do_objectives = TRUE, do_relocate = TRUE, silent = FALSE, source = ANTAGONIST_SOURCE_ROUNDSTART, respect_mutual_exclusives = TRUE)
+	proc/add_antagonist(role_id, do_equip = TRUE, do_objectives = TRUE, do_relocate = TRUE, silent = FALSE, source = ANTAGONIST_SOURCE_ROUND_START, respect_mutual_exclusives = TRUE)
 		// Check for mutual exclusivity
 		if (respect_mutual_exclusives && length(src.antagonists))
 			for (var/datum/antagonist/A as anything in src.antagonists)
@@ -250,6 +250,7 @@ datum/mind
 				A.remove_self(TRUE, FALSE)
 				antagonists.Remove(A)
 				qdel(A)
+				return TRUE
 		return FALSE
 	
 	/// Removes ALL antagonists from this mind. Use with caution!

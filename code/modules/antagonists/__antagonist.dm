@@ -17,7 +17,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 	/// The mind of the player that that this antagonist is assigned to.
 	var/datum/mind/owner
 	/// How this antagonist was created. Displayed at the end of the round.
-	var/assigned_by = ANTAGONIST_SOURCE_ROUNDSTART
+	var/assigned_by = ANTAGONIST_SOURCE_ROUND_START
 	
 	New(datum/mind/M, do_equip, do_objectives, do_relocate, silent, source)
 		. = ..()
@@ -41,7 +41,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 			owner.former_antagonist_roles.Add(owner.special_role)
 			owner.special_role = null
 
-	/// Returns TRUE if this antagonist can be assigned to the given mind, and FALSE otherwise. 
+	/// Returns TRUE if this antagonist can be assigned to the given mind, and FALSE otherwise. This is intended to be overriden by subtypes; mutual exclusivity and other selection logic is not performed here. 
 	proc/is_compatible_with(datum/mind/M)
 		return TRUE
 
@@ -88,6 +88,8 @@ ABSTRACT_TYPE(/datum/antagonist)
 	proc/announce_objectives()
 		var/obj_count = 1
 		for (var/datum/objective/O in owner.objectives)
+			if (istype(O, /datum/objective/crew) || istype(O, /datum/objective/miscreant))
+				continue
 			boutput(owner.current, "<b>Objective #[obj_count]:</b> [O.explanation_text]")
 			obj_count++
 
