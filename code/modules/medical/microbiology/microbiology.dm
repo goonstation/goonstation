@@ -346,7 +346,7 @@ ABSTRACT_TYPE(/datum/microbe)
 
 	var/datum/suppressant/suppressant				// Handles curing
 
-	var/list/effects = list()						// A list of symptoms exhibited by those infected with this pathogen.
+	var/list/datum/microbioeffects/effects = list()	// A list of symptoms exhibited by those infected with this pathogen.
 	var/list/effectdata = list()					// used for custom var calls
 
 	var/artificial									// Did someone make this microbe using a machine? (1 yes, 0 no)
