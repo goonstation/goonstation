@@ -532,6 +532,12 @@
 	generateLight = 0
 	temperature = TRENCH_TEMP
 
+	clear
+		spawningFlags = null
+#ifdef IN_MAP_EDITOR
+		icon_state = "concrete"
+#endif
+
 /obj/machinery/computer/sea_elevator
 	name = "Elevator Control"
 	icon_state = "shuttle"
