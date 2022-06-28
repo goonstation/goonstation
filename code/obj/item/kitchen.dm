@@ -714,11 +714,12 @@ TRAYS
 
 	dropped(mob/user)
 		..()
-		if(user.lying && isturf(loc))
+		if(user.lying)
+			if (ishuman(user))
+				var/mob/living/carbon/human/H = user
+				if (!H.limbs.r_leg && !H.limbs.l_leg)
+					return // fix for legless players shattering plates when stacking and pulling disposed plates from null space
 			user.visible_message("<span class='alert'>[user] drops \the [src]!</span>")
-			src.shatter()
-		else if(user?.bioHolder.HasEffect("clumsy") && prob(25))
-			user.visible_message("<span class='alert'>[user] clumsily drops \the [src]!</span>")
 			src.shatter()
 
 	Crossed(atom/movable/AM)
