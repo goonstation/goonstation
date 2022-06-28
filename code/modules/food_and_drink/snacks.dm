@@ -2900,6 +2900,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	icon_state = "ratatouille"
 	needspoon = 1
 	heal_amt = 2
-	bites_left = 6
+	bites_left = 3
 	food_effects = list("food_refreshed","food_warm")
 	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_DINNER
