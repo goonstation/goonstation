@@ -714,7 +714,7 @@ TRAYS
 
 	dropped(mob/user)
 		..()
-		if(user.lying)
+		if(user.lying && isturf(loc))
 			user.visible_message("<span class='alert'>[user] drops \the [src]!</span>")
 			src.shatter()
 		else if(user?.bioHolder.HasEffect("clumsy") && prob(25))
