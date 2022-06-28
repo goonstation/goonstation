@@ -140,5 +140,5 @@
 	attack_hand(atom/target, var/mob/user, var/reach)
 		if (ismob(target))
 			..()
-		//..()
+		..()
 

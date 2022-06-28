@@ -86,7 +86,7 @@
 		if (C.health < -50 || !isalive(C)) continue
 		if(istype(C, /mob/living/critter/robotic/sawfly)) continue
 
-		if(C?.mind.special_role)
+		if(C.mind?.special_role)
 			if (istraitor(C) || isnukeop(C) || isspythief(C) || isnukeopgunbot(C)) // frens :)
 				if (!(C in owncritter.friends))
 					boutput(C, "<span class='alert'> [owncritter]'s IFF system silently flags you as an ally! </span>")
@@ -127,7 +127,7 @@
 	for (var/mob/living/C in viewers(max_dist, owncritter))
 		if (C.health < -50 || !isalive(C)) continue
 		if(istype(C, /mob/living/critter/robotic/sawfly)) continue
-		if(C?.mind.special_role)
+		if(C.mind?.special_role)
 			if (istraitor(C) || isnukeop(C) || isspythief(C) || isnukeopgunbot(C)) // frens :)
 				if (!(C in owncritter.friends))
 					boutput(C, "<span class='alert'> [owncritter]'s IFF system silently flags you as an ally! </span>")
