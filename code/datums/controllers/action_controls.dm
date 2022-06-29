@@ -678,6 +678,9 @@ var/datum/action_controller/actions
 		if (sheet2 && cost2)
 			sheet2.change_stack_amount(-cost2)
 		logTheThing("station", owner, null, "builds [objname] (<b>Material:</b> [mat && istype(mat) && mat.mat_id ? "[mat.mat_id]" : "*UNKNOWN*"]) at [log_loc(owner)].")
+		if(isliving(owner))
+			var/mob/living/M = owner
+			R.add_fingerprint(M)
 		if (callback)
 			call(callback)(src, R)
 

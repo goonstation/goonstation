@@ -1232,7 +1232,7 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 				boutput(owner, "<span class='notice'>You snip the last piece of the electrical system connected to the semiconductor.</span>")
 				playsound(generator, "sound/items/Scissor.ogg", 80, 1)
 				generator.semiconductor_repair = "The semiconductor has been disconnected and can be pried out or reconnected with additional cable."
-				generator.status = BROKEN // SEMICONDUCTOR DISCONNECTED IT BROKEN
+				generator.status |= BROKEN // SEMICONDUCTOR DISCONNECTED IT BROKEN
 				generator.UpdateIcon()
 
 			if (TEG_SEMI_STATE_DISCONNECTED)
