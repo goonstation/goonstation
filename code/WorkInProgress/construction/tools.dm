@@ -501,7 +501,7 @@
 
 		selecting = 1
 
-		/// mode selection for floor planner
+		// mode selection for floor planner
 		mode = tgui_input_list(message="What to mark?", title="Marking", buttons=icons)
 		if(!mode)
 			mode = "floors"
@@ -512,9 +512,9 @@
 			selecting = 0
 			return
 
-		/// icon selection
-		/// selectedicon is the file we selected
-		/// selectedtype gets used as our iconstate for floors or the key to the lists for walls
+		// icon selection
+		// selectedicon is the file we selected
+		// selectedtype gets used as our iconstate for floors or the key to the lists for walls
 		if (mode == "floors")
 			states += icon_states('icons/turf/construction_floors.dmi')
 			selectedtype = tgui_input_list(message="What kind?", title="Marking", buttons=states)
@@ -817,7 +817,7 @@
 		// Originally worked only on this type specifically.
 		// Which meant it didn't work with the fancy new auto-walls
 
-		/// this has been reworked to use auto walls that i resprited a while back.
+		// this has been reworked to use auto walls that i resprited a while back.
 		if (istype(T, /turf/simulated/wall/auto))
 			var/turf/simulated/wall/auto/AT = T
 			var/connectdir = get_connected_directions_bitflag(AT.connects_to, AT.connects_to_exceptions, TRUE, AT.connect_diagonal)
