@@ -453,10 +453,12 @@
 	var/mode = null
 	var/icons = list("floors", "walls", "restore original")
 	var/marker_class = list("floors" = /obj/plan_marker/floor, "walls" = /obj/plan_marker/wall)
-	var/selectedicon = "floor"
+	/// icon file selected
+	var/selectedicon
+	/// iconstate selected
 	var/selectedtype
+	/// mod to use for generating smoothwalls
 	var/selectedmod
-	var/selected = null
 	// var/pod_turf = 0
 	var/turf_op = 0
 
@@ -505,7 +507,6 @@
 		mode = tgui_input_list(message="What to mark?", title="Marking", buttons=icons)
 		if(!mode)
 			mode = "floors"
-		selected = null
 		var/states = list()
 		if (mode == "restore original")
 			boutput(user, "<span class='notice'>Now set for restoring appearance.</span>")
