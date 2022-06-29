@@ -13797,25 +13797,18 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/teleporter)
 "aHF" = (
-/obj/table/wood/auto,
-/obj/item/clipboard,
-/obj/item/paper_bin,
-/obj/item/pen{
-	pixel_x = -7
+/obj/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-s"
 	},
-/obj/item/pen/fancy,
-/obj/item/stamp/md,
 /obj/cable{
+	d1 = 4;
+	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/disposalpipe/segment/mail{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/white/checker2{
-	dir = 1
-	},
-/area/station/medical/head)
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/station/medical/dome)
 "aHG" = (
 /obj/machinery/vending/computer3,
 /turf/simulated/floor/plating,
@@ -14031,18 +14024,23 @@
 	},
 /area/station/hallway/primary/east)
 "aIh" = (
-/obj/machinery/optable{
-	name = "Autopsy Table"
+/obj/table/wood/auto,
+/obj/item/reagent_containers/hypospray{
+	pixel_x = 9;
+	pixel_y = 4
 	},
-/obj/item/clothing/gloves/latex,
-/obj/item/device/reagentscanner{
-	pixel_x = -2;
-	pixel_y = 1
+/obj/item/paper/book/from_file/icarus_ovid{
+	pixel_y = 2;
+	pixel_x = -6
 	},
-/obj/item/device/analyzer/healthanalyzer,
-/obj/item/clothing/mask/surgical_shield,
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/morgue)
+/obj/item/reagent_containers/food/drinks/tea{
+	pixel_y = 14;
+	pixel_x = -8
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge{
+	dir = 10
+	},
+/area/station/medical/head)
 "aIi" = (
 /obj/rack,
 /obj/item/circuitboard/teleporter,
@@ -14127,12 +14125,15 @@
 /area/station/storage/tech)
 "aIq" = (
 /obj/table/reinforced/auto,
-/obj/item/reagent_containers/glass/bottle/morphine,
-/obj/item/kitchen/food_box/lollipop,
+/obj/item/kitchen/food_box/lollipop{
+	pixel_y = 11;
+	pixel_x = -8
+	},
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 4
 	},
 /obj/access_spawn/medical,
+/obj/item/clipboard,
 /turf/simulated/floor/specialroom/medbay{
 	dir = 2
 	},
@@ -14274,8 +14275,8 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/medical/head)
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "aIF" = (
 /obj/disposalpipe/junction{
 	dir = 0;
@@ -14556,49 +14557,21 @@
 /turf/simulated/floor,
 /area/station/bridge)
 "aJk" = (
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
+/obj/shrub{
+	dir = 10
 	},
-/obj/machinery/computer3/generic/med_data{
-	dir = 4
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	icon_state = "camera";
-	name = "autoname - SS13";
-	network = "SS13";
-	tag = ""
-	},
-/turf/simulated/floor/specialroom/medbay{
-	dir = 2
-	},
-/area/station/medical/head)
-"aJl" = (
-/obj/machinery/disposal/mail{
-	mail_tag = "medical_director";
-	mailgroup = "command";
-	mailgroup2 = "medbay";
-	message = "1";
-	name = "mail chute-'Medical Director'"
-	},
-/obj/disposalpipe/trunk/mail,
-/turf/simulated/floor/white/checker2{
-	dir = 1
-	},
-/area/station/medical/head)
+/turf/simulated/floor/grass/random,
+/area/station/medical/dome)
 "aJm" = (
-/obj/disposalpipe/segment,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/medical/head)
+/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/neutral,
+/area/station/medical/medbay/cloner)
 "aJn" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/obj/storage/closet/emergency,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "aJo" = (
@@ -14884,9 +14857,7 @@
 	dir = 4;
 	pixel_y = 0
 	},
-/obj/landmark{
-	name = "blobstart"
-	},
+/obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "aJX" = (
@@ -14906,76 +14877,29 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "aJZ" = (
-/obj/disposalpipe/segment{
-	dir = 4;
-	pixel_y = 0
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/medical/head)
+/obj/decal/cleanable/fungus,
+/turf/simulated/wall/auto/supernorn,
+/area/station/maintenance/west)
 "aKa" = (
-/obj/item/storage/firstaid/regular,
-/obj/item/storage/firstaid/regular,
-/obj/item/hand_labeler,
-/obj/item/reagent_containers/food/snacks/cookie/jaffa,
 /obj/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/table/wood/auto,
-/obj/machinery/phone/wall{
-	pixel_x = -24;
-	pixel_y = 4
-	},
-/turf/simulated/floor/white/checker2{
-	dir = 1
-	},
-/area/station/medical/head)
-"aKb" = (
-/obj/stool/chair/comfy/red,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment/mail,
-/turf/simulated/floor/specialroom/medbay{
-	dir = 2
-	},
-/area/station/medical/head)
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
 "aKc" = (
-/obj/machinery/light{
-	dir = 1
+/obj/machinery/disposal,
+/obj/disposalpipe/trunk{
+	dir = 8
 	},
-/obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+/turf/simulated/floor/bluewhite{
+	dir = 4
 	},
-/turf/simulated/floor/white/checker2{
-	dir = 1
-	},
-/area/station/medical/head)
-"aKd" = (
-/obj/storage/secure/closet/command/medical_director,
-/turf/simulated/floor/specialroom/medbay{
-	dir = 2
-	},
-/area/station/medical/head)
+/area/station/medical/medbay/lobby)
 "aKf" = (
-/obj/stool/bed,
 /obj/disposalpipe/segment,
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "black";
-	icon_state = "bedsheet-black"
-	},
-/obj/critter/bat/doctor,
-/turf/simulated/floor/specialroom/medbay{
-	dir = 2
-	},
-/area/station/medical/head)
+/turf/simulated/wall/auto/supernorn,
+/area/station/medical/robotics)
 "aKg" = (
 /obj/table/auto,
 /obj/item/clipboard,
@@ -15254,19 +15178,14 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/robotics)
 "aKM" = (
-/obj/disposalpipe/segment,
-/obj/table/wood/auto,
-/obj/machinery/computer3/generic/personal,
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4";
-	pixel_y = 0
+/obj/landmark/spawner{
+	name = "monkeyspawn_normal"
 	},
-/turf/simulated/floor/specialroom/medbay{
-	dir = 2
+/obj/shrub{
+	dir = 8
 	},
-/area/station/medical/head)
+/turf/simulated/floor/grass/random,
+/area/station/medical/dome)
 "aKN" = (
 /obj/table/auto,
 /obj/item/paper_bin,
@@ -15276,94 +15195,29 @@
 /area/station/crew_quarters/stockex)
 "aKO" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/cable{
 	icon_state = "4-8"
 	},
-/obj/disposalpipe/segment/mail{
-	dir = 4;
-	icon_state = "pipe-s"
-	},
-/turf/simulated/floor/specialroom/medbay{
-	dir = 2
-	},
-/area/station/medical/head)
-"aKP" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment/mail{
-	dir = 4;
-	icon_state = "pipe-s"
-	},
-/turf/simulated/floor/white/checker2{
-	dir = 1
-	},
-/area/station/medical/head)
-"aKQ" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment/mail{
-	dir = 4;
-	icon_state = "pipe-s"
-	},
-/obj/landmark/gps_waypoint,
-/turf/simulated/floor/specialroom/medbay{
-	dir = 2
-	},
-/area/station/medical/head)
+/obj/decal/cleanable/dirt/dirt4,
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "aKR" = (
 /obj/disposalpipe/segment,
-/obj/submachine/chef_sink/chem_sink{
-	dir = 8;
-	pixel_x = 6
-	},
-/obj/disposalpipe/segment/mail{
-	dir = 4;
-	icon_state = "pipe-s"
-	},
-/obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/turf/simulated/floor/white/checker2{
-	dir = 1
-	},
-/area/station/medical/head)
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
 "aKS" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4;
-	icon_state = "pipe-s"
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/medical/head)
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/station/medical/dome)
 "aKT" = (
-/obj/shrub{
-	dir = 2;
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant"
-	},
-/obj/disposalpipe/segment/mail{
-	dir = 4;
-	icon_state = "pipe-s"
-	},
+/obj/shrub,
 /turf/simulated/floor/blue/side{
 	dir = 8
 	},
-/area/station/hallway/primary/west)
-"aKU" = (
-/obj/disposalpipe/switch_junction{
-	dir = 1;
-	icon_state = "pipe-sj2";
-	mail_tag = "medical_director";
-	name = "Medical Director mail router"
-	},
-/turf/simulated/floor,
 /area/station/hallway/primary/west)
 "aKV" = (
 /obj/machinery/light/emergency{
@@ -15735,19 +15589,18 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/west)
+/obj/shrub{
+	dir = 1
+	},
+/turf/simulated/floor/grass/random,
+/area/station/medical/dome)
 "aLK" = (
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/maintenance/alt{
-	dir = 4;
-	req_access = null
-	},
-/obj/access_spawn/robotics,
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/medical/robotics)
 "aLL" = (
@@ -15755,6 +15608,23 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/table/auto,
+/obj/item/robot_module{
+	pixel_x = 5;
+	pixel_y = 10
+	},
+/obj/item/robot_module{
+	pixel_x = 5;
+	pixel_y = -1
+	},
+/obj/item/hand_labeler{
+	pixel_y = 11;
+	pixel_x = -10
+	},
+/obj/item/reagent_containers/glass/oilcan{
+	pixel_y = 3;
+	pixel_x = -8
 	},
 /turf/simulated/floor/black/side{
 	dir = 9
@@ -15769,24 +15639,45 @@
 /obj/machinery/phone/wall{
 	pixel_y = 30
 	},
+/obj/table/auto,
+/obj/machinery/cell_charger,
+/obj/item/cell/supercell/charged{
+	pixel_x = 4
+	},
+/obj/item/cell/supercell/charged{
+	pixel_x = 8;
+	pixel_y = 13
+	},
+/obj/item/cell/supercell/charged{
+	pixel_x = -5;
+	pixel_y = 13
+	},
 /turf/simulated/floor/black/side{
 	dir = 1
 	},
 /area/station/medical/robotics)
 "aLN" = (
 /obj/table/auto,
-/obj/machinery/cell_charger,
-/obj/item/hand_labeler{
-	pixel_y = 8
+/obj/item/storage/firstaid/regular{
+	pixel_x = -6;
+	pixel_y = 10
 	},
-/obj/item/reagent_containers/glass/oilcan,
-/obj/item/cell/supercell/charged{
-	pixel_x = -5
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = 8;
+	pixel_y = 9
 	},
-/obj/item/cell/supercell/charged{
-	pixel_x = 5
+/obj/item/storage/toolbox/emergency{
+	pixel_y = 4;
+	pixel_x = 7
 	},
-/obj/item/cell/supercell/charged,
+/obj/item/storage/belt/utility{
+	pixel_y = -1;
+	pixel_x = -4
+	},
+/obj/item/device/multitool{
+	pixel_x = 10;
+	pixel_y = 3
+	},
 /turf/simulated/floor/black/side{
 	dir = 5
 	},
@@ -15795,120 +15686,41 @@
 /obj/disposalpipe/junction{
 	dir = 1
 	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/medical/head)
-"aLP" = (
-/obj/disposalpipe/segment{
-	dir = 4;
-	pixel_y = 0
-	},
-/obj/stool/chair/blue{
-	dir = 1
-	},
-/obj/item/clothing/suit/cardboard_box/head_surgeon,
-/turf/simulated/floor/specialroom/medbay{
-	dir = 2
-	},
-/area/station/medical/head)
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
 "aLQ" = (
-/obj/disposalpipe/segment{
-	dir = 4;
-	pixel_y = 0
+/obj/table/auto,
+/obj/item/storage/box/stma_kit{
+	pixel_x = -3;
+	pixel_y = 9
 	},
-/obj/machinery/power/apc{
-	dir = 2;
-	name = "S APC";
-	pixel_y = -24
+/obj/item/storage/box/lglo_kit,
+/turf/simulated/floor/bluewhite{
+	dir = 4
 	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4";
-	pixel_y = 0
-	},
-/turf/simulated/floor/white/checker2{
-	dir = 1
-	},
-/area/station/medical/head)
+/area/station/medical/medbay/lobby)
 "aLR" = (
 /obj/disposalpipe/segment{
 	dir = 4;
 	pixel_y = 0
 	},
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/light,
-/obj/storage/secure/closet/medical/chemical,
-/obj/item/cigpacket,
-/turf/simulated/floor/specialroom/medbay{
-	dir = 2
-	},
-/area/station/medical/head)
-"aLS" = (
-/obj/disposalpipe/segment{
-	dir = 4;
-	pixel_y = 0
-	},
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/white/checker2{
-	dir = 1
-	},
-/area/station/medical/head)
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
 "aLT" = (
 /obj/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/specialroom/medbay{
-	dir = 2
-	},
-/area/station/medical/head)
-"aLU" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4
-	},
-/obj/access_spawn/medical_director,
-/obj/firedoor_spawn,
-/turf/simulated/floor/white/side{
-	dir = 8
-	},
-/area/station/medical/head)
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
 "aLV" = (
-/obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+/obj/machinery/door/airlock/pyro/maintenance/alt{
+	dir = 4;
+	req_access = null
 	},
-/turf/simulated/floor/blue/side{
-	dir = 8
-	},
-/area/station/hallway/primary/west)
+/obj/access_spawn/robotics,
+/turf/simulated/floor/plating,
+/area/station/medical/robotics)
 "aLW" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor,
@@ -16060,46 +15872,21 @@
 	},
 /area/station/medical/robotics)
 "aMt" = (
-/obj/table/auto,
 /obj/machinery/light{
 	dir = 4;
 	icon_state = "tube1"
 	},
-/obj/item/storage/firstaid/regular{
-	pixel_x = -6;
-	pixel_y = 10
-	},
-/obj/item/storage/firstaid/brute{
-	pixel_x = 6;
-	pixel_y = 10
-	},
-/obj/item/bandage,
-/obj/item/staple_gun{
-	pixel_x = 8;
-	pixel_y = -3
-	},
+/obj/machinery/computer/robot_module_rewriter,
 /turf/simulated/floor/black/side{
 	dir = 5
 	},
 /area/station/medical/robotics)
 "aMu" = (
-/obj/machinery/door/airlock/pyro/glass,
-/obj/access_spawn/medical_director,
-/turf/simulated/floor/white/side{
-	dir = 1
-	},
-/area/station/medical/head)
-"aMv" = (
-/obj/cable,
+/obj/wingrille_spawn/auto,
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/station/medical/head)
+/area/station/medical/medbay/cloner)
 "aMw" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/machinery/light{
 	dir = 8;
 	icon_state = "tube1"
@@ -16108,11 +15895,6 @@
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
 	},
 /turf/simulated/floor/blue/side{
 	dir = 8
@@ -16319,6 +16101,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/storage/closet/fire,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "aMY" = (
@@ -16342,41 +16125,14 @@
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "aNc" = (
-/obj/item/device/multitool{
-	pixel_x = 10;
-	pixel_y = 3
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Genetics"
 	},
-/obj/item/device/multitool{
-	pixel_x = 10
-	},
-/obj/item/device/multitool{
-	pixel_x = 10;
-	pixel_y = -4
-	},
-/obj/table/auto,
-/obj/item/storage/belt/utility{
-	pixel_y = 4
-	},
-/obj/item/storage/belt/utility{
-	pixel_y = 2
-	},
-/obj/item/storage/belt/utility,
-/obj/item/storage/toolbox/mechanical{
-	pixel_x = -4;
-	pixel_y = 12
-	},
-/obj/item/storage/toolbox/mechanical{
-	pixel_x = 4;
-	pixel_y = 12
-	},
-/turf/simulated/floor/black/corner{
-	dir = 8
-	},
-/area/station/medical/robotics)
+/obj/access_spawn/medlab,
+/obj/firedoor_spawn,
+/turf/space,
+/area/station/medical/medbay/lobby)
 "aNd" = (
-/obj/disposalpipe/trunk{
-	dir = 1
-	},
 /obj/machinery/camera{
 	c_tag = "Robotics"
 	},
@@ -16430,7 +16186,6 @@
 	},
 /area/station/medical/robotics)
 "aNi" = (
-/obj/decal/cleanable/cobweb2,
 /obj/machinery/disposal/mail{
 	mail_tag = "robotics";
 	mailgroup = "medresearch";
@@ -16544,10 +16299,17 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "aNA" = (
-/obj/machinery/drainage,
-/obj/machinery/vending/medical,
-/turf/simulated/floor/caution/south,
-/area/station/medical/medbay/surgery)
+/obj/table/auto,
+/obj/random_item_spawner/med_kit/two{
+	pixel_x = 6
+	},
+/obj/random_item_spawner/medicine/one{
+	pixel_y = 1;
+	pixel_x = -7
+	},
+/obj/item/remote/porter/port_a_medbay,
+/turf/simulated/floor/white,
+/area/station/medical/medbay)
 "aNB" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/ai_upload{
@@ -16881,11 +16643,31 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/bar)
 "aOo" = (
-/obj/machinery/traymachine/morgue{
-	dir = 2
+/obj/blind_switch/area{
+	pixel_x = -20;
+	pixel_y = 10
 	},
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/morgue)
+/obj/machinery/light_switch{
+	name = "W light switch";
+	on = 0;
+	pixel_x = -20;
+	pixel_y = -1
+	},
+/obj/shrub{
+	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
+	dir = 8;
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant";
+	tag = "icon-plant (NORTH)"
+	},
+/obj/item/paper/folded/ball{
+	pixel_y = 9;
+	pixel_x = -4
+	},
+/obj/item/paper/folded/ball,
+/obj/item/cigpacket/menthol,
+/turf/simulated/floor/wood,
+/area/station/medical/head)
 "aOp" = (
 /obj/machinery/camera,
 /turf/simulated/floor/plating,
@@ -16927,6 +16709,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/rack,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "aOu" = (
@@ -17170,11 +16953,9 @@
 	dir = 1;
 	pixel_x = -1
 	},
-/obj/machinery/traymachine/morgue{
-	dir = 2
-	},
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/morgue)
+/obj/stool/chair/comfy/blue,
+/turf/simulated/floor/wood,
+/area/station/medical/head)
 "aPb" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -17237,9 +17018,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
-	},
-/obj/submachine/cargopad{
-	name = "Robotics Pad"
 	},
 /turf/simulated/floor/black/side,
 /area/station/medical/robotics)
@@ -17471,27 +17249,16 @@
 /turf/simulated/floor/plating,
 /area/station/medical/morgue)
 "aPN" = (
-/obj/landmark/start{
-	name = "Medical Doctor"
-	},
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/morgue)
+/turf/simulated/floor/carpet/blue/fancy/edge/south,
+/area/station/medical/head)
 "aPO" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	frequency = 1445;
-	name = "Medical Intercom"
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/blue,
+/obj/critter/bat/doctor,
+/turf/simulated/floor/carpet/blue/fancy/edge{
+	dir = 9
 	},
-/obj/surgery_tray,
-/obj/item/circular_saw{
-	pixel_y = 8
-	},
-/obj/item/surgical_spoon{
-	pixel_y = 4
-	},
-/obj/item/scalpel,
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/morgue)
+/area/station/medical/head)
 "aPP" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -17701,16 +17468,9 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "aQp" = (
-/obj/disposaloutlet{
-	dir = 8;
-	mailgroup = "medbay";
-	mailgroup2 = "security";
-	message = "Delivery alert in Morgue.";
-	name = "Morgue Outlet"
-	},
-/obj/disposalpipe/trunk/morgue,
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/morgue)
+/obj/storage/secure/closet/medical/chemical,
+/turf/simulated/floor/carpet/blue/fancy/narrow/north,
+/area/station/medical/head)
 "aQq" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4;
@@ -17722,14 +17482,8 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "aQr" = (
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/critter/opossum/morty,
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/morgue)
+/turf/simulated/floor/wood,
+/area/station/medical/head)
 "aQs" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -17741,26 +17495,31 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/light/small/floor,
+/obj/disposalpipe/segment/morgue{
+	dir = 4;
+	icon_state = "pipe-c";
+	name = "crematorium pipe"
+	},
 /obj/cable{
 	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	d2 = 4;
+	icon_state = "2-4"
 	},
-/obj/disposalpipe/segment/morgue{
-	dir = 4
-	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "aQu" = (
 /obj/disposalpipe/segment/morgue{
-	dir = 4
+	dir = 4;
+	name = "crematorium pipe"
 	},
-/obj/machinery/door/airlock/pyro/medical/alt{
-	dir = 4
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/obj/access_spawn/morgue,
-/turf/simulated/floor/black,
-/area/station/medical/medbay/surgery)
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "aQv" = (
 /obj/cable{
 	d1 = 1;
@@ -17797,33 +17556,21 @@
 /turf/space,
 /area/space)
 "aQy" = (
-/obj/table/auto,
-/obj/item/circular_saw{
-	pixel_x = 3;
-	pixel_y = 12
+/obj/machinery/door/airlock/pyro/medical{
+	dir = 4;
+	name = "Morgue";
+	req_access = null;
+	req_access_txt = null
 	},
-/obj/item/scalpel,
-/obj/item/staple_gun,
-/obj/item/suture,
-/obj/item/hemostat,
-/obj/machinery/light{
-	dir = 1;
-	pixel_x = -1
-	},
-/turf/simulated/floor/redwhite{
-	dir = 1
-	},
-/area/station/medical/medbay/surgery)
+/obj/access_spawn/medical,
+/obj/firedoor_spawn,
+/turf/simulated/floor/white,
+/area/station/medical/morgue)
 "aQz" = (
-/obj/table/auto,
-/obj/item/clothing/gloves/latex,
-/obj/item/clothing/mask/surgical,
-/obj/item/device/analyzer/healthanalyzer,
-/obj/item/clothing/mask/surgical_shield,
-/turf/simulated/floor/redwhite{
-	dir = 5
+/turf/simulated/floor/blackwhite/corner{
+	dir = 8
 	},
-/area/station/medical/medbay/surgery)
+/area/station/medical/medbay)
 "aQA" = (
 /turf/simulated/floor/blackwhite{
 	dir = 1
@@ -17835,6 +17582,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/vending/medical,
 /turf/simulated/floor/blackwhite/corner{
 	dir = 1
 	},
@@ -17960,141 +17708,101 @@
 /area/station/security/detectives_office)
 "aQS" = (
 /obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor,
 /area/station/medical/medbay/cloner)
 "aQT" = (
-/obj/cable{
-	icon_state = "4-8"
+/obj/storage/secure/closet/command/medical_director,
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 25;
+	pixel_y = 6
 	},
-/obj/disposalpipe/segment/morgue{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/morgue)
-"aQV" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment/morgue{
-	dir = 4
-	},
-/obj/machinery/door/airlock/pyro/medical/alt{
-	dir = 4
-	},
-/obj/access_spawn/morgue,
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/morgue)
+/turf/simulated/floor/carpet/blue/fancy/narrow/south,
+/area/station/medical/head)
 "aQW" = (
-/obj/submachine/chef_sink/chem_sink{
-	dir = 4;
-	pixel_x = -4;
-	pixel_y = 0
-	},
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/morgue)
+/turf/simulated/wall/auto/supernorn,
+/area/station/medical/staff)
 "aQX" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Medical Director";
+	req_access_txt = null
 	},
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/morgue)
+/obj/access_spawn/medical_director,
+/obj/firedoor_spawn,
+/turf/simulated/floor/wood,
+/area/station/medical/head)
 "aQY" = (
+/obj/wingrille_spawn/auto/tuff,
+/obj/window_blinds/cog2/middle,
+/turf/simulated/floor/plating,
+/area/station/medical/head)
+"aQZ" = (
+/obj/critter/opossum/morty,
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
-	icon_state = "pipe-c";
 	name = "crematorium pipe"
 	},
+/obj/machinery/power/apc/autoname_south,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
-"aQZ" = (
-/obj/machinery/light{
-	dir = 1;
-	pixel_x = -1
-	},
-/obj/disposalpipe/segment/morgue{
-	dir = 4
-	},
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	frequency = 1445;
-	name = "Medical Intercom"
-	},
-/turf/simulated/floor/redblack{
-	dir = 4
-	},
-/area/station/medical/medbay/surgery)
 "aRa" = (
 /obj/disposalpipe/segment,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/morgue{
-	dir = 4;
 	name = "crematorium pipe"
 	},
-/obj/machinery/light/small/floor,
-/turf/simulated/floor/black,
+/obj/item/device/radio/intercom{
+	dir = 4;
+	frequency = 1445;
+	layer = 9.6;
+	name = "Medical Intercom"
+	},
+/turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "aRb" = (
-/obj/disposalpipe/segment/morgue{
-	dir = 4;
-	name = "crematorium pipe"
+/obj/machinery/traymachine/morgue{
+	dir = 8
 	},
-/obj/machinery/door/airlock/pyro/medical/alt{
-	dir = 4
-	},
-/obj/access_spawn/morgue,
-/turf/simulated/floor/black,
-/area/station/medical/medbay/surgery)
-"aRc" = (
-/obj/disposalpipe/segment/morgue{
-	dir = 4;
-	name = "crematorium pipe"
-	},
-/turf/simulated/floor/redblack{
-	dir = 4
-	},
-/area/station/medical/medbay/surgery)
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "aRd" = (
-/obj/disposalpipe/segment/morgue{
-	dir = 4;
-	name = "crematorium pipe"
-	},
-/turf/simulated/floor/redwhite{
-	dir = 9
-	},
-/area/station/medical/medbay/surgery)
+/obj/machinery/traymachine/morgue,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "aRe" = (
-/obj/disposalpipe/segment/morgue,
 /obj/disposalpipe/segment/morgue{
-	dir = 4;
+	dir = 1;
+	icon_state = "pipe-c";
 	name = "crematorium pipe"
 	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay/surgery)
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "aRf" = (
-/obj/landmark/start{
-	name = "Medical Doctor"
-	},
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
 	name = "crematorium pipe"
 	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay/surgery)
+/obj/wingrille_spawn/auto,
+/obj/decal/poster/wallsign/biohazard,
+/turf/simulated/floor/plating,
+/area/station/medical/morgue)
 "aRg" = (
-/obj/storage/secure/closet/fridge/blood,
-/obj/disposalpipe/segment/morgue{
-	dir = 4;
-	name = "crematorium pipe"
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/turf/simulated/floor/redwhite{
-	dir = 4
+/turf/simulated/floor/greenwhite{
+	dir = 8
 	},
-/area/station/medical/medbay/surgery)
+/area/station/medical/research)
 "aRh" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
@@ -18310,14 +18018,6 @@
 "aRG" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/detectives_office)
-"aRH" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay/surgery)
 "aRI" = (
 /obj/table/auto,
 /obj/item/card/id/captains_spare,
@@ -18329,27 +18029,32 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/captain)
 "aRL" = (
-/obj/disposalpipe/segment/morgue{
-	dir = 4;
+/obj/disposalpipe/segment/morgue,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/disposal/morgue{
+	desc = "A pneumatic delivery chute for sending things directly to the crematorium.";
+	destination_tag = "crematorium";
+	name = "crematorium chute"
+	},
+/obj/disposalpipe/trunk/morgue{
+	dir = 1;
 	name = "crematorium pipe"
 	},
-/obj/machinery/door/airlock/pyro/medical/alt{
-	dir = 4
-	},
-/obj/access_spawn/morgue,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "aRM" = (
-/obj/table/reinforced/auto,
-/obj/item/storage/box/biohazard_bags,
-/obj/item/storage/box/body_bag,
-/obj/item/body_bag,
-/obj/item/body_bag,
-/obj/item/clothing/under/suit{
-	name = "Mortician Suit"
+/obj/item/device/radio/intercom{
+	broadcasting = 0;
+	dir = 1;
+	frequency = 1445;
+	name = "Medical Intercom"
 	},
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/morgue)
+/turf/simulated/floor/carpet/blue/fancy/edge{
+	dir = 6
+	},
+/area/station/medical/head)
 "aRN" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/box/evidence,
@@ -18366,64 +18071,30 @@
 /obj/machinery/light,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
-"aRO" = (
-/obj/machinery/power/apc{
-	dir = 2;
-	name = "S APC";
-	operating = 1;
-	pixel_y = -24
+"aRP" = (
+/obj/machinery/light{
+	dir = 1;
+	pixel_x = -1
 	},
-/obj/cable,
-/obj/machinery/disposal,
-/obj/disposalpipe/trunk,
+/obj/machinery/optable{
+	name = "Autopsy Table"
+	},
+/obj/machinery/drainage,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
-"aRP" = (
-/obj/machinery/camera{
-	c_tag = "Medbay Lobby";
-	dir = 4
-	},
-/turf/simulated/floor/caution/north,
-/area/station/medical/medbay/surgery)
 "aRQ" = (
-/obj/machinery/drainage,
-/turf/simulated/floor/caution/north,
-/area/station/medical/medbay/surgery)
-"aRR" = (
-/obj/disposalpipe/segment/morgue,
-/turf/simulated/floor/caution/corner/ne{
+/obj/shrub{
 	dir = 1
 	},
-/area/station/medical/medbay/surgery)
-"aRS" = (
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay/surgery)
-"aRT" = (
-/obj/machinery/computer3/generic/med_data{
-	dir = 8
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/redwhite{
-	dir = 4
-	},
-/area/station/medical/medbay/surgery)
+/obj/critter/parrot/random,
+/obj/item/clothing/mask/monkey_translator,
+/turf/simulated/floor/grass/random,
+/area/station/medical/dome)
 "aRU" = (
 /obj/cable{
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
-	},
-/obj/cable{
-	icon_state = "2-8"
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
@@ -18436,6 +18107,9 @@
 /obj/machinery/light{
 	dir = 4;
 	icon_state = "tube1"
+	},
+/obj/stool/chair/comfy/wheelchair{
+	dir = 8
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
@@ -18694,40 +18368,20 @@
 "aSy" = (
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/supernorn,
-/area/station/medical/morgue)
+/area/station/maintenance/west)
 "aSA" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "W APC";
-	noalerts = 1;
-	pixel_x = -24;
-	pixel_y = 0
+/obj/submachine/chef_sink/chem_sink{
+	pixel_y = 8
 	},
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/iv_stand,
-/obj/item/reagent_containers/iv_drip/blood,
-/turf/simulated/floor,
-/area/station/medical/medbay/surgery)
-"aSB" = (
-/obj/machinery/optable,
-/obj/item/robodefibrillator,
-/turf/simulated/floor,
-/area/station/medical/medbay/surgery)
-"aSC" = (
-/obj/disposalpipe/segment/morgue,
-/turf/simulated/floor/caution/east{
-	dir = 8
-	},
-/area/station/medical/medbay/surgery)
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "aSD" = (
-/obj/storage/secure/closet/medical/anesthetic,
-/turf/simulated/floor/redwhite{
-	dir = 4
+/obj/disposalpipe/segment,
+/obj/cable{
+	icon_state = "1-2"
 	},
-/area/station/medical/medbay/surgery)
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "aSE" = (
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
@@ -18863,10 +18517,11 @@
 	})
 "aSY" = (
 /obj/disposalpipe/segment/morgue{
-	dir = 4
+	dir = 4;
+	name = "crematorium pipe"
 	},
-/turf/simulated/floor/red,
-/area/station/medical/medbay/surgery)
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "aSZ" = (
 /turf/simulated/floor/stairs{
 	icon_state = "stairs_middle"
@@ -19008,70 +18663,94 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay)
+/obj/disposalpipe/segment/morgue{
+	name = "crematorium pipe"
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "aTn" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
-	},
-/turf/simulated/floor,
-/area/station/medical/medbay/surgery)
+/obj/machinery/light,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "aTo" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+/obj/storage/crate/freezer{
+	name = "Freezer - Spare Parts"
 	},
-/obj/surgery_tray,
-/obj/item/circular_saw{
-	pixel_y = 8
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
+	icon = 'icons/effects/blood.dmi';
+	icon_state = "gibhead";
+	name = "grody thing"
 	},
-/obj/item/hemostat,
-/obj/item/scalpel,
-/turf/simulated/floor,
-/area/station/medical/medbay/surgery)
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
+	icon = 'icons/effects/blood.dmi';
+	icon_state = "gibmid2";
+	name = "gross organs"
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
+	icon = 'icons/effects/blood.dmi';
+	icon_state = "gibtorso";
+	name = "meaty bit"
+	},
+/obj/item/organ/liver,
+/obj/item/organ/heart{
+	desc = "A human heart, grody. How long has it been in that freezer?";
+	name = "funky ol' heart"
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
+	icon = 'icons/effects/blood.dmi';
+	icon_state = "gibmid2";
+	name = "gross organs";
+	pixel_x = -2;
+	pixel_y = -3
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
+	pixel_x = -2;
+	pixel_y = -2
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "aTp" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+/obj/disposaloutlet{
+	dir = 1;
+	mailgroup = "medresearch";
+	mailgroup2 = "security";
+	message = "Delivery alert in Morgue.";
+	name = "Morgue Outlet"
 	},
-/obj/landmark/start{
-	name = "Medical Doctor"
-	},
-/obj/disposalpipe/segment/morgue,
-/turf/simulated/floor/caution/east,
-/area/station/medical/medbay/surgery)
+/obj/disposalpipe/trunk/morgue,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "aTq" = (
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay/surgery)
+/obj/item/toy/plush/small,
+/turf/simulated/floor/grass/random,
+/area/station/medical/dome)
 "aTr" = (
+/obj/disposalpipe/segment{
+	dir = 4;
+	pixel_y = 0
+	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/access_spawn/medical,
-/turf/simulated/floor/redwhite{
-	dir = 4
+/obj/machinery/door/airlock/pyro/glass{
+	id = "medbay_front";
+	name = "Medical Bay";
+	req_access_txt = null
 	},
-/area/station/medical/medbay/surgery)
+/obj/access_spawn/medical,
+/obj/firedoor_spawn,
+/turf/simulated/floor/white,
+/area/station/medical/staff)
 "aTs" = (
 /obj/storage/crate,
 /obj/item/scissors,
@@ -19082,7 +18761,7 @@
 	})
 "aTt" = (
 /obj/wingrille_spawn/auto,
-/turf/simulated/floor/neutral,
+/turf/simulated/floor/plating,
 /area/station/medical/medbay/cloner)
 "aTu" = (
 /turf/simulated/floor/white,
@@ -19311,116 +18990,84 @@
 	name = "Renovation Area"
 	})
 "aTW" = (
-/obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
-	},
 /obj/table/auto,
-/obj/item/clothing/suit/straight_jacket{
-	pixel_x = -4;
-	pixel_y = 7
+/obj/bedsheetbin,
+/obj/item/reagent_containers/glass/bottle/cleaner{
+	pixel_y = 1;
+	pixel_x = -9
 	},
-/obj/item/clothing/suit/straight_jacket{
-	pixel_x = -2;
-	pixel_y = -1
-	},
-/obj/item/clothing/glasses/blindfold{
-	pixel_x = -2;
-	pixel_y = 2
-	},
-/obj/item/clothing/glasses/blindfold{
-	pixel_y = -4
-	},
-/obj/item/reagent_containers/syringe/haloperidol{
-	pixel_x = 1;
-	pixel_y = 13
-	},
-/obj/item/reagent_containers/syringe/haloperidol{
-	pixel_y = 9
-	},
-/obj/item/reagent_containers/syringe/haloperidol{
-	pixel_x = -1;
-	pixel_y = 5
+/obj/item/spraybottle/cleaner{
+	pixel_y = -2;
+	pixel_x = 7
 	},
 /turf/simulated/floor/white,
-/area/station/medical/medbay)
+/area/station/medical/staff)
 "aTX" = (
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/disposalpipe/junction{
-	dir = 8;
-	icon_state = "pipe-j1"
-	},
-/turf/simulated/floor/redwhite{
-	dir = 10
-	},
-/area/station/medical/medbay)
-"aTY" = (
 /obj/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
+	dir = 4;
+	pixel_y = 0
 	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/medical/staff)
+"aTY" = (
 /obj/cable{
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay)
+/obj/disposalpipe/junction{
+	dir = 8
+	},
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/station/medical/morgue)
 "aTZ" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 2;
-	icon_state = "pipe-c"
+	icon_state = "pipe-c";
+	name = "crematorium pipe"
 	},
-/obj/machinery/manufacturer/medical,
-/turf/simulated/floor/redwhite{
-	dir = 9
-	},
-/area/station/medical/medbay/surgery)
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "aUa" = (
-/obj/machinery/optable,
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/station/medical/medbay/surgery)
-"aUb" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/disposalpipe/segment/morgue,
-/turf/simulated/floor/caution/east,
-/area/station/medical/medbay/surgery)
-"aUc" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay/surgery)
-"aUd" = (
-/obj/machinery/disposal,
-/obj/disposalpipe/trunk{
+/obj/stool/chair/office/green{
 	dir = 8
 	},
-/turf/simulated/floor/redwhite{
-	dir = 4
+/turf/simulated/floor/white,
+/area/station/medical/research)
+"aUb" = (
+/obj/disposalpipe/segment/morgue,
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/station/medical/morgue)
+"aUc" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
 	},
-/area/station/medical/medbay/surgery)
+/obj/storage/closet/coffin,
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
+"aUd" = (
+/obj/table/auto,
+/obj/random_item_spawner/pizza,
+/obj/item/raw_material/shard/glass,
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "aUe" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4
-	},
-/obj/access_spawn/medical,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/firedoor_spawn,
-/turf/simulated/floor/neutral,
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
 /area/station/medical/medbay/cloner)
 "aUf" = (
 /obj/machinery/light,
@@ -19442,50 +19089,8 @@
 /turf/space,
 /area/space)
 "aUi" = (
-/obj/storage/crate/freezer{
-	name = "Freezer - Spare Parts"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibhead";
-	name = "grody thing"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibhead";
-	name = "grody thing"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibmid2";
-	name = "gross organs"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibmid2";
-	name = "gross organs"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibmid2";
-	name = "gross organs"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibmid2";
-	name = "gross organs"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibtorso";
-	name = "meaty bit"
-	},
-/obj/item/organ/liver,
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/morgue)
+/turf/simulated/floor/carpet/blue,
+/area/station/medical/staff)
 "aUj" = (
 /obj/machinery/camera{
 	c_tag = "Inner Maintenance North Airlock";
@@ -19635,92 +19240,89 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "aUy" = (
-/obj/disposalpipe/segment,
-/obj/cable{
-	icon_state = "1-2"
+/obj/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
 	},
-/obj/machinery/door/airlock/pyro/medical/alt,
-/obj/access_spawn/morgue,
-/turf/simulated/floor/white,
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
 /area/station/medical/morgue)
 "aUz" = (
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/science)
 "aUA" = (
-/obj/disposalpipe/segment,
-/obj/access_spawn/medical,
-/turf/simulated/floor/caution/south,
-/area/station/medical/medbay/surgery)
+/obj/machinery/vending/medical,
+/turf/simulated/floor/white,
+/area/station/medical/medbay)
 "aUB" = (
-/obj/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
 	},
-/obj/iv_stand,
-/obj/item/reagent_containers/iv_drip/saline,
-/obj/submachine/chef_sink/chem_sink{
-	dir = 4;
-	pixel_x = -4;
-	pixel_y = 0
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "N APC";
+	pixel_y = 24
 	},
-/turf/simulated/floor,
-/area/station/medical/medbay/surgery)
+/turf/simulated/floor/bluewhite{
+	dir = 9
+	},
+/area/station/medical/medbay/lobby)
 "aUC" = (
 /obj/disposalpipe/segment/morgue,
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "corner_east"
+/obj/shrub{
+	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
+	dir = 1;
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant";
+	tag = "null"
 	},
-/area/station/medical/medbay/surgery)
+/turf/simulated/floor/white,
+/area/station/medical/medbay)
 "aUD" = (
-/obj/table/auto,
-/obj/item/clothing/gloves/latex,
-/obj/item/clothing/mask/surgical,
-/obj/item/device/analyzer/healthanalyzer,
-/obj/item/clothing/mask/surgical_shield,
-/obj/item/surgical_spoon,
-/turf/simulated/floor/redwhite,
-/area/station/medical/medbay/surgery)
+/obj/noticeboard/persistent{
+	name = "Medbay persistent notice board";
+	persistent_id = "medbay"
+	},
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/white,
+/area/station/medical/medbay)
 "aUE" = (
 /obj/table/auto,
-/obj/item/circular_saw{
-	pixel_x = 3;
-	pixel_y = 12
+/obj/item/storage/firstaid/toxin{
+	pixel_x = 7;
+	pixel_y = 8
 	},
-/obj/item/scalpel,
-/obj/item/staple_gun,
-/obj/item/suture,
-/obj/item/hemostat,
-/turf/simulated/floor/redwhite{
-	dir = 6
+/obj/item/storage/pill_bottle/mutadone{
+	pixel_y = 2;
+	pixel_x = -6
 	},
-/area/station/medical/medbay/surgery)
+/turf/simulated/floor/white,
+/area/station/medical/research)
 "aUF" = (
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/stool/chair/comfy/wheelchair{
+	dir = 8
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "aUG" = (
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
+/obj/machinery/disposal/mail{
+	mail_tag = "medical_director";
+	mailgroup = "command";
+	mailgroup2 = "medbay";
+	message = "1";
+	name = "mail chute-'Medical Director'"
 	},
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "E APC";
-	pixel_x = 24;
-	pixel_y = 0
-	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay)
+/turf/simulated/floor/wood,
+/area/station/medical/head)
 "aUH" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay)
@@ -19954,97 +19556,99 @@
 /area/station/bridge)
 "aVf" = (
 /obj/disposalpipe/segment,
-/obj/machinery/chem_master,
-/turf/simulated/floor/white/checker{
-	dir = 9
-	},
-/area/station/medical/medbay)
+/obj/item/toy/plush/small/stress_ball,
+/turf/simulated/floor/grass/random,
+/area/station/medical/dome)
 "aVg" = (
-/obj/table/reinforced/chemistry/beakers,
-/obj/item/device/reagentscanner,
-/obj/item/device/reagentscanner{
-	pixel_x = 12;
-	pixel_y = 4
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 5;
+	level = 2
 	},
 /turf/simulated/floor/white,
-/area/station/medical/medbay)
+/area/station/medical/medbay/surgery)
 "aVh" = (
-/turf/simulated/floor/red,
-/area/station/medical/medbay)
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 4;
+	level = 2
+	},
+/turf/simulated/floor/white,
+/area/station/medical/medbay/surgery)
 "aVi" = (
-/turf/simulated/floor/redwhite{
-	dir = 10
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 1;
+	level = 2
 	},
-/area/station/medical/medbay)
+/turf/simulated/floor/white,
+/area/station/medical/medbay/surgery)
 "aVj" = (
-/turf/simulated/floor/white/checker{
-	dir = 9
+/obj/table/reinforced,
+/obj/item/reagent_containers/glass/beaker/cryoxadone{
+	pixel_y = 2;
+	pixel_x = -5
 	},
-/area/station/medical/medbay)
+/obj/item/reagent_containers/glass/beaker/cryoxadone{
+	pixel_x = 7;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/glass/beaker/cryoxadone{
+	pixel_x = 3;
+	pixel_y = 1
+	},
+/obj/item/robodefibrillator{
+	pixel_y = -2;
+	pixel_x = -16
+	},
+/turf/simulated/floor/white,
+/area/station/medical/medbay/surgery)
 "aVk" = (
-/obj/rack,
-/obj/item/clothing/suit/bio_suit/paramedic{
-	pixel_x = -4;
-	pixel_y = 4
+/obj/cable{
+	icon_state = "4-8"
 	},
-/obj/item/clothing/suit/bio_suit/paramedic,
-/obj/item/storage/belt/medical{
-	pixel_x = -4;
-	pixel_y = 4
-	},
-/obj/item/storage/belt/medical,
-/obj/item/clothing/glasses/healthgoggles{
-	pixel_x = -4;
-	pixel_y = 4
-	},
-/obj/item/clothing/glasses/healthgoggles,
-/turf/simulated/floor/red/corner{
-	dir = 8
-	},
-/area/station/medical/medbay)
+/obj/decal/cleanable/dirt/dirt5,
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "aVl" = (
-/obj/machinery/chem_dispenser,
-/obj/machinery/light{
+/obj/decal/cleanable/dirt/dirt5,
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
+"aVm" = (
+/obj/stool/chair/office/blue{
 	dir = 1
 	},
-/turf/simulated/floor/red/corner{
-	dir = 8
+/turf/simulated/floor/carpet/blue/fancy/edge{
+	dir = 5
 	},
-/area/station/medical/medbay)
-"aVm" = (
-/obj/machinery/chem_heater,
-/obj/machinery/camera{
-	c_tag = "Medical Research West";
-	dir = 2
-	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay)
-"aVn" = (
-/obj/machinery/light{
-	dir = 1;
-	pixel_x = -1
-	},
-/obj/disposalpipe/segment/morgue,
-/turf/simulated/floor/white,
-/area/station/medical/medbay)
+/area/station/medical/head)
 "aVo" = (
 /obj/machinery/light{
 	dir = 4;
 	icon_state = "tube1"
 	},
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "E APC";
+	pixel_x = 24;
+	pixel_y = 0
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/storage/secure/closet/medical/medkit,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "aVp" = (
-/obj/machinery/vending/port_a_nanomed,
 /turf/simulated/floor/white,
-/area/station/medical/medbay)
+/area/station/medical/medbay/surgery)
 "aVq" = (
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/white,
+/turf/simulated/floor/bluewhite/corner{
+	dir = 2
+	},
 /area/station/medical/medbay/lobby)
 "aVs" = (
 /obj/submachine/chef_sink/chem_sink{
@@ -20254,9 +19858,8 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/iv_stand,
 /turf/simulated/floor/white,
-/area/station/medical/medbay)
+/area/station/medical/staff)
 "aVW" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -20266,9 +19869,8 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
-/area/station/medical/medbay)
+/turf/simulated/wall/auto/supernorn,
+/area/station/medical/medbay/surgery)
 "aVX" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -20278,9 +19880,12 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/vending/medical,
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 4
+	},
 /turf/simulated/floor/white,
-/area/station/medical/medbay)
+/area/station/medical/medbay/surgery)
 "aVZ" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -20291,16 +19896,16 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/white,
-/area/station/medical/medbay)
+/area/station/medical/medbay/surgery)
 "aWa" = (
-/obj/disposalpipe/junction{
-	dir = 8;
-	icon_state = "pipe-y"
-	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
@@ -20337,13 +19942,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
-"aWg" = (
-/obj/submachine/chef_sink/chem_sink{
-	dir = 8;
-	pixel_x = 6
-	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay)
 "aWh" = (
 /obj/decal/cleanable/fungus,
 /turf/simulated/wall/auto/supernorn,
@@ -20358,6 +19956,10 @@
 	icon = 'icons/obj/stationobjs.dmi';
 	icon_state = "plant"
 	},
+/obj/machinery/firealarm{
+	pixel_y = 24;
+	text = "NF"
+	},
 /turf/simulated/floor/carpet{
 	dir = 10;
 	icon_state = "red2"
@@ -20365,10 +19967,6 @@
 /area/station/medical/medbay/lobby)
 "aWj" = (
 /obj/machinery/genetics_booth,
-/obj/machinery/firealarm{
-	pixel_y = 24;
-	text = "NF"
-	},
 /obj/machinery/light{
 	dir = 1;
 	pixel_x = -1
@@ -20637,17 +20235,9 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "aWN" = (
-/obj/machinery/camera{
-	c_tag = "Medbay Lobby";
-	dir = 4
-	},
-/obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
-	},
-/obj/storage/secure/closet/medical/medkit,
+/obj/machinery/atmospherics/unary/cold_sink/freezer/cryo/east,
 /turf/simulated/floor/white,
-/area/station/medical/medbay)
+/area/station/medical/medbay/surgery)
 "aWO" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -20674,9 +20264,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/light/small,
-/turf/simulated/floor/plating,
-/area/station/maintenance/west)
+/obj/decal/poster/wallsign/chsl,
+/turf/simulated/wall/auto/supernorn,
+/area/station/medical/staff)
 "aWR" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -20687,49 +20277,31 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/maintenance/alt{
-	dir = 4;
-	req_access = null
-	},
-/obj/access_spawn/medical,
-/obj/firedoor_spawn,
-/turf/simulated/floor/plating,
-/area/station/maintenance/west)
+/turf/simulated/wall/auto/supernorn,
+/area/station/medical/staff)
 "aWS" = (
-/obj/disposalpipe/segment{
-	dir = 4;
-	pixel_y = 0
-	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/stool/chair/office/blue{
-	dir = 1;
-	icon_state = "office_chair_blue"
+/obj/landmark/spawner{
+	name = "monkeyspawn_normal"
 	},
-/obj/landmark/start{
-	name = "Medical Doctor"
-	},
-/turf/simulated/floor/white/checker{
-	dir = 9
-	},
-/area/station/medical/medbay)
+/turf/simulated/floor/grass/random,
+/area/station/medical/dome)
 "aWT" = (
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "aWU" = (
-/obj/machinery/computer3/generic/med_data{
-	dir = 4
-	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay/lobby)
+/obj/decal/poster/wallsign/poster_nt,
+/turf/simulated/wall/auto/supernorn,
+/area/station/hallway/primary/west)
 "aWV" = (
 /obj/wingrille_spawn/auto,
 /obj/machinery/phone/wall,
-/turf/simulated/floor/blue/checker,
+/turf/simulated/floor/plating,
 /area/station/medical/medbay)
 "aWW" = (
 /obj/cable{
@@ -20782,10 +20354,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "aXg" = (
-/obj/disposalpipe/junction,
-/obj/item/mousetrap,
-/turf/simulated/floor/plating,
-/area/station/maintenance/southwest)
+/turf/simulated/floor/bluewhite/corner,
+/area/station/medical/medbay/lobby)
 "aXh" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/bridge)
@@ -20867,56 +20437,39 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "aXp" = (
-/obj/machinery/door/airlock/pyro/maintenance/alt{
-	req_access = null
-	},
-/obj/access_spawn/medical,
-/obj/firedoor_spawn,
-/turf/simulated/floor/plating,
-/area/station/maintenance/west)
+/turf/simulated/wall/auto/supernorn,
+/area/station/medical/dome)
 "aXq" = (
 /obj/storage/secure/closet/medical/medkit,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
-"aXr" = (
-/obj/disposalpipe/segment/morgue{
-	dir = 4;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay)
 "aXu" = (
-/obj/disposalpipe/segment/morgue{
-	dir = 4
-	},
+/obj/machinery/door/airlock/pyro/glass,
+/obj/access_spawn/medical,
+/obj/firedoor_spawn,
 /turf/simulated/floor/white,
-/area/station/medical/medbay)
+/area/station/medical/medbay/surgery)
 "aXv" = (
-/obj/disposalpipe/segment,
-/obj/disposalpipe/segment/morgue{
-	dir = 4
+/turf/simulated/floor/bluewhite{
+	dir = 5
 	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay)
+/area/station/medical/medbay/lobby)
 "aXw" = (
-/obj/disposalpipe/segment/morgue{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "1-2"
+/obj/table/reinforced,
+/obj/item/paper/cryo,
+/obj/item/wrench,
+/obj/item/storage/firstaid/brain{
+	pixel_x = -6;
+	pixel_y = 5
 	},
 /turf/simulated/floor/white,
-/area/station/medical/medbay)
+/area/station/medical/medbay/surgery)
 "aXx" = (
 /obj/machinery/light{
 	dir = 4;
 	icon_state = "tube1"
 	},
-/obj/disposalpipe/junction{
-	dir = 1;
-	icon_state = "pipe-j2";
-	name = "morgue pipe"
-	},
+/obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "aXA" = (
@@ -20969,37 +20522,25 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
-"aXF" = (
-/obj/machinery/disposal/morgue{
-	desc = "A pneumatic delivery chute for sending things directly to the crematorium.";
-	destination_tag = "crematorium";
-	name = "crematorium chute"
-	},
-/obj/disposalpipe/trunk/morgue{
-	dir = 1;
-	name = "crematorium pipe"
-	},
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/morgue)
 "aXG" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4;
 	icon_state = "pipe-s"
 	},
-/obj/decal/tile_edge/floorguide/medbay{
-	dir = 8
-	},
-/turf/simulated/floor/blue/side{
-	dir = 8
+/obj/decal/tile_edge/floorguide/arrow_w,
+/turf/simulated/floor/blue/corner{
+	dir = 1
 	},
 /area/station/hallway/primary/west)
 "aXH" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4;
-	icon_state = "pipe-s"
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/turf/simulated/floor,
-/area/station/hallway/primary/west)
+/obj/decal/cleanable/dirt/dirt2,
+/turf/simulated/floor/grass/random,
+/area/station/medical/dome)
 "aXI" = (
 /obj/machinery/light{
 	dir = 4;
@@ -21116,18 +20657,13 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/hallway/primary/east)
 "aXW" = (
-/obj/machinery/light{
-	dir = 1;
-	pixel_x = -1
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4
-	},
-/obj/firedoor_spawn,
-/turf/simulated/floor/bluewhite{
-	dir = 5
-	},
-/area/station/medical/medbay/lobby)
+/turf/simulated/floor/grass/random,
+/area/station/medical/dome)
 "aXX" = (
 /turf/simulated/floor,
 /area/station/bridge)
@@ -21243,26 +20779,25 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "aYj" = (
-/obj/cable{
-	icon_state = "2-4"
+/obj/machinery/computer/announcement{
+	name = "Medical Announcement Computer";
+	req_access_txt = "19"
 	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay)
+/obj/machinery/power/apc/autoname_east,
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/wood,
+/area/station/medical/head)
 "aYk" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	frequency = 1445;
-	name = "Medical Intercom"
+/obj/machinery/light/small{
+	dir = 1
 	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/trunk/morgue{
-	dir = 4
-	},
-/obj/machinery/disposal/morgue,
-/turf/simulated/floor/white,
-/area/station/medical/medbay)
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/station/medical/dome)
 "aYl" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -21293,9 +20828,9 @@
 /area/station/medical/medbay)
 "aYo" = (
 /obj/disposalpipe/segment/morgue,
-/obj/disposalpipe/junction{
-	dir = 8;
-	icon_state = "pipe-j2"
+/obj/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
@@ -21336,6 +20871,7 @@
 	dir = 4;
 	icon_state = "pipe-s"
 	},
+/obj/item/device/radio/beacon,
 /turf/simulated/floor/specialroom/medbay{
 	dir = 2
 	},
@@ -21378,12 +20914,16 @@
 	dir = 4;
 	icon_state = "pipe-s"
 	},
+/obj/disposalpipe/segment/mail{
+	dir = 4;
+	icon_state = "pipe-s"
+	},
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
 /obj/firedoor_spawn,
 /turf/simulated/floor/bluewhite{
-	dir = 9
+	dir = 1
 	},
 /area/station/medical/medbay/lobby)
 "aYx" = (
@@ -21538,14 +21078,9 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "aYP" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4
-	},
-/obj/firedoor_spawn,
-/turf/simulated/floor/bluewhite{
-	dir = 4
-	},
-/area/station/medical/medbay/lobby)
+/obj/decal/poster/wallsign/medbay_left,
+/turf/simulated/wall/auto/supernorn,
+/area/station/hallway/primary/west)
 "aYQ" = (
 /obj/cable{
 	d1 = 4;
@@ -21671,42 +21206,44 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "aZa" = (
-/obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
-	},
+/obj/wingrille_spawn/auto/tuff,
+/obj/window_blinds/cog2/middle,
 /obj/cable{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay)
+/turf/simulated/floor/plating,
+/area/station/medical/head)
 "aZb" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "aZc" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	dir = 1;
-	frequency = 1445;
-	name = "Medical Intercom"
-	},
 /obj/disposalpipe/segment/morgue,
-/obj/disposalpipe/trunk{
-	dir = 1
-	},
-/obj/machinery/disposal/small/west,
+/obj/machinery/vending/port_a_nanomed,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "aZd" = (
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/blue/checker,
-/area/station/medical/medbay)
-"aZe" = (
-/turf/simulated/floor/specialroom/medbay{
-	dir = 2
+/obj/machinery/disposal,
+/obj/disposalpipe/trunk{
+	dir = 2;
+	name = "factory pipe"
 	},
-/area/station/medical/medbay)
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
+"aZe" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/station/medical/medbay/surgery)
 "aZf" = (
 /obj/landmark/start{
 	name = "Medical Doctor"
@@ -21721,7 +21258,10 @@
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay)
 "aZg" = (
-/obj/disposalpipe/segment,
+/obj/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/specialroom/medbay{
 	dir = 2
 	},
@@ -21734,12 +21274,20 @@
 /obj/item/device/analyzer/healthanalyzer,
 /obj/item/clothing/glasses/healthgoggles,
 /obj/access_spawn/medical,
+/obj/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-s"
+	},
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay)
 "aZi" = (
 /obj/machinery/light{
 	dir = 8;
 	icon_state = "tube1"
+	},
+/obj/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 8
@@ -21940,7 +21488,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "aZz" = (
-/obj/machinery/vending/coffee,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 4;
@@ -21949,43 +21496,6 @@
 	network = "SS13";
 	tag = ""
 	},
-/turf/simulated/floor/specialroom/medbay{
-	dir = 2
-	},
-/area/station/medical/medbay)
-"aZA" = (
-/obj/storage/secure/closet/medical/uniforms,
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "N APC";
-	pixel_y = 24
-	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4";
-	pixel_y = 0
-	},
-/turf/simulated/floor/specialroom/medbay{
-	dir = 2
-	},
-/area/station/medical/medbay)
-"aZB" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/specialroom/medbay{
-	dir = 2
-	},
-/area/station/medical/medbay)
-"aZC" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4
-	},
-/obj/access_spawn/medical,
-/obj/firedoor_spawn,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "aZD" = (
@@ -21994,13 +21504,24 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/shrub{
+	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
+	dir = 1;
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant";
+	name = "A tasteful shrub";
+	tag = "null"
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "aZE" = (
-/turf/simulated/floor/bluewhite/corner{
-	dir = 2
+/obj/decal/tile_edge/floorguide/arrow_w{
+	dir = 8
 	},
-/area/station/medical/medbay)
+/turf/simulated/floor/blue/corner{
+	dir = 8
+	},
+/area/station/hallway/primary/west)
 "aZF" = (
 /obj/cable{
 	d1 = 4;
@@ -22012,26 +21533,42 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/white,
+/turf/simulated/floor/bluewhite/corner{
+	dir = 8
+	},
 /area/station/medical/medbay/lobby)
 "aZG" = (
-/obj/access_spawn/medical,
-/turf/simulated/floor/bluewhite,
-/area/station/medical/medbay)
-"aZH" = (
-/turf/simulated/floor/bluewhite/corner{
+/obj/disposalpipe/segment{
 	dir = 4
 	},
-/area/station/medical/medbay)
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 4
+	},
+/turf/simulated/floor/white,
+/area/station/medical/medbay/surgery)
+"aZH" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/item/clothing/suit/cardboard_box/head_surgeon,
+/turf/simulated/floor/wood,
+/area/station/medical/head)
 "aZI" = (
-/obj/machinery/light{
+/obj/disposalpipe/segment{
 	dir = 4;
-	icon_state = "tube1"
+	pixel_y = 0
 	},
-/turf/simulated/floor/bluewhite/corner{
-	dir = 2
-	},
-/area/station/medical/medbay)
+/obj/storage/closet/coffin,
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "aZJ" = (
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/wall/auto/supernorn,
@@ -22073,30 +21610,22 @@
 /obj/item/reagent_containers/glass/bottle/antitoxin,
 /obj/item/reagent_containers/syringe,
 /obj/table/reinforced/auto,
-/obj/disposalpipe/segment,
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/access_spawn/medical,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay)
-"aZO" = (
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/specialroom/medbay{
-	dir = 2
-	},
-/area/station/medical/medbay)
 "aZP" = (
-/obj/machinery/light,
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4
-	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
 /obj/firedoor_spawn,
 /turf/simulated/floor/bluewhite{
-	dir = 4
+	dir = 1
 	},
 /area/station/medical/medbay/lobby)
 "aZQ" = (
@@ -22250,45 +21779,15 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay)
-"baf" = (
-/obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
-	},
-/turf/simulated/floor/specialroom/medbay{
-	dir = 2
-	},
-/area/station/medical/medbay)
-"bag" = (
-/obj/machinery/atmospherics/unary/cryo_cell/east,
-/turf/simulated/floor/bluewhite{
+"bah" = (
+/obj/stool/chair/moveable{
 	dir = 4
 	},
-/area/station/medical/medbay)
-"bah" = (
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4;
-	icon_state = "intact";
-	layer = 3;
-	level = 2
-	},
-/turf/simulated/floor/blue,
-/area/station/medical/medbay)
-"bai" = (
-/obj/machinery/atmospherics/pipe/manifold{
-	dir = 1;
-	icon_state = "manifold";
-	layer = 3;
-	level = 2
-	},
-/turf/simulated/floor/blue,
-/area/station/medical/medbay)
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "baj" = (
-/obj/machinery/atmospherics/unary/cryo_cell/west,
-/turf/simulated/floor/bluewhite{
-	dir = 8
-	},
-/area/station/medical/medbay)
+/turf/simulated/floor/grass/random,
+/area/station/medical/dome)
 "bak" = (
 /obj/machinery/sleeper/port_a_medbay{
 	dir = 4
@@ -22296,30 +21795,17 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "bal" = (
-/obj/machinery/door_control{
-	id = "medbay_front";
-	name = "Medbay Door Control";
-	pixel_x = 21;
-	pixel_y = 23
+/obj/decal/tile_edge/floorguide/medbay{
+	dir = 8
 	},
-/turf/simulated/floor/bluewhite{
-	dir = 4
+/turf/simulated/floor/blue/corner{
+	dir = 8
 	},
-/area/station/medical/medbay)
+/area/station/hallway/primary/west)
 "bam" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "N APC";
-	pixel_y = 24
-	},
 /obj/disposalpipe/segment/morgue,
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/turf/simulated/floor/bluewhite{
-	dir = 9
-	},
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
 /area/station/medical/medbay/lobby)
 "ban" = (
 /obj/cable{
@@ -22346,14 +21832,12 @@
 	},
 /area/station/medical/medbay/lobby)
 "bap" = (
-/obj/machinery/disposal,
-/obj/disposalpipe/trunk{
-	dir = 1
+/obj/submachine/laundry_machine,
+/obj/item/sponge{
+	pixel_y = 9
 	},
-/turf/simulated/floor/bluewhite{
-	dir = 1
-	},
-/area/station/medical/medbay/lobby)
+/turf/simulated/floor/white,
+/area/station/medical/staff)
 "baq" = (
 /obj/cable{
 	d1 = 2;
@@ -22405,24 +21889,11 @@
 /turf/simulated/floor,
 /area/station/engine/substation/west)
 "bau" = (
-/obj/machinery/secscanner{
-	dir = 4;
-	icon_state = "scanner_on";
-	pixel_x = -20
-	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	icon_state = "1-4"
 	},
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	id = "medbay_front"
-	},
-/obj/access_spawn/medical,
-/obj/firedoor_spawn,
-/turf/simulated/floor/blue,
-/area/station/medical/medbay)
+/turf/simulated/floor/wood,
+/area/station/medical/head)
 "baw" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -22547,73 +22018,64 @@
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
-"baJ" = (
-/turf/simulated/floor/carpet{
-	dir = 9;
-	icon_state = "blue2"
-	},
-/area/station/medical/medbay)
-"baK" = (
-/turf/simulated/floor/carpet{
-	dir = 5;
-	icon_state = "blue2"
-	},
-/area/station/medical/medbay)
 "baL" = (
-/obj/machinery/camera{
-	c_tag = "Medbay Lobby";
-	dir = 4
+/obj/cable{
+	icon_state = "4-8"
 	},
-/turf/simulated/floor/bluewhite{
-	dir = 4
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
 	},
-/area/station/medical/medbay)
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "baM" = (
-/obj/landmark/start{
-	name = "Medical Doctor"
+/obj/table/wood/auto,
+/obj/item/paper_bin{
+	pixel_y = 1;
+	pixel_x = 5
 	},
-/turf/simulated/floor/blue,
-/area/station/medical/medbay)
-"baN" = (
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 2;
-	icon_state = "intact";
-	level = 2
+/obj/item/stamp/md{
+	pixel_x = 5;
+	pixel_y = 5
 	},
-/turf/simulated/floor/blue,
-/area/station/medical/medbay)
-"baO" = (
-/obj/table/auto,
-/obj/item/paper/cryo,
-/obj/item/wrench,
-/turf/simulated/floor/bluewhite{
-	dir = 8
+/obj/machinery/phone{
+	pixel_y = 5;
+	pixel_x = -6
 	},
-/area/station/medical/medbay)
+/obj/item/device/light/zippo{
+	pixel_x = -8;
+	pixel_y = 1
+	},
+/turf/simulated/floor/wood,
+/area/station/medical/head)
 "baP" = (
-/obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
-	},
-/obj/table/auto,
-/obj/item/remote/porter/port_a_medbay,
-/turf/simulated/floor/white,
-/area/station/medical/medbay)
-"baR" = (
-/obj/disposalpipe/segment/morgue,
 /obj/cable{
 	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+	d2 = 2;
+	icon_state = "1-2"
 	},
+/obj/storage/closet/coffin,
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
+"baR" = (
+/obj/disposalpipe/segment/morgue,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/bluewhite{
-	dir = 8
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4;
+	id = "medbay_front"
 	},
+/obj/access_spawn/medical,
+/obj/machinery/secscanner{
+	dir = 4;
+	icon_state = "scanner_on";
+	pixel_x = -20
+	},
+/turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "baS" = (
 /obj/machinery/navbeacon{
@@ -22625,7 +22087,14 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/white,
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/bluewhite{
+	dir = 8
+	},
 /area/station/medical/medbay/lobby)
 "baV" = (
 /obj/cable{
@@ -22666,11 +22135,9 @@
 /turf/simulated/floor/plating,
 /area/station/bridge)
 "baZ" = (
-/obj/stool/chair/comfy/wheelchair{
-	dir = 4
-	},
+/obj/monkeyplant,
 /turf/simulated/floor/white,
-/area/station/medical/medbay)
+/area/station/medical/research)
 "bba" = (
 /obj/cable{
 	d1 = 1;
@@ -22711,83 +22178,80 @@
 	dir = 2
 	},
 /area/station/medical/medbay)
-"bbg" = (
-/obj/stool/chair/office/blue{
-	dir = 4
-	},
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	dir = 1;
-	frequency = 1445;
-	name = "Medical Intercom"
-	},
-/turf/simulated/floor/carpet{
-	dir = 10;
-	icon_state = "blue2"
-	},
-/area/station/medical/medbay)
 "bbh" = (
-/turf/simulated/floor/carpet{
-	dir = 6;
-	icon_state = "blue2"
+/obj/disposalpipe/segment{
+	dir = 4;
+	pixel_y = 0
 	},
-/area/station/medical/medbay)
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/grass/random,
+/area/station/medical/dome)
 "bbi" = (
-/obj/machinery/atmospherics/unary/cold_sink/freezer/cryo/east,
-/turf/simulated/floor/bluewhite{
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/wood,
+/area/station/medical/head)
+"bbj" = (
+/obj/storage/cart/medcart,
+/turf/simulated/floor/white,
+/area/station/medical/staff)
+"bbk" = (
+/obj/disposalpipe/segment{
 	dir = 4
 	},
-/area/station/medical/medbay)
-"bbj" = (
-/obj/machinery/atmospherics/pipe/manifold{
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
-	icon_state = "manifold";
 	level = 2
 	},
-/obj/landmark/start{
-	name = "Medical Doctor"
-	},
-/turf/simulated/floor/blue,
-/area/station/medical/medbay)
-"bbk" = (
-/obj/table/auto,
-/obj/item/reagent_containers/glass/beaker/cryoxadone,
-/obj/item/clothing/glasses/healthgoggles,
-/turf/simulated/floor/bluewhite{
-	dir = 8
-	},
-/area/station/medical/medbay)
+/turf/simulated/floor/white,
+/area/station/medical/medbay/surgery)
 "bbl" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/bluewhite{
-	dir = 8
-	},
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
 /area/station/medical/medbay/lobby)
 "bbm" = (
-/obj/disposalpipe/segment/morgue{
-	dir = 4
-	},
-/turf/simulated/floor/bluewhite,
-/area/station/medical/medbay/lobby)
-"bbn" = (
-/obj/machinery/light,
 /obj/machinery/disposal/morgue,
 /obj/disposalpipe/trunk/morgue{
 	dir = 8
 	},
-/turf/simulated/floor/white,
+/turf/simulated/floor/bluewhite{
+	dir = 10
+	},
 /area/station/medical/medbay/lobby)
-"bbo" = (
+"bbn" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 1;
 	name = "autoname - SS13";
 	tag = ""
 	},
-/turf/simulated/floor/white,
+/obj/stool/chair{
+	dir = 1
+	},
+/turf/simulated/floor/bluewhite,
+/area/station/medical/medbay/lobby)
+"bbo" = (
+/obj/machinery/light,
+/obj/stool/chair{
+	dir = 1
+	},
+/turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/lobby)
 "bbq" = (
 /obj/cable,
@@ -22795,12 +22259,17 @@
 /obj/machinery/sleeper/compact{
 	dir = 8
 	},
-/turf/simulated/floor/white,
+/turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/lobby)
 "bbr" = (
 /obj/machinery/light,
 /obj/table/auto,
-/turf/simulated/floor/white,
+/obj/item/decoration/flower_vase/vase7,
+/obj/item/decoration/ashtray{
+	pixel_y = 1;
+	pixel_x = 8
+	},
+/turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/lobby)
 "bbs" = (
 /obj/machinery/sleeper/compact{
@@ -22808,14 +22277,16 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable,
-/turf/simulated/floor/white,
+/turf/simulated/floor/bluewhite{
+	dir = 6
+	},
 /area/station/medical/medbay/lobby)
 "bbv" = (
 /obj/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/portable_atmospherics/scrubber,
+/obj/machinery/vending/standard,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "bbw" = (
@@ -22903,47 +22374,14 @@
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
-"bbI" = (
-/obj/machinery/atmospherics/portables_connector{
-	dir = 4
-	},
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/simulated/floor/bluewhite/corner{
-	dir = 8
-	},
-/area/station/medical/medbay)
 "bbJ" = (
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4;
-	icon_state = "intact";
-	layer = 3;
-	level = 2
-	},
 /obj/machinery/light,
-/turf/simulated/floor/bluewhite{
-	dir = 1
-	},
-/area/station/medical/medbay)
-"bbK" = (
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 9;
-	icon_state = "intact";
-	layer = 3;
-	level = 2
-	},
-/obj/storage/secure/closet/medical/medicine,
-/turf/simulated/floor/bluewhite{
-	dir = 1
-	},
+/turf/simulated/floor/white,
 /area/station/medical/medbay)
 "bbL" = (
-/obj/table/auto,
-/obj/item/device/analyzer/healthanalyzer,
-/obj/item/reagent_containers/glass/beaker/cryoxadone,
-/turf/simulated/floor/bluewhite/corner{
-	dir = 1
-	},
-/area/station/medical/medbay)
+/obj/decal/poster/wallsign/medbay_sign,
+/turf/simulated/wall/auto/supernorn,
+/area/station/medical/medbay/lobby)
 "bbM" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/lobby)
@@ -23129,24 +22567,15 @@
 /obj/machinery/space_heater,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
-"bcg" = (
-/obj/reagent_dispensers/foamtank,
-/turf/simulated/floor/plating,
-/area/station/maintenance/west)
 "bch" = (
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/maintenance/alt{
-	dir = 4;
-	req_access = null
-	},
-/obj/access_spawn/maint,
-/obj/firedoor_spawn,
-/turf/simulated/floor,
-/area/station/maintenance/west)
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/station/medical/research)
 "bcj" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -23305,6 +22734,7 @@
 	dir = 4;
 	icon_state = "tube1"
 	},
+/obj/item/storage/box/crayon/basic,
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "bcG" = (
@@ -23462,15 +22892,15 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/west)
+/turf/simulated/floor/grass/random,
+/area/station/medical/dome)
 "bdc" = (
 /obj/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/wall/auto/supernorn,
-/area/station/maintenance/west)
+/turf/simulated/floor/grass/random,
+/area/station/medical/dome)
 "bdd" = (
 /obj/cable{
 	d1 = 1;
@@ -23700,15 +23130,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "bdA" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+/obj/stool/chair/moveable{
+	dir = 8
 	},
-/turf/simulated/floor/bluewhite{
-	dir = 4
-	},
-/area/station/medical/medbay)
+/obj/decal/cleanable/vomit,
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "bdB" = (
 /obj/machinery/power/apc{
 	dir = 1;
@@ -23722,12 +23149,15 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "bdD" = (
-/obj/machinery/space_heater,
-/obj/decal/cleanable/cobweb2,
-/turf/simulated/floor/plating,
-/area/station/maintenance/west)
+/obj/machinery/computer/genetics{
+	dir = 8
+	},
+/turf/simulated/floor/white,
+/area/station/medical/research)
 "bdE" = (
-/obj/machinery/vending/medical_public,
+/obj/table/auto,
+/obj/random_item_spawner/snacks/maybe_few,
+/obj/decal/cleanable/paper,
 /turf/simulated/floor/blue/side{
 	dir = 10
 	},
@@ -23738,6 +23168,9 @@
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
+	},
+/obj/stool/chair{
+	dir = 8
 	},
 /turf/simulated/floor/blue/side{
 	dir = 0
@@ -24218,12 +23651,9 @@
 /turf/simulated/floor/plating,
 /area/station/medical/research)
 "beD" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/medical/research)
-"beE" = (
-/obj/disposalpipe/segment,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/medical/research)
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/station/medical/dome)
 "beF" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/research)
@@ -24306,112 +23736,75 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/heads)
 "beS" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
 /obj/cable{
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/west)
+/obj/critter/parrot/random,
+/turf/simulated/floor/grass/random,
+/area/station/medical/dome)
 "beT" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/east)
 "beU" = (
-/obj/machinery/genetics_scanner,
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
+/obj/machinery/door/airlock/pyro/glass{
+	id = "medbay_front";
+	name = "Medical Bay";
+	req_access_txt = null
 	},
-/turf/simulated/floor/greenwhite{
-	dir = 9
-	},
-/area/station/medical/research)
+/obj/access_spawn/medical,
+/obj/firedoor_spawn,
+/turf/simulated/floor/white,
+/area/station/medical/staff)
 "beV" = (
-/obj/machinery/computer/genetics,
 /obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
 	},
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/greenwhite{
-	dir = 9
-	},
-/area/station/medical/research)
+/obj/machinery/vending/monkey/genetics,
+/turf/simulated/floor/grass/random,
+/area/station/medical/dome)
 "beW" = (
-/obj/table/auto,
-/obj/item/storage/firstaid/toxin,
-/turf/simulated/floor/greenwhite{
-	dir = 5
-	},
-/area/station/medical/research)
+/turf/simulated/floor/bluewhite,
+/area/station/medical/medbay/lobby)
 "beX" = (
-/obj/storage/closet/office,
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "N APC";
-	pixel_y = 24
-	},
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13"
-	},
-/turf/simulated/floor/greenwhite{
-	dir = 1
-	},
-/area/station/medical/research)
+/obj/stool/chair,
+/obj/item/clothing/suit/monkey,
+/turf/simulated/floor/grass/random,
+/area/station/medical/dome)
 "beY" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	frequency = 1445;
-	name = "Station Intercom (Medical)"
+/obj/table/wood/auto,
+/obj/item/decoration/ashtray{
+	pixel_x = 6;
+	pixel_y = 10
 	},
-/obj/machinery/light{
-	dir = 1
+/obj/item/cigbutt{
+	pixel_y = 10;
+	pixel_x = 6
 	},
-/turf/simulated/floor/greenwhite{
-	dir = 1
+/obj/item/storage/firstaid/regular{
+	pixel_y = -1;
+	pixel_x = -12
 	},
-/area/station/medical/research)
-"beZ" = (
-/turf/simulated/floor/greenwhite{
-	dir = 1
-	},
-/area/station/medical/research)
-"bfa" = (
-/obj/table/auto,
-/obj/machinery/cashreg,
-/turf/simulated/floor/greenwhite{
-	dir = 5
-	},
-/area/station/medical/research)
+/turf/simulated/floor/wood,
+/area/station/medical/head)
 "bfc" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
+/obj/disposalpipe/segment/mail{
+	dir = 4;
+	icon_state = "pipe-s"
 	},
-/obj/machinery/light{
-	dir = 1;
-	icon_state = "tube1"
-	},
-/turf/simulated/floor/grass/random,
-/area/station/medical/research)
-"bfd" = (
-/obj/machinery/vending/monkey,
-/turf/simulated/floor/grass/random,
-/area/station/medical/research)
+/obj/storage/closet/coffin,
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "bfe" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
+/obj/disposalpipe/segment{
+	dir = 4;
+	pixel_y = 0
 	},
 /turf/simulated/floor/grass/random,
-/area/station/medical/research)
+/area/station/medical/dome)
 "bff" = (
 /obj/machinery/light{
 	dir = 4;
@@ -24535,86 +23928,51 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
-"bfv" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+"bfw" = (
+/obj/item/device/radio/intercom{
+	broadcasting = 0;
+	frequency = 1445;
+	name = "Medical Intercom"
 	},
+/obj/surgery_tray,
+/obj/item/circular_saw{
+	pixel_y = 8
+	},
+/obj/item/surgical_spoon{
+	pixel_y = 4
+	},
+/obj/item/scalpel,
+/obj/item/suture,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
+"bfx" = (
 /obj/machinery/light{
 	dir = 8;
-	icon_state = "tube1";
-	tag = ""
+	icon_state = "tube1"
 	},
-/turf/simulated/floor/greenwhite{
-	dir = 8
-	},
-/area/station/medical/research)
-"bfw" = (
-/obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/landmark/start{
-	name = "Geneticist"
-	},
-/obj/stool/chair/office/purple{
-	dir = 1;
-	icon_state = "office_chair_purple"
-	},
-/turf/simulated/floor/white/checker2{
-	dir = 5
-	},
-/area/station/medical/research)
-"bfx" = (
-/turf/simulated/floor/white/checker2{
-	dir = 9
-	},
-/area/station/medical/research)
+/turf/simulated/floor/white,
+/area/station/medical/medbay)
 "bfy" = (
 /turf/simulated/floor/white,
 /area/station/medical/research)
 "bfz" = (
-/obj/stool/chair{
-	dir = 4
+/obj/machinery/drainage,
+/turf/simulated/floor/grass/random,
+/area/station/medical/dome)
+"bfC" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4;
+	name = "Genetics"
 	},
-/obj/cable{
-	icon_state = "2-8"
+/obj/access_spawn/medlab,
+/obj/firedoor_spawn,
+/turf/simulated/floor/grass/random,
+/area/station/medical/dome)
+"bfD" = (
+/obj/stool/chair/office/green{
+	dir = 4
 	},
 /turf/simulated/floor/white,
-/area/station/medical/research)
-"bfA" = (
-/obj/table/auto,
-/obj/item/storage/box/diskbox,
-/turf/simulated/floor/greenwhite{
-	dir = 4
-	},
-/area/station/medical/research)
-"bfB" = (
-/turf/simulated/floor/grass/random,
-/area/station/medical/research)
-"bfC" = (
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
-/turf/simulated/floor/grass/random,
-/area/station/medical/research)
-"bfD" = (
-/obj/overlay{
-	anchored = 1;
-	icon = 'icons/misc/beach2.dmi';
-	icon_state = "palm1";
-	layer = 10;
-	name = "palm tree"
-	},
-/turf/simulated/floor/grass/random,
 /area/station/medical/research)
 "bfE" = (
 /turf/simulated/floor/bluegreen/side{
@@ -24784,38 +24142,18 @@
 	dir = 8
 	},
 /area/station/medical/research)
-"bfW" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/white/checker2{
-	dir = 9
-	},
-/area/station/medical/research)
 "bfX" = (
-/turf/simulated/floor/white/checker2{
-	dir = 5
+/obj/machinery/vending/medical_public,
+/turf/simulated/floor/blue/side{
+	dir = 8
 	},
-/area/station/medical/research)
-"bfY" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/white,
-/area/station/medical/research)
+/area/station/hallway/primary/west)
 "bfZ" = (
-/obj/table/auto,
-/obj/item/paper,
-/obj/item/storage/firstaid/brain,
-/obj/item/storage/pill_bottle/mutadone,
-/turf/simulated/floor/greenwhite{
-	dir = 4
+/obj/shrub{
+	dir = 8
 	},
-/area/station/medical/research)
+/turf/simulated/floor/grass/random,
+/area/station/medical/dome)
 "bga" = (
 /obj/disposalpipe/segment/mail,
 /obj/cable{
@@ -24826,26 +24164,16 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "bgb" = (
-/obj/stool/bench/green/auto,
-/turf/simulated/floor/white/checker2{
-	dir = 9
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 9;
+	level = 2
 	},
-/area/station/medical/research)
+/turf/simulated/floor/white,
+/area/station/medical/medbay/surgery)
 "bgc" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	frequency = 1445;
-	name = "Station Intercom (Medical)"
-	},
-/obj/stool/bench/green/auto,
-/obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
-	},
-/turf/simulated/floor/white/checker2{
-	dir = 5
-	},
-/area/station/medical/research)
+/obj/storage/closet/emergency,
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "bgd" = (
 /turf/simulated/floor/green/side{
 	dir = 8
@@ -24870,14 +24198,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "bgg" = (
-/obj/disposalpipe/switch_junction{
-	dir = 8;
-	icon_state = "pipe-sj2";
-	mail_tag = "genetics";
-	name = "genetics mail router"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/inner/central)
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/maintenance/west)
 "bgh" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4;
@@ -24969,71 +24291,53 @@
 /obj/storage/closet/fire,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
-"bgu" = (
-/obj/storage/closet/wardrobe/white/genetics,
-/turf/simulated/floor/greenwhite{
-	dir = 9
-	},
-/area/station/medical/research)
-"bgv" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/white/checker2{
-	dir = 5
-	},
-/area/station/medical/research)
-"bgw" = (
-/obj/table/auto,
-/obj/machinery/phone,
-/turf/simulated/floor/white/checker2{
-	dir = 9
-	},
-/area/station/medical/research)
-"bgx" = (
-/obj/table/auto,
-/obj/item/hand_labeler,
-/turf/simulated/floor/white,
-/area/station/medical/research)
 "bgy" = (
-/obj/storage/secure/closet/animal,
-/turf/simulated/floor/greenwhite{
-	dir = 4
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
 	},
-/area/station/medical/research)
+/obj/item/device/radio/intercom{
+	broadcasting = 0;
+	dir = 8;
+	frequency = 1445;
+	name = "Medical Intercom"
+	},
+/turf/simulated/floor/white,
+/area/station/medical/medbay)
 "bgz" = (
-/obj/machinery/door/airlock/pyro/glass,
-/obj/access_spawn/medlab,
-/turf/simulated/floor/grass/random,
-/area/station/medical/research)
-"bgA" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4
+/obj/machinery/door_control{
+	id = "medbay_front";
+	name = "Medbay Door Control";
+	pixel_x = 21;
+	pixel_y = 23
 	},
-/obj/access_spawn/medlab,
-/obj/firedoor_spawn,
+/turf/simulated/floor/white,
+/area/station/medical/medbay)
+"bgA" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/genetics_scanner,
 /turf/simulated/floor/white,
 /area/station/medical/research)
 "bgB" = (
-/turf/simulated/floor/green/side{
-	dir = 9
+/obj/landmark/spawner{
+	name = "monkeyspawn_normal"
 	},
-/area/station/medical/research)
-"bgC" = (
-/turf/simulated/floor/green/side{
-	dir = 1
-	},
-/area/station/medical/research)
+/turf/simulated/floor/grass/random,
+/area/station/medical/dome)
 "bgD" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4
+/obj/machinery/door/airlock/pyro/maintenance/alt{
+	dir = 4;
+	req_access = null
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/green/side{
 	dir = 5
 	},
-/area/station/medical/research)
+/area/station/maintenance/west)
 "bgE" = (
 /obj/machinery/light/emergency{
 	dir = 4;
@@ -25105,160 +24409,67 @@
 	dir = 8;
 	icon_state = "tube1"
 	},
-/obj/machinery/disposal/mail{
-	mail_tag = "genetics";
-	mailgroup = "medresearch";
-	name = "mail chute-'Genetics'"
-	},
-/obj/disposalpipe/trunk/mail{
-	dir = 4
-	},
-/turf/simulated/floor/greenwhite{
-	dir = 8
-	},
-/area/station/medical/research)
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "bgR" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4;
-	icon_state = "pipe-s"
-	},
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
-/turf/simulated/floor/white,
-/area/station/medical/research)
-"bgS" = (
 /obj/cable{
 	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/obj/disposalpipe/segment/mail{
-	dir = 4;
-	icon_state = "pipe-s"
-	},
-/turf/simulated/floor/white/checker2{
-	dir = 9
-	},
+/turf/simulated/floor/grass/random,
+/area/station/medical/dome)
+"bgS" = (
+/obj/table/auto,
+/obj/item/toy/plush/small/monkey,
+/turf/simulated/floor/white,
 /area/station/medical/research)
 "bgT" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/disposalpipe/segment/mail{
-	dir = 4;
-	icon_state = "pipe-s"
-	},
-/obj/table/auto,
-/obj/item/paper_bin,
-/obj/item/pen{
-	pixel_x = -7
-	},
-/turf/simulated/floor/white/checker2{
-	dir = 5
-	},
-/area/station/medical/research)
+/obj/decal/poster/wallsign/chsl,
+/turf/simulated/wall/auto/supernorn,
+/area/station/maintenance/west)
 "bgU" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment/mail{
-	dir = 4;
-	icon_state = "pipe-s"
-	},
 /obj/table/auto,
-/obj/item/pen{
-	pixel_x = -7
+/obj/random_item_spawner/desk_stuff/one{
+	pixel_x = -1;
+	pixel_y = 2
 	},
-/turf/simulated/floor/white,
-/area/station/medical/research)
+/turf/simulated/floor/blue/side{
+	dir = 8
+	},
+/area/station/hallway/primary/west)
 "bgV" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment/mail{
-	dir = 4;
-	icon_state = "pipe-s"
+/obj/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/white,
-/area/station/medical/research)
+/area/station/medical/medbay/lobby)
 "bgW" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4;
-	icon_state = "pipe-s"
-	},
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/white,
-/area/station/medical/research)
-"bgX" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment/mail{
-	dir = 4;
-	icon_state = "pipe-s"
-	},
-/obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
-	},
-/turf/simulated/floor/greenwhite{
+/obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
-/area/station/medical/research)
-"bgY" = (
-/obj/disposalpipe/segment,
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment/mail{
-	dir = 4;
-	icon_state = "pipe-s"
-	},
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
-/area/station/medical/research)
+/obj/firedoor_spawn,
+/turf/simulated/floor/bluewhite,
+/area/station/medical/medbay/lobby)
+"bgX" = (
+/obj/decal/poster/wallsign/portrait_scientist,
+/turf/simulated/wall/auto/supernorn,
+/area/station/medical/medbay/lobby)
 "bgZ" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+/obj/table/reinforced/auto,
+/obj/item/storage/box/body_bag,
+/obj/item/storage/box/biohazard_bags,
+/obj/item/body_bag,
+/obj/item/body_bag,
+/obj/item/clothing/under/suit{
+	name = "Mortician Suit"
 	},
-/obj/disposalpipe/segment/mail{
-	dir = 4;
-	icon_state = "pipe-s"
+/obj/item/device/reagentscanner{
+	pixel_x = -13
 	},
-/obj/machinery/light{
-	dir = 1;
-	icon_state = "tube1"
-	},
-/turf/simulated/floor/white,
-/area/station/medical/research)
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "bha" = (
 /obj/cable{
 	d2 = 4;
@@ -25274,108 +24485,44 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/ai_monitored/armory)
-"bhb" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment/mail{
-	dir = 4;
-	icon_state = "pipe-s"
-	},
-/turf/simulated/floor/white/checker2{
-	dir = 9
-	},
-/area/station/medical/research)
 "bhc" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment/mail{
+/obj/machinery/door/airlock/pyro/medical{
 	dir = 4;
-	icon_state = "pipe-s"
+	name = "Morgue";
+	req_access = null;
+	req_access_txt = null
 	},
-/turf/simulated/floor/white/checker2{
-	dir = 5
-	},
-/area/station/medical/research)
+/obj/access_spawn/medical,
+/obj/firedoor_spawn,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "bhd" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment/mail{
-	dir = 4;
-	icon_state = "pipe-s"
-	},
-/obj/machinery/door/airlock/pyro/glass{
+/obj/wingrille_spawn/auto/tuff,
+/obj/window_blinds/cog2/left{
 	dir = 4
 	},
-/obj/access_spawn/medlab,
-/obj/firedoor_spawn,
-/turf/simulated/floor/white,
-/area/station/medical/research)
+/turf/simulated/floor/plating,
+/area/station/medical/head)
 "bhe" = (
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/disposalpipe/segment/mail{
-	dir = 4;
-	icon_state = "pipe-s"
-	},
-/turf/simulated/floor/green/side{
-	dir = 10
-	},
-/area/station/medical/research)
-"bhf" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/disposalpipe/segment/mail{
-	dir = 4;
-	icon_state = "pipe-s"
-	},
-/turf/simulated/floor/green/side,
+/obj/storage/secure/closet/animal,
+/turf/simulated/floor/white,
 /area/station/medical/research)
 "bhg" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment/mail{
-	dir = 4;
-	icon_state = "pipe-s"
-	},
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4
-	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/green/side{
 	dir = 6
 	},
-/area/station/medical/research)
+/area/station/maintenance/west)
 "bhh" = (
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment/mail{
-	dir = 4;
-	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/green/side{
 	dir = 8
@@ -25387,33 +24534,18 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/disposalpipe/segment/mail{
-	dir = 4;
-	icon_state = "pipe-s"
-	},
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "bhk" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4;
-	icon_state = "pipe-s"
+/obj/overlay{
+	anchored = 1;
+	icon = 'icons/misc/beach2.dmi';
+	icon_state = "palm1";
+	layer = 10;
+	name = "palm tree"
 	},
-/obj/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/station/hallway/primary/south)
-"bhl" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/disposalpipe/segment/mail{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor,
-/area/station/hallway/primary/south)
+/turf/simulated/floor/grass/random,
+/area/station/medical/dome)
 "bhm" = (
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
@@ -25594,11 +24726,6 @@
 	icon_state = "fred2"
 	},
 /area/station/security/hos)
-"bhL" = (
-/turf/simulated/floor/bluewhite{
-	dir = 4
-	},
-/area/station/medical/medbay)
 "bhM" = (
 /obj/machinery/computer/ATM{
 	dir = 8
@@ -25622,17 +24749,10 @@
 	dir = 6
 	},
 /area/station/security/brig)
-"bhO" = (
-/obj/storage/closet/wardrobe/white/genetics,
-/turf/simulated/floor/greenwhite{
-	dir = 10
-	},
-/area/station/medical/research)
 "bhP" = (
-/turf/simulated/floor/greenwhite{
-	dir = 4
-	},
-/area/station/medical/research)
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/wood,
+/area/station/medical/head)
 "bhR" = (
 /obj/cable{
 	d1 = 4;
@@ -25647,26 +24767,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "bhS" = (
-/obj/machinery/door/airlock/pyro/maintenance/alt{
-	req_access = null
-	},
-/obj/access_spawn/maint,
-/obj/firedoor_spawn,
-/turf/simulated/floor/plating,
-/area/station/maintenance/southwest)
-"bhT" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/door/airlock/pyro/maintenance/alt{
-	req_access = null
-	},
-/obj/access_spawn/maint,
-/obj/firedoor_spawn,
-/turf/simulated/floor/plating,
-/area/station/maintenance/southwest)
+/obj/stool/bed/moveable/hospital,
+/obj/item/clothing/suit/bedsheet,
+/turf/simulated/floor/white,
+/area/station/medical/staff)
 "bhV" = (
 /obj/critter/roach,
 /turf/simulated/floor/plating,
@@ -25823,21 +24927,16 @@
 	},
 /area/station/security/main)
 "bip" = (
-/obj/disposalpipe/segment,
-/turf/simulated/floor/stairs{
-	dir = 4;
-	icon_state = "medstairs2_wide"
-	},
-/area/station/medical/research)
+/obj/machinery/vending/medical_public,
+/turf/simulated/floor,
+/area/station/hallway/primary/west)
 "bir" = (
-/obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+/obj/shrub{
+	dir = 4
 	},
-/turf/simulated/floor/white/checker2{
-	dir = 5
-	},
-/area/station/medical/research)
+/obj/item/clothing/suit/bedsheet/captain,
+/turf/simulated/floor/grass/random,
+/area/station/medical/dome)
 "bis" = (
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
@@ -26086,83 +25185,60 @@
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "biY" = (
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+/obj/disposalpipe/segment,
+/obj/decal/cleanable/machine_debris,
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
+"biZ" = (
+/obj/decal/cleanable/ripped_poster,
+/turf/simulated/wall/auto/supernorn,
+/area/station/maintenance/west)
+"bjd" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4;
+	icon_state = "pipe-s"
 	},
-/turf/simulated/floor/greenwhite{
+/turf/simulated/floor/bluewhite/corner{
 	dir = 8
 	},
-/area/station/medical/research)
-"biZ" = (
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+/area/station/medical/medbay/lobby)
+"bje" = (
+/obj/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-s"
 	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/landmark/start{
-	name = "Geneticist"
-	},
-/obj/stool/chair/office/purple,
-/turf/simulated/floor/white/checker2{
-	dir = 5
-	},
-/area/station/medical/research)
-"bja" = (
 /obj/cable{
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/simulated/floor/white/checker2{
-	dir = 9
-	},
-/area/station/medical/research)
-"bjb" = (
-/obj/machinery/light,
-/obj/storage/secure/closet/medical{
-	name = "locker"
-	},
-/turf/simulated/floor/greenwhite,
-/area/station/medical/research)
-"bjd" = (
-/turf/simulated/floor/greenwhite,
-/area/station/medical/research)
-"bje" = (
-/obj/disposalpipe/trunk,
-/obj/machinery/disposal,
-/turf/simulated/floor/greenwhite{
-	dir = 6
-	},
-/area/station/medical/research)
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "bjf" = (
 /obj/disposalpipe/segment,
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/station/medical/research)
-"bjg" = (
-/obj/table/auto,
-/obj/item/storage/toolbox/mechanical,
-/turf/simulated/floor/white,
-/area/station/medical/research)
+/area/station/medical/dome)
 "bjh" = (
 /obj/machinery/light,
-/obj/table/auto,
-/obj/item/storage/firstaid/regular{
-	pixel_x = -6;
-	pixel_y = 5
-	},
-/turf/simulated/floor/white,
-/area/station/medical/research)
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "bji" = (
-/obj/table/auto,
-/obj/item/crowbar,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/disposal/mail{
+	mail_tag = "genetics";
+	mailgroup = "medresearch";
+	name = "mail chute-'Genetics'"
+	},
 /turf/simulated/floor/white,
 /area/station/medical/research)
 "bjj" = (
@@ -26175,22 +25251,16 @@
 	c_tag = "Medical Research East";
 	dir = 1
 	},
-/obj/stool/bench/green/auto,
-/turf/simulated/floor/white/checker2{
-	dir = 5
-	},
-/area/station/medical/research)
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "bjl" = (
-/obj/machinery/light_switch{
-	name = "E light switch";
-	pixel_x = 24;
-	pixel_y = 0
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
 	},
-/obj/stool/bench/green/auto,
-/turf/simulated/floor/white/checker2{
-	dir = 9
-	},
-/area/station/medical/research)
+/obj/access_spawn/medical,
+/obj/firedoor_spawn,
+/turf/simulated/floor/white,
+/area/station/medical/medbay/cloner)
 "bjm" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/kitchen)
@@ -26260,10 +25330,8 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/red/corner{
-	dir = 8
-	},
-/area/station/medical/medbay)
+/turf/simulated/wall/auto/supernorn,
+/area/station/medical/morgue)
 "bjy" = (
 /obj/cable{
 	d1 = 1;
@@ -26403,27 +25471,19 @@
 /turf/simulated/floor,
 /area/station/security/hos)
 "bjP" = (
-/obj/machinery/genetics_scanner,
-/obj/cable,
-/turf/simulated/floor/greenwhite{
-	dir = 10
+/obj/landmark{
+	name = "blobstart"
 	},
-/area/station/medical/research)
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "bjQ" = (
-/obj/cable,
-/obj/machinery/power/data_terminal,
-/obj/machinery/computer/genetics,
-/turf/simulated/floor/greenwhite{
-	dir = 10
-	},
-/area/station/medical/research)
-"bjS" = (
-/obj/machinery/door/airlock/pyro/maintenance/alt{
-	req_access = null
-	},
-/obj/access_spawn/medlab,
+/obj/machinery/genetics_scanner,
 /turf/simulated/floor/white,
 /area/station/medical/research)
+"bjS" = (
+/obj/decal/poster/wallsign/framed_award/mdlicense,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/medical/head)
 "bjT" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 6
@@ -26821,8 +25881,9 @@
 /turf/space,
 /area/station/turret_protected/AIbaseoutside)
 "bkS" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/maintenance/southwest)
+/obj/stool/chair/comfy/blue,
+/turf/simulated/floor,
+/area/station/hallway/primary/west)
 "bkU" = (
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -30793,11 +29854,9 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/sec)
 "buk" = (
-/obj/table/reinforced/chemistry/beakers,
-/obj/machinery/glass_recycler,
-/obj/item/storage/box/beakerbox,
-/turf/simulated/floor/red,
-/area/station/medical/medbay)
+/obj/machinery/atmospherics/unary/cryo_cell/east,
+/turf/simulated/floor/white,
+/area/station/medical/medbay/surgery)
 "bun" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -31246,10 +30305,9 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "bvs" = (
-/turf/simulated/floor/red/corner{
-	dir = 8
-	},
-/area/station/medical/medbay)
+/obj/machinery/atmospherics/unary/cryo_cell/west,
+/turf/simulated/floor/white,
+/area/station/medical/medbay/surgery)
 "bvu" = (
 /obj/machinery/firealarm{
 	pixel_y = 24;
@@ -31855,10 +30913,9 @@
 	},
 /area/station/hangar/sec)
 "bwA" = (
-/obj/stool/bed/moveable,
-/obj/item/clothing/suit/bedsheet,
+/obj/machinery/drainage,
 /turf/simulated/floor/white,
-/area/station/medical/medbay)
+/area/station/medical/staff)
 "bwB" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -32286,12 +31343,8 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "bxu" = (
-/obj/iv_stand,
-/obj/machinery/light{
-	dir = 1
-	},
 /turf/simulated/floor/white,
-/area/station/medical/medbay)
+/area/station/medical/staff)
 "bxw" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -32947,10 +32000,8 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/wall/auto/supernorn,
-/area/station/medical/medbay)
+/area/station/medical/staff)
 "byV" = (
-/obj/stool/bed/moveable,
-/obj/item/clothing/suit/bedsheet,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -32959,8 +32010,12 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/submachine/chef_sink/chem_sink{
+	dir = 4;
+	pixel_x = -4
+	},
 /turf/simulated/floor/white,
-/area/station/medical/medbay)
+/area/station/medical/staff)
 "byW" = (
 /obj/reagent_dispensers/watertank,
 /turf/simulated/floor/plating,
@@ -38281,6 +37336,7 @@
 /obj/cable/black{
 	icon_state = "1-8"
 	},
+/obj/decal/cleanable/oil,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "dMh" = (
@@ -38585,16 +37641,14 @@
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "etA" = (
-/obj/disposalpipe/segment,
-/obj/machinery/firealarm{
-	pixel_y = 24;
-	text = "NF"
-	},
-/turf/simulated/floor/stairs{
+/obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
-	icon_state = "medstairs_wide"
+	id = "cloning_exit"
 	},
-/area/station/medical/research)
+/obj/access_spawn/medical,
+/obj/firedoor_spawn,
+/turf/simulated/floor/white,
+/area/station/medical/medbay/cloner)
 "etQ" = (
 /obj/disposalpipe/segment/mail,
 /obj/cable{
@@ -39120,22 +38174,12 @@
 /turf/space,
 /area/space)
 "fBB" = (
-/obj/table/auto,
-/obj/item/storage/firstaid/brain,
 /obj/machinery/light_switch{
 	name = "S light switch";
 	pixel_y = -24
 	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/turf/simulated/floor/greenwhite{
-	dir = 6
-	},
-/area/station/medical/research)
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "fCJ" = (
 /obj/cable{
 	d1 = 1;
@@ -39502,15 +38546,9 @@
 	name = "Upload Station"
 	})
 "gvK" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment/morgue{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay)
+/obj/decal/poster/wallsign/portrait_scientist,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/medical/head)
 "gvW" = (
 /obj/cable/black{
 	icon_state = "1-2"
@@ -39934,9 +38972,12 @@
 /turf/simulated/floor,
 /area/station/science/testchamber)
 "hug" = (
-/obj/machinery/drone_recharger,
-/turf/simulated/floor/plating,
-/area/station/maintenance/west)
+/obj/machinery/computer/genetics{
+	dir = 4
+	},
+/obj/item/cloneModule/genepowermodule,
+/turf/simulated/floor/white,
+/area/station/medical/research)
 "hus" = (
 /obj/machinery/vending/security_ammo,
 /turf/simulated/floor/black,
@@ -40549,10 +39590,6 @@
 	intact = 0
 	},
 /area/station/solar/west)
-"iFf" = (
-/obj/storage/closet/wardrobe/white,
-/turf/simulated/floor/greenwhite,
-/area/station/medical/research)
 "iFM" = (
 /obj/machinery/shower{
 	dir = 1
@@ -40777,14 +39814,6 @@
 	name = "solar paneling"
 	},
 /area/station/solar/west)
-"jgf" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/white,
-/area/station/medical/research)
 "jhj" = (
 /obj/machinery/vehicle/miniputt/armed,
 /turf/simulated/floor/shuttlebay,
@@ -40977,11 +40006,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/decal/tile_edge/floorguide/arrow_w{
-	dir = 8
-	},
-/turf/simulated/floor/blue/side{
-	dir = 8
+/obj/decal/tile_edge/floorguide/medbay,
+/turf/simulated/floor/blue/corner{
+	dir = 1
 	},
 /area/station/hallway/primary/west)
 "jJi" = (
@@ -41429,6 +40456,7 @@
 /obj/cable/black{
 	icon_state = "1-4"
 	},
+/obj/decal/cleanable/ash,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "kKa" = (
@@ -41909,11 +40937,8 @@
 /turf/simulated/floor/caution/northsouth,
 /area/station/quartermaster/office)
 "lLC" = (
-/obj/item/device/radio/beacon,
-/turf/simulated/floor/specialroom/medbay{
-	dir = 2
-	},
-/area/station/medical/medbay)
+/turf/simulated/floor/carpet/blue/fancy/edge/north,
+/area/station/medical/head)
 "lMl" = (
 /obj/item/storage/toilet/random{
 	dir = 8
@@ -42078,7 +41103,11 @@
 	},
 /area/station/chapel/sanctuary)
 "mhg" = (
-/obj/decal/tile_edge/floorguide/medbay,
+/obj/machinery/light{
+	dir = 8;
+	icon_state = "tube1"
+	},
+/obj/machinery/vending/coffee,
 /turf/simulated/floor/blue/side{
 	dir = 8
 	},
@@ -44106,10 +43135,12 @@
 /turf/simulated/floor,
 /area/station/hangar/arrivals)
 "qNK" = (
-/turf/simulated/floor/white/checker2{
-	dir = 1
+/obj/cable/black{
+	icon_state = "4-8"
 	},
-/area/station/medical/head)
+/obj/decal/cleanable/dirt/dirt5,
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "qNY" = (
 /obj/decal/poster/wallsign/stencil/left/c{
 	pixel_x = -6
@@ -44677,8 +43708,12 @@
 /area/station/science/lobby)
 "shz" = (
 /obj/machinery/light/small/floor,
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 9;
+	level = 2
+	},
 /turf/simulated/floor/white,
-/area/station/medical/medbay)
+/area/station/medical/medbay/surgery)
 "sig" = (
 /obj/machinery/door/airlock/pyro/glass/sci{
 	dir = 4
@@ -45395,6 +44430,9 @@
 "tvL" = (
 /obj/disposalpipe/segment,
 /obj/machinery/light/small/floor,
+/obj/stool/chair{
+	dir = 4
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "tvN" = (
@@ -45661,12 +44699,6 @@
 	},
 /turf/simulated/floor,
 /area/station/science/bot_storage)
-"tXt" = (
-/obj/decal/tile_edge/floorguide/arrow_w,
-/turf/simulated/floor/blue/side{
-	dir = 8
-	},
-/area/station/hallway/primary/west)
 "tXY" = (
 /obj/machinery/door/airlock/pyro/engineering/alt,
 /obj/access_spawn/mining,
@@ -45733,6 +44765,10 @@
 /area/station/turret_protected/ai)
 "uhm" = (
 /obj/landmark/gps_waypoint,
+/obj/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "uhL" = (
@@ -46871,8 +45907,8 @@
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
 "wLu" = (
-/obj/machinery/computer/robot_module_rewriter{
-	dir = 4
+/obj/submachine/cargopad{
+	name = "Robotics Pad"
 	},
 /turf/simulated/floor/black/side{
 	dir = 8
@@ -47069,15 +46105,6 @@
 	},
 /turf/simulated/floor,
 /area/station/science/lobby)
-"xkl" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment/morgue{
-	dir = 4
-	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay)
 "xlR" = (
 /obj/machinery/light/emergency{
 	dir = 8;
@@ -58841,7 +57868,7 @@ ecM
 kXr
 kMZ
 ayH
-arN
+aVl
 arN
 arN
 arN
@@ -58858,8 +57885,8 @@ arN
 arN
 aUH
 aUH
-bae
-bae
+aUH
+aUH
 aUH
 aUH
 aYi
@@ -59143,7 +58170,7 @@ avq
 nqI
 iLe
 rrM
-arN
+bjP
 aOZ
 arN
 arN
@@ -59157,13 +58184,13 @@ arN
 byS
 aOZ
 arN
-arN
+wfC
 aUH
 aZz
-aZe
-aZe
-aZe
-aXp
+aSE
+aSE
+aSE
+avq
 aYi
 arN
 avq
@@ -59444,27 +58471,27 @@ aaa
 avq
 nqI
 ayH
+aVl
 arN
-arN
-aNE
-aPL
-aPL
-aPL
-aNE
-arN
-arN
-aOr
-aUH
-aUH
+aID
+bhd
+bhd
+aID
+aQW
+aQW
+aQW
+aWR
+aQW
+aQW
 byU
+aQW
+aQW
 aUH
 aUH
-wfC
-aUH
-aZA
-aZe
-aZe
-bbf
+aSE
+aSE
+aSE
+aSE
 aUH
 aYi
 arN
@@ -59744,29 +58771,29 @@ aaa
 aaa
 aaa
 avq
-nqI
-ayH
-aNE
-aNE
-aNE
+qNK
+aVk
+aID
+aID
+bjS
 aPO
 aIh
-aQW
-aNE
-aNE
-arN
+aQY
+aUi
+aUi
+aUi
 aWQ
-aUH
+bap
 bwA
 byV
 aTW
-aUH
-avq
-aUH
-aZB
-baf
-baJ
-bbg
+aQW
+bfx
+aSE
+aSE
+aSE
+aSE
+aSE
 aUH
 bcf
 aPb
@@ -60047,30 +59074,30 @@ aJT
 aJT
 aJT
 wbZ
-ayH
-aNE
+aVk
+aQY
 aOo
-aQo
-aQo
+baM
+lLC
 aPN
-aQo
-aRM
-aNE
-arN
-aOr
-aUH
+aQY
+aUi
+aUi
+aUi
+aWR
+bbj
 bxu
 aVU
+bhS
+aQW
+aSE
+aSE
+aSE
+aSE
+aSE
 aSE
 aUH
-aSE
-aUH
-aZC
-aUH
-baK
-bbh
-aUH
-bcg
+avq
 arN
 bcZ
 avq
@@ -60350,24 +59377,24 @@ aLF
 aJT
 nqI
 ayH
-aNE
+aQY
 aPa
-aPN
-aQo
-aQo
-aQo
-aRN
-aNE
-arN
-aOr
-aUH
+beY
+aVm
+aRM
+aQY
+aUi
+aUi
+aUi
+aTr
+bxu
+bxu
+aVU
+bxu
+beU
 aSE
-aVZ
 aSE
-jey
-aYj
-aZa
-aZD
+aSE
 aSE
 aSE
 aSE
@@ -60651,32 +59678,32 @@ aKH
 aLG
 aJT
 ekK
-ayH
-aNE
-aOo
-aQo
-aQo
-aQo
-aQo
-aUi
-aNE
-avq
-aWR
-aUH
-bae
-aVW
-bae
-bae
-aYk
-aSE
-aZE
-bag
 baL
+aZa
 bbi
-bbI
+bau
+bhP
+aUG
+aQY
+aUi
+aUi
+aUi
+aWR
+aPR
+aPR
+aVW
+aPR
+aPR
+aYl
+aSE
+aSE
+aSE
+aSE
+aSE
+aSE
 avq
-arN
-bcZ
+bdB
+bje
 avq
 aaa
 aaa
@@ -60953,42 +59980,42 @@ aKI
 aLH
 aJT
 nqI
-ayH
-aNE
-aOo
-aQo
-aQo
+aKO
+aQY
+aYj
+aZH
+aQr
 aQr
 aQX
-aRO
-aSy
-aVf
+aUi
+aUi
+aUi
 aTX
 buk
 aVg
 aVX
 aWN
-aXq
-xkl
+aPR
+aYl
 aSE
-aZG
-bah
-baM
-bah
+aSE
+aSE
+aSE
+aSE
 bbJ
 avq
 arN
 bcZ
 avq
-aaa
-aaa
-aaa
-aaa
-beC
-beC
-beC
-beC
-beC
+acG
+avq
+avq
+avq
+avq
+avq
+avq
+avq
+avq
 aaa
 aaa
 aaa
@@ -61256,44 +60283,44 @@ aLI
 aMp
 aMY
 aOs
-avq
-avq
-aNE
+bgg
+bgg
+gvK
 aQp
 aQT
 aQY
-aXF
-aNE
-aVl
-aWS
-aVi
+aUi
+aUi
+aUi
+aWR
+aXw
 aVh
-aVZ
+bbk
+aVh
+aWO
+aYl
 aSE
-aXr
-gvK
 aSE
-aZG
-bai
-baN
-bbj
-bbK
+aSE
+aSE
+aSE
+aSE
 avq
 arN
 bcZ
 avq
-acG
-beC
-beC
-beC
-beC
-bgu
+avq
+avq
+arN
+arN
+avq
+arN
 bgQ
-bhO
-beC
-beC
-beC
-beC
+arN
+avq
+avq
+avq
+avq
 aaa
 aaa
 aaa
@@ -61558,44 +60585,44 @@ aJT
 aJT
 nqI
 aQs
-aQv
-aug
+baP
+aUc
+aID
+aID
+aID
+aID
 aNE
+bhc
 aNE
-aQV
-aRL
-aNE
-aNE
-aVm
 bjx
 aVj
 aVi
-aVZ
+aZG
 shz
 aXu
 aYl
 aSE
-aZH
-baj
-baO
-bbk
-bbL
+aSE
+aSE
+aSE
+aSE
+aSE
 avq
 arN
 bcZ
+arN
+arN
+arN
+arN
+arN
 avq
-aag
-beC
-beU
-bfv
-bfV
-bfy
-bgR
-bfy
-bfV
-biY
-bjP
-beC
+arN
+arN
+arN
+arN
+arN
+arN
+avq
 aaa
 aaa
 aaa
@@ -61857,47 +60884,47 @@ aaa
 aaa
 aJS
 aaa
-avq
+aJZ
 nqI
 arN
 arN
 aQw
-aPb
 aPP
+aSD
 aQt
 aRa
-aUy
 aTm
 aTm
+aRL
 aTY
 bvs
-aVj
+bgb
 aVZ
 aVp
 aXu
 aYl
 aSE
-baZ
-bak
-baP
-baZ
+aSE
+aSE
+aSE
+aSE
 aSE
 avq
 arN
 bcZ
+arN
+arN
+arN
+arN
+arN
 avq
-aai
-beC
-beV
-bfw
-bfW
-bgv
-bgS
-bfX
-bfx
-biZ
-bjQ
-beC
+arN
+arN
+arN
+arN
+arN
+arN
+avq
 aaa
 aaa
 aaa
@@ -62161,45 +61188,45 @@ acK
 aaa
 avq
 aMW
-arN
+aVl
 arN
 aOr
-arN
-aPR
+avq
+bfw
 aQu
 aRb
-aPR
-aPR
+aRb
+aQo
+aZd
+aUy
 aWO
 aWO
-aPR
-aVk
-aVZ
-aSE
-aXu
+aZe
+aWO
+aWO
 ban
 baD
 baD
 baD
 bdy
 aSE
-aSE
+aUH
+aXp
+beD
+aHF
+beD
+beD
 aXp
 arN
-bcZ
+arN
 avq
-aaa
-beC
-beW
-bfx
-bfX
-bgw
-bgT
-bfW
-bgv
-bja
+arN
+arN
+arN
+arN
+arN
 fBB
-beD
+avq
 bkY
 bmP
 bnI
@@ -62461,47 +61488,47 @@ avq
 avq
 avq
 awR
-avq
+biZ
 fGh
 arN
 arN
-aOr
-arN
-aPR
-aQZ
-aRc
+gja
+bgT
 aRP
+aQZ
+aNE
+aNE
 aSA
 aTn
-aUB
+aPL
 aUA
-aZb
+bak
 aWa
 tvL
-aXv
+aZb
 aYm
 aSE
-aZI
-bal
-bdA
-bhL
-aUH
+aSE
+aSE
+aUx
+aSE
+jey
+bfz
+aRQ
+bbh
+bfZ
+aJk
+beD
+arN
+arN
 avq
 arN
-aOr
-avq
-avq
-beD
-beX
-jgf
-bfy
-bgx
-bgU
-bfy
-bfy
-bjb
-beC
-bkS
+arN
+arN
+arN
+arN
+arN
+blZ
 bkZ
 blZ
 bnJ
@@ -62768,41 +61795,41 @@ qVL
 aQv
 aQv
 aOt
-gja
-aPR
+avq
+aRN
 aSY
 aRd
-aRQ
-aSB
+aRd
+aQo
 aTo
-aUa
+aPL
 aNA
 aSE
 aWb
 baD
-aXw
+baD
 aYn
 aSE
+bgy
+bgz
+aUx
+aSE
 aUH
-bae
-bau
-bae
-aUH
+beX
+bgB
+bbh
+bhk
+aKM
+beD
 arN
 arN
-aOr
+avq
 arN
 arN
-beC
-beY
-tbY
-bfy
-bfy
-bgV
-bfy
-bfy
-iFf
-beC
+arN
+arN
+arN
+arN
 ejk
 lnV
 blZ
@@ -63067,19 +62094,19 @@ cji
 aKK
 tTU
 dKB
-aGl
-aGl
-bbv
+biY
 vng
-aPR
+bbv
+avq
+bgZ
 aTZ
 aRe
-aRR
-aSC
+aQo
+aQo
 aTp
 aUb
 aUC
-aVn
+aWT
 aWc
 aWT
 aXx
@@ -63089,22 +62116,22 @@ aZJ
 bam
 baR
 bbl
-bbM
+bgX
 beS
-aQv
+bgR
 bdb
-aQv
-aug
-beC
-beZ
-bfz
-bfY
-bfY
-bgW
-bfy
-bfy
-bjd
-bjS
+aXH
+beV
+beD
+arN
+arN
+avq
+arN
+arN
+arN
+arN
+arN
+arN
 bis
 bla
 blZ
@@ -63368,7 +62395,7 @@ arN
 aIG
 aKL
 aLK
-aKL
+aLV
 aMZ
 aMZ
 aMZ
@@ -63376,38 +62403,38 @@ aKL
 aKL
 aQy
 aRf
-aRS
-aRH
-aTq
-aUc
+aPL
+aPL
+aPL
+aNE
 aUD
 aSE
 aUx
-aZO
-aZd
+bae
+bae
 aYp
-aZd
-aZO
-aWZ
+bae
+bae
+aUB
 baS
 bbm
-bbN
-asx
+aWl
+aXW
+bhk
+bfe
+baj
+aTq
+beD
 arN
-aJX
+arN
 avq
-asx
-beC
-bfa
-bfA
-bfZ
-bgy
-bgX
-bhP
-bhP
-bje
-bjf
-bkU
+arN
+arN
+arN
+arN
+arN
+arN
+bis
 bla
 bis
 bis
@@ -63663,7 +62690,7 @@ aaa
 aaa
 aap
 avq
-avq
+aJZ
 arN
 nqI
 arN
@@ -63677,39 +62704,39 @@ aNG
 aPc
 aMZ
 aQz
-aRg
-aRT
-aSD
-aTr
-aUd
-aUE
+aRh
+aSE
+aSE
+aSE
+aSE
+aSE
 aSE
 aUx
-aZd
-lLC
+bae
+bbf
 aYq
 pQI
 aZL
 aWZ
 bbB
 bbn
-bbM
-asx
-arN
+aWl
+aWS
+bir
 bdc
-aGl
+aVf
 aLJ
 bjf
-bjf
-bjf
-bjf
-bjf
-bgY
-etA
-bip
-bjf
-beE
-aXg
+aGl
+aGl
+aSy
+aGl
+aGl
+aGl
+aGl
+aGl
+aGl
+bma
 blb
 bma
 bma
@@ -63984,8 +63011,8 @@ aSE
 aSE
 aRU
 aUk
-aUF
 aSF
+aUk
 aWf
 aWW
 aXA
@@ -63996,25 +63023,25 @@ bao
 bsG
 bbo
 bbM
-asx
+aKS
+bfC
+beD
+aYk
+aKS
+aXp
+arN
 arN
 avq
-aMX
-asx
-beF
-bfc
-bfB
-bfD
-beC
-bgV
-bfy
-bfy
-bjg
-beD
+arN
+arN
+arN
+arN
+arN
+avq
 blZ
 blc
 bmQ
-blZ
+bis
 bqx
 blZ
 blZ
@@ -64282,37 +63309,37 @@ aPe
 aPT
 aQB
 aRi
-aSF
+aUF
 aRV
 aZD
 aUx
-aUG
+aSE
 aVo
-aWg
+aXq
 aWV
 aXB
 aYs
 aZg
 aZN
-bap
+aWZ
 bbB
-aYv
-bbM
-asx
+beW
+aNc
+aRg
+bfV
+aUE
+hug
+bjQ
+beF
+arN
 arN
 avq
-bdB
-avs
-beF
-bfd
-bfC
-bfe
-bgz
-bgV
-bfy
-bfy
+arN
+arN
+arN
+arN
 bjh
-beD
+avq
 jXF
 bld
 bmR
@@ -64571,50 +63598,50 @@ avq
 avq
 aHO
 fmV
-aID
-aID
-aJZ
-aID
-aID
+avq
+avq
+aLR
+aNb
+aNb
 aMt
-aNc
+aMs
 aNb
 aNb
 aPf
 aKL
-aTt
+aJm
 aRj
-aTt
+aMu
 aTt
 aTt
 aUe
-aQH
+bjl
 aQH
 aUH
-aZO
+bae
 aXC
 aIq
 aZh
-aZO
+bae
 aWZ
 bbB
-aYv
+beW
 bbM
-asx
+bji
+bfy
+gbs
+aUa
+bfy
+beF
+arN
 arN
 avq
-aOp
 arN
-beF
-bfe
-bfD
-bfB
-beC
-bgZ
-gbs
-bfy
-bji
-beD
+arN
+arN
+arN
+arN
+avq
 aYt
 ble
 bmS
@@ -64873,12 +63900,12 @@ avq
 aGk
 arN
 nqI
-aID
-aJk
+arO
+avq
 aKa
-aKM
+aKR
 aLO
-aJm
+aNb
 aNd
 aNb
 aNb
@@ -64902,21 +63929,21 @@ baq
 baV
 bbq
 bbM
-asx
+bhe
+bfy
+bfy
+bfy
+baZ
+beF
+arN
 arN
 avq
-hug
 arN
-beF
-beF
-beD
-beC
-beC
-bgV
-bfy
-bfy
-bfy
-beD
+arN
+arN
+arN
+arN
+avq
 bgF
 blg
 bnE
@@ -65175,12 +64202,12 @@ aFu
 arN
 arN
 nqI
-aID
-aJl
-aKb
-aHF
-aLP
-aID
+bgc
+avq
+aKL
+aNb
+aLR
+aNb
 aNe
 aNJ
 aOu
@@ -65197,28 +64224,28 @@ aQH
 aWj
 aWZ
 aXE
-aWU
 aYv
+bgV
 uhm
 bbB
 aYv
 bbr
 bbM
-asx
+tbY
+bfD
+bfy
+bfD
+bfy
+beF
+arN
 arN
 avq
 arN
 arN
 arN
 arN
-beD
-bgb
-bfX
-bhb
-bfX
-bfx
 bjk
-beD
+avq
 bjT
 blg
 bjm
@@ -65478,11 +64505,11 @@ aGl
 aGl
 kYO
 aIE
-aID
-aKc
-aKO
-aLQ
-aID
+bah
+aKL
+aNb
+aLR
+aNb
 aNf
 aNK
 aOw
@@ -65497,30 +64524,30 @@ aVu
 aTu
 aQH
 aWk
-aWZ
-aXE
-aYv
-aYv
-aYv
+aXv
+bjd
+aXg
+aLQ
+aKc
 aZF
 aVq
 bbs
 bbM
-asx
-aGm
-avq
+bgA
 bdD
+bgS
+bdD
+bjQ
+beF
+arN
+arN
+avq
 arN
 arN
 arN
-beD
-bgc
-bfx
-bhc
-bfx
-bir
-bjl
-beD
+arN
+arN
+avq
 bjU
 blk
 bjm
@@ -65777,14 +64804,14 @@ aDK
 aEz
 avq
 aGm
-aGm
+arN
 oVW
 kJs
-aID
-aKd
-aKP
+aUd
+aKL
+aNb
 aLR
-aID
+aNb
 aNg
 aNL
 aOx
@@ -65796,33 +64823,33 @@ aQS
 aQS
 aQS
 aQS
+etA
 aUI
-aQH
-bbM
-aXW
+bbL
+aWl
 aYw
+bgW
 aWl
 aWl
-aYP
 aZP
-aWl
+bgW
 aWl
 bbM
 bch
+beC
+beC
+beC
+beF
+beF
+arN
+arN
 avq
-aYy
-aYy
-aYy
-arN
-arN
-beD
-beD
-bgA
-bhd
-beD
-beD
-beD
-beD
+avq
+avq
+avq
+avq
+avq
+avq
 bjV
 blk
 bjm
@@ -66082,11 +65109,11 @@ azA
 azA
 azA
 qVQ
-aID
-qNK
-aKQ
-aLS
-aMu
+bdA
+aKL
+aNb
+aLR
+aNb
 aNh
 aNb
 jsR
@@ -66100,28 +65127,28 @@ aTw
 aTw
 aTw
 aTw
+aSI
 aTw
-tXt
 aXG
-aTw
-aTw
+bal
+bfX
 mhg
 jHm
-aTw
+aZE
 aTw
 bbO
 bbC
 aTw
-aTw
+bgU
 bdE
 aYy
+bgc
 arN
 arN
 arN
-bbN
-bgB
-bhe
-bhS
+arN
+arN
+bis
 bis
 bis
 bis
@@ -66384,11 +65411,11 @@ aGn
 aGY
 azA
 aIF
-aJm
+aGl
 aKf
 aKR
 aLT
-aMv
+aNb
 aNi
 aNM
 aOy
@@ -66420,10 +65447,10 @@ aYy
 aMX
 arN
 arN
-bbN
-bgC
-bhf
-bhT
+arN
+arN
+asx
+bis
 bit
 bit
 aKh
@@ -66686,11 +65713,11 @@ aFB
 aFB
 aHP
 gKv
-aID
-aID
-aKS
-aLU
-aID
+arN
+aKL
+aKL
+aKL
+aKL
 aIz
 aNN
 aOz
@@ -66988,10 +66015,10 @@ aFB
 aGZ
 azA
 gKv
-arO
+arN
 aYy
 aKT
-aLV
+aTw
 aMw
 aNk
 aNO
@@ -67002,7 +66029,7 @@ aQG
 aLX
 aRX
 aLX
-aYy
+aYP
 aYy
 aYy
 aYy
@@ -67016,8 +66043,8 @@ bar
 aYy
 aYy
 aYy
-aYy
-aLX
+aYP
+bkS
 aLX
 bdH
 seM
@@ -67292,7 +66319,7 @@ azA
 gKv
 aJn
 aTx
-aKU
+aLW
 aLW
 aOB
 aNl
@@ -67319,7 +66346,7 @@ aZj
 aZj
 bbP
 aYy
-aLX
+bip
 aLX
 bdI
 bcE
@@ -67620,7 +66647,7 @@ azU
 azU
 azU
 bbQ
-aYy
+aWU
 bcF
 aLX
 aLX
@@ -67630,7 +66657,7 @@ bff
 aLX
 bge
 bgE
-aXH
+aLX
 aLX
 aLX
 bjo
@@ -67932,7 +66959,7 @@ aYy
 aYy
 aYy
 aYy
-aXH
+aLX
 aLX
 aLX
 bjo
@@ -68234,7 +67261,7 @@ aZj
 bfF
 bgf
 bgH
-bhk
+gRh
 bAS
 gRh
 bjo
@@ -68534,9 +67561,9 @@ mHx
 aRq
 azU
 azP
-bgg
-bgG
-bhl
+bfL
+bgH
+bho
 bhm
 bhm
 bjo
@@ -69101,8 +68128,8 @@ azA
 azA
 azA
 azA
-aIG
-aJo
+aZI
+bfc
 ayR
 aKY
 awm
