@@ -8,7 +8,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 
 /obj/machinery/communications_dish/transception
 	name = "Transception Array"
-	desc = "Sends and receives both energy and matter over considerable distance. Figuratively, but hopefully not literally, duct-taped together."
+	desc = "Sends and receives both energy and matter over a considerable distance. Questionably safe."
 	icon = 'icons/obj/machines/transception.dmi'
 	icon_state = "array"
 	bound_height = 64
@@ -500,6 +500,9 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 		h2 { font-size: 130%; }
 		h3 { font-size: 110%; margin-top: 1em; }
 	</style>"}
+
+	var/pending_crate_ct = length(shippingmarket.pending_crates)
+	HTML += "PENDING CARGO ITEMS: [pending_crate_ct]<br>"
 
 	src.build_formatted_list()
 	if (src.formatted_list)
