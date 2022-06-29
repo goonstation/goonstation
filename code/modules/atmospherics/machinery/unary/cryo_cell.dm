@@ -352,7 +352,7 @@
 		if (src.status & (NOPOWER|BROKEN))
 			boutput(user, "<span class='alert'>\the [src] is broken.</span>")
 			return
-		if (!(can_act(target) && can_reach(user, src) && can_reach(user, target)))
+		if (!(can_act(user) && can_reach(user, src) && can_reach(user, target)))
 			return
 		if (!ishuman(target))
 			boutput(user, "<span class='alert'>You can't seem to fit [target == user ? "yourself" : "[target]"] into \the [src].</span>")
@@ -361,7 +361,7 @@
 			user.show_text("The cryo tube is already occupied.", "red")
 			return
 
-		logTheThing("combat", user, target, "shoves [user == target ? "themselves" : constructTarget(target,"combat")] into [src] containing [log_reagents(src.beaker)] at [log_loc(src)].")
+		logTheThing("combat", user, target, "shoves [user == target ? "themselves" : constructTarget(target,"combat")] into [src] containing [src.beaker ? log_reagents(src.beaker) : "(no beaker)"] at [log_loc(src)].")
 		target.remove_pulling()
 		src.occupant = target
 		src.occupant.set_loc(src)

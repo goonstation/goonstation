@@ -749,9 +749,6 @@ proc/get_angle(atom/a, atom/b)
 	for(var/mob/new_player/M in mobs)
 		. += M
 		LAGCHECK(LAG_REALTIME)
-	for(var/mob/living/carbon/wall/M in mobs)
-		. += M
-		LAGCHECK(LAG_REALTIME)
 	for(var/mob/living/silicon/ghostdrone/M in mobs)
 		. += M
 		LAGCHECK(LAG_REALTIME)

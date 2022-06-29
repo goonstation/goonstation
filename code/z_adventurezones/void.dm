@@ -20,20 +20,23 @@ CONTENTS:
 	sound_loop = 'sound/ambience/spooky/Void_Song.ogg'
 	ambient_light = rgb(6.9, 4.20, 6.9)
 
-	New()
-		..()
-		SPAWN(1 SECOND)
-			process()
+/area/crunch/New()
+	. = ..()
+	START_TRACKING_CAT(TR_CAT_AREA_PROCESS)
 
-	proc/process()
-		while(current_state < GAME_STATE_FINISHED)
-			sleep(10 SECONDS)
-			if (current_state == GAME_STATE_PLAYING)
-				if(!played_fx_2 && prob(10))
-					sound_fx_2 = pick('sound/ambience/spooky/Void_Hisses.ogg','sound/ambience/spooky/Void_Screaming.ogg','sound/ambience/spooky/Void_Wail.ogg','sound/ambience/spooky/Void_Calls.ogg')
-					for(var/mob/M in src)
-						if (M.client)
-							M.client.playAmbience(src, AMBIENCE_FX_2, 50)
+/area/crunch/disposing()
+	STOP_TRACKING_CAT(TR_CAT_AREA_PROCESS)
+	. = ..()
+
+/area/crunch/area_process()
+	if(prob(20))
+		src.sound_fx_2 = pick('sound/ambience/spooky/Void_Hisses.ogg',\
+		'sound/ambience/spooky/Void_Screaming.ogg',\
+		'sound/ambience/spooky/Void_Wail.ogg',\
+		'sound/ambience/spooky/Void_Calls.ogg')
+
+		for(var/mob/living/carbon/human/H in src)
+			H.client?.playAmbience(src, AMBIENCE_FX_2, 50)
 
 /turf/unsimulated/wall/void
 	name = "dense void"

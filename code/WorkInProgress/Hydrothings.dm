@@ -430,7 +430,7 @@ obj/item/gnomechompski/elf
 		usrverbs -= /proc/owl_slam
 
 	attack_self(mob/user as mob)
-		var/input = alert("Would you like to attempt to absorb the core into your body?","Hoot or not to hoot.", "Yes","No")
+		var/input = tgui_alert(user, "Would you like to attempt to absorb the core into your body?", "Hoot or not to hoot.", list("Yes", "No"))
 		if (input == "Yes" && chosen == 0)
 			chosen = 1
 			user.visible_message("<span class='alert'><b>[user] absorbs the [src] into their body!")
@@ -725,43 +725,14 @@ obj/item/gnomechompski/elf
 	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 	anchored = 1
 	density = 1
-	last_flash = 0
 	flash_prob = 80
-
-	flash()
-		if (src.last_flash && world.time < src.last_flash + 10)
-			return
-
-		playsound(src.loc, "sound/voice/animal/hoot.ogg", 70, 1)
-		flick("smallowl-flap", src)
-		src.last_flash = world.time
-
-	HasProximity(atom/movable/AM as mob|obj)
-		if (src.last_flash && world.time < src.last_flash + 10)
-			return
-
-		if (iscarbon(AM))
-			var/mob/living/carbon/M = AM
-			if ((M.m_intent != "walk") && (src.anchored))
-				if (M.client) // I can't take it anymore I can't take the destiny owls reacting to the monkey it's driving me mad
-					if (prob(flash_prob))
-						src.flash()
-
-	attackby(obj/item/W, mob/user)
-		if (iswrenchingtool(W))
-			add_fingerprint(user)
-			src.anchored = !src.anchored
-
-			if (!src.anchored)
-				user.show_message(text("<span class='alert'>[src] can now be moved.</span>"))
-
-			else if (src.anchored)
-				user.show_message(text("<span class='alert'>[src] is now secured.</span>"))
+	base_state = "smallowl"
 
 	attack_hand(user)
 		if (src.anchored)
-			if (src.last_flash && world.time < src.last_flash + 10)
+			if(!ON_COOLDOWN(src, "flash", 5 SECONDS))
 				return
+
 			name = "Not so Disabled Animatronic Owl"
 			src.flash()
 

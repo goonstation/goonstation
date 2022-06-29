@@ -96,7 +96,7 @@ Contains:
 						continue
 				else if(isobj(A))
 					var/obj/O = A
-					if(O.level != 1)
+					if(O.level != 1 && !istype(O, /obj/disposalpipe)) // disposal pipes handled below
 						continue
 				var/image/img = image(A.icon, icon_state=A.icon_state, dir=A.dir)
 				img.plane = PLANE_SCREEN_OVERLAYS
@@ -105,6 +105,9 @@ Contains:
 				img.alpha = 100
 				img.appearance_flags = RESET_ALPHA | RESET_COLOR
 				display.overlays += img
+
+			if (T.disposal_image)
+				display.overlays += T.disposal_image
 
 			if( length(display.overlays))
 				display.plane = PLANE_SCREEN_OVERLAYS
@@ -686,8 +689,8 @@ that cannot be itched
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
 
 	attack_self(mob/user)
-		var/menuchoice = alert("What would you like to do?",,"Ticket","Nothing")
-		if (menuchoice == "Nothing")
+		var/menuchoice = tgui_alert(user, "What would you like to do?", "Ticket writer", list("Ticket", "Nothing"))
+		if (!menuchoice || menuchoice == "Nothing")
 			return
 		else if (menuchoice == "Ticket")
 			src.ticket(user)

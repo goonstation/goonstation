@@ -54,7 +54,7 @@ mob/verb/checkrewards()
 						if(rewardDatum.claimedNumbers.Find(usr.key) && rewardDatum.claimedNumbers[usr.key] >= rewardDatum.claimPerRound)
 							claimsLeft = 0
 					if(claimsLeft)
-						if(alert("Would you like to claim this reward?",,"Yes","No") == "Yes")
+						if(tgui_alert(usr, "Would you like to claim this reward?", "Claim reward", list("Yes", "No")) == "Yes")
 							if(rewardDatum.claimPerRound > 0)
 								if(rewardDatum.claimedNumbers.Find(usr.key) && rewardDatum.claimedNumbers[usr.key] >= rewardDatum.claimPerRound)
 									return

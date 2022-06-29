@@ -38,7 +38,7 @@
 	if(..())
 		return
 	src.add_dialog(user)
-	var/dat = "Located AI Units<BR><BR>"
+	var/list/dat = list("Located AI Units<BR><BR>")
 	for_by_tcl(A, /mob/living/silicon/ai)
 		dat += "[A.name] |"
 		if(A.stat)
@@ -112,7 +112,7 @@
 			found_drones = TRUE
 		dat += "[drone] <A href='?src=\ref[src];gib=drone;bot=\ref[drone]'>Kill Switch *Swipe ID*</A><BR>"
 
-	user.Browse(dat, "window=computer;size=400x500")
+	user.Browse(dat.Join(), "window=computer;size=400x500")
 	onclose(user, "computer")
 	return
 

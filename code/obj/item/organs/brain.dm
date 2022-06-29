@@ -28,11 +28,11 @@
 
 	Eat(mob/M, mob/user)
 		if(M == user)
-			if(alert(user, "Are you sure you want to eat [src]?", "Eat brain?", "Yes", "No") == "Yes")
+			if(tgui_alert(user, "Are you sure you want to eat [src]?", "Eat brain?", list("Yes", "No")) == "Yes")
 				logTheThing("combat", user, null, "tries to eat [src] (owner's ckey [owner ? owner.ckey : null]).")
 				return ..()
 		else
-			if(alert(user, "Are you sure you want to feed [src] to [M]?", "Feed brain?", "Yes", "No") == "Yes")
+			if(tgui_alert(user, "Are you sure you want to feed [src] to [M]?", "Feed brain?", list("Yes", "No")) == "Yes")
 				logTheThing("combat", user, null, "tries to feed [src] (owner's ckey [owner ? owner.ckey : null]) to [M].")
 				return ..()
 		return 0
@@ -70,9 +70,9 @@
 
 			var/fluff = pick("insert", "shove", "place", "drop", "smoosh", "squish")
 
-			H.tri_message("<span class='alert'><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] head!</span>",\
-			user, "<span class='alert'>You [fluff] [src] into [user == H ? "your" : "[H]'s"] head!</span>",\
-			H, "<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your head!</span>")
+			user.tri_message(H, "<span class='alert'><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] head!</span>",\
+				"<span class='alert'>You [fluff] [src] into [user == H ? "your" : "[H]'s"] head!</span>",\
+				"<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your head!</span>")
 
 			if (user.find_in_hand(src))
 				user.u_equip(src)

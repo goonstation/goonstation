@@ -234,7 +234,7 @@
 			boutput(holder.owner, "<span class='alert'>There are no minds eligible for this ability. We need to absorb another.</span>")
 			return 1
 
-		var/use_mob_name = tgui_input_list("Select the mind to transfer into the legworm:", "Select Mind", sortList(eligible))
+		var/use_mob_name = tgui_input_list(holder.owner, "Select the mind to transfer into the legworm:", "Select Mind", sortList(eligible))
 		if (!use_mob_name)
 			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
 			return 1
@@ -442,7 +442,7 @@
 			boutput(holder.owner, "<span class='alert'>There are no minds eligible for this ability.</span>")
 			return 1
 
-		var/use_mob_name = tgui_input_list("Select the mind to silence:", "Select Mind", sortList(eligible))
+		var/use_mob_name = tgui_input_list(holder.owner, "Select the mind to silence:", "Select Mind", sortList(eligible))
 		if (!use_mob_name)
 			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
 			return 1

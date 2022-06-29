@@ -24,13 +24,13 @@
 	desc = "Helps protect against vacuum."
 	seal_hair = 1
 	path_prot = 0
-	permeability_coefficient = 0.2
 
 	setupProperties()
 		..()
 		setProperty("coldprot", 20)
 		setProperty("heatprot", 5)
 		setProperty("viralprot", 50)
+		setProperty("chemprot", 20)
 		setProperty("disorient_resist_eye", 8)
 		setProperty("disorient_resist_ear", 8)
 		setProperty("space_movespeed", 0.2)
@@ -393,12 +393,12 @@
 			name = "specialist health monitor"
 			icon_state = "syndie_specialist"
 			item_state = "syndie_specialist"
-			permeability_coefficient = 0.01
 			c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 
 			setupProperties()
 				..()
 				setProperty("viralprot", 50)
+				setProperty("chemprot", 30)
 
 			equipped(var/mob/user, var/slot)
 				..()
@@ -439,7 +439,7 @@
 
 /obj/item/clothing/head/helmet/space/ntso //recoloured nuke class suits for ntso vs syndicate specialist
 	name = "NT combat helmet"
-	desc = "A modified combat helmet for Nanotrasen paramilitary forces."
+	desc = "A modified combat helmet for Nanotrasen security forces."
 	icon_state = "ntso_specialist"
 	item_state = "ntso_specialist"
 

@@ -169,7 +169,7 @@
 			return 1
 		return ..()
 
-	Move(NewLoc, direct) //just a copy paste from ghost move
+	Move(NewLoc, direct) //just a copy paste from ghost move // YEAH IT SURE FUCKING IS
 		if(!canmove) return
 
 		if (NewLoc && isrestrictedz(src.z) && !restricted_z_allowed(src, NewLoc) && !(src.client && src.client.holder))
@@ -196,6 +196,8 @@
 			src.x++
 		if((direct & WEST) && src.x > 1)
 			src.x--
+
+		. = ..()
 
 	is_active()
 		return 0

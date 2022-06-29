@@ -111,6 +111,11 @@
 	src.flock.removeDrone(src)
 	src.flock = null
 
+/mob/living/critter/flock/projCanHit(datum/projectile/P)
+	if(istype(P, /datum/projectile/energy_bolt/flockdrone))
+		return FALSE
+	return ..()
+
 /mob/living/critter/flock/bullet_act(var/obj/projectile/P)
 	if(istype(P.proj_data, /datum/projectile/energy_bolt/flockdrone))
 		src.visible_message("<span class='notice'>[src] harmlessly absorbs [P].</span>")
@@ -426,16 +431,16 @@
 		var/mob/living/critter/flock/C
 		C = target
 		if(istype(C))
-			F.tri_message("<span class='notice'>[owner] begins spraying glowing fibers onto [C].</span>",
-				F, "<span class='notice'>You begin repairing [C.real_name]. You will both need to stay still for this to work.</span>",
-				target, "<span class='notice'>[F.real_name] begins repairing you. You will both need to stay still for this to work.</span>",
+			F.tri_message(C, "<span class='notice'>[owner] begins spraying glowing fibers onto [C].</span>",
+				"<span class='notice'>You begin repairing [C.real_name]. You will both need to stay still for this to work.</span>",
+				"<span class='notice'>[F.real_name] begins repairing you. You will both need to stay still for this to work.</span>",
 				"You hear hissing and spraying.")
 			if (C.is_npc)
 				C.ai.wait()
 		else
-			F.tri_message("<span class='notice'>[owner] begins spraying glowing fibers onto [target].</span>",
-				F, "<span class='notice'>You begin repairing [target]. You will need to stay still for this to work.</span>",
-				null, null, "You hear hissing and spraying.")
+			F.visible_message("<span class='notice'>[owner] begins spraying glowing fibers onto [target].</span>",
+				"<span class='notice'>You begin repairing [target]. You will need to stay still for this to work.</span>",
+				"You hear hissing and spraying.")
 		playsound(target, "sound/misc/flockmind/flockdrone_quickbuild.ogg", 50, 1)
 
 	onEnd()
@@ -485,7 +490,7 @@
 /datum/action/bar/flock_entomb
 	id = "flock_entomb"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	duration = 6 SECONDS
+	duration = 4 SECONDS
 	resumable = FALSE
 
 	var/atom/target
@@ -500,8 +505,7 @@
 
 	onUpdate()
 		..()
-		var/mob/living/critter/flock/F = owner
-		if (target == null || owner == null || !in_interact_range(owner, target) || !F.can_afford(FLOCK_CAGE_COST))
+		if (target == null || owner == null || !in_interact_range(owner, target))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -510,10 +514,10 @@
 		if(target)
 			var/mob/living/critter/flock/F = owner
 			if(F)
-				F.tri_message("<span class='notice'>[owner] begins forming a cuboid structure around [target].</span>",
-					F, "<span class='notice'>You begin imprisoning [target]. You will both need to stay still for this to work.</span>",
-					target, "<span class='alert'>[F] is forming a structure around you!</span>",
-					"You hear strange building noises.")
+				F.tri_message(target, "<span class='notice'>[owner] begins forming a cuboid structure around [target].</span>",
+						"<span class='notice'>You begin imprisoning [target]. You will need to stay still for this to work.</span>",
+						"<span class='alert'>[F] is forming a structure around you!</span>",
+						"You hear strange building noises.")
 				if(istype(target,/mob/living))
 					var/mob/living/M = target
 					M.was_harmed(F, null, "flock", INTENT_DISARM)
@@ -537,7 +541,6 @@
 		if(F && target && in_interact_range(owner, target))
 			var/obj/flock_structure/cage/cage = new /obj/flock_structure/cage(target.loc, target, F.flock)
 			cage.visible_message("<span class='alert'>[cage] forms around [target], entombing them completely!</span>")
-			F.pay_resources(FLOCK_CAGE_COST)
 			playsound(target, "sound/misc/flockmind/flockdrone_build_complete.ogg", 70, 1)
 
 ///

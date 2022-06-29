@@ -60,7 +60,7 @@
 		return {"<span class='bold'>Status:</span> [status].
 	<br><span class='bold'>Gnesis Tank Level:</span> [src.reagents.total_volume]/[fluid_level_max]."}
 
-	process()
+	process(mult)
 		if(!src.flock)//if it dont exist it off
 			powered = FALSE
 			src.compute = 0
@@ -81,7 +81,7 @@
 		if(src.reagents.total_volume < src.reagents.maximum_volume)
 			if(src.flock.can_afford_compute(base_compute+fluid_gen_cost))
 				src.compute = -(base_compute + fluid_gen_cost)
-				src.reagents.add_reagent(fluid_gen_type, fluid_gen_amt)
+				src.reagents.add_reagent(fluid_gen_type, fluid_gen_amt * mult)
 
 		if(src.reagents.total_volume >= fluid_shot_amt)
 			//shamelessly stolen from deployable_turret.dm

@@ -292,9 +292,9 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 
 	attack(mob/M, mob/user)
 		if (src.popup_win && (src.no_spam + 25) <= ticker.round_elapsed_ticks)
-			user.tri_message("<span class='alert'><b>[user]</b> shoves [src] in [user == M ? "[his_or_her(user)] own" : "[M]'s"] face!</span>",\
-			user, "<span class='alert'>You shove [src] in [user == M ? "your own" : "[M]'s"] face!</span>",\
-			M, "<span class='alert'>[M == user ? "You shove" : "<b>[user]</b> shoves"] [src] in your[M == user ? " own" : null] face!</span>")
+			user.tri_message(M, "<span class='alert'><b>[user]</b> shoves [src] in [user == M ? "[his_or_her(user)] own" : "[M]'s"] face!</span>",\
+				"<span class='alert'>You shove [src] in [user == M ? "your own" : "[M]'s"] face!</span>",\
+				"<span class='alert'>[M == user ? "You shove" : "<b>[user]</b> shoves"] [src] in your[M == user ? " own" : null] face!</span>")
 			if (M.client)
 				src.show_popup_win(M.client)
 			src.no_spam = ticker.round_elapsed_ticks

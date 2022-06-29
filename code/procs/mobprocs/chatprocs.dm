@@ -899,11 +899,16 @@
 				assoc_maptext.show_to(src.client)
 
 			if (isliving(src))
-				for (var/mob/dead/target_observer/observer in src:observers)
+				for (var/mob/dead/target_observer/M in src:observers)
 					if(!just_maptext)
-						boutput(observer, msg, group)
-					if(assoc_maptext && observer.client && !observer.client.preferences.flying_chat_hidden)
-						assoc_maptext.show_to(observer.client)
+						if (M.client?.holder && !M.client.player_mode)
+							if (M.mind)
+								msg = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[msg]</span>"
+							boutput(M, msg)
+						else
+							boutput(M, msg, group)
+					if(assoc_maptext && M.client && !M.client.preferences.flying_chat_hidden)
+						assoc_maptext.show_to(M.client)
 
 // Show a message to all mobs in sight of this one
 // This would be for visible actions by the src mob
@@ -931,19 +936,29 @@
 			continue
 		M.show_message(message, 1, blind_message, 2, group)
 
-// for things where there are three parties that should recieve different messages (specifically made for surgery):
-// viewer_message, the thing visible to everyone except specified targets
-// first_message, the thing visible to first_target
-// second_message, the thing visible to second_target
-// blind_message (optional) is what blind people will hear e.g. "You hear something!"
-/mob/proc/tri_message(var/viewer_message, var/first_target, var/first_message, var/second_target, var/second_message, var/blind_message)
-	for (var/mob/M in AIviewers(src))
+/**
+ * Used in messages with three separate parties that should receive different messages
+ * second_target - the second individual involved in the interaction, with the source atom being the first individual
+ * viewer_message - the message shown to observers that aren't specified targets
+ * first_message - the message shown to the atom this proc is called from
+ * second_message - the message shown to second_target
+ * blind_message (optional) is what blind people will hear, e.g. "You hear something!"
+ * Observers in range of either target will see the message, so the proc can be called on either target
+ */
+/atom/proc/tri_message(mob/second_target, viewer_message, first_message, second_message, blind_message)
+	var/list/source_viewers = AIviewers(Center = src)
+	var/list/target_viewers = AIviewers(Center = second_target)
+	// get a list of all viewers within range of either target, discarding duplicates
+	for (var/atom/A in target_viewers)
+		if (!source_viewers.Find(A))
+			source_viewers.Add(A)
+	for (var/mob/M in source_viewers)
 		if (!M.client)
 			continue
 		var/msg = viewer_message
-		if (first_message && M == first_target)
+		if (first_message && M == src)
 			msg = first_message
-		if (second_message && M == second_target && M != first_target)
+		if (second_message && M == second_target && M != src)
 			msg = second_message
 		M.show_message(msg, 1, blind_message, 2)
 		//DEBUG_MESSAGE("<b>[M] recieves message: &quot;[msg]&quot;</b>")

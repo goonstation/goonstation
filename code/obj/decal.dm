@@ -286,6 +286,15 @@ obj/decal/fakeobjects/teleport_pad
 	icon_state = "door0"
 	anchored = 1
 
+/obj/decal/fakeobjects/airlock_broken
+	name = "rusted airlock"
+	desc = "Rust has rendered this airlock useless."
+	icon = 'icons/obj/doors/Door1.dmi';
+	icon_state = "doorl";
+	anchored = 1
+	density = 1
+	opacity = 1
+
 /obj/decal/fakeobjects/lighttube_broken
 	name = "shattered light tube"
 	desc = "Something has broken this light."
@@ -310,8 +319,8 @@ obj/decal/fakeobjects/teleport_pad
 /obj/decal/fakeobjects/shuttlethruster
 	name = "propulsion unit"
 	desc = "A small impulse drive that moves the shuttle."
-	icon = 'icons/turf/shuttle.dmi'
-	icon_state = "propulsion"
+	icon = 'icons/obj/shuttle.dmi'
+	icon_state = "alt_propulsion"
 	anchored = 1
 	density = 1
 	opacity = 0
@@ -319,7 +328,7 @@ obj/decal/fakeobjects/teleport_pad
 /obj/decal/fakeobjects/shuttleweapon
 	name = "weapons unit"
 	desc = "A weapons system for shuttles and similar craft."
-	icon = 'icons/turf/shuttle.dmi'
+	icon = 'icons/obj/shuttle.dmi'
 	icon_state = "shuttle_laser"
 	anchored = 1
 	density = 1
@@ -355,7 +364,7 @@ obj/decal/fakeobjects/teleport_pad
 /obj/decal/fakeobjects/shuttleengine
 	name = "engine unit"
 	desc = "A generator unit that uses complex technology."
-	icon = 'icons/turf/shuttle.dmi'
+	icon = 'icons/obj/shuttle.dmi'
 	icon_state = "heater"
 	anchored = 1
 	density = 1

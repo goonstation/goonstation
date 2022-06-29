@@ -19963,7 +19963,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 8
 	},
-/obj/storage/secure/closet/brig/automatic/genpop_s,
+/obj/storage/secure/closet/brig_automatic/genpop_s,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "aJE" = (
@@ -56966,21 +56966,21 @@
 	},
 /area/station/security/main)
 "cfh" = (
-/obj/storage/secure/closet/brig/automatic/genpop_n,
+/obj/storage/secure/closet/brig_automatic/genpop_n,
 /obj/machinery/light{
 	dir = 8
 	},
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "cfi" = (
-/obj/storage/secure/closet/brig/automatic/minibrig,
+/obj/storage/secure/closet/brig_automatic/minibrig,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
 /turf/simulated/floor/grime,
 /area/station/security/checkpoint/cargo)
 "cfj" = (
-/obj/storage/secure/closet/brig/automatic/solitary,
+/obj/storage/secure/closet/brig_automatic/solitary,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;

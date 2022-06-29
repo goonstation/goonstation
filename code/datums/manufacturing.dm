@@ -568,6 +568,33 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Machinery"
 
+/datum/manufacture/shieldgen
+	name = "Energy-Shield Gen."
+	item_paths = list("MET-2","CON-1","CRY-1")
+	item_amounts = list(20,10,5)
+	item_outputs = list(/obj/machinery/shieldgenerator/energy_shield/nocell)
+	time = 60 SECONDS
+	create = 1
+	category = "Machinery"
+
+/datum/manufacture/doorshieldgen
+	name = "Door-Shield Gen."
+	item_paths = list("MET-2","CON-1")
+	item_amounts = list(20,15)
+	item_outputs = list(/obj/machinery/shieldgenerator/energy_shield/doorlink/nocell)
+	time = 60 SECONDS
+	create = 1
+	category = "Machinery"
+
+/datum/manufacture/meteorshieldgen
+	name = "Meteor-Shield Gen."
+	item_paths = list("MET-1","MET-2","CON-1")
+	item_amounts = list(10,10,10)
+	item_outputs = list(/obj/machinery/shieldgenerator/meteorshield/nocell)
+	time = 30 SECONDS
+	create = 1
+	category = "Machinery"
+
 //// cogwerks - gas extraction stuff
 
 
@@ -1618,10 +1645,70 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Component"
 
+/******************** Science **************************/
 
+/datum/manufacture/biosuit
+	name = "Biosuit Set"
+	item_paths = list("FAB-1","CRY-1")
+	item_amounts = list(5,2)
+	item_outputs = list(/obj/item/clothing/suit/bio_suit,/obj/item/clothing/head/bio_hood)
+	time = 10 SECONDS
+	create = 1
+	category = "Clothing"
 
+/datum/manufacture/spectrogoggles
+	name = "Spectroscopic Scanner Goggles"
+	item_paths = list("MET-1","CRY-1")
+	item_amounts = list(1,2)
+	item_outputs = list(/obj/item/clothing/glasses/spectro)
+	time = 20 SECONDS
+	create = 1
+	category = "Clothing"
 
+/datum/manufacture/gasmask
+	name = "Gas Mask"
+	item_paths = list("FAB-1", "MET-2", "CRY-1")
+	item_amounts = list(2,4,2)
+	item_outputs = list(/obj/item/clothing/mask/gas)
+	time = 5 SECONDS
+	create = 1
+	category = "Clothing"
 
+/datum/manufacture/dropper
+	name ="Dropper"
+	item_paths = list("INS-1", "CRY-1")
+	item_amounts = list(1,2)
+	item_outputs = list(/obj/item/reagent_containers/dropper)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
+
+/datum/manufacture/mechdropper
+	name ="Mechanical Dropper"
+	item_paths = list("MET-1", "CON-1")
+	item_amounts = list(3,3)
+	item_outputs = list(/obj/item/reagent_containers/dropper/mechanical)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
+
+/datum/manufacture/gps
+	name ="Space GPS"
+	item_paths = list("MET-1", "CON-1")
+	item_amounts = list(1,1)
+	item_outputs = list(/obj/item/device/gps)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
+
+/datum/manufacture/reagentscanner
+	name ="Reagent Scanner"
+	item_paths = list("MET-1", "CON-1", "CRY-1")
+	item_amounts = list(2,2,1)
+	item_outputs = list(/obj/item/device/reagentscanner)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
 // Mining Gear
 #ifndef UNDERWATER_MAP
 /datum/manufacture/mining_magnet

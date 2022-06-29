@@ -101,8 +101,6 @@
 		to_add["Total Moles|moles"] += sample["Total Moles|moles"]
 		to_add["Nitrous Oxide|mols"] += sample["Nitrous Oxide|mols"]
 		to_add["Oxygen Agent B|mols"] += sample["Oxygen Agent B|mols"]
-		to_add["Volatile Fuel|mols"] += sample["Volatile Fuel|mols"]
-		to_add["Other Gasses|mols"] += sample["Other Gasses|mols"]
 		. += list(to_add)
 
 /obj/machinery/power/reactor_stats/proc/sample_air(var/datum/gas_mixture/G, var/not_archived)
@@ -127,10 +125,8 @@
 					.["Nitrous Oxide|mols"] = T.moles
 				else if(istype(T, /datum/gas/oxygen_agent_b))
 					.["Oxygen Agent B|mols"] = T.moles
-				else if(istype(T, /datum/gas/volatile_fuel))
-					.["Volatile Fuel|mols"] = T.moles
-				else
-					.["Other Gasses|mols"] = T.moles
+				// else
+				// 	.["Other Gasses|mols"] = T.moles
 
 	else
 		if(G?.ARCHIVED(oxygen)) .["Oxygen|mols"] = G.ARCHIVED(oxygen)
@@ -152,10 +148,8 @@
 					.["Nitrous Oxide|mols"] = T.ARCHIVED(moles)
 				else if(istype(T, /datum/gas/oxygen_agent_b))
 					.["Oxygen Agent B|mols"] = T.ARCHIVED(moles)
-				else if(istype(T, /datum/gas/volatile_fuel))
-					.["Volatile Fuel|mols"] = T.ARCHIVED(moles)
-				else
-					.["Other Gasses|mols"] = T.ARCHIVED(moles)
+				// else
+				// 	.["Other Gasses|mols"] = T.ARCHIVED(moles)
 
 
 /obj/machinery/power/reactor_stats/proc/sample_teg()

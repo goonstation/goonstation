@@ -51,6 +51,7 @@
 	<a href='?src=\ref[src];action=vampthrall'>Vamp Thrall</a> |
 	<a href='?src=\ref[src];action=vampzombie'>Vamp Zombie</a> |
 	<br><a href='?src=\ref[src];action=changeling'>Changeling</a> |
+	<a href='?src=\ref[src];action=changeling_absorbed'>Changeling victim</a> |
 	<a href='?src=\ref[src];action=handspider'>Handspider</a> |
 	<a href='?src=\ref[src];action=eyespider'>Eyespider</a> |
 	<a href='?src=\ref[src];action=legworm'>Legworm</a> |
@@ -114,131 +115,186 @@
 		switch(popup_name)
 			// traitor
 			if ("traitorradio")
+				window_title = "Radio Traitor Tips"
 				filename = "html/traitorTips/traitorradiouplinkTips.html"
 			if ("traitorpda")
+				window_title = "Traitor Tips"
 				filename = "html/traitorTips/traitorTips.html"
 			if ("traitorhard")
+				window_title = "Hardmode Traitor Tips"
 				filename = "html/traitorTips/traitorhardTips.html"
 			if ("traitoromni")
+				window_title = "Omni-Traitor Tips"
 				filename = "html/traitorTips/omniTips.html"
 			if ("traitorgeneric")
+				window_title = "Antagonist Tips"
 				filename ="html/traitorTips/traitorGenericTips.html"
 			if ("sleeper")
+				window_title = "Sleeper Agent Tips"
 				filename = "html/traitorTips/traitorsleeperTips.html"
 
 			// mindslave
 			if ("mindslave")
+				window_title = "You've been mindslaved!"
 				filename = "html/mindslave/implanted.html"
 			if ("mindslavedeath")
+				window_title = "Mindslaved Status Removed!"
 				filename = "html/mindslave/death.html"
 			if ("mindslaveoverride")
+				window_title = "Mindslave Master Changed!"
 				filename = "html/mindslave/override.html"
 			if ("mindslaveexpired")
+				window_title = "Mindslave Implant Expired!"
 				filename = "html/mindslave/expire.html"
 
 			// wizard
 			if ("wizard")
+				window_title = "Wizarding Facts for beginning magical entities"
 				filename = "html/traitorTips/wizardTips.html"
 			if ("adminwizard")
+				window_title = "Wizarding Theory for advanced practitioners"
 				filename = "html/traitorTips/wizardcustomTips.html"
 			if ("polymorph")
-				window_title = "Polymorphed!"
+				window_title = "You've been polymorphed!"
 				filename = "html/polymorph.html"
 
 			// nuke/rev
 			if ("nukeop")
+				window_title = "Nuclear Operative Basics"
 				filename = "html/traitorTips/nukeopTips.html"
 			if ("nukeop-commander")
+				window_title = "Nuclear Commander Basics"
 				filename = "html/traitorTips/nukeopcommanderTips.html"
 			if ("nukeop-gunbot")
+				window_title = "Nuclear Gun-Bot Basics"
 				filename = "html/traitorTips/nukeopgunbotTips.html"
 			if ("revhead")
+				window_title = "Revolutionary Head Goals"
 				filename = "html/traitorTips/revTips.html"
 			if ("revved")
+				window_title = "You've been converted to the Revolution!"
 				filename = "html/traitorTips/revAdded.html"
 			if ("derevved")
+				window_title = "You've been freed from your brainwashing!"
 				filename = "html/traitorTips/revRemoved.html"
 
 			// spy/conspiracy
 			if ("spy")
+				window_title = "How to Spy 101"
 				filename = "html/traitorTips/spyTips.html"
 			if ("spythief")
+				window_title = "Spy Thief Tips"
 				filename = "html/traitorTips/spy_theft_Tips.html"
 			if ("conspiracy")
+				window_title = "Conspiracy Guidelines"
 				filename = "html/traitorTips/conspiracyTips.html"
 
 			// gangers
 			if ("gang_member")
+				window_title = "You've joined a Gang!"
 				filename = "html/traitorTips/gang_member_added.html"
 
 			// vamp/changeling
 			if ("vampire")
+				window_title = "Vampire Tips"
 				filename = "html/traitorTips/vampireTips.html"
 			if ("vampthrall")
+				window_title = "You've become the brainwashed thrall of a Vampire!"
 				filename = "html/traitorTips/vampiricthrallTips.html"
 			if ("changeling")
+				window_title = "Changeling Tips"
 				filename = "html/traitorTips/changelingTips.html"
+			if ("changeling_absorbed")
+				window_title = "You've been absorbed into the Hivemind!"
+				filename = "html/mindslave/changelingEaten.html"
+			if ("changeling_leave")
+				window_title = "Leaving the Hivemind"
+				filename = "html/mindslave/changelingLeave.html"
 			if ("handspider")
+				window_title = "Handspider Expectations"
 				filename = "html/mindslave/handspider.html"
 			if ("eyespider")
+				window_title = "Eyespider Expectations"
 				filename = "html/mindslave/eyespider.html"
 			if ("legworm")
+				window_title = "LegWorm Expectations"
 				filename = "html/mindslave/legworm.html"
 			if ("buttcrab")
+				window_title = "Buttcrab Expectations"
 				filename = "html/mindslave/buttcrab.html"
 
 			//flock
 			if("flocktrace")
+				window_title = "Flocktrace tips"
 				filename = "html/traitorTips/flocktraceTips.html"
 			if("flockmind")
+				window_title = "Flockmind Basics"
 				filename = "html/traitorTips/flockmindTips.html"
 
 			// other antags
 			if ("grinch")
+				window_title = "How to steal Spacemas"
 				filename = "html/traitorTips/grinchTips.html"
 			if ("hunter")
+				window_title = "Basic Prey Hunting"
 				filename = "html/traitorTips/hunterTips.html"
 			if ("werewolf")
+				window_title = "Werewolf Basics"
 				filename = "html/traitorTips/werewolfTips.html"
 			if ("wrestler")
+				window_title = "How to be a Champion!"
 				filename = "html/traitorTips/wrestlerTips.html"
 			if ("battle")
+				window_title = "Battle Royale Tips!"
 				filename = "html/traitorTips/battleTips.html"
 			if ("martian")
+				window_title = "Being a Martian 101!"
 				filename = "html/traitorTips/martianInfiltrator.html"
 			if ("kudzu")
+				window_title = "You've been absorbed into the Kudzu!"
 				filename = "html/traitorTips/kudzu.html"
 			if ("slasher")
+				window_title = "You've been made a Slasher!"
 				filename = "html/traitorTips/slasherTips.html"
 			if ("arcfiend")
+				window_title = "Arcfiend Tips!"
 				filename = "html/traitorTips/arcfiendTips.html"
 			if ("football")
+				window_title = "Go for the endzone!"
 				filename = "html/traitorTips/football.html"
 			if ("podwars")
+				window_title = "Fight for your team!"
 				filename = "html/traitorTips/pod_wars.html"
 			if ("zombie")
+				window_title = "Zombie Basics"
 				filename = "html/traitorTips/zombieTips.html"
 
 			// ghost roles
 			if ("ghostdrone")
+				window_title = "Ghost Drone Expectations"
 				filename = "html/ghostdrone.html"
 			if ("ghostcritter")
+				window_title = "Ghost Critter Expectations"
 				filename = "html/ghostcritter.html"
 			if ("ghostcritter_antag")
+				window_title = "Ghost Critter Antagonist Tips!"
 				filename = "html/ghostcritter_antag.html"
 			if ("ghostcritter_mentor")
+				window_title = "Mentor Mouse Tips!"
 				filename = "html/ghostcritter_mentor.html"
 
 			// misc
 			if ("rogueborgremoved")
+				window_title = "Rogue Status Removed!"
 				filename = "html/traitorTips/roguerobotRemoved.html"
 			if ("antagremoved")
+				window_title = "Antagonist Status Removed!"
 				filename = "html/traitorTips/antagRemoved.html"
 			if ("soulsteel")
 				window_title = "Posession!"
 				filename = "html/soulsteel.html"
 			if ("slasher_possession")
-				window_title = "Posession!"
+				window_title = "Possessed by the Slasher!"
 				filename = "html/slasher_possession.html"
 			if ("mindwipe")
 				window_title = "Mindwiped!"

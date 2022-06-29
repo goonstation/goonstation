@@ -789,7 +789,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/left)
 	step_image_state = "footprintsL"
 	icon_state_base = "l_leg"
 	icon_state = "l_leg-generic"
-	handlistPart = "legL-generic"
+	partlistPart = "legL-generic"
 	movement_modifier = /datum/movement_modifier/robotleg_left
 
 /obj/item/parts/robot_parts/leg/left/standard
@@ -799,7 +799,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/left)
 	name = "light cyborg left leg"
 	appearanceString = "light"
 	icon_state = "l_leg-light"
-	handlistPart = "legL-light"
+	partlistPart = "legL-light"
 	max_health = 25
 	robot_movement_modifier = /datum/movement_modifier/robotleg_left
 	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT)
@@ -809,7 +809,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/left)
 	desc = "A large wheeled unit like tank tracks. This will help heavier cyborgs to move quickly."
 	appearanceString = "treads"
 	icon_state = "l_leg-treads"
-	handlistPart = "legL-treads"
+	handlistPart = "legL-treads" // THIS ONE gets to layer with the hands because it looks ugly if jumpsuits are over it. Will fix codewise later
 	max_health = 100
 	powerdrain = 2.5
 	step_image_state = "tracksL"
@@ -824,7 +824,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	step_image_state = "footprintsR"
 	icon_state_base = "r_leg"
 	icon_state = "r_leg-generic"
-	handlistPart = "legR-generic"
+	partlistPart = "legR-generic"
 	movement_modifier = /datum/movement_modifier/robotleg_right
 
 /obj/item/parts/robot_parts/leg/right/standard
@@ -834,7 +834,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	name = "light cyborg right leg"
 	appearanceString = "light"
 	icon_state = "r_leg-light"
-	handlistPart = "legR-light"
+	partlistPart = "legR-light"
 	max_health = 25
 	robot_movement_modifier = /datum/movement_modifier/robotleg_right
 	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT)
@@ -844,7 +844,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	desc = "A large wheeled unit like tank tracks. This will help heavier cyborgs to move quickly."
 	appearanceString = "treads"
 	icon_state = "r_leg-treads"
-	handlistPart = "legR-treads"
+	handlistPart = "legR-treads"  // THIS ONE gets to layer with the hands because it looks ugly if jumpsuits are over it. Will fix codewise later
 	max_health = 100
 	powerdrain = 2.5
 	step_image_state = "tracksR"

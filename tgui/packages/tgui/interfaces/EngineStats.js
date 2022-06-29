@@ -101,7 +101,7 @@ export const EngineStats = (props, context) => {
 
   return (
     <Window
-      height="620"
+      height="560"
       width="760"
       theme="retro-dark"
       title="Engine Statistics"
