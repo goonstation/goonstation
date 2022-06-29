@@ -608,3 +608,49 @@
 		power_change()
 	..()
 	return
+
+
+/turf/unsimulated/floor
+
+	proc/update_ambient()
+		var/obj/ambient/A = locate() in vis_contents
+		if(A)
+			if(A.color=="#222222")
+				animate(A, color="#666666", time=10 SECONDS)
+			else
+				animate(A, color="#222222", time=10 SECONDS)
+
+	proc/lightning(fadeout=3 SECONDS, flash_color="#ccf")
+		var/obj/ambient/A = locate() in vis_contents
+		if(A)
+			var/old_color = A.color
+			var/first_flash_low = "#666666"
+			var/list/L1 = hex_to_rgb_list(A.color)
+			var/list/L2 = hex_to_rgb_list(flash_color)
+			if(!isnull(L1) && !isnull(L2))
+				first_flash_low = rgb(lerp(L1[1],L2[1],0.8), lerp(L1[1],L2[1],0.8), lerp(L1[1],L2[1],0.8))
+
+			A.color = flash_color
+			animate(A, color=flash_color, time=0.5)
+			animate(color=first_flash_low, time=0.75 SECONDS, easing = SINE_EASING)
+			animate(color=flash_color, time=0.75)
+			animate(color=old_color, time = fadeout, easing = SINE_EASING)
+			playsound(src, pick('sound/effects/thunder.ogg','sound/ambience/nature/Rain_ThunderDistant.ogg'), 75, 1)
+			SPAWN(fadeout + (1.5 SECONDS))
+				A.color = old_color
+
+	proc/color_shift_lights(colors, durations)
+		var/obj/ambient/A = locate() in vis_contents
+		if(A && length(colors) && length(durations))
+			var/iterations = min(length(colors), length(durations))
+			for(var/i in 1 to iterations)
+				if(i==1)
+					animate(A, color=colors[i], time=durations[i])
+				else
+					animate(color=colors[i], time=durations[i])
+
+	proc/sunset()
+		color_shift_lights(list("#AAA", "#c53a8b", "#b13333", "#444","#222"), list(0, 25 SECONDS, 25 SECONDS, 20 SECONDS, 25 SECONDS))
+
+	proc/sunrise()
+		color_shift_lights(list("#222", "#444","#ca2929", "#c4b91f", "#AAA", ), list(0, 10 SECONDS, 20 SECONDS, 15 SECONDS, 25 SECONDS))
