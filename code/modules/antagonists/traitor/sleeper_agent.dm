@@ -11,8 +11,7 @@
 	var/list/eligible_objectives = list(
 		/datum/objective/regular/assassinate,
 		/datum/objective/regular/steal,
-		/datum/objective/regular/multigrab,
-		/datum/objective/regular/killstirstir,
+		/datum/objective/regular/multigrab
 	)
 
 	var/list/escape_objectives = list(
@@ -21,16 +20,17 @@
 		/datum/objective/escape/hijack,
 #endif
 		/datum/objective/escape/survive,
-		/datum/objective/escape/kamikaze,
-		/datum/objective/escape/stirstir,
+		/datum/objective/escape/kamikaze
 	)
+	// Can't have us trying to both kill and rescue the same monkey. Schrodinger's ape.
+	if (prob(50))
+		escape_objectives += /datum/objective/escape/stirstir
+	else
+		eligible_objectives += /datum/objective/regular/killstirstir
 	var/list/objectives = list()
 	var/datum/objective/new_objective = null
-	for(var/i = 0, i < rand(1, 3), i++)
+	for (var/i in 0 to rand(1, 3))
 		new_objective = pick(eligible_objectives)
-		if (new_objective == /datum/objective/regular/killstirstir) // single-use
-			eligible_objectives -= /datum/objective/regular/killstirstir
-			escape_objectives -= /datum/objective/escape/stirstir
 		objectives += new new_objective(null, owner)
 	var/datum/objective/escape/E = pick(escape_objectives)
 	objectives += new /datum/objective/regular/gimmick(null, owner)

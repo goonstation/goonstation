@@ -97,15 +97,14 @@ ABSTRACT_TYPE(/datum/antagonist)
 	proc/announce()
 		boutput(owner.current, "<h3><span class='alert'>You are \a [src.display_name]!</span></h3>")
 
+	/// Display something when this antagonist is removed.
+	proc/announce_removal()
+		boutput(owner.current, "<h3><span class='alert'>You are no longer \a [src.display_name]!</span></h3>")
+
 	/// Show a popup window for this antagonist. Defaults to using the same ID as the antagonist itself.
 	proc/do_popup(override)
 		if (has_info_popup || override)
 			owner.current.show_antag_popup(!override ? id : override)
-
-	/// Display something when this antagonist is removed.
-	proc/announce_removal()
-		boutput(owner.current, "<h3><span class='alert'>You are no longer \a [src.display_name]!</span></h3>")
-		return
 	
 	/// Returns whether or not this antagonist is considered to have succeeded. By default, this checks all antagonist-specific objectives.
 	proc/check_success()
@@ -122,32 +121,32 @@ ABSTRACT_TYPE(/datum/antagonist)
 	 * display_at_round_end will prevent the returned info from being displayed, so an override isn't necessary for antagonists that have things like success medals but that shouldn't pop up after the round ends.
 	 */
 	proc/handle_round_end(log_data = FALSE)
-		var/list/dat = list()
+		. = list()
 		if (owner.current)
-			// we conjugate manually here so that the text macro doesn't treat null assigned_by values as their own text, thus working incorrectly
-			dat.Add("<b>[owner.current]</b> (played by <b>[owner.displayed_key]</b>) was \a [assigned_by + display_name]!")
+			// we conjugate assigned_by and display_name manually here,
+			// so that the text macro doesn't treat null assigned_by values as their own text and thus display weirdly
+			. += "<b>[owner.current]</b> (played by <b>[owner.displayed_key]</b>) was \a [assigned_by + display_name]!"
 		else
-			dat.Add("<b>[owner.displayed_key]</b> (character destroyed) was \a [assigned_by + display_name]!")
+			. += "<b>[owner.displayed_key]</b> (character destroyed) was \a [assigned_by + display_name]!"
 		if (length(owner.objectives))
 			var/obj_count = 1
 			for (var/datum/objective/O as anything in owner.objectives)
 				if (istype(O, /datum/objective/crew) || istype(O, /datum/objective/miscreant))
 					continue
 				if (O.check_completion())
-					dat.Add("<b>Objective #[obj_count]:</b> [O.explanation_text] <span class='success'><b>Success!</b></span>")
+					. += "<b>Objective #[obj_count]:</b> [O.explanation_text] <span class='success'><b>Success!</b></span>"
 					if (log_data)
 						logTheThing("diary", owner, null,"completed objective: [O.explanation_text]")
 						if (!isnull(O.medal_name) && !isnull(owner.current))
 							owner.current.unlock_medal(O.medal_name, O.medal_announce)
 				else
-					dat.Add("<b>Objective #[obj_count]:</b> [O.explanation_text] <span class='alert'><b>Failure!</b></span>")
+					. += "<b>Objective #[obj_count]:</b> [O.explanation_text] <span class='alert'><b>Failure!</b></span>"
 					if (log_data)
 						logTheThing("diary", owner, null, "failed objective: [O.explanation_text]. Womp womp.")
 				obj_count++
 		if (src.check_success())
-			dat.Add("<span class='success'><b>\The [src.display_name] has succeeded!</b></span>")
+			. += "<span class='success'><b>\The [src.display_name] has succeeded!</b></span>"
 			if (!isnull(success_medal) && log_data)
 				owner.current.unlock_medal(success_medal, TRUE)
 		else
-			dat.Add("<span class='alert'><b>\The [src.display_name] has failed!</b></span>")
-		return dat
+			. += "<span class='alert'><b>\The [src.display_name] has failed!</b></span>"
