@@ -659,6 +659,7 @@
 	m_amt = 3000
 	g_amt = 1000
 	var/up = FALSE // The helmet's current position
+	bypass_view_tint = TRUE
 	color_r = 0.3 // darken
 	color_g = 0.3
 	color_b = 0.3

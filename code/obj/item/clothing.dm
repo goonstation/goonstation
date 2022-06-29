@@ -9,6 +9,9 @@
 	//var/c_flags = null // these don't need to be in the general flags when they only apply to clothes  :I
 	// mbc moived c flags up to item bewcause some wearaables things are items and not clothign :)
 
+	///Bypass client view tint settings, for things like welding masks
+	var/bypass_view_tint = FALSE
+
 	var/color_r = 1 // used for vision stuff, see human/handle_regular_hud_updates()
 	var/color_g = 1 // (why were these only on crafted glasses?  they could have just been used on the parent like this from the start  :V)
 	var/color_b = 1

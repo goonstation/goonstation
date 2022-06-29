@@ -33,19 +33,19 @@
 			var/color_mod_r = 255
 			var/color_mod_g = 255
 			var/color_mod_b = 255
-			if ( human_owner.client.view_tint )
-				if (istype(human_owner.glasses))
-					color_mod_r *= human_owner.glasses.color_r
-					color_mod_g *= human_owner.glasses.color_g
-					color_mod_b *= human_owner.glasses.color_b
-				if (istype(human_owner.wear_mask))
-					color_mod_r *= human_owner.wear_mask.color_r
-					color_mod_g *= human_owner.wear_mask.color_g
-					color_mod_b *= human_owner.wear_mask.color_b
-				if (istype(human_owner.head))
-					color_mod_r *= human_owner.head.color_r
-					color_mod_g *= human_owner.head.color_g
-					color_mod_b *= human_owner.head.color_b
+			if (istype(human_owner.glasses) && (human_owner.client.view_tint || human_owner.glasses.bypass_view_tint))
+				color_mod_r *= human_owner.glasses.color_r
+				color_mod_g *= human_owner.glasses.color_g
+				color_mod_b *= human_owner.glasses.color_b
+			if (istype(human_owner.wear_mask) && (human_owner.client.view_tint || human_owner.wear_mask.bypass_view_tint))
+				color_mod_r *= human_owner.wear_mask.color_r
+				color_mod_g *= human_owner.wear_mask.color_g
+				color_mod_b *= human_owner.wear_mask.color_b
+			if (istype(human_owner.head) && (human_owner.client.view_tint || human_owner.head.bypass_view_tint))
+				color_mod_r *= human_owner.head.color_r
+				color_mod_g *= human_owner.head.color_g
+				color_mod_b *= human_owner.head.color_b
+			if (human_owner.client.view_tint)
 				var/obj/item/organ/eye/L_E = human_owner.get_organ("left_eye")
 				if (istype(L_E))
 					color_mod_r *= L_E.color_r
