@@ -3177,7 +3177,9 @@ datum
 							var/datum/reagent/blood/B = target.get_reagent(reagent_id)
 							if (!istype(B))
 								continue
-							B.microbes += target_pathogens
+							for (var/uid in target_pathogens)
+								if (!(B.microbes[uid]))
+									B.microbes[uid] = target_pathogens[uid]
 				return
 
 		blood/bloodc
