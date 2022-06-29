@@ -334,11 +334,12 @@
 // A microbe. How surprising.
 ABSTRACT_TYPE(/datum/microbe)
 /datum/microbe
-	var/name										// The name of the microbial culture. Does not change.
-	var/print_name									// The name of the microbial culture as shown on scanners. Can be changed.
-	var/desc										// What a scientist might see when he looks at this pathogen through a microscope (eg. blue stringy viruses)
+	var/name										// The "uid" name of the microbial culture. Does not change.
+	var/print_name									// The "front-end" name of the microbial culture. Shows on scanners. Can be changed.
+	var/desc										// What a scientist might see when he looks through a microscope (eg. blue stringy viruses)
 
 	var/mob/infected = list()						// The mobs that are currently infected with this pathogen.
+	var/mob/infectedhistory = list()				// Chronological infection history. Copycats the one line in infected involving the infected list.
 	var/mob/immune = list()							// The mobs that are immune to this microbe.
 	var/infectioncount								// Int variable, used to limit transmissible spread for singular cultures
 	var/infectiontotal								// Int constant, called when a fresh identical culture is made
@@ -349,35 +350,13 @@ ABSTRACT_TYPE(/datum/microbe)
 	var/list/datum/microbioeffects/effects = list()	// A list of symptoms exhibited by those infected with this pathogen.
 	var/list/effectdata = list()					// used for custom var calls
 
-	var/artificial									// Did someone make this microbe using a machine? (1 yes, 0 no)
-	var/reported									// Has someone analyzed this culture?
-	var/curereported								// Did the reporter correctly identify the right cure?
+	var/artificial = 0								// Did someone make this microbe using a machine? (1 yes, 0 no)
+	var/reported = 0								// Has someone analyzed this culture?
+	var/curereported = 0							// Did the reporter correctly identify the right cure?
 
-	var/tellcount									// Tells the microscope how many of this effect group are present
-	var/benefitcount								// Tells the microscope how many of this effect group are present
+	var/tellcount = 0								// Tells the microscope how many of this effect group are present
+	var/benefitcount = 0							// Tells the microscope how many of this effect group are present
 // PROCS AND FUNCTIONS FOR GENERATION
-
-
-	New()
-		//clear()
-		..()
-
-	proc/clear()
-		name = ""
-		print_name = ""
-		desc = ""
-		infected = list()
-		immune = list()
-		infectioncount = null
-		durationtotal = null
-		suppressant = null
-		effects = list()
-		effectdata = list()
-		artificial = 0
-		reported = 0
-		curereported = 0
-		tellcount = 0
-		benefitcount = 0
 
 	//generate_name
 	//Called on creation of a new parent microbe
@@ -395,7 +374,7 @@ ABSTRACT_TYPE(/datum/microbe)
 	//The for loop uses the add_new_symptom function, which uses pick() to choose an effect and returns 1 if successful.
 	proc/generate_effects()
 		var/random = rand(2,5)
-		for (var/i = 0, i <= random, i++)
+		for (var/i = 0, i < random, i++)
 			var/check = 0
 			do
 				check = add_new_symptom(microbio_controls.effects, 0)
@@ -435,6 +414,7 @@ ABSTRACT_TYPE(/datum/microbe)
 		generate_effects()
 		generate_cure()
 		generate_attributes()
+		microbio_controls.add_to_cultures(src)
 		logTheThing("pathology", null, null, "Microbe culture [name] created by randomization.")
 		return
 
@@ -681,13 +661,17 @@ ABSTRACT_TYPE(/datum/microbesubdata)
 	if (src.microbes.len >= MICROBIO_INDIVIDUALMICROBELIMIT)
 		return 0
 	if (!(src in P.infected))
+		P.infected += src
+		P.infectedhistory += src
+		P.infectioncount--
+		microbio_controls.push_to_upstream(P, src)	// Put in earliest possible order so as to prevent a "merge conflict"
+		// These go after the push to avoid redundancies
 		var/datum/microbesubdata/Q = new /datum/microbesubdata
 		src.microbes[P.name] = Q
 		Q.master = P
 		Q.affected_mob = src
 		Q.duration = P.durationtotal - 1
 		Q.probability = 0
-		microbio_controls.updatemicrobe(P, src, "infected")
 		logTheThing("pathology", src, null, "is infected by [Q.master.name].")
 		return 1
 	else
@@ -696,13 +680,12 @@ ABSTRACT_TYPE(/datum/microbesubdata)
 /mob/living/carbon/human/cured(var/datum/microbesubdata/S)
 	if (!istype(S) || !S.master)
 		return 0
-	for (var/uid in src.microbes)
-		var/datum/microbesubdata/Q = src.microbes[uid]
-		if (S == Q)
-			var/datum/microbe/P = microbio_controls.get_microbe_from_name(S.master.name)
-			microbio_controls.updatemicrobe(P, src, "cured")
-			logTheThing("pathology", src, null, "is cured of and gains immunity to [Q.master.name].")
-			src.microbes -= uid
-			qdel(Q)
-			src.show_text("You feel that the disease has passed.", "blue")
-			return 1
+	S.master.infected -= src
+	S.master.immune += src
+	src.microbes -= S
+	var/datum/microbe/P = S.master					// Might be unnecessary, but explicitly defines the input type
+	microbio_controls.push_to_upstream(P)
+	logTheThing("pathology", src, null, "is cured of and gains immunity to [P.name].")
+	qdel(S)
+	src.show_text("You feel that the disease has passed.", "blue")
+	return 1

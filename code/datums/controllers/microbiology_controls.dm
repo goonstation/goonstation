@@ -1,15 +1,15 @@
 var/datum/microbiology_controller/microbio_controls
-
+//Does this even go here? Should it be in the main microbiology folder?
 /datum/microbiology_controller
 
 	var/list/pathogen_affected_reagents = list("blood", "pathogen", "bloodc")
 
 	var/next_uid = 1
 
-	var/list/datum/microbe/cultures = list()
-	var/list/datum/microbioeffects/effects = list()
-	var/list/datum/suppressant/cures = list()
-	//var/list/path_to_evil = list()
+	var/list/datum/microbe/cultures = list()				//Equivalent to the upstream of a repository. This list is ALWAYS up to date.
+	var/list/datum/microbioeffects/effects = list()			//Normally static after New unless admins try to hotcode something in.
+	var/list/datum/suppressant/cures = list()				//Normally static after New unless admins try to hotcode something in.
+	//var/list/datum/microbioeffects/evil = list()			//Normally static after New unless admins try to hotcode something in.
 
 	New()	//Initialize effect and cure paths.
 		..()
@@ -26,55 +26,42 @@ var/datum/microbiology_controller/microbio_controls
 			var/datum/suppressant/C = new X
 			cures += C
 
-	proc/rerendermicrobes()
-		for (var/X in concrete_typesof(/datum/microbe))
-			if (!(X in cultures))
-				var/datum/microbe/A = new X
-				cultures += A
+	proc/pull_from_upstream(var/datum/microbe/P)
+		for (var/uid in cultures)
+			if (P.name == uid)
+				return cultures[uid]
 
-	proc/updatemicrobe(var/datum/microbe/P, var/mob/M, var/selection, var/newname = "Optional", var/reportaccuracy = 0)
-		if (!(P) || !(selection))
+	proc/push_to_upstream(var/datum/microbe/P)
+		if (!P)
 			return
-		if (selection == "infected")
-			P.infected += M
-			P.infectioncount--
-			for (var/mob/living/carbon/human/H in P.infected)
-				updatesubdata(H,P)
+		cultures[P.name] = P
+		if (!P.infected) //If the disease has gone extinct/has no hosts don't run the for loops
 			return
-		if (selection == "cured")
-			P.infected -= M
-			P.immune += M
-			if (!(P.infected))	//If the disease is extinct skip the for loops
-				return
-			for (var/mob/living/carbon/human/H in P.infected)
-				updatesubdata(H,P)
-			return
-		if (selection == "rename")
-			P.print_name = newname
-			if (!(P.infected))	//If the disease is extinct skip the for loops
-				return
-			for (var/mob/living/carbon/human/H in P.infected)
-				updatesubdata(H,P)
-			return
-		if (selection == "researched")
-			P.reported = 1
-			if (reportaccuracy)
-				P.curereported = 1
-			if (!(P.infected))	//If the disease is extinct/has no hosts skip the for loops
-				return
-			for (var/mob/living/carbon/human/H in P.infected)
-				updatesubdata(H,P)
-			return
+		for (var/mob/living/carbon/human/H in P.infected)
+			push_to_players(H,P)
+		return
 
-	proc/updatesubdata(var/mob/living/carbon/human/H, var/datum/microbe/P)
+	proc/push_to_players(var/mob/living/carbon/human/H, var/datum/microbe/P)
 		if (!H.microbes.len)	//If the listed mob does not have any microbes return early
 			return
 		for (var/uid in H.microbes)
 			if (P.name == uid)
 				H.microbes[uid].master = P
 
+	//Primarily a bug catching function.
+	//It would likely be faster to do microbio_controls.cultures[P.name] = P
+	//Must consult devs on this
+	proc/add_to_cultures(var/datum/microbe/P)
+		if (!P)
+			logTheThing("debug", null, null, "<b>Microbiology:</b> Attempted to add null microbe to cultures")
+			return
+		if (!P.name)
+			logTheThing("debug", null, null, "<b>Microbiology:</b> Microbe name null or improperly set")
+			return
+		cultures[P.name] = P
+		return
+
 	proc/get_microbe_from_path(var/microbe_path)
-		rerendermicrobes()
 		if (!ispath(microbe_path))
 			logTheThing("debug", null, null, "<b>Microbiology:</b> Attempt to find schematic with null path")
 			return null
@@ -88,7 +75,6 @@ var/datum/microbiology_controller/microbio_controls
 		return null
 
 	proc/get_microbe_from_name(var/microbe_name)
-		rerendermicrobes()
 		if (!istext(microbe_name))
 			logTheThing("debug", null, null, "<b>Microbiology:</b> Attempt to find disease with non-string")
 			return null
