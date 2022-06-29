@@ -1,5 +1,9 @@
 
 (t)tue jun 28 22
+(u)CodeJester
+(p)8541
+(e)📄|tgui
+(*)Mineral magnets, how do they work? Maybe you can find out with its new UI menu.
 (u)Flaborized
 (p)9365
 (e)🎨|sprites
