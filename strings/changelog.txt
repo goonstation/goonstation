@@ -1,4 +1,8 @@
 
+(t)thu jun 30 22
+(u)End
+(e)🎨|sprites
+(+)Resprited the Syndicate teleport gun.
 (t)tue jun 28 22
 (u)Azrun
 (e)|
