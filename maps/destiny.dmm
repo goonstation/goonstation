@@ -34097,6 +34097,11 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=courtroom";
+	location = "pool";
+	name = "bot navigation beacon"
+	},
 /turf/simulated/floor/darkblue,
 /area/station/crew_quarters/pool)
 "kpp" = (
