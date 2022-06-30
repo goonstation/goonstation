@@ -50,7 +50,8 @@
 					C.change_misstep_chance(-INFINITY)
 					C.take_oxygen_deprivation(-INFINITY)
 					C.delStatus("drowsy")
-					c.delStatus("n_radiation")
+					C.delStatus("passing_out")
+					C.delStatus("n_radiation")
 					C.delStatus("paralysis")
 					C.delStatus("slowed")
 					C.delStatus("stunned")
@@ -71,6 +72,11 @@
 							C.implant.Remove(I)
 							I.set_loc(C.loc)
 							continue
+					if(C.bioHolder?.effects && length(C.bioHolder.effects))
+						for(var/bioEffectId in C.bioHolder.effects)
+							var/datum/bioEffect/gene = C.bioHolder.GetEffect(bioEffectId)
+							if (gene.curable_by_mutadone && gene.effectType == EFFECT_TYPE_DISABILITY)
+								C.bioHolder.RemoveEffect(gene.id)
 
 				C.set_clothing_icon_dirty()
 				H.in_fakedeath = 0
