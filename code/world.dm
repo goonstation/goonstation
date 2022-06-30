@@ -745,6 +745,11 @@ var/f_color_selector_handler/F_Color_Selector
 
 	s += "The classic SS13 experience. &#8212; (<a href=\"http://bit.ly/gndscd\">Discord</a>)<br>"
 
+	if(ticker && ticker.round_elapsed_ticks > 0 && current_state == GAME_STATE_PLAYING)
+		s += "Round time: [round(ticker.round_elapsed_ticks / 36000)]:[add_zero(num2text(ticker.round_elapsed_ticks / 600 % 60), 2)]<br>"
+	else if(!ticker)
+		s += "<b>STARTING</b><br>"
+
 	if (map_settings)
 		var/map_name = istext(map_settings.display_name) ? "[map_settings.display_name]" : "[map_settings.name]"
 		//var/map_link_str = map_settings.goonhub_map ? "<a href=\"[map_settings.goonhub_map]\">[map_name]</a>" : "[map_name]"
@@ -752,9 +757,7 @@ var/f_color_selector_handler/F_Color_Selector
 
 	var/list/features = list()
 
-	if (!ticker)
-		features += "<b>STARTING</b>"
-	else if (ticker && master_mode)
+	if(ticker && master_mode)
 		if (ticker.hide_mode)
 			features += "Mode: <b>secret</b>"
 		else
