@@ -232,16 +232,31 @@
 					playsound(user.loc, T.hitsound_uncharged, 50, 1)
 				src.dig_hp -= digstr
 				if(src.dig_hp <= 0)
-					if(drop_table)
-						for(var/field in drop_table)
-							if(prob(drop_table[field]) && ispath(field))
-								var/obj/item/drop = new field
-								drop.set_loc(src.loc)
-					src.visible_message("<span class='alert'>[user] breaks [src] apart.</span>")
-					qdel(src)
+					src.visible_message("<span class='alert'>[src] breaks apart.</span>")
+					break_apart()
 			else
 				return
 		..()
+
+	meteorhit()
+		break_apart()
+		return
+
+	blob_act()
+		break_apart()
+		return
+
+	bullet_act()
+		break_apart()
+		return
+
+	proc/break_apart()
+		if(length(drop_table))
+			for(var/field in drop_table)
+				if(prob(drop_table[field]) && ispath(field))
+					var/obj/item/drop = new field
+					drop.set_loc(src.loc)
+		qdel(src)
 
 /obj/nadir_doodad/sinkspires
 	name = "sinkspire cluster"
