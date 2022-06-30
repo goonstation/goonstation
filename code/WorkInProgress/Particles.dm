@@ -1314,7 +1314,9 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 /datum/particleSystem/chemSmoke
 	var/datum/reagents/copied
 	var/list/affected
-	var/list/banned_reagents = list("smokepowder", "propellant", "pyrosium", "fluorosurfactant", "salt", "poor_concrete", "okay_concrete", "good_concrete", "perfect_concrete", "pathogen")
+	var/list/banned_reagents = list("smokepowder", "propellant", "pyrosium", "fluorosurfactant", "salt",\
+	"poor_concrete", "okay_concrete", "good_concrete", "perfect_concrete",\
+	"pathogen", "exlusiveimmunity")
 	var/smoke_size = 3
 
 	New(var/atom/location = null, var/datum/reagents/source, var/duration = 20, var/size = 3)
