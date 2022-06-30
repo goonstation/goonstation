@@ -503,7 +503,7 @@
 		if(2)
 			dat += "Shuttle Location: Medbay"
 		if(3)
-			dat += "Shuttle Location: Pathology Research"
+			dat += "Shuttle Location: Microbiology Research"
 	dat += "<BR><BR>"
 
 	if(active)
@@ -518,7 +518,7 @@
 				if(2)
 					dat += "<a href='byond://?src=\ref[src];medbay=1'>Medbay</a><BR>"
 				if(3)
-					dat += "<a href='byond://?src=\ref[src];pathology=1'>Pathology Research</a><BR>"
+					dat += "<a href='byond://?src=\ref[src];pathology=1'>Microbiology Research</a><BR>"
 
 	user.Browse(dat, "window=shuttle")
 	onclose(user, "shuttle")
@@ -556,7 +556,7 @@
 				if(2)
 					message_string = "Medbay"
 				if(3)
-					message_string = "Pathology Research"
+					message_string = "Microbiology Research"
 			C.visible_message("<span class='alert'>The Asylum Shuttle has been sent to [message_string]!</span>")
 		SPAWN(10 SECONDS)
 			var/area/start_location

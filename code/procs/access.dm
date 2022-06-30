@@ -287,7 +287,7 @@
 			return list(access_medical, access_medical_lockers, access_morgue, access_maint_tunnels)
 		if("Geneticist")
 			return list(access_medical, access_medical_lockers, access_morgue, access_medlab, access_maint_tunnels)
-		if("Pathologist")
+		if("Microbiologist")
 			#ifdef SCIENCE_PATHO_MAP
 			return list(access_tox, access_tox_storage, access_research, access_chemistry, access_pathology)
 			#else

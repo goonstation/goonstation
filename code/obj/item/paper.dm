@@ -849,7 +849,7 @@ as it may become compromised.
 	- B <br>
 	"}
 
-/obj/item/paper/cdc_pamphlet
+/obj/item/paper/cdc_pamphlet	//Mark for rework
 	name = "So you've contracted a pathogen!"
 	icon_state = "paper"
 	info = {"<center><h2>So you've contracted a pathogen!</h2></center>

@@ -51,7 +51,7 @@ var/global/crew_creds = null
 					continue
 
 				// Pathology?
-				if("Pathologist")
+				if("Microbiologist")
 					#ifdef SCIENCE_PATHO_MAP
 					round_science.Add(M)
 					#else

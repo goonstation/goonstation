@@ -467,9 +467,9 @@
 		icon_state = "genetics-alt"
 		item_state = "genetics-alt"
 
-/obj/item/clothing/under/rank/pathologist
-	name = "pathologist's jumpsuit"
-	desc = "Scientifically proven to block up to 99% of pathogens."
+/obj/item/clothing/under/rank/microbiologist
+	name = "microbiologist's jumpsuit"
+	desc = "Scientifically proven to block up to 99.99% of germs."
 	icon_state = "pathology"
 	item_state = "pathology"
 

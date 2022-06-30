@@ -8,7 +8,7 @@ var/list/occupations = list(
 //	"Vice Officer",
 	"Detective",
 	"Geneticist",
-	"Pathologist",
+	"Microbiologist",
 	"Scientist","Scientist", "Scientist",
 	"Medical Doctor", "Medical Doctor",
 	"Head of Personnel",
@@ -51,7 +51,7 @@ var/list/job_mailgroup_list = list(
 	"Medical Director" = MGD_MEDRESEACH,
 	"Roboticist" = MGD_MEDRESEACH,
 	"Geneticist" = MGD_MEDRESEACH,
-	"Pathologist" = MGD_MEDRESEACH,
+	"Microbiologist" = MGD_MEDRESEACH,
 	"Medical Doctor" = MGD_MEDBAY,
 	"Chaplain" = MGD_SPIRITUALAFFAIRS)
 

@@ -121,10 +121,10 @@
 		..()
 		JobEquipSpawned("Geneticist")
 
-/mob/living/carbon/human/normal/pathologist
+/mob/living/carbon/human/normal/microbiologist
 	New()
 		..()
-		JobEquipSpawned("Pathologist")
+		JobEquipSpawned("Microbiologist")
 
 /mob/living/carbon/human/normal/roboticist
 	New()

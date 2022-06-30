@@ -550,7 +550,6 @@ datum
 			id = "bacterialmedium"
 			description = "A solution useful for the cultivation of bacteria."
 			reagent_state = 2
-			pathogen_nutrition = list("water", "sugar", "sodium", "iron", "nitrogen")
 /*
 		parasiticmedium
 			name = "Parasitic Medium"
