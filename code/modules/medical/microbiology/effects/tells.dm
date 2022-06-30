@@ -190,8 +190,8 @@ ABSTRACT_TYPE(/datum/microbioeffects/tells)
 		var/obj/item/reagent_containers/food/snacks/ingredient/egg/bee/toThrow = new /obj/item/reagent_containers/food/snacks/ingredient/egg/bee(T)
 		M.visible_message("<span class='alert'>[M] sneezes out a space bee egg!</span> [chosen_phrase]", "<span class='alert'>You sneeze out a bee egg!</span> [chosen_phrase]", "<span class='alert'>You hear someone sneezing.</span>")
 		toThrow.throw_at(target, 6, 1)
-		for (var/mob/M in range(1))
-			infect_direct(M, origin, MICROBIO_TRANSMISSION_TYPE_AEROBIC)
+		for (var/mob/neighbor in range(1))
+			infect_direct(neighbor, origin, MICROBIO_TRANSMISSION_TYPE_AEROBIC)
 		//src.infect_cloud(M, origin, origin.spread) // TODO: at some point I want the bees to spread this instead
 
 	mob_act(var/mob/M, var/datum/microbesubdata/origin)

@@ -565,7 +565,7 @@ ABSTRACT_TYPE(/datum/microbe)
 			else if (istype(E,/datum/microbioeffects/benevolent))
 				src.benefitcount--
 				src.effects -= E
-			for (var/effect in src.effects)
+			for (var/datum/microbioeffects/effect in src.effects)
 				if (effect.has_event)
 					src.effect_has_events = 1
 					return 1
