@@ -482,7 +482,7 @@ datum
 		disease/leprosybacteria
 			name = "mycobacterium leprae"
 			id = "mycobacterium leprae"
-			description = "A bacterial strain that known to cause leprosy in humans."
+			description = "A bacterial strain that is known to cause leprosy in humans."
 			reagent_state = LIQUID
 			fluid_r = 255
 			fluid_g = 40
