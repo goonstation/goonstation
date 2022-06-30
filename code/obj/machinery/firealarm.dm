@@ -102,7 +102,7 @@
 		src.alarm()
 	return
 
-/obj/machinery/firealarm/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/firealarm/attackby(obj/item/W, mob/user)
 	if (issnippingtool(W))
 		src.detecting = !( src.detecting )
 		if (src.detecting)
@@ -135,7 +135,7 @@
 			status |= NOPOWER
 			UpdateIcon()
 
-/obj/machinery/firealarm/attack_hand(mob/user as mob)
+/obj/machinery/firealarm/attack_hand(mob/user)
 	if(user.stat || status & (NOPOWER|BROKEN) || ON_COOLDOWN(src, "toggle", 1 SECOND))
 		return
 

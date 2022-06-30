@@ -75,6 +75,7 @@ var/list/server_toggles_tab_verbs = list(\
 /datum/admins/proc/toggleaprilfools,\
 /datum/admins/proc/togglespeechpopups,\
 /datum/admins/proc/togglemonkeyspeakhuman,\
+/datum/admins/proc/toggletraitorsseeeachother,\
 /datum/admins/proc/togglelatetraitors,\
 /datum/admins/proc/togglesoundwaiting,\
 /datum/admins/proc/adjump,\
@@ -216,9 +217,9 @@ client/proc/toggle_ghost_respawns()
 	ADMIN_ONLY
 	src.holder.rp_word_filtering = !src.holder.rp_word_filtering
 	if(src.holder.rp_word_filtering)
-		src.RegisterSignal(GLOBAL_SIGNAL, COMSIG_SUSSY_PHRASE, .proc/message_one_admin)
+		src.RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_SUSSY_PHRASE, .proc/message_one_admin)
 	else
-		src.UnregisterSignal(GLOBAL_SIGNAL, COMSIG_SUSSY_PHRASE)
+		src.UnregisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_SUSSY_PHRASE)
 	boutput(usr, "<span class='notice'>Toggled RP word filter notifications [src.holder.rp_word_filtering ?"on":"off"]!</span>")
 
 /client/proc/toggle_hear_prayers()
@@ -818,6 +819,20 @@ client/proc/toggle_ghost_respawns()
 	logTheThing("admin", usr, null, "toggled Monkey/Human communication [monkeysspeakhuman ? "on" : "off"].")
 	logTheThing("diary", usr, null, "toggled Monkey/Human communication [monkeysspeakhuman ? "on" : "off"].", "admin")
 	message_admins("[key_name(usr)] toggled Monkey/Human communication [monkeysspeakhuman ? "on" : "off"]")
+
+/datum/admins/proc/toggletraitorsseeeachother()
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
+	set desc = "Toggle traitors being able to see each other."
+	set name = "Toggle Traitors Seeing Each Other"
+	NOT_IF_TOGGLES_ARE_OFF
+	traitorsseeeachother = !traitorsseeeachother
+	if (traitorsseeeachother)
+		boutput(world, "<B>Traitors can now see each other.</B>")
+	else
+		boutput(world, "<B>Traitors can no longer see each other.</B>")
+	logTheThing("admin", usr, null, "toggled traitors seeing each other [traitorsseeeachother ? "on" : "off"].")
+	logTheThing("diary", usr, null, "toggled traitors seeing each other [traitorsseeeachother ? "on" : "off"].", "admin")
+	message_admins("[key_name(usr)] toggled traitors seeing each other [traitorsseeeachother ? "on" : "off"]")
 
 /datum/admins/proc/toggleautoending()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)

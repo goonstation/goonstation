@@ -11,10 +11,8 @@
 	if (P.proj_data)  //ZeWaka: Fix for null.ks_ratio
 		damage = round((P.power*P.proj_data.ks_ratio), 1.0)
 
-	var/armor_value_bullet = 1
+	var/armor_value_bullet = get_ranged_protection()
 
-	if (!(client && client.hellbanned))
-		armor_value_bullet = get_ranged_protection()
 	var/target_organ = pick("left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail")
 	if (P.proj_data) //Wire: Fix for: Cannot read null.damage_type
 		switch(P.proj_data.damage_type)
@@ -100,6 +98,11 @@
 					if (src.organHolder && prob(50))
 						src.organHolder.damage_organ(0, damage, 0, target_organ)
 
+				if (istype(P.proj_data, /datum/projectile/laser))
+					var/wound_num = rand(0, 4)
+					var/image/I = image(icon = 'icons/mob/human.dmi', icon_state = "laser_wound-[wound_num]", layer = MOB_EFFECT_LAYER)
+					src.UpdateOverlays(I, "laser_wound-[wound_num]")
+
 			if (D_BURNING)
 				if (armor_value_bullet > 1)
 					if (src.organHolder && prob(50))
@@ -109,13 +112,15 @@
 						src.organHolder.damage_organ(0, damage, 0, target_organ)
 
 			if (D_TOXIC)
-				if (P.proj_data.reagent_payload)
+				if (P.reagents)
 					if (P.implanted)
 						if (istext(P.implanted))
 							P.implanted = text2path(P.implanted)
 							if (!P.implanted)
 								return
 						var/obj/item/implant/projectile/implanted = new P.implanted
+						implanted.create_reagents(P.reagents.maximum_volume)
+						P.reagents.trans_to(implanted, P.reagents.maximum_volume)
 						implanted.set_loc(src)
 						if (istype(implanted))
 							implanted.owner = src
@@ -436,6 +441,12 @@
 
 	src.take_toxin_damage(-tox)
 
+	if (burn > 0)
+		if (burn >= 10 || src.get_burn_damage() <= 5)
+			src.heal_laser_wound("all")
+		else if (prob(10))
+			src.heal_laser_wound("single")
+
 	if (zone == "All")
 		var/bruteOrganCount = 0.0 		//How many organs have brute damage?
 		var/burnOrganCount = 0.0		//How many organs have burn damage?
@@ -509,6 +520,16 @@
 		else
 			return 0
 	return
+
+/mob/living/carbon/human/proc/heal_laser_wound(type)
+	if (type == "single")
+		for (var/i in 0 to 4)
+			if (src.GetOverlayImage("laser_wound-[i]"))
+				src.UpdateOverlays(null, "laser_wound-[i]")
+				break
+	else if (type == "all")
+		for (var/i in 0 to 4)
+			src.UpdateOverlays(null, "laser_wound-[i]")
 
 /mob/living/carbon/human/take_eye_damage(var/amount, var/tempblind = 0, var/side)
 	if (!src || !ishuman(src) || (!isnum(amount) || amount == 0))

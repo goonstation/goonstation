@@ -50,7 +50,7 @@
 		user.show_text("You repair the lock on [src].", "blue")
 	return 1
 
-/obj/item/storage/secure/attackby(obj/item/W as obj, mob/user as mob, obj/item/storage/T)
+/obj/item/storage/secure/attackby(obj/item/W, mob/user, obj/item/storage/T)
 	if ((W.w_class > W_CLASS_NORMAL || istype(W, /obj/item/storage/secure)))
 		return
 	//Waluigi hates this
@@ -83,7 +83,7 @@
 
 	return ..()
 
-/obj/item/storage/secure/attack_hand(mob/user as mob)
+/obj/item/storage/secure/attack_hand(mob/user)
 	if (src.loc == user && src.locked == 1)
 		boutput(user, "<span class='alert'>[src] is locked and cannot be opened!</span>")
 		return
@@ -402,7 +402,7 @@
 	/obj/item/pen)
 
 /*
-/obj/item/storage/secure/sbriefcase/attack(mob/M as mob, mob/user as mob)
+/obj/item/storage/secure/sbriefcase/attack(mob/M, mob/user)
 	if (usr.bioHolder.HasEffect("clumsy") && prob(50))
 		user.visible_message("<span class='alert'><b>[usr]</b> swings [src] too hard and nails \himself in the face.</span>")
 		random_brute_damage(usr, 10)
@@ -458,7 +458,7 @@
 	desc = "A extremely tough secure safe."
 	mechanics_type_override = /obj/item/storage/secure/ssafe
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		return attack_self(user)
 
 /obj/item/storage/secure/ssafe/loot

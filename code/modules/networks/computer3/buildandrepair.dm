@@ -69,7 +69,7 @@
 /obj/computer3frame/meteorhit(obj/O as obj)
 	qdel(src)
 
-/obj/computer3frame/attackby(obj/item/P as obj, mob/user as mob)
+/obj/computer3frame/attackby(obj/item/P, mob/user)
 	var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, 2 SECONDS, /obj/computer3frame/proc/state_actions,\
 	list(P,user), P.icon, P.icon_state, null)
 	switch(state)

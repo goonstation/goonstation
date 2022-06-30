@@ -42,7 +42,7 @@ toxic - poisons
 	color_red = 1
 	color_green = 0
 	color_blue = 0
-	icon_turf_hit = "burn1"
+	impact_image_state = "burn1"
 
 	hit_mob_sound = 'sound/impact_sounds/burn_sizzle.ogg'
 	hit_object_sound = 'sound/impact_sounds/burn_sizzle.ogg'
@@ -133,6 +133,29 @@ toxic - poisons
 	color_red = 1
 	color_green = 0
 	color_blue = 0
+
+	tiny
+		name = "mini phaser bolt"
+		icon_state = "bolt"
+		sname = "mini phaser bolt"
+		power = 10
+		cost = 25
+		shot_sound = 'sound/weapons/energy/phaser_tiny.ogg'
+		color_red = 0
+		color_green = 1
+		color_blue = 0.2
+
+	huge // yes laser/light/huge is pretty dumb
+		name = "macro phaser blast"
+		icon_state = "crescent"
+		sname = "macro phaser blast"
+		power = 55
+		cost = 100
+		shot_sound = 'sound/weapons/energy/phaser_huge.ogg'
+		color_red = 0
+		color_green = 0.1
+		color_blue = 0.4
+
 
 	mining
 		name = "mining phaser bolt"
@@ -256,7 +279,7 @@ toxic - poisons
 	color_red = 1
 	color_green = 0
 	color_blue = 1
-	icon_turf_hit = "burn2"
+	impact_image_state = "burn2"
 	projectile_speed = 42
 
 /datum/projectile/laser/precursor // for precursor traps
@@ -455,8 +478,8 @@ toxic - poisons
 	shot_sound = 'sound/machines/rock_drill.ogg'
 	shot_volume = 20
 	dissipation_delay = 1
-	dissipation_rate = 35
-	icon_turf_hit = null
+	dissipation_rate = 45
+	impact_image_state = null
 	var/damtype = DAMAGE_STAB
 
 	var/hit_human_sound = "sound/impact_sounds/Slimy_Splat_1.ogg"
@@ -508,7 +531,7 @@ toxic - poisons
 	sname = "laser"
 	shot_sound = 'sound/weapons/energy/laser_alastor.ogg'
 	brightness = 1
-	icon_turf_hit = "burn1"
+	impact_image_state = "burn1"
 
 	on_hit(atom/hit)
 		var/mob/living/L = hit
@@ -523,7 +546,7 @@ toxic - poisons
 	name = "signifer bolt"
 	icon = 'icons/obj/projectiles.dmi'
 	power = 15
-	cost = 50
+	cost = 40
 	sname = "lethal"
 	shot_sound = 'sound/weapons/SigLethal.ogg'
 	hit_ground_chance = 30
@@ -558,3 +581,52 @@ toxic - poisons
 				random_brute_damage(hit, rand(5,10), 0)
 				hit.delStatus("signified")
 			..()
+
+/datum/projectile/special/spreader/plasma_spreader
+	name = "energy bolt"
+	sname = "plasma spray"
+	cost = 30
+	power = 60 //a chunky pointblank
+	ks_ratio = 0
+	damage_type = D_SPECIAL
+	pellets_to_fire = 4
+	spread_projectile_type = /datum/projectile/laser/plasma/mini
+	split_type = 0
+	shot_sound = 'sound/weapons/plasma_gun.ogg'
+	var/spread_angle_variance = 10
+
+	new_pellet(var/obj/projectile/P, var/turf/PT, var/datum/projectile/F)
+		var/obj/projectile/FC = initialize_projectile(PT, F, P.xo, P.yo, P.shooter)
+		FC.rotateDirection(rand(0-spread_angle_variance,spread_angle_variance))
+		FC.launch()
+
+/datum/projectile/laser/plasma/mini
+	dissipation_delay = 4
+	dissipation_rate = 3
+	power = 15
+
+	on_hit(atom/movable/hit, dir, datum/projectile/P)
+		. = ..()
+
+		if(hit.hasStatus("cornicened2") && ismovable(hit))
+			hit.throw_at(get_edge_target_turf(hit, dir), 7, 1, throw_type = THROW_GUNIMPACT)
+			hit.delStatus("cornicened")
+			hit.delStatus("cornicened2")
+		else
+			hit.setStatus("cornicened", 0.5 SECONDS)
+
+/datum/projectile/laser/plasma/burst
+	cost = 60
+	power = 25
+	shot_number = 4
+	shot_delay = 1
+
+	on_hit(atom/movable/hit, dir, datum/projectile/P)
+		. = ..()
+		if(hit.hasStatus("cornicened2"))
+			elecflash(get_turf(hit),radius=0, power=6, exclude_center = 0)
+			random_brute_damage(hit, rand(10,20), 0)
+			hit.delStatus("cornicened")
+			hit.delStatus("cornicened2")
+		else
+			hit.setStatus("cornicened")

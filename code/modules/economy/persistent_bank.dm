@@ -94,8 +94,6 @@
 			return FALSE //if the client's mob isn't a new_player, we've probably started already. If it's just null, we've got bigger problems
 
 		if(istype(src.bought_this_round))
-			//we already picked something this round, so refund it first
-			c.add_to_bank(src.bought_this_round.cost)
 			if (istype(c.mob,/mob/new_player))
 				var/mob/new_player/playermob = c.mob
 				if (playermob.mind)
@@ -177,7 +175,7 @@
 		if (purchase.Create(src))
 			boutput( src, "<span class='notice'><b>[purchase.name] equipped successfully.</b></span>" )
 		else
-			boutput( src, "<span class='notice'><b>[purchase.name] is not available for the job you rolled. It has been refunded.</b></span>" )
+			boutput( src, "<span class='notice'><b>[purchase.name] is not available for the job you rolled. It will not be billed.</b></span>" )
 			src.client.add_to_bank(purchase.cost)
 			src.client.set_last_purchase(null)
 			return

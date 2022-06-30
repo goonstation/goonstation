@@ -45,7 +45,7 @@ GAUNTLET CARDS
 
 /obj/item/card/emag/fake
 //delicious fake emag
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		boutput(user, "<span class='combat'>Turns out that card was actually a kind of [pick("deadly chameleon","spiny anteater","Discount Dan's latest product prototype","Syndicate Top Trumps Card","bag of neckbeard shavings")] in disguise! It stabs you!</span>")
 		user.changeStatus("paralysis", 10 SECONDS)
 		SPAWN(1 SECOND)
@@ -320,7 +320,7 @@ GAUNTLET CARDS
 	else
 		..()
 
-/obj/item/card/id/syndicate/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/card/id/syndicate/attackby(obj/item/W, mob/user)
 	var/obj/item/card/id/sourceCard = W
 	if (istype(sourceCard))
 		boutput(user, "You copy [sourceCard]'s accesses to [src].")

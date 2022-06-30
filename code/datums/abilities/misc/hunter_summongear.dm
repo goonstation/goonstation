@@ -38,7 +38,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		boutput(M, __red("<B>Request acknowledged. You must stand still.</B>"))
+		boutput(M, "<span class='alert'><B>Request acknowledged. You must stand still.</B></span>")
 
 	onUpdate()
 		..()

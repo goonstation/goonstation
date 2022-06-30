@@ -23,7 +23,7 @@
 	ticker.mode.Agimmicks.Add(H)
 
 	H.unequip_all()
-	H.equip_new_if_possible(/obj/item/clothing/shoes/sandal, SLOT_SHOES)
+	H.equip_new_if_possible(/obj/item/clothing/shoes/sandal/wizard, SLOT_SHOES)
 	H.equip_new_if_possible(/obj/item/clothing/under/gimmick/viking, SLOT_W_UNIFORM)
 	H.equip_new_if_possible(/obj/item/clothing/head/helmet/viking, SLOT_HEAD)
 	H.equip_new_if_possible(/obj/item/storage/backpack/, SLOT_BACK)
@@ -42,7 +42,7 @@
 	item_state = "moneybag"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(!istype(W, /obj/item/clothing/shoes))
 			boutput(user, "<span class='alert'>\The [W] doesn't seem to fit in the bag. Weird!</span>")
 			return
@@ -51,7 +51,7 @@
 		playsound(src.loc, "rustle", 50, 1, -5)
 		boutput(user, "You stuff [W] into [src].")
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!user.find_in_hand(src))
 			return ..()
 		if (!src.contents.len)
@@ -153,11 +153,11 @@
 		if(target == holder.owner || !ishuman(target))
 			return 1
 		if(!(BOUNDS_DIST(holder.owner, target) == 0))
-			boutput(holder.owner, __red("Target is too far away."))
+			boutput(holder.owner, "<span class='alert'>Target is too far away.</span>")
 			return 1
 		var/mob/living/carbon/human/target_human = target
 		if(!target_human?.limbs?.l_leg || !target_human?.limbs?.r_leg)
-			boutput(holder.owner, __red("[target_human] has no ankles to bite!"))
+			boutput(holder.owner, "<span class='alert'>[target_human] has no ankles to bite!</span>")
 			return 1
 
 		var/x_coeff = rand(0, 1)	// open the floor horizontally
@@ -212,7 +212,7 @@
 		if(target == holder.owner || !ishuman(target))
 			return 1
 		if(!(BOUNDS_DIST(holder.owner, target) == 0))
-			boutput(holder.owner, __red("Target is too far away."))
+			boutput(holder.owner, "<span class='alert'>Target is too far away.</span>")
 			return 1
 
 		var/mob/living/carbon/human/H = target

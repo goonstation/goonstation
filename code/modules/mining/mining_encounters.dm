@@ -895,7 +895,7 @@
 			AST.ClearAllOverlays() // i know theres probably a better way to handle this
 			AST.UpdateIcon()
 #ifndef UNDERWATER_MAP // We don't want fullbright ore underwater.
-			AST.overlays += /image/fullbright
+			AST.UpdateOverlays(new /image/fullbright, "fullbright")
 #endif
 			AST.top_overlays()
 			var/image/ore_overlay = image('icons/turf/walls_asteroid.dmi',"[O.name][AST.orenumber]")
@@ -955,7 +955,7 @@
 			AST.ClearAllOverlays() // i know theres probably a better way to handle this
 			AST.UpdateIcon()
 #ifndef UNDERWATER_MAP // We don't want fullbright ore underwater.
-			AST.overlays += /image/fullbright
+			AST.UpdateOverlays(new /image/fullbright, "fullbright")
 #endif
 			AST.top_overlays()
 			var/image/ore_overlay = image('icons/turf/walls_asteroid.dmi',"[O.name][AST.orenumber]")

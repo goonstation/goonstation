@@ -204,7 +204,7 @@ proc/is_weak_rollable_contract(type)
 			take_bleeding_damage(A, null, total_souls_value, DAMAGE_STAB)
 		..()
 
-	attack(target as mob, mob/user as mob)
+	attack(target, mob/user)
 		playsound(target, "sound/impact_sounds/Flesh_Stab_1.ogg", 60, 1)
 		if(iscarbon(target))
 			var/mob/living/carbon/C = target
@@ -286,7 +286,7 @@ proc/is_weak_rollable_contract(type)
 				var/obj/item/contract/T = new tempcontract(src)
 				T.merchant = src.merchant
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		..()
 		if (total_souls_value >= 6)
 			var/mob/living/L = M
@@ -427,7 +427,7 @@ END GUIDE
 		SPAWN(1 DECI SECOND)
 			qdel(src)
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		if (!isliving(M) || isghostdrone(M) || issilicon(M) || isintangible(M))
 			return
 		if (!user.find_type_in_hand(/obj/item/pen/fancy/satan))
@@ -445,7 +445,7 @@ END GUIDE
 		else
 			return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/pen))
 			if (isdiabolical(user))
 				boutput(user, "<span class='notice'>You can't sell your soul to yourself!</span>")

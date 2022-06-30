@@ -130,6 +130,9 @@
 #elif defined(MAP_OVERRIDE_HORIZON)
 #include "horizon.dm"
 
+#elif defined(MAP_OVERRIDE_CRASH)
+#include "crash.dm"
+
 #elif defined(MAP_OVERRIDE_ATLAS)
 #include "atlas.dm"
 
@@ -159,6 +162,9 @@
 
 #elif defined(MAP_OVERRIDE_POD_WARS)
 #include "pod_wars.dm"
+
+#elif defined(MAP_OVERRIDE_EVENT)
+#include "event.dm"
 
 #elif defined(GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW)
 #include "gottagofast.dm"

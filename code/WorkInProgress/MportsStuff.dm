@@ -58,7 +58,7 @@
 				onclose(usr, "[src.name]")
 	return
 
-/obj/infared_icon/attackby(obj/item/P as obj, mob/user as mob)
+/obj/infared_icon/attackby(obj/item/P, mob/user)
 
 	if (istype(P, /obj/item/pen/infared))
 

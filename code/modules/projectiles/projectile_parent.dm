@@ -125,7 +125,7 @@
 			//die()
 			return
 
-		var/sigreturn = SEND_SIGNAL(src, COMSIG_PROJ_COLLIDE, A)
+		var/sigreturn = SEND_SIGNAL(src, COMSIG_OBJ_PROJ_COLLIDE, A)
 		sigreturn |= SEND_SIGNAL(A, COMSIG_ATOM_HITBY_PROJ, src)
 		if(QDELETED(src)) //maybe a signal proc QDELETED(src) us
 			return
@@ -151,18 +151,6 @@
 				O.bullet_act(src)
 			T = A
 			if ((sigreturn & PROJ_ATOM_CANNOT_PASS) || (T.density && !goes_through_walls && !(sigreturn & PROJ_PASSWALL) && !(sigreturn & PROJ_ATOM_PASSTHROUGH)))
-				if (proj_data?.icon_turf_hit && istype(A, /turf/simulated/wall))
-					var/turf/simulated/wall/W = A
-					if (src.forensic_ID)
-						W.forensic_impacts += src.forensic_ID
-
-					if (W.proj_impacts.len <= 10)
-						var/image/impact = image('icons/obj/projectiles.dmi', proj_data.icon_turf_hit)
-						impact.transform = turn(impact.transform, pick(0, 90, 180, 270))
-						impact.pixel_x += rand(-12,12)
-						impact.pixel_y += rand(-12,12)
-						W.proj_impacts += impact
-						W.update_projectile_image(ticker.round_elapsed_ticks)
 				if (proj_data?.hit_object_sound)
 					playsound(A, proj_data.hit_object_sound, 60, 0.5)
 				die()
@@ -170,8 +158,8 @@
 			if (src.proj_data) //ZeWaka: Fix for null.ticks_between_mob_hits
 				if (proj_data.hit_mob_sound)
 					playsound(A.loc, proj_data.hit_mob_sound, 60, 0.5)
-			SEND_SIGNAL(A, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
-			SEND_SIGNAL(A, COMSIG_DISGUISER_DEACTIVATE)
+			SEND_SIGNAL(A, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
+			SEND_SIGNAL(A, COMSIG_MOB_DISGUISER_DEACTIVATE)
 			if (ishuman(A))
 				var/mob/living/carbon/human/H = A
 				H.stamina_stun()
@@ -465,7 +453,7 @@ datum/projectile
 	var/name = "projectile"
 	var/icon = 'icons/obj/projectiles.dmi'
 	var/icon_state = "bullet"	// A special note: the icon state, if not a point-symmetric sprite, should face NORTH by default.
-	var/icon_turf_hit = null // what kinda overlay they puke onto turfs when they hit
+	var/impact_image_state = null // what kinda overlay they puke onto non-mobs when they hit
 	var/brightness = 0
 	var/color_red = 0
 	var/color_green = 0
@@ -922,6 +910,10 @@ datum/projectile/snowball
 		P.max_range = DATA.max_range
 	else
 		P.max_range = min(DATA.dissipation_delay + round(P.power / DATA.dissipation_rate), DATA.max_range)
+
+	if (DATA.reagent_payload)
+		P.create_reagents(15)
+		P.reagents.add_reagent(DATA.reagent_payload, 15)
 
 	return P
 

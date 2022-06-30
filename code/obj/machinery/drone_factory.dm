@@ -41,7 +41,7 @@
 
 		. = ..()
 		SPAWN(0)
-			if (alert(G, "Add yourself to the ghostdrone queue?", "Confirmation", "Yes", "No") == "No")
+			if (tgui_alert(G, "Add yourself to the ghostdrone queue?", "Confirmation", list("Yes", "No")) != "Yes")
 				return
 
 			ghostdrone_candidates += M

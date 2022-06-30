@@ -14,6 +14,7 @@
 	New()
 		. = ..()
 		START_TRACKING
+		src.AddComponent(/datum/component/bullet_holes, 10, 0)
 
 	disposing()
 		. = ..()
@@ -474,10 +475,10 @@
 
 		src.UpdateIcon()
 		playsound(src.loc, "sound/effects/cargodoor.ogg", 15, 1, -3)
-		SEND_SIGNAL(src, COMSIG_STORAGE_CLOSED)
+		SEND_SIGNAL(src, COMSIG_OBJ_STORAGE_CLOSED)
 		return 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/cargotele))
 			return
 
@@ -600,11 +601,12 @@
 	icon_state = "red-medical"
 	icon_opened = "open-white"
 	desc = "A handy medical locker for storing your doctoring apparel."
-	spawn_contents = list(/obj/item/clothing/head/nursehat = 3,
+	spawn_contents = list(/obj/item/clothing/head/nursehat = 2,
+					/obj/item/clothing/head/traditionalnursehat = 2,
 					/obj/item/clothing/suit/nursedress = 3,
 					/obj/item/clothing/suit/wintercoat/medical = 3,
 					/obj/item/clothing/head/headmirror = 3,
-					/obj/item/clothing/suit/labcoat/medical = 3)
+					/obj/item/clothing/suit/labcoat = 2)
 
 /obj/storage/closet/command/ruined //replacements for azones and mining level flavor
 	name = "Dented command locker"

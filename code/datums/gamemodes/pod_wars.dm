@@ -762,7 +762,7 @@ ABSTRACT_TYPE(/obj/machinery/macrofab/pod_wars)
 	var/team_num = 0
 
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (get_pod_wars_team_num(user) != team_num)
 			boutput(user, "<span class='alert'>This machine's design makes no sense to you, you can't figure out how to use it!</span>")
 			return
@@ -974,7 +974,7 @@ proc/setup_pw_crate_lists()
 			last_reset_text = "<h4>(mission log reset [days_passed] days ago)</h4>"
 		src.desc = "<center><h2><b>Pod Wars Mission Log</b></h2><br> <h3>Nanotrasen Victories: [nt_wins]<br>\nNanotrasen Deaths: [nt_deaths]</h3><br>[last_reset_text]</center>"
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (..(user))
 			return
 
@@ -1009,7 +1009,7 @@ proc/setup_pw_crate_lists()
 			last_reset_text = "<h4>(mission log reset [days_passed] days ago)</h4>"
 		src.desc = "<center><h2><b>Pod Wars Mission Log</b></h2><br> <h3>Syndicate Victories: [sy_wins]<br>\nSyndicate Deaths: [sy_deaths]</h3><br>[last_reset_text]</center>"
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (..(user))
 			return
 

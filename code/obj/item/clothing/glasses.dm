@@ -17,7 +17,7 @@
 	var/correct_bad_vision = 0
 	compatible_species = list("human", "cow", "werewolf", "flubber")
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/cloth/handkerchief))
 			user.visible_message("<span class='notice'>[user] [pick("polishes", "shines", "cleans", "wipes")] [src] with [src].</span>")
 			return
@@ -46,7 +46,7 @@
 	desc = "A strip of cloth painstakingly designed to wear around your eyes so you cannot see."
 	block_vision = 1
 
-	attack(mob/M as mob, mob/user as mob, def_zone) //this is for equipping blindfolds on head attack.
+	attack(mob/M, mob/user, def_zone) //this is for equipping blindfolds on head attack.
 		if (user.zone_sel.selecting == "head" && ishuman(M)) //ishuman() works on monkeys too apparently.
 			if(user == M) //Accidentally blindfolding yourself might be annoying so I'm leaving that out.
 				boutput(user, "<span class='alert'>Put it on your eyes, dingus!</span>")
@@ -322,6 +322,7 @@
 	block_eye = "R"
 	var/pinhole = 0
 	var/mob/living/carbon/human/equipper
+	wear_layer = MOB_GLASSES_LAYER2
 
 	setupProperties()
 		..()
@@ -333,7 +334,7 @@
 			equipper = user//todo: this is prooobably redundant
 		return ..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if ((isscrewingtool(W) || istype(W, /obj/item/pen)) && !pinhole)
 			if( equipper && equipper.glasses == src )
 				var/obj/item/organ/eye/theEye = equipper.drop_organ((src.icon_state == "eyepatch-L") ? "left_eye" : "right_eye")
@@ -421,6 +422,29 @@
 		else
 			boutput(user, "<span class='alert'>You put on the glasses but they show no signal. The scuttlebot is likely destroyed.</span>")
 
+	attack(mob/W, mob/M)
+		if (istype(W, /mob/living/critter/robotic/scuttlebot))
+			var/mob/living/critter/robotic/scuttlebot/S = W
+			if (connected_scuttlebot != S)
+				boutput(M, "You try to put the goggles back into the hat but it grumps at you, not recognizing the glasses.")
+				return 1
+
+			if (istype(W, /mob/living/critter/robotic/scuttlebot/weak))
+				var/mob/living/critter/robotic/scuttlebot/weak/O = S
+				if (O.linked_hat != null)
+					O.linked_hat.set_loc(get_turf(O))
+				else
+					new /obj/item/clothing/head/det_hat/gadget(get_turf(O))
+				boutput(M, "You stuff the goggles back into the detgadget hat. It powers down with a low whirr.")
+				qdel(O)
+				qdel(src)
+			else
+				new /obj/item/clothing/head/det_hat/folded_scuttlebot(get_turf(S))
+				boutput(M, "You stuff the goggles back into the hat. It powers down with a low whirr.")
+				qdel(S)
+				qdel(src)
+		else
+			..()
 
 	unequipped(var/mob/user) //Someone might have removed them from us. If we're inside the scuttlebot, we're forced out
 		..()
@@ -472,7 +496,7 @@
 			get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_mob(user)
 		..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/analyzer/healthanalyzer_upgrade))
 			if (src.scan_upgrade)
 				boutput(user, "<span class='alert'>[src] already has a health scan upgrade!</span>")
@@ -607,6 +631,7 @@
 	color_r = 0.5
 	color_g = 1
 	color_b = 0.5
+	wear_layer = MOB_GLASSES_LAYER2
 
 	equipped(mob/user, slot)
 		. = ..()

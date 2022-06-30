@@ -224,7 +224,7 @@
 		src.open(user=user)
 		src.visible_message("<span class='alert'><b>[user]</b> kicks [src] open!</span>")
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(world.time == src.last_attackhand) // prevent double-attackhand when entering
 			return
 		if (!in_interact_range(src, user))
@@ -239,7 +239,7 @@
 		else if (!src.toggle(user))
 			return src.Attackby(null, user)
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		if (istype(I, /obj/item/satchel/))
 			if(src.secure && src.locked)
 				user.show_text("Access Denied", "red")
@@ -309,9 +309,16 @@
 			if (src.emagged)
 				user.show_text("It appears to be broken.", "red")
 				return
-			else if (src.personal && istype(I, /obj/item/card/id))
-				var/obj/item/card/id/ID = I
-				if ((src.req_access && src.allowed(user)) || !src.registered || (istype(ID, /obj/item/card/id) && src.registered == ID.registered))
+			else if (src.personal)
+				var/obj/item/card/id/ID = null
+				if (istype(I, /obj/item/card/id))
+					ID = I
+				else
+					if (ishuman(user))
+						var/mob/living/carbon/human/H = user
+						if (H.wear_id)
+							ID = H.wear_id
+				if ((src.req_access && src.allowed(user)) || (ID && length(ID.registered) && (src.registered == ID.registered || !src.registered)))
 					//they can open all lockers, or nobody owns this, or they own this locker
 					src.locked = !( src.locked )
 					user.visible_message("<span class='notice'>The locker has been [src.locked ? null : "un"]locked by [user].</span>")
@@ -516,7 +523,7 @@
 					if (src.open)
 						src.close()
 			if(!stuffed)
-				if(check_if_enterable(O))
+				if(check_if_enterable(O) && in_interact_range(user, src) && in_interact_range(user, O))
 					O.set_loc(T)
 					if (user != O)
 						user.visible_message("<span class='alert'>[user] stuffs [O] into [src]!</span>",\
@@ -663,7 +670,7 @@
 
 		src.UpdateIcon()
 		playsound(src.loc, src.close_sound, volume, 1, -3)
-		SEND_SIGNAL(src, COMSIG_STORAGE_CLOSED)
+		SEND_SIGNAL(src, COMSIG_OBJ_STORAGE_CLOSED)
 		return 1
 
 	proc/recalcPClass()
@@ -751,7 +758,7 @@
 			src.log_me(weldman, M, src.welded ? "welds" : "unwelds")
 
 	proc/crunch(var/mob/M as mob)
-		if (!M || istype(M, /mob/living/carbon/wall))
+		if (!M)
 			return
 
 		if (M.ckey && (M.ckey == owner_ckey))

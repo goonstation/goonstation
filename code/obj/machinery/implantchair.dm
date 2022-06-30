@@ -31,7 +31,7 @@
 	M.setStatus("buckled", duration = INFINITE_STATUS)
 	return
 
-/obj/machinery/imp/chair/attack_hand(mob/user as mob)
+/obj/machinery/imp/chair/attack_hand(mob/user)
 	for(var/mob/M in src.loc)
 		if (M.buckled)
 			if (M != user)

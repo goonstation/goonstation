@@ -20,29 +20,33 @@ proc/is_teleportation_allowed(var/turf/T)
 			if (!TJ.active)
 				continue
 			if(IN_RANGE(TJ, T, TJ.range))
-				return 0
+				return FALSE
 		if (istype(atom, /obj/item/device/flockblocker))
 			var/obj/item/device/flockblocker/F = atom
 			if (!F.active)
 				continue
 			if(IN_RANGE(F, T, F.range))
-				return 0
+				return FALSE
 
 	for_by_tcl(N, /obj/blob/nucleus)
 		if(IN_RANGE(N, T, 3))
-			return 0
+			return FALSE
 
 	// first check the always allowed turfs from map landmarks
 	if (T in landmarks[LANDMARK_TELESCI])
-		return 1
+		return TRUE
 
 	if ((istype(T.loc,/area) && T.loc:teleport_blocked) || isrestrictedz(T.z))
-		return 0
+		return FALSE
 
-	if (istype(T.loc, /area/shuttle/escape/station) && !T.canpass())
-		return 0//forgive me pls
+	if (istype(T.loc, /area/shuttle/escape/station))
+		if (T.density)
+			return FALSE
+		for (var/obj/O in T)
+			if (O.density)
+				return FALSE
 
-	return 1
+	return TRUE
 
 /obj/machinery/networked/telepad
 	icon = 'icons/obj/stationobjs.dmi'
@@ -96,7 +100,7 @@ proc/is_teleportation_allowed(var/turf/T)
 		if (!src.host_id)
 			. += "<span class='alert'>The [src.name]'s \"disconnected from host\" light is flashing.</span>"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..())
 			return
 
@@ -757,7 +761,7 @@ proc/is_teleportation_allowed(var/turf/T)
 					O.show_message("<span class='alert'>The area surrounding the [src] bursts into flame!</span>", 1)
 				return
 			if("mediumsummon")
-				var/summon = pick(/obj/critter/maneater,/obj/critter/killertomato,/obj/critter/spacebee,/obj/critter/golem,/obj/critter/magiczombie,/obj/critter/mimic)
+				var/summon = pick(/obj/critter/maneater,/obj/critter/killertomato,/obj/critter/wasp,/obj/critter/golem,/obj/critter/magiczombie,/obj/critter/mimic)
 				new summon(src.loc)
 				return
 			if("getrandom")
@@ -937,7 +941,7 @@ proc/is_teleportation_allowed(var/turf/T)
 
 		return
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (..(user))
 			return
 
@@ -985,7 +989,7 @@ proc/is_teleportation_allowed(var/turf/T)
 		onclose(user, "t_computer")
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W))
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 			src.panel_open = !src.panel_open

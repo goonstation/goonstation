@@ -38,6 +38,10 @@
 		TP.turret_list += src
 	START_TRACKING
 
+	#ifdef LOW_SECURITY
+	START_TRACKING_CAT(TR_CAT_DELETE_ME)
+	#endif
+
 /obj/machinery/turret/disposing()
 	var/area/station/turret_protected/TP = get_area(src)
 	if(istype(TP))

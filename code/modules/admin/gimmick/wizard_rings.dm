@@ -78,7 +78,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring/wizard)
 				var/obj/item/staff/cthulhu/staff = new /obj/item/staff/cthulhu(get_turf(user))
 				created_staff = staff
 
-			if (created_staff?.wizard_key != user?.mind.key)
+			if (created_staff?.wizard_key != user?.mind.key && !isvirtual(user))
 				boutput(user, "<span class='notice'><b>You claim [created_staff] as your own!</b></span>")
 				created_staff.wizard_key = user?.mind.key
 
@@ -100,7 +100,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring/wizard)
 				var/obj/item/staff/thunder/staff = new /obj/item/staff/thunder(get_turf(user))
 				created_staff = staff
 
-			if (created_staff?.wizard_key != user?.mind.key)
+			if (created_staff?.wizard_key != user?.mind.key && !isvirtual(user))
 				boutput(user, "<span class='notice'><b>You claim [created_staff] as your own!</b></span>")
 				created_staff.wizard_key = user?.mind.key
 

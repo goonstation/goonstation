@@ -4157,7 +4157,7 @@ datum
 					M.changeStatus("weakened", 1 SECONDS)
 					M.emote("laugh")
 					M.visible_message("<span class='alert'>[M] sneezes. \His sneeze sounds like a honk!</span>")
-					playsound(M.loc, "sound/items/bikehorn.ogg", 50, 1)
+					playsound(M.loc, "sound/musical_instruments/Bikehorn_1.ogg", 50, 1)
 				if (probmult(4))
 					//Create an alphabet soup of random phrases and force the mob to say it!
 					var/message = null
@@ -4346,3 +4346,22 @@ datum
 			description = "A cocktail from the prohibition era, named after a popular expression."
 			reagent_state = LIQUID
 			taste = "honeyed"
+
+		fooddrink/alcoholic/tealquila
+			name = "Tealquila Sunrise"
+			id = "tealquila"
+			fluid_r = 38
+			fluid_g = 255
+			fluid_b = 230
+			alch_strength = 0.3
+			description = "A shockingly teal cocktail infused with benign gnesis, effective at neutralizing the more aggresssive variety."
+			reagent_state = LIQUID
+			taste = list("teal", "like TV static")
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				. = ..()
+				if (!M)
+					M = holder.my_atom
+				if (M.reagents.has_reagent("flockdrone_fluid"))
+					boutput(M, "<span class='alert'>The alien presence in your mind receeds a little.</span>")
+				flush(M, 2 * mult, list("flockdrone_fluid")) //slightly better than calomel

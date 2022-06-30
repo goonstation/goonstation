@@ -100,7 +100,7 @@
 		return
 	if (src?.holder)
 		M.playsound_local(M, "sound/misc/prayerchime.ogg", 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
-		boutput(Mclient.mob, __blue("You hear a voice in your head... <i>[msg]</i>"))
+		boutput(Mclient.mob, "<span class='notice'>You hear a voice in your head... <i>[msg]</i></span>")
 
 	logTheThing("admin", src.mob, Mclient.mob, "Subtle Messaged [constructTarget(Mclient.mob,"admin")]: [msg]")
 	logTheThing("diary", src.mob, Mclient.mob, "Subtle Messaged [constructTarget(Mclient.mob,"diary")]: [msg]", "admin")
@@ -936,7 +936,7 @@
 				qdel(target_mob.r_hand)
 				target_mob.equip_if_possible(new /obj/item/clothing/suit/wizrobe, target_mob.slot_wear_suit)
 				target_mob.equip_if_possible(new /obj/item/clothing/head/wizard, target_mob.slot_head)
-				target_mob.equip_if_possible(new /obj/item/clothing/shoes/sandal, target_mob.slot_shoes)
+				target_mob.equip_if_possible(new /obj/item/clothing/shoes/sandal/wizard, target_mob.slot_shoes)
 				target_mob.put_in_hand(new /obj/item/staff(target_mob))
 
 				var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
@@ -1169,7 +1169,7 @@
 	target = trim(lowertext(target))
 	if (!target) return 0
 
-	var/msg = "<span class='notice'>"
+	var/list/msg = list("<span class='notice'>")
 	var/whois = whois(target)
 	if (whois)
 		var/list/whoisR = whois
@@ -1181,7 +1181,7 @@
 		msg += "No players found for '[target]'"
 
 	msg += "</span>"
-	boutput(src, msg)
+	boutput(src, msg.Join())
 
 /client/proc/cmd_whodead()
 	set name = "Whodead"
@@ -1190,7 +1190,7 @@
 	set popup_menu = 0
 	ADMIN_ONLY
 
-	var/msg = "<span class='notice'>"
+	var/list/msg = list("<span class='notice'>")
 	var/list/whodead = whodead()
 	if (whodead.len)
 		msg += "<b>Dead player[(whodead.len == 1 ? "" : "s")] found:</b><br>"
@@ -1201,7 +1201,7 @@
 		msg += "No dead players found"
 
 	msg += "</span>"
-	boutput(src, msg)
+	boutput(src, msg.Join())
 
 /client/proc/debugreward()
 	set background = 1
@@ -1254,7 +1254,7 @@
 		return
 		//target = input(usr, "Target", "Target") as mob in world
 
-	boutput(usr, scan_health(target, 1, 255, 1))
+	boutput(usr, scan_health(target, 1, 255, 1, syndicate = TRUE))
 	return
 
 /client/proc/cmd_admin_check_reagents(var/atom/target as null|mob|obj|turf in world)
@@ -1685,10 +1685,13 @@
 	newMind.is_target = M.mind.is_target
 	if (M.mind.former_antagonist_roles.len)
 		newMind.former_antagonist_roles.Add(M.mind.former_antagonist_roles)
+	if (M.mind in ticker.mode.Agimmicks)
+		ticker.mode.Agimmicks -= M.mind
 	qdel(M.mind)
 	if (!(newMind in ticker.minds))
 		ticker.minds.Add(newMind)
 	M.mind = newMind
+	M.mind.brain.owner = M.mind
 
 	M.antagonist_overlay_refresh(1, 1)
 

@@ -56,7 +56,7 @@
 		if (new_timing)
 			set_timing(new_timing)
 
-	attackby(obj/item/W as obj, mob/user as mob) //this one is big and sucks, where all of our key and construction stuff is
+	attackby(obj/item/W, mob/user) //this one is big and sucks, where all of our key and construction stuff is
 		if (istype(W, /obj/item/piano_key)) //piano key controls
 			var/mode_sel = input("Which do you want to do?", "Piano Control") as null|anything in list("Reset Piano", "Toggle Looping", "Adjust Timing")
 
@@ -154,7 +154,7 @@
 		else
 			..()
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (is_busy)
 			src.visible_message("<span class='alert'>\The [src] emits an angry beep!</span>")
 			return

@@ -42,7 +42,7 @@ obj/chessbutton
 	icon_state = "doorctrl0"
 	var/confirm = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(chess_in_progress && !confirm)
 			boutput(user, "<span class='alert'>You are about to erase the board. Press again to confirm.</span>")
 			confirm = 1

@@ -91,7 +91,6 @@ proc/filter_trait_hats(var/type)
 	name = "bio hood"
 	icon_state = "bio"
 	item_state = "bio_hood"
-	permeability_coefficient = 0.005
 	c_flags = COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	desc = "This hood protects you from harmful biological contaminants."
 	seal_hair = 1
@@ -101,9 +100,11 @@ proc/filter_trait_hats(var/type)
 		..()
 		setProperty("heatprot", 10)
 		setProperty("viralprot", 50)
+		setProperty("chemprot", 30)
 		setProperty("meleeprot_head", 1)
 		setProperty("disorient_resist_eye", 5)
 		setProperty("disorient_resist_ear", 2)
+		setProperty("movespeed", 0.1)
 
 /obj/item/clothing/head/bio_hood/janitor // adhara stuff
 	name = "bio hood"
@@ -122,7 +123,6 @@ proc/filter_trait_hats(var/type)
 	name = "emergency hood"
 	icon_state = "emerg"
 	item_state = "emerg"
-	permeability_coefficient = 0.25
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	desc = "Helps protect from vacuum for a short period of time."
 	seal_hair = 1
@@ -130,6 +130,7 @@ proc/filter_trait_hats(var/type)
 
 	setupProperties()
 		..()
+		setProperty("chemprot", 15)
 		setProperty("disorient_resist_eye", 9)
 		setProperty("disorient_resist_ear", 5)
 		setProperty("space_movespeed", 0.5)
@@ -137,7 +138,6 @@ proc/filter_trait_hats(var/type)
 /obj/item/clothing/head/rad_hood
 	name = "Class II radiation hood"
 	icon_state = "radiation"
-	permeability_coefficient = 0.02
 	c_flags = COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	desc = "Asbestos, right near your face. Perfect!"
 	seal_hair = 1
@@ -147,9 +147,10 @@ proc/filter_trait_hats(var/type)
 		setProperty("radprot", 50)
 		setProperty("heatprot", 10)
 		setProperty("meleeprot_head", 1)
+		setProperty("chemprot", 10)
 		setProperty("disorient_resist_eye", 12)
 		setProperty("disorient_resist_ear", 8)
-		setProperty("movespeed", 0.15)
+		setProperty("movespeed", 0.1)
 
 /obj/item/clothing/head/cakehat
 	name = "cakehat"
@@ -279,6 +280,7 @@ proc/filter_trait_hats(var/type)
 
 //A robot in disguise, ready to go and spy on everyone for you
 /obj/item/clothing/head/det_hat/folded_scuttlebot
+	blocked_from_petasusaphilic = TRUE
 	desc = "Someone who wears this will look very smart. It looks a bit heavier than it should."
 
 	attack_self(mob/user)
@@ -368,7 +370,7 @@ proc/filter_trait_hats(var/type)
 				M.show_text("Requested object missing or nonexistant!", "red")
 				return
 
-	attackby(obj/item/W as obj, mob/M as mob)
+	attackby(obj/item/W, mob/M)
 		var/success = 0
 		for (var/name in items)
 			var/type = items[name]
@@ -404,6 +406,15 @@ proc/filter_trait_hats(var/type)
 			return
 
 		return ..()
+
+	attack_self (mob/user as mob)
+		user.visible_message("<span class='combat'><b>[user] turns [his_or_her(user)] detgadget hat into a spiffy scuttlebot!</b></span>")
+		var/mob/living/critter/robotic/scuttlebot/weak/S = new /mob/living/critter/robotic/scuttlebot/weak(get_turf(src))
+		S.linked_hat = src
+		user.drop_item()
+		src.set_loc(S)
+		user.update_inhands()
+		return
 
 	verb/set_phrase()
 		set name = "Set Activation Phrase"
@@ -739,7 +750,7 @@ proc/filter_trait_hats(var/type)
 	see_face = 1
 	body_parts_covered = HEAD
 
-/obj/item/paper_hat/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/paper_hat/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/pen))
 		var/obj/item/pen/P = W
 		if (P.font_color)
@@ -1172,17 +1183,24 @@ proc/filter_trait_hats(var/type)
 	icon_state = "nursehat"
 	item_state = "nursehat"
 
+/obj/item/clothing/head/traditionalnursehat
+	name = "Traditional Nurse Hat"
+	desc = "A nurse hat from the past."
+	icon_state = "traditionalnursehat"
+	item_state = "traditionalnursehat"
+	seal_hair = 1
+
 /obj/item/clothing/head/chemhood
 	name = "chemical protection hood"
 	desc = "A thick rubber hood which protects you from almost any harmful chemical substance."
 	icon_state = "chemhood"
 	item_state = "chemhood"
-	permeability_coefficient = 0
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	seal_hair = 1
 
 	setupProperties()
 		..()
+		setProperty("chemprot", 40)
 		setProperty("disorient_resist_eye", 6)
 		setProperty("disorient_resist_ear", 5)
 
@@ -1358,7 +1376,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/headband)
 	w_class = W_CLASS_TINY
 	throwforce = 0
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		..()
 		if(istype(W,/obj/item/device/radio/headset))
 			user.show_message("You stuff the headset on the headband and tape it in place. [istype(src, /obj/item/clothing/head/headband/nyan) ? "Meow" : "Now"] you should be able to hear the radio using these!")

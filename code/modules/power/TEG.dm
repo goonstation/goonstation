@@ -121,7 +121,7 @@
 			. += "<br><span class='notice'>[reagents.get_description(user,RC_SCALE)]</span>"
 
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		var/open = is_open_container()
 
 		// Weld > Crowbar > Rods > Weld
@@ -291,7 +291,7 @@
 				reaction_temp -= 200
 				if(prob(5))
 					src.visible_message("<span class='alert'>A thin layer of frost momentarily forms around [src].</span>")
-			if(src.reagents.has_active_reaction("thalmerite_heat"))
+			if(src.reagents.has_active_reaction("pyrosium_heat"))
 				reaction_temp += 200
 				if(prob(5))
 					src.visible_message("<span class='alert'>The [src] looks kind of hazey for a moment.</span>")
@@ -896,7 +896,7 @@ datum/pump_ui/circulator_ui
 
 		return efficiency_scale * 0.01
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		// Weld > Crowbar > Rods > Weld
 		switch(semiconductor_state)
 			if(TEG_SEMI_STATE_INSTALLED)
@@ -1232,7 +1232,7 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 				boutput(owner, "<span class='notice'>You snip the last piece of the electrical system connected to the semiconductor.</span>")
 				playsound(generator, "sound/items/Scissor.ogg", 80, 1)
 				generator.semiconductor_repair = "The semiconductor has been disconnected and can be pried out or reconnected with additional cable."
-				generator.status = BROKEN // SEMICONDUCTOR DISCONNECTED IT BROKEN
+				generator.status |= BROKEN // SEMICONDUCTOR DISCONNECTED IT BROKEN
 				generator.UpdateIcon()
 
 			if (TEG_SEMI_STATE_DISCONNECTED)
@@ -1385,8 +1385,8 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 		return 1
 
 /obj/machinery/power/furnace/thermo
-	name = "Furnace"
-	desc = "Generates Heat for the thermoelectric generator."
+	name = "Zaojun-1 Furnace"
+	desc = "The venerable XIANG|GIESEL model '灶君' combustion furnace. This version lacks the thermocouple and is designed to heat larger thermo-electric gas circulator systems."
 	icon_state = "furnace"
 	anchored = 1
 	density = 1

@@ -5,9 +5,8 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	icon = 'icons/obj/foodNdrink/food_produce.dmi'
 	var/datum/plant/planttype = null
 	var/datum/plantgenes/plantgenes = null
-	edible = 1     // Can this just be eaten as-is?
+	edible = TRUE     // Can this just be eaten as-is?
 	var/generation = 0 // For genetics tracking.
-	var/plant_reagent = null
 	var/validforhat = null
 	var/crop_prefix = ""	// Prefix for crop name when harvested ("rainbow" melon)
 	var/crop_suffix = ""	// Suffix for crop name when harvested (bamboo "shoot")
@@ -35,7 +34,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	proc/make_reagents()
 		made_reagents = 1
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		if (src.edible == 0)
 			if (user == M)
 				boutput(user, "<span class='alert'>You can't just cram that in your mouth, you greedy beast!</span>")
@@ -82,7 +81,6 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	heal_amt = 1
 	throwforce = 0
 	force = 0
-	plant_reagent = "juice_tomato"
 	validforhat = 1
 	sliceable = TRUE
 	slice_product = /obj/item/reagent_containers/food/snacks/ingredient/tomatoslice
@@ -133,7 +131,6 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	throwforce = 0
 	force = 0
 	food_color = "#FFFF00"
-	plant_reagent = "cornstarch"
 	var/popping = 0
 	brewable = 1
 	brew_result = "bourbon"
@@ -163,7 +160,6 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	bites_left = 3
 	heal_amt = 3
 	food_color = "#FFFFFF"
-	plant_reagent = "ethanol"
 	brew_result = "ethanol"
 
 /obj/item/reagent_containers/food/snacks/plant/corn/pepper
@@ -174,7 +170,6 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	bites_left = 3
 	heal_amt = 3
 	food_color = "#373232"
-	plant_reagent = "pepper"
 	brew_result = "pepper"
 
 /obj/item/reagent_containers/food/snacks/plant/soy
@@ -188,7 +183,6 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	throwforce = 0
 	force = 0
 	food_color = "#4A7402"
-	plant_reagent = "grease"
 	food_effects = list("food_space_farts")
 
 /obj/item/reagent_containers/food/snacks/plant/bean
@@ -201,7 +195,6 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	heal_amt = 1
 	throwforce = 0
 	force = 0
-	plant_reagent = "nitrogen"
 	food_color = "#CCFFCC"
 	food_effects = list("food_space_farts")
 
@@ -223,7 +216,6 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	crop_prefix = "golden "
 	icon_state = "goldenpeapod"
 	food_color = "#bdbd35"
-	plant_reagent = "ammonia"
 	brew_result = "ammonia"
 
 /obj/item/reagent_containers/food/snacks/plant/soylent
@@ -246,11 +238,10 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	bites_left = 3
 	heal_amt = 1
 	food_color = "#FF8C00"
-	plant_reagent = "juice_orange"
 	validforhat = 1
 	food_effects = list("food_cold", "food_refreshed")
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat))
 			boutput(user, "<span class='notice'>You combine the [src] and [W] to create a Synthorange!</span>")
 			var/obj/item/reagent_containers/food/snacks/plant/orange/synth/P = new(W.loc)
@@ -286,7 +277,6 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 /obj/item/reagent_containers/food/snacks/plant/orange/blood
 	name = "blood orange"
 	desc = "Juicy."
-	plant_reagent = "bloodc"
 
 /obj/item/reagent_containers/food/snacks/plant/orange/wedge
 	name = "orange wedge"
@@ -357,7 +347,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	food_color = "#FF9F87"
 	brew_result = "juice_grapefruit"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (iscuttingtool(W))
 			if (istype (src, /obj/item/reagent_containers/food/snacks/plant/grapefruit/wedge))
 				boutput(user, "<span class='alert'>You can't cut wedges into wedges! What kind of insanity is that!?</span>")
@@ -411,7 +401,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	food_color = "#7FFF00"
 	validforhat = 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (iscuttingtool(W))
 			var/turf/T = get_turf(src)
 			user.visible_message("[user] cuts [src] into slices.", "You cut [src] into slices.")
@@ -462,7 +452,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 		..()
 		reagents.add_reagent("george_melonium",50)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (iscuttingtool(W))
 			var/turf/T = get_turf(src)
 			user.visible_message("[user] cuts [src] into slices.", "You cut [src] into slices.")
@@ -508,7 +498,6 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	w_class = W_CLASS_TINY
 	bites_left = 1
 	heal_amt = 2
-	plant_reagent = "george_melonium"
 	initial_volume = 30
 
 	make_reagents()
@@ -543,7 +532,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 			src.icon_state = "[base_icon_state]-spin-left"
 		. = ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		..()
 		if(user)
 			src.icon_state = base_icon_state
@@ -620,7 +609,6 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	w_class = W_CLASS_TINY
 	bites_left = 1
 	heal_amt = 2
-	plant_reagent = "capsaicin"
 	initial_volume = 100
 	food_effects = list("food_refreshed")
 
@@ -639,7 +627,6 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	bites_left = 1
 	heal_amt = 2
 	food_color = "#00CED1"
-	plant_reagent = "cryostylane"
 	initial_volume = 100
 
 	make_reagents()
@@ -663,7 +650,6 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	bites_left = 1
 	heal_amt = 1
 	food_color = "#FFFF00"
-	plant_reagent = "ghostchilijuice"
 	initial_volume = 30
 
 	make_reagents()
@@ -707,7 +693,6 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	bites_left = 1
 	heal_amt = 1
 	food_color = "#FF2244"
-	plant_reagent = "juice_strawberry"
 	validforhat = 1
 	food_effects = list("food_cold", "food_refreshed")
 
@@ -719,7 +704,6 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	bites_left = 1
 	heal_amt = 1
 	food_color = "#0000FF"
-	plant_reagent = "juice_blueberry"
 	food_effects = list("food_cold", "food_refreshed")
 
 /obj/item/reagent_containers/food/snacks/plant/blackberry/
@@ -730,7 +714,6 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	bites_left = 1
 	heal_amt = 1
 	food_color = "#1d222f"
-	plant_reagent = "juice_blackberry"
 	food_effects = list("food_cold", "food_refreshed")
 
 /obj/item/reagent_containers/food/snacks/plant/raspberry/
@@ -741,7 +724,6 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	bites_left = 1
 	heal_amt = 1
 	food_color = "#a30325"
-	plant_reagent = "juice_raspberry"
 	food_effects = list("food_cold", "food_refreshed")
 
 /obj/item/reagent_containers/food/snacks/plant/blueraspberry
@@ -752,7 +734,6 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	bites_left = 1
 	heal_amt = 1
 	food_color = "#65d8e6"
-	plant_reagent = "juice_blueraspberry"
 	food_effects = list("food_cold", "food_refreshed")
 
 /obj/item/reagent_containers/food/snacks/plant/pear/
@@ -775,7 +756,6 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	bites_left = 1
 	heal_amt = 2
 	brewable = 1
-	plant_reagent = "too much"
 	brew_result = list("cider","rotting") //bad
 	food_color = "#3FB929"
 	initial_volume = 30
@@ -820,19 +800,19 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 		M.take_oxygen_deprivation(0 - src.heal_amt)
 		M.take_brain_damage(0 - src.heal_amt)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		// Apple on a stick
 		if(istype(W,/obj/item/stick) || istype(W,/obj/item/rods))
 			// Fail if already an apple on a stick
 			if(istype(src,/obj/item/reagent_containers/food/snacks/plant/apple/stick))
-				boutput(user, __red("This apple already has a stick!"))
+				boutput(user, "<span class='alert'>This apple already has a stick!</span>")
 				return
 
 			// Check for broken sticks
 			if(istype(W,/obj/item/stick))
 				var/obj/item/stick/S = W
 				if(S.broken)
-					boutput(user, __red("You can't use a broken stick!"))
+					boutput(user, "<span class='alert'>You can't use a broken stick!</span>")
 					return
 
 			// Create apple on a stick
@@ -868,7 +848,6 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	desc = "Woah. This looks absolutely delicious."
 	icon_state = "poison"
 	food_color = "#AC1515"
-	plant_reagent = "capulettium"
 	initial_volume = 100
 
 	make_reagents()
@@ -902,7 +881,6 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	bites_left = 2
 	heal_amt = 2
 	food_color = "#FFFF00"
-	plant_reagent = "potassium"
 	validforhat = 1
 	food_effects = list("food_cold", "food_refreshed")
 
@@ -957,7 +935,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	food_color = "#CC6600"
 	validforhat = 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (iscuttingtool(W))
 			user.visible_message("[user] carefully and creatively carves [src].", "You carefully and creatively carve [src]. Spooky!")
 			var/obj/item/clothing/head/pumpkin/P = new /obj/item/clothing/head/pumpkin(user.loc)
@@ -977,7 +955,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	see_face = 0.0
 	item_state = "pumpkin"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/light/flashlight))
 			user.visible_message("[user] adds [W] to [src].", "You add [W] to [src].")
 			W.name = copytext(src.name, 8) + " lantern"	// "carved "
@@ -997,11 +975,10 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	bites_left = 2
 	heal_amt = 1
 	food_color = "#008000"
-	plant_reagent = "juice_lime"
 	validforhat = 1
 	food_effects = list("food_cold", "food_refreshed")
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (iscuttingtool(W))
 			if (istype (src, /obj/item/reagent_containers/food/snacks/plant/lime/wedge))
 				boutput(user, "<span class='alert'>You can't cut wedges into wedges! What kind of insanity is that!?</span>")
@@ -1042,11 +1019,10 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	bites_left = 2
 	heal_amt = 1
 	food_color = "#FFFF00"
-	plant_reagent = "juice_lemon"
 	validforhat = 1
 	food_effects = list("food_cold", "food_refreshed")
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (iscuttingtool(W))
 			if (istype (src, /obj/item/reagent_containers/food/snacks/plant/lemon/wedge))
 				boutput(user, "<span class='alert'>You can't cut wedges into wedges! What kind of insanity is that!?</span>")
@@ -1087,7 +1063,6 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	bites_left = 1
 	heal_amt = -1
 	food_color = "#008000"
-	plant_reagent = "toxic_slurry"
 	initial_volume = 50
 
 /obj/item/reagent_containers/food/snacks/plant/slurryfruit/omega
@@ -1115,7 +1090,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	food_effects = list("food_energized", "food_brute")
 
 	/* drsingh todo: peanut shells and requiring roasting shelling
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/kitchen/utensil/knife) || istype(W,/obj/item/knife/butcher))
 			if (src.icon_state == "potato")
 				user.visible_message("[user] peels [src].", "You peel [src].")
@@ -1139,7 +1114,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	brewable = 1
 	brew_result = "vodka"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/kitchen/utensil/knife) || istype(W,/obj/item/knife/butcher))
 			if (src.icon_state == "potato")
 				user.visible_message("[user] peels [src].", "You peel [src].")
@@ -1179,7 +1154,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	food_color = "#FF9933"
 	food_effects = list("food_bad_breath")
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/kitchen/utensil/knife) || istype(W,/obj/item/knife/butcher))
 			user.visible_message("[user] chops up [src].", "You chop up [src].")
 			for (var/mob/living/carbon/M in range(user, 2))
@@ -1256,7 +1231,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 		..()
 		reagents.add_reagent("coconut_milk",30)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (iscuttingtool(W))
 			user.visible_message("[user] cuts [src] into slices.", "You cut [src] into slices.")
 			src.split()
@@ -1314,33 +1289,17 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 
 /obj/item/reagent_containers/food/snacks/plant/pineapple
 	name = "pineapple"
-	desc = "Its spiky, kind of like some sort of medieval weapon that grows on a plant. Who decided to cut one of these open and tried to eat it?"
+	desc = "It's spiky, kind of like some sort of medieval weapon that grows on a plant. Who decided to cut one of these open and tried to eat it?"
 	icon_state = "pineapple"
 	planttype = /datum/plant/fruit/pineapple
+	sliceable = TRUE
+	slice_amount = 4
+	slice_product = /obj/item/reagent_containers/food/snacks/plant/pineappleslice
 	throwforce = 7
 	w_class = W_CLASS_NORMAL
-	edible = 0
+	edible = FALSE
 	food_color = "#F8D016"
 	validforhat = 1
-
-	make_reagents()
-		..()
-		reagents.add_reagent("juice_pineapple")
-
-	attackby(obj/item/W as obj, mob/user as mob) //make pineapple slices
-		if (iscuttingtool(W))
-			var/turf/T = get_turf(src)
-			user.visible_message("[user] cuts [src] into slices.", "You cut [src] into slices.")
-			for (var/i in 1 to 4)
-				var/obj/item/reagent_containers/food/snacks/plant/pineappleslice/P = new(T)
-				P.name = "[src.name] slice"
-				P.transform = src.transform
-				var/datum/plantgenes/DNA = src.plantgenes
-				var/datum/plantgenes/PDNA = P.plantgenes
-				if(DNA)
-					HYPpassplantgenes(DNA,PDNA)
-			qdel(src)
-		..()
 
 /obj/item/reagent_containers/food/snacks/plant/pineappleslice
 	name = "pineapple slice"
@@ -1354,7 +1313,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 
 	make_reagents()
 		..()
-		reagents.add_reagent("juice_pineapple",10)
+		reagents.add_reagent("juice_pineapple", 10)
 
 /obj/item/reagent_containers/food/snacks/plant/coffeeberry
 	name = "coffee berries"
@@ -1413,7 +1372,6 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	desc = "An aromatic root from the turmeric plant, a relative of ginger."
 	icon_state = "turmericroot"
 	planttype = /datum/plant/veg/turmeric
-	plant_reagent = "currypowder"
 	edible = 0
 	validforhat = 1
 	food_color = "#e0a80c"

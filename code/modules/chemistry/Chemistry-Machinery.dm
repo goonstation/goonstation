@@ -32,11 +32,12 @@
 		..()
 		output_target = src.loc
 
-	attackby(var/obj/item/reagent_containers/glass/B as obj, var/mob/user as mob)
+	attackby(var/obj/item/reagent_containers/glass/B, var/mob/user)
 
-		if(!istype(B, /obj/item/reagent_containers/glass))
-			return
+		if(istype(B, /obj/item/reagent_containers/glass))
+			tryInsert(B, user)
 
+	proc/tryInsert(obj/item/reagent_containers/glass/B, var/mob/user)
 		if (status & (NOPOWER|BROKEN))
 			user.show_text("[src] seems to be out of order.", "red")
 			return
@@ -154,20 +155,18 @@
 						return
 					src.roboworking = null
 				else
-					container.set_loc(src.output_target)
+					container.set_loc(src.output_target) // causes Exited proc to be called
 					usr.put_in_hand_or_eject(container) // try to eject it into the users hand, if we can
-
 				src.beaker = null
 				src.UpdateIcon()
+				return
+
 			if("insert")
 				if (container)
 					return
 				var/obj/item/reagent_containers/glass/inserting = usr.equipped()
 				if(istype(inserting))
-					src.beaker = inserting
-					usr.drop_item()
-					inserting.set_loc(src)
-					src.UpdateIcon()
+					tryInsert(inserting, usr)
 			if("adjustTemp")
 				src.target_temp = clamp(params["temperature"], 0, 1000)
 				src.UpdateIcon()
@@ -280,6 +279,12 @@
 			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
 		return
 
+	Exited(Obj, newloc)
+		if(Obj == src.beaker)
+			src.beaker = null
+			src.UpdateIcon()
+			tgui_process.update_uis(src)
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -328,7 +333,7 @@
 		if (event == "reagent_holder_update")
 			src.updateUsrDialog()
 
-	attackby(var/obj/item/reagent_containers/glass/B as obj, var/mob/user as mob)
+	attackby(var/obj/item/reagent_containers/glass/B, var/mob/user)
 		if (!istype(B, /obj/item/reagent_containers/glass))
 			return
 
@@ -386,12 +391,10 @@
 			attack_hand(usr)
 			return
 		else if (href_list["eject"])
-			if (src.beaker)
-				beaker.set_loc(src.output_target)
-			usr.put_in_hand_or_eject(beaker) // try to eject it into the users hand, if we can
-			beaker = null
-			icon_state = "mixer0"
-			src.updateUsrDialog()
+			var/obj/item/I = src.beaker
+			if (I)
+				I.set_loc(src.output_target) // causes Exited proc to be called
+			usr.put_in_hand_or_eject(I) // try to eject it into the users hand, if we can
 			return
 
 		else if (href_list["createpill"])
@@ -604,7 +607,7 @@
 	attack_ai(mob/user as mob)
 		return src.Attackhand(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (status & BROKEN)
 			return
 		src.add_dialog(user)
@@ -688,6 +691,12 @@
 			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
 		return
 
+	Exited(Obj, newloc)
+		if(Obj == src.beaker)
+			src.beaker = null
+			icon_state = "mixer0"
+			src.updateUsrDialog()
+
 datum/chemicompiler_core/stationaryCore
 	statusChangeCallback = "statusChange"
 
@@ -746,7 +755,7 @@ datum/chemicompiler_core/stationaryCore
 	attack_ai(mob/user as mob)
 		return src.Attackhand(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (status & BROKEN || !powered())
 			boutput( user, "<span class='alert'>You can't seem to power it on!</span>" )
 			return
@@ -755,7 +764,7 @@ datum/chemicompiler_core/stationaryCore
 		onclose(user, "chemicompiler")
 		return
 
-	attackby(var/obj/item/reagent_containers/glass/B as obj, var/mob/user as mob)
+	attackby(var/obj/item/reagent_containers/glass/B, var/mob/user)
 		if (!istype(B, /obj/item/reagent_containers/glass))
 			return
 		if (isrobot(user)) return attack_ai(user)
@@ -791,9 +800,8 @@ datum/chemicompiler_core/stationaryCore
 		topicPermissionCheck(action)
 			if (!(src in range(1)))
 				return 0
-			if (executor.core.running)
-				if(!(action in list("getUIState", "reportError")))
-					return 0
+			if(executor.core.running)
+				return action in list("getUIState", "reportError", "abortCode")
 			return 1
 
 		statusChange(oldStatus, newStatus)
@@ -946,7 +954,7 @@ datum/chemicompiler_core/stationaryCore
 			count++
 		output_target = src.loc
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/glass/))
 			var/obj/item/reagent_containers/glass/B = W
 

@@ -602,7 +602,7 @@ var/global/list/module_editors = list()
 	logTheThing("station", src, null, "[src]'s status as a [role != "" ? "[role]" : "rogue robot"] was removed[persistent == 1 ? " (actual antagonist role unchanged)" : ""].[cause ? " Source: [constructTarget(cause,"combat")]" : ""]")
 	boutput(src, "<h2><span class='alert'>You have been deactivated, removing your antagonist status. Do not commit traitorous acts if you've been brought back to life somehow.</h></span>")
 	src.show_antag_popup("rogueborgremoved")
-
+	src.antagonist_overlay_refresh(TRUE, TRUE) // Syndie vision deactivated.
 	src.law_rack_connection = ticker?.ai_law_rack_manager?.default_ai_rack
 	logTheThing("station", src, null, "[src.name] is connected to the default rack [constructName(src.law_rack_connection)] [cause ? " Source: [constructTarget(cause,"combat")]" : ""]")
 	src.syndicate = FALSE

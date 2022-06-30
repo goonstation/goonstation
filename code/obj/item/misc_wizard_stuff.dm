@@ -48,9 +48,7 @@
 	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))))
 		src.add_dialog(usr)
 		if (href_list["spell_teleport"])
-			if (!can_act(H))
-				return
-			if (src.uses >= 1 && usr.teleportscroll(1, 1, src) == 1)
+			if (src.uses >= 1 && usr.teleportscroll(1, 1, src, null, TRUE) == 1)
 				src.uses -= 1
 		if (ismob(src.loc))
 			attack_self(src.loc)
@@ -151,6 +149,7 @@
 		return
 
 /obj/item/staff/crystal // goes with Gannets' purple wizard robes - it looks different, and that's about it  :I  (always b fabulous)
+	name = "crystal wizard's staff"
 	desc = "A magical staff used for channeling spells. It's got a big crystal on the end."
 	icon_state = "staff_crystal"
 	item_state = "staff_crystal"
@@ -172,7 +171,7 @@
 		. = ..()
 		STOP_TRACKING
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (user.mind)
 			if (iswizard(user) || check_target_immunity(user))
 				if (user.mind.key != src.wizard_key && !check_target_immunity(user))
@@ -184,7 +183,7 @@
 				return
 		else ..()
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (iswizard(user) && !iswizard(M) && !isdead(M) && !check_target_immunity(M))
 			if (M?.traitHolder?.hasTrait("training_chaplain"))
 				M.visible_message("<spab class='alert'>A divine light shields [M] from harm!</span>")
@@ -207,7 +206,7 @@
 		else
 			return
 
-	pull(var/mob/user)
+	pull(mob/user)
 		if(check_target_immunity(user))
 			return ..()
 
@@ -259,7 +258,7 @@
 		flick("[icon_state]_fire", src)
 		..()
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (user.mind)
 			if (iswizard(user) || check_target_immunity(user))
 				if (user.mind.key != src.wizard_key && !check_target_immunity(user))
@@ -271,7 +270,7 @@
 				return
 		else ..()
 
-	pull(var/mob/user)
+	pull(mob/user)
 		if(check_target_immunity(user))
 			return ..()
 

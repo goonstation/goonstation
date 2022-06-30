@@ -64,6 +64,8 @@
 			AddComponent(/datum/component/cell_holder, new from_frame_cell_type)
 
 		SEND_SIGNAL(src, COMSIG_CELL_USE, INFINITY) //also drain the cell out of spite
+		src.is_active = FALSE
+		src.UpdateIcon()
 
 	disposing()
 		processing_items -= src
@@ -242,7 +244,7 @@
 
 		return
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		src.add_fingerprint(user)
 
 		if(check_target_immunity( M ))
@@ -374,7 +376,7 @@
 
 /obj/item/baton/ntso
 	name = "extendable stun baton"
-	desc = "An extendable stun baton for NT Security Operatives in sleek NanoTrasen blue."
+	desc = "An extendable stun baton for NT Security Consultants in sleek NanoTrasen blue."
 	icon_state = "ntso_baton-c"
 	item_state = "ntso-baton-c"
 	force = 7
