@@ -1692,13 +1692,8 @@
 		L.take_toxin_damage(tox * mult)
 		if(weighted_average > 4)
 			weighted_average = 0
-			#ifdef CREATE_PATHOGENS
-			if(!isdead(L))
-				var/datum/pathogen/P = new /datum/pathogen
-				P.create_weak()
-				P.spread = 0
-				wrap_pathogen(L.reagents, P, 10)
-			#endif
+			if (!isdead(L) && prob(0.1))
+				boutput(L, "<span class='alert'>You feel a sense of dread wash over you.</span>")
 		if(probmult(puke_prob))
 			L.visible_message("<span class='alert'>[L] pukes all over [himself_or_herself(L)].</span>", "<span class='alert'>You puke all over yourself!</span>")
 			L.vomit()
@@ -1728,10 +1723,8 @@
 				. += " Your ghostly essence makes you immune to its poison."
 			else
 				. += " You will take toxic damage."
-				#ifdef CREATE_PATHOGENS
-				if(how_miasma > 4)
-					. += " You might get sick."
-				#endif
+			if(how_miasma > 4)
+				. += " You might get sick."
 
 /datum/statusEffect/dripping_paint
 	id = "marker_painted"

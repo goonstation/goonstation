@@ -1873,7 +1873,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					src.ball_up(emote=FALSE)
 		..()
 		if(infected && prob(1))
-			M.infected(ez_pathogen(/datum/pathogeneffects/malevolent/leprosy), null, null, 0)
+			M.reagents.add_reagent("mycobacterium leprae",5)
 
 	death(var/gibbed)
 		if(is_balled())
