@@ -8,8 +8,8 @@
 	recureprob = 100
 	associated_reagent = "mycobacterium leprae"
 	affected_species = list("Human")
-	stage_prob = 3
-//
+	stage_prob = 1
+
 /datum/ailment/disease/leprosy/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)
 	if (..())
 		return

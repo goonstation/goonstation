@@ -257,11 +257,11 @@
 /obj/item/reagent_containers/pill/cold_medicine
 	name = "robustissin pill"
 	desc = "Used to treat mild illnesses."
-	icon_state = "pill4"
+	icon_state = "pill2"
 
 	New()
 		..()
-		reagents.add_reagent("cold_medicine", 10)
+		reagents.add_reagent("cold_medicine", 15)
 
 // drugs 420 all day
 

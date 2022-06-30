@@ -286,14 +286,12 @@
 	icon_state ="moldyburger"
 	bites_left = 1
 	heal_amt = 1
-	initial_volume = 15
-	initial_reagents = null
 	food_effects = list("food_bad_breath")
 
 	heal(var/mob/M)
 		boutput(M, "<span class='alert'>Oof, how old was that?</span>")
 		if(prob(66))
-			M.reagents.add_reagent(pick("salmonella","mucus"),15)
+			M.reagents.add_reagent("salmonella",15)
 		..()
 
 /obj/item/reagent_containers/food/snacks/burger/plague
@@ -310,7 +308,6 @@
 		boutput(M, "<span class='alert'>EW! What the hell did you just taste?!</span>")
 		M.reagents.add_reagent("salmonella",15)
 		..()
-
 
 	fishstick
 		roundstart_pathogens = 0
