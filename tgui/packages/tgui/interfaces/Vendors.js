@@ -21,7 +21,7 @@ export const Vendors = (props, context) => {
   } = data;
 
   const canVend = (a) => (
-    (((a.cost <= cash) || (a.cost <= bankMoney)) || !requiresMoney)
+    ((((a.cost <= cash) || (a.cost <= bankMoney)) || !requiresMoney) && (a.amount > 0))
   );
   const getCost = (a) => (
     (((a.cost) && requiresMoney) ? `$${a.cost}` : "Free")
