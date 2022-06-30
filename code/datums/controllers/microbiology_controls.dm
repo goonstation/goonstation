@@ -61,19 +61,6 @@ var/datum/microbiology_controller/microbio_controls
 		cultures[P.name] = P
 		return
 
-	proc/get_microbe_from_path(var/microbe_path)
-		if (!ispath(microbe_path))
-			logTheThing("debug", null, null, "<b>Microbiology:</b> Attempt to find schematic with null path")
-			return null
-		if (!microbio_controls.cultures.len)
-			logTheThing("debug", null, null, "<b>Microbiology:</b> Cant find disease due to empty disease list")
-			return null
-		for (var/datum/microbe/A in microbio_controls.cultures)
-			if (microbe_path == A.type)
-				return A
-		logTheThing("debug", null, null, "<b>Microbiology:</b> Disease \"[microbe_path]\" not found")
-		return null
-
 	proc/get_microbe_from_name(var/microbe_name)
 		if (!istext(microbe_name))
 			logTheThing("debug", null, null, "<b>Microbiology:</b> Attempt to find disease with non-string")
