@@ -568,6 +568,7 @@ TRAYS
 		if (istype(food, /obj/item/plate))
 			if (food == src)
 				boutput(user, "<span class='alert>You can't stack a plate on itself!</span>")
+				return
 			var/obj/item/plate/not_really_food = food
 			. = src.stackable && not_really_food.stackable // . is TRUE if we can stack the other plate on this plate, FALSE otherwise
 
