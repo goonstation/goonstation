@@ -112,8 +112,9 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 	netname = "SIPHON"
 	var/sound/sound_unload = sound('sound/items/Deconstruct.ogg')
 
-	///overlay for beam because can't animate otherwise apparently
+	//overlays for beam and siphoning
 	var/obj/overlay/beamlight
+	var/obj/overlay/drawlight
 	///paired control console for non-manual operation
 	var/obj/machinery/siphon_lever/paired_lever
 
@@ -146,8 +147,10 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 
 	New()
 		..()
-		src.beamlight = new /obj/overlay/siphonbeam()
+		src.beamlight = new /obj/overlay/siphonglow()
 		src.vis_contents += beamlight
+		src.drawlight = new /obj/overlay/siphonglow()
+		src.vis_contents += drawlight
 		for(var/mineral in concrete_typesof(/datum/siphon_mineral))
 			src.can_extract += new mineral
 
@@ -188,14 +191,14 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 				if(M.shear != null) //check shear against spec; happens early to avoid blowouts in high-shear targets
 					var/shearcheck = abs(src.shear - M.shear)
 					if(shearcheck > M.sens_window) continue
+				if(M.x_torque != null) //check x torque against mineral's requirement, if there is one
+					var/xtcheck = abs(src.x_torque - M.x_torque)
+					if(xtcheck > M.sens_window) continue
+				if(M.y_torque != null) // check y torque against mineral's requirement, if there is one
+					var/ytcheck = abs(src.y_torque - M.y_torque)
+					if(ytcheck > M.sens_window) continue
 				extract_progressed = TRUE
-				if(src.extract_ticks >= M.tick_req) //enough mining progress to check in more depth
-					if(M.x_torque != null)
-						var/xtcheck = abs(src.x_torque - M.x_torque)
-						if(xtcheck > M.sens_window) continue
-					if(M.y_torque != null)
-						var/ytcheck = abs(src.y_torque - M.y_torque)
-						if(ytcheck > M.sens_window) continue
+				if(src.extract_ticks >= M.tick_req)
 					src.extract_ticks -= M.tick_req
 					var/atom/movable/yielder = new M.product()
 					if(istype(yielder,/obj/item)) //items go into internal reservoir
@@ -251,8 +254,11 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 							RSO.shear_overload(TRUE)
 						else
 							RSO.shear_overload()
+			else
+				SPAWN(0.1 SECONDS)
+					flick("drill-extract",src.drawlight)
 
-			playsound(src.loc, 'sound/machines/siphon_run.ogg', 30, !extract_progressed)
+			playsound(src.loc, 'sound/machines/siphon_run.ogg', 30, !extract_progressed) //noise warbles if no progress occurred
 
 			if(length(src.contents) >= src.max_held_items)
 				src.changemode("low")
@@ -514,15 +520,10 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		src.post_signal(reply)
 		return
 
-/obj/overlay/siphonbeam
+/obj/overlay/siphonglow
 	icon = 'icons/obj/machines/neodrill_32x64.dmi'
 	icon_state = "drill-beam-0"
 	plane = PLANE_OVERLAY_EFFECTS
-
-
-
-
-
 
 //section: resonators
 
