@@ -1231,7 +1231,7 @@ TYPEINFO(/datum/mutantrace)
 			APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST, "abomination", 100)
 			APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "abomination", 100)
 			APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTSPRINT, src)
-			RegisterSignal(M, COMSIG_MOB_GRABBED, .proc/NoGrabbing)  //trigger on pin instead of grab, prevent
+			RegisterSignal(M, COMSIG_MOB_GRABBED, .proc/NoGrabbing)
 		last_drain = world.time
 		return ..(M)
 
