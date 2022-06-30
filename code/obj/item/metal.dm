@@ -130,6 +130,7 @@ MATERIAL
 					var/atom/G = new /obj/grille(user.loc)
 					G.setMaterial(src.material)
 					logTheThing("station", user, null, "builds a Grille in [user.loc.loc] ([log_loc(user)])")
+					G.add_fingerprint(user)
 		if (src.amount < 1)
 			qdel(src)
 			return

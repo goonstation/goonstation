@@ -1062,7 +1062,8 @@
 			health.tooltipTheme = "healthDam healthDam[stage]"
 
 	proc/update_blood_indicator()
-		if (!bleeding || isdead(master))
+		if (!src.bleeding) return //doesn't have a hud element to update
+		if (isdead(master))
 			bleeding.icon_state = "blood0"
 			bleeding.tooltipTheme = "healthDam healthDam0"
 			return

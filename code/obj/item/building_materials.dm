@@ -841,6 +841,7 @@ MATERIAL
 					G.setMaterial(src.material)
 					src.change_stack_amount(-2)
 					logTheThing("station", user, null, "builds a grille (<b>Material:</b> [G.material && G.material.mat_id ? "[G.material.mat_id]" : "*UNKNOWN*"]) at [log_loc(user)].")
+					G.add_fingerprint(user)
 		src.add_fingerprint(user)
 		return
 

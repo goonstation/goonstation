@@ -386,28 +386,6 @@ var/datum/action_controller/actions
 			shield_bar.invisibility = INVIS_ALWAYS
 
 
-/datum/action/bar/blob_replicator
-	onUpdate()
-		var/obj/blob/deposit/replicator/B = owner
-		if (!owner)
-			return
-		if (!B.converting || (B.converting && !B.converting.maximum_volume))
-			border.invisibility = INVIS_ALWAYS
-			bar.invisibility = INVIS_ALWAYS
-			return
-		else
-			border.invisibility = INVIS_NONE
-			bar.invisibility = INVIS_NONE
-		var/complete = 1 - (B.converting.total_volume / B.converting.maximum_volume)
-		bar.color = "#0000FF"
-		bar.transform = matrix(complete, 1, MATRIX_SCALE)
-		bar.pixel_x = -nround( ((30 - (30 * complete)) / 2) )
-
-	onDelete()
-		bar.invisibility = INVIS_NONE
-		border.invisibility = INVIS_NONE
-		..()
-
 /datum/action/bar/icon //Visible to everyone and has an icon.
 	var/icon //! Icon to use above the bar. Can also be a mutable_appearance; pretty much anything that can be converted into an image
 	var/icon_state
@@ -700,6 +678,9 @@ var/datum/action_controller/actions
 		if (sheet2 && cost2)
 			sheet2.change_stack_amount(-cost2)
 		logTheThing("station", owner, null, "builds [objname] (<b>Material:</b> [mat && istype(mat) && mat.mat_id ? "[mat.mat_id]" : "*UNKNOWN*"]) at [log_loc(owner)].")
+		if(isliving(owner))
+			var/mob/living/M = owner
+			R.add_fingerprint(M)
 		if (callback)
 			call(callback)(src, R)
 
