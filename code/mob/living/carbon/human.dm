@@ -598,9 +598,9 @@
 	for (var/obj/item/implant/H in src.implant)
 		H.on_death()
 
-	for (var/uid in src.microbes)
+	/*for (var/uid in src.microbes)
 		var/datum/microbe/P = src.microbes[uid].master
-		P.ondeath()
+		P.ondeath()*/
 
 #ifdef DATALOGGER
 	game_stats.Increment("deaths")
@@ -1491,11 +1491,11 @@
 
 	message = process_accents(src,message)
 
-	for (var/uid in src.microbes)
+	/*for (var/uid in src.microbes)
 		var/datum/microbe/P = src.microbes[uid].master
 		message = P.onsay(message)
 
-	..(message)
+	..(message)*/
 
 	src.say_language = original_language
 

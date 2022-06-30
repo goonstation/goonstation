@@ -27,7 +27,8 @@ ABSTRACT_TYPE(/datum/suppressant)
 	// Is not called if suppressed is -1. A secondary resistance may overpower a primary weakness.
 	proc/suppress_act(var/datum/microbe/P)
 		return
-
+// The event handling system was poorly "optimized" and has been removed for the sake of lag reduction.
+/*
 	proc/ongrab(var/mob/target as mob, var/datum/microbe/P)
 	proc/onpunched(var/mob/origin as mob, zone, var/datum/microbe/P)
 	proc/onpunch(var/mob/target as mob, zone, var/datum/microbe/P)
@@ -35,6 +36,15 @@ ABSTRACT_TYPE(/datum/suppressant)
 
 	proc/onshocked(var/datum/shockparam/param, var/datum/microbe/P)
 		return
+
+
+// This could be the base for a shock therapy cure type.
+	onshocked(var/datum/shockparam/param, var/datum/microbesubdata/P)
+		if (param.skipsupp)
+			return
+		if (param.amt > 30)
+			P.affected_mob.show_message("<span class='notice'>You feel better.</span>")
+			return
 
 	proc/onsay(message, var/datum/microbe/P)
 
@@ -45,7 +55,7 @@ ABSTRACT_TYPE(/datum/suppressant)
 	proc/ondeath(var/datum/microbe/P)
 
 	proc/oncured(var/datum/microbe/P)
-
+*/
 	// While doing pathogen research, the suppression method may define how the pathogen reacts to certain reagents.
 	// Returns null if the pathogen does not react to the reagent.
 	// Returns a string describing what happened if it does react to the reagent.
@@ -58,7 +68,7 @@ ABSTRACT_TYPE(/datum/suppressant)
 /datum/suppressant/heat
 	name = "Heat"
 	desc = "The pathogen is suppressed by a high body temperature."
-	therapy = "Thermal"
+	therapy = "Therapy"
 	exactcure = "Controlled hyperthermia therapy"
 	cure_synthesis = MB_HOT_REAGENTS
 	reactionlist = MB_COLD_REAGENTS
@@ -71,14 +81,10 @@ ABSTRACT_TYPE(/datum/suppressant)
 				P.affected_mob.show_message("<span class='notice'>You feel better.</span>")
 			return 1
 
-	onadd(var/datum/microbe/P)
-		P.suppressant = "Heat"
-		return
-
 /datum/suppressant/cold
 	name = "Cold"
 	desc = "The pathogen is suppressed by a low body temperature."
-	therapy = "Thermal"
+	therapy = "Therapy"
 	exactcure = "Cryogenic therapy"
 	cure_synthesis = MB_COLD_REAGENTS
 	reactionlist = MB_HOT_REAGENTS
@@ -133,7 +139,6 @@ ABSTRACT_TYPE(/datum/suppressant)
 	cure_synthesis = MB_TOX_MEDS_CATAGORY
 	reactionlist = MB_TOX_MEDS_CATAGORY
 
-
 	suppress_act(var/datum/microbesubdata/P)
 		for (var/R in cure_synthesis)
 			if (!(P.affected_mob.reagents.has_reagent(R, REAGENT_CURE_THRESHOLD)))
@@ -177,13 +182,6 @@ ABSTRACT_TYPE(/datum/suppressant)
 			return 1
 		return 0
 
-	onshocked(var/datum/shockparam/param, var/datum/microbesubdata/P)
-		if (param.skipsupp)
-			return
-		if (param.amt > 30)
-			P.affected_mob.show_message("<span class='notice'>You feel better.</span>")
-			return
-
 /datum/suppressant/stimulants
 	name = "Stimulants"
 	desc = "The pathogen is suppressed by facilitating muscle function."
@@ -218,6 +216,10 @@ ABSTRACT_TYPE(/datum/suppressant)
 			return 1
 		return 0
 
+// I find the below cures highly questionable.
+// I do not agree with cures explicitly requiring harm to function.
+// I do not agree with cures that only use reageants that are limited/obscure/difficult to obtain.
+// I do not agree with cures that force players to stop playing the game (sleep) to cure.
 /*
 /datum/suppressant/chickensoup
 	color = "pink"

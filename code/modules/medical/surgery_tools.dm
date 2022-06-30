@@ -510,10 +510,10 @@ CONTAINS:
 			patient.setStatus("defibbed", user == patient ? 6 SECONDS : 12 SECONDS)
 
 			if (ishuman(patient)) //remove later when we give nonhumans pathogen / organ response?
-				var/mob/living/carbon/human/H = patient
+				/*var/mob/living/carbon/human/H = patient
 				for (var/uid in H.microbes)
 					var/datum/microbe/P = H.microbes[uid].master
-					P.onshocked(35, 500)
+					P.onshocked(35, 500)*/
 
 				var/sumdamage = patient.get_brute_damage() + patient.get_burn_damage() + patient.get_toxin_damage()
 				if (suiciding)

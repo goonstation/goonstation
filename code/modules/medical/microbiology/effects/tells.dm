@@ -55,20 +55,6 @@ ABSTRACT_TYPE(/datum/microbioeffects/tells)
 		if (prob(origin.probability/20))
 			M:emote("deathgasp")
 
-/datum/microbioeffects/tells/shakespeare
-	name = "Shakespeare"
-	desc = "The infected has an urge to begin reciting shakespearean poetry."
-	reactionlist = list("sonic_powder")
-	reactionmessage = "The microbes appear to be quite dramatic."
-
-	onsay(var/mob/M, message, var/datum/microbesubdata/origin)
-		if (!(message in MICROBIO_SHAKESPEARE))
-			return shakespearify(message)
-
-	mob_act(var/mob/M, var/datum/microbesubdata/origin)
-		if (prob(origin.probability/10)) // 3. holy shit shut up shUT UP
-			M.say(pick(MICROBIO_SHAKESPEARE))
-
 /datum/microbioeffects/tells/hoarseness
 	name = "Hoarseness"
 	desc = "The microbes cause dry throat, leading to hoarse speech."
@@ -175,6 +161,10 @@ ABSTRACT_TYPE(/datum/microbioeffects/tells)
 		if (prob(origin.probability))
 			M.emote("fart")
 
+//
+// TRANSMISSION-ENABLING EFFECTS
+//
+
 /datum/microbioeffects/tells/beesneeze
 	name = "Projectile Bee Egg Sneezing"
 	desc = "The infected sneezes bee eggs frequently."
@@ -200,11 +190,30 @@ ABSTRACT_TYPE(/datum/microbioeffects/tells)
 		var/obj/item/reagent_containers/food/snacks/ingredient/egg/bee/toThrow = new /obj/item/reagent_containers/food/snacks/ingredient/egg/bee(T)
 		M.visible_message("<span class='alert'>[M] sneezes out a space bee egg!</span> [chosen_phrase]", "<span class='alert'>You sneeze out a bee egg!</span> [chosen_phrase]", "<span class='alert'>You hear someone sneezing.</span>")
 		toThrow.throw_at(target, 6, 1)
+		for (var/mob/M in range(1))
+			infect_direct(M, origin, MICROBIO_TRANSMISSION_TYPE_AEROBIC)
 		//src.infect_cloud(M, origin, origin.spread) // TODO: at some point I want the bees to spread this instead
 
 	mob_act(var/mob/M, var/datum/microbesubdata/origin)
-		if (prob(origin.probability/10))
+		if (prob(origin.probability*MICROBIO_EFFECT_PROBABILITY_FACTOR_HORRIFYING))	// Divide by 10, less bee spam!
 			sneeze(M, origin)
+
+// Give this to genetics: they already have a ton of accents and other say-modifiers!
+/*
+/datum/microbioeffects/tells/shakespeare
+	name = "Shakespeare"
+	desc = "The infected has an urge to begin reciting shakespearean poetry."
+	reactionlist = list("sonic_powder")
+	reactionmessage = "The microbes appear to be quite dramatic."
+
+	onsay(var/mob/M, message, var/datum/microbesubdata/origin)
+		if (!(message in MICROBIO_SHAKESPEARE))
+			return shakespearify(message)
+
+	mob_act(var/mob/M, var/datum/microbesubdata/origin)
+		if (prob(origin.probability/10)) // 3. holy shit shut up shUT UP
+			M.say(pick(MICROBIO_SHAKESPEARE))
+*/
 
 /*
 datum/microbioeffects/tells/bloodcolors
@@ -224,7 +233,8 @@ datum/microbioeffects/tells/bloodcolors
 	may_react_to()
 		return "The pathogen appears to generate a high amount of fluids."
 */
-/*datum/pathogeneffects/benevolent/oxytocinproduction
+/*
+datum/pathogeneffects/benevolent/oxytocinproduction
 	name = "Oxytocin Production"
 	desc = "The pathogen produces Pure Love within the infected."
 	infect_type = INFECT_TOUCH

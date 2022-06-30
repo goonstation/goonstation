@@ -56,6 +56,15 @@
 #define MICROBIO_NAMINGLIST list("Disease", "Strain", "Plague", "Syndrome", "Virions")
 
 
+#define MICROBIO_EFFECT_PROBABILITY_FACTOR_HORRIFYING 0.1
+#define MICROBIO_EFFECT_PROBABILITY_FACTOR_RARE 0.2
+#define MICROBIO_EFFECT_PROBABILITY_FACTOR_UNCOMMON 0.5
+
+#define MICROBIO_CURE_PROBABILITY_FACTOR 100	//Fuck RNG! Let the people be cured!
+
+#define MICROBIO_TRANSMISSION_TYPE_PHYSICAL 1
+#define MICROBIO_TRANSMISSION_TYPE_AEROBIC 2
+
 #define MICROBIO_SHAKESPEARE list("Expectation is the root of all heartache.",\
 "A fool thinks himself to be wise, but a wise man knows himself to be a fool.",\
 "Love all, trust a few, do wrong to none.",\

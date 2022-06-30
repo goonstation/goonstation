@@ -1,5 +1,3 @@
-
-
 	//var/list/microbe_trees = new/list()				//stores info on a single microbe across different infected players
 
 /*
@@ -356,6 +354,7 @@ ABSTRACT_TYPE(/datum/microbe)
 
 	var/tellcount = 0								// Tells the microscope how many of this effect group are present
 	var/benefitcount = 0							// Tells the microscope how many of this effect group are present
+	var/effect_has_events = 0						// Boolean: 1 if any of the effects have an event to consider. 0 allows early returns to save time.
 // PROCS AND FUNCTIONS FOR GENERATION
 
 	//generate_name
@@ -417,7 +416,10 @@ ABSTRACT_TYPE(/datum/microbe)
 		microbio_controls.add_to_cultures(src)
 		logTheThing("pathology", null, null, "Microbe culture [name] created by randomization.")
 		return
-
+/*
+	// Events are commented out. The implementation below was terribly inefficient.
+	// It is certainly possible to improve the efficiency of the event handlers, but none of the effects
+	// that I have rebuilt use them. The event handler code shall stand as a good lesson on how to not write effective code.
 	//=============================================================================
 	//	Events
 	//=============================================================================
@@ -479,10 +481,11 @@ ABSTRACT_TYPE(/datum/microbe)
 			ret = min(effect:ondisarm(infected, target, isPushDown, src), ret)
 		suppressant.ondisarm(target, isPushDown, src)
 		return ret
-
+*/
 	// Act when shocked. Returns the amount of damage the shocked mob should actually take (which leaves place for both amplification and suppression)
 	// The return system here is more complex than for most other events. The symptoms' onshocked may not only modify the amount of shock damage, but
 	// also decide that the presence of the symptom makes the a muscle-event vulnerable pathogen resistant to suppression through shocking.
+/*
 	proc/onshocked(var/amt, var/wattage)
 		var/datum/shockparam/ret = new
 		ret.amt = amt
@@ -493,10 +496,11 @@ ABSTRACT_TYPE(/datum/microbe)
 		suppressant.onshocked(ret, src)
 		return ret.amt
 	// Act when saying something. Returns the message that should be said after the diseases make the appropriate modifications.
+
 	proc/onsay(message)
 		for (var/effect in src.effects)
 			message = effect:onsay(infected, message, src)
-		suppressant.onsay(message, src)
+		//suppressant.onsay(message, src)
 		return message
 
 	// Act on emoting. Vetoing available by returning 0.
@@ -518,7 +522,7 @@ ABSTRACT_TYPE(/datum/microbe)
 			effect:oncured(infected, src)
 		suppressant.oncured(src)
 		return
-
+*/
 	proc/add_new_symptom(var/list/allowed, var/allow_evil = 0)
 		var/datum/microbioeffects/E = pick(allowed)
 		if (add_symptom(E, allow_evil))
@@ -533,14 +537,12 @@ ABSTRACT_TYPE(/datum/microbe)
 			logTheThing("pathology", null, null, "Malevolent effect added to [src.name].")
 			return 1
 		else if ((!istype(E,/datum/microbioeffects/malevolent)) && !(E in effects))
-			/*for (var/mutex in E.mutex)
-				for (var/T in typesof(mutex))
-					if (!(T in mutex))
-						mutex += T*/
 			if (istype(E,/datum/microbioeffects/tells))
 				src.tellcount++
 			else if (istype(E,/datum/microbioeffects/benevolent))
 				src.benefitcount++
+			if (E.has_event && !src.effect_has_events)
+				src.effect_has_events = 1
 			effects += E
 			E.onadd(src)
 			return 1
@@ -552,6 +554,7 @@ ABSTRACT_TYPE(/datum/microbe)
 				src.effects -= E
 			src.tellcount = 0
 			src.benefitcount = 0
+			src.effect_has_events = 0
 			return 1
 		else
 			if (!(E in src.effects))
@@ -562,14 +565,23 @@ ABSTRACT_TYPE(/datum/microbe)
 			else if (istype(E,/datum/microbioeffects/benevolent))
 				src.benefitcount--
 				src.effects -= E
+			for (var/effect in src.effects)
+				if (effect.has_event)
+					src.effect_has_events = 1
+					return 1
+			src.effect_has_events = 0
 			return 1
 
+
+// All code using this datum has been commented out, possibly to be deleted.
+/*
 // todo: remove this, port. (To where?)
 // A wrapper record returned by the onshocked event of a pathogen symptom.
 /datum/shockparam
 	var/amt
 	var/wattage
 	var/skipsupp
+*/
 
 //Subdata is player specific.
 ABSTRACT_TYPE(/datum/microbesubdata)

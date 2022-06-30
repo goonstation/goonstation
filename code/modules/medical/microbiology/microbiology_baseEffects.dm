@@ -2,20 +2,10 @@ ABSTRACT_TYPE(/datum/microbioeffects)
 /datum/microbioeffects
 	var/name
 	var/desc
-	var/infect_message = null
-	var/infect_attempt_message = null // shown to person when an attempt to directly infect them is made
+	var/infect_message = null // shown to person when they are infected from a transmission
 	var/reactionlist = list()
 	var/reactionmessage = "Default Message"
-
-	// This is a list of mutual exclusive symptom TYPES.
-	// If this contains any symptoms, none of these symptoms will be picked upon mutation or initial raffle.
-	// Mutexes cut the ENTIRE object tree - for example, if symptoms a/b, a/c and a/d all exist, then mutexing
-	// symptom a will also mutex b, c and d.
-	//var/list/mutex = list()
-
-	// A symptom might not always infect everyone around. This is a flat probability: 0 means never infect to 1 means always infect. This is checked PER MOB, not per infect call.
-	//var/infection_coefficient = 1
-
+	var/has_event = 0	// Boolean: 1 if the effect calls one of the event functions.
 
 	// mob_act(mob, datum/pathogen) : void
 	// This is the center of pathogen symptoms.
@@ -83,22 +73,27 @@ ABSTRACT_TYPE(/datum/microbioeffects)
 	// gets his bodily fluids onto another when they directly disarm, punch, or grab a person.
 	// For INFECT_TOUCH diseases this is automatically called on a successful disarm, punch or grab. When overriding any of these events, use ..() to keep this behaviour.
 	// OVERRIDE: Generally, you do not need to override this.
-	proc/infect_direct(var/mob/target, var/datum/microbesubdata/S, contact_type = "touch")
-		var/datum/microbe/origin = microbio_controls.get_microbe_from_name(S.master.name)
-		if (infect_attempt_message)
-			target.show_message("<span class='alert'><B>[infect_attempt_message]</B></span>")
-		if(istype(target, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = target
-			if(prob(100-H.get_disease_protection()))
-				if (target.infected(origin))
-					if (infect_message)
-						target.show_message(infect_message)
-				logTheThing("pathology", origin.infected, target, "infects [constructTarget(target,"pathology")] with [origin.name] due to symptom [name] through direct contact ([contact_type]).")
-				return 1
+	proc/infect_direct(var/mob/target, var/datum/microbesubdata/S, contact_type = MICROBIO_TRANSMISSION_TYPE_AEROBIC)
+		if ((ishuman(S.affected_mob)))	// If in the future we want to generalize the system to include critters, review this
+			if (contact_type == MICROBIO_TRANSMISSION_TYPE_AEROBIC && S.affected_mob.wear_mask)
+				return	//If the source mob is masked, don't infect!
+			if (contact_type == MICROBIO_TRANSMISSION_TYPE_PHYSICAL && S.affected_mob.gloves)
+				return 	//If the source mob is wearing gloves, don't infect!
+		if !(ishuman(target))
+			return	//If the target isn't human, it does not have the code infrastructure to hold an infection.
+		var/mob/living/carbon/human/H = target
+		if !(prob(100-H.get_disease_protection()))
+			return	// The target succeeded in the protect roll
+		if (target.infected(microbio_controls.pull_from_upstream(S.master.name)))
+			if (infect_message)
+				target.show_message(infect_message)
+			logTheThing("pathology", origin.infected, target, "infects [constructTarget(target,"pathology")] with [origin.name] due to symptom [name] through direct contact ([contact_type]).")
+			return 1
 
 	proc/onadd(var/datum/microbe/P)
 		return
-
+/*
+	// The events system was poorly optimized. It and any associated code have been commented out for the sake of lag reduction.
 	// ====
 	// Events from this point on. Their exact behaviour is documented in pathogen.dm. Please do not add any event definitions outside this block.
 	// ondisarm(mob, mob, boolean, datum/pathogen) : float
@@ -158,7 +153,7 @@ ABSTRACT_TYPE(/datum/microbioeffects)
 	// OVERRIDE: Overriding this is situational.
 	proc/oncured(var/mob/M, var/datum/microbesubdata/origin)
 		return
-
+*/
 
 	// End of events: please do not add any event definitions outside this block.
 	// ====
