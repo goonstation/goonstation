@@ -429,9 +429,9 @@
 			var/obj/O = A
 			if (O.mechanics_blacklist)
 				return
+		do_scan_effects(A, user)
 		if (SEND_SIGNAL(A, COMSIG_ATOM_ANALYZE, parent_item, user))
 			return TRUE
-		do_scan_effects(A, user)
 		boutput(user, "<span class='alert'>The structure of [A] is not compatible with [parent_item].</span>")
 		return TRUE
 	

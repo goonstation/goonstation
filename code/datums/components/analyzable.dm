@@ -28,7 +28,6 @@ TYPEINFO(/datum/component/analyzable)
 		return
 	// in the future, this could be replaced with a component for analyzers themselves, too
 	var/obj/item/electronics/scanner/S = I
-	S.do_scan_effects(parent_atom, user)
 	if (isnull(parent_atom.mats) || parent_atom.mats == 0 || (parent_atom.is_syndicate && !S.is_syndicate))
 		// if this item doesn't have mats defined or was constructed or
 		// attempting to scan a syndicate item and this is a normal scanner
