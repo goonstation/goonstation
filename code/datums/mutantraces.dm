@@ -1212,6 +1212,18 @@ TYPEINFO(/datum/mutantrace)
 	var/drains_dna_on_life = 1
 	var/ruff_tuff_and_ultrabuff = 1
 
+	proc/NoGrabbing(mob/living/carbon/human/ling,obj/item/grab/G)
+		var/mob/living/attacker = G.assailant
+		if (istype(attacker))
+			attacker.visible_message("<span class='alert'>[attacker] tries to grab [ling] but is flung away by [him_or_her(ling)]</span>")
+			attacker.force_laydown_standup()
+			qdel(G)
+			attacker.throw_at(get_edge_target_turf(attacker, get_dir(ling,attacker)), 2, 2)
+			attacker.changeStatus("weakened", 3 SECONDS)
+			attacker.changeStatus("stunned", 3 SECONDS)
+			attacker.changeStatus("slowed", 8 SECONDS, 3)
+
+
 	New(var/mob/living/carbon/human/M)
 		if(ruff_tuff_and_ultrabuff && ishuman(M))
 			M.add_stam_mod_max("abomination", 1000)
@@ -1219,6 +1231,7 @@ TYPEINFO(/datum/mutantrace)
 			APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST, "abomination", 100)
 			APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "abomination", 100)
 			APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTSPRINT, src)
+			RegisterSignal(M, COMSIG_MOB_GRABBED, .proc/NoGrabbing)  //trigger on pin instead of grab, prevent
 		last_drain = world.time
 		return ..(M)
 
