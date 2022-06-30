@@ -110,7 +110,7 @@
 	name = "matcha"
 	desc = "A powder created from dried tea leaves."
 	icon_state = "matcha"
-	initial_volume = 5
+	initial_volume = 10
 	initial_reagents = "matcha"
 	food_color = "#74A12E"
 
