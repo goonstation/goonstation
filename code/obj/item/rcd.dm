@@ -126,6 +126,8 @@ Broken RCD + Effects
 	/// do we really actually for real want this to work in adventure zones?? just do this with varedit dont make children with this on
 	var/really_actually_bypass_z_restriction = false
 
+
+	var/microbioupgrade = 0
 	///Custom contextActions list so we can handle opening them ourselves
 	var/list/datum/contextAction/contexts = list()
 
@@ -520,6 +522,8 @@ Broken RCD + Effects
 		elecflash(src)
 
 	proc/ammo_check(mob/user as mob, var/checkamt = 0)
+		if (src.microbioupgrade)
+			checkamt = ceil(checkamt/2)
 		if (issilicon(user))
 			var/mob/living/silicon/S = user
 			return (S.cell && (S.cell.charge >= checkamt * silicon_cost_multiplier))
@@ -527,6 +531,8 @@ Broken RCD + Effects
 			return (src.matter >= checkamt)
 
 	proc/ammo_consume(mob/user as mob, var/checkamt = 0)
+		if (src.microbioupgrade)
+			checkamt = ceil(checkamt/2)
 		if (issilicon(user))
 			var/mob/living/silicon/S = user
 			if (S.cell)

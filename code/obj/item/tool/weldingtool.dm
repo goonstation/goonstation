@@ -28,6 +28,7 @@
 	rand_pos = 1
 	inventory_counter_enabled = 1
 	var/capacity = 20
+	var/microbioupgrade = 0
 
 	New()
 		..()
@@ -334,6 +335,8 @@
 			if (src.get_fuel() < fuel_amt)
 				boutput(user, "<span class='notice'>Need more fuel!</span>")
 				return 0 //welding, doesnt have fuel
+			if (src.microbioupgrade)
+				use_amt = min(min(1, use_amt),prob(50))
 			src.use_fuel(use_amt)
 			if(noisy)
 				playsound(user.loc, list('sound/items/Welder.ogg', 'sound/items/Welder2.ogg')[noisy], 40, 1)

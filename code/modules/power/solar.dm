@@ -83,6 +83,7 @@
 	var/adir = SOUTH
 	var/ndir = SOUTH
 	var/turn_angle = 0
+	var/improve = 1
 	var/obj/machinery/computer/solar_control/control
 
 	north
@@ -163,7 +164,7 @@
 		return
 
 	if(!obscured)
-		var/sgen = SOLARGENRATE * sunfrac
+		var/sgen = improve * SOLARGENRATE * sunfrac
 		sgen *= PROCESSING_TIER_MULTI(src)
 		add_avail(sgen)
 		if(powernet && control && powernet == control.get_direct_powernet())

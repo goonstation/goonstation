@@ -152,7 +152,7 @@ that cannot be itched
 	var/active = 0
 	var/distancescan = 0
 	var/target = null
-
+	var/microbioupgrade = 0
 	attack_self(mob/user as mob)
 
 		src.add_fingerprint(user)
@@ -192,12 +192,12 @@ that cannot be itched
 			return
 
 		user.visible_message("<span class='alert'><b>[user]</b> has scanned [A].</span>")
-		boutput(user, scan_forensic(A, visible = 1)) // Moved to scanprocs.dm to cut down on code duplication (Convair880).
+		boutput(user, scan_forensic(A, visible = 1, microbioupgrade = src.microbioupgrade)) // Moved to scanprocs.dm to cut down on code duplication (Convair880).
 		src.add_fingerprint(user)
 
 		if(!active && istype(A, /obj/decal/cleanable/blood))
 			var/obj/decal/cleanable/blood/B = A
-			if(B.dry > 0) //Fresh blood is -1
+			if(B.dry > 0 && !src.microbioupgrade) //Fresh blood is -1
 				boutput(user, "<span class='alert'>Targeted blood is too dry to be useful!</span>")
 				return
 			for(var/mob/living/carbon/human/H in mobs)

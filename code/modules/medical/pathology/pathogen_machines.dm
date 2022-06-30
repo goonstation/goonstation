@@ -1193,53 +1193,32 @@
 
 /obj/machinery/synthomatic
 	name = "Synth-O-Matic 6.5.535"
-	desc = "The leading technological assistant in synthesizing cure for certain pathogens."
+	desc = "The leading technological assistant in synthesizing useful biochemicals."
 	icon = 'icons/obj/pathology.dmi'
 	icon_state = "synth1"
 	density = 1
 	anchored = 1
+	flags = NOSPLASH
 
 	var/list/obj/item/reagent_containers/glass/vial/vials[5]
-	var/obj/item/reagent_containers/glass/beaker/antiagent = null
-	var/obj/item/reagent_containers/glass/beaker/suppressant = null
-	var/list/obj/item/synthmodule/modules = list()
+	var/obj/item/beaker = null
+	var/obj/item/bloodbag = null
+	var/list/whitelist = list()
+	var/selectedresult = null
+	var/emagged = 0
+	//Emagging may...
+		//Bypass the budget
+		//Improve production (bottles instead of vials, multiple containers)
 
 	var/maintenance = 0
 	var/machine_state = 0
 	var/sel_vial = 0
-	var/const/synthesize_pathogen_cost = 100 // used to be 2000
+	var/const/synthesize_cost = 500 //used to be 100 // used to used to be 2000
 
 	New()
 		..()
-		src.reagents = new(100)
-		src.reagents.my_atom = src
-		flags |= NOSPLASH
-		if (!pathogen_controller || !pathogen_controller.cure_bases || !length(pathogen_controller.cure_bases))
-			SPAWN(2 SECONDS)
-				for (var/C in pathogen_controller.cure_bases)
-					src.reagents.add_reagent(C, 1)
-		else
-			for (var/C in pathogen_controller.cure_bases)
-				src.reagents.add_reagent(C, 1)
-		/*
-		src.add_module(new /obj/item/synthmodule/virii())
-		src.add_module(new /obj/item/synthmodule/bacteria())
-		src.add_module(new /obj/item/synthmodule/parasite())
-		src.add_module(new /obj/item/synthmodule/gmcell())
-		*/
-		// ZAMUJASA HERE WITH "FUCK THIS SHIT", LIVE!
-		// what happens if we just give them the ability to cure shit. what then.
-		src.add_module(new /obj/item/synthmodule/virii())
-		src.add_module(new /obj/item/synthmodule/bacteria())
-		src.add_module(new /obj/item/synthmodule/parasite())
-		src.add_module(new /obj/item/synthmodule/gmcell())
-		src.add_module(new /obj/item/synthmodule/fungi())
-		src.add_module(new /obj/item/synthmodule/vaccine())
-		src.add_module(new /obj/item/synthmodule/upgrader())
-		src.add_module(new /obj/item/synthmodule/assistant())
-		src.add_module(new /obj/item/synthmodule/synthesizer())
-		src.add_module(new /obj/item/synthmodule/radiation())
-
+		if (!src.emagged && islist(biochemistry_whitelist) && length(biochemistry_whitelist))
+			src.whitelist = biochemistry_whitelist
 
 	attack_hand(var/mob/user)
 		if(status & (BROKEN|NOPOWER))
@@ -1247,26 +1226,14 @@
 		..()
 		show_interface(user)
 
-	proc/add_module(var/obj/item/synthmodule/M)
-		if (has_module(M))
-			boutput(usr, "<span class='alert'>The [name] already has that kind of module.</span>")
-			return 0
-		else
-			modules[M.id] = M
-			M.set_loc(src)
-			M.received(src)
-			return 1
-
-	proc/has_module(var/id)
-		if (src.modules.len && (id in src.modules) && src.modules[id])
-			return 1
-		return 0
-
 	attackby(var/obj/item/O, var/mob/user)
 		if(status & (BROKEN|NOPOWER))
 			boutput(user,  "<span class='alert'>You can't insert things while the machine is out of power!</span>")
 			return
 		if (istype(O, /obj/item/reagent_containers/glass/vial))
+			if (O.reagents.reagent_list.len > 1 || O.reagents.total_volume < 5)	//full, pure-reagent vials only
+				boutput(user, "<span class='alert'>The machine can only process full vials of pure reagent.</span>")
+				return
 			var/done = 0
 			for (var/i = 1, i <= 5, i++)
 				if (!(vials[i]))
@@ -1279,45 +1246,56 @@
 					break
 			if (!done)
 				boutput(user, "<span class='alert'>The machine cannot hold any more vials.</span>")
+				return
 			else
 				boutput(user, "<span class='notice'>You insert the vial into the machine.</span>")
-				show_interface(user)
-			return
+				return
 		if (istype(O, /obj/item/reagent_containers/glass/beaker))
-			var/action = input("Which slot?", "Synth-O-Matic", "Cancel") in list("Anti-Agent", "Suppressant", "Cancel")
-			if (action == "Anti-Agent")
-				if (!(user in range(1)))
-					boutput(user, "<span class='alert'>You must be near the machine to do that.</span>")
-					return
-				if (user.equipped() != O)
-					return
-				if (!antiagent)
-					antiagent = O
-					user.u_equip(O)
-					O.set_loc(src)
-					O.master = src
-					user.client.screen -= O
-					boutput(user, "<span class='notice'>You insert the beaker into the machine.</span>")
-					show_interface(user)
-				else
-					boutput(user, "<span class='alert'>That slot is already occupied!</span>")
-			else if (action == "Suppressant")
-				if (!(user in range(1)))
-					boutput(user, "<span class='alert'>You must be near the machine to do that.</span>")
-					return
-				if (user.equipped() != O)
-					return
-				if (!suppressant)
-					suppressant = O
-					user.u_equip(O)
-					O.set_loc(src)
-					O.master = src
-					user.client.screen -= O
-					boutput(user, "<span class='notice'>You insert the beaker into the machine.</span>")
-					show_interface(user)
-				else
-					boutput(user, "<span class='alert'>That slot is already occupied!</span>")
+			if (!(user in range(1)))
+				boutput(user, "<span class='alert'>You must be near the machine to do that.</span>")
+				return
+			if (user.equipped() != O)
+				return
+			if (src.beaker)
+				boutput(user, "<span class='alert'>An egg reservoir beaker is already loaded into the machine.</span>")
+				return
+			if (O.reagents.reagent_list.len > 1)	// pure-reagent only
+				boutput(user, "<span class='alert'>Please isolate the egg in the beaker.</span>")
+				return
+			if (!(O.reagents.has_reagent("egg")))
+				boutput(user, "<span class='alert'>Egg substance not detected.</span>")
+			else
+				src.beaker = O
+				user.u_equip(O)
+				O.set_loc(src)
+				O.master = src
+				user.client.screen -= O
+				boutput(user, "<span class='notice'>You insert the beaker into the machine.</span>")
 			return
+		if (istype(O, /obj/item/reagent_containers/iv_drip))
+			if (!(user in range(1)))
+				boutput(user, "<span class='alert'>You must be near the machine to do that.</span>")
+				return
+			if (user.equipped() != O)
+				return
+			if (src.bloodbag)
+				boutput(user, "<span class='alert'>A blood bag is already loaded into the machine.</span>")
+				return
+			if (O.reagents.reagent_list.len > 1 || !(O.reagents.has_reagent("blood")))	// pure-reagent only
+				boutput(user, "<span class='alert'>Foreign contaminants detected in the blood bag.</span>")
+				return
+			if (!(O.reagents.reagent_list.len))
+				boutput(user, "<span class='alert'>The blood bag is empty.</span>")
+				return
+			else
+				src.bloodbag = O
+				user.u_equip(O)
+				O.set_loc(src)
+				O.master = src
+				user.client.screen -= O
+				boutput(user, "<span class='notice'>You insert the blood bag into the machine.</span>")
+			return
+
 		if (isscrewingtool(O))
 			if (machine_state)
 				boutput(user, "<span class='alert'>You cannot do that while the machine is working.</span>")
@@ -1326,23 +1304,12 @@
 				boutput(user, "<span class='notice'>You open the maintenance panel on the Synth-O-Matic.</span>")
 				icon_state = "synthp"
 				maintenance = 1
+				show_interface(user)
 			else
 				boutput(user, "<span class='notice'>You close the maintenance panel on the Synth-O-Matic.</span>")
 				icon_state = "synth1"
 				maintenance = 0
-			return
-		if (istype(O, /obj/item/synthmodule))
-			if (maintenance)
-				if (add_module(O))
-					boutput(user, "<span class='notice'>You insert the [O] into the machine.</span>")
-					O.master = src
-					user.client.screen -= O
-					user.u_equip(O)
-					show_interface(user)
-				else
-					boutput(user, "<span class='alert'>The machine already has the [O].</span>")
-			else
-				boutput(user, "<span class='alert'>You must open the maintenance panel first.</span>")
+				show_interface(user)
 			return
 		..(O, user)
 
@@ -1350,98 +1317,52 @@
 		var/output_text = ""
 
 		output_text += "<b>SYNTH-O-MATIC 6.5.535</b><br>"
-		output_text += "<i>\"Introducing the future in safe and controlled pathology science.\"</i><br>"
+		output_text += "<i>\"Introducing the future in safe and controlled <s>pathology science</s> biochemistry.\"</i><br>"
 		output_text += "<br>"
 
 		if (machine_state)
 			output_text += "The machine is currently working. Please wait."
 		else if (maintenance)
-			output_text += "<b>Maintenance panel open - active modules</b><br>"
-			for (var/module in modules)
-				var/obj/item/synthmodule/mod = modules[module]
-				output_text += "[mod.name] <a href='?src=\ref[src];remove=[module]'>\[remove\]</a><br>"
+			output_text += "<b>Maintenance panel open.</b><br>"
 		else
-			var/sane = 0
-			var/vaccinable = 0
-			var/body_name = null
-			var/module = null
 			output_text += "<b>Active vial:</b><br>"
 			if (sel_vial && vials[sel_vial])
 				var/obj/item/reagent_containers/glass/vial/V = vials[sel_vial]
-				if (V.reagents.has_reagent("pathogen"))
-					var/datum/reagent/blood/pathogen/R = V.reagents.reagent_list["pathogen"]
-					if (R.pathogens.len > 1)
-						output_text += "#[sel_vial] [V.name] (<font color='red'>ERROR:</font> contains multiple pathogen samples)<br><br>"
-					else if (!R.pathogens.len)
-						output_text += "#[sel_vial] [V.name] (empty)<br><br>"
-					else
-						var/uid = R.pathogens[1]
-						var/datum/pathogen/P = R.pathogens[uid]
-						sane = 1
-						vaccinable = P.body_type.vaccination
-						body_name = P.body_type.plural
-						module = P.body_type.module_id
-						output_text += "#[sel_vial] [V.name] (singular sample of strain [P.name_base])<br>"
-						if (has_module("assistant"))
-							var/units = P.suppression_threshold
-							output_text += "<br>The assistant module suggests at least [units <= 5 ? 5 : units] unit(s) of one of the following suppressants for this pathogen:<br>"
-							var/first = 1
-							for (var/supp in P.suppressant.cure_synthesis)
-								if (first)
-									first = 0
-								else
-									output_text += ", "
-								output_text += reagent_id_to_name(supp)
-							output_text += "<br><br>"
-						else
-							output_text += "<br>"
-				else
-					output_text += "#[sel_vial] [V.name] (empty)<br><br>"
+				var/rid = V.reagents.get_master_reagent()
+				var/rname = V.reagents.get_master_reagent_name()
+				output_text += "Vial #[sel_vial]: [rname]<br>"
+				for (var/R in whitelist)
+					if (rid == R)
+						output_text += "Valid precursor: <a href='?src=\ref[src];buymats=1'>Synthesize for [synthesize_cost] credits</a><br>"
+						for (var/L in concrete_typesof(/datum/reagent/microbiology))
+							var/datum/reagent/RE = new L()
+							if (rid == RE.data)
+								src.selectedresult = RE.id
 			else
 				output_text += "None<br><br>"
+
 			output_text += "<b>Research Budget:</b> [wagesystem.research_budget] Credits<br>"
-			output_text += "<a href='?src=\ref[src];buymats=1;microbody=virus'>Synthesize a new virus pathogen sample for [synthesize_pathogen_cost] credits</a><br>"
-			output_text += "<a href='?src=\ref[src];buymats=1;microbody=parasite'>Synthesize a new parasite pathogen sample for [synthesize_pathogen_cost] credits</a><br>"
-			output_text += "<a href='?src=\ref[src];buymats=1;microbody=bacterium'>Synthesize a new bacterium pathogen sample for [synthesize_pathogen_cost] credits</a><br>"
-			output_text += "<a href='?src=\ref[src];buymats=1;microbody=fungus'>Synthesize a new fungus pathogen sample for [synthesize_pathogen_cost] credits</a><br>"
 			output_text += "<br>"
+
 			output_text += "<b>Inserted vials:</b><br>"
 			for (var/i = 1, i <= 5, i++)
 				if (vials[i])
 					var/obj/item/reagent_containers/glass/vial/V = vials[i]
-					if ("pathogen" in V.reagents.reagent_list)
-						var/datum/reagent/blood/pathogen/R = V.reagents.reagent_list["pathogen"]
-						if (R.pathogens.len > 1)
-							output_text += "#[i] <a href='?src=\ref[src];vial=[i]'>[V.name]</a> <a href='?src=\ref[src];eject=[i]'>\[eject\]</a> (multiple samples)<br>"
-						else if (!R.pathogens.len)
-							output_text += "#[i] <a href='?src=\ref[src];vial=[i]'>[V.name]</a> <a href='?src=\ref[src];eject=[i]'>\[eject\]</a> (empty)<br>"
-						else
-							var/uid = R.pathogens[1]
-							var/datum/pathogen/P = R.pathogens[uid]
-							output_text += "#[i] <a href='?src=\ref[src];vial=[i]'>[V.name]</a> <a href='?src=\ref[src];eject=[i]'>\[eject\]</a> (singular sample of strain [P.name_base])<br>"
-					else
-						output_text += "#[i] <a href='?src=\ref[src];vial=[i]'>[V.name]</a> <a href='?src=\ref[src];eject=[i]'>\[eject\]</a> (empty)<br>"
+					var/chemname = V.reagents.get_master_reagent_name()
+					output_text += "Vial #[i]: <a href='?src=\ref[src];vial=[i]'>[chemname]</a> <a href='?src=\ref[src];eject=[i]'>\[eject\]</a><br>"
 				else
 					output_text += "#[i] Empty slot<br>"
+
 			output_text += "<br>"
-			output_text += "<b>Anti-agent beaker slot: </b>"
+			output_text += "<b>Egg reservoir slot: </b>"
 
-			if (antiagent)
-				output_text += "[antiagent] <a href='?src=\ref[src];ejectanti=1'>\[eject\]</a><br><br>"
+			if (beaker)
+				output_text += "[beaker] <a href='?src=\ref[src];ejectanti=1'>\[eject\]</a><br><br>"
 
-				if (has_module("synthesizer"))
-					if (antiagent.reagents.total_volume != antiagent.reagents.maximum_volume)
-						output_text += "<b>Anti-agent synthesizer module - select a reagent to add:</b><br>"
-						for (var/A in pathogen_controller.cure_bases)
-							var/datum/reagent/base_cure = src.reagents.reagent_list[A]
-							output_text += "10 units of <a href='?src=\ref[src];antiagent=[A]'>[base_cure.name]</a><br>"
-						output_text += "<br>"
-					else
-						output_text += "<b>Anti-agent synthesizer module - beaker is full.</b><br><br>"
-				output_text += "<b>Contents:</b><br>"
-				if (antiagent.reagents.reagent_list.len)
-					for (var/reagent in antiagent.reagents.reagent_list)
-						var/datum/reagent/R = antiagent.reagents.reagent_list[reagent]
+				if (beaker.reagents.reagent_list.len)
+					for (var/reagent in beaker.reagents.reagent_list)
+						var/datum/reagent/R = beaker.reagents.reagent_list[reagent]
+						output_text += "<b>Contents:</b><br>"
 						output_text += "[R.volume] units of [R.name]<br>"
 					output_text += "<br>"
 				else
@@ -1449,46 +1370,19 @@
 			else
 				output_text += "Empty<br><br>"
 
-			output_text += "<b>Suppression beaker slot: </b>"
-			if (suppressant)
-				output_text += "[suppressant] <a href='?src=\ref[src];ejectsupp=1'>\[eject\]</a><br><br>"
+			output_text += "<b>Blood Supply slot: </b>"
+			if (bloodbag)
+				output_text += "[bloodbag] <a href='?src=\ref[src];ejectsupp=1'>\[eject\]</a><br><br>"
 				output_text += "<b>Contents:</b><br>"
-				if (suppressant.reagents.reagent_list.len)
-					for (var/reagent in suppressant.reagents.reagent_list)
-						var/datum/reagent/R = suppressant.reagents.reagent_list[reagent]
+				if (bloodbag.reagents.reagent_list.len)
+					for (var/reagent in bloodbag.reagents.reagent_list)
+						var/datum/reagent/R = bloodbag.reagents.reagent_list[reagent]
 						output_text += "[R.volume] units of [R.name]<br>"
 					output_text += "<br>"
 				else
 					output_text += "Nothing.<br><br>"
 			else
 				output_text += "Empty<br><br>"
-
-
-			if (sane)
-				if (!antiagent || !length(antiagent.reagents.reagent_list))
-					output_text += "<i><b>NOTICE:</b> Serums manufactured without the appropriate antiagent may lead to an epidemic.</i><br>"
-				if (!suppressant || !length(suppressant.reagents.reagent_list))
-					if (has_module("vaccine"))
-						output_text += "<i><b>NOTICE:</b> Serums and vaccines manufactured without the appropriate suppression agent may lead to an epidemic.</i><br>"
-					else
-						output_text += "<i><b>NOTICE:</b> Serums manufactured without the appropriate suppression agent may lead to an epidemic.</i><br>"
-				if (module && !has_module(module))
-					output_text += "<b>ERROR:</b> Additional modules are required to synthesize cure for [body_name].<br>"
-				else
-					if (has_module("radiation"))
-						output_text += "<a href='?src=\ref[src];serum=1'>Synthesize serum from suppressants</a><br>"
-						output_text += "<a href='?src=\ref[src];serumrad=1'>Synthesize serum by irradiation</a><br>"
-					else
-						output_text += "<a href='?src=\ref[src];serum=1'>Synthesize serum</a><br>"
-					if (has_module("vaccine"))
-						if (vaccinable)
-							if (has_module("radiation"))
-								output_text += "<a href='?src=\ref[src];vaccine=1'>Synthesize vaccine from suppressants</a><br>"
-								output_text += "<a href='?src=\ref[src];vaccinerad=1'>Synthesize vaccine by irradiation</a><br>"
-							else
-								output_text += "<a href='?src=\ref[src];vaccine=1'>Synthesize vaccine</a><br>"
-						else
-							output_text += "No vaccine synthesis method is known for [body_name].<br>"
 
 		user.Browse(output_text, "window=synthomatic;size=800x600")
 
@@ -1499,12 +1393,8 @@
 			show_interface(usr)
 			return
 		if (maintenance)
-			if (href_list["remove"])
-				if (modules[href_list["remove"]])
-					var/obj/item/synthmodule/M = modules[href_list["remove"]]
-					modules -= href_list["remove"]
-					M.set_loc(src.loc)
-					M.master = null
+			show_interface(usr)
+			return
 		else
 			if (href_list["eject"])
 				var/index = text2num_safe(href_list["eject"])
@@ -1519,129 +1409,55 @@
 						if (sel_vial == index)
 							sel_vial = 0
 			else if (href_list["ejectanti"])
-				if (antiagent)
-					antiagent.set_loc(src.loc)
-					antiagent.master = null
-					antiagent = null
+				if (beaker)
+					beaker.set_loc(src.loc)
+					beaker.master = null
+					beaker = null
 			else if (href_list["ejectsupp"])
-				if (suppressant)
-					suppressant.set_loc(src.loc)
-					suppressant.master = null
-					suppressant = null
+				if (bloodbag)
+					bloodbag.set_loc(src.loc)
+					bloodbag.master = null
+					bloodbag = null
 			else if (href_list["vial"])
 				var/index = text2num_safe(href_list["vial"])
 				if(index > 0 && index <= vials.len)
 					if (vials[index])
 						sel_vial = index
-			else if (href_list["serum"])
-				machine_state = 1
-				icon_state = "synth2"
-				src.visible_message("The [src.name] bubbles and begins synthesis.", "You hear a bubbling noise.")
-				SPAWN(2 SECONDS) // 80
-					finish_creation(1, 1)
-			else if (href_list["serumrad"])
-				machine_state = 1
-				icon_state = "synth2"
-				src.visible_message("The [src.name] bubbles and begins synthesis.", "You hear a bubbling noise.")
-				SPAWN(2 SECONDS) // 120
-					finish_creation(0, 1)
-			else if (href_list["vaccine"])
-				machine_state = 1
-				icon_state = "synth2"
-				src.visible_message("The [src.name] bubbles and begins synthesis.", "You hear a bubbling noise.")
-				SPAWN(2 SECONDS) // 80
-					finish_creation(1, 0)
-			else if (href_list["vaccinerad"])
-				machine_state = 1
-				icon_state = "synth2"
-				src.visible_message("The [src.name] bubbles and begins synthesis.", "You hear a bubbling noise.")
-				SPAWN(2 SECONDS) // 120
-					finish_creation(0, 0)
-			else if (href_list["antiagent"])
-				var/new_antiagent = href_list["antiagent"]
 
-				if( !has_module("synthesizer") || !pathogen_controller.cure_bases.Find(new_antiagent) )
-					//Someone's tampering with the href
-					if (usr in range(1))
-						//Check that whoever's doing this is nearby - otherwise they could gib any old scrub
-
-						trigger_anti_cheat(usr, "tried to href exploit antiagent on [src].")
-						return
-				var/added = min(10, src.antiagent.reagents.maximum_volume - src.antiagent.reagents.total_volume)
-				src.antiagent.reagents.add_reagent(new_antiagent, added)
-				boutput(usr, "<span class='notice'>[added] units of anti-agent added to the beaker.</span>")
 			else if (href_list["buymats"])
-				#ifdef CREATE_PATHOGENS //PATHOLOGY REMOVAL
-				var/confirm = alert("How many pathogen samples do you wish to synthesize? ([synthesize_pathogen_cost] credits per sample)", "Confirm Purchase", "1", "5", "Cancel")
-				if (confirm != "Cancel" && machine_state == 0 && (usr in range(1)))
-					var/count = text2num_safe(confirm)
-					if (synthesize_pathogen_cost*count > wagesystem.research_budget)
-						boutput(usr, "<span class='alert'>Insufficient research budget to make that transaction.</span>")
-					else
-						boutput(usr, "<span class='notice'>Transaction successful.</span>")
-						wagesystem.research_budget -= synthesize_pathogen_cost*count
-						machine_state = 1
-						icon_state = "synth2"
-						src.visible_message("The [src.name] bubbles and begins synthesis.", "You hear a bubbling noise.")
-						SPAWN(0 SECONDS)
-							while(count > 0)
-								count--
-								sleep(5 SECONDS)
-								for (var/mob/C in viewers(src))
-									C.show_message("The [src.name] ejects a new pathogen sample.", 3)
-								switch(href_list["microbody"])
-									if("virus")
-										new /obj/item/reagent_containers/glass/vial/prepared/virus(src.loc)
-									if("parasite")
-										new /obj/item/reagent_containers/glass/vial/prepared/parasite(src.loc)
-									if("bacterium")
-										new /obj/item/reagent_containers/glass/vial/prepared/bacterium(src.loc)
-									if("fungus")
-										new /obj/item/reagent_containers/glass/vial/prepared/fungus(src.loc)
+				if (machine_state == 0 && (usr in range(1)))
+					if (!bloodbag)
+						boutput(usr, "<span class='alert'>No blood reservoir detected.</span>")
+					else if (!beaker)
+						boutput(usr, "<span class='alert'>No egg reservoir detected.</span>")
+					if (bloodbag && beaker)
+						var/BL = bloodbag.reagents.get_reagent_amount("blood")
+						var/EG = beaker.reagents.get_reagent_amount("egg")
+						if (EG < 5)
+							boutput(usr, "<span class='alert'>Insufficient egg reservoir (5 units needed).</span>")
+						else if (BL < 25)
+							boutput(usr, "<span class='alert'>Insufficient blood reservoir (25 units needed).</span>")
+						else if (synthesize_cost > wagesystem.research_budget)
+							boutput(usr, "<span class='alert'>Insufficient research budget to make that transaction.</span>")
+						else
+							boutput(usr, "<span class='notice'>Transaction successful.</span>")
+							wagesystem.research_budget -= synthesize_cost
+							machine_state = 1
+							icon_state = "synth2"
+							show_interface(usr)
+							src.visible_message("The [src.name] bubbles and begins synthesis.", "You hear a bubbling noise.")
+							beaker.reagents.remove_reagent("egg", 5)
+							bloodbag.reagents.remove_reagent("blood", 25)
+							SPAWN(0 SECONDS)
+							sleep(5 SECONDS)
+							for (var/mob/C in viewers(src))
+								C.show_message("The [src.name] ejects a new biochemical sample.", 3)
+							var/obj/item/reagent_containers/glass/vial/V = new /obj/item/reagent_containers/glass/vial/plastic(src.loc)
+							V.reagents.add_reagent(src.selectedresult, 5)
 							machine_state = 0
 							icon_state = "synth1"
-				#else
-				boutput(usr, "<span class='alert'>[src] unable to complete task. Please contact your network administrator.</span>")
-				#endif
+				//boutput(usr, "<span class='alert'>[src] unable to complete task. Please contact your network administrator.</span>")
 		show_interface(usr)
-
-	proc/finish_creation(var/use_suppressant, var/use_antiagent)
-		machine_state = 0
-		icon_state = "synth1"
-		create_injectors(use_suppressant, use_antiagent)
-
-	proc/create_injectors(var/use_suppressant, var/use_antiagent)
-		if (has_module("upgrade"))
-			for (var/mob/C in viewers(src))
-				C.show_message("The [src.name] shuts down and ejects multiple syringes.", 3)
-		else
-			for (var/mob/C in viewers(src))
-				C.show_message("The [src.name] shuts down and ejects a syringe.", 3)
-		var/obj/item/reagent_containers/glass/vial/V = src.vials[sel_vial]
-		var/datum/reagent/blood/pathogen/R = V.reagents.reagent_list["pathogen"]
-		var/uid = R.pathogens[1]
-		var/datum/pathogen/P = R.pathogens[uid]
-		var/is_cure = 0
-		if ((src.antiagent || !use_antiagent) && (src.suppressant || !use_suppressant))
-			if (!use_antiagent || src.antiagent.reagents.has_reagent(P.body_type.cure_base, clamp(P.suppression_threshold, 5, 50)))
-				var/found = 0
-				if (use_suppressant)
-					for (var/id in P.suppressant.cure_synthesis)
-						if (src.suppressant.reagents.has_reagent(id, clamp(P.suppression_threshold, 5, 50)))
-							found = 1
-							break
-					if (found)
-						is_cure = 1
-				else
-					is_cure = 1
-		if (use_antiagent && src.antiagent)
-			src.antiagent.reagents.clear_reagents()
-		if (use_suppressant && src.suppressant)
-			src.suppressant.reagents.clear_reagents()
-		V.reagents.clear_reagents()
-		for (var/i = 1, i <= (has_module("upgrade") ? 4 : 1), i++)
-			new/obj/item/serum_injector(src.loc, P, is_cure, use_antiagent ? 0 : 1)
-
 
 /obj/machinery/autoclave
 	name = "Autoclave"
