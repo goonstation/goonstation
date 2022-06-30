@@ -659,23 +659,26 @@
 	m_amt = 3000
 	g_amt = 1000
 	var/up = FALSE // The helmet's current position
-	color_r = 0.3 // darken
-	color_g = 0.3
-	color_b = 0.3
 
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 1)
 		setProperty("disorient_resist_eye", 100)
 
+	proc/obscure(mob/user)
+		user.addOverlayComposition(/datum/overlayComposition/weldingmask)
+		user.updateOverlaysClient(user.client)
+
+	proc/reveal(mob/user)
+		user.removeOverlayComposition(/datum/overlayComposition/weldingmask)
+		user.updateOverlaysClient(user.client)
+
 	proc/flip_down(mob/user)
 		up = FALSE
 		see_face = FALSE
 		icon_state = "welding"
 		boutput(user, "You flip the mask down. The mask is now protecting you from eye damage.")
-		color_r = initial(color_r) // darken
-		color_g = initial(color_g)
-		color_b = initial(color_b)
+		src.obscure(user)
 		user.set_clothing_icon_dirty()
 
 		src.c_flags |= (COVERSEYES | BLOCKCHOKE)
@@ -687,14 +690,26 @@
 		see_face = TRUE
 		icon_state = "welding-up"
 		boutput(user, "You flip the mask up. The mask is now providing greater armor to your head.")
-		color_r = 1 // no effect
-		color_g = 1
-		color_b = 1
+		src.reveal(user)
 		user.set_clothing_icon_dirty()
-
 		src.c_flags &= ~(COVERSEYES | BLOCKCHOKE)
 		setProperty("meleeprot_head", 4)
 		setProperty("disorient_resist_eye", 0)
+
+	equipped(mob/user, slot)
+		. = ..()
+		if (!src.up)
+			src.obscure(user)
+
+	unequipped(mob/user)
+		. = ..()
+		src.reveal(user)
+
+	disposing()
+		. = ..()
+		if (ismob(src.loc))
+			var/mob/owner = src.loc
+			src.reveal(owner)
 
 	attack_self(mob/user) //let people toggle these inhand too
 		for(var/obj/ability_button/mask_toggle/toggle in ability_buttons)
