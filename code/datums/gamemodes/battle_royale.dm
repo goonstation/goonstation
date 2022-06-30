@@ -106,6 +106,8 @@ var/global/area/current_battle_spawn = null
 				qdel(MAC)
 			if (/obj/machinery/portable_atmospherics/canister/toxins)
 				qdel(MAC)
+			if (/obj/machinery/portable_atmospherics/canister/carbon_dioxide)
+				qdel(MAC)
 			if (/obj/machinery/teleport/portal_generator)
 				qdel(MAC)
 			if (/obj/machinery/bot/secbot)
