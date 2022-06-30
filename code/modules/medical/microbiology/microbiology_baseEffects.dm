@@ -79,10 +79,10 @@ ABSTRACT_TYPE(/datum/microbioeffects)
 				return	//If the source mob is masked, don't infect!
 			if (contact_type == MICROBIO_TRANSMISSION_TYPE_PHYSICAL && S.affected_mob.gloves)
 				return 	//If the source mob is wearing gloves, don't infect!
-		if !(ishuman(target))
+		if (!(ishuman(target)))
 			return	//If the target isn't human, it does not have the code infrastructure to hold an infection.
 		var/mob/living/carbon/human/H = target
-		if !(prob(100-H.get_disease_protection()))
+		if (!(prob(100-H.get_disease_protection())))
 			return	// The target succeeded in the protect roll
 		if (target.infected(microbio_controls.pull_from_upstream(S.master.name)))
 			if (infect_message)

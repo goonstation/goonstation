@@ -1,19 +1,36 @@
-// Spread flags. Determines what slots are taken into account during a permeability scan.
+// GENERAL DEFINES, REPORTING FOR DUTY!
 
-//#define SPREAD_FACE 1
-//#define SPREAD_BODY 2
-//#define SPREAD_HANDS 4
-//#define SPREAD_AIR 8
+#define MICROBIO_NAMINGLIST list("Disease", "Strain", "Plague", "Syndrome", "Virions")
 
-//#define COOLDOWN_MULTIPLIER 1
+#define MICROBIO_LOWERDURATIONVALUE 120
+#define MICROBIO_UPPERDURATIONVALUE 240
 
-//#define INFECT_NONE 0
-//#define INFECT_TOUCH 1
-//#define INFECT_AREA 3
+#define MICROBIO_INDIVIDUALMICROBELIMIT 3
+
+// Probability Factors
+#define MICROBIO_DEFAULTPROBABILITYDIVIDEND 5
+#define MICROBIO_MAXIMUMPROBABILITY 5
+#define MICROBIO_MICROBEWEIGHTEDPROBABILITYDIVIDEND 2
+
+// EFFECT-RELATED DEFINES
+
+// More Probability Factors, effectively the old rarity system
+#define MICROBIO_EFFECT_PROBABILITY_FACTOR_OHGODHELP 0.01
+#define MICROBIO_EFFECT_PROBABILITY_FACTOR_HORRIFYING 0.1
+#define MICROBIO_EFFECT_PROBABILITY_FACTOR_RARE 0.2
+#define MICROBIO_EFFECT_PROBABILITY_FACTOR_UNCOMMON 0.5
+
+// Transmission Types
+#define MICROBIO_TRANSMISSION_TYPE_PHYSICAL 1
+#define MICROBIO_TRANSMISSION_TYPE_AEROBIC 2
+
+// CURE-RELATED DEFINES
 
 #define REAGENT_CURE_THRESHOLD 10
 
-// Reagent Catagories
+#define MICROBIO_CURE_PROBABILITY_FACTOR 100	//Fuck RNG! Let the people be cured!
+
+//Reagent Catagories
 
 #define MB_BRUTE_MEDS_CATAGORY list("styptic_powder", "synthflesh", "analgesic")
 #define MB_BURN_MEDS_CATAGORY list("silver_sulfadiazine", "synthflesh", "menthol")
@@ -34,6 +51,9 @@
 "sodium_thiopental","ketamine","sulfonal","toxin","venom","neurotoxin","mutagen","wolfsbane","toxic_slurry","histamine","sarin")
 
 #define MB_BRAINDAMAGE_REAGENTS list("mercury","neurotoxin","haloperidol","sarin")
+
+// MACHINE DEFINES
+
 // Inspection Responses
 
 #define MICROBIO_INSPECT_LIKES "The microbes are moving towards the area affected by the reagent!"
@@ -45,26 +65,6 @@
 #define MICROBIO_INSPECT_HIT_CURE "The microbes in the test reagent are rapidly withering away!"
 
 // Other constants
-
-#define MICROBIO_LOWERDURATIONVALUE 120
-#define MICROBIO_UPPERDURATIONVALUE 240
-
-#define MICROBIO_INDIVIDUALMICROBELIMIT 3
-#define MICROBIO_DEFAULTPROBABILITYDIVIDEND 5
-#define MICROBIO_MAXIMUMPROBABILITY 5
-#define MICROBIO_MICROBEWEIGHTEDPROBABILITYDIVIDEND 2
-#define MICROBIO_NAMINGLIST list("Disease", "Strain", "Plague", "Syndrome", "Virions")
-
-
-#define MICROBIO_EFFECT_PROBABILITY_FACTOR_HORRIFYING 0.1
-#define MICROBIO_EFFECT_PROBABILITY_FACTOR_RARE 0.2
-#define MICROBIO_EFFECT_PROBABILITY_FACTOR_UNCOMMON 0.5
-
-#define MICROBIO_CURE_PROBABILITY_FACTOR 100	//Fuck RNG! Let the people be cured!
-
-#define MICROBIO_TRANSMISSION_TYPE_PHYSICAL 1
-#define MICROBIO_TRANSMISSION_TYPE_AEROBIC 2
-
 #define MICROBIO_SHAKESPEARE list("Expectation is the root of all heartache.",\
 "A fool thinks himself to be wise, but a wise man knows himself to be a fool.",\
 "Love all, trust a few, do wrong to none.",\
