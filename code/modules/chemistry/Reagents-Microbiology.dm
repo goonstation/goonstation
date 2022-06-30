@@ -1,6 +1,6 @@
 var/global/list/biochemistry_whitelist = list("copper","silicon","carbon","ldmatter",\
 "luminol","oxygen","nitrogen","plasma","synthflesh","sonic_powder","perfluorodecalin",\
-"insulin","calomel","spaceacillin", "space_cleaner")
+"insulin","calomel","spaceacillin", "space_cleaner", "oil")
 
 ABSTRACT_TYPE(/datum/reagent/microbiology)
 
