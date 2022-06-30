@@ -470,7 +470,7 @@ datum/projectile
 	var/ks_ratio = 1.0           /* Kill/Stun ratio, when it hits a mob the damage/stun is based upon this and the power
 	                                eg 1.0 will cause damage = to power while 0.0 would cause just stun = to power */
   var/armor_ignored = 0				 // How much flat ranged protection will be ignored
-									// (Ranged prot is a multiplier. Sec vests have 1.5 prot, so 0.5 armor_ignored or greater will ignore all armor)
+									// (Sec vests have 1 prot, so 1 armor_ignored or greater will ignore all armor)
 
 	var/sname = "stun"           // name of the projectile setting, used when you change a guns setting
 	var/shot_sound = 'sound/weapons/Taser.ogg' // file location for the sound you want it to play
