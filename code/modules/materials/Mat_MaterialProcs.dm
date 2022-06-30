@@ -300,6 +300,8 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	execute(var/atom/owner, var/atom/movable/entering)
 		if (isobserver(entering) || isintangible(entering))
 			return
+		if(ON_COOLDOWN(entering, "telecrystal_warp", 1 SECOND))
+			return
 		var/turf/T = get_turf(entering)
 		if(prob(50) && owner && isturf(owner) && !isrestrictedz(T.z))
 			. = get_offset_target_turf(get_turf(entering), rand(-2, 2), rand(-2, 2))
@@ -313,6 +315,8 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/telecrystal_onattack
 	execute(var/obj/item/owner, var/mob/attacker, var/mob/attacked)
 		var/turf/T = get_turf(attacked)
+		if(ON_COOLDOWN(attacked, "telecrystal_warp", 1 SECOND))
+			return
 		if(prob(33))
 			if(istype(attacked) && !isrestrictedz(T.z)) // Haine fix for undefined proc or verb /turf/simulated/floor/set loc()
 				. = get_offset_target_turf(get_turf(attacked), rand(-8, 8), rand(-8, 8))
@@ -330,6 +334,8 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 /datum/materialProc/telecrystal_life
 	execute(var/mob/M, var/obj/item/I, mult)
+		if(ON_COOLDOWN(M, "telecrystal_warp", 1 SECOND))
+			return
 		var/turf/T = get_turf(M)
 		if(probmult(5) && M && !isrestrictedz(T.z))
 			. = get_offset_target_turf(get_turf(M), rand(-8, 8), rand(-8, 8))
