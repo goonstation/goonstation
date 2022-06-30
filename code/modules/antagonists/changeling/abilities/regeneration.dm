@@ -47,11 +47,16 @@
 					C.HealDamage("All", 1000, 1000)
 					C.take_brain_damage(-INFINITY)
 					C.take_toxin_damage(-INFINITY)
+					C.change_misstep_chance(-INFINITY)
 					C.take_oxygen_deprivation(-INFINITY)
+					C.delStatus("drowsy")
+					c.delStatus("n_radiation")
 					C.delStatus("paralysis")
+					C.delStatus("slowed")
 					C.delStatus("stunned")
 					C.delStatus("weakened")
 					C.delStatus("radiation")
+					C.delStatus("disorient")
 					C.health = 100
 					C.reagents.clear_reagents()
 					C.lying = 0
