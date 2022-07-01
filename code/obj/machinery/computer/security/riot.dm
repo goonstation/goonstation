@@ -1,15 +1,23 @@
 /obj/machinery/computer/riotgear
 	name = "Armory Authorization"
+	desc = "Use this computer to authorize security access to the Armory. You need an ID with security access to do so."
 	icon_state = "drawbr"
 	density = 0
 	glow_in_dark_screen = TRUE
 	var/auth_need = 3.0
-	var/list/authorized
-	var/list/authorized_registered = null
 	var/net_id = null
 	var/control_frequency = "1461"
 	var/radiorange = 3
-	desc = "Use this computer to authorize security access to the Armory. You need an ID with security access to do so."
+
+	var/list/authorisations = list()
+	var/hasID = FALSE
+	var/hasAccess = FALSE
+	var/mismatchedAppearance = FALSE
+	var/mismatchedID = FALSE
+	var/maxSecAccess = FALSE
+	var/existingAuthorisation = FALSE
+	var/nameOnFile = FALSE
+	var/printOnFile = FALSE
 
 	light_r =1
 	light_g = 0.3
@@ -116,9 +124,6 @@
 		src.icon_state = "drawbr-alert"
 		src.UpdateIcon()
 
-		src.authorized = null
-		src.authorized_registered = null
-
 		for (var/obj/machinery/door/airlock/D in armory_area)
 			if (D.has_access(access_maxsec))
 				D.req_access = list(access_security)
@@ -135,45 +140,109 @@
 				LAGCHECK(LAG_REALTIME)
 
 	proc/unauthorize()
-		if(src.authed)
+		if(!src.authed)
+			return
 
-			logTheThing("station", usr, null, "unauthorized armory access")
-			authed = 0
-			src.ClearSpecificOverlays("screen_image")
-			icon_state = "drawbr"
-			src.UpdateIcon()
+		logTheThing("station", usr, null, "unauthorized armory access")
+		authed = 0
+		authorisations = list()
+		src.ClearSpecificOverlays("screen_image")
+		icon_state = "drawbr"
+		src.UpdateIcon()
 
-			for (var/obj/machinery/door/airlock/D in armory_area)
-				if (D.has_access(access_security))
-					D.req_access = list(access_maxsec)
-				LAGCHECK(LAG_REALTIME)
+		ON_COOLDOWN(src, "deauth", 5 MINUTES)
 
-			if (armory_area)
-				for(var/obj/O in armory_area)
-					if (istype(O,/obj/storage/secure/crate))
-						O.req_access = list(access_maxsec)
-					else if (istype(O,/obj/machinery/vending))
-						O.req_access = list(access_maxsec)
+		for (var/obj/machinery/door/airlock/D in armory_area)
+			if (D.has_access(access_security))
+				D.req_access = list(access_maxsec)
+			LAGCHECK(LAG_REALTIME)
 
-				LAGCHECK(LAG_REALTIME)
+		if (armory_area)
+			for(var/obj/O in armory_area)
+				if (istype(O,/obj/storage/secure/crate))
+					O.req_access = list(access_maxsec)
+				else if (istype(O,/obj/machinery/vending))
+					O.req_access = list(access_maxsec)
+
+			LAGCHECK(LAG_REALTIME)
 
 	proc/print_auth_needed(var/mob/author)
 		if (author)
 			for (var/mob/O in hearers(src, null))
-				O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[author] request accepted. [src.auth_need - src.authorized.len] authorizations needed until Armory is opened.\"</span></span>", 2)
+				O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[author] request accepted. [src.auth_need - src.authorisations.len] authorizations needed until Armory is opened.\"</span></span>", 2)
 		else
 			for (var/mob/O in hearers(src, null))
-				O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[src.auth_need - src.authorized.len] authorizations needed until Armory is opened.\"</span></span>", 2)
+				O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[src.auth_need - src.authorisations.len] authorizations needed until Armory is opened.\"</span></span>", 2)
 
+	proc/checkRequirements(var/mob/user, var/obj/item/W)
+		// Reset the variables.
+		hasID = FALSE
+		hasAccess = FALSE
+		mismatchedAppearance = FALSE
+		mismatchedID = FALSE
+		maxSecAccess = FALSE
+		existingAuthorisation = FALSE
+		nameOnFile = FALSE
+		printOnFile = FALSE
+
+		if (W == null) // No ID.
+			return
+
+		if (!istype(W, /obj/item/card/id)) // No ID.
+			return
+		else
+			hasID = TRUE
+
+		var/obj/item/card/id/ID = W
+
+		if (!ID:access) // No access.
+			return
+
+		var/list/cardaccess = ID:access
+		if (!istype(cardaccess, /list) || !length(cardaccess)) // No access.
+			return
+
+		if (access_securitylockers in ID:access) // Has Security Equipment access.
+			hasAccess = TRUE
+
+		if (ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if (H.name != strip_html_tags(H.get_heard_name())) // User's appearance must match their voice.
+				mismatchedAppearance = TRUE
+				boutput(user, "[H.name] | [strip_html_tags(H.get_heard_name())]")
+				return
+
+		if (user.name != ID.registered) // Player name must match their ID's registered name.
+			mismatchedID = TRUE
+			return
+
+		if (access_maxsec in ID:access) // Are they the HoS, or do they have equivalent access?
+			maxSecAccess = TRUE
+
+		if (user.name in authorisations) // Check for authorisations that use the player's name.
+			nameOnFile = TRUE
+
+		for (var/x in authorisations)
+			var/list/params = authorisations[x]
+			if (user.bioHolder.fingerprints == params["prints"]) // Check for authorisations that use the player's fingerprints.
+				printOnFile = TRUE
+				break
+
+		// If both their name and fingerprint are on file, then they may repeal their authorisation.
+		// If either only their name or fingerprint are on file, and not the other, then the computer will deny them access.
+		if (nameOnFile == TRUE && printOnFile == TRUE)
+			existingAuthorisation = TRUE
 
 /obj/machinery/computer/riotgear/attack_hand(mob/user)
 	if (ishuman(user))
 		return src.Attackby(user:wear_id, user)
 	..()
 
-//kinda copy paste from shuttle auth :)
 /obj/machinery/computer/riotgear/attackby(var/obj/item/W, var/mob/user)
+
 	interact_particle(user,src)
+	src.add_fingerprint(user)
+
 	if(status & (BROKEN|NOPOWER))
 		return
 	if (!user)
@@ -181,89 +250,202 @@
 
 	if (istype(W, /obj/item/device/pda2) && W:ID_card)
 		W = W:ID_card
-	if (!istype(W, /obj/item/card/id))
-		boutput(user, "No ID given.")
+
+	checkRequirements(user, W)
+
+	return src.ui_interact(user)
+
+/obj/machinery/computer/riotgear/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "RiotGear")
+		ui.open()
+
+/obj/machinery/computer/riotgear/ui_data(mob/user)
+	. = list(
+		"authed" = authed,
+		"authorisations" = authorisations,
+		"hasID" = hasID,
+		"hasAccess" = hasAccess,
+		"mismatchedAppearance" = mismatchedAppearance,
+		"mismatchedID" = mismatchedID,
+		"maxSecAccess" = maxSecAccess,
+		"existingAuthorisation" = existingAuthorisation,
+		"nameOnFile" = nameOnFile,
+		"printOnFile" = printOnFile,
+		"cooldown" = GET_COOLDOWN(src, "deauth")
+	)
+
+/obj/machinery/computer/riotgear/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if (.)
 		return
 
-	if (!W:access) //no access
-		src.add_fingerprint(user)
-		boutput(user, "The access level of [W] is not high enough.")
+	var/mob/user = ui.user
+	var/obj/item/W
+	if (ishuman(user))
+		W = user:wear_id
+	if (W == null)
+		W = user.equipped()
+	if (istype(W, /obj/item/device/pda2) && W:ID_card)
+		W = W:ID_card
+
+	checkRequirements(user, W)
+
+	if (hasID != TRUE || hasAccess != TRUE || mismatchedAppearance != FALSE || mismatchedID != FALSE || nameOnFile != printOnFile || GET_COOLDOWN(src, "deauth")) // Most of the logic is handled by RiotGear.js, however I feel it prudent to check here too.
 		return
 
-	var/list/cardaccess = W:access
-	if(!istype(cardaccess, /list) || !length(cardaccess)) //no access
-		src.add_fingerprint(user)
-		boutput(user, "The access level of [W] is not high enough.")
-		return
+	var/obj/item/card/id/ID = W
 
-	if(!(access_securitylockers in W:access)) //doesn't have this access
-		src.add_fingerprint(user)
-		boutput(user, "The access level of [W] is not high enough.")
-		return
-
-	if(authed && (!(access_maxsec in W:access)))
-		boutput(user, "Armory has already been authorized!")
-		return
-
-	if(authed && (access_maxsec in W:access))
-		var/choice = tgui_alert(user, "Would you like to unauthorize security's access to riot gear?", "Armory Unauthorization", list("Unauthorize", "No"))
-		if(BOUNDS_DIST(user, src) > 0) return
-		src.add_fingerprint(user)
-		if (choice == "Unauthorize")
-			if(GET_COOLDOWN(src, "unauth"))
-				boutput(user, "<span class='alert'> The armory computer cannot take your commands at the moment! Wait [GET_COOLDOWN(src, "unauth")/10] seconds!</span>")
-				playsound( src.loc,"sound/machines/airlock_deny.ogg", 10, 0 )
-				return
-			if(!ON_COOLDOWN(src, "unauth", 5 MINUTES))
-				unauthorize()
-				playsound(src.loc,"sound/machines/chime.ogg", 10, 1)
-				boutput(user,"<span class='notice'> The armory's equipments have returned to having their default access!</span>")
-		return
-
-	if (!src.authorized)
-		src.authorized = list()
-		src.authorized_registered = list()
-
-	var/choice = tgui_alert(user, "Would you like to authorize access to riot gear? [src.auth_need - length(src.authorized)] authorization\s are still needed.", "Armory Auth", list("Authorize", "Repeal"))
-	if(BOUNDS_DIST(user, src) > 0 || src.authed)
-		return
-	src.add_fingerprint(user)
-	if (!choice)
-		return
-	switch(choice)
-		if("Authorize")
-			if (user in src.authorized)
-				boutput(user, "You have already authorized! [src.auth_need - src.authorized.len] authorizations from others are still needed.")
-				return
-			if (W:registered in src.authorized_registered)
-				boutput(user, "This ID has already issued an authorization! [src.auth_need - src.authorized.len] authorizations from others are still needed.")
-				return
-			if (access_maxsec in W:access)
-				authorize()
+	switch (action)
+		if ("HoS-Authorise")
+			if (maxSecAccess != TRUE)
 				return
 
-			if (ishuman(user))
-				var/mob/living/carbon/human/H = user
-				if (H.bioHolder.Uid in src.authorized)
-					boutput(user, "You have already authorized - fingerprints on file! [src.auth_need - src.authorized.len] authorizations from others are still needed.")
-					return
-				src.authorized += H.bioHolder.Uid
-			else
-				src.authorized += user //authorize by USER, not by registered ID. prevent the captain from printing out 3 unique ID cards and getting in by themselves.
-			src.authorized_registered += W:registered
+			authorisations[user.name] = list("name" = user.name, "rank" = ID:assignment, "prints" = user.bioHolder.fingerprints)
 
-			if (src.authorized.len < auth_need)
+			authorize()
+			. = TRUE
+
+		if ("Authorise")
+			if (existingAuthorisation != FALSE)
+				return
+
+			authorisations[user.name] = list("name" = user.name, "rank" = ID:assignment, "prints" = user.bioHolder.fingerprints)
+
+			if (src.authorisations.len < auth_need)
 				print_auth_needed(user)
 			else
 				authorize()
+			. = TRUE
 
-		if("Repeal")
+		if ("Repeal")
+			if (existingAuthorisation != TRUE)
+				return
 
-			if (ishuman(user))
-				var/mob/living/carbon/human/H = user
-				src.authorized -= H.bioHolder.Uid
-			else
-				src.authorized -= user
-			src.authorized_registered -= W:registered
+			authorisations.Remove(user.name)
 
 			print_auth_needed(user)
+			. = TRUE
+
+		if ("Deauthorise")
+			if (maxSecAccess != TRUE)
+				return
+
+			unauthorize()
+			. = TRUE
+
+	checkRequirements(user, ID)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// /obj/machinery/computer/riotgear/proc/ignorethis(var/obj/item/W, var/mob/user)
+// 	return
+// 	interact_particle(user,src)
+// 	if(status & (BROKEN|NOPOWER))
+// 		return
+// 	if (!user)
+// 		return
+
+// 	if (istype(W, /obj/item/device/pda2) && W:ID_card)
+// 		W = W:ID_card
+// 	if (!istype(W, /obj/item/card/id))
+// 		boutput(user, "No ID given.")
+// 		return
+
+// 	if (!W:access) //no access
+// 		src.add_fingerprint(user)
+// 		boutput(user, "The access level of [W] is not high enough.")
+// 		return
+
+// 	var/list/cardaccess = W:access
+// 	if(!istype(cardaccess, /list) || !length(cardaccess)) //no access
+// 		src.add_fingerprint(user)
+// 		boutput(user, "The access level of [W] is not high enough.")
+// 		return
+
+// 	if(!(access_securitylockers in W:access)) //doesn't have this access
+// 		src.add_fingerprint(user)
+// 		boutput(user, "The access level of [W] is not high enough.")
+// 		return
+
+// 	if(authed && (!(access_maxsec in W:access)))
+// 		boutput(user, "Armory has already been authorized!")
+// 		return
+
+// 	if(authed && (access_maxsec in W:access))
+// 		var/choice = tgui_alert(user, "Would you like to unauthorize security's access to riot gear?", "Armory Unauthorization", list("Unauthorize", "No"))
+// 		if(BOUNDS_DIST(user, src) > 0) return
+// 		src.add_fingerprint(user)
+// 		if (choice == "Unauthorize")
+// 			if(GET_COOLDOWN(src, "unauth"))
+// 				boutput(user, "<span class='alert'> The armory computer cannot take your commands at the moment! Wait [GET_COOLDOWN(src, "unauth")/10] seconds!</span>")
+// 				playsound( src.loc,"sound/machines/airlock_deny.ogg", 10, 0 )
+// 				return
+// 			if(!ON_COOLDOWN(src, "unauth", 5 MINUTES))
+// 				unauthorize()
+// 				playsound(src.loc,"sound/machines/chime.ogg", 10, 1)
+// 				boutput(user,"<span class='notice'> The armory's equipments have returned to having their default access!</span>")
+// 		return
+
+// 	if (!src.authorized)
+// 		src.authorized = list()
+// 		src.authorized_registered = list()
+
+// 	var/choice = tgui_alert(user, "Would you like to authorize access to riot gear? [src.auth_need - length(src.authorized)] authorization\s are still needed.", "Armory Auth", list("Authorize", "Repeal"))
+// 	if(BOUNDS_DIST(user, src) > 0 || src.authed)
+// 		return
+// 	src.add_fingerprint(user)
+// 	if (!choice)
+// 		return
+// 	switch(choice)
+// 		if("Authorize")
+// 			if (user in src.authorized)
+// 				boutput(user, "You have already authorized! [src.auth_need - src.authorized.len] authorizations from others are still needed.")
+// 				return
+// 			if (W:registered in src.authorized_registered)
+// 				boutput(user, "This ID has already issued an authorization! [src.auth_need - src.authorized.len] authorizations from others are still needed.")
+// 				return
+// 			if (access_maxsec in W:access)
+// 				authorize()
+// 				return
+
+// 			if (ishuman(user))
+// 				var/mob/living/carbon/human/H = user
+// 				if (H.bioHolder.Uid in src.authorized)
+// 					boutput(user, "You have already authorized - fingerprints on file! [src.auth_need - src.authorized.len] authorizations from others are still needed.")
+// 					return
+// 				src.authorized += H.bioHolder.Uid
+// 			else
+// 				src.authorized += user //authorize by USER, not by registered ID. prevent the captain from printing out 3 unique ID cards and getting in by themselves.
+// 			src.authorized_registered += W:registered
+
+// 			if (src.authorized.len < auth_need)
+// 				print_auth_needed(user)
+// 			else
+// 				authorize()
+
+// 		if("Repeal")
+
+// 			if (ishuman(user))
+// 				var/mob/living/carbon/human/H = user
+// 				src.authorized -= H.bioHolder.Uid
+// 			else
+// 				src.authorized -= user
+// 			src.authorized_registered -= W:registered
+
+// 			print_auth_needed(user)
