@@ -33609,7 +33609,7 @@
 /turf/simulated/floor/red/side,
 /area/station/security/main)
 "bzQ" = (
-/obj/storage/secure/crate/weapon/confiscated_items,
+/obj/storage/secure/closet/brig,
 /turf/simulated/floor/red/side,
 /area/station/security/main)
 "bzR" = (

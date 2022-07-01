@@ -568,6 +568,7 @@ TRAYS
 		if (istype(food, /obj/item/plate))
 			if (food == src)
 				boutput(user, "<span class='alert>You can't stack a plate on itself!</span>")
+				return
 			var/obj/item/plate/not_really_food = food
 			. = src.stackable && not_really_food.stackable // . is TRUE if we can stack the other plate on this plate, FALSE otherwise
 
@@ -684,6 +685,8 @@ TRAYS
 				M.visible_message("<span class='alert'><B>[user] smashes [src] over [M]'s head!</B></span>")
 				logTheThing("combat", user, M, "smashes [src] over [constructTarget(M,"combat")]'s head! ")
 
+			unique_attack_garbage_fuck(M, user)
+
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if(istype(H.head, /obj/item/clothing/head/helmet))
@@ -705,8 +708,6 @@ TRAYS
 					M.force_laydown_standup()
 			else //borgs, ghosts, whatever
 				M.do_disorient(stamina_damage = 150, weakened = 0.1 SECONDS, disorient = 1 SECOND)
-
-			unique_attack_garbage_fuck(M, user)
 		else
 			M.visible_message("<span class='alert'>[user] taps [M] over the head with [src].</span>")
 			playsound(src, src.hit_sound, 30, 1)
