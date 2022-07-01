@@ -1191,6 +1191,9 @@
 	desc = "A module that allows the Synth-O-Matic to generate cure through irradiation, instead of chemicals."
 	id = "radiation"
 
+#define BIOCHEMISTRY_PRODUCTION_LOWER_BOUND 4
+#define BIOCHEMISTRY_PRODUCTION_UPPER_BOUND 10
+
 /obj/machinery/synthomatic
 	name = "Synth-O-Matic 6.5.535"
 	desc = "The leading technological assistant in synthesizing useful biochemicals."
@@ -1203,10 +1206,10 @@
 	var/list/obj/item/reagent_containers/glass/vial/vials[3]
 	var/obj/item/beaker = null
 	var/obj/item/bloodbag = null
-	var/selectedresult = null
-	var/emagged = 0
+	var/datum/reagent/selectedresult = null
+	var/emagged = FALSE
 	var/delay = 5
-	var/maintainance = 0
+	var/maintainance = FALSE
 	var/machine_state = 0
 	var/sel_vial = 0
 	var/const/synthesize_cost = 100 // used to used to be 2000
@@ -1229,19 +1232,19 @@
 			return
 
 		if (istype(O, /obj/item/reagent_containers/glass/vial))
-			var/done = 0
+			var/done = FALSE
 			if (O.reagents.reagent_list.len > 1 || O.reagents.total_volume < 5)	//full, pure-reagent vials only
 				boutput(user, "<span class='alert'>The machine can only process full vials of pure reagent.</span>")
 				return
 			for (var/i in 1 to 3)
 				if (!(vials[i]))
-					done = 1
+					done = TRUE
 					vials[i] = O
 					user.u_equip(O)
 					O.set_loc(src)
 					user.client.screen -= O
 					break
-			if (!done)
+			if (done == TRUE)
 				boutput(user, "<span class='alert'>The machine cannot hold any more vials.</span>")
 				return
 			else
@@ -1446,6 +1449,7 @@
 						SPAWN(delay SECONDS)
 							for (var/mob/C in viewers(src))
 								C.show_message("The [src.name] ejects [production_amount] biochemical sample[production_amount? "s." : "."]", 3)
+							production_amount = rand(BIOCHEMISTRY_PRODUCTION_LOWER_BOUND, BIOCHEMISTRY_PRODUCTION_UPPER_BOUND)
 							for (var/i in 1 to production_amount)
 								var/obj/item/reagent_containers/glass/vial/plastic/V = new /obj/item/reagent_containers/glass/vial/plastic(src.loc)
 								V.reagents.add_reagent(src.selectedresult.id, 5)
@@ -1453,6 +1457,9 @@
 							icon_state = "synth1"
 				//boutput(usr, "<span class='alert'>[src] unable to complete task. Please contact your network administrator.</span>")
 		show_interface(usr)
+
+#undef BIOCHEMISTRY_PRODUCTION_LOWER_BOUND
+#undef BIOCHEMISTRY_PRODUCTION_UPPER_BOUND
 
 /obj/machinery/autoclave
 	name = "Autoclave"

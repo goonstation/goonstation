@@ -106,7 +106,7 @@ datum
 				if (!(istype(O,/obj/item/clothing)))
 					return
 				if (istype(O,/obj/item/clothing/glasses) || istype(O,/obj/item/clothing/mask))
-					boutput(usr,"<span class='alert'>The [O] is too small to support the regenerative synthreads...</span>")
+					boutput(usr,"<span class='alert'>The [O.name] is too small to support the regenerative synthreads...</span>")
 					return
 				if (istype(O,/obj/item/clothing/head/helmet))	//head melee + explo + ranged
 					var/obj/item/clothing/head/helmet/C = O
@@ -161,7 +161,7 @@ datum
 						ranged = min(ranged + RANGED_INCREMENT, MAX_RANGED_UPGRADE)
 						C.setProperty("rangedprot", ranged)
 
-				boutput(usr,"<span class='notice'>The [O] looks much sturdier.</span>")
+				boutput(usr,"<span class='notice'>The [O.name] looks much sturdier.</span>")
 				#undef HEADGEAR_MAX_MELEE_UPGRADE
 				#undef HEADGEAR_MELEE_INCREMENT
 				#undef GLOVES_MAX_CONDUCTIVITY_UPGRADE
