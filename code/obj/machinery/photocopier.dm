@@ -128,6 +128,9 @@
 				if (src.paper_amount >= 30.0)
 					boutput(user, "<span class='alert'>You can't fit any more paper into \the [src].</span>")
 					return
+				var/obj/item/paper/P = w
+				if (P.info != "" && tgui_alert(user, "This paper has writing on it, are you sure you want to put it in the inlet tray?", "Warning", list("Yes", "No")) == "No")
+					return
 				boutput(user, "You load the sheet of paper into \the [src].")
 				src.paper_amount++
 				qdel(w)

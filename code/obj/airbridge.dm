@@ -366,7 +366,7 @@
 		<A href='?src=\ref[src];air=1'>Pressurize</A><BR>
 		"}
 
-		if (user.client.tooltipHolder)
+		if (user.client?.tooltipHolder) // BAD MONKEY!
 			user.client.tooltipHolder.showClickTip(src, list(
 				"params" = params,
 				"title" = src.name,
