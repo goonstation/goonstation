@@ -504,7 +504,7 @@
 	return data
 
 // Should make it easier to maintain the detective's scanner and PDA program (Convair880).
-/proc/scan_forensic(var/atom/A as turf|obj|mob, visible = 0, var/microbioupgrade = 0)
+/proc/scan_forensic(var/atom/A as turf|obj|mob, visible = 0)
 	if (istype(A, /obj/ability_button)) // STOP THAT
 		return
 	var/fingerprint_data = null
@@ -615,18 +615,18 @@
 			if (istype(A, /turf))
 				interesting_data += "<br><span class='notice'>There seems to be more to [A] than meets the eye.</span>"
 
-		if (!A.fingerprints && !(params2list(A.get_forensic_trace("fprints"))))
-			fingerprint_data += "<br><span class='notice'>Unable to locate any fingerprints.</span>"
-
-		else if (A.fingerprints)
-			var/list/FP = A:fingerprints
-			var/list/FT = params2list(A.get_forensic_trace("fprints"))
-			if (FT && microbioupgrade)
-				for (var/i in FT)
+//		if (!A.fingerprints)
+			/*var/list/FP = params2list(A.get_forensic_trace("fprints"))
+			if (FP)
+				for (var/i in FP)
 					fingerprint_data += "<br><span class='notice'>[i]</span>"
 			else
-				for(var/i in FP)
-					fingerprint_data += "<br><span class='notice'>[i]</span>"
+				*///fingerprint_data += "<br><span class='notice'>Unable to locate any fingerprints.</span>"
+//		else
+		if (A.fingerprints)
+			var/list/FP = A:fingerprints
+			for(var/i in FP)
+				fingerprint_data += "<br><span class='notice'>[i]</span>"
 
 //		if (!A.blood_DNA)
 			/*var/list/DNA = params2list(A.get_forensic_trace("bDNA"))

@@ -67,7 +67,7 @@
 		if(length(src.fingerprints) >= 6)
 			src.fingerprints -= src.fingerprints[1]
 		src.fingerprints += H.bioHolder.fingerprints
-		src.add_forensic_trace("fprints", H.bioHolder.fingerprints)
+
 // WHAT THE ACTUAL FUCK IS THIS SHIT
 // WHO THE FUCK WROTE THIS
 /atom/proc/add_blood(atom/source, var/amount = 5)

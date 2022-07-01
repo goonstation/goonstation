@@ -57,7 +57,6 @@ datum
 						do_improve = max(0, (max_improve - S.improve))
 					S.improve += do_improve
 					boutput(usr,"<span class='notice'>The solar panel seems less reflective.</span>")	//It's absorbing more light -> more energy
-				return
 
 		microbiology/meatspikehelper
 			name = "swill-reclaiming parasites"
@@ -81,28 +80,98 @@ datum
 					boutput(usr,"<span class='notice'>You think you can extract a little more meat from the spike.</span>")
 					var/add_meat = 3
 					K.meat += add_meat
-				return
 
-		microbiology/bioforensic
-			name = "bioforensic autotrophes"
-			id = "bioforensic"
-			description = "A culture of germs: this one seems to enhance the capabilities of a forensic scanner once applied."
-			taste = "intimidating"
-			fluid_r = 250
-			fluid_b = 15
+		microbiology/plainarmor
+			name = "regenerative synthreads"
+			id = "plainarmor"
+			description = "A culture of germs: this one seems to improve the defensive qualities of large clothing."
+			fluid_r = 20
+			fluid_b = 20
 			fluid_g = 20
-			transparency = 210
-			value = 7		// 1+1+1+1+2+1
-			data = "luminol"
+			transparency = 10
+			value = 7		// 4 2 1
+			data = "carpet"
 
 			reaction_obj(var/obj/O, var/volume)
-				if (istype(O,/obj/item/device/detective_scanner))
-					var/obj/item/device/detective_scanner/D = O
-					if (D.microbioupgrade)
-						return
-					D.microbioupgrade = 1
-					boutput(usr,"<span class='notice'>The forensic scanner seems more... robust.</span>")
-				return
+			#define HEADGEAR_MAX_MELEE_UPGRADE 5		//nukie knight 6, slowdown (EOD, swat, etc.) 7+
+			#define HEADGEAR_MELEE_INCREMENT 1			//hats average 0-2 prot
+			#define GLOVES_MAX_CONDUCTIVITY_UPGRADE 0.3	//Scaled multiplier: 0-1, affects shock damage. 0 is insulated
+			#define GLOVES_CONDUCTIVITY_DECREMENT 0.1	//approx. 50-35-15 dist. uninsul-partial-insul
+			#define GENERAL_MELEE_INCREMENT 1
+			#define GENERAL_MAX_MELEE_UPGRADE 5			//suits and coats avg around 3-4, proper armor avg around 6-8
+			#define MAX_EXPLO_UPGRADE 5					//0-100 scale, 100 being immunity. Very few clothes offer exploprot.
+			#define EXPLO_INCREMENT 1
+			#define RANGED_INCREMENT 0.25				//numeric scale, 1->inf. Most clothes with rangedprot do not go past 1.
+			#define MAX_RANGED_UPGRADE 0.5				//Assume someone tries to minmax shoes, uniform, outer layer, and hat. Give 2 total.
+				if (!(istype(O,/obj/item/clothing)))
+					return
+				if (istype(O,/obj/item/clothing/glasses) || istype(O,/obj/item/clothing/mask))
+					boutput(usr,"<span class='alert'>The [O] is too small to support the regenerative synthreads...</span>")
+					return
+				if (istype(O,/obj/item/clothing/head/helmet))	//head melee + explo + ranged
+					var/obj/item/clothing/head/helmet/C = O
+					var/melee = C.getProperty("meleeprot_head")	//unnecessary, but it's easier to comprehend the code this way
+					if (melee <= HEADGEAR_MAX_MELEE_UPGRADE)
+						melee = min(melee + HEADGEAR_MELEE_INCREMENT, HEADGEAR_MAX_MELEE_UPGRADE)
+						C.setProperty("meleeprot_head", melee)
+
+					var/explo = C.getProperty("exploprot")
+					if (explo <= MAX_EXPLO_UPGRADE)
+						explo = min(explo + EXPLO_INCREMENT, MAX_EXPLO_UPGRADE)
+						C.setProperty("exploprot", explo)
+
+					var/ranged = C.getProperty("rangedprot")
+					if (ranged <= MAX_RANGED_UPGRADE)
+						ranged = min(ranged + RANGED_INCREMENT, MAX_RANGED_UPGRADE)
+						C.setProperty("rangedprot", ranged)
+
+				else if (istype(O,/obj/item/clothing/head)) //head melee + ranged
+					var/obj/item/clothing/head/C = O
+					var/melee = C.getProperty("meleeprot_head")
+					if (melee <= HEADGEAR_MAX_MELEE_UPGRADE)
+						melee = min(melee + HEADGEAR_MELEE_INCREMENT, HEADGEAR_MAX_MELEE_UPGRADE)
+						C.setProperty("meleeprot_head", melee)
+
+					var/ranged = C.getProperty("rangedprot")
+					if (ranged <= MAX_RANGED_UPGRADE)
+						ranged = min(ranged + RANGED_INCREMENT, MAX_RANGED_UPGRADE)
+						C.setProperty("rangedprot", ranged)
+
+				else if (istype(O,/obj/item/clothing/gloves))	//conductivity
+					var/obj/item/clothing/gloves/C = O
+					var/conductivity = C.getProperty("conductivity")
+					if (conductivity >= GLOVES_MAX_CONDUCTIVITY_UPGRADE)
+						conductivity = min(conductivity - GLOVES_CONDUCTIVITY_DECREMENT, GLOVES_MAX_CONDUCTIVITY_UPGRADE)
+						C.setProperty("conductivity", conductivity)
+
+				else	//regular melee + explo + ranged
+					var/obj/item/clothing/C = O
+					var/melee = C.getProperty("meleeprot")
+					if (melee <= GENERAL_MAX_MELEE_UPGRADE)
+						melee = min(melee + GENERAL_MELEE_INCREMENT, GENERAL_MAX_MELEE_UPGRADE)
+						C.setProperty("meleeprot", melee)
+
+					var/explo = C.getProperty("exploprot")
+					if (explo <= MAX_EXPLO_UPGRADE)
+						explo = min(explo + EXPLO_INCREMENT, MAX_EXPLO_UPGRADE)
+						C.setProperty("exploprot", explo)
+
+					var/ranged = C.getProperty("rangedprot")
+					if (ranged <= MAX_RANGED_UPGRADE)
+						ranged = min(ranged + RANGED_INCREMENT, MAX_RANGED_UPGRADE)
+						C.setProperty("rangedprot", ranged)
+
+				boutput(usr,"<span class='notice'>The [O] looks much sturdier.</span>")
+				#undef HEADGEAR_MAX_MELEE_UPGRADE
+				#undef HEADGEAR_MELEE_INCREMENT
+				#undef GLOVES_MAX_CONDUCTIVITY_UPGRADE
+				#undef GLOVES_CONDUCTIVITY_DECREMENT
+				#undef GENERAL_MELEE_INCREMENT
+				#undef GENERAL_MAX_MELEE_UPGRADE
+				#undef MAX_EXPLO_UPGRADE
+				#undef EXPLO_INCREMENT
+				#undef RANGED_INCREMENT
+				#undef MAX_RANGED_UPGRADE
 
 		microbiology/rcdregen
 			name = "dense matter autotrophes"
@@ -133,7 +202,6 @@ datum
 					R.time_create_light_fixture = max(0.5,R.time_create_light_fixture--) SECONDS
 					//No deconstruction buffs because that would have big grief potential
 					boutput(usr,"<span class='notice'>The RCD feels lighter, but the ammo indicator hasn't changed.</span>")
-				return
 
 		microbiology/bioopamp
 			name = "operational-bioamplifiers"
@@ -153,8 +221,6 @@ datum
 					if (R.secondarymult <= 2)
 						boutput(usr,"<span class='notice'>The lights on the recharger seem more intense.</span>")
 						R.secondarymult = 2
-						return
-				return
 
 		microbiology/drycleaner
 			name = "organic sanitizer"
@@ -175,13 +241,11 @@ datum
 				if (C.can_stain)
 					C.can_stain = 0
 					boutput(usr,"<span class='notice'>You see some stains fading from the [C]. A washing would help.</span>")
-					return
-				return
 
 		microbiology/weldingregen
-			name = "naphthalene crystallizers"
+			name = "alkane catalysts"
 			id = "weldingregen"
-			description = "A culture of germs: this one seems to facilitate the binding of hydrocarbons into more efficient molecules."
+			description = "A culture of germs: this one seems to facilitate the binding of hydrocarbons into longer chains."
 			taste = "oily"
 			fluid_r = 25
 			fluid_g = 10
@@ -198,7 +262,6 @@ datum
 					return
 				tool.microbioupgrade = 1
 				boutput(usr,"<span class='notice'>The [tool] gives off a pungent, octane smell.</span>")
-				return
 
 //Auxillary Reagents
 

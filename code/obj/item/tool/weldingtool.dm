@@ -336,7 +336,8 @@
 				boutput(user, "<span class='notice'>Need more fuel!</span>")
 				return 0 //welding, doesnt have fuel
 			if (src.microbioupgrade)
-				use_amt = min(min(1, use_amt),prob(50))
+				var/minamt = min(1, use_amt)
+				use_amt = min(minamt,prob(50))
 			src.use_fuel(use_amt)
 			if(noisy)
 				playsound(user.loc, list('sound/items/Welder.ogg', 'sound/items/Welder2.ogg')[noisy], 40, 1)

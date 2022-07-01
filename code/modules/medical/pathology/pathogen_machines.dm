@@ -1200,24 +1200,17 @@
 	anchored = 1
 	flags = NOSPLASH
 
-	var/list/obj/item/reagent_containers/glass/vial/vials[5]
+	var/list/obj/item/reagent_containers/glass/vial/vials[3]
 	var/obj/item/beaker = null
 	var/obj/item/bloodbag = null
-	var/list/whitelist = list()
 	var/selectedresult = null
 	var/emagged = 0
-	var/delay = 5 SECONDS
-
-	var/maintenance = 0
+	var/delay = 5
+	var/maintainance = 0
 	var/machine_state = 0
 	var/sel_vial = 0
-	var/const/synthesize_cost = 500 //used to be 100 // used to used to be 2000
-
-	New()
-		..()
-		for (var/L in concrete_typesof(/datum/reagent/microbiology))
-			var/datum/reagent/R = new L()
-			whitelist += R.data
+	var/const/synthesize_cost = 100 // used to used to be 2000
+	var/production_amount = 7 // Balance so that you don't need to drain the budget to get a big surplus
 
 	attack_hand(var/mob/user)
 		if(status & (BROKEN|NOPOWER))
@@ -1229,22 +1222,23 @@
 		if(status & (BROKEN|NOPOWER))
 			boutput(user,  "<span class='alert'>You can't insert things while the machine is out of power!</span>")
 			return
+
 		if (istype(O,/obj/item/card/emag))
 			emagged = !emagged
-			boutput(user, "<span class='notice'>You switch [emagged ? "on" : "off"] the overclocking components in the Synth-o-Matic and reroute the integrated budget directory.</span>")
+			boutput(user, "<span class='notice'>You switch [emagged ? "on" : "off"] the overclocking components and reroute the integrated budget directory.</span>")
 			return
+
 		if (istype(O, /obj/item/reagent_containers/glass/vial))
+			var/done = 0
 			if (O.reagents.reagent_list.len > 1 || O.reagents.total_volume < 5)	//full, pure-reagent vials only
 				boutput(user, "<span class='alert'>The machine can only process full vials of pure reagent.</span>")
 				return
-			var/done = 0
 			for (var/i in 1 to 3)
 				if (!(vials[i]))
 					done = 1
 					vials[i] = O
 					user.u_equip(O)
 					O.set_loc(src)
-					O.master = src
 					user.client.screen -= O
 					break
 			if (!done)
@@ -1253,28 +1247,7 @@
 			else
 				boutput(user, "<span class='notice'>You insert the vial into the machine.</span>")
 				return
-		if (istype(O, /obj/item/reagent_containers/glass/beaker))
-			if (!(user in range(1)))
-				boutput(user, "<span class='alert'>You must be near the machine to do that.</span>")
-				return
-			if (user.equipped() != O)
-				return
-			if (src.beaker)
-				boutput(user, "<span class='alert'>An egg reservoir beaker is already loaded into the machine.</span>")
-				return
-			if (O.reagents.reagent_list.len > 1)	// pure-reagent only
-				boutput(user, "<span class='alert'>Please isolate the egg in the beaker.</span>")
-				return
-			if (!(O.reagents.has_reagent("egg")))
-				boutput(user, "<span class='alert'>Egg substance not detected.</span>")
-			else
-				src.beaker = O
-				user.u_equip(O)
-				O.set_loc(src)
-				O.master = src
-				user.client.screen -= O
-				boutput(user, "<span class='notice'>You insert the beaker into the machine.</span>")
-			return
+
 		if (istype(O, /obj/item/reagent_containers/iv_drip))
 			if (!(user in range(1)))
 				boutput(user, "<span class='alert'>You must be near the machine to do that.</span>")
@@ -1297,89 +1270,109 @@
 				O.master = src
 				user.client.screen -= O
 				boutput(user, "<span class='notice'>You insert the blood bag into the machine.</span>")
-			return
+				return
+
+		if (istype(O, /obj/item/reagent_containers/glass/beaker))
+			if (!(user in range(1)))
+				boutput(user, "<span class='alert'>You must be near the machine to do that.</span>")
+				return
+			if (user.equipped() != O)
+				return
+			if (src.beaker)
+				boutput(user, "<span class='alert'>An egg reservoir beaker is already loaded into the machine.</span>")
+				return
+			if (O.reagents.reagent_list.len > 1)	// pure-reagent only
+				boutput(user, "<span class='alert'>Please isolate the egg in the beaker.</span>")
+				return
+			if (!(O.reagents.has_reagent("egg")))
+				boutput(user, "<span class='alert'>Egg substance not detected.</span>")
+				return
+			else
+				src.beaker = O
+				user.u_equip(O)
+				O.set_loc(src)
+				O.master = src
+				user.client.screen -= O
+				boutput(user, "<span class='notice'>You insert the beaker into the machine.</span>")
+				return
 
 		if (isscrewingtool(O))
 			if (machine_state)
 				boutput(user, "<span class='alert'>You cannot do that while the machine is working.</span>")
 				return
-			if (!maintenance)
-				boutput(user, "<span class='notice'>You open the maintenance panel on the Synth-O-Matic.</span>")
-				icon_state = "synthp"
-				maintenance = 1
-				show_interface(user)
-			else
-				boutput(user, "<span class='notice'>You close the maintenance panel on the Synth-O-Matic.</span>")
+			if (maintainance)
 				icon_state = "synth1"
-				maintenance = 0
-				show_interface(user)
+				boutput(user, "<span class='notice'>You close the maintenance panel on the Synth-O-Matic.</span>")
+			else
+				icon_state = "synthp"
+				boutput(user, "<span class='notice'>You open the maintenance panel on the Synth-O-Matic.</span>")
+			maintainance = !maintainance
 			return
 		..(O, user)
 
 	proc/show_interface(var/mob/user)
-		var/output_text = ""
-
-		output_text += "<b>SYNTH-O-MATIC 6.5.535</b><br>"
-		output_text += "<i>\"Introducing the future in safe and controlled <s>pathology science</s> biochemistry.\"</i><br><br>"
+		. = ""
+		. += "<b>SYNTH-O-MATIC 6.5.535</b><br>"
+		. += "<i>\"Introducing the future in safe and controlled <s>pathology science</s> biochemistry.\"</i><br><br>"
 
 		if (machine_state)
-			output_text += "The machine is currently working. Please wait."
-		else if (maintenance)
-			output_text += "<b>Maintenance panel open.</b><br>"
+			. += "The machine is currently working. Please wait."
+		else if (maintainance)
+			. += "<b>Maintenance panel open.</b><br>"
 		else
-			output_text += "<b>Active vial:</b><br>"
+			. += "<b>Active vial:</b><br>"
 			if (sel_vial && vials[sel_vial])
 				var/obj/item/reagent_containers/glass/vial/V = vials[sel_vial]
 				var/rid = V.reagents.get_master_reagent()
 				var/rname = V.reagents.get_master_reagent_name()
-				output_text += "Vial #[sel_vial]: [rname]<br>"
-				for (var/R in whitelist)
-					if (rid == R)
-						output_text += "Valid precursor: <a href='?src=\ref[src];buymats=1'>Synthesize for [synthesize_cost] credits</a><br>"
+				. += "Vial #[sel_vial]: [rname]<br>"
+				for (var/R in concrete_typesof(/datum/reagent/microbiology))
+					var/datum/reagent/RE = new R()
+					if (RE.data == rid)
+						src.selectedresult = RE
+						. += "Valid precursor: <a href='?src=\ref[src];buymats=1'>Synthesize for [synthesize_cost] credits</a><br>"
+						break
 			else
-				output_text += "None<br><br>"
+				. += "None<br><br>"
 			if (emagged)
-				output_text += "<b>Research Budget:</b> <b>999999999999999999...</b> Credits<br><br>"
+				. += "<b>Research Budget:</b> <b>$!ND!_(@+E999999999999999999999</b> Credits<br><br>"
 			else
-				output_text += "<b>Research Budget:</b> [wagesystem.research_budget] Credits<br><br>"
-			output_text += "<b>Inserted vials:</b><br>"
+				. += "<b>Research Budget:</b> [wagesystem.research_budget] Credits<br><br>"
+
+			. += "<b>Inserted vials:</b><br>"
 			for (var/i in 1 to 3)
 				if (vials[i])
 					var/obj/item/reagent_containers/glass/vial/V = vials[i]
 					var/chemname = V.reagents.get_master_reagent_name()
-					output_text += "Vial #[i]: <a href='?src=\ref[src];vial=[i]'>[chemname]</a> <a href='?src=\ref[src];eject=[i]'>\[eject\]</a><br>"
+					. += "Vial #[i]: <a href='?src=\ref[src];vial=[i]'>[chemname]</a> <a href='?src=\ref[src];eject=[i]'>\[eject\]</a><br>"
 				else
-					output_text += "#[i] Empty slot<br>"
-
-			output_text += "<br><b>Egg reservoir slot: </b>"
-
+					. += "#[i] Empty slot<br>"
+			. += "<br><b>Egg reservoir: </b>"
 			if (beaker)
-				output_text += "[beaker] <a href='?src=\ref[src];ejectanti=1'>\[eject\]</a><br><br>"
+				. += "[beaker] <a href='?src=\ref[src];ejectanti=1'>\[eject\]</a><br><br>"
+				. += "<b>Contents:</b><br>"
 				if (beaker.reagents.reagent_list.len)
 					for (var/reagent in beaker.reagents.reagent_list)
 						var/datum/reagent/R = beaker.reagents.reagent_list[reagent]
-						output_text += "<b>Contents:</b><br>"
-						output_text += "[R.volume] units of [R.name]<br>"
+						. += "[R.volume] units of [R.name]<br><br>"
 				else
-					output_text += "Nothing.<br>"
+					. += "Empty.<br><br>"
 			else
-				output_text += "Empty<br>"
-
-			output_text += "<br><b>Blood Supply slot: </b>"
+				. += "No beaker detected.<br><br>"
+			. += "<br><b>Blood Supply: </b>"
 			if (bloodbag)
-				output_text += "[bloodbag] <a href='?src=\ref[src];ejectsupp=1'>\[eject\]</a><br><br>"
-				output_text += "<b>Contents:</b><br>"
+				. += "[bloodbag] <a href='?src=\ref[src];ejectsupp=1'>\[eject\]</a><br><br>"
+				. += "<b>Contents:</b><br>"
 				if (bloodbag.reagents.reagent_list.len)
 					for (var/reagent in bloodbag.reagents.reagent_list)
 						var/datum/reagent/R = bloodbag.reagents.reagent_list[reagent]
-						output_text += "[R.volume] units of [R.name]<br>"
-					output_text += "<br>"
+						. += "[R.volume] units of [R.name]<br><br>"
 				else
-					output_text += "Nothing.<br><br>"
+					. += "Empty.<br><br>"
 			else
-				output_text += "Empty<br><br>"
+				. += "No blood bag detected.<br><br>"
 
-		user.Browse(output_text, "window=synthomatic;size=800x600")
+		user.Browse(., "window=synthomatic;size=800x600")
 
 	Topic(href, href_list)
 		if (!(usr in range(1)))
@@ -1387,7 +1380,7 @@
 		if (machine_state)
 			show_interface(usr)
 			return
-		if (maintenance)
+		if (maintainance)
 			show_interface(usr)
 			return
 		else
@@ -1403,16 +1396,19 @@
 						V.master = null
 						if (sel_vial == index)
 							sel_vial = 0
+				show_interface(usr)
 			else if (href_list["ejectanti"])
 				if (beaker)
 					beaker.set_loc(src.loc)
 					beaker.master = null
 					beaker = null
+				show_interface(usr)
 			else if (href_list["ejectsupp"])
 				if (bloodbag)
 					bloodbag.set_loc(src.loc)
 					bloodbag.master = null
 					bloodbag = null
+				show_interface(usr)
 			else if (href_list["vial"])
 				var/index = text2num_safe(href_list["vial"])
 				if(index > 0 && index <= vials.len)
@@ -1443,15 +1439,16 @@
 							beaker.reagents.remove_reagent("egg", 5)
 							bloodbag.reagents.remove_reagent("blood", 25)
 							if (emagged)
-								delay = 3 SECONDS
+								delay = 3
 							else
-								delay = 5 SECONDS
+								delay = 5
 								wagesystem.research_budget -= synthesize_cost
-							SPAWN(delay)
+						SPAWN(delay SECONDS)
 							for (var/mob/C in viewers(src))
-								C.show_message("The [src.name] ejects a new biochemical sample.", 3)
-							var/obj/item/reagent_containers/glass/vial/V = new /obj/item/reagent_containers/glass/vial/plastic(src.loc)
-							V.reagents.add_reagent(src.selectedresult, 5)
+								C.show_message("The [src.name] ejects [production_amount] biochemical sample[production_amount? "s." : "."]", 3)
+							for (var/i in 1 to production_amount)
+								var/obj/item/reagent_containers/glass/vial/plastic/V = new /obj/item/reagent_containers/glass/vial/plastic(src.loc)
+								V.reagents.add_reagent(src.selectedresult.id, 5)
 							machine_state = 0
 							icon_state = "synth1"
 				//boutput(usr, "<span class='alert'>[src] unable to complete task. Please contact your network administrator.</span>")
