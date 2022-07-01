@@ -34574,7 +34574,7 @@
 	dir = 8;
 	nostick = 1
 	},
-/obj/item/clothing/suit/labcoat/pathology,
+/obj/item/clothing/suit/labcoat/microbiology,
 /turf/simulated/floor,
 /area/station/medical/cdc)
 "kCe" = (
@@ -53631,7 +53631,7 @@
 	dir = 4;
 	nostick = 1
 	},
-/obj/item/clothing/suit/labcoat/pathology,
+/obj/item/clothing/suit/labcoat/microbiology,
 /turf/simulated/floor/greenwhite/other{
 	dir = 4
 	},
