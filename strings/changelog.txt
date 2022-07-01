@@ -1,5 +1,9 @@
 
 (t)fri jul 01 22
+(u)Walpvrgis
+(p)9425
+(e)🎨|sprites
+(+)Some botany herbs have had a visual makeover, and Shivering/Quivering Contusine now have unique growth sprites rather than using the same one.
 (u)Munien
 (p)9424
 (e)|
