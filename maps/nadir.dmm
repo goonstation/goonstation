@@ -3345,6 +3345,10 @@
 	},
 /turf/simulated/floor/carpet/red,
 /area/station/crew_quarters/quarters_east)
+"bJE" = (
+/obj/machinery/chem_dispenser,
+/turf/simulated/floor/engine/caution/north,
+/area/station/science/chemistry)
 "bJF" = (
 /obj/decal/tile_edge/line/purple{
 	dir = 4;
@@ -4508,6 +4512,13 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai)
+"cot" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 8;
+	pixel_x = 8
+	},
+/turf/simulated/floor/engine,
+/area/station/science/chemistry)
 "coT" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/machinery/door/poddoor/pyro{
@@ -7242,8 +7253,24 @@
 /turf/simulated/floor/engine,
 /area/station/medical/staff)
 "dTB" = (
-/obj/machinery/chem_heater,
-/turf/simulated/floor/engine/caution/westeast,
+/obj/table/reinforced/chemistry/auto,
+/obj/item/storage/box/beakerbox{
+	pixel_x = 6;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/glass/beaker/large{
+	pixel_x = -6
+	},
+/obj/item/clothing/glasses/spectro{
+	pixel_x = 5;
+	pixel_y = -4
+	},
+/obj/item/reagent_containers/dropper/mechanical{
+	pixel_y = 6
+	},
+/turf/simulated/floor/engine/caution/corner{
+	dir = 1
+	},
 /area/station/science/chemistry)
 "dTD" = (
 /obj/cable{
@@ -9816,7 +9843,7 @@
 /turf/simulated/floor/engine,
 /area/station/turret_protected/Zeta)
 "fqB" = (
-/obj/machinery/door/airlock/pyro/glass/sci{
+/obj/machinery/door/airlock/pyro/sci_alt{
 	dir = 4
 	},
 /obj/access_spawn/research,
@@ -14416,7 +14443,6 @@
 /turf/simulated/floor/engine,
 /area/station/security/checkpoint/escape)
 "hyt" = (
-/obj/machinery/chemicompiler_stationary,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
@@ -14424,7 +14450,10 @@
 	pixel_y = 20;
 	tag = ""
 	},
-/turf/simulated/floor/engine/caution/westeast,
+/obj/machinery/chem_heater,
+/turf/simulated/floor/engine/caution/corner{
+	dir = 4
+	},
 /area/station/science/chemistry)
 "hyL" = (
 /obj/table/reinforced/auto,
@@ -17038,6 +17067,17 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/security/main)
+"iLJ" = (
+/obj/decal/tile_edge/line/purple{
+	dir = 8;
+	icon_state = "line1"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/junction/right/south,
+/turf/simulated/floor/engine,
+/area/station/science/chemistry)
 "iLV" = (
 /obj/wingrille_spawn/auto,
 /obj/machinery/door/poddoor/pyro{
@@ -18581,6 +18621,13 @@
 /area/station/engine/inner{
 	name = "Transception Array Control"
 	})
+"jzj" = (
+/obj/machinery/drainage,
+/obj/stool/chair/office/blue{
+	dir = 1
+	},
+/turf/simulated/floor/engine,
+/area/station/science/chemistry)
 "jzr" = (
 /obj/machinery/door/airlock/pyro/glass/sci{
 	dir = 4
@@ -22106,6 +22153,10 @@
 	},
 /turf/space/fluid/acid/clear,
 /area/space)
+"lky" = (
+/obj/disposalpipe/segment/horizontal,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/science/chemistry)
 "lkN" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/emergency,
@@ -22245,8 +22296,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/southeast)
 "los" = (
-/obj/machinery/drainage,
-/turf/simulated/floor/engine/caution/westeast,
+/turf/simulated/floor/engine/caution/west,
 /area/station/science/chemistry)
 "loU" = (
 /obj/machinery/plantpot,
@@ -23743,7 +23793,8 @@
 	dir = 4;
 	pixel_x = 12
 	},
-/turf/simulated/floor/engine/caution/westeast,
+/obj/machinery/chemicompiler_stationary,
+/turf/simulated/floor/engine/caution/east,
 /area/station/science/chemistry)
 "lWM" = (
 /obj/disposalpipe/segment/ejection{
@@ -25768,11 +25819,17 @@
 "mZj" = (
 /obj/table/reinforced/chemistry/auto,
 /obj/item/storage/box/beakerbox,
-/obj/item/reagent_containers/glass/beaker/large,
-/obj/item/reagent_containers/glass/beaker/large,
-/obj/item/reagent_containers/glass/beaker/large,
-/obj/item/clothing/glasses/spectro,
-/obj/item/clothing/glasses/spectro,
+/obj/item/reagent_containers/glass/beaker/large{
+	pixel_x = 15;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/glass/beaker/large{
+	pixel_x = 15;
+	pixel_y = -2
+	},
+/obj/item/clothing/glasses/spectro{
+	pixel_y = 4
+	},
 /obj/item/clothing/glasses/spectro,
 /obj/decal/tile_edge/line/purple{
 	icon_state = "line1"
@@ -26693,6 +26750,7 @@
 /area/station/crew_quarters/arcade/dungeon)
 "nzD" = (
 /obj/stool/bench/blue/auto,
+/obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/engine,
 /area/station/science/chemistry)
 "nzQ" = (
@@ -30227,6 +30285,9 @@
 "pDB" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/chapel/office)
+"pDS" = (
+/turf/simulated/floor/engine/caution/south,
+/area/station/science/chemistry)
 "pEc" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/window_blinds/cog2,
@@ -35162,11 +35223,6 @@
 /turf/simulated/floor/engine,
 /area/station/security/beepsky)
 "svg" = (
-/obj/table/reinforced/chemistry/auto,
-/obj/machinery/glass_recycler{
-	glass_amt = 5;
-	pixel_y = 4
-	},
 /obj/decal/tile_edge/line/purple{
 	icon_state = "line1"
 	},
@@ -35175,6 +35231,11 @@
 	dir = 10;
 	name = "autoname - SS13";
 	tag = ""
+	},
+/obj/table/reinforced/chemistry/auto,
+/obj/machinery/glass_recycler{
+	glass_amt = 5;
+	pixel_y = 4
 	},
 /turf/simulated/floor/engine,
 /area/station/science/chemistry)
@@ -35560,9 +35621,10 @@
 	},
 /area/station/hallway/primary/northwest)
 "sEG" = (
-/obj/machinery/chem_master,
 /obj/machinery/light/small/warm/very,
-/turf/simulated/floor/engine/caution/westeast,
+/obj/machinery/disposal/small/east,
+/obj/disposalpipe/trunk/west,
+/turf/simulated/floor/engine/caution/corner,
 /area/station/science/chemistry)
 "sEL" = (
 /obj/grille/steel,
@@ -39841,14 +39903,12 @@
 /turf/simulated/floor/white/checker,
 /area/station/crew_quarters/pool)
 "uRX" = (
-/obj/submachine/chef_sink/chem_sink{
-	dir = 8;
-	pixel_x = 8
-	},
 /obj/decal/tile_edge/line/purple{
 	dir = 1;
 	icon_state = "line1"
 	},
+/obj/storage/closet/fire,
+/obj/item/chem_grenade/metalfoam,
 /turf/simulated/floor/engine,
 /area/station/science/chemistry)
 "uSe" = (
@@ -40358,11 +40418,10 @@
 /turf/simulated/floor/engine,
 /area/station/science)
 "vkt" = (
-/obj/storage/closet/fire,
-/obj/item/chem_grenade/metalfoam,
 /obj/decal/tile_edge/line/purple{
 	icon_state = "line1"
 	},
+/obj/machinery/chem_heater,
 /turf/simulated/floor/engine,
 /area/station/science/chemistry)
 "vkx" = (
@@ -41695,12 +41754,18 @@
 /turf/simulated/floor/engine,
 /area/station/hallway/primary/southeast)
 "vXk" = (
-/obj/machinery/chem_dispenser,
 /obj/machinery/light/small/warm/very{
 	dir = 1;
 	pixel_y = 21
 	},
-/turf/simulated/floor/engine/caution/westeast,
+/obj/machinery/chem_master,
+/obj/item/storage/wall/fire{
+	dir = 4;
+	pixel_x = -32
+	},
+/turf/simulated/floor/engine/caution/corner{
+	dir = 8
+	},
 /area/station/science/chemistry)
 "vXq" = (
 /obj/table/reinforced/auto,
@@ -93845,7 +93910,7 @@ kmg
 jUC
 rkI
 jsy
-rkI
+iLJ
 nqs
 wWP
 riM
@@ -94145,7 +94210,7 @@ uQd
 vkt
 ioG
 uRX
-uXm
+cot
 uXm
 nzD
 qVs
@@ -94447,9 +94512,9 @@ uXm
 svg
 wRi
 wRi
-ioG
+wRi
 fqB
-ioG
+lky
 wRi
 xZH
 hJl
@@ -95051,9 +95116,9 @@ uXm
 mZj
 wRi
 wRi
-ioG
-fqB
-ioG
+bJE
+jzj
+pDS
 wRi
 xZH
 qiE
