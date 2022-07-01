@@ -524,20 +524,8 @@
     ui = new(user, src, "Vendors")
     ui.open()
 
-/obj/machinery/vending/ui_data(mob/user)
-	var/bankaccount = FindBankAccountByName(src.scan?.registered)
- . = list(
-	"windowName" = src.name,
-	"wiresOpen" = src.panel_open ? TRUE : null,
-	"wiresList" = list(),
-	"lightColors" = list(),
-	"bankMoney" = bankaccount ? bankaccount["current_money"] : 0,
-	"cash" = src.credit,
-	"acceptCard" = src.acceptcard,
-	"requiresMoney" = src.pay,
-	"cardname" = src.scan?.name,
-	"playerBuilt" = src.player_list ? TRUE : FALSE
- 	)
+/obj/machinery/vending/ui_static_data(mob/user)
+	. = list()
 	src.vendwires = list("Violet" = 1,\
 	"Orange" = 2,\
 	"Goldenrod" = 3,\
@@ -565,12 +553,14 @@
 	if(src.ai_control_enabled)
 		lightcolors["ai_control"] = TRUE
 	.["lightColors"] += lightcolors
-	/*html_parts += "The orange light is [(src.seconds_electrified == 0) ? "off" : "on"].<BR>"
-	html_parts += "The red light is [src.shoot_inventory ? "off" : "blinking"].<BR>"
-	html_parts += "The green light is [src.extended_inventory ? "on" : "off"].<BR>"
-	html_parts += "The [(src.wires & WIRE_SCANID) ? "purple" : "yellow"] light is on.<BR>"
-	html_parts += "The AI control indicator is [src.ai_control_enabled ? "lit" : "unlit"].<BR>"*/
-	for (var/datum/data/vending_product/R in src.product_list)
+
+	var/list/plist
+	if (player_list)
+		plist = player_list
+	else
+		plist = product_list
+
+	for (var/datum/data/vending_product/R in plist)
 		if (R.product_hidden && !src.extended_inventory)
 			continue
 		var/display_amount = R.product_amount
@@ -578,30 +568,84 @@
 			display_amount = "OUT OF STOCK"
 		.["productList"] += list(list("path" = R.product_path,"name" = R.product_name,"amount" = display_amount,"cost" = R.product_cost,"img" = R.getBase64Img()))
 
-	for (var/datum/data/vending_product/player_product/R in src.player_list)
-		if (R.product_hidden && !src.extended_inventory)
-			continue
-		var/display_amount = R.product_amount
-		if (R.product_amount < 1)
-			display_amount = "OUT OF STOCK"
-		.["productList"] += list(list("path" = R.product_path,"name" = R.product_name,"amount" = display_amount,"cost" = R.product_cost,"img" = R.getBase64Img()))
+
+/obj/machinery/vending/ui_data(mob/user)
+	var/bankaccount = FindBankAccountByName(src.scan?.registered)
+ . = list(
+	"windowName" = src.name,
+	"wiresOpen" = src.panel_open ? TRUE : null,
+	"bankMoney" = bankaccount ? bankaccount["current_money"] : 0,
+	"cash" = src.credit,
+	"acceptCard" = src.acceptcard,
+	"requiresMoney" = src.pay,
+	"cardname" = src.scan?.name,
+	"name" = src.name
+ 	)
+
+	if(istype(src,/obj/machinery/vending/player))
+		var/obj/machinery/vending/player/P = src
+		if(!P.owner && src.scan?.registered)
+			.["owner"] = src.scan.registered
+			P.owner = src.scan.registered
+		else
+			.["owner"] = P.owner
+		.["playerBuilt"] = TRUE
+		.["unlocked"] = P.unlocked
+		.["loading"] = P.loading
 
 /obj/machinery/vending/ui_act(action, params)
 	. = ..()
 	if (.) return
+	var/obj/item/I = usr.equipped()
 
 	switch(action)
 		if("cutwire")
-			if(params["wire"])
+			if(params["wire"] && iscuttingtool(I))
 				src.cut(src.vendwires[params["wire"]])
+				update_static_data(usr)
 		if("mendwire")
-			if(params["wire"])
+			if(params["wire"] && iscuttingtool(I))
 				src.mend(src.vendwires[params["wire"]])
+				update_static_data(usr)
 		if("pulsewire")
-			if(params["wire"])
+			if(params["wire"] && ispulsingtool(I))
 				src.pulse(src.vendwires[params["wire"]])
+				update_static_data(usr)
 		if("logout")
 			src.scan = null
+		// player vending machine exclusives
+		if("togglechute")
+			if(istype(src,/obj/machinery/vending/player))
+				var/obj/machinery/vending/player/P = src
+				if(usr.get_id()?.registered == P.owner || !P.owner)
+					P.loading = !P.loading
+		if("togglelock")
+			if(istype(src,/obj/machinery/vending/player))
+				var/obj/machinery/vending/player/P = src
+				if(usr.get_id()?.registered == P.owner || !P.owner)
+					P.unlocked = !P.unlocked
+		if("setPrice")
+			if(istype(src,/obj/machinery/vending/player))
+				var/obj/machinery/vending/player/P = src
+				if(usr.get_id()?.registered == P.owner || !P.owner)
+					for (var/datum/data/vending_product/R in player_list)
+						if(R.product_path == text2path(params["target"]))
+							R.product_cost = text2num(params["cost"])
+				update_static_data(usr)
+		if("rename")
+			if(istype(src,/obj/machinery/vending/player))
+				var/obj/machinery/vending/player/P = src
+				if(usr.get_id()?.registered == P.owner || !P.owner)
+					P.name = params["name"]
+		if("setIcon")
+			if(istype(src,/obj/machinery/vending/player))
+				var/obj/machinery/vending/player/P = src
+				if(usr.get_id().registered == P.owner || !P.owner)
+					for (var/datum/data/vending_product/player_product/R in player_list)
+						if(R.product_path == text2path(params["target"]))
+							P.promoimage = R.icon
+							P.updateAppearance()
+		// return cash
 		if("returncash")
 			SPAWN(src.vend_delay)
 				if (src.credit > 0)
@@ -642,21 +686,30 @@
 				SPAWN(src.vend_delay)
 					var/product_amount = 0 // this is to make absolutely sure that these numbers arent desynced
 					var/datum/data/vending_product/product
-					for (var/datum/data/vending_product/R in src.product_list)
+
+					var/list/plist
+					if (player_list)
+						plist = player_list
+					else
+						plist = product_list
+					for (var/datum/data/vending_product/R in plist)
 						if(R.product_path == text2path(params["target"]))
 							product_amount = R.product_amount
 							product = R
 					if(!vend_ready) // do not proceed if players dont have money
 						return
-					if(product_amount >= 0 && text2path(params["target"]))
+					if(product_amount > 0 && text2path(params["target"]))
 						src.prevend_effect()
 						var/atom/product_path = text2path(params["target"])
 						var/atom/movable/vended = new product_path(src.get_output_location())
+						vended.name = product.product_name
 						vended.loc = src.get_output_location()
 						vended.layer = src.layer + 0.1 //So things stop spawning under the fukin thing
 						if(isitem(vended))
 							usr.put_in_hand_or_eject(vended) // try to eject it into the users hand, if we can
 							src.postvend_effect()
+						if (plist == player_list && product_amount == 1)
+							player_list -= product
 						product.product_amount--
 						if (src.pay && vended) // do we need to take their money
 							if (src.acceptcard && account)
@@ -664,6 +717,7 @@
 							else
 								src.credit -= product.product_cost
 						src.vend_ready = 1
+						update_static_data(usr)
 	. = TRUE
 
 /obj/machinery/vending/attack_hand(mob/user as mob)
@@ -1855,6 +1909,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 			return
 		product_type = product.type
 		product_name = product.name
+		product_path = product_type
 		real_name = product.real_name
 		contents += product
 		product_cost = price
@@ -2203,6 +2258,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 	attackby(obj/item/target, mob/user)
 		if (loading && panel_open)
 			addProduct(target, user)
+			update_static_data(user)
 		else
 			. = ..()
 		if (!panel_open) //lock up if the service panel is closed

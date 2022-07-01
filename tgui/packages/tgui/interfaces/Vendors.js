@@ -14,10 +14,13 @@ export const Vendors = (props, context) => {
     wiresOpen,
     cash,
     bankMoney,
-    acceptCard,
     requiresMoney,
     cardname,
     playerBuilt,
+    name,
+    owner,
+    unlocked,
+    loading,
   } = data;
 
   const canVend = (a) => (
@@ -53,6 +56,7 @@ export const Vendors = (props, context) => {
                       <Flex.Item mr="5%">
                         <Button
                           ml="10%"
+                          my="1%"
                           content="Pulse"
                           onClick={() => act('pulsewire', {
                             wire: wire.name })}
@@ -60,7 +64,7 @@ export const Vendors = (props, context) => {
                       </Flex.Item>
                       <Flex.Item>
                         <Button
-                          ml="1%"
+                          m="1%"
                           content={wire.uncut ? "Cut" : "Mend"}
                           onClick={() => act(wire.uncut ? 'cutwire' : "mendwire", {
                             wire: wire.name })}
@@ -73,9 +77,9 @@ export const Vendors = (props, context) => {
                 <Divider />
                 {playerBuilt && (
                   <>
-                    <Button content={"Owner: "} onClick={() => act("togglelock")} />
-                    <Button content="Unlock" onClick={() => act("togglelock")} />
-                    <Button content="Loading Chute" onClick={() => act("togglechute")} />
+                    <Button content={`Owner: ${owner} (${unlocked ? "Unlocked" : "Locked"})`} onClick={() => act("togglelock")} />
+                    <Button content="Loading Chute" disabled={!unlocked} color={loading ? "green" : "red"} onClick={() => act("togglechute")} />
+                    <Button.Input content={name} defaultValue={name} onCommit={(e, value) => act("rename", { name: value })} />
                   </>
                 )}
                 <Flex justify="space-between" align="stretch">
@@ -126,19 +130,29 @@ export const Vendors = (props, context) => {
                         <Table.Cell>
                           <Box bold>
                             {product.name}
+                            {(playerBuilt && wiresOpen) && <Button
+                              ml="1%"
+                              color="green"
+                              icon="images"
+                              onClick={() => act('setIcon', { target: product.path })}
+                            />}
                           </Box>
                           <Box italic>
                             {`Quantity: ${product.amount}`}
                           </Box>
                         </Table.Cell>
                         <Table.Cell bold textAlign="right">
-                          <Button
+                          {(playerBuilt && unlocked) ? <Button.Input
+                            color={canVend(product) ? "green" : "grey"}
+                            content={getCost(product)}
+                            onCommit={(e, value) => act('setPrice', { target: product.path, cost: value })}
+                          /> : <Button
                             color={canVend(product) ? "green" : "grey"}
                             content={getCost(product)}
                             disabled={canVend(product) ? false : true}
                             onClick={() => act('vend', {
                               target: product.path, cost: product.cost, amount: product.amount })}
-                          />
+                          />}
                         </Table.Cell>
                       </Table.Row>
                     </Table>
@@ -167,9 +181,9 @@ export const Vendors = (props, context) => {
                   <Table.Cell bold direction="row">
                     {(cash > 0) && ("Cash: $" + cash)}
                     {(cash > 0 && cash) && (
-                      <Button icon="cash"
+                      <Button icon="eject"
                         ml="1%"
-                        content={"eject cash"}
+                        content={"eject"}
                         onClick={() => act('returncash')} />
                     )}
                   </Table.Cell>
