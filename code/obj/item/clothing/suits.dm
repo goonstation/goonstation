@@ -563,8 +563,8 @@
 		coat_style = "MDlabcoat-cool"
 
 /obj/item/clothing/suit/labcoat/pathology
-	name = "pathologist's labcoat"
-	desc = "A protective laboratory coat with the orange markings of a Pathologist."
+	name = "microbiologist's labcoat"
+	desc = "A protective laboratory coat with the orange markings of a Microbiologist."
 	icon_state = "PTlabcoat"
 	item_state = "PTlabcoat"
 	coat_style = "PTlabcoat"

@@ -593,17 +593,9 @@ ABSTRACT_TYPE(/datum/job/research)
 		return
 
 
-#ifdef CREATE_PATHOGENS
 /datum/job/research/pathologist
-#else
-/datum/job/pathologist // pls no autogenerate list
-#endif
-	name = "Pathologist"
-	#ifdef CREATE_PATHOGENS
-	limit = 1
-	#else
-	limit = 0
-	#endif
+	name = "Microbiologist"
+	limit = 2
 	wages = PAY_DOCTORATE
 	slot_belt = list(/obj/item/device/pda2/genetics)
 	slot_jump = list(/obj/item/clothing/under/rank/pathologist)
@@ -617,7 +609,7 @@ ABSTRACT_TYPE(/datum/job/research)
 
 	New()
 		..()
-		src.access = get_access("Pathologist")
+		src.access = get_access("Microbiologist")
 		return
 
 /datum/job/research/roboticist

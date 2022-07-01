@@ -97,13 +97,8 @@
 
 /obj/access_spawn/pathology
 	name = "pathology spawn"
-	#ifdef CREATE_PATHOGENS
 	req_access = list(access_pathology)
-	#elif defined(SCIENCE_PATHO_MAP)
-	req_access = list(access_research)
-	#else
-	req_access = list(access_medical)
-	#endif
+	
 	#ifdef SCIENCE_PATHO_MAP
 	color = RESEARCH
 	#else
