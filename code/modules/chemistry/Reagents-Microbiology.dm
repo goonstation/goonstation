@@ -1,7 +1,3 @@
-var/global/list/biochemistry_whitelist = list("copper","silicon","ldmatter","luminol","synthflesh",\
-"perfluorodecalin", "insulin","calomel",/*"spaceacillin"*/,"cleaner","napalm_goo")
-//There is definitely a better/automatic way to do this.
-
 ABSTRACT_TYPE(/datum/reagent/microbiology)
 
 datum
@@ -78,7 +74,6 @@ datum
 			reaction_obj(var/obj/O, var/volume)
 				if (istype(O,/obj/kitchenspike))
 					var/obj/kitchenspike/K = O
-					// Credit to Convair800's silicate code implementation as a reference
 					if (K.meat <= 1)
 						return
 					if (K.occupied == FALSE)
@@ -103,7 +98,6 @@ datum
 			reaction_obj(var/obj/O, var/volume)
 				if (istype(O,/obj/item/device/detective_scanner))
 					var/obj/item/device/detective_scanner/D = O
-					// Credit to Convair800's silicate code implementation as a reference
 					if (D.microbioupgrade)
 						return
 					D.microbioupgrade = 1
@@ -156,7 +150,6 @@ datum
 			reaction_obj(var/obj/O, var/volume)
 				if (istype(O,/obj/machinery/recharger))
 					var/obj/machinery/recharger/R = O
-					// Credit to Convair800's silicate code implementation as a reference
 					if (R.secondarymult <= 2)
 						boutput(usr,"<span class='notice'>The lights on the recharger seem more intense.</span>")
 						R.secondarymult = 2
@@ -181,7 +174,7 @@ datum
 				var/obj/item/clothing/C = O
 				if (C.can_stain)
 					C.can_stain = 0
-					boutput(usr,"<span class='notice'>You see some stains fading from the [C].</span>")
+					boutput(usr,"<span class='notice'>You see some stains fading from the [C]. A washing would help.</span>")
 					return
 				return
 
