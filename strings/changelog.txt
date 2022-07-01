@@ -3,6 +3,7 @@
 (u)End
 (e)🎨|sprites
 (+)Resprited the Syndicate teleport gun.
+(+)Updated the armory shotgun rack.
 (t)tue jun 28 22
 (u)Azrun
 (e)|
