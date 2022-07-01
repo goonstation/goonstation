@@ -3654,18 +3654,6 @@
 /obj/item/spacecash/random/small,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
-"aix" = (
-/obj/storage/closet/dresser,
-/obj/item/clothing/under/gimmick/princess,
-/obj/item/clothing/suit/jacket/yellow,
-/obj/item/clothing/suit/jacket/plastic,
-/obj/item/clothing/under/misc/vice,
-/obj/machinery/firealarm{
-	pixel_y = 24;
-	text = "NF"
-	},
-/turf/simulated/floor/sanitary,
-/area/station/crew_quarters/toilets)
 "aiy" = (
 /obj/table/auto,
 /obj/machinery/light/incandescent/warm,
@@ -19285,12 +19273,6 @@
 /obj/machinery/atmospherics/pipe/tank/oxygen{
 	dir = 8
 	},
-/turf/simulated/floor/grime,
-/area/iss)
-"aVj" = (
-/obj/rack,
-/obj/item/clothing/head/helmet/space/blackstronaut,
-/obj/item/clothing/under/gimmick/snazza,
 /turf/simulated/floor/grime,
 /area/iss)
 "aVk" = (
@@ -36243,14 +36225,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/radio/lab)
-"bOZ" = (
-/obj/decal/fakeobjects/firelock_broken{
-	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
-	icon = 'icons/turf/shuttle.dmi';
-	name = "rusted hatch"
-	},
-/turf/simulated/floor/damaged2,
-/area/space)
 "bPa" = (
 /obj/decal/fakeobjects/operatorconsole,
 /turf/simulated/floor/wood/two,
@@ -44585,6 +44559,18 @@
 /obj/landmark/random_room/size3x3,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/north)
+"cYm" = (
+/obj/storage/closet/dresser,
+/obj/item/clothing/under/gimmick/princess,
+/obj/item/clothing/gloves/princess,
+/obj/item/clothing/suit/jacket/yellow,
+/obj/item/clothing/suit/jacket/plastic,
+/obj/item/clothing/under/misc/vice,
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/toilets)
 "dbi" = (
 /obj/machinery/door/airlock/pyro/alt{
 	dir = 4;
@@ -45345,6 +45331,12 @@
 	dir = 4
 	},
 /area/station/medical/medbay)
+"gGZ" = (
+/obj/rack,
+/obj/item/clothing/head/helmet/space/donk,
+/obj/item/clothing/under/gimmick/donkini,
+/turf/simulated/floor/grime,
+/area/iss)
 "gHR" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -47029,6 +47021,15 @@
 /turf/simulated/shuttle/wall/flock{
 	dir = 9
 	},
+/area/space)
+"qyp" = (
+/obj/decal/fakeobjects/firelock_broken{
+	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
+	icon = 'icons/obj/doors/shuttle.dmi';
+	name = "rusted hatch";
+	icon_state = "door1"
+	},
+/turf/simulated/floor/damaged2,
 /area/space)
 "qBd" = (
 /obj/forcefield/energyshield/perma/doorlink,
@@ -67272,7 +67273,7 @@ aqn
 aqn
 aqn
 aUm
-aVj
+gGZ
 aVS
 aUm
 aqn
@@ -79660,7 +79661,7 @@ agm
 boU
 agY
 aiz
-aix
+cYm
 aiB
 ajZ
 aiz
@@ -110416,7 +110417,7 @@ bNJ
 bOo
 bSe
 bPD
-bOZ
+qyp
 bNY
 bOI
 aaE
