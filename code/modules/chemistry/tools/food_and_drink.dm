@@ -1558,6 +1558,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		SPAWN(0)
 			if (src.reagents)
 				src.fill_it_up()
+				src.decorate()
 
 	proc/fill_it_up()
 		var/flavor = null
@@ -1580,6 +1581,24 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		src.reagents.add_reagent(flavor, src.initial_volume)
 		src.whitelist = null // save a tiny bit of memory I guess
 		src.blacklist = null // same as above  :V
+
+	proc/decorate()
+		if (prob(33))
+			var/P = pick(/obj/item/reagent_containers/food/snacks/plant/orange/wedge,\
+			/obj/item/reagent_containers/food/snacks/plant/grapefruit/wedge,\
+			/obj/item/reagent_containers/food/snacks/plant/lime/wedge,\
+			/obj/item/reagent_containers/food/snacks/plant/lemon/wedge)
+			src.wedge = new P(src)
+		if (prob(33))
+			src.umbrella = new /obj/item/cocktail_stuff/drink_umbrella(src)
+		if (prob(33))
+			var/P = pick(/obj/item/cocktail_stuff/maraschino_cherry,\
+			/obj/item/cocktail_stuff/cocktail_olive,\
+			/obj/item/cocktail_stuff/celery)
+			src.in_glass = new P(src)
+		if (prob(5))
+			src.salted = TRUE
+		src.update_icon()
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/sane
 	// well, relatively sane, the dangerous drinks are still here but at least people won't be drinking initropidril again
