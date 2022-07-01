@@ -1417,9 +1417,10 @@
 	item_state = "backpack"
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	uses_multiple_icon_states = 1
+	uses_multiple_icon_states = TRUE
 	var/list/clothing_choices = list()
 	spawn_contents = list()
+	in_list_or_max = TRUE
 	can_hold = list(/obj/item/storage/belt/chameleon)
 
 	New()
