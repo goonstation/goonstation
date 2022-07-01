@@ -3721,8 +3721,7 @@
 /turf/simulated/floor/sanitary/blue,
 /area/station/medical/asylum/bathroom)
 "aOP" = (
-/obj/stool/bench/auto,
-/turf/simulated/floor/carpet/grime,
+/turf/simulated/floor/white,
 /area/station/medical/breakroom)
 "aOR" = (
 /obj/lattice{
@@ -47996,15 +47995,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "nPx" = (
-/obj/table/auto,
-/obj/item/plate{
-	pixel_y = 4
-	},
-/obj/item/reagent_containers/food/snacks/plant/apple{
-	pixel_y = 8;
-	pixel_x = 2
-	},
-/turf/simulated/floor/carpet/grime,
+/turf/simulated/floor/stairs/medical/wide,
 /area/station/medical/breakroom)
 "nPM" = (
 /obj/cable{
@@ -63654,7 +63645,7 @@
 /obj/machinery/light/incandescent/cool{
 	dir = 8
 	},
-/turf/simulated/floor/stairs/medical/wide,
+/turf/simulated/floor/white,
 /area/station/medical/breakroom)
 "sge" = (
 /obj/table/auto,
@@ -123562,8 +123553,8 @@ anc
 uqE
 mdg
 xiU
-hhT
 aOP
+hhT
 mja
 mja
 pGy
@@ -123864,8 +123855,8 @@ oZA
 qiF
 yfC
 xiU
+aOP
 sLf
-mCO
 mCO
 hek
 pGy
