@@ -45,6 +45,7 @@ names@=
 	Aultman
 	Auman
 	Awad
+	Awiakta
 	Aziz
 	Ba
 	Baba
@@ -151,6 +152,7 @@ names@=
 	Carter
 	Caruso
 	Cash
+	Catawanee
 	Catherina
 	Catleay
 	Cavalet
@@ -159,6 +161,8 @@ names@=
 	Chandra
 	Chang
 	Chapman
+	Chasing Bear
+	Chasing Horse
 	Chauvin
 	Chen
 	Cheng
@@ -248,7 +252,6 @@ names@=
 	Estes
 	Evans
 	Ewing
-	Fa
 	Fairbanks
 	Fakhoury
 	Fang
@@ -287,6 +290,7 @@ names@=
 	Fuji
 	Fulton
 	Gadow
+	Galihai
 	Ganem
 	Ganim
 	Garcia
@@ -300,7 +304,6 @@ names@=
 	Gerges
 	Gettemy
 	Ghannam
-	Gibson
 	Gibson
 	Glover
 	Gold
@@ -328,7 +331,6 @@ names@=
 	Gul
 	Gulati
 	Guo
-	Gupta
 	Gupta
 	Gustafsson
 	Gutierrez
@@ -359,6 +361,7 @@ names@=
 	Harrow
 	Harshman
 	Hastings
+	Hatahali
 	Hawker
 	Hawking
 	Hawkins
@@ -371,7 +374,6 @@ names@=
 	Hernandez
 	Hice
 	Highlands
-	Hill
 	Hill
 	Hincken
 	Hirleman
@@ -387,6 +389,7 @@ names@=
 	Hoover
 	Houser
 	Houston
+	Howahkan
 	Howard
 	Howe
 	Hu
@@ -438,6 +441,7 @@ names@=
 	Jowers
 	Joyce
 	Judge
+	Jumping Elk
 	Jyllian
 	Kadel
 	Kalb
@@ -551,7 +555,6 @@ names@=
 	Mary
 	Masih
 	Mason
-	Mason
 	Mathews
 	Mathis
 	Matsuda
@@ -568,6 +571,7 @@ names@=
 	Mckendrick
 	Mcloskey
 	Mcmullen
+	Medicine Crow
 	Meier
 	Melnyk
 	Mendis
@@ -657,6 +661,7 @@ names@=
 	Okada
 	Okamoto
 	Okoye
+	Old Fire Heart
 	Olphert
 	Olsen
 	Oneal
@@ -842,6 +847,7 @@ names@=
 	Simpson
 	Simsek
 	Singh
+	Sitting Bull
 	Skywalker
 	Slaughter
 	Sleiman
@@ -910,6 +916,7 @@ names@=
 	Thompson
 	Thomson
 	Thorley
+	Thunderhawk
 	Thursday
 	Tian
 	Tilton
@@ -948,7 +955,6 @@ names@=
 	Wallick
 	Walmund
 	Wang
-	Ward
 	Ward
 	Wardle
 	Warren
