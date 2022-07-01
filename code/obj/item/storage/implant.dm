@@ -27,7 +27,7 @@
 /obj/item/storage/box/revimp_kit
 	name = "counter-revolutionary implant kit"
 	icon_state = "implant"
-	desc = "A box containing an implanting tool and six counter-revolutionary implant cases. The implanter can remove the implants from their cases and inject them in a person, supressing their will to rebel against the Captain and crew."
+	desc = "A box containing an implanting tool and six counter-revolutionary implant cases. The implanter can remove the implants from their cases and inject them in a person, supressing their will to commit large scale revolution, as the name implies."
 	spawn_contents = list(/obj/item/implantcase/counterrev = 6,\
 	/obj/item/implanter)
 

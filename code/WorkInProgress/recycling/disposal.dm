@@ -884,7 +884,7 @@
 		src.is_doing_stuff = TRUE
 
 		if (H.contents.len)
-			playsound(src.loc, "sound/machines/mixer.ogg", 50, 1)
+			playsound(src.loc, "sound/machines/mixer.ogg", 30, 1)
 			//src.visible_message("<b>[src] activates!</b>") // Processor + loop = SPAM
 			src.icon_state = "pipe-loaf1"
 
@@ -917,7 +917,7 @@
 					otherLoaf = null
 
 				else if (isliving(newIngredient))
-					playsound(src.loc, pick("sound/impact_sounds/Slimy_Splat_1.ogg","sound/impact_sounds/Liquid_Slosh_1.ogg","sound/impact_sounds/Wood_Hit_1.ogg","sound/impact_sounds/Slimy_Hit_3.ogg","sound/impact_sounds/Slimy_Hit_4.ogg","sound/impact_sounds/Flesh_Stab_1.ogg"), 50, 1)
+					playsound(src.loc, pick("sound/impact_sounds/Slimy_Splat_1.ogg","sound/impact_sounds/Liquid_Slosh_1.ogg","sound/impact_sounds/Wood_Hit_1.ogg","sound/impact_sounds/Slimy_Hit_3.ogg","sound/impact_sounds/Slimy_Hit_4.ogg","sound/impact_sounds/Flesh_Stab_1.ogg"), 30, 1)
 					var/mob/living/poorSoul = newIngredient
 					if (issilicon(poorSoul))
 						newLoaf.reagents.add_reagent("oil",10)
@@ -951,10 +951,10 @@
 			StopLoafing:
 
 			sleep(0.3 SECONDS)	//make a bunch of ongoing noise i guess?
-			playsound(src.loc, pick("sound/machines/mixer.ogg","sound/machines/mixer.ogg","sound/machines/mixer.ogg","sound/machines/hiss.ogg","sound/machines/ding.ogg","sound/machines/buzz-sigh.ogg","sound/impact_sounds/Machinery_Break_1.ogg","sound/effects/pop.ogg","sound/machines/warning-buzzer.ogg","sound/impact_sounds/Glass_Shatter_1.ogg","sound/impact_sounds/Flesh_Break_2.ogg","sound/effects/spring.ogg","sound/machines/engine_grump1.ogg","sound/machines/engine_grump2.ogg","sound/machines/engine_grump3.ogg","sound/impact_sounds/Glass_Hit_1.ogg","sound/effects/bubbles.ogg","sound/effects/brrp.ogg"), 50, 1)
+			playsound(src.loc, pick("sound/machines/mixer.ogg","sound/machines/mixer.ogg","sound/machines/mixer.ogg","sound/machines/hiss.ogg","sound/machines/ding.ogg","sound/machines/buzz-sigh.ogg","sound/impact_sounds/Machinery_Break_1.ogg","sound/effects/pop.ogg","sound/machines/warning-buzzer.ogg","sound/impact_sounds/Glass_Shatter_1.ogg","sound/impact_sounds/Flesh_Break_2.ogg","sound/effects/spring.ogg","sound/machines/engine_grump1.ogg","sound/machines/engine_grump2.ogg","sound/machines/engine_grump3.ogg","sound/impact_sounds/Glass_Hit_1.ogg","sound/effects/bubbles.ogg","sound/effects/brrp.ogg"), 30, 1)
 			sleep(0.3 SECONDS)
 
-			playsound(src.loc, "sound/machines/engine_grump1.ogg", 50, 1)
+			playsound(src.loc, "sound/machines/engine_grump1.ogg", 30, 1)
 			sleep(3 SECONDS)
 			src.icon_state = "pipe-loaf0"
 			//src.visible_message("<b>[src] deactivates!</b>") // Processor + loop = SPAM

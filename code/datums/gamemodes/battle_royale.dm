@@ -106,6 +106,8 @@ var/global/area/current_battle_spawn = null
 				qdel(MAC)
 			if (/obj/machinery/portable_atmospherics/canister/toxins)
 				qdel(MAC)
+			if (/obj/machinery/portable_atmospherics/canister/carbon_dioxide)
+				qdel(MAC)
 			if (/obj/machinery/teleport/portal_generator)
 				qdel(MAC)
 			if (/obj/machinery/bot/secbot)
@@ -418,7 +420,7 @@ proc/equip_battler(mob/living/carbon/human/battler)
 		/obj/item/clothing/under/gimmick/fake_waldo,
 		/obj/item/clothing/under/gimmick/johnny,
 		/obj/item/clothing/under/gimmick/police,
-		/obj/item/clothing/under/gimmick/blackstronaut,
+		/obj/item/clothing/under/gimmick/donk,
 		/obj/item/clothing/under/gimmick/duke,
 		/obj/item/clothing/under/gimmick/mj_clothes,
 		/obj/item/clothing/under/gimmick/viking,
