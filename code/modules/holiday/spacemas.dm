@@ -569,9 +569,9 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 				M.visible_message("<span class='alert'><b>[user] smushes [src] into [his_or_her(user)] own face!</b></span>",\
 				"<span class='alert'><b>You smush [src] into your own face!</b></span>")
 			else if ((user != M && iscarbon(M)))
-				M.tri_message("<span class='alert'><b>[user] smushes [src] into [M]'s face!</b></span>",\
-				user, "<span class='alert'><b>You smush [src] into [M]'s face!</b></span>",\
-				M, "<span class='alert'><b>[user] smushes [src] in your face!</b></span>")
+				M.tri_message(user, "<span class='alert'><b>[user] smushes [src] into [M]'s face!</b></span>",\
+					"<span class='alert'><b>You smush [src] into [M]'s face!</b></span>",\
+					"<span class='alert'><b>[user] smushes [src] in your face!</b></span>")
 			src.hit(M, 0)
 
 		else return ..()

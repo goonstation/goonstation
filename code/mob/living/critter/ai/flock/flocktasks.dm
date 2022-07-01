@@ -682,6 +682,8 @@ stare
 					holder.owner.put_in_hand_or_drop(harvest_target)
 				else if (istype(harvest_target, /obj/item/bell))
 					holder.owner.put_in_hand_or_drop(harvest_target)
+				else if (istype(harvest_target,/obj/item/reagent_containers/food/snacks/cake))
+					holder.owner.put_in_hand_or_drop(harvest_target)
 				else if(istype(harvest_target, /obj/item/paper_bin))
 					// special consideration because these things can empty out
 					var/obj/item/paper_bin/P = harvest_target

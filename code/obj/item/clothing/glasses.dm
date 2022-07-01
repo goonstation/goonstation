@@ -441,6 +441,7 @@
 			else
 				new /obj/item/clothing/head/det_hat/folded_scuttlebot(get_turf(S))
 				boutput(M, "You stuff the goggles back into the hat. It powers down with a low whirr.")
+				S.drop_item()
 				qdel(S)
 				qdel(src)
 		else

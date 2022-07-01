@@ -239,14 +239,14 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				user.visible_message("<span class='alert'>[user] tries to feed [M] [src], but fails!</span>", "<span class='alert'>You try to feed [M] [src], but fail!</span>")
 				return 0
 			else if(!M.can_eat(src))
-				user.tri_message("<span class='alert'><b>[user]</b> tries to feed [M] [src], but they can't eat that!</span>",\
-				user, "<span class='alert'>You try to feed [M] [src], but they can't eat that!</span>",\
-				M, "<span class='alert'><b>[user]</b> tries to feed you [src], but you can't eat that!</span>")
+				user.tri_message(M, "<span class='alert'><b>[user]</b> tries to feed [M] [src], but they can't eat that!</span>",\
+					"<span class='alert'>You try to feed [M] [src], but they can't eat that!</span>",\
+					"<span class='alert'><b>[user]</b> tries to feed you [src], but you can't eat that!</span>")
 				return 0
 			else
-				user.tri_message("<span class='alert'><b>[user]</b> tries to feed [M] [src]!</span>",\
-				user, "<span class='alert'>You try to feed [M] [src]!</span>",\
-				M, "<span class='alert'><b>[user]</b> tries to feed you [src]!</span>")
+				user.tri_message(M, "<span class='alert'><b>[user]</b> tries to feed [M] [src]!</span>",\
+					"<span class='alert'>You try to feed [M] [src]!</span>",\
+					"<span class='alert'><b>[user]</b> tries to feed you [src]!</span>")
 				logTheThing("combat", user, M, "attempts to feed [constructTarget(M,"combat")] [src] [log_reagents(src)] at [log_loc(user)].")
 
 				//no or broken stomach
@@ -254,14 +254,14 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 					var/mob/living/carbon/human/H = M
 					var/obj/item/organ/stomach/tummy = H.get_organ("stomach")
 					if (!istype(tummy) || (tummy.broken || tummy.get_damage() > tummy.MAX_DAMAGE))
-						user.tri_message("<span class='alert'><b>[user]</b>tries to feed [M] [src], but can't make [him_or_her(M)] swallow!</span>",\
-						user, "<span class='alert'>You try to feed [M] [src], but can't make [him_or_her(M)] swallow!</span>",\
-						M, "<span class='alert'><b>[user]</b> tries to feed you [src], but you can't swallow!!</span>")
+						user.tri_message(M, "<span class='alert'><b>[user]</b>tries to feed [M] [src], but can't make [him_or_her(M)] swallow!</span>",\
+							"<span class='alert'>You try to feed [M] [src], but can't make [him_or_her(M)] swallow!</span>",\
+							"<span class='alert'><b>[user]</b> tries to feed you [src], but you can't swallow!!</span>")
 						return 0
 					if (!H.organHolder.head)
-						user.tri_message("<span class='alert'><b>[user]</b>tries to feed [M] [src], but [he_or_she(M)] has no head!!</span>",\
-						user, "<span class='alert'>You try to feed [M] [src], but [he_or_she(M)] has no head!</span>",\
-						M, "<span class='alert'><b>[user]</b> tries to feed you [src], but you don't have a head!</span>")
+						user.tri_message(M, "<span class='alert'><b>[user]</b>tries to feed [M] [src], but [he_or_she(M)] has no head!!</span>",\
+							"<span class='alert'>You try to feed [M] [src], but [he_or_she(M)] has no head!</span>",\
+							"<span class='alert'><b>[user]</b> tries to feed you [src], but you don't have a head!</span>")
 						return 0
 
 				actions.start(new/datum/action/bar/icon/forcefeed(M, src, src.icon, src.icon_state), user)
@@ -274,9 +274,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			  "<span class='notice'>You take a bite of [src]!</span>")
 			logTheThing("combat", consumer, null, "takes a bite of [src] [log_reagents(src)] at [log_loc(consumer)].")
 		else
-			feeder.tri_message("<span class='alert'><b>[feeder]</b> feeds [consumer] [src]!</span>",\
-					feeder, "<span class='alert'>You feed [consumer] [src]!</span>",\
-					consumer, "<span class='alert'><b>[feeder]</b> feeds you [src]!</span>")
+			feeder.tri_message(consumer, "<span class='alert'><b>[feeder]</b> feeds [consumer] [src]!</span>",\
+				"<span class='alert'>You feed [consumer] [src]!</span>",\
+				"<span class='alert'><b>[feeder]</b> feeds you [src]!</span>")
 			logTheThing("combat", feeder, consumer, "feeds [constructTarget(consumer,"combat")] [src] [log_reagents(src)] at [log_loc(feeder)].")
 
 		src.bites_left--
@@ -1558,6 +1558,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		SPAWN(0)
 			if (src.reagents)
 				src.fill_it_up()
+				src.decorate()
 
 	proc/fill_it_up()
 		var/flavor = null
@@ -1580,6 +1581,24 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		src.reagents.add_reagent(flavor, src.initial_volume)
 		src.whitelist = null // save a tiny bit of memory I guess
 		src.blacklist = null // same as above  :V
+
+	proc/decorate()
+		if (prob(33))
+			var/P = pick(/obj/item/reagent_containers/food/snacks/plant/orange/wedge,\
+			/obj/item/reagent_containers/food/snacks/plant/grapefruit/wedge,\
+			/obj/item/reagent_containers/food/snacks/plant/lime/wedge,\
+			/obj/item/reagent_containers/food/snacks/plant/lemon/wedge)
+			src.wedge = new P(src)
+		if (prob(33))
+			src.umbrella = new /obj/item/cocktail_stuff/drink_umbrella(src)
+		if (prob(33))
+			var/P = pick(/obj/item/cocktail_stuff/maraschino_cherry,\
+			/obj/item/cocktail_stuff/cocktail_olive,\
+			/obj/item/cocktail_stuff/celery)
+			src.in_glass = new P(src)
+		if (prob(5))
+			src.salted = TRUE
+		src.update_icon()
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/sane
 	// well, relatively sane, the dangerous drinks are still here but at least people won't be drinking initropidril again
