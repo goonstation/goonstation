@@ -536,29 +536,19 @@
 	"Goldenrod" = "#B8860B",\
 	"Green" = "#00ff00") // this is so we can have fancy stuff on the gui
 
-	var/lightcolors = list("electrified" = FALSE,\
-	"shootinventory" = FALSE,\
-	"extendedinventory" = FALSE,\
-	"ai_control" = FALSE)
+	var/lightcolors = list(
+		"electrified" = (src.seconds_electrified > 0),
+		"shootinventory" = src.shoot_inventory,
+		"extendedinventory" = src.extended_inventory,
+		"ai_control" = src.ai_control_enabled
+	)
 
 	for (var/wiredesc in vendwires)
 		var/is_uncut = src.wires & APCWireColorToFlag[vendwires[wiredesc]]
 		.["wiresList"] += list(list("name" = wiredesc,"color" = wireGuiColors[wiredesc],"uncut" = is_uncut))
-	if(src.seconds_electrified > 0)
-		lightcolors["electrified"] = TRUE
-	if(src.shoot_inventory)
-		lightcolors["shootinventory"] = TRUE
-	if(src.extended_inventory)
-		lightcolors["extendedinventory"] = TRUE
-	if(src.ai_control_enabled)
-		lightcolors["ai_control"] = TRUE
 	.["lightColors"] += lightcolors
 
-	var/list/plist
-	if (player_list)
-		plist = player_list
-	else
-		plist = product_list
+	var/list/plist = player_list || product_list
 
 	for (var/datum/data/vending_product/R in plist)
 		if (R.product_hidden && !src.extended_inventory)
@@ -571,15 +561,15 @@
 
 /obj/machinery/vending/ui_data(mob/user)
 	var/bankaccount = FindBankAccountByName(src.scan?.registered)
- . = list(
-	"windowName" = src.name,
-	"wiresOpen" = src.panel_open ? TRUE : null,
-	"bankMoney" = bankaccount ? bankaccount["current_money"] : 0,
-	"cash" = src.credit,
-	"acceptCard" = src.acceptcard,
-	"requiresMoney" = src.pay,
-	"cardname" = src.scan?.name,
-	"name" = src.name
+	 . = list(
+		"windowName" = src.name,
+		"wiresOpen" = src.panel_open ? TRUE : null,
+		"bankMoney" = bankaccount ? bankaccount["current_money"] : 0,
+		"cash" = src.credit,
+		"acceptCard" = src.acceptcard,
+		"requiresMoney" = src.pay,
+		"cardname" = src.scan?.name,
+		"name" = src.name
  	)
 
 	if(istype(src,/obj/machinery/vending/player))
@@ -654,7 +644,7 @@
 					src.credit = 0
 		if("vend")
 			if(params["target"])
-				src.vend_ready = 1
+				src.vend_ready = TRUE
 				var/datum/db_record/account = null
 				account = FindBankAccountByName(src.scan?.registered)
 				if ((!src.allowed(usr)) && (!src.emagged) && (src.wires & WIRE_SCANID))
@@ -666,20 +656,20 @@
 						if (!account)
 							boutput(usr, "<span class='alert'>No bank account associated with ID found.</span>")
 							flick(src.icon_deny,src)
-							src.vend_ready = 0
+							src.vend_ready = FALSE
 							src.paying_for = params["target"]
 							return
 						if (account["current_money"] < params["cost"])
 							boutput(usr, "<span class='alert'>Insufficient funds in account. To use machine credit, log out.</span>")
 							flick(src.icon_deny,src)
-							src.vend_ready = 0
+							src.vend_ready = FALSE
 							src.paying_for = params["target"]
 							return
 					else
 						if (src.credit < params["cost"])
 							boutput(usr, "<span class='alert'>Insufficient Credit.</span>")
 							flick(src.icon_deny,src)
-							src.vend_ready = 0
+							src.vend_ready = FALSE
 							src.paying_for = params["target"]
 							return
  // copy pasted stuff below here
@@ -687,11 +677,7 @@
 					var/product_amount = 0 // this is to make absolutely sure that these numbers arent desynced
 					var/datum/data/vending_product/product
 
-					var/list/plist
-					if (player_list)
-						plist = player_list
-					else
-						plist = product_list
+					var/list/plist = player_list || product_list
 					for (var/datum/data/vending_product/R in plist)
 						if(R.product_path == text2path(params["target"]))
 							product_amount = R.product_amount
@@ -716,14 +702,13 @@
 								account["current_money"] -= product.product_cost
 							else
 								src.credit -= product.product_cost
-						src.vend_ready = 1
+						src.vend_ready = TRUE
 						update_static_data(usr)
 	. = TRUE
 
 /obj/machinery/vending/attack_hand(mob/user as mob)
 	if (status & (BROKEN|NOPOWER))
 		return
-	//src.add_dialog(user)
 
 	if (src.seconds_electrified != 0)
 		if (src.shock(user, 100))
