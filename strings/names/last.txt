@@ -6,6 +6,7 @@ names@=
 	Ackerley
 	Adams
 	Adcock
+	Agathangelou
 	Agnor
 	Aguilar
 	Ahmed
@@ -38,6 +39,8 @@ names@=
 	Ashbaugh
 	Asker
 	Aswad
+	Athanasiou
+	Athens
 	Atiyeh
 	Atkinson
 	Attia
@@ -73,9 +76,12 @@ names@=
 	Baz
 	Beach
 	Beail
+	Beanblossom
 	Beasley
 	Beck
+	Bees
 	Beedell
+	Beekeeper
 	Begum
 	Bell
 	Benford
@@ -146,6 +152,7 @@ names@=
 	Campbell
 	Candles
 	Cao
+	Captain
 	Carmichael
 	Carr
 	Carson
@@ -190,12 +197,14 @@ names@=
 	Cox
 	Cressman
 	Crowe
+	Crow Dog
 	Curie
 	Curry
 	Cypret
 	Dagher
 	Daher
 	Dang
+	Danger
 	Dardar
 	David
 	Davies
@@ -304,6 +313,9 @@ names@=
 	Gerges
 	Gettemy
 	Ghannam
+	Ghosthunter
+	Ghostkiller
+	Ghostseller
 	Gibson
 	Glover
 	Gold
@@ -408,11 +420,13 @@ names@=
 	Ikeda
 	Inoue
 	Ioannou
+	Iraklidis
 	Ironmonger
 	Isa
 	Isaman
 	Isemann
 	Ishikawa
+	Isley
 	Issa
 	Ito
 	Ivanov
@@ -443,6 +457,7 @@ names@=
 	Judge
 	Jumping Elk
 	Jyllian
+	Kaʻaukai
 	Kadel
 	Kalb
 	Kanaan
@@ -502,16 +517,19 @@ names@=
 	Larson
 	Lauffer
 	Laurenzi
+	Lavender
 	Leach
 	Lee
 	Leech
 	Leichter
 	Leslie
 	Lester
+	Lettuce
 	Levett
 	Lewis
 	Li
 	Liang
+	Light
 	Liao
 	Lin
 	Lindberg
@@ -560,6 +578,7 @@ names@=
 	Matsuda
 	Matsumoto
 	Matthews
+	Mayberry
 	McNab
 	Mccloud
 	Mcclymonds
@@ -605,7 +624,6 @@ names@=
 	Montoya
 	Moon
 	Moore
-	Moore
 	Morcos
 	Morgan
 	Morris
@@ -635,6 +653,7 @@ names@=
 	Narain
 	Narang
 	Narasimhan
+	Nasir
 	Naser
 	Nash
 	Nassar
@@ -681,10 +700,12 @@ names@=
 	Page
 	Pai
 	Pain
+	Pallas
 	Palmer
 	Park
 	Parker
 	Parkinson
+	Parlsey
 	Patel
 	Patterson
 	Paul
@@ -736,8 +757,8 @@ names@=
 	Quirin
 	Quraishi
 	Qureshi
+	Radium
 	Rader
-	Rahal
 	Rahal
 	Rahl
 	Ramos
@@ -807,10 +828,10 @@ names@=
 	Schaeffer
 	Schere
 	Schmidt
+	Schmuck
 	Schneider
 	Schofield
 	Schrader
-	Scott
 	Scott
 	Scully
 	Sealis
@@ -863,7 +884,9 @@ names@=
 	Sommer
 	Song
 	Sparks
+	Sparrowhawk
 	Spock
+	Sprinkles
 	Srinivas
 	Srinivasan
 	Srivastava
@@ -878,7 +901,6 @@ names@=
 	Steele
 	Stephenson
 	Stern
-	Stewart
 	Stewart
 	Stocker
 	Stoev
@@ -897,6 +919,7 @@ names@=
 	Suzuki
 	Swabey
 	Swarner
+	Sweetman
 	Sybilla
 	Taggart
 	Tahan
@@ -922,8 +945,8 @@ names@=
 	Tilton
 	Timm
 	Tireman
+	Titan
 	Titus
-	Todd
 	Todd
 	Toma
 	Tomoe
@@ -978,6 +1001,7 @@ names@=
 	Whiteman
 	Whittier
 	Wible
+	Wigglesworth
 	Wilcox
 	Wile
 	Wilkerson
@@ -1036,3 +1060,5 @@ names@=
 	the Fourth
 	the Third
 	the Twentieth
+	the Eleventh
+	the French
