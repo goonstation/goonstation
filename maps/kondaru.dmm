@@ -31079,7 +31079,7 @@
 	},
 /area/station/security/secwing)
 "bQK" = (
-/obj/machinery/computer/secure_data{
+/obj/machinery/computer3/generic/secure_data{
 	dir = 4
 	},
 /obj/cable{
