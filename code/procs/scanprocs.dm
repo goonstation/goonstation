@@ -527,7 +527,7 @@
 			var/obj/item/clothing/gloves/WG = H.gloves
 			if (WG.glove_ID)
 				glove_data += "[WG.glove_ID] (<span class='notice'>[H]'s worn [WG.name]</span>)"
-			if (!WG.hide_prints || microbioupgrade)
+			if (!WG.hide_prints)
 				fingerprint_data += "<br><span class='notice'>[H]'s fingerprints:</span> [H.bioHolder.fingerprints]"
 			else
 				fingerprint_data += "<br><span class='notice'>Unable to scan [H]'s fingerprints.</span>"
@@ -615,7 +615,7 @@
 			if (istype(A, /turf))
 				interesting_data += "<br><span class='notice'>There seems to be more to [A] than meets the eye.</span>"
 
-		if (!A.fingerprints)
+		if (!A.fingerprints && !(params2list(A.get_forensic_trace("fprints"))))
 			fingerprint_data += "<br><span class='notice'>Unable to locate any fingerprints.</span>"
 
 		else if (A.fingerprints)

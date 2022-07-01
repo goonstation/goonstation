@@ -51,7 +51,6 @@ obj/machinery/recharger
 	var/charge_status = 0
 
 	var/secondarymult = 1
-
 	//wall rechargers!!
 	wall
 		icon_state = "wall_recharger0"

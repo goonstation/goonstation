@@ -56,7 +56,6 @@
 		if(isnull(src.fingerprints))
 			src.fingerprints = list()
 		if (H.gloves) // Fixed: now adds distorted prints even if 'fingerprintslast == ckey'. Important for the clean_forensic proc (Convair880).
-			src.add_forensic_trace("fprints", H.bioHolder.fingerprints)
 			var/gloveprints = H.gloves.distort_prints(H.bioHolder.fingerprints, 1)
 			if (gloveprints)
 				src.fingerprints -= gloveprints
