@@ -247,14 +247,12 @@
 	can_recycle = FALSE
 	initial_reagents = list("chickensoup"=30)
 
-
 /obj/item/reagent_containers/food/drinks/fruitmilk
-	name = "Fruit Milk"
+	name = "Creaca's Fruit Milk"
 	desc = "Milk and fruit of undetermined origin; finally, together at last."
 	icon_state = "fruitmilk"
-	item_state = "coffee"
 	initial_volume = 50
-	initial_reagents = list("milk"=40,"juice_pineapple=10")
+	initial_reagents = list("milk"=30,"juice_pineapple"=20)
 
 /obj/item/reagent_containers/food/drinks/weightloss_shake
 	name = "Weight-Loss Shake"
