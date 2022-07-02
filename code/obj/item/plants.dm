@@ -249,6 +249,18 @@
 	desc = "Dry, bitter leaves known for their wound-mending properties."
 	icon_state = "contusine"
 
+/obj/item/plant/herb/contusine/shivering
+	name = "contusine leaves"
+	crop_suffix	= " leaves"
+	desc = "Dry, bitter leaves known for their wound-mending properties. The leaves almost appear to be breathing."
+	icon_state = "contusine-s"
+
+/obj/item/plant/herb/contusine/quivering
+	name = "contusine leaves"
+	crop_suffix	= " leaves"
+	desc = "Dry, bitter leaves known for their wound-mending properties. The squirming leaves make your skin crawl."
+	icon_state = "contusine-q"
+
 /obj/item/plant/herb/nureous
 	name = "nureous leaves"
 	crop_suffix	= " leaves"
@@ -282,6 +294,12 @@
 	crop_suffix	= " root"
 	desc = "A tough and waxy root. It is well-regarded as an ingredient in burn salve."
 	icon_state = "commol"
+
+/obj/item/plant/herb/commol/burning
+	name = "commol root"
+	crop_suffix	= " root"
+	desc = "A tough and waxy root. It is well-regarded as an ingredient in burn salve. This variation feels warm to the touch."
+	icon_state = "commolburn"
 
 /obj/item/plant/herb/ipecacuanha
 	name = "ipecacuanha root"

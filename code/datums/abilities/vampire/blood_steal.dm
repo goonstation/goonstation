@@ -10,7 +10,6 @@
 	when_stunned = 1
 	not_when_handcuffed = 0
 	sticky = 1
-	unlock_message = "You have gained Hide Coffin. It allows you to hide a coffin somewhere on the station."
 
 	cast(mob/target)
 		if (!holder)
