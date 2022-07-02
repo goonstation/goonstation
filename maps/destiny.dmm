@@ -38735,6 +38735,9 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1"
+	},
 /turf/simulated/floor/red,
 /area/station/security/checkpoint{
 	name = "Security Checkpoint"

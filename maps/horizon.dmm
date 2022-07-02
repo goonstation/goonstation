@@ -25698,7 +25698,7 @@
 /turf/simulated/floor/red/checker{
 	dir = 4
 	},
-/area/space)
+/area/station/security/checkpoint/arrivals)
 "bmA" = (
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/east)
