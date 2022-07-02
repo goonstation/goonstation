@@ -205,7 +205,9 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	return // No action required this should be the one doing the EMPing
 
 /obj/machinery/the_singularity/proc/eat()
-	for (var/X in range(grav_pull, src.get_center()))
+
+	var/turf/sing_center = src.get_center()
+	for (var/X in range(grav_pull, sing_center))
 		if (!X)
 			continue
 		if (X == src)
@@ -221,7 +223,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 				continue
 
 		if (!isarea(X))
-			if(IN_EUCLIDEAN_RANGE(src.get_center(), X, radius+0.5))
+			if(IN_EUCLIDEAN_RANGE(sing_center, X, radius+0.5))
 				src.Bumped(A)
 			else if (istype(X, /atom/movable))
 				var/atom/movable/AM = X
@@ -395,11 +397,12 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		"<B>You look directly into [src]!<br><span class='alert'>You feel weak!</span></B>")
 
 /obj/machinery/the_singularity/proc/BHolerip()
-
-	for (var/turf/T in orange(radius*EVENT_GROWTH+EVENT_MINIMUM, src.get_center()))
+	var/turf/sing_center = src.get_center()
+	for (var/turf/T in orange(radius*EVENT_GROWTH, sing_center))
 		if (prob(70))
 			continue
-		if (T && !(T.turf_flags & CAN_BE_SPACE_SAMPLE) && (get_dist(src.get_center(),T) == radius+1 || get_dist(src.get_center(),T) == radius+2)) // I'm very tired and this is the least dumb thing I can make of what was here for now.   This needs to get updated for the variable size singularity at some point
+
+		if (T && !(T.turf_flags & CAN_BE_SPACE_SAMPLE) && (IN_EUCLIDEAN_RANGE(sing_center, T, radius+EVENT_GROWTH+0.5)))
 			if (T.turf_flags & IS_TYPE_SIMULATED)
 				if (istype(T,/turf/simulated/floor) && !istype(T,/turf/simulated/floor/plating))
 					var/turf/simulated/floor/F = T
