@@ -28,7 +28,7 @@
 	rand_pos = 1
 	inventory_counter_enabled = 1
 	var/capacity = 20
-	var/microbioupgrade = 0
+	var/microbioupgrade = FALSE
 
 	New()
 		..()

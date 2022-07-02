@@ -56,7 +56,7 @@ datum
 					if ((S.improve + do_improve) > max_improve)
 						do_improve = max(0, (max_improve - S.improve))
 					S.improve += do_improve
-					boutput(usr,"<span class='notice'>The solar panel seems less reflective.</span>")	//It's absorbing more light -> more energy
+					boutput(usr, "<span class='notice'>The solar panel seems less reflective.</span>")	//It's absorbing more light -> more energy
 
 		microbiology/meatspikehelper
 			name = "swill-reclaiming parasites"
@@ -67,7 +67,7 @@ datum
 			fluid_b = 15
 			fluid_g = 20
 			transparency = 100
-			value = 12			//9 2 1
+			value = 12		//9 2 1
 			data = "synthflesh"
 
 			reaction_obj(var/obj/O, var/volume)
@@ -75,11 +75,10 @@ datum
 					var/obj/kitchenspike/K = O
 					if (K.meat <= 1)
 						return
-					if (K.occupied == FALSE)
+					if (!K.occupied)
 						return
-					boutput(usr,"<span class='notice'>You think you can extract a little more meat from the spike.</span>")
-					var/add_meat = 3
-					K.meat += add_meat
+					boutput(usr, "<span class='notice'>You think you can extract a little more meat from the spike.</span>")
+					K.meat += 3
 
 		microbiology/plainarmor
 			name = "regenerative synthreads"
@@ -89,7 +88,7 @@ datum
 			fluid_b = 20
 			fluid_g = 20
 			transparency = 10
-			value = 7		// 4 2 1
+			value = 7	// 4 2 1
 			data = "carpet"
 
 			reaction_obj(var/obj/O, var/volume)
@@ -103,12 +102,12 @@ datum
 			#define EXPLO_INCREMENT 1
 			#define RANGED_INCREMENT 0.25				//numeric scale, 1->inf. Most clothes with rangedprot do not go past 1.
 			#define MAX_RANGED_UPGRADE 0.5				//Assume someone tries to minmax shoes, uniform, outer layer, and hat. Give 2 total.
-				if (!(istype(O,/obj/item/clothing)))
+				if (!(istype(O, /obj/item/clothing)))
 					return
-				if (istype(O,/obj/item/clothing/glasses) || istype(O,/obj/item/clothing/mask))
-					boutput(usr,"<span class='alert'>The [O.name] is too small to support the regenerative synthreads...</span>")
+				if (istype(O, /obj/item/clothing/glasses) || istype(O,/obj/item/clothing/mask))
+					boutput(usr, "<span class='alert'>The [O.name] is too small to support the regenerative synthreads...</span>")
 					return
-				if (istype(O,/obj/item/clothing/head/helmet))	//head melee + explo + ranged
+				if (istype(O, /obj/item/clothing/head/helmet))	//head melee + explo + ranged
 					var/obj/item/clothing/head/helmet/C = O
 					var/melee = C.getProperty("meleeprot_head")	//unnecessary, but it's easier to comprehend the code this way
 					if (melee <= HEADGEAR_MAX_MELEE_UPGRADE)
@@ -125,7 +124,7 @@ datum
 						ranged = min(ranged + RANGED_INCREMENT, MAX_RANGED_UPGRADE)
 						C.setProperty("rangedprot", ranged)
 
-				else if (istype(O,/obj/item/clothing/head)) //head melee + ranged
+				else if (istype(O, /obj/item/clothing/head)) //head melee + ranged
 					var/obj/item/clothing/head/C = O
 					var/melee = C.getProperty("meleeprot_head")
 					if (melee <= HEADGEAR_MAX_MELEE_UPGRADE)
@@ -137,7 +136,7 @@ datum
 						ranged = min(ranged + RANGED_INCREMENT, MAX_RANGED_UPGRADE)
 						C.setProperty("rangedprot", ranged)
 
-				else if (istype(O,/obj/item/clothing/gloves))	//conductivity
+				else if (istype(O, /obj/item/clothing/gloves))	//conductivity
 					var/obj/item/clothing/gloves/C = O
 					var/conductivity = C.getProperty("conductivity")
 					if (conductivity >= GLOVES_MAX_CONDUCTIVITY_UPGRADE)
@@ -161,7 +160,7 @@ datum
 						ranged = min(ranged + RANGED_INCREMENT, MAX_RANGED_UPGRADE)
 						C.setProperty("rangedprot", ranged)
 
-				boutput(usr,"<span class='notice'>The [O.name] looks much sturdier.</span>")
+				boutput(usr, "<span class='notice'>The [O.name] looks much sturdier.</span>")
 				#undef HEADGEAR_MAX_MELEE_UPGRADE
 				#undef HEADGEAR_MELEE_INCREMENT
 				#undef GLOVES_MAX_CONDUCTIVITY_UPGRADE
@@ -182,26 +181,26 @@ datum
 			fluid_b = 100
 			fluid_g = 200
 			transparency = 240
-			value = 9		// 6 + 2 + 1
+			value = 9	// 6 2 1
 			data = "ldmatter"
 
 			reaction_obj(var/obj/O, var/volume)
-				if (istype(O,/obj/item/rcd))
+				if (istype(O, /obj/item/rcd))
 					var/obj/item/rcd/R = O
 					/* construction cost and time */
-					R.matter_create_wall = max(1,R.matter_create_wall--)
-					R.time_create_wall = max(3,R.time_create_wall--) SECONDS
-					R.matter_reinforce_wall = max(1,R.matter_reinforce_wall--)
-					R.time_reinforce_wall = max(4,R.time_reinforce_wall--) SECONDS
+					R.matter_create_wall = max(1, R.matter_create_wall--)
+					R.time_create_wall = max(3, R.time_create_wall--) SECONDS
+					R.matter_reinforce_wall = max(1, R.matter_reinforce_wall--)
+					R.time_reinforce_wall = max(4, R.time_reinforce_wall--) SECONDS
 					R.time_create_wall_girder = 1 SECONDS
-					R.matter_create_door = max(2,R.matter_create_door--)
-					R.time_create_door = max(3,R.time_create_door--) SECONDS
+					R.matter_create_door = max(2, R.matter_create_door--)
+					R.time_create_door = max(3, R.time_create_door--) SECONDS
 					R.matter_create_window = 1
 					R.time_create_window = 1 SECONDS
-					R.matter_create_light_fixture = max(0.5,R.matter_create_light_fixture--)
-					R.time_create_light_fixture = max(0.5,R.time_create_light_fixture--) SECONDS
-					//No deconstruction buffs because that would have big grief potential
-					boutput(usr,"<span class='notice'>The RCD feels lighter, but the ammo indicator hasn't changed.</span>")
+					R.matter_create_light_fixture = max(0.5, R.matter_create_light_fixture--)
+					R.time_create_light_fixture = max(0.5, R.time_create_light_fixture--) SECONDS
+					//No deconstruction buffs because the big grief potential (spacing air + delimbing)
+					boutput(usr, "<span class='notice'>The RCD feels lighter, but the ammo indicator hasn't changed.</span>")
 
 		microbiology/bioopamp
 			name = "operational-bioamplifiers"
@@ -212,14 +211,14 @@ datum
 			fluid_b = 5
 			fluid_g = 120
 			transparency = 120
-			value = 4		//1+2+1
+			value = 4	//1 2 1
 			data = "copper"
 
 			reaction_obj(var/obj/O, var/volume)
-				if (istype(O,/obj/machinery/recharger))
+				if (istype(O, /obj/machinery/recharger))
 					var/obj/machinery/recharger/R = O
 					if (R.secondarymult <= 2)
-						boutput(usr,"<span class='notice'>The lights on the recharger seem more intense.</span>")
+						boutput(usr, "<span class='notice'>The lights on the recharger seem more intense.</span>")
 						R.secondarymult = 2
 
 		microbiology/drycleaner
@@ -231,7 +230,7 @@ datum
 			fluid_b = 170
 			fluid_g = 115
 			transparency = 125
-			value = 7		//4 2 1
+			value = 7	//4 2 1
 			data = "cleaner"
 
 			reaction_obj(var/obj/O, var/volume)
@@ -240,7 +239,7 @@ datum
 				var/obj/item/clothing/C = O
 				if (C.can_stain)
 					C.can_stain = 0
-					boutput(usr,"<span class='notice'>You see some stains fading from the [C]. A washing would help.</span>")
+					boutput(usr, "<span class='notice'>You see some stains fading from the [C]. A washing would help.</span>")
 
 		microbiology/weldingregen
 			name = "alkane catalysts"
@@ -251,17 +250,17 @@ datum
 			fluid_g = 10
 			fluid_b = 10
 			transparency = 210
-			value = 6			// 3 2 1
+			value = 6	// 3 2 1
 			data = "napalm_goo"
 
 			reaction_obj(var/obj/O, var/volume)
-				if(!(istype(O,/obj/item/weldingtool)))
+				if(!(istype(O, /obj/item/weldingtool)))
 					return
 				var/obj/item/weldingtool/tool = O
 				if (tool.microbioupgrade)
 					return
-				tool.microbioupgrade = 1
-				boutput(usr,"<span class='notice'>The [tool] gives off a pungent, octane smell.</span>")
+				tool.microbioupgrade = TRUE
+				boutput(usr, "<span class='notice'>The [tool] gives off a pungent, octane smell.</span>")
 
 //Auxillary Reagents
 
