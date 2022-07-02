@@ -308,7 +308,7 @@
 		if(src.is_open_container())
 			. = ..()
 		else
-			src.material?.triggerTemp(src, temp)
+			src.material?.triggerTemp(src, exposed_temperature)
 
 	proc/circulate_gas(datum/gas_mixture/gas)
 		var/datum/gas_mixture/gas_input = air1
