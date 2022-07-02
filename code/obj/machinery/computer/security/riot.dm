@@ -10,14 +10,6 @@
 	var/radiorange = 3
 
 	var/list/authorisations = list()
-	var/hasID = FALSE
-	var/hasAccess = FALSE
-	var/mismatchedAppearance = FALSE
-	var/mismatchedID = FALSE
-	var/maxSecAccess = FALSE
-	var/existingAuthorisation = FALSE
-	var/nameOnFile = FALSE
-	var/printOnFile = FALSE
 
 	light_r =1
 	light_g = 0.3
@@ -174,50 +166,37 @@
 			for (var/mob/O in hearers(src, null))
 				O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[src.auth_need - src.authorisations.len] authorizations needed until Armory is opened.\"</span></span>", 2)
 
-	proc/checkRequirements(var/mob/user, var/obj/item/W)
+	proc/checkRequirements(var/mob/user)
 		// Reset the variables.
-		hasID = FALSE
-		hasAccess = FALSE
-		mismatchedAppearance = FALSE
-		mismatchedID = FALSE
-		maxSecAccess = FALSE
-		existingAuthorisation = FALSE
-		nameOnFile = FALSE
-		printOnFile = FALSE
+		var/hasID = FALSE
+		var/hasAccess = FALSE
+		var/maxSecAccess = FALSE
+		var/existingAuthorisation = FALSE
+		var/canAuth = FALSE
+		var/nameOnFile = FALSE
+		var/printOnFile = FALSE
 
-		if (W == null) // No ID.
-			return
-
-		if (!istype(W, /obj/item/card/id)) // No ID.
-			return
-		else
-			hasID = TRUE
-
-		var/obj/item/card/id/ID = W
-
-		if (!ID:access) // No access.
-			return
-
-		var/list/cardaccess = ID:access
-		if (!istype(cardaccess, /list) || !length(cardaccess)) // No access.
-			return
-
-		if (access_securitylockers in ID:access) // Has Security Equipment access.
-			hasAccess = TRUE
-
+		var/obj/item/W
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
-			if (H.name != strip_html_tags(H.get_heard_name())) // User's appearance must match their voice.
-				mismatchedAppearance = TRUE
-				boutput(user, "[H.name] | [strip_html_tags(H.get_heard_name())]")
-				return
+			W = H.wear_id
+		if (W == null)
+			W = user.equipped()
+		if (istype(W, /obj/item/device/pda2))
+			var/obj/item/device/pda2/PDA = W
+			if (PDA.ID_card)
+				W = PDA.ID_card
 
-		if (user.name != ID.registered) // Player name must match their ID's registered name.
-			mismatchedID = TRUE
-			return
+		if (W != null)
+			if (istype(W, /obj/item/card/id)) // Has ID.
+				hasID = TRUE
+				var/obj/item/card/id/ID = W
 
-		if (access_maxsec in ID:access) // Are they the HoS, or do they have equivalent access?
-			maxSecAccess = TRUE
+				if (access_securitylockers in ID.access) // Has Security Equipment access.
+					hasAccess = TRUE
+
+				if (access_maxsec in ID.access) // Are they the HoS, or do they have equivalent access?
+					maxSecAccess = TRUE
 
 		if (user.name in authorisations) // Check for authorisations that use the player's name.
 			nameOnFile = TRUE
@@ -233,9 +212,43 @@
 		if (nameOnFile == TRUE && printOnFile == TRUE)
 			existingAuthorisation = TRUE
 
+		if (nameOnFile == printOnFile)
+			canAuth = TRUE
+
+		var/showModal = FALSE
+		var/modalText = ""
+		if (hasID != TRUE && authed != TRUE)
+			modalText = "No ID Given!"
+		if (hasAccess != TRUE && hasID == TRUE && authed != TRUE)
+			modalText = "Insufficient Access Level!"
+		if (GET_COOLDOWN(src, "deauth") && hasAccess == TRUE && hasID == TRUE)
+			modalText = " Before Any Commands May Be Accepted Again."
+		if (!maxSecAccess && !GET_COOLDOWN(src, "deauth") && authed == TRUE)
+			modalText = "Armoury Access Has Been Authorised!"
+
+		if (modalText != "")
+			showModal = TRUE
+
+		if (nameOnFile != printOnFile && maxSecAccess != TRUE) // Placed after the showModal value assign, as will only display when Auth/Repeal is clicked.
+			if (printOnFile != FALSE)
+				modalText = "User Fingerprint ID Already On File!"
+			if (nameOnFile != FALSE)
+				modalText = "Authorisation Already Issued By User!"
+
+		return list(
+			"hasID" = hasID,
+			"hasAccess" = hasAccess,
+			"maxSecAccess" = maxSecAccess,
+			"existingAuthorisation" = existingAuthorisation,
+			"canAuth" = canAuth,
+			"showModal" = showModal,
+			"modalText" = modalText
+			)
+
 /obj/machinery/computer/riotgear/attack_hand(mob/user)
 	if (ishuman(user))
-		return src.Attackby(user:wear_id, user)
+		var/mob/living/carbon/human/H = user
+		return src.Attackby(H.wear_id, H)
 	..()
 
 /obj/machinery/computer/riotgear/attackby(var/obj/item/W, var/mob/user)
@@ -248,11 +261,6 @@
 	if (!user)
 		return
 
-	if (istype(W, /obj/item/device/pda2) && W:ID_card)
-		W = W:ID_card
-
-	checkRequirements(user, W)
-
 	return src.ui_interact(user)
 
 /obj/machinery/computer/riotgear/ui_interact(mob/user, datum/tgui/ui)
@@ -262,18 +270,18 @@
 		ui.open()
 
 /obj/machinery/computer/riotgear/ui_data(mob/user)
+	var/list/reqs = checkRequirements(user)
 	. = list(
 		"authed" = authed,
 		"authorisations" = authorisations,
-		"hasID" = hasID,
-		"hasAccess" = hasAccess,
-		"mismatchedAppearance" = mismatchedAppearance,
-		"mismatchedID" = mismatchedID,
-		"maxSecAccess" = maxSecAccess,
-		"existingAuthorisation" = existingAuthorisation,
-		"nameOnFile" = nameOnFile,
-		"printOnFile" = printOnFile,
-		"cooldown" = GET_COOLDOWN(src, "deauth")
+		"hasID" = reqs["hasID"],
+		"hasAccess" = reqs["hasAccess"],
+		"maxSecAccess" = reqs["maxSecAccess"],
+		"existingAuthorisation" = reqs["existingAuthorisation"],
+		"canAuth" = reqs["canAuth"],
+		"cooldown" = GET_COOLDOWN(src, "deauth"),
+		"showModal" = reqs["showModal"],
+		"modalText" = reqs["modalText"]
 	)
 
 /obj/machinery/computer/riotgear/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -282,36 +290,39 @@
 		return
 
 	var/mob/user = ui.user
-	var/obj/item/W
-	if (ishuman(user))
-		W = user:wear_id
-	if (W == null)
-		W = user.equipped()
-	if (istype(W, /obj/item/device/pda2) && W:ID_card)
-		W = W:ID_card
 
-	checkRequirements(user, W)
+	var/list/reqs = checkRequirements(user)
 
-	if (hasID != TRUE || hasAccess != TRUE || mismatchedAppearance != FALSE || mismatchedID != FALSE || nameOnFile != printOnFile || GET_COOLDOWN(src, "deauth")) // Most of the logic is handled by RiotGear.js, however I feel it prudent to check here too.
+	if (reqs["hasID"] != TRUE || reqs["hasAccess"] != TRUE || reqs["canAuth"] != TRUE || GET_COOLDOWN(src, "deauth"))
 		return
 
+	var/obj/item/W
+	if (ishuman(user))
+		var/mob/living/carbon/human/H = user
+		W = H.wear_id
+	if (W == null)
+		W = user.equipped()
+	if (istype(W, /obj/item/device/pda2))
+		var/obj/item/device/pda2/PDA = W
+		if (PDA.ID_card)
+			W = PDA.ID_card
 	var/obj/item/card/id/ID = W
 
 	switch (action)
 		if ("HoS-Authorise")
-			if (maxSecAccess != TRUE)
+			if (reqs["maxSecAccess"] != TRUE)
 				return
 
-			authorisations[user.name] = list("name" = user.name, "rank" = ID:assignment, "prints" = user.bioHolder.fingerprints)
+			authorisations[user.name] = list("name" = user.name, "rank" = ID.assignment, "prints" = user.bioHolder.fingerprints)
 
 			authorize()
 			. = TRUE
 
 		if ("Authorise")
-			if (existingAuthorisation != FALSE)
+			if (reqs["existingAuthorisation"] != FALSE)
 				return
 
-			authorisations[user.name] = list("name" = user.name, "rank" = ID:assignment, "prints" = user.bioHolder.fingerprints)
+			authorisations[user.name] = list("name" = user.name, "rank" = ID.assignment, "prints" = user.bioHolder.fingerprints)
 
 			if (src.authorisations.len < auth_need)
 				print_auth_needed(user)
@@ -320,7 +331,7 @@
 			. = TRUE
 
 		if ("Repeal")
-			if (existingAuthorisation != TRUE)
+			if (reqs["existingAuthorisation"] != TRUE)
 				return
 
 			authorisations.Remove(user.name)
@@ -329,10 +340,8 @@
 			. = TRUE
 
 		if ("Deauthorise")
-			if (maxSecAccess != TRUE)
+			if (reqs["maxSecAccess"] != TRUE)
 				return
 
 			unauthorize()
 			. = TRUE
-
-	checkRequirements(user, ID)

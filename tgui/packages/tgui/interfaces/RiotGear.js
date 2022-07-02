@@ -1,4 +1,4 @@
-import { useBackend, useLocalState } from '../backend';
+import { useBackend } from '../backend';
 import { Box, Button, Flex, Modal, Section, LabeledControls, TimeDisplay } from '../components';
 import { formatTime } from '../format';
 import { Window } from '../layouts';
@@ -10,17 +10,18 @@ export const RiotGear = (props, context) => {
     authorisations,
     hasID,
     hasAccess,
-    mismatchedAppearance,
-    mismatchedID,
     maxSecAccess,
     existingAuthorisation,
-    nameOnFile,
-    printOnFile,
+    canAuth,
     cooldown,
+    showModal,
+    modalText,
+    modal,
   } = data;
 
-  const [nameModal, displayNameModal] = useLocalState(context, 'nameIsOnFile', '');
-  const [printModal, displayPrintModal] = useLocalState(context, 'printIsOnFile', '');
+  const displayModal = () => {
+    data.modal = true;
+  };
 
   return (
     <Window
@@ -29,83 +30,15 @@ export const RiotGear = (props, context) => {
       height={280}
     >
       <Window.Content>
-        {(!hasID && !authed) && (
+        {(modalText === "") && (data.modal = false)}
+        {(!!showModal || (!!modal && modalText !== "")) && (
           <Modal
             fontSize="20px"
             mr={2}
             p={3}>
             <Box>
-              No ID Given!
-            </Box>
-          </Modal>
-        )}
-        {(!hasAccess && !(!hasID) && !authed) && (
-          <Modal
-            fontSize="20px"
-            mr={2}
-            p={3}>
-            <Box>
-              Insufficient Access Level!
-            </Box>
-          </Modal>
-        )}
-        {(!(!mismatchedID) && !(!hasAccess) && !(!hasID) && !authed) && (
-          <Modal
-            fontSize="20px"
-            mr={2}
-            p={3}>
-            <Box>
-              ID Registration Does Not Match User!
-            </Box>
-          </Modal>
-        )}
-        {(!(!mismatchedAppearance) && !mismatchedID && !(!hasAccess) && !(!hasID) && !authed) && (
-          <Modal
-            fontSize="20px"
-            mr={2}
-            p={3}>
-            <Box>
-              User Appearance Does Not Match User Voiceprint!
-            </Box>
-          </Modal>
-        )}
-        {(!(!cooldown) && !mismatchedAppearance && !mismatchedID && !(!hasAccess) && !(!hasID)) && (
-          <Modal
-            fontSize="20px"
-            mr={2}
-            p={3}>
-            <Box>
-              <TimeDisplay value={cooldown} timing={"true"} format={formatTime} /> Before Any Commands May Be Accepted Again.
-            </Box>
-          </Modal>
-        )}
-        {(!maxSecAccess && !cooldown && !(!authed)) && (
-          <Modal
-            fontSize="20px"
-            mr={2}
-            p={3}>
-            <Box>
-              Armoury Access Has Been Authorised!
-            </Box>
-          </Modal>
-        )}
-        {nameModal && (
-          <Modal
-            fontSize="20px"
-            mr={2}
-            p={3}>
-            <Box>
-              Authorisation Already Issued By User!
-            </Box>
-          </Modal>
-        )}
-        {printModal && (
-          <Modal
-            fontSize="20px"
-            mr={2}
-            p={3}>
-            <Box>
-              User Fingerprint ID Already On File!
+              {(!!cooldown && !!hasAccess && !!hasID) && <TimeDisplay value={cooldown} timing={"true"} format={formatTime} />}
+              {modalText}
             </Box>
           </Modal>
         )}
@@ -122,14 +55,14 @@ export const RiotGear = (props, context) => {
                   color={existingAuthorisation ? 'blue' : 'green'}
                   disabled={authed ? true : false}
                   onClick={() => (maxSecAccess
-                    ? act('HoS-Authorise')
-                    : ((nameOnFile === printOnFile)
+                    ? (existingAuthorisation
+                      ? act('Repeal')
+                      : act('HoS-Authorise'))
+                    : (canAuth
                       ? (existingAuthorisation
                         ? act('Repeal')
                         : act('Authorise'))
-                      : (nameOnFile
-                        ? displayNameModal(true)
-                        : displayPrintModal(true)))
+                      : displayModal())
                   )}>
                   <Flex width={30} height={3.5} align="center" justify="center">
                     <Flex.Item>
@@ -168,15 +101,18 @@ export const RiotGear = (props, context) => {
             <Flex.Item className="cloning-console__head__row" mr={2}>
               <Flex.Item
                 className="cloning-console__head__item"
-                style={{ 'width': '200px' }}>Name
+                width={18}>
+                Name
               </Flex.Item>
               <Flex.Item
                 className="cloning-console__head__item"
-                style={{ 'width': '200px' }}>Rank
+                width={18}>
+                Rank
               </Flex.Item>
               <Flex.Item
                 className="cloning-console__head__item"
-                style={{ 'width': '300px' }}>Fingerprint ID
+                width={28}>
+                Fingerprint ID
               </Flex.Item>
             </Flex.Item>
           </Flex>
@@ -189,15 +125,18 @@ export const RiotGear = (props, context) => {
                   <Flex.Item key={data.authorisations[authorisation].name} className="cloning-console__body__row">
                     <Flex.Item
                       className="cloning-console__body__item"
-                      style={{ 'width': '200px' }}><Flex.Item align="center">{data.authorisations[authorisation].name}</Flex.Item>
+                      width={18}>
+                      <Flex.Item align="center">{data.authorisations[authorisation].name}</Flex.Item>
                     </Flex.Item>
                     <Flex.Item
                       className="cloning-console__body__item"
-                      style={{ 'width': '200px' }}><Flex.Item align="center">{data.authorisations[authorisation].rank}</Flex.Item>
+                      width={18}>
+                      <Flex.Item align="center">{data.authorisations[authorisation].rank}</Flex.Item>
                     </Flex.Item>
                     <Flex.Item
                       className="cloning-console__body__item"
-                      style={{ 'width': '320px' }}><Flex.Item align="center">{data.authorisations[authorisation].prints}</Flex.Item>
+                      width={28}>
+                      <Flex.Item align="center">{data.authorisations[authorisation].prints}</Flex.Item>
                     </Flex.Item>
                   </Flex.Item>
                 ))}
