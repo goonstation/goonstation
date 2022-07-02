@@ -37,7 +37,7 @@ export const RiotGear = (props, context) => {
             mr={2}
             p={3}>
             <Box>
-              {(!!cooldown && !!hasAccess && !!hasID) && <TimeDisplay value={cooldown} timing={"true"} format={formatTime} />}
+              {(!!cooldown && !!authed && !!maxSecAccess && !!hasAccess && !!hasID) && <TimeDisplay value={cooldown} timing={"true"} format={formatTime} />}
               {modalText}
             </Box>
           </Modal>

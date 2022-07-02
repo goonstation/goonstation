@@ -167,7 +167,6 @@
 				O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[src.auth_need - src.authorisations.len] authorizations needed until Armory is opened.\"</span></span>", 2)
 
 	proc/checkRequirements(var/mob/user)
-		// Reset the variables.
 		var/hasID = FALSE
 		var/hasAccess = FALSE
 		var/maxSecAccess = FALSE
@@ -188,7 +187,7 @@
 				W = PDA.ID_card
 
 		if (W != null)
-			if (istype(W, /obj/item/card/id)) // Has ID.
+			if (istype(W, /obj/item/card/id)) // Has an ID.
 				hasID = TRUE
 				var/obj/item/card/id/ID = W
 
@@ -198,7 +197,7 @@
 				if (access_maxsec in ID.access) // Are they the HoS, or do they have equivalent access?
 					maxSecAccess = TRUE
 
-		if (user.name in authorisations) // Check for authorisations that use the player's name.
+		if (user in authorisations) // Check for authorisations made by the player.
 			nameOnFile = TRUE
 
 		for (var/x in authorisations)
@@ -221,9 +220,9 @@
 			modalText = "No ID Given!"
 		if (hasAccess != TRUE && hasID == TRUE && authed != TRUE)
 			modalText = "Insufficient Access Level!"
-		if (GET_COOLDOWN(src, "deauth") && hasAccess == TRUE && hasID == TRUE)
+		if (GET_COOLDOWN(src, "deauth") && maxSecAccess == TRUE && authed == TRUE)
 			modalText = " Before Any Commands May Be Accepted Again."
-		if (!maxSecAccess && !GET_COOLDOWN(src, "deauth") && authed == TRUE)
+		if (maxSecAccess != TRUE && authed == TRUE)
 			modalText = "Armoury Access Has Been Authorised!"
 
 		if (modalText != "")
@@ -293,7 +292,7 @@
 
 	var/list/reqs = checkRequirements(user)
 
-	if (reqs["hasID"] != TRUE || reqs["hasAccess"] != TRUE || reqs["canAuth"] != TRUE || GET_COOLDOWN(src, "deauth"))
+	if (reqs["hasID"] != TRUE || reqs["hasAccess"] != TRUE || reqs["canAuth"] != TRUE)
 		return
 
 	var/obj/item/W
@@ -313,7 +312,7 @@
 			if (reqs["maxSecAccess"] != TRUE)
 				return
 
-			authorisations[user.name] = list("name" = user.name, "rank" = ID.assignment, "prints" = user.bioHolder.fingerprints)
+			authorisations[user] = list("name" = user, "rank" = ID.assignment, "prints" = user.bioHolder.fingerprints)
 
 			authorize()
 			. = TRUE
@@ -322,7 +321,7 @@
 			if (reqs["existingAuthorisation"] != FALSE)
 				return
 
-			authorisations[user.name] = list("name" = user.name, "rank" = ID.assignment, "prints" = user.bioHolder.fingerprints)
+			authorisations[user] = list("name" = user, "rank" = ID.assignment, "prints" = user.bioHolder.fingerprints)
 
 			if (src.authorisations.len < auth_need)
 				print_auth_needed(user)
@@ -334,13 +333,13 @@
 			if (reqs["existingAuthorisation"] != TRUE)
 				return
 
-			authorisations.Remove(user.name)
+			authorisations.Remove(user)
 
 			print_auth_needed(user)
 			. = TRUE
 
 		if ("Deauthorise")
-			if (reqs["maxSecAccess"] != TRUE)
+			if (reqs["maxSecAccess"] != TRUE || GET_COOLDOWN(src, "deauth"))
 				return
 
 			unauthorize()
