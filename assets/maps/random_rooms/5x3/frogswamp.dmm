@@ -2,7 +2,7 @@
 "a" = (
 /mob/living/critter/small_animal/frog/weak,
 /turf/simulated/floor/auto/dirt,
-/area/space)
+/area/dmm_suite/clear_area)
 "d" = (
 /mob/living/critter/small_animal/frog/weak,
 /obj/machinery/light/incandescent/warm/very{
@@ -10,37 +10,37 @@
 	pixel_y = 10
 	},
 /turf/simulated/floor/auto/grass/swamp_grass,
-/area/space)
+/area/dmm_suite/clear_area)
 "g" = (
 /turf/simulated/floor/auto/grass/leafy,
-/area/space)
+/area/dmm_suite/clear_area)
 "k" = (
 /obj/item/clothing/under/gimmick/frog,
 /turf/simulated/floor/auto/dirt,
-/area/space)
+/area/dmm_suite/clear_area)
 "A" = (
 /turf/simulated/floor/auto/dirt,
-/area/space)
+/area/dmm_suite/clear_area)
 "G" = (
 /turf/simulated/floor/auto/grass/swamp_grass,
-/area/space)
+/area/dmm_suite/clear_area)
 "I" = (
 /mob/living/critter/small_animal/frog/weak,
 /turf/simulated/floor/auto/grass/swamp_grass,
-/area/space)
+/area/dmm_suite/clear_area)
 "L" = (
 /mob/living/critter/small_animal/frog/weak,
 /obj/machinery/light/incandescent/warm/very,
 /turf/simulated/floor/auto/grass/leafy,
-/area/space)
+/area/dmm_suite/clear_area)
 "P" = (
 /obj/item/paper/book/from_file/fun_facts_about_shelterfrogs,
 /turf/simulated/floor/auto/dirt,
-/area/space)
+/area/dmm_suite/clear_area)
 "Q" = (
 /obj/item/clothing/head/frog_hat,
 /turf/simulated/floor/auto/grass/leafy,
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 d
