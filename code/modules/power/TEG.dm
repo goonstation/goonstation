@@ -303,6 +303,13 @@
 	proc/is_circulator_active()
 		return last_pressure_delta > src.min_circ_pressure
 
+	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+		// Protect if hatch is closed
+		if(src.is_open_container())
+			. = ..()
+		else
+			src.material?.triggerTemp(src, temp)
+
 	proc/circulate_gas(datum/gas_mixture/gas)
 		var/datum/gas_mixture/gas_input = air1
 		var/datum/gas_mixture/gas_output = air2
