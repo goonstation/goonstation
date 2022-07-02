@@ -1723,8 +1723,8 @@
 				. += " Your ghostly essence makes you immune to its poison."
 			else
 				. += " You will take toxic damage."
-			if(how_miasma > 4)
-				. += " You might get sick."
+				if(how_miasma > 4)
+					. += " You might get sick."
 
 /datum/statusEffect/dripping_paint
 	id = "marker_painted"
