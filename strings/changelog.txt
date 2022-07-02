@@ -1,4 +1,9 @@
 
+(t)sat jul 02 22
+(u)Azrun
+(p)9434
+(e)⚖|balance
+(+)TEG Circulator maintenance panel now protected with aerogel.  Less likely to be impacted by environmental temperatures when panel is closed.
 (t)fri jul 01 22
 (u)Walpvrgis
 (p)9425
