@@ -1780,6 +1780,15 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	contains = list(/obj/item/instrument/tambourine,/obj/item/instrument/triangle,/obj/item/instrument/cowbell)
 	containertype = /obj/storage/crate/wooden
 
+/datum/supply_packs/banjo
+	name = "Banjo Kit"
+	desc = "1x Banjo"
+	category = "Civilian Department"
+	cost = 2000
+	containername = "Banjo Kit"
+	contains = list(/obj/item/instrument/banjo)
+	containertype = /obj/storage/crate/wooden
+
 //Western
 
 /datum/supply_packs/west_coats
