@@ -2897,7 +2897,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 /obj/item/reagent_containers/food/snacks/cheesewheel
 	name = "cheese wheel"
 	desc = "A giant wheel of cheese. It seems a slice is already missing."
-	icon = 'icons/obj/foodNdrink/food_bread.dmi'
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "cheesewheel"
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	throwforce = 1
@@ -2908,7 +2908,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	stamina_cost = 5
 	stamina_damage = 2
 	var/slicetype = /obj/item/reagent_containers/food/snacks/ingredient/cheese
-	initial_volume = 60
+	initial_volume = 40
 	initial_reagents = "cheese"
 	food_effects = list("food_warm")
 
@@ -2932,7 +2932,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 
 			var/turf/T = get_turf(src)
 			user.visible_message("[user] cuts [src] into slices.", "You cut [src] into slices.")
-			var/makeslices = 6
+			var/makeslices = 4
 			while (makeslices > 0)
 				new slicetype (T)
 				makeslices -= 1
