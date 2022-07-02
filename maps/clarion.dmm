@@ -13850,7 +13850,9 @@
 	},
 /area/station/maintenance/disposal)
 "aBG" = (
-/obj/machinery/launcher_loader/east,
+/obj/machinery/launcher_loader/east{
+	id = "disposals_vent"
+	},
 /turf/simulated/floor/caution/northsouth{
 	dir = 1
 	},
@@ -43991,12 +43993,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/fitness)
-"cmJ" = (
-/obj/machinery/computer/tanning{
-	pixel_y = 32
-	},
-/turf/simulated/floor/white,
-/area/station/crew_quarters/pool)
 "cpm" = (
 /obj/cable,
 /obj/wingrille_spawn/auto/crystal,
@@ -50283,6 +50279,9 @@
 /area/station/crew_quarters/pool)
 "sOY" = (
 /obj/machinery/traymachine/locking/tanning,
+/obj/machinery/computer/tanning{
+	pixel_y = 32
+	},
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
 "sQp" = (
@@ -82898,7 +82897,7 @@ asj
 arT
 asA
 sBO
-cmJ
+usZ
 oRA
 usZ
 usZ

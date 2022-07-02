@@ -1098,7 +1098,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
 	item = /obj/item/chem_grenade/sarin
 	cost = 1
 	desc = "A terrifying grenade containing a potent nerve gas. Try not to get caught in the smoke."
-	br_allowed = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF | UPLINK_NUKE_OP
 
 /////////////////////////////////////////// Irregular Items //////////////////////////////////////////////////
