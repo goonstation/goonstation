@@ -2202,8 +2202,10 @@ datum
 							boutput(H, "<span class='alert'>Your face comes into contact with the acidic vapors!</span>")
 							H.TakeDamage("head", 0, created_volume * 3, 0, DAMAGE_BURN) // IT'S ACID IT BURNS
 							H.emote("scream")
-							boutput(H, "<span class='alert'>Your face has become disfigured!</span>")
-							H.real_name = "Unknown"
+							if(!H.disfigured)
+								boutput(H, "<span class='alert'>Your face has become disfigured!</span>")
+								H.disfigured = TRUE
+								H.UpdateName()
 							H.changeStatus("weakened", 8 SECONDS)
 							H:unlock_medal("Red Hood", 1)
 				return

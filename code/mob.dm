@@ -69,6 +69,7 @@
 	var/stuttering = null
 	var/real_name = null
 	var/blinded = null
+	var/disfigured = FALSE
 	var/druggy = 0
 	var/sleeping = 0.0
 	var/lying = 0.0
