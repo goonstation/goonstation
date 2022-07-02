@@ -585,6 +585,8 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/bakedpotato(src)
 			src.recipes += new /datum/cookingrecipe/rice_ball(src)
 			src.recipes += new /datum/cookingrecipe/hotdog(src)
+			src.recipes += new /datum/cookingrecipe/cheesewheel(src)
+
 
 	Topic(href, href_list)
 		if ((BOUNDS_DIST(src, usr) > 0 && (!issilicon(usr) && !isAI(usr))) || !isliving(usr) || iswraith(usr) || isintangible(usr))

@@ -2892,3 +2892,49 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	initial_volume = 20
 	initial_reagents = "currypowder"
 	food_effects = list("food_hp_up","food_refreshed","food_warm")
+
+
+/obj/item/reagent_containers/food/snacks/cheesewheel
+	name = "cheese wheel"
+	desc = "A giant wheel of cheese. It seems a slice is already missing."
+	icon = 'icons/obj/foodNdrink/food_bread.dmi'
+	icon_state = "cheesewheel"
+	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
+	throwforce = 1
+	real_name = "bread"
+	flags = NOSPLASH | FPRINT | TABLEPASS
+	throw_speed = 2
+	throw_range = 5
+	stamina_cost = 5
+	stamina_damage = 2
+	var/slicetype = /obj/item/reagent_containers/food/snacks/ingredient/cheese
+	initial_volume = 60
+	initial_reagents = "cheese"
+	food_effects = list("food_warm")
+
+	attack(mob/M, mob/user, def_zone)
+		if (user == M)
+			boutput(user, "<span class='alert'>You can't just cram that in your mouth, you greedy beast!</span>")
+			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
+			return
+		else
+			user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
+			return
+
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/knife/butcher))
+			if(user.bioHolder.HasEffect("clumsy") && prob(50))
+				user.visible_message("<span class='alert'><b>[user]</b> fumbles and jabs [himself_or_herself(user)] in the eye with [W].</span>")
+				user.change_eye_blurry(5)
+				user.changeStatus("weakened", 3 SECONDS)
+				JOB_XP(user, "Clown", 2)
+				return
+
+			var/turf/T = get_turf(src)
+			user.visible_message("[user] cuts [src] into slices.", "You cut [src] into slices.")
+			var/makeslices = 6
+			while (makeslices > 0)
+				new slicetype (T)
+				makeslices -= 1
+			qdel (src)
+		else ..()
