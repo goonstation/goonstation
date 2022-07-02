@@ -192,7 +192,6 @@ that cannot be itched
 			return
 
 		user.visible_message("<span class='alert'><b>[user]</b> has scanned [A].</span>")
-		boutput(user, scan_forensic(A, visible = 1)) // Moved to scanprocs.dm to cut down on code duplication (Convair880).
 		src.add_fingerprint(user)
 
 		if(!active && istype(A, /obj/decal/cleanable/blood))
@@ -200,6 +199,7 @@ that cannot be itched
 			if(B.dry > 0) //Fresh blood is -1
 				boutput(user, "<span class='alert'>Targeted blood is too dry to be useful!</span>")
 				return
+			boutput(user, scan_forensic(A, visible = 1)) // Moved to scanprocs.dm to cut down on code duplication (Convair880).
 			for(var/mob/living/carbon/human/H in mobs)
 				if(B.blood_DNA == H.bioHolder.Uid)
 					target = H
