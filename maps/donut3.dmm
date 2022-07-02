@@ -9410,6 +9410,14 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/security/brig/south_side)
+"cwV" = (
+/obj/machinery/computer/chem_requester/medical{
+	dir = 4
+	},
+/turf/simulated/floor/bluewhite{
+	dir = 8
+	},
+/area/station/medical/medbay)
 "cwW" = (
 /obj/machinery/vending/medical,
 /obj/disposalpipe/segment/mail,
@@ -13100,6 +13108,21 @@
 	},
 /turf/simulated/wall/auto/reinforced/jen/yellow,
 /area/station/mining/staff_room)
+"dCh" = (
+/obj/decal/tile_edge/line/blue{
+	icon_state = "line1";
+	dir = 1
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/courtroom)
 "dCu" = (
 /obj/table/auto,
 /obj/item/clipboard{
@@ -13126,10 +13149,6 @@
 /obj/fitness/weightlifter,
 /turf/simulated/floor,
 /area/station/crew_quarters/fitness)
-"dCO" = (
-/obj/machinery/computer/chem_request_receiver,
-/turf/simulated/floor/black,
-/area/station/science/chemistry)
 "dCV" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 1
@@ -26537,20 +26556,6 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor,
 /area/station/crew_quarters/garden)
-"hvd" = (
-/obj/decal/tile_edge/line/blue{
-	icon_state = "line1"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/light/incandescent/netural{
-	dir = 8
-	},
-/turf/simulated/floor,
-/area/station/crew_quarters/courtroom)
 "hvl" = (
 /turf/simulated/floor/black,
 /area/station/teleporter)
@@ -33895,17 +33900,6 @@
 	dir = 1
 	},
 /area/station/storage/primary)
-"jFD" = (
-/obj/table/reinforced/chemistry/auto,
-/obj/item/reagent_containers/emergency_injector/calomel{
-	pixel_y = -14
-	},
-/obj/item/hand_labeler{
-	pixel_y = -8
-	},
-/obj/machinery/glass_recycler,
-/turf/simulated/floor/black,
-/area/station/science/chemistry)
 "jFH" = (
 /turf/simulated/grass,
 /area/station/hallway/secondary/exit)
@@ -35970,6 +35964,20 @@
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
+"kmb" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/obj/disposalpipe/segment/mail,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 10;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/obj/machinery/vending/port_a_nanomed,
+/turf/simulated/floor/bluewhite,
+/area/station/medical/medbay)
 "kmc" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -38292,14 +38300,6 @@
 	},
 /turf/simulated/floor/yellowblack/corner,
 /area/station/engine/engineering)
-"kYu" = (
-/obj/machinery/computer/chem_requester/medical{
-	dir = 4
-	},
-/turf/simulated/floor/bluewhite{
-	dir = 8
-	},
-/area/station/medical/medbay)
 "kYx" = (
 /obj/decal/poster/wallsign/hazard_rad,
 /obj/wingrille_spawn/auto,
@@ -61427,6 +61427,17 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/garden)
+"ryX" = (
+/obj/table/reinforced/chemistry/auto,
+/obj/item/reagent_containers/emergency_injector/calomel{
+	pixel_y = -14
+	},
+/obj/item/hand_labeler{
+	pixel_y = -8
+	},
+/obj/machinery/glass_recycler,
+/turf/simulated/floor/black,
+/area/station/science/chemistry)
 "rzd" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/railing/orange{
@@ -68261,20 +68272,6 @@
 	dir = 8
 	},
 /area/station/science/lobby)
-"tAU" = (
-/obj/disposalpipe/segment/transport{
-	dir = 4
-	},
-/obj/disposalpipe/segment/mail,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 10;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/obj/machinery/vending/port_a_nanomed,
-/turf/simulated/floor/bluewhite,
-/area/station/medical/medbay)
 "tAW" = (
 /obj/shrub{
 	dir = 6
@@ -70995,12 +70992,6 @@
 	dir = 4
 	},
 /area/station/bridge)
-"utB" = (
-/obj/machinery/computer/chem_requester/science{
-	dir = 8
-	},
-/turf/simulated/floor/purple,
-/area/station/science/chemistry)
 "utC" = (
 /turf/simulated/floor/red,
 /area/listeningpost)
@@ -75383,6 +75374,10 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/security/brig/south_side)
+"vCQ" = (
+/obj/machinery/computer/chem_request_receiver,
+/turf/simulated/floor/black,
+/area/station/science/chemistry)
 "vDd" = (
 /obj/decal/mule/dropoff,
 /obj/machinery/door/airlock/pyro/glass{
@@ -76471,6 +76466,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/west)
+"vTr" = (
+/obj/machinery/computer/chem_requester/science{
+	dir = 8
+	},
+/turf/simulated/floor/purple,
+/area/station/science/chemistry)
 "vTs" = (
 /obj/random_item_spawner/junk/one_or_zero,
 /obj/decal/cleanable/dirt/jen,
@@ -116253,7 +116254,7 @@ kfN
 vzm
 okV
 kqU
-hvd
+dCh
 uhs
 gom
 itv
@@ -122613,7 +122614,7 @@ dpI
 fHL
 pyL
 mZl
-utB
+vTr
 oqi
 oqi
 aZz
@@ -123218,7 +123219,7 @@ dYa
 dNb
 mZl
 aLq
-dCO
+vCQ
 saq
 saq
 srh
@@ -123825,7 +123826,7 @@ aLq
 lQc
 saq
 gUy
-jFD
+ryX
 opG
 mHF
 saq
@@ -124408,7 +124409,7 @@ sZE
 pAf
 uIi
 uHm
-kYu
+cwV
 fFl
 oem
 xHf
@@ -124711,7 +124712,7 @@ mRY
 uIi
 wHi
 nUt
-tAU
+kmb
 hTp
 lrL
 wrS
@@ -147295,7 +147296,7 @@ tJf
 xXf
 kwO
 ovm
-mxH
+cxH
 nkC
 lVQ
 etV

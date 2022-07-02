@@ -13849,12 +13849,6 @@
 	dir = 1
 	},
 /area/station/maintenance/disposal)
-"aBG" = (
-/obj/machinery/launcher_loader/east,
-/turf/simulated/floor/caution/northsouth{
-	dir = 1
-	},
-/area/station/maintenance/disposal)
 "aBH" = (
 /obj/machinery/mass_driver{
 	dir = 4;
@@ -17517,14 +17511,6 @@
 /area/station/science/testchamber)
 "aKo" = (
 /obj/item/device/radio/beacon,
-/turf/simulated/floor/engine,
-/area/station/science/testchamber)
-"aKp" = (
-/obj/machinery/light{
-	dir = 4;
-	pixel_x = 10
-	},
-/obj/machinery/vending/monkey/research,
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
 "aKq" = (
@@ -22524,14 +22510,6 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
-"aUr" = (
-/obj/machinery/computer/chem_requester/science{
-	dir = 8
-	},
-/turf/simulated/floor/purpleblack{
-	dir = 4
-	},
-/area/station/hallway/primary/east)
 "aUs" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/science/teleporter)
@@ -25106,12 +25084,6 @@
 	codes_txt = "patrol;next_patrol=medbay_lobby";
 	location = "medbay";
 	name = "bot navigation beacon"
-	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay)
-"bae" = (
-/obj/machinery/computer/chem_requester/medical{
-	dir = 8
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
@@ -28188,16 +28160,6 @@
 	tag = "icon-bdoormidc1"
 	},
 /turf/simulated/floor/plating,
-/area/station/science/chemistry)
-"bhJ" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/item/device/radio/intercom/science,
-/obj/machinery/computer/chem_request_receiver,
-/turf/simulated/floor/purpleblack{
-	dir = 9
-	},
 /area/station/science/chemistry)
 "bhK" = (
 /obj/machinery/light/emergency{
@@ -43035,6 +42997,16 @@
 /obj/item/light/bulb,
 /turf/simulated/grimycarpet,
 /area/ghostdrone_factory)
+"bMO" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/item/device/radio/intercom/science,
+/obj/machinery/computer/chem_request_receiver,
+/turf/simulated/floor/purpleblack{
+	dir = 9
+	},
+/area/station/science/chemistry)
 "bMS" = (
 /obj/machinery/drainage/big,
 /turf/simulated/floor/black,
@@ -43989,12 +43961,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/fitness)
-"cmJ" = (
-/obj/machinery/computer/tanning{
-	pixel_y = 32
-	},
-/turf/simulated/floor/white,
-/area/station/crew_quarters/pool)
 "cpm" = (
 /obj/cable,
 /obj/wingrille_spawn/auto/crystal,
@@ -44102,6 +44068,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
+"cIM" = (
+/obj/machinery/traymachine/locking/tanning,
+/obj/machinery/computer/tanning{
+	pixel_y = 32
+	},
+/turf/simulated/floor/blue/checker,
+/area/station/crew_quarters/pool)
 "cLG" = (
 /obj/rack,
 /obj/item/storage/box/lglo_kit,
@@ -45320,6 +45293,14 @@
 /obj/access_spawn/engineering_chief,
 /turf/simulated/floor/wood,
 /area/station/engine/engineering/ce/private)
+"fEM" = (
+/obj/machinery/computer/chem_requester/science{
+	dir = 8
+	},
+/turf/simulated/floor/purpleblack{
+	dir = 4
+	},
+/area/station/hallway/primary/east)
 "fFW" = (
 /obj/machinery/optable,
 /obj/decal/tile_edge/stripe{
@@ -46591,6 +46572,14 @@
 	icon_state = "engine_caution_corners"
 	},
 /area/station/science/teleporter)
+"iWb" = (
+/obj/machinery/light{
+	dir = 4;
+	pixel_x = 10
+	},
+/obj/machinery/vending/monkey/research,
+/turf/simulated/floor/engine,
+/area/station/science/testchamber)
 "iYT" = (
 /obj/disposalpipe/segment/mail,
 /obj/wingrille_spawn/auto,
@@ -46733,6 +46722,10 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/red,
 /area/station/security/brig)
+"jqO" = (
+/obj/iv_stand,
+/turf/simulated/floor/engine,
+/area/station/science/testchamber)
 "jtY" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -47719,10 +47712,6 @@
 	dir = 5
 	},
 /area/station/security/hos)
-"lsT" = (
-/obj/iv_stand,
-/turf/simulated/floor/engine,
-/area/station/science/testchamber)
 "ltT" = (
 /obj/machinery/r_door_control/podbay/security/new_walls/west{
 	pixel_x = -24
@@ -48730,6 +48719,12 @@
 	},
 /turf/simulated/floor/white/checker,
 /area/station/medical/medbay/treatment1)
+"oys" = (
+/obj/machinery/computer/chem_requester/medical{
+	dir = 8
+	},
+/turf/simulated/floor/white,
+/area/station/medical/medbay)
 "oyz" = (
 /obj/table/wood/round/auto,
 /obj/item/paper/book/from_file/monster_manual_revised{
@@ -50283,10 +50278,6 @@
 	},
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
-"sOY" = (
-/obj/machinery/traymachine/locking/tanning,
-/turf/simulated/floor/blue/checker,
-/area/station/crew_quarters/pool)
 "sQp" = (
 /obj/disposalpipe/segment{
 	dir = 2;
@@ -50807,6 +50798,14 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
+"uqX" = (
+/obj/machinery/launcher_loader/east{
+	id = "disposals_vent"
+	},
+/turf/simulated/floor/caution/northsouth{
+	dir = 1
+	},
+/area/station/maintenance/disposal)
 "urR" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -77020,7 +77019,7 @@ aUY
 aWs
 aXC
 nAU
-bae
+oys
 bbn
 bcB
 aLA
@@ -82900,7 +82899,7 @@ asj
 arT
 asA
 sBO
-cmJ
+usZ
 oRA
 usZ
 usZ
@@ -83157,7 +83156,7 @@ arj
 arR
 asy
 sBO
-sOY
+cIM
 tQO
 qms
 pui
@@ -89875,7 +89874,7 @@ bdU
 bbU
 beq
 bbU
-aUr
+fEM
 aRt
 bbU
 bbU
@@ -90390,7 +90389,7 @@ bdq
 bes
 bfG
 bgQ
-bhJ
+bMO
 bjf
 bkq
 blB
@@ -93190,7 +93189,7 @@ aaU
 avz
 avz
 awj
-aBG
+uqX
 axO
 aDP
 aER
@@ -94996,7 +94995,7 @@ aET
 aET
 aET
 aHO
-lsT
+jqO
 aKm
 aLr
 aMN
@@ -95768,7 +95767,7 @@ aGr
 aET
 aET
 aET
-aKp
+iWb
 aLu
 aMP
 rNo

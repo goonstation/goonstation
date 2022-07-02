@@ -859,6 +859,7 @@ var/global/list/mapNames = list(
 
 /datum/map_settings/oshan
 	name = "OSHAN"
+	display_name = "Oshan Laboratory, Abzu"
 	goonhub_map = "https://goonhub.com/maps/oshan"
 
 	arrivals_type = MAP_SPAWN_MISSILE
