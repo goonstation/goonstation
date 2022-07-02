@@ -101,7 +101,6 @@
 	baseprice = 7
 	upperfluc = 3
 	lowerfluc = -3
-/// pathology
 
 /datum/commodity/mat_bar
 	comname = "Material Bar"
@@ -2372,58 +2371,6 @@
 	lowerfluc = -20
 */
 
-/// pathology
-/*
-/datum/commodity/synthmodule
-	comname = "Synth-O-Matic module"
-	comtype = /obj/item/synthmodule
-	desc = "A synth-o-matic module."
-	onmarket = 0
-	price = 5000
-	baseprice = 5000
-	upperfluc = 2000
-	lowerfluc = -2000
-
-/datum/commodity/synthmodule/vaccine
-	comname = "Synth-O-Matic vaccine module"
-	comtype = /obj/item/synthmodule/vaccine
-
-/datum/commodity/synthmodule/upgrader
-	comname = "Synth-O-Matic efficiency module"
-	comtype = /obj/item/synthmodule/upgrader
-
-/datum/commodity/synthmodule/assistant
-	comname = "Synth-O-Matic assistant module"
-	comtype = /obj/item/synthmodule/assistant
-
-/datum/commodity/synthmodule/synthesizer
-	comname = "Synth-O-Matic synthesizer module"
-	comtype = /obj/item/synthmodule/synthesizer
-
-/datum/commodity/synthmodule/virii
-	comname = "Synth-O-Matic virus module"
-	comtype = /obj/item/synthmodule/virii
-
-/datum/commodity/synthmodule/bacteria
-	comname = "Synth-O-Matic bacterium module"
-	comtype = /obj/item/synthmodule/bacteria
-
-/datum/commodity/synthmodule/fungi
-	comname = "Synth-O-Matic fungus module"
-	comtype = /obj/item/synthmodule/fungi
-
-/datum/commodity/synthmodule/parasite
-	comname = "Synth-O-Matic parasite module"
-	comtype = /obj/item/synthmodule/parasite
-
-/datum/commodity/synthmodule/gmcell
-	comname = "Synth-O-Matic great mutatis cell module"
-	comtype = /obj/item/synthmodule/gmcell
-
-/datum/commodity/synthmodule/radiation
-	comname = "Synth-O-Matic irradiation module"
-	comtype = /obj/item/synthmodule/radiation
-*/
 /datum/commodity/pathogensample
 	comname = "Pathogen sample"
 	comtype = /obj/item/reagent_containers/glass/vial/prepared

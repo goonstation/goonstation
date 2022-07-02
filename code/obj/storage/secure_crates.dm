@@ -176,3 +176,11 @@
 		name = "Lab Monkey Crate"
 		desc = "Warning: Contains live monkeys!"
 		req_access = list(access_medical_lockers, access_tox_storage)
+
+	cdc
+		name = "CDC pathogen sample crate"
+		desc = "A crate for receiving microbial samples analysis."
+		spawn_contents = list(/obj/item/reagent_containers/glass/vial/prepared, \
+		/obj/item/reagent_containers/glass/vial/prepared, \
+		/obj/item/reagent_containers/glass/vial/prepared, \
+		/obj/item/paper/cdc_pamphlet)
