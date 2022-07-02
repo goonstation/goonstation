@@ -14857,28 +14857,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "aJX" = (
-/obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 4;
-	id = "monkey_room"
-	},
-/obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/snacks/plant/peanuts,
-/obj/item/reagent_containers/food/snacks/plant/peanuts{
-	pixel_y = 10;
-	pixel_x = -4
-	},
-/obj/item/reagent_containers/food/snacks/plant/peanuts,
-/obj/item/kitchen/utensil/knife,
-/obj/item/reagent_containers/food/snacks/plant/banana{
-	pixel_y = -3;
-	pixel_x = 4
-	},
-/obj/access_spawn/medlab,
 /obj/disposalpipe/segment{
 	dir = 4;
 	pixel_y = 0
 	},
-/turf/simulated/floor/wood/five,
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
 /area/station/medical/dome)
 "aJY" = (
 /obj/storage/secure/closet/medical/uniforms,
@@ -17089,9 +17073,7 @@
 	},
 /area/station/medical/robotics)
 "aPk" = (
-/obj/shrub{
-	dir = 8
-	},
+/obj/storage/secure/closet/animal,
 /turf/simulated/floor/grass/random,
 /area/station/medical/dome)
 "aPl" = (
@@ -17846,10 +17828,11 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "aRf" = (
-/obj/wingrille_spawn/auto,
-/obj/machinery/phone/wall,
-/turf/simulated/floor/plating,
-/area/station/medical/medbay/lobby)
+/obj/storage/secure/closet/animal,
+/turf/simulated/floor/greenwhite/corner{
+	dir = 8
+	},
+/area/station/medical/research)
 "aRg" = (
 /obj/shrub{
 	dir = 4;
@@ -19976,12 +19959,21 @@
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/surgery)
 "aWa" = (
-/obj/item/bananapeel,
 /obj/disposalpipe/segment{
 	dir = 4;
 	pixel_y = 0
 	},
-/turf/simulated/floor/wood/five,
+/obj/table/glass/auto,
+/obj/item/reagent_containers/food/snacks/plant/banana{
+	pixel_y = 7;
+	pixel_x = 4
+	},
+/obj/item/reagent_containers/food/snacks/plant/banana{
+	pixel_y = 8;
+	pixel_x = -6
+	},
+/obj/item/reagent_containers/food/snacks/plant/banana,
+/turf/simulated/floor/grass/random,
 /area/station/medical/dome)
 "aWb" = (
 /obj/cable{
@@ -20381,9 +20373,8 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/hallway/primary/west)
 "aWV" = (
-/obj/wingrille_spawn/auto,
 /obj/machinery/phone/wall,
-/turf/simulated/floor/plating,
+/turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay)
 "aWW" = (
 /obj/cable{
@@ -23217,23 +23208,6 @@
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
-"bdA" = (
-/obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 4;
-	id = "monkey_room"
-	},
-/obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/snacks/plant/peanuts{
-	pixel_x = -4;
-	pixel_y = -5
-	},
-/obj/item/reagent_containers/food/snacks/plant/banana{
-	pixel_y = 8;
-	pixel_x = -6
-	},
-/obj/access_spawn/medlab,
-/turf/simulated/floor/wood/five,
-/area/station/medical/dome)
 "bdB" = (
 /obj/machinery/power/apc{
 	dir = 1;
@@ -23247,7 +23221,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "bdD" = (
-/obj/storage/secure/closet/animal,
+/obj/table/auto,
 /turf/simulated/floor/greenwhite{
 	dir = 4
 	},
@@ -38153,6 +38127,7 @@
 	dir = 4;
 	pixel_y = 0
 	},
+/obj/decal/cleanable/oil/streak,
 /turf/simulated/floor/grass/random,
 /area/station/medical/dome)
 "ezb" = (
@@ -39261,11 +39236,9 @@
 /turf/simulated/floor/plating,
 /area/station/science/gen_storage)
 "gAx" = (
-/turf/simulated/floor/stairs{
-	icon_state = "Stairs_wide";
-	dir = 4
-	},
-/area/station/medical/dome)
+/obj/machinery/phone/wall,
+/turf/simulated/wall/auto/supernorn,
+/area/station/medical/medbay/lobby)
 "gCr" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
@@ -46002,7 +45975,6 @@
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "tbY" = (
-/obj/table/glass,
 /obj/item/toy/plush/small{
 	pixel_y = 10;
 	pixel_x = 14
@@ -46012,6 +45984,7 @@
 	pixel_x = -6
 	},
 /obj/item/reagent_containers/food/snacks/plant/lettuce,
+/obj/table/glass/auto,
 /turf/simulated/floor/grass/random,
 /area/station/medical/dome)
 "tgF" = (
@@ -46145,11 +46118,11 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "tsC" = (
-/obj/table/glass,
 /obj/item/reagent_containers/food/snacks/plant/banana{
 	pixel_y = -3;
 	pixel_x = 4
 	},
+/obj/table/glass/auto,
 /turf/simulated/floor/grass/random,
 /area/station/medical/dome)
 "ttf" = (
@@ -47267,7 +47240,10 @@
 	pixel_y = -4;
 	pixel_x = 9
 	},
-/turf/simulated/floor/wood/five,
+/obj/table/glass/auto,
+/obj/item/kitchen/utensil/knife,
+/obj/item/reagent_containers/food/snacks/plant/lettuce,
+/turf/simulated/floor/grass/random,
 /area/station/medical/dome)
 "vAe" = (
 /obj/machinery/floorflusher/minibrig,
@@ -47372,6 +47348,7 @@
 	dir = 4;
 	pixel_y = 0
 	},
+/obj/item/bananapeel,
 /turf/simulated/floor/grass/random,
 /area/station/medical/dome)
 "vOv" = (
@@ -48121,10 +48098,8 @@
 	dir = 4;
 	pixel_y = 0
 	},
-/turf/simulated/floor/stairs{
-	icon_state = "Stairs2_wide";
-	dir = 4
-	},
+/obj/item/bananapeel,
+/turf/simulated/floor/grass/random,
 /area/station/medical/dome)
 "xjR" = (
 /obj/table/auto,
@@ -65744,7 +65719,7 @@ aUe
 aTt
 aUH
 aUH
-bae
+aUH
 aXC
 aIq
 aZh
@@ -66356,7 +66331,7 @@ uhm
 bbB
 aYv
 bbr
-aRf
+aWl
 bji
 bfD
 bfy
@@ -66658,12 +66633,12 @@ aKc
 aZF
 aVq
 bbs
-aWl
+gAx
 bgA
 aUF
 bgS
 bdD
-bjQ
+aRf
 bfy
 shz
 beD
@@ -66969,7 +66944,7 @@ ggJ
 bjQ
 aKM
 beD
-gAx
+baj
 xhF
 aXp
 asx
@@ -67573,7 +67548,7 @@ aKf
 aMX
 mSm
 beD
-bdA
+beD
 aJX
 aXp
 ftF
