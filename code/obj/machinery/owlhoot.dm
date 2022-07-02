@@ -68,6 +68,7 @@
 				if (iswraith(M) || isintangible(M))
 					continue
 				mobs_nearby += M
-			var/mob/frown_target = pick(mobs_nearby)
-			if (frown_target)
-				src.visible_message("<span class='alert'><b>[src]</b> frowns at [frown_target].</span>")
+			if(length(mobs_nearby))
+				var/mob/frown_target = pick(mobs_nearby)
+				if (frown_target)
+					src.visible_message("<span class='alert'><b>[src]</b> frowns at [frown_target].</span>")
