@@ -1244,7 +1244,7 @@
 					O.set_loc(src)
 					user.client.screen -= O
 					break
-			if (done == TRUE)
+			if (done == FALSE)
 				boutput(user, "<span class='alert'>The machine cannot hold any more vials.</span>")
 				return
 			else

@@ -262,11 +262,11 @@ datum
 				tool.microbioupgrade = TRUE
 				boutput(usr, "<span class='notice'>The [tool] gives off a pungent, octane smell.</span>")
 
-//Auxillary Reagents
-
+//Organ Failure Disease Cures
+/*
 		microbiology/organ_drug3
 			name = "digestive antibiotics"
-			id = "digestiveprobio"
+			id = "organ_drug3"
 			description = "A culture of germs: this one seems to strengthen digestive organ tissues."
 			taste = "gross"
 			fluid_r = 125
@@ -278,7 +278,7 @@ datum
 
 		microbiology/organ_drug2
 			name = "endocrine antibiotics"
-			id = "endocrineprobio"
+			id = "organ_drug2"
 			description = "A culture of germs: this one seems to bolster the endocrine system."
 			taste = "confusing"
 			fluid_r = 80
@@ -290,7 +290,7 @@ datum
 
 		microbiology/organ_drug1
 			name = "respiratory antibiotics"
-			id = "respiraprobio"
+			id = "organ_drug1"
 			description = "A culture of germs: this one seems to remedy damage to the respiratory system."
 			taste = "dry"
 			fluid_r = 25
@@ -299,7 +299,7 @@ datum
 			transparency = 50
 			value = 9	// 6 2 1
 			data = "perfluorodecalin"
-
+*/
 //No code infrastructure for these...
 /*
 		microbiology/lastwords
