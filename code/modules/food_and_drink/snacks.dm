@@ -2901,7 +2901,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	icon_state = "cheesewheel"
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	throwforce = 1
-	real_name = "bread"
+	real_name = "cheesewheel"
 	flags = NOSPLASH | FPRINT | TABLEPASS
 	throw_speed = 2
 	throw_range = 5
