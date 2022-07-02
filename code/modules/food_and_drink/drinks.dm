@@ -247,7 +247,8 @@
 	can_recycle = FALSE
 	initial_reagents = list("chickensoup"=30)
 
-	/obj/item/reagent_containers/food/drinks/fruitmilk
+
+/obj/item/reagent_containers/food/drinks/fruitmilk
 	name = "Fruit Milk"
 	desc = "Milk and fruit of undetermined origin; finally, together at last."
 	icon_state = "fruitmilk"
