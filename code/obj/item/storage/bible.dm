@@ -181,7 +181,13 @@ var/global/list/bible_contents = list()
 		else
 			user.visible_message("<span class='alert'>[user] farts on the bible.<br><b>A mysterious force smites [user]!</b></span>")
 			logTheThing("combat", user, null, "farted on [src] at [log_loc(src)] last touched by <b>[src.fingerprintslast ? src.fingerprintslast : "unknown"]</b>.")
-			user.gib()
+			var/turf/T = get_turf(src)
+			showlightning_bolt(T)
+			playsound(T, 'sound/effects/lightning_strike.ogg', 50, 1)
+			//elecflash(T,0, power=4, exclude_center = 0)
+			user.unequip_all()
+			user.emote("scream")
+			user.elecgib()
 			return TRUE
 
 /obj/item/storage/bible/evil
