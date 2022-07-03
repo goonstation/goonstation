@@ -276,7 +276,7 @@ datum
 				tool.microbioupgrade = TRUE
 				boutput(usr, "<span class='notice'>The [tool] gives off a pungent, octane smell.</span>")
 
-		microbiology/pipestrengthener
+		microbiology/pipestrengthener	//This could also be justified using carbon fiber mats from nanites/asteroids, but that's extending engineering's reliance on QM/mining for stuff
 			name = "interlocked nanotubes"
 			id = "pipestrengthener"
 			description = "A culture of germs: the microbodies seem to contain crystal tubes of boron nitride which interlock with other microbes."
@@ -285,7 +285,7 @@ datum
 			fluid_b = 5
 			transparency = 15
 			value = 4	// 1 2 1
-			data = "boron"
+			data = "spaceglue"	// No boron yet...
 
 			reaction_obj(var/obj/O, var/volume)
 				if(!(istype(O, /obj/machinery/atmospherics/pipe/simple)))
