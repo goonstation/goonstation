@@ -36035,6 +36035,7 @@
 "bOf" = (
 /obj/disposalpipe/junction/middle/west,
 /obj/machinery/light,
+/obj/storage/secure/closet/brig_automatic/genpop,
 /turf/simulated/floor/white,
 /area/station/security/brig/genpop)
 "bOg" = (
@@ -54495,6 +54496,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/storage/secure/closet/brig_automatic/solitary,
 /turf/simulated/floor/white,
 /area/station/security/brig/genpop)
 "ihY" = (
@@ -54956,6 +54958,7 @@
 	pixel_y = 20;
 	tag = ""
 	},
+/obj/storage/secure/closet/brig_automatic/solitary2,
 /turf/simulated/floor/white,
 /area/station/security/brig/genpop)
 "jlU" = (

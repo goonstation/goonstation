@@ -30001,11 +30001,8 @@
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "bNr" = (
-/obj/table/reinforced/auto,
-/obj/item/paper_bin,
-/obj/item/pen/marker,
-/obj/item/pen/marker,
 /obj/disposalpipe/junction/left/north,
+/obj/storage/secure/closet/brig_automatic/genpop,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "bNs" = (
@@ -31440,7 +31437,8 @@
 /turf/simulated/floor/black,
 /area/station/security/brig/solitary)
 "bRX" = (
-/obj/stool,
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet,
 /obj/item/device/radio/intercom{
 	dir = 8
 	},
@@ -43016,12 +43014,11 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/core)
 "fWx" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet,
 /obj/disposalpipe/segment/brig{
 	dir = 2;
 	icon_state = "pipe-c"
 	},
+/obj/storage/secure/closet/brig_automatic/solitary,
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
@@ -46010,7 +46007,8 @@
 	},
 /area/station/security/secwing)
 "iVC" = (
-/obj/stool,
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet,
 /obj/item/device/radio/intercom{
 	dir = 4
 	},
@@ -52945,8 +52943,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
 "pXL" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet,
+/obj/storage/secure/closet/brig_automatic/solitary2,
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
@@ -53146,6 +53143,9 @@
 	persistent_id = "brig";
 	pixel_x = 32;
 	pixel_y = 0
+	},
+/obj/machinery/vending/snack{
+	credit = 50
 	},
 /turf/simulated/floor/red/side{
 	dir = 4
@@ -53579,6 +53579,9 @@
 /area/station/medical/medbay)
 "qFh" = (
 /obj/table/reinforced/auto,
+/obj/item/paper_bin,
+/obj/item/pen/marker,
+/obj/item/pen/marker,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "qFo" = (
@@ -59054,12 +59057,6 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/garden/aviary)
-"wdS" = (
-/obj/machinery/vending/snack{
-	credit = 50
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/brig/solitary)
 "wfc" = (
 /obj/cable{
 	d1 = 1;
@@ -120535,7 +120532,7 @@ bNH
 wVV
 wVV
 wVV
-wdS
+wVV
 bUA
 tjJ
 tan
