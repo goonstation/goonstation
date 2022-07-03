@@ -20,8 +20,10 @@ ABSTRACT_TYPE(/obj/reactor_component)
 	///Control rods don't moderate neutrons, they absorb them.
 	var/is_control_rod = FALSE
 	_max_health = 100
+	var/melt_health = 100
 	///If this component is melted, you can't take it out of the reactor and it might do some weird stuff
 	var/melted = FALSE
+	var/melting_point = 2500
 	var/static/list/ui_image_base64_cache = list()
 	var/gas_volume = 0
 
@@ -34,7 +36,7 @@ ABSTRACT_TYPE(/obj/reactor_component)
 	New()
 		..()
 		src.setMaterial(getMaterial("steel"))
-		_health = _max_health
+		melt_health = _max_health
 		var/img_check = ui_image_base64_cache[src.type]
 		if (img_check)
 			src.ui_image = img_check
@@ -42,6 +44,18 @@ ABSTRACT_TYPE(/obj/reactor_component)
 			var/icon/dummy_icon = icon(initial(src.icon), initial(src.icon_state_inserted))
 			src.ui_image = icon2base64(dummy_icon)
 			ui_image_base64_cache[src.type] = src.ui_image
+
+	proc/melt()
+		if(melted)
+			return
+		src.melted = TRUE
+		src.name = "melted "+src.name
+		src.neutron_cross_section = 5.0
+		src.thermal_cross_section = 0.25
+		src.is_control_rod = FALSE
+
+	proc/extra_info()
+		. = ""
 
 	proc/processGas(var/datum/gas_mixture/inGas)
 		return null //most components won't touch gas
@@ -74,6 +88,10 @@ ABSTRACT_TYPE(/obj/reactor_component)
 
 			holder.material.triggerTemp(holder,holder.temperature)
 			src.material.triggerTemp(src,src.temperature)
+		if((src.temperature > src.melting_point) && (src.melt_health > 0))
+			src.melt_health -= 10
+		if(src.melt_health <= 0)
+			src.melt() //oh no
 
 
 	proc/processNeutrons(var/list/datum/neutron/inNeutrons)
@@ -126,6 +144,9 @@ ABSTRACT_TYPE(/obj/reactor_component)
 	neutron_cross_section = 1.0
 	thermal_cross_section = 0.02
 
+	extra_info()
+		. = ..()
+		. += "Radioactivity: [max(src.material.getProperty("n_radioactive"),src.material.getProperty("radioactive"))]%"
 ////////////////////////////////////////////////////////////////
 //Control rod
 /obj/item/reactor_component/control_rod
@@ -135,6 +156,10 @@ ABSTRACT_TYPE(/obj/reactor_component)
 	neutron_cross_section = 1.0 //essentially *actual* insertion level
 	var/configured_insertion_level = 1.0 //target insertion level
 	is_control_rod = TRUE
+
+	extra_info()
+		. = ..()
+		. += "Insertion: [neutron_cross_section*100]%"
 
 	processNeutrons(list/datum/neutron/inNeutrons)
 		. = ..()
@@ -161,7 +186,7 @@ ABSTRACT_TYPE(/obj/reactor_component)
 	desc = "A gas coolant channel component for a nuclear reactor"
 	icon_state_inserted = "gas"
 	thermal_cross_section = 0.05
-	var/gas_thermal_cross_section = 0.5
+	var/gas_thermal_cross_section = 0.95
 	var/datum/gas_mixture/current_gas
 	gas_volume = 100
 
@@ -178,6 +203,10 @@ ABSTRACT_TYPE(/obj/reactor_component)
 				if(src.current_gas.temperature < 0 || src.temperature < 0)
 					CRASH("TEMP WENT NEGATIVE")
 			. = src.current_gas
+			if(src.melted)
+				var/turf/T = get_turf(src.loc)
+				if(T)
+					T.assume_air(current_gas)
 		if(inGas)
 			src.current_gas = inGas.remove((src.gas_volume*MIXTURE_PRESSURE(inGas))/(R_IDEAL_GAS_EQUATION*inGas.temperature))
 

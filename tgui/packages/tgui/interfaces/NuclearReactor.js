@@ -43,13 +43,13 @@ const ReactorRow = (shape) => {
         }
         else
         {
-          const { x, y, name, img, temp } = c;
+          const { x, y, name, img, temp, extra } = c;
           return (
             <Table.Cell>
               <Button
                 key={name}
                 fluid
-                tooltip={<>{capitalize(name)}<br />{temp} K</>}
+                tooltip={<>{capitalize(name)}<br />{temp} K<br />{extra}</>}
                 color="transparent"
                 m={1}
                 onClick={() => onClick('slot', { "x": x, "y": y })} >

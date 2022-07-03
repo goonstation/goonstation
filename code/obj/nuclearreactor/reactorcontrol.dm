@@ -139,7 +139,8 @@
 							"y" = y,
 							"name" = comp.name,
 							"img" = comp.ui_image,
-							"temp" = comp.temperature
+							"temp" = comp.temperature,
+							"extra" = comp.extra_info()
 						)
 
 		. = list(

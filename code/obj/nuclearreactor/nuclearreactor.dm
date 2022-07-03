@@ -123,7 +123,7 @@
 	proc/processCaseRadiation(var/rads)
 		if(rads <= 0)
 			return
-
+		neutron_projectile.power = rads
 		for(var/i = min(rads,10),i>0,i--)
 			shoot_projectile_XY(src, neutron_projectile, rand(-10,10), rand(-10,10)) //for once, rand(range) returning int is useful
 		rads -= min(rads,10)
@@ -208,8 +208,9 @@
 							"y" = y,
 							"name" = comp.name,
 							"img" = comp.ui_image,
-							"temp" = comp.temperature
-						)
+							"temp" = comp.temperature,
+							"extra" = comp.extra_info()
+ 						)
 
 		. = list(
 			"components" = comps,
@@ -238,12 +239,16 @@
 					if(issilicon(ui.user))
 						boutput(ui.user,"Your clunky robot hands can't grip the [src.component_grid[x][y]]!")
 						return
+
+					if(src.component_grid[x][y].melted)
+						boutput(ui.user, "The component is melted! It's stuck.")
+						return
+
 					ui.user.visible_message("<span class='alert'>[ui.user] starts removing a [component_grid[x][y]]!</span>", "<span class='alert'>You start removing the [component_grid[x][y]]!</span>")
 					var/datum/action/bar/icon/callback/A = new(ui.user, src, 2 SECONDS, .proc/remove_comp_callback, list(x,y,ui.user), component_grid[x][y].icon, component_grid[x][y].icon_state,\
 					"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 					A.maximum_range=3
 					actions.start(A,ui.user)
-
 				else
 					var/equipped = ui.user.equipped()
 					if(!equipped)
@@ -329,6 +334,7 @@
 	//With what % do we hit mobs laying down
 	hit_ground_chance = 50
 	window_pass = FALSE
+	silentshot = TRUE
 
 	on_hit(atom/hit, angle, var/obj/projectile/O)
 		. = FALSE //default to doing normal hit behaviour
