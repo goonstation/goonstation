@@ -41,8 +41,8 @@ TYPEINFO(/datum/component/radioactive)
 		else
 			global.processing_items.Add(src) //gross - in the event that this component is put on something that isn't an item/mob, use the item processing loop anyway
 		var/atom/PA = parent
-		PA.add_simple_light("radiation_light", rgb2num(neutron ? "#2e3ae4" : "#18e022")+list(round(255*radStrength/100)))
-		PA.add_filter("radiation_outline", 2, outline_filter(size=1,color=(neutron ? "#2e3ae4FF" : "#18e022FF")))
+		PA.add_simple_light("radiation_light", rgb2num(neutron ? "#2e3ae4" : "#18e022")+list(min(128,round(255*radStrength/100))))
+		PA.add_filter("radiation_outline", -1, outline_filter(size=1.3, color=(neutron ? "#2e3ae4FF" : "#18e022FF")))
 
 	proc/process()
 		ticked(parent)
@@ -70,6 +70,11 @@ TYPEINFO(/datum/component/radioactive)
 		else if(ismob(parent))
 			UnregisterSignal(parent, list(COMSIG_LIVING_LIFE_TICK))
 
+	InheritComponent(datum/component/radioactive/R, i_am_original)
+		if (i_am_original)
+			src.radStrength = (src.radStrength+R.radStrength)/2
+			src.neutron |= R.neutron //only one type of radiation allowed, and neutron takes precedence
+			src.decays &= R.decays //permenant radiation takes precedence over decay
 
 	proc/ticked(atom/owner, mult=1)
 		for(var/mob/M in viewers(1,parent))
