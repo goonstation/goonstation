@@ -17,6 +17,8 @@ ABSTRACT_TYPE(/obj/reactor_component)
 	var/thermal_cross_section = 0.01
 	///How adept is this component at interacting with neutrons - fuel rods are set up to capture them, heat exchangers are set up not to
 	var/neutron_cross_section = 0.5
+	///Control rods don't moderate neutrons, they absorb them.
+	var/is_control_rod = FALSE
 	_max_health = 100
 	///If this component is melted, you can't take it out of the reactor and it might do some weird stuff
 	var/melted = FALSE
@@ -102,11 +104,15 @@ ABSTRACT_TYPE(/obj/reactor_component)
 				else
 					if(prob(src.material.getProperty("hardness"))) //reflection is based on hardness
 						N.dir = turn(N.dir,pick(180,225,135)) //either complete 180 or  180+/-45
-					N.velocity--
-					src.temperature += 1
-					if(N.velocity < 0)
+					else if(is_control_rod) //control rods absorb neutrons
+						N.velocity = 0
+					else //everything else moderates them
+						N.velocity--
+					if(N.velocity <= 0)
 						inNeutrons -= N
 						qdel(N)
+					src.temperature += 1
+
 		return inNeutrons
 
 
@@ -128,6 +134,7 @@ ABSTRACT_TYPE(/obj/reactor_component)
 	icon_state_inserted = "control"
 	neutron_cross_section = 1.0 //essentially *actual* insertion level
 	var/configured_insertion_level = 1.0 //target insertion level
+	is_control_rod = TRUE
 
 	processNeutrons(list/datum/neutron/inNeutrons)
 		. = ..()

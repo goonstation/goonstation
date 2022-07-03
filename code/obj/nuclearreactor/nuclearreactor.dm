@@ -26,6 +26,7 @@
 	var/radiationLevel = 0
 	var/datum/gas_mixture/current_gas = null
 	var/temperature = T20C
+	var/datum/projectile/neutron_projectile = new /datum/projectile/neutron
 
 	var/reactor_vessel_gas_volume=200
 	var/obj/machinery/power/terminal/terminal = null
@@ -94,8 +95,9 @@
 
 		//if we somehow ended up with input gas still
 		gas_output.merge(gas_input)
-		//TODO spawn radioactivity then reset level
+
 		src.radiationLevel = tmpRads
+		processCaseRadiation(tmpRads)
 		total_gas_volume += src.reactor_vessel_gas_volume
 		src.air1.volume = total_gas_volume
 		src.air2.volume = total_gas_volume
@@ -116,6 +118,22 @@
 			. = src.current_gas
 		if(inGas)
 			src.current_gas = inGas.remove((src.reactor_vessel_gas_volume*MIXTURE_PRESSURE(inGas))/(R_IDEAL_GAS_EQUATION*inGas.temperature))
+
+
+	proc/processCaseRadiation(var/rads)
+		if(rads <= 0)
+			return
+
+		for(var/i = min(rads,10),i>0,i--)
+			shoot_projectile_XY(src, neutron_projectile, rand(-10,10), rand(-10,10)) //for once, rand(range) returning int is useful
+		rads -= min(rads,10)
+
+		if(rads <= 0)
+			return
+
+		src.AddComponent(/datum/component/radioactive, min(rads,100), TRUE, FALSE, 5)
+
+
 
 
 	proc/getGridNeighbors(var/x,var/y)
@@ -258,7 +276,7 @@
 		src.component_grid[x][y] = null
 		tgui_process.update_uis(src)
 
-/datum/neutron
+/datum/neutron //this is literally just a tuple
 	var/dir = NORTH
 	var/velocity = 1
 
@@ -289,3 +307,44 @@
 
 #undef REACTOR_GRID_WIDTH
 #undef REACTOR_GRID_HEIGHT
+
+/datum/projectile/neutron //neutron projectile for radiation shooting from reactor
+	name = "neutron"
+	icon_state = ""
+	icon = null
+	power = 100
+	cost = 0
+//How fast the power goes away
+	dissipation_rate = 1
+//How many tiles till it starts to lose power
+	dissipation_delay = 10
+//Kill/Stun ratio
+	ks_ratio = 1.0
+//name of the projectile setting, used when you change a guns setting
+	sname = "neutron"
+//file location for the sound you want it to play
+	shot_sound = null
+	shot_number = 1
+	damage_type = D_RADIOACTIVE
+	//With what % do we hit mobs laying down
+	hit_ground_chance = 50
+	window_pass = FALSE
+
+	on_hit(atom/hit, angle, var/obj/projectile/O)
+		. = FALSE //default to doing normal hit behaviour
+		if(hit.material)
+			if(prob(hit.material.getProperty("hardness")))
+				//reflect
+				shoot_reflected_bounce(O, hit)
+
+			if(prob(hit.material.getProperty("n_radioactive")))
+				hit.AddComponent(/datum/component/radioactive, min(power,20), TRUE, TRUE, 1)
+			if(prob(hit.material.getProperty("radioactive")))
+				hit.AddComponent(/datum/component/radioactive, min(power,20), TRUE, FALSE, 1)
+		return
+
+	on_pre_hit(atom/hit, angle, var/obj/projectile/O)
+		. = FALSE //default to doing normal hit behaviour
+		if(hit.material && !prob(hit.material.getProperty("density")))
+			O.power /= 2
+			. = TRUE

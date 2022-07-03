@@ -3,7 +3,8 @@ TYPEINFO(/datum/component/radioactive)
 	initialization_args = list(
 		ARG_INFO("radStrength", DATA_INPUT_NUM, "Value of radiation strength \[0-100\]", 100),
 		ARG_INFO("decays", DATA_INPUT_BOOL, "Whether this radiation will decay over time (bool)", FALSE),
-		ARG_INFO("neutron", DATA_INPUT_BOOL, "Whether this radiation is neutron, and therefor penetrates more (bool)", FALSE)
+		ARG_INFO("neutron", DATA_INPUT_BOOL, "Whether this radiation is neutron, and therefor penetrates more (bool)", FALSE),
+		ARG_INFO("effectRange", DATA_INPUT_NUM, "How far this effect goes. Do not set too high, it's expensive. \[0-10\]", 1)
 	)
 
 /datum/component/radioactive
@@ -12,14 +13,16 @@ TYPEINFO(/datum/component/radioactive)
 	var/decays = FALSE
 	var/neutron = FALSE
 	var/_added_to_items_processing = FALSE
+	var/effect_range = 1
 
-	Initialize(radStrength=100, decays=FALSE, neutron=FALSE)
+	Initialize(radStrength=100, decays=FALSE, neutron=FALSE, effectRange=1)
 		if(!istype(parent,/atom))
 			return COMPONENT_INCOMPATIBLE
 		. = ..()
 		src.radStrength = radStrength
 		src.decays = decays
 		src.neutron = neutron
+		src.effect_range = effectRange
 		RegisterSignal(parent, list(COMSIG_ATOM_EXAMINE), .proc/examined)
 		RegisterSignal(parent, list(COMSIG_ATOM_CROSSED,
 			COMSIG_ATOM_ENTERED,
@@ -77,7 +80,7 @@ TYPEINFO(/datum/component/radioactive)
 			src.decays &= R.decays //permenant radiation takes precedence over decay
 
 	proc/ticked(atom/owner, mult=1)
-		for(var/mob/M in viewers(1,parent))
+		for(var/mob/M in viewers(effect_range,parent))
 			M.take_radiation_dose(mult * (neutron ? 0.2 : 0.05) * (radStrength/100))
 		if(src.decays)
 			src.radStrength = max(0, src.radStrength - mult)
@@ -107,3 +110,4 @@ TYPEINFO(/datum/component/radioactive)
 				rad_word = "radiating blindingly"
 
 		lines += "It is [rad_word] with a [pick("fuzzy","sickening","nauseating","worrying")] [neutron ? "blue" : "green"] light.[examiner.job == "Clown" ? " You should touch it!" : ""]"
+
