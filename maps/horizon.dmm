@@ -25196,6 +25196,11 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/red/checker{
 	dir = 4
 	},
@@ -25681,8 +25686,13 @@
 	},
 /area/station/maintenance/southwest)
 "bmz" = (
-/obj/machinery/computer/secure_data{
+/obj/machinery/computer3/generic/secure_data{
 	dir = 8
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
 	},
 /obj/machinery/recharger/wall/sticky,
 /turf/simulated/floor/red/checker{
@@ -25848,7 +25858,12 @@
 /area/station/hangar/qm)
 "bmT" = (
 /obj/machinery/light_switch/north,
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer3/generic/secure_data,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
 /obj/decal/cleanable/dirt,
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -32072,11 +32087,21 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment,
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/courtroom)
 "bDC" = (
 /obj/disposalpipe/segment/mineral{
 	dir = 4
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/courtroom)
@@ -32090,6 +32115,11 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/transport,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/courtroom)
 "bDE" = (
@@ -54233,6 +54263,11 @@
 /obj/disposalpipe/segment/transport{
 	dir = 8;
 	icon_state = "pipe-c"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/red/checker{
 	dir = 4
