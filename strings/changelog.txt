@@ -1,4 +1,9 @@
 
+(t)sun jul 03 22
+(u)Mr. Moriarty
+(p)9430
+(e)🗺|mapping
+(+)Replaced old Security Records computers with ThinkDOS SecMate computers.
 (t)sat jul 02 22
 (u)ZWRh3
 (p)9437
