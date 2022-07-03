@@ -96,6 +96,9 @@
 	get_disorient_protection()
 		return max(..(), 80)
 
+	get_disorient_protection_eye()
+		return(50)
+
 	attack_hand(mob/user)
 		user.lastattacked = src
 		if(!user.stat)

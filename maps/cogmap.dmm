@@ -4854,7 +4854,11 @@
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/arrivals)
 "aon" = (
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer3/generic/secure_data,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/red/side{
 	dir = 10
 	},
@@ -4865,6 +4869,9 @@
 	},
 /obj/cable{
 	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "1-8"
 	},
 /obj/submachine/weapon_vendor/security,
 /turf/simulated/floor/red/side,
@@ -55951,8 +55958,8 @@
 	pixel_y = 11
 	},
 /obj/item/clipboard{
-	pixel_y = 4;
-	pixel_x = -2
+	pixel_x = -2;
+	pixel_y = 4
 	},
 /obj/item/pen{
 	pixel_x = 6;
@@ -59013,8 +59020,8 @@
 	pixel_x = 19
 	},
 /obj/item/reagent_containers/food/snacks/candy/butterscotch{
-	pixel_y = -4;
-	pixel_x = 4
+	pixel_x = 4;
+	pixel_y = -4
 	},
 /turf/simulated/floor/wood/two,
 /area/station/medical/staff)
@@ -62305,12 +62312,12 @@
 /obj/item/storage/wall/office,
 /obj/rack,
 /obj/item/robodefibrillator{
-	pixel_y = 6;
-	pixel_x = -5
+	pixel_x = -5;
+	pixel_y = 6
 	},
 /obj/item/reagent_containers/hypospray{
-	pixel_y = 2;
-	pixel_x = -11
+	pixel_x = -11;
+	pixel_y = 2
 	},
 /obj/item/storage/box/health_upgrade_kit{
 	pixel_x = 9;
@@ -63765,8 +63772,8 @@
 "vMs" = (
 /obj/table/auto,
 /obj/item/cigpacket/propuffs{
-	pixel_y = -2;
-	pixel_x = -9
+	pixel_x = -9;
+	pixel_y = -2
 	},
 /obj/item/clothing/mask/cigarette/propuffs{
 	pixel_x = -2;

@@ -65,6 +65,24 @@
 		else
 			src.icon_state = "armorvest"
 
+/obj/item/clothing/suit/armor/vest/light
+	name = "light armor vest"
+	desc = "A cheap armored vest that gives a little bit of protection."
+	icon_state = "armorvest-old"
+	uses_multiple_icon_states = 0
+	item_state = "armorvest-old"
+
+	setupProperties()
+		..()
+		setProperty("meleeprot", 3)
+		setProperty("rangedprot", 0.4)
+
+	attackby(obj/item/W, mob/user)
+		return
+
+	attack_self(mob/user)
+		return
+
 // Added support for old-style grenades and pipe bombs. Also a bit of code streamlining (Convair880).
 /obj/item/clothing/suit/armor/suicide_bomb
 	name = "suicide bomb vest"

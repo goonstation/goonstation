@@ -402,13 +402,15 @@
 	name = "Shivering Contusine"
 	name_prefix = "Shivering "
 	iconmod = "ContusineShivering"
+	crop = /obj/item/plant/herb/contusine/shivering
 	assoc_reagents = list("salbutamol")
 	chance = 20
 
 /datum/plantmutation/contusine/quivering
 	name = "Quivering Contusine"
 	name_prefix = "Quivering "
-	iconmod = "ContusineShivering"
+	iconmod = "ContusineQuivering"
+	crop = /obj/item/plant/herb/contusine/quivering
 	assoc_reagents = list("histamine")
 	chance = 10
 	mutation_sfx = "sound/impact_sounds/Bush_Hit.ogg"
@@ -438,6 +440,7 @@
 	name = "Burning Commol"
 	name_prefix = "Burning "
 	iconmod = "CommolBurning"
+	crop = /obj/item/plant/herb/commol/burning
 	assoc_reagents = list("phlogiston")
 	chance = 10
 

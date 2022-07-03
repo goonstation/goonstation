@@ -796,6 +796,8 @@
 				if(href_list["op"])
 					var/datum/electronics/scanned_item/O = locate(href_list["op"])
 					if(istype(O,/datum/electronics/scanned_item/))
+						if (!(O.item_mats && src.olde))
+							return
 						var/obj/item/electronics/frame/F = new/obj/item/electronics/frame(src.loc)
 						F.name = "[O.name]-frame"
 						F.store_type = O.item_type
@@ -808,6 +810,8 @@
 					else
 						var/datum/electronics/scanned_item/O = locate(href_list["op"]) in ruck_controls.scanned_items
 						if (istype(O.blueprint, /datum/manufacture/mechanics/))
+							if (!(!O.locked || src.allowed(usr) || src.olde))
+								return
 							usr.show_text("Print job started...", "blue")
 							var/datum/manufacture/mechanics/M = O.blueprint
 							playsound(src.loc, 'sound/machines/printer_thermal.ogg', 25, 1)
@@ -818,7 +822,8 @@
 
 			if("lock")
 				if(href_list["op"])
-
+					if (!src.allowed(usr))
+						return
 					var/datum/electronics/scanned_item/O = locate(href_list["op"]) in ruck_controls.scanned_items
 					O.locked = !O.locked
 					for (var/datum/electronics/scanned_item/OP in ruck_controls.scanned_items) //Lock items with the same name, that's how LOCK works
