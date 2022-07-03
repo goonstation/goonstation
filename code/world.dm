@@ -735,8 +735,7 @@ var/f_color_selector_handler/F_Color_Selector
 /world/proc/update_status()
 	Z_LOG_DEBUG("World/Status", "Updating status")
 
-	//we start off with an animated bee gif because, well, this is who we are.
-	var/s = "<img src=\"http://goonhub.com/bee.gif\"/>"
+	var/s = ""
 
 	if (config?.server_name)
 		s += "<b><a href=\"https://goonhub.com\">[config.server_name]</a></b> &#8212; "
@@ -746,7 +745,7 @@ var/f_color_selector_handler/F_Color_Selector
 	s += "The classic SS13 experience. &#8212; (<a href=\"http://bit.ly/gndscd\">Discord</a>)<br>"
 
 	if(ticker && ticker.round_elapsed_ticks > 0 && current_state == GAME_STATE_PLAYING)
-		s += "Round time: [round(ticker.round_elapsed_ticks / 36000)]:[add_zero(num2text(ticker.round_elapsed_ticks / 600 % 60), 2)]<br>"
+		s += "Time: [round(ticker.round_elapsed_ticks / 36000)]:[add_zero(num2text(ticker.round_elapsed_ticks / 600 % 60), 2)]<br>"
 	else if(!ticker)
 		s += "<b>STARTING</b><br>"
 
