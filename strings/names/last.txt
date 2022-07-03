@@ -153,6 +153,7 @@ names@=
 	Candles
 	Cao
 	Captain
+	Carlos
 	Carmichael
 	Carr
 	Carson
@@ -168,8 +169,6 @@ names@=
 	Chandra
 	Chang
 	Chapman
-	Chasing Bear
-	Chasing Horse
 	Chen
 	Cheng
 	Cherry
@@ -196,7 +195,6 @@ names@=
 	Cox
 	Cressman
 	Crowe
-	Crow Dog
 	Curie
 	Curry
 	Cypret
@@ -454,7 +452,6 @@ names@=
 	Jowers
 	Joyce
 	Judge
-	Jumping Elk
 	Jyllian
 	Kaʻaukai
 	Kadel
@@ -589,7 +586,6 @@ names@=
 	Mckendrick
 	Mcloskey
 	Mcmullen
-	Medicine Crow
 	Meier
 	Melnyk
 	Mendis
@@ -679,7 +675,6 @@ names@=
 	Okada
 	Okamoto
 	Okoye
-	Old Fire Heart
 	Olphert
 	Olsen
 	Oneal
@@ -867,7 +862,6 @@ names@=
 	Simpson
 	Simsek
 	Singh
-	Sitting Bull
 	Skywalker
 	Slaughter
 	Sleiman
@@ -883,7 +877,6 @@ names@=
 	Sommer
 	Song
 	Sparks
-	Sparrowhawk
 	Spock
 	Sprinkles
 	Srinivas
@@ -937,7 +930,6 @@ names@=
 	Thompson
 	Thomson
 	Thorley
-	Thunderhawk
 	Thursday
 	Tian
 	Tilton
