@@ -589,7 +589,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "bE" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall_space"
@@ -683,36 +683,36 @@
 	amount = 10
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "cI" = (
 /obj/item/material_piece/ice{
 	amount = 10
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "ds" = (
 /obj/item/material_piece/organic/wood{
 	amount = 10
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "dx" = (
 /obj/machinery/portable_atmospherics/pressurizer,
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "eW" = (
 /obj/item/material_piece/char{
 	amount = 10
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "gm" = (
 /obj/item/material_piece/hamburgris{
 	amount = 10
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "gD" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 4
@@ -721,7 +721,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "gJ" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 10
@@ -731,27 +731,27 @@
 "gM" = (
 /obj/item/tool/omnitool/syndicate,
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "hB" = (
 /obj/item/material_piece/gnesisglass{
 	amount = 10
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "iJ" = (
 /obj/machinery/light/small/floor,
 /obj/item/material_piece/glass{
 	amount = 10
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "jp" = (
 /obj/machinery/light/small/floor,
 /obj/item/material_piece/gold{
 	amount = 10
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "jX" = (
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/shuttle,
@@ -761,13 +761,13 @@
 	dir = 1
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "ku" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 9
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "kK" = (
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/shuttlebay{
@@ -779,11 +779,11 @@
 	amount = 10
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "lq" = (
 /obj/item/wrench,
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "lR" = (
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/shuttlebay,
@@ -793,43 +793,43 @@
 	amount = 100
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "mF" = (
 /obj/machinery/computer/power_monitor/smes,
 /obj/cable,
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "mK" = (
 /obj/machinery/atmospherics/valve{
 	dir = 1
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "nd" = (
 /obj/item/material_piece/bohrum{
 	amount = 10
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "oy" = (
 /obj/machinery/light/small/floor,
 /obj/cable{
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "oC" = (
 /obj/item/material_piece/coral{
 	amount = 10
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "oV" = (
 /obj/item/material_piece/kremfuel_o{
 	amount = 10
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "pi" = (
 /obj/cable{
 	d1 = 1;
@@ -837,19 +837,19 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "qr" = (
 /obj/machinery/atmospherics/pipe/manifold/overfloor,
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "qF" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "rr" = (
 /obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "rF" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -858,7 +858,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "sj" = (
 /obj/machinery/atmospherics/binary/pump{
 	dir = 2;
@@ -875,7 +875,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "sx" = (
 /obj/cable{
 	d1 = 4;
@@ -883,7 +883,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "sF" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 8
@@ -900,7 +900,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "sP" = (
 /obj/landmark/start/latejoin,
 /obj/machinery/light/small/floor,
@@ -912,7 +912,7 @@
 	amount = 10
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "uO" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -924,7 +924,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "vN" = (
 /obj/cable{
 	d2 = 2;
@@ -933,23 +933,23 @@
 	},
 /obj/machinery/atmospherics/binary/nuclear_reactor/prefilled,
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "vT" = (
 /obj/item/material_piece/copper{
 	amount = 10
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "wc" = (
 /obj/item/material_piece/iridiumalloy,
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "xD" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 5
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "xH" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 1
@@ -961,12 +961,12 @@
 	amount = 10
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "yk" = (
 /obj/item/reactor_component/heat_exchanger,
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "zD" = (
 /obj/cable{
 	d1 = 4;
@@ -979,16 +979,16 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "zQ" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "zR" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /turf/simulated/wall/r_wall,
-/area/space)
+/area/station/engine/engineering)
 "Al" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 4
@@ -997,56 +997,56 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "AG" = (
 /obj/item/material_piece/mauxite{
 	amount = 10
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "AK" = (
 /obj/machinery/light/small/floor,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "BN" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "Cd" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "Cu" = (
 /obj/machinery/light/small/floor,
 /obj/item/material_piece/molitz{
 	amount = 0
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "CO" = (
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "Ds" = (
 /obj/item/material_piece/spacelag{
 	amount = 10
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "Dt" = (
 /obj/item/material_piece/fibrilith{
 	amount = 10
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "Dx" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "DB" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 5
@@ -1058,7 +1058,7 @@
 	dir = 6
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "Er" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -1072,11 +1072,11 @@
 	pixel_y = 24
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "Ez" = (
 /obj/machinery/portable_atmospherics/canister/sleeping_agent,
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "FE" = (
 /obj/cable{
 	d1 = 4;
@@ -1095,7 +1095,7 @@
 "Hh" = (
 /obj/machinery/nanofab/nuclear,
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "HV" = (
 /obj/machinery/atmospherics/pipe/simple/junction,
 /turf/space,
@@ -1104,41 +1104,41 @@
 /obj/item/reactor_component/control_rod,
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "Ir" = (
 /obj/machinery/light/small/floor,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "IF" = (
 /obj/machinery/light/small/floor,
 /obj/item/device/analyzer/atmospheric/upgraded,
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "IV" = (
 /obj/machinery/light/small/floor,
 /obj/item/material_piece/claretine{
 	amount = 10
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "IZ" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "Je" = (
 /obj/item/device/matanalyzer,
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "Ju" = (
 /obj/machinery/light/small/floor,
 /obj/machinery/atmospherics/valve{
 	dir = 1
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "Kc" = (
 /obj/cable{
 	d1 = 2;
@@ -1146,18 +1146,18 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "Kt" = (
 /obj/cable,
 /obj/machinery/power/terminal,
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "KF" = (
 /obj/item/material_piece/pharosium{
 	amount = 10
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "KG" = (
 /obj/cable{
 	d1 = 1;
@@ -1170,7 +1170,7 @@
 "Lc" = (
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "Ld" = (
 /obj/machinery/light/small/floor,
 /obj/cable{
@@ -1179,27 +1179,27 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "Lg" = (
 /turf/simulated/wall/r_wall,
-/area/space)
+/area/station/engine/engineering)
 "Lq" = (
 /obj/machinery/light/small/floor,
 /obj/item/material_piece/slag{
 	amount = 10
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "Lx" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "MI" = (
 /obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "MS" = (
 /obj/cable{
 	d1 = 1;
@@ -1207,13 +1207,13 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "MT" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 10
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "Nl" = (
 /obj/machinery/computer/power_monitor,
 /obj/cable{
@@ -1221,38 +1221,38 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "NG" = (
 /obj/item/crowbar,
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "Og" = (
 /obj/machinery/atmospherics/valve{
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "OL" = (
 /obj/item/material_piece/gnesis{
 	amount = 10
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "PO" = (
 /obj/machinery/light/small/floor,
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "QU" = (
 /obj/item/reactor_component/gas_channel,
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "RE" = (
 /obj/item/reactor_component/fuel_rod,
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "RV" = (
 /obj/machinery/power/smes,
 /obj/cable{
@@ -1260,12 +1260,12 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "Sh" = (
 /obj/machinery/atmospherics/portables_connector,
 /obj/machinery/portable_atmospherics/canister/toxins,
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "Up" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 9
@@ -1277,14 +1277,14 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "UF" = (
 /obj/machinery/light/small/floor,
 /obj/item/material_piece/p239_o{
 	amount = 10
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "UH" = (
 /obj/cable{
 	d2 = 2;
@@ -1293,53 +1293,53 @@
 	},
 /obj/machinery/atmospherics/binary/reactor_turbine,
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "UL" = (
 /obj/item/material_piece/cobryl{
 	amount = 10
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "UR" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "Vf" = (
 /obj/item/material_piece/fart,
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "VG" = (
 /obj/machinery/power/nuclear/turbine_control,
 /obj/cable,
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "Xf" = (
 /obj/machinery/power/nuclear/reactor_control,
 /obj/cable,
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "XZ" = (
 /obj/item/material_piece/cerenkite{
 	amount = 10
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "Yq" = (
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "Zo" = (
 /obj/item/material_piece/plasmastone{
 	amount = 10
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 "ZL" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe{
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/station/engine/engineering)
 
 (1,1,1) = {"
 aa

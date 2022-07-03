@@ -51,7 +51,7 @@ ABSTRACT_TYPE(/obj/reactor_component)
 		src.melted = TRUE
 		src.name = "melted "+src.name
 		src.neutron_cross_section = 5.0
-		src.thermal_cross_section = 0.25
+		src.thermal_cross_section = 2.0
 		src.is_control_rod = FALSE
 
 	proc/extra_info()
@@ -95,25 +95,25 @@ ABSTRACT_TYPE(/obj/reactor_component)
 
 
 	proc/processNeutrons(var/list/datum/neutron/inNeutrons)
-		if(prob(src.material.getProperty("n_radioactive"))) //fast spontaneous emission
+		if(prob(src.material.getProperty("n_radioactive"))*src.neutron_cross_section) //fast spontaneous emission
 			inNeutrons += new /datum/neutron(pick(cardinals), pick(2,3)) //neutron radiation gets you fast neutrons
 			src.material.adjustProperty("n_radioactive", -0.1)
 			src.material.adjustProperty("radioactive", 0.1)
 			src.temperature += 100 //TODO make this less arbitrary
-		if(prob(src.material.getProperty("radioactive"))) //spontaneous emission
+		if(prob(src.material.getProperty("radioactive"))*src.neutron_cross_section) //spontaneous emission
 			inNeutrons += new /datum/neutron(pick(cardinals), pick(1,2))
 			src.material.adjustProperty("radioactive", -0.1)
 			src.temperature += 100 //TODO make this less arbitrary
 		for(var/datum/neutron/N in inNeutrons)
 			if(prob(src.material.getProperty("density")*src.neutron_cross_section)) //dense materials capture neutrons, configuration influences that
 				//if a neutron is captured, we either do fission or we slow it down
-				if(N.velocity == 1 & prob(src.material.getProperty("n_radioactive"))) //neutron stimulated emission
+				if(N.velocity <= (1 + src.melted) & prob(src.material.getProperty("n_radioactive"))) //neutron stimulated emission
 					inNeutrons += new /datum/neutron(pick(cardinals), pick(2,3))
 					inNeutrons += new /datum/neutron(pick(cardinals), pick(2,3))
 					inNeutrons -= N
 					qdel(N)
 					src.temperature += 100 //TODO make this less arbitrary
-				else if(N.velocity == 1 & prob(src.material.getProperty("radioactive"))) //stimulated emission
+				else if(N.velocity <= (1 + src.melted) & prob(src.material.getProperty("radioactive"))) //stimulated emission
 					inNeutrons += new /datum/neutron(pick(cardinals), pick(1,2))
 					inNeutrons += new /datum/neutron(pick(cardinals), pick(1,2))
 					inNeutrons -= N
@@ -165,7 +165,7 @@ ABSTRACT_TYPE(/obj/reactor_component)
 		. = ..()
 		if((!src.melted) & (src.neutron_cross_section != src.configured_insertion_level))
 			//step towards configured insertion level
-			if(src.configured_insertion_level > src.neutron_cross_section)
+			if(src.configured_insertion_level < src.neutron_cross_section)
 				src.neutron_cross_section -= 0.1 //TODO balance - this is 10% per tick, which is like every 3 seconds or something
 			else
 				src.neutron_cross_section += 0.1
@@ -189,6 +189,10 @@ ABSTRACT_TYPE(/obj/reactor_component)
 	var/gas_thermal_cross_section = 0.95
 	var/datum/gas_mixture/current_gas
 	gas_volume = 100
+
+	melt()
+		..()
+		gas_thermal_cross_section = 0.1 //oh no, all the fins and stuff are melted
 
 	processGas(var/datum/gas_mixture/inGas)
 		if(src.current_gas)
