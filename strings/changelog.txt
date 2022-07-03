@@ -1,6 +1,10 @@
 
 (t)sun jul 03 22
 (u)DimWhat
+(p)9352
+(e)⚖|balance
+(+)Removed the penlight flash effect
+(u)DimWhat
 (p)9370
 (e)⚖|balance
 (+)Made the radio show host headphones more protective against loud noises.
