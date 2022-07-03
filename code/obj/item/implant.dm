@@ -722,7 +722,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 
 		if(M == I)
 			boutput(M, "<span class='alert'>You feel utterly strengthened in your resolve! You are the most important person in the universe!</span>")
-			alert(M, "You feel utterly strengthened in your resolve! You are the most important person in the universe!", "YOU ARE REALY GREAT!!")
+			tgui_alert(M, "You feel utterly strengthened in your resolve! You are the most important person in the universe!", "YOU ARE REALY GREAT!!")
 			return
 
 		if (M.mind && ticker.mode)
@@ -1475,9 +1475,9 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		if (sneaky)
 			boutput(user, "<span class='alert'>You implanted the implant into [M].</span>")
 		else
-			M.tri_message("<span class='alert'>[M] has been implanted by [user].</span>",\
-			M, "<span class='alert'>You have been implanted by [user].</span>",\
-			user, "<span class='alert'>You implanted the implant into [M].</span>")
+			M.tri_message(user, "<span class='alert'>[M] has been implanted by [user].</span>",\
+				"<span class='alert'>You have been implanted by [user].</span>",\
+				"<span class='alert'>You implanted the implant into [M].</span>")
 
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M

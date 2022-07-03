@@ -159,11 +159,19 @@
 	var/time_between_uses = 400 // The default time between uses.
 	var/override_default_behaviour = 0 // When this is set to 1, the additional_items list will be used to dispense items.
 	var/list/additional_items = list() // See above.
+	/// How many bites can cow people take out of it?
+	var/bites = 5
+	/// The mask used to show bite marks
+	var/current_mask = 5
+	/// Is the bush actually made out of plastic?
+	var/is_plastic = FALSE
 
 	New()
 		..()
 		max_uses = rand(0, 5)
 		spawn_chance = rand(1, 40)
+		if (prob(5))
+			is_plastic = TRUE
 		#ifdef XMAS
 		if(src.z == Z_LEVEL_STATION)
 			src.UpdateOverlays(image(src.icon, "[icon_state]-xmas"), "xmas")
@@ -175,11 +183,20 @@
 				qdel(src)
 			else
 				src.take_damage(45)
+
 	attack_hand(mob/user)
 		if (!user) return
-		if (destroyed) return ..()
+		if (destroyed && iscow(user) && user.a_intent == INTENT_HELP)
+			boutput(user, "<span class='notice'>You pick at the ruined bush, looking for any leafs to graze on, but cannot find any.</span>")
+			return ..()
+		else if (destroyed)
+			return ..()
 
 		user.lastattacked = src
+		if (iscow(user) && user.a_intent == INTENT_HELP)	//Cow people may want to eat some of the bush's leaves
+			graze(user)
+			return 0
+
 		playsound(src, "sound/impact_sounds/Bush_Hit.ogg", 50, 1, -1)
 
 		var/original_x = pixel_x
@@ -263,14 +280,44 @@
 		src.take_damage(W.force)
 		user.visible_message("<span class='alert'><b>[user] hacks at [src] with [W]!</b></span>")
 
+	proc/graze(mob/living/carbon/human/user)
+		src.bites -= 1
+		var/desired_mask = (src.bites / initial(src.bites)) * 5
+		desired_mask = round(desired_mask)
+		desired_mask = clamp(desired_mask, 1, 5)
+
+		if (desired_mask != current_mask)
+			current_mask = desired_mask
+			src.add_filter("bite", 0, alpha_mask_filter(icon=icon('icons/obj/foodNdrink/food.dmi', "eating[desired_mask]")))
+
+		eat_twitch(user)
+		playsound(user, "sound/items/eatfood.ogg", rand(10,50), 1)
+
+		if (is_plastic)
+			user.setStatus("weakened", 3 SECONDS)
+			user.visible_message("<span class='notice'>[user] takes a bite out of [src] and chokes on the plastic leaves.</span>", "<span class='alert'>You munch on some of [src]'s leaves, but realise too late it's made of plastic. You start choking!</span>")
+			user.take_oxygen_deprivation(20)
+			user.losebreath += 2
+		else
+			user.changeStatus("food_hp_up", 20 SECONDS)
+			user.visible_message("<span class='notice'>[user] takes a bite out of [src].</span>", "<span class='notice'>You munch on some of [src]'s leaves, like any normal human would.</span>")
+			user.sims?.affectMotive("Hunger", 10)
+
+		if(src.bites <= 0)
+			destroy()
+		return 0
+
 	proc/take_damage(var/damage_amount = 5)
 		src.health -= damage_amount
 		if (src.health <= 0)
-			src.visible_message("<span class='alert'><b>The [src.name] falls apart!</b></span>")
-			new /obj/decal/cleanable/leaves(get_turf(src))
-			playsound(src.loc, "sound/impact_sounds/Wood_Snap.ogg", 90, 1)
-			qdel(src)
+			destroy()
 			return
+
+	proc/destroy()
+		src.visible_message("<span class='alert'><b>The [src.name] falls apart!</b></span>")
+		new /obj/decal/cleanable/leaves(get_turf(src))
+		playsound(src.loc, "sound/impact_sounds/Wood_Snap.ogg", 90, 1)
+		qdel(src)
 
 	random
 		New()
@@ -306,7 +353,7 @@
 	layer = EFFECTS_LAYER_UNDER_1
 	dir = EAST
 
-	proc/destroy()
+	destroy()
 		src.set_dir(NORTHEAST)
 		src.destroyed = 1
 		src.set_density(0)
@@ -323,6 +370,21 @@
 		for (var/mob/living/M in mobs)
 			if (M.mind && M.mind.assigned_role == "Captain")
 				boutput(M, "<span class='alert'>You suddenly feel hollow. Something very dear to you has been lost.</span>")
+
+	graze(mob/user)
+		user.lastattacked = src
+		if (user.mind && user.mind.assigned_role == "Captain")
+			boutput(user, "<span class='notice'>You catch yourself almost taking a bite out of your precious bonzai but stop just in time!</span>")
+			return
+		else
+			boutput(user, "<span class='alert'>I don't think the Captain is going to be too happy about this...</span>")
+			user.visible_message("<b><span class='alert'>[user] violently grazes on [src]!</span></b>", "<span class='notice'>You voraciously devour the bonzai, what a feast!</span>")
+			src.interesting = "Inexplicably, the genetic code of the bonsai tree has the words 'fuck [user.real_name]' encoded in it over and over again."
+			src.destroy()
+			user.changeStatus("food_deep_burp", 2 MINUTES)
+			user.changeStatus("food_hp_up", 2 MINUTES)
+			user.changeStatus("food_energized", 2 MINUTES)
+			return
 
 	attackby(obj/item/W, mob/user)
 		if (!W) return
@@ -1381,3 +1443,63 @@ obj/decoration/pottedfern
 	icon_state = "plant_fern"
 	anchored = 1
 	density = 1
+
+/obj/burning_barrel
+	name = "burning barrel"
+	desc = "cozy."
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "barrel1"
+	density = 1
+	anchored = 1
+	opacity = 0
+
+	var/datum/light/light
+
+	New()
+		UpdateParticles(new/particles/barrel_embers, "embers")
+		UpdateParticles(new/particles/barrel_smoke, "smoke")
+		light = new /datum/light/point
+		light.attach(src)
+		light.set_brightness(1)
+		light.set_color(0.5, 0.3, 0)
+		light.enable()
+		..()
+
+	disposing()
+		light.disable()
+		light.detach()
+		light = null
+		..()
+
+	attackby(obj/item/W, mob/user)
+		if(istype(W, /obj/item/clothing/mask/cigarette))
+			var/obj/item/clothing/mask/cigarette/C = W
+			if(!C.on)
+				C.light(user, "<span class='alert'>[user] lights the [C] with [src]. That seems appropriate.</span>")
+
+/obj/fireworksbox
+	name = "Box of Fireworks"
+	desc = "The Label simply reads : \"Firwerks fun is having total family.\""
+	density = 0
+	anchored = 0
+	opacity = 0
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "fireworksbox"
+	var/fireworking = 0
+
+	attack_hand(mob/user)
+		if(fireworking) return
+		fireworking = 1
+		boutput(user, "<span class='alert'>The fireworks go off as soon as you touch the box. This is some high quality stuff.</span>")
+		anchored = 1
+
+		SPAWN(0)
+			for(var/i=0, i<rand(30,40), i++)
+				particleMaster.SpawnSystem(new /datum/particleSystem/fireworks(src.loc))
+				sleep(rand(2, 15))
+
+			for(var/mob/O in oviewers(world.view, src))
+				O.show_message("<span class='notice'>The box of fireworks magically disappears.</span>", 1)
+
+			qdel(src)
+		return

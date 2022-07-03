@@ -1720,6 +1720,13 @@
 "en" = (
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
+"eo" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/station/turret_protected/ai)
 "ep" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -4642,7 +4649,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai)
 "lP" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -6211,8 +6218,8 @@
 	pixel_y = 5
 	},
 /obj/item/hand_tele{
-	pixel_y = 4;
-	pixel_x = 2
+	pixel_x = 2;
+	pixel_y = 4
 	},
 /turf/simulated/floor/purpleblack{
 	dir = 10
@@ -6506,7 +6513,7 @@
 "qj" = (
 /obj/machinery/turret,
 /turf/simulated/floor/delivery,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai)
 "qk" = (
 /obj/cable{
 	d1 = 1;
@@ -6529,7 +6536,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/circuit,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai)
 "qn" = (
 /obj/submachine/seed_vendor,
 /turf/simulated/floor/green,
@@ -6656,7 +6663,7 @@
 /area/station/maintenance/north)
 "qD" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai)
 "qE" = (
 /turf/simulated/floor/black,
 /area/station/engine/substation/west)
@@ -6887,7 +6894,7 @@
 	},
 /obj/machinery/computer3/terminal/zeta,
 /turf/simulated/floor/circuit,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai)
 "rh" = (
 /obj/machinery/computer3/terminal/network{
 	name = "CENTCOM Terminal";
@@ -6909,7 +6916,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/circuit,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai)
 "ri" = (
 /obj/machinery/atmospherics/valve{
 	dir = 4;
@@ -6922,7 +6929,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/blue,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai)
 "rk" = (
 /obj/cable{
 	d1 = 4;
@@ -6930,7 +6937,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/blueblack,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai)
 "rl" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
@@ -6938,7 +6945,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/blue,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai)
 "rm" = (
 /obj/table/auto,
 /obj/item/paper/book/from_file/hydroponicsguide,
@@ -7022,7 +7029,7 @@
 "rw" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai)
 "rx" = (
 /obj/machinery/light{
 	dir = 8;
@@ -7462,7 +7469,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/black,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai)
 "ss" = (
 /obj/landmark/start{
 	name = "Cyborg"
@@ -7480,7 +7487,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/black,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai)
 "st" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -7488,7 +7495,7 @@
 /turf/simulated/floor/blueblack{
 	dir = 4
 	},
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai)
 "su" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -7513,12 +7520,12 @@
 	},
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/circuit,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai)
 "sx" = (
 /turf/simulated/floor/blueblack{
 	dir = 8
 	},
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai)
 "sy" = (
 /obj/submachine/seed_manipulator{
 	dir = 4
@@ -7704,7 +7711,7 @@
 	},
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/circuit,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai)
 "sW" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -7774,7 +7781,7 @@
 	},
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/circuit,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai)
 "td" = (
 /obj/lattice{
 	dir = 4;
@@ -8044,7 +8051,7 @@
 	},
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai)
 "tE" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -8054,7 +8061,7 @@
 	},
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/black,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai)
 "tF" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
@@ -8066,7 +8073,7 @@
 	},
 /obj/access_spawn/ai_upload,
 /turf/simulated/floor/black,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai)
 "tG" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -8077,7 +8084,7 @@
 /turf/simulated/floor/blueblack{
 	dir = 4
 	},
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai)
 "tH" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg,
@@ -8109,7 +8116,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/circuit,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai)
 "tJ" = (
 /obj/machinery/light{
 	dir = 4;
@@ -8121,7 +8128,7 @@
 /turf/simulated/floor/blueblack{
 	dir = 8
 	},
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai)
 "tK" = (
 /obj/table/auto,
 /obj/item/device/light/lava_lamp,
@@ -8622,19 +8629,19 @@
 	pixel_x = -32
 	},
 /turf/simulated/floor/black,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai)
 "uM" = (
 /obj/landmark/start{
 	name = "Cyborg"
 	},
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/black,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai)
 "uN" = (
 /turf/simulated/floor/blueblack{
 	dir = 4
 	},
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai)
 "uO" = (
 /obj/cable{
 	d1 = 1;
@@ -8656,7 +8663,7 @@
 	},
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/circuit,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai)
 "uQ" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -8933,7 +8940,7 @@
 	},
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/circuit,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai)
 "vu" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
@@ -8949,7 +8956,7 @@
 	},
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/circuit,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai)
 "vx" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 6
@@ -9021,15 +9028,15 @@
 /obj/table/auto,
 /obj/item/aiModule/freeform,
 /turf/simulated/floor/circuit,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai)
 "vI" = (
 /turf/simulated/floor/blue,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai)
 "vJ" = (
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai)
 "vK" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -9041,7 +9048,7 @@
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai)
 "vL" = (
 /obj/table/auto,
 /obj/item/bee_egg_carton,
@@ -9064,7 +9071,7 @@
 "vO" = (
 /obj/securearea,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai)
 "vP" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hydroponics/bay)
@@ -9085,7 +9092,7 @@
 	},
 /area/station/medical/medbay)
 "vS" = (
-/obj/storage/secure/closet/medical,
+/obj/storage/secure/closet/medical/cloning,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "vU" = (
@@ -9373,19 +9380,19 @@
 /obj/item/aiModule/protectStation,
 /obj/item/aiModule/conservePower,
 /turf/simulated/floor/circuit,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai)
 "wI" = (
 /obj/machinery/computer/robotics,
 /obj/machinery/light{
 	light_type = /obj/item/light/tube/blueish
 	},
 /turf/simulated/floor/circuit,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai)
 "wJ" = (
 /obj/table/auto,
 /obj/item/aiModule/makeCaptain,
 /turf/simulated/floor/circuit,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai)
 "wK" = (
 /obj/machinery/vending/hydroponics,
 /turf/simulated/floor/green,
@@ -9930,7 +9937,7 @@
 	icon_state = "delivery2"
 	},
 /turf/simulated/floor/black,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai)
 "xU" = (
 /obj/storage/secure/closet/engineering/mining,
 /turf/simulated/floor/yellow/side,
@@ -11200,7 +11207,7 @@
 	pixel_y = 21
 	},
 /turf/simulated/floor/circuit,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai)
 "Bd" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/southeast)
@@ -16734,7 +16741,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/circuit,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai)
 "Pc" = (
 /obj/submachine/chicken_incubator,
 /obj/item/reagent_containers/food/snacks/ingredient/egg{
@@ -17504,6 +17511,9 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/black,
 /area/station/storage/tech)
+"QM" = (
+/turf/space,
+/area/station/turret_protected/ai)
 "QP" = (
 /obj/cable{
 	d1 = 4;
@@ -17756,6 +17766,13 @@
 	},
 /turf/simulated/floor,
 /area/station/mining/refinery)
+"Ry" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/station/turret_protected/ai)
 "RA" = (
 /obj/machinery/atmospherics/binary/pump{
 	dir = 1;
@@ -19284,14 +19301,14 @@
 	},
 /obj/machinery/light/small/blueish,
 /turf/simulated/floor/black,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai)
 "VN" = (
 /obj/machinery/light{
 	light_type = /obj/item/light/tube/blueish
 	},
 /obj/table/auto,
 /turf/simulated/floor/circuit,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai)
 "VO" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -19923,7 +19940,7 @@
 /obj/table/auto,
 /obj/random_item_spawner/ai_experimental,
 /turf/simulated/floor/circuit,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai)
 "Xz" = (
 /obj/table/round/auto,
 /obj/machinery/computer/tour_console,
@@ -20764,7 +20781,7 @@
 /obj/securearea,
 /obj/machinery/light/incandescent/blueish,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai)
 "ZL" = (
 /obj/machinery/light{
 	dir = 8;
@@ -61766,11 +61783,11 @@ tB
 pw
 tB
 oF
-aa
+QM
 qD
 VM
 qD
-aa
+QM
 yV
 yA
 Zy
@@ -62068,11 +62085,11 @@ kl
 kl
 kl
 kl
-nB
+Ry
 vO
 lO
 ZK
-yf
+eo
 AD
 RE
 Zy

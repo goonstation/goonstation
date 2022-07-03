@@ -2,7 +2,7 @@
 /obj/item/sticker
 	name = "sticker"
 	desc = "You stick it on something, then that thing is even better, because it has a little sparkly unicorn stuck to it, or whatever."
-	flags = FPRINT | TABLEPASS | CLICK_DELAY_IN_CONTENTS | USEDELAY
+	flags = FPRINT | TABLEPASS | CLICK_DELAY_IN_CONTENTS | USEDELAY | NOSPLASH
 	event_handler_flags = HANDLE_STICKER | USE_FLUID_ENTER
 	icon = 'icons/misc/stickers.dmi'
 	icon_state = "bounds"
@@ -28,9 +28,9 @@
 			return
 		if (isarea(A) || istype(A, /obj/item/item_box) || istype(A, /atom/movable/screen) || istype(A, /obj/ability_button))
 			return
-		user.tri_message("<b>[user]</b> sticks [src] to [A]!",\
-		user, "You stick [src] to [user == A ? "yourself" : "[A]"]!",\
-		A, "[user == A ? "You stick" : "<b>[user]</b> sticks"] [src] to you[user == A ? "rself" : null]!")
+		user.tri_message(A, "<b>[user]</b> sticks [src] to [A]!",\
+			"You stick [src] to [user == A ? "yourself" : "[A]"]!",\
+			"[user == A ? "You stick" : "<b>[user]</b> sticks"] [src] to you[user == A ? "rself" : null]!")
 		var/pox = src.pixel_x
 		var/poy = src.pixel_y
 		DEBUG_MESSAGE("pox [pox] poy [poy]")
@@ -435,7 +435,9 @@
 	attack_self(mob/user as mob)
 		var/choice = "Set radio"
 		if (src.has_camera)
-			choice = alert(user, "What would you like to do with [src]?",,"Set radio", "Set camera")
+			choice = tgui_alert(user, "What would you like to do with [src]?", "Configure sticker", list("Set radio", "Set camera"))
+		if (!choice)
+			return
 		if (choice == "Set radio")
 			src.set_internal_radio(user)
 		else

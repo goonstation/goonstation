@@ -236,7 +236,7 @@
 					"params" = params,
 					"title" = title,
 					"content" = tooltip_rebuild ? buildTooltipContent() : lastTooltipContent,
-					"theme" = usr.client.preferences.hud_style == "New" ? "newhud" : "item"
+					"theme" = usr.client?.preferences.hud_style == "New" ? "newhud" : "item"
 				)
 
 				if (src.z == 0 && src.loc == usr)
@@ -406,9 +406,9 @@
 		return 1
 
 	else
-		user.tri_message("<span class='alert'><b>[user]</b> tries to feed [M] [src]!</span>",\
-		user, "<span class='alert'>You try to feed [M] [src]!</span>",\
-		M, "<span class='alert'><b>[user]</b> tries to feed you [src]!</span>")
+		user.tri_message(M, "<span class='alert'><b>[user]</b> tries to feed [M] [src]!</span>",\
+			"<span class='alert'>You try to feed [M] [src]!</span>",\
+			"<span class='alert'><b>[user]</b> tries to feed you [src]!</span>")
 		logTheThing("combat", user, M, "attempts to feed [constructTarget(M,"combat")] [src] [log_reagents(src)]")
 
 		if (!do_mob(user, M))
@@ -416,9 +416,9 @@
 		if (BOUNDS_DIST(user, M) > 0)
 			return 0
 
-		user.tri_message("<span class='alert'><b>[user]</b> feeds [M] [src]!</span>",\
-		user, "<span class='alert'>You feed [M] [src]!</span>",\
-		M, "<span class='alert'><b>[user]</b> feeds you [src]!</span>")
+		user.tri_message(M, "<span class='alert'><b>[user]</b> feeds [M] [src]!</span>",\
+			"<span class='alert'>You feed [M] [src]!</span>",\
+			"<span class='alert'><b>[user]</b> feeds you [src]!</span>")
 		logTheThing("combat", user, M, "feeds [constructTarget(M,"combat")] [src] [log_reagents(src)]")
 
 		if (src.material && src.material.edible)

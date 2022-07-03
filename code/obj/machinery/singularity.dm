@@ -136,6 +136,11 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	event()
 	if (Ti)
 		src.Dtime = Ti
+
+	var/offset = rand(1000)
+	add_filter("loose rays", 1, rays_filter(size=1, density=10, factor=0, offset=offset, threshold=0.20, color="#c0c", x=0, y=0))
+	animate(get_filter("loose rays"), offset=offset+60, time=5 MINUTES, easing=LINEAR_EASING, flags=ANIMATION_PARALLEL, loop=-1)
+
 	..()
 
 /obj/machinery/the_singularity/disposing()
@@ -179,6 +184,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 					checkpointC++
 				if (checkpointC > max(MIN_TO_CONTAIN,(radius*8)))//as radius of a 5x5 should be 2, 16 tiles are needed to hold it in, this allows for 4 failures before the singularity is loose
 					src.active = FALSE
+					animate(get_filter("loose rays"), size=1, time=5 SECONDS, easing=LINEAR_EASING, flags=ANIMATION_PARALLEL, loop=1)
 					maxradius = radius + 1
 					logTheThing("station", null, null, "[src] has been contained at [log_loc(src)]")
 					message_admins("[src] has been contained at [log_loc(src)]")
@@ -189,6 +195,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			checkpointC ++
 		if (checkpointC < max(MIN_TO_CONTAIN,(radius*8)))//as radius of a 5x5 should be 2, 16 tiles are needed to hold it in, this allows for 4 failures before the singularity is loose
 			src.active = TRUE
+			animate(get_filter("loose rays"), size=100, time=5 SECONDS, easing=LINEAR_EASING, flags=ANIMATION_PARALLEL, loop=1)
 			maxradius = INFINITY
 			logTheThing("station", null, null, "[src] has become loose at [log_loc(src)]")
 			message_admins("[src] has become loose at [log_loc(src)]")
@@ -198,7 +205,9 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	return // No action required this should be the one doing the EMPing
 
 /obj/machinery/the_singularity/proc/eat()
-	for (var/X in range(grav_pull, src.get_center()))
+
+	var/turf/sing_center = src.get_center()
+	for (var/X in range(grav_pull, sing_center))
 		if (!X)
 			continue
 		if (X == src)
@@ -214,7 +223,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 				continue
 
 		if (!isarea(X))
-			if (get_dist(src.get_center(), X) <= radius) // why was this a switch before ffs
+			if(IN_EUCLIDEAN_RANGE(sing_center, X, radius+0.5))
 				src.Bumped(A)
 			else if (istype(X, /atom/movable))
 				var/atom/movable/AM = X
@@ -338,6 +347,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	if(radius<maxradius)
 		radius++
 		SafeScale((radius+0.5)/(radius-0.5),(radius+0.5)/(radius-0.5))
+		grav_pull = max(grav_pull, radius)
 
 // totally rewrote this proc from the ground-up because it was puke but I want to keep this comment down here vvv so we can bask in the glory of What Used To Be - haine
 		/* uh why was lighting a cig causing the singularity to have an extra process()?
@@ -387,11 +397,12 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		"<B>You look directly into [src]!<br><span class='alert'>You feel weak!</span></B>")
 
 /obj/machinery/the_singularity/proc/BHolerip()
-
-	for (var/turf/T in orange(radius*EVENT_GROWTH+EVENT_MINIMUM, src.get_center()))
+	var/turf/sing_center = src.get_center()
+	for (var/turf/T in orange(radius*EVENT_GROWTH, sing_center))
 		if (prob(70))
 			continue
-		if (T && !(T.turf_flags & CAN_BE_SPACE_SAMPLE) && (get_dist(src.get_center(),T) == radius+1 || get_dist(src.get_center(),T) == radius+2)) // I'm very tired and this is the least dumb thing I can make of what was here for now.   This needs to get updated for the variable size singularity at some point
+
+		if (T && !(T.turf_flags & CAN_BE_SPACE_SAMPLE) && (IN_EUCLIDEAN_RANGE(sing_center, T, radius+EVENT_GROWTH+0.5)))
 			if (T.turf_flags & IS_TYPE_SIMULATED)
 				if (istype(T,/turf/simulated/floor) && !istype(T,/turf/simulated/floor/plating))
 					var/turf/simulated/floor/F = T
@@ -419,6 +430,24 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 				T.ReplaceWithFloor()
 	return
 #endif
+
+/particles/singularity
+	transform = list(1, 0, 0, 0,
+	                 0, 1, 0, 0,
+					 0, 0, 0, 1,
+					 0, 0, 0, 1)
+	width = 200
+	height = 200
+	spawning = 2
+	count = 1000
+	lifespan = 8
+	fade = 10
+	fadein = 8
+	position = generator("circle", 200, 300, UNIFORM_RAND)
+	gravity = list(0, 0, 0.05)
+	velocity = list(0, 0, 0.4)
+	friction = 0.2
+
 //////////////////////////////////////// Field generator /////////////////////////////////////////
 
 /obj/machinery/field_generator
@@ -962,14 +991,14 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	if(state == WELDED)
 		if(!src.locked)
 			if(src.active==1)
-				if(alert("Turn off the emitter?",,"Yes","No") == "Yes")
+				if(tgui_alert(user, "Turn off the emitter?", "Emitter controls", list("Yes", "No")) == "Yes")
 					src.active = 0
 					icon_state = "Emitter"
 					boutput(user, "You turn off the emitter.")
 					logTheThing("station", user, null, "deactivated active emitter at [log_loc(src)].")
 					message_admins("[key_name(user)] deactivated active emitter at [log_loc(src)].")
 			else
-				if(alert("Turn on the emitter?",,"Yes","No") == "Yes")
+				if(tgui_alert(user, "Turn on the emitter?", "Emitter controls", list("Yes", "No")) == "Yes")
 					src.active = 1
 					icon_state = "Emitter +a"
 					boutput(user, "You turn on the emitter.")

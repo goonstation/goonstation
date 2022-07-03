@@ -790,7 +790,9 @@
 				see_traitors = 1
 				see_nukeops = 1
 				see_revs = 1
-		if (isnukeop(src) || isnukeopgunbot(src))
+		if (istraitor(src) && traitorsseeeachother)
+			see_traitors = TRUE
+		else if (isnukeop(src) || isnukeopgunbot(src))
 			see_nukeops = 1
 		else if (iswizard(src))
 			see_wizards = 1
@@ -1122,14 +1124,10 @@
 	.=0
 
 /mob/living/carbon/human/clothing_protects_from_chems()
-	.= 0
-	if (\
-		(src.wear_suit 	&& src.wear_suit.permeability_coefficient 	<= 0.01) && \
-		(src.head 		&& src.head.permeability_coefficient 		<= 0.01) && \
-		(src.wear_mask 	&& src.wear_mask.permeability_coefficient 	<= 0.10) && \
-		(src.shoes 		&& src.shoes.permeability_coefficient 		<= 0.10) && \
-		(src.gloves 	&& src.gloves.permeability_coefficient 		<= 0.02 ))
-		.=1
+	if (src.get_chem_protection() == 100)
+		return 1
+	else
+		return 0
 
 
 /// Changes ghost invisibility for the round.

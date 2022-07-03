@@ -185,11 +185,11 @@ mob/new_player
 
 		if(href_list["ready"])
 			if(!ready)
-				if(alert(src,"Are you sure you are ready? This will lock-in your preferences.","Player Setup","Yes","No") == "Yes")
+				if(tgui_alert(src, "Are you sure you are ready? This will lock-in your preferences.", "Player Setup", list("Yes", "No")) == "Yes")
 					ready = 1
 
 		if(href_list["observe"])
-			if(alert(src,"Are you sure you wish to observe? You will not be able to play this round!","Player Setup","Yes","No") == "Yes")
+			if(tgui_alert(src, "Are you sure you wish to observe? You will not be able to play this round!", "Player Setup", list("Yes", "No")) == "Yes")
 				if(!src.client) return
 				var/mob/dead/observer/observer = new(src)
 
@@ -410,7 +410,7 @@ mob/new_player
 				qdel(src)
 
 		else
-			src << alert("[JOB.name] is not available. Please try another.")
+			tgui_alert(src, "[JOB.name] is not available. Please try another.", "Job unavailable")
 
 		return
 
@@ -649,7 +649,7 @@ a.latejoin-card:hover {
 		if(ishuman(new_character))
 			var/mob/living/carbon/human/H = new_character
 			H.update_colorful_parts()
-		var/client/C = client
+
 		mind.transfer_to(new_character)
 
 		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/assday))
@@ -658,7 +658,7 @@ a.latejoin-card:hover {
 			new_character.mind.late_special_role = 1
 			logTheThing("debug", new_character, null, "<b>Late join</b>: assigned antagonist role: [bad_type].")
 		else
-			if (ishuman(new_character) && allow_late_antagonist && current_state == GAME_STATE_PLAYING && ticker.round_elapsed_ticks >= 6000 && emergency_shuttle.timeleft() >= 300 && !C.hellbanned && !src.is_respawned_player) // no new evils for the first 10 minutes or last 5 before shuttle
+			if (ishuman(new_character) && allow_late_antagonist && current_state == GAME_STATE_PLAYING && ticker.round_elapsed_ticks >= 6000 && emergency_shuttle.timeleft() >= 300 && !src.is_respawned_player) // no new evils for the first 10 minutes or last 5 before shuttle
 				if (late_traitors && ticker.mode && ticker.mode.latejoin_antag_compatible == 1)
 					var/livingtraitor = 0
 
@@ -894,7 +894,7 @@ a.latejoin-card:hover {
 		if (src.client.has_login_notice_pending(TRUE))
 			return
 
-		if(alert(src,"Are you sure you wish to observe? You will not be able to play this round!","Player Setup","Yes","No") == "Yes")
+		if(tgui_alert(src, "Are you sure you wish to observe? You will not be able to play this round!", "Player Setup", list("Yes", "No")) == "Yes")
 			if(!src.client) return
 			var/mob/dead/observer/observer = new(src)
 			if (src.client && src.client.using_antag_token) //ZeWaka: Fix for null.using_antag_token

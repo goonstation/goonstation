@@ -92,6 +92,12 @@ var/global/area/current_battle_spawn = null
 				qdel(MAC)
 			if (/obj/machinery/vending/monkey)
 				qdel(MAC)
+			if (/obj/machinery/vending/monkey/kitchen)
+				qdel(MAC)
+			if (/obj/machinery/vending/monkey/genetics)
+				qdel(MAC)
+			if (/obj/machinery/vending/monkey/research)
+				qdel(MAC)
 			if (/obj/machinery/vending/security)
 				qdel(MAC)
 			if (/obj/machinery/vending/mechanics)
@@ -105,6 +111,8 @@ var/global/area/current_battle_spawn = null
 			if (/obj/machinery/portable_atmospherics/canister/sleeping_agent)
 				qdel(MAC)
 			if (/obj/machinery/portable_atmospherics/canister/toxins)
+				qdel(MAC)
+			if (/obj/machinery/portable_atmospherics/canister/carbon_dioxide)
 				qdel(MAC)
 			if (/obj/machinery/teleport/portal_generator)
 				qdel(MAC)
@@ -418,7 +426,7 @@ proc/equip_battler(mob/living/carbon/human/battler)
 		/obj/item/clothing/under/gimmick/fake_waldo,
 		/obj/item/clothing/under/gimmick/johnny,
 		/obj/item/clothing/under/gimmick/police,
-		/obj/item/clothing/under/gimmick/blackstronaut,
+		/obj/item/clothing/under/gimmick/donk,
 		/obj/item/clothing/under/gimmick/duke,
 		/obj/item/clothing/under/gimmick/mj_clothes,
 		/obj/item/clothing/under/gimmick/viking,
@@ -453,6 +461,7 @@ proc/equip_battler(mob/living/carbon/human/battler)
 	jumpsuit = new suit_type(battler)
 	battler.equip_if_possible(jumpsuit, battler.slot_w_uniform)
 	battler.equip_if_possible(new /obj/item/clothing/shoes/swat(battler), battler.slot_shoes)
+	battler.equip_if_possible(new /obj/item/clothing/suit/armor/vest/light(battler), battler.slot_wear_suit)
 	battler.equip_if_possible(new /obj/item/storage/backpack(battler), battler.slot_back)
 	battler.equip_if_possible(new /obj/item/reagent_containers/food/snacks/donkpocket_w(battler), battler.slot_l_store)
 	battler.equip_if_possible(new /obj/item/reagent_containers/food/snacks/donkpocket_w(battler), battler.slot_r_store)

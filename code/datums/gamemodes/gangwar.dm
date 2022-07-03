@@ -355,7 +355,7 @@
 			part2chosen = pick(part2)
 			temp_name = part1chosen + " " + part2chosen
 
-		switch(alert(leaderMind.current,"Name: [temp_name].","Approve your gang's name","Accept","Randomize"))
+		switch(tgui_alert(leaderMind.current, "Name: [temp_name].", "Approve your gang's name", list("Accept", "Randomize")))
 			if ("Accept")
 				//make sure no other gangs have this name
 				if (fullchosen)
@@ -373,7 +373,7 @@
 					part2_used += part2chosen
 				leaderMind.gang.gang_name = temp_name
 				boutput(leaderMind.current, "<h1><font color=red>Your gang name is [temp_name]!</font></h1>")
-			if ("Randomize")
+			else
 				continue
 
 /datum/game_mode/gang/proc/check_winner()
@@ -1219,7 +1219,7 @@
 			boutput(target, "<span class='alert'>You're already in a gang, you can't switch sides!</span>")
 			return
 
-		if(target.mind.assigned_role in list("Security Officer", "Security Assistant", "Vice Officer","Part-time Vice Officer","Head of Security","Captain","Head of Personnel","Communications Officer", "Medical Director", "Chief Engineer", "Research Director", "Detective", "Nanotrasen Security Consultant"))
+		if(target.mind.assigned_role in list("Security Officer", "Security Assistant", "Vice Officer","Part-time Vice Officer","Head of Security","Captain","Head of Personnel","Communications Officer", "Medical Director", "Chief Engineer", "Research Director", "Detective", "Nanotrasen Security Consultant", "Nanotrasen Special Operative"))
 			boutput(target, "<span class='alert'>You are too responsible to join a gang!</span>")
 			return
 

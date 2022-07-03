@@ -16356,9 +16356,7 @@
 	name = "Exit Door Control";
 	pixel_x = 24
 	},
-/obj/storage/secure/closet/medical{
-	name = "Patient Locker"
-	},
+/obj/storage/secure/closet/medical/cloning,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "aVh" = (
@@ -16406,6 +16404,9 @@
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
+	},
+/obj/item/device/radio/intercom/AI{
+	dir = 8
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
@@ -17230,9 +17231,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/storage/secure/closet/medical{
-	name = "Patient Locker"
-	},
+/obj/storage/secure/closet/medical/cloning,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/cloner)
 "aXH" = (
@@ -18625,7 +18624,7 @@
 	icon_state = "on";
 	on = 1
 	},
-/turf/simulated/floor/red,
+/turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "bcR" = (
 /obj/disposalpipe/segment/vertical,
@@ -19233,7 +19232,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple,
 /obj/machinery/light/small/floor/netural,
-/turf/simulated/floor/redwhite{
+/turf/simulated/floor/bluewhite{
 	dir = 1
 	},
 /area/station/medical/medbay)
@@ -21695,7 +21694,7 @@
 "bnu" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
-	icon_state = "generic_locked";
+	icon_state = "door_locked";
 	locked = 1
 	},
 /turf/simulated/floor/grey,
@@ -24151,7 +24150,7 @@
 /area/station/storage/eva)
 "bwe" = (
 /obj/disposalpipe/segment/mail/vertical,
-/turf/simulated/floor/redwhite{
+/turf/simulated/floor/bluewhite{
 	dir = 10
 	},
 /area/station/medical/medbooth)
@@ -24165,7 +24164,7 @@
 	dir = 8;
 	pixel_x = 8
 	},
-/turf/simulated/floor/redwhite/corner{
+/turf/simulated/floor/bluewhite/corner{
 	dir = 4
 	},
 /area/station/medical/medbooth)
@@ -24417,7 +24416,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/redwhite{
+/turf/simulated/floor/bluewhite{
 	dir = 8
 	},
 /area/station/medical/medbooth)
@@ -24852,7 +24851,7 @@
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/pharmacy)
 "byz" = (
-/turf/simulated/floor/redwhite,
+/turf/simulated/floor/bluewhite,
 /area/station/medical/medbooth)
 "byB" = (
 /obj/landmark/magnet_center,
@@ -26110,7 +26109,7 @@
 "bCR" = (
 /obj/table/wood/auto,
 /obj/displaycase{
-	displayed = new /obj/item/captaingun;
+	displayed = new/obj/item/captaingun;
 	pixel_y = 6
 	},
 /turf/simulated/floor/carpet/arcade,
@@ -30307,7 +30306,7 @@
 /turf/simulated/floor/white,
 /area/station/science/lobby)
 "bOl" = (
-/obj/machinery/manufacturer/general,
+/obj/machinery/manufacturer/science,
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "bOm" = (
@@ -33257,7 +33256,7 @@
 	icon_state = "1-2"
 	},
 /obj/item/device/radio/beacon,
-/turf/simulated/floor/red,
+/turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "bZl" = (
 /obj/table/auto,
@@ -33879,8 +33878,8 @@
 /obj/item/clothing/suit/hoodie{
 	desc = "Smells vaguely of cabbage and diesel."
 	},
-/obj/item/clothing/head/helmet/space/blackstronaut{
-	desc = "This was cheaply spray-painted with flames at some point, but only a few flecks remain. There's a little tag on the back that says 'NASSA'.";
+/obj/item/clothing/head/helmet/space/donk{
+	desc = "This was cheaply spray-painted with flames at some point, but only a few flecks remain. There's a little tag on the back that says 'Donk Co.'.";
 	name = "dented motorbike helm"
 	},
 /obj/machinery/light{
@@ -39721,6 +39720,7 @@
 "cSO" = (
 /obj/storage/crate,
 /obj/item/clothing/under/gimmick/princess,
+/obj/item/clothing/gloves/princess,
 /obj/item/clothing/mask/horse_mask,
 /obj/machinery/light/small{
 	dir = 1;
@@ -40727,7 +40727,7 @@
 /turf/simulated/floor/engine,
 /area/station/security/secwing)
 "dOy" = (
-/turf/simulated/floor/redwhite{
+/turf/simulated/floor/bluewhite{
 	dir = 8
 	},
 /area/station/medical/medbay)
@@ -44764,7 +44764,7 @@
 	name = "Medical Doctor"
 	},
 /obj/disposalpipe/segment/morgue,
-/turf/simulated/floor/redwhite{
+/turf/simulated/floor/bluewhite{
 	dir = 4
 	},
 /area/station/medical/medbay)
@@ -44966,7 +44966,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/redwhite,
+/turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
 "hQg" = (
 /obj/table/auto,
@@ -48562,7 +48562,7 @@
 "lGK" = (
 /obj/disposalpipe/segment/mail/vertical,
 /obj/disposalpipe/segment/horizontal,
-/turf/simulated/floor/redwhite/corner{
+/turf/simulated/floor/bluewhite/corner{
 	dir = 4
 	},
 /area/station/medical/medbooth)
@@ -57286,7 +57286,7 @@
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/catering)
 "urd" = (
-/turf/simulated/floor/red,
+/turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "ury" = (
 /obj/grille/catwalk{
@@ -60975,7 +60975,7 @@
 /area/station/mining/magnet)
 "xQE" = (
 /obj/machinery/atmospherics/pipe/simple,
-/turf/simulated/floor/red,
+/turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "xQK" = (
 /obj/table/reinforced/bar/auto,

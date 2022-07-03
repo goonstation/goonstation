@@ -149,7 +149,6 @@
 		if (iscarbon(victim))
 			var/mob/living/M = victim
 			obs = new(src.owner)
-			obs.corpse = null
 
 			//Set up name and vision
 			obs.name = M.name
@@ -183,6 +182,7 @@
 				M.ghost = obs
 			*/
 			obs.set_owner(src)
+			obs.show_antag_popup("changeling_absorbed")
 		else if (istype(victim,/mob/dead/target_observer/hivemind_observer))
 			obs = victim
 

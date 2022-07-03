@@ -27,7 +27,16 @@
 		. += "[reinforced ? "It's reinforced, only stronger firearms and explosives could break into this. " : ""] [bolted ? "It's bolted to the floor." : ""]"
 
 	attackby(obj/item/I, mob/user)
-		if (src.open || !src.locked)
+		if (iswrenchingtool(I) && !src.open)
+			if (istype(get_turf(src), /turf/space))
+				if (user)
+					user.show_text("What exactly are you gunna secure [src] to?", "red")
+				return
+			playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+			user.visible_message("<b>[user]</b> begins to [src.bolted ? "unbolt the [src.name] from" : "bolt the [src.name] to"] [get_turf(src)].")
+			SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, .proc/toggle_bolts, user, I.icon, I.icon_state,"", null)
+			return
+		else if (src.open || !src.locked)
 			..()
 		else if (!I)
 			..()
@@ -35,13 +44,6 @@
 			..()
 		else if (isweldingtool(I))
 			..()
-		else if (iswrenchingtool(I))
-			if (istype(get_turf(src), /turf/space))
-				if (user)
-					user.show_text("What exactly are you gunna secure [src] to?", "red")
-				return
-			playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
-			SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, .proc/toggle_bolts, user, I.icon, I.icon_state,"", null)
 		else if (istype(I, /obj/item/card/))
 			..()
 		else if (user.a_intent == INTENT_HELP)
@@ -299,7 +301,8 @@
 /obj/storage/secure/closet/command/chief_engineer
 	name = "\improper Chief Engineer's locker"
 	req_access = list(access_engineering_chief)
-	spawn_contents = list(/obj/item/storage/toolbox/mechanical/yellow_tools,
+	spawn_contents = list(/obj/item/disk/data/floppy/manudrive/law_rack,
+	/obj/item/storage/toolbox/mechanical/yellow_tools,
 	/obj/item/storage/backpack/engineering,
 	/obj/item/storage/box/clothing/chief_engineer,
 	/obj/item/clothing/gloves/yellow,
@@ -323,8 +326,7 @@
 	/obj/item/clothing/suit/space/engineer,
 	/obj/item/clothing/head/helmet/space/engineer,
 #endif
-	/obj/item/device/radio/headset/command/ce,
-	/obj/item/paper/manufacturer_blueprint/lawrack)
+	/obj/item/device/radio/headset/command/ce)
 
 /* ==================== */
 /* ----- Security ----- */
@@ -374,6 +376,7 @@
 	reinforced = TRUE
 	req_access = list(access_maxsec)
 	spawn_contents = list(/obj/item/requisition_token/security = 2,
+	/obj/item/requisition_token/security/assistant = 2,
 	/obj/item/turret_deployer/riot = 2,
 	/obj/item/clothing/glasses/nightvision = 2,
 	/obj/item/clothing/glasses/sunglasses,
@@ -456,10 +459,13 @@
 
 	New()
 		..()
+		START_TRACKING
 		SPAWN(0.5 SECONDS)
 			if (src)
 				// Why range 30? COG2 places linked fixtures much further away from the timer than originally envisioned.
-				for (var/obj/machinery/door_timer/DT in range(30, src))
+				for_by_tcl(DT, /obj/machinery/door_timer)
+					if (!IN_RANGE(DT, src, 30))
+						continue
 					if (DT && DT.id == src.id)
 						src.our_timer = DT
 						if (src.name == "\improper Automatic Locker")
@@ -469,6 +475,10 @@
 					message_admins("Automatic locker: couldn't find brig timer with ID [isnull(src.id) ? "*null*" : "[src.id]"] in [get_area(src)].")
 					logTheThing("debug", null, null, "<b>Convair880:</b> couldn't find brig timer with ID [isnull(src.id) ? "*null*" : "[src.id]"] for automatic locker at [log_loc(src)].")
 		return
+
+	disposing()
+		..()
+		STOP_TRACKING
 
 	mouse_drop(over_object, src_location, over_location)
 		..()
@@ -488,7 +498,7 @@
 			usr.show_text("Automatic lockers can only be linked to a brig timer.", "red")
 			return
 
-		if (alert("Link locker to this brig timer?",,"Yes","No") == "Yes")
+		if (tgui_alert(usr, "Link locker to this brig timer?", "Link locker", list("Yes", "No")) == "Yes")
 			var/obj/machinery/door_timer/DT = over_object
 			if (!DT.id)
 				usr.show_text("This brig timer doesn't have an ID assigned to it.", "red")
@@ -510,7 +520,9 @@
 	icon_opened = "secure_white-open"
 	req_access = list(access_medical_lockers)
 
-
+/obj/storage/secure/closet/medical/cloning
+	name = "cloning storage locker"
+	bolted = FALSE
 
 /obj/storage/secure/closet/medical/medicine
 	name = "medicine storage locker"

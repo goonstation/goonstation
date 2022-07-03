@@ -148,7 +148,7 @@
 			boutput(user, "<span class='alert'>Deployment area definition missing or invalid! Please report this to a coder.</span>")
 		else if (!NUKE_AREA_CHECK)
 			boutput(user, "<span class='alert'>You need to deploy the bomb in [target_name].</span>")
-		else if(alert("Deploy and arm [src.name] here?", src.name, "Yes", "No") != "Yes")
+		else if(tgui_alert(user, "Deploy and arm [src] here?", src.name, list("Yes", "No")) != "Yes")
 			return
 		else if(src.armed || !NUKE_AREA_CHECK || !can_reach(user, src) || !can_act(user)) // gotta re-check after the alert!!!
 			boutput(user, "<span class='alert'>Deploying aborted due to you or [src] not being in [target_name].</span>")

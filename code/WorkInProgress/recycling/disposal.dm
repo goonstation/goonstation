@@ -169,7 +169,8 @@
 		return
 
 // Disposal pipes
-
+/// Color of the 'holograms' of pipes, visible to a t-ray scanner
+#define MISSING_DISPOSAL_IMAGE_COLOR "#0ac6f0"
 /obj/disposalpipe
 	icon = 'icons/obj/disposal.dmi'
 	name = "disposal pipe"
@@ -178,14 +179,15 @@
 	density = 0
 	text = ""
 
-	level = 1			// underfloor only
-	var/dpdir = 0		// bitmask of pipe directions
-	dir = 0				// dir will contain dominant direction for junction pipes
-	var/health = 10 	// health points 0-10
+	level = 1			//! underfloor only
+	var/dpdir = 0		//! bitmask of pipe directions
+	dir = 0				//! dir will contain dominant direction for junction pipes
+	var/health = 10 	//! Health points 0-10
 	layer = DISPOSAL_PIPE_LAYER
 	plane = PLANE_FLOOR
-	var/base_icon_state	// initial icon state on map
-	var/list/mail_tag = null // Tag of mail group for switching pipes
+	var/base_icon_state	//! Initial icon state on map
+	var/list/mail_tag = null //! Tag of mail group for switching pipes
+
 
 	var/image/pipeimg = null
 
@@ -196,7 +198,10 @@
 		pipeimg = image(src.icon, src.loc, src.icon_state, 3, dir)
 		pipeimg.layer = OBJ_LAYER
 		pipeimg.dir = dir
-		return
+
+		// done here instead of world setup in case you want to load a big map in before the round starts or something
+		if (src.z == Z_LEVEL_STATION && global.current_state <= GAME_STATE_PREGAME)
+			src.build_missing_image()
 
 	// pipe is deleted
 	// ensure if holder is present, it is expelled
@@ -273,9 +278,24 @@
 	proc/fix_sprite()
 		return
 
+	/// Builds the 'missing pipe' overlay visible on T-ray scanners
+	proc/build_missing_image()
+		// loc doesn't matter since we aren't showing these directly, just adding as overlays to another image
+		var/image/missing_image = image(icon = src.icon, icon_state = src.icon_state, layer = src.layer - 0.01, dir = src.dir)
+		missing_image.plane = PLANE_SCREEN_OVERLAYS
+		missing_image.color = MISSING_DISPOSAL_IMAGE_COLOR
+		missing_image.alpha = 120
+		missing_image.appearance_flags = RESET_ALPHA | RESET_COLOR
+
+		var/turf/simulated/T = get_turf(src)
+		if (!T.disposal_image)
+			T.disposal_image = missing_image
+		else
+			T.disposal_image.overlays += missing_image
+		return missing_image
+
 	// expel the held objects into a turf
 	// called when there is a break in the pipe
-	//
 
 	proc/expel(var/obj/disposalholder/H, var/turf/T, var/direction)
 		// oh dear, please stop ruining the machine loop with your invalid loc
@@ -461,6 +481,8 @@
 		C.update()
 
 		qdel(src)
+
+#undef MISSING_DISPOSAL_IMAGE_COLOR
 
 // a straight or bent segment
 /obj/disposalpipe/segment
@@ -862,7 +884,7 @@
 		src.is_doing_stuff = TRUE
 
 		if (H.contents.len)
-			playsound(src.loc, "sound/machines/mixer.ogg", 50, 1)
+			playsound(src.loc, "sound/machines/mixer.ogg", 30, 1)
 			//src.visible_message("<b>[src] activates!</b>") // Processor + loop = SPAM
 			src.icon_state = "pipe-loaf1"
 
@@ -895,7 +917,7 @@
 					otherLoaf = null
 
 				else if (isliving(newIngredient))
-					playsound(src.loc, pick("sound/impact_sounds/Slimy_Splat_1.ogg","sound/impact_sounds/Liquid_Slosh_1.ogg","sound/impact_sounds/Wood_Hit_1.ogg","sound/impact_sounds/Slimy_Hit_3.ogg","sound/impact_sounds/Slimy_Hit_4.ogg","sound/impact_sounds/Flesh_Stab_1.ogg"), 50, 1)
+					playsound(src.loc, pick("sound/impact_sounds/Slimy_Splat_1.ogg","sound/impact_sounds/Liquid_Slosh_1.ogg","sound/impact_sounds/Wood_Hit_1.ogg","sound/impact_sounds/Slimy_Hit_3.ogg","sound/impact_sounds/Slimy_Hit_4.ogg","sound/impact_sounds/Flesh_Stab_1.ogg"), 30, 1)
 					var/mob/living/poorSoul = newIngredient
 					if (issilicon(poorSoul))
 						newLoaf.reagents.add_reagent("oil",10)
@@ -929,10 +951,10 @@
 			StopLoafing:
 
 			sleep(0.3 SECONDS)	//make a bunch of ongoing noise i guess?
-			playsound(src.loc, pick("sound/machines/mixer.ogg","sound/machines/mixer.ogg","sound/machines/mixer.ogg","sound/machines/hiss.ogg","sound/machines/ding.ogg","sound/machines/buzz-sigh.ogg","sound/impact_sounds/Machinery_Break_1.ogg","sound/effects/pop.ogg","sound/machines/warning-buzzer.ogg","sound/impact_sounds/Glass_Shatter_1.ogg","sound/impact_sounds/Flesh_Break_2.ogg","sound/effects/spring.ogg","sound/machines/engine_grump1.ogg","sound/machines/engine_grump2.ogg","sound/machines/engine_grump3.ogg","sound/impact_sounds/Glass_Hit_1.ogg","sound/effects/bubbles.ogg","sound/effects/brrp.ogg"), 50, 1)
+			playsound(src.loc, pick("sound/machines/mixer.ogg","sound/machines/mixer.ogg","sound/machines/mixer.ogg","sound/machines/hiss.ogg","sound/machines/ding.ogg","sound/machines/buzz-sigh.ogg","sound/impact_sounds/Machinery_Break_1.ogg","sound/effects/pop.ogg","sound/machines/warning-buzzer.ogg","sound/impact_sounds/Glass_Shatter_1.ogg","sound/impact_sounds/Flesh_Break_2.ogg","sound/effects/spring.ogg","sound/machines/engine_grump1.ogg","sound/machines/engine_grump2.ogg","sound/machines/engine_grump3.ogg","sound/impact_sounds/Glass_Hit_1.ogg","sound/effects/bubbles.ogg","sound/effects/brrp.ogg"), 30, 1)
 			sleep(0.3 SECONDS)
 
-			playsound(src.loc, "sound/machines/engine_grump1.ogg", 50, 1)
+			playsound(src.loc, "sound/machines/engine_grump1.ogg", 30, 1)
 			sleep(3 SECONDS)
 			src.icon_state = "pipe-loaf0"
 			//src.visible_message("<b>[src] deactivates!</b>") // Processor + loop = SPAM
@@ -1415,7 +1437,7 @@
 	attackby(obj/item/W, mob/user)
 		if(..(W, user)) return
 		else if(ispulsingtool(W))
-			. = alert(user, "What should trigger the sensor?","Disposal Sensor", "Creatures", "Anything", "A mail tag")
+			. = tgui_alert(user, "What should trigger the sensor?", "Disposal Sensor", list("Creatures", "Anything", "A mail tag"))
 			if (.)
 				if (BOUNDS_DIST(user, src) > 0 || user.stat)
 					return

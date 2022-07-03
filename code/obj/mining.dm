@@ -322,6 +322,7 @@
 	var/cooldown_time = 1200
 	var/active = 0
 	var/last_used = 0
+	var/last_use_attempt = 0
 	var/automatic_mode = 0
 	var/auto_delay = 100
 	var/last_delay = 0
@@ -375,9 +376,9 @@
 		process()
 			if (!target)
 				return
-			if (automatic_mode && last_used < world.time && last_delay < world.time)
+			if (automatic_mode && last_used < TIME && last_delay < TIME)
 				if (target.check_for_unacceptable_content())
-					last_delay = world.time + auto_delay
+					last_delay = TIME + auto_delay
 					return
 				else
 					SPAWN(0)
@@ -400,10 +401,10 @@
 
 			active = 1
 
-			if (last_used > world.time)
+			if (last_used > TIME)
 				damage(rand(2,6))
 
-			last_used = world.time + cooldown_time
+			last_used = TIME + cooldown_time
 			playsound(src.loc, sound_activate, 100, 0, 3, 0.25)
 			build_icon()
 
@@ -482,9 +483,9 @@
 
 	process()
 		..()
-		if (automatic_mode && last_used < world.time && last_delay < world.time)
+		if (automatic_mode && last_used < TIME && last_delay < TIME)
 			if (mining_controls.magnet_area.check_for_unacceptable_content())
-				last_delay = world.time + auto_delay
+				last_delay = TIME + auto_delay
 				return
 			else
 				SPAWN(0) //Did you know that if you sleep directly in process() you are the old lady at the mall who only pays in quarters.
@@ -628,10 +629,10 @@
 
 		active = 1
 
-		if (last_used > world.time)
+		if (last_used > TIME)
 			damage(rand(2,6))
 
-		last_used = world.time + cooldown_time
+		last_used = TIME + cooldown_time
 		playsound(src.loc, sound_activate, 100, 0, 3, 0.25)
 		build_icon()
 
@@ -701,161 +702,78 @@
 		src.updateUsrDialog()
 		return
 
-	proc/generate_interface(var/mob/user as mob)
-		src.add_dialog(user)
+	ui_data(mob/user)
+		. = ..()
+		.["magnetHealth"] = src.health
+		.["magnetActive"] = src.active
+		.["magnetLastUsed"] = src.last_used
+		.["magnetCooldownOverride"] = src.cooldown_override
+		.["magnetAutomaticMode"] = src.automatic_mode
 
-		var/dat = "<BR><B>Magnet Status:</B><BR>"
-		dat += "<u>Condition:</u> "
-		switch(src.health)
-			if (95 to INFINITY)
-				dat += "Optimal"
-			if (70 to 94)
-				dat += "Mild Structural Damage"
-			if (40 to 69)
-				dat += "Heavy Structural Damage"
-			if (10 to 39)
-				dat += "Extreme Structural Damage"
-			if (-INFINITY to 10)
-				dat += "Destruction Imminent"
+		var/list/miningEncounters = list()
+		for(var/encounter_id in mining_controls.mining_encounters_selectable)
+			var/datum/mining_encounter/encounter = mining_controls.mining_encounters_selectable[encounter_id]
+			if(istype(encounter))
+				miningEncounters += list(list(
+					name = encounter.name,
+					id = encounter_id
+				))
+		.["miningEncounters"] = miningEncounters
 
-		dat += "<br><u>Status:</u> "
-		if (src.active)
-			dat += "Pulling New Mineral Source"
-		else
-			if (src.last_used > world.time)
-				dat += "Cooling Down: Ready in T-[max(0,round((src.last_used - world.time) / 10))]"
-				if (src.cooldown_override)
-					dat += "<br><i>Cooldown Override Engaged</i>"
-			else
-				dat += "Idle"
+		.["time"] = TIME
 
-		dat += "<BR><HR>"
-		if (src.active)
-			dat += "Magnet Active<BR>"
-		else
-			if (src.last_used > world.time)
-				if (src.cooldown_override)
-					dat += "<A href='?src=\ref[src];activate_magnet=1'>Activate Magnet</A> (On Cooldown!)<BR>"
-					if(mining_controls.mining_encounters_selectable.len > 0)
-						dat += "<A href='?src=\ref[src];show_selectable=1'>Activate telescope location</A>  (On Cooldown!)<BR>"
+	ui_act(action, params)
+		var/magnetNotReady = src.active || (src.last_used > TIME && !src.cooldown_override) || src.last_use_attempt > TIME
+		switch(action)
+			if ("geoscan")
+				var/MC = src.get_magnetic_center()
+				if (!MC)
+					boutput(usr, "Error. Magnet is not magnetized.")
+					return
+				mining_scan(MC, usr, src.get_scan_range())
+			if ("activateselectable")
+				if (magnetNotReady)
+					return
+				if (src.uses_global_controls && !istype(mining_controls.magnet_area))
+					boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder!")
+					return
+
+				if (src.check_for_unacceptable_content())
+					src.visible_message("<b>[src.name]</b> states, \"Safety lock engaged. Please remove all personnel and vehicles from the magnet area.\"")
 				else
-					dat += "Magnet Cooling Down<BR>"
-			else
-				dat += "<A href='?src=\ref[src];activate_magnet=1'>Activate Magnet</A><BR>"
-				if(mining_controls.mining_encounters_selectable.len > 0)
-					dat += "<A href='?src=\ref[src];show_selectable=1'>Activate telescope location</A><BR>"
+					src.last_use_attempt = TIME + 10
+					src.pull_new_source(params["encounter_id"])
+					. = TRUE
+			if ("activatemagnet")
+				if (magnetNotReady)
+					return
+				if (src.uses_global_controls && !istype(mining_controls.magnet_area))
+					boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder!")
+					return
 
-
-			dat += "<A href='?src=\ref[src];geo_scan=1'>Scan Mining Area</A><BR>"
-
-		var/auto_mode = "Enable Automatic Mode"
-		if (src.automatic_mode)
-			auto_mode = "Disable Automatic Mode"
-		dat += "<A href='?src=\ref[src];auto_mode=1'>[auto_mode]</A><BR>"
-
-		var/override_text = "Override Cooldown"
-		if (src.cooldown_override)
-			override_text = "Disable Cooldown Override"
-		dat += "<A href='?src=\ref[src];override_cooldown=1'>[override_text]</A><BR>"
-		dat += "<BR><A href='?action=mach_close&window=computer'>Close</A>"
-		user.Browse(dat, "window=computer;size=300x400")
-		onclose(user, "computer")
-		return null
-
-	Topic(href, href_list)
-		if(status & (NOPOWER|BROKEN))
-			boutput(usr, "<span class='alert'>That machine is not powered.</span>")
-			return 1
-		if(usr.restrained() || usr.lying || usr.stat)
-			boutput(usr, "<span class='alert'>You are currently unable to do that.</span>")
-			return 1
-
-		var/rangecheck = 0
-		if (isAI(usr) || issilicon(usr))
-			rangecheck = 1
-		if (istype(usr.loc,/obj/machinery/vehicle/))
-			var/obj/machinery/vehicle/V = usr.loc
-			if (istype(V.com_system,/obj/item/shipcomponent/communications/mining) && V.com_system.active)
-				rangecheck = 1
-		for(var/obj/machinery/computer/magnet/M in range(usr,1))
-			rangecheck = 1
-			break
-
-		if (!rangecheck)
-			boutput(usr, "<span class='alert'>You aren't in range of the controls.</span>")
-			return
-		src.add_dialog(usr)
-
-		if (!istype(src))
-			boutput(usr, "Error. Magnet not detected.")
-			src.updateUsrDialog()
-			return
-
-		else if (href_list["back"])
-			src.generate_interface(usr)
-
-		else if (href_list["show_selectable"])
-			if (src.uses_global_controls && !istype(mining_controls.magnet_area))
-				boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder!")
-				return
-
-			var/html = ""
-			for(var/X in mining_controls.mining_encounters_selectable)
-				var/datum/mining_encounter/E = mining_controls.mining_encounters_selectable[X]
-				if(istype(E))
-					html += "<A href='?src=\ref[src];activate_selectable=[X]'>[E.name]</A><BR>"
-
-			html += "<BR><A href='?src=\ref[src];back=1'>Back</A><BR>"
-			usr.Browse(html, "window=computer;size=300x400")
-			onclose(usr, "computer")
-			return
-
-		else if (href_list["activate_selectable"])
-			if (src.uses_global_controls && !istype(mining_controls.magnet_area))
-				boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder!")
-				return
-
-			if (src.check_for_unacceptable_content())
-				src.visible_message("<b>[src.name]</b> states, \"Safety lock engaged. Please remove all personnel and vehicles from the magnet area.\"")
-			else
-				SPAWN(0)
-					if (src) src.pull_new_source(href_list["activate_selectable"])
-
-		else if (href_list["activate_magnet"])
-			if (src.uses_global_controls && !istype(mining_controls.magnet_area))
-				boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder!")
-				return
-
-			if (src.check_for_unacceptable_content())
-				src.visible_message("<b>[src.name]</b> states, \"Safety lock engaged. Please remove all personnel and vehicles from the magnet area.\"")
-			else
-				SPAWN(0)
-					if (src) src.pull_new_source()
-
-		else if (href_list["override_cooldown"])
-			if (!ishuman(usr))
-				boutput(usr, "<span class='alert'>AI and robotic personnel may not access the override.</span>")
-			else
-				var/mob/living/carbon/human/H = usr
-				if(!src.allowed(H))
-					boutput(usr, "<span class='alert'>Access denied. Please contact the Chief Engineer or Captain to access the override.</span>")
+				if (src.check_for_unacceptable_content())
+					src.visible_message("<b>[src.name]</b> states, \"Safety lock engaged. Please remove all personnel and vehicles from the magnet area.\"")
 				else
-					src.cooldown_override = !src.cooldown_override
+					src.last_use_attempt = TIME + 10 // This is to prevent href exploits or autoclickers from pulling multiple times simultaneously
+					src.pull_new_source()
+					. = TRUE
+			if("overridecooldown")
+				if (!ishuman(usr))
+					boutput(usr, "<span class='alert'>AI and robotic personnel may not access the override.</span>")
+				else
+					var/mob/living/carbon/human/H = usr
+					if(!src.allowed(H))
+						boutput(usr, "<span class='alert'>Access denied. Please contact the Chief Engineer or Captain to access the override.</span>")
+					else
+						src.cooldown_override = !src.cooldown_override
+					. = TRUE
+			if("automode")
+				src.automatic_mode = !src.automatic_mode
+				. = TRUE
 
-		else if (href_list["auto_mode"])
-			src.automatic_mode = !src.automatic_mode
+	ui_status(mob/user, datum/ui_state/state)
+		. = tgui_broken_state.can_use_topic(src, user)
 
-		else if (href_list["geo_scan"])
-			var/MC = src.get_magnetic_center()
-			if (!MC)
-				boutput(usr, "Error. Magnet is not magnetized.")
-				src.updateUsrDialog()
-				return
-
-			mining_scan(MC, usr, src.get_scan_range())
-
-		src.generate_interface(usr)
-		return
 
 /obj/machinery/computer/magnet
 	name = "mineral magnet controls"
@@ -874,60 +792,65 @@
 		SPAWN(0)
 			src.connection_scan()
 
-	attack_hand(var/mob/user)
-		if(..())
-			return
-		if (istype(linked_magnet))
-			linked_magnet.generate_interface(user)
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "MineralMagnet", src.name)
+			ui.open()
+
+	ui_data(mob/user)
+		. = ..()
+		.["linkedMagnets"] = null
+
+		if(istype(linked_magnet))
+			. = linked_magnet.ui_data(user)
+			.["isLinked"] = TRUE
 		else
-			src.add_dialog(user)
-			var/dat = "<B>Mineral Mining Magnet Terminal</B><HR>"
-			dat += "<A href='?src=\ref[src];scan_for_connection=1'>Scan for Magnets</A><BR><BR>"
-			dat += "<B>Choose linked magnet:</B><BR>"
+			var/list/linkedMagnets = list()
 			for (var/obj/M in linked_magnets)
-				dat += "<a href='?src=\ref[src];choosemagnet=\ref[M]'>[M] at ([M.x], [M.y])</a><BR>"
-			dat += "<BR><B>Selected magnet:</B><BR>"
-			if (linked_magnet)
-				dat += "[linked_magnet] at ([linked_magnet.x], [linked_magnet.y])<BR>"
-			else
-				dat += "None<BR>"
+				var/magnetData = list(
+					name = M.name,
+					x = M.x,
+					y = M.y,
+					z = M.z,
+					ref = "\ref[M]",
+					angle = -arctan(M.x - user.x, M.y - user.y)
+				)
+				linkedMagnets += list(magnetData)
+			.["linkedMagnets"] = linkedMagnets
+			.["isLinked"] = FALSE
 
-			//dat += "<BR><a href='?src=\ref[src];unlink=1'>Disconnect Terminal from Magnet</a>"
-
-			dat += "<BR><A href='?action=mach_close&window=computer'>Close</A>"
-			user.Browse(dat, "window=computer;size=300x400")
-			onclose(user, "computer")
-		return
-
-	Topic(href, href_list)
-		if(..())
+	ui_act(action, params)
+		. = ..()
+		if (.)
 			return
+		switch(action)
+			if("linkmagnet")
+				linked_magnet = locate(params["ref"]) in linked_magnets
+				if (!istype(linked_magnet))
+					linked_magnet = null
+					src.visible_message("<b>[src.name]</b> states, \"Designated magnet is no longer operational.\"")
+				. = TRUE
+			if ("magnetscan")
+				switch(src.connection_scan())
+					if(1)
+						src.visible_message("<b>[src.name]</b> states, \"Unoccupied Magnet Chassis located. Please connect magnet system to chassis.\"")
+					if(2)
+						src.visible_message("<b>[src.name]</b> states, \"Magnet equipment not found within range.\"")
+					else
+						src.visible_message("<b>[src.name]</b> states, \"Magnet equipment located. Link established.\"")
+				. = TRUE
+			if ("unlinkmagnet")
+				src.linked_magnet = null
+				. = TRUE
+			else
+				if(istype(src.linked_magnet))
+					. = src.linked_magnet.ui_act(action, params)
 
-		if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-			src.add_dialog(usr)
-
-		src.add_fingerprint(usr)
-
-		if (href_list["choosemagnet"])
-			linked_magnet = locate(href_list["choosemagnet"])
-			if (!linked_magnet)
-				linked_magnet = null
-				src.visible_message("<b>[src.name]</b> states, \"Designated magnet is no longer operational.\"")
-
-		else if (href_list["scan_for_connection"])
-			switch(src.connection_scan())
-				if(1)
-					src.visible_message("<b>[src.name]</b> states, \"Unoccupied Magnet Chassis located. Please connect magnet system to chassis.\"")
-				if(2)
-					src.visible_message("<b>[src.name]</b> states, \"Magnet equipment not found within range.\"")
-				else
-					src.visible_message("<b>[src.name]</b> states, \"Magnet equipment located. Link established.\"")
-
-		else if (href_list["unlink"])
-			src.linked_magnet = null
-
-		src.updateUsrDialog()
-		return
+	ui_status(mob/user, datum/ui_state/state)
+		. = ..()
+		if(istype(src.linked_magnet))
+			. = min(., linked_magnet.ui_status(user))
 
 /obj/machinery/computer/magnet/connection_scan()
 	linked_magnets = list()
@@ -2005,6 +1928,9 @@ obj/item/clothing/gloves/concussive
 		if (!istype(O))
 			return ..()
 		if (O.artifact || src.allowed_types[O.type])
+			if (O.anchored)
+				boutput(user, "<span class='alert'>You can't teleport [O] while it is anchored!</span>")
+				return
 			src.try_teleport(O, user)
 
 	proc/can_teleport(var/obj/cargo, var/mob/user)
@@ -2054,6 +1980,7 @@ obj/item/clothing/gloves/concussive
 				logTheThing("station", user, M, "uses a cargo transporter to send [cargo.name][S && S.locked ? " (locked)" : ""][S && S.welded ? " (welded)" : ""] with [constructTarget(M,"station")] inside to [log_loc(src.target)].")
 
 		cargo.set_loc(get_turf(src.target))
+		target.receive_cargo(cargo)
 		elecflash(src)
 		if (isrobot(user))
 			var/mob/living/silicon/robot/R = user
@@ -2356,34 +2283,64 @@ var/global/datum/cargo_pad_manager/cargo_pad_manager
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 	var/active = TRUE
 	var/group
+	/// The mailgroup to send notifications to
+	var/mailgroup = null
 
 	podbay
 		name = "Pod Bay Pad"
 	hydroponic
+		mailgroup = MGD_BOTANY
 		name = "Hydroponics Pad"
 	robotics
+		mailgroup = MGD_MEDRESEACH
 		name = "Robotics Pad"
 	artlab
+		mailgroup = MGD_SCIENCE
 		name = "Artifact Lab Pad"
 	engineering
+		mailgroup = MGO_ENGINEER
 		name = "Engineering Pad"
 	mechanics
+		mailgroup = MGO_MECHANIC
 		name = "Mechanics Pad"
 	magnet
+		mailgroup = MGD_MINING
 		name = "Mineral Magnet Pad"
 	miningoutpost
+		mailgroup = MGD_MINING
 		name = "Mining Outpost Pad"
 	qm
+		mailgroup = MGD_CARGO
 		name = "QM Pad"
 	qm2
+		mailgroup = MGD_CARGO
 		name = "QM Pad 2"
 	researchoutpost
+		mailgroup = MGD_SCIENCE
 		name = "Research Outpost Pad"
 
 	New()
 		..()
 		if (src.name == "Cargo Pad")
 			src.name += " ([rand(100,999)])"
+
+		//sadly maps often don't use the subtypes, so we do this instead
+		if (!src.mailgroup)
+			var/area/area = get_area(src)
+			if (istype(area, /area/station/hydroponics) || istype(area, /area/station/storage/hydroponics) || istype(area, /area/station/ranch))
+				src.mailgroup = MGD_BOTANY
+			else if (istype(area, /area/station/medical))
+				src.mailgroup = MGD_MEDRESEACH
+			else if (istype(area, /area/station/science) || istype(area, /area/research_outpost))
+				src.mailgroup = MGD_SCIENCE
+			else if (istype(area, /area/station/engine/elect))
+				src.mailgroup = MGO_MECHANIC
+			else if (istype(area, /area/station/engine))
+				src.mailgroup = MGO_ENGINEER
+			else if (istype(area, /area/station/mining) || istype(area, /area/station/quartermaster/refinery) || istype(area, /area/mining))
+				src.mailgroup = MGD_MINING
+			else if (istype(area, /area/station/quartermaster))
+				src.mailgroup = MGD_CARGO
 
 		if (src.active) //in case of map edits etc
 			UpdateOverlays(image('icons/obj/objects.dmi', "cpad-rec"), "lights")
@@ -2412,6 +2369,13 @@ var/global/datum/cargo_pad_manager/cargo_pad_manager
 			UpdateOverlays(image('icons/obj/objects.dmi', "cpad-rec"), "lights")
 			src.active = TRUE
 			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_CARGO_PAD_ENABLED, src)
+
+	proc/receive_cargo(var/obj/cargo)
+		if (!src.mailgroup)
+			return
+		var/datum/signal/pdaSignal = get_free_signal()
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(src.mailgroup), "sender"="00000000", "message"="Notification: Incoming delivery to [src.name].")
+		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 
 // satchels -> obj/item/satchel.dm
 
