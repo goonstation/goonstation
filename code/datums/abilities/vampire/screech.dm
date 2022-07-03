@@ -7,7 +7,7 @@
 	max_range = 0
 	cooldown = 300
 	pointCost = 60
-	not_when_in_an_object = 0
+	not_when_in_an_object = 2
 	when_stunned = 1
 	var/duration = 10 SECONDS
 	not_when_handcuffed = 0

@@ -123,7 +123,7 @@
 	preferred_holder_type = /datum/abilityHolder/vampiric_thrall
 	var/when_stunned = 1 // 0: Never | 1: Ignore mob.stunned and mob.weakened | 2: Ignore all incapacitation vars
 	var/not_when_handcuffed = 0
-	var/not_when_in_an_object = 1
+	var/not_when_in_an_object = 1 // 0: Anywhere | 1: Only on turfs | 2: Anywhere but the port a brig
 	var/unlock_message = null
 
 	New()
