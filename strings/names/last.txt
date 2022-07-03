@@ -170,7 +170,6 @@ names@=
 	Chapman
 	Chasing Bear
 	Chasing Horse
-	Chauvin
 	Chen
 	Cheng
 	Cherry
@@ -1055,9 +1054,3 @@ names@=
 	Zimmer
 	Zoucks
 	de Leon
-	the Eighth
-	the Fourth
-	the Third
-	the Twentieth
-	the Eleventh
-	the French
