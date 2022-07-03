@@ -287,6 +287,11 @@
 			contained_item = /obj/item/reagent_containers/patch/synthflesh
 			item_amount = 10
 			max_item_amount = 10
+		nicotine
+			name = "box of nicotine patches"
+			contained_item = /obj/item/reagent_containers/patch/nicotine
+			item_amount = 5
+			max_item_amount = 10
 
 		mini_styptic
 			name = "box of mini healing patches"

@@ -69,7 +69,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 		var/turf/T = get_turf(O)
 		T.visible_message("<span class='alert'>The [cosmeticSource.name] warps [user.name] away!</span>")
 		playsound(T, "sound/effects/mag_warp.ogg", 100, 1)
-		user.set_loc(pick(wormholeturfs))
+		user.set_loc(pick(random_floor_turfs))
 
 /datum/artifact_fault/grow
 	// embiggens the artifact
