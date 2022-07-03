@@ -50,6 +50,7 @@
 	max_range = 999
 	cooldown = 600
 	pointCost = 0
+	not_when_in_an_object = 0
 	when_stunned = 1
 	not_when_handcuffed = 0
 	sticky = 1
@@ -89,6 +90,7 @@
 	max_range = 999
 	cooldown = 600
 	pointCost = 400
+	not_when_in_an_object = 0
 	when_stunned = 1
 	not_when_handcuffed = 0
 	sticky = 1
@@ -107,8 +109,8 @@
 		var/turf/spawnturf = V.coffin_turf
 		if (istype(spawnturf,/turf/space))
 			spawnturf = get_turf(M)
-
-		if (spawnturf.z != M.z)
+		var/turf/owner_turf = get_turf(M)
+		if (spawnturf.z != owner_turf?.z)
 			boutput(M, "<span class='alert'>You cannot escape to a different Z-level.</span>")
 			return 1
 

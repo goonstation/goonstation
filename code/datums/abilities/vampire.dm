@@ -136,10 +136,6 @@
 				src.UpdateIcon()
 				boutput(usr, "<span class='notice'>Please press a number to bind this ability to...</span>")
 				return
-
-		if (!isturf(owner.holder.owner.loc))
-			boutput(owner.holder.owner, "<span class='alert'>You can't use this spell here.</span>")
-			return
 		if (spell.targeted && usr.targeting_ability == owner)
 			usr.targeting_ability = null
 			usr.update_cursor()
@@ -438,6 +434,7 @@
 	preferred_holder_type = /datum/abilityHolder/vampire
 	var/when_stunned = 0 // 0: Never | 1: Ignore mob.stunned and mob.weakened | 2: Ignore all incapacitation vars
 	var/not_when_handcuffed = 0
+	var/not_when_in_an_object = 1
 	var/unlock_message = null
 
 	New()
@@ -509,7 +506,9 @@
 
 		if(isobj(M)) //Exception for VampTEG and Sentient Objects...
 			return 1
-
+		if (src.not_when_in_an_object && !isturf(M.loc))
+			boutput(M, "<span class='alert'>You can't use this ability here.</span>")
+			return 0
 		if (!(iscarbon(M) || ismobcritter(M)))
 			boutput(M, "<span class='alert'>You cannot use any powers in your current form.</span>")
 			return 0
