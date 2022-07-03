@@ -223,7 +223,7 @@ datum
 						boutput(usr, "<span class='notice'>The lights on the [R.name] seem more intense.</span>")
 
 				else if (istype(O, /obj/machinery/cell_charger))	//Cell charger
-					var/obj/machiner/cell_charger/R = O
+					var/obj/machinery/cell_charger/R = O
 					if (R.chargerate < CHARGER_MAX_CHARGE_RATE)
 						R.chargerate += 250
 						boutput(usr, "<span class='notice'>The lights on the [R.name] seem more intense.</span>")
