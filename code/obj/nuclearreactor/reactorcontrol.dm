@@ -156,6 +156,13 @@
 			return
 
 		switch(action)
+			if("adjustCR")
+				for(var/x=1 to REACTOR_GRID_WIDTH)
+					for(var/y=1 to REACTOR_GRID_HEIGHT)
+						if(src.reactor_handle.component_grid[x][y])
+							if(istype(src.reactor_handle.component_grid[x][y],/obj/item/reactor_component/control_rod))
+								var/obj/item/reactor_component/control_rod/CR = src.reactor_handle.component_grid[x][y]
+								CR.configured_insertion_level = text2num(params["crvalue"])/100
 			if("slot")
 				var/x = params["x"]
 				var/y = params["y"]

@@ -33,9 +33,9 @@ ABSTRACT_TYPE(/obj/reactor_component)
 		                    WEST, NORTHWEST, SOUTHWEST,  \
 		                    EAST, NORTHEAST, SOUTHEAST)
 
-	New()
+	New(material_name="steel")
 		..()
-		src.setMaterial(getMaterial("steel"))
+		src.setMaterial(getMaterial(material_name))
 		melt_health = _max_health
 		var/img_check = ui_image_base64_cache[src.type]
 		if (img_check)
@@ -166,9 +166,9 @@ ABSTRACT_TYPE(/obj/reactor_component)
 		if((!src.melted) & (src.neutron_cross_section != src.configured_insertion_level))
 			//step towards configured insertion level
 			if(src.configured_insertion_level < src.neutron_cross_section)
-				src.neutron_cross_section -= 0.1 //TODO balance - this is 10% per tick, which is like every 3 seconds or something
+				src.neutron_cross_section -= min(0.1, src.neutron_cross_section - src.configured_insertion_level)//TODO balance - this is 10% per tick, which is like every 3 seconds or something
 			else
-				src.neutron_cross_section += 0.1
+				src.neutron_cross_section += min(0.1, src.configured_insertion_level - src.neutron_cross_section)
 
 ////////////////////////////////////////////////////////////////
 //Heat exchanger

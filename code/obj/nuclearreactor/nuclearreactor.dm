@@ -231,7 +231,7 @@
 						if(src.component_grid[x][y])
 							if(istype(src.component_grid[x][y],/obj/item/reactor_component/control_rod))
 								var/obj/item/reactor_component/control_rod/CR = src.component_grid[x][y]
-								CR.configured_insertion_level = params["crvalue"]/100
+								CR.configured_insertion_level = text2num(params["crvalue"])/100
 			if("slot")
 				var/x = params["x"]
 				var/y = params["y"]
@@ -293,7 +293,28 @@
 /obj/machinery/atmospherics/binary/nuclear_reactor/prefilled
 	New()
 		..()
-		src.component_grid[3][2] = new /obj/item/reactor_component/gas_channel
+		src.component_grid[3][1] = new /obj/item/reactor_component/gas_channel
+		src.component_grid[3][3] = new /obj/item/reactor_component/gas_channel
+		src.component_grid[3][5] = new /obj/item/reactor_component/gas_channel
+		src.component_grid[3][7] = new /obj/item/reactor_component/gas_channel
+		src.component_grid[5][1] = new /obj/item/reactor_component/gas_channel
+		src.component_grid[5][3] = new /obj/item/reactor_component/gas_channel
+		src.component_grid[5][5] = new /obj/item/reactor_component/gas_channel
+		src.component_grid[5][7] = new /obj/item/reactor_component/gas_channel
+
+		src.component_grid[3][2] = new /obj/item/reactor_component/heat_exchanger
+		src.component_grid[3][4] = new /obj/item/reactor_component/heat_exchanger
+		src.component_grid[3][6] = new /obj/item/reactor_component/heat_exchanger
+		src.component_grid[5][2] = new /obj/item/reactor_component/heat_exchanger
+		src.component_grid[5][4] = new /obj/item/reactor_component/heat_exchanger
+		src.component_grid[5][6] = new /obj/item/reactor_component/heat_exchanger
+
+		src.component_grid[4][1] = new /obj/item/reactor_component/heat_exchanger
+		src.component_grid[4][7] = new /obj/item/reactor_component/heat_exchanger
+
+		src.component_grid[4][3] = new /obj/item/reactor_component/control_rod("bohrum")
+		src.component_grid[4][5] = new /obj/item/reactor_component/control_rod("bohrum")
+		/*src.component_grid[3][2] = new /obj/item/reactor_component/gas_channel
 		src.component_grid[2][3] = new /obj/item/reactor_component/gas_channel
 		src.component_grid[3][6] = new /obj/item/reactor_component/gas_channel
 		src.component_grid[2][5] = new /obj/item/reactor_component/gas_channel
@@ -307,7 +328,7 @@
 		src.component_grid[3][5] = new /obj/item/reactor_component/heat_exchanger
 		src.component_grid[5][3] = new /obj/item/reactor_component/heat_exchanger
 		src.component_grid[6][4] = new /obj/item/reactor_component/heat_exchanger
-		src.component_grid[5][5] = new /obj/item/reactor_component/heat_exchanger
+		src.component_grid[5][5] = new /obj/item/reactor_component/heat_exchanger*/
 
 
 #undef REACTOR_GRID_WIDTH
