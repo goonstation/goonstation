@@ -25,10 +25,10 @@ datum
 					return
 				var/mob/living/carbon/human/H = M
 				if(!(H.totalimmunity) && !(special_chem_processed))
-					H.totalimmunity = 1
+					H.totalimmunity = TRUE
 					special_chem_processed = 1
 				else
-					H.totalimmunity = 0
+					H.totalimmunity = FALSE
 					special_chem_processed = 1
 				..()
 				return*/
@@ -161,16 +161,16 @@ datum
 						C.setProperty("rangedprot", ranged)
 
 				boutput(usr, "<span class='notice'>The [O.name] looks much sturdier.</span>")
-				#undef HEADGEAR_MAX_MELEE_UPGRADE
-				#undef HEADGEAR_MELEE_INCREMENT
-				#undef GLOVES_MAX_CONDUCTIVITY_UPGRADE
-				#undef GLOVES_CONDUCTIVITY_DECREMENT
-				#undef GENERAL_MELEE_INCREMENT
-				#undef GENERAL_MAX_MELEE_UPGRADE
-				#undef MAX_EXPLO_UPGRADE
-				#undef EXPLO_INCREMENT
-				#undef RANGED_INCREMENT
-				#undef MAX_RANGED_UPGRADE
+			#undef HEADGEAR_MAX_MELEE_UPGRADE
+			#undef HEADGEAR_MELEE_INCREMENT
+			#undef GLOVES_MAX_CONDUCTIVITY_UPGRADE
+			#undef GLOVES_CONDUCTIVITY_DECREMENT
+			#undef GENERAL_MELEE_INCREMENT
+			#undef GENERAL_MAX_MELEE_UPGRADE
+			#undef MAX_EXPLO_UPGRADE
+			#undef EXPLO_INCREMENT
+			#undef RANGED_INCREMENT
+			#undef MAX_RANGED_UPGRADE
 
 		microbiology/rcdregen
 			name = "dense matter autotrophes"
@@ -215,11 +215,25 @@ datum
 			data = "copper"
 
 			reaction_obj(var/obj/O, var/volume)
-				if (istype(O, /obj/machinery/recharger))
+			#define CHARGER_MAX_CHARGE_RATE 1000	//2-3 times faster charge for cells, borgs!
+				if (istype(O, /obj/machinery/recharger))	//Tool charger
 					var/obj/machinery/recharger/R = O
 					if (R.secondarymult <= 2)
-						boutput(usr, "<span class='notice'>The lights on the recharger seem more intense.</span>")
 						R.secondarymult = 2
+						boutput(usr, "<span class='notice'>The lights on the [R.name] seem more intense.</span>")
+
+				else if (istype(O, /obj/machinery/cell_charger))	//Cell charger
+					var/obj/machiner/cell_charger/R = O
+					if (R.chargerate < CHARGER_MAX_CHARGE_RATE)
+						R.chargerate += 250
+						boutput(usr, "<span class='notice'>The lights on the [R.name] seem more intense.</span>")
+
+				else if (istype(O, /obj/machinery/recharge_station))	//Borg docking station
+					var/obj/machinery/recharge_station/R = O
+					if (R.chargerate < CHARGER_MAX_CHARGE_RATE)
+						R.chargerate += 300
+						boutput(usr, "<span class='notice'>The lights on the [R.name] seem more intense.</span>")
+			#undef CHARGER_MAX_CHARGE_RATE
 
 		microbiology/drycleaner
 			name = "organic sanitizer"
@@ -262,45 +276,31 @@ datum
 				tool.microbioupgrade = TRUE
 				boutput(usr, "<span class='notice'>The [tool] gives off a pungent, octane smell.</span>")
 
-//Organ Failure Disease Cures
-/*
-		microbiology/organ_drug3
-			name = "digestive antibiotics"
-			id = "organ_drug3"
-			description = "A culture of germs: this one seems to strengthen digestive organ tissues."
-			taste = "gross"
-			fluid_r = 125
-			fluid_b = 100
-			fluid_g = 180
-			transparency = 50
-			value = 9	// 6 2 1
-			data = "insulin"
+		microbiology/pipestrengthener
+			name = "interlocked nanotubes"
+			id = "pipestrengthener"
+			description = "A culture of germs: the microbodies seem to contain crystal tubes of boron nitride which interlock with other microbes."
+			fluid_r = 5
+			fluid_g = 5
+			fluid_b = 5
+			transparency = 15
+			value = 4	// 1 2 1
+			data = "boron"
 
-		microbiology/organ_drug2
-			name = "endocrine antibiotics"
-			id = "organ_drug2"
-			description = "A culture of germs: this one seems to bolster the endocrine system."
-			taste = "confusing"
-			fluid_r = 80
-			fluid_b = 190
-			fluid_g = 65
-			transparency = 80
-			value = 6	// 3 2 1
-			data = "calomel"
+			reaction_obj(var/obj/O, var/volume)
+				if(!(istype(O, /obj/machinery/atmospherics/pipe/simple)))
+					return
+				var/obj/machinery/atmospherics/pipe/simple/Pipe = O
+				if (Pipe.fatigue_pressure == INFINITY)
+					return
+				else if (Pipe.fatigue_pressure < 15000*ONE_ATMOSPHERE)
+					Pipe.fatigue_pressure = 100*Pipe.fatigue_pressure
+				else
+					Pipe.fatigue_pressure = INFINITY //No more tedious pipe fixing, please.
+				boutput(usr, "<span class='notice'>The [Pipe.name] is reinforced by the organic nanotubes.</span>")
 
-		microbiology/organ_drug1
-			name = "respiratory antibiotics"
-			id = "organ_drug1"
-			description = "A culture of germs: this one seems to remedy damage to the respiratory system."
-			taste = "dry"
-			fluid_r = 25
-			fluid_b = 240
-			fluid_g = 140
-			transparency = 50
-			value = 9	// 6 2 1
-			data = "perfluorodecalin"
-*/
-//No code infrastructure for these...
+
+//No code infrastructure for these yet. Potential ideas.
 /*
 		microbiology/lastwords
 			name = "organic oscillators"
