@@ -311,3 +311,87 @@
 	icon = 'icons/turf/walls_tempus-green.dmi'
 	icon_state = "0"
 
+/obj/shifting_wall
+	name = "r wall"
+	desc = ""
+	opacity = 1
+	density = 1
+	anchored = 1
+
+	icon = 'icons/turf/walls.dmi'
+	icon_state = "r_wall"
+
+	New()
+		..()
+		update()
+
+	proc/update()
+		var/list/possible = new/list()
+
+		for(var/A in cardinal)
+			var/turf/current = get_step(src,A)
+			if(current.density) continue
+			if(is_blocked_turf(current)) continue
+			possible +=  current
+
+		if(!possible.len)
+			SPAWN(3 SECONDS) update()
+			return
+
+		var/turf/picked = pick(possible)
+		if(src.loc.invisibility) src.loc.invisibility = INVIS_NONE
+		src.set_loc(picked)
+		SPAWN(0.5 SECONDS) picked.invisibility = INVIS_ALWAYS_ISH
+
+		SPAWN(rand(50,80)) update()
+
+/obj/shifting_wall/sneaky
+
+	var/sightrange = 8
+
+	proc/find_suitable_tiles()
+		var/list/possible = new/list()
+
+		for(var/A in cardinal)
+			var/turf/current = get_step(src,A)
+			if(current.density) continue
+			if(is_blocked_turf(current)) continue
+			if(someone_can_see(current)) continue
+			possible +=  current
+
+		return possible
+
+	proc/someone_can_see(var/atom/A)
+		for(var/mob/living/L in view(sightrange,A))
+			if(!L.sight_check(1)) continue
+			if(A in view(sightrange,L)) return 1
+		return 0
+
+	proc/someone_can_see_me()
+		for(var/mob/living/L in view(sightrange,src))
+			if(L.sight_check(1)) continue
+			if(src in view(sightrange,L)) return 1
+		return 0
+
+	update()
+		if(someone_can_see_me()) //Award for the most readable code GOES TO THIS LINE.
+			SPAWN(rand(50,80)) update()
+			return
+
+		var/list/possible = find_suitable_tiles()
+
+		if(!possible.len)
+			SPAWN(3 SECONDS) update()
+			return
+
+		var/turf/picked = pick(possible)
+		if(src.loc.invisibility) src.loc.invisibility = INVIS_NONE
+		if(src.loc.opacity) src.loc.opacity = 0
+
+		src.set_loc(picked)
+
+		SPAWN(0.5 SECONDS)
+			picked.invisibility = INVIS_ALWAYS_ISH
+			picked.opacity = 1
+
+		SPAWN(rand(50,80)) update()

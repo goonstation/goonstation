@@ -1,4 +1,53 @@
 
+(t)sun jul 03 22
+(u)Mr. Moriarty
+(p)9430
+(e)🗺|mapping
+(+)Replaced old Security Records computers with ThinkDOS SecMate computers.
+(t)sat jul 02 22
+(u)ZWRh3
+(p)9437
+(e)⚖|balance
+(+)Removed stimulants from battle royale.
+(u)ZWRh3
+(p)9438
+(e)⚖|balance
+(+)Removed sarin grenades from BR
+(u)Azrun
+(p)9434
+(e)⚖|balance
+(+)TEG Circulator maintenance panel now protected with aerogel.  Less likely to be impacted by environmental temperatures when panel is closed.
+(t)fri jul 01 22
+(u)Walpvrgis
+(p)9425
+(e)🎨|sprites
+(+)Some botany herbs have had a visual makeover, and Shivering/Quivering Contusine now have unique growth sprites rather than using the same one.
+(u)Munien
+(p)9424
+(e)|
+(+)Nicotine patch boxes are now available for purchase in cigarette vending machines.
+(t)thu jun 30 22
+(u)End
+(e)🎨|sprites
+(+)Resprited the Syndicate teleport gun.
+(+)Updated the armory shotgun rack.
+(t)tue jun 28 22
+(u)Azrun
+(e)|
+(+)Frozen fart will no longer jump out of objects.
+(u)CodeJester
+(p)8541
+(e)📄|tgui
+(*)Mineral magnets, how do they work? Maybe you can find out with its new UI menu.
+(u)Flaborized
+(p)9365
+(e)🎨|sprites
+(+)Resprited many instruments, including bike horns and amplified vuvuzelas.
+(t)mon jun 27 22
+(u)singh
+(p)9368
+(e)|
+(+)Monkeys will now drop their inventory when meat spiked
 (t)fri jun 24 22
 (u)Flaborized
 (p)9325

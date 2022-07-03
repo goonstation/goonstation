@@ -18624,7 +18624,7 @@
 	icon_state = "on";
 	on = 1
 	},
-/turf/simulated/floor/red,
+/turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "bcR" = (
 /obj/disposalpipe/segment/vertical,
@@ -19232,7 +19232,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple,
 /obj/machinery/light/small/floor/netural,
-/turf/simulated/floor/redwhite{
+/turf/simulated/floor/bluewhite{
 	dir = 1
 	},
 /area/station/medical/medbay)
@@ -24150,7 +24150,7 @@
 /area/station/storage/eva)
 "bwe" = (
 /obj/disposalpipe/segment/mail/vertical,
-/turf/simulated/floor/redwhite{
+/turf/simulated/floor/bluewhite{
 	dir = 10
 	},
 /area/station/medical/medbooth)
@@ -24164,7 +24164,7 @@
 	dir = 8;
 	pixel_x = 8
 	},
-/turf/simulated/floor/redwhite/corner{
+/turf/simulated/floor/bluewhite/corner{
 	dir = 4
 	},
 /area/station/medical/medbooth)
@@ -24416,7 +24416,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/redwhite{
+/turf/simulated/floor/bluewhite{
 	dir = 8
 	},
 /area/station/medical/medbooth)
@@ -24851,7 +24851,7 @@
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/pharmacy)
 "byz" = (
-/turf/simulated/floor/redwhite,
+/turf/simulated/floor/bluewhite,
 /area/station/medical/medbooth)
 "byB" = (
 /obj/landmark/magnet_center,
@@ -31079,7 +31079,7 @@
 	},
 /area/station/security/secwing)
 "bQK" = (
-/obj/machinery/computer/secure_data{
+/obj/machinery/computer3/generic/secure_data{
 	dir = 4
 	},
 /obj/cable{
@@ -33256,7 +33256,7 @@
 	icon_state = "1-2"
 	},
 /obj/item/device/radio/beacon,
-/turf/simulated/floor/red,
+/turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "bZl" = (
 /obj/table/auto,
@@ -40727,7 +40727,7 @@
 /turf/simulated/floor/engine,
 /area/station/security/secwing)
 "dOy" = (
-/turf/simulated/floor/redwhite{
+/turf/simulated/floor/bluewhite{
 	dir = 8
 	},
 /area/station/medical/medbay)
@@ -44764,7 +44764,7 @@
 	name = "Medical Doctor"
 	},
 /obj/disposalpipe/segment/morgue,
-/turf/simulated/floor/redwhite{
+/turf/simulated/floor/bluewhite{
 	dir = 4
 	},
 /area/station/medical/medbay)
@@ -44966,7 +44966,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/redwhite,
+/turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
 "hQg" = (
 /obj/table/auto,
@@ -48562,7 +48562,7 @@
 "lGK" = (
 /obj/disposalpipe/segment/mail/vertical,
 /obj/disposalpipe/segment/horizontal,
-/turf/simulated/floor/redwhite/corner{
+/turf/simulated/floor/bluewhite/corner{
 	dir = 4
 	},
 /area/station/medical/medbooth)
@@ -57286,7 +57286,7 @@
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/catering)
 "urd" = (
-/turf/simulated/floor/red,
+/turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "ury" = (
 /obj/grille/catwalk{
@@ -60975,7 +60975,7 @@
 /area/station/mining/magnet)
 "xQE" = (
 /obj/machinery/atmospherics/pipe/simple,
-/turf/simulated/floor/red,
+/turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "xQK" = (
 /obj/table/reinforced/bar/auto,

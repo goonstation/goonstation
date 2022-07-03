@@ -903,7 +903,7 @@
 /area/station/turret_protected/AIsat)
 "abL" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer3/generic/secure_data,
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -26535,6 +26535,7 @@
 /area/station/crew_quarters/garden)
 "hvd" = (
 /obj/decal/tile_edge/line/blue{
+	dir = 1;
 	icon_state = "line1"
 	},
 /obj/cable{
@@ -36576,7 +36577,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/ranch)
 "kwK" = (
-/obj/machinery/computer/secure_data{
+/obj/machinery/computer3/generic/secure_data{
 	dir = 8
 	},
 /obj/decoration/vent{
@@ -64977,7 +64978,7 @@
 	icon_state = "1-10"
 	},
 /obj/cable,
-/obj/machinery/computer/secure_data{
+/obj/machinery/computer3/generic/secure_data{
 	dir = 8
 	},
 /obj/machinery/power/data_terminal,
@@ -71424,7 +71425,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/west)
 "uzE" = (
-/obj/machinery/computer/secure_data{
+/obj/machinery/computer3/generic/secure_data{
 	dir = 4
 	},
 /obj/item/reagent_containers/food/drinks/mug/random_color{
@@ -147293,7 +147294,7 @@ tJf
 xXf
 kwO
 ovm
-mxH
+cxH
 nkC
 lVQ
 etV

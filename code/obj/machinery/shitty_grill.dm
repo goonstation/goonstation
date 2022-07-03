@@ -15,7 +15,8 @@
 	var/on = 0
 	var/movable = 1
 	var/datum/light/light
-	var/datum/particleSystem/barrelSmoke/smoke_part
+	var/particles/barrel_embers/part_embers
+	var/particles/barrel_smoke/part_smoke
 
 	New()
 		..()
@@ -29,6 +30,18 @@
 		light.set_brightness(1)
 		light.set_color(0.5, 0.3, 0)
 
+		part_embers = new
+		part_smoke = new
+
+	disposing()
+		qdel(light)
+		light = null
+		part_embers = null
+		part_smoke = null
+		grillitem = null
+		qdel(reagents)
+		reagents = null
+		. = ..()
 
 	attackby(obj/item/W, mob/user)
 		if(movable && istool(W, TOOL_SCREWING | TOOL_WRENCHING))
@@ -171,7 +184,8 @@
 
 	process()
 		if (status & BROKEN)
-			particleMaster.RemoveSystem(/datum/particleSystem/barrelSmoke, src)
+			ClearSpecificParticles("embers")
+			ClearSpecificParticles("smoke")
 			UnsubscribeProcess()
 			return
 
@@ -188,11 +202,11 @@
 				UnsubscribeProcess()
 
 		if (src.grilltemp >= 200 + T0C)
-			if (!smoke_part)
-				smoke_part = particleMaster.SpawnSystem(new /datum/particleSystem/barrelSmoke(src))
+			UpdateParticles(part_embers, "embers")
+			UpdateParticles(part_smoke, "smoke")
 		else
-			particleMaster.RemoveSystem(/datum/particleSystem/barrelSmoke, src)
-			smoke_part = null
+			ClearSpecificParticles("embers")
+			ClearSpecificParticles("smoke")
 
 		if (src.grilltemp >= src.reagents.total_temperature)
 			src.reagents.set_reagent_temp(src.reagents.total_temperature + 5)

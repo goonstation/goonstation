@@ -679,7 +679,7 @@
 		icon_state = "welding"
 		boutput(user, "You flip the mask down. The mask is now protecting you from eye damage.")
 		src.obscure(user)
-		user.set_clothing_icon_dirty()
+		user.update_clothing()
 
 		src.c_flags |= (COVERSEYES | BLOCKCHOKE)
 		setProperty("meleeprot_head", 1)
@@ -691,7 +691,8 @@
 		icon_state = "welding-up"
 		boutput(user, "You flip the mask up. The mask is now providing greater armor to your head.")
 		src.reveal(user)
-		user.set_clothing_icon_dirty()
+		user.update_clothing()
+
 		src.c_flags &= ~(COVERSEYES | BLOCKCHOKE)
 		setProperty("meleeprot_head", 4)
 		setProperty("disorient_resist_eye", 0)
