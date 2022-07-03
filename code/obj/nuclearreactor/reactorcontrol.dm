@@ -157,8 +157,8 @@
 
 		switch(action)
 			if("adjustCR")
-				for(var/x=1 to REACTOR_GRID_WIDTH)
-					for(var/y=1 to REACTOR_GRID_HEIGHT)
+				for(var/x=1 to length(src.reactor_handle.component_grid))
+					for(var/y=1 to length(src.reactor_handle.component_grid[1]))
 						if(src.reactor_handle.component_grid[x][y])
 							if(istype(src.reactor_handle.component_grid[x][y],/obj/item/reactor_component/control_rod))
 								var/obj/item/reactor_component/control_rod/CR = src.reactor_handle.component_grid[x][y]
