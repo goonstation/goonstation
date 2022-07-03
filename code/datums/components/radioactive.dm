@@ -75,7 +75,7 @@ TYPEINFO(/datum/component/radioactive)
 
 	InheritComponent(datum/component/radioactive/R, i_am_original)
 		if (i_am_original)
-			src.radStrength = (src.radStrength+R.radStrength)/2
+			src.radStrength = min(src.radStrength+R.radStrength, 100)
 			src.neutron |= R.neutron //only one type of radiation allowed, and neutron takes precedence
 			src.decays &= R.decays //permenant radiation takes precedence over decay
 
