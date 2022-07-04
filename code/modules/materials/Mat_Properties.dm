@@ -146,7 +146,7 @@ ABSTRACT_TYPE(/datum/material_property)
 				return "very reflective"
 
 	onValueChanged(var/datum/material/M, var/new_value)
-		if(new_value >= 76)
+		if(new_value >= 7)
 			M.addTrigger(M.triggersOnBullet, new /datum/materialProc/reflective_onbullet())
 		else
 			M.removeTrigger(M.triggersOnBullet, /datum/materialProc/reflective_onbullet)
