@@ -659,42 +659,61 @@
 	m_amt = 3000
 	g_amt = 1000
 	var/up = FALSE // The helmet's current position
-	color_r = 0.3 // darken
-	color_g = 0.3
-	color_b = 0.3
 
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 1)
 		setProperty("disorient_resist_eye", 100)
 
-	proc/flip_down(mob/user)
+	proc/obscure(mob/user)
+		user.addOverlayComposition(/datum/overlayComposition/weldingmask)
+		user.updateOverlaysClient(user.client)
+
+	proc/reveal(mob/user)
+		user.removeOverlayComposition(/datum/overlayComposition/weldingmask)
+		user.updateOverlaysClient(user.client)
+
+	proc/flip_down(var/mob/living/carbon/human/user)
 		up = FALSE
 		see_face = FALSE
 		icon_state = "welding"
 		boutput(user, "You flip the mask down. The mask is now protecting you from eye damage.")
-		color_r = initial(color_r) // darken
-		color_g = initial(color_g)
-		color_b = initial(color_b)
-		user.update_clothing()
+		if (user.head == src)
+			src.obscure(user)
+			user.update_clothing()
 
 		src.c_flags |= (COVERSEYES | BLOCKCHOKE)
 		setProperty("meleeprot_head", 1)
 		setProperty("disorient_resist_eye", 100)
 
-	proc/flip_up(mob/user)
+	proc/flip_up(var/mob/living/carbon/human/user)
 		up = TRUE
 		see_face = TRUE
 		icon_state = "welding-up"
 		boutput(user, "You flip the mask up. The mask is now providing greater armor to your head.")
-		color_r = 1 // no effect
-		color_g = 1
-		color_b = 1
-		user.update_clothing()
+		if (user.head == src)
+			src.reveal(user)
+			user.update_clothing()
 
 		src.c_flags &= ~(COVERSEYES | BLOCKCHOKE)
 		setProperty("meleeprot_head", 4)
 		setProperty("disorient_resist_eye", 0)
+
+	equipped(mob/user, slot)
+		. = ..()
+		if (!src.up)
+			src.obscure(user)
+
+	unequipped(mob/user)
+		. = ..()
+		src.reveal(user)
+
+	disposing()
+		. = ..()
+		if (ishuman(src.loc))
+			var/mob/living/carbon/human/owner = src.loc
+			if (owner.head == src) //human is actually wearing it
+				src.reveal(owner)
 
 	attack_self(mob/user) //let people toggle these inhand too
 		for(var/obj/ability_button/mask_toggle/toggle in ability_buttons)
