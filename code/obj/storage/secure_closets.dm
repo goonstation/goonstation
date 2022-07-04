@@ -595,7 +595,11 @@
 	/obj/item/storage/belt/medical,
 	/obj/item/storage/box/stma_kit,
 	/obj/item/storage/box/lglo_kit/random,
-	/obj/item/clothing/glasses/healthgoggles)
+	/obj/item/clothing/glasses/healthgoggles
+	#ifdef CREATE_PATHOGENS
+	/obj/item/storage/backpack/pathology,
+	/obj/item/storage/backpack/satchel/pathology,
+	/obj/item/storage/box/clothing/pathologist)
 
 /obj/storage/secure/closet/medical/chemical
 	name = "restricted medical locker"
