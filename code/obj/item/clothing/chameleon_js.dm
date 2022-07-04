@@ -1599,7 +1599,7 @@
 		item_state = "bp_pathology"
 
 	pathology
-		name = "pathology backpack"
+		name = "pathology satchel"
 		desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects safely on the shoulder of pathologists."
 		icon_state = "satchel_pathology"
 		item_state = "satchel_pathology"
