@@ -1305,6 +1305,61 @@ datum
 				..(M, mult)
 				return
 
+		harmful/neurodepressant
+			name = "neurodepressant"
+			id = "neurodepressant"
+			description = "A debilitating compound that affects muscular function, extracted from neurotoxin."
+			reagent_state = LIQUID
+			fluid_r = 140
+			fluid_g = 145
+			fluid_b = 135
+			depletion_rate = 0.2
+			var/counter = 1
+			blob_damage = 1
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if (!M) M = holder.my_atom
+				if (!counter) counter = 1
+				switch(counter += (1 * mult))
+					if (1 to 4) //give it some time, with the drooling, they might even think it's neurotoxin
+						if(probmult(10))
+							M.emote("drool")
+						else if(probmult(8))
+							boutput(M, pick("<span class='alert'>You feel a tingling in your [pick("arms","legs","chest")]..</span>",\
+											"<span class='alert'>Things don't feel quite right..</span>",\
+											"<span class='alert'>Your [pick("left arm","right arm","left leg","right leg")] twitches a bit.</span>"))
+					if (4 to 9)
+						M.make_dizzy(1 * mult)
+						M.change_eye_blurry(1, 3)
+						M.change_misstep_chance(10 * mult)
+						if (probmult(20)) M.emote(pick("twitch", "tremble", "twitch_v"))
+						else if(probmult(20))
+							boutput(M, pick("<span class='alert'>Your [pick("arms","legs")] start twitching!</span>",\
+											"<span class='alert'>You feel kinda dizzy..</span>",\
+											"<span class='alert'>You don't feel very well.</span>"))
+					if (9 to INFINITY) //now things start going wacky
+						M.make_dizzy(1 * mult)
+						M.change_eye_blurry(3, 3)
+						M.change_misstep_chance(20 * mult)
+						if(probmult(12))
+							M.setStatus("drowsy", 10 SECONDS)
+							boutput(M, pick("<span class='alert'>You feel extremely dizzy!</span>",\
+											"<span class='alert'>You feel like everything is spinning!</span>",\
+											"<span class='alert'>Your [pick("arms", "legs")] quiver!</span>",\
+											"<span class='alert'>You feel very sick!</span>"))
+							if(prob(10)) //no need for probmult in here as it's already behind a probmult statement
+								M.vomit() //so dizzy you puke
+						else if(probmult(12))
+							M.setStatus("muted", 10 SECONDS)
+							boutput(M, pick("<span class='alert'>You feel like the words are getting caught up in your mouth!</span>",\
+											"<span class='alert'>You can't feel your [pick("mouth","tongue","throat")]!</span>"))
+							if(prob(20)) //no need for probmult in here as it's already behind a probmult statement
+								M.losebreath += (1)
+								M.emote(pick("gasp", "choke"))
+						else if (probmult(40)) M.emote(pick("twitch", "tremble", "twitch_v"))
+				..(M, mult)
+				return
+
 		harmful/mutagen // COGWERKS CHEM REVISION PROJECT. magic chemical, fine as is
 			name = "unstable mutagen"
 			id = "mutagen"
