@@ -350,7 +350,7 @@
 		icon_state = "airbr[working]"
 		state_str = C.get_state_string()
 
-	attack_hand(var/mob/user as mob, params)
+	attack_hand(var/mob/user, params)
 		if (..(user, params))
 			return
 
@@ -366,7 +366,7 @@
 		<A href='?src=\ref[src];air=1'>Pressurize</A><BR>
 		"}
 
-		if (user.client.tooltipHolder)
+		if (user.client?.tooltipHolder) // BAD MONKEY!
 			user.client.tooltipHolder.showClickTip(src, list(
 				"params" = params,
 				"title" = src.name,
@@ -481,7 +481,7 @@
 	var/state = 0
 	anchored = 1.0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		for(var/obj/airbridge_controller/C in range(3, src))
 			boutput(user, "<span class='notice'>[C.toggle_bridge()]</span>")
 			break

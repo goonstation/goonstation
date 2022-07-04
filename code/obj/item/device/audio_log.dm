@@ -160,7 +160,7 @@
 		desc = "A wall-mounted audio log device."
 		max_lines = 30
 
-		attack_hand(mob/user as mob)
+		attack_hand(mob/user)
 			return attack_self(user)
 
 		updateSelfDialog()
@@ -194,7 +194,7 @@
 
 		return
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		if (istype(I, /obj/item/audio_tape))
 			if (src.tape)
 				boutput(user, "There is already a tape loaded.")

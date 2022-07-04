@@ -56,10 +56,9 @@
 		return 1 // Return 1 if we got this far in the test run.
 
 	if (stop_burning == 1)
-		var/mob/living/carbon/human/HH = H
-		if (istype(HH) && HH.getStatusDuration("burning"))
-			boutput(HH, "<span class='notice'>The flames sputter out as you phase shift.</span>")
-			HH.delStatus("burning")
+		if (H.getStatusDuration("burning"))
+			boutput(H, "<span class='notice'>The flames sputter out as you phase shift.</span>")
+			H.delStatus("burning")
 
 	SPAWN(0)
 		var/mobloc = get_turf(H.loc)

@@ -6,7 +6,6 @@ CONTAINS:
 	- DEFIBRILLATOR
 	- SUTURE
 	- BANDAGE
-	- BLOOD BAG (unused)
 	- BODY BAG
 	- HEMOSTAT
 	- REFLEX HAMMER
@@ -52,7 +51,7 @@ CONTAINS:
 		BLOCK_SETUP(BLOCK_KNIFE)
 
 
-	attack(mob/living/carbon/M as mob, mob/user as mob)
+	attack(mob/living/carbon/M, mob/user)
 		if (src.reagents && src.reagents.total_volume)
 			logTheThing("combat", user, M, "used [src] on [constructTarget(M,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
 		else
@@ -122,7 +121,7 @@ CONTAINS:
 		AddComponent(/datum/component/transfer_on_attack)
 		BLOCK_SETUP(BLOCK_LARGE)
 
-	attack(mob/living/carbon/M as mob, mob/user as mob)
+	attack(mob/living/carbon/M, mob/user)
 		if (src.reagents && src.reagents.total_volume)
 			logTheThing("combat", user, M, "used [src] on [constructTarget(M,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
 		else
@@ -188,7 +187,7 @@ CONTAINS:
 		setProperty("piercing", 80)
 
 
-	attack(mob/living/carbon/M as mob, mob/user as mob)
+	attack(mob/living/carbon/M, mob/user)
 		if (src.reagents && src.reagents.total_volume)
 			logTheThing("combat", user, M, "used [src] on [constructTarget(M,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
 		else
@@ -244,7 +243,7 @@ CONTAINS:
 		. = ..()
 		. += "There are [src.ammo] staples left."
 
-	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	attack(mob/living/carbon/M, mob/living/carbon/user)
 		if (!ismob(M))
 			return
 
@@ -389,7 +388,7 @@ CONTAINS:
 		src.emagged = 0
 		return 1
 
-	attack(mob/living/M as mob, mob/user as mob)
+	attack(mob/living/M, mob/user)
 		if (!isliving(M) || issilicon(M))
 			return ..()
 		if (src.defibrillate(M, user, src.emagged, src.makeshift, src.cell))
@@ -672,7 +671,7 @@ CONTAINS:
 					put_back_defib(src.defib.loc)
 		..()
 
-	attack_hand(mob/living/user as mob)
+	attack_hand(mob/living/user)
 		if (isAI(user) || isintangible(user) || isobserver(user)) return
 		user.lastattacked = src
 		..()
@@ -696,7 +695,7 @@ CONTAINS:
 			else
 				user.move_laying = list(src.defib)
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		user.lastattacked = src
 		if (W == src.defib)
 			src.defib.move_callback(user,get_turf(user),get_turf(src))
@@ -741,7 +740,7 @@ CONTAINS:
 	var/in_use = 0
 	hide_attack = 2
 
-	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	attack(mob/living/carbon/M, mob/living/carbon/user)
 		if (!suture_surgery(M,user))
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
@@ -815,7 +814,7 @@ CONTAINS:
 				if (6 to INFINITY)
 					. += "None of it has been used."
 
-	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	attack(mob/living/carbon/M, mob/living/carbon/user)
 		if (!src.uses || src.icon_state == "bandage-item-0")
 			user.show_text("There's nothing left of [src]!", "red")
 			return
@@ -972,135 +971,6 @@ CONTAINS:
 				ownerMob.u_equip(tool)
 				qdel(tool)
 
-/* =================================================== */
-/* -------------------- Blood Bag -------------------- */
-/* =================================================== */
-/*
-/obj/item/bloodbag
-	name = "blood bag"
-	desc = "A bag filled with donated O- blood. There's a fine needle at the end that can be used to transfer the blood to someone."
-	icon = 'icons/obj/surgery.dmi'
-	icon_state = "bloodbag-10"
-	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
-	item_state = "bloodbag"
-	flags = FPRINT | TABLEPASS
-	w_class = W_CLASS_TINY
-	force = 0
-	throwforce = 1.0
-	throw_speed = 4
-	throw_range = 20
-	stamina_damage = 0
-	stamina_cost = 0
-	stamina_crit_chance = 0
-	var/volume = 100 // aaa why did they hold SO MUCH BLOOD??  500 IS THE SAME AS A PERSON WHY DID THEY HAVE A PERSON WORTH OF BLOOD IN THEM
-	var/in_use = 0
-
-	get_desc(dist)
-		..()
-		if (src.volume >= 0)
-			switch (src.volume)
-				if (-INFINITY to 0)
-					. += "<span class='alert'>It's empty.</span>"
-				if (1 to 29)
-					. += "<span class='alert'>It's getting low.</span>"
-				if (30 to 69)
-					. += "Some of it's been used."
-				if (70 to 99)
-					. += "<span class='notice'>It's nearly full.</span>"
-				if (100 to INFINITY)
-					. += "<span class='notice'>It's full.</span>"
-
-	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-		if (volume <= 0)
-			user.show_text("There's nothing left in [src]!", "red")
-			return
-		if (in_use)
-			return
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if (H.blood_volume < 500)
-				H.tri_message("<span class='notice'><b>[user]</b> attaches [src]'s needle to [H == user ? </span>"[his_or_her(H)]" : "[H]'s"] arm and begins transferring blood.",\
-				user, "<span class='notice'>You attach [src]'s needle to [H == user ? </span>"your" : "[H]'s"] arm and begin transferring blood.",\
-				H, "<span class='notice'>[H == user ? </span>"You attach" : "<b>[user]</b> attaches"] [src]'s needle to your arm and begin transferring blood.")
-				src.in_use = 1
-				for (var/i)
-					if (H.blood_volume >= 500)
-						H.visible_message("<span class='notice'><b>[H]</b>'s blood transfusion finishes.</span>", \
-						"<span class='notice'>Your blood transfusion finishes.</span>")
-						src.in_use = 0
-						break
-					if (src.volume <= 0)
-						H.visible_message("<span class='alert'><b>[src] runs out of blood!</b></span>")
-						src.in_use = 0
-						break
-					if (BOUNDS_DIST(src, H) > 0)
-						var/fluff = pick("pulled", "yanked", "ripped")
-						H.visible_message("<span class='alert'><b>[src]'s needle gets [fluff] out of [H]'s arm!</b></span>", \
-						"<span class='alert'><b>[src]'s needle gets [fluff] out of your arm!</b></span>")
-						src.in_use = 0
-						break
-					else
-						H.blood_volume ++
-						src.volume --
-						src.UpdateIcon()
-						if (prob(5))
-							var/fluff = pick("better", "a little better", "a bit better", "warmer", "a little warmer", "a bit warmer", "less cold")
-							H.visible_message("<span class='notice'><b>[H]</b> looks [fluff].</span>", \
-							"<span class='notice'>You feel [fluff].</span>")
-						sleep(0.5 SECONDS)
-			else
-				user.show_text("[H] already has enough blood!", "red")
-				return
-		else
-			return ..()
-
-	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/reagent_containers/hypospray) || istype(W, /obj/item/reagent_containers/syringe) || istype(W, /obj/item/reagent_containers/emergency_injector))
-			if (W.reagents && W.reagents.has_reagent("blood"))
-				var/blood_volume = W.reagents.get_reagent_amount("blood")
-				if (blood_volume < W.reagents.total_volume)
-					user.show_text("This blood is impure!", "red")
-					return
-				else
-					if (src.volume > 100 - W:amount_per_transfer_from_this)
-						user.show_text("[src] is too full!", "red")
-						return
-					user.visible_message("<span class='notice'><b>[user]</b> transfers blood to [src].</span>", \
-					"<span class='notice'>You transfer blood from [W] to [src].</span>")
-					W.reagents.remove_reagent("blood", W:amount_per_transfer_from_this)
-					src.volume += W:amount_per_transfer_from_this
-					return
-		else
-			return ..()
-
-	update_icon()
-		var/iv_state = clamp(round(src.volume, 10) / 10, 0, 100)
-		icon_state = "bloodbag-[iv_state]"
-/*		switch (src.volume)
-			if (90 to INFINITY)
-				src.icon_state = "bloodbag-10"
-			if (80 to 89)
-				src.icon_state = "bloodbag-9"
-			if (70 to 79)
-				src.icon_state = "bloodbag-8"
-			if (60 to 69)
-				src.icon_state = "bloodbag-7"
-			if (50 to 59)
-				src.icon_state = "bloodbag-6"
-			if (40 to 49)
-				src.icon_state = "bloodbag-5"
-			if (30 to 39)
-				src.icon_state = "bloodbag-4"
-			if (20 to 29)
-				src.icon_state = "bloodbag-3"
-			if (10 to 19)
-				src.icon_state = "bloodbag-2"
-			if (1 to 9)
-				src.icon_state = "bloodbag-1"
-			if (-INFINITY to 0)
-				src.icon_state = "bloodbag-0"
-*/
-*/
 /* ================================================== */
 /* -------------------- Body Bag -------------------- */
 /* ================================================== */
@@ -1161,7 +1031,7 @@ CONTAINS:
 		else
 			return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		add_fingerprint(user)
 		if (src.icon_state == "bodybag" && src.w_class == W_CLASS_TINY)
 			return ..()
@@ -1252,7 +1122,7 @@ CONTAINS:
 	stamina_crit_chance = 15
 	hide_attack = 2
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (!ishuman(M))
 			if (user.a_intent == INTENT_HELP)
 				return
@@ -1268,18 +1138,18 @@ CONTAINS:
 				return
 			return ..()
 		if (H.bleeding)
-			H.tri_message("<span class='alert'><b>[user]</b> begins clamping the bleeders in [H == user ? "[his_or_her(H)]" : "[H]'s"] incision with [src].</span>",\
-			user, "<span class='alert'>You begin clamping the bleeders in [user == H ? "your" : "[H]'s"] incision with [src].</span>",\
-			H, "<span class='alert'>[H == user ? "You begin" : "<b>[user]</b> begins"] clamping the bleeders in your incision with [src].</span>")
+			user.tri_message(H, "<span class='alert'><b>[user]</b> begins clamping the bleeders in [H == user ? "[his_or_her(H)]" : "[H]'s"] incision with [src].</span>",\
+				"<span class='alert'>You begin clamping the bleeders in [user == H ? "your" : "[H]'s"] incision with [src].</span>",\
+				"<span class='alert'>[H == user ? "You begin" : "<b>[user]</b> begins"] clamping the bleeders in your incision with [src].</span>")
 
 			if (!do_mob(user, H, clamp(surgery_status * 4, 0, 100)))
 				user.visible_message("<span class='alert'><b>[user]</b> was interrupted!</span>",\
 				"<span class='alert'>You were interrupted!</span>")
 				return
 
-			H.tri_message("<span class='notice'><b>[user]</b> clamps the bleeders in [H == user ? "[his_or_her(H)]" : "[H]'s"] incision with [src].</span>",\
-			user, "<span class='notice'>You clamp the bleeders in [user == H ? "your" : "[H]'s"] incision with [src].</span>",\
-			H, "<span class='notice'>[H == user ? "You clamp" : "<b>[user]</b> clamps"] the bleeders in your incision with [src].</span>")
+			user.tri_message(H, "<span class='notice'><b>[user]</b> clamps the bleeders in [H == user ? "[his_or_her(H)]" : "[H]'s"] incision with [src].</span>",\
+				"<span class='notice'>You clamp the bleeders in [user == H ? "your" : "[H]'s"] incision with [src].</span>",\
+				"<span class='notice'>[H == user ? "You clamp" : "<b>[user]</b> clamps"] the bleeders in your incision with [src].</span>")
 
 			if (H.bleeding)
 				repair_bleeding_damage(H, 50, rand(2,5))
@@ -1289,7 +1159,7 @@ CONTAINS:
 /* -------------------- Reflex Hammer -------------------- */
 /* ======================================================= */
 /*
-/obj/item/tinyhammer/attack(mob/M as mob, mob/user as mob, def_zone) // the rest of this is defined in shipalert.dm
+/obj/item/tinyhammer/attack(mob/M, mob/user, def_zone) // the rest of this is defined in shipalert.dm
 	// todo: give people's limbs the ol' tappa tappa
 	// also make sure intent, force and armor matter
 	if (!def_zone)
@@ -1391,7 +1261,7 @@ CONTAINS:
 	brightness = 2
 	var/anim_duration = 10 // testing var so I can adjust in-game to see what looks nice
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		// todo: check zone, make sure people are shining the light 1) at a human 2) in the eyes, clauses for whatever else
 		if (!def_zone && user?.zone_sel?.selecting)
 			def_zone = user.zone_sel.selecting
@@ -1403,18 +1273,15 @@ CONTAINS:
 			JOB_XP(user, "Clown", 1)
 
 		if (!src.on || def_zone != "head")
-			M.tri_message("[user] wiggles [src] at [M == user ? "[his_or_her(user)] own" : "[M]'s"] [zone_sel2name[def_zone]].[!src.on ? " \The [src] isn't on, so it doesn't do much." : null]",\
-			user, "You wiggle [src] at [M == user ? "your own" : "[M]'s"] [zone_sel2name[def_zone]].[!src.on ? " \The [src] isn't on, so it doesn't do much." : null]",\
-			M, "[M == user ? "You wiggle" : "<b>[user]</b> wiggles"] [src] at your[M == user ? " own" : null] [zone_sel2name[def_zone]].[!src.on ? " \The [src] isn't on, so it doesn't do much." : null]")
+			user.tri_message(M, "[user] wiggles [src] at [M == user ? "[his_or_her(user)] own" : "[M]'s"] [zone_sel2name[def_zone]].[!src.on ? " \The [src] isn't on, so it doesn't do much." : null]",\
+				"You wiggle [src] at [M == user ? "your own" : "[M]'s"] [zone_sel2name[def_zone]].[!src.on ? " \The [src] isn't on, so it doesn't do much." : null]",\
+				"[M == user ? "You wiggle" : "<b>[user]</b> wiggles"] [src] at your[M == user ? " own" : null] [zone_sel2name[def_zone]].[!src.on ? " \The [src] isn't on, so it doesn't do much." : null]")
 			return
 
 		var/results_msg = "&emsp;Nothing happens." // shown to everyone but the target (you can't see your own eyes!! also we have no mirrors)
 
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
-
-			if (!H.blinded) // can't see the light if you can't see shit else!!
-				H.vision.flash(src.anim_duration)
 
 			if (istype(H.glasses) && !istype(H.glasses, /obj/item/clothing/glasses/regular) && H.glasses.c_flags & COVERSEYES) // check all the normal things that could cover eyes
 				results_msg = "&emsp;<span class='alert'>It's hard to accurately judge how [H]'s eyes reacted through [his_or_her(H)] [H.glasses.name]!</span>"
@@ -1526,9 +1393,9 @@ CONTAINS:
 			var/mob/living/L = M
 			L.vision.flash(src.anim_duration)
 
-		M.tri_message("[user] shines [src] in [M == user ? "[his_or_her(user)] own" : "[M]'s"] eyes.[results_msg ? "<br>[results_msg]" : null]",\
-		user, "You shine [src] in [M == user ? "your own" : "[M]'s"] eyes.[(M != user && results_msg) ? "<br>[results_msg]" : null]",\
-		M, "[M == user ? "You shine" : "<b>[user]</b> shines"] [src] in your[M == user ? " own" : null] eyes.")
+		user.tri_message(M, "[user] shines [src] in [M == user ? "[his_or_her(user)] own" : "[M]'s"] eyes.[results_msg ? "<br>[results_msg]" : null]",\
+			"You shine [src] in [M == user ? "your own" : "[M]'s"] eyes.[(M != user && results_msg) ? "<br>[results_msg]" : null]",\
+			"[M == user ? "You shine" : "<b>[user]</b> shines"] [src] in your[M == user ? " own" : null] eyes.")
 
 /* ====================================================== */
 /* -------------------- Surgery Tray -------------------- */
@@ -1600,7 +1467,7 @@ keeping this here because I want to make something else with it eventually
 				falling?.throw_at(target, 1, 1)
 
 
-	attackby(obj/item/W as obj, mob/user as mob, params)
+	attackby(obj/item/W, mob/user, params)
 		if (iswrenchingtool(W))
 			actions.start(new /datum/action/bar/icon/furniture_deconstruct(src, W, 30), user)
 			return
@@ -1647,7 +1514,7 @@ keeping this here because I want to make something else with it eventually
 		src.attached_objs.Remove(I)
 		UnregisterSignal(I, list(COMSIG_ITEM_PICKUP, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_PRE_DISPOSING))
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!anchored)
 			boutput(user, "You apply \the [name]'s brake.")
 		else

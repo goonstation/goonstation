@@ -114,7 +114,7 @@
 	if(health <=0)
 		src.death()
 
-/obj/npc/attackby(obj/item/W as obj, mob/living/user as mob)
+/obj/npc/attackby(obj/item/W, mob/living/user)
 /*	if (!src.alive)
 		..()
 		return

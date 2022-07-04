@@ -206,7 +206,7 @@
 		yerba_left -= water_amount
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/yerba))
 			src.icon_state = "mate"
 			yerba_left = 100
@@ -274,7 +274,7 @@
 		..()
 		setup_soda()
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (is_sealed)
 			boutput(user, "<span class='alert'>You can't drink out of a sealed can!</span>") //idiot
 			return

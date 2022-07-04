@@ -255,7 +255,7 @@
 					remove_equipment(M)
 					return
 				if (O.mind)
-					O.Browse(grabResource("html/slasher_possession.html"),"window=slasher_possession;size=600x440;title=Slasher Possession")
+					O.show_antag_popup("slasher_possession", FALSE)
 					boutput(O, "<span class='bold' style='color:red;font-size:150%'>You have been temporarily removed from your body!</span>")
 				if(!src.mind || !O.mind)
 					src.visible_message("<span class='bold' style='color:red'>Something fucked up! Aborting possession, please let #imcoder know. Error Code: 102</span>")

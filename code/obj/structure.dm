@@ -43,7 +43,7 @@ obj/structure/ex_act(severity)
 			return
 	return
 
-/obj/structure/girder/attack_hand(mob/user as mob)
+/obj/structure/girder/attack_hand(mob/user)
 	if (user.is_hulk())
 		if (prob(50))
 			playsound(user.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
@@ -79,7 +79,7 @@ obj/structure/ex_act(severity)
 			return
 	..()
 
-/obj/structure/girder/attackby(obj/item/W as obj, mob/user as mob)
+/obj/structure/girder/attackby(obj/item/W, mob/user)
 	if (iswrenchingtool(W) && state == 0 && anchored && !istype(src, /obj/structure/girder/displaced))
 		actions.start(new /datum/action/bar/icon/girder_tool_interact(src, W, GIRDER_DISASSEMBLE), user)
 
@@ -243,7 +243,7 @@ obj/structure/ex_act(severity)
 				qdel(the_girder)
 		owner.visible_message("<span class='notice'>[owner] [verbens] [the_girder].</span>")
 
-/obj/structure/girder/displaced/attack_hand(mob/user as mob)
+/obj/structure/girder/displaced/attack_hand(mob/user)
 	if (user.is_hulk())
 		if (prob(70))
 			playsound(user.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
@@ -262,7 +262,7 @@ obj/structure/ex_act(severity)
 			return
 	..()
 
-/obj/structure/girder/displaced/attackby(obj/item/W as obj, mob/user as mob)
+/obj/structure/girder/displaced/attackby(obj/item/W, mob/user)
 
 	if (istype(W, /obj/item/sheet))
 		if (!istype(src.loc, /turf/simulated/floor/))
@@ -353,7 +353,7 @@ obj/structure/ex_act(severity)
 		else
 			icon_state = "woodwall"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (ishuman(user) && !user.is_zombie)
 			var/mob/living/carbon/human/H = user
 			if (src.anti_z && H.a_intent != INTENT_HARM && isfloor(get_turf(src)))
@@ -384,7 +384,7 @@ obj/structure/ex_act(severity)
 		else
 			return
 
-	attackby(var/obj/item/W as obj, mob/user as mob)
+	attackby(var/obj/item/W, mob/user)
 		if (istype(W, /obj/item/plank))
 			actions.start(new /datum/action/bar/icon/plank_repair_wall(W, src, 30), user)
 			return

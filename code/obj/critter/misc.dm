@@ -329,10 +329,10 @@
 
 		return 1
 
-/obj/critter/spacebee
+/obj/critter/wasp
 	name = "space wasp"
 	desc = "A wasp in space."
-	icon_state = "spacebee"
+	icon_state = "wasp"
 	critter_family = BUG
 	density = 1
 	health = 10
@@ -433,7 +433,7 @@
 			else
 				continue
 
-	attackby(obj/item/W as obj, mob/M as mob)
+	attackby(obj/item/W, mob/M)
 		if(istype(W, /obj/item/reagent_containers/food/snacks) && !(M in src.friends))
 			if(prob(20))
 				src.visible_message("<span class='notice'>[src] chitters happily at the [W], and seems a little friendlier with [M]!</span>")
@@ -452,7 +452,7 @@
 		else
 			..()
 
-	attack_hand(mob/M as mob)
+	attack_hand(mob/M)
 		if ((M.a_intent != INTENT_HARM) && (M in src.friends))
 			if(M.a_intent == INTENT_HELP && src.aggressive)
 				src.visible_message("<span class='notice'>[M] pats [src] on the head in a soothing way. It won't attack anyone now.</span>")
@@ -490,7 +490,7 @@
 
 
 
-/obj/critter/spacebee/angry
+/obj/critter/wasp/angry
 	name = "angry space wasp"
 	desc = "An angry wasp in space."
 	angertext = "buzzes furiously at"
@@ -500,10 +500,10 @@
 
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/wasp
 	name = "space wasp egg"
-	critter_type = /obj/critter/spacebee
+	critter_type = /obj/critter/wasp
 
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/wasp/angry
-	critter_type = /obj/critter/spacebee/angry
+	critter_type = /obj/critter/wasp/angry
 
 /obj/critter/magiczombie
 	name = "skeleton"
@@ -536,7 +536,7 @@
 		playsound(src.loc, "sound/impact_sounds/Crystal_Hit_1.ogg", 50, 0)
 		. = ..()
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		..()
 		if (!src.alive) return
 		if (istype(W, /obj/item/clothing/head))
@@ -868,25 +868,27 @@
 
 /obj/critter/bloodling
 	name = "Bloodling"
-	desc = "A force of pure sorrow and evil."
+	desc = "A force of pure sorrow and evil. They shy away from that which is holy."
 	icon_state = "bling"
 	density = 1
-	health = 20
+	health = 15
 	aggressive = 1
 	defensive = 0
 	wanderer = 1
-	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 1
 	atksilicon = 0
 	atcritter = 0
-	firevuln = 0
-	brutevuln = 0
+	firevuln = 1
+	brutevuln = 0.5
 	seekrange = 5
-	invisibility = INVIS_INFRA
 	flying = 1
 	is_pet = FALSE
-
 	generic = 0
+
+	New()
+		UpdateParticles(new/particles/bloody_aura, "bloodaura")
+		..()
 
 	seek_target()
 		src.anchored = 0
@@ -912,12 +914,9 @@
 		if (narrator_mode)
 			playsound(src.loc, 'sound/vox/ghost.ogg', 50, 1, -1)
 		else
-			playsound(src.loc, 'sound/effects/ghost.ogg', 50, 1, -1)
+			playsound(src.loc, 'sound/effects/ghost.ogg', 30, 1, -1)
 		if(iscarbon(M) && prob(50))
-			if(M.see_invisible < INVIS_CLOAK)
-				boutput(M, "<span class='combat'><b>You are forced to the ground by an unseen being!</b></span>")
-			else
-				boutput(M, "<span class='combat'><b>You are forced to the ground by the Bloodling!</b></span>")
+			boutput(M, "<span class='combat'><b>You are forced to the ground by the Bloodling!</b></span>")
 			random_brute_damage(M, rand(0,3))
 			M.changeStatus("stunned", 2 SECONDS)
 			M.changeStatus("weakened", 2 SECONDS)
@@ -926,20 +925,20 @@
 
 
 	CritterAttack(mob/M)
-		playsound(src.loc, "sound/effects/ghost2.ogg", 50, 1, -1)
+		playsound(src.loc, "sound/effects/ghost2.ogg", 30, 1, -1)
 		attacking = 1
 		if(iscarbon(M))
-			if(prob(50))
+			if(prob(30))
 				random_brute_damage(M, rand(3,7))
 				boutput(M, "<span class='combat'><b>You feel blood getting drawn out through your skin!</b></span>")
 			else
-				boutput(M, "<span class='combat'>You feel uncomfortable.</span>")
+				boutput(M, "<span class='combat'>You feel uncomfortable. Your blood seeks to escape you.</span>")
 
 		SPAWN(0.5 SECONDS)
 			attacking = 0
 
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (!src.alive)
 			return
 		else
@@ -956,9 +955,18 @@
 
 	ai_think()
 		if(!locate(/obj/decal/cleanable/blood) in src.loc)
-			playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1, -1)
-			make_cleanable( /obj/decal/cleanable/blood,loc)
+			if(prob(50))
+				playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1, -1)
+				make_cleanable( /obj/decal/cleanable/blood,loc)
 		return ..()
+
+	CritterDeath()
+		if (!src.alive)
+			return
+		..()
+		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1, -1)
+		new /obj/decal/cleanable/blood(src.loc)
+		qdel(src)
 
 /obj/critter/blobman
 	name = "mutant"
@@ -1025,12 +1033,12 @@
 	blob_act(power)
 		return
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (src.alive)
 			boutput(user, "<span class='combat'><b>Your hand passes right through! It's so cold...</b></span>")
 		return
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (!src.alive)
 			return
 		else
@@ -1124,11 +1132,11 @@
 			src.appear()
 			break
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		..()
 		src.boredom_countdown = rand(5,10)
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		..()
 		src.boredom_countdown = rand(5,10)
 
@@ -1178,7 +1186,7 @@
 	aggressive = 1
 	generic = 0
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (user.a_intent == "help")
 			return
 

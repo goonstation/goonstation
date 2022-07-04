@@ -302,7 +302,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 		HH.limb_name = "teeth"					// name for the dummy holder
 		HH.can_hold_items = 0
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (!isdead(src) && istype(W, /obj/item/plant/herb/catnip))
 			user.visible_message("<b>[user]</b> gives [src] \the [W]!",\
 			"You give [src] \the [W].")
@@ -420,7 +420,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 			src.show_text("[user] swipes the card down your back in a petting motion...")
 		return 1
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (istype(W, /obj/item/card/emag))
 			emag_act(user, W)
 		else
@@ -1020,7 +1020,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	bird_call_msg = list("hoots", "hoos")
 	bird_call_sound = "sound/voice/animal/hoot.ogg"
 
-	attackby(obj/item/W as obj, mob/M as mob)
+	attackby(obj/item/W, mob/M)
 		if(istype(W, /obj/item/plutonium_core/hootonium_core)) //Owls interestingly are capable of absorbing hootonium into their bodies harmlessly. This is the only safe method of removing it.
 			playsound(M.loc, "sound/items/eatfood.ogg", 100, 1)
 			boutput(M, "<span class='alert'><B>You feed the [src] the [W]. It looks [pick("confused", "annoyed", "worried", "satisfied", "upset", "a tad miffed", "at you and winks")].</B></span>")
@@ -1055,7 +1055,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 30
 	good_grip = 0.5
 
-	attackby(obj/item/W as obj, mob/M as mob)
+	attackby(obj/item/W, mob/M)
 		if(istype(W, /obj/item/plutonium_core/hootonium_core)) //Owls interestingly are capable of absorbing hootonium into their bodies harmlessly. This is the only safe method of removing it.
 			playsound(M.loc, "sound/items/eatfood.ogg", 100, 1)
 			boutput(M, "<span class='alert'><B>You feed the [src] the [W]. It looks [pick("confused", "annoyed", "worried", "satisfied", "upset", "a tad miffed", "at you and winks")].</B></span>")
@@ -1239,6 +1239,16 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			src.name = replacetext(src.name, "crow", "raven")
 			if (src.name != initial(src.name))
 				src.real_name = src.name
+
+/mob/living/critter/small_animal/bird/crow/strong
+	health_brute = 30
+	health_burn = 30
+
+/mob/living/critter/small_animal/bird/crow/strong/strongest
+	name = "starry crow"
+	icon_state = "space"
+	health_brute = 100
+	health_burn = 100
 
 /* -------------------- Goose -------------------- */
 
@@ -1759,13 +1769,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				src.icon_state = icon_state_dead ? icon_state_dead : "[icon_state]-dead" // so we gotta show the message + change icon + etc
 				src.visible_message("<span class='alert'><b>[src]</b> dies!</span>",\
 				"<span class='alert'><b>You play dead!</b></span>")
-				src.set_density(0)
 			src.playing_dead = clamp((src.playing_dead + addtime), 0, 100)
 		if (src.playing_dead <= 0)
 			return
 		if (src.playing_dead == 1)
 			src.playing_dead = 0
-			src.set_density(1)
 			src.full_heal()
 			src.visible_message("<span class='notice'><b>[src]</b> stops playing dead and gets back up!</span>")
 			boutput(src, "<span class='notice'><b>You stop playing dead and get back up!</b></span>") // visible_message doesn't go through when this triggers
@@ -1858,7 +1866,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if(prob(50))
 				src.ball_up(emote=FALSE)
 
-	attack_hand(mob/living/M as mob, params, location, control)
+	attack_hand(mob/living/M, params, location, control)
 		if (M.a_intent == INTENT_HARM || M.a_intent == INTENT_GRAB)
 			if (!src.is_balled())
 				if(prob(70))
@@ -2123,6 +2131,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	New()
 		..()
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 		if (prob(1))
 			src.name = replacetext(src.name, "bat", "bart")
 			if (src.name != initial(src.name))
@@ -2197,8 +2206,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	name = "space wasp"
 	real_name = "space wasp"
 	desc = "A wasp in space."
-	icon_state = "spacebee"
-	icon_state_dead = "spacebee-dead"
+	icon_state = "wasp"
+	icon_state_dead = "wasp-dead"
 	speechverb_say = "buzzes"
 	speechverb_exclaim = "screeches"
 	speechverb_ask = "hums"
@@ -2327,6 +2336,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	desc = "It doesn't have any arms or legs so it's kind of like a snake, but it's gross and unthreatening instead of cool and dangerous."
 	icon_state = "slug"
 	icon_state_dead = "slug-dead"
+	blood_id = "hemolymph"
 	speechverb_say = "blorps"
 	speechverb_exclaim = "bloops"
 	speechverb_ask = "burbles"
@@ -2361,6 +2371,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	desc = "It's basically just a slug with a shell on it. This makes it less gross."
 	icon_state = "snail"
 	icon_state_dead = "snail-dead"
+	blood_id = "hemolymph"
 	health_brute = 10
 	health_burn = 10
 	slime_chance = 11
@@ -2451,6 +2462,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	name = "moth"
 	real_name = "moth"
 	desc = "Ew a moth. Hope it doesn't get into the wardrobe."
+	blood_id = "hemolymph"
 
 	New()
 		..()
@@ -2474,6 +2486,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	speechverb_exclaim = "bzzts"
 	speechverb_ask = "pesters"
 	death_text = "%src% splats."
+	blood_id = "hemolymph"
 	flags = TABLEPASS | DOORPASS
 	fits_under_table = 1
 	base_move_delay = 1.3
@@ -2534,6 +2547,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	hand_count = 2
 	icon_state = "sqwibby"
 	icon_state_dead = "sqwibby-dead"
+	blood_id = "hemolymph"
 	speechverb_say = "bzzs"
 	speechverb_exclaim = "bzzts"
 	speechverb_ask = "pesters"
@@ -2963,7 +2977,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			boutput(M, "You extend your hand to the mouse, waiting for it to accept.")
 			if (ON_COOLDOWN(src, "mentor mouse pickup popup", 3 SECONDS))
 				return
-			if (alert(src, "[M] wants to pick you up and put you in their pocket. Is that okay with you?", "Hop in the pocket", "Yes", "No") != "Yes")
+			if (tgui_alert(src, "[M] wants to pick you up and put you in their pocket. Is that okay with you?", "Hop in the pocket", list("Yes", "No")) != "Yes")
 				boutput(M, "\The [src] slips out as you try to pick it up.")
 				return
 		if(!src || !src.mind || !src.client)
@@ -3087,6 +3101,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	real_name = "crab"
 	desc = "Snip snap"
 	icon_state = "crab_party"
+	blood_id = "hemolymph"
 	hand_count = 2
 	speechverb_say = "snips"
 	speechverb_gasp = "claks"
@@ -3130,6 +3145,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	real_name = "crab"
 	desc = "Snip snap"
 	icon_state = "crab_party"
+	blood_id = "hemolymph"
 	hand_count = 2
 	speechverb_say = "snips"
 	speechverb_exclaim = "snaps"
@@ -3253,6 +3269,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	desc = "This is an alien hallucigenia."
 	icon_state = "hallucigenia"
 	icon_state_dead = "hallucigenia-dead"
+	blood_id = "hemolymph"
 	speechverb_say = "clicks"
 	speechverb_exclaim = "screeches"
 	speechverb_ask = "chitters"

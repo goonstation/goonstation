@@ -223,6 +223,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_fake_medal,
 		/datum/admins/proc/togglespeechpopups,
 		/datum/admins/proc/togglemonkeyspeakhuman,
+		/datum/admins/proc/toggletraitorsseeeachother,
 		/datum/admins/proc/toggleautoending,
 		/datum/admins/proc/togglelatetraitors,
 		/datum/admins/proc/toggle_pull_slowing,
@@ -263,6 +264,7 @@ var/list/admin_verbs = list(
 		/client/proc/idclip,
 		///client/proc/addpathogens,
 		/client/proc/respawn_as_self,
+		/client/proc/respawn_list_players,
 		/client/proc/cmd_give_pet,
 		/client/proc/cmd_give_pets,
 		/client/proc/cmd_give_player_pets,
@@ -532,7 +534,7 @@ var/list/special_pa_observing_verbs = list(
 	src.holder.rank = rank
 
 	if(!src.holder.state)
-		var/state = alert("Which state do you want the admin to begin in?", "Admin-state", "Play", "Observe", "Neither")
+		var/state = tgui_alert(src.mob, "Which state do you want the admin to begin in?", "Admin-state", list("Play", "Observe", "Neither"))
 		if(state == "Play")
 			src.holder.state = 1
 			src.admin_play()
@@ -831,7 +833,7 @@ var/list/special_pa_observing_verbs = list(
 	set desc = "Ban or unban a player from using OOC"
 	ADMIN_ONLY
 	var/mob/target
-	var/client/selection = input("Please, select a player!", "OOC Ban") as null|anything in clients
+	var/client/selection = tgui_input_list(src.mob, "Please, select a player!", "OOC Ban", clients)
 	if (!selection)
 		return
 	target = selection.mob
@@ -908,7 +910,7 @@ var/list/fun_images = list()
 	set popup_menu = 0
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 
-	var/crossness = input("How cross are we with this guy?", "Enter Crossness", "A bit") as anything in list("A bit", "A lot", "Cancel")
+	var/crossness = tgui_alert(src.mob, "How cross are we with this guy?", "Enter Crossness", list("A bit", "A lot", "Cancel"))
 	if (!crossness || crossness == "Cancel")
 		return
 
@@ -955,7 +957,7 @@ var/list/fun_images = list()
 	ADMIN_ONLY
 
 	var/list/respawn_types = list("Heavenly", "Demonically")
-	var/selection = tgui_input_list(usr, "Select Respawn type.", "Cinematic Respawn", respawn_types)
+	var/selection = tgui_input_list(src.mob, "Select Respawn type.", "Cinematic Respawn", respawn_types)
 	switch(selection)
 		if("Heavenly")
 			src.respawn_as_self()
@@ -976,7 +978,7 @@ var/list/fun_images = list()
 	ADMIN_ONLY
 
 	if (!cli)
-		cli = input("Please, select a player!", "Respawn As", null, null) as null|anything in clients
+		cli = tgui_input_list(src.mob, "Please, select a player!", "Respawn As", null, null, clients)
 		if(!cli)
 			return
 
@@ -1058,6 +1060,28 @@ var/list/fun_images = list()
 	if (flourish)
 		for (var/mob/living/M in oviewers(5, get_turf(H)))
 			M.apply_flash(animation_duration = 30, weak = 5, uncloak_prob = 0, stamina_damage = 250)
+
+/client/proc/respawn_list_players()
+	set name = "Respawn List of Players"
+	set desc = "Respawn the provided list of players."
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	set popup_menu = FALSE
+	ADMIN_ONLY
+
+	var/list/ckeys = splittext(input(src, "Input list of players", "Ckeys with spaces as delimiters", null) as null|text, " ")
+	if (!length(ckeys))
+		return
+	var/list/jobs = job_controls.staple_jobs + job_controls.special_jobs + job_controls.hidden_jobs
+	SortList(jobs, /proc/compareName)
+	var/datum/job/job = tgui_input_list(usr, "Select job to respawn", "Respawn As", jobs)
+	if (!job)
+		return
+	for (var/CK in ckeys)
+		var/mob/M = ckey_to_mob(CK)
+		if (!M)
+			continue
+		var/mob/new_player/NP = src.respawn_target(M)
+		NP?.AttemptLateSpawn(job, force=TRUE)
 
 /client/proc/cmd_admin_humanize(var/mob/M in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -1141,7 +1165,7 @@ var/list/fun_images = list()
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 
 	//Gotta prevent dummies
-	var/confirm = alert("WARNING: This proc should absolutely not be run on a live server! Make sure you know what you are doing!", "WARNING", "Cancel", "Proceed")
+	var/confirm = tgui_alert(src.mob, "WARNING: This proc should absolutely not be run on a live server! Make sure you know what you are doing!", "WARNING", list("Cancel", "Proceed"))
 	if(confirm == "Cancel")
 		return
 
@@ -1178,14 +1202,14 @@ var/list/fun_images = list()
 	else
 		delay = inputDelay
 
-	var/confirm2 = alert("Make everyone invisible? (Literally every mob)", "Invisible Mobs?", "No", "Yes")
+	var/confirm2 = tgui_alert(src.mob, "Make everyone invisible? (Literally every mob)", "Invisible Mobs?", list("Yes", "No"))
 	if (confirm2 == "Yes")
 		//Make everyone invisible so they don't get in the way of screenshots
 		for (var/mob/M in mobs)
 			if (M.ckey)
 				M.alpha = 0
 
-	var/confirm3 = alert("Max out all power devices? (Prevents lights from going out mid-mapping)", "Max Power?", "No", "Yes")
+	var/confirm3 = tgui_alert(src.mob, "Max out all power devices? (Prevents lights from going out mid-mapping)", "Max Power?", list("Yes", "No"))
 	if (confirm3 == "Yes")
 		//Max out all power (to avoid lights dying mid mapping)
 		for(var/obj/machinery/power/apc/C in machine_registry[MACHINES_POWER])
@@ -1200,7 +1224,7 @@ var/list/fun_images = list()
 			S.UpdateIcon()
 			S.power_change()
 
-	var/confirm4 = alert("Turn space bright pink? (For post processing/optimizations)", "Pink Background?", "No", "Yes")
+	var/confirm4 = tgui_alert(src.mob, "Turn space bright pink? (For post processing/optimizations)", "Pink Background?", list("Yes", "No"))
 	if (confirm4 == "Yes")
 		//Make every space tile bright pink (for further processing via local image manipulation)
 		for (var/turf/space/S in world)
@@ -1210,13 +1234,13 @@ var/list/fun_images = list()
 				S.icon_state = "etc"
 				S.color = transparentColor
 
-	var/confirm5 = alert("Make everything full bright?", "Fullbright?", "No", "Yes")
+	var/confirm5 = tgui_alert(src.mob, "Make everything full bright?", "Fullbright?", list("Yes", "No"))
 	if (confirm5 == "Yes")
 		var/atom/plane = src.get_plane(PLANE_LIGHTING)
 		if (plane)
 			plane.alpha = 0
 
-	var/confirm6 = alert("Disable drop shadowing?", "Dropshadows?", "No", "Yes")
+	var/confirm6 = tgui_alert(src.mob, "Disable drop shadowing?", "Dropshadows?", list("Yes", "No"))
 	if (confirm6 == "Yes")
 		winset(src, "menu.set_shadow", "is-checked=false")
 		src.apply_depth_filter()
@@ -1249,7 +1273,7 @@ var/list/fun_images = list()
 					out(src, "Screenshot taken at ([x], [y], [z])")
 					sleep(delay)
 			if (curZ != world.maxz)
-				var/pause = alert("Z Level ([curZ]) finished. Organise your screenshot files and press Ok to continue or Cancel to cease mapping.", "Tea break", "Ok", "Cancel")
+				var/pause = tgui_alert(src.mob, "Z Level ([curZ]) finished. Organise your screenshot files and press Ok to continue or Cancel to cease mapping.", "Tea break", list("Ok", "Cancel"))
 				if (pause == "Cancel")
 					return
 	//Or just one level I GUESS
@@ -1503,7 +1527,7 @@ var/list/fun_images = list()
 	ADMIN_ONLY
 
 	if (!M)
-		M = input("Choose a target.", "Selection") as null|anything in mobs
+		M = tgui_input_list(src.mob, "Choose a target.", "Selection", mobs)
 		if (!M)
 			return
 	var/pet_input = input("Enter path of the thing you want to give as a pet or enter a part of the path to search", "Enter Path", pick("/obj/critter/domestic_bee", "/obj/critter/parrot/random", "/obj/critter/cat")) as null|text
@@ -1599,7 +1623,9 @@ var/list/fun_images = list()
 	set desc = "Create a custom object spewing grenade"
 	ADMIN_ONLY
 
-	var/new_grenade = alert("Use the new thing throwing grenade?", "Cool new grenade?", "Yes", "No") == "Yes"
+	var/new_grenade = tgui_alert(src.mob, "Use the new thing throwing grenade?", "Cool new grenade?", list("Yes", "No"))
+	if(new_grenade == "No")
+		return
 	var/obj_input = input("Enter path of the object you want the grenade to have or enter a part of the path to search", "Enter Path") as null|text
 	if (!obj_input)
 		return
@@ -1702,7 +1728,7 @@ var/list/fun_images = list()
 		return alert(bustedMapSwitcher)
 
 	if (mapSwitcher.nextMapIsVotedFor)
-		var/ignorePlayerVote = alert("The next map was voted for by the players, are you sure you want to override it? This could be very rude!", "Ignore Players?", "Yes", "No")
+		var/ignorePlayerVote = tgui_alert(src.mob, "The next map was voted for by the players, are you sure you want to override it? This could be very rude!", "Ignore Players?", list("Yes", "No"))
 		if (ignorePlayerVote == "No")
 			return
 
@@ -1727,7 +1753,7 @@ var/list/fun_images = list()
 	logTheThing("diary", usr ? usr : src, null, "set the next round's map to [map]", "admin")
 	message_admins("[key_name(usr ? usr : src)] set the next round's map to [map]")
 
-	var/announce = alert("Map set to [map]. It will apply next round.\n\nAnnounce this to the unwashed masses?", "All done", "Ok", "Nah")
+	var/announce = tgui_alert(src.mob, "Map set to [map]. It will apply next round.\n\nAnnounce this to the unwashed masses?", "All done", list("Ok", "Nah"))
 	if (announce == "Ok")
 		boutput(world, "<span class='notice'><b>The next round's map will be: [map]</b></span>")
 
@@ -1802,7 +1828,7 @@ var/list/fun_images = list()
 	if (!mapSwitcher.playersVoting)
 		return alert("There isn't a vote currently underway.")
 
-	var/really = alert("Are you sure you want to cancel the map vote before it's finished? This will discard all votes and do nothing.", "Dash player dreams?", "Yes", "No")
+	var/really = tgui_alert(src.mob, "Are you sure you want to cancel the map vote before it's finished? This will discard all votes and do nothing.", "Dash player dreams?", list("Yes", "No"))
 	if (really == "No")
 		return
 
@@ -2069,25 +2095,25 @@ var/list/fun_images = list()
 		for(var/atom/thing as anything in clicked_turf)
 			atoms += thing
 		if (atoms.len)
-			A = input(usr, "Which item to admin-interact with?") as null|anything in atoms
+			A = tgui_input_list(src, "Which item to admin-interact with?", "Admin interact", atoms)
 			if (isnull(A)) return
 
 	var/choice = 0
 
 	if (!client.holder.animtoggle)
 		if (ismob(A))
-			choice = input(usr, "What do? (Atom verbs are ON)", "[A]") as null|anything in (client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["mob"])
+			choice = tgui_input_list(src, "What do? (Atom verbs are ON)", "[A]", (client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["mob"]))
 		else if (isturf(A))
-			choice = input(usr, "What do? (Atom verbs are ON)", "[A]") as null|anything in (client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["turf"])
+			choice = tgui_input_list(src, "What do? (Atom verbs are ON)", "[A]", (client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["turf"]))
 		else
-			choice = input(usr, "What do? (Atom verbs are ON)", "[A]") as null|anything in (client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["obj"])
+			choice = tgui_input_list(src, "What do? (Atom verbs are ON)", "[A]", (client.holder.admin_interact_atom_verbs + client.holder.admin_interact_verbs["obj"]))
 	else
 		if (ismob(A))
-			choice = input(usr, "What do?", "[A]") as null|anything in client.holder.admin_interact_verbs["mob"]
+			choice = tgui_input_list(src, "What do?", "[A]", client.holder.admin_interact_verbs["mob"])
 		else if (isturf(A))
-			choice = input(usr, "What do?", "[A]") as null|anything in client.holder.admin_interact_verbs["turf"]
+			choice = tgui_input_list(src, "What do?", "[A]", client.holder.admin_interact_verbs["turf"])
 		else
-			choice = input(usr, "What do?", "[A]") as null|anything in client.holder.admin_interact_verbs["obj"]
+			choice = tgui_input_list(src, "What do?", "[A]", client.holder.admin_interact_verbs["obj"])
 
 	var/client/C = src.client
 	switch(choice)

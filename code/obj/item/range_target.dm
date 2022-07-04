@@ -8,6 +8,10 @@
 	density = 1
 	anchored = 1
 
+	New()
+		..()
+		src.AddComponent(/datum/component/bullet_holes, 100, 0)
+
 	bullet_act(obj/projectile/P)
 		. = ..()
 		if(!ON_COOLDOWN(src, "target_range_hit", 0.5 SECONDS))

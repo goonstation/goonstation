@@ -254,7 +254,7 @@
 
 					boutput(user, "<b>You must wait at least [time_left_message] until you can leave cryosleep.</b>")
 					return FALSE
-		if (alert(user, "Would you like to leave cryogenic storage?", "Confirmation", "Yes", "No") == "No")
+		if (tgui_alert(user, "Would you like to leave cryogenic storage?", "Confirmation", list("Yes", "No")) != "Yes")
 			return 0
 		if (user.loc != src || !stored_mobs.Find(user))
 			return 0
@@ -283,7 +283,7 @@
 					if (!isnull(crew_record))
 						crew_record["p_stat"] = "Active"
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if(isgrab(user.l_hand))
 			src.Attackby(user.l_hand, user)
 		else if(isgrab(user.r_hand))
@@ -298,7 +298,7 @@
 		if (!enter_prompt(user))
 			return ..()
 
-	attackby(var/obj/item/W as obj, var/mob/user as mob)
+	attackby(var/obj/item/W, var/mob/user)
 		if (istype(W, /obj/item/grab))
 			var/obj/item/grab/G = W
 			if (ismob(G.affecting) && insert_prompt(G.affecting, user))
@@ -311,7 +311,7 @@
 		if (target.client || !target.ckey)
 			boutput(user, "<span class='alert'>You can't force someone into cryosleep if they're still logged in or are an NPC!</span>")
 			return FALSE
-		else if (alert(user, "Would you like to put [target] into cryogenic storage? They will be able to leave it immediately if they log back in.", "Confirmation", "Yes", "No") == "Yes")
+		else if (tgui_alert(user, "Would you like to put [target] into cryogenic storage? They will be able to leave it immediately if they log back in.", "Confirmation", list("Yes", "No")) == "Yes")
 			if (!src.mob_can_enter_storage(target, user))
 				return FALSE
 			else

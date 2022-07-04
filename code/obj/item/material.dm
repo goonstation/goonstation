@@ -33,7 +33,7 @@
 			name = "[amount] [initial(src.name)][amount > 1 ? "s":""]"
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(W.type == src.type)
 			stack_item(W)
 			if(!user.is_in_hands(src))
@@ -52,7 +52,7 @@
 				boutput(user, "<span class='alert'>[W] is full!</span>")
 		else ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(user.is_in_hands(src) && src.amount > 1)
 			var/splitnum = round(input("How many ores do you want to take from the stack?","Stack of [src.amount]",1) as num)
 			if (splitnum >= amount || splitnum < 1 || !isnum_safe(splitnum))
@@ -210,6 +210,7 @@
 
 	setup_material()
 		src.setMaterial(getMaterial("molitz_b"), appearance = 1, setname = 0)
+		src.pressure_resistance = INFINITY //has to be after material setup. REASONS
 		return ..()
 
 /obj/item/raw_material/pharosium
@@ -431,7 +432,7 @@
 		src.setMaterial(getMaterial("telecrystal"), appearance = 0, setname = 0)
 		return ..()
 
-	attack(mob/M as mob, mob/user as mob, def_zone)//spyguy apologizes in advance -- not somepotato i promise
+	attack(mob/M, mob/user, def_zone)//spyguy apologizes in advance -- not somepotato i promise
 		if(M == user)
 			boutput(M, "<b class='alert'>You eat the [html_encode(src)]!</b>")
 			boutput(M, "Nothing happens, though.")
@@ -591,14 +592,14 @@
 		icon_state += "[rand(1,3)]"
 		src.setItemSpecial(/datum/item_special/double)
 
-	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	attack(mob/living/carbon/M, mob/living/carbon/user)
 		if(!scalpel_surgery(M,user)) return ..()
 		else return
 
 	Crossed(atom/movable/AM as mob|obj)
 		if(ishuman(AM))
 			var/mob/living/carbon/human/H = AM
-			if(H.getStatusDuration("stunned") || H.getStatusDuration("weakened")) // nerf for dragging a person and a shard to damage them absurdly fast - drsingh
+			if(ON_COOLDOWN(H, "shard_Crossed", 7 SECONDS) || H.getStatusDuration("stunned") || H.getStatusDuration("weakened")) // nerf for dragging a person and a shard to damage them absurdly fast - drsingh
 				return
 			if(isabomination(H))
 				return
@@ -770,7 +771,7 @@
 	var/atom/output_location = null
 	var/list/atom/leftovers = null
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (active)
 			boutput(user, "<span class='alert'>It's already working! Give it a moment!</span>")
 			return
@@ -884,10 +885,8 @@
 			W.dropped(user)
 			. = TRUE
 
-	attackby(obj/item/W as obj, mob/user as mob)
-		if (W.cant_drop) //For borg held items
-			boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
-			return ..()
+	attackby(obj/item/W, mob/user)
+
 		if (istype(W, /obj/item/ore_scoop))
 			var/obj/item/ore_scoop/scoop = W
 			W = scoop.satchel
@@ -909,11 +908,12 @@
 			if (.)
 				user.visible_message("<b>[user.name]</b> loads [W] into [src].")
 				playsound(src, sound_load, 40, 1)
-
 		else if (load_reclaim(W, user))
 			boutput(user, "You load [W] into [src].")
 			playsound(src, sound_load, 40, 1)
-
+		else if (W.cant_drop)
+			boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
+			return ..()
 		else
 			. = ..()
 

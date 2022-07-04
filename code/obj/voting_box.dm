@@ -14,7 +14,7 @@
 		if (bribeAmount > 0)
 			. += "<br>Looks like some jerk spent [bribeAmount] credits to buy a vote."
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.add_fingerprint(user)
 
 		var/client/C = user.client
@@ -46,7 +46,7 @@
 			boutput(user, "<span class='notice'>There's no vote going on right now.</span>")
 
 
-	attackby(obj/item/S as obj, mob/user as mob)
+	attackby(obj/item/S, mob/user)
 		src.add_fingerprint(user)
 
 		if (istype(S, /obj/item/spacecash))

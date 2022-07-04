@@ -67,7 +67,7 @@
 	last_cast = world.time + cooldown
 	holder.updateButtons()
 	SPAWN(cooldown + 5)
-		holder.updateButtons()
+		holder?.updateButtons()
 
 /////////////////////////////////////////
 
@@ -175,18 +175,21 @@
 
 /datum/targetable/flockmindAbility/partitionMind
 	name = "Partition Mind"
-	desc = "Create a Flocktrace, using 100 compute."
 	icon_state = "awaken_drone"
 	cooldown = 60 SECONDS
 	targeted = FALSE
 	///Are we still waiting for ghosts to respond
 	var/waiting = FALSE
 
+/datum/targetable/flockmindAbility/partitionMind/New()
+	src.desc = "Create a Flocktrace, using [FLOCKTRACE_COMPUTE_COST] compute."
+	..()
+
 /datum/targetable/flockmindAbility/partitionMind/cast(atom/target)
 	if(waiting || ..())
 		return TRUE
 
-	if(!holder.pointCheck(100))
+	if(!holder.pointCheck(FLOCKTRACE_COMPUTE_COST))
 		return TRUE
 
 	var/mob/living/intangible/flock/flockmind/F = holder.owner

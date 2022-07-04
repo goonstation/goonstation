@@ -142,11 +142,14 @@ ABSTRACT_TYPE(/obj/item/circuitboard)
 /obj/item/circuitboard/telescope
 	name = "Circuit board (Quantum Telescope)"
 	computertype = "/obj/machinery/computer/telescope"
+/obj/item/circuitboard/announcement
+	name = "Circuit board (Announcement Computer)"
+	computertype = "/obj/machinery/computer/announcement"
 
 /obj/computerframe/meteorhit(obj/O as obj)
 	qdel(src)
 
-/obj/computerframe/attackby(obj/item/P as obj, mob/user as mob)
+/obj/computerframe/attackby(obj/item/P, mob/user)
 	var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, 2 SECONDS, /obj/computerframe/proc/state_actions,\
 	list(P,user), P.icon, P.icon_state, null)
 	switch(state)

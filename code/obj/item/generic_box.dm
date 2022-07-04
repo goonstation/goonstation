@@ -262,7 +262,7 @@
 			..()
 			build_overlay()
 
-		attack(mob/M as mob, mob/user as mob)
+		attack(mob/M, mob/user)
 			if (src.open)
 				src.add_fingerprint(user)
 				var/obj/item/I = src.take_from()
@@ -286,6 +286,11 @@
 			name = "box of synthflesh patches"
 			contained_item = /obj/item/reagent_containers/patch/synthflesh
 			item_amount = 10
+			max_item_amount = 10
+		nicotine
+			name = "box of nicotine patches"
+			contained_item = /obj/item/reagent_containers/patch/nicotine
+			item_amount = 5
 			max_item_amount = 10
 
 		mini_styptic
@@ -359,11 +364,11 @@
 		src.UpdateIcon()
 		return
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (!src.add_to(W, user))
 			return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.add_fingerprint(user)
 		if (user.is_in_hands(src))
 			if (!src.open)

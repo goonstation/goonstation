@@ -73,7 +73,7 @@
 				I.setMaterial(M)
 			qdel(src)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (iswrenchingtool(W) && src.deconstructable)
 			actions.start(new /datum/action/bar/icon/furniture_deconstruct(src, W, 30), user)
 			return
@@ -330,7 +330,7 @@
 			C.Move(src.loc)
 			C.buckled = src
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/clothing/suit/bedsheet))
 			src.tuck_sheet(W, user)
 			return
@@ -340,7 +340,7 @@
 		else
 			return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		..()
 		if (src.sheet)
 			src.untuck_sheet(user)
@@ -427,9 +427,9 @@
 			else
 				somebody = locate(/mob/living/carbon) in get_turf(src)
 			if (somebody?.lying)
-				user.tri_message("<span class='notice'><b>[user]</b> tucks [somebody == user ? "[him_or_her(user)]self" : "[somebody]"] into bed.</span>",\
-				user, "<span class='notice'>You tuck [somebody == user ? "yourself" : "[somebody]"] into bed.</span>",\
-				somebody, "<span class='notice'>[somebody == user ? "You tuck yourself" : "<b>[user]</b> tucks you"] into bed.</span>")
+				user.tri_message(somebody, "<span class='notice'><b>[user]</b> tucks [somebody == user ? "[him_or_her(user)]self" : "[somebody]"] into bed.</span>",\
+					"<span class='notice'>You tuck [somebody == user ? "yourself" : "[somebody]"] into bed.</span>",\
+					"<span class='notice'>[somebody == user ? "You tuck yourself" : "<b>[user]</b> tucks you"] into bed.</span>")
 				newsheet.layer = EFFECTS_LAYER_BASE-1
 			else
 				user.visible_message("<span class='notice'><b>[user]</b> tucks [newsheet] into [src].</span>",\
@@ -448,9 +448,9 @@
 			else
 				somebody = locate(/mob/living/carbon) in get_turf(src)
 			if (somebody?.lying)
-				user.tri_message("<span class='notice'><b>[user]</b> untucks [somebody == user ? "[him_or_her(user)]self" : "[somebody]"] from bed.</span>",\
-				user, "<span class='notice'>You untuck [somebody == user ? "yourself" : "[somebody]"] from bed.</span>",\
-				somebody, "<span class='notice'>[somebody == user ? "You untuck yourself" : "<b>[user]</b> untucks you"] from bed.</span>")
+				user.tri_message(somebody, "<span class='notice'><b>[user]</b> untucks [somebody == user ? "[him_or_her(user)]self" : "[somebody]"] from bed.</span>",\
+					"<span class='notice'>You untuck [somebody == user ? "yourself" : "[somebody]"] from bed.</span>",\
+					"<span class='notice'>[somebody == user ? "You untuck yourself" : "<b>[user]</b> untucks you"] from bed.</span>")
 				oldsheet.layer = initial(oldsheet.layer)
 			else
 				user.visible_message("<span class='notice'><b>[user]</b> untucks [oldsheet] from [src].</span>",\
@@ -582,7 +582,7 @@
 		src.p_class = src.anchored ? initial(src.p_class) : 2
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (ispryingtool(W) && has_butt)
 			user.put_in_hand_or_drop(has_butt)
 			boutput(user, "<span class='notice'>You pry [has_butt.name] from [name].</span>")
@@ -613,7 +613,7 @@
 		else
 			return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!isliving(user)) return
 		var/mob/living/L = user
 		var/mob/living/carbon/human/chair_chump = null
@@ -907,7 +907,7 @@
 	qdel(src)
 	return
 
-/obj/item/chair/folded/attack(atom/target, mob/user as mob)
+/obj/item/chair/folded/attack(atom/target as mob, mob/user as mob, params)
 	var/oldcrit = src.stamina_crit_chance
 	if(iswrestler(user))
 		src.stamina_crit_chance = 100
@@ -1088,7 +1088,7 @@
 		src.p_class = initial(src.p_class) + src.lying // 2 while standing, 3 while lying
 		src.scoot_sounds = list("sound/misc/chair/normal/scoot1.ogg", "sound/misc/chair/normal/scoot2.ogg", "sound/misc/chair/normal/scoot3.ogg", "sound/misc/chair/normal/scoot4.ogg", "sound/misc/chair/normal/scoot5.ogg")
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.lying)
 			user.visible_message("[user] sets [src] back on its wheels.",\
 			"You set [src] back on its wheels.")
@@ -1252,7 +1252,7 @@
 			damaged += 1
 			overlays += image('icons/obj/objects.dmi', "couch-rip")
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!user) return
 		if (damaged || buckled_guy) return ..()
 
@@ -1379,7 +1379,7 @@
 				src.UpdateIcon()
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (iswrenchingtool(W))
 			var/obj/stool/chair/C = new /obj/stool/chair(get_turf(src))
 			if (src.material)

@@ -354,7 +354,7 @@
 		if (!src.traitPreferences.isValid())
 			src.traitPreferences.traits_selected.Cut()
 			src.traitPreferences.calcTotal()
-			alert(user, "Your traits couldn't be loaded. Please reselect your traits.")
+			tgui_alert(user, "Your traits couldn't be loaded. Please reselect your traits.", "Reselect traits")
 
 
 		if(!src.radio_music_volume) // We can take this out some time, when we're decently sure that most people will have this var set to something

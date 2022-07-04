@@ -96,7 +96,8 @@
 /obj/item/storage/desk_drawer/aloe
 	spawn_contents = list(/obj/item/reagent_containers/patch/LSD,
 						  /obj/item/reagent_containers/patch/lsd_bee,
-						  /obj/item/cloth/handkerchief/nt
+						  /obj/item/cloth/handkerchief/nt,
+						  /obj/item/aiModule/hologram_expansion/elden
 	)
 
 /obj/table/wood/auto/desk/aloe

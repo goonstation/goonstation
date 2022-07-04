@@ -303,18 +303,18 @@
 		return the_text
 
 	Cross(atom/movable/mover)
-		if(!src.density) return 1
+		if(!src.density)
+			return TRUE
 		if(istype(mover, /obj/projectile))
 			var/obj/projectile/P = mover
 			if(P.proj_data.window_pass)
-				return 1
+				return TRUE
 		if (!is_cardinal(dir))
-			return 0 //full tile window, you can't move into it!
+			return FALSE //full tile window, you can't move into it!
 		if(get_dir(loc, mover) & dir)
-
 			return !density
 		else
-			return 1
+			return TRUE
 
 	gas_cross(turf/target)
 		. = TRUE
@@ -354,7 +354,7 @@
 		..()
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		user.lastattacked = src
 		attack_particle(user,src)
 		if (user.a_intent == "harm")
@@ -378,7 +378,7 @@
 					playsound(src.loc, src.hitsound, 100, 1)
 				return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		user.lastattacked = src
 
 		if (isscrewingtool(W))
@@ -726,7 +726,8 @@
 		/turf/simulated/shuttle/wall, /turf/unsimulated/wall, /turf/simulated/wall/auto/shuttle, /obj/indestructible/shuttle_corner,
 		/obj/machinery/door, /obj/window, /turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred, /turf/simulated/wall/auto/reinforced/supernorn/orange, /turf/simulated/wall/auto/reinforced/paper,
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
-		/turf/unsimulated/wall/auto/supernorn/wood, /turf/unsimulated/wall/auto/adventure/shuttle/dark, /turf/simulated/wall/auto/reinforced/old, /turf/unsimulated/wall/auto/lead/blue, /turf/unsimulated/wall/auto/adventure/old, /turf/unsimulated/wall/auto/adventure/mars/interior, /turf/unsimulated/wall/auto/adventure/shuttle, /turf/unsimulated/wall/auto/reinforced/supernorn)
+		/turf/unsimulated/wall/auto/supernorn/wood, /turf/unsimulated/wall/auto/adventure/shuttle/dark, /turf/simulated/wall/auto/reinforced/old, /turf/unsimulated/wall/auto/lead/blue, /turf/unsimulated/wall/auto/adventure/old, /turf/unsimulated/wall/auto/adventure/mars/interior, /turf/unsimulated/wall/auto/adventure/shuttle, /turf/unsimulated/wall/auto/reinforced/supernorn,
+		/turf/simulated/wall/false_wall)
 
 	var/list/connects_to_exceptions = list(/obj/window/cubicle, /obj/window/reinforced, /turf/unsimulated/wall/auto/lead/blue)
 	var/list/connects_with_overlay_exceptions = list(/obj/window, /obj/machinery/door/poddoor )
@@ -767,7 +768,7 @@
 		else
 			src.UpdateOverlays(null, "connect")
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (..(W, user))
 			src.UpdateIcon()
 			src.update_neighbors()
@@ -803,7 +804,7 @@
 		if(actuallysmash)
 			return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(!ON_COOLDOWN(user, "glass_tap", 5 SECONDS))
 			src.visible_message("<span class='alert'><b>[user]</b> knocks on [src].</span>")
 			playsound(src.loc, src.hitsound, 100, 1)
@@ -987,16 +988,26 @@
 
 
 	auto
-		name = "reinforced autowindow grille spawner"
+		name = "autowindow grille spawner (will place nonreinf soon)"
 		win_path = "/obj/window/auto/reinforced"
 		full_win = 1
 		no_dirs = 1
-		icon_state = "r-wingrille_f"
+		icon_state = "wingrille_f"
+
+		reinforced
+			name = "reinforced autowindow grille spawner"
+			win_path = "/obj/window/auto/reinforced"
+			icon_state = "r-wingrille_f"
 
 		crystal
-			name = "crystal autowindow grille spawner"
+			name = "crystal autowindow grille spawner (will place nonreinf soon)"
 			win_path = "/obj/window/auto/crystal/reinforced"
 			icon_state = "p-wingrille_f"
+
+			reinforced
+				name = "reinforced crystal autowindow grille spawner"
+				win_path = "/obj/window/auto/crystal/reinforced"
+				icon_state = "pr-wingrille_f"
 
 		tuff
 			name = "tuff stuff reinforced autowindow grille spawner"
@@ -1023,7 +1034,7 @@
 		if(health <= 0)
 			qdel(src)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W))
 			src.anchored = !( src.anchored )
 			src.stops_space_move = !(src.stops_space_move)
@@ -1046,7 +1057,6 @@
 // flock windows
 
 /obj/window/auto/feather
-	default_material = "gnesisglass"
 
 /obj/window/auto/feather/New()
 	connects_to += /turf/simulated/wall/auto/feather

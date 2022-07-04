@@ -28,7 +28,7 @@
 	item_function_flags = COLD_BURN
 	crop_suffix	= " leaf"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!src.reagents)
 			src.make_reagents()
 
@@ -249,6 +249,18 @@
 	desc = "Dry, bitter leaves known for their wound-mending properties."
 	icon_state = "contusine"
 
+/obj/item/plant/herb/contusine/shivering
+	name = "contusine leaves"
+	crop_suffix	= " leaves"
+	desc = "Dry, bitter leaves known for their wound-mending properties. The leaves almost appear to be breathing."
+	icon_state = "contusine-s"
+
+/obj/item/plant/herb/contusine/quivering
+	name = "contusine leaves"
+	crop_suffix	= " leaves"
+	desc = "Dry, bitter leaves known for their wound-mending properties. The squirming leaves make your skin crawl."
+	icon_state = "contusine-q"
+
 /obj/item/plant/herb/nureous
 	name = "nureous leaves"
 	crop_suffix	= " leaves"
@@ -282,6 +294,12 @@
 	crop_suffix	= " root"
 	desc = "A tough and waxy root. It is well-regarded as an ingredient in burn salve."
 	icon_state = "commol"
+
+/obj/item/plant/herb/commol/burning
+	name = "commol root"
+	crop_suffix	= " root"
+	desc = "A tough and waxy root. It is well-regarded as an ingredient in burn salve. This variation feels warm to the touch."
+	icon_state = "commolburn"
 
 /obj/item/plant/herb/ipecacuanha
 	name = "ipecacuanha root"
@@ -358,7 +376,7 @@
 	icon_state = "aconite"
 	event_handler_flags = USE_FLUID_ENTER
 	// module_research_type = /obj/item/plant/herb/cannabis
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (iswerewolf(user))
 			user.changeStatus("weakened", 3 SECONDS)
 			user.TakeDamage("All", 0, 5, 0, DAMAGE_BURN)
@@ -375,7 +393,7 @@
 			M.visible_message("<span class='alert'>The [M] steps too close to [src] and falls down!</span>")
 			return
 		..()
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		//if a wolf attacks with this, which they shouldn't be able to, they'll just drop it
 		if (iswerewolf(user))
 			user.u_equip(src)
@@ -429,7 +447,7 @@
 		..()
 		desc = desc + pick(names) + "."
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		var/mob/living/carbon/human/H = user
 		if(src.thorned)
 			if (H.hand)//gets active arm - left arm is 1, right arm is 0
@@ -450,7 +468,7 @@
 		else
 			..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/wirecutters/) && src.thorned)
 			boutput(user, "<span class='notice'>You snip off [src]'s thorns.</span>")
 			src.thorned = 0

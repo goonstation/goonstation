@@ -25363,7 +25363,7 @@
 	d1 = 4;
 	d2 = 8
 	},
-/obj/storage/secure/closet/brig/automatic/solitary{
+/obj/storage/secure/closet/brig_automatic/solitary{
 	id = "solitary3";
 	name = "Automatic Locker (Cell #3)"
 	},
@@ -25835,7 +25835,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
 "bet" = (
-/obj/storage/secure/closet/brig/automatic/solitary{
+/obj/storage/secure/closet/brig_automatic/solitary{
 	id = "solitary1"
 	},
 /obj/cable{
@@ -26207,7 +26207,7 @@
 	d1 = 4;
 	d2 = 8
 	},
-/obj/storage/secure/closet/brig/automatic/solitary{
+/obj/storage/secure/closet/brig_automatic/solitary{
 	id = "solitary2";
 	name = "Automatic Locker (Cell #2)"
 	},

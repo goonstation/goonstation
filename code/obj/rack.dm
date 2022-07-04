@@ -90,7 +90,7 @@
 		Ar.sims_score = max(Ar.sims_score, 0)
 	..()
 
-/obj/rack/attackby(obj/item/W as obj, mob/user as mob)
+/obj/rack/attackby(obj/item/W, mob/user)
 	if (iswrenchingtool(W))
 		actions.start(new /datum/action/bar/icon/rack_tool_interact(src, W), user)
 	else

@@ -28,7 +28,7 @@
 					human_owner.see_invisible = INVIS_CLOAK
 
 			if (istype(owner, /mob/living/critter/flock))
-				owner.see_invisible = INVIS_CLOAK
+				owner.see_invisible = INVIS_FLOCK
 
 ////Dead sight
 		var/turf/T = owner.eye ? get_turf(owner.eye) : get_turf(owner) //They might be in a closet or something idk

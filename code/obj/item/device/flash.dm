@@ -10,7 +10,7 @@
 	throw_range = 10
 	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
 	item_state = "electronic"
-	mats = list("MET-1" = 3, "CON-1" = 5, "DEN-1" = 5)
+	mats = list("MET-1" = 3, "CON-1" = 5, "CRY-1" = 5)
 
 	var/status = 1 // Bulb still functional?
 	var/secure = 1 // Access panel still secured?
@@ -34,7 +34,7 @@
 		process_burnout(mob/user)
 			return
 
-		attack(mob/living/M as mob, mob/user as mob)
+		attack(mob/living/M, mob/user)
 			..()
 			var/mob/living/silicon/robot/R = user
 			if (istype(R))
@@ -84,7 +84,7 @@
 					. += "\nThe bulb is in terrible condition"
 
 //I split attack and flash_mob into seperate procs so the rev_flash code is cleaner
-/obj/item/device/flash/attack(mob/living/M as mob, mob/user as mob)
+/obj/item/device/flash/attack(mob/living/M, mob/user)
 	if(isghostcritter(user)) return
 	src.flash_mob(M, user)
 
@@ -329,7 +329,7 @@
 	return
 
 
-/obj/item/device/flash/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/device/flash/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/cell) && !src.secure)
 		boutput(user, "<span class='notice'>You combine [W] and [src]...</span>")
 		var/obj/item/device/flash/turbo/T = new /obj/item/device/flash/turbo(user.loc)
@@ -392,7 +392,7 @@
 				src.cell.charge = src.cell.maxcharge
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!W)
 			return
 		if (iswrenchingtool(W) && !(src.secure))
@@ -426,10 +426,10 @@
 	emp_act()
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return
 
-	attack(mob/living/M as mob, mob/user as mob)
+	attack(mob/living/M, mob/user)
 		flash_mob(M, user, 0)
 		flash_mob(M, user, 1)
 
