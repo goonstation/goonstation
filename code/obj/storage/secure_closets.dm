@@ -561,6 +561,7 @@
 	/obj/item/storage/backpack/satchel/medic,
 	/obj/item/storage/backpack/robotics,
 	/obj/item/storage/backpack/genetics,
+	/obj/item/storage/backpack/pathology,
 	/obj/item/storage/backpack/satchel/robotics,
 	/obj/item/storage/backpack/satchel/genetics,
 	/obj/item/storage/box/clothing/medical,
